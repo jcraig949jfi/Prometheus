@@ -1,0 +1,158 @@
+{
+ "triplicateId": "HT-e106e1603b",
+ "world": "W5",
+ "reproducibility": [
+  {
+   "arm": "POSITIVE_CONTROL",
+   "max_abs_dev_G": 0.0
+  },
+  {
+   "arm": "NULL_TWIN",
+   "max_abs_dev_G": 0.0
+  },
+  {
+   "arm": "CHEAT",
+   "max_abs_dev_G": 0.0
+  },
+  {
+   "clause": "S1",
+   "positive_value": 0.2804167919322236,
+   "twin_value": 0.005257832640034233,
+   "attainable": true,
+   "discriminating": true,
+   "frozen_attainable": true,
+   "frozen_discriminating": true,
+   "match": true
+  },
+  {
+   "clause": "S2",
+   "positive_value": 0.26249937754405206,
+   "twin_value": 0.0003483321387304228,
+   "attainable": true,
+   "discriminating": true,
+   "frozen_attainable": true,
+   "frozen_discriminating": true,
+   "match": true
+  }
+ ],
+ "outcome": "NULL",
+ "statistics": {
+  "TREATMENT_G_per_seed": [
+   0.019900120107389285,
+   0.028688098080115743,
+   0.029963579399034157,
+   0.030060368263307935,
+   0.02486274254043297
+  ],
+  "S1_mean_G": 0.026694981678056017,
+  "S2_min_G": 0.019900120107389285,
+  "F1_mean_G": 0.026694981678056017,
+  "F2_ratio": 15.0,
+  "median_t_p_0.06_0.09": 60.0,
+  "median_t_p_0.02_0.04": 4.0,
+  "n_hi": 4457,
+  "n_lo": 3063,
+  "frac_cap_all": 0.7928,
+  "frac_cap_hi": 0.9948395781916087,
+  "frac_cap_lo": 0.1743388834476004,
+  "frac_t0": 0.0,
+  "n_wrong_codeword": 0,
+  "POSITIVE_CONTROL": {
+   "G_per_seed": [
+    0.29677655609809406,
+    0.2688086207925233,
+    0.2960846903023061,
+    0.26249937754405206,
+    0.27791471492414244
+   ],
+   "mean_G": 0.2804167919322236,
+   "min_G": 0.26249937754405206
+  },
+  "NULL_TWIN": {
+   "G_per_seed": [
+    0.0003483321387304228,
+    0.00569021912969081,
+    0.010169632464989808,
+    0.006839903751726495,
+    0.0032410757150336256
+   ],
+   "mean_G": 0.005257832640034233,
+   "min_G": 0.0003483321387304228
+  },
+  "CHEAT": {
+   "G_per_seed": [
+    0.9995714016927563,
+    0.9996412047963258,
+    0.9995724140887928,
+    0.9996362018535567,
+    0.9996610316721212
+   ],
+   "mean_G": 0.9996164508207105,
+   "min_G": 0.9995714016927563
+  },
+  "secondary_G_cap_indicator_per_seed": [
+   0.01544463542785146,
+   0.024315245593724888,
+   0.024409378814919447,
+   0.025737576790056615,
+   0.019481288516973505
+  ],
+  "secondary_G_cap_indicator_mean": 0.021877625028705182
+ },
+ "criterion_as_applied": {
+  "S1": {
+   "value": 0.026694981678056017,
+   "cmp": ">=",
+   "threshold": 0.2,
+   "holds": false
+  },
+  "S2": {
+   "value": 0.019900120107389285,
+   "cmp": ">=",
+   "threshold": 0.1,
+   "holds": false
+  },
+  "F1": {
+   "value": 0.026694981678056017,
+   "cmp": "<",
+   "threshold": 0.05,
+   "holds": true
+  },
+  "F2": {
+   "value": 15.0,
+   "cmp": "<",
+   "threshold": 1.5,
+   "holds": false
+  },
+  "rule": "SIGNAL iff S1 and S2 hold and no failure clause holds; NULL otherwise (G in [0.05, 0.20) without S1 is NULL, recorded as weak). Controls must reproduce ATTAINABILITY.json or the outcome is INSTRUMENT_FAIL."
+ },
+ "positive_control_detected": true,
+ "cheat_detected": true,
+ "null_twin_meets_success": false,
+ "stupid_explanations_status": [
+  {
+   "text": "the cap: blocks that never converge are the heavy-noise ones, so t acts as a coarse failure flag rather than a slowing-down clock",
+   "addressed_by_this_run": true,
+   "how": "secondary G with t -> 1[t=60]: mean 0.0219 vs full-t mean 0.0267 (ratio 0.82); cap fraction 0.793"
+  },
+  {
+   "text": "the polynomial in s underfits E[w|s], and any second feature correlated with s (including t) absorbs the misfit and shows positive G",
+   "addressed_by_this_run": true,
+   "how": "null twin (t from s alone, same shape) re-run in the same code path: mean G 0.0053; underfit absorption by an s-correlated feature is at most this"
+  },
+  {
+   "text": "if the decoder were given p (a per-block LLR magnitude), t would leak p and hence w directly; the fixed LLR rule prevents this and must be kept",
+   "addressed_by_this_run": true,
+   "how": "decoder uses fixed LLR +-1 for every block (world.py min_sum_iterations); p and w are never passed to it"
+  },
+  {
+   "text": "t is discrete and saturates at 60, so G may sit on a plateau set by the cap rather than by the decoder dynamics",
+   "addressed_by_this_run": false,
+   "how": "reported only: cap fractions (all/hi/lo) and the cap-indicator G; no run with a different cap (the cap is frozen), so a plateau set by the cap is not excluded"
+  }
+ ],
+ "anomalies": [],
+ "core_minutes": 0.806,
+ "attempts": 1,
+ "notes": []
+}

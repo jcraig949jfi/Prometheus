@@ -1,0 +1,150 @@
+{
+ "world": "W5",
+ "triplicateId": "HT-faa9277e02",
+ "clauses": [
+  {
+   "id": "S1",
+   "statistic": "seed_mean_P",
+   "comparison": ">=",
+   "threshold": 0.5,
+   "positive_value": 0.9916870166836226,
+   "twin_value": 0.007033154870879928,
+   "cheat_value": 1.0,
+   "attainable": true,
+   "discriminating": true,
+   "treatment_must_reach": "treatment seed-mean P >= 0.5 (fraction of arrow magnitude pointing downstream net of upstream)"
+  },
+  {
+   "id": "S2",
+   "statistic": "seed_mean_B",
+   "comparison": ">=",
+   "threshold": 0.15,
+   "positive_value": 0.5628999878355934,
+   "twin_value": -0.007698741832991173,
+   "cheat_value": 0.8968733445034716,
+   "attainable": true,
+   "discriminating": true,
+   "treatment_must_reach": "treatment seed-mean B >= 0.15; by CALIBRATION this needs a downstream-uniform eps of mean about 0.05 (eps 0.025 -> B 0.076, 0.05 -> 0.153, 0.1 -> 0.301)"
+  },
+  {
+   "id": "S3",
+   "statistic": "seed_mean_B_minus_twin",
+   "comparison": ">=",
+   "threshold": 0.1,
+   "positive_value": 0.5705987296685846,
+   "twin_value": -0.023482116289517584,
+   "cheat_value": 0.9045720863364629,
+   "attainable": true,
+   "discriminating": true,
+   "treatment_must_reach": "treatment B >= its own twin B + 0.10 (twin of the positive control has seed-mean B -0.008, so about 0.09)"
+  },
+  {
+   "id": "S4",
+   "statistic": "n_seeds_B_above_twin",
+   "comparison": ">=",
+   "threshold": 9,
+   "positive_value": 10,
+   "twin_value": 1,
+   "cheat_value": 10,
+   "attainable": true,
+   "discriminating": true,
+   "treatment_must_reach": "treatment B above its own twin B in >= 9 of 10 seeds"
+  }
+ ],
+ "failure_clauses_on_controls": [
+  {
+   "id": "F1",
+   "statistic": "seed_mean_P",
+   "comparison": "<",
+   "threshold": 0.2,
+   "positive_value": 0.9916870166836226,
+   "positive_fires": false,
+   "twin_value": 0.007033154870879928,
+   "twin_fires": true,
+   "cheat_value": 1.0,
+   "cheat_fires": false,
+   "note": null
+  },
+  {
+   "id": "F2",
+   "statistic": "seed_mean_B",
+   "comparison": "<",
+   "threshold": 0.05,
+   "positive_value": 0.5628999878355934,
+   "positive_fires": false,
+   "twin_value": -0.007698741832991173,
+   "twin_fires": true,
+   "cheat_value": 0.8968733445034716,
+   "cheat_fires": false,
+   "note": null
+  },
+  {
+   "id": "F3",
+   "statistic": "abs_seed_mean_B_flat",
+   "comparison": ">=",
+   "threshold": 0.05,
+   "positive_value": 0.00035174344390312564,
+   "positive_fires": false,
+   "twin_value": 0.00035174344390312564,
+   "twin_fires": false,
+   "cheat_value": 0.00035174344390312564,
+   "cheat_fires": false,
+   "note": "instrument statistic from FLAT rows; same for all pairings"
+  },
+  {
+   "id": "F4",
+   "statistic": "seed_mean_P_control",
+   "comparison": ">",
+   "threshold": -0.2,
+   "positive_value": -0.9916870166836226,
+   "positive_fires": false,
+   "twin_value": -0.9916870166836226,
+   "twin_fires": false,
+   "cheat_value": -0.9916870166836226,
+   "cheat_fires": false,
+   "note": "control-arm statistic: value here is from POSITIVE_CONTROL_REVERSED (a correctly written arrow under reversed waves); same for all pairings; the real control arm exists only in the probe"
+  }
+ ],
+ "cheat_detected": true,
+ "frozen": true,
+ "calibration_B_by_eps_mean": {
+  "0.025": 0.07565881079573718,
+  "0.05": 0.15252393258165142,
+  "0.1": 0.3013397396108567
+ },
+ "pairing": {
+  "positive": [
+   "POSITIVE_CONTROL",
+   "NULL_TWIN"
+  ],
+  "twin": [
+   "NULL_TWIN",
+   "NULL_TWIN_B"
+  ],
+  "cheat": [
+   "CHEAT",
+   "NULL_TWIN"
+  ]
+ },
+ "revisions": [
+  {
+   "rev": 0,
+   "what": "first design: positive control eps_h ~ N(0.2,0.1); twin = random sign per edge; FLAT instrument check; CHEAT overwrites P and mirrors pulse mass; clauses not yet numbered",
+   "result": "PC P 0.992, B 0.563; twin P 0.007, B -0.008; FLAT B -0.0004; CHEAT P 1, B 0.897",
+   "why_changed": "relative clauses need a twin value in the arm slot; treatment_must_reach needs B as a function of eps"
+  },
+  {
+   "rev": 1,
+   "what": "added NULL_TWIN_B (second sign draw) and CALIBRATION rows (eps mean 0.025/0.05/0.1 -> B 0.076/0.153/0.301)",
+   "result": "thresholds set: S1 P>=0.5, S2 B>=0.15 (= eps mean about 0.05), S3 B-twin>=0.10, S4 >=9/10 seeds",
+   "why_changed": "freeze"
+  },
+  {
+   "rev": 2,
+   "what": "spec control changed from a 'timing-symmetric Hebb' arm (algebraically eps == 0, cannot fail, so useless as a check) to a reversed-wave control that must flip the arrow (F4: seed-mean P > -0.2 fires); added POSITIVE_CONTROL_REVERSED rows as the F4 reference; evaluator added",
+   "result": "see clauses",
+   "why_changed": "a guard that cannot fire is not a guard"
+  }
+ ],
+ "control_cpu_s_final_run": 5.25
+}

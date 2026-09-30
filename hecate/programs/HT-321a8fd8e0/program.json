@@ -1,0 +1,1863 @@
+{
+  "id": "HT-321a8fd8e0",
+  "key": "Holography Principle + Kolmogorov Complexity + Mechanism Design",
+  "stratum": "S3_nous_high",
+  "concepts": [
+    {
+      "field": "Physics",
+      "mechanism": "structure",
+      "name": "Holography Principle",
+      "short_description": "Bulk information encoded on boundary; AdS/CFT correspondence, information density bounds."
+    },
+    {
+      "field": "Information Science",
+      "mechanism": "measure",
+      "name": "Kolmogorov Complexity",
+      "short_description": "Minimum description length of an object; algorithmic randomness, incompressibility, MDL principle."
+    },
+    {
+      "field": "Economics",
+      "mechanism": "constraint",
+      "name": "Mechanism Design",
+      "short_description": "Engineering rules to achieve desired outcomes with self-interested agents; auctions, incentive compatibility."
+    }
+  ],
+  "provenance": {
+    "historicalId": "Holography Principle + Kolmogorov Complexity + Mechanism Design",
+    "humanreadable": "agents/hephaestus/humanreadable/Holography_Principle---Kolmogorov_Complexity---Mechanism_Design.md",
+    "ledger_lines": [
+      714
+    ],
+    "source": "hephaestus",
+    "sourceArtifact": "agents/hephaestus/ledger.jsonl#L714",
+    "upstream_nous": [
+      "agents/nous/runs/20260324_131206/responses.jsonl#L683"
+    ],
+    "selected_by": "roles/Hecate/prereg/2026-09-29_first_selection/"
+  },
+  "history": {
+    "forged": false,
+    "ledger_n": 1,
+    "ledger_reasons": [
+      "trap_battery_failed"
+    ],
+    "nous_composite_max": 7.33,
+    "nous_high_potential": true,
+    "nous_models": [
+      "nvidia/nemotron-3-super-120b-a12b"
+    ],
+    "nous_n": 1,
+    "nous_unproductive_any": false
+  },
+  "passes": [
+    {
+      "id": "P0",
+      "triplicateId": "HT-321a8fd8e0",
+      "index": 0,
+      "kind": "raw_interpretation",
+      "added": [
+        "new interpretation"
+      ],
+      "generator": {
+        "model": "claude-opus-5-5",
+        "search": false,
+        "prompt": "hecate/programs/_prompts/pass0_3_v1.md",
+        "prompt_sha256": "9ac5468dffb0a5792840809c84b3ad1ab22056397741dacb893386fd206baf3d"
+      },
+      "inspected_prior": [],
+      "unexplained": [
+        "whether description-length capacity and incentive constraints interact at all or are separable",
+        "which interpretation carries genuine three-way dependency"
+      ],
+      "decision": "DEEPEN",
+      "research_state": {
+        "novelty": "unknown",
+        "mechanistic_clarity": "low",
+        "falsifiability": "low",
+        "empirical_support": "none",
+        "cross_lens_agreement": "unknown",
+        "cross_substrate_transfer": "unknown",
+        "baseline_resistance": "unknown",
+        "artifact_risk": "medium",
+        "cost": "low",
+        "unexpectedness": "medium",
+        "potential_importance": "medium"
+      },
+      "concept_extractions": [
+        {
+          "concept": "Holography Principle",
+          "defining_structures": [
+            "bulk region with a lower-dimensional boundary",
+            "bulk-to-boundary dictionary (reconstruction map)",
+            "minimal surface separating boundary regions (area of a cut)",
+            "radial direction identified with scale / coarse-graining depth"
+          ],
+          "invariants": [
+            "maximum information in a region bounded by boundary area, not volume",
+            "boundary observables are complete for the bulk",
+            "nesting: larger boundary region reconstructs a larger bulk wedge"
+          ],
+          "transformations": [
+            "bulk operator -> many equivalent boundary representations",
+            "boundary coarse-graining <-> moving inward radially",
+            "erasure of a boundary subregion (recoverable if small)"
+          ],
+          "conserved_quantities": [
+            "total information content across the dictionary",
+            "area-bounded entropy budget"
+          ],
+          "failure_modes": [
+            "exceeding the area bound (saturation / collapse)",
+            "erasing too much boundary destroys reconstruction of deep bulk",
+            "bulk locality is only approximate"
+          ],
+          "dynamics": [
+            "boundary evolution induces bulk evolution",
+            "scale flow along the radial direction"
+          ],
+          "scales": [
+            "UV at the boundary, IR deep in the bulk",
+            "area vs volume scaling regimes"
+          ],
+          "locality": [
+            "bulk locality emergent, not fundamental",
+            "boundary is local; bulk points are nonlocal on the boundary"
+          ],
+          "memory": [
+            "bulk state is stored redundantly across boundary regions"
+          ],
+          "identity": [
+            "a bulk object is the equivalence class of its boundary representations"
+          ],
+          "reproduction": [
+            "same bulk content reproduced in multiple boundary subregions (redundant encoding)"
+          ],
+          "selection": [
+            "only boundary-visible degrees of freedom are addressable from outside"
+          ],
+          "information": [
+            "information density bounded by area",
+            "reconstruction behaves like an erasure-correcting code"
+          ],
+          "constraint": [
+            "capacity bound on any region",
+            "reconstructability threshold on boundary fraction"
+          ]
+        },
+        {
+          "concept": "Kolmogorov Complexity",
+          "defining_structures": [
+            "shortest program producing an object on a universal machine",
+            "conditional complexity K(x|y)",
+            "two-part code: model + data given model (MDL)"
+          ],
+          "invariants": [
+            "invariance theorem: machine choice changes K by at most a constant",
+            "most strings are incompressible",
+            "K is uncomputable; only upper bounds via compressors"
+          ],
+          "transformations": [
+            "compression / decompression",
+            "conditioning on side information",
+            "simulation of one machine by another"
+          ],
+          "conserved_quantities": [
+            "symmetry of information: K(x,y) ~ K(x)+K(y|x)",
+            "total description length of model plus residual"
+          ],
+          "failure_modes": [
+            "compressor bias: practical estimates miss structure",
+            "overfitting when model cost is ignored",
+            "randomness deficiency cannot be certified"
+          ],
+          "dynamics": [
+            "complexity growth under random mutation",
+            "compression gain as a learning signal (prequential coding)"
+          ],
+          "scales": [
+            "additive constants dominate for short objects",
+            "asymptotic regime for long objects"
+          ],
+          "locality": [
+            "none intrinsic; a short program can fix distant bits"
+          ],
+          "memory": [
+            "the shortest program is a maximally compressed memory of the object"
+          ],
+          "identity": [
+            "objects equivalent up to O(1) description length"
+          ],
+          "reproduction": [
+            "a program regenerates its object exactly"
+          ],
+          "selection": [
+            "Occam / MDL: prefer shorter descriptions"
+          ],
+          "information": [
+            "algorithmic mutual information I(x:y)=K(x)-K(x|y)",
+            "randomness = incompressibility"
+          ],
+          "constraint": [
+            "description budgets",
+            "halting-problem limits on certifying minimality"
+          ]
+        },
+        {
+          "concept": "Mechanism Design",
+          "defining_structures": [
+            "agents with private types",
+            "message space, outcome rule, payment rule",
+            "designer objective (welfare, revenue, accuracy)"
+          ],
+          "invariants": [
+            "revelation principle: any implementable outcome has a truthful direct mechanism",
+            "incentive compatibility and individual rationality constraints",
+            "impossibility results (no efficient, IC, IR, budget-balanced bilateral trade)"
+          ],
+          "transformations": [
+            "indirect -> direct mechanism",
+            "payments redistribute surplus without changing allocation",
+            "coalition formation changes effective agent set"
+          ],
+          "conserved_quantities": [
+            "budget identity (payments in = payments out + designer surplus)",
+            "total surplus split between welfare and information rents"
+          ],
+          "failure_modes": [
+            "collusion",
+            "message space too small to reveal types",
+            "information rents make efficiency expensive",
+            "manipulation when IC fails"
+          ],
+          "dynamics": [
+            "repeated play, learning to best-respond",
+            "designer revising rules against observed behaviour"
+          ],
+          "scales": [
+            "number of agents",
+            "message length / communication complexity"
+          ],
+          "locality": [
+            "agents see only their own type and the rule",
+            "designer sees only messages"
+          ],
+          "memory": [
+            "reputation / history-dependent mechanisms"
+          ],
+          "identity": [
+            "agent defined by type and preference; sybil identities break mechanisms"
+          ],
+          "reproduction": [
+            "mechanisms copied across markets"
+          ],
+          "selection": [
+            "allocation selects winners; payments select which types participate"
+          ],
+          "information": [
+            "private information is the scarce resource; rents are its price"
+          ],
+          "constraint": [
+            "IC, IR, budget balance, communication limits"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "P1",
+      "triplicateId": "HT-321a8fd8e0",
+      "index": 1,
+      "kind": "collision",
+      "added": [
+        "new mechanism",
+        "new intervention"
+      ],
+      "generator": {
+        "model": "claude-opus-5-5",
+        "search": false,
+        "prompt": "hecate/programs/_prompts/pass0_3_v1.md",
+        "prompt_sha256": "9ac5468dffb0a5792840809c84b3ad1ab22056397741dacb893386fd206baf3d"
+      },
+      "inspected_prior": [
+        "I1",
+        "I2",
+        "I3",
+        "I4",
+        "I5",
+        "I6",
+        "I7"
+      ],
+      "unexplained": [
+        "M3, M8, M9, M15 have weak three-way dependency",
+        "whether any mechanism is more than a coding theorem plus 'pay for effort'"
+      ],
+      "decision": "DEEPEN",
+      "research_state": {
+        "novelty": "unknown",
+        "mechanistic_clarity": "medium",
+        "falsifiability": "low",
+        "empirical_support": "none",
+        "cross_lens_agreement": "unknown",
+        "cross_substrate_transfer": "unknown",
+        "baseline_resistance": "unknown",
+        "artifact_risk": "medium",
+        "cost": "low",
+        "unexpectedness": "medium",
+        "potential_importance": "medium"
+      }
+    },
+    {
+      "id": "P2",
+      "triplicateId": "HT-321a8fd8e0",
+      "index": 2,
+      "kind": "lens_explosion",
+      "added": [
+        "new lens",
+        "new observable"
+      ],
+      "generator": {
+        "model": "claude-opus-5-5",
+        "search": false,
+        "prompt": "hecate/programs/_prompts/pass0_3_v1.md",
+        "prompt_sha256": "9ac5468dffb0a5792840809c84b3ad1ab22056397741dacb893386fd206baf3d"
+      },
+      "inspected_prior": [
+        "M2",
+        "M3",
+        "M4",
+        "M8",
+        "M10",
+        "M12",
+        "M16"
+      ],
+      "unexplained": [
+        "reliability of compressor estimates of K",
+        "whether L1 nesting is testable at small grid sizes"
+      ],
+      "decision": "BUILD_ENGINE",
+      "research_state": {
+        "novelty": "unknown",
+        "mechanistic_clarity": "medium",
+        "falsifiability": "medium",
+        "empirical_support": "none",
+        "cross_lens_agreement": "unknown",
+        "cross_substrate_transfer": "unknown",
+        "baseline_resistance": "unknown",
+        "artifact_risk": "medium",
+        "cost": "low",
+        "unexpectedness": "medium",
+        "potential_importance": "medium"
+      }
+    },
+    {
+      "id": "P3",
+      "triplicateId": "HT-321a8fd8e0",
+      "index": 3,
+      "kind": "minimal_worlds",
+      "added": [
+        "new substrate",
+        "new falsifier",
+        "new intervention"
+      ],
+      "generator": {
+        "model": "claude-opus-5-5",
+        "search": false,
+        "prompt": "hecate/programs/_prompts/pass0_3_v1.md",
+        "prompt_sha256": "9ac5468dffb0a5792840809c84b3ad1ab22056397741dacb893386fd206baf3d"
+      },
+      "inspected_prior": [
+        "M2",
+        "M3",
+        "M8",
+        "M12",
+        "L1",
+        "L3",
+        "L4",
+        "L5",
+        "L6"
+      ],
+      "unexplained": [
+        "W1 likely reproduces a textbook decoding bound",
+        "W2 may reduce to source coding plus paid effort",
+        "no world yet tests M4, M11 or M16"
+      ],
+      "decision": "FALSIFY",
+      "research_state": {
+        "novelty": "unknown",
+        "mechanistic_clarity": "medium",
+        "falsifiability": "high",
+        "empirical_support": "none",
+        "cross_lens_agreement": "unknown",
+        "cross_substrate_transfer": "unknown",
+        "baseline_resistance": "unknown",
+        "artifact_risk": "medium",
+        "cost": "low",
+        "unexpectedness": "medium",
+        "potential_importance": "medium"
+      }
+    },
+    {
+      "id": "P3-probe1",
+      "triplicateId": "HT-321a8fd8e0",
+      "index": 3,
+      "kind": "cheap_probe",
+      "added": [
+        "new observable"
+      ],
+      "generator": {
+        "model": "claude-opus-5-5 (implementer)",
+        "search": false,
+        "prompt": "hecate/programs/_prompts/probe_impl_v1.md",
+        "prompt_sha256": "cf4bd374bce1b817a12d3607063278183ce0a8b7c4a7b771061dc8ce133bcea2"
+      },
+      "prereg": "roles/Hecate/prereg/2026-09-29_probe_round1/PREREG.md",
+      "inspected_prior": [
+        "W1"
+      ],
+      "unexplained": [
+        "the threshold is exactly the textbook decoding radius, so nothing new",
+        "restricting coalition search to own symbols guarantees the result",
+        "majority/repetition voting would show the same robustness"
+      ],
+      "decision": "FALSIFY",
+      "research_state": {
+        "novelty": "unknown",
+        "mechanistic_clarity": "unknown",
+        "falsifiability": "unknown",
+        "empirical_support": "low",
+        "cross_lens_agreement": "unknown",
+        "cross_substrate_transfer": "unknown",
+        "baseline_resistance": "unknown",
+        "artifact_risk": "unknown",
+        "cost": "unknown",
+        "unexpectedness": "unknown",
+        "potential_importance": "unknown"
+      }
+    },
+    {
+      "id": "P4",
+      "triplicateId": "HT-321a8fd8e0",
+      "index": 4,
+      "kind": "first_falsification",
+      "added": [
+        "new falsifier",
+        "new substrate"
+      ],
+      "generator": {
+        "model": "claude-opus-5-5 (attacker)",
+        "search": false,
+        "prompt": "hecate/programs/_prompts/pass4_impl_v1.md",
+        "prompt_sha256": "77ff9e2d04f990b18d049dcf86bf70e10246b171cb4445cc8b34bebbcecece6e"
+      },
+      "prereg": "roles/Hecate/prereg/2026-09-30_pass4_round1/PREREG.md",
+      "inspected_prior": [
+        "W1",
+        "O-W1-r1"
+      ],
+      "unexplained": [
+        "ALT passes by counting (31 agents cannot give 16 bits 3 copies each); it could not fail. Calibration ledger row 2. Both worlds reduce to minimum-distance decoding: prior art KNOWN_ANALOGUE_FOUND."
+      ],
+      "decision": "FALSIFY",
+      "research_state": {
+        "novelty": "unknown",
+        "mechanistic_clarity": "unknown",
+        "falsifiability": "unknown",
+        "empirical_support": "low",
+        "cross_lens_agreement": "unknown",
+        "cross_substrate_transfer": "unknown",
+        "baseline_resistance": "none",
+        "artifact_risk": "unknown",
+        "cost": "unknown",
+        "unexpectedness": "unknown",
+        "potential_importance": "unknown"
+      }
+    }
+  ],
+  "hypotheses": [
+    {
+      "id": "I1",
+      "triplicateId": "HT-321a8fd8e0",
+      "passId": "P0",
+      "kind": "interpretation",
+      "layer": "speculation",
+      "statement": "Holographic revelation: a designer can read only an area-bounded boundary of a population of agents holding private bulk information; reconstruction of the bulk from boundary messages is possible iff K(bulk) fits the boundary capacity AND the mechanism makes strategic interior agents compress and relay."
+    },
+    {
+      "id": "I2",
+      "triplicateId": "HT-321a8fd8e0",
+      "passId": "P0",
+      "kind": "interpretation",
+      "layer": "speculation",
+      "statement": "Redundancy as incentive: holographic encoding is an erasure-correcting code; an outcome computed by decoding redundantly encoded reports could be manipulation-proof against coalitions below the code distance without payments, trading payments for redundancy."
+    },
+    {
+      "id": "I3",
+      "triplicateId": "HT-321a8fd8e0",
+      "passId": "P0",
+      "kind": "interpretation",
+      "layer": "speculation",
+      "statement": "Information rent priced in bits: the rent an agent can extract equals the conditional description length of its type given what the designer sees on the boundary, K(type|boundary); agents face a pressure between legibility (low rent, low cost) and incompressibility (high rent)."
+    },
+    {
+      "id": "I4",
+      "triplicateId": "HT-321a8fd8e0",
+      "passId": "P0",
+      "kind": "interpretation",
+      "layer": "speculation",
+      "statement": "Scale tower of principals: the radial direction is a hierarchy of mechanisms, each layer aggregating and compressing reports from the layer below; the tower stops growing where compression gain per layer no longer covers the cost of keeping that layer truthful."
+    },
+    {
+      "id": "I5",
+      "triplicateId": "HT-321a8fd8e0",
+      "passId": "P0",
+      "kind": "interpretation",
+      "layer": "speculation",
+      "statement": "Fabrication is detectable by complexity: a strategic liar must fabricate data consistent with the boundary; bounded liars produce fabrications whose conditional compressibility relative to peers differs from genuine data, so the designer can audit by compression gain rather than by payments."
+    },
+    {
+      "id": "I6",
+      "triplicateId": "HT-321a8fd8e0",
+      "passId": "P0",
+      "kind": "interpretation",
+      "layer": "speculation",
+      "statement": "Occam for institutions: among mechanisms that are incentive compatible on the observed (boundary) sample of agent types, the shortest-description ones remain IC on unseen type distributions."
+    },
+    {
+      "id": "I7",
+      "triplicateId": "HT-321a8fd8e0",
+      "passId": "P0",
+      "kind": "interpretation",
+      "layer": "speculation",
+      "statement": "Minimal-cut externality: an agent's influence on the outcome is measured by the change in a minimal cut (area of the separating surface) of the communication graph, giving a geometric payment rule to set against externality (VCG) pricing."
+    },
+    {
+      "id": "M1",
+      "triplicateId": "HT-321a8fd8e0",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "selection mechanism",
+      "statement": "Prequential MDL scoring rule on the boundary: agents submit a model of boundary data and are paid by the two-part code-length saving it achieves on held-out boundary segments; truthful best-available modelling should be a best response.",
+      "derived_from": [
+        "I1",
+        "I3"
+      ],
+      "concept_contributions": {
+        "Holography Principle": "the payment is computed only on boundary data",
+        "Kolmogorov Complexity": "payment = bits saved under a two-part code (model cost included)",
+        "Mechanism Design": "the scoring rule must be incentive compatible for self-interested modellers"
+      },
+      "knockouts": {
+        "Holography Principle": "payment could use full bulk data; audit scarcity disappears",
+        "Kolmogorov Complexity": "reduces to a plain log-score proper scoring rule",
+        "Mechanism Design": "no strategic agents; ordinary model selection"
+      },
+      "simpler_alternative": "log-loss proper scoring rule",
+      "questions": {
+        "what_exists": "agents, boundary data, candidate models",
+        "what_changes": "reported models, payments",
+        "what_persists": "scoring rule",
+        "what_is_selected": "models with the largest held-out compression",
+        "what_can_reproduce": "reported models can be copied",
+        "what_can_learn": "agents learn better models",
+        "what_can_transfer": "the scoring rule across data sources",
+        "distinguishing_observable": "whether the model-cost term changes the equilibrium report vs plain log-score"
+      }
+    },
+    {
+      "id": "M2",
+      "triplicateId": "HT-321a8fd8e0",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "information bottleneck",
+      "statement": "Area-budgeted reconstruction: interior agents relay compressed summaries outward; the designer reads at most B*|boundary| bits; bulk reconstruction succeeds iff K(bulk) <= boundary capacity, and only when the mechanism pays relays for compression effort.",
+      "derived_from": [
+        "I1"
+      ],
+      "concept_contributions": {
+        "Holography Principle": "capacity scales with boundary, not volume",
+        "Kolmogorov Complexity": "the phase boundary is set by the bulk's description length",
+        "Mechanism Design": "relays compress only if paid; flat pay yields shirking"
+      },
+      "knockouts": {
+        "Holography Principle": "capacity scales with volume; no transition at K = capacity",
+        "Kolmogorov Complexity": "transition sits at raw volume, not at K",
+        "Mechanism Design": "compression happens for free; world is just a coding theorem"
+      },
+      "simpler_alternative": "Shannon source coding over a bandwidth-limited channel",
+      "questions": {
+        "what_exists": "grid of agents, private bits, relay links",
+        "what_changes": "messages, relay effort",
+        "what_persists": "boundary capacity",
+        "what_is_selected": "relay strategies (compress/shirk)",
+        "what_can_reproduce": "relay encodings",
+        "what_can_learn": "relays learn encodings",
+        "what_can_transfer": "scheme across grid sizes",
+        "distinguishing_observable": "location of the reconstruction transition vs K(bulk)/capacity, and its shift under flat pay"
+      }
+    },
+    {
+      "id": "M3",
+      "triplicateId": "HT-321a8fd8e0",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "implemented_candidate",
+      "form": "error-correction mechanism",
+      "statement": "Code-decoded outcome rule: each agent's report is a symbol of a codeword with distance d; the outcome is the decoded message; coalitions smaller than d/2 cannot shift the outcome, so manipulation resistance comes from redundancy instead of payments.",
+      "derived_from": [
+        "I2"
+      ],
+      "concept_contributions": {
+        "Holography Principle": "redundant boundary encoding with a recovery threshold",
+        "Kolmogorov Complexity": "nothing essential: distance, not description length, is the invariant",
+        "Mechanism Design": "coalition manipulation is the threat model"
+      },
+      "knockouts": {
+        "Holography Principle": "no redundancy: any single liar shifts the outcome",
+        "Kolmogorov Complexity": "weak three-way dependency: KC contributes nothing causal here",
+        "Mechanism Design": "no strategic threat; plain channel coding"
+      },
+      "simpler_alternative": "majority vote / Byzantine-robust aggregation",
+      "questions": {
+        "what_exists": "agents, codewords, coalitions",
+        "what_changes": "reports under coalition",
+        "what_persists": "decoded outcome",
+        "what_is_selected": "coalitions that manipulate",
+        "what_can_reproduce": "codeword structure",
+        "what_can_learn": "nothing",
+        "what_can_transfer": "code family to other outcome rules",
+        "distinguishing_observable": "manipulation-rate step at k ~ d/2 versus a matched-redundancy random-parity null"
+      },
+      "prior_art": {
+        "label": "KNOWN_ANALOGUE_FOUND",
+        "evidence": "minimum-distance decoding; Pass 4 ORIG rows hecate/programs/HT-321a8fd8e0/worlds/W1/pass4/rows.jsonl"
+      }
+    },
+    {
+      "id": "M4",
+      "triplicateId": "HT-321a8fd8e0",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "learning pressure",
+      "statement": "Complexity rent: the designer pays each agent a rent proportional to an estimate of K(type|boundary); over repeated play, agents are selected to present types that are legible or incompressible depending on the rent's sign.",
+      "derived_from": [
+        "I3"
+      ],
+      "concept_contributions": {
+        "Holography Principle": "conditioning variable is the boundary the designer sees",
+        "Kolmogorov Complexity": "rent measured in conditional description length",
+        "Mechanism Design": "rent is an information rent of a mechanism"
+      },
+      "knockouts": {
+        "Holography Principle": "conditioning on nothing; rent becomes unconditional complexity",
+        "Kolmogorov Complexity": "rent becomes an arbitrary scalar trait",
+        "Mechanism Design": "no agents choosing presentations"
+      },
+      "simpler_alternative": "selection on any paid-for scalar trait (you get what you pay for)",
+      "questions": {
+        "what_exists": "agents with presentable types",
+        "what_changes": "type presentations",
+        "what_persists": "rent schedule",
+        "what_is_selected": "high-rent presentations",
+        "what_can_reproduce": "presentations",
+        "what_can_learn": "population",
+        "what_can_transfer": "presentations across compressors",
+        "distinguishing_observable": "whether presentations selected against one compressor also score high on an unseen compressor"
+      }
+    },
+    {
+      "id": "M5",
+      "triplicateId": "HT-321a8fd8e0",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "organism architecture",
+      "statement": "Holographic organism: an agent's internal state is readable only via an interface tape whose capacity scales with its surface; to be paid by a truthful-report mechanism the organism must compress its internal policy onto that surface.",
+      "derived_from": [
+        "I1",
+        "I4"
+      ],
+      "concept_contributions": {
+        "Holography Principle": "interface capacity scales with surface",
+        "Kolmogorov Complexity": "policy must fit via compression",
+        "Mechanism Design": "payment for truthful interface report"
+      },
+      "knockouts": {
+        "Holography Principle": "unbounded interface, no compression pressure",
+        "Kolmogorov Complexity": "no pressure toward short policies",
+        "Mechanism Design": "no reason to report internal state truthfully"
+      },
+      "simpler_alternative": "bandwidth-limited agent with a length regularizer",
+      "questions": {
+        "what_exists": "organisms, internal state, interface tape",
+        "what_changes": "internal state and interface",
+        "what_persists": "interface contract",
+        "what_is_selected": "organisms whose compressed interface predicts behaviour",
+        "what_can_reproduce": "organisms",
+        "what_can_learn": "internal policy",
+        "what_can_transfer": "interface encoding",
+        "distinguishing_observable": "interface predictivity vs interface size curve"
+      }
+    },
+    {
+      "id": "M6",
+      "triplicateId": "HT-321a8fd8e0",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "developmental process",
+      "statement": "RG tower of principals: layers of mechanisms each compress and aggregate children's reports; depth grows until marginal compression gain per layer falls below the incentive cost of keeping that layer truthful.",
+      "derived_from": [
+        "I4"
+      ],
+      "concept_contributions": {
+        "Holography Principle": "radial depth = scale",
+        "Kolmogorov Complexity": "each layer compresses",
+        "Mechanism Design": "each layer must remain IC"
+      },
+      "knockouts": {
+        "Holography Principle": "no scale interpretation; depth is arbitrary",
+        "Kolmogorov Complexity": "no stopping rule on depth",
+        "Mechanism Design": "no truthfulness cost; depth grows unbounded"
+      },
+      "simpler_alternative": "hierarchical aggregation tree with a per-level cost",
+      "questions": {
+        "what_exists": "hierarchy of principals",
+        "what_changes": "depth, aggregates",
+        "what_persists": "top summary",
+        "what_is_selected": "layers that pay their way",
+        "what_can_reproduce": "layers",
+        "what_can_learn": "aggregation rules",
+        "what_can_transfer": "tower shape across data",
+        "distinguishing_observable": "stopping depth vs K of the data"
+      }
+    },
+    {
+      "id": "M7",
+      "triplicateId": "HT-321a8fd8e0",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "causal constraint",
+      "statement": "Revelation principle under a description cap: when messages must be shorter than K(type), direct truthful mechanisms fail and multi-round indirect mechanisms become necessary; the welfare gap is a function of K(type) minus message budget.",
+      "derived_from": [
+        "I1",
+        "I3"
+      ],
+      "concept_contributions": {
+        "Holography Principle": "message budget as boundary capacity",
+        "Kolmogorov Complexity": "type complexity sets the required budget",
+        "Mechanism Design": "revelation principle"
+      },
+      "knockouts": {
+        "Holography Principle": "no cap; revelation principle holds",
+        "Kolmogorov Complexity": "budget in raw bits, not K",
+        "Mechanism Design": "no strategic reporting"
+      },
+      "simpler_alternative": "communication complexity of the allocation function",
+      "questions": {
+        "what_exists": "agents, capped messages",
+        "what_changes": "rounds",
+        "what_persists": "outcome",
+        "what_is_selected": "mechanisms achieving welfare under cap",
+        "what_can_reproduce": "nothing",
+        "what_can_learn": "nothing",
+        "what_can_transfer": "cap-gap curve across outcome functions",
+        "distinguishing_observable": "welfare loss of best direct vs indirect mechanism as a function of K(type)-budget"
+      }
+    },
+    {
+      "id": "M8",
+      "triplicateId": "HT-321a8fd8e0",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "learning pressure",
+      "statement": "Occam for institutions: a designer searching mechanism programs prefers the shortest that are IC on observed type samples; shorter IC mechanisms should remain IC under distribution shift.",
+      "derived_from": [
+        "I6"
+      ],
+      "concept_contributions": {
+        "Holography Principle": "only as 'designer sees a sample'; weak",
+        "Kolmogorov Complexity": "description length of the mechanism",
+        "Mechanism Design": "IC as the target property"
+      },
+      "knockouts": {
+        "Holography Principle": "weak three-way dependency: removing holography barely changes the world",
+        "Kolmogorov Complexity": "no preference among IC mechanisms",
+        "Mechanism Design": "nothing to generalize"
+      },
+      "simpler_alternative": "PAC/Occam generalization bound for any hypothesis class",
+      "questions": {
+        "what_exists": "mechanism programs in a small grammar",
+        "what_changes": "selected mechanism",
+        "what_persists": "IC property",
+        "what_is_selected": "short IC mechanisms",
+        "what_can_reproduce": "mechanism programs",
+        "what_can_learn": "designer",
+        "what_can_transfer": "mechanisms to shifted distributions",
+        "distinguishing_observable": "OOD regret vs mechanism length among train-IC mechanisms"
+      }
+    },
+    {
+      "id": "M9",
+      "triplicateId": "HT-321a8fd8e0",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "interaction law",
+      "statement": "Minimal-cut externality payments: each agent pays the change in the min-cut value of the influence graph when it is removed, a geometric analog of externality pricing.",
+      "derived_from": [
+        "I7"
+      ],
+      "concept_contributions": {
+        "Holography Principle": "minimal surface (area of cut)",
+        "Kolmogorov Complexity": "nothing essential",
+        "Mechanism Design": "payment rule"
+      },
+      "knockouts": {
+        "Holography Principle": "replace min cut by degree; geometry disappears",
+        "Kolmogorov Complexity": "weak three-way dependency: KC does not enter causally",
+        "Mechanism Design": "no incentive analysis"
+      },
+      "simpler_alternative": "VCG in flow/path procurement, which is already cut-based",
+      "questions": {
+        "what_exists": "graph, agents on edges",
+        "what_changes": "reported capacities",
+        "what_persists": "cut structure",
+        "what_is_selected": "edges on the min cut",
+        "what_can_reproduce": "nothing",
+        "what_can_learn": "nothing",
+        "what_can_transfer": "to other graphs",
+        "distinguishing_observable": "divergence of min-cut payments from VCG payments on the same instances"
+      }
+    },
+    {
+      "id": "M10",
+      "triplicateId": "HT-321a8fd8e0",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "representation",
+      "statement": "Wedge-decodability dictionary: represent a strategic population by its boundary transcript and ask which interior agents' types are decodable from each boundary subregion; test nesting and complementary recovery.",
+      "derived_from": [
+        "I1",
+        "I2"
+      ],
+      "concept_contributions": {
+        "Holography Principle": "wedge nesting and complementary recovery",
+        "Kolmogorov Complexity": "decodability as low description length of type given subregion",
+        "Mechanism Design": "transcripts are produced by strategic agents under a mechanism"
+      },
+      "knockouts": {
+        "Holography Principle": "no nesting prediction",
+        "Kolmogorov Complexity": "decodability becomes binary routing",
+        "Mechanism Design": "non-strategic transcripts; pure coding"
+      },
+      "simpler_alternative": "routing table: which paths reached which boundary node",
+      "questions": {
+        "what_exists": "transcripts, subregions",
+        "what_changes": "mechanism rule",
+        "what_persists": "dictionary",
+        "what_is_selected": "mechanisms whose dictionary is nested",
+        "what_can_reproduce": "dictionary",
+        "what_can_learn": "nothing",
+        "what_can_transfer": "dictionary across mechanisms",
+        "distinguishing_observable": "nesting-violation count under IC vs non-IC mechanisms"
+      }
+    },
+    {
+      "id": "M11",
+      "triplicateId": "HT-321a8fd8e0",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "mutation operator",
+      "statement": "Boundary-neutral mutation: mutations to interior strategy that leave the boundary transcript unchanged are neutral; the bulk drifts along a neutral network whose size is set by the bulk-boundary complexity gap.",
+      "derived_from": [
+        "I1"
+      ],
+      "concept_contributions": {
+        "Holography Principle": "bulk degrees of freedom invisible at the boundary",
+        "Kolmogorov Complexity": "neutral network size ~ 2^(K(bulk)-K(boundary))",
+        "Mechanism Design": "selection acts only via mechanism payoffs on the boundary"
+      },
+      "knockouts": {
+        "Holography Principle": "all mutations visible; no neutrality",
+        "Kolmogorov Complexity": "neutral set size unexplained",
+        "Mechanism Design": "no selection"
+      },
+      "simpler_alternative": "neutral networks in genotype-phenotype maps",
+      "questions": {
+        "what_exists": "population, bulk strategies",
+        "what_changes": "interior strategies",
+        "what_persists": "boundary transcript",
+        "what_is_selected": "boundary-effective strategies",
+        "what_can_reproduce": "strategies",
+        "what_can_learn": "population",
+        "what_can_transfer": "neutral drift to new optima",
+        "distinguishing_observable": "neutral drift rate vs complexity gap"
+      }
+    },
+    {
+      "id": "M12",
+      "triplicateId": "HT-321a8fd8e0",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "computational primitive",
+      "statement": "Incompressibility audit: the designer audits reports by compression gain relative to peers; bounded-program liars fabricate data whose conditional compressibility is anomalous, detectable without payments.",
+      "derived_from": [
+        "I5"
+      ],
+      "concept_contributions": {
+        "Holography Principle": "audit uses only boundary-visible reports",
+        "Kolmogorov Complexity": "fabrication has a different conditional K",
+        "Mechanism Design": "the liar is strategic, trying to shift the outcome"
+      },
+      "knockouts": {
+        "Holography Principle": "audit uses bulk truth directly; trivial",
+        "Kolmogorov Complexity": "audit reduces to a marginal-statistics test",
+        "Mechanism Design": "liars become random noise, not strategic"
+      },
+      "simpler_alternative": "a two-sample test on marginal statistics",
+      "questions": {
+        "what_exists": "honest and lying reporters",
+        "what_changes": "reports",
+        "what_persists": "detection rule",
+        "what_is_selected": "undetected lies",
+        "what_can_reproduce": "liar generators",
+        "what_can_learn": "liars (adapting generator)",
+        "what_can_transfer": "audit to new sources",
+        "distinguishing_observable": "detection AUC under matched first/second/third-order statistics"
+      }
+    },
+    {
+      "id": "M13",
+      "triplicateId": "HT-321a8fd8e0",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "memory structure",
+      "statement": "Holographic ledger: reputation history is stored only in an area-bounded, redundantly encoded boundary record; reputation mechanisms survive if long histories are reconstructable from it.",
+      "derived_from": [
+        "I2",
+        "I4"
+      ],
+      "concept_contributions": {
+        "Holography Principle": "bounded, redundantly encoded memory",
+        "Kolmogorov Complexity": "compressed history",
+        "Mechanism Design": "reputation mechanism"
+      },
+      "knockouts": {
+        "Holography Principle": "unbounded ledger",
+        "Kolmogorov Complexity": "raw truncated history",
+        "Mechanism Design": "no incentive use of history"
+      },
+      "simpler_alternative": "finite-window reputation",
+      "questions": {
+        "what_exists": "agents, ledger",
+        "what_changes": "ledger contents",
+        "what_persists": "reputation",
+        "what_is_selected": "cooperators",
+        "what_can_reproduce": "ledger encoding",
+        "what_can_learn": "agents",
+        "what_can_transfer": "ledger scheme",
+        "distinguishing_observable": "cooperation rate vs ledger capacity, redundant vs raw truncation"
+      }
+    },
+    {
+      "id": "M14",
+      "triplicateId": "HT-321a8fd8e0",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "world rule",
+      "statement": "Strategic saturation: when the reported complexity of a region exceeds its boundary capacity the mechanism pools the region into one effective agent; the number of separable IC constraints a region supports is bounded by its boundary.",
+      "derived_from": [
+        "I1",
+        "I3"
+      ],
+      "concept_contributions": {
+        "Holography Principle": "capacity bound and saturation",
+        "Kolmogorov Complexity": "reported complexity",
+        "Mechanism Design": "IC constraints and pooling"
+      },
+      "knockouts": {
+        "Holography Principle": "no bound, no pooling",
+        "Kolmogorov Complexity": "pooling by count, not K",
+        "Mechanism Design": "no IC constraints"
+      },
+      "simpler_alternative": "coarse-graining when data is too large",
+      "questions": {
+        "what_exists": "regions, agents",
+        "what_changes": "pooling state",
+        "what_persists": "capacity",
+        "what_is_selected": "regions that pool",
+        "what_can_reproduce": "nothing",
+        "what_can_learn": "nothing",
+        "what_can_transfer": "to other capacities",
+        "distinguishing_observable": "number of separating IC constraints vs boundary size"
+      }
+    },
+    {
+      "id": "M15",
+      "triplicateId": "HT-321a8fd8e0",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "selection mechanism",
+      "statement": "Description-priced auction: bidders submit bid programs and pay in description length in addition to money; a strange case.",
+      "derived_from": [
+        "I3"
+      ],
+      "concept_contributions": {
+        "Holography Principle": "nothing holographic survives",
+        "Kolmogorov Complexity": "price of expressivity",
+        "Mechanism Design": "auction"
+      },
+      "knockouts": {
+        "Holography Principle": "almost nothing disappears; weak three-way dependency",
+        "Kolmogorov Complexity": "standard auction",
+        "Mechanism Design": "no bidders"
+      },
+      "simpler_alternative": "auction with a message-length fee",
+      "questions": {
+        "what_exists": "bidders, bid programs",
+        "what_changes": "bids",
+        "what_persists": "auction rule",
+        "what_is_selected": "short bids",
+        "what_can_reproduce": "bid programs",
+        "what_can_learn": "bidders",
+        "what_can_transfer": "bidding languages",
+        "distinguishing_observable": "bid-program length distribution vs value dispersion"
+      }
+    },
+    {
+      "id": "M16",
+      "triplicateId": "HT-321a8fd8e0",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "developmental process",
+      "statement": "Emergent radial geometry: agents choose relay parents under per-bit payments with compression at merge nodes; the resulting network acquires depth ~ log n and a compression ratio increasing with depth, like a radial scale direction.",
+      "derived_from": [
+        "I1",
+        "I4"
+      ],
+      "concept_contributions": {
+        "Holography Principle": "radial depth = scale",
+        "Kolmogorov Complexity": "compression at merge nodes",
+        "Mechanism Design": "paid per bit forwarded"
+      },
+      "knockouts": {
+        "Holography Principle": "depth profile unexplained",
+        "Kolmogorov Complexity": "no compression gain with depth",
+        "Mechanism Design": "random parent choice"
+      },
+      "simpler_alternative": "shortest-path tree to a sink",
+      "questions": {
+        "what_exists": "agents, relay links",
+        "what_changes": "parent choices",
+        "what_persists": "network shape",
+        "what_is_selected": "low-cost relays",
+        "what_can_reproduce": "topology",
+        "what_can_learn": "agents",
+        "what_can_transfer": "network across payment rules",
+        "distinguishing_observable": "compression ratio vs depth against a shortest-path-tree null"
+      }
+    },
+    {
+      "id": "O-W1-r1",
+      "triplicateId": "HT-321a8fd8e0",
+      "passId": "P3-probe1",
+      "kind": "observation",
+      "layer": "experimental_observation",
+      "evidence_rows": [
+        "hecate/programs/HT-321a8fd8e0/worlds/W1/rows.jsonl",
+        "hecate/programs/HT-321a8fd8e0/worlds/W1/OUTCOME.json"
+      ],
+      "statement": "W1 probe round 1: SIGNAL. BCH(31,16) with verified d=7 (covering radius 5), exact nearest-codeword decoding, exhaustive 2^k coalition search, 4000 coalitions per k. TREATMENT manipulation rate by k: {1: 0.0, 2: 0.0, 3: 0.0, 4: 0.5883, 5: 0.9205, 6: 1.0, 7: 1.0, 8: 1.0}. CONTROL random-parity k=1 rate 1.0000; NULL_TWIN k=1 rate 1.0000; POSITIVE_CONTROL k=1 rate 1.0000. Outcome SIGNAL by the PREREG class rules applied in code.",
+      "derived_from": [
+        "M3"
+      ]
+    },
+    {
+      "id": "O-W1-p4",
+      "triplicateId": "HT-321a8fd8e0",
+      "passId": "P4",
+      "kind": "observation",
+      "layer": "experimental_observation",
+      "evidence_rows": [
+        "hecate/programs/HT-321a8fd8e0/worlds/W1/pass4/rows.jsonl"
+      ],
+      "statement": "Pass 4 on W1: ORIG_FOSSIL_ALT_PASS. ALT passes by counting (31 agents cannot give 16 bits 3 copies each); it could not fail. Calibration ledger row 2. Both worlds reduce to minimum-distance decoding: prior art KNOWN_ANALOGUE_FOUND. R: round-1 class on seeds 100-119 = SIGNAL; BCH16 rates {'1': 0.0, '2': 0.0, '3': 0.0, '4': 0.589, '5': 0.91, '6': 1.0, '7': 1.0, '8': 1.0}. ORIG: d=3 step True, d=5 step True -> fired=True (KNOWN_ANALOGUE_FOUND). ALT: K(code)=3 vs K(majority,31)=0 -> PASS; aux majority r=3 on 48 agents K=1. Predicate ORIG_FOSSIL_ALT_PASS.",
+      "derived_from": [
+        "M3"
+      ]
+    }
+  ],
+  "lenses": [
+    {
+      "id": "L1",
+      "name": "Wedge-decodability map",
+      "rationale": "Holography predicts nested, complementary reconstruction; test whether strategic transcripts reproduce this structure.",
+      "sourceRepresentation": "boundary transcripts of a grid of agents under a mechanism",
+      "transformation": "for each contiguous boundary subregion A, decode each interior agent's type from A's transcript with a fixed decoder; record the decodable set W(A)",
+      "observables": [
+        "|W(A)| vs |A|",
+        "nesting violations: A subset of B but W(A) not subset of W(B)",
+        "complementary recovery: W(A) union W(complement of A) covers interior"
+      ],
+      "predictedSignals": [
+        "threshold in |W(A)| near |A| = half the boundary",
+        "zero nesting violations under the IC mechanism"
+      ],
+      "nullExpectation": "decodability grows linearly with |A| with no threshold; violation rate equals a random-routing null",
+      "failureModes": [
+        "decoder too weak",
+        "routing artifacts dominate"
+      ],
+      "informationAddedBeyondExistingLenses": "geometric (nested) structure of reconstruction, not a single accuracy number",
+      "targets": [
+        "M2",
+        "M10",
+        "M3"
+      ],
+      "triplicateId": "HT-321a8fd8e0",
+      "passId": "P2"
+    },
+    {
+      "id": "L2",
+      "name": "Rent-per-bit ledger",
+      "rationale": "Tests whether information rents track conditional description length.",
+      "sourceRepresentation": "agent types, boundary signal, payments",
+      "transformation": "estimate K(type|boundary) by compressed-length difference with two estimators (lzma and an order-k context coder); regress rent on it",
+      "observables": [
+        "slope of rent vs conditional K estimate",
+        "agreement between estimators"
+      ],
+      "predictedSignals": [
+        "positive slope stable across both estimators"
+      ],
+      "nullExpectation": "rent correlates only with raw type length",
+      "failureModes": [
+        "compressor bias",
+        "both estimators share a blind spot"
+      ],
+      "informationAddedBeyondExistingLenses": "prices private information in bits",
+      "targets": [
+        "M4",
+        "M7",
+        "M14"
+      ],
+      "triplicateId": "HT-321a8fd8e0",
+      "passId": "P2"
+    },
+    {
+      "id": "L3",
+      "name": "Capacity-transition locator",
+      "rationale": "Description length against boundary capacity is the core holography-Kolmogorov claim; locate where reconstruction fails.",
+      "sourceRepresentation": "reconstruction error across grid size L, per-link budget B, generator program length l",
+      "transformation": "for each (L,B,l) compute exact-reconstruction rate; fit transition point in ratio r = l/(4L*B)",
+      "observables": [
+        "transition ratio r*",
+        "transition sharpness",
+        "shift under flat pay"
+      ],
+      "predictedSignals": [
+        "r* near 1 under MDL pay",
+        "under flat pay failure whenever L^2 > 4L*B"
+      ],
+      "nullExpectation": "no dependence on l when generator structure is hidden from relays",
+      "failureModes": [
+        "search cap, not K, sets the transition"
+      ],
+      "informationAddedBeyondExistingLenses": "separates capacity-bound failure from incentive failure",
+      "targets": [
+        "M2",
+        "M14"
+      ],
+      "triplicateId": "HT-321a8fd8e0",
+      "passId": "P2"
+    },
+    {
+      "id": "L4",
+      "name": "Coalition erasure spectrum",
+      "rationale": "Treat collusion as corruption of codeword symbols.",
+      "sourceRepresentation": "outcome rule, coalition size k, coalition best response",
+      "transformation": "for each k sample coalitions and compute best manipulation by exhaustive search over coalition reports; record success rate",
+      "observables": [
+        "manipulation rate vs k",
+        "empirical distance (smallest successful k)"
+      ],
+      "predictedSignals": [
+        "step at k ~ d/2 for the code rule"
+      ],
+      "nullExpectation": "smooth rise from k=1 for a random-parity rule with matched redundancy",
+      "failureModes": [
+        "coalition search incomplete"
+      ],
+      "informationAddedBeyondExistingLenses": "collusion robustness expressed as a code parameter",
+      "targets": [
+        "M3",
+        "M13"
+      ],
+      "triplicateId": "HT-321a8fd8e0",
+      "passId": "P2"
+    },
+    {
+      "id": "L5",
+      "name": "Fabrication compression-gain audit",
+      "rationale": "Distinguish genuine from fabricated reports by conditional compressibility.",
+      "sourceRepresentation": "reports of honest and lying agents with peer reports",
+      "transformation": "score = C(peers+report) - C(peers) (conditional compressed length); rank reporters",
+      "observables": [
+        "AUC honest vs liar",
+        "AUC under matched-statistics liars"
+      ],
+      "predictedSignals": [
+        "AUC >= 0.75 after matching unigram/bigram statistics"
+      ],
+      "nullExpectation": "AUC ~ 0.5 once marginal statistics are matched",
+      "failureModes": [
+        "compressor window too short",
+        "liar generator coincides with source"
+      ],
+      "informationAddedBeyondExistingLenses": "payment-free truthfulness enforcement",
+      "targets": [
+        "M12"
+      ],
+      "triplicateId": "HT-321a8fd8e0",
+      "passId": "P2"
+    },
+    {
+      "id": "L6",
+      "name": "Mechanism-length generalization curve",
+      "rationale": "Occam claim for institutions.",
+      "sourceRepresentation": "enumerated mechanism programs in a tiny grammar",
+      "transformation": "compute train IC regret, keep zero-regret programs, compute OOD regret, correlate with program length",
+      "observables": [
+        "Spearman rho(length, OOD regret)"
+      ],
+      "predictedSignals": [
+        "rho >= 0.3 between length and OOD regret"
+      ],
+      "nullExpectation": "rho ~ 0, or explained by count of numeric constants",
+      "failureModes": [
+        "grammar biases short programs toward canonical auctions"
+      ],
+      "informationAddedBeyondExistingLenses": "links description length to robustness of incentives",
+      "targets": [
+        "M8"
+      ],
+      "triplicateId": "HT-321a8fd8e0",
+      "passId": "P2"
+    },
+    {
+      "id": "L7",
+      "name": "Radial compression profile",
+      "rationale": "Checks for an emergent scale direction in relay networks.",
+      "sourceRepresentation": "relay network and per-node message sizes",
+      "transformation": "bin nodes by depth; compute mean compression ratio per depth",
+      "observables": [
+        "compression ratio vs depth",
+        "max depth vs n"
+      ],
+      "predictedSignals": [
+        "ratio increases with depth; depth ~ log n"
+      ],
+      "nullExpectation": "shortest-path tree shows the same profile",
+      "failureModes": [
+        "profile fixed by grid geometry alone"
+      ],
+      "informationAddedBeyondExistingLenses": "geometric emergence rather than performance",
+      "targets": [
+        "M16",
+        "M6"
+      ],
+      "triplicateId": "HT-321a8fd8e0",
+      "passId": "P2"
+    }
+  ],
+  "experiments": [
+    {
+      "id": "W1",
+      "mechanism_ids": [
+        "M3"
+      ],
+      "lens_ids": [
+        "L4"
+      ],
+      "hypothesis": "An outcome rule that decodes agents' reports as a codeword of distance d resists manipulation by any coalition of size k < d/2 without payments, while a rule with matched redundancy but no distance does not.",
+      "mechanism": "n=31 agents each hold one symbol of a BCH(31,16,d=7) codeword encoding the true 16-bit public decision; reports are symbols; outcome = nearest-codeword decode. Coalition members prefer a different outcome and choose reports jointly.",
+      "intervention": "coalition sizes k = 1..8; coalition searches its members' reports exhaustively (2^k options) for any report vector changing the decoded outcome",
+      "control": "random-parity rule: same 31 report bits, outcome = 16 fixed random XOR parities of the reports (no minimum distance), same redundancy ratio",
+      "positive_control": "direct rule: outcome bits read from 16 agents (d=1); k=1 must manipulate in >= 0.99 of coalitions",
+      "observable": "manipulation success rate: fraction of sampled coalitions that can change the decoded outcome, per k",
+      "success_criterion": "code rule: success rate <= 0.02 for all k <= 3 AND >= 0.5 for k >= 4, over 20 seeds x 200 coalitions; random-parity null: success rate >= 0.5 at k = 1",
+      "failure_criterion": "code rule success rate > 0.02 at any k <= 3; or null success rate < 0.5 at k = 1 (world broken)",
+      "alternative_explanation": "the standard minimum-distance decoding bound; coding theory with agents renamed",
+      "null_twin": "random-parity rule with matched report count, per-report entropy and outcome entropy, but no minimum distance",
+      "substrate": "population",
+      "why_this_implementation": "explicit linear codes over GF(2) are the smallest faithful discrete analog of holographic erasure correction; no ML needed",
+      "size": "31 agents, 16-bit message, k=1..8, 200 coalitions per k, 20 seeds, exhaustive 2^k search",
+      "cost_estimate": "about 2 CPU core-minutes",
+      "stupid_explanations": [
+        "the threshold is exactly the textbook decoding radius, so nothing new",
+        "restricting coalition search to own symbols guarantees the result",
+        "majority/repetition voting would show the same robustness"
+      ],
+      "triplicateId": "HT-321a8fd8e0",
+      "passId": "P3",
+      "outcome": "SIGNAL",
+      "raw_outcome": "SIGNAL",
+      "procedural_notes": [],
+      "rows": "hecate/programs/HT-321a8fd8e0/worlds/W1/rows.jsonl",
+      "outcome_file": "hecate/programs/HT-321a8fd8e0/worlds/W1/OUTCOME.json",
+      "statistics": {
+        "CHEAT": {
+          "1": {
+            "rate": 0.0,
+            "n_coalitions": 4000,
+            "n_seeds": 20,
+            "seed_rate_min": 0.0,
+            "seed_rate_max": 0.0
+          },
+          "2": {
+            "rate": 0.0,
+            "n_coalitions": 4000,
+            "n_seeds": 20,
+            "seed_rate_min": 0.0,
+            "seed_rate_max": 0.0
+          },
+          "3": {
+            "rate": 0.0,
+            "n_coalitions": 4000,
+            "n_seeds": 20,
+            "seed_rate_min": 0.0,
+            "seed_rate_max": 0.0
+          },
+          "4": {
+            "rate": 1.0,
+            "n_coalitions": 4000,
+            "n_seeds": 20,
+            "seed_rate_min": 1.0,
+            "seed_rate_max": 1.0
+          },
+          "5": {
+            "rate": 1.0,
+            "n_coalitions": 4000,
+            "n_seeds": 20,
+            "seed_rate_min": 1.0,
+            "seed_rate_max": 1.0
+          },
+          "6": {
+            "rate": 1.0,
+            "n_coalitions": 4000,
+            "n_seeds": 20,
+            "seed_rate_min": 1.0,
+            "seed_rate_max": 1.0
+          },
+          "7": {
+            "rate": 1.0,
+            "n_coalitions": 4000,
+            "n_seeds": 20,
+            "seed_rate_min": 1.0,
+            "seed_rate_max": 1.0
+          },
+          "8": {
+            "rate": 1.0,
+            "n_coalitions": 4000,
+            "n_seeds": 20,
+            "seed_rate_min": 1.0,
+            "seed_rate_max": 1.0
+          }
+        },
+        "CONTROL": {
+          "1": {
+            "rate": 1.0,
+            "n_coalitions": 4000,
+            "n_seeds": 20,
+            "seed_rate_min": 1.0,
+            "seed_rate_max": 1.0
+          },
+          "2": {
+            "rate": 1.0,
+            "n_coalitions": 4000,
+            "n_seeds": 20,
+            "seed_rate_min": 1.0,
+            "seed_rate_max": 1.0
+          },
+          "3": {
+            "rate": 1.0,
+            "n_coalitions": 4000,
+            "n_seeds": 20,
+            "seed_rate_min": 1.0,
+            "seed_rate_max": 1.0
+          },
+          "4": {
+            "rate": 1.0,
+            "n_coalitions": 4000,
+            "n_seeds": 20,
+            "seed_rate_min": 1.0,
+            "seed_rate_max": 1.0
+          },
+          "5": {
+            "rate": 1.0,
+            "n_coalitions": 4000,
+            "n_seeds": 20,
+            "seed_rate_min": 1.0,
+            "seed_rate_max": 1.0
+          },
+          "6": {
+            "rate": 1.0,
+            "n_coalitions": 4000,
+            "n_seeds": 20,
+            "seed_rate_min": 1.0,
+            "seed_rate_max": 1.0
+          },
+          "7": {
+            "rate": 1.0,
+            "n_coalitions": 4000,
+            "n_seeds": 20,
+            "seed_rate_min": 1.0,
+            "seed_rate_max": 1.0
+          },
+          "8": {
+            "rate": 1.0,
+            "n_coalitions": 4000,
+            "n_seeds": 20,
+            "seed_rate_min": 1.0,
+            "seed_rate_max": 1.0
+          }
+        },
+        "NULL_TWIN": {
+          "1": {
+            "rate": 1.0,
+            "n_coalitions": 4000,
+            "n_seeds": 20,
+            "seed_rate_min": 1.0,
+            "seed_rate_max": 1.0
+          },
+          "2": {
+            "rate": 1.0,
+            "n_coalitions": 4000,
+            "n_seeds": 20,
+            "seed_rate_min": 1.0,
+            "seed_rate_max": 1.0
+          },
+          "3": {
+            "rate": 1.0,
+            "n_coalitions": 4000,
+            "n_seeds": 20,
+            "seed_rate_min": 1.0,
+            "seed_rate_max": 1.0
+          },
+          "4": {
+            "rate": 1.0,
+            "n_coalitions": 4000,
+            "n_seeds": 20,
+            "seed_rate_min": 1.0,
+            "seed_rate_max": 1.0
+          },
+          "5": {
+            "rate": 1.0,
+            "n_coalitions": 4000,
+            "n_seeds": 20,
+            "seed_rate_min": 1.0,
+            "seed_rate_max": 1.0
+          },
+          "6": {
+            "rate": 1.0,
+            "n_coalitions": 4000,
+            "n_seeds": 20,
+            "seed_rate_min": 1.0,
+            "seed_rate_max": 1.0
+          },
+          "7": {
+            "rate": 1.0,
+            "n_coalitions": 4000,
+            "n_seeds": 20,
+            "seed_rate_min": 1.0,
+            "seed_rate_max": 1.0
+          },
+          "8": {
+            "rate": 1.0,
+            "n_coalitions": 4000,
+            "n_seeds": 20,
+            "seed_rate_min": 1.0,
+            "seed_rate_max": 1.0
+          }
+        },
+        "POSITIVE_CONTROL": {
+          "1": {
+            "rate": 1.0,
+            "n_coalitions": 4000,
+            "n_seeds": 20,
+            "seed_rate_min": 1.0,
+            "seed_rate_max": 1.0
+          },
+          "2": {
+            "rate": 1.0,
+            "n_coalitions": 4000,
+            "n_seeds": 20,
+            "seed_rate_min": 1.0,
+            "seed_rate_max": 1.0
+          },
+          "3": {
+            "rate": 1.0,
+            "n_coalitions": 4000,
+            "n_seeds": 20,
+            "seed_rate_min": 1.0,
+            "seed_rate_max": 1.0
+          },
+          "4": {
+            "rate": 1.0,
+            "n_coalitions": 4000,
+            "n_seeds": 20,
+            "seed_rate_min": 1.0,
+            "seed_rate_max": 1.0
+          },
+          "5": {
+            "rate": 1.0,
+            "n_coalitions": 4000,
+            "n_seeds": 20,
+            "seed_rate_min": 1.0,
+            "seed_rate_max": 1.0
+          },
+          "6": {
+            "rate": 1.0,
+            "n_coalitions": 4000,
+            "n_seeds": 20,
+            "seed_rate_min": 1.0,
+            "seed_rate_max": 1.0
+          },
+          "7": {
+            "rate": 1.0,
+            "n_coalitions": 4000,
+            "n_seeds": 20,
+            "seed_rate_min": 1.0,
+            "seed_rate_max": 1.0
+          },
+          "8": {
+            "rate": 1.0,
+            "n_coalitions": 4000,
+            "n_seeds": 20,
+            "seed_rate_min": 1.0,
+            "seed_rate_max": 1.0
+          }
+        },
+        "TREATMENT": {
+          "1": {
+            "rate": 0.0,
+            "n_coalitions": 4000,
+            "n_seeds": 20,
+            "seed_rate_min": 0.0,
+            "seed_rate_max": 0.0
+          },
+          "2": {
+            "rate": 0.0,
+            "n_coalitions": 4000,
+            "n_seeds": 20,
+            "seed_rate_min": 0.0,
+            "seed_rate_max": 0.0
+          },
+          "3": {
+            "rate": 0.0,
+            "n_coalitions": 4000,
+            "n_seeds": 20,
+            "seed_rate_min": 0.0,
+            "seed_rate_max": 0.0
+          },
+          "4": {
+            "rate": 0.58825,
+            "n_coalitions": 4000,
+            "n_seeds": 20,
+            "seed_rate_min": 0.535,
+            "seed_rate_max": 0.645
+          },
+          "5": {
+            "rate": 0.9205,
+            "n_coalitions": 4000,
+            "n_seeds": 20,
+            "seed_rate_min": 0.865,
+            "seed_rate_max": 0.97
+          },
+          "6": {
+            "rate": 1.0,
+            "n_coalitions": 4000,
+            "n_seeds": 20,
+            "seed_rate_min": 1.0,
+            "seed_rate_max": 1.0
+          },
+          "7": {
+            "rate": 1.0,
+            "n_coalitions": 4000,
+            "n_seeds": 20,
+            "seed_rate_min": 1.0,
+            "seed_rate_max": 1.0
+          },
+          "8": {
+            "rate": 1.0,
+            "n_coalitions": 4000,
+            "n_seeds": 20,
+            "seed_rate_min": 1.0,
+            "seed_rate_max": 1.0
+          }
+        }
+      },
+      "anomalies": [],
+      "rejected_explanations": [],
+      "pass4": {
+        "predicate": "ORIG_FOSSIL_ALT_PASS",
+        "R": {
+          "reproduced": true,
+          "stats": {
+            "round1_class_on_new_seeds": "SIGNAL",
+            "seeds": "100-119",
+            "TREATMENT_rate_by_k": {
+              "1": 0.0,
+              "2": 0.0,
+              "3": 0.0,
+              "4": 0.589,
+              "5": 0.91,
+              "6": 1.0,
+              "7": 1.0,
+              "8": 1.0
+            },
+            "TREATMENT_seed_range_k4": [
+              0.525,
+              0.635
+            ],
+            "CONTROL_rate_k1": 1.0,
+            "NULL_TWIN_rate_k1": 1.0,
+            "null_twin_meets_code_clause": false
+          }
+        },
+        "ORIG": {
+          "fired": true,
+          "stats": {
+            "BCH(31,26,3)": {
+              "step_at_t_plus_1": true,
+              "t": 1,
+              "rate_by_k": {
+                "1": 0.0,
+                "2": 1.0,
+                "3": 1.0,
+                "4": 1.0,
+                "5": 1.0,
+                "6": 1.0,
+                "7": 1.0,
+                "8": 1.0
+              }
+            },
+            "BCH(31,21,5)": {
+              "step_at_t_plus_1": true,
+              "t": 2,
+              "rate_by_k": {
+                "1": 0.0,
+                "2": 0.0,
+                "3": 0.882,
+                "4": 1.0,
+                "5": 1.0,
+                "6": 1.0,
+                "7": 1.0,
+                "8": 1.0
+              }
+            },
+            "codes_meta": {
+              "BCH(31,16,7) nearest-codeword decode": {
+                "generator_poly": "0b1000111110101111",
+                "dmin": 7,
+                "covering_radius": 5,
+                "t": 3
+              },
+              "BCH(31,21,5) nearest-codeword decode": {
+                "generator_poly": "0b11101101001",
+                "dmin": 5,
+                "covering_radius": 3,
+                "t": 2
+              },
+              "BCH(31,26,3) nearest-codeword decode": {
+                "generator_poly": "0b100101",
+                "dmin": 3,
+                "covering_radius": 1,
+                "t": 1
+              }
+            },
+            "prior_art_label": "KNOWN_ANALOGUE_FOUND"
+          }
+        },
+        "ALT": {
+          "status": "PASS",
+          "stats": {
+            "K_code_BCH31_16": 3,
+            "K_majority_31": 0,
+            "code_rate_by_k": {
+              "1": 0.0,
+              "2": 0.0,
+              "3": 0.0,
+              "4": 0.6025,
+              "5": 0.91,
+              "6": 1.0,
+              "7": 1.0,
+              "8": 1.0
+            },
+            "majority31_rate_by_k": {
+              "1": 0.51125,
+              "2": 0.77125,
+              "3": 0.8945,
+              "4": 0.9595,
+              "5": 0.9825,
+              "6": 0.9935,
+              "7": 0.99725,
+              "8": 0.999
+            },
+            "aux_MAJ_R3_48_K": 1,
+            "aux_MAJ_R3_48_rate_by_k": {
+              "1": 0.0,
+              "2": 0.046,
+              "3": 0.126,
+              "4": 0.24475,
+              "5": 0.379,
+              "6": 0.52575,
+              "7": 0.66125,
+              "8": 0.77575
+            },
+            "aux_exhaustive_k1_3": {
+              "EXH_CODE_BCH16": {
+                "counts": {
+                  "1": 0,
+                  "2": 0,
+                  "3": 0
+                },
+                "n_coalitions_by_k": {
+                  "1": 31,
+                  "2": 465,
+                  "3": 4495
+                }
+              },
+              "EXH_MAJ31": {
+                "counts": {
+                  "1": 18,
+                  "2": 355,
+                  "3": 4007
+                },
+                "n_coalitions_by_k": {
+                  "1": 31,
+                  "2": 465,
+                  "3": 4495
+                }
+              }
+            }
+          }
+        },
+        "rows": "hecate/programs/HT-321a8fd8e0/worlds/W1/pass4/rows.jsonl",
+        "outcome_file": "hecate/programs/HT-321a8fd8e0/worlds/W1/pass4/PASS4_OUTCOME.json",
+        "note": "ALT passes by counting (31 agents cannot give 16 bits 3 copies each); it could not fail. Calibration ledger row 2. Both worlds reduce to minimum-distance decoding: prior art KNOWN_ANALOGUE_FOUND."
+      },
+      "original_world_claim": "FOSSIL"
+    },
+    {
+      "id": "W2",
+      "mechanism_ids": [
+        "M2",
+        "M14"
+      ],
+      "lens_ids": [
+        "L3",
+        "L1"
+      ],
+      "hypothesis": "With per-bit relay costs, bulk reconstruction from an area-bounded boundary succeeds iff the bulk's description length fits boundary capacity, but only when relays are paid for compression; under flat pay relays shirk and failure sets in whenever raw volume exceeds capacity.",
+      "mechanism": "L x L grid of agents; bulk bits generated by a random program of length l in a 16-opcode stack VM (so K <= l + c); interior agents relay outward; each relay chooses an encoding from {raw-truncate, lzma, VM-program search up to l_max} with effort cost; designer reads 4L*B bits and reconstructs; payment is MDL (paid bits saved on audited cells) or flat",
+      "intervention": "vary l in 8 log-spaced values 8..256, L in {8,12,16}, B in {1,2,4}; switch payment MDL vs flat; relays reach a fixed point by iterated best response",
+      "control": "flat payment with identical costs and budgets",
+      "positive_control": "l = 8 with MDL pay must reconstruct exactly at all L",
+      "observable": "exact-reconstruction rate; fitted transition ratio r* = l/(4L*B) at 50% exact reconstruction",
+      "success_criterion": "under MDL pay r* in [0.5, 2] for every (L,B); under flat pay exact-reconstruction rate <= 0.1 whenever L^2 > 4L*B; 10 seeds per cell",
+      "failure_criterion": "MDL-pay r* outside [0.5, 2] for any (L,B); or MDL vs flat exact-reconstruction difference < 0.2 at matched cells",
+      "alternative_explanation": "source coding theorem plus the fact that paying for effort buys effort",
+      "null_twin": "same VM output XORed with a fixed secret pseudorandom mask unknown to relays: matched marginal bit statistics and same true K up to the mask seed, but generator structure unavailable to relays",
+      "substrate": "bytecode VM",
+      "why_this_implementation": "a tiny VM gives an upper bound on K by construction instead of relying only on a compressor estimate",
+      "size": "L in {8,12,16}, B in {1,2,4}, 8 values of l, 10 seeds, program search capped at 1e5 candidates",
+      "cost_estimate": "about 9 CPU core-minutes",
+      "stupid_explanations": [
+        "the transition reflects the program-search cap, not K",
+        "paying for effort trivially yields effort",
+        "flat-pay failure is baked in by the cost choice"
+      ],
+      "triplicateId": "HT-321a8fd8e0",
+      "passId": "P3"
+    },
+    {
+      "id": "W3",
+      "mechanism_ids": [
+        "M12"
+      ],
+      "lens_ids": [
+        "L5"
+      ],
+      "hypothesis": "Bounded-program liars trying to shift an aggregate outcome produce reports whose conditional compressed length given honest peers is anomalous, detectable even after matching unigram and bigram statistics.",
+      "mechanism": "40 reporters observe segments of a structured source (order-3 Markov with a planted repeated motif); 8 liars emit 512-symbol reports from generators of <= 64 VM instructions chosen to push the mean statistic upward; audit score = C(peers+report) - C(peers) with lzma and a context coder",
+      "intervention": "liars optimize their generator by hill-climbing to maximize outcome shift subject to matching unigram and bigram frequencies within 1%",
+      "control": "liars sampling from the true source (no lie): AUC must be within 0.5 +/- 0.05",
+      "positive_control": "naive liars emitting biased i.i.d. bits: AUC must be >= 0.95",
+      "observable": "ROC AUC of audit score, liar vs honest",
+      "success_criterion": "mean AUC >= 0.75 for matched-statistics liars across 20 seeds, with 95% bootstrap CI lower bound > 0.6",
+      "failure_criterion": "mean AUC < 0.6 for matched-statistics liars",
+      "alternative_explanation": "liars miss a third-order statistic that any n-gram test would catch",
+      "null_twin": "liars that match unigram, bigram and trigram statistics by resampling from the source's own trigram table with a bias, removing any program-length signature",
+      "substrate": "bytecode VM",
+      "why_this_implementation": "liars as short programs make 'bounded fabrication' literal; a neural generator was displaced because its capacity is not measured in description length",
+      "size": "40 reporters, 8 liars, 512 symbols each, 20 seeds, 2000 hill-climb steps",
+      "cost_estimate": "about 6 CPU core-minutes",
+      "stupid_explanations": [
+        "detection comes from an unmatched higher-order n-gram",
+        "lzma window artefacts",
+        "hill-climbing leaves telltale periodicity"
+      ],
+      "triplicateId": "HT-321a8fd8e0",
+      "passId": "P3"
+    },
+    {
+      "id": "W4",
+      "mechanism_ids": [
+        "M8"
+      ],
+      "lens_ids": [
+        "L6"
+      ],
+      "hypothesis": "Among single-item auction programs that are incentive compatible on a training value distribution, shorter programs have lower IC regret under distribution shift.",
+      "mechanism": "grammar of allocation/payment rules over sorted bids (max, second, reserve constants, arithmetic, conditionals); enumerate all programs up to 9 tokens; evaluate max gain from unilateral deviation for 3 bidders",
+      "intervention": "train on uniform[0,1] values; test on beta(0.5,0.5), exponential(1) clipped, and correlated values",
+      "control": "random selection among train-IC mechanisms regardless of length",
+      "positive_control": "second-price auction must have zero OOD regret",
+      "observable": "Spearman rho between program length and mean OOD regret among train-IC programs",
+      "success_criterion": "rho >= 0.3 with permutation p < 0.01, AND rho >= 0.2 after partialling out number of numeric constants",
+      "failure_criterion": "rho < 0.1, or partial rho < 0.1 after controlling for constant count",
+      "alternative_explanation": "longer programs carry more reserve constants tuned to the training distribution; ordinary overfitting",
+      "null_twin": "length labels permuted within train-regret strata, preserving the regret distribution",
+      "substrate": "symbolic rewriting",
+      "why_this_implementation": "an enumerable grammar gives exact description length; no learned mechanism network needed",
+      "size": "programs up to 9 tokens (~1e5), 3 bidders, 2000 value profiles per distribution, 20-point deviation grid",
+      "cost_estimate": "about 8 CPU core-minutes",
+      "stupid_explanations": [
+        "only canonical auctions survive the train filter, so rho measures grammar bias",
+        "constant count drives everything",
+        "deviation grid too coarse to see small violations"
+      ],
+      "triplicateId": "HT-321a8fd8e0",
+      "passId": "P3"
+    }
+  ],
+  "candidateEngines": [],
+  "currentVerdict": "PROBING",
+  "evidenceSummary": {
+    "layer": "experimental_observation",
+    "rows": "hecate/programs/HT-321a8fd8e0/worlds/W1/pass4/rows.jsonl",
+    "note": "Pass 4 round 1: ORIG_FOSSIL_ALT_PASS"
+  }
+}

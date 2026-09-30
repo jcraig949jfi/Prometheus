@@ -1,0 +1,35 @@
+{
+ "id": "W6",
+ "triplicateId": "HT-37e311ce05",
+ "passId": "P3v2",
+ "mechanism_ids": ["M2", "M9"],
+ "lens_ids": ["L1"],
+ "hypothesis": "Under vertical (pair-level) transmission, selection on joint sparse recovery makes each symbiont's measurement rows complementary to ITS OWN host specifically (low coherence with its partner's rows, but not with the other hosts in the population); under horizontal transmission with identical selection this partner-specific complementarity is absent.",
+ "mechanism": "Selection for transverse null spaces: a pair decodes a k-sparse environment from its stacked rows [A_h; A_s]; a symbiont row coherent with a host row adds almost nothing to the stacked matrix, so co-inherited pairs whose rows are mutually incoherent recover more, and vertical inheritance lets that complementarity be partner-specific.",
+ "intervention": "Vertical transmission: selected pairs reproduce as units (host and symbiont offspring stay together).",
+ "control": "Horizontal transmission: identical pair-level truncation selection on identical pair success, identical mutation, but offspring symbionts are randomly re-paired with offspring hosts every generation (the null twin).",
+ "positive_control": "A constructed population of pairs in which each pair's host and symbiont hold rows from disjoint coherence classes (complementary by construction), with pairs drawn independently so that different pairs use different classes (partner-specific by construction).",
+ "observable": "For the final population: R_own = mean over pairs of the fraction of the symbiont's rows that are coherent (|cos| >= 0.9, which includes identical rows) with at least one row of its own host; R_other = the same fraction against every other host in the population, averaged; specificity D = R_other - R_own. Secondary: joint OMP recovery rate on 200 fixed evaluation signals.",
+ "success_clauses": [
+  {"id": "S1", "text": "Partner-specific complementarity: seed-mean specificity D = R_other - R_own is at least 0.10.", "statistic": "S1_specificity", "comparison": ">=", "threshold": 0.10},
+  {"id": "S2", "text": "Lower own-partner redundancy than the null twin: seed-mean R_own divided by the seed-mean R_own of the horizontal twin run on the same seeds is at most 0.5.", "statistic": "S2_redundancy_ratio", "comparison": "<=", "threshold": 0.5}
+ ],
+ "failure_clauses": [
+  {"id": "F1", "text": "No partner specificity: seed-mean D below 0.03.", "statistic": "S1_specificity", "comparison": "<", "threshold": 0.03},
+  {"id": "F2", "text": "Own-partner redundancy not reduced: redundancy ratio above 0.8.", "statistic": "S2_redundancy_ratio", "comparison": ">", "threshold": 0.8}
+ ],
+ "alternative_explanation": "Vertical transmission raises the heritability of pair fitness; any additive complementarity between co-inherited traits (not specifically null-space geometry) would give the same partner-specific pattern.",
+ "null_twin": "Horizontal arm: same palette, signals, selection intensity (top half of pairs by success), mutation and population size; symbionts re-paired at random every generation. Partner identity carries no information, so any complementarity can only be to the host population as a whole.",
+ "substrate": "population (two co-evolving lineages carrying index sets into a fixed row palette; OMP as the fitness oracle)",
+ "why_this_implementation": "A finite palette with explicit coherence classes (24 base rows plus a near-copy of each, cos about 0.95) makes redundancy countable at the level of measurement geometry rather than identity, so a symbiont cannot look complementary merely by avoiding exact duplicates. OMP recovery is the fitness oracle because the claim is about the joint null-space property of the stacked matrix. Displaced alternatives: gradient-trained sensing matrices (removes inheritance) and neural decoders (would learn around redundancy).",
+ "size": "n=32, k=3, palette 48 rows (24 coherence classes x 2), 5 rows per partner, 50 pairs, 200 generations, 8 common test signals per generation, truncation 50%, mutation: each partner with prob 0.3 swaps one row for a random palette row not already held; treatment 10 seeds; controls: PC 10 seeds, null twin 10 seeds, twin replicate B 10 seeds",
+ "seeds": {"treatment": [0,1,2,3,4,5,6,7,8,9], "controls": [0,1,2,3,4,5,6,7,8,9]},
+ "cost_estimate": "treatment about 1 CPU core-minute; controls about 2 core-minutes",
+ "stupid_explanations": [
+  "the vertical arm has higher effective heritability, so it optimises everything faster, including redundancy, without null-space geometry mattering",
+  "lineages under vertical transmission become clonal families, so R_other rises simply because other pairs belong to different families while own pairs are relatives (population structure, not complementarity)",
+  "exact-duplicate avoidance alone (a symbiont never copies its host's index) produces low R_own; near-copy coherence plays no role",
+  "noisy fitness with 8 test signals lets drift fix whatever pairs happened to be complementary at initialisation"
+ ],
+ "parameters": {"n": 32, "k": 3, "classes": 24, "copy_noise": 0.33, "coherence_cut": 0.9, "rows_per_partner": 5, "pairs": 50, "generations": 200, "test_signals": 8, "eval_signals": 200, "mut_prob": 0.3, "control_seeds": 10, "min_twin_redundancy": 0.02}
+}

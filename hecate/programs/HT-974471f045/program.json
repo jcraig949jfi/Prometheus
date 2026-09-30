@@ -1,0 +1,2072 @@
+{
+  "id": "HT-974471f045",
+  "key": "Evolution + Phenomenology + Reservoir Computing",
+  "stratum": "S2_forged",
+  "concepts": [
+    {
+      "field": "Biology",
+      "mechanism": "dynamics",
+      "name": "Evolution",
+      "short_description": "Descent with modification via natural selection; fitness landscapes, speciation, genetic drift."
+    },
+    {
+      "field": "Philosophy",
+      "mechanism": "structure",
+      "name": "Phenomenology",
+      "short_description": "First-person study of conscious experience and its structures; intentionality, bracketing, lifeworld."
+    },
+    {
+      "field": "Computer Science",
+      "mechanism": "dynamics",
+      "name": "Reservoir Computing",
+      "short_description": "Fixed random recurrent network with trainable readout; echo state networks, liquid state machines."
+    }
+  ],
+  "provenance": {
+    "historicalId": "Evolution + Phenomenology + Reservoir Computing",
+    "humanreadable": "agents/hephaestus/humanreadable/Reservoir_Computing---Evolution---Phenomenology.md",
+    "ledger_lines": [
+      1448
+    ],
+    "source": "hephaestus",
+    "sourceArtifact": "agents/hephaestus/ledger.jsonl#L1448",
+    "upstream_nous": [
+      "agents/nous/runs/20260325_062155/responses.jsonl#L175"
+    ],
+    "selected_by": "roles/Hecate/prereg/2026-09-29_first_selection/"
+  },
+  "history": {
+    "forged": true,
+    "ledger_n": 1,
+    "ledger_reasons": [
+      ""
+    ],
+    "nous_composite_max": 7.33,
+    "nous_high_potential": true,
+    "nous_models": [
+      "nvidia/nemotron-3-super-120b-a12b"
+    ],
+    "nous_n": 1,
+    "nous_unproductive_any": false
+  },
+  "passes": [
+    {
+      "id": "P0",
+      "triplicateId": "HT-974471f045",
+      "index": 0,
+      "kind": "raw_interpretation",
+      "added": [
+        "new interpretation"
+      ],
+      "generator": {
+        "model": "claude-opus-5-5",
+        "search": false,
+        "prompt": "hecate/programs/_prompts/pass0_3_v1.md",
+        "prompt_sha256": "9ac5468dffb0a5792840809c84b3ad1ab22056397741dacb893386fd206baf3d"
+      },
+      "inspected_prior": [],
+      "unexplained": [
+        "whether any interpretation needs phenomenology causally rather than as vocabulary",
+        "no reproduction notion in phenomenology or reservoir computing; evolution supplies all of it"
+      ],
+      "decision": "DEEPEN",
+      "research_state": {
+        "novelty": "low",
+        "mechanistic_clarity": "low",
+        "falsifiability": "low",
+        "empirical_support": "none",
+        "cross_lens_agreement": "unknown",
+        "cross_substrate_transfer": "unknown",
+        "baseline_resistance": "low",
+        "artifact_risk": "medium",
+        "cost": "low",
+        "unexpectedness": "low",
+        "potential_importance": "medium"
+      },
+      "concept_extractions": [
+        {
+          "concept": "Evolution",
+          "defining_structures": [
+            "population of heritable variants",
+            "genotype-phenotype map",
+            "fitness landscape over genotype space",
+            "lineage tree"
+          ],
+          "invariants": [
+            "heredity: offspring resemble parents more than random members",
+            "selection acts on phenotype, inheritance passes genotype",
+            "no foresight: variation is blind to future fitness"
+          ],
+          "transformations": [
+            "mutation",
+            "recombination",
+            "selection (differential reproduction)",
+            "drift (sampling)",
+            "speciation (lineage splitting)"
+          ],
+          "conserved_quantities": [
+            "population size (in fixed-N models)",
+            "total frequency = 1",
+            "none conserved in the genotype itself"
+          ],
+          "failure_modes": [
+            "error catastrophe above a mutation threshold",
+            "premature convergence / loss of diversity",
+            "drift fixing deleterious variants in small populations",
+            "local optimum trapping",
+            "extinction under fast environmental change"
+          ],
+          "dynamics": [
+            "replicator-mutator flow",
+            "punctuated shifts between neutral plateaus",
+            "Red Queen / tracking of moving optima"
+          ],
+          "scales": [
+            "generation time",
+            "lineage/clade time",
+            "population size sets drift strength (1/N)"
+          ],
+          "locality": [
+            "mutational neighbourhood in genotype space",
+            "spatial/mating locality producing demes"
+          ],
+          "memory": [
+            "the genome as a record of past selection",
+            "sediment of historical contingency in lineage"
+          ],
+          "identity": [
+            "lineage identity by descent, not by state",
+            "species identity by reproductive compatibility"
+          ],
+          "reproduction": [
+            "copy with error",
+            "recombination between compatible genomes"
+          ],
+          "selection": [
+            "differential survival/reproduction on realized phenotype in an environment"
+          ],
+          "information": [
+            "genome accumulates information about environment at rate bounded by selection strength",
+            "mutation destroys information"
+          ],
+          "constraint": [
+            "developmental constraints limit reachable phenotypes",
+            "trade-offs between tasks",
+            "cannot select on what is not expressed"
+          ]
+        },
+        {
+          "concept": "Phenomenology",
+          "defining_structures": [
+            "intentionality: every act is of-something (noesis/noema correlation)",
+            "time-consciousness triad: retention / primal impression / protention",
+            "horizon structure of experience",
+            "lifeworld as pre-given background",
+            "embodiment (lived body as zero-point)"
+          ],
+          "invariants": [
+            "the intentional object is identical across varying acts (noematic invariance under adumbrations)",
+            "the living present always has retentional and protentional fringes",
+            "constitution is layered: passive synthesis precedes active judgment"
+          ],
+          "transformations": [
+            "epoche (bracketing: suspension of the natural attitude, not deletion)",
+            "eidetic variation (vary an example imaginatively to find what cannot change)",
+            "sedimentation (active achievements become passive habitual background)",
+            "horizon fusion / shift"
+          ],
+          "conserved_quantities": [
+            "identity of the noema across profiles",
+            "the formal structure of time-consciousness"
+          ],
+          "failure_modes": [
+            "naturalistic objectification (treating experience as just another thing)",
+            "loss of retention (no temporal object)",
+            "horizon collapse (no anticipation)",
+            "sedimented background becomes invisible and uncorrectable"
+          ],
+          "dynamics": [
+            "continuous flow of the living present sinking into retention",
+            "fulfilment or disappointment of protentions",
+            "passive association building habitual types"
+          ],
+          "scales": [
+            "specious present (short window)",
+            "habitual/sedimented history (life-long)",
+            "intersubjective/cultural lifeworld (supra-individual)"
+          ],
+          "locality": [
+            "the here of the lived body",
+            "the now of the living present",
+            "near vs far horizons"
+          ],
+          "memory": [
+            "retention (primary, fading, part of the present)",
+            "recollection (secondary, reproduced)",
+            "sedimentation (habit, background)"
+          ],
+          "identity": [
+            "identity of an object = invariant through a manifold of appearances",
+            "identity of the ego as pole of acts"
+          ],
+          "reproduction": [
+            "intersubjective transmission of sense via tradition / lifeworld",
+            "no biological reproduction notion"
+          ],
+          "selection": [
+            "attention selects an object from the field",
+            "fulfilment selects which protentions persist"
+          ],
+          "information": [
+            "sense/meaning is constituted, not received",
+            "adumbrations (partial profiles) carry the object only jointly"
+          ],
+          "constraint": [
+            "one can only intend what the horizon makes available",
+            "bracketing suspends validity but keeps content available"
+          ]
+        },
+        {
+          "concept": "Reservoir Computing",
+          "defining_structures": [
+            "fixed (random) recurrent dynamical system driven by input",
+            "trainable (usually linear) readout",
+            "input and optional output-feedback coupling"
+          ],
+          "invariants": [
+            "echo state property: state is asymptotically a function of input history only, independent of initial condition",
+            "reservoir weights unchanged by training"
+          ],
+          "transformations": [
+            "nonlinear expansion of input history into high-dimensional state",
+            "linear regression from state to target",
+            "hyperparameter changes (spectral radius, leak, input scale, sparsity)"
+          ],
+          "conserved_quantities": [
+            "total linear memory capacity bounded by state dimension N",
+            "reservoir weight matrix during training"
+          ],
+          "failure_modes": [
+            "chaotic regime: loss of echo state property, sensitivity to initial state",
+            "over-damped regime: too short memory",
+            "saturation of nonlinearity",
+            "readout overfitting with few samples",
+            "collinear states (low effective rank)"
+          ],
+          "dynamics": [
+            "fading memory of input",
+            "separation of distinct input histories",
+            "operation near the edge of stability"
+          ],
+          "scales": [
+            "memory horizon set by spectral radius and leak rate",
+            "state dimension N",
+            "washout length"
+          ],
+          "locality": [
+            "temporal locality: recent inputs dominate state",
+            "structural locality: sparse connectivity"
+          ],
+          "memory": [
+            "fading memory in the state",
+            "no memory in the readout beyond weights"
+          ],
+          "identity": [
+            "a reservoir is identified by its weight matrix; readouts are only meaningful relative to one reservoir"
+          ],
+          "reproduction": [
+            "none natively"
+          ],
+          "selection": [
+            "readout training selects a linear functional of state; hyperparameter search selects reservoirs"
+          ],
+          "information": [
+            "memory-nonlinearity trade-off",
+            "separation property vs approximation property"
+          ],
+          "constraint": [
+            "only linear functionals of state are decodable",
+            "readout cannot recover what the state has forgotten"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "P1",
+      "triplicateId": "HT-974471f045",
+      "index": 1,
+      "kind": "collision",
+      "added": [
+        "new mechanism",
+        "new intervention"
+      ],
+      "generator": {
+        "model": "claude-opus-5-5",
+        "search": false,
+        "prompt": "hecate/programs/_prompts/pass0_3_v1.md",
+        "prompt_sha256": "9ac5468dffb0a5792840809c84b3ad1ab22056397741dacb893386fd206baf3d"
+      },
+      "inspected_prior": [
+        "I1",
+        "I2",
+        "I3",
+        "I4",
+        "I5",
+        "I6",
+        "I7"
+      ],
+      "unexplained": [
+        "M1, M11, M12 have weak phenomenology dependency and may be ordinary search",
+        "whether sedimentation (M3) differs from Lamarckian readout inheritance",
+        "whether richness (M4) is more than effective rank"
+      ],
+      "decision": "DEEPEN",
+      "research_state": {
+        "novelty": "low",
+        "mechanistic_clarity": "medium",
+        "falsifiability": "medium",
+        "empirical_support": "none",
+        "cross_lens_agreement": "unknown",
+        "cross_substrate_transfer": "unknown",
+        "baseline_resistance": "low",
+        "artifact_risk": "medium",
+        "cost": "low",
+        "unexpectedness": "medium",
+        "potential_importance": "medium"
+      }
+    },
+    {
+      "id": "P2",
+      "triplicateId": "HT-974471f045",
+      "index": 2,
+      "kind": "lens_explosion",
+      "added": [
+        "new lens",
+        "new observable"
+      ],
+      "generator": {
+        "model": "claude-opus-5-5",
+        "search": false,
+        "prompt": "hecate/programs/_prompts/pass0_3_v1.md",
+        "prompt_sha256": "9ac5468dffb0a5792840809c84b3ad1ab22056397741dacb893386fd206baf3d"
+      },
+      "inspected_prior": [
+        "I1",
+        "I2",
+        "I3",
+        "I4",
+        "I5",
+        "I6",
+        "I7",
+        "M1",
+        "M2",
+        "M3",
+        "M4",
+        "M5",
+        "M6",
+        "M7",
+        "M8",
+        "M9",
+        "M10",
+        "M11",
+        "M12",
+        "M13",
+        "M14",
+        "M15"
+      ],
+      "unexplained": [
+        "no lens yet separates embodiment (M13) from generic physical reservoirs",
+        "commons (M10) lacks a decisive observable"
+      ],
+      "decision": "DEEPEN",
+      "research_state": {
+        "novelty": "low",
+        "mechanistic_clarity": "medium",
+        "falsifiability": "medium",
+        "empirical_support": "none",
+        "cross_lens_agreement": "unknown",
+        "cross_substrate_transfer": "unknown",
+        "baseline_resistance": "low",
+        "artifact_risk": "medium",
+        "cost": "low",
+        "unexpectedness": "medium",
+        "potential_importance": "medium"
+      }
+    },
+    {
+      "id": "P3",
+      "triplicateId": "HT-974471f045",
+      "index": 3,
+      "kind": "minimal_worlds",
+      "added": [
+        "new falsifier",
+        "new substrate",
+        "new intervention"
+      ],
+      "generator": {
+        "model": "claude-opus-5-5",
+        "search": false,
+        "prompt": "hecate/programs/_prompts/pass0_3_v1.md",
+        "prompt_sha256": "9ac5468dffb0a5792840809c84b3ad1ab22056397741dacb893386fd206baf3d"
+      },
+      "inspected_prior": [
+        "M1",
+        "M2",
+        "M3",
+        "M4",
+        "M5",
+        "M6",
+        "M7",
+        "M8",
+        "M9",
+        "M10",
+        "M11",
+        "M12",
+        "M13",
+        "M14",
+        "M15",
+        "L1",
+        "L2",
+        "L3",
+        "L4",
+        "L5",
+        "L6",
+        "L7"
+      ],
+      "unexplained": [
+        "all worlds are ESN populations; no cross-substrate world yet (mass-spring M13 is a candidate)",
+        "M5, M10, M14 have no world"
+      ],
+      "decision": "FALSIFY",
+      "research_state": {
+        "novelty": "low",
+        "mechanistic_clarity": "medium",
+        "falsifiability": "high",
+        "empirical_support": "none",
+        "cross_lens_agreement": "unknown",
+        "cross_substrate_transfer": "unknown",
+        "baseline_resistance": "low",
+        "artifact_risk": "medium",
+        "cost": "low",
+        "unexpectedness": "low",
+        "potential_importance": "medium"
+      }
+    },
+    {
+      "id": "P3-probe1",
+      "triplicateId": "HT-974471f045",
+      "index": 3,
+      "kind": "cheap_probe",
+      "added": [
+        "new observable"
+      ],
+      "generator": {
+        "model": "claude-opus-5-5 (implementer)",
+        "search": false,
+        "prompt": "hecate/programs/_prompts/probe_impl_v1.md",
+        "prompt_sha256": "cf4bd374bce1b817a12d3607063278183ce0a8b7c4a7b771061dc8ce133bcea2"
+      },
+      "prereg": "roles/Hecate/prereg/2026-09-29_probe_round1/PREREG.md",
+      "inspected_prior": [
+        "W3"
+      ],
+      "unexplained": [
+        "distractor variance saturates tanh, making masking a gain control"
+      ],
+      "decision": "DEEPEN",
+      "research_state": {
+        "novelty": "unknown",
+        "mechanistic_clarity": "unknown",
+        "falsifiability": "unknown",
+        "empirical_support": "none",
+        "cross_lens_agreement": "unknown",
+        "cross_substrate_transfer": "unknown",
+        "baseline_resistance": "unknown",
+        "artifact_risk": "unknown",
+        "cost": "unknown",
+        "unexpectedness": "unknown",
+        "potential_importance": "unknown"
+      }
+    },
+    {
+      "id": "P3-probe2",
+      "triplicateId": "HT-974471f045",
+      "index": 3,
+      "kind": "cheap_probe",
+      "added": [
+        "new observable"
+      ],
+      "generator": {
+        "model": "claude-opus-5-5 (implementer)",
+        "search": false,
+        "prompt": "hecate/programs/_prompts/probe_impl_v2.md",
+        "prompt_sha256": "2021ed66e8fefd807203ae1d814b74091b4eabdacef16668e7a025d82128185e"
+      },
+      "prereg": "roles/Hecate/prereg/2026-09-30_probe_round2/PREREG.md",
+      "inspected_prior": [
+        "W3",
+        "W1"
+      ],
+      "unexplained": [
+        "deposits increase rho before rescaling and rescaling is imperfect",
+        "task A and task B share delay structure so B-training preserves A",
+        "20-sample ridge is so noisy that any change in state scale shifts NRMSE",
+        "elites selected on B happen to carry A by chance at one seed"
+      ],
+      "decision": "PARK",
+      "research_state": {
+        "novelty": "unknown",
+        "mechanistic_clarity": "unknown",
+        "falsifiability": "unknown",
+        "empirical_support": "none",
+        "cross_lens_agreement": "unknown",
+        "cross_substrate_transfer": "unknown",
+        "baseline_resistance": "unknown",
+        "artifact_risk": "unknown",
+        "cost": "unknown",
+        "unexpectedness": "unknown",
+        "potential_importance": "unknown"
+      }
+    },
+    {
+      "id": "P3v2",
+      "triplicateId": "HT-974471f045",
+      "index": 3,
+      "kind": "minimal_worlds_v2",
+      "added": [
+        "new falsifier",
+        "new observable"
+      ],
+      "generator": {
+        "model": "claude-opus-5-5",
+        "search": false,
+        "prompt": "hecate/programs/_prompts/pass3_v2.md",
+        "prompt_sha256": "2adcfc8da07ee9adb9b04d2214889f0965758f7fcf0a60cde08eebb62bedd461"
+      },
+      "prereg": "roles/Hecate/prereg/2026-09-30_pass3_v2/PREREG.md",
+      "inspected_prior": [
+        "W3"
+      ],
+      "unexplained": [],
+      "decision": "FALSIFY",
+      "research_state": {
+        "novelty": "unknown",
+        "mechanistic_clarity": "unknown",
+        "falsifiability": "unknown",
+        "empirical_support": "none",
+        "cross_lens_agreement": "unknown",
+        "cross_substrate_transfer": "unknown",
+        "baseline_resistance": "unknown",
+        "artifact_risk": "unknown",
+        "cost": "unknown",
+        "unexpectedness": "unknown",
+        "potential_importance": "unknown"
+      }
+    },
+    {
+      "id": "P3-probe3",
+      "triplicateId": "HT-974471f045",
+      "index": 3,
+      "kind": "cheap_probe",
+      "added": [
+        "new falsifier",
+        "new observable"
+      ],
+      "generator": {
+        "model": "claude-opus-5-5",
+        "search": false,
+        "prompt": "hecate/programs/_prompts/probe_impl_v3.md",
+        "prompt_sha256": "a34a8c6143f49df2b33b75871e8f9cd12e60c10c37778ba595e12fedf1621685"
+      },
+      "prereg": "roles/Hecate/prereg/2026-09-30_pass3_v2/PREREG.md",
+      "inspected_prior": [
+        "W6"
+      ],
+      "unexplained": [
+        "template collapse: rms(M_in) grows so large that resampling noise is irrelevant and the world is a fixed linear decoder (see alternative_explanation; record the template-to-noise ratio)"
+      ],
+      "decision": "PARK",
+      "research_state": {
+        "novelty": "unknown",
+        "mechanistic_clarity": "unknown",
+        "falsifiability": "unknown",
+        "empirical_support": "none",
+        "cross_lens_agreement": "unknown",
+        "cross_substrate_transfer": "unknown",
+        "baseline_resistance": "unknown",
+        "artifact_risk": "unknown",
+        "cost": "unknown",
+        "unexpectedness": "unknown",
+        "potential_importance": "unknown"
+      }
+    }
+  ],
+  "hypotheses": [
+    {
+      "id": "I1",
+      "triplicateId": "HT-974471f045",
+      "passId": "P0",
+      "kind": "interpretation",
+      "layer": "speculation",
+      "statement": "The reservoir's fading memory is a specious present (retention + protention fringes around the input now). Evolution does not select what is known but how wide the living present is: heritable leak rate and spectral radius are selected to match the temporal structure of the environment, and the retention/protention balance is itself an evolved trait."
+    },
+    {
+      "id": "I2",
+      "triplicateId": "HT-974471f045",
+      "passId": "P0",
+      "kind": "interpretation",
+      "layer": "speculation",
+      "statement": "The reservoir/readout split is an epoche: the fixed dynamics are the bracketed background that is not modified in life, while the readout is the active attitude learned in life. Evolution then acts on the bracketed layer only, producing a Baldwin-style division of labour between heritable fixed dynamics and lifetime-trained readouts."
+    },
+    {
+      "id": "I3",
+      "triplicateId": "HT-974471f045",
+      "passId": "P0",
+      "kind": "interpretation",
+      "layer": "speculation",
+      "statement": "The reservoir is not random but a sediment of ancestral readouts: across generations, readouts that were learned actively are compiled back into fixed recurrent dynamics (sedimentation / genetic assimilation), so the 'random' reservoir of a lineage carries a stratigraphy of past tasks that makes their relearning cheap."
+    },
+    {
+      "id": "I4",
+      "triplicateId": "HT-974471f045",
+      "passId": "P0",
+      "kind": "interpretation",
+      "layer": "speculation",
+      "statement": "Intentionality as readout multiplicity: one state stream supports many intentional objects via many readouts. Evolution can select reservoirs for noematic richness (how many distinct target functionals are linearly decodable) rather than for any single task, yielding reservoirs that transfer to unseen tasks."
+    },
+    {
+      "id": "I5",
+      "triplicateId": "HT-974471f045",
+      "passId": "P0",
+      "kind": "interpretation",
+      "layer": "speculation",
+      "statement": "Lifeworld incommensurability as speciation: a readout is meaningful only relative to its reservoir, so readouts cannot be exchanged between divergent reservoirs. Readout-transplant failure is a reproductive-isolation criterion, and species are sets of individuals sharing a horizon of decodability."
+    },
+    {
+      "id": "I6",
+      "triplicateId": "HT-974471f045",
+      "passId": "P0",
+      "kind": "interpretation",
+      "layer": "speculation",
+      "statement": "Epoche as an evolved input gate: when readout capacity is limited, lineages that suspend (mask) distracting input channels without losing them from the world gain fitness; bracketing is a heritable, selected information bottleneck rather than a method."
+    },
+    {
+      "id": "I7",
+      "triplicateId": "HT-974471f045",
+      "passId": "P0",
+      "kind": "interpretation",
+      "layer": "speculation",
+      "statement": "Noema as invariant across reservoirs: if the readout is heritable but each individual's reservoir is freshly resampled in development, only readouts addressing properties invariant across reservoir realizations survive; evolution performs an eidetic variation over reservoirs and finds their invariant."
+    },
+    {
+      "id": "M1",
+      "triplicateId": "HT-974471f045",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "selection mechanism",
+      "statement": "Horizon tuning: leak rate and spectral radius are heritable; fitness is lifetime readout error on a task with characteristic delay D; the population's memory-capacity profile migrates to centre on D.",
+      "derived_from": [
+        "I1"
+      ],
+      "concept_contributions": {
+        "Evolution": "heritable variation and selection on reservoir hyperparameters",
+        "Phenomenology": "the framing of memory width as a specious present (weak: no causal role)",
+        "Reservoir Computing": "fading memory whose width depends on hyperparameters"
+      },
+      "knockouts": {
+        "Evolution": "no adaptation of horizon; horizon stays at initial random value",
+        "Phenomenology": "nothing measurable disappears; phenomenology is decorative here (three-way dependency WEAK)",
+        "Reservoir Computing": "no horizon to tune"
+      },
+      "simpler_alternative": "Plain hyperparameter search (grid or random) over spectral radius and leak.",
+      "questions": {
+        "what_exists": "population of ESNs with heritable (rho, leak)",
+        "what_changes": "hyperparameters per lineage",
+        "what_persists": "the delay-matched horizon",
+        "what_is_selected": "(rho, leak) values",
+        "what_can_reproduce": "genomes (hyperparameters)",
+        "what_can_learn": "readouts in life",
+        "what_can_transfer": "horizon value to new tasks with same delay",
+        "distinguishing_observable": "memory-capacity peak lag tracks D across environments; must beat random search at equal evaluations to be more than search"
+      }
+    },
+    {
+      "id": "M2",
+      "triplicateId": "HT-974471f045",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "learning pressure",
+      "statement": "Bracketed inheritance: reservoir weights are heritable and never changed in life; readout is re-learned from scratch each life with a fixed small sample budget. Low lifetime budget pushes task information into the heritable reservoir; high budget leaves reservoir near-random.",
+      "derived_from": [
+        "I2"
+      ],
+      "concept_contributions": {
+        "Evolution": "heritable reservoir under selection",
+        "Phenomenology": "the partition between bracketed (fixed) and active (learned) layers",
+        "Reservoir Computing": "the natural fixed/trainable split"
+      },
+      "knockouts": {
+        "Evolution": "reservoir stays random; all adaptation in readout",
+        "Phenomenology": "without the partition (everything trained in life) no division of labour exists to measure",
+        "Reservoir Computing": "no fixed layer to carry heredity"
+      },
+      "simpler_alternative": "Baldwin effect in any two-timescale learner (evolved init + fine-tuning).",
+      "questions": {
+        "what_exists": "reservoir genome and lifetime readout",
+        "what_changes": "reservoir weights across generations; readout within life",
+        "what_persists": "reservoir structure",
+        "what_is_selected": "reservoirs whose readouts learn fast with few samples",
+        "what_can_reproduce": "reservoir weights",
+        "what_can_learn": "readout only",
+        "what_can_transfer": "reservoir to sibling tasks",
+        "distinguishing_observable": "task-relevant information in reservoir (ablation) as a decreasing function of lifetime sample budget"
+      }
+    },
+    {
+      "id": "M3",
+      "triplicateId": "HT-974471f045",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "mutation operator",
+      "statement": "Sedimentation operator: with probability p per birth, the parent's learned readout w is compiled into the offspring reservoir as a fixed feedback loop W <- W + eps * v w^T (v a random input-like vector). Actively learned functionals become passive background dynamics of descendants.",
+      "derived_from": [
+        "I3"
+      ],
+      "concept_contributions": {
+        "Evolution": "inheritance and selection that retain useful sediment",
+        "Phenomenology": "sedimentation: active achievement becomes passive habitual background",
+        "Reservoir Computing": "a fixed recurrent matrix into which a linear functional can be folded"
+      },
+      "knockouts": {
+        "Evolution": "sediment accumulates without filtering; noise dominates",
+        "Phenomenology": "operator becomes an ordinary random rank-one mutation",
+        "Reservoir Computing": "no fixed layer to deposit into"
+      },
+      "simpler_alternative": "Lamarckian inheritance of any learned parameter; or simply initializing offspring readout from parent readout.",
+      "questions": {
+        "what_exists": "reservoirs carrying rank-one feedback deposits",
+        "what_changes": "reservoir gains deposits over generations",
+        "what_persists": "deposited functionals of ancestral tasks",
+        "what_is_selected": "lineages whose sediment helps current task",
+        "what_can_reproduce": "reservoir including sediment",
+        "what_can_learn": "readout each life",
+        "what_can_transfer": "fast relearning of ancestral task after task switch",
+        "distinguishing_observable": "few-shot relearning of an abandoned task beats a norm-matched random-deposit twin"
+      }
+    },
+    {
+      "id": "M4",
+      "triplicateId": "HT-974471f045",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "selection mechanism",
+      "statement": "Noematic richness selection: fitness counts how many of K random target functionals of input history are linearly decodable above threshold, not performance on one task. Predicts better transfer to held-out functionals than task-selected reservoirs.",
+      "derived_from": [
+        "I4"
+      ],
+      "concept_contributions": {
+        "Evolution": "selection over reservoirs",
+        "Phenomenology": "one stream, many intentional objects; fitness defined by readout multiplicity",
+        "Reservoir Computing": "linear decodability as the test of what is present in the state"
+      },
+      "knockouts": {
+        "Evolution": "reservoir stays random; no richness gain",
+        "Phenomenology": "fitness reverts to single-task; transfer advantage should vanish",
+        "Reservoir Computing": "decodability undefined"
+      },
+      "simpler_alternative": "Selecting for high effective rank / memory capacity of the state covariance (a known reservoir quality metric).",
+      "questions": {
+        "what_exists": "reservoirs and a bank of random target functionals",
+        "what_changes": "reservoir weights",
+        "what_persists": "decodable-feature set",
+        "what_is_selected": "count of decodable functionals",
+        "what_can_reproduce": "reservoirs",
+        "what_can_learn": "many readouts",
+        "what_can_transfer": "to unseen functionals",
+        "distinguishing_observable": "held-out functional R^2 higher than both task-selected and effective-rank-selected reservoirs"
+      }
+    },
+    {
+      "id": "M5",
+      "triplicateId": "HT-974471f045",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "selection mechanism",
+      "statement": "Readout-transplant speciation: mating succeeds only if parent A's readout, applied to parent B's reservoir, achieves error below a threshold. Compatibility classes (shared horizons) become species; isolation emerges where reservoirs diverge in decodable geometry.",
+      "derived_from": [
+        "I5"
+      ],
+      "concept_contributions": {
+        "Evolution": "mating and lineage splitting",
+        "Phenomenology": "horizons of mutual understanding define community membership",
+        "Reservoir Computing": "readouts only meaningful relative to a reservoir"
+      },
+      "knockouts": {
+        "Evolution": "no lineages to split",
+        "Phenomenology": "compatibility becomes arbitrary weight-distance threshold",
+        "Reservoir Computing": "no readout notion"
+      },
+      "simpler_alternative": "Assortative mating by genetic distance threshold.",
+      "questions": {
+        "what_exists": "population of reservoir+readout pairs",
+        "what_changes": "reservoir weights and readouts",
+        "what_persists": "compatibility clusters",
+        "what_is_selected": "task-competent and mutually decodable individuals",
+        "what_can_reproduce": "compatible pairs",
+        "what_can_learn": "readouts",
+        "what_can_transfer": "readouts within a cluster",
+        "distinguishing_observable": "transplant-compatibility graph modular even at matched weight-distance; transplant success not predicted by raw weight distance"
+      }
+    },
+    {
+      "id": "M6",
+      "triplicateId": "HT-974471f045",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "representation",
+      "statement": "Retention/protention split: state decomposes into subspaces predictive of past inputs (retention) and of future inputs (protention); in environments with learnable regularity, selection shifts capacity from retention toward protention, with total bounded by N.",
+      "derived_from": [
+        "I1"
+      ],
+      "concept_contributions": {
+        "Evolution": "selection shifting allocation",
+        "Phenomenology": "the two-sided structure of the living present",
+        "Reservoir Computing": "a finite linear memory budget"
+      },
+      "knockouts": {
+        "Evolution": "allocation fixed",
+        "Phenomenology": "only past-memory capacity would be measured; the future side has no motivation (moderate dependency)",
+        "Reservoir Computing": "no bounded budget"
+      },
+      "simpler_alternative": "Trained predictor; any predictive coding system shifts toward prediction when future is predictable.",
+      "questions": {
+        "what_exists": "reservoir states",
+        "what_changes": "retention/protention allocation",
+        "what_persists": "total capacity bound",
+        "what_is_selected": "reservoirs with protentive allocation",
+        "what_can_reproduce": "reservoirs",
+        "what_can_learn": "readouts",
+        "what_can_transfer": "protentive structure to same-process environments",
+        "distinguishing_observable": "future-capacity FC(k) rises while past MC(k) falls, sum bounded"
+      }
+    },
+    {
+      "id": "M7",
+      "triplicateId": "HT-974471f045",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "implemented_candidate",
+      "form": "information bottleneck",
+      "statement": "Epoche gate: heritable binary mask over input channels; readout limited to k taps. When k is small, evolution brackets high-variance uninformative channels (keeps them in the world, suspends them from the reservoir); when readout is unconstrained, masking is not selected.",
+      "derived_from": [
+        "I6"
+      ],
+      "concept_contributions": {
+        "Evolution": "selection on masks",
+        "Phenomenology": "bracketing as suspension without deletion",
+        "Reservoir Computing": "limited readout makes distractor contamination costly"
+      },
+      "knockouts": {
+        "Evolution": "mask stays random",
+        "Phenomenology": "reduces to feature selection (knockout shows weak dependency)",
+        "Reservoir Computing": "no contamination to avoid"
+      },
+      "simpler_alternative": "Feature selection by any wrapper method.",
+      "questions": {
+        "what_exists": "masks, reservoirs, k-tap readouts",
+        "what_changes": "mask bits",
+        "what_persists": "masked set",
+        "what_is_selected": "masks that exclude distractors",
+        "what_can_reproduce": "masks",
+        "what_can_learn": "readouts",
+        "what_can_transfer": "mask to new task sharing distractors",
+        "distinguishing_observable": "masking of distractors depends on readout budget k (interaction), not merely on distractor presence"
+      }
+    },
+    {
+      "id": "M8",
+      "triplicateId": "HT-974471f045",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "computational primitive",
+      "statement": "Passive synthesis: during life, before readout training, the reservoir undergoes slow unsupervised intrinsic plasticity (gain/bias homeostasis) driven only by input exposure; the plasticity rate is heritable. Pre-reflective shaping precedes active readout.",
+      "derived_from": [
+        "I2",
+        "I3"
+      ],
+      "concept_contributions": {
+        "Evolution": "heritable plasticity rate",
+        "Phenomenology": "passive synthesis before active judgment",
+        "Reservoir Computing": "a substrate whose gains can adapt"
+      },
+      "knockouts": {
+        "Evolution": "rate stays at initial value",
+        "Phenomenology": "just intrinsic plasticity (weak dependency)",
+        "Reservoir Computing": "nothing to adapt"
+      },
+      "simpler_alternative": "Standard intrinsic plasticity in ESNs.",
+      "questions": {
+        "what_exists": "reservoir with adaptive gains",
+        "what_changes": "gains in life, rate across generations",
+        "what_persists": "rate",
+        "what_is_selected": "rate",
+        "what_can_reproduce": "rate",
+        "what_can_learn": "gains and readout",
+        "what_can_transfer": "rate to new input statistics",
+        "distinguishing_observable": "evolved plasticity rate correlates with environmental nonstationarity"
+      }
+    },
+    {
+      "id": "M9",
+      "triplicateId": "HT-974471f045",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "causal constraint",
+      "statement": "Echo-state heredity boundary: because the echo state property erases initial conditions, environmental regularities with period longer than the reservoir horizon cannot be carried in state and must be carried genetically. Predicts a gap: structure at timescales below horizon is learned, above horizon is inherited or absent.",
+      "derived_from": [
+        "I1",
+        "I2"
+      ],
+      "concept_contributions": {
+        "Evolution": "genetic carriage of long-timescale structure",
+        "Phenomenology": "horizon as the limit of the living present",
+        "Reservoir Computing": "fading memory with finite horizon"
+      },
+      "knockouts": {
+        "Evolution": "long-timescale structure simply lost",
+        "Phenomenology": "boundary exists but framing loses its motivation",
+        "Reservoir Computing": "no forgetting, no boundary"
+      },
+      "simpler_alternative": "Any finite-memory learner needs slow parameters for slow structure.",
+      "questions": {
+        "what_exists": "reservoirs in environments with multiple periods",
+        "what_changes": "which periods are encoded where",
+        "what_persists": "slow-period encoding in genome",
+        "what_is_selected": "reservoirs encoding slow context",
+        "what_can_reproduce": "reservoirs",
+        "what_can_learn": "readouts (fast only)",
+        "what_can_transfer": "slow-context encoding to environments sharing the slow period",
+        "distinguishing_observable": "ablation shows fast periods lost on readout reset, slow periods lost on reservoir randomization"
+      }
+    },
+    {
+      "id": "M10",
+      "triplicateId": "HT-974471f045",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "interaction law",
+      "statement": "Lifeworld commons: one reservoir is shared by the whole population; individuals are only readouts. Individuals' outputs are fed back as reservoir input and the shared reservoir drifts under cumulative feedback, so readouts evolve against a world they collectively shape.",
+      "derived_from": [
+        "I4",
+        "I5"
+      ],
+      "concept_contributions": {
+        "Evolution": "selection on readouts",
+        "Phenomenology": "shared pre-given world constituted intersubjectively",
+        "Reservoir Computing": "shared dynamical substrate with feedback"
+      },
+      "knockouts": {
+        "Evolution": "no adaptation",
+        "Phenomenology": "reduces to multi-agent control on a shared dynamical system",
+        "Reservoir Computing": "no shared substrate"
+      },
+      "simpler_alternative": "Niche construction / multi-agent learning in a shared environment.",
+      "questions": {
+        "what_exists": "one reservoir, many readouts",
+        "what_changes": "readouts and the reservoir's effective input",
+        "what_persists": "shared dynamics",
+        "what_is_selected": "readouts",
+        "what_can_reproduce": "readouts",
+        "what_can_learn": "readouts",
+        "what_can_transfer": "readouts to newcomers",
+        "distinguishing_observable": "newcomer readouts learn faster in a commons shaped by an evolved population than in one shaped by random readouts"
+      }
+    },
+    {
+      "id": "M11",
+      "triplicateId": "HT-974471f045",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "dynamical law",
+      "statement": "Edge drift: under mutation plus selection on robustness of offspring fitness, spectral radius drifts toward the stability boundary because mutational robustness of readout performance peaks there; phenomenologically, horizon widens until it becomes unstable.",
+      "derived_from": [
+        "I1"
+      ],
+      "concept_contributions": {
+        "Evolution": "mutational robustness selection",
+        "Phenomenology": "horizon widening motif (weak: decorative)",
+        "Reservoir Computing": "stability boundary at rho ~ 1"
+      },
+      "knockouts": {
+        "Evolution": "no drift",
+        "Phenomenology": "nothing measurable disappears (dependency WEAK)",
+        "Reservoir Computing": "no boundary"
+      },
+      "simpler_alternative": "Selection for memory capacity pushes rho to 1 regardless of robustness.",
+      "questions": {
+        "what_exists": "population of rho values",
+        "what_changes": "rho",
+        "what_persists": "rho distribution",
+        "what_is_selected": "robust genomes",
+        "what_can_reproduce": "genomes",
+        "what_can_learn": "readouts",
+        "what_can_transfer": "robust rho to new tasks of similar delay",
+        "distinguishing_observable": "rho distribution under robustness-only selection vs capacity-only selection"
+      }
+    },
+    {
+      "id": "M12",
+      "triplicateId": "HT-974471f045",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "learning pressure",
+      "statement": "Protention-fulfilment fitness: fitness is the rate of fulfilled vs disappointed anticipations (sign agreement of predicted and actual next input change), not squared error; predicts selection for reservoirs that anticipate qualitative events rather than magnitudes.",
+      "derived_from": [
+        "I1"
+      ],
+      "concept_contributions": {
+        "Evolution": "selection",
+        "Phenomenology": "fulfilment/disappointment of protention as the unit",
+        "Reservoir Computing": "readout producing anticipation"
+      },
+      "knockouts": {
+        "Evolution": "fixed reservoir",
+        "Phenomenology": "reduces to a sign-based loss (weak)",
+        "Reservoir Computing": "no anticipations"
+      },
+      "simpler_alternative": "Classification loss on sign of next change.",
+      "questions": {
+        "what_exists": "reservoirs",
+        "what_changes": "reservoirs",
+        "what_persists": "anticipatory structure",
+        "what_is_selected": "sign-fulfilment rate",
+        "what_can_reproduce": "reservoirs",
+        "what_can_learn": "readouts",
+        "what_can_transfer": "to event prediction",
+        "distinguishing_observable": "difference between reservoirs selected on sign-fulfilment and on MSE at matched MSE"
+      }
+    },
+    {
+      "id": "M13",
+      "triplicateId": "HT-974471f045",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "organism architecture",
+      "statement": "Embodied reservoir: the reservoir is a mass-spring body whose morphology is heritable; the body computes by being perturbed by the world, and only a linear readout of spring lengths is learned. The lived body is the zero-point of computation.",
+      "derived_from": [
+        "I1",
+        "I2"
+      ],
+      "concept_contributions": {
+        "Evolution": "morphological evolution",
+        "Phenomenology": "embodiment: the body as the medium of experience",
+        "Reservoir Computing": "physical reservoir computing"
+      },
+      "knockouts": {
+        "Evolution": "random bodies only",
+        "Phenomenology": "physical reservoir computing without motivation (moderate)",
+        "Reservoir Computing": "body is inert structure"
+      },
+      "simpler_alternative": "Morphological computation with random bodies plus trained readout.",
+      "questions": {
+        "what_exists": "mass-spring bodies",
+        "what_changes": "morphology",
+        "what_persists": "body plan",
+        "what_is_selected": "body plans",
+        "what_can_reproduce": "bodies",
+        "what_can_learn": "readouts",
+        "what_can_transfer": "morphology to new input streams",
+        "distinguishing_observable": "evolved bodies beat random bodies at matched spring count and energy"
+      }
+    },
+    {
+      "id": "M14",
+      "triplicateId": "HT-974471f045",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "implemented_candidate",
+      "form": "selection mechanism",
+      "statement": "Eidetic variation over reservoirs: the readout is heritable but each individual's reservoir is resampled at birth from a heritable distribution. Selection keeps only readouts addressing reservoir-invariant properties (e.g., permutation-invariant aggregates), and the distribution evolves to make more properties invariant.",
+      "derived_from": [
+        "I7"
+      ],
+      "concept_contributions": {
+        "Evolution": "heritable readout and distribution",
+        "Phenomenology": "noema as what stays identical across varying acts; eidetic variation",
+        "Reservoir Computing": "random reservoirs with ensemble statistics"
+      },
+      "knockouts": {
+        "Evolution": "no selection toward invariants",
+        "Phenomenology": "the move from 'fixed reservoir' to 'ensemble' loses its reason (moderate)",
+        "Reservoir Computing": "no ensemble"
+      },
+      "simpler_alternative": "Readout converges to mean-field / population average, a trivial invariant.",
+      "questions": {
+        "what_exists": "heritable readouts and reservoir distributions",
+        "what_changes": "readouts and distribution hyperparameters",
+        "what_persists": "invariant functionals",
+        "what_is_selected": "readouts robust to resampling",
+        "what_can_reproduce": "readouts",
+        "what_can_learn": "none in life",
+        "what_can_transfer": "readout to any sample of the distribution",
+        "distinguishing_observable": "fraction of readout weight outside the trivial all-ones direction that remains useful across resamples"
+      }
+    },
+    {
+      "id": "M15",
+      "triplicateId": "HT-974471f045",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "error-correction mechanism",
+      "statement": "Adumbration voting: several small reservoirs each receive a partial profile (subset of channels); a population-level readout reconciles them. Evolution selects channel-to-reservoir assignments; the object is only decodable jointly.",
+      "derived_from": [
+        "I4"
+      ],
+      "concept_contributions": {
+        "Evolution": "selection of assignments",
+        "Phenomenology": "adumbrations: partial profiles jointly give the object",
+        "Reservoir Computing": "multiple reservoirs and combined readout"
+      },
+      "knockouts": {
+        "Evolution": "random assignments",
+        "Phenomenology": "ensemble learning (weak)",
+        "Reservoir Computing": "no reservoirs"
+      },
+      "simpler_alternative": "Ensemble of feature-bagged models.",
+      "questions": {
+        "what_exists": "reservoir ensemble",
+        "what_changes": "assignments",
+        "what_persists": "assignment structure",
+        "what_is_selected": "assignments",
+        "what_can_reproduce": "assignments",
+        "what_can_learn": "readout",
+        "what_can_transfer": "assignment to damaged channels",
+        "distinguishing_observable": "robustness to channel loss exceeds random assignment at equal overlap"
+      }
+    },
+    {
+      "id": "O-W3-r1",
+      "triplicateId": "HT-974471f045",
+      "passId": "P3-probe1",
+      "kind": "observation",
+      "layer": "experimental_observation",
+      "evidence_rows": [
+        "hecate/programs/HT-974471f045/worlds/W3/rows.jsonl",
+        "hecate/programs/HT-974471f045/worlds/W3/OUTCOME.json"
+      ],
+      "statement": "W3 probe round 1: NULL. Outcome NULL. Evolved masks: distractor masked fraction k=3 1.000, k=50 1.000; permuted-fitness twin k=3 0.469, k=50 0.434. Hand mask reduces NRMSE by 0.108 (relative) at k=3 and 0.897 at k=50. Controls: positive True, cheat True. Task, taps and ESN scaling were chosen a priori (see IMPLEMENTATION_NOTES.md); the result is specific to that configuration.",
+      "derived_from": [
+        "M7"
+      ]
+    },
+    {
+      "id": "O-W1-r2",
+      "triplicateId": "HT-974471f045",
+      "passId": "P3-probe2",
+      "kind": "observation",
+      "layer": "experimental_observation",
+      "evidence_rows": [
+        "hecate/programs/HT-974471f045/worlds/W1/pilot_rows.jsonl"
+      ],
+      "statement": "W1 probe round 2: SPEC_UNATTAINABLE. No treatment or control-arm code was written; no treatment statistic exists. Repair = readout fitted to u_{t-4} so the one-step deposit feedback carries u_{t-5} (NOTES Pilot log). Thresholds unchanged. Files: NOTES.md, pilot.py, pilot_eval.py, pilot_rows.jsonl, pilot_rows_attempt2.jsonl, PILOT.json, cpu_ledger.jsonl.",
+      "derived_from": [
+        "M3",
+        "M2"
+      ]
+    },
+    {
+      "id": "O-W6-r3",
+      "triplicateId": "HT-974471f045",
+      "passId": "P3-probe3",
+      "kind": "observation",
+      "layer": "experimental_observation",
+      "evidence_rows": [
+        "hecate/programs/HT-974471f045/worlds/W6/probe/rows.jsonl"
+      ],
+      "statement": "W6 probe round 3: NULL. See NOTES.md. Kept elites keep their one-life fitness (reading 1). PERMUTED_TWIN is diagnostic only. The spec's alternative_explanation (template collapse) is not distinguished by any clause; read the tnr beside the outcome.",
+      "derived_from": [
+        "M14"
+      ]
+    }
+  ],
+  "lenses": [
+    {
+      "id": "L1",
+      "name": "Specious-present profile",
+      "triplicateId": "HT-974471f045",
+      "passId": "P2",
+      "rationale": "Makes retention and protention jointly measurable as two capacity curves around the input now.",
+      "sourceRepresentation": "reservoir state trajectory X(t) driven by input u(t)",
+      "transformation": "for each lag k in [-20, 20], fit ridge readout from X(t) to u(t-k) on held-out data; record R^2 as MC(k) for k>0 and FC(k) for k<0",
+      "observables": [
+        "MC(k)",
+        "FC(k)",
+        "centroid lag of MC",
+        "sum of capacities"
+      ],
+      "predictedSignals": [
+        "centroid tracks environment delay under M1",
+        "FC rises and MC falls under M6 with sum bounded by N"
+      ],
+      "nullExpectation": "random reservoirs with same rho/leak give same profiles as evolved ones",
+      "failureModes": [
+        "FC nonzero only because input is autocorrelated",
+        "ridge regularization shapes profile"
+      ],
+      "informationAddedBeyondExistingLenses": "Two-sided temporal capacity rather than single-task error.",
+      "targets": [
+        "M1",
+        "M6",
+        "M9",
+        "M11"
+      ]
+    },
+    {
+      "id": "L2",
+      "name": "Bracketing ledger",
+      "triplicateId": "HT-974471f045",
+      "passId": "P2",
+      "rationale": "Locates where task information lives: heritable reservoir or lifetime readout.",
+      "sourceRepresentation": "individual = (reservoir W, readout w) at end of life",
+      "transformation": "two ablations: (a) reset readout and retrain with n samples; (b) replace W by a random reservoir with matched spectrum and retrain readout with same n; information attributed to reservoir = error(b) - error(a)",
+      "observables": [
+        "reservoir-attributed gain",
+        "gain as function of lifetime budget n"
+      ],
+      "predictedSignals": [
+        "reservoir gain decreases as n increases (M2)",
+        "slow-period gain only removed by (b) (M9)"
+      ],
+      "nullExpectation": "gain ~ 0 for all n in drift populations",
+      "failureModes": [
+        "matched-spectrum replacement not matched in other statistics",
+        "readout noise dominates at small n"
+      ],
+      "informationAddedBeyondExistingLenses": "Attribution of competence to layer rather than total performance.",
+      "targets": [
+        "M2",
+        "M3",
+        "M9"
+      ]
+    },
+    {
+      "id": "L3",
+      "name": "Horizon-fusion transplant matrix",
+      "triplicateId": "HT-974471f045",
+      "passId": "P2",
+      "rationale": "Species as sets that share decodability, not genome similarity.",
+      "sourceRepresentation": "population of (W_i, w_i)",
+      "transformation": "matrix T_ij = NRMSE of readout w_i applied to states of W_j; threshold into graph; compute Newman modularity; compare to weight-distance graph at same edge density",
+      "observables": [
+        "modularity Q of T-graph",
+        "rank correlation of T with weight distance"
+      ],
+      "predictedSignals": [
+        "Q exceeds weight-distance graph Q (M5)"
+      ],
+      "nullExpectation": "T fully predicted by weight distance",
+      "failureModes": [
+        "any divergence kills transplant, giving trivial all-incompatible graph"
+      ],
+      "informationAddedBeyondExistingLenses": "Relational compatibility structure of the population.",
+      "targets": [
+        "M5",
+        "M10"
+      ]
+    },
+    {
+      "id": "L4",
+      "name": "Sediment stratigraphy",
+      "triplicateId": "HT-974471f045",
+      "passId": "P2",
+      "rationale": "Reads a lineage's reservoir as layered deposits of ancestral tasks.",
+      "sourceRepresentation": "lineage reservoirs and the record of tasks faced by ancestors",
+      "transformation": "for each ancestral task epoch, few-shot relearning error of that task from the current reservoir, relative to a norm-matched random-deposit twin; plot against age of epoch",
+      "observables": [
+        "relearning advantage per epoch",
+        "decay of advantage with epoch age"
+      ],
+      "predictedSignals": [
+        "positive advantage decaying with age (M3)"
+      ],
+      "nullExpectation": "zero advantage at every age",
+      "failureModes": [
+        "deposit norm changes rho and memory generally, not task content"
+      ],
+      "informationAddedBeyondExistingLenses": "Historical depth of heritable content.",
+      "targets": [
+        "M3"
+      ]
+    },
+    {
+      "id": "L5",
+      "name": "Noematic invariance under resampling",
+      "triplicateId": "HT-974471f045",
+      "passId": "P2",
+      "rationale": "Tests which decodings survive changes of the act (reservoir) while the object (input history) is fixed.",
+      "sourceRepresentation": "readout w and a family of reservoirs sampled from a distribution",
+      "transformation": "evaluate w across 20 resampled reservoirs; decompose w into all-ones component and remainder; measure performance of each component across resamples",
+      "observables": [
+        "variance of performance across resamples",
+        "useful fraction outside all-ones direction"
+      ],
+      "predictedSignals": [
+        "non-trivial invariant component emerges (M14)"
+      ],
+      "nullExpectation": "only all-ones component is useful",
+      "failureModes": [
+        "invariance trivially from mean activity"
+      ],
+      "informationAddedBeyondExistingLenses": "Separates trivial from non-trivial ensemble invariants.",
+      "targets": [
+        "M14",
+        "M4"
+      ]
+    },
+    {
+      "id": "L6",
+      "name": "Decodable-object census",
+      "triplicateId": "HT-974471f045",
+      "passId": "P2",
+      "rationale": "Counts intentional objects a state stream supports.",
+      "sourceRepresentation": "reservoir states on a fixed input stream",
+      "transformation": "fit readouts to K=40 random functionals (random degree-2 polynomials of last 10 inputs); count R^2 > 0.5; split 20 train/20 held-out",
+      "observables": [
+        "count on train bank",
+        "mean R^2 on held-out bank",
+        "effective rank of state covariance"
+      ],
+      "predictedSignals": [
+        "held-out R^2 rises beyond what effective rank predicts (M4)"
+      ],
+      "nullExpectation": "held-out R^2 is a function of effective rank alone",
+      "failureModes": [
+        "functional bank too easy or too hard"
+      ],
+      "informationAddedBeyondExistingLenses": "Richness beyond rank.",
+      "targets": [
+        "M4",
+        "M15"
+      ]
+    },
+    {
+      "id": "L7",
+      "name": "Selection-intensity-matched drift twin",
+      "triplicateId": "HT-974471f045",
+      "passId": "P2",
+      "rationale": "Separates selection content from mere selection intensity for every world.",
+      "sourceRepresentation": "per-generation fitness vectors",
+      "transformation": "rerun with fitness values permuted among individuals each generation",
+      "observables": [
+        "same observables as target lens under permuted fitness"
+      ],
+      "predictedSignals": [
+        "target signals absent under permutation"
+      ],
+      "nullExpectation": "signals equal under permutation",
+      "failureModes": [
+        "mutation bias alone produces the signal"
+      ],
+      "informationAddedBeyondExistingLenses": "Controls for selection intensity and mutation bias.",
+      "targets": [
+        "M1",
+        "M2",
+        "M3",
+        "M4",
+        "M7"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "W1",
+      "triplicateId": "HT-974471f045",
+      "passId": "P3",
+      "mechanism_ids": [
+        "M3",
+        "M2"
+      ],
+      "lens_ids": [
+        "L4",
+        "L2",
+        "L7"
+      ],
+      "hypothesis": "Sedimenting learned readouts into offspring reservoirs makes an abandoned ancestral task cheaper to relearn than a norm-matched random deposit does.",
+      "mechanism": "Sedimentation operator W <- W + eps * v w_parent^T at each birth (eps=0.05, v random unit input-like vector), then rescale to keep rho unchanged.",
+      "intervention": "Task A (delay-5 recall of u) for generations 0-40, task B (NARMA-5) for 41-80; at gen 80 measure few-shot (n=20 samples) readout NRMSE on task A.",
+      "control": "Same run with no deposit operator (plain Gaussian weight mutation only).",
+      "positive_control": "Insert the ridge-optimal task A readout (computed with n=2000) as the deposit at gen 80 directly; must reduce few-shot A error, otherwise the deposit channel cannot carry task content.",
+      "observable": "Few-shot task A NRMSE at gen 80, mean over population elites, 10 seeds.",
+      "success_criterion": "Sediment arm mean NRMSE_A <= 0.85 x null-twin mean, one-sided Mann-Whitney p < 0.05 over 10 seeds, AND positive control reduces NRMSE_A by >= 15%.",
+      "failure_criterion": "Ratio > 0.95 or p >= 0.2, or positive control fails (then world is uninformative, not negative).",
+      "alternative_explanation": "Deposits change the memory spectrum in a way that happens to favour delay recall regardless of content.",
+      "null_twin": "Deposit W <- W + eps * v r^T with r random, ||r|| = ||w_parent||, same eps, same rho rescale: matches perturbation magnitude, rank and spectral effect, destroys content.",
+      "substrate": "population",
+      "why_this_implementation": "An ESN is the literal object of the Reservoir Computing concept, not a default ML ontology; population with rank-one deposits is the minimal form of sedimentation. Displaced alternative: a gradient-trained RNN, which would erase the fixed/active split.",
+      "size": "population 30, leaky tanh ESN, N=50, sparse (10%), input dim 1, ridge readout lambda=1e-4, 300 steps + 50 washout, 80 generations, 10 seeds per arm, 3 arms (sediment, null twin, control)",
+      "cost_estimate": "about 3 CPU core-minutes (30*80*10*3 = 72k evaluations at ~2 ms)",
+      "stupid_explanations": [
+        "deposits increase rho before rescaling and rescaling is imperfect",
+        "task A and task B share delay structure so B-training preserves A",
+        "20-sample ridge is so noisy that any change in state scale shifts NRMSE",
+        "elites selected on B happen to carry A by chance at one seed"
+      ],
+      "outcome": "SPEC_UNATTAINABLE",
+      "round": 2,
+      "rows": "hecate/programs/HT-974471f045/worlds/W1/pilot_rows.jsonl",
+      "outcome_file": "hecate/programs/HT-974471f045/worlds/W1/OUTCOME.json",
+      "statistics": {
+        "attempt1": {
+          "positive_control": {
+            "mean": 0.9502242745544136,
+            "ref_mean": 0.9743058344586688,
+            "ratio": 0.9752833668314888,
+            "p_one_sided": 0.13651816987559418,
+            "meets": false,
+            "reduction": 0.02471663316851125
+          },
+          "cheat": {
+            "mean": 0.00694897129366948,
+            "ref_mean": 0.9743058344586688,
+            "ratio": 0.007132227939012988,
+            "p_one_sided": 9.133589555477501e-05,
+            "meets": true
+          },
+          "pc_content_free_twin": {
+            "mean": 0.9873790657446737,
+            "ref_mean": 0.9743058344586688,
+            "ratio": 1.0134179954831826,
+            "p_one_sided": 0.6884118880589414,
+            "meets": false,
+            "reduction": -0.013417995483182565
+          }
+        },
+        "attempt2_repaired": {
+          "positive_control": {
+            "mean": 0.9589378619600181,
+            "ref_mean": 0.9743058344586688,
+            "ratio": 0.9842267469257338,
+            "p_one_sided": 0.3668649978481236,
+            "meets": false,
+            "reduction": 0.015773253074266247
+          },
+          "cheat": {
+            "mean": 0.00694897129366948,
+            "ref_mean": 0.9743058344586688,
+            "ratio": 0.007132227939012988,
+            "p_one_sided": 9.133589555477501e-05,
+            "meets": true
+          },
+          "pc_content_free_twin": {
+            "mean": 1.0006512533102807,
+            "ref_mean": 0.9743058344586688,
+            "ratio": 1.02704019407443,
+            "p_one_sided": 0.8634818301244058,
+            "meets": false,
+            "reduction": -0.027040194074430035
+          }
+        },
+        "info_null_twin_gen80_vs_gen0": {
+          "mean": 0.9743058344586688,
+          "ref_mean": 1.054972121456587,
+          "ratio": 0.9235370439111289,
+          "p_one_sided": 0.01056696406458055,
+          "meets": false
+        },
+        "treatment": "not built (phase 2 never started)"
+      },
+      "procedural_notes": [],
+      "anomalies": [
+        {
+          "id": "A1",
+          "text": "Positive control as literally specified gave only 2.5% reduction; channel-lag-aligned repair gave 1.6%. A deposit of a readout with ||w_A*|| ~50-95 at eps=0.05 (rank-one gain ~3, then rescaled to rho 0.9) does not make task A few-shot learnable with n=20."
+        },
+        {
+          "id": "A2",
+          "text": "PC_NULL_TWIN row (PC's content-free twin) added to pilot rows as the pilot reading of 'null twin does not meet it' (NOTES ambiguity 3)."
+        }
+      ],
+      "rejected_explanations": []
+    },
+    {
+      "id": "W2",
+      "triplicateId": "HT-974471f045",
+      "passId": "P3",
+      "mechanism_ids": [
+        "M4"
+      ],
+      "lens_ids": [
+        "L6",
+        "L7"
+      ],
+      "hypothesis": "Selecting reservoirs for the number of decodable random functionals transfers to held-out functionals better than selecting for one task or for effective rank.",
+      "mechanism": "Fitness = count of 20 training functionals decoded with R^2 > 0.5.",
+      "intervention": "Four arms: richness selection, single-task selection (delay-5 recall), effective-rank selection, permuted-fitness twin.",
+      "control": "Unevolved random reservoirs with matched rho and leak.",
+      "positive_control": "Directly select on the held-out bank; must exceed control, bounding the attainable gain.",
+      "observable": "Mean R^2 over 20 held-out functionals (random degree-2 polynomials of last 10 inputs).",
+      "success_criterion": "Richness arm held-out mean R^2 exceeds single-task arm and effective-rank arm each by >= 0.05, over 8 seeds, paired by seed, sign test 7/8 or better.",
+      "failure_criterion": "Richness minus effective-rank difference < 0.02 or sign test worse than 6/8.",
+      "alternative_explanation": "Richness selection is just effective-rank selection with extra steps.",
+      "null_twin": "Richness fitness values permuted among individuals each generation: matched selection intensity and mutation, destroyed link to decodability.",
+      "substrate": "population",
+      "why_this_implementation": "Linear decodability is the defining test of reservoir content; population search over fixed weights keeps the reservoir unlearned in life. Displaced: meta-learned neural representation.",
+      "size": "population 24, leaky tanh ESN N=40, 50 generations, 8 seeds, 5 arms",
+      "cost_estimate": "about 8 CPU core-minutes (20 ridge fits per evaluation, 24*50*8*5 evaluations)",
+      "stupid_explanations": [
+        "held-out and training functionals share low-order terms",
+        "selection just raises input scaling",
+        "effective-rank arm poorly tuned so richness wins by default"
+      ]
+    },
+    {
+      "id": "W3",
+      "triplicateId": "HT-974471f045",
+      "passId": "P3",
+      "mechanism_ids": [
+        "M7"
+      ],
+      "lens_ids": [
+        "L2",
+        "L7"
+      ],
+      "hypothesis": "Bracketing of distractor channels evolves when the readout budget is small but not when it is large.",
+      "mechanism": "Heritable input mask over 8 channels (2 informative, 6 high-variance distractors); readout restricted to k taps.",
+      "intervention": "k in {3, 50}; 60 generations.",
+      "control": "Mask fixed to all-ones.",
+      "positive_control": "Hand-set mask excluding distractors: must beat all-ones at k=3 by >= 10% NRMSE, confirming bracketing is useful there.",
+      "observable": "Fraction of distractor channels masked in elite genomes at gen 60.",
+      "success_criterion": "Masked fraction >= 0.8 at k=3 and <= 0.4 at k=50, over 8 seeds (mean), and k=3 fraction exceeds permuted-fitness twin by >= 0.3.",
+      "failure_criterion": "Difference between k=3 and k=50 masked fractions < 0.2.",
+      "alternative_explanation": "Masking is selected wherever distractors add noise, independent of readout budget.",
+      "null_twin": "Same k and channels, fitness permuted among individuals each generation.",
+      "substrate": "population",
+      "why_this_implementation": "The mask is a heritable gate before a fixed reservoir, the smallest bracketing that keeps channels in the world. Displaced: learned attention weights.",
+      "size": "population 30, ESN N=50, 8 input channels, 60 generations, 8 seeds, 2 k values plus twin",
+      "cost_estimate": "about 2 CPU core-minutes",
+      "stupid_explanations": [
+        "mask mutation bias toward zeros",
+        "at k=50 ridge already ignores distractors so there is no pressure",
+        "distractor variance saturates tanh, making masking a gain control"
+      ],
+      "outcome": "NULL",
+      "raw_outcome": "NULL",
+      "procedural_notes": [],
+      "rows": "hecate/programs/HT-974471f045/worlds/W3/rows.jsonl",
+      "outcome_file": "hecate/programs/HT-974471f045/worlds/W3/OUTCOME.json",
+      "statistics": {
+        "masked_frac_TREATMENT_k3": {
+          "mean": 1.0,
+          "sd": 0.0,
+          "n": 8,
+          "per_seed": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "masked_frac_TREATMENT_k50": {
+          "mean": 1.0,
+          "sd": 0.0,
+          "n": 8,
+          "per_seed": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "masked_frac_NULL_TWIN_k3": {
+          "mean": 0.46875,
+          "sd": 0.08832012043039518,
+          "n": 8,
+          "per_seed": [
+            0.5556,
+            0.5,
+            0.3056,
+            0.5556,
+            0.4722,
+            0.4444,
+            0.5556,
+            0.3611
+          ]
+        },
+        "masked_frac_NULL_TWIN_k50": {
+          "mean": 0.4340277777777778,
+          "sd": 0.10480130744990675,
+          "n": 8,
+          "per_seed": [
+            0.5556,
+            0.5556,
+            0.3333,
+            0.25,
+            0.5278,
+            0.3611,
+            0.4444,
+            0.4444
+          ]
+        },
+        "masked_frac_CONTROL_k3": {
+          "mean": 0.0,
+          "sd": 0.0,
+          "n": 8,
+          "per_seed": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "masked_frac_CONTROL_k50": {
+          "mean": 0.0,
+          "sd": 0.0,
+          "n": 8,
+          "per_seed": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "masked_frac_CHEAT_k3": {
+          "mean": 1.0,
+          "sd": 0.0,
+          "n": 8,
+          "per_seed": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "masked_frac_CHEAT_k50": {
+          "mean": 0.0,
+          "sd": 0.0,
+          "n": 8,
+          "per_seed": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "PC_rel_nrmse_gain_k3": {
+          "mean": 0.10849986617666518,
+          "sd": 0.06002415417131007,
+          "n": 8,
+          "per_seed": [
+            0.1377,
+            0.0941,
+            0.0827,
+            0.0203,
+            0.0771,
+            0.1641,
+            0.0672,
+            0.2248
+          ]
+        },
+        "PC_rel_nrmse_gain_k50": {
+          "mean": 0.89679013492499,
+          "sd": 0.021547185287656954,
+          "n": 8,
+          "per_seed": [
+            0.8895,
+            0.9227,
+            0.9147,
+            0.8999,
+            0.881,
+            0.9122,
+            0.8507,
+            0.9037
+          ]
+        },
+        "CONTROL_nrmse_k3": {
+          "mean": 1.0024572088073855,
+          "sd": 0.004825303006460666,
+          "n": 8,
+          "per_seed": [
+            1.0057,
+            1.0104,
+            1.0012,
+            1.0046,
+            0.9973,
+            1.0048,
+            1.0017,
+            0.9939
+          ]
+        },
+        "CONTROL_nrmse_k50": {
+          "mean": 0.8020197879897693,
+          "sd": 0.04552400844272997,
+          "n": 8,
+          "per_seed": [
+            0.777,
+            0.7748,
+            0.8613,
+            0.8446,
+            0.8211,
+            0.8488,
+            0.7259,
+            0.7628
+          ]
+        },
+        "TREATMENT_elite_nrmse_k3": {
+          "mean": 0.8054651724407487,
+          "sd": 0.10230229183131163,
+          "n": 8,
+          "per_seed": [
+            0.8673,
+            0.7577,
+            0.8715,
+            0.9777,
+            0.841,
+            0.7285,
+            0.7842,
+            0.6159
+          ]
+        },
+        "TREATMENT_elite_nrmse_k50": {
+          "mean": 0.08223538873355238,
+          "sd": 0.014379482137655436,
+          "n": 8,
+          "per_seed": [
+            0.0859,
+            0.0599,
+            0.0735,
+            0.0845,
+            0.0977,
+            0.0745,
+            0.1084,
+            0.0734
+          ]
+        },
+        "TREATMENT_inf_kept_k3": {
+          "mean": 0.5625,
+          "sd": 0.16535945694153692,
+          "n": 8,
+          "per_seed": [
+            1.0,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5
+          ]
+        },
+        "TREATMENT_inf_kept_k50": {
+          "mean": 1.0,
+          "sd": 0.0,
+          "n": 8,
+          "per_seed": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "diff_k3_minus_k50": 0.0,
+        "treatment_k3_minus_twin_k3": 0.53125,
+        "treatment_meets_success": false,
+        "treatment_meets_failure": true
+      },
+      "anomalies": [
+        {
+          "id": "A1",
+          "text": "hand mask also helps at k=50 (rel gain 0.897): masking useful at large budget too"
+        }
+      ],
+      "rejected_explanations": [
+        "mask mutation bias toward zeros",
+        "at k=50 ridge already ignores distractors so there is no pressure"
+      ]
+    },
+    {
+      "id": "W4",
+      "triplicateId": "HT-974471f045",
+      "passId": "P3",
+      "mechanism_ids": [
+        "M1",
+        "M9"
+      ],
+      "lens_ids": [
+        "L1",
+        "L2",
+        "L7"
+      ],
+      "hypothesis": "Evolved memory-capacity centroid tracks environmental delay, and a slow context period beyond the horizon is carried by the reservoir, not the readout.",
+      "mechanism": "Heritable (rho, leak, weights); fitness = readout error on delayed recall with delay D in {2, 8, 20} plus a context bit that flips every 200 steps.",
+      "intervention": "Vary D across environments; ablate readout vs reservoir at end (L2).",
+      "control": "Random search over (rho, leak) with the same number of evaluations.",
+      "positive_control": "Hand-set leak = 1/D; must shift MC centroid toward D.",
+      "observable": "MC centroid lag (L1) and reservoir-attributed gain for the context bit (L2).",
+      "success_criterion": "Spearman(D, centroid) >= 0.8 pooled over 3 D x 5 seeds, evolved beats random search NRMSE by >= 10%; context-bit gain from reservoir >= 0.1 NRMSE and from readout reset < 0.03.",
+      "failure_criterion": "Evolved not better than random search by 5% (then M1 is just search) or context-bit gain < 0.03.",
+      "alternative_explanation": "Any hyperparameter optimizer produces the tracking; context carried by trivial bias drift.",
+      "null_twin": "Permuted-fitness evolution with identical mutation schedule.",
+      "substrate": "population",
+      "why_this_implementation": "Horizon is a property of the fixed dynamics, so only evolutionary change of the reservoir tests it. Displaced: backprop through time on a gated RNN.",
+      "size": "population 20, ESN N=50, 40 generations, 3 D x 5 seeds, 3 arms, 2000-step runs",
+      "cost_estimate": "about 6 CPU core-minutes",
+      "stupid_explanations": [
+        "random search and evolution differ only in evaluation count bookkeeping",
+        "context bit leaks into input scaling",
+        "centroid defined poorly for flat profiles"
+      ]
+    },
+    {
+      "id": "W5",
+      "triplicateId": "HT-974471f045",
+      "passId": "P3v2",
+      "mechanism_ids": [
+        "M2"
+      ],
+      "lens_ids": [
+        "L2",
+        "L7"
+      ],
+      "hypothesis": "Bracketed inheritance: when the reservoir is heritable and never changed in life and the readout is relearned from scratch each life, a small lifetime sample budget (n=8) drives task information into the heritable reservoir, while a large budget (n=200) leaves the reservoir near-random. Measured by the reservoir-attributed gain of the L2 bracketing ledger.",
+      "mechanism": "Genome = (W, W_in): a 40-unit tanh reservoir x_t = tanh(W x_{t-1} + W_in u_t), no leak, 2 input channels u1, u2 ~ U[-0.5,0.5] iid. Nothing in the genome changes during life. Each life the readout is fitted from scratch by ridge regression (lambda=1e-2, with intercept, dual/min-norm form) on n_life randomly chosen post-washout steps (washout 50, 350 steps) of a fresh input stream, target y_t = u1_{t-3}; lifetime fitness = NRMSE on the remaining post-washout steps, mean over 2 lives with fresh inputs. Selection: population 20, 60 generations; each generation rank by fitness (lower NRMSE better), keep the top 4 unchanged, 16 offspring each copying a parent drawn uniformly from the top 8, then mutation: every entry of W and of W_in gets N(0, (0.05 * rms of that matrix)^2) noise; if spectral radius of W exceeds 0.95 it is rescaled to 0.95. Gen-0 law: W dense N(0,1) rescaled to spectral radius 0.9; W_in ~ U[-0.5,0.5].",
+      "intervention": "Two treatment arms that differ only in lifetime budget: LOW (n_life = 8) and HIGH (n_life = 200). Everything else, including seeds and input streams, identical.",
+      "control": "Unevolved gen-0 population (reservoirs drawn from the gen-0 law), measured with the same instrument; its reservoir-attributed gain is 0 in expectation because the replacement reservoir is drawn from the same law.",
+      "positive_control": "Constructed task-carrying reservoirs in the LOW arm: a 3-step delay chain on u1 (W_in[0,0]=1, W[1,0]=1, W[2,1]=1) broadcast into units 3..39 (W[i,2]=1), plus background W ~ 0.05 N(0,1)/sqrt(40) and W_in background 0.05 U[-1,1]; so units 3..39 carry u1_{t-3} by construction. HIGH arm = reservoirs drawn from the gen-0 law (the hypothesis says high budget leaves the reservoir near-random). 5 individuals per arm per seed.",
+      "observable": "Reservoir-attributed gain (L2 ablation b minus a) at instrument budget n=8: G = NRMSE(readout fitted with n=8 on a freshly drawn gen-0-law reservoir) - NRMSE(readout fitted with n=8 on the individual's own reservoir), same input stream and same training indices, mean over R=5 repeats (fresh input and fresh replacement reservoir each), computed for the task target u1_{t-3} (G_task) and the off-task target u2_{t-3} (G_off). Per seed: mean over the 5 final-generation elites (top 5 by the arm's own fitness at generation 60). Measurement input streams are seeded 10000+seed+k (k = elite index) for every arm (common random numbers).",
+      "success_criterion": "[{\"id\": \"S1\", \"text\": \"LOW arm carries task information in the reservoir.\", \"statistic\": \"mean over 6 seeds of G_task in the LOW arm\", \"comparison\": \">=\", \"threshold\": 0.3}, {\"id\": \"S2\", \"text\": \"Budget interaction: the LOW arm carries more reservoir task information than the HIGH arm.\", \"statistic\": \"mean over 6 seeds of (G_task LOW - G_task HIGH), paired by seed\", \"comparison\": \">=\", \"threshold\": 0.25}, {\"id\": \"S3\", \"text\": \"Content, not generic few-shot conditioning: LOW-arm gain is specific to the task channel.\", \"statistic\": \"mean over 6 seeds of (G_task LOW - G_off LOW)\", \"comparison\": \">=\", \"threshold\": 0.3}, {\"id\": \"S4\", \"text\": \"Selection content, not selection intensity or mutation bias (L7).\", \"statistic\": \"mean over 6 seeds of G_task LOW minus mean over 6 seeds of G_task LOW in the permuted-fitness twin\", \"comparison\": \">=\", \"threshold\": 0.25}]",
+      "failure_criterion": "[{\"id\": \"F1\", \"text\": \"No reservoir task information under low budget.\", \"statistic\": \"mean over 6 seeds of G_task in the LOW arm\", \"comparison\": \"<\", \"threshold\": 0.1}, {\"id\": \"F2\", \"text\": \"No budget interaction.\", \"statistic\": \"mean over 6 seeds of (G_task LOW - G_task HIGH)\", \"comparison\": \"<\", \"threshold\": 0.1}, {\"id\": \"F3\", \"text\": \"LOW arm indistinguishable from the permuted-fitness twin.\", \"statistic\": \"mean G_task LOW minus mean G_task LOW of the twin\", \"comparison\": \"<\", \"threshold\": 0.1}]",
+      "alternative_explanation": "Selection at low budget improves few-shot learnability generically (e.g. lowering the effective dimension or raising the variance of whatever the state already carries) rather than depositing task content; or the HIGH arm evolves the same reservoir content because a better reservoir also lowers error at n=200 (the budget contrast then carries no pressure difference). S3 targets the first; the pressure diagnostic in the controls (constructed reservoir vs gen-0 at n=200: gain 0.008) and S2 target the second.",
+      "null_twin": "Permuted-fitness twin: same population size, genealogy law (keep 4, parents from top 8 of a ranking), mutation, rho cap, generations and seeds, with the ranking random each generation instead of by fitness; no fitness is used. In distribution this equals the permuted-fitness twin of L7. Measured with the identical instrument, 5 random final-generation individuals per seed; LOW and HIGH twins are two independent drift runs (budget has no effect without selection).",
+      "substrate": "population of fixed tanh reservoirs (echo state networks) with lifetime-fitted linear readouts",
+      "cost_estimate": "treatment about 20*60*2 lives*2 arms*6 seeds = 28,800 reservoir runs of 350 steps (about 1-2 CPU core-minutes) plus instrument; controls measured at 6.3 CPU seconds.",
+      "stupid_explanations": [
+        "the low-budget arm raises input scaling or shrinks recurrence so that u1 and u2 both dominate the state, improving any few-shot recall (S3 checks task specificity)",
+        "the replacement reservoir is noisy, so a single lucky seed drives the mean gain (6-seed mean, twin per-seed sd 0.15 recorded)",
+        "the HIGH arm has no selection pressure at all because random reservoirs already solve the task at n=200, so S2 reflects pressure absence rather than a division of labour (this IS the M2 prediction, but it also means S2 alone cannot separate M2 from 'selection only acts where error is high')",
+        "spectral radius drifts to the 0.95 cap under mutation and a longer memory alone changes few-shot error"
+      ],
+      "spec": "hecate/programs/HT-974471f045/worlds/W5/spec.json",
+      "attainability": "hecate/programs/HT-974471f045/worlds/W5/ATTAINABILITY.json"
+    },
+    {
+      "id": "W6",
+      "triplicateId": "HT-974471f045",
+      "passId": "P3v2",
+      "mechanism_ids": [
+        "M14"
+      ],
+      "lens_ids": [
+        "L5",
+        "L7"
+      ],
+      "hypothesis": "Eidetic variation over reservoirs: when the readout is heritable but every individual's reservoir is resampled at birth from a heritable distribution, selection retains only readouts that address properties invariant across reservoir realisations, and these invariants are non-trivial (not the all-ones mean-field direction) when the task cannot be solved by the mean field.",
+      "mechanism": "Genome = (M_in in R^{40x8}, w in R^40). At birth the individual's reservoir is sampled: W_in = M_in + 0.3 * xi (xi iid N(0,1)), W dense N(0,1) rescaled to spectral radius 0.9, fresh every birth and never inherited. Reservoir x_t = tanh(W x_{t-1} + W_in u_t), no leak, u = 8 channels iid U[-1,1]. Nothing is learned in life: the output is w . x_t. Lifetime fitness = corr^2(w . x_t, y_t) over one life (300 steps, 50 washout, fresh input) with target y_t = u1_t - u2_t (higher better). Selection: population 20, 60 generations; rank by fitness, keep the top 4 unchanged (they are NOT re-born; their reservoir is kept), 16 offspring copying a parent drawn uniformly from the top 8, each offspring re-sampled at birth after mutation: M_in += N(0, 0.05^2) per entry, w += N(0, (0.05 * rms(w))^2) per entry. Gen-0 law: M_in ~ N(0, 0.5^2), w ~ N(0, 1).",
+      "intervention": "Resampling of the reservoir at every birth while readout and template are heritable (the eidetic variation), under selection on the lifetime fitness above.",
+      "control": "Unevolved gen-0 genomes measured with the same instrument.",
+      "positive_control": "Constructed genomes carrying a non-trivial invariant: M_in = 0.05 N(0,1) background with +1 on channel u1 for units 0..19 and +1 on channel u2 for units 20..39; w = +1 on units 0..19, -1 on units 20..39, plus 0.05 N(0,1). The readout addresses 'u1-driven units minus u2-driven units', which survives any resample of W and any SIGMA=0.3 noise on W_in. 5 genomes per seed.",
+      "observable": "L5 noematic invariance: each measured genome's readout w is evaluated, fixed, on 20 reservoirs freshly resampled from its own distribution (fresh input per resample; measurement streams seeded 10000+100*seed+k for genome k, common across arms). w_perp = w - mean(w) (w minus its all-ones component). Per genome: I_perp = mean over resamples of corr^2(w_perp . x_t, y_t); I_ones = mean over resamples of corr^2(sum_i x_i,t, y_t); I_full likewise for w. Per seed: mean over the 5 final-generation elites (top 5 by the arm's lifetime fitness at generation 60).",
+      "success_criterion": "[{\"id\": \"S1\", \"text\": \"The non-all-ones component of evolved readouts decodes the contrast across resampled reservoirs, above the 0.5 ceiling of single-channel decoding.\", \"statistic\": \"mean over 6 seeds of I_perp\", \"comparison\": \">=\", \"threshold\": 0.6}, {\"id\": \"S2\", \"text\": \"The invariant is non-trivial: it beats the mean-field (all-ones) readout.\", \"statistic\": \"mean over 6 seeds of (I_perp - I_ones)\", \"comparison\": \">=\", \"threshold\": 0.3}, {\"id\": \"S3\", \"text\": \"Selection content, not intensity or mutation bias (L7).\", \"statistic\": \"mean over 6 seeds of I_perp minus mean over 6 seeds of I_perp of the permuted-fitness twin\", \"comparison\": \">=\", \"threshold\": 0.25}]",
+      "failure_criterion": "[{\"id\": \"F1\", \"text\": \"No invariant decodable component.\", \"statistic\": \"mean over 6 seeds of I_perp\", \"comparison\": \"<\", \"threshold\": 0.15}, {\"id\": \"F2\", \"text\": \"Indistinguishable from the permuted-fitness twin.\", \"statistic\": \"mean I_perp minus twin mean I_perp\", \"comparison\": \"<\", \"threshold\": 0.1}]",
+      "alternative_explanation": "The heritable template M_in simply grows until the resampling noise (0.3) is negligible, so the 'distribution' collapses to one fixed input map and the readout is an ordinary fixed linear decoder of the input, with the random recurrence as noise: invariance by collapse rather than by selecting an invariant functional. The treatment implementer should record the template-to-noise ratio (rms(M_in)/0.3) of elites; the clauses do not distinguish collapse from selection of an invariant, and a pass is to be read with that ratio beside it.",
+      "null_twin": "Permuted-fitness twin: identical population size, genealogy law (keep 4, parents from top 8 of a ranking), mutation, birth resampling and generations, with a random ranking each generation instead of by fitness; no fitness is used. In distribution this equals the L7 permuted-fitness twin. 5 random final-generation genomes per seed, same instrument and measurement streams.",
+      "substrate": "population of heritable readouts over resampled random tanh reservoirs (reservoir ensemble)",
+      "cost_estimate": "treatment about 20*60*6 = 7,200 lives of 300 steps (under 1 CPU core-minute) plus instrument; controls measured at 2.0 CPU seconds.",
+      "stupid_explanations": [
+        "template collapse: rms(M_in) grows so large that resampling noise is irrelevant and the world is a fixed linear decoder (see alternative_explanation; record the template-to-noise ratio)",
+        "the recurrent reservoir contributes nothing; the result is a property of the input template alone",
+        "a readout aligned with a single unit that happens to carry u1 - u2 at one seed drives the mean",
+        "single-channel decoding: a readout that decodes u1 alone reaches corr^2 = 0.5 with u1 - u2 (upper bound); S1 threshold 0.60 is set above that bound so a pass requires both channels"
+      ],
+      "spec": "hecate/programs/HT-974471f045/worlds/W6/spec.json",
+      "attainability": "hecate/programs/HT-974471f045/worlds/W6/ATTAINABILITY.json",
+      "outcome": "NULL",
+      "round": 3,
+      "rows": "hecate/programs/HT-974471f045/worlds/W6/probe/rows.jsonl",
+      "outcome_file": "hecate/programs/HT-974471f045/worlds/W6/probe/OUTCOME.json",
+      "statistics": {
+        "TREATMENT": {
+          "I_full": 0.4576,
+          "I_perp": 0.4505,
+          "I_ones": 0.0503,
+          "I_perp_per_seed": [
+            0.4046,
+            0.5535,
+            0.5324,
+            0.4102,
+            0.3315,
+            0.4708
+          ],
+          "tnr_mean": 1.7916,
+          "max_unit_share_mean": 0.1458,
+          "I_perp_norec": 0.5855,
+          "best_fit_g1": 0.4497,
+          "best_fit_g60": 0.7823,
+          "mean_fit_g60": 0.5105
+        },
+        "NULL_TWIN": {
+          "I_full": 0.0358,
+          "I_perp": 0.0375,
+          "I_ones": 0.1061,
+          "I_perp_per_seed": [
+            0.0668,
+            0.06,
+            0.0168,
+            0.0232,
+            0.0401,
+            0.0181
+          ],
+          "tnr_mean": 1.9971,
+          "max_unit_share_mean": 0.134
+        },
+        "CONTROL": {
+          "I_full": 0.1042,
+          "I_perp": 0.106,
+          "I_ones": 0.0827,
+          "I_perp_per_seed": [
+            0.0592,
+            0.0738,
+            0.1384,
+            0.1348,
+            0.1156,
+            0.1139
+          ],
+          "tnr_mean": 1.6731,
+          "max_unit_share_mean": 0.1436
+        },
+        "POSITIVE_CONTROL": {
+          "I_full": 0.928,
+          "I_perp": 0.928,
+          "I_ones": 0.0057,
+          "I_perp_per_seed": [
+            0.9274,
+            0.9291,
+            0.9302,
+            0.9278,
+            0.9278,
+            0.9257
+          ],
+          "tnr_mean": 1.1918,
+          "max_unit_share_mean": 0.0307
+        },
+        "PERMUTED_TWIN": {
+          "I_full": 0.0781,
+          "I_perp": 0.0815,
+          "I_ones": 0.0964,
+          "I_perp_per_seed": [
+            0.0279,
+            0.204,
+            0.0465,
+            0.0427,
+            0.0641,
+            0.1037
+          ],
+          "tnr_mean": 1.9892,
+          "max_unit_share_mean": 0.147
+        },
+        "CHEAT": {
+          "I_full": 1.0,
+          "I_perp": 1.0,
+          "I_ones": 0.0827,
+          "I_perp_per_seed": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "clause_values": {
+          "TREATMENT": {
+            "S1": 0.4505,
+            "S2": 0.4002,
+            "S3": 0.413
+          },
+          "POSITIVE_CONTROL": {
+            "S1": 0.928,
+            "S2": 0.9223,
+            "S3": 0.8905
+          },
+          "NULL_TWIN": {
+            "S1": 0.0375,
+            "S2": -0.0686,
+            "S3": 0.0
+          },
+          "CHEAT": {
+            "S1": 1.0,
+            "S2": 0.9173,
+            "S3": 0.9625
+          }
+        },
+        "permuted_twin_S3_diag": 0.369
+      },
+      "anomalies": [
+        {
+          "id": "A1",
+          "text": "elite one-life fitness (best 0.7823) far above instrument I_full 0.4576: selection partly on lucky reservoir draws (kept elites keep their one-life fitness, NOTES reading 1)"
+        },
+        {
+          "id": "A2",
+          "text": "treatment elites decode better with recurrent W removed: recurrence is noise to the selected readout"
+        },
+        {
+          "id": "A3",
+          "text": "S1 fails below the 0.5 single-channel ceiling although S2 and S3 pass: selection found a partial decoder, not the invariant the positive control carries"
+        }
+      ],
+      "rejected_explanations": [
+        "the recurrent reservoir contributes nothing; the result is a property of the input template alone",
+        "a readout aligned with a single unit that happens to carry u1 - u2 at one seed drives the mean",
+        "single-channel decoding: a readout that decodes u1 alone reaches corr^2 = 0.5 with u1 - u2 (upper bound); S1 threshold 0.60 is set above that bound so a pass requires both channels"
+      ]
+    }
+  ],
+  "candidateEngines": [],
+  "currentVerdict": "PARK",
+  "evidenceSummary": {
+    "layer": "experimental_observation",
+    "rows": "hecate/programs/HT-974471f045/worlds/W6/probe/rows.jsonl",
+    "note": "round 3 W6 NULL: two valid NULL readings (W3, W6)"
+  }
+}

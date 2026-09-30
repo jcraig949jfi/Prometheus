@@ -1,0 +1,35 @@
+{
+  "id": "W5",
+  "triplicateId": "HT-e106e1603b",
+  "passId": "P3v2",
+  "mechanism_ids": ["M8"],
+  "lens_ids": ["L2"],
+  "hypothesis": "Near the decoding threshold an iterative decoder slows down, so the number of iterations it needs carries information about the realised number of channel errors w that the syndrome weight s of the received word does not already carry. Speculation layer; the simpler alternative (M8) is that s already carries everything and the iteration count adds nothing.",
+  "mechanism": "Random (3,6)-regular Tanner graph, n=504 variables, m=252 checks, built by controls.py make_graph(seed) (configuration model with swap repair of repeated edges). All-zero codeword. Per block: noise rate p ~ Uniform[0.02, 0.12] (straddles the min-sum threshold region of the ensemble), iid bit flips at p, w = number of flipped bits, s = number of unsatisfied checks of the received word (controls.py channel(cv, seed), same RNG streams). The decoder is flooding-schedule min-sum on the hard received word with a FIXED channel LLR magnitude (min-sum is scale-invariant, so the decoder never sees p or w). It stops at the first iteration whose hard decision has zero syndrome; t = number of iterations performed (t = 0 if the received syndrome is already zero; t = 60 if not converged by the 60-iteration cap).",
+  "intervention": "TREATMENT arm: t = the real min-sum iteration count per block, on exactly the graphs and channel draws of controls.py (seeds 0-4, 3000 blocks each). Statistic G per seed computed by controls.py g_statistic(w, s, t, seed) unchanged.",
+  "control": "NULL_TWIN (in controls.py): t built by the same slowing-down formula as the positive control but from w_hat(s), the error weight inferred from the syndrome weight alone, with the same noise model, cap and discreteness; it matches the nuisance statistics of an iteration count while carrying no information about w beyond s.",
+  "positive_control": "POSITIVE_CONTROL (in controls.py): t = clip(round(0.5/(|w/n - 0.07| + 0.005) * exp(0.4 z)), 1, 60), z standard normal: critical slowing down built into t from the TRUE w, with heavy multiplicative jitter so the built-in effect is moderate (G ~0.28), not overwhelming.",
+  "observable": "Per seed, G = 1 - CVMSE(w ~ poly3(s, log1p t)) / CVMSE(w ~ poly3(s)), 5-fold cross-validated least squares with fixed fold assignment (controls.py features, cv_mse, g_statistic). G is the fraction of the syndrome-only residual variance of w that the iteration count explains out of sample. Diagnostic (no clause): median t among blocks with p in [0.06, 0.09] and among blocks with p in [0.02, 0.04].",
+  "success_clauses": [
+    {"id": "S1", "text": "mean over the 5 seeds of treatment G is at least 0.20", "statistic": "mean over seeds 0-4 of G", "comparison": ">=", "threshold": 0.20},
+    {"id": "S2", "text": "every seed has treatment G at least 0.10", "statistic": "min over seeds 0-4 of G", "comparison": ">=", "threshold": 0.10}
+  ],
+  "failure_clauses": [
+    {"id": "F1", "text": "iteration count adds essentially nothing beyond syndrome weight (M8's simpler alternative holds)", "statistic": "mean over seeds 0-4 of G", "comparison": "<", "threshold": 0.05},
+    {"id": "F2", "text": "premise absent: the decoder shows no slowing down near threshold", "statistic": "median t over blocks with p in [0.06,0.09] divided by median t over blocks with p in [0.02,0.04], pooled over seeds", "comparison": "<", "threshold": 1.5}
+  ],
+  "outcome_rule": "SIGNAL iff S1 and S2 hold and no failure clause holds; NULL otherwise (G in [0.05, 0.20) without S1 is NULL, recorded as weak). Controls must reproduce ATTAINABILITY.json or the outcome is INSTRUMENT_FAIL.",
+  "alternative_explanation": "Non-convergence (t = 60) happens mainly for large w, so any decoder's failure flag carries some information about w; a positive G could come from the cap alone rather than graded slowing down. Checked as a secondary report: G recomputed with t replaced by the binary indicator 1[t = 60] (reported, not a clause).",
+  "null_twin": "t generated from syndrome weight alone through the same slowing-down formula, noise, cap and discreteness: destroys information beyond s while keeping the shape and marginal behaviour of an iteration count.",
+  "substrate": "graph",
+  "why_this_implementation": "The literal code and its literal decoder: a Tanner graph with min-sum message passing. min-sum is used rather than bit-flipping because bit-flip decoding on small (3,6) blocks has an ill-defined threshold dominated by low-weight trapping sets. w is the target rather than p because w is a sufficient statistic for p under an iid channel, so anything the iteration count knows about p it knows through w; G therefore has a clean ceiling of 1 and an honest zero.",
+  "size": "n=504, 3000 blocks per seed, 5 seeds, iteration cap 60",
+  "seeds": [0, 1, 2, 3, 4],
+  "cost_estimate": "about 2 CPU core-minutes for the treatment (vectorised min-sum, 15000 blocks); controls 0.1 s",
+  "stupid_explanations": [
+    "the cap: blocks that never converge are the heavy-noise ones, so t acts as a coarse failure flag rather than a slowing-down clock",
+    "the polynomial in s underfits E[w|s], and any second feature correlated with s (including t) absorbs the misfit and shows positive G",
+    "if the decoder were given p (a per-block LLR magnitude), t would leak p and hence w directly; the fixed LLR rule prevents this and must be kept",
+    "t is discrete and saturates at 60, so G may sit on a plateau set by the cap rather than by the decoder dynamics"
+  ]
+}

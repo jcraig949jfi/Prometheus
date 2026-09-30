@@ -3,16 +3,16 @@
   "seat": "Harmonia",
   "mwo_id": "MWO-0004",
   "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
-  "updated_at_utc": "2026-09-29T12:25:00Z",
-  "state": "HOLD",
+  "updated_at_utc": "2026-09-30T10:20:00Z",
+  "state": "WORKING",
   "branch": "harmonia/m2-475d761f-mwo1-2026-09-28",
-  "head_sha": "ad4f5b240b1fdd2867480026b03dc8d9cd1c738e",
+  "head_sha": "3c897c32f029bb9f68ce30509dd71a242cc45d9c",
   "instance": "m2-475d761f (M2 SPECTREX5); only live Harmonia instance at boot",
   "threads": [
     {
       "id": "D2-CUSTODY",
       "what": "Cosmos holdout D2 custody/order guarantees (MWO HARMONIA duty)",
-      "state": "BLOCKED_FAIL_CLOSED (DEF-HARM-D2-001 CLOSED by 742243972, verified by execution)",
+      "state": "DORMANT: AUDIT PASS anchored; no COMMITMENT (Cosmos C3 rejected pre-holdout, 0f6c3b87f); D2 sealed and unspent",
       "record": "roles/Harmonia/rulings/RECORD_D2_GOVERNING_AUDIT_AND_SEAL_GATE_2026-09-29.md"
     },
     {
@@ -32,12 +32,13 @@
   "blocked_on": [
     {
       "item": "D2 adjudication",
-      "on": "concrete dependency: MWO-0004 D2-2 FINAL bounded repair (Nestor: anchor-built governing set, V12-1..4) + FINAL re-audit (Odysseus); bounded re-audit v12 FAIL 47df49352"
+      "dependency": "no claim: Cosmos C3 operator disposition",
+      "owner": "operator/Cosmos"
     }
   ],
   "next_actions": [
-    "D2: record the D2-2 re-audit verdict; if PASS, D2 continues under the existing protocol and Harmonia adjudicates from the evidence.py bundle per Addenda E/F/H/J/L",
-    "HOLD otherwise"
+    "CURRENT: audit Tyche v0 report on arrival (Monitor armed)",
+    "meanwhile NEXT"
   ],
   "overtaken": [
     {
@@ -55,12 +56,27 @@
   ],
   "operator_decisions_required": [],
   "latest_reports": [
-    "roles/Harmonia/rulings/RECORD_D2_GOVERNING_AUDIT_AND_SEAL_GATE_2026-09-29.md",
-    "roles/Harmonia/probes/FP-001_RESULT.json"
+    "roles/Harmonia/qualification/primitives/audit_primitives.py",
+    "roles/Harmonia/audits/RULER_QUALITY_2026-09-30.md",
+    "roles/Harmonia/audits/EVIDENCE_AUDIT_2026-09-30.md"
   ],
-  "hold_reason": "Harmonia's D2 role is to record the governing verdict of the MWO-0004 D2-2 bounded completion attempt (Nestor implements D2-1; Odysseus re-audits) and later adjudicate from the evidence bundle. No other eligible ruler work.",
   "mwo_sha256": "925660b2d2be53af2ee4195391e484d9649bbd4ee828cd60432ce2f0903a99df",
   "migration_report": "roles/Harmonia/MIGRATION_REPORT_MWO-0002.json",
   "comms_cursor": "#961 (sync 2026-09-29T06:58Z, instance m2-475d761f); queue empty",
-  "probe_result": "roles/Harmonia/probes/FP-001_RESULT.json"
+  "probe_result": "roles/Harmonia/probes/FP-001_RESULT.json",
+  "work_order": "MWO-0004 (current) + CWO 2026-09-30 fleet activation (ops/fleet/CWO_2026-09-30_FLEET_ACTIVATION.md, text sha256 ab93f646...b7e, 6a7a84569; Authority: Operator, executor Aporia; comms #1024/#1034)",
+  "current": "FOLLOW-UP EVIDENCE AUDIT (promoted): Tyche v0 report when it lands (check H1/H6 labelled UNREACHABLE_BY_DESIGN), then Ensorain/Ananke closures",
+  "next": "extend AP with a multiplicity/power helper for sealed-holdout designs",
+  "reserve": [
+    "evidence-audit sample 2: Ensorain, Ananke, Bellerophon closures"
+  ],
+  "blocked": [
+    {
+      "item": "D2 adjudication",
+      "dependency": "no claim: Cosmos C3 operator disposition",
+      "owner": "operator/Cosmos"
+    }
+  ],
+  "resource_status": "local CPU only; no leases; no spend",
+  "last_receipt": "roles/Harmonia/STANDING_RULES.md section F (F1-F5 ruler rules, executable via AP-1.0.0)"
 }

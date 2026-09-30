@@ -1,0 +1,207 @@
+================================================================================
+EXTERNAL REVIEW PACKET
+HECATE -- TRIPLICATE DEEP SEARCH, FIRST IMPLEMENTATION CYCLE
+================================================================================
+Prepared:        2026-09-30   frozen (all rows committed), not independently
+                 audited
+Location/Code:   hecate/ (schema, corpus, select, probe_select, probe_report,
+                 probe_round3, pass4_report, index, dossier, llm, meta/,
+                 gravity/), hecate/programs/HT-*/ (16 programs)
+Seat docs:       roles/Hecate/ (RESPONSIBILITIES, prereg/, journal/,
+                 calibration/LEDGER.md)
+Artifacts:       hecate/programs/PROBE_ROUND{1,2,3}_REPORT.json,
+                 PASS4_ROUND{1,2}_REPORT.json, hecate/meta/REPORT_v1.md
+Version/Hash:    origin/main fefb095b2 (charter 3cd459f84)
+Headline:        NO CANDIDATE PRINCIPLE SURVIVED FIRST FALSIFICATION;
+                 the Pass 3 world generator was the binding constraint
+                 and was repaired (0 of 8 v2 worlds failed as instruments)
+
+--------------------------------------------------------------------------------
+1. CLAIM / SUBJECT UNDER REVIEW
+--------------------------------------------------------------------------------
+The charter asks whether colliding three distant concepts (historical
+Hephaestus/Nous triplicates) and converting them into executable,
+falsifiable worlds yields candidate principles of intelligence that
+survive hostile tests, and whether triplicates add value over single
+concepts, pairs and ordinary prompts. This cycle built the machinery and
+ran it end to end once on 16 triplicates. Claims made: (a) the funnel
+works mechanically with provenance and preregistration at every step;
+(b) no candidate survived Pass 4; (c) the first world generator produced
+untestable worlds at a high rate and a control-first generator fixes it;
+(d) meta v1 shows no evidence triplicates beat pairs.
+Preregistered falsifier of (c): >= 3 of 8 v2 worlds unattainable or
+instrument failures (roles/Hecate/prereg/2026-09-30_pass3_v2/).
+
+--------------------------------------------------------------------------------
+2. METHOD / SETUP / SUBSTRATE
+--------------------------------------------------------------------------------
+- Corpus: Nous responses joined to the Hephaestus ledger, one row per
+  unordered triple, provenance source "hephaestus" + ledger key + Nous
+  run:line. 6,939 triples, 95 concepts; counts equal Cyclops's
+  independent survey (collider/FINDINGS.md), asserted by test.
+- Selection: 16 triples, 5 strata (cross-field, forged, Nous-high,
+  Nous-failure, 4 unfiltered random), seed 20260929, 48 distinct concepts.
+- Pass 0-3: one fresh generator (claude-opus-5-5) per triple, no search,
+  no access to historical text. 111 interpretations, 243 mechanisms, 109
+  lenses, 64 worlds, all layer "speculation".
+- Probes: fresh implementer per world; treatment, control, null twin,
+  positive control, CHEAT control; >= 5 seeds; outcome decided in code.
+  Round 1: 16 worlds. Round 2: 13 (control-first pilot). Round 3: 8 worlds
+  from generator v2 (spec frozen only after its own controls showed every
+  clause attainable and discriminating).
+- Pass 4: fresh attacker; R replication on fresh seeds, ORIG attack on
+  the trivial explanation, ALT alternative implementation.
+- Meta v1: 8 units x 5 arms (T triple, P pair, S single, O single-
+  discipline prompt, G concept-free), claude-sonnet-5 generator, 10
+  mechanisms per arm; blinded gravity detector and 4-way matcher on
+  claude-opus-5-5, all isolated `claude -p` calls (no tools, no context).
+
+--------------------------------------------------------------------------------
+3. GROUND TRUTH / CERTIFICATION / KEY DEFINITIONS
+--------------------------------------------------------------------------------
+- Program verdicts are allocation states, not truth claims. PROMISING /
+  EXPAND require a PASSing preregistered predicate on committed rows;
+  validator (hecate/schema.py) enforces it; 13 cheat-control tests.
+- Honesty layers on every hypothesis: speculation / implemented
+  candidate / experimental observation / supported conclusion. No
+  hypothesis in this cycle is above "experimental observation".
+- Detector calibration gate: 8/8 disguised known mechanisms FAMILIAR
+  with family named, 0/4 nonsense FAMILIAR -> PASS.
+
+--------------------------------------------------------------------------------
+4. INPUTS / DATA / CONDITIONS / BASELINES
+--------------------------------------------------------------------------------
+Seven preregistrations, each committed before the data it governs:
+first selection + meta v1 (e0bd2e312), probe round 1 (15b24b7ce),
+Pass 4 r1 (64b3266f5), probe round 2 (4f2143d2c), Pass 3 v2 + round 3
+(ac5742f44), Pass 4 r2 (c523ea784). Meta analysis code frozen before
+scoring (65e0fcf80).
+
+--------------------------------------------------------------------------------
+5. PROCEDURE / METRICS / STATISTICS
+--------------------------------------------------------------------------------
+Probe outcome classes: SIGNAL, NULL, CONFOUNDED, INSTRUMENT_FAIL,
+NOT_BUILT, SPEC_UNATTAINABLE. Meta M1: sign test over 8 paired units,
+ties NOT lower, ADDS_VALUE at >= 7/8 (p <= 0.035). M2: 36/80 correct
+vs chance 0.25. Compute: 32.5 core-minutes total over all probes and
+attacks (MWO-0004 R2 envelope); model calls are session use.
+
+--------------------------------------------------------------------------------
+6. PRIMARY RESULT
+--------------------------------------------------------------------------------
+    Round            Worlds  SIGNAL  NULL  CONF  IF  NB  SU  core-min
+    ---------------  ------  ------  ----  ----  --  --  --  --------
+    Probe round 1        16       3     6     1   3   3   0     16.86
+    Probe round 2        13       0     7     0   0   0   6     10.83
+    Probe round 3 v2      8       2     6     0   0   0   0      3.83
+    Pass 4 round 1        3   PARK 2, ORIG_FOSSIL_ALT_PASS 1       0.29
+    Pass 4 round 2        2   PARK 2                               0.73
+    (CONF confounded, IF instrument fail, NB not built, SU spec
+     unattainable)
+
+    Program state (16):   PARK 15   PROBING 1 (HT-321a8fd8e0, minimum-
+                          distance decoding, prior art KNOWN_ANALOGUE_FOUND)
+    Signals attacked:     5         survived: 0
+
+Meta v1 (hecate/meta/REPORT_v1.md):
+
+    Arm   familiar frac   FAMILIAR  COMPOSITE  UNFAMILIAR
+    ----  -------------   --------  ---------  ----------
+    T            0.088          7         73           0
+    P            0.140         11         68           0
+    S            0.775         62         18           0
+    O            0.838         67         11           0
+    G            0.850         68         12           0
+
+    M1 vs S 8/8, vs O 8/8 ADDS_VALUE; vs P 5/8 INDETERMINATE
+    -> OVERALL INDETERMINATE.  M2: T 80/80, P 78/80 (saturated).
+
+--------------------------------------------------------------------------------
+7. DELIVERABLE / ARTIFACT + ACCEPTANCE CRITERIA
+--------------------------------------------------------------------------------
+    Every artifact points to its triplicate and pass .......... yes
+    Historical provenance kept as "hephaestus" ................ yes
+    Every verdict committed with its rows ..................... yes
+    Preregistration before data, own commit ................... yes
+    Positive + cheat control on every measured world .......... yes
+    Discovery index + dossiers derived, not hand-edited ....... yes
+    Pass 5-10 exercised ........................................ NO
+    Cross-substrate transfer, engines, visual cortex ........... NO
+
+--------------------------------------------------------------------------------
+8. CONTROLS / ABLATIONS / STRESS TESTS
+--------------------------------------------------------------------------------
+The five signals and what killed them:
+- 71b6 adaptive pragmatic depth: a fixed shallow listener ties (0.74355
+  vs 0.74370); no world where depth matters could be built.
+- 321a code-decoded voting: resistance step exactly at floor((d-1)/2)+1
+  for d = 3, 5, 7 -- textbook decoding.
+- 5b0b unwitnessed beliefs: failure fully decided by endpoint location
+  (0/20 strata vary); ALT reversed the sign (OR 0.44).
+- 8a87 core-guided forgetting: a channel-reset rule with no SAT makes
+  the SAME 1278 errors seed for seed; ALT failed (0.601, 0.856).
+- 5516 perturbation grouping: non-chaotic carriers at higher amplitude
+  group perfectly; chaos is not the cause.
+Round-3 controls reproduced their frozen values exactly in 8/8 worlds.
+
+--------------------------------------------------------------------------------
+9. INDEPENDENT / ADVERSARIAL VERIFICATION
+--------------------------------------------------------------------------------
+Within-seat only: every generator, implementer and attacker was a fresh
+model instance that could not read the others' work, and no instance
+scored its own output. NO independent seat or different-model review
+(charter Pass 10) has been done. Same model family throughout.
+
+--------------------------------------------------------------------------------
+10. KNOWN LIMITATIONS & CAVEATS
+--------------------------------------------------------------------------------
+- 16 triplicates, one pass of Pass 0-3 each; one model family generated,
+  implemented, attacked and scored.
+- Meta v1 rulers were weak where it matters: no coherent-but-unfamiliar
+  calibration control (0 UNFAMILIAR calls may be the detector's limit);
+  FAMILIAR/COMPOSITE boundary unstable; M2 saturated on vocabulary.
+- My own instrument defects, all recorded beside outcomes: non-binding
+  eligibility filter (0/64 rejected); a Pass 4 ALT that passed by
+  counting (ledger row 2); round-2 pilot could not test treatment-vs-
+  twin clauses; a prompt that forbade reading a referenced world; a
+  wrong ORIG prediction (ledger row 4); two miscounts (rows 1, 3).
+- One procedural breach by an implementer (repair after seeing treatment
+  numbers, HT-2a8a3aedeb W4); rerun NULL, so it could not manufacture a
+  signal.
+- Several close calls hinge on spec wording (HT-056d3ac561 W4 pooled vs
+  per-k reading: 0.823 vs 0.618).
+- PARK is revivable; no triplicate is REJECTED.
+
+--------------------------------------------------------------------------------
+11. REPRODUCTION
+--------------------------------------------------------------------------------
+    git fetch origin && git worktree add <dir> fefb095b2
+    python -m hecate.corpus            # sha256 d78f9d66...3885
+    python -m hecate.select            # the frozen 16
+    python -m pytest -q hecate/tests   # 27 passed
+    python hecate/programs/<ID>/worlds/<W>/evaluate.py   # any round 1-2
+    python hecate/programs/<ID>/worlds/<W>/probe/evaluate.py  # round 3
+    python -m hecate.meta.analyze      # meta v1 verdicts from rows
+Spot check: hecate/programs/HT-8a87057933/worlds/W5/pass4/PASS4_OUTCOME.json
+(ORIG channel-reset errors == core-guided errors, seed for seed).
+
+--------------------------------------------------------------------------------
+12. VERDICT / DECISION
+--------------------------------------------------------------------------------
+    MACHINERY_WORKS_END_TO_END ................. YES
+    ANY_CANDIDATE_SURVIVES_PASS_4 .............. no (0 of 5)
+    PASS3_GENERATOR_REPAIRED ................... YES (0/8 failed; bar 3)
+    TRIPLICATES_BEAT_PAIRS (meta v1) ........... no evidence (5/8)
+    TRIPLICATES_BEAT_SINGLES/ORDINARY .......... yes on M1, but only as
+                                                 FAMILIAR -> COMPOSITE
+    WORTH_CONTINUING ........................... yes, with changes:
+      meta v2 with an unfamiliar control and field-matched decoys;
+      Pass 3 v2 for the untouched worlds; independent Pass 10 review.
+
+Reviewer's bottom line: is "multi-concept prompts yield composites of
+known mechanisms, and no composite survived first falsification" a fair
+reading of these rows, or is the funnel too hostile or too narrow for a
+real principle to have survived?
+================================================================================
+END OF PACKET
+================================================================================

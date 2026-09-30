@@ -1,0 +1,140 @@
+{
+ "world": "W6",
+ "triplicateId": "HT-faa9277e02",
+ "clauses": [
+  {
+   "id": "S1",
+   "statistic": "seed_mean_rif",
+   "comparison": ">=",
+   "threshold": 0.25,
+   "positive_value": 0.38111582565381946,
+   "twin_value": 0.055633973230596045,
+   "cheat_value": 1.0020451200195974,
+   "attainable": true,
+   "discriminating": true,
+   "treatment_must_reach": "treatment seed-mean RIF >= 0.25"
+  },
+  {
+   "id": "S2",
+   "statistic": "seed_mean_rif_minus_twin",
+   "comparison": ">=",
+   "threshold": 0.15,
+   "positive_value": 0.32548185242322347,
+   "twin_value": 0.01325063173561541,
+   "cheat_value": 0.9464111467890015,
+   "attainable": true,
+   "discriminating": true,
+   "treatment_must_reach": "treatment RIF >= its own twin RIF + 0.15 (twin of the positive control: 0.056, so about 0.21)"
+  },
+  {
+   "id": "S3",
+   "statistic": "seed_mean_rif_minus_fixed",
+   "comparison": ">=",
+   "threshold": 0.1,
+   "positive_value": 0.2356467410003365,
+   "twin_value": -0.089835111422887,
+   "cheat_value": 0.8565760353661144,
+   "attainable": true,
+   "discriminating": true,
+   "treatment_must_reach": "treatment RIF >= FIXED RIF + 0.10 (FIXED seed-mean 0.145, so about 0.25)"
+  },
+  {
+   "id": "S4",
+   "statistic": "n_seeds_rif_above_twin",
+   "comparison": ">=",
+   "threshold": 9,
+   "positive_value": 10,
+   "twin_value": 5,
+   "cheat_value": 10,
+   "attainable": true,
+   "discriminating": true,
+   "treatment_must_reach": "treatment RIF above its own twin in >= 9 of 10 seeds"
+  }
+ ],
+ "failure_clauses_on_controls": [
+  {
+   "id": "F1",
+   "statistic": "seed_mean_rif_minus_twin",
+   "comparison": "<",
+   "threshold": 0.05,
+   "positive_value": 0.32548185242322347,
+   "positive_fires": false,
+   "twin_value": 0.01325063173561541,
+   "twin_fires": true,
+   "cheat_value": 0.9464111467890015,
+   "cheat_fires": false
+  },
+  {
+   "id": "F2",
+   "statistic": "seed_mean_rif_minus_fixed",
+   "comparison": "<",
+   "threshold": 0.0,
+   "positive_value": 0.2356467410003365,
+   "positive_fires": false,
+   "twin_value": -0.089835111422887,
+   "twin_fires": true,
+   "cheat_value": 0.8565760353661144,
+   "cheat_fires": false
+  },
+  {
+   "id": "F3",
+   "statistic": "seed_mean_rif",
+   "comparison": "<",
+   "threshold": 0.1,
+   "positive_value": 0.38111582565381946,
+   "positive_fires": false,
+   "twin_value": 0.055633973230596045,
+   "twin_fires": true,
+   "cheat_value": 1.0020451200195974,
+   "cheat_fires": false
+  }
+ ],
+ "cheat_detected": true,
+ "frozen": true,
+ "fixed_control_seed_mean_rif": 0.14546908465348302,
+ "pairing": {
+  "positive": [
+   "POSITIVE_CONTROL",
+   "NULL_TWIN"
+  ],
+  "twin_in_arm_slot": [
+   "NULL_TWIN",
+   "NULL_TWIN_B"
+  ],
+  "cheat": [
+   "CHEAT",
+   "NULL_TWIN"
+  ]
+ },
+ "revisions": [
+  {
+   "rev": 0,
+   "what": "first design: open-question lesion 16x16, lesion noise 0.01, positive control 'core_low' (g=0.3 on every edge touching a core, 1 elsewhere); observable raw MM bits",
+   "result": "FIXED (g=1) medium recovered r_lesion 0.86 / bits 0.43, ABOVE the positive control (bits 0.16): border pinning alone repairs a 16x16 lesion (about 2.4 wavelengths) from low noise; raw bits capped by the low entropy of sparse spot maps",
+   "why_changed": "clause would be dominated by border pinning and bits not comparable across media",
+   "rows": "revisions/rev0_core_low_L16_n0.01.jsonl"
+  },
+  {
+   "rev": 1,
+   "what": "observable -> RIF = MI / H(O_bin) inside lesion; tried L in {16,24} x lesion noise in {0.01,0.3} for core_low, and core_high (W1-style: core-core 5, core-boundary 0.2) at L=24, noise 0.3",
+   "result": "L=24 + noise 0.3 drops FIXED RIF to 0.145; core_low PC RIF 0.20 vs twin 0.04; core_high PC 0.28 vs twin 0.08",
+   "why_changed": "positive-control margin over FIXED too small (<0.14) for a clean treatment-vs-control clause",
+   "rows": "revisions/rev1_*.jsonl"
+  },
+  {
+   "rev": 2,
+   "what": "carving strength variants at L=24, noise 0.3: core_low g=0.1; core_high 10/0.1; boundary-only cut (core-core 1, core-boundary 0.1)",
+   "result": "boundary-only cut: PC RIF 0.381, twin 0.056, FIXED 0.145 (best separation); core_high 10/0.1: 0.27; core_low 0.1: 0.28 (twin 0.02 but PC r_lesion 0.16)",
+   "why_changed": "froze boundary-only cut (g=0.1 across core boundaries) as the positive control; thresholds set below positive and above twin/FIXED",
+   "rows": "revisions/rev2_*.jsonl"
+  },
+  {
+   "rev": 3,
+   "what": "final file: frozen parameters hard-coded, NULL_TWIN_B added for twin-in-arm-slot values of relative clauses, evaluator writes ATTAINABILITY.json from spec.json clauses",
+   "result": "see clauses",
+   "why_changed": "freeze",
+   "rows": "control_rows.jsonl"
+  }
+ ],
+ "control_cpu_s_final_run": 14.046875
+}

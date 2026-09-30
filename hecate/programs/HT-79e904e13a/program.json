@@ -1,0 +1,1989 @@
+{
+  "id": "HT-79e904e13a",
+  "key": "Counterfactual Reasoning + Dynamical Systems + Ecosystem Dynamics",
+  "stratum": "S5_random",
+  "concepts": [
+    {
+      "field": "Philosophy",
+      "mechanism": "dynamics",
+      "name": "Counterfactual Reasoning",
+      "short_description": "Reasoning about what would have happened under different conditions; Lewis's possible worlds, Pearl's do-calculus."
+    },
+    {
+      "field": "Mathematics",
+      "mechanism": "dynamics",
+      "name": "Dynamical Systems",
+      "short_description": "Evolution of state over time via deterministic rules; attractors, bifurcations, Lyapunov exponents."
+    },
+    {
+      "field": "Biology",
+      "mechanism": "dynamics",
+      "name": "Ecosystem Dynamics",
+      "short_description": "Energy flows, trophic cascades, and succession in ecological communities; resilience, keystone species."
+    }
+  ],
+  "provenance": {
+    "historicalId": "Counterfactual Reasoning + Dynamical Systems + Ecosystem Dynamics",
+    "humanreadable": "agents/hephaestus/humanreadable/Dynamical_Systems---Ecosystem_Dynamics---Counterfactual_Reasoning.md",
+    "ledger_lines": [
+      489
+    ],
+    "source": "hephaestus",
+    "sourceArtifact": "agents/hephaestus/ledger.jsonl#L489",
+    "upstream_nous": [
+      "agents/nous/runs/20260325_062155/responses.jsonl#L101"
+    ],
+    "selected_by": "roles/Hecate/prereg/2026-09-29_first_selection/"
+  },
+  "history": {
+    "forged": false,
+    "ledger_n": 1,
+    "ledger_reasons": [
+      "trap_battery_failed"
+    ],
+    "nous_composite_max": 8.0,
+    "nous_high_potential": true,
+    "nous_models": [
+      "nvidia/nemotron-3-super-120b-a12b"
+    ],
+    "nous_n": 1,
+    "nous_unproductive_any": false
+  },
+  "passes": [
+    {
+      "id": "P0",
+      "triplicateId": "HT-79e904e13a",
+      "index": 0,
+      "kind": "raw_interpretation",
+      "added": [
+        "new interpretation"
+      ],
+      "generator": {
+        "model": "claude-opus-5-5",
+        "search": false,
+        "prompt": "hecate/programs/_prompts/pass0_3_v1.md",
+        "prompt_sha256": "9ac5468dffb0a5792840809c84b3ad1ab22056397741dacb893386fd206baf3d"
+      },
+      "inspected_prior": [],
+      "unexplained": [
+        "whether the counterfactual layer adds anything beyond interventional prediction in any of these dynamics",
+        "whether ecology contributes structure or only vocabulary"
+      ],
+      "decision": "DEEPEN",
+      "research_state": {
+        "novelty": "low",
+        "mechanistic_clarity": "low",
+        "falsifiability": "medium",
+        "empirical_support": "none",
+        "cross_lens_agreement": "unknown",
+        "cross_substrate_transfer": "unknown",
+        "baseline_resistance": "unknown",
+        "artifact_risk": "medium",
+        "cost": "low",
+        "unexpectedness": "low",
+        "potential_importance": "medium"
+      },
+      "concept_extractions": [
+        {
+          "concept": "Counterfactual Reasoning",
+          "defining_structures": [
+            "structural causal model (variables, mechanisms, exogenous noise)",
+            "set of possible worlds with a similarity ordering",
+            "do-operator: surgery that replaces one mechanism and leaves the rest intact",
+            "three-step counterfactual: abduction of noise, action, prediction"
+          ],
+          "invariants": [
+            "mechanisms not intervened on are unchanged (modularity / autonomy)",
+            "the abducted exogenous noise is shared between actual and counterfactual world",
+            "consistency: if X actually took value x, the counterfactual under do(X=x) equals the actual"
+          ],
+          "transformations": [
+            "intervention (clamp a variable)",
+            "soft intervention (shift a mechanism)",
+            "abduction (condition on evidence to infer noise)",
+            "backtracking (change the past to reach a changed present)"
+          ],
+          "conserved_quantities": [
+            "the exogenous noise realization across twin worlds",
+            "the causal graph outside the surgery site"
+          ],
+          "failure_modes": [
+            "non-identifiability of unit-level counterfactuals from observational data",
+            "backtracking ambiguity (many pasts, same present)",
+            "similarity metric chosen arbitrarily, answers flip",
+            "confounding: correlation read as intervention effect"
+          ],
+          "dynamics": [
+            "actual and counterfactual world evolve in parallel from a divergence point",
+            "effect propagates along directed edges"
+          ],
+          "scales": [
+            "unit level (this trajectory)",
+            "population level (interventional distribution)",
+            "counterfactual horizon (how far downstream the query reaches)"
+          ],
+          "locality": [
+            "surgery is local to one mechanism",
+            "closest world differs minimally from actual"
+          ],
+          "memory": [
+            "the actual history is the anchor; counterfactual requires retaining it (or its noise)"
+          ],
+          "identity": [
+            "a unit is identified by its exogenous noise; 'the same individual' across worlds"
+          ],
+          "reproduction": [
+            "none intrinsic; a counterfactual world is a copy of the actual with one edit"
+          ],
+          "selection": [
+            "the query selects which mechanism is replaced",
+            "the similarity ordering selects the closest world"
+          ],
+          "information": [
+            "counterfactual knowledge exceeds interventional which exceeds observational (ladder)",
+            "the value of a counterfactual is the information it gives about which mechanism matters"
+          ],
+          "constraint": [
+            "must keep non-target mechanisms fixed",
+            "answers are constrained by what the data can identify"
+          ]
+        },
+        {
+          "concept": "Dynamical Systems",
+          "defining_structures": [
+            "state space",
+            "flow or map",
+            "attractors (fixed points, cycles, strange attractors) and their basins",
+            "bifurcation diagram over parameters",
+            "Lyapunov spectrum"
+          ],
+          "invariants": [
+            "topological conjugacy class",
+            "invariant measures on attractors",
+            "sum of Lyapunov exponents equals mean phase-space contraction rate",
+            "number and stability type of attractors between bifurcations"
+          ],
+          "transformations": [
+            "parameter change (continuation)",
+            "state perturbation",
+            "coordinate change / embedding (delay embedding)",
+            "time reversal (defined only for invertible systems)"
+          ],
+          "conserved_quantities": [
+            "phase-space volume in conservative systems",
+            "first integrals where present"
+          ],
+          "failure_modes": [
+            "sensitive dependence: predictability horizon ~ 1/lambda_max",
+            "critical slowing down near bifurcation",
+            "tipping into an alternative basin",
+            "transients mistaken for attractors"
+          ],
+          "dynamics": [
+            "relaxation to attractor",
+            "chaotic mixing",
+            "hysteresis across bifurcations",
+            "intermittency"
+          ],
+          "scales": [
+            "transient time vs attractor time",
+            "Lyapunov time",
+            "distance to bifurcation in parameter space"
+          ],
+          "locality": [
+            "neighbourhood in state space (local linearization, Jacobian)",
+            "basin membership as a non-local property of a point"
+          ],
+          "memory": [
+            "which basin the trajectory is in stores initial-condition information indefinitely",
+            "dissipation erases fine initial-condition information"
+          ],
+          "identity": [
+            "an attractor is identified by its basin and invariant measure, not by a state"
+          ],
+          "reproduction": [
+            "none intrinsic; periodic orbits re-visit"
+          ],
+          "selection": [
+            "dissipation selects attractors: most initial conditions end on few sets",
+            "basin volume as a prior over outcomes"
+          ],
+          "information": [
+            "Kolmogorov-Sinai entropy: rate of information production",
+            "contraction destroys information about the past"
+          ],
+          "constraint": [
+            "determinism: one future per state",
+            "invariant manifolds restrict reachable sets"
+          ]
+        },
+        {
+          "concept": "Ecosystem Dynamics",
+          "defining_structures": [
+            "trophic network (who eats whom) with signed interaction strengths",
+            "energy flow from producers upward with loss per level",
+            "community composition (presence/absence + abundances)",
+            "species pool and immigration"
+          ],
+          "invariants": [
+            "energy dissipates up the trophic chain (roughly 10% transfer)",
+            "mass balance of nutrients",
+            "sign structure of trophic interactions (+/- pairs)"
+          ],
+          "transformations": [
+            "species removal or invasion",
+            "press perturbation (sustained) and pulse perturbation (one-shot)",
+            "succession (sequential colonization and replacement)",
+            "disturbance resetting succession"
+          ],
+          "conserved_quantities": [
+            "nutrient mass in closed systems",
+            "energy accounting (input = storage + dissipation)"
+          ],
+          "failure_modes": [
+            "trophic cascade after keystone loss",
+            "regime shift to alternative stable state",
+            "extinction debt (delayed collapse)",
+            "invasional meltdown"
+          ],
+          "dynamics": [
+            "predator-prey oscillation",
+            "competitive exclusion",
+            "succession toward late-stage community",
+            "recovery after disturbance (resilience)"
+          ],
+          "scales": [
+            "individual, population, community, landscape",
+            "generation time vs succession time vs disturbance interval"
+          ],
+          "locality": [
+            "interactions are local in the trophic graph",
+            "spatial patches with dispersal"
+          ],
+          "memory": [
+            "seed banks and dormancy",
+            "legacy effects of past disturbance",
+            "priority effects: assembly order determines outcome"
+          ],
+          "identity": [
+            "species identity and functional role",
+            "keystone: identity defined by the counterfactual effect of its removal"
+          ],
+          "reproduction": [
+            "births of individuals; recolonization of patches"
+          ],
+          "selection": [
+            "competition and predation filter composition",
+            "environmental filtering during succession"
+          ],
+          "information": [
+            "composition encodes history (legacy)",
+            "early warning signals in abundance fluctuations"
+          ],
+          "constraint": [
+            "energy budget caps trophic levels",
+            "feasibility (all abundances positive) and stability conditions on the community matrix"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "P1",
+      "triplicateId": "HT-79e904e13a",
+      "index": 1,
+      "kind": "collision",
+      "added": [
+        "new mechanism"
+      ],
+      "generator": {
+        "model": "claude-opus-5-5",
+        "search": false,
+        "prompt": "hecate/programs/_prompts/pass0_3_v1.md",
+        "prompt_sha256": "9ac5468dffb0a5792840809c84b3ad1ab22056397741dacb893386fd206baf3d"
+      },
+      "inspected_prior": [
+        "I1",
+        "I2",
+        "I3",
+        "I4",
+        "I5",
+        "I6",
+        "I7"
+      ],
+      "unexplained": [
+        "M1, M3, M8, M9, M10, M12 and M15 have weak three-way dependency; ecology may be decorative there",
+        "whether M5 order-memory is separable from ordinary basin dependence",
+        "M13 entrenchment lacks a clean abundance control"
+      ],
+      "decision": "DEEPEN",
+      "research_state": {
+        "novelty": "low",
+        "mechanistic_clarity": "medium",
+        "falsifiability": "medium",
+        "empirical_support": "none",
+        "cross_lens_agreement": "unknown",
+        "cross_substrate_transfer": "medium",
+        "baseline_resistance": "low",
+        "artifact_risk": "medium",
+        "cost": "low",
+        "unexpectedness": "low",
+        "potential_importance": "medium"
+      }
+    },
+    {
+      "id": "P2",
+      "triplicateId": "HT-79e904e13a",
+      "index": 2,
+      "kind": "lens_explosion",
+      "added": [
+        "new lens",
+        "new observable"
+      ],
+      "generator": {
+        "model": "claude-opus-5-5",
+        "search": false,
+        "prompt": "hecate/programs/_prompts/pass0_3_v1.md",
+        "prompt_sha256": "9ac5468dffb0a5792840809c84b3ad1ab22056397741dacb893386fd206baf3d"
+      },
+      "inspected_prior": [
+        "M1",
+        "M2",
+        "M3",
+        "M4",
+        "M5",
+        "M6",
+        "M7",
+        "M8",
+        "M9",
+        "M10",
+        "M11",
+        "M12",
+        "M13",
+        "M14",
+        "M15"
+      ],
+      "unexplained": [
+        "whether signature (L2) and ledger (L3) lenses agree on which species are keystones",
+        "whether any invented lens adds information beyond the stock slowing-down lens L7"
+      ],
+      "decision": "BUILD_ENGINE",
+      "research_state": {
+        "novelty": "low",
+        "mechanistic_clarity": "medium",
+        "falsifiability": "high",
+        "empirical_support": "none",
+        "cross_lens_agreement": "unknown",
+        "cross_substrate_transfer": "medium",
+        "baseline_resistance": "low",
+        "artifact_risk": "medium",
+        "cost": "low",
+        "unexpectedness": "low",
+        "potential_importance": "medium"
+      }
+    },
+    {
+      "id": "P3",
+      "triplicateId": "HT-79e904e13a",
+      "index": 3,
+      "kind": "minimal_worlds",
+      "added": [
+        "new substrate",
+        "new intervention",
+        "new falsifier"
+      ],
+      "generator": {
+        "model": "claude-opus-5-5",
+        "search": false,
+        "prompt": "hecate/programs/_prompts/pass0_3_v1.md",
+        "prompt_sha256": "9ac5468dffb0a5792840809c84b3ad1ab22056397741dacb893386fd206baf3d"
+      },
+      "inspected_prior": [
+        "M1",
+        "M2",
+        "M3",
+        "M4",
+        "M5",
+        "M6",
+        "M7",
+        "M8",
+        "M9",
+        "M10",
+        "M11",
+        "M12",
+        "M13",
+        "M14",
+        "M15",
+        "L1",
+        "L2",
+        "L3",
+        "L4",
+        "L5",
+        "L6",
+        "L7"
+      ],
+      "unexplained": [
+        "M4, M6, M7, M13, M14 have no world yet",
+        "whether W1 merely re-derives linear response theory",
+        "whether W3 order memory survives an initial-abundance-matched control"
+      ],
+      "decision": "FALSIFY",
+      "research_state": {
+        "novelty": "low",
+        "mechanistic_clarity": "medium",
+        "falsifiability": "high",
+        "empirical_support": "none",
+        "cross_lens_agreement": "unknown",
+        "cross_substrate_transfer": "medium",
+        "baseline_resistance": "low",
+        "artifact_risk": "medium",
+        "cost": "low",
+        "unexpectedness": "low",
+        "potential_importance": "medium"
+      }
+    },
+    {
+      "id": "P3-probe1",
+      "triplicateId": "HT-79e904e13a",
+      "index": 3,
+      "kind": "cheap_probe",
+      "added": [
+        "new observable"
+      ],
+      "generator": {
+        "model": "claude-opus-5-5 (implementer)",
+        "search": false,
+        "prompt": "hecate/programs/_prompts/probe_impl_v1.md",
+        "prompt_sha256": "cf4bd374bce1b817a12d3607063278183ce0a8b7c4a7b771061dc8ce133bcea2"
+      },
+      "prereg": "roles/Hecate/prereg/2026-09-29_probe_round1/PREREG.md",
+      "inspected_prior": [
+        "W4"
+      ],
+      "unexplained": [
+        "grid resolution sets an entropy ceiling",
+        "radius r scaling produces the trend"
+      ],
+      "decision": "DEEPEN",
+      "research_state": {
+        "novelty": "unknown",
+        "mechanistic_clarity": "unknown",
+        "falsifiability": "unknown",
+        "empirical_support": "none",
+        "cross_lens_agreement": "unknown",
+        "cross_substrate_transfer": "unknown",
+        "baseline_resistance": "unknown",
+        "artifact_risk": "unknown",
+        "cost": "unknown",
+        "unexpectedness": "unknown",
+        "potential_importance": "unknown"
+      }
+    },
+    {
+      "id": "P3-probe2",
+      "triplicateId": "HT-79e904e13a",
+      "index": 3,
+      "kind": "cheap_probe",
+      "added": [
+        "new observable"
+      ],
+      "generator": {
+        "model": "claude-opus-5-5 (implementer)",
+        "search": false,
+        "prompt": "hecate/programs/_prompts/probe_impl_v2.md",
+        "prompt_sha256": "2021ed66e8fefd807203ae1d814b74091b4eabdacef16668e7a025d82128185e"
+      },
+      "prereg": "roles/Hecate/prereg/2026-09-30_probe_round2/PREREG.md",
+      "inspected_prior": [
+        "W4",
+        "W1"
+      ],
+      "unexplained": [
+        "response rank simply tracks abundance rank",
+        "the estimator is dominated by the diagonal (self-regulation) terms",
+        "near the fold, noise-induced excursions to other states contaminate the covariance",
+        "the press magnitude is large enough to trigger nonlinear responses at all distances"
+      ],
+      "decision": "PARK",
+      "research_state": {
+        "novelty": "unknown",
+        "mechanistic_clarity": "unknown",
+        "falsifiability": "unknown",
+        "empirical_support": "none",
+        "cross_lens_agreement": "unknown",
+        "cross_substrate_transfer": "unknown",
+        "baseline_resistance": "unknown",
+        "artifact_risk": "unknown",
+        "cost": "unknown",
+        "unexpectedness": "unknown",
+        "potential_importance": "unknown"
+      }
+    }
+  ],
+  "hypotheses": [
+    {
+      "id": "I1",
+      "triplicateId": "HT-79e904e13a",
+      "passId": "P0",
+      "kind": "interpretation",
+      "layer": "speculation",
+      "statement": "Counterfactual horizon: in an ecosystem that is a chaotic dynamical system, unit-level counterfactual questions ('what would this community have been had species j been reduced at t') are answerable only within a horizon set by the largest Lyapunov exponent; beyond it only attractor-level (distributional) counterfactuals exist. Intelligence operating in ecosystems must know which kind of counterfactual it can still ask. Experiment: measure the horizon at which knowing the noise realization stops improving counterfactual prediction, across lambda."
+    },
+    {
+      "id": "I2",
+      "triplicateId": "HT-79e904e13a",
+      "passId": "P0",
+      "kind": "interpretation",
+      "layer": "speculation",
+      "statement": "Keystone-ness is a counterfactual quantity (the effect of removal) and a dynamical one (does removal move the system to another attractor). Candidate principle: an agent can infer keystones from passive fluctuations without ever removing anything, as long as the system is near a linearizable attractor, and loses that ability exactly near bifurcations. Experiment: predict removal effects from observational covariance and compare with actual removals as a function of distance to bifurcation."
+    },
+    {
+      "id": "I3",
+      "triplicateId": "HT-79e904e13a",
+      "passId": "P0",
+      "kind": "interpretation",
+      "layer": "speculation",
+      "statement": "History as stored counterfactual: with multistability, assembly order (succession path) selects the final community, so 'what if the order had been different' has a non-trivial answer and the community is a memory of its own history. Experiment: measure information between assembly order and final attractor as interaction strength varies."
+    },
+    {
+      "id": "I4",
+      "triplicateId": "HT-79e904e13a",
+      "passId": "P0",
+      "kind": "interpretation",
+      "layer": "speculation",
+      "statement": "Dormancy as physically stored counterfactual worlds: a seed bank keeps propagules of communities that are not currently realized, so the ecosystem retains reachable alternative attractors; counterfactual reasoning here is not simulated but materially cached. Experiment: compare the number of recoverable attractors and recovery time after regime shift with and without a dormant pool."
+    },
+    {
+      "id": "I5",
+      "triplicateId": "HT-79e904e13a",
+      "passId": "P0",
+      "kind": "interpretation",
+      "layer": "speculation",
+      "statement": "The 'closest possible world' metric should be dynamical, not geometric: two states are counterfactually close if they share basins under the same interventions, regardless of Euclidean distance. Experiment: predict intervention outcomes by nearest-neighbour under a basin-signature metric versus Euclidean metric and compare accuracy."
+    },
+    {
+      "id": "I6",
+      "triplicateId": "HT-79e904e13a",
+      "passId": "P0",
+      "kind": "interpretation",
+      "layer": "speculation",
+      "statement": "Dissipation creates a counterfactual arrow of time: in a contracting ecological dynamics, forward counterfactuals ('had the past been different') are well-posed while backtracking counterfactuals ('what past would have given this different present') become non-identifiable at a rate set by phase-space contraction. Experiment: measure posterior entropy of initial conditions given perturbed final states as a function of net contraction rate, with a volume-preserving twin."
+    },
+    {
+      "id": "I7",
+      "triplicateId": "HT-79e904e13a",
+      "passId": "P0",
+      "kind": "interpretation",
+      "layer": "speculation",
+      "statement": "Where to probe: near a tipping point, a small intervention has the largest counterfactual consequence (high sensitivity) but critical slowing down makes its effect slow to show; an intervening agent faces a sensitivity-latency tradeoff. Experiment: allocate a fixed intervention budget across distance-to-bifurcation and measure information gained about the bifurcation location per unit time."
+    },
+    {
+      "id": "M1",
+      "triplicateId": "HT-79e904e13a",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "causal constraint",
+      "statement": "Counterfactual horizon law: the advantage of a unit-level counterfactual (abducted noise shared with the actual world) over an interventional (population-average) prediction decays with query lead time h and vanishes at h* ~ ln(Delta/epsilon)/lambda_max, where Delta is attractor diameter and epsilon the perturbation size.",
+      "derived_from": [
+        "I1"
+      ],
+      "concept_contributions": {
+        "Counterfactual Reasoning": "distinction between unit-level counterfactual and interventional query; shared exogenous noise",
+        "Dynamical Systems": "Lyapunov exponent sets divergence rate of twin worlds",
+        "Ecosystem Dynamics": "the concrete interventions (species reductions) and a bounded attractor (community) that saturates error"
+      },
+      "knockouts": {
+        "Counterfactual Reasoning": "only one kind of prediction remains; no gap to measure",
+        "Dynamical Systems": "no exponential divergence; the gap persists indefinitely or decays for other reasons",
+        "Ecosystem Dynamics": "WEAK: the law holds in any chaotic system; ecology only supplies the query vocabulary"
+      },
+      "simpler_alternative": "ordinary forecast-skill decay in chaotic systems; the 'counterfactual' part may add nothing beyond generic predictability loss",
+      "questions": {
+        "what_exists": "twin trajectories sharing a noise realization",
+        "what_changes": "their separation after an intervention",
+        "what_persists": "the attractor and its invariant measure",
+        "what_is_selected": "queries whose answer is still better than the interventional baseline",
+        "what_can_reproduce": "nothing",
+        "what_can_learn": "an estimate of its own counterfactual horizon",
+        "what_can_transfer": "the horizon scaling to any system with known lambda_max",
+        "distinguishing_observable": "log h* versus log(1/lambda_max) slope near 1, and zero advantage in a mismatched-noise twin"
+      }
+    },
+    {
+      "id": "M2",
+      "triplicateId": "HT-79e904e13a",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "representation",
+      "statement": "Basin-address representation: encode each community state by the vector of attractor labels reached under a fixed small set of interventions (remove species 1, remove species 2, press species 3...). This counterfactual signature is the state's identity for decision purposes; states with equal signatures are interchangeable.",
+      "derived_from": [
+        "I5",
+        "I2"
+      ],
+      "concept_contributions": {
+        "Counterfactual Reasoning": "the set of interventions defines coordinates",
+        "Dynamical Systems": "attractor labels are the coordinate values",
+        "Ecosystem Dynamics": "removals and presses are the natural intervention alphabet; alternative stable states give more than one label"
+      },
+      "knockouts": {
+        "Counterfactual Reasoning": "representation reduces to raw state",
+        "Dynamical Systems": "with a single global attractor all signatures are identical",
+        "Ecosystem Dynamics": "without multistable community structure the signature is one bit or constant"
+      },
+      "simpler_alternative": "clustering states by Euclidean distance; or a lookup of which basin the unperturbed state is in",
+      "questions": {
+        "what_exists": "states, a fixed intervention set, attractor labels",
+        "what_changes": "which signature a state carries as it moves",
+        "what_persists": "signature is constant within a region between counterfactual separatrices",
+        "what_is_selected": "states sharing signature are pooled",
+        "what_can_reproduce": "nothing",
+        "what_can_learn": "a map from signature to best action",
+        "what_can_transfer": "signatures transfer if two ecosystems share intervention alphabet",
+        "distinguishing_observable": "nearest-neighbour outcome prediction accuracy under signature metric exceeding Euclidean metric at equal neighbour count"
+      }
+    },
+    {
+      "id": "M3",
+      "triplicateId": "HT-79e904e13a",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "implemented_candidate",
+      "form": "computational primitive",
+      "statement": "Fluctuation-response keystone inference: near a stable equilibrium of a stochastic community, the press-perturbation response matrix -J^{-1} can be estimated from passive lagged covariances (J = log(C(tau) C(0)^{-1})/tau); thus interventional effects are computed without intervening. The primitive fails in a signature way as the leading eigenvalue approaches zero (bifurcation).",
+      "derived_from": [
+        "I2",
+        "I7"
+      ],
+      "concept_contributions": {
+        "Counterfactual Reasoning": "the target quantity is interventional (effect of press/removal), not correlational",
+        "Dynamical Systems": "linearization and the relation between fluctuation and response on a stable attractor",
+        "Ecosystem Dynamics": "keystone definition as largest removal/press effect; noise from demographic stochasticity"
+      },
+      "knockouts": {
+        "Counterfactual Reasoning": "no demand for interventional effects; covariance would be reported as is",
+        "Dynamical Systems": "no linear-response relation; covariance says nothing about press response",
+        "Ecosystem Dynamics": "WEAK-ish: holds in any stochastic linear system; ecology only supplies the keystone query"
+      },
+      "simpler_alternative": "fluctuation-dissipation / linear response theorem applied to an Ornstein-Uhlenbeck approximation; community matrix inverse (press perturbation theory)",
+      "questions": {
+        "what_exists": "species abundances with noise, lagged covariance matrices",
+        "what_changes": "estimated J as regime approaches bifurcation",
+        "what_persists": "the covariance-response relation on a stable attractor",
+        "what_is_selected": "species ranked by predicted press effect",
+        "what_can_reproduce": "nothing",
+        "what_can_learn": "an estimate of J and hence of intervention effects",
+        "what_can_transfer": "method transfers to any near-equilibrium stochastic system",
+        "distinguishing_observable": "rank agreement of predicted and actual press responses; collapse near bifurcation; zero in cross-covariance-destroyed twin"
+      }
+    },
+    {
+      "id": "M4",
+      "triplicateId": "HT-79e904e13a",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "memory structure",
+      "statement": "Seed bank as counterfactual cache: dormant propagules of currently absent species keep alternative attractors reachable; the number of recoverable attractors after a regime shift scales with the diversity of the dormant pool, making counterfactual worlds materially stored rather than simulated.",
+      "derived_from": [
+        "I4"
+      ],
+      "concept_contributions": {
+        "Counterfactual Reasoning": "the stored item is a not-realized world, retrievable on demand",
+        "Dynamical Systems": "multiple attractors and basins; dormancy changes reachability",
+        "Ecosystem Dynamics": "dormancy, germination cues, regime shifts"
+      },
+      "knockouts": {
+        "Counterfactual Reasoning": "it is just a reservoir of species with no alternative-world meaning",
+        "Dynamical Systems": "with a single attractor the cache holds nothing distinct",
+        "Ecosystem Dynamics": "no dormancy, no physical cache"
+      },
+      "simpler_alternative": "immigration from a regional species pool at a constant low rate",
+      "questions": {
+        "what_exists": "active community plus dormant pool",
+        "what_changes": "which attractor is realized",
+        "what_persists": "the dormant pool across regime shifts",
+        "what_is_selected": "propagules that germinate under specific conditions",
+        "what_can_reproduce": "the propagules",
+        "what_can_learn": "the pool composition as a record of past communities",
+        "what_can_transfer": "a pool can seed another patch",
+        "distinguishing_observable": "recoverable-attractor count with dormancy versus with matched-rate random immigration"
+      }
+    },
+    {
+      "id": "M5",
+      "triplicateId": "HT-79e904e13a",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "dynamical law",
+      "statement": "Assembly-order memory: in multistable competitive communities, sequential introduction order selects the final attractor; the mutual information I(order; final community) is a memory capacity that peaks at intermediate interaction strength (weak: one attractor; strong: order effects saturate into near-deterministic exclusion by the first arrivals).",
+      "derived_from": [
+        "I3"
+      ],
+      "concept_contributions": {
+        "Counterfactual Reasoning": "'had the order differed' counterfactual defines the quantity measured",
+        "Dynamical Systems": "multistability and hysteresis make the order persistent",
+        "Ecosystem Dynamics": "priority effects and succession supply the ordered-colonization process"
+      },
+      "knockouts": {
+        "Counterfactual Reasoning": "quantity undefined, but the dynamics would still show order dependence (WEAK three-way)",
+        "Dynamical Systems": "no multistability, zero memory",
+        "Ecosystem Dynamics": "no sequential assembly, no order"
+      },
+      "simpler_alternative": "dependence of outcome on initial abundances (ordinary basin dependence), with order being a proxy for initial conditions",
+      "questions": {
+        "what_exists": "species pool, introduction order, final community",
+        "what_changes": "composition during assembly",
+        "what_persists": "the final attractor",
+        "what_is_selected": "first arrivals",
+        "what_can_reproduce": "nothing",
+        "what_can_learn": "the community as a record of its order",
+        "what_can_transfer": "order-memory in other sequential-assembly systems",
+        "distinguishing_observable": "I(order;attractor) peaks at interior interaction strength and vanishes under constant immigration"
+      }
+    },
+    {
+      "id": "M6",
+      "triplicateId": "HT-79e904e13a",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "learning pressure",
+      "statement": "Foresight inverted-U: a consumer that forecasts counterfactual prey collapse (switching prey before collapse) gains fitness only when community dynamics are at intermediate predictability; at high stability reactive switching suffices, at high chaos forecasts are worthless. Selection for counterfactual foresight peaks at intermediate lambda.",
+      "derived_from": [
+        "I1",
+        "I7"
+      ],
+      "concept_contributions": {
+        "Counterfactual Reasoning": "foresight is a counterfactual computation (what if I keep eating this prey)",
+        "Dynamical Systems": "lambda controls the value of forecasting",
+        "Ecosystem Dynamics": "prey switching and trophic interaction"
+      },
+      "knockouts": {
+        "Counterfactual Reasoning": "no foresight, only reactive consumers",
+        "Dynamical Systems": "no variation in predictability, no inverted-U",
+        "Ecosystem Dynamics": "no trophic switching decision"
+      },
+      "simpler_alternative": "value of information peaks at intermediate uncertainty (generic decision-theory result)",
+      "questions": {
+        "what_exists": "forecasting and reactive consumers, prey community",
+        "what_changes": "consumer strategy frequencies",
+        "what_persists": "the forecaster fraction at intermediate lambda",
+        "what_is_selected": "forecast horizon length",
+        "what_can_reproduce": "consumers",
+        "what_can_learn": "forecast horizon",
+        "what_can_transfer": "horizon tuned in one regime to another",
+        "distinguishing_observable": "forecaster invasion fitness as a function of lambda, peaking interior"
+      }
+    },
+    {
+      "id": "M7",
+      "triplicateId": "HT-79e904e13a",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "error-correction mechanism",
+      "statement": "Counterfactual robustness as error correction: functional redundancy means most single-species removals leave the community on the same attractor; the fraction of removals that do not change the attractor is a code distance, and communities under repeated disturbance are selected for high distance.",
+      "derived_from": [
+        "I2",
+        "I5"
+      ],
+      "concept_contributions": {
+        "Counterfactual Reasoning": "robustness is defined over counterfactual removals",
+        "Dynamical Systems": "attractor identity as the 'codeword'",
+        "Ecosystem Dynamics": "functional redundancy, disturbance regime"
+      },
+      "knockouts": {
+        "Counterfactual Reasoning": "robustness measured only on actual events, which are rare",
+        "Dynamical Systems": "no attractors, no codeword",
+        "Ecosystem Dynamics": "no redundancy mechanism"
+      },
+      "simpler_alternative": "structural stability / diagonal dominance: communities with weak interactions are trivially robust",
+      "questions": {
+        "what_exists": "communities, removal set, attractors",
+        "what_changes": "which removals are tolerated",
+        "what_persists": "attractor under tolerated removals",
+        "what_is_selected": "communities with high tolerated fraction",
+        "what_can_reproduce": "communities (via patch recolonization)",
+        "what_can_learn": "nothing individually",
+        "what_can_transfer": "robust assemblies transplanted",
+        "distinguishing_observable": "tolerated-removal fraction increasing under disturbance selection while mean interaction strength held fixed"
+      }
+    },
+    {
+      "id": "M8",
+      "triplicateId": "HT-79e904e13a",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "interaction law",
+      "statement": "Cascade parity: in a linear food chain the counterfactual effect of a press at level k on level k+d has sign (-1)^d; an agent can compute effect sign by parity counting on the trophic graph without simulation. The law breaks in webs with omnivory, where parity becomes ambiguous.",
+      "derived_from": [
+        "I2"
+      ],
+      "concept_contributions": {
+        "Counterfactual Reasoning": "the object computed is the effect of an intervention",
+        "Dynamical Systems": "linearized equilibrium response",
+        "Ecosystem Dynamics": "trophic chain and cascade"
+      },
+      "knockouts": {
+        "Counterfactual Reasoning": "WEAK: the law is a property of signed matrices",
+        "Dynamical Systems": "parity follows from the inverse of a tridiagonal sign matrix, not from dynamics per se",
+        "Ecosystem Dynamics": "no chain, no cascade"
+      },
+      "simpler_alternative": "sign pattern of the inverse of a tridiagonal matrix (qualitative stability / loop analysis)",
+      "questions": {
+        "what_exists": "chain or web, signed edges",
+        "what_changes": "abundance responses to presses",
+        "what_persists": "sign pattern",
+        "what_is_selected": "nothing",
+        "what_can_reproduce": "nothing",
+        "what_can_learn": "parity rule",
+        "what_can_transfer": "parity rule to any chain-like signed network",
+        "distinguishing_observable": "fraction of correct signs by parity rule versus by simulation in webs with increasing omnivory"
+      }
+    },
+    {
+      "id": "M9",
+      "triplicateId": "HT-79e904e13a",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "computational primitive",
+      "statement": "Intervention as parameter continuation: clamping a species (do(X=x)) turns a state variable into a parameter; a counterfactual query becomes a question of whether the clamp value crosses a bifurcation of the reduced system. Counterfactual answers are therefore discontinuous in clamp value exactly at bifurcations of the clamped system, not of the original.",
+      "derived_from": [
+        "I5",
+        "I7"
+      ],
+      "concept_contributions": {
+        "Counterfactual Reasoning": "do-surgery converts a variable into a fixed input",
+        "Dynamical Systems": "bifurcation analysis of the reduced system",
+        "Ecosystem Dynamics": "clamping species abundances (harvesting, stocking) is a concrete ecological intervention"
+      },
+      "knockouts": {
+        "Counterfactual Reasoning": "no surgery, only parameter sweeps of the original system",
+        "Dynamical Systems": "no discontinuities, smooth response",
+        "Ecosystem Dynamics": "WEAK: the reduction is generic"
+      },
+      "simpler_alternative": "harvest-yield curves and fold bifurcations in managed populations (maximum sustainable yield collapse)",
+      "questions": {
+        "what_exists": "full and reduced (clamped) systems",
+        "what_changes": "clamp value",
+        "what_persists": "attractor structure between clamp-bifurcations",
+        "what_is_selected": "clamp values",
+        "what_can_reproduce": "nothing",
+        "what_can_learn": "location of clamp-bifurcations",
+        "what_can_transfer": "clamp analysis to any system with a controllable variable",
+        "distinguishing_observable": "counterfactual outcome jumps at clamp values predicted by continuation of the reduced system, not the full system"
+      }
+    },
+    {
+      "id": "M10",
+      "triplicateId": "HT-79e904e13a",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "implemented_candidate",
+      "form": "information bottleneck",
+      "statement": "Early-warning bottleneck: an agent restricted to k scalar observables of a community, needing to predict whether a given intervention tips the system, is best served by lag-1 autocorrelation and variance of the slowest mode; these compress counterfactual fragility into one or two numbers.",
+      "derived_from": [
+        "I7",
+        "I2"
+      ],
+      "concept_contributions": {
+        "Counterfactual Reasoning": "target is a counterfactual (would this intervention tip it)",
+        "Dynamical Systems": "critical slowing down links autocorrelation to eigenvalue",
+        "Ecosystem Dynamics": "abundance time series as the observable channel"
+      },
+      "knockouts": {
+        "Counterfactual Reasoning": "the agent would predict actual futures, not intervention outcomes",
+        "Dynamical Systems": "no slowing down, the statistic carries nothing",
+        "Ecosystem Dynamics": "WEAK: generic to near-bifurcation systems"
+      },
+      "simpler_alternative": "standard early-warning signals of critical transitions",
+      "questions": {
+        "what_exists": "time series, summary statistics, tipping outcome",
+        "what_changes": "statistics as bifurcation nears",
+        "what_persists": "the relation between autocorrelation and leading eigenvalue",
+        "what_is_selected": "the most informative statistics",
+        "what_can_reproduce": "nothing",
+        "what_can_learn": "a threshold on the statistic",
+        "what_can_transfer": "thresholds across systems with similar slow-mode structure",
+        "distinguishing_observable": "tip-prediction AUC from 1-2 statistics versus from full covariance"
+      }
+    },
+    {
+      "id": "M11",
+      "triplicateId": "HT-79e904e13a",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "developmental process",
+      "statement": "Succession narrows the counterfactual set: early-successional communities have many attractors reachable by single interventions (high counterfactual branching), late ones few. Counterfactual entropy (entropy of attractor labels over the intervention set) declines along succession, so maturity is measured by loss of counterfactual options.",
+      "derived_from": [
+        "I3",
+        "I5"
+      ],
+      "concept_contributions": {
+        "Counterfactual Reasoning": "entropy over outcomes of an intervention set",
+        "Dynamical Systems": "basin structure changes as the community fills in",
+        "Ecosystem Dynamics": "succession as ordered development"
+      },
+      "knockouts": {
+        "Counterfactual Reasoning": "no measurable quantity",
+        "Dynamical Systems": "no attractor structure",
+        "Ecosystem Dynamics": "no succession ordering"
+      },
+      "simpler_alternative": "declining invasibility with increasing diversity (community saturation)",
+      "questions": {
+        "what_exists": "community at each successional stage, intervention set",
+        "what_changes": "attractor-label entropy",
+        "what_persists": "late-stage attractor",
+        "what_is_selected": "late-successional species",
+        "what_can_reproduce": "nothing",
+        "what_can_learn": "nothing",
+        "what_can_transfer": "the entropy measure",
+        "distinguishing_observable": "monotone decline of counterfactual entropy with succession time, absent in a randomly ordered-assembly twin"
+      }
+    },
+    {
+      "id": "M12",
+      "triplicateId": "HT-79e904e13a",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "world rule",
+      "statement": "Twin-world coupling: running the actual and counterfactual community with common random numbers (shared noise) makes unit-level effects identifiable; the twin-difference trajectory separates intervention effect from noise. Under chaos the twins decorrelate and common-noise identification degrades to interventional averaging.",
+      "derived_from": [
+        "I1"
+      ],
+      "concept_contributions": {
+        "Counterfactual Reasoning": "abduction: shared exogenous noise defines 'the same unit'",
+        "Dynamical Systems": "chaotic divergence decorrelates twins",
+        "Ecosystem Dynamics": "demographic noise and species interventions"
+      },
+      "knockouts": {
+        "Counterfactual Reasoning": "twins would be independent, only average effects",
+        "Dynamical Systems": "no divergence, identification permanent",
+        "Ecosystem Dynamics": "WEAK: generic stochastic simulation technique"
+      },
+      "simpler_alternative": "common random numbers variance reduction in Monte Carlo",
+      "questions": {
+        "what_exists": "twin trajectories with shared noise",
+        "what_changes": "the difference trajectory",
+        "what_persists": "correlation between twins",
+        "what_is_selected": "nothing",
+        "what_can_reproduce": "nothing",
+        "what_can_learn": "effect estimates",
+        "what_can_transfer": "method generic",
+        "distinguishing_observable": "variance of unit-level effect estimates vs independent-noise twins as a function of lambda"
+      }
+    },
+    {
+      "id": "M13",
+      "triplicateId": "HT-79e904e13a",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "selection mechanism",
+      "statement": "Keystone entrenchment (strange): species whose removal would trigger cascades that also remove their competitors are counterfactually protected; if disturbances remove species randomly and recolonization is competitive, lineages that make themselves keystone (by acquiring interactions that stabilize others) persist longer. Selection acts on counterfactual indispensability, not direct fitness.",
+      "derived_from": [
+        "I2",
+        "I4"
+      ],
+      "concept_contributions": {
+        "Counterfactual Reasoning": "indispensability is defined by a removal counterfactual",
+        "Dynamical Systems": "the community attractor must depend on the species",
+        "Ecosystem Dynamics": "disturbance, recolonization, interaction evolution"
+      },
+      "knockouts": {
+        "Counterfactual Reasoning": "no concept of indispensability; ordinary fitness",
+        "Dynamical Systems": "no attractor dependence",
+        "Ecosystem Dynamics": "no disturbance regime"
+      },
+      "simpler_alternative": "species with high abundance and broad niche persist longer (abundance-persistence correlation) regardless of keystone role",
+      "questions": {
+        "what_exists": "evolving interaction matrix, disturbance, recolonization",
+        "what_changes": "interaction coefficients",
+        "what_persists": "keystone lineages",
+        "what_is_selected": "counterfactual indispensability",
+        "what_can_reproduce": "species",
+        "what_can_learn": "nothing",
+        "what_can_transfer": "entrenchment in other networks",
+        "distinguishing_observable": "persistence gain of high-removal-effect lineages after controlling for abundance"
+      }
+    },
+    {
+      "id": "M14",
+      "triplicateId": "HT-79e904e13a",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "organism architecture",
+      "statement": "Model-based forager: an organism carrying a low-dimensional internal copy of its community's attractor (a few coarse variables) and running counterfactual rollouts of its own foraging choices. Prediction: benefit concentrated at intermediate lambda (see M6) and requiring model dimension roughly equal to attractor dimension.",
+      "derived_from": [
+        "I1",
+        "I5"
+      ],
+      "concept_contributions": {
+        "Counterfactual Reasoning": "rollouts of alternative actions",
+        "Dynamical Systems": "attractor dimension bounds model size",
+        "Ecosystem Dynamics": "foraging within a trophic network"
+      },
+      "knockouts": {
+        "Counterfactual Reasoning": "reactive forager",
+        "Dynamical Systems": "no attractor structure to model",
+        "Ecosystem Dynamics": "no foraging context"
+      },
+      "simpler_alternative": "a reactive threshold forager with memory of recent yields",
+      "questions": {
+        "what_exists": "forager with internal model, community",
+        "what_changes": "internal model state",
+        "what_persists": "model",
+        "what_is_selected": "model dimension",
+        "what_can_reproduce": "foragers",
+        "what_can_learn": "the model",
+        "what_can_transfer": "model across similar communities",
+        "distinguishing_observable": "fitness gain as a function of model dimension plateauing at the correlation dimension of the attractor"
+      }
+    },
+    {
+      "id": "M15",
+      "triplicateId": "HT-79e904e13a",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "implemented_candidate",
+      "form": "causal constraint",
+      "statement": "Dissipative counterfactual arrow: in dissipative community dynamics, forward counterfactuals stay well-posed but backtracking counterfactuals ('what past would give this different present') lose identifiability at a rate equal to the net phase-space contraction (minus the sum of Lyapunov exponents). Conservative twins with the same lambda_max show no such asymmetry.",
+      "derived_from": [
+        "I6"
+      ],
+      "concept_contributions": {
+        "Counterfactual Reasoning": "forward versus backtracking counterfactuals as distinct queries",
+        "Dynamical Systems": "phase-space contraction and non-invertibility",
+        "Ecosystem Dynamics": "energy dissipation up trophic levels is the physical source of contraction"
+      },
+      "knockouts": {
+        "Counterfactual Reasoning": "no distinction between directions",
+        "Dynamical Systems": "no contraction, asymmetry vanishes",
+        "Ecosystem Dynamics": "WEAK: ecology supplies an interpretation of contraction, the mathematics is generic"
+      },
+      "simpler_alternative": "non-invertibility of dissipative maps; information loss under coarse-graining",
+      "questions": {
+        "what_exists": "trajectories, perturbed final states, candidate initial states",
+        "what_changes": "posterior entropy over pasts",
+        "what_persists": "attractor",
+        "what_is_selected": "nothing",
+        "what_can_reproduce": "nothing",
+        "what_can_learn": "which queries are answerable",
+        "what_can_transfer": "asymmetry to any dissipative system",
+        "distinguishing_observable": "backward-posterior entropy growth rate correlating with contraction rate, flat in the volume-preserving twin"
+      }
+    },
+    {
+      "id": "O-W4-r1",
+      "triplicateId": "HT-79e904e13a",
+      "passId": "P3-probe1",
+      "kind": "observation",
+      "layer": "experimental_observation",
+      "evidence_rows": [
+        "hecate/programs/HT-79e904e13a/worlds/W4/rows.jsonl",
+        "hecate/programs/HT-79e904e13a/worlds/W4/OUTCOME.json"
+      ],
+      "statement": "W4 probe round 1: NULL. Outcome NULL. Backward posterior entropy growth over T=1..30 in the coupled Ricker world ranged 0.026..0.115 nats/step across 8 dissipation levels whose measured net contraction ranged 0.531..2.266; Spearman 0.167. Volume-preserving twin growth ranged -0.002..0.008. Positive control slope 0.1544 vs known 0.1539; cheat Spearman 1.000. Forward-spread Spearman with contraction -0.714. Only one grid and one r were used.",
+      "derived_from": [
+        "M15"
+      ]
+    },
+    {
+      "id": "O-W1-r2",
+      "triplicateId": "HT-79e904e13a",
+      "passId": "P3-probe2",
+      "kind": "observation",
+      "layer": "experimental_observation",
+      "evidence_rows": [
+        "hecate/programs/HT-79e904e13a/worlds/W1/rows.jsonl"
+      ],
+      "statement": "W1 probe round 2: NULL. Pilot passed on attempt 2 (PILOT.json). CONTROL = spec's null twin on gLV series decides CONFOUNDED; pilot arms rerun on OU in world.py. See NOTES.md.",
+      "derived_from": [
+        "M3",
+        "M10"
+      ]
+    }
+  ],
+  "lenses": [
+    {
+      "id": "L1",
+      "name": "Twin-world divergence spectrum",
+      "triplicateId": "HT-79e904e13a",
+      "passId": "P2",
+      "targets": [
+        "M1",
+        "M12"
+      ],
+      "rationale": "Invented for this triplicate: counterfactual twins sharing noise are the object; their separation under intervention (not under noise) is the quantity no stock Lyapunov analysis reports.",
+      "sourceRepresentation": "pairs of trajectories (actual, counterfactual) with common random numbers, differing only by an intervention at t0",
+      "transformation": "log of twin separation vs lead time; fit exponential rate; compare with rate for mismatched-noise twins",
+      "observables": [
+        "counterfactual divergence rate",
+        "horizon h* where unit-level advantage is below 5%",
+        "twin correlation at lag h"
+      ],
+      "predictedSignals": [
+        "h* scales as 1/lambda_max",
+        "mismatched-noise twins show zero advantage at all h"
+      ],
+      "nullExpectation": "unit-level and interventional predictions equally accurate at all h (no advantage), or advantage independent of lambda",
+      "failureModes": [
+        "integrator error dominates small separations",
+        "saturation at attractor diameter masks rate",
+        "noise too large, twins never correlated"
+      ],
+      "informationAddedBeyondExistingLenses": "separates the counterfactual (unit-level) layer of the causal ladder from ordinary predictability"
+    },
+    {
+      "id": "L2",
+      "name": "Basin-address signature",
+      "triplicateId": "HT-79e904e13a",
+      "passId": "P2",
+      "targets": [
+        "M2",
+        "M5",
+        "M11",
+        "M7"
+      ],
+      "rationale": "Invented: a state is described by where each intervention sends it, making counterfactual structure the coordinate system.",
+      "sourceRepresentation": "community state plus a fixed intervention set of size m",
+      "transformation": "run each intervention to equilibrium, cluster final states into attractor labels, produce an m-length label vector",
+      "observables": [
+        "signature entropy",
+        "Hamming distance between signatures",
+        "number of distinct signatures",
+        "tolerated-removal fraction"
+      ],
+      "predictedSignals": [
+        "signature entropy declines along succession",
+        "signature metric beats Euclidean in outcome prediction"
+      ],
+      "nullExpectation": "signature constant (single attractor) or signature distance no better than Euclidean distance",
+      "failureModes": [
+        "attractor clustering threshold arbitrary",
+        "long transients mislabeled",
+        "intervention set too small to discriminate"
+      ],
+      "informationAddedBeyondExistingLenses": "measures geometry of counterfactual outcomes rather than of states"
+    },
+    {
+      "id": "L3",
+      "name": "Fluctuation-response ledger",
+      "triplicateId": "HT-79e904e13a",
+      "passId": "P2",
+      "targets": [
+        "M3",
+        "M10",
+        "M8"
+      ],
+      "rationale": "Accounts, per species pair, what passive data predicts versus what an intervention actually does; the gap is the ledger balance.",
+      "sourceRepresentation": "long observational abundance time series and a set of actual press/removal experiments",
+      "transformation": "estimate J from lagged covariance; predict responses by -J^{-1}; subtract actual responses",
+      "observables": [
+        "Spearman rank correlation predicted vs actual response per press",
+        "sign agreement fraction",
+        "ledger residual vs leading eigenvalue"
+      ],
+      "predictedSignals": [
+        "high agreement far from bifurcation, collapse near it",
+        "residual larger for removals than small presses"
+      ],
+      "nullExpectation": "agreement at chance (rank correlation ~0) in all regimes",
+      "failureModes": [
+        "finite-sample covariance noise",
+        "nonlinearity at large perturbations",
+        "matrix log ill-conditioned"
+      ],
+      "informationAddedBeyondExistingLenses": "quantifies how much of the interventional rung is recoverable from the observational rung per regime"
+    },
+    {
+      "id": "L4",
+      "name": "Clamp continuation lens",
+      "triplicateId": "HT-79e904e13a",
+      "passId": "P2",
+      "targets": [
+        "M9",
+        "M10"
+      ],
+      "rationale": "Invented: treat every do-intervention as creating a new reduced system and draw its bifurcation diagram in clamp value.",
+      "sourceRepresentation": "community model and one clampable species",
+      "transformation": "numerical continuation of equilibria of the reduced system in clamp value",
+      "observables": [
+        "clamp values of folds",
+        "jump sizes in counterfactual outcome",
+        "hysteresis width under clamp"
+      ],
+      "predictedSignals": [
+        "outcome jumps located at reduced-system folds, not full-system folds"
+      ],
+      "nullExpectation": "outcome smooth in clamp value, or jumps at full-system bifurcation parameters",
+      "failureModes": [
+        "continuation misses branches",
+        "clamp outside feasible range"
+      ],
+      "informationAddedBeyondExistingLenses": "locates discontinuities of counterfactual answers"
+    },
+    {
+      "id": "L5",
+      "name": "Backtracking posterior entropy",
+      "triplicateId": "HT-79e904e13a",
+      "passId": "P2",
+      "targets": [
+        "M15"
+      ],
+      "rationale": "Invented: measure how many pasts are compatible with a counterfactually altered present, as a function of dissipation.",
+      "sourceRepresentation": "grid of initial conditions mapped forward T steps",
+      "transformation": "for each perturbed final state, collect initial conditions landing within radius r; compute entropy of their distribution",
+      "observables": [
+        "backward posterior entropy vs T",
+        "entropy growth rate",
+        "forward counterfactual spread vs T"
+      ],
+      "predictedSignals": [
+        "entropy growth rate proportional to net contraction",
+        "flat entropy for volume-preserving twin"
+      ],
+      "nullExpectation": "backward and forward identifiability symmetric; entropy growth independent of contraction",
+      "failureModes": [
+        "grid resolution limits entropy",
+        "radius r choice drives result",
+        "chaotic stretching confounds contraction"
+      ],
+      "informationAddedBeyondExistingLenses": "introduces direction of counterfactual as a measurable asymmetry"
+    },
+    {
+      "id": "L6",
+      "name": "Dormant-pool reachability",
+      "triplicateId": "HT-79e904e13a",
+      "passId": "P2",
+      "targets": [
+        "M4",
+        "M13"
+      ],
+      "rationale": "Invented: count which attractors remain reachable from the current state plus dormant pool under realistic germination events.",
+      "sourceRepresentation": "active community, dormant pool composition, germination rule",
+      "transformation": "enumerate germination events, run to attractor, count distinct attractors",
+      "observables": [
+        "reachable attractor count",
+        "recovery time after regime shift"
+      ],
+      "predictedSignals": [
+        "reachable count scales with dormant diversity beyond matched-rate immigration"
+      ],
+      "nullExpectation": "dormant pool equivalent to random immigration at matched rate",
+      "failureModes": [
+        "germination rule dominates result",
+        "attractor labeling threshold"
+      ],
+      "informationAddedBeyondExistingLenses": "treats the stored counterfactual as a material reservoir"
+    },
+    {
+      "id": "L7",
+      "name": "Critical slowing down statistics (stock lens)",
+      "triplicateId": "HT-79e904e13a",
+      "passId": "P2",
+      "targets": [
+        "M10",
+        "M3"
+      ],
+      "rationale": "Stock dynamical-systems lens used as a baseline against which invented lenses must add information.",
+      "sourceRepresentation": "abundance time series in rolling windows",
+      "transformation": "lag-1 autocorrelation and variance of detrended series",
+      "observables": [
+        "AR1 coefficient",
+        "variance",
+        "AUC for tip prediction"
+      ],
+      "predictedSignals": [
+        "AR1 rises toward 1 near fold"
+      ],
+      "nullExpectation": "no trend in AR1 as bifurcation approached",
+      "failureModes": [
+        "detrending artifacts",
+        "noise-induced tipping before slowing down visible"
+      ],
+      "informationAddedBeyondExistingLenses": "none by design; it is the baseline"
+    }
+  ],
+  "experiments": [
+    {
+      "id": "W1",
+      "triplicateId": "HT-79e904e13a",
+      "passId": "P3",
+      "mechanism_ids": [
+        "M3",
+        "M10"
+      ],
+      "lens_ids": [
+        "L3",
+        "L7"
+      ],
+      "hypothesis": "Press-perturbation responses (interventional effects) of a stochastic community near a stable equilibrium can be predicted from passive lagged covariances, and this prediction degrades as the leading eigenvalue approaches zero.",
+      "mechanism": "Linear response: estimate J = logm(C(tau) C(0)^{-1})/tau from observational data, predict press response vector r_k = -J^{-1} e_k for each species k.",
+      "intervention": "Constant small press (immigration +0.02 of equilibrium abundance) on each species k in turn, simulated to new equilibrium; true response = mean abundance shift.",
+      "control": "Same estimator applied to the same series after independent random circular shifts per species (null twin).",
+      "positive_control": "Linear Ornstein-Uhlenbeck system with known J of same size: estimator must reach median Spearman >= 0.95.",
+      "observable": "Median over presses of Spearman rank correlation between predicted and actual response vectors, at 4 distances to fold (leading eigenvalue real part -0.5, -0.2, -0.05, -0.01).",
+      "success_criterion": "Median Spearman >= 0.8 at eigenvalue -0.5 and -0.2, AND null-twin median Spearman <= 0.2, AND median Spearman at -0.01 at least 0.3 lower than at -0.5 (paired over 30 seeds, Wilcoxon p < 0.01).",
+      "failure_criterion": "Median Spearman < 0.5 at eigenvalue -0.5, OR null twin within 0.2 of real, OR no decline toward the fold (difference < 0.1).",
+      "alternative_explanation": "Prediction succeeds because abundance ranks alone predict response ranks (big species respond big); decline near fold reflects finite-sample covariance noise rather than nonlinearity.",
+      "null_twin": "Per-species independent circular time shifts: preserves each species' marginal distribution and autocorrelation, destroys cross-covariance hence J off-diagonals.",
+      "substrate": "ecology",
+      "why_this_implementation": "A 12-species stochastic generalized Lotka-Volterra with trophic sign structure is the smallest system where press effects are nontrivial and a fold can be approached by tuning one mortality parameter; no learning machinery is needed because the question is whether the observational rung contains the interventional one.",
+      "size": "12 species; Euler-Maruyama dt=0.01; 200,000 observational steps; 12 presses x 4 distances x 30 seeds; tau=1.0 time units",
+      "cost_estimate": 4,
+      "stupid_explanations": [
+        "response rank simply tracks abundance rank",
+        "the estimator is dominated by the diagonal (self-regulation) terms",
+        "near the fold, noise-induced excursions to other states contaminate the covariance",
+        "the press magnitude is large enough to trigger nonlinear responses at all distances"
+      ],
+      "outcome": "NULL",
+      "round": 2,
+      "rows": "hecate/programs/HT-79e904e13a/worlds/W1/rows.jsonl",
+      "outcome_file": "hecate/programs/HT-79e904e13a/worlds/W1/OUTCOME.json",
+      "statistics": {
+        "arms": {
+          "CHEAT": {
+            "median": {
+              "-0.5": 1.0,
+              "-0.2": 1.0,
+              "-0.05": 1.0,
+              "-0.01": -0.0017482517482517463
+            },
+            "decline": 1.0017482517482517,
+            "wilcoxon_p": 9.313225746154785e-10,
+            "n_seeds": 30
+          },
+          "CHEAT_NULL": {
+            "median": {
+              "-0.5": -0.015734265734265736,
+              "-0.2": 0.0034965034965034926,
+              "-0.05": 0.0017482517482517483,
+              "-0.01": 0.02972027972027972
+            },
+            "decline": -0.045454545454545456,
+            "wilcoxon_p": 0.866655488797953,
+            "n_seeds": 30
+          },
+          "CONTROL": {
+            "median": {
+              "-0.5": 0.22027972027972031,
+              "-0.2": 0.20629370629370633,
+              "-0.05": 0.24475524475524477,
+              "-0.01": 0.20104895104895107
+            },
+            "decline": 0.019230769230769246,
+            "wilcoxon_p": 0.29635318366412544,
+            "n_seeds": 30
+          },
+          "DET_VS_STOCH": {
+            "median": {
+              "-0.5": 1.0,
+              "-0.2": 1.0,
+              "-0.05": 1.0,
+              "-0.01": 1.0
+            },
+            "decline": 0.0,
+            "wilcoxon_p": 1.0,
+            "n_seeds": 30
+          },
+          "NULL_TWIN": {
+            "median": {
+              "-0.5": 0.25,
+              "-0.2": 0.21853146853146857,
+              "-0.05": 0.1958041958041958,
+              "-0.01": 0.12412587412587414
+            },
+            "decline": 0.12587412587412586,
+            "wilcoxon_p": 0.0009461309247436456,
+            "n_seeds": 30
+          },
+          "ORACLE": {
+            "median": {
+              "-0.5": 1.0,
+              "-0.2": 1.0,
+              "-0.05": 1.0,
+              "-0.01": 1.0
+            },
+            "decline": 0.0,
+            "wilcoxon_p": 1.0,
+            "n_seeds": 30
+          },
+          "POSITIVE_CONTROL": {
+            "median": {
+              "-0.5": 0.9545454545454546,
+              "-0.2": 0.9510489510489513,
+              "-0.05": 0.9597902097902098,
+              "-0.01": 0.9685314685314685
+            },
+            "decline": -0.013986013986013957,
+            "wilcoxon_p": 0.9933850927546788,
+            "n_seeds": 30
+          },
+          "SE1_ABUNDANCE": {
+            "median": {
+              "-0.5": -0.0034965034965035,
+              "-0.2": -0.026652094402794403,
+              "-0.05": -0.015734265734265736,
+              "-0.01": 0.0004283181790181792
+            },
+            "decline": -0.003924821675521679,
+            "wilcoxon_p": 0.0872810510219873,
+            "n_seeds": 30
+          },
+          "SE2_DIAGONAL": {
+            "median": {
+              "-0.5": 0.4803844614152615,
+              "-0.2": 0.4803844614152615,
+              "-0.05": 0.4803844614152615,
+              "-0.01": 0.4803844614152615
+            },
+            "decline": 0.0,
+            "wilcoxon_p": 1.0,
+            "n_seeds": 30
+          },
+          "SE4_LINEAR_VS_EXACT": {
+            "median": {
+              "-0.5": 1.0,
+              "-0.2": 1.0,
+              "-0.05": 1.0,
+              "-0.01": 1.0
+            },
+            "decline": 0.0,
+            "wilcoxon_p": 1.0,
+            "n_seeds": 30
+          },
+          "TREATMENT": {
+            "median": {
+              "-0.5": 0.9562937062937064,
+              "-0.2": 0.9510489510489512,
+              "-0.05": 0.9440559440559442,
+              "-0.01": 0.931818181818182
+            },
+            "decline": 0.02447552447552437,
+            "wilcoxon_p": 2.2794066471485846e-05,
+            "n_seeds": 30
+          }
+        },
+        "success": false,
+        "failure": true
+      },
+      "procedural_notes": [
+        "~1 s unlogged exploration of reachable eigenvalues (disclosed); noise level 0.02 chosen by implementer, spec silent"
+      ],
+      "anomalies": [
+        {
+          "id": "A1",
+          "text": "CONTROL: logm had imaginary part up to 3.17; real part used (A8)"
+        },
+        {
+          "id": "A2",
+          "text": "gLV community redraws needed for 8 of 30 seeds (A10)"
+        },
+        {
+          "id": "A3",
+          "text": "pilot attempt 1 failed: cheat was coupled to the real null twin (0.25 > 0.2); repaired once (NOTES.md)"
+        }
+      ],
+      "rejected_explanations": []
+    },
+    {
+      "id": "W2",
+      "triplicateId": "HT-79e904e13a",
+      "passId": "P3",
+      "mechanism_ids": [
+        "M1",
+        "M12"
+      ],
+      "lens_ids": [
+        "L1"
+      ],
+      "hypothesis": "The advantage of unit-level counterfactual prediction (true noise realization abducted) over interventional prediction (averaging over noise) vanishes at a horizon h* that scales as 1/lambda_max.",
+      "mechanism": "Twin worlds with common random numbers; an intervention (reduce species j by 10% at t0) is applied to one twin; unit-level predictor uses the actual noise path, interventional predictor averages 50 independent noise paths.",
+      "intervention": "10% reduction of one species at t0; five parameter settings of a 4-species competitive community with lambda_max spanning ~0.01 to ~0.2 (estimated per setting by standard two-trajectory renormalization).",
+      "control": "Mismatched-noise twin (null twin): unit-level predictor given a noise path drawn independently from the same distribution.",
+      "positive_control": "Stable (lambda_max < 0) setting: advantage must persist to the end of the run (h up to 200 time units) at > 50% of its initial value.",
+      "observable": "Advantage A(h) = 1 - MSE_unit(h)/MSE_interv(h) for the counterfactual abundance vector; h* = first h with A(h) < 0.05.",
+      "success_criterion": "Regression of log h* on log(1/lambda_max) across the 5 chaotic settings gives slope in [0.7, 1.3] with R^2 >= 0.8 (20 seeds per setting); null-twin A(h) <= 0.02 at all h.",
+      "failure_criterion": "Slope outside [0.4, 1.6], OR R^2 < 0.5, OR null-twin A(h) > 0.1 at any h, OR positive control loses advantage.",
+      "alternative_explanation": "h* is set by noise amplitude or integrator error rather than lambda; the lambda estimates themselves are noisy and correlated with h* through shared transients.",
+      "null_twin": "Mismatched-noise twin: identical noise statistics and intervention, but the link between actual and counterfactual noise realizations is destroyed.",
+      "substrate": "causal toy",
+      "why_this_implementation": "A 4-species competitive Lotka-Volterra with small additive noise is the smallest chaotic community; the question concerns the causal ladder, so a structural simulation with explicit noise is the right substrate and no learned model is needed.",
+      "size": "4 species; dt=0.005; 5 chaotic + 1 stable setting; 20 seeds each; 50 noise paths for interventional average; horizon up to 200 time units",
+      "cost_estimate": 6,
+      "stupid_explanations": [
+        "error saturation at attractor diameter makes every h* look similar",
+        "threshold 0.05 choice produces the scaling",
+        "lambda_max estimate and h* both depend on transient length",
+        "numerical round-off divergence masquerading as chaos"
+      ]
+    },
+    {
+      "id": "W3",
+      "triplicateId": "HT-79e904e13a",
+      "passId": "P3",
+      "mechanism_ids": [
+        "M5",
+        "M11"
+      ],
+      "lens_ids": [
+        "L2"
+      ],
+      "hypothesis": "The information stored by assembly order in the final community, I(order; attractor), peaks at intermediate competition strength and vanishes when history dependence is destroyed.",
+      "mechanism": "Sequential introduction of species into a multistable competitive community; each introduction runs to equilibrium before the next.",
+      "intervention": "Vary mean off-diagonal competition strength over 8 levels (0.2 to 1.6 relative to self-regulation).",
+      "control": "Null twin with constant immigration of all pool species at rate 1e-3 (destroys priority effects) with the same matrices and orders.",
+      "positive_control": "Hand-built 3-species community: two mutually excluding competitors (bistable, first arrival wins) plus a neutral third species; order dependence is analytically 1 bit and the estimator must return >= 0.9 bits.",
+      "observable": "Plug-in mutual information (bits) between identity of the first 3 introduced species and final attractor label, bias-corrected by label shuffling.",
+      "success_criterion": "Peak MI >= 0.5 bits at an interior strength level (not the first or last), end levels <= 50% of peak, and null-twin MI <= 0.05 bits at every level (20 matrices x 200 orders per level).",
+      "failure_criterion": "Peak MI < 0.2 bits, OR peak at an end level, OR null-twin MI > 0.2 bits.",
+      "alternative_explanation": "Order is a proxy for initial abundances; MI reflects basin geometry of initial conditions rather than a sequential process.",
+      "null_twin": "Constant low immigration: same interaction statistics, same orders, but every species is always present at trace level so no priority effect can persist.",
+      "substrate": "ecology",
+      "why_this_implementation": "Generalized Lotka-Volterra assembly is the minimal world where order and multistability coexist; a cellular-automaton or learned model would add spatial or parametric confounds without adding the order effect.",
+      "size": "pool of 10 species; 8 strength levels x 20 matrices x 200 orders = 32,000 assembly runs; 2,000 steps per introduction stage",
+      "cost_estimate": 8,
+      "stupid_explanations": [
+        "MI inflated by many attractor labels and finite samples",
+        "attractor clustering threshold splits one attractor into many",
+        "strong competition drives numerical extinction artifacts",
+        "first species alone determines outcome (trivial dominance)"
+      ]
+    },
+    {
+      "id": "W4",
+      "triplicateId": "HT-79e904e13a",
+      "passId": "P3",
+      "mechanism_ids": [
+        "M15"
+      ],
+      "lens_ids": [
+        "L5"
+      ],
+      "hypothesis": "Backtracking counterfactuals lose identifiability at a rate set by net phase-space contraction, while forward counterfactuals do not.",
+      "mechanism": "Three coupled Ricker-type population maps with a dissipation parameter controlling net contraction.",
+      "intervention": "Vary dissipation over 8 levels; perturb final state by delta and ask which initial states map within radius r of it.",
+      "control": "Forward query on the same grid: spread of final states for initial states perturbed by delta.",
+      "positive_control": "Linear contracting map with known contraction rate: backward entropy growth rate must match -sum of log singular values within 10%.",
+      "observable": "Growth rate (nats per step) of backward posterior entropy over T = 1..30 steps.",
+      "success_criterion": "Spearman between backward entropy growth rate and measured net contraction rate >= 0.8 across 8 levels (10 seeds each), AND volume-preserving twin growth rate <= 0.1 nats/step.",
+      "failure_criterion": "Spearman < 0.5, OR volume-preserving twin growth rate within 50% of the dissipative system at matched lambda_max.",
+      "alternative_explanation": "Entropy growth is driven by chaotic stretching (lambda_max) or grid resolution rather than contraction.",
+      "null_twin": "Area/volume-preserving coupled map (shear-type, invertible) tuned to the same lambda_max (+/-10%) with zero net contraction.",
+      "substrate": "causal toy",
+      "why_this_implementation": "Discrete maps allow exact enumeration of preimages on a grid, which is what backtracking identifiability requires; an ODE integrator would add error, and a learned inverse model would conflate model error with non-identifiability.",
+      "size": "3-dimensional maps; 100,000-point initial grid; T up to 30; 8 dissipation levels x 10 seeds; plus null twin",
+      "cost_estimate": 3,
+      "stupid_explanations": [
+        "grid resolution sets an entropy ceiling",
+        "radius r scaling produces the trend",
+        "points leaving the feasible (positive) region counted as information loss",
+        "matched lambda_max in the twin is not achieved"
+      ],
+      "outcome": "NULL",
+      "raw_outcome": "NULL",
+      "procedural_notes": [],
+      "rows": "hecate/programs/HT-79e904e13a/worlds/W4/rows.jsonl",
+      "outcome_file": "hecate/programs/HT-79e904e13a/worlds/W4/OUTCOME.json",
+      "statistics": {
+        "d_levels": [
+          0.0,
+          0.03,
+          0.06,
+          0.09,
+          0.12,
+          0.15,
+          0.18,
+          0.21
+        ],
+        "treatment_backward_growth_nats_per_step": [
+          {
+            "mean": 0.025683139516202685,
+            "sd": 0.023672982475644793,
+            "n": 10
+          },
+          {
+            "mean": 0.08279904540391199,
+            "sd": 0.009706718146358269,
+            "n": 10
+          },
+          {
+            "mean": 0.115421400925979,
+            "sd": 0.01397514990191715,
+            "n": 10
+          },
+          {
+            "mean": 0.08760003214915227,
+            "sd": 0.00835570147439114,
+            "n": 10
+          },
+          {
+            "mean": 0.08819971035555636,
+            "sd": 0.0191566501337156,
+            "n": 10
+          },
+          {
+            "mean": 0.0800106118240628,
+            "sd": 0.03262602628924725,
+            "n": 10
+          },
+          {
+            "mean": 0.06470029766774846,
+            "sd": 0.015687722875844023,
+            "n": 10
+          },
+          {
+            "mean": 0.0673595970717988,
+            "sd": 0.03751945763704346,
+            "n": 10
+          }
+        ],
+        "treatment_net_contraction": [
+          {
+            "mean": 0.5308076103259362,
+            "sd": 0.02066725369973729,
+            "n": 10
+          },
+          {
+            "mean": 1.6461239517489414,
+            "sd": 0.010680721846495055,
+            "n": 10
+          },
+          {
+            "mean": 2.1579358616724447,
+            "sd": 3.916498697301471e-16,
+            "n": 10
+          },
+          {
+            "mean": 1.692299537817512,
+            "sd": 2.229166159321335e-06,
+            "n": 10
+          },
+          {
+            "mean": 1.7305856381969924,
+            "sd": 2.340555645717801e-16,
+            "n": 10
+          },
+          {
+            "mean": 1.8533856800570336,
+            "sd": 0.0,
+            "n": 10
+          },
+          {
+            "mean": 2.028954151056045,
+            "sd": 0.0,
+            "n": 10
+          },
+          {
+            "mean": 2.265894255459382,
+            "sd": 4.1869132231567334e-16,
+            "n": 10
+          }
+        ],
+        "treatment_lambda_max": [
+          {
+            "mean": 0.3454249069316947,
+            "sd": 0.012240646206968036,
+            "n": 10
+          },
+          {
+            "mean": 0.26102854762916966,
+            "sd": 0.0034104297957057365,
+            "n": 10
+          },
+          {
+            "mean": -0.22717379799671092,
+            "sd": 0.00010868498348301258,
+            "n": 10
+          },
+          {
+            "mean": -0.005487722050177134,
+            "sd": 7.322330015610524e-06,
+            "n": 10
+          },
+          {
+            "mean": -0.22814589749930209,
+            "sd": 8.354664345294131e-06,
+            "n": 10
+          },
+          {
+            "mean": -0.4633027495627525,
+            "sd": 8.386053448981434e-06,
+            "n": 10
+          },
+          {
+            "mean": -0.4589569436386882,
+            "sd": 3.5774537215373105e-05,
+            "n": 10
+          },
+          {
+            "mean": -0.42583891466502094,
+            "sd": 0.00014019938661560228,
+            "n": 10
+          }
+        ],
+        "spearman_growth_vs_contraction_n8": 0.1666666666666667,
+        "null_twin_backward_growth_nats_per_step": [
+          {
+            "mean": 0.0017871946343136565,
+            "sd": 0.0028139095631171895,
+            "n": 10
+          },
+          {
+            "mean": -0.001636899102841704,
+            "sd": 0.006971077916591076,
+            "n": 10
+          },
+          {
+            "mean": 0.0022904572641270814,
+            "sd": 0.004120855045673175,
+            "n": 10
+          },
+          {
+            "mean": 0.0019249430690992993,
+            "sd": 0.003629907687691898,
+            "n": 10
+          },
+          {
+            "mean": 0.002900211701895297,
+            "sd": 0.008559427735797329,
+            "n": 10
+          },
+          {
+            "mean": 0.0019678440815180695,
+            "sd": 0.006090889291710072,
+            "n": 10
+          },
+          {
+            "mean": 0.008150698598508286,
+            "sd": 0.016624762869642932,
+            "n": 10
+          },
+          {
+            "mean": 0.0007098290787968739,
+            "sd": 0.013839304576237959,
+            "n": 10
+          }
+        ],
+        "null_twin_lambda_max": [
+          {
+            "mean": 0.35555009186872294,
+            "sd": 0.008653598614171297,
+            "n": 10
+          },
+          {
+            "mean": 0.2535398807043074,
+            "sd": 0.005075862627847679,
+            "n": 10
+          },
+          {
+            "mean": 0.010938995679451297,
+            "sd": 0.0012938520117204725,
+            "n": 10
+          },
+          {
+            "mean": 0.010901877897817049,
+            "sd": 0.0037379731443118033,
+            "n": 10
+          },
+          {
+            "mean": 0.011980485802694136,
+            "sd": 0.0015989121140909852,
+            "n": 10
+          },
+          {
+            "mean": 0.01128422724824871,
+            "sd": 0.004965128190297508,
+            "n": 10
+          },
+          {
+            "mean": 0.012490914472165163,
+            "sd": 0.0015916141168452961,
+            "n": 10
+          },
+          {
+            "mean": 0.01248607818775629,
+            "sd": 0.0009937183253449623,
+            "n": 10
+          }
+        ],
+        "null_twin_net_contraction": [
+          {
+            "mean": 4.776734563449738e-18,
+            "sd": 1.5741460241042388e-18,
+            "n": 10
+          },
+          {
+            "mean": 2.1010970741031096e-18,
+            "sd": 1.2581881326290324e-18,
+            "n": 10
+          },
+          {
+            "mean": 0.0,
+            "sd": 0.0,
+            "n": 10
+          },
+          {
+            "mean": 0.0,
+            "sd": 0.0,
+            "n": 10
+          },
+          {
+            "mean": 0.0,
+            "sd": 0.0,
+            "n": 10
+          },
+          {
+            "mean": 0.0,
+            "sd": 0.0,
+            "n": 10
+          },
+          {
+            "mean": 0.0,
+            "sd": 0.0,
+            "n": 10
+          },
+          {
+            "mean": 0.0,
+            "sd": 0.0,
+            "n": 10
+          }
+        ],
+        "null_twin_k": [
+          0.2683221476510067,
+          0.23852348993288588,
+          0.02,
+          0.02,
+          0.02,
+          0.02,
+          0.02,
+          0.02
+        ],
+        "lambda_max_matched_within_10pct": [
+          true,
+          true,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "twin_max_level_growth": 0.008150698598508286,
+        "twin_within_50pct_of_treatment_per_level": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "spearman_twin_growth_vs_treatment_contraction": 0.3333333333333334,
+        "forward_control_growth_nats_per_step": [
+          {
+            "mean": 0.09459201675545195,
+            "sd": 0.02413800645565337,
+            "n": 10
+          },
+          {
+            "mean": 0.06801242734885339,
+            "sd": 0.03663178613834912,
+            "n": 10
+          },
+          {
+            "mean": -0.12073990240787831,
+            "sd": 0.15618705962274293,
+            "n": 10
+          },
+          {
+            "mean": -0.10953301838431495,
+            "sd": 0.02942193345187897,
+            "n": 10
+          },
+          {
+            "mean": -0.26164948042461794,
+            "sd": 0.023806136349487313,
+            "n": 10
+          },
+          {
+            "mean": -0.4841767896370802,
+            "sd": 0.011985607031452353,
+            "n": 10
+          },
+          {
+            "mean": -0.4448334291845013,
+            "sd": 0.027180385912912778,
+            "n": 10
+          },
+          {
+            "mean": -0.37835716031357025,
+            "sd": 0.14373145639786383,
+            "n": 10
+          }
+        ],
+        "spearman_forward_growth_vs_contraction": -0.7142857142857144,
+        "positive_control_growth": {
+          "mean": 0.15444287236765114,
+          "sd": 0.0010119403870911645,
+          "n": 10,
+          "known_rate": 0.15387988316265222,
+          "rel_err": 0.003658627712914472
+        },
+        "cheat_spearman": 1.0,
+        "cheat_twin_ok": true,
+        "treatment_success": false,
+        "treatment_failure": true,
+        "max_match_fraction_of_grid": 0.7699642661067394,
+        "mean_fraction_of_entropy_rise_reached_by_T10": 0.27000810805048125
+      },
+      "anomalies": [
+        {
+          "id": "A1",
+          "text": "level 2: twin lambda_max 0.011 vs treatment -0.227 not within 10%"
+        },
+        {
+          "id": "A2",
+          "text": "level 3: twin lambda_max 0.011 vs treatment -0.005 not within 10%"
+        },
+        {
+          "id": "A3",
+          "text": "level 4: twin lambda_max 0.012 vs treatment -0.228 not within 10%"
+        },
+        {
+          "id": "A4",
+          "text": "level 5: twin lambda_max 0.011 vs treatment -0.463 not within 10%"
+        },
+        {
+          "id": "A5",
+          "text": "level 6: twin lambda_max 0.012 vs treatment -0.459 not within 10%"
+        },
+        {
+          "id": "A6",
+          "text": "level 7: twin lambda_max 0.012 vs treatment -0.426 not within 10%"
+        }
+      ],
+      "rejected_explanations": [
+        "points leaving the feasible (positive) region counted as information loss",
+        "matched lambda_max in the twin is not achieved"
+      ]
+    }
+  ],
+  "candidateEngines": [],
+  "currentVerdict": "PARK",
+  "evidenceSummary": {
+    "layer": "experimental_observation",
+    "rows": "hecate/programs/HT-79e904e13a/worlds/W1/rows.jsonl",
+    "note": "round 1 W4 NULL; round 2 W1 NULL: two worlds read, both NULL/CONFOUNDED"
+  }
+}

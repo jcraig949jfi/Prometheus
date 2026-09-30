@@ -1,0 +1,79 @@
+{
+  "prereg": "roles/Hecate/prereg/2026-09-30_pass3_v2/PREREG.md",
+  "counts": {
+    "NULL": 6,
+    "SIGNAL": 2
+  },
+  "verdicts": {
+    "PARK": 6,
+    "PROBING": 2
+  },
+  "unattainable_or_failed": 0,
+  "repair_falsified": false,
+  "worlds": [
+    {
+      "triplicateId": "HT-056d3ac561",
+      "world": "W5",
+      "outcome": "NULL",
+      "verdict": "PARK",
+      "reason": "two valid NULL readings (W4, W5)",
+      "core_minutes": 0.0216
+    },
+    {
+      "triplicateId": "HT-974471f045",
+      "world": "W6",
+      "outcome": "NULL",
+      "verdict": "PARK",
+      "reason": "two valid NULL readings (W3, W6)",
+      "core_minutes": 0.454
+    },
+    {
+      "triplicateId": "HT-ae38c641b1",
+      "world": "W5",
+      "outcome": "NULL",
+      "verdict": "PARK",
+      "reason": "two valid NULL readings (W3, W5)",
+      "core_minutes": 1.261
+    },
+    {
+      "triplicateId": "HT-e106e1603b",
+      "world": "W5",
+      "outcome": "NULL",
+      "verdict": "PARK",
+      "reason": "two valid NULL readings (W1, W5)",
+      "core_minutes": 0.806
+    },
+    {
+      "triplicateId": "HT-37e311ce05",
+      "world": "W5",
+      "outcome": "NULL",
+      "verdict": "PARK",
+      "reason": "revived by the generator repair and read NULL (two reasons)",
+      "core_minutes": 0.789
+    },
+    {
+      "triplicateId": "HT-55162c0ac0",
+      "world": "W6",
+      "outcome": "SIGNAL",
+      "verdict": "PROBING",
+      "reason": "round-3 SIGNAL; Pass 4 next",
+      "core_minutes": 0.04114583333333333
+    },
+    {
+      "triplicateId": "HT-8a87057933",
+      "world": "W5",
+      "outcome": "SIGNAL",
+      "verdict": "PROBING",
+      "reason": "round-3 SIGNAL; Pass 4 next",
+      "core_minutes": 0.014322916666666666
+    },
+    {
+      "triplicateId": "HT-faa9277e02",
+      "world": "W6",
+      "outcome": "NULL",
+      "verdict": "PARK",
+      "reason": "revived by the generator repair and read NULL (two reasons)",
+      "core_minutes": 0.44166666666666665
+    }
+  ]
+}

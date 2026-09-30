@@ -1,0 +1,42 @@
+{
+  "schema": "prometheus.work_state.v1",
+  "seat": "Tyche",
+  "mwo_id": "MWO-0004",
+  "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
+  "updated_at_utc": "2026-09-30T07:25:00Z",
+  "state": "ACTIVE",
+  "branch": "tyche/dark-ecology-v0-2026-09-30",
+  "head_sha": "(this commit; see git log -1 -- roles/Tyche/WORK_STATE.json)",
+  "threads": [
+    {
+      "id": "T-TYCHE-DARK-ECOLOGY",
+      "charter": "roles/Tyche/prompts/2026-09-30_charter/",
+      "status": "RUNNING"
+    }
+  ],
+  "campaigns": [],
+  "experiments": [
+    {
+      "id": "v0",
+      "prereg": "roles/Tyche/prereg/2026-09-30_v0/PREREG.md",
+      "status": "BLOCKED",
+      "run_dir": "tyche/runs/v0_2026-09-30",
+      "note": "evolution complete (40 gens, 44 admitted); Pass D 33/44 audited when the harness stopped the job for host memory pressure; not restarted without operator go-ahead"
+    }
+  ],
+  "fabric_tasks": [],
+  "running": [],
+  "blocked_on": [
+    "operator go-ahead to resume Pass D for 11 lenses (harness memory reap; seat instructed not to restart on its own)"
+  ],
+  "next_actions": [
+    "Resume Pass D for the 11 unaudited lenses with 8 workers and a bounded world cache (on go-ahead)",
+    "Score H1-H6 + REPORT (TYCHE-02)",
+    "Review packet (TYCHE-03)",
+    "Replenish frontier, prereg v1 (TYCHE-04)"
+  ],
+  "operator_decisions_required": [],
+  "latest_reports": [
+    "roles/Tyche/prereg/2026-09-30_v0/PREREG.md"
+  ]
+}

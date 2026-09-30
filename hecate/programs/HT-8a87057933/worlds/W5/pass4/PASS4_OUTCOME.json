@@ -1,0 +1,217 @@
+{
+ "triplicateId": "HT-8a87057933",
+ "world": "W5",
+ "R": {
+  "reproduced": true,
+  "stats": {
+   "pooled_ratio": 0.32955131511088187,
+   "seeds_meeting_0.50": 10,
+   "per_seed_ratio": [
+    0.3159144893111639,
+    0.35,
+    0.32075471698113206,
+    0.32186732186732187,
+    0.34025974025974026,
+    0.3038961038961039,
+    0.33064516129032256,
+    0.35774647887323946,
+    0.32754342431761785,
+    0.3333333333333333
+   ],
+   "errors_treatment": 1278,
+   "errors_control_ref": 3878,
+   "S_values": {
+    "S1": 0.32955131511088187,
+    "S2": 1.0,
+    "S3": 0.14992057340628812
+   },
+   "S3_reported_not_gated": 0.14992057340628812
+  }
+ },
+ "ORIG": {
+  "fired": true,
+  "stats": {
+   "errors_channel_reset": 1278,
+   "errors_core_guided": 1278,
+   "ratio_reset_over_core": 1.0,
+   "kill_if_le": 1.1,
+   "valid_deleted_channel_reset": 2775,
+   "valid_deleted_core_guided": 2775,
+   "errors_per_seed_reset": [
+    133,
+    126,
+    136,
+    131,
+    131,
+    117,
+    123,
+    127,
+    132,
+    122
+   ],
+   "errors_per_seed_core": [
+    133,
+    126,
+    136,
+    131,
+    131,
+    117,
+    123,
+    127,
+    132,
+    122
+   ]
+  }
+ },
+ "ALT": {
+  "status": "FAIL",
+  "stats": {
+   "A1_ratio_to_drop_oldest": 0.6013754457463066,
+   "A1_pass": false,
+   "A2_ratio_to_channel_reset": 0.8557448350851757,
+   "A2_pass": false,
+   "errors_treatment": 2361,
+   "errors_per_seed_treatment": [
+    237,
+    238,
+    266,
+    241,
+    229,
+    216,
+    231,
+    240,
+    227,
+    236
+   ],
+   "errors_by_arm": {
+    "CONTROL_REF": 3926,
+    "CHANNEL_RESET": 2759,
+    "POSITIVE_CONTROL": 364,
+    "NULL_TWIN": 3359,
+    "CHEAT": 0
+   },
+   "valid_deleted_per_unsat": {
+    "CONTROL_REF": 7.016,
+    "CHANNEL_RESET": 7.580389768574909,
+    "POSITIVE_CONTROL": 0.0,
+    "NULL_TWIN": 5.692429022082019,
+    "TREATMENT": 3.5715254237288137
+   },
+   "mus_size_range": [
+    2,
+    8
+   ],
+   "mus_size_mean_per_seed": [
+    4.2194940476190474,
+    4.239700374531835,
+    4.371848739495798,
+    4.277902621722847,
+    4.201219512195122,
+    4.370402053036783,
+    4.306376360808709,
+    4.249258160237389,
+    4.383319967923015,
+    4.2541966426858515
+   ],
+   "mus_frac_spanning_ge3_channels_per_seed": [
+    0.9017857142857143,
+    0.9161048689138577,
+    0.9250700280112045,
+    0.9108614232209737,
+    0.8971036585365854,
+    0.9204448246364414,
+    0.9284603421461898,
+    0.9094955489614244,
+    0.9125902165196471,
+    0.9192645883293366
+   ]
+  }
+ },
+ "controls": {
+  "positive_detected": true,
+  "cheat_detected": true
+ },
+ "controls_detail": {
+  "R_world": {
+   "positive_values": {
+    "S1": 0.1634863331614234,
+    "S2": 1.0,
+    "S3": 0.0
+   },
+   "positive_detected": true,
+   "twin_values": {
+    "S1": 0.7111913357400722,
+    "S2": 0.0,
+    "S3": 0.7950290443308206
+   },
+   "twin_fails_all_clauses": true,
+   "cheat_values": {
+    "S1": 0.0,
+    "S2": 1.0,
+    "S3": 0.0
+   },
+   "cheat_detected": true,
+   "pc_floor_flag": false,
+   "twin_floor_flag": false,
+   "faithfulness_ok": true
+  },
+  "ALT_world": {
+   "control_first_eligible": true,
+   "rerun_identical": true,
+   "status_same": true,
+   "clauses": [
+    {
+     "id": "A1",
+     "threshold": 0.5,
+     "positive_value": 0.09271523178807947,
+     "twin_value": 0.8555781966377993,
+     "attainable": true,
+     "discriminating": true
+    },
+    {
+     "id": "A2",
+     "threshold": 0.8,
+     "positive_value": 0.1319318593693367,
+     "twin_value": 1.217470097861544,
+     "attainable": true,
+     "discriminating": true
+    }
+   ],
+   "positive_detected": true,
+   "cheat_detected": true,
+   "cheat_detail": {
+    "cheat_meets_all_alt_clauses": true,
+    "cheat_flagged_by_error_floor": true,
+    "positive_control_flagged_by_floor": false,
+    "null_twin_flagged_by_floor": false
+   }
+  }
+ },
+ "predicate": "PARK",
+ "stupid_explanations_status": [
+  {
+   "text": "the MUS is trivially the conflicting channel, so any per-channel reset-on-mismatch rule would do equally well (SAT adds nothing)",
+   "addressed_by_this_run": true,
+   "how": "ORIG: channel-reset without SAT in the original world, errors 1278 vs core-guided 1278 -> fired=True. ALT: relational world where cores span channels; core-guided vs channel-reset A2 ratio 0.8557448350851757."
+  },
+  {
+   "text": "drop-oldest is a strawman here because a window of 32 over 8 channels means the stale clause is usually young; the advantage is window geometry, not conflict localisation",
+   "addressed_by_this_run": false,
+   "how": "Window fixed at 32 in both worlds by PREREG/spec; no window sweep run."
+  },
+  {
+   "text": "the treatment wins only because sensor noise is rare (3%); at higher noise 'oldest in core' deletes valid clauses and the effect vanishes",
+   "addressed_by_this_run": false,
+   "how": "Noise fixed at 3% in both worlds; no noise sweep run."
+  },
+  {
+   "text": "errors are dominated by the unavoidable first request after each switch, so any policy lands near the floor and ratios are noise",
+   "addressed_by_this_run": true,
+   "how": "Positive controls (R world 634 errors, ALT world 364) sit far below drop-oldest, so errors are not floor-dominated."
+  }
+ ],
+ "anomalies": [],
+ "core_minutes": 0.1171875,
+ "attempts": 1,
+ "notes": "R/ORIG seeds 100-109 original W5 world (frozen controls.run, probe/world.run); ALT relational world (theta_i - theta_j clauses, union-find SAT), control-first ALT_ATTAINABILITY.json before treatment code; seeds 100-109. See NOTES.md."
+}

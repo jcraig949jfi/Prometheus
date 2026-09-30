@@ -1,0 +1,2198 @@
+{
+  "id": "HT-8a87057933",
+  "key": "Adaptive Control + Category Theory + Satisfiability",
+  "stratum": "S1_cross_extreme",
+  "concepts": [
+    {
+      "field": "Control Theory",
+      "mechanism": "dynamics",
+      "name": "Adaptive Control",
+      "short_description": "Controllers that adjust parameters online to handle uncertainty; model reference, self-tuning regulators."
+    },
+    {
+      "field": "Mathematics",
+      "mechanism": "structure",
+      "name": "Category Theory",
+      "short_description": "Abstract algebra of mappings between structures; functors, natural transformations, universal properties."
+    },
+    {
+      "field": "Logic",
+      "mechanism": "constraint",
+      "name": "Satisfiability",
+      "short_description": "Determining if a logical formula has a satisfying assignment; SAT/SMT solvers; minimal unsatisfiable cores for conflict localization."
+    }
+  ],
+  "provenance": {
+    "historicalId": "Adaptive Control + Category Theory + Satisfiability",
+    "humanreadable": "agents/hephaestus/humanreadable/Category_Theory---Adaptive_Control---Satisfiability.md",
+    "ledger_lines": [
+      4282
+    ],
+    "source": "hephaestus",
+    "sourceArtifact": "agents/hephaestus/ledger.jsonl#L4282",
+    "upstream_nous": [
+      "agents/nous/runs/20260325_132552/responses.jsonl#L2773",
+      "agents/nous/runs/20260327_203534/responses.jsonl#L24"
+    ],
+    "selected_by": "roles/Hecate/prereg/2026-09-29_first_selection/"
+  },
+  "history": {
+    "forged": false,
+    "ledger_n": 1,
+    "ledger_reasons": [
+      "api_call_failed"
+    ],
+    "nous_composite_max": 6.33,
+    "nous_high_potential": false,
+    "nous_models": [
+      "nvidia/nemotron-3-super-120b-a12b"
+    ],
+    "nous_n": 2,
+    "nous_unproductive_any": true
+  },
+  "passes": [
+    {
+      "id": "P0",
+      "triplicateId": "HT-8a87057933",
+      "index": 0,
+      "kind": "raw_interpretation",
+      "added": [
+        "new interpretation"
+      ],
+      "generator": {
+        "model": "claude-opus-5-5",
+        "search": false,
+        "prompt": "hecate/programs/_prompts/pass0_3_v1.md",
+        "prompt_sha256": "9ac5468dffb0a5792840809c84b3ad1ab22056397741dacb893386fd206baf3d"
+      },
+      "inspected_prior": [],
+      "unexplained": [
+        "whether any interpretation needs all three concepts rather than two",
+        "whether category theory contributes mechanism or only vocabulary"
+      ],
+      "decision": "DEEPEN",
+      "research_state": {
+        "novelty": "unknown",
+        "mechanistic_clarity": "low",
+        "falsifiability": "low",
+        "empirical_support": "none",
+        "cross_lens_agreement": "unknown",
+        "cross_substrate_transfer": "unknown",
+        "baseline_resistance": "unknown",
+        "artifact_risk": "medium",
+        "cost": "low",
+        "unexpectedness": "medium",
+        "potential_importance": "medium"
+      },
+      "concept_extractions": [
+        {
+          "concept": "Adaptive Control",
+          "defining_structures": [
+            "plant with unknown/slowly varying parameters theta",
+            "controller with adjustable parameters k(t)",
+            "reference model (MRAC) or online identifier + design map (self-tuning regulator)",
+            "update law driven by an error signal"
+          ],
+          "invariants": [
+            "Lyapunov function V(e, theta_tilde) non-increasing under ideal update law",
+            "certainty-equivalence structure: controller = design(estimate)",
+            "sign of high-frequency gain assumed known"
+          ],
+          "transformations": [
+            "parameter update k <- k - gamma * grad-like term",
+            "identification map data -> estimate",
+            "design map estimate -> controller gains"
+          ],
+          "conserved_quantities": [
+            "bounded energy-like V in the ideal case",
+            "total excitation budget (probing vs exploiting trade-off)"
+          ],
+          "failure_modes": [
+            "parameter drift without persistent excitation",
+            "bursting (quiet periods then violent transients)",
+            "loss of robustness to unmodelled dynamics",
+            "non-identifiability: many parameters fit the same data",
+            "dual-control dilemma: exploit poorly identified model or probe at a cost"
+          ],
+          "dynamics": [
+            "two time scales: fast plant, slower parameter adaptation",
+            "convergence of tracking error without convergence of parameters"
+          ],
+          "scales": [
+            "adaptation gain vs plant bandwidth",
+            "forgetting horizon vs rate of plant change"
+          ],
+          "locality": [
+            "local in time (update uses current error)",
+            "local in parameter space (gradient-like steps)"
+          ],
+          "memory": [
+            "parameter estimate as compressed memory of all past data",
+            "covariance matrix / forgetting factor in RLS"
+          ],
+          "identity": [
+            "the controller is identified by its gains; the plant by its parameter vector (up to non-identifiable directions)"
+          ],
+          "reproduction": [
+            "none native; gains can be copied to a new plant as a warm start"
+          ],
+          "selection": [
+            "implicit: the update law selects parameter values that reduce error"
+          ],
+          "information": [
+            "persistent excitation = information-richness of the input",
+            "estimation error as information about model mismatch"
+          ],
+          "constraint": [
+            "stability must hold during learning",
+            "actuator limits",
+            "known structure (order, relative degree)"
+          ]
+        },
+        {
+          "concept": "Category Theory",
+          "defining_structures": [
+            "objects and morphisms with associative composition and identities",
+            "functors between categories",
+            "natural transformations between functors",
+            "universal constructions: limits, colimits, adjunctions"
+          ],
+          "invariants": [
+            "composition is preserved by functors",
+            "naturality squares commute",
+            "universal objects are unique up to unique isomorphism"
+          ],
+          "transformations": [
+            "functorial translation of one structure into another",
+            "vertical/horizontal composition of natural transformations",
+            "Yoneda embedding: object -> its hom-functor"
+          ],
+          "conserved_quantities": [
+            "isomorphism class",
+            "commutativity of diagrams"
+          ],
+          "failure_modes": [
+            "non-functoriality: translation that breaks composition",
+            "a desired limit does not exist",
+            "over-abstraction: structure that forgets exactly the distinctions that matter"
+          ],
+          "dynamics": [
+            "none native; dynamics appear only as endofunctors/coalgebras or as categories of trajectories"
+          ],
+          "scales": [
+            "objects vs morphisms vs 2-cells (three levels of structure)",
+            "small finite categories vs large ones"
+          ],
+          "locality": [
+            "a diagram is checked square by square",
+            "sheaf-like gluing of local data"
+          ],
+          "memory": [
+            "none native; an object is characterised by its relations (Yoneda), which acts like a relational record"
+          ],
+          "identity": [
+            "identity morphisms; identity only up to isomorphism"
+          ],
+          "reproduction": [
+            "free constructions generate structure from generators",
+            "copying via diagonal maps in cartesian categories"
+          ],
+          "selection": [
+            "a universal property selects the 'best' object among all cones"
+          ],
+          "information": [
+            "an object is determined by how all others map into it (Yoneda)",
+            "forgetful functors discard information; left adjoints add it freely"
+          ],
+          "constraint": [
+            "commutativity constraints on diagrams",
+            "functoriality constraints on translations"
+          ]
+        },
+        {
+          "concept": "Satisfiability",
+          "defining_structures": [
+            "Boolean variables, literals, clauses (CNF)",
+            "assignment; satisfiable vs unsatisfiable",
+            "CDCL: unit propagation, conflict analysis, learned clauses, backjumping, restarts",
+            "local search (WalkSAT) with noise",
+            "minimal unsatisfiable subsets (MUS)"
+          ],
+          "invariants": [
+            "satisfiability is invariant under variable renaming and clause reordering",
+            "a learned clause is implied by the original formula",
+            "every UNSAT formula contains at least one MUS"
+          ],
+          "transformations": [
+            "resolution",
+            "unit propagation",
+            "encoding a problem into CNF",
+            "clause deletion / MUS extraction"
+          ],
+          "conserved_quantities": [
+            "the solution set under implied-clause addition",
+            "backbone (literals fixed in every solution)"
+          ],
+          "failure_modes": [
+            "exponential search near the clause/variable phase transition (~4.27 for random 3-SAT)",
+            "heavy-tailed runtimes",
+            "clause database blow-up",
+            "multiple overlapping MUSes making conflict attribution ambiguous"
+          ],
+          "dynamics": [
+            "solver trajectory: decisions, propagations, conflicts, restarts",
+            "phase transition in P(SAT) vs constraint density"
+          ],
+          "scales": [
+            "number of variables n, clause density alpha",
+            "MUS size vs formula size"
+          ],
+          "locality": [
+            "clauses are local constraints over few variables",
+            "conflict analysis localises failure to an implication-graph cut"
+          ],
+          "memory": [
+            "learned clauses: persistent memory of forbidden regions",
+            "variable activity scores (VSIDS) as decaying memory"
+          ],
+          "identity": [
+            "a formula up to renaming; a solution as a point in {0,1}^n"
+          ],
+          "reproduction": [
+            "learned clauses are derived (generated) from conflicts"
+          ],
+          "selection": [
+            "clause-database reduction keeps 'useful' learned clauses",
+            "branching heuristics select variables"
+          ],
+          "information": [
+            "each conflict yields a clause excluding a region",
+            "model counting = log volume of the remaining solution space"
+          ],
+          "constraint": [
+            "hard Boolean constraints; nothing partial unless MaxSAT"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "P1",
+      "triplicateId": "HT-8a87057933",
+      "index": 1,
+      "kind": "collision",
+      "added": [
+        "new mechanism"
+      ],
+      "generator": {
+        "model": "claude-opus-5-5",
+        "search": false,
+        "prompt": "hecate/programs/_prompts/pass0_3_v1.md",
+        "prompt_sha256": "9ac5468dffb0a5792840809c84b3ad1ab22056397741dacb893386fd206baf3d"
+      },
+      "inspected_prior": [
+        "I1",
+        "I2",
+        "I3",
+        "I4",
+        "I5",
+        "I6",
+        "I7"
+      ],
+      "unexplained": [
+        "M1/M5/M15 may be known ideas (change-point reset, robust control, info-gain exploration) in new vocabulary",
+        "category-theory knockouts are weak for M1, M7, M8, M13, M15"
+      ],
+      "decision": "DEEPEN",
+      "research_state": {
+        "novelty": "unknown",
+        "mechanistic_clarity": "medium",
+        "falsifiability": "medium",
+        "empirical_support": "none",
+        "cross_lens_agreement": "unknown",
+        "cross_substrate_transfer": "unknown",
+        "baseline_resistance": "unknown",
+        "artifact_risk": "high",
+        "cost": "low",
+        "unexpectedness": "medium",
+        "potential_importance": "medium"
+      }
+    },
+    {
+      "id": "P2",
+      "triplicateId": "HT-8a87057933",
+      "index": 2,
+      "kind": "lens_explosion",
+      "added": [
+        "new lens",
+        "new observable"
+      ],
+      "generator": {
+        "model": "claude-opus-5-5",
+        "search": false,
+        "prompt": "hecate/programs/_prompts/pass0_3_v1.md",
+        "prompt_sha256": "9ac5468dffb0a5792840809c84b3ad1ab22056397741dacb893386fd206baf3d"
+      },
+      "inspected_prior": [
+        "M1",
+        "M2",
+        "M3",
+        "M4",
+        "M5",
+        "M6",
+        "M7",
+        "M8",
+        "M9",
+        "M10",
+        "M11",
+        "M12",
+        "M13",
+        "M14",
+        "M15"
+      ],
+      "unexplained": [
+        "whether core churn carries information beyond error magnitude",
+        "whether naturality propagation beats spanning-tree transport"
+      ],
+      "decision": "FALSIFY",
+      "research_state": {
+        "novelty": "unknown",
+        "mechanistic_clarity": "medium",
+        "falsifiability": "medium",
+        "empirical_support": "none",
+        "cross_lens_agreement": "unknown",
+        "cross_substrate_transfer": "unknown",
+        "baseline_resistance": "unknown",
+        "artifact_risk": "medium",
+        "cost": "low",
+        "unexpectedness": "medium",
+        "potential_importance": "medium"
+      }
+    },
+    {
+      "id": "P3",
+      "triplicateId": "HT-8a87057933",
+      "index": 3,
+      "kind": "minimal_worlds",
+      "added": [
+        "new intervention",
+        "new falsifier",
+        "new substrate"
+      ],
+      "generator": {
+        "model": "claude-opus-5-5",
+        "search": false,
+        "prompt": "hecate/programs/_prompts/pass0_3_v1.md",
+        "prompt_sha256": "9ac5468dffb0a5792840809c84b3ad1ab22056397741dacb893386fd206baf3d"
+      },
+      "inspected_prior": [
+        "M1",
+        "M2",
+        "M3",
+        "M4",
+        "M5",
+        "M6",
+        "M7",
+        "M8",
+        "M9",
+        "M10",
+        "M11",
+        "M12",
+        "M13",
+        "M14",
+        "M15",
+        "L1",
+        "L2",
+        "L3",
+        "L4",
+        "L5",
+        "L6",
+        "L7"
+      ],
+      "unexplained": [
+        "all worlds unrun",
+        "W3 may rediscover adaptive-noise local search",
+        "W2 may reduce to graph transport"
+      ],
+      "decision": "FALSIFY",
+      "research_state": {
+        "novelty": "unknown",
+        "mechanistic_clarity": "medium",
+        "falsifiability": "high",
+        "empirical_support": "none",
+        "cross_lens_agreement": "unknown",
+        "cross_substrate_transfer": "unknown",
+        "baseline_resistance": "unknown",
+        "artifact_risk": "medium",
+        "cost": "low",
+        "unexpectedness": "medium",
+        "potential_importance": "medium"
+      }
+    },
+    {
+      "id": "P3-probe1",
+      "triplicateId": "HT-8a87057933",
+      "index": 3,
+      "kind": "cheap_probe",
+      "added": [
+        "new observable"
+      ],
+      "generator": {
+        "model": "claude-opus-5-5 (implementer)",
+        "search": false,
+        "prompt": "hecate/programs/_prompts/probe_impl_v1.md",
+        "prompt_sha256": "cf4bd374bce1b817a12d3607063278183ce0a8b7c4a7b771061dc8ce133bcea2"
+      },
+      "prereg": "roles/Hecate/prereg/2026-09-29_probe_round1/PREREG.md",
+      "inspected_prior": [
+        "W1"
+      ],
+      "unexplained": [],
+      "decision": "DEEPEN",
+      "research_state": {
+        "novelty": "unknown",
+        "mechanistic_clarity": "unknown",
+        "falsifiability": "unknown",
+        "empirical_support": "none",
+        "cross_lens_agreement": "unknown",
+        "cross_substrate_transfer": "unknown",
+        "baseline_resistance": "unknown",
+        "artifact_risk": "unknown",
+        "cost": "unknown",
+        "unexpectedness": "unknown",
+        "potential_importance": "unknown"
+      }
+    },
+    {
+      "id": "P3-probe2",
+      "triplicateId": "HT-8a87057933",
+      "index": 3,
+      "kind": "cheap_probe",
+      "added": [
+        "new observable"
+      ],
+      "generator": {
+        "model": "claude-opus-5-5 (implementer)",
+        "search": false,
+        "prompt": "hecate/programs/_prompts/probe_impl_v2.md",
+        "prompt_sha256": "2021ed66e8fefd807203ae1d814b74091b4eabdacef16668e7a025d82128185e"
+      },
+      "prereg": "roles/Hecate/prereg/2026-09-30_probe_round2/PREREG.md",
+      "inspected_prior": [
+        "W1",
+        "W4"
+      ],
+      "unexplained": [
+        "random automata rarely disagree near the start, so every policy is safe",
+        "forbidden-state density decides everything",
+        "the intersection is often empty, forcing probes that happen to be safe"
+      ],
+      "decision": "PARK",
+      "research_state": {
+        "novelty": "unknown",
+        "mechanistic_clarity": "unknown",
+        "falsifiability": "unknown",
+        "empirical_support": "none",
+        "cross_lens_agreement": "unknown",
+        "cross_substrate_transfer": "unknown",
+        "baseline_resistance": "unknown",
+        "artifact_risk": "unknown",
+        "cost": "unknown",
+        "unexpectedness": "unknown",
+        "potential_importance": "unknown"
+      }
+    },
+    {
+      "id": "P3v2",
+      "triplicateId": "HT-8a87057933",
+      "index": 3,
+      "kind": "minimal_worlds_v2",
+      "added": [
+        "new falsifier",
+        "new observable"
+      ],
+      "generator": {
+        "model": "claude-opus-5-5",
+        "search": false,
+        "prompt": "hecate/programs/_prompts/pass3_v2.md",
+        "prompt_sha256": "2adcfc8da07ee9adb9b04d2214889f0965758f7fcf0a60cde08eebb62bedd461"
+      },
+      "prereg": "roles/Hecate/prereg/2026-09-30_pass3_v2/PREREG.md",
+      "inspected_prior": [],
+      "unexplained": [],
+      "decision": "FALSIFY",
+      "research_state": {
+        "novelty": "unknown",
+        "mechanistic_clarity": "unknown",
+        "falsifiability": "unknown",
+        "empirical_support": "none",
+        "cross_lens_agreement": "unknown",
+        "cross_substrate_transfer": "unknown",
+        "baseline_resistance": "unknown",
+        "artifact_risk": "unknown",
+        "cost": "unknown",
+        "unexpectedness": "unknown",
+        "potential_importance": "unknown"
+      }
+    },
+    {
+      "id": "P3-probe3",
+      "triplicateId": "HT-8a87057933",
+      "index": 3,
+      "kind": "cheap_probe",
+      "added": [
+        "new falsifier",
+        "new observable"
+      ],
+      "generator": {
+        "model": "claude-opus-5-5",
+        "search": false,
+        "prompt": "hecate/programs/_prompts/probe_impl_v3.md",
+        "prompt_sha256": "a34a8c6143f49df2b33b75871e8f9cd12e60c10c37778ba595e12fedf1621685"
+      },
+      "prereg": "roles/Hecate/prereg/2026-09-30_pass3_v2/PREREG.md",
+      "inspected_prior": [
+        "W5"
+      ],
+      "unexplained": [
+        "the MUS is trivially the conflicting channel, so any per-channel reset-on-mismatch rule would do equally well (SAT adds nothing)",
+        "drop-oldest is a strawman here because a window of 32 over 8 channels means the stale clause is usually young; the advantage is window geometry, not conflict localisation",
+        "the treatment wins only because sensor noise is rare (3%); at higher noise 'oldest in core' deletes valid clauses and the effect vanishes"
+      ],
+      "decision": "FALSIFY",
+      "research_state": {
+        "novelty": "unknown",
+        "mechanistic_clarity": "unknown",
+        "falsifiability": "unknown",
+        "empirical_support": "low",
+        "cross_lens_agreement": "unknown",
+        "cross_substrate_transfer": "unknown",
+        "baseline_resistance": "unknown",
+        "artifact_risk": "unknown",
+        "cost": "unknown",
+        "unexpectedness": "unknown",
+        "potential_importance": "unknown"
+      }
+    },
+    {
+      "id": "P4",
+      "triplicateId": "HT-8a87057933",
+      "index": 4,
+      "kind": "first_falsification",
+      "added": [
+        "new falsifier",
+        "new substrate"
+      ],
+      "generator": {
+        "model": "claude-opus-5-5 (attacker)",
+        "search": false,
+        "prompt": "hecate/programs/_prompts/pass4_impl_v2.md",
+        "prompt_sha256": "e55576b2abf79aca49dd5b740bfd6a0d9a6d8ce4060652fc13aded01fb0e2d8c"
+      },
+      "prereg": "roles/Hecate/prereg/2026-09-30_pass4_round2/PREREG.md",
+      "inspected_prior": [
+        "W5"
+      ],
+      "unexplained": [
+        "ORIG fired as predicted: channel-reset (no SAT) made exactly the same 1278 errors seed for seed. ALT (cross-channel clauses; cores span >= 3 channels in ~91%) FAILED: 0.601 of drop-oldest, 0.856 of channel-reset."
+      ],
+      "decision": "PARK",
+      "research_state": {
+        "novelty": "unknown",
+        "mechanistic_clarity": "unknown",
+        "falsifiability": "unknown",
+        "empirical_support": "none",
+        "cross_lens_agreement": "unknown",
+        "cross_substrate_transfer": "unknown",
+        "baseline_resistance": "none",
+        "artifact_risk": "unknown",
+        "cost": "unknown",
+        "unexpectedness": "unknown",
+        "potential_importance": "unknown"
+      }
+    }
+  ],
+  "hypotheses": [
+    {
+      "id": "I1",
+      "triplicateId": "HT-8a87057933",
+      "passId": "P0",
+      "kind": "interpretation",
+      "layer": "speculation",
+      "statement": "Adaptation is constraint repair rather than gradient descent: every closed-loop observation becomes a clause over a discretised model/controller space, the adapting agent maintains a satisfiable clause set, and when the plant changes the set turns UNSAT; the MUS localises which past observations conflict with the new regime, so forgetting is targeted to the conflict instead of uniform in time. Experiment: switching plant, core-guided forgetting vs time-based forgetting."
+    },
+    {
+      "id": "I2",
+      "triplicateId": "HT-8a87057933",
+      "passId": "P0",
+      "kind": "interpretation",
+      "layer": "speculation",
+      "statement": "Adaptation should be functorial: if controllers for subsystems compose into a controller for the whole, the adaptation operator should commute with composition (adapt(g o f) = adapt(g) o adapt(f)); SAT enforces the interface constraints. Experiment: adapt modules separately, recompose, and test whether the composite works without retuning vs non-functorial adaptation."
+    },
+    {
+      "id": "I3",
+      "triplicateId": "HT-8a87057933",
+      "passId": "P0",
+      "kind": "interpretation",
+      "layer": "speculation",
+      "statement": "The SAT solver is itself the plant: its noise/restart parameters are control inputs, its unsat-clause trajectory is the output, and the random-SAT phase transition is a plant nonlinearity; an adaptive controller should be equivariant under instance isomorphisms (renaming), a categorical requirement. Experiment: MRAC on local-search noise near alpha ~ 4.2."
+    },
+    {
+      "id": "I4",
+      "triplicateId": "HT-8a87057933",
+      "passId": "P0",
+      "kind": "interpretation",
+      "layer": "speculation",
+      "statement": "Persistent excitation is a Yoneda question: an unknown plant among a finite category of candidates is determined by its responses to probes, and the agent should choose probes forming a separating family, found by SAT as a hitting-set problem. Experiment: probes needed to identify the plant with SAT-chosen separating probes vs random excitation."
+    },
+    {
+      "id": "I5",
+      "triplicateId": "HT-8a87057933",
+      "passId": "P0",
+      "kind": "interpretation",
+      "layer": "speculation",
+      "statement": "The adaptation target is a universal object rather than a point estimate: act only with controls valid in the limit (intersection) of all models still consistent with data; when that intersection is empty (UNSAT) the MUS names the models in conflict and drives targeted probing (dual control). Experiment: forbidden-state entries of limit-seeking vs certainty-equivalence control."
+    },
+    {
+      "id": "I6",
+      "triplicateId": "HT-8a87057933",
+      "passId": "P0",
+      "kind": "interpretation",
+      "layer": "speculation",
+      "statement": "There is a phase transition of adaptability: as specifications per adjustable parameter rise, the closed-loop spec set passes from almost-always-repairable to almost-never-repairable, with adaptation time and MUS size peaking at the threshold. Experiment: sweep spec density, measure adaptation time and core size."
+    },
+    {
+      "id": "I7",
+      "triplicateId": "HT-8a87057933",
+      "passId": "P0",
+      "kind": "interpretation",
+      "layer": "speculation",
+      "statement": "Regime changes are natural transformations: a regime maps a task category to behaviours; a regime shift is a family of components, one per task, tied by naturality squares; encoding squares as clauses lets an agent that re-adapted on a few tasks propagate the adaptation to unseen tasks. Experiment: accuracy of propagated components on unseen objects vs independent per-task adaptation."
+    },
+    {
+      "id": "M1",
+      "triplicateId": "HT-8a87057933",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "implemented_candidate",
+      "form": "error-correction mechanism",
+      "statement": "Core-guided forgetting: the agent keeps a window of observation clauses over a finite model space; on UNSAT it extracts an MUS and deletes the oldest clause(s) inside the core only, instead of forgetting uniformly by age.",
+      "derived_from": [
+        "I1"
+      ],
+      "concept_contributions": {
+        "Adaptive Control": "online operation, a switching plant, and the need to re-identify within a stability budget",
+        "Category Theory": "weak: only the view of observations as morphisms into the model space; mostly bookkeeping",
+        "Satisfiability": "MUS extraction as conflict localisation"
+      },
+      "knockouts": {
+        "Adaptive Control": "no drift, nothing to repair; becomes offline consistency checking",
+        "Category Theory": "little changes; the mechanism survives without categorical language (weak three-way dependency)",
+        "Satisfiability": "reverts to uniform exponential/window forgetting"
+      },
+      "simpler_alternative": "change-point detection followed by a full reset, or a short sliding window",
+      "questions": {
+        "what_exists": "a finite set of candidate plant models, a window of observation clauses",
+        "what_changes": "the clause window and the chosen model",
+        "what_persists": "observations not implicated in any conflict",
+        "what_is_selected": "which observations are retained",
+        "what_can_reproduce": "nothing",
+        "what_can_learn": "the current plant regime",
+        "what_can_transfer": "retained clauses that stay consistent across regimes",
+        "distinguishing_observable": "recovery time after a switch vs a random-drop twin and a drop-oldest twin at matched deletion counts"
+      }
+    },
+    {
+      "id": "M2",
+      "triplicateId": "HT-8a87057933",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "learning pressure",
+      "statement": "Functorial adaptation: modules adapt locally but each update must satisfy SAT-encoded interface clauses so that the adapted composite equals the composite of adapted modules.",
+      "derived_from": [
+        "I2"
+      ],
+      "concept_contributions": {
+        "Adaptive Control": "local online adaptation of each module",
+        "Category Theory": "composition law and the requirement that adaptation preserves it",
+        "Satisfiability": "interface consistency checking"
+      },
+      "knockouts": {
+        "Adaptive Control": "static modules; composition trivially preserved",
+        "Category Theory": "modules adapt independently and composites break",
+        "Satisfiability": "functoriality is only checked, not enforced"
+      },
+      "simpler_alternative": "joint retuning of the whole composite after any change",
+      "questions": {
+        "what_exists": "modules as morphisms, interface variables",
+        "what_changes": "module parameters",
+        "what_persists": "commutation of adaptation with composition",
+        "what_is_selected": "updates that keep interfaces consistent",
+        "what_can_reproduce": "nothing",
+        "what_can_learn": "module parameters",
+        "what_can_transfer": "adapted modules into new composites",
+        "distinguishing_observable": "composite error on held-out composites never adapted jointly"
+      }
+    },
+    {
+      "id": "M3",
+      "triplicateId": "HT-8a87057933",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "dynamical law",
+      "statement": "Solver-as-plant MRAC: a local-search SAT solver's noise parameter is adjusted online by a reference-model law tracking a target decay of unsatisfied-clause count; the law uses only renaming-invariant statistics so it is equivariant under instance isomorphism.",
+      "derived_from": [
+        "I3"
+      ],
+      "concept_contributions": {
+        "Adaptive Control": "the MRAC update law and reference trajectory",
+        "Category Theory": "equivariance under the groupoid of variable renamings",
+        "Satisfiability": "the plant (random 3-SAT near threshold)"
+      },
+      "knockouts": {
+        "Adaptive Control": "fixed noise",
+        "Category Theory": "the law may use non-invariant features; the claim collapses to plain tuning (weak dependency)",
+        "Satisfiability": "no plant; nothing to control"
+      },
+      "simpler_alternative": "a fixed noise value tuned offline, or a stagnation-triggered noise increase",
+      "questions": {
+        "what_exists": "solver state, noise parameter, reference trajectory",
+        "what_changes": "noise",
+        "what_persists": "instance-invariant statistics",
+        "what_is_selected": "noise schedules that shorten runs",
+        "what_can_reproduce": "nothing",
+        "what_can_learn": "noise schedule per instance",
+        "what_can_transfer": "the adaptive law across instance sizes and densities",
+        "distinguishing_observable": "median flips-to-solution vs best fixed noise and vs a sign-randomised controller"
+      }
+    },
+    {
+      "id": "M4",
+      "triplicateId": "HT-8a87057933",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "representation",
+      "statement": "Yoneda probing: the plant is represented by its response profile to a probe set; probes are chosen by solving a hitting-set SAT instance so every pair of remaining candidate models is separated by at least one probe.",
+      "derived_from": [
+        "I4"
+      ],
+      "concept_contributions": {
+        "Adaptive Control": "excitation requirement for identifiability",
+        "Category Theory": "representable-functor view: an object is determined by its hom-profile",
+        "Satisfiability": "hitting-set / separating-set solving"
+      },
+      "knockouts": {
+        "Adaptive Control": "no identification pressure; probe choice irrelevant",
+        "Category Theory": "probing is just active learning; the Yoneda framing adds naming only (weak)",
+        "Satisfiability": "probes chosen greedily or randomly"
+      },
+      "simpler_alternative": "greedy information-gain active learning",
+      "questions": {
+        "what_exists": "candidate models, probe inputs, response table",
+        "what_changes": "the set of consistent candidates",
+        "what_persists": "the response profile of the true plant",
+        "what_is_selected": "probes",
+        "what_can_reproduce": "nothing",
+        "what_can_learn": "the plant's identity",
+        "what_can_transfer": "a separating probe set to a new family with the same response structure",
+        "distinguishing_observable": "probes needed to reach one consistent candidate vs random and greedy probing"
+      }
+    },
+    {
+      "id": "M5",
+      "triplicateId": "HT-8a87057933",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "causal constraint",
+      "statement": "Limit-seeking control: at each step apply only controls safe in every model still consistent with data (the limit of the diagram of models); if no such control exists the MUS names which models disagree and the agent probes to split them.",
+      "derived_from": [
+        "I5"
+      ],
+      "concept_contributions": {
+        "Adaptive Control": "online control with the dual-control trade-off",
+        "Category Theory": "limit/intersection as the universal safe object",
+        "Satisfiability": "feasibility test and MUS"
+      },
+      "knockouts": {
+        "Adaptive Control": "no learning; static robust control",
+        "Category Theory": "it is minimax robust control over a version space (weak)",
+        "Satisfiability": "no conflict explanation; probes become random"
+      },
+      "simpler_alternative": "minimax robust control over the version space with random exploration",
+      "questions": {
+        "what_exists": "candidate models, safe-control sets",
+        "what_changes": "version space",
+        "what_persists": "safe actions common to all consistent models",
+        "what_is_selected": "actions",
+        "what_can_reproduce": "nothing",
+        "what_can_learn": "which model is real",
+        "what_can_transfer": "the rule 'act in the intersection, probe on conflict'",
+        "distinguishing_observable": "forbidden-state entries and steps-to-goal vs certainty equivalence"
+      }
+    },
+    {
+      "id": "M6",
+      "triplicateId": "HT-8a87057933",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "memory structure",
+      "statement": "Learned-clause gain memory: clauses learned from past closed-loop conflicts forbid parameter regions; on a new plant the memory is transported through a renaming functor if the plant is isomorphic to a past one, and discarded otherwise.",
+      "derived_from": [
+        "I1",
+        "I3"
+      ],
+      "concept_contributions": {
+        "Adaptive Control": "repeated adaptation across plants",
+        "Category Theory": "transport of memory along isomorphisms",
+        "Satisfiability": "clause learning"
+      },
+      "knockouts": {
+        "Adaptive Control": "no adaptation episodes to remember",
+        "Category Theory": "memory reused naively and poisons non-isomorphic plants",
+        "Satisfiability": "no persistent memory"
+      },
+      "simpler_alternative": "warm-starting from the last gains",
+      "questions": {
+        "what_exists": "clause store, plant family",
+        "what_changes": "active clauses",
+        "what_persists": "clauses valid across isomorphic plants",
+        "what_is_selected": "which clauses are transported",
+        "what_can_reproduce": "clauses (derived from conflicts)",
+        "what_can_learn": "forbidden regions",
+        "what_can_transfer": "memory across isomorphic plants",
+        "distinguishing_observable": "speed-up on isomorphic vs non-isomorphic new plants"
+      }
+    },
+    {
+      "id": "M7",
+      "triplicateId": "HT-8a87057933",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "dynamical law",
+      "statement": "Adaptability phase transition: with k specs per adjustable parameter, P(spec set repairable by adaptation) drops sharply at a critical density and adaptation time peaks there.",
+      "derived_from": [
+        "I6"
+      ],
+      "concept_contributions": {
+        "Adaptive Control": "adaptation as the repair process whose time is measured",
+        "Category Theory": "weak: the category of spec refinements only orders densities",
+        "Satisfiability": "random constraint-density phase transition"
+      },
+      "knockouts": {
+        "Adaptive Control": "no repair process; plain random-SAT statistics",
+        "Category Theory": "no change (weak three-way dependency)",
+        "Satisfiability": "no threshold"
+      },
+      "simpler_alternative": "the random-SAT phase transition relabelled",
+      "questions": {
+        "what_exists": "parameters, specs",
+        "what_changes": "spec density",
+        "what_persists": "repairability",
+        "what_is_selected": "parameter settings",
+        "what_can_reproduce": "nothing",
+        "what_can_learn": "nothing beyond repair",
+        "what_can_transfer": "the critical density to other plants",
+        "distinguishing_observable": "offset between adaptation-time peak and P(SAT) midpoint"
+      }
+    },
+    {
+      "id": "M8",
+      "triplicateId": "HT-8a87057933",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "dynamical law",
+      "statement": "Bursting as core churn: in adaptation without persistent excitation, the sliding spec set alternates SAT/UNSAT; bursts in tracking error coincide with abrupt MUS turnover.",
+      "derived_from": [
+        "I1",
+        "I6"
+      ],
+      "concept_contributions": {
+        "Adaptive Control": "drift and bursting phenomenology",
+        "Category Theory": "weak: none beyond vocabulary",
+        "Satisfiability": "MUS identity over time as a diagnostic"
+      },
+      "knockouts": {
+        "Adaptive Control": "no bursting to explain",
+        "Category Theory": "no change (weak three-way dependency)",
+        "Satisfiability": "no core-level signal"
+      },
+      "simpler_alternative": "bursts caused by excitation dropping below a threshold (classical explanation)",
+      "questions": {
+        "what_exists": "a slow adaptive loop with a window of specs",
+        "what_changes": "core membership",
+        "what_persists": "nothing during bursts",
+        "what_is_selected": "nothing",
+        "what_can_reproduce": "nothing",
+        "what_can_learn": "parameters",
+        "what_can_transfer": "the churn signal as an early warning",
+        "distinguishing_observable": "lead time of core-churn spikes over error bursts vs an excitation-level predictor"
+      }
+    },
+    {
+      "id": "M9",
+      "triplicateId": "HT-8a87057933",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "interaction law",
+      "statement": "Naturality-constrained transfer: after a regime shift, components learned on a few task objects are propagated to unseen objects by unit propagation over naturality-square clauses.",
+      "derived_from": [
+        "I7"
+      ],
+      "concept_contributions": {
+        "Adaptive Control": "online regime shift and sample-efficient re-adaptation",
+        "Category Theory": "naturality squares tying components together",
+        "Satisfiability": "propagation over square clauses"
+      },
+      "knockouts": {
+        "Adaptive Control": "one-shot fitting; no regime to track",
+        "Category Theory": "components independent; unseen tasks at chance",
+        "Satisfiability": "squares known but not exploited"
+      },
+      "simpler_alternative": "copying the adaptation from the nearest task, or composing maps along a spanning tree",
+      "questions": {
+        "what_exists": "task category, two behaviour functors, components",
+        "what_changes": "components",
+        "what_persists": "naturality relations",
+        "what_is_selected": "consistent component families",
+        "what_can_reproduce": "nothing",
+        "what_can_learn": "components on seen objects",
+        "what_can_transfer": "components to unseen objects",
+        "distinguishing_observable": "accuracy on unseen objects vs independent adaptation and a shuffled-square twin"
+      }
+    },
+    {
+      "id": "M10",
+      "triplicateId": "HT-8a87057933",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "computational primitive",
+      "statement": "Identification/design adjunction residue: treat identification (data -> model) and design (model -> controller) as a candidate adjoint pair; the round-trip residue (controller -> induced data -> re-identified model -> controller) measures certainty-equivalence error and predicts closed-loop failure better than parameter error.",
+      "derived_from": [
+        "I2",
+        "I5"
+      ],
+      "concept_contributions": {
+        "Adaptive Control": "certainty equivalence and closed-loop data",
+        "Category Theory": "unit/counit round trip as a measurable residue",
+        "Satisfiability": "residue computed as SAT consistency of the round trip"
+      },
+      "knockouts": {
+        "Adaptive Control": "no loop, no residue",
+        "Category Theory": "round-trip error is just prediction error (weak)",
+        "Satisfiability": "consistency check replaced by numerical distance"
+      },
+      "simpler_alternative": "closed-loop prediction error",
+      "questions": {
+        "what_exists": "data, model, controller maps",
+        "what_changes": "estimates",
+        "what_persists": "fixed points of the round trip",
+        "what_is_selected": "models near fixed points",
+        "what_can_reproduce": "nothing",
+        "what_can_learn": "the model",
+        "what_can_transfer": "the residue as a diagnostic",
+        "distinguishing_observable": "AUC of residue vs parameter error for predicting instability"
+      }
+    },
+    {
+      "id": "M11",
+      "triplicateId": "HT-8a87057933",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "error-correction mechanism",
+      "statement": "Compositional MUS credit assignment: in a diagram of controller modules, a fault is localised by an MUS over interface clauses and only modules in the core adapt.",
+      "derived_from": [
+        "I1",
+        "I2"
+      ],
+      "concept_contributions": {
+        "Adaptive Control": "local adaptation",
+        "Category Theory": "diagram of modules and interfaces",
+        "Satisfiability": "MUS localisation"
+      },
+      "knockouts": {
+        "Adaptive Control": "no adaptation after localisation",
+        "Category Theory": "no modular structure; core is over flat clauses",
+        "Satisfiability": "all modules adapt"
+      },
+      "simpler_alternative": "adapt the module with largest local error",
+      "questions": {
+        "what_exists": "modules, interfaces, faults",
+        "what_changes": "parameters of core modules only",
+        "what_persists": "untouched modules",
+        "what_is_selected": "modules to adapt",
+        "what_can_reproduce": "nothing",
+        "what_can_learn": "fault locations",
+        "what_can_transfer": "localisation to new diagrams",
+        "distinguishing_observable": "modules modified per fault and collateral loss on unaffected tasks"
+      }
+    },
+    {
+      "id": "M12",
+      "triplicateId": "HT-8a87057933",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "mutation operator",
+      "statement": "Structure-preserving mutation: a population of controllers mutates only by composition-preserving rewrites of its module diagram; survivors must have SAT-certified safety specs; within a lifetime each adapts gains online.",
+      "derived_from": [
+        "I2"
+      ],
+      "concept_contributions": {
+        "Adaptive Control": "within-lifetime gain adaptation",
+        "Category Theory": "rewrite rules that preserve composition",
+        "Satisfiability": "safety certification"
+      },
+      "knockouts": {
+        "Adaptive Control": "population search only (weak: adaptation is incidental)",
+        "Category Theory": "arbitrary mutations",
+        "Satisfiability": "no certification; unsafe survivors"
+      },
+      "simpler_alternative": "random mutation with a fitness penalty for unsafe behaviour",
+      "questions": {
+        "what_exists": "population, rewrite rules",
+        "what_changes": "diagrams, gains",
+        "what_persists": "certified safe diagrams",
+        "what_is_selected": "diagrams",
+        "what_can_reproduce": "controllers",
+        "what_can_learn": "gains",
+        "what_can_transfer": "diagrams across plants",
+        "distinguishing_observable": "fraction of certified offspring and fitness gain vs arbitrary mutation"
+      }
+    },
+    {
+      "id": "M13",
+      "triplicateId": "HT-8a87057933",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "memory structure",
+      "statement": "Backbone identity: the backbone of the specification SAT instance (literals fixed in all solutions) is the persistent part of the controller; adaptation should touch only non-backbone variables.",
+      "derived_from": [
+        "I6"
+      ],
+      "concept_contributions": {
+        "Adaptive Control": "drift requiring partial change",
+        "Category Theory": "weak: none beyond vocabulary",
+        "Satisfiability": "backbone computation"
+      },
+      "knockouts": {
+        "Adaptive Control": "no drift, backbone irrelevant",
+        "Category Theory": "no change (weak three-way dependency)",
+        "Satisfiability": "no invariant part identified"
+      },
+      "simpler_alternative": "freeze parameters with low historical variance",
+      "questions": {
+        "what_exists": "spec instance, backbone",
+        "what_changes": "non-backbone variables",
+        "what_persists": "backbone",
+        "what_is_selected": "non-backbone values",
+        "what_can_reproduce": "nothing",
+        "what_can_learn": "free values",
+        "what_can_transfer": "the backbone across plants",
+        "distinguishing_observable": "backbone stability predicts which parameters change after a shift"
+      }
+    },
+    {
+      "id": "M14",
+      "triplicateId": "HT-8a87057933",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "information bottleneck",
+      "statement": "Adaptive quotient: the controller sees the plant only through a quotient of its state set; the quotient is adapted online to the coarsest partition for which the spec remains satisfiable.",
+      "derived_from": [
+        "I4",
+        "I5"
+      ],
+      "concept_contributions": {
+        "Adaptive Control": "online refinement as the plant changes",
+        "Category Theory": "quotient functor",
+        "Satisfiability": "feasibility of the spec on the quotient"
+      },
+      "knockouts": {
+        "Adaptive Control": "fixed abstraction",
+        "Category Theory": "partition without functorial coherence",
+        "Satisfiability": "no criterion for coarseness"
+      },
+      "simpler_alternative": "bisimulation minimisation / state aggregation",
+      "questions": {
+        "what_exists": "plant states, partition",
+        "what_changes": "partition",
+        "what_persists": "spec satisfiability",
+        "what_is_selected": "partitions",
+        "what_can_reproduce": "nothing",
+        "what_can_learn": "the abstraction",
+        "what_can_transfer": "abstractions to related plants",
+        "distinguishing_observable": "partition size vs control performance frontier"
+      }
+    },
+    {
+      "id": "M15",
+      "triplicateId": "HT-8a87057933",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "learning pressure",
+      "statement": "Conflict-seeking dual control: as CDCL seeks conflicts to learn, the controller chooses actions expected to produce model-eliminating conflicts, valuing an action by the number of candidate models it can refute.",
+      "derived_from": [
+        "I4",
+        "I5"
+      ],
+      "concept_contributions": {
+        "Adaptive Control": "dual control and exploration cost",
+        "Category Theory": "weak: probes as morphisms only",
+        "Satisfiability": "conflicts as the learning signal"
+      },
+      "knockouts": {
+        "Adaptive Control": "no cost, no trade-off",
+        "Category Theory": "no change (weak three-way dependency)",
+        "Satisfiability": "exploration without explanation"
+      },
+      "simpler_alternative": "information-gain exploration",
+      "questions": {
+        "what_exists": "candidate models, actions",
+        "what_changes": "version space",
+        "what_persists": "survivors",
+        "what_is_selected": "actions",
+        "what_can_reproduce": "nothing",
+        "what_can_learn": "the plant",
+        "what_can_transfer": "the refutation-valued policy",
+        "distinguishing_observable": "models eliminated per probe vs random and greedy info-gain"
+      }
+    },
+    {
+      "id": "O-W1-r1",
+      "triplicateId": "HT-8a87057933",
+      "passId": "P3-probe1",
+      "kind": "observation",
+      "layer": "experimental_observation",
+      "evidence_rows": [
+        "hecate/programs/HT-8a87057933/worlds/W1/rows.jsonl",
+        "hecate/programs/HT-8a87057933/worlds/W1/OUTCOME.json"
+      ],
+      "statement": "W1 probe round 1: NOT_BUILT. Outcome NOT_BUILT. Median recovery (steps, n=300 switches each): TREATMENT 3.0, CONTROL drop-oldest 3.0, NULL_TWIN random-drop 5.0, POSITIVE_CONTROL oracle 3.0, CONTROL_SW10 3.0. Treatment/random ratio 0.600 (p=1.92e-56), treatment/drop-oldest ratio 1.000 (p=0.412). Positive control detected=False, cheat detected=True, null twin meets success=False.",
+      "derived_from": [
+        "M1",
+        "M8"
+      ]
+    },
+    {
+      "id": "O-W4-r2",
+      "triplicateId": "HT-8a87057933",
+      "passId": "P3-probe2",
+      "kind": "observation",
+      "layer": "experimental_observation",
+      "evidence_rows": [
+        "hecate/programs/HT-8a87057933/worlds/W4/pilot_rows.jsonl"
+      ],
+      "statement": "W4 probe round 2: SPEC_UNATTAINABLE. Pilot failed twice (see PILOT_attempt1.json, PILOT.json, NOTES.md). Repair applied between attempts: singleton-set trigger steps not counted as probes (symmetric, thresholds unchanged). Phase 2 not run; world.py/evaluate.py not built.",
+      "derived_from": [
+        "M5",
+        "M15",
+        "M4"
+      ]
+    },
+    {
+      "id": "O-W5-r3",
+      "triplicateId": "HT-8a87057933",
+      "passId": "P3-probe3",
+      "kind": "observation",
+      "layer": "experimental_observation",
+      "evidence_rows": [
+        "hecate/programs/HT-8a87057933/worlds/W5/probe/rows.jsonl"
+      ],
+      "statement": "W5 probe round 3: SIGNAL. Control arms from frozen controls.run; TREATMENT from probe/world.run (verbatim loop copy + core-guided repair: MUS by deletion oldest-first, delete the oldest clause in the MUS, repeat until SAT). Seeds 0..9. See probe/NOTES.md.",
+      "derived_from": [
+        "M1"
+      ]
+    },
+    {
+      "id": "O-W5-p4",
+      "triplicateId": "HT-8a87057933",
+      "passId": "P4",
+      "kind": "observation",
+      "layer": "experimental_observation",
+      "evidence_rows": [
+        "hecate/programs/HT-8a87057933/worlds/W5/pass4/rows.jsonl"
+      ],
+      "statement": "Pass 4 on W5: PARK. ORIG fired as predicted: channel-reset (no SAT) made exactly the same 1278 errors seed for seed. ALT (cross-channel clauses; cores span >= 3 channels in ~91%) FAILED: 0.601 of drop-oldest, 0.856 of channel-reset. R/ORIG seeds 100-109 original W5 world (frozen controls.run, probe/world.run); ALT relational world (theta_i - theta_j clauses, union-find SAT), control-first ALT_ATTAINABILITY.json before treatment code; seeds 100-109. See NOTES.md.",
+      "derived_from": [
+        "M1"
+      ]
+    }
+  ],
+  "lenses": [
+    {
+      "id": "L1",
+      "name": "Core-churn seismograph",
+      "triplicateId": "HT-8a87057933",
+      "rationale": "If conflict localisation matters, MUS membership over time should carry information not in error magnitude.",
+      "sourceRepresentation": "time series of sliding-window clause sets",
+      "transformation": "extract one MUS per window; compute Jaccard turnover between successive cores",
+      "observables": [
+        "core size",
+        "core turnover",
+        "lag from turnover spike to error spike"
+      ],
+      "predictedSignals": [
+        "turnover spikes precede error bursts",
+        "core-guided deletion concentrates on pre-switch clauses"
+      ],
+      "nullExpectation": "turnover is uncorrelated with regime switches beyond what error magnitude predicts",
+      "failureModes": [
+        "multiple MUSes make turnover depend on extraction order",
+        "window too short: every window trivially SAT"
+      ],
+      "informationAddedBeyondExistingLenses": "which observations conflict, not only how large the error is",
+      "passId": "P2",
+      "targets": [
+        "M1",
+        "M8",
+        "M11"
+      ]
+    },
+    {
+      "id": "L2",
+      "name": "Naturality-square defect ledger",
+      "triplicateId": "HT-8a87057933",
+      "rationale": "Compositional and transfer claims reduce to whether squares commute after adaptation.",
+      "sourceRepresentation": "finite category with two behaviour functors and learned components",
+      "transformation": "enumerate generating squares and test commutation",
+      "observables": [
+        "fraction of commuting squares",
+        "defects on unseen objects"
+      ],
+      "predictedSignals": [
+        "defects near zero under naturality-constrained adaptation"
+      ],
+      "nullExpectation": "defects equal to a shuffled-square twin",
+      "failureModes": [
+        "bijective arrow maps make propagation trivial",
+        "sparse categories give no constraints"
+      ],
+      "informationAddedBeyondExistingLenses": "structural correctness independent of task reward",
+      "passId": "P2",
+      "targets": [
+        "M2",
+        "M9",
+        "M10"
+      ]
+    },
+    {
+      "id": "L3",
+      "name": "Version-space thermometer",
+      "triplicateId": "HT-8a87057933",
+      "rationale": "Adaptation and probing can be read as shrinking a counted solution space.",
+      "sourceRepresentation": "set of candidate models consistent with data",
+      "transformation": "exact model count by enumeration, log2",
+      "observables": [
+        "log2 consistent count per step",
+        "bits removed per probe"
+      ],
+      "predictedSignals": [
+        "SAT-chosen probes remove more bits per probe"
+      ],
+      "nullExpectation": "bits per probe match random probes",
+      "failureModes": [
+        "count collapses in one probe for any policy on tiny spaces"
+      ],
+      "informationAddedBeyondExistingLenses": "an information currency comparable across mechanisms",
+      "passId": "P2",
+      "targets": [
+        "M4",
+        "M5",
+        "M15",
+        "M7"
+      ]
+    },
+    {
+      "id": "L4",
+      "name": "Lyapunov certificate audit",
+      "triplicateId": "HT-8a87057933",
+      "rationale": "Satisfying specs does not imply closed-loop stability; a stock control lens guards against that confusion.",
+      "sourceRepresentation": "adapted closed-loop linear(ised) dynamics",
+      "transformation": "solve discrete Lyapunov equation / compute spectral radius along the trajectory",
+      "observables": [
+        "certificate exists",
+        "spectral radius"
+      ],
+      "predictedSignals": [
+        "core-guided adaptation keeps spectral radius < 1 during recovery more often"
+      ],
+      "nullExpectation": "same certificate rate as time-based forgetting",
+      "failureModes": [
+        "grids where all models are stable make the audit vacuous"
+      ],
+      "informationAddedBeyondExistingLenses": "stability, not just consistency",
+      "passId": "P2",
+      "targets": [
+        "M1",
+        "M3",
+        "M8"
+      ]
+    },
+    {
+      "id": "L5",
+      "name": "Renaming-orbit equivariance probe",
+      "triplicateId": "HT-8a87057933",
+      "rationale": "Categorical claims predict behaviour invariant under isomorphisms of instances.",
+      "sourceRepresentation": "instance plus random variable/object permutations",
+      "transformation": "run the same adaptive process on permuted copies; compare outcomes",
+      "observables": [
+        "variance of outcome across orbit",
+        "trajectory alignment after un-permuting"
+      ],
+      "predictedSignals": [
+        "orbit variance at seed-noise level for equivariant laws"
+      ],
+      "nullExpectation": "orbit variance equal for equivariant and non-equivariant laws",
+      "failureModes": [
+        "seed noise dominates"
+      ],
+      "informationAddedBeyondExistingLenses": "separates structural from representational effects",
+      "passId": "P2",
+      "targets": [
+        "M3",
+        "M6",
+        "M9"
+      ]
+    },
+    {
+      "id": "L6",
+      "name": "Spec-density phase portrait",
+      "triplicateId": "HT-8a87057933",
+      "rationale": "Tests whether adaptation difficulty has a threshold distinct from raw SAT statistics.",
+      "sourceRepresentation": "random spec sets over discretised parameters",
+      "transformation": "sweep specs-per-parameter; measure repair time and P(SAT)",
+      "observables": [
+        "repair-time peak location",
+        "P(SAT) midpoint",
+        "MUS size"
+      ],
+      "predictedSignals": [
+        "repair peak offset from P(SAT) midpoint"
+      ],
+      "nullExpectation": "peak coincides with P(SAT) midpoint (M7 is relabelled SAT)",
+      "failureModes": [
+        "small n smears the transition"
+      ],
+      "informationAddedBeyondExistingLenses": "distinguishes an adaptation-specific threshold from the generic one",
+      "passId": "P2",
+      "targets": [
+        "M7",
+        "M13"
+      ]
+    },
+    {
+      "id": "L7",
+      "name": "Module blast-radius count",
+      "triplicateId": "HT-8a87057933",
+      "rationale": "Compositional credit assignment should limit collateral change.",
+      "sourceRepresentation": "diagram of modules with parameter vectors",
+      "transformation": "diff parameters before/after fault repair",
+      "observables": [
+        "modules modified",
+        "performance change on unaffected tasks"
+      ],
+      "predictedSignals": [
+        "core-guided repair modifies fewer modules with less collateral loss"
+      ],
+      "nullExpectation": "same blast radius as largest-error-module heuristic",
+      "failureModes": [
+        "single-module faults make all methods equal"
+      ],
+      "informationAddedBeyondExistingLenses": "side-effect cost of adaptation",
+      "passId": "P2",
+      "targets": [
+        "M11",
+        "M2"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "W1",
+      "triplicateId": "HT-8a87057933",
+      "passId": "P3",
+      "mechanism_ids": [
+        "M1",
+        "M8"
+      ],
+      "lens_ids": [
+        "L1",
+        "L4"
+      ],
+      "hypothesis": "Forgetting the clauses inside an MUS recovers from a plant switch faster than forgetting the same number of clauses chosen by age or at random.",
+      "mechanism": "Scalar plant x' = a x + b u + noise (uniform +-0.05); candidate models (a,b) on a 16x16 grid (256 models). Each observation clause excludes models whose one-step prediction misses by > 0.1. Window of 40 clauses; on UNSAT (no model consistent) extract one MUS by deletion and drop its oldest member(s) until SAT. Controller: certainty-equivalence deadbeat toward a square-wave reference r(t) using the lowest-index consistent model.",
+      "intervention": "Plant (a,b) resampled from the grid every 200 steps; 10 switches per run.",
+      "control": "Drop-oldest: on UNSAT drop the oldest clauses (same count core-guided would drop) until SAT; also a fixed 10-step sliding window.",
+      "positive_control": "Oracle reset: clear the window exactly at each switch.",
+      "observable": "Recovery time per switch = steps until |x - r| < 0.1 for 10 consecutive steps.",
+      "success_criterion": "Median recovery time of core-guided <= 0.7 x random-drop null twin AND <= 0.85 x drop-oldest, one-sided Mann-Whitney p < 0.01 over 300 switches (30 seeds x 10).",
+      "failure_criterion": "Median ratio to drop-oldest >= 0.95 or p >= 0.05: core-guided is age-based forgetting in disguise.",
+      "alternative_explanation": "Cores after a switch consist mostly of pre-switch clauses, so core-guided dropping equals drop-oldest; any advantage would come from noise-band tuning.",
+      "null_twin": "Random-drop: at identical UNSAT times drop the same number of clauses chosen uniformly from the window (matched deletion count and timing; conflict localisation destroyed).",
+      "substrate": "causal toy",
+      "why_this_implementation": "An enumerable 256-model space makes SAT and MUS exact by brute force, isolating the forgetting policy from solver heuristics; no learned function approximator is needed.",
+      "size": "256 models, 2000 steps, window 40, 30 seeds, 4 policies",
+      "cost_estimate": "~2 CPU core-minutes (pure Python, 256-model consistency checks)",
+      "stupid_explanations": [
+        "core-guided dropping is drop-oldest under another name",
+        "deadbeat control on a fine grid recovers in 2 steps regardless of policy",
+        "the noise band makes UNSAT fire spuriously, so the 'mechanism' is just a noise detector"
+      ],
+      "outcome": "NOT_BUILT",
+      "raw_outcome": "NOT_BUILT",
+      "procedural_notes": [],
+      "rows": "hecate/programs/HT-8a87057933/worlds/W1/rows.jsonl",
+      "outcome_file": "hecate/programs/HT-8a87057933/worlds/W1/OUTCOME.json",
+      "statistics": {
+        "TREATMENT": {
+          "n_switches": 300,
+          "n_seeds": 30,
+          "median_recovery": 3.0,
+          "mean_recovery": 3.4266666666666667,
+          "frac_censored": 0.0,
+          "frac_at_minimum_10": 0.013333333333333334,
+          "mean_unsat_events_per_run": 16.066666666666666,
+          "mean_core_size": 2.2852618253779244,
+          "mean_core_turnover": 0.9406266959662857,
+          "mean_preswitch_fraction_dropped": 1.0,
+          "L4_recovery_pole_stable_fraction": 0.947352157102157,
+          "max_abs_x": 9.885206628722408,
+          "ratio_to_null_twin": 0.6,
+          "ratio_to_drop_oldest": 1.0,
+          "p_vs_null_twin": 1.9226619220603058e-56,
+          "p_vs_drop_oldest": 0.41166896559092336,
+          "meets_failure_criterion": true
+        },
+        "CONTROL": {
+          "n_switches": 300,
+          "n_seeds": 30,
+          "median_recovery": 3.0,
+          "mean_recovery": 3.4566666666666666,
+          "frac_censored": 0.0,
+          "frac_at_minimum_10": 0.013333333333333334,
+          "mean_unsat_events_per_run": 15.0,
+          "mean_core_size": 2.271125655390361,
+          "mean_core_turnover": 0.9406066641691642,
+          "mean_preswitch_fraction_dropped": 1.0,
+          "L4_recovery_pole_stable_fraction": 0.9482468457468459,
+          "max_abs_x": 9.885206628722408
+        },
+        "CONTROL_SW10": {
+          "n_switches": 300,
+          "n_seeds": 30,
+          "median_recovery": 3.0,
+          "mean_recovery": 3.6266666666666665,
+          "frac_censored": 0.0,
+          "frac_at_minimum_10": 0.006666666666666667,
+          "mean_unsat_events_per_run": 14.8,
+          "mean_core_size": 2.3685052066669714,
+          "mean_core_turnover": 0.9268336320542202,
+          "mean_preswitch_fraction_dropped": 1.0,
+          "L4_recovery_pole_stable_fraction": 0.9440867991657466,
+          "max_abs_x": 11.888705560104112
+        },
+        "NULL_TWIN": {
+          "n_switches": 300,
+          "n_seeds": 30,
+          "median_recovery": 5.0,
+          "mean_recovery": 6.653333333333333,
+          "frac_censored": 0.0,
+          "frac_at_minimum_10": 0.013333333333333334,
+          "mean_unsat_events_per_run": 33.766666666666666,
+          "mean_core_size": 2.1584190863053956,
+          "mean_core_turnover": 0.890098551597672,
+          "mean_preswitch_fraction_dropped": 0.6599804849887358,
+          "L4_recovery_pole_stable_fraction": 0.8745403462570982,
+          "max_abs_x": 15020.780223451004,
+          "p_vs_drop_oldest": 1.0,
+          "ratio_to_drop_oldest": 1.6666666666666667
+        },
+        "POSITIVE_CONTROL": {
+          "n_switches": 300,
+          "n_seeds": 30,
+          "median_recovery": 3.0,
+          "mean_recovery": 2.76,
+          "frac_censored": 0.0,
+          "frac_at_minimum_10": 0.006666666666666667,
+          "mean_unsat_events_per_run": 0.0,
+          "mean_core_size": null,
+          "mean_core_turnover": null,
+          "mean_preswitch_fraction_dropped": null,
+          "L4_recovery_pole_stable_fraction": 0.8935353535353535,
+          "max_abs_x": 16.122638978554793,
+          "ratio_to_null_twin": 0.6,
+          "ratio_to_drop_oldest": 1.0,
+          "p_vs_null_twin": 5.6862495409127475e-90,
+          "p_vs_drop_oldest": 1.244864942643236e-12
+        },
+        "CHEAT": {
+          "n_switches": 300,
+          "n_seeds": 30,
+          "median_recovery": 1.0,
+          "mean_recovery": 1.0,
+          "frac_censored": 0.0,
+          "frac_at_minimum_10": 1.0,
+          "mean_unsat_events_per_run": 16.066666666666666,
+          "mean_core_size": 2.2852618253779244,
+          "mean_core_turnover": 0.9406266959662857,
+          "mean_preswitch_fraction_dropped": 1.0,
+          "L4_recovery_pole_stable_fraction": 0.947352157102157,
+          "max_abs_x": 9.885206628722408,
+          "ratio_to_null_twin": 0.2,
+          "ratio_to_drop_oldest": 0.3333333333333333,
+          "p_vs_null_twin": 4.6958600128761305e-112,
+          "p_vs_drop_oldest": 4.3408845160176705e-114
+        }
+      },
+      "anomalies": [
+        {
+          "id": "A1",
+          "text": "oracle reset not faster than drop-oldest (median 3.0 vs 3.0)"
+        }
+      ],
+      "rejected_explanations": []
+    },
+    {
+      "id": "W2",
+      "triplicateId": "HT-8a87057933",
+      "passId": "P3",
+      "mechanism_ids": [
+        "M9"
+      ],
+      "lens_ids": [
+        "L2",
+        "L5"
+      ],
+      "hypothesis": "Naturality-square constraints let an agent that re-adapted on a few task objects infer the regime-shift components on unseen objects.",
+      "mechanism": "Random finite category: 12 objects, 20 generating arrows (random connected digraph), F: C -> FinSet with |F(c)| = 8 and random arrow maps. Hidden components eta_c are random permutations of F(c); G is defined by conjugation (G(f) = eta_d o F(f) o eta_c^-1) so eta is natural by construction. Samples (c, x, eta_c(x)) arrive online from 3 seen objects. One-hot encoding (64 vars per object) plus square clauses; a pure-Python DPLL with unit propagation predicts eta on the 9 unseen objects.",
+      "intervention": "Regime shift from identity components to eta at t = 0; agent receives 30 samples.",
+      "control": "Independent adaptation: unseen objects predicted by the pre-shift identity components.",
+      "positive_control": "eta = identity for all objects (squares trivially determine components).",
+      "observable": "Element accuracy of predicted eta on unseen objects.",
+      "success_criterion": "Mean unseen accuracy >= 0.9 with squares AND (squares - null twin) >= 0.4, averaged over 20 random categories x 3 seeds.",
+      "failure_criterion": "(squares - null twin) < 0.2, or squares accuracy < 0.5.",
+      "alternative_explanation": "Propagation is just composing known maps along paths (spanning-tree transport); categorical structure adds nothing beyond graph connectivity.",
+      "null_twin": "Shuffled squares: same number and arity of square clauses, but each square links a random object pair through a random arrow map (clause statistics matched, true naturality destroyed; only instances that remain SAT are kept).",
+      "substrate": "symbolic rewriting",
+      "why_this_implementation": "Finite categories with FinSet functors are exactly enumerable; DPLL over one-hot encodings is the minimal faithful solver. Displaces a GNN-on-graph default, which would blur squares into message passing.",
+      "size": "12 objects, 20 arrows, 8-element sets, 768 Boolean vars, 20 categories x 3 seeds",
+      "cost_estimate": "~5 CPU core-minutes",
+      "stupid_explanations": [
+        "bijective arrow maps make any path transport trivial",
+        "accuracy driven by objects one step from seen objects",
+        "DPLL default assignment happens to match identity-like eta"
+      ]
+    },
+    {
+      "id": "W3",
+      "triplicateId": "HT-8a87057933",
+      "passId": "P3",
+      "mechanism_ids": [
+        "M3"
+      ],
+      "lens_ids": [
+        "L5"
+      ],
+      "hypothesis": "An MRAC-style noise controller tracking a reference unsat-count decay beats the best fixed noise near the 3-SAT threshold, and its effect is invariant under renaming.",
+      "mechanism": "Pure-Python WalkSAT on random 3-SAT, n = 60, alpha in {4.0, 4.1, 4.2, 4.3}; every 100 flips update p <- clip(p + gamma (u_obs - u_ref(t)), 0.01, 0.9), u_ref a geometric decay.",
+      "intervention": "Adaptive noise law vs fixed noise.",
+      "control": "Best fixed p chosen on 50 calibration instances per alpha.",
+      "positive_control": "Oracle per-instance best fixed p (upper bound).",
+      "observable": "Flips to solution (cap 2e4; capped runs count as cap) on instances solved by any method within the cap.",
+      "success_criterion": "Median flips adaptive <= 0.8 x best fixed on 100 test instances per alpha in >= 3 of 4 alphas, paired Wilcoxon p < 0.01; orbit variance under 5 renamings <= 1.2 x seed variance.",
+      "failure_criterion": "Median ratio >= 0.95 in >= 2 alphas, or sign-randomised twin within 10% of adaptive.",
+      "alternative_explanation": "Any noise increase on stagnation helps; the reference model is irrelevant.",
+      "null_twin": "Sign-randomised controller: same update magnitudes and times, random sign (matched noise variability; feedback destroyed).",
+      "substrate": "optimizer",
+      "why_this_implementation": "Local search exposes one scalar control input and one scalar output, the smallest faithful adaptive-control plant; no learned policy needed.",
+      "size": "n = 60, 4 alphas, 50 calibration + 100 test instances each, 5 renamings on 20 instances",
+      "cost_estimate": "~8 CPU core-minutes",
+      "stupid_explanations": [
+        "adaptive-noise local search works for generic reasons unrelated to the reference model",
+        "the cap truncates distributions and hides differences",
+        "renaming invariance is automatic because WalkSAT picks clauses randomly"
+      ]
+    },
+    {
+      "id": "W4",
+      "triplicateId": "HT-8a87057933",
+      "passId": "P3",
+      "mechanism_ids": [
+        "M5",
+        "M15",
+        "M4"
+      ],
+      "lens_ids": [
+        "L3"
+      ],
+      "hypothesis": "Acting in the intersection of consistent models and probing on conflict reduces catastrophic errors vs certainty equivalence at modest cost in steps.",
+      "mechanism": "64 candidate deterministic automata (6 states, 2 inputs, one forbidden state, one goal, shared start); true plant drawn uniformly. Agent keeps the consistent set; safe actions = those not reaching forbidden in any consistent model; if none are safe or none progress, take the action whose predicted next state splits the consistent set most (refutation value).",
+      "intervention": "Limit-seeking control + refutation probing.",
+      "control": "Certainty equivalence: plan with the lowest-index consistent model.",
+      "positive_control": "Agent given the true model.",
+      "observable": "Forbidden-state entries per episode; steps to goal; bits removed per probe (L3).",
+      "success_criterion": "Forbidden entries reduced >= 50% vs CE with median steps <= 1.5 x CE over 1000 episodes; refutation probes remove >= 1.5 x bits per probe vs the null twin.",
+      "failure_criterion": "Forbidden reduction < 20% or bits-per-probe ratio < 1.1.",
+      "alternative_explanation": "Robust minimax over a version space; nothing categorical or SAT-specific.",
+      "null_twin": "Random probing: identical probe triggers and count, action chosen uniformly among allowed actions (matched probe rate; refutation choice destroyed).",
+      "substrate": "causal toy",
+      "why_this_implementation": "Finite automata give exact version spaces; the limit reduces to a directly computable intersection.",
+      "size": "64 models, 6 states, 1000 episodes x 30 steps, 10 seeds",
+      "cost_estimate": "~3 CPU core-minutes",
+      "stupid_explanations": [
+        "random automata rarely disagree near the start, so every policy is safe",
+        "forbidden-state density decides everything",
+        "the intersection is often empty, forcing probes that happen to be safe"
+      ],
+      "outcome": "SPEC_UNATTAINABLE",
+      "round": 2,
+      "rows": "hecate/programs/HT-8a87057933/worlds/W4/pilot_rows.jsonl",
+      "outcome_file": "hecate/programs/HT-8a87057933/worlds/W4/OUTCOME.json",
+      "statistics": {
+        "pilot_attempt1": {
+          "CE_REFERENCE": {
+            "n_episodes": 10000,
+            "mean_forbidden": 1.0131,
+            "median_steps": 4.0,
+            "probes": 0,
+            "bits_per_probe": null,
+            "probes_per_episode": 0.0,
+            "reach_rate": 0.679,
+            "frac_ep_zero_forbidden": 0.6582,
+            "probe_true_safe_frac": null,
+            "trig_none_safe_frac": null
+          },
+          "POSITIVE_CONTROL": {
+            "n_episodes": 10000,
+            "mean_forbidden": 0.3163,
+            "median_steps": 5.0,
+            "probes": 148601,
+            "bits_per_probe": 0.30210598779359205,
+            "probes_per_episode": 14.8601,
+            "reach_rate": 0.5385,
+            "frac_ep_zero_forbidden": 0.9437,
+            "probe_true_safe_frac": 0.9787148134938527,
+            "trig_none_safe_frac": 0.11402345879233652,
+            "criterion": {
+              "forbidden_reduction": 0.6877899516335998,
+              "median_steps_ratio": 1.25,
+              "bits_ratio": 0.9137172607542162,
+              "a": true,
+              "b": true,
+              "c": false,
+              "meets_success": false,
+              "meets_failure": true
+            }
+          },
+          "CHEAT": {
+            "n_episodes": 10000,
+            "mean_forbidden": 0.0,
+            "median_steps": 4.0,
+            "probes": 142650,
+            "bits_per_probe": 0.6612679890587215,
+            "probes_per_episode": 14.265,
+            "reach_rate": 0.5697,
+            "frac_ep_zero_forbidden": 1.0,
+            "probe_true_safe_frac": 0.9519663512092534,
+            "trig_none_safe_frac": 0.13924991237294077,
+            "criterion": {
+              "forbidden_reduction": 1.0,
+              "median_steps_ratio": 1.0,
+              "bits_ratio": 2.0,
+              "a": true,
+              "b": true,
+              "c": true,
+              "meets_success": true,
+              "meets_failure": false
+            }
+          },
+          "NULL_TWIN": {
+            "n_episodes": 10000,
+            "mean_forbidden": 0.6852,
+            "median_steps": 5.0,
+            "probes": 142650,
+            "bits_per_probe": 0.33063399452936076,
+            "probes_per_episode": 14.265,
+            "reach_rate": 0.5697,
+            "frac_ep_zero_forbidden": 0.7495,
+            "probe_true_safe_frac": 0.9519663512092534,
+            "trig_none_safe_frac": 0.13924991237294077,
+            "criterion": {
+              "forbidden_reduction": 0.32366005330174696,
+              "median_steps_ratio": 1.25,
+              "bits_ratio": 1.0,
+              "a": false,
+              "b": true,
+              "c": false,
+              "meets_success": false,
+              "meets_failure": true
+            }
+          },
+          "null_twin_meets_a_and_b": false,
+          "note": "null twin part (c) is its own reference (ratio 1.0): see NOTES ambiguity 2"
+        },
+        "pilot_attempt2": {
+          "CE_REFERENCE": {
+            "n_episodes": 10000,
+            "mean_forbidden": 1.0131,
+            "median_steps": 4.0,
+            "probes": 0,
+            "bits_per_probe": null,
+            "probes_per_episode": 0.0,
+            "reach_rate": 0.679,
+            "frac_ep_zero_forbidden": 0.6582,
+            "probe_true_safe_frac": null,
+            "trig_none_safe_frac": null
+          },
+          "POSITIVE_CONTROL": {
+            "n_episodes": 10000,
+            "mean_forbidden": 0.3163,
+            "median_steps": 5.0,
+            "probes": 91685,
+            "bits_per_probe": 0.48964663676845255,
+            "probes_per_episode": 9.1685,
+            "reach_rate": 0.5385,
+            "frac_ep_zero_forbidden": 0.9437,
+            "probe_true_safe_frac": 0.9927359982548944,
+            "trig_none_safe_frac": 0.15757212193924852,
+            "criterion": {
+              "forbidden_reduction": 0.6877899516335998,
+              "median_steps_ratio": 1.25,
+              "bits_ratio": 0.8429428489165547,
+              "a": true,
+              "b": true,
+              "c": false,
+              "meets_success": false,
+              "meets_failure": true
+            }
+          },
+          "CHEAT": {
+            "n_episodes": 10000,
+            "mean_forbidden": 0.0,
+            "median_steps": 4.0,
+            "probes": 81196,
+            "bits_per_probe": 1.1617552421206294,
+            "probes_per_episode": 8.1196,
+            "reach_rate": 0.5697,
+            "frac_ep_zero_forbidden": 1.0,
+            "probe_true_safe_frac": 0.958421597123011,
+            "trig_none_safe_frac": 0.20183260259126065,
+            "criterion": {
+              "forbidden_reduction": 1.0,
+              "median_steps_ratio": 1.0,
+              "bits_ratio": 2.0,
+              "a": true,
+              "b": true,
+              "c": true,
+              "meets_success": true,
+              "meets_failure": false
+            }
+          },
+          "NULL_TWIN": {
+            "n_episodes": 10000,
+            "mean_forbidden": 0.6852,
+            "median_steps": 5.0,
+            "probes": 81196,
+            "bits_per_probe": 0.5808776210603147,
+            "probes_per_episode": 8.1196,
+            "reach_rate": 0.5697,
+            "frac_ep_zero_forbidden": 0.7495,
+            "probe_true_safe_frac": 0.958421597123011,
+            "trig_none_safe_frac": 0.20183260259126065,
+            "criterion": {
+              "forbidden_reduction": 0.32366005330174696,
+              "median_steps_ratio": 1.25,
+              "bits_ratio": 1.0,
+              "a": false,
+              "b": true,
+              "c": false,
+              "meets_success": false,
+              "meets_failure": true
+            }
+          },
+          "null_twin_meets_a_and_b": false,
+          "note": "null twin part (c) is its own reference (ratio 1.0): see NOTES ambiguity 2"
+        },
+        "TREATMENT": null,
+        "CONTROL": null
+      },
+      "procedural_notes": [],
+      "anomalies": [
+        {
+          "id": "A1",
+          "text": "Positive control (true-model oracle picking the largest realised refutation among allowed actions) cannot beat random probing on bits/probe: ratio 0.914 (attempt 1), 0.843 (attempt 2). With 2 inputs and 64 i.i.d. random automata the version space collapses in ~2-3 observations for any policy (lens L3 failure mode 'count collapses in one probe for any policy on tiny spaces'); bits/probe is set by the number of low-information triggers on near-singleton sets, not by probe choice."
+        },
+        {
+          "id": "A2",
+          "text": "Null-twin part (c) is self-referential (ratio identically 1.0), so null_twin_meets_success could never be true; null twin also failed (a) (reduction 0.324), so the pilot's null-twin check did not rest on the vacuous part."
+        },
+        {
+          "id": "A3",
+          "text": "CE baseline computed as a reference in the pilot (criterion is relative to CE); no treatment code or statistic ever existed."
+        }
+      ],
+      "rejected_explanations": []
+    },
+    {
+      "id": "W5",
+      "triplicateId": "HT-8a87057933",
+      "passId": "P3v2",
+      "mechanism_ids": [
+        "M1"
+      ],
+      "lens_ids": [
+        "L1"
+      ],
+      "hypothesis": "When a regime switch changes only part of the plant, forgetting the clauses inside a minimal unsatisfiable subset (MUS) keeps the observations that are still valid, and so halves tracking errors relative to age-based forgetting, which must discard every clause older than the stale one.",
+      "mechanism": "Factored switching plant. K=8 channels, each with an unknown offset theta_k in Z_8. Each step t a task requests channel k_t (uniform) with target r_t (uniform in Z_8). The controller reads theta_hat_k = the smallest value allowed by all window clauses on channel k (0..7 if none), applies u = (r_t - theta_hat_k) mod 8; plant output y = (u + theta_k) mod 8; tracking error iff y != r_t. Sensor: y_obs = y with prob 0.97, else a uniformly random other value. Each step appends the observation clause 'theta_k == (y_obs - u) mod 8' to a FIFO window of capacity 32 (oldest evicted on overflow). The window is SAT iff every channel's clauses agree. On UNSAT the arm's repair rule deletes clauses until SAT. TREATMENT repair (core-guided): repeat { extract one MUS by deletion, scanning window clauses oldest-first; delete the oldest clause in that MUS } until SAT.",
+      "intervention": "Every 80 steps one channel (uniform) takes a new value (uniform among the 7 others); 2400 steps per run, 29 switches.",
+      "control": "CONTROL_REF, drop-oldest: on UNSAT delete the oldest window clause, one at a time, until SAT. Same trigger times rule, same stop rule.",
+      "positive_control": "Oracle repair: on UNSAT delete exactly the window clauses inconsistent with the true current theta (stale and sensor-corrupted clauses), nothing else. Targeted forgetting present by construction, same trigger rule.",
+      "observable": "Per run: total tracking errors (y != r_t); number of UNSAT events; number of deleted clauses that were consistent with the true current theta at deletion time (valid_deleted).",
+      "success_criterion": "[{\"id\": \"S1\", \"text\": \"Pooled over 10 seeds, total errors(TREATMENT) / total errors(CONTROL_REF) <= 0.50.\", \"statistic\": \"sum_seeds errors(X) / sum_seeds errors(CONTROL_REF)\", \"comparison\": \"<=\", \"threshold\": 0.5}, {\"id\": \"S2\", \"text\": \"Fraction of the 10 seeds in which errors(TREATMENT) <= 0.50 x errors(CONTROL_REF) of the same seed is >= 0.80.\", \"statistic\": \"fraction of seeds with errors(X) <= 0.5 * errors(CONTROL_REF, same seed)\", \"comparison\": \">=\", \"threshold\": 0.8}, {\"id\": \"S3\", \"text\": \"Valid clauses deleted per UNSAT event (pooled) for TREATMENT <= 0.50 x the same statistic for CONTROL_REF (L1: deletion concentrates on conflicting clauses).\", \"statistic\": \"[sum valid_deleted(X)/sum unsat(X)] / [sum valid_deleted(CONTROL_REF)/sum unsat(CONTROL_REF)]\", \"comparison\": \"<=\", \"threshold\": 0.5}]",
+      "failure_criterion": "[{\"id\": \"F1\", \"text\": \"Core-guided is no better than drop-oldest: pooled error ratio to CONTROL_REF >= 0.90.\", \"statistic\": \"sum_seeds errors(X) / sum_seeds errors(CONTROL_REF)\", \"comparison\": \">=\", \"threshold\": 0.9}, {\"id\": \"F2\", \"text\": \"Core-guided is no better than random deletion: pooled errors(TREATMENT) / errors(NULL_TWIN) >= 1.00.\", \"statistic\": \"sum_seeds errors(X) / sum_seeds errors(NULL_TWIN)\", \"comparison\": \">=\", \"threshold\": 1.0}, {\"id\": \"F3\", \"text\": \"Deletions do not concentrate on conflicting clauses: valid-deleted-per-UNSAT ratio to CONTROL_REF >= 0.90.\", \"statistic\": \"[sum valid_deleted(X)/sum unsat(X)] / [sum valid_deleted(CONTROL_REF)/sum unsat(CONTROL_REF)]\", \"comparison\": \">=\", \"threshold\": 0.9}]",
+      "alternative_explanation": "In a factored plant the MUS is always confined to one channel, so core-guided forgetting may be nothing more than 'reset the channel that just mismatched' (per-variable change detection); the SAT/MUS machinery would then add no mechanism beyond locality of the factorisation. Separately, under sensor corruption the 'oldest clause in the core' rule blames the older valid observation instead of the new corrupted one, which could erase the advantage.",
+      "null_twin": "Random-drop: at the same trigger (UNSAT), delete one uniformly chosen window clause at a time until SAT. Same trigger rule and stop rule as the treatment; conflict localisation destroyed.",
+      "substrate": "causal toy",
+      "cost_estimate": "controls: 0.33 CPU core-seconds for 4 arms x 10 seeds; treatment with MUS-by-deletion: < 1 CPU core-minute",
+      "stupid_explanations": [
+        "the MUS is trivially the conflicting channel, so any per-channel reset-on-mismatch rule would do equally well (SAT adds nothing)",
+        "drop-oldest is a strawman here because a window of 32 over 8 channels means the stale clause is usually young; the advantage is window geometry, not conflict localisation",
+        "the treatment wins only because sensor noise is rare (3%); at higher noise 'oldest in core' deletes valid clauses and the effect vanishes",
+        "errors are dominated by the unavoidable first request after each switch, so any policy lands near the floor and ratios are noise"
+      ],
+      "spec": "hecate/programs/HT-8a87057933/worlds/W5/spec.json",
+      "attainability": "hecate/programs/HT-8a87057933/worlds/W5/ATTAINABILITY.json",
+      "outcome": "SIGNAL",
+      "round": 3,
+      "rows": "hecate/programs/HT-8a87057933/worlds/W5/probe/rows.jsonl",
+      "outcome_file": "hecate/programs/HT-8a87057933/worlds/W5/probe/OUTCOME.json",
+      "statistics": {
+        "arms": {
+          "TREATMENT": {
+            "errors_total": 1249,
+            "unsat_total": 1663,
+            "deleted_total": 4229,
+            "valid_deleted_total": 2648,
+            "valid_deleted_per_unsat": 1.592303066746843,
+            "errors_per_seed": [
+              130,
+              126,
+              118,
+              125,
+              114,
+              132,
+              125,
+              130,
+              123,
+              126
+            ],
+            "mus_size_range": [
+              2,
+              2
+            ],
+            "mus_calls_total": 4229
+          },
+          "CONTROL_REF": {
+            "errors_total": 3876,
+            "unsat_total": 1417,
+            "deleted_total": 16746,
+            "valid_deleted_total": 15376,
+            "valid_deleted_per_unsat": 10.851093860268172,
+            "errors_per_seed": [
+              397,
+              366,
+              352,
+              401,
+              365,
+              374,
+              375,
+              451,
+              375,
+              420
+            ]
+          },
+          "POSITIVE_CONTROL": {
+            "errors_total": 619,
+            "unsat_total": 951,
+            "deleted_total": 1633,
+            "valid_deleted_total": 0,
+            "valid_deleted_per_unsat": 0.0,
+            "errors_per_seed": [
+              61,
+              70,
+              59,
+              69,
+              56,
+              57,
+              55,
+              75,
+              56,
+              61
+            ]
+          },
+          "NULL_TWIN": {
+            "errors_total": 2779,
+            "unsat_total": 1558,
+            "deleted_total": 14639,
+            "valid_deleted_total": 13197,
+            "valid_deleted_per_unsat": 8.470474967907574,
+            "errors_per_seed": [
+              292,
+              263,
+              244,
+              292,
+              304,
+              266,
+              250,
+              279,
+              284,
+              305
+            ]
+          },
+          "CHEAT": {
+            "errors_total": 0,
+            "unsat_total": 1558,
+            "deleted_total": 14639,
+            "valid_deleted_total": 0,
+            "valid_deleted_per_unsat": 0.0,
+            "errors_per_seed": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          }
+        },
+        "treatment_success_values": {
+          "S1": 0.3222394220846233,
+          "S2": 1.0,
+          "S3": 0.1467412490621928
+        },
+        "treatment_success_pass": {
+          "S1": true,
+          "S2": true,
+          "S3": true
+        },
+        "treatment_failure_values": {
+          "F1": 0.3222394220846233,
+          "F2": 0.4494422454120187,
+          "F3": 0.1467412490621928
+        },
+        "treatment_failure_holds": {
+          "F1": false,
+          "F2": false,
+          "F3": false
+        },
+        "positive_control_values": {
+          "S1": 0.15970072239422084,
+          "S2": 1.0,
+          "S3": 0.0
+        },
+        "null_twin_values": {
+          "S1": 0.7169762641898865,
+          "S2": 0.0,
+          "S3": 0.7806102386527727
+        },
+        "cheat_values": {
+          "S1": 0.0,
+          "S2": 1.0,
+          "S3": 0.0
+        }
+      },
+      "anomalies": [],
+      "rejected_explanations": [
+        "errors are dominated by the unavoidable first request after each switch, so any policy lands near the floor and ratios are noise"
+      ],
+      "pass4": {
+        "predicate": "PARK",
+        "R": {
+          "reproduced": true,
+          "stats": {
+            "pooled_ratio": 0.32955131511088187,
+            "seeds_meeting_0.50": 10,
+            "per_seed_ratio": [
+              0.3159144893111639,
+              0.35,
+              0.32075471698113206,
+              0.32186732186732187,
+              0.34025974025974026,
+              0.3038961038961039,
+              0.33064516129032256,
+              0.35774647887323946,
+              0.32754342431761785,
+              0.3333333333333333
+            ],
+            "errors_treatment": 1278,
+            "errors_control_ref": 3878,
+            "S_values": {
+              "S1": 0.32955131511088187,
+              "S2": 1.0,
+              "S3": 0.14992057340628812
+            },
+            "S3_reported_not_gated": 0.14992057340628812
+          }
+        },
+        "ORIG": {
+          "fired": true,
+          "stats": {
+            "errors_channel_reset": 1278,
+            "errors_core_guided": 1278,
+            "ratio_reset_over_core": 1.0,
+            "kill_if_le": 1.1,
+            "valid_deleted_channel_reset": 2775,
+            "valid_deleted_core_guided": 2775,
+            "errors_per_seed_reset": [
+              133,
+              126,
+              136,
+              131,
+              131,
+              117,
+              123,
+              127,
+              132,
+              122
+            ],
+            "errors_per_seed_core": [
+              133,
+              126,
+              136,
+              131,
+              131,
+              117,
+              123,
+              127,
+              132,
+              122
+            ]
+          }
+        },
+        "ALT": {
+          "status": "FAIL",
+          "stats": {
+            "A1_ratio_to_drop_oldest": 0.6013754457463066,
+            "A1_pass": false,
+            "A2_ratio_to_channel_reset": 0.8557448350851757,
+            "A2_pass": false,
+            "errors_treatment": 2361,
+            "errors_per_seed_treatment": [
+              237,
+              238,
+              266,
+              241,
+              229,
+              216,
+              231,
+              240,
+              227,
+              236
+            ],
+            "errors_by_arm": {
+              "CONTROL_REF": 3926,
+              "CHANNEL_RESET": 2759,
+              "POSITIVE_CONTROL": 364,
+              "NULL_TWIN": 3359,
+              "CHEAT": 0
+            },
+            "valid_deleted_per_unsat": {
+              "CONTROL_REF": 7.016,
+              "CHANNEL_RESET": 7.580389768574909,
+              "POSITIVE_CONTROL": 0.0,
+              "NULL_TWIN": 5.692429022082019,
+              "TREATMENT": 3.5715254237288137
+            },
+            "mus_size_range": [
+              2,
+              8
+            ],
+            "mus_size_mean_per_seed": [
+              4.2194940476190474,
+              4.239700374531835,
+              4.371848739495798,
+              4.277902621722847,
+              4.201219512195122,
+              4.370402053036783,
+              4.306376360808709,
+              4.249258160237389,
+              4.383319967923015,
+              4.2541966426858515
+            ],
+            "mus_frac_spanning_ge3_channels_per_seed": [
+              0.9017857142857143,
+              0.9161048689138577,
+              0.9250700280112045,
+              0.9108614232209737,
+              0.8971036585365854,
+              0.9204448246364414,
+              0.9284603421461898,
+              0.9094955489614244,
+              0.9125902165196471,
+              0.9192645883293366
+            ]
+          }
+        },
+        "rows": "hecate/programs/HT-8a87057933/worlds/W5/pass4/rows.jsonl",
+        "outcome_file": "hecate/programs/HT-8a87057933/worlds/W5/pass4/PASS4_OUTCOME.json",
+        "note": "ORIG fired as predicted: channel-reset (no SAT) made exactly the same 1278 errors seed for seed. ALT (cross-channel clauses; cores span >= 3 channels in ~91%) FAILED: 0.601 of drop-oldest, 0.856 of channel-reset."
+      },
+      "original_world_claim": "FOSSIL"
+    },
+    {
+      "id": "W6",
+      "triplicateId": "HT-8a87057933",
+      "passId": "P3v2",
+      "mechanism_ids": [
+        "M4"
+      ],
+      "lens_ids": [
+        "L3"
+      ],
+      "hypothesis": "Choosing excitation probes as a minimum separating family of the candidates still consistent with the data (a hitting-set problem solved exactly) identifies an unknown plant as efficiently as greedy information-gain probing, far faster than random probing, and with a bounded worst case.",
+      "mechanism": "N=64 candidate plants; candidate c = 'component c is faulty'. A library of P=48 probes; probe p exercises a fixed subset E_p of components, |E_p| uniform in {2,4,8,16,32}, members uniform; the library is regenerated until it separates every pair of candidates. Response of the plant to probe p is 1 iff its faulty component is in E_p (noise-free). The agent keeps the version space V of candidates consistent with all responses and stops when |V| = 1; a probe is never repeated. TREATMENT (Yoneda / hitting-set probing): at each step, over the current V, solve exactly (SAT or ILP with a cardinality objective) for a minimum-size set of unapplied probes that separates every pair of candidates in V (every pair is 'hit' by a probe containing exactly one of the two); apply the lowest-index probe of that set that splits V; re-solve after each response.",
+      "intervention": "Hitting-set separating-family probe choice versus the reference and null policies on the same 10 libraries, every candidate taken as the true plant once per library (640 episodes per arm).",
+      "control": "GREEDY_REF: greedy information gain -- the unapplied probe maximising the binary entropy of the split of V (ties: lowest index). This is the simpler alternative named for M4.",
+      "positive_control": "Truth oracle: the unapplied probe whose realised response removes the most candidates (ties: lowest index). It uses the hidden truth, so it is an upper bound, not a legitimate policy; attainability of S1 by a legitimate policy is checked separately against the entropy bound (mean probes >= log2 64 = 6).",
+      "observable": "Probes applied until |V| = 1, per episode, recomputable by replaying the logged (probe, response) trace against the library and the truth.",
+      "success_criterion": "[{\"id\": \"S1\", \"text\": \"Mean probes to identification (640 episodes) is at most 1.05 x the GREEDY_REF mean on the same episodes (parity with greedy information gain).\", \"statistic\": \"mean probes(X) / mean probes(GREEDY_REF)\", \"comparison\": \"<=\", \"threshold\": 1.05}, {\"id\": \"S2\", \"text\": \"Mean probes to identification <= 9.0 (information bound 6.0).\", \"statistic\": \"mean probes(X)\", \"comparison\": \"<=\", \"threshold\": 9.0}, {\"id\": \"S3\", \"text\": \"95th percentile of probes to identification over the 640 episodes <= 8 (bounded worst case, the property a separating family is meant to buy).\", \"statistic\": \"p95 probes(X), nearest-rank\", \"comparison\": \"<=\", \"threshold\": 8}]",
+      "failure_criterion": "[{\"id\": \"F1\", \"text\": \"Hitting-set probing is materially worse than greedy information gain: mean probes ratio to GREEDY_REF >= 1.15.\", \"statistic\": \"mean probes(X) / mean probes(GREEDY_REF)\", \"comparison\": \">=\", \"threshold\": 1.15}, {\"id\": \"F2\", \"text\": \"Hitting-set probing is not clearly better than random: mean probes(X) >= 0.75 x mean probes(NULL_TWIN) (disjoint from S2: 0.75 x 13.18 = 9.89 > 9.0).\", \"statistic\": \"mean probes(X) / mean probes(NULL_TWIN)\", \"comparison\": \">=\", \"threshold\": 0.75}, {\"id\": \"F3\", \"text\": \"Worst case not bounded: p95 probes >= 10.\", \"statistic\": \"p95 probes(X), nearest-rank\", \"comparison\": \">=\", \"threshold\": 10}]",
+      "alternative_explanation": "Any policy that prefers balanced splits identifies the plant near the entropy bound on a random library; a separating-family solver may do so only because its chosen family happens to contain balanced probes, i.e. it is greedy information gain by another route, and the Yoneda framing adds a name, not a mechanism. Conversely a minimum separating family is a worst-case (non-adaptive) object and may spend probes that an adaptive greedy policy would skip, making it strictly worse in the mean.",
+      "null_twin": "Random probing: a uniformly random unapplied probe at each step, same libraries, same truths, same stop rule (probe choice destroyed).",
+      "substrate": "causal toy",
+      "cost_estimate": "controls: 0.16 CPU core-seconds for 4 arms; treatment: 640 episodes x <= ~10 exact minimum-hitting-set solves on <= 2016 pairs x 48 probes; expected < 3 CPU core-minutes in pure Python with a small branch-and-bound or a SAT cardinality encoding",
+      "stupid_explanations": [
+        "greedy information gain already sits at the entropy bound (6.02 vs 6.0), so any balanced-split rule 'matches greedy' and S1 tests nothing specific to separating families",
+        "the minimum separating family is re-solved after every response, so the treatment is adaptive greedy in disguise; its first probe is whatever the solver's tie-break picks",
+        "S3 passes for any sensible policy because the libraries contain size-32 probes that halve V; the worst-case bound comes from the library, not the solver",
+        "random probing is a strawman: excluding never-splitting probes from the twin alone would halve its count"
+      ],
+      "spec": "hecate/programs/HT-8a87057933/worlds/W6/spec.json",
+      "attainability": "hecate/programs/HT-8a87057933/worlds/W6/ATTAINABILITY.json"
+    }
+  ],
+  "candidateEngines": [],
+  "currentVerdict": "PARK",
+  "evidenceSummary": {
+    "layer": "experimental_observation",
+    "rows": "hecate/programs/HT-8a87057933/worlds/W5/pass4/rows.jsonl",
+    "note": "Pass 4 round 1: PARK"
+  }
+}

@@ -1,0 +1,135 @@
+{
+ "clauses": [
+  {
+   "id": "S1",
+   "positive_value": 0.5495374909356047,
+   "twin_value": 0.9908181542937274,
+   "attainable": true,
+   "discriminating": true,
+   "treatment_must_reach": 0.8,
+   "treatment_statistic": "median over seeds 0-4 of alpha, TREATMENT (must be <=)"
+  },
+  {
+   "id": "S2",
+   "positive_value": 0.44128066335812277,
+   "twin_value": -0.016755141769214776,
+   "attainable": true,
+   "discriminating": true,
+   "treatment_must_reach": "alpha_treatment <= alpha_twin(probe rerun) - 0.15; with this run's twin: <= 0.841",
+   "treatment_statistic": "median alpha NULL_TWIN minus median alpha TREATMENT, seeds 0-4 (must be >=)"
+  }
+ ],
+ "cheat_detected": true,
+ "cheat_values": {
+  "S1": 0.5000000000000001,
+  "S2": 0.4908181542937273
+ },
+ "frozen": true,
+ "diagnostics": {
+  "POSITIVE_CONTROL": {
+   "alpha": 0.5495374909356047,
+   "r2": 0.9995607673369363,
+   "alpha_coarse": 0.5634471694824266,
+   "alpha_fine": 0.5360975919016056
+  },
+  "NULL_TWIN": {
+   "alpha": 0.9908181542937274,
+   "r2": 0.9986777932737856,
+   "alpha_coarse": 0.9750158943136459,
+   "alpha_fine": 1.0196997768754226
+  },
+  "NULL_TWIN_REPLICATE": {
+   "alpha": 1.0075732960629422,
+   "r2": 0.9976416954394367,
+   "alpha_coarse": 0.9652366858091135,
+   "alpha_fine": 1.0958127298073992
+  },
+  "CHEAT": {
+   "alpha": 0.5000000000000001,
+   "r2": 1.0,
+   "alpha_coarse": 0.4999999999999997,
+   "alpha_fine": 0.49999999999999983
+  }
+ },
+ "cpu_core_seconds_last_run": 109.984375,
+ "revisions": [
+  {
+   "rev": 0,
+   "what": "Pre-run debugging of the NULL_TWIN labeller (no clause values produced): (a) Newton polish of the log-likelihood had the wrong curvature sign (fixed; labeller now agrees 3000/3000 with a 200001-point brute-force argmax); (b) data (-1.8,-1.2,1.0,1.6) with rigid group shifts were mirror-symmetric, so the two local maxima tied exactly for every g (degenerate twin); (c) asymmetric clusters with rigid group shifts gave a 4% minority label (boundary nearly absent from the square).",
+   "why_changed": "a twin without a boundary in the square cannot discriminate anything; chose data (-1.9,-1.4,-1.0,0.8,1.2,1.9) with groups (0,0,1,1,0,1) so g1 != g2 changes cluster tightness, not only location: minority label 46%, boundary length ~2.5 in the square. NBASE 40000 -> 30000 and likelihood grid 320 -> 200 points to fit the CPU budget."
+  }
+ ],
+ "cpu_budget": {
+  "limit_core_min": 5,
+  "last_run_core_s": 110.0,
+  "cumulative_core_s_all_control_runs_approx": 116.0,
+  "note": "about 6 core-s of labeller debugging/config scans before the full run"
+ },
+ "label_balance": [
+  {
+   "0": 10540,
+   "1": 9779,
+   "2": 9681
+  },
+  {
+   "0": 10502,
+   "1": 9742,
+   "2": 9756
+  },
+  {
+   "0": 10415,
+   "1": 9780,
+   "2": 9805
+  },
+  {
+   "0": 10601,
+   "1": 9661,
+   "2": 9738
+  },
+  {
+   "0": 10550,
+   "1": 9839,
+   "2": 9611
+  },
+  {
+   "-1": 16381,
+   "1": 13619
+  },
+  {
+   "-1": 16491,
+   "1": 13509
+  },
+  {
+   "-1": 16411,
+   "1": 13589
+  },
+  {
+   "-1": 16366,
+   "1": 13634
+  },
+  {
+   "-1": 16362,
+   "1": 13638
+  },
+  {
+   "-1": 16439,
+   "1": 13561
+  },
+  {
+   "-1": 16508,
+   "1": 13492
+  },
+  {
+   "-1": 16436,
+   "1": 13564
+  },
+  {
+   "-1": 16363,
+   "1": 13637
+  },
+  {
+   "-1": 16478,
+   "1": 13522
+  }
+ ]
+}

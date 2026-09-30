@@ -1,0 +1,2315 @@
+{
+  "id": "HT-55162c0ac0",
+  "key": "Chaos Theory + Cognitive Load Theory + Neuromodulation",
+  "stratum": "S2_forged",
+  "concepts": [
+    {
+      "field": "Physics",
+      "mechanism": "dynamics",
+      "name": "Chaos Theory",
+      "short_description": "Sensitive dependence on initial conditions in deterministic systems; strange attractors, Lyapunov exponents."
+    },
+    {
+      "field": "Cognitive Science",
+      "mechanism": "constraint",
+      "name": "Cognitive Load Theory",
+      "short_description": "Limited working memory constrains learning; intrinsic, extraneous, and germane load; chunking."
+    },
+    {
+      "field": "Neuroscience",
+      "mechanism": "dynamics",
+      "name": "Neuromodulation",
+      "short_description": "Chemical signals that alter neural circuit dynamics; dopamine, serotonin, gain control, state-dependent processing."
+    }
+  ],
+  "provenance": {
+    "historicalId": "Chaos Theory + Cognitive Load Theory + Neuromodulation",
+    "humanreadable": "agents/hephaestus/humanreadable/Chaos_Theory---Cognitive_Load_Theory---Neuromodulation.md",
+    "ledger_lines": [
+      618
+    ],
+    "source": "hephaestus",
+    "sourceArtifact": "agents/hephaestus/ledger.jsonl#L618",
+    "upstream_nous": [
+      "agents/nous/runs/20260325_132552/responses.jsonl#L98"
+    ],
+    "selected_by": "roles/Hecate/prereg/2026-09-29_first_selection/"
+  },
+  "history": {
+    "forged": true,
+    "ledger_n": 1,
+    "ledger_reasons": [
+      ""
+    ],
+    "nous_composite_max": 7.0,
+    "nous_high_potential": false,
+    "nous_models": [
+      "nvidia/nemotron-3-super-120b-a12b"
+    ],
+    "nous_n": 1,
+    "nous_unproductive_any": false
+  },
+  "passes": [
+    {
+      "id": "P0",
+      "triplicateId": "HT-55162c0ac0",
+      "index": 0,
+      "kind": "raw_interpretation",
+      "added": [
+        "new interpretation"
+      ],
+      "generator": {
+        "model": "claude-opus-5-5",
+        "search": false,
+        "prompt": "hecate/programs/_prompts/pass0_3_v1.md",
+        "prompt_sha256": "9ac5468dffb0a5792840809c84b3ad1ab22056397741dacb893386fd206baf3d"
+      },
+      "inspected_prior": [],
+      "unexplained": [
+        "whether any link between Lyapunov exponents and working-memory capacity is more than metaphor",
+        "whether the modulator is needed or a fixed parameter suffices"
+      ],
+      "decision": "DEEPEN",
+      "research_state": {
+        "novelty": "unknown",
+        "mechanistic_clarity": "low",
+        "falsifiability": "low",
+        "empirical_support": "none",
+        "cross_lens_agreement": "unknown",
+        "cross_substrate_transfer": "unknown",
+        "baseline_resistance": "unknown",
+        "artifact_risk": "medium",
+        "cost": "low",
+        "unexpectedness": "medium",
+        "potential_importance": "medium"
+      },
+      "concept_extractions": [
+        {
+          "concept": "Chaos Theory",
+          "defining_structures": [
+            "deterministic nonlinear map or flow",
+            "strange attractor with fractal dimension",
+            "dense set of unstable periodic orbits (UPOs)",
+            "stretching-and-folding (horseshoe)"
+          ],
+          "invariants": [
+            "Lyapunov spectrum",
+            "Kaplan-Yorke / correlation dimension",
+            "topological entropy",
+            "invariant (natural) measure",
+            "UPO skeleton"
+          ],
+          "transformations": [
+            "iteration of the map",
+            "bifurcation under parameter change (period doubling, intermittency, crisis)",
+            "symbolic coding by a generating partition",
+            "delay embedding"
+          ],
+          "conserved_quantities": [
+            "phase-space volume only in the Hamiltonian case",
+            "invariant measure under the dynamics",
+            "topological conjugacy class"
+          ],
+          "failure_modes": [
+            "loss of predictability beyond the Lyapunov time",
+            "boundary crisis / escape",
+            "riddled or fractal basins making outcome unpredictable",
+            "collapse into a periodic window"
+          ],
+          "dynamics": [
+            "exponential divergence of nearby states",
+            "mixing",
+            "chaotic itinerancy among attractor ruins",
+            "intermittent bursts"
+          ],
+          "scales": [
+            "Lyapunov time",
+            "correlation time",
+            "bifurcation-parameter distance to onset"
+          ],
+          "locality": [
+            "local in phase space (Jacobian)",
+            "global in consequence (sensitivity)",
+            "spatiotemporal chaos in locally coupled lattices"
+          ],
+          "memory": [
+            "finite memory of initial conditions, erased at rate lambda_max",
+            "memory stored in which attractor/basin is occupied",
+            "hysteresis near bifurcations"
+          ],
+          "identity": [
+            "an attractor is identified by its invariant measure and symbolic grammar, not by any single trajectory"
+          ],
+          "reproduction": [
+            "none intrinsic; self-similar structure recurs across scales"
+          ],
+          "selection": [
+            "basins select which attractor a state ends on",
+            "the control parameter selects the regime"
+          ],
+          "information": [
+            "entropy production = sum of positive Lyapunov exponents (Pesin)",
+            "information created at small scales and lost at large ones"
+          ],
+          "constraint": [
+            "determinism: no noise required",
+            "bounded phase space with stretching must fold"
+          ]
+        },
+        {
+          "concept": "Cognitive Load Theory",
+          "defining_structures": [
+            "working memory of limited element count",
+            "long-term memory with effectively unlimited schemas",
+            "intrinsic, extraneous and germane load components",
+            "chunks/schemas that count as one element"
+          ],
+          "invariants": [
+            "capacity limit on simultaneously processed interacting elements",
+            "total load = intrinsic + extraneous + germane must stay under capacity"
+          ],
+          "transformations": [
+            "chunking: many elements -> one schema",
+            "automation: a schema stops consuming working memory",
+            "instructional redesign reducing extraneous load"
+          ],
+          "conserved_quantities": [
+            "working-memory capacity (approximately fixed per learner)",
+            "element interactivity of a task, relative to the learner's schemas"
+          ],
+          "failure_modes": [
+            "overload: learning collapses when load exceeds capacity",
+            "expertise reversal: guidance that helps novices hurts experts",
+            "split-attention and redundancy effects"
+          ],
+          "dynamics": [
+            "schema acquisition gradually lowers effective intrinsic load",
+            "load fluctuates with task sequence"
+          ],
+          "scales": [
+            "seconds (working-memory hold)",
+            "hours to years (schema formation)",
+            "element counts of a handful"
+          ],
+          "locality": [
+            "load is local to what must be held simultaneously; non-interacting elements can be processed serially"
+          ],
+          "memory": [
+            "two tiers: tiny volatile working store, large durable schema store"
+          ],
+          "identity": [
+            "an element's identity depends on the learner's schemas (one element for an expert, many for a novice)"
+          ],
+          "reproduction": [
+            "schemas are transmitted by instruction; worked examples copy structure"
+          ],
+          "selection": [
+            "what gets encoded is selected by what fits in working memory",
+            "germane load is effort directed at schema construction"
+          ],
+          "information": [
+            "element interactivity = number of elements whose meaning depends on each other",
+            "compression by chunking"
+          ],
+          "constraint": [
+            "hard capacity bound",
+            "interacting elements cannot be split without loss"
+          ]
+        },
+        {
+          "concept": "Neuromodulation",
+          "defining_structures": [
+            "diffuse broadcast signal (few scalars, many targets)",
+            "receptor-specific effects on gain, excitability and plasticity",
+            "slow timescale relative to fast circuit dynamics"
+          ],
+          "invariants": [
+            "low dimensionality of the control signal relative to the circuit",
+            "receptor mapping from modulator to effect"
+          ],
+          "transformations": [
+            "gain scaling of input-output functions",
+            "switching a circuit between regimes (bursting vs tonic)",
+            "gating plasticity (three-factor learning)"
+          ],
+          "conserved_quantities": [
+            "wiring unchanged while dynamics change",
+            "total modulator release is budgeted"
+          ],
+          "failure_modes": [
+            "too much gain -> runaway instability",
+            "too little -> unresponsive/rigid",
+            "receptor desensitization",
+            "inverted-U performance curve"
+          ],
+          "dynamics": [
+            "phasic bursts vs tonic levels",
+            "slow drift of state (arousal, mood)"
+          ],
+          "scales": [
+            "hundreds of ms to hours",
+            "brain-wide spatial scale"
+          ],
+          "locality": [
+            "non-local: one signal reaches many sites",
+            "effect made local by receptor density"
+          ],
+          "memory": [
+            "tags recent activity for consolidation (eligibility)",
+            "slow state persists as context"
+          ],
+          "identity": [
+            "a circuit's function is identified with its modulatory state, not only its wiring"
+          ],
+          "reproduction": [
+            "none"
+          ],
+          "selection": [
+            "reward-related modulators select which transients are consolidated",
+            "the modulator selects the operating regime"
+          ],
+          "information": [
+            "few bits of broadcast information with high leverage",
+            "signals prediction error, uncertainty, urgency"
+          ],
+          "constraint": [
+            "a scalar broadcast cannot address individual units",
+            "slow: cannot follow fast dynamics"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "P1",
+      "triplicateId": "HT-55162c0ac0",
+      "index": 1,
+      "kind": "collision",
+      "added": [
+        "new mechanism"
+      ],
+      "generator": {
+        "model": "claude-opus-5-5",
+        "search": false,
+        "prompt": "hecate/programs/_prompts/pass0_3_v1.md",
+        "prompt_sha256": "9ac5468dffb0a5792840809c84b3ad1ab22056397741dacb893386fd206baf3d"
+      },
+      "inspected_prior": [
+        "I1",
+        "I2",
+        "I3",
+        "I4",
+        "I5",
+        "I6",
+        "I7"
+      ],
+      "unexplained": [
+        "M8, M9 and M11 have weak three-way dependency",
+        "M1 may be a familiar annealing/criticality mechanism relabelled",
+        "no observable yet separates chaos-caused overload from exclusion"
+      ],
+      "decision": "DEEPEN",
+      "research_state": {
+        "novelty": "unknown",
+        "mechanistic_clarity": "medium",
+        "falsifiability": "medium",
+        "empirical_support": "none",
+        "cross_lens_agreement": "unknown",
+        "cross_substrate_transfer": "unknown",
+        "baseline_resistance": "unknown",
+        "artifact_risk": "medium",
+        "cost": "low",
+        "unexpectedness": "medium",
+        "potential_importance": "medium"
+      }
+    },
+    {
+      "id": "P2",
+      "triplicateId": "HT-55162c0ac0",
+      "index": 2,
+      "kind": "lens_explosion",
+      "added": [
+        "new lens",
+        "new observable"
+      ],
+      "generator": {
+        "model": "claude-opus-5-5",
+        "search": false,
+        "prompt": "hecate/programs/_prompts/pass0_3_v1.md",
+        "prompt_sha256": "9ac5468dffb0a5792840809c84b3ad1ab22056397741dacb893386fd206baf3d"
+      },
+      "inspected_prior": [
+        "M1",
+        "M2",
+        "M3",
+        "M4",
+        "M5",
+        "M6",
+        "M7",
+        "M8",
+        "M9",
+        "M10",
+        "M11",
+        "M12",
+        "M13",
+        "M14"
+      ],
+      "unexplained": [
+        "whether basin census and Lyapunov ledger agree on capacity",
+        "whether hysteresis loop area predicts order effects"
+      ],
+      "decision": "DEEPEN",
+      "research_state": {
+        "novelty": "unknown",
+        "mechanistic_clarity": "medium",
+        "falsifiability": "medium",
+        "empirical_support": "none",
+        "cross_lens_agreement": "unknown",
+        "cross_substrate_transfer": "unknown",
+        "baseline_resistance": "unknown",
+        "artifact_risk": "medium",
+        "cost": "low",
+        "unexpectedness": "medium",
+        "potential_importance": "medium"
+      }
+    },
+    {
+      "id": "P3",
+      "triplicateId": "HT-55162c0ac0",
+      "index": 3,
+      "kind": "minimal_worlds",
+      "added": [
+        "new substrate",
+        "new falsifier",
+        "new intervention"
+      ],
+      "generator": {
+        "model": "claude-opus-5-5",
+        "search": false,
+        "prompt": "hecate/programs/_prompts/pass0_3_v1.md",
+        "prompt_sha256": "9ac5468dffb0a5792840809c84b3ad1ab22056397741dacb893386fd206baf3d"
+      },
+      "inspected_prior": [
+        "L1",
+        "L2",
+        "L3",
+        "L4",
+        "L5",
+        "L6",
+        "M10",
+        "M5",
+        "M4",
+        "M2",
+        "M7"
+      ],
+      "unexplained": [
+        "M1, M3, M6, M12, M13 have no world yet",
+        "transfer of any threshold law across substrates"
+      ],
+      "decision": "FALSIFY",
+      "research_state": {
+        "novelty": "unknown",
+        "mechanistic_clarity": "medium",
+        "falsifiability": "high",
+        "empirical_support": "none",
+        "cross_lens_agreement": "unknown",
+        "cross_substrate_transfer": "unknown",
+        "baseline_resistance": "unknown",
+        "artifact_risk": "medium",
+        "cost": "low",
+        "unexpectedness": "medium",
+        "potential_importance": "medium"
+      }
+    },
+    {
+      "id": "P3-probe1",
+      "triplicateId": "HT-55162c0ac0",
+      "index": 3,
+      "kind": "cheap_probe",
+      "added": [
+        "new observable"
+      ],
+      "generator": {
+        "model": "claude-opus-5-5 (implementer)",
+        "search": false,
+        "prompt": "hecate/programs/_prompts/probe_impl_v1.md",
+        "prompt_sha256": "cf4bd374bce1b817a12d3607063278183ce0a8b7c4a7b771061dc8ce133bcea2"
+      },
+      "prereg": "roles/Hecate/prereg/2026-09-29_probe_round1/PREREG.md",
+      "inspected_prior": [
+        "W3"
+      ],
+      "unexplained": [
+        "adjusted Rand index biased by cluster count"
+      ],
+      "decision": "DEEPEN",
+      "research_state": {
+        "novelty": "unknown",
+        "mechanistic_clarity": "unknown",
+        "falsifiability": "unknown",
+        "empirical_support": "none",
+        "cross_lens_agreement": "unknown",
+        "cross_substrate_transfer": "unknown",
+        "baseline_resistance": "unknown",
+        "artifact_risk": "unknown",
+        "cost": "unknown",
+        "unexpectedness": "unknown",
+        "potential_importance": "unknown"
+      }
+    },
+    {
+      "id": "P3-probe2",
+      "triplicateId": "HT-55162c0ac0",
+      "index": 3,
+      "kind": "cheap_probe",
+      "added": [
+        "new observable"
+      ],
+      "generator": {
+        "model": "claude-opus-5-5 (implementer)",
+        "search": false,
+        "prompt": "hecate/programs/_prompts/probe_impl_v2.md",
+        "prompt_sha256": "2021ed66e8fefd807203ae1d814b74091b4eabdacef16668e7a025d82128185e"
+      },
+      "prereg": "roles/Hecate/prereg/2026-09-30_probe_round2/PREREG.md",
+      "inspected_prior": [
+        "W3",
+        "W2"
+      ],
+      "unexplained": [
+        "delta too small for longer orbits (repeat at delta=0.05)",
+        "long-period UPOs located inaccurately",
+        "trajectory lands near the orbit by luck"
+      ],
+      "decision": "PARK",
+      "research_state": {
+        "novelty": "unknown",
+        "mechanistic_clarity": "unknown",
+        "falsifiability": "unknown",
+        "empirical_support": "none",
+        "cross_lens_agreement": "unknown",
+        "cross_substrate_transfer": "unknown",
+        "baseline_resistance": "unknown",
+        "artifact_risk": "unknown",
+        "cost": "unknown",
+        "unexpectedness": "unknown",
+        "potential_importance": "unknown"
+      }
+    },
+    {
+      "id": "P3v2",
+      "triplicateId": "HT-55162c0ac0",
+      "index": 3,
+      "kind": "minimal_worlds_v2",
+      "added": [
+        "new falsifier",
+        "new observable"
+      ],
+      "generator": {
+        "model": "claude-opus-5-5",
+        "search": false,
+        "prompt": "hecate/programs/_prompts/pass3_v2.md",
+        "prompt_sha256": "2adcfc8da07ee9adb9b04d2214889f0965758f7fcf0a60cde08eebb62bedd461"
+      },
+      "prereg": "roles/Hecate/prereg/2026-09-30_pass3_v2/PREREG.md",
+      "inspected_prior": [],
+      "unexplained": [],
+      "decision": "FALSIFY",
+      "research_state": {
+        "novelty": "unknown",
+        "mechanistic_clarity": "unknown",
+        "falsifiability": "unknown",
+        "empirical_support": "none",
+        "cross_lens_agreement": "unknown",
+        "cross_substrate_transfer": "unknown",
+        "baseline_resistance": "unknown",
+        "artifact_risk": "unknown",
+        "cost": "unknown",
+        "unexpectedness": "unknown",
+        "potential_importance": "unknown"
+      }
+    },
+    {
+      "id": "P3-probe3",
+      "triplicateId": "HT-55162c0ac0",
+      "index": 3,
+      "kind": "cheap_probe",
+      "added": [
+        "new falsifier",
+        "new observable"
+      ],
+      "generator": {
+        "model": "claude-opus-5-5",
+        "search": false,
+        "prompt": "hecate/programs/_prompts/probe_impl_v3.md",
+        "prompt_sha256": "a34a8c6143f49df2b33b75871e8f9cd12e60c10c37778ba595e12fedf1621685"
+      },
+      "prereg": "roles/Hecate/prereg/2026-09-30_pass3_v2/PREREG.md",
+      "inspected_prior": [
+        "W6"
+      ],
+      "unexplained": [
+        "tau = 8 is either too short for within-group spread or long enough for the leak to saturate everything (report ftle_within_mean and ftle_between_mean)",
+        "Any perturbation-response (causal intervention) readout recovers a coupling graph whether or not the carrier is chaotic; success would show that intervention beats observation, not that chaos is what measures interactivity. Separately, the global leak may synchronise units so that every readout sees one block."
+      ],
+      "decision": "FALSIFY",
+      "research_state": {
+        "novelty": "unknown",
+        "mechanistic_clarity": "unknown",
+        "falsifiability": "unknown",
+        "empirical_support": "low",
+        "cross_lens_agreement": "unknown",
+        "cross_substrate_transfer": "unknown",
+        "baseline_resistance": "unknown",
+        "artifact_risk": "unknown",
+        "cost": "unknown",
+        "unexpectedness": "unknown",
+        "potential_importance": "unknown"
+      }
+    },
+    {
+      "id": "P4",
+      "triplicateId": "HT-55162c0ac0",
+      "index": 4,
+      "kind": "first_falsification",
+      "added": [
+        "new falsifier",
+        "new substrate"
+      ],
+      "generator": {
+        "model": "claude-opus-5-5 (attacker)",
+        "search": false,
+        "prompt": "hecate/programs/_prompts/pass4_impl_v2.md",
+        "prompt_sha256": "e55576b2abf79aca49dd5b740bfd6a0d9a6d8ce4060652fc13aded01fb0e2d8c"
+      },
+      "prereg": "roles/Hecate/prereg/2026-09-30_pass4_round2/PREREG.md",
+      "inspected_prior": [
+        "W6"
+      ],
+      "unexplained": [
+        "R strictly not reproduced: grouping 10/10 at ARI 1.0 but correlation control -0.111 (below chance, outside |mean| <= 0.1). ORIG did NOT fire (contracting carrier r=0.2 groups 0/10) -- the author's prediction was wrong. ALT FAILED: non-chaotic levels r=0.65 (Lyapunov -0.92) and r=0.8 group perfectly; the readout tracks carrier amplitude, not chaos."
+      ],
+      "decision": "PARK",
+      "research_state": {
+        "novelty": "unknown",
+        "mechanistic_clarity": "unknown",
+        "falsifiability": "unknown",
+        "empirical_support": "none",
+        "cross_lens_agreement": "unknown",
+        "cross_substrate_transfer": "unknown",
+        "baseline_resistance": "unknown",
+        "artifact_risk": "unknown",
+        "cost": "unknown",
+        "unexpectedness": "unknown",
+        "potential_importance": "unknown"
+      }
+    }
+  ],
+  "hypotheses": [
+    {
+      "id": "I1",
+      "triplicateId": "HT-55162c0ac0",
+      "passId": "P0",
+      "kind": "interpretation",
+      "layer": "speculation",
+      "statement": "Capacity-matched chaos: a learner's useful exploration level (largest Lyapunov exponent of its internal dynamics) must be matched to task intrinsic load, and a slow scalar modulator performs the matching. Experiment: vary element interactivity and test whether the optimal modulator setting shifts."
+    },
+    {
+      "id": "I2",
+      "triplicateId": "HT-55162c0ac0",
+      "passId": "P0",
+      "kind": "interpretation",
+      "layer": "speculation",
+      "statement": "Chunks are attractors carved from a chaotic sea; working-memory capacity is the number of attractors that can coexist before basins crowd, fragment or merge; modulation changes that number. Experiment: count retrievable attractors versus a gain parameter."
+    },
+    {
+      "id": "I3",
+      "triplicateId": "HT-55162c0ac0",
+      "passId": "P0",
+      "kind": "interpretation",
+      "layer": "speculation",
+      "statement": "Overload is a dynamical phase transition: past a threshold number of held interacting items, the competition among them itself becomes chaotic and items are lost; modulation that weakens interaction shifts the threshold. Experiment: add items one at a time and test whether chaos onset and recall collapse coincide."
+    },
+    {
+      "id": "I4",
+      "triplicateId": "HT-55162c0ac0",
+      "passId": "P0",
+      "kind": "interpretation",
+      "layer": "speculation",
+      "statement": "Curriculum is a path through a bifurcation diagram: the modulator is the slow bifurcation parameter, and through hysteresis the order in which tasks of different load are met determines the final attractor set. Experiment: same tasks, opposite orders, compare retained structure."
+    },
+    {
+      "id": "I5",
+      "triplicateId": "HT-55162c0ac0",
+      "passId": "P0",
+      "kind": "interpretation",
+      "layer": "speculation",
+      "statement": "Working-memory span is a predictability horizon: only what can be predicted forward can be held, so span scales with Lyapunov time, and the modulator buys span at the cost of flexibility. Experiment: measure span of a memory held in a chaotic carrier versus lambda_max."
+    },
+    {
+      "id": "I6",
+      "triplicateId": "HT-55162c0ac0",
+      "passId": "P0",
+      "kind": "interpretation",
+      "layer": "speculation",
+      "statement": "Low-bandwidth control of a high-dimensional chaotic system: a modulator is a scalar broadcast controller, and what it can stabilise is limited by how many past states the controller can hold (its load). Experiment: stabilisable UPO period versus controller memory size."
+    },
+    {
+      "id": "I7",
+      "triplicateId": "HT-55162c0ac0",
+      "passId": "P0",
+      "kind": "interpretation",
+      "layer": "speculation",
+      "statement": "Learnability of a chaotic source by a capacity-limited chunker peaks at an entropy matched to its chunk budget; the modulator tunes source entropy (or sampling) to that match. Experiment: vary topological entropy and chunk-table size, find the argmax shift."
+    },
+    {
+      "id": "M1",
+      "triplicateId": "HT-55162c0ac0",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "dynamical law",
+      "statement": "A coupled-map learner whose global gain g is set by a slow modulator reading a running load estimate (prediction error): g is pushed toward the order-chaos boundary (lambda_max near 0) when load is high and toward contraction when load is low.",
+      "derived_from": [
+        "I1"
+      ],
+      "concept_contributions": {
+        "Chaos Theory": "the gain -> Lyapunov-exponent relation and the order-chaos boundary",
+        "Cognitive Load Theory": "the load signal that sets the target exponent",
+        "Neuromodulation": "the single slow scalar that moves g"
+      },
+      "knockouts": {
+        "Chaos Theory": "no exploration regime; gain only scales responsiveness",
+        "Cognitive Load Theory": "target g no longer depends on the task; reduces to fixed criticality",
+        "Neuromodulation": "g fixed; must be hand-tuned per task"
+      },
+      "simpler_alternative": "a learning-rate or temperature schedule that anneals with error (simulated annealing)",
+      "questions": {
+        "what_exists": "N coupled maps, scalar g, load estimator",
+        "what_changes": "g and map states",
+        "what_persists": "coupling structure",
+        "what_is_selected": "g values minimising error per task",
+        "what_can_reproduce": "nothing",
+        "what_can_learn": "the g(load) policy",
+        "what_can_transfer": "the g(load) policy to another map family",
+        "distinguishing_observable": "optimal lambda_max shifts monotonically with element interactivity at fixed error magnitude; annealing predicts dependence on error magnitude only"
+      }
+    },
+    {
+      "id": "M2",
+      "triplicateId": "HT-55162c0ac0",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "implemented_candidate",
+      "form": "memory structure",
+      "statement": "Capacity = number of coexisting attractors in a globally coupled map; storing chunk k+1 fragments existing basins, and beyond a gain-dependent K* basins become riddled so cued recall fails.",
+      "derived_from": [
+        "I2"
+      ],
+      "concept_contributions": {
+        "Chaos Theory": "multistability, basin geometry, riddling",
+        "Cognitive Load Theory": "the hard count limit and chunk-as-single-element",
+        "Neuromodulation": "gain moves the system between few large basins and many tiny ones"
+      },
+      "knockouts": {
+        "Chaos Theory": "no multistability; capacity undefined",
+        "Cognitive Load Theory": "no reason to measure a count limit; becomes generic multistability",
+        "Neuromodulation": "K* fixed; no trade between capacity and search"
+      },
+      "simpler_alternative": "Hopfield-style capacity limit from pattern interference, no chaos needed",
+      "questions": {
+        "what_exists": "globally coupled logistic maps, stored cluster patterns",
+        "what_changes": "which basin the state occupies",
+        "what_persists": "the attractor set",
+        "what_is_selected": "patterns that keep a basin",
+        "what_can_reproduce": "nothing",
+        "what_can_learn": "stored patterns via weak forcing",
+        "what_can_transfer": "the K*(gain) curve",
+        "distinguishing_observable": "basin-boundary dimension rises before recall fails; interference predicts smooth decline without a boundary-dimension precursor"
+      }
+    },
+    {
+      "id": "M3",
+      "triplicateId": "HT-55162c0ac0",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "learning pressure",
+      "statement": "Chaotic itinerancy proposes candidate chunks (transient visits to attractor ruins); a phasic broadcast pulse on success locally lowers gain at currently active units, freezing the current ruin into a stable attractor. The capacity limit bounds how many ruins can be frozen before itinerancy stops.",
+      "derived_from": [
+        "I1",
+        "I2"
+      ],
+      "concept_contributions": {
+        "Chaos Theory": "itinerancy as a free proposal generator",
+        "Cognitive Load Theory": "limited number of frozen chunks",
+        "Neuromodulation": "phasic success-triggered freezing"
+      },
+      "knockouts": {
+        "Chaos Theory": "proposals must come from external noise",
+        "Cognitive Load Theory": "unlimited freezing; itinerancy dies immediately or never",
+        "Neuromodulation": "no consolidation; itinerancy never becomes memory"
+      },
+      "simpler_alternative": "random search with a success-triggered cache (epsilon-greedy with memory)",
+      "questions": {
+        "what_exists": "units in chaotic itinerancy, a pulse signal",
+        "what_changes": "local gains",
+        "what_persists": "frozen attractors",
+        "what_is_selected": "ruins active at pulse time",
+        "what_can_reproduce": "nothing",
+        "what_can_learn": "a library of attractors",
+        "what_can_transfer": "the library to tasks sharing sub-patterns",
+        "distinguishing_observable": "time-to-discovery follows ruin dwell-time statistics rather than the proposal count of an equivalent random search"
+      }
+    },
+    {
+      "id": "M4",
+      "triplicateId": "HT-55162c0ac0",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "implemented_candidate",
+      "form": "developmental process",
+      "statement": "The modulator is swept slowly while tasks of increasing intrinsic load are presented; hysteresis near bifurcations makes easy-to-hard order retain more pattern structure than hard-to-easy, with identical total exposure.",
+      "derived_from": [
+        "I4"
+      ],
+      "concept_contributions": {
+        "Chaos Theory": "hysteresis and path dependence around bifurcations",
+        "Cognitive Load Theory": "ordering of tasks by intrinsic load",
+        "Neuromodulation": "the slow parameter whose path matters"
+      },
+      "knockouts": {
+        "Chaos Theory": "no hysteresis; order irrelevant",
+        "Cognitive Load Theory": "tasks have no load ordering; becomes a generic parameter sweep",
+        "Neuromodulation": "parameter never moves; any order effect comes only from forcing"
+      },
+      "simpler_alternative": "curriculum effect from interference/recency (last task wins)",
+      "questions": {
+        "what_exists": "coupled maps, forcing patterns, a modulator path",
+        "what_changes": "modulator and state",
+        "what_persists": "attractor set after forcing is removed",
+        "what_is_selected": "patterns imprinted under a matching modulator value",
+        "what_can_reproduce": "nothing",
+        "what_can_learn": "patterns",
+        "what_can_transfer": "the ordering rule",
+        "distinguishing_observable": "order effect vanishes in a monostable twin with matched variance, whereas recency predicts it persists there"
+      }
+    },
+    {
+      "id": "M5",
+      "triplicateId": "HT-55162c0ac0",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "causal constraint",
+      "statement": "A scalar broadcast controller stabilises unstable periodic orbits with small parameter kicks computed from the last C observed states; the longest stabilisable period grows with C, so controller working memory bounds the repertoire a single modulator can pin.",
+      "derived_from": [
+        "I6"
+      ],
+      "concept_contributions": {
+        "Chaos Theory": "the UPO skeleton as a free repertoire of behaviours",
+        "Cognitive Load Theory": "C, the held-state limit",
+        "Neuromodulation": "scalar low-bandwidth kick"
+      },
+      "knockouts": {
+        "Chaos Theory": "no UPOs; nothing cheap to stabilise",
+        "Cognitive Load Theory": "C unlimited; repertoire bounded only by noise",
+        "Neuromodulation": "kicks could be vector and site-specific; the question changes"
+      },
+      "simpler_alternative": "a generic linear controller needs observation depth >= system order (observability); nothing chaos-specific",
+      "questions": {
+        "what_exists": "a chaotic map, a delay buffer of size C, a kick budget",
+        "what_changes": "kick size",
+        "what_persists": "the stabilised orbit",
+        "what_is_selected": "orbit period",
+        "what_can_reproduce": "nothing",
+        "what_can_learn": "feedback gains by least squares",
+        "what_can_transfer": "the p_max(C) law to other maps",
+        "distinguishing_observable": "sharp p_max threshold in C plus failure when fitted on time-shuffled data"
+      }
+    },
+    {
+      "id": "M6",
+      "triplicateId": "HT-55162c0ac0",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "information bottleneck",
+      "statement": "Extraneous load = input directions that project onto expanding Lyapunov directions and get amplified; modulation reshapes the Lyapunov spectrum direction-selectively (contracting irrelevant directions), acting as attention without addressing individual units.",
+      "derived_from": [
+        "I1",
+        "I5"
+      ],
+      "concept_contributions": {
+        "Chaos Theory": "direction-resolved amplification",
+        "Cognitive Load Theory": "the relevant/extraneous input split",
+        "Neuromodulation": "a global signal that nonetheless shapes the spectrum"
+      },
+      "knockouts": {
+        "Chaos Theory": "no amplification; distractors cost nothing",
+        "Cognitive Load Theory": "no extraneous/intrinsic split",
+        "Neuromodulation": "spectrum fixed"
+      },
+      "simpler_alternative": "input filtering by a learned gating mask",
+      "questions": {
+        "what_exists": "driven coupled maps with relevant and distractor inputs",
+        "what_changes": "covariant Lyapunov vectors",
+        "what_persists": "the relevant readout subspace",
+        "what_is_selected": "directions kept expanding",
+        "what_can_reproduce": "nothing",
+        "what_can_learn": "the modulation schedule",
+        "what_can_transfer": "to other distractor statistics",
+        "distinguishing_observable": "angle between leading Lyapunov vectors and the distractor subspace grows under modulation, while a mask baseline leaves the spectrum unchanged"
+      }
+    },
+    {
+      "id": "M7",
+      "triplicateId": "HT-55162c0ac0",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "representation",
+      "statement": "Chunks are frequent words in the symbolic dynamics of a chaotic source; a learner with chunk budget C captures grammar only up to an entropy h*(C); moving source entropy (or sampling resolution) to h*(C) maximises learned structure.",
+      "derived_from": [
+        "I7"
+      ],
+      "concept_contributions": {
+        "Chaos Theory": "topological entropy and a grammar with forbidden words",
+        "Cognitive Load Theory": "the chunk budget",
+        "Neuromodulation": "the knob that sets entropy"
+      },
+      "knockouts": {
+        "Chaos Theory": "source i.i.d. or Markov; no grammar",
+        "Cognitive Load Theory": "unbounded table; argmax at maximal entropy",
+        "Neuromodulation": "entropy fixed; no matching possible"
+      },
+      "simpler_alternative": "any n-gram learner does best on low-entropy sequences; an argmax shift could be a finite-sample effect",
+      "questions": {
+        "what_exists": "symbol sequence, chunk table of size C",
+        "what_changes": "the entropy parameter",
+        "what_persists": "chunks",
+        "what_is_selected": "frequent words",
+        "what_can_reproduce": "nothing",
+        "what_can_learn": "context table",
+        "what_can_transfer": "the h*(C) law to other maps",
+        "distinguishing_observable": "argmax entropy increases with C and learned gain exceeds a Markov-1 surrogate"
+      }
+    },
+    {
+      "id": "M8",
+      "triplicateId": "HT-55162c0ac0",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "interaction law",
+      "statement": "Two modulators (gain and temporal integration) interact; their cross-coupling, not the circuit, generates chaos, and load determines which modulator saturates first.",
+      "derived_from": [
+        "I1"
+      ],
+      "concept_contributions": {
+        "Chaos Theory": "chaos arising in the modulator loop itself",
+        "Cognitive Load Theory": "load as the saturating input",
+        "Neuromodulation": "two interacting slow scalars"
+      },
+      "knockouts": {
+        "Chaos Theory": "modulators simply settle; weak dependency: chaos is incidental here",
+        "Cognitive Load Theory": "no saturation ordering",
+        "Neuromodulation": "no loop exists"
+      },
+      "simpler_alternative": "two coupled PID loops with windup oscillate; any two-integrator loop can oscillate",
+      "questions": {
+        "what_exists": "two modulators and a circuit",
+        "what_changes": "modulator levels",
+        "what_persists": "circuit wiring",
+        "what_is_selected": "stable modulator regimes",
+        "what_can_reproduce": "nothing",
+        "what_can_learn": "nothing",
+        "what_can_transfer": "unclear",
+        "distinguishing_observable": "positive lambda in the modulator time series only when load exceeds capacity"
+      }
+    },
+    {
+      "id": "M9",
+      "triplicateId": "HT-55162c0ac0",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "interaction law",
+      "statement": "Elements bound into one chunk are chaotically synchronised clusters; capacity is the number of distinct synchronised clusters that can coexist; the modulator sets coupling and hence cluster count.",
+      "derived_from": [
+        "I2"
+      ],
+      "concept_contributions": {
+        "Chaos Theory": "chaotic synchronisation and clustering",
+        "Cognitive Load Theory": "the count limit",
+        "Neuromodulation": "the coupling knob"
+      },
+      "knockouts": {
+        "Chaos Theory": "periodic oscillators might give the same count; dependency possibly weak",
+        "Cognitive Load Theory": "no count-limit meaning",
+        "Neuromodulation": "fixed coupling"
+      },
+      "simpler_alternative": "phase coding of items in nested periodic rhythms gives a count limit without chaos",
+      "questions": {
+        "what_exists": "coupled chaotic units",
+        "what_changes": "cluster membership",
+        "what_persists": "the cluster partition",
+        "what_is_selected": "stable partitions",
+        "what_can_reproduce": "nothing",
+        "what_can_learn": "partitions",
+        "what_can_transfer": "the partition count law",
+        "distinguishing_observable": "cluster-count limit differs between chaotic and matched periodic oscillators; if identical, chaos is decoration"
+      }
+    },
+    {
+      "id": "M10",
+      "triplicateId": "HT-55162c0ac0",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "dynamical law",
+      "statement": "Load-induced chaos: held items compete (generalised Lotka-Volterra); beyond a threshold item count the competition becomes chaotic and items drop out; a modulator scaling inter-item interaction shifts the threshold.",
+      "derived_from": [
+        "I3"
+      ],
+      "concept_contributions": {
+        "Chaos Theory": "onset of chaos with dimension in competitive systems",
+        "Cognitive Load Theory": "item count and overload collapse",
+        "Neuromodulation": "the interaction-scaling knob"
+      },
+      "knockouts": {
+        "Chaos Theory": "collapse must come from exclusion alone",
+        "Cognitive Load Theory": "no threshold count",
+        "Neuromodulation": "threshold fixed"
+      },
+      "simpler_alternative": "competitive exclusion in non-chaotic (symmetric) competition removes items with no chaos",
+      "questions": {
+        "what_exists": "n competing activities",
+        "what_changes": "abundances",
+        "what_persists": "the surviving set",
+        "what_is_selected": "items that persist",
+        "what_can_reproduce": "nothing",
+        "what_can_learn": "nothing within a trial",
+        "what_can_transfer": "the threshold law across random interaction matrices",
+        "distinguishing_observable": "within fixed n, chaotic draws lose more items than non-chaotic draws; the symmetric twin cannot be chaotic"
+      }
+    },
+    {
+      "id": "M11",
+      "triplicateId": "HT-55162c0ac0",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "mutation operator",
+      "statement": "A population of chunk-programs evolves with a mutation rate set by a modulator tracking recent success; capacity caps population size; ruggedness from a chaotic fitness map sets the needed rate.",
+      "derived_from": [
+        "I1"
+      ],
+      "concept_contributions": {
+        "Chaos Theory": "a rugged, sensitive fitness map",
+        "Cognitive Load Theory": "the population cap",
+        "Neuromodulation": "adaptive mutation rate"
+      },
+      "knockouts": {
+        "Chaos Theory": "weak dependency: chaos only supplies ruggedness",
+        "Cognitive Load Theory": "weak dependency: the cap is population size, not load",
+        "Neuromodulation": "rate fixed"
+      },
+      "simpler_alternative": "standard self-adaptive mutation rate (1/5 success rule)",
+      "questions": {
+        "what_exists": "programs and a fitness map",
+        "what_changes": "programs",
+        "what_persists": "best programs",
+        "what_is_selected": "high fitness",
+        "what_can_reproduce": "programs",
+        "what_can_learn": "programs",
+        "what_can_transfer": "the rate rule",
+        "distinguishing_observable": "almost none beyond the 1/5 rule; three-way dependency is weak, stated as such"
+      }
+    },
+    {
+      "id": "M12",
+      "triplicateId": "HT-55162c0ac0",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "implemented_candidate",
+      "form": "computational primitive",
+      "statement": "Finite-time Lyapunov exponents between input elements measure element interactivity for free: elements whose perturbations co-diverge interact; the modulator allocates capacity to high-FTLE groups, forming chunks of interacting elements.",
+      "derived_from": [
+        "I5",
+        "I1"
+      ],
+      "concept_contributions": {
+        "Chaos Theory": "FTLE as a sensitivity measurement",
+        "Cognitive Load Theory": "element interactivity as the quantity to measure",
+        "Neuromodulation": "the allocation signal"
+      },
+      "knockouts": {
+        "Chaos Theory": "no divergence; interactivity must be learned otherwise",
+        "Cognitive Load Theory": "no reason to group",
+        "Neuromodulation": "no allocation"
+      },
+      "simpler_alternative": "correlation or mutual-information clustering of inputs",
+      "questions": {
+        "what_exists": "elements and perturbation probes",
+        "what_changes": "allocation",
+        "what_persists": "chunk groups",
+        "what_is_selected": "interacting groups",
+        "what_can_reproduce": "nothing",
+        "what_can_learn": "groupings",
+        "what_can_transfer": "the grouping rule",
+        "distinguishing_observable": "FTLE grouping recovers interaction structure where pairwise correlation is zero (XOR-coupled elements)"
+      }
+    },
+    {
+      "id": "M13",
+      "triplicateId": "HT-55162c0ac0",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "error-correction mechanism",
+      "statement": "A chaotic memory trace drifts at rate lambda_max; periodic broadcast resets resynchronise it to a small stored anchor set; retention time ~ Lyapunov time x number of anchors under a fixed anchor budget.",
+      "derived_from": [
+        "I5"
+      ],
+      "concept_contributions": {
+        "Chaos Theory": "the drift rate",
+        "Cognitive Load Theory": "the anchor budget",
+        "Neuromodulation": "timed broadcast resets"
+      },
+      "knockouts": {
+        "Chaos Theory": "no drift; resets unnecessary",
+        "Cognitive Load Theory": "unlimited anchors",
+        "Neuromodulation": "no resets"
+      },
+      "simpler_alternative": "periodic refresh of a leaky memory (rehearsal)",
+      "questions": {
+        "what_exists": "trace, anchors, reset pulses",
+        "what_changes": "the trace",
+        "what_persists": "anchored components",
+        "what_is_selected": "anchors",
+        "what_can_reproduce": "nothing",
+        "what_can_learn": "reset timing",
+        "what_can_transfer": "the timing rule",
+        "distinguishing_observable": "optimal reset interval scales with 1/lambda_max, whereas leak-based rehearsal scales with the leak constant"
+      }
+    },
+    {
+      "id": "M14",
+      "triplicateId": "HT-55162c0ac0",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "selection mechanism",
+      "statement": "In a population of fixed-gain agents facing time-varying load, adaptive modulation is selected only when load changes faster than the Lyapunov time of the agents' own dynamics.",
+      "derived_from": [
+        "I1",
+        "I4"
+      ],
+      "concept_contributions": {
+        "Chaos Theory": "Lyapunov time as the agents' internal timescale",
+        "Cognitive Load Theory": "load switching",
+        "Neuromodulation": "adaptive vs fixed-gain genotypes"
+      },
+      "knockouts": {
+        "Chaos Theory": "no internal timescale; the threshold comes from other time constants",
+        "Cognitive Load Theory": "nothing varies",
+        "Neuromodulation": "no adaptive genotype"
+      },
+      "simpler_alternative": "general result: plasticity is favoured when the environment varies on intermediate timescales",
+      "questions": {
+        "what_exists": "agents with gain genotypes",
+        "what_changes": "genotype frequencies",
+        "what_persists": "the winning genotype",
+        "what_is_selected": "the gain policy",
+        "what_can_reproduce": "agents",
+        "what_can_learn": "nothing within a lifetime",
+        "what_can_transfer": "the threshold law",
+        "distinguishing_observable": "the selection threshold tracks Lyapunov time when it is varied independently of other time constants"
+      }
+    },
+    {
+      "id": "O-W3-r1",
+      "triplicateId": "HT-55162c0ac0",
+      "passId": "P3-probe1",
+      "kind": "observation",
+      "layer": "experimental_observation",
+      "evidence_rows": [
+        "hecate/programs/HT-55162c0ac0/worlds/W3/rows.jsonl",
+        "hecate/programs/HT-55162c0ac0/worlds/W3/OUTCOME.json"
+      ],
+      "statement": "W3 probe round 1: INSTRUMENT_FAIL. Attempt 1 (0.21 core-min). The positive control failed: a single k=2 pattern forced 500 steps at a=3.7 left a final partition of ~3.7 clusters with mean ARI 0.024 against the pattern (threshold 0.8), so by the PREREG no reading of the treatment is made. The cheat control was detected (diff 0.985, p=9e-10). For the record only: treatment mean diff 0.0005 (p=0.43), CONTROL -0.000005, NULL_TWIN 0.0 (all singletons, variance match 1.00), 5000-step check unchanged, L3 signed loop area 0.0016 (p=2e-4). Retention is ~0 in every arm; the pattern structure is not retained by these dynamics at these parameters. No instrument repair was made because no instrument defect was found.",
+      "derived_from": [
+        "M4",
+        "M2"
+      ]
+    },
+    {
+      "id": "O-W2-r2",
+      "triplicateId": "HT-55162c0ac0",
+      "passId": "P3-probe2",
+      "kind": "observation",
+      "layer": "experimental_observation",
+      "evidence_rows": [
+        "hecate/programs/HT-55162c0ac0/worlds/W2/pilot_rows.jsonl"
+      ],
+      "statement": "W2 probe round 2: SPEC_UNATTAINABLE. Pilot attempt 1 failed on the null twin; one repair (fit with intercept, intercept dropped from controller; NOTES.md) and rerun; attempt 2 failed on the null twin again -> SPEC_UNATTAINABLE per PREREG round 2. No treatment code written. core_minutes = summed process time of pilot rows + ~0.2 min for UPO checks/evaluators.",
+      "derived_from": [
+        "M5"
+      ]
+    },
+    {
+      "id": "O-W6-r3",
+      "triplicateId": "HT-55162c0ac0",
+      "passId": "P3-probe3",
+      "kind": "observation",
+      "layer": "experimental_observation",
+      "evidence_rows": [
+        "hecate/programs/HT-55162c0ac0/worlds/W6/probe/rows.jsonl"
+      ],
+      "statement": "W6 probe round 3: SIGNAL. ['treatment: S1=1.0000, S2=1.0830; success met']",
+      "derived_from": [
+        "M12"
+      ]
+    },
+    {
+      "id": "O-W6-p4",
+      "triplicateId": "HT-55162c0ac0",
+      "passId": "P4",
+      "kind": "observation",
+      "layer": "experimental_observation",
+      "evidence_rows": [
+        "hecate/programs/HT-55162c0ac0/worlds/W6/pass4/rows.jsonl"
+      ],
+      "statement": "Pass 4 on W6: PARK. R strictly not reproduced: grouping 10/10 at ARI 1.0 but correlation control -0.111 (below chance, outside |mean| <= 0.1). ORIG did NOT fire (contracting carrier r=0.2 groups 0/10) -- the author's prediction was wrong. ALT FAILED: non-chaotic levels r=0.65 (Lyapunov -0.92) and r=0.8 group perfectly; the readout tracks carrier amplitude, not chaos. readings per NOTES.md: R chance = |mean ari_corr| <= 0.1; ORIG existence test over sigma grid {0,0.01,0.05} at r=0.2, readable variants only; ALT A2 pooled over (level, seed)",
+      "derived_from": [
+        "M12"
+      ]
+    }
+  ],
+  "lenses": [
+    {
+      "id": "L1",
+      "name": "Lyapunov budget ledger",
+      "rationale": "Treat working capacity as a budget of expanding directions and tie chunk counts to the Kaplan-Yorke dimension.",
+      "sourceRepresentation": "trajectory plus tangent dynamics of the learner",
+      "transformation": "QR-based Lyapunov spectrum over windows; count positive exponents and KY dimension",
+      "observables": [
+        "number of positive exponents",
+        "KY dimension",
+        "lambda_max"
+      ],
+      "predictedSignals": [
+        "KY dimension tracks the number of held chunks",
+        "modulation reduces the positive count under load"
+      ],
+      "nullExpectation": "KY dimension unrelated to chunk count (rank correlation near 0)",
+      "failureModes": [
+        "short windows bias exponents",
+        "discontinuous maps break tangent estimates"
+      ],
+      "informationAddedBeyondExistingLenses": "ties a capacity count to a dynamical invariant rather than a task score",
+      "targets": [
+        "M1",
+        "M6",
+        "M13"
+      ],
+      "triplicateId": "HT-55162c0ac0",
+      "passId": "P2"
+    },
+    {
+      "id": "L2",
+      "name": "Basin census",
+      "rationale": "Capacity claims are claims about basin counts and basin geometry.",
+      "sourceRepresentation": "map with a control parameter",
+      "transformation": "sample initial conditions, cluster final states, estimate basin entropy and the uncertainty exponent of basin boundaries",
+      "observables": [
+        "number of attractors",
+        "basin entropy",
+        "uncertainty exponent"
+      ],
+      "predictedSignals": [
+        "boundary dimension rises before recall fails"
+      ],
+      "nullExpectation": "attractor count flat in the modulator",
+      "failureModes": [
+        "long transients mistaken for attractors",
+        "clustering-tolerance artifacts"
+      ],
+      "informationAddedBeyondExistingLenses": "gives a precursor that separates basin fragmentation from interference",
+      "targets": [
+        "M2",
+        "M9",
+        "M3"
+      ],
+      "triplicateId": "HT-55162c0ac0",
+      "passId": "P2"
+    },
+    {
+      "id": "L3",
+      "name": "Modulator hysteresis loop",
+      "rationale": "Order effects attributed to hysteresis must come with a hysteresis loop in the modulator parameter.",
+      "sourceRepresentation": "state versus a slowly swept modulator",
+      "transformation": "sweep up then down; label attractor sets; compute loop area and up/down overlap",
+      "observables": [
+        "loop area",
+        "overlap between up- and down-sweep attractor sets"
+      ],
+      "predictedSignals": [
+        "nonzero loop area where order effects appear"
+      ],
+      "nullExpectation": "zero loop area within seed noise",
+      "failureModes": [
+        "sweep too fast (transients)",
+        "seed dependence"
+      ],
+      "informationAddedBeyondExistingLenses": "separates path dependence from recency",
+      "targets": [
+        "M4",
+        "M14"
+      ],
+      "triplicateId": "HT-55162c0ac0",
+      "passId": "P2"
+    },
+    {
+      "id": "L4",
+      "name": "Chunk-budget grammar lens",
+      "rationale": "Treat learning as compressing symbolic dynamics under a hard context-table cap.",
+      "sourceRepresentation": "symbol sequence from a partition of the map",
+      "transformation": "fit a capped context table; compare with a Markov-1 surrogate",
+      "observables": [
+        "next-symbol accuracy gain over unigram",
+        "gain over Markov-1 surrogate",
+        "block-entropy estimate"
+      ],
+      "predictedSignals": [
+        "argmax entropy shifts with the cap"
+      ],
+      "nullExpectation": "gain curve independent of the cap",
+      "failureModes": [
+        "finite-sample effects",
+        "partition not generating"
+      ],
+      "informationAddedBeyondExistingLenses": "separates capacity matching from a generic low-entropy advantage",
+      "targets": [
+        "M7",
+        "M12"
+      ],
+      "triplicateId": "HT-55162c0ac0",
+      "passId": "P2"
+    },
+    {
+      "id": "L5",
+      "name": "Overload onset spectroscopy",
+      "rationale": "Add items one at a time and measure the dynamical regime alongside recall.",
+      "sourceRepresentation": "competitive dynamics with n items",
+      "transformation": "for each n compute lambda_max and survivor fraction over random interaction draws",
+      "observables": [
+        "lambda_max versus n",
+        "survivor fraction versus n",
+        "chaotic-vs-non-chaotic recall gap at fixed n"
+      ],
+      "predictedSignals": [
+        "recall gap favouring non-chaotic draws"
+      ],
+      "nullExpectation": "recall independent of chaos at fixed n",
+      "failureModes": [
+        "numerical extinction thresholds",
+        "transient chaos misread as asymptotic"
+      ],
+      "informationAddedBeyondExistingLenses": "tests whether overload is dynamical rather than combinatorial",
+      "targets": [
+        "M10",
+        "M8"
+      ],
+      "triplicateId": "HT-55162c0ac0",
+      "passId": "P2"
+    },
+    {
+      "id": "L6",
+      "name": "Single-knob controllability",
+      "rationale": "What can one scalar broadcast pin, given a finite memory of past states?",
+      "sourceRepresentation": "chaotic map plus a scalar kick",
+      "transformation": "fit feedback from C delayed states; attempt stabilisation of each UPO period",
+      "observables": [
+        "success fraction per (C, period)",
+        "p_max(C)",
+        "kick magnitude used"
+      ],
+      "predictedSignals": [
+        "p_max grows with C; shuffled-fit twin fails"
+      ],
+      "nullExpectation": "p_max independent of C",
+      "failureModes": [
+        "UPO-finding failure",
+        "noise floor"
+      ],
+      "informationAddedBeyondExistingLenses": "gives a controller-memory account of a modulator's repertoire",
+      "targets": [
+        "M5",
+        "M13"
+      ],
+      "triplicateId": "HT-55162c0ac0",
+      "passId": "P2"
+    }
+  ],
+  "experiments": [
+    {
+      "id": "W1",
+      "triplicateId": "HT-55162c0ac0",
+      "passId": "P3",
+      "mechanism_ids": [
+        "M10"
+      ],
+      "lens_ids": [
+        "L5"
+      ],
+      "hypothesis": "Item loss under overload is caused by chaotic competition, not only by competitive exclusion.",
+      "mechanism": "generalised Lotka-Volterra dx_i/dt = x_i(1 - sum_j A'_ij x_j) with A'_ii = 1 and A'_ij = m*A_ij, A_ij ~ U(0,1.5) asymmetric; modulator m scales off-diagonals",
+      "intervention": "vary n in 2..10 and m in {0.6, 0.7, 0.8, 0.9, 1.0}",
+      "control": "at the same n and m, compare chaotic draws (lambda_max > 1e-3) with non-chaotic draws",
+      "positive_control": "screen random 4-species matrices for one with lambda_max > 0.01 and confirm the estimator reports a positive exponent from 5 initial conditions",
+      "observable": "lambda_max by tangent-space QR over the last 2000 time units; recall = fraction of species with x_i > 1e-3 at the end",
+      "success_criterion": "for n in 4..8 pooled, mean recall of chaotic draws is lower than non-chaotic draws by >= 0.15 with Mann-Whitney p < 0.01 after regressing out mean off-diagonal strength, AND lowering m from 1.0 to 0.6 raises n_recall* (smallest n with mean recall < 0.5) by >= 1 while reducing the chaotic fraction by >= 0.2",
+      "failure_criterion": "recall gap < 0.05 or p > 0.05 (overload is exclusion, not chaos); or fewer than 20 chaotic draws in total (world cannot test the claim)",
+      "alternative_explanation": "chaotic draws simply have stronger mean interaction, which causes both chaos and exclusion",
+      "null_twin": "symmetrised matrices (A + A^T)/2 with matched off-diagonal mean and variance: they admit a Lyapunov function, cannot be chaotic, and still show exclusion",
+      "substrate": "ecology",
+      "why_this_implementation": "competition among held items is the literal CLT picture of interacting elements; ODE ecology keeps it non-ML",
+      "size": "n = 2..10, 100 matrices per n, 5 m values, 3 initial-condition seeds, T = 5000 time units, dt = 0.01 RK4, vectorised numpy",
+      "cost_estimate": "about 6 CPU core-minutes",
+      "stupid_explanations": [
+        "chaotic draws have larger interaction strength (regress recall on mean A and chaos jointly)",
+        "the 1e-3 extinction threshold counts low-amplitude chaotic excursions as losses",
+        "integration error at dt = 0.01 manufactures positive exponents (repeat at dt = 0.005 on a subset)"
+      ]
+    },
+    {
+      "id": "W2",
+      "triplicateId": "HT-55162c0ac0",
+      "passId": "P3",
+      "mechanism_ids": [
+        "M5"
+      ],
+      "lens_ids": [
+        "L6"
+      ],
+      "hypothesis": "The longest unstable periodic orbit a scalar-kick controller can stabilise is bounded by the number C of past states it holds.",
+      "mechanism": "logistic map x' = (3.9 + u_t) x (1 - x) with |u_t| <= delta; controller u_t = sum_{k<C} w_k (x_{t-k} - x*_{phase,k}) fitted by least squares on 20000 uncontrolled points",
+      "intervention": "C in 1..8, target period p in 1..8, delta = 0.02",
+      "control": "controller fitted on a time-shuffled copy of the training series",
+      "positive_control": "C = 16 stabilises periods 1..4 with success fraction >= 0.8",
+      "observable": "success = |x_t - orbit| < 1e-3 for 200 consecutive steps within 5000 steps; success fraction over 50 trials",
+      "success_criterion": "p_max(C) (largest p with success fraction >= 0.8) is nondecreasing in C and p_max(8) - p_max(1) >= 3; shuffled-fit twin success fraction <= 0.1 for all p >= 2",
+      "failure_criterion": "p_max(8) - p_max(1) <= 1 (memory is not the binding resource), or shuffled twin succeeds >= 0.5 at some p >= 2 (control does not use the dynamics)",
+      "alternative_explanation": "failures at long periods come from orbit-finding error or the kick budget, not memory",
+      "null_twin": "time-shuffled training series: identical marginal distribution of x, temporal structure destroyed",
+      "substrate": "causal toy",
+      "why_this_implementation": "a one-dimensional map makes UPOs enumerable; the controller is linear least squares, no learning system",
+      "size": "8 C values x 8 periods x 50 trials x 5000 steps",
+      "cost_estimate": "about 2 CPU core-minutes",
+      "stupid_explanations": [
+        "delta too small for longer orbits regardless of C (repeat at delta = 0.05)",
+        "long-period UPOs located inaccurately",
+        "trajectory lands near the orbit by luck (compare waiting time to uncontrolled recurrence)"
+      ],
+      "outcome": "SPEC_UNATTAINABLE",
+      "round": 2,
+      "rows": "hecate/programs/HT-55162c0ac0/worlds/W2/pilot_rows.jsonl",
+      "outcome_file": "hecate/programs/HT-55162c0ac0/worlds/W2/OUTCOME.json",
+      "statistics": {
+        "attempt1": {
+          "positive_pooled_frac_C16": {
+            "1": 1.0,
+            "2": 1.0,
+            "3": 1.0,
+            "4": 1.0
+          },
+          "cheat_p_max": {
+            "1": 1,
+            "2": 2,
+            "3": 3,
+            "4": 4,
+            "5": 5,
+            "6": 6,
+            "7": 7,
+            "8": 8
+          },
+          "null_twin_p_max": {
+            "1": 0,
+            "2": 0,
+            "3": 0,
+            "4": 0,
+            "5": 0,
+            "6": 0,
+            "7": 0,
+            "8": 0
+          },
+          "null_twin_max_frac_p_ge_2": 0.2
+        },
+        "attempt2": {
+          "positive_pooled_frac_C16": {
+            "1": 1.0,
+            "2": 1.0,
+            "3": 1.0,
+            "4": 1.0
+          },
+          "cheat_p_max": {
+            "1": 1,
+            "2": 2,
+            "3": 3,
+            "4": 4,
+            "5": 5,
+            "6": 6,
+            "7": 7,
+            "8": 8
+          },
+          "cheat_twin_uncontrolled_max_frac": 0.0,
+          "null_twin_p_max": {
+            "1": 0,
+            "2": 0,
+            "3": 0,
+            "4": 0,
+            "5": 0,
+            "6": 0,
+            "7": 0,
+            "8": 0
+          },
+          "null_twin_max_frac_p_ge_2": 0.4,
+          "null_twin_cells_p_ge_2_above_0p1": {
+            "C1p2": 0.2,
+            "C1p3": 0.4,
+            "C1p8": 0.2,
+            "C2p2": 0.196,
+            "C2p3": 0.2,
+            "C2p6": 0.2,
+            "C2p7": 0.176,
+            "C2p8": 0.2,
+            "C3p2": 0.192,
+            "C3p3": 0.2,
+            "C3p8": 0.2,
+            "C4p2": 0.132,
+            "C4p3": 0.4,
+            "C5p2": 0.136,
+            "C5p3": 0.2,
+            "C5p8": 0.2,
+            "C6p3": 0.2,
+            "C6p8": 0.2,
+            "C7p3": 0.2,
+            "C7p8": 0.2,
+            "C8p3": 0.4,
+            "C8p8": 0.2
+          },
+          "null_twin_seed_cells_with_50_of_50": 23
+        },
+        "treatment": "not built (pilot failed twice; no treatment statistic exists)"
+      },
+      "procedural_notes": [],
+      "anomalies": [
+        {
+          "id": "A1",
+          "text": "Null twin never shows the memory law (p_max=0 at every C in both attempts) but a shuffled-fit controller stabilises whole cells (50/50 trials) in single seeds: a random proportional gain lands in the finite stabilising interval of a 1-D UPO. Pooled null fraction exceeded the spec's 0.1 twin bound at p>=2 in both attempts (0.2, then 0.4 after the intercept repair)."
+        },
+        {
+          "id": "A2",
+          "text": "Spec's control and null_twin are the same construction (time-shuffled fit); both would be affected."
+        },
+        {
+          "id": "A3",
+          "text": "Positive control at C=16 already reached 1.0 at p=1..4; with a 1-D map a C=1 deadbeat controller is sufficient in principle (M5's own simpler_alternative: observability needs depth >= system order = 1). Not measured: no treatment run."
+        }
+      ],
+      "rejected_explanations": []
+    },
+    {
+      "id": "W3",
+      "triplicateId": "HT-55162c0ac0",
+      "passId": "P3",
+      "mechanism_ids": [
+        "M4",
+        "M2"
+      ],
+      "lens_ids": [
+        "L3",
+        "L2"
+      ],
+      "hypothesis": "With identical exposure, presenting low-load patterns first under a rising modulator retains more pattern structure than the reverse order, because of hysteresis.",
+      "mechanism": "globally coupled logistic maps x_i' = (1 - eps) f_a(x_i) + eps * mean_j f_a(x_j) + b_i, N = 100, eps = 0.1; forcing patterns b with k in {2, 4, 8} distinct levels (amplitude 0.02); modulator a ramps with k",
+      "intervention": "easy->hard (k = 2, 4, 8 at a = 3.7, 3.8, 3.9) versus hard->easy (k = 8, 4, 2 at a = 3.9, 3.8, 3.7), 500 steps each, then 1000 unforced steps",
+      "control": "same patterns and orders with a fixed at 3.8",
+      "positive_control": "single pattern k = 2 at a = 3.7 is retained (adjusted Rand index >= 0.8)",
+      "observable": "retention = mean over the three patterns of the adjusted Rand index between the final cluster partition and each pattern's partition",
+      "success_criterion": "mean retention(easy->hard) - retention(hard->easy) >= 0.15 over 30 seeds with Wilcoxon p < 0.01, AND the same difference in the null twin < 0.05, AND L3 loop area > 0 across a in [3.7, 3.9]",
+      "failure_criterion": "difference < 0.05, or null-twin difference >= 0.1 (order effect is recency or interference, not hysteresis)",
+      "alternative_explanation": "the last pattern dominates (recency) and happens to be easier to retain in one order",
+      "null_twin": "replace f_a with a contracting affine map whose per-site variance matches the chaotic run: monostable, no hysteresis",
+      "substrate": "developmental",
+      "why_this_implementation": "coupled maps give multistable cluster states without any neural learning rule",
+      "size": "N = 100, 30 seeds, 2 orders + fixed-a control + null twin, 2500 steps per run",
+      "cost_estimate": "about 1 CPU core-minute",
+      "stupid_explanations": [
+        "recency of the final pattern",
+        "adjusted Rand index biased by cluster count",
+        "transients not settled after 1000 steps (check with 5000)"
+      ],
+      "outcome": "INSTRUMENT_FAIL",
+      "raw_outcome": "INSTRUMENT_FAIL",
+      "procedural_notes": [],
+      "rows": "hecate/programs/HT-55162c0ac0/worlds/W3/rows.jsonl",
+      "outcome_file": "hecate/programs/HT-55162c0ac0/worlds/W3/OUTCOME.json",
+      "statistics": {
+        "TREATMENT": {
+          "n": 30,
+          "mean_diff": 0.00048159670692338175,
+          "median_diff": 0.005871500768232035,
+          "wilcoxon_p_greater": 0.4276358615607023,
+          "mean_retention_easy_hard": 0.015847754816543956,
+          "mean_retention_hard_easy": 0.015366158109620574,
+          "mean_n_clusters_easy_hard": 90.63333333333334,
+          "mean_n_clusters_hard_easy": 3.8,
+          "mean_ari_by_k_easy_hard": {
+            "2": 0.004177638982047984,
+            "4": 0.012733144725894681,
+            "8": 0.030632480741689207
+          },
+          "mean_ari_by_k_hard_easy": {
+            "2": 0.03839696418683479,
+            "4": 0.007527367897437077,
+            "8": 0.00017414224458985397
+          }
+        },
+        "CONTROL": {
+          "n": 30,
+          "mean_diff": -4.680418393219336e-06,
+          "median_diff": 0.0,
+          "wilcoxon_p_greater": 0.5,
+          "mean_retention_easy_hard": -1.3460096385115944e-05,
+          "mean_retention_hard_easy": -8.779677991896608e-06,
+          "mean_n_clusters_easy_hard": 99.96666666666667,
+          "mean_n_clusters_hard_easy": 99.93333333333334,
+          "mean_ari_by_k_easy_hard": {
+            "2": -1.3467957941491344e-05,
+            "4": -1.346223422604774e-05,
+            "8": -1.3450096987808747e-05
+          },
+          "mean_ari_by_k_hard_easy": {
+            "2": 2.748562845202315e-05,
+            "4": -2.692446845209548e-05,
+            "8": -2.6900193975617493e-05
+          }
+        },
+        "NULL_TWIN": {
+          "n": 30,
+          "mean_diff": 0.0,
+          "median_diff": 0.0,
+          "wilcoxon_p_greater": 1.0,
+          "mean_retention_easy_hard": 0.0,
+          "mean_retention_hard_easy": 0.0,
+          "mean_n_clusters_easy_hard": 100.0,
+          "mean_n_clusters_hard_easy": 100.0,
+          "mean_ari_by_k_easy_hard": {
+            "2": 0.0,
+            "4": 0.0,
+            "8": 0.0
+          },
+          "mean_ari_by_k_hard_easy": {
+            "2": 0.0,
+            "4": 0.0,
+            "8": 0.0
+          },
+          "realized_over_target_var_mean": 0.9978376650800793
+        },
+        "CHEAT": {
+          "n": 30,
+          "mean_diff": 0.9846338418903794,
+          "median_diff": 0.9894159452243758,
+          "wilcoxon_p_greater": 9.313225746154785e-10,
+          "mean_retention_easy_hard": 1.0,
+          "mean_retention_hard_easy": 0.015366158109620574
+        },
+        "TRANSIENT_CHECK": {
+          "n": 30,
+          "mean_diff": 0.0004952146433003002,
+          "median_diff": 0.005871500768232035,
+          "wilcoxon_p_greater": 0.4276358615607023,
+          "mean_retention_easy_hard": 0.015861372752920874,
+          "mean_retention_hard_easy": 0.015366158109620574,
+          "mean_n_clusters_easy_hard": 90.6,
+          "mean_n_clusters_hard_easy": 3.8,
+          "mean_ari_by_k_easy_hard": {
+            "2": 0.004191380663152078,
+            "4": 0.012774855394420071,
+            "8": 0.030617882201190483
+          },
+          "mean_ari_by_k_hard_easy": {
+            "2": 0.03839696418683479,
+            "4": 0.007527367897437077,
+            "8": 0.00017414224458985397
+          }
+        },
+        "POSITIVE_CONTROL": {
+          "n": 30,
+          "mean_ari": 0.02395351685442753,
+          "min_ari": -0.01063015179496419,
+          "mean_n_clusters": 3.7
+        },
+        "LOOP": {
+          "n": 30,
+          "mean_signed_area": 0.0015816666666666629,
+          "mean_abs_area": 0.0015816666666666629,
+          "wilcoxon_p_two_sided": 0.00019643672621231134
+        }
+      },
+      "anomalies": [
+        {
+          "id": "A1",
+          "text": "positive control not retained: mean ARI 0.024 < 0.8 (mean clusters 3.7)"
+        },
+        {
+          "id": "A2",
+          "text": "TREATMENT orders end in different regimes: easy->hard (unforced at a=3.9) mean 90.6 clusters, hard->easy (unforced at a=3.7) mean 3.8 clusters; fixed-a CONTROL at 3.8 ~100 clusters (turbulent)"
+        },
+        {
+          "id": "A3",
+          "text": "instrument repair declined: no readout defect found; the positive control fails because the specified dynamics at a=3.7 collapse to ~4 clusters unrelated to the pattern, and any change to amplitude/eps/steps would be tuning the mechanism"
+        }
+      ],
+      "rejected_explanations": []
+    },
+    {
+      "id": "W4",
+      "triplicateId": "HT-55162c0ac0",
+      "passId": "P3",
+      "mechanism_ids": [
+        "M7"
+      ],
+      "lens_ids": [
+        "L4"
+      ],
+      "hypothesis": "A learner with chunk budget C extracts most structure from a chaotic source whose entropy is matched to C, and the matched entropy rises with C.",
+      "mechanism": "logistic map at 20 r values in [3.57, 4.0], binary partition at 0.5; learner = variable-order context table capped at C contexts (most frequent kept)",
+      "intervention": "C in {4, 16, 64}",
+      "control": "the same learner trained on a Markov-1 surrogate with matched symbol and transition frequencies",
+      "positive_control": "C = 1024 achieves gain >= 0.1 over the surrogate at some r",
+      "observable": "gain = next-symbol accuracy on 20000 held-out symbols of the capped table minus that of the surrogate-trained table; entropy from block-entropy slope",
+      "success_criterion": "median over 10 seeds of the entropy at argmax gain strictly increases across C = 4, 16, 64, AND gain at argmax >= 0.05 for C >= 16",
+      "failure_criterion": "argmax entropy identical for all C, or gain at argmax < 0.02 (first-order statistics explain everything)",
+      "alternative_explanation": "periodic windows in r create predictability spikes unrelated to capacity matching",
+      "null_twin": "Markov-1 surrogate sequences: matched symbol and pair frequencies, higher-order grammar destroyed",
+      "substrate": "symbolic rewriting",
+      "why_this_implementation": "the context-table cap is a direct CLT capacity bound; no neural predictor",
+      "size": "20 r values x 3 C values x 10 seeds x 100000 symbols",
+      "cost_estimate": "about 3 CPU core-minutes",
+      "stupid_explanations": [
+        "periodic windows in r",
+        "finite training length favours low-entropy sources",
+        "the eviction rule, not cap size, sets the argmax"
+      ]
+    },
+    {
+      "id": "W5",
+      "triplicateId": "HT-55162c0ac0",
+      "passId": "P3v2",
+      "mechanism_ids": [
+        "M10"
+      ],
+      "lens_ids": [
+        "L5"
+      ],
+      "hypothesis": "At a fixed number of held items (n = 4) and matched interaction strength, competitive dynamics that are chaotic lose more items than competitive dynamics that are not chaotic: item loss under load is caused by chaotic competition, not only by competitive exclusion.",
+      "mechanism": "Competitive generalised Lotka-Volterra dx_i/dt = r_i x_i (1 - sum_j A_ij x_j), n = 4, r = (1, 0.72, 1.53, 1.27). A is drawn from a neighbourhood of the Vano et al. (2006) chaotic matrix A0 = [[1,1.09,1.52,0],[0,1,0.44,1.36],[2.33,0,1,0.47],[1.21,0.51,0.35,1]]: every nonzero off-diagonal entry is multiplied by an independent U(0.9, 1.1) factor; zeros and the unit diagonal are kept. The neighbourhood contains both chaotic and non-chaotic draws at nearly identical interaction strength. Initial state x0 ~ U(0.2, 0.4)^4 per draw.",
+      "intervention": "None is imposed on the dynamics; the contrast is the naturally occurring chaos label of each draw: chaotic if lambda_max > 0.005, measured by a renormalised twin trajectory (delta0 = 1e-8, renormalised every 1.0 time unit) over t in [300, 1500], RK4 dt = 0.05. The same draw is then integrated, unmodified, to t = 3000.",
+      "control": "Symmetrised draws (A + A^T)/2, integrated identically: these admit a Lyapunov function, cannot be chaotic, and give the loss rate from exclusion alone; reported descriptively, no clause.",
+      "positive_control": "Effect present by construction: same family and same phase-A integration and chaos label, but on t in [1500, 3000] an absorbing boundary removes permanently any species whose abundance falls below 0.02, so the large excursions of chaotic draws cost items by construction. Recall and clauses computed exactly as for the treatment.",
+      "observable": "Per draw: chaos label (above) and recall = fraction of the 4 species whose mean abundance over t in [2800, 3000] exceeds 1e-3; mean off-diagonal strength = mean of the 12 off-diagonal entries of A. Pooled over 5 seeds x 100 draws.",
+      "success_criterion": "[{\"id\": \"S1\", \"text\": \"Pooled mean recall of non-chaotic draws minus pooled mean recall of chaotic draws is at least 0.08 (0.32 species of 4).\", \"statistic\": \"mean(recall | non-chaotic) - mean(recall | chaotic), pooled 500 draws\", \"comparison\": \">=\", \"threshold\": 0.08}, {\"id\": \"S2\", \"text\": \"One-sided Mann-Whitney U test (non-chaotic recall greater than chaotic recall) has p below 0.01.\", \"statistic\": \"Mann-Whitney U one-sided p-value, pooled\", \"comparison\": \"<\", \"threshold\": 0.01}, {\"id\": \"S3\", \"text\": \"In the OLS regression recall ~ 1 + mean_offdiag_strength + chaotic, the negated coefficient of the chaotic indicator is at least 0.06 (the chaos effect survives adjustment for interaction strength).\", \"statistic\": \"-beta_chaotic from OLS recall ~ 1 + strength + chaotic, pooled\", \"comparison\": \">=\", \"threshold\": 0.06}]",
+      "failure_criterion": "[{\"id\": \"F1\", \"text\": \"The recall gap is below 0.03 (about 1.4 standard errors of the label-permutation null): overload loss is exclusion, not chaos.\", \"statistic\": \"mean(recall | non-chaotic) - mean(recall | chaotic), pooled\", \"comparison\": \"<\", \"threshold\": 0.03}, {\"id\": \"F2\", \"text\": \"Adjusted chaos coefficient below 0.02: any raw gap is carried by interaction strength.\", \"statistic\": \"-beta_chaotic from OLS recall ~ 1 + strength + chaotic, pooled\", \"comparison\": \"<\", \"threshold\": 0.02}, {\"id\": \"F3\", \"text\": \"Fewer than 20 chaotic or fewer than 20 non-chaotic draws: the world cannot test the claim (UNTESTABLE, not NULL).\", \"statistic\": \"min(n_chaotic, n_nonchaotic), pooled\", \"comparison\": \"<\", \"threshold\": 20}]",
+      "alternative_explanation": "Chaotic draws differ systematically from non-chaotic neighbours in interaction strength or in which entries were perturbed, and that difference, not chaos, causes (or prevents) exclusion; or the 1e-3 floor counts low chaotic excursions as losses.",
+      "null_twin": "Label-permutation twin: the treatment's own rows with the chaos labels permuted within each seed (fixed permutation seed 1000 + seed). Every nuisance statistic is identical (same draws, same recall values, same number of chaotic labels); only the association between chaos and recall is destroyed. A second, physical twin (symmetrised matrices) is the control arm.",
+      "substrate": "ecology",
+      "cost_estimate": "about 0.2 CPU core-minutes for the treatment (controls took 0.12 core-minutes)",
+      "stupid_explanations": [
+        "chaotic draws have different mean interaction strength (S3 adjusts for it; also report strength by class)",
+        "the 1e-3 floor on a 200-unit mean abundance misreads a slow chaotic excursion as a loss (report per-class minimum of mean abundance of surviving species)",
+        "lambda_max > 0.005 mislabels long transients or slow limit cycles as chaos (report lambda histogram; the unperturbed Vano matrix gives 0.019 and its symmetrisation -0.13 in the estimator check)",
+        "integration error at dt = 0.05 manufactures or hides chaos (repeat 50 draws at dt = 0.025 and compare labels)"
+      ],
+      "spec": "hecate/programs/HT-55162c0ac0/worlds/W5/spec.json",
+      "attainability": "hecate/programs/HT-55162c0ac0/worlds/W5/ATTAINABILITY.json"
+    },
+    {
+      "id": "W6",
+      "triplicateId": "HT-55162c0ac0",
+      "passId": "P3v2",
+      "mechanism_ids": [
+        "M12"
+      ],
+      "lens_ids": [
+        "L4"
+      ],
+      "hypothesis": "Finite-time co-divergence of perturbations in a chaotic carrier recovers which elements interact (element interactivity) even when the interaction is XOR-like, so that pairwise correlation carries no grouping information, and it does so in the presence of a weak unstructured global leak.",
+      "mechanism": "N = 12 units v_i in [-1, 1], nominal partition into 4 groups of 3. v_i' = (1 - kappa - eps_g) T(v_i) + kappa * v_p(i) * v_q(i) + eps_g * mean_j T(v_j), with T(v) = 4 v^3 - 3 v (odd cubic Chebyshev map, chaotic, symmetric invariant density), kappa = 0.10, eps_g = 0.05. In the treatment p(i), q(i) are the other two members of unit i's group: interaction is a product (XOR-like) of the partners, so partners are uncorrelated to first order; the global mean-field leak eps_g couples every unit to every other unit without group structure.",
+      "intervention": "Readout applied to the treatment world: FTLE grouping. At K = 100 base times (burn-in 500 steps, spacing 20) each unit i is perturbed by delta = 1e-9 and both copies are iterated tau = 8 steps; D_ij = mean over base times of log10(|dv_j| + 1e-18); similarity D + D^T (diagonal set to the maximum); average-linkage agglomeration into 4 clusters; adjusted Rand index (ARI) against the nominal partition.",
+      "control": "Correlation grouping on the same trajectory: similarity = max(|Pearson lag 0|, |Pearson lag 1| in either direction) over 5000 post-burn-in steps; same clustering; ARI against the nominal partition. This is M12's simpler alternative.",
+      "positive_control": "Effect present by construction: identical world and readouts with eps_g = 0, so perturbations can travel only inside groups and FTLE grouping must recover the partition; the product coupling keeps correlation near zero.",
+      "observable": "Per seed: ari_ftle, ari_corr (both against the nominal 4 x 3 partition). Statistics are means over 10 seeds (initial condition v0 ~ U(-1, 1)^12 from numpy default_rng(seed)).",
+      "success_criterion": "[{\"id\": \"S1\", \"text\": \"Mean over 10 seeds of the FTLE-grouping ARI is at least 0.8.\", \"statistic\": \"mean_seed(ari_ftle)\", \"comparison\": \">=\", \"threshold\": 0.8}, {\"id\": \"S2\", \"text\": \"Mean over 10 seeds of (FTLE-grouping ARI minus correlation-grouping ARI) is at least 0.5.\", \"statistic\": \"mean_seed(ari_ftle - ari_corr)\", \"comparison\": \">=\", \"threshold\": 0.5}]",
+      "failure_criterion": "[{\"id\": \"F1\", \"text\": \"Mean FTLE-grouping ARI below 0.3: co-divergence does not isolate interacting elements once an unstructured leak is present.\", \"statistic\": \"mean_seed(ari_ftle)\", \"comparison\": \"<\", \"threshold\": 0.3}, {\"id\": \"F2\", \"text\": \"Mean (FTLE ARI minus correlation ARI) below 0.2: the correlation baseline does as well, so FTLE adds nothing here.\", \"statistic\": \"mean_seed(ari_ftle - ari_corr)\", \"comparison\": \"<\", \"threshold\": 0.2}]",
+      "alternative_explanation": "Any perturbation-response (causal intervention) readout recovers a coupling graph whether or not the carrier is chaotic; success would show that intervention beats observation, not that chaos is what measures interactivity. Separately, the global leak may synchronise units so that every readout sees one block.",
+      "null_twin": "Same map, same kappa = 0.10, same eps_g = 0.05, same in-degree 2 product coupling, but each unit's two partners drawn uniformly at random from the other 11 units (default_rng(500 + seed)); the nominal partition remains the scoring target. Nuisance statistics (coupling count, strength, map, leak) matched; group structure destroyed.",
+      "substrate": "causal toy",
+      "cost_estimate": "about 0.02 CPU core-minutes for the treatment (all controls took 0.03)",
+      "stupid_explanations": [
+        "the leak synchronises units (check corr_between_mean and trajectory range; the twin at eps_g = 0.05 stays unsynchronised, mean |corr| about 0.04)",
+        "the ARI of a 4-cluster average-linkage partition is inflated by cluster-size artefacts (report the partitions; chance ARI in the twins is about 0)",
+        "the invariant density is not symmetric, so E[v] != 0 and product coupling leaks first-order correlation (report corr_within_mean vs corr_between_mean)",
+        "tau = 8 is either too short for within-group spread or long enough for the leak to saturate everything (report ftle_within_mean and ftle_between_mean)"
+      ],
+      "spec": "hecate/programs/HT-55162c0ac0/worlds/W6/spec.json",
+      "attainability": "hecate/programs/HT-55162c0ac0/worlds/W6/ATTAINABILITY.json",
+      "outcome": "SIGNAL",
+      "round": 3,
+      "rows": "hecate/programs/HT-55162c0ac0/worlds/W6/probe/rows.jsonl",
+      "outcome_file": "hecate/programs/HT-55162c0ac0/worlds/W6/probe/OUTCOME.json",
+      "statistics": {
+        "success": {
+          "TREATMENT": {
+            "S1": {
+              "value": 1.0,
+              "threshold": 0.8,
+              "comparison": ">=",
+              "met": true
+            },
+            "S2": {
+              "value": 1.083018601827008,
+              "threshold": 0.5,
+              "comparison": ">=",
+              "met": true
+            }
+          },
+          "POSITIVE_CONTROL": {
+            "S1": {
+              "value": 1.0,
+              "threshold": 0.8,
+              "comparison": ">=",
+              "met": true
+            },
+            "S2": {
+              "value": 0.9786190952456613,
+              "threshold": 0.5,
+              "comparison": ">=",
+              "met": true
+            }
+          },
+          "CHEAT": {
+            "S1": {
+              "value": 1.0,
+              "threshold": 0.8,
+              "comparison": ">=",
+              "met": true
+            },
+            "S2": {
+              "value": 0.9786190952456613,
+              "threshold": 0.5,
+              "comparison": ">=",
+              "met": true
+            }
+          },
+          "NULL_TWIN": {
+            "S1": {
+              "value": 0.019075615242337963,
+              "threshold": 0.8,
+              "comparison": ">=",
+              "met": false
+            },
+            "S2": {
+              "value": 0.02405499058494337,
+              "threshold": 0.5,
+              "comparison": ">=",
+              "met": false
+            }
+          },
+          "NULL_TWIN_NOLEAK": {
+            "S1": {
+              "value": -0.032775016301408756,
+              "threshold": 0.8,
+              "comparison": ">=",
+              "met": false
+            },
+            "S2": {
+              "value": -0.05869106984951923,
+              "threshold": 0.5,
+              "comparison": ">=",
+              "met": false
+            }
+          }
+        },
+        "failure": {
+          "TREATMENT": {
+            "F1": {
+              "value": 1.0,
+              "threshold": 0.3,
+              "comparison": "<",
+              "met": false
+            },
+            "F2": {
+              "value": 1.083018601827008,
+              "threshold": 0.2,
+              "comparison": "<",
+              "met": false
+            }
+          },
+          "POSITIVE_CONTROL": {
+            "F1": {
+              "value": 1.0,
+              "threshold": 0.3,
+              "comparison": "<",
+              "met": false
+            },
+            "F2": {
+              "value": 0.9786190952456613,
+              "threshold": 0.2,
+              "comparison": "<",
+              "met": false
+            }
+          },
+          "CHEAT": {
+            "F1": {
+              "value": 1.0,
+              "threshold": 0.3,
+              "comparison": "<",
+              "met": false
+            },
+            "F2": {
+              "value": 0.9786190952456613,
+              "threshold": 0.2,
+              "comparison": "<",
+              "met": false
+            }
+          },
+          "NULL_TWIN": {
+            "F1": {
+              "value": 0.019075615242337963,
+              "threshold": 0.3,
+              "comparison": "<",
+              "met": true
+            },
+            "F2": {
+              "value": 0.02405499058494337,
+              "threshold": 0.2,
+              "comparison": "<",
+              "met": true
+            }
+          },
+          "NULL_TWIN_NOLEAK": {
+            "F1": {
+              "value": -0.032775016301408756,
+              "threshold": 0.3,
+              "comparison": "<",
+              "met": true
+            },
+            "F2": {
+              "value": -0.05869106984951923,
+              "threshold": 0.2,
+              "comparison": "<",
+              "met": true
+            }
+          }
+        },
+        "treatment_diagnostics": {
+          "ari_ftle": 1.0,
+          "ari_corr": -0.083018601827008,
+          "ftle_within_mean": -7.940745924636741,
+          "ftle_between_mean": -8.710649100695711,
+          "corr_within_mean": 0.034027470373770824,
+          "corr_between_mean": 0.03926544084058133,
+          "traj_min": -0.9411111075100553,
+          "traj_max": 0.9444462335922341,
+          "per_seed_ari_ftle": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "per_seed_ari_corr": [
+            -0.09561752988047807,
+            0.014336917562724002,
+            -0.13452914798206278,
+            -0.23318385650224216,
+            -0.12037037037037035,
+            -0.007968127490039834,
+            -0.03587443946188342,
+            -0.03587443946188342,
+            -0.14336917562724016,
+            -0.03773584905660378
+          ],
+          "partitions_ftle": [
+            [
+              0,
+              0,
+              0,
+              1,
+              1,
+              1,
+              2,
+              2,
+              2,
+              3,
+              3,
+              3
+            ],
+            [
+              0,
+              0,
+              0,
+              1,
+              1,
+              1,
+              2,
+              2,
+              2,
+              3,
+              3,
+              3
+            ],
+            [
+              0,
+              0,
+              0,
+              1,
+              1,
+              1,
+              2,
+              2,
+              2,
+              3,
+              3,
+              3
+            ],
+            [
+              0,
+              0,
+              0,
+              1,
+              1,
+              1,
+              2,
+              2,
+              2,
+              3,
+              3,
+              3
+            ],
+            [
+              0,
+              0,
+              0,
+              1,
+              1,
+              1,
+              2,
+              2,
+              2,
+              3,
+              3,
+              3
+            ],
+            [
+              0,
+              0,
+              0,
+              1,
+              1,
+              1,
+              2,
+              2,
+              2,
+              3,
+              3,
+              3
+            ],
+            [
+              0,
+              0,
+              0,
+              1,
+              1,
+              1,
+              2,
+              2,
+              2,
+              3,
+              3,
+              3
+            ],
+            [
+              0,
+              0,
+              0,
+              1,
+              1,
+              1,
+              2,
+              2,
+              2,
+              3,
+              3,
+              3
+            ],
+            [
+              0,
+              0,
+              0,
+              1,
+              1,
+              1,
+              2,
+              2,
+              2,
+              3,
+              3,
+              3
+            ],
+            [
+              0,
+              0,
+              0,
+              1,
+              1,
+              1,
+              2,
+              2,
+              2,
+              3,
+              3,
+              3
+            ]
+          ]
+        },
+        "n_seeds": {
+          "TREATMENT": 10,
+          "POSITIVE_CONTROL": 10,
+          "CHEAT": 10,
+          "NULL_TWIN": 10,
+          "NULL_TWIN_NOLEAK": 10
+        },
+        "control_arm_ari_corr_mean": -0.083018601827008
+      },
+      "anomalies": [],
+      "rejected_explanations": [
+        "the leak synchronises units (check corr_between_mean and trajectory range; the twin at eps_g = 0.05 stays unsynchronised, mean |corr| about 0.04)",
+        "the ARI of a 4-cluster average-linkage partition is inflated by cluster-size artefacts (report the partitions; chance ARI in the twins is about 0)",
+        "the invariant density is not symmetric, so E[v] != 0 and product coupling leaks first-order correlation (report corr_within_mean vs corr_between_mean)"
+      ],
+      "pass4": {
+        "predicate": "PARK",
+        "R": {
+          "reproduced": false,
+          "stats": {
+            "grouping": {
+              "n_seeds_ge_0.8": 10,
+              "n": 10,
+              "met": true,
+              "mean_ari_ftle": 1.0
+            },
+            "corr_chance": {
+              "mean_ari_corr": -0.11105720664048076,
+              "met": false
+            },
+            "null_twin_groups": {
+              "n_seeds_ge_0.8": 0,
+              "n": 10,
+              "met": false,
+              "mean_ari_ftle": -0.014384613924404313
+            },
+            "per_seed_ari_ftle": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "per_seed_ari_corr": [
+              -0.06751054852320673,
+              -0.10852713178294576,
+              0.11814345991561183,
+              -0.16033755274261602,
+              -0.1832669322709163,
+              -0.09561752988047807,
+              -0.23318385650224216,
+              -0.09561752988047807,
+              -0.05147058823529411,
+              -0.23318385650224216
+            ],
+            "seeds": [
+              100,
+              101,
+              102,
+              103,
+              104,
+              105,
+              106,
+              107,
+              108,
+              109
+            ],
+            "lle_mean": 0.6512020485773657
+          }
+        },
+        "ORIG": {
+          "fired": false,
+          "stats": {
+            "r0.2_sigma0.0": {
+              "readable": false,
+              "grouping": {
+                "n_seeds_ge_0.8": 10,
+                "n": 10,
+                "met": true,
+                "mean_ari_ftle": 1.0
+              },
+              "per_seed_ari_ftle": [
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0
+              ],
+              "treatment_lle_mean": -0.6161861394238237,
+              "ftle_within_mean": -12.655376282690195,
+              "ftle_between_mean": -12.655376282692284,
+              "traj_std_mean": 5.1927645679789895e-138
+            },
+            "r0.2_sigma0.01": {
+              "readable": true,
+              "grouping": {
+                "n_seeds_ge_0.8": 0,
+                "n": 10,
+                "met": false,
+                "mean_ari_ftle": -0.024650470764457283
+              },
+              "per_seed_ari_ftle": [
+                0.04776119402985077,
+                -0.0835820895522388,
+                -0.14336917562724016,
+                -0.0835820895522388,
+                -0.017910447761194014,
+                -0.06451612903225808,
+                -0.017910447761194014,
+                -0.03125000000000003,
+                -0.03125000000000003,
+                0.17910447761194032
+              ],
+              "treatment_lle_mean": -0.6167292749286453,
+              "ftle_within_mean": -12.657759357457465,
+              "ftle_between_mean": -12.65719194461918,
+              "traj_std_mean": 0.011648731611266241
+            },
+            "r0.2_sigma0.05": {
+              "readable": true,
+              "grouping": {
+                "n_seeds_ge_0.8": 0,
+                "n": 10,
+                "met": false,
+                "mean_ari_ftle": -0.23807145355081022
+              },
+              "per_seed_ari_ftle": [
+                -0.2531645569620253,
+                -0.2531645569620253,
+                -0.2531645569620253,
+                -0.1832669322709163,
+                -0.2531645569620253,
+                -0.2531645569620253,
+                -0.2531645569620253,
+                -0.2531645569620253,
+                -0.2531645569620253,
+                -0.17213114754098363
+              ],
+              "treatment_lle_mean": -0.629739392980152,
+              "ftle_within_mean": -12.754624604403052,
+              "ftle_between_mean": -12.702648691377004,
+              "traj_std_mean": 0.057979804633993416
+            },
+            "fired_by": []
+          }
+        },
+        "ALT": {
+          "status": "FAIL",
+          "stats": {
+            "A1": {
+              "value": 0.0,
+              "threshold": 0.2,
+              "met": false
+            },
+            "A2": {
+              "value": 0.3693773092471725,
+              "threshold": 0.6,
+              "met": false
+            },
+            "level_mean_ari_ftle": {
+              "0.2": -0.23807145355081022,
+              "0.35": -0.03025808457711445,
+              "0.5": 0.7314209905660377,
+              "0.65": 1.0,
+              "0.8": 1.0,
+              "0.9": 1.0,
+              "1.0": 1.0
+            },
+            "level_mean_lle_treatment": {
+              "0.2": -0.629739392980152,
+              "0.35": -0.09317138633472102,
+              "0.5": -0.5623596879662113,
+              "0.65": -0.919056502661561,
+              "0.8": -0.04270096036538272,
+              "0.9": 0.37638917075556017,
+              "1.0": 0.6659440820354008
+            },
+            "level_class_frozen": {
+              "0.2": "non-chaotic",
+              "0.35": "non-chaotic",
+              "0.5": "non-chaotic",
+              "0.65": "non-chaotic",
+              "0.8": "non-chaotic",
+              "0.9": "chaotic",
+              "1.0": "chaotic"
+            },
+            "spearman_level_means_secondary": 0.4531634835874829,
+            "level_mean_ari_corr": {
+              "0.2": 0.04018397694608465,
+              "0.35": -0.0230200878605988,
+              "0.5": 0.026535756583974324,
+              "0.65": 0.06806770980005632,
+              "0.8": 0.002495407487675175,
+              "0.9": 0.023357584945736715,
+              "1.0": -0.02989801998756485
+            }
+          }
+        },
+        "rows": "hecate/programs/HT-55162c0ac0/worlds/W6/pass4/rows.jsonl",
+        "outcome_file": "hecate/programs/HT-55162c0ac0/worlds/W6/pass4/PASS4_OUTCOME.json",
+        "note": "R strictly not reproduced: grouping 10/10 at ARI 1.0 but correlation control -0.111 (below chance, outside |mean| <= 0.1). ORIG did NOT fire (contracting carrier r=0.2 groups 0/10) -- the author's prediction was wrong. ALT FAILED: non-chaotic levels r=0.65 (Lyapunov -0.92) and r=0.8 group perfectly; the readout tracks carrier amplitude, not chaos."
+      }
+    }
+  ],
+  "candidateEngines": [],
+  "currentVerdict": "PARK",
+  "evidenceSummary": {
+    "layer": "experimental_observation",
+    "rows": "hecate/programs/HT-55162c0ac0/worlds/W6/pass4/rows.jsonl",
+    "note": "Pass 4 round 1: PARK"
+  }
+}

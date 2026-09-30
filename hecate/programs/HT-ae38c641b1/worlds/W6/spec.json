@@ -1,0 +1,35 @@
+{
+ "id": "W6",
+ "triplicateId": "HT-ae38c641b1",
+ "passId": "P3v2",
+ "mechanism_ids": ["M8"],
+ "lens_ids": ["L1"],
+ "hypothesis": "For an iteratively computed estimator (undamped Newton on a multi-root score), the set of misspecification parameters on which the estimated effect keeps its sign has a fractal boundary (uncertainty exponent alpha = 2 - D well below 1), while the same estimand computed without iteration (global maximiser) has a smooth boundary (alpha ~ 1). Because a sound certifier must leave undecided every cell that contains both signs, alpha < 1 means sound robustness certification of the sign costs a power law in grid resolution steeper than for a smooth boundary.",
+ "mechanism": "Data: six unit-level treated-minus-control differences d0 = (-1.9, -1.4, -1.0, 0.8, 1.2, 1.9). Misspecification (unmeasured bias in two subgroups): g = (g1, g2) in [-1, 1]^2; group labels grp = (0, 0, 1, 1, 0, 1); d_i(g) = d0_i + g1 if grp_i = 0 else d0_i + g2. Estimand: location tau of a Cauchy model with scale s = 0.5, log-likelihood l(tau) = -sum_i ln(s^2 + (d_i - tau)^2), which has up to several local maxima because the differences form two clusters.",
+ "intervention": "TREATMENT label(g): undamped Newton on the score psi(tau) = sum_i r_i / (s^2 + r_i^2), r_i = d_i(g) - tau, psi'(tau) = sum_i (r_i^2 - s^2)/(s^2 + r_i^2)^2; tau_0 = sample median of d(g) (mean of the 3rd and 4th order statistics); tau <- tau - psi(tau)/psi'(tau) for exactly 100 iterations in float64. Label = +1 if converged and tau_100 > 0, -1 if converged and tau_100 < 0, 0 otherwise; converged iff tau_100 finite, |tau_100| <= 1000 and |psi(tau_100)| <= 1e-9 (psi' = 0 or any non-finite value at any step -> label 0). Newton may converge to any stationary point (including a likelihood minimum); that is the estimator as specified.",
+ "control": "NULL_TWIN (below).",
+ "positive_control": "POSITIVE_CONTROL label(g) = index of the cube root of unity reached by 60 undamped Newton steps for z^3 - 1 from z_0 = g1 + i g2 (label 3 if not within 1e-6 of a root): a fractal (Julia-set) basin boundary by construction, measured by exactly the same pair pipeline. Implemented in controls.py.",
+ "observable": "Per arm and seed: 30000 base points x uniform in [-0.75, 0.75]^2 drawn from np.random.default_rng([seed, 101]) (then from the same generator: angles a of shape (8, 30000) uniform in [0, 2*pi)); for eps_k = 2^-k, k = 2..9, partner x + eps_k (cos a_k, sin a_k); f(eps) = fraction of the 30000 pairs whose labels differ (all label values are classes, including 0 / non-converged); alpha = OLS slope of ln f on ln eps over the 8 eps; also R^2 and the slopes of the coarse (k=2..5) and fine (k=6..9) halves. Clause statistics use the median over seeds 0-4. Identical code path for every arm (controls.py measure()/fit()).",
+ "success_clauses": [
+  {"id": "S1", "text": "The sign-flip boundary of the Newton estimator is fractal in the window: median alpha <= 0.80 (D >= 1.20).", "statistic": "median over seeds 0-4 of alpha, TREATMENT", "comparison": "<=", "threshold": 0.80},
+  {"id": "S2", "text": "The iteration, not the estimand, makes it fractal: the global-maximiser twin's median alpha exceeds the treatment's by >= 0.15.", "statistic": "median alpha NULL_TWIN (seeds 0-4) minus median alpha TREATMENT (seeds 0-4)", "comparison": ">=", "threshold": 0.15}
+ ],
+ "failure_clauses": [
+  {"id": "F1", "text": "Smooth boundary: the Newton estimator's flip boundary is not fractal in the window (M8 reads NULL here: its 'likely common case' knockout holds).", "statistic": "median over seeds 0-4 of alpha, TREATMENT", "comparison": ">=", "threshold": 0.90},
+  {"id": "F2", "text": "Not scale-free in the window (no single exponent; reading INCONCLUSIVE, not a pass).", "statistic": "median over seeds 0-4 of R^2 of the ln f vs ln eps fit, TREATMENT", "comparison": "<", "threshold": 0.95},
+  {"id": "F3", "text": "Reading invalid (INCONCLUSIVE): a boundary is nearly absent or unmeasurable.", "statistic": "min over seeds 0-4 of the smallest disagreement count over the 8 eps (TREATMENT)", "comparison": "<", "threshold": 5}
+ ],
+ "alternative_explanation": "Non-convergence (label 0) forms thin smooth bands near psi' = 0 that inflate f at small eps without being fractal; or Newton's jump from the median start is piecewise-smooth in g with many (finitely many) branches, which a finite window can mistake for a power law. The coarse/fine slope split and F2 test the second; the label-0 fraction is a preregistered diagnostic for the first.",
+ "null_twin": "NULL_TWIN label(g) = sign of the global maximiser of l(tau) for the same d(g): 200-point grid on [min d - 0.5, max d + 0.5], candidates = the best grid point within 0.6 of each datum and the overall best, each polished by 30 Newton steps on l clipped to +-0.05 (only where -l'' > 0), label = sign of the candidate with the largest l. Same data, same misspecification, same estimand, same pairs; the iteration's path-dependence is removed. Verified against a 200001-point brute-force argmax (3000/3000 agree). Seeds 5-9 are a replicate used only for the twin's value on S2.",
+ "substrate": "causal toy",
+ "why_this_implementation": "The smallest case of M8 that is actually iterative: a Cauchy-location M-estimator with two clusters has several stationary points, and Newton from the median is what a practitioner would run. The misspecification set is 2-dimensional so the boundary dimension is measurable by random pairs, which (unlike grid counting) has no grid-alignment convention. The positive control uses the same Newton machinery on the canonical fractal case.",
+ "size": "3 arms (TREATMENT, NULL_TWIN, POSITIVE_CONTROL) x 5 seeds x 30000 base points x 9 label evaluations; twin replicate 5 more seeds",
+ "seeds": [0, 1, 2, 3, 4],
+ "cost_estimate": "controls.py 110 CPU core-s (twin dominates); treatment about 10 CPU core-s",
+ "stupid_explanations": [
+  "floating-point noise near psi' = 0 creates speckle labels that look like a fractal boundary (check: rerun a subsample with 200 iterations and with tau_0 perturbed by 1e-12; speckle changes, a real boundary does not)",
+  "non-converged points (label 0) form a band whose width shrinks slower than eps, faking alpha < 1 (check: the preregistered label-0 fraction and alpha recomputed with label 0 merged into its nearest-sign neighbour)",
+  "the fit window sits in a pre-asymptotic crossover (check: coarse vs fine half slopes and F2)",
+  "the boundary is smooth but long and wiggly (many branches), which raises f but not the slope; only the slope is scored, so this cannot pass S1 by itself"
+ ]
+}

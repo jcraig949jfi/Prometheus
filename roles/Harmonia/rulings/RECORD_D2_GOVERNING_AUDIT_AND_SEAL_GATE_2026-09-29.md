@@ -446,3 +446,86 @@ Nothing released, revealed or built.
   record, incl. every audit version" (`evidence.py`). A governing set built from the anchor (the verdict's item 1) is what
   lets that bundle prove that no anchored FAIL was hidden. Nothing further is required by Harmonia.
 - Nothing released, revealed or built.
+
+## Addendum O (2026-09-29): GOVERNING FIREWALL AUDIT = PASS (v13, MWO-0004 D2-2 final re-audit), independently verified
+
+| Item | Value |
+|---|---|
+| Verdict file | `roles/Odysseus/fabric_pilot/d2_audit/v13/VERDICT.md`, blob sha256 `2653a22889cc86b305d98b9a330f1a653b5aade5528d979077d57fcd2e28c807` (commit 6f5ac3192, 14:32Z) |
+| **Protocol record** | `prometheus/cosmos/c3_holdout_D2/protocol/FIREWALL_AUDIT_1.json` at **67e05df127e042d32b7444c3796735829e7f0ee3** (single parent f0f9852b8; adds only the record) |
+| Record blob sha256 | `4d267476762461ffc1c989c554c832c38275f0af061c6f3977a7e60bd16e2546` |
+| Record content | format c3-D2-firewall-audit/2; n 1; **verdict PASS**; auditor Odysseus; spec_id e2d3213b...; audited_commit b17320e64c145bb6b10df9f9aa568614da1e85e5; code_sha256 over 20 files |
+| Replicas | tsk-786a631bbc11 PASS (conditional), tsk-833387561512 PASS; self-tests tsk-f0e704e2fc9a / tsk-649848095158 PASS |
+
+**Harmonia's independent verification (executed on M2, public commands, no secrets):**
+1. `git show origin/main:<record> | sha256sum` gives 4d267476...; this matches the verdict.
+2. `git log -- <record>` shows exactly one commit, 67e05df12, with one parent (no merge).
+3. b17320e64 is an ancestor of origin/main.
+4. `protocol --code-hashes --ref refs/remotes/origin/main` gives 20 files, no nulls, and it is **identical to the record's
+   code_sha256**. The PASS therefore binds the code **currently** on main; no post-audit code drift (unlike v9 -> v10).
+5. Public `protocol` status on origin/main 6f5ac3192: `SEAL PASS`, `AUDIT: AuditMissing (no allow-listed ...)`.
+   **Expected:** the record is not yet anchored. Anchoring is the custodian's next step on M1 (`entry.py allowlist add
+   --expect-commit 67e05df12... --expect-sha256 4d267476...`, verdict "Next step").
+
+**Conditions attached by the auditor (both before the FIRST DESIGNATION; neither blocks the record):**
+- C-1: publish an M1 true/false check that neither the runner nor the predictor-child account can write `ANCHOR.jsonl`,
+  or declare that residual in FIREWALL.md.
+- C-2: add to the declared residuals that a FAIL takes effect only when anchored, and that anyone who can push to main can
+  halt D2 (fails safe).
+
+**Harmonia notes:**
+- These are custodian and Cosmos steps. Harmonia checks at adjudication time that the evidence bundle shows the anchored
+  PASS, and that C-1 was either checked or declared before the designation record.
+- **Harmonia adds no gate.** The Addendum C condition is discharged (Addendum M).
+- **D2 sequence from here (existing protocol, unchanged):**
+  1. custodian anchors AUDIT;
+  2. Cosmos commits PREDICTION_COMMITMENT (strictly after the audit);
+  3. RUNNER_DESIGNATION (host never M2; C-1/C-2 first);
+  4. key release -> one run -> RESULT_SEAL;
+  5. reveal;
+  6. **Harmonia adjudicates from the `evidence.py` bundle** under Addenda E/F/H/J/L (exposure from the `deliver`
+     receipts; post-exposure abort = FORFEIT; PROTOCOL/CERTIFY_ERROR = failed worlds; every consumed attempt
+     disclosed).
+- Harmonia releases nothing and reveals nothing on a comms message alone.
+- **Process note:** the auditor records DEF-ODY-016 (the verdict was about 1.5 h late because its seat loop missed a
+  round completed between ticks) and credits #1018.
+
+## Addendum P (2026-09-29): AUDIT anchored; C-1/C-2 handled; the next gate is COMMITMENT (Cosmos)
+
+- The custodian anchored FIREWALL_AUDIT_1 (Nestor #1021, entry_hash e1a2e48b; repository commit d74bd3dde, **docs only**:
+  FIREWALL.md + Nestor WORK_STATE).
+  - Harmonia checked: the audited-file hashes on the current origin/main still equal the record's code_sha256, so the
+    PASS still binds.
+- **C-1 (FIREWALL.md "POST-PASS", C-1):**
+  - checked TRUE on M1 today: the anchor ACL is SYSTEM, Administrators and the custodian only;
+  - no runner or child account exists yet;
+  - declared residual with its procedure: the future accounts must not be Administrators and hold no ACE on holdout_D2
+    except the runner's Modify on `runs`, and the custodian re-runs and publishes the icacls check **before the
+    designation record is anchored**.
+  - Harmonia will look for that published check in the evidence bundle and on comms before treating a designation as
+    conforming.
+- **C-2:** declared (an unanchored FAIL is ignored; anyone who can push to main can halt D2, which fails safe; the anchor's
+  contents are published per record on comms).
+- **D2 sequence:** SEAL PASS, AUDIT PASS (anchored). **Next: COMMITMENT (Cosmos)**, then DESIGNATION (C-1 re-check first), then
+  run and result seal, then reveal, then Harmonia adjudicates.
+
+## Addendum Q (2026-09-29): no COMMITMENT: C3 rejected before the holdout; D2 sealed and UNSPENT; Harmonia's adjudication duty dormant
+
+- Cosmos 0f6c3b87f (WORK_STATE HOLD): the C3 coordinate-layer audit was **REJECTED**
+  (`roles/Cosmos/research/reviews/COORD_AUDIT_C3_2026-09-29.md`):
+  - both independent replicas found the main coordinate restates the P2 definition and the rest fingerprint the family;
+  - Cosmos's executed check (VERIFY.json) shows a zero-parameter rule from the P1/P2 definitions reproduces 104/120
+    certificate classes.
+  - By precommitment, Cosmos **stopped before D2** and will make **no PREDICTION_COMMITMENT** without explicit
+    authorization.
+- Cosmos reports this as a hard gate (MWO-0001 s7(2)) with an operator disposition: (a) close C3 as killed pre-holdout,
+  D2 sealed and unspent; or (b) authorize a successor preregistration that must beat the zero-parameter definition rung
+  before any D2 commitment. **Harmonia takes no side on (a) versus (b).** It is a scientific-priority decision.
+- **Harmonia's record of the D2 state:**
+  - SEAL PASS; AUDIT PASS anchored; **COMMITMENT absent**;
+  - no designation, no key release, no run, no receipts: **D2 is unspent.**
+  - None of Addenda E/F/H/J/L has been exercised; they remain in force for any future D2 claim.
+- **Ruler note:** this is the intended path. A claim that fails its own pre-holdout audit is killed before it can
+  consume the holdout, and the holdout's value is preserved. Harmonia records it as a correct stop, not a failure of D2.
+- Harmonia's D2 adjudication duty is **dormant** until a COMMITMENT exists. The governing audit PASS binds the D2 code by
+  hash (AuditStale), so a future claim can reuse it only while the audited files are unchanged.

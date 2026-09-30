@@ -165,3 +165,35 @@ T-CT-1, T-INS-1, T-TA-1, T-D3, T-TM-2 (-> T-WA-2), T-DEP-1 (deposit.py).
   8c37f32e's N is a split-copy artifact. Successors: T-INS-14 (decompile the
   split-copy outcomes), T-INS-15 (direct-carrier jitter plant to validate P8),
   T-INS-16 (does the first-broadcast rule reach MAJ / 78f3b0ec).
+- T-INS-16 ANSWERED (W-T, E-ANANKE-W-T, workers/W-T/REPORT.md; 10 tests,
+  principal re-run 10 passed; verdicts spot-checked). The first-broadcast
+  latency rule (W-S P8/P8any, frozen) is exact on a direct-carrier known-answer
+  plant (decisive 1.00, jitter-off control single-class, shuffle -> .47) but
+  does NOT reach any new cell: MAJ 4781b0a1 0/22 units (dense multi-sensor
+  traffic, ~30 cue copies per trial), 78f3b0ec 0/6 (source re-broadcasts; late
+  offsets follow the LATEST source emission, post hoc), e06701a5 fails only on
+  coin-toss split cases. It is a property of three RELAY cells, not a law of the
+  update-clock phase. Successors: T-INS-17 (causal-emission carrier: cue-flip
+  each source emission separately), T-INS-18 (MAJ per-sensor carrier census).
+- T-SWAP-REL3 ANSWERED (W-U, E-ANANKE-W-U, workers/W-U/REPORT.md; 10 tests,
+  principal re-run 10 passed; FC table spot-checked). Studentized pair
+  bootstrap (BOOTT) is the only candidate holding the 1% false-certificate
+  target at P=32 (not robust at K11/K12: upper CI 1.05-1.09%); floor P>=32;
+  percentile/BCa/t need P>=128, P-dependent level P>=64. REL3 on W-O's 733:
+  669 identical to REL2, 64 ambiguous (saved marginals only), 0 inconsistent.
+  Transfer class by paired z CI: 101 COMPLETE / 33 PARTIAL / 33 ambiguous of
+  170 FLIP_REL; of the 42, 19 COMPLETE / 18 PARTIAL / 5 ambiguous. NOT
+  promoted: BOOTT's power collapses at normal ~1 (degenerate resamples, p_min
+  1.0 for FLIP/NO_EFFECT at P32-64). Successor T-SWAP-REL4: frozen FC run for a
+  BOOTT/t hybrid on degenerate resamples, then promote to lens.
+- T-INS-18 ANSWERED (W-V, E-ANANKE-W-V, workers/W-V/REPORT.md; 8 tests, principal
+  re-run 8 passed; class verdicts spot-checked). Per-sensor carrier census of
+  MAJ 4781b0a1 with exact emitter tagging: readout-bound traffic matters only
+  at o10+ (o2-o8 swaps leave raw S0 bit-identical); at o12/o14q0 all five
+  sensors carry ~1/5 each but the readout is NOT a majority (pivotality
+  contrast .10-.12 vs 1.00 in a majority plant): it detects rectified positive
+  payload-1 evidence in its last wake window, count-dependent (post hoc).
+  Known-answer majority and dictator plants read correctly; must-fails pass.
+  The readout's own S1 never differs between mirror partners; the carrier
+  "S1" is the sensors'. Successors: T-INS-19 (per-sensor census on
+  sensor-addressed traffic, o2-o9), T-INS-20 (swap readout Kp[7] alone).

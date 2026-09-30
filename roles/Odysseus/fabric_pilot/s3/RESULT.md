@@ -12,7 +12,7 @@ context/credential leaks, AND useful artifacts without manual rescue.
 
 | criterion | S3 measurement | status |
 |---|---|---|
-| coordination actions per execution | **4 / 12 = 0.33**: 1 dispatch, 2 status checks, 1 message with the worker operator (the canary handshake). Control, Artemis's manual self-test: 126 / 36 = 3.5 (lower bound). | MET |
+| coordination actions per execution | **8 / 12 = 0.67** (CORRECTED 2026-09-29 per Artemis #1019: the first version counted only the 4 actions committed at submission; the full log has 8). Control, Artemis's manual self-test: 126 / 36 = 3.5 (lower bound), re-coded into the same split in `CONTROL_RECODE.json` (2026-09-30, Harmonia #1038): all 126 are coordination, so 3.5 is unchanged. | MET |
 | blind quality within 1 point (of 10) of control | **S3 mean 10.0 (min 10) vs CONTROL mean 9.1 (min 8)**; S3 >= control - 1 | MET (see limits) |
 | context/credential leaks | **0.** The Odysseus-seat canary and the host secret-like fixture were found in none of 80 artifacts or the Task texts (full value and random suffix). Both canaries were removed afterwards. | MET |
 | manual rescue | **0.** 12/12 Tasks completed on their first Attempt. | MET |
@@ -51,9 +51,11 @@ shared host.
 
 ## Limits (read before relying on the quality line)
 
-1. **Ceiling.** The rubric saturates: every S3 report scored 10/10 from both scorers, and the controls scored
+1. **Ceiling** (Harmonia #1038 rates this MAJOR for the ruler, not the gate). The rubric saturates: every S3 report scored 10/10 from both scorers, and the controls scored
    8-10. The gate "within 1 point" is met, but at this ceiling it discriminates weakly. The result supports "not
-   worse on this rubric", NOT "better research".
+   worse on this rubric", NOT "better research". With the control at 9.1 the clause fails only if S3
+   scores below 8.1, and the preregistration has no ceiling provision. Read the quality clause as a
+   non-inferiority check with a weak ruler.
 2. **The gap is mostly format.** The 0.9-point difference comes mainly from EVIDENCE. The S3 packages required
    path:line citations and a claims file; the control runs were never asked for them. So the difference reflects
    the instructions, not the quality of the reasoning.
@@ -64,12 +66,12 @@ shared host.
    - Scorers saw REPORT.md only. Control reports have no claims.json, so including it would unblind the set.
    - Residual blindness cues: the control reports also exist in the repository; the two groups cite different
      commits; the S3 reports share a format.
-5. **Single principal, single run, and a light coordination count.** The treatment log (4 actions) is written by
+5. **Single principal, single run, and a light coordination count.** The treatment log (8 coordination + 5 scientific actions; corrected 2026-09-30, Harmonia #1038) is written by
    the treated principal.
 
 ## Recommendation for the operator's migration decision
 
-- The coordination criterion (0.33 vs 3.5 per execution), the leak criterion and the no-rescue criterion are met
+- The coordination criterion (0.67 vs 3.5 per execution; corrected from 0.33, Artemis #1019), the leak criterion and the no-rescue criterion are met
   with margin.
 - The quality criterion is met, but only at the rubric's ceiling.
 - The operator's stated condition for progressive fleet adoption is met on its face. The same-host separation

@@ -1,0 +1,36 @@
+{
+ "id": "W5",
+ "triplicateId": "HT-8a87057933",
+ "passId": "P3v2",
+ "mechanism_ids": ["M1"],
+ "lens_ids": ["L1"],
+ "hypothesis": "When a regime switch changes only part of the plant, forgetting the clauses inside a minimal unsatisfiable subset (MUS) keeps the observations that are still valid, and so halves tracking errors relative to age-based forgetting, which must discard every clause older than the stale one.",
+ "mechanism": "Factored switching plant. K=8 channels, each with an unknown offset theta_k in Z_8. Each step t a task requests channel k_t (uniform) with target r_t (uniform in Z_8). The controller reads theta_hat_k = the smallest value allowed by all window clauses on channel k (0..7 if none), applies u = (r_t - theta_hat_k) mod 8; plant output y = (u + theta_k) mod 8; tracking error iff y != r_t. Sensor: y_obs = y with prob 0.97, else a uniformly random other value. Each step appends the observation clause 'theta_k == (y_obs - u) mod 8' to a FIFO window of capacity 32 (oldest evicted on overflow). The window is SAT iff every channel's clauses agree. On UNSAT the arm's repair rule deletes clauses until SAT. TREATMENT repair (core-guided): repeat { extract one MUS by deletion, scanning window clauses oldest-first; delete the oldest clause in that MUS } until SAT.",
+ "intervention": "Every 80 steps one channel (uniform) takes a new value (uniform among the 7 others); 2400 steps per run, 29 switches.",
+ "control": "CONTROL_REF, drop-oldest: on UNSAT delete the oldest window clause, one at a time, until SAT. Same trigger times rule, same stop rule.",
+ "positive_control": "Oracle repair: on UNSAT delete exactly the window clauses inconsistent with the true current theta (stale and sensor-corrupted clauses), nothing else. Targeted forgetting present by construction, same trigger rule.",
+ "observable": "Per run: total tracking errors (y != r_t); number of UNSAT events; number of deleted clauses that were consistent with the true current theta at deletion time (valid_deleted).",
+ "success_clauses": [
+  {"id": "S1", "text": "Pooled over 10 seeds, total errors(TREATMENT) / total errors(CONTROL_REF) <= 0.50.", "statistic": "sum_seeds errors(X) / sum_seeds errors(CONTROL_REF)", "comparison": "<=", "threshold": 0.50},
+  {"id": "S2", "text": "Fraction of the 10 seeds in which errors(TREATMENT) <= 0.50 x errors(CONTROL_REF) of the same seed is >= 0.80.", "statistic": "fraction of seeds with errors(X) <= 0.5 * errors(CONTROL_REF, same seed)", "comparison": ">=", "threshold": 0.80},
+  {"id": "S3", "text": "Valid clauses deleted per UNSAT event (pooled) for TREATMENT <= 0.50 x the same statistic for CONTROL_REF (L1: deletion concentrates on conflicting clauses).", "statistic": "[sum valid_deleted(X)/sum unsat(X)] / [sum valid_deleted(CONTROL_REF)/sum unsat(CONTROL_REF)]", "comparison": "<=", "threshold": 0.50}
+ ],
+ "failure_clauses": [
+  {"id": "F1", "text": "Core-guided is no better than drop-oldest: pooled error ratio to CONTROL_REF >= 0.90.", "statistic": "sum_seeds errors(X) / sum_seeds errors(CONTROL_REF)", "comparison": ">=", "threshold": 0.90},
+  {"id": "F2", "text": "Core-guided is no better than random deletion: pooled errors(TREATMENT) / errors(NULL_TWIN) >= 1.00.", "statistic": "sum_seeds errors(X) / sum_seeds errors(NULL_TWIN)", "comparison": ">=", "threshold": 1.00},
+  {"id": "F3", "text": "Deletions do not concentrate on conflicting clauses: valid-deleted-per-UNSAT ratio to CONTROL_REF >= 0.90.", "statistic": "[sum valid_deleted(X)/sum unsat(X)] / [sum valid_deleted(CONTROL_REF)/sum unsat(CONTROL_REF)]", "comparison": ">=", "threshold": 0.90}
+ ],
+ "alternative_explanation": "In a factored plant the MUS is always confined to one channel, so core-guided forgetting may be nothing more than 'reset the channel that just mismatched' (per-variable change detection); the SAT/MUS machinery would then add no mechanism beyond locality of the factorisation. Separately, under sensor corruption the 'oldest clause in the core' rule blames the older valid observation instead of the new corrupted one, which could erase the advantage.",
+ "null_twin": "Random-drop: at the same trigger (UNSAT), delete one uniformly chosen window clause at a time until SAT. Same trigger rule and stop rule as the treatment; conflict localisation destroyed.",
+ "substrate": "causal toy",
+ "why_this_implementation": "Channel-wise point clauses make SAT and MUS exact and cheap with no solver heuristics, and a partial switch is the smallest setting in which the valid-but-old observations that age-based forgetting throws away actually exist; sensor corruption adds the one ambiguity (which clause of a conflicting pair is wrong) that the 'oldest in core' rule can get wrong. No function approximator is involved.",
+ "size": "8 channels x 8 values, window 32, 2400 steps, 29 switches per run, 10 seeds per arm",
+ "seeds": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+ "cost_estimate": "controls: 0.33 CPU core-seconds for 4 arms x 10 seeds; treatment with MUS-by-deletion: < 1 CPU core-minute",
+ "stupid_explanations": [
+  "the MUS is trivially the conflicting channel, so any per-channel reset-on-mismatch rule would do equally well (SAT adds nothing)",
+  "drop-oldest is a strawman here because a window of 32 over 8 channels means the stale clause is usually young; the advantage is window geometry, not conflict localisation",
+  "the treatment wins only because sensor noise is rare (3%); at higher noise 'oldest in core' deletes valid clauses and the effect vanishes",
+  "errors are dominated by the unavoidable first request after each switch, so any policy lands near the floor and ratios are noise"
+ ]
+}

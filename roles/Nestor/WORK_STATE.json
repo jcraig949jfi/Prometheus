@@ -3,7 +3,7 @@
  "seat": "Nestor",
  "mwo_id": "MWO-0004",
  "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
- "updated_at_utc": "2026-09-29T14:50:00Z",
+ "updated_at_utc": "2026-09-30T11:05:00Z",
  "state": "WORKING",
  "branch": "nestor/d2v13-2026-09-29 (merged to main)",
  "head_sha": "b17320e64c145bb6b10df9f9aa568614da1e85e5",
@@ -12,10 +12,11 @@
   "D2 custody (C3 successor seal)"
  ],
  "campaigns": [
+  "roles/Nestor/campaigns/npe-frontier-2026-09-30",
   "roles/Nestor/campaigns/ancestry-replay-2026-09-28"
  ],
  "experiments": [
-  "ancestry production run 2 (GO_FINAL v2)"
+  "X-MAT-INTERNALIZE (prereg c3e9eae9e)"
  ],
  "fabric_tasks": [
   "s4 v2.2 conformance: 2/2 CONFORMS (review_s4v22/)",
@@ -29,23 +30,25 @@
   "D2 v11 re-audit -> FAIL SOLELY on S1 (#986, VERDICT @ 864cb36b1): firewall code clean; should-fix V11-1 receive deadline, V11-2 stop-send deadline, V11-3 cleanup AssertionError masking (all FORFEIT under Addendum J)",
   "FP-001 probe: tsk-0dbadf4cf8d7, tsk-79f45eec10f8 (PASS)",
   "D2 v12 bounded re-audit -> FAIL (#993, VERDICT @ 47df49352: V12-1 anchored records skipped not refused)",
-  "D2 v13 FINAL re-audit: tsk-786a631bbc11 PASS, tsk-833387561512 PASS (no blocks-PASS); selftests tsk-f0e704e2fc9a PASS, tsk-649848095158 (base b17320e64) -- awaiting Odysseus's adjudication"
+  "D2 v13 FINAL re-audit -> PASS (Odysseus #1020; FIREWALL_AUDIT_1.json @ 67e05df12, anchored entry_hash e1a2e48b)"
  ],
- "running": [],
+ "running": [
+  "X-MAT-INTERNALIZE: roles/Nestor/campaigns/npe-frontier-2026-09-30/x_mat_internalize/run_xmi.py (resumable; results/ skips done runs)"
+ ],
  "blocked_on": [
-  "1% sample (MWO-0004 G2): stage 1 VERIFIED on the run-1 copy; stage 2 SCHEMA_UNDECLARED (exit 2) -> Archaeon declares schema, then one native rerun (#990)",
-  "D2: awaiting Odysseus's adjudication of the v13 FINAL re-audit (both replicas PASS). On PASS: anchor FIREWALL_AUDIT_1.json with --expect-commit/--expect-sha256"
+  "D2 commitment anchoring: blocked on the operator's COSMOS-C3 decision (A close C3 / B successor prereg); owner Cosmos/operator",
+  "D2 designation host change (custodian + child accounts): privileged; only when designation actually requires it; owner operator"
  ],
  "next_actions": [
-  "before the first D2 designation (replica condition N-1/R-B): when the anchor directory C:/Users/jcrai/nestor_receipts/holdout_D2 is created, restrict and verify its ACL (custodian + SYSTEM + Administrators write; runner account write only on runs/) and publish the booleans; declare in FIREWALL.md",
+  "D2 before the first designation (Odysseus C-1): once the runner/child accounts exist, re-run icacls on holdout_D2 (neither account admin; only runner Modify on runs/) and publish the true/false before anchoring the designation",
   "key-holder scan (entry.py firewall-check) OUTSTANDING: the 00:47 run was stopped by Claude Code for low system memory after ~5.5 h with no output; rerun only when the operator asks, narrower (current code; repo history + comms dump, not the canonical working tree)",
-  "report key-holder scan booleans (public) to Odysseus",
-  "on Archaeon's schema declaration: rerun npe_sample_task once natively (candidate 1)"
+  "report key-holder scan booleans (public) to Odysseus"
  ],
  "operator_decisions_required": [
-  "hard gate at D2 designation time only (MWO-0004 Part 4, privileged host change): a dedicated custodian account and a separate predictor-child account with an outbound firewall rule on M1"
+  "D2 designation host change (privileged; only when designation requires it)"
  ],
  "latest_reports": [
+  "comms #1041 (X-MAT-INTERNALIZE prereg)",
   "comms #997 (D2 v13)",
   "comms #992 (D2 v12)",
   "comms #990 (G2 sample)",
@@ -65,7 +68,11 @@
   "D2 v5 repairs on main 57c809387 (B-1/B-2/S-1..S-6; selftests PASS)",
   "copy search: 2 run-1 candidate dirs match SAMPLE_MANIFEST_CONTENT 11/11 by content (Nestor's check; verifier v2 pending)",
   "D2 v6 repairs on main 7c7b0b836 (BP-1; selftests PASS)",
-  "FINDINGS.md A-2 pressure row: EXTERNAL-only scope note (Artemis S3 Q8, #1010)"
+  "FINDINGS.md A-2 pressure row: EXTERNAL-only scope note (Artemis S3 Q8, #1010)",
+  "D2 firewall: v13 FINAL re-audit PASS; FIREWALL_AUDIT_1.json anchored (pins == audited bindings); C-1 fact (today TRUE) + C-2 residuals declared in FIREWALL.md",
+  "MWO-0004 G2: 1% sample stage 1 VERIFIED + stage 2 AGREEMENT PASS (exit 0) on SKULLPORT @ 8631128c3; outputs g2_sample_check/rerun_8631128c3/",
+  "CWO 2026-09-30 CURRENT: lease-cutover ack #904 confirmed (Odysseus; 8370083ae); all new claims since used the canonical Fabric lease",
+  "comms triage 2026-09-30: 68 messages reviewed, no live dependency (inbox 'unread' counter not cleared by comms done -> tooling note)"
  ],
  "incidents": [
   "2026-09-29 00:45-00:49 -04:00: UNAUTHORIZED ancestry production run 3 from Nestor's stale one-time schtask trigger (lease wait-acquire); killed; nothing committed; 10/11 run-2 1% sample files destroyed; tasks disabled; record INCIDENT_RUN3_2026-09-29.md"
@@ -80,7 +87,7 @@
  ],
  "mwo_sha256": "925660b2d2be53af2ee4195391e484d9649bbd4ee828cd60432ce2f0903a99df",
  "migration_report": "roles/Nestor/MIGRATION_REPORT_MWO-0002.json",
- "comms_cursor": 1010,
+ "comms_cursor": 1027,
  "adjudication_rules_seen": [
   "Harmonia #960 Addendum E (9f6abdce6)",
   "Harmonia #965 Addendum F (6da0d5b5f): exposure = open receipt; ABORTED after open = FORFEIT unless the record evidences an outside cause",
@@ -93,5 +100,15 @@
   "branch protection: not required (D2-1)",
   "SKULLPORT Fabric worker: native fallback R3",
   "run-2 1% sample: G2 default (verified copy found; no regeneration)"
- ]
+ ],
+ "work_order": "MWO-0004 + CWO-2026-09-30 fleet activation (ops/fleet/CWO_2026-09-30_FLEET_ACTIVATION.md @ 6a7a84569, sha256 ab93f646...7b7e)",
+ "current": "X-MAT-INTERNALIZE RUNNING (CWO NEXT, NPE frontier): material-tag audit of C-A3-INTERNALIZE's 8 events -- endogenous vs bookkeeping/transplant internalization; prereg frozen c3e9eae9e (PREREG sha256 6f7c7aca..1ebce7, comms #1041); pilot replay gate PASS (7ae3 27000023 identical, 1050 s); 26 replays pool 8",
+ "next": "Read VERDICT.json once the replays finish, release the lease, report to Aporia; then choose the next discriminating experiment (candidates: task-coupled endogenous vs external controls; tape-rotation world)",
+ "reserve": [
+  "Keep one preregistered bounded next-day NPE campaign ready (CWO s3 RESERVE)",
+  "D2: anchor Cosmos's PREDICTION_COMMITMENT when posted (blocked on the operator's COSMOS-C3 decision)",
+  "Bookkeeping-artifact lead from Artemis #888 R-08: NPE board_eligible (primordial/core/contract.py) accepts any non-empty cheat string"
+ ],
+ "resource_status": "SKULLPORT skullport:cpu8 lease lse-e39dab75e9bd (Nestor, TTL 3 h, acquired 2026-09-30 ~10:48Z); projected ~7.6 core-h of R2's 16/item; spend $0",
+ "last_receipt": "MWO-0004 G2 1% sample stage-2 PASS (roles/Nestor/campaigns/ancestry-replay-2026-09-28/g2_sample_check/rerun_8631128c3 @ 168c8b81d); D2 FIREWALL_AUDIT_1 anchored (#1021)"
 }

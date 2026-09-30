@@ -1,0 +1,708 @@
+{
+ "method": "BOOTT",
+ "status": {
+  "DETERMINED": 669,
+  "AMBIGUOUS": 64
+ },
+ "rel2_x_rel3": {
+  "CHANCE_REL": {
+   "CHANCE_REL": 332,
+   "CHANCE_REL|INDETERMINATE": 44
+  },
+  "FLIP_REL": {
+   "FLIP_REL": 167,
+   "FLIP_REL|INDETERMINATE": 2,
+   "FLIP_REL|INDETERMINATE|NOT_ELIGIBLE": 1
+  },
+  "INDETERMINATE": {
+   "INDETERMINATE": 105
+  },
+  "NOT_ELIGIBLE": {
+   "NOT_ELIGIBLE": 1
+  },
+  "NO_EFFECT_REL": {
+   "INDETERMINATE|NO_EFFECT_REL": 17,
+   "NO_EFFECT_REL": 64
+  }
+ },
+ "strict2_x_strict3": {
+  "CHANCE_REL": {
+   "CHANCE_REL": 310,
+   "CHANCE_REL|INDETERMINATE": 44
+  },
+  "FLIP_REL": {
+   "FLIP_REL": 115,
+   "FLIP_REL|INDETERMINATE": 2
+  },
+  "INDETERMINATE": {
+   "INDETERMINATE": 105
+  },
+  "NOT_ELIGIBLE": {
+   "FLIP_REL": 23,
+   "FLIP_REL|INDETERMINATE|NOT_ELIGIBLE": 1,
+   "FLIP_REL|NOT_ELIGIBLE": 8,
+   "NOT_ELIGIBLE": 45
+  },
+  "NO_EFFECT_REL": {
+   "INDETERMINATE|NO_EFFECT_REL": 17,
+   "NO_EFFECT_REL": 63
+  }
+ },
+ "rel3_marginal": {
+  "FLIP_REL": 167,
+  "NO_EFFECT_REL": 64,
+  "CHANCE_REL": 332,
+  "INDETERMINATE": 105,
+  "NOT_ELIGIBLE": 1,
+  "CHANCE_REL|INDETERMINATE": 44,
+  "FLIP_REL|INDETERMINATE|NOT_ELIGIBLE": 1,
+  "INDETERMINATE|NO_EFFECT_REL": 17,
+  "FLIP_REL|INDETERMINATE": 2
+ },
+ "rel3_strict_marginal": {
+  "FLIP_REL": 138,
+  "NO_EFFECT_REL": 63,
+  "CHANCE_REL": 310,
+  "INDETERMINATE": 105,
+  "NOT_ELIGIBLE": 45,
+  "CHANCE_REL|INDETERMINATE": 44,
+  "FLIP_REL|NOT_ELIGIBLE": 8,
+  "FLIP_REL|INDETERMINATE|NOT_ELIGIBLE": 1,
+  "INDETERMINATE|NO_EFFECT_REL": 17,
+  "FLIP_REL|INDETERMINATE": 2
+ },
+ "flip_zclass": {
+  "COMPLETE": 101,
+  "COMPLETE|PARTIAL": 21,
+  "COMPLETE|OVERSHOOT": 12,
+  "PARTIAL": 33
+ },
+ "flip_zclass_by_family": {
+  "HOLD": {
+   "COMPLETE": 21,
+   "COMPLETE|OVERSHOOT": 7,
+   "COMPLETE|PARTIAL": 13
+  },
+  "MAJ": {
+   "COMPLETE": 35,
+   "COMPLETE|OVERSHOOT": 4,
+   "COMPLETE|PARTIAL": 3,
+   "PARTIAL": 6
+  },
+  "RELAY": {
+   "COMPLETE": 45,
+   "COMPLETE|OVERSHOOT": 1,
+   "COMPLETE|PARTIAL": 5,
+   "PARTIAL": 27
+  }
+ },
+ "n_groups": 249,
+ "groups_with_verdict": {
+  "FLIP_REL": 86,
+  "NO_EFFECT_REL": 42,
+  "CHANCE_REL": 120,
+  "INDETERMINATE": 53,
+  "NOT_ELIGIBLE": 1
+ },
+ "flip_groups": 86,
+ "flip_groups_by_zclass": {
+  "COMPLETE": 50,
+  "COMPLETE|COMPLETE|PARTIAL": 3,
+  "COMPLETE|PARTIAL": 14,
+  "COMPLETE|COMPLETE|OVERSHOOT": 3,
+  "PARTIAL": 10,
+  "COMPLETE|PARTIAL|PARTIAL": 3,
+  "COMPLETE|OVERSHOOT": 3
+ },
+ "flip_specimens": 56,
+ "absCHANCE_x_rel3": {
+  "FLIP_REL": 93,
+  "CHANCE_REL": 323,
+  "INDETERMINATE": 100,
+  "NO_EFFECT_REL": 41,
+  "NOT_ELIGIBLE": 1,
+  "CHANCE_REL|INDETERMINATE": 42,
+  "FLIP_REL|INDETERMINATE|NOT_ELIGIBLE": 1,
+  "INDETERMINATE|NO_EFFECT_REL": 13,
+  "FLIP_REL|INDETERMINATE": 1
+ },
+ "absCHANCE_flip_groups": 47,
+ "changed_rows": [
+  [
+   "V0111",
+   "e06701a5",
+   "site_all",
+   "5",
+   "CHANCE_REL",
+   "CHANCE_REL|INDETERMINATE",
+   "AMBIGUOUS"
+  ],
+  [
+   "V0112",
+   "e06701a5",
+   "channel_all",
+   "5",
+   "CHANCE_REL",
+   "CHANCE_REL|INDETERMINATE",
+   "AMBIGUOUS"
+  ],
+  [
+   "V0113",
+   "e06701a5",
+   "channel_count",
+   "5",
+   "CHANCE_REL",
+   "CHANCE_REL|INDETERMINATE",
+   "AMBIGUOUS"
+  ],
+  [
+   "V0166",
+   "4ecdfb3f",
+   "channel_all",
+   "5",
+   "FLIP_REL",
+   "FLIP_REL|INDETERMINATE|NOT_ELIGIBLE",
+   "AMBIGUOUS"
+  ],
+  [
+   "V0267",
+   "42716814",
+   "site_all",
+   "-1",
+   "NO_EFFECT_REL",
+   "INDETERMINATE|NO_EFFECT_REL",
+   "AMBIGUOUS"
+  ],
+  [
+   "V0268",
+   "42716814",
+   "channel_all",
+   "-1",
+   "NO_EFFECT_REL",
+   "INDETERMINATE|NO_EFFECT_REL",
+   "AMBIGUOUS"
+  ],
+  [
+   "V0306",
+   "31cd2a8a",
+   "channel_all",
+   "1",
+   "CHANCE_REL",
+   "CHANCE_REL|INDETERMINATE",
+   "AMBIGUOUS"
+  ],
+  [
+   "V0307",
+   "31cd2a8a",
+   "channel_content",
+   "1",
+   "CHANCE_REL",
+   "CHANCE_REL|INDETERMINATE",
+   "AMBIGUOUS"
+  ],
+  [
+   "V0312",
+   "31cd2a8a",
+   "site_all",
+   "3",
+   "NO_EFFECT_REL",
+   "INDETERMINATE|NO_EFFECT_REL",
+   "AMBIGUOUS"
+  ],
+  [
+   "V0313",
+   "31cd2a8a",
+   "S",
+   "3",
+   "NO_EFFECT_REL",
+   "INDETERMINATE|NO_EFFECT_REL",
+   "AMBIGUOUS"
+  ],
+  [
+   "V0314",
+   "31cd2a8a",
+   "site_all",
+   "6",
+   "CHANCE_REL",
+   "CHANCE_REL|INDETERMINATE",
+   "AMBIGUOUS"
+  ],
+  [
+   "V0315",
+   "31cd2a8a",
+   "inbox",
+   "6",
+   "CHANCE_REL",
+   "CHANCE_REL|INDETERMINATE",
+   "AMBIGUOUS"
+  ],
+  [
+   "V0316",
+   "31cd2a8a",
+   "channel_all",
+   "7",
+   "NO_EFFECT_REL",
+   "INDETERMINATE|NO_EFFECT_REL",
+   "AMBIGUOUS"
+  ],
+  [
+   "V0319",
+   "31cd2a8a",
+   "channel_content",
+   "7",
+   "NO_EFFECT_REL",
+   "INDETERMINATE|NO_EFFECT_REL",
+   "AMBIGUOUS"
+  ],
+  [
+   "V0327",
+   "369f5a5b",
+   "S",
+   "0",
+   "CHANCE_REL",
+   "CHANCE_REL|INDETERMINATE",
+   "AMBIGUOUS"
+  ],
+  [
+   "V0328",
+   "369f5a5b",
+   "S",
+   "1",
+   "FLIP_REL",
+   "FLIP_REL|INDETERMINATE",
+   "AMBIGUOUS"
+  ],
+  [
+   "V0334",
+   "369f5a5b",
+   "S",
+   "3",
+   "CHANCE_REL",
+   "CHANCE_REL|INDETERMINATE",
+   "AMBIGUOUS"
+  ],
+  [
+   "V0356",
+   "369f5a5b",
+   "site_all",
+   "9",
+   "CHANCE_REL",
+   "CHANCE_REL|INDETERMINATE",
+   "AMBIGUOUS"
+  ],
+  [
+   "V0357",
+   "369f5a5b",
+   "channel_all",
+   "9",
+   "CHANCE_REL",
+   "CHANCE_REL|INDETERMINATE",
+   "AMBIGUOUS"
+  ],
+  [
+   "V0360",
+   "369f5a5b",
+   "site_all",
+   "10",
+   "CHANCE_REL",
+   "CHANCE_REL|INDETERMINATE",
+   "AMBIGUOUS"
+  ],
+  [
+   "V0361",
+   "369f5a5b",
+   "channel_all",
+   "10",
+   "CHANCE_REL",
+   "CHANCE_REL|INDETERMINATE",
+   "AMBIGUOUS"
+  ],
+  [
+   "V0392",
+   "42716814",
+   "S",
+   "2",
+   "NO_EFFECT_REL",
+   "INDETERMINATE|NO_EFFECT_REL",
+   "AMBIGUOUS"
+  ],
+  [
+   "V0394",
+   "42716814",
+   "r",
+   "2",
+   "CHANCE_REL",
+   "CHANCE_REL|INDETERMINATE",
+   "AMBIGUOUS"
+  ],
+  [
+   "V0408",
+   "42716814",
+   "r",
+   "5",
+   "CHANCE_REL",
+   "CHANCE_REL|INDETERMINATE",
+   "AMBIGUOUS"
+  ],
+  [
+   "V0413",
+   "42716814",
+   "r",
+   "6",
+   "NO_EFFECT_REL",
+   "INDETERMINATE|NO_EFFECT_REL",
+   "AMBIGUOUS"
+  ],
+  [
+   "V0423",
+   "42716814",
+   "r",
+   "8",
+   "NO_EFFECT_REL",
+   "INDETERMINATE|NO_EFFECT_REL",
+   "AMBIGUOUS"
+  ],
+  [
+   "V0424",
+   "42716814",
+   "site_all",
+   "9",
+   "CHANCE_REL",
+   "CHANCE_REL|INDETERMINATE",
+   "AMBIGUOUS"
+  ],
+  [
+   "V0425",
+   "42716814",
+   "channel_all",
+   "9",
+   "CHANCE_REL",
+   "CHANCE_REL|INDETERMINATE",
+   "AMBIGUOUS"
+  ],
+  [
+   "V0427",
+   "42716814",
+   "channel_count",
+   "9",
+   "CHANCE_REL",
+   "CHANCE_REL|INDETERMINATE",
+   "AMBIGUOUS"
+  ],
+  [
+   "V0436",
+   "42716814",
+   "S",
+   "11",
+   "CHANCE_REL",
+   "CHANCE_REL|INDETERMINATE",
+   "AMBIGUOUS"
+  ],
+  [
+   "V0509",
+   "4781b0a1",
+   "site_all",
+   "14",
+   "CHANCE_REL",
+   "CHANCE_REL|INDETERMINATE",
+   "AMBIGUOUS"
+  ],
+  [
+   "V0510",
+   "4781b0a1",
+   "channel_all",
+   "14",
+   "CHANCE_REL",
+   "CHANCE_REL|INDETERMINATE",
+   "AMBIGUOUS"
+  ],
+  [
+   "V0511",
+   "4781b0a1",
+   "inbox",
+   "14",
+   "CHANCE_REL",
+   "CHANCE_REL|INDETERMINATE",
+   "AMBIGUOUS"
+  ],
+  [
+   "V0512",
+   "4781b0a1",
+   "channel_content",
+   "14",
+   "CHANCE_REL",
+   "CHANCE_REL|INDETERMINATE",
+   "AMBIGUOUS"
+  ],
+  [
+   "V0513",
+   "4781b0a1",
+   "site_all",
+   "15",
+   "FLIP_REL",
+   "FLIP_REL|INDETERMINATE",
+   "AMBIGUOUS"
+  ],
+  [
+   "V0514",
+   "4781b0a1",
+   "channel_all",
+   "15",
+   "NO_EFFECT_REL",
+   "INDETERMINATE|NO_EFFECT_REL",
+   "AMBIGUOUS"
+  ],
+  [
+   "V0517",
+   "4781b0a1",
+   "channel_content",
+   "15",
+   "NO_EFFECT_REL",
+   "INDETERMINATE|NO_EFFECT_REL",
+   "AMBIGUOUS"
+  ],
+  [
+   "V0525",
+   "4ab2ba01",
+   "site_all",
+   "8",
+   "NO_EFFECT_REL",
+   "INDETERMINATE|NO_EFFECT_REL",
+   "AMBIGUOUS"
+  ],
+  [
+   "V0526",
+   "4ab2ba01",
+   "inbox",
+   "8",
+   "NO_EFFECT_REL",
+   "INDETERMINATE|NO_EFFECT_REL",
+   "AMBIGUOUS"
+  ],
+  [
+   "V0554",
+   "63d17a90",
+   "site_all",
+   "4",
+   "CHANCE_REL",
+   "CHANCE_REL|INDETERMINATE",
+   "AMBIGUOUS"
+  ],
+  [
+   "V0555",
+   "63d17a90",
+   "channel_all",
+   "4",
+   "CHANCE_REL",
+   "CHANCE_REL|INDETERMINATE",
+   "AMBIGUOUS"
+  ],
+  [
+   "V0558",
+   "63d17a90",
+   "channel_count",
+   "4",
+   "CHANCE_REL",
+   "CHANCE_REL|INDETERMINATE",
+   "AMBIGUOUS"
+  ],
+  [
+   "V0580",
+   "78f3b0ec",
+   "site_all",
+   "9",
+   "CHANCE_REL",
+   "CHANCE_REL|INDETERMINATE",
+   "AMBIGUOUS"
+  ],
+  [
+   "V0581",
+   "78f3b0ec",
+   "channel_all",
+   "9",
+   "CHANCE_REL",
+   "CHANCE_REL|INDETERMINATE",
+   "AMBIGUOUS"
+  ],
+  [
+   "V0582",
+   "78f3b0ec",
+   "S",
+   "9",
+   "CHANCE_REL",
+   "CHANCE_REL|INDETERMINATE",
+   "AMBIGUOUS"
+  ],
+  [
+   "V0583",
+   "78f3b0ec",
+   "channel_count",
+   "9",
+   "CHANCE_REL",
+   "CHANCE_REL|INDETERMINATE",
+   "AMBIGUOUS"
+  ],
+  [
+   "V0592",
+   "78f3b0ec",
+   "site_all",
+   "14",
+   "CHANCE_REL",
+   "CHANCE_REL|INDETERMINATE",
+   "AMBIGUOUS"
+  ],
+  [
+   "V0593",
+   "78f3b0ec",
+   "channel_all",
+   "14",
+   "CHANCE_REL",
+   "CHANCE_REL|INDETERMINATE",
+   "AMBIGUOUS"
+  ],
+  [
+   "V0594",
+   "78f3b0ec",
+   "inbox",
+   "14",
+   "CHANCE_REL",
+   "CHANCE_REL|INDETERMINATE",
+   "AMBIGUOUS"
+  ],
+  [
+   "V0595",
+   "78f3b0ec",
+   "channel_count",
+   "14",
+   "CHANCE_REL",
+   "CHANCE_REL|INDETERMINATE",
+   "AMBIGUOUS"
+  ],
+  [
+   "V0625",
+   "bbef66a1",
+   "channel_all",
+   "9",
+   "CHANCE_REL",
+   "CHANCE_REL|INDETERMINATE",
+   "AMBIGUOUS"
+  ],
+  [
+   "V0626",
+   "bbef66a1",
+   "channel_content",
+   "9",
+   "CHANCE_REL",
+   "CHANCE_REL|INDETERMINATE",
+   "AMBIGUOUS"
+  ],
+  [
+   "V0631",
+   "bbef66a1",
+   "site_all",
+   "11",
+   "NO_EFFECT_REL",
+   "INDETERMINATE|NO_EFFECT_REL",
+   "AMBIGUOUS"
+  ],
+  [
+   "V0632",
+   "bbef66a1",
+   "S",
+   "11",
+   "NO_EFFECT_REL",
+   "INDETERMINATE|NO_EFFECT_REL",
+   "AMBIGUOUS"
+  ],
+  [
+   "V0633",
+   "bbef66a1",
+   "site_all",
+   "14",
+   "CHANCE_REL",
+   "CHANCE_REL|INDETERMINATE",
+   "AMBIGUOUS"
+  ],
+  [
+   "V0634",
+   "bbef66a1",
+   "inbox",
+   "14",
+   "CHANCE_REL",
+   "CHANCE_REL|INDETERMINATE",
+   "AMBIGUOUS"
+  ],
+  [
+   "V0635",
+   "bbef66a1",
+   "channel_all",
+   "15",
+   "NO_EFFECT_REL",
+   "INDETERMINATE|NO_EFFECT_REL",
+   "AMBIGUOUS"
+  ],
+  [
+   "V0638",
+   "bbef66a1",
+   "channel_content",
+   "15",
+   "NO_EFFECT_REL",
+   "INDETERMINATE|NO_EFFECT_REL",
+   "AMBIGUOUS"
+  ],
+  [
+   "V0646",
+   "bf82cb29",
+   "site_all",
+   "6",
+   "CHANCE_REL",
+   "CHANCE_REL|INDETERMINATE",
+   "AMBIGUOUS"
+  ],
+  [
+   "V0647",
+   "bf82cb29",
+   "channel_all",
+   "6",
+   "CHANCE_REL",
+   "CHANCE_REL|INDETERMINATE",
+   "AMBIGUOUS"
+  ],
+  [
+   "V0648",
+   "bf82cb29",
+   "inbox",
+   "6",
+   "CHANCE_REL",
+   "CHANCE_REL|INDETERMINATE",
+   "AMBIGUOUS"
+  ],
+  [
+   "V0649",
+   "bf82cb29",
+   "channel_content",
+   "6",
+   "CHANCE_REL",
+   "CHANCE_REL|INDETERMINATE",
+   "AMBIGUOUS"
+  ],
+  [
+   "V0662",
+   "c16d5231",
+   "inbox",
+   "5",
+   "CHANCE_REL",
+   "CHANCE_REL|INDETERMINATE",
+   "AMBIGUOUS"
+  ],
+  [
+   "V0671",
+   "cd5b6fd6",
+   "inbox",
+   "3",
+   "CHANCE_REL",
+   "CHANCE_REL|INDETERMINATE",
+   "AMBIGUOUS"
+  ]
+ ]
+}

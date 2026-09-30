@@ -1,0 +1,88 @@
+{
+ "triplicateId": "HT-ae38c641b1",
+ "world": "W4",
+ "outcome": "SPEC_UNATTAINABLE",
+ "statistics": {
+  "pilot_attempt1": {
+   "positive_meets_success": true,
+   "cheat_detected": false,
+   "null_twin_meets_success": false,
+   "cause": "gamma_oracle undefined at (k=4,T=2,t=0): grid-aligned boundary resolved exactly, undecided area 0 at B=64"
+  },
+  "pilot_attempt2": {
+   "positive_meets_success": false,
+   "cheat_detected": true,
+   "null_twin_meets_success": false,
+   "positive_control_failures": [
+    {
+     "k": 8,
+     "T": 5,
+     "t": 0,
+     "gamma_oracle": 0.40037915610276553,
+     "gamma_uniform_true": 0.30107674490103564,
+     "ratio": 1.3298242487455174,
+     "target_2_over_D": 1.4999999999999998,
+     "rel_err": 0.11345050083632159,
+     "within_10pct": false,
+     "within_20pct": true,
+     "oracle_stopped_early_any": false
+    },
+    {
+     "k": 8,
+     "T": 10,
+     "t": 0,
+     "gamma_oracle": 0.40037915610276553,
+     "gamma_uniform_true": 0.30107674490103564,
+     "ratio": 1.3298242487455174,
+     "target_2_over_D": 1.4999999999999998,
+     "rel_err": 0.11345050083632159,
+     "within_10pct": false,
+     "within_20pct": true,
+     "oracle_stopped_early_any": false
+    },
+    {
+     "k": 8,
+     "T": 20,
+     "t": 0,
+     "gamma_oracle": 0.40037915610276553,
+     "gamma_uniform_true": 0.30107674490103564,
+     "ratio": 1.3298242487455174,
+     "target_2_over_D": 1.4999999999999998,
+     "rel_err": 0.11345050083632159,
+     "within_10pct": false,
+     "within_20pct": true,
+     "oracle_stopped_early_any": false
+    }
+   ],
+   "positive_control_max_rel_err": 0.11345050083632159,
+   "cheat_rho": -0.9982563195104296,
+   "null_twin_criterion": {
+    "S1": false,
+    "S2": true,
+    "S3": false,
+    "rho": 0.024454157797968182,
+    "meets": false,
+    "n_configs": 24
+   }
+  },
+  "treatment": "not built (no treatment statistic exists)"
+ },
+ "criterion_as_applied": "PC: |gamma_oracle/gamma_uniform_true - 2/D_k| <= 0.10*2/D_k at all 16 configs with k^-T <= 2^-12; S1 ratio>=0.8 at (t=0,T=2) every k; S2 ratio<=0.6 at (t=30,T=20) every k; S3 Spearman(ratio, lambda*T=T ln k) over 24 configs <= -0.7; ratio = seed-mean gamma_arm / seed-mean gamma_oracle. See NOTES.md.",
+ "positive_control_detected": false,
+ "cheat_detected": true,
+ "null_twin_meets_success": false,
+ "stupid_explanations_status": {
+  "budget range too small to leave the pre-asymptotic regime": "NOT RULED OUT: the PC miss at k=8,t=0 (ratio 1.330 vs 1.5) is within 20% and plausibly a finite-window / grid-alignment effect; not tested further because the pilot protocol stops here",
+  "ties in width signal broken by a spatial order that happens to follow the boundary": "NOT APPLICABLE: no treatment built; control ties are randomised per seed",
+  "oracle exponent itself is off because the ground-truth grid is too coarse": "NOT RULED OUT: k=8,t=0 miss appeared only after the closed-cell repair (attempt 1 interior truth: 1.533, 2.2% off) -- the oracle exponent depends on the ground-truth convention on a grid-aligned dust"
+ },
+ "anomalies": [
+  "Map family and decided test are the implementer's reading: W4 defers both to W1, which the implementer rules forbid reading",
+  "Attempt 1 PC passed (max err 6.2%) but cheat undetectable: S1 denominator undefined at (4,2,0)",
+  "Attempt 2 (closed-cell truth) fixed the cheat but moved k=8,t=0 PC to 11.3% error (k=4,t=0 to 8.3%): the positive control's verdict hinges on a boundary convention for grid-aligned sets",
+  "Pilot null twin matched to the oracle's depth sequence, not sens (no treatment may exist in phase 1)"
+ ],
+ "core_minutes": 1.26,
+ "attempts": 2,
+ "notes": "Pilot failed twice -> SPEC_UNATTAINABLE per round-2 PREREG. No treatment code written. Files: NOTES.md, common.py, pilot.py, pilot_eval.py, PILOT.json (attempt 2), PILOT_attempt1.json, pilot_rows.jsonl (attempt 2), pilot_rows_attempt1.jsonl."
+}

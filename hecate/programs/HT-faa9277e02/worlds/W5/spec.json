@@ -1,0 +1,102 @@
+{
+  "id": "W5",
+  "triplicateId": "HT-faa9277e02",
+  "passId": "P3v2",
+  "mechanism_ids": [
+    "M9"
+  ],
+  "lens_ids": [
+    "L7"
+  ],
+  "hypothesis": "A timing-asymmetric Hebbian (STDP-like) update of directed transport couplings, driven by morphogen waves that always travel in +x, writes an antisymmetric coupling component aligned with the wave direction; this tissue arrow persists for one decay time after the waves stop and biases the later spread of a released morphogen downstream, beyond what the same coupling magnitudes with scrambled orientation produce.",
+  "mechanism": "48x48 torus of cells. Every edge e from cell i to its +x neighbour j (horizontal) or +y neighbour j (vertical) carries two directed transport rates r_{i->j} = D0*g_e*(1+eps_e) and r_{j->i} = D0*g_e*(1-eps_e); D0 = 1; g_e = exp(0.3*N(0,1)) per edge (RNG stream 0 of the seed), divided by the mean over all edges; g is fixed (not plastic). Plastic variable eps_e in [-0.9, 0.9], starting at 0. Activity u_i(t) in {0,1} is an imposed travelling morphogen wave: u_i(t) = 1 iff ((t - x_i - j_i) mod 48) < 3, speed 1 cell per time unit, width 3 cells, period 48, where j_i ~ N(0, 0.5) is a fixed per-cell timing jitter (RNG stream 6). Traces: dx_i/dt = (u_i - x_i)/tau, tau = 2, x_i(0) = 0. STDP update (treatment): d eps_e/dt = eta*(x_i*u_j - x_j*u_i) - lambda*eps_e, then clip to [-0.9, 0.9]; eta = 0.0866, lambda = 0.01. eta is fixed a priori by the normalization rule 'for jitter-free waves the analytic equilibrium eps equals 0.2' (per passage, integral of x_i*u_j - x_j*u_i = 1.1088 for delay 1, width 3, tau 2; per unit time 1.1088/48; eta = 0.2*lambda*48/1.1088). Morphogen transport of a released pulse: da_i/dt = sum_j r_{j->i}*a_j - sum_j r_{i->j}*a_i (mass conserving). Explicit Euler dt = 0.02 throughout.",
+  "intervention": "TREATMENT, per seed: wave epoch 480 time units (10 wave passages) with the STDP update on; quiet epoch 100 time units (= 1/lambda) with u = 0, traces decaying and eps decaying under -lambda*eps (update still applied; with u = 0 it is pure decay); then the pulse test with all couplings frozen: unit mass released at each of 16 release cells (RNG stream 3), transport run for t_test = 8 time units, and the observables read.",
+  "control": "Reversed-wave control: identical to the treatment (same g, jitter, traces, STDP rule, schedule, decay, release cells) except the waves travel in -x: u_i(t) = 1 iff ((t + x_i - j_i) mod 48) < 3. If the arrow is written by temporal order it must flip sign (P near -1); if it comes from code orientation (array rolls, update order) it will not. Used by failure clause F4. The eps = 0 medium (FLAT) is the instrument baseline used by F3.",
+  "positive_control": "Directed couplings written by hand: horizontal eps_e ~ N(0.2, 0.1) clipped to [-0.9, 0.9] (all pointing downstream on average), vertical eps_e = 0; same g, same release cells, same pulse test.",
+  "observable": "P = polarity index over horizontal edges = sum_e A_e / sum_e |A_e| with A_e = r_{i->j} - r_{j->i} = 2*D0*g_e*eps_e (+1 = every edge points downstream along +x, 0 = no net orientation). B = downstream bias of the released pulses at t_test: for each release cell, d = signed torus x-offset of every cell from the release column, in [-24, 23]; B_pulse = mass(d > 0) - mass(d < 0) over total mass; B = mean over the 16 pulses. Diagnostics: P_perp (same index over vertical edges), mean x displacement.",
+  "success_clauses": [
+    {
+      "id": "S1",
+      "text": "Treatment seed-mean polarity index P (10 seeds) is at least 0.5.",
+      "statistic": "seed_mean_P",
+      "comparison": ">=",
+      "threshold": 0.5
+    },
+    {
+      "id": "S2",
+      "text": "Treatment seed-mean downstream bias B is at least 0.15.",
+      "statistic": "seed_mean_B",
+      "comparison": ">=",
+      "threshold": 0.15
+    },
+    {
+      "id": "S3",
+      "text": "Paired by seed, treatment B minus null-twin B (treatment couplings with orientation scrambled) has seed-mean at least 0.10.",
+      "statistic": "seed_mean_B_minus_twin",
+      "comparison": ">=",
+      "threshold": 0.1
+    },
+    {
+      "id": "S4",
+      "text": "Treatment B exceeds its null-twin B in at least 9 of 10 seeds.",
+      "statistic": "n_seeds_B_above_twin",
+      "comparison": ">=",
+      "threshold": 9
+    }
+  ],
+  "failure_clauses": [
+    {
+      "id": "F1",
+      "text": "Treatment seed-mean P below 0.2: no arrow written or it did not survive the quiet epoch.",
+      "statistic": "seed_mean_P",
+      "comparison": "<",
+      "threshold": 0.2
+    },
+    {
+      "id": "F2",
+      "text": "Treatment seed-mean B below 0.05: any arrow present does not bias later transport.",
+      "statistic": "seed_mean_B",
+      "comparison": "<",
+      "threshold": 0.05
+    },
+    {
+      "id": "F3",
+      "text": "Instrument bias: with eps = 0 on every edge (same g, same release cells) |seed-mean B| is at least 0.05; the probe is invalid.",
+      "statistic": "abs_seed_mean_B_flat",
+      "comparison": ">=",
+      "threshold": 0.05
+    },
+    {
+      "id": "F4",
+      "text": "Reversed-wave control seed-mean P above -0.2: the arrow does not follow the wave direction, so it is not written by temporal order.",
+      "statistic": "seed_mean_P_control",
+      "comparison": ">",
+      "threshold": -0.2
+    }
+  ],
+  "alternative_explanation": "Drift without polarity: a spatial gradient in the symmetric part g along x (e.g. from wave attenuation) biases the centroid of a spreading pulse even with eps = 0; or the implementation's update order (array rolls, sweep direction) leaks asymmetry. Here waves are imposed plane waves on a torus (no attenuation, no source), g is fixed and random without gradient, the null twin keeps g and |eps| exactly, the FLAT check (F3) bounds instrument bias and the reversed-wave control (F4) must flip the arrow.",
+  "null_twin": "The treatment's own final coupling field with every eps_e (horizontal and vertical) given an independent fair random sign (RNG stream 2): g and the |eps| histogram identical, orientation relative to the wave destroyed. Same release cells and pulse test.",
+  "substrate": "directed transport on a cell lattice (morphogen hopping on a 48x48 torus) driven by imposed travelling morphogen waves",
+  "why_this_implementation": "Polarity is a property of directed transport between neighbouring cells, so the plastic element is the pair of directed rates on each edge and the read-out is what that tissue does to a morphogen released later; no network, learner or embedding is introduced. Waves are imposed kinematically (not simulated excitable dynamics) so that the only source of temporal order is the wave and the world has no free wave-generation parameters that could fail for unrelated reasons.",
+  "size": "48x48 cells, 4608 edges, 29000 Euler steps per treatment or reversed-wave control run (580 time units), 16 released pulses x 400 steps, 10 seeds",
+  "seeds": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+  ],
+  "cost_estimate": "controls: about 0.1 CPU core-minute; treatment + reversed-wave control + twin pulse tests: about 1.5 CPU core-minutes (numpy, single core)",
+  "stupid_explanations": [
+    "array-roll or update-order asymmetry in the code writes an arrow by itself (F4 reversed-wave control must flip the arrow; F3 flat couplings bound the pulse instrument)",
+    "a gradient in the symmetric couplings g along x produces centroid drift without any antisymmetry (g fixed, gradient-free; the twin keeps g exactly)",
+    "torus wrap-around makes downstream and upstream mass ambiguous (t_test = 8 keeps pulse spread well below half the torus; d is measured as the shortest signed offset)",
+    "the polarity index is 1 for any tiny but uniform asymmetry, so P alone could pass with a biologically meaningless arrow (S2 and S3 require an effect on transport of a fixed size)",
+    "the release cells sit at particular wave phases when waves stop (waves are off for 100 time units before release; release cells random)"
+  ]
+}

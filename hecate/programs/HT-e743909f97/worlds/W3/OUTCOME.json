@@ -1,0 +1,79 @@
+{
+ "triplicateId": "HT-e743909f97",
+ "world": "W3",
+ "outcome": "NULL",
+ "statistics": {
+  "TREATMENT": {
+   "n": 30,
+   "median_stat_kl": 1.6645107931519778,
+   "median_late_kl": 1.5547643497866461,
+   "median_rt": 395.5,
+   "n_rt_censored": 0,
+   "median_mean_sd_applied": 0.007175548551105959,
+   "median_sd_applied_post50": 0.009964957968362734
+  },
+  "CONTROL": {
+   "n": 30,
+   "median_stat_kl": 1.5939949868814791,
+   "median_late_kl": 1.7649265576894897,
+   "median_rt": 452.5,
+   "n_rt_censored": 0,
+   "median_mean_sd_applied": 0.007175548551105962,
+   "median_sd_applied_post50": 0.007175548551105961
+  },
+  "NULL_TWIN": {
+   "n": 30,
+   "median_stat_kl": 1.6489950460330314,
+   "median_late_kl": 1.860348665915319,
+   "median_rt": 438.0,
+   "n_rt_censored": 0,
+   "median_mean_sd_applied": 0.007158264870208191,
+   "median_sd_applied_post50": 0.00706566132542806
+  },
+  "POSITIVE_CONTROL": {
+   "n": 30,
+   "median_stat_kl": 0.011078111357612094,
+   "median_late_kl": 9.884460229700217,
+   "median_rt": 1000.0,
+   "n_rt_censored": 30
+  },
+  "CHEAT": {
+   "n": 30,
+   "median_stat_kl": 1.228894563349629e-18,
+   "median_late_kl": 6.520700058141416e-19,
+   "median_rt": 0.0,
+   "n_rt_censored": 0
+  },
+  "ratios": {
+   "T_over_C": 0.8740331491712707,
+   "T_over_N": 0.9029680365296804,
+   "N_over_C": 0.9679558011049724
+  }
+ },
+ "criterion_as_applied": {
+  "success": "median stat KL(T) < 0.1 AND median rt(T) <= 0.7*median rt(C) AND <= 0.7*median rt(N), 30 seeds",
+  "failure": "KL(T) >= 0.1 OR rt ratio > 0.9 vs C or N",
+  "success_met": false,
+  "failure_met": true,
+  "klT_lt_0.1": false,
+  "T_over_C": 0.8740331491712707,
+  "T_over_N": 0.9029680365296804
+ },
+ "positive_control_detected": true,
+ "cheat_detected": true,
+ "null_twin_meets_success": false,
+ "stupid_explanations_status": {
+  "larger mutation after the switch just raises exploration": "NOT RULED OUT: error coupling IS larger post-switch mutation; the time-permuted null twin separates coupling from marginal sd statistics, not from 'more exploration when error is high'",
+  "grid coarseness makes KL small anyway": "NOT TESTED (single 64-bin grid; no finer-grid rerun)",
+  "it is sequential Monte Carlo renamed": "NOT RULED OUT: implementation is a bootstrap particle filter with per-particle jitter by construction"
+ },
+ "anomalies": [
+  "pilot null-twin check was structurally False (ratio vs itself); phase-2 confound check uses rt_null vs rt_control only (NOTES A6)"
+ ],
+ "core_minutes": 0.466,
+ "attempts": {
+  "pilot": 1,
+  "phase2": 1
+ },
+ "notes": "pilot passed attempt 1 (PILOT.json); parameters fixed in NOTES.md before any run; single-threaded numpy."
+}

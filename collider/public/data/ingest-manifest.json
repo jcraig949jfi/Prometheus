@@ -1,0 +1,36 @@
+{
+ "script": "ingest-hephaestus/1",
+ "inputs_sha256_lf": {
+  "agents/nous/src/concepts.py": "eb15352b83340df989b9b78b5eeb9f00cede4470e8889de513c659c5c229e993",
+  "agents/coeus/graphs/concept_scores.json": "589df876382b5e677e60555cd4945ae092282bd72d8627cf1eddfdf29daf1b0d",
+  "agents/hephaestus/ledger.jsonl": "748826e78f6ecfc6c03662bd8ba63df7e81c18b2b3f25e712e7b2ae7b67a32ce",
+  "agents/nous/data/priority_triples.json": "103af06c3ab9d292ff922cada75ccb65e111145e823e0b9d0e0b2fe87e51d6ce",
+  "agents/nous/runs/20260324_112138/responses.jsonl": "e232aba5470e84cead231a274634d2f081221ebe0170506fdb9432cd88f8d442",
+  "agents/nous/runs/20260324_115258/responses.jsonl": "4286c4518a54a251eca663f358e1e6e1311ba8fa02cb8b2855b400dd5ab00fd7",
+  "agents/nous/runs/20260324_131206/responses.jsonl": "0e50575bca47b14599ffe17a9154b7000e3b7b0b278a2eb98ca7c9143632a879",
+  "agents/nous/runs/20260324_214225/responses.jsonl": "827475b2304646da3edeeca133d90e638583df21f0753422ad7528c79f2a3989",
+  "agents/nous/runs/20260325_062155/responses.jsonl": "8411c66d96300384f8e41d7b48abf9cfd6ea8c46365c4bd4036d3d837c852b99",
+  "agents/nous/runs/20260325_085453/responses.jsonl": "7c0b1294c2f016e56c05ea52e2763b59636f1af84530df72705cf28cd8468be4",
+  "agents/nous/runs/20260325_132552/responses.jsonl": "3e428dd2283cace7d21e0133d4c3e6e15c65d525d309a07035cfcbf00d9caffe",
+  "agents/nous/runs/20260327_043111/responses.jsonl": "297936bdbb2eb199ced9c88fbb7a2da381c8e2a168057d4be538e7d6d4fd7d82",
+  "agents/nous/runs/20260327_070604/responses.jsonl": "fa78818ef1fb4589797db425217b6f8987ac2c0a25f24c7a0a32a462dd2355dd",
+  "agents/nous/runs/20260327_075209/responses.jsonl": "eb77171bc7ccbea37164ba650b033bb5800eb94362c742ad4eb681227b939824",
+  "agents/nous/runs/20260327_143330/responses.jsonl": "8db9bc80ef712dd110fac0337c50404ee2e06a93486b74b69375a2958c8aa1f1",
+  "agents/nous/runs/20260327_203534/responses.jsonl": "80d7f5537d5e1ab678691cade3a4e9846e204e28909cb081dc313bbc63623115"
+ },
+ "counts": {
+  "concepts": 95,
+  "fields": 20,
+  "nous_responses": 5918,
+  "unique_triples": 5727,
+  "ledger_keys": 6651,
+  "forged_triples": 383,
+  "with_named_title": 2740,
+  "unproductive_triples": 284
+ },
+ "not_ingested": {
+  "agents/hephaestus/humanreadable": "derived reports; linked per record, not copied",
+  "agents/coeus/enrichments": "code-generation prompt blocks, not collisions",
+  "forge/candidates": "tier-2 single-field forge (2026-04), not triples"
+ }
+}

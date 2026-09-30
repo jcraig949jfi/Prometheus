@@ -1,0 +1,137 @@
+{
+ "triplicateId": "HT-55162c0ac0",
+ "world": "W3",
+ "outcome": "INSTRUMENT_FAIL",
+ "statistics": {
+  "TREATMENT": {
+   "n": 30,
+   "mean_diff": 0.00048159670692338175,
+   "median_diff": 0.005871500768232035,
+   "wilcoxon_p_greater": 0.4276358615607023,
+   "mean_retention_easy_hard": 0.015847754816543956,
+   "mean_retention_hard_easy": 0.015366158109620574,
+   "mean_n_clusters_easy_hard": 90.63333333333334,
+   "mean_n_clusters_hard_easy": 3.8,
+   "mean_ari_by_k_easy_hard": {
+    "2": 0.004177638982047984,
+    "4": 0.012733144725894681,
+    "8": 0.030632480741689207
+   },
+   "mean_ari_by_k_hard_easy": {
+    "2": 0.03839696418683479,
+    "4": 0.007527367897437077,
+    "8": 0.00017414224458985397
+   }
+  },
+  "CONTROL": {
+   "n": 30,
+   "mean_diff": -4.680418393219336e-06,
+   "median_diff": 0.0,
+   "wilcoxon_p_greater": 0.5,
+   "mean_retention_easy_hard": -1.3460096385115944e-05,
+   "mean_retention_hard_easy": -8.779677991896608e-06,
+   "mean_n_clusters_easy_hard": 99.96666666666667,
+   "mean_n_clusters_hard_easy": 99.93333333333334,
+   "mean_ari_by_k_easy_hard": {
+    "2": -1.3467957941491344e-05,
+    "4": -1.346223422604774e-05,
+    "8": -1.3450096987808747e-05
+   },
+   "mean_ari_by_k_hard_easy": {
+    "2": 2.748562845202315e-05,
+    "4": -2.692446845209548e-05,
+    "8": -2.6900193975617493e-05
+   }
+  },
+  "NULL_TWIN": {
+   "n": 30,
+   "mean_diff": 0.0,
+   "median_diff": 0.0,
+   "wilcoxon_p_greater": 1.0,
+   "mean_retention_easy_hard": 0.0,
+   "mean_retention_hard_easy": 0.0,
+   "mean_n_clusters_easy_hard": 100.0,
+   "mean_n_clusters_hard_easy": 100.0,
+   "mean_ari_by_k_easy_hard": {
+    "2": 0.0,
+    "4": 0.0,
+    "8": 0.0
+   },
+   "mean_ari_by_k_hard_easy": {
+    "2": 0.0,
+    "4": 0.0,
+    "8": 0.0
+   },
+   "realized_over_target_var_mean": 0.9978376650800793
+  },
+  "CHEAT": {
+   "n": 30,
+   "mean_diff": 0.9846338418903794,
+   "median_diff": 0.9894159452243758,
+   "wilcoxon_p_greater": 9.313225746154785e-10,
+   "mean_retention_easy_hard": 1.0,
+   "mean_retention_hard_easy": 0.015366158109620574
+  },
+  "TRANSIENT_CHECK": {
+   "n": 30,
+   "mean_diff": 0.0004952146433003002,
+   "median_diff": 0.005871500768232035,
+   "wilcoxon_p_greater": 0.4276358615607023,
+   "mean_retention_easy_hard": 0.015861372752920874,
+   "mean_retention_hard_easy": 0.015366158109620574,
+   "mean_n_clusters_easy_hard": 90.6,
+   "mean_n_clusters_hard_easy": 3.8,
+   "mean_ari_by_k_easy_hard": {
+    "2": 0.004191380663152078,
+    "4": 0.012774855394420071,
+    "8": 0.030617882201190483
+   },
+   "mean_ari_by_k_hard_easy": {
+    "2": 0.03839696418683479,
+    "4": 0.007527367897437077,
+    "8": 0.00017414224458985397
+   }
+  },
+  "POSITIVE_CONTROL": {
+   "n": 30,
+   "mean_ari": 0.02395351685442753,
+   "min_ari": -0.01063015179496419,
+   "mean_n_clusters": 3.7
+  },
+  "LOOP": {
+   "n": 30,
+   "mean_signed_area": 0.0015816666666666629,
+   "mean_abs_area": 0.0015816666666666629,
+   "wilcoxon_p_two_sided": 0.00019643672621231134
+  }
+ },
+ "criterion_as_applied": "S1 mean_d(TREATMENT) >= 0.15; S2 one-sided Wilcoxon signed-rank p < 0.01 on 30 paired d; S3 mean_d(NULL_TWIN) < 0.05; S4 L3 signed loop area of q=n_clusters/N over a in [3.7,3.9] (21 values x 200 steps up then down) differs from 0 by two-sided Wilcoxon p < 0.01. success = S1&S2&S3&S4. failure = mean_d < 0.05 or mean_d(NULL_TWIN) >= 0.1. S1=False S2=False S3=True S4=True success=False failure=True",
+ "positive_control_detected": false,
+ "cheat_detected": true,
+ "null_twin_meets_success": false,
+ "stupid_explanations_status": [
+  {
+   "text": "recency of the final pattern",
+   "addressed_by_this_run": true,
+   "how": "NULL_TWIN arm (monostable, same order) and per-pattern ARI by order in statistics"
+  },
+  {
+   "text": "adjusted Rand index biased by cluster count",
+   "addressed_by_this_run": false,
+   "how": "cluster counts recorded per arm/order; no cluster-count-matched ARI baseline was run"
+  },
+  {
+   "text": "transients not settled after 1000 steps (check with 5000)",
+   "addressed_by_this_run": true,
+   "how": "TRANSIENT_CHECK arm with 5000 unforced steps"
+  }
+ ],
+ "anomalies": [
+  "positive control not retained: mean ARI 0.024 < 0.8 (mean clusters 3.7)",
+  "TREATMENT orders end in different regimes: easy->hard (unforced at a=3.9) mean 90.6 clusters, hard->easy (unforced at a=3.7) mean 3.8 clusters; fixed-a CONTROL at 3.8 ~100 clusters (turbulent)",
+  "instrument repair declined: no readout defect found; the positive control fails because the specified dynamics at a=3.7 collapse to ~4 clusters unrelated to the pattern, and any change to amplitude/eps/steps would be tuning the mechanism"
+ ],
+ "core_minutes": 0.21,
+ "attempts": 1,
+ "notes": "Attempt 1 (0.21 core-min). The positive control failed: a single k=2 pattern forced 500 steps at a=3.7 left a final partition of ~3.7 clusters with mean ARI 0.024 against the pattern (threshold 0.8), so by the PREREG no reading of the treatment is made. The cheat control was detected (diff 0.985, p=9e-10). For the record only: treatment mean diff 0.0005 (p=0.43), CONTROL -0.000005, NULL_TWIN 0.0 (all singletons, variance match 1.00), 5000-step check unchanged, L3 signed loop area 0.0016 (p=2e-4). Retention is ~0 in every arm; the pattern structure is not retained by these dynamics at these parameters. No instrument repair was made because no instrument defect was found."
+}

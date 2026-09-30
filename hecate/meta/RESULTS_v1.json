@@ -1,0 +1,375 @@
+{
+  "prereg": "roles/Hecate/prereg/2026-09-29_meta_experiment_v1/PREREG.md",
+  "calibration": "hecate/gravity/CALIBRATION_v1.json (gate PASS)",
+  "detector_items": 400,
+  "matcher_items": 160,
+  "M1": {
+    "familiar_fraction_mean_by_arm": {
+      "T": 0.0875,
+      "P": 0.14027777777777778,
+      "S": 0.775,
+      "O": 0.8375,
+      "G": 0.85
+    },
+    "classification_counts": {
+      "T": {
+        "COMPOSITE": 73,
+        "FAMILIAR": 7
+      },
+      "P": {
+        "COMPOSITE": 68,
+        "FAMILIAR": 11
+      },
+      "S": {
+        "FAMILIAR": 62,
+        "COMPOSITE": 18
+      },
+      "O": {
+        "FAMILIAR": 67,
+        "COMPOSITE": 11,
+        "INCOHERENT": 2
+      },
+      "G": {
+        "FAMILIAR": 68,
+        "COMPOSITE": 12
+      }
+    },
+    "comparisons": {
+      "S": {
+        "T_lower_in": 8,
+        "eligible_units": 8,
+        "sign_test_p_one_sided": 0.00390625,
+        "verdict": "ADDS_VALUE_vs_S",
+        "descriptive_only": false,
+        "per_unit": [
+          {
+            "unit": 0,
+            "T": 0.0,
+            "S": 0.7,
+            "T_lower": true
+          },
+          {
+            "unit": 1,
+            "T": 0.0,
+            "S": 0.9,
+            "T_lower": true
+          },
+          {
+            "unit": 2,
+            "T": 0.0,
+            "S": 1.0,
+            "T_lower": true
+          },
+          {
+            "unit": 3,
+            "T": 0.1,
+            "S": 0.9,
+            "T_lower": true
+          },
+          {
+            "unit": 4,
+            "T": 0.2,
+            "S": 0.3,
+            "T_lower": true
+          },
+          {
+            "unit": 5,
+            "T": 0.0,
+            "S": 1.0,
+            "T_lower": true
+          },
+          {
+            "unit": 6,
+            "T": 0.1,
+            "S": 0.8,
+            "T_lower": true
+          },
+          {
+            "unit": 7,
+            "T": 0.3,
+            "S": 0.6,
+            "T_lower": true
+          }
+        ]
+      },
+      "P": {
+        "T_lower_in": 5,
+        "eligible_units": 8,
+        "sign_test_p_one_sided": 0.36328125,
+        "verdict": "INDETERMINATE",
+        "descriptive_only": false,
+        "per_unit": [
+          {
+            "unit": 0,
+            "T": 0.0,
+            "P": 0.0,
+            "T_lower": false
+          },
+          {
+            "unit": 1,
+            "T": 0.0,
+            "P": 0.1,
+            "T_lower": true
+          },
+          {
+            "unit": 2,
+            "T": 0.0,
+            "P": 0.1,
+            "T_lower": true
+          },
+          {
+            "unit": 3,
+            "T": 0.1,
+            "P": 0.1,
+            "T_lower": false
+          },
+          {
+            "unit": 4,
+            "T": 0.2,
+            "P": 0.2222222222222222,
+            "T_lower": true
+          },
+          {
+            "unit": 5,
+            "T": 0.0,
+            "P": 0.2,
+            "T_lower": true
+          },
+          {
+            "unit": 6,
+            "T": 0.1,
+            "P": 0.2,
+            "T_lower": true
+          },
+          {
+            "unit": 7,
+            "T": 0.3,
+            "P": 0.2,
+            "T_lower": false
+          }
+        ]
+      },
+      "O": {
+        "T_lower_in": 8,
+        "eligible_units": 8,
+        "sign_test_p_one_sided": 0.00390625,
+        "verdict": "ADDS_VALUE_vs_O",
+        "descriptive_only": false,
+        "per_unit": [
+          {
+            "unit": 0,
+            "T": 0.0,
+            "O": 0.8,
+            "T_lower": true
+          },
+          {
+            "unit": 1,
+            "T": 0.0,
+            "O": 0.7,
+            "T_lower": true
+          },
+          {
+            "unit": 2,
+            "T": 0.0,
+            "O": 1.0,
+            "T_lower": true
+          },
+          {
+            "unit": 3,
+            "T": 0.1,
+            "O": 0.9,
+            "T_lower": true
+          },
+          {
+            "unit": 4,
+            "T": 0.2,
+            "O": 1.0,
+            "T_lower": true
+          },
+          {
+            "unit": 5,
+            "T": 0.0,
+            "O": 1.0,
+            "T_lower": true
+          },
+          {
+            "unit": 6,
+            "T": 0.1,
+            "O": 0.8,
+            "T_lower": true
+          },
+          {
+            "unit": 7,
+            "T": 0.3,
+            "O": 0.5,
+            "T_lower": true
+          }
+        ]
+      },
+      "G": {
+        "T_lower_in": 8,
+        "eligible_units": 8,
+        "sign_test_p_one_sided": 0.00390625,
+        "verdict": "ADDS_VALUE_vs_G",
+        "descriptive_only": true,
+        "per_unit": [
+          {
+            "unit": 0,
+            "T": 0.0,
+            "G": 0.7,
+            "T_lower": true
+          },
+          {
+            "unit": 1,
+            "T": 0.0,
+            "G": 0.7,
+            "T_lower": true
+          },
+          {
+            "unit": 2,
+            "T": 0.0,
+            "G": 0.8,
+            "T_lower": true
+          },
+          {
+            "unit": 3,
+            "T": 0.1,
+            "G": 0.7,
+            "T_lower": true
+          },
+          {
+            "unit": 4,
+            "T": 0.2,
+            "G": 1.0,
+            "T_lower": true
+          },
+          {
+            "unit": 5,
+            "T": 0.0,
+            "G": 0.9,
+            "T_lower": true
+          },
+          {
+            "unit": 6,
+            "T": 0.1,
+            "G": 1.0,
+            "T_lower": true
+          },
+          {
+            "unit": 7,
+            "T": 0.3,
+            "G": 1.0,
+            "T_lower": true
+          }
+        ]
+      }
+    },
+    "overall": "INDETERMINATE",
+    "detector_failed_items": 1,
+    "M4_family_spread_by_unit": {
+      "T": [
+        10,
+        10,
+        10,
+        10,
+        10,
+        10,
+        10,
+        10
+      ],
+      "P": [
+        10,
+        10,
+        10,
+        9,
+        9,
+        10,
+        10,
+        10
+      ],
+      "S": [
+        10,
+        10,
+        10,
+        10,
+        10,
+        10,
+        10,
+        10
+      ],
+      "O": [
+        10,
+        10,
+        10,
+        10,
+        10,
+        10,
+        10,
+        10
+      ],
+      "G": [
+        10,
+        10,
+        10,
+        10,
+        10,
+        10,
+        10,
+        10
+      ]
+    }
+  },
+  "M2": {
+    "T": {
+      "n": 80,
+      "correct": 80,
+      "accuracy": 1.0,
+      "binom_p_vs_chance": 6.842277657836021e-49,
+      "verdict": "LABELS_SHAPE_OUTPUT"
+    },
+    "P": {
+      "n": 80,
+      "correct": 78,
+      "accuracy": 0.975,
+      "binom_p_vs_chance": 1.9624336550439491e-44,
+      "verdict": "LABELS_SHAPE_OUTPUT"
+    }
+  },
+  "M3_structural_specificity": {
+    "G": {
+      "n": 80,
+      "state_named": 1.0,
+      "change_rule": 1.0,
+      "intervention_in_world": 0.8125,
+      "comparator": 0.4375
+    },
+    "O": {
+      "n": 80,
+      "state_named": 1.0,
+      "change_rule": 1.0,
+      "intervention_in_world": 0.7375,
+      "comparator": 0.5625
+    },
+    "P": {
+      "n": 80,
+      "state_named": 0.875,
+      "change_rule": 1.0,
+      "intervention_in_world": 0.8125,
+      "comparator": 0.6
+    },
+    "S": {
+      "n": 80,
+      "state_named": 0.9875,
+      "change_rule": 1.0,
+      "intervention_in_world": 0.4625,
+      "comparator": 0.4625
+    },
+    "T": {
+      "n": 80,
+      "state_named": 0.75,
+      "change_rule": 1.0,
+      "intervention_in_world": 0.6625,
+      "comparator": 0.75
+    }
+  }
+}

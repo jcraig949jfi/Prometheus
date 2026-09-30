@@ -1,0 +1,1959 @@
+{
+  "id": "HT-71b65251aa",
+  "key": "Metacognition + Nash Equilibrium + Pragmatics",
+  "stratum": "S5_random",
+  "concepts": [
+    {
+      "field": "Cognitive Science",
+      "mechanism": "measure",
+      "name": "Metacognition",
+      "short_description": "Thinking about thinking; confidence calibration, error monitoring, strategy selection."
+    },
+    {
+      "field": "Game Theory",
+      "mechanism": "constraint",
+      "name": "Nash Equilibrium",
+      "short_description": "Stable strategy profiles where no agent benefits from unilateral deviation; mixed strategies, coordination games."
+    },
+    {
+      "field": "Linguistics",
+      "mechanism": "structure",
+      "name": "Pragmatics",
+      "short_description": "Context-dependent meaning beyond literal semantics; implicature, speech acts, Grice's maxims."
+    }
+  ],
+  "provenance": {
+    "historicalId": "Metacognition + Nash Equilibrium + Pragmatics",
+    "humanreadable": "agents/hephaestus/humanreadable/Metacognition---Pragmatics---Nash_Equilibrium.md",
+    "ledger_lines": [
+      1736
+    ],
+    "source": "hephaestus",
+    "sourceArtifact": "agents/hephaestus/ledger.jsonl#L1736",
+    "upstream_nous": [
+      "agents/nous/runs/20260325_132552/responses.jsonl#L2172"
+    ],
+    "selected_by": "roles/Hecate/prereg/2026-09-29_first_selection/"
+  },
+  "history": {
+    "forged": false,
+    "ledger_n": 1,
+    "ledger_reasons": [
+      "trap_battery_failed"
+    ],
+    "nous_composite_max": 7.0,
+    "nous_high_potential": false,
+    "nous_models": [
+      "nvidia/nemotron-3-super-120b-a12b"
+    ],
+    "nous_n": 1,
+    "nous_unproductive_any": false
+  },
+  "passes": [
+    {
+      "id": "P0",
+      "triplicateId": "HT-71b65251aa",
+      "index": 0,
+      "kind": "raw_interpretation",
+      "added": [
+        "new interpretation"
+      ],
+      "generator": {
+        "model": "claude-opus-5-5",
+        "search": false,
+        "prompt": "hecate/programs/_prompts/pass0_3_v1.md",
+        "prompt_sha256": "9ac5468dffb0a5792840809c84b3ad1ab22056397741dacb893386fd206baf3d"
+      },
+      "inspected_prior": [],
+      "concept_extractions": [
+        {
+          "concept": "Metacognition",
+          "defining_structures": [
+            "a first-order process (decide/answer) and a second-order process that reads a signal about it",
+            "a confidence variable attached to each first-order output",
+            "a control arm: monitoring output changes strategy (stop, retry, ask, abstain)"
+          ],
+          "invariants": [
+            "calibration: among outputs tagged with confidence p, a fraction p is correct",
+            "resolution: confidence ranks correct above incorrect outputs"
+          ],
+          "transformations": [
+            "recalibration (monotone remapping of confidence)",
+            "strategy switch triggered by low confidence",
+            "abstention"
+          ],
+          "conserved_quantities": [
+            "none strictly; the ranking of items by confidence is preserved under monotone recalibration"
+          ],
+          "failure_modes": [
+            "overconfidence",
+            "underconfidence",
+            "zero resolution (confidence independent of correctness)",
+            "monitor sharing the first-order error (correlated blind spot)"
+          ],
+          "dynamics": [
+            "confidence accumulates with evidence over time",
+            "post-decision drift of confidence",
+            "learning of the confidence map from feedback"
+          ],
+          "scales": [
+            "per decision",
+            "per task type",
+            "lifetime self-model"
+          ],
+          "locality": [
+            "monitor has access only to internal signals, not ground truth",
+            "local to one agent's own process"
+          ],
+          "memory": [
+            "track record of past accuracy by context",
+            "feeling-of-knowing before retrieval"
+          ],
+          "identity": [
+            "the self whose accuracy is being modelled; the monitor must know which process it watches"
+          ],
+          "reproduction": [
+            "copying a calibrated confidence map to another agent does not transfer if first-order skill differs"
+          ],
+          "selection": [
+            "selection of strategies/tasks by expected accuracy",
+            "selective reporting of high-confidence answers"
+          ],
+          "information": [
+            "mutual information between confidence and correctness",
+            "metacognitive efficiency: resolution relative to first-order sensitivity"
+          ],
+          "constraint": [
+            "the monitor cannot be more informative than the signals it reads",
+            "costs of monitoring (time, extra computation)"
+          ]
+        },
+        {
+          "concept": "Nash Equilibrium",
+          "defining_structures": [
+            "players, strategy sets, payoff functions",
+            "a profile where each strategy is a best response to the others",
+            "mixed strategies as probability distributions"
+          ],
+          "invariants": [
+            "no profitable unilateral deviation",
+            "existence of at least one mixed equilibrium in finite games",
+            "indifference among supported pure strategies in a mixed equilibrium"
+          ],
+          "transformations": [
+            "best-response map",
+            "adding a constant or positive affine transform to a player's payoffs leaves equilibria unchanged",
+            "elimination of dominated strategies"
+          ],
+          "conserved_quantities": [
+            "equilibrium set under positive affine payoff transforms",
+            "in zero-sum games, the game value"
+          ],
+          "failure_modes": [
+            "multiplicity and selection failure (miscoordination)",
+            "Pareto-inferior equilibria",
+            "non-convergence of learning dynamics (cycles)",
+            "babbling equilibria in communication games"
+          ],
+          "dynamics": [
+            "best-response dynamics",
+            "fictitious play",
+            "replicator dynamics; equilibria as rest points"
+          ],
+          "scales": [
+            "one-shot vs repeated",
+            "two players vs population"
+          ],
+          "locality": [
+            "deviations are unilateral: stability checked one player at a time",
+            "each player sees only own payoff"
+          ],
+          "memory": [
+            "history in repeated games enables reputation",
+            "fictitious play memory of opponent frequencies"
+          ],
+          "identity": [
+            "roles (speaker/listener) define strategy sets",
+            "symmetric vs asymmetric equilibria"
+          ],
+          "reproduction": [
+            "in evolutionary reading, strategies reproduce by payoff"
+          ],
+          "selection": [
+            "equilibrium selection: salience, risk dominance, payoff dominance",
+            "evolutionary stability as a refinement"
+          ],
+          "information": [
+            "private types and beliefs in Bayesian games",
+            "common knowledge of rationality as an assumption"
+          ],
+          "constraint": [
+            "mutual consistency: every strategy constrained by all others",
+            "incentive compatibility"
+          ]
+        },
+        {
+          "concept": "Pragmatics",
+          "defining_structures": [
+            "literal content vs intended/inferred meaning",
+            "context and common ground",
+            "speech acts (assert, ask, promise, hedge)",
+            "cooperative maxims: quantity, quality, relation, manner"
+          ],
+          "invariants": [
+            "listener assumes cooperativity unless evidence against",
+            "scalar alternatives: saying the weaker form implicates the stronger is not true"
+          ],
+          "transformations": [
+            "implicature: literal -> enriched meaning",
+            "flouting a maxim to trigger reinterpretation",
+            "accommodation of presupposition into common ground"
+          ],
+          "conserved_quantities": [
+            "common ground grows monotonically within a cooperative exchange except under explicit repair"
+          ],
+          "failure_modes": [
+            "misunderstanding when contexts differ",
+            "over-enrichment (reading implicature that was not meant)",
+            "exploitation of cooperativity (misleading without lying)"
+          ],
+          "dynamics": [
+            "grounding: contribution, acknowledgment, repair",
+            "conventionalization of implicatures over repeated use"
+          ],
+          "scales": [
+            "single utterance",
+            "conversation",
+            "community convention"
+          ],
+          "locality": [
+            "meaning depends on local context and the alternatives the speaker could have said"
+          ],
+          "memory": [
+            "common ground ledger",
+            "discourse history"
+          ],
+          "identity": [
+            "speaker intent; who is committed to what"
+          ],
+          "reproduction": [
+            "conventions spread by imitation across speakers"
+          ],
+          "selection": [
+            "speaker selects among alternative utterances by informativeness and cost"
+          ],
+          "information": [
+            "meaning carried by choice among alternatives, not only by form",
+            "context as side information"
+          ],
+          "constraint": [
+            "effort/cost of utterance vs informativeness",
+            "cooperativity assumption"
+          ]
+        }
+      ],
+      "unexplained": [
+        "whether confidence reports can hold stable meaning when speakers have incentives",
+        "whether metacognitive precision limits which pragmatic equilibria are reachable",
+        "whether any interpretation needs all three concepts rather than two"
+      ],
+      "decision": "DEEPEN",
+      "research_state": {
+        "novelty": "unknown",
+        "mechanistic_clarity": "low",
+        "falsifiability": "low",
+        "empirical_support": "none",
+        "cross_lens_agreement": "unknown",
+        "cross_substrate_transfer": "unknown",
+        "baseline_resistance": "unknown",
+        "artifact_risk": "medium",
+        "cost": "low",
+        "unexpectedness": "low",
+        "potential_importance": "medium"
+      }
+    },
+    {
+      "id": "P1",
+      "triplicateId": "HT-71b65251aa",
+      "index": 1,
+      "kind": "collision",
+      "added": [
+        "new mechanism",
+        "new observable"
+      ],
+      "generator": {
+        "model": "claude-opus-5-5",
+        "search": false,
+        "prompt": "hecate/programs/_prompts/pass0_3_v1.md",
+        "prompt_sha256": "9ac5468dffb0a5792840809c84b3ad1ab22056397741dacb893386fd206baf3d"
+      },
+      "inspected_prior": [
+        "P0",
+        "I1",
+        "I2",
+        "I3",
+        "I4",
+        "I5",
+        "I6",
+        "I7"
+      ],
+      "unexplained": [
+        "which mechanisms reduce to two-concept stories (knockouts marked weak)",
+        "whether metacognitive noise acts as a continuous control on equilibrium informativeness or as a threshold",
+        "how to separate emergent hedge meaning from trivially shaped payoffs"
+      ],
+      "decision": "DEEPEN",
+      "research_state": {
+        "novelty": "unknown",
+        "mechanistic_clarity": "medium",
+        "falsifiability": "medium",
+        "empirical_support": "none",
+        "cross_lens_agreement": "unknown",
+        "cross_substrate_transfer": "unknown",
+        "baseline_resistance": "low",
+        "artifact_risk": "medium",
+        "cost": "low",
+        "unexpectedness": "low",
+        "potential_importance": "medium"
+      }
+    },
+    {
+      "id": "P2",
+      "triplicateId": "HT-71b65251aa",
+      "index": 2,
+      "kind": "lens_explosion",
+      "added": [
+        "new lens",
+        "new observable",
+        "new falsifier"
+      ],
+      "generator": {
+        "model": "claude-opus-5-5",
+        "search": false,
+        "prompt": "hecate/programs/_prompts/pass0_3_v1.md",
+        "prompt_sha256": "9ac5468dffb0a5792840809c84b3ad1ab22056397741dacb893386fd206baf3d"
+      },
+      "inspected_prior": [
+        "P1",
+        "M1",
+        "M2",
+        "M3",
+        "M4",
+        "M6",
+        "M9",
+        "M14"
+      ],
+      "unexplained": [
+        "whether L4 (private/public calibration gap) and L1 (hedge reliability) disagree in any regime",
+        "whether deviation-regret (L3) is small because of true equilibrium or because learning stalled"
+      ],
+      "decision": "DEEPEN",
+      "research_state": {
+        "novelty": "unknown",
+        "mechanistic_clarity": "medium",
+        "falsifiability": "medium",
+        "empirical_support": "none",
+        "cross_lens_agreement": "unknown",
+        "cross_substrate_transfer": "unknown",
+        "baseline_resistance": "unknown",
+        "artifact_risk": "medium",
+        "cost": "low",
+        "unexpectedness": "medium",
+        "potential_importance": "medium"
+      }
+    },
+    {
+      "id": "P3",
+      "triplicateId": "HT-71b65251aa",
+      "index": 3,
+      "kind": "minimal_worlds",
+      "added": [
+        "new substrate",
+        "new intervention",
+        "new falsifier"
+      ],
+      "generator": {
+        "model": "claude-opus-5-5",
+        "search": false,
+        "prompt": "hecate/programs/_prompts/pass0_3_v1.md",
+        "prompt_sha256": "9ac5468dffb0a5792840809c84b3ad1ab22056397741dacb893386fd206baf3d"
+      },
+      "inspected_prior": [
+        "P2",
+        "M1",
+        "M2",
+        "M3",
+        "M6",
+        "L1",
+        "L2",
+        "L3",
+        "L4",
+        "L5",
+        "L6"
+      ],
+      "unexplained": [
+        "all worlds are specified, none run",
+        "whether the interaction effect in W1 survives a payoff family other than the one chosen",
+        "whether results are properties of best-response dynamics rather than of equilibria"
+      ],
+      "decision": "FALSIFY",
+      "research_state": {
+        "novelty": "unknown",
+        "mechanistic_clarity": "medium",
+        "falsifiability": "high",
+        "empirical_support": "none",
+        "cross_lens_agreement": "unknown",
+        "cross_substrate_transfer": "unknown",
+        "baseline_resistance": "unknown",
+        "artifact_risk": "medium",
+        "cost": "low",
+        "unexpectedness": "medium",
+        "potential_importance": "medium"
+      }
+    },
+    {
+      "id": "P3-probe1",
+      "triplicateId": "HT-71b65251aa",
+      "index": 3,
+      "kind": "cheap_probe",
+      "added": [
+        "new observable"
+      ],
+      "generator": {
+        "model": "claude-opus-5-5 (implementer)",
+        "search": false,
+        "prompt": "hecate/programs/_prompts/probe_impl_v1.md",
+        "prompt_sha256": "cf4bd374bce1b817a12d3607063278183ce0a8b7c4a7b771061dc8ce133bcea2"
+      },
+      "prereg": "roles/Hecate/prereg/2026-09-29_probe_round1/PREREG.md",
+      "inspected_prior": [
+        "W3"
+      ],
+      "unexplained": [],
+      "decision": "FALSIFY",
+      "research_state": {
+        "novelty": "unknown",
+        "mechanistic_clarity": "unknown",
+        "falsifiability": "unknown",
+        "empirical_support": "low",
+        "cross_lens_agreement": "unknown",
+        "cross_substrate_transfer": "unknown",
+        "baseline_resistance": "unknown",
+        "artifact_risk": "unknown",
+        "cost": "unknown",
+        "unexpectedness": "unknown",
+        "potential_importance": "unknown"
+      }
+    },
+    {
+      "id": "P4",
+      "triplicateId": "HT-71b65251aa",
+      "index": 4,
+      "kind": "first_falsification",
+      "added": [
+        "new falsifier",
+        "new substrate"
+      ],
+      "generator": {
+        "model": "claude-opus-5-5 (attacker)",
+        "search": false,
+        "prompt": "hecate/programs/_prompts/pass4_impl_v1.md",
+        "prompt_sha256": "77ff9e2d04f990b18d049dcf86bf70e10246b171cb4445cc8b34bebbcecece6e"
+      },
+      "prereg": "roles/Hecate/prereg/2026-09-30_pass4_round1/PREREG.md",
+      "inspected_prior": [
+        "W3",
+        "O-W3-r1"
+      ],
+      "unexplained": [
+        "Two speaker variants gave L2-L1 accuracy gaps 0.0000 and 0.0003: the 4-word world is too simple for depth to matter."
+      ],
+      "decision": "PARK",
+      "research_state": {
+        "novelty": "unknown",
+        "mechanistic_clarity": "unknown",
+        "falsifiability": "unknown",
+        "empirical_support": "none",
+        "cross_lens_agreement": "unknown",
+        "cross_substrate_transfer": "unknown",
+        "baseline_resistance": "none",
+        "artifact_risk": "unknown",
+        "cost": "unknown",
+        "unexpectedness": "unknown",
+        "potential_importance": "unknown"
+      }
+    }
+  ],
+  "hypotheses": [
+    {
+      "id": "I1",
+      "triplicateId": "HT-71b65251aa",
+      "passId": "P0",
+      "kind": "interpretation",
+      "layer": "speculation",
+      "statement": "Confidence reports are speech acts inside a game: hedges ('certain', 'probably') acquire meaning only as an equilibrium between speakers and listeners, and the informativeness of that equilibrium is bounded by the speaker's metacognitive resolution. Experiment: vary metacognitive noise and measure the information carried by emergent hedges."
+    },
+    {
+      "id": "I2",
+      "triplicateId": "HT-71b65251aa",
+      "passId": "P0",
+      "kind": "interpretation",
+      "layer": "speculation",
+      "statement": "Implicature is a fixed point of recursive modelling (speaker models listener models speaker); metacognition is the controller that decides how deep to recurse on each utterance. Experiment: compare fixed-depth against self-monitored adaptive-depth interpretation on accuracy per unit reasoning."
+    },
+    {
+      "id": "I3",
+      "triplicateId": "HT-71b65251aa",
+      "passId": "P0",
+      "kind": "interpretation",
+      "layer": "speculation",
+      "statement": "Metacognition is itself an internal game: a generator and a monitor inside one agent reach a Nash equilibrium over output/withhold, and their internal messages are context-dependent (pragmatic) rather than literal. Experiment: split an agent into two payoff-bearing modules and test whether calibrated abstention is an equilibrium of the internal game."
+    },
+    {
+      "id": "I4",
+      "triplicateId": "HT-71b65251aa",
+      "passId": "P0",
+      "kind": "interpretation",
+      "layer": "speculation",
+      "statement": "Monitoring one's own interpretive uncertainty ('did I understand?') sets the rate of clarification requests, and the speaker's redundancy and the listener's clarification threshold settle into an equilibrium set by the cost ratio. Experiment: sweep clarification cost and locate the equilibrium threshold."
+    },
+    {
+      "id": "I5",
+      "triplicateId": "HT-71b65251aa",
+      "passId": "P0",
+      "kind": "interpretation",
+      "layer": "speculation",
+      "statement": "Equilibrium selection in coordination games is done by pragmatic salience, and metacognition estimates whether the partner shares the salience (shared context). Experiment: coordination with partially shared context and confidence-gated fallback to explicit signalling."
+    },
+    {
+      "id": "I6",
+      "triplicateId": "HT-71b65251aa",
+      "passId": "P0",
+      "kind": "interpretation",
+      "layer": "speculation",
+      "statement": "Strategic miscalibration: when listeners weight messages by stated confidence, stated confidence inflates and listeners pragmatically discount it; the resulting equilibrium separates a private (internal) calibration from a public (conventional) one. Experiment: measure the private-public calibration gap under different listener payoff rules."
+    },
+    {
+      "id": "I7",
+      "triplicateId": "HT-71b65251aa",
+      "passId": "P0",
+      "kind": "interpretation",
+      "layer": "speculation",
+      "statement": "Maxim flouting is only interpretable by a listener who monitors its own expectation of informativeness: a metacognitive surprise signal about the utterance (not about the world) triggers reinterpretation, and the speaker's flouting strategy is in equilibrium with that detector. Experiment: vary the listener's surprise-detector precision and measure non-literal interpretation success."
+    },
+    {
+      "id": "M1",
+      "triplicateId": "HT-71b65251aa",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "interaction law",
+      "statement": "Hedge-token equilibrium: speakers attach one of K meaningless tokens to each answer; listeners choose accept or verify-at-cost. Under best-response dynamics tokens become calibrated confidence labels, and the mutual information between token and correctness is capped by the speaker's metacognitive resolution and collapses when speaker-listener interests diverge.",
+      "derived_from": [
+        "I1"
+      ],
+      "concept_contributions": {
+        "Metacognition": "the private confidence signal that the speaker can condition tokens on; its noise sets an upper bound on token informativeness",
+        "Nash Equilibrium": "stability of the token-to-confidence map; babbling vs informative equilibria; collapse under interest conflict",
+        "Pragmatics": "tokens have no literal meaning; meaning is the listener's inference from which token was chosen among alternatives"
+      },
+      "knockouts": {
+        "Metacognition": "tokens cannot correlate with correctness; only the babbling equilibrium remains",
+        "Nash Equilibrium": "without mutual best response, token meanings are arbitrary and drift",
+        "Pragmatics": "with fixed literal numeric confidence the question becomes pure calibration; no emergent convention to study"
+      },
+      "simpler_alternative": "a plain sender-receiver signalling game whose state is the speaker's confidence bin; metacognitive noise is just state noise",
+      "questions": {
+        "what_exists": "speakers with answer+confidence, listeners with accept/verify, K tokens",
+        "what_changes": "speaker token policy, listener response policy",
+        "what_persists": "the token-to-confidence mapping once at equilibrium",
+        "what_is_selected": "policies with higher expected payoff",
+        "what_can_reproduce": "token conventions via imitation in the population",
+        "what_can_learn": "both policy tables",
+        "what_can_transfer": "a converged token convention to a new task with a different accuracy distribution",
+        "distinguishing_observable": "MI(token; correctness) as a function of metacognitive noise and interest conflict jointly; the simpler alternative predicts a separable effect, the mechanism predicts an interaction (conflict threshold shifts with noise)"
+      }
+    },
+    {
+      "id": "M2",
+      "triplicateId": "HT-71b65251aa",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "implemented_candidate",
+      "form": "computational primitive",
+      "statement": "Metacognitively gated recursion depth: a listener interprets utterances by level-k reasoning over alternatives and stops recursing when its self-estimated interpretive uncertainty falls below a threshold; the threshold is in equilibrium with how deeply speakers design their utterances.",
+      "derived_from": [
+        "I2"
+      ],
+      "concept_contributions": {
+        "Metacognition": "the stopping rule: uncertainty about one's own interpretation",
+        "Nash Equilibrium": "speaker's design depth and listener's reading depth are mutual best responses under effort cost",
+        "Pragmatics": "the recursion is over alternative utterances (scalar implicature)"
+      },
+      "knockouts": {
+        "Metacognition": "fixed depth; accuracy same on easy items, wasted effort on easy and errors on hard",
+        "Nash Equilibrium": "depth tuned by listener alone; speaker depth fixed; no co-adaptation",
+        "Pragmatics": "recursion over world states only; reduces to generic anytime inference"
+      },
+      "simpler_alternative": "fixed level-2 reasoning, which may already capture most implicatures",
+      "questions": {
+        "what_exists": "referential contexts, utterances with literal extensions, depth-limited reasoners",
+        "what_changes": "per-utterance depth",
+        "what_persists": "the threshold pair",
+        "what_is_selected": "thresholds with best accuracy-minus-effort",
+        "what_can_reproduce": "threshold values in a population",
+        "what_can_learn": "the uncertainty-to-depth map",
+        "what_can_transfer": "thresholds to contexts with different ambiguity rates",
+        "distinguishing_observable": "depth spent per item correlates with item ambiguity (Spearman) and adaptive depth matches fixed-depth accuracy with fewer steps"
+      }
+    },
+    {
+      "id": "M3",
+      "triplicateId": "HT-71b65251aa",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "selection mechanism",
+      "statement": "Clarification equilibrium: the listener asks for clarification when its posterior over referents has max below tau; the speaker chooses redundancy r. The pair (tau*, r*) is an interior Nash equilibrium whose location moves predictably with the cost of asking and the cost of words.",
+      "derived_from": [
+        "I4"
+      ],
+      "concept_contributions": {
+        "Metacognition": "posterior-max as the listener's monitored interpretive confidence",
+        "Nash Equilibrium": "joint stability of tau and r",
+        "Pragmatics": "redundancy and clarification are speech-act choices that depend on shared context"
+      },
+      "knockouts": {
+        "Metacognition": "listener cannot tell when it misunderstood; clarification becomes random and wasteful",
+        "Nash Equilibrium": "optimize tau alone for fixed r: a decision problem, no trade-off between parties",
+        "Pragmatics": "weak: a generic noisy channel with retransmission (ARQ) gives the same structure"
+      },
+      "simpler_alternative": "automatic repeat request with a fixed error-detection threshold in a noisy channel",
+      "questions": {
+        "what_exists": "objects with features, speakers, listeners, clarify action",
+        "what_changes": "tau, r",
+        "what_persists": "equilibrium pair",
+        "what_is_selected": "tau and r by expected payoff",
+        "what_can_reproduce": "none essential",
+        "what_can_learn": "thresholds",
+        "what_can_transfer": "tau* to new object sets with the same ambiguity rate",
+        "distinguishing_observable": "communicative success at equilibrium drops when listener confidence is replaced by a random score with the same marginal"
+      }
+    },
+    {
+      "id": "M4",
+      "triplicateId": "HT-71b65251aa",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "error-correction mechanism",
+      "statement": "Utterance-surprise gate: the listener keeps a model of how informative a cooperative speaker should be in this context; an utterance that under-informs relative to that model triggers non-literal reinterpretation. Speakers flout only when the listener's gate is precise enough for flouting to pay.",
+      "derived_from": [
+        "I7"
+      ],
+      "concept_contributions": {
+        "Metacognition": "surprise about the utterance relative to self-predicted informativeness",
+        "Nash Equilibrium": "flouting rate and gate precision co-stabilize",
+        "Pragmatics": "maxim of quantity and its flouting"
+      },
+      "knockouts": {
+        "Metacognition": "no gate; flouting is always read literally and dies out",
+        "Nash Equilibrium": "flouting rate fixed exogenously",
+        "Pragmatics": "surprise-triggered re-analysis without the notion of cooperative informativeness: generic anomaly detection"
+      },
+      "simpler_alternative": "a listener with a larger literal lexicon that simply includes the flouted form's secondary meaning",
+      "questions": {
+        "what_exists": "contexts, expected-informativeness model, utterances",
+        "what_changes": "flouting rate, gate threshold",
+        "what_persists": "conventions of flouting",
+        "what_is_selected": "flouting when it saves cost and is understood",
+        "what_can_reproduce": "flouting conventions",
+        "what_can_learn": "gate threshold",
+        "what_can_transfer": "gate to new contexts",
+        "distinguishing_observable": "equilibrium flouting rate is a step function of gate precision"
+      }
+    },
+    {
+      "id": "M5",
+      "triplicateId": "HT-71b65251aa",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "organism architecture",
+      "statement": "Internal parliament: a generator and a monitor inside one agent have separate payoffs (generator rewarded for answering, monitor for avoiding errors); calibrated abstention is a Nash equilibrium of this internal game and the monitor's messages to the generator take meaning from task context.",
+      "derived_from": [
+        "I3"
+      ],
+      "concept_contributions": {
+        "Metacognition": "the monitor itself",
+        "Nash Equilibrium": "abstention policy as mutual best response between modules",
+        "Pragmatics": "monitor signals interpreted relative to task context"
+      },
+      "knockouts": {
+        "Metacognition": "no monitor, nothing to play",
+        "Nash Equilibrium": "a single joint objective gives the same abstention policy directly",
+        "Pragmatics": "weak: internal signals could be literal scalars with no loss; pragmatic contribution is thin"
+      },
+      "simpler_alternative": "a single agent maximizing accuracy minus abstention cost with a confidence threshold",
+      "questions": {
+        "what_exists": "two modules, task stream",
+        "what_changes": "each module's policy",
+        "what_persists": "abstention threshold",
+        "what_is_selected": "module policies",
+        "what_can_reproduce": "none",
+        "what_can_learn": "each module",
+        "what_can_transfer": "monitor to a new generator",
+        "distinguishing_observable": "abstention threshold differs from the joint-objective optimum only when payoffs are misaligned; otherwise indistinguishable"
+      }
+    },
+    {
+      "id": "M6",
+      "triplicateId": "HT-71b65251aa",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "learning pressure",
+      "statement": "Confidence inflation with pragmatic discounting: when listeners weight speakers by stated confidence, speakers inflate; listeners learn to discount; the equilibrium has public confidence words whose meaning is shifted from private calibrated confidence, producing a measurable private-public calibration gap that vanishes under proper-scoring listeners.",
+      "derived_from": [
+        "I6",
+        "I1"
+      ],
+      "concept_contributions": {
+        "Metacognition": "private calibrated confidence that exists separately from what is said",
+        "Nash Equilibrium": "inflation and discount as mutual best responses",
+        "Pragmatics": "public words mean 'discounted' values by convention, not by literal content"
+      },
+      "knockouts": {
+        "Metacognition": "no private confidence; gap undefined",
+        "Nash Equilibrium": "without the listener's counter-adaptation, inflation runs to saturation with no stable shifted convention",
+        "Pragmatics": "numeric reports with a literal reading: inflation becomes lying, not convention shift"
+      },
+      "simpler_alternative": "a cheap-talk game with a speaker bias parameter; the 'gap' is just the bias",
+      "questions": {
+        "what_exists": "speakers with private confidence, listeners with weighting rules, a word scale",
+        "what_changes": "speaker word map, listener decoding map",
+        "what_persists": "shifted convention",
+        "what_is_selected": "maps by payoff",
+        "what_can_reproduce": "conventions by imitation",
+        "what_can_learn": "both maps",
+        "what_can_transfer": "a discounted convention to a population of honest speakers (predicted to under-trust them)",
+        "distinguishing_observable": "gap between private ECE and public-literal ECE while listener-decoded ECE stays low"
+      }
+    },
+    {
+      "id": "M7",
+      "triplicateId": "HT-71b65251aa",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "information bottleneck",
+      "statement": "Content-confidence channel split: a channel of fixed capacity must carry both the answer and its confidence; at equilibrium confidence moves out of the explicit channel into implicature (e.g. choice of phrasing) when context makes it recoverable.",
+      "derived_from": [
+        "I1",
+        "I7"
+      ],
+      "concept_contributions": {
+        "Metacognition": "the confidence payload",
+        "Nash Equilibrium": "allocation of bits stable against deviations",
+        "Pragmatics": "implicit transmission through choice among alternatives"
+      },
+      "knockouts": {
+        "Metacognition": "only content to send; no split",
+        "Nash Equilibrium": "weak: a single designer optimizing the code gives the same allocation",
+        "Pragmatics": "all confidence must be explicit"
+      },
+      "simpler_alternative": "joint source coding by a single optimizer",
+      "questions": {
+        "what_exists": "a capacity-limited code, contexts",
+        "what_changes": "bit allocation",
+        "what_persists": "the code",
+        "what_is_selected": "codes by payoff",
+        "what_can_reproduce": "codes",
+        "what_can_learn": "codes",
+        "what_can_transfer": "codes to contexts with less shared ground (predicted failure)",
+        "distinguishing_observable": "fraction of confidence information carried implicitly as a function of shared context"
+      }
+    },
+    {
+      "id": "M8",
+      "triplicateId": "HT-71b65251aa",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "causal constraint",
+      "statement": "Self-as-model substitution: agents approximate the partner's strategy by their own self-model (metacognitive access used as a proxy for common knowledge); equilibria reached this way are correct in homogeneous populations and systematically miscoordinate in heterogeneous ones, with miscoordination concentrated on context-dependent (pragmatic) signals.",
+      "derived_from": [
+        "I5",
+        "I2"
+      ],
+      "concept_contributions": {
+        "Metacognition": "self-model used as partner model",
+        "Nash Equilibrium": "fixed points of projected best responses",
+        "Pragmatics": "context-dependent signals are where projection errors bite"
+      },
+      "knockouts": {
+        "Metacognition": "must learn partner model from data; slower but unbiased",
+        "Nash Equilibrium": "no fixed point concept; just projection bias",
+        "Pragmatics": "literal signals are robust to projection; the effect vanishes"
+      },
+      "simpler_alternative": "false-consensus bias in a coordination game",
+      "questions": {
+        "what_exists": "agents of two types, coordination tasks with literal and context-dependent signals",
+        "what_changes": "strategies",
+        "what_persists": "projected conventions",
+        "what_is_selected": "strategies",
+        "what_can_reproduce": "conventions within type",
+        "what_can_learn": "partner models if allowed",
+        "what_can_transfer": "self-models across partners",
+        "distinguishing_observable": "miscoordination rate difference between context-dependent and literal signals in mixed-type pairs"
+      }
+    },
+    {
+      "id": "M9",
+      "triplicateId": "HT-71b65251aa",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "memory structure",
+      "statement": "Common-ground ledger with uncertainty: each agent keeps a ledger of established facts plus a metacognitive estimate of whether each entry is shared; acknowledgement acts are spent on entries with low shared-estimate; equilibrium acknowledgement rate depends on channel loss.",
+      "derived_from": [
+        "I4",
+        "I5"
+      ],
+      "concept_contributions": {
+        "Metacognition": "estimate that one's own ledger entry is shared",
+        "Nash Equilibrium": "acknowledgement rates as mutual best responses",
+        "Pragmatics": "grounding acts and common ground"
+      },
+      "knockouts": {
+        "Metacognition": "acknowledge everything or nothing",
+        "Nash Equilibrium": "weak: a fixed protocol from a designer works equally well",
+        "Pragmatics": "reduces to distributed-systems acknowledgement"
+      },
+      "simpler_alternative": "TCP-style acknowledgement with fixed timeouts",
+      "questions": {
+        "what_exists": "ledgers, lossy channel",
+        "what_changes": "entries and acks",
+        "what_persists": "ledger",
+        "what_is_selected": "ack policies",
+        "what_can_reproduce": "none",
+        "what_can_learn": "ack thresholds",
+        "what_can_transfer": "thresholds across loss rates",
+        "distinguishing_observable": "ack allocation concentrates on uncertain entries vs uniform"
+      }
+    },
+    {
+      "id": "M10",
+      "triplicateId": "HT-71b65251aa",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "dynamical law",
+      "statement": "Mixed-strategy ambiguity cycles: speakers randomize between explicit and ambiguous forms; listeners' interpretive vigilance tracks the recent ambiguity rate; the population cycles around a mixed equilibrium, and listeners with better metacognitive tracking damp the cycles.",
+      "derived_from": [
+        "I7",
+        "I4"
+      ],
+      "concept_contributions": {
+        "Metacognition": "tracking one's own recent misunderstanding rate to set vigilance",
+        "Nash Equilibrium": "mixed equilibrium as the centre of cycles",
+        "Pragmatics": "ambiguity as a cheap but risky form"
+      },
+      "knockouts": {
+        "Metacognition": "vigilance tracks nothing; cycle amplitude grows or is set by learning rate only",
+        "Nash Equilibrium": "no centre; drift",
+        "Pragmatics": "any two-action cost/risk trade-off would cycle the same way"
+      },
+      "simpler_alternative": "matching-pennies-like dynamics under replicator equation",
+      "questions": {
+        "what_exists": "speakers with a mix, listeners with vigilance",
+        "what_changes": "mix, vigilance",
+        "what_persists": "the cycle centre",
+        "what_is_selected": "forms",
+        "what_can_reproduce": "forms",
+        "what_can_learn": "vigilance",
+        "what_can_transfer": "damping",
+        "distinguishing_observable": "cycle amplitude vs listener tracking precision"
+      }
+    },
+    {
+      "id": "M11",
+      "triplicateId": "HT-71b65251aa",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "mutation operator",
+      "statement": "Reliability-tagged lexicon mutation: each word carries a metacognitive reliability tag; mutations that reassign a word's meaning are accepted only if the resulting lexicon remains a Nash equilibrium of the referential game; low-reliability words mutate more.",
+      "derived_from": [
+        "I1",
+        "I5"
+      ],
+      "concept_contributions": {
+        "Metacognition": "per-word reliability estimate steering mutation rate",
+        "Nash Equilibrium": "acceptance filter",
+        "Pragmatics": "word meanings as conventions"
+      },
+      "knockouts": {
+        "Metacognition": "uniform mutation; slower convergence but same end states",
+        "Nash Equilibrium": "no filter; random drift",
+        "Pragmatics": "weak: any code optimisation with adaptive mutation"
+      },
+      "simpler_alternative": "adaptive mutation rate proportional to local error",
+      "questions": {
+        "what_exists": "lexicon, reliability tags",
+        "what_changes": "word meanings",
+        "what_persists": "equilibrium lexicons",
+        "what_is_selected": "lexicons",
+        "what_can_reproduce": "lexicons",
+        "what_can_learn": "tags",
+        "what_can_transfer": "tags",
+        "distinguishing_observable": "time to equilibrium lexicon vs uniform mutation"
+      }
+    },
+    {
+      "id": "M12",
+      "triplicateId": "HT-71b65251aa",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "developmental process",
+      "statement": "Hedges acquire meaning only after self-calibration: in a developing agent, confidence tokens stay babbling until its internal confidence map reaches a resolution threshold, then snap to an informative equilibrium; the order (calibrate first, then hedge) is required, and reversing it locks in a babbling convention.",
+      "derived_from": [
+        "I1"
+      ],
+      "concept_contributions": {
+        "Metacognition": "the developing confidence map",
+        "Nash Equilibrium": "babbling equilibrium as an absorbing state",
+        "Pragmatics": "hedge meaning"
+      },
+      "knockouts": {
+        "Metacognition": "no development; either always babbling or always informative",
+        "Nash Equilibrium": "no lock-in; meaning emerges whenever resolution permits",
+        "Pragmatics": "only calibration learning, nothing to lock"
+      },
+      "simpler_alternative": "hedge informativeness is a smooth function of current resolution with no hysteresis",
+      "questions": {
+        "what_exists": "developing speakers, listeners",
+        "what_changes": "resolution over time, hedge policy",
+        "what_persists": "whichever convention formed first",
+        "what_is_selected": "policies",
+        "what_can_reproduce": "conventions",
+        "what_can_learn": "confidence map, hedge map",
+        "what_can_transfer": "conventions to newcomers",
+        "distinguishing_observable": "hysteresis: final MI differs between calibrate-then-talk and talk-while-calibrating schedules at the same final resolution"
+      }
+    },
+    {
+      "id": "M13",
+      "triplicateId": "HT-71b65251aa",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "representation",
+      "statement": "Meaning as equilibrium-membership: an utterance's meaning is represented as the set of equilibria of the ongoing game it is consistent with; metacognitive confidence is the entropy over that set, so confidence is about which game is being played rather than about the world.",
+      "derived_from": [
+        "I5",
+        "I2"
+      ],
+      "concept_contributions": {
+        "Metacognition": "entropy over candidate equilibria as confidence",
+        "Nash Equilibrium": "the equilibrium set as the hypothesis space",
+        "Pragmatics": "context narrows the set"
+      },
+      "knockouts": {
+        "Metacognition": "no confidence; commit to first consistent equilibrium",
+        "Nash Equilibrium": "hypothesis space becomes arbitrary interpretations",
+        "Pragmatics": "no context narrowing; set stays large"
+      },
+      "simpler_alternative": "Bayesian inference over partner types",
+      "questions": {
+        "what_exists": "equilibrium set per game",
+        "what_changes": "posterior over the set",
+        "what_persists": "selected equilibrium",
+        "what_is_selected": "equilibria",
+        "what_can_reproduce": "none",
+        "what_can_learn": "priors over equilibria",
+        "what_can_transfer": "priors across games with isomorphic equilibrium structure",
+        "distinguishing_observable": "coordination success as a function of entropy-gated commitment vs immediate commitment"
+      }
+    },
+    {
+      "id": "M14",
+      "triplicateId": "HT-71b65251aa",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "world rule",
+      "statement": "Silence as an equilibrium speech act: agents may abstain from answering; whether silence means 'I do not know' or 'I will not say' is fixed by equilibrium and depends on whether abstention is driven by metacognitive uncertainty or by strategic withholding.",
+      "derived_from": [
+        "I1",
+        "I6"
+      ],
+      "concept_contributions": {
+        "Metacognition": "uncertainty-driven abstention",
+        "Nash Equilibrium": "stability of silence's meaning",
+        "Pragmatics": "silence as meaningful by contrast with speaking"
+      },
+      "knockouts": {
+        "Metacognition": "silence is only strategic",
+        "Nash Equilibrium": "silence meaning fixed by designer",
+        "Pragmatics": "silence is a null action with no inference"
+      },
+      "simpler_alternative": "abstention with a fixed penalty; listeners treat abstention as a coin flip",
+      "questions": {
+        "what_exists": "speakers with answer/abstain, listeners inferring from abstain",
+        "what_changes": "abstention policies",
+        "what_persists": "silence's meaning",
+        "what_is_selected": "policies",
+        "what_can_reproduce": "conventions",
+        "what_can_learn": "listener inference from silence",
+        "what_can_transfer": "the meaning of silence to a population with a different incentive",
+        "distinguishing_observable": "listener's posterior of speaker ignorance given silence vs actual rate"
+      }
+    },
+    {
+      "id": "M15",
+      "triplicateId": "HT-71b65251aa",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "interaction law",
+      "statement": "Self-deceptive monitor: when outward confidence pays, a monitor whose internal calibration is shifted toward overconfidence is favoured over one that reports honestly-but-strategically, because the second pays a monitoring cost to maintain two confidence maps; inner and outer games are coupled through the cost of keeping private and public confidence distinct.",
+      "derived_from": [
+        "I3",
+        "I6"
+      ],
+      "concept_contributions": {
+        "Metacognition": "internal confidence map and its cost",
+        "Nash Equilibrium": "outer game rewarding confidence",
+        "Pragmatics": "public confidence conventions"
+      },
+      "knockouts": {
+        "Metacognition": "nothing to deceive",
+        "Nash Equilibrium": "no pressure toward overconfidence",
+        "Pragmatics": "no convention to exploit"
+      },
+      "simpler_alternative": "direct selection for overconfidence when it pays, with no two-map cost",
+      "questions": {
+        "what_exists": "agents with one or two confidence maps",
+        "what_changes": "map calibration",
+        "what_persists": "the fitter architecture",
+        "what_is_selected": "one-map vs two-map agents",
+        "what_can_reproduce": "architectures",
+        "what_can_learn": "maps",
+        "what_can_transfer": "overconfidence to non-social tasks (predicted cost)",
+        "distinguishing_observable": "internal ECE drift occurs only when two-map cost > 0"
+      }
+    },
+    {
+      "id": "O-W3-r1",
+      "triplicateId": "HT-71b65251aa",
+      "passId": "P3-probe1",
+      "kind": "observation",
+      "layer": "experimental_observation",
+      "evidence_rows": [
+        "hecate/programs/HT-71b65251aa/worlds/W3/rows.jsonl",
+        "hecate/programs/HT-71b65251aa/worlds/W3/OUTCOME.json"
+      ],
+      "statement": "W3 probe round 1: SIGNAL. Outcome SIGNAL. acc(L2)=0.7427, acc(L3)=0.7427. theta 0.6: acc 0.7427, depth 1.305, rho 0.7389266078147675; twin acc 0.6972, rho -0.0026527621963870563. theta 0.7: acc 0.7427, depth 1.876, rho 0.6363435997679954; twin acc 0.6990, rho 0.002596329133080727. theta 0.8: acc 0.7427, depth 2.183, rho 0.7143012353844714; twin acc 0.6991, rho -0.004319459992948448. theta 0.9: acc 0.7427, depth 2.340, rho 0.7533684015705153; twin acc 0.6981, rho -0.003330735108549688. Positive control detected=True; cheat detected=True.",
+      "derived_from": [
+        "M2"
+      ]
+    },
+    {
+      "id": "O-W3-p4",
+      "triplicateId": "HT-71b65251aa",
+      "passId": "P4",
+      "kind": "observation",
+      "layer": "experimental_observation",
+      "evidence_rows": [
+        "hecate/programs/HT-71b65251aa/worlds/W3/pass4/rows.jsonl"
+      ],
+      "statement": "Pass 4 on W3: PARK. Two speaker variants gave L2-L1 accuracy gaps 0.0000 and 0.0003: the 4-word world is too simple for depth to matter. Predicate PARK. R (seeds 100-109, theta 0.6): acc 0.7437 vs L2 0.7437, depth 1.307, rho 0.735; twin acc 0.7009; reproduced=True. ORIG: L1 acc 0.74355 depth 1.0 vs adaptive acc 0.74370 depth 1.307; fired=True. ALT ALT_V1: L1 0.8946, L2 0.8946, gap 0.0000, eligible=False. ALT ALT_V2: L1 0.7075, L2 0.7079, gap 0.0003, eligible=False. ALT status NOT_ELIGIBLE.",
+      "derived_from": [
+        "M2"
+      ]
+    }
+  ],
+  "lenses": [
+    {
+      "id": "L1",
+      "name": "Hedge reliability diagram",
+      "triplicateId": "HT-71b65251aa",
+      "passId": "P2",
+      "targets": [
+        "M1",
+        "M6",
+        "M12"
+      ],
+      "rationale": "Emergent tokens have no built-in meaning; the only way to read their meaning is the accuracy of answers they accompany.",
+      "sourceRepresentation": "log of (token, correct) pairs at equilibrium",
+      "transformation": "per-token accuracy and count; order tokens by accuracy",
+      "observables": [
+        "per-token accuracy",
+        "MI(token; correct) in bits",
+        "number of tokens in use"
+      ],
+      "predictedSignals": [
+        "tokens separate into distinct accuracy levels when metacognitive noise is low"
+      ],
+      "nullExpectation": "all tokens share the base accuracy; MI near 0",
+      "failureModes": [
+        "tokens unused so accuracy estimates noisy",
+        "MI bias at small samples"
+      ],
+      "informationAddedBeyondExistingLenses": "baseline public-meaning readout; other lenses are relative to it"
+    },
+    {
+      "id": "L2",
+      "name": "Implicature ledger",
+      "triplicateId": "HT-71b65251aa",
+      "passId": "P2",
+      "targets": [
+        "M2",
+        "M4",
+        "M7"
+      ],
+      "rationale": "Pragmatic meaning is visible exactly where listener action departs from what literal semantics would dictate.",
+      "sourceRepresentation": "per-utterance record of literal-semantics action, actual listener action, context id",
+      "transformation": "count departures from literal action; condition on context",
+      "observables": [
+        "implicature rate",
+        "implicature success (departure led to correct referent)"
+      ],
+      "predictedSignals": [
+        "high implicature rate with high success in contexts with scalar alternatives"
+      ],
+      "nullExpectation": "departures at chance, success below literal baseline",
+      "failureModes": [
+        "literal semantics ill-defined for emergent tokens"
+      ],
+      "informationAddedBeyondExistingLenses": "separates enrichment from mere accuracy"
+    },
+    {
+      "id": "L3",
+      "name": "Deviation-regret audit",
+      "triplicateId": "HT-71b65251aa",
+      "passId": "P2",
+      "targets": [
+        "M1",
+        "M3",
+        "M6"
+      ],
+      "rationale": "Claims about equilibrium require checking that no unilateral deviation pays, not that learning stopped.",
+      "sourceRepresentation": "final strategy profile and the payoff simulator",
+      "transformation": "for each role, evaluate every pure deviation by Monte Carlo; report max gain",
+      "observables": [
+        "epsilon = max unilateral gain per role"
+      ],
+      "predictedSignals": [
+        "epsilon below tolerance at reported equilibria"
+      ],
+      "nullExpectation": "large epsilon if dynamics stalled away from equilibrium",
+      "failureModes": [
+        "strategy space too large to enumerate",
+        "Monte Carlo noise mistaken for gain"
+      ],
+      "informationAddedBeyondExistingLenses": "certifies the Nash component, which the other lenses assume"
+    },
+    {
+      "id": "L4",
+      "name": "Private-public calibration gap",
+      "triplicateId": "HT-71b65251aa",
+      "passId": "P2",
+      "targets": [
+        "M6",
+        "M15",
+        "M14"
+      ],
+      "rationale": "The triplicate specifically predicts that what an agent knows about its accuracy and what its words say can diverge stably.",
+      "sourceRepresentation": "per-item private confidence, public token, listener-decoded probability, correctness",
+      "transformation": "compute ECE of private confidence, of token read at its original nominal value, and of listener-decoded probability",
+      "observables": [
+        "ECE_private",
+        "ECE_public_literal",
+        "ECE_decoded",
+        "gap = ECE_public_literal - ECE_private"
+      ],
+      "predictedSignals": [
+        "gap > 0 while ECE_decoded stays small under confidence-weighting listeners"
+      ],
+      "nullExpectation": "gap near 0 under proper-scoring listeners",
+      "failureModes": [
+        "nominal token values arbitrary, making ECE_public_literal a design choice"
+      ],
+      "informationAddedBeyondExistingLenses": "distinguishes convention shift (M6) from miscalibration"
+    },
+    {
+      "id": "L5",
+      "name": "Recursion budget ledger",
+      "triplicateId": "HT-71b65251aa",
+      "passId": "P2",
+      "targets": [
+        "M2"
+      ],
+      "rationale": "If metacognition controls pragmatic depth, depth spending should track item ambiguity.",
+      "sourceRepresentation": "per-item depth used, item ambiguity (number of literal candidates), correctness",
+      "transformation": "Spearman(depth, ambiguity); accuracy per depth step",
+      "observables": [
+        "rank correlation",
+        "mean depth",
+        "accuracy"
+      ],
+      "predictedSignals": [
+        "positive rank correlation; equal accuracy at lower mean depth than fixed depth"
+      ],
+      "nullExpectation": "correlation near 0 for random-depth twin",
+      "failureModes": [
+        "ambiguity and depth both driven by context size"
+      ],
+      "informationAddedBeyondExistingLenses": "measures metacognitive efficiency of pragmatic computation, not outcome"
+    },
+    {
+      "id": "L6",
+      "name": "Conflict-noise phase map",
+      "triplicateId": "HT-71b65251aa",
+      "passId": "P2",
+      "targets": [
+        "M1",
+        "M12"
+      ],
+      "rationale": "The three-way claim in M1 is an interaction: the interest conflict at which hedges collapse should depend on metacognitive noise.",
+      "sourceRepresentation": "grid over (speaker bias b, metacognitive noise sigma) with equilibrium MI at each cell",
+      "transformation": "for each sigma, locate b* where MI falls below half its b=0 value",
+      "observables": [
+        "b*(sigma)"
+      ],
+      "predictedSignals": [
+        "b* decreases with sigma"
+      ],
+      "nullExpectation": "b* independent of sigma (separable effects)",
+      "failureModes": [
+        "MI floor effects at high sigma make b* undefined"
+      ],
+      "informationAddedBeyondExistingLenses": "tests the interaction rather than the main effects, which the simpler alternative also predicts"
+    }
+  ],
+  "experiments": [
+    {
+      "id": "W1",
+      "triplicateId": "HT-71b65251aa",
+      "passId": "P3",
+      "mechanism_ids": [
+        "M1"
+      ],
+      "lens_ids": [
+        "L1",
+        "L3",
+        "L6"
+      ],
+      "hypothesis": "The interest conflict at which emergent hedge tokens stop carrying information about correctness decreases as the speaker's metacognitive noise increases (interaction, not separable effects).",
+      "mechanism": "Speaker answers a binary item correctly with prob q ~ U(0.5,1); observes private confidence c = q + N(0, sigma) clipped; maps c to one of K=3 tokens via 2 thresholds. Listener maps each token to accept/verify. Payoffs: listener +1 accept-correct, -2 accept-wrong, -0.3 verify; speaker gets listener payoff plus bias b per accept. Discrete strategy grids (thresholds on 0.05 grid) updated by smoothed best response in a population.",
+      "intervention": "grid sigma in {0, 0.1, 0.2, 0.4} x b in {0, 0.25, 0.5, 0.75, 1.0, 1.5}",
+      "control": "same world with sigma = infinity (confidence independent of q)",
+      "positive_control": "speaker thresholds hard-coded to calibrated values and listener best-responding: MI must be >= 0.1 bits at sigma=0, b=0",
+      "observable": "equilibrium MI(token; correct) per cell and b*(sigma) = smallest b with MI < 0.5 * MI(b=0)",
+      "success_criterion": "median over 20 seeds: MI(sigma=0,b=0) >= 0.05 bits AND Spearman(b*, sigma) <= -0.8 across the 4 sigma levels AND b*(0) - b*(0.4) >= 0.25",
+      "failure_criterion": "b* identical (difference < 0.25) across sigma levels, or MI(sigma=0,b=0) < 0.05 bits, or L3 epsilon > 0.02 at reported equilibria",
+      "alternative_explanation": "noise lowers the stakes of accept decisions so any bias looks larger relative to them; the interaction is an artefact of the payoff scale, not of metacognitive access",
+      "null_twin": "tokens conditioned on a confidence permuted across items within each seed (same marginal distribution of c, same token frequencies), destroying the c-q link while keeping sigma's effect on the confidence distribution",
+      "substrate": "population",
+      "why_this_implementation": "a finite strategy grid under best-response dynamics exposes equilibria directly and is auditable by L3; no learned function approximator needed",
+      "size": "50 speakers, 50 listeners, 3 tokens, 24 grid cells, 3000 rounds per cell, 20 seeds",
+      "cost_estimate": "about 6 CPU core-minutes",
+      "stupid_explanations": [
+        "MI estimator bias at small token counts produces apparent structure",
+        "best-response dynamics stalls in the initial random convention",
+        "payoff asymmetry (-2 vs +1) alone forces a two-level convention irrespective of confidence"
+      ]
+    },
+    {
+      "id": "W2",
+      "triplicateId": "HT-71b65251aa",
+      "passId": "P3",
+      "mechanism_ids": [
+        "M3"
+      ],
+      "lens_ids": [
+        "L3",
+        "L2"
+      ],
+      "hypothesis": "The listener's clarification threshold and the speaker's redundancy form an interior equilibrium whose threshold falls as clarification cost rises, and this depends on the listener using its own posterior as the trigger.",
+      "mechanism": "8 objects with 3 binary features per trial; speaker names r in {1,2,3} features of the target at cost 0.05 per word; listener computes posterior over consistent objects, clarifies if max posterior < tau at cost k (then succeeds), else guesses. Payoff shared: +1 success minus costs. Strategy grid tau in {0,0.1,...,1}, r in {1,2,3}; equilibrium by iterated best response on a Monte Carlo payoff table.",
+      "intervention": "k in {0.02, 0.05, 0.1, 0.2, 0.4, 0.8}",
+      "control": "listener clarifies at a fixed tau = 0.5 regardless of k",
+      "positive_control": "k = 0: equilibrium must be tau = 1 or r = 3 with success >= 0.99",
+      "observable": "tau*(k), r*(k), success rate at equilibrium",
+      "success_criterion": "median over 20 seeds: Spearman(tau*, k) <= -0.8 AND equilibrium success minus null-twin success >= 0.10 at k = 0.1",
+      "failure_criterion": "tau* constant across k, or null twin success within 0.05 of the mechanism",
+      "alternative_explanation": "the effect is the ARQ trade-off of any noisy channel; pragmatics adds nothing",
+      "null_twin": "listener's clarification trigger uses a random score drawn from the empirical marginal of its posterior-max (same clarification rate distribution, no link to actual ambiguity)",
+      "substrate": "causal toy",
+      "why_this_implementation": "exact enumeration of consistent objects makes the listener's posterior exact, so metacognitive access is controlled precisely",
+      "size": "8 objects, 3 features, 11 x 3 strategy grid, 5000 trials per cell, 6 cost levels, 20 seeds",
+      "cost_estimate": "about 3 CPU core-minutes",
+      "stupid_explanations": [
+        "random feature sets often make the target unique, so clarification barely matters",
+        "the tau grid is too coarse for an interior optimum to move",
+        "shared payoff makes it a team decision problem where 'equilibrium' is just an optimum"
+      ]
+    },
+    {
+      "id": "W3",
+      "triplicateId": "HT-71b65251aa",
+      "passId": "P3",
+      "mechanism_ids": [
+        "M2"
+      ],
+      "lens_ids": [
+        "L5",
+        "L2"
+      ],
+      "hypothesis": "A listener that stops recursive pragmatic reasoning when its interpretive uncertainty is low reaches the accuracy of fixed-depth reasoning with fewer recursion steps, and its depth tracks item ambiguity.",
+      "mechanism": "Symbolic referential contexts of 3-4 objects over a scalar lexicon (e.g. 'some'/'all' style predicates); literal listener L0, speaker S1, listener L1, up to L3 computed exactly by normalized tables; adaptive listener stops at level k when max posterior >= theta. Speakers are fixed S2 in this minimal world.",
+      "intervention": "theta in {0.6, 0.7, 0.8, 0.9}",
+      "control": "fixed depth L2 and L3",
+      "positive_control": "items with a unique literal referent must be solved at depth 0 by the adaptive listener",
+      "observable": "accuracy, mean depth, Spearman(depth, number of literal candidates)",
+      "success_criterion": "for some theta: accuracy >= accuracy(L2) - 0.01 AND mean depth <= 0.7 * 2 AND Spearman(depth, ambiguity) >= 0.4",
+      "failure_criterion": "no theta meets all three, or the random-depth twin with matched mean depth meets the accuracy criterion too",
+      "alternative_explanation": "most items are unambiguous so any early stopping saves depth; the result reflects the item distribution, not metacognition",
+      "null_twin": "depth drawn at random per item from the adaptive listener's empirical depth distribution (same mean and variance), ignoring uncertainty",
+      "substrate": "symbolic rewriting",
+      "why_this_implementation": "exact probabilistic tables over tiny contexts avoid learned approximators; recursion depth is literal and countable",
+      "size": "2000 random contexts of 3-4 objects, 4 predicates, depth up to 3, 10 seeds",
+      "cost_estimate": "about 1 CPU core-minute",
+      "stupid_explanations": [
+        "ambiguity is correlated with context size, so depth tracks size not uncertainty",
+        "deeper levels rarely change the answer, so any stopping rule is as good",
+        "the S2 speaker makes the task trivially solvable at L1"
+      ],
+      "outcome": "SIGNAL",
+      "raw_outcome": "SIGNAL",
+      "procedural_notes": [],
+      "rows": "hecate/programs/HT-71b65251aa/worlds/W3/rows.jsonl",
+      "outcome_file": "hecate/programs/HT-71b65251aa/worlds/W3/OUTCOME.json",
+      "statistics": {
+        "n_seeds": 10,
+        "n_items_per_seed": 2000,
+        "CONTROL_fixed": {
+          "L0": {
+            "accuracy": 0.5376333333333333,
+            "mean_depth": 0.0
+          },
+          "L1": {
+            "accuracy": 0.7427000000000001,
+            "mean_depth": 1.0
+          },
+          "L2": {
+            "accuracy": 0.742725,
+            "mean_depth": 2.0
+          },
+          "L3": {
+            "accuracy": 0.742725,
+            "mean_depth": 3.0
+          }
+        },
+        "TREATMENT_by_theta": {
+          "0.6": {
+            "accuracy": 0.742725,
+            "mean_depth": 1.30515,
+            "spearman_depth_ambiguity": 0.7389266078147675,
+            "spearman_within_size3": 0.8141597965536385,
+            "spearman_within_size4": 0.599538954227424,
+            "spearman_depth_size": 0.2675472412603202,
+            "depth_hist_total": [
+              4317,
+              9408,
+              2130,
+              4145
+            ],
+            "clauses_acc_depth_rho": [
+              true,
+              true,
+              true
+            ]
+          },
+          "0.7": {
+            "accuracy": 0.742725,
+            "mean_depth": 1.8760499999999998,
+            "spearman_depth_ambiguity": 0.6363435997679954,
+            "spearman_within_size3": 0.6708799207929702,
+            "spearman_within_size4": 0.5377637877552098,
+            "spearman_depth_size": 0.25550416388454,
+            "depth_hist_total": [
+              4317,
+              2996,
+              3536,
+              9151
+            ],
+            "clauses_acc_depth_rho": [
+              true,
+              false,
+              true
+            ]
+          },
+          "0.8": {
+            "accuracy": 0.742725,
+            "mean_depth": 2.1829,
+            "spearman_depth_ambiguity": 0.7143012353844714,
+            "spearman_within_size3": 0.7401108920347526,
+            "spearman_within_size4": 0.659215276428508,
+            "spearman_depth_size": 0.24740839763165806,
+            "depth_hist_total": [
+              4317,
+              741,
+              1909,
+              13033
+            ],
+            "clauses_acc_depth_rho": [
+              true,
+              false,
+              true
+            ]
+          },
+          "0.9": {
+            "accuracy": 0.742725,
+            "mean_depth": 2.3395,
+            "spearman_depth_ambiguity": 0.7533684015705153,
+            "spearman_within_size3": 0.8248173687337648,
+            "spearman_within_size4": 0.6646970233722773,
+            "spearman_depth_size": 0.1593436818906327,
+            "depth_hist_total": [
+              4317,
+              0,
+              259,
+              15424
+            ],
+            "clauses_acc_depth_rho": [
+              true,
+              false,
+              true
+            ]
+          }
+        },
+        "NULL_TWIN_by_theta": {
+          "0.6": {
+            "accuracy": 0.6971749999999999,
+            "mean_depth": 1.30515,
+            "spearman_depth_ambiguity": -0.0026527621963870563,
+            "clauses_acc_depth_rho": [
+              false,
+              true,
+              false
+            ]
+          },
+          "0.7": {
+            "accuracy": 0.6989916666666666,
+            "mean_depth": 1.8760499999999998,
+            "spearman_depth_ambiguity": 0.002596329133080727,
+            "clauses_acc_depth_rho": [
+              false,
+              false,
+              false
+            ]
+          },
+          "0.8": {
+            "accuracy": 0.6991,
+            "mean_depth": 2.1829,
+            "spearman_depth_ambiguity": -0.004319459992948448,
+            "clauses_acc_depth_rho": [
+              false,
+              false,
+              false
+            ]
+          },
+          "0.9": {
+            "accuracy": 0.6981124999999999,
+            "mean_depth": 2.3395,
+            "spearman_depth_ambiguity": -0.003330735108549688,
+            "clauses_acc_depth_rho": [
+              false,
+              false,
+              false
+            ]
+          }
+        },
+        "POSITIVE_CONTROL_by_theta": {
+          "0.6": {
+            "n_unique_total": 4317,
+            "all_depth0_all_seeds": true,
+            "all_correct_all_seeds": true,
+            "min_n_unique_per_seed": 399
+          },
+          "0.7": {
+            "n_unique_total": 4317,
+            "all_depth0_all_seeds": true,
+            "all_correct_all_seeds": true,
+            "min_n_unique_per_seed": 399
+          },
+          "0.8": {
+            "n_unique_total": 4317,
+            "all_depth0_all_seeds": true,
+            "all_correct_all_seeds": true,
+            "min_n_unique_per_seed": 399
+          },
+          "0.9": {
+            "n_unique_total": 4317,
+            "all_depth0_all_seeds": true,
+            "all_correct_all_seeds": true,
+            "min_n_unique_per_seed": 399
+          }
+        },
+        "CHEAT": {
+          "accuracy": 1.0,
+          "mean_depth": 0.78415,
+          "spearman_depth_ambiguity": 0.7531128736102832
+        },
+        "diagnostics": {
+          "frac_L0_argmax_differs_from_L2": 0.7809000000000001,
+          "frac_L1_argmax_differs_from_L2": 0.0038499999999999993,
+          "frac_L3_argmax_differs_from_L2": 0.0,
+          "frac_ambiguity_1": 0.21585000000000001,
+          "implicature_rate_L2": 0.7809000000000001,
+          "implicature_success_L2": 0.6725967891797596,
+          "spearman_size_ambiguity": 0.2843475887616497
+        },
+        "success_thetas": [
+          "0.6"
+        ],
+        "signal_thetas": [
+          "0.6"
+        ],
+        "confound_thetas": []
+      },
+      "anomalies": [
+        {
+          "id": "A1",
+          "text": "fixed L2 and L3 accuracies identical"
+        },
+        {
+          "id": "A2",
+          "text": "fixed L1 already within 0.01 of L2 (0.7427 vs 0.7427)"
+        }
+      ],
+      "rejected_explanations": [
+        "ambiguity is correlated with context size, so depth tracks size not uncertainty",
+        "deeper levels rarely change the answer, so any stopping rule is as good",
+        "the S2 speaker makes the task trivially solvable at L1",
+        "(spec alternative_explanation) most items are unambiguous so any early stopping saves depth"
+      ],
+      "pass4": {
+        "predicate": "PARK",
+        "R": {
+          "reproduced": true,
+          "stats": {
+            "seeds": [
+              100,
+              101,
+              102,
+              103,
+              104,
+              105,
+              106,
+              107,
+              108,
+              109
+            ],
+            "theta": "0.6",
+            "fixed": {
+              "L0": {
+                "accuracy": 0.5389583333333334,
+                "mean_depth": 0.0
+              },
+              "L1": {
+                "accuracy": 0.7435499999999999,
+                "mean_depth": 1.0
+              },
+              "L2": {
+                "accuracy": 0.7437,
+                "mean_depth": 2.0
+              },
+              "L3": {
+                "accuracy": 0.7437,
+                "mean_depth": 3.0
+              }
+            },
+            "treatment_by_theta": {
+              "0.6": {
+                "accuracy": 0.7437,
+                "mean_depth": 1.30675,
+                "spearman_depth_ambiguity": 0.7354596657289096,
+                "spearman_depth_uncertainty": 0.7354596657289096,
+                "spearman_depth_unc1": 0.9333353706122111,
+                "depth_hist_total": [
+                  4360,
+                  9329,
+                  2127,
+                  4184
+                ],
+                "spearman_within_size3": 0.8209386709773033,
+                "spearman_within_size4": 0.5849155401489272
+              },
+              "0.7": {
+                "accuracy": 0.7437,
+                "mean_depth": 1.8625,
+                "spearman_depth_ambiguity": 0.6414963747535606,
+                "spearman_depth_uncertainty": 0.6414963747535606,
+                "spearman_depth_unc1": 0.9204325841353256,
+                "depth_hist_total": [
+                  4360,
+                  3061,
+                  3548,
+                  9031
+                ],
+                "spearman_within_size3": 0.691012997884138,
+                "spearman_within_size4": 0.5241222794352596
+              },
+              "0.8": {
+                "accuracy": 0.7437,
+                "mean_depth": 2.1710000000000003,
+                "spearman_depth_ambiguity": 0.7173562503731271,
+                "spearman_depth_uncertainty": 0.7173562503731271,
+                "spearman_depth_unc1": 0.8500919384267126,
+                "depth_hist_total": [
+                  4360,
+                  797,
+                  1906,
+                  12937
+                ],
+                "spearman_within_size3": 0.7556135812645232,
+                "spearman_within_size4": 0.6470993560154412
+              },
+              "0.9": {
+                "accuracy": 0.7437,
+                "mean_depth": 2.33225,
+                "spearman_depth_ambiguity": 0.755972673495829,
+                "spearman_depth_uncertainty": 0.755972673495829,
+                "spearman_depth_unc1": 0.7359984080653978,
+                "depth_hist_total": [
+                  4360,
+                  0,
+                  275,
+                  15365
+                ],
+                "spearman_within_size3": 0.8307507675349444,
+                "spearman_within_size4": 0.6614864364147743
+              }
+            },
+            "twin_by_theta": {
+              "0.6": {
+                "accuracy": 0.7008708333333333,
+                "mean_depth": 1.30675,
+                "spearman_depth_ambiguity": 0.010404989592827813,
+                "spearman_depth_uncertainty": 0.010404989592827813,
+                "spearman_depth_unc1": 0.0036950409940915653
+              },
+              "0.7": {
+                "accuracy": 0.6982833333333334,
+                "mean_depth": 1.8625,
+                "spearman_depth_ambiguity": 0.00394764631758285,
+                "spearman_depth_uncertainty": 0.00394764631758285,
+                "spearman_depth_unc1": 0.005983704085158024
+              },
+              "0.8": {
+                "accuracy": 0.6985041666666667,
+                "mean_depth": 2.1710000000000003,
+                "spearman_depth_ambiguity": 0.000972171819853758,
+                "spearman_depth_uncertainty": 0.000972171819853758,
+                "spearman_depth_unc1": 0.006125127734251206
+              },
+              "0.9": {
+                "accuracy": 0.6981208333333332,
+                "mean_depth": 2.33225,
+                "spearman_depth_ambiguity": 0.0012552052720893325,
+                "spearman_depth_uncertainty": 0.0012552052720893325,
+                "spearman_depth_unc1": 0.003678105355574423
+              }
+            },
+            "diagnostics": {
+              "frac_L0_argmax_differs_from_L2": 0.7789999999999999,
+              "frac_L1_argmax_differs_from_L2": 0.0039,
+              "frac_L3_argmax_differs_from_L2": 0.0,
+              "frac_ambiguity_1": 0.21800000000000003
+            },
+            "clauses_acc_depth_rho_theta06": [
+              true,
+              true,
+              true
+            ],
+            "twin_clauses_theta06": [
+              false,
+              true,
+              false
+            ],
+            "confound_thetas": []
+          }
+        },
+        "ORIG": {
+          "fired": true,
+          "stats": {
+            "theta": "0.6",
+            "fixed_L1_accuracy": 0.7435499999999999,
+            "fixed_L1_mean_depth": 1.0,
+            "adaptive_by_theta": {
+              "0.6": {
+                "accuracy": 0.7437,
+                "mean_depth": 1.30675
+              },
+              "0.7": {
+                "accuracy": 0.7437,
+                "mean_depth": 1.8625
+              },
+              "0.8": {
+                "accuracy": 0.7437,
+                "mean_depth": 2.1710000000000003
+              },
+              "0.9": {
+                "accuracy": 0.7437,
+                "mean_depth": 2.33225
+              }
+            },
+            "clause_acc": true,
+            "clause_depth": true,
+            "fires_at_other_thetas": {
+              "0.6": true,
+              "0.7": true,
+              "0.8": true,
+              "0.9": true
+            }
+          }
+        },
+        "ALT": {
+          "status": "NOT_ELIGIBLE",
+          "stats": {
+            "variants_tried": [
+              "ALT_V1",
+              "ALT_V2"
+            ],
+            "by_variant": {
+              "ALT_V1": {
+                "eligible": false,
+                "gap_L2_minus_L1": 0.0,
+                "fixed": {
+                  "L0": {
+                    "accuracy": 0.5986749999999998,
+                    "mean_depth": 0.0
+                  },
+                  "L1": {
+                    "accuracy": 0.8946,
+                    "mean_depth": 1.0
+                  },
+                  "L2": {
+                    "accuracy": 0.8946,
+                    "mean_depth": 2.0
+                  },
+                  "L3": {
+                    "accuracy": 0.893675,
+                    "mean_depth": 3.0
+                  }
+                },
+                "diagnostics": {
+                  "frac_L0_argmax_differs_from_L2": 0.7041,
+                  "frac_L1_argmax_differs_from_L2": 0.0,
+                  "frac_L3_argmax_differs_from_L2": 0.051050000000000005,
+                  "frac_ambiguity_1": 0.29544999999999993
+                },
+                "treatment_by_theta": {
+                  "0.6": {
+                    "accuracy": 0.893675,
+                    "mean_depth": 0.9164,
+                    "spearman_depth_ambiguity": 0.7369069383412665,
+                    "spearman_depth_uncertainty": 0.7369069383412665,
+                    "spearman_depth_unc1": 0.8866898784465402,
+                    "depth_hist_total": [
+                      5909,
+                      11809,
+                      327,
+                      1955
+                    ],
+                    "spearman_within_size3": 0.892161176670081,
+                    "spearman_within_size4": 0.5000570705773653
+                  },
+                  "0.7": {
+                    "accuracy": 0.893675,
+                    "mean_depth": 1.24255,
+                    "spearman_depth_ambiguity": 0.6226400101038639,
+                    "spearman_depth_uncertainty": 0.6226400101038639,
+                    "spearman_depth_unc1": 0.9467110319332223,
+                    "depth_hist_total": [
+                      5909,
+                      8000,
+                      1422,
+                      4669
+                    ],
+                    "spearman_within_size3": 0.7882313523132243,
+                    "spearman_within_size4": 0.3628542996058279
+                  },
+                  "0.8": {
+                    "accuracy": 0.893675,
+                    "mean_depth": 1.3190500000000003,
+                    "spearman_depth_ambiguity": 0.632202222815337,
+                    "spearman_depth_uncertainty": 0.632202222815337,
+                    "spearman_depth_unc1": 0.9567681077721744,
+                    "depth_hist_total": [
+                      5909,
+                      6745,
+                      2402,
+                      4944
+                    ],
+                    "spearman_within_size3": 0.7869099699121443,
+                    "spearman_within_size4": 0.3759985423771418
+                  },
+                  "0.9": {
+                    "accuracy": 0.893675,
+                    "mean_depth": 1.4633000000000003,
+                    "spearman_depth_ambiguity": 0.65588740798133,
+                    "spearman_depth_uncertainty": 0.65588740798133,
+                    "spearman_depth_unc1": 0.9650364907244903,
+                    "depth_hist_total": [
+                      5909,
+                      4216,
+                      4575,
+                      5300
+                    ],
+                    "spearman_within_size3": 0.7946716760885713,
+                    "spearman_within_size4": 0.4126084589443691
+                  }
+                }
+              },
+              "ALT_V2": {
+                "eligible": false,
+                "gap_L2_minus_L1": 0.00034999999999996145,
+                "fixed": {
+                  "L0": {
+                    "accuracy": 0.5050999999999999,
+                    "mean_depth": 0.0
+                  },
+                  "L1": {
+                    "accuracy": 0.7075250000000001,
+                    "mean_depth": 1.0
+                  },
+                  "L2": {
+                    "accuracy": 0.707875,
+                    "mean_depth": 2.0
+                  },
+                  "L3": {
+                    "accuracy": 0.70285,
+                    "mean_depth": 3.0
+                  }
+                },
+                "diagnostics": {
+                  "frac_L0_argmax_differs_from_L2": 0.8068500000000001,
+                  "frac_L1_argmax_differs_from_L2": 0.0152,
+                  "frac_L3_argmax_differs_from_L2": 0.08769999999999999,
+                  "frac_ambiguity_1": 0.16925
+                },
+                "treatment_by_theta": {
+                  "0.6": {
+                    "accuracy": 0.70595,
+                    "mean_depth": 1.8065500000000003,
+                    "spearman_depth_ambiguity": 0.5021577568835934,
+                    "spearman_depth_uncertainty": 0.5021577568835934,
+                    "spearman_depth_unc1": 0.9325235377594812,
+                    "depth_hist_total": [
+                      3385,
+                      5473,
+                      2768,
+                      8374
+                    ],
+                    "spearman_within_size3": 0.5118867856974967,
+                    "spearman_within_size4": 0.35924127139497314
+                  },
+                  "0.7": {
+                    "accuracy": 0.70285,
+                    "mean_depth": 2.14815,
+                    "spearman_depth_ambiguity": 0.4142032998241284,
+                    "spearman_depth_uncertainty": 0.4142032998241284,
+                    "spearman_depth_unc1": 0.8489497883863508,
+                    "depth_hist_total": [
+                      3385,
+                      2020,
+                      2842,
+                      11753
+                    ],
+                    "spearman_within_size3": 0.34300555362622837,
+                    "spearman_within_size4": 0.36099498480192815
+                  },
+                  "0.8": {
+                    "accuracy": 0.70285,
+                    "mean_depth": 2.2981000000000003,
+                    "spearman_depth_ambiguity": 0.4320285312201689,
+                    "spearman_depth_uncertainty": 0.4320285312201689,
+                    "spearman_depth_unc1": 0.8039109315529711,
+                    "depth_hist_total": [
+                      3385,
+                      229,
+                      3425,
+                      12961
+                    ],
+                    "spearman_within_size3": 0.4202869005903624,
+                    "spearman_within_size4": 0.3819757989710399
+                  },
+                  "0.9": {
+                    "accuracy": 0.70285,
+                    "mean_depth": 2.3653000000000004,
+                    "spearman_depth_ambiguity": 0.4330175721051999,
+                    "spearman_depth_uncertainty": 0.4330175721051999,
+                    "spearman_depth_unc1": 0.760511675092719,
+                    "depth_hist_total": [
+                      3385,
+                      162,
+                      2215,
+                      14238
+                    ],
+                    "spearman_within_size3": 0.3780325215607522,
+                    "spearman_within_size4": 0.43796758810423625
+                  }
+                }
+              }
+            }
+          }
+        },
+        "rows": "hecate/programs/HT-71b65251aa/worlds/W3/pass4/rows.jsonl",
+        "outcome_file": "hecate/programs/HT-71b65251aa/worlds/W3/pass4/PASS4_OUTCOME.json",
+        "note": "Two speaker variants gave L2-L1 accuracy gaps 0.0000 and 0.0003: the 4-word world is too simple for depth to matter."
+      },
+      "original_world_claim": "FOSSIL"
+    },
+    {
+      "id": "W4",
+      "triplicateId": "HT-71b65251aa",
+      "passId": "P3",
+      "mechanism_ids": [
+        "M6",
+        "M14"
+      ],
+      "lens_ids": [
+        "L4",
+        "L3"
+      ],
+      "hypothesis": "When listeners reward stated confidence, a stable convention forms in which public confidence words are shifted from private calibrated confidence while listener-decoded confidence remains calibrated; under proper-scoring listeners the shift vanishes.",
+      "mechanism": "Speakers have calibrated private confidence c on binary items and choose a word from 5 ordered words with nominal values {0.55,0.65,0.75,0.85,0.95}. Listener regime A pays speakers proportional to decoded confidence of accepted answers; regime B pays by Brier score of decoded confidence. Listeners learn a decoding table word -> probability from outcomes. Replicator dynamics over speaker word maps (monotone maps on a grid).",
+      "intervention": "listener regime A vs B",
+      "control": "regime B",
+      "positive_control": "speakers forced to use the nominal honest map: gap must be <= 0.02 in both regimes",
+      "observable": "gap = ECE_public_literal - ECE_private; ECE_decoded",
+      "success_criterion": "median over 20 seeds: gap_A >= 0.08 AND gap_B <= 0.03 AND ECE_decoded_A <= 0.05",
+      "failure_criterion": "gap_A < 0.05, or ECE_decoded_A > 0.10 (no stable discounting convention), or L3 epsilon > 0.02",
+      "alternative_explanation": "regime A simply rewards the top word, so speakers pile onto it; the 'convention' is saturation plus a one-token decoder",
+      "null_twin": "regime A with listeners' decoding table frozen at nominal values (no pragmatic discounting), keeping the same payoff scale",
+      "substrate": "population",
+      "why_this_implementation": "replicator dynamics over a small monotone-map space gives equilibria that can be audited exhaustively",
+      "size": "100 speakers, 100 listeners, 5 words, 5000 rounds, 2 regimes, 20 seeds",
+      "cost_estimate": "about 4 CPU core-minutes",
+      "stupid_explanations": [
+        "saturation on the top word makes ECE_public_literal large by construction",
+        "ECE binning artefacts with only 5 words",
+        "the decoded ECE is low merely because one word carries almost all mass"
+      ]
+    }
+  ],
+  "candidateEngines": [],
+  "currentVerdict": "PARK",
+  "evidenceSummary": {
+    "layer": "experimental_observation",
+    "rows": "hecate/programs/HT-71b65251aa/worlds/W3/pass4/rows.jsonl",
+    "note": "Pass 4 round 1: PARK"
+  }
+}

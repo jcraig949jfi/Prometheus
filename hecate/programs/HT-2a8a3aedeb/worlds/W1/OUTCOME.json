@@ -1,0 +1,517 @@
+{
+ "triplicateId": "HT-2a8a3aedeb",
+ "world": "W1",
+ "outcome": "NULL",
+ "statistics": {
+  "treatment_success": {
+   "success": false,
+   "S1": false,
+   "S2": true,
+   "S3": true,
+   "S1_counts": {
+    "r1_lam1": 0,
+    "r1_lam3": 0,
+    "r1_lam10": 0,
+    "r2_lam1": 0,
+    "r2_lam3": 0,
+    "r2_lam10": 0,
+    "r4_lam1": 0,
+    "r4_lam3": 0,
+    "r4_lam10": 0
+   },
+   "S2_counts": {
+    "r1_lam1": 10,
+    "r1_lam3": 10,
+    "r1_lam10": 10,
+    "r2_lam1": 10,
+    "r2_lam3": 10,
+    "r2_lam10": 10,
+    "r4_lam1": 10,
+    "r4_lam3": 10,
+    "r4_lam10": 10
+   },
+   "n": {
+    "r1_lam1": 10,
+    "r1_lam3": 10,
+    "r1_lam10": 10,
+    "r2_lam1": 10,
+    "r2_lam3": 10,
+    "r2_lam10": 10,
+    "r4_lam1": 10,
+    "r4_lam3": 10,
+    "r4_lam10": 10
+   },
+   "rho": {
+    "1": 0.9466030570784412,
+    "3": 0.9532459670482616,
+    "10": 0.9516259931244676
+   }
+  },
+  "treatment_failure": {
+   "failure": true,
+   "cells": {
+    "c0.5_r1_lam1": {
+     "z_ge_V": 10,
+     "z_not_lt_tanh": 0
+    },
+    "c0.5_r1_lam3": {
+     "z_ge_V": 10,
+     "z_not_lt_tanh": 0
+    },
+    "c0.5_r1_lam10": {
+     "z_ge_V": 10,
+     "z_not_lt_tanh": 0
+    },
+    "c0.5_r2_lam1": {
+     "z_ge_V": 10,
+     "z_not_lt_tanh": 0
+    },
+    "c0.5_r2_lam3": {
+     "z_ge_V": 10,
+     "z_not_lt_tanh": 0
+    },
+    "c0.5_r2_lam10": {
+     "z_ge_V": 10,
+     "z_not_lt_tanh": 0
+    },
+    "c0.5_r4_lam1": {
+     "z_ge_V": 10,
+     "z_not_lt_tanh": 0
+    },
+    "c0.5_r4_lam3": {
+     "z_ge_V": 10,
+     "z_not_lt_tanh": 0
+    },
+    "c0.5_r4_lam10": {
+     "z_ge_V": 10,
+     "z_not_lt_tanh": 0
+    },
+    "c2_r1_lam1": {
+     "z_ge_V": 10,
+     "z_not_lt_tanh": 0
+    },
+    "c2_r1_lam3": {
+     "z_ge_V": 10,
+     "z_not_lt_tanh": 0
+    },
+    "c2_r1_lam10": {
+     "z_ge_V": 10,
+     "z_not_lt_tanh": 0
+    },
+    "c2_r2_lam1": {
+     "z_ge_V": 10,
+     "z_not_lt_tanh": 0
+    },
+    "c2_r2_lam3": {
+     "z_ge_V": 10,
+     "z_not_lt_tanh": 0
+    },
+    "c2_r2_lam10": {
+     "z_ge_V": 10,
+     "z_not_lt_tanh": 0
+    },
+    "c2_r4_lam1": {
+     "z_ge_V": 10,
+     "z_not_lt_tanh": 5
+    },
+    "c2_r4_lam3": {
+     "z_ge_V": 10,
+     "z_not_lt_tanh": 4
+    },
+    "c2_r4_lam10": {
+     "z_ge_V": 10,
+     "z_not_lt_tanh": 0
+    }
+   }
+  },
+  "treatment_success_tol1e-3": {
+   "success": false,
+   "S1": false,
+   "S2": true,
+   "S3": true,
+   "S1_counts": {
+    "r1_lam1": 0,
+    "r1_lam3": 0,
+    "r1_lam10": 0,
+    "r2_lam1": 0,
+    "r2_lam3": 0,
+    "r2_lam10": 0,
+    "r4_lam1": 0,
+    "r4_lam3": 0,
+    "r4_lam10": 0
+   },
+   "S2_counts": {
+    "r1_lam1": 10,
+    "r1_lam3": 10,
+    "r1_lam10": 10,
+    "r2_lam1": 10,
+    "r2_lam3": 10,
+    "r2_lam10": 10,
+    "r4_lam1": 10,
+    "r4_lam3": 10,
+    "r4_lam10": 10
+   },
+   "n": {
+    "r1_lam1": 10,
+    "r1_lam3": 10,
+    "r1_lam10": 10,
+    "r2_lam1": 10,
+    "r2_lam3": 10,
+    "r2_lam10": 10,
+    "r4_lam1": 10,
+    "r4_lam3": 10,
+    "r4_lam10": 10
+   },
+   "rho": {
+    "1": 0.9507653770830565,
+    "3": 0.9513467476837024,
+    "10": 0.9999999999999998
+   }
+  },
+  "treatment_failure_tol1e-3": {
+   "failure": true
+  },
+  "null_twin": {
+   "success": false,
+   "S1": false,
+   "S2": false,
+   "S3": false,
+   "S1_counts": {
+    "r1_lam1": 0,
+    "r1_lam3": 0,
+    "r1_lam10": 0,
+    "r2_lam1": 0,
+    "r2_lam3": 0,
+    "r2_lam10": 0,
+    "r4_lam1": 0,
+    "r4_lam3": 0,
+    "r4_lam10": 0
+   },
+   "S2_counts": {
+    "r1_lam1": 0,
+    "r1_lam3": 0,
+    "r1_lam10": 0,
+    "r2_lam1": 0,
+    "r2_lam3": 0,
+    "r2_lam10": 0,
+    "r4_lam1": 0,
+    "r4_lam3": 0,
+    "r4_lam10": 0
+   },
+   "n": {
+    "r1_lam1": 10,
+    "r1_lam3": 10,
+    "r1_lam10": 10,
+    "r2_lam1": 10,
+    "r2_lam3": 10,
+    "r2_lam10": 10,
+    "r4_lam1": 10,
+    "r4_lam3": 10,
+    "r4_lam10": 10
+   },
+   "rho": {
+    "1": null,
+    "3": null,
+    "10": null
+   }
+  },
+  "cheat": {
+   "success": true,
+   "S1": true,
+   "S2": true,
+   "S3": true,
+   "S1_counts": {
+    "r1_lam1": 10,
+    "r1_lam3": 10,
+    "r1_lam10": 10,
+    "r2_lam1": 10,
+    "r2_lam3": 10,
+    "r2_lam10": 10,
+    "r4_lam1": 10,
+    "r4_lam3": 10,
+    "r4_lam10": 10
+   },
+   "S2_counts": {
+    "r1_lam1": 10,
+    "r1_lam3": 10,
+    "r1_lam10": 10,
+    "r2_lam1": 10,
+    "r2_lam3": 10,
+    "r2_lam10": 10,
+    "r4_lam1": 10,
+    "r4_lam3": 10,
+    "r4_lam10": 10
+   },
+   "n": {
+    "r1_lam1": 10,
+    "r1_lam3": 10,
+    "r1_lam10": 10,
+    "r2_lam1": 10,
+    "r2_lam3": 10,
+    "r2_lam10": 10,
+    "r4_lam1": 10,
+    "r4_lam3": 10,
+    "r4_lam10": 10
+   },
+   "rho": {
+    "1": 0.9999999999999998,
+    "3": 0.9999999999999998,
+    "10": 0.9999999999999998
+   }
+  },
+  "positive": {
+   "meets": true,
+   "exact_z1_V2": true,
+   "success": true,
+   "S1": true,
+   "S2": true,
+   "S3": null,
+   "S1_counts": {
+    "r0_lam1": 10,
+    "r0_lam3": 10,
+    "r0_lam10": 10
+   },
+   "S2_counts": {
+    "r0_lam1": 10,
+    "r0_lam3": 10,
+    "r0_lam10": 10
+   },
+   "n": {
+    "r0_lam1": 10,
+    "r0_lam3": 10,
+    "r0_lam10": 10
+   },
+   "rho": {
+    "1": null,
+    "3": null,
+    "10": null
+   }
+  },
+  "bonds_lam_ge1": {
+   "TREATMENT_z_c0.5": {
+    "mean": 17.933333333333334,
+    "min": 5,
+    "max": 33
+   },
+   "TREATMENT_V_c0.5": {
+    "mean": 10.4,
+    "min": 5,
+    "max": 20
+   },
+   "CONTROL_tanh_c0.5": {
+    "mean": 33.86666666666667,
+    "min": 29,
+    "max": 36
+   },
+   "CONTROL_quant_c0.5": {
+    "mean": 35.977777777777774,
+    "min": 35,
+    "max": 36
+   },
+   "NULL_TWIN_z": {
+    "mean": 35.99444444444445,
+    "min": 35,
+    "max": 36
+   },
+   "NULL_TWIN_V": {
+    "mean": 36.0,
+    "min": 36,
+    "max": 36
+   },
+   "POSITIVE_z": {
+    "mean": 1.0,
+    "min": 1,
+    "max": 1
+   },
+   "POSITIVE_V": {
+    "mean": 2.0,
+    "min": 2,
+    "max": 2
+   }
+  },
+  "treatment_cell_means": {
+   "c0.5_r1_lam0.1": {
+    "mean_bz": 4.9,
+    "mean_bV": 5.4,
+    "mean_btanh": 30.9
+   },
+   "c0.5_r1_lam0.3": {
+    "mean_bz": 8.9,
+    "mean_bV": 6.8,
+    "mean_btanh": 32.0
+   },
+   "c0.5_r1_lam1": {
+    "mean_bz": 10.5,
+    "mean_bV": 6.8,
+    "mean_btanh": 31.4
+   },
+   "c0.5_r1_lam3": {
+    "mean_bz": 8.4,
+    "mean_bV": 6.0,
+    "mean_btanh": 30.4
+   },
+   "c0.5_r1_lam10": {
+    "mean_bz": 6.2,
+    "mean_bV": 5.1,
+    "mean_btanh": 30.2
+   },
+   "c0.5_r2_lam0.1": {
+    "mean_bz": 6.9,
+    "mean_bV": 7.5,
+    "mean_btanh": 34.8
+   },
+   "c0.5_r2_lam0.3": {
+    "mean_bz": 15.3,
+    "mean_bV": 10.7,
+    "mean_btanh": 35.4
+   },
+   "c0.5_r2_lam1": {
+    "mean_bz": 21.1,
+    "mean_bV": 11.4,
+    "mean_btanh": 35.0
+   },
+   "c0.5_r2_lam3": {
+    "mean_bz": 17.7,
+    "mean_bV": 9.7,
+    "mean_btanh": 35.1
+   },
+   "c0.5_r2_lam10": {
+    "mean_bz": 12.1,
+    "mean_bV": 8.4,
+    "mean_btanh": 35.0
+   },
+   "c0.5_r4_lam0.1": {
+    "mean_bz": 9.0,
+    "mean_bV": 10.4,
+    "mean_btanh": 36.0
+   },
+   "c0.5_r4_lam0.3": {
+    "mean_bz": 21.8,
+    "mean_bV": 15.9,
+    "mean_btanh": 35.9
+   },
+   "c0.5_r4_lam1": {
+    "mean_bz": 31.8,
+    "mean_bV": 18.0,
+    "mean_btanh": 36.0
+   },
+   "c0.5_r4_lam3": {
+    "mean_bz": 30.2,
+    "mean_bV": 15.3,
+    "mean_btanh": 35.8
+   },
+   "c0.5_r4_lam10": {
+    "mean_bz": 23.4,
+    "mean_bV": 12.9,
+    "mean_btanh": 35.9
+   },
+   "c2_r1_lam0.1": {
+    "mean_bz": 5.9,
+    "mean_bV": 5.9,
+    "mean_btanh": 33.4
+   },
+   "c2_r1_lam0.3": {
+    "mean_bz": 11.9,
+    "mean_bV": 9.0,
+    "mean_btanh": 34.5
+   },
+   "c2_r1_lam1": {
+    "mean_bz": 16.1,
+    "mean_bV": 9.1,
+    "mean_btanh": 34.1
+   },
+   "c2_r1_lam3": {
+    "mean_bz": 13.3,
+    "mean_bV": 7.5,
+    "mean_btanh": 33.6
+   },
+   "c2_r1_lam10": {
+    "mean_bz": 8.9,
+    "mean_bV": 7.0,
+    "mean_btanh": 33.5
+   },
+   "c2_r2_lam0.1": {
+    "mean_bz": 7.6,
+    "mean_bV": 8.3,
+    "mean_btanh": 35.7
+   },
+   "c2_r2_lam0.3": {
+    "mean_bz": 19.4,
+    "mean_bV": 14.5,
+    "mean_btanh": 36.0
+   },
+   "c2_r2_lam1": {
+    "mean_bz": 29.1,
+    "mean_bV": 16.2,
+    "mean_btanh": 35.7
+   },
+   "c2_r2_lam3": {
+    "mean_bz": 26.2,
+    "mean_bV": 14.3,
+    "mean_btanh": 35.7
+   },
+   "c2_r2_lam10": {
+    "mean_bz": 19.2,
+    "mean_bV": 12.5,
+    "mean_btanh": 35.9
+   },
+   "c2_r4_lam0.1": {
+    "mean_bz": 8.6,
+    "mean_bV": 10.8,
+    "mean_btanh": 35.9
+   },
+   "c2_r4_lam0.3": {
+    "mean_bz": 23.7,
+    "mean_bV": 19.7,
+    "mean_btanh": 36.0
+   },
+   "c2_r4_lam1": {
+    "mean_bz": 35.3,
+    "mean_bV": 25.4,
+    "mean_btanh": 35.9
+   },
+   "c2_r4_lam3": {
+    "mean_bz": 35.0,
+    "mean_bV": 23.7,
+    "mean_btanh": 35.9
+   },
+   "c2_r4_lam10": {
+    "mean_bz": 31.5,
+    "mean_bV": 20.5,
+    "mean_btanh": 36.0
+   }
+  }
+ },
+ "criterion_as_applied": "tol 1e-6; c=0.5, lam in {1,3,10}; S1 per (r,lam) cell #seeds bond(z)<=bond(V)-1 >=8/10; S2 per cell #seeds bond(z)<=bond(tanh_centred)-1 >=7/10; S3 per lam Spearman(r,bond z) over 30 points >=0.6 (undefined=fail). Failure: any (c in {0.5,2}, r, lam>=1) cell with #bond(z)>=bond(V) >=5 or #bond(z) not < bond(tanh) >=5. SIGNAL needs success and not failure. See NOTES.md.",
+ "positive_control_detected": true,
+ "cheat_detected": true,
+ "null_twin_meets_success": false,
+ "stupid_explanations_status": {
+  "tolerance-dependent rank": {
+   "status": "ruled_out",
+   "detail": "verdict(success&!failure) at 1e-6=False, at 1e-3=False"
+  },
+  "exp underflow to zero creating spurious low rank": {
+   "status": "ruled_out",
+   "detail": "log-domain solve; max frac normalised z<1e-300 at lam>=1 = 0.0, all lam = 0.0"
+  },
+  "lambda large makes z nearly constant": {
+   "status": "measured_not_adjudicated",
+   "detail": "min rel_std(z) at lam>=1 = 0.0853; see per-cell means at lam=1 vs 10"
+  },
+  "passive dynamics mixing to stationarity erasing structure over 20 steps": {
+   "status": "measured_not_adjudicated",
+   "detail": "max_i max|P_i^20 - pi| = 4.937e-03 (lazy 0.5 Dirichlet); no horizon sweep was specified"
+  }
+ },
+ "anomalies": [
+  "pilot attempt 1 failed: uncentred tanh(V/sd V) saturated to constant (bond 1) in every arm; one control repair (centring) applied before any treatment code existed",
+  "positive control S3 (Spearman over r) undefined since r does not enter q at c=0; carried by CHEAT"
+ ],
+ "core_minutes": 0.521,
+ "attempts": {
+  "pilot": 2,
+  "phase2": 1
+ },
+ "notes": "Prompt probe_impl_v2 sha256 2021ed66...185e. Pilot pass on attempt 2. Rows: rows.jsonl (phase 2), pilot_rows.jsonl (attempt 2), pilot_rows_attempt1.jsonl."
+}

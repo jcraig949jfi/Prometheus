@@ -1,0 +1,195 @@
+{
+  "prereg": "roles/Hecate/prereg/2026-09-30_probe_round2/PREREG.md",
+  "counts": {
+    "NULL": 7,
+    "SPEC_UNATTAINABLE": 6
+  },
+  "verdicts": {
+    "SPECULATIVE": 4,
+    "PARK": 9
+  },
+  "worlds": [
+    {
+      "triplicateId": "HT-056d3ac561",
+      "round1": [
+        "W1",
+        "INSTRUMENT_FAIL"
+      ],
+      "round2": [
+        "W4",
+        "NULL"
+      ],
+      "verdict": "SPECULATIVE",
+      "reason": "one valid NULL reading; next world eligible",
+      "core_minutes": 0.465
+    },
+    {
+      "triplicateId": "HT-2a8a3aedeb",
+      "round1": [
+        "W4",
+        "NULL"
+      ],
+      "round2": [
+        "W1",
+        "NULL"
+      ],
+      "verdict": "PARK",
+      "reason": "two worlds read, both NULL/CONFOUNDED",
+      "core_minutes": 0.521
+    },
+    {
+      "triplicateId": "HT-37e311ce05",
+      "round1": [
+        "W1",
+        "INSTRUMENT_FAIL"
+      ],
+      "round2": [
+        "W4",
+        "SPEC_UNATTAINABLE"
+      ],
+      "verdict": "PARK",
+      "reason": "Pass 3 produced no testable world in two tries (generator finding)",
+      "core_minutes": 0.845
+    },
+    {
+      "triplicateId": "HT-47f4c02be4",
+      "round1": [
+        "W4",
+        "CONFOUNDED"
+      ],
+      "round2": [
+        "W1",
+        "NULL"
+      ],
+      "verdict": "PARK",
+      "reason": "two worlds read, both NULL/CONFOUNDED",
+      "core_minutes": 0.0094
+    },
+    {
+      "triplicateId": "HT-55162c0ac0",
+      "round1": [
+        "W3",
+        "INSTRUMENT_FAIL"
+      ],
+      "round2": [
+        "W2",
+        "SPEC_UNATTAINABLE"
+      ],
+      "verdict": "PARK",
+      "reason": "Pass 3 produced no testable world in two tries (generator finding)",
+      "core_minutes": 1.76
+    },
+    {
+      "triplicateId": "HT-79e904e13a",
+      "round1": [
+        "W4",
+        "NULL"
+      ],
+      "round2": [
+        "W1",
+        "NULL"
+      ],
+      "verdict": "PARK",
+      "reason": "two worlds read, both NULL/CONFOUNDED",
+      "core_minutes": 2.612
+    },
+    {
+      "triplicateId": "HT-8a87057933",
+      "round1": [
+        "W1",
+        "NOT_BUILT"
+      ],
+      "round2": [
+        "W4",
+        "SPEC_UNATTAINABLE"
+      ],
+      "verdict": "PARK",
+      "reason": "Pass 3 produced no testable world in two tries (generator finding)",
+      "core_minutes": 0.391
+    },
+    {
+      "triplicateId": "HT-974471f045",
+      "round1": [
+        "W3",
+        "NULL"
+      ],
+      "round2": [
+        "W1",
+        "SPEC_UNATTAINABLE"
+      ],
+      "verdict": "SPECULATIVE",
+      "reason": "one valid NULL reading; next world eligible",
+      "core_minutes": 1.34
+    },
+    {
+      "triplicateId": "HT-a9e2ba7618",
+      "round1": [
+        "W4",
+        "NULL"
+      ],
+      "round2": [
+        "W3",
+        "NULL"
+      ],
+      "verdict": "PARK",
+      "reason": "two worlds read, both NULL/CONFOUNDED",
+      "core_minutes": 0.92
+    },
+    {
+      "triplicateId": "HT-ae38c641b1",
+      "round1": [
+        "W3",
+        "NULL"
+      ],
+      "round2": [
+        "W4",
+        "SPEC_UNATTAINABLE"
+      ],
+      "verdict": "SPECULATIVE",
+      "reason": "one valid NULL reading; next world eligible",
+      "core_minutes": 1.26
+    },
+    {
+      "triplicateId": "HT-e106e1603b",
+      "round1": [
+        "W2",
+        "NOT_BUILT"
+      ],
+      "round2": [
+        "W1",
+        "NULL"
+      ],
+      "verdict": "SPECULATIVE",
+      "reason": "one valid NULL reading; next world eligible",
+      "core_minutes": 0.0404
+    },
+    {
+      "triplicateId": "HT-e743909f97",
+      "round1": [
+        "W1",
+        "NULL"
+      ],
+      "round2": [
+        "W3",
+        "NULL"
+      ],
+      "verdict": "PARK",
+      "reason": "two worlds read, both NULL/CONFOUNDED",
+      "core_minutes": 0.466
+    },
+    {
+      "triplicateId": "HT-faa9277e02",
+      "round1": [
+        "W2",
+        "NOT_BUILT"
+      ],
+      "round2": [
+        "W1",
+        "SPEC_UNATTAINABLE"
+      ],
+      "verdict": "PARK",
+      "reason": "Pass 3 produced no testable world in two tries (generator finding)",
+      "core_minutes": 0.197
+    }
+  ]
+}

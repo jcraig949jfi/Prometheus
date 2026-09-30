@@ -1,0 +1,76 @@
+{
+ "world": "W5",
+ "triplicateId": "HT-974471f045",
+ "control_run": "r3",
+ "rows": "control_rows.jsonl",
+ "clauses": [
+  {
+   "id": "S1",
+   "threshold": 0.3,
+   "positive_value": 0.8298,
+   "twin_value": 0.0061,
+   "cheat_value": 1.0009,
+   "attainable": true,
+   "discriminating": true,
+   "treatment_must_reach": ">= 0.30 (mean G_task LOW)"
+  },
+  {
+   "id": "S2",
+   "threshold": 0.25,
+   "positive_value": 0.8271,
+   "twin_value": -0.0091,
+   "cheat_value": 0.9982,
+   "attainable": true,
+   "discriminating": true,
+   "treatment_must_reach": ">= 0.25 (mean G_task LOW - G_task HIGH)"
+  },
+  {
+   "id": "S3",
+   "threshold": 0.3,
+   "positive_value": 1.4625,
+   "twin_value": 0.1149,
+   "cheat_value": 1.003,
+   "attainable": true,
+   "discriminating": true,
+   "treatment_must_reach": ">= 0.30 (mean G_task LOW - G_off LOW)"
+  },
+  {
+   "id": "S4",
+   "threshold": 0.25,
+   "positive_value": 0.8238,
+   "twin_value": 0.0,
+   "cheat_value": 0.9948,
+   "attainable": true,
+   "discriminating": true,
+   "treatment_must_reach": "treatment mean G_task LOW >= twin mean G_task LOW + 0.25 (twin value measured in the probe rerun; controls gave twin G_task LOW = 0.006, so about 0.256)"
+  }
+ ],
+ "cheat_detected": true,
+ "diagnostics": {
+  "pressure_n8_constructed_minus_gen0": 0.825,
+  "pressure_n200_constructed_minus_gen0": 0.008,
+  "note": "selection pressure for the constructed task content exists at the LOW budget and is ~0 at the HIGH budget, so the budget contrast carries a pressure difference (checked before freezing)",
+  "twin_per_seed_sd_G_task_low": 0.151
+ },
+ "cpu_seconds_control_runs": {
+  "r1": 4.77,
+  "r2": 4.94,
+  "r3": 6.28,
+  "total": 15.99
+ },
+ "frozen": true,
+ "revisions": [
+  {
+   "rev": 1,
+   "after_run": "r1 (rows control_rows_r1_superseded.jsonl)",
+   "what": "positive-control chain gains 2.0 -> 1.0; ridge lambda 1e-6 -> 1e-2",
+   "why": "r1 positive control failed: gain 2.0 saturated tanh (units carried ~sign(u1_{t-3}), corr 0.905) and lambda=1e-6 made n=8 an exact interpolation that fitted residuals through small-norm directions; constructed reservoir scored NRMSE 1.7 at n=8 (worse than random, G_task -0.68). With gain 1.0 and lambda 1e-2 it scores 0.18 vs 1.11 random."
+  },
+  {
+   "rev": 2,
+   "after_run": "r2 (rows control_rows_r2_superseded.jsonl)",
+   "what": "generations 30 -> 60, mutation sd 0.02 -> 0.05 (relative); twin and spec updated identically",
+   "why": "r2 controls already attainable and discriminating; the change gives the treatment a fair chance to move the reservoir (total drift 0.02*sqrt(30) ~ 0.11 of rms was judged too small to reach any structured region), made before freezing; thresholds unchanged by it."
+  }
+ ]
+}

@@ -1,0 +1,124 @@
+{
+ "triplicateId": "HT-47f4c02be4",
+ "world": "W4",
+ "outcome": "CONFOUNDED",
+ "statistics": {
+  "s=1": {
+   "TREATMENT_prior_mean_divisions": 3.54168,
+   "TREATMENT_n": 50000,
+   "CONTROL_ascending_mean_divisions": 424.78616,
+   "CONTROL_n": 50000,
+   "R_drift": 0.008337559773604676,
+   "R_drift_per_seed": [
+    0.006142845058118958,
+    0.004193741302034541,
+    0.04880079993092518,
+    0.00941206835077935,
+    0.014546062462333543
+   ],
+   "NULL_TWIN_prior_mean_divisions": 79.1926,
+   "NULL_TWIN_ascending_mean_divisions": 424.78616,
+   "NULL_TWIN_n": 50000,
+   "R_null": 0.1864293318784209,
+   "R_null_per_seed": [
+    0.16896086789136855,
+    0.08572087708248129,
+    1.2033111346931042,
+    0.1819011989590928,
+    0.2891594911210362
+   ],
+   "MEMO_mean_divisions_diagnostic": 426.28492,
+   "R_memo_diagnostic": 1.0035282693767613
+  },
+  "s=3": {
+   "TREATMENT_prior_mean_divisions": 11.51366,
+   "TREATMENT_n": 50000,
+   "CONTROL_ascending_mean_divisions": 345.79532,
+   "CONTROL_n": 50000,
+   "R_drift": 0.03329617069427082,
+   "R_drift_per_seed": [
+    0.032808519108280254,
+    0.025811473328427866,
+    0.018642337629194844,
+    0.05642515436582706,
+    0.1059881850444627
+   ],
+   "NULL_TWIN_prior_mean_divisions": 259.39262,
+   "NULL_TWIN_ascending_mean_divisions": 345.79532,
+   "NULL_TWIN_n": 50000,
+   "R_null": 0.7501334026151656,
+   "R_null_per_seed": [
+    0.6668101683348499,
+    0.6323201887425359,
+    0.3773707324715767,
+    1.8758607206069635,
+    1.5251012526211438
+   ],
+   "MEMO_mean_divisions_diagnostic": 347.29392,
+   "R_memo_diagnostic": 1.004333777565295
+  },
+  "s=10": {
+   "TREATMENT_prior_mean_divisions": 38.59934,
+   "TREATMENT_n": 50000,
+   "CONTROL_ascending_mean_divisions": 337.50452,
+   "CONTROL_n": 50000,
+   "R_drift": 0.11436688314574275,
+   "R_drift_per_seed": [
+    0.07725406220346118,
+    0.12827452488648844,
+    0.10805213137150972,
+    0.16657684024374303,
+    0.13012175495441897
+   ],
+   "NULL_TWIN_prior_mean_divisions": 330.84622,
+   "NULL_TWIN_ascending_mean_divisions": 337.50452,
+   "NULL_TWIN_n": 50000,
+   "R_null": 0.9802719679132001,
+   "R_null_per_seed": [
+    0.7376033004540982,
+    1.0915314644994603,
+    0.9201858838268598,
+    1.3887849720466832,
+    1.033151960528132
+   ],
+   "MEMO_mean_divisions_diagnostic": 338.97568,
+   "R_memo_diagnostic": 1.0043589342151624
+  },
+  "POSITIVE_CONTROL": {
+   "first_try_frac": 0.9999,
+   "n": 50000,
+   "prior_mean_divisions": 1.0483
+  },
+  "CHEAT": {
+   "R_cheat": 0.002354125661721182,
+   "n": 50000
+  }
+ },
+ "criterion_as_applied": "s=1, pooled 5 seeds x 10000: R_drift = mean prior / mean ascending = 0.0083 (<= 0.5? True); R_null (shuffled twin) = 0.1864 (>= 0.9? False). Null twin 'meets success' = R_null <= 0.5: True. Positive control first-try frac 0.9999 (>= 0.99? True); cheat R = 0.0024 (<= 0.5? True).",
+ "positive_control_detected": true,
+ "cheat_detected": true,
+ "null_twin_meets_success": true,
+ "stupid_explanations_status": [
+  {
+   "text": "any cache beats no cache on a slowly varying stream",
+   "addressed_by_this_run": true,
+   "how": "MEMO diagnostic (try last two factors, then ascending) at s=1: R_memo = 1.0035 vs R_drift 0.0083; and the shuffled null twin R_null = 0.1864 shows how much saving survives without temporal order."
+  },
+  {
+   "text": "operation count ignores the cost of maintaining the prior",
+   "addressed_by_this_run": false,
+   "how": "Observable counts trial divisions only; building the order costs 1229 distance evaluations + a sort per sample, which exceeds ascending cost; not in the criterion."
+  },
+  {
+   "text": "the asymmetry is a property of trial division, not of factoring in general",
+   "addressed_by_this_run": false,
+   "how": "Only trial division was implemented."
+  }
+ ],
+ "anomalies": [
+  "shuffled null twin still favors the prior (R_null=0.186 < 1); see TREATMENT rows' range_idx_p/q for the index band the s=1 walk occupied"
+ ],
+ "core_minutes": 0.22552083333333334,
+ "attempts": 2,
+ "notes": "Outcome CONFOUNDED. At s=1 the prior-ordered solver used 3.54 trial divisions per sample vs 424.79 ascending (R_drift=0.0083). On the temporally shuffled twin the ratio was 0.1864. Positive control first-try 0.9999; cheat ratio 0.0024. R_drift at s=3/10: 0.0333/0.1144. Numbers only; generation cost is 1 multiplication so the infer/generate ratio equals the division count."
+}

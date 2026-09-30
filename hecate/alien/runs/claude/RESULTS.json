@@ -1,0 +1,5258 @@
+{
+ "summary": {
+  "model": "claude",
+  "n_blind": 100,
+  "by_group": {
+   "A": {
+    "n": 32,
+    "t1_RULE_rate": 1.0,
+    "t1_RANDOM_rate": 0.0,
+    "t2_comp": 0.9286458333333334,
+    "t2_exact": 0.8020833333333334,
+    "t2_bar": 0.5194444444444444,
+    "t3_comp": 0.9325520833333333,
+    "code_eval_comp": 0.9227777777777778,
+    "code_eval_exact": 0.7955000000000001,
+    "code_intervention_exact": 0.8194444444444444,
+    "code_length_median": 190.0,
+    "learned_rate": 0.875,
+    "incoherent_rate": 0.0,
+    "familiar_yes_rate": 0.5,
+    "analogy_classes": {
+     "NO_ANALOGY": 17,
+     "USEFUL_PARTIAL_ANALOGY": 4,
+     "CORRECT_ANALOGY": 5,
+     "FALSE_COLLAPSE_TO_FAMILIAR": 2,
+     "SUPERFICIAL_ANALOGY": 4
+    },
+    "t4_status": {
+     "TRUE": 26,
+     "UNTESTABLE": 78
+    },
+    "planted_recall": [
+     0.53125,
+     32
+    ],
+    "invariant_precision": 1.0
+   },
+   "AADV": {
+    "n": 8,
+    "t1_RULE_rate": 0.875,
+    "t1_RANDOM_rate": 0.125,
+    "t2_comp": 0.32552083333333337,
+    "t2_exact": 0.19791666666666669,
+    "t2_bar": 0.25,
+    "t3_comp": 0.5973958333333333,
+    "code_eval_comp": 0.33203125,
+    "code_eval_exact": 0.211875,
+    "code_intervention_exact": 0.2708333333333333,
+    "code_length_median": 815.5,
+    "learned_rate": 0.25,
+    "incoherent_rate": 0.0,
+    "familiar_yes_rate": 0.0,
+    "analogy_classes": {
+     "NO_ANALOGY": 8
+    },
+    "t4_status": {
+     "UNTESTABLE": 22
+    },
+    "planted_recall": [
+     0.0,
+     6
+    ],
+    "invariant_precision": null
+   },
+   "K": {
+    "n": 20,
+    "t1_RULE_rate": 1.0,
+    "t1_RANDOM_rate": 0.0,
+    "t2_comp": 0.9972222222222221,
+    "t2_exact": 0.9833333333333332,
+    "t2_bar": 0.5668749999999999,
+    "t3_comp": 0.9930555555555556,
+    "code_eval_comp": 0.9960416666666667,
+    "code_eval_exact": 0.9782499999999998,
+    "code_intervention_exact": 0.9666666666666666,
+    "code_length_median": 122.0,
+    "learned_rate": 1.0,
+    "incoherent_rate": 0.0,
+    "familiar_yes_rate": 0.95,
+    "analogy_classes": {
+     "CORRECT_ANALOGY": 19,
+     "NO_ANALOGY": 1
+    },
+    "t4_status": {
+     "FALSE": 2,
+     "TRIVIAL": 2,
+     "UNTESTABLE": 35,
+     "TRUE": 38
+    },
+    "planted_recall": [
+     null,
+     0
+    ],
+    "invariant_precision": 0.95
+   },
+   "N_CONJ": {
+    "n": 7,
+    "t1_RULE_rate": 0.7142857142857143,
+    "t1_RANDOM_rate": 0.14285714285714285,
+    "t2_comp": 0.2779761904761905,
+    "t2_exact": 0.08333333333333334,
+    "t2_bar": 0.3244047619047619,
+    "t3_comp": 0.4257936507936507,
+    "code_eval_comp": 0.2805357142857143,
+    "code_eval_exact": 0.08357142857142859,
+    "code_intervention_exact": 0.08730158730158731,
+    "code_length_median": 290.0,
+    "learned_rate": 0.0,
+    "incoherent_rate": 0.0,
+    "familiar_yes_rate": 0.0,
+    "analogy_classes": {
+     "NO_ANALOGY": 7
+    },
+    "t4_status": {
+     "UNTESTABLE": 14,
+     "TRUE": 1
+    },
+    "planted_recall": [
+     null,
+     0
+    ],
+    "invariant_precision": 1.0
+   },
+   "N_DESTROY": {
+    "n": 10,
+    "t1_RULE_rate": 1.0,
+    "t1_RANDOM_rate": 0.0,
+    "t2_comp": 0.7875,
+    "t2_exact": 0.5166666666666666,
+    "t2_bar": 0.47069444444444447,
+    "t3_comp": 0.7986111111111112,
+    "code_eval_comp": 0.8011250000000001,
+    "code_eval_exact": 0.5559999999999999,
+    "code_intervention_exact": 0.5916666666666666,
+    "code_length_median": 224.0,
+    "learned_rate": 0.6,
+    "incoherent_rate": 0.0,
+    "familiar_yes_rate": 0.3,
+    "analogy_classes": {
+     "NO_ANALOGY": 7,
+     "SUPERFICIAL_ANALOGY": 2,
+     "CORRECT_ANALOGY": 1
+    },
+    "t4_status": {
+     "UNTESTABLE": 29,
+     "TRUE": 3,
+     "TRIVIAL": 1,
+     "FALSE": 2
+    },
+    "planted_recall": [
+     null,
+     0
+    ],
+    "invariant_precision": 0.6
+   },
+   "N_DSCRAMBLE": {
+    "n": 11,
+    "t1_RULE_rate": 0.45454545454545453,
+    "t1_RANDOM_rate": 0.09090909090909091,
+    "t2_comp": 0.5006313131313131,
+    "t2_exact": 0.10606060606060605,
+    "t2_bar": 0.4609848484848486,
+    "t3_comp": 0.5786616161616163,
+    "code_eval_comp": 0.46284166666666665,
+    "code_eval_exact": 0.0865,
+    "code_intervention_exact": 0.11666666666666667,
+    "code_length_median": 77.0,
+    "learned_rate": 0.09090909090909091,
+    "incoherent_rate": 0.0,
+    "familiar_yes_rate": 0.2727272727272727,
+    "analogy_classes": {
+     "NO_ANALOGY": 8,
+     "SUPERFICIAL_ANALOGY": 2,
+     "USEFUL_PARTIAL_ANALOGY": 1
+    },
+    "t4_status": {
+     "UNTESTABLE": 22,
+     "FALSE": 1
+    },
+    "planted_recall": [
+     null,
+     0
+    ],
+    "invariant_precision": 0.0
+   },
+   "N_SCRAMBLE": {
+    "n": 4,
+    "t1_RULE_rate": 0.75,
+    "t1_RANDOM_rate": 0.25,
+    "t2_comp": 0.3194444444444444,
+    "t2_exact": 0.0,
+    "t2_bar": 0.30833333333333324,
+    "t3_comp": 0.5388888888888889,
+    "code_eval_comp": 0.40166666666666667,
+    "code_eval_exact": 0.03666666666666667,
+    "code_intervention_exact": 0.10185185185185185,
+    "code_length_median": 858.5,
+    "learned_rate": 0.0,
+    "incoherent_rate": 0.25,
+    "familiar_yes_rate": 0.0,
+    "analogy_classes": {
+     "NO_ANALOGY": 4
+    },
+    "t4_status": {
+     "UNTESTABLE": 8
+    },
+    "planted_recall": [
+     null,
+     0
+    ],
+    "invariant_precision": null
+   },
+   "N_SEDUCTIVE": {
+    "n": 8,
+    "t1_RULE_rate": 0.75,
+    "t1_RANDOM_rate": 0.0,
+    "t2_comp": 0.26822916666666663,
+    "t2_exact": 0.010416666666666666,
+    "t2_bar": 0.3505208333333333,
+    "t3_comp": 0.4984375,
+    "code_eval_comp": 0.32265625,
+    "code_eval_exact": 0.04625,
+    "code_intervention_exact": 0.09375,
+    "code_length_median": 569.5,
+    "learned_rate": 0.0,
+    "incoherent_rate": 0.0,
+    "familiar_yes_rate": 0.0,
+    "analogy_classes": {
+     "NO_ANALOGY": 8
+    },
+    "t4_status": {
+     "UNTESTABLE": 20
+    },
+    "planted_recall": [
+     null,
+     0
+    ],
+    "invariant_precision": null
+   }
+  },
+  "confusion": {
+   "t1_verdict": {
+    "A": {
+     "RULE": 32
+    },
+    "AADV": {
+     "RULE": 7,
+     "RANDOM": 1
+    },
+    "K": {
+     "RULE": 20
+    },
+    "N_CONJ": {
+     "RULE": 5,
+     "UNCERTAIN": 1,
+     "RANDOM": 1
+    },
+    "N_DESTROY": {
+     "RULE": 10
+    },
+    "N_DSCRAMBLE": {
+     "UNCERTAIN": 5,
+     "RULE": 5,
+     "RANDOM": 1
+    },
+    "N_SCRAMBLE": {
+     "RULE": 3,
+     "RANDOM": 1
+    },
+    "N_SEDUCTIVE": {
+     "RULE": 6,
+     "UNCERTAIN": 2
+    }
+   },
+   "coherence": {
+    "A": {
+     "COHERENT": 31,
+     "UNCLEAR": 1
+    },
+    "AADV": {
+     "COHERENT": 8
+    },
+    "K": {
+     "COHERENT": 20
+    },
+    "N_CONJ": {
+     "COHERENT": 5,
+     "UNCLEAR": 2
+    },
+    "N_DESTROY": {
+     "UNCLEAR": 1,
+     "COHERENT": 9
+    },
+    "N_DSCRAMBLE": {
+     "COHERENT": 8,
+     "UNCLEAR": 3
+    },
+    "N_SCRAMBLE": {
+     "COHERENT": 3,
+     "INCOHERENT": 1
+    },
+    "N_SEDUCTIVE": {
+     "COHERENT": 8
+    }
+   },
+   "familiar": {
+    "A": {
+     "NO": 16,
+     "YES": 16
+    },
+    "AADV": {
+     "NO": 8
+    },
+    "K": {
+     "YES": 19,
+     "NO": 1
+    },
+    "N_CONJ": {
+     "NO": 7
+    },
+    "N_DESTROY": {
+     "NO": 7,
+     "YES": 3
+    },
+    "N_DSCRAMBLE": {
+     "NO": 8,
+     "YES": 3
+    },
+    "N_SCRAMBLE": {
+     "NO": 4
+    },
+    "N_SEDUCTIVE": {
+     "NO": 8
+    }
+   }
+  },
+  "discrimination": {
+   "t1_K_vs_incomp": 1.0,
+   "t1_A_vs_incomp": 0.98125,
+   "t1_Aall_vs_incomp": 0.9404166666666667,
+   "t1_AADV_vs_SEDUCTIVE": 0.6875,
+   "t1_A_vs_DESTROY": 0.6375,
+   "behav_K_vs_incomp": 1.0,
+   "behav_A_vs_incomp": 0.9739583333333334,
+   "behav_Aall_vs_incomp": 0.9075,
+   "behav_AADV_vs_SEDUCTIVE": 0.796875,
+   "behav_A_vs_DESTROY": 0.6359375
+  },
+  "pairs": {
+   "INCOMP": {
+    "n": 30,
+    "accuracy": 0.7666666666666667
+   },
+   "type:DSCRAMBLE": {
+    "n": 11,
+    "accuracy": 0.9090909090909091
+   },
+   "type:SCRAMBLE": {
+    "n": 4,
+    "accuracy": 0.5
+   },
+   "type:SEDUCTIVE": {
+    "n": 8,
+    "accuracy": 0.5
+   },
+   "type:DESTROY": {
+    "n": 10,
+    "accuracy": 0.5
+   },
+   "type:CONJ": {
+    "n": 7,
+    "accuracy": 1.0
+   }
+  },
+  "detector_validation": {
+   "t1_auc_A_vs_incomp": 0.98125,
+   "ci95_low": 0.9473958333333333,
+   "pair_accuracy_incomp": 0.7666666666666667,
+   "verdict": "NOVELTY_DETECTOR_NOT_VALIDATED"
+  },
+  "failure_taxonomy": {
+   "n_misses": 11,
+   "primary": {
+    "PARTIAL_STRUCTURE": 3,
+    "EXPLANATORY_WITHOUT_PREDICTION": 1,
+    "PREDICTIVE_WITHOUT_EXPLANATION": 1,
+    "RIGHT_STRUCTURE_WRONG_MECHANISM": 5,
+    "FALSE_NOISE": 1
+   },
+   "all_tags": {
+    "PARTIAL_STRUCTURE": 3,
+    "RECOVERED_AFTER_EXPERIMENTATION": 1,
+    "RECOVERED_AFTER_RULE_REVEAL": 2,
+    "EXPLANATORY_WITHOUT_PREDICTION": 1,
+    "PREDICTIVE_WITHOUT_EXPLANATION": 1,
+    "RIGHT_STRUCTURE_WRONG_MECHANISM": 5,
+    "FALSE_NOISE": 1
+   },
+   "by_system": {
+    "SYS-19722": [
+     "PARTIAL_STRUCTURE",
+     "RECOVERED_AFTER_EXPERIMENTATION"
+    ],
+    "SYS-44623": [
+     "PARTIAL_STRUCTURE",
+     "RECOVERED_AFTER_RULE_REVEAL"
+    ],
+    "SYS-67770": [
+     "EXPLANATORY_WITHOUT_PREDICTION",
+     "RECOVERED_AFTER_RULE_REVEAL"
+    ],
+    "SYS-70053": [
+     "PREDICTIVE_WITHOUT_EXPLANATION"
+    ],
+    "SYS-80858": [
+     "PARTIAL_STRUCTURE"
+    ],
+    "SYS-37739": [
+     "RIGHT_STRUCTURE_WRONG_MECHANISM"
+    ],
+    "SYS-41174": [
+     "FALSE_NOISE"
+    ],
+    "SYS-42741": [
+     "RIGHT_STRUCTURE_WRONG_MECHANISM"
+    ],
+    "SYS-46005": [
+     "RIGHT_STRUCTURE_WRONG_MECHANISM"
+    ],
+    "SYS-46945": [
+     "RIGHT_STRUCTURE_WRONG_MECHANISM"
+    ],
+    "SYS-67061": [
+     "RIGHT_STRUCTURE_WRONG_MECHANISM"
+    ]
+   }
+  },
+  "prose_vs_tuple_t2_comp": {
+   "A": {
+    "tuple": 0.9143055555555556,
+    "prose": 0.7776388888888889
+   },
+   "K": {
+    "tuple": 0.9944444444444445,
+    "prose": 0.9944444444444445
+   },
+   "N_CONJ": {
+    "tuple": 0.2541666666666667,
+    "prose": 0.3319444444444445
+   },
+   "N_DSCRAMBLE": {
+    "tuple": 0.5208333333333334,
+    "prose": 0.48333333333333334
+   },
+   "N_SCRAMBLE": {
+    "tuple": 0.27777777777777773,
+    "prose": 0.2083333333333333
+   },
+   "N_SEDUCTIVE": {
+    "tuple": 0.27777777777777773,
+    "prose": 0.3055555555555556
+   }
+  },
+  "hypotheses": {
+   "H1_t1": {
+    "estimate": 0.018750000000000044,
+    "ci95": [
+     0.0005208333333333037,
+     0.051562499999999956
+    ],
+    "decision": "INDETERMINATE"
+   },
+   "H1_behav": {
+    "estimate": 0.02604166666666663,
+    "ci95": [
+     0.002083333333333326,
+     0.06458333333333333
+    ],
+    "decision": "INDETERMINATE"
+   },
+   "H2": {
+    "estimate": 0.0,
+    "ci95": [
+     0.0,
+     0.0
+    ],
+    "n_A": 32,
+    "n_K": 20,
+    "decision": "NOT_SUPPORTED"
+   },
+   "H2_within_family": {
+    "tab": 0.0,
+    "graph": 0.0,
+    "rewrite": 0.0,
+    "vm": 0.0,
+    "map": 0.0
+   },
+   "H5": {
+    "estimate": 0.0625,
+    "ci95": [
+     0.0,
+     0.15625
+    ],
+    "n_A": 32,
+    "n_K": 20,
+    "decision": "INDETERMINATE"
+   },
+   "H3": {
+    "n_A": 10,
+    "n_K": 4,
+    "n_N": 6,
+    "passive_gap_K_minus_A": 0.19999999999999996,
+    "active_gap_K_minus_A": 0.09999999999999998,
+    "A_learned_passive": 0.8,
+    "A_learned_active": 0.9,
+    "N_learned_active": 0.0,
+    "note": "descriptive; underpowered by design (PREREG s6)",
+    "decision": "INDETERMINATE"
+   },
+   "H4": {
+    "n_A": 15,
+    "n_K": 10,
+    "blind_gap": 0.0,
+    "reveal_gap": 0.0,
+    "reveal_coherent_rate": {
+     "A": 1.0,
+     "K": 1.0,
+     "N_DESTROY": 1.0
+    },
+    "reveal_t2_exact": {
+     "A": 1.0,
+     "K": 1.0,
+     "N_DESTROY": 1.0
+    },
+    "reveal_planted_recall": [
+     0.4,
+     15
+    ],
+    "decision": "INDETERMINATE"
+   },
+   "H6": {
+    "strict_ids": [],
+    "soft_ids": [
+     "SYS-70053"
+    ],
+    "decision": "NOT_SUPPORTED"
+   }
+  }
+ },
+ "rows": {
+  "SYS-10088": {
+   "id": "SYS-10088",
+   "group": "N_SEDUCTIVE",
+   "family": "vm",
+   "bar_t2": 0.375,
+   "bar_eval": 0.3425,
+   "planted_n": 0,
+   "rule_complexity": 0.2862,
+   "t1_score": 0.8,
+   "t1_verdict": "RULE",
+   "t2_exact": 0.0,
+   "t2_comp": 0.3125,
+   "t3_exact": 0.0,
+   "t3_comp": 0.41666666666666674,
+   "t4": {
+    "UNTESTABLE": 3
+   },
+   "t4_captured": {},
+   "t5": {
+    "status": "OK",
+    "eval_exact": 0.035,
+    "eval_comp": 0.36875,
+    "length": 547,
+    "intervention_exact": 0.0
+   },
+   "learned": false,
+   "behav_score": 0.026249999999999996,
+   "coherence": "COHERENT",
+   "familiar": "NO",
+   "analogy_score": null,
+   "analogy_class": "NO_ANALOGY",
+   "analogy_name": null
+  },
+  "SYS-10355": {
+   "id": "SYS-10355",
+   "group": "K",
+   "family": "graph",
+   "bar_t2": 0.7083333333333334,
+   "bar_eval": 0.705,
+   "planted_n": 0,
+   "rule_complexity": 0.0881,
+   "t1_score": 0.93,
+   "t1_verdict": "RULE",
+   "t2_exact": 0.6666666666666666,
+   "t2_comp": 0.9444444444444446,
+   "t3_exact": 0.5,
+   "t3_comp": 0.8611111111111112,
+   "t4": {
+    "FALSE": 1,
+    "TRIVIAL": 1,
+    "UNTESTABLE": 1,
+    "TRUE": 1
+   },
+   "t4_captured": {},
+   "t5": {
+    "status": "OK",
+    "eval_exact": 0.565,
+    "eval_comp": 0.9208333333333333,
+    "length": 171,
+    "intervention_exact": 0.3333333333333333
+   },
+   "learned": true,
+   "behav_score": 0.23611111111111127,
+   "coherence": "COHERENT",
+   "familiar": "YES",
+   "analogy_score": {
+    "status": "OK",
+    "eval_exact": 0.93,
+    "eval_comp": 0.9883333333333333,
+    "length": 329,
+    "intervention_exact": 0.3333333333333333
+   },
+   "analogy_class": "CORRECT_ANALOGY",
+   "analogy_name": "Synchronous plurality (majority-vote) cellular automaton / voter-style majority dynamics on a graph, as in consensus or opinion dynamics with multiple states",
+   "reveal": {
+    "coherence": "COHERENT",
+    "t2": [
+     1.0,
+     1.0
+    ],
+    "t3": [
+     1.0,
+     1.0
+    ],
+    "t4": {
+     "UNTESTABLE": 6
+    },
+    "captured": {}
+   },
+   "prose_t2": [
+    0.6666666666666666,
+    0.9444444444444446
+   ]
+  },
+  "SYS-10772": {
+   "id": "SYS-10772",
+   "group": "N_SEDUCTIVE",
+   "family": "tab",
+   "bar_t2": 0.3333333333333333,
+   "bar_eval": 0.31600000000000006,
+   "planted_n": 0,
+   "rule_complexity": 0.2724,
+   "t1_score": 0.6,
+   "t1_verdict": "RULE",
+   "t2_exact": 0.0,
+   "t2_comp": 0.25000000000000006,
+   "t3_exact": 0.0,
+   "t3_comp": 0.41666666666666663,
+   "t4": {
+    "UNTESTABLE": 2
+   },
+   "t4_captured": {},
+   "t5": {
+    "status": "OK",
+    "eval_exact": 0.0,
+    "eval_comp": 0.31500000000000006,
+    "length": 27,
+    "intervention_exact": 0.0
+   },
+   "learned": false,
+   "behav_score": -0.0010000000000000009,
+   "coherence": "COHERENT",
+   "familiar": "NO",
+   "analogy_score": null,
+   "analogy_class": "NO_ANALOGY",
+   "analogy_name": null
+  },
+  "SYS-11297": {
+   "id": "SYS-11297",
+   "group": "N_CONJ",
+   "family": "graph",
+   "bar_t2": 0.25,
+   "bar_eval": 0.285,
+   "planted_n": 0,
+   "rule_complexity": 0.144,
+   "t1_score": 0.6,
+   "t1_verdict": "RULE",
+   "t2_exact": 0.0,
+   "t2_comp": 0.20833333333333334,
+   "t3_exact": 0.08333333333333333,
+   "t3_comp": 0.38888888888888884,
+   "t4": {
+    "UNTESTABLE": 2
+   },
+   "t4_captured": {},
+   "t5": {
+    "status": "OK",
+    "eval_exact": 0.0,
+    "eval_comp": 0.2658333333333333,
+    "length": 1038,
+    "intervention_exact": 0.1111111111111111
+   },
+   "learned": false,
+   "behav_score": -0.019166666666666665,
+   "coherence": "COHERENT",
+   "familiar": "NO",
+   "analogy_score": null,
+   "analogy_class": "NO_ANALOGY",
+   "analogy_name": null
+  },
+  "SYS-12423": {
+   "id": "SYS-12423",
+   "group": "A",
+   "family": "graph",
+   "bar_t2": 0.5277777777777778,
+   "bar_eval": 0.5133333333333333,
+   "planted_n": 1,
+   "rule_complexity": 0.1152,
+   "t1_score": 0.85,
+   "t1_verdict": "RULE",
+   "t2_exact": 0.5833333333333334,
+   "t2_comp": 0.9166666666666669,
+   "t3_exact": 0.41666666666666663,
+   "t3_comp": 0.7638888888888888,
+   "t4": {
+    "TRUE": 1,
+    "UNTESTABLE": 2
+   },
+   "t4_captured": {
+    "{\"max_transient\": 20, \"type\": \"all_orbits_fixed\"}": true
+   },
+   "t5": {
+    "status": "OK",
+    "eval_exact": 0.71,
+    "eval_comp": 0.94,
+    "length": 180,
+    "intervention_exact": 0.4444444444444444
+   },
+   "learned": true,
+   "behav_score": 0.42666666666666664,
+   "coherence": "COHERENT",
+   "familiar": "NO",
+   "analogy_score": null,
+   "analogy_class": "NO_ANALOGY",
+   "analogy_name": null
+  },
+  "SYS-13028": {
+   "id": "SYS-13028",
+   "group": "N_DSCRAMBLE",
+   "family": "map",
+   "bar_t2": 0.0,
+   "bar_eval": 0.03,
+   "planted_n": 0,
+   "rule_complexity": 0.3365,
+   "t1_score": 0.5,
+   "t1_verdict": "UNCERTAIN",
+   "t2_exact": 0.0,
+   "t2_comp": 0.0,
+   "t3_exact": 0.0,
+   "t3_comp": 0.5,
+   "t4": {
+    "UNTESTABLE": 1
+   },
+   "t4_captured": {},
+   "t5": {
+    "status": "OK",
+    "eval_exact": 0.0,
+    "eval_comp": 0.0225,
+    "length": 1054,
+    "intervention_exact": 0.0
+   },
+   "learned": false,
+   "behav_score": 0.0,
+   "coherence": "COHERENT",
+   "familiar": "NO",
+   "analogy_score": null,
+   "analogy_class": "NO_ANALOGY",
+   "analogy_name": null
+  },
+  "SYS-14118": {
+   "id": "SYS-14118",
+   "group": "A",
+   "family": "graph",
+   "bar_t2": 0.5555555555555556,
+   "bar_eval": 0.5383333333333333,
+   "planted_n": 1,
+   "rule_complexity": 0.1292,
+   "t1_score": 0.75,
+   "t1_verdict": "RULE",
+   "t2_exact": 1.0,
+   "t2_comp": 1.0,
+   "t3_exact": 1.0,
+   "t3_comp": 1.0,
+   "t4": {
+    "TRUE": 1,
+    "UNTESTABLE": 2
+   },
+   "t4_captured": {
+    "{\"max_transient\": 20, \"type\": \"all_orbits_fixed\"}": true
+   },
+   "t5": {
+    "status": "OK",
+    "eval_exact": 1.0,
+    "eval_comp": 1.0,
+    "length": 214,
+    "intervention_exact": 1.0
+   },
+   "learned": true,
+   "behav_score": 0.46166666666666667,
+   "coherence": "COHERENT",
+   "familiar": "NO",
+   "analogy_score": null,
+   "analogy_class": "NO_ANALOGY",
+   "analogy_name": null,
+   "reveal": {
+    "coherence": "COHERENT",
+    "t2": [
+     1.0,
+     1.0
+    ],
+    "t3": [
+     1.0,
+     1.0
+    ],
+    "t4": {
+     "UNTESTABLE": 3
+    },
+    "captured": {
+     "{\"max_transient\": 20, \"type\": \"all_orbits_fixed\"}": false
+    }
+   }
+  },
+  "SYS-14145": {
+   "id": "SYS-14145",
+   "group": "N_CONJ",
+   "family": "vm",
+   "bar_t2": 0.25,
+   "bar_eval": 0.2675,
+   "planted_n": 0,
+   "rule_complexity": 0.2677,
+   "t1_score": 0.5,
+   "t1_verdict": "UNCERTAIN",
+   "t2_exact": 0.16666666666666666,
+   "t2_comp": 0.25,
+   "t3_exact": 0.0,
+   "t3_comp": 0.3541666666666667,
+   "t4": {
+    "UNTESTABLE": 1
+   },
+   "t4_captured": {},
+   "t5": {
+    "status": "OK",
+    "eval_exact": 0.145,
+    "eval_comp": 0.3075,
+    "length": 290,
+    "intervention_exact": 0.0
+   },
+   "learned": false,
+   "behav_score": 0.03999999999999998,
+   "coherence": "COHERENT",
+   "familiar": "NO",
+   "analogy_score": null,
+   "analogy_class": "NO_ANALOGY",
+   "analogy_name": null,
+   "active": {
+    "t1": [
+     0.44999999999999996,
+     "RANDOM"
+    ],
+    "t2": [
+     0.0,
+     0.20833333333333334
+    ],
+    "t5": {
+     "status": "OK",
+     "eval_exact": 0.0,
+     "eval_comp": 0.15625,
+     "length": 678,
+     "intervention_exact": 0.0
+    },
+    "captured": {},
+    "n_experiments": 10,
+    "learned": false
+   }
+  },
+  "SYS-14535": {
+   "id": "SYS-14535",
+   "group": "N_DSCRAMBLE",
+   "family": "map",
+   "bar_t2": 0.08333333333333333,
+   "bar_eval": 0.08,
+   "planted_n": 0,
+   "rule_complexity": 0.3167,
+   "t1_score": 0.5,
+   "t1_verdict": "UNCERTAIN",
+   "t2_exact": 0.0,
+   "t2_comp": 0.041666666666666664,
+   "t3_exact": 0.0,
+   "t3_comp": 0.5,
+   "t4": {
+    "UNTESTABLE": 1
+   },
+   "t4_captured": {},
+   "t5": {
+    "status": "OK",
+    "eval_exact": 0.005,
+    "eval_comp": 0.0725,
+    "length": 944,
+    "intervention_exact": 0.0
+   },
+   "learned": false,
+   "behav_score": -0.007500000000000007,
+   "coherence": "COHERENT",
+   "familiar": "NO",
+   "analogy_score": null,
+   "analogy_class": "NO_ANALOGY",
+   "analogy_name": null,
+   "active": {
+    "t1": [
+     0.5,
+     "RANDOM"
+    ],
+    "t2": [
+     0.0,
+     0.041666666666666664
+    ],
+    "t5": {
+     "status": "OK",
+     "eval_exact": 0.035,
+     "eval_comp": 0.1,
+     "length": 587,
+     "intervention_exact": 0.0
+    },
+    "captured": {},
+    "n_experiments": 10,
+    "learned": false
+   }
+  },
+  "SYS-14818": {
+   "id": "SYS-14818",
+   "group": "AADV",
+   "family": "vm",
+   "bar_t2": 0.625,
+   "bar_eval": 0.6275,
+   "planted_n": 1,
+   "rule_complexity": 0.2329,
+   "t1_score": 0.88,
+   "t1_verdict": "RULE",
+   "t2_exact": 0.8333333333333334,
+   "t2_comp": 0.9583333333333334,
+   "t3_exact": 1.0,
+   "t3_comp": 1.0,
+   "t4": {
+    "UNTESTABLE": 3
+   },
+   "t4_captured": {},
+   "t5": {
+    "status": "OK",
+    "eval_exact": 0.815,
+    "eval_comp": 0.95375,
+    "length": 244,
+    "intervention_exact": 1.0
+   },
+   "learned": true,
+   "behav_score": 0.33333333333333337,
+   "coherence": "COHERENT",
+   "familiar": "NO",
+   "analogy_score": null,
+   "analogy_class": "NO_ANALOGY",
+   "analogy_name": null
+  },
+  "SYS-16220": {
+   "id": "SYS-16220",
+   "group": "K",
+   "family": "map",
+   "bar_t2": 0.0,
+   "bar_eval": 0.05,
+   "planted_n": 0,
+   "rule_complexity": 0.3774,
+   "t1_score": 0.98,
+   "t1_verdict": "RULE",
+   "t2_exact": 1.0,
+   "t2_comp": 1.0,
+   "t3_exact": 1.0,
+   "t3_comp": 1.0,
+   "t4": {
+    "TRUE": 3,
+    "UNTESTABLE": 1
+   },
+   "t4_captured": {},
+   "t5": {
+    "status": "OK",
+    "eval_exact": 1.0,
+    "eval_comp": 1.0,
+    "length": 54,
+    "intervention_exact": 1.0
+   },
+   "learned": true,
+   "behav_score": 1.0,
+   "coherence": "COHERENT",
+   "familiar": "YES",
+   "analogy_score": {
+    "status": "OK",
+    "eval_exact": 1.0,
+    "eval_comp": 1.0,
+    "length": 59,
+    "intervention_exact": 1.0
+   },
+   "analogy_class": "CORRECT_ANALOGY",
+   "analogy_name": "Arnold's cat map (discrete, on a 31x31 torus): the linear toral automorphism with matrix [[2,1],[1,1]], i.e. the square of the Fibonacci matrix"
+  },
+  "SYS-17388": {
+   "id": "SYS-17388",
+   "group": "N_DESTROY",
+   "family": "graph",
+   "bar_t2": 0.513888888888889,
+   "bar_eval": 0.43166666666666664,
+   "planted_n": 0,
+   "rule_complexity": 0.1226,
+   "t1_score": 0.7,
+   "t1_verdict": "RULE",
+   "t2_exact": 0.08333333333333333,
+   "t2_comp": 0.49999999999999994,
+   "t3_exact": 0.0,
+   "t3_comp": 0.375,
+   "t4": {
+    "UNTESTABLE": 4
+   },
+   "t4_captured": {},
+   "t5": {
+    "status": "OK",
+    "eval_exact": 0.01,
+    "eval_comp": 0.40333333333333327,
+    "length": 274,
+    "intervention_exact": 0.0
+   },
+   "learned": false,
+   "behav_score": -0.013888888888889006,
+   "coherence": "UNCLEAR",
+   "familiar": "NO",
+   "analogy_score": null,
+   "analogy_class": "NO_ANALOGY",
+   "analogy_name": null
+  },
+  "SYS-18225": {
+   "id": "SYS-18225",
+   "group": "N_DESTROY",
+   "family": "map",
+   "bar_t2": 0.041666666666666664,
+   "bar_eval": 0.04,
+   "planted_n": 0,
+   "rule_complexity": 0.3694,
+   "t1_score": 0.93,
+   "t1_verdict": "RULE",
+   "t2_exact": 1.0,
+   "t2_comp": 1.0,
+   "t3_exact": 1.0,
+   "t3_comp": 1.0,
+   "t4": {
+    "UNTESTABLE": 3
+   },
+   "t4_captured": {},
+   "t5": {
+    "status": "OK",
+    "eval_exact": 1.0,
+    "eval_comp": 1.0,
+    "length": 93,
+    "intervention_exact": 1.0
+   },
+   "learned": true,
+   "behav_score": 0.96,
+   "coherence": "COHERENT",
+   "familiar": "YES",
+   "analogy_score": {
+    "status": "OK",
+    "eval_exact": 0.045,
+    "eval_comp": 0.065,
+    "length": 127,
+    "intervention_exact": 0.0
+   },
+   "analogy_class": "SUPERFICIAL_ANALOGY",
+   "analogy_name": "Quadratic polynomial map over the finite field GF(31) (Henon-like coupled quadratic map mod p)",
+   "reveal": {
+    "coherence": "COHERENT",
+    "t2": [
+     1.0,
+     1.0
+    ],
+    "t3": [
+     1.0,
+     1.0
+    ],
+    "t4": {
+     "UNTESTABLE": 4
+    },
+    "captured": {}
+   }
+  },
+  "SYS-19722": {
+   "id": "SYS-19722",
+   "group": "A",
+   "family": "vm",
+   "bar_t2": 0.5416666666666666,
+   "bar_eval": 0.5025,
+   "planted_n": 1,
+   "rule_complexity": 0.1634,
+   "t1_score": 0.8,
+   "t1_verdict": "RULE",
+   "t2_exact": 0.0,
+   "t2_comp": 0.6458333333333334,
+   "t3_exact": 0.41666666666666663,
+   "t3_comp": 0.7916666666666666,
+   "t4": {
+    "TRUE": 1,
+    "UNTESTABLE": 3
+   },
+   "t4_captured": {
+    "{\"mod\": 7, \"type\": \"conserved_linear\", \"w\": [0, 6, 3, 2]}": false
+   },
+   "t5": {
+    "status": "OK",
+    "eval_exact": 0.345,
+    "eval_comp": 0.72375,
+    "length": 315,
+    "intervention_exact": 0.41666666666666663
+   },
+   "learned": false,
+   "behav_score": 0.22125000000000006,
+   "coherence": "COHERENT",
+   "familiar": "YES",
+   "analogy_score": {
+    "status": "OK",
+    "eval_exact": 0.4,
+    "eval_comp": 0.75,
+    "length": 452,
+    "intervention_exact": 0.3333333333333333
+   },
+   "analogy_class": "USEFUL_PARTIAL_ANALOGY",
+   "analogy_name": "Program-counter-driven register machine / finite-state controller with a halting state",
+   "active": {
+    "t1": [
+     0.85,
+     "RULE"
+    ],
+    "t2": [
+     0.5,
+     0.7708333333333334
+    ],
+    "t5": {
+     "status": "OK",
+     "eval_exact": 0.5,
+     "eval_comp": 0.76125,
+     "length": 378,
+     "intervention_exact": 0.25
+    },
+    "captured": {
+     "{\"mod\": 7, \"type\": \"conserved_linear\", \"w\": [0, 6, 3, 2]}": false
+    },
+    "n_experiments": 10,
+    "learned": true
+   }
+  },
+  "SYS-22177": {
+   "id": "SYS-22177",
+   "group": "N_CONJ",
+   "family": "tab",
+   "bar_t2": 0.25000000000000006,
+   "bar_eval": 0.20199999999999999,
+   "planted_n": 0,
+   "rule_complexity": 0.281,
+   "t1_score": 0.7,
+   "t1_verdict": "RULE",
+   "t2_exact": 0.0,
+   "t2_comp": 0.2166666666666667,
+   "t3_exact": 0.0,
+   "t3_comp": 0.38333333333333336,
+   "t4": {
+    "UNTESTABLE": 3
+   },
+   "t4_captured": {},
+   "t5": {
+    "status": "OK",
+    "eval_exact": 0.0,
+    "eval_comp": 0.21000000000000005,
+    "length": 1824,
+    "intervention_exact": 0.0
+   },
+   "learned": false,
+   "behav_score": 0.008000000000000063,
+   "coherence": "COHERENT",
+   "familiar": "NO",
+   "analogy_score": null,
+   "analogy_class": "NO_ANALOGY",
+   "analogy_name": null,
+   "prose_t2": [
+    0.0,
+    0.15
+   ]
+  },
+  "SYS-26937": {
+   "id": "SYS-26937",
+   "group": "A",
+   "family": "graph",
+   "bar_t2": 0.6527777777777778,
+   "bar_eval": 0.655,
+   "planted_n": 1,
+   "rule_complexity": 0.135,
+   "t1_score": 0.93,
+   "t1_verdict": "RULE",
+   "t2_exact": 1.0,
+   "t2_comp": 1.0,
+   "t3_exact": 1.0,
+   "t3_comp": 1.0,
+   "t4": {
+    "UNTESTABLE": 3,
+    "TRUE": 1
+   },
+   "t4_captured": {
+    "{\"mod\": 1000, \"type\": \"conserved_linear\", \"w\": [1, 1, 1, 1, 1, 1]}": true
+   },
+   "t5": {
+    "status": "OK",
+    "eval_exact": 1.0,
+    "eval_comp": 1.0,
+    "length": 162,
+    "intervention_exact": 1.0
+   },
+   "learned": true,
+   "behav_score": 0.3472222222222222,
+   "coherence": "COHERENT",
+   "familiar": "NO",
+   "analogy_score": null,
+   "analogy_class": "NO_ANALOGY",
+   "analogy_name": null,
+   "active": {
+    "t1": [
+     0.95,
+     "RULE"
+    ],
+    "t2": [
+     1.0,
+     1.0
+    ],
+    "t5": {
+     "status": "OK",
+     "eval_exact": 1.0,
+     "eval_comp": 1.0,
+     "length": 162,
+     "intervention_exact": 1.0
+    },
+    "captured": {
+     "{\"mod\": 1000, \"type\": \"conserved_linear\", \"w\": [1, 1, 1, 1, 1, 1]}": true
+    },
+    "n_experiments": 10,
+    "learned": true
+   }
+  },
+  "SYS-28905": {
+   "id": "SYS-28905",
+   "group": "A",
+   "family": "map",
+   "bar_t2": 0.125,
+   "bar_eval": 0.085,
+   "planted_n": 1,
+   "rule_complexity": 0.3912,
+   "t1_score": 0.95,
+   "t1_verdict": "RULE",
+   "t2_exact": 1.0,
+   "t2_comp": 1.0,
+   "t3_exact": 1.0,
+   "t3_comp": 1.0,
+   "t4": {
+    "TRUE": 1,
+    "UNTESTABLE": 1
+   },
+   "t4_captured": {
+    "{\"type\": \"bijective\"}": true
+   },
+   "t5": {
+    "status": "OK",
+    "eval_exact": 1.0,
+    "eval_comp": 1.0,
+    "length": 111,
+    "intervention_exact": 1.0
+   },
+   "learned": true,
+   "behav_score": 0.915,
+   "coherence": "COHERENT",
+   "familiar": "NO",
+   "analogy_score": null,
+   "analogy_class": "NO_ANALOGY",
+   "analogy_name": null,
+   "active": {
+    "t1": [
+     0.95,
+     "RULE"
+    ],
+    "t2": [
+     1.0,
+     1.0
+    ],
+    "t5": {
+     "status": "OK",
+     "eval_exact": 1.0,
+     "eval_comp": 1.0,
+     "length": 104,
+     "intervention_exact": 1.0
+    },
+    "captured": {
+     "{\"type\": \"bijective\"}": true
+    },
+    "n_experiments": 10,
+    "learned": true
+   }
+  },
+  "SYS-29201": {
+   "id": "SYS-29201",
+   "group": "N_DESTROY",
+   "family": "tab",
+   "bar_t2": 0.4833333333333334,
+   "bar_eval": 0.44,
+   "planted_n": 0,
+   "rule_complexity": 0.1848,
+   "t1_score": 0.8,
+   "t1_verdict": "RULE",
+   "t2_exact": 0.4166666666666667,
+   "t2_comp": 0.7333333333333334,
+   "t3_exact": 0.25,
+   "t3_comp": 0.75,
+   "t4": {
+    "UNTESTABLE": 6
+   },
+   "t4_captured": {},
+   "t5": {
+    "status": "OK",
+    "eval_exact": 0.265,
+    "eval_comp": 0.7269999999999999,
+    "length": 826,
+    "intervention_exact": 0.25
+   },
+   "learned": true,
+   "behav_score": 0.28699999999999987,
+   "coherence": "COHERENT",
+   "familiar": "NO",
+   "analogy_score": null,
+   "analogy_class": "NO_ANALOGY",
+   "analogy_name": null,
+   "reveal": {
+    "coherence": "COHERENT",
+    "t2": [
+     1.0,
+     1.0
+    ],
+    "t3": [
+     1.0,
+     1.0
+    ],
+    "t4": {
+     "UNTESTABLE": 4
+    },
+    "captured": {}
+   }
+  },
+  "SYS-29535": {
+   "id": "SYS-29535",
+   "group": "A",
+   "family": "tab",
+   "bar_t2": 0.6,
+   "bar_eval": 0.518,
+   "planted_n": 1,
+   "rule_complexity": 0.2936,
+   "t1_score": 0.93,
+   "t1_verdict": "RULE",
+   "t2_exact": 1.0,
+   "t2_comp": 1.0,
+   "t3_exact": 1.0,
+   "t3_comp": 1.0,
+   "t4": {
+    "UNTESTABLE": 3
+   },
+   "t4_captured": {
+    "{\"type\": \"bijective\"}": false
+   },
+   "t5": {
+    "status": "OK",
+    "eval_exact": 1.0,
+    "eval_comp": 1.0,
+    "length": 174,
+    "intervention_exact": 1.0
+   },
+   "learned": true,
+   "behav_score": 0.482,
+   "coherence": "COHERENT",
+   "familiar": "NO",
+   "analogy_score": null,
+   "analogy_class": "NO_ANALOGY",
+   "analogy_name": null,
+   "active": {
+    "t1": [
+     0.93,
+     "RULE"
+    ],
+    "t2": [
+     1.0,
+     1.0
+    ],
+    "t5": {
+     "status": "OK",
+     "eval_exact": 1.0,
+     "eval_comp": 1.0,
+     "length": 174,
+     "intervention_exact": 1.0
+    },
+    "captured": {
+     "{\"type\": \"bijective\"}": true
+    },
+    "n_experiments": 10,
+    "learned": true
+   }
+  },
+  "SYS-29593": {
+   "id": "SYS-29593",
+   "group": "N_SCRAMBLE",
+   "family": "tab",
+   "bar_t2": 0.39999999999999997,
+   "bar_eval": 0.21399999999999994,
+   "planted_n": 0,
+   "rule_complexity": 0.2502,
+   "t1_score": 0.55,
+   "t1_verdict": "RULE",
+   "t2_exact": 0.0,
+   "t2_comp": 0.25000000000000006,
+   "t3_exact": 0.0,
+   "t3_comp": 0.4333333333333333,
+   "t4": {
+    "UNTESTABLE": 3
+   },
+   "t4_captured": {},
+   "t5": {
+    "status": "ERROR",
+    "error": "rejected: attribute join",
+    "length": 927
+   },
+   "learned": false,
+   "behav_score": -0.1499999999999999,
+   "coherence": "COHERENT",
+   "familiar": "NO",
+   "analogy_score": null,
+   "analogy_class": "NO_ANALOGY",
+   "analogy_name": null,
+   "active": {
+    "t1": [
+     0.5,
+     "UNCERTAIN"
+    ],
+    "t2": [
+     0.0,
+     0.21666666666666667
+    ],
+    "t5": {
+     "status": "OK",
+     "eval_exact": 0.0,
+     "eval_comp": 0.20600000000000002,
+     "length": 135,
+     "intervention_exact": 0.0
+    },
+    "captured": {},
+    "n_experiments": 10,
+    "learned": false
+   }
+  },
+  "SYS-30077": {
+   "id": "SYS-30077",
+   "group": "K",
+   "family": "rewrite",
+   "bar_t2": 0.6944444444444445,
+   "bar_eval": 0.7200000000000003,
+   "planted_n": 0,
+   "rule_complexity": 0.1768,
+   "t1_score": 0.88,
+   "t1_verdict": "RULE",
+   "t2_exact": 1.0,
+   "t2_comp": 1.0,
+   "t3_exact": 1.0,
+   "t3_comp": 1.0,
+   "t4": {
+    "TRUE": 3,
+    "UNTESTABLE": 1
+   },
+   "t4_captured": {},
+   "t5": {
+    "status": "OK",
+    "eval_exact": 1.0,
+    "eval_comp": 1.0,
+    "length": 165,
+    "intervention_exact": 1.0
+   },
+   "learned": true,
+   "behav_score": 0.30555555555555547,
+   "coherence": "COHERENT",
+   "familiar": "YES",
+   "analogy_score": {
+    "status": "OK",
+    "eval_exact": 1.0,
+    "eval_comp": 1.0,
+    "length": 189,
+    "intervention_exact": 1.0
+   },
+   "analogy_class": "CORRECT_ANALOGY",
+   "analogy_name": "String rewriting system (semi-Thue system) with leftmost single-rewrite strategy; the Z-moving rules resemble one bubble-sort-style adjacent swap per step",
+   "reveal": {
+    "coherence": "COHERENT",
+    "t2": [
+     1.0,
+     1.0
+    ],
+    "t3": [
+     1.0,
+     1.0
+    ],
+    "t4": {
+     "TRUE": 3,
+     "TRIVIAL": 1,
+     "UNTESTABLE": 1
+    },
+    "captured": {}
+   },
+   "prose_t2": [
+    1.0,
+    1.0
+   ]
+  },
+  "SYS-30128": {
+   "id": "SYS-30128",
+   "group": "N_SEDUCTIVE",
+   "family": "vm",
+   "bar_t2": 0.3958333333333333,
+   "bar_eval": 0.34,
+   "planted_n": 0,
+   "rule_complexity": 0.2317,
+   "t1_score": 0.6,
+   "t1_verdict": "RULE",
+   "t2_exact": 0.0,
+   "t2_comp": 0.3333333333333333,
+   "t3_exact": 0.0,
+   "t3_comp": 0.43749999999999994,
+   "t4": {
+    "UNTESTABLE": 2
+   },
+   "t4_captured": {},
+   "t5": {
+    "status": "OK",
+    "eval_exact": 0.005,
+    "eval_comp": 0.3175,
+    "length": 930,
+    "intervention_exact": 0.0
+   },
+   "learned": false,
+   "behav_score": -0.02250000000000002,
+   "coherence": "COHERENT",
+   "familiar": "NO",
+   "analogy_score": null,
+   "analogy_class": "NO_ANALOGY",
+   "analogy_name": null,
+   "prose_t2": [
+    0.0,
+    0.3333333333333333
+   ]
+  },
+  "SYS-32523": {
+   "id": "SYS-32523",
+   "group": "K",
+   "family": "tab",
+   "bar_t2": 0.7833333333333333,
+   "bar_eval": 0.748,
+   "planted_n": 0,
+   "rule_complexity": 0.2069,
+   "t1_score": 0.97,
+   "t1_verdict": "RULE",
+   "t2_exact": 1.0,
+   "t2_comp": 1.0,
+   "t3_exact": 1.0,
+   "t3_comp": 1.0,
+   "t4": {
+    "TRUE": 3,
+    "UNTESTABLE": 1
+   },
+   "t4_captured": {},
+   "t5": {
+    "status": "OK",
+    "eval_exact": 1.0,
+    "eval_comp": 1.0,
+    "length": 93,
+    "intervention_exact": 1.0
+   },
+   "learned": true,
+   "behav_score": 0.252,
+   "coherence": "COHERENT",
+   "familiar": "YES",
+   "analogy_score": {
+    "status": "OK",
+    "eval_exact": 1.0,
+    "eval_comp": 1.0,
+    "length": 106,
+    "intervention_exact": 1.0
+   },
+   "analogy_class": "CORRECT_ANALOGY",
+   "analogy_name": "Base-5 odometer / counter increment (little-endian, least significant digit at index 0)",
+   "active": {
+    "t1": [
+     0.97,
+     "RULE"
+    ],
+    "t2": [
+     1.0,
+     1.0
+    ],
+    "t5": {
+     "status": "OK",
+     "eval_exact": 1.0,
+     "eval_comp": 1.0,
+     "length": 89,
+     "intervention_exact": 1.0
+    },
+    "captured": {},
+    "n_experiments": 6,
+    "learned": true
+   }
+  },
+  "SYS-33309": {
+   "id": "SYS-33309",
+   "group": "N_DSCRAMBLE",
+   "family": "rewrite",
+   "bar_t2": 0.8194444444444446,
+   "bar_eval": 0.8416666666666666,
+   "planted_n": 0,
+   "rule_complexity": 0.1394,
+   "t1_score": 0.6,
+   "t1_verdict": "RULE",
+   "t2_exact": 0.16666666666666666,
+   "t2_comp": 0.8194444444444446,
+   "t3_exact": 0.25,
+   "t3_comp": 0.8194444444444445,
+   "t4": {
+    "FALSE": 1,
+    "UNTESTABLE": 2
+   },
+   "t4_captured": {},
+   "t5": {
+    "status": "OK",
+    "eval_exact": 0.29,
+    "eval_comp": 0.8408333333333334,
+    "length": 27,
+    "intervention_exact": 0.25
+   },
+   "learned": false,
+   "behav_score": 0.0,
+   "coherence": "COHERENT",
+   "familiar": "NO",
+   "analogy_score": null,
+   "analogy_class": "NO_ANALOGY",
+   "analogy_name": null
+  },
+  "SYS-33425": {
+   "id": "SYS-33425",
+   "group": "N_SCRAMBLE",
+   "family": "graph",
+   "bar_t2": 0.38888888888888884,
+   "bar_eval": 0.4283333333333333,
+   "planted_n": 0,
+   "rule_complexity": 0.1687,
+   "t1_score": 0.7,
+   "t1_verdict": "RULE",
+   "t2_exact": 0.0,
+   "t2_comp": 0.4722222222222221,
+   "t3_exact": 0.08333333333333333,
+   "t3_comp": 0.625,
+   "t4": {
+    "UNTESTABLE": 3
+   },
+   "t4_captured": {},
+   "t5": {
+    "status": "OK",
+    "eval_exact": 0.06,
+    "eval_comp": 0.6108333333333333,
+    "length": 790,
+    "intervention_exact": 0.1111111111111111
+   },
+   "learned": false,
+   "behav_score": 0.18250000000000005,
+   "coherence": "COHERENT",
+   "familiar": "NO",
+   "analogy_score": null,
+   "analogy_class": "NO_ANALOGY",
+   "analogy_name": null
+  },
+  "SYS-34740": {
+   "id": "SYS-34740",
+   "group": "A",
+   "family": "vm",
+   "bar_t2": 0.5416666666666666,
+   "bar_eval": 0.4975,
+   "planted_n": 1,
+   "rule_complexity": 0.2457,
+   "t1_score": 0.85,
+   "t1_verdict": "RULE",
+   "t2_exact": 0.8333333333333334,
+   "t2_comp": 0.9166666666666666,
+   "t3_exact": 0.8333333333333334,
+   "t3_comp": 0.9166666666666666,
+   "t4": {
+    "UNTESTABLE": 3
+   },
+   "t4_captured": {
+    "{\"mod\": 7, \"type\": \"conserved_linear\", \"w\": [0, 6, 4, 2]}": false
+   },
+   "t5": {
+    "status": "OK",
+    "eval_exact": 0.855,
+    "eval_comp": 0.9275,
+    "length": 299,
+    "intervention_exact": 0.8333333333333334
+   },
+   "learned": true,
+   "behav_score": 0.43,
+   "coherence": "COHERENT",
+   "familiar": "YES",
+   "analogy_score": {
+    "status": "OK",
+    "eval_exact": 0.455,
+    "eval_comp": 0.74,
+    "length": 146,
+    "intervention_exact": 0.25
+   },
+   "analogy_class": "USEFUL_PARTIAL_ANALOGY",
+   "analogy_name": "Program-counter-driven register machine (a tiny CPU or fetch-execute cycle running a fixed 6-instruction program with a conditional skip)",
+   "reveal": {
+    "coherence": "COHERENT",
+    "t2": [
+     1.0,
+     1.0
+    ],
+    "t3": [
+     0.5,
+     0.6875
+    ],
+    "t4": {
+     "UNTESTABLE": 4
+    },
+    "captured": {
+     "{\"mod\": 7, \"type\": \"conserved_linear\", \"w\": [0, 6, 4, 2]}": false
+    }
+   }
+  },
+  "SYS-34934": {
+   "id": "SYS-34934",
+   "group": "A",
+   "family": "map",
+   "bar_t2": 0.125,
+   "bar_eval": 0.095,
+   "planted_n": 2,
+   "rule_complexity": 0.3212,
+   "t1_score": 0.95,
+   "t1_verdict": "RULE",
+   "t2_exact": 1.0,
+   "t2_comp": 1.0,
+   "t3_exact": 1.0,
+   "t3_comp": 1.0,
+   "t4": {
+    "TRUE": 1,
+    "UNTESTABLE": 3
+   },
+   "t4_captured": {
+    "{\"type\": \"commutes_swap\"}": true
+   },
+   "t5": {
+    "status": "OK",
+    "eval_exact": 1.0,
+    "eval_comp": 1.0,
+    "length": 93,
+    "intervention_exact": 1.0
+   },
+   "learned": true,
+   "behav_score": 0.905,
+   "coherence": "COHERENT",
+   "familiar": "NO",
+   "analogy_score": null,
+   "analogy_class": "NO_ANALOGY",
+   "analogy_name": null,
+   "active": {
+    "t1": [
+     0.97,
+     "RULE"
+    ],
+    "t2": [
+     1.0,
+     1.0
+    ],
+    "t5": {
+     "status": "OK",
+     "eval_exact": 1.0,
+     "eval_comp": 1.0,
+     "length": 117,
+     "intervention_exact": 1.0
+    },
+    "captured": {
+     "{\"type\": \"commutes_swap\"}": true
+    },
+    "n_experiments": 10,
+    "learned": true
+   }
+  },
+  "SYS-36639": {
+   "id": "SYS-36639",
+   "group": "K",
+   "family": "rewrite",
+   "bar_t2": 0.75,
+   "bar_eval": 0.7733333333333334,
+   "planted_n": 0,
+   "rule_complexity": 0.2181,
+   "t1_score": 0.93,
+   "t1_verdict": "RULE",
+   "t2_exact": 1.0,
+   "t2_comp": 1.0,
+   "t3_exact": 1.0,
+   "t3_comp": 1.0,
+   "t4": {
+    "UNTESTABLE": 3,
+    "TRUE": 2
+   },
+   "t4_captured": {},
+   "t5": {
+    "status": "OK",
+    "eval_exact": 1.0,
+    "eval_comp": 1.0,
+    "length": 113,
+    "intervention_exact": 1.0
+   },
+   "learned": true,
+   "behav_score": 0.25,
+   "coherence": "COHERENT",
+   "familiar": "YES",
+   "analogy_score": {
+    "status": "OK",
+    "eval_exact": 1.0,
+    "eval_comp": 1.0,
+    "length": 134,
+    "intervention_exact": 1.0
+   },
+   "analogy_class": "CORRECT_ANALOGY",
+   "analogy_name": "Bubble sort (one adjacent-transposition step, leftmost inversion first), sorting on the binary key 'is Y', which gives a stable partition moving Y's to the end"
+  },
+  "SYS-36706": {
+   "id": "SYS-36706",
+   "group": "N_DESTROY",
+   "family": "tab",
+   "bar_t2": 0.4666666666666668,
+   "bar_eval": 0.502,
+   "planted_n": 0,
+   "rule_complexity": 0.2137,
+   "t1_score": 0.85,
+   "t1_verdict": "RULE",
+   "t2_exact": 0.16666666666666666,
+   "t2_comp": 0.7666666666666667,
+   "t3_exact": 0.25,
+   "t3_comp": 0.6666666666666667,
+   "t4": {
+    "UNTESTABLE": 3
+   },
+   "t4_captured": {},
+   "t5": {
+    "status": "OK",
+    "eval_exact": 0.36,
+    "eval_comp": 0.828,
+    "length": 915,
+    "intervention_exact": 0.75
+   },
+   "learned": false,
+   "behav_score": 0.32599999999999996,
+   "coherence": "COHERENT",
+   "familiar": "NO",
+   "analogy_score": null,
+   "analogy_class": "NO_ANALOGY",
+   "analogy_name": null
+  },
+  "SYS-36792": {
+   "id": "SYS-36792",
+   "group": "N_DESTROY",
+   "family": "vm",
+   "bar_t2": 0.4583333333333333,
+   "bar_eval": 0.5725,
+   "planted_n": 0,
+   "rule_complexity": 0.1425,
+   "t1_score": 0.75,
+   "t1_verdict": "RULE",
+   "t2_exact": 0.16666666666666666,
+   "t2_comp": 0.6458333333333334,
+   "t3_exact": 0.41666666666666663,
+   "t3_comp": 0.7708333333333334,
+   "t4": {
+    "TRUE": 1,
+    "UNTESTABLE": 2
+   },
+   "t4_captured": {},
+   "t5": {
+    "status": "OK",
+    "eval_exact": 0.42,
+    "eval_comp": 0.77125,
+    "length": 174,
+    "intervention_exact": 0.41666666666666663
+   },
+   "learned": false,
+   "behav_score": 0.19874999999999998,
+   "coherence": "COHERENT",
+   "familiar": "YES",
+   "analogy_score": {
+    "status": "OK",
+    "eval_exact": 0.36,
+    "eval_comp": 0.71375,
+    "length": 198,
+    "intervention_exact": 0.3333333333333333
+   },
+   "analogy_class": "SUPERFICIAL_ANALOGY",
+   "analogy_name": "Program-counter register machine (tiny straight-line program with a HALT instruction, like a Minsky/RAM-style machine with instruction pointer)",
+   "reveal": {
+    "coherence": "COHERENT",
+    "t2": [
+     1.0,
+     1.0
+    ],
+    "t3": [
+     0.08333333333333333,
+     0.5208333333333334
+    ],
+    "t4": {
+     "UNTESTABLE": 4
+    },
+    "captured": {}
+   }
+  },
+  "SYS-37739": {
+   "id": "SYS-37739",
+   "group": "AADV",
+   "family": "tab",
+   "bar_t2": 0.2833333333333334,
+   "bar_eval": 0.22399999999999998,
+   "planted_n": 1,
+   "rule_complexity": 0.1838,
+   "t1_score": 0.75,
+   "t1_verdict": "RULE",
+   "t2_exact": 0.0,
+   "t2_comp": 0.3,
+   "t3_exact": 0.08333333333333333,
+   "t3_comp": 0.41666666666666663,
+   "t4": {
+    "UNTESTABLE": 3
+   },
+   "t4_captured": {
+    "{\"mod\": 5, \"type\": \"conserved_linear\", \"w\": [3, 2, 1, 4, 1]}": false
+   },
+   "t5": {
+    "status": "OK",
+    "eval_exact": 0.02,
+    "eval_comp": 0.221,
+    "length": 818,
+    "intervention_exact": 0.0
+   },
+   "learned": false,
+   "behav_score": 0.016666666666666607,
+   "coherence": "COHERENT",
+   "familiar": "NO",
+   "analogy_score": null,
+   "analogy_class": "NO_ANALOGY",
+   "analogy_name": null
+  },
+  "SYS-39367": {
+   "id": "SYS-39367",
+   "group": "A",
+   "family": "rewrite",
+   "bar_t2": 0.8055555555555557,
+   "bar_eval": 0.8000000000000002,
+   "planted_n": 1,
+   "rule_complexity": 0.1187,
+   "t1_score": 0.85,
+   "t1_verdict": "RULE",
+   "t2_exact": 1.0,
+   "t2_comp": 1.0,
+   "t3_exact": 1.0,
+   "t3_comp": 1.0,
+   "t4": {
+    "TRUE": 1,
+    "UNTESTABLE": 1
+   },
+   "t4_captured": {
+    "{\"mod\": 4, \"type\": \"conserved_weights\", \"w\": [0, 3, 1, 2]}": false
+   },
+   "t5": {
+    "status": "OK",
+    "eval_exact": 1.0,
+    "eval_comp": 1.0,
+    "length": 134,
+    "intervention_exact": 1.0
+   },
+   "learned": true,
+   "behav_score": 0.19999999999999984,
+   "coherence": "COHERENT",
+   "familiar": "YES",
+   "analogy_score": {
+    "status": "OK",
+    "eval_exact": 1.0,
+    "eval_comp": 1.0,
+    "length": 172,
+    "intervention_exact": 1.0
+   },
+   "analogy_class": "CORRECT_ANALOGY",
+   "analogy_name": "String rewriting system / Markov normal algorithm (leftmost single-substitution semantics)"
+  },
+  "SYS-39412": {
+   "id": "SYS-39412",
+   "group": "N_CONJ",
+   "family": "vm",
+   "bar_t2": 0.14583333333333334,
+   "bar_eval": 0.15,
+   "planted_n": 0,
+   "rule_complexity": 0.3268,
+   "t1_score": 0.44999999999999996,
+   "t1_verdict": "RANDOM",
+   "t2_exact": 0.0,
+   "t2_comp": 0.1875,
+   "t3_exact": 0.0,
+   "t3_comp": 0.3125,
+   "t4": {
+    "UNTESTABLE": 1
+   },
+   "t4_captured": {},
+   "t5": {
+    "status": "OK",
+    "eval_exact": 0.0,
+    "eval_comp": 0.13875,
+    "length": 190,
+    "intervention_exact": 0.0
+   },
+   "learned": false,
+   "behav_score": 0.04166666666666666,
+   "coherence": "UNCLEAR",
+   "familiar": "NO",
+   "analogy_score": null,
+   "analogy_class": "NO_ANALOGY",
+   "analogy_name": null
+  },
+  "SYS-39793": {
+   "id": "SYS-39793",
+   "group": "K",
+   "family": "vm",
+   "bar_t2": 0.6875,
+   "bar_eval": 0.645,
+   "planted_n": 0,
+   "rule_complexity": 0.2572,
+   "t1_score": 0.95,
+   "t1_verdict": "RULE",
+   "t2_exact": 1.0,
+   "t2_comp": 1.0,
+   "t3_exact": 1.0,
+   "t3_comp": 1.0,
+   "t4": {
+    "UNTESTABLE": 3
+   },
+   "t4_captured": {},
+   "t5": {
+    "status": "OK",
+    "eval_exact": 1.0,
+    "eval_comp": 1.0,
+    "length": 115,
+    "intervention_exact": 1.0
+   },
+   "learned": true,
+   "behav_score": 0.355,
+   "coherence": "COHERENT",
+   "familiar": "YES",
+   "analogy_score": {
+    "status": "OK",
+    "eval_exact": 1.0,
+    "eval_comp": 1.0,
+    "length": 212,
+    "intervention_exact": 1.0
+   },
+   "analogy_class": "CORRECT_ANALOGY",
+   "analogy_name": "Fibonacci sequence mod 7, generated by a shift register (an additive lagged-Fibonacci generator / linear feedback shift register over Z7), run as a multi-phase sequential machine",
+   "reveal": {
+    "coherence": "COHERENT",
+    "t2": [
+     1.0,
+     1.0
+    ],
+    "t3": [
+     1.0,
+     1.0
+    ],
+    "t4": {
+     "TRUE": 2,
+     "UNTESTABLE": 1
+    },
+    "captured": {}
+   },
+   "prose_t2": [
+    1.0,
+    1.0
+   ]
+  },
+  "SYS-40369": {
+   "id": "SYS-40369",
+   "group": "N_SEDUCTIVE",
+   "family": "map",
+   "bar_t2": 0.25,
+   "bar_eval": 0.325,
+   "planted_n": 0,
+   "rule_complexity": 0.1575,
+   "t1_score": 0.6,
+   "t1_verdict": "RULE",
+   "t2_exact": 0.0,
+   "t2_comp": 0.3333333333333333,
+   "t3_exact": 0.3333333333333333,
+   "t3_comp": 0.6666666666666666,
+   "t4": {
+    "UNTESTABLE": 2
+   },
+   "t4_captured": {},
+   "t5": {
+    "status": "OK",
+    "eval_exact": 0.105,
+    "eval_comp": 0.3425,
+    "length": 331,
+    "intervention_exact": 0.3333333333333333
+   },
+   "learned": false,
+   "behav_score": 0.08333333333333331,
+   "coherence": "COHERENT",
+   "familiar": "NO",
+   "analogy_score": null,
+   "analogy_class": "NO_ANALOGY",
+   "analogy_name": null,
+   "prose_t2": [
+    0.0,
+    0.2916666666666667
+   ]
+  },
+  "SYS-41174": {
+   "id": "SYS-41174",
+   "group": "AADV",
+   "family": "map",
+   "bar_t2": 0.125,
+   "bar_eval": 0.03,
+   "planted_n": 1,
+   "rule_complexity": 0.3067,
+   "t1_score": 0.55,
+   "t1_verdict": "RANDOM",
+   "t2_exact": 0.0,
+   "t2_comp": 0.0,
+   "t3_exact": 0.08333333333333333,
+   "t3_comp": 0.5416666666666666,
+   "t4": {
+    "UNTESTABLE": 1
+   },
+   "t4_captured": {
+    "{\"M\": [[8, 30], [16, 20]], \"Minv\": [[29, 3], [14, 24]], \"mod\": 31, \"type\": \"commutes_swap\"}": false
+   },
+   "t5": {
+    "status": "OK",
+    "eval_exact": 0.0,
+    "eval_comp": 0.025,
+    "length": 841,
+    "intervention_exact": 0.08333333333333333
+   },
+   "learned": false,
+   "behav_score": -0.0049999999999999975,
+   "coherence": "COHERENT",
+   "familiar": "NO",
+   "analogy_score": null,
+   "analogy_class": "NO_ANALOGY",
+   "analogy_name": null
+  },
+  "SYS-41840": {
+   "id": "SYS-41840",
+   "group": "N_SEDUCTIVE",
+   "family": "tab",
+   "bar_t2": 0.3333333333333333,
+   "bar_eval": 0.3299999999999999,
+   "planted_n": 0,
+   "rule_complexity": 0.2772,
+   "t1_score": 0.6,
+   "t1_verdict": "RULE",
+   "t2_exact": 0.0,
+   "t2_comp": 0.23333333333333336,
+   "t3_exact": 0.0,
+   "t3_comp": 0.4333333333333333,
+   "t4": {
+    "UNTESTABLE": 2
+   },
+   "t4_captured": {},
+   "t5": {
+    "status": "OK",
+    "eval_exact": 0.0,
+    "eval_comp": 0.31200000000000006,
+    "length": 1283,
+    "intervention_exact": 0.0
+   },
+   "learned": false,
+   "behav_score": -0.01799999999999985,
+   "coherence": "COHERENT",
+   "familiar": "NO",
+   "analogy_score": null,
+   "analogy_class": "NO_ANALOGY",
+   "analogy_name": null,
+   "active": {
+    "t1": [
+     0.6,
+     "RULE"
+    ],
+    "t2": [
+     0.0,
+     0.45
+    ],
+    "t5": {
+     "status": "OK",
+     "eval_exact": 0.0,
+     "eval_comp": 0.335,
+     "length": 354,
+     "intervention_exact": 0.0
+    },
+    "captured": {},
+    "n_experiments": 10,
+    "learned": false
+   }
+  },
+  "SYS-42741": {
+   "id": "SYS-42741",
+   "group": "AADV",
+   "family": "tab",
+   "bar_t2": 0.19999999999999998,
+   "bar_eval": 0.21599999999999997,
+   "planted_n": 1,
+   "rule_complexity": 0.2127,
+   "t1_score": 0.75,
+   "t1_verdict": "RULE",
+   "t2_exact": 0.0,
+   "t2_comp": 0.18333333333333332,
+   "t3_exact": 0.0,
+   "t3_comp": 0.4333333333333333,
+   "t4": {
+    "UNTESTABLE": 2
+   },
+   "t4_captured": {
+    "{\"mod\": 5, \"type\": \"conserved_linear\", \"w\": [2, 2, 1, 1, 4]}": false
+   },
+   "t5": {
+    "status": "OK",
+    "eval_exact": 0.02,
+    "eval_comp": 0.205,
+    "length": 410,
+    "intervention_exact": 0.0
+   },
+   "learned": false,
+   "behav_score": -0.010999999999999982,
+   "coherence": "COHERENT",
+   "familiar": "NO",
+   "analogy_score": null,
+   "analogy_class": "NO_ANALOGY",
+   "analogy_name": null
+  },
+  "SYS-44623": {
+   "id": "SYS-44623",
+   "group": "A",
+   "family": "tab",
+   "bar_t2": 0.43333333333333335,
+   "bar_eval": 0.45400000000000007,
+   "planted_n": 1,
+   "rule_complexity": 0.2358,
+   "t1_score": 0.85,
+   "t1_verdict": "RULE",
+   "t2_exact": 0.08333333333333333,
+   "t2_comp": 0.6666666666666666,
+   "t3_exact": 0.08333333333333333,
+   "t3_comp": 0.6666666666666666,
+   "t4": {
+    "UNTESTABLE": 3
+   },
+   "t4_captured": {
+    "{\"mod\": 5, \"type\": \"conserved_linear\", \"w\": [2, 3, 3, 4, 2]}": false
+   },
+   "t5": {
+    "status": "OK",
+    "eval_exact": 0.08,
+    "eval_comp": 0.6729999999999998,
+    "length": 1623,
+    "intervention_exact": 0.16666666666666666
+   },
+   "learned": false,
+   "behav_score": 0.23333333333333328,
+   "coherence": "COHERENT",
+   "familiar": "NO",
+   "analogy_score": null,
+   "analogy_class": "NO_ANALOGY",
+   "analogy_name": null,
+   "reveal": {
+    "coherence": "COHERENT",
+    "t2": [
+     1.0,
+     1.0
+    ],
+    "t3": [
+     1.0,
+     1.0
+    ],
+    "t4": {
+     "TRUE": 1,
+     "UNTESTABLE": 2
+    },
+    "captured": {
+     "{\"mod\": 5, \"type\": \"conserved_linear\", \"w\": [2, 3, 3, 4, 2]}": true
+    }
+   },
+   "prose_t2": [
+    0.16666666666666666,
+    0.6833333333333332
+   ]
+  },
+  "SYS-44707": {
+   "id": "SYS-44707",
+   "group": "A",
+   "family": "rewrite",
+   "bar_t2": 0.7083333333333335,
+   "bar_eval": 0.8033333333333332,
+   "planted_n": 1,
+   "rule_complexity": 0.1381,
+   "t1_score": 0.9,
+   "t1_verdict": "RULE",
+   "t2_exact": 1.0,
+   "t2_comp": 1.0,
+   "t3_exact": 1.0,
+   "t3_comp": 1.0,
+   "t4": {
+    "UNTESTABLE": 3
+   },
+   "t4_captured": {
+    "{\"mod\": 3, \"type\": \"conserved_weights\", \"w\": [0, 1, 1, 2]}": false
+   },
+   "t5": {
+    "status": "OK",
+    "eval_exact": 1.0,
+    "eval_comp": 1.0,
+    "length": 172,
+    "intervention_exact": 1.0
+   },
+   "learned": true,
+   "behav_score": 0.2916666666666665,
+   "coherence": "COHERENT",
+   "familiar": "YES",
+   "analogy_score": {
+    "status": "OK",
+    "eval_exact": 1.0,
+    "eval_comp": 1.0,
+    "length": 187,
+    "intervention_exact": 1.0
+   },
+   "analogy_class": "CORRECT_ANALOGY",
+   "analogy_name": "String rewriting system (semi-Thue system) applied at the leftmost match, like a Markov-algorithm step",
+   "reveal": {
+    "coherence": "COHERENT",
+    "t2": [
+     1.0,
+     1.0
+    ],
+    "t3": [
+     1.0,
+     1.0
+    ],
+    "t4": {
+     "UNTESTABLE": 5
+    },
+    "captured": {
+     "{\"mod\": 3, \"type\": \"conserved_weights\", \"w\": [0, 1, 1, 2]}": false
+    }
+   },
+   "prose_t2": [
+    1.0,
+    1.0
+   ]
+  },
+  "SYS-44978": {
+   "id": "SYS-44978",
+   "group": "K",
+   "family": "vm",
+   "bar_t2": 0.625,
+   "bar_eval": 0.635,
+   "planted_n": 0,
+   "rule_complexity": 0.2422,
+   "t1_score": 0.97,
+   "t1_verdict": "RULE",
+   "t2_exact": 1.0,
+   "t2_comp": 1.0,
+   "t3_exact": 1.0,
+   "t3_comp": 1.0,
+   "t4": {
+    "TRUE": 1,
+    "FALSE": 1,
+    "UNTESTABLE": 2
+   },
+   "t4_captured": {},
+   "t5": {
+    "status": "OK",
+    "eval_exact": 1.0,
+    "eval_comp": 1.0,
+    "length": 123,
+    "intervention_exact": 1.0
+   },
+   "learned": true,
+   "behav_score": 0.375,
+   "coherence": "COHERENT",
+   "familiar": "YES",
+   "analogy_score": {
+    "status": "OK",
+    "eval_exact": 1.0,
+    "eval_comp": 1.0,
+    "length": 174,
+    "intervention_exact": 1.0
+   },
+   "analogy_class": "CORRECT_ANALOGY",
+   "analogy_name": "Arithmetic (add/subtract) swap without a temporary variable, the modular analogue of XOR swap, run as a tiny program with a program counter",
+   "reveal": {
+    "coherence": "COHERENT",
+    "t2": [
+     1.0,
+     1.0
+    ],
+    "t3": [
+     1.0,
+     1.0
+    ],
+    "t4": {
+     "TRUE": 2,
+     "UNTESTABLE": 3
+    },
+    "captured": {}
+   },
+   "prose_t2": [
+    1.0,
+    1.0
+   ]
+  },
+  "SYS-45599": {
+   "id": "SYS-45599",
+   "group": "K",
+   "family": "vm",
+   "bar_t2": 0.6875,
+   "bar_eval": 0.725,
+   "planted_n": 0,
+   "rule_complexity": 0.27,
+   "t1_score": 0.93,
+   "t1_verdict": "RULE",
+   "t2_exact": 1.0,
+   "t2_comp": 1.0,
+   "t3_exact": 1.0,
+   "t3_comp": 1.0,
+   "t4": {
+    "TRUE": 1,
+    "UNTESTABLE": 2
+   },
+   "t4_captured": {},
+   "t5": {
+    "status": "OK",
+    "eval_exact": 1.0,
+    "eval_comp": 1.0,
+    "length": 168,
+    "intervention_exact": 1.0
+   },
+   "learned": true,
+   "behav_score": 0.3125,
+   "coherence": "COHERENT",
+   "familiar": "YES",
+   "analogy_score": {
+    "status": "OK",
+    "eval_exact": 1.0,
+    "eval_comp": 1.0,
+    "length": 245,
+    "intervention_exact": 1.0
+   },
+   "analogy_class": "CORRECT_ANALOGY",
+   "analogy_name": "Register (counter/Minsky-style) machine running a multiply-accumulate loop: while R2 != 0: R3 += R1; R2 -= 1; then halt (repeated addition, i.e. multiplication by iterated addition)"
+  },
+  "SYS-45738": {
+   "id": "SYS-45738",
+   "group": "A",
+   "family": "vm",
+   "bar_t2": 0.375,
+   "bar_eval": 0.4725,
+   "planted_n": 1,
+   "rule_complexity": 0.3094,
+   "t1_score": 0.85,
+   "t1_verdict": "RULE",
+   "t2_exact": 0.6666666666666666,
+   "t2_comp": 0.8333333333333334,
+   "t3_exact": 0.5833333333333333,
+   "t3_comp": 0.875,
+   "t4": {
+    "UNTESTABLE": 3
+   },
+   "t4_captured": {
+    "{\"mod\": 7, \"type\": \"conserved_linear\", \"w\": [0, 5, 1, 6]}": false
+   },
+   "t5": {
+    "status": "OK",
+    "eval_exact": 0.66,
+    "eval_comp": 0.83,
+    "length": 393,
+    "intervention_exact": 0.5833333333333333
+   },
+   "learned": true,
+   "behav_score": 0.45833333333333337,
+   "coherence": "COHERENT",
+   "familiar": "YES",
+   "analogy_score": {
+    "status": "OK",
+    "eval_exact": 0.46,
+    "eval_comp": 0.73,
+    "length": 276,
+    "intervention_exact": 0.5833333333333333
+   },
+   "analogy_class": "USEFUL_PARTIAL_ANALOGY",
+   "analogy_name": "Program-counter-driven register machine (a small straight-line program with a counted loop, all arithmetic mod 7)",
+   "active": {
+    "t1": [
+     0.85,
+     "RULE"
+    ],
+    "t2": [
+     0.3333333333333333,
+     0.7083333333333334
+    ],
+    "t5": {
+     "status": "OK",
+     "eval_exact": 0.405,
+     "eval_comp": 0.72375,
+     "length": 355,
+     "intervention_exact": 0.75
+    },
+    "captured": {
+     "{\"mod\": 7, \"type\": \"conserved_linear\", \"w\": [0, 5, 1, 6]}": false
+    },
+    "n_experiments": 10,
+    "learned": true
+   }
+  },
+  "SYS-46005": {
+   "id": "SYS-46005",
+   "group": "AADV",
+   "family": "tab",
+   "bar_t2": 0.18333333333333332,
+   "bar_eval": 0.206,
+   "planted_n": 1,
+   "rule_complexity": 0.2377,
+   "t1_score": 0.8,
+   "t1_verdict": "RULE",
+   "t2_exact": 0.0,
+   "t2_comp": 0.18333333333333335,
+   "t3_exact": 0.0,
+   "t3_comp": 0.2833333333333333,
+   "t4": {
+    "UNTESTABLE": 3
+   },
+   "t4_captured": {
+    "{\"mod\": 5, \"type\": \"conserved_linear\", \"w\": [1, 0, 0, 4, 1]}": false
+   },
+   "t5": {
+    "status": "OK",
+    "eval_exact": 0.03,
+    "eval_comp": 0.23399999999999999,
+    "length": 1399,
+    "intervention_exact": 0.0
+   },
+   "learned": false,
+   "behav_score": 0.027999999999999997,
+   "coherence": "COHERENT",
+   "familiar": "NO",
+   "analogy_score": null,
+   "analogy_class": "NO_ANALOGY",
+   "analogy_name": null
+  },
+  "SYS-46945": {
+   "id": "SYS-46945",
+   "group": "AADV",
+   "family": "map",
+   "bar_t2": 0.0,
+   "bar_eval": 0.045,
+   "planted_n": 1,
+   "rule_complexity": 0.2786,
+   "t1_score": 0.6,
+   "t1_verdict": "RULE",
+   "t2_exact": 0.0,
+   "t2_comp": 0.0,
+   "t3_exact": 0.08333333333333333,
+   "t3_comp": 0.5416666666666666,
+   "t4": {
+    "UNTESTABLE": 3
+   },
+   "t4_captured": {
+    "{\"M\": [[29, 13], [11, 17]], \"Minv\": [[26, 2], [16, 17]], \"mod\": 31, \"type\": \"commutes_swap\"}": false
+   },
+   "t5": {
+    "status": "OK",
+    "eval_exact": 0.0,
+    "eval_comp": 0.035,
+    "length": 838,
+    "intervention_exact": 0.0
+   },
+   "learned": false,
+   "behav_score": 0.0,
+   "coherence": "COHERENT",
+   "familiar": "NO",
+   "analogy_score": null,
+   "analogy_class": "NO_ANALOGY",
+   "analogy_name": null
+  },
+  "SYS-46959": {
+   "id": "SYS-46959",
+   "group": "A",
+   "family": "map",
+   "bar_t2": 0.041666666666666664,
+   "bar_eval": 0.05,
+   "planted_n": 1,
+   "rule_complexity": 0.3796,
+   "t1_score": 0.97,
+   "t1_verdict": "RULE",
+   "t2_exact": 1.0,
+   "t2_comp": 1.0,
+   "t3_exact": 1.0,
+   "t3_comp": 1.0,
+   "t4": {
+    "TRUE": 1,
+    "UNTESTABLE": 2
+   },
+   "t4_captured": {
+    "{\"type\": \"bijective\"}": true
+   },
+   "t5": {
+    "status": "OK",
+    "eval_exact": 1.0,
+    "eval_comp": 1.0,
+    "length": 87,
+    "intervention_exact": 1.0
+   },
+   "learned": true,
+   "behav_score": 0.9583333333333334,
+   "coherence": "COHERENT",
+   "familiar": "YES",
+   "analogy_score": {
+    "status": "OK",
+    "eval_exact": 0.085,
+    "eval_comp": 0.1825,
+    "length": 223,
+    "intervention_exact": 0.0
+   },
+   "analogy_class": "FALSE_COLLAPSE_TO_FAMILIAR",
+   "analogy_name": "Discrete kicked-rotor / Chirikov standard map (area-preserving shear composition, a symplectic Euler-type step) on the 31x31 torus",
+   "reveal": {
+    "coherence": "COHERENT",
+    "t2": [
+     1.0,
+     1.0
+    ],
+    "t3": [
+     1.0,
+     1.0
+    ],
+    "t4": {
+     "TRUE": 1,
+     "UNTESTABLE": 2
+    },
+    "captured": {
+     "{\"type\": \"bijective\"}": true
+    }
+   }
+  },
+  "SYS-47418": {
+   "id": "SYS-47418",
+   "group": "K",
+   "family": "graph",
+   "bar_t2": 0.6111111111111112,
+   "bar_eval": 0.5833333333333334,
+   "planted_n": 0,
+   "rule_complexity": 0.1399,
+   "t1_score": 0.95,
+   "t1_verdict": "RULE",
+   "t2_exact": 1.0,
+   "t2_comp": 1.0,
+   "t3_exact": 1.0,
+   "t3_comp": 1.0,
+   "t4": {
+    "TRUE": 1,
+    "UNTESTABLE": 1
+   },
+   "t4_captured": {},
+   "t5": {
+    "status": "OK",
+    "eval_exact": 1.0,
+    "eval_comp": 1.0,
+    "length": 172,
+    "intervention_exact": 1.0
+   },
+   "learned": true,
+   "behav_score": 0.41666666666666663,
+   "coherence": "COHERENT",
+   "familiar": "NO",
+   "analogy_score": null,
+   "analogy_class": "NO_ANALOGY",
+   "analogy_name": null,
+   "reveal": {
+    "coherence": "COHERENT",
+    "t2": [
+     1.0,
+     1.0
+    ],
+    "t3": [
+     1.0,
+     1.0
+    ],
+    "t4": {
+     "TRUE": 1,
+     "UNTESTABLE": 2
+    },
+    "captured": {}
+   },
+   "prose_t2": [
+    1.0,
+    1.0
+   ]
+  },
+  "SYS-49302": {
+   "id": "SYS-49302",
+   "group": "K",
+   "family": "tab",
+   "bar_t2": 0.6166666666666666,
+   "bar_eval": 0.528,
+   "planted_n": 0,
+   "rule_complexity": 0.1011,
+   "t1_score": 0.95,
+   "t1_verdict": "RULE",
+   "t2_exact": 1.0,
+   "t2_comp": 1.0,
+   "t3_exact": 1.0,
+   "t3_comp": 1.0,
+   "t4": {
+    "TRUE": 4,
+    "UNTESTABLE": 1
+   },
+   "t4_captured": {},
+   "t5": {
+    "status": "OK",
+    "eval_exact": 1.0,
+    "eval_comp": 1.0,
+    "length": 84,
+    "intervention_exact": 1.0
+   },
+   "learned": true,
+   "behav_score": 0.472,
+   "coherence": "COHERENT",
+   "familiar": "YES",
+   "analogy_score": {
+    "status": "OK",
+    "eval_exact": 1.0,
+    "eval_comp": 1.0,
+    "length": 96,
+    "intervention_exact": 1.0
+   },
+   "analogy_class": "CORRECT_ANALOGY",
+   "analogy_name": "Iterated 1D median filter (radius-1 median cellular automaton, i.e. majority/median smoothing with periodic boundary)",
+   "reveal": {
+    "coherence": "COHERENT",
+    "t2": [
+     1.0,
+     1.0
+    ],
+    "t3": [
+     1.0,
+     1.0
+    ],
+    "t4": {
+     "TRUE": 4,
+     "UNTESTABLE": 3
+    },
+    "captured": {}
+   },
+   "prose_t2": [
+    1.0,
+    1.0
+   ]
+  },
+  "SYS-52089": {
+   "id": "SYS-52089",
+   "group": "K",
+   "family": "map",
+   "bar_t2": 0.4583333333333333,
+   "bar_eval": 0.4,
+   "planted_n": 0,
+   "rule_complexity": 0.2104,
+   "t1_score": 0.97,
+   "t1_verdict": "RULE",
+   "t2_exact": 1.0,
+   "t2_comp": 1.0,
+   "t3_exact": 1.0,
+   "t3_comp": 1.0,
+   "t4": {
+    "TRUE": 4,
+    "UNTESTABLE": 1
+   },
+   "t4_captured": {},
+   "t5": {
+    "status": "OK",
+    "eval_exact": 1.0,
+    "eval_comp": 1.0,
+    "length": 40,
+    "intervention_exact": 1.0
+   },
+   "learned": true,
+   "behav_score": 0.6,
+   "coherence": "COHERENT",
+   "familiar": "YES",
+   "analogy_score": {
+    "status": "OK",
+    "eval_exact": 1.0,
+    "eval_comp": 1.0,
+    "length": 40,
+    "intervention_exact": 1.0
+   },
+   "analogy_class": "CORRECT_ANALOGY",
+   "analogy_name": "Linear recurrence / linear map over Z_31: the quarter-turn rotation matrix [[0,-1],[1,0]] acting on (s[1], s[0]), equivalently x_{n+1} = -x_{n-1} mod 31 (a degenerate linear-feedback / lagged recurrence)",
+   "reveal": {
+    "coherence": "COHERENT",
+    "t2": [
+     1.0,
+     1.0
+    ],
+    "t3": [
+     1.0,
+     1.0
+    ],
+    "t4": {
+     "TRUE": 5,
+     "UNTESTABLE": 1
+    },
+    "captured": {}
+   },
+   "prose_t2": [
+    1.0,
+    1.0
+   ]
+  },
+  "SYS-53095": {
+   "id": "SYS-53095",
+   "group": "N_CONJ",
+   "family": "rewrite",
+   "bar_t2": 0.4861111111111111,
+   "bar_eval": 0.495,
+   "planted_n": 0,
+   "rule_complexity": 0.1303,
+   "t1_score": 0.7,
+   "t1_verdict": "RULE",
+   "t2_exact": 0.3333333333333333,
+   "t2_comp": 0.4861111111111111,
+   "t3_exact": 0.0,
+   "t3_comp": 0.3472222222222222,
+   "t4": {
+    "TRUE": 1,
+    "UNTESTABLE": 1
+   },
+   "t4_captured": {},
+   "t5": {
+    "status": "OK",
+    "eval_exact": 0.28,
+    "eval_comp": 0.45083333333333336,
+    "length": 27,
+    "intervention_exact": 0.0
+   },
+   "learned": false,
+   "behav_score": 0.0,
+   "coherence": "COHERENT",
+   "familiar": "NO",
+   "analogy_score": null,
+   "analogy_class": "NO_ANALOGY",
+   "analogy_name": null
+  },
+  "SYS-53677": {
+   "id": "SYS-53677",
+   "group": "A",
+   "family": "graph",
+   "bar_t2": 0.5277777777777778,
+   "bar_eval": 0.5083333333333333,
+   "planted_n": 1,
+   "rule_complexity": 0.1432,
+   "t1_score": 0.93,
+   "t1_verdict": "RULE",
+   "t2_exact": 1.0,
+   "t2_comp": 1.0,
+   "t3_exact": 1.0,
+   "t3_comp": 1.0,
+   "t4": {
+    "TRUE": 1,
+    "UNTESTABLE": 3
+   },
+   "t4_captured": {
+    "{\"max_transient\": 20, \"type\": \"all_orbits_fixed\"}": false
+   },
+   "t5": {
+    "status": "OK",
+    "eval_exact": 1.0,
+    "eval_comp": 1.0,
+    "length": 166,
+    "intervention_exact": 1.0
+   },
+   "learned": true,
+   "behav_score": 0.4916666666666667,
+   "coherence": "COHERENT",
+   "familiar": "NO",
+   "analogy_score": null,
+   "analogy_class": "NO_ANALOGY",
+   "analogy_name": null,
+   "reveal": {
+    "coherence": "COHERENT",
+    "t2": [
+     1.0,
+     1.0
+    ],
+    "t3": [
+     1.0,
+     1.0
+    ],
+    "t4": {
+     "UNTESTABLE": 4
+    },
+    "captured": {
+     "{\"max_transient\": 20, \"type\": \"all_orbits_fixed\"}": false
+    }
+   },
+   "prose_t2": [
+    1.0,
+    1.0
+   ]
+  },
+  "SYS-54593": {
+   "id": "SYS-54593",
+   "group": "N_DESTROY",
+   "family": "vm",
+   "bar_t2": 0.4375,
+   "bar_eval": 0.465,
+   "planted_n": 0,
+   "rule_complexity": 0.2746,
+   "t1_score": 0.85,
+   "t1_verdict": "RULE",
+   "t2_exact": 0.5,
+   "t2_comp": 0.8125,
+   "t3_exact": 0.75,
+   "t3_comp": 0.8958333333333334,
+   "t4": {
+    "UNTESTABLE": 4
+   },
+   "t4_captured": {},
+   "t5": {
+    "status": "OK",
+    "eval_exact": 0.655,
+    "eval_comp": 0.88,
+    "length": 371,
+    "intervention_exact": 0.75
+   },
+   "learned": true,
+   "behav_score": 0.415,
+   "coherence": "COHERENT",
+   "familiar": "NO",
+   "analogy_score": null,
+   "analogy_class": "NO_ANALOGY",
+   "analogy_name": null
+  },
+  "SYS-54730": {
+   "id": "SYS-54730",
+   "group": "K",
+   "family": "graph",
+   "bar_t2": 0.5,
+   "bar_eval": 0.5483333333333333,
+   "planted_n": 0,
+   "rule_complexity": 0.1169,
+   "t1_score": 0.93,
+   "t1_verdict": "RULE",
+   "t2_exact": 1.0,
+   "t2_comp": 1.0,
+   "t3_exact": 1.0,
+   "t3_comp": 1.0,
+   "t4": {
+    "UNTESTABLE": 4
+   },
+   "t4_captured": {},
+   "t5": {
+    "status": "OK",
+    "eval_exact": 1.0,
+    "eval_comp": 1.0,
+    "length": 150,
+    "intervention_exact": 1.0
+   },
+   "learned": true,
+   "behav_score": 0.5,
+   "coherence": "COHERENT",
+   "familiar": "YES",
+   "analogy_score": {
+    "status": "OK",
+    "eval_exact": 1.0,
+    "eval_comp": 1.0,
+    "length": 217,
+    "intervention_exact": 1.0
+   },
+   "analogy_class": "CORRECT_ANALOGY",
+   "analogy_name": "Synchronous outer-totalistic threshold cellular automaton on a graph, with saturating up/down counters (a leaky integrator threshold network, similar to spreading activation or bootstrap percolation)",
+   "active": {
+    "t1": [
+     0.93,
+     "RULE"
+    ],
+    "t2": [
+     1.0,
+     1.0
+    ],
+    "t5": {
+     "status": "OK",
+     "eval_exact": 1.0,
+     "eval_comp": 1.0,
+     "length": 150,
+     "intervention_exact": 1.0
+    },
+    "captured": {},
+    "n_experiments": 10,
+    "learned": true
+   }
+  },
+  "SYS-58162": {
+   "id": "SYS-58162",
+   "group": "A",
+   "family": "rewrite",
+   "bar_t2": 0.875,
+   "bar_eval": 0.87,
+   "planted_n": 1,
+   "rule_complexity": 0.1226,
+   "t1_score": 0.8,
+   "t1_verdict": "RULE",
+   "t2_exact": 1.0,
+   "t2_comp": 1.0,
+   "t3_exact": 1.0,
+   "t3_comp": 1.0,
+   "t4": {
+    "TRUE": 2,
+    "UNTESTABLE": 2
+   },
+   "t4_captured": {
+    "{\"mod\": 3, \"type\": \"conserved_weights\", \"w\": [0, 0, 2, 0]}": true
+   },
+   "t5": {
+    "status": "OK",
+    "eval_exact": 1.0,
+    "eval_comp": 1.0,
+    "length": 200,
+    "intervention_exact": 1.0
+   },
+   "learned": true,
+   "behav_score": 0.13,
+   "coherence": "COHERENT",
+   "familiar": "YES",
+   "analogy_score": {
+    "status": "OK",
+    "eval_exact": 1.0,
+    "eval_comp": 1.0,
+    "length": 189,
+    "intervention_exact": 1.0
+   },
+   "analogy_class": "CORRECT_ANALOGY",
+   "analogy_name": "String rewriting system (semi-Thue system), applied like a Markov algorithm (one rewrite per step, leftmost match)",
+   "active": {
+    "t1": [
+     0.9,
+     "RULE"
+    ],
+    "t2": [
+     0.8333333333333334,
+     0.9444444444444443
+    ],
+    "t5": {
+     "status": "OK",
+     "eval_exact": 1.0,
+     "eval_comp": 1.0,
+     "length": 212,
+     "intervention_exact": 1.0
+    },
+    "captured": {
+     "{\"mod\": 3, \"type\": \"conserved_weights\", \"w\": [0, 0, 2, 0]}": true
+    },
+    "n_experiments": 10,
+    "learned": true
+   }
+  },
+  "SYS-59756": {
+   "id": "SYS-59756",
+   "group": "A",
+   "family": "map",
+   "bar_t2": 0.041666666666666664,
+   "bar_eval": 0.04,
+   "planted_n": 2,
+   "rule_complexity": 0.3035,
+   "t1_score": 0.97,
+   "t1_verdict": "RULE",
+   "t2_exact": 1.0,
+   "t2_comp": 1.0,
+   "t3_exact": 1.0,
+   "t3_comp": 1.0,
+   "t4": {
+    "TRUE": 1,
+    "UNTESTABLE": 2
+   },
+   "t4_captured": {
+    "{\"type\": \"commutes_swap\"}": true
+   },
+   "t5": {
+    "status": "ERROR",
+    "error": "rejected: call f",
+    "length": 105
+   },
+   "learned": true,
+   "behav_score": 0.9583333333333334,
+   "coherence": "COHERENT",
+   "familiar": "NO",
+   "analogy_score": null,
+   "analogy_class": "NO_ANALOGY",
+   "analogy_name": null,
+   "reveal": {
+    "coherence": "COHERENT",
+    "t2": [
+     1.0,
+     1.0
+    ],
+    "t3": [
+     1.0,
+     1.0
+    ],
+    "t4": {
+     "TRUE": 1,
+     "UNTESTABLE": 4
+    },
+    "captured": {
+     "{\"type\": \"commutes_swap\"}": true
+    }
+   },
+   "prose_t2": [
+    0.6666666666666666,
+    0.7083333333333334
+   ]
+  },
+  "SYS-60800": {
+   "id": "SYS-60800",
+   "group": "A",
+   "family": "rewrite",
+   "bar_t2": 0.8055555555555555,
+   "bar_eval": 0.8033333333333335,
+   "planted_n": 1,
+   "rule_complexity": 0.1071,
+   "t1_score": 0.85,
+   "t1_verdict": "RULE",
+   "t2_exact": 1.0,
+   "t2_comp": 1.0,
+   "t3_exact": 1.0,
+   "t3_comp": 1.0,
+   "t4": {
+    "TRUE": 1,
+    "UNTESTABLE": 2
+   },
+   "t4_captured": {
+    "{\"mod\": 4, \"type\": \"conserved_weights\", \"w\": [0, 1, 0, 3]}": false
+   },
+   "t5": {
+    "status": "OK",
+    "eval_exact": 0.81,
+    "eval_comp": 0.9283333333333332,
+    "length": 157,
+    "intervention_exact": 1.0
+   },
+   "learned": true,
+   "behav_score": 0.19444444444444453,
+   "coherence": "COHERENT",
+   "familiar": "YES",
+   "analogy_score": {
+    "status": "OK",
+    "eval_exact": 0.81,
+    "eval_comp": 0.9283333333333332,
+    "length": 189,
+    "intervention_exact": 1.0
+   },
+   "analogy_class": "FALSE_COLLAPSE_TO_FAMILIAR",
+   "analogy_name": "String rewriting system (semi-Thue system) / local substitution system, similar to Wolfram-style substitution systems",
+   "reveal": {
+    "coherence": "COHERENT",
+    "t2": [
+     1.0,
+     1.0
+    ],
+    "t3": [
+     1.0,
+     1.0
+    ],
+    "t4": {
+     "TRUE": 4,
+     "TRIVIAL": 1,
+     "UNTESTABLE": 1
+    },
+    "captured": {
+     "{\"mod\": 4, \"type\": \"conserved_weights\", \"w\": [0, 1, 0, 3]}": false
+    }
+   }
+  },
+  "SYS-62120": {
+   "id": "SYS-62120",
+   "group": "K",
+   "family": "tab",
+   "bar_t2": 0.6,
+   "bar_eval": 0.582,
+   "planted_n": 0,
+   "rule_complexity": 0.2474,
+   "t1_score": 0.97,
+   "t1_verdict": "RULE",
+   "t2_exact": 1.0,
+   "t2_comp": 1.0,
+   "t3_exact": 1.0,
+   "t3_comp": 1.0,
+   "t4": {
+    "UNTESTABLE": 1,
+    "TRUE": 1
+   },
+   "t4_captured": {},
+   "t5": {
+    "status": "OK",
+    "eval_exact": 1.0,
+    "eval_comp": 1.0,
+    "length": 66,
+    "intervention_exact": 1.0
+   },
+   "learned": true,
+   "behav_score": 0.41800000000000004,
+   "coherence": "COHERENT",
+   "familiar": "YES",
+   "analogy_score": {
+    "status": "OK",
+    "eval_exact": 1.0,
+    "eval_comp": 1.0,
+    "length": 74,
+    "intervention_exact": 1.0
+   },
+   "analogy_class": "CORRECT_ANALOGY",
+   "analogy_name": "Linear feedback shift register (LFSR) over GF(5), equivalently a linear recurring sequence mod 5 (a Fibonacci-style LFSR)"
+  },
+  "SYS-65579": {
+   "id": "SYS-65579",
+   "group": "A",
+   "family": "tab",
+   "bar_t2": 0.38333333333333336,
+   "bar_eval": 0.42200000000000004,
+   "planted_n": 1,
+   "rule_complexity": 0.1829,
+   "t1_score": 0.85,
+   "t1_verdict": "RULE",
+   "t2_exact": 0.25,
+   "t2_comp": 0.65,
+   "t3_exact": 0.08333333333333333,
+   "t3_comp": 0.6166666666666667,
+   "t4": {
+    "TRUE": 1,
+    "UNTESTABLE": 1
+   },
+   "t4_captured": {
+    "{\"mod\": 5, \"type\": \"conserved_linear\", \"w\": [4, 4, 2, 3, 2]}": true
+   },
+   "t5": {
+    "status": "OK",
+    "eval_exact": 0.265,
+    "eval_comp": 0.625,
+    "length": 1034,
+    "intervention_exact": 0.08333333333333333
+   },
+   "learned": true,
+   "behav_score": 0.26666666666666666,
+   "coherence": "COHERENT",
+   "familiar": "NO",
+   "analogy_score": null,
+   "analogy_class": "NO_ANALOGY",
+   "analogy_name": null,
+   "reveal": {
+    "coherence": "COHERENT",
+    "t2": [
+     1.0,
+     1.0
+    ],
+    "t3": [
+     1.0,
+     1.0
+    ],
+    "t4": {
+     "TRUE": 1,
+     "UNTESTABLE": 1
+    },
+    "captured": {
+     "{\"mod\": 5, \"type\": \"conserved_linear\", \"w\": [4, 4, 2, 3, 2]}": true
+    }
+   },
+   "prose_t2": [
+    0.08333333333333333,
+    0.6
+   ]
+  },
+  "SYS-65663": {
+   "id": "SYS-65663",
+   "group": "N_SEDUCTIVE",
+   "family": "map",
+   "bar_t2": 0.4166666666666667,
+   "bar_eval": 0.32,
+   "planted_n": 0,
+   "rule_complexity": 0.2087,
+   "t1_score": 0.5,
+   "t1_verdict": "UNCERTAIN",
+   "t2_exact": 0.0,
+   "t2_comp": 0.16666666666666666,
+   "t3_exact": 0.3333333333333333,
+   "t3_comp": 0.6666666666666667,
+   "t4": {
+    "UNTESTABLE": 3
+   },
+   "t4_captured": {},
+   "t5": {
+    "status": "OK",
+    "eval_exact": 0.12,
+    "eval_comp": 0.3075,
+    "length": 592,
+    "intervention_exact": 0.08333333333333333
+   },
+   "learned": false,
+   "behav_score": -0.012500000000000011,
+   "coherence": "COHERENT",
+   "familiar": "NO",
+   "analogy_score": null,
+   "analogy_class": "NO_ANALOGY",
+   "analogy_name": null,
+   "prose_t2": [
+    0.0,
+    0.2916666666666667
+   ]
+  },
+  "SYS-67061": {
+   "id": "SYS-67061",
+   "group": "AADV",
+   "family": "map",
+   "bar_t2": 0.041666666666666664,
+   "bar_eval": 0.055,
+   "planted_n": 1,
+   "rule_complexity": 0.2901,
+   "t1_score": 0.6,
+   "t1_verdict": "RULE",
+   "t2_exact": 0.0,
+   "t2_comp": 0.041666666666666664,
+   "t3_exact": 0.16666666666666666,
+   "t3_comp": 0.5833333333333333,
+   "t4": {
+    "UNTESTABLE": 3
+   },
+   "t4_captured": {
+    "{\"M\": [[26, 4], [15, 7]], \"Minv\": [[12, 2], [23, 18]], \"mod\": 31, \"type\": \"commutes_swap\"}": false
+   },
+   "t5": {
+    "status": "OK",
+    "eval_exact": 0.0,
+    "eval_comp": 0.03,
+    "length": 813,
+    "intervention_exact": 0.16666666666666666
+   },
+   "learned": false,
+   "behav_score": 0.0,
+   "coherence": "COHERENT",
+   "familiar": "NO",
+   "analogy_score": null,
+   "analogy_class": "NO_ANALOGY",
+   "analogy_name": null
+  },
+  "SYS-67174": {
+   "id": "SYS-67174",
+   "group": "N_DSCRAMBLE",
+   "family": "rewrite",
+   "bar_t2": 0.736111111111111,
+   "bar_eval": 0.7683333333333333,
+   "planted_n": 0,
+   "rule_complexity": 0.1884,
+   "t1_score": 0.7,
+   "t1_verdict": "RULE",
+   "t2_exact": 0.16666666666666666,
+   "t2_comp": 0.736111111111111,
+   "t3_exact": 0.5,
+   "t3_comp": 0.75,
+   "t4": {
+    "UNTESTABLE": 1
+   },
+   "t4_captured": {},
+   "t5": {
+    "status": "OK",
+    "eval_exact": 0.195,
+    "eval_comp": 0.7541666666666665,
+    "length": 974,
+    "intervention_exact": 0.5
+   },
+   "learned": false,
+   "behav_score": 0.0,
+   "coherence": "COHERENT",
+   "familiar": "YES",
+   "analogy_score": {
+    "status": "OK",
+    "eval_exact": 0.035,
+    "eval_comp": 0.5525,
+    "length": 206,
+    "intervention_exact": 0.08333333333333333
+   },
+   "analogy_class": "SUPERFICIAL_ANALOGY",
+   "analogy_name": "Local pair-rewriting system conserving a quantity mod 4 (similar to a number-conserving / block cellular automaton or string rewriting)"
+  },
+  "SYS-67205": {
+   "id": "SYS-67205",
+   "group": "K",
+   "family": "tab",
+   "bar_t2": 0.48333333333333334,
+   "bar_eval": 0.47800000000000004,
+   "planted_n": 0,
+   "rule_complexity": 0.1155,
+   "t1_score": 0.95,
+   "t1_verdict": "RULE",
+   "t2_exact": 1.0,
+   "t2_comp": 1.0,
+   "t3_exact": 1.0,
+   "t3_comp": 1.0,
+   "t4": {
+    "UNTESTABLE": 2,
+    "TRUE": 2
+   },
+   "t4_captured": {},
+   "t5": {
+    "status": "OK",
+    "eval_exact": 1.0,
+    "eval_comp": 1.0,
+    "length": 132,
+    "intervention_exact": 1.0
+   },
+   "learned": true,
+   "behav_score": 0.522,
+   "coherence": "COHERENT",
+   "familiar": "YES",
+   "analogy_score": {
+    "status": "OK",
+    "eval_exact": 1.0,
+    "eval_comp": 1.0,
+    "length": 138,
+    "intervention_exact": 1.0
+   },
+   "analogy_class": "CORRECT_ANALOGY",
+   "analogy_name": "Odd-even transposition sort (brick sort, a parallel bubble-sort variant / sorting network)",
+   "reveal": {
+    "coherence": "COHERENT",
+    "t2": [
+     1.0,
+     1.0
+    ],
+    "t3": [
+     1.0,
+     1.0
+    ],
+    "t4": {
+     "UNTESTABLE": 3,
+     "TRUE": 4
+    },
+    "captured": {}
+   },
+   "prose_t2": [
+    1.0,
+    1.0
+   ]
+  },
+  "SYS-67770": {
+   "id": "SYS-67770",
+   "group": "A",
+   "family": "tab",
+   "bar_t2": 0.7333333333333334,
+   "bar_eval": 0.6920000000000001,
+   "planted_n": 1,
+   "rule_complexity": 0.1011,
+   "t1_score": 0.75,
+   "t1_verdict": "RULE",
+   "t2_exact": 0.08333333333333333,
+   "t2_comp": 0.6833333333333332,
+   "t3_exact": 0.6666666666666666,
+   "t3_comp": 0.8333333333333333,
+   "t4": {
+    "TRUE": 1,
+    "UNTESTABLE": 3
+   },
+   "t4_captured": {
+    "{\"max_transient\": 20, \"type\": \"all_orbits_fixed\"}": true
+   },
+   "t5": {
+    "status": "OK",
+    "eval_exact": 0.185,
+    "eval_comp": 0.713,
+    "length": 219,
+    "intervention_exact": 0.6666666666666666
+   },
+   "learned": false,
+   "behav_score": 0.020999999999999908,
+   "coherence": "COHERENT",
+   "familiar": "NO",
+   "analogy_score": null,
+   "analogy_class": "NO_ANALOGY",
+   "analogy_name": null,
+   "reveal": {
+    "coherence": "COHERENT",
+    "t2": [
+     1.0,
+     1.0
+    ],
+    "t3": [
+     1.0,
+     1.0
+    ],
+    "t4": {
+     "UNTESTABLE": 5
+    },
+    "captured": {
+     "{\"max_transient\": 20, \"type\": \"all_orbits_fixed\"}": false
+    }
+   }
+  },
+  "SYS-69242": {
+   "id": "SYS-69242",
+   "group": "A",
+   "family": "vm",
+   "bar_t2": 0.4791666666666667,
+   "bar_eval": 0.61,
+   "planted_n": 1,
+   "rule_complexity": 0.2688,
+   "t1_score": 0.85,
+   "t1_verdict": "RULE",
+   "t2_exact": 0.8333333333333334,
+   "t2_comp": 0.9375,
+   "t3_exact": 1.0,
+   "t3_comp": 1.0,
+   "t4": {
+    "UNTESTABLE": 3
+   },
+   "t4_captured": {
+    "{\"mod\": 7, \"type\": \"conserved_linear\", \"w\": [0, 3, 6, 5]}": false
+   },
+   "t5": {
+    "status": "OK",
+    "eval_exact": 0.755,
+    "eval_comp": 0.92125,
+    "length": 412,
+    "intervention_exact": 1.0
+   },
+   "learned": true,
+   "behav_score": 0.4583333333333333,
+   "coherence": "COHERENT",
+   "familiar": "YES",
+   "analogy_score": {
+    "status": "OK",
+    "eval_exact": 0.42,
+    "eval_comp": 0.75375,
+    "length": 225,
+    "intervention_exact": 0.0
+   },
+   "analogy_class": "SUPERFICIAL_ANALOGY",
+   "analogy_name": "Program-counter-driven register machine (finite-state controller with a conditional branch on a register being zero, Minsky/counter-machine style)",
+   "reveal": {
+    "coherence": "COHERENT",
+    "t2": [
+     1.0,
+     1.0
+    ],
+    "t3": [
+     0.75,
+     0.8541666666666667
+    ],
+    "t4": {
+     "UNTESTABLE": 5
+    },
+    "captured": {
+     "{\"mod\": 7, \"type\": \"conserved_linear\", \"w\": [0, 3, 6, 5]}": false
+    }
+   },
+   "prose_t2": [
+    0.75,
+    0.8958333333333334
+   ]
+  },
+  "SYS-70053": {
+   "id": "SYS-70053",
+   "group": "A",
+   "family": "vm",
+   "bar_t2": 0.5,
+   "bar_eval": 0.5175,
+   "planted_n": 1,
+   "rule_complexity": 0.2955,
+   "t1_score": 0.8,
+   "t1_verdict": "RULE",
+   "t2_exact": 0.9166666666666666,
+   "t2_comp": 0.9583333333333334,
+   "t3_exact": 0.49999999999999994,
+   "t3_comp": 0.8333333333333334,
+   "t4": {
+    "TRUE": 1,
+    "UNTESTABLE": 4
+   },
+   "t4_captured": {
+    "{\"mod\": 7, \"type\": \"conserved_linear\", \"w\": [0, 6, 5, 5]}": false
+   },
+   "t5": {
+    "status": "OK",
+    "eval_exact": 0.71,
+    "eval_comp": 0.855,
+    "length": 468,
+    "intervention_exact": 0.49999999999999994
+   },
+   "learned": true,
+   "behav_score": 0.45833333333333337,
+   "coherence": "UNCLEAR",
+   "familiar": "NO",
+   "analogy_score": null,
+   "analogy_class": "NO_ANALOGY",
+   "analogy_name": null,
+   "reveal": {
+    "coherence": "COHERENT",
+    "t2": [
+     1.0,
+     1.0
+    ],
+    "t3": [
+     0.0,
+     0.33333333333333337
+    ],
+    "t4": {
+     "TRUE": 1,
+     "UNTESTABLE": 2
+    },
+    "captured": {
+     "{\"mod\": 7, \"type\": \"conserved_linear\", \"w\": [0, 6, 5, 5]}": false
+    }
+   },
+   "prose_t2": [
+    0.9166666666666666,
+    0.9583333333333334
+   ]
+  },
+  "SYS-70364": {
+   "id": "SYS-70364",
+   "group": "N_SCRAMBLE",
+   "family": "map",
+   "bar_t2": 0.041666666666666664,
+   "bar_eval": 0.04,
+   "planted_n": 0,
+   "rule_complexity": 0.3239,
+   "t1_score": 0.6,
+   "t1_verdict": "RULE",
+   "t2_exact": 0.0,
+   "t2_comp": 0.0,
+   "t3_exact": 0.0,
+   "t3_comp": 0.5,
+   "t4": {
+    "UNTESTABLE": 1
+   },
+   "t4_captured": {},
+   "t5": {
+    "status": "OK",
+    "eval_exact": 0.0,
+    "eval_comp": 0.0325,
+    "length": 1000,
+    "intervention_exact": 0.08333333333333333
+   },
+   "learned": false,
+   "behav_score": -0.0075,
+   "coherence": "COHERENT",
+   "familiar": "NO",
+   "analogy_score": null,
+   "analogy_class": "NO_ANALOGY",
+   "analogy_name": null,
+   "prose_t2": [
+    0.0,
+    0.0
+   ]
+  },
+  "SYS-70448": {
+   "id": "SYS-70448",
+   "group": "N_DSCRAMBLE",
+   "family": "graph",
+   "bar_t2": 0.3194444444444444,
+   "bar_eval": 0.29000000000000004,
+   "planted_n": 0,
+   "rule_complexity": 0.2535,
+   "t1_score": 0.5,
+   "t1_verdict": "UNCERTAIN",
+   "t2_exact": 0.0,
+   "t2_comp": 0.38888888888888884,
+   "t3_exact": 0.0,
+   "t3_comp": 0.36111111111111105,
+   "t4": {
+    "UNTESTABLE": 1
+   },
+   "t4_captured": {},
+   "t5": {
+    "status": "OK",
+    "eval_exact": 0.005,
+    "eval_comp": 0.3741666666666667,
+    "length": 44,
+    "intervention_exact": 0.0
+   },
+   "learned": false,
+   "behav_score": 0.08416666666666667,
+   "coherence": "COHERENT",
+   "familiar": "NO",
+   "analogy_score": null,
+   "analogy_class": "NO_ANALOGY",
+   "analogy_name": null
+  },
+  "SYS-70612": {
+   "id": "SYS-70612",
+   "group": "AADV",
+   "family": "vm",
+   "bar_t2": 0.5416666666666666,
+   "bar_eval": 0.5675,
+   "planted_n": 1,
+   "rule_complexity": 0.2677,
+   "t1_score": 0.85,
+   "t1_verdict": "RULE",
+   "t2_exact": 0.75,
+   "t2_comp": 0.9375,
+   "t3_exact": 0.9166666666666666,
+   "t3_comp": 0.9791666666666666,
+   "t4": {
+    "UNTESTABLE": 4
+   },
+   "t4_captured": {},
+   "t5": {
+    "status": "OK",
+    "eval_exact": 0.81,
+    "eval_comp": 0.9525,
+    "length": 359,
+    "intervention_exact": 0.9166666666666666
+   },
+   "learned": true,
+   "behav_score": 0.39583333333333337,
+   "coherence": "COHERENT",
+   "familiar": "NO",
+   "analogy_score": null,
+   "analogy_class": "NO_ANALOGY",
+   "analogy_name": null
+  },
+  "SYS-73520": {
+   "id": "SYS-73520",
+   "group": "A",
+   "family": "rewrite",
+   "bar_t2": 0.8333333333333334,
+   "bar_eval": 0.8383333333333333,
+   "planted_n": 1,
+   "rule_complexity": 0.1277,
+   "t1_score": 0.9,
+   "t1_verdict": "RULE",
+   "t2_exact": 1.0,
+   "t2_comp": 1.0,
+   "t3_exact": 1.0,
+   "t3_comp": 1.0,
+   "t4": {
+    "TRUE": 2,
+    "UNTESTABLE": 1
+   },
+   "t4_captured": {
+    "{\"mod\": 3, \"type\": \"conserved_weights\", \"w\": [1, 1, 0, 2]}": true
+   },
+   "t5": {
+    "status": "OK",
+    "eval_exact": 1.0,
+    "eval_comp": 1.0,
+    "length": 211,
+    "intervention_exact": 1.0
+   },
+   "learned": true,
+   "behav_score": 0.16666666666666663,
+   "coherence": "COHERENT",
+   "familiar": "NO",
+   "analogy_score": null,
+   "analogy_class": "NO_ANALOGY",
+   "analogy_name": null
+  },
+  "SYS-75695": {
+   "id": "SYS-75695",
+   "group": "A",
+   "family": "vm",
+   "bar_t2": 0.4375,
+   "bar_eval": 0.46,
+   "planted_n": 1,
+   "rule_complexity": 0.3279,
+   "t1_score": 0.85,
+   "t1_verdict": "RULE",
+   "t2_exact": 1.0,
+   "t2_comp": 1.0,
+   "t3_exact": 1.0,
+   "t3_comp": 1.0,
+   "t4": {
+    "UNTESTABLE": 4
+   },
+   "t4_captured": {
+    "{\"mod\": 7, \"type\": \"conserved_linear\", \"w\": [0, 5, 6, 2]}": false
+   },
+   "t5": {
+    "status": "OK",
+    "eval_exact": 0.94,
+    "eval_comp": 0.97,
+    "length": 383,
+    "intervention_exact": 1.0
+   },
+   "learned": true,
+   "behav_score": 0.5625,
+   "coherence": "COHERENT",
+   "familiar": "NO",
+   "analogy_score": null,
+   "analogy_class": "NO_ANALOGY",
+   "analogy_name": null
+  },
+  "SYS-75701": {
+   "id": "SYS-75701",
+   "group": "N_DESTROY",
+   "family": "rewrite",
+   "bar_t2": 0.7638888888888888,
+   "bar_eval": 0.7716666666666667,
+   "planted_n": 0,
+   "rule_complexity": 0.1355,
+   "t1_score": 0.85,
+   "t1_verdict": "RULE",
+   "t2_exact": 1.0,
+   "t2_comp": 1.0,
+   "t3_exact": 1.0,
+   "t3_comp": 1.0,
+   "t4": {
+    "TRUE": 1,
+    "UNTESTABLE": 1,
+    "TRIVIAL": 1
+   },
+   "t4_captured": {},
+   "t5": {
+    "status": "OK",
+    "eval_exact": 1.0,
+    "eval_comp": 1.0,
+    "length": 159,
+    "intervention_exact": 1.0
+   },
+   "learned": true,
+   "behav_score": 0.23611111111111116,
+   "coherence": "COHERENT",
+   "familiar": "YES",
+   "analogy_score": {
+    "status": "OK",
+    "eval_exact": 1.0,
+    "eval_comp": 1.0,
+    "length": 187,
+    "intervention_exact": 1.0
+   },
+   "analogy_class": "CORRECT_ANALOGY",
+   "analogy_name": "String rewriting system (semi-Thue system) with a leftmost-outermost, one-rewrite-per-step strategy, run to a normal form",
+   "reveal": {
+    "coherence": "COHERENT",
+    "t2": [
+     1.0,
+     1.0
+    ],
+    "t3": [
+     1.0,
+     1.0
+    ],
+    "t4": {
+     "TRUE": 1,
+     "UNTESTABLE": 2
+    },
+    "captured": {}
+   }
+  },
+  "SYS-79080": {
+   "id": "SYS-79080",
+   "group": "A",
+   "family": "rewrite",
+   "bar_t2": 0.75,
+   "bar_eval": 0.7233333333333334,
+   "planted_n": 1,
+   "rule_complexity": 0.1884,
+   "t1_score": 0.93,
+   "t1_verdict": "RULE",
+   "t2_exact": 1.0,
+   "t2_comp": 1.0,
+   "t3_exact": 1.0,
+   "t3_comp": 1.0,
+   "t4": {
+    "TRUE": 1,
+    "UNTESTABLE": 2
+   },
+   "t4_captured": {
+    "{\"mod\": 3, \"type\": \"conserved_weights\", \"w\": [0, 2, 2, 0]}": false
+   },
+   "t5": {
+    "status": "OK",
+    "eval_exact": 1.0,
+    "eval_comp": 1.0,
+    "length": 162,
+    "intervention_exact": 1.0
+   },
+   "learned": true,
+   "behav_score": 0.2766666666666666,
+   "coherence": "COHERENT",
+   "familiar": "YES",
+   "analogy_score": {
+    "status": "OK",
+    "eval_exact": 1.0,
+    "eval_comp": 1.0,
+    "length": 205,
+    "intervention_exact": 1.0
+   },
+   "analogy_class": "CORRECT_ANALOGY",
+   "analogy_name": "String rewriting system (semi-Thue system) with leftmost-first rewriting, similar to a Markov normal algorithm"
+  },
+  "SYS-79388": {
+   "id": "SYS-79388",
+   "group": "N_CONJ",
+   "family": "rewrite",
+   "bar_t2": 0.513888888888889,
+   "bar_eval": 0.465,
+   "planted_n": 0,
+   "rule_complexity": 0.1174,
+   "t1_score": 0.75,
+   "t1_verdict": "RULE",
+   "t2_exact": 0.08333333333333333,
+   "t2_comp": 0.2916666666666667,
+   "t3_exact": 0.5,
+   "t3_comp": 0.7916666666666666,
+   "t4": {
+    "UNTESTABLE": 3
+   },
+   "t4_captured": {},
+   "t5": {
+    "status": "OK",
+    "eval_exact": 0.16,
+    "eval_comp": 0.3216666666666667,
+    "length": 96,
+    "intervention_exact": 0.5
+   },
+   "learned": false,
+   "behav_score": -0.1433333333333333,
+   "coherence": "UNCLEAR",
+   "familiar": "NO",
+   "analogy_score": null,
+   "analogy_class": "NO_ANALOGY",
+   "analogy_name": null,
+   "prose_t2": [
+    0.25,
+    0.513888888888889
+   ]
+  },
+  "SYS-80526": {
+   "id": "SYS-80526",
+   "group": "N_DSCRAMBLE",
+   "family": "graph",
+   "bar_t2": 0.5416666666666667,
+   "bar_eval": 0.4749999999999999,
+   "planted_n": 0,
+   "rule_complexity": 0.237,
+   "t1_score": 0.6,
+   "t1_verdict": "RULE",
+   "t2_exact": 0.08333333333333333,
+   "t2_comp": 0.5416666666666667,
+   "t3_exact": 0.0,
+   "t3_comp": 0.4722222222222222,
+   "t4": {
+    "UNTESTABLE": 2
+   },
+   "t4_captured": {},
+   "t5": {
+    "status": "OK",
+    "eval_exact": 0.03,
+    "eval_comp": 0.4825,
+    "length": 27,
+    "intervention_exact": 0.0
+   },
+   "learned": false,
+   "behav_score": 0.007500000000000062,
+   "coherence": "UNCLEAR",
+   "familiar": "NO",
+   "analogy_score": null,
+   "analogy_class": "NO_ANALOGY",
+   "analogy_name": null,
+   "prose_t2": [
+    0.08333333333333333,
+    0.5416666666666667
+   ]
+  },
+  "SYS-80858": {
+   "id": "SYS-80858",
+   "group": "A",
+   "family": "tab",
+   "bar_t2": 0.5,
+   "bar_eval": 0.5379999999999999,
+   "planted_n": 1,
+   "rule_complexity": 0.2666,
+   "t1_score": 0.85,
+   "t1_verdict": "RULE",
+   "t2_exact": 0.16666666666666666,
+   "t2_comp": 0.7166666666666667,
+   "t3_exact": 0.16666666666666666,
+   "t3_comp": 0.6833333333333332,
+   "t4": {
+    "UNTESTABLE": 2
+   },
+   "t4_captured": {
+    "{\"mod\": 5, \"type\": \"cyclic_linear\", \"w\": [4, 2, 3, 0, 2]}": false
+   },
+   "t5": {
+    "status": "OK",
+    "eval_exact": 0.17,
+    "eval_comp": 0.784,
+    "length": 403,
+    "intervention_exact": 0.0
+   },
+   "learned": false,
+   "behav_score": 0.2460000000000001,
+   "coherence": "COHERENT",
+   "familiar": "NO",
+   "analogy_score": null,
+   "analogy_class": "NO_ANALOGY",
+   "analogy_name": null,
+   "active": {
+    "t1": [
+     0.8,
+     "RULE"
+    ],
+    "t2": [
+     0.08333333333333333,
+     0.7000000000000001
+    ],
+    "t5": {
+     "status": "OK",
+     "eval_exact": 0.17,
+     "eval_comp": 0.77,
+     "length": 424,
+     "intervention_exact": 0.0
+    },
+    "captured": {
+     "{\"mod\": 5, \"type\": \"cyclic_linear\", \"w\": [4, 2, 3, 0, 2]}": false
+    },
+    "n_experiments": 10,
+    "learned": false
+   }
+  },
+  "SYS-81058": {
+   "id": "SYS-81058",
+   "group": "A",
+   "family": "rewrite",
+   "bar_t2": 0.7638888888888888,
+   "bar_eval": 0.8266666666666669,
+   "planted_n": 1,
+   "rule_complexity": 0.1174,
+   "t1_score": 0.8,
+   "t1_verdict": "RULE",
+   "t2_exact": 1.0,
+   "t2_comp": 1.0,
+   "t3_exact": 1.0,
+   "t3_comp": 1.0,
+   "t4": {
+    "UNTESTABLE": 3,
+    "TRUE": 1
+   },
+   "t4_captured": {
+    "{\"mod\": 3, \"type\": \"conserved_weights\", \"w\": [2, 2, 1, 2]}": false
+   },
+   "t5": {
+    "status": "OK",
+    "eval_exact": 1.0,
+    "eval_comp": 1.0,
+    "length": 158,
+    "intervention_exact": 1.0
+   },
+   "learned": true,
+   "behav_score": 0.23611111111111116,
+   "coherence": "COHERENT",
+   "familiar": "YES",
+   "analogy_score": {
+    "status": "OK",
+    "eval_exact": 0.87,
+    "eval_comp": 0.9725,
+    "length": 184,
+    "intervention_exact": 0.5
+   },
+   "analogy_class": "SUPERFICIAL_ANALOGY",
+   "analogy_name": "String rewriting system / Markov algorithm (leftmost-first local rewrite rules)",
+   "reveal": {
+    "coherence": "COHERENT",
+    "t2": [
+     1.0,
+     1.0
+    ],
+    "t3": [
+     1.0,
+     1.0
+    ],
+    "t4": {
+     "UNTESTABLE": 2,
+     "TRUE": 3
+    },
+    "captured": {
+     "{\"mod\": 3, \"type\": \"conserved_weights\", \"w\": [2, 2, 1, 2]}": true
+    }
+   },
+   "prose_t2": [
+    1.0,
+    1.0
+   ]
+  },
+  "SYS-81699": {
+   "id": "SYS-81699",
+   "group": "N_SEDUCTIVE",
+   "family": "map",
+   "bar_t2": 0.3333333333333333,
+   "bar_eval": 0.295,
+   "planted_n": 0,
+   "rule_complexity": 0.211,
+   "t1_score": 0.5,
+   "t1_verdict": "UNCERTAIN",
+   "t2_exact": 0.08333333333333333,
+   "t2_comp": 0.16666666666666666,
+   "t3_exact": 0.16666666666666666,
+   "t3_comp": 0.5833333333333334,
+   "t4": {
+    "UNTESTABLE": 3
+   },
+   "t4_captured": {},
+   "t5": {
+    "status": "OK",
+    "eval_exact": 0.1,
+    "eval_comp": 0.28,
+    "length": 601,
+    "intervention_exact": 0.3333333333333333
+   },
+   "learned": false,
+   "behav_score": -0.014999999999999958,
+   "coherence": "COHERENT",
+   "familiar": "NO",
+   "analogy_score": null,
+   "analogy_class": "NO_ANALOGY",
+   "analogy_name": null
+  },
+  "SYS-81862": {
+   "id": "SYS-81862",
+   "group": "N_DSCRAMBLE",
+   "family": "graph",
+   "bar_t2": 0.47222222222222227,
+   "bar_eval": 0.42833333333333334,
+   "planted_n": 0,
+   "rule_complexity": 0.2617,
+   "t1_score": 0.44999999999999996,
+   "t1_verdict": "RANDOM",
+   "t2_exact": 0.08333333333333333,
+   "t2_comp": 0.47222222222222227,
+   "t3_exact": 0.0,
+   "t3_comp": 0.41666666666666663,
+   "t4": {
+    "UNTESTABLE": 1
+   },
+   "t4_captured": {},
+   "t5": {
+    "status": "OK",
+    "eval_exact": 0.0,
+    "eval_comp": 0.4175,
+    "length": 27,
+    "intervention_exact": 0.0
+   },
+   "learned": false,
+   "behav_score": 0.0,
+   "coherence": "UNCLEAR",
+   "familiar": "NO",
+   "analogy_score": null,
+   "analogy_class": "NO_ANALOGY",
+   "analogy_name": null
+  },
+  "SYS-82332": {
+   "id": "SYS-82332",
+   "group": "A",
+   "family": "graph",
+   "bar_t2": 0.5416666666666666,
+   "bar_eval": 0.5850000000000001,
+   "planted_n": 1,
+   "rule_complexity": 0.0988,
+   "t1_score": 0.85,
+   "t1_verdict": "RULE",
+   "t2_exact": 0.6666666666666666,
+   "t2_comp": 0.9305555555555557,
+   "t3_exact": 0.9166666666666666,
+   "t3_comp": 0.9861111111111112,
+   "t4": {
+    "TRUE": 1,
+    "UNTESTABLE": 3
+   },
+   "t4_captured": {
+    "{\"max_transient\": 20, \"type\": \"all_orbits_fixed\"}": true
+   },
+   "t5": {
+    "status": "OK",
+    "eval_exact": 0.69,
+    "eval_comp": 0.9316666666666668,
+    "length": 166,
+    "intervention_exact": 0.8888888888888888
+   },
+   "learned": true,
+   "behav_score": 0.38888888888888906,
+   "coherence": "COHERENT",
+   "familiar": "YES",
+   "analogy_score": {
+    "status": "OK",
+    "eval_exact": 0.69,
+    "eval_comp": 0.9316666666666668,
+    "length": 261,
+    "intervention_exact": 0.8888888888888888
+   },
+   "analogy_class": "USEFUL_PARTIAL_ANALOGY",
+   "analogy_name": "Outer-totalistic cellular automaton on a graph, with the neighbour sum taken mod 4 and a quiescent state 0",
+   "reveal": {
+    "coherence": "COHERENT",
+    "t2": [
+     1.0,
+     1.0
+    ],
+    "t3": [
+     1.0,
+     1.0
+    ],
+    "t4": {
+     "TRUE": 2,
+     "UNTESTABLE": 2
+    },
+    "captured": {
+     "{\"max_transient\": 20, \"type\": \"all_orbits_fixed\"}": false
+    }
+   },
+   "prose_t2": [
+    0.6666666666666666,
+    0.9305555555555557
+   ]
+  },
+  "SYS-85660": {
+   "id": "SYS-85660",
+   "group": "N_DESTROY",
+   "family": "rewrite",
+   "bar_t2": 0.9166666666666669,
+   "bar_eval": 0.8933333333333331,
+   "planted_n": 0,
+   "rule_complexity": 0.1265,
+   "t1_score": 0.88,
+   "t1_verdict": "RULE",
+   "t2_exact": 0.8333333333333334,
+   "t2_comp": 0.9722222222222223,
+   "t3_exact": 0.75,
+   "t3_comp": 0.9583333333333334,
+   "t4": {
+    "UNTESTABLE": 3,
+    "FALSE": 1,
+    "TRUE": 1
+   },
+   "t4_captured": {},
+   "t5": {
+    "status": "OK",
+    "eval_exact": 0.85,
+    "eval_comp": 0.9708333333333334,
+    "length": 100,
+    "intervention_exact": 0.75
+   },
+   "learned": true,
+   "behav_score": 0.07750000000000035,
+   "coherence": "COHERENT",
+   "familiar": "NO",
+   "analogy_score": null,
+   "analogy_class": "NO_ANALOGY",
+   "analogy_name": null
+  },
+  "SYS-86243": {
+   "id": "SYS-86243",
+   "group": "K",
+   "family": "rewrite",
+   "bar_t2": 0.6944444444444445,
+   "bar_eval": 0.6766666666666669,
+   "planted_n": 0,
+   "rule_complexity": 0.2168,
+   "t1_score": 0.95,
+   "t1_verdict": "RULE",
+   "t2_exact": 1.0,
+   "t2_comp": 1.0,
+   "t3_exact": 1.0,
+   "t3_comp": 1.0,
+   "t4": {
+    "UNTESTABLE": 2,
+    "TRUE": 2
+   },
+   "t4_captured": {},
+   "t5": {
+    "status": "OK",
+    "eval_exact": 1.0,
+    "eval_comp": 1.0,
+    "length": 103,
+    "intervention_exact": 1.0
+   },
+   "learned": true,
+   "behav_score": 0.32333333333333314,
+   "coherence": "COHERENT",
+   "familiar": "YES",
+   "analogy_score": {
+    "status": "OK",
+    "eval_exact": 1.0,
+    "eval_comp": 1.0,
+    "length": 122,
+    "intervention_exact": 1.0
+   },
+   "analogy_class": "CORRECT_ANALOGY",
+   "analogy_name": "Bubble sort (adjacent-transposition sorting), one swap per time step, always resolving the leftmost adjacent inversion"
+  },
+  "SYS-87863": {
+   "id": "SYS-87863",
+   "group": "A",
+   "family": "graph",
+   "bar_t2": 0.5138888888888888,
+   "bar_eval": 0.45666666666666667,
+   "planted_n": 1,
+   "rule_complexity": 0.0881,
+   "t1_score": 0.85,
+   "t1_verdict": "RULE",
+   "t2_exact": 0.5833333333333334,
+   "t2_comp": 0.861111111111111,
+   "t3_exact": 0.75,
+   "t3_comp": 0.875,
+   "t4": {
+    "TRUE": 1,
+    "UNTESTABLE": 2
+   },
+   "t4_captured": {
+    "{\"mod\": 1000, \"type\": \"conserved_linear\", \"w\": [1, 1, 1, 1, 1, 1]}": true
+   },
+   "t5": {
+    "status": "OK",
+    "eval_exact": 0.69,
+    "eval_comp": 0.8608333333333333,
+    "length": 210,
+    "intervention_exact": 1.0
+   },
+   "learned": true,
+   "behav_score": 0.4041666666666667,
+   "coherence": "COHERENT",
+   "familiar": "YES",
+   "analogy_score": {
+    "status": "OK",
+    "eval_exact": 0.215,
+    "eval_comp": 0.6441666666666667,
+    "length": 331,
+    "intervention_exact": 0.3333333333333333
+   },
+   "analogy_class": "SUPERFICIAL_ANALOGY",
+   "analogy_name": "Conservative load balancing / discrete diffusion on a graph (chip-firing / token-exchange family)",
+   "active": {
+    "t1": [
+     0.85,
+     "RULE"
+    ],
+    "t2": [
+     1.0,
+     1.0
+    ],
+    "t5": {
+     "status": "OK",
+     "eval_exact": 1.0,
+     "eval_comp": 1.0,
+     "length": 175,
+     "intervention_exact": 1.0
+    },
+    "captured": {
+     "{\"mod\": 1000, \"type\": \"conserved_linear\", \"w\": [1, 1, 1, 1, 1, 1]}": true
+    },
+    "n_experiments": 10,
+    "learned": true
+   }
+  },
+  "SYS-87933": {
+   "id": "SYS-87933",
+   "group": "K",
+   "family": "graph",
+   "bar_t2": 0.7916666666666666,
+   "bar_eval": 0.705,
+   "planted_n": 0,
+   "rule_complexity": 0.0905,
+   "t1_score": 0.93,
+   "t1_verdict": "RULE",
+   "t2_exact": 1.0,
+   "t2_comp": 1.0,
+   "t3_exact": 1.0,
+   "t3_comp": 1.0,
+   "t4": {
+    "TRUE": 1,
+    "UNTESTABLE": 2,
+    "TRIVIAL": 1
+   },
+   "t4_captured": {},
+   "t5": {
+    "status": "OK",
+    "eval_exact": 1.0,
+    "eval_comp": 1.0,
+    "length": 141,
+    "intervention_exact": 1.0
+   },
+   "learned": true,
+   "behav_score": 0.29500000000000004,
+   "coherence": "COHERENT",
+   "familiar": "YES",
+   "analogy_score": {
+    "status": "OK",
+    "eval_exact": 1.0,
+    "eval_comp": 1.0,
+    "length": 196,
+    "intervention_exact": 1.0
+   },
+   "analogy_class": "CORRECT_ANALOGY",
+   "analogy_name": "Bellman-Ford / distance-vector (hop-count) relaxation from source node 0, as in the Bellman-Ford routing protocol"
+  },
+  "SYS-90967": {
+   "id": "SYS-90967",
+   "group": "K",
+   "family": "map",
+   "bar_t2": 0.25,
+   "bar_eval": 0.155,
+   "planted_n": 0,
+   "rule_complexity": 0.2224,
+   "t1_score": 0.95,
+   "t1_verdict": "RULE",
+   "t2_exact": 1.0,
+   "t2_comp": 1.0,
+   "t3_exact": 1.0,
+   "t3_comp": 1.0,
+   "t4": {
+    "TRUE": 1,
+    "UNTESTABLE": 2
+   },
+   "t4_captured": {},
+   "t5": {
+    "status": "OK",
+    "eval_exact": 1.0,
+    "eval_comp": 1.0,
+    "length": 75,
+    "intervention_exact": 1.0
+   },
+   "learned": true,
+   "behav_score": 0.845,
+   "coherence": "COHERENT",
+   "familiar": "YES",
+   "analogy_score": {
+    "status": "OK",
+    "eval_exact": 1.0,
+    "eval_comp": 1.0,
+    "length": 117,
+    "intervention_exact": 1.0
+   },
+   "analogy_class": "CORRECT_ANALOGY",
+   "analogy_name": "Discrete-time Lotka-Volterra predator-prey model (Nicholson-Bailey-like)",
+   "reveal": {
+    "coherence": "COHERENT",
+    "t2": [
+     1.0,
+     1.0
+    ],
+    "t3": [
+     1.0,
+     1.0
+    ],
+    "t4": {
+     "UNTESTABLE": 5
+    },
+    "captured": {}
+   },
+   "prose_t2": [
+    1.0,
+    1.0
+   ]
+  },
+  "SYS-91106": {
+   "id": "SYS-91106",
+   "group": "N_DESTROY",
+   "family": "map",
+   "bar_t2": 0.08333333333333333,
+   "bar_eval": 0.055,
+   "planted_n": 0,
+   "rule_complexity": 0.3547,
+   "t1_score": 0.95,
+   "t1_verdict": "RULE",
+   "t2_exact": 1.0,
+   "t2_comp": 1.0,
+   "t3_exact": 1.0,
+   "t3_comp": 1.0,
+   "t4": {
+    "UNTESTABLE": 2
+   },
+   "t4_captured": {},
+   "t5": {
+    "status": "OK",
+    "eval_exact": 1.0,
+    "eval_comp": 1.0,
+    "length": 99,
+    "intervention_exact": 1.0
+   },
+   "learned": true,
+   "behav_score": 0.945,
+   "coherence": "COHERENT",
+   "familiar": "NO",
+   "analogy_score": null,
+   "analogy_class": "NO_ANALOGY",
+   "analogy_name": null
+  },
+  "SYS-91403": {
+   "id": "SYS-91403",
+   "group": "N_DSCRAMBLE",
+   "family": "vm",
+   "bar_t2": 0.375,
+   "bar_eval": 0.3375,
+   "planted_n": 0,
+   "rule_complexity": 0.3233,
+   "t1_score": 0.5,
+   "t1_verdict": "UNCERTAIN",
+   "t2_exact": 0.08333333333333333,
+   "t2_comp": 0.5208333333333334,
+   "t3_exact": 0.08333333333333333,
+   "t3_comp": 0.6666666666666667,
+   "t4": {
+    "UNTESTABLE": 3
+   },
+   "t4_captured": {},
+   "t5": {
+    "status": "OK",
+    "eval_exact": 0.115,
+    "eval_comp": 0.54875,
+    "length": 54,
+    "intervention_exact": 0.08333333333333333
+   },
+   "learned": false,
+   "behav_score": 0.21124999999999994,
+   "coherence": "UNCLEAR",
+   "familiar": "YES",
+   "analogy_score": {
+    "status": "OK",
+    "eval_exact": 0.115,
+    "eval_comp": 0.54875,
+    "length": 54,
+    "intervention_exact": 0.08333333333333333
+   },
+   "analogy_class": "USEFUL_PARTIAL_ANALOGY",
+   "analogy_name": "Modular counter / clock (mod-6 ring counter) with a latch-like register",
+   "prose_t2": [
+    0.0,
+    0.4583333333333333
+   ]
+  },
+  "SYS-91539": {
+   "id": "SYS-91539",
+   "group": "A",
+   "family": "graph",
+   "bar_t2": 0.4861111111111111,
+   "bar_eval": 0.485,
+   "planted_n": 1,
+   "rule_complexity": 0.1086,
+   "t1_score": 0.93,
+   "t1_verdict": "RULE",
+   "t2_exact": 1.0,
+   "t2_comp": 1.0,
+   "t3_exact": 1.0,
+   "t3_comp": 1.0,
+   "t4": {
+    "TRUE": 1,
+    "UNTESTABLE": 3
+   },
+   "t4_captured": {
+    "{\"mod\": 1000, \"type\": \"conserved_linear\", \"w\": [1, 1, 1, 1, 1, 1]}": true
+   },
+   "t5": {
+    "status": "OK",
+    "eval_exact": 1.0,
+    "eval_comp": 1.0,
+    "length": 355,
+    "intervention_exact": 1.0
+   },
+   "learned": true,
+   "behav_score": 0.515,
+   "coherence": "COHERENT",
+   "familiar": "YES",
+   "analogy_score": {
+    "status": "OK",
+    "eval_exact": 0.02,
+    "eval_comp": 0.3208333333333333,
+    "length": 215,
+    "intervention_exact": 0.0
+   },
+   "analogy_class": "NO_ANALOGY",
+   "analogy_name": "Chip-firing / abelian sandpile on the given graph (threshold = degree)"
+  },
+  "SYS-91678": {
+   "id": "SYS-91678",
+   "group": "N_DSCRAMBLE",
+   "family": "rewrite",
+   "bar_t2": 0.8611111111111113,
+   "bar_eval": 0.815,
+   "planted_n": 0,
+   "rule_complexity": 0.1703,
+   "t1_score": 0.6,
+   "t1_verdict": "RULE",
+   "t2_exact": 0.16666666666666666,
+   "t2_comp": 0.7777777777777778,
+   "t3_exact": 0.25,
+   "t3_comp": 0.75,
+   "t4": {
+    "UNTESTABLE": 3
+   },
+   "t4_captured": {},
+   "t5": {
+    "status": "ERROR",
+    "error": "rejected: attribute split",
+    "length": 544
+   },
+   "learned": false,
+   "behav_score": -0.08333333333333348,
+   "coherence": "COHERENT",
+   "familiar": "NO",
+   "analogy_score": null,
+   "analogy_class": "NO_ANALOGY",
+   "analogy_name": null,
+   "active": {
+    "t1": [
+     0.8,
+     "RULE"
+    ],
+    "t2": [
+     0.08333333333333333,
+     0.7777777777777777
+    ],
+    "t5": {
+     "status": "ERROR",
+     "error": "rejected: attribute join",
+     "length": 745
+    },
+    "captured": {},
+    "n_experiments": 10,
+    "learned": false
+   }
+  },
+  "SYS-92421": {
+   "id": "SYS-92421",
+   "group": "N_CONJ",
+   "family": "rewrite",
+   "bar_t2": 0.375,
+   "bar_eval": 0.37,
+   "planted_n": 0,
+   "rule_complexity": 0.1587,
+   "t1_score": 0.72,
+   "t1_verdict": "RULE",
+   "t2_exact": 0.0,
+   "t2_comp": 0.3055555555555556,
+   "t3_exact": 0.0,
+   "t3_comp": 0.4027777777777777,
+   "t4": {
+    "UNTESTABLE": 3
+   },
+   "t4_captured": {},
+   "t5": {
+    "status": "OK",
+    "eval_exact": 0.0,
+    "eval_comp": 0.26916666666666667,
+    "length": 1282,
+    "intervention_exact": 0.0
+   },
+   "learned": false,
+   "behav_score": -0.06944444444444442,
+   "coherence": "COHERENT",
+   "familiar": "NO",
+   "analogy_score": null,
+   "analogy_class": "NO_ANALOGY",
+   "analogy_name": null,
+   "active": {
+    "t1": [
+     0.7,
+     "RULE"
+    ],
+    "t2": [
+     0.16666666666666666,
+     0.375
+    ],
+    "t5": {
+     "status": "OK",
+     "eval_exact": 0.09,
+     "eval_comp": 0.325,
+     "length": 27,
+     "intervention_exact": 0.0
+    },
+    "captured": {},
+    "n_experiments": 10,
+    "learned": false
+   }
+  },
+  "SYS-93325": {
+   "id": "SYS-93325",
+   "group": "K",
+   "family": "vm",
+   "bar_t2": 0.5625,
+   "bar_eval": 0.595,
+   "planted_n": 0,
+   "rule_complexity": 0.2526,
+   "t1_score": 0.93,
+   "t1_verdict": "RULE",
+   "t2_exact": 1.0,
+   "t2_comp": 1.0,
+   "t3_exact": 1.0,
+   "t3_comp": 1.0,
+   "t4": {
+    "UNTESTABLE": 3
+   },
+   "t4_captured": {},
+   "t5": {
+    "status": "OK",
+    "eval_exact": 1.0,
+    "eval_comp": 1.0,
+    "length": 217,
+    "intervention_exact": 1.0
+   },
+   "learned": true,
+   "behav_score": 0.4375,
+   "coherence": "COHERENT",
+   "familiar": "YES",
+   "analogy_score": {
+    "status": "OK",
+    "eval_exact": 1.0,
+    "eval_comp": 1.0,
+    "length": 266,
+    "intervention_exact": 1.0
+   },
+   "analogy_class": "CORRECT_ANALOGY",
+   "analogy_name": "Odometer / ripple-carry base-7 counter run as a sequential microcoded state machine (carry propagated one step at a time)",
+   "active": {
+    "t1": [
+     0.93,
+     "RULE"
+    ],
+    "t2": [
+     1.0,
+     1.0
+    ],
+    "t5": {
+     "status": "OK",
+     "eval_exact": 1.0,
+     "eval_comp": 1.0,
+     "length": 217,
+     "intervention_exact": 1.0
+    },
+    "captured": {},
+    "n_experiments": 10,
+    "learned": true
+   }
+  },
+  "SYS-94023": {
+   "id": "SYS-94023",
+   "group": "K",
+   "family": "map",
+   "bar_t2": 0.16666666666666666,
+   "bar_eval": 0.195,
+   "planted_n": 0,
+   "rule_complexity": 0.2551,
+   "t1_score": 0.95,
+   "t1_verdict": "RULE",
+   "t2_exact": 1.0,
+   "t2_comp": 1.0,
+   "t3_exact": 1.0,
+   "t3_comp": 1.0,
+   "t4": {
+    "TRUE": 3,
+    "UNTESTABLE": 1
+   },
+   "t4_captured": {},
+   "t5": {
+    "status": "OK",
+    "eval_exact": 1.0,
+    "eval_comp": 1.0,
+    "length": 121,
+    "intervention_exact": 1.0
+   },
+   "learned": true,
+   "behav_score": 0.8333333333333334,
+   "coherence": "COHERENT",
+   "familiar": "YES",
+   "analogy_score": {
+    "status": "OK",
+    "eval_exact": 1.0,
+    "eval_comp": 1.0,
+    "length": 147,
+    "intervention_exact": 1.0
+   },
+   "analogy_class": "CORRECT_ANALOGY",
+   "analogy_name": "Two-agent rendezvous / discrete consensus on a cycle (each agent steps one unit toward the other along the shortest arc of the ring)",
+   "active": {
+    "t1": [
+     0.95,
+     "RULE"
+    ],
+    "t2": [
+     1.0,
+     1.0
+    ],
+    "t5": {
+     "status": "OK",
+     "eval_exact": 1.0,
+     "eval_comp": 1.0,
+     "length": 115,
+     "intervention_exact": 1.0
+    },
+    "captured": {},
+    "n_experiments": 10,
+    "learned": true
+   }
+  },
+  "SYS-95220": {
+   "id": "SYS-95220",
+   "group": "N_SCRAMBLE",
+   "family": "graph",
+   "bar_t2": 0.4027777777777777,
+   "bar_eval": 0.3816666666666667,
+   "planted_n": 0,
+   "rule_complexity": 0.2222,
+   "t1_score": 0.44999999999999996,
+   "t1_verdict": "RANDOM",
+   "t2_exact": 0.0,
+   "t2_comp": 0.5555555555555555,
+   "t3_exact": 0.08333333333333333,
+   "t3_comp": 0.5972222222222221,
+   "t4": {
+    "UNTESTABLE": 1
+   },
+   "t4_captured": {},
+   "t5": {
+    "status": "OK",
+    "eval_exact": 0.05,
+    "eval_comp": 0.5616666666666668,
+    "length": 359,
+    "intervention_exact": 0.1111111111111111
+   },
+   "learned": false,
+   "behav_score": 0.18000000000000005,
+   "coherence": "INCOHERENT",
+   "familiar": "NO",
+   "analogy_score": null,
+   "analogy_class": "NO_ANALOGY",
+   "analogy_name": null,
+   "prose_t2": [
+    0.0,
+    0.4166666666666666
+   ]
+  },
+  "SYS-95313": {
+   "id": "SYS-95313",
+   "group": "N_DESTROY",
+   "family": "graph",
+   "bar_t2": 0.5416666666666666,
+   "bar_eval": 0.4316666666666667,
+   "planted_n": 0,
+   "rule_complexity": 0.1737,
+   "t1_score": 0.8,
+   "t1_verdict": "RULE",
+   "t2_exact": 0.0,
+   "t2_comp": 0.4444444444444444,
+   "t3_exact": 0.16666666666666666,
+   "t3_comp": 0.5694444444444444,
+   "t4": {
+    "FALSE": 1,
+    "UNTESTABLE": 1
+   },
+   "t4_captured": {},
+   "t5": {
+    "status": "OK",
+    "eval_exact": 0.0,
+    "eval_comp": 0.43083333333333335,
+    "length": 1280,
+    "intervention_exact": 0.0
+   },
+   "learned": false,
+   "behav_score": -0.0008333333333333526,
+   "coherence": "COHERENT",
+   "familiar": "NO",
+   "analogy_score": null,
+   "analogy_class": "NO_ANALOGY",
+   "analogy_name": null,
+   "reveal": {
+    "coherence": "COHERENT",
+    "t2": [
+     1.0,
+     1.0
+    ],
+    "t3": [
+     1.0,
+     1.0
+    ],
+    "t4": {
+     "UNTESTABLE": 3
+    },
+    "captured": {}
+   }
+  },
+  "SYS-95656": {
+   "id": "SYS-95656",
+   "group": "N_DSCRAMBLE",
+   "family": "tab",
+   "bar_t2": 0.38333333333333336,
+   "bar_eval": 0.34600000000000003,
+   "planted_n": 0,
+   "rule_complexity": 0.2945,
+   "t1_score": 0.75,
+   "t1_verdict": "RULE",
+   "t2_exact": 0.0,
+   "t2_comp": 0.5,
+   "t3_exact": 0.0,
+   "t3_comp": 0.39999999999999997,
+   "t4": {
+    "UNTESTABLE": 4
+   },
+   "t4_captured": {},
+   "t5": {
+    "status": "OK",
+    "eval_exact": 0.02,
+    "eval_comp": 0.503,
+    "length": 77,
+    "intervention_exact": 0.0
+   },
+   "learned": false,
+   "behav_score": 0.15699999999999997,
+   "coherence": "COHERENT",
+   "familiar": "NO",
+   "analogy_score": null,
+   "analogy_class": "NO_ANALOGY",
+   "analogy_name": null,
+   "prose_t2": [
+    0.08333333333333333,
+    0.45
+   ]
+  },
+  "SYS-96481": {
+   "id": "SYS-96481",
+   "group": "K",
+   "family": "rewrite",
+   "bar_t2": 0.6666666666666666,
+   "bar_eval": 0.6900000000000003,
+   "planted_n": 0,
+   "rule_complexity": 0.2374,
+   "t1_score": 0.93,
+   "t1_verdict": "RULE",
+   "t2_exact": 1.0,
+   "t2_comp": 1.0,
+   "t3_exact": 1.0,
+   "t3_comp": 1.0,
+   "t4": {
+    "TRUE": 5,
+    "UNTESTABLE": 1
+   },
+   "t4_captured": {},
+   "t5": {
+    "status": "OK",
+    "eval_exact": 1.0,
+    "eval_comp": 1.0,
+    "length": 154,
+    "intervention_exact": 1.0
+   },
+   "learned": true,
+   "behav_score": 0.33333333333333337,
+   "coherence": "COHERENT",
+   "familiar": "YES",
+   "analogy_score": {
+    "status": "OK",
+    "eval_exact": 1.0,
+    "eval_comp": 1.0,
+    "length": 189,
+    "intervention_exact": 1.0
+   },
+   "analogy_class": "CORRECT_ANALOGY",
+   "analogy_name": "Deterministic string rewriting system with leftmost-first strategy, like a Markov algorithm. The cancellation part resembles free reduction of involutions (a*a = 1, as in a free product of Z2's or Coxeter-style word reduction), and the Z-shifting part resembles sorting blanks rightward (gravity/compaction).",
+   "reveal": {
+    "coherence": "COHERENT",
+    "t2": [
+     1.0,
+     1.0
+    ],
+    "t3": [
+     1.0,
+     1.0
+    ],
+    "t4": {
+     "TRUE": 7,
+     "TRIVIAL": 1,
+     "UNTESTABLE": 1
+    },
+    "captured": {}
+   },
+   "prose_t2": [
+    1.0,
+    1.0
+   ]
+  },
+  "SYS-96628": {
+   "id": "SYS-96628",
+   "group": "A",
+   "family": "map",
+   "bar_t2": 0.125,
+   "bar_eval": 0.045,
+   "planted_n": 2,
+   "rule_complexity": 0.3354,
+   "t1_score": 0.95,
+   "t1_verdict": "RULE",
+   "t2_exact": 1.0,
+   "t2_comp": 1.0,
+   "t3_exact": 1.0,
+   "t3_comp": 1.0,
+   "t4": {
+    "TRUE": 1,
+    "UNTESTABLE": 1
+   },
+   "t4_captured": {
+    "{\"type\": \"commutes_swap\"}": true
+   },
+   "t5": {
+    "status": "ERROR",
+    "error": "rejected: call h",
+    "length": 106
+   },
+   "learned": true,
+   "behav_score": 0.875,
+   "coherence": "COHERENT",
+   "familiar": "YES",
+   "analogy_score": {
+    "status": "OK",
+    "eval_exact": 0.0,
+    "eval_comp": 0.0375,
+    "length": 227,
+    "intervention_exact": 0.0
+   },
+   "analogy_class": "SUPERFICIAL_ANALOGY",
+   "analogy_name": "Two-site symmetric coupled map (coupled map lattice with a nonlinear local map and diffusive coupling), on integers 0..30",
+   "reveal": {
+    "coherence": "COHERENT",
+    "t2": [
+     1.0,
+     1.0
+    ],
+    "t3": [
+     1.0,
+     1.0
+    ],
+    "t4": {
+     "TRUE": 1,
+     "UNTESTABLE": 3
+    },
+    "captured": {
+     "{\"type\": \"commutes_swap\"}": true
+    }
+   },
+   "prose_t2": [
+    0.0,
+    0.0
+   ]
+  },
+  "SYS-97244": {
+   "id": "SYS-97244",
+   "group": "N_SEDUCTIVE",
+   "family": "tab",
+   "bar_t2": 0.3666666666666667,
+   "bar_eval": 0.35,
+   "planted_n": 0,
+   "rule_complexity": 0.2743,
+   "t1_score": 0.85,
+   "t1_verdict": "RULE",
+   "t2_exact": 0.0,
+   "t2_comp": 0.35000000000000003,
+   "t3_exact": 0.0,
+   "t3_comp": 0.36666666666666664,
+   "t4": {
+    "UNTESTABLE": 3
+   },
+   "t4_captured": {},
+   "t5": {
+    "status": "OK",
+    "eval_exact": 0.005,
+    "eval_comp": 0.33799999999999997,
+    "length": 27,
+    "intervention_exact": 0.0
+   },
+   "learned": false,
+   "behav_score": -0.01200000000000001,
+   "coherence": "COHERENT",
+   "familiar": "NO",
+   "analogy_score": null,
+   "analogy_class": "NO_ANALOGY",
+   "analogy_name": null
+  },
+  "SYS-97644": {
+   "id": "SYS-97644",
+   "group": "N_DSCRAMBLE",
+   "family": "vm",
+   "bar_t2": 0.4791666666666667,
+   "bar_eval": 0.405,
+   "planted_n": 0,
+   "rule_complexity": 0.2932,
+   "t1_score": 0.5,
+   "t1_verdict": "UNCERTAIN",
+   "t2_exact": 0.4166666666666667,
+   "t2_comp": 0.7083333333333334,
+   "t3_exact": 0.3333333333333333,
+   "t3_comp": 0.7291666666666666,
+   "t4": {
+    "UNTESTABLE": 3
+   },
+   "t4_captured": {},
+   "t5": {
+    "status": "OK",
+    "eval_exact": 0.205,
+    "eval_comp": 0.6125,
+    "length": 96,
+    "intervention_exact": 0.3333333333333333
+   },
+   "learned": true,
+   "behav_score": 0.22916666666666669,
+   "coherence": "COHERENT",
+   "familiar": "YES",
+   "analogy_score": {
+    "status": "OK",
+    "eval_exact": 0.04,
+    "eval_comp": 0.5225,
+    "length": 114,
+    "intervention_exact": 0.08333333333333333
+   },
+   "analogy_class": "SUPERFICIAL_ANALOGY",
+   "analogy_name": "Program-counter-driven register machine (instruction pointer cycling over a small fixed program acting on registers)"
+  },
+  "SYS-98078": {
+   "id": "SYS-98078",
+   "group": "A",
+   "family": "graph",
+   "bar_t2": 0.5138888888888888,
+   "bar_eval": 0.5266666666666666,
+   "planted_n": 1,
+   "rule_complexity": 0.1276,
+   "t1_score": 0.9,
+   "t1_verdict": "RULE",
+   "t2_exact": 1.0,
+   "t2_comp": 1.0,
+   "t3_exact": 1.0,
+   "t3_comp": 1.0,
+   "t4": {
+    "TRUE": 1,
+    "UNTESTABLE": 2
+   },
+   "t4_captured": {
+    "{\"mod\": 1000, \"type\": \"conserved_linear\", \"w\": [1, 1, 1, 1, 1, 1]}": true
+   },
+   "t5": {
+    "status": "OK",
+    "eval_exact": 1.0,
+    "eval_comp": 1.0,
+    "length": 221,
+    "intervention_exact": 1.0
+   },
+   "learned": true,
+   "behav_score": 0.48611111111111116,
+   "coherence": "COHERENT",
+   "familiar": "NO",
+   "analogy_score": null,
+   "analogy_class": "NO_ANALOGY",
+   "analogy_name": null
+  },
+  "SYS-99585": {
+   "id": "SYS-99585",
+   "group": "A",
+   "family": "rewrite",
+   "bar_t2": 0.7777777777777777,
+   "bar_eval": 0.7933333333333333,
+   "planted_n": 1,
+   "rule_complexity": 0.1329,
+   "t1_score": 0.9,
+   "t1_verdict": "RULE",
+   "t2_exact": 1.0,
+   "t2_comp": 1.0,
+   "t3_exact": 1.0,
+   "t3_comp": 1.0,
+   "t4": {
+    "UNTESTABLE": 3,
+    "TRUE": 1
+   },
+   "t4_captured": {
+    "{\"mod\": 4, \"type\": \"conserved_weights\", \"w\": [0, 3, 0, 0]}": true
+   },
+   "t5": {
+    "status": "OK",
+    "eval_exact": 1.0,
+    "eval_comp": 1.0,
+    "length": 172,
+    "intervention_exact": 1.0
+   },
+   "learned": true,
+   "behav_score": 0.22222222222222232,
+   "coherence": "COHERENT",
+   "familiar": "YES",
+   "analogy_score": {
+    "status": "OK",
+    "eval_exact": 1.0,
+    "eval_comp": 1.0,
+    "length": 187,
+    "intervention_exact": 1.0
+   },
+   "analogy_class": "CORRECT_ANALOGY",
+   "analogy_name": "String rewriting system (semi-Thue system) with leftmost-first, one-rewrite-per-step application",
+   "active": {
+    "t1": [
+     0.88,
+     "RULE"
+    ],
+    "t2": [
+     1.0,
+     1.0
+    ],
+    "t5": {
+     "status": "OK",
+     "eval_exact": 1.0,
+     "eval_comp": 1.0,
+     "length": 232,
+     "intervention_exact": 1.0
+    },
+    "captured": {
+     "{\"mod\": 4, \"type\": \"conserved_weights\", \"w\": [0, 3, 0, 0]}": true
+    },
+    "n_experiments": 10,
+    "learned": true
+   }
+  }
+ }
+}
