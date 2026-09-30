@@ -4,7 +4,7 @@
   "mwo_id": "MWO-0004",
   "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
   "mwo_sha256": "925660b2d2be53af2ee4195391e484d9649bbd4ee828cd60432ce2f0903a99df",
-  "updated_at_utc": "2026-09-30T09:27:51Z",
+  "updated_at_utc": "2026-09-30T09:38:22Z",
   "state": "ACTIVE",
   "state_reason": "CWO 2026-09-30 fleet activation (Aporia #1033; ops/fleet/QUEUE.json @ 6a7a84569) ends HOLD. MWO-0004 remains in force (blob 925660b2 unchanged). CURRENT started: candidate survey for the independent emergence replication lane.",
   "branch": "bellerophon/mwo-0001-2026-09-28",
@@ -92,16 +92,39 @@
   ],
   "fabric_tasks": [
     {
-      "id": "tsk-e951f8544793",
-      "title": "FP-001 probe replica 1",
-      "state": "completed",
-      "result": "PASS"
+      "id": "tsk-f4777af93ac7",
+      "title": "E-BEL-REPL-01 pilot2 CARRIED random 0-49",
+      "state": "submitted"
     },
     {
-      "id": "tsk-9be92dd00323",
-      "title": "FP-001 probe replica 2",
-      "state": "completed",
-      "result": "PASS"
+      "id": "tsk-515c7c1db04e",
+      "title": "E-BEL-REPL-01 pilot2 ZERO random 0-49",
+      "state": "submitted"
+    },
+    {
+      "id": "tsk-34a356c97f50",
+      "title": "E-BEL-REPL-01 pilot2 CARRIED random 50-99",
+      "state": "submitted"
+    },
+    {
+      "id": "tsk-1ffec4dec0f8",
+      "title": "E-BEL-REPL-01 pilot2 ZERO random 50-99",
+      "state": "submitted"
+    },
+    {
+      "id": "tsk-db6275d8340a",
+      "title": "E-BEL-REPL-01 pilot2 CARRIED founders 0-23",
+      "state": "submitted"
+    },
+    {
+      "id": "tsk-7d5523cd0b39",
+      "title": "E-BEL-REPL-01 pilot2 ZERO founders 0-23",
+      "state": "submitted"
+    },
+    {
+      "id": "tsk-c26c09590d3b",
+      "title": "post-merge adversarial review of BEE register-world axis 35b2fde55 (landed on main without pre-merge review; ledger row)",
+      "state": "submitted"
     }
   ],
   "leases": [
@@ -209,8 +232,9 @@
     "id": "E-BEL-REPL-01",
     "title": "Independent emergence replication lane",
     "text": "Select the strongest unresolved emergence-like or mechanism-change signal in the fleet that can be reconstructed without custody/contamination violation; rebuild it in BEE (prometheus/toolbox) from its published description; attempt to make it disappear.",
-    "step": "S0 candidate survey + selection record (selection criteria written before the pick)",
-    "started_at_utc": "2026-09-30T09:20:32Z"
+    "step": "S0 done (criteria 9c4a4fabe, selection 19e758e7f: Nestor C-A3-INTERNALIZE); BEE register-world axis built (35b2fde55, branch bellerophon/repl-internalize-2026-09-30, 81 tests, historical hashes unchanged); PILOT 1 founders: BEE origins ZERO_DEPENDENT 159/229; PILOT 2 (origin/extinction/cost only) running on Fabric; next S1 prereg",
+    "started_at_utc": "2026-09-30T09:20:32Z",
+    "branch": "bellerophon/repl-internalize-2026-09-30"
   },
   "next": {
     "id": "E-BEL-REPL-02",
@@ -227,7 +251,8 @@
     "leases_held": [],
     "core_hours_today": 0,
     "gpu": "none",
-    "spend_usd": 0
+    "spend_usd": 0,
+    "note": "pilot 2 on ubu001 Fabric script workers (M2 cpu12 held by Nestor X-MAT); est < 2 core-h"
   },
   "last_receipt": {
     "what": "E-003 post-hoc Q4 summary recompute (reproduces published file exactly)",

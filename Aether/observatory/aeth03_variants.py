@@ -71,9 +71,9 @@ if _REF not in sys.path:
 import gpu_aeth01 as K                                   # noqa: E402
 
 VARIANTS = ("v1", "add", "hys", "chg", "cnd", "str", "mov", "rcv", "m4",
-            "fwd", "rcv_add", "rcv_cnd", "rcv_str", "rcv_sfx")
+            "fwd", "rcv_add", "rcv_cnd", "rcv_str", "rcv_sfx", "rcv_adr")
 # Laws that carry rcv's received flag (one bit per site, across ticks).
-RCV_FAMILY = ("rcv", "fwd", "rcv_add", "rcv_cnd", "rcv_str", "rcv_sfx")
+RCV_FAMILY = ("rcv", "fwd", "rcv_add", "rcv_cnd", "rcv_str", "rcv_sfx", "rcv_adr")
 # Laws that use cnd's conditional opcode 0x02.
 CND_FAMILY = ("cnd", "rcv_cnd")
 # `v1g` is v1 routed through this module's shared code path rather than
@@ -96,6 +96,7 @@ SEMANTICS_ID = {
     "rcv_cnd": "aeth03.rcv_cnd.scout0",
     "rcv_str": "aeth03.rcv_str.scout0",
     "rcv_sfx": "aeth03.rcv_sfx.lesion0",
+    "rcv_adr": "aeth03.rcv_adr.lesion0",
     "v1g": "aeth01.v1",
 }
 COND_OPCODE = 0x02
@@ -103,7 +104,11 @@ COND_OPCODE = 0x02
 # static per-site offset in 0..3, drawn from a domain-separated hash of
 # (seed, coordinates). Same aim distribution, no coupling to energy dynamics.
 # Both twins share the seed, so the offset field is identical across twins.
-SFX_DOMAIN_CONST = np.uint64(0xA0761D6478BD642F)   # unused elsewhere (not the arbitration XOR)
+SFX_DOMAIN_CONST = np.uint64(0xA0761D6478BD642F)
+# rcv_adr (E-011 trace lesion): rcv_add, except that a write won by a RELAY (a
+# receipt-activated site that is not itself a WRITE site) commits by
+# replacement, as in rcv; writes won by WRITE sites still add, as in add. The
+# two mechanisms act on their own writers but no longer compound.   # unused elsewhere (not the arbitration XOR)
 ENERGY = K.ENERGY
 _SLOTS = K._NEIGHBOR_SLOTS
 # Offset from a site to the neighbour it targets, indexed by direction
@@ -187,11 +192,15 @@ def step(variant, H, W, seed, tick, write_cost, maintenance_cost,
     won_src = np.zeros((H, W), dtype=bool)        # mov: a source's template proposal won
     received_next = np.zeros((H, W), dtype=bool)  # rcv: site got a winning template write
     received_value_next = np.zeros((H, W), dtype=np.int16)   # fwd
+    relay = np.zeros((H, W), dtype=bool)                     # rcv_adr: emitting only because it received
+    if variant == "rcv_adr" and received is not None:
+        relay = received & (opcode != K.WRITE_OPCODE) & active
 
     for f in range(5):
         best_has = np.zeros((H, W), dtype=bool)
         best_priority = np.zeros((H, W), dtype=np.uint64)
         best_value = np.zeros((H, W), dtype=np.int16)
+        best_relay = np.zeros((H, W), dtype=bool)
         watched = observer is not None
         best_slot = np.full((H, W), 255, dtype=np.uint8) if watched else None
         contenders = np.zeros((H, W), dtype=np.uint8) if watched else None
@@ -216,6 +225,8 @@ def step(variant, H, W, seed, tick, write_cost, maintenance_cost,
             cond = slot_valid & (~best_has | (prio > best_priority))
             best_priority = np.where(cond, prio, best_priority)
             best_value = np.where(cond, n_value, best_value)
+            if variant == "rcv_adr":
+                best_relay = np.where(cond, np.roll(relay, shift, axis=(0, 1)), best_relay)
             if variant == "mov" and f != ENERGY:
                 # track the winning slot per target without the observer
                 if slot == 0:
@@ -241,6 +252,8 @@ def step(variant, H, W, seed, tick, write_cost, maintenance_cost,
             commit = best_value
             if variant in ("add", "rcv_add"):
                 commit = (template[f] + best_value) & 0xFF
+            elif variant == "rcv_adr":
+                commit = np.where(best_relay, best_value, (template[f] + best_value) & 0xFF)
             trig, bit_idx = K.mu_vec(seed, tick, packed, f, mut_numer)
             stored = np.where(trig, commit ^ (np.int16(1) << bit_idx), commit)
             template[f] = np.where(best_has, stored, template[f])
