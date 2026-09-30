@@ -173,6 +173,13 @@ N5 (decaying reliability; the Block G nuisance kind not yet probed):
   - v5 false detection >= 4/8 (it IS variance-sensitive, and that is a limitation);
   - the recency holdout is worse than the all-history holdout on stale recall.
 
+READOUT GATE STATUS (2026-09-30, W-DRIFT + W-MULTI):
+- The hard current-regime cut removes full-switch losses. But it discards still-valid records after partial switches:
+  MU1 refuted, worst -0.60.
+- Slow ramps are localized mid-ramp.
+- Next design step: per-cell SOFT validity weights, from straddling-pair disagreement relative to the local noise.
+- Not ready for preregistration.
+
 DETECTOR OF RECORD (2026-09-30, RESULTS_PKGF_PROBE.md v9b):
 - v5 proposes a split; the v8 local-noise-referenced statistic vetoes at that tau (p < .01).
 - It passes all four controls on independent worlds: N5 0/8 false, F3 8/8, F2 twins 0/8, partial rho = .5 8/8.

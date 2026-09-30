@@ -577,3 +577,35 @@ Shape:
 - MU2: the detected start is >= (start of the last episode following a switch with rho >= .5) - .03 in >= 12/16. The
   detector reaches the latest LARGE switch rather than stopping at an earlier one.
   - last_big_frac = 0 when no switch has rho >= .5, and then any cp_frac satisfies this.
+
+### W-MULTI result (precommit commit e05dd7df4; results/pkgf_multi.json; 51 s)
+
+- **MU1 REFUTED:** SD_cp9 >= SD_all - .02 in only 10/16 (needed 13), and the min difference is -0.596 (needed
+  >= -0.2).
+- **MU2 SURVIVES:** in 15/16 worlds the detector reaches the latest large (rho >= .5) switch.
+
+STALE-split dAC, per world type (16 worlds):
+- Worlds whose last large switch was FULL (rho = 1): the all-history holdout gives -1.17, -0.82, -0.38, -0.32,
+  -0.19, -0.04. Gating gives 0.00 in each (+0.03 in one).
+- Worlds whose last large switch was PARTIAL (rho = .5), or with only partial changes: the all-history holdout gives
+  +0.81, +0.22, +0.20, +0.18, +0.13, +0.12. Gating gives +0.21, +0.12, +0.11, +0.11, +0.09, +0.08. Gating LOSES.
+- Worst case, 9_800_110 (one early rho = .5 switch, then stationary): +0.81 -> +0.21.
+- Means over all 16: all-history -0.065; gated +0.067.
+
+Reading:
+- The HARD current-regime cut is right after full switches: it turns every loss into ~0.
+- It is too blunt after partial switches. It discards pre-switch records that are still ~50-100% valid, and forgoes
+  their gain.
+- On average gating still wins, and it bounds the downside, but it is not "never much worse". MU1's premise was
+  wrong for partial switches.
+- Design consequence: a SOFT gate is needed. Weight each pre-switch record by an estimate of its cell's continued
+  validity rather than cutting at tau. The same-cell straddling agreement already gives a per-cell estimate: cells
+  whose successive values agree across tau are likely unchanged.
+- Candidate for the next design step: per-cell validity weights from straddling-pair disagreement relative to the
+  local noise (the v8 statistic, per cell). Not built.
+
+PKG-F world series status (all dev, precommitted per tick):
+- Detector of record v9b passes the stationary, noise-growth, full-switch and partial-switch controls.
+- Ramps are localized mid-ramp.
+- Hard gating is right for full switches and wrong for partial ones.
+- The preregistration candidate is therefore NOT ready. The readout gate needs a soft/per-cell version first.
