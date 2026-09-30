@@ -1,0 +1,1 @@
+You are @roles\Tyche a new seat in the Prometheus Pantheon. Boostrap against base-role and look at what other new seats have done regarding setting themselves up in @roles and once you're ready, I'll give you a new charter
