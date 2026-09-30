@@ -3,7 +3,7 @@
   "seat": "Tyche",
   "mwo_id": "MWO-0004",
   "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
-  "updated_at_utc": "2026-09-30T10:30:00Z",
+  "updated_at_utc": "2026-09-30T11:00:00Z",
   "state": "ACTIVE",
   "branch": "tyche/dark-ecology-v0-2026-09-30",
   "head_sha": "(this commit; see git log -1 -- roles/Tyche/WORK_STATE.json)",
@@ -51,16 +51,16 @@
     "roles/Tyche/REVIEW_PACKET_v0_2026-09-30.txt",
     "tyche/runs/v0_2026-09-30/REPORT.md"
   ],
-  "work_order": "CWO 2026-09-30 fleet activation (ops/fleet/CWO_2026-09-30_FLEET_ACTIVATION.md, TYCHE section) under MWO-0004",
-  "current": "Dark Ecology assay prep: behaviour-tag the 83 imported entries (provisional, not evidence) and attach raw_rows where committed; then cluster residuals by behaviour, not engine (CWO TYCHE NEXT promoted: catalogue v0 DONE)",
-  "next": "Residual perturbation: pick the best cross-engine, reproducible, cheap-to-probe residuals and turn them into bounded experiments (CWO TYCHE RESERVE promoted)",
+  "work_order": "Operator v1 directive 2026-09-30 (roles/Tyche/prompts/2026-09-30_v1_directive/) within CWO 2026-09-30 and MWO-0004",
+  "current": "Dark ecology v1 (primary): gates 1-6 -- capability-deficit residual + order-independent organism inputs; zero-marginal/positive-joint hidden controls (delayed XOR canonical); utility-free reserve with drift; pair/composition/coalition evaluation; delayed credit; arm comparison vs v0 selection",
+  "next": "Catalogue items 1-2 in parallel: behaviour tags for imported entries + raw rows; cluster by behaviour (operator's categories as descriptors, not rulers)",
   "reserve": [
-    "Residual perturbation: best catalogue residuals -> bounded experiments (CWO TYCHE RESERVE)",
-    "Lens-engine v1 instrument repairs: organism inputs independent of ecology order; residual with its own negative control (TYCHE-23/24)",
-    "Zero-marginal positive controls + reachability operators (TYCHE-25)",
-    "P5/R2/tree seed-fragility diagnosis (TYCHE-26)"
+    "Gate 7: natural 122-residual habitat -- ONLY after gate 6 is shown",
+    "Evolvable grammar levels (new operators -> bytecode-VM genome)",
+    "P5/R2/tree seed-fragility diagnosis (TYCHE-26)",
+    "Independent review of v0 packet (TYCHE-22)"
   ],
   "blocked": [],
   "resource_status": "Item v0 used <= 15.4 CPU core-hours on M2 (envelope 16/item, 48/24h per seat); no lease claimed; nothing running",
-  "last_receipt": "Residual catalogue v0: 122 admitted / 10 rejected at ref 7510264263 (tyche/residuals/v0/); validator tests 7/7"
+  "last_receipt": "Residual catalogue v0 79edf052c; v1 directive committed verbatim (this commit)"
 }
