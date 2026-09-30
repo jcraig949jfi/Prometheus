@@ -118,8 +118,38 @@ def round2():
     return out
 
 
+R3_PROGRAMS = ("HT-056d3ac561", "HT-974471f045", "HT-ae38c641b1", "HT-e106e1603b",
+               "HT-37e311ce05", "HT-55162c0ac0", "HT-8a87057933", "HT-faa9277e02")
+
+
+def round3():
+    """Round 3 (roles/Hecate/prereg/2026-09-30_pass3_v2/): per program, the
+    lower-cost FROZEN world of W5/W6 (ATTAINABILITY.json frozen == true),
+    ties by id; none frozen -> NO_FREEZABLE_WORLD."""
+    out = []
+    for tid in R3_PROGRAMS:
+        cands = []
+        for wid in ("W5", "W6"):
+            d = os.path.join(ROOT, "hecate", "programs", tid, "worlds", wid)
+            try:
+                with open(os.path.join(d, "ATTAINABILITY.json"), encoding="utf-8") as fh:
+                    att = json.load(fh)
+                with open(os.path.join(d, "spec.json"), encoding="utf-8") as fh:
+                    spec = json.load(fh)
+            except (OSError, ValueError):
+                continue
+            if att.get("frozen") is True:
+                c = parse_cost(spec.get("cost_estimate"))
+                cands.append((c if c is not None else 1e9, wid))
+        cands.sort()
+        out.append({"triplicateId": tid, "probe_world": cands[0][1] if cands else None,
+                    "frozen_worlds": [w for _, w in cands],
+                    "status": "SELECTED" if cands else "NO_FREEZABLE_WORLD"})
+    return out
+
+
 if __name__ == "__main__":
     import sys
-    rows = round2() if sys.argv[1:] == ["round2"] else main()
+    rows = {"round2": round2, "round3": round3}.get((sys.argv[1:] or [""])[0], main)()
     for r in rows:
         print(json.dumps(r, sort_keys=True))
