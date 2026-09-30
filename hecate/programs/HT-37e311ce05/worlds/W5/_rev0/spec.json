@@ -1,0 +1,36 @@
+{
+ "id": "W5",
+ "triplicateId": "HT-37e311ce05",
+ "passId": "P3v2",
+ "mechanism_ids": ["M5"],
+ "lens_ids": ["L5", "L3"],
+ "hypothesis": "When a host pays a symbiont only for matching the host's m compressed measurements of a cooperative contribution, symbionts evolving under a per-unit (L1) production cost exploit the host with a gap (reward paid minus benefit delivered) that collapses abruptly at the basis-pursuit recovery transition m*, not smoothly in m.",
+ "mechanism": "Coset-bounded sanctions. Any contribution x in the coset x_good + ker A is paid in full; under L1 cost the cheapest element of that coset equals x_good exactly when m is above the L1 recovery transition for the k-sparse x_good, and is a cheaper, less beneficial vector below it. Evolution under L1 cost should therefore discover coset aliases only below m*.",
+ "intervention": "Symbiont population evolves under fitness = reward(A x) - c*||x||_1 at each host measurement count m in the grid.",
+ "control": "Identical world with cost c*||x||_2^2 (the null twin); cost of the cooperator x_good is equal in both (10).",
+ "positive_control": "For every (seed, m), the minimum-L1 element of x_good + ker A (linear program): the optimal L1 cheater, paid full reward by construction.",
+ "observable": "g(seed, m) = population median of reward_i - benefit_i after the final generation (the exploitation gap). gbar(m) = mean of g over seeds. Reward = exp(-||A x - A x_good||^2 / (2 tau^2 ||A x_good||^2)); benefit = mean over required set R of clip(x_i, 0, 1).",
+ "success_clauses": [
+  {"id": "S1", "text": "The gap collapses at the recovery transition: sharpness = (gbar(m*-8) - gbar(m*+8)) / (gbar(m_min) - gbar(m_max)) is at least 0.6; defined as 0 if the total drop gbar(m_min) - gbar(m_max) is below 0.3.", "statistic": "S1_sharpness", "comparison": ">=", "threshold": 0.6},
+  {"id": "S2", "text": "No exploitation above the transition: mean of gbar(m) over m >= 40 is at most 0.05.", "statistic": "S2_high_m_gap", "comparison": "<=", "threshold": 0.05}
+ ],
+ "failure_clauses": [
+  {"id": "F1", "text": "Smooth decline: sharpness at most 0.4.", "statistic": "S1_sharpness", "comparison": "<=", "threshold": 0.4},
+  {"id": "F2", "text": "No cheating evolved: total drop gbar(m_min) - gbar(m_max) below 0.3 (evolution did not find coset aliases at low m).", "statistic": "total_drop", "comparison": "<", "threshold": 0.3},
+  {"id": "F3", "text": "Exploitation persists above the transition: mean gbar over m >= 40 above 0.15.", "statistic": "S2_high_m_gap", "comparison": ">", "threshold": 0.15}
+ ],
+ "alternative_explanation": "Any shrinkage-inducing cost with a sparse cooperator gives the same collapse; the result would then be a property of L1 geometry (known compressed-sensing theory) acting through selection, and the symbiosis reading adds nothing beyond 'evolution approximately solves basis pursuit'.",
+ "null_twin": "Same world, reward, verification matrices, selection, mutation and population, cost c*||x||_2^2 instead of c*||x||_1 (equal cost for x_good). The L2 coset optimum is the row-space projection of x_good, whose benefit rises smoothly with m: exploitation is present but has no transition.",
+ "substrate": "population (mutation-selection over real-valued contribution vectors with a linear verification oracle)",
+ "why_this_implementation": "The claim is about which vectors selection finds inside the host's measurement coset, so the organism is the contribution vector itself and the host is a matrix; the L1 vs L2 cost swap removes exactly the sparsity geometry while keeping every other quantity equal. Displaced alternatives: a principal-agent game solved analytically (would assume optimal cheaters, which is what is being tested) and learned agents (add credit assignment noise unrelated to the coset).",
+ "size": "n=64, k=10, m in {12,16,...,60} (13 values), population 60, 2000 generations, truncation 50%, per-gene mutation prob 0.1 with N(0, 0.05^2), c=0.03, tau=0.25; treatment 10 seeds (0-9); controls 5 seeds (0-4) + 20 calibration draws per m",
+ "seeds": {"treatment": [0,1,2,3,4,5,6,7,8,9], "controls": [0,1,2,3,4], "calibration": "1000-1019"},
+ "cost_estimate": "treatment about 0.5 CPU core-minute (130 runs x ~0.2 s); controls about 0.5 core-minute",
+ "stupid_explanations": [
+  "the reward tolerance tau sets a gap floor that is the same at all m, so the drop is carried by a few low-m points",
+  "the benefit clip at 1 creates a threshold unrelated to the coset geometry",
+  "A is scaled by 1/sqrt(m), so a mutation moves A x by a different relative amount at each m and selection strength varies with m, producing a step for reasons of search rather than geometry",
+  "2000 generations are enough to reach the coset optimum only when ker A is small (large m), so the gap falls wherever search becomes easy, not where L1 recovery sets in"
+ ],
+ "parameters": {"n": 64, "k": 10, "m_min": 12, "m_max": 60, "m_step": 4, "m_star": 28, "window_half_width": 8, "min_total_drop": 0.3, "high_m_from": 40, "pop": 60, "generations": 2000, "c": 0.03, "tau": 0.25, "mut_sigma": 0.05, "mut_prob": 0.1, "control_seeds": 5, "calibration_draws": 20, "m_star_rule": "smallest grid m where basis pursuit recovers x_good exactly (max abs error < 1e-4) in >= 50% of calibration draws"}
+}

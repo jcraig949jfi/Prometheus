@@ -1,0 +1,2427 @@
+{
+  "id": "HT-2a8a3aedeb",
+  "key": "Maximum Entropy + Optimal Control + Tensor Decomposition",
+  "stratum": "S3_nous_high",
+  "concepts": [
+    {
+      "field": "Statistical Physics",
+      "mechanism": "measure",
+      "name": "Maximum Entropy",
+      "short_description": "Least biased inference consistent with constraints; Jaynes' principle, exponential families, log-linear models."
+    },
+    {
+      "field": "Control Theory",
+      "mechanism": "dynamics",
+      "name": "Optimal Control",
+      "short_description": "Minimizing cost over trajectories; Pontryagin's principle, Hamilton-Jacobi-Bellman, LQR."
+    },
+    {
+      "field": "Mathematics",
+      "mechanism": "structure",
+      "name": "Tensor Decomposition",
+      "short_description": "Factoring multi-dimensional arrays into simpler components; CP, Tucker, and tensor train formats."
+    }
+  ],
+  "provenance": {
+    "historicalId": "Maximum Entropy + Optimal Control + Tensor Decomposition",
+    "humanreadable": "agents/hephaestus/humanreadable/Tensor_Decomposition---Optimal_Control---Maximum_Entropy.md",
+    "ledger_lines": [
+      2160
+    ],
+    "source": "hephaestus",
+    "sourceArtifact": "agents/hephaestus/ledger.jsonl#L2160",
+    "upstream_nous": [
+      "agents/nous/runs/20260324_131206/responses.jsonl#L547"
+    ],
+    "selected_by": "roles/Hecate/prereg/2026-09-29_first_selection/"
+  },
+  "history": {
+    "forged": false,
+    "ledger_n": 1,
+    "ledger_reasons": [
+      "api_call_failed"
+    ],
+    "nous_composite_max": 7.67,
+    "nous_high_potential": true,
+    "nous_models": [
+      "nvidia/nemotron-3-super-120b-a12b"
+    ],
+    "nous_n": 1,
+    "nous_unproductive_any": false
+  },
+  "passes": [
+    {
+      "id": "P0",
+      "triplicateId": "HT-2a8a3aedeb",
+      "index": 0,
+      "kind": "raw_interpretation",
+      "added": [
+        "new interpretation"
+      ],
+      "generator": {
+        "model": "claude-opus-5-5",
+        "search": false,
+        "prompt": "hecate/programs/_prompts/pass0_3_v1.md",
+        "prompt_sha256": "9ac5468dffb0a5792840809c84b3ad1ab22056397741dacb893386fd206baf3d"
+      },
+      "inspected_prior": [],
+      "unexplained": [
+        "whether the exponential transform really reduces rank or only dynamic range",
+        "which rank (signed CP, TT, nonnegative) is the operative one for policies",
+        "whether any interpretation needs all three concepts"
+      ],
+      "decision": "DEEPEN",
+      "research_state": {
+        "novelty": "unknown",
+        "mechanistic_clarity": "low",
+        "falsifiability": "low",
+        "empirical_support": "none",
+        "cross_lens_agreement": "unknown",
+        "cross_substrate_transfer": "unknown",
+        "baseline_resistance": "unknown",
+        "artifact_risk": "medium",
+        "cost": "low",
+        "unexpectedness": "low",
+        "potential_importance": "medium"
+      },
+      "concept_extractions": [
+        {
+          "concept": "Maximum Entropy",
+          "defining_structures": [
+            "a set of admissible distributions carved out by moment (expectation) constraints",
+            "exponential-family solution p(x) proportional to exp(sum_i lambda_i f_i(x)) relative to a base measure",
+            "log-partition function log Z(lambda), convex in the multipliers",
+            "Lagrange multipliers lambda_i as the prices of constraints"
+          ],
+          "invariants": [
+            "the solution depends on the data only through the constrained feature expectations (sufficient statistics)",
+            "Legendre duality between multipliers and moments",
+            "invariance of the relative-entropy form under reparameterization of x (with base measure)"
+          ],
+          "transformations": [
+            "adding a constraint = exponential tilting of the previous solution",
+            "dual ascent on multipliers; moment matching",
+            "change of base measure (prior) = multiplicative reweighting"
+          ],
+          "conserved_quantities": [
+            "the constrained moments",
+            "total probability mass"
+          ],
+          "failure_modes": [
+            "wrong feature set gives a confidently wrong but 'least biased' model",
+            "infeasible or near-boundary constraints send multipliers to infinity",
+            "entropy is not invariant for continuous x without a base measure",
+            "too many constraints overfit (reduces to the empirical distribution)"
+          ],
+          "dynamics": [
+            "none intrinsically; it is a static variational principle",
+            "iterative scaling / multiplier ascent as an induced algorithmic dynamics",
+            "temperature sweeps: lambda scaled by 1/T moves between uniform and argmax"
+          ],
+          "scales": [
+            "number of constraints versus size of the outcome space",
+            "temperature (multiplier magnitude)"
+          ],
+          "locality": [
+            "locality is inherited from the features: local features give Markov-random-field structure",
+            "factorization of p follows the hypergraph of feature supports"
+          ],
+          "memory": [
+            "the multipliers are the entire memory of the data",
+            "nothing about the data beyond the constrained moments is retained"
+          ],
+          "identity": [
+            "a model is identified by its feature set plus multipliers",
+            "two data sets with equal moments are indistinguishable"
+          ],
+          "reproduction": [
+            "no native reproduction; a model can be copied by copying its multipliers"
+          ],
+          "selection": [
+            "selection of which constraints to impose is outside the principle and is its critical choice",
+            "among all distributions, it selects the one with fewest extra commitments"
+          ],
+          "information": [
+            "entropy as residual uncertainty",
+            "KL divergence to base measure as information paid for the constraints",
+            "multipliers measure marginal information value of each constraint"
+          ],
+          "constraint": [
+            "hard linear constraints on expectations",
+            "normalization",
+            "support restrictions via base measure"
+          ]
+        },
+        {
+          "concept": "Optimal Control",
+          "defining_structures": [
+            "state space, control space, dynamics x_{t+1}=f(x_t,u_t) or its stochastic version",
+            "running and terminal cost; objective as a functional of trajectories",
+            "value function V(x,t) solving the Hamilton-Jacobi-Bellman equation",
+            "Pontryagin Hamiltonian with costate (adjoint) p(t)",
+            "LQR: quadratic value function with Riccati matrix P_t"
+          ],
+          "invariants": [
+            "principle of optimality: tails of optimal trajectories are optimal",
+            "along optimal trajectories the Hamiltonian is constant for time-invariant problems",
+            "value function is invariant to adding a constant to cost"
+          ],
+          "transformations": [
+            "backward induction / Bellman backup",
+            "Riccati recursion",
+            "costate backward integration",
+            "feedback law u = K_t x obtained from value gradient"
+          ],
+          "conserved_quantities": [
+            "the Hamiltonian (autonomous case)",
+            "cost-to-go decomposition across time"
+          ],
+          "failure_modes": [
+            "curse of dimensionality in V",
+            "non-smooth value (shocks) and non-unique optimal controls",
+            "model mismatch: optimal for the wrong dynamics",
+            "open-loop plans brittle to noise"
+          ],
+          "dynamics": [
+            "forward state dynamics coupled to backward costate / value dynamics (two-point boundary problem)"
+          ],
+          "scales": [
+            "horizon length",
+            "control cost weight versus state cost weight",
+            "noise magnitude"
+          ],
+          "locality": [
+            "locality in time via Bellman recursion",
+            "locality in state if dynamics couple only neighbours"
+          ],
+          "memory": [
+            "full state feedback needs no memory beyond the state",
+            "partial observation requires belief-state memory",
+            "the value function is a compiled memory of all future consequences"
+          ],
+          "identity": [
+            "a controller is identified by its policy map; many costs induce the same policy (inverse control non-uniqueness)"
+          ],
+          "reproduction": [
+            "none native; policies can be copied or warm-started"
+          ],
+          "selection": [
+            "argmin over controls at every state; selection of actions by cost-to-go"
+          ],
+          "information": [
+            "value gradient / costate as sensitivity information",
+            "control as information injected into the plant"
+          ],
+          "constraint": [
+            "dynamics as equality constraint",
+            "actuator bounds",
+            "state constraints",
+            "terminal conditions"
+          ]
+        },
+        {
+          "concept": "Tensor Decomposition",
+          "defining_structures": [
+            "CP: sum of R rank-1 outer products",
+            "Tucker: core tensor times factor matrices per mode",
+            "tensor train: chain of 3-way cores with bond dimensions",
+            "multilinear rank and CP rank as complexity measures"
+          ],
+          "invariants": [
+            "CP is essentially unique (up to scaling and permutation) under Kruskal-type conditions",
+            "Tucker is unique only up to invertible transforms of each mode (gauge freedom)",
+            "TT bond dimension at a cut equals the matrix rank of the corresponding unfolding (for exact TT)"
+          ],
+          "transformations": [
+            "ALS sweeps",
+            "HOSVD / TT-SVD truncation",
+            "mode products, contraction, rounding",
+            "gauge transformations between adjacent TT cores"
+          ],
+          "conserved_quantities": [
+            "the represented tensor under gauge change",
+            "unfolding ranks under mode-wise invertible maps"
+          ],
+          "failure_modes": [
+            "border rank: best rank-R approximation may not exist; components diverge and cancel",
+            "CP rank is NP-hard to compute",
+            "ALS swamps and slow convergence",
+            "ordering dependence of TT bond dimensions"
+          ],
+          "dynamics": [
+            "optimization dynamics of ALS / gradient fitting",
+            "rank growth under repeated contraction"
+          ],
+          "scales": [
+            "mode sizes, number of modes, rank",
+            "storage O(d n r^2) for TT versus n^d"
+          ],
+          "locality": [
+            "TT imposes a 1-D chain locality over modes",
+            "CP components are global across all modes"
+          ],
+          "memory": [
+            "TT bond dimension = information passed across a cut, akin to a finite-state memory",
+            "factor matrices as a shared dictionary"
+          ],
+          "identity": [
+            "a component is identified up to scaling/permutation (CP) or up to gauge (Tucker/TT)"
+          ],
+          "reproduction": [
+            "components can be duplicated and split (rank increase) or merged (rank decrease)"
+          ],
+          "selection": [
+            "truncation selects dominant singular directions",
+            "rank selection by error threshold"
+          ],
+          "information": [
+            "singular value spectra at cuts as entanglement-like measures of correlation across modes"
+          ],
+          "constraint": [
+            "rank bound",
+            "nonnegativity (for probability tensors: nonnegative rank >= rank)",
+            "orthogonality in HOSVD"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "P1",
+      "triplicateId": "HT-2a8a3aedeb",
+      "index": 1,
+      "kind": "collision",
+      "added": [
+        "new mechanism",
+        "new observable"
+      ],
+      "generator": {
+        "model": "claude-opus-5-5",
+        "search": false,
+        "prompt": "hecate/programs/_prompts/pass0_3_v1.md",
+        "prompt_sha256": "9ac5468dffb0a5792840809c84b3ad1ab22056397741dacb893386fd206baf3d"
+      },
+      "inspected_prior": [
+        "P0",
+        "I1",
+        "I2",
+        "I3",
+        "I4",
+        "I5",
+        "I6",
+        "I7"
+      ],
+      "unexplained": [
+        "M1 and M12 may be restatements of known linearly-solvable control",
+        "M14 identity unverified and possibly false",
+        "M11 weakly depends on maximum entropy"
+      ],
+      "decision": "DEEPEN",
+      "research_state": {
+        "novelty": "unknown",
+        "mechanistic_clarity": "medium",
+        "falsifiability": "medium",
+        "empirical_support": "none",
+        "cross_lens_agreement": "unknown",
+        "cross_substrate_transfer": "unknown",
+        "baseline_resistance": "unknown",
+        "artifact_risk": "medium",
+        "cost": "low",
+        "unexpectedness": "low",
+        "potential_importance": "medium"
+      }
+    },
+    {
+      "id": "P2",
+      "triplicateId": "HT-2a8a3aedeb",
+      "index": 2,
+      "kind": "lens_explosion",
+      "added": [
+        "new lens",
+        "new observable",
+        "new falsifier"
+      ],
+      "generator": {
+        "model": "claude-opus-5-5",
+        "search": false,
+        "prompt": "hecate/programs/_prompts/pass0_3_v1.md",
+        "prompt_sha256": "9ac5468dffb0a5792840809c84b3ad1ab22056397741dacb893386fd206baf3d"
+      },
+      "inspected_prior": [
+        "P1",
+        "M1",
+        "M2",
+        "M3",
+        "M4",
+        "M6",
+        "M7",
+        "M10",
+        "M12",
+        "M13"
+      ],
+      "unexplained": [
+        "L5 may measure a mathematical identity",
+        "threshold dependence of L1 and L2"
+      ],
+      "decision": "BUILD_ENGINE",
+      "research_state": {
+        "novelty": "unknown",
+        "mechanistic_clarity": "medium",
+        "falsifiability": "medium",
+        "empirical_support": "none",
+        "cross_lens_agreement": "unknown",
+        "cross_substrate_transfer": "unknown",
+        "baseline_resistance": "unknown",
+        "artifact_risk": "medium",
+        "cost": "low",
+        "unexpectedness": "low",
+        "potential_importance": "medium"
+      }
+    },
+    {
+      "id": "P3",
+      "triplicateId": "HT-2a8a3aedeb",
+      "index": 3,
+      "kind": "minimal_worlds",
+      "added": [
+        "new intervention",
+        "new falsifier",
+        "new substrate"
+      ],
+      "generator": {
+        "model": "claude-opus-5-5",
+        "search": false,
+        "prompt": "hecate/programs/_prompts/pass0_3_v1.md",
+        "prompt_sha256": "9ac5468dffb0a5792840809c84b3ad1ab22056397741dacb893386fd206baf3d"
+      },
+      "inspected_prior": [
+        "P2",
+        "L1",
+        "L2",
+        "L4",
+        "L6",
+        "M1",
+        "M2",
+        "M3",
+        "M4",
+        "M10"
+      ],
+      "unexplained": [
+        "whether W2 non-monotonicity is generic interpolation",
+        "whether W1 advantage survives the tanh control",
+        "M5, M6, M7, M9, M11, M12, M14 have no world yet"
+      ],
+      "decision": "FALSIFY",
+      "research_state": {
+        "novelty": "unknown",
+        "mechanistic_clarity": "medium",
+        "falsifiability": "high",
+        "empirical_support": "none",
+        "cross_lens_agreement": "unknown",
+        "cross_substrate_transfer": "unknown",
+        "baseline_resistance": "unknown",
+        "artifact_risk": "medium",
+        "cost": "low",
+        "unexpectedness": "low",
+        "potential_importance": "medium"
+      }
+    },
+    {
+      "id": "P3-probe1",
+      "triplicateId": "HT-2a8a3aedeb",
+      "index": 3,
+      "kind": "cheap_probe",
+      "added": [
+        "new observable"
+      ],
+      "generator": {
+        "model": "claude-opus-5-5 (implementer)",
+        "search": false,
+        "prompt": "hecate/programs/_prompts/probe_impl_v1.md",
+        "prompt_sha256": "cf4bd374bce1b817a12d3607063278183ce0a8b7c4a7b771061dc8ce133bcea2"
+      },
+      "prereg": "roles/Hecate/prereg/2026-09-29_probe_round1/PREREG.md",
+      "inspected_prior": [
+        "W4"
+      ],
+      "unexplained": [
+        "crossover is built into the construction"
+      ],
+      "decision": "DEEPEN",
+      "research_state": {
+        "novelty": "unknown",
+        "mechanistic_clarity": "unknown",
+        "falsifiability": "unknown",
+        "empirical_support": "none",
+        "cross_lens_agreement": "unknown",
+        "cross_substrate_transfer": "unknown",
+        "baseline_resistance": "unknown",
+        "artifact_risk": "unknown",
+        "cost": "unknown",
+        "unexpectedness": "unknown",
+        "potential_importance": "unknown"
+      }
+    },
+    {
+      "id": "P3-probe2",
+      "triplicateId": "HT-2a8a3aedeb",
+      "index": 3,
+      "kind": "cheap_probe",
+      "added": [
+        "new observable"
+      ],
+      "generator": {
+        "model": "claude-opus-5-5 (implementer)",
+        "search": false,
+        "prompt": "hecate/programs/_prompts/probe_impl_v2.md",
+        "prompt_sha256": "2021ed66e8fefd807203ae1d814b74091b4eabdacef16668e7a025d82128185e"
+      },
+      "prereg": "roles/Hecate/prereg/2026-09-30_probe_round2/PREREG.md",
+      "inspected_prior": [
+        "W4",
+        "W1"
+      ],
+      "unexplained": [
+        "tolerance-dependent rank",
+        "exp underflow to zero creating spurious low rank",
+        "lambda large makes z nearly constant",
+        "passive dynamics mixing to stationarity erasing structure over 20 steps"
+      ],
+      "decision": "PARK",
+      "research_state": {
+        "novelty": "unknown",
+        "mechanistic_clarity": "unknown",
+        "falsifiability": "unknown",
+        "empirical_support": "none",
+        "cross_lens_agreement": "unknown",
+        "cross_substrate_transfer": "unknown",
+        "baseline_resistance": "unknown",
+        "artifact_risk": "unknown",
+        "cost": "unknown",
+        "unexpectedness": "unknown",
+        "potential_importance": "unknown"
+      }
+    }
+  ],
+  "hypotheses": [
+    {
+      "id": "I1",
+      "triplicateId": "HT-2a8a3aedeb",
+      "passId": "P0",
+      "kind": "interpretation",
+      "layer": "speculation",
+      "statement": "The exponential (maximum-entropy) transform of a cost-to-go is a rank-changing map: under KL-regularized optimal control the desirability exp(-V/lambda) may be far lower tensor-rank than V itself, so maximum entropy is what makes optimal control tensor-compressible, and temperature is a knob on representational complexity."
+    },
+    {
+      "id": "I2",
+      "triplicateId": "HT-2a8a3aedeb",
+      "passId": "P0",
+      "kind": "interpretation",
+      "layer": "speculation",
+      "statement": "Tensor rank is a control budget: an agent may only deploy policies whose joint action (or state-action) tensor has CP/nonnegative rank at most R, and maximum entropy fills all freedom left by that budget; intelligence is then the trade between rank spent and cost reduced."
+    },
+    {
+      "id": "I3",
+      "triplicateId": "HT-2a8a3aedeb",
+      "passId": "P0",
+      "kind": "interpretation",
+      "layer": "speculation",
+      "statement": "Maximum entropy's unsolved choice of which constraints to impose is answered by control: the agent should constrain only the moments aligned with factors of its cost-to-go tensor and stay maximally ignorant elsewhere, so its world model is shaped by what it must control, not by what it must predict."
+    },
+    {
+      "id": "I4",
+      "triplicateId": "HT-2a8a3aedeb",
+      "passId": "P0",
+      "kind": "interpretation",
+      "layer": "speculation",
+      "statement": "Bond dimension is required memory: a maximum-entropy distribution over trajectories subject to control-relevant constraints is a tensor train over time, and its bond dimension at each time cut counts how much memory any controller realizing it must carry."
+    },
+    {
+      "id": "I5",
+      "triplicateId": "HT-2a8a3aedeb",
+      "passId": "P0",
+      "kind": "interpretation",
+      "layer": "speculation",
+      "statement": "Temperature drives rank transitions: as the entropy weight falls, the Gibbs policy of a coupled multi-actuator cost passes from product (rank 1) through a high-rank intermediate regime to a mixture of ground states, so there is a characteristic temperature where coordination is most representationally expensive."
+    },
+    {
+      "id": "I6",
+      "triplicateId": "HT-2a8a3aedeb",
+      "passId": "P0",
+      "kind": "interpretation",
+      "layer": "speculation",
+      "statement": "Multipliers and costates are the same kind of object (prices of constraints); stacking them over time, state dimension and constraint index gives a price tensor whose low-rank structure would reveal a small number of latent 'concerns' that the controller actually trades off."
+    },
+    {
+      "id": "I7",
+      "triplicateId": "HT-2a8a3aedeb",
+      "passId": "P0",
+      "kind": "interpretation",
+      "layer": "speculation",
+      "statement": "Rank as an evolvable trait: in a population of controllers represented as sums of rank-1 components, mutation adds, deletes, or splits components and selection acts on entropy-regularized cost, so effective rank is a heritable complexity measure whose equilibrium value is set by the task, not by a penalty."
+    },
+    {
+      "id": "M1",
+      "triplicateId": "HT-2a8a3aedeb",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "implemented_candidate",
+      "form": "dynamical law",
+      "statement": "Desirability-rank law: for KL-regularized control on a product state space with product passive dynamics, the desirability tensor z = exp(-V/lambda) has TT rank no larger than, and often much smaller than, V; rank(z) tracks the rank of the non-additive (coupling) part of the state cost rather than the number of state factors.",
+      "derived_from": [
+        "I1"
+      ],
+      "concept_contributions": {
+        "Maximum Entropy": "the exponential transform that turns additive cost into multiplicative weight and linearizes the Bellman equation",
+        "Optimal Control": "the cost-to-go V and the backward recursion that builds it",
+        "Tensor Decomposition": "the rank observable and the TT-SVD that measures it"
+      },
+      "knockouts": {
+        "Maximum Entropy": "V would be computed directly; additive costs give TT rank 2 for V but no multiplicative collapse to rank 1",
+        "Optimal Control": "no value/desirability object exists; only a static tensor",
+        "Tensor Decomposition": "the claim reduces to 'linear Bellman is easier', with no complexity observable"
+      },
+      "simpler_alternative": "Any monotone smoothing of V (e.g. softmin) reduces numerical rank because it flattens dynamic range, not because of the exponential's multiplicative structure.",
+      "questions": {
+        "what_exists": "a product state space, passive dynamics, state cost, desirability tensor",
+        "what_changes": "desirability through backward iterations and as temperature lambda varies",
+        "what_persists": "the factor structure of the passive dynamics",
+        "what_is_selected": "the rank-minimal representation of the value object",
+        "what_can_reproduce": "nothing reproduces",
+        "what_can_learn": "an agent could learn z in compressed TT form",
+        "what_can_transfer": "TT cores of z for one cost may be reused when only one factor's cost changes",
+        "distinguishing_observable": "rank(z) minus rank(V) versus a matched non-exponential monotone transform of V"
+      }
+    },
+    {
+      "id": "M2",
+      "triplicateId": "HT-2a8a3aedeb",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "organism architecture",
+      "statement": "Rank-budgeted maximum-entropy policy: the organism's joint action distribution is a mixture of R product distributions (nonnegative CP rank R); within that budget it minimizes expected cost minus lambda times entropy. The free-energy gap versus R has a knee at the number of coordination modes the cost actually demands.",
+      "derived_from": [
+        "I2",
+        "I5"
+      ],
+      "concept_contributions": {
+        "Maximum Entropy": "entropy term that makes the optimum a Gibbs distribution and gives a well-defined gap",
+        "Optimal Control": "the cost over joint actions being minimized",
+        "Tensor Decomposition": "the rank budget and mixture-of-products representation"
+      },
+      "knockouts": {
+        "Maximum Entropy": "policy collapses to argmin (rank = number of ties); no knee from temperature",
+        "Optimal Control": "no cost, the maxent optimum is uniform and rank 1 for every R",
+        "Tensor Decomposition": "an unrestricted policy with no complexity axis"
+      },
+      "simpler_alternative": "Parameter-count-limited policy with a generic capacity curve; the knee is just the point of diminishing returns of any capacity.",
+      "questions": {
+        "what_exists": "actuator modes, joint cost tensor, mixture components",
+        "what_changes": "component weights and marginals",
+        "what_persists": "the cost tensor",
+        "what_is_selected": "components that lower free energy",
+        "what_can_reproduce": "components can be duplicated to seed new ones",
+        "what_can_learn": "component marginals via EM-like updates",
+        "what_can_transfer": "components shared between tasks whose costs share coordination modes",
+        "distinguishing_observable": "position of the knee in R relative to the number of ground-state configurations and to a shuffled-cost null"
+      }
+    },
+    {
+      "id": "M3",
+      "triplicateId": "HT-2a8a3aedeb",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "dynamical law",
+      "statement": "Temperature-driven rank transition: the nonnegative rank needed to approximate the Gibbs policy of a coupled cost to fixed KL tolerance is non-monotone in inverse temperature beta: 1 at high temperature, peaking at an intermediate beta, and settling at the number of ground states at low temperature.",
+      "derived_from": [
+        "I5"
+      ],
+      "concept_contributions": {
+        "Maximum Entropy": "temperature parameter and the Gibbs family",
+        "Optimal Control": "the cost whose minima define the low-temperature limit",
+        "Tensor Decomposition": "the rank needed as the order parameter"
+      },
+      "knockouts": {
+        "Maximum Entropy": "no temperature axis; only the argmin set exists",
+        "Optimal Control": "no cost structure; rank of the uniform distribution is 1 always",
+        "Tensor Decomposition": "no order parameter to observe the transition"
+      },
+      "simpler_alternative": "Numerical rank of any sharpening family grows then shrinks as it interpolates between uniform and a point mass; nothing specific to coordination.",
+      "questions": {
+        "what_exists": "joint action tensor, Gibbs distribution family",
+        "what_changes": "required rank as beta varies",
+        "what_persists": "the ground-state set",
+        "what_is_selected": "the rank-minimal approximation at each beta",
+        "what_can_reproduce": "nothing",
+        "what_can_learn": "an agent could learn which beta it can afford",
+        "what_can_transfer": "the beta of peak rank as a signature of the coupling graph",
+        "distinguishing_observable": "peak rank and its location for structured versus entry-shuffled costs with identical cost histograms"
+      }
+    },
+    {
+      "id": "M4",
+      "triplicateId": "HT-2a8a3aedeb",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "implemented_candidate",
+      "form": "information bottleneck",
+      "statement": "Control-relevant constraint selection: a maximum-entropy world model constrains only the moments lying in the span of the leading Tucker factors of the stacked desirability tensor over past goals; it is maximally ignorant elsewhere. It should transfer to new goals sharing those factors and fail on goals built from orthogonal factors, more sharply than a prediction-relevant model.",
+      "derived_from": [
+        "I3"
+      ],
+      "concept_contributions": {
+        "Maximum Entropy": "the principle that everything not constrained is left at maximum ignorance",
+        "Optimal Control": "the goals, desirability functions, and regret used to judge the model",
+        "Tensor Decomposition": "the Tucker factors that define which moments are constrained"
+      },
+      "knockouts": {
+        "Maximum Entropy": "model would be arbitrary within the subspace; no principled ignorance off-subspace",
+        "Optimal Control": "factors would be chosen for prediction; the crossover disappears",
+        "Tensor Decomposition": "constraints would be chosen by an unstructured feature search; no shared-factor transfer"
+      },
+      "simpler_alternative": "Standard multi-task representation learning (shared low-rank subspace of value functions) with no maximum-entropy content.",
+      "questions": {
+        "what_exists": "a factored world, a bank of goal costs, a Tucker subspace",
+        "what_changes": "the subspace as more goals are seen",
+        "what_persists": "shared factors across goals",
+        "what_is_selected": "subspace directions that reduce regret",
+        "what_can_reproduce": "nothing",
+        "what_can_learn": "the subspace",
+        "what_can_transfer": "goals within the subspace span",
+        "distinguishing_observable": "regret crossover: control-chosen beats prediction-chosen on in-span goals and loses on orthogonal goals"
+      }
+    },
+    {
+      "id": "M5",
+      "triplicateId": "HT-2a8a3aedeb",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "representation",
+      "statement": "Price tensor: stacking constraint multipliers (maximum entropy) and costates (Pontryagin) over time, state coordinate and constraint index yields a tensor whose Tucker core size counts the independent constraint 'concerns' the controller trades off, which can be smaller than the number of active constraints.",
+      "derived_from": [
+        "I6"
+      ],
+      "concept_contributions": {
+        "Maximum Entropy": "multipliers as prices of moment constraints",
+        "Optimal Control": "costates as prices of dynamics constraints",
+        "Tensor Decomposition": "the Tucker core as the count of latent concerns"
+      },
+      "knockouts": {
+        "Maximum Entropy": "only costates remain; the tensor loses its constraint axis",
+        "Optimal Control": "only static multipliers; no time axis",
+        "Tensor Decomposition": "a list of multipliers with no latent-structure measure"
+      },
+      "simpler_alternative": "Counting active constraints directly (rank of the constraint Jacobian) gives the same number.",
+      "questions": {
+        "what_exists": "time-indexed costates and multipliers",
+        "what_changes": "prices over the horizon",
+        "what_persists": "the constraint set",
+        "what_is_selected": "active constraints",
+        "what_can_reproduce": "nothing",
+        "what_can_learn": "the price factors",
+        "what_can_transfer": "price factors across problems with shared constraints",
+        "distinguishing_observable": "core size lower than active-constraint count, beyond what the constraint Jacobian rank predicts"
+      }
+    },
+    {
+      "id": "M6",
+      "triplicateId": "HT-2a8a3aedeb",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "error-correction mechanism",
+      "statement": "Entropy bounds degeneracy: near a border-rank configuration, CP-factored controllers fitted by least squares develop diverging, mutually cancelling components; representing the policy as a maximum-entropy log-linear model whose natural parameters are CP-factored, and penalizing policy KL from passive dynamics, bounds component norms and removes the divergence.",
+      "derived_from": [
+        "I2"
+      ],
+      "concept_contributions": {
+        "Maximum Entropy": "KL/entropy regularization that bounds how extreme any component can be",
+        "Optimal Control": "the cost that pulls the fit toward the degenerate target",
+        "Tensor Decomposition": "border rank and the CP degeneracy phenomenon itself"
+      },
+      "knockouts": {
+        "Maximum Entropy": "divergence recurs",
+        "Optimal Control": "no target pulling toward degeneracy",
+        "Tensor Decomposition": "no degeneracy to correct"
+      },
+      "simpler_alternative": "Weight decay (L2 on factors) prevents divergence equally well.",
+      "questions": {
+        "what_exists": "CP-factored natural parameters, a degenerate target",
+        "what_changes": "component norms during fitting",
+        "what_persists": "the represented policy",
+        "what_is_selected": "bounded component solutions",
+        "what_can_reproduce": "nothing",
+        "what_can_learn": "factors",
+        "what_can_transfer": "a bounded fit transfers to perturbed targets more smoothly",
+        "distinguishing_observable": "component-norm growth with KL regularization versus L2 matched on the same achieved fit error"
+      }
+    },
+    {
+      "id": "M7",
+      "triplicateId": "HT-2a8a3aedeb",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "memory structure",
+      "statement": "Bond dimension equals controller memory: the maximum-entropy trajectory distribution under k soft interval constraints is a TT over time whose bond dimension at each cut is bounded by the number of distinct partial sufficient-statistic values; any finite-state controller reproducing it needs at least that many memory states, whereas non-additive constraints break the bound.",
+      "derived_from": [
+        "I4"
+      ],
+      "concept_contributions": {
+        "Maximum Entropy": "the exponential-family trajectory law with additive sufficient statistics",
+        "Optimal Control": "the controller that must realize the distribution with finite memory",
+        "Tensor Decomposition": "bond dimension as the count"
+      },
+      "knockouts": {
+        "Maximum Entropy": "an arbitrary trajectory distribution has no sufficient-statistic bound",
+        "Optimal Control": "no controller; statement becomes pure automata theory",
+        "Tensor Decomposition": "no memory measure"
+      },
+      "simpler_alternative": "Finite-automaton state counting (Myhill-Nerode classes) gives the same number without tensors or entropy.",
+      "questions": {
+        "what_exists": "trajectories, soft constraints, a TT over time",
+        "what_changes": "memory state along the trajectory",
+        "what_persists": "partial sums of constrained features",
+        "what_is_selected": "the minimal memory controller",
+        "what_can_reproduce": "nothing",
+        "what_can_learn": "memory states",
+        "what_can_transfer": "memory machines across constraint sets sharing features",
+        "distinguishing_observable": "bond dimension versus distinct-conditional-future count under additive and non-additive constraints"
+      }
+    },
+    {
+      "id": "M8",
+      "triplicateId": "HT-2a8a3aedeb",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "interaction law",
+      "statement": "Rank-1 modules: each CP component is a module that runs its own product (independent-actuator) maximum-entropy policy; modules interact only by being mixed; the number of modules a task sustains equals the coupling rank of its cost at the operating temperature. Three-way dependency is moderate: this is close to a mixture-of-products with a cost.",
+      "derived_from": [
+        "I2",
+        "I5"
+      ],
+      "concept_contributions": {
+        "Maximum Entropy": "within-module independence (product = maximum entropy given marginals)",
+        "Optimal Control": "the shared cost that allocates weight between modules",
+        "Tensor Decomposition": "the component count"
+      },
+      "knockouts": {
+        "Maximum Entropy": "modules would be arbitrary joint policies; count uninterpretable",
+        "Optimal Control": "no reason for modules to differ",
+        "Tensor Decomposition": "no modules"
+      },
+      "simpler_alternative": "Mixture of experts with a gating prior; module count set by capacity.",
+      "questions": {
+        "what_exists": "modules with product policies",
+        "what_changes": "module weights",
+        "what_persists": "module identities",
+        "what_is_selected": "modules with positive weight",
+        "what_can_reproduce": "modules can be copied",
+        "what_can_learn": "module marginals",
+        "what_can_transfer": "modules between tasks with a shared coordination mode",
+        "distinguishing_observable": "number of surviving modules versus ground-state count and versus shuffled-cost null"
+      }
+    },
+    {
+      "id": "M9",
+      "triplicateId": "HT-2a8a3aedeb",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "computational primitive",
+      "statement": "ALS as soft best response: one ALS sweep over CP factors of a joint policy equals each actuator computing a maximum-entropy (softmin) best response to the others' current marginals; the fixed points are quantal-response-type equilibria and rank is the number of coexisting equilibria a single policy can hold.",
+      "derived_from": [
+        "I2",
+        "I5"
+      ],
+      "concept_contributions": {
+        "Maximum Entropy": "softmin replaces argmin in each block update",
+        "Optimal Control": "each block's cost given others",
+        "Tensor Decomposition": "the block-coordinate structure of ALS"
+      },
+      "knockouts": {
+        "Maximum Entropy": "hard best response; cycling and non-smoothness",
+        "Optimal Control": "no objective to respond to",
+        "Tensor Decomposition": "no block decomposition"
+      },
+      "simpler_alternative": "Block-coordinate descent / fictitious play with smoothing; the tensor language adds nothing.",
+      "questions": {
+        "what_exists": "actuator marginals per component",
+        "what_changes": "marginals per sweep",
+        "what_persists": "fixed-point equilibria",
+        "what_is_selected": "equilibria with lowest free energy",
+        "what_can_reproduce": "nothing",
+        "what_can_learn": "marginals",
+        "what_can_transfer": "equilibria across similar games",
+        "distinguishing_observable": "number of distinct fixed points reached from random starts versus fitted rank"
+      }
+    },
+    {
+      "id": "M10",
+      "triplicateId": "HT-2a8a3aedeb",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "mutation operator",
+      "statement": "Rank mutation: controllers are genomes of rank-1 components; mutations add a component, delete one, split one into two perturbed copies, or merge two; selection is on negative free energy (cost minus lambda entropy). Without any explicit complexity penalty, effective rank (exp of mixture-weight entropy after merging near-duplicates) converges to the task's required rank.",
+      "derived_from": [
+        "I7"
+      ],
+      "concept_contributions": {
+        "Maximum Entropy": "the entropy term that gives a finite-temperature target",
+        "Optimal Control": "the cost that defines fitness",
+        "Tensor Decomposition": "the component genome and rank-changing operators"
+      },
+      "knockouts": {
+        "Maximum Entropy": "target is argmin; effective rank equals tie count, weaker test",
+        "Optimal Control": "neutral drift of rank",
+        "Tensor Decomposition": "no genome structure; ordinary parameter evolution"
+      },
+      "simpler_alternative": "Any evolution with redundancy: surplus components are neutral and wander, and effective-rank convergence reflects merging, not selection.",
+      "questions": {
+        "what_exists": "a population of component genomes",
+        "what_changes": "components by mutation",
+        "what_persists": "useful components",
+        "what_is_selected": "genomes with higher negative free energy",
+        "what_can_reproduce": "genomes (asexual copy with mutation)",
+        "what_can_learn": "component marginals via mutation-selection",
+        "what_can_transfer": "components between lineages facing different temperatures",
+        "distinguishing_observable": "evolved effective rank versus W2's required rank, and versus shuffled-cost populations"
+      }
+    },
+    {
+      "id": "M11",
+      "triplicateId": "HT-2a8a3aedeb",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "world rule",
+      "statement": "Gauge-neutral drift: the Tucker/TT gauge freedom of a factored controller is a neutral space; drift along it changes nothing about cost or entropy but changes which single-factor mutations are beneficial, so gauge drift could set evolvability. Three-way dependency is weak: maximum entropy only supplies the fitness.",
+      "derived_from": [
+        "I7"
+      ],
+      "concept_contributions": {
+        "Maximum Entropy": "fitness function (entropy-regularized)",
+        "Optimal Control": "the controlled cost",
+        "Tensor Decomposition": "the gauge freedom"
+      },
+      "knockouts": {
+        "Maximum Entropy": "fitness still exists with plain cost; little is lost",
+        "Optimal Control": "no fitness",
+        "Tensor Decomposition": "no neutral space"
+      },
+      "simpler_alternative": "Neutral networks in any redundant parameterization do the same.",
+      "questions": {
+        "what_exists": "gauge-equivalent controllers",
+        "what_changes": "gauge coordinates",
+        "what_persists": "the represented policy",
+        "what_is_selected": "nothing directly",
+        "what_can_reproduce": "genomes",
+        "what_can_learn": "gauge position",
+        "what_can_transfer": "gauge positions across tasks",
+        "distinguishing_observable": "fraction of beneficial mutations as a function of gauge after drift versus canonical gauge"
+      }
+    },
+    {
+      "id": "M12",
+      "triplicateId": "HT-2a8a3aedeb",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "dynamical law",
+      "statement": "Distribution steering as rank-1 factorization in time: steering a population from an initial to a target set of moments with minimal KL from passive dynamics yields a trajectory law that factorizes as forward potential times backward potential; the TT bond dimension across the midpoint is 1 per constraint pair and grows only with intermediate constraints.",
+      "derived_from": [
+        "I4",
+        "I6"
+      ],
+      "concept_contributions": {
+        "Maximum Entropy": "minimal-KL criterion",
+        "Optimal Control": "steering between boundary conditions",
+        "Tensor Decomposition": "bond dimension across time cuts"
+      },
+      "knockouts": {
+        "Maximum Entropy": "arbitrary steering law; no factorization",
+        "Optimal Control": "no boundary conditions; stationary law",
+        "Tensor Decomposition": "no measure of the factorization"
+      },
+      "simpler_alternative": "This is plausibly an already-known bridge/linearly solvable control result restated; the tensor view may add only a counting convention.",
+      "questions": {
+        "what_exists": "population, passive dynamics, boundary moments",
+        "what_changes": "the distribution over time",
+        "what_persists": "the forward/backward potentials",
+        "what_is_selected": "the minimal-KL path",
+        "what_can_reproduce": "nothing",
+        "what_can_learn": "potentials",
+        "what_can_transfer": "potentials between tasks sharing a boundary",
+        "distinguishing_observable": "bond dimension versus number of intermediate constraints"
+      }
+    },
+    {
+      "id": "M13",
+      "triplicateId": "HT-2a8a3aedeb",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "implemented_candidate",
+      "form": "learning pressure",
+      "statement": "Multi-goal compression pressure: an agent that must serve many goals under a per-goal entropy (KL) budget is pressured toward sharing low-rank factors across the goal-by-state desirability tensor; the achieved goal-mode rank falls as the KL budget tightens.",
+      "derived_from": [
+        "I3",
+        "I1"
+      ],
+      "concept_contributions": {
+        "Maximum Entropy": "the KL budget that prices deviation from passive behaviour",
+        "Optimal Control": "the multiple goals",
+        "Tensor Decomposition": "the goal-mode rank"
+      },
+      "knockouts": {
+        "Maximum Entropy": "no budget; no pressure to share",
+        "Optimal Control": "no goals",
+        "Tensor Decomposition": "no sharing measure"
+      },
+      "simpler_alternative": "Multi-task learning under capacity limits shares representations for generic reasons.",
+      "questions": {
+        "what_exists": "an agent, a family of goals",
+        "what_changes": "the shared factors",
+        "what_persists": "factors reused across goals",
+        "what_is_selected": "shared factors that help many goals",
+        "what_can_reproduce": "nothing",
+        "what_can_learn": "factors",
+        "what_can_transfer": "factors to new goals",
+        "distinguishing_observable": "goal-mode rank as a function of KL budget at matched parameter count"
+      }
+    },
+    {
+      "id": "M14",
+      "triplicateId": "HT-2a8a3aedeb",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "causal constraint",
+      "statement": "Rank deficit as control price: the minimal KL a controller must pay to reach a joint-state target equals the sum over CP components of per-component log-partition differences plus an interaction term that vanishes iff the target's coupling rank is 1. Speculative identity; three-way dependency is strong but the statement may be false for most targets.",
+      "derived_from": [
+        "I1",
+        "I6"
+      ],
+      "concept_contributions": {
+        "Maximum Entropy": "log-partition differences as KL",
+        "Optimal Control": "the reach objective",
+        "Tensor Decomposition": "component decomposition of the target"
+      },
+      "knockouts": {
+        "Maximum Entropy": "no KL price",
+        "Optimal Control": "no target",
+        "Tensor Decomposition": "no decomposition"
+      },
+      "simpler_alternative": "KL between product and joint is just multi-information; rank adds nothing beyond total correlation.",
+      "questions": {
+        "what_exists": "passive product dynamics and a joint target",
+        "what_changes": "the KL paid",
+        "what_persists": "the target",
+        "what_is_selected": "nothing",
+        "what_can_reproduce": "nothing",
+        "what_can_learn": "nothing",
+        "what_can_transfer": "nothing",
+        "distinguishing_observable": "interaction term versus total correlation of the target at fixed rank"
+      }
+    },
+    {
+      "id": "M15",
+      "triplicateId": "HT-2a8a3aedeb",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "developmental process",
+      "statement": "Coarse-to-fine by rank: a controller develops by first solving the rank-1 (independent-factor) maximum-entropy approximation at high temperature, then annealing temperature and adding components only when the free-energy gap exceeds a threshold; developmental order of components follows the coupling strength order.",
+      "derived_from": [
+        "I5",
+        "I7"
+      ],
+      "concept_contributions": {
+        "Maximum Entropy": "annealing schedule on temperature",
+        "Optimal Control": "cost that orders components by value",
+        "Tensor Decomposition": "component addition"
+      },
+      "knockouts": {
+        "Maximum Entropy": "no schedule; order arbitrary",
+        "Optimal Control": "no order",
+        "Tensor Decomposition": "no components"
+      },
+      "simpler_alternative": "A curriculum from easy to hard produces the same ordering.",
+      "questions": {
+        "what_exists": "a controller and a temperature schedule",
+        "what_changes": "rank and temperature",
+        "what_persists": "earlier components",
+        "what_is_selected": "components that reduce the gap",
+        "what_can_reproduce": "nothing",
+        "what_can_learn": "new components",
+        "what_can_transfer": "early components across tasks",
+        "distinguishing_observable": "order of acquired components versus coupling strengths, compared with random-order addition"
+      }
+    },
+    {
+      "id": "O-W4-r1",
+      "triplicateId": "HT-2a8a3aedeb",
+      "passId": "P3-probe1",
+      "kind": "observation",
+      "layer": "experimental_observation",
+      "evidence_rows": [
+        "hecate/programs/HT-2a8a3aedeb/worlds/W4/rows.jsonl",
+        "hecate/programs/HT-2a8a3aedeb/worlds/W4/OUTCOME.json"
+      ],
+      "statement": "W4 probe round 1: NULL. Attempt 1 was INSTRUMENT_FAIL (positive control 0/10: my goal construction put the cost offset outside the K=2 shared span); one repair moved the constant into the shared span, all else unchanged. Attempt 2: rule (a) HOSVD beats rule (b) prediction subspace strongly on in-span goals (median in-span ratio b/a = 24.3, 10/10 seeds >= 2) but shows no meaningful reversal on orthogonal goals (median off-span ratio a/b = 1.022, needed >= 1.2), so 0/10 seeds meet the joint criterion: NULL. The formal failure criterion is not met (off-span ratio > 1 in 10/10 seeds, range 1.004-1.079), so this is a fails-to-reach-success NULL, not a failure-criterion kill. Null twin loses the in-span advantage (median 0.91); random subspace is ~20x worse everywhere. Both (a) and (b) have ~0.006 relative regret on orthogonal goals.",
+      "derived_from": [
+        "M4",
+        "M13"
+      ]
+    },
+    {
+      "id": "O-W1-r2",
+      "triplicateId": "HT-2a8a3aedeb",
+      "passId": "P3-probe2",
+      "kind": "observation",
+      "layer": "experimental_observation",
+      "evidence_rows": [
+        "hecate/programs/HT-2a8a3aedeb/worlds/W1/rows.jsonl"
+      ],
+      "statement": "W1 probe round 2: NULL. Prompt probe_impl_v2 sha256 2021ed66...185e. Pilot pass on attempt 2. Rows: rows.jsonl (phase 2), pilot_rows.jsonl (attempt 2), pilot_rows_attempt1.jsonl.",
+      "derived_from": [
+        "M1"
+      ]
+    }
+  ],
+  "lenses": [
+    {
+      "id": "L1",
+      "name": "Exponential-rank spectrometer",
+      "rationale": "M1/M3 claim the maxent exponential changes tensor complexity; measure it directly and against matched non-exponential transforms.",
+      "sourceRepresentation": "full value tensor V and desirability z over a product state space",
+      "transformation": "TT-SVD of V, of exp(-V/lambda), and of rank-matched monotone controls (tanh, rank-preserving quantile maps) at each lambda",
+      "observables": [
+        "TT bond dimensions at relative Frobenius tolerance 1e-6 and 1e-3",
+        "singular value decay per cut"
+      ],
+      "predictedSignals": [
+        "bond(z) < bond(V) for additive-plus-weak-coupling costs",
+        "bond(z) tracks coupling rank"
+      ],
+      "nullExpectation": "on entry-shuffled costs bond(z) and bond(V) both saturate near full rank",
+      "failureModes": [
+        "tolerance choice manufactures rank differences",
+        "exp saturates to near-constant at large lambda, trivially rank 1"
+      ],
+      "informationAddedBeyondExistingLenses": "separates the multiplicative structure of the maxent transform from generic dynamic-range compression",
+      "passId": "P2",
+      "targets": [
+        "M1",
+        "M3",
+        "M13"
+      ],
+      "triplicateId": "HT-2a8a3aedeb"
+    },
+    {
+      "id": "L2",
+      "name": "Free-energy knee finder",
+      "rationale": "M2/M8/M10 predict a characteristic rank; find the knee of the free-energy-gap-versus-rank curve.",
+      "sourceRepresentation": "joint action cost tensor and mixture-of-products policies at ranks 1..Rmax",
+      "transformation": "fit each rank by EM to the Gibbs target, record KL gap, detect knee by max second difference of log gap",
+      "observables": [
+        "R* = smallest R with KL gap < 0.01 nats",
+        "knee location",
+        "gap curve shape"
+      ],
+      "predictedSignals": [
+        "R* equals ground-state count at low temperature",
+        "non-monotone R*(beta)"
+      ],
+      "nullExpectation": "shuffled-cost R*(beta) rises smoothly and exceeds structured R* at intermediate beta",
+      "failureModes": [
+        "EM local optima understate achievable fit",
+        "threshold dependence"
+      ],
+      "informationAddedBeyondExistingLenses": "measures nonnegative (mixture) rank, the operationally relevant rank for policies, which L1's signed TT rank does not",
+      "passId": "P2",
+      "targets": [
+        "M2",
+        "M3",
+        "M8",
+        "M10",
+        "M15"
+      ],
+      "triplicateId": "HT-2a8a3aedeb"
+    },
+    {
+      "id": "L3",
+      "name": "Cancellation seismograph",
+      "rationale": "M6 is about divergent cancelling components; measure cancellation directly.",
+      "sourceRepresentation": "CP factor sets over a fitting trajectory",
+      "transformation": "compute cancellation ratio (sum of component norms / norm of reconstructed tensor) per iteration",
+      "observables": [
+        "max cancellation ratio",
+        "component norm growth rate"
+      ],
+      "predictedSignals": [
+        "unbounded growth under least squares near border rank; bounded under KL regularization"
+      ],
+      "nullExpectation": "L2 penalty matched on final fit error bounds norms equally",
+      "failureModes": [
+        "finite iterations hide divergence",
+        "regularization simply worsens fit"
+      ],
+      "informationAddedBeyondExistingLenses": "sees ill-posedness of the representation, not its size",
+      "passId": "P2",
+      "targets": [
+        "M6"
+      ],
+      "triplicateId": "HT-2a8a3aedeb"
+    },
+    {
+      "id": "L4",
+      "name": "Transfer crossover plot",
+      "rationale": "M4/M13 predict that control-shaped models win in-span and lose off-span; a crossover is a sharper signature than a mean advantage.",
+      "sourceRepresentation": "regret of subspace-restricted linear-Bellman solutions on held-out goals",
+      "transformation": "group test goals into in-span and orthogonal; compute median regret ratio per subspace-selection rule",
+      "observables": [
+        "median regret per rule per group",
+        "sign of the interaction"
+      ],
+      "predictedSignals": [
+        "control-chosen < prediction-chosen in-span; reversed off-span"
+      ],
+      "nullExpectation": "with fiber-permuted training desirabilities the in-span advantage vanishes",
+      "failureModes": [
+        "orthogonal goals accidentally aligned with passive-dynamics eigenvectors",
+        "too few goals"
+      ],
+      "informationAddedBeyondExistingLenses": "tests maxent-as-ignorance behaviourally rather than representationally",
+      "passId": "P2",
+      "targets": [
+        "M4",
+        "M13"
+      ],
+      "triplicateId": "HT-2a8a3aedeb"
+    },
+    {
+      "id": "L5",
+      "name": "Cut-memory ledger",
+      "rationale": "M7/M12 equate TT bond dimension over time with memory; count both independently.",
+      "sourceRepresentation": "trajectory distribution tensor over T binary steps",
+      "transformation": "TT-SVD across time cuts; separately count distinct normalized conditional futures and distinct partial sufficient statistics",
+      "observables": [
+        "bond dimension per cut",
+        "distinct-future count",
+        "sufficient-statistic count"
+      ],
+      "predictedSignals": [
+        "bond = statistic count under additive constraints; bond > statistic count under non-additive constraints"
+      ],
+      "nullExpectation": "bond dimension equals min of unfolding sizes for random distributions",
+      "failureModes": [
+        "identity is mathematically forced (no empirical content)"
+      ],
+      "informationAddedBeyondExistingLenses": "converts representation size into a controller-memory requirement",
+      "passId": "P2",
+      "targets": [
+        "M7",
+        "M12"
+      ],
+      "triplicateId": "HT-2a8a3aedeb"
+    },
+    {
+      "id": "L6",
+      "name": "Rank genealogy",
+      "rationale": "M10/M11/M15 are about how rank arises in lineages; track components as heritable units.",
+      "sourceRepresentation": "population genomes of rank-1 components with parent pointers",
+      "transformation": "track effective rank per lineage, component ages, and merge/split events over generations",
+      "observables": [
+        "effective rank trajectory",
+        "component survival times",
+        "fraction of neutral mutations"
+      ],
+      "predictedSignals": [
+        "effective rank converges to required rank from L2"
+      ],
+      "nullExpectation": "effective rank drifts upward neutrally when components cost nothing",
+      "failureModes": [
+        "near-duplicate merge threshold decides the result"
+      ],
+      "informationAddedBeyondExistingLenses": "adds heritability/history to a quantity other lenses see only at a snapshot",
+      "passId": "P2",
+      "targets": [
+        "M10",
+        "M11",
+        "M15"
+      ],
+      "triplicateId": "HT-2a8a3aedeb"
+    }
+  ],
+  "experiments": [
+    {
+      "id": "W1",
+      "triplicateId": "HT-2a8a3aedeb",
+      "passId": "P3",
+      "mechanism_ids": [
+        "M1"
+      ],
+      "lens_ids": [
+        "L1"
+      ],
+      "hypothesis": "Under KL-regularized control on a product space, max TT rank of desirability z is lower than that of V, and tracks the planted coupling rank.",
+      "mechanism": "Linear Bellman (z = exp(-q/lambda) * P z, finite horizon) on product passive dynamics, compared with the value V = -lambda log z.",
+      "intervention": "plant coupling cost q = sum_i q_i(s_i) + c * (sum of r rank-1 products) with r in {1,2,4}, c in {0.5, 2}; sweep lambda in {0.1, 0.3, 1, 3, 10}",
+      "control": "same V passed through tanh(V/sd(V)) and through a rank-preserving quantile map to a Gaussian (non-exponential monotone transforms)",
+      "positive_control": "purely additive q (c = 0): z must be exactly TT rank 1 and V TT rank 2; any deviation means the pipeline is broken",
+      "observable": "max TT bond dimension at relative Frobenius tolerance 1e-6 (secondary 1e-3) for z, V, and controls",
+      "success_criterion": "for c=0.5 and lambda >= 1, bond(z) <= bond(V) - 1 in >= 8/10 seeds for every r, AND bond(z) <= bond(tanh control) - 1 in >= 7/10 seeds, AND Spearman rho(r, bond(z)) >= 0.6 across seeds",
+      "failure_criterion": "bond(z) >= bond(V) in >= 5/10 seeds at lambda >= 1, OR bond(z) is not lower than the tanh control in >= 5/10 seeds (exponential not special)",
+      "alternative_explanation": "at large lambda z approaches constant, trivially low-rank; at small lambda z approaches a point mass",
+      "null_twin": "entry-shuffled q (same histogram of cost values, factor structure destroyed): expect |bond(z) - bond(V)| <= 1 and both near full",
+      "substrate": "tensor",
+      "why_this_implementation": "an exact dense tensor with exact TT-SVD removes all learning noise; no ML model is needed",
+      "size": "4 state factors x 6 levels (1296 states), horizon 20, 10 seeds x 3 r x 2 c x 5 lambda = 300 solves",
+      "cost_estimate": "about 2 CPU core-minutes",
+      "stupid_explanations": [
+        "tolerance-dependent rank",
+        "exp underflow to zero creating spurious low rank",
+        "lambda large makes z nearly constant",
+        "passive dynamics mixing to stationarity erasing structure over 20 steps"
+      ],
+      "outcome": "NULL",
+      "round": 2,
+      "rows": "hecate/programs/HT-2a8a3aedeb/worlds/W1/rows.jsonl",
+      "outcome_file": "hecate/programs/HT-2a8a3aedeb/worlds/W1/OUTCOME.json",
+      "statistics": {
+        "treatment_success": {
+          "success": false,
+          "S1": false,
+          "S2": true,
+          "S3": true,
+          "S1_counts": {
+            "r1_lam1": 0,
+            "r1_lam3": 0,
+            "r1_lam10": 0,
+            "r2_lam1": 0,
+            "r2_lam3": 0,
+            "r2_lam10": 0,
+            "r4_lam1": 0,
+            "r4_lam3": 0,
+            "r4_lam10": 0
+          },
+          "S2_counts": {
+            "r1_lam1": 10,
+            "r1_lam3": 10,
+            "r1_lam10": 10,
+            "r2_lam1": 10,
+            "r2_lam3": 10,
+            "r2_lam10": 10,
+            "r4_lam1": 10,
+            "r4_lam3": 10,
+            "r4_lam10": 10
+          },
+          "n": {
+            "r1_lam1": 10,
+            "r1_lam3": 10,
+            "r1_lam10": 10,
+            "r2_lam1": 10,
+            "r2_lam3": 10,
+            "r2_lam10": 10,
+            "r4_lam1": 10,
+            "r4_lam3": 10,
+            "r4_lam10": 10
+          },
+          "rho": {
+            "1": 0.9466030570784412,
+            "3": 0.9532459670482616,
+            "10": 0.9516259931244676
+          }
+        },
+        "treatment_failure": {
+          "failure": true,
+          "cells": {
+            "c0.5_r1_lam1": {
+              "z_ge_V": 10,
+              "z_not_lt_tanh": 0
+            },
+            "c0.5_r1_lam3": {
+              "z_ge_V": 10,
+              "z_not_lt_tanh": 0
+            },
+            "c0.5_r1_lam10": {
+              "z_ge_V": 10,
+              "z_not_lt_tanh": 0
+            },
+            "c0.5_r2_lam1": {
+              "z_ge_V": 10,
+              "z_not_lt_tanh": 0
+            },
+            "c0.5_r2_lam3": {
+              "z_ge_V": 10,
+              "z_not_lt_tanh": 0
+            },
+            "c0.5_r2_lam10": {
+              "z_ge_V": 10,
+              "z_not_lt_tanh": 0
+            },
+            "c0.5_r4_lam1": {
+              "z_ge_V": 10,
+              "z_not_lt_tanh": 0
+            },
+            "c0.5_r4_lam3": {
+              "z_ge_V": 10,
+              "z_not_lt_tanh": 0
+            },
+            "c0.5_r4_lam10": {
+              "z_ge_V": 10,
+              "z_not_lt_tanh": 0
+            },
+            "c2_r1_lam1": {
+              "z_ge_V": 10,
+              "z_not_lt_tanh": 0
+            },
+            "c2_r1_lam3": {
+              "z_ge_V": 10,
+              "z_not_lt_tanh": 0
+            },
+            "c2_r1_lam10": {
+              "z_ge_V": 10,
+              "z_not_lt_tanh": 0
+            },
+            "c2_r2_lam1": {
+              "z_ge_V": 10,
+              "z_not_lt_tanh": 0
+            },
+            "c2_r2_lam3": {
+              "z_ge_V": 10,
+              "z_not_lt_tanh": 0
+            },
+            "c2_r2_lam10": {
+              "z_ge_V": 10,
+              "z_not_lt_tanh": 0
+            },
+            "c2_r4_lam1": {
+              "z_ge_V": 10,
+              "z_not_lt_tanh": 5
+            },
+            "c2_r4_lam3": {
+              "z_ge_V": 10,
+              "z_not_lt_tanh": 4
+            },
+            "c2_r4_lam10": {
+              "z_ge_V": 10,
+              "z_not_lt_tanh": 0
+            }
+          }
+        },
+        "treatment_success_tol1e-3": {
+          "success": false,
+          "S1": false,
+          "S2": true,
+          "S3": true,
+          "S1_counts": {
+            "r1_lam1": 0,
+            "r1_lam3": 0,
+            "r1_lam10": 0,
+            "r2_lam1": 0,
+            "r2_lam3": 0,
+            "r2_lam10": 0,
+            "r4_lam1": 0,
+            "r4_lam3": 0,
+            "r4_lam10": 0
+          },
+          "S2_counts": {
+            "r1_lam1": 10,
+            "r1_lam3": 10,
+            "r1_lam10": 10,
+            "r2_lam1": 10,
+            "r2_lam3": 10,
+            "r2_lam10": 10,
+            "r4_lam1": 10,
+            "r4_lam3": 10,
+            "r4_lam10": 10
+          },
+          "n": {
+            "r1_lam1": 10,
+            "r1_lam3": 10,
+            "r1_lam10": 10,
+            "r2_lam1": 10,
+            "r2_lam3": 10,
+            "r2_lam10": 10,
+            "r4_lam1": 10,
+            "r4_lam3": 10,
+            "r4_lam10": 10
+          },
+          "rho": {
+            "1": 0.9507653770830565,
+            "3": 0.9513467476837024,
+            "10": 0.9999999999999998
+          }
+        },
+        "treatment_failure_tol1e-3": {
+          "failure": true
+        },
+        "null_twin": {
+          "success": false,
+          "S1": false,
+          "S2": false,
+          "S3": false,
+          "S1_counts": {
+            "r1_lam1": 0,
+            "r1_lam3": 0,
+            "r1_lam10": 0,
+            "r2_lam1": 0,
+            "r2_lam3": 0,
+            "r2_lam10": 0,
+            "r4_lam1": 0,
+            "r4_lam3": 0,
+            "r4_lam10": 0
+          },
+          "S2_counts": {
+            "r1_lam1": 0,
+            "r1_lam3": 0,
+            "r1_lam10": 0,
+            "r2_lam1": 0,
+            "r2_lam3": 0,
+            "r2_lam10": 0,
+            "r4_lam1": 0,
+            "r4_lam3": 0,
+            "r4_lam10": 0
+          },
+          "n": {
+            "r1_lam1": 10,
+            "r1_lam3": 10,
+            "r1_lam10": 10,
+            "r2_lam1": 10,
+            "r2_lam3": 10,
+            "r2_lam10": 10,
+            "r4_lam1": 10,
+            "r4_lam3": 10,
+            "r4_lam10": 10
+          },
+          "rho": {
+            "1": null,
+            "3": null,
+            "10": null
+          }
+        },
+        "cheat": {
+          "success": true,
+          "S1": true,
+          "S2": true,
+          "S3": true,
+          "S1_counts": {
+            "r1_lam1": 10,
+            "r1_lam3": 10,
+            "r1_lam10": 10,
+            "r2_lam1": 10,
+            "r2_lam3": 10,
+            "r2_lam10": 10,
+            "r4_lam1": 10,
+            "r4_lam3": 10,
+            "r4_lam10": 10
+          },
+          "S2_counts": {
+            "r1_lam1": 10,
+            "r1_lam3": 10,
+            "r1_lam10": 10,
+            "r2_lam1": 10,
+            "r2_lam3": 10,
+            "r2_lam10": 10,
+            "r4_lam1": 10,
+            "r4_lam3": 10,
+            "r4_lam10": 10
+          },
+          "n": {
+            "r1_lam1": 10,
+            "r1_lam3": 10,
+            "r1_lam10": 10,
+            "r2_lam1": 10,
+            "r2_lam3": 10,
+            "r2_lam10": 10,
+            "r4_lam1": 10,
+            "r4_lam3": 10,
+            "r4_lam10": 10
+          },
+          "rho": {
+            "1": 0.9999999999999998,
+            "3": 0.9999999999999998,
+            "10": 0.9999999999999998
+          }
+        },
+        "positive": {
+          "meets": true,
+          "exact_z1_V2": true,
+          "success": true,
+          "S1": true,
+          "S2": true,
+          "S3": null,
+          "S1_counts": {
+            "r0_lam1": 10,
+            "r0_lam3": 10,
+            "r0_lam10": 10
+          },
+          "S2_counts": {
+            "r0_lam1": 10,
+            "r0_lam3": 10,
+            "r0_lam10": 10
+          },
+          "n": {
+            "r0_lam1": 10,
+            "r0_lam3": 10,
+            "r0_lam10": 10
+          },
+          "rho": {
+            "1": null,
+            "3": null,
+            "10": null
+          }
+        },
+        "bonds_lam_ge1": {
+          "TREATMENT_z_c0.5": {
+            "mean": 17.933333333333334,
+            "min": 5,
+            "max": 33
+          },
+          "TREATMENT_V_c0.5": {
+            "mean": 10.4,
+            "min": 5,
+            "max": 20
+          },
+          "CONTROL_tanh_c0.5": {
+            "mean": 33.86666666666667,
+            "min": 29,
+            "max": 36
+          },
+          "CONTROL_quant_c0.5": {
+            "mean": 35.977777777777774,
+            "min": 35,
+            "max": 36
+          },
+          "NULL_TWIN_z": {
+            "mean": 35.99444444444445,
+            "min": 35,
+            "max": 36
+          },
+          "NULL_TWIN_V": {
+            "mean": 36.0,
+            "min": 36,
+            "max": 36
+          },
+          "POSITIVE_z": {
+            "mean": 1.0,
+            "min": 1,
+            "max": 1
+          },
+          "POSITIVE_V": {
+            "mean": 2.0,
+            "min": 2,
+            "max": 2
+          }
+        },
+        "treatment_cell_means": {
+          "c0.5_r1_lam0.1": {
+            "mean_bz": 4.9,
+            "mean_bV": 5.4,
+            "mean_btanh": 30.9
+          },
+          "c0.5_r1_lam0.3": {
+            "mean_bz": 8.9,
+            "mean_bV": 6.8,
+            "mean_btanh": 32.0
+          },
+          "c0.5_r1_lam1": {
+            "mean_bz": 10.5,
+            "mean_bV": 6.8,
+            "mean_btanh": 31.4
+          },
+          "c0.5_r1_lam3": {
+            "mean_bz": 8.4,
+            "mean_bV": 6.0,
+            "mean_btanh": 30.4
+          },
+          "c0.5_r1_lam10": {
+            "mean_bz": 6.2,
+            "mean_bV": 5.1,
+            "mean_btanh": 30.2
+          },
+          "c0.5_r2_lam0.1": {
+            "mean_bz": 6.9,
+            "mean_bV": 7.5,
+            "mean_btanh": 34.8
+          },
+          "c0.5_r2_lam0.3": {
+            "mean_bz": 15.3,
+            "mean_bV": 10.7,
+            "mean_btanh": 35.4
+          },
+          "c0.5_r2_lam1": {
+            "mean_bz": 21.1,
+            "mean_bV": 11.4,
+            "mean_btanh": 35.0
+          },
+          "c0.5_r2_lam3": {
+            "mean_bz": 17.7,
+            "mean_bV": 9.7,
+            "mean_btanh": 35.1
+          },
+          "c0.5_r2_lam10": {
+            "mean_bz": 12.1,
+            "mean_bV": 8.4,
+            "mean_btanh": 35.0
+          },
+          "c0.5_r4_lam0.1": {
+            "mean_bz": 9.0,
+            "mean_bV": 10.4,
+            "mean_btanh": 36.0
+          },
+          "c0.5_r4_lam0.3": {
+            "mean_bz": 21.8,
+            "mean_bV": 15.9,
+            "mean_btanh": 35.9
+          },
+          "c0.5_r4_lam1": {
+            "mean_bz": 31.8,
+            "mean_bV": 18.0,
+            "mean_btanh": 36.0
+          },
+          "c0.5_r4_lam3": {
+            "mean_bz": 30.2,
+            "mean_bV": 15.3,
+            "mean_btanh": 35.8
+          },
+          "c0.5_r4_lam10": {
+            "mean_bz": 23.4,
+            "mean_bV": 12.9,
+            "mean_btanh": 35.9
+          },
+          "c2_r1_lam0.1": {
+            "mean_bz": 5.9,
+            "mean_bV": 5.9,
+            "mean_btanh": 33.4
+          },
+          "c2_r1_lam0.3": {
+            "mean_bz": 11.9,
+            "mean_bV": 9.0,
+            "mean_btanh": 34.5
+          },
+          "c2_r1_lam1": {
+            "mean_bz": 16.1,
+            "mean_bV": 9.1,
+            "mean_btanh": 34.1
+          },
+          "c2_r1_lam3": {
+            "mean_bz": 13.3,
+            "mean_bV": 7.5,
+            "mean_btanh": 33.6
+          },
+          "c2_r1_lam10": {
+            "mean_bz": 8.9,
+            "mean_bV": 7.0,
+            "mean_btanh": 33.5
+          },
+          "c2_r2_lam0.1": {
+            "mean_bz": 7.6,
+            "mean_bV": 8.3,
+            "mean_btanh": 35.7
+          },
+          "c2_r2_lam0.3": {
+            "mean_bz": 19.4,
+            "mean_bV": 14.5,
+            "mean_btanh": 36.0
+          },
+          "c2_r2_lam1": {
+            "mean_bz": 29.1,
+            "mean_bV": 16.2,
+            "mean_btanh": 35.7
+          },
+          "c2_r2_lam3": {
+            "mean_bz": 26.2,
+            "mean_bV": 14.3,
+            "mean_btanh": 35.7
+          },
+          "c2_r2_lam10": {
+            "mean_bz": 19.2,
+            "mean_bV": 12.5,
+            "mean_btanh": 35.9
+          },
+          "c2_r4_lam0.1": {
+            "mean_bz": 8.6,
+            "mean_bV": 10.8,
+            "mean_btanh": 35.9
+          },
+          "c2_r4_lam0.3": {
+            "mean_bz": 23.7,
+            "mean_bV": 19.7,
+            "mean_btanh": 36.0
+          },
+          "c2_r4_lam1": {
+            "mean_bz": 35.3,
+            "mean_bV": 25.4,
+            "mean_btanh": 35.9
+          },
+          "c2_r4_lam3": {
+            "mean_bz": 35.0,
+            "mean_bV": 23.7,
+            "mean_btanh": 35.9
+          },
+          "c2_r4_lam10": {
+            "mean_bz": 31.5,
+            "mean_bV": 20.5,
+            "mean_btanh": 36.0
+          }
+        }
+      },
+      "procedural_notes": [],
+      "anomalies": [
+        {
+          "id": "A1",
+          "text": "pilot attempt 1 failed: uncentred tanh(V/sd V) saturated to constant (bond 1) in every arm; one control repair (centring) applied before any treatment code existed"
+        },
+        {
+          "id": "A2",
+          "text": "positive control S3 (Spearman over r) undefined since r does not enter q at c=0; carried by CHEAT"
+        }
+      ],
+      "rejected_explanations": []
+    },
+    {
+      "id": "W2",
+      "triplicateId": "HT-2a8a3aedeb",
+      "passId": "P3",
+      "mechanism_ids": [
+        "M2",
+        "M3",
+        "M8"
+      ],
+      "lens_ids": [
+        "L2"
+      ],
+      "hypothesis": "Required nonnegative rank R*(beta) of the Gibbs joint-action policy is non-monotone in beta and settles at the ground-state count for structured costs.",
+      "mechanism": "mixture-of-products policies fitted by EM to Gibbs target exp(-beta C)/Z",
+      "intervention": "coupled cost over 4 actuators x 3 levels (81 joint actions): ferromagnetic pairwise plus planted k-minima patterns, k in {2,3}; beta grid of 15 values log-spaced 0.1..30",
+      "control": "additive cost (no coupling)",
+      "positive_control": "additive cost must give R*=1 at every beta",
+      "observable": "R*(beta) = smallest R in 1..10 with KL(Gibbs || fit) < 0.01 nats (best of 5 restarts)",
+      "success_criterion": "in >= 8/10 seeds: R* at beta=30 equals k, AND max over beta of R* exceeds R*(beta=30) by >= 1 (non-monotone), AND structured peak R* <= shuffled-null peak R* - 2",
+      "failure_criterion": "R*(beta) monotone non-decreasing in >= 5/10 seeds, OR structured and shuffled peaks differ by < 2 in >= 5/10 seeds",
+      "alternative_explanation": "EM local optima inflate R* at intermediate beta",
+      "null_twin": "cost entries shuffled over the 81 joint actions, same histogram, one random global minimum typically",
+      "substrate": "tensor",
+      "why_this_implementation": "exact enumeration over 81 joint actions; mixture-of-products EM is the direct nonnegative CP of a distribution",
+      "size": "81 joint actions, R 1..10, 5 restarts, 15 betas, 10 seeds, 2 k values",
+      "cost_estimate": "about 4 CPU core-minutes",
+      "stupid_explanations": [
+        "KL threshold picks the answer",
+        "EM restarts too few",
+        "non-monotonicity is generic interpolation between uniform and point mass",
+        "ground-state count trivially equals the planted k"
+      ]
+    },
+    {
+      "id": "W3",
+      "triplicateId": "HT-2a8a3aedeb",
+      "passId": "P3",
+      "mechanism_ids": [
+        "M10",
+        "M15"
+      ],
+      "lens_ids": [
+        "L2",
+        "L6"
+      ],
+      "hypothesis": "With no explicit complexity penalty, evolved effective rank converges to W2's R*(beta) for the same cost.",
+      "mechanism": "population of mixture-of-products genomes; mutations: add, delete, split, merge, perturb; fitness = -(E[C] - (1/beta) H)",
+      "intervention": "costs from W2 at beta in {1, 3, 30}",
+      "control": "same evolution with fitness = -E[C] only (no entropy term)",
+      "positive_control": "additive cost must evolve effective rank 1 (+-0.5)",
+      "observable": "effective rank = exp(entropy of mixture weights after merging components with total-variation < 0.05)",
+      "success_criterion": "|mean effective rank over last 50 generations - R*(beta)| <= 0.75 in >= 7/10 seeds at each beta, AND shuffled-null effective rank differs from structured by >= 1.5 at beta=3",
+      "failure_criterion": "effective rank drifts upward (slope > 0.005/generation over last 100 generations) in >= 5/10 seeds, OR deviates from R* by > 1.5",
+      "alternative_explanation": "merge threshold produces convergence independent of selection",
+      "null_twin": "shuffled cost from W2 with matched histogram",
+      "substrate": "population",
+      "why_this_implementation": "an explicit genome of rank-1 components makes rank heritable; no neural policy needed",
+      "size": "40 genomes, 300 generations, 3 betas, 10 seeds, 81 joint actions",
+      "cost_estimate": "about 3 CPU core-minutes",
+      "stupid_explanations": [
+        "merge threshold sets the rank",
+        "mutation bias toward deletion",
+        "population too small, drift dominates"
+      ]
+    },
+    {
+      "id": "W4",
+      "triplicateId": "HT-2a8a3aedeb",
+      "passId": "P3",
+      "mechanism_ids": [
+        "M4",
+        "M13"
+      ],
+      "lens_ids": [
+        "L4"
+      ],
+      "hypothesis": "A Tucker subspace chosen from past goals' desirabilities beats a prediction-chosen subspace on in-span goals and loses on orthogonal goals.",
+      "mechanism": "Galerkin-restricted linear Bellman solve within a K-dimensional per-mode Tucker subspace; policy u(s'|s) proportional to P(s'|s) z_hat(s')",
+      "intervention": "subspace rule: (a) HOSVD of stacked training desirability tensor (goal x s1 x s2 x s3), (b) leading eigenvectors of passive per-mode transition, (c) random",
+      "control": "rule (c) random subspace of same K",
+      "positive_control": "test goal equal to a training goal: rule (a) regret < 1e-3 relative",
+      "observable": "relative regret = (J(policy) - J*) / J* evaluated exactly",
+      "success_criterion": "median regret (b)/(a) >= 2 on in-span goals AND median regret (a)/(b) >= 1.2 on orthogonal goals, in >= 7/10 seeds",
+      "failure_criterion": "(a) not better than (b) by factor 2 in-span in >= 5/10 seeds, OR no reversal off-span in >= 5/10 seeds",
+      "alternative_explanation": "subspace (a) simply has more energy in cost directions; crossover due to orthogonality by construction",
+      "null_twin": "training desirabilities with mode fibers independently permuted per goal (spectra kept, shared factors destroyed)",
+      "substrate": "tensor",
+      "why_this_implementation": "exact small linear solves; the claim is about subspaces, so no learned network is required",
+      "size": "3 modes x 5 levels (125 states), K = 2 per mode, 10 training goals, 5 in-span + 5 orthogonal test goals, 10 seeds",
+      "cost_estimate": "about 1 CPU core-minute",
+      "stupid_explanations": [
+        "orthogonal goals chosen to be hard for everyone",
+        "prediction subspace poor due to near-uniform dynamics",
+        "crossover is built into the construction"
+      ],
+      "outcome": "NULL",
+      "raw_outcome": "NULL",
+      "procedural_notes": [
+        "instrument repair made AFTER the implementer had seen attempt-1 treatment numbers (disclosed in IMPLEMENTATION_NOTES); the rerun was NULL, so the breach could not have manufactured a signal"
+      ],
+      "rows": "hecate/programs/HT-2a8a3aedeb/worlds/W4/rows.jsonl",
+      "outcome_file": "hecate/programs/HT-2a8a3aedeb/worlds/W4/OUTCOME.json",
+      "statistics": {
+        "TREATMENT": {
+          "n": 10,
+          "n_seed_success": 0,
+          "success": false,
+          "failure": false,
+          "n_in_ratio_below_2": 0,
+          "n_no_reversal": 0,
+          "median_in_ratio": 24.285353778344188,
+          "median_off_ratio": 1.022452619124956,
+          "per_seed": [
+            {
+              "seed": 0,
+              "in_ratio": 22.770774417731715,
+              "off_ratio": 1.013545938696472,
+              "med_cand_in": 0.00025269898584826184,
+              "med_b_in": 0.005754151602340349,
+              "med_cand_off": 0.0076748460824830325,
+              "med_b_off": 0.007572272542824948,
+              "med_of_ratios_in": 22.770774417731715,
+              "seed_success": false
+            },
+            {
+              "seed": 1,
+              "in_ratio": 10.56559769595592,
+              "off_ratio": 1.0267305558058888,
+              "med_cand_in": 0.0005675626542827188,
+              "med_b_in": 0.00599663867240012,
+              "med_cand_off": 0.013846274321758523,
+              "med_b_off": 0.013485791616370542,
+              "med_of_ratios_in": 11.81363152295285,
+              "seed_success": false
+            },
+            {
+              "seed": 2,
+              "in_ratio": 38.74233815780981,
+              "off_ratio": 1.030076318972743,
+              "med_cand_in": 0.00017946654107617096,
+              "med_b_in": 0.00695295342238548,
+              "med_cand_off": 0.005468741145636031,
+              "med_b_off": 0.0053090640420603045,
+              "med_of_ratios_in": 38.74233815780981,
+              "seed_success": false
+            },
+            {
+              "seed": 3,
+              "in_ratio": 25.322053502170977,
+              "off_ratio": 1.0044151701308246,
+              "med_cand_in": 0.0002981151949886968,
+              "med_b_in": 0.007548888917313913,
+              "med_cand_off": 0.003713717309406072,
+              "med_b_off": 0.0036973926916320492,
+              "med_of_ratios_in": 30.75062669285851,
+              "seed_success": false
+            },
+            {
+              "seed": 4,
+              "in_ratio": 16.41810087117423,
+              "off_ratio": 1.0688747902138487,
+              "med_cand_in": 0.00046650529955430663,
+              "med_b_in": 0.007659131065019957,
+              "med_cand_off": 0.00380864647627465,
+              "med_b_off": 0.0035632297731642247,
+              "med_of_ratios_in": 19.203065566437978,
+              "seed_success": false
+            },
+            {
+              "seed": 5,
+              "in_ratio": 62.88400517846693,
+              "off_ratio": 1.0181746824440234,
+              "med_cand_in": 0.00022577316544134757,
+              "med_b_in": 0.014197520904772571,
+              "med_cand_off": 0.005772563049536106,
+              "med_b_off": 0.005669521300293642,
+              "med_of_ratios_in": 50.401283852645136,
+              "seed_success": false
+            },
+            {
+              "seed": 6,
+              "in_ratio": 35.158644136933454,
+              "off_ratio": 1.0787088052023672,
+              "med_cand_in": 0.0002245507495871529,
+              "med_b_in": 0.007894899895416366,
+              "med_cand_off": 0.005861676852737204,
+              "med_b_off": 0.005433975160365494,
+              "med_of_ratios_in": 35.913732879802694,
+              "seed_success": false
+            },
+            {
+              "seed": 7,
+              "in_ratio": 10.22878361061608,
+              "off_ratio": 1.046182103428509,
+              "med_cand_in": 0.0005353743878804092,
+              "med_b_in": 0.005476228764294746,
+              "med_cand_off": 0.004783657362313711,
+              "med_b_off": 0.004572490149312331,
+              "med_of_ratios_in": 11.530626121267105,
+              "seed_success": false
+            },
+            {
+              "seed": 8,
+              "in_ratio": 23.248654054517402,
+              "off_ratio": 1.011106787445068,
+              "med_cand_in": 0.00026282660272094755,
+              "med_b_in": 0.006110364762983392,
+              "med_cand_off": 0.008926742011881348,
+              "med_b_off": 0.008828683698621026,
+              "med_of_ratios_in": 24.418552362139867,
+              "seed_success": false
+            },
+            {
+              "seed": 9,
+              "in_ratio": 30.61860123359363,
+              "off_ratio": 1.0163092969855463,
+              "med_cand_in": 0.00022016913734970275,
+              "med_b_in": 0.006741271020454854,
+              "med_cand_off": 0.0065047066721273155,
+              "med_b_off": 0.0064003219211127855,
+              "med_of_ratios_in": 22.875316477036023,
+              "seed_success": false
+            }
+          ]
+        },
+        "CONTROL": {
+          "n": 10,
+          "n_seed_success": 0,
+          "success": false,
+          "failure": true,
+          "n_in_ratio_below_2": 10,
+          "n_no_reversal": 0,
+          "median_in_ratio": 0.05682744277888641,
+          "median_off_ratio": 20.40725122316067,
+          "per_seed": [
+            {
+              "seed": 0,
+              "in_ratio": 0.053585977491178674,
+              "off_ratio": 14.998869881744866,
+              "med_cand_in": 0.10738166721485295,
+              "med_b_in": 0.005754151602340349,
+              "med_cand_off": 0.11357553057894072,
+              "med_b_off": 0.007572272542824948,
+              "med_of_ratios_in": 0.05572368671796827,
+              "seed_success": false
+            },
+            {
+              "seed": 1,
+              "in_ratio": 0.0476433409772041,
+              "off_ratio": 10.34885378408371,
+              "med_cand_in": 0.12586520066402,
+              "med_b_in": 0.00599663867240012,
+              "med_cand_off": 0.13956248560044066,
+              "med_b_off": 0.013485791616370542,
+              "med_of_ratios_in": 0.0476433409772041,
+              "seed_success": false
+            },
+            {
+              "seed": 2,
+              "in_ratio": 0.05430139029464365,
+              "off_ratio": 20.629841112275788,
+              "med_cand_in": 0.12804374592728113,
+              "med_b_in": 0.00695295342238548,
+              "med_cand_off": 0.10952514764260074,
+              "med_b_off": 0.0053090640420603045,
+              "med_of_ratios_in": 0.051434184629000096,
+              "seed_success": false
+            },
+            {
+              "seed": 3,
+              "in_ratio": 0.05942812963529543,
+              "off_ratio": 37.266194396188,
+              "med_cand_in": 0.12702551743830237,
+              "med_b_in": 0.007548888917313913,
+              "med_cand_off": 0.13778775480540473,
+              "med_b_off": 0.0036973926916320492,
+              "med_of_ratios_in": 0.0546508804262169,
+              "seed_success": false
+            },
+            {
+              "seed": 4,
+              "in_ratio": 0.05869356506606308,
+              "off_ratio": 37.69453861788737,
+              "med_cand_in": 0.13049353973300398,
+              "med_b_in": 0.007659131065019957,
+              "med_cand_off": 0.13431430228894492,
+              "med_b_off": 0.0035632297731642247,
+              "med_of_ratios_in": 0.047703769634406,
+              "seed_success": false
+            },
+            {
+              "seed": 5,
+              "in_ratio": 0.10599828128296165,
+              "off_ratio": 20.184661334045554,
+              "med_cand_in": 0.13394104822202155,
+              "med_b_in": 0.014197520904772571,
+              "med_cand_off": 0.11443736737258474,
+              "med_b_off": 0.005669521300293642,
+              "med_of_ratios_in": 0.10599828128296165,
+              "seed_success": false
+            },
+            {
+              "seed": 6,
+              "in_ratio": 0.06895218315371025,
+              "off_ratio": 22.829380642931074,
+              "med_cand_in": 0.1144981860518734,
+              "med_b_in": 0.007894899895416366,
+              "med_cand_off": 0.12405428734021628,
+              "med_b_off": 0.005433975160365494,
+              "med_of_ratios_in": 0.051956551338800595,
+              "seed_success": false
+            },
+            {
+              "seed": 7,
+              "in_ratio": 0.04153500711560827,
+              "off_ratio": 27.410653552627398,
+              "med_cand_in": 0.13184610150787374,
+              "med_b_in": 0.005476228764294746,
+              "med_cand_off": 0.12533494335560183,
+              "med_b_off": 0.004572490149312331,
+              "med_of_ratios_in": 0.04839502773842315,
+              "seed_success": false
+            },
+            {
+              "seed": 8,
+              "in_ratio": 0.05532643883784158,
+              "off_ratio": 14.386426517307322,
+              "med_cand_in": 0.11044203985173343,
+              "med_b_in": 0.006110364762983392,
+              "med_cand_off": 0.12701320927476042,
+              "med_b_off": 0.008828683698621026,
+              "med_of_ratios_in": 0.05532643883784158,
+              "seed_success": false
+            },
+            {
+              "seed": 9,
+              "in_ratio": 0.058328446719931246,
+              "off_ratio": 18.02865435727252,
+              "med_cand_in": 0.11557432778595343,
+              "med_b_in": 0.006741271020454854,
+              "med_cand_off": 0.11538919169101684,
+              "med_b_off": 0.0064003219211127855,
+              "med_of_ratios_in": 0.06677948612775049,
+              "seed_success": false
+            }
+          ]
+        },
+        "NULL_TWIN": {
+          "n": 10,
+          "n_seed_success": 0,
+          "success": false,
+          "failure": true,
+          "n_in_ratio_below_2": 10,
+          "n_no_reversal": 1,
+          "median_in_ratio": 0.9091114213550349,
+          "median_off_ratio": 1.0175274496595057,
+          "per_seed": [
+            {
+              "seed": 0,
+              "in_ratio": 0.7696190132722621,
+              "off_ratio": 0.9755877429182783,
+              "med_cand_in": 0.007476623502159696,
+              "med_b_in": 0.005754151602340349,
+              "med_cand_off": 0.007387416278816643,
+              "med_b_off": 0.007572272542824948,
+              "med_of_ratios_in": 0.7696190132722621,
+              "seed_success": false
+            },
+            {
+              "seed": 1,
+              "in_ratio": 0.7985793995735658,
+              "off_ratio": 1.0521104485354007,
+              "med_cand_in": 0.007509132686871551,
+              "med_b_in": 0.00599663867240012,
+              "med_cand_off": 0.014188542266354558,
+              "med_b_off": 0.013485791616370542,
+              "med_of_ratios_in": 0.7985793995735658,
+              "seed_success": false
+            },
+            {
+              "seed": 2,
+              "in_ratio": 0.94770105393985,
+              "off_ratio": 1.0080833772896385,
+              "med_cand_in": 0.007336652622132443,
+              "med_b_in": 0.00695295342238548,
+              "med_cand_off": 0.005351979209767131,
+              "med_b_off": 0.0053090640420603045,
+              "med_of_ratios_in": 0.94770105393985,
+              "seed_success": false
+            },
+            {
+              "seed": 3,
+              "in_ratio": 1.0903883261403151,
+              "off_ratio": 1.0154517856985428,
+              "med_cand_in": 0.006923119714638704,
+              "med_b_in": 0.007548888917313913,
+              "med_cand_off": 0.0037545240111465056,
+              "med_b_off": 0.0036973926916320492,
+              "med_of_ratios_in": 1.0903883261403151,
+              "seed_success": false
+            },
+            {
+              "seed": 4,
+              "in_ratio": 1.1490099155267248,
+              "off_ratio": 1.0401392394806506,
+              "med_cand_in": 0.006665852889101384,
+              "med_b_in": 0.007659131065019957,
+              "med_cand_off": 0.0037062551063538475,
+              "med_b_off": 0.0035632297731642247,
+              "med_of_ratios_in": 1.1633760531516952,
+              "seed_success": false
+            },
+            {
+              "seed": 5,
+              "in_ratio": 1.2082434702294762,
+              "off_ratio": 1.01875096511638,
+              "med_cand_in": 0.01175054635476416,
+              "med_b_in": 0.014197520904772571,
+              "med_cand_off": 0.0057758302964220215,
+              "med_b_off": 0.005669521300293642,
+              "med_of_ratios_in": 1.5338770679481566,
+              "seed_success": false
+            },
+            {
+              "seed": 6,
+              "in_ratio": 1.1895383763480085,
+              "off_ratio": 1.2374140486142133,
+              "med_cand_in": 0.006636944257027193,
+              "med_b_in": 0.007894899895416366,
+              "med_cand_off": 0.006724077203256936,
+              "med_b_off": 0.005433975160365494,
+              "med_of_ratios_in": 1.0886179129119657,
+              "seed_success": false
+            },
+            {
+              "seed": 7,
+              "in_ratio": 0.6339228084569691,
+              "off_ratio": 1.04975907517326,
+              "med_cand_in": 0.00863863658356832,
+              "med_b_in": 0.005476228764294746,
+              "med_cand_off": 0.0048000130303809535,
+              "med_b_off": 0.004572490149312331,
+              "med_of_ratios_in": 0.6528157963891219,
+              "seed_success": false
+            },
+            {
+              "seed": 8,
+              "in_ratio": 0.823120687482689,
+              "off_ratio": 1.007445490931085,
+              "med_cand_in": 0.007423412940416345,
+              "med_b_in": 0.006110364762983392,
+              "med_cand_off": 0.008894417583032527,
+              "med_b_off": 0.008828683698621026,
+              "med_of_ratios_in": 0.8666114291083027,
+              "seed_success": false
+            },
+            {
+              "seed": 9,
+              "in_ratio": 0.8705217887702197,
+              "off_ratio": 1.0163039342026314,
+              "med_cand_in": 0.007743942894270576,
+              "med_b_in": 0.006741271020454854,
+              "med_cand_off": 0.006504672348590267,
+              "med_b_off": 0.0064003219211127855,
+              "med_of_ratios_in": 0.9332823329982708,
+              "seed_success": false
+            }
+          ]
+        },
+        "CHEAT": {
+          "n": 10,
+          "n_seed_success": 10,
+          "success": true,
+          "failure": false,
+          "n_in_ratio_below_2": 0,
+          "n_no_reversal": 0,
+          "median_in_ratio": 10.0,
+          "median_off_ratio": 10.0,
+          "per_seed": [
+            {
+              "seed": 0,
+              "in_ratio": 10.0,
+              "off_ratio": 10.0,
+              "med_cand_in": 0.0005754151602340349,
+              "med_b_in": 0.005754151602340349,
+              "med_cand_off": 0.07572272542824948,
+              "med_b_off": 0.007572272542824948,
+              "med_of_ratios_in": 10.0,
+              "seed_success": true
+            },
+            {
+              "seed": 1,
+              "in_ratio": 10.0,
+              "off_ratio": 9.999999999999998,
+              "med_cand_in": 0.0005996638672400121,
+              "med_b_in": 0.00599663867240012,
+              "med_cand_off": 0.1348579161637054,
+              "med_b_off": 0.013485791616370542,
+              "med_of_ratios_in": 10.0,
+              "seed_success": true
+            },
+            {
+              "seed": 2,
+              "in_ratio": 10.0,
+              "off_ratio": 10.0,
+              "med_cand_in": 0.000695295342238548,
+              "med_b_in": 0.00695295342238548,
+              "med_cand_off": 0.05309064042060305,
+              "med_b_off": 0.0053090640420603045,
+              "med_of_ratios_in": 10.0,
+              "seed_success": true
+            },
+            {
+              "seed": 3,
+              "in_ratio": 10.0,
+              "off_ratio": 10.000000000000002,
+              "med_cand_in": 0.0007548888917313913,
+              "med_b_in": 0.007548888917313913,
+              "med_cand_off": 0.036973926916320496,
+              "med_b_off": 0.0036973926916320492,
+              "med_of_ratios_in": 10.0,
+              "seed_success": true
+            },
+            {
+              "seed": 4,
+              "in_ratio": 10.0,
+              "off_ratio": 10.0,
+              "med_cand_in": 0.0007659131065019957,
+              "med_b_in": 0.007659131065019957,
+              "med_cand_off": 0.03563229773164225,
+              "med_b_off": 0.0035632297731642247,
+              "med_of_ratios_in": 10.0,
+              "seed_success": true
+            },
+            {
+              "seed": 5,
+              "in_ratio": 10.0,
+              "off_ratio": 10.0,
+              "med_cand_in": 0.001419752090477257,
+              "med_b_in": 0.014197520904772571,
+              "med_cand_off": 0.056695213002936416,
+              "med_b_off": 0.005669521300293642,
+              "med_of_ratios_in": 10.0,
+              "seed_success": true
+            },
+            {
+              "seed": 6,
+              "in_ratio": 10.0,
+              "off_ratio": 10.0,
+              "med_cand_in": 0.0007894899895416367,
+              "med_b_in": 0.007894899895416366,
+              "med_cand_off": 0.05433975160365494,
+              "med_b_off": 0.005433975160365494,
+              "med_of_ratios_in": 10.0,
+              "seed_success": true
+            },
+            {
+              "seed": 7,
+              "in_ratio": 10.0,
+              "off_ratio": 10.0,
+              "med_cand_in": 0.0005476228764294746,
+              "med_b_in": 0.005476228764294746,
+              "med_cand_off": 0.04572490149312331,
+              "med_b_off": 0.004572490149312331,
+              "med_of_ratios_in": 10.0,
+              "seed_success": true
+            },
+            {
+              "seed": 8,
+              "in_ratio": 10.0,
+              "off_ratio": 10.0,
+              "med_cand_in": 0.0006110364762983392,
+              "med_b_in": 0.006110364762983392,
+              "med_cand_off": 0.08828683698621026,
+              "med_b_off": 0.008828683698621026,
+              "med_of_ratios_in": 10.0,
+              "seed_success": true
+            },
+            {
+              "seed": 9,
+              "in_ratio": 10.0,
+              "off_ratio": 10.0,
+              "med_cand_in": 0.0006741271020454854,
+              "med_b_in": 0.006741271020454854,
+              "med_cand_off": 0.06400321921112785,
+              "med_b_off": 0.0064003219211127855,
+              "med_of_ratios_in": 10.0,
+              "seed_success": true
+            }
+          ]
+        },
+        "POSITIVE_CONTROL": {
+          "n": 10,
+          "median_regret_a_per_seed": [
+            0.000457076398326471,
+            0.0006271411849807446,
+            0.0002697411902473286,
+            9.199184063476344e-05,
+            0.0005248713398083942,
+            0.0002608341190143392,
+            0.00020551977046191414,
+            0.00031197757110562683,
+            0.00011867519047703356,
+            0.00015378076701718862
+          ],
+          "n_seeds_below_threshold": 10,
+          "median_regret_b_per_seed": [
+            0.007217708624948104,
+            0.008439593671909197,
+            0.006331431305807371,
+            0.002860127299644974,
+            0.01264376168786449,
+            0.00971034730159371,
+            0.004833012331751552,
+            0.0044385679122998355,
+            0.004547421091355819,
+            0.006261001388299148
+          ]
+        }
+      },
+      "anomalies": [
+        {
+          "id": "A1",
+          "text": "5805 z_hat entries floored (non-positive Galerkin desirability) across TREATMENT seeds, all rules"
+        }
+      ],
+      "rejected_explanations": [
+        "orthogonal goals chosen to be hard for everyone",
+        "prediction subspace poor due to near-uniform dynamics"
+      ]
+    }
+  ],
+  "candidateEngines": [],
+  "currentVerdict": "PARK",
+  "evidenceSummary": {
+    "layer": "experimental_observation",
+    "rows": "hecate/programs/HT-2a8a3aedeb/worlds/W1/rows.jsonl",
+    "note": "round 1 W4 NULL; round 2 W1 NULL: two worlds read, both NULL/CONFOUNDED"
+  }
+}

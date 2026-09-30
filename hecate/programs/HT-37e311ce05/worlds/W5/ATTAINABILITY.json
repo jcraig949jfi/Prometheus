@@ -1,0 +1,92 @@
+{
+ "world": "W5",
+ "triplicateId": "HT-37e311ce05",
+ "clauses": [
+  {
+   "id": "S1",
+   "statistic": "S1_completion",
+   "comparison": ">=",
+   "threshold": 0.8,
+   "positive_value": 0.9315,
+   "twin_value": 0.6272,
+   "attainable": true,
+   "discriminating": true,
+   "treatment_must_reach": 0.8,
+   "treatment_must_reach_note": "treatment S1_completion >= 0.8 on its 10-seed mean curve; absolute clause, not relative to a control"
+  },
+  {
+   "id": "S2",
+   "statistic": "S2_high_m_gap",
+   "comparison": "<=",
+   "threshold": 0.05,
+   "positive_value": 0.0,
+   "twin_value": 0.1669,
+   "attainable": true,
+   "discriminating": true,
+   "treatment_must_reach": 0.05,
+   "treatment_must_reach_note": "treatment S2_high_m_gap <= 0.05 on its 10-seed mean curve; absolute clause, not relative to a control"
+  }
+ ],
+ "cheat_detected": true,
+ "cheat_detail": {
+  "definition": "(a) the ruler reads success on CHEAT rows (sensitivity) AND (b) the audit, which recomputes every row's gap from its stored genome and world seed, flags every CHEAT row whose injected gap differs from the honest value, with zero flags on POSITIVE_CONTROL and NULL_TWIN rows",
+  "ruler_fires_on_cheat": true,
+  "cheat_rows_injected_differing": 40,
+  "cheat_rows_flagged": 40,
+  "pc_rows_flagged": 0,
+  "twin_rows_flagged": 0,
+  "note": "CHEAT rows at m >= m* inject gap 0, which equals the honest cooperator's gap, so they are not falsified and are correctly not flagged"
+ },
+ "failure_clause_readings": {
+  "POSITIVE_CONTROL": {
+   "F1": false,
+   "F2": false,
+   "F3": false
+  },
+  "NULL_TWIN": {
+   "F1": true,
+   "F2": false,
+   "F3": true
+  }
+ },
+ "m_star": {
+  "spec": 28,
+  "calibrated": 28,
+  "calibration_bp_recovery_frac": {
+   "12": 0.0,
+   "16": 0.0,
+   "20": 0.0,
+   "24": 0.2,
+   "28": 0.55,
+   "32": 0.85,
+   "36": 0.95,
+   "40": 1.0,
+   "44": 1.0,
+   "48": 1.0,
+   "52": 1.0,
+   "56": 1.0,
+   "60": 1.0
+  }
+ },
+ "control_cpu_seconds_total": {
+  "rev0_run": 14.8,
+  "rev1_run": 30.9
+ },
+ "control_rows": "control_rows.jsonl",
+ "control_rows_sha256": "7012cfbf9959bbea0ffe06b70462f89ca1c91928beb9b6f296c324ba2e60eb82",
+ "revisions": [
+  {
+   "rev": 0,
+   "what": "initial spec: S1 = sharpness (gbar(m*-8)-gbar(m*+8))/total drop >= 0.6; controls 5 seeds",
+   "result": "PC 0.659, twin 0.459; attainable and discriminating but PC margin 0.06 and PC curve non-monotone with 5 seeds (rows kept in _rev0/)",
+   "why_changed": "sharpness over a 16-row window is dominated by per-seed noise in where each basis-pursuit instance crosses; a 0.06 margin would make the frozen clause a coin flip on a rerun"
+  },
+  {
+   "rev": 1,
+   "what": "S1 replaced by completion = fraction of the total gap drop achieved by m*+8, threshold 0.8; F1 rewritten on completion (<= 0.65); sharpness kept as a secondary recorded statistic; controls raised to 10 seeds (the treatment's own worlds, seeds 0-9); genome precision 4 d.p.",
+   "result": "PC 0.931, twin 0.627 (twin also meets F1); S2 unchanged PC 0.0, twin 0.167",
+   "why_changed": "completion asks the mechanism's actual prediction (exploitation ends where L1 recovery sets in, while the L2 twin keeps declining to m=n) and is not a knife-edge on either control; the revision was made after seeing rev0 control values and is recorded as such"
+  }
+ ],
+ "frozen": true
+}

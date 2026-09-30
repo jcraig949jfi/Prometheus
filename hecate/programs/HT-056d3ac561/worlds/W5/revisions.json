@@ -1,0 +1,4 @@
+[
+ {"rev": 0, "what": "Initial world: J = 1.5, RHO = 1.0, band 0.5*J for 10 steps, NIS window 20, 5% calibrated FA; S1 <= 12 steps, S2 FA <= 0.10, S3 ratio to REFERENCE_NIS <= 0.60. First control run (before spec.json text was final): POSITIVE median 2, NULL_TWIN 76, REFERENCE_NIS 18, NO_REOPEN 78.", "why": "J chosen so that NIS detection is neither instant nor impossible (reference median 18 steps leaves room for a faster alarm to show and for a slower one to fail S3)."},
+ {"rev": 1, "what": "controls.py: added the secondary observable (MSE on unchanged components over [300, 350)) to every row; CHEAT arm now reuses NO_REOPEN's secondary value. Spec stupid-explanation 3 reworded: NO_REOPEN median is ~78 steps, far above the oracle, not near the 290 cap. No clause, threshold or world parameter changed.", "why": "The spec names this secondary observable; the rows must carry it. Wording corrected to match the measured value."}
+]

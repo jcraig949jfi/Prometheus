@@ -1,0 +1,227 @@
+{
+ "triplicateId": "HT-71b65251aa",
+ "world": "W3",
+ "outcome": "SIGNAL",
+ "statistics": {
+  "n_seeds": 10,
+  "n_items_per_seed": 2000,
+  "CONTROL_fixed": {
+   "L0": {
+    "accuracy": 0.5376333333333333,
+    "mean_depth": 0.0
+   },
+   "L1": {
+    "accuracy": 0.7427000000000001,
+    "mean_depth": 1.0
+   },
+   "L2": {
+    "accuracy": 0.742725,
+    "mean_depth": 2.0
+   },
+   "L3": {
+    "accuracy": 0.742725,
+    "mean_depth": 3.0
+   }
+  },
+  "TREATMENT_by_theta": {
+   "0.6": {
+    "accuracy": 0.742725,
+    "mean_depth": 1.30515,
+    "spearman_depth_ambiguity": 0.7389266078147675,
+    "spearman_within_size3": 0.8141597965536385,
+    "spearman_within_size4": 0.599538954227424,
+    "spearman_depth_size": 0.2675472412603202,
+    "depth_hist_total": [
+     4317,
+     9408,
+     2130,
+     4145
+    ],
+    "clauses_acc_depth_rho": [
+     true,
+     true,
+     true
+    ]
+   },
+   "0.7": {
+    "accuracy": 0.742725,
+    "mean_depth": 1.8760499999999998,
+    "spearman_depth_ambiguity": 0.6363435997679954,
+    "spearman_within_size3": 0.6708799207929702,
+    "spearman_within_size4": 0.5377637877552098,
+    "spearman_depth_size": 0.25550416388454,
+    "depth_hist_total": [
+     4317,
+     2996,
+     3536,
+     9151
+    ],
+    "clauses_acc_depth_rho": [
+     true,
+     false,
+     true
+    ]
+   },
+   "0.8": {
+    "accuracy": 0.742725,
+    "mean_depth": 2.1829,
+    "spearman_depth_ambiguity": 0.7143012353844714,
+    "spearman_within_size3": 0.7401108920347526,
+    "spearman_within_size4": 0.659215276428508,
+    "spearman_depth_size": 0.24740839763165806,
+    "depth_hist_total": [
+     4317,
+     741,
+     1909,
+     13033
+    ],
+    "clauses_acc_depth_rho": [
+     true,
+     false,
+     true
+    ]
+   },
+   "0.9": {
+    "accuracy": 0.742725,
+    "mean_depth": 2.3395,
+    "spearman_depth_ambiguity": 0.7533684015705153,
+    "spearman_within_size3": 0.8248173687337648,
+    "spearman_within_size4": 0.6646970233722773,
+    "spearman_depth_size": 0.1593436818906327,
+    "depth_hist_total": [
+     4317,
+     0,
+     259,
+     15424
+    ],
+    "clauses_acc_depth_rho": [
+     true,
+     false,
+     true
+    ]
+   }
+  },
+  "NULL_TWIN_by_theta": {
+   "0.6": {
+    "accuracy": 0.6971749999999999,
+    "mean_depth": 1.30515,
+    "spearman_depth_ambiguity": -0.0026527621963870563,
+    "clauses_acc_depth_rho": [
+     false,
+     true,
+     false
+    ]
+   },
+   "0.7": {
+    "accuracy": 0.6989916666666666,
+    "mean_depth": 1.8760499999999998,
+    "spearman_depth_ambiguity": 0.002596329133080727,
+    "clauses_acc_depth_rho": [
+     false,
+     false,
+     false
+    ]
+   },
+   "0.8": {
+    "accuracy": 0.6991,
+    "mean_depth": 2.1829,
+    "spearman_depth_ambiguity": -0.004319459992948448,
+    "clauses_acc_depth_rho": [
+     false,
+     false,
+     false
+    ]
+   },
+   "0.9": {
+    "accuracy": 0.6981124999999999,
+    "mean_depth": 2.3395,
+    "spearman_depth_ambiguity": -0.003330735108549688,
+    "clauses_acc_depth_rho": [
+     false,
+     false,
+     false
+    ]
+   }
+  },
+  "POSITIVE_CONTROL_by_theta": {
+   "0.6": {
+    "n_unique_total": 4317,
+    "all_depth0_all_seeds": true,
+    "all_correct_all_seeds": true,
+    "min_n_unique_per_seed": 399
+   },
+   "0.7": {
+    "n_unique_total": 4317,
+    "all_depth0_all_seeds": true,
+    "all_correct_all_seeds": true,
+    "min_n_unique_per_seed": 399
+   },
+   "0.8": {
+    "n_unique_total": 4317,
+    "all_depth0_all_seeds": true,
+    "all_correct_all_seeds": true,
+    "min_n_unique_per_seed": 399
+   },
+   "0.9": {
+    "n_unique_total": 4317,
+    "all_depth0_all_seeds": true,
+    "all_correct_all_seeds": true,
+    "min_n_unique_per_seed": 399
+   }
+  },
+  "CHEAT": {
+   "accuracy": 1.0,
+   "mean_depth": 0.78415,
+   "spearman_depth_ambiguity": 0.7531128736102832
+  },
+  "diagnostics": {
+   "frac_L0_argmax_differs_from_L2": 0.7809000000000001,
+   "frac_L1_argmax_differs_from_L2": 0.0038499999999999993,
+   "frac_L3_argmax_differs_from_L2": 0.0,
+   "frac_ambiguity_1": 0.21585000000000001,
+   "implicature_rate_L2": 0.7809000000000001,
+   "implicature_success_L2": 0.6725967891797596,
+   "spearman_size_ambiguity": 0.2843475887616497
+  },
+  "success_thetas": [
+   "0.6"
+  ],
+  "signal_thetas": [
+   "0.6"
+  ],
+  "confound_thetas": []
+ },
+ "criterion_as_applied": "seed-mean statistics; exists theta in ['0.6', '0.7', '0.8', '0.9']: acc(theta) >= acc(L2) - 0.01 [acc(L2)=0.7427] AND mean_depth <= 1.4 AND Spearman(depth, #literal candidates) >= 0.4 (NaN fails); SIGNAL requires that theta's random-depth twin (permuted adaptive depths) FAIL the accuracy clause; CONFOUNDED if any theta's twin meets all three clauses.",
+ "positive_control_detected": true,
+ "cheat_detected": true,
+ "null_twin_meets_success": false,
+ "stupid_explanations_status": [
+  {
+   "text": "ambiguity is correlated with context size, so depth tracks size not uncertainty",
+   "addressed_by_this_run": true,
+   "how": "within-size Spearman(depth, ambiguity) per theta: 0.6: s3=0.8141597965536385, s4=0.599538954227424, rho(depth,size)=0.2675472412603202; 0.7: s3=0.6708799207929702, s4=0.5377637877552098, rho(depth,size)=0.25550416388454; 0.8: s3=0.7401108920347526, s4=0.659215276428508, rho(depth,size)=0.24740839763165806; 0.9: s3=0.8248173687337648, s4=0.6646970233722773, rho(depth,size)=0.1593436818906327"
+  },
+  {
+   "text": "deeper levels rarely change the answer, so any stopping rule is as good",
+   "addressed_by_this_run": true,
+   "how": "frac items where argmax set differs from L2: L0 0.7809000000000001, L1 0.0038499999999999993, L3 0.0; random-depth twin accuracy vs L2 per theta: 0.6: 0.6972; 0.7: 0.6990; 0.8: 0.6991; 0.9: 0.6981"
+  },
+  {
+   "text": "the S2 speaker makes the task trivially solvable at L1",
+   "addressed_by_this_run": true,
+   "how": "fixed accuracy L0 0.5376, L1 0.7427, L2 0.7427, L3 0.7427"
+  },
+  {
+   "text": "(spec alternative_explanation) most items are unambiguous so any early stopping saves depth",
+   "addressed_by_this_run": true,
+   "how": "fraction of items with one literal candidate = 0.21585000000000001; twin at matched depth"
+  }
+ ],
+ "anomalies": [
+  "fixed L2 and L3 accuracies identical",
+  "fixed L1 already within 0.01 of L2 (0.7427 vs 0.7427)"
+ ],
+ "core_minutes": 0.0453,
+ "attempts": 1,
+ "notes": "Outcome SIGNAL. acc(L2)=0.7427, acc(L3)=0.7427. theta 0.6: acc 0.7427, depth 1.305, rho 0.7389266078147675; twin acc 0.6972, rho -0.0026527621963870563. theta 0.7: acc 0.7427, depth 1.876, rho 0.6363435997679954; twin acc 0.6990, rho 0.002596329133080727. theta 0.8: acc 0.7427, depth 2.183, rho 0.7143012353844714; twin acc 0.6991, rho -0.004319459992948448. theta 0.9: acc 0.7427, depth 2.340, rho 0.7533684015705153; twin acc 0.6981, rho -0.003330735108549688. Positive control detected=True; cheat detected=True."
+}

@@ -1,0 +1,1629 @@
+{
+  "id": "HT-47f4c02be4",
+  "key": "Predictive Coding + Prime Number Theory + Thermodynamics",
+  "stratum": "S4_nous_failure",
+  "concepts": [
+    {
+      "field": "Cognitive Science",
+      "mechanism": "dynamics",
+      "name": "Predictive Coding",
+      "short_description": "Brain as prediction engine minimizing surprise; prediction errors, hierarchical generative models."
+    },
+    {
+      "field": "Mathematics",
+      "mechanism": "structure",
+      "name": "Prime Number Theory",
+      "short_description": "Distribution and structure of primes; Riemann zeta function, prime gaps, multiplicative number theory."
+    },
+    {
+      "field": "Physics",
+      "mechanism": "constraint",
+      "name": "Thermodynamics",
+      "short_description": "Energy, entropy, and equilibrium; laws governing heat transfer and the arrow of time."
+    }
+  ],
+  "provenance": {
+    "historicalId": "Predictive Coding + Prime Number Theory + Thermodynamics",
+    "humanreadable": "agents/hephaestus/humanreadable/Prime_Number_Theory---Thermodynamics---Predictive_Coding.md",
+    "ledger_lines": [
+      6417
+    ],
+    "source": "hephaestus",
+    "sourceArtifact": "agents/hephaestus/ledger.jsonl#L6417",
+    "upstream_nous": [
+      "agents/nous/runs/20260325_085453/responses.jsonl#L15"
+    ],
+    "selected_by": "roles/Hecate/prereg/2026-09-29_first_selection/"
+  },
+  "history": {
+    "forged": false,
+    "ledger_n": 1,
+    "ledger_reasons": [
+      "trap_battery_failed"
+    ],
+    "nous_composite_max": 5.33,
+    "nous_high_potential": false,
+    "nous_models": [
+      "nvidia/nemotron-3-super-120b-a12b"
+    ],
+    "nous_n": 1,
+    "nous_unproductive_any": false
+  },
+  "passes": [
+    {
+      "id": "P0",
+      "triplicateId": "HT-47f4c02be4",
+      "index": 0,
+      "kind": "raw_interpretation",
+      "added": [
+        "new interpretation"
+      ],
+      "generator": {
+        "model": "claude-opus-5-5",
+        "search": false,
+        "prompt": "hecate/programs/_prompts/pass0_3_v1.md",
+        "prompt_sha256": "9ac5468dffb0a5792840809c84b3ad1ab22056397741dacb893386fd206baf3d"
+      },
+      "inspected_prior": [],
+      "unexplained": [
+        "whether the prediction-error reading of primes adds anything beyond the sieve",
+        "whether any thermodynamic quantity here is more than bookkeeping"
+      ],
+      "decision": "DEEPEN",
+      "research_state": {
+        "novelty": "low",
+        "mechanistic_clarity": "low",
+        "falsifiability": "low",
+        "empirical_support": "none",
+        "cross_lens_agreement": "unknown",
+        "cross_substrate_transfer": "unknown",
+        "baseline_resistance": "low",
+        "artifact_risk": "high",
+        "cost": "low",
+        "unexpectedness": "low",
+        "potential_importance": "low"
+      },
+      "concept_extractions": [
+        {
+          "concept": "Predictive Coding",
+          "defining_structures": [
+            "hierarchy of levels, each predicting the activity of the level below",
+            "prediction units and error units",
+            "precision (inverse variance) weights on errors"
+          ],
+          "invariants": [
+            "only unpredicted signal propagates upward",
+            "fixed point: errors vanish when the generative model matches the input"
+          ],
+          "transformations": [
+            "top-down prediction",
+            "bottom-up error",
+            "precision reweighting",
+            "model update (slow) vs state inference (fast)"
+          ],
+          "conserved_quantities": [
+            "none strictly; variational free energy is a bound that decreases, not a conserved quantity"
+          ],
+          "failure_modes": [
+            "over-precise priors (hallucination)",
+            "under-precise priors (noise-chasing)",
+            "dark-room: suppress input instead of modelling it",
+            "unbounded model growth"
+          ],
+          "dynamics": [
+            "gradient descent on prediction error",
+            "two timescales: inference and learning"
+          ],
+          "scales": [
+            "level depth",
+            "temporal horizon of each level",
+            "receptive-field width"
+          ],
+          "locality": [
+            "errors computed locally between adjacent levels"
+          ],
+          "memory": [
+            "the generative model's parameters are the memory; the error stream is what is not yet remembered"
+          ],
+          "identity": [
+            "an agent is its generative model; its boundary is what it predicts vs what it receives"
+          ],
+          "reproduction": [
+            "not native; copying of a generative model to a new agent"
+          ],
+          "selection": [
+            "of hypotheses by evidence; of precision by reliability"
+          ],
+          "information": [
+            "surprise = -log p(input); error = compressible residual"
+          ],
+          "constraint": [
+            "capacity of the model",
+            "cost of error transmission"
+          ]
+        },
+        {
+          "concept": "Prime Number Theory",
+          "defining_structures": [
+            "the multiplicative monoid of positive integers with unique factorization",
+            "primes as irreducible generators",
+            "Euler product for zeta(s)",
+            "residue classes mod p"
+          ],
+          "invariants": [
+            "unique factorization",
+            "coprimality independence (Chinese remainder theorem)",
+            "density pi(x) ~ x / ln x"
+          ],
+          "transformations": [
+            "multiplication (cheap)",
+            "factorization (believed costly)",
+            "sieving",
+            "Mobius inversion",
+            "Dirichlet convolution"
+          ],
+          "conserved_quantities": [
+            "prime exponent vectors are additive under multiplication (log n = sum of v_p(n) log p)"
+          ],
+          "failure_modes": [
+            "local regularity illusions (prime races, small-number patterns)",
+            "random-model (Cramer) predictions that fail for arithmetic reasons"
+          ],
+          "dynamics": [
+            "none intrinsic; the integers are static, but a walk along them gives a deterministic stream"
+          ],
+          "scales": [
+            "magnitude n",
+            "log n",
+            "log log n (Erdos-Kac)",
+            "gap sizes ~ ln n"
+          ],
+          "locality": [
+            "divisibility by p is periodic, local in residue space, non-local in n"
+          ],
+          "memory": [
+            "a sieve remembers all smaller primes to decide the next"
+          ],
+          "identity": [
+            "a number is its prime-exponent vector"
+          ],
+          "reproduction": [
+            "multiplication combines factor multisets"
+          ],
+          "selection": [
+            "sieving selects survivors of all periodic tests"
+          ],
+          "information": [
+            "primes are the incompressible residue of periodic tests",
+            "Omega(n) (number of prime factors) is ~ Gaussian with variance log log n"
+          ],
+          "constraint": [
+            "unique factorization forbids alternative decompositions"
+          ]
+        },
+        {
+          "concept": "Thermodynamics",
+          "defining_structures": [
+            "state functions: energy, entropy, free energy",
+            "partition function Z(beta)",
+            "reservoirs and work"
+          ],
+          "invariants": [
+            "first law: energy conserved",
+            "second law: total entropy non-decreasing"
+          ],
+          "transformations": [
+            "quasi-static vs irreversible processes",
+            "Legendre transforms",
+            "coarse-graining"
+          ],
+          "conserved_quantities": [
+            "energy",
+            "particle number when closed"
+          ],
+          "failure_modes": [
+            "heat death (no free energy gradient)",
+            "phase transitions where Z diverges",
+            "Maxwell-demon paradoxes resolved by erasure cost"
+          ],
+          "dynamics": [
+            "relaxation to equilibrium",
+            "entropy production",
+            "fluctuation theorems"
+          ],
+          "scales": [
+            "temperature",
+            "system size",
+            "relaxation time"
+          ],
+          "locality": [
+            "local equilibrium",
+            "extensivity for short-range interactions"
+          ],
+          "memory": [
+            "erasure costs at least kT ln 2 per bit (Landauer)"
+          ],
+          "identity": [
+            "a system is defined by its boundary with a reservoir"
+          ],
+          "reproduction": [
+            "dissipative structures persist by exporting entropy"
+          ],
+          "selection": [
+            "Boltzmann weighting exp(-beta E) selects low-energy states"
+          ],
+          "information": [
+            "entropy = missing information about the microstate"
+          ],
+          "constraint": [
+            "the arrow of time; minimum dissipation for irreversible computation"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "P1",
+      "triplicateId": "HT-47f4c02be4",
+      "index": 1,
+      "kind": "collision",
+      "added": [
+        "new mechanism",
+        "new intervention"
+      ],
+      "generator": {
+        "model": "claude-opus-5-5",
+        "search": false,
+        "prompt": "hecate/programs/_prompts/pass0_3_v1.md",
+        "prompt_sha256": "9ac5468dffb0a5792840809c84b3ad1ab22056397741dacb893386fd206baf3d"
+      },
+      "inspected_prior": [
+        "I1",
+        "I2",
+        "I3",
+        "I4",
+        "I5",
+        "I6",
+        "I7"
+      ],
+      "unexplained": [
+        "M1, M7, M9 may be known number theory restated in predictive-coding words",
+        "M13 and M14 have weak three-way dependency",
+        "no mechanism yet shows a thermodynamic effect that is not just a cost term"
+      ],
+      "decision": "DEEPEN",
+      "research_state": {
+        "novelty": "low",
+        "mechanistic_clarity": "medium",
+        "falsifiability": "medium",
+        "empirical_support": "none",
+        "cross_lens_agreement": "unknown",
+        "cross_substrate_transfer": "low",
+        "baseline_resistance": "low",
+        "artifact_risk": "high",
+        "cost": "low",
+        "unexpectedness": "low",
+        "potential_importance": "low"
+      }
+    },
+    {
+      "id": "P2",
+      "triplicateId": "HT-47f4c02be4",
+      "index": 2,
+      "kind": "lens_explosion",
+      "added": [
+        "new lens",
+        "new observable"
+      ],
+      "generator": {
+        "model": "claude-opus-5-5",
+        "search": false,
+        "prompt": "hecate/programs/_prompts/pass0_3_v1.md",
+        "prompt_sha256": "9ac5468dffb0a5792840809c84b3ad1ab22056397741dacb893386fd206baf3d"
+      },
+      "inspected_prior": [
+        "M1",
+        "M2",
+        "M3",
+        "M4",
+        "M5",
+        "M6",
+        "M7",
+        "M8",
+        "M9",
+        "M10",
+        "M11",
+        "M12",
+        "M13",
+        "M14",
+        "M15"
+      ],
+      "unexplained": [
+        "whether the Cramer twin is the right null for every mechanism",
+        "whether L7 can resolve zeta-zero peaks at feasible N"
+      ],
+      "decision": "DEEPEN",
+      "research_state": {
+        "novelty": "low",
+        "mechanistic_clarity": "medium",
+        "falsifiability": "medium",
+        "empirical_support": "none",
+        "cross_lens_agreement": "unknown",
+        "cross_substrate_transfer": "low",
+        "baseline_resistance": "low",
+        "artifact_risk": "medium",
+        "cost": "low",
+        "unexpectedness": "low",
+        "potential_importance": "low"
+      }
+    },
+    {
+      "id": "P3",
+      "triplicateId": "HT-47f4c02be4",
+      "index": 3,
+      "kind": "minimal_worlds",
+      "added": [
+        "new substrate",
+        "new falsifier",
+        "new intervention"
+      ],
+      "generator": {
+        "model": "claude-opus-5-5",
+        "search": false,
+        "prompt": "hecate/programs/_prompts/pass0_3_v1.md",
+        "prompt_sha256": "9ac5468dffb0a5792840809c84b3ad1ab22056397741dacb893386fd206baf3d"
+      },
+      "inspected_prior": [
+        "M1",
+        "M2",
+        "M3",
+        "M4",
+        "M5",
+        "M6",
+        "M7",
+        "M8",
+        "M9",
+        "M10",
+        "M11",
+        "M12",
+        "M13",
+        "M14",
+        "M15",
+        "L1",
+        "L2",
+        "L3",
+        "L4",
+        "L5",
+        "L6",
+        "L7"
+      ],
+      "unexplained": [
+        "W1 success may be guaranteed by construction (it is the sieve)",
+        "W3 coexistence may be inherited from source periods rather than selected",
+        "no world yet tests M6, M13 or M15"
+      ],
+      "decision": "FALSIFY",
+      "research_state": {
+        "novelty": "low",
+        "mechanistic_clarity": "medium",
+        "falsifiability": "high",
+        "empirical_support": "none",
+        "cross_lens_agreement": "unknown",
+        "cross_substrate_transfer": "low",
+        "baseline_resistance": "low",
+        "artifact_risk": "medium",
+        "cost": "low",
+        "unexpectedness": "low",
+        "potential_importance": "low"
+      }
+    },
+    {
+      "id": "P3-probe1",
+      "triplicateId": "HT-47f4c02be4",
+      "index": 3,
+      "kind": "cheap_probe",
+      "added": [
+        "new observable"
+      ],
+      "generator": {
+        "model": "claude-opus-5-5 (implementer)",
+        "search": false,
+        "prompt": "hecate/programs/_prompts/probe_impl_v1.md",
+        "prompt_sha256": "cf4bd374bce1b817a12d3607063278183ce0a8b7c4a7b771061dc8ce133bcea2"
+      },
+      "prereg": "roles/Hecate/prereg/2026-09-29_probe_round1/PREREG.md",
+      "inspected_prior": [
+        "W4"
+      ],
+      "unexplained": [
+        "operation count ignores the cost of maintaining the prior",
+        "the asymmetry is a property of trial division, not of factoring in general"
+      ],
+      "decision": "DEEPEN",
+      "research_state": {
+        "novelty": "unknown",
+        "mechanistic_clarity": "unknown",
+        "falsifiability": "unknown",
+        "empirical_support": "none",
+        "cross_lens_agreement": "unknown",
+        "cross_substrate_transfer": "unknown",
+        "baseline_resistance": "unknown",
+        "artifact_risk": "unknown",
+        "cost": "unknown",
+        "unexpectedness": "unknown",
+        "potential_importance": "unknown"
+      }
+    },
+    {
+      "id": "P3-probe2",
+      "triplicateId": "HT-47f4c02be4",
+      "index": 3,
+      "kind": "cheap_probe",
+      "added": [
+        "new observable"
+      ],
+      "generator": {
+        "model": "claude-opus-5-5 (implementer)",
+        "search": false,
+        "prompt": "hecate/programs/_prompts/probe_impl_v2.md",
+        "prompt_sha256": "2021ed66e8fefd807203ae1d814b74091b4eabdacef16668e7a025d82128185e"
+      },
+      "prereg": "roles/Hecate/prereg/2026-09-30_probe_round2/PREREG.md",
+      "inspected_prior": [
+        "W4",
+        "W1"
+      ],
+      "unexplained": [
+        "the promotion rule is literally the sieve so success is guaranteed by construction",
+        "Mertens agreement is a known theorem, not a property of the agent",
+        "the Cramer twin fails because random streams are unpredictable by any periodic model, which says nothing about predictive coding"
+      ],
+      "decision": "PARK",
+      "research_state": {
+        "novelty": "unknown",
+        "mechanistic_clarity": "unknown",
+        "falsifiability": "unknown",
+        "empirical_support": "none",
+        "cross_lens_agreement": "unknown",
+        "cross_substrate_transfer": "unknown",
+        "baseline_resistance": "unknown",
+        "artifact_risk": "unknown",
+        "cost": "unknown",
+        "unexpectedness": "unknown",
+        "potential_importance": "unknown"
+      }
+    }
+  ],
+  "hypotheses": [
+    {
+      "id": "I1",
+      "triplicateId": "HT-47f4c02be4",
+      "passId": "P0",
+      "kind": "interpretation",
+      "layer": "speculation",
+      "statement": "Primes are the irreducible prediction errors of a multiplicative generative model: a hierarchical predictor whose levels are periodic divisibility predictors produces an error stream that is exactly the primes, and each error promotes a new level. Experiment: a self-growing sieve-hierarchy and its error statistics."
+    },
+    {
+      "id": "I2",
+      "triplicateId": "HT-47f4c02be4",
+      "passId": "P0",
+      "kind": "interpretation",
+      "layer": "speculation",
+      "statement": "The prime density 1/ln n is an entropy-production rate: a predictor of the integer stream pays Landauer cost only for errors, so its dissipation per integer decays like 1/ln n. Experiment: measure bit-erasure per step of a budgeted predictor against a Cramer random twin of matched density."
+    },
+    {
+      "id": "I3",
+      "triplicateId": "HT-47f4c02be4",
+      "passId": "P0",
+      "kind": "interpretation",
+      "layer": "speculation",
+      "statement": "The primon gas (energy log n, Z = zeta(beta)) is an environment whose pole at beta = 1 is a learnability transition: a learner with a factorized (Euler-product) model gains advantage over an unfactorized one that grows as beta -> 1. Experiment: learning curves across beta."
+    },
+    {
+      "id": "I4",
+      "triplicateId": "HT-47f4c02be4",
+      "passId": "P0",
+      "kind": "interpretation",
+      "layer": "speculation",
+      "statement": "Coprimality is statistical independence: the Chinese remainder theorem makes coprime periodic channels independent, so precision can be allocated per channel without cross-talk; a thermodynamic cost is paid only for non-coprime overlap. Experiment: niche partitioning of periodic predictors under coprime vs non-coprime sources."
+    },
+    {
+      "id": "I5",
+      "triplicateId": "HT-47f4c02be4",
+      "passId": "P0",
+      "kind": "interpretation",
+      "layer": "speculation",
+      "statement": "The asymmetry between cheap multiplication and costly factorization is an arrow of time for an inferring agent: generation is near-reversible, inference dissipates; predictive priors are what reduce the dissipation of inference. Experiment: operation-count cost of factor inference with and without temporal priors."
+    },
+    {
+      "id": "I6",
+      "triplicateId": "HT-47f4c02be4",
+      "passId": "P0",
+      "kind": "interpretation",
+      "layer": "speculation",
+      "statement": "Sieving is cooling: each sieve level removes composite microstates, and the survivors are defects of an annealing schedule whose depth trades maintenance energy against residual error. Experiment: find the free-energy-optimal sieve depth under a per-level cost and compare the residual with the Mertens product."
+    },
+    {
+      "id": "I7",
+      "triplicateId": "HT-47f4c02be4",
+      "passId": "P0",
+      "kind": "interpretation",
+      "layer": "speculation",
+      "statement": "Precision is temperature and should track arithmetic regularity: an agent that sets its inverse temperature from recent surprise will fluctuate with prime-gap statistics, differently from a Poisson-gap twin. Experiment: surprise-driven thermostat on a prime indicator stream vs Cramer stream."
+    },
+    {
+      "id": "M1",
+      "triplicateId": "HT-47f4c02be4",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "implemented_candidate",
+      "form": "organism architecture",
+      "statement": "Self-growing sieve hierarchy: level k is a periodic predictor with period p_k predicting 'composite'; an integer that no level predicts is a residual error and is promoted to a new level with that integer as its period. Each level costs c energy units per step.",
+      "derived_from": [
+        "I1",
+        "I6"
+      ],
+      "concept_contributions": {
+        "Predictive Coding": "hierarchical levels that pass only unpredicted signal upward",
+        "Prime Number Theory": "unique factorization guarantees promoted periods are exactly the primes",
+        "Thermodynamics": "per-level maintenance cost bounds depth"
+      },
+      "knockouts": {
+        "Predictive Coding": "becomes a plain sieve with no notion of error-driven growth",
+        "Prime Number Theory": "on a non-arithmetic periodic stream promoted periods are arbitrary and levels overlap",
+        "Thermodynamics": "depth grows without bound; no optimum depth exists"
+      },
+      "simpler_alternative": "Sieve of Eratosthenes with a memory cap.",
+      "questions": {
+        "what_exists": "periodic predictor levels and an integer stream",
+        "what_changes": "number of levels and residual error rate",
+        "what_persists": "levels once promoted",
+        "what_is_selected": "periods that absorb errors",
+        "what_can_reproduce": "levels are copied from errors (weak sense)",
+        "what_can_learn": "which periods to hold",
+        "what_can_transfer": "a trained hierarchy to other multiplicative streams (e.g. Gaussian integers)",
+        "distinguishing_observable": "residual error rate vs depth follows the Mertens product prod(1-1/p), not the Cramer-twin curve"
+      }
+    },
+    {
+      "id": "M2",
+      "triplicateId": "HT-47f4c02be4",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "implemented_candidate",
+      "form": "learning pressure",
+      "statement": "Landauer-priced error erasure: every prediction-error bit that must be stored or erased costs kT ln 2; the agent decides which errors to absorb into model structure and which to discard. Primes are the errors that cannot be absorbed by existing structure.",
+      "derived_from": [
+        "I2"
+      ],
+      "concept_contributions": {
+        "Predictive Coding": "error stream as the only paid signal",
+        "Prime Number Theory": "arithmetic fixes which errors are compressible",
+        "Thermodynamics": "erasure cost converts information into dissipation"
+      },
+      "knockouts": {
+        "Predictive Coding": "no error/prediction split; cost is paid on the raw stream",
+        "Prime Number Theory": "errors are uniformly incompressible (Cramer twin)",
+        "Thermodynamics": "errors are free; no pressure to absorb them"
+      },
+      "simpler_alternative": "Minimum-description-length compression of the prime indicator with a bit budget.",
+      "questions": {
+        "what_exists": "a stream, a model, a heat bath",
+        "what_changes": "stored bits, dissipated heat",
+        "what_persists": "absorbed structure",
+        "what_is_selected": "compressible error patterns",
+        "what_can_reproduce": "nothing",
+        "what_can_learn": "which errors to absorb",
+        "what_can_transfer": "the absorb/discard policy to other periodic-with-residue streams",
+        "distinguishing_observable": "dissipation per integer scales as 1/ln n with a coefficient set by model depth; Cramer twin shows no depth dependence"
+      }
+    },
+    {
+      "id": "M3",
+      "triplicateId": "HT-47f4c02be4",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "world rule",
+      "statement": "Primon-gas environment: the world emits integers n with probability n^-beta / zeta(beta) (truncated). A learner predicting divisibility events sees independent per-prime channels; as beta -> 1 the partition function diverges and rare large factors dominate.",
+      "derived_from": [
+        "I3"
+      ],
+      "concept_contributions": {
+        "Predictive Coding": "the learner's model and its sample efficiency",
+        "Prime Number Theory": "Euler product makes divisibility by distinct primes exactly independent",
+        "Thermodynamics": "beta as inverse temperature and the Hagedorn-like pole at beta = 1"
+      },
+      "knockouts": {
+        "Predictive Coding": "no learner, only a distribution",
+        "Prime Number Theory": "a magnitude-matched distribution with dependent factor events",
+        "Thermodynamics": "beta fixed; no transition to probe"
+      },
+      "simpler_alternative": "Any product distribution over independent Bernoulli features with heavy-tailed rates.",
+      "questions": {
+        "what_exists": "integers sampled at inverse temperature beta, a learner",
+        "what_changes": "beta, sample count",
+        "what_persists": "the factorized structure of the distribution",
+        "what_is_selected": "model class (factorized vs not)",
+        "what_can_reproduce": "nothing",
+        "what_can_learn": "per-prime rates",
+        "what_can_transfer": "the factorized prior to other Euler-product-like distributions",
+        "distinguishing_observable": "held-out log-loss advantage of factorized over unfactorized model as a function of beta"
+      }
+    },
+    {
+      "id": "M4",
+      "triplicateId": "HT-47f4c02be4",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "representation",
+      "statement": "CRT precision routing: the agent represents the stream in residues mod pairwise-coprime moduli; precision is allocated per residue channel and channels do not share error.",
+      "derived_from": [
+        "I4"
+      ],
+      "concept_contributions": {
+        "Predictive Coding": "precision weighting per channel",
+        "Prime Number Theory": "coprimality gives channel independence",
+        "Thermodynamics": "cross-talk between non-coprime channels costs redundant dissipation"
+      },
+      "knockouts": {
+        "Predictive Coding": "channels exist but no allocation",
+        "Prime Number Theory": "non-coprime moduli leave correlated channels",
+        "Thermodynamics": "redundancy is free; no reason to prefer coprime moduli"
+      },
+      "simpler_alternative": "Choosing orthogonal features in any factorized representation.",
+      "questions": {
+        "what_exists": "residue channels",
+        "what_changes": "precision per channel",
+        "what_persists": "moduli set",
+        "what_is_selected": "coprime moduli",
+        "what_can_reproduce": "moduli sets can be inherited",
+        "what_can_learn": "precision",
+        "what_can_transfer": "moduli choice to new periodic sources",
+        "distinguishing_observable": "mutual information between channel errors is ~0 iff moduli are coprime"
+      }
+    },
+    {
+      "id": "M5",
+      "triplicateId": "HT-47f4c02be4",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "implemented_candidate",
+      "form": "causal constraint",
+      "statement": "Factor-inference arrow: the generative direction (multiply) is cheap and near-reversible, inference (factor) is expensive; a predictive prior over factors reduces the dissipated work of inference, so good prediction is measured as reduced irreversibility.",
+      "derived_from": [
+        "I5"
+      ],
+      "concept_contributions": {
+        "Predictive Coding": "priors over hidden causes reduce inference work",
+        "Prime Number Theory": "one-way function supplied by multiplication vs factorization",
+        "Thermodynamics": "work/dissipation as the currency of inference"
+      },
+      "knockouts": {
+        "Predictive Coding": "no priors; inference cost is fixed",
+        "Prime Number Theory": "any invertible map with equal forward and inverse cost removes the asymmetry",
+        "Thermodynamics": "cost is not accounted; asymmetry is invisible"
+      },
+      "simpler_alternative": "Caching / memoization of recent answers.",
+      "questions": {
+        "what_exists": "hidden factors, observed products, a solver",
+        "what_changes": "prior over factors",
+        "what_persists": "the prior",
+        "what_is_selected": "priors that cut search",
+        "what_can_reproduce": "nothing",
+        "what_can_learn": "factor drift",
+        "what_can_transfer": "prior-building strategy to other one-way inversions",
+        "distinguishing_observable": "ratio infer-cost / generate-cost decreases with temporal predictability of factors, not with magnitude"
+      }
+    },
+    {
+      "id": "M6",
+      "triplicateId": "HT-47f4c02be4",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "dynamical law",
+      "statement": "Gap-surprise thermostat: the agent's inverse temperature is updated from recent surprise; on the prime indicator stream the thermostat's fluctuation spectrum is set by gap statistics.",
+      "derived_from": [
+        "I7"
+      ],
+      "concept_contributions": {
+        "Predictive Coding": "surprise-driven precision update",
+        "Prime Number Theory": "gap distribution of primes",
+        "Thermodynamics": "temperature as the controlled variable"
+      },
+      "knockouts": {
+        "Predictive Coding": "temperature fixed",
+        "Prime Number Theory": "Poisson gaps from a Cramer twin",
+        "Thermodynamics": "no thermostat, only a counter"
+      },
+      "simpler_alternative": "An exponential moving average of the input rate.",
+      "questions": {
+        "what_exists": "a thermostat and a stream",
+        "what_changes": "beta_t",
+        "what_persists": "long-run mean beta",
+        "what_is_selected": "none",
+        "what_can_reproduce": "nothing",
+        "what_can_learn": "a gain",
+        "what_can_transfer": "gain to other bursty streams",
+        "distinguishing_observable": "autocorrelation of beta_t at lags 2, 6, 30 differs from the Cramer twin (arithmetic gap preferences)"
+      }
+    },
+    {
+      "id": "M7",
+      "triplicateId": "HT-47f4c02be4",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "error-correction mechanism",
+      "statement": "Mobius-signed error aggregation: errors from overlapping levels are combined with inclusion-exclusion signs mu(d) so that multiply-predicted events are not double counted.",
+      "derived_from": [
+        "I1",
+        "I4"
+      ],
+      "concept_contributions": {
+        "Predictive Coding": "aggregation of multi-level predictions",
+        "Prime Number Theory": "Mobius function supplies the exact correction signs",
+        "Thermodynamics": "double counting would inflate dissipated error"
+      },
+      "knockouts": {
+        "Predictive Coding": "no aggregation step",
+        "Prime Number Theory": "arbitrary signs fail; overlaps are not lattice-structured",
+        "Thermodynamics": "double counting is harmless if unpriced"
+      },
+      "simpler_alternative": "Normalizing predictions with a softmax or taking a max over levels.",
+      "questions": {
+        "what_exists": "overlapping predictors",
+        "what_changes": "signed contributions",
+        "what_persists": "the sign rule",
+        "what_is_selected": "the correct signs",
+        "what_can_reproduce": "nothing",
+        "what_can_learn": "signs could be learned",
+        "what_can_transfer": "to any lattice of overlapping detectors",
+        "distinguishing_observable": "a learned sign vector converges to mu(d) on arithmetic streams but not on twin streams"
+      }
+    },
+    {
+      "id": "M8",
+      "triplicateId": "HT-47f4c02be4",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "mutation operator",
+      "statement": "Multiplicative mutation: genomes are integers; mutation multiplies or divides by a small prime; fitness is the negative free energy of a periodic predictor with that period. Primes are irreducible genome building blocks.",
+      "derived_from": [
+        "I3",
+        "I6"
+      ],
+      "concept_contributions": {
+        "Predictive Coding": "fitness defined as predictive free energy",
+        "Prime Number Theory": "mutation lattice is the divisor lattice",
+        "Thermodynamics": "Boltzmann selection with a temperature"
+      },
+      "knockouts": {
+        "Predictive Coding": "fitness is arbitrary; the lattice alone remains",
+        "Prime Number Theory": "additive mutation (+/-1) destroys the divisor-lattice geometry",
+        "Thermodynamics": "greedy selection; no temperature-dependent exploration"
+      },
+      "simpler_alternative": "Evolution on any lattice with a smooth fitness landscape.",
+      "questions": {
+        "what_exists": "an integer-genome population",
+        "what_changes": "genomes",
+        "what_persists": "prime-factor building blocks",
+        "what_is_selected": "periods matching source structure",
+        "what_can_reproduce": "genomes",
+        "what_can_learn": "periods",
+        "what_can_transfer": "building blocks between environments sharing prime factors",
+        "distinguishing_observable": "time-to-fit under multiplicative vs additive mutation on sources with composite periods"
+      }
+    },
+    {
+      "id": "M9",
+      "triplicateId": "HT-47f4c02be4",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "computational primitive",
+      "statement": "Euler-product free-energy decomposition: log Z = sum over primes of -log(1 - p^-beta), so free energy and prediction error decompose into independent per-prime channels; the primitive is a per-prime error unit.",
+      "derived_from": [
+        "I3"
+      ],
+      "concept_contributions": {
+        "Predictive Coding": "per-channel error units",
+        "Prime Number Theory": "Euler product",
+        "Thermodynamics": "free energy as the additive quantity"
+      },
+      "knockouts": {
+        "Predictive Coding": "no error units; only a partition function",
+        "Prime Number Theory": "no product formula; channels couple",
+        "Thermodynamics": "decomposition of error without the energy reading"
+      },
+      "simpler_alternative": "Naive Bayes over independent features.",
+      "questions": {
+        "what_exists": "per-prime channels",
+        "what_changes": "channel errors",
+        "what_persists": "channel structure",
+        "what_is_selected": "channels with signal",
+        "what_can_reproduce": "nothing",
+        "what_can_learn": "channel rates",
+        "what_can_transfer": "channel layout to other product-form environments",
+        "distinguishing_observable": "sum of per-channel errors equals total error only in product-form worlds"
+      }
+    },
+    {
+      "id": "M10",
+      "triplicateId": "HT-47f4c02be4",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "implemented_candidate",
+      "form": "dynamical law",
+      "statement": "Heat death of prediction: residual error density falls like prod(1-1/p) while maintenance grows linearly with depth, giving an optimal depth K*; beyond it the agent freezes (adds levels whose savings are below their cost).",
+      "derived_from": [
+        "I6",
+        "I2"
+      ],
+      "concept_contributions": {
+        "Predictive Coding": "error-driven depth",
+        "Prime Number Theory": "Mertens-rate decay of residual",
+        "Thermodynamics": "cost per level"
+      },
+      "knockouts": {
+        "Predictive Coding": "depth fixed by hand",
+        "Prime Number Theory": "decay law differs",
+        "Thermodynamics": "no optimum"
+      },
+      "simpler_alternative": "Any diminishing-returns feature addition under linear cost.",
+      "questions": {
+        "what_exists": "a hierarchy with cost",
+        "what_changes": "depth",
+        "what_persists": "the optimal depth",
+        "what_is_selected": "depth",
+        "what_can_reproduce": "nothing",
+        "what_can_learn": "depth",
+        "what_can_transfer": "the stopping rule",
+        "distinguishing_observable": "K*(c) follows the solution of c = marginal Mertens saving, not the Cramer twin"
+      }
+    },
+    {
+      "id": "M11",
+      "triplicateId": "HT-47f4c02be4",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "information bottleneck",
+      "statement": "Smooth-number bottleneck: the agent can represent only y-smooth structure (primes <= y); everything else is treated as heat. The fraction explained follows the Dickman function rho(log n / log y).",
+      "derived_from": [
+        "I1",
+        "I6"
+      ],
+      "concept_contributions": {
+        "Predictive Coding": "capacity-limited model",
+        "Prime Number Theory": "smooth-number distribution",
+        "Thermodynamics": "unexplained residue treated as heat"
+      },
+      "knockouts": {
+        "Predictive Coding": "no model; y is just a filter",
+        "Prime Number Theory": "no Dickman law",
+        "Thermodynamics": "residue is not costed"
+      },
+      "simpler_alternative": "Truncating a feature dictionary at size y.",
+      "questions": {
+        "what_exists": "a y-limited model",
+        "what_changes": "y",
+        "what_persists": "explained fraction",
+        "what_is_selected": "y",
+        "what_can_reproduce": "nothing",
+        "what_can_learn": "y",
+        "what_can_transfer": "y choice to other heavy-tailed factor structures",
+        "distinguishing_observable": "explained fraction vs log n / log y tracks rho(u)"
+      }
+    },
+    {
+      "id": "M12",
+      "triplicateId": "HT-47f4c02be4",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "selection mechanism",
+      "statement": "Coprimality niche selection: periodic predictors compete for correctly predicted events; predictors sharing a factor compete for the same events; under an energy budget survivors are pairwise coprime and coexist.",
+      "derived_from": [
+        "I4"
+      ],
+      "concept_contributions": {
+        "Predictive Coding": "reward for correct prediction",
+        "Prime Number Theory": "gcd structure decides niche overlap",
+        "Thermodynamics": "energy budget forces exclusion"
+      },
+      "knockouts": {
+        "Predictive Coding": "reward for arbitrary behaviour; no niche",
+        "Prime Number Theory": "non-coprime sources give overlapping niches",
+        "Thermodynamics": "no budget; all coexist"
+      },
+      "simpler_alternative": "Competitive exclusion on any resource with overlapping niches.",
+      "questions": {
+        "what_exists": "a population of period-predictors",
+        "what_changes": "abundances",
+        "what_persists": "survivor set",
+        "what_is_selected": "non-overlapping periods",
+        "what_can_reproduce": "agents",
+        "what_can_learn": "periods",
+        "what_can_transfer": "niche structure",
+        "distinguishing_observable": "number of coexisting distinct periods equals the number of coprime source components; lower in non-coprime twin"
+      }
+    },
+    {
+      "id": "M13",
+      "triplicateId": "HT-47f4c02be4",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "dynamical law",
+      "statement": "Zero-resonance detector (strange; three-way dependency weak): a predictor tracking psi(x) - x in log x develops internal oscillation modes at the ordinates of zeta zeros. Thermodynamics contributes only a noise floor, so the TD dependency is weak.",
+      "derived_from": [
+        "I1",
+        "I7"
+      ],
+      "concept_contributions": {
+        "Predictive Coding": "a tracking predictor with resonant modes",
+        "Prime Number Theory": "explicit formula oscillations",
+        "Thermodynamics": "noise floor only (weak)"
+      },
+      "knockouts": {
+        "Predictive Coding": "plain spectral analysis finds the same peaks",
+        "Prime Number Theory": "no zeros; no peaks",
+        "Thermodynamics": "almost nothing changes; weak dependency"
+      },
+      "simpler_alternative": "A Fourier transform of the prime-counting error in log x.",
+      "questions": {
+        "what_exists": "a tracker",
+        "what_changes": "mode frequencies",
+        "what_persists": "peaks",
+        "what_is_selected": "resonant modes",
+        "what_can_reproduce": "nothing",
+        "what_can_learn": "frequencies",
+        "what_can_transfer": "none",
+        "distinguishing_observable": "peaks at gamma_1 = 14.13 in log-x spectrum; absent in Cramer twin"
+      }
+    },
+    {
+      "id": "M14",
+      "triplicateId": "HT-47f4c02be4",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "memory structure",
+      "statement": "Factorized memory: items are stored as prime-exponent multisets; retrieval cost is Omega(n); memory energy distribution inherits Erdos-Kac normality. Predictive coding dependency is weak: only 'predict which item next' ties it in.",
+      "derived_from": [
+        "I3"
+      ],
+      "concept_contributions": {
+        "Predictive Coding": "weak: next-item prediction",
+        "Prime Number Theory": "factor multiset storage",
+        "Thermodynamics": "storage/erasure cost"
+      },
+      "knockouts": {
+        "Predictive Coding": "memory still works; nothing predictive lost (weak)",
+        "Prime Number Theory": "flat storage",
+        "Thermodynamics": "cost unaccounted"
+      },
+      "simpler_alternative": "Variable-length encoding of integers.",
+      "questions": {
+        "what_exists": "factor-stored items",
+        "what_changes": "stored multisets",
+        "what_persists": "the memory",
+        "what_is_selected": "cheap items",
+        "what_can_reproduce": "nothing",
+        "what_can_learn": "access patterns",
+        "what_can_transfer": "none",
+        "distinguishing_observable": "retrieval-cost histogram Gaussian in log log n"
+      }
+    },
+    {
+      "id": "M15",
+      "triplicateId": "HT-47f4c02be4",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "interaction law",
+      "statement": "Prime avoidance by active inference: an agent that moves along the integers and minimizes surprise will dwell on highly composite numbers (most predictable) and avoid primes; movement costs energy.",
+      "derived_from": [
+        "I1",
+        "I5"
+      ],
+      "concept_contributions": {
+        "Predictive Coding": "action chosen to minimize surprise (dark-room tendency)",
+        "Prime Number Theory": "highly composite numbers are maximally predicted by a sieve hierarchy",
+        "Thermodynamics": "movement cost prevents trivial teleportation"
+      },
+      "knockouts": {
+        "Predictive Coding": "random walk; no preference",
+        "Prime Number Theory": "no arithmetic predictability landscape",
+        "Thermodynamics": "agent jumps anywhere at no cost"
+      },
+      "simpler_alternative": "Gradient following on a fixed divisor-count landscape.",
+      "questions": {
+        "what_exists": "walkers and a predictability landscape",
+        "what_changes": "positions",
+        "what_persists": "dwell sites",
+        "what_is_selected": "predictable sites",
+        "what_can_reproduce": "nothing",
+        "what_can_learn": "the landscape",
+        "what_can_transfer": "the dark-room failure mode",
+        "distinguishing_observable": "occupancy correlation with d(n) (divisor count) vs Cramer-twin landscape"
+      }
+    },
+    {
+      "id": "O-W4-r1",
+      "triplicateId": "HT-47f4c02be4",
+      "passId": "P3-probe1",
+      "kind": "observation",
+      "layer": "experimental_observation",
+      "evidence_rows": [
+        "hecate/programs/HT-47f4c02be4/worlds/W4/rows.jsonl",
+        "hecate/programs/HT-47f4c02be4/worlds/W4/OUTCOME.json"
+      ],
+      "statement": "W4 probe round 1: CONFOUNDED. Outcome CONFOUNDED. At s=1 the prior-ordered solver used 3.54 trial divisions per sample vs 424.79 ascending (R_drift=0.0083). On the temporally shuffled twin the ratio was 0.1864. Positive control first-try 0.9999; cheat ratio 0.0024. R_drift at s=3/10: 0.0333/0.1144. Numbers only; generation cost is 1 multiplication so the infer/generate ratio equals the division count.",
+      "derived_from": [
+        "M5"
+      ]
+    },
+    {
+      "id": "O-W1-r2",
+      "triplicateId": "HT-47f4c02be4",
+      "passId": "P3-probe2",
+      "kind": "observation",
+      "layer": "experimental_observation",
+      "evidence_rows": [
+        "hecate/programs/HT-47f4c02be4/worlds/W1/rows.jsonl"
+      ],
+      "statement": "W1 probe round 2: NULL. Phase 2 ran once after a passing pilot (PILOT.json attempt 1). No parameter or threshold changed. See NOTES.md.",
+      "derived_from": [
+        "M1",
+        "M10",
+        "M2"
+      ]
+    }
+  ],
+  "lenses": [
+    {
+      "id": "L1",
+      "name": "Sieve ledger",
+      "triplicateId": "HT-47f4c02be4",
+      "rationale": "Invented for this triplicate: account for which level absorbed each integer's prediction, so error promotion can be audited.",
+      "sourceRepresentation": "per-integer record of which levels predicted it",
+      "transformation": "tabulate absorbed/passed counts per level and depth",
+      "observables": [
+        "absorbed fraction per level",
+        "residual error rate vs depth"
+      ],
+      "predictedSignals": [
+        "residual rate tracks prod(1-1/p) within 5%"
+      ],
+      "nullExpectation": "in a Cramer twin levels absorb at the rate of their own density with no nesting",
+      "failureModes": [
+        "off-by-one in level promotion makes composites levels",
+        "finite-N edge effects at small N"
+      ],
+      "informationAddedBeyondExistingLenses": "attributes error reduction to specific levels instead of reporting only totals",
+      "passId": "P2",
+      "targets": [
+        "M1",
+        "M7",
+        "M10"
+      ]
+    },
+    {
+      "id": "L2",
+      "name": "Landauer ledger",
+      "triplicateId": "HT-47f4c02be4",
+      "rationale": "Price every stored or erased bit, turning prediction quality into dissipation.",
+      "sourceRepresentation": "bit-level memory writes and erasures of the agent",
+      "transformation": "sum kT ln 2 per erased bit per step",
+      "observables": [
+        "dissipation per integer",
+        "dissipation vs n"
+      ],
+      "predictedSignals": [
+        "dissipation ~ a / ln n with a depending on depth"
+      ],
+      "nullExpectation": "dissipation flat in n for an agent that learns nothing",
+      "failureModes": [
+        "counting convention for overwrites",
+        "hidden erasures in bookkeeping"
+      ],
+      "informationAddedBeyondExistingLenses": "a thermodynamic currency comparable across agents of different architectures",
+      "passId": "P2",
+      "targets": [
+        "M2",
+        "M10",
+        "M5"
+      ]
+    },
+    {
+      "id": "L3",
+      "name": "Cramer twin contrast",
+      "triplicateId": "HT-47f4c02be4",
+      "rationale": "Invented: every observable is paired with a density-matched random-prime world to separate arithmetic structure from density alone.",
+      "sourceRepresentation": "prime indicator stream and a Bernoulli(1/ln n) stream",
+      "transformation": "compute each observable on both and take the difference",
+      "observables": [
+        "difference in each target statistic"
+      ],
+      "predictedSignals": [
+        "nonzero differences only where divisibility structure is used"
+      ],
+      "nullExpectation": "zero difference for mechanisms that use only density",
+      "failureModes": [
+        "twin not matched at small n",
+        "multiple-comparison noise"
+      ],
+      "informationAddedBeyondExistingLenses": "isolates what depends on arithmetic, not on density",
+      "passId": "P2",
+      "targets": [
+        "M1",
+        "M2",
+        "M6",
+        "M13",
+        "M15"
+      ]
+    },
+    {
+      "id": "L4",
+      "name": "Euler-mode spectrum",
+      "triplicateId": "HT-47f4c02be4",
+      "rationale": "Invented: decompose the agent's error signal into per-prime residue channels (Fourier over Z/p for each p).",
+      "sourceRepresentation": "error stream e_n",
+      "transformation": "for each small prime p, the DFT of e_n over residues mod p",
+      "observables": [
+        "power per prime channel",
+        "cross-channel correlation"
+      ],
+      "predictedSignals": [
+        "near-zero cross-correlation between coprime channels"
+      ],
+      "nullExpectation": "correlated channels when moduli share factors",
+      "failureModes": [
+        "leakage from finite windows",
+        "too few samples for large p"
+      ],
+      "informationAddedBeyondExistingLenses": "tests independence claims (CRT) directly in the error signal",
+      "passId": "P2",
+      "targets": [
+        "M4",
+        "M9",
+        "M3"
+      ]
+    },
+    {
+      "id": "L5",
+      "name": "Divisor-lattice ecology",
+      "triplicateId": "HT-47f4c02be4",
+      "rationale": "Invented: represent populations of period-agents on the divisor lattice with edges gcd > 1 as niche overlap.",
+      "sourceRepresentation": "population of periods with abundances",
+      "transformation": "build gcd-overlap graph; compute component and coexistence statistics",
+      "observables": [
+        "number of coexisting periods",
+        "fraction of coprime surviving pairs"
+      ],
+      "predictedSignals": [
+        "coexistence count equals number of coprime source components"
+      ],
+      "nullExpectation": "coexistence count at chance for non-coprime sources",
+      "failureModes": [
+        "mutation rate too high to reach equilibrium",
+        "budget too loose so all coexist"
+      ],
+      "informationAddedBeyondExistingLenses": "an ecological reading of CRT absent from single-agent lenses",
+      "passId": "P2",
+      "targets": [
+        "M12",
+        "M8"
+      ]
+    },
+    {
+      "id": "L6",
+      "name": "Inversion-cost arrow",
+      "triplicateId": "HT-47f4c02be4",
+      "rationale": "Measure forward (generate) vs inverse (infer) operation counts as an irreversibility index.",
+      "sourceRepresentation": "operation counts of the generator and the inferring solver",
+      "transformation": "ratio infer/generate per sample; conditioned on prior quality",
+      "observables": [
+        "cost ratio",
+        "cost ratio vs prior accuracy"
+      ],
+      "predictedSignals": [
+        "ratio falls as priors improve"
+      ],
+      "nullExpectation": "ratio independent of prior when factors are i.i.d.",
+      "failureModes": [
+        "solver implementation dominates cost",
+        "cache effects misread as prediction"
+      ],
+      "informationAddedBeyondExistingLenses": "gives a work-based metric of prediction quality",
+      "passId": "P2",
+      "targets": [
+        "M5"
+      ]
+    },
+    {
+      "id": "L7",
+      "name": "Log-scale resonance",
+      "triplicateId": "HT-47f4c02be4",
+      "rationale": "Spectrum of error or thermostat signals as functions of log n.",
+      "sourceRepresentation": "time series indexed by log n",
+      "transformation": "resample on a log grid and compute the power spectrum",
+      "observables": [
+        "peak frequencies"
+      ],
+      "predictedSignals": [
+        "peaks near zeta zero ordinates"
+      ],
+      "nullExpectation": "flat spectrum for Cramer twin",
+      "failureModes": [
+        "window too short to resolve gamma_1",
+        "resampling artifacts"
+      ],
+      "informationAddedBeyondExistingLenses": "probes explicit-formula structure no other lens reaches",
+      "passId": "P2",
+      "targets": [
+        "M13",
+        "M6"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "W1",
+      "triplicateId": "HT-47f4c02be4",
+      "passId": "P3",
+      "mechanism_ids": [
+        "M1",
+        "M10",
+        "M2"
+      ],
+      "lens_ids": [
+        "L1",
+        "L2",
+        "L3"
+      ],
+      "hypothesis": "A self-growing sieve hierarchy with per-level cost c has a free-energy-optimal depth K*(c) whose residual error rate follows the Mertens product, and this depends on arithmetic structure, not on prime density.",
+      "mechanism": "levels = periodic 'composite' predictors; an unpredicted integer is promoted to a new level; cost per step = c * depth + (1 bit per residual error)",
+      "intervention": "sweep c over {0.001, 0.003, 0.01, 0.03, 0.1}; cap depth at K and sweep K in 1..40",
+      "control": "same agent with depth frozen at 0 (predict prime-density only)",
+      "positive_control": "stream built as an explicit OR of periodic sources of periods {2,3,5,7}: depth must stop at 4 with zero residual",
+      "observable": "residual error rate r(K) over n in [2, 10^5]; total cost per step; K*(c)",
+      "success_criterion": "max relative deviation |r(K) - prod_{p<=p_K}(1-1/p)| / prod <= 0.05 for K in 1..20 on the real stream, AND on the null twin the ratio r(K)/r(0) at K=20 is >= 0.9",
+      "failure_criterion": "relative deviation > 0.05 for any K <= 20 on the real stream, OR the twin achieves r(20)/r(0) < 0.9 (structure not arithmetic)",
+      "alternative_explanation": "the sieve itself explains everything; the predictive-coding framing adds nothing beyond Eratosthenes",
+      "null_twin": "Cramer stream: each n >= 3 labelled 'prime' with probability 1/ln n independently (matched density, divisibility structure destroyed); the agent runs unchanged",
+      "substrate": "symbolic rewriting",
+      "why_this_implementation": "integers and periodic masks are the native objects; no learned function approximator needed",
+      "size": "N = 10^5 integers, K up to 40 levels, 5 cost values, 10 seeds for the twin",
+      "cost_estimate": "about 2 CPU core-minutes",
+      "stupid_explanations": [
+        "the promotion rule is literally the sieve so success is guaranteed by construction",
+        "Mertens agreement is a known theorem, not a property of the agent",
+        "the Cramer twin fails because random streams are unpredictable by any periodic model, which says nothing about predictive coding"
+      ],
+      "outcome": "NULL",
+      "round": 2,
+      "rows": "hecate/programs/HT-47f4c02be4/worlds/W1/rows.jsonl",
+      "outcome_file": "hecate/programs/HT-47f4c02be4/worlds/W1/OUTCOME.json",
+      "statistics": {
+        "treatment_max_rel_dev_K1_20": 0.0042,
+        "treatment_rel_dev_by_K": {
+          "1": 0.0,
+          "2": 0.0,
+          "3": 0.0001,
+          "4": 0.0001,
+          "5": 0.0002,
+          "6": 0.0003,
+          "7": 0.0004,
+          "8": 0.0005,
+          "9": 0.0006,
+          "10": 0.0012,
+          "11": 0.002,
+          "12": 0.0026,
+          "13": 0.0029,
+          "14": 0.0032,
+          "15": 0.003,
+          "16": 0.0022,
+          "17": 0.0009,
+          "18": 0.0008,
+          "19": 0.0026,
+          "20": 0.0042
+        },
+        "treatment_r_K": {
+          "0": 1.0,
+          "1": 0.50001,
+          "4": 0.2286,
+          "10": 0.15814,
+          "20": 0.12726,
+          "40": 0.10326
+        },
+        "treatment_K_star": {
+          "0.001": 32,
+          "0.003": 15,
+          "0.01": 7,
+          "0.03": 4,
+          "0.1": 2
+        },
+        "treatment_depth_final": 40,
+        "treatment_periods_first10": [
+          2,
+          3,
+          5,
+          7,
+          11,
+          13,
+          17,
+          19,
+          23,
+          29
+        ],
+        "control_r0": 1.0,
+        "twin_ratio_20_0_mean": 0.2115,
+        "twin_ratio_20_0_per_seed": [
+          0.2114,
+          0.2108,
+          0.2121,
+          0.2127,
+          0.211,
+          0.2116,
+          0.2118,
+          0.2098,
+          0.211,
+          0.2126
+        ],
+        "twin_max_rel_dev_mean_curve": 0.6548,
+        "twin_K_star_seed0": {
+          "0.001": 30,
+          "0.003": 14,
+          "0.01": 7,
+          "0.03": 4,
+          "0.1": 2
+        },
+        "pc_depth_final": [
+          4,
+          4,
+          4,
+          4,
+          4
+        ],
+        "cheat_max_rel_dev": [
+          0.0097,
+          0.0097,
+          0.0099,
+          0.0094,
+          0.0099
+        ],
+        "clause_A_real_stream": true,
+        "clause_B_twin_ratio": false
+      },
+      "procedural_notes": [
+        "pilot cannot test whether the treatment-vs-twin clause is attainable (PREREG gap); Mertens agreement is by construction (sieve)"
+      ],
+      "anomalies": [
+        {
+          "id": "A1",
+          "text": "Clause B (twin r(20)/r(0) >= 0.9) is unattainable under readings R3/R4: r(0)=1 by construction and label-free promotion makes periodic levels absorb most twin integers; observed at the pilot (ratio ~0.21) before treatment code existed. The spec's success criterion requires the twin NOT to be absorbed while its mechanism absorbs any integer stream."
+        },
+        {
+          "id": "A2",
+          "text": "Positive control and treatment are deterministic; the 5 seeds per arm are identical rows (recorded in NOTES.md)."
+        },
+        {
+          "id": "A3",
+          "text": "pilot_eval.py crashed once on JSON serialisation (evaluator bug, fixed, rerun on the same rows)."
+        }
+      ],
+      "rejected_explanations": []
+    },
+    {
+      "id": "W2",
+      "triplicateId": "HT-47f4c02be4",
+      "passId": "P3",
+      "mechanism_ids": [
+        "M3",
+        "M9"
+      ],
+      "lens_ids": [
+        "L4",
+        "L3"
+      ],
+      "hypothesis": "Under a truncated primon-gas environment the held-out log-loss advantage of a factorized (per-prime Bernoulli) learner over an unfactorized learner with equal parameter count grows as beta -> 1.",
+      "mechanism": "Euler-product independence of divisibility events makes per-prime channels exact sufficient statistics",
+      "intervention": "beta in {1.05, 1.2, 1.5, 2.0, 3.0}; training samples T in {100, 1000, 10000}",
+      "control": "unfactorized learner: histogram over log-magnitude buckets with Laplace smoothing, parameter count matched to the factorized learner (number of primes <= 1000 = 168)",
+      "positive_control": "an explicitly product-form synthetic world: independent geometric exponents per prime, which must show the factorized advantage at every beta",
+      "observable": "held-out log-loss (nats per sample) on 5000 samples; gap G(beta) = loss_unfact - loss_fact",
+      "success_criterion": "at T=1000, G(1.05) >= 2 * G(3.0) on the primon world (mean over 10 seeds, one-sided Welch p < 0.01), AND on the null twin G(1.05) <= 1.2 * G(3.0)",
+      "failure_criterion": "G(1.05) < 2 * G(3.0) on the primon world, or the null twin shows the same ratio (>= 2)",
+      "alternative_explanation": "heavier tails at low beta favour any model with explicit tail parameters, factorized or not",
+      "null_twin": "magnitude-matched world: draw n from the primon law, then replace n with a uniformly random integer in the same dyadic bucket [2^k, 2^(k+1)); size law preserved, factor independence destroyed",
+      "substrate": "population",
+      "why_this_implementation": "direct sampling of integers with exact factorization by a precomputed smallest-prime-factor table; counting estimators suffice, no neural network",
+      "size": "integers <= 10^6, 168 prime channels, 5 beta values, 3 T values, 10 seeds",
+      "cost_estimate": "about 4 CPU core-minutes",
+      "stupid_explanations": [
+        "truncation at 10^6 dominates behaviour near beta = 1",
+        "the matched-parameter histogram is simply a poor model",
+        "log-loss differences come from smoothing constants"
+      ]
+    },
+    {
+      "id": "W3",
+      "triplicateId": "HT-47f4c02be4",
+      "passId": "P3",
+      "mechanism_ids": [
+        "M12",
+        "M4",
+        "M8"
+      ],
+      "lens_ids": [
+        "L5",
+        "L4"
+      ],
+      "hypothesis": "Under an energy budget, a population of periodic predictors facing a superposition of coprime periodic sources sustains one distinct surviving period per source; with non-coprime sources of matched total density fewer periods coexist.",
+      "mechanism": "reward for correctly predicted events is shared among agents predicting the same event; cost per agent per step proportional to 1/period; Boltzmann reproduction at temperature T; multiplicative mutation (x or / by 2,3,5,7)",
+      "intervention": "coprime sources {3,5,7,11} vs non-coprime sources {4,6,10,12}; T in {0.1, 0.3, 1.0}",
+      "control": "same population with reward not shared (no niche competition)",
+      "positive_control": "a single source of period 5: exactly one period (5 or a multiple) must dominate",
+      "observable": "number D of distinct periods with abundance >= 5% at step 20000",
+      "success_criterion": "coprime world median D over 20 seeds in [3,5] AND non-coprime world median D <= 2, at T = 0.3",
+      "failure_criterion": "coprime median D outside [3,5], or non-coprime median D >= 3",
+      "alternative_explanation": "overlapping events in the non-coprime world simply reduce total available reward, shrinking the population",
+      "null_twin": "non-coprime source set {4,6,10,12} with OR-combined event density matched to the coprime set within 2% (adjusted by dropping events at random)",
+      "substrate": "ecology",
+      "why_this_implementation": "an explicit agent ecology with integer genomes keeps the divisor lattice visible; an RL policy would hide period structure in weights",
+      "size": "64 agents, periods 2..60, 20000 steps, 20 seeds, 2 worlds, 3 temperatures",
+      "cost_estimate": "about 8 CPU core-minutes",
+      "stupid_explanations": [
+        "survivors merely copy the source periods, so coprimality of survivors is inherited not selected",
+        "density matching by random dropping adds noise that reduces coexistence",
+        "population size, not niche structure, limits D"
+      ]
+    },
+    {
+      "id": "W4",
+      "triplicateId": "HT-47f4c02be4",
+      "passId": "P3",
+      "mechanism_ids": [
+        "M5"
+      ],
+      "lens_ids": [
+        "L6"
+      ],
+      "hypothesis": "The ratio of inference work (trial-division factoring) to generation work (one multiplication) falls with the temporal predictability of hidden factors when the solver uses a predictive prior ordering of candidate divisors.",
+      "mechanism": "semiprime stream n_t = p_t q_t with p_t, q_t random walks over the prime index; solver tries divisors in order of prior probability from recent factors",
+      "intervention": "prior-ordered trial division vs ascending trial division; walk step size s in {1, 3, 10}",
+      "control": "ascending trial division (no prior)",
+      "positive_control": "constant factors (s = 0): prior-ordered solver must succeed on first try for >= 99% of samples",
+      "observable": "mean number of trial divisions per sample",
+      "success_criterion": "on the drift world with s = 1, mean prior-ordered cost <= 0.5 x ascending cost; on the null twin prior-ordered cost >= 0.9 x ascending cost",
+      "failure_criterion": "drift-world ratio > 0.5, or null-twin ratio < 0.9",
+      "alternative_explanation": "memoization of the last answer, not prediction, produces the saving",
+      "null_twin": "same marginal distribution of (p, q) as the drift world but temporally shuffled: magnitudes matched, temporal predictability destroyed",
+      "substrate": "causal toy",
+      "why_this_implementation": "operation counts on a deterministic solver are an exact, cheap proxy for work; no learned model",
+      "size": "primes < 10^4 (1229), 10000 samples per condition, 3 step sizes, 5 seeds",
+      "cost_estimate": "about 1 CPU core-minute",
+      "stupid_explanations": [
+        "any cache beats no cache on a slowly varying stream",
+        "operation count ignores the cost of maintaining the prior",
+        "the asymmetry is a property of trial division, not of factoring in general"
+      ],
+      "outcome": "CONFOUNDED",
+      "raw_outcome": "CONFOUNDED",
+      "procedural_notes": [],
+      "rows": "hecate/programs/HT-47f4c02be4/worlds/W4/rows.jsonl",
+      "outcome_file": "hecate/programs/HT-47f4c02be4/worlds/W4/OUTCOME.json",
+      "statistics": {
+        "s=1": {
+          "TREATMENT_prior_mean_divisions": 3.54168,
+          "TREATMENT_n": 50000,
+          "CONTROL_ascending_mean_divisions": 424.78616,
+          "CONTROL_n": 50000,
+          "R_drift": 0.008337559773604676,
+          "R_drift_per_seed": [
+            0.006142845058118958,
+            0.004193741302034541,
+            0.04880079993092518,
+            0.00941206835077935,
+            0.014546062462333543
+          ],
+          "NULL_TWIN_prior_mean_divisions": 79.1926,
+          "NULL_TWIN_ascending_mean_divisions": 424.78616,
+          "NULL_TWIN_n": 50000,
+          "R_null": 0.1864293318784209,
+          "R_null_per_seed": [
+            0.16896086789136855,
+            0.08572087708248129,
+            1.2033111346931042,
+            0.1819011989590928,
+            0.2891594911210362
+          ],
+          "MEMO_mean_divisions_diagnostic": 426.28492,
+          "R_memo_diagnostic": 1.0035282693767613
+        },
+        "s=3": {
+          "TREATMENT_prior_mean_divisions": 11.51366,
+          "TREATMENT_n": 50000,
+          "CONTROL_ascending_mean_divisions": 345.79532,
+          "CONTROL_n": 50000,
+          "R_drift": 0.03329617069427082,
+          "R_drift_per_seed": [
+            0.032808519108280254,
+            0.025811473328427866,
+            0.018642337629194844,
+            0.05642515436582706,
+            0.1059881850444627
+          ],
+          "NULL_TWIN_prior_mean_divisions": 259.39262,
+          "NULL_TWIN_ascending_mean_divisions": 345.79532,
+          "NULL_TWIN_n": 50000,
+          "R_null": 0.7501334026151656,
+          "R_null_per_seed": [
+            0.6668101683348499,
+            0.6323201887425359,
+            0.3773707324715767,
+            1.8758607206069635,
+            1.5251012526211438
+          ],
+          "MEMO_mean_divisions_diagnostic": 347.29392,
+          "R_memo_diagnostic": 1.004333777565295
+        },
+        "s=10": {
+          "TREATMENT_prior_mean_divisions": 38.59934,
+          "TREATMENT_n": 50000,
+          "CONTROL_ascending_mean_divisions": 337.50452,
+          "CONTROL_n": 50000,
+          "R_drift": 0.11436688314574275,
+          "R_drift_per_seed": [
+            0.07725406220346118,
+            0.12827452488648844,
+            0.10805213137150972,
+            0.16657684024374303,
+            0.13012175495441897
+          ],
+          "NULL_TWIN_prior_mean_divisions": 330.84622,
+          "NULL_TWIN_ascending_mean_divisions": 337.50452,
+          "NULL_TWIN_n": 50000,
+          "R_null": 0.9802719679132001,
+          "R_null_per_seed": [
+            0.7376033004540982,
+            1.0915314644994603,
+            0.9201858838268598,
+            1.3887849720466832,
+            1.033151960528132
+          ],
+          "MEMO_mean_divisions_diagnostic": 338.97568,
+          "R_memo_diagnostic": 1.0043589342151624
+        },
+        "POSITIVE_CONTROL": {
+          "first_try_frac": 0.9999,
+          "n": 50000,
+          "prior_mean_divisions": 1.0483
+        },
+        "CHEAT": {
+          "R_cheat": 0.002354125661721182,
+          "n": 50000
+        }
+      },
+      "anomalies": [
+        {
+          "id": "A1",
+          "text": "shuffled null twin still favors the prior (R_null=0.186 < 1); see TREATMENT rows' range_idx_p/q for the index band the s=1 walk occupied"
+        }
+      ],
+      "rejected_explanations": []
+    }
+  ],
+  "candidateEngines": [],
+  "currentVerdict": "PARK",
+  "evidenceSummary": {
+    "layer": "experimental_observation",
+    "rows": "hecate/programs/HT-47f4c02be4/worlds/W1/rows.jsonl",
+    "note": "round 1 W4 CONFOUNDED; round 2 W1 NULL: two worlds read, both NULL/CONFOUNDED"
+  }
+}

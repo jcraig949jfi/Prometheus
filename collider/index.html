@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1" />
+<meta name="theme-color" content="#030406" />
+<title>Prometheus Collider</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22%3E%3Crect width=%2232%22 height=%2232%22 fill=%22%23030406%22/%3E%3Ccircle cx=%2210%22 cy=%2212%22 r=%225%22 fill=%22none%22 stroke=%22%23d8b27a%22/%3E%3Ccircle cx=%2222%22 cy=%2212%22 r=%225%22 fill=%22none%22 stroke=%22%238fb8d8%22/%3E%3Ccircle cx=%2216%22 cy=%2222%22 r=%225%22 fill=%22none%22 stroke=%22%23b9a6e0%22/%3E%3C/svg%3E" />
+<meta name="description" content="Creativity looks forward. Data looks back. A swipe feed of generative three-concept collisions." />
+</head>
+<body>
+<canvas id="gl"></canvas>
+<main id="feed" aria-label="Collision feed"></main>
+
+<header id="mark" title="Prometheus Collider">
+  <span class="mark-a">PROMETHEUS</span><span class="mark-dot">·</span><span class="mark-b">COLLIDER</span>
+</header>
+<button id="collide-open" class="icon-btn top" aria-label="Collide your own three ideas" title="Collide your own (C)">
+  <svg viewBox="0 0 24 24"><circle cx="7" cy="8" r="3"/><circle cx="17" cy="8" r="3"/><circle cx="12" cy="17" r="3"/><path d="M12 12v2M9.5 9.5 11 11M14.5 9.5 13 11"/></svg>
+</button>
+
+<nav id="rail" aria-label="Collision controls">
+  <button data-act="freeze" class="icon-btn" title="Freeze / resume (space)" aria-label="Freeze or resume"><svg viewBox="0 0 24 24"><path class="i-pause" d="M8 5v14M16 5v14"/><path class="i-play" d="M7 5l12 7-12 7z"/></svg></button>
+  <button data-act="remix" class="icon-btn" title="Remix: replace one concept (R)" aria-label="Remix"><svg viewBox="0 0 24 24"><path d="M4 12a8 8 0 0 1 14-5.3M20 12a8 8 0 0 1-14 5.3"/><path d="M18 3v4h-4M6 21v-4h4"/></svg></button>
+  <button data-act="reorder" class="icon-btn" title="Rotate concept order (O)" aria-label="Rotate order"><svg viewBox="0 0 24 24"><path d="M5 7h11l-3-3M19 17H8l3 3"/></svg></button>
+  <button data-act="info" class="icon-btn" title="Provenance (I)" aria-label="Provenance"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.01"/></svg></button>
+  <button data-act="share" class="icon-btn" title="Copy replay link (S)" aria-label="Copy link"><svg viewBox="0 0 24 24"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7L11.5 6.8M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1.5-1.5"/></svg></button>
+  <button data-act="fav" class="icon-btn" title="Keep (F)" aria-label="Favorite"><svg viewBox="0 0 24 24"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg></button>
+  <button data-act="sound" class="icon-btn" title="Sound (M)" aria-label="Sound"><svg viewBox="0 0 24 24"><path d="M4 10v4h4l5 4V6L8 10z"/><path class="i-wave" d="M16 9a4 4 0 0 1 0 6M18.5 6.5a8 8 0 0 1 0 11"/></svg></button>
+</nav>
+
+<div id="sheet" class="sheet" hidden>
+  <div class="sheet-inner">
+    <button class="sheet-close" aria-label="Close">×</button>
+    <div id="sheet-body"></div>
+  </div>
+</div>
+
+<div id="modal" class="modal" hidden>
+  <form id="collide-form" class="modal-inner" autocomplete="off">
+    <div class="modal-title">COLLIDE THREE IDEAS</div>
+    <input name="a" list="concepts" placeholder="Quantum error correction" required />
+    <input name="b" list="concepts" placeholder="Mycelial networks" required />
+    <input name="c" list="concepts" placeholder="Constitutional law" required />
+    <datalist id="concepts"></datalist>
+    <div class="modal-hint">Any words work. Names from the historical Nous dictionary carry their field and mechanism into the collision.</div>
+    <div class="modal-row"><button type="button" class="ghost" id="collide-cancel">Cancel</button><button type="submit" class="solid">COLLIDE</button></div>
+  </form>
+</div>
+
+<div id="hud" hidden></div>
+<div id="toast" aria-live="polite"></div>
+<div id="hint">swipe · scroll · ↑↓</div>
+<script type="module" src="/src/main.ts"></script>
+</body>
+</html>

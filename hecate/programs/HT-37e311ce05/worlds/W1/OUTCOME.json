@@ -1,0 +1,197 @@
+{
+ "triplicateId": "HT-37e311ce05",
+ "world": "W1",
+ "outcome": "INSTRUMENT_FAIL",
+ "statistics": {
+  "TREATMENT": {
+   "n": 10,
+   "f_pool_per_seed": [
+    0.99,
+    0.98,
+    1.0,
+    0.93,
+    0.71,
+    0.99,
+    0.95,
+    0.85,
+    0.99,
+    0.54
+   ],
+   "T_per_seed": [
+    54.71,
+    64.75,
+    48.68,
+    70.58,
+    74.85,
+    49.55,
+    69.58,
+    70.0,
+    51.2,
+    84.87
+   ],
+   "T_over_mstar_mean": 2.5551083176009417,
+   "mean_success_mean": 0.9828999999999999,
+   "mean_m_mean": 32.019,
+   "seeds_meeting_part_a": 0,
+   "seeds_f_pool_below_0_5": 0
+  },
+  "CONTROL": {
+   "n": 10,
+   "f_pool_per_seed": [
+    0.4,
+    0.97,
+    0.51,
+    0.99,
+    0.43,
+    0.87,
+    0.24,
+    0.96,
+    0.99,
+    0.96
+   ],
+   "T_per_seed": [
+    107.22,
+    60.04,
+    112.55,
+    54.67,
+    112.1,
+    99.16,
+    101.0,
+    99.76,
+    84.1,
+    66.72
+   ],
+   "T_over_mstar_mean": 3.5893046527799,
+   "mean_success_mean": 0.9900228592162555,
+   "mean_m_mean": 45.011,
+   "seeds_meeting_part_a": 0,
+   "seeds_f_pool_below_0_5": 3
+  },
+  "NULL_TWIN": {
+   "n": 10,
+   "f_pool_per_seed": [
+    0.99,
+    0.95,
+    1.0,
+    0.96,
+    0.99,
+    0.74,
+    0.97,
+    0.9,
+    0.99,
+    0.96
+   ],
+   "T_per_seed": [
+    88.61,
+    55.62,
+    52.56,
+    60.72,
+    52.18,
+    103.72,
+    65.04,
+    71.98,
+    52.69,
+    54.07
+   ],
+   "T_over_mstar_mean": 2.628787710859452,
+   "mean_success_mean": 0.970247369375907,
+   "mean_m_mean": 32.898999999999994,
+   "seeds_meeting_part_a": 0,
+   "seeds_f_pool_below_0_5": 0
+  },
+  "POSITIVE_CONTROL": {
+   "n": 10,
+   "f_pool_per_seed": [
+    0.69,
+    0.07,
+    0.76,
+    0.75,
+    0.65,
+    0.67,
+    0.4,
+    0.04,
+    0.31,
+    0.51
+   ],
+   "T_per_seed": [
+    53.92,
+    null,
+    52.0,
+    51.59,
+    52.76,
+    52.3,
+    53.0,
+    null,
+    59.0,
+    53.21
+   ],
+   "T_over_mstar_mean": 2.138973305561541,
+   "mean_success_mean": 0.992,
+   "mean_m_mean": 26.887999999999998,
+   "seeds_meeting_part_a": 0,
+   "seeds_f_pool_below_0_5": 4
+  },
+  "CHEAT": {
+   "n": 10,
+   "f_pool_per_seed": [
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0
+   ],
+   "T_per_seed": [
+    25.0,
+    25.0,
+    25.0,
+    25.0,
+    25.0,
+    25.0,
+    25.0,
+    25.0,
+    25.0,
+    25.0
+   ],
+   "T_over_mstar_mean": 1.0,
+   "mean_success_mean": 1.0,
+   "mean_m_mean": null,
+   "seeds_meeting_part_a": 10,
+   "seeds_f_pool_below_0_5": 0
+  },
+  "success_difference_TREATMENT_minus_CONTROL": -0.007122859216255661,
+  "m_star": 25
+ },
+ "criterion_as_applied": "m*=25 (smallest m with P_CS>=0.5). SUCCESS: >=8/10 TREATMENT seeds with final f_pool>=0.8 and |T/m*-1|<=0.15 (T=mean m1+m2 over both-pool pairs of the final generation), AND mean-over-seeds success(TREATMENT)-success(CONTROL)>=0.3. FAILURE: f_pool<0.5 in >=5/10 TREATMENT seeds OR difference<0.1. TREATMENT success=False, failure=True, diff=-0.0071.",
+ "positive_control_detected": false,
+ "cheat_detected": false,
+ "null_twin_meets_success": false,
+ "stupid_explanations_status": [
+  {
+   "text": "mutation bias toward lower m drives free-riding in both arms",
+   "addressed_by_this_run": true,
+   "how": "mutation is symmetric +-1 by construction, identical across arms; only the clip at 0 and 60 is asymmetric at the boundaries. Mean m per arm reported."
+  },
+  {
+   "text": "m* sits near the max budget so the cap does the work",
+   "addressed_by_this_run": true,
+   "how": "m*=25: 0.42 of the individual cap 60, 0.21 of the pair cap 120."
+  },
+  {
+   "text": "the linear null has lower marginal return near m*, so selection intensity differs",
+   "addressed_by_this_run": false,
+   "how": "slope near m*: CS 0.0688/row vs null 0.0192/row; inherent to the null design, not separable in this run."
+  }
+ ],
+ "anomalies": [
+  "success part (b) unattainable: CONTROL mean success 0.9900, so max attainable difference is 0.0100 < 0.3 (CHEAT at 1.0 fails)",
+  "m*=25 <= individual cap 60: a lone agent can reach m*, so pooling is not required; POSITIVE_CONTROL mean T/m* = 2.14 (pairs sum two solo budgets)"
+ ],
+ "core_minutes": 0.0354,
+ "attempts": 1,
+ "notes": "OMP transition midpoint m*=25. Final pooling frequency (mean over seeds): TREATMENT 0.89, CONTROL 0.73, NULL_TWIN 0.94, POSITIVE_CONTROL 0.48. Seeds meeting the stability part: TREATMENT 0/10, NULL_TWIN 0/10. Mean success difference TREATMENT-CONTROL -0.007 (threshold 0.3). Outcome INSTRUMENT_FAIL decided in code from the PREREG classes."
+}

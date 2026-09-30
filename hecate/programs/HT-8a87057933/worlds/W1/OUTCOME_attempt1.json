@@ -1,0 +1,133 @@
+{
+ "triplicateId": "HT-8a87057933",
+ "world": "W1",
+ "outcome": "INSTRUMENT_FAIL",
+ "statistics": {
+  "TREATMENT": {
+   "n_switches": 300,
+   "n_seeds": 30,
+   "median_recovery": 12.0,
+   "mean_recovery": 12.426666666666666,
+   "frac_censored": 0.0,
+   "frac_at_minimum_10": 0.013333333333333334,
+   "mean_unsat_events_per_run": 16.066666666666666,
+   "mean_core_size": 2.2852618253779244,
+   "mean_core_turnover": 0.9406266959662857,
+   "mean_preswitch_fraction_dropped": 1.0,
+   "L4_recovery_pole_stable_fraction": 0.947352157102157,
+   "max_abs_x": 9.885206628722408,
+   "ratio_to_null_twin": 0.8571428571428571,
+   "ratio_to_drop_oldest": 1.0,
+   "p_vs_null_twin": 1.9226619220603058e-56,
+   "p_vs_drop_oldest": 0.41166896559092336,
+   "meets_failure_criterion": true
+  },
+  "CONTROL": {
+   "n_switches": 300,
+   "n_seeds": 30,
+   "median_recovery": 12.0,
+   "mean_recovery": 12.456666666666667,
+   "frac_censored": 0.0,
+   "frac_at_minimum_10": 0.013333333333333334,
+   "mean_unsat_events_per_run": 15.0,
+   "mean_core_size": 2.271125655390361,
+   "mean_core_turnover": 0.9406066641691642,
+   "mean_preswitch_fraction_dropped": 1.0,
+   "L4_recovery_pole_stable_fraction": 0.9482468457468459,
+   "max_abs_x": 9.885206628722408
+  },
+  "CONTROL_SW10": {
+   "n_switches": 300,
+   "n_seeds": 30,
+   "median_recovery": 12.0,
+   "mean_recovery": 12.626666666666667,
+   "frac_censored": 0.0,
+   "frac_at_minimum_10": 0.006666666666666667,
+   "mean_unsat_events_per_run": 14.8,
+   "mean_core_size": 2.3685052066669714,
+   "mean_core_turnover": 0.9268336320542202,
+   "mean_preswitch_fraction_dropped": 1.0,
+   "L4_recovery_pole_stable_fraction": 0.9440867991657466,
+   "max_abs_x": 11.888705560104112
+  },
+  "NULL_TWIN": {
+   "n_switches": 300,
+   "n_seeds": 30,
+   "median_recovery": 14.0,
+   "mean_recovery": 15.653333333333334,
+   "frac_censored": 0.0,
+   "frac_at_minimum_10": 0.013333333333333334,
+   "mean_unsat_events_per_run": 33.766666666666666,
+   "mean_core_size": 2.1584190863053956,
+   "mean_core_turnover": 0.890098551597672,
+   "mean_preswitch_fraction_dropped": 0.6599804849887358,
+   "L4_recovery_pole_stable_fraction": 0.8745403462570982,
+   "max_abs_x": 15020.780223451004,
+   "p_vs_drop_oldest": 1.0,
+   "ratio_to_drop_oldest": 1.1666666666666667
+  },
+  "POSITIVE_CONTROL": {
+   "n_switches": 300,
+   "n_seeds": 30,
+   "median_recovery": 12.0,
+   "mean_recovery": 11.76,
+   "frac_censored": 0.0,
+   "frac_at_minimum_10": 0.006666666666666667,
+   "mean_unsat_events_per_run": 0.0,
+   "mean_core_size": null,
+   "mean_core_turnover": null,
+   "mean_preswitch_fraction_dropped": null,
+   "L4_recovery_pole_stable_fraction": 0.8935353535353535,
+   "max_abs_x": 16.122638978554793,
+   "ratio_to_null_twin": 0.8571428571428571,
+   "ratio_to_drop_oldest": 1.0,
+   "p_vs_null_twin": 5.6862495409127475e-90,
+   "p_vs_drop_oldest": 1.244864942643236e-12
+  },
+  "CHEAT": {
+   "n_switches": 300,
+   "n_seeds": 30,
+   "median_recovery": 10.0,
+   "mean_recovery": 10.0,
+   "frac_censored": 0.0,
+   "frac_at_minimum_10": 1.0,
+   "mean_unsat_events_per_run": 16.066666666666666,
+   "mean_core_size": 2.2852618253779244,
+   "mean_core_turnover": 0.9406266959662857,
+   "mean_preswitch_fraction_dropped": 1.0,
+   "L4_recovery_pole_stable_fraction": 0.947352157102157,
+   "max_abs_x": 9.885206628722408,
+   "ratio_to_null_twin": 0.7142857142857143,
+   "ratio_to_drop_oldest": 0.8333333333333334,
+   "p_vs_null_twin": 4.6958600128761305e-112,
+   "p_vs_drop_oldest": 4.3408845160176705e-114
+  }
+ },
+ "criterion_as_applied": "Recovery time = steps after switch until |x-r|<0.1 held 10 consecutive steps (min 10, censor 200). SUCCESS: median(TREATMENT) <= 0.7*median(NULL_TWIN) AND <= 0.85*median(CONTROL=drop-oldest) AND one-sided Mann-Whitney (treatment less) p<0.01 vs each, over 300 switches (30 seeds x 10). FAILURE: median ratio to drop-oldest >= 0.95 or p vs drop-oldest >= 0.05. Positive control/cheat detected = meets the full success criterion in the treatment slot. Null twin meets success = median(NULL_TWIN) <= 0.85*median(CONTROL) and p<0.01 (the 0.7x-self clause is vacuous).",
+ "positive_control_detected": false,
+ "cheat_detected": false,
+ "null_twin_meets_success": false,
+ "stupid_explanations_status": [
+  {
+   "text": "core-guided dropping is drop-oldest under another name",
+   "addressed_by_this_run": true,
+   "how": "direct comparison vs CONTROL at matched deletion count; mean pre-switch fraction of dropped clauses TREATMENT=1.0, CONTROL=1.0"
+  },
+  {
+   "text": "deadbeat control on a fine grid recovers in 2 steps regardless of policy",
+   "addressed_by_this_run": true,
+   "how": "fraction of switches at the 10-step minimum per arm: TREATMENT=0.01, CONTROL=0.01, CONTROL_SW10=0.01, NULL_TWIN=0.01, POSITIVE_CONTROL=0.01, CHEAT=1.00"
+  },
+  {
+   "text": "the noise band makes UNSAT fire spuriously, so the 'mechanism' is just a noise detector",
+   "addressed_by_this_run": true,
+   "how": "noise 0.05 < miss 0.1 so the true model is never excluded; UNSAT per run in POSITIVE_CONTROL (no stale clauses) = 0.0"
+  }
+ ],
+ "anomalies": [
+  "oracle reset not faster than drop-oldest (median 12.0 vs 12.0)"
+ ],
+ "core_minutes": 0.064,
+ "attempts": 1,
+ "notes": "Outcome INSTRUMENT_FAIL. Median recovery (steps, n=300 switches each): TREATMENT 12.0, CONTROL drop-oldest 12.0, NULL_TWIN random-drop 14.0, POSITIVE_CONTROL oracle 12.0, CONTROL_SW10 12.0. Treatment/random ratio 0.857 (p=1.92e-56), treatment/drop-oldest ratio 1.000 (p=0.412). Positive control detected=False, cheat detected=False, null twin meets success=False."
+}

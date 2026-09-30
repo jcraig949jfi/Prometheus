@@ -1,0 +1,167 @@
+{
+ "triplicateId": "HT-321a8fd8e0",
+ "world": "W1",
+ "R": {
+  "reproduced": true,
+  "stats": {
+   "round1_class_on_new_seeds": "SIGNAL",
+   "seeds": "100-119",
+   "TREATMENT_rate_by_k": {
+    "1": 0.0,
+    "2": 0.0,
+    "3": 0.0,
+    "4": 0.589,
+    "5": 0.91,
+    "6": 1.0,
+    "7": 1.0,
+    "8": 1.0
+   },
+   "TREATMENT_seed_range_k4": [
+    0.525,
+    0.635
+   ],
+   "CONTROL_rate_k1": 1.0,
+   "NULL_TWIN_rate_k1": 1.0,
+   "null_twin_meets_code_clause": false
+  }
+ },
+ "ORIG": {
+  "fired": true,
+  "stats": {
+   "BCH(31,26,3)": {
+    "step_at_t_plus_1": true,
+    "t": 1,
+    "rate_by_k": {
+     "1": 0.0,
+     "2": 1.0,
+     "3": 1.0,
+     "4": 1.0,
+     "5": 1.0,
+     "6": 1.0,
+     "7": 1.0,
+     "8": 1.0
+    }
+   },
+   "BCH(31,21,5)": {
+    "step_at_t_plus_1": true,
+    "t": 2,
+    "rate_by_k": {
+     "1": 0.0,
+     "2": 0.0,
+     "3": 0.882,
+     "4": 1.0,
+     "5": 1.0,
+     "6": 1.0,
+     "7": 1.0,
+     "8": 1.0
+    }
+   },
+   "codes_meta": {
+    "BCH(31,16,7) nearest-codeword decode": {
+     "generator_poly": "0b1000111110101111",
+     "dmin": 7,
+     "covering_radius": 5,
+     "t": 3
+    },
+    "BCH(31,21,5) nearest-codeword decode": {
+     "generator_poly": "0b11101101001",
+     "dmin": 5,
+     "covering_radius": 3,
+     "t": 2
+    },
+    "BCH(31,26,3) nearest-codeword decode": {
+     "generator_poly": "0b100101",
+     "dmin": 3,
+     "covering_radius": 1,
+     "t": 1
+    }
+   },
+   "prior_art_label": "KNOWN_ANALOGUE_FOUND"
+  }
+ },
+ "ALT": {
+  "status": "PASS",
+  "stats": {
+   "K_code_BCH31_16": 3,
+   "K_majority_31": 0,
+   "code_rate_by_k": {
+    "1": 0.0,
+    "2": 0.0,
+    "3": 0.0,
+    "4": 0.6025,
+    "5": 0.91,
+    "6": 1.0,
+    "7": 1.0,
+    "8": 1.0
+   },
+   "majority31_rate_by_k": {
+    "1": 0.51125,
+    "2": 0.77125,
+    "3": 0.8945,
+    "4": 0.9595,
+    "5": 0.9825,
+    "6": 0.9935,
+    "7": 0.99725,
+    "8": 0.999
+   },
+   "aux_MAJ_R3_48_K": 1,
+   "aux_MAJ_R3_48_rate_by_k": {
+    "1": 0.0,
+    "2": 0.046,
+    "3": 0.126,
+    "4": 0.24475,
+    "5": 0.379,
+    "6": 0.52575,
+    "7": 0.66125,
+    "8": 0.77575
+   },
+   "aux_exhaustive_k1_3": {
+    "EXH_CODE_BCH16": {
+     "counts": {
+      "1": 0,
+      "2": 0,
+      "3": 0
+     },
+     "n_coalitions_by_k": {
+      "1": 31,
+      "2": 465,
+      "3": 4495
+     }
+    },
+    "EXH_MAJ31": {
+     "counts": {
+      "1": 18,
+      "2": 355,
+      "3": 4007
+     },
+     "n_coalitions_by_k": {
+      "1": 31,
+      "2": 465,
+      "3": 4495
+     }
+    }
+   }
+  }
+ },
+ "controls": {
+  "positive_detected": true,
+  "cheat_detected": true,
+  "detail": {
+   "R.POSITIVE_CONTROL(k=1>=0.99)": true,
+   "ORIG.POSITIVE_CONTROL(k=1>=0.99)": true,
+   "ALT.POSITIVE_CONTROL(k=1>=0.99)": true,
+   "R.CHEAT(code clause)": true,
+   "ORIG.CHEAT_D3(step at t=1)": true,
+   "ORIG.CHEAT_D5(step at t=2)": true,
+   "ALT.CHEAT_ALT(K==3)": true
+  }
+ },
+ "predicate": "ORIG_FOSSIL_ALT_PASS",
+ "anomalies": [
+  "ALT pass is guaranteed by counting: 31 agents cannot give 16 bits >= 3 copies each (needs 48), so some single agent is pivotal under any allocation/tie rule; ALT tests rate, not mechanism.",
+  "R: step at k=4 is partial (rate 0.589); resistance just beyond t depends on which coalition is drawn (not explained in this pass)"
+ ],
+ "core_minutes": 0.109375,
+ "attempts": 1,
+ "notes": "R: round-1 class on seeds 100-119 = SIGNAL; BCH16 rates {'1': 0.0, '2': 0.0, '3': 0.0, '4': 0.589, '5': 0.91, '6': 1.0, '7': 1.0, '8': 1.0}. ORIG: d=3 step True, d=5 step True -> fired=True (KNOWN_ANALOGUE_FOUND). ALT: K(code)=3 vs K(majority,31)=0 -> PASS; aux majority r=3 on 48 agents K=1. Predicate ORIG_FOSSIL_ALT_PASS."
+}

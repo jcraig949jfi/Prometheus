@@ -1,0 +1,104 @@
+{
+ "clauses": [
+  {
+   "id": "S1",
+   "positive_value": 0.38888888888888895,
+   "twin_value": 2.190031152647975,
+   "attainable": true,
+   "discriminating": true,
+   "treatment_must_reach": "mean probes to identification <= 6.320 (= 1.05 x GREEDY_REF 6.019); entropy bound for any non-oracle policy is 6.0, so this bar is reachable in principle by a legitimate policy"
+  },
+  {
+   "id": "S2",
+   "positive_value": 2.340625,
+   "twin_value": 13.18125,
+   "attainable": true,
+   "discriminating": true,
+   "treatment_must_reach": "mean probes to identification <= 9.0"
+  },
+  {
+   "id": "S3",
+   "positive_value": 3,
+   "twin_value": 23,
+   "attainable": true,
+   "discriminating": true,
+   "treatment_must_reach": "95th percentile of probes over the 640 episodes <= 8 (GREEDY_REF p95 = 6)"
+  }
+ ],
+ "cheat_detected": true,
+ "cheat_detail": {
+  "cheat_meets_all_success_clauses": true,
+  "cheat_flagged_by_trace_replay": true,
+  "replay_audit": {
+   "GREEDY_REF": {
+    "rows": 640,
+    "replay_mismatch": 0
+   },
+   "POSITIVE_CONTROL": {
+    "rows": 640,
+    "replay_mismatch": 0
+   },
+   "NULL_TWIN": {
+    "rows": 640,
+    "replay_mismatch": 0
+   },
+   "CHEAT": {
+    "rows": 640,
+    "replay_mismatch": 640
+   }
+  }
+ },
+ "legitimate_policy_feasibility": {
+  "entropy_bound_mean_probes": 6.0,
+  "S1_bar_mean_probes": 6.3196875,
+  "S1_bar_above_bound": true
+ },
+ "frozen": true,
+ "revisions": [
+  {
+   "rev": 1,
+   "what": "initial spec: S1 mean probes(X)/mean probes(GREEDY_REF) <= 0.95 (beat greedy information gain by 5%); S2 mean probes <= 9.0; S3 bits per probe log2(64)/mean >= 0.65",
+   "result": "PC (truth oracle) S1=0.389 S2=2.34 S3=2.56; NULL_TWIN S1=2.19 S2=13.18 S3=0.455; all attainable and discriminating on the oracle, BUT GREEDY_REF mean = 6.019 probes against an entropy lower bound of 6.0 for any policy that does not know the truth, so the S1 bar (5.718) is reachable ONLY by the oracle. Not frozen by the added legitimate-policy feasibility check.",
+   "why_changed": "this is the W4 defect in another form (a threshold the positive control reaches only because it is an oracle). Beating greedy in mean probes is information-theoretically impossible on this substrate; S1 reformulated as parity with greedy, S3 (redundant with S2: bits = 6/mean) replaced by a worst-case clause, the property a separating family is supposed to buy"
+  },
+  {
+   "rev": 2,
+   "what": "S1 mean probes(X)/mean probes(GREEDY_REF) <= 1.05 (parity: no more than 5% worse than greedy); S2 unchanged (<= 9.0); S3 95th-percentile probes over 640 episodes <= 8",
+   "why_changed": "see rev 1; thresholds set before any treatment exists, from control values and the entropy bound only"
+  },
+  {
+   "rev": 3,
+   "what": "F2 threshold 0.60 -> 0.75 (spec only; controls unchanged)",
+   "why_changed": "at 0.60 a treatment with mean 7.9-9.0 probes would meet S2 and F2 at once (contradictory clauses); 0.75 x twin 13.18 = 9.89 > S2 bar 9.0, and any treatment meeting S1 (<= 6.32) has F2 ratio <= 0.48, F1 <= 1.05, F3 p95 <= 8, so success and failure regions are disjoint"
+  }
+ ],
+ "control_cpu_seconds": 0.15625,
+ "seeds_per_arm": 10,
+ "episodes_per_seed": 64,
+ "arm_summary": {
+  "GREEDY_REF": {
+   "mean_probes": 6.01875,
+   "median_probes": 6,
+   "p95_probes": 6,
+   "max_probes": 7
+  },
+  "POSITIVE_CONTROL": {
+   "mean_probes": 2.340625,
+   "median_probes": 2,
+   "p95_probes": 3,
+   "max_probes": 5
+  },
+  "NULL_TWIN": {
+   "mean_probes": 13.18125,
+   "median_probes": 13,
+   "p95_probes": 23,
+   "max_probes": 38
+  },
+  "CHEAT": {
+   "mean_probes": 1.0,
+   "median_probes": 1,
+   "p95_probes": 1,
+   "max_probes": 1
+  }
+ }
+}

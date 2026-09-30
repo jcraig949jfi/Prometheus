@@ -1,0 +1,36 @@
+{
+ "id": "W6",
+ "triplicateId": "HT-056d3ac561",
+ "passId": "P3v2",
+ "mechanism_ids": ["M9"],
+ "lens_ids": ["L3"],
+ "hypothesis": "Choosing which metamorphic relations to run, one at a time, by the expected covariance reduction of a recursive Gaussian belief whose per-component prior variances are re-estimated as sparse after every result, localizes a planted 2-sparse fault with a fixed test budget far more often than random selection and than the same greedy rule under a fixed (non-sparse) Gaussian belief.",
+ "mechanism": "World (per seed): hidden fault f in R^64 with exactly 2 nonzero entries, value sign*U(1,2), support and sign uniform; a pool of 256 metamorphic relations, relation i returning residual r_i = a_i . f + eps_i, eps_i ~ N(0, 0.3^2) drawn once per trial per relation; a_i has 6 nonzero entries +/-1/sqrt(6) at uniform positions (pool fixed per seed). Budget: 24 distinct relations, run sequentially; each choice may use every residual already observed. TREATMENT (M9): belief f ~ N(mu, P) with prior N(0, diag(gamma)); gamma initialised to tau2 = 2*(7/3)/64 for every component; after each observed residual, gamma is re-estimated by 10 iterations of the sparse-Bayesian-learning EM update gamma_j <- mu_j^2 + P_jj (floored at 1e-6) using all residuals so far, and (mu, P) recomputed from gamma and those residuals by the Kalman information update; the next relation is the unused i maximising a_i^T P^2 a_i / (a_i^T P a_i + 0.09) (expected reduction of trace P). After 24 relations, a FIXED decoder shared by every arm (orthogonal matching pursuit selecting exactly 2 columns of the 24 x 64 selected-row matrix, column correlations normalised by column norm, zero columns never chosen) outputs the support. The treatment's own belief is never used for decoding.",
+ "intervention": "Relation selection is adaptive through the sparse (re-estimated gamma) belief.",
+ "control": "Two controls on exactly the same pool, faults and residual noise: REFERENCE_RANDOM = 24 relations uniform without replacement; REFERENCE_GAUSSIAN_GREEDY (sparse prior removed) = the same expected-trace-reduction rule under the fixed prior N(0, tau2 I) with no gamma update, which makes the selection data-independent (one set of 24 per pool). Both decoded by the same OMP.",
+ "positive_control": "Oracle-targeted selection: knows the true support S; test b targets S[b mod 2], chosen uniformly among unused relations containing the target and not the other true component (else any unused containing the target, else any unused). Effect present by construction.",
+ "observable": "Per trial: success = 1 if the OMP support equals the true support, else 0. Secondary (reported, not a clause): whether both true components appear in at least one selected relation.",
+ "success_clauses": [
+  {"id": "S1", "text": "Pooled over 5 seeds x 300 trials, localization accuracy is at least 0.60.", "statistic": "mean success over the 1500 pooled trials", "comparison": ">=", "threshold": 0.60},
+  {"id": "S2", "text": "Pooled accuracy minus REFERENCE_RANDOM pooled accuracy on the same 1500 trials is at least 0.25.", "statistic": "mean success(arm) - mean success(REFERENCE_RANDOM), same trials", "comparison": ">=", "threshold": 0.25},
+  {"id": "S3", "text": "Pooled accuracy minus REFERENCE_GAUSSIAN_GREEDY pooled accuracy on the same 1500 trials is at least 0.15.", "statistic": "mean success(arm) - mean success(REFERENCE_GAUSSIAN_GREEDY), same trials", "comparison": ">=", "threshold": 0.15}
+ ],
+ "failure_clauses": [
+  {"id": "F1", "text": "Treatment beats random selection by less than 0.10.", "statistic": "mean success(TREATMENT) - mean success(REFERENCE_RANDOM), pooled", "comparison": "<", "threshold": 0.10},
+  {"id": "F2", "text": "Treatment beats the fixed-Gaussian greedy design by less than 0.05 (the sparse belief adds nothing beyond a good fixed design).", "statistic": "mean success(TREATMENT) - mean success(REFERENCE_GAUSSIAN_GREEDY), pooled", "comparison": "<", "threshold": 0.05},
+  {"id": "F3", "text": "Treatment localization accuracy below 0.40.", "statistic": "mean success(TREATMENT), pooled", "comparison": "<", "threshold": 0.40}
+ ],
+ "alternative_explanation": "Any gain is ordinary adaptive group testing / sequential compressed sensing: any rule that follows up on relations with large residuals (no Kalman covariance, no sparse re-estimation) would do as well; the Kalman-plus-sparse framing is then decorative. This world does not rule that out; it only tests whether the stated mechanism beats random and a fixed Gaussian design.",
+ "null_twin": "Decoy-targeted selection: the positive control's targeting procedure aimed at 2 uniform components disjoint from the true support. Same targeting machinery, test sparsity and budget; the relation between selection and the fault is destroyed.",
+ "substrate": "causal toy",
+ "why_this_implementation": "A linear measurement pool with a known 2-sparse fault is the smallest world where test choice can matter: the fixed-Gaussian belief's covariance evolves independently of the data (Riccati), so only the sparse re-estimation can make the choice adaptive. Decoding is fixed and shared, so arms differ only in the tests run. No learned model, no neural ontology.",
+ "size": {"fault_dim": 64, "fault_sparsity": 2, "pool": 256, "row_sparsity": 6, "budget": 24, "trials_per_seed": 300, "noise_sd": 0.3},
+ "seeds": {"evaluation": [0, 1, 2, 3, 4], "arm_rng": "numpy default_rng([seed, trial, 7])"},
+ "cost_estimate": 2,
+ "stupid_explanations": [
+  "budget large enough that random selection already localizes (checked: REFERENCE_RANDOM pooled accuracy 0.23)",
+  "the decoder, not the selection, does the work (decoder is fixed and shared by every arm)",
+  "the treatment peeks at the true support through a shared RNG stream (arms draw from their own rng; the treatment must not read the fault, the decoy, or the oracle's choices)",
+  "noise so low that one relation touching a true component reveals it (oracle needs targeted repeats; random with both components covered in ~80% of trials still succeeds in only ~23%)"
+ ]
+}

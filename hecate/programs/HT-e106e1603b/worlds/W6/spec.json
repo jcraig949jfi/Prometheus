@@ -1,0 +1,37 @@
+{
+  "id": "W6",
+  "triplicateId": "HT-e106e1603b",
+  "passId": "P3v2",
+  "mechanism_ids": ["M2"],
+  "lens_ids": ["L7", "L2"],
+  "hypothesis": "A storage scrubber that lowers its protection after quiet periods and raises it after failures, with the residual errors of a failed scrub persisting into the next epoch, shows failure clustering on long time scales (Fano factor of failure counts growing with window) beyond a memoryless twin driven by the same measured failure curve and the same update rule. Speculation layer; the simpler alternative (M2) is a stochastic-approximation controller parked at a failure quantile, whose failures are regulated, not clustered.",
+  "mechanism": "Random (3,6)-regular Tanner graph, n=504, built by controls.py make_graph(seed). Stored word = error vector e relative to the all-zero codeword. Protection level s in 0..24; per epoch, iid bit flips at p(s) = 0.04 * 0.75^s are XORed into e; then one scrub = controls.py scrub_batch rule (parallel sweeps flipping every variable with >= 2 of its 3 checks unsatisfied, until quiescence or 30 sweeps). Failure = e nonzero after the scrub. e is NOT reset: residual errors of a failed scrub persist into the next epoch (after a successful scrub e is zero by definition). Update rule = controls.py step_controller: after a failure s = min(s+3, 24) and the quiet counter resets; after 20 consecutive clean epochs s = max(s-1, 0). Start s = 12, 2000 burn-in epochs, 100000 measured epochs.",
+  "intervention": "TREATMENT arm: the mechanism above with the real scrub on the real stored word, seeds 0-4, same graph per seed as controls.py. Failure indicator per measured epoch written as rows; F computed by controls.py fano_ratio unchanged.",
+  "control": "NULL_TWIN (in controls.py): same controller, failure at each epoch ~ Bernoulli(Pfail(s)) with Pfail(s) the fresh-start failure probability of the same scrub at level s, measured on the same graph (600 blocks per level). This is exactly the treatment with the stored word reset to zero after every failure, so it keeps the failure curve and the rule and destroys only persistence.",
+  "positive_control": "POSITIVE_CONTROL (in controls.py): the twin plus an explicit persistent-damage state: each failure opens, with probability 0.05, a damage episode of geometric length (mean 1000 epochs) during which the failure probability is raised by 0.05*(1-Pfail(s)). Epoch coupling present by construction, under the same controller that tends to regulate it away.",
+  "observable": "Per seed: F = Fano(1000)/Fano(10), Fano(W) = sample variance / mean of failure counts in non-overlapping windows of W measured epochs (controls.py fano, fano_ratio). Also reported (no clause): Fano(100), failure rate, mean protection level, fraction of epochs at s=24, residual weight |e| after each failed scrub, and |e| at the start of each epoch averaged per quarter of the run.",
+  "success_clauses": [
+    {"id": "S1", "text": "mean over 5 seeds of treatment F is at least 2.0 (failure counts over-dispersed at long windows relative to short)", "statistic": "mean over seeds 0-4 of F", "comparison": ">=", "threshold": 2.0},
+    {"id": "S2", "text": "every seed has treatment F at least 1.0", "statistic": "min over seeds 0-4 of F", "comparison": ">=", "threshold": 1.0},
+    {"id": "S3", "text": "treatment mean F is at least 4 times the frozen NULL_TWIN mean F (0.0854)", "statistic": "mean over seeds of treatment F divided by mean over seeds of NULL_TWIN F from control_rows.jsonl", "comparison": ">=", "threshold": 4.0}
+  ],
+  "failure_clauses": [
+    {"id": "F1", "text": "failures regulated rather than clustered: treatment long-window Fano does not exceed short-window Fano on average (M2 is recorded as a plain controller)", "statistic": "mean over seeds 0-4 of F", "comparison": "<", "threshold": 1.0},
+    {"id": "F2", "text": "controller saturates: the run is pinned at maximum protection, so clustering, if any, reflects saturation, not regulation with memory", "statistic": "mean over seeds of fraction of measured epochs at s = 24", "comparison": ">", "threshold": 0.5},
+    {"id": "F3", "text": "non-stationary residue: stored-word weight grows through the run", "statistic": "mean over seeds of (mean |e| at epoch start in the last quarter) minus (same in the first quarter), in bits", "comparison": ">", "threshold": 2.0}
+  ],
+  "outcome_rule": "SIGNAL iff S1, S2 and S3 hold and no failure clause holds; NULL otherwise. Controls rerun must reproduce ATTAINABILITY.json (same seeds, same Pfail curves) or the outcome is INSTRUMENT_FAIL.",
+  "alternative_explanation": "Residue raises the failure rate (fresh-start Pfail underestimates failure with residue), and a higher failure rate under the asymmetric controller could change the dispersion without any long memory. Checked by the diagnostic RATE_TWIN_DIAG in controls.py (memoryless twin with an always-on added failure probability; F 0.48-0.78, below S2) and by S3 against the twin; treatment failure rate is reported beside the twin's.",
+  "null_twin": "Bernoulli(Pfail(s)) failures under the same controller, Pfail measured fresh-start on the same graph; equivalent to resetting the stored word after every failure. Destroys persistence only.",
+  "substrate": "optimizer",
+  "why_this_implementation": "A scalar protection controller around a real code and a real scrub is the minimal form of the thermostat; protection is a noise-rate knob rather than a sweep count because extra bit-flip sweeps stop helping after convergence, so a sweep-count knob has no sigmoid failure curve. The protection range reaches p ~ 4e-5 so the bit-flip error floor does not pin the controller at its maximum. A learning agent was not used: the question is whether persistence of the code's residue creates memory, not whether a learner finds a policy.",
+  "size": "n=504; 2000 burn-in + 100000 measured epochs per seed; 5 seeds; protection levels 0..24",
+  "seeds": [0, 1, 2, 3, 4],
+  "cost_estimate": "about 3-6 CPU core-minutes for the treatment (sparse incremental scrub; most epochs carry 0-2 new flips); controls 19 s",
+  "stupid_explanations": [
+    "the asymmetric step controller produces sawtooth oscillations of s that cluster failures regardless of residue (the twin shares the rule and shows F ~0.09, so the rule alone regulates)",
+    "fresh-start Pfail underestimates failure with residue, so the treatment runs at a different operating point than the twin",
+    "residue grows without bound and the run is non-stationary, which inflates long-window Fano trivially (F3)",
+    "with 100 windows of 1000 epochs, Fano(1000) has sampling noise of roughly 15%; single-seed values near a threshold mean nothing, hence S2 uses the minimum across seeds with a low bar"
+  ]
+}

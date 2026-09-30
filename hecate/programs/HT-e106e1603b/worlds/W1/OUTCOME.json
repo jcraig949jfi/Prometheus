@@ -1,0 +1,305 @@
+{
+ "triplicateId": "HT-e106e1603b",
+ "world": "W1",
+ "outcome": "NULL",
+ "statistics": {
+  "TREATMENT": {
+   "ratio": 1.0,
+   "ci90": [
+    1.0,
+    1.0
+   ],
+   "n_seeds": 5,
+   "n_boot": 4000,
+   "s95_by_L": {
+    "16": 2.0,
+    "32": 2.0,
+    "64": 2.0
+   },
+   "mean_nonempty_by_L": {
+    "16": 1.159686358996609,
+    "32": 1.1647320498577483,
+    "64": 1.1705390764423087
+   },
+   "var_nonempty_by_L": {
+    "16": 0.23796919833332675,
+    "32": 0.2625634296121451,
+    "64": 0.2884207119230364
+   },
+   "frac_nonempty_by_L": {
+    "16": 0.70268,
+    "32": 0.73915,
+    "64": 0.7542099999999999
+   },
+   "max_by_L": {
+    "16": 9.6,
+    "32": 9.0,
+    "64": 10.0
+   },
+   "violations_by_L": {
+    "16": 0.0,
+    "32": 0.0,
+    "64": 0.0
+   },
+   "audit_mismatch_by_L": {
+    "16": 0.0,
+    "32": 0.0,
+    "64": 0.0
+   },
+   "logical_per_1000_by_L": {
+    "16": 9.88,
+    "32": 9.879999999999999,
+    "64": 8.85
+   },
+   "density_by_L": {
+    "16": 0.1020265625,
+    "32": 0.09255423828125,
+    "64": 0.08777902832031251
+   },
+   "largest_cluster_frac_by_L": {
+    "16": 0.878125,
+    "32": 0.859765625,
+    "64": 0.7986328125
+   }
+  },
+  "CONTROL": {
+   "ratio": 2.446483180428171,
+   "ci90": [
+    2.4,
+    2.5450689289502773
+   ],
+   "n_seeds": 5,
+   "n_boot": 4000,
+   "s95_by_L": {
+    "16": 9.809999999999855,
+    "32": 15.409999999999854,
+    "64": 24.0
+   },
+   "mean_nonempty_by_L": {
+    "16": 2.4925699999999997,
+    "32": 3.47423,
+    "64": 4.77331
+   },
+   "var_nonempty_by_L": {
+    "16": 8.6145855485,
+    "32": 26.5449113785,
+    "64": 76.5853439825
+   },
+   "frac_nonempty_by_L": {
+    "16": 1.0,
+    "32": 1.0,
+    "64": 1.0
+   },
+   "max_by_L": {
+    "16": 16.0,
+    "32": 32.0,
+    "64": 64.0
+   },
+   "violations_by_L": {
+    "16": 0.0,
+    "32": 0.0,
+    "64": 0.0
+   },
+   "audit_mismatch_by_L": {
+    "16": 0.0,
+    "32": 0.0,
+    "64": 0.0
+   },
+   "logical_per_1000_by_L": {
+    "16": 9.959999999999999,
+    "32": 10.0,
+    "64": 10.0
+   },
+   "density_by_L": {
+    "16": 0.0,
+    "32": 0.0,
+    "64": 0.0
+   },
+   "largest_cluster_frac_by_L": {
+    "16": 0.83671875,
+    "32": 0.82734375,
+    "64": 0.842724609375
+   }
+  },
+  "NULL_TWIN": {
+   "ratio": 1.0,
+   "ci90": [
+    1.0,
+    1.0
+   ],
+   "n_seeds": 5,
+   "n_boot": 4000,
+   "s95_by_L": {
+    "16": 2.0,
+    "32": 2.0,
+    "64": 2.0
+   },
+   "mean_nonempty_by_L": {
+    "16": 1.0993204398441665,
+    "32": 1.1063973492863357,
+    "64": 1.1114347232411226
+   },
+   "var_nonempty_by_L": {
+    "16": 0.11950878860057104,
+    "32": 0.1322095560122201,
+    "64": 0.13997425182901552
+   },
+   "frac_nonempty_by_L": {
+    "16": 0.63346,
+    "32": 0.66719,
+    "64": 0.68254
+   },
+   "max_by_L": {
+    "16": 5.6,
+    "32": 7.0,
+    "64": 6.8
+   },
+   "violations_by_L": {
+    "16": 4715.8,
+    "32": 4704.4,
+    "64": 4697.4
+   },
+   "audit_mismatch_by_L": {
+    "16": 122.4,
+    "32": 516.6,
+    "64": 1892.8
+   },
+   "logical_per_1000_by_L": {
+    "16": 9.45,
+    "32": 9.39,
+    "64": 7.159999999999999
+   },
+   "density_by_L": {
+    "16": 0.0855745703125,
+    "32": 0.077859931640625,
+    "64": 0.07361561767578126
+   },
+   "largest_cluster_frac_by_L": {
+    "16": 0.73515625,
+    "32": 0.7396484375,
+    "64": 0.572021484375
+   }
+  },
+  "CHEAT": {
+   "ratio": 16.0,
+   "ci90": [
+    16.0,
+    16.0
+   ],
+   "n_seeds": 5,
+   "n_boot": 4000,
+   "s95_by_L": {
+    "16": 2.0,
+    "32": 8.0,
+    "64": 32.0
+   },
+   "mean_nonempty_by_L": {
+    "16": 1.0993204398441665,
+    "32": 4.425589397145343,
+    "64": 17.78295557185796
+   },
+   "var_nonempty_by_L": {
+    "16": 0.11950878860057104,
+    "32": 2.1153528961955215,
+    "64": 35.83340846822797
+   },
+   "frac_nonempty_by_L": {
+    "16": 0.63346,
+    "32": 0.66719,
+    "64": 0.68254
+   },
+   "max_by_L": {
+    "16": 5.6,
+    "32": 28.0,
+    "64": 108.8
+   }
+  },
+  "POSITIVE_CONTROL": {
+   "ratio": 14.200587422252939,
+   "ci90": [
+    14.026982758620678,
+    14.413203983516524
+   ],
+   "n_seeds": 5,
+   "n_boot": 4000,
+   "s95_by_L": {
+    "16": 115.75999999999985,
+    "32": 470.94999999999965,
+    "64": 1643.859999999998
+   },
+   "mean_nonempty_by_L": {
+    "16": 27.632117617238162,
+    "32": 94.74257919192777,
+    "64": 296.28509097569776
+   },
+   "var_nonempty_by_L": {
+    "16": 1748.6140132864741,
+    "32": 35151.040250259684,
+    "64": 682167.3839985946
+   },
+   "frac_nonempty_by_L": {
+    "16": 0.41109,
+    "32": 0.42374999999999996,
+    "64": 0.34341
+   },
+   "max_by_L": {
+    "16": 430.8,
+    "32": 2236.4,
+    "64": 12986.4
+   }
+  }
+ },
+ "criterion_as_applied": {
+  "success": "R_cons >= 4 AND R_twin <= 2 AND bootstrap 90% CIs disjoint; R = mean_seeds s95(64)/mean_seeds s95(16), 5 seeds",
+  "R_cons": 1.0,
+  "R_cons_ci90": [
+   1.0,
+   1.0
+  ],
+  "R_twin": 1.0,
+  "R_twin_ci90": [
+   1.0,
+   1.0
+  ],
+  "cis_disjoint": false,
+  "success_met": false,
+  "failure_clauses": {
+   "conserving_ratio_below_2": true,
+   "twin_ratio_within_conserving_ci": true,
+   "positive_control_fails": false
+  },
+  "R_eager_control": 2.446483180428171,
+  "R_positive": 14.200587422252939,
+  "R_cheat": 16.0
+ },
+ "positive_control_detected": true,
+ "cheat_detected": true,
+ "null_twin_meets_success": false,
+ "stupid_explanations_status": [
+  {
+   "explanation": "boundary walk ~L makes any size grow with L",
+   "status": "MOOT: conserving s95 does not grow with L (ratio 1.000)"
+  },
+  {
+   "explanation": "laziness backlog released as lattice fills, not criticality",
+   "status": "MOOT: no growing cutoff; stationary defect density by L {'16': 0.102, '32': 0.0926, '64': 0.0878}"
+  },
+  {
+   "explanation": "eps matches mean but not variance",
+   "status": "RECORDED: twin/cons mean ratio {'16': 0.948, '32': 0.95, '64': 0.95}, variance ratio {'16': 0.502, '32': 0.504, '64': 0.485}"
+  }
+ ],
+ "anomalies": [
+  "twin mean not within 5% of conserving at L=16 (ratio 0.948) on measurement seeds",
+  "twin mean not within 5% of conserving at L=32 (ratio 0.950) on measurement seeds",
+  "twin mean not within 5% of conserving at L=64 (ratio 0.950) on measurement seeds",
+  "conserving s95 identical at L=16 and 64 (2.0): percentile sits on an integer plateau"
+ ],
+ "core_minutes": 0.0404,
+ "attempts": {
+  "pilot": 1,
+  "pilot_repairs": 0,
+  "phase2": 1
+ },
+ "notes": "Pilot passed on attempt 1 (PILOT.json). eps from pilot calibration.json, largest eps within the 5% mean band (NOTES A2). Calibration target (conserving mean) was visible in the pilot; disclosed in NOTES.md. Lens L6 recorded only."
+}

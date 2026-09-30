@@ -1,0 +1,426 @@
+{
+ "triplicateId": "HT-71b65251aa",
+ "world": "W3",
+ "R": {
+  "reproduced": true,
+  "stats": {
+   "seeds": [
+    100,
+    101,
+    102,
+    103,
+    104,
+    105,
+    106,
+    107,
+    108,
+    109
+   ],
+   "theta": "0.6",
+   "fixed": {
+    "L0": {
+     "accuracy": 0.5389583333333334,
+     "mean_depth": 0.0
+    },
+    "L1": {
+     "accuracy": 0.7435499999999999,
+     "mean_depth": 1.0
+    },
+    "L2": {
+     "accuracy": 0.7437,
+     "mean_depth": 2.0
+    },
+    "L3": {
+     "accuracy": 0.7437,
+     "mean_depth": 3.0
+    }
+   },
+   "treatment_by_theta": {
+    "0.6": {
+     "accuracy": 0.7437,
+     "mean_depth": 1.30675,
+     "spearman_depth_ambiguity": 0.7354596657289096,
+     "spearman_depth_uncertainty": 0.7354596657289096,
+     "spearman_depth_unc1": 0.9333353706122111,
+     "depth_hist_total": [
+      4360,
+      9329,
+      2127,
+      4184
+     ],
+     "spearman_within_size3": 0.8209386709773033,
+     "spearman_within_size4": 0.5849155401489272
+    },
+    "0.7": {
+     "accuracy": 0.7437,
+     "mean_depth": 1.8625,
+     "spearman_depth_ambiguity": 0.6414963747535606,
+     "spearman_depth_uncertainty": 0.6414963747535606,
+     "spearman_depth_unc1": 0.9204325841353256,
+     "depth_hist_total": [
+      4360,
+      3061,
+      3548,
+      9031
+     ],
+     "spearman_within_size3": 0.691012997884138,
+     "spearman_within_size4": 0.5241222794352596
+    },
+    "0.8": {
+     "accuracy": 0.7437,
+     "mean_depth": 2.1710000000000003,
+     "spearman_depth_ambiguity": 0.7173562503731271,
+     "spearman_depth_uncertainty": 0.7173562503731271,
+     "spearman_depth_unc1": 0.8500919384267126,
+     "depth_hist_total": [
+      4360,
+      797,
+      1906,
+      12937
+     ],
+     "spearman_within_size3": 0.7556135812645232,
+     "spearman_within_size4": 0.6470993560154412
+    },
+    "0.9": {
+     "accuracy": 0.7437,
+     "mean_depth": 2.33225,
+     "spearman_depth_ambiguity": 0.755972673495829,
+     "spearman_depth_uncertainty": 0.755972673495829,
+     "spearman_depth_unc1": 0.7359984080653978,
+     "depth_hist_total": [
+      4360,
+      0,
+      275,
+      15365
+     ],
+     "spearman_within_size3": 0.8307507675349444,
+     "spearman_within_size4": 0.6614864364147743
+    }
+   },
+   "twin_by_theta": {
+    "0.6": {
+     "accuracy": 0.7008708333333333,
+     "mean_depth": 1.30675,
+     "spearman_depth_ambiguity": 0.010404989592827813,
+     "spearman_depth_uncertainty": 0.010404989592827813,
+     "spearman_depth_unc1": 0.0036950409940915653
+    },
+    "0.7": {
+     "accuracy": 0.6982833333333334,
+     "mean_depth": 1.8625,
+     "spearman_depth_ambiguity": 0.00394764631758285,
+     "spearman_depth_uncertainty": 0.00394764631758285,
+     "spearman_depth_unc1": 0.005983704085158024
+    },
+    "0.8": {
+     "accuracy": 0.6985041666666667,
+     "mean_depth": 2.1710000000000003,
+     "spearman_depth_ambiguity": 0.000972171819853758,
+     "spearman_depth_uncertainty": 0.000972171819853758,
+     "spearman_depth_unc1": 0.006125127734251206
+    },
+    "0.9": {
+     "accuracy": 0.6981208333333332,
+     "mean_depth": 2.33225,
+     "spearman_depth_ambiguity": 0.0012552052720893325,
+     "spearman_depth_uncertainty": 0.0012552052720893325,
+     "spearman_depth_unc1": 0.003678105355574423
+    }
+   },
+   "diagnostics": {
+    "frac_L0_argmax_differs_from_L2": 0.7789999999999999,
+    "frac_L1_argmax_differs_from_L2": 0.0039,
+    "frac_L3_argmax_differs_from_L2": 0.0,
+    "frac_ambiguity_1": 0.21800000000000003
+   },
+   "clauses_acc_depth_rho_theta06": [
+    true,
+    true,
+    true
+   ],
+   "twin_clauses_theta06": [
+    false,
+    true,
+    false
+   ],
+   "confound_thetas": []
+  }
+ },
+ "ORIG": {
+  "fired": true,
+  "stats": {
+   "theta": "0.6",
+   "fixed_L1_accuracy": 0.7435499999999999,
+   "fixed_L1_mean_depth": 1.0,
+   "adaptive_by_theta": {
+    "0.6": {
+     "accuracy": 0.7437,
+     "mean_depth": 1.30675
+    },
+    "0.7": {
+     "accuracy": 0.7437,
+     "mean_depth": 1.8625
+    },
+    "0.8": {
+     "accuracy": 0.7437,
+     "mean_depth": 2.1710000000000003
+    },
+    "0.9": {
+     "accuracy": 0.7437,
+     "mean_depth": 2.33225
+    }
+   },
+   "clause_acc": true,
+   "clause_depth": true,
+   "fires_at_other_thetas": {
+    "0.6": true,
+    "0.7": true,
+    "0.8": true,
+    "0.9": true
+   }
+  }
+ },
+ "ALT": {
+  "status": "NOT_ELIGIBLE",
+  "stats": {
+   "variants_tried": [
+    "ALT_V1",
+    "ALT_V2"
+   ],
+   "by_variant": {
+    "ALT_V1": {
+     "eligible": false,
+     "gap_L2_minus_L1": 0.0,
+     "fixed": {
+      "L0": {
+       "accuracy": 0.5986749999999998,
+       "mean_depth": 0.0
+      },
+      "L1": {
+       "accuracy": 0.8946,
+       "mean_depth": 1.0
+      },
+      "L2": {
+       "accuracy": 0.8946,
+       "mean_depth": 2.0
+      },
+      "L3": {
+       "accuracy": 0.893675,
+       "mean_depth": 3.0
+      }
+     },
+     "diagnostics": {
+      "frac_L0_argmax_differs_from_L2": 0.7041,
+      "frac_L1_argmax_differs_from_L2": 0.0,
+      "frac_L3_argmax_differs_from_L2": 0.051050000000000005,
+      "frac_ambiguity_1": 0.29544999999999993
+     },
+     "treatment_by_theta": {
+      "0.6": {
+       "accuracy": 0.893675,
+       "mean_depth": 0.9164,
+       "spearman_depth_ambiguity": 0.7369069383412665,
+       "spearman_depth_uncertainty": 0.7369069383412665,
+       "spearman_depth_unc1": 0.8866898784465402,
+       "depth_hist_total": [
+        5909,
+        11809,
+        327,
+        1955
+       ],
+       "spearman_within_size3": 0.892161176670081,
+       "spearman_within_size4": 0.5000570705773653
+      },
+      "0.7": {
+       "accuracy": 0.893675,
+       "mean_depth": 1.24255,
+       "spearman_depth_ambiguity": 0.6226400101038639,
+       "spearman_depth_uncertainty": 0.6226400101038639,
+       "spearman_depth_unc1": 0.9467110319332223,
+       "depth_hist_total": [
+        5909,
+        8000,
+        1422,
+        4669
+       ],
+       "spearman_within_size3": 0.7882313523132243,
+       "spearman_within_size4": 0.3628542996058279
+      },
+      "0.8": {
+       "accuracy": 0.893675,
+       "mean_depth": 1.3190500000000003,
+       "spearman_depth_ambiguity": 0.632202222815337,
+       "spearman_depth_uncertainty": 0.632202222815337,
+       "spearman_depth_unc1": 0.9567681077721744,
+       "depth_hist_total": [
+        5909,
+        6745,
+        2402,
+        4944
+       ],
+       "spearman_within_size3": 0.7869099699121443,
+       "spearman_within_size4": 0.3759985423771418
+      },
+      "0.9": {
+       "accuracy": 0.893675,
+       "mean_depth": 1.4633000000000003,
+       "spearman_depth_ambiguity": 0.65588740798133,
+       "spearman_depth_uncertainty": 0.65588740798133,
+       "spearman_depth_unc1": 0.9650364907244903,
+       "depth_hist_total": [
+        5909,
+        4216,
+        4575,
+        5300
+       ],
+       "spearman_within_size3": 0.7946716760885713,
+       "spearman_within_size4": 0.4126084589443691
+      }
+     }
+    },
+    "ALT_V2": {
+     "eligible": false,
+     "gap_L2_minus_L1": 0.00034999999999996145,
+     "fixed": {
+      "L0": {
+       "accuracy": 0.5050999999999999,
+       "mean_depth": 0.0
+      },
+      "L1": {
+       "accuracy": 0.7075250000000001,
+       "mean_depth": 1.0
+      },
+      "L2": {
+       "accuracy": 0.707875,
+       "mean_depth": 2.0
+      },
+      "L3": {
+       "accuracy": 0.70285,
+       "mean_depth": 3.0
+      }
+     },
+     "diagnostics": {
+      "frac_L0_argmax_differs_from_L2": 0.8068500000000001,
+      "frac_L1_argmax_differs_from_L2": 0.0152,
+      "frac_L3_argmax_differs_from_L2": 0.08769999999999999,
+      "frac_ambiguity_1": 0.16925
+     },
+     "treatment_by_theta": {
+      "0.6": {
+       "accuracy": 0.70595,
+       "mean_depth": 1.8065500000000003,
+       "spearman_depth_ambiguity": 0.5021577568835934,
+       "spearman_depth_uncertainty": 0.5021577568835934,
+       "spearman_depth_unc1": 0.9325235377594812,
+       "depth_hist_total": [
+        3385,
+        5473,
+        2768,
+        8374
+       ],
+       "spearman_within_size3": 0.5118867856974967,
+       "spearman_within_size4": 0.35924127139497314
+      },
+      "0.7": {
+       "accuracy": 0.70285,
+       "mean_depth": 2.14815,
+       "spearman_depth_ambiguity": 0.4142032998241284,
+       "spearman_depth_uncertainty": 0.4142032998241284,
+       "spearman_depth_unc1": 0.8489497883863508,
+       "depth_hist_total": [
+        3385,
+        2020,
+        2842,
+        11753
+       ],
+       "spearman_within_size3": 0.34300555362622837,
+       "spearman_within_size4": 0.36099498480192815
+      },
+      "0.8": {
+       "accuracy": 0.70285,
+       "mean_depth": 2.2981000000000003,
+       "spearman_depth_ambiguity": 0.4320285312201689,
+       "spearman_depth_uncertainty": 0.4320285312201689,
+       "spearman_depth_unc1": 0.8039109315529711,
+       "depth_hist_total": [
+        3385,
+        229,
+        3425,
+        12961
+       ],
+       "spearman_within_size3": 0.4202869005903624,
+       "spearman_within_size4": 0.3819757989710399
+      },
+      "0.9": {
+       "accuracy": 0.70285,
+       "mean_depth": 2.3653000000000004,
+       "spearman_depth_ambiguity": 0.4330175721051999,
+       "spearman_depth_uncertainty": 0.4330175721051999,
+       "spearman_depth_unc1": 0.760511675092719,
+       "depth_hist_total": [
+        3385,
+        162,
+        2215,
+        14238
+       ],
+       "spearman_within_size3": 0.3780325215607522,
+       "spearman_within_size4": 0.43796758810423625
+      }
+     }
+    }
+   }
+  }
+ },
+ "controls": {
+  "positive_detected": true,
+  "cheat_detected": true,
+  "by_arm_set": {
+   "R/ORIGINAL": {
+    "positive_detected": true,
+    "cheat_detected": true,
+    "n_seeds": 10,
+    "min_unique_per_seed": 403,
+    "cheat_stats": {
+     "accuracy": 1.0,
+     "mean_depth": 0.7819999999999999,
+     "spearman_depth_ambiguity": 0.7556545673229178,
+     "spearman_depth_uncertainty": 0.7556545673229178
+    }
+   },
+   "ALT/ALT_V1": {
+    "positive_detected": true,
+    "cheat_detected": true,
+    "n_seeds": 10,
+    "min_unique_per_seed": 563,
+    "cheat_stats": {
+     "accuracy": 1.0,
+     "mean_depth": 0.70455,
+     "spearman_depth_ambiguity": 0.8414575355241741,
+     "spearman_depth_uncertainty": 0.8414575355241741
+    }
+   },
+   "ALT/ALT_V2": {
+    "positive_detected": true,
+    "cheat_detected": true,
+    "n_seeds": 10,
+    "min_unique_per_seed": 291,
+    "cheat_stats": {
+     "accuracy": 1.0,
+     "mean_depth": 0.8307499999999999,
+     "spearman_depth_ambiguity": 0.6901229969901378,
+     "spearman_depth_uncertainty": 0.6901229969901378
+    }
+   }
+  }
+ },
+ "predicate": "PARK",
+ "anomalies": [
+  "R world: fixed L2 and L3 accuracies identical",
+  "R world: fixed L1 within 0.001 of L2 (0.74355 vs 0.74370)",
+  "ALT_V1: not eligible, L2-L1 gap 0.00000 < 0.02",
+  "ALT_V2: not eligible, L2-L1 gap 0.00035 < 0.02"
+ ],
+ "core_minutes": 0.1479,
+ "attempts": 1,
+ "notes": "Predicate PARK. R (seeds 100-109, theta 0.6): acc 0.7437 vs L2 0.7437, depth 1.307, rho 0.735; twin acc 0.7009; reproduced=True. ORIG: L1 acc 0.74355 depth 1.0 vs adaptive acc 0.74370 depth 1.307; fired=True. ALT ALT_V1: L1 0.8946, L2 0.8946, gap 0.0000, eligible=False. ALT ALT_V2: L1 0.7075, L2 0.7079, gap 0.0003, eligible=False. ALT status NOT_ELIGIBLE."
+}

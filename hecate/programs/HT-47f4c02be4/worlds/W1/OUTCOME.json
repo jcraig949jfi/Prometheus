@@ -1,0 +1,117 @@
+{
+ "triplicateId": "HT-47f4c02be4",
+ "world": "W1",
+ "outcome": "NULL",
+ "statistics": {
+  "treatment_max_rel_dev_K1_20": 0.0042,
+  "treatment_rel_dev_by_K": {
+   "1": 0.0,
+   "2": 0.0,
+   "3": 0.0001,
+   "4": 0.0001,
+   "5": 0.0002,
+   "6": 0.0003,
+   "7": 0.0004,
+   "8": 0.0005,
+   "9": 0.0006,
+   "10": 0.0012,
+   "11": 0.002,
+   "12": 0.0026,
+   "13": 0.0029,
+   "14": 0.0032,
+   "15": 0.003,
+   "16": 0.0022,
+   "17": 0.0009,
+   "18": 0.0008,
+   "19": 0.0026,
+   "20": 0.0042
+  },
+  "treatment_r_K": {
+   "0": 1.0,
+   "1": 0.50001,
+   "4": 0.2286,
+   "10": 0.15814,
+   "20": 0.12726,
+   "40": 0.10326
+  },
+  "treatment_K_star": {
+   "0.001": 32,
+   "0.003": 15,
+   "0.01": 7,
+   "0.03": 4,
+   "0.1": 2
+  },
+  "treatment_depth_final": 40,
+  "treatment_periods_first10": [
+   2,
+   3,
+   5,
+   7,
+   11,
+   13,
+   17,
+   19,
+   23,
+   29
+  ],
+  "control_r0": 1.0,
+  "twin_ratio_20_0_mean": 0.2115,
+  "twin_ratio_20_0_per_seed": [
+   0.2114,
+   0.2108,
+   0.2121,
+   0.2127,
+   0.211,
+   0.2116,
+   0.2118,
+   0.2098,
+   0.211,
+   0.2126
+  ],
+  "twin_max_rel_dev_mean_curve": 0.6548,
+  "twin_K_star_seed0": {
+   "0.001": 30,
+   "0.003": 14,
+   "0.01": 7,
+   "0.03": 4,
+   "0.1": 2
+  },
+  "pc_depth_final": [
+   4,
+   4,
+   4,
+   4,
+   4
+  ],
+  "cheat_max_rel_dev": [
+   0.0097,
+   0.0097,
+   0.0099,
+   0.0094,
+   0.0099
+  ],
+  "clause_A_real_stream": true,
+  "clause_B_twin_ratio": false
+ },
+ "criterion_as_applied": "SUCCESS iff max_(K=1..20) |r(K)-prod_(p<=p_K)(1-1/p)|/prod <= 0.05 on the real stream (every seed) AND mean over 10 twin seeds of r(20)/r(0) >= 0.9. r(K) = residual errors / (N-1), N=1e5, residual = non-silent integer that no level predicts or that a level mispredicts (NOTES.md R1-R11).",
+ "positive_control_detected": true,
+ "cheat_detected": true,
+ "null_twin_meets_success": false,
+ "stupid_explanations_status": {
+  "the promotion rule is literally the sieve so success is guaranteed by construction": "NOT RULED OUT -- promoted periods are exactly the primes 2,3,5,7,... on the real stream AND on the twin (promotion is label-free, R4); the agent is Eratosthenes.",
+  "Mertens agreement is a known theorem, not a property of the agent": "NOT RULED OUT -- r(K) on the real stream is the Legendre count phi(N,K)/N plus K promotions; any match to Mertens is arithmetic, not agent behaviour.",
+  "the Cramer twin fails because random streams are unpredictable by any periodic model, which says nothing about predictive coding": "NOT SUPPORTED BY THE ROWS -- the twin was not unpredictable to the periodic levels: they absorb ~79% of twin integers (ratio ~0.21); the twin differs from the real stream only through mispredictions at twin-prime labels."
+ },
+ "anomalies": [
+  "Clause B (twin r(20)/r(0) >= 0.9) is unattainable under readings R3/R4: r(0)=1 by construction and label-free promotion makes periodic levels absorb most twin integers; observed at the pilot (ratio ~0.21) before treatment code existed. The spec's success criterion requires the twin NOT to be absorbed while its mechanism absorbs any integer stream.",
+  "Positive control and treatment are deterministic; the 5 seeds per arm are identical rows (recorded in NOTES.md).",
+  "pilot_eval.py crashed once on JSON serialisation (evaluator bug, fixed, rerun on the same rows)."
+ ],
+ "core_minutes": 0.0094,
+ "attempts": {
+  "pilot": 1,
+  "pilot_eval_bugfix_reruns": 1,
+  "phase2": 1
+ },
+ "notes": "Phase 2 ran once after a passing pilot (PILOT.json attempt 1). No parameter or threshold changed. See NOTES.md."
+}

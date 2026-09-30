@@ -1,0 +1,96 @@
+{
+ "world": "W6",
+ "triplicateId": "HT-056d3ac561",
+ "clauses": [
+  {
+   "id": "S1",
+   "positive_value": 0.9873333333333333,
+   "twin_value": 0.18733333333333332,
+   "cheat_value": 1.0,
+   "attainable": true,
+   "discriminating": true,
+   "treatment_must_reach": {
+    "value": 0.6,
+    "text": "pooled accuracy >= 0.6"
+   }
+  },
+  {
+   "id": "S2",
+   "positive_value": 0.754,
+   "twin_value": -0.04600000000000001,
+   "cheat_value": 0.7666666666666666,
+   "attainable": true,
+   "discriminating": true,
+   "treatment_must_reach": {
+    "value": 0.4833,
+    "text": "pooled accuracy >= 0.4833 (= REFERENCE_RANDOM 0.2333 + 0.25 on these control rows)"
+   }
+  },
+  {
+   "id": "S3",
+   "positive_value": 0.7053333333333334,
+   "twin_value": -0.09466666666666665,
+   "cheat_value": 0.718,
+   "attainable": true,
+   "discriminating": true,
+   "treatment_must_reach": {
+    "value": 0.432,
+    "text": "pooled accuracy >= 0.4320 (= REFERENCE_GAUSSIAN_GREEDY 0.2820 + 0.15 on these control rows)"
+   }
+  }
+ ],
+ "cheat_detected": true,
+ "frozen": true,
+ "reference_values": {
+  "REFERENCE_RANDOM_accuracy": 0.23333333333333334,
+  "REFERENCE_GAUSSIAN_GREEDY_accuracy": 0.282,
+  "per_seed_accuracy": {
+   "POSITIVE_CONTROL": [
+    0.98,
+    0.9866666666666667,
+    0.9933333333333333,
+    0.99,
+    0.9866666666666667
+   ],
+   "NULL_TWIN": [
+    0.20666666666666667,
+    0.16,
+    0.16666666666666666,
+    0.22,
+    0.18333333333333332
+   ],
+   "REFERENCE_RANDOM": [
+    0.21,
+    0.24333333333333335,
+    0.21666666666666667,
+    0.24,
+    0.25666666666666665
+   ],
+   "REFERENCE_GAUSSIAN_GREEDY": [
+    0.33666666666666667,
+    0.29333333333333333,
+    0.27,
+    0.24333333333333335,
+    0.26666666666666666
+   ]
+  },
+  "both_true_covered_fraction": {
+   "POSITIVE_CONTROL": 1.0,
+   "NULL_TWIN": 0.7566666666666666,
+   "REFERENCE_RANDOM": 0.7993333333333332,
+   "REFERENCE_GAUSSIAN_GREEDY": 0.9720000000000001
+  }
+ },
+ "revisions": [
+  {
+   "rev": 0,
+   "what": "Initial world with budget B = 12. Control run: POSITIVE_CONTROL pooled accuracy ~0.86 (per seed 0.85-0.89), NULL_TWIN ~0.03, REFERENCE_RANDOM ~0.05. No spec.json written yet.",
+   "why": "First sizing of the world."
+  },
+  {
+   "rev": 1,
+   "what": "Budget raised 12 -> 24 (scan on seeds 0-1, 150 trials, B in {16, 20, 24, 32}: oracle 0.94/0.96/0.98/0.99, random 0.11/0.18/0.25/0.38). Added REFERENCE_GAUSSIAN_GREEDY (sparse-prior knockout) to controls.py and clause S3 against it. Thresholds set after this run: S1 >= 0.60, S2 >= +0.25 over random, S3 >= +0.15 over Gaussian greedy.",
+   "why": "At B = 12 even perfect targeting only just reached 0.85, so any threshold that means 'localizes' would be near-unattainable for a non-oracle and the world could only fail. At B = 24 the oracle is near ceiling (0.99) and random is low (0.23), leaving a wide band where a real selection rule can pass or fail. The knockout control makes the sparse-coding contribution testable (Riccati: a fixed Gaussian belief selects data-independently)."
+  }
+ ]
+}

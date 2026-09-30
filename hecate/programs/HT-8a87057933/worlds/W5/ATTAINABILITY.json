@@ -1,0 +1,77 @@
+{
+ "clauses": [
+  {
+   "id": "S1",
+   "positive_value": 0.15970072239422084,
+   "twin_value": 0.7169762641898865,
+   "attainable": true,
+   "discriminating": true,
+   "treatment_must_reach": "total errors over the 10 seeds <= 1938 (= 0.50 x CONTROL_REF 3876)"
+  },
+  {
+   "id": "S2",
+   "positive_value": 1.0,
+   "twin_value": 0.0,
+   "attainable": true,
+   "discriminating": true,
+   "treatment_must_reach": ">= 8 of 10 seeds with errors <= 0.50 x same-seed CONTROL_REF errors (per-seed bars: [198, 183, 176, 200, 182, 187, 187, 225, 187, 210])"
+  },
+  {
+   "id": "S3",
+   "positive_value": 0.0,
+   "twin_value": 0.7806102386527727,
+   "attainable": true,
+   "discriminating": true,
+   "treatment_must_reach": "valid clauses deleted per UNSAT event <= 5.426 (= 0.50 x CONTROL_REF 10.851)"
+  }
+ ],
+ "cheat_detected": true,
+ "cheat_detail": {
+  "cheat_meets_all_success_clauses": true,
+  "cheat_flagged_by_error_floor": true,
+  "positive_control_flagged_by_floor": false,
+  "null_twin_flagged_by_floor": false
+ },
+ "frozen": true,
+ "revisions": [
+  {
+   "rev": 1,
+   "what": "initial spec: S1 errors(X)/errors(CONTROL_REF) <= 0.70; S2 fraction of seeds with errors(X) < errors(CONTROL_REF) >= 0.80; S3 valid-deleted-per-UNSAT ratio <= 0.25",
+   "result": "PC S1=0.160 S2=1.0 S3=0.0 (all pass); NULL_TWIN S1=0.717 (fails by 0.017, too close), S2=1.0 (PASSES -> not discriminating), S3=0.781",
+   "why_changed": "random-drop beats drop-oldest in this world (drop-oldest must delete everything older than the newest stale clause), so a 'beats CONTROL_REF' clause is met by the twin; thresholds reset to a scientifically meaningful 'halves' bar"
+  },
+  {
+   "rev": 2,
+   "what": "S1 threshold 0.70 -> 0.50; S2 redefined as fraction of seeds with errors(X) <= 0.50 x same-seed CONTROL_REF errors, threshold 0.80; S3 threshold 0.25 -> 0.50 ('at most half the valid deletions per repair'); added a plausibility floor (errors >= 0.5 per switch) so an injected cheat is flagged",
+   "why_changed": "rev 1 S2 was not discriminating and S1 had a 0.017 margin; S3 0.25 was chosen without a stated rationale, 0.50 matches S1's 'halves' claim. No treatment exists; changes made on control values only"
+  }
+ ],
+ "control_cpu_seconds": 0.328125,
+ "seeds_per_arm": 10,
+ "arm_totals": {
+  "CONTROL_REF": {
+   "errors_total": 3876,
+   "unsat_total": 1417,
+   "deleted_total": 16746,
+   "valid_deleted_total": 15376
+  },
+  "POSITIVE_CONTROL": {
+   "errors_total": 619,
+   "unsat_total": 951,
+   "deleted_total": 1633,
+   "valid_deleted_total": 0
+  },
+  "NULL_TWIN": {
+   "errors_total": 2779,
+   "unsat_total": 1558,
+   "deleted_total": 14639,
+   "valid_deleted_total": 13197
+  },
+  "CHEAT": {
+   "errors_total": 0,
+   "unsat_total": 1558,
+   "deleted_total": 14639,
+   "valid_deleted_total": 0
+  }
+ }
+}

@@ -1,0 +1,34 @@
+{
+ "id": "W6",
+ "triplicateId": "HT-55162c0ac0",
+ "passId": "P3v2",
+ "mechanism_ids": ["M12"],
+ "lens_ids": ["L4"],
+ "hypothesis": "Finite-time co-divergence of perturbations in a chaotic carrier recovers which elements interact (element interactivity) even when the interaction is XOR-like, so that pairwise correlation carries no grouping information, and it does so in the presence of a weak unstructured global leak.",
+ "mechanism": "N = 12 units v_i in [-1, 1], nominal partition into 4 groups of 3. v_i' = (1 - kappa - eps_g) T(v_i) + kappa * v_p(i) * v_q(i) + eps_g * mean_j T(v_j), with T(v) = 4 v^3 - 3 v (odd cubic Chebyshev map, chaotic, symmetric invariant density), kappa = 0.10, eps_g = 0.05. In the treatment p(i), q(i) are the other two members of unit i's group: interaction is a product (XOR-like) of the partners, so partners are uncorrelated to first order; the global mean-field leak eps_g couples every unit to every other unit without group structure.",
+ "intervention": "Readout applied to the treatment world: FTLE grouping. At K = 100 base times (burn-in 500 steps, spacing 20) each unit i is perturbed by delta = 1e-9 and both copies are iterated tau = 8 steps; D_ij = mean over base times of log10(|dv_j| + 1e-18); similarity D + D^T (diagonal set to the maximum); average-linkage agglomeration into 4 clusters; adjusted Rand index (ARI) against the nominal partition.",
+ "control": "Correlation grouping on the same trajectory: similarity = max(|Pearson lag 0|, |Pearson lag 1| in either direction) over 5000 post-burn-in steps; same clustering; ARI against the nominal partition. This is M12's simpler alternative.",
+ "positive_control": "Effect present by construction: identical world and readouts with eps_g = 0, so perturbations can travel only inside groups and FTLE grouping must recover the partition; the product coupling keeps correlation near zero.",
+ "observable": "Per seed: ari_ftle, ari_corr (both against the nominal 4 x 3 partition). Statistics are means over 10 seeds (initial condition v0 ~ U(-1, 1)^12 from numpy default_rng(seed)).",
+ "success_clauses": [
+  {"id": "S1", "text": "Mean over 10 seeds of the FTLE-grouping ARI is at least 0.8.", "statistic": "mean_seed(ari_ftle)", "comparison": ">=", "threshold": 0.8},
+  {"id": "S2", "text": "Mean over 10 seeds of (FTLE-grouping ARI minus correlation-grouping ARI) is at least 0.5.", "statistic": "mean_seed(ari_ftle - ari_corr)", "comparison": ">=", "threshold": 0.5}
+ ],
+ "failure_clauses": [
+  {"id": "F1", "text": "Mean FTLE-grouping ARI below 0.3: co-divergence does not isolate interacting elements once an unstructured leak is present.", "statistic": "mean_seed(ari_ftle)", "comparison": "<", "threshold": 0.3},
+  {"id": "F2", "text": "Mean (FTLE ARI minus correlation ARI) below 0.2: the correlation baseline does as well, so FTLE adds nothing here.", "statistic": "mean_seed(ari_ftle - ari_corr)", "comparison": "<", "threshold": 0.2}
+ ],
+ "alternative_explanation": "Any perturbation-response (causal intervention) readout recovers a coupling graph whether or not the carrier is chaotic; success would show that intervention beats observation, not that chaos is what measures interactivity. Separately, the global leak may synchronise units so that every readout sees one block.",
+ "null_twin": "Same map, same kappa = 0.10, same eps_g = 0.05, same in-degree 2 product coupling, but each unit's two partners drawn uniformly at random from the other 11 units (default_rng(500 + seed)); the nominal partition remains the scoring target. Nuisance statistics (coupling count, strength, map, leak) matched; group structure destroyed.",
+ "substrate": "causal toy",
+ "why_this_implementation": "A 12-unit map lattice makes the interaction graph exactly known and the perturbation experiment exact (no noise), and the product coupling is the smallest construction in which interacting elements are pairwise uncorrelated. No learning system, no network training.",
+ "size": "N = 12, 10 seeds, 5500-step trajectory, 100 base times x 12 perturbations x 8 steps per seed",
+ "seeds": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+ "cost_estimate": "about 0.02 CPU core-minutes for the treatment (all controls took 0.03)",
+ "stupid_explanations": [
+  "the leak synchronises units (check corr_between_mean and trajectory range; the twin at eps_g = 0.05 stays unsynchronised, mean |corr| about 0.04)",
+  "the ARI of a 4-cluster average-linkage partition is inflated by cluster-size artefacts (report the partitions; chance ARI in the twins is about 0)",
+  "the invariant density is not symmetric, so E[v] != 0 and product coupling leaks first-order correlation (report corr_within_mean vs corr_between_mean)",
+  "tau = 8 is either too short for within-group spread or long enough for the leak to saturate everything (report ftle_within_mean and ftle_between_mean)"
+ ]
+}

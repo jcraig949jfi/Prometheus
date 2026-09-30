@@ -1,0 +1,162 @@
+{
+ "triplicateId": "HT-5b0b3ebb8d",
+ "world": "W4",
+ "outcome": "SIGNAL",
+ "statistics": {
+  "TREATMENT": {
+   "or_mh": 1.5795840110000243,
+   "p": 0.00017881593763680224,
+   "chi2": 14.041545370383602,
+   "strata_used": 10,
+   "n": 1747,
+   "n_lucky": 1252,
+   "n_grounded": 495,
+   "fail_rate_lucky": 0.3769968051118211,
+   "fail_rate_grounded": 0.2585858585858586
+  },
+  "NULL_TWIN": {
+   "or_mh": 0.998177526075097,
+   "p": 1.0,
+   "chi2": 0.0,
+   "strata_used": 10,
+   "n": 1747,
+   "n_lucky": 1252,
+   "n_grounded": 495,
+   "fail_rate_lucky": 0.3506389776357827,
+   "fail_rate_grounded": 0.32525252525252524
+  },
+  "CHEAT": {
+   "or_mh": "inf",
+   "p": 0.0,
+   "chi2": 1685.0433305228498,
+   "strata_used": 10,
+   "n": 1747,
+   "n_lucky": 1252,
+   "n_grounded": 495,
+   "fail_rate_lucky": 1.0,
+   "fail_rate_grounded": 0.0
+  },
+  "POSITIVE_CONTROL": {
+   "or_mh": 3.2872375796125084,
+   "p": 1.070450416642397e-22,
+   "chi2": 96.13990991170162,
+   "strata_used": 10,
+   "n": 2020,
+   "n_lucky": 1562,
+   "n_grounded": 458,
+   "fail_rate_lucky": 0.49359795134443024,
+   "fail_rate_grounded": 0.21397379912663755,
+   "n_planted": 300,
+   "n_planted_flagged": 300,
+   "planted_flagged_fraction": 1.0,
+   "planted_flagged_fail_rate": 1.0
+  },
+  "CONTROL": {
+   "n": 1747,
+   "fail_rate": 0.34344590726960506,
+   "per_visit_decile": {
+    "0": {
+     "n": 175,
+     "fail_rate": 0.25142857142857145,
+     "lucky_frac": 0.5657142857142857
+    },
+    "1": {
+     "n": 175,
+     "fail_rate": 0.3485714285714286,
+     "lucky_frac": 0.6571428571428571
+    },
+    "2": {
+     "n": 173,
+     "fail_rate": 0.4046242774566474,
+     "lucky_frac": 0.7687861271676301
+    },
+    "3": {
+     "n": 176,
+     "fail_rate": 0.39204545454545453,
+     "lucky_frac": 0.8295454545454546
+    },
+    "4": {
+     "n": 170,
+     "fail_rate": 0.38823529411764707,
+     "lucky_frac": 0.7764705882352941
+    },
+    "5": {
+     "n": 179,
+     "fail_rate": 0.43575418994413406,
+     "lucky_frac": 0.7877094972067039
+    },
+    "6": {
+     "n": 175,
+     "fail_rate": 0.4,
+     "lucky_frac": 0.76
+    },
+    "7": {
+     "n": 174,
+     "fail_rate": 0.3275862068965517,
+     "lucky_frac": 0.735632183908046
+    },
+    "8": {
+     "n": 175,
+     "fail_rate": 0.26857142857142857,
+     "lucky_frac": 0.7142857142857143
+    },
+    "9": {
+     "n": 175,
+     "fail_rate": 0.21714285714285714,
+     "lucky_frac": 0.5714285714285714
+    }
+   },
+   "crude_or_lucky_vs_grounded": 1.7350160256410256,
+   "spearman_visit_vs_fail": -0.04399948853293343,
+   "spearman_p": 0.06597015195764824
+  },
+  "TREATMENT_20_strata": {
+   "or_mh": 1.5816233472426526,
+   "p": 0.00018644555928622113,
+   "chi2": 13.962983320712311,
+   "strata_used": 20,
+   "n": 1747,
+   "n_lucky": 1252,
+   "n_grounded": 495,
+   "fail_rate_lucky": 0.3769968051118211,
+   "fail_rate_grounded": 0.2585858585858586
+  },
+  "seeds_per_arm": {
+   "TREATMENT": 60,
+   "CONTROL": 60,
+   "NULL_TWIN": 60,
+   "POSITIVE_CONTROL": 60,
+   "CHEAT": 60
+  }
+ },
+ "criterion_as_applied": "Mantel-Haenszel common OR of post-shift failure, lucky vs grounded, stratified by pooled visit-count deciles (mean visits over witness states), CMH chi2 with 0.5 continuity correction, 60 seeds x 30 formulas (true & verified beliefs only). Success: OR>=1.5 and p<0.01. Failure criterion: OR<1.2 or p>0.1. Not-success -> NULL per PREREG.",
+ "treatment_meets_success": true,
+ "treatment_meets_failure_criterion": false,
+ "positive_control_detected": true,
+ "cheat_detected": true,
+ "null_twin_meets_success": false,
+ "stupid_explanations_status": [
+  {
+   "text": "lucky beliefs concentrate on the disabled mechanism by construction of the shift",
+   "addressed_by_this_run": false,
+   "how": "described only: witness touches disabled-mechanism interior in 0.3769968051118211 of lucky vs 0.2585858585858586 of grounded beliefs; not stratified on it"
+  },
+  {
+   "text": "witness selection picks shortest paths that happen to use abduced edges",
+   "addressed_by_this_run": false,
+   "how": "only one witness rule run; lucky witnesses using an abduced edge 0.963258785942492, fabricated edge 0.9592651757188498; grounded: abduced 0.0, fabricated 0.0"
+  },
+  {
+   "text": "visit-count strata too coarse to remove the confound",
+   "addressed_by_this_run": true,
+   "how": "prespecified 20-quantile strata: OR_MH=1.5816233472426526, p=0.00018644555928622113 (10-decile: OR_MH=1.5795840110000243, p=0.00017881593763680224)"
+  }
+ ],
+ "anomalies": [
+  "post-run descriptive check (not part of outcome): in TREATMENT, fail == touches_disabled for all 1747 beliefs; a belief fails iff s or t is an interior state of the disabled mechanism. Beliefs with an endpoint in either mechanism interior: n=1093, lucky 0.772, fail 0.549; beliefs with no such endpoint: n=654, lucky 0.624, fail 0.000. The lucky-vs-grounded OR may be carried by endpoint location (stupid explanation 1), which visit strata do not remove.",
+  "1747/1800 formulas are true and verified (world is nearly strongly connected); 96% of lucky witnesses use a fabricated reverse edge, 0% of grounded ones."
+ ],
+ "core_minutes": 0.0185,
+ "attempts": 1,
+ "notes": "Outcome SIGNAL. Treatment: 1747 true verified beliefs (1252 lucky, 495 grounded); post-shift failure rate lucky 0.3769968051118211, grounded 0.2585858585858586; MH OR 1.5795840110000243, p 0.00017881593763680224. Null twin MH OR 0.998177526075097, p 1.0. Cheat OR inf. Positive control: 300/300 planted flagged, failure rate among flagged 1.0. Numbers only; no claim beyond this toy configuration."
+}

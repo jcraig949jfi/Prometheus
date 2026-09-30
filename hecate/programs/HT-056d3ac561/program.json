@@ -1,0 +1,2538 @@
+{
+  "id": "HT-056d3ac561",
+  "key": "Kalman Filtering + Metamorphic Testing + Sparse Coding",
+  "stratum": "S1_cross_extreme",
+  "concepts": [
+    {
+      "field": "Signal Processing",
+      "mechanism": "dynamics",
+      "name": "Kalman Filtering",
+      "short_description": "Optimal recursive state estimation under noise; prediction-update cycle, Gaussian state space models."
+    },
+    {
+      "field": "Software Engineering",
+      "mechanism": "constraint",
+      "name": "Metamorphic Testing",
+      "short_description": "Testing without oracle: define relations between outputs (double input, ordering unchanged). Metamorphic relations as formal mutation taxonomy."
+    },
+    {
+      "field": "Neuroscience",
+      "mechanism": "structure",
+      "name": "Sparse Coding",
+      "short_description": "Neural representations using few active neurons; energy efficiency, pattern separation, Olshausen-Field model."
+    }
+  ],
+  "provenance": {
+    "historicalId": "Kalman Filtering + Metamorphic Testing + Sparse Coding",
+    "humanreadable": "agents/hephaestus/humanreadable/Kalman_Filtering---Sparse_Coding---Metamorphic_Testing.md",
+    "ledger_lines": [
+      3859
+    ],
+    "source": "hephaestus",
+    "sourceArtifact": "agents/hephaestus/ledger.jsonl#L3859",
+    "upstream_nous": [
+      "agents/nous/runs/20260325_132552/responses.jsonl#L844"
+    ],
+    "selected_by": "roles/Hecate/prereg/2026-09-29_first_selection/"
+  },
+  "history": {
+    "forged": false,
+    "ledger_n": 1,
+    "ledger_reasons": [
+      "api_call_failed"
+    ],
+    "nous_composite_max": 6.33,
+    "nous_high_potential": false,
+    "nous_models": [
+      "nvidia/nemotron-3-super-120b-a12b"
+    ],
+    "nous_n": 1,
+    "nous_unproductive_any": false
+  },
+  "passes": [
+    {
+      "id": "P0",
+      "triplicateId": "HT-056d3ac561",
+      "index": 0,
+      "kind": "raw_interpretation",
+      "added": [
+        "new interpretation"
+      ],
+      "generator": {
+        "model": "claude-opus-5-5",
+        "search": false,
+        "prompt": "hecate/programs/_prompts/pass0_3_v1.md",
+        "prompt_sha256": "9ac5468dffb0a5792840809c84b3ad1ab22056397741dacb893386fd206baf3d"
+      },
+      "inspected_prior": [],
+      "unexplained": [
+        "whether MR residuals carry information beyond innovation statistics",
+        "whether sparsity is causal or decorative in each interpretation"
+      ],
+      "decision": "DEEPEN",
+      "research_state": {
+        "novelty": "unknown",
+        "mechanistic_clarity": "low",
+        "falsifiability": "low",
+        "empirical_support": "none",
+        "cross_lens_agreement": "unknown",
+        "cross_substrate_transfer": "unknown",
+        "baseline_resistance": "unknown",
+        "artifact_risk": "medium",
+        "cost": "low",
+        "unexpectedness": "low",
+        "potential_importance": "unknown"
+      },
+      "concept_extractions": [
+        {
+          "concept": "Kalman Filtering",
+          "defining_structures": [
+            "latent state x_t with linear-Gaussian transition A, Q",
+            "measurement model z_t = H x_t + v, R",
+            "sufficient statistic (x_hat, P) carried forward",
+            "predict-update cycle with gain K = P H^T (H P H^T + R)^-1"
+          ],
+          "invariants": [
+            "innovations are zero-mean and white iff the model is correct",
+            "covariance recursion (Riccati) does not depend on the data values",
+            "estimator is linear in the observations (superposition holds)"
+          ],
+          "transformations": [
+            "prediction: push mean and covariance through A",
+            "update: correct by gain-weighted innovation",
+            "information form: updates add information matrices"
+          ],
+          "conserved_quantities": [
+            "no exact conservation; information is additive across independent measurements",
+            "steady-state gain is a fixed point of the Riccati map"
+          ],
+          "failure_modes": [
+            "model mismatch -> biased, non-white innovations",
+            "covariance collapse: P and K shrink, filter stops listening (overconfidence)",
+            "outliers / non-Gaussian noise drag the mean",
+            "unobservable directions never corrected"
+          ],
+          "dynamics": [
+            "Riccati convergence to steady-state gain",
+            "error dynamics (I-KH)A contract when stable"
+          ],
+          "scales": [
+            "time constant set by Q/R ratio",
+            "single step vs steady-state horizon"
+          ],
+          "locality": [
+            "Markov: only previous estimate and current measurement matter",
+            "local in time, global in state space (dense covariance)"
+          ],
+          "memory": [
+            "whole history compressed into mean + covariance",
+            "memory length set by gain (small K = long memory)"
+          ],
+          "identity": [
+            "a tracked state; identity of a track maintained by gating/association"
+          ],
+          "reproduction": [
+            "none native; track splitting in multi-hypothesis tracking"
+          ],
+          "selection": [
+            "innovation gating (chi-square test) accepts or rejects measurements"
+          ],
+          "information": [
+            "Fisher information = P^-1",
+            "normalized innovation squared (NIS) as self-consistency statistic"
+          ],
+          "constraint": [
+            "linear-Gaussian assumptions",
+            "known Q, R, A, H"
+          ]
+        },
+        {
+          "concept": "Metamorphic Testing",
+          "defining_structures": [
+            "program under test f with no oracle",
+            "metamorphic relation (T, g): f(T x) should equal g(f(x))",
+            "source test case and follow-up test case pair"
+          ],
+          "invariants": [
+            "the relation itself: equivariance of f with respect to (T, g)",
+            "a correct program satisfies every valid MR"
+          ],
+          "transformations": [
+            "input transformation T (scale, permute, shift, add, reverse)",
+            "output transformation g",
+            "composition of MRs yields new MRs"
+          ],
+          "conserved_quantities": [
+            "the relation residual g(f(x)) - f(T x) is conserved at zero for correct f"
+          ],
+          "failure_modes": [
+            "MR too weak: buggy programs also satisfy it (faults in the relation's kernel)",
+            "false violations from numerical tolerance",
+            "MR invalid for correct program (spec error)",
+            "shared faults that commute with T are invisible"
+          ],
+          "dynamics": [
+            "no intrinsic dynamics; a test campaign accumulates pass/fail evidence"
+          ],
+          "scales": [
+            "single relation instance vs relation family vs campaign"
+          ],
+          "locality": [
+            "relations are local in input space (x and T x) but can be global in output"
+          ],
+          "memory": [
+            "stateless per test; campaign keeps a ledger of violations"
+          ],
+          "identity": [
+            "programs are identified up to equivalence classes indistinguishable by the MR set"
+          ],
+          "reproduction": [
+            "follow-up tests generated from source tests",
+            "MR composition breeds new relations"
+          ],
+          "selection": [
+            "MRs ranked by fault-detection power",
+            "test prioritization"
+          ],
+          "information": [
+            "a violation is evidence of a fault without knowing the correct output",
+            "information limited to the complement of the relation kernel"
+          ],
+          "constraint": [
+            "relations constrain pairs of outputs, never absolute values"
+          ]
+        },
+        {
+          "concept": "Sparse Coding",
+          "defining_structures": [
+            "overcomplete dictionary D",
+            "code alpha with few nonzeros: x ~ D alpha",
+            "objective ||x - D alpha||^2 + lambda |alpha|_1",
+            "inference by competition (ISTA / locally competitive algorithm)"
+          ],
+          "invariants": [
+            "support set (which atoms are active) is locally stable away from threshold boundaries",
+            "atom norms constrained",
+            "dictionary identifiable only up to permutation and sign"
+          ],
+          "transformations": [
+            "soft thresholding",
+            "lateral inhibition between correlated atoms",
+            "Hebbian-like dictionary update"
+          ],
+          "conserved_quantities": [
+            "activity budget (number of active units) approximately conserved by lambda"
+          ],
+          "failure_modes": [
+            "dead atoms",
+            "coherent dictionary -> unstable support flips",
+            "shrinkage bias (codes biased toward zero)",
+            "non-smooth: small input changes cause discrete support switches"
+          ],
+          "dynamics": [
+            "fast inference dynamics (competition) vs slow learning dynamics (dictionary)",
+            "winner-take-most settling"
+          ],
+          "scales": [
+            "number of atoms N, sparsity k, signal dimension n"
+          ],
+          "locality": [
+            "atoms are local features; competition is between overlapping atoms"
+          ],
+          "memory": [
+            "dictionary = long-term memory; code = short-term state"
+          ],
+          "identity": [
+            "the support set is the identity of a percept"
+          ],
+          "reproduction": [
+            "atom splitting / recruitment during learning"
+          ],
+          "selection": [
+            "atoms compete for support; unused atoms die or are reinitialized"
+          ],
+          "information": [
+            "roughly k log(N/k) bits per code",
+            "pattern separation: similar inputs mapped to dissimilar supports"
+          ],
+          "constraint": [
+            "L0/L1 sparsity budget",
+            "reconstruction fidelity"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "P1",
+      "triplicateId": "HT-056d3ac561",
+      "index": 1,
+      "kind": "collision",
+      "added": [
+        "new mechanism",
+        "new falsifier"
+      ],
+      "generator": {
+        "model": "claude-opus-5-5",
+        "search": false,
+        "prompt": "hecate/programs/_prompts/pass0_3_v1.md",
+        "prompt_sha256": "9ac5468dffb0a5792840809c84b3ad1ab22056397741dacb893386fd206baf3d"
+      },
+      "inspected_prior": [
+        "I1",
+        "I2",
+        "I3",
+        "I4",
+        "I5",
+        "I6",
+        "I7"
+      ],
+      "unexplained": [
+        "M4, M10, M15 have weak three-way dependency",
+        "M14 and M16 may be familiar results (compressed sensing, nonlinearity probing) in disguise"
+      ],
+      "decision": "DEEPEN",
+      "research_state": {
+        "novelty": "unknown",
+        "mechanistic_clarity": "medium",
+        "falsifiability": "medium",
+        "empirical_support": "none",
+        "cross_lens_agreement": "unknown",
+        "cross_substrate_transfer": "unknown",
+        "baseline_resistance": "unknown",
+        "artifact_risk": "medium",
+        "cost": "low",
+        "unexpectedness": "medium",
+        "potential_importance": "unknown"
+      }
+    },
+    {
+      "id": "P2",
+      "triplicateId": "HT-056d3ac561",
+      "index": 2,
+      "kind": "lens_explosion",
+      "added": [
+        "new lens",
+        "new observable"
+      ],
+      "generator": {
+        "model": "claude-opus-5-5",
+        "search": false,
+        "prompt": "hecate/programs/_prompts/pass0_3_v1.md",
+        "prompt_sha256": "9ac5468dffb0a5792840809c84b3ad1ab22056397741dacb893386fd206baf3d"
+      },
+      "inspected_prior": [
+        "I1",
+        "I2",
+        "I3",
+        "I4",
+        "I5",
+        "I6",
+        "I7",
+        "M1",
+        "M2",
+        "M3",
+        "M4",
+        "M5",
+        "M6",
+        "M7",
+        "M8",
+        "M9",
+        "M10",
+        "M11",
+        "M12",
+        "M13",
+        "M14",
+        "M15",
+        "M16"
+      ],
+      "unexplained": [
+        "no lens yet separates MR information from NIS information except through the L1 baseline comparison",
+        "L6 needs an MI estimator robust at small samples"
+      ],
+      "decision": "FALSIFY",
+      "research_state": {
+        "novelty": "unknown",
+        "mechanistic_clarity": "medium",
+        "falsifiability": "medium",
+        "empirical_support": "none",
+        "cross_lens_agreement": "unknown",
+        "cross_substrate_transfer": "unknown",
+        "baseline_resistance": "unknown",
+        "artifact_risk": "medium",
+        "cost": "low",
+        "unexpectedness": "medium",
+        "potential_importance": "unknown"
+      }
+    },
+    {
+      "id": "P3",
+      "triplicateId": "HT-056d3ac561",
+      "index": 3,
+      "kind": "minimal_worlds",
+      "added": [
+        "new substrate",
+        "new intervention",
+        "new falsifier"
+      ],
+      "generator": {
+        "model": "claude-opus-5-5",
+        "search": false,
+        "prompt": "hecate/programs/_prompts/pass0_3_v1.md",
+        "prompt_sha256": "9ac5468dffb0a5792840809c84b3ad1ab22056397741dacb893386fd206baf3d"
+      },
+      "inspected_prior": [
+        "M1",
+        "M2",
+        "M3",
+        "M4",
+        "M5",
+        "M6",
+        "M7",
+        "M8",
+        "M9",
+        "M10",
+        "M11",
+        "M12",
+        "M13",
+        "M14",
+        "M15",
+        "M16",
+        "L1",
+        "L2",
+        "L3",
+        "L4",
+        "L5",
+        "L6",
+        "L7"
+      ],
+      "unexplained": [
+        "W4 may reduce to compressed sensing",
+        "W2 may reduce to convolutional dictionaries",
+        "nothing run"
+      ],
+      "decision": "FALSIFY",
+      "research_state": {
+        "novelty": "unknown",
+        "mechanistic_clarity": "medium",
+        "falsifiability": "high",
+        "empirical_support": "none",
+        "cross_lens_agreement": "unknown",
+        "cross_substrate_transfer": "unknown",
+        "baseline_resistance": "low",
+        "artifact_risk": "medium",
+        "cost": "low",
+        "unexpectedness": "medium",
+        "potential_importance": "low"
+      }
+    },
+    {
+      "id": "P3-probe1",
+      "triplicateId": "HT-056d3ac561",
+      "index": 3,
+      "kind": "cheap_probe",
+      "added": [
+        "new observable"
+      ],
+      "generator": {
+        "model": "claude-opus-5-5 (implementer)",
+        "search": false,
+        "prompt": "hecate/programs/_prompts/probe_impl_v1.md",
+        "prompt_sha256": "cf4bd374bce1b817a12d3607063278183ce0a8b7c4a7b771061dc8ce133bcea2"
+      },
+      "prereg": "roles/Hecate/prereg/2026-09-29_probe_round1/PREREG.md",
+      "inspected_prior": [
+        "W1"
+      ],
+      "unexplained": [],
+      "decision": "DEEPEN",
+      "research_state": {
+        "novelty": "unknown",
+        "mechanistic_clarity": "unknown",
+        "falsifiability": "unknown",
+        "empirical_support": "none",
+        "cross_lens_agreement": "unknown",
+        "cross_substrate_transfer": "unknown",
+        "baseline_resistance": "unknown",
+        "artifact_risk": "unknown",
+        "cost": "unknown",
+        "unexpectedness": "unknown",
+        "potential_importance": "unknown"
+      }
+    },
+    {
+      "id": "P3-probe2",
+      "triplicateId": "HT-056d3ac561",
+      "index": 3,
+      "kind": "cheap_probe",
+      "added": [
+        "new observable"
+      ],
+      "generator": {
+        "model": "claude-opus-5-5 (implementer)",
+        "search": false,
+        "prompt": "hecate/programs/_prompts/probe_impl_v2.md",
+        "prompt_sha256": "2021ed66e8fefd807203ae1d814b74091b4eabdacef16668e7a025d82128185e"
+      },
+      "prereg": "roles/Hecate/prereg/2026-09-30_probe_round2/PREREG.md",
+      "inspected_prior": [
+        "W1",
+        "W4"
+      ],
+      "unexplained": [
+        "projection rank high enough that no recovery is needed",
+        "Lasso lambda tuned on the test trials",
+        "an incoherent fault dictionary makes any method work"
+      ],
+      "decision": "PARK",
+      "research_state": {
+        "novelty": "unknown",
+        "mechanistic_clarity": "unknown",
+        "falsifiability": "unknown",
+        "empirical_support": "none",
+        "cross_lens_agreement": "unknown",
+        "cross_substrate_transfer": "unknown",
+        "baseline_resistance": "unknown",
+        "artifact_risk": "unknown",
+        "cost": "unknown",
+        "unexpectedness": "unknown",
+        "potential_importance": "unknown"
+      }
+    },
+    {
+      "id": "P3v2",
+      "triplicateId": "HT-056d3ac561",
+      "index": 3,
+      "kind": "minimal_worlds_v2",
+      "added": [
+        "new falsifier",
+        "new observable"
+      ],
+      "generator": {
+        "model": "claude-opus-5-5",
+        "search": false,
+        "prompt": "hecate/programs/_prompts/pass3_v2.md",
+        "prompt_sha256": "2adcfc8da07ee9adb9b04d2214889f0965758f7fcf0a60cde08eebb62bedd461"
+      },
+      "prereg": "roles/Hecate/prereg/2026-09-30_pass3_v2/PREREG.md",
+      "inspected_prior": [
+        "W4"
+      ],
+      "unexplained": [],
+      "decision": "FALSIFY",
+      "research_state": {
+        "novelty": "unknown",
+        "mechanistic_clarity": "unknown",
+        "falsifiability": "unknown",
+        "empirical_support": "none",
+        "cross_lens_agreement": "unknown",
+        "cross_substrate_transfer": "unknown",
+        "baseline_resistance": "unknown",
+        "artifact_risk": "unknown",
+        "cost": "unknown",
+        "unexpectedness": "unknown",
+        "potential_importance": "unknown"
+      }
+    },
+    {
+      "id": "P3-probe3",
+      "triplicateId": "HT-056d3ac561",
+      "index": 3,
+      "kind": "cheap_probe",
+      "added": [
+        "new falsifier",
+        "new observable"
+      ],
+      "generator": {
+        "model": "claude-opus-5-5",
+        "search": false,
+        "prompt": "hecate/programs/_prompts/probe_impl_v3.md",
+        "prompt_sha256": "a34a8c6143f49df2b33b75871e8f9cd12e60c10c37778ba595e12fedf1621685"
+      },
+      "prereg": "roles/Hecate/prereg/2026-09-30_pass3_v2/PREREG.md",
+      "inspected_prior": [
+        "W5"
+      ],
+      "unexplained": [
+        "alternative explanation (spec): any gain comes from per-component sparse alarms, not the metamorphic relation; a per-component NIS_j alarm with the same sparse reopening would do as well"
+      ],
+      "decision": "PARK",
+      "research_state": {
+        "novelty": "unknown",
+        "mechanistic_clarity": "unknown",
+        "falsifiability": "unknown",
+        "empirical_support": "none",
+        "cross_lens_agreement": "unknown",
+        "cross_substrate_transfer": "unknown",
+        "baseline_resistance": "unknown",
+        "artifact_risk": "unknown",
+        "cost": "unknown",
+        "unexpectedness": "unknown",
+        "potential_importance": "unknown"
+      }
+    }
+  ],
+  "hypotheses": [
+    {
+      "id": "I1",
+      "triplicateId": "HT-056d3ac561",
+      "passId": "P0",
+      "kind": "interpretation",
+      "layer": "speculation",
+      "statement": "Oracle-free state estimation: a system estimates a hidden state using only relations between its own outputs on transformed inputs (metamorphic residuals as pseudo-measurements), with the hidden state represented in a sparse basis. Experiment: can MR residuals replace ground-truth measurements in a predict-update loop?"
+    },
+    {
+      "id": "I2",
+      "triplicateId": "HT-056d3ac561",
+      "passId": "P0",
+      "kind": "interpretation",
+      "layer": "speculation",
+      "statement": "Validity of invariants is itself a sparse, drifting latent state: of many candidate relations only a few hold at any time, and which ones hold changes as the system changes. Experiment: sparse-code the violation pattern over a relation library and track it with a filter."
+    },
+    {
+      "id": "I3",
+      "triplicateId": "HT-056d3ac561",
+      "passId": "P0",
+      "kind": "interpretation",
+      "layer": "speculation",
+      "statement": "Self-sealing estimators: covariance collapse (filter stops listening), support lock-in (code stops switching) and trivially-passing relations are three faces of one failure, confident self-consistency while wrong. Experiment: map the region of parameter space where all three co-occur."
+    },
+    {
+      "id": "I4",
+      "triplicateId": "HT-056d3ac561",
+      "passId": "P0",
+      "kind": "interpretation",
+      "layer": "speculation",
+      "statement": "Change is sparse: between steps only a few code atoms switch, so innovations live in a sparse event space, and a transformation predicts which switches are lawful. Experiment: classify support flips into transform-predicted vs anomalous and use the anomalous ones as fault events."
+    },
+    {
+      "id": "I5",
+      "triplicateId": "HT-056d3ac561",
+      "passId": "P0",
+      "kind": "interpretation",
+      "layer": "speculation",
+      "statement": "A transformation is a time step: the pair (x, T x) can be treated as consecutive states, so the transition matrix of a filter over sparse codes is a learned representation of T, and group laws of T (T^n = I) become metamorphic relations on that matrix. Experiment: test whether learned transition matrices obey the group laws."
+    },
+    {
+      "id": "I6",
+      "triplicateId": "HT-056d3ac561",
+      "passId": "P0",
+      "kind": "interpretation",
+      "layer": "speculation",
+      "statement": "Sparsity rescues weak oracles: a metamorphic relation only reveals the component of a fault outside its kernel, but if faults are sparse in some basis the full fault can be reconstructed from that projection. Experiment: recover full fault vectors from MR residuals with and without a sparse prior."
+    },
+    {
+      "id": "I7",
+      "triplicateId": "HT-056d3ac561",
+      "passId": "P0",
+      "kind": "interpretation",
+      "layer": "speculation",
+      "statement": "A trilemma: sparse coding separates similar inputs, filtering smooths across time, metamorphic relations demand consistency across transforms; the three cannot all be maximized, and there may be a phase boundary where relation violations peak. Experiment: sweep threshold and gain and look for a ridge."
+    },
+    {
+      "id": "M1",
+      "triplicateId": "HT-056d3ac561",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "implemented_candidate",
+      "form": "error-correction mechanism",
+      "statement": "Metamorphic pseudo-measurement: the Kalman update uses the MR residual r = g(f(x)) - f(T x), whose expected value is zero under a correct model, as its measurement, estimating hidden model parameters stored as a sparse coefficient vector.",
+      "derived_from": [
+        "I1",
+        "I6"
+      ],
+      "concept_contributions": {
+        "Kalman Filtering": "predict-update recursion and covariance weighting of residuals",
+        "Metamorphic Testing": "a measurement that needs no ground truth",
+        "Sparse Coding": "a sparse parameter basis making the estimation identifiable from few relations"
+      },
+      "knockouts": {
+        "Kalman Filtering": "residuals are used once, no accumulation of evidence or uncertainty",
+        "Metamorphic Testing": "nothing to measure without an oracle; loop has no input",
+        "Sparse Coding": "parameters are dense; relation residuals underdetermine them"
+      },
+      "simpler_alternative": "gradient descent on a consistency-regularization loss",
+      "questions": {
+        "what_exists": "a model with sparse parameters, a relation library, a filter over parameters",
+        "what_changes": "parameter estimate and its covariance",
+        "what_persists": "relations and dictionary",
+        "what_is_selected": "parameter components consistent with relations",
+        "what_can_reproduce": "nothing",
+        "what_can_learn": "parameter values without labels",
+        "what_can_transfer": "the relation library to a new model family",
+        "distinguishing_observable": "covariance of the parameter estimate shrinks only along directions outside the relation kernel; a loss-minimizer gives no such directional profile"
+      }
+    },
+    {
+      "id": "M2",
+      "triplicateId": "HT-056d3ac561",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "dynamical law",
+      "statement": "Sparse-innovation filter: after prediction, the innovation in code space is soft-thresholded, so updates are events touching few atoms; the transform T supplies the prediction.",
+      "derived_from": [
+        "I4"
+      ],
+      "concept_contributions": {
+        "Kalman Filtering": "prediction-correction structure",
+        "Metamorphic Testing": "the prediction operator (x -> T x) as the expected change",
+        "Sparse Coding": "thresholding making updates discrete and few"
+      },
+      "knockouts": {
+        "Kalman Filtering": "no prediction; each frame coded independently",
+        "Metamorphic Testing": "prediction is identity; all change looks like innovation",
+        "Sparse Coding": "innovations dense; no event structure"
+      },
+      "simpler_alternative": "a thresholded residual change detector",
+      "questions": {
+        "what_exists": "codes, a transition operator, sparse innovations",
+        "what_changes": "which atoms are active",
+        "what_persists": "atoms whose change is predicted",
+        "what_is_selected": "innovation atoms exceeding threshold",
+        "what_can_reproduce": "nothing",
+        "what_can_learn": "the threshold and transition",
+        "what_can_transfer": "event statistics to other signal types",
+        "distinguishing_observable": "fraction of nonzero innovation atoms under lawful transforms vs planted anomalies"
+      }
+    },
+    {
+      "id": "M3",
+      "triplicateId": "HT-056d3ac561",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "implemented_candidate",
+      "form": "learning pressure",
+      "statement": "Covariance reopening: the rate of metamorphic violations inflates process noise Q, so a filter that has become overconfident starts listening again when relations it should satisfy begin failing.",
+      "derived_from": [
+        "I3"
+      ],
+      "concept_contributions": {
+        "Kalman Filtering": "the covariance/gain whose collapse is the failure",
+        "Metamorphic Testing": "an oracle-free alarm",
+        "Sparse Coding": "a sparse fault attribution deciding which state components get reopened"
+      },
+      "knockouts": {
+        "Kalman Filtering": "no gain to reopen",
+        "Metamorphic Testing": "must rely on innovation magnitude (NIS) alone",
+        "Sparse Coding": "Q is inflated isotropically; unaffected components lose accuracy"
+      },
+      "simpler_alternative": "fixed forgetting factor or NIS-based adaptive Q",
+      "questions": {
+        "what_exists": "filter, relations, violation counter",
+        "what_changes": "Q, P, K",
+        "what_persists": "model structure",
+        "what_is_selected": "components that get reopened",
+        "what_can_reproduce": "nothing",
+        "what_can_learn": "when to distrust itself",
+        "what_can_transfer": "the reopening rule to other estimators",
+        "distinguishing_observable": "recovery time after an abrupt sparse regime change compared with NIS-adaptive Q at matched false-alarm rate"
+      }
+    },
+    {
+      "id": "M4",
+      "triplicateId": "HT-056d3ac561",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "representation",
+      "statement": "Support equivariance: a sparse code satisfies the MR supp(S(T x)) = pi_T(supp(S(x))) for some fixed permutation pi_T of atoms. Three-way dependency WEAK: the filter only enters when codes are tracked over sequences of transforms.",
+      "derived_from": [
+        "I5"
+      ],
+      "concept_contributions": {
+        "Kalman Filtering": "optional: tracking codes across repeated transforms",
+        "Metamorphic Testing": "the relation on supports",
+        "Sparse Coding": "discrete supports on which a permutation can act"
+      },
+      "knockouts": {
+        "Kalman Filtering": "only static equivariance remains; little is lost (weak dependency)",
+        "Metamorphic Testing": "no criterion for good dictionaries",
+        "Sparse Coding": "dense codes admit no permutation action"
+      },
+      "simpler_alternative": "a convolutional (shift-tied) dictionary, which is equivariant by construction",
+      "questions": {
+        "what_exists": "dictionary, codes, transforms",
+        "what_changes": "supports under T",
+        "what_persists": "the permutation pi_T",
+        "what_is_selected": "dictionaries whose supports transform lawfully",
+        "what_can_reproduce": "nothing",
+        "what_can_learn": "dictionary geometry",
+        "what_can_transfer": "pi_T to compositions of T",
+        "distinguishing_observable": "permutation-likeness of the code-space transition matrix"
+      }
+    },
+    {
+      "id": "M5",
+      "triplicateId": "HT-056d3ac561",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "memory structure",
+      "statement": "Relation dictionary: the violation vector over a library of candidate MRs is sparse-coded against a dictionary of fault signatures, and a filter tracks the coefficients as the system under test drifts.",
+      "derived_from": [
+        "I2"
+      ],
+      "concept_contributions": {
+        "Kalman Filtering": "tracking drifting coefficients with uncertainty",
+        "Metamorphic Testing": "the relation library producing the observation vector",
+        "Sparse Coding": "fault signatures as atoms; few faults active"
+      },
+      "knockouts": {
+        "Kalman Filtering": "each campaign is a snapshot; drift invisible",
+        "Metamorphic Testing": "no observation vector",
+        "Sparse Coding": "violations must be explained one relation at a time"
+      },
+      "simpler_alternative": "per-relation moving average of violation rate",
+      "questions": {
+        "what_exists": "relation library, signature dictionary, coefficient filter",
+        "what_changes": "active fault coefficients",
+        "what_persists": "signature dictionary",
+        "what_is_selected": "faults explaining violations",
+        "what_can_reproduce": "signatures can be recruited",
+        "what_can_learn": "fault signatures",
+        "what_can_transfer": "signature dictionary to related programs",
+        "distinguishing_observable": "a new fault combining two known signatures is explained with 2 atoms rather than a new per-relation pattern"
+      }
+    },
+    {
+      "id": "M6",
+      "triplicateId": "HT-056d3ac561",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "computational primitive",
+      "statement": "Transform-as-transition: fit a Kalman transition matrix A in code space from pairs (alpha(x), alpha(T x)); the MRs of T's group structure (T^n = I, commutation) become testable laws on A.",
+      "derived_from": [
+        "I5"
+      ],
+      "concept_contributions": {
+        "Kalman Filtering": "the transition matrix and its use for multi-step prediction",
+        "Metamorphic Testing": "group laws of T as relations on A",
+        "Sparse Coding": "sparse codes making A near-permutation and interpretable"
+      },
+      "knockouts": {
+        "Kalman Filtering": "A is a regression matrix with no predictive use",
+        "Metamorphic Testing": "no law to check A against",
+        "Sparse Coding": "A is a dense rotation; group laws hold only in the full basis"
+      },
+      "simpler_alternative": "fit a linear map between raw inputs x and T x",
+      "questions": {
+        "what_exists": "codes, transition A, transform group",
+        "what_changes": "code under repeated T",
+        "what_persists": "A",
+        "what_is_selected": "dictionaries yielding lawful A",
+        "what_can_reproduce": "nothing",
+        "what_can_learn": "A from pairs",
+        "what_can_transfer": "A to longer sequences and composite transforms",
+        "distinguishing_observable": "||A^n - I|| relative to the raw-space map and to a shuffled-pair twin"
+      }
+    },
+    {
+      "id": "M7",
+      "triplicateId": "HT-056d3ac561",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "dynamical law",
+      "statement": "Gain collapse and support lock-in couple: when code inference is warm-started by a low-gain Kalman prediction, the support rarely switches, so support-level MRs pass while the true support has changed (self-sealing).",
+      "derived_from": [
+        "I3",
+        "I7"
+      ],
+      "concept_contributions": {
+        "Kalman Filtering": "low steady-state gain holding the prediction",
+        "Metamorphic Testing": "MR as a check that passes",
+        "Sparse Coding": "threshold making switches discrete and sticky"
+      },
+      "knockouts": {
+        "Kalman Filtering": "no warm start; lock-in disappears",
+        "Metamorphic Testing": "self-sealing is invisible but still present",
+        "Sparse Coding": "smooth codes drift instead of locking"
+      },
+      "simpler_alternative": "hysteresis of any thresholded estimator with momentum",
+      "questions": {
+        "what_exists": "latent switching support, warm-started LCA, filter",
+        "what_changes": "support estimate",
+        "what_persists": "stale support",
+        "what_is_selected": "estimator configurations",
+        "what_can_reproduce": "nothing",
+        "what_can_learn": "nothing",
+        "what_can_transfer": "phase boundary to other thresholded trackers",
+        "distinguishing_observable": "self-sealing region boundary aligned with a single combined variable K/lambda"
+      }
+    },
+    {
+      "id": "M8",
+      "triplicateId": "HT-056d3ac561",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "implemented_candidate",
+      "form": "error-correction mechanism",
+      "statement": "Oracle-free divergence detection by stride MR: the same filter run on the data at stride 1 and stride 2 (model A^2) should agree within computable covariance; systematic disagreement flags model mismatch, and sparse regression of the disagreement on parameter sensitivities localizes which entry of A is wrong.",
+      "derived_from": [
+        "I1",
+        "I6"
+      ],
+      "concept_contributions": {
+        "Kalman Filtering": "the estimator and its covariance for the expected disagreement",
+        "Metamorphic Testing": "the stride relation giving a check without truth",
+        "Sparse Coding": "sparse attribution of the fault to few parameters"
+      },
+      "knockouts": {
+        "Kalman Filtering": "no covariance to normalize disagreement",
+        "Metamorphic Testing": "only NIS on one run remains",
+        "Sparse Coding": "attribution is spread over all parameters"
+      },
+      "simpler_alternative": "the classical NIS chi-square test",
+      "questions": {
+        "what_exists": "filter, stride pair, sensitivity Jacobians",
+        "what_changes": "disagreement statistic",
+        "what_persists": "model",
+        "what_is_selected": "parameter entries blamed",
+        "what_can_reproduce": "nothing",
+        "what_can_learn": "which parameter is wrong",
+        "what_can_transfer": "the stride relation to any Markov estimator",
+        "distinguishing_observable": "detection AUC above NIS at equal data"
+      }
+    },
+    {
+      "id": "M9",
+      "triplicateId": "HT-056d3ac561",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "selection mechanism",
+      "statement": "Sparse test selection: at each step choose k of N metamorphic relations maximizing expected covariance reduction of a sparse fault vector, updating the fault belief recursively.",
+      "derived_from": [
+        "I1",
+        "I2"
+      ],
+      "concept_contributions": {
+        "Kalman Filtering": "recursive belief and expected information gain",
+        "Metamorphic Testing": "the pool of relations as candidate measurements",
+        "Sparse Coding": "sparse fault prior shaping which tests are informative"
+      },
+      "knockouts": {
+        "Kalman Filtering": "no belief to update; selection is static",
+        "Metamorphic Testing": "nothing to select",
+        "Sparse Coding": "dense prior makes all tests roughly equally informative"
+      },
+      "simpler_alternative": "random or failure-history-greedy test prioritization",
+      "questions": {
+        "what_exists": "relation pool, fault belief",
+        "what_changes": "selected tests and belief",
+        "what_persists": "relation pool",
+        "what_is_selected": "relations",
+        "what_can_reproduce": "nothing",
+        "what_can_learn": "which relations are informative",
+        "what_can_transfer": "selection policy to new programs",
+        "distinguishing_observable": "tests needed to localize a planted sparse fault vs random selection"
+      }
+    },
+    {
+      "id": "M10",
+      "triplicateId": "HT-056d3ac561",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "mutation operator",
+      "statement": "Metamorphic mutation: dictionaries (organisms) are mutated only along MR-preserving transforms of their atoms, and a filter estimates lineage fitness from noisy reconstruction scores. Three-way dependency WEAK on the filter side.",
+      "derived_from": [
+        "I5"
+      ],
+      "concept_contributions": {
+        "Kalman Filtering": "noise averaging of fitness (replaceable)",
+        "Metamorphic Testing": "transforms defining lawful mutations",
+        "Sparse Coding": "dictionaries as organisms"
+      },
+      "knockouts": {
+        "Kalman Filtering": "any moving average does as well (weak)",
+        "Metamorphic Testing": "mutations become arbitrary",
+        "Sparse Coding": "no organism"
+      },
+      "simpler_alternative": "random mutation with repeated evaluation",
+      "questions": {
+        "what_exists": "population of dictionaries",
+        "what_changes": "atoms",
+        "what_persists": "MR-preserving structure",
+        "what_is_selected": "dictionaries",
+        "what_can_reproduce": "dictionaries",
+        "what_can_learn": "dictionary content",
+        "what_can_transfer": "lawful mutation set",
+        "distinguishing_observable": "fitness gain per evaluation vs random mutation"
+      }
+    },
+    {
+      "id": "M11",
+      "triplicateId": "HT-056d3ac561",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "dynamical law",
+      "statement": "Separation-smoothing-consistency trilemma: MR violation rate peaks on a ridge in (lambda, Q/R) space where pattern separation and temporal smoothing conflict.",
+      "derived_from": [
+        "I7"
+      ],
+      "concept_contributions": {
+        "Kalman Filtering": "temporal smoothing",
+        "Metamorphic Testing": "consistency measurement",
+        "Sparse Coding": "pattern separation"
+      },
+      "knockouts": {
+        "Kalman Filtering": "no smoothing axis; ridge collapses to a threshold effect",
+        "Metamorphic Testing": "no measurable conflict",
+        "Sparse Coding": "no separation axis"
+      },
+      "simpler_alternative": "violations simply increase monotonically with noise",
+      "questions": {
+        "what_exists": "sweep grid",
+        "what_changes": "violation rate",
+        "what_persists": "ridge location",
+        "what_is_selected": "nothing",
+        "what_can_reproduce": "nothing",
+        "what_can_learn": "nothing",
+        "what_can_transfer": "ridge coordinates across dictionaries",
+        "distinguishing_observable": "non-monotone violation rate with an interior maximum"
+      }
+    },
+    {
+      "id": "M12",
+      "triplicateId": "HT-056d3ac561",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "information bottleneck",
+      "statement": "Relational sufficiency: the filter state is constrained to k nonzero components, and the components retained are those needed to satisfy the MRs rather than those minimizing reconstruction.",
+      "derived_from": [
+        "I1",
+        "I2"
+      ],
+      "concept_contributions": {
+        "Kalman Filtering": "state that must be carried forward",
+        "Metamorphic Testing": "criterion for what must be kept",
+        "Sparse Coding": "the k-budget"
+      },
+      "knockouts": {
+        "Kalman Filtering": "no carried state; bottleneck trivial",
+        "Metamorphic Testing": "reconstruction criterion only",
+        "Sparse Coding": "no budget"
+      },
+      "simpler_alternative": "top-k by variance (PCA truncation)",
+      "questions": {
+        "what_exists": "k-sparse state",
+        "what_changes": "which components are retained",
+        "what_persists": "relation set",
+        "what_is_selected": "components",
+        "what_can_reproduce": "nothing",
+        "what_can_learn": "what to keep",
+        "what_can_transfer": "retained basis to new relations",
+        "distinguishing_observable": "retained components differ from top-k variance and predict MR outcomes better"
+      }
+    },
+    {
+      "id": "M13",
+      "triplicateId": "HT-056d3ac561",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "developmental process",
+      "statement": "Atom recruitment by persistent violation: an MR violation that no existing atom combination explains recruits a new atom with large initial covariance, which shrinks as it matures.",
+      "derived_from": [
+        "I2",
+        "I4"
+      ],
+      "concept_contributions": {
+        "Kalman Filtering": "per-atom covariance as maturity",
+        "Metamorphic Testing": "persistent violation as recruitment trigger",
+        "Sparse Coding": "growing dictionary"
+      },
+      "knockouts": {
+        "Kalman Filtering": "atoms have no maturity; all equally plastic",
+        "Metamorphic Testing": "recruitment triggered by reconstruction error alone",
+        "Sparse Coding": "nothing to recruit"
+      },
+      "simpler_alternative": "grow on reconstruction error threshold",
+      "questions": {
+        "what_exists": "dictionary with per-atom covariance",
+        "what_changes": "dictionary size, covariances",
+        "what_persists": "mature atoms",
+        "what_is_selected": "recruited atoms",
+        "what_can_reproduce": "atoms",
+        "what_can_learn": "dictionary",
+        "what_can_transfer": "mature atoms to a new task",
+        "distinguishing_observable": "recruited atoms are MR-structured (transform pairs) more often than error-recruited atoms"
+      }
+    },
+    {
+      "id": "M14",
+      "triplicateId": "HT-056d3ac561",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "implemented_candidate",
+      "form": "interaction law",
+      "statement": "Mirror filters: filter A sees x, filter B sees T x; each serves as the other's oracle through the MR. Consensus without truth; predicted failure: collusion, both agree on the same wrong answer when the bias lies in the relation kernel.",
+      "derived_from": [
+        "I1",
+        "I6"
+      ],
+      "concept_contributions": {
+        "Kalman Filtering": "two recursive estimators with covariances",
+        "Metamorphic Testing": "the relation coupling them",
+        "Sparse Coding": "sparse fault model that can partially escape the kernel"
+      },
+      "knockouts": {
+        "Kalman Filtering": "single estimate, no mirror",
+        "Metamorphic Testing": "no coupling",
+        "Sparse Coding": "kernel components of faults unrecoverable"
+      },
+      "simpler_alternative": "ensemble disagreement",
+      "questions": {
+        "what_exists": "two filters and a coupling relation",
+        "what_changes": "joint residual",
+        "what_persists": "shared biases",
+        "what_is_selected": "nothing",
+        "what_can_reproduce": "nothing",
+        "what_can_learn": "joint bias estimate",
+        "what_can_transfer": "the collusion analysis to any cross-check scheme",
+        "distinguishing_observable": "fraction of consistent-but-wrong states equals kernel energy fraction"
+      }
+    },
+    {
+      "id": "M15",
+      "triplicateId": "HT-056d3ac561",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "representation",
+      "statement": "Violation pattern as sparse code of fault location: pass/fail over many MRs is a binary measurement vector, and the fault is decoded as a sparse combination of mutation-operator signatures. Kalman fit is poor (binary, non-Gaussian); a Bernoulli filter is the honest version; three-way dependency WEAK.",
+      "derived_from": [
+        "I2"
+      ],
+      "concept_contributions": {
+        "Kalman Filtering": "recursive fusion across campaigns (weak, non-Gaussian)",
+        "Metamorphic Testing": "binary measurements",
+        "Sparse Coding": "sparse decoding"
+      },
+      "knockouts": {
+        "Kalman Filtering": "single-campaign decoding still works (weak)",
+        "Metamorphic Testing": "no measurements",
+        "Sparse Coding": "exhaustive search over faults"
+      },
+      "simpler_alternative": "nearest-neighbour lookup of violation patterns",
+      "questions": {
+        "what_exists": "violation vectors, signature dictionary",
+        "what_changes": "decoded faults",
+        "what_persists": "signatures",
+        "what_is_selected": "signatures",
+        "what_can_reproduce": "nothing",
+        "what_can_learn": "signatures",
+        "what_can_transfer": "signatures across programs",
+        "distinguishing_observable": "decoding accuracy for 2-fault combinations unseen in training"
+      }
+    },
+    {
+      "id": "M16",
+      "triplicateId": "HT-056d3ac561",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "computational primitive",
+      "statement": "Shrinkage thermometer: soft-threshold shrinkage breaks the scaling MR S(c x) = c S(x) while the linear filter satisfies it exactly, so the scaling-MR residual of the joint pipeline measures the effective threshold and localizes nonlinearity to the sparse stage.",
+      "derived_from": [
+        "I7"
+      ],
+      "concept_contributions": {
+        "Kalman Filtering": "a linear stage that satisfies scaling (reference)",
+        "Metamorphic Testing": "scaling relation as probe",
+        "Sparse Coding": "the nonlinearity being measured"
+      },
+      "knockouts": {
+        "Kalman Filtering": "no reference; residual cannot be localized",
+        "Metamorphic Testing": "no probe",
+        "Sparse Coding": "residual is zero; nothing to measure"
+      },
+      "simpler_alternative": "compute the Jacobian numerically",
+      "questions": {
+        "what_exists": "pipeline, scaling probe",
+        "what_changes": "residual vs c",
+        "what_persists": "lambda",
+        "what_is_selected": "nothing",
+        "what_can_reproduce": "nothing",
+        "what_can_learn": "lambda estimate",
+        "what_can_transfer": "probe to other pipelines",
+        "distinguishing_observable": "residual curve shape vs c matches the soft-threshold prediction"
+      }
+    },
+    {
+      "id": "O-W1-r1",
+      "triplicateId": "HT-056d3ac561",
+      "passId": "P3-probe1",
+      "kind": "observation",
+      "layer": "experimental_observation",
+      "evidence_rows": [
+        "hecate/programs/HT-056d3ac561/worlds/W1/rows.jsonl",
+        "hecate/programs/HT-056d3ac561/worlds/W1/OUTCOME.json"
+      ],
+      "statement": "W1 probe round 1: INSTRUMENT_FAIL. At delta=0.1 the stride disagreement statistic D gave AUC 0.493 against NIS AUC 0.490 (50 vs 50 runs); Lasso top-1 localization accuracy was 0.000 (chance 0.0625; data-free sensitivity-norm baseline 0.160); null-twin AUC 0.417. Oracle RMSE AUC 0.490; cheat success=True. Matched-model mean D 4.028 (expected 4). Outcome INSTRUMENT_FAIL by the PREREG class rules applied in code.",
+      "derived_from": [
+        "M8",
+        "M1"
+      ]
+    },
+    {
+      "id": "O-W4-r2",
+      "triplicateId": "HT-056d3ac561",
+      "passId": "P3-probe2",
+      "kind": "observation",
+      "layer": "experimental_observation",
+      "evidence_rows": [
+        "hecate/programs/HT-056d3ac561/worlds/W4/rows.jsonl"
+      ],
+      "statement": "W4 probe round 2: NULL. Pilot attempt 1 (spec positive control) failed; attempt 2 (oracle-support repair) passed; no parameter or threshold change at any point. Treatment and control share trials. See NOTES.md.",
+      "derived_from": [
+        "M14",
+        "M1"
+      ]
+    },
+    {
+      "id": "O-W5-r3",
+      "triplicateId": "HT-056d3ac561",
+      "passId": "P3-probe3",
+      "kind": "observation",
+      "layer": "experimental_observation",
+      "evidence_rows": [
+        "hecate/programs/HT-056d3ac561/worlds/W5/probe/rows.jsonl"
+      ],
+      "statement": "W5 probe round 3: NULL. Post-run diagnostic (NOTES.md): z_j^2 mean 0.976 under null (normalization correct) but lag-1 autocorrelation 0.97, so the 10-step window is ~one draw and h_MR=114 is high; MR alarm after the change fires in 79.8% of runs, median delay 82 steps. Treatment in controls.run_filter code path (probe/world.py mr_fn); readings A1-A5 in probe/NOTES.md. Seeds 0-4 x 200 runs, calibration seed 999.",
+      "derived_from": [
+        "M3",
+        "M8"
+      ]
+    }
+  ],
+  "lenses": [
+    {
+      "id": "L1",
+      "name": "Innovation whiteness spectrum",
+      "triplicateId": "HT-056d3ac561",
+      "rationale": "Standard filter consistency check; the baseline every MR-based claim must beat.",
+      "sourceRepresentation": "innovation sequence e_t and its covariance S_t",
+      "transformation": "normalize by S_t^-1/2, compute autocorrelation and NIS",
+      "observables": [
+        "NIS mean",
+        "lag-1..10 autocorrelation"
+      ],
+      "predictedSignals": [
+        "mismatch shows NIS > dim and nonzero autocorrelation"
+      ],
+      "nullExpectation": "NIS ~ chi2(dim), autocorrelation within 2/sqrt(T)",
+      "failureModes": [
+        "insensitive to mismatches absorbed by Q"
+      ],
+      "informationAddedBeyondExistingLenses": "baseline only; defines what MRs must add",
+      "passId": "P2",
+      "targets": [
+        "M3",
+        "M8"
+      ]
+    },
+    {
+      "id": "L2",
+      "name": "Support-flip ledger",
+      "triplicateId": "HT-056d3ac561",
+      "rationale": "Invented: treats support changes as discrete events and asks which ones the transform predicted.",
+      "sourceRepresentation": "sequence of supports S_t and transform permutation pi_T",
+      "transformation": "classify each flip as lawful (predicted by pi_T(S_{t-1})) or unlawful",
+      "observables": [
+        "flip rate",
+        "lawful fraction",
+        "Jaccard(S_t, pi_T S_{t-1})"
+      ],
+      "predictedSignals": [
+        "anomalies raise unlawful fraction",
+        "lock-in drives flip rate to zero while true support flips"
+      ],
+      "nullExpectation": "lawful fraction equals that expected from random flips of equal count",
+      "failureModes": [
+        "threshold noise creates spurious flips"
+      ],
+      "informationAddedBeyondExistingLenses": "event-level view invisible to continuous innovations",
+      "passId": "P2",
+      "targets": [
+        "M2",
+        "M4",
+        "M7"
+      ]
+    },
+    {
+      "id": "L3",
+      "name": "Oracle-debt accounting",
+      "triplicateId": "HT-056d3ac561",
+      "rationale": "Invented: uses hidden ground truth (visible only to the lens, never the agent) to measure how much true error the MRs can see.",
+      "sourceRepresentation": "true error vector and MR residual vector",
+      "transformation": "decompose true error into MR-kernel and complement components",
+      "observables": [
+        "visibility ratio = complement energy / total error energy",
+        "collusion rate",
+        "recovered fraction"
+      ],
+      "predictedSignals": [
+        "sparse prior raises recovered fraction above the visibility ratio"
+      ],
+      "nullExpectation": "recovered fraction equals visibility ratio (min-norm recovery)",
+      "failureModes": [
+        "kernel estimate wrong if the MR is nonlinear"
+      ],
+      "informationAddedBeyondExistingLenses": "quantifies what oracle-free checking cannot see",
+      "passId": "P2",
+      "targets": [
+        "M1",
+        "M8",
+        "M14"
+      ]
+    },
+    {
+      "id": "L4",
+      "name": "Gain-threshold phase portrait",
+      "triplicateId": "HT-056d3ac561",
+      "rationale": "Invented for this triplicate: the two knobs that make each stage stubborn, plotted together.",
+      "sourceRepresentation": "grid over steady-state gain K and threshold lambda",
+      "transformation": "run tracker per cell, compute latency and MR violation rate",
+      "observables": [
+        "switch detection latency",
+        "violation rate",
+        "self-sealing indicator"
+      ],
+      "predictedSignals": [
+        "self-sealing region with boundary on K/lambda"
+      ],
+      "nullExpectation": "boundary requires K and lambda independently, or no region exists",
+      "failureModes": [
+        "grid too coarse",
+        "too few seeds"
+      ],
+      "informationAddedBeyondExistingLenses": "joint structure neither knob shows alone",
+      "passId": "P2",
+      "targets": [
+        "M7",
+        "M11"
+      ]
+    },
+    {
+      "id": "L5",
+      "name": "Group-representation residue",
+      "triplicateId": "HT-056d3ac561",
+      "rationale": "Invented: asks whether learned code-space transitions respect the algebra of the transforms.",
+      "sourceRepresentation": "learned transition matrices A_T for transforms T",
+      "transformation": "compute ||A^n - I||, commutators, row concentration of |A|",
+      "observables": [
+        "cyclic residual",
+        "permutation-likeness",
+        "commutator norm"
+      ],
+      "predictedSignals": [
+        "MR-trained dictionaries give permutation-like A with small cyclic residual"
+      ],
+      "nullExpectation": "shuffled-pair twin gives dense A with large residual",
+      "failureModes": [
+        "regularization alone making A diagonal"
+      ],
+      "informationAddedBeyondExistingLenses": "algebraic rather than predictive test of representations",
+      "passId": "P2",
+      "targets": [
+        "M4",
+        "M6"
+      ]
+    },
+    {
+      "id": "L6",
+      "name": "Relational sufficiency lens",
+      "triplicateId": "HT-056d3ac561",
+      "rationale": "Information view of what a k-sparse bottleneck keeps.",
+      "sourceRepresentation": "k-sparse retained state and MR outcomes",
+      "transformation": "estimate mutual information between retained components and MR pass/fail vs reconstruction",
+      "observables": [
+        "MI(retained; MR outcome)",
+        "reconstruction error"
+      ],
+      "predictedSignals": [
+        "MR-selected components carry more MR information at small reconstruction cost"
+      ],
+      "nullExpectation": "equal to top-k variance selection",
+      "failureModes": [
+        "MI estimation bias at small samples"
+      ],
+      "informationAddedBeyondExistingLenses": "separates what is kept for consistency from what is kept for fidelity",
+      "passId": "P2",
+      "targets": [
+        "M12"
+      ]
+    },
+    {
+      "id": "L7",
+      "name": "Recovery-latency ledger",
+      "triplicateId": "HT-056d3ac561",
+      "rationale": "Invented: measures how quickly an overconfident estimator is reopened after a regime change.",
+      "sourceRepresentation": "estimate error trace around a planted change point",
+      "transformation": "steps until error returns within 2 sigma; false-alarm rate before change",
+      "observables": [
+        "recovery latency",
+        "false-alarm rate"
+      ],
+      "predictedSignals": [
+        "MR-driven reopening recovers faster at equal false alarms"
+      ],
+      "nullExpectation": "equal to NIS-adaptive Q",
+      "failureModes": [
+        "change too large makes all methods equal"
+      ],
+      "informationAddedBeyondExistingLenses": "decision-level comparison at matched false-alarm budgets",
+      "passId": "P2",
+      "targets": [
+        "M3"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "W1",
+      "triplicateId": "HT-056d3ac561",
+      "passId": "P3",
+      "mechanism_ids": [
+        "M8",
+        "M1"
+      ],
+      "lens_ids": [
+        "L1",
+        "L3"
+      ],
+      "hypothesis": "A stride-consistency metamorphic relation detects model mismatch in a Kalman filter without ground truth, better than the NIS test, and sparse regression localizes the wrong transition entry.",
+      "mechanism": "Filter with transition A' run at stride 1 and stride 2 (A'^2); disagreement normalized by its predicted covariance; Lasso of mean disagreement on per-entry sensitivity vectors.",
+      "intervention": "Perturb one of 16 entries of a stable 4x4 A by delta in {0.05, 0.1, 0.2} in the filter model only.",
+      "control": "Matched model (delta = 0).",
+      "positive_control": "Oracle detector using true-state RMSE (expected AUC near 1).",
+      "observable": "Mean normalized stride disagreement D per run; mean NIS per run; Lasso top-1 entry.",
+      "success_criterion": "Across 50 mismatched vs 50 matched seeds at delta = 0.1: AUC(D) >= 0.80 AND AUC(D) >= AUC(NIS) + 0.05 AND Lasso top-1 localization accuracy >= 0.60 (chance 0.0625) AND null-twin AUC <= 0.60.",
+      "failure_criterion": "AUC(D) < 0.70, or AUC(D) <= AUC(NIS), or localization accuracy < 0.25, or null-twin AUC > 0.60.",
+      "alternative_explanation": "Stride disagreement is only a re-weighted innovation statistic and carries no information beyond NIS.",
+      "null_twin": "Same runs, but the stride-2 estimate at t is compared with the stride-1 estimate at a random time t' (equal marginal variance, relation destroyed).",
+      "substrate": "causal toy",
+      "why_this_implementation": "A linear-Gaussian toy is the smallest world where the relation's expected distribution is exactly computable; no learned component, so no ML ontology is displaced.",
+      "size": {
+        "state_dim": 4,
+        "steps": 500,
+        "seeds": 100,
+        "deltas": 3
+      },
+      "cost_estimate": 2,
+      "stupid_explanations": [
+        "mismatch also inflates innovations, so any statistic detects it",
+        "normalization miscomputed so the matched model already looks mismatched",
+        "Lasso localizes by sensitivity magnitude alone regardless of data"
+      ],
+      "outcome": "INSTRUMENT_FAIL",
+      "raw_outcome": "INSTRUMENT_FAIL",
+      "procedural_notes": [],
+      "rows": "hecate/programs/HT-056d3ac561/worlds/W1/rows.jsonl",
+      "outcome_file": "hecate/programs/HT-056d3ac561/worlds/W1/OUTCOME.json",
+      "statistics": {
+        "criterion_delta_0.1": {
+          "n_mismatched": 50,
+          "n_matched": 50,
+          "AUC_D": 0.4932,
+          "AUC_NIS": 0.49039999999999995,
+          "AUC_null_twin": 0.4168,
+          "loc_top1_acc": 0.0,
+          "loc_literal_mean_reading_acc": 0.02,
+          "loc_sensitivity_norm_only_acc": 0.16,
+          "AUC_oracle_rmse": 0.49,
+          "AUC_cheat": 1.0,
+          "loc_cheat": 1.0,
+          "mean_D_mismatched": 4.036191130495718,
+          "mean_NIS_mismatched": 4.022545417030738,
+          "success_met": false,
+          "failure_met": true
+        },
+        "other_deltas": {
+          "0.05": {
+            "n_mismatched": 50,
+            "n_matched": 50,
+            "AUC_D": 0.48560000000000003,
+            "AUC_NIS": 0.4724,
+            "AUC_null_twin": 0.486,
+            "loc_top1_acc": 0.12,
+            "loc_literal_mean_reading_acc": 0.02,
+            "loc_sensitivity_norm_only_acc": 0.16,
+            "AUC_oracle_rmse": 0.47640000000000005,
+            "AUC_cheat": 1.0,
+            "loc_cheat": 1.0,
+            "mean_D_mismatched": 4.030960522870414,
+            "mean_NIS_mismatched": 4.013041697787798,
+            "success_met": false,
+            "failure_met": true
+          },
+          "0.2": {
+            "n_mismatched": 50,
+            "n_matched": 50,
+            "AUC_D": 0.522,
+            "AUC_NIS": 0.5604,
+            "AUC_null_twin": 0.2864,
+            "loc_top1_acc": 0.0,
+            "loc_literal_mean_reading_acc": 0.02,
+            "loc_sensitivity_norm_only_acc": 0.16,
+            "AUC_oracle_rmse": 0.5576,
+            "AUC_cheat": 1.0,
+            "loc_cheat": 1.0,
+            "mean_D_mismatched": 4.063305902472024,
+            "mean_NIS_mismatched": 4.056659044415027,
+            "success_met": false,
+            "failure_met": true
+          }
+        },
+        "CONTROL": {
+          "n": 50,
+          "mean_D": 4.027940878984006,
+          "mean_NIS": 4.026843169769284,
+          "mean_D_null": 23624.325820686117,
+          "min_eig_P2_minus_P1": 4.2707425557185725e-05,
+          "top1_distribution": {
+            "8": 1,
+            "13": 49
+          }
+        },
+        "TREATMENT_delta_0.1": {
+          "n": 50,
+          "mean_D": 4.036191130495718,
+          "mean_NIS": 4.022545417030738,
+          "true_entry_distribution": {
+            "0": 2,
+            "2": 3,
+            "3": 2,
+            "4": 5,
+            "5": 3,
+            "6": 4,
+            "7": 1,
+            "8": 4,
+            "9": 8,
+            "10": 2,
+            "11": 7,
+            "12": 1,
+            "13": 2,
+            "14": 4,
+            "15": 2
+          }
+        }
+      },
+      "anomalies": [
+        {
+          "id": "A1",
+          "text": "delta=0.05: oracle true-state-RMSE AUC 0.476 ~ chance; mismatch not visible between seeds even with ground truth"
+        },
+        {
+          "id": "A2",
+          "text": "delta=0.1: oracle true-state-RMSE AUC 0.490 ~ chance; mismatch not visible between seeds even with ground truth"
+        },
+        {
+          "id": "A3",
+          "text": "delta=0.2: oracle true-state-RMSE AUC 0.558 ~ chance; mismatch not visible between seeds even with ground truth"
+        },
+        {
+          "id": "A4",
+          "text": "Lasso top-1 accuracy 0.000 below data-free sensitivity-norm baseline 0.160"
+        },
+        {
+          "id": "A5",
+          "text": "matched-run Lasso top-1 concentrated on entry 13 (49/50)"
+        }
+      ],
+      "rejected_explanations": []
+    },
+    {
+      "id": "W2",
+      "triplicateId": "HT-056d3ac561",
+      "passId": "P3",
+      "mechanism_ids": [
+        "M6",
+        "M4"
+      ],
+      "lens_ids": [
+        "L5",
+        "L2"
+      ],
+      "hypothesis": "Codes from a dictionary trained with a shift-MR consistency penalty admit a permutation-like code-space transition A for circular shift, and using A as the Kalman transition improves tracking of shifting signals.",
+      "mechanism": "Learn a 64-atom dictionary on length-32 signals (sums of 3 circular bumps) via ISTA + dictionary update, with or without penalty ||alpha(Tx) - A alpha(x)||^2; fit A by least squares; track noisy shifting sequences with a Kalman filter using A.",
+      "intervention": "Toggle the MR penalty weight (0 vs 0.5).",
+      "control": "Unpenalized dictionary; Kalman with identity transition.",
+      "positive_control": "Hand-built shifted-bump dictionary (permutation-likeness near 1).",
+      "observable": "Permutation-likeness PL = mean over rows of max|A_ij| / sum_j|A_ij|; cyclic residual ||A^32 - I||_F / ||I||_F; tracking MSE ratio vs identity-transition Kalman.",
+      "success_criterion": "Over 10 seeds: mean penalized PL >= 0.80 AND unpenalized PL <= 0.50 AND penalized tracking MSE <= 0.70 x identity-transition MSE AND null-twin PL <= 0.40.",
+      "failure_criterion": "Penalized PL < 0.60, or penalized minus unpenalized PL < 0.15, or tracking MSE ratio > 0.90.",
+      "alternative_explanation": "The penalty merely makes the dictionary convolutional/shift-tied, a known construction.",
+      "null_twin": "Train with pairs (x, x') where x' is a random other sample: same marginals, no transform relation.",
+      "substrate": "tensor",
+      "why_this_implementation": "Small dense tensors are the natural substrate for dictionary learning; sparse inference is ISTA (an optimizer, not a neural network) and the transition is a linear map.",
+      "size": {
+        "atoms": 64,
+        "signal_len": 32,
+        "train_samples": 5000,
+        "ista_iters": 200,
+        "seeds": 10,
+        "track_steps": 300
+      },
+      "cost_estimate": 8,
+      "stupid_explanations": [
+        "penalty shrinks codes onto few atoms so A becomes diagonal-dominant and PL is trivially high",
+        "the signal generator is itself shift-tied, so any dictionary learns shifted bumps",
+        "tracking gain comes from better denoising, not from the transition"
+      ]
+    },
+    {
+      "id": "W3",
+      "triplicateId": "HT-056d3ac561",
+      "passId": "P3",
+      "mechanism_ids": [
+        "M7",
+        "M11"
+      ],
+      "lens_ids": [
+        "L4",
+        "L2"
+      ],
+      "hypothesis": "A warm-started sparse tracker has a self-sealing region (stale support while the support MR passes) whose boundary is set by the single combined variable K/lambda.",
+      "mechanism": "Latent 3-of-32 support switching with probability 0.02/step, known dictionary, noisy 16-dim observations; LCA inference initialized from a Kalman prediction with gain K; support MR = support identity under independent re-noising of the observation.",
+      "intervention": "Sweep 8 K values x 8 lambda values.",
+      "control": "Cold-start LCA over the same grid.",
+      "positive_control": "Force K = 0 (pure prediction) in 4 extra cells: these must be self-sealing.",
+      "observable": "Per cell: switch detection latency, MR violation rate, self-sealing indicator (latency > 50 steps AND violation rate < 0.01).",
+      "success_criterion": "At least 5 of 64 cells self-sealing AND logistic regression of the indicator on log(K/lambda) alone has AUC >= 0.90 AND adding log K and log lambda separately reduces deviance by < 10% AND null twin has <= 1 self-sealing cell.",
+      "failure_criterion": "Fewer than 3 self-sealing cells, or AUC(log K/lambda) < 0.75, or null twin has at least as many self-sealing cells as the warm-started tracker.",
+      "alternative_explanation": "Generic hysteresis of any thresholded tracker with momentum; nothing specific to the three concepts.",
+      "null_twin": "Cold-start tracker plus an exponential moving average on codes with equal effective memory: Kalman gain structure removed, smoothing and noise matched.",
+      "substrate": "optimizer",
+      "why_this_implementation": "A small iterative optimizer (LCA) captures thresholded competition directly; no network training needed.",
+      "size": {
+        "atoms": 32,
+        "active": 3,
+        "signal_dim": 16,
+        "steps": 2000,
+        "grid": "8x8",
+        "seeds": 10
+      },
+      "cost_estimate": 9,
+      "stupid_explanations": [
+        "latency threshold chosen so a region trivially exists",
+        "re-noising amplitude too small to ever flip support, so the MR always passes",
+        "K and lambda correlated in the grid design"
+      ]
+    },
+    {
+      "id": "W4",
+      "triplicateId": "HT-056d3ac561",
+      "passId": "P3",
+      "mechanism_ids": [
+        "M14",
+        "M1"
+      ],
+      "lens_ids": [
+        "L3"
+      ],
+      "hypothesis": "When MR residuals reveal only the projection of a fault outside the relation kernel, a sparse fault prior recovers the full fault including its kernel component, while min-norm recovery cannot.",
+      "mechanism": "Mirror filters on x and T x over a 20-dim linear system; faults are biases in a 40-atom sensor-fault dictionary; accumulated whitened MR residual y = P f + noise; recover f by Lasso vs min-norm least squares.",
+      "intervention": "Fault sparsity k in {1, 2, 3, 6, 10}.",
+      "control": "Min-norm least-squares recovery.",
+      "positive_control": "Faults placed entirely outside the kernel (both methods should recover).",
+      "observable": "Relative recovery error ||f_hat - f|| / ||f||; recovered kernel-energy fraction.",
+      "success_criterion": "For k <= 3 over 200 trials: Lasso error <= 0.20 in >= 80% of trials AND min-norm error >= 0.50 in >= 80% of trials AND null-twin Lasso error <= 0.20 in <= 20% of trials.",
+      "failure_criterion": "Lasso success < 50% at k <= 3, or null-twin success rate within 15 percentage points of the sparse case.",
+      "alternative_explanation": "This is ordinary compressed sensing; the MR and filter are incidental.",
+      "null_twin": "Dense faults (Gaussian over all 40 atoms) with the same total energy and the same kernel-energy fraction.",
+      "substrate": "causal toy",
+      "why_this_implementation": "A linear-algebraic causal toy: the relation kernel and projection are exact, so outcomes are decidable; Lasso and linear filters only, no learning ontology.",
+      "size": {
+        "state_dim": 20,
+        "fault_atoms": 40,
+        "kernel_dim": 8,
+        "trials": 200,
+        "sparsity_levels": 5,
+        "steps": 200
+      },
+      "cost_estimate": 3,
+      "stupid_explanations": [
+        "projection rank high enough that no recovery is needed",
+        "Lasso lambda tuned on the test trials",
+        "an incoherent fault dictionary makes any method work"
+      ],
+      "outcome": "NULL",
+      "round": 2,
+      "rows": "hecate/programs/HT-056d3ac561/worlds/W4/rows.jsonl",
+      "outcome_file": "hecate/programs/HT-056d3ac561/worlds/W4/OUTCOME.json",
+      "statistics": {
+        "pooled_by_arm_and_k": {
+          "POSITIVE_CONTROL": {
+            "1": {
+              "lasso_rate": 1.0,
+              "mn_rate": 1.0,
+              "lasso_err_median_mean": 0.011112530497714879,
+              "mn_err_median_mean": 0.8396699356675924,
+              "lasso_rkf_mean": 0.9999226271268636,
+              "mn_rkf_mean": 4.501785047792826e-19,
+              "visibility_mean": 0.2997031481796509
+            },
+            "2": {
+              "lasso_rate": 1.0,
+              "mn_rate": 1.0,
+              "lasso_err_median_mean": 0.01388725042701137,
+              "mn_err_median_mean": 0.8416731586001637,
+              "lasso_rkf_mean": 0.9999164830474664,
+              "mn_rkf_mean": 1.581816462407653e-18,
+              "visibility_mean": 0.2960901291665555
+            },
+            "3": {
+              "lasso_rate": 1.0,
+              "mn_rate": 1.0,
+              "lasso_err_median_mean": 0.015448758397471696,
+              "mn_err_median_mean": 0.8401093534063975,
+              "lasso_rkf_mean": 1.000089219328745,
+              "mn_rkf_mean": -4.812775226090877e-19,
+              "visibility_mean": 0.2982596069357972
+            },
+            "6": {
+              "lasso_rate": 1.0,
+              "mn_rate": 1.0,
+              "lasso_err_median_mean": 0.020386069786684398,
+              "mn_err_median_mean": 0.8377800801866355,
+              "lasso_rkf_mean": 1.0001890293545694,
+              "mn_rkf_mean": -8.351890830934396e-19,
+              "visibility_mean": 0.3037295037892582
+            },
+            "10": {
+              "lasso_rate": 0.991,
+              "mn_rate": 1.0,
+              "lasso_err_median_mean": 0.03603769313987678,
+              "mn_err_median_mean": 0.8409378135820363,
+              "lasso_rkf_mean": 0.9997922556886636,
+              "mn_rkf_mean": 1.056970395921502e-18,
+              "visibility_mean": 0.3011321496257472
+            }
+          },
+          "CHEAT": {
+            "1": {
+              "lasso_rate": 1.0,
+              "mn_rate": 1.0,
+              "lasso_err_median_mean": 0.0,
+              "mn_err_median_mean": 0.8397730079330463,
+              "lasso_rkf_mean": 1.0,
+              "mn_rkf_mean": 9.581308854785254e-19,
+              "visibility_mean": 0.2997031481796508
+            },
+            "2": {
+              "lasso_rate": 1.0,
+              "mn_rate": 1.0,
+              "lasso_err_median_mean": 0.0,
+              "mn_err_median_mean": 0.8418312527778042,
+              "lasso_rkf_mean": 1.0,
+              "mn_rkf_mean": 3.66750206218257e-19,
+              "visibility_mean": 0.2960901291665555
+            },
+            "3": {
+              "lasso_rate": 1.0,
+              "mn_rate": 1.0,
+              "lasso_err_median_mean": 0.0,
+              "mn_err_median_mean": 0.8401031940031733,
+              "lasso_rkf_mean": 1.0,
+              "mn_rkf_mean": 4.612774370174326e-19,
+              "visibility_mean": 0.2982596069357972
+            },
+            "6": {
+              "lasso_rate": 1.0,
+              "mn_rate": 1.0,
+              "lasso_err_median_mean": 0.0,
+              "mn_err_median_mean": 0.8378221459647881,
+              "lasso_rkf_mean": 1.0,
+              "mn_rkf_mean": -4.816585993763288e-19,
+              "visibility_mean": 0.3037295037892582
+            },
+            "10": {
+              "lasso_rate": 1.0,
+              "mn_rate": 1.0,
+              "lasso_err_median_mean": 0.0,
+              "mn_err_median_mean": 0.8409284128765083,
+              "lasso_rkf_mean": 1.0,
+              "mn_rkf_mean": 2.0189360147282828e-19,
+              "visibility_mean": 0.30113214962574714
+            }
+          },
+          "NULL_TWIN": {
+            "1": {
+              "lasso_rate": 0.0,
+              "mn_rate": 1.0,
+              "lasso_err_median_mean": 0.9638825864113887,
+              "mn_err_median_mean": 0.8397730079330463,
+              "lasso_rkf_mean": 0.002664629927004307,
+              "mn_rkf_mean": 9.581308854785254e-19,
+              "visibility_mean": 0.2997031481796508
+            },
+            "2": {
+              "lasso_rate": 0.0,
+              "mn_rate": 1.0,
+              "lasso_err_median_mean": 0.976233324510774,
+              "mn_err_median_mean": 0.8418312527778042,
+              "lasso_rkf_mean": -0.002499342380827281,
+              "mn_rkf_mean": 3.66750206218257e-19,
+              "visibility_mean": 0.2960901291665555
+            },
+            "3": {
+              "lasso_rate": 0.0,
+              "mn_rate": 1.0,
+              "lasso_err_median_mean": 0.9699545790587669,
+              "mn_err_median_mean": 0.8401031940031733,
+              "lasso_rkf_mean": 0.000399095859973826,
+              "mn_rkf_mean": 4.612774370174326e-19,
+              "visibility_mean": 0.2982596069357972
+            },
+            "6": {
+              "lasso_rate": 0.0,
+              "mn_rate": 1.0,
+              "lasso_err_median_mean": 0.9753601482447045,
+              "mn_err_median_mean": 0.8378221459647881,
+              "lasso_rkf_mean": -0.0019064526852459924,
+              "mn_rkf_mean": -4.816585993763288e-19,
+              "visibility_mean": 0.3037295037892582
+            },
+            "10": {
+              "lasso_rate": 0.0,
+              "mn_rate": 1.0,
+              "lasso_err_median_mean": 0.9878920730364783,
+              "mn_err_median_mean": 0.8409284128765083,
+              "lasso_rkf_mean": -0.003049991383120033,
+              "mn_rkf_mean": 2.0189360147282828e-19,
+              "visibility_mean": 0.30113214962574714
+            }
+          },
+          "TREATMENT": {
+            "1": {
+              "lasso_rate": 0.975,
+              "mn_rate": 1.0,
+              "lasso_err_median_mean": 0.0638014020017825,
+              "mn_err_median_mean": 0.8398156572444468,
+              "lasso_rkf_mean": 0.9233645882179786,
+              "mn_rkf_mean": -6.848078447044445e-19,
+              "visibility_mean": 0.2997031481796509
+            },
+            "2": {
+              "lasso_rate": 0.876,
+              "mn_rate": 1.0,
+              "lasso_err_median_mean": 0.08039168034763736,
+              "mn_err_median_mean": 0.8416701418783683,
+              "lasso_rkf_mean": 0.8636560137330388,
+              "mn_rkf_mean": -1.0332857839929932e-18,
+              "visibility_mean": 0.2960901291665555
+            },
+            "3": {
+              "lasso_rate": 0.618,
+              "mn_rate": 1.0,
+              "lasso_err_median_mean": 0.13271391319759845,
+              "mn_err_median_mean": 0.8400871611851783,
+              "lasso_rkf_mean": 0.7038643950258805,
+              "mn_rkf_mean": 1.3820353572670539e-18,
+              "visibility_mean": 0.2982596069357972
+            },
+            "6": {
+              "lasso_rate": 0.05,
+              "mn_rate": 1.0,
+              "lasso_err_median_mean": 0.8481830671387435,
+              "mn_err_median_mean": 0.8378020369699613,
+              "lasso_rkf_mean": 0.21126404812289593,
+              "mn_rkf_mean": -1.073495984681087e-18,
+              "visibility_mean": 0.3037295037892582
+            },
+            "10": {
+              "lasso_rate": 0.0,
+              "mn_rate": 1.0,
+              "lasso_err_median_mean": 0.950624011800457,
+              "mn_err_median_mean": 0.8409236970677011,
+              "lasso_rkf_mean": 0.051523615492977806,
+              "mn_rkf_mean": -1.19029602810172e-19,
+              "visibility_mean": 0.3011321496257472
+            }
+          },
+          "CONTROL": {
+            "1": {
+              "lasso_rate": 0.0,
+              "mn_rate": 1.0,
+              "lasso_err_median_mean": 0.8398156572444468,
+              "mn_err_median_mean": 0.8398156572444468,
+              "lasso_rkf_mean": -6.848078447044445e-19,
+              "mn_rkf_mean": -6.848078447044445e-19,
+              "visibility_mean": 0.2997031481796509
+            },
+            "2": {
+              "lasso_rate": 0.0,
+              "mn_rate": 1.0,
+              "lasso_err_median_mean": 0.8416701418783683,
+              "mn_err_median_mean": 0.8416701418783683,
+              "lasso_rkf_mean": -1.0332857839929932e-18,
+              "mn_rkf_mean": -1.0332857839929932e-18,
+              "visibility_mean": 0.2960901291665555
+            },
+            "3": {
+              "lasso_rate": 0.0,
+              "mn_rate": 1.0,
+              "lasso_err_median_mean": 0.8400871611851783,
+              "mn_err_median_mean": 0.8400871611851783,
+              "lasso_rkf_mean": 1.3820353572670539e-18,
+              "mn_rkf_mean": 1.3820353572670539e-18,
+              "visibility_mean": 0.2982596069357972
+            },
+            "6": {
+              "lasso_rate": 0.0,
+              "mn_rate": 1.0,
+              "lasso_err_median_mean": 0.8378020369699613,
+              "mn_err_median_mean": 0.8378020369699613,
+              "lasso_rkf_mean": -1.073495984681087e-18,
+              "mn_rkf_mean": -1.073495984681087e-18,
+              "visibility_mean": 0.3037295037892582
+            },
+            "10": {
+              "lasso_rate": 0.0,
+              "mn_rate": 1.0,
+              "lasso_err_median_mean": 0.8409236970677011,
+              "mn_err_median_mean": 0.8409236970677011,
+              "lasso_rkf_mean": -1.19029602810172e-19,
+              "mn_rkf_mean": -1.19029602810172e-19,
+              "visibility_mean": 0.3011321496257472
+            }
+          }
+        },
+        "per_seed_k": {
+          "TREATMENT_vs_CONTROL": {
+            "s0_k1": {
+              "lasso_rate": 0.96,
+              "mn_rate": 1.0,
+              "nt_lasso_rate": 0.0,
+              "met": true
+            },
+            "s0_k2": {
+              "lasso_rate": 0.885,
+              "mn_rate": 1.0,
+              "nt_lasso_rate": 0.0,
+              "met": true
+            },
+            "s0_k3": {
+              "lasso_rate": 0.58,
+              "mn_rate": 1.0,
+              "nt_lasso_rate": 0.0,
+              "met": false
+            },
+            "s1_k1": {
+              "lasso_rate": 1.0,
+              "mn_rate": 1.0,
+              "nt_lasso_rate": 0.0,
+              "met": true
+            },
+            "s1_k2": {
+              "lasso_rate": 0.895,
+              "mn_rate": 1.0,
+              "nt_lasso_rate": 0.0,
+              "met": true
+            },
+            "s1_k3": {
+              "lasso_rate": 0.67,
+              "mn_rate": 1.0,
+              "nt_lasso_rate": 0.0,
+              "met": false
+            },
+            "s2_k1": {
+              "lasso_rate": 0.96,
+              "mn_rate": 1.0,
+              "nt_lasso_rate": 0.0,
+              "met": true
+            },
+            "s2_k2": {
+              "lasso_rate": 0.84,
+              "mn_rate": 1.0,
+              "nt_lasso_rate": 0.0,
+              "met": true
+            },
+            "s2_k3": {
+              "lasso_rate": 0.54,
+              "mn_rate": 1.0,
+              "nt_lasso_rate": 0.0,
+              "met": false
+            },
+            "s3_k1": {
+              "lasso_rate": 0.955,
+              "mn_rate": 1.0,
+              "nt_lasso_rate": 0.0,
+              "met": true
+            },
+            "s3_k2": {
+              "lasso_rate": 0.805,
+              "mn_rate": 1.0,
+              "nt_lasso_rate": 0.0,
+              "met": true
+            },
+            "s3_k3": {
+              "lasso_rate": 0.645,
+              "mn_rate": 1.0,
+              "nt_lasso_rate": 0.0,
+              "met": false
+            },
+            "s4_k1": {
+              "lasso_rate": 1.0,
+              "mn_rate": 1.0,
+              "nt_lasso_rate": 0.0,
+              "met": true
+            },
+            "s4_k2": {
+              "lasso_rate": 0.955,
+              "mn_rate": 1.0,
+              "nt_lasso_rate": 0.0,
+              "met": true
+            },
+            "s4_k3": {
+              "lasso_rate": 0.655,
+              "mn_rate": 1.0,
+              "nt_lasso_rate": 0.0,
+              "met": false
+            }
+          },
+          "POSITIVE_CONTROL": {
+            "s0_k1": {
+              "lasso_rate": 1.0,
+              "mn_rate": 1.0,
+              "nt_lasso_rate": 0.0,
+              "met": true
+            },
+            "s0_k2": {
+              "lasso_rate": 1.0,
+              "mn_rate": 1.0,
+              "nt_lasso_rate": 0.0,
+              "met": true
+            },
+            "s0_k3": {
+              "lasso_rate": 1.0,
+              "mn_rate": 1.0,
+              "nt_lasso_rate": 0.0,
+              "met": true
+            },
+            "s1_k1": {
+              "lasso_rate": 1.0,
+              "mn_rate": 1.0,
+              "nt_lasso_rate": 0.0,
+              "met": true
+            },
+            "s1_k2": {
+              "lasso_rate": 1.0,
+              "mn_rate": 1.0,
+              "nt_lasso_rate": 0.0,
+              "met": true
+            },
+            "s1_k3": {
+              "lasso_rate": 1.0,
+              "mn_rate": 1.0,
+              "nt_lasso_rate": 0.0,
+              "met": true
+            },
+            "s2_k1": {
+              "lasso_rate": 1.0,
+              "mn_rate": 1.0,
+              "nt_lasso_rate": 0.0,
+              "met": true
+            },
+            "s2_k2": {
+              "lasso_rate": 1.0,
+              "mn_rate": 1.0,
+              "nt_lasso_rate": 0.0,
+              "met": true
+            },
+            "s2_k3": {
+              "lasso_rate": 1.0,
+              "mn_rate": 1.0,
+              "nt_lasso_rate": 0.0,
+              "met": true
+            },
+            "s3_k1": {
+              "lasso_rate": 1.0,
+              "mn_rate": 1.0,
+              "nt_lasso_rate": 0.0,
+              "met": true
+            },
+            "s3_k2": {
+              "lasso_rate": 1.0,
+              "mn_rate": 1.0,
+              "nt_lasso_rate": 0.0,
+              "met": true
+            },
+            "s3_k3": {
+              "lasso_rate": 1.0,
+              "mn_rate": 1.0,
+              "nt_lasso_rate": 0.0,
+              "met": true
+            },
+            "s4_k1": {
+              "lasso_rate": 1.0,
+              "mn_rate": 1.0,
+              "nt_lasso_rate": 0.0,
+              "met": true
+            },
+            "s4_k2": {
+              "lasso_rate": 1.0,
+              "mn_rate": 1.0,
+              "nt_lasso_rate": 0.0,
+              "met": true
+            },
+            "s4_k3": {
+              "lasso_rate": 1.0,
+              "mn_rate": 1.0,
+              "nt_lasso_rate": 0.0,
+              "met": true
+            }
+          },
+          "CHEAT": {
+            "s0_k1": {
+              "lasso_rate": 1.0,
+              "mn_rate": 1.0,
+              "nt_lasso_rate": 0.0,
+              "met": true
+            },
+            "s0_k2": {
+              "lasso_rate": 1.0,
+              "mn_rate": 1.0,
+              "nt_lasso_rate": 0.0,
+              "met": true
+            },
+            "s0_k3": {
+              "lasso_rate": 1.0,
+              "mn_rate": 1.0,
+              "nt_lasso_rate": 0.0,
+              "met": true
+            },
+            "s1_k1": {
+              "lasso_rate": 1.0,
+              "mn_rate": 1.0,
+              "nt_lasso_rate": 0.0,
+              "met": true
+            },
+            "s1_k2": {
+              "lasso_rate": 1.0,
+              "mn_rate": 1.0,
+              "nt_lasso_rate": 0.0,
+              "met": true
+            },
+            "s1_k3": {
+              "lasso_rate": 1.0,
+              "mn_rate": 1.0,
+              "nt_lasso_rate": 0.0,
+              "met": true
+            },
+            "s2_k1": {
+              "lasso_rate": 1.0,
+              "mn_rate": 1.0,
+              "nt_lasso_rate": 0.0,
+              "met": true
+            },
+            "s2_k2": {
+              "lasso_rate": 1.0,
+              "mn_rate": 1.0,
+              "nt_lasso_rate": 0.0,
+              "met": true
+            },
+            "s2_k3": {
+              "lasso_rate": 1.0,
+              "mn_rate": 1.0,
+              "nt_lasso_rate": 0.0,
+              "met": true
+            },
+            "s3_k1": {
+              "lasso_rate": 1.0,
+              "mn_rate": 1.0,
+              "nt_lasso_rate": 0.0,
+              "met": true
+            },
+            "s3_k2": {
+              "lasso_rate": 1.0,
+              "mn_rate": 1.0,
+              "nt_lasso_rate": 0.0,
+              "met": true
+            },
+            "s3_k3": {
+              "lasso_rate": 1.0,
+              "mn_rate": 1.0,
+              "nt_lasso_rate": 0.0,
+              "met": true
+            },
+            "s4_k1": {
+              "lasso_rate": 1.0,
+              "mn_rate": 1.0,
+              "nt_lasso_rate": 0.0,
+              "met": true
+            },
+            "s4_k2": {
+              "lasso_rate": 1.0,
+              "mn_rate": 1.0,
+              "nt_lasso_rate": 0.0,
+              "met": true
+            },
+            "s4_k3": {
+              "lasso_rate": 1.0,
+              "mn_rate": 1.0,
+              "nt_lasso_rate": 0.0,
+              "met": true
+            }
+          },
+          "NULL_TWIN": {
+            "s0_k1": {
+              "lasso_rate": 0.0,
+              "mn_rate": 1.0,
+              "met": false
+            },
+            "s0_k2": {
+              "lasso_rate": 0.0,
+              "mn_rate": 1.0,
+              "met": false
+            },
+            "s0_k3": {
+              "lasso_rate": 0.0,
+              "mn_rate": 1.0,
+              "met": false
+            },
+            "s1_k1": {
+              "lasso_rate": 0.0,
+              "mn_rate": 1.0,
+              "met": false
+            },
+            "s1_k2": {
+              "lasso_rate": 0.0,
+              "mn_rate": 1.0,
+              "met": false
+            },
+            "s1_k3": {
+              "lasso_rate": 0.0,
+              "mn_rate": 1.0,
+              "met": false
+            },
+            "s2_k1": {
+              "lasso_rate": 0.0,
+              "mn_rate": 1.0,
+              "met": false
+            },
+            "s2_k2": {
+              "lasso_rate": 0.0,
+              "mn_rate": 1.0,
+              "met": false
+            },
+            "s2_k3": {
+              "lasso_rate": 0.0,
+              "mn_rate": 1.0,
+              "met": false
+            },
+            "s3_k1": {
+              "lasso_rate": 0.0,
+              "mn_rate": 1.0,
+              "met": false
+            },
+            "s3_k2": {
+              "lasso_rate": 0.0,
+              "mn_rate": 1.0,
+              "met": false
+            },
+            "s3_k3": {
+              "lasso_rate": 0.0,
+              "mn_rate": 1.0,
+              "met": false
+            },
+            "s4_k1": {
+              "lasso_rate": 0.0,
+              "mn_rate": 1.0,
+              "met": false
+            },
+            "s4_k2": {
+              "lasso_rate": 0.0,
+              "mn_rate": 1.0,
+              "met": false
+            },
+            "s4_k3": {
+              "lasso_rate": 0.0,
+              "mn_rate": 1.0,
+              "met": false
+            }
+          }
+        },
+        "treatment_meets_success": false,
+        "failure_criterion_met": false,
+        "failure_reasons": [],
+        "lasso_alpha_by_seed": {
+          "0": 7.60596850559863,
+          "1": 8.02763087012421,
+          "2": 7.4322227769666585,
+          "3": 7.417207522036522,
+          "4": 7.966964446622337
+        },
+        "coherence_P_by_seed": [
+          0.9123486082353077,
+          0.8207995531201062,
+          0.7951998712640221,
+          0.8309300867706624,
+          0.8664321319897557
+        ],
+        "coherence_D_by_seed": [
+          0.6705761627821674,
+          0.6057975545349504,
+          0.6799375474529677,
+          0.6568533847694626,
+          0.5949019497493693
+        ],
+        "P_rank": 12
+      },
+      "procedural_notes": [
+        "'k <= 3' read as every k before the run; pooled reading would have been SIGNAL (0.823)"
+      ],
+      "anomalies": [
+        {
+          "id": "A1",
+          "text": "Spec positive control (row(P) faults, 'both methods recover') cannot satisfy the min-norm >= 0.50 clause by construction; pilot attempt 1 failed on it and was repaired (pre-declared) to oracle-support LS on the sparse faults."
+        }
+      ],
+      "rejected_explanations": []
+    },
+    {
+      "id": "W5",
+      "triplicateId": "HT-056d3ac561",
+      "passId": "P3v2",
+      "mechanism_ids": [
+        "M3",
+        "M8"
+      ],
+      "lens_ids": [
+        "L7",
+        "L1"
+      ],
+      "hypothesis": "An overconfident (collapsed-gain) Kalman filter that reopens its covariance only on the components flagged by a metamorphic stride-consistency relation recovers from an abrupt sparse regime change faster than a filter that reopens isotropically on a windowed-NIS alarm, at a matched pre-change false-alarm rate.",
+      "mechanism": "World: 8 independent scalar random walks x_{t+1} = x_t + w, w ~ N(0, Q=1e-4), observed z_t = x_t + v, v ~ N(0, R=1), T = 600 steps; the filter model is exactly correct (Q, R known) and starts at its steady-state variance P_ss (gain ~0.01, so it barely listens: collapsed covariance). At t_c = 300, 2 of the 8 components (uniform) jump by sign*J, J = 1.5, sign uniform +/-1. Every arm that reopens uses the same action: P_jj <- P_jj + RHO (RHO = 1.0) on the chosen components before the update at the chosen step. TREATMENT (M3 with the M8 relation as alarm): alongside the stride-1 filter runs an auxiliary stride-2 filter on the even-step measurements only (2-step model: process variance 2Q, same R, same initial P_ss). At every even t, d_j = xhat1_j - xhat2_j and z_j = d_j / sqrt(max(P2_jj - P1_jj, 1e-8)) (model-predicted disagreement variance: xhat2 conditions on a subset of xhat1's data). Per component, S_j = sum of z_j^2 over the last 10 even steps. An alarm on component j fires when S_j > h_MR and t >= 50; the stride-1 AND stride-2 filters are then both reopened on the alarmed components only, and those components' windows are cleared. h_MR is a single scalar calibrated on calibration seed 999 (1000 runs, no jump, alarms disabled): the 0.95 quantile over runs of max over components and over t in [50, 300) of S_j. No other tuning.",
+      "intervention": "Which components are reopened and when is decided by the per-component stride-MR statistic (oracle-free: uses only z_t) instead of by windowed NIS.",
+      "control": "REFERENCE_NIS: the same stride-1 filter; per step NIS_t = sum_j e_j^2 / S_j; windowed sum over the last 20 steps; alarm when the sum exceeds h_NIS and t >= 50; on alarm reopen ALL 8 components by RHO and clear the window. h_NIS calibrated on calibration seed 999 (1000 runs, no jump, alarms disabled) as the 0.95 quantile over runs of the max windowed sum over window ends in [50, 300). Runs on exactly the same trajectories and noise as the treatment.",
+      "positive_control": "Oracle reopening: exactly at t_c, exactly the two changed components, same RHO. Effect present by construction.",
+      "observable": "Per run: recovery latency = smallest s >= 0 such that for every changed component |xhat_j - x_j| <= 0.5*J for 10 consecutive steps starting at t_c + s (cap 290 if never); false-alarm flag = 1 if any reopening occurs at a step in [50, 300). Secondary (reported, not a clause): mean squared error on the 6 unchanged components over [300, 350).",
+      "success_criterion": "[{\"id\": \"S1\", \"text\": \"Pooled over all 5 seeds x 200 runs, the median recovery latency is at most 12 steps.\", \"statistic\": \"median over the 1000 pooled runs of recovery latency (steps)\", \"comparison\": \"<=\", \"threshold\": 12}, {\"id\": \"S2\", \"text\": \"Pooled over all 1000 runs, the fraction of runs with any reopening in [50, 300) (before the change) is at most 0.10.\", \"statistic\": \"mean over the 1000 pooled runs of the false-alarm flag\", \"comparison\": \"<=\", \"threshold\": 0.1}, {\"id\": \"S3\", \"text\": \"The pooled median recovery latency divided by the pooled median recovery latency of REFERENCE_NIS on the same 1000 runs is at most 0.60.\", \"statistic\": \"median latency(arm) / median latency(REFERENCE_NIS), both pooled over the same 1000 runs\", \"comparison\": \"<=\", \"threshold\": 0.6}]",
+      "failure_criterion": "[{\"id\": \"F1\", \"text\": \"Median latency ratio to REFERENCE_NIS is at least 0.95 (no faster than isotropic NIS reopening).\", \"statistic\": \"median latency(TREATMENT) / median latency(REFERENCE_NIS), pooled\", \"comparison\": \">=\", \"threshold\": 0.95}, {\"id\": \"F2\", \"text\": \"Pre-change false-alarm fraction exceeds 0.15 (calibration did not hold; speed bought with false alarms).\", \"statistic\": \"mean false-alarm flag of TREATMENT, pooled\", \"comparison\": \">\", \"threshold\": 0.15}, {\"id\": \"F3\", \"text\": \"Median latency is at least 0.90 of the never-reopening filter's median latency on the same runs (the MR alarm does not act in time).\", \"statistic\": \"median latency(TREATMENT) / median latency(NO_REOPEN), pooled\", \"comparison\": \">=\", \"threshold\": 0.9}]",
+      "alternative_explanation": "Any gain comes from per-component (sparse) alarms rather than from the metamorphic relation: a per-component innovation (NIS_j) alarm with the same sparse reopening would do as well. Also: stride disagreement is a re-weighted innovation statistic and so can at best match NIS (then S3 fails).",
+      "null_twin": "One reopening of two uniformly random components at a uniformly random step in [50, 600), same RHO: the number, size and sparsity of reopenings match the oracle; the relation between the reopening and the change is destroyed.",
+      "substrate": "causal toy",
+      "cost_estimate": 1,
+      "stupid_explanations": [
+        "the MR threshold is so low that it fires continuously, so latency is short because the filter is always open (checked by S2 and by the unchanged-component MSE)",
+        "the jump is so large that any alarm fires on the first step after the change, so no statistic can beat another (checked: REFERENCE_NIS median latency is well above the oracle's)",
+        "the latency band is so loose that the collapsed filter already counts as recovered (checked: NO_REOPEN median latency ~78 steps against the oracle's 2)",
+        "calibration on the evaluation seeds rather than the separate calibration seed"
+      ],
+      "spec": "hecate/programs/HT-056d3ac561/worlds/W5/spec.json",
+      "attainability": "hecate/programs/HT-056d3ac561/worlds/W5/ATTAINABILITY.json",
+      "outcome": "NULL",
+      "round": 3,
+      "rows": "hecate/programs/HT-056d3ac561/worlds/W5/probe/rows.jsonl",
+      "outcome_file": "hecate/programs/HT-056d3ac561/worlds/W5/probe/OUTCOME.json",
+      "statistics": {
+        "treatment": {
+          "S1_median_latency": 75.0,
+          "S2_fa_fraction": 0.028,
+          "S3_ratio_to_REFERENCE_NIS": 4.166666666666667,
+          "F1_ratio_to_REFERENCE_NIS": 4.166666666666667,
+          "F2_fa_fraction": 0.028,
+          "F3_ratio_to_NO_REOPEN": 0.9615384615384616
+        },
+        "per_arm": {
+          "TREATMENT": {
+            "median_latency_pooled": 75.0,
+            "fa_fraction_pooled": 0.028,
+            "mse_unchanged_300_350_mean": 0.5110587519780188,
+            "reopen_events_per_run_mean": 1.17,
+            "per_seed_median_latency": [
+              74.0,
+              75.0,
+              76.0,
+              75.5,
+              74.0
+            ],
+            "frac_never_recovered_cap": 0.0,
+            "post_change_first_alarm_delay": {
+              "fraction_with_alarm": 0.798,
+              "median_delay_steps": 82.0
+            }
+          },
+          "REFERENCE_NIS": {
+            "median_latency_pooled": 18.0,
+            "fa_fraction_pooled": 0.043,
+            "mse_unchanged_300_350_mean": 2.708314834975819,
+            "reopen_events_per_run_mean": 1.011,
+            "per_seed_median_latency": [
+              18.5,
+              18.0,
+              18.0,
+              18.0,
+              16.0
+            ],
+            "frac_never_recovered_cap": 0.0
+          },
+          "POSITIVE_CONTROL": {
+            "median_latency_pooled": 2.0,
+            "fa_fraction_pooled": 0.0,
+            "mse_unchanged_300_350_mean": 0.5095719440199036,
+            "reopen_events_per_run_mean": 1.0,
+            "per_seed_median_latency": [
+              2.0,
+              2.0,
+              2.0,
+              2.0,
+              2.0
+            ],
+            "frac_never_recovered_cap": 0.0
+          },
+          "NULL_TWIN": {
+            "median_latency_pooled": 76.0,
+            "fa_fraction_pooled": 0.473,
+            "mse_unchanged_300_350_mean": 0.5778503092619444,
+            "reopen_events_per_run_mean": 1.0,
+            "per_seed_median_latency": [
+              77.0,
+              76.0,
+              76.0,
+              76.0,
+              75.0
+            ],
+            "frac_never_recovered_cap": 0.0
+          },
+          "NO_REOPEN": {
+            "median_latency_pooled": 78.0,
+            "fa_fraction_pooled": 0.0,
+            "mse_unchanged_300_350_mean": 0.5095719440199036,
+            "reopen_events_per_run_mean": 0.0,
+            "per_seed_median_latency": [
+              79.0,
+              77.5,
+              78.0,
+              78.0,
+              77.0
+            ],
+            "frac_never_recovered_cap": 0.0
+          },
+          "CHEAT": {
+            "median_latency_pooled": 0.0,
+            "fa_fraction_pooled": 0.0,
+            "mse_unchanged_300_350_mean": 0.5095719440199036,
+            "reopen_events_per_run_mean": 0.0,
+            "per_seed_median_latency": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "frac_never_recovered_cap": 0.0
+          }
+        },
+        "control_reproducibility": {
+          "ok": true,
+          "clauses": [
+            {
+              "id": "S1",
+              "positive_value": 2.0,
+              "twin_value": 76.0,
+              "cheat_value": 0.0,
+              "attainable": true,
+              "discriminating": true,
+              "frozen_attainable": true,
+              "frozen_discriminating": true,
+              "status_matches": true,
+              "values_identical": true
+            },
+            {
+              "id": "S2",
+              "positive_value": 0.0,
+              "twin_value": 0.473,
+              "cheat_value": 0.0,
+              "attainable": true,
+              "discriminating": true,
+              "frozen_attainable": true,
+              "frozen_discriminating": true,
+              "status_matches": true,
+              "values_identical": true
+            },
+            {
+              "id": "S3",
+              "positive_value": 0.1111111111111111,
+              "twin_value": 4.222222222222222,
+              "cheat_value": 0.0,
+              "attainable": true,
+              "discriminating": true,
+              "frozen_attainable": true,
+              "frozen_discriminating": true,
+              "status_matches": true,
+              "values_identical": true
+            }
+          ],
+          "REFERENCE_NIS_median": 18.0,
+          "REFERENCE_NIS_reproduces_18": true,
+          "h_NIS_reproduces": true
+        },
+        "calibration": {
+          "h_NIS": 223.97086372226062,
+          "h_MR": 114.31690862659673,
+          "cal_seed": 999,
+          "cal_runs": 1000,
+          "quantile": 0.95,
+          "h_MR_run_max_summary": {
+            "min": 23.063312879865638,
+            "median": 61.51126337580662,
+            "max": 210.81972635517783
+          }
+        }
+      },
+      "anomalies": [],
+      "rejected_explanations": [
+        "the MR threshold is so low that it fires continuously, so latency is short because the filter is always open (checked by S2 and by the unchanged-component MSE)",
+        "the jump is so large that any alarm fires on the first step after the change, so no statistic can beat another (checked: REFERENCE_NIS median latency is well above the oracle's)",
+        "the latency band is so loose that the collapsed filter already counts as recovered (checked: NO_REOPEN median latency ~78 steps against the oracle's 2)",
+        "calibration on the evaluation seeds rather than the separate calibration seed"
+      ]
+    },
+    {
+      "id": "W6",
+      "triplicateId": "HT-056d3ac561",
+      "passId": "P3v2",
+      "mechanism_ids": [
+        "M9"
+      ],
+      "lens_ids": [
+        "L3"
+      ],
+      "hypothesis": "Choosing which metamorphic relations to run, one at a time, by the expected covariance reduction of a recursive Gaussian belief whose per-component prior variances are re-estimated as sparse after every result, localizes a planted 2-sparse fault with a fixed test budget far more often than random selection and than the same greedy rule under a fixed (non-sparse) Gaussian belief.",
+      "mechanism": "World (per seed): hidden fault f in R^64 with exactly 2 nonzero entries, value sign*U(1,2), support and sign uniform; a pool of 256 metamorphic relations, relation i returning residual r_i = a_i . f + eps_i, eps_i ~ N(0, 0.3^2) drawn once per trial per relation; a_i has 6 nonzero entries +/-1/sqrt(6) at uniform positions (pool fixed per seed). Budget: 24 distinct relations, run sequentially; each choice may use every residual already observed. TREATMENT (M9): belief f ~ N(mu, P) with prior N(0, diag(gamma)); gamma initialised to tau2 = 2*(7/3)/64 for every component; after each observed residual, gamma is re-estimated by 10 iterations of the sparse-Bayesian-learning EM update gamma_j <- mu_j^2 + P_jj (floored at 1e-6) using all residuals so far, and (mu, P) recomputed from gamma and those residuals by the Kalman information update; the next relation is the unused i maximising a_i^T P^2 a_i / (a_i^T P a_i + 0.09) (expected reduction of trace P). After 24 relations, a FIXED decoder shared by every arm (orthogonal matching pursuit selecting exactly 2 columns of the 24 x 64 selected-row matrix, column correlations normalised by column norm, zero columns never chosen) outputs the support. The treatment's own belief is never used for decoding.",
+      "intervention": "Relation selection is adaptive through the sparse (re-estimated gamma) belief.",
+      "control": "Two controls on exactly the same pool, faults and residual noise: REFERENCE_RANDOM = 24 relations uniform without replacement; REFERENCE_GAUSSIAN_GREEDY (sparse prior removed) = the same expected-trace-reduction rule under the fixed prior N(0, tau2 I) with no gamma update, which makes the selection data-independent (one set of 24 per pool). Both decoded by the same OMP.",
+      "positive_control": "Oracle-targeted selection: knows the true support S; test b targets S[b mod 2], chosen uniformly among unused relations containing the target and not the other true component (else any unused containing the target, else any unused). Effect present by construction.",
+      "observable": "Per trial: success = 1 if the OMP support equals the true support, else 0. Secondary (reported, not a clause): whether both true components appear in at least one selected relation.",
+      "success_criterion": "[{\"id\": \"S1\", \"text\": \"Pooled over 5 seeds x 300 trials, localization accuracy is at least 0.60.\", \"statistic\": \"mean success over the 1500 pooled trials\", \"comparison\": \">=\", \"threshold\": 0.6}, {\"id\": \"S2\", \"text\": \"Pooled accuracy minus REFERENCE_RANDOM pooled accuracy on the same 1500 trials is at least 0.25.\", \"statistic\": \"mean success(arm) - mean success(REFERENCE_RANDOM), same trials\", \"comparison\": \">=\", \"threshold\": 0.25}, {\"id\": \"S3\", \"text\": \"Pooled accuracy minus REFERENCE_GAUSSIAN_GREEDY pooled accuracy on the same 1500 trials is at least 0.15.\", \"statistic\": \"mean success(arm) - mean success(REFERENCE_GAUSSIAN_GREEDY), same trials\", \"comparison\": \">=\", \"threshold\": 0.15}]",
+      "failure_criterion": "[{\"id\": \"F1\", \"text\": \"Treatment beats random selection by less than 0.10.\", \"statistic\": \"mean success(TREATMENT) - mean success(REFERENCE_RANDOM), pooled\", \"comparison\": \"<\", \"threshold\": 0.1}, {\"id\": \"F2\", \"text\": \"Treatment beats the fixed-Gaussian greedy design by less than 0.05 (the sparse belief adds nothing beyond a good fixed design).\", \"statistic\": \"mean success(TREATMENT) - mean success(REFERENCE_GAUSSIAN_GREEDY), pooled\", \"comparison\": \"<\", \"threshold\": 0.05}, {\"id\": \"F3\", \"text\": \"Treatment localization accuracy below 0.40.\", \"statistic\": \"mean success(TREATMENT), pooled\", \"comparison\": \"<\", \"threshold\": 0.4}]",
+      "alternative_explanation": "Any gain is ordinary adaptive group testing / sequential compressed sensing: any rule that follows up on relations with large residuals (no Kalman covariance, no sparse re-estimation) would do as well; the Kalman-plus-sparse framing is then decorative. This world does not rule that out; it only tests whether the stated mechanism beats random and a fixed Gaussian design.",
+      "null_twin": "Decoy-targeted selection: the positive control's targeting procedure aimed at 2 uniform components disjoint from the true support. Same targeting machinery, test sparsity and budget; the relation between selection and the fault is destroyed.",
+      "substrate": "causal toy",
+      "cost_estimate": 2,
+      "stupid_explanations": [
+        "budget large enough that random selection already localizes (checked: REFERENCE_RANDOM pooled accuracy 0.23)",
+        "the decoder, not the selection, does the work (decoder is fixed and shared by every arm)",
+        "the treatment peeks at the true support through a shared RNG stream (arms draw from their own rng; the treatment must not read the fault, the decoy, or the oracle's choices)",
+        "noise so low that one relation touching a true component reveals it (oracle needs targeted repeats; random with both components covered in ~80% of trials still succeeds in only ~23%)"
+      ],
+      "spec": "hecate/programs/HT-056d3ac561/worlds/W6/spec.json",
+      "attainability": "hecate/programs/HT-056d3ac561/worlds/W6/ATTAINABILITY.json"
+    }
+  ],
+  "candidateEngines": [],
+  "currentVerdict": "PARK",
+  "evidenceSummary": {
+    "layer": "experimental_observation",
+    "rows": "hecate/programs/HT-056d3ac561/worlds/W5/probe/rows.jsonl",
+    "note": "round 3 W5 NULL: two valid NULL readings (W4, W5)"
+  }
+}

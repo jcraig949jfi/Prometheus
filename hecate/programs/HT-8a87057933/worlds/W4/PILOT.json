@@ -1,0 +1,89 @@
+{
+ "positive_meets_success": false,
+ "cheat_detected": true,
+ "null_twin_meets_success": false,
+ "pilot_pass": false,
+ "stats": {
+  "CE_REFERENCE": {
+   "n_episodes": 10000,
+   "mean_forbidden": 1.0131,
+   "median_steps": 4.0,
+   "probes": 0,
+   "bits_per_probe": null,
+   "probes_per_episode": 0.0,
+   "reach_rate": 0.679,
+   "frac_ep_zero_forbidden": 0.6582,
+   "probe_true_safe_frac": null,
+   "trig_none_safe_frac": null
+  },
+  "POSITIVE_CONTROL": {
+   "n_episodes": 10000,
+   "mean_forbidden": 0.3163,
+   "median_steps": 5.0,
+   "probes": 91685,
+   "bits_per_probe": 0.48964663676845255,
+   "probes_per_episode": 9.1685,
+   "reach_rate": 0.5385,
+   "frac_ep_zero_forbidden": 0.9437,
+   "probe_true_safe_frac": 0.9927359982548944,
+   "trig_none_safe_frac": 0.15757212193924852,
+   "criterion": {
+    "forbidden_reduction": 0.6877899516335998,
+    "median_steps_ratio": 1.25,
+    "bits_ratio": 0.8429428489165547,
+    "a": true,
+    "b": true,
+    "c": false,
+    "meets_success": false,
+    "meets_failure": true
+   }
+  },
+  "CHEAT": {
+   "n_episodes": 10000,
+   "mean_forbidden": 0.0,
+   "median_steps": 4.0,
+   "probes": 81196,
+   "bits_per_probe": 1.1617552421206294,
+   "probes_per_episode": 8.1196,
+   "reach_rate": 0.5697,
+   "frac_ep_zero_forbidden": 1.0,
+   "probe_true_safe_frac": 0.958421597123011,
+   "trig_none_safe_frac": 0.20183260259126065,
+   "criterion": {
+    "forbidden_reduction": 1.0,
+    "median_steps_ratio": 1.0,
+    "bits_ratio": 2.0,
+    "a": true,
+    "b": true,
+    "c": true,
+    "meets_success": true,
+    "meets_failure": false
+   }
+  },
+  "NULL_TWIN": {
+   "n_episodes": 10000,
+   "mean_forbidden": 0.6852,
+   "median_steps": 5.0,
+   "probes": 81196,
+   "bits_per_probe": 0.5808776210603147,
+   "probes_per_episode": 8.1196,
+   "reach_rate": 0.5697,
+   "frac_ep_zero_forbidden": 0.7495,
+   "probe_true_safe_frac": 0.958421597123011,
+   "trig_none_safe_frac": 0.20183260259126065,
+   "criterion": {
+    "forbidden_reduction": 0.32366005330174696,
+    "median_steps_ratio": 1.25,
+    "bits_ratio": 1.0,
+    "a": false,
+    "b": true,
+    "c": false,
+    "meets_success": false,
+    "meets_failure": true
+   }
+  },
+  "null_twin_meets_a_and_b": false,
+  "note": "null twin part (c) is its own reference (ratio 1.0): see NOTES ambiguity 2"
+ },
+ "attempt": 2
+}
