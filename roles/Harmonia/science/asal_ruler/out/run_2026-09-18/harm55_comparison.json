@@ -1,0 +1,254 @@
+{
+ "abs_error": {
+  "max": 4.76837158203125e-07,
+  "mean": 1.0757474927930861e-07,
+  "p95": 2.384185791015625e-07
+ },
+ "band": 0.01,
+ "best_crosser_class_preserved": true,
+ "best_crosser_identity_preserved": true,
+ "crossing": {
+  "2sd": {
+   "agree": 333,
+   "flax_crossers": 24,
+   "flax_min_above_threshold": false,
+   "flax_only": [],
+   "min_flax": 0.7664519548416138,
+   "min_torch": 0.7664518356323242,
+   "threshold": 0.79996,
+   "torch_crossers": 24,
+   "torch_only": []
+  },
+  "mean": {
+   "agree": 333,
+   "flax_crossers": 105,
+   "flax_min_above_threshold": false,
+   "flax_only": [],
+   "min_flax": 0.7664519548416138,
+   "min_torch": 0.7664518356323242,
+   "threshold": 0.816686,
+   "torch_crossers": 105,
+   "torch_only": []
+  }
+ },
+ "discordance": {
+  "2sd": {
+   "by_class_pair": {},
+   "by_distance_to_threshold": {
+    "<0.0025": 0,
+    "<0.005": 0,
+    "<0.01": 0
+   },
+   "discordance_rate": 0.0,
+   "examples": [],
+   "n_discordant": 0,
+   "n_discordant_pairs_straddling_threshold": 0,
+   "n_in_band": 65,
+   "n_pairs": 2080
+  },
+  "mean": {
+   "by_class_pair": {},
+   "by_distance_to_threshold": {
+    "<0.0025": 0,
+    "<0.005": 0,
+    "<0.01": 0
+   },
+   "discordance_rate": 0.0,
+   "examples": [],
+   "n_discordant": 0,
+   "n_discordant_pairs_straddling_threshold": 0,
+   "n_in_band": 101,
+   "n_pairs": 5050
+  }
+ },
+ "flax_identity": {
+  "band": 0.01,
+  "body_commit": "677ba0ea4d3b3ca78273c9906c6e84d2b1481ce7",
+  "body_tree_sha256": "188a6adae350258e004ed280bf0ba1bcbd8850642faf198ba0de0629ca87bf0a",
+  "boundaries": {
+   "catalogue": 0.8472459316253662,
+   "garbage_2sd": 0.7999,
+   "garbage_mean": 0.8167
+  },
+  "cpu": "Intel64 Family 6 Model 183 Stepping 1, GenuineIntel",
+  "flax": "0.10.2",
+  "frames": {
+   "contract": "uint8 grey /255 -> grey_to_rgb bilinear 224 -> CLIP mean/std -> image features -> L2 (the seven-arm fixture's path)",
+   "dir": "C:\\Users\\James\\AppData\\Local\\Temp\\claude\\D--Prometheus\\475d761f-7808-4fd1-8171-f3a2c6d3ddb1\\scratchpad\\harm55\\transfer\\harm55_frames128",
+   "dtype": "uint8",
+   "manifest": "C:/Users/James/AppData/Local/Temp/claude/D--Prometheus/475d761f-7808-4fd1-8171-f3a2c6d3ddb1/scratchpad/harm55/transfer/harm55_frames128/MANIFEST_frames128.json",
+   "manifest_sha256_lf": "d7b521c8d5e6d538cee321388807384f0cbca6120f704da52150e7df3d4bde22",
+   "regenerated_here": false,
+   "shape": [
+    8,
+    128,
+    128
+   ]
+  },
+  "host": "SPECTREX5",
+  "jax": "0.4.38",
+  "jaxlib": "0.4.38",
+  "model": "openai/clip-vit-base-patch32 (FlaxCLIPModel)",
+  "n_frames_verified": 395,
+  "n_scored": 395,
+  "path": "flax",
+  "python": "3.12.10",
+  "scorer": "ASAL foundation_models/clip.py CLIP.embed_img + asal_metrics.calc_open_endedness_score (body, unmodified)",
+  "seconds": 589.5,
+  "thresholds_file": {
+   "coh_O": 0.9659503203670327,
+   "d_clip_H": 0.04501099245888846,
+   "d_clip_O": 0.03832137584686279,
+   "d_pix_H": 0.0,
+   "d_pix_O": 0.07214030080162391,
+   "disp_O": 31.922809343714615,
+   "mass_cv_O": 0.014652026896380198,
+   "orbium_alive": true,
+   "orbium_mass": [
+    76.86274509803921,
+    73.51138007162263,
+    73.69621915415426,
+    73.5118305653536,
+    73.36058833133,
+    73.61704615699455,
+    73.78888209021994,
+    73.78435669914238,
+    73.27873302948117
+   ]
+  },
+  "transformers": "4.47.1",
+  "weights_files_sha256": {
+   "flax_model.msgpack": "2a2994d89bebd77abba5a554789dd9152a7e25467b79d88f6bd237d2dec5051c"
+  },
+  "written_utc": "2026-09-30T10:52:09Z"
+ },
+ "lowest": {
+  "flax": [
+   {
+    "class": "METRIC_EXPLOIT",
+    "ic": "IC-ORB",
+    "key": "S2_189",
+    "score": 0.7664519548416138
+   },
+   {
+    "class": "METRIC_EXPLOIT",
+    "ic": "IC-ORB",
+    "key": "S2_175",
+    "score": 0.7798832058906555
+   },
+   {
+    "class": "UNCLASSIFIED",
+    "ic": "IC-CAT:PN+cy",
+    "key": "S2_87",
+    "score": 0.7855318784713745
+   },
+   {
+    "class": "METRIC_EXPLOIT",
+    "ic": "IC-ORB",
+    "key": "S2_162",
+    "score": 0.7881608009338379
+   },
+   {
+    "class": "METRIC_EXPLOIT",
+    "ic": "IC-BLOB",
+    "key": "S2_2",
+    "score": 0.788177490234375
+   },
+   {
+    "class": "UNCLASSIFIED",
+    "ic": "IC-CAT:PN+cy",
+    "key": "S2_115",
+    "score": 0.7884790897369385
+   },
+   {
+    "class": "METRIC_EXPLOIT",
+    "ic": "IC-ORB",
+    "key": "S2_194",
+    "score": 0.7898147106170654
+   },
+   {
+    "class": "UNCLASSIFIED",
+    "ic": "IC-CAT:PN+cy",
+    "key": "S2_84",
+    "score": 0.7923051118850708
+   },
+   {
+    "class": "UNCLASSIFIED",
+    "ic": "IC-CAT:3GG2r",
+    "key": "S2_55",
+    "score": 0.7926573157310486
+   },
+   {
+    "class": "GENUINE_DYNAMICAL_NOVELTY",
+    "ic": "IC-CAT:3G3an",
+    "key": "S2_135",
+    "score": 0.7933100461959839
+   }
+  ],
+  "torch": [
+   {
+    "class": "METRIC_EXPLOIT",
+    "ic": "IC-ORB",
+    "key": "S2_189",
+    "score": 0.7664518356323242
+   },
+   {
+    "class": "METRIC_EXPLOIT",
+    "ic": "IC-ORB",
+    "key": "S2_175",
+    "score": 0.7798830270767212
+   },
+   {
+    "class": "UNCLASSIFIED",
+    "ic": "IC-CAT:PN+cy",
+    "key": "S2_87",
+    "score": 0.7855318784713745
+   },
+   {
+    "class": "METRIC_EXPLOIT",
+    "ic": "IC-ORB",
+    "key": "S2_162",
+    "score": 0.7881609201431274
+   },
+   {
+    "class": "METRIC_EXPLOIT",
+    "ic": "IC-BLOB",
+    "key": "S2_2",
+    "score": 0.788177490234375
+   },
+   {
+    "class": "UNCLASSIFIED",
+    "ic": "IC-CAT:PN+cy",
+    "key": "S2_115",
+    "score": 0.7884790897369385
+   },
+   {
+    "class": "METRIC_EXPLOIT",
+    "ic": "IC-ORB",
+    "key": "S2_194",
+    "score": 0.7898144721984863
+   },
+   {
+    "class": "UNCLASSIFIED",
+    "ic": "IC-CAT:PN+cy",
+    "key": "S2_84",
+    "score": 0.7923047542572021
+   },
+   {
+    "class": "UNCLASSIFIED",
+    "ic": "IC-CAT:3GG2r",
+    "key": "S2_55",
+    "score": 0.7926574945449829
+   },
+   {
+    "class": "GENUINE_DYNAMICAL_NOVELTY",
+    "ic": "IC-CAT:3G3an",
+    "key": "S2_135",
+    "score": 0.7933099269866943
+   }
+  ]
+ },
+ "n_compared": 333,
+ "n_missing_flax": 0,
+ "spearman": 1.0
+}

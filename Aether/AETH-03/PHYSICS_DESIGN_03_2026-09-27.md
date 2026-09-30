@@ -340,3 +340,18 @@ energy-steered aim") is now supported by intervention. Limits: the lesion
 removes both dynamic coupling and any static aim–energy correlation, and it
 changes the aim distribution to uniform. A frozen-energy-snapshot lesion
 would separate these (`ops/campaigns/C-002/E-010/RESULT.md`).
+
+## AMENDMENT A5 (2026-09-30) — trace lesion (E-011)
+
+*Appended; nothing above is edited. Preregistered at 1c7b3249d.*
+
+`rcv_adr` is `rcv_add` with relay-won writes committing by replacement (WRITE-site
+writes still add). On seeds 4–7 it gives P_sust 10/128, against 22/128 for
+`rcv_add` and an additive null of 5/128. **Verdict: PARTIAL.** The regression gate
+passed (`rcv_add` s4 reproduced E-009 bit for bit).
+
+Compounding relay traces carry most of `rcv_add`'s excess (22 → 10), but the
+lesion is incomplete by construction: later add-writes can still carry a relay's
+trace forward. §5.4's `rcv_add` mechanism is therefore partly supported by
+intervention; a complete lesion needs last-writer provenance
+(`ops/campaigns/C-002/E-011/RESULT.md`).

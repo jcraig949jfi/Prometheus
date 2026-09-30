@@ -24,3 +24,7 @@
   starting any process that uses the GPU, or > 2 CPU threads for > 5 min.
   Release on completion, abandonment or crash. If BUSY: queue in your
   QUEUE.md and do other work; do not start a weaker substitute experiment.
+5 GATES AND DEVICES (2026-09-30). If a pre-registered known-answer gate fails,
+  do NOT run the champion: stop and report (a principal decides). Run every
+  engine process with CUDA_VISIBLE_DEVICES= unless the brief grants a GPU lease
+  (the engine defaults to cuda).

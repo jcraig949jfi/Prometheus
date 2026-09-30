@@ -22,7 +22,8 @@ worker GitHub credentials added; the orchestrating seat commits on behalf of exe
 | E-008 | Are rcv_add / rcv_str locality conclusions horizon-robust to 10,000 ticks? (d_horizon falsifier; Fabric, MWO-0001) | see E-008 |
 | E-009 | Do the Block D positives (rcv_add, rcv_str) replicate on fresh seeds 4-7 under the unchanged N1 rule? (MWO-0004 G4; Fabric) | see E-009 |
 | E-010 | Does rcv_str's super-additivity need energy-coupled aim? (steering lesion rcv_sfx; CLOSED: STEERING_REQUIRED) | see E-010 |
-| E-011 | Does rcv_add's super-additivity need compounding relay traces? (trace lesion rcv_adr; controlled intervention; CWO 2026-09-30) | see E-011 |
+| E-011 | Does rcv_add's super-additivity need compounding relay traces? (trace lesion rcv_adr; CLOSED: PARTIAL, 10/128 vs 22/128, additive null 5/128) | see E-011 |
+| E-012 | Does rcv_str need dynamic aim-energy coupling or only aim-energy correlation? (frozen-energy lesion rcv_sfz; CWO 2026-09-30) | see E-012 |
 
 Task numbering is campaign-wide (as C-001). Portable-Task record, as C-001: code refs (pinned commit + LF-normalised sha256 of
 every imported module), inputs (canonical parameters + sha256; the unit id is derived from them), a host-independent command

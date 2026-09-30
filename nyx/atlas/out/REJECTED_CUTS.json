@@ -1,12 +1,12 @@
 {
  "schema": "nyx.atlas/0",
- "built": "2026-09-19T10:08Z",
- "n": 355,
+ "built": "2026-09-30T11:20Z",
+ "n": 359,
  "by_reason": {
   "GENERIC_LANGUAGE_MECHANICS": 46,
-  "NAME_HAS_NO_EXECUTABLE_BOUNDARY": 115,
-  "OTHER": 143,
-  "BELOW_MEANINGFUL_GRAIN": 16,
+  "NAME_HAS_NO_EXECUTABLE_BOUNDARY": 116,
+  "OTHER": 145,
+  "BELOW_MEANINGFUL_GRAIN": 17,
   "DUPLICATES_A_CONTROL": 2,
   "EFFECT_FROM_ENVIRONMENT": 18,
   "INHERITED_FROM_RUNTIME_OR_LIBRARY": 11,
@@ -45,6 +45,38 @@
    "note": "",
    "cut_mode": "ANCESTRY_AWARE",
    "fossil": "asal-sakana-2024"
+  },
+  {
+   "candidate": "SexualAncestry.cc (162 lines), Clade.cc / CladeArbiter.cc (464 lines), GenomeTestMetrics.cc",
+   "reason": "OTHER",
+   "evidence": "NOT READ this pass; a second arbiter role and per-genotype attached data",
+   "note": "the clade arbiter is a parallel classification under another role id; the ancestry cut is of the 'genotype' role only",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "avida"
+  },
+  {
+   "candidate": "SaveFlameData (cPopulation.cc 6667-) and SaveStructuredSystematicsGroup (6566-6632)",
+   "reason": "OTHER",
+   "evidence": "vault:avida/upstream/tree/avida-core/source/main/cPopulation.cc:6566-6632 read; SaveFlameData not read beyond its header",
+   "note": "the group save is SavePopulation without the organism columns; flame data is a different file that shares the .spop extension and is out of the packet's scope by its missing #filetype line",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "avida"
+  },
+  {
+   "candidate": "threshold status and genotype names (nameGenotype 482-496; SetThreshold)",
+   "reason": "BELOW_MEANINGFUL_GRAIN",
+   "evidence": "vault:avida/upstream/tree/avida-core/source/systematics/GenotypeArbiter.cc:482-496",
+   "note": "labels for genotypes that reached an abundance; nothing reads them back into the dynamics",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "avida"
+  },
+  {
+   "candidate": "'the phylogeny' as one organ",
+   "reason": "NAME_HAS_NO_EXECUTABLE_BOUNDARY",
+   "evidence": "what is called the phylogeny is four separable acts with separate code: founding an edge, retaining by reference count, writing rows, and reading them back with renumbering; each loses different information",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "avida"
   },
   {
    "candidate": "demes and deme competition, predator/prey, mating types and sexual birth handlers, tolerance/groups, the energy model, HGT genome fragments, promoters/regulation, resource bins, avatars, multi-process worlds",

@@ -1,0 +1,184 @@
+{
+ "cuda_visible_devices": "",
+ "KA_B_latch": {
+  "offset": 6,
+  "channel_all": {
+   "label": "NO_EFFECT_REL",
+   "certificate": "NO_EFFECT_REL",
+   "P": 256,
+   "K": 12,
+   "normal": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "DF": [
+    0.75,
+    0.75,
+    0.75
+   ],
+   "DN": [
+    0.25,
+    0.25,
+    0.25
+   ],
+   "zci": {
+    "z": 1.0,
+    "lo": 1.0,
+    "hi": 1.0,
+    "class": "PARTIAL"
+   },
+   "transfer": "",
+   "p_min_used": {
+    "FLIP_REL": 0.57,
+    "NO_EFFECT_REL": 0.57,
+    "CHANCE_REL": 0.58
+   }
+  },
+  "site_all": {
+   "label": "FLIP_REL",
+   "certificate": "FLIP_REL",
+   "P": 256,
+   "K": 12,
+   "normal": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "DF": [
+    -0.25,
+    -0.25,
+    -0.25
+   ],
+   "DN": [
+    -0.75,
+    -0.75,
+    -0.75
+   ],
+   "zci": {
+    "z": -1.0,
+    "lo": -1.0,
+    "hi": -1.0,
+    "class": "COMPLETE"
+   },
+   "transfer": "COMPLETE",
+   "p_min_used": {
+    "FLIP_REL": 0.57,
+    "NO_EFFECT_REL": 0.57,
+    "CHANCE_REL": 0.58
+   }
+  },
+  "pass": true
+ },
+ "MUSTFAIL_latch_site_all": {
+  "label": "FLIP_REL",
+  "as_required": true
+ },
+ "KA_A_champion": {
+  "arms": {
+   "S": {
+    "label": "FLIP_REL",
+    "certificate": "FLIP_REL",
+    "P": 256,
+    "K": 11,
+    "normal": [
+     0.7079190340909091,
+     0.6932848094829268,
+     0.7229907170586185
+    ],
+    "DF": [
+     -0.12029474431818182,
+     -0.13612194997671428,
+     -0.1034359918452537
+    ],
+    "DN": [
+     -0.3282137784090909,
+     -0.3469464685254384,
+     -0.310499275545434
+    ],
+    "zci": {
+     "z": -1.0785653287788217,
+     "lo": -1.1832832725994875,
+     "hi": -0.9738473849581559,
+     "class": "COMPLETE"
+    },
+    "transfer": "COMPLETE",
+    "p_min_used": {
+     "FLIP_REL": 0.58,
+     "NO_EFFECT_REL": 0.58,
+     "CHANCE_REL": 0.59
+    }
+   },
+   "site_all": {
+    "label": "FLIP_REL",
+    "certificate": "FLIP_REL",
+    "P": 256,
+    "K": 11,
+    "normal": [
+     0.7079190340909091,
+     0.6932848094829268,
+     0.7229907170586185
+    ],
+    "DF": [
+     -0.12029474431818182,
+     -0.13612194997671428,
+     -0.1034359918452537
+    ],
+    "DN": [
+     -0.3282137784090909,
+     -0.3469464685254384,
+     -0.310499275545434
+    ],
+    "zci": {
+     "z": -1.0785653287788217,
+     "lo": -1.1832832725994875,
+     "hi": -0.9738473849581559,
+     "class": "COMPLETE"
+    },
+    "transfer": "COMPLETE",
+    "p_min_used": {
+     "FLIP_REL": 0.58,
+     "NO_EFFECT_REL": 0.58,
+     "CHANCE_REL": 0.59
+    }
+   },
+   "channel_all": {
+    "label": "NO_EFFECT_REL",
+    "certificate": "NO_EFFECT_REL",
+    "P": 256,
+    "K": 11,
+    "normal": [
+     0.7079190340909091,
+     0.6932848094829268,
+     0.7229907170586185
+    ],
+    "DF": [
+     0.31187855113636365,
+     0.28992721422439033,
+     0.334486075587928
+    ],
+    "DN": [
+     0.10395951704545453,
+     0.09664240474146339,
+     0.11149535852930928
+    ],
+    "zci": {
+     "z": 1.0,
+     "lo": 1.0,
+     "hi": 1.0,
+     "class": "PARTIAL"
+    },
+    "transfer": "",
+    "p_min_used": {
+     "FLIP_REL": 0.58,
+     "NO_EFFECT_REL": 0.58,
+     "CHANCE_REL": 0.59
+    }
+   }
+  },
+  "pass": true
+ },
+ "all_pass": true,
+ "wall_s": 115.1,
+ "cpu_s": 114.2
+}

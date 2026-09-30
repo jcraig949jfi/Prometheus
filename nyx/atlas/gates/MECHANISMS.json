@@ -31,8 +31,8 @@
      "what_it_established": "the raw catalogue DOES cross with no search (min ALIVE catalogue 0.8076 < 0.8167; five catalogued lifeforms). This strengthens the mechanism reading (selection alone suffices) while falsifying the sub-claim. The SAME packet carries evidence and counterevidence -- which is exactly why a mechanism is not a packet."
     }
    ],
-   "observer_dependence": "UNKNOWN",
-   "observer_dependence_basis": "HARM-55 native Flax column DEFERRED on execution placement, not science (Techne #488: M3 is a 2008 i7-920 without AVX; M1/M2 expose no remote exec). The original-observer column is bit-identical over all 395 (max |diff| 0.0), so the frames + script ARE the pipeline that produced the search result and the Flax run changes the observer and nothing else. Resolution awaits HARM-56 disposition A/B/C.",
+   "observer_dependence": "OBSERVER_STABLE",
+   "observer_dependence_basis": "HARM-56 disposition A_OBSERVER_STABLE (Harmonia #1067, 2026-09-30; roles/Harmonia/rulings/RECORD_HARM55_HARM56_NATIVE_OBSERVER_2026-09-30.md): native Flax column 395/395 hash-verified; versus the torch reconstruction n = 333 compared, max abs error 4.77e-7, Spearman 1.0, best-crosser identity and class preserved; harm56_map every row STABLE (catalogue 61 crossing / 272 not), classification 324 stable / 9 unresolved, no B hits. WHAT IT SHOWS: observer RECONSTRUCTION is not the source of the crossings. WHAT IT DOES NOT: anything new about whether the crossings are open-endedness. CAVEAT carried from the record: the tool's C-SELF / C-STATIC fields read null and the authorisation rests on two separate artifacts (torch cheat 16/16; native STATIC anchor 0.8750002). Scope: the executed 395-rollout domain only. replication_authorised = true",
    "transplant_history": [
     {
      "receiving_ecology": "Theophrastus cell (mechanism x Lenia port under fw2-5886f2b9, frozen legitimate search)",
@@ -42,7 +42,8 @@
     }
    ],
    "current_disposition": "EVIDENCE_SUPPORTED",
-   "open_anomaly": "ANOM-ASAL-MANY-TO-ONE"
+   "open_anomaly": "ANOM-ASAL-MANY-TO-ONE",
+   "observer_dependence_basis_before_2026-09-30": "HARM-55 native Flax column DEFERRED on execution placement, not science (Techne #488: M3 is a 2008 i7-920 without AVX; M1/M2 expose no remote exec). The original-observer column is bit-identical over all 395 (max |diff| 0.0), so the frames + script ARE the pipeline that produced the search result and the Flax run changes the observer and nothing else. Resolution awaits HARM-56 disposition A/B/C."
   },
   {
    "mechanism_id": "MECH-ASAL-FRAME-SAMPLING",
@@ -122,15 +123,16 @@
     {
      "packet_id": "MECH-POET-NOVELTY-ESTIMATOR-001",
      "freeze": "291a22ed",
-     "ruling": "ISSUED 2026-09-19, awaiting Harmonia verdict",
-     "what_it_established": "NOTHING YET -- frozen and handed over; four exact rows scouted (SEEN) before freezing"
+     "ruling": "CUT_SUPPORTED, all four rows, as an EXECUTED STRUCTURAL IDENTITY on the fossil's own bytes; NOT CONFIRMATORY (Harmonia #1063, 2026-09-30; roles/Harmonia/rulings/RULING_MECH_POET_NOVELTY_ESTIMATOR_001_2026-09-30.md)",
+     "what_it_established": "CODE FACTS, independently executed and hash-bound: the four properties are true of novelty.py @ 0b40743d (I1 = 1 over all 20 archive sizes; I2 = 2.6666666666666665 against a normalized reference of 1.0; I3 = 0.0; I4 = 0 increases, series 2.890 -> 0.236); controls pass; cut_kill silent. NOT a predictive success: every row was seen before the freeze and the payload is deterministic, so Harmonia's run is the same measurement, not a test of a prediction. UNTESTED: the consequence for POET's open-endedness (needs Box2D + fiber) and the delete_optimizer claim tail (outside the executed boundary novelty.py:18-62)"
     }
    ],
    "counterevidence_packets": [],
    "observer_dependence": "NOT_APPLICABLE",
    "observer_dependence_basis": "no learned representation in the boundary; the descriptor is five hand-written numbers from the fossil",
    "transplant_history": [],
-   "current_disposition": "PROPOSED"
+   "current_disposition": "EVIDENCE_SUPPORTED",
+   "evidence_kind": "EXECUTED_STRUCTURAL_IDENTITY -- the boundary and the claimed properties are verified code facts; zero predictions were tested. Counted as evidence-supported because an independent ruling supported the boundary, which is what the disposition means; it is weaker than a blind prediction surviving and must not be read as one"
   },
   {
    "mechanism_id": "MECH-POET-MINIMAL-CRITERION",
@@ -171,6 +173,34 @@
    "observer_dependence_basis": "pure bookkeeping over insertion order; no representation involved",
    "transplant_history": [],
    "current_disposition": "PROPOSED"
+  },
+  {
+   "mechanism_id": "MECH-AVIDA-ANCESTRY-RETENTION",
+   "registered": "2026-09-30",
+   "source_lineage": "github.com/devosoft/avida @ 47f13dad (Avida, 1993-; the systematics code carries David M. Bryson, 2009-2011, in its file headers). Operator directive 2026-09-18 s3: the reference implementation for HISTORY_MODE",
+   "minimal_executable_organ": {
+    "cut_id": "avida",
+    "organ": "a parent edge written once when a class of identical organisms is founded, plus reference-counted retention that keeps the living classes and their ancestors and unlinks an extinct branch the moment its last leaf dies",
+    "boundary": "avida-core/source/systematics/Genotype.cc:128-184, 282-299, 321-331 (payload sha256 6480345d004cb1af11a47f3c2e00c34936323b0986b59941625f81c5ec797f78); systematics/GenotypeArbiter.cc:278-369, 372-410, 498-533 (payload sha256 0ada071fb731613af8251a943aa91c3a7d05f33a3319cb446dfdb54f7502b4bf)",
+    "executable_note": "NOT EXECUTED: the body is a docker world and M3 has none. Adjudicable with Python alone on the 177 .spop files the body ships. The rule is restated as a ~100-line reference model (nyx/atlas/experiments/avida_ancestry/model.py), which is the form a transplant would take."
+   },
+   "proposed_behavior": "the record of descent is a tree of genotype CLASSES, not of organisms. An edge exists only where a newborn's genome matched neither its parent's class nor any living class; breed-true births and births that converge on a living class write nothing. Retention depends only on two reference counts, so a save holds exactly the living classes and the ancestors of the living (Harmonia's D2, endpoints plus ancestors, at class resolution). Forgetting is immediate and recursive, and an event that re-injects organisms without parents erases the whole prior record.",
+   "predicted_intervention": "on the body's own shipped saves: no parent id dangles; no dead row is unnamed as a parent; depth is the first parent's depth plus one; no two living rows share a genome; a save_historic=0 file holds no dead row; a row founded before an earlier save and present at a later one is present at the earlier one; and after the u 99 whole-genome re-injection no row stamped before 100 survives",
+   "falsifier": "in a fresh, asexual, host-only, non-deme save written with historic rows: one dead row that no row names as parent (the record keeps MORE than the ancestors of the living -- retention is not by reference count), or one parent id naming no row (it keeps LESS), or one row stamped before the re-injection surviving it (an inject is not a root). Any of these kills the reading.",
+   "evidence_packets": [
+    {
+     "packet_id": "MECH-AVIDA-ANCESTRY-RETENTION-001",
+     "freeze": "0f52e295",
+     "ruling": "ISSUED 2026-09-30, awaiting Harmonia verdict",
+     "what_it_established": "NOTHING YET -- frozen BLIND (no .spop opened by the author); eight exact rows, each checked defined with its cheat control on a synthetic fixture before the hash"
+    }
+   ],
+   "counterevidence_packets": [],
+   "observer_dependence": "NOT_APPLICABLE",
+   "observer_dependence_basis": "no learned representation in the boundary; the observables are integer counts over rows written by the fossil",
+   "transplant_history": [],
+   "current_disposition": "PROPOSED",
+   "instrument_note": "the founding stamp's clock (-1 through update 0, never 0, T+1 for event-founded genotypes; GenotypeArbiter.cc:49, 87) is tested by row I6 of the same packet. It is a property of the record's time base, carried here and NOT registered as a second mechanism."
   }
  ]
 }

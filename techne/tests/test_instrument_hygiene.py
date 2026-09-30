@@ -53,7 +53,11 @@ def test_harvest_keeps_the_authoritative_implementations():
 
     # acquire: the submodule/preservation-aware implementation
     src_acquire = inspect.getsource(harvest.acquire)
-    assert "init_submodules" in src_acquire
+    # 662f707fc (2026-09-16) factored the fetch into _fetch_artifacts so rematerialize shares it;
+    # the submodule-aware call lives there. This assertion read acquire() alone and was red from
+    # that commit until 2026-09-30 (the file is not in the test_fossil* set that was being run).
+    assert "_fetch_artifacts(" in src_acquire
+    assert "init_submodules" in inspect.getsource(harvest._fetch_artifacts)
     assert 'rec["preservation"]' in src_acquire
 
     # verify: the drift-based one, which reports added/removed/modified rather than a bare hash

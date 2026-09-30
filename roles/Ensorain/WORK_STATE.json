@@ -4,11 +4,11 @@
   "mwo_id": "MWO-0004",
   "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
   "mwo_sha256": "925660b2d2be53af2ee4195391e484d9649bbd4ee828cd60432ce2f0903a99df",
-  "updated_at_utc": "2026-09-30T04:49:20Z",
+  "updated_at_utc": "2026-09-30T10:25:00Z",
   "state": "ACTIVE",
-  "state_reason": "MWO-0004 current. LM01 at ee8cbe0c8 HOLD / NOT LAUNCHED by decision (MWO-0004 G3). ARC3 dev lines (T25, crypticity, PKG-F) at resting points with review packets; next items are new directions (multi-switch/drift, N5, LM02 window-sufficiency test) paced deliberately.",
+  "state_reason": "CWO-2026-09-30 adopted on top of MWO-0004. LM01 HOLD (item-level BLOCKED). CURRENT = PKG-F soft gate on W-DRIFT + per-cell test power, then LM02 window-sufficiency test.",
   "branch": "ensorain/base-role-adopt-2026-09-23",
-  "head_sha": "619c557cc50df3614878a4cfaaa8cd4c8ad0e8a4",
+  "head_sha": "36b8d075675d8c5cebe580ee3c5bfe2e4ae9c41e",
   "base_sha": "bd48fac9b5d51262e84b76d0ca16b8d9054eb5f1",
   "threads": [
     "thr-ens-lossless-memorizer",
@@ -128,7 +128,11 @@
     }
   },
   "blocked_on": [
-    "E-ENS-LM01 launch: HOLD by decision (MWO-0004 G3). Hard gate only if a later order launches it (MWO-0004 Part 4, frozen launch gate). DEF-ENS-001 matters only at that launch."
+    {
+      "item": "E-ENS-LM01 launch",
+      "dependency": "operator-approved MWO carrying the exact LAUNCH line (MWO-0004 G3 HOLD)",
+      "owner": "operator"
+    }
   ],
   "next_actions": [
     "ARC3 (R2 envelope, no campaign): PKG-F soft gate on W-DRIFT + per-cell test power; then a PKG-F review packet and prereg draft decision; LM02 power-based 'window sufficient' test",
@@ -154,5 +158,28 @@
   "head_sha_note": "the latest pushed work commit before this WORK_STATE commit (the file cannot contain its own commit hash)",
   "migration_report": "roles/Ensorain/MIGRATION_REPORT_MWO-0002.json",
   "resume": "roles/Ensorain/RESUME.md",
-  "fp001_result": "roles/Ensorain/probes/FP-001_RESULT.json"
+  "fp001_result": "roles/Ensorain/probes/FP-001_RESULT.json",
+  "work_order": {
+    "mwo": "MWO-0004",
+    "cwo": "CWO-2026-09-30 fleet activation",
+    "cwo_text": "ops/fleet/CWO_2026-09-30_FLEET_ACTIVATION.md@6a7a84569",
+    "cwo_sha256": "ab93f64684d94771350848d2aef5d518f9045e1f8b79ba7834e419c83aba7b7e",
+    "queue": "ops/fleet/QUEUE.json@6a7a84569",
+    "delegation": "comms #1030"
+  },
+  "current": "ARC3 development within budget and PKG-F, favouring discriminatory power of future worlds: (1) PKG-F soft gate on W-DRIFT; (2) per-cell change-test power at low counts (the soft gate's residual failure, worlds 9_800_131/135/138); (3) LM02 power-based window-sufficiency test.",
+  "next": "Baseline hardening: every relevant world/economy must survive constants, running statistics and trivial compressors before expensive search.",
+  "reserve": [
+    "Substrate-collider improvements: structural diversity among admissible worlds"
+  ],
+  "resource_status": {
+    "host": "SPECTREX5 (M2)",
+    "compute": "CPU dev envelope (<=8 workers, BELOW_NORMAL, stop at <6 GB free RAM); no campaign",
+    "gpu": "none",
+    "spend": "none"
+  },
+  "last_receipt": {
+    "commit": "619c557cc",
+    "what": "PKG-F soft gate SG1/SG2 survive on 16 fresh W-MULTI worlds (ensorain/arc3/RESULTS_PKGF_PROBE.md)"
+  }
 }

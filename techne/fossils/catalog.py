@@ -35,7 +35,7 @@ def enumerate_fossils(check_bodies: bool = True) -> list[dict]:
         r = json.loads(rec_path.read_text(encoding="utf-8"))
         sid = r["specimen_id"]
         sd = rec_path.parent
-        body = vault.body_dir(sid)
+        body = vault.body_dir(sid) if check_bodies else None     # body_dir shells out to git; skip it when host-neutral
         def rel(p):
             try:
                 return str(p.relative_to(vault.REPO)).replace("\\", "/")
@@ -48,7 +48,11 @@ def enumerate_fossils(check_bodies: bool = True) -> list[dict]:
         disp = [t for t in tags if t in ("loser", "known_bad", "known_bad_lineage", "failed_branch",
                                          "superseded_design", "contested_design", "historical_redesign",
                                          "successor", "predecessor", "pathology", "documented_pathology")]
-        mirror = _mirror_status(tree_sha256=(r.get("hashes") or {}).get("tree_sha256", ""))
+        # check_bodies=False is the HOST-NEUTRAL mode (TECHNE-125, 2026-09-30): nothing that depends on
+        # which machine wrote the row may appear -- no body check, no vault path, no mirror lookup
+        # (the mirror destination comes from the host-local techne/config.local.json). Until
+        # 2026-09-30 this mode still wrote body_path and the tracked snapshot carried M1 drive paths.
+        mirror = _mirror_status(tree_sha256=(r.get("hashes") or {}).get("tree_sha256", "")) if check_bodies else None
         rows.append({
             "fossil_id": sid,
             "canonical_name": r.get("canonical_name", ""),
@@ -75,7 +79,7 @@ def enumerate_fossils(check_bodies: bool = True) -> list[dict]:
             "recipe_path": rel(sd / "recipe.json") if (sd / "recipe.json").exists() else None,
             "receipts": [x.get("receipt") for x in r.get("receipts", [])],
             "body_present_on_this_host": (body / "upstream").exists() if check_bodies else None,
-            "body_path": str(body),
+            "body_path": str(body) if check_bodies else None,
             "mirror_available": mirror,
         })
     return rows
@@ -108,13 +112,21 @@ def _mirror_status(tree_sha256=""):
 
 def catalog(check_bodies: bool = True) -> dict:
     rows = enumerate_fossils(check_bodies)
+    try:
+        records_root_rel = str(vault.SPECIMENS.relative_to(vault.REPO)).replace("\\", "/")
+    except ValueError:
+        records_root_rel = None
     return {"schema": "techne.fossil.catalog/1",
             "written_utc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
-            "records_root": str(vault.SPECIMENS).replace("\\", "/"),
-            "vault_root_on_this_host": str(vault.vault_root()),
+            # host_neutral: every host-dependent cell is null and records_root is repository-relative,
+            # so the file is the same whichever machine writes it (apart from written_utc). A null
+            # count is "not measured", never 0.
+            "host_neutral": not check_bodies,
+            "records_root": str(vault.SPECIMENS).replace("\\", "/") if check_bodies else records_root_rel,
+            "vault_root_on_this_host": str(vault.vault_root()) if check_bodies else None,
             "fossils": len(rows),
             "runnable": sum(1 for r in rows if str(r["run_status"]).startswith("RUNNABLE")),
-            "bodies_present_on_this_host": sum(1 for r in rows if r["body_present_on_this_host"]),
+            "bodies_present_on_this_host": sum(1 for r in rows if r["body_present_on_this_host"]) if check_bodies else None,
             "fields": list(FIELDS),
             "rows": rows}
 
@@ -137,7 +149,8 @@ def main(argv=None) -> int:
         for r in c["rows"]:
             print("%-38s %-28s %-24s body=%s  %s" % (r["fossil_id"], r["run_status"], r["test_status"],
                   {True: "yes", False: "no", None: "?"}[r["body_present_on_this_host"]], r["record_path"]))
-        print("fossils %d  runnable %d  bodies_present_on_this_host %d" % (c["fossils"], c["runnable"], c["bodies_present_on_this_host"]))
+        n_bodies = c["bodies_present_on_this_host"]
+        print("fossils %d  runnable %d  bodies_present_on_this_host %s" % (c["fossils"], c["runnable"], "not measured" if n_bodies is None else n_bodies))
     return 0
 
 
