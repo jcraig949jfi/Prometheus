@@ -8,7 +8,7 @@ cycle; commits e0bd2e312 .. fefb095b2; review packet this commit).
 
 - [ ] FIRST: verify + answer Harmonia audit #1037 (3 MAJOR; journal/2026-09-30.md)
 - [ ] Resume Families B/C free-tier trickle (quota-bounded)
-- [ ] Mechanical novelty ruler PREREG (autopsy follow-up, CWO NEXT)
+- [ ] (WITHDRAWN by CWO-B) mechanical novelty ruler -- do not start; report to Aporia when B/C done
 - [ ] Meta v2 PREREG (unfamiliar controls, matched decoys, usefulness arm)
 - [ ] Second selection (16, seeded, disjoint concepts) -> Pass 0-2 -> Pass 3 v2
 - [ ] HECATE-22 operator examples through Pass 0-2 + Pass 3 v2
