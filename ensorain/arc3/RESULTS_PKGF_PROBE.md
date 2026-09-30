@@ -496,3 +496,16 @@ Reading:
   correlated pairs.
 - Design note for every future PKG-F world builder: cp and tt variants of the same seed share the walk. Count per seed,
   or de-correlate the walk.
+
+## v9b: stricter veto (alpha .01), INDEPENDENT worlds (pkgf_cp5b.py)
+
+- pkgf_cp5.py gained an alpha argument; its default of .05 is unchanged.
+- Worlds: 8 distinct fresh seeds 9_800_090-097 per world type, with the generator alternating by seed, so no shared
+  walks.
+
+### Precommitment (written BEFORE running pkgf_cp5b.py; the same thresholds as v8/v9, now on 8 independent worlds)
+
+- Z1': N5 false detections <= 1/8.
+- Z2': F3 final switch (cp_frac in [.60, .75]) in >= 7/8.
+- Z3': F2 twins false detections <= 1/8.
+- Z4': partial rho = .5 final switch in >= 6/8.

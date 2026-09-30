@@ -11,7 +11,7 @@ from ensorain.arc3.pkgf_cp3 import pairs, split as v5_split
 from ensorain.arc3.pkgf_cp4 import stat as v8_stat, stream, W_FRAC
 
 
-def local_ok(A, y, lo, hi, tau, rng, n_perm=200):
+def local_ok(A, y, lo, hi, tau, rng, n_perm=200, alpha=0.05):
     P = pairs(A, y, lo, hi); W = int(W_FRAC * len(y))
     s0, t = v8_stat(P, y, [tau], W)
     if t is None or s0 <= 0:
@@ -27,14 +27,14 @@ def local_ok(A, y, lo, hi, tau, rng, n_perm=200):
             yp[idx] = y[rng.permutation(idx)]
         if v8_stat(P, yp, [tau], W)[0] >= s0:
             ge += 1
-    return (ge + 1) / (n_perm + 1) < 0.05
+    return (ge + 1) / (n_perm + 1) < alpha
 
 
-def last_regime_start(A, y, seed):
+def last_regime_start(A, y, seed, alpha=0.05):
     r5, r8 = np.random.default_rng(seed + 11), np.random.default_rng(seed + 17); lo = 0
     while True:
         tau = v5_split(A, y, lo, len(y), r5)
-        if tau is None or not local_ok(A, y, lo, len(y), tau, r8):
+        if tau is None or not local_ok(A, y, lo, len(y), tau, r8, alpha=alpha):
             return lo
         lo = tau
 
