@@ -134,11 +134,11 @@ def eligible(reg, eid, lane):
         return True  # the lane's constraint is on the parent SET (>= half synthetic)
     if e["origin"] == "human":
         return False
+    if e.get("kind") == "lens":
+        return False  # amendment 1: a lens enters only through the DEEP_LENS lens slot
     if lane == "DEEP":
-        return e["generation"] >= DEEP_MIN_GEN or e.get("kind") == "lens"
+        return e["generation"] >= DEEP_MIN_GEN
     if lane == "VERY_DEEP":
-        if e.get("kind") == "lens":
-            return True
         if e["generation"] < DEEP_MIN_GEN:
             return False
         ps = e.get("parentIds", [])

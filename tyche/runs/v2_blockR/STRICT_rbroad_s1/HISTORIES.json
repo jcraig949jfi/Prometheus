@@ -1,0 +1,1163 @@
+[
+ {
+  "assembly": "COALITION+EXAPTATION",
+  "first_carrier": {
+   "0": {
+    "gen": 1,
+    "home_val": [
+     0.093667,
+     8.677
+    ],
+    "id": "L-d1022bcf68",
+    "ops": [
+     "point",
+     "dup"
+    ],
+    "valued_elsewhere": [
+     "R3_v0"
+    ]
+   },
+   "2": {
+    "gen": 0,
+    "home_val": [
+     0.239667,
+     19.695
+    ],
+    "id": "L-c7f4f49345",
+    "ops": [
+     "init"
+    ],
+    "valued_elsewhere": [
+     "R1_v0"
+    ]
+   }
+  },
+  "gradient": [
+   [
+    0,
+    0.2397
+   ],
+   [
+    1,
+    0.2397
+   ],
+   [
+    2,
+    0.258
+   ],
+   [
+    3,
+    0.258
+   ],
+   [
+    -1,
+    null
+   ]
+  ],
+  "kind": "coalition",
+  "lens": "L-8bcfb21b41",
+  "n_ancestors": 14,
+  "oracle_deficit": 0.5006666666666666,
+  "precursors_never_carried": [
+   1
+  ],
+  "slot": "R2_v0",
+  "spec": "R2_v0@L1",
+  "strict_survivable_frac": 0.8,
+  "test": 0.3363333333333333,
+  "transition": {
+   "child": "L-3fdfa2ff0b",
+   "child_gain": 0.258,
+   "donors": [],
+   "gen": 2,
+   "jump": 0.0183,
+   "ops": [
+    "temporal"
+   ],
+   "parent": "L-912be9855d",
+   "parent_gain": 0.239667,
+   "parent_valued_elsewhere": [
+    "D1_v0",
+    "R1_v0"
+   ]
+  },
+  "why_survived": {},
+  "zero_utility_gens": {
+   "0": 0,
+   "2": 0
+  }
+ },
+ {
+  "assembly": "COALITION+EXAPTATION",
+  "first_carrier": {
+   "1": {
+    "gen": 9,
+    "home_val": [
+     0.073333,
+     5.88
+    ],
+    "id": "L-7fb3f68663",
+    "ops": [
+     "recur"
+    ],
+    "valued_elsewhere": [
+     "D5d_v0",
+     "D6_v0"
+    ]
+   },
+   "2": {
+    "gen": 3,
+    "home_val": [
+     0.264667,
+     22.16
+    ],
+    "id": "L-82e12886f8",
+    "ops": [
+     "graft"
+    ],
+    "valued_elsewhere": [
+     "R1_v0",
+     "R2_v0"
+    ]
+   }
+  },
+  "gradient": [
+   [
+    0,
+    0.2647
+   ],
+   [
+    1,
+    0.2647
+   ],
+   [
+    2,
+    0.2647
+   ],
+   [
+    3,
+    0.2647
+   ],
+   [
+    4,
+    0.2647
+   ],
+   [
+    5,
+    0.2647
+   ],
+   [
+    8,
+    0.2647
+   ],
+   [
+    9,
+    0.2647
+   ],
+   [
+    10,
+    0.2613
+   ],
+   [
+    -1,
+    null
+   ]
+  ],
+  "kind": "coalition",
+  "lens": "L-ff8dc57c57",
+  "n_ancestors": 40,
+  "oracle_deficit": 0.4973333333333333,
+  "precursors_never_carried": [
+   0
+  ],
+  "slot": "D1_v0",
+  "spec": "D1_v0",
+  "strict_survivable_frac": 0.9,
+  "test": 0.255,
+  "transition": {
+   "child": "L-e31667ca10",
+   "child_gain": 0.264667,
+   "donors": [
+    {
+     "id": "L-c7f4f49345",
+     "valued_elsewhere": [
+      "R1_v0",
+      "R2_v0"
+     ]
+    }
+   ],
+   "gen": 1,
+   "jump": 0.0,
+   "ops": [
+    "graft"
+   ],
+   "parent": "L-5fbf1dea0c",
+   "parent_gain": 0.264667,
+   "parent_valued_elsewhere": []
+  },
+  "why_survived": {},
+  "zero_utility_gens": {
+   "1": 0,
+   "2": 0
+  }
+ },
+ {
+  "assembly": "COALITION+EXAPTATION",
+  "first_carrier": {
+   "2": {
+    "gen": 3,
+    "home_val": [
+     0.264667,
+     22.16
+    ],
+    "id": "L-82e12886f8",
+    "ops": [
+     "graft"
+    ],
+    "valued_elsewhere": [
+     "R1_v0",
+     "R2_v0"
+    ]
+   }
+  },
+  "gradient": [
+   [
+    0,
+    0.2647
+   ],
+   [
+    1,
+    0.2647
+   ],
+   [
+    2,
+    0.2647
+   ],
+   [
+    3,
+    0.2647
+   ],
+   [
+    4,
+    0.2647
+   ],
+   [
+    5,
+    0.2647
+   ],
+   [
+    7,
+    0.2647
+   ],
+   [
+    10,
+    0.2647
+   ],
+   [
+    12,
+    0.206
+   ],
+   [
+    13,
+    0.2243
+   ],
+   [
+    -1,
+    null
+   ]
+  ],
+  "kind": "coalition",
+  "lens": "L-08e695df18",
+  "n_ancestors": 26,
+  "oracle_deficit": 0.4973333333333333,
+  "precursors_never_carried": [
+   0,
+   1
+  ],
+  "slot": "D1_v0",
+  "spec": "D1_v0",
+  "strict_survivable_frac": 0.909,
+  "test": 0.25033333333333335,
+  "transition": {
+   "child": "L-a828948d47",
+   "child_gain": 0.224333,
+   "donors": [],
+   "gen": 13,
+   "jump": 0.0183,
+   "ops": [
+    "out"
+   ],
+   "parent": "L-d83fa360b3",
+   "parent_gain": 0.206,
+   "parent_valued_elsewhere": [
+    "D5d_v0"
+   ]
+  },
+  "why_survived": {},
+  "zero_utility_gens": {
+   "2": 0
+  }
+ },
+ {
+  "assembly": "COALITION+EXAPTATION",
+  "first_carrier": {
+   "1": {
+    "gen": 0,
+    "home_val": [
+     0.052333,
+     4.461
+    ],
+    "id": "L-d47365b520",
+    "ops": [
+     "init"
+    ],
+    "valued_elsewhere": [
+     "R1_v0",
+     "R2_v0"
+    ]
+   },
+   "2": {
+    "gen": 3,
+    "home_val": [
+     0.264667,
+     22.16
+    ],
+    "id": "L-82e12886f8",
+    "ops": [
+     "graft"
+    ],
+    "valued_elsewhere": [
+     "R1_v0",
+     "R2_v0"
+    ]
+   }
+  },
+  "gradient": [
+   [
+    0,
+    0.2647
+   ],
+   [
+    1,
+    0.2647
+   ],
+   [
+    2,
+    0.2647
+   ],
+   [
+    3,
+    0.2647
+   ],
+   [
+    4,
+    0.2647
+   ],
+   [
+    5,
+    0.2647
+   ],
+   [
+    20,
+    0.2317
+   ],
+   [
+    21,
+    0.2317
+   ],
+   [
+    22,
+    0.2467
+   ],
+   [
+    -1,
+    null
+   ]
+  ],
+  "kind": "coalition",
+  "lens": "L-b2c799aa2e",
+  "n_ancestors": 137,
+  "oracle_deficit": 0.4973333333333333,
+  "precursors_never_carried": [
+   0
+  ],
+  "slot": "D1_v0",
+  "spec": "D1_v0",
+  "strict_survivable_frac": 0.9,
+  "test": 0.25033333333333335,
+  "transition": {
+   "child": "L-95fa607357",
+   "child_gain": 0.246667,
+   "donors": [
+    {
+     "id": "L-3f3974cc31",
+     "valued_elsewhere": [
+      "D5d_v0"
+     ]
+    }
+   ],
+   "gen": 22,
+   "jump": 0.015,
+   "ops": [
+    "graft"
+   ],
+   "parent": "L-011bdb3a80",
+   "parent_gain": 0.231667,
+   "parent_valued_elsewhere": [
+    "R2_v0",
+    "R3_v0"
+   ]
+  },
+  "why_survived": {
+   "elite": 1,
+   "parent_noise_level": 1,
+   "parent_significant": 9
+  },
+  "zero_utility_gens": {
+   "1": 0,
+   "2": 2
+  }
+ },
+ {
+  "assembly": "COALITION+EXAPTATION",
+  "first_carrier": {
+   "1": {
+    "gen": 0,
+    "home_val": [
+     0.052333,
+     4.461
+    ],
+    "id": "L-d47365b520",
+    "ops": [
+     "init"
+    ],
+    "valued_elsewhere": [
+     "R1_v0",
+     "R2_v0"
+    ]
+   },
+   "2": {
+    "gen": 3,
+    "home_val": [
+     0.264667,
+     22.16
+    ],
+    "id": "L-82e12886f8",
+    "ops": [
+     "graft"
+    ],
+    "valued_elsewhere": [
+     "R1_v0",
+     "R2_v0"
+    ]
+   }
+  },
+  "gradient": [
+   [
+    0,
+    0.2647
+   ],
+   [
+    1,
+    0.2647
+   ],
+   [
+    2,
+    0.2647
+   ],
+   [
+    3,
+    0.2647
+   ],
+   [
+    4,
+    0.2647
+   ],
+   [
+    5,
+    0.2647
+   ],
+   [
+    6,
+    0.2647
+   ],
+   [
+    7,
+    0.2647
+   ],
+   [
+    8,
+    0.2647
+   ],
+   [
+    9,
+    0.2647
+   ],
+   [
+    10,
+    0.2647
+   ],
+   [
+    18,
+    0.2373
+   ],
+   [
+    19,
+    0.198
+   ],
+   [
+    20,
+    0.198
+   ],
+   [
+    27,
+    0.0
+   ],
+   [
+    28,
+    0.0
+   ],
+   [
+    29,
+    0.0
+   ],
+   [
+    30,
+    0.0
+   ],
+   [
+    31,
+    0.202
+   ],
+   [
+    42,
+    0.2263
+   ],
+   [
+    43,
+    0.2443
+   ],
+   [
+    44,
+    0.2443
+   ],
+   [
+    45,
+    0.2443
+   ],
+   [
+    -1,
+    null
+   ]
+  ],
+  "kind": "coalition",
+  "lens": "L-9e1f2a68a0",
+  "n_ancestors": 356,
+  "oracle_deficit": 0.4973333333333333,
+  "precursors_never_carried": [
+   0
+  ],
+  "slot": "D1_v0",
+  "spec": "D1_v0",
+  "strict_survivable_frac": 0.958,
+  "test": 0.25033333333333335,
+  "transition": {
+   "child": "L-08005a8405",
+   "child_gain": 0.202,
+   "donors": [],
+   "gen": 31,
+   "jump": 0.202,
+   "ops": [
+    "out"
+   ],
+   "parent": "L-8169d4df20",
+   "parent_gain": 0.0,
+   "parent_valued_elsewhere": [
+    "D3_v0",
+    "D6_v0",
+    "R1_v0"
+   ]
+  },
+  "why_survived": {},
+  "zero_utility_gens": {
+   "1": 1,
+   "2": 0
+  }
+ },
+ {
+  "assembly": "COALITION+EXAPTATION",
+  "first_carrier": {
+   "0": {
+    "gen": 4,
+    "home_val": [
+     0.227667,
+     19.154
+    ],
+    "id": "L-db364bf786",
+    "ops": [
+     "recur",
+     "temporal"
+    ],
+    "valued_elsewhere": [
+     "D1_v0"
+    ]
+   }
+  },
+  "gradient": [
+   [
+    0,
+    0.036
+   ],
+   [
+    1,
+    0.0143
+   ],
+   [
+    2,
+    0.0143
+   ],
+   [
+    3,
+    0.014
+   ],
+   [
+    4,
+    0.2277
+   ],
+   [
+    5,
+    0.2223
+   ],
+   [
+    6,
+    0.2233
+   ],
+   [
+    7,
+    0.2233
+   ],
+   [
+    8,
+    0.2233
+   ],
+   [
+    9,
+    0.247
+   ],
+   [
+    10,
+    0.3267
+   ],
+   [
+    -1,
+    null
+   ]
+  ],
+  "kind": "coalition",
+  "lens": "L-e26bcf4f10",
+  "n_ancestors": 25,
+  "oracle_deficit": 0.5023333333333333,
+  "precursors_never_carried": [],
+  "slot": "D5d_v0",
+  "spec": "D5d_v0",
+  "strict_survivable_frac": 0.917,
+  "test": 0.34,
+  "transition": {
+   "child": "L-db364bf786",
+   "child_gain": 0.227667,
+   "donors": [],
+   "gen": 4,
+   "jump": 0.2137,
+   "ops": [
+    "recur",
+    "temporal"
+   ],
+   "parent": "L-df1d20292a",
+   "parent_gain": 0.014,
+   "parent_valued_elsewhere": [
+    "D1_v0",
+    "D7a_v0"
+   ]
+  },
+  "why_survived": {},
+  "zero_utility_gens": {
+   "0": 0
+  }
+ },
+ {
+  "assembly": "COALITION+EXAPTATION",
+  "first_carrier": {
+   "0": {
+    "gen": 0,
+    "home_val": [
+     0.094667,
+     8.727
+    ],
+    "id": "L-03b07648fe",
+    "ops": [
+     "init"
+    ],
+    "valued_elsewhere": [
+     "D7a_v0"
+    ]
+   }
+  },
+  "gradient": [
+   [
+    0,
+    0.0133
+   ],
+   [
+    1,
+    0.0083
+   ],
+   [
+    2,
+    0.0153
+   ],
+   [
+    3,
+    0.1787
+   ],
+   [
+    4,
+    0.1787
+   ],
+   [
+    6,
+    0.1787
+   ],
+   [
+    7,
+    0.1787
+   ],
+   [
+    11,
+    0.228
+   ],
+   [
+    12,
+    0.2267
+   ],
+   [
+    13,
+    0.237
+   ],
+   [
+    16,
+    0.237
+   ],
+   [
+    -1,
+    null
+   ]
+  ],
+  "kind": "coalition",
+  "lens": "L-d90c814c47",
+  "n_ancestors": 113,
+  "oracle_deficit": 0.5023333333333333,
+  "precursors_never_carried": [],
+  "slot": "D5d_v0",
+  "spec": "D5d_v0",
+  "strict_survivable_frac": 0.917,
+  "test": 0.282,
+  "transition": {
+   "child": "L-b0627dc245",
+   "child_gain": 0.178667,
+   "donors": [],
+   "gen": 3,
+   "jump": 0.1633,
+   "ops": [
+    "temporal"
+   ],
+   "parent": "L-3fdfa2ff0b",
+   "parent_gain": 0.015333,
+   "parent_valued_elsewhere": [
+    "D1_v0",
+    "D7a_v0",
+    "R1_v0",
+    "R2_v0"
+   ]
+  },
+  "why_survived": {},
+  "zero_utility_gens": {
+   "0": 0
+  }
+ },
+ {
+  "assembly": "COALITION+EXAPTATION",
+  "first_carrier": {
+   "0": {
+    "gen": 0,
+    "home_val": [
+     0.094667,
+     8.727
+    ],
+    "id": "L-03b07648fe",
+    "ops": [
+     "init"
+    ],
+    "valued_elsewhere": [
+     "D7a_v0"
+    ]
+   }
+  },
+  "gradient": [
+   [
+    0,
+    0.0133
+   ],
+   [
+    1,
+    0.0083
+   ],
+   [
+    2,
+    0.0153
+   ],
+   [
+    3,
+    0.1787
+   ],
+   [
+    4,
+    0.1787
+   ],
+   [
+    6,
+    0.1787
+   ],
+   [
+    7,
+    0.1787
+   ],
+   [
+    11,
+    0.228
+   ],
+   [
+    12,
+    0.2267
+   ],
+   [
+    13,
+    0.237
+   ],
+   [
+    16,
+    0.237
+   ],
+   [
+    17,
+    0.238
+   ],
+   [
+    18,
+    0.2493
+   ],
+   [
+    19,
+    0.2493
+   ],
+   [
+    20,
+    0.2493
+   ],
+   [
+    21,
+    0.27
+   ],
+   [
+    22,
+    0.27
+   ],
+   [
+    23,
+    0.27
+   ],
+   [
+    24,
+    0.269
+   ],
+   [
+    -1,
+    null
+   ]
+  ],
+  "kind": "coalition",
+  "lens": "L-779483bff6",
+  "n_ancestors": 140,
+  "oracle_deficit": 0.5023333333333333,
+  "precursors_never_carried": [],
+  "slot": "D5d_v0",
+  "spec": "D5d_v0",
+  "strict_survivable_frac": 0.95,
+  "test": 0.29533333333333334,
+  "transition": {
+   "child": "L-b0627dc245",
+   "child_gain": 0.178667,
+   "donors": [],
+   "gen": 3,
+   "jump": 0.1633,
+   "ops": [
+    "temporal"
+   ],
+   "parent": "L-3fdfa2ff0b",
+   "parent_gain": 0.015333,
+   "parent_valued_elsewhere": [
+    "D1_v0",
+    "D7a_v0",
+    "R1_v0",
+    "R2_v0"
+   ]
+  },
+  "why_survived": {},
+  "zero_utility_gens": {
+   "0": 0
+  }
+ },
+ {
+  "assembly": "COALITION+EXAPTATION",
+  "first_carrier": {
+   "0": {
+    "gen": 0,
+    "home_val": [
+     0.094667,
+     8.727
+    ],
+    "id": "L-03b07648fe",
+    "ops": [
+     "init"
+    ],
+    "valued_elsewhere": [
+     "D7a_v0"
+    ]
+   }
+  },
+  "gradient": [
+   [
+    0,
+    0.0133
+   ],
+   [
+    1,
+    0.0083
+   ],
+   [
+    2,
+    0.0153
+   ],
+   [
+    3,
+    0.1787
+   ],
+   [
+    4,
+    0.1787
+   ],
+   [
+    6,
+    0.1787
+   ],
+   [
+    7,
+    0.1787
+   ],
+   [
+    11,
+    0.228
+   ],
+   [
+    12,
+    0.2267
+   ],
+   [
+    13,
+    0.237
+   ],
+   [
+    16,
+    0.237
+   ],
+   [
+    17,
+    0.238
+   ],
+   [
+    18,
+    0.2493
+   ],
+   [
+    19,
+    0.2493
+   ],
+   [
+    20,
+    0.2493
+   ],
+   [
+    21,
+    0.27
+   ],
+   [
+    32,
+    0.25
+   ],
+   [
+    -1,
+    null
+   ]
+  ],
+  "kind": "coalition",
+  "lens": "L-208b9e66b5",
+  "n_ancestors": 155,
+  "oracle_deficit": 0.5023333333333333,
+  "precursors_never_carried": [],
+  "slot": "D5d_v0",
+  "spec": "D5d_v0",
+  "strict_survivable_frac": 0.944,
+  "test": 0.279,
+  "transition": {
+   "child": "L-b0627dc245",
+   "child_gain": 0.178667,
+   "donors": [],
+   "gen": 3,
+   "jump": 0.1633,
+   "ops": [
+    "temporal"
+   ],
+   "parent": "L-3fdfa2ff0b",
+   "parent_gain": 0.015333,
+   "parent_valued_elsewhere": [
+    "D1_v0",
+    "D7a_v0",
+    "R1_v0",
+    "R2_v0"
+   ]
+  },
+  "why_survived": {},
+  "zero_utility_gens": {
+   "0": 0
+  }
+ },
+ {
+  "assembly": "COALITION+EXAPTATION",
+  "first_carrier": {
+   "0": {
+    "gen": 0,
+    "home_val": [
+     0.094667,
+     8.727
+    ],
+    "id": "L-03b07648fe",
+    "ops": [
+     "init"
+    ],
+    "valued_elsewhere": [
+     "D7a_v0"
+    ]
+   }
+  },
+  "gradient": [
+   [
+    0,
+    0.0133
+   ],
+   [
+    1,
+    0.0083
+   ],
+   [
+    2,
+    0.0153
+   ],
+   [
+    3,
+    0.1787
+   ],
+   [
+    4,
+    0.1787
+   ],
+   [
+    6,
+    0.1787
+   ],
+   [
+    7,
+    0.1787
+   ],
+   [
+    11,
+    0.228
+   ],
+   [
+    12,
+    0.2267
+   ],
+   [
+    13,
+    0.237
+   ],
+   [
+    16,
+    0.237
+   ],
+   [
+    17,
+    0.238
+   ],
+   [
+    18,
+    0.2493
+   ],
+   [
+    19,
+    0.2493
+   ],
+   [
+    20,
+    0.2493
+   ],
+   [
+    21,
+    0.27
+   ],
+   [
+    -1,
+    null
+   ]
+  ],
+  "kind": "coalition",
+  "lens": "L-67ae782260",
+  "n_ancestors": 359,
+  "oracle_deficit": 0.5023333333333333,
+  "precursors_never_carried": [],
+  "slot": "D5d_v0",
+  "spec": "D5d_v0",
+  "strict_survivable_frac": 0.941,
+  "test": 0.2906666666666667,
+  "transition": {
+   "child": "L-b0627dc245",
+   "child_gain": 0.178667,
+   "donors": [],
+   "gen": 3,
+   "jump": 0.1633,
+   "ops": [
+    "temporal"
+   ],
+   "parent": "L-3fdfa2ff0b",
+   "parent_gain": 0.015333,
+   "parent_valued_elsewhere": [
+    "D1_v0",
+    "D7a_v0",
+    "R1_v0",
+    "R2_v0"
+   ]
+  },
+  "why_survived": {},
+  "zero_utility_gens": {
+   "0": 0
+  }
+ }
+]

@@ -51,3 +51,36 @@ committed and is reported as a joint reading, not as a verdict.
 
 **Not done:** Harmonia did not re-execute `repl_analysis.py` on the sealed outputs. Two adversarial Fabric merge reviews
 are queued (tsk-ad966fa39590, tsk-750695b70564).
+
+## CORRECTION C-2 (2026-09-30, after Bellerophon #1113 / errata c776cea6a): item J downgraded to SUPPORTED_WITH_DEFECTS
+
+**What J said:** "SUPPORTED", with clean exposure and an adopted F8 grounded in "zero material continuity". Two
+adversarial Fabric merge reviews found three things this audit missed. Harmonia has verified the errata on main
+(c776cea6a) and accepts them.
+
+**1. K3 had no demonstrated route to SURVIVES.** This is an F1 reachability failure, and it is my own rule.
+- Founder content turns over in every arm, ZERO included (FM share about 0.01 by tick 500).
+- NPE's own descended genomes differ from their founder at 58-62 of 64 bytes.
+- K3's pre-freeze test used synthetic records only.
+- I checked that the verdict recomputes from the frozen rule. I did not check whether that rule could have returned
+  anything else.
+- **Correct reading:** DISAPPEARS (K3) stands as the frozen verdict of record. The descent component is
+  **UNRESOLVED**, a transfer failure, **not** shown absent.
+
+**2. Exposure was not clean.**
+- Nestor's X-MAT ENDOGENOUS verdict entered Bellerophon's branch by a merge of main 67 minutes before the freeze.
+- **One carrier was Harmonia's own commit 8eafe8afe**, whose subject line names the verdict.
+- My check looked at seed disjointness only, not at what the branch history carried. Blinding was honour-system.
+- Mitigation, as in the errata: the frozen design does not reference X-MAT, and the committed prediction was wrong in a
+  direction X-MAT knowledge would not suggest.
+- **Harmonia practice from now on:** my commit subjects do not state a verdict of a line that another seat is
+  replicating blind; they name the item and the record only.
+
+**3. "Chance-level" was false.** The post-hoc LCS median of 2 is above the random null of 1. I repeated the claim
+without checking it.
+
+**Other consequences:**
+- F8 is amended in STANDING_RULES: "zero material continuity" is withdrawn, and the rule now requires a passable content
+  ruler (a planted descended positive plus a non-parental null).
+- **Revised verdict J:** SUPPORTED_WITH_DEFECTS. The numbers and the freeze order hold; the interpretation, the
+  reachability and the blinding were defective. The owner has corrected all three.

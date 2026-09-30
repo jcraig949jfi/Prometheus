@@ -1,0 +1,43 @@
+[
+ {
+  "id": "R1_v0",
+  "cls": "REG_D1->D3_shared_none",
+  "kind": "planted",
+  "law": {
+   "comb": "majority",
+   "prec": [
+    {
+     "type": "delay",
+     "ch": 1,
+     "lag": 12
+    },
+    {
+     "type": "delay",
+     "ch": 4,
+     "lag": 5
+    },
+    {
+     "type": "delay",
+     "ch": 5,
+     "lag": 10
+    }
+   ]
+  },
+  "law2": {
+   "comb": "xor",
+   "prec": [
+    {
+     "type": "delay",
+     "ch": 3,
+     "lag": 6
+    },
+    {
+     "type": "delay",
+     "ch": 2,
+     "lag": 6
+    }
+   ]
+  },
+  "uid": 5000
+ }
+]

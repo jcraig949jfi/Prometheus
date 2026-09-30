@@ -1,6 +1,6 @@
 # Hecate status
 
-Currency: 2026-09-30T10:11Z (from date -u). RESTART HANDOFF: roles/Hecate/journal/2026-09-30.md.
+Currency: 2026-09-30T13:18Z (from date -u). RESTART HANDOFF: roles/Hecate/journal/2026-09-30.md (see CWO-B update at its end).
 
 seat state: ACTIVE. Charter 2026-09-29 (triplicate deep search).
 what it asserts: PRODUCTIVE (37 worlds probed, 5 Pass 4 attacks, meta v1,

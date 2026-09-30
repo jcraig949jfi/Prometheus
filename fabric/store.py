@@ -55,6 +55,35 @@ def schema() -> str:
     return s
 
 
+# DEF-ODY-019: libpq connections had no TCP keepalive or user timeout. After a network blip, a half-open socket made
+# every store call wait forever (the ubu001 workers stopped claiming for ~36 min, 2026-09-30). These options make a
+# dead peer raise within about a minute, so the callers' existing reconnect paths run.
+TCP_OPTS = (("SO_KEEPALIVE", 1, "SOL_SOCKET"), ("TCP_KEEPIDLE", 30, "IPPROTO_TCP"), ("TCP_KEEPINTVL", 10, "IPPROTO_TCP"),
+            ("TCP_KEEPCNT", 3, "IPPROTO_TCP"), ("TCP_USER_TIMEOUT", 60000, "IPPROTO_TCP"))
+
+
+def _harden_socket(conn) -> None:
+    """Set keepalive + TCP_USER_TIMEOUT on the connection's socket. Linux only, and fail-soft: hardening must never
+    break a connect. DEF-ODY-023: on Windows the libpq socket is a WinSock handle, not a CRT fd, so os.dup() raised
+    and every Fabric CLI call failed. The long-running workers that need this are Linux."""
+    if not sys.platform.startswith("linux"):
+        return
+    import socket
+    try:
+        s = socket.socket(fileno=os.dup(conn.fileno()))    # a dup of the same socket: options apply to it
+    except Exception:
+        return
+    try:
+        for name, val, level in TCP_OPTS:
+            if hasattr(socket, name):
+                try:
+                    s.setsockopt(getattr(socket, level), getattr(socket, name), val)
+                except OSError:
+                    pass
+    finally:
+        s.close()
+
+
 def connect(require_schema: bool = True):
     """The canonical store, through comms's resolver and identity guard: a
     fabric on the wrong cluster fails closed (WrongEnvironment), exactly as
@@ -64,6 +93,7 @@ def connect(require_schema: bool = True):
     from evidence_wiki.ew import db as ewdb
     from comms import identity
     conn = ewdb.connect()
+    _harden_socket(conn)
     try:
         identity.require(conn, identity.current_environment())
     except identity.WrongEnvironment:

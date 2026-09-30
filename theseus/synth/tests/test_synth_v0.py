@@ -109,3 +109,11 @@ def test_tyche_lens_runs_inside_substrate():
     assert not sb.validate(g)
     tr, info = sb.run(g, seed=0, T=16)
     assert np.isfinite(tr).all()
+
+
+def test_lens_is_never_a_deep_lane_parent():
+    reg = en.Registry()
+    reg.add({"id": "L-x", "origin": "synthetic", "kind": "lens", "executableRepresentation": {"ins": [], "out": [0]},
+             "parentIds": [], "metadata": {}})
+    assert not en.eligible(reg, "L-x", "DEEP")
+    assert not en.eligible(reg, "L-x", "VERY_DEEP")
