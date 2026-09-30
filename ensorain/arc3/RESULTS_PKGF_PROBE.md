@@ -701,3 +701,62 @@ Smoke test on the non-eval seeds 9_814_000-002 (code check only):
 - C1 (price prediction, from the smoke test): in STAT, SD_obs keeps < 50% of SD_all's mean STALE gain.
 - C2 (prediction, EXPECTED TO FAIL): MULTI STALE: SD_obs >= SD_all - .02 in >= 13/16 and min >= -.2. This is SG2,
   which v1 passed through leak paths (a)-(c).
+
+### Observability-gate result (precommit commit 5a9d58345; results/pkgf_obs.json; 293 s; 48 fresh worlds)
+
+Pooled gate leak (admitted stale pre-tau_eff records / all stale pre-tau_eff records):
+
+| family | soft gate v1 | observability gate |
+|---|---|---|
+| DRIFT (24) | 23850/79854 = .299 | 24/79854 = .0003 |
+| MULTI (16) | 23579/33774 = .698 | 6/33774 = .0002 |
+
+- **OB1 SURVIVES.** Both leaks are <= .05, and far below v1.
+- **OB1b SURVIVES.** The assert held; no admitted cell lacked a post record.
+- v1's leak grows with ramp width: 709/26446, then 3234/25890, then 19907/27518 at w = .02/.2/.5. The w = .5 leak is
+  path (c): 4/8 worlds had no detection, and all history was admitted.
+
+Mean dAC (STALE / GEN):
+
+| family | SD_all | SD_cp9 | SD_soft1 | SD_obs | SD_post |
+|---|---|---|---|---|---|
+| DRIFT | -1.380 / -.273 | -.259 / -.041 | -.239 / -.054 | +.067 / -.015 | +.067 / -.016 |
+| MULTI | +.033 / -.034 | +.125 / -.001 | +.184 / -.004 | +.134 / -.005 | +.134 / -.006 |
+| STAT | +.602 / -.003 | +.602 / -.003 | +.602 / -.003 | -.032 / -.017 | -.016 / -.018 |
+
+- **OB2: REFUTED in one cell, STAT STALE.** SD_obs -.032 < SD_post -.016 - .01, missing the threshold by .006. It
+  survives in the other five cells.
+  - The STAT miss is readout-weight noise: per world, obs beats post in 2 worlds and loses in 4.
+- **C1 CONFIRMED (the predicted price).** In STAT, SD_obs keeps -5% of SD_all's STALE gain (+.602 -> -.032). All of
+  it is forfeited.
+- **C2 FAILED, as predicted.** MULTI STALE obs >= all - .02 in only 10/16; min -.397.
+
+W-DRIFT mean STALE dAC by ramp width:
+
+| w | SD_all | SD_soft1 | SD_obs |
+|---|---|---|---|
+| .02 | -1.53 | +.13 | +.14 |
+| .2 | -1.33 | -.08 | +.05 |
+| .5 | -1.28 | -.77 | +.01 |
+
+The observability gate is the only readout that is never harmed by drift.
+
+Reading:
+- The ruling is implementable and removes the leak: 3e-4 vs .30/.70.
+- In these walk worlds, per-cell observability is nearly empty. The gate verifies only 4% of valid pre-tau records in
+  DRIFT/MULTI and 23% in STAT. SD_obs therefore equals SD_post, i.e. a RECENT WINDOW, to within noise. Per-cell drift
+  detection at 1-3 records per cell has almost no power at DELTA = .25; a cell with n_post = 1 must agree to .06.
+- v1's MULTI "win" (+.184 vs +.134) was bought by admitting 70% of the stale records. It paid off only because
+  W-MULTI's changes are often partial; it is not a property of the gate.
+- The price is real and located. Where valid knowledge is about cells not revisited recently (STAT STALE, +.60), a
+  per-cell rule can never certify it, and it is forfeited.
+  - Recovering it needs a DIFFERENT kind of evidence: population/exchangeability ("the tested cells did not change, so
+    untested ones probably did not either") or structural. That is a policy question, not a power fix. Not built; for
+    the operator.
+- Still open: post-tau stale records, from a detector that lands mid-ramp (DRIFT 2236, MULTI 3782). Every gate admits
+  them. This is detector placement, not per-cell power.
+
+PKG-F disposition (dev):
+- The gate of record is the observability gate (pkgf_obs.obs_keep, DELTA .25, one-sided 5% TOST, tau_eff fallback 5n/6).
+- Operationally it is "the recent window plus rare verified extensions". That makes window sufficiency, LM02, the
+  deciding question for what it costs.
