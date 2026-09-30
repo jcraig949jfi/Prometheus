@@ -40,14 +40,15 @@ not wait.
      a parked seat, not an operator directive, and the harness contract (what is injected into
      what, who scores) would have to be agreed with Nyx first. One message, when A/B leave room.
   E. HARM-55 (ASAL Flax column, gandalf-6cd1348b) -- TECHNE-115. Everything on the Techne side is
-     built and frozen. BLOCKED on an AVX host with jax/flax; #576 to Harmonia (09-25) unanswered.
-     Unprobed candidate route: a Fabric script task on a Linux worker (frames are host-local and
-     the worker would need an isolated jax/flax env). Not actionable from M3.
+     built and frozen. Not runnable on M3 (no AVX). 09-30: Harmonia[m2-475d761f] took the run
+     over as its CURRENT, on M2; pointers sent. When HARM55_FLAX_NATIVE_*.json lands on main:
+     run the frozen tranche-2 selector and fill the 39 capsules (native_observer PENDING).
   F. TECHNE-123 (measure open-oasis / MineWorld / Matrix-Game). BLOCKED on a GPU-class host.
   G. TECHNE-65/100 off-host mirror destination: the operator's one line (external side effect).
 
 Done 2026-09-30: TECHNE-127 (dcd fossil), TECHNE-126 (recipe axis: NO_RECIPE), TECHNE-125
-(host-neutral catalog snapshot with a staleness test).
+(host-neutral catalog snapshot with a staleness test), TECHNE-129 (nyx_handoff filled for 10
+records; the 39 rollout records wait on a grade answer from Harmonia or Nyx).
 
 ## 3. Standing facts a new instance would otherwise re-derive
 
@@ -59,6 +60,9 @@ Done 2026-09-30: TECHNE-127 (dcd fossil), TECHNE-126 (recipe axis: NO_RECIPE), T
     A file outside that list went red for 14 days unseen (TECHNE-128).
   - A NEW FOSSIL RECORD NOW REQUIRES A CATALOG REGEN, or test_fossil_catalog_snapshot.py is red:
     `python -m techne.fossils.catalog --no-body-check --out techne/fossils/CATALOG.json`.
+  - A NEW FOSSIL RECORD ALSO NEEDS ITS nyx_handoff FILLED (or a CAPSULE.json), or
+    test_fossil_handoff.py is red: record.skeleton writes it empty; see
+    techne/fossils/batches/finalize_handoff_20260930.py handoff_of().
   - record.preservation.recipe_status is a closed set (harvest.RECIPE_STATES); NO_RECIPE means no
     recipe.json exists, not that the body is self-sufficient to run.
   - archaeon/tests/test_base_role.py is the fleet self-test; 14 passed, 1 skipped on 09-30.

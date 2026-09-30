@@ -153,11 +153,11 @@
   "versions_preserved": [],
   "receipts": [],
   "nyx_handoff": {
-    "here_is_the_machine": "",
-    "where_it_came_from": "",
-    "how_to_run_it": "",
-    "how_we_know_it_runs": "",
-    "what_humans_used_it_for": ""
+    "here_is_the_machine": "vault body <vault>/dcd-facebookresearch-2022 (host-local; `python -m techne.fossils.harvest rematerialize dcd-facebookresearch-2022` on a host without it) ; tracked techne/fossils/specimens/dcd-facebookresearch-2022",
+    "where_it_came_from": "https://github.com/facebookresearch/dcd ; ORIGINAL_AUTHORITATIVE_RELEASE ; commit cefd88196f2696860e42405d7b32f47d3d12bbde ; licence CC-BY-NC-4.0",
+    "how_to_run_it": "not executed from this record (NOT_ATTEMPTED); upstream entry: python train_scripts/make_cmd.py --json minigrid/60_blocks_uniform/mg_60b_uni_accel_empty --num_trials 1   # prints the train.py command for ACCEL on mazes ; host class: Linux compiler+docker host with AVX (M2 / ubu nodes); NOT M3",
+    "how_we_know_it_runs": "we do not: no run receipt. The body is pinned (tree_sha256 b6eefb613217bf78, UPSTREAM_HASHES.txt) and verifies by hash; that is preservation, not execution",
+    "what_humans_used_it_for": "train a student agent on a curriculum of environment instances chosen or generated to maximise its regret, so that it transfers zero-shot to unseen, harder instances"
   },
   "seat": "Techne",
   "runtime": {
