@@ -4,7 +4,7 @@
   "mwo_id": "MWO-0004",
   "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
   "mwo_sha256": "925660b2d2be53af2ee4195391e484d9649bbd4ee828cd60432ce2f0903a99df",
-  "updated_at_utc": "2026-09-30T11:20:00Z",
+  "updated_at_utc": "2026-09-30T12:40:00Z",
   "state": "ACTIVE",
   "state_reason": "Operator direction 2026-09-30 adopted (queue re-ordered over the CWO). CURRENT = PKG-F W-DRIFT observability repair, then bounded LM02, then freeze; NEXT = WTP-04 Habitable Islands. LM01 HOLD.",
   "branch": "ensorain/base-role-adopt-2026-09-23",
@@ -46,7 +46,7 @@
     },
     {
       "id": "E-ENS-LM02",
-      "status": "DESIGN v0.2",
+      "status": "BOUNDED ASSAY RUNNING (prereg ensorain/arc3/lm02/PREREG_LM02_ASSAY.md @ 8b49a4456); v0.2 design PARKED",
       "report": "ensorain/arc3/packages/PKG_LM02_DESIGN.md"
     },
     {
@@ -116,7 +116,16 @@
       "state": "completed (succeeded; outputs identical across replicas)"
     }
   ],
-  "running": [],
+  "running": [
+    {
+      "what": "LM02 assay eval (88 worlds, 9_815_xxx)",
+      "host": "M2",
+      "workers": 8,
+      "priority": "BELOW_NORMAL",
+      "precommit": "8b49a4456",
+      "output": "ensorain/arc3/lm02/results/lm02_assay.json"
+    }
+  ],
   "dependencies": {
     "LM01_b_bellerophon_campaign_ended": {
       "status": "SATISFIED",
@@ -135,9 +144,7 @@
     }
   ],
   "next_actions": "Close the instrumentation loop: (1) PKG-F DONE (dev) fe6393297; (2) LM02 as a BOUNDED instrument test of window sufficiency vs full history (downstream competence, substrate ordering, anomaly detection; several drift rates, families, substrates); WINDOW_NOT_SUPPORTED is a valid stop; (3) freeze the line.",
-  "operator_decisions_required": [
-    "Optional policy: may UNKNOWN cells (no recent record) be admitted on population/exchangeability evidence with a powered bound on the stale fraction? Without it, stationary-world STALE knowledge (+.60 AC) is forfeited. Not blocking."
-  ],
+  "operator_decisions_required": [],
   "latest_reports": [
     "ensorain/arc3/reviews/PKGF_CRYPT_REVIEW_2026-09-29.md (review packet: PKG-F v2-v5b + learned crypticity)",
     "roles/Ensorain/probes/FP-001_RESULT.json",
@@ -165,7 +172,8 @@
     "cwo_sha256": "ab93f64684d94771350848d2aef5d518f9045e1f8b79ba7834e419c83aba7b7e",
     "queue": "ops/fleet/QUEUE.json@6a7a84569",
     "delegation": "comms #1030",
-    "operator_direction": "roles/Ensorain/prompts/2026-09-30_operator_direction/ (supersedes the CWO Ensorain section where they differ)"
+    "operator_direction": "roles/Ensorain/prompts/2026-09-30_operator_direction/ (supersedes the CWO Ensorain section where they differ)",
+    "operator_ruling_hier": "roles/Ensorain/prompts/2026-09-30_pkgf_pop_lm02_ruling/"
   },
   "current": "Close the instrumentation loop: (1) PKG-F DONE (dev) fe6393297; (2) LM02 as a BOUNDED instrument test of window sufficiency vs full history (downstream competence, substrate ordering, anomaly detection; several drift rates, families, substrates); WINDOW_NOT_SUPPORTED is a valid stop; (3) freeze the line.",
   "next": "WTP-04 Habitable Islands: take each independent WTP-03 founding family and perturb its physics outward (memory/environment ratio, change timescale, information cost, observation quality, irreversibility, credit delay, topology, compute, forgetting, active sensing, recurrence); map where learning becomes possible and where it dies. Cheap competitors first.",

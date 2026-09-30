@@ -1,5 +1,6 @@
 # PKG-LM02: successor to LM01 (research-ready design package v0.2; thread T24)
-n> STATUS 2026-09-30: PARKED. Superseded for the instrument question by the bounded assay ensorain/arc3/lm02/PREREG_LM02_ASSAY.md (operator direction 2026-09-30: LM02 is a bounded instrument test, not a research program).
+
+> STATUS 2026-09-30: PARKED. Superseded for the instrument question by the bounded assay ensorain/arc3/lm02/PREREG_LM02_ASSAY.md (operator direction 2026-09-30: LM02 is a bounded instrument test, not a research program).
 
 Status: DESIGN. It receives everything the operator excluded from LM01 v0.3.2 as "expansion, not repair"
 (roles/Ensorain/prompts/2026-09-28_lm01_v032_amend/). It must not launch before the LM01 campaign rows are integrated.
