@@ -3,7 +3,7 @@
   "seat": "Tyche",
   "mwo_id": "MWO-0004",
   "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
-  "updated_at_utc": "2026-09-30T11:00:00Z",
+  "updated_at_utc": "2026-09-30T14:30:00Z",
   "state": "ACTIVE",
   "branch": "tyche/dark-ecology-v0-2026-09-30",
   "head_sha": "(this commit; see git log -1 -- roles/Tyche/WORK_STATE.json)",
@@ -34,6 +34,12 @@
       "id": "residual_catalogue_v0",
       "status": "DONE",
       "report": "tyche/residuals/v0/SUMMARY_v0.json"
+    },
+    {
+      "id": "v1",
+      "status": "DONE",
+      "report": "tyche/runs/v1_2026-09-30/REPORT_v1.md",
+      "verdict": "GATE6 FAIL"
     }
   ],
   "fabric_tasks": [],
@@ -52,8 +58,8 @@
     "tyche/runs/v0_2026-09-30/REPORT.md"
   ],
   "work_order": "Operator v1 directive 2026-09-30 (roles/Tyche/prompts/2026-09-30_v1_directive/) within CWO 2026-09-30 and MWO-0004",
-  "current": "Dark ecology v1 (primary): gates 1-6 -- capability-deficit residual + order-independent organism inputs; zero-marginal/positive-joint hidden controls (delayed XOR canonical); utility-free reserve with drift; pair/composition/coalition evaluation; delayed credit; arm comparison vs v0 selection",
-  "next": "Catalogue items 1-2 in parallel: behaviour tags for imported entries + raw rows; cluster by behaviour (operator's categories as descriptors, not rulers)",
+  "current": "v1 DONE (gate 6 FAIL; counterfactual false: noisy lexicase preserves useless lineages). Awaiting operator read of REVIEW_PACKET_v1; meanwhile prepare v2 design (strict utility-gated arm, order>=3 parity needles, triple coalitions, cheap pair screening, preregistered neutral-persistence rate) -- design only, no run until reviewed",
+  "next": "v2 prereg after operator/review read",
   "reserve": [
     "Gate 7: natural 122-residual habitat -- ONLY after gate 6 is shown",
     "Evolvable grammar levels (new operators -> bytecode-VM genome)",
@@ -62,5 +68,5 @@
   ],
   "blocked": [],
   "resource_status": "Item v0 used <= 15.4 CPU core-hours on M2 (envelope 16/item, 48/24h per seat); no lease claimed; nothing running",
-  "last_receipt": "Residual catalogue v0 79edf052c; v1 directive committed verbatim (this commit)"
+  "last_receipt": "v1 complete: REPORT_v1.md + REVIEW_PACKET_v1 (this commit); catalogue v0.1 8cb8d804a"
 }

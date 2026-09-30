@@ -5,29 +5,29 @@
   "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
   "mwo_sha256": "925660b2d2be53af2ee4195391e484d9649bbd4ee828cd60432ce2f0903a99df",
   "work_order": "MWO-0004 (ops/work_orders/CURRENT.md, blob 925660b2...3685 verified at boot) + CWO-2026-09-30 fleet activation (ops/fleet/CWO_2026-09-30_FLEET_ACTIVATION.md, sha256 ab93f646...b7e; queue ops/fleet/QUEUE.json; delegation comms #1036)",
-  "updated_at_utc": "2026-09-30T10:30:00Z",
-  "state": "ACTIVE",
+  "updated_at_utc": "2026-09-30T10:30:39Z",
+  "state": "PARKED",
   "branch": "cyclops/boot-2026-09-30",
   "head_sha": "(this commit; see git log -1 -- roles/Cyclops/WORK_STATE.json)",
   "role_note": "CWO s3 CYCLOPS: not a fleet coordinator; not a steward; registrar role of MWO-0001 is superseded in practice by Aporia publishing MWO-0002..0004. Do not recreate the previous coordination layer.",
-  "current": "Bounded observability audit (CWO s3 NEXT, promoted): reported fleet state (roles/*/WORK_STATE.json, ops/fleet/QUEUE.json, comms status) vs repository/process/comms evidence; mismatches to Aporia (BUILDER-OBSERVABILITY).",
-  "next": "PARK (CWO s3) unless Aporia assigns a concrete bounded task.",
+  "current": "none -- PARKED per CWO s3 after the observability audit; routable for a bounded task from Aporia",
+  "next": "none",
   "reserve": [],
   "blocked": [],
   "blocked_on": [],
   "resource_status": "no compute, GPU or spend held; read-only audit",
-  "last_receipt": "state repair: WORK_STATE converged from MWO-0001/HOLD to MWO-0004 + CWO s5 fields (this commit)",
+  "last_receipt": "observability audit roles/Cyclops/audits/2026-09-30_observability.md (F1-F7), comms #1060 to Aporia, #1061 FYI Tyche",
   "threads": [],
   "campaigns": [],
   "experiments": [],
   "fabric_tasks": [],
   "running": [],
   "next_actions": [
-    "run the observability audit; write roles/Cyclops/audits/2026-09-30_observability.md; send mismatches to Aporia",
-    "then set state PARKED"
+    "on a bounded task from Aporia: unpark, execute, re-park"
   ],
   "operator_decisions_required": [],
   "latest_reports": [
+    "roles/Cyclops/audits/2026-09-30_observability.md",
     "ops/work_orders/PUBLICATIONS.md (MWO-0001 sha256 007054ad...88f3, commit 7e4c09f2c, comms #914)"
   ],
   "comms_cursor": 1046
