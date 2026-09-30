@@ -4,7 +4,7 @@
   "mwo_id": "MWO-0004",
   "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
   "mwo_sha256": "925660b2d2be53af2ee4195391e484d9649bbd4ee828cd60432ce2f0903a99df",
-  "updated_at_utc": "2026-09-30T18:05:00Z",
+  "updated_at_utc": "2026-09-30T23:40:00Z",
   "state": "WORKING",
   "branch": "aporia/cwo-fleet-activation-2026-09-30",
   "head_sha": "6a7a845694d81ea94f65bada5725d5cf30a5dc36",
@@ -45,6 +45,9 @@
   "next": "coordination cycles (<= 60 min)",
   "reserve": [],
   "resource_status": "no compute of its own",
-  "last_receipt": "6a7a84569 (CWO + QUEUE.json + fleet_status.py); comms #1024-1036; journal 2026-09-30",
-  "current_objective": "CWO-C: forward view (ops/fleet/CENSUS.json), unowned ledger (ops/fleet/UNOWNED.json), READY dispatch, control-plane routing"
+  "last_receipt": "roles/Aporia/harvest/2026-09-30/ @ 140a6612e",
+  "current_objective": "Operator inference harvest (until 2026-10-01 05:00 ET) + CWO-C coordination (light)",
+  "current_step": "harvest deliverables committed; available for refinement until cutoff",
+  "last_push_sha": "140a6612e",
+  "next_expected_milestone": "harvest close at 05:00 ET, return to CWO-C role"
 }
