@@ -386,3 +386,49 @@ def test_block_variants_differ_from_rcv_on_a_live_soup(variant):
             va = ob[5]["received_value"]
         diff = diff or any(not np.array_equal(x, y) for x, y in zip(a, b))
     assert diff
+
+
+def _sfx_offset(seed, r, c):
+    h0 = K.mix64_scalar(np.uint64(seed) ^ V.SFX_DOMAIN_CONST)
+    packed = K.pack_coords_vec(np.array([[r]]), np.array([[c]]))
+    return int((K.mix64_vec(h0 ^ packed) >> np.uint64(62))[0, 0])
+
+
+def test_rcv_sfx_relay_direction_ignores_energy():
+    """E-010 lesion: rcv_sfx aims at arg0 + a static per-site offset, whatever the energy."""
+    outs = []
+    for e in (2, 130, 250):          # all >= write_cost (energy 0 starves the relay)
+        f = blank(energy=0)
+        f[0][2, 2] = 7
+        f[1][2, 2] = K.NORTH
+        f[2][2, 2] = K.PAYLOAD
+        f[3][2, 2] = 21
+        f[4][2, 2] = e
+        rec = np.zeros((5, 5), dtype=bool)
+        rec[2, 2] = True
+        outs.append(_stepx("rcv_sfx", [x.copy() for x in f], received=rec)[3])
+    for o in outs[1:]:
+        assert np.array_equal(o, outs[0])
+
+
+def test_rcv_sfx_relay_direction_is_arg0_plus_static_offset():
+    off = _sfx_offset(1, 2, 2)              # _stepx uses seed=1
+    target = {K.NORTH: (1, 2), K.EAST: (2, 3), K.SOUTH: (3, 2), K.WEST: (2, 1)}
+    d = (K.NORTH + off) % 4
+    f = blank(energy=0)
+    f[0][2, 2] = 7
+    f[1][2, 2] = K.NORTH
+    f[2][2, 2] = K.PAYLOAD
+    f[3][2, 2] = 21
+    f[4][2, 2] = 130
+    rec = np.zeros((5, 5), dtype=bool)
+    rec[2, 2] = True
+    out = _stepx("rcv_sfx", [x.copy() for x in f], received=rec)
+    assert out[3][target[d]] == 21
+
+
+def test_rcv_sfx_offset_field_is_roughly_uniform():
+    h0 = K.mix64_scalar(np.uint64(3) ^ V.SFX_DOMAIN_CONST)
+    packed = K.pack_coords_vec(np.arange(128).reshape(128, 1), np.arange(128).reshape(1, 128))
+    counts = np.bincount((K.mix64_vec(h0 ^ packed) >> np.uint64(62)).astype(np.int64).ravel(), minlength=4)
+    assert counts.min() > 0.23 * counts.sum()

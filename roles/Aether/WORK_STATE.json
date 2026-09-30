@@ -4,11 +4,11 @@
   "mwo_id": "MWO-0004",
   "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
   "mwo_sha256": "925660b2d2be53af2ee4195391e484d9649bbd4ee828cd60432ce2f0903a99df",
-  "updated_at_utc": "2026-09-29T14:17:25Z",
-  "state": "HOLD",
-  "state_reason": "Explicit HOLD (MWO-0004 R5) on the narrow rcv_add/rcv_str line: it has answered its declared questions. Existence: E-006. Cause: the E-006 cause probe. Horizon: E-008. Fresh-seed replication: E-009, both REPLICATED. Every remaining direction widens the search beyond G4's narrow mandate: an energy/parameter regime sweep (law parameters are not exposed by the unit runner, so new code is needed), or medium mobility (TH-009, parked). That makes it a program-priority choice (MWO-0001 s7(6)), not a routine default. Reopens on an MWO that authorizes either direction.",
+  "updated_at_utc": "2026-09-30T08:52:45Z",
+  "state": "WORKING",
+  "state_reason": "CWO 2026-09-30: CURRENT (broker closure) is blocked on Odysseus, so NEXT is promoted per CWO s5. Follow-ups ranked (Aether/AETH-03/FOLLOWUP_RANKING_2026-09-30.md); rank 1 = rcv_str steering lesion, to be preregistered as E-010 and run.",
   "branch": "aether/mwo0001-2026-09-28",
-  "head_sha": "2783107b4862410fda976f79bb5c3bb95e8ad8d4",
+  "head_sha": "35f207ebdc89b4e6929b7b470c3d1f92a5048e4f",
   "head_sha_note": "the latest pushed work commit before this WORK_STATE commit (the file cannot contain its own commit hash)",
   "threads": [
     {
@@ -227,7 +227,7 @@
   ],
   "running": [],
   "blocked_on": [
-    "promexec round 2: concrete dependency on Odysseus reporting the final installed broker hash + ACCEPTANCE_RUNS (#917)"
+    "promexec round 2 / broker closure: owner Odysseus -- final installed broker hash + ACCEPTANCE_RUNS (#917)"
   ],
   "next_actions": [
     "s8 loop; act on MWO/comms changes",
@@ -236,12 +236,11 @@
   ],
   "operator_decisions_required": [],
   "latest_reports": [
+    "Aether/AETH-03/FOLLOWUP_RANKING_2026-09-30.md",
     "ops/campaigns/C-002/E-009/RESULT.md",
     "roles/Aether/DEFECTS.md",
     "roles/Aether/probes/FP-001_RESULT.json",
-    "ops/campaigns/C-002/E-008/RESULT.md",
-    "roles/Aether/reviews/2026-09-28_promexec_round1/FINDINGS.md",
-    "Aether/AETH-03/PHYSICS_DESIGN_03_2026-09-27.md#amendment-a2"
+    "ops/campaigns/C-002/E-008/RESULT.md"
   ],
   "migration_report": "roles/Aether/MIGRATION_REPORT_MWO-0002.json",
   "fp001_result": "roles/Aether/probes/FP-001_RESULT.json",
@@ -255,5 +254,15 @@
   ],
   "incidents": [
     "DEF-AETH-001 RESOLVED upstream (Odysseus #1000, DEF-ODY-015)"
-  ]
+  ],
+  "work_order": "MWO-0004 + operator CWO 2026-09-30 (ops/fleet/CWO_2026-09-30_FLEET_ACTIVATION.md, blob ab93f646)",
+  "current": "E-010 rcv_str steering lesion (rank 1): preregister, then run (controlled intervention)",
+  "next": "rank 2: rcv_add trace lesion",
+  "reserve": [
+    "rank 3: value-provenance detector (Builder-lane candidate)",
+    "rank 4: AETH-01 arbitration finite-run diagnostic",
+    "AGE/Builder friction feed (CWO RESERVE)"
+  ],
+  "resource_status": "local CPU only; within MWO-0004 R2 (about 2 CPU-h used in the rolling 24 h); no GPU, no paid compute",
+  "last_receipt": "ops/campaigns/C-002/E-009/RESULT.md @ cabc6314a (both REPLICATED)"
 }

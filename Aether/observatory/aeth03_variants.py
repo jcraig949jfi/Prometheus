@@ -71,9 +71,9 @@ if _REF not in sys.path:
 import gpu_aeth01 as K                                   # noqa: E402
 
 VARIANTS = ("v1", "add", "hys", "chg", "cnd", "str", "mov", "rcv", "m4",
-            "fwd", "rcv_add", "rcv_cnd", "rcv_str")
+            "fwd", "rcv_add", "rcv_cnd", "rcv_str", "rcv_sfx")
 # Laws that carry rcv's received flag (one bit per site, across ticks).
-RCV_FAMILY = ("rcv", "fwd", "rcv_add", "rcv_cnd", "rcv_str")
+RCV_FAMILY = ("rcv", "fwd", "rcv_add", "rcv_cnd", "rcv_str", "rcv_sfx")
 # Laws that use cnd's conditional opcode 0x02.
 CND_FAMILY = ("cnd", "rcv_cnd")
 # `v1g` is v1 routed through this module's shared code path rather than
@@ -95,9 +95,15 @@ SEMANTICS_ID = {
     "rcv_add": "aeth03.rcv_add.scout0",
     "rcv_cnd": "aeth03.rcv_cnd.scout0",
     "rcv_str": "aeth03.rcv_str.scout0",
+    "rcv_sfx": "aeth03.rcv_sfx.lesion0",
     "v1g": "aeth01.v1",
 }
 COND_OPCODE = 0x02
+# rcv_sfx (E-010 steering lesion): rcv_str with its energy term replaced by a
+# static per-site offset in 0..3, drawn from a domain-separated hash of
+# (seed, coordinates). Same aim distribution, no coupling to energy dynamics.
+# Both twins share the seed, so the offset field is identical across twins.
+SFX_DOMAIN_CONST = np.uint64(0xA0761D6478BD642F)   # unused elsewhere (not the arbitration XOR)
 ENERGY = K.ENERGY
 _SLOTS = K._NEIGHBOR_SLOTS
 # Offset from a site to the neighbour it targets, indexed by direction
@@ -153,6 +159,10 @@ def step(variant, H, W, seed, tick, write_cost, maintenance_cost,
     active = is_emitter & (~starved)
     if variant in ("str", "rcv_str"):
         direction = ((arg0.astype(np.int64) + (energy_i >> 6)) % 4).astype(np.uint8)
+    elif variant == "rcv_sfx":
+        sfx = (K.mix64_vec(K.mix64_scalar(np.uint64(seed) ^ SFX_DOMAIN_CONST) ^ packed)
+               >> np.uint64(62)).astype(np.int64)
+        direction = ((arg0.astype(np.int64) + sfx) % 4).astype(np.uint8)
     else:
         direction = (arg0 % 4).astype(np.uint8)
     if variant == "m4":

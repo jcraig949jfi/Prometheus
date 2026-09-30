@@ -3,7 +3,7 @@
   "seat": "Hecate",
   "mwo_id": "MWO-0004",
   "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
-  "updated_at_utc": "2026-09-30T03:28:00Z",
+  "updated_at_utc": "2026-09-30T08:27:41Z",
   "state": "ACTIVE",
   "branch": "hecate/base-role-adopt-2026-09-29",
   "head_sha": "(this commit; see git log -1 -- roles/Hecate/WORK_STATE.json)",
@@ -45,21 +45,52 @@
       "id": "meta_v1",
       "status": "DONE",
       "report": "hecate/meta/REPORT_v1.md"
+    },
+    {
+      "id": "alien_lawful_assay_pilot",
+      "status": "PARTIAL (Family A done; B, C incomplete)",
+      "report": "hecate/alien/REPORT_pilot.md",
+      "prereg": "roles/Hecate/prereg/2026-09-30_alien_lawful_assay/"
     }
   ],
   "fabric_tasks": [],
   "running": [],
   "blocked_on": [],
   "next_actions": [
+    "Operator decision (spend): complete Families B/C on a paid tier (est. < $5) or by ~5 days of free-tier trickle",
+    "Before any B/C rerun: runner requires task top-level keys (truncation => unparseable); raise Gemini output budget; record as deviation",
+    "Assay v2 PREREG: T1 names the predictive standard; analogy tested with the named mechanism's canonical rule; adversarial set expanded",
+    "Hecate novelty detection: behavioural/predictive tests only (detector NOT_VALIDATED)",
     "Meta v2 PREREG: coherent-but-unfamiliar calibration controls; FAMILIAR+COMPOSITE scored together; field-matched M2 decoys; usefulness arm (top world per arm through Pass 3 v2 + probe)",
-    "Pass 3 v2 for PARKed programs whose worlds W1-W4 were never read validly and for the operator examples (HECATE-22: Epigenetics x Emergence x Hoare Logic as source human; Topology x Gauge Theory x Evolution)",
-    "Prior-art PREREG for HT-321a8fd8e0 (rule: KNOWN_ANALOGUE on every probed world -> FOSSIL), written generally, not for one case",
-    "Request an independent Pass 10 review of the first cycle (review packet committed) from a different-model or different-seat reviewer",
     "Second selection of 16 historical triplicates (seeded, disjoint concepts) through Pass 0-2 + Pass 3 v2"
   ],
   "operator_decisions_required": [],
   "latest_reports": [
-    "roles/Hecate/REVIEW_PACKET_2026-09-30_first_cycle.txt",
-    "hecate/meta/REPORT_v1.md"
-  ]
+    "hecate/autopsy/AUTOPSY.md",
+    "hecate/alien/REPORT_pilot.md"
+  ],
+  "work_order": "MWO-0004 + CWO-2026-09-30 fleet activation (ops/fleet/QUEUE.json; comms #1024, #1029)",
+  "current": "Alien-lawful Families B/C free-tier trickle under the frozen PREREG + DEVIATION_01 (8a517eb2d); stops cleanly on daily quota and resumes next session",
+  "next": "RESERVE promoted when B/C blocks on quota: mechanical novelty ruler (template-reducibility, calibrated on the alien assay) -- the smallest experiment that discriminates autopsy causes C1/C2",
+  "reserve": [
+    "Generator-side novelty interventions (generate, implement, attack, then test reducibility)",
+    "Alien assay v2 PREREG (T1 names the predictive standard; analogy tested with the canonical mechanism)",
+    "Second selection of 16 triplicates via Pass 3 v2"
+  ],
+  "blocked": [
+    {
+      "item": "Families B/C completion",
+      "dependency": "free-tier daily quotas (Gemini requests/day, Groq 200k tokens/day)",
+      "owner": "time / operator optional spend (HECATE-SPEND)",
+      "resume_after_utc": "2026-10-01T07:00:00Z (Gemini daily reset); Groq rolling 24h from its last use",
+      "progress": "gptoss blind 30/100 valid, pair 0/40; gemini blind 0/100 valid (earlier rows truncated), pair 0/40"
+    },
+    {
+      "item": "Alien assay Phase 2 (Visual Cortex)",
+      "dependency": "a renderer and a human observer session",
+      "owner": "operator"
+    }
+  ],
+  "resource_status": "CPU negligible; model calls: Claude subscription, Gemini/Groq free tier; spend $0",
+  "last_receipt": "hecate/autopsy/AUTOPSY.md (64c9353e0): zero-UNFAMILIAR is an instrument result (R1, 0/32 alien rules UNFAMILIAR)"
 }

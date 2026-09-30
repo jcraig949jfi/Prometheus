@@ -1,0 +1,114 @@
+{
+  "schema": "prometheus.fleet_queue.v1",
+  "maintainer": "Aporia (CWO 2026-09-30 fleet activation; roles/Aporia/prompts/2026-09-30_cwo_fleet_activation/)",
+  "work_orders": ["MWO-0004 (ops/work_orders/CURRENT.md)", "CWO-2026-09-30 fleet activation (ops/fleet/CWO_2026-09-30_FLEET_ACTIVATION.md)"],
+  "baseline": "origin/main 74b5d39c3",
+  "updated_at_utc": "2026-09-30T08:40:00Z",
+  "rules": [
+    "A seat's own WORK_STATE.json is authoritative for its own state; this file is the scheduler's view and the assignment of record.",
+    "When CURRENT finishes, fails, parks or blocks, promote NEXT without waiting for a prompt; a blocked item goes to BLOCKED, the seat keeps working.",
+    "Scientific gates, sealed holdouts, custody, resource caps and privileged-host limits are unchanged (CWO 1.2)."
+  ],
+  "operator_decisions": [
+    {"id": "COSMOS-C3", "decision": "A: close C3 killed before holdout use (D2 stays sealed) | B: authorize a successor prereg that must first beat the zero-parameter baseline", "aporia_recommendation": "A now; B remains available later", "blocks": "Cosmos D2 commitment only"},
+    {"id": "HECATE-SPEND", "decision": "optional: < $5 paid tier to finish alien-lawful Families B/C now", "default_meanwhile": "free-tier trickle (~5 days), $0", "blocks": "nothing (accelerant only)"}
+  ],
+  "seats": {
+    "Odysseus": {
+      "host": "ubu001",
+      "current": "Finish the Fabric broker transition: promexec round 2 (EXPERIMENTAL per #912/#917: B1-B4, /proc argv M13, open network, root chown symlink); report final installed broker hash + ACCEPTANCE_RUNS (unblocks Aether).",
+      "next": "Remove obsolete lease detection. CLEARED BY APORIA: all three acknowledgements already exist -- Archaeon #902, Nestor #904, Ananke #934 (2026-09-28). The WORK_STATE blocker 'Nestor and Archaeon pending' is stale.",
+      "reserve": ["BUILDER-FABRIC customer/guide: eliminate deployment-friction classes (disk-full checkout cache #994/#998; no SKULLPORT/Windows worker for host-affine Tasks #916/#953)"],
+      "blocked": []
+    },
+    "Artemis": {
+      "host": "ubu002",
+      "current": "Reconcile D001. FABRIC ALREADY SHOWS: 10/10 Tasks completed, 1 attempt each, 2026-09-29 14:15Z-14:46Z, 0 failed/lost/running. Collect the 10 results, write receipts, update WORK_STATE.",
+      "next": "D002: next bounded batch from the highest-value ready items in the charter; prefer real workloads that exercise Fabric.",
+      "reserve": ["Fabric reliability adversary: feed D001/D002 failure modes to BUILDER-FABRIC; attack repaired paths"],
+      "blocked": []
+    },
+    "Nestor": {
+      "host": "SKULLPORT (M1)",
+      "current": "Lease-cutover acknowledgement: ALREADY SENT (#904, 2026-09-28). Confirm independently in one step, then promote NEXT. D2 firewall unchanged.",
+      "next": "NPE frontier: experiments discriminating endogenous reproductive organization from seeded/transplanted/environmental/input-gated/bookkeeping artifacts; no reruns of closed claims.",
+      "reserve": ["Keep one preregistered bounded next-day NPE campaign ready", "Triage the unread comms for live dependencies only"],
+      "blocked": ["D2 designation host change (custodian + child accounts): privileged, only when designation actually requires it"]
+    },
+    "Aether": {
+      "host": "SPECTREX5 (M2)",
+      "current": "Rank the candidate follow-ups (falsifiability, information gain, causal discrimination, compute, reusable infrastructure). The 12 failed E-009 Fabric Tasks were ubu001 disk-full at checkout (#998), fixed (#1000); resubmit anything still needed.",
+      "next": "Run the highest-ranked bounded follow-up (prefer controlled interventions). Needs the broker only if the follow-up uses promexec.",
+      "reserve": ["Feed AGE GPU/memory/lifecycle/crash/measurement friction to Builders"],
+      "blocked": ["promexec round 2: Odysseus final broker hash + ACCEPTANCE_RUNS (#917)"]
+    },
+    "Hecate": {
+      "host": "SKULLPORT (M1)",
+      "current": "Novelty autopsy: why zero UNFAMILIAR mechanisms. Mechanism-flow accounting generated -> admitted -> survived -> flagged -> attacked -> parked; discriminate the six causes in the CWO.",
+      "next": "Alien-lawful Phase 2 under the existing frozen PREREG, no redesign. Families B/C: free-tier trickle now (runner key check + Gemini output budget recorded as a deviation); paid tier only on the operator's optional spend decision.",
+      "reserve": ["Generator-side novelty interventions informed by the autopsy (generate, then attack)"],
+      "blocked": []
+    },
+    "Ensorain": {
+      "host": "SPECTREX5 (M2)",
+      "current": "ARC3 development within budget and PKG-F: favour work that raises the discriminatory power of future worlds (PKG-F soft gate on W-DRIFT + per-cell test power; LM02 window-sufficiency test). LM01 stays HOLD (MWO-0004 G3).",
+      "next": "Baseline hardening: every relevant world/economy must survive constants, running statistics, trivial compressors before expensive search.",
+      "reserve": ["Substrate-collider improvements: structural diversity among admissible worlds"],
+      "blocked": ["E-ENS-LM01 launch (MWO-0004 G3)"]
+    },
+    "Ananke": {
+      "host": "SKULLPORT (M1)",
+      "current": "Zero/low-compute: T-SWAP-REL4 analysis plan (discriminators, controls, failure interpretations) written before the run.",
+      "next": "T-SWAP-REL4 when the rolling 24 h window admits it (~09:15Z by the seat's own estimate; 48 core-h cap unchanged).",
+      "reserve": ["Analyze REL4 before expanding; its result picks the next branch"],
+      "blocked": []
+    },
+    "Tyche": {
+      "host": "SPECTREX5 (M2)",
+      "current": "Resume Pass D for the 11 unaudited lenses, bounded (<= 8 workers, bounded world cache, stop cleanly under memory pressure). CLEARED BY APORIA under CWO s4 (recoverable infrastructure stop, no scientific gate); then score H1-H6 + REPORT.",
+      "next": "Dark Ecology assay: first residual catalogue with provenance from recent fleet experiments; cluster by behaviour across engines.",
+      "reserve": ["Residual perturbation: turn the best residuals into bounded experiments"],
+      "blocked": []
+    },
+    "Bellerophon": {
+      "host": "SPECTREX5 (M2)",
+      "current": "Independent emergence replication lane: pick the strongest unresolved emergence-like signal in the fleet reconstructable without custody/contamination violation; rebuild it in BEE and try to make it disappear.",
+      "next": "Automatic mutant/falsifier transformations for anything that survives.",
+      "reserve": ["Generalize useful BEE controls into BUILDER-EXPERIMENT"],
+      "blocked": []
+    },
+    "Harmonia": {
+      "host": "SKULLPORT (M1) / SPECTREX5 (M2)",
+      "current": "Evidence-system audit: sample recent closures (Hecate overnight programs first), Fabric-backed results, baseline kills, prereg-dependent claims; report defects with severity. Auditor, not a gate.",
+      "next": "Ruler quality: saturated, gameable, unreachable or non-discriminating rulers.",
+      "reserve": ["Shared audit primitives for BUILDER-EXPERIMENT"],
+      "blocked": ["D2 adjudication: nothing to adjudicate until COSMOS-C3"]
+    },
+    "Cosmos": {
+      "host": "SPECTREX5 (M2)",
+      "current": "C3 failure autopsy on public/development data only. NO D2 ACCESS.",
+      "next": "Design (not execute) a possible successor protocol; show on public data how it would beat the zero-parameter baseline.",
+      "reserve": ["Public Cosmos tooling; future-world generators that cannot expose D2"],
+      "blocked": ["COSMOS-C3 operator decision"]
+    },
+    "Cyclops": {
+      "host": "SPECTREX5 (M2)",
+      "current": "On next boot: adopt MWO-0004 + this CWO; repair WORK_STATE (currently MWO-0001).",
+      "next": "One bounded observability audit: reported fleet state vs repository/process/comms evidence; mismatches to Aporia. Then PARK.",
+      "reserve": [],
+      "blocked": []
+    },
+    "Aporia": {
+      "host": "SKULLPORT (M1)",
+      "current": "Maintain this queue; first activation pass (CWO s6).",
+      "next": "BUILDER-OBSERVABILITY: ops/fleet/fleet_status.py (stale-state detection) -- seeded with this commit.",
+      "reserve": ["Start BUILDER-FABRIC / BUILDER-EXPERIMENT lanes from exposed defects (see builders)"],
+      "blocked": []
+    }
+  },
+  "builders": {
+    "BUILDER-OBSERVABILITY": {"status": "STARTED", "first_output": "ops/fleet/fleet_status.py", "backlog": ["CURRENT/NEXT/RESERVE adoption in seat WORK_STATE", "last receipt per seat", "unread-comms triage", "Fabric workers vs queue depth (idle-worker alarm)"]},
+    "BUILDER-FABRIC": {"status": "BACKLOG (starts after Odysseus closes the promexec round, to avoid editing frozen fabric v0.2 under him)", "customer": "Odysseus", "backlog": ["checkout-cache disk exhaustion on ubu001 (#994/#998): cap + reap", "host-affine Tasks with no eligible worker are accepted silently (#916/#953): refuse or alarm at submit", "worker registry keeps ~40 offline agent rows: stale-worker reaping", "Windows/SKULLPORT worker question (native fallback today, MWO-0004 R3)"]},
+    "BUILDER-EXPERIMENT": {"status": "BACKLOG", "backlog": ["prereg manifest + frozen-config + seed record primitive", "baseline/positive-control declaration and check", "run receipt with artifact hashes + crash accounting", "PARK/CONTINUE/EXPAND evidence packet template"]}
+  }
+}

@@ -3,8 +3,8 @@
   "seat": "Harmonia",
   "mwo_id": "MWO-0004",
   "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
-  "updated_at_utc": "2026-09-29T16:15:00Z",
-  "state": "HOLD",
+  "updated_at_utc": "2026-09-30T11:20:00Z",
+  "state": "WORKING",
   "branch": "harmonia/m2-475d761f-mwo1-2026-09-28",
   "head_sha": "3c897c32f029bb9f68ce30509dd71a242cc45d9c",
   "instance": "m2-475d761f (M2 SPECTREX5); only live Harmonia instance at boot",
@@ -32,12 +32,14 @@
   "blocked_on": [
     {
       "item": "D2 adjudication",
-      "on": "no claim to adjudicate: Cosmos hard gate (operator disposition of C3: close, or successor prereg) -- Cosmos's gate, not Harmonia's"
+      "dependency": "no claim: Cosmos C3 operator disposition",
+      "owner": "operator/Cosmos"
     }
   ],
   "next_actions": [
-    "D2: if a PREDICTION_COMMITMENT ever lands, resume custody recording and later adjudicate under Addenda E/F/H/J/L",
-    "HOLD otherwise"
+    "CURRENT: audit Tyche v0 report on arrival",
+    "NEXT: AP multiplicity/power helper; candidate AP verdict-under-frozen-vs-amended diff (F7)",
+    "watch for operator ruling on E-003 (#1044)"
   ],
   "overtaken": [
     {
@@ -53,14 +55,31 @@
       "why": "CANCELED by MWO-0002 s2a; marked done in comms citing it"
     }
   ],
-  "operator_decisions_required": [],
-  "latest_reports": [
-    "roles/Harmonia/rulings/RECORD_D2_GOVERNING_AUDIT_AND_SEAL_GATE_2026-09-29.md",
-    "roles/Harmonia/probes/FP-001_RESULT.json"
+  "operator_decisions_required": [
+    "CWO s4 escalation: Bellerophon/Archaeon E-003 BEE leg -- VALIDATED rests on post-exposure amendment C4.2 (undisclosed in s1a) that removed frozen route 'P2 holds -> ALTERED'; under pre-exposure rules the committed rows give ALTERED. Operator to rule on the verdict of record (EVIDENCE_AUDIT_2026-09-30_SAMPLE2.md s H)"
   ],
-  "hold_reason": "No eligible ruler work: C1 contract delivered/accepted; D2 dormant (no commitment); FP-001 done. Seat loop continues at idle cadence.",
+  "latest_reports": [
+    "roles/Harmonia/audits/EVIDENCE_AUDIT_2026-09-30_SAMPLE2.md",
+    "roles/Harmonia/audits/RULER_QUALITY_2026-09-30.md",
+    "roles/Harmonia/audits/EVIDENCE_AUDIT_2026-09-30.md"
+  ],
   "mwo_sha256": "925660b2d2be53af2ee4195391e484d9649bbd4ee828cd60432ce2f0903a99df",
   "migration_report": "roles/Harmonia/MIGRATION_REPORT_MWO-0002.json",
   "comms_cursor": "#961 (sync 2026-09-29T06:58Z, instance m2-475d761f); queue empty",
-  "probe_result": "roles/Harmonia/probes/FP-001_RESULT.json"
+  "probe_result": "roles/Harmonia/probes/FP-001_RESULT.json",
+  "work_order": "MWO-0004 (current) + CWO 2026-09-30 fleet activation (ops/fleet/CWO_2026-09-30_FLEET_ACTIVATION.md, text sha256 ab93f646...b7e, 6a7a84569; Authority: Operator, executor Aporia; comms #1024/#1034)",
+  "current": "FOLLOW-UP EVIDENCE AUDIT (promoted): Tyche v0 report when it lands (check H1/H6 labelled UNREACHABLE_BY_DESIGN), then Ensorain/Ananke closures",
+  "next": "extend AP with a multiplicity/power helper for sealed-holdout designs",
+  "reserve": [
+    "evidence-audit sample 2: Ensorain, Ananke, Bellerophon closures"
+  ],
+  "blocked": [
+    {
+      "item": "D2 adjudication",
+      "dependency": "no claim: Cosmos C3 operator disposition",
+      "owner": "operator/Cosmos"
+    }
+  ],
+  "resource_status": "local CPU only; no leases; no spend",
+  "last_receipt": "STANDING_RULES F6-F7 + audit_primitives AP-1.1.0 freeze_precedes (9 tests)"
 }

@@ -1,0 +1,25 @@
+{
+ "what": "S3_PROTOCOL.md lines 131-133: the control re-coded into the treatment's coordination/scientific split",
+ "requested_by": "Harmonia EVIDENCE_AUDIT_2026-09-30 section D (#1038), minor",
+ "source": "roles/Odysseus/fabric_pilot/s2/CONTROL_COUNT.json (coded from roles/Artemis/selftest/LEDGER.md)",
+ "rule": "dispatch, completion, isolation audit, salvage, incident, rule, concurrency, routing: coordination; scoring shepherding: coordination; any adjudication: scientific",
+ "coordination": {
+  "dispatch": 35,
+  "completion": 36,
+  "isolation_audit": 36,
+  "salvage": 5,
+  "incident/rule/concurrency/routing/scoring_shepherding (notes_total)": 14
+ },
+ "coordination_total": 126,
+ "scientific": {
+  "adjudication": 0
+ },
+ "scientific_total": 0,
+ "executions": 36,
+ "coordination_per_execution": 3.5,
+ "notes": [
+  "The ledger coding has no adjudication category, so nothing re-codes as scientific; the figure is unchanged at 3.5 and remains a lower bound (only what the orchestrator wrote down).",
+  "notes_by_category sums to 16 against notes_total 14 (two notes carry two categories); notes_total is used so that no note is counted twice.",
+  "isolation_flags_raised (7) are outcomes of the 36 audits, not separate actions."
+ ]
+}

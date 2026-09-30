@@ -3,7 +3,7 @@
   "seat": "Tyche",
   "mwo_id": "MWO-0004",
   "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
-  "updated_at_utc": "2026-09-30T07:25:00Z",
+  "updated_at_utc": "2026-09-30T08:10:00Z",
   "state": "ACTIVE",
   "branch": "tyche/dark-ecology-v0-2026-09-30",
   "head_sha": "(this commit; see git log -1 -- roles/Tyche/WORK_STATE.json)",
@@ -19,24 +19,31 @@
     {
       "id": "v0",
       "prereg": "roles/Tyche/prereg/2026-09-30_v0/PREREG.md",
-      "status": "BLOCKED",
-      "run_dir": "tyche/runs/v0_2026-09-30",
-      "note": "evolution complete (40 gens, 44 admitted); Pass D 33/44 audited when the harness stopped the job for host memory pressure; not restarted without operator go-ahead"
+      "status": "DONE",
+      "report": "tyche/runs/v0_2026-09-30/REPORT.md",
+      "verdicts": {
+        "H1": "INDETERMINATE",
+        "H2": "PASS",
+        "H3": "FAIL",
+        "H4": "FAIL",
+        "H5": "PASS",
+        "H6": "INDETERMINATE"
+      }
     }
   ],
   "fabric_tasks": [],
   "running": [],
-  "blocked_on": [
-    "operator go-ahead to resume Pass D for 11 lenses (harness memory reap; seat instructed not to restart on its own)"
-  ],
+  "blocked_on": [],
   "next_actions": [
-    "Resume Pass D for the 11 unaudited lenses with 8 workers and a bounded world cache (on go-ahead)",
-    "Score H1-H6 + REPORT (TYCHE-02)",
-    "Review packet (TYCHE-03)",
-    "Replenish frontier, prereg v1 (TYCHE-04)"
+    "v1 instrument repair: tab budget independent of ecology order + H4 recheck (TYCHE-23)",
+    "v1 residual with its own negative control (TYCHE-24)",
+    "v1 zero-marginal positive controls + operators that could reach them (TYCHE-25)",
+    "Diagnose P5/R2/tree seed fragility (TYCHE-26)",
+    "Request independent review of the v0 packet (TYCHE-22)"
   ],
   "operator_decisions_required": [],
   "latest_reports": [
-    "roles/Tyche/prereg/2026-09-30_v0/PREREG.md"
+    "roles/Tyche/REVIEW_PACKET_v0_2026-09-30.txt",
+    "tyche/runs/v0_2026-09-30/REPORT.md"
   ]
 }
