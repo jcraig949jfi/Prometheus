@@ -3,7 +3,7 @@
  "seat": "Nestor",
  "mwo_id": "MWO-0004",
  "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
- "updated_at_utc": "2026-09-30T12:30:00Z",
+ "updated_at_utc": "2026-09-30T11:05:00Z",
  "state": "WORKING",
  "branch": "nestor/d2v13-2026-09-29 (merged to main)",
  "head_sha": "b17320e64c145bb6b10df9f9aa568614da1e85e5",
@@ -12,10 +12,11 @@
   "D2 custody (C3 successor seal)"
  ],
  "campaigns": [
+  "roles/Nestor/campaigns/npe-frontier-2026-09-30",
   "roles/Nestor/campaigns/ancestry-replay-2026-09-28"
  ],
  "experiments": [
-  "ancestry production run 2 (GO_FINAL v2)"
+  "X-MAT-INTERNALIZE (prereg c3e9eae9e)"
  ],
  "fabric_tasks": [
   "s4 v2.2 conformance: 2/2 CONFORMS (review_s4v22/)",
@@ -31,7 +32,9 @@
   "D2 v12 bounded re-audit -> FAIL (#993, VERDICT @ 47df49352: V12-1 anchored records skipped not refused)",
   "D2 v13 FINAL re-audit -> PASS (Odysseus #1020; FIREWALL_AUDIT_1.json @ 67e05df12, anchored entry_hash e1a2e48b)"
  ],
- "running": [],
+ "running": [
+  "X-MAT-INTERNALIZE: roles/Nestor/campaigns/npe-frontier-2026-09-30/x_mat_internalize/run_xmi.py (resumable; results/ skips done runs)"
+ ],
  "blocked_on": [
   "D2 commitment anchoring: blocked on the operator's COSMOS-C3 decision (A close C3 / B successor prereg); owner Cosmos/operator",
   "D2 designation host change (custodian + child accounts): privileged; only when designation actually requires it; owner operator"
@@ -45,6 +48,7 @@
   "D2 designation host change (privileged; only when designation requires it)"
  ],
  "latest_reports": [
+  "comms #1041 (X-MAT-INTERNALIZE prereg)",
   "comms #997 (D2 v13)",
   "comms #992 (D2 v12)",
   "comms #990 (G2 sample)",
@@ -98,13 +102,13 @@
   "run-2 1% sample: G2 default (verified copy found; no regeneration)"
  ],
  "work_order": "MWO-0004 + CWO-2026-09-30 fleet activation (ops/fleet/CWO_2026-09-30_FLEET_ACTIVATION.md @ 6a7a84569, sha256 ab93f646...7b7e)",
- "current": "NPE frontier (CWO s3 NEXT, promoted 2026-09-30): scoping the highest-value experiment that discriminates endogenous reproductive organization from seeded/transplanted/environmental/input-gated/bookkeeping artifacts; preregister before any exposure; within MWO-0004 R2",
- "next": "Execute the first preregistered discriminating NPE experiment (bounded, canonical Fabric lease, Fabric replicas where portable)",
+ "current": "X-MAT-INTERNALIZE RUNNING (CWO NEXT, NPE frontier): material-tag audit of C-A3-INTERNALIZE's 8 events -- endogenous vs bookkeeping/transplant internalization; prereg frozen c3e9eae9e (PREREG sha256 6f7c7aca..1ebce7, comms #1041); pilot replay gate PASS (7ae3 27000023 identical, 1050 s); 26 replays pool 8",
+ "next": "Read VERDICT.json once the replays finish, release the lease, report to Aporia; then choose the next discriminating experiment (candidates: task-coupled endogenous vs external controls; tape-rotation world)",
  "reserve": [
   "Keep one preregistered bounded next-day NPE campaign ready (CWO s3 RESERVE)",
   "D2: anchor Cosmos's PREDICTION_COMMITMENT when posted (blocked on the operator's COSMOS-C3 decision)",
   "Bookkeeping-artifact lead from Artemis #888 R-08: NPE board_eligible (primordial/core/contract.py) accepts any non-empty cheat string"
  ],
- "resource_status": "SKULLPORT cpu: no lease held; local only; spend $0",
+ "resource_status": "SKULLPORT skullport:cpu8 lease lse-e39dab75e9bd (Nestor, TTL 3 h, acquired 2026-09-30 ~10:48Z); projected ~7.6 core-h of R2's 16/item; spend $0",
  "last_receipt": "MWO-0004 G2 1% sample stage-2 PASS (roles/Nestor/campaigns/ancestry-replay-2026-09-28/g2_sample_check/rerun_8631128c3 @ 168c8b81d); D2 FIREWALL_AUDIT_1 anchored (#1021)"
 }
