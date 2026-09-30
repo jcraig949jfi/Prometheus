@@ -325,3 +325,33 @@ The UNRESOLVED status recorded in A1 for `rcv_str` is lifted: its §5.2
 NEW_BEHAVIOUR (N1) stands on two independent seed sets. The effect remains
 small and near the floor (per seed 3/2/5/5 of 32). N2 remains uninformative
 (E-P1). §5.5 point 2 now holds for both combinations.
+
+## AMENDMENT A4 (2026-09-30) — steering lesion (E-010)
+
+*Appended; nothing above is edited. Preregistered at 32c14e403.*
+
+`rcv_sfx` is `rcv_str` with its aim term (energy >> 6) replaced by a static
+per-site offset. On seeds 4–7 it gives P_sust 4/128, exactly `rcv`'s level,
+and P_content 0. **Verdict: STEERING_REQUIRED.** The regression gate passed
+(`rcv_str` s4 reproduced E-009 bit for bit).
+
+§5.4's mechanism for `rcv_str` ("activity re-routing activity via
+energy-steered aim") is now supported by intervention. Limits: the lesion
+removes both dynamic coupling and any static aim–energy correlation, and it
+changes the aim distribution to uniform. A frozen-energy-snapshot lesion
+would separate these (`ops/campaigns/C-002/E-010/RESULT.md`).
+
+## AMENDMENT A5 (2026-09-30) — trace lesion (E-011)
+
+*Appended; nothing above is edited. Preregistered at 1c7b3249d.*
+
+`rcv_adr` is `rcv_add` with relay-won writes committing by replacement (WRITE-site
+writes still add). On seeds 4–7 it gives P_sust 10/128, against 22/128 for
+`rcv_add` and an additive null of 5/128. **Verdict: PARTIAL.** The regression gate
+passed (`rcv_add` s4 reproduced E-009 bit for bit).
+
+Compounding relay traces carry most of `rcv_add`'s excess (22 → 10), but the
+lesion is incomplete by construction: later add-writes can still carry a relay's
+trace forward. §5.4's `rcv_add` mechanism is therefore partly supported by
+intervention; a complete lesion needs last-writer provenance
+(`ops/campaigns/C-002/E-011/RESULT.md`).

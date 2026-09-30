@@ -3,10 +3,10 @@
  "seat": "Odysseus",
  "mwo_id": "MWO-0004",
  "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
- "updated_at_utc": "2026-09-30T08:51:51Z",
+ "updated_at_utc": "2026-09-30T09:26:15Z",
  "state": "ACTIVE",
  "branch": "odysseus/fabric-v0-2026-09-28",
- "head_sha": "8cc7dc841dedc94fab5560a3620dc18fa80b790d",
+ "head_sha": "9f95f9ea06ff6b5cf78e81a3686ce11a49f591dd",
  "threads": [
   {
    "id": "thr-d2-firewall-audit",
@@ -72,7 +72,7 @@
   "roles/Odysseus/fabric_pilot/s2/RESULT.md"
  ],
  "mwo_sha256": "925660b2d2be53af2ee4195391e484d9649bbd4ee828cd60432ce2f0903a99df",
- "comms_cursor": 1038,
+ "comms_cursor": 1046,
  "migration_report": "roles/Odysseus/MIGRATION_REPORT_MWO-0002.json",
  "hard_gates_note": "MWO-0004 R1/R5: only hard gates listed. promexec stays NOT ENABLED (MWO-0004 G4); the round-2 install is listed because it is a privileged host modification (CWO s4), not an enablement",
  "work_order": "MWO-0004 (ops/work_orders/CURRENT.md) + CWO-2026-09-30 fleet activation (ops/fleet/CWO_2026-09-30_FLEET_ACTIVATION.md, sha256 ab93f646...b7e; queue ops/fleet/QUEUE.json)",
@@ -87,9 +87,9 @@
    "dependency": "installing the round-2 broker replaces a root-owned file: privileged host/security modification (CWO s4)",
    "owner": "operator",
    "runbook": "fabric/promexec/OPERATOR_STEPS_ROUND2.md",
-   "source_commit": "b2fd90314 (round-2 source), plus the DEF-ODY-001 mtime fix"
+   "source_commit": "9f95f9ea0 (round 2 + Aether source-review N1/N2); broker sha256 3cf32a642febd032608878480bdf29c2b433f6859445072b44f1efcac14b0df3"
   }
  ],
  "resource_status": "no compute or spend held; ubu001 disk 24%; workers .a/.b/.sci on ~/fabric-runtime @8cc7dc841",
- "last_receipt": "8cc7dc841: legacy ARC3 lease detection removed (CWO NEXT closed; FREEZE.md log; 111 tests pass) and rolled into ~/fabric-runtime"
+ "last_receipt": "9f95f9ea0: promexec N1/N2 applied after Aether's round-2 source review (#1046: all round-1 items closed on source, nothing blocks install)"
 }

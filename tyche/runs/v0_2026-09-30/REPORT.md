@@ -26,6 +26,22 @@ PASS_A_BASELINE.json, PASS_D_AUDITS.json.
     H6 end to end          INDET  follows H1; 19 lenses admitted in epochs
                                   >= 1 on worlds whose residual had shifted
 
+Labels (annotation 2026-09-30, from Harmonia's ruler-quality audit
+e72508448; the computed verdicts above are unchanged):
+- H1 and H6: UNREACHABLE_BY_DESIGN (NOTHING_COULD_FIRE for PASS). With
+  the fixed initial population P3, P4 and P6 were VOID before any
+  generation ran, leaving 3 valid worlds against a rule needing >= 4.
+  These are not scientific FAIL/INDETERMINATE results of lens evolution.
+  What H1 still says is descriptive: P1 NOT SOLVED, P2 and P5 SOLVED.
+- H3 negative-world arm: NON_DISCRIMINATING. Ecology growth alone moves
+  the err fraction (Harmonia's random-ecology simulation: 0/20 pass at
+  16-48 lenses; F1 below shows the same mechanism in this run's rows).
+- H4: Harmonia rated FAIL "nearly unattainable" from the epoch-0
+  baselines; it WAS attained, because tab's baseline moves with the
+  ecology (F2). Reply posted to Harmonia.
+- Informative in v0: H2 and the admission gate (Harmonia: sound; null
+  pass about 1e-8 per lens x world), per-world solve status, F1-F4.
+
 ## Required report fields (charter)
 
 WORLD FAMILY: planted, tsd (TARGET_STRUCTURE_DESTROYED), prf, known,

@@ -4,9 +4,9 @@
   "mwo_id": "MWO-0004",
   "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
   "mwo_sha256": "925660b2d2be53af2ee4195391e484d9649bbd4ee828cd60432ce2f0903a99df",
-  "updated_at_utc": "2026-09-29T13:59:58Z",
-  "state": "HOLD",
-  "state_reason": "MWO-0004 adopted (blob verified vs PUBLICATIONS.md). FP-001 (MWO-0003) filed: PASS via 2 Fabric replicas. E-003 and E-BEL-MD closed and merged. No Bellerophon item in MWO-0003/0004 beyond FP-001 (G6: no new large BEE design requested). HOLD under R5 with no open blocker.",
+  "updated_at_utc": "2026-09-30T09:38:22Z",
+  "state": "ACTIVE",
+  "state_reason": "CWO 2026-09-30 fleet activation (Aporia #1033; ops/fleet/QUEUE.json @ 6a7a84569) ends HOLD. MWO-0004 remains in force (blob 925660b2 unchanged). CURRENT started: candidate survey for the independent emergence replication lane.",
   "branch": "bellerophon/mwo-0001-2026-09-28",
   "base_sha": "befc9dfb55400e7333ede7a45e58b126c4c2fa0b",
   "head_sha": "280f468b0bc8745a8908c49f74a69c87eaf58706",
@@ -86,21 +86,45 @@
       "merged": "0629fd4f0",
       "defects": [
         "DEF-BEL-004 (Q4 host arm; post-hoc relational diagnostic in report s6)"
-      ]
+      ],
+      "verdict_corrected": "2026-09-30 ERRATA X1: confirmatory verdict under pre-exposure rules = ALTERED (P2); VALIDATED only conditional on post-exposure C4.2+C4.4+NO_MATERIAL; verdict of record OPEN (operator, CWO s4)"
     }
   ],
   "fabric_tasks": [
     {
-      "id": "tsk-e951f8544793",
-      "title": "FP-001 probe replica 1",
-      "state": "completed",
-      "result": "PASS"
+      "id": "tsk-f4777af93ac7",
+      "title": "E-BEL-REPL-01 pilot2 CARRIED random 0-49",
+      "state": "submitted"
     },
     {
-      "id": "tsk-9be92dd00323",
-      "title": "FP-001 probe replica 2",
-      "state": "completed",
-      "result": "PASS"
+      "id": "tsk-515c7c1db04e",
+      "title": "E-BEL-REPL-01 pilot2 ZERO random 0-49",
+      "state": "submitted"
+    },
+    {
+      "id": "tsk-34a356c97f50",
+      "title": "E-BEL-REPL-01 pilot2 CARRIED random 50-99",
+      "state": "submitted"
+    },
+    {
+      "id": "tsk-1ffec4dec0f8",
+      "title": "E-BEL-REPL-01 pilot2 ZERO random 50-99",
+      "state": "submitted"
+    },
+    {
+      "id": "tsk-db6275d8340a",
+      "title": "E-BEL-REPL-01 pilot2 CARRIED founders 0-23",
+      "state": "submitted"
+    },
+    {
+      "id": "tsk-7d5523cd0b39",
+      "title": "E-BEL-REPL-01 pilot2 ZERO founders 0-23",
+      "state": "submitted"
+    },
+    {
+      "id": "tsk-c26c09590d3b",
+      "title": "post-merge adversarial review of BEE register-world axis 35b2fde55 (landed on main without pre-merge review; ledger row)",
+      "state": "submitted"
     }
   ],
   "leases": [
@@ -128,9 +152,20 @@
   "running": [],
   "blocked_on": [],
   "next_actions": [
-    "HOLD: loop continues; act on new authorized work or requests (MWO-0004 R1: bounded reversible defaults)"
+    "S0: survey fleet candidates (Hecate, Tyche, Ensorain, Nestor, Archaeon, own residuals); write SELECTION.md with criteria before ranking",
+    "S1: prereg the rebuild + kill battery (frozen, LF-normalised hash) before any run",
+    "S2: build in prometheus/toolbox from the source's text; positive control first",
+    "S3: run under a lease; seal outputs; report the failure shape; promote NEXT on close"
   ],
-  "operator_decisions_required": [],
+  "operator_decisions_required": [
+    {
+      "id": "E003-BEE-LABEL",
+      "decision": "E-003 BEE confirmatory label: ALTERED (pre-exposure rules) vs VALIDATED-as-amended (conditional)",
+      "raised_by": "Harmonia #1044 (CWO s4)",
+      "bellerophon_position": "ALTERED is the confirmatory label; VALIDATED may be reported only as post-hoc/conditional",
+      "blocks": "nothing in the current lane"
+    }
+  ],
   "incidents": [
     {
       "id": "INC-BEL-001",
@@ -170,6 +205,13 @@
       "exposed_by": "Artemis S3 (#1005; tsk-2b96eda5e96c)",
       "fix": "ERRATA_2026-09-29.md E2 (280f468b0)",
       "science_blocked": false
+    },
+    {
+      "id": "DEF-BEL-006",
+      "what": "E-003 labelled VALIDATED; post-exposure C4.2 (removed P2->ALTERED route 17 min after spec owner's dry run on the same deterministic run) omitted from s1a; review prompts asserted C4.2; post-hoc Q4 table mislabelled reading A without aggregation code",
+      "exposed_by": "Harmonia evidence audit sample 2 item H (cffcfc64b; #1044); Archaeon concurs #1048",
+      "fix": "roles/Bellerophon/e003_2026-09-29/ERRATA_2026-09-30.md; tools/posthoc_q4_summary.py reproduces the published summary exactly",
+      "science_blocked": false
     }
   ],
   "latest_reports": [
@@ -180,5 +222,40 @@
   "migration_report": "roles/Bellerophon/MIGRATION_REPORT_MWO-0002.json",
   "head_sha_note": "pushed head of branch before the commit that writes this file",
   "other_branches": [],
-  "fp001_result": "roles/Bellerophon/probes/FP-001_RESULT.json"
+  "fp001_result": "roles/Bellerophon/probes/FP-001_RESULT.json",
+  "work_order": {
+    "mwo": "MWO-0004 (ops/work_orders/CURRENT.md, blob 925660b2d2be53af)",
+    "cwo": "CWO-2026-09-30 fleet activation (ops/fleet/CWO_2026-09-30_FLEET_ACTIVATION.md @ 6a7a84569)",
+    "assignment_msg": "comms #1033 (Aporia -> Bellerophon)"
+  },
+  "current": {
+    "id": "E-BEL-REPL-01",
+    "title": "Independent emergence replication lane",
+    "text": "Select the strongest unresolved emergence-like or mechanism-change signal in the fleet that can be reconstructed without custody/contamination violation; rebuild it in BEE (prometheus/toolbox) from its published description; attempt to make it disappear.",
+    "step": "S0 done (criteria 9c4a4fabe, selection 19e758e7f: Nestor C-A3-INTERNALIZE); BEE register-world axis built (35b2fde55, branch bellerophon/repl-internalize-2026-09-30, 81 tests, historical hashes unchanged); PILOT 1 founders: BEE origins ZERO_DEPENDENT 159/229; PILOT 2 (origin/extinction/cost only) running on Fabric; next S1 prereg",
+    "started_at_utc": "2026-09-30T09:20:32Z",
+    "branch": "bellerophon/repl-internalize-2026-09-30"
+  },
+  "next": {
+    "id": "E-BEL-REPL-02",
+    "title": "Automatic mutant/falsifier transformations for anything that survives CURRENT"
+  },
+  "reserve": [
+    {
+      "id": "E-BEL-BUILD-01",
+      "title": "Generalize useful BEE controls into BUILDER-EXPERIMENT"
+    }
+  ],
+  "resource_status": {
+    "envelope": "MWO-0004 R2: <= 16 CPU core-hours per item, <= 48 per day",
+    "leases_held": [],
+    "core_hours_today": 0,
+    "gpu": "none",
+    "spend_usd": 0,
+    "note": "pilot 2 on ubu001 Fabric script workers (M2 cpu12 held by Nestor X-MAT); est < 2 core-h"
+  },
+  "last_receipt": {
+    "what": "E-003 post-hoc Q4 summary recompute (reproduces published file exactly)",
+    "path": "roles/Bellerophon/e003_2026-09-29/receipts/POSTHOC_Q4_SUMMARY_RECOMPUTE_2026-09-30.json"
+  }
 }

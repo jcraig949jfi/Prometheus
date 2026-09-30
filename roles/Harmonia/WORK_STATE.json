@@ -3,7 +3,7 @@
   "seat": "Harmonia",
   "mwo_id": "MWO-0004",
   "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
-  "updated_at_utc": "2026-09-30T11:20:00Z",
+  "updated_at_utc": "2026-09-30T12:40:00Z",
   "state": "WORKING",
   "branch": "harmonia/m2-475d761f-mwo1-2026-09-28",
   "head_sha": "3c897c32f029bb9f68ce30509dd71a242cc45d9c",
@@ -37,9 +37,9 @@
     }
   ],
   "next_actions": [
-    "CURRENT: audit Tyche v0 report on arrival",
-    "NEXT: AP multiplicity/power helper; candidate AP verdict-under-frozen-vs-amended diff (F7)",
-    "watch for operator ruling on E-003 (#1044)"
+    "watch for operator ruling on E-003 (#1044)",
+    "sample new closures (evidence audit 3)",
+    "AP helpers (multiplicity/power; frozen-vs-amended verdict diff)"
   ],
   "overtaken": [
     {
@@ -56,19 +56,19 @@
     }
   ],
   "operator_decisions_required": [
-    "CWO s4 escalation: Bellerophon/Archaeon E-003 BEE leg -- VALIDATED rests on post-exposure amendment C4.2 (undisclosed in s1a) that removed frozen route 'P2 holds -> ALTERED'; under pre-exposure rules the committed rows give ALTERED. Operator to rule on the verdict of record (EVIDENCE_AUDIT_2026-09-30_SAMPLE2.md s H)"
+    "CWO s4: E-003 BEE-leg verdict of record (owner erratum d06059735 accepts pre-exposure ALTERED as confirmatory; VALIDATED conditional-only; operator to rule). Harmonia reading: ALTERED of record."
   ],
   "latest_reports": [
+    "roles/Harmonia/audits/EVIDENCE_AUDIT_2026-09-30_SAMPLE3.md",
     "roles/Harmonia/audits/EVIDENCE_AUDIT_2026-09-30_SAMPLE2.md",
-    "roles/Harmonia/audits/RULER_QUALITY_2026-09-30.md",
-    "roles/Harmonia/audits/EVIDENCE_AUDIT_2026-09-30.md"
+    "roles/Harmonia/audits/RULER_QUALITY_2026-09-30.md"
   ],
   "mwo_sha256": "925660b2d2be53af2ee4195391e484d9649bbd4ee828cd60432ce2f0903a99df",
   "migration_report": "roles/Harmonia/MIGRATION_REPORT_MWO-0002.json",
   "comms_cursor": "#961 (sync 2026-09-29T06:58Z, instance m2-475d761f); queue empty",
   "probe_result": "roles/Harmonia/probes/FP-001_RESULT.json",
   "work_order": "MWO-0004 (current) + CWO 2026-09-30 fleet activation (ops/fleet/CWO_2026-09-30_FLEET_ACTIVATION.md, text sha256 ab93f646...b7e, 6a7a84569; Authority: Operator, executor Aporia; comms #1024/#1034)",
-  "current": "FOLLOW-UP EVIDENCE AUDIT (promoted): Tyche v0 report when it lands (check H1/H6 labelled UNREACHABLE_BY_DESIGN), then Ensorain/Ananke closures",
+  "current": "FOLLOW-UP: Tyche v0 audited for labelling (applied); self-correction C-1 done. Next CURRENT: evidence-audit sample 3 when new closures land",
   "next": "extend AP with a multiplicity/power helper for sealed-holdout designs",
   "reserve": [
     "evidence-audit sample 2: Ensorain, Ananke, Bellerophon closures"
@@ -81,5 +81,5 @@
     }
   ],
   "resource_status": "local CPU only; no leases; no spend",
-  "last_receipt": "STANDING_RULES F6-F7 + audit_primitives AP-1.1.0 freeze_precedes (9 tests)"
+  "last_receipt": "roles/Harmonia/audits/EVIDENCE_AUDIT_2026-09-30_SAMPLE3.md (Aether E-010, Nestor X-MAT-INTERNALIZE: SUPPORTED, minor only)"
 }

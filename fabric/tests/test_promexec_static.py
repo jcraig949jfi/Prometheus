@@ -53,7 +53,7 @@ def test_unit_properties_carry_the_repairs():
     joined = "\n".join(props)
     for need in ("DynamicUser=yes", "NoNewPrivileges=yes", "RestrictSUIDSGID=yes", "ProtectSystem=strict",
                  "ProtectHome=yes", "PrivateDevices=yes", "PrivateTmp=yes", "ProtectProc=invisible", "ProcSubset=pid",
-                 "PrivateNetwork=yes", "IPAddressDeny=any", "TemporaryFileSystem=/var/lib/promexec:ro",
+                 "PrivateNetwork=yes", "IPAddressDeny=any", "UMask=0022", "TemporaryFileSystem=/var/lib/promexec:ro",
                  "MemoryMax=512M", "TasksMax=16", "RuntimeMaxSec=60", "TMPDIR=/var/lib/promexec/work/tmp"):
         assert need in joined, need
     assert not any(p.startswith(("User=", "Group=")) for p in props)      # a static user would defeat DynamicUser
@@ -90,16 +90,26 @@ def test_wrapper_refuses_mismatched_broker(tmp_path, monkeypatch, capsys):
     _attempt(tmp_path, monkeypatch)
     fake = tmp_path / "installed"; fake.write_text("not the committed broker\n")
     real = wrapper.broker_matches
-    monkeypatch.setattr(wrapper, "broker_matches", lambda: real(fake, wrapper.COMMITTED_BROKER))
+    monkeypatch.setattr(wrapper, "broker_matches", lambda: real(fake, wrapper.COMMITTED_BROKER, wrapper.REVIEWED_PIN))
     assert wrapper.main(["job.py"]) == 64
     assert "M20" in capsys.readouterr().err
 
 
 def test_broker_matches_detects_difference(tmp_path):
+    import hashlib
     a = tmp_path / "a"; a.write_text("x"); b = tmp_path / "b"; b.write_text("y")
-    assert wrapper.broker_matches(a, a)[0] is True
-    assert wrapper.broker_matches(a, b)[0] is False
-    assert wrapper.broker_matches(tmp_path / "missing", a)[0] is False
+    pin = tmp_path / "pin"; pin.write_text(hashlib.sha256(b"x").hexdigest() + "  broker.py\n")
+    assert wrapper.broker_matches(a, a, pin)[0] is True
+    assert wrapper.broker_matches(a, b, pin)[0] is False
+    assert wrapper.broker_matches(b, b, pin)[0] is False            # N1: committed drift that matches install still refused
+    assert wrapper.broker_matches(tmp_path / "missing", a, pin)[0] is False
+    pin.write_text("not-a-hash\n")
+    assert wrapper.broker_matches(a, a, pin)[0] is False
+
+
+def test_reviewed_pin_matches_committed_broker():
+    import hashlib
+    assert wrapper.reviewed_pin() == hashlib.sha256((ROOT / "fabric/promexec/broker.py").read_bytes()).hexdigest()
 
 
 def test_wrapper_stages_args_in_a_file_not_argv(tmp_path, monkeypatch):
@@ -136,8 +146,11 @@ def test_transfer_keeps_mtime(tmp_path):
     orig = broker.drop_to
     broker.drop_to = lambda u, g: None                       # no privilege change needed for this check
     try:
-        c1, c2 = broker.transfer(uid, gid, str(src), uid, gid, str(dst), 2**20, 10)
+        os.symlink(f, src / "link.txt"); os.mkfifo(src / "fifo")
+        c1, c2, counts = broker.transfer(uid, gid, str(src), uid, gid, str(dst), 2**20, 10)
     finally:
         broker.drop_to = orig
     assert (c1, c2) == (0, 0)
+    assert counts == {"files": 1, "skipped": 2}                  # N2: skips are counted, not silent
+    assert sorted(x.name for x in dst.iterdir()) == ["r.txt"]
     assert int((dst / "r.txt").stat().st_mtime) == 1790000000

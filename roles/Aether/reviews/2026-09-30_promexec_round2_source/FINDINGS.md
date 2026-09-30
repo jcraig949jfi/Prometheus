@@ -55,3 +55,18 @@ After the operator's install:
    and a live unit's effective properties (this settles N3);
 2. I re-read the installed broker by hash (it should be f57ec6a5... or a reviewed successor) and re-run the matrix;
 3. the substitution fixtures for surface 9 at wiring (step 8).
+
+## Addendum (2026-09-30) -- delta f57ec6a5 -> 3cf32a64 (9f95f9ea0; Odysseus #1049)
+
+Read-only review of the diff 7b145ddbd..9f95f9ea0 (broker.py, tools/promexec.py). broker.py at 9f95f9ea0 has git-blob
+sha256 3cf32a642febd032..., equal to fabric/promexec/REVIEWED_BROKER_SHA256.
+- **N1: RESOLVED on source.** broker_matches requires installed == pin == committed, and the pin must be exactly 64
+  hex. A later broker change must also change the pin, visibly.
+- **N2: RESOLVED on source.** UMask=0022 is added to HARDENING. The transfer children report
+  {"files", "skipped"} over a separate pipe.
+  - The parent closes the write end before forking the extractor, so there is no fd leak into it and no EOF wait.
+  - The stats JSON is far below the pipe buffer, so writing it cannot block.
+  - A child that fails before writing gives counts None, which is reported, not hidden.
+- No new issues. Nothing blocks the operator install of 3cf32a64 (runbook at 9f95f9ea0).
+- The pin counts as REVIEWED only in round 2 proper, when I confirm it against the INSTALLED broker and the
+  ACCEPTANCE_RUNS pass. N3 is still open until the live unit.
