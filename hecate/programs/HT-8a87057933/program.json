@@ -427,6 +427,40 @@
         "unexpectedness": "medium",
         "potential_importance": "medium"
       }
+    },
+    {
+      "id": "P3-probe1",
+      "triplicateId": "HT-8a87057933",
+      "index": 3,
+      "kind": "cheap_probe",
+      "added": [
+        "new observable"
+      ],
+      "generator": {
+        "model": "claude-opus-5-5 (implementer)",
+        "search": false,
+        "prompt": "hecate/programs/_prompts/probe_impl_v1.md",
+        "prompt_sha256": "cf4bd374bce1b817a12d3607063278183ce0a8b7c4a7b771061dc8ce133bcea2"
+      },
+      "prereg": "roles/Hecate/prereg/2026-09-29_probe_round1/PREREG.md",
+      "inspected_prior": [
+        "W1"
+      ],
+      "unexplained": [],
+      "decision": "DEEPEN",
+      "research_state": {
+        "novelty": "unknown",
+        "mechanistic_clarity": "unknown",
+        "falsifiability": "unknown",
+        "empirical_support": "none",
+        "cross_lens_agreement": "unknown",
+        "cross_substrate_transfer": "unknown",
+        "baseline_resistance": "unknown",
+        "artifact_risk": "unknown",
+        "cost": "unknown",
+        "unexpectedness": "unknown",
+        "potential_importance": "unknown"
+      }
     }
   ],
   "hypotheses": [
@@ -986,6 +1020,22 @@
         "what_can_transfer": "the refutation-valued policy",
         "distinguishing_observable": "models eliminated per probe vs random and greedy info-gain"
       }
+    },
+    {
+      "id": "O-W1-r1",
+      "triplicateId": "HT-8a87057933",
+      "passId": "P3-probe1",
+      "kind": "observation",
+      "layer": "experimental_observation",
+      "evidence_rows": [
+        "hecate/programs/HT-8a87057933/worlds/W1/rows.jsonl",
+        "hecate/programs/HT-8a87057933/worlds/W1/OUTCOME.json"
+      ],
+      "statement": "W1 probe round 1: NOT_BUILT. Outcome NOT_BUILT. Median recovery (steps, n=300 switches each): TREATMENT 3.0, CONTROL drop-oldest 3.0, NULL_TWIN random-drop 5.0, POSITIVE_CONTROL oracle 3.0, CONTROL_SW10 3.0. Treatment/random ratio 0.600 (p=1.92e-56), treatment/drop-oldest ratio 1.000 (p=0.412). Positive control detected=False, cheat detected=True, null twin meets success=False.",
+      "derived_from": [
+        "M1",
+        "M8"
+      ]
     }
   ],
   "lenses": [
@@ -1207,7 +1257,120 @@
         "core-guided dropping is drop-oldest under another name",
         "deadbeat control on a fine grid recovers in 2 steps regardless of policy",
         "the noise band makes UNSAT fire spuriously, so the 'mechanism' is just a noise detector"
-      ]
+      ],
+      "outcome": "NOT_BUILT",
+      "raw_outcome": "NOT_BUILT",
+      "procedural_notes": [],
+      "rows": "hecate/programs/HT-8a87057933/worlds/W1/rows.jsonl",
+      "outcome_file": "hecate/programs/HT-8a87057933/worlds/W1/OUTCOME.json",
+      "statistics": {
+        "TREATMENT": {
+          "n_switches": 300,
+          "n_seeds": 30,
+          "median_recovery": 3.0,
+          "mean_recovery": 3.4266666666666667,
+          "frac_censored": 0.0,
+          "frac_at_minimum_10": 0.013333333333333334,
+          "mean_unsat_events_per_run": 16.066666666666666,
+          "mean_core_size": 2.2852618253779244,
+          "mean_core_turnover": 0.9406266959662857,
+          "mean_preswitch_fraction_dropped": 1.0,
+          "L4_recovery_pole_stable_fraction": 0.947352157102157,
+          "max_abs_x": 9.885206628722408,
+          "ratio_to_null_twin": 0.6,
+          "ratio_to_drop_oldest": 1.0,
+          "p_vs_null_twin": 1.9226619220603058e-56,
+          "p_vs_drop_oldest": 0.41166896559092336,
+          "meets_failure_criterion": true
+        },
+        "CONTROL": {
+          "n_switches": 300,
+          "n_seeds": 30,
+          "median_recovery": 3.0,
+          "mean_recovery": 3.4566666666666666,
+          "frac_censored": 0.0,
+          "frac_at_minimum_10": 0.013333333333333334,
+          "mean_unsat_events_per_run": 15.0,
+          "mean_core_size": 2.271125655390361,
+          "mean_core_turnover": 0.9406066641691642,
+          "mean_preswitch_fraction_dropped": 1.0,
+          "L4_recovery_pole_stable_fraction": 0.9482468457468459,
+          "max_abs_x": 9.885206628722408
+        },
+        "CONTROL_SW10": {
+          "n_switches": 300,
+          "n_seeds": 30,
+          "median_recovery": 3.0,
+          "mean_recovery": 3.6266666666666665,
+          "frac_censored": 0.0,
+          "frac_at_minimum_10": 0.006666666666666667,
+          "mean_unsat_events_per_run": 14.8,
+          "mean_core_size": 2.3685052066669714,
+          "mean_core_turnover": 0.9268336320542202,
+          "mean_preswitch_fraction_dropped": 1.0,
+          "L4_recovery_pole_stable_fraction": 0.9440867991657466,
+          "max_abs_x": 11.888705560104112
+        },
+        "NULL_TWIN": {
+          "n_switches": 300,
+          "n_seeds": 30,
+          "median_recovery": 5.0,
+          "mean_recovery": 6.653333333333333,
+          "frac_censored": 0.0,
+          "frac_at_minimum_10": 0.013333333333333334,
+          "mean_unsat_events_per_run": 33.766666666666666,
+          "mean_core_size": 2.1584190863053956,
+          "mean_core_turnover": 0.890098551597672,
+          "mean_preswitch_fraction_dropped": 0.6599804849887358,
+          "L4_recovery_pole_stable_fraction": 0.8745403462570982,
+          "max_abs_x": 15020.780223451004,
+          "p_vs_drop_oldest": 1.0,
+          "ratio_to_drop_oldest": 1.6666666666666667
+        },
+        "POSITIVE_CONTROL": {
+          "n_switches": 300,
+          "n_seeds": 30,
+          "median_recovery": 3.0,
+          "mean_recovery": 2.76,
+          "frac_censored": 0.0,
+          "frac_at_minimum_10": 0.006666666666666667,
+          "mean_unsat_events_per_run": 0.0,
+          "mean_core_size": null,
+          "mean_core_turnover": null,
+          "mean_preswitch_fraction_dropped": null,
+          "L4_recovery_pole_stable_fraction": 0.8935353535353535,
+          "max_abs_x": 16.122638978554793,
+          "ratio_to_null_twin": 0.6,
+          "ratio_to_drop_oldest": 1.0,
+          "p_vs_null_twin": 5.6862495409127475e-90,
+          "p_vs_drop_oldest": 1.244864942643236e-12
+        },
+        "CHEAT": {
+          "n_switches": 300,
+          "n_seeds": 30,
+          "median_recovery": 1.0,
+          "mean_recovery": 1.0,
+          "frac_censored": 0.0,
+          "frac_at_minimum_10": 1.0,
+          "mean_unsat_events_per_run": 16.066666666666666,
+          "mean_core_size": 2.2852618253779244,
+          "mean_core_turnover": 0.9406266959662857,
+          "mean_preswitch_fraction_dropped": 1.0,
+          "L4_recovery_pole_stable_fraction": 0.947352157102157,
+          "max_abs_x": 9.885206628722408,
+          "ratio_to_null_twin": 0.2,
+          "ratio_to_drop_oldest": 0.3333333333333333,
+          "p_vs_null_twin": 4.6958600128761305e-112,
+          "p_vs_drop_oldest": 4.3408845160176705e-114
+        }
+      },
+      "anomalies": [
+        {
+          "id": "A1",
+          "text": "oracle reset not faster than drop-oldest (median 3.0 vs 3.0)"
+        }
+      ],
+      "rejected_explanations": []
     },
     {
       "id": "W2",
@@ -1307,6 +1470,7 @@
   "currentVerdict": "SPECULATIVE",
   "evidenceSummary": {
     "layer": "speculation",
-    "note": "Pass 0-3 specs only; nothing run"
+    "note": "probe round 1: W1 NOT_BUILT; nothing supported (no Pass 4 yet)",
+    "rows": "hecate/programs/HT-8a87057933/worlds/W1/rows.jsonl"
   }
 }

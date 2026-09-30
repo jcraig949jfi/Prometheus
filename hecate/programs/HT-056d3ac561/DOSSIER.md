@@ -25,14 +25,14 @@ Layers: [spec] speculation, [impl] implemented candidate, [obs] experimental obs
 - [spec] I7: A trilemma: sparse coding separates similar inputs, filtering smooths across time, metamorphic relations demand consistency across transforms; the three cannot all be maximized, and there may be a phase boundary where relation violations peak. Experiment: sweep threshold and gain and look for a ridge.
 
 ## CANDIDATE PHYSICS
-- [spec] M1 (error-correction mechanism): Metamorphic pseudo-measurement: the Kalman update uses the MR residual r = g(f(x)) - f(T x), whose expected value is zero under a correct model, as its measurement, estimating hidden model parameters stored as a sparse coefficient vector.
+- [impl] M1 (error-correction mechanism): Metamorphic pseudo-measurement: the Kalman update uses the MR residual r = g(f(x)) - f(T x), whose expected value is zero under a correct model, as its measurement, estimating hidden model parameters stored as a sparse coefficient vector.
 - [spec] M2 (dynamical law): Sparse-innovation filter: after prediction, the innovation in code space is soft-thresholded, so updates are events touching few atoms; the transform T supplies the prediction.
 - [spec] M3 (learning pressure): Covariance reopening: the rate of metamorphic violations inflates process noise Q, so a filter that has become overconfident starts listening again when relations it should satisfy begin failing.
 - [spec] M4 (representation): Support equivariance: a sparse code satisfies the MR supp(S(T x)) = pi_T(supp(S(x))) for some fixed permutation pi_T of atoms. Three-way dependency WEAK: the filter only enters when codes are tracked over sequences of transforms.
 - [spec] M5 (memory structure): Relation dictionary: the violation vector over a library of candidate MRs is sparse-coded against a dictionary of fault signatures, and a filter tracks the coefficients as the system under test drifts.
 - [spec] M6 (computational primitive): Transform-as-transition: fit a Kalman transition matrix A in code space from pairs (alpha(x), alpha(T x)); the MRs of T's group structure (T^n = I, commutation) become testable laws on A.
 - [spec] M7 (dynamical law): Gain collapse and support lock-in couple: when code inference is warm-started by a low-gain Kalman prediction, the support rarely switches, so support-level MRs pass while the true support has changed (self-sealing).
-- [spec] M8 (error-correction mechanism): Oracle-free divergence detection by stride MR: the same filter run on the data at stride 1 and stride 2 (model A^2) should agree within computable covariance; systematic disagreement flags model mismatch, and sparse regression of the disagreement on parameter sensitivities localizes which entry of A is wrong.
+- [impl] M8 (error-correction mechanism): Oracle-free divergence detection by stride MR: the same filter run on the data at stride 1 and stride 2 (model A^2) should agree within computable covariance; systematic disagreement flags model mismatch, and sparse regression of the disagreement on parameter sensitivities localizes which entry of A is wrong.
 - [spec] M9 (selection mechanism): Sparse test selection: at each step choose k of N metamorphic relations maximizing expected covariance reduction of a sparse fault vector, updating the fault belief recursively.
 - [spec] M10 (mutation operator): Metamorphic mutation: dictionaries (organisms) are mutated only along MR-preserving transforms of their atoms, and a filter estimates lineage fitness from noisy reconstruction scores. Three-way dependency WEAK on the filter side.
 - [spec] M11 (dynamical law): Separation-smoothing-consistency trilemma: MR violation rate peaks on a ridge in (lambda, Q/R) space where pattern separation and temporal smoothing conflict.
@@ -58,13 +58,17 @@ Layers: [spec] speculation, [impl] implemented candidate, [obs] experimental obs
 - W4 [causal toy] When MR residuals reveal only the projection of a fault outside the relation kernel, a sparse fault prior recovers the full fault including its kernel component, while min-norm recovery cannot. | success: For k <= 3 over 200 trials: Lasso error <= 0.20 in >= 80% of trials AND min-norm error >= 0.50 in >= 80% of trials AND null-twin Lasso error <= 0.20 in <= 20% of trials. | null twin: Dense faults (Gaussian over all 40 atoms) with the same total energy and the same kernel-energy fraction. | cost: 3
 
 ## OBSERVATIONS
-_none yet_
+- W1: INSTRUMENT_FAIL (hecate/programs/HT-056d3ac561/worlds/W1/rows.jsonl)
 
 ## FALSIFICATIONS
 _none yet_
 
 ## SURVIVING ANOMALIES
-_none yet_
+- W1: delta=0.05: oracle true-state-RMSE AUC 0.476 ~ chance; mismatch not visible between seeds even with ground truth
+- W1: delta=0.1: oracle true-state-RMSE AUC 0.490 ~ chance; mismatch not visible between seeds even with ground truth
+- W1: delta=0.2: oracle true-state-RMSE AUC 0.558 ~ chance; mismatch not visible between seeds even with ground truth
+- W1: Lasso top-1 accuracy 0.000 below data-free sensitivity-norm baseline 0.160
+- W1: matched-run Lasso top-1 concentrated on entry 13 (49/50)
 
 ## CROSS-SUBSTRATE RESULTS
 _none yet_
@@ -79,12 +83,10 @@ _none yet_
 _none yet_
 
 ## OPEN QUESTIONS
-- W4 may reduce to compressed sensing
-- W2 may reduce to convolutional dictionaries
-- nothing run
+_none yet_
 
 ## CURRENT VERDICT
-SPECULATIVE (an allocation state, not a truth claim). Pass 0-3 specs only; nothing run
+SPECULATIVE (an allocation state, not a truth claim). probe round 1: W1 INSTRUMENT_FAIL; nothing supported (no Pass 4 yet)
 
 ## NEXT PASS
-decision after P3: FALSIFY
+decision after P3-probe1: DEEPEN

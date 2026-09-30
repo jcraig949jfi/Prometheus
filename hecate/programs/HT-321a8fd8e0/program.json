@@ -394,6 +394,44 @@
         "unexpectedness": "medium",
         "potential_importance": "medium"
       }
+    },
+    {
+      "id": "P3-probe1",
+      "triplicateId": "HT-321a8fd8e0",
+      "index": 3,
+      "kind": "cheap_probe",
+      "added": [
+        "new observable"
+      ],
+      "generator": {
+        "model": "claude-opus-5-5 (implementer)",
+        "search": false,
+        "prompt": "hecate/programs/_prompts/probe_impl_v1.md",
+        "prompt_sha256": "cf4bd374bce1b817a12d3607063278183ce0a8b7c4a7b771061dc8ce133bcea2"
+      },
+      "prereg": "roles/Hecate/prereg/2026-09-29_probe_round1/PREREG.md",
+      "inspected_prior": [
+        "W1"
+      ],
+      "unexplained": [
+        "the threshold is exactly the textbook decoding radius, so nothing new",
+        "restricting coalition search to own symbols guarantees the result",
+        "majority/repetition voting would show the same robustness"
+      ],
+      "decision": "FALSIFY",
+      "research_state": {
+        "novelty": "unknown",
+        "mechanistic_clarity": "unknown",
+        "falsifiability": "unknown",
+        "empirical_support": "low",
+        "cross_lens_agreement": "unknown",
+        "cross_substrate_transfer": "unknown",
+        "baseline_resistance": "unknown",
+        "artifact_risk": "unknown",
+        "cost": "unknown",
+        "unexpectedness": "unknown",
+        "potential_importance": "unknown"
+      }
     }
   ],
   "hypotheses": [
@@ -525,7 +563,7 @@
       "triplicateId": "HT-321a8fd8e0",
       "passId": "P1",
       "kind": "mechanism",
-      "layer": "speculation",
+      "layer": "implemented_candidate",
       "form": "error-correction mechanism",
       "statement": "Code-decoded outcome rule: each agent's report is a symbol of a codeword with distance d; the outcome is the decoded message; coalitions smaller than d/2 cannot shift the outcome, so manipulation resistance comes from redundancy instead of payments.",
       "derived_from": [
@@ -987,6 +1025,21 @@
         "what_can_transfer": "network across payment rules",
         "distinguishing_observable": "compression ratio vs depth against a shortest-path-tree null"
       }
+    },
+    {
+      "id": "O-W1-r1",
+      "triplicateId": "HT-321a8fd8e0",
+      "passId": "P3-probe1",
+      "kind": "observation",
+      "layer": "experimental_observation",
+      "evidence_rows": [
+        "hecate/programs/HT-321a8fd8e0/worlds/W1/rows.jsonl",
+        "hecate/programs/HT-321a8fd8e0/worlds/W1/OUTCOME.json"
+      ],
+      "statement": "W1 probe round 1: SIGNAL. BCH(31,16) with verified d=7 (covering radius 5), exact nearest-codeword decoding, exhaustive 2^k coalition search, 4000 coalitions per k. TREATMENT manipulation rate by k: {1: 0.0, 2: 0.0, 3: 0.0, 4: 0.5883, 5: 0.9205, 6: 1.0, 7: 1.0, 8: 1.0}. CONTROL random-parity k=1 rate 1.0000; NULL_TWIN k=1 rate 1.0000; POSITIVE_CONTROL k=1 rate 1.0000. Outcome SIGNAL by the PREREG class rules applied in code.",
+      "derived_from": [
+        "M3"
+      ]
     }
   ],
   "lenses": [
@@ -1201,7 +1254,306 @@
         "majority/repetition voting would show the same robustness"
       ],
       "triplicateId": "HT-321a8fd8e0",
-      "passId": "P3"
+      "passId": "P3",
+      "outcome": "SIGNAL",
+      "raw_outcome": "SIGNAL",
+      "procedural_notes": [],
+      "rows": "hecate/programs/HT-321a8fd8e0/worlds/W1/rows.jsonl",
+      "outcome_file": "hecate/programs/HT-321a8fd8e0/worlds/W1/OUTCOME.json",
+      "statistics": {
+        "CHEAT": {
+          "1": {
+            "rate": 0.0,
+            "n_coalitions": 4000,
+            "n_seeds": 20,
+            "seed_rate_min": 0.0,
+            "seed_rate_max": 0.0
+          },
+          "2": {
+            "rate": 0.0,
+            "n_coalitions": 4000,
+            "n_seeds": 20,
+            "seed_rate_min": 0.0,
+            "seed_rate_max": 0.0
+          },
+          "3": {
+            "rate": 0.0,
+            "n_coalitions": 4000,
+            "n_seeds": 20,
+            "seed_rate_min": 0.0,
+            "seed_rate_max": 0.0
+          },
+          "4": {
+            "rate": 1.0,
+            "n_coalitions": 4000,
+            "n_seeds": 20,
+            "seed_rate_min": 1.0,
+            "seed_rate_max": 1.0
+          },
+          "5": {
+            "rate": 1.0,
+            "n_coalitions": 4000,
+            "n_seeds": 20,
+            "seed_rate_min": 1.0,
+            "seed_rate_max": 1.0
+          },
+          "6": {
+            "rate": 1.0,
+            "n_coalitions": 4000,
+            "n_seeds": 20,
+            "seed_rate_min": 1.0,
+            "seed_rate_max": 1.0
+          },
+          "7": {
+            "rate": 1.0,
+            "n_coalitions": 4000,
+            "n_seeds": 20,
+            "seed_rate_min": 1.0,
+            "seed_rate_max": 1.0
+          },
+          "8": {
+            "rate": 1.0,
+            "n_coalitions": 4000,
+            "n_seeds": 20,
+            "seed_rate_min": 1.0,
+            "seed_rate_max": 1.0
+          }
+        },
+        "CONTROL": {
+          "1": {
+            "rate": 1.0,
+            "n_coalitions": 4000,
+            "n_seeds": 20,
+            "seed_rate_min": 1.0,
+            "seed_rate_max": 1.0
+          },
+          "2": {
+            "rate": 1.0,
+            "n_coalitions": 4000,
+            "n_seeds": 20,
+            "seed_rate_min": 1.0,
+            "seed_rate_max": 1.0
+          },
+          "3": {
+            "rate": 1.0,
+            "n_coalitions": 4000,
+            "n_seeds": 20,
+            "seed_rate_min": 1.0,
+            "seed_rate_max": 1.0
+          },
+          "4": {
+            "rate": 1.0,
+            "n_coalitions": 4000,
+            "n_seeds": 20,
+            "seed_rate_min": 1.0,
+            "seed_rate_max": 1.0
+          },
+          "5": {
+            "rate": 1.0,
+            "n_coalitions": 4000,
+            "n_seeds": 20,
+            "seed_rate_min": 1.0,
+            "seed_rate_max": 1.0
+          },
+          "6": {
+            "rate": 1.0,
+            "n_coalitions": 4000,
+            "n_seeds": 20,
+            "seed_rate_min": 1.0,
+            "seed_rate_max": 1.0
+          },
+          "7": {
+            "rate": 1.0,
+            "n_coalitions": 4000,
+            "n_seeds": 20,
+            "seed_rate_min": 1.0,
+            "seed_rate_max": 1.0
+          },
+          "8": {
+            "rate": 1.0,
+            "n_coalitions": 4000,
+            "n_seeds": 20,
+            "seed_rate_min": 1.0,
+            "seed_rate_max": 1.0
+          }
+        },
+        "NULL_TWIN": {
+          "1": {
+            "rate": 1.0,
+            "n_coalitions": 4000,
+            "n_seeds": 20,
+            "seed_rate_min": 1.0,
+            "seed_rate_max": 1.0
+          },
+          "2": {
+            "rate": 1.0,
+            "n_coalitions": 4000,
+            "n_seeds": 20,
+            "seed_rate_min": 1.0,
+            "seed_rate_max": 1.0
+          },
+          "3": {
+            "rate": 1.0,
+            "n_coalitions": 4000,
+            "n_seeds": 20,
+            "seed_rate_min": 1.0,
+            "seed_rate_max": 1.0
+          },
+          "4": {
+            "rate": 1.0,
+            "n_coalitions": 4000,
+            "n_seeds": 20,
+            "seed_rate_min": 1.0,
+            "seed_rate_max": 1.0
+          },
+          "5": {
+            "rate": 1.0,
+            "n_coalitions": 4000,
+            "n_seeds": 20,
+            "seed_rate_min": 1.0,
+            "seed_rate_max": 1.0
+          },
+          "6": {
+            "rate": 1.0,
+            "n_coalitions": 4000,
+            "n_seeds": 20,
+            "seed_rate_min": 1.0,
+            "seed_rate_max": 1.0
+          },
+          "7": {
+            "rate": 1.0,
+            "n_coalitions": 4000,
+            "n_seeds": 20,
+            "seed_rate_min": 1.0,
+            "seed_rate_max": 1.0
+          },
+          "8": {
+            "rate": 1.0,
+            "n_coalitions": 4000,
+            "n_seeds": 20,
+            "seed_rate_min": 1.0,
+            "seed_rate_max": 1.0
+          }
+        },
+        "POSITIVE_CONTROL": {
+          "1": {
+            "rate": 1.0,
+            "n_coalitions": 4000,
+            "n_seeds": 20,
+            "seed_rate_min": 1.0,
+            "seed_rate_max": 1.0
+          },
+          "2": {
+            "rate": 1.0,
+            "n_coalitions": 4000,
+            "n_seeds": 20,
+            "seed_rate_min": 1.0,
+            "seed_rate_max": 1.0
+          },
+          "3": {
+            "rate": 1.0,
+            "n_coalitions": 4000,
+            "n_seeds": 20,
+            "seed_rate_min": 1.0,
+            "seed_rate_max": 1.0
+          },
+          "4": {
+            "rate": 1.0,
+            "n_coalitions": 4000,
+            "n_seeds": 20,
+            "seed_rate_min": 1.0,
+            "seed_rate_max": 1.0
+          },
+          "5": {
+            "rate": 1.0,
+            "n_coalitions": 4000,
+            "n_seeds": 20,
+            "seed_rate_min": 1.0,
+            "seed_rate_max": 1.0
+          },
+          "6": {
+            "rate": 1.0,
+            "n_coalitions": 4000,
+            "n_seeds": 20,
+            "seed_rate_min": 1.0,
+            "seed_rate_max": 1.0
+          },
+          "7": {
+            "rate": 1.0,
+            "n_coalitions": 4000,
+            "n_seeds": 20,
+            "seed_rate_min": 1.0,
+            "seed_rate_max": 1.0
+          },
+          "8": {
+            "rate": 1.0,
+            "n_coalitions": 4000,
+            "n_seeds": 20,
+            "seed_rate_min": 1.0,
+            "seed_rate_max": 1.0
+          }
+        },
+        "TREATMENT": {
+          "1": {
+            "rate": 0.0,
+            "n_coalitions": 4000,
+            "n_seeds": 20,
+            "seed_rate_min": 0.0,
+            "seed_rate_max": 0.0
+          },
+          "2": {
+            "rate": 0.0,
+            "n_coalitions": 4000,
+            "n_seeds": 20,
+            "seed_rate_min": 0.0,
+            "seed_rate_max": 0.0
+          },
+          "3": {
+            "rate": 0.0,
+            "n_coalitions": 4000,
+            "n_seeds": 20,
+            "seed_rate_min": 0.0,
+            "seed_rate_max": 0.0
+          },
+          "4": {
+            "rate": 0.58825,
+            "n_coalitions": 4000,
+            "n_seeds": 20,
+            "seed_rate_min": 0.535,
+            "seed_rate_max": 0.645
+          },
+          "5": {
+            "rate": 0.9205,
+            "n_coalitions": 4000,
+            "n_seeds": 20,
+            "seed_rate_min": 0.865,
+            "seed_rate_max": 0.97
+          },
+          "6": {
+            "rate": 1.0,
+            "n_coalitions": 4000,
+            "n_seeds": 20,
+            "seed_rate_min": 1.0,
+            "seed_rate_max": 1.0
+          },
+          "7": {
+            "rate": 1.0,
+            "n_coalitions": 4000,
+            "n_seeds": 20,
+            "seed_rate_min": 1.0,
+            "seed_rate_max": 1.0
+          },
+          "8": {
+            "rate": 1.0,
+            "n_coalitions": 4000,
+            "n_seeds": 20,
+            "seed_rate_min": 1.0,
+            "seed_rate_max": 1.0
+          }
+        }
+      },
+      "anomalies": [],
+      "rejected_explanations": []
     },
     {
       "id": "W2",
@@ -1297,9 +1649,10 @@
     }
   ],
   "candidateEngines": [],
-  "currentVerdict": "SPECULATIVE",
+  "currentVerdict": "PROBING",
   "evidenceSummary": {
-    "layer": "speculation",
-    "note": "Pass 0-3 specs only; nothing run"
+    "layer": "experimental_observation",
+    "note": "probe round 1: W1 SIGNAL; nothing supported (no Pass 4 yet)",
+    "rows": "hecate/programs/HT-321a8fd8e0/worlds/W1/rows.jsonl"
   }
 }

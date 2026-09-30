@@ -28,7 +28,7 @@ Layers: [spec] speculation, [impl] implemented candidate, [obs] experimental obs
 - [spec] M1 (dynamical law): Desirability-rank law: for KL-regularized control on a product state space with product passive dynamics, the desirability tensor z = exp(-V/lambda) has TT rank no larger than, and often much smaller than, V; rank(z) tracks the rank of the non-additive (coupling) part of the state cost rather than the number of state factors.
 - [spec] M2 (organism architecture): Rank-budgeted maximum-entropy policy: the organism's joint action distribution is a mixture of R product distributions (nonnegative CP rank R); within that budget it minimizes expected cost minus lambda times entropy. The free-energy gap versus R has a knee at the number of coordination modes the cost actually demands.
 - [spec] M3 (dynamical law): Temperature-driven rank transition: the nonnegative rank needed to approximate the Gibbs policy of a coupled cost to fixed KL tolerance is non-monotone in inverse temperature beta: 1 at high temperature, peaking at an intermediate beta, and settling at the number of ground states at low temperature.
-- [spec] M4 (information bottleneck): Control-relevant constraint selection: a maximum-entropy world model constrains only the moments lying in the span of the leading Tucker factors of the stacked desirability tensor over past goals; it is maximally ignorant elsewhere. It should transfer to new goals sharing those factors and fail on goals built from orthogonal factors, more sharply than a prediction-relevant model.
+- [impl] M4 (information bottleneck): Control-relevant constraint selection: a maximum-entropy world model constrains only the moments lying in the span of the leading Tucker factors of the stacked desirability tensor over past goals; it is maximally ignorant elsewhere. It should transfer to new goals sharing those factors and fail on goals built from orthogonal factors, more sharply than a prediction-relevant model.
 - [spec] M5 (representation): Price tensor: stacking constraint multipliers (maximum entropy) and costates (Pontryagin) over time, state coordinate and constraint index yields a tensor whose Tucker core size counts the independent constraint 'concerns' the controller trades off, which can be smaller than the number of active constraints.
 - [spec] M6 (error-correction mechanism): Entropy bounds degeneracy: near a border-rank configuration, CP-factored controllers fitted by least squares develop diverging, mutually cancelling components; representing the policy as a maximum-entropy log-linear model whose natural parameters are CP-factored, and penalizing policy KL from passive dynamics, bounds component norms and removes the divergence.
 - [spec] M7 (memory structure): Bond dimension equals controller memory: the maximum-entropy trajectory distribution under k soft interval constraints is a TT over time whose bond dimension at each cut is bounded by the number of distinct partial sufficient-statistic values; any finite-state controller reproducing it needs at least that many memory states, whereas non-additive constraints break the bound.
@@ -37,7 +37,7 @@ Layers: [spec] speculation, [impl] implemented candidate, [obs] experimental obs
 - [spec] M10 (mutation operator): Rank mutation: controllers are genomes of rank-1 components; mutations add a component, delete one, split one into two perturbed copies, or merge two; selection is on negative free energy (cost minus lambda entropy). Without any explicit complexity penalty, effective rank (exp of mixture-weight entropy after merging near-duplicates) converges to the task's required rank.
 - [spec] M11 (world rule): Gauge-neutral drift: the Tucker/TT gauge freedom of a factored controller is a neutral space; drift along it changes nothing about cost or entropy but changes which single-factor mutations are beneficial, so gauge drift could set evolvability. Three-way dependency is weak: maximum entropy only supplies the fitness.
 - [spec] M12 (dynamical law): Distribution steering as rank-1 factorization in time: steering a population from an initial to a target set of moments with minimal KL from passive dynamics yields a trajectory law that factorizes as forward potential times backward potential; the TT bond dimension across the midpoint is 1 per constraint pair and grows only with intermediate constraints.
-- [spec] M13 (learning pressure): Multi-goal compression pressure: an agent that must serve many goals under a per-goal entropy (KL) budget is pressured toward sharing low-rank factors across the goal-by-state desirability tensor; the achieved goal-mode rank falls as the KL budget tightens.
+- [impl] M13 (learning pressure): Multi-goal compression pressure: an agent that must serve many goals under a per-goal entropy (KL) budget is pressured toward sharing low-rank factors across the goal-by-state desirability tensor; the achieved goal-mode rank falls as the KL budget tightens.
 - [spec] M14 (causal constraint): Rank deficit as control price: the minimal KL a controller must pay to reach a joint-state target equals the sum over CP components of per-component log-partition differences plus an interaction term that vanishes iff the target's coupling rank is 1. Speculative identity; three-way dependency is strong but the statement may be false for most targets.
 - [spec] M15 (developmental process): Coarse-to-fine by rank: a controller develops by first solving the rank-1 (independent-factor) maximum-entropy approximation at high temperature, then annealing temperature and adding components only when the free-energy gap exceeds a threshold; developmental order of components follows the coupling strength order.
 
@@ -56,13 +56,14 @@ Layers: [spec] speculation, [impl] implemented candidate, [obs] experimental obs
 - W4 [tensor] A Tucker subspace chosen from past goals' desirabilities beats a prediction-chosen subspace on in-span goals and loses on orthogonal goals. | success: median regret (b)/(a) >= 2 on in-span goals AND median regret (a)/(b) >= 1.2 on orthogonal goals, in >= 7/10 seeds | null twin: training desirabilities with mode fibers independently permuted per goal (spectra kept, shared factors destroyed) | cost: about 1 CPU core-minute
 
 ## OBSERVATIONS
-_none yet_
+- W4: NULL (hecate/programs/HT-2a8a3aedeb/worlds/W4/rows.jsonl)
 
 ## FALSIFICATIONS
-_none yet_
+- W4: orthogonal goals chosen to be hard for everyone
+- W4: prediction subspace poor due to near-uniform dynamics
 
 ## SURVIVING ANOMALIES
-_none yet_
+- W4: 5805 z_hat entries floored (non-positive Galerkin desirability) across TREATMENT seeds, all rules
 
 ## CROSS-SUBSTRATE RESULTS
 _none yet_
@@ -77,12 +78,10 @@ _none yet_
 _none yet_
 
 ## OPEN QUESTIONS
-- whether W2 non-monotonicity is generic interpolation
-- whether W1 advantage survives the tanh control
-- M5, M6, M7, M9, M11, M12, M14 have no world yet
+- crossover is built into the construction
 
 ## CURRENT VERDICT
-SPECULATIVE (an allocation state, not a truth claim). Pass 0-3 specs only; nothing run
+SPECULATIVE (an allocation state, not a truth claim). probe round 1: W4 NULL; nothing supported (no Pass 4 yet)
 
 ## NEXT PASS
-decision after P3: FALSIFY
+decision after P3-probe1: DEEPEN

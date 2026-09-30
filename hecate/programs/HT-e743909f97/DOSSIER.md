@@ -27,7 +27,7 @@ Layers: [spec] speculation, [impl] implemented candidate, [obs] experimental obs
 ## CANDIDATE PHYSICS
 - [spec] M1 (developmental process): Tolerance-by-deletion setpoint: during a developmental window a random detector repertoire is exposed to the system's own inputs and every detector that fires is deleted; after the window, any detector firing drives corrective action. The setpoint is the complement of the surviving repertoire.
 - [spec] M2 (causal constraint): Waterbed repertoire allocation: total detector mass is fixed; expanding coverage (sensitivity) in one region of input space must reduce it elsewhere, so the summed log-sensitivity over input space is approximately conserved under learning.
-- [spec] M3 (dynamical law): Clonal gain loop: controller gain equals the size of the responding clone; the clone grows in proportion to delayed error and decays at a cost rate. The loop has a delay-dependent oscillatory instability (storm) whose onset is predicted by the Nyquist criterion of the linearised loop.
+- [impl] M3 (dynamical law): Clonal gain loop: controller gain equals the size of the responding clone; the clone grows in proportion to delayed error and decays at a cost rate. The loop has a delay-dependent oscillatory instability (storm) whose onset is predicted by the Nyquist criterion of the linearised loop.
 - [spec] M4 (representation): Precision-as-clone-count: each prediction-error channel is weighted by the number of detectors assigned to it, so precision is integer-valued and learned by birth-death rather than by gradient.
 - [spec] M5 (selection mechanism): Replicator inference: the recognition density is a finite population of hypothesis clones; each step clones replicate in proportion to exp(-prediction error) and mutate with a rate scaled by their current error.
 - [spec] M6 (memory structure): Antigenic-sin windup: stored memory clones respond first and consume the antigen that naive clones need to be selected, so after drift the response stays locked to the old target. An anti-windup rule suppresses memory recall when error is not falling.
@@ -40,7 +40,7 @@ Layers: [spec] speculation, [impl] implemented candidate, [obs] experimental obs
 - [spec] M13 (organism architecture): Innate/adaptive cascade: a fast fixed-gain loop holds the system while a slow learned loop sets the fast loop's setpoint, a timescale hierarchy as in hierarchical FEP. Three-way dependency weak: this is cascade control.
 - [spec] M14 (dynamical law): Tolerance-inflammation hysteresis: positive feedback between damage and inflammation plus negative feedback from regulatory cells gives a bistable switch; the self/non-self boundary in input space shows hysteresis when the input is swept.
 - [spec] M15 (learning pressure): Sentinel repertoire: a fixed fraction of detectors is reserved for low-affinity epistemic sampling (expected information gain) and never expanded, to keep coverage of unseen regions.
-- [spec] M16 (error-correction mechanism): Anergy as chronic precision down-regulation: when an error persists without falling, the responding clone's gain is reduced, preventing storm and windup at the cost of tolerating chronic error.
+- [impl] M16 (error-correction mechanism): Anergy as chronic precision down-regulation: when an error persists without falling, the responding clone's gain is reduced, preventing storm and windup at the cost of tolerating chronic error.
 
 ## LENSES
 - L1 Waterbed ledger: Invented for this triplicate: tests whether detector-mediated sensitivity obeys a conservation law analogous to the Bode integral. (targets M2, M12, M1)
@@ -58,13 +58,20 @@ Layers: [spec] speculation, [impl] implemented candidate, [obs] experimental obs
 - W4 [ecology] Memory clones that compete with naive clones for antigen produce a windup threshold in clearance time vs antigen drift, and an anti-windup rule restores clearance near the no-memory level. | success: for some d* the memory clearance time exceeds 1.5x no-memory, the loop area is > 3x the null-twin area, AND anti-windup stays within 1.2x of no-memory at every d, over 20 seeds | null twin: memory clones placed at random positions with the same count and affinity distribution (destroys history-specificity) | cost: 5
 
 ## OBSERVATIONS
-_none yet_
+- W1: NULL (hecate/programs/HT-e743909f97/worlds/W1/rows.jsonl)
 
 ## FALSIFICATIONS
-_none yet_
+- W1: exhaustion only reduces mean gain (checked by the matched fixed-gain control)
+- W1: stochastic extinction at low counts ends oscillation early and looks like stability
 
 ## SURVIVING ANOMALIES
-_none yet_
+- W1: NULL_TWIN: 177 diverged runs (p > 1e13)
+- W1: POSITIVE_CONTROL: 180 diverged runs (p > 1e13)
+- W1: NULL_TWIN surrogate negative-clip fraction mean 0.1221
+- W1: TREATMENT exh=True: p extinct in 182 of 800 runs (min tau 30)
+- W1: exhaustion LOWERED the onset delay (ratio 0.348 < 1): opposite sign to the hypothesis
+- W1: exhaustion on in 0.511 of steps on average (mean a = 0.01861 = 0.744 a0)
+- W1: matched fixed-gain control ratio exactly 1.0: a constant lower a leaves onset unchanged (linear loop gain a*k*p* = c*r does not depend on a)
 
 ## CROSS-SUBSTRATE RESULTS
 _none yet_
@@ -79,12 +86,10 @@ _none yet_
 _none yet_
 
 ## OPEN QUESTIONS
-- M7 blanket-by-patrol and M8 danger gating not yet given worlds
-- whether W1 survives the matched fixed-gain control
-- whether W3 differs from adaptive-jitter SMC
+- the CV threshold 0.2 is tuned to the result
 
 ## CURRENT VERDICT
-SPECULATIVE (an allocation state, not a truth claim). Pass 0-3 specs only; nothing run
+SPECULATIVE (an allocation state, not a truth claim). probe round 1: W1 NULL; nothing supported (no Pass 4 yet)
 
 ## NEXT PASS
-decision after P3: FALSIFY
+decision after P3-probe1: DEEPEN

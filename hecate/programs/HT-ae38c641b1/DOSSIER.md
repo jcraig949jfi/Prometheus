@@ -27,7 +27,7 @@ Layers: [spec] speculation, [impl] implemented candidate, [obs] experimental obs
 - [spec] M1 (computational primitive): Sound-precision power law: partition state space into eps-cells, propagate each by interval arithmetic for horizon T, call a cell decided iff its abstract image lies inside one outcome class. The undecided fraction scales as eps^alpha_s with alpha_s = n - D_B(boundary) when propagation is wrapping-free, and alpha_s falls below the concrete uncertainty exponent alpha_c by an amount that grows with lambda_max*T.
 - [spec] M2 (selection mechanism): Domain imprint: if survival requires certification by a budgeted sound verifier with abstract domain G, evolved dynamics align their principal directions with G's geometry (box domain -> axis-aligned eigenvectors; rotated box -> rotated alignment), because rotation relative to the domain axes causes wrapping inflation and certification failure.
 - [spec] M3 (learning pressure): Sensitivity-directed refinement: refine the abstract cell with the largest abstract-output-width times area. On a boundary of dimension D the undecided area falls as B^-(2-D)/D under ideal adaptive refinement versus B^-(2-D)/2 under uniform refinement; width-based sensitivity approximates the ideal only when wrapping is small.
-- [spec] M4 (dynamical law): Analyzer staircase: the result of a widening-based interval analysis, as a function of a continuous program parameter theta, is piecewise constant with a breakpoint set whose count grows as a power of resolution (fractal-like) rather than saturating, while the concrete invariant varies continuously.
+- [impl] M4 (dynamical law): Analyzer staircase: the result of a widening-based interval analysis, as a function of a continuous program parameter theta, is piecewise constant with a breakpoint set whose count grows as a power of resolution (fractal-like) rather than saturating, while the concrete invariant varies continuously.
 - [spec] M5 (representation): IFS abstract domain: represent a reachable set by a finite set of contractions whose attractor over-approximates it; join = union of maps; widening = replace an orbit's growth by the attractor of the fitted contractions, with contraction ratios chosen by local sensitivity (Jacobian norms). Precision on self-similar reachable sets should exceed box/polyhedral domains at equal description size.
 - [spec] M6 (memory structure): Scale-conjugated certificate cache: a certificate proven at scale s is transported to scale r^k s by conjugating with the similarity map, so the memory needed to certify a property across K octaves grows as O(1) or O(log K) instead of O(K).
 - [spec] M7 (information bottleneck): Sound certification rate: to keep false-alarm (undecided) mass below delta, a reasoner needs about delta^(-D/(n-D)) abstract cells under adaptive refinement; D acts as a capacity limit on how cheaply sound knowledge of the world can be stored.
@@ -55,13 +55,18 @@ Layers: [spec] speculation, [impl] implemented candidate, [obs] experimental obs
 - W4 [optimizer] Width-guided (sensitivity) refinement approaches the oracle adaptive exponent ratio 2/D on wrapping-free maps but falls short as lambda*T grows. | success: Positive control within 10%; gamma_sens/gamma_oracle >= 0.8 at (t=0,T=2) and <= 0.6 at (t=30,T=20), with a monotone decline (Spearman rho <= -0.7 against lambda*T over the grid). | null twin: Random-leaf refinement matched to the width-guided policy's leaf-depth histogram at each budget: same cell-size distribution, no sensitivity signal. | cost: ~3 CPU core-minutes
 
 ## OBSERVATIONS
-_none yet_
+- W3: NULL (hecate/programs/HT-ae38c641b1/worlds/W3/rows.jsonl)
 
 ## FALSIFICATIONS
-_none yet_
+- W3: floating-point jitter produces fake breakpoints (recheck a subsample in exact rational arithmetic)
+- W3: iteration-count changes give dense but non-scaling breakpoints
 
 ## SURVIVING ANOMALIES
-_none yet_
+- W3: CONTROL (continuous concrete hull) has median beta 1.000 >= 0.2: the |dW|>1e-9*median counter registers continuous variation as breakpoints at every grid pair
+- W3: TREATMENT finite fraction of theta = 0.144; rest of circle W=inf (box expansion r(|cos|+|sin|)>1)
+- W3: TREATMENT distinct finite W values per seed: [8749, 8758, 9115, 8747, 8770]
+- W3: NULL_TWIN distinct finite W values per seed: [2, 2, 2, 2, 2]
+- W3: NULL_TWIN had Kleene-cap unconverged theta: [31, 29, 30, 31, 33]
 
 ## CROSS-SUBSTRATE RESULTS
 _none yet_
@@ -76,13 +81,10 @@ _none yet_
 _none yet_
 
 ## OPEN QUESTIONS
-- whether W1's rotation intervention truly leaves alpha_c invariant in a finite window
-- whether W2's imprint is more than a norm penalty
-- whether W3 breakpoints saturate
-- M5, M6, M8, M9, M11, M12, M13 have no world yet
+- count grows because the threshold set is the only source of steps and the fit window is too short to see saturation
 
 ## CURRENT VERDICT
-SPECULATIVE (an allocation state, not a truth claim). Pass 0-3 specs only; nothing run
+SPECULATIVE (an allocation state, not a truth claim). probe round 1: W3 NULL; nothing supported (no Pass 4 yet)
 
 ## NEXT PASS
-decision after P3: FALSIFY
+decision after P3-probe1: DEEPEN

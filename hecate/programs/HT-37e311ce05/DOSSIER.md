@@ -25,7 +25,7 @@ Layers: [spec] speculation, [impl] implemented candidate, [obs] experimental obs
 - [spec] I7: Critical dependence: gene transfer from symbiont to host proceeds until the host alone sits just below the recovery threshold, so endosymbioses are poised at a phase boundary where the symbiont's residual contribution is minimal but indispensable.
 
 ## CANDIDATE PHYSICS
-- [spec] M1 (interaction law): Free-rider stabilisation by a steep recovery curve: partners pool measurement rows to decode a k-sparse environment; because success collapses abruptly below m*(k), any partner that trims its rows sinks the pair, so the steepness of the CS phase transition polices free-riding.
+- [impl] M1 (interaction law): Free-rider stabilisation by a steep recovery curve: partners pool measurement rows to decode a k-sparse environment; because success collapses abruptly below m*(k), any partner that trims its rows sinks the pair, so the steepness of the CS phase transition polices free-riding.
 - [spec] M2 (selection mechanism): Selection for transverse null spaces: pair-level selection acts on the joint null-space property of the stacked matrix [A_h; A_s], pushing partners' kernels apart so that no sparse vector is invisible to both.
 - [spec] M3 (mutation operator): Singular-remainder genome reduction: under per-gene cost, the symbiont loses genes whose function lies in the support of the host's function measure; the retained genome converges to the part singular w.r.t. the host.
 - [spec] M4 (information bottleneck): Sigma-algebra exchange: partners exchange partitions (which events they can resolve) instead of estimates; the holobiont's policy must be measurable w.r.t. the join, and the partnership's value is the number of fitness-relevant events measurable only in the join.
@@ -56,13 +56,14 @@ Layers: [spec] speculation, [impl] implemented candidate, [obs] experimental obs
 - W4 [optimizer] Sanctions based on compressed verification in the host's basis make symbiont genomes sparse in that basis beyond what matched random sanctions produce; redundancy loss alone drives host-overlap mass to ~0 in both arms. | success: M13: s_Psi(sanction) <= 0.7 * s_Psi(null) in >=8/10 seeds. M3: overlap fraction <= 0.05 in both arms in >=8/10 seeds | null twin: random sanctions at matched rate: same sanction magnitude, no dependence on legibility in Psi_h | cost: about 3 CPU core-minutes
 
 ## OBSERVATIONS
-_none yet_
+- W1: INSTRUMENT_FAIL (hecate/programs/HT-37e311ce05/worlds/W1/rows.jsonl)
 
 ## FALSIFICATIONS
 _none yet_
 
 ## SURVIVING ANOMALIES
-_none yet_
+- W1: success part (b) unattainable: CONTROL mean success 0.9900, so max attainable difference is 0.0100 < 0.3 (CHEAT at 1.0 fails)
+- W1: m*=25 <= individual cap 60: a lone agent can reach m*, so pooling is not required; POSITIVE_CONTROL mean T/m* = 2.14 (pairs sum two solo budgets)
 
 ## CROSS-SUBSTRATE RESULTS
 _none yet_
@@ -77,11 +78,10 @@ _none yet_
 _none yet_
 
 ## OPEN QUESTIONS
-- M4, M5, M6, M7, M8, M10, M11, M14 have no world yet
-- W1 may only confirm a known threshold public-goods effect
+- the linear null has lower marginal return near m*, so selection intensity differs
 
 ## CURRENT VERDICT
-SPECULATIVE (an allocation state, not a truth claim). Pass 0-3 specs only; nothing run
+SPECULATIVE (an allocation state, not a truth claim). probe round 1: W1 INSTRUMENT_FAIL; nothing supported (no Pass 4 yet)
 
 ## NEXT PASS
-decision after P3: FALSIFY
+decision after P3-probe1: DEEPEN

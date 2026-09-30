@@ -31,7 +31,7 @@ Layers: [spec] speculation, [impl] implemented candidate, [obs] experimental obs
 - [spec] M4 (selection mechanism): Noematic richness selection: fitness counts how many of K random target functionals of input history are linearly decodable above threshold, not performance on one task. Predicts better transfer to held-out functionals than task-selected reservoirs.
 - [spec] M5 (selection mechanism): Readout-transplant speciation: mating succeeds only if parent A's readout, applied to parent B's reservoir, achieves error below a threshold. Compatibility classes (shared horizons) become species; isolation emerges where reservoirs diverge in decodable geometry.
 - [spec] M6 (representation): Retention/protention split: state decomposes into subspaces predictive of past inputs (retention) and of future inputs (protention); in environments with learnable regularity, selection shifts capacity from retention toward protention, with total bounded by N.
-- [spec] M7 (information bottleneck): Epoche gate: heritable binary mask over input channels; readout limited to k taps. When k is small, evolution brackets high-variance uninformative channels (keeps them in the world, suspends them from the reservoir); when readout is unconstrained, masking is not selected.
+- [impl] M7 (information bottleneck): Epoche gate: heritable binary mask over input channels; readout limited to k taps. When k is small, evolution brackets high-variance uninformative channels (keeps them in the world, suspends them from the reservoir); when readout is unconstrained, masking is not selected.
 - [spec] M8 (computational primitive): Passive synthesis: during life, before readout training, the reservoir undergoes slow unsupervised intrinsic plasticity (gain/bias homeostasis) driven only by input exposure; the plasticity rate is heritable. Pre-reflective shaping precedes active readout.
 - [spec] M9 (causal constraint): Echo-state heredity boundary: because the echo state property erases initial conditions, environmental regularities with period longer than the reservoir horizon cannot be carried in state and must be carried genetically. Predicts a gap: structure at timescales below horizon is learned, above horizon is inherited or absent.
 - [spec] M10 (interaction law): Lifeworld commons: one reservoir is shared by the whole population; individuals are only readouts. Individuals' outputs are fed back as reservoir input and the shared reservoir drifts under cumulative feedback, so readouts evolve against a world they collectively shape.
@@ -57,13 +57,14 @@ Layers: [spec] speculation, [impl] implemented candidate, [obs] experimental obs
 - W4 [population] Evolved memory-capacity centroid tracks environmental delay, and a slow context period beyond the horizon is carried by the reservoir, not the readout. | success: Spearman(D, centroid) >= 0.8 pooled over 3 D x 5 seeds, evolved beats random search NRMSE by >= 10%; context-bit gain from reservoir >= 0.1 NRMSE and from readout reset < 0.03. | null twin: Permuted-fitness evolution with identical mutation schedule. | cost: about 6 CPU core-minutes
 
 ## OBSERVATIONS
-_none yet_
+- W3: NULL (hecate/programs/HT-974471f045/worlds/W3/rows.jsonl)
 
 ## FALSIFICATIONS
-_none yet_
+- W3: mask mutation bias toward zeros
+- W3: at k=50 ridge already ignores distractors so there is no pressure
 
 ## SURVIVING ANOMALIES
-_none yet_
+- W3: hand mask also helps at k=50 (rel gain 0.897): masking useful at large budget too
 
 ## CROSS-SUBSTRATE RESULTS
 _none yet_
@@ -78,11 +79,10 @@ _none yet_
 _none yet_
 
 ## OPEN QUESTIONS
-- all worlds are ESN populations; no cross-substrate world yet (mass-spring M13 is a candidate)
-- M5, M10, M14 have no world
+- distractor variance saturates tanh, making masking a gain control
 
 ## CURRENT VERDICT
-SPECULATIVE (an allocation state, not a truth claim). Pass 0-3 specs only; nothing run
+SPECULATIVE (an allocation state, not a truth claim). probe round 1: W3 NULL; nothing supported (no Pass 4 yet)
 
 ## NEXT PASS
-decision after P3: FALSIFY
+decision after P3-probe1: DEEPEN

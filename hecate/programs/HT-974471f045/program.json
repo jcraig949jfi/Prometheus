@@ -451,6 +451,42 @@
         "unexpectedness": "low",
         "potential_importance": "medium"
       }
+    },
+    {
+      "id": "P3-probe1",
+      "triplicateId": "HT-974471f045",
+      "index": 3,
+      "kind": "cheap_probe",
+      "added": [
+        "new observable"
+      ],
+      "generator": {
+        "model": "claude-opus-5-5 (implementer)",
+        "search": false,
+        "prompt": "hecate/programs/_prompts/probe_impl_v1.md",
+        "prompt_sha256": "cf4bd374bce1b817a12d3607063278183ce0a8b7c4a7b771061dc8ce133bcea2"
+      },
+      "prereg": "roles/Hecate/prereg/2026-09-29_probe_round1/PREREG.md",
+      "inspected_prior": [
+        "W3"
+      ],
+      "unexplained": [
+        "distractor variance saturates tanh, making masking a gain control"
+      ],
+      "decision": "DEEPEN",
+      "research_state": {
+        "novelty": "unknown",
+        "mechanistic_clarity": "unknown",
+        "falsifiability": "unknown",
+        "empirical_support": "none",
+        "cross_lens_agreement": "unknown",
+        "cross_substrate_transfer": "unknown",
+        "baseline_resistance": "unknown",
+        "artifact_risk": "unknown",
+        "cost": "unknown",
+        "unexpectedness": "unknown",
+        "potential_importance": "unknown"
+      }
     }
   ],
   "hypotheses": [
@@ -713,7 +749,7 @@
       "triplicateId": "HT-974471f045",
       "passId": "P1",
       "kind": "mechanism",
-      "layer": "speculation",
+      "layer": "implemented_candidate",
       "form": "information bottleneck",
       "statement": "Epoche gate: heritable binary mask over input channels; readout limited to k taps. When k is small, evolution brackets high-variance uninformative channels (keeps them in the world, suspends them from the reservoir); when readout is unconstrained, masking is not selected.",
       "derived_from": [
@@ -1008,6 +1044,21 @@
         "what_can_transfer": "assignment to damaged channels",
         "distinguishing_observable": "robustness to channel loss exceeds random assignment at equal overlap"
       }
+    },
+    {
+      "id": "O-W3-r1",
+      "triplicateId": "HT-974471f045",
+      "passId": "P3-probe1",
+      "kind": "observation",
+      "layer": "experimental_observation",
+      "evidence_rows": [
+        "hecate/programs/HT-974471f045/worlds/W3/rows.jsonl",
+        "hecate/programs/HT-974471f045/worlds/W3/OUTCOME.json"
+      ],
+      "statement": "W3 probe round 1: NULL. Outcome NULL. Evolved masks: distractor masked fraction k=3 1.000, k=50 1.000; permuted-fitness twin k=3 0.469, k=50 0.434. Hand mask reduces NRMSE by 0.108 (relative) at k=3 and 0.897 at k=50. Controls: positive True, cheat True. Task, taps and ESN scaling were chosen a priori (see IMPLEMENTATION_NOTES.md); the result is specific to that configuration.",
+      "derived_from": [
+        "M7"
+      ]
     }
   ],
   "lenses": [
@@ -1293,6 +1344,267 @@
         "mask mutation bias toward zeros",
         "at k=50 ridge already ignores distractors so there is no pressure",
         "distractor variance saturates tanh, making masking a gain control"
+      ],
+      "outcome": "NULL",
+      "raw_outcome": "NULL",
+      "procedural_notes": [],
+      "rows": "hecate/programs/HT-974471f045/worlds/W3/rows.jsonl",
+      "outcome_file": "hecate/programs/HT-974471f045/worlds/W3/OUTCOME.json",
+      "statistics": {
+        "masked_frac_TREATMENT_k3": {
+          "mean": 1.0,
+          "sd": 0.0,
+          "n": 8,
+          "per_seed": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "masked_frac_TREATMENT_k50": {
+          "mean": 1.0,
+          "sd": 0.0,
+          "n": 8,
+          "per_seed": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "masked_frac_NULL_TWIN_k3": {
+          "mean": 0.46875,
+          "sd": 0.08832012043039518,
+          "n": 8,
+          "per_seed": [
+            0.5556,
+            0.5,
+            0.3056,
+            0.5556,
+            0.4722,
+            0.4444,
+            0.5556,
+            0.3611
+          ]
+        },
+        "masked_frac_NULL_TWIN_k50": {
+          "mean": 0.4340277777777778,
+          "sd": 0.10480130744990675,
+          "n": 8,
+          "per_seed": [
+            0.5556,
+            0.5556,
+            0.3333,
+            0.25,
+            0.5278,
+            0.3611,
+            0.4444,
+            0.4444
+          ]
+        },
+        "masked_frac_CONTROL_k3": {
+          "mean": 0.0,
+          "sd": 0.0,
+          "n": 8,
+          "per_seed": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "masked_frac_CONTROL_k50": {
+          "mean": 0.0,
+          "sd": 0.0,
+          "n": 8,
+          "per_seed": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "masked_frac_CHEAT_k3": {
+          "mean": 1.0,
+          "sd": 0.0,
+          "n": 8,
+          "per_seed": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "masked_frac_CHEAT_k50": {
+          "mean": 0.0,
+          "sd": 0.0,
+          "n": 8,
+          "per_seed": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "PC_rel_nrmse_gain_k3": {
+          "mean": 0.10849986617666518,
+          "sd": 0.06002415417131007,
+          "n": 8,
+          "per_seed": [
+            0.1377,
+            0.0941,
+            0.0827,
+            0.0203,
+            0.0771,
+            0.1641,
+            0.0672,
+            0.2248
+          ]
+        },
+        "PC_rel_nrmse_gain_k50": {
+          "mean": 0.89679013492499,
+          "sd": 0.021547185287656954,
+          "n": 8,
+          "per_seed": [
+            0.8895,
+            0.9227,
+            0.9147,
+            0.8999,
+            0.881,
+            0.9122,
+            0.8507,
+            0.9037
+          ]
+        },
+        "CONTROL_nrmse_k3": {
+          "mean": 1.0024572088073855,
+          "sd": 0.004825303006460666,
+          "n": 8,
+          "per_seed": [
+            1.0057,
+            1.0104,
+            1.0012,
+            1.0046,
+            0.9973,
+            1.0048,
+            1.0017,
+            0.9939
+          ]
+        },
+        "CONTROL_nrmse_k50": {
+          "mean": 0.8020197879897693,
+          "sd": 0.04552400844272997,
+          "n": 8,
+          "per_seed": [
+            0.777,
+            0.7748,
+            0.8613,
+            0.8446,
+            0.8211,
+            0.8488,
+            0.7259,
+            0.7628
+          ]
+        },
+        "TREATMENT_elite_nrmse_k3": {
+          "mean": 0.8054651724407487,
+          "sd": 0.10230229183131163,
+          "n": 8,
+          "per_seed": [
+            0.8673,
+            0.7577,
+            0.8715,
+            0.9777,
+            0.841,
+            0.7285,
+            0.7842,
+            0.6159
+          ]
+        },
+        "TREATMENT_elite_nrmse_k50": {
+          "mean": 0.08223538873355238,
+          "sd": 0.014379482137655436,
+          "n": 8,
+          "per_seed": [
+            0.0859,
+            0.0599,
+            0.0735,
+            0.0845,
+            0.0977,
+            0.0745,
+            0.1084,
+            0.0734
+          ]
+        },
+        "TREATMENT_inf_kept_k3": {
+          "mean": 0.5625,
+          "sd": 0.16535945694153692,
+          "n": 8,
+          "per_seed": [
+            1.0,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5
+          ]
+        },
+        "TREATMENT_inf_kept_k50": {
+          "mean": 1.0,
+          "sd": 0.0,
+          "n": 8,
+          "per_seed": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "diff_k3_minus_k50": 0.0,
+        "treatment_k3_minus_twin_k3": 0.53125,
+        "treatment_meets_success": false,
+        "treatment_meets_failure": true
+      },
+      "anomalies": [
+        {
+          "id": "A1",
+          "text": "hand mask also helps at k=50 (rel gain 0.897): masking useful at large budget too"
+        }
+      ],
+      "rejected_explanations": [
+        "mask mutation bias toward zeros",
+        "at k=50 ridge already ignores distractors so there is no pressure"
       ]
     },
     {
@@ -1332,7 +1644,8 @@
   "candidateEngines": [],
   "currentVerdict": "SPECULATIVE",
   "evidenceSummary": {
-    "layer": "speculation",
-    "note": "Pass 0-3 specs only; nothing run"
+    "layer": "experimental_observation",
+    "note": "probe round 1: W3 NULL; nothing supported (no Pass 4 yet)",
+    "rows": "hecate/programs/HT-974471f045/worlds/W3/rows.jsonl"
   }
 }

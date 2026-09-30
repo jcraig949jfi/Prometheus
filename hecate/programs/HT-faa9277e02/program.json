@@ -413,6 +413,40 @@
         "unexpectedness": "low",
         "potential_importance": "medium"
       }
+    },
+    {
+      "id": "P3-probe1",
+      "triplicateId": "HT-faa9277e02",
+      "index": 3,
+      "kind": "cheap_probe",
+      "added": [
+        "new observable"
+      ],
+      "generator": {
+        "model": "claude-opus-5-5 (implementer)",
+        "search": false,
+        "prompt": "hecate/programs/_prompts/probe_impl_v1.md",
+        "prompt_sha256": "cf4bd374bce1b817a12d3607063278183ce0a8b7c4a7b771061dc8ce133bcea2"
+      },
+      "prereg": "roles/Hecate/prereg/2026-09-29_probe_round1/PREREG.md",
+      "inspected_prior": [
+        "W2"
+      ],
+      "unexplained": [],
+      "decision": "DEEPEN",
+      "research_state": {
+        "novelty": "unknown",
+        "mechanistic_clarity": "unknown",
+        "falsifiability": "unknown",
+        "empirical_support": "none",
+        "cross_lens_agreement": "unknown",
+        "cross_substrate_transfer": "unknown",
+        "baseline_resistance": "unknown",
+        "artifact_risk": "unknown",
+        "cost": "unknown",
+        "unexpectedness": "unknown",
+        "potential_importance": "unknown"
+      }
     }
   ],
   "hypotheses": [
@@ -1005,6 +1039,22 @@
         "what_can_transfer": "none",
         "distinguishing_observable": "entropy peak at the morphology transition vs shift of D ratio alone"
       }
+    },
+    {
+      "id": "O-W2-r1",
+      "triplicateId": "HT-faa9277e02",
+      "passId": "P3-probe1",
+      "kind": "observation",
+      "layer": "experimental_observation",
+      "evidence_rows": [
+        "hecate/programs/HT-faa9277e02/worlds/W2/rows.jsonl",
+        "hecate/programs/HT-faa9277e02/worlds/W2/OUTCOME.json"
+      ],
+      "statement": "W2 probe round 1: NOT_BUILT. At T=1, seed-mean Miller-Madow bits: Hebbian 1.638, uniform quantizer 2.232, random-centre null twin 2.002, Bayes 8-class decoder 2.230. Mean slopes over T<=8: Hebbian 0.095, control 0.163, null 0.132, PC 0.163. Outcome INSTRUMENT_FAIL by the PREREG class rules applied in code.",
+      "derived_from": [
+        "M3",
+        "M15"
+      ]
     }
   ],
   "lenses": [
@@ -1256,7 +1306,221 @@
         "MI estimator bias favours whichever readout has more occupied bins",
         "optimal bound computed with wrong noise model making ratio look high",
         "the 0.5 log2 T law follows from Gaussian averaging with no role for Hebb"
-      ]
+      ],
+      "outcome": "NOT_BUILT",
+      "raw_outcome": "INSTRUMENT_FAIL",
+      "procedural_notes": [],
+      "rows": "hecate/programs/HT-faa9277e02/worlds/W2/rows.jsonl",
+      "outcome_file": "hecate/programs/HT-faa9277e02/worlds/W2/OUTCOME.json",
+      "statistics": {
+        "TREATMENT": {
+          "n_seeds": 10,
+          "n_test_per_T": 50000,
+          "bits_mm_by_T": {
+            "1": {
+              "mean": 1.637988709864845,
+              "sd": 0.0950416440780084
+            },
+            "2": {
+              "mean": 1.5928082827361831,
+              "sd": 0.1717535330022905
+            },
+            "4": {
+              "mean": 1.82549594862542,
+              "sd": 0.0016995511673838241
+            },
+            "8": {
+              "mean": 1.877474267439719,
+              "sd": 0.0030304634244439476
+            },
+            "16": {
+              "mean": 1.8732321751637275,
+              "sd": 0.12110808654116352
+            },
+            "32": {
+              "mean": 1.8973453845766943,
+              "sd": 0.12307848036505513
+            }
+          },
+          "slope_T_le_8_mean": 0.09511443386138559,
+          "slope_T_le_8_min": 0.06779444936450295,
+          "slope_T_le_8_max": 0.1933253382823041,
+          "ratio_to_PC_T1_mean": 0.7343335925091171,
+          "mm_minus_plugin_T1_mean": -0.0013417063880268643,
+          "occupied_r_T1_min": 7,
+          "clause_pass_counts": {
+            "a_ratio": 0,
+            "b_null_margin": 0,
+            "c_slope": 0
+          }
+        },
+        "CONTROL": {
+          "n_seeds": 10,
+          "n_test_per_T": 50000,
+          "bits_mm_by_T": {
+            "1": {
+              "mean": 2.2320414863182827,
+              "sd": 0.004799052216857798
+            },
+            "2": {
+              "mean": 2.447193596207228,
+              "sd": 0.003910501373996173
+            },
+            "4": {
+              "mean": 2.6065802661124224,
+              "sd": 0.003649185727539335
+            },
+            "8": {
+              "mean": 2.7212264551233143,
+              "sd": 0.002787307229316619
+            },
+            "16": {
+              "mean": 2.802409704687359,
+              "sd": 0.003502537455285264
+            },
+            "32": {
+              "mean": 2.860604039485368,
+              "sd": 0.0011102156790983976
+            }
+          },
+          "slope_T_le_8_mean": 0.1626941576320286,
+          "slope_T_le_8_min": 0.16067914090936994,
+          "slope_T_le_8_max": 0.1654708028321318,
+          "ratio_to_PC_T1_mean": 1.0007100709092163,
+          "mm_minus_plugin_T1_mean": -0.002484320860410616,
+          "occupied_r_T1_min": 8,
+          "clause_pass_counts": {
+            "a_ratio": 10,
+            "b_null_margin": 1,
+            "c_slope": 0
+          }
+        },
+        "NULL_TWIN": {
+          "n_seeds": 10,
+          "n_test_per_T": 50000,
+          "bits_mm_by_T": {
+            "1": {
+              "mean": 2.0020137633257216,
+              "sd": 0.19776775855118345
+            },
+            "2": {
+              "mean": 2.2357842374264725,
+              "sd": 0.14178011384075917
+            },
+            "4": {
+              "mean": 2.283496601473856,
+              "sd": 0.23159260761528772
+            },
+            "8": {
+              "mean": 2.4276029937123225,
+              "sd": 0.13979202768775092
+            },
+            "16": {
+              "mean": 2.4800383804711243,
+              "sd": 0.19282859753784928
+            },
+            "32": {
+              "mean": 2.527128425468107,
+              "sd": 0.1669178005779501
+            }
+          },
+          "slope_T_le_8_mean": 0.1324480055207184,
+          "slope_T_le_8_min": 0.02983457122975452,
+          "slope_T_le_8_max": 0.2712704991121552,
+          "ratio_to_PC_T1_mean": 0.8976433725517818,
+          "mm_minus_plugin_T1_mean": -0.0024078580232442803,
+          "occupied_r_T1_min": 8,
+          "clause_pass_counts": {
+            "a_ratio": 9,
+            "b_null_margin": 0,
+            "c_slope": 0
+          }
+        },
+        "POSITIVE_CONTROL": {
+          "n_seeds": 10,
+          "n_test_per_T": 50000,
+          "bits_mm_by_T": {
+            "1": {
+              "mean": 2.230457120469557,
+              "sd": 0.004201865538854599
+            },
+            "2": {
+              "mean": 2.4458152490143648,
+              "sd": 0.004449614930167013
+            },
+            "4": {
+              "mean": 2.6053706585861454,
+              "sd": 0.0036106408628362586
+            },
+            "8": {
+              "mean": 2.720927629786864,
+              "sd": 0.0029734055568172626
+            },
+            "16": {
+              "mean": 2.801188626390945,
+              "sd": 0.0021157882350157538
+            },
+            "32": {
+              "mean": 2.8600560208331554,
+              "sd": 0.0016958493819330673
+            }
+          },
+          "slope_T_le_8_mean": 0.16309669375237,
+          "slope_T_le_8_min": 0.1608938892728422,
+          "slope_T_le_8_max": 0.16596570233944974,
+          "ratio_to_PC_T1_mean": 1.0,
+          "mm_minus_plugin_T1_mean": -0.00247999277528832,
+          "occupied_r_T1_min": 8
+        },
+        "CHEAT": {
+          "n_seeds": 10,
+          "n_test_per_T": 50000,
+          "bits_mm_by_T": {
+            "1": {
+              "mean": 2.602013763325721,
+              "sd": 0.19776775855118345
+            },
+            "2": {
+              "mean": 3.102013763325721,
+              "sd": 0.19776775855118345
+            },
+            "4": {
+              "mean": 3.602013763325721,
+              "sd": 0.19776775855118345
+            },
+            "8": {
+              "mean": 4.10201376332572,
+              "sd": 0.19776775855118342
+            },
+            "16": {
+              "mean": 4.60201376332572,
+              "sd": 0.19776775855118334
+            },
+            "32": {
+              "mean": 5.10201376332572,
+              "sd": 0.19776775855118334
+            }
+          },
+          "slope_T_le_8_mean": 0.4999999999999997,
+          "slope_T_le_8_min": 0.4999999999999994,
+          "slope_T_le_8_max": 0.49999999999999994
+        }
+      },
+      "anomalies": [
+        {
+          "id": "A1",
+          "text": "CHEAT injected bits exceed log2(8)=3 at some T: injection is not a physically realisable 8-output readout"
+        },
+        {
+          "id": "A2",
+          "text": "attainability: clauses (a)+(c) need bits(T=8) >= ~0.8*PC(T=1)+0.9 = 2.684 vs cap 3.0"
+        },
+        {
+          "id": "A3",
+          "text": "TREATMENT uses fewer than 8 outputs at T=1 in some seed (min 7)"
+        }
+      ],
+      "rejected_explanations": []
     },
     {
       "triplicateId": "HT-faa9277e02",
@@ -1327,6 +1591,7 @@
   "currentVerdict": "SPECULATIVE",
   "evidenceSummary": {
     "layer": "speculation",
-    "note": "Pass 0-3 specs only; nothing run"
+    "note": "probe round 1: W2 NOT_BUILT; nothing supported (no Pass 4 yet)",
+    "rows": "hecate/programs/HT-faa9277e02/worlds/W2/rows.jsonl"
   }
 }

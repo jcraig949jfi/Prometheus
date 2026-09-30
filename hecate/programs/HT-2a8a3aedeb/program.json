@@ -424,6 +424,42 @@
         "unexpectedness": "low",
         "potential_importance": "medium"
       }
+    },
+    {
+      "id": "P3-probe1",
+      "triplicateId": "HT-2a8a3aedeb",
+      "index": 3,
+      "kind": "cheap_probe",
+      "added": [
+        "new observable"
+      ],
+      "generator": {
+        "model": "claude-opus-5-5 (implementer)",
+        "search": false,
+        "prompt": "hecate/programs/_prompts/probe_impl_v1.md",
+        "prompt_sha256": "cf4bd374bce1b817a12d3607063278183ce0a8b7c4a7b771061dc8ce133bcea2"
+      },
+      "prereg": "roles/Hecate/prereg/2026-09-29_probe_round1/PREREG.md",
+      "inspected_prior": [
+        "W4"
+      ],
+      "unexplained": [
+        "crossover is built into the construction"
+      ],
+      "decision": "DEEPEN",
+      "research_state": {
+        "novelty": "unknown",
+        "mechanistic_clarity": "unknown",
+        "falsifiability": "unknown",
+        "empirical_support": "none",
+        "cross_lens_agreement": "unknown",
+        "cross_substrate_transfer": "unknown",
+        "baseline_resistance": "unknown",
+        "artifact_risk": "unknown",
+        "cost": "unknown",
+        "unexpectedness": "unknown",
+        "potential_importance": "unknown"
+      }
     }
   ],
   "hypotheses": [
@@ -588,7 +624,7 @@
       "triplicateId": "HT-2a8a3aedeb",
       "passId": "P1",
       "kind": "mechanism",
-      "layer": "speculation",
+      "layer": "implemented_candidate",
       "form": "information bottleneck",
       "statement": "Control-relevant constraint selection: a maximum-entropy world model constrains only the moments lying in the span of the leading Tucker factors of the stacked desirability tensor over past goals; it is maximally ignorant elsewhere. It should transfer to new goals sharing those factors and fail on goals built from orthogonal factors, more sharply than a prediction-relevant model.",
       "derived_from": [
@@ -888,7 +924,7 @@
       "triplicateId": "HT-2a8a3aedeb",
       "passId": "P1",
       "kind": "mechanism",
-      "layer": "speculation",
+      "layer": "implemented_candidate",
       "form": "learning pressure",
       "statement": "Multi-goal compression pressure: an agent that must serve many goals under a per-goal entropy (KL) budget is pressured toward sharing low-rank factors across the goal-by-state desirability tensor; the achieved goal-mode rank falls as the KL budget tightens.",
       "derived_from": [
@@ -984,6 +1020,22 @@
         "what_can_transfer": "early components across tasks",
         "distinguishing_observable": "order of acquired components versus coupling strengths, compared with random-order addition"
       }
+    },
+    {
+      "id": "O-W4-r1",
+      "triplicateId": "HT-2a8a3aedeb",
+      "passId": "P3-probe1",
+      "kind": "observation",
+      "layer": "experimental_observation",
+      "evidence_rows": [
+        "hecate/programs/HT-2a8a3aedeb/worlds/W4/rows.jsonl",
+        "hecate/programs/HT-2a8a3aedeb/worlds/W4/OUTCOME.json"
+      ],
+      "statement": "W4 probe round 1: NULL. Attempt 1 was INSTRUMENT_FAIL (positive control 0/10: my goal construction put the cost offset outside the K=2 shared span); one repair moved the constant into the shared span, all else unchanged. Attempt 2: rule (a) HOSVD beats rule (b) prediction subspace strongly on in-span goals (median in-span ratio b/a = 24.3, 10/10 seeds >= 2) but shows no meaningful reversal on orthogonal goals (median off-span ratio a/b = 1.022, needed >= 1.2), so 0/10 seeds meet the joint criterion: NULL. The formal failure criterion is not met (off-span ratio > 1 in 10/10 seeds, range 1.004-1.079), so this is a fails-to-reach-success NULL, not a failure-criterion kill. Null twin loses the in-span advantage (median 0.91); random subspace is ~20x worse everywhere. Both (a) and (b) have ~0.006 relative regret on orthogonal goals.",
+      "derived_from": [
+        "M4",
+        "M13"
+      ]
     }
   ],
   "lenses": [
@@ -1277,13 +1329,549 @@
         "orthogonal goals chosen to be hard for everyone",
         "prediction subspace poor due to near-uniform dynamics",
         "crossover is built into the construction"
+      ],
+      "outcome": "NULL",
+      "raw_outcome": "NULL",
+      "procedural_notes": [
+        "instrument repair made AFTER the implementer had seen attempt-1 treatment numbers (disclosed in IMPLEMENTATION_NOTES); the rerun was NULL, so the breach could not have manufactured a signal"
+      ],
+      "rows": "hecate/programs/HT-2a8a3aedeb/worlds/W4/rows.jsonl",
+      "outcome_file": "hecate/programs/HT-2a8a3aedeb/worlds/W4/OUTCOME.json",
+      "statistics": {
+        "TREATMENT": {
+          "n": 10,
+          "n_seed_success": 0,
+          "success": false,
+          "failure": false,
+          "n_in_ratio_below_2": 0,
+          "n_no_reversal": 0,
+          "median_in_ratio": 24.285353778344188,
+          "median_off_ratio": 1.022452619124956,
+          "per_seed": [
+            {
+              "seed": 0,
+              "in_ratio": 22.770774417731715,
+              "off_ratio": 1.013545938696472,
+              "med_cand_in": 0.00025269898584826184,
+              "med_b_in": 0.005754151602340349,
+              "med_cand_off": 0.0076748460824830325,
+              "med_b_off": 0.007572272542824948,
+              "med_of_ratios_in": 22.770774417731715,
+              "seed_success": false
+            },
+            {
+              "seed": 1,
+              "in_ratio": 10.56559769595592,
+              "off_ratio": 1.0267305558058888,
+              "med_cand_in": 0.0005675626542827188,
+              "med_b_in": 0.00599663867240012,
+              "med_cand_off": 0.013846274321758523,
+              "med_b_off": 0.013485791616370542,
+              "med_of_ratios_in": 11.81363152295285,
+              "seed_success": false
+            },
+            {
+              "seed": 2,
+              "in_ratio": 38.74233815780981,
+              "off_ratio": 1.030076318972743,
+              "med_cand_in": 0.00017946654107617096,
+              "med_b_in": 0.00695295342238548,
+              "med_cand_off": 0.005468741145636031,
+              "med_b_off": 0.0053090640420603045,
+              "med_of_ratios_in": 38.74233815780981,
+              "seed_success": false
+            },
+            {
+              "seed": 3,
+              "in_ratio": 25.322053502170977,
+              "off_ratio": 1.0044151701308246,
+              "med_cand_in": 0.0002981151949886968,
+              "med_b_in": 0.007548888917313913,
+              "med_cand_off": 0.003713717309406072,
+              "med_b_off": 0.0036973926916320492,
+              "med_of_ratios_in": 30.75062669285851,
+              "seed_success": false
+            },
+            {
+              "seed": 4,
+              "in_ratio": 16.41810087117423,
+              "off_ratio": 1.0688747902138487,
+              "med_cand_in": 0.00046650529955430663,
+              "med_b_in": 0.007659131065019957,
+              "med_cand_off": 0.00380864647627465,
+              "med_b_off": 0.0035632297731642247,
+              "med_of_ratios_in": 19.203065566437978,
+              "seed_success": false
+            },
+            {
+              "seed": 5,
+              "in_ratio": 62.88400517846693,
+              "off_ratio": 1.0181746824440234,
+              "med_cand_in": 0.00022577316544134757,
+              "med_b_in": 0.014197520904772571,
+              "med_cand_off": 0.005772563049536106,
+              "med_b_off": 0.005669521300293642,
+              "med_of_ratios_in": 50.401283852645136,
+              "seed_success": false
+            },
+            {
+              "seed": 6,
+              "in_ratio": 35.158644136933454,
+              "off_ratio": 1.0787088052023672,
+              "med_cand_in": 0.0002245507495871529,
+              "med_b_in": 0.007894899895416366,
+              "med_cand_off": 0.005861676852737204,
+              "med_b_off": 0.005433975160365494,
+              "med_of_ratios_in": 35.913732879802694,
+              "seed_success": false
+            },
+            {
+              "seed": 7,
+              "in_ratio": 10.22878361061608,
+              "off_ratio": 1.046182103428509,
+              "med_cand_in": 0.0005353743878804092,
+              "med_b_in": 0.005476228764294746,
+              "med_cand_off": 0.004783657362313711,
+              "med_b_off": 0.004572490149312331,
+              "med_of_ratios_in": 11.530626121267105,
+              "seed_success": false
+            },
+            {
+              "seed": 8,
+              "in_ratio": 23.248654054517402,
+              "off_ratio": 1.011106787445068,
+              "med_cand_in": 0.00026282660272094755,
+              "med_b_in": 0.006110364762983392,
+              "med_cand_off": 0.008926742011881348,
+              "med_b_off": 0.008828683698621026,
+              "med_of_ratios_in": 24.418552362139867,
+              "seed_success": false
+            },
+            {
+              "seed": 9,
+              "in_ratio": 30.61860123359363,
+              "off_ratio": 1.0163092969855463,
+              "med_cand_in": 0.00022016913734970275,
+              "med_b_in": 0.006741271020454854,
+              "med_cand_off": 0.0065047066721273155,
+              "med_b_off": 0.0064003219211127855,
+              "med_of_ratios_in": 22.875316477036023,
+              "seed_success": false
+            }
+          ]
+        },
+        "CONTROL": {
+          "n": 10,
+          "n_seed_success": 0,
+          "success": false,
+          "failure": true,
+          "n_in_ratio_below_2": 10,
+          "n_no_reversal": 0,
+          "median_in_ratio": 0.05682744277888641,
+          "median_off_ratio": 20.40725122316067,
+          "per_seed": [
+            {
+              "seed": 0,
+              "in_ratio": 0.053585977491178674,
+              "off_ratio": 14.998869881744866,
+              "med_cand_in": 0.10738166721485295,
+              "med_b_in": 0.005754151602340349,
+              "med_cand_off": 0.11357553057894072,
+              "med_b_off": 0.007572272542824948,
+              "med_of_ratios_in": 0.05572368671796827,
+              "seed_success": false
+            },
+            {
+              "seed": 1,
+              "in_ratio": 0.0476433409772041,
+              "off_ratio": 10.34885378408371,
+              "med_cand_in": 0.12586520066402,
+              "med_b_in": 0.00599663867240012,
+              "med_cand_off": 0.13956248560044066,
+              "med_b_off": 0.013485791616370542,
+              "med_of_ratios_in": 0.0476433409772041,
+              "seed_success": false
+            },
+            {
+              "seed": 2,
+              "in_ratio": 0.05430139029464365,
+              "off_ratio": 20.629841112275788,
+              "med_cand_in": 0.12804374592728113,
+              "med_b_in": 0.00695295342238548,
+              "med_cand_off": 0.10952514764260074,
+              "med_b_off": 0.0053090640420603045,
+              "med_of_ratios_in": 0.051434184629000096,
+              "seed_success": false
+            },
+            {
+              "seed": 3,
+              "in_ratio": 0.05942812963529543,
+              "off_ratio": 37.266194396188,
+              "med_cand_in": 0.12702551743830237,
+              "med_b_in": 0.007548888917313913,
+              "med_cand_off": 0.13778775480540473,
+              "med_b_off": 0.0036973926916320492,
+              "med_of_ratios_in": 0.0546508804262169,
+              "seed_success": false
+            },
+            {
+              "seed": 4,
+              "in_ratio": 0.05869356506606308,
+              "off_ratio": 37.69453861788737,
+              "med_cand_in": 0.13049353973300398,
+              "med_b_in": 0.007659131065019957,
+              "med_cand_off": 0.13431430228894492,
+              "med_b_off": 0.0035632297731642247,
+              "med_of_ratios_in": 0.047703769634406,
+              "seed_success": false
+            },
+            {
+              "seed": 5,
+              "in_ratio": 0.10599828128296165,
+              "off_ratio": 20.184661334045554,
+              "med_cand_in": 0.13394104822202155,
+              "med_b_in": 0.014197520904772571,
+              "med_cand_off": 0.11443736737258474,
+              "med_b_off": 0.005669521300293642,
+              "med_of_ratios_in": 0.10599828128296165,
+              "seed_success": false
+            },
+            {
+              "seed": 6,
+              "in_ratio": 0.06895218315371025,
+              "off_ratio": 22.829380642931074,
+              "med_cand_in": 0.1144981860518734,
+              "med_b_in": 0.007894899895416366,
+              "med_cand_off": 0.12405428734021628,
+              "med_b_off": 0.005433975160365494,
+              "med_of_ratios_in": 0.051956551338800595,
+              "seed_success": false
+            },
+            {
+              "seed": 7,
+              "in_ratio": 0.04153500711560827,
+              "off_ratio": 27.410653552627398,
+              "med_cand_in": 0.13184610150787374,
+              "med_b_in": 0.005476228764294746,
+              "med_cand_off": 0.12533494335560183,
+              "med_b_off": 0.004572490149312331,
+              "med_of_ratios_in": 0.04839502773842315,
+              "seed_success": false
+            },
+            {
+              "seed": 8,
+              "in_ratio": 0.05532643883784158,
+              "off_ratio": 14.386426517307322,
+              "med_cand_in": 0.11044203985173343,
+              "med_b_in": 0.006110364762983392,
+              "med_cand_off": 0.12701320927476042,
+              "med_b_off": 0.008828683698621026,
+              "med_of_ratios_in": 0.05532643883784158,
+              "seed_success": false
+            },
+            {
+              "seed": 9,
+              "in_ratio": 0.058328446719931246,
+              "off_ratio": 18.02865435727252,
+              "med_cand_in": 0.11557432778595343,
+              "med_b_in": 0.006741271020454854,
+              "med_cand_off": 0.11538919169101684,
+              "med_b_off": 0.0064003219211127855,
+              "med_of_ratios_in": 0.06677948612775049,
+              "seed_success": false
+            }
+          ]
+        },
+        "NULL_TWIN": {
+          "n": 10,
+          "n_seed_success": 0,
+          "success": false,
+          "failure": true,
+          "n_in_ratio_below_2": 10,
+          "n_no_reversal": 1,
+          "median_in_ratio": 0.9091114213550349,
+          "median_off_ratio": 1.0175274496595057,
+          "per_seed": [
+            {
+              "seed": 0,
+              "in_ratio": 0.7696190132722621,
+              "off_ratio": 0.9755877429182783,
+              "med_cand_in": 0.007476623502159696,
+              "med_b_in": 0.005754151602340349,
+              "med_cand_off": 0.007387416278816643,
+              "med_b_off": 0.007572272542824948,
+              "med_of_ratios_in": 0.7696190132722621,
+              "seed_success": false
+            },
+            {
+              "seed": 1,
+              "in_ratio": 0.7985793995735658,
+              "off_ratio": 1.0521104485354007,
+              "med_cand_in": 0.007509132686871551,
+              "med_b_in": 0.00599663867240012,
+              "med_cand_off": 0.014188542266354558,
+              "med_b_off": 0.013485791616370542,
+              "med_of_ratios_in": 0.7985793995735658,
+              "seed_success": false
+            },
+            {
+              "seed": 2,
+              "in_ratio": 0.94770105393985,
+              "off_ratio": 1.0080833772896385,
+              "med_cand_in": 0.007336652622132443,
+              "med_b_in": 0.00695295342238548,
+              "med_cand_off": 0.005351979209767131,
+              "med_b_off": 0.0053090640420603045,
+              "med_of_ratios_in": 0.94770105393985,
+              "seed_success": false
+            },
+            {
+              "seed": 3,
+              "in_ratio": 1.0903883261403151,
+              "off_ratio": 1.0154517856985428,
+              "med_cand_in": 0.006923119714638704,
+              "med_b_in": 0.007548888917313913,
+              "med_cand_off": 0.0037545240111465056,
+              "med_b_off": 0.0036973926916320492,
+              "med_of_ratios_in": 1.0903883261403151,
+              "seed_success": false
+            },
+            {
+              "seed": 4,
+              "in_ratio": 1.1490099155267248,
+              "off_ratio": 1.0401392394806506,
+              "med_cand_in": 0.006665852889101384,
+              "med_b_in": 0.007659131065019957,
+              "med_cand_off": 0.0037062551063538475,
+              "med_b_off": 0.0035632297731642247,
+              "med_of_ratios_in": 1.1633760531516952,
+              "seed_success": false
+            },
+            {
+              "seed": 5,
+              "in_ratio": 1.2082434702294762,
+              "off_ratio": 1.01875096511638,
+              "med_cand_in": 0.01175054635476416,
+              "med_b_in": 0.014197520904772571,
+              "med_cand_off": 0.0057758302964220215,
+              "med_b_off": 0.005669521300293642,
+              "med_of_ratios_in": 1.5338770679481566,
+              "seed_success": false
+            },
+            {
+              "seed": 6,
+              "in_ratio": 1.1895383763480085,
+              "off_ratio": 1.2374140486142133,
+              "med_cand_in": 0.006636944257027193,
+              "med_b_in": 0.007894899895416366,
+              "med_cand_off": 0.006724077203256936,
+              "med_b_off": 0.005433975160365494,
+              "med_of_ratios_in": 1.0886179129119657,
+              "seed_success": false
+            },
+            {
+              "seed": 7,
+              "in_ratio": 0.6339228084569691,
+              "off_ratio": 1.04975907517326,
+              "med_cand_in": 0.00863863658356832,
+              "med_b_in": 0.005476228764294746,
+              "med_cand_off": 0.0048000130303809535,
+              "med_b_off": 0.004572490149312331,
+              "med_of_ratios_in": 0.6528157963891219,
+              "seed_success": false
+            },
+            {
+              "seed": 8,
+              "in_ratio": 0.823120687482689,
+              "off_ratio": 1.007445490931085,
+              "med_cand_in": 0.007423412940416345,
+              "med_b_in": 0.006110364762983392,
+              "med_cand_off": 0.008894417583032527,
+              "med_b_off": 0.008828683698621026,
+              "med_of_ratios_in": 0.8666114291083027,
+              "seed_success": false
+            },
+            {
+              "seed": 9,
+              "in_ratio": 0.8705217887702197,
+              "off_ratio": 1.0163039342026314,
+              "med_cand_in": 0.007743942894270576,
+              "med_b_in": 0.006741271020454854,
+              "med_cand_off": 0.006504672348590267,
+              "med_b_off": 0.0064003219211127855,
+              "med_of_ratios_in": 0.9332823329982708,
+              "seed_success": false
+            }
+          ]
+        },
+        "CHEAT": {
+          "n": 10,
+          "n_seed_success": 10,
+          "success": true,
+          "failure": false,
+          "n_in_ratio_below_2": 0,
+          "n_no_reversal": 0,
+          "median_in_ratio": 10.0,
+          "median_off_ratio": 10.0,
+          "per_seed": [
+            {
+              "seed": 0,
+              "in_ratio": 10.0,
+              "off_ratio": 10.0,
+              "med_cand_in": 0.0005754151602340349,
+              "med_b_in": 0.005754151602340349,
+              "med_cand_off": 0.07572272542824948,
+              "med_b_off": 0.007572272542824948,
+              "med_of_ratios_in": 10.0,
+              "seed_success": true
+            },
+            {
+              "seed": 1,
+              "in_ratio": 10.0,
+              "off_ratio": 9.999999999999998,
+              "med_cand_in": 0.0005996638672400121,
+              "med_b_in": 0.00599663867240012,
+              "med_cand_off": 0.1348579161637054,
+              "med_b_off": 0.013485791616370542,
+              "med_of_ratios_in": 10.0,
+              "seed_success": true
+            },
+            {
+              "seed": 2,
+              "in_ratio": 10.0,
+              "off_ratio": 10.0,
+              "med_cand_in": 0.000695295342238548,
+              "med_b_in": 0.00695295342238548,
+              "med_cand_off": 0.05309064042060305,
+              "med_b_off": 0.0053090640420603045,
+              "med_of_ratios_in": 10.0,
+              "seed_success": true
+            },
+            {
+              "seed": 3,
+              "in_ratio": 10.0,
+              "off_ratio": 10.000000000000002,
+              "med_cand_in": 0.0007548888917313913,
+              "med_b_in": 0.007548888917313913,
+              "med_cand_off": 0.036973926916320496,
+              "med_b_off": 0.0036973926916320492,
+              "med_of_ratios_in": 10.0,
+              "seed_success": true
+            },
+            {
+              "seed": 4,
+              "in_ratio": 10.0,
+              "off_ratio": 10.0,
+              "med_cand_in": 0.0007659131065019957,
+              "med_b_in": 0.007659131065019957,
+              "med_cand_off": 0.03563229773164225,
+              "med_b_off": 0.0035632297731642247,
+              "med_of_ratios_in": 10.0,
+              "seed_success": true
+            },
+            {
+              "seed": 5,
+              "in_ratio": 10.0,
+              "off_ratio": 10.0,
+              "med_cand_in": 0.001419752090477257,
+              "med_b_in": 0.014197520904772571,
+              "med_cand_off": 0.056695213002936416,
+              "med_b_off": 0.005669521300293642,
+              "med_of_ratios_in": 10.0,
+              "seed_success": true
+            },
+            {
+              "seed": 6,
+              "in_ratio": 10.0,
+              "off_ratio": 10.0,
+              "med_cand_in": 0.0007894899895416367,
+              "med_b_in": 0.007894899895416366,
+              "med_cand_off": 0.05433975160365494,
+              "med_b_off": 0.005433975160365494,
+              "med_of_ratios_in": 10.0,
+              "seed_success": true
+            },
+            {
+              "seed": 7,
+              "in_ratio": 10.0,
+              "off_ratio": 10.0,
+              "med_cand_in": 0.0005476228764294746,
+              "med_b_in": 0.005476228764294746,
+              "med_cand_off": 0.04572490149312331,
+              "med_b_off": 0.004572490149312331,
+              "med_of_ratios_in": 10.0,
+              "seed_success": true
+            },
+            {
+              "seed": 8,
+              "in_ratio": 10.0,
+              "off_ratio": 10.0,
+              "med_cand_in": 0.0006110364762983392,
+              "med_b_in": 0.006110364762983392,
+              "med_cand_off": 0.08828683698621026,
+              "med_b_off": 0.008828683698621026,
+              "med_of_ratios_in": 10.0,
+              "seed_success": true
+            },
+            {
+              "seed": 9,
+              "in_ratio": 10.0,
+              "off_ratio": 10.0,
+              "med_cand_in": 0.0006741271020454854,
+              "med_b_in": 0.006741271020454854,
+              "med_cand_off": 0.06400321921112785,
+              "med_b_off": 0.0064003219211127855,
+              "med_of_ratios_in": 10.0,
+              "seed_success": true
+            }
+          ]
+        },
+        "POSITIVE_CONTROL": {
+          "n": 10,
+          "median_regret_a_per_seed": [
+            0.000457076398326471,
+            0.0006271411849807446,
+            0.0002697411902473286,
+            9.199184063476344e-05,
+            0.0005248713398083942,
+            0.0002608341190143392,
+            0.00020551977046191414,
+            0.00031197757110562683,
+            0.00011867519047703356,
+            0.00015378076701718862
+          ],
+          "n_seeds_below_threshold": 10,
+          "median_regret_b_per_seed": [
+            0.007217708624948104,
+            0.008439593671909197,
+            0.006331431305807371,
+            0.002860127299644974,
+            0.01264376168786449,
+            0.00971034730159371,
+            0.004833012331751552,
+            0.0044385679122998355,
+            0.004547421091355819,
+            0.006261001388299148
+          ]
+        }
+      },
+      "anomalies": [
+        {
+          "id": "A1",
+          "text": "5805 z_hat entries floored (non-positive Galerkin desirability) across TREATMENT seeds, all rules"
+        }
+      ],
+      "rejected_explanations": [
+        "orthogonal goals chosen to be hard for everyone",
+        "prediction subspace poor due to near-uniform dynamics"
       ]
     }
   ],
   "candidateEngines": [],
   "currentVerdict": "SPECULATIVE",
   "evidenceSummary": {
-    "layer": "speculation",
-    "note": "Pass 0-3 specs only; nothing run"
+    "layer": "experimental_observation",
+    "note": "probe round 1: W4 NULL; nothing supported (no Pass 4 yet)",
+    "rows": "hecate/programs/HT-2a8a3aedeb/worlds/W4/rows.jsonl"
   }
 }

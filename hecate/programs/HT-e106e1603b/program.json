@@ -55,7 +55,9 @@
       "triplicateId": "HT-e106e1603b",
       "index": 0,
       "kind": "raw_interpretation",
-      "added": ["new interpretation"],
+      "added": [
+        "new interpretation"
+      ],
       "generator": {
         "model": "claude-opus-5-5",
         "search": false,
@@ -66,54 +68,193 @@
       "concept_extractions": [
         {
           "concept": "Error Correcting Codes",
-          "defining_structures": ["codebook as a subset of a noisy word space", "parity-check matrix / Tanner graph of variable and check nodes", "minimum distance d", "rate k/n"],
-          "invariants": ["every codeword has zero syndrome", "syndrome depends only on the error, not on the transmitted codeword", "linear codes are closed under addition"],
-          "transformations": ["encoding map", "syndrome computation", "decoding (nearest-codeword, bit-flipping, message passing)", "concatenation, puncturing, interleaving"],
-          "conserved_quantities": ["the k information bits (up to decodable noise)", "code dimension", "parity of each check under paired flips"],
-          "failure_modes": ["noise above the decoding threshold -> block failure", "miscorrection to a wrong codeword (silent failure)", "trapping / stopping sets that stall iterative decoders", "burst errors that exceed local redundancy"],
-          "dynamics": ["iterative message passing as a relaxation", "bit-flip decoding as greedy descent on unsatisfied-check count"],
-          "scales": ["block length n", "distance d", "noise rate p relative to threshold p*", "burst length relative to interleaver depth"],
-          "locality": ["checks are local (low-density) but the protected information is delocalised over the block"],
-          "memory": ["redundancy is stored memory; a code is a way of remembering against noise", "residual errors persist between scrub cycles"],
-          "identity": ["a message is identified with a decoding region (Voronoi cell) rather than one word"],
-          "reproduction": ["re-encoding / copying through a noisy channel", "concatenation reproduces a code at a larger scale"],
-          "selection": ["the decoder selects the most likely codeword", "code ensembles are selected for threshold"],
-          "information": ["channel capacity bounds rate at given noise", "syndrome is information about the error only"],
-          "constraint": ["parity checks are hard constraints", "sphere-packing / Singleton-type trade-offs between rate and distance"]
+          "defining_structures": [
+            "codebook as a subset of a noisy word space",
+            "parity-check matrix / Tanner graph of variable and check nodes",
+            "minimum distance d",
+            "rate k/n"
+          ],
+          "invariants": [
+            "every codeword has zero syndrome",
+            "syndrome depends only on the error, not on the transmitted codeword",
+            "linear codes are closed under addition"
+          ],
+          "transformations": [
+            "encoding map",
+            "syndrome computation",
+            "decoding (nearest-codeword, bit-flipping, message passing)",
+            "concatenation, puncturing, interleaving"
+          ],
+          "conserved_quantities": [
+            "the k information bits (up to decodable noise)",
+            "code dimension",
+            "parity of each check under paired flips"
+          ],
+          "failure_modes": [
+            "noise above the decoding threshold -> block failure",
+            "miscorrection to a wrong codeword (silent failure)",
+            "trapping / stopping sets that stall iterative decoders",
+            "burst errors that exceed local redundancy"
+          ],
+          "dynamics": [
+            "iterative message passing as a relaxation",
+            "bit-flip decoding as greedy descent on unsatisfied-check count"
+          ],
+          "scales": [
+            "block length n",
+            "distance d",
+            "noise rate p relative to threshold p*",
+            "burst length relative to interleaver depth"
+          ],
+          "locality": [
+            "checks are local (low-density) but the protected information is delocalised over the block"
+          ],
+          "memory": [
+            "redundancy is stored memory; a code is a way of remembering against noise",
+            "residual errors persist between scrub cycles"
+          ],
+          "identity": [
+            "a message is identified with a decoding region (Voronoi cell) rather than one word"
+          ],
+          "reproduction": [
+            "re-encoding / copying through a noisy channel",
+            "concatenation reproduces a code at a larger scale"
+          ],
+          "selection": [
+            "the decoder selects the most likely codeword",
+            "code ensembles are selected for threshold"
+          ],
+          "information": [
+            "channel capacity bounds rate at given noise",
+            "syndrome is information about the error only"
+          ],
+          "constraint": [
+            "parity checks are hard constraints",
+            "sphere-packing / Singleton-type trade-offs between rate and distance"
+          ]
         },
         {
           "concept": "Phase Transitions",
-          "defining_structures": ["order parameter", "control parameter", "free energy landscape", "correlation length", "universality class"],
-          "invariants": ["critical exponents within a universality class", "symmetry of the governing rule"],
-          "transformations": ["coarse-graining / renormalisation", "symmetry breaking", "finite-size scaling collapse"],
-          "conserved_quantities": ["symmetry charges", "conserved densities in conserving dynamics"],
-          "failure_modes": ["metastability and hysteresis", "finite-size rounding hides the transition", "frustration / glassiness produce many competing states"],
-          "dynamics": ["critical slowing down", "nucleation and domain growth", "coarsening"],
-          "scales": ["diverging correlation length at criticality", "system size L as the cutoff"],
-          "locality": ["local couplings produce long-range order"],
-          "memory": ["broken-symmetry state remembers its initial bias", "hysteresis loops store history"],
-          "identity": ["a phase is a macroscopic basin, identified by the order parameter"],
-          "reproduction": ["a nucleus of the stable phase converts its neighbourhood"],
-          "selection": ["free-energy minimisation selects the phase", "the control parameter selects the regime"],
-          "information": ["long-range correlations and susceptibility peak near the critical point", "success/failure of inference can itself be a sharp transition"],
-          "constraint": ["random constraint problems show satisfiable/unsatisfiable transitions", "symmetry constrains allowed order parameters"]
+          "defining_structures": [
+            "order parameter",
+            "control parameter",
+            "free energy landscape",
+            "correlation length",
+            "universality class"
+          ],
+          "invariants": [
+            "critical exponents within a universality class",
+            "symmetry of the governing rule"
+          ],
+          "transformations": [
+            "coarse-graining / renormalisation",
+            "symmetry breaking",
+            "finite-size scaling collapse"
+          ],
+          "conserved_quantities": [
+            "symmetry charges",
+            "conserved densities in conserving dynamics"
+          ],
+          "failure_modes": [
+            "metastability and hysteresis",
+            "finite-size rounding hides the transition",
+            "frustration / glassiness produce many competing states"
+          ],
+          "dynamics": [
+            "critical slowing down",
+            "nucleation and domain growth",
+            "coarsening"
+          ],
+          "scales": [
+            "diverging correlation length at criticality",
+            "system size L as the cutoff"
+          ],
+          "locality": [
+            "local couplings produce long-range order"
+          ],
+          "memory": [
+            "broken-symmetry state remembers its initial bias",
+            "hysteresis loops store history"
+          ],
+          "identity": [
+            "a phase is a macroscopic basin, identified by the order parameter"
+          ],
+          "reproduction": [
+            "a nucleus of the stable phase converts its neighbourhood"
+          ],
+          "selection": [
+            "free-energy minimisation selects the phase",
+            "the control parameter selects the regime"
+          ],
+          "information": [
+            "long-range correlations and susceptibility peak near the critical point",
+            "success/failure of inference can itself be a sharp transition"
+          ],
+          "constraint": [
+            "random constraint problems show satisfiable/unsatisfiable transitions",
+            "symmetry constrains allowed order parameters"
+          ]
         },
         {
           "concept": "Self-Organized Criticality",
-          "defining_structures": ["slowly driven threshold system", "toppling rule", "dissipation (typically at boundaries)", "separation of drive and relaxation timescales"],
-          "invariants": ["abelian property of some sandpiles: final state independent of toppling order", "recurrent-configuration set forms a group", "scale-free avalanche statistics up to a size cutoff"],
-          "transformations": ["drive (add a grain)", "relax (avalanche)", "dissipate (lose grains)"],
-          "conserved_quantities": ["grains in bulk toppling", "only the boundary dissipates"],
-          "failure_modes": ["bulk dissipation -> subcritical characteristic avalanche size", "fast drive -> overlapping avalanches, loss of scale-freeness", "system-spanning characteristic events"],
-          "dynamics": ["intermittent avalanches", "1/f-like fluctuations", "attraction to a critical state without parameter tuning"],
-          "scales": ["avalanche size cutoff scaling with system size", "drive interval >> relaxation time"],
-          "locality": ["nearest-neighbour toppling", "nonlocal consequences through avalanches"],
-          "memory": ["slowly built stress landscape stores the drive history", "the recurrent state encodes a group element"],
-          "identity": ["an avalanche is a transient entity with size, duration, area"],
-          "reproduction": ["a toppling triggers topplings; branching ratio near one"],
-          "selection": ["the dynamics selects the recurrent critical attractor"],
-          "information": ["susceptibility and dynamic range claimed to be maximal at criticality"],
-          "constraint": ["thresholds", "bulk conservation often required for criticality"]
+          "defining_structures": [
+            "slowly driven threshold system",
+            "toppling rule",
+            "dissipation (typically at boundaries)",
+            "separation of drive and relaxation timescales"
+          ],
+          "invariants": [
+            "abelian property of some sandpiles: final state independent of toppling order",
+            "recurrent-configuration set forms a group",
+            "scale-free avalanche statistics up to a size cutoff"
+          ],
+          "transformations": [
+            "drive (add a grain)",
+            "relax (avalanche)",
+            "dissipate (lose grains)"
+          ],
+          "conserved_quantities": [
+            "grains in bulk toppling",
+            "only the boundary dissipates"
+          ],
+          "failure_modes": [
+            "bulk dissipation -> subcritical characteristic avalanche size",
+            "fast drive -> overlapping avalanches, loss of scale-freeness",
+            "system-spanning characteristic events"
+          ],
+          "dynamics": [
+            "intermittent avalanches",
+            "1/f-like fluctuations",
+            "attraction to a critical state without parameter tuning"
+          ],
+          "scales": [
+            "avalanche size cutoff scaling with system size",
+            "drive interval >> relaxation time"
+          ],
+          "locality": [
+            "nearest-neighbour toppling",
+            "nonlocal consequences through avalanches"
+          ],
+          "memory": [
+            "slowly built stress landscape stores the drive history",
+            "the recurrent state encodes a group element"
+          ],
+          "identity": [
+            "an avalanche is a transient entity with size, duration, area"
+          ],
+          "reproduction": [
+            "a toppling triggers topplings; branching ratio near one"
+          ],
+          "selection": [
+            "the dynamics selects the recurrent critical attractor"
+          ],
+          "information": [
+            "susceptibility and dynamic range claimed to be maximal at criticality"
+          ],
+          "constraint": [
+            "thresholds",
+            "bulk conservation often required for criticality"
+          ]
         }
       ],
       "unexplained": [
@@ -141,14 +282,25 @@
       "triplicateId": "HT-e106e1603b",
       "index": 1,
       "kind": "collision",
-      "added": ["new mechanism"],
+      "added": [
+        "new mechanism"
+      ],
       "generator": {
         "model": "claude-opus-5-5",
         "search": false,
         "prompt": "hecate/programs/_prompts/pass0_3_v1.md",
         "prompt_sha256": "9ac5468dffb0a5792840809c84b3ad1ab22056397741dacb893386fd206baf3d"
       },
-      "inspected_prior": ["P0", "I1", "I2", "I3", "I4", "I5", "I6", "I7"],
+      "inspected_prior": [
+        "P0",
+        "I1",
+        "I2",
+        "I3",
+        "I4",
+        "I5",
+        "I6",
+        "I7"
+      ],
       "unexplained": [
         "several mechanisms (M2, M11, M13) may reduce to a feedback controller or a mutation-selection balance with no genuine SOC content",
         "no mechanism yet says why a slowly driven decoder would stop at the threshold rather than at zero error",
@@ -174,14 +326,31 @@
       "triplicateId": "HT-e106e1603b",
       "index": 2,
       "kind": "lens_explosion",
-      "added": ["new lens", "new observable"],
+      "added": [
+        "new lens",
+        "new observable"
+      ],
       "generator": {
         "model": "claude-opus-5-5",
         "search": false,
         "prompt": "hecate/programs/_prompts/pass0_3_v1.md",
         "prompt_sha256": "9ac5468dffb0a5792840809c84b3ad1ab22056397741dacb893386fd206baf3d"
       },
-      "inspected_prior": ["P1", "M1", "M2", "M3", "M4", "M5", "M6", "M7", "M8", "M9", "M10", "M12", "M15"],
+      "inspected_prior": [
+        "P1",
+        "M1",
+        "M2",
+        "M3",
+        "M4",
+        "M5",
+        "M6",
+        "M7",
+        "M8",
+        "M9",
+        "M10",
+        "M12",
+        "M15"
+      ],
       "unexplained": [
         "which lens statistic distinguishes a true self-organized threshold from a controller parked at a quantile",
         "whether power-law avalanche fits survive a matched-mean null twin at the small sizes affordable here",
@@ -207,14 +376,31 @@
       "triplicateId": "HT-e106e1603b",
       "index": 3,
       "kind": "minimal_worlds",
-      "added": ["new substrate", "new intervention", "new falsifier"],
+      "added": [
+        "new substrate",
+        "new intervention",
+        "new falsifier"
+      ],
       "generator": {
         "model": "claude-opus-5-5",
         "search": false,
         "prompt": "hecate/programs/_prompts/pass0_3_v1.md",
         "prompt_sha256": "9ac5468dffb0a5792840809c84b3ad1ab22056397741dacb893386fd206baf3d"
       },
-      "inspected_prior": ["P2", "M1", "M2", "M7", "M9", "L1", "L2", "L3", "L4", "L5", "L6", "L7"],
+      "inspected_prior": [
+        "P2",
+        "M1",
+        "M2",
+        "M7",
+        "M9",
+        "L1",
+        "L2",
+        "L3",
+        "L4",
+        "L5",
+        "L6",
+        "L7"
+      ],
       "unexplained": [
         "small sizes (L <= 64, n <= 2000) may be too small to separate power laws from broad exponentials",
         "W2 may simply accumulate trapping-set residue without a stationary density",
@@ -233,6 +419,43 @@
         "cost": "low",
         "unexpectedness": "medium",
         "potential_importance": "medium"
+      }
+    },
+    {
+      "id": "P3-probe1",
+      "triplicateId": "HT-e106e1603b",
+      "index": 3,
+      "kind": "cheap_probe",
+      "added": [
+        "new observable"
+      ],
+      "generator": {
+        "model": "claude-opus-5-5 (implementer)",
+        "search": false,
+        "prompt": "hecate/programs/_prompts/probe_impl_v1.md",
+        "prompt_sha256": "cf4bd374bce1b817a12d3607063278183ce0a8b7c4a7b771061dc8ce133bcea2"
+      },
+      "prereg": "roles/Hecate/prereg/2026-09-29_probe_round1/PREREG.md",
+      "inspected_prior": [
+        "W2"
+      ],
+      "unexplained": [
+        "the density equals p* because both are set by the same degree-3 majority arithmetic, not by self-organization",
+        "the twin fails merely because random flips inject errors, a trivially different drive"
+      ],
+      "decision": "DEEPEN",
+      "research_state": {
+        "novelty": "unknown",
+        "mechanistic_clarity": "unknown",
+        "falsifiability": "unknown",
+        "empirical_support": "none",
+        "cross_lens_agreement": "unknown",
+        "cross_substrate_transfer": "unknown",
+        "baseline_resistance": "unknown",
+        "artifact_risk": "unknown",
+        "cost": "unknown",
+        "unexpectedness": "unknown",
+        "potential_importance": "unknown"
       }
     }
   ],
@@ -301,7 +524,9 @@
       "layer": "speculation",
       "form": "dynamical law",
       "statement": "Syndrome sandpile: on a sparse Tanner graph, noise is injected one bit at a time and a threshold bit-flip rule (flip a variable when at least t of its checks are unsatisfied) runs to quiescence between injections. The stationary residual-error density self-tunes toward the ensemble's bit-flip decoding threshold, because below it relaxation removes errors and above it stalled trapping sets accumulate and flips create new errors.",
-      "derived_from": ["I1"],
+      "derived_from": [
+        "I1"
+      ],
       "concept_contributions": {
         "Error Correcting Codes": "the Tanner graph, the syndrome as stress field, the bit-flip rule as toppling",
         "Phase Transitions": "the decoding threshold as the candidate attractor density",
@@ -332,7 +557,9 @@
       "layer": "speculation",
       "form": "learning pressure",
       "statement": "Redundancy thermostat: a storage agent lowers its protection (scrub effort or transmit power) by a small step after every successful epoch and raises it by a large step after every failure, with residual errors persisting between epochs. The operating point is driven to the edge of the scrubbing threshold and failures arrive in heavy-tailed bursts because persistent residue couples consecutive epochs.",
-      "derived_from": ["I2"],
+      "derived_from": [
+        "I2"
+      ],
       "concept_contributions": {
         "Error Correcting Codes": "the code and scrub decoder that define success and failure",
         "Phase Transitions": "the sharp failure-versus-noise curve that makes the edge well defined",
@@ -363,7 +590,9 @@
       "layer": "speculation",
       "form": "representation",
       "statement": "Critical medium as distributed code: a pattern is imprinted on a threshold medium by biased driving; after erasing a random fraction of sites, the imprint is recovered by a linear readout of the remaining sites. Recoverability peaks near the critical point of the medium because correlations spread the imprint without the medium forgetting it.",
-      "derived_from": ["I3"],
+      "derived_from": [
+        "I3"
+      ],
       "concept_contributions": {
         "Error Correcting Codes": "erasure recovery as the success measure; redundancy as delocalisation",
         "Phase Transitions": "the control parameter sweeping ordered, critical, disordered regimes",
@@ -394,7 +623,9 @@
       "layer": "speculation",
       "form": "computational primitive",
       "statement": "Sandpile syndrome computer: take the graph Laplacian lattice as a lattice code (codewords = integer toppling vectors times the reduced Laplacian). Relaxing a received grain vector to its recurrent representative computes its coset, i.e. its syndrome, by purely local threshold dynamics; decoding reduces to a lookup from recurrent configuration to minimum-weight grain error.",
-      "derived_from": ["I5"],
+      "derived_from": [
+        "I5"
+      ],
       "concept_contributions": {
         "Error Correcting Codes": "lattice code, syndrome, minimum-weight decoding",
         "Phase Transitions": "WEAK: only through the claim that decoding success versus grain-noise rate sharpens with graph size",
@@ -425,7 +656,9 @@
       "layer": "speculation",
       "form": "selection mechanism",
       "statement": "Error-threshold seeking: genomes carry an evolvable repetition factor on their functional bits; redundancy costs replication speed. The population evolves toward the minimum redundancy that keeps it below its heredity error threshold, and extinction or sweep events near that edge have scale-free size distributions.",
-      "derived_from": ["I7"],
+      "derived_from": [
+        "I7"
+      ],
       "concept_contributions": {
         "Error Correcting Codes": "repetition coding of genome function",
         "Phase Transitions": "the heredity error threshold",
@@ -456,7 +689,10 @@
       "layer": "speculation",
       "form": "error-correction mechanism",
       "statement": "Failure-size criticality at threshold: the number of wrong bits left after iterative decoding is bimodal away from threshold (zero or large) and broad, possibly power-law, exactly at threshold, so the size distribution of decoding failures is an order-parameter probe of the code's phase.",
-      "derived_from": ["I1", "I4"],
+      "derived_from": [
+        "I1",
+        "I4"
+      ],
       "concept_contributions": {
         "Error Correcting Codes": "iterative decoder and its failure residue",
         "Phase Transitions": "threshold as critical point, failure size as order-parameter fluctuation",
@@ -487,7 +723,9 @@
       "layer": "speculation",
       "form": "memory structure",
       "statement": "Scale-free burst memory: marks written into a sandpile are erased when their site topples. At criticality erasures come in spatially compact bursts of every size, so the benefit of scattering an erasure-code's symbols (interleaving) over placing them contiguously grows with system size, whereas in a subcritical pile the benefit saturates once the spread exceeds the characteristic avalanche size.",
-      "derived_from": ["I4"],
+      "derived_from": [
+        "I4"
+      ],
       "concept_contributions": {
         "Error Correcting Codes": "erasure code with n-k tolerance, interleaving as layout",
         "Phase Transitions": "critical versus subcritical regime changes the burst-size law",
@@ -518,7 +756,10 @@
       "layer": "speculation",
       "form": "computational primitive",
       "statement": "Critical slowing down as noise estimator: the number of iterations an iterative decoder needs grows sharply as noise approaches threshold, so an agent can read its own distance-to-threshold from convergence time and adjust protection without ever observing a failure.",
-      "derived_from": ["I1", "I2"],
+      "derived_from": [
+        "I1",
+        "I2"
+      ],
       "concept_contributions": {
         "Error Correcting Codes": "iterative decoder",
         "Phase Transitions": "critical slowing down near threshold",
@@ -549,7 +790,10 @@
       "layer": "speculation",
       "form": "causal constraint",
       "statement": "Parity-conserving lazy decoder: on a planar surface-code-like lattice, edge flips create defect pairs; a lazy local decoder acts only where a neighbourhood holds at least theta defects, and its moves either annihilate adjacent pairs or hop a defect (parity preserving). Defects leave only at the boundary. Parity conservation plus threshold laziness plus boundary-only loss should make decoding avalanches scale-free; allowing bulk single-defect deletion should destroy it.",
-      "derived_from": ["I6", "I1"],
+      "derived_from": [
+        "I6",
+        "I1"
+      ],
       "concept_contributions": {
         "Error Correcting Codes": "stabilizer-like parity checks, defects in pairs, logical failure as a spanning chain",
         "Phase Transitions": "the defect-density at which spanning (logical) failures proliferate",
@@ -580,7 +824,10 @@
       "layer": "speculation",
       "form": "developmental process",
       "statement": "Failure-driven code growth: a code grows by adding a new check node over the bits involved in each decoding failure; the grown Tanner graph self-organizes to a structure whose threshold sits just above the ambient noise, and failure sizes become scale-free as the code approaches that edge.",
-      "derived_from": ["I1", "I2"],
+      "derived_from": [
+        "I1",
+        "I2"
+      ],
       "concept_contributions": {
         "Error Correcting Codes": "Tanner graph structure as the growing body",
         "Phase Transitions": "threshold of the grown code relative to ambient noise",
@@ -611,7 +858,9 @@
       "layer": "speculation",
       "form": "information bottleneck",
       "statement": "Coarse-graining as decoding: majority-rule block coarse-graining is a concatenated repetition decoder; its fixed-point structure (flow to all-correct or to random) is the threshold of the concatenated code, so a system that repeatedly coarse-grains its own state keeps information iff noise is below an RG critical point.",
-      "derived_from": ["I3"],
+      "derived_from": [
+        "I3"
+      ],
       "concept_contributions": {
         "Error Correcting Codes": "concatenated repetition code and majority decoding",
         "Phase Transitions": "RG fixed points and the unstable critical point",
@@ -642,7 +891,10 @@
       "layer": "speculation",
       "form": "mutation operator",
       "statement": "Avalanche mutation: mutations hit genomes as sandpile avalanches mapped onto the genome layout (correlated bursts with scale-free sizes) rather than iid with the same mean rate. Populations with evolvable symbol layout evolve multi-scale interleaving, which iid-mutated populations never do.",
-      "derived_from": ["I4", "I7"],
+      "derived_from": [
+        "I4",
+        "I7"
+      ],
       "concept_contributions": {
         "Error Correcting Codes": "genome-level code and its layout",
         "Phase Transitions": "critical burst law versus subcritical burst law as treatment",
@@ -673,7 +925,9 @@
       "layer": "speculation",
       "form": "world rule",
       "statement": "Throughput heats the channel: the world's noise rate rises with the information rate pushed through it and relaxes slowly; a transmitter maximising goodput drives the channel to the code's threshold, where noise fluctuations are amplified by the steep failure curve.",
-      "derived_from": ["I2"],
+      "derived_from": [
+        "I2"
+      ],
       "concept_contributions": {
         "Error Correcting Codes": "goodput and failure depend on rate and noise",
         "Phase Transitions": "steep threshold curve amplifies fluctuations",
@@ -704,7 +958,10 @@
       "layer": "speculation",
       "form": "organism architecture",
       "statement": "Split-phase organism: an organism that must both detect weak signals (favoured at criticality) and retain states (favoured in an ordered, code-protected phase) evolves a partition into a critical sensing module and an ordered, redundant memory module, when each module has its own control parameter; with one shared parameter it settles at a compromise that is worse at both.",
-      "derived_from": ["I3", "I2"],
+      "derived_from": [
+        "I3",
+        "I2"
+      ],
       "concept_contributions": {
         "Error Correcting Codes": "redundant memory module",
         "Phase Transitions": "ordered versus critical regimes of each module",
@@ -735,7 +992,10 @@
       "layer": "speculation",
       "form": "interaction law",
       "statement": "Miscorrection contagion: a network of storage nodes each scrubs its own codeword, but a miscorrection at one node leaks corrupted symbols into its neighbours' codewords. The branching ratio of miscorrection set by code distance and coupling determines whether failures stay local or cascade, and repair policies that reduce scrub effort after quiet periods poise the network at branching ratio one.",
-      "derived_from": ["I1", "I2"],
+      "derived_from": [
+        "I1",
+        "I2"
+      ],
       "concept_contributions": {
         "Error Correcting Codes": "miscorrection probability as a function of distance and load",
         "Phase Transitions": "the branching-ratio-one transition between local and cascading failure",
@@ -757,6 +1017,22 @@
         "what_can_transfer": "policy across coupling graphs",
         "distinguishing_observable": "cascade-size distribution and effective branching ratio under adaptive versus fixed effort matched on mean effort"
       }
+    },
+    {
+      "id": "O-W2-r1",
+      "triplicateId": "HT-e106e1603b",
+      "passId": "P3-probe1",
+      "kind": "observation",
+      "layer": "experimental_observation",
+      "evidence_rows": [
+        "hecate/programs/HT-e106e1603b/worlds/W2/rows.jsonl",
+        "hecate/programs/HT-e106e1603b/worlds/W2/OUTCOME.json"
+      ],
+      "statement": "W2 probe round 1: NOT_BUILT. p* (L2 crossing, mean of 5 seeds) = 0.0050578171560948584. n=1000: treatment rho*=0 (rel dist 1), slope/1e4=0; n=2000: treatment rho*=0 (rel dist 1), slope/1e4=0; twin n=1000 rho*=0.4995; twin n=2000 rho*=0.4984; control n=1000 rho*=0.4999; control n=2000 rho*=0.4476; Outcome by PREREG rule: INSTRUMENT_FAIL.",
+      "derived_from": [
+        "M1",
+        "M6"
+      ]
     }
   ],
   "lenses": [
@@ -765,14 +1041,30 @@
       "name": "Syndrome-grain bookkeeping",
       "triplicateId": "HT-e106e1603b",
       "passId": "P2",
-      "targets": ["M1", "M9", "M15"],
+      "targets": [
+        "M1",
+        "M9",
+        "M15"
+      ],
       "rationale": "Treat unsatisfied checks as grains and decoder moves as topplings so that sandpile statistics can be computed on decoders directly.",
       "sourceRepresentation": "time series of decoder moves per injection, with the defect/unsatisfied-check set before and after each move",
       "transformation": "segment into avalanches (moves between consecutive injections), compute size, duration, area, and branching ratio (moves caused per move)",
-      "observables": ["avalanche size distribution P(s)", "95th-percentile size s95 as a function of system size", "empirical branching ratio", "stationary defect density"],
-      "predictedSignals": ["s95 grows with system size roughly as a power", "branching ratio near 1 in the conserving rule"],
+      "observables": [
+        "avalanche size distribution P(s)",
+        "95th-percentile size s95 as a function of system size",
+        "empirical branching ratio",
+        "stationary defect density"
+      ],
+      "predictedSignals": [
+        "s95 grows with system size roughly as a power",
+        "branching ratio near 1 in the conserving rule"
+      ],
       "nullExpectation": "sizes have a characteristic scale independent of system size; branching ratio clearly below 1",
-      "failureModes": ["finite-size cutoff dominates at small L", "log-log straightness mistaken for power law", "overlapping avalanches when drive is not slow"],
+      "failureModes": [
+        "finite-size cutoff dominates at small L",
+        "log-log straightness mistaken for power law",
+        "overlapping avalanches when drive is not slow"
+      ],
       "informationAddedBeyondExistingLenses": "makes decoders measurable with sandpile statistics rather than only with failure rates"
     },
     {
@@ -780,14 +1072,28 @@
       "name": "Threshold-distance thermometer",
       "triplicateId": "HT-e106e1603b",
       "passId": "P2",
-      "targets": ["M1", "M2", "M6", "M8"],
+      "targets": [
+        "M1",
+        "M2",
+        "M6",
+        "M8"
+      ],
       "rationale": "Any claim that a dynamics sits 'at threshold' needs an independent threshold measurement made without the dynamics.",
       "sourceRepresentation": "block failure probability versus iid noise rate p for two block lengths of the same ensemble",
       "transformation": "fit logistic curves, locate the crossing of the two curves as p*; express any operating point as (p - p*)/p*",
-      "observables": ["p* estimate with bootstrap interval", "curve steepness at p*", "relative distance of self-organized operating points to p*"],
-      "predictedSignals": ["self-organized densities within 20% of p*"],
+      "observables": [
+        "p* estimate with bootstrap interval",
+        "curve steepness at p*",
+        "relative distance of self-organized operating points to p*"
+      ],
+      "predictedSignals": [
+        "self-organized densities within 20% of p*"
+      ],
       "nullExpectation": "operating points unrelated to p* (e.g. near zero or far above)",
-      "failureModes": ["curves do not cross at small n", "bit-flip decoder threshold poorly defined for small blocks"],
+      "failureModes": [
+        "curves do not cross at small n",
+        "bit-flip decoder threshold poorly defined for small blocks"
+      ],
       "informationAddedBeyondExistingLenses": "an external reference point, so that 'critical' is not self-certified by the dynamics being tested"
     },
     {
@@ -795,14 +1101,27 @@
       "name": "Interleaver-depth demand curve",
       "triplicateId": "HT-e106e1603b",
       "passId": "P2",
-      "targets": ["M7", "M12"],
+      "targets": [
+        "M7",
+        "M12"
+      ],
       "rationale": "Invented for this triplicate: the burst law of a critical world should show up as a growing demand for spread in a code's layout, which is a code-side measurement of criticality.",
       "sourceRepresentation": "survival time of a k-of-n erasure-coded message under a given layout in a given burst world",
       "transformation": "compute median survival for contiguous and scattered layouts, and the minimal spread radius that reaches 90% of scattered-layout survival, as a function of system size L",
-      "observables": ["survival ratio R(L) = median survival scattered / contiguous", "required spread radius D(L)"],
-      "predictedSignals": ["R(L) and D(L) increase with L at criticality", "both saturate in a subcritical world", "R near 1 in an iid world"],
+      "observables": [
+        "survival ratio R(L) = median survival scattered / contiguous",
+        "required spread radius D(L)"
+      ],
+      "predictedSignals": [
+        "R(L) and D(L) increase with L at criticality",
+        "both saturate in a subcritical world",
+        "R near 1 in an iid world"
+      ],
       "nullExpectation": "R(L) flat in L in all regimes",
-      "failureModes": ["mean avalanche area growth alone drives R(L) growth", "boundary effects at small L"],
+      "failureModes": [
+        "mean avalanche area growth alone drives R(L) growth",
+        "boundary effects at small L"
+      ],
       "informationAddedBeyondExistingLenses": "measures criticality through its consequence for information retention rather than through avalanche histograms"
     },
     {
@@ -810,14 +1129,26 @@
       "name": "Coset ledger",
       "triplicateId": "HT-e106e1603b",
       "passId": "P2",
-      "targets": ["M4"],
+      "targets": [
+        "M4"
+      ],
       "rationale": "Invented for this triplicate: view every sandpile configuration by its coset modulo the Laplacian lattice so that relaxation is read as syndrome computation.",
       "sourceRepresentation": "integer grain vectors on non-sink vertices of a small graph",
       "transformation": "map each vector to its recurrent representative by stabilisation plus the identity-element trick; tabulate minimum-weight error per coset by breadth-first enumeration",
-      "observables": ["group order", "minimum L1 weight of a nonzero lattice vector", "decoding success versus grain-noise rate", "topplings per syndrome computation"],
-      "predictedSignals": ["decoding success curve sharpens with graph size within a family"],
+      "observables": [
+        "group order",
+        "minimum L1 weight of a nonzero lattice vector",
+        "decoding success versus grain-noise rate",
+        "topplings per syndrome computation"
+      ],
+      "predictedSignals": [
+        "decoding success curve sharpens with graph size within a family"
+      ],
       "nullExpectation": "success curve shape unchanged by graph size",
-      "failureModes": ["cosets too many to tabulate beyond ~16 vertices", "lattice minimum distance fixed by vertex degree so no family scaling"],
+      "failureModes": [
+        "cosets too many to tabulate beyond ~16 vertices",
+        "lattice minimum distance fixed by vertex degree so no family scaling"
+      ],
       "informationAddedBeyondExistingLenses": "gives the sandpile an algebraic code reading independent of avalanche statistics"
     },
     {
@@ -825,14 +1156,26 @@
       "name": "Defect-parity audit",
       "triplicateId": "HT-e106e1603b",
       "passId": "P2",
-      "targets": ["M9", "M1"],
+      "targets": [
+        "M9",
+        "M1"
+      ],
       "rationale": "Tests the analogy grain conservation <-> parity conservation directly by counting where parity is broken.",
       "sourceRepresentation": "defect set per time step with a region partition",
       "transformation": "compute per-region defect-parity changes not accounted for by boundary crossings",
-      "observables": ["bulk parity-violation rate", "correlation of violation rate with avalanche cutoff exponent"],
-      "predictedSignals": ["zero violations in the conserving rule, with the largest cutoff scaling", "cutoff scaling falls as bulk violation rate rises"],
+      "observables": [
+        "bulk parity-violation rate",
+        "correlation of violation rate with avalanche cutoff exponent"
+      ],
+      "predictedSignals": [
+        "zero violations in the conserving rule, with the largest cutoff scaling",
+        "cutoff scaling falls as bulk violation rate rises"
+      ],
       "nullExpectation": "cutoff scaling independent of violation rate",
-      "failureModes": ["region choice changes the count", "annihilation mislabelled as violation"],
+      "failureModes": [
+        "region choice changes the count",
+        "annihilation mislabelled as violation"
+      ],
       "informationAddedBeyondExistingLenses": "isolates the conservation ingredient rather than treating the decoder rule as a black box"
     },
     {
@@ -840,14 +1183,28 @@
       "name": "Residue-cluster geometry",
       "triplicateId": "HT-e106e1603b",
       "passId": "P2",
-      "targets": ["M1", "M6", "M9"],
+      "targets": [
+        "M1",
+        "M6",
+        "M9"
+      ],
       "rationale": "Failure residue that is critical should have fractal, system-spanning clusters; failure residue that is a mixture should have compact, bounded clusters.",
       "sourceRepresentation": "set of wrong bits after relaxation, embedded in the Tanner graph or lattice",
       "transformation": "connected components in the graph induced by wrong bits and their shared checks; size and graph-diameter per component",
-      "observables": ["largest-component fraction", "component-size distribution", "mass-diameter relation"],
-      "predictedSignals": ["largest component fraction rises sharply near p*", "broad component-size distribution only near p*"],
+      "observables": [
+        "largest-component fraction",
+        "component-size distribution",
+        "mass-diameter relation"
+      ],
+      "predictedSignals": [
+        "largest component fraction rises sharply near p*",
+        "broad component-size distribution only near p*"
+      ],
       "nullExpectation": "components are those of iid errors at the same density",
-      "failureModes": ["expander-like Tanner graphs make diameter uninformative", "density matching of iid null is approximate"],
+      "failureModes": [
+        "expander-like Tanner graphs make diameter uninformative",
+        "density matching of iid null is approximate"
+      ],
       "informationAddedBeyondExistingLenses": "looks at the spatial form of residue, not only its count"
     },
     {
@@ -855,14 +1212,27 @@
       "name": "Inter-failure clock",
       "triplicateId": "HT-e106e1603b",
       "passId": "P2",
-      "targets": ["M2", "M13", "M15"],
+      "targets": [
+        "M2",
+        "M13",
+        "M15"
+      ],
       "rationale": "Separates a controller parked at a quantile (memoryless failures) from a system with memory-coupled bursts.",
       "sourceRepresentation": "sequence of failure epochs",
       "transformation": "inter-failure interval distribution, Fano factor of failure counts in windows of 10, 100, 1000 epochs",
-      "observables": ["Fano factor versus window size", "interval CCDF", "likelihood ratio power-law versus exponential"],
-      "predictedSignals": ["Fano factor grows with window size when residue couples epochs"],
+      "observables": [
+        "Fano factor versus window size",
+        "interval CCDF",
+        "likelihood ratio power-law versus exponential"
+      ],
+      "predictedSignals": [
+        "Fano factor grows with window size when residue couples epochs"
+      ],
       "nullExpectation": "Fano factor near 1 at all windows (Bernoulli failures)",
-      "failureModes": ["controller oscillation produces clustering without criticality", "short runs make large-window Fano noisy"],
+      "failureModes": [
+        "controller oscillation produces clustering without criticality",
+        "short runs make large-window Fano noisy"
+      ],
       "informationAddedBeyondExistingLenses": "a temporal-memory test that does not rely on spatial avalanche definitions"
     }
   ],
@@ -871,8 +1241,14 @@
       "id": "W1",
       "triplicateId": "HT-e106e1603b",
       "passId": "P3",
-      "mechanism_ids": ["M9"],
-      "lens_ids": ["L1", "L5", "L6"],
+      "mechanism_ids": [
+        "M9"
+      ],
+      "lens_ids": [
+        "L1",
+        "L5",
+        "L6"
+      ],
       "hypothesis": "A lazy, parity-conserving local decoder on a planar parity-check lattice under slow edge-flip drive produces decoding avalanches whose size cutoff scales with lattice size; permitting bulk single-defect deletion, at a rate matched to give the same mean avalanche size, removes that scaling.",
       "mechanism": "LxL planar lattice, errors on edges, vertex parity checks give defects. Drive: flip one uniformly random edge, then relax. Relaxation: any vertex whose 3x3 neighbourhood holds >= theta=3 defects is active; an active vertex either annihilates an adjacent defect pair by flipping the connecting edge or moves one of its defects one step toward the nearest lattice boundary (random tie-breaks). Defects reaching a boundary are removed. Relax until no active vertex.",
       "intervention": "null twin rule: identical, plus each active step deletes a bulk defect without flipping an edge with probability eps, eps calibrated by bisection so mean avalanche size matches the conserving rule within 5%",
@@ -897,8 +1273,15 @@
       "id": "W2",
       "triplicateId": "HT-e106e1603b",
       "passId": "P3",
-      "mechanism_ids": ["M1", "M6"],
-      "lens_ids": ["L1", "L2", "L6"],
+      "mechanism_ids": [
+        "M1",
+        "M6"
+      ],
+      "lens_ids": [
+        "L1",
+        "L2",
+        "L6"
+      ],
       "hypothesis": "Under one-bit-at-a-time noise injection with bit-flip relaxation to quiescence, the stationary residual-error density of a regular (3,6) sparse code sits within 20% of the independently measured bit-flip threshold of the same ensemble.",
       "mechanism": "random (3,6)-regular Tanner graph, all-zero codeword, error vector e. Drive: flip one random bit of e. Relax: parallel sweeps flipping every variable with >= 2 of 3 checks unsatisfied, up to 50 sweeps or quiescence. Record residual density |e|/n after each relaxation.",
       "intervention": "null twin: same injection, but relaxation flips a uniformly random set of variables of the same size as the syndrome rule would have flipped at that step (syndrome-blind)",
@@ -917,14 +1300,471 @@
         "residue accumulates in trapping sets monotonically and the density 'at' p* is just where the run was stopped",
         "the density equals p* because both are set by the same degree-3 majority arithmetic, not by self-organization",
         "the twin fails merely because random flips inject errors, a trivially different drive"
-      ]
+      ],
+      "outcome": "NOT_BUILT",
+      "raw_outcome": "INSTRUMENT_FAIL",
+      "procedural_notes": [],
+      "rows": "hecate/programs/HT-e106e1603b/worlds/W2/rows.jsonl",
+      "outcome_file": "hecate/programs/HT-e106e1603b/worlds/W2/OUTCOME.json",
+      "statistics": {
+        "p_star": 0.0050578171560948584,
+        "p_star_per_seed": [
+          0.006429330347713006,
+          0.0012662325059367343,
+          0.008697335723363437,
+          0.001714489767451344,
+          0.007181697436009769
+        ],
+        "CHEAT_n1000": {
+          "n_seeds": 5,
+          "rho_star_mean": 0.005,
+          "slope_per_1e4_mean": -1.7672039210351105e-19,
+          "rel_dist_to_p_star": 0.01143124678304879,
+          "per_seed": [
+            {
+              "seed": 0,
+              "rho_star": 0.005,
+              "slope_per_1e4": -1.7672039210351105e-19,
+              "avalanche": null,
+              "capped": null
+            },
+            {
+              "seed": 1,
+              "rho_star": 0.005,
+              "slope_per_1e4": -1.7672039210351105e-19,
+              "avalanche": null,
+              "capped": null
+            },
+            {
+              "seed": 2,
+              "rho_star": 0.005,
+              "slope_per_1e4": -1.7672039210351105e-19,
+              "avalanche": null,
+              "capped": null
+            },
+            {
+              "seed": 3,
+              "rho_star": 0.005,
+              "slope_per_1e4": -1.7672039210351105e-19,
+              "avalanche": null,
+              "capped": null
+            },
+            {
+              "seed": 4,
+              "rho_star": 0.005,
+              "slope_per_1e4": -1.7672039210351105e-19,
+              "avalanche": null,
+              "capped": null
+            }
+          ]
+        },
+        "CHEAT_n2000": {
+          "n_seeds": 5,
+          "rho_star_mean": 0.005013659999999999,
+          "slope_per_1e4_mean": 1.3067555613625285e-07,
+          "rel_dist_to_p_star": 0.008730476949260341,
+          "per_seed": [
+            {
+              "seed": 0,
+              "rho_star": 0.005014166666666666,
+              "slope_per_1e4": 2.1577511207012074e-06,
+              "avalanche": null,
+              "capped": null
+            },
+            {
+              "seed": 1,
+              "rho_star": 0.005013333333333332,
+              "slope_per_1e4": 1.21406222761731e-06,
+              "avalanche": null,
+              "capped": null
+            },
+            {
+              "seed": 2,
+              "rho_star": 0.005013566666666666,
+              "slope_per_1e4": -2.737511123277552e-07,
+              "avalanche": null,
+              "capped": null
+            },
+            {
+              "seed": 3,
+              "rho_star": 0.005014433333333333,
+              "slope_per_1e4": -2.6240622338842818e-06,
+              "avalanche": null,
+              "capped": null
+            },
+            {
+              "seed": 4,
+              "rho_star": 0.0050127999999999995,
+              "slope_per_1e4": 1.793777785747835e-07,
+              "avalanche": null,
+              "capped": null
+            }
+          ]
+        },
+        "CONTROL_n1000": {
+          "n_seeds": 2,
+          "rho_star_mean": 0.49990023333333333,
+          "slope_per_1e4_mean": -0.015459751189981889,
+          "rel_dist_to_p_star": 97.83715007983926,
+          "per_seed": [
+            {
+              "seed": 0,
+              "rho_star": 0.4998704666666667,
+              "slope_per_1e4": 2.0624088980545918e-05,
+              "avalanche": {
+                "mean": 24979.641133333334,
+                "s95": 25508.0,
+                "max": 26223
+              },
+              "capped": 29990
+            },
+            {
+              "seed": 1,
+              "rho_star": 0.49993000000000004,
+              "slope_per_1e4": -0.030940126468944323,
+              "avalanche": {
+                "mean": 24882.236875,
+                "s95": 25486.05,
+                "max": 25919
+              },
+              "capped": 1599
+            }
+          ]
+        },
+        "CONTROL_n2000": {
+          "n_seeds": 1,
+          "rho_star_mean": 0.44758109999999995,
+          "slope_per_1e4_mean": 0.18385498119935564,
+          "rel_dist_to_p_star": 87.49293799809429,
+          "per_seed": [
+            {
+              "seed": 0,
+              "rho_star": 0.44758109999999995,
+              "slope_per_1e4": 0.18385498119935564,
+              "avalanche": {
+                "mean": 375.88936666666666,
+                "s95": 1276.0,
+                "max": 2840
+              },
+              "capped": 15566
+            }
+          ]
+        },
+        "NULL_TWIN_n1000": {
+          "n_seeds": 5,
+          "rho_star_mean": 0.4995036,
+          "slope_per_1e4_mean": -0.003312405156055108,
+          "rel_dist_to_p_star": 97.75873021587573,
+          "per_seed": [
+            {
+              "seed": 0,
+              "rho_star": 0.49748746666666666,
+              "slope_per_1e4": 0.003256771285585691,
+              "avalanche": null,
+              "capped": null
+            },
+            {
+              "seed": 1,
+              "rho_star": 0.5000268,
+              "slope_per_1e4": 0.0005905362159579287,
+              "avalanche": null,
+              "capped": null
+            },
+            {
+              "seed": 2,
+              "rho_star": 0.49901120000000004,
+              "slope_per_1e4": -0.00607005563586693,
+              "avalanche": null,
+              "capped": null
+            },
+            {
+              "seed": 3,
+              "rho_star": 0.5035397333333334,
+              "slope_per_1e4": -0.00712495846722202,
+              "avalanche": null,
+              "capped": null
+            },
+            {
+              "seed": 4,
+              "rho_star": 0.49745280000000003,
+              "slope_per_1e4": -0.007214319178730208,
+              "avalanche": null,
+              "capped": null
+            }
+          ]
+        },
+        "NULL_TWIN_n2000": {
+          "n_seeds": 5,
+          "rho_star_mean": 0.49835535999999997,
+          "slope_per_1e4_mean": 0.0019199532600886692,
+          "rel_dist_to_p_star": 97.53170737883697,
+          "per_seed": [
+            {
+              "seed": 0,
+              "rho_star": 0.4969184,
+              "slope_per_1e4": -0.0009089815862620516,
+              "avalanche": null,
+              "capped": null
+            },
+            {
+              "seed": 1,
+              "rho_star": 0.4975665333333333,
+              "slope_per_1e4": -0.0014694422820864701,
+              "avalanche": null,
+              "capped": null
+            },
+            {
+              "seed": 2,
+              "rho_star": 0.5035264666666667,
+              "slope_per_1e4": 0.009164404751841786,
+              "avalanche": null,
+              "capped": null
+            },
+            {
+              "seed": 3,
+              "rho_star": 0.49805900000000003,
+              "slope_per_1e4": 0.0032081920320362867,
+              "avalanche": null,
+              "capped": null
+            },
+            {
+              "seed": 4,
+              "rho_star": 0.4957064,
+              "slope_per_1e4": -0.00039440661508620363,
+              "avalanche": null,
+              "capped": null
+            }
+          ]
+        },
+        "TREATMENT_n1000": {
+          "n_seeds": 5,
+          "rho_star_mean": 0.0,
+          "slope_per_1e4_mean": 0.0,
+          "rel_dist_to_p_star": 1.0,
+          "per_seed": [
+            {
+              "seed": 0,
+              "rho_star": 0.0,
+              "slope_per_1e4": 0.0,
+              "avalanche": {
+                "mean": 1.0,
+                "s95": 1.0,
+                "max": 1
+              },
+              "capped": 0
+            },
+            {
+              "seed": 1,
+              "rho_star": 0.0,
+              "slope_per_1e4": 0.0,
+              "avalanche": {
+                "mean": 1.0,
+                "s95": 1.0,
+                "max": 1
+              },
+              "capped": 0
+            },
+            {
+              "seed": 2,
+              "rho_star": 0.0,
+              "slope_per_1e4": 0.0,
+              "avalanche": {
+                "mean": 1.0,
+                "s95": 1.0,
+                "max": 1
+              },
+              "capped": 0
+            },
+            {
+              "seed": 3,
+              "rho_star": 0.0,
+              "slope_per_1e4": 0.0,
+              "avalanche": {
+                "mean": 1.0,
+                "s95": 1.0,
+                "max": 1
+              },
+              "capped": 0
+            },
+            {
+              "seed": 4,
+              "rho_star": 0.0,
+              "slope_per_1e4": 0.0,
+              "avalanche": {
+                "mean": 1.0,
+                "s95": 1.0,
+                "max": 1
+              },
+              "capped": 0
+            }
+          ]
+        },
+        "TREATMENT_n2000": {
+          "n_seeds": 5,
+          "rho_star_mean": 0.0,
+          "slope_per_1e4_mean": 0.0,
+          "rel_dist_to_p_star": 1.0,
+          "per_seed": [
+            {
+              "seed": 0,
+              "rho_star": 0.0,
+              "slope_per_1e4": 0.0,
+              "avalanche": {
+                "mean": 1.0,
+                "s95": 1.0,
+                "max": 1
+              },
+              "capped": 0
+            },
+            {
+              "seed": 1,
+              "rho_star": 0.0,
+              "slope_per_1e4": 0.0,
+              "avalanche": {
+                "mean": 1.0,
+                "s95": 1.0,
+                "max": 1
+              },
+              "capped": 0
+            },
+            {
+              "seed": 2,
+              "rho_star": 0.0,
+              "slope_per_1e4": 0.0,
+              "avalanche": {
+                "mean": 1.0,
+                "s95": 1.0,
+                "max": 1
+              },
+              "capped": 0
+            },
+            {
+              "seed": 3,
+              "rho_star": 0.0,
+              "slope_per_1e4": 0.0,
+              "avalanche": {
+                "mean": 1.0,
+                "s95": 1.0,
+                "max": 1
+              },
+              "capped": 0
+            },
+            {
+              "seed": 4,
+              "rho_star": 0.0,
+              "slope_per_1e4": 0.0,
+              "avalanche": {
+                "mean": 1.0,
+                "s95": 1.0,
+                "max": 1
+              },
+              "capped": 0
+            }
+          ]
+        },
+        "success_by_n": {
+          "1000": false,
+          "2000": false
+        },
+        "failure_criterion_by_n": {
+          "1000": {
+            "rho_below_0.2_pstar": true,
+            "nonstationary": true,
+            "twin_within_20pct": false
+          },
+          "2000": {
+            "rho_below_0.2_pstar": true,
+            "nonstationary": true,
+            "twin_within_20pct": false
+          }
+        }
+      },
+      "anomalies": [
+        {
+          "id": "A1",
+          "text": "CONTROL seed 1 n 1000 truncated by compute guard"
+        },
+        {
+          "id": "A2",
+          "text": "CONTROL seed 1 n 2000 truncated by compute guard"
+        },
+        {
+          "id": "A3",
+          "text": "CONTROL seed 2 n 1000 truncated by compute guard"
+        },
+        {
+          "id": "A4",
+          "text": "CONTROL seed 2 n 2000 truncated by compute guard"
+        },
+        {
+          "id": "A5",
+          "text": "CONTROL seed 3 n 1000 truncated by compute guard"
+        },
+        {
+          "id": "A6",
+          "text": "CONTROL seed 3 n 2000 truncated by compute guard"
+        },
+        {
+          "id": "A7",
+          "text": "CONTROL seed 4 n 1000 truncated by compute guard"
+        },
+        {
+          "id": "A8",
+          "text": "CONTROL seed 4 n 2000 truncated by compute guard"
+        },
+        {
+          "id": "A9",
+          "text": "PC seed 0 n=1000: fail frac at grid ends 0.21,1.00"
+        },
+        {
+          "id": "A10",
+          "text": "PC seed 0 n=2000: fail frac at grid ends 0.26,1.00"
+        },
+        {
+          "id": "A11",
+          "text": "PC seed 1 n=1000: fail frac at grid ends 0.23,1.00"
+        },
+        {
+          "id": "A12",
+          "text": "PC seed 1 n=2000: fail frac at grid ends 0.33,1.00"
+        },
+        {
+          "id": "A13",
+          "text": "PC seed 2 n=1000: fail frac at grid ends 0.24,1.00"
+        },
+        {
+          "id": "A14",
+          "text": "PC seed 2 n=2000: fail frac at grid ends 0.25,1.00"
+        },
+        {
+          "id": "A15",
+          "text": "PC seed 3 n=1000: fail frac at grid ends 0.21,1.00"
+        },
+        {
+          "id": "A16",
+          "text": "PC seed 3 n=2000: fail frac at grid ends 0.29,1.00"
+        },
+        {
+          "id": "A17",
+          "text": "PC seed 4 n=1000: fail frac at grid ends 0.24,1.00"
+        },
+        {
+          "id": "A18",
+          "text": "PC seed 4 n=2000: fail frac at grid ends 0.29,1.00"
+        }
+      ],
+      "rejected_explanations": []
     },
     {
       "id": "W3",
       "triplicateId": "HT-e106e1603b",
       "passId": "P3",
-      "mechanism_ids": ["M7"],
-      "lens_ids": ["L3"],
+      "mechanism_ids": [
+        "M7"
+      ],
+      "lens_ids": [
+        "L3"
+      ],
       "hypothesis": "In a critical sandpile the survival advantage of scattered over contiguous placement of an erasure code's symbols grows with system size, while in a subcritical pile it saturates and in an iid-erasure world it is absent.",
       "mechanism": "2D BTW sandpile LxL, open boundaries, driven one grain at a time after burn-in. A message is one (n=32, k=16) erasure codeword: 32 symbols pinned at 32 sites; a symbol is erased the first time its site topples. The message dies when more than 16 symbols are erased. Layouts: contiguous 4x8 block at a random position, or 32 uniformly scattered sites.",
       "intervention": "subcritical regime: each toppling loses a grain in the bulk with probability 0.05; iid twin: each site is erased per grain added with probability equal to that site class's empirical per-grain toppling probability measured in the critical run",
@@ -949,8 +1789,13 @@
       "id": "W4",
       "triplicateId": "HT-e106e1603b",
       "passId": "P3",
-      "mechanism_ids": ["M2"],
-      "lens_ids": ["L2", "L7"],
+      "mechanism_ids": [
+        "M2"
+      ],
+      "lens_ids": [
+        "L2",
+        "L7"
+      ],
       "hypothesis": "A storage scrubber that lowers effort after each clean epoch and raises it after each failure, with residual errors persisting between epochs, shows failure clustering (Fano factor growing with window) beyond a memoryless twin driven by the same measured failure curve.",
       "mechanism": "(3,6)-regular code n=1000 stored in a noisy memory; each epoch adds iid bit flips at p=0.02; scrub = s sweeps of bit-flip (s is the effort, integer 1..20); failure = residual errors > 0 after scrub; residual errors persist. Update: s -= 1 after 20 consecutive clean epochs, s += 3 after a failure.",
       "intervention": "memoryless twin: at each epoch failure is Bernoulli(Pfail(s)) with Pfail(s) measured from fresh-start scrubs at each s; same update rule",
@@ -976,6 +1821,7 @@
   "currentVerdict": "SPECULATIVE",
   "evidenceSummary": {
     "layer": "speculation",
-    "note": "Pass 0-3 specs only; nothing run"
+    "note": "probe round 1: W2 NOT_BUILT; nothing supported (no Pass 4 yet)",
+    "rows": "hecate/programs/HT-e106e1603b/worlds/W2/rows.jsonl"
   }
 }

@@ -1,0 +1,232 @@
+{
+ "triplicateId": "HT-faa9277e02",
+ "world": "W2",
+ "outcome": "INSTRUMENT_FAIL",
+ "statistics": {
+  "TREATMENT": {
+   "n_seeds": 10,
+   "n_test_per_T": 50000,
+   "bits_mm_by_T": {
+    "1": {
+     "mean": 1.637988709864845,
+     "sd": 0.0950416440780084
+    },
+    "2": {
+     "mean": 1.5928082827361831,
+     "sd": 0.1717535330022905
+    },
+    "4": {
+     "mean": 1.82549594862542,
+     "sd": 0.0016995511673838241
+    },
+    "8": {
+     "mean": 1.877474267439719,
+     "sd": 0.0030304634244439476
+    },
+    "16": {
+     "mean": 1.8732321751637275,
+     "sd": 0.12110808654116352
+    },
+    "32": {
+     "mean": 1.8973453845766943,
+     "sd": 0.12307848036505513
+    }
+   },
+   "slope_T_le_8_mean": 0.09511443386138559,
+   "slope_T_le_8_min": 0.06779444936450295,
+   "slope_T_le_8_max": 0.1933253382823041,
+   "ratio_to_PC_T1_mean": 0.7343335925091171,
+   "mm_minus_plugin_T1_mean": -0.0013417063880268643,
+   "occupied_r_T1_min": 7,
+   "clause_pass_counts": {
+    "a_ratio": 0,
+    "b_null_margin": 0,
+    "c_slope": 0
+   }
+  },
+  "CONTROL": {
+   "n_seeds": 10,
+   "n_test_per_T": 50000,
+   "bits_mm_by_T": {
+    "1": {
+     "mean": 2.2320414863182827,
+     "sd": 0.004799052216857798
+    },
+    "2": {
+     "mean": 2.447193596207228,
+     "sd": 0.003910501373996173
+    },
+    "4": {
+     "mean": 2.6065802661124224,
+     "sd": 0.003649185727539335
+    },
+    "8": {
+     "mean": 2.7212264551233143,
+     "sd": 0.002787307229316619
+    },
+    "16": {
+     "mean": 2.802409704687359,
+     "sd": 0.003502537455285264
+    },
+    "32": {
+     "mean": 2.860604039485368,
+     "sd": 0.0011102156790983976
+    }
+   },
+   "slope_T_le_8_mean": 0.1626941576320286,
+   "slope_T_le_8_min": 0.16067914090936994,
+   "slope_T_le_8_max": 0.1654708028321318,
+   "ratio_to_PC_T1_mean": 1.0007100709092163,
+   "mm_minus_plugin_T1_mean": -0.002484320860410616,
+   "occupied_r_T1_min": 8,
+   "clause_pass_counts": {
+    "a_ratio": 10,
+    "b_null_margin": 1,
+    "c_slope": 0
+   }
+  },
+  "NULL_TWIN": {
+   "n_seeds": 10,
+   "n_test_per_T": 50000,
+   "bits_mm_by_T": {
+    "1": {
+     "mean": 2.0020137633257216,
+     "sd": 0.19776775855118345
+    },
+    "2": {
+     "mean": 2.2357842374264725,
+     "sd": 0.14178011384075917
+    },
+    "4": {
+     "mean": 2.283496601473856,
+     "sd": 0.23159260761528772
+    },
+    "8": {
+     "mean": 2.4276029937123225,
+     "sd": 0.13979202768775092
+    },
+    "16": {
+     "mean": 2.4800383804711243,
+     "sd": 0.19282859753784928
+    },
+    "32": {
+     "mean": 2.527128425468107,
+     "sd": 0.1669178005779501
+    }
+   },
+   "slope_T_le_8_mean": 0.1324480055207184,
+   "slope_T_le_8_min": 0.02983457122975452,
+   "slope_T_le_8_max": 0.2712704991121552,
+   "ratio_to_PC_T1_mean": 0.8976433725517818,
+   "mm_minus_plugin_T1_mean": -0.0024078580232442803,
+   "occupied_r_T1_min": 8,
+   "clause_pass_counts": {
+    "a_ratio": 9,
+    "b_null_margin": 0,
+    "c_slope": 0
+   }
+  },
+  "POSITIVE_CONTROL": {
+   "n_seeds": 10,
+   "n_test_per_T": 50000,
+   "bits_mm_by_T": {
+    "1": {
+     "mean": 2.230457120469557,
+     "sd": 0.004201865538854599
+    },
+    "2": {
+     "mean": 2.4458152490143648,
+     "sd": 0.004449614930167013
+    },
+    "4": {
+     "mean": 2.6053706585861454,
+     "sd": 0.0036106408628362586
+    },
+    "8": {
+     "mean": 2.720927629786864,
+     "sd": 0.0029734055568172626
+    },
+    "16": {
+     "mean": 2.801188626390945,
+     "sd": 0.0021157882350157538
+    },
+    "32": {
+     "mean": 2.8600560208331554,
+     "sd": 0.0016958493819330673
+    }
+   },
+   "slope_T_le_8_mean": 0.16309669375237,
+   "slope_T_le_8_min": 0.1608938892728422,
+   "slope_T_le_8_max": 0.16596570233944974,
+   "ratio_to_PC_T1_mean": 1.0,
+   "mm_minus_plugin_T1_mean": -0.00247999277528832,
+   "occupied_r_T1_min": 8
+  },
+  "CHEAT": {
+   "n_seeds": 10,
+   "n_test_per_T": 50000,
+   "bits_mm_by_T": {
+    "1": {
+     "mean": 2.602013763325721,
+     "sd": 0.19776775855118345
+    },
+    "2": {
+     "mean": 3.102013763325721,
+     "sd": 0.19776775855118345
+    },
+    "4": {
+     "mean": 3.602013763325721,
+     "sd": 0.19776775855118345
+    },
+    "8": {
+     "mean": 4.10201376332572,
+     "sd": 0.19776775855118342
+    },
+    "16": {
+     "mean": 4.60201376332572,
+     "sd": 0.19776775855118334
+    },
+    "32": {
+     "mean": 5.10201376332572,
+     "sd": 0.19776775855118334
+    }
+   },
+   "slope_T_le_8_mean": 0.4999999999999997,
+   "slope_T_le_8_min": 0.4999999999999994,
+   "slope_T_le_8_max": 0.49999999999999994
+  }
+ },
+ "criterion_as_applied": "SUCCESS iff in every one of 10 seeds: (a) Hebb MM-bits(T=1) >= 0.8*PC bits(T=1); (b) Hebb - NULL_TWIN bits(T=1) >= 0.5; (c) OLS slope of bits vs log2 T over T in {1,2,4,8} in [0.3,0.7]. FAILURE iff seed-mean Hebb bits(T=1) <= seed-mean CONTROL bits(T=1)+0.1 or seed-mean Hebb slope outside [0.15,0.85]. Result: success=False, failure=True.",
+ "positive_control_detected": false,
+ "cheat_detected": true,
+ "null_twin_meets_success": false,
+ "treatment_success": false,
+ "treatment_failure": true,
+ "stupid_explanations_status": [
+  {
+   "text": "MI estimator bias favours whichever readout has more occupied bins",
+   "addressed_by_this_run": true,
+   "how": "MM correction recorded; mean MM-minus-plugin at T=1 per arm: TREATMENT=-0.0013, CONTROL=-0.0025, NULL_TWIN=-0.0024, POSITIVE_CONTROL=-0.0025; min occupied outputs at T=1: TREATMENT=7, CONTROL=8, NULL_TWIN=8, POSITIVE_CONTROL=8"
+  },
+  {
+   "text": "optimal bound computed with wrong noise model making ratio look high",
+   "addressed_by_this_run": true,
+   "how": "At T=1 (where the ratio clause applies) the decoder uses the exact generating lognormal model; for T>1 it uses the Fenton-Wilkinson approximation (not exact). The PC is an 8-class Bayes classifier, not a proven MI upper bound."
+  },
+  {
+   "text": "the 0.5 log2 T law follows from Gaussian averaging with no role for Hebb",
+   "addressed_by_this_run": true,
+   "how": "CONTROL (fixed quantizer, same averaging, no Hebb) slope mean 0.163 vs TREATMENT 0.095."
+  }
+ ],
+ "anomalies": [
+  "CHEAT injected bits exceed log2(8)=3 at some T: injection is not a physically realisable 8-output readout",
+  "attainability: clauses (a)+(c) need bits(T=8) >= ~0.8*PC(T=1)+0.9 = 2.684 vs cap 3.0",
+  "TREATMENT uses fewer than 8 outputs at T=1 in some seed (min 7)"
+ ],
+ "core_minutes": 1.056,
+ "attempts": 2,
+ "prereg_consequence": "NOT_BUILT (second INSTRUMENT_FAIL after one repair)",
+ "instrument_repair": "CHEAT injection repaired to satisfy clause (b); see IMPLEMENTATION_NOTES attempt log",
+ "notes": "At T=1, seed-mean Miller-Madow bits: Hebbian 1.638, uniform quantizer 2.232, random-centre null twin 2.002, Bayes 8-class decoder 2.230. Mean slopes over T<=8: Hebbian 0.095, control 0.163, null 0.132, PC 0.163. Outcome INSTRUMENT_FAIL by the PREREG class rules applied in code."
+}

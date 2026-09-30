@@ -416,6 +416,42 @@
         "unexpectedness": "medium",
         "potential_importance": "medium"
       }
+    },
+    {
+      "id": "P3-probe1",
+      "triplicateId": "HT-37e311ce05",
+      "index": 3,
+      "kind": "cheap_probe",
+      "added": [
+        "new observable"
+      ],
+      "generator": {
+        "model": "claude-opus-5-5 (implementer)",
+        "search": false,
+        "prompt": "hecate/programs/_prompts/probe_impl_v1.md",
+        "prompt_sha256": "cf4bd374bce1b817a12d3607063278183ce0a8b7c4a7b771061dc8ce133bcea2"
+      },
+      "prereg": "roles/Hecate/prereg/2026-09-29_probe_round1/PREREG.md",
+      "inspected_prior": [
+        "W1"
+      ],
+      "unexplained": [
+        "the linear null has lower marginal return near m*, so selection intensity differs"
+      ],
+      "decision": "DEEPEN",
+      "research_state": {
+        "novelty": "unknown",
+        "mechanistic_clarity": "unknown",
+        "falsifiability": "unknown",
+        "empirical_support": "none",
+        "cross_lens_agreement": "unknown",
+        "cross_substrate_transfer": "unknown",
+        "baseline_resistance": "unknown",
+        "artifact_risk": "unknown",
+        "cost": "unknown",
+        "unexpectedness": "unknown",
+        "potential_importance": "unknown"
+      }
     }
   ],
   "hypotheses": [
@@ -480,7 +516,7 @@
       "triplicateId": "HT-37e311ce05",
       "passId": "P1",
       "kind": "mechanism",
-      "layer": "speculation",
+      "layer": "implemented_candidate",
       "form": "interaction law",
       "statement": "Free-rider stabilisation by a steep recovery curve: partners pool measurement rows to decode a k-sparse environment; because success collapses abruptly below m*(k), any partner that trims its rows sinks the pair, so the steepness of the CS phase transition polices free-riding.",
       "derived_from": [
@@ -945,6 +981,21 @@
         "what_can_transfer": "none",
         "distinguishing_observable": "coexistence predicted by a.c.-overlap mass but not by a smoothed overlap index when supports are fractal and interleaved"
       }
+    },
+    {
+      "id": "O-W1-r1",
+      "triplicateId": "HT-37e311ce05",
+      "passId": "P3-probe1",
+      "kind": "observation",
+      "layer": "experimental_observation",
+      "evidence_rows": [
+        "hecate/programs/HT-37e311ce05/worlds/W1/rows.jsonl",
+        "hecate/programs/HT-37e311ce05/worlds/W1/OUTCOME.json"
+      ],
+      "statement": "W1 probe round 1: INSTRUMENT_FAIL. OMP transition midpoint m*=25. Final pooling frequency (mean over seeds): TREATMENT 0.89, CONTROL 0.73, NULL_TWIN 0.94, POSITIVE_CONTROL 0.48. Seeds meeting the stability part: TREATMENT 0/10, NULL_TWIN 0/10. Mean success difference TREATMENT-CONTROL -0.007 (threshold 0.3). Outcome INSTRUMENT_FAIL decided in code from the PREREG classes.",
+      "derived_from": [
+        "M1"
+      ]
     }
   ],
   "lenses": [
@@ -1166,7 +1217,187 @@
         "mutation bias toward lower m drives free-riding in both arms",
         "m* sits near the max budget so the cap does the work",
         "the linear null has lower marginal return near m*, so selection intensity differs"
-      ]
+      ],
+      "outcome": "INSTRUMENT_FAIL",
+      "raw_outcome": "INSTRUMENT_FAIL",
+      "procedural_notes": [],
+      "rows": "hecate/programs/HT-37e311ce05/worlds/W1/rows.jsonl",
+      "outcome_file": "hecate/programs/HT-37e311ce05/worlds/W1/OUTCOME.json",
+      "statistics": {
+        "TREATMENT": {
+          "n": 10,
+          "f_pool_per_seed": [
+            0.99,
+            0.98,
+            1.0,
+            0.93,
+            0.71,
+            0.99,
+            0.95,
+            0.85,
+            0.99,
+            0.54
+          ],
+          "T_per_seed": [
+            54.71,
+            64.75,
+            48.68,
+            70.58,
+            74.85,
+            49.55,
+            69.58,
+            70.0,
+            51.2,
+            84.87
+          ],
+          "T_over_mstar_mean": 2.5551083176009417,
+          "mean_success_mean": 0.9828999999999999,
+          "mean_m_mean": 32.019,
+          "seeds_meeting_part_a": 0,
+          "seeds_f_pool_below_0_5": 0
+        },
+        "CONTROL": {
+          "n": 10,
+          "f_pool_per_seed": [
+            0.4,
+            0.97,
+            0.51,
+            0.99,
+            0.43,
+            0.87,
+            0.24,
+            0.96,
+            0.99,
+            0.96
+          ],
+          "T_per_seed": [
+            107.22,
+            60.04,
+            112.55,
+            54.67,
+            112.1,
+            99.16,
+            101.0,
+            99.76,
+            84.1,
+            66.72
+          ],
+          "T_over_mstar_mean": 3.5893046527799,
+          "mean_success_mean": 0.9900228592162555,
+          "mean_m_mean": 45.011,
+          "seeds_meeting_part_a": 0,
+          "seeds_f_pool_below_0_5": 3
+        },
+        "NULL_TWIN": {
+          "n": 10,
+          "f_pool_per_seed": [
+            0.99,
+            0.95,
+            1.0,
+            0.96,
+            0.99,
+            0.74,
+            0.97,
+            0.9,
+            0.99,
+            0.96
+          ],
+          "T_per_seed": [
+            88.61,
+            55.62,
+            52.56,
+            60.72,
+            52.18,
+            103.72,
+            65.04,
+            71.98,
+            52.69,
+            54.07
+          ],
+          "T_over_mstar_mean": 2.628787710859452,
+          "mean_success_mean": 0.970247369375907,
+          "mean_m_mean": 32.898999999999994,
+          "seeds_meeting_part_a": 0,
+          "seeds_f_pool_below_0_5": 0
+        },
+        "POSITIVE_CONTROL": {
+          "n": 10,
+          "f_pool_per_seed": [
+            0.69,
+            0.07,
+            0.76,
+            0.75,
+            0.65,
+            0.67,
+            0.4,
+            0.04,
+            0.31,
+            0.51
+          ],
+          "T_per_seed": [
+            53.92,
+            null,
+            52.0,
+            51.59,
+            52.76,
+            52.3,
+            53.0,
+            null,
+            59.0,
+            53.21
+          ],
+          "T_over_mstar_mean": 2.138973305561541,
+          "mean_success_mean": 0.992,
+          "mean_m_mean": 26.887999999999998,
+          "seeds_meeting_part_a": 0,
+          "seeds_f_pool_below_0_5": 4
+        },
+        "CHEAT": {
+          "n": 10,
+          "f_pool_per_seed": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "T_per_seed": [
+            25.0,
+            25.0,
+            25.0,
+            25.0,
+            25.0,
+            25.0,
+            25.0,
+            25.0,
+            25.0,
+            25.0
+          ],
+          "T_over_mstar_mean": 1.0,
+          "mean_success_mean": 1.0,
+          "mean_m_mean": null,
+          "seeds_meeting_part_a": 10,
+          "seeds_f_pool_below_0_5": 0
+        },
+        "success_difference_TREATMENT_minus_CONTROL": -0.007122859216255661,
+        "m_star": 25
+      },
+      "anomalies": [
+        {
+          "id": "A1",
+          "text": "success part (b) unattainable: CONTROL mean success 0.9900, so max attainable difference is 0.0100 < 0.3 (CHEAT at 1.0 fails)"
+        },
+        {
+          "id": "A2",
+          "text": "m*=25 <= individual cap 60: a lone agent can reach m*, so pooling is not required; POSITIVE_CONTROL mean T/m* = 2.14 (pairs sum two solo budgets)"
+        }
+      ],
+      "rejected_explanations": []
     },
     {
       "id": "W2",
@@ -1267,7 +1498,8 @@
   "candidateEngines": [],
   "currentVerdict": "SPECULATIVE",
   "evidenceSummary": {
-    "layer": "speculation",
-    "note": "Pass 0-3 specs only; nothing run"
+    "layer": "experimental_observation",
+    "note": "probe round 1: W1 INSTRUMENT_FAIL; nothing supported (no Pass 4 yet)",
+    "rows": "hecate/programs/HT-37e311ce05/worlds/W1/rows.jsonl"
   }
 }

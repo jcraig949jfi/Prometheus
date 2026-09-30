@@ -58,13 +58,15 @@ Layers: [spec] speculation, [impl] implemented candidate, [obs] experimental obs
 - W4 [reaction-diffusion] A plastic RD medium stores several patterns and recovers a lesioned pattern using stored couplings beyond what border pinning explains. | success: capacity (largest P with mean overlap >= 0.9 over 5 seeds) >= 2; lesion overlap with intact couplings exceeds scrambled-inside by >= 0.2 (paired, 10 seeds, Wilcoxon p<0.01). | null twin: scrambled-inside couplings for lesion test; permuted couplings for recall test. | cost: about 6 CPU core-minutes
 
 ## OBSERVATIONS
-_none yet_
+- W2: NOT_BUILT (hecate/programs/HT-faa9277e02/worlds/W2/rows.jsonl)
 
 ## FALSIFICATIONS
 _none yet_
 
 ## SURVIVING ANOMALIES
-_none yet_
+- W2: CHEAT injected bits exceed log2(8)=3 at some T: injection is not a physically realisable 8-output readout
+- W2: attainability: clauses (a)+(c) need bits(T=8) >= ~0.8*PC(T=1)+0.9 = 2.684 vs cap 3.0
+- W2: TREATMENT uses fewer than 8 outputs at T=1 in some seed (min 7)
 
 ## CROSS-SUBSTRATE RESULTS
 _none yet_
@@ -79,12 +81,10 @@ _none yet_
 _none yet_
 
 ## OPEN QUESTIONS
-- M9 polarity and M13 segment-count not yet given worlds
-- whether W1 recall survives stronger boundary controls (periodic boundaries)
-- the information-theory leg remains mostly a yardstick
+_none yet_
 
 ## CURRENT VERDICT
-SPECULATIVE (an allocation state, not a truth claim). Pass 0-3 specs only; nothing run
+SPECULATIVE (an allocation state, not a truth claim). probe round 1: W2 NOT_BUILT; nothing supported (no Pass 4 yet)
 
 ## NEXT PASS
-decision after P3: FALSIFY
+decision after P3-probe1: DEEPEN

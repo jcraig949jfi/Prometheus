@@ -415,6 +415,43 @@
         "unexpectedness": "low",
         "potential_importance": "low"
       }
+    },
+    {
+      "id": "P3-probe1",
+      "triplicateId": "HT-47f4c02be4",
+      "index": 3,
+      "kind": "cheap_probe",
+      "added": [
+        "new observable"
+      ],
+      "generator": {
+        "model": "claude-opus-5-5 (implementer)",
+        "search": false,
+        "prompt": "hecate/programs/_prompts/probe_impl_v1.md",
+        "prompt_sha256": "cf4bd374bce1b817a12d3607063278183ce0a8b7c4a7b771061dc8ce133bcea2"
+      },
+      "prereg": "roles/Hecate/prereg/2026-09-29_probe_round1/PREREG.md",
+      "inspected_prior": [
+        "W4"
+      ],
+      "unexplained": [
+        "operation count ignores the cost of maintaining the prior",
+        "the asymmetry is a property of trial division, not of factoring in general"
+      ],
+      "decision": "DEEPEN",
+      "research_state": {
+        "novelty": "unknown",
+        "mechanistic_clarity": "unknown",
+        "falsifiability": "unknown",
+        "empirical_support": "none",
+        "cross_lens_agreement": "unknown",
+        "cross_substrate_transfer": "unknown",
+        "baseline_resistance": "unknown",
+        "artifact_risk": "unknown",
+        "cost": "unknown",
+        "unexpectedness": "unknown",
+        "potential_importance": "unknown"
+      }
     }
   ],
   "hypotheses": [
@@ -612,7 +649,7 @@
       "triplicateId": "HT-47f4c02be4",
       "passId": "P1",
       "kind": "mechanism",
-      "layer": "speculation",
+      "layer": "implemented_candidate",
       "form": "causal constraint",
       "statement": "Factor-inference arrow: the generative direction (multiply) is cheap and near-reversible, inference (factor) is expensive; a predictive prior over factors reduces the dissipated work of inference, so good prediction is measured as reduced irreversibility.",
       "derived_from": [
@@ -975,6 +1012,21 @@
         "what_can_transfer": "the dark-room failure mode",
         "distinguishing_observable": "occupancy correlation with d(n) (divisor count) vs Cramer-twin landscape"
       }
+    },
+    {
+      "id": "O-W4-r1",
+      "triplicateId": "HT-47f4c02be4",
+      "passId": "P3-probe1",
+      "kind": "observation",
+      "layer": "experimental_observation",
+      "evidence_rows": [
+        "hecate/programs/HT-47f4c02be4/worlds/W4/rows.jsonl",
+        "hecate/programs/HT-47f4c02be4/worlds/W4/OUTCOME.json"
+      ],
+      "statement": "W4 probe round 1: CONFOUNDED. Outcome CONFOUNDED. At s=1 the prior-ordered solver used 3.54 trial divisions per sample vs 424.79 ascending (R_drift=0.0083). On the temporally shuffled twin the ratio was 0.1864. Positive control first-try 0.9999; cheat ratio 0.0024. R_drift at s=3/10: 0.0333/0.1144. Numbers only; generation cost is 1 multiplication so the infer/generate ratio equals the division count.",
+      "derived_from": [
+        "M5"
+      ]
     }
   ],
   "lenses": [
@@ -1292,13 +1344,118 @@
         "any cache beats no cache on a slowly varying stream",
         "operation count ignores the cost of maintaining the prior",
         "the asymmetry is a property of trial division, not of factoring in general"
-      ]
+      ],
+      "outcome": "CONFOUNDED",
+      "raw_outcome": "CONFOUNDED",
+      "procedural_notes": [],
+      "rows": "hecate/programs/HT-47f4c02be4/worlds/W4/rows.jsonl",
+      "outcome_file": "hecate/programs/HT-47f4c02be4/worlds/W4/OUTCOME.json",
+      "statistics": {
+        "s=1": {
+          "TREATMENT_prior_mean_divisions": 3.54168,
+          "TREATMENT_n": 50000,
+          "CONTROL_ascending_mean_divisions": 424.78616,
+          "CONTROL_n": 50000,
+          "R_drift": 0.008337559773604676,
+          "R_drift_per_seed": [
+            0.006142845058118958,
+            0.004193741302034541,
+            0.04880079993092518,
+            0.00941206835077935,
+            0.014546062462333543
+          ],
+          "NULL_TWIN_prior_mean_divisions": 79.1926,
+          "NULL_TWIN_ascending_mean_divisions": 424.78616,
+          "NULL_TWIN_n": 50000,
+          "R_null": 0.1864293318784209,
+          "R_null_per_seed": [
+            0.16896086789136855,
+            0.08572087708248129,
+            1.2033111346931042,
+            0.1819011989590928,
+            0.2891594911210362
+          ],
+          "MEMO_mean_divisions_diagnostic": 426.28492,
+          "R_memo_diagnostic": 1.0035282693767613
+        },
+        "s=3": {
+          "TREATMENT_prior_mean_divisions": 11.51366,
+          "TREATMENT_n": 50000,
+          "CONTROL_ascending_mean_divisions": 345.79532,
+          "CONTROL_n": 50000,
+          "R_drift": 0.03329617069427082,
+          "R_drift_per_seed": [
+            0.032808519108280254,
+            0.025811473328427866,
+            0.018642337629194844,
+            0.05642515436582706,
+            0.1059881850444627
+          ],
+          "NULL_TWIN_prior_mean_divisions": 259.39262,
+          "NULL_TWIN_ascending_mean_divisions": 345.79532,
+          "NULL_TWIN_n": 50000,
+          "R_null": 0.7501334026151656,
+          "R_null_per_seed": [
+            0.6668101683348499,
+            0.6323201887425359,
+            0.3773707324715767,
+            1.8758607206069635,
+            1.5251012526211438
+          ],
+          "MEMO_mean_divisions_diagnostic": 347.29392,
+          "R_memo_diagnostic": 1.004333777565295
+        },
+        "s=10": {
+          "TREATMENT_prior_mean_divisions": 38.59934,
+          "TREATMENT_n": 50000,
+          "CONTROL_ascending_mean_divisions": 337.50452,
+          "CONTROL_n": 50000,
+          "R_drift": 0.11436688314574275,
+          "R_drift_per_seed": [
+            0.07725406220346118,
+            0.12827452488648844,
+            0.10805213137150972,
+            0.16657684024374303,
+            0.13012175495441897
+          ],
+          "NULL_TWIN_prior_mean_divisions": 330.84622,
+          "NULL_TWIN_ascending_mean_divisions": 337.50452,
+          "NULL_TWIN_n": 50000,
+          "R_null": 0.9802719679132001,
+          "R_null_per_seed": [
+            0.7376033004540982,
+            1.0915314644994603,
+            0.9201858838268598,
+            1.3887849720466832,
+            1.033151960528132
+          ],
+          "MEMO_mean_divisions_diagnostic": 338.97568,
+          "R_memo_diagnostic": 1.0043589342151624
+        },
+        "POSITIVE_CONTROL": {
+          "first_try_frac": 0.9999,
+          "n": 50000,
+          "prior_mean_divisions": 1.0483
+        },
+        "CHEAT": {
+          "R_cheat": 0.002354125661721182,
+          "n": 50000
+        }
+      },
+      "anomalies": [
+        {
+          "id": "A1",
+          "text": "shuffled null twin still favors the prior (R_null=0.186 < 1); see TREATMENT rows' range_idx_p/q for the index band the s=1 walk occupied"
+        }
+      ],
+      "rejected_explanations": []
     }
   ],
   "candidateEngines": [],
   "currentVerdict": "SPECULATIVE",
   "evidenceSummary": {
-    "layer": "speculation",
-    "note": "Pass 0-3 specs only; nothing run"
+    "layer": "experimental_observation",
+    "note": "probe round 1: W4 CONFOUNDED; nothing supported (no Pass 4 yet)",
+    "rows": "hecate/programs/HT-47f4c02be4/worlds/W4/rows.jsonl"
   }
 }

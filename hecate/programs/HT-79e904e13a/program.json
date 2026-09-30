@@ -440,6 +440,43 @@
         "unexpectedness": "low",
         "potential_importance": "medium"
       }
+    },
+    {
+      "id": "P3-probe1",
+      "triplicateId": "HT-79e904e13a",
+      "index": 3,
+      "kind": "cheap_probe",
+      "added": [
+        "new observable"
+      ],
+      "generator": {
+        "model": "claude-opus-5-5 (implementer)",
+        "search": false,
+        "prompt": "hecate/programs/_prompts/probe_impl_v1.md",
+        "prompt_sha256": "cf4bd374bce1b817a12d3607063278183ce0a8b7c4a7b771061dc8ce133bcea2"
+      },
+      "prereg": "roles/Hecate/prereg/2026-09-29_probe_round1/PREREG.md",
+      "inspected_prior": [
+        "W4"
+      ],
+      "unexplained": [
+        "grid resolution sets an entropy ceiling",
+        "radius r scaling produces the trend"
+      ],
+      "decision": "DEEPEN",
+      "research_state": {
+        "novelty": "unknown",
+        "mechanistic_clarity": "unknown",
+        "falsifiability": "unknown",
+        "empirical_support": "none",
+        "cross_lens_agreement": "unknown",
+        "cross_substrate_transfer": "unknown",
+        "baseline_resistance": "unknown",
+        "artifact_risk": "unknown",
+        "cost": "unknown",
+        "unexpectedness": "unknown",
+        "potential_importance": "unknown"
+      }
     }
   ],
   "hypotheses": [
@@ -975,7 +1012,7 @@
       "triplicateId": "HT-79e904e13a",
       "passId": "P1",
       "kind": "mechanism",
-      "layer": "speculation",
+      "layer": "implemented_candidate",
       "form": "causal constraint",
       "statement": "Dissipative counterfactual arrow: in dissipative community dynamics, forward counterfactuals stay well-posed but backtracking counterfactuals ('what past would give this different present') lose identifiability at a rate equal to the net phase-space contraction (minus the sum of Lyapunov exponents). Conservative twins with the same lambda_max show no such asymmetry.",
       "derived_from": [
@@ -1002,6 +1039,21 @@
         "what_can_transfer": "asymmetry to any dissipative system",
         "distinguishing_observable": "backward-posterior entropy growth rate correlating with contraction rate, flat in the volume-preserving twin"
       }
+    },
+    {
+      "id": "O-W4-r1",
+      "triplicateId": "HT-79e904e13a",
+      "passId": "P3-probe1",
+      "kind": "observation",
+      "layer": "experimental_observation",
+      "evidence_rows": [
+        "hecate/programs/HT-79e904e13a/worlds/W4/rows.jsonl",
+        "hecate/programs/HT-79e904e13a/worlds/W4/OUTCOME.json"
+      ],
+      "statement": "W4 probe round 1: NULL. Outcome NULL. Backward posterior entropy growth over T=1..30 in the coupled Ricker world ranged 0.026..0.115 nats/step across 8 dissipation levels whose measured net contraction ranged 0.531..2.266; Spearman 0.167. Volume-preserving twin growth ranged -0.002..0.008. Positive control slope 0.1544 vs known 0.1539; cheat Spearman 1.000. Forward-spread Spearman with contraction -0.714. Only one grid and one r were used.",
+      "derived_from": [
+        "M15"
+      ]
     }
   ],
   "lenses": [
@@ -1332,13 +1384,402 @@
         "radius r scaling produces the trend",
         "points leaving the feasible (positive) region counted as information loss",
         "matched lambda_max in the twin is not achieved"
+      ],
+      "outcome": "NULL",
+      "raw_outcome": "NULL",
+      "procedural_notes": [],
+      "rows": "hecate/programs/HT-79e904e13a/worlds/W4/rows.jsonl",
+      "outcome_file": "hecate/programs/HT-79e904e13a/worlds/W4/OUTCOME.json",
+      "statistics": {
+        "d_levels": [
+          0.0,
+          0.03,
+          0.06,
+          0.09,
+          0.12,
+          0.15,
+          0.18,
+          0.21
+        ],
+        "treatment_backward_growth_nats_per_step": [
+          {
+            "mean": 0.025683139516202685,
+            "sd": 0.023672982475644793,
+            "n": 10
+          },
+          {
+            "mean": 0.08279904540391199,
+            "sd": 0.009706718146358269,
+            "n": 10
+          },
+          {
+            "mean": 0.115421400925979,
+            "sd": 0.01397514990191715,
+            "n": 10
+          },
+          {
+            "mean": 0.08760003214915227,
+            "sd": 0.00835570147439114,
+            "n": 10
+          },
+          {
+            "mean": 0.08819971035555636,
+            "sd": 0.0191566501337156,
+            "n": 10
+          },
+          {
+            "mean": 0.0800106118240628,
+            "sd": 0.03262602628924725,
+            "n": 10
+          },
+          {
+            "mean": 0.06470029766774846,
+            "sd": 0.015687722875844023,
+            "n": 10
+          },
+          {
+            "mean": 0.0673595970717988,
+            "sd": 0.03751945763704346,
+            "n": 10
+          }
+        ],
+        "treatment_net_contraction": [
+          {
+            "mean": 0.5308076103259362,
+            "sd": 0.02066725369973729,
+            "n": 10
+          },
+          {
+            "mean": 1.6461239517489414,
+            "sd": 0.010680721846495055,
+            "n": 10
+          },
+          {
+            "mean": 2.1579358616724447,
+            "sd": 3.916498697301471e-16,
+            "n": 10
+          },
+          {
+            "mean": 1.692299537817512,
+            "sd": 2.229166159321335e-06,
+            "n": 10
+          },
+          {
+            "mean": 1.7305856381969924,
+            "sd": 2.340555645717801e-16,
+            "n": 10
+          },
+          {
+            "mean": 1.8533856800570336,
+            "sd": 0.0,
+            "n": 10
+          },
+          {
+            "mean": 2.028954151056045,
+            "sd": 0.0,
+            "n": 10
+          },
+          {
+            "mean": 2.265894255459382,
+            "sd": 4.1869132231567334e-16,
+            "n": 10
+          }
+        ],
+        "treatment_lambda_max": [
+          {
+            "mean": 0.3454249069316947,
+            "sd": 0.012240646206968036,
+            "n": 10
+          },
+          {
+            "mean": 0.26102854762916966,
+            "sd": 0.0034104297957057365,
+            "n": 10
+          },
+          {
+            "mean": -0.22717379799671092,
+            "sd": 0.00010868498348301258,
+            "n": 10
+          },
+          {
+            "mean": -0.005487722050177134,
+            "sd": 7.322330015610524e-06,
+            "n": 10
+          },
+          {
+            "mean": -0.22814589749930209,
+            "sd": 8.354664345294131e-06,
+            "n": 10
+          },
+          {
+            "mean": -0.4633027495627525,
+            "sd": 8.386053448981434e-06,
+            "n": 10
+          },
+          {
+            "mean": -0.4589569436386882,
+            "sd": 3.5774537215373105e-05,
+            "n": 10
+          },
+          {
+            "mean": -0.42583891466502094,
+            "sd": 0.00014019938661560228,
+            "n": 10
+          }
+        ],
+        "spearman_growth_vs_contraction_n8": 0.1666666666666667,
+        "null_twin_backward_growth_nats_per_step": [
+          {
+            "mean": 0.0017871946343136565,
+            "sd": 0.0028139095631171895,
+            "n": 10
+          },
+          {
+            "mean": -0.001636899102841704,
+            "sd": 0.006971077916591076,
+            "n": 10
+          },
+          {
+            "mean": 0.0022904572641270814,
+            "sd": 0.004120855045673175,
+            "n": 10
+          },
+          {
+            "mean": 0.0019249430690992993,
+            "sd": 0.003629907687691898,
+            "n": 10
+          },
+          {
+            "mean": 0.002900211701895297,
+            "sd": 0.008559427735797329,
+            "n": 10
+          },
+          {
+            "mean": 0.0019678440815180695,
+            "sd": 0.006090889291710072,
+            "n": 10
+          },
+          {
+            "mean": 0.008150698598508286,
+            "sd": 0.016624762869642932,
+            "n": 10
+          },
+          {
+            "mean": 0.0007098290787968739,
+            "sd": 0.013839304576237959,
+            "n": 10
+          }
+        ],
+        "null_twin_lambda_max": [
+          {
+            "mean": 0.35555009186872294,
+            "sd": 0.008653598614171297,
+            "n": 10
+          },
+          {
+            "mean": 0.2535398807043074,
+            "sd": 0.005075862627847679,
+            "n": 10
+          },
+          {
+            "mean": 0.010938995679451297,
+            "sd": 0.0012938520117204725,
+            "n": 10
+          },
+          {
+            "mean": 0.010901877897817049,
+            "sd": 0.0037379731443118033,
+            "n": 10
+          },
+          {
+            "mean": 0.011980485802694136,
+            "sd": 0.0015989121140909852,
+            "n": 10
+          },
+          {
+            "mean": 0.01128422724824871,
+            "sd": 0.004965128190297508,
+            "n": 10
+          },
+          {
+            "mean": 0.012490914472165163,
+            "sd": 0.0015916141168452961,
+            "n": 10
+          },
+          {
+            "mean": 0.01248607818775629,
+            "sd": 0.0009937183253449623,
+            "n": 10
+          }
+        ],
+        "null_twin_net_contraction": [
+          {
+            "mean": 4.776734563449738e-18,
+            "sd": 1.5741460241042388e-18,
+            "n": 10
+          },
+          {
+            "mean": 2.1010970741031096e-18,
+            "sd": 1.2581881326290324e-18,
+            "n": 10
+          },
+          {
+            "mean": 0.0,
+            "sd": 0.0,
+            "n": 10
+          },
+          {
+            "mean": 0.0,
+            "sd": 0.0,
+            "n": 10
+          },
+          {
+            "mean": 0.0,
+            "sd": 0.0,
+            "n": 10
+          },
+          {
+            "mean": 0.0,
+            "sd": 0.0,
+            "n": 10
+          },
+          {
+            "mean": 0.0,
+            "sd": 0.0,
+            "n": 10
+          },
+          {
+            "mean": 0.0,
+            "sd": 0.0,
+            "n": 10
+          }
+        ],
+        "null_twin_k": [
+          0.2683221476510067,
+          0.23852348993288588,
+          0.02,
+          0.02,
+          0.02,
+          0.02,
+          0.02,
+          0.02
+        ],
+        "lambda_max_matched_within_10pct": [
+          true,
+          true,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "twin_max_level_growth": 0.008150698598508286,
+        "twin_within_50pct_of_treatment_per_level": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "spearman_twin_growth_vs_treatment_contraction": 0.3333333333333334,
+        "forward_control_growth_nats_per_step": [
+          {
+            "mean": 0.09459201675545195,
+            "sd": 0.02413800645565337,
+            "n": 10
+          },
+          {
+            "mean": 0.06801242734885339,
+            "sd": 0.03663178613834912,
+            "n": 10
+          },
+          {
+            "mean": -0.12073990240787831,
+            "sd": 0.15618705962274293,
+            "n": 10
+          },
+          {
+            "mean": -0.10953301838431495,
+            "sd": 0.02942193345187897,
+            "n": 10
+          },
+          {
+            "mean": -0.26164948042461794,
+            "sd": 0.023806136349487313,
+            "n": 10
+          },
+          {
+            "mean": -0.4841767896370802,
+            "sd": 0.011985607031452353,
+            "n": 10
+          },
+          {
+            "mean": -0.4448334291845013,
+            "sd": 0.027180385912912778,
+            "n": 10
+          },
+          {
+            "mean": -0.37835716031357025,
+            "sd": 0.14373145639786383,
+            "n": 10
+          }
+        ],
+        "spearman_forward_growth_vs_contraction": -0.7142857142857144,
+        "positive_control_growth": {
+          "mean": 0.15444287236765114,
+          "sd": 0.0010119403870911645,
+          "n": 10,
+          "known_rate": 0.15387988316265222,
+          "rel_err": 0.003658627712914472
+        },
+        "cheat_spearman": 1.0,
+        "cheat_twin_ok": true,
+        "treatment_success": false,
+        "treatment_failure": true,
+        "max_match_fraction_of_grid": 0.7699642661067394,
+        "mean_fraction_of_entropy_rise_reached_by_T10": 0.27000810805048125
+      },
+      "anomalies": [
+        {
+          "id": "A1",
+          "text": "level 2: twin lambda_max 0.011 vs treatment -0.227 not within 10%"
+        },
+        {
+          "id": "A2",
+          "text": "level 3: twin lambda_max 0.011 vs treatment -0.005 not within 10%"
+        },
+        {
+          "id": "A3",
+          "text": "level 4: twin lambda_max 0.012 vs treatment -0.228 not within 10%"
+        },
+        {
+          "id": "A4",
+          "text": "level 5: twin lambda_max 0.011 vs treatment -0.463 not within 10%"
+        },
+        {
+          "id": "A5",
+          "text": "level 6: twin lambda_max 0.012 vs treatment -0.459 not within 10%"
+        },
+        {
+          "id": "A6",
+          "text": "level 7: twin lambda_max 0.012 vs treatment -0.426 not within 10%"
+        }
+      ],
+      "rejected_explanations": [
+        "points leaving the feasible (positive) region counted as information loss",
+        "matched lambda_max in the twin is not achieved"
       ]
     }
   ],
   "candidateEngines": [],
   "currentVerdict": "SPECULATIVE",
   "evidenceSummary": {
-    "layer": "speculation",
-    "note": "Pass 0-3 specs only; nothing run"
+    "layer": "experimental_observation",
+    "note": "probe round 1: W4 NULL; nothing supported (no Pass 4 yet)",
+    "rows": "hecate/programs/HT-79e904e13a/worlds/W4/rows.jsonl"
   }
 }

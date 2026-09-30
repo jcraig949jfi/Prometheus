@@ -35,9 +35,9 @@ Layers: [spec] speculation, [impl] implemented candidate, [obs] experimental obs
 - [spec] M8 (information bottleneck): Horizon-tagged belief: the checker runs with depth bound k; every belief carries its horizon tag and the agent must represent 'unknown beyond k' separately from 'true'; abduction is only allowed to fill in beyond-horizon structure when a spec forces it.
 - [spec] M9 (learning pressure): Spec-disagreement exploration: the agent chooses actions that maximize disagreement among candidate models about whether the SPEC holds (not about next-state predictions), so exploration concentrates where verification verdicts are uncertain.
 - [spec] M10 (developmental process): Spec-driven abstraction growth: the agent starts with a one-state abstraction of the world and splits abstract states only when a counterexample to the spec turns out spurious on real traces; the belief partition therefore grows only as fine as the spec requires.
-- [spec] M11 (error-correction mechanism): Witness grounding (mechanical Gettier detection): a belief phi is flagged as lucky if it is true in the world and verified in the agent's model but its certificate (witness path) has never been realized in observed traces; lucky beliefs are held at reduced strength and prioritized for testing.
+- [impl] M11 (error-correction mechanism): Witness grounding (mechanical Gettier detection): a belief phi is flagged as lucky if it is true in the world and verified in the agent's model but its certificate (witness path) has never been realized in observed traces; lucky beliefs are held at reduced strength and prioritized for testing.
 - [spec] M12 (representation): Bisimulation-quotient epistemics: hypotheses that are bisimilar with respect to observable labels are identified; abduction operates on quotient classes; the agent never distinguishes observationally equivalent explanations and cannot represent a preference between them.
-- [spec] M13 (interaction law): Skeptic-believer game: a skeptic searches (by model checking over candidate structures) for a counter-model consistent with all evidence in which the believer's claim fails; the believer answers by abducing a discriminating experiment; a claim becomes knowledge when the skeptic's bounded search is exhausted.
+- [impl] M13 (interaction law): Skeptic-believer game: a skeptic searches (by model checking over candidate structures) for a counter-model consistent with all evidence in which the believer's claim fails; the believer answers by abducing a discriminating experiment; a claim becomes knowledge when the skeptic's bounded search is exhausted.
 - [spec] M14 (mutation operator): Abductive directed mutation under a verifier guard: an evolving population of candidate automata mutates by abducing a minimal edit that fixes one misclassified example, and offspring that violate a known spec are killed before selection.
 - [spec] M15 (memory structure): Obligation memory: memory stores open temporal obligations (pending 'until' and 'eventually' formulas implied by current beliefs) instead of facts; a belief is demoted when an obligation it created expires unmet and promoted when obligations are discharged.
 - [spec] M16 (learning pressure): Loveliness as checkable scope: an explanation's loveliness is the number of spec formulas it makes decidable within the checker's budget; the agent prefers lovely explanations over merely likely ones and the question is whether loveliness predicts future survival beyond likelihood.
@@ -59,13 +59,14 @@ Layers: [spec] speculation, [impl] implemented candidate, [obs] experimental obs
 - W4 [causal toy] True, model-checked beliefs whose witness paths were never realized in observed traces (lucky beliefs) fail more often after a mechanism shift than grounded beliefs matched on visit counts. | success: Pooled over 60 seeds x 30 formulas, Cochran-Mantel-Haenszel common odds ratio of failure (lucky vs grounded, stratified by visit decile) >= 1.5 with p < 0.01. | null twin: Flag a random subset of true verified beliefs as lucky at the same rate and with the same visit-count distribution: nuisance matched, grounding information destroyed. | cost: 2
 
 ## OBSERVATIONS
-_none yet_
+- W4: SIGNAL (hecate/programs/HT-5b0b3ebb8d/worlds/W4/rows.jsonl)
 
 ## FALSIFICATIONS
-_none yet_
+- W4: visit-count strata too coarse to remove the confound
 
 ## SURVIVING ANOMALIES
-_none yet_
+- W4: post-run descriptive check (not part of outcome): in TREATMENT, fail == touches_disabled for all 1747 beliefs; a belief fails iff s or t is an interior state of the disabled mechanism. Beliefs with an endpoint in either mechanism interior: n=1093, lucky 0.772, fail 0.549; beliefs with no such endpoint: n=654, lucky 0.624, fail 0.000. The lucky-vs-grounded OR may be carried by endpoint location (stupid explanation 1), which visit strata do not remove.
+- W4: 1747/1800 formulas are true and verified (world is nearly strongly connected); 96% of lucky witnesses use a fabricated reverse edge, 0% of grounded ones.
 
 ## CROSS-SUBSTRATE RESULTS
 _none yet_
@@ -80,11 +81,11 @@ _none yet_
 _none yet_
 
 ## OPEN QUESTIONS
-- all four worlds are unrun specifications
-- baseline resistance unknown until null twins run
+- lucky beliefs concentrate on the disabled mechanism by construction of the shift
+- witness selection picks shortest paths that happen to use abduced edges
 
 ## CURRENT VERDICT
-SPECULATIVE (an allocation state, not a truth claim). Pass 0-3 specs only; nothing run
+PROBING (an allocation state, not a truth claim). probe round 1: W4 SIGNAL; nothing supported (no Pass 4 yet)
 
 ## NEXT PASS
-decision after P3: FALSIFY
+decision after P3-probe1: FALSIFY

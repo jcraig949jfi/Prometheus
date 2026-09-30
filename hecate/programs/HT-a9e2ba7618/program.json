@@ -427,6 +427,42 @@
         "unexpectedness": "low",
         "potential_importance": "medium"
       }
+    },
+    {
+      "id": "P3-probe1",
+      "triplicateId": "HT-a9e2ba7618",
+      "index": 3,
+      "kind": "cheap_probe",
+      "added": [
+        "new observable"
+      ],
+      "generator": {
+        "model": "claude-opus-5-5 (implementer)",
+        "search": false,
+        "prompt": "hecate/programs/_prompts/probe_impl_v1.md",
+        "prompt_sha256": "cf4bd374bce1b817a12d3607063278183ce0a8b7c4a7b771061dc8ce133bcea2"
+      },
+      "prereg": "roles/Hecate/prereg/2026-09-29_probe_round1/PREREG.md",
+      "inspected_prior": [
+        "W4"
+      ],
+      "unexplained": [
+        "adaptive-scale decoder overfits the warp family"
+      ],
+      "decision": "DEEPEN",
+      "research_state": {
+        "novelty": "unknown",
+        "mechanistic_clarity": "unknown",
+        "falsifiability": "unknown",
+        "empirical_support": "none",
+        "cross_lens_agreement": "unknown",
+        "cross_substrate_transfer": "unknown",
+        "baseline_resistance": "unknown",
+        "artifact_risk": "unknown",
+        "cost": "unknown",
+        "unexpectedness": "unknown",
+        "potential_importance": "unknown"
+      }
     }
   ],
   "hypotheses": [
@@ -624,7 +660,7 @@
       "triplicateId": "HT-a9e2ba7618",
       "passId": "P1",
       "kind": "mechanism",
-      "layer": "speculation",
+      "layer": "implemented_candidate",
       "form": "representation",
       "statement": "Warp-invariant phase code: message symbols are coded by phase relative to a carrier that is carried along with the message; any monotone time warp applied to the transmission leaves carrier-relative phase unchanged, so decoding by wavelet-tracked carrier phase is invariant to tempo changes that break clock-time decoding.",
       "derived_from": [
@@ -986,6 +1022,21 @@
         "what_can_transfer": "to reaction-diffusion",
         "distinguishing_observable": "domain count vs kernel scale follows an integer staircase"
       }
+    },
+    {
+      "id": "O-W4-r1",
+      "triplicateId": "HT-a9e2ba7618",
+      "passId": "P3-probe1",
+      "kind": "observation",
+      "layer": "experimental_observation",
+      "evidence_rows": [
+        "hecate/programs/HT-a9e2ba7618/worlds/W4/rows.jsonl",
+        "hecate/programs/HT-a9e2ba7618/worlds/W4/OUTCOME.json"
+      ],
+      "statement": "W4 probe round 1: NULL. Carrier-phase decoding with a co-warped carrier: accuracy 1.000 at w=0 and 0.875 at w=0.4. Clock-time decoder with oracle cycle onsets: 1.000 -> 0.713. Same carrier-phase decoder with the carrier left unwarped (null twin): 1.000 -> 0.204. Positive control (w=0, separate seeds) carrier 1.000, clock 1.000. Outcome NULL by the PREREG class rules applied in code. The run does not test other warp families or a non-oscillatory co-warped clock (the spec's alternative explanation).",
+      "derived_from": [
+        "M5"
+      ]
     }
   ],
   "lenses": [
@@ -1299,13 +1350,107 @@
         "monotone warps preserve order so any order decoder is invariant",
         "warps too weak to move symbols across slot boundaries",
         "adaptive-scale decoder overfits the warp family"
+      ],
+      "outcome": "NULL",
+      "raw_outcome": "NULL",
+      "procedural_notes": [],
+      "rows": "hecate/programs/HT-a9e2ba7618/worlds/W4/rows.jsonl",
+      "outcome_file": "hecate/programs/HT-a9e2ba7618/worlds/W4/OUTCOME.json",
+      "statistics": {
+        "statistic": "mean over seeds of per-seed symbol decoding accuracy (4000 symbols per seed per w)",
+        "TREATMENT_carrier_phase_cowarped": {
+          "mean_by_w": {
+            "0.0": 1.0,
+            "0.1": 1.0,
+            "0.2": 0.9929749999999998,
+            "0.4": 0.8748250000000001
+          },
+          "sd_by_w": {
+            "0.0": 0.0,
+            "0.1": 0.0,
+            "0.2": 0.0012272937708633735,
+            "0.4": 0.008395642057374487
+          },
+          "n_seeds": 10,
+          "drop_0_to_0.4": 0.12517499999999993
+        },
+        "CONTROL_clock_time": {
+          "mean_by_w": {
+            "0.0": 1.0,
+            "0.1": 1.0,
+            "0.2": 0.934225,
+            "0.4": 0.712925
+          },
+          "sd_by_w": {
+            "0.0": 0.0,
+            "0.1": 0.0,
+            "0.2": 0.005691672767200229,
+            "0.4": 0.006298203006502028
+          },
+          "n_seeds": 10,
+          "drop_0_to_0.4": 0.28707499999999997
+        },
+        "NULL_TWIN_carrier_phase_unwarped_carrier": {
+          "mean_by_w": {
+            "0.0": 1.0,
+            "0.1": 0.411925,
+            "0.2": 0.24244999999999997,
+            "0.4": 0.2045
+          },
+          "sd_by_w": {
+            "0.0": 0.0,
+            "0.1": 0.02052033205817532,
+            "0.2": 0.014169509518681303,
+            "0.4": 0.00874404559304978
+          },
+          "n_seeds": 10,
+          "drop_0_to_0.4": 0.7955
+        },
+        "POSITIVE_CONTROL_w0": {
+          "carrier": 1.0,
+          "clock": 1.0,
+          "n_seeds": 10
+        },
+        "CHEAT": {
+          "T": {
+            "0.0": 1.0,
+            "0.1": 1.0,
+            "0.2": 1.0,
+            "0.4": 1.0
+          },
+          "C": {
+            "0.0": 1.0,
+            "0.1": 0.20097500000000004,
+            "0.2": 0.1995,
+            "0.4": 0.201225
+          },
+          "N": {
+            "0.0": 1.0,
+            "0.1": 0.201275,
+            "0.2": 0.2037,
+            "0.4": 0.19855
+          },
+          "n_seeds": 10
+        },
+        "frac_symbols_crossing_clock_slot_boundary_by_w": {
+          "0.0": 0.0,
+          "0.1": 0.0,
+          "0.2": 0.065775,
+          "0.4": 0.28707499999999997
+        }
+      },
+      "anomalies": [],
+      "rejected_explanations": [
+        "monotone warps preserve order so any order decoder is invariant",
+        "warps too weak to move symbols across slot boundaries"
       ]
     }
   ],
   "candidateEngines": [],
   "currentVerdict": "SPECULATIVE",
   "evidenceSummary": {
-    "layer": "speculation",
-    "note": "Pass 0-3 specs only; nothing run"
+    "layer": "experimental_observation",
+    "note": "probe round 1: W4 NULL; nothing supported (no Pass 4 yet)",
+    "rows": "hecate/programs/HT-a9e2ba7618/worlds/W4/rows.jsonl"
   }
 }

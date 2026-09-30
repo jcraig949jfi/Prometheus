@@ -57,13 +57,13 @@ Layers: [spec] speculation, [impl] implemented candidate, [obs] experimental obs
 - W4 [causal toy] Acting in the intersection of consistent models and probing on conflict reduces catastrophic errors vs certainty equivalence at modest cost in steps. | success: Forbidden entries reduced >= 50% vs CE with median steps <= 1.5 x CE over 1000 episodes; refutation probes remove >= 1.5 x bits per probe vs the null twin. | null twin: Random probing: identical probe triggers and count, action chosen uniformly among allowed actions (matched probe rate; refutation choice destroyed). | cost: ~3 CPU core-minutes
 
 ## OBSERVATIONS
-_none yet_
+- W1: NOT_BUILT (hecate/programs/HT-8a87057933/worlds/W1/rows.jsonl)
 
 ## FALSIFICATIONS
 _none yet_
 
 ## SURVIVING ANOMALIES
-_none yet_
+- W1: oracle reset not faster than drop-oldest (median 3.0 vs 3.0)
 
 ## CROSS-SUBSTRATE RESULTS
 _none yet_
@@ -78,12 +78,10 @@ _none yet_
 _none yet_
 
 ## OPEN QUESTIONS
-- all worlds unrun
-- W3 may rediscover adaptive-noise local search
-- W2 may reduce to graph transport
+_none yet_
 
 ## CURRENT VERDICT
-SPECULATIVE (an allocation state, not a truth claim). Pass 0-3 specs only; nothing run
+SPECULATIVE (an allocation state, not a truth claim). probe round 1: W1 NOT_BUILT; nothing supported (no Pass 4 yet)
 
 ## NEXT PASS
-decision after P3: FALSIFY
+decision after P3-probe1: DEEPEN

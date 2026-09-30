@@ -424,6 +424,40 @@
         "unexpectedness": "medium",
         "potential_importance": "low"
       }
+    },
+    {
+      "id": "P3-probe1",
+      "triplicateId": "HT-056d3ac561",
+      "index": 3,
+      "kind": "cheap_probe",
+      "added": [
+        "new observable"
+      ],
+      "generator": {
+        "model": "claude-opus-5-5 (implementer)",
+        "search": false,
+        "prompt": "hecate/programs/_prompts/probe_impl_v1.md",
+        "prompt_sha256": "cf4bd374bce1b817a12d3607063278183ce0a8b7c4a7b771061dc8ce133bcea2"
+      },
+      "prereg": "roles/Hecate/prereg/2026-09-29_probe_round1/PREREG.md",
+      "inspected_prior": [
+        "W1"
+      ],
+      "unexplained": [],
+      "decision": "DEEPEN",
+      "research_state": {
+        "novelty": "unknown",
+        "mechanistic_clarity": "unknown",
+        "falsifiability": "unknown",
+        "empirical_support": "none",
+        "cross_lens_agreement": "unknown",
+        "cross_substrate_transfer": "unknown",
+        "baseline_resistance": "unknown",
+        "artifact_risk": "unknown",
+        "cost": "unknown",
+        "unexpectedness": "unknown",
+        "potential_importance": "unknown"
+      }
     }
   ],
   "hypotheses": [
@@ -488,7 +522,7 @@
       "triplicateId": "HT-056d3ac561",
       "passId": "P1",
       "kind": "mechanism",
-      "layer": "speculation",
+      "layer": "implemented_candidate",
       "form": "error-correction mechanism",
       "statement": "Metamorphic pseudo-measurement: the Kalman update uses the MR residual r = g(f(x)) - f(T x), whose expected value is zero under a correct model, as its measurement, estimating hidden model parameters stored as a sparse coefficient vector.",
       "derived_from": [
@@ -721,7 +755,7 @@
       "triplicateId": "HT-056d3ac561",
       "passId": "P1",
       "kind": "mechanism",
-      "layer": "speculation",
+      "layer": "implemented_candidate",
       "form": "error-correction mechanism",
       "statement": "Oracle-free divergence detection by stride MR: the same filter run on the data at stride 1 and stride 2 (model A^2) should agree within computable covariance; systematic disagreement flags model mismatch, and sparse regression of the disagreement on parameter sensitivities localizes which entry of A is wrong.",
       "derived_from": [
@@ -1017,6 +1051,22 @@
         "what_can_transfer": "probe to other pipelines",
         "distinguishing_observable": "residual curve shape vs c matches the soft-threshold prediction"
       }
+    },
+    {
+      "id": "O-W1-r1",
+      "triplicateId": "HT-056d3ac561",
+      "passId": "P3-probe1",
+      "kind": "observation",
+      "layer": "experimental_observation",
+      "evidence_rows": [
+        "hecate/programs/HT-056d3ac561/worlds/W1/rows.jsonl",
+        "hecate/programs/HT-056d3ac561/worlds/W1/OUTCOME.json"
+      ],
+      "statement": "W1 probe round 1: INSTRUMENT_FAIL. At delta=0.1 the stride disagreement statistic D gave AUC 0.493 against NIS AUC 0.490 (50 vs 50 runs); Lasso top-1 localization accuracy was 0.000 (chance 0.0625; data-free sensitivity-norm baseline 0.160); null-twin AUC 0.417. Oracle RMSE AUC 0.490; cheat success=True. Matched-model mean D 4.028 (expected 4). Outcome INSTRUMENT_FAIL by the PREREG class rules applied in code.",
+      "derived_from": [
+        "M8",
+        "M1"
+      ]
     }
   ],
   "lenses": [
@@ -1238,7 +1288,123 @@
         "mismatch also inflates innovations, so any statistic detects it",
         "normalization miscomputed so the matched model already looks mismatched",
         "Lasso localizes by sensitivity magnitude alone regardless of data"
-      ]
+      ],
+      "outcome": "INSTRUMENT_FAIL",
+      "raw_outcome": "INSTRUMENT_FAIL",
+      "procedural_notes": [],
+      "rows": "hecate/programs/HT-056d3ac561/worlds/W1/rows.jsonl",
+      "outcome_file": "hecate/programs/HT-056d3ac561/worlds/W1/OUTCOME.json",
+      "statistics": {
+        "criterion_delta_0.1": {
+          "n_mismatched": 50,
+          "n_matched": 50,
+          "AUC_D": 0.4932,
+          "AUC_NIS": 0.49039999999999995,
+          "AUC_null_twin": 0.4168,
+          "loc_top1_acc": 0.0,
+          "loc_literal_mean_reading_acc": 0.02,
+          "loc_sensitivity_norm_only_acc": 0.16,
+          "AUC_oracle_rmse": 0.49,
+          "AUC_cheat": 1.0,
+          "loc_cheat": 1.0,
+          "mean_D_mismatched": 4.036191130495718,
+          "mean_NIS_mismatched": 4.022545417030738,
+          "success_met": false,
+          "failure_met": true
+        },
+        "other_deltas": {
+          "0.05": {
+            "n_mismatched": 50,
+            "n_matched": 50,
+            "AUC_D": 0.48560000000000003,
+            "AUC_NIS": 0.4724,
+            "AUC_null_twin": 0.486,
+            "loc_top1_acc": 0.12,
+            "loc_literal_mean_reading_acc": 0.02,
+            "loc_sensitivity_norm_only_acc": 0.16,
+            "AUC_oracle_rmse": 0.47640000000000005,
+            "AUC_cheat": 1.0,
+            "loc_cheat": 1.0,
+            "mean_D_mismatched": 4.030960522870414,
+            "mean_NIS_mismatched": 4.013041697787798,
+            "success_met": false,
+            "failure_met": true
+          },
+          "0.2": {
+            "n_mismatched": 50,
+            "n_matched": 50,
+            "AUC_D": 0.522,
+            "AUC_NIS": 0.5604,
+            "AUC_null_twin": 0.2864,
+            "loc_top1_acc": 0.0,
+            "loc_literal_mean_reading_acc": 0.02,
+            "loc_sensitivity_norm_only_acc": 0.16,
+            "AUC_oracle_rmse": 0.5576,
+            "AUC_cheat": 1.0,
+            "loc_cheat": 1.0,
+            "mean_D_mismatched": 4.063305902472024,
+            "mean_NIS_mismatched": 4.056659044415027,
+            "success_met": false,
+            "failure_met": true
+          }
+        },
+        "CONTROL": {
+          "n": 50,
+          "mean_D": 4.027940878984006,
+          "mean_NIS": 4.026843169769284,
+          "mean_D_null": 23624.325820686117,
+          "min_eig_P2_minus_P1": 4.2707425557185725e-05,
+          "top1_distribution": {
+            "8": 1,
+            "13": 49
+          }
+        },
+        "TREATMENT_delta_0.1": {
+          "n": 50,
+          "mean_D": 4.036191130495718,
+          "mean_NIS": 4.022545417030738,
+          "true_entry_distribution": {
+            "0": 2,
+            "2": 3,
+            "3": 2,
+            "4": 5,
+            "5": 3,
+            "6": 4,
+            "7": 1,
+            "8": 4,
+            "9": 8,
+            "10": 2,
+            "11": 7,
+            "12": 1,
+            "13": 2,
+            "14": 4,
+            "15": 2
+          }
+        }
+      },
+      "anomalies": [
+        {
+          "id": "A1",
+          "text": "delta=0.05: oracle true-state-RMSE AUC 0.476 ~ chance; mismatch not visible between seeds even with ground truth"
+        },
+        {
+          "id": "A2",
+          "text": "delta=0.1: oracle true-state-RMSE AUC 0.490 ~ chance; mismatch not visible between seeds even with ground truth"
+        },
+        {
+          "id": "A3",
+          "text": "delta=0.2: oracle true-state-RMSE AUC 0.558 ~ chance; mismatch not visible between seeds even with ground truth"
+        },
+        {
+          "id": "A4",
+          "text": "Lasso top-1 accuracy 0.000 below data-free sensitivity-norm baseline 0.160"
+        },
+        {
+          "id": "A5",
+          "text": "matched-run Lasso top-1 concentrated on entry 13 (49/50)"
+        }
+      ],
+      "rejected_explanations": []
     },
     {
       "id": "W2",
@@ -1360,7 +1526,8 @@
   "candidateEngines": [],
   "currentVerdict": "SPECULATIVE",
   "evidenceSummary": {
-    "layer": "speculation",
-    "note": "Pass 0-3 specs only; nothing run"
+    "layer": "experimental_observation",
+    "note": "probe round 1: W1 INSTRUMENT_FAIL; nothing supported (no Pass 4 yet)",
+    "rows": "hecate/programs/HT-056d3ac561/worlds/W1/rows.jsonl"
   }
 }

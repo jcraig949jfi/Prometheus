@@ -29,7 +29,7 @@ Layers: [spec] speculation, [impl] implemented candidate, [obs] experimental obs
 - [spec] M2 (learning pressure): Landauer-priced error erasure: every prediction-error bit that must be stored or erased costs kT ln 2; the agent decides which errors to absorb into model structure and which to discard. Primes are the errors that cannot be absorbed by existing structure.
 - [spec] M3 (world rule): Primon-gas environment: the world emits integers n with probability n^-beta / zeta(beta) (truncated). A learner predicting divisibility events sees independent per-prime channels; as beta -> 1 the partition function diverges and rare large factors dominate.
 - [spec] M4 (representation): CRT precision routing: the agent represents the stream in residues mod pairwise-coprime moduli; precision is allocated per residue channel and channels do not share error.
-- [spec] M5 (causal constraint): Factor-inference arrow: the generative direction (multiply) is cheap and near-reversible, inference (factor) is expensive; a predictive prior over factors reduces the dissipated work of inference, so good prediction is measured as reduced irreversibility.
+- [impl] M5 (causal constraint): Factor-inference arrow: the generative direction (multiply) is cheap and near-reversible, inference (factor) is expensive; a predictive prior over factors reduces the dissipated work of inference, so good prediction is measured as reduced irreversibility.
 - [spec] M6 (dynamical law): Gap-surprise thermostat: the agent's inverse temperature is updated from recent surprise; on the prime indicator stream the thermostat's fluctuation spectrum is set by gap statistics.
 - [spec] M7 (error-correction mechanism): Mobius-signed error aggregation: errors from overlapping levels are combined with inclusion-exclusion signs mu(d) so that multiply-predicted events are not double counted.
 - [spec] M8 (mutation operator): Multiplicative mutation: genomes are integers; mutation multiplies or divides by a small prime; fitness is the negative free energy of a periodic predictor with that period. Primes are irreducible genome building blocks.
@@ -57,13 +57,13 @@ Layers: [spec] speculation, [impl] implemented candidate, [obs] experimental obs
 - W4 [causal toy] The ratio of inference work (trial-division factoring) to generation work (one multiplication) falls with the temporal predictability of hidden factors when the solver uses a predictive prior ordering of candidate divisors. | success: on the drift world with s = 1, mean prior-ordered cost <= 0.5 x ascending cost; on the null twin prior-ordered cost >= 0.9 x ascending cost | null twin: same marginal distribution of (p, q) as the drift world but temporally shuffled: magnitudes matched, temporal predictability destroyed | cost: about 1 CPU core-minute
 
 ## OBSERVATIONS
-_none yet_
+- W4: CONFOUNDED (hecate/programs/HT-47f4c02be4/worlds/W4/rows.jsonl)
 
 ## FALSIFICATIONS
 _none yet_
 
 ## SURVIVING ANOMALIES
-_none yet_
+- W4: shuffled null twin still favors the prior (R_null=0.186 < 1); see TREATMENT rows' range_idx_p/q for the index band the s=1 walk occupied
 
 ## CROSS-SUBSTRATE RESULTS
 _none yet_
@@ -78,12 +78,11 @@ _none yet_
 _none yet_
 
 ## OPEN QUESTIONS
-- W1 success may be guaranteed by construction (it is the sieve)
-- W3 coexistence may be inherited from source periods rather than selected
-- no world yet tests M6, M13 or M15
+- operation count ignores the cost of maintaining the prior
+- the asymmetry is a property of trial division, not of factoring in general
 
 ## CURRENT VERDICT
-SPECULATIVE (an allocation state, not a truth claim). Pass 0-3 specs only; nothing run
+SPECULATIVE (an allocation state, not a truth claim). probe round 1: W4 CONFOUNDED; nothing supported (no Pass 4 yet)
 
 ## NEXT PASS
-decision after P3: FALSIFY
+decision after P3-probe1: DEEPEN

@@ -39,7 +39,7 @@ Layers: [spec] speculation, [impl] implemented candidate, [obs] experimental obs
 - [spec] M12 (world rule): Twin-world coupling: running the actual and counterfactual community with common random numbers (shared noise) makes unit-level effects identifiable; the twin-difference trajectory separates intervention effect from noise. Under chaos the twins decorrelate and common-noise identification degrades to interventional averaging.
 - [spec] M13 (selection mechanism): Keystone entrenchment (strange): species whose removal would trigger cascades that also remove their competitors are counterfactually protected; if disturbances remove species randomly and recolonization is competitive, lineages that make themselves keystone (by acquiring interactions that stabilize others) persist longer. Selection acts on counterfactual indispensability, not direct fitness.
 - [spec] M14 (organism architecture): Model-based forager: an organism carrying a low-dimensional internal copy of its community's attractor (a few coarse variables) and running counterfactual rollouts of its own foraging choices. Prediction: benefit concentrated at intermediate lambda (see M6) and requiring model dimension roughly equal to attractor dimension.
-- [spec] M15 (causal constraint): Dissipative counterfactual arrow: in dissipative community dynamics, forward counterfactuals stay well-posed but backtracking counterfactuals ('what past would give this different present') lose identifiability at a rate equal to the net phase-space contraction (minus the sum of Lyapunov exponents). Conservative twins with the same lambda_max show no such asymmetry.
+- [impl] M15 (causal constraint): Dissipative counterfactual arrow: in dissipative community dynamics, forward counterfactuals stay well-posed but backtracking counterfactuals ('what past would give this different present') lose identifiability at a rate equal to the net phase-space contraction (minus the sum of Lyapunov exponents). Conservative twins with the same lambda_max show no such asymmetry.
 
 ## LENSES
 - L1 Twin-world divergence spectrum: Invented for this triplicate: counterfactual twins sharing noise are the object; their separation under intervention (not under noise) is the quantity no stock Lyapunov analysis reports. (targets M1, M12)
@@ -57,13 +57,19 @@ Layers: [spec] speculation, [impl] implemented candidate, [obs] experimental obs
 - W4 [causal toy] Backtracking counterfactuals lose identifiability at a rate set by net phase-space contraction, while forward counterfactuals do not. | success: Spearman between backward entropy growth rate and measured net contraction rate >= 0.8 across 8 levels (10 seeds each), AND volume-preserving twin growth rate <= 0.1 nats/step. | null twin: Area/volume-preserving coupled map (shear-type, invertible) tuned to the same lambda_max (+/-10%) with zero net contraction. | cost: 3
 
 ## OBSERVATIONS
-_none yet_
+- W4: NULL (hecate/programs/HT-79e904e13a/worlds/W4/rows.jsonl)
 
 ## FALSIFICATIONS
-_none yet_
+- W4: points leaving the feasible (positive) region counted as information loss
+- W4: matched lambda_max in the twin is not achieved
 
 ## SURVIVING ANOMALIES
-_none yet_
+- W4: level 2: twin lambda_max 0.011 vs treatment -0.227 not within 10%
+- W4: level 3: twin lambda_max 0.011 vs treatment -0.005 not within 10%
+- W4: level 4: twin lambda_max 0.012 vs treatment -0.228 not within 10%
+- W4: level 5: twin lambda_max 0.011 vs treatment -0.463 not within 10%
+- W4: level 6: twin lambda_max 0.012 vs treatment -0.459 not within 10%
+- W4: level 7: twin lambda_max 0.012 vs treatment -0.426 not within 10%
 
 ## CROSS-SUBSTRATE RESULTS
 _none yet_
@@ -78,12 +84,11 @@ _none yet_
 _none yet_
 
 ## OPEN QUESTIONS
-- M4, M6, M7, M13, M14 have no world yet
-- whether W1 merely re-derives linear response theory
-- whether W3 order memory survives an initial-abundance-matched control
+- grid resolution sets an entropy ceiling
+- radius r scaling produces the trend
 
 ## CURRENT VERDICT
-SPECULATIVE (an allocation state, not a truth claim). Pass 0-3 specs only; nothing run
+SPECULATIVE (an allocation state, not a truth claim). probe round 1: W4 NULL; nothing supported (no Pass 4 yet)
 
 ## NEXT PASS
-decision after P3: FALSIFY
+decision after P3-probe1: DEEPEN

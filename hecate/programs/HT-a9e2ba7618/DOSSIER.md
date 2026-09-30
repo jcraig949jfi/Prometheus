@@ -29,7 +29,7 @@ Layers: [spec] speculation, [impl] implemented candidate, [obs] experimental obs
 - [spec] M2 (error-correction mechanism): Slip-ridge repair: a phase slip appears as a localized discontinuity in the wavelet ridge of the two nodes adjacent to the slipping link; a local controller that detects the discontinuity and injects an opposite slip restores q without any global knowledge.
 - [spec] M3 (selection mechanism): Cross-scale persistence binding: two locations of an input are coupled (and therefore synchronize) only if they fall in the same connected component of a superlevel set of the scalogram at k or more of the dyadic scales; synchrony clusters then equal the scale-persistent components.
 - [spec] M4 (computational primitive): Dyadic nesting address: a slow rhythm with f_slow and fast rhythm with f_fast = 2^d f_slow form a d-level address tree; the number of reliably addressable slots grows as 2^d until phase noise in the slow cycle exceeds a slot width, giving a capacity cliff at a predictable d.
-- [spec] M5 (representation): Warp-invariant phase code: message symbols are coded by phase relative to a carrier that is carried along with the message; any monotone time warp applied to the transmission leaves carrier-relative phase unchanged, so decoding by wavelet-tracked carrier phase is invariant to tempo changes that break clock-time decoding.
+- [impl] M5 (representation): Warp-invariant phase code: message symbols are coded by phase relative to a carrier that is carried along with the message; any monotone time warp applied to the transmission leaves carrier-relative phase unchanged, so decoding by wavelet-tracked carrier phase is invariant to tempo changes that break clock-time decoding.
 - [spec] M6 (learning pressure): Coherence-triggered surgery: an edge is added between two oscillators when their wavelet coherence exceeds c* at some scale for T steps and removed when it falls below c_low; the cycle rank of the coupling graph therefore grows with the number of independent rhythmic co-occurrences in the input, creating new loops that can hold windings.
 - [spec] M7 (selection mechanism): Betti-matching pressure: in a population of oscillator networks selected on a task needing M integers of memory, selection favours networks whose coupling graph has cycle rank at least M; wavelet energy penalties at unused scales push the rest of the graph to be tree-like.
 - [spec] M8 (causal constraint): Vanishing-moment drift immunity: a phase readout using wavelets with p vanishing moments is exactly blind to polynomial phase drift of order below p, so an oscillator code subjected to slow polynomial frequency drift remains decodable, while the integer part (winding) is protected separately.
@@ -57,10 +57,11 @@ Layers: [spec] speculation, [impl] implemented candidate, [obs] experimental obs
 - W4 [causal toy] Carrier-relative phase decoding is invariant to monotone time warps only when the carrier is warped together with the message; the invariance comes from the co-moving reference, not from the code. | success: carrier-phase accuracy at w=0.4 >= 0.9 with drop from w=0 <= 0.05, AND clock decoder drop >= 0.3, AND in the null twin carrier-phase drop >= 0.3 | null twin: carrier generated unwarped while the message is warped: same spectra and symbol counts, co-moving reference destroyed | cost: 2
 
 ## OBSERVATIONS
-_none yet_
+- W4: NULL (hecate/programs/HT-a9e2ba7618/worlds/W4/rows.jsonl)
 
 ## FALSIFICATIONS
-_none yet_
+- W4: monotone warps preserve order so any order decoder is invariant
+- W4: warps too weak to move symbols across slot boundaries
 
 ## SURVIVING ANOMALIES
 _none yet_
@@ -78,12 +79,10 @@ _none yet_
 _none yet_
 
 ## OPEN QUESTIONS
-- M4, M6, M7, M9, M10, M11 have no world yet
-- W1 may show pure Kramers behaviour, collapsing the triplicate to a familiar mechanism
-- whether the wavelet is ever causal rather than a readout
+- adaptive-scale decoder overfits the warp family
 
 ## CURRENT VERDICT
-SPECULATIVE (an allocation state, not a truth claim). Pass 0-3 specs only; nothing run
+SPECULATIVE (an allocation state, not a truth claim). probe round 1: W4 NULL; nothing supported (no Pass 4 yet)
 
 ## NEXT PASS
-decision after P3: FALSIFY
+decision after P3-probe1: DEEPEN

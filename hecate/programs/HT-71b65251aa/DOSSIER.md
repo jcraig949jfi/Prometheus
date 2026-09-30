@@ -26,7 +26,7 @@ Layers: [spec] speculation, [impl] implemented candidate, [obs] experimental obs
 
 ## CANDIDATE PHYSICS
 - [spec] M1 (interaction law): Hedge-token equilibrium: speakers attach one of K meaningless tokens to each answer; listeners choose accept or verify-at-cost. Under best-response dynamics tokens become calibrated confidence labels, and the mutual information between token and correctness is capped by the speaker's metacognitive resolution and collapses when speaker-listener interests diverge.
-- [spec] M2 (computational primitive): Metacognitively gated recursion depth: a listener interprets utterances by level-k reasoning over alternatives and stops recursing when its self-estimated interpretive uncertainty falls below a threshold; the threshold is in equilibrium with how deeply speakers design their utterances.
+- [impl] M2 (computational primitive): Metacognitively gated recursion depth: a listener interprets utterances by level-k reasoning over alternatives and stops recursing when its self-estimated interpretive uncertainty falls below a threshold; the threshold is in equilibrium with how deeply speakers design their utterances.
 - [spec] M3 (selection mechanism): Clarification equilibrium: the listener asks for clarification when its posterior over referents has max below tau; the speaker chooses redundancy r. The pair (tau*, r*) is an interior Nash equilibrium whose location moves predictably with the cost of asking and the cost of words.
 - [spec] M4 (error-correction mechanism): Utterance-surprise gate: the listener keeps a model of how informative a cooperative speaker should be in this context; an utterance that under-informs relative to that model triggers non-literal reinterpretation. Speakers flout only when the listener's gate is precise enough for flouting to pay.
 - [spec] M5 (organism architecture): Internal parliament: a generator and a monitor inside one agent have separate payoffs (generator rewarded for answering, monitor for avoiding errors); calibrated abstention is a Nash equilibrium of this internal game and the monitor's messages to the generator take meaning from task context.
@@ -56,13 +56,17 @@ Layers: [spec] speculation, [impl] implemented candidate, [obs] experimental obs
 - W4 [population] When listeners reward stated confidence, a stable convention forms in which public confidence words are shifted from private calibrated confidence while listener-decoded confidence remains calibrated; under proper-scoring listeners the shift vanishes. | success: median over 20 seeds: gap_A >= 0.08 AND gap_B <= 0.03 AND ECE_decoded_A <= 0.05 | null twin: regime A with listeners' decoding table frozen at nominal values (no pragmatic discounting), keeping the same payoff scale | cost: about 4 CPU core-minutes
 
 ## OBSERVATIONS
-_none yet_
+- W3: SIGNAL (hecate/programs/HT-71b65251aa/worlds/W3/rows.jsonl)
 
 ## FALSIFICATIONS
-_none yet_
+- W3: ambiguity is correlated with context size, so depth tracks size not uncertainty
+- W3: deeper levels rarely change the answer, so any stopping rule is as good
+- W3: the S2 speaker makes the task trivially solvable at L1
+- W3: (spec alternative_explanation) most items are unambiguous so any early stopping saves depth
 
 ## SURVIVING ANOMALIES
-_none yet_
+- W3: fixed L2 and L3 accuracies identical
+- W3: fixed L1 already within 0.01 of L2 (0.7427 vs 0.7427)
 
 ## CROSS-SUBSTRATE RESULTS
 _none yet_
@@ -77,12 +81,10 @@ _none yet_
 _none yet_
 
 ## OPEN QUESTIONS
-- all worlds are specified, none run
-- whether the interaction effect in W1 survives a payoff family other than the one chosen
-- whether results are properties of best-response dynamics rather than of equilibria
+_none yet_
 
 ## CURRENT VERDICT
-SPECULATIVE (an allocation state, not a truth claim). Pass 0-3 specs only; nothing run
+PROBING (an allocation state, not a truth claim). probe round 1: W3 SIGNAL; nothing supported (no Pass 4 yet)
 
 ## NEXT PASS
-decision after P3: FALSIFY
+decision after P3-probe1: FALSIFY

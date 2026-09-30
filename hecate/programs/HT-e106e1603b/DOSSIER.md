@@ -57,13 +57,30 @@ Layers: [spec] speculation, [impl] implemented candidate, [obs] experimental obs
 - W4 [optimizer] A storage scrubber that lowers effort after each clean epoch and raises it after each failure, with residual errors persisting between epochs, shows failure clustering (Fano factor growing with window) beyond a memoryless twin driven by the same measured failure curve. | success: adaptive: Fano(1000)/Fano(10) >= 2 AND memoryless twin: Fano(1000)/Fano(10) <= 1.3, 3 seeds each, all seeds agreeing in direction | null twin: memoryless Bernoulli failures with the same effort-to-failure curve and the same update rule; destroys the persistent-residue coupling | cost: 9
 
 ## OBSERVATIONS
-_none yet_
+- W2: NOT_BUILT (hecate/programs/HT-e106e1603b/worlds/W2/rows.jsonl)
 
 ## FALSIFICATIONS
 _none yet_
 
 ## SURVIVING ANOMALIES
-_none yet_
+- W2: CONTROL seed 1 n 1000 truncated by compute guard
+- W2: CONTROL seed 1 n 2000 truncated by compute guard
+- W2: CONTROL seed 2 n 1000 truncated by compute guard
+- W2: CONTROL seed 2 n 2000 truncated by compute guard
+- W2: CONTROL seed 3 n 1000 truncated by compute guard
+- W2: CONTROL seed 3 n 2000 truncated by compute guard
+- W2: CONTROL seed 4 n 1000 truncated by compute guard
+- W2: CONTROL seed 4 n 2000 truncated by compute guard
+- W2: PC seed 0 n=1000: fail frac at grid ends 0.21,1.00
+- W2: PC seed 0 n=2000: fail frac at grid ends 0.26,1.00
+- W2: PC seed 1 n=1000: fail frac at grid ends 0.23,1.00
+- W2: PC seed 1 n=2000: fail frac at grid ends 0.33,1.00
+- W2: PC seed 2 n=1000: fail frac at grid ends 0.24,1.00
+- W2: PC seed 2 n=2000: fail frac at grid ends 0.25,1.00
+- W2: PC seed 3 n=1000: fail frac at grid ends 0.21,1.00
+- W2: PC seed 3 n=2000: fail frac at grid ends 0.29,1.00
+- W2: PC seed 4 n=1000: fail frac at grid ends 0.24,1.00
+- W2: PC seed 4 n=2000: fail frac at grid ends 0.29,1.00
 
 ## CROSS-SUBSTRATE RESULTS
 _none yet_
@@ -78,12 +95,11 @@ _none yet_
 _none yet_
 
 ## OPEN QUESTIONS
-- small sizes (L <= 64, n <= 2000) may be too small to separate power laws from broad exponentials
-- W2 may simply accumulate trapping-set residue without a stationary density
-- none of the worlds tests transfer of a learned code across substrates
+- the density equals p* because both are set by the same degree-3 majority arithmetic, not by self-organization
+- the twin fails merely because random flips inject errors, a trivially different drive
 
 ## CURRENT VERDICT
-SPECULATIVE (an allocation state, not a truth claim). Pass 0-3 specs only; nothing run
+SPECULATIVE (an allocation state, not a truth claim). probe round 1: W2 NOT_BUILT; nothing supported (no Pass 4 yet)
 
 ## NEXT PASS
-decision after P3: FALSIFY
+decision after P3-probe1: DEEPEN

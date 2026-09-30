@@ -26,9 +26,9 @@ Layers: [spec] speculation, [impl] implemented candidate, [obs] experimental obs
 
 ## CANDIDATE PHYSICS
 - [spec] M1 (dynamical law): A coupled-map learner whose global gain g is set by a slow modulator reading a running load estimate (prediction error): g is pushed toward the order-chaos boundary (lambda_max near 0) when load is high and toward contraction when load is low.
-- [spec] M2 (memory structure): Capacity = number of coexisting attractors in a globally coupled map; storing chunk k+1 fragments existing basins, and beyond a gain-dependent K* basins become riddled so cued recall fails.
+- [impl] M2 (memory structure): Capacity = number of coexisting attractors in a globally coupled map; storing chunk k+1 fragments existing basins, and beyond a gain-dependent K* basins become riddled so cued recall fails.
 - [spec] M3 (learning pressure): Chaotic itinerancy proposes candidate chunks (transient visits to attractor ruins); a phasic broadcast pulse on success locally lowers gain at currently active units, freezing the current ruin into a stable attractor. The capacity limit bounds how many ruins can be frozen before itinerancy stops.
-- [spec] M4 (developmental process): The modulator is swept slowly while tasks of increasing intrinsic load are presented; hysteresis near bifurcations makes easy-to-hard order retain more pattern structure than hard-to-easy, with identical total exposure.
+- [impl] M4 (developmental process): The modulator is swept slowly while tasks of increasing intrinsic load are presented; hysteresis near bifurcations makes easy-to-hard order retain more pattern structure than hard-to-easy, with identical total exposure.
 - [spec] M5 (causal constraint): A scalar broadcast controller stabilises unstable periodic orbits with small parameter kicks computed from the last C observed states; the longest stabilisable period grows with C, so controller working memory bounds the repertoire a single modulator can pin.
 - [spec] M6 (information bottleneck): Extraneous load = input directions that project onto expanding Lyapunov directions and get amplified; modulation reshapes the Lyapunov spectrum direction-selectively (contracting irrelevant directions), acting as attention without addressing individual units.
 - [spec] M7 (representation): Chunks are frequent words in the symbolic dynamics of a chaotic source; a learner with chunk budget C captures grammar only up to an entropy h*(C); moving source entropy (or sampling resolution) to h*(C) maximises learned structure.
@@ -55,13 +55,15 @@ Layers: [spec] speculation, [impl] implemented candidate, [obs] experimental obs
 - W4 [symbolic rewriting] A learner with chunk budget C extracts most structure from a chaotic source whose entropy is matched to C, and the matched entropy rises with C. | success: median over 10 seeds of the entropy at argmax gain strictly increases across C = 4, 16, 64, AND gain at argmax >= 0.05 for C >= 16 | null twin: Markov-1 surrogate sequences: matched symbol and pair frequencies, higher-order grammar destroyed | cost: about 3 CPU core-minutes
 
 ## OBSERVATIONS
-_none yet_
+- W3: INSTRUMENT_FAIL (hecate/programs/HT-55162c0ac0/worlds/W3/rows.jsonl)
 
 ## FALSIFICATIONS
 _none yet_
 
 ## SURVIVING ANOMALIES
-_none yet_
+- W3: positive control not retained: mean ARI 0.024 < 0.8 (mean clusters 3.7)
+- W3: TREATMENT orders end in different regimes: easy->hard (unforced at a=3.9) mean 90.6 clusters, hard->easy (unforced at a=3.7) mean 3.8 clusters; fixed-a CONTROL at 3.8 ~100 clusters (turbulent)
+- W3: instrument repair declined: no readout defect found; the positive control fails because the specified dynamics at a=3.7 collapse to ~4 clusters unrelated to the pattern, and any change to amplitude/eps/steps would be tuning the mechanism
 
 ## CROSS-SUBSTRATE RESULTS
 _none yet_
@@ -76,11 +78,10 @@ _none yet_
 _none yet_
 
 ## OPEN QUESTIONS
-- M1, M3, M6, M12, M13 have no world yet
-- transfer of any threshold law across substrates
+- adjusted Rand index biased by cluster count
 
 ## CURRENT VERDICT
-SPECULATIVE (an allocation state, not a truth claim). Pass 0-3 specs only; nothing run
+SPECULATIVE (an allocation state, not a truth claim). probe round 1: W3 INSTRUMENT_FAIL; nothing supported (no Pass 4 yet)
 
 ## NEXT PASS
-decision after P3: FALSIFY
+decision after P3-probe1: DEEPEN

@@ -27,7 +27,7 @@ Layers: [spec] speculation, [impl] implemented candidate, [obs] experimental obs
 ## CANDIDATE PHYSICS
 - [spec] M1 (selection mechanism): Prequential MDL scoring rule on the boundary: agents submit a model of boundary data and are paid by the two-part code-length saving it achieves on held-out boundary segments; truthful best-available modelling should be a best response.
 - [spec] M2 (information bottleneck): Area-budgeted reconstruction: interior agents relay compressed summaries outward; the designer reads at most B*|boundary| bits; bulk reconstruction succeeds iff K(bulk) <= boundary capacity, and only when the mechanism pays relays for compression effort.
-- [spec] M3 (error-correction mechanism): Code-decoded outcome rule: each agent's report is a symbol of a codeword with distance d; the outcome is the decoded message; coalitions smaller than d/2 cannot shift the outcome, so manipulation resistance comes from redundancy instead of payments.
+- [impl] M3 (error-correction mechanism): Code-decoded outcome rule: each agent's report is a symbol of a codeword with distance d; the outcome is the decoded message; coalitions smaller than d/2 cannot shift the outcome, so manipulation resistance comes from redundancy instead of payments.
 - [spec] M4 (learning pressure): Complexity rent: the designer pays each agent a rent proportional to an estimate of K(type|boundary); over repeated play, agents are selected to present types that are legible or incompressible depending on the rent's sign.
 - [spec] M5 (organism architecture): Holographic organism: an agent's internal state is readable only via an interface tape whose capacity scales with its surface; to be paid by a truthful-report mechanism the organism must compress its internal policy onto that surface.
 - [spec] M6 (developmental process): RG tower of principals: layers of mechanisms each compress and aggregate children's reports; depth grows until marginal compression gain per layer falls below the incentive cost of keeping that layer truthful.
@@ -58,7 +58,7 @@ Layers: [spec] speculation, [impl] implemented candidate, [obs] experimental obs
 - W4 [symbolic rewriting] Among single-item auction programs that are incentive compatible on a training value distribution, shorter programs have lower IC regret under distribution shift. | success: rho >= 0.3 with permutation p < 0.01, AND rho >= 0.2 after partialling out number of numeric constants | null twin: length labels permuted within train-regret strata, preserving the regret distribution | cost: about 8 CPU core-minutes
 
 ## OBSERVATIONS
-_none yet_
+- W1: SIGNAL (hecate/programs/HT-321a8fd8e0/worlds/W1/rows.jsonl)
 
 ## FALSIFICATIONS
 _none yet_
@@ -79,12 +79,12 @@ _none yet_
 _none yet_
 
 ## OPEN QUESTIONS
-- W1 likely reproduces a textbook decoding bound
-- W2 may reduce to source coding plus paid effort
-- no world yet tests M4, M11 or M16
+- the threshold is exactly the textbook decoding radius, so nothing new
+- restricting coalition search to own symbols guarantees the result
+- majority/repetition voting would show the same robustness
 
 ## CURRENT VERDICT
-SPECULATIVE (an allocation state, not a truth claim). Pass 0-3 specs only; nothing run
+PROBING (an allocation state, not a truth claim). probe round 1: W1 SIGNAL; nothing supported (no Pass 4 yet)
 
 ## NEXT PASS
-decision after P3: FALSIFY
+decision after P3-probe1: FALSIFY
