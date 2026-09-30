@@ -658,3 +658,46 @@ Reading:
 - The earlier hard-gate framing ("the regime-gated readout") was really a channel gate. All PKG-F summaries before this
   entry that say "gating removes the harm" mean "setting the residual weight to ~0 removes the harm". The soft gate is
   the first genuinely SELECTIVE readout in this series.
+
+## Observability gate (pkgf_obs.py; operator direction 2026-09-30: low power never means "unchanged")
+
+Ruling (roles/Ensorain/prompts/2026-09-30_operator_direction/): a cell with too few records to detect drift is
+UNKNOWN / QUARANTINED, never admitted as fresh.
+
+Leak paths found in the soft gate v1 (pkgf_soft.soft_keep):
+- (a) "unchanged" meant non-rejection, |d| < 2 se. se grows as n shrinks, so small cells pass;
+- (b) cells with NO post-tau record were admitted when the point-estimated changed fraction was < .5;
+- (c) with no detected regime, ALL history was admitted.
+
+Gate of record (obs_keep):
+- tau_eff = the detected tau, else floor(5n/6), so the recent window is always tested.
+- A cell's pre-tau_eff records are admitted iff n_post >= 1 AND |mean_pre - mean_post| + 1.645 se <= DELTA,
+  with DELTA = .25 field SD (2.5x the noise). This is a one-sided 5% equivalence test.
+- Everything else before tau_eff is QUARANTINED.
+- Minimum observability is therefore explicit: at noise .1 a cell with n_pre = 3, n_post = 1 can be admitted only if
+  |d| <= .06.
+
+Ground-truth leak:
+- A record is STALE iff |s_i - x_final| > DELTA.
+- Gate leak = admitted stale pre-tau_eff records / all stale pre-tau_eff records, pooled over the worlds.
+
+Worlds: fresh block 9_813_xxx.
+- DRIFT: w .02/.2/.5 x 8.
+- MULTI: 16.
+- STAT: MULTI with every rho = 0, 8 worlds (the price-of-caution control).
+
+Smoke test on the non-eval seeds 9_814_000-002 (code check only):
+- The z-test is calibrated in STAT: 10.4% flagged CHANGED at a 10% two-sided null.
+- STALE-split cells structurally have no recent record, so the rule quarantines all of them.
+- STAT STALE dAC fell from +2.37 (all history) to +0.01.
+
+### Precommitment (written BEFORE running pkgf_obs.py on the 9_813_xxx worlds)
+
+- OB1 (the ruling): pooled gate leak of SD_obs <= .05 in DRIFT (all w) and in MULTI, AND strictly below SD_soft1's
+  pooled leak in each.
+- OB1b (structural): no admitted cell lacks a post record. Asserted in code; the run crashes otherwise.
+- OB2 (no harm vs full quarantine): in each of DRIFT, MULTI and STAT, mean dAC(SD_obs) >= mean dAC(SD_post) - .01, on
+  both STALE and GEN.
+- C1 (price prediction, from the smoke test): in STAT, SD_obs keeps < 50% of SD_all's mean STALE gain.
+- C2 (prediction, EXPECTED TO FAIL): MULTI STALE: SD_obs >= SD_all - .02 in >= 13/16 and min >= -.2. This is SG2,
+  which v1 passed through leak paths (a)-(c).
