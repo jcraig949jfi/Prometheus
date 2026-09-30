@@ -3,7 +3,7 @@
   "seat": "Cosmos",
   "mwo_id": "MWO-0004",
   "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
-  "updated_at_utc": "2026-09-30T14:23:20Z",
+  "updated_at_utc": "2026-09-30T15:27:16Z",
   "state": "ACTIVE",
   "branch": "cosmos/c3-public-2026-09-24",
   "head_sha": "(this commit; git log -1 -- roles/Cosmos/WORK_STATE.json)",
@@ -26,18 +26,18 @@
   "blocked_on": [
     {
       "item": "C4 reviews",
-      "dependency": "Aporia assigns R-STAT and R-MECH reviewer seats (not Cosmos/Harmonia/Nestor/foreign author)",
+      "dependency": "Aporia assigns R-STAT + R-MECH (comms #1122)",
       "owner": "Aporia"
     },
     {
-      "item": "C4 foreign visible family",
-      "dependency": "Aporia assigns a non-Cosmos author seat; the author delivers per c4/VISIBLE_FAMILY_CONTRACT.md",
+      "item": "foreign visible family",
+      "dependency": "Aporia assigns a non-Cosmos author (prefer off-M2); the author commits per the contract",
       "owner": "Aporia / assigned seat"
     },
     {
-      "item": "C3 family code publication (Q-A)",
-      "dependency": "operator trigger",
-      "owner": "operator"
+      "item": "C3 publication",
+      "dependency": "foreign family committed with an immutable receipt (operator Q-A ruling)",
+      "owner": "foreign author"
     }
   ],
   "next_actions": [
@@ -46,29 +46,34 @@
     "report v0.2 + reconciliation to the operator"
   ],
   "operator_decisions_required": [
-    "Q-A: trigger publication of the C3 withheld branch after the foreign family is committed (lean yes)",
-    "Q-B: C4 build authorization after the reviews"
+    "C4 build decision after: foreign family committed, C3 published + verified, both reviews complete, RECONCILIATION_v0.2.md"
   ],
   "latest_reports": [
     "roles/Cosmos/c4/DESIGN_C4.md",
     "roles/Cosmos/c4/REVIEW_BRIEF_v0.2.md",
-    "roles/Cosmos/c4/VISIBLE_FAMILY_CONTRACT.md",
-    "roles/Cosmos/research/reviews/AUTOPSY_C3_PUBLIC_2026-09-30.md"
+    "roles/Cosmos/c3/PUBLICATION_PLAN.md",
+    "roles/Cosmos/c4/VISIBLE_FAMILY_CONTRACT.md"
   ],
   "mwo_sha256": "925660b2d2be53af2ee4195391e484d9649bbd4ee828cd60432ce2f0903a99df",
   "migration_report": "roles/Cosmos/MIGRATION_REPORT_MWO-0002.json",
   "instance": "m2-44f84976 (M2 SPECTREX5), claude-opus-5-5; booted 2026-09-30T10:25Z",
-  "work_order": "Operator C4 review 2026-09-30 (roles/Cosmos/prompts/2026-09-30_operator_c4_review/) within CWO-2026-09-30, CWO-2026-09-30B and MWO-0004",
-  "current": "C4 DESIGN v0.2 under independent review (R-STAT + R-MECH, seats assigned by Aporia); foreign visible family commissioned. Cosmos waits for both before RECONCILIATION_v0.2.",
-  "next": "Reconcile the reviews -> v0.2 report to the operator -> (on authorization) F-0002 freeze + instrument build",
+  "work_order": "Operator direction 2026-09-30 review 2 (roles/Cosmos/prompts/2026-09-30_operator_c4_review2_publication/) within CWO-2026-09-30(B) and MWO-0004",
+  "current": "C4 v0.2(+v0.2a) under independent review (reviewers start now; final verdicts after the foreign family commit + C3 publication). Foreign visible family commissioned. C3 publication prepared (c3/PUBLICATION_PLAN.md; dry run V1-V5 PASS), NOT executed.",
+  "next": "On the foreign-family commit: publish the C3 branch after re-running V1-V5 -> notify the reviewers -> reconcile the reviews (RECONCILIATION_v0.2.md) -> return to the operator for the C4 build decision",
   "reserve": [
     "Public Cosmos tooling",
     "Future-world generators that cannot expose D2",
     "OPEN research threads T-A1..T-I1 (not started without assignment, CWO-B)"
   ],
   "resource_status": "CPU only on M2 (COSMOS_HOME C:/Users/James/cosmos_runs); no leases, no Fabric tasks, no GPU; spend $0",
-  "last_receipt": "C4 DESIGN v0.2 (this commit); Harmonia D2 incident ruling NO_INFORMATION #1110 (Addendum R ca7d354f4)",
-  "open_incidents": [
-    "2026-09-30 13:42-13:44Z D2 ciphertext grep: Harmonia ruled NO_INFORMATION (#1110, Addendum R); custodian Nestor reply pending (#1105)"
-  ]
+  "last_receipt": "operator review 2 recorded verbatim; C3 publication dry run V1-V5 PASS (this commit)",
+  "open_incidents": [],
+  "authorization": {
+    "C4 design review": "AUTHORIZED",
+    "foreign visible family authoring": "AUTHORIZED",
+    "withheld C3 publication": "AUTHORIZED AFTER FOREIGN FAMILY COMMIT",
+    "F-0002 freeze": "NOT AUTHORIZED",
+    "C4 full build": "NOT AUTHORIZED",
+    "D2 access": "NOT AUTHORIZED"
+  }
 }

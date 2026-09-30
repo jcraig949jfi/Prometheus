@@ -3,7 +3,8 @@
 Campaign C4, thread T-C4 thr-cac8c079f216. Successor to C3; a NEW preregistration, not a repaired C3.
 v0.2 of 2026-09-30 answers the operator review of v0.1
 (roles/Cosmos/prompts/2026-09-30_operator_c4_review/). v0.1 is kept in git at c37e2c687.
-Status: DESIGNED v0.2. It goes to two independent reviews (s12). F-0002 (the full preregistration) and
+Status: DESIGNED v0.2, ACCEPTED FOR INDEPENDENT REVIEW (operator 2026-09-30,
+prompts/2026-09-30_operator_c4_review2_publication/), with the additions marked [v0.2a] below. Two independent reviews (s12). F-0002 (the full preregistration) and
 the instrument build wait for the operator's authorization after those reviews are reconciled.
 Frozen so far: F-0001 (the v0.1 S0 rules). F-0001 is SUPERSEDED IN DESIGN by s3 below. The chain entry
 changes to SUPERSEDED only when F-0002 is frozen (FREEZES rule: a repair appends, it never edits).
@@ -65,6 +66,16 @@ S0-C TARGET-DISTRIBUTION ESTIMATE (reported, not a gate)
 
 Also reported in both strata: T0, T1a, T1b (leakage reference), T2a, T2b (within-family ceiling), T3-DOWN.
 
+[v0.2a] PER-FAMILY SHORTCUT-FAILURE ACCOUNTING (required in every S0-A report)
+- Per challenge family: the absolute number and the rate of T3-DOWN failures. When sample sizes permit,
+  also per family: candidate-only corrections and candidate-introduced errors.
+- CONCENTRATION RULE: "strong explanatory uplift" may not be claimed if a single family contributes > 50%
+  of the challenge stratum's T3-DOWN failures, or > 50% of the candidate-only corrections. The report
+  then states the uplift as family-concentrated, and the S0-A per-family condition (d) still applies.
+- INDETERMINATE and INCOHERENT rows: excluded from BA under both certificates, but COUNTED and REPORTED
+  per family and stratum. If the exclusion rate differs between the candidate's predicted classes by
+  more than 10 percentage points, that is flagged as possible selection.
+
 ## 4. Gate S1 v0.2 -- explanatory measurement != certificate measurement
 PROHIBITED in any candidate coordinate:
 - certificate twins;
@@ -104,6 +115,9 @@ G4 LABEL-BLIND SETTINGS: every probe setting (horizons, probe alphabet, kick siz
 G5 RE-ENCODING INVARIANCE: coordinates are invariant, within bootstrap SE, under an invertible linear
    re-basis of either view, duplicated components and re-encoded discrete variables (whitened /
    affine-invariant statistics only).
+[v0.2a] G3 is NOT proof of independence on its own: a coordinate can be delay-invariant and still encode
+family identity or task construction. G1-G6 are jointly necessary, not sufficient. Both reviewers are
+asked to attack all six (REVIEW_BRIEF_v0.2.md), and S2 carries the family-encoding test.
 G6 RESTATEMENT DIAGNOSTIC: report each coordinate's rank correlation with the P2 effect and with the
    T3-DOWN inputs. This is a diagnostic, not a gate: a good upstream coordinate SHOULD predict
    usability. Restatement is prevented structurally by G1-G4.
@@ -124,6 +138,9 @@ following holds:
 (e) conditional dependence: a stratified permutation (CMH-type) test of error independent of family,
     given predicted-probability bins, gives p < 0.01.
 A law whose apparent success needs a family-specific correction term is NOT universal.
+[v0.2a] Reported explicitly, whatever the verdict: does adding family identity improve (1) held-out
+discrimination, (2) calibration, (3) boundary location, (4) intervention prediction (S4 arms scored
+with and without family terms)? Each is reported as the improvement with its CI.
 
 ## 6. Gate S3 v0.2 -- Certificate B changes the intervention level
 - B-USE (causal use; source-level randomization):
@@ -149,6 +166,8 @@ A law whose apparent success needs a family-specific correction term is NOT univ
   | code | certify.py | separate module |
   They share only the task definition, the System interface and the macroscopic phenomenon.
 - B is calibrated on the planted suite (s8) before use.
+- [v0.2a] OPEN FOR REVIEW (operator): does controlling the current observation make B reconstruct A's
+  causal contrast by another path? If the reviewers find that it does, B is redesigned before F-0002.
 - S3 PASS: A/B agreement is reported per family (kappa). The candidate passes S0-A and S0-B under B
   labels as well as A labels. A relation that exists only under Certificate A is NOT earned.
 
@@ -231,7 +250,12 @@ D2: SEALED / UNREAD / UNSPENT / COMPATIBILITY PENDING.
 - No C4 decision depends on D2.
 - D2's compatibility is determined separately, after the visible gates, by a seat other than Cosmos.
 
-## 12. Reviews before F-0002 (operator s9)
+## 12. Reviews before F-0002 (operator s9; phasing per operator 2026-09-30 review 2)
+Reviewers START NOW from the public design material. FINAL verdicts wait until (1) the foreign family is
+committed and (2) the C3 substrate implementations are public (c3/PUBLICATION_PLAN.md). Final reports
+separate DESIGN REVIEW from IMPLEMENTATION-DIVERSITY REVIEW.
+Return gate: foreign family committed + C3 published and verified + both reviews complete +
+RECONCILIATION_v0.2.md -> operator build decision.
 Two independent reviewers. Neither may be Cosmos, Harmonia (kept clean for D2), Nestor (the D2
 custodian) or the foreign visible-family author:
 - R-STAT, statistical / experimental design;
@@ -240,6 +264,8 @@ Brief: c4/REVIEW_BRIEF_v0.2.md. Seats are assigned by Aporia. C4 proceeds to F-0
 reviews are reconciled, the reconciliation is recorded, and the operator authorizes the build.
 
 ## 13. Open for the operator
+Q-A RULED 2026-09-30: publish the C3 withheld branch AFTER the foreign family commit, with checks V1-V5
+(c3/PUBLICATION_PLAN.md). Original text:
 Q-A C3 FAMILY CODE is on the withheld branch.
 - Using those families in C4 means C4 results expose them. Publication now needs only the operator's
   trigger: the original seal and D2 are on main, D2 is sealed, and Harmonia ruled the incident
