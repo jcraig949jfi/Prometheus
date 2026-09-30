@@ -36,6 +36,18 @@ class WorldEvalV2(WorldEvalV1):
         self._zcache = {}
         self._bin = {}
 
+    def lens_Z(self, g):
+        # bounded lens-output cache (v1's 200 float64 entries per world x
+        # 48 worlds per worker reached ~0.6 GB per worker in Block R)
+        k = Lm.canonical(g)
+        z = self._zcache.get(k)
+        if z is None:
+            z = Lm.execute(g, self.X).astype(np.float32)
+            if len(self._zcache) > 100:
+                self._zcache.clear()
+            self._zcache[k] = z
+        return z
+
     def binarised(self, g):
         k = Lm.canonical(g)
         b = self._bin.get(k)
@@ -43,8 +55,8 @@ class WorldEvalV2(WorldEvalV1):
             Z = self.lens_Z(g)
             lo, hi = TR
             med = np.median(Z[lo:hi], 0)
-            b = (Z > med).astype(np.int64)
-            if len(self._bin) > 2000:
+            b = (Z > med).astype(np.int8)
+            if len(self._bin) > 150:
                 self._bin.clear()
             self._bin[k] = b
         return b
@@ -59,10 +71,13 @@ def _init(specs):
     _W = {}
 
 
+WORLD_CACHE = 12  # memory: each WorldEval holds X, Y, ecology blocks and bounded lens caches
+
+
 def world(wid, seed):
     k = (wid, seed)
     if k not in _W:
-        if len(_W) >= 48:
+        if len(_W) >= WORLD_CACHE:
             _W.pop(next(iter(_W)))
         _W[k] = WorldEvalV2(_SPECS[wid], seed)
     return _W[k]
@@ -82,7 +97,7 @@ def task_lenses(args):
 def _key(cols):
     k = np.zeros(cols.shape[0], dtype=np.int64)
     for j in range(cols.shape[1]):
-        k = k * 2 + cols[:, j]
+        k = k * 2 + cols[:, j].astype(np.int64)
     return k
 
 
