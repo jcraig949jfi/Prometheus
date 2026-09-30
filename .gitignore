@@ -530,3 +530,9 @@ roles/*/.tick_state.json
 # RunPod controller ledgers: durable run state that holds the per-run
 # artifact token, so never committed (Aether Iteration 3).
 /Aether/runpod/.ledger/
+
+# Theseus charter (roles/Theseus/prompts/2026-09-30_charter/, REQUIRED OUTPUTS) mandates
+# theseus/archive/ and theseus/reports/ as committed artifact dirs; the generic
+# archive/ and **/reports/ rules above would silently ignore them (base role s10/s11).
+!theseus/archive/
+!theseus/reports/
