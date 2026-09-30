@@ -9,6 +9,12 @@ concept triples that Nous evaluated (and Hephaestus tried to forge) between Marc
 April 2026, with a pointer to the exact artifact line it came from. Curated and
 generated collisions are mixed in and are always labelled as such.
 
+**Live:** https://jcraig949jfi.github.io/Prometheus/collider/ (built by GitHub Actions
+from `.github/workflows/pages.yml` on every push to main that touches `collider/**`:
+`npm ci`, `npm test`, `npm run build`, copy `dist/` into the Pages artifact as
+`collider/`. The built app is never committed. A failed collider build leaves the
+previous collider deploy out of that run but still publishes the rest of `docs/`.)
+
 ## Run
 
 ```
