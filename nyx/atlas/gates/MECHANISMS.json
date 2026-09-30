@@ -171,6 +171,34 @@
    "observer_dependence_basis": "pure bookkeeping over insertion order; no representation involved",
    "transplant_history": [],
    "current_disposition": "PROPOSED"
+  },
+  {
+   "mechanism_id": "MECH-AVIDA-ANCESTRY-RETENTION",
+   "registered": "2026-09-30",
+   "source_lineage": "github.com/devosoft/avida @ 47f13dad (Avida, 1993-; the systematics code carries David M. Bryson, 2009-2011, in its file headers). Operator directive 2026-09-18 s3: the reference implementation for HISTORY_MODE",
+   "minimal_executable_organ": {
+    "cut_id": "avida",
+    "organ": "a parent edge written once when a class of identical organisms is founded, plus reference-counted retention that keeps the living classes and their ancestors and unlinks an extinct branch the moment its last leaf dies",
+    "boundary": "avida-core/source/systematics/Genotype.cc:128-184, 282-299, 321-331 (payload sha256 6480345d004cb1af11a47f3c2e00c34936323b0986b59941625f81c5ec797f78); systematics/GenotypeArbiter.cc:278-369, 372-410, 498-533 (payload sha256 0ada071fb731613af8251a943aa91c3a7d05f33a3319cb446dfdb54f7502b4bf)",
+    "executable_note": "NOT EXECUTED: the body is a docker world and M3 has none. Adjudicable with Python alone on the 177 .spop files the body ships. The rule is restated as a ~100-line reference model (nyx/atlas/experiments/avida_ancestry/model.py), which is the form a transplant would take."
+   },
+   "proposed_behavior": "the record of descent is a tree of genotype CLASSES, not of organisms. An edge exists only where a newborn's genome matched neither its parent's class nor any living class; breed-true births and births that converge on a living class write nothing. Retention depends only on two reference counts, so a save holds exactly the living classes and the ancestors of the living (Harmonia's D2, endpoints plus ancestors, at class resolution). Forgetting is immediate and recursive, and an event that re-injects organisms without parents erases the whole prior record.",
+   "predicted_intervention": "on the body's own shipped saves: no parent id dangles; no dead row is unnamed as a parent; depth is the first parent's depth plus one; no two living rows share a genome; a save_historic=0 file holds no dead row; a row founded before an earlier save and present at a later one is present at the earlier one; and after the u 99 whole-genome re-injection no row stamped before 100 survives",
+   "falsifier": "in a fresh, asexual, host-only, non-deme save written with historic rows: one dead row that no row names as parent (the record keeps MORE than the ancestors of the living -- retention is not by reference count), or one parent id naming no row (it keeps LESS), or one row stamped before the re-injection surviving it (an inject is not a root). Any of these kills the reading.",
+   "evidence_packets": [
+    {
+     "packet_id": "MECH-AVIDA-ANCESTRY-RETENTION-001",
+     "freeze": "0f52e295",
+     "ruling": "ISSUED 2026-09-30, awaiting Harmonia verdict",
+     "what_it_established": "NOTHING YET -- frozen BLIND (no .spop opened by the author); eight exact rows, each checked defined with its cheat control on a synthetic fixture before the hash"
+    }
+   ],
+   "counterevidence_packets": [],
+   "observer_dependence": "NOT_APPLICABLE",
+   "observer_dependence_basis": "no learned representation in the boundary; the observables are integer counts over rows written by the fossil",
+   "transplant_history": [],
+   "current_disposition": "PROPOSED",
+   "instrument_note": "the founding stamp's clock (-1 through update 0, never 0, T+1 for event-founded genotypes; GenotypeArbiter.cc:49, 87) is tested by row I6 of the same packet. It is a property of the record's time base, carried here and NOT registered as a second mechanism."
   }
  ]
 }
