@@ -62,6 +62,7 @@ HARDENING = [
     "ProtectHome=yes",                 # B4, M4-M6, M9: /home, /root, /run/user inaccessible
     "PrivateDevices=yes",              # B4
     "PrivateTmp=yes",                  # B2, M12
+    "UMask=0022",                      # Aether round-2 source N2: outputs stay readable by the transfer identity
     "ProtectProc=invisible",           # B3/M11, M13: other UIDs' processes hidden in /proc
     "ProcSubset=pid",                  # M13
     "PrivateNetwork=yes",              # round-1 gap A: no network
@@ -125,14 +126,24 @@ def drop_to(uid, gid):
 
 
 def stream_tar_as(uid, gid, root, max_bytes, max_files):
-    """Fork: as uid, tar the regular files under root (no symlinks) to a pipe. Returns the read end and the pid."""
+    """Fork: as uid, tar the regular files under root (no symlinks) to a pipe. Returns the read end, the pid and a
+    stats fd: on exit the child writes {"files": n, "skipped": k} to it (N2: nothing is skipped silently)."""
     r, w = os.pipe()
+    sr, sw = os.pipe()
     pid = os.fork()
     if pid == 0:
+        skipped = [0]
+
+        def stats(n):
+            try:
+                os.write(sw, json.dumps({"files": n, "skipped": skipped[0]}).encode())
+            except OSError:
+                pass
+        n = 0
         try:
-            os.close(r)
+            os.close(r); os.close(sr)
             drop_to(uid, gid)
-            total = n = 0
+            total = 0
             with os.fdopen(w, "wb") as f, tarfile.open(fileobj=f, mode="w|") as t:
                 for dirpath, dirnames, filenames in os.walk(root, followlinks=False):
                     dirnames[:] = [d for d in dirnames if not os.path.islink(os.path.join(dirpath, d))]
@@ -141,22 +152,23 @@ def stream_tar_as(uid, gid, root, max_bytes, max_files):
                         try:
                             fd = os.open(p, os.O_RDONLY | os.O_NOFOLLOW | os.O_NONBLOCK)
                         except OSError:
-                            continue                                          # symlink, unreadable: skipped
+                            skipped[0] += 1                                   # symlink, unreadable: skipped
+                            continue
                         st = os.fstat(fd)
                         if not (st.st_mode & 0o170000 == 0o100000):          # regular files only
-                            os.close(fd)
+                            os.close(fd); skipped[0] += 1
                             continue
                         n += 1; total += st.st_size
                         if n > max_files or total > max_bytes:
-                            os._exit(3)
-                        ti = tarfile.TarInfo(os.path.relpath(p, root)); ti.size = st.st_size; ti.mode = 0o644
+                            stats(n); os._exit(3)
+                        ti = tarfile.TarInfo(os.path.relpath(p, root)); ti.size = st.st_size; ti.mode = 0o644; ti.mtime = int(st.st_mtime)  # DEF-ODY-001
                         with os.fdopen(fd, "rb") as fh:
                             t.addfile(ti, fh)
-            os._exit(0)
+            stats(n); os._exit(0)
         except Exception:
-            os._exit(4)
-    os.close(w)
-    return r, pid
+            stats(n); os._exit(4)
+    os.close(w); os.close(sw)
+    return r, pid, sr
 
 
 def extract_as(uid, gid, fd_r, dest):
@@ -175,10 +187,16 @@ def extract_as(uid, gid, fd_r, dest):
 
 
 def transfer(src_uid, src_gid, src, dst_uid, dst_gid, dst, max_bytes, max_files):
-    r, p1 = stream_tar_as(src_uid, src_gid, src, max_bytes, max_files)
+    r, p1, sr = stream_tar_as(src_uid, src_gid, src, max_bytes, max_files)
     p2 = extract_as(dst_uid, dst_gid, r, dst)
     s1 = os.waitpid(p1, 0)[1]; s2 = os.waitpid(p2, 0)[1]
-    return os.waitstatus_to_exitcode(s1), os.waitstatus_to_exitcode(s2)
+    with os.fdopen(sr, "rb") as f:
+        raw = f.read()
+    try:
+        counts = json.loads(raw)
+    except ValueError:
+        counts = {"files": None, "skipped": None}
+    return os.waitstatus_to_exitcode(s1), os.waitstatus_to_exitcode(s2), counts
 
 
 def make_rundir(run_id, xfer_gid):
@@ -214,8 +232,8 @@ def main():
     os.lchown(os.path.join(rundir, "in"), xpw.pw_uid, xpw.pw_gid)
     summary = {"ok": False, "run_dir": rundir, "limits": lim, "hardening": HARDENING}
     try:
-        c1, c2 = transfer(caller, cpw.pw_gid, src, xpw.pw_uid, xpw.pw_gid, os.path.join(rundir, "in"),
-                          MAX_IN_BYTES, MAX_IN_FILES)
+        c1, c2, summary["input_counts"] = transfer(caller, cpw.pw_gid, src, xpw.pw_uid, xpw.pw_gid,
+                                                   os.path.join(rundir, "in"), MAX_IN_BYTES, MAX_IN_FILES)
         if c1 or c2:
             die("input transfer failed (as caller: %s, as promexec: %s)" % (c1, c2))
         if not os.path.isfile(os.path.join(rundir, "in", ENTRY)):
@@ -243,7 +261,7 @@ def main():
                     summary[k] = f.read().decode("utf-8", "replace")
             except OSError:
                 summary[k] = ""
-        c1, c2 = transfer(xpw.pw_uid, xpw.pw_gid, os.path.join(rundir, "out"), caller, cpw.pw_gid, dst,
+        c1, c2, summary["output_counts"] = transfer(xpw.pw_uid, xpw.pw_gid, os.path.join(rundir, "out"), caller, cpw.pw_gid, dst,
                           MAX_OUT_BYTES, MAX_OUT_FILES)
         summary["output_transfer"] = {"as_promexec": c1, "as_caller": c2}
         summary["ok"] = summary["result"] == "success" and c1 == 0 and c2 == 0

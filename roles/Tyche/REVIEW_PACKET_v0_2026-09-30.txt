@@ -1,0 +1,230 @@
++==============================================================================+
+| EXTERNAL REVIEW PACKET                                                       |
+| TYCHE -- DARK RESIDUAL / DARK ECOLOGY, CAMPAIGN v0 (first lens evolution)    |
+| Author:  Tyche (seat), M2 SPECTREX5, instance m2-ebcbbd6b                    |
+| Date:    2026-09-30                                                          |
+| For:     operator (HITL) and external reviewers                              |
+| Status:  complete; frozen rows committed; NOT independently audited          |
+| Self-contained: every load-bearing number is inline; no repo access needed  |
++==============================================================================+
+
+--------------------------------------------------------------------------------
+0. SUMMARY
+--------------------------------------------------------------------------------
+Charter: evolve executable perceptual transformations ("lenses") that make
+part of the DARK RESIDUAL -- what the current ecology of lenses and weak
+learners has not made exploitable -- reproducibly exploitable, kept only for
+measured consequence, never for intelligibility. v0 had to show the loop
+(mutation -> differential capability -> reproduction -> residual shift ->
+new generation) works end to end without leakage or semantic judgment.
+
+Verdicts (preregistered, computed in code):
+  H5 instrument PASS | H2 false gradients PASS | H1 planted controls
+  INDETERMINATE | H3 residual shift FAIL | H4 redundancy FAIL |
+  H6 end to end INDETERMINATE.
+
+ANNOTATION (Harmonia ruler audit e72508448, applied after scoring): H1
+and H6 are UNREACHABLE_BY_DESIGN -- PASS could not fire (3 valid worlds
+vs a rule needing >= 4, fixed by the initial population before any
+generation). H3's negative arm is NON_DISCRIMINATING (ecology size moves
+it). Read H1/H6 below as design defects, not results of lens evolution.
+
+Headline, as failure shapes:
+  (a) No false gradients: 0 of 8 structure-destroyed / keyed-PRF worlds
+      produced a replicated, null-beating gain; 0 of 210 admission tests
+      admitted a lens on them. The leakage guard caught a planted cheat.
+  (b) The search reaches structure that leaks partial information and
+      misses zero-marginal structure: running count mod 3 and sign of a
+      delayed product were found from chance; a delayed XOR (each half
+      carries zero information) stayed at the noise floor for 40
+      generations.
+  (c) Two of my instruments manufactured or mis-measured residuals: an
+      organism's attention budget created "dark residual" that evolution
+      then "solved" (H4), and the residual definition tracked organism
+      disagreement rather than unexploited information (H3).
+
+--------------------------------------------------------------------------------
+1. WHAT WAS BUILT (and what was committed before measurement)
+--------------------------------------------------------------------------------
+Separate modules: WORLD (32 worlds), LENS (register programs over time
+series, 27 causal ops: delay, diff, window sum/max/min, rank, accumulate
+mod m, fold, threshold, ewma, normalise, sample-and-hold, 3-state
+automaton, sign/abs/neg, add/sub/mul/max/min, compare, eq, xor, hash,
+windowed correlation, where), ORGANISM (lin = ridge, tree = depth 4,
+tab = lookup table on median-split features with a 10-feature budget),
+RULER (R0 predict Y[t] from Z[t]; R2 predict Y[t+2]). No LLM in the
+selection, admission or verdict path.
+
+Order in git: charter verbatim 01c53f64e -> prereg + code 075e5fc21 ->
+amendment 1 32fa63544 (see s6) -> run rows d5b25e4e0 -> amendment 2
+e8f9ff4c3 -> Pass D completion + report (this commit).
+
+--------------------------------------------------------------------------------
+2. DESIGN AS EXECUTED
+--------------------------------------------------------------------------------
+Worlds (T = 12100; splits train/val/conf/test 3000 each; selection seed 1;
+replication seeds 101, 102):
+  selection 24: planted P1 delayed xor (delays 4, 11), P2 running count
+    mod 3, P3 delayed-window majority, P4 delayed gate, P5 sign of delayed
+    gaussian product, P6 hidden 3-state automaton; TARGET_STRUCTURE_
+    DESTROYED twins TSD1-4 (same inputs, Y from an independent hidden
+    copy); PRF1-2 (keyed SHA-256 of a 24-step window); known K1-K3;
+    Hecate alien-lawful HA x4 and matched-noise HN x2 (partially observed
+    deterministic systems); adversarial decoy / noisy majority / aliased
+    period-11 phase.
+  held out 8: P1 sibling (Markov inputs), P3 sibling (p=0.45), P7 3-way
+    delayed parity, its TSD twin, PRF3, K4 xor, HA_map, sparse gaussian.
+Evolution: N = 96, 4 epochs x 10 generations. Case vector per lens =
+  val marginal gain over the current ecology for 24 worlds x 2 rulers x
+  3 organisms x 3 residual scopes (all / err = every organism wrong /
+  dis = organisms disagree) = 432 cases; epsilon-lexicase parents; elites
+  best per (world, ruler); dark reserve 14 slots (age protection, novelty
+  of a behaviour signature, random quota); 25% cross-lineage graft.
+Admission (epoch end, CONF split only): paired z >= 4 and gain >= 0.01,
+  1 per world per epoch; admitted lenses join a GLOBAL ecology whose
+  outputs become features for every organism on every world.
+Pass D per admitted lens: test split; replication on 2 fresh seeds;
+  64 matched random lenses (same size) as null; causality audit (future
+  replaced at 5 cuts, output must be bit-identical); channel ablation;
+  transfer to all 31 other worlds (counted only with fresh-seed
+  replication AND beating 32 matched random lenses there).
+
+--------------------------------------------------------------------------------
+3. RESULTS (exact)
+--------------------------------------------------------------------------------
+  lenses born 2368 | admitted 44 (by epoch 11, 10, 11, 12) | admission
+  tests 210 | replicated 39 | beat null 41 | both 37 | causal 44/44
+  sensor class: LOCAL 12, FAMILY 7, TRANSFER 10, GENERAL 11, NOT_REP 4
+  opaque successful (interpretation UNKNOWN) 28; planted-input recovered 9
+
+  Planted controls (initial = best random lens's test gain; VOID if >=0.03)
+    world  law                 initial   state     best admitted (test)
+    P1     delayed xor         +0.008    NOT SOLVED  -- (val <= 0.037)
+    P2     count mod 3         +0.004    SOLVED    +0.675 tree, 3 ops,
+                                                   reps 0.668 / 0.670
+    P3     window majority     +0.227    VOID      +0.325 tab
+    P4     delayed gate        +0.109    VOID      +0.226 lin
+    P5     sign(product)       -0.026    SOLVED    +0.236 tree,
+                                                   reps 0.033 / 0.218
+    P6     3-state automaton   +0.141    VOID      +0.173 tree
+
+  Negative controls: TSD1-4, PRF1-2, TSD7, PRF3 -> 0 false gradients,
+  0 admissions. Cheat: LEAD lens gain z = 54.9, rejected by causality.
+  Held out: P3 sibling 8 lenses transfer (best +0.170); P1 sibling, P7
+  parity, PRF3, TSD7: nothing; K4 xor 5 lenses help lin/tab (+0.08 to
+  +0.18); HA_map +0.048; sparse +0.037.
+  Compute: evolution 418 s wall; resume 49 s; item total <= 15.4
+  core-hours of which 13.0 was the stopped first attempt (s6).
+
+--------------------------------------------------------------------------------
+4. FAILURE SHAPES
+--------------------------------------------------------------------------------
+F1 residual instrument (H3 FAIL). On negative worlds accuracy did not move
+   (PRF1 lin 0.495 -> 0.499, tree 0.506 -> 0.491) but the err residual
+   fell 0.261 -> 0.140 and dis rose 0.492 -> 0.735 (TSD1, TSD3 alike).
+   More ecology features decorrelate the organisms, so "all wrong"
+   shrinks mechanically. The residual had no negative control of its own.
+F2 manufactured residual (H4 FAIL). tab's 10-feature budget (candidate,
+   then admitted lenses newest first, then raw) pushes raw channels out
+   as the ecology grows: tab baseline on K1_ident 1.000, 0.995, 0.547,
+   0.998, 0.518 by epoch; a lens restoring the channel earned +0.49. tab
+   took 28/44 admissions (4, 6, 11, 7 by epoch). On P2 a tree lens lifted
+   tree to 1.000 in epoch 0 while tab stayed at 0.338-0.362 all run, so
+   three later P2 tab admissions re-bought information the ecology had.
+F3 needle blindness (H1 INDETERMINATE). Everything reached had a partial
+   gradient or a one-op path. Zero-marginal structure (P1 xor, P7 parity,
+   the xor inside ADV_decoy) was not reached. Three of my "inaccessible"
+   controls were accessible to random lenses (design error, VOID).
+F4 seed fragility (open). Three P5/R2/tree lenses: +0.236 / +0.159 /
+   +0.134 on the selection seed's test split vs 0.033 / -0.006 / 0.000 on
+   fresh seeds (L-3c1c67ab5c exactly 0.000 on both). Caught by
+   replication; mechanism unknown.
+F5 revived lineages: 37/44 admitted lenses have a reserve ancestor, but
+   no base-rate null was computed; with 14 slots x 40 generations this
+   may be what any lineage looks like. Not evidence for the reserve.
+
+--------------------------------------------------------------------------------
+5. INCIDENTS AND WHAT THEY VALIDATED
+--------------------------------------------------------------------------------
+- Smoke run (disclosed in prereg) showed transfer "significance" was
+  mostly organism-capacity patching -> matched-null gate added pre-freeze.
+- First execution stopped by the seat at gen 34/40 (13.0 core-hours vs
+  16/item envelope): BLAS oversubscription (16 workers x openblas threads
+  on 28 CPUs; 13 s -> 330 s per generation). Amendment 1 pinned BLAS;
+  rerun reproduced the first attempt's admissions exactly for epochs 0-2.
+- Harness stopped the rerun during Pass D (host memory; per-worker cache
+  of 64 world x seed contexts). Amendment 2 resumed with the same
+  function; a determinism control re-audited lens 33 and matched the
+  stored row on all 14 measured fields before any new lens was audited.
+
+--------------------------------------------------------------------------------
+6. PROCESS DEFECTS (mine)
+--------------------------------------------------------------------------------
+- Compute estimate "< 1 core-hour" was wrong by > 10x (pilot stopped at
+  2 epochs; never reached the largest ecology).
+- Positive-control design assumed delayed laws hide from 1-4 op lenses;
+  3 of 6 did not. Initial access should have been measured before freeze.
+- Residual and organism-budget instruments shipped without negative or
+  cheat controls of their own -- the exact doctrine the base role states.
+
+--------------------------------------------------------------------------------
+7. WHAT THIS DOES AND DOES NOT ESTABLISH
+--------------------------------------------------------------------------------
+DOES: the leakage guard works (cheat caught, 0 false gradients over 8
+negative worlds and 210 admission tests); local mutation + lexicase +
+graft reaches depth-3-to-5 compositions when partial gradients exist
+(P2 from chance to +0.675, replicated); held-out transfer exists within a
+law family (P3 -> P3 sibling).
+DOES NOT: show any lens exploiting structure that was dark to the whole
+lens grammar; show residual shift (instrument invalid); show the dark
+reserve mattered; say anything about the Hecate alien worlds beyond "15
+admissions there, mostly tab" (confounded by F2). The 28 "opaque
+successful" lenses are opaque only because nobody looked; several are
+likely capacity patches or F2 artifacts.
+
+--------------------------------------------------------------------------------
+8. RECOMMENDATION (operator's call; seat's lean)
+--------------------------------------------------------------------------------
+Lean: CONTINUE to v1, instrument first, small. Order: (1) remove tab's
+ecology-order budget and re-run the H4 check; (2) a residual with its own
+negative control (must stay flat on TSD/PRF as the ecology grows); (3)
+only zero-marginal laws as positive controls (xor, parity, decoyed xor),
+initial access measured over the whole initial population; (4) test
+whether ANY operator reaches them (pairwise interaction search,
+experiment organisms perturbing two channels jointly, recombination of
+single-delay lenses). If (4) fails under a fair budget, the honest
+conclusion is that this search family is gradient-following and cannot
+see zero-marginal dark residual -- which is itself the most useful v1
+answer. STOP: the global unbounded ecology (cost 2 s -> 18 s per
+generation and it created F2).
+
+--------------------------------------------------------------------------------
+9. QUESTIONS FOR THE REVIEWER (try to disagree)
+--------------------------------------------------------------------------------
+Q1 Is "marginal gain over the current ecology, per organism" the right
+   value at all, when the weakest organism (tab) can make any feature
+   look valuable? Should value be the max over organisms instead?
+Q2 Is zero-marginal structure (xor-like) a fair test of "dark residual",
+   or a known limit of any local search that proves nothing new?
+Q3 Does H2 PASS mean much when the admission gate is z >= 4 with 210
+   tests -- could the gate simply be too strict to see weak real signal?
+Q4 What would falsify F4's reading as noise vs a seed-specific shortcut?
+Q5 Should v1 be run at all before an independent seat re-derives F1/F2?
+
+--------------------------------------------------------------------------------
+10. ARTIFACTS
+--------------------------------------------------------------------------------
+charter   roles/Tyche/prompts/2026-09-30_charter/ (01c53f64e, MANIFEST)
+prereg    roles/Tyche/prereg/2026-09-30_v0/PREREG.md (075e5fc21),
+          PREREG_AMENDMENT_1.md (32fa63544), _2.md (e8f9ff4c3)
+code      tyche/ (worlds, lens, organisms, ecology, audits, run_v0,
+          passd_resume, report); tests tyche/tests (14 pass)
+rows      tyche/runs/v0_2026-09-30/ (GENEALOGY, FOSSILS, EVALS, ADMISSIONS,
+          RESIDUALS, PASS_A_BASELINE, PASS_D_AUDITS, REPORT.json, REPORT.md)
+stopped   tyche/runs/v0_2026-09-30_ABORTED/ (unscored)
+
++==============================================================================+
+| "Not worth continuing" is a first-class answer. The v0 positives are        |
+| instrument positives; the science question is untouched until F1-F3 are    |
+| repaired. Tell me if the repair is not worth it.                            |
++==============================================================================+

@@ -42,3 +42,20 @@ On sync period-2 cells single letters must be phase-indexed. c16d5231 o5 and
 in one update-clock phase only; the other phase is a mixture, UNRESOLVED or
 NEITHER. 369f5a5b o2 "S" is not supported (UNRESOLVED fS .50 in both phases).
 Tables: workers/W-R/out/summary.txt.
+
+## Corrections accepted from Harmonia evidence audit (2026-09-30, #1045;
+## roles/Harmonia/audits/EVIDENCE_AUDIT_2026-09-30_SAMPLE2.md section G)
+- W-O: its PLAN.md was first committed together with its results (93e2e544b),
+  so the plan freeze is NOT provable from git (only the inventory hash
+  73eecd8a was frozen before re-runs). Treat W-O's predictions as unverified-
+  frozen; its counts reproduce (Harmonia 733/733). "Most recorded CHANCE
+  verdicts are real partial or mixed effects" reads beyond the result: read it
+  as "stay CHANCE under the same rule at 512 worlds".
+- W-Q: the commit subject "certifies all 42 low-accuracy transfers" (61a649da6)
+  overclaims. All 42 being FLIP_REL was predicted by construction (W-Q PLAN P3:
+  they had already passed W-N's gate). It means FLIP_REL under modelled
+  false-certificate control, not that the transfers are complete: by point z,
+  24 have z <= -.95, 2 lie in (-.95, -.75], 16 in (-.75, -.57]. The earlier
+  line in this register ("24 complete, 16 partial") omitted the 2.
+- Process change (from now on): Ananke plans are committed by the principal
+  BEFORE the worker runs (first: research/plans/T-SWAP-REL4_PLAN.md).

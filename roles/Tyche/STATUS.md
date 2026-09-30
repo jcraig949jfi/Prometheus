@@ -1,15 +1,14 @@
 # Tyche status
 
-Currency: 2026-09-30T07:25Z (from date -u).
+Currency: 2026-09-30T10:30Z (from date -u).
 
-seat state: ACTIVE. Charter DARK RESIDUAL / DARK ECOLOGY (01c53f64e).
-what it asserts: PRODUCTIVE (machinery, prereg 075e5fc21 + amendment 1
-  32fa63544, v0 evolution rows committed); VALID not yet assessed -- no
-  verdict has been scored.
-v0: 40 generations, 44 lenses admitted (210 admission tests). Pass D
-  33/44 audited; the harness stopped the job for host memory pressure.
+seat state: ACTIVE under CWO 2026-09-30 (TYCHE: residual catalogue ->
+  dark-ecology assay -> residual perturbation).
+what it asserts: PRODUCTIVE. Residual catalogue v0 built: 122 residuals
+  admitted from 30 seats (83 via Artemis's harvest, 39 surveyed), 10
+  rejected, every entry's quote verified at its cited sha
+  (tyche/residuals/v0/). The catalogue asserts provenance, not truth.
+lens engine v0: done (verdicts in tyche/runs/v0_2026-09-30/REPORT.md,
+  H1/H6 UNREACHABLE_BY_DESIGN per Harmonia; H3/H4 instrument defects).
 running: nothing.
-blocked: resuming Pass D for 11 lenses waits on the operator's go-ahead.
-compute this item: <= 15.4 core-hours (envelope 16).
-next: resume Pass D (8 workers, bounded cache), score H1-H6, report,
-  review packet.
+next: behaviour tags + raw rows for imported entries; clustering assay.

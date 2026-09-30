@@ -14,9 +14,10 @@ ops/.../reftracer/ref_tracer_bee.py are NOT read before the first agreement run.
 | 3 fixture pack (bee_fixtures.py @028f2eff8, stub harness; Archaeon tracer never loaded) | DONE: 28/28 PASS on the frozen tracer | receipts/FIXTURES_FREEZE.json |
 | 3b review3/review4 cases | covered by fixtures (R3 CX-A..D,G -> K8/K11-K14; CX-F -> K15; CX-E pair-only, K10/K10c for SHARED; R4 D1-D5 -> K1/K4, K22, K24, K23, K3). The review scripts embed reviewer tracers and were not executed (independence) | |
 | 4 world replay with persisted origin vectors, tracer on every interaction | DONE (dry): rows bit-for-bit, 123,210 interactions value-equal, 0 mismatches | receipts/DRYRUN_TRACED_WORLD_r022153.json |
-| 5 Q4 (isolated + host-assisted C4.5), R1 arms / Q8c / whether, C7.2 flip, R5 completeness, verdict in code, v0 round-trip | DONE as a DRY pipeline validation; v0 round-trip PASS 32,827/32,827 | receipts/DRY_RESULTS_r022153_pipeline_validation.json |
+| 5 Q4 (isolated + host-assisted C4.5), R1 arms / Q8c / whether, C7.2 flip, R5 completeness, verdict in code, v0 round-trip | DONE as a DRY pipeline validation; v0 round-trip PASS 32,827/32,827 for the Qs it recomputes (majority donor, new share, source diversity, Q4-isolated;
+  not homology, performer, Q6, Q8c, Q-input, Q4-host; ERRATA_2026-09-30 X3) | receipts/DRY_RESULTS_r022153_pipeline_validation.json |
 | 6 production | DONE under GO aa958093 / GO v2 (#974): start receipt PASS, sealed outputs, production s4.3 (post-C11 re-run PASS + fresh set 2 PASS, exact) | receipts/PRODUCTION_START_RECEIPT.json, production/PRODUCTION_SEAL.json |
-| 7 result | VALIDATED under readings A and B (not reading-dependent) | E003_BEE_RESULT.md |
+| 7 result | ALTERED under the pre-exposure rules (P2). VALIDATED (A and B) only as a conditional post-exposure reading (C4.2, C4.4, NO_MATERIAL). Verdict of record OPEN, for the operator under CWO s4 | E003_BEE_RESULT.md; ERRATA_2026-09-30.md |
 
 DRY RUN DISCLOSURE. The full pipeline was run once on r022153 before the freeze, to validate it: every number in
 receipts/DRY_RESULTS_* is DRY and is not a production result.

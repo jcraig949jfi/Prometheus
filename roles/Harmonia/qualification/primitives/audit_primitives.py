@@ -24,11 +24,12 @@ from __future__ import annotations
 
 import itertools
 import json
+import subprocess
 import sys
 from math import comb
 from typing import Callable, Dict, Iterable, List, Optional
 
-VERSION = "AP-1.0.0"
+VERSION = "AP-1.1.0"   # 1.1.0: + freeze_precedes (STANDING_RULES F6)
 
 
 # ------------------------------------------------------------------------------------------------------------ helpers
@@ -46,7 +47,10 @@ def reachability(verdict_fn: Callable[[dict], str], design_space: Iterable[dict]
     """Evaluate verdict_fn over every design-admissible input and report which gated labels can occur at all.
 
     design_space must encode what is FIXED by the design (fixed seeds, VOID rules already decided, n) and enumerate only
-    what the run can still change. A gated label that no input reaches is UNREACHABLE_BY_DESIGN."""
+    what the run can still change. A gated label that no input reaches is UNREACHABLE_BY_DESIGN.
+    Any baseline that is a function of the EVOLVING state (e.g. a feature budget filled by admitted lenses) is part of
+    what the run can change: enumerate it too, never fix it at its t = 0 value (F1 amendment; Tyche v0 H4, RULER_QUALITY
+    C-1, where Harmonia's own t = 0 reading wrongly called H4 FAIL unreachable)."""
     seen: Dict[str, int] = {}
     for x in design_space:
         v = verdict_fn(x)
@@ -88,6 +92,29 @@ def ceiling(control: float, maximum: float, margin: float) -> dict:
     return {"control": control, "maximum": maximum, "margin": margin, "headroom": round(headroom, 6),
             "fail_below": round(control - margin, 6), "flag": saturated,
             "reading": "SANITY_CHECK_ONLY" if saturated else "DISCRIMINATING"}
+
+
+# ------------------------------------------------------------------------------------------------------------ F6
+def freeze_precedes(repo: str, plan_path: str, result_paths: List[str], ref: str = "HEAD") -> dict:
+    """STANDING_RULES F6: a plan counts as frozen only if the commit that FIRST added it is a strict ancestor of the
+    commit that first added every result path. A plan first committed together with its results is not a freeze.
+    Read-only git (log --diff-filter=A, merge-base --is-ancestor)."""
+    def first_add(path):
+        p = subprocess.run(["git", "-C", repo, "log", "--diff-filter=A", "--format=%H", ref, "--", path],
+                           capture_output=True, text=True)
+        shas = p.stdout.split()
+        return shas[-1] if shas else None
+    plan = first_add(plan_path)
+    rows = []
+    for rp in result_paths:
+        r = first_add(rp)
+        strict = (plan is not None and r is not None and plan != r and
+                  subprocess.run(["git", "-C", repo, "merge-base", "--is-ancestor", plan, r]).returncode == 0)
+        rows.append({"result": rp, "result_added": r, "plan_strictly_before": strict})
+    bad = [x["result"] for x in rows if not x["plan_strictly_before"]]
+    return {"plan": plan_path, "plan_added": plan, "results": rows, "flag": plan is None or bool(bad),
+            "reason": ("plan never committed" if plan is None else
+                       ("plan not strictly before: %s" % ", ".join(bad)) if bad else None)}
 
 
 # ------------------------------------------------------------------------------------------------------------ fixtures

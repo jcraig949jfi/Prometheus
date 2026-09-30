@@ -32,6 +32,7 @@ from pathlib import Path
 
 BROKER = "/usr/local/sbin/promexec-run"
 COMMITTED_BROKER = Path(__file__).resolve().parents[1] / "promexec" / "broker.py"
+REVIEWED_PIN = Path(__file__).resolve().parents[1] / "promexec" / "REVIEWED_BROKER_SHA256"
 ENTRY, ARGS_FILE = "main.py", ".promexec_args.json"
 CAPS = {"wall_s": 1800, "mem_mb": 4096, "cpu_pct": 200, "tasks": 64}
 
@@ -49,14 +50,27 @@ def inside(p: Path, root: Path) -> bool:
         return False
 
 
-def broker_matches(installed: Path = Path(BROKER), committed: Path = COMMITTED_BROKER) -> tuple:
-    """M20: the installed root-owned broker must be byte-identical to the committed source of this checkout."""
+def reviewed_pin(pin: Path = REVIEWED_PIN) -> str:
+    """The first token of REVIEWED_BROKER_SHA256: the broker hash the independent reviewer signed off."""
+    try:
+        tok = pin.read_text().split()[0].lower()
+    except (OSError, IndexError):
+        return ""
+    return tok if len(tok) == 64 and all(c in "0123456789abcdef" for c in tok) else ""
+
+
+def broker_matches(installed: Path = Path(BROKER), committed: Path = COMMITTED_BROKER, pin: Path = REVIEWED_PIN) -> tuple:
+    """M20 (+ Aether round-2 N1): installed == reviewed pin == committed source. A later broker change therefore
+    needs an explicit, reviewable change to the pin as well; drift between the three is refused."""
+    want = reviewed_pin(pin)
+    if not want:
+        return False, "no valid reviewed-broker pin"
     try:
         a = hashlib.sha256(installed.read_bytes()).hexdigest()
         b = hashlib.sha256(committed.read_bytes()).hexdigest()
     except OSError as e:
         return False, "cannot hash broker: %s" % e.__class__.__name__
-    return a == b, "installed %s, committed %s" % (a[:16], b[:16])
+    return a == b == want, "installed %s, committed %s, reviewed pin %s" % (a[:16], b[:16], want[:16])
 
 
 def copy_tree_regular(src: Path, dst: Path) -> int:

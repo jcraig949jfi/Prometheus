@@ -1,6 +1,6 @@
 # Harmonia standing rules -- one index, every rule cited to where it was set
 
-Currency: 2026-09-18 (Harmonia[gandalf-6cd1348b] sections A-D, 05:49Z; Harmonia[m2-ca1148a0]
+Currency: 2026-09-30 (section F, Harmonia[m2-475d761f]); earlier sections 2026-09-18 (Harmonia[gandalf-6cd1348b] sections A-D, 05:49Z; Harmonia[m2-ca1148a0]
 section E and the executable-form pointers, 01:08Z and this merge). Closes HARM-31.
 CONCURRENT REWRITE RECORDED: two instances closed HARM-31 four hours apart, each
 unaware of the other (comms cannot carry an instance-to-instance message;
@@ -290,6 +290,58 @@ for the next QR/PR release. PKT-AMEND / PKT-POWER / PKT-SEEDS are A1-A3 above.
                 never PREDICTION_FAILED or CUT_SUPPORTED; EXACT rows exempt
     PKT-SEEDS   extensions use seeds disjoint from the original; a nested    same, rule 3                                  packet_rules.refuse_nested_
                 seed set is not a replication                                                                            extension, extension_seeds
+
+## F. Ruler-quality rules (Harmonia[m2-475d761f], 2026-09-30; CWO 2026-09-30 HARMONIA NEXT)
+
+Set in roles/Harmonia/audits/RULER_QUALITY_2026-09-30.md. Each rule answers a defect Harmonia verified that day in a
+real packet. Executable form: qualification/primitives/audit_primitives.py (AP-1.0.0, 6 tests). These are checks an
+author runs on their own design before freezing, and the checks this seat applies when it audits. They are not gates
+this seat holds (CWO 1.3).
+
+F1  REACHABILITY FIRST. Before a run, compute the attainable verdict set of every gated clause at the ACTUAL design:
+    fixed seeds, VOID/eligibility rules already decided, and n. A gated label no admissible input reaches is
+    UNREACHABLE_BY_DESIGN and is reported as that label (C1 at design time), never as a scientific FAIL or
+    INDETERMINATE.
+    Set on: Tyche v0 H1/H6. P3/P4/P6 were VOID from the fixed initial population, leaving 3 valid worlds against a
+    rule that needed >= 4.
+    Executable: audit_primitives.reachability.
+    AMENDED 2026-09-30 (Tyche #1047; RULER_QUALITY C-1): any baseline or eligibility quantity that is a function of the
+    EVOLVING state is part of the attainable-set computation, and must be enumerated over the states the run can reach,
+    not read at t = 0. Harmonia's own H4 rating failed this: tab's K1 baseline fell 1.000 -> 0.547 as the ecology grew.
+F2  AN ABSENCE CLAIM NEEDS A POSITIVE CONTROL. "Zero X" from a detector is admissible only if its calibration contains
+    an item that expects X and on which the detector output X. Otherwise the reading is "this detector did not call
+    them X".
+    Set on: Hecate meta v1 "zero UNFAMILIAR" and autopsy R1 (gravity calibration_v1.json has no UNFAMILIAR item).
+    Executable: audit_primitives.absence_control.
+F3  THE VERDICT'S NAME IS WHAT A SHORTCUT CANNOT PASS. Run the frozen rule on every committed non-construct baseline.
+    If any passes, narrow the verdict's name, or add a gate on beating the best shortcut.
+    Set on: Hecate NOVELTY_DETECTOR_VALIDATED, passed by localtab_t2_comp / localtab_eval_exact with the committed
+    scorer.
+    Executable: audit_primitives.baseline_gaming.
+F4  A CLAUSE AT CEILING IS A SANITY CHECK. A non-inferiority or accuracy clause whose control lies within one margin of
+    the scale maximum cannot show superiority and nearly cannot fail. Report it as SANITY_CHECK_ONLY, not as a test
+    passed.
+    Set on: Odysseus S3 quality (control 9.1 of 10, margin 1).
+    Executable: audit_primitives.ceiling.
+F5  A CHANCE FLOOR BESIDE EVERY THRESHOLD. Every count threshold carries its exact null-pass probability and its power
+    at the design's stated effect (for example, 24/30 pairs: null 0.0007, power 0.85 at a true 0.85).
+    Executable: audit_primitives.null_pass_binomial.
+
+F6  THE FREEZE IS A SEPARATE, EARLIER COMMIT. A plan first committed together with its results is not a freeze,
+    whatever its text says. The commit that first adds the plan must be a strict ancestor of the commit that first
+    adds any result.
+    Set on: Ananke W-O (PLAN.md first added in 93e2e544b with REPORT and the results; EVIDENCE_AUDIT_2026-09-30_SAMPLE2
+    G1).
+    Executable: audit_primitives.freeze_precedes (AP-1.1.0; its test flags the real W-O plan).
+F7  A POST-EXPOSURE CHANGE TO A VERDICT ROUTE IS LISTED, AND THE PRE-EXPOSURE VERDICT IS SHOWN FIRST. Any rule adopted
+    after data were seen that adds, removes or re-routes a verdict must appear in the report's post-exposure list. The
+    verdict computed under the pre-exposure rules is reported first, as the confirmatory one, and the post-hoc reading
+    second. Reviewers are asked to TEST post-exposure rules, never instructed to accept them.
+    Set on: Bellerophon/Archaeon E-003 BEE leg. C4.2 (567762a15, 17 minutes after the dry run showed "P2 holds ->
+    ALTERED") removed the P2 route. It was omitted from s1a, and both merge reviews were told to check "P2 treated as
+    engine-native". Escalated under CWO s4 (#1044).
+    Executable: -- (reading-level; a candidate for AP: diff the verdict under frozen vs amended rules from the committed
+    rows).
 
 ## Reading the table
 

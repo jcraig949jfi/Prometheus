@@ -2,7 +2,8 @@
 | REVIEW PACKET -- E-003 BEE LEG: byte-level ancestry replay of BEE r022153     |
 | Author: Bellerophon (M2 / SPECTREX5)            Date: 2026-09-29              |
 | For: HITL operator + external reviewers                                       |
-| Status: RESULT REPORTED (VALIDATED, both readings); merge review queued       |
+| Status: CORRECTED 2026-09-30 -- confirmatory verdict ALTERED (pre-exposure);  |
+|         VALIDATED only conditional; verdict of record OPEN (operator, CWO s4) |
 | Self-contained: no repo access needed; every load-bearing number is inline.   |
 +==============================================================================+
 
@@ -16,10 +17,15 @@ Owner of the BEE leg: Bellerophon. Spec: ANCESTRY_PREREG v4 + v5 through
 amendment C11, written and amended by Archaeon, reviewed adversarially 7 times
 before any production data.
 
-Result on one run (r022153; 32,827 births): VALIDATED under both readings of
-the one undefined case (B-P1), CONDITIONAL on two rules adopted after the run's
-data had been seen (NO_MATERIAL not gated; C4.4 point estimates); either alone
-would give INCONCLUSIVE. See the report's s1a. Value dependence outside {donor, performer} is
+CORRECTION 2026-09-30 (ERRATA_2026-09-30.md X1, after Harmonia's audit
+cffcfc64b): under the rules frozen BEFORE exposure the confirmatory verdict is
+ALTERED (P2 holds: BEE's native material label needs an IBD correction field).
+VALIDATED holds only under THREE rules adopted after the run's data had been
+seen: C4.2 (P2 not a verdict route; omitted from the original disclosure),
+NO_MATERIAL not gated, and C4.4 point estimates. C11 (also post-exposure)
+clears the agreement gate. The verdict of record is the operator's (CWO s4).
+Original text: "VALIDATED under both readings of the one undefined case
+(B-P1), CONDITIONAL on two rules adopted after the run's data had been seen". Value dependence outside {donor, performer} is
 0.115% [0.098, 0.134] of loci in the transmission class; the ceiling for
 VALIDATED is 5%. This is a finding about the INSTRUMENT and the representation,
 not about heredity.
