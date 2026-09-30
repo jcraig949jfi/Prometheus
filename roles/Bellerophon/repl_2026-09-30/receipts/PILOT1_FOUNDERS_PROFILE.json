@@ -1,0 +1,5667 @@
+{
+ "about": "E-BEL-REPL-01 pilot (feasibility only)",
+ "R1": [
+  232,
+  174,
+  55,
+  16,
+  200,
+  204,
+  false,
+  true
+ ],
+ "R2": [
+  193,
+  52,
+  197,
+  160,
+  196,
+  121,
+  false,
+  false
+ ],
+ "origins": 229,
+ "distinct_tapes_x_physics": 170,
+ "class_counts_all_origins": {
+  "NOT_COMPETENT": 63,
+  "ZERO_DEPENDENT": 159,
+  "STATE_FREE": 2,
+  "PARTIAL": 5
+ },
+ "class_counts_one_per_seed": {
+  "NOT_COMPETENT": 52,
+  "ZERO_DEPENDENT": 86,
+  "STATE_FREE": 2,
+  "PARTIAL": 2
+ },
+ "by_cell": {
+  "G1:CONSTRUCTIVE/Z80_64": {
+   "ZERO_DEPENDENT": 6
+  },
+  "G1:ENDOGENOUS_COPY/BYTECODE32": {
+   "ZERO_DEPENDENT": 1,
+   "STATE_FREE": 1
+  },
+  "G1:ENDOGENOUS_COPY/VM_COPY": {
+   "NOT_COMPETENT": 3,
+   "ZERO_DEPENDENT": 5
+  },
+  "G1:ENDOGENOUS_COPY/Z80_64": {
+   "NOT_COMPETENT": 1,
+   "ZERO_DEPENDENT": 4
+  },
+  "G1:ENDOGENOUS_PARTIAL/Z80_64": {
+   "NOT_COMPETENT": 2,
+   "ZERO_DEPENDENT": 17
+  },
+  "G1:OVERWRITE/Z80_64": {
+   "ZERO_DEPENDENT": 2,
+   "NOT_COMPETENT": 1
+  },
+  "G1T:COND_MULTI": {
+   "ZERO_DEPENDENT": 5
+  },
+  "G1T:COND_ONE": {
+   "ZERO_DEPENDENT": 5
+  },
+  "G1T:CONST": {
+   "ZERO_DEPENDENT": 5
+  },
+  "G1T:ECHO": {
+   "ZERO_DEPENDENT": 5
+  },
+  "G1T:INC": {
+   "ZERO_DEPENDENT": 5
+  },
+  "G1T:SUM2": {
+   "ZERO_DEPENDENT": 7
+  },
+  "G3:RANDOM/EXPLICIT/COND_ONE": {
+   "PARTIAL": 1
+  },
+  "G3:RANDOM/EXPLICIT/INC": {
+   "PARTIAL": 1
+  },
+  "G3:RANDOM/IMPLICIT/COND_ONE": {
+   "PARTIAL": 1
+  },
+  "G3:RANDOM/IMPLICIT/INC": {
+   "PARTIAL": 1
+  },
+  "G7:RANDOM/GRAPH/LOCAL": {
+   "ZERO_DEPENDENT": 2,
+   "NOT_COMPETENT": 2
+  },
+  "G7:RANDOM/GRID/LOCAL": {
+   "NOT_COMPETENT": 3,
+   "ZERO_DEPENDENT": 6
+  },
+  "G7:RANDOM/GRID/WELL_MIXED": {
+   "ZERO_DEPENDENT": 9,
+   "NOT_COMPETENT": 2
+  },
+  "G7:RANDOM/NICHES/NICHES_COMPETENCE_MIG": {
+   "NOT_COMPETENT": 1,
+   "ZERO_DEPENDENT": 1
+  },
+  "G7:RANDOM/NICHES/NICHES_ENV_MIG": {
+   "ZERO_DEPENDENT": 4
+  },
+  "G7:RANDOM/NICHES/NICHES_HIGH_MIG": {
+   "NOT_COMPETENT": 4,
+   "ZERO_DEPENDENT": 3
+  },
+  "G7:RANDOM/NICHES/NICHES_ISOLATED": {
+   "ZERO_DEPENDENT": 4
+  },
+  "G7:RANDOM/NICHES/NICHES_LOW_MIG": {
+   "NOT_COMPETENT": 3,
+   "ZERO_DEPENDENT": 4
+  },
+  "G7:RANDOM/NICHES/NICHES_PERIODIC": {
+   "ZERO_DEPENDENT": 3
+  },
+  "G7:RANDOM/NICHES/NICHES_POLLINATION": {
+   "NOT_COMPETENT": 1,
+   "ZERO_DEPENDENT": 5
+  },
+  "G7:RANDOM/NICHES/RESERVOIR": {
+   "NOT_COMPETENT": 3,
+   "ZERO_DEPENDENT": 2
+  },
+  "G7:RANDOM/SOUP/WELL_MIXED": {
+   "ZERO_DEPENDENT": 9,
+   "NOT_COMPETENT": 2
+  },
+  "G7P1:NICHES_ISOLATED": {
+   "NOT_COMPETENT": 4
+  },
+  "G7P1:NICHES_POLLINATION": {
+   "NOT_COMPETENT": 20,
+   "ZERO_DEPENDENT": 11,
+   "STATE_FREE": 1
+  },
+  "G7P1:RESERVOIR": {
+   "NOT_COMPETENT": 3,
+   "ZERO_DEPENDENT": 2
+  },
+  "P8:RANDOM/COPY/base": {
+   "ZERO_DEPENDENT": 7,
+   "NOT_COMPETENT": 1
+  },
+  "P8:RANDOM/COPY/mut_low": {
+   "ZERO_DEPENDENT": 3
+  },
+  "P8:RANDOM/COPY/mut_vlow": {
+   "NOT_COMPETENT": 2,
+   "ZERO_DEPENDENT": 2
+  },
+  "P8:RANDOM/PARTIAL/base": {
+   "NOT_COMPETENT": 2,
+   "ZERO_DEPENDENT": 11
+  },
+  "P8:RANDOM/PARTIAL/target_zero": {
+   "ZERO_DEPENDENT": 4,
+   "NOT_COMPETENT": 3,
+   "PARTIAL": 1
+  }
+ },
+ "rows": [
+  {
+   "id": "g000161",
+   "lane": "G7P1",
+   "cell": "NICHES_POLLINATION",
+   "seed": 9001000000000,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "14141414141414141414141414141414141414141414141414141414141414141414141414141414147014141414141414141414141414141414141414141414",
+   "profile": {
+    "Z": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.05
+    },
+    "class": "NOT_COMPETENT"
+   }
+  },
+  {
+   "id": "g000167",
+   "lane": "G7P1",
+   "cell": "NICHES_POLLINATION",
+   "seed": 9001000000003,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "08405200404e310ac99c008a38c54064471d0d000000158821ca80934e00c98900c16a8400b90bb1674f3a67fcc66178f2076ac9006a0000b3477100760000db",
+   "profile": {
+    "Z": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "NOT_COMPETENT"
+   }
+  },
+  {
+   "id": "g000186",
+   "lane": "G7P1",
+   "cell": "NICHES_POLLINATION",
+   "seed": 9001000000012,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "20a06deeee3610693ece2a1d13aa48416a0086f760156d394369a2cb0000000020a06deeee3610693ecefb1d13aa48416a0086f760156d394369a2cb00000000",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g000187",
+   "lane": "G7P1",
+   "cell": "NICHES_POLLINATION",
+   "seed": 9001000000013,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "141414141414141477141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141d1414141414",
+   "profile": {
+    "Z": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "NOT_COMPETENT"
+   }
+  },
+  {
+   "id": "g000195",
+   "lane": "G7P1",
+   "cell": "NICHES_POLLINATION",
+   "seed": 9001000000017,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "14141414141414141414141414141414143514141414141414141414141414141414141914141414141414141414141414141414141414141414141446141414",
+   "profile": {
+    "Z": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "NOT_COMPETENT"
+   }
+  },
+  {
+   "id": "g000203",
+   "lane": "G7P1",
+   "cell": "NICHES_POLLINATION",
+   "seed": 9001000000021,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "20d6a469ab00185800fcc54b8e8479011548cc0e9620d6a469ab00185800fcc54b8e8479011548cc0e9620d6a469ab00185800fcc54b8e8479011548cc0e9620",
+   "profile": {
+    "Z": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "NOT_COMPETENT"
+   }
+  },
+  {
+   "id": "g000213",
+   "lane": "G7P1",
+   "cell": "NICHES_POLLINATION",
+   "seed": 9001000000026,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "14141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414",
+   "profile": {
+    "Z": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "NOT_COMPETENT"
+   }
+  },
+  {
+   "id": "g000239",
+   "lane": "G7P1",
+   "cell": "NICHES_POLLINATION",
+   "seed": 9001000000039,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "00bdef3e44c9000063cb3170084033cf64637eb77ca936a661ebc812ab7c15db000063c574de33591559f05190f5000000403bb404d37fb155ee00a81213f24d",
+   "profile": {
+    "Z": {
+     "competent": false,
+     "rate": 0.1
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "NOT_COMPETENT"
+   }
+  },
+  {
+   "id": "g000245",
+   "lane": "G7P1",
+   "cell": "NICHES_POLLINATION",
+   "seed": 9001000000042,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "001300a800f800390000bd000840fb171500b0ad01dce96c0000bd00083cfb171500b0ad01dce96c0000bd00001300a800f800130000bd0000a50000001300a8",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g000249",
+   "lane": "G7P1",
+   "cell": "NICHES_POLLINATION",
+   "seed": 9001000000044,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "81a5930000083f5f0051636c89009040000e16b60018800a92e1e03c74e6be00a12e336a719925e3379b89b50a0000971b008f81150000000000000000000000",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g000259",
+   "lane": "G7P1",
+   "cell": "NICHES_POLLINATION",
+   "seed": 9001000000049,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "c9c9cec3516648c321521a88c3c35ef9a2c3c376678b3191c3c3cbc337c3c387c39405e9c310c3c3b2f4d4c31dc315b1fae5c3422757ead11287b35f7f0e3dc3",
+   "profile": {
+    "Z": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "NOT_COMPETENT"
+   }
+  },
+  {
+   "id": "g000269",
+   "lane": "G7P1",
+   "cell": "NICHES_POLLINATION",
+   "seed": 9001000000054,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "1414141414141414141414141414141414141414141414141414141414bf141414c2661414141414141414141414141414141414141414141414141414141414",
+   "profile": {
+    "Z": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "NOT_COMPETENT"
+   }
+  },
+  {
+   "id": "g000261",
+   "lane": "G7P1",
+   "cell": "NICHES_POLLINATION",
+   "seed": 9001000000050,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "141414141414141414141414141414141414141414141414141414141414141414147e1414141414141414141414141414141414141414141414141414141414",
+   "profile": {
+    "Z": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "NOT_COMPETENT"
+   }
+  },
+  {
+   "id": "g000273",
+   "lane": "G7P1",
+   "cell": "NICHES_POLLINATION",
+   "seed": 9001000000056,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "14141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414891414141414141414141414141414141414",
+   "profile": {
+    "Z": {
+     "competent": false,
+     "rate": 0.05
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "NOT_COMPETENT"
+   }
+  },
+  {
+   "id": "g000272",
+   "lane": "G7P1",
+   "cell": "NICHES_POLLINATION",
+   "seed": 9001000000055,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "000155384900ad86b1ea1309d385bda37766369c80cee038eab4355b4b0840ba7df284fe86b2be87897617c3ca8d46e547223d917f391530a630ca97d4e442e4",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g000291",
+   "lane": "G7P1",
+   "cell": "NICHES_POLLINATION",
+   "seed": 9001000000065,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "741e2b84083ee374741e2b84083e0000103ebda6e4a43840ed48f115ca8d2d7c103ebda6e4a43884ed48f115ca8d2d7c103e02a6e4a43884ed48f115ca8d2d7c",
+   "profile": {
+    "Z": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "NOT_COMPETENT"
+   }
+  },
+  {
+   "id": "g000289",
+   "lane": "G7P1",
+   "cell": "NICHES_POLLINATION",
+   "seed": 9001000000064,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "00b9415a1df95bcfdd04e44fb90840b4f30eea6f9be12c03ca52b75800857c8852000000000000963a000097c6e5711906f300001579c2408900470c00f200b3",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g000305",
+   "lane": "G7P1",
+   "cell": "NICHES_POLLINATION",
+   "seed": 9001000000072,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "14141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414",
+   "profile": {
+    "Z": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "NOT_COMPETENT"
+   }
+  },
+  {
+   "id": "g000307",
+   "lane": "G7P1",
+   "cell": "NICHES_POLLINATION",
+   "seed": 9001000000073,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "00e01b310a81003208f14a47990831150000320b1900006a08316800991b317381006a8b311500891b310a81006a083115090000000000000000000000000000",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R2": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "class": "STATE_FREE"
+   }
+  },
+  {
+   "id": "g000301",
+   "lane": "G7P1",
+   "cell": "NICHES_POLLINATION",
+   "seed": 9001000000070,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "14141414141414141414141414141414141414141414141414141414141414141414141414141414141414141400141414141414141414141414141414141414",
+   "profile": {
+    "Z": {
+     "competent": false,
+     "rate": 0.15
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "NOT_COMPETENT"
+   }
+  },
+  {
+   "id": "g000325",
+   "lane": "G7P1",
+   "cell": "NICHES_POLLINATION",
+   "seed": 9001000000082,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "2f57008f3ffd0fd30840db56b724b86f002a7ff8bcae6447cc00263e6e6100c0f991d5364a151c8bd01aad4f6e22d8b45400b568008193a25b0057568f05fd49",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g000337",
+   "lane": "G7P1",
+   "cell": "NICHES_POLLINATION",
+   "seed": 9001000000088,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "141414141414141414141414141414141414141414141414521414141414141414141414141414141414141414141414141414143f1414141414141414141414",
+   "profile": {
+    "Z": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "NOT_COMPETENT"
+   }
+  },
+  {
+   "id": "g000345",
+   "lane": "G7P1",
+   "cell": "NICHES_POLLINATION",
+   "seed": 9001000000092,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "00141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414",
+   "profile": {
+    "Z": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "NOT_COMPETENT"
+   }
+  },
+  {
+   "id": "g000373",
+   "lane": "G7P1",
+   "cell": "NICHES_POLLINATION",
+   "seed": 9001000000106,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "614c9a08404240157961d763892c25edaf06ef2c15f6614c9a0840424008538970af95630089951506d7d706d7f6001506d7d706d7f6002c61d72c892c2cedaf",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g000385",
+   "lane": "G7P1",
+   "cell": "NICHES_POLLINATION",
+   "seed": 9001000000112,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "0814fc08401415810814fc08081415810814fc08081415810814fc08081415810814fc08081415810814fc08081415810814fc08081415810814fc0808141581",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g000389",
+   "lane": "G7P1",
+   "cell": "NICHES_POLLINATION",
+   "seed": 9001000000114,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "14141414141414141414141414e1141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414ea14141414",
+   "profile": {
+    "Z": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.05
+    },
+    "class": "NOT_COMPETENT"
+   }
+  },
+  {
+   "id": "g000399",
+   "lane": "G7P1",
+   "cell": "NICHES_POLLINATION",
+   "seed": 9001000000119,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "d87bb5a9d87bb5a9d87bb5ea6f7bb5ea6f083e593bce67cd25bb5a6925bb5a4df93583fb159b426b002966ae420c69e089d2fa420cfa28589172b15f78f9a9d8",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g000419",
+   "lane": "G7P1",
+   "cell": "NICHES_POLLINATION",
+   "seed": 9001000000129,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "141414141414141414141414141414f5141414d5141414141414141414141414141414141414141b141414141414141414141414141414141414141414001414",
+   "profile": {
+    "Z": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "NOT_COMPETENT"
+   }
+  },
+  {
+   "id": "g000445",
+   "lane": "G7P1",
+   "cell": "NICHES_POLLINATION",
+   "seed": 9001000000142,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "c65f48b8ea4006ebb27ac423c1bc48c29bb70fba0a3ce7823142fe9104f6d7e43ea49b4aa07c9b356cab677cbb9328c82f15bf31fe70368633eba172bdb1615c",
+   "profile": {
+    "Z": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "NOT_COMPETENT"
+   }
+  },
+  {
+   "id": "g000441",
+   "lane": "G7P1",
+   "cell": "NICHES_POLLINATION",
+   "seed": 9001000000140,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "14141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414",
+   "profile": {
+    "Z": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "NOT_COMPETENT"
+   }
+  },
+  {
+   "id": "g000433",
+   "lane": "G7P1",
+   "cell": "NICHES_POLLINATION",
+   "seed": 9001000000136,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "00000000002d3fc08a89472f0840007d21ef00e4a80047139c2a0e0000f67e15d302ed0096003700004d516bdc00340e54fffb7c12de200500004c1900f13301",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g000459",
+   "lane": "G7P1",
+   "cell": "NICHES_POLLINATION",
+   "seed": 9001000000149,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "00592c007193089ab81ccf2d897bc72d62f26f1ffe00b041281d3abfb7d1d20840940011004df41584a9ea001d610035b3bf86f000b30023bf000cb42d456c2d",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g000570",
+   "lane": "G7P1",
+   "cell": "RESERVOIR",
+   "seed": 9001000000054,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "14141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414",
+   "profile": {
+    "Z": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "NOT_COMPETENT"
+   }
+  },
+  {
+   "id": "g000569",
+   "lane": "G7P1",
+   "cell": "RESERVOIR",
+   "seed": 9001000000054,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "14141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414",
+   "profile": {
+    "Z": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "NOT_COMPETENT"
+   }
+  },
+  {
+   "id": "g000611",
+   "lane": "G7P1",
+   "cell": "RESERVOIR",
+   "seed": 9001000000075,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "0fb31fc048ecba6ed8ef87a6f1293fac907048ce2135d19fce653df21fae5d8e68a529bddc5cd6bbaef89f2a2570dcde97c4cf8382fe641587c7af9b2afddeb3",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g000647",
+   "lane": "G7P1",
+   "cell": "RESERVOIR",
+   "seed": 9001000000093,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "0090000840b300a800000000000000000000000000007b00000000000000000000000000fd46a40000ef15000000d81a310000005d000000000000fb00000000",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g000696",
+   "lane": "G7P1",
+   "cell": "RESERVOIR",
+   "seed": 9001000000117,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "14141414141414141414141414141414141414141414141414141414141414141414141414141459141414141414141414141414141414141414141414141414",
+   "profile": {
+    "Z": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "NOT_COMPETENT"
+   }
+  },
+  {
+   "id": "g000869",
+   "lane": "G7P1",
+   "cell": "NICHES_ISOLATED",
+   "seed": 9001000000054,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "1414141414141414141414141414141414141414141414143d141414141414141414141414141414141414141414141414141414141414141414141414141414",
+   "profile": {
+    "Z": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "NOT_COMPETENT"
+   }
+  },
+  {
+   "id": "g000870",
+   "lane": "G7P1",
+   "cell": "NICHES_ISOLATED",
+   "seed": 9001000000054,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "1414141414141414141414141414141414141414141414143d141414141414141414141414141414141414141414141414141414141414141414141414141414",
+   "profile": {
+    "Z": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "NOT_COMPETENT"
+   }
+  },
+  {
+   "id": "g001029",
+   "lane": "G7P1",
+   "cell": "NICHES_ISOLATED",
+   "seed": 9001000000134,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "910da24f4f90c35235c87ac73f281fcb045174544eaf98ba5e486f175170e5bfc90906dcd6955c6e0e7bac426831a5dca7b0ec1500f45dd1a4fa417f2e4bb500",
+   "profile": {
+    "Z": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "NOT_COMPETENT"
+   }
+  },
+  {
+   "id": "g001030",
+   "lane": "G7P1",
+   "cell": "NICHES_ISOLATED",
+   "seed": 9001000000134,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "910da24f4f90c35235c87ac73f281fcb045174544eaf98ba5e486f175170e5bfc90906dcd6955c6e0e7bac426831a5dca7b0ec1500f45dd1a4fa417f2e4bb500",
+   "profile": {
+    "Z": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "NOT_COMPETENT"
+   }
+  },
+  {
+   "id": "g001149",
+   "lane": "G1",
+   "cell": "ENDOGENOUS_COPY/Z80_64",
+   "seed": 9002000000088,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "94c7da7553d41792b56e2249cbbc50854c75e7a0452340488e3b5861bd72f4f32b8d386688d375b7e672dbec4215003800000000000000000000000000000000",
+   "profile": {
+    "Z": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "NOT_COMPETENT"
+   }
+  },
+  {
+   "id": "g001201",
+   "lane": "G1",
+   "cell": "ENDOGENOUS_COPY/Z80_64",
+   "seed": 9002000000140,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "4c180840315b93068fbf5fbcdb91f7402885155c6eb7dee2841d6700efa4f2334c180820315b93068fbf5fbcdb91f7682885155c6eb7dee2841d6700efa4f233",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g001288",
+   "lane": "G1",
+   "cell": "ENDOGENOUS_COPY/Z80_64",
+   "seed": 9002000000227,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "5e9400f10840159c5e9400f10828159c5e9400f10828159c5e9400f10828159c5e9400f10828159c5e9400f10828bdcd5e9400ca0828159c5e9400f10840159c",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g001395",
+   "lane": "G1",
+   "cell": "ENDOGENOUS_COPY/Z80_64",
+   "seed": 9002000000334,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "6c00000008402a00000094000000000015000000000000000000006c00000085e800000000000000005600000000000000000000000000000000db0042000000",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g001374",
+   "lane": "G1",
+   "cell": "ENDOGENOUS_COPY/Z80_64",
+   "seed": 9002000000313,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "0840b63fda2b154869373526863accb30810b63fda2b154869373526863accb30810b63fda2b154869373526863accb30810b63fda2b154869373526863accb3",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g001489",
+   "lane": "G1",
+   "cell": "ENDOGENOUS_PARTIAL/Z80_64",
+   "seed": 9002000000028,
+   "reproduction": "ENDOGENOUS_PARTIAL",
+   "representation": "Z80_64",
+   "tape": "c0002c359806d5c487b7c69bdb3fcd1f7e9ec1ccd3f0b474e9f8193c55598fc74800638cf2c4051586dc092da59c7a5611994a9fe8dd86de683f9040ba48917c",
+   "profile": {
+    "Z": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "NOT_COMPETENT"
+   }
+  },
+  {
+   "id": "g001495",
+   "lane": "G1",
+   "cell": "ENDOGENOUS_PARTIAL/Z80_64",
+   "seed": 9002000000034,
+   "reproduction": "ENDOGENOUS_PARTIAL",
+   "representation": "Z80_64",
+   "tape": "1c453faeb37ab8c5c7503f46a23f900b419de07085aacae45e162dd996eea82fb410c4e7a00840a04dcfbab22b15ce7e9231d3c310e9a2ecc53a5aeeca24e552",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g001523",
+   "lane": "G1",
+   "cell": "ENDOGENOUS_PARTIAL/Z80_64",
+   "seed": 9002000000062,
+   "reproduction": "ENDOGENOUS_PARTIAL",
+   "representation": "Z80_64",
+   "tape": "7bc424e1952d3ae10a2d3ae1000000e1000000e1142d3ae1f900000fd3e114f939f90fd37f000008436115f0a93213ece505a74b73f50b08304b7654d60a2d3a",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g001566",
+   "lane": "G1",
+   "cell": "ENDOGENOUS_PARTIAL/Z80_64",
+   "seed": 9002000000105,
+   "reproduction": "ENDOGENOUS_PARTIAL",
+   "representation": "Z80_64",
+   "tape": "570000c500cc3f5a0000000051ac57011c14570157010000cad2ca3bcad285d2ca0097b01b3e00b01b3e276ea7acc0cae5138008411588d0eae7b1c7286eca52",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g001629",
+   "lane": "G1",
+   "cell": "ENDOGENOUS_PARTIAL/Z80_64",
+   "seed": 9002000000168,
+   "reproduction": "ENDOGENOUS_PARTIAL",
+   "representation": "Z80_64",
+   "tape": "66b824bd6608419af6bb15cba64f8a60caf449f963e7475e00c30000000000000000000000000000000000000000000000000000000000000000000000000000",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g001648",
+   "lane": "G1",
+   "cell": "ENDOGENOUS_PARTIAL/Z80_64",
+   "seed": 9002000000187,
+   "reproduction": "ENDOGENOUS_PARTIAL",
+   "representation": "Z80_64",
+   "tape": "666666700646f0825e4706af84adc35653dc6b5559d893494b8e54957ff87225911d1a01bf2cc0e69c051def6bf1f715fdfc9793c3140c481a84065775520841",
+   "profile": {
+    "Z": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "NOT_COMPETENT"
+   }
+  },
+  {
+   "id": "g001601",
+   "lane": "G1",
+   "cell": "ENDOGENOUS_PARTIAL/Z80_64",
+   "seed": 9002000000140,
+   "reproduction": "ENDOGENOUS_PARTIAL",
+   "representation": "Z80_64",
+   "tape": "cd0b084046bf853e1d85d263d238464f11af153dc503b0413201d4013b030c8ecd0b082046bf853e1d85d263d238464f11af153dc503b0413201d4013b03108e",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g001622",
+   "lane": "G1",
+   "cell": "ENDOGENOUS_PARTIAL/Z80_64",
+   "seed": 9002000000161,
+   "reproduction": "ENDOGENOUS_PARTIAL",
+   "representation": "Z80_64",
+   "tape": "3fa7d01010a7a722a76aa7486eeda7f9153fa7d01010a7a722a76aa7486eeda7f9153fa7d01010a7a722a76aa7486eeda7f9153fa7d01010a7a722a76aa7486e",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g001618",
+   "lane": "G1",
+   "cell": "ENDOGENOUS_PARTIAL/Z80_64",
+   "seed": 9002000000157,
+   "reproduction": "ENDOGENOUS_PARTIAL",
+   "representation": "Z80_64",
+   "tape": "146af2580000f2003831f200a231310038cb580038cb0058319e084171deb6c373db5453153638cb0038cb7431deb6c373db549555633b87153638cb14146af2",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g001696",
+   "lane": "G1",
+   "cell": "ENDOGENOUS_PARTIAL/Z80_64",
+   "seed": 9002000000235,
+   "reproduction": "ENDOGENOUS_PARTIAL",
+   "representation": "Z80_64",
+   "tape": "620c24b3906224b317e600009a955aa940b600009095810000fb00003a41bf220842899c084295d7084289b3d61589b33a3a04040e3030906290620c24b39062",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g001681",
+   "lane": "G1",
+   "cell": "ENDOGENOUS_PARTIAL/Z80_64",
+   "seed": 9002000000220,
+   "reproduction": "ENDOGENOUS_PARTIAL",
+   "representation": "Z80_64",
+   "tape": "a3084088b3911525574d00e704bfd008a30850a3b3911525574d7d0000b349c6a30850a3b3911525574dbbb5002100c5a30850a3b3191525574d85bbc17c0000",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g001698",
+   "lane": "G1",
+   "cell": "ENDOGENOUS_PARTIAL/Z80_64",
+   "seed": 9002000000237,
+   "reproduction": "ENDOGENOUS_PARTIAL",
+   "representation": "Z80_64",
+   "tape": "5b665d566746455b371dce0f844bc2825b665d566746455b371dce0f844b1d8261398c38084015ccbcf1ce0f844b1d825b665d56674645bf37d0ce0f844bc282",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g001792",
+   "lane": "G1",
+   "cell": "ENDOGENOUS_PARTIAL/Z80_64",
+   "seed": 9002000000331,
+   "reproduction": "ENDOGENOUS_PARTIAL",
+   "representation": "Z80_64",
+   "tape": "36571b2f8b5698cc98cc98cc95a200b2b60000500014a898af3139a2000079793ee8669508422bc41926155a4cc27714e65a868ed3468f65843474d11d36571b",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 0.55
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g001790",
+   "lane": "G1",
+   "cell": "ENDOGENOUS_PARTIAL/Z80_64",
+   "seed": 9002000000329,
+   "reproduction": "ENDOGENOUS_PARTIAL",
+   "representation": "Z80_64",
+   "tape": "2008401578d58a280808401578458a280808401578d58a280808401578d58a280808401578d58a280808401578d58a280808401578d58a280808401578d58a28",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g001754",
+   "lane": "G1",
+   "cell": "ENDOGENOUS_PARTIAL/Z80_64",
+   "seed": 9002000000293,
+   "reproduction": "ENDOGENOUS_PARTIAL",
+   "representation": "Z80_64",
+   "tape": "00406f87590cd333128e92a57f38f59092faabd1fab6b65ce13b8f25590250b34bd596dd124f48dc2b1f091b36d9fab046aeaab26fb53f152db5c72baf8271ac",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g001774",
+   "lane": "G1",
+   "cell": "ENDOGENOUS_PARTIAL/Z80_64",
+   "seed": 9002000000313,
+   "reproduction": "ENDOGENOUS_PARTIAL",
+   "representation": "Z80_64",
+   "tape": "0840bc4a1fe31591910cc8abc491910c0810bc4af3e31591910cc8abc491910c0810bc4af3e31591910cc8abc491910c0810bc4af3e31591910cc8abc491910c",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g001854",
+   "lane": "G1",
+   "cell": "ENDOGENOUS_PARTIAL/Z80_64",
+   "seed": 9002000000393,
+   "reproduction": "ENDOGENOUS_PARTIAL",
+   "representation": "Z80_64",
+   "tape": "65c870f8f30840529e357d8938f315f74fddaa5642a4243335d333d9bb71138f65c870f8f30820529e357d8938f315f74fddaa5642a4243335d333d9bb71138f",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g001829",
+   "lane": "G1",
+   "cell": "ENDOGENOUS_PARTIAL/Z80_64",
+   "seed": 9002000000368,
+   "reproduction": "ENDOGENOUS_PARTIAL",
+   "representation": "Z80_64",
+   "tape": "08ceceededededed9990a8e4e45490909090b597929292fd3eccccb5a1649393935252db367308400e0e1546344f1e474fe9e908ceceededededed9990a8e4e4",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g001843",
+   "lane": "G1",
+   "cell": "ENDOGENOUS_PARTIAL/Z80_64",
+   "seed": 9002000000382,
+   "reproduction": "ENDOGENOUS_PARTIAL",
+   "representation": "Z80_64",
+   "tape": "08349b00601b5fe6ee1b2600120e00004a3900004a39d1000000005d0000005d0000000000720000000000000840150008349b00601b5fe6601b5fe6ee1b2600",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g001883",
+   "lane": "G1",
+   "cell": "OVERWRITE/Z80_64",
+   "seed": 9002000000022,
+   "reproduction": "OVERWRITE",
+   "representation": "Z80_64",
+   "tape": "00568d61f16d52136e9b08409d85b5a4d30e096a8c15b532b823f29d0e61615ac4f2c054199abf69b72665402147621114738475fcef620ea790c958ea1db1da",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g001936",
+   "lane": "G1",
+   "cell": "OVERWRITE/Z80_64",
+   "seed": 9002000000075,
+   "reproduction": "OVERWRITE",
+   "representation": "Z80_64",
+   "tape": "0840566142d818ccb20f869ec26f68a237ee6d87d52bc6a3fabc38efb8daf7700684ed4e8355d8710f9b11608eb3fe46fada1531bbc1133425e1632b8d000000",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g002007",
+   "lane": "G1",
+   "cell": "OVERWRITE/Z80_64",
+   "seed": 9002000000146,
+   "reproduction": "OVERWRITE",
+   "representation": "Z80_64",
+   "tape": "14145d1414141414141414141414141414141414141414141414142c141414141414141414141414141414141414141414141414141414141414141414141414",
+   "profile": {
+    "Z": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "NOT_COMPETENT"
+   }
+  },
+  {
+   "id": "g002752",
+   "lane": "G1",
+   "cell": "CONSTRUCTIVE/Z80_64",
+   "seed": 9002000000091,
+   "reproduction": "CONSTRUCTIVE",
+   "representation": "Z80_64",
+   "tape": "99691e699969006999690058996900699969f5699969192800003500c9456acb6cb82940f2b8523fed2ecde658dbf448e4ad2015420e9645267a6751f0f3d39d",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g002808",
+   "lane": "G1",
+   "cell": "CONSTRUCTIVE/Z80_64",
+   "seed": 9002000000147,
+   "reproduction": "CONSTRUCTIVE",
+   "representation": "Z80_64",
+   "tape": "084020a415058f08084020a415058f0830a320a408454020a415798f08084020a415058f08084020a415058f08084020a41505d508084020a415058f08084020",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g002881",
+   "lane": "G1",
+   "cell": "CONSTRUCTIVE/Z80_64",
+   "seed": 9002000000220,
+   "reproduction": "CONSTRUCTIVE",
+   "representation": "Z80_64",
+   "tape": "00fc014efbe66c81fc5404250840ca760b5f2cd83a4d8ef614bbf40de9bfb3500492e95f2cb2a605a7ec146a3ff1e9153af70000a1464d5d6c81fc4792250820",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g002946",
+   "lane": "G1",
+   "cell": "CONSTRUCTIVE/Z80_64",
+   "seed": 9002000000285,
+   "reproduction": "CONSTRUCTIVE",
+   "representation": "Z80_64",
+   "tape": "7bacc62ff2d538ad81a8bb0a81de77d31cf40389d879426d8c71403f6867b3b5d2a4390840f8ca560d15eed8f7b8cfa36c4600249a6efffa74c2566df08a420f",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g002974",
+   "lane": "G1",
+   "cell": "CONSTRUCTIVE/Z80_64",
+   "seed": 9002000000313,
+   "reproduction": "CONSTRUCTIVE",
+   "representation": "Z80_64",
+   "tape": "0840528d77cf1540a0db46d82aaf4a4f0810528d77cf158fa0db46d82aaf4a4f0810528d77cf1540a0db46d82aaf4a4f0810528d77cf1540a0db46d82aaf4a4f",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g002985",
+   "lane": "G1",
+   "cell": "CONSTRUCTIVE/Z80_64",
+   "seed": 9002000000324,
+   "reproduction": "CONSTRUCTIVE",
+   "representation": "Z80_64",
+   "tape": "00bbe8c66a093628e41c9f26caed6022006435d44a2f749de78c558c8b57d1ab08400a7e125d72c3d8db46f1ac218a52a71589f9cae7a6f4bcc8b1820acb518d",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g003084",
+   "lane": "G1",
+   "cell": "ENDOGENOUS_COPY/VM_COPY",
+   "seed": 9002000000023,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "VM_COPY",
+   "tape": "001e0000000048a600c600000000001600325c0000000000000000c700b1003b0000002f000000e8009b00000000972e0019000000000d00004600a600000000",
+   "profile": {
+    "Z": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "NOT_COMPETENT"
+   }
+  },
+  {
+   "id": "g003090",
+   "lane": "G1",
+   "cell": "ENDOGENOUS_COPY/VM_COPY",
+   "seed": 9002000000029,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "VM_COPY",
+   "tape": "80d0e940a589b072c216be69869ed805dde3f189aeaf612a5e1ef3d35a0b90cc78118fb24834e255e28e59f0bed4e50ab161ffdf9708b5209fdf47f31e2c6b1c",
+   "profile": {
+    "Z": {
+     "competent": false,
+     "rate": 0.05
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "NOT_COMPETENT"
+   }
+  },
+  {
+   "id": "g003167",
+   "lane": "G1",
+   "cell": "ENDOGENOUS_COPY/VM_COPY",
+   "seed": 9002000000106,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "VM_COPY",
+   "tape": "d4fdcea20a49d17832698fb1acfdcea2214958581d86153643272608589f6a582facd736462726083d9f6a581dacd736464efdcea221496316acfa3644d4fdce",
+   "profile": {
+    "Z": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "NOT_COMPETENT"
+   }
+  },
+  {
+   "id": "g003184",
+   "lane": "G1",
+   "cell": "ENDOGENOUS_COPY/VM_COPY",
+   "seed": 9002000000123,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "VM_COPY",
+   "tape": "598f913d083fa89c3f797a84889a35ede46da7d8f5992881b2254fac7e843aac7e843aa7873035a787303524747c3791e7b8abf4231560a180fbfb4ffeae01bd",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g003207",
+   "lane": "G1",
+   "cell": "ENDOGENOUS_COPY/VM_COPY",
+   "seed": 9002000000146,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "VM_COPY",
+   "tape": "0b08f820c8c25e0840416910d3e5c57435439815896c36639aab20641cead1b1d78557f23306c652e41fbcfc8acaec4608df4f68e47c07838fde7de123e0009f",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g003201",
+   "lane": "G1",
+   "cell": "ENDOGENOUS_COPY/VM_COPY",
+   "seed": 9002000000140,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "VM_COPY",
+   "tape": "1f5d8a0b7c0840311f5d8a0b7cb8bc6ed2fb55a25f3b4d6eb78cd36615da1a781f5d8a0b7c0820311f5d8a0b7cb8bc6ed2fb55a25f3b4d6eb78cd36615da1a78",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g003219",
+   "lane": "G1",
+   "cell": "ENDOGENOUS_COPY/VM_COPY",
+   "seed": 9002000000158,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "VM_COPY",
+   "tape": "a24d6ff520b696c9a4726f292000480d169936a0969c8b431616667d594d8fa3a24d6ff520b64ac9a4726f292000480d169936a0969c8b431616667d594d8fa3",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g003244",
+   "lane": "G1",
+   "cell": "ENDOGENOUS_COPY/VM_COPY",
+   "seed": 9002000000183,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "VM_COPY",
+   "tape": "16e83f48a297cf545c2960dd50cfe81616e81648a297cfe85c2960dde8cfe81616e83f48a297cf545c2960dd50cfe81616e81648a297cfe85c2960dd34cfe816",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g003422",
+   "lane": "G1",
+   "cell": "ENDOGENOUS_COPY/BYTECODE32",
+   "seed": 9002000000161,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "BYTECODE32",
+   "tape": "8e78e6bd6b2b7a9f368b100820fd4c7fbf69b89962f15715c071b1e6d9c0acca",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g003386",
+   "lane": "G1",
+   "cell": "ENDOGENOUS_COPY/BYTECODE32",
+   "seed": 9002000000125,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "BYTECODE32",
+   "tape": "554dcf5307faaf82081ae8528ee5138b6dfb6db0fd5c15805556000000002d00",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R2": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "class": "STATE_FREE"
+   }
+  },
+  {
+   "id": "g003591",
+   "lane": "G3",
+   "cell": "RANDOM/IMPLICIT/INC",
+   "seed": 9003000000065,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "cacaca656565655bd5c8aaaad54343caeaea5e5e16acb6518080511f4949493a5107f3f3f340bfa1a14a083373150000e6644100000000000000000000000000",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "class": "PARTIAL"
+   }
+  },
+  {
+   "id": "g003791",
+   "lane": "G3",
+   "cell": "RANDOM/IMPLICIT/COND_ONE",
+   "seed": 9003000000065,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "cacaca656565655bd5c8aaaad54343caeaea5e5e16acb6518080511f4949493a5107f3f3f340bfa1a14a083373150000e6644100000000000000000000000000",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "class": "PARTIAL"
+   }
+  },
+  {
+   "id": "g003991",
+   "lane": "G3",
+   "cell": "RANDOM/EXPLICIT/INC",
+   "seed": 9003000000065,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "cacaca656565655bd5c8aaaad54343caeaea5e5e16acb6518080511f4949493a5107f3f3f340bfa1a14a083373150000e6644100000000000000000000000000",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "class": "PARTIAL"
+   }
+  },
+  {
+   "id": "g004191",
+   "lane": "G3",
+   "cell": "RANDOM/EXPLICIT/COND_ONE",
+   "seed": 9003000000065,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "cacaca656565655bd5c8aaaad54343caeaea5e5e16acb6518080511f4949493a5107f3f3f340bfa1a14a083373150000e6644100000000000000000000000000",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "class": "PARTIAL"
+   }
+  },
+  {
+   "id": "g005586",
+   "lane": "P8",
+   "cell": "RANDOM/COPY/base",
+   "seed": 9005000000025,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "401257b9b6489454234b1582c14b423f101257b9b6489454234b1582c14b423f10125794b6489454234b1582c14b423f101257b9b6489454234b1582c14b423f",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g005606",
+   "lane": "P8",
+   "cell": "RANDOM/COPY/base",
+   "seed": 9005000000045,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "cf084015950c1bc1b8343c2f2c09dbc54bb9facee328f0b3d3502946ff5f2085cf082015950c1bc1b8343c2f2c09dbc54bb9facee328f0b3d3502946ff5f2085",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g005611",
+   "lane": "P8",
+   "cell": "RANDOM/COPY/base",
+   "seed": 9005000000050,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "08404415fc809f1408084415fc809f1408084415fc809f1408084415fc809f1408084415fc809f1408084415fc809f1408084415fc809f1408084415fc809f14",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g005623",
+   "lane": "P8",
+   "cell": "RANDOM/COPY/base",
+   "seed": 9005000000062,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "14141414141414142214141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414",
+   "profile": {
+    "Z": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "NOT_COMPETENT"
+   }
+  },
+  {
+   "id": "g005655",
+   "lane": "P8",
+   "cell": "RANDOM/COPY/base",
+   "seed": 9005000000094,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "4063b0647cda011d4a098a1031db48416d15e7c9464be06059ada41031db48416d15e7c9464be06059ada410badb48416d15e7c9464be06059ada41031db4841",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g005665",
+   "lane": "P8",
+   "cell": "RANDOM/COPY/base",
+   "seed": 9005000000104,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "10b29b8efadfb5ee3dd376e28531310f2eee98b3084031174229028bf20ce65015303a6db9d9b3f09439dc3ced18fb5bbdd99721566439e7a9f5f9ada106b437",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g005796",
+   "lane": "P8",
+   "cell": "RANDOM/COPY/base",
+   "seed": 9005000000235,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "63185e08408bbbfee9634d8d66cfe0fe9b64f510505283115895cb8fdcfdb55ac36e15673f3c39a67a5bf9f95901b5fb3ab17ea8bd844810dda42f58faa7c410",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g005812",
+   "lane": "P8",
+   "cell": "RANDOM/COPY/base",
+   "seed": 9005000000251,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "d608407723da3742f1715b0dc569568821ddbd1b80f2999e3c288d7866b715ea06dedb74c6fe429fb4f3e73bff2f3cb1cbbe3f244e990500d7fcd4ef4e3b6cf1",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g006806",
+   "lane": "P8",
+   "cell": "RANDOM/COPY/mut_low",
+   "seed": 9005000000045,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "bfb3cb84fbd12076bfb3cb84fbd12076cc08401571d1207657b3cb84fbd12076bfb3cb84fbd12076bfb3cb84fbf22076cc08381571d1207657b3cb84fbd12076",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g007012",
+   "lane": "P8",
+   "cell": "RANDOM/COPY/mut_low",
+   "seed": 9005000000251,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "d608407723da3742f1715b0dc569568821ddbd1b80f2999e3c288d7866b715ea06dedb74c6fe429fb4f3e73bff2f3cb1cbbe3f244e990500d7fcd4ef4e3b6cf1",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g007025",
+   "lane": "P8",
+   "cell": "RANDOM/COPY/mut_low",
+   "seed": 9005000000264,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "00bb05a73ed919f70b72083f3913f92ed76f25b76636a7c782b258f4552da07896734c154c1d78c44295b7ea7532549b98a62fc0b70775738eae3d42265f7026",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g007145",
+   "lane": "P8",
+   "cell": "RANDOM/COPY/mut_vlow",
+   "seed": 9005000000084,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "14141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414",
+   "profile": {
+    "Z": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "NOT_COMPETENT"
+   }
+  },
+  {
+   "id": "g007186",
+   "lane": "P8",
+   "cell": "RANDOM/COPY/mut_vlow",
+   "seed": 9005000000125,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "14141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414",
+   "profile": {
+    "Z": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "NOT_COMPETENT"
+   }
+  },
+  {
+   "id": "g007312",
+   "lane": "P8",
+   "cell": "RANDOM/COPY/mut_vlow",
+   "seed": 9005000000251,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "d608407723da3742f1715b0dc569568821ddbd1b80f2999e3c288d7866b715ea06dedb74c6fe429fb4f3e73bff2f3cb1cbbe3f244e990500d7fcd4ef4e3b6cf1",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g007325",
+   "lane": "P8",
+   "cell": "RANDOM/COPY/mut_vlow",
+   "seed": 9005000000264,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "00bb05a73ed919f70b72083f3913f42ed76f8db76636a72582b258f4552da07896734c154c1d78c44295b7ea7532549b98a62fc0b70775738eae3d42265f7026",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g007392",
+   "lane": "P8",
+   "cell": "RANDOM/PARTIAL/base",
+   "seed": 9005000000031,
+   "reproduction": "ENDOGENOUS_PARTIAL",
+   "representation": "Z80_64",
+   "tape": "e1141414141414141414141414141414141414141414141414144314141414141414141414141414141414141414141414141414141414141414141414141414",
+   "profile": {
+    "Z": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "NOT_COMPETENT"
+   }
+  },
+  {
+   "id": "g007364",
+   "lane": "P8",
+   "cell": "RANDOM/PARTIAL/base",
+   "seed": 9005000000003,
+   "reproduction": "ENDOGENOUS_PARTIAL",
+   "representation": "Z80_64",
+   "tape": "c948c50840832f15a781c5080883b515c9edc50850832f15a7afc5080883b515c9edc5d450832f15a7080883421581afc9afc5085083e81580afc5080883b515",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g007399",
+   "lane": "P8",
+   "cell": "RANDOM/PARTIAL/base",
+   "seed": 9005000000038,
+   "reproduction": "ENDOGENOUS_PARTIAL",
+   "representation": "Z80_64",
+   "tape": "ac01000000000000000000000000e0b5b5b500000000007c92000840fdce4bfa150000e9bb00006a00004f4f0058004900000000ac0100000000000000000000",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g007429",
+   "lane": "P8",
+   "cell": "RANDOM/PARTIAL/base",
+   "seed": 9005000000068,
+   "reproduction": "ENDOGENOUS_PARTIAL",
+   "representation": "Z80_64",
+   "tape": "4cd546b760e71dd6232a0840f66d8129a29de949c3a39015e63ba749c8da79754cd546b760e71dd6232a0820f66d8129a20de949c3a39015e63ba749c8da7975",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g007455",
+   "lane": "P8",
+   "cell": "RANDOM/PARTIAL/base",
+   "seed": 9005000000094,
+   "reproduction": "ENDOGENOUS_PARTIAL",
+   "representation": "Z80_64",
+   "tape": "401071054870bc155e7a4843f1590000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g007428",
+   "lane": "P8",
+   "cell": "RANDOM/PARTIAL/base",
+   "seed": 9005000000067,
+   "reproduction": "ENDOGENOUS_PARTIAL",
+   "representation": "Z80_64",
+   "tape": "8b02c483084015b68b02c483080815b68b02c483080815b68b02c483080815b68b02c483080815b68b02c483080815b68b02c483080815b68b02c483080815b6",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g007458",
+   "lane": "P8",
+   "cell": "RANDOM/PARTIAL/base",
+   "seed": 9005000000097,
+   "reproduction": "ENDOGENOUS_PARTIAL",
+   "representation": "Z80_64",
+   "tape": "3ba8429b7d14ca1448167d143d16143d1621c72a3f058f76d719490144257948b2235e9815ca14551621b12a3f058f76d719490121257948b2ee3ba8429b7d14",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g007466",
+   "lane": "P8",
+   "cell": "RANDOM/PARTIAL/base",
+   "seed": 9005000000105,
+   "reproduction": "ENDOGENOUS_PARTIAL",
+   "representation": "Z80_64",
+   "tape": "0b90a116084049150b90a116080849150b90a116080849150b90a116080849150b90a116080849150b90a116080849150b90a116080849150b90a11608084915",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g007526",
+   "lane": "P8",
+   "cell": "RANDOM/PARTIAL/base",
+   "seed": 9005000000165,
+   "reproduction": "ENDOGENOUS_PARTIAL",
+   "representation": "Z80_64",
+   "tape": "3f3f0144d605566dd2d162669e658d741a496c6c2b761a2c7800088a159cbb9f0fa94f85036d1bb948c1e13a7d7e4b9a92607bdc45d31649ce597008415f9f14",
+   "profile": {
+    "Z": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "NOT_COMPETENT"
+   }
+  },
+  {
+   "id": "g007575",
+   "lane": "P8",
+   "cell": "RANDOM/PARTIAL/base",
+   "seed": 9005000000214,
+   "reproduction": "ENDOGENOUS_PARTIAL",
+   "representation": "Z80_64",
+   "tape": "008391693808402050671559d86c4cdd0244a2d37bf5b9e158f0b78d4fd14b4e8ef9771d48887378b0a7476a0700ed3cfd5f8c2be0f841b76660ae11464e5fa2",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g007584",
+   "lane": "P8",
+   "cell": "RANDOM/PARTIAL/base",
+   "seed": 9005000000223,
+   "reproduction": "ENDOGENOUS_PARTIAL",
+   "representation": "Z80_64",
+   "tape": "1b893681284573f4dac6370840d815741b893681284573f4dac6370810d815741b893681284573f4dac6370810d815741b893681284573f4dac6370810d81574",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g007612",
+   "lane": "P8",
+   "cell": "RANDOM/PARTIAL/base",
+   "seed": 9005000000251,
+   "reproduction": "ENDOGENOUS_PARTIAL",
+   "representation": "Z80_64",
+   "tape": "d608407723da3742f1715b0dc569568821ddbd1b80f2999e3c288d7866b715ea06dedb74c6fe429fb4f3e73bff2f3cb1cbbe3f244e990500d7fcd4ef4e3b6cf1",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g007651",
+   "lane": "P8",
+   "cell": "RANDOM/PARTIAL/base",
+   "seed": 9005000000290,
+   "reproduction": "ENDOGENOUS_PARTIAL",
+   "representation": "Z80_64",
+   "tape": "45f0f71445f0f74545f7b5a408411509c1bc15098f38f08c45f7b5a4085096091abcb709423bf0f445f7b5a408501509c1bc15098f45f015302aa0098f45f0f7",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g007664",
+   "lane": "P8",
+   "cell": "RANDOM/PARTIAL/target_zero",
+   "seed": 9005000000003,
+   "reproduction": "ENDOGENOUS_PARTIAL",
+   "representation": "Z80_64",
+   "tape": "c9ed45084083b5158000000000000000c9ed45085083b5158000000000000000c9ed45085083b51580000000980000ba4f8e53a62f72c1cc7b0c0be4d8b3974d",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g007715",
+   "lane": "P8",
+   "cell": "RANDOM/PARTIAL/target_zero",
+   "seed": 9005000000054,
+   "reproduction": "ENDOGENOUS_PARTIAL",
+   "representation": "Z80_64",
+   "tape": "000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000057084515be",
+   "profile": {
+    "Z": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "NOT_COMPETENT"
+   }
+  },
+  {
+   "id": "g007833",
+   "lane": "P8",
+   "cell": "RANDOM/PARTIAL/target_zero",
+   "seed": 9005000000172,
+   "reproduction": "ENDOGENOUS_PARTIAL",
+   "representation": "Z80_64",
+   "tape": "acd14755408d6a8db3ab0fa5c9110cab3e20b890142bd7a8b0aea898aa1370eb38b67196bc42a9c3486a159092b4fd434166a16038b671962c42f5c348000000",
+   "profile": {
+    "Z": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "NOT_COMPETENT"
+   }
+  },
+  {
+   "id": "g007805",
+   "lane": "P8",
+   "cell": "RANDOM/PARTIAL/target_zero",
+   "seed": 9005000000144,
+   "reproduction": "ENDOGENOUS_PARTIAL",
+   "representation": "Z80_64",
+   "tape": "5eb7aae3c90840adec1e1db7d6c4daa1bfa201c9d9b105e4951d87cd35bc3a4f93753559f00af94ec76135f33be03f8edd89e320e515a788956ecdbf3ff0b95e",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g007903",
+   "lane": "P8",
+   "cell": "RANDOM/PARTIAL/target_zero",
+   "seed": 9005000000242,
+   "reproduction": "ENDOGENOUS_PARTIAL",
+   "representation": "Z80_64",
+   "tape": "32242c669c5c4de577141520b440a82b146a21196fd31228e71991855257e6d6f155e73b8483b971ebe14689433bd0cb64b6bcc2c7e461747097f4c70e350000",
+   "profile": {
+    "Z": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "NOT_COMPETENT"
+   }
+  },
+  {
+   "id": "g007875",
+   "lane": "P8",
+   "cell": "RANDOM/PARTIAL/target_zero",
+   "seed": 9005000000214,
+   "reproduction": "ENDOGENOUS_PARTIAL",
+   "representation": "Z80_64",
+   "tape": "008391693808402050671559d86c4cdd0244a2d37bf5b9e158f0b78d4fd14b4e8ef9771d48887378b0a7476a0700ed3cfd5f8c2be0f841b76660ae11464e5fa2",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g007912",
+   "lane": "P8",
+   "cell": "RANDOM/PARTIAL/target_zero",
+   "seed": 9005000000251,
+   "reproduction": "ENDOGENOUS_PARTIAL",
+   "representation": "Z80_64",
+   "tape": "d608407723da3742f1715b0dc569568821ddbd1b80f2999e3c288d7866b715ea06dedb74c6fe429fb4f3e73bff2f3cb1cbbe3f244e990500d7fcd4ef4e3b6cf1",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g007936",
+   "lane": "P8",
+   "cell": "RANDOM/PARTIAL/target_zero",
+   "seed": 9005000000275,
+   "reproduction": "ENDOGENOUS_PARTIAL",
+   "representation": "Z80_64",
+   "tape": "cc62c34f001c5c163808409b3c1582923a560088070000ba000000001100b86acc62c34f001c5c163808209b3c1582923a560088070000ba000000001100b86a",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "PARTIAL"
+   }
+  },
+  {
+   "id": "g008955",
+   "lane": "G1T",
+   "cell": "CONST",
+   "seed": 9007000000004,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "c44a31d1f604fc5008400a0b567ae2a740af3bf0e315e0ed748726d7f30e36e1c44a31d1f604fc5008200a0b567ae2a740af3bf0e315e0ed748726d7f30e36e1",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g009065",
+   "lane": "G1T",
+   "cell": "CONST",
+   "seed": 9007000000114,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "40406a6a6a000074e7000090083338ca554dd31b08401500004e000000000000000000000000000000bdbd0000000000000000c3406a6a6a000074e700009008",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g009007",
+   "lane": "G1T",
+   "cell": "CONST",
+   "seed": 9007000000056,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "58f2d63b7b3d8e32084057bbcdf6e7b0ad196480bbaba493a3b58e19a27e385b65385b67fe8b9e2a86269862151b39bce1e5952fce39960f63381d462865024b",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g009053",
+   "lane": "G1T",
+   "cell": "CONST",
+   "seed": 9007000000102,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "7c7eefae06685eda084015da8f7c6b9c057eef0107aa44da083015e28f7c6b9c057eef01074844da083015e28f7c6b9c7c7eefae06685eda084015da8f7c6b9c",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g009051",
+   "lane": "G1T",
+   "cell": "CONST",
+   "seed": 9007000000100,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "8ca698874ed32597cfcfb25ecb0840df153d6b2c740f9b09105a12b04345adb5ed0e1b05ead1e4998463b960dcfe050bc85f659f6aea357b4a21704f457bd567",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g009105",
+   "lane": "G1T",
+   "cell": "ECHO",
+   "seed": 9007000000004,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "c44a31d1f604fc5008400a0b567ae2a740af3bf0e315e0ed748726d7f30e36e1c44a31d1f604fc5008200a0b567ae2a740af3bf0e315e0ed748726d7f30e36e1",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g009215",
+   "lane": "G1T",
+   "cell": "ECHO",
+   "seed": 9007000000114,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "40406a6a6a000074e7000090083338ca554dd31b08401500004e000000000000000000000000000000bdbd0000000000000000c3406a6a6a000074e700009008",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g009157",
+   "lane": "G1T",
+   "cell": "ECHO",
+   "seed": 9007000000056,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "58f2d63b7b3d8e32084057bbcdf6e7b0ad196480bbaba493a3b58e19a27e385b65385b67fe8b9e2a86269862151b39bce1e5952fce39960f63381d462865024b",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g009203",
+   "lane": "G1T",
+   "cell": "ECHO",
+   "seed": 9007000000102,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "7c7eefae06685eda084015da8f7c6b9c057eef0107aa44da083015e28f7c6b9c057eef01074844da083015e28f7c6b9c7c7eefae06685eda084015da8f7c6b9c",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g009201",
+   "lane": "G1T",
+   "cell": "ECHO",
+   "seed": 9007000000100,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "8ca698874ed32597cfcfb25ecb0840df153d6b2c740f9b09105a12b04345adb5ed0e1b05ead1e4998463b960dcfe050bc85f659f6aea357b4a21704f457bd567",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g009255",
+   "lane": "G1T",
+   "cell": "INC",
+   "seed": 9007000000004,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "c44a31d1f604fc5008400a0b567ae2a740af3bf0e315e0ed748726d7f30e36e1c44a31d1f604fc5008200a0b567ae2a740af3bf0e315e0ed748726d7f30e36e1",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g009307",
+   "lane": "G1T",
+   "cell": "INC",
+   "seed": 9007000000056,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "58f2d63b7b3d8e32084057bbcdf6e7b0ad196480bbaba493a3b58e19a27e385b65385b67fe8b9e2a86269862151b39bce1e5952fce39960f63381d462865024b",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g009353",
+   "lane": "G1T",
+   "cell": "INC",
+   "seed": 9007000000102,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "7c7eefae06685eda084015da8f7c6b9c057eef0107aa44da083015e28f7c6b9c057eef01074844da083015e28f7c6b9c7c7eefae06685eda084015da8f7c6b9c",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g009351",
+   "lane": "G1T",
+   "cell": "INC",
+   "seed": 9007000000100,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "8ca698874ed32597cfcfb25ecb0840df153d6b2c740f9b09105a12b04345adb5ed0e1b05ead1e4998463b960dcfe050bc85f659f6aea357b4a21704f457bd567",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g009365",
+   "lane": "G1T",
+   "cell": "INC",
+   "seed": 9007000000114,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "40406a6a6a000074e7000090083338ca554dd31b08401500004e000000000000000000000000000000bdbd0000000000000000c3406a6a6a000074e700009008",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g009405",
+   "lane": "G1T",
+   "cell": "COND_ONE",
+   "seed": 9007000000004,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "c44a31d1f604fc5008400a0b567ae2a740af3bf0e315e0ed748726d7f30e36e1c44a31d1f604fc5008200a0b567ae2a740af3bf0e315e0ed748726d7f30e36e1",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g009457",
+   "lane": "G1T",
+   "cell": "COND_ONE",
+   "seed": 9007000000056,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "58f2d63b7b3d8e32084057bbcdf6e7b0ad196480bbaba493a3b58e19a27e385b65385b67fe8b9e2a86269862151b39bce1e5952fce39960f63381d462865024b",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g009503",
+   "lane": "G1T",
+   "cell": "COND_ONE",
+   "seed": 9007000000102,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "7c7eefae06685eda084015da8f7c6b9c057eef0107aa44da083015e28f7c6b9c057eef01074844da083015e28f7c6b9c7c7eefae06685eda084015da8f7c6b9c",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g009501",
+   "lane": "G1T",
+   "cell": "COND_ONE",
+   "seed": 9007000000100,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "8ca698874ed32597cfcfb25ecb0840df153d6b2c740f9b09105a12b04345adb5ed0e1b05ead1e4998463b960dcfe050bc85f659f6aea357b4a21704f457bd567",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g009515",
+   "lane": "G1T",
+   "cell": "COND_ONE",
+   "seed": 9007000000114,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "40406a6a6a000074e7000090083338ca554dd31b08401500004e000000000000000000000000000000bdbd0000000000000000c3406a6a6a000074e700009008",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g009555",
+   "lane": "G1T",
+   "cell": "COND_MULTI",
+   "seed": 9007000000004,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "c44a31d1f604fc5008400a0b567ae2a740af3bf0e315e0ed748726d7f30e36e1c44a31d1f604fc5008200a0b567ae2a740af3bf0e315e0ed748726d7f30e36e1",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g009607",
+   "lane": "G1T",
+   "cell": "COND_MULTI",
+   "seed": 9007000000056,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "58f2d63b7b3d8e32084057bbcdf6e7b0ad196480bbaba493a3b58e19a27e385b65385b67fe8b9e2a86269862151b39bce1e5952fce39960f63381d462865024b",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g009665",
+   "lane": "G1T",
+   "cell": "COND_MULTI",
+   "seed": 9007000000114,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "40406a6a6a000074e7000090083338ca554dd31b08401500004e000000000000000000000000000000bdbd0000000000000000c3406a6a6a000074e700009008",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g009653",
+   "lane": "G1T",
+   "cell": "COND_MULTI",
+   "seed": 9007000000102,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "7c7eefae06685eda084015da8f7c6b9c057eef0107aa44da083015e28f7c6b9c057eef01074844da083015e28f7c6b9c7c7eefae06685eda084015da8f7c6b9c",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g009651",
+   "lane": "G1T",
+   "cell": "COND_MULTI",
+   "seed": 9007000000100,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "8ca698874ed32597cfcfb25ecb0840df153d6b2c740f9b09105a12b04345adb5ed0e1b05ead1e4998463b960dcfe050bc85f659f6aea357b4a21704f457bd567",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g009706",
+   "lane": "G1T",
+   "cell": "SUM2",
+   "seed": 9007000000005,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "0013d7e82a0840150013d7e82a0828150013d7e82a08281500eed7e82a0828150013d7e82a0828150013d7e82a0840150013d7e82a0828150013d7e82a082815",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g009740",
+   "lane": "G1T",
+   "cell": "SUM2",
+   "seed": 9007000000039,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "f06ef06ef07505e308404b224b15bd3ff06ef06ef06ef07505e308404b224b15bd3ff06ef06ef07505e308224b224b15bd3faf6ef06ef06ef07505e308404b22",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g009757",
+   "lane": "G1T",
+   "cell": "SUM2",
+   "seed": 9007000000056,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "58f2d63b7b3d8e32084057bbcdf6e7b0ad196480bbaba493a3b58e19a27e385b65385b67fe8b9e2a86269862151b39bce1e5952fce39960f63381d462865024b",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g009860",
+   "lane": "G7",
+   "cell": "RANDOM/GRID/LOCAL",
+   "seed": 9008000000009,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "d780938e9e06433ce8c7812b98092f64d9a5083f671c6d80444d644c20c76c64409c6645496804f55165eec304c81be49625ea04a81572a2f05174af884b4f88",
+   "profile": {
+    "Z": {
+     "competent": false,
+     "rate": 0.35
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "NOT_COMPETENT"
+   }
+  },
+  {
+   "id": "g009801",
+   "lane": "G1T",
+   "cell": "SUM2",
+   "seed": 9007000000100,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "8ca698874ed32597cfcfb25ecb0840df153d6b2c740f9b09105a12b04345adb5ed0e1b05ead1e4998463b960dcfe050bc85f659f6aea357b4a21704f457bd567",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g009808",
+   "lane": "G1T",
+   "cell": "SUM2",
+   "seed": 9007000000107,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "4000c93c72506e0b973b591931380bf7e3638ad2755dfb7f1967eb21128a52502d0cd11c4818a994e658a899b769181d1a8415f3fd635202e2c7441bd96c4504",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g009849",
+   "lane": "G1T",
+   "cell": "SUM2",
+   "seed": 9007000000148,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "5b39dacb10013ae51a92a856a286a589ee4d834e55d6846a08ce398159ad31d198e03b084019b95a559c46b97746153be0f7560e33e7d9ef73d460caf92732e4",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g009815",
+   "lane": "G1T",
+   "cell": "SUM2",
+   "seed": 9007000000114,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "33156565ef009c00eaea00007c7c7c7c7c7c7c7c8e7c7c7c7cf1b93afde900b319b3b3b3172f17d1eb2b2b2b2b6c6cf66b6b0840156565ef009c00eaea00007c",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g009883",
+   "lane": "G7",
+   "cell": "RANDOM/GRID/LOCAL",
+   "seed": 9008000000032,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "14141414f31414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414",
+   "profile": {
+    "Z": {
+     "competent": false,
+     "rate": 0.05
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "NOT_COMPETENT"
+   }
+  },
+  {
+   "id": "g009892",
+   "lane": "G7",
+   "cell": "RANDOM/GRID/LOCAL",
+   "seed": 9008000000041,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "0840d3e9e41f93f32eb880a44b9e9f7caa1f82d5b1fc278915c96e2aba8ee30728f05ac2820cfde0af308f71e5a7d7a5c412a5a0afc2393704038b22f0d9e7a4",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g009917",
+   "lane": "G7",
+   "cell": "RANDOM/GRID/LOCAL",
+   "seed": 9008000000066,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "1414141414141414141414141414142814141414141414141414141414141414141414141414141414141414141414141414141414141414141414a614141414",
+   "profile": {
+    "Z": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "NOT_COMPETENT"
+   }
+  },
+  {
+   "id": "g009919",
+   "lane": "G7",
+   "cell": "RANDOM/GRID/LOCAL",
+   "seed": 9008000000068,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "4040fa404040404040404040404040404040404040404040404040404040ad4050404040404040404008401540404040404040c3404040404040404040404040",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g009996",
+   "lane": "G7",
+   "cell": "RANDOM/GRID/LOCAL",
+   "seed": 9008000000145,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "0840e56e8241024e6a86e41510dc225d4bd180b9eed9e8b9550ee190ab93b3b30820e56e8241024e6a86e41510dc225d4bd180b9eed9e8b9550ee190ab93b3b3",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g009979",
+   "lane": "G7",
+   "cell": "RANDOM/GRID/LOCAL",
+   "seed": 9008000000128,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "ce4e967dce4e967dce4e967d0140481500001300000013006669967d0069967d8c69967dce8b967dce29967da84e967ea84e967ece4e967dce4e967dce4e967d",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g009992",
+   "lane": "G7",
+   "cell": "RANDOM/GRID/LOCAL",
+   "seed": 9008000000141,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "cb287be44180f357ae57d50a06980840ca426e3a1504cc174242f34fd02050c4cb287be44180f357ae57d50a06980820ca426e3a1504cc1742eef34fd02050c4",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g009987",
+   "lane": "G7",
+   "cell": "RANDOM/GRID/LOCAL",
+   "seed": 9008000000136,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "94fea58242844bc9720140b00a205e48f942022a155627e39402a15cd3a4edae00a3bea5375fa438e71eb5985f80bfb5e6b6020e2de26fb3a0528e7df4c44392",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g010043",
+   "lane": "G7",
+   "cell": "RANDOM/GRID/WELL_MIXED",
+   "seed": 9008000000002,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "1a0840051e924ff562156400d54d1d9d1a0810051e924ff562156400d54d1d9d1a0810051e924ff562156400d54d1d9d1a0810051e924ff562156400d54d1d9d",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g010050",
+   "lane": "G7",
+   "cell": "RANDOM/GRID/WELL_MIXED",
+   "seed": 9008000000009,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "d7e4938e9e06433ce8c7812b98092f64d9a5083f671c6d80444d644c20c76c64409c6645496804f55165eec304c81be49625ea04a81572a2f05174af884b4f88",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 0.55
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g010054",
+   "lane": "G7",
+   "cell": "RANDOM/GRID/WELL_MIXED",
+   "seed": 9008000000013,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "40d5042438a1a372d801b309e43cb309e43c1248231540d5042438a1a372d801b309e43c1248231540d5042438a1a372d801b309e43c1248231540d5042438a1",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g010065",
+   "lane": "G7",
+   "cell": "RANDOM/GRID/WELL_MIXED",
+   "seed": 9008000000024,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "102a354df383fc48c993af645aead433106e0983ed55f06bc9700ddf15eabdd9102a354df383fc48c993b9645aead4a0106e0983ed55f06bc9700ddf15eabdd9",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g010073",
+   "lane": "G7",
+   "cell": "RANDOM/GRID/WELL_MIXED",
+   "seed": 9008000000032,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "797e00009b0000000009000000013ffc00005100000051000000000000005b130000220048000000ca0015f900000000000000000000009400003f3f3f3f3f79",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g010085",
+   "lane": "G7",
+   "cell": "RANDOM/GRID/WELL_MIXED",
+   "seed": 9008000000044,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "16d044375803d3c060e14078b557384877f2d7fedd573e157dab758582060ab4276d8ce9e1f45f95e200000000000000d924c51f8b51fc06264f890000005000",
+   "profile": {
+    "Z": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "NOT_COMPETENT"
+   }
+  },
+  {
+   "id": "g010107",
+   "lane": "G7",
+   "cell": "RANDOM/GRID/WELL_MIXED",
+   "seed": 9008000000066,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "0840ee15f1aa3300f1aa3300f1aa3b50f1fc3b50f1fc3b50f1fc3b50f119c5d7e5f7ebfc50f7ebfc50f7ebfc5050eafcd750ea920834ee15f1aa3300f1aa3300",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g010144",
+   "lane": "G7",
+   "cell": "RANDOM/GRID/WELL_MIXED",
+   "seed": 9008000000103,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "0b754a3662083f94c34d0f0967ca1886d0539006c0cc991280830c587f57e8bd7566263208f9f0da4d0fae7d2518861a53da066240137280d99215404ac7f400",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g010187",
+   "lane": "G7",
+   "cell": "RANDOM/GRID/WELL_MIXED",
+   "seed": 9008000000146,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "005cc5d202c9d3975e6bfb616f899ba6d091928efc83482a420cb8da989fdf38370a0e3b02f7504bdb87d465c50031b52adc96dfa4b34b0015fc40c0dfa4b34b",
+   "profile": {
+    "Z": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "NOT_COMPETENT"
+   }
+  },
+  {
+   "id": "g010153",
+   "lane": "G7",
+   "cell": "RANDOM/GRID/WELL_MIXED",
+   "seed": 9008000000112,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "0840b6756317b820969b415f00c4989920e39a9c296f9989686bcc92c618beaff1366ec2302c17b9e20c752cfe7063f97d7c666179402db27afe2a15945bfb59",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g010177",
+   "lane": "G7",
+   "cell": "RANDOM/GRID/WELL_MIXED",
+   "seed": 9008000000136,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "94fea58242844bc9720140b00a205e48f942022a155627e39402a15cd3a4edae00a3bea5375fa438e71eb5985f80bfb5e6b6020e2de26fb3a0528e7df4c44392",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g010233",
+   "lane": "G7",
+   "cell": "RANDOM/SOUP/WELL_MIXED",
+   "seed": 9008000000002,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "1a0840051e924ff562156400d54d1d9d1a0810051e924ff562156400d54d1d9d1a0810051e924ff562156400d54d1d9d1a0810051e924ff562156400d54d1d9d",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g010244",
+   "lane": "G7",
+   "cell": "RANDOM/SOUP/WELL_MIXED",
+   "seed": 9008000000013,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "40d5042438a1a372d801b309e43cb309e43c1248231540d5042438a1a372d801b309e43c1248231540d5042438a1a372d801b309e43c1248231540d5042438a1",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g010240",
+   "lane": "G7",
+   "cell": "RANDOM/SOUP/WELL_MIXED",
+   "seed": 9008000000009,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "d7e4938e9e06433ce8c7812b98092f64d9a5083f671c6d80444d644c20c76c64409c6645496804f55165eec304c81be49625ea04a81572a2f05174af884b4f88",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 0.55
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g010275",
+   "lane": "G7",
+   "cell": "RANDOM/SOUP/WELL_MIXED",
+   "seed": 9008000000044,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "16d044375803d3c060e14078b557384877f2d7fedd573e157dab758582060ab4276d8ce9e1f45f95e200000000000000d924c51f8b51fc06264f890000005000",
+   "profile": {
+    "Z": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "NOT_COMPETENT"
+   }
+  },
+  {
+   "id": "g010255",
+   "lane": "G7",
+   "cell": "RANDOM/SOUP/WELL_MIXED",
+   "seed": 9008000000024,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "102a354df383fc48c993af645aead433106e0983ed55f06bc9700ddf15eabdd9102a354df383fc48c993b9645aead4a0106e0983ed55f06bc9700ddf15eabdd9",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g010263",
+   "lane": "G7",
+   "cell": "RANDOM/SOUP/WELL_MIXED",
+   "seed": 9008000000032,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "797e00009b0000000009000000013ffc00005100000051000000000000005b130000220048000000ca0015f900000000000000000000009400003f3f3f3f3f79",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g010297",
+   "lane": "G7",
+   "cell": "RANDOM/SOUP/WELL_MIXED",
+   "seed": 9008000000066,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "0840ee15f1aa3300f1aa3300f1aa3b50f1fc3b50f1fc3b50f1fc3b50f119c5d7e5f7ebfc50f7ebfc50f7ebfc5050eafcd750ea920834ee15f1aa3300f1aa3300",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g010334",
+   "lane": "G7",
+   "cell": "RANDOM/SOUP/WELL_MIXED",
+   "seed": 9008000000103,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "0b754a3662083f94c34d0f0967ca1886d0539006c0cc991280830c587f57e8bd7566263208f9f0da4d0fae7d2518861a53da066240137280d99215404ac7f400",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g010343",
+   "lane": "G7",
+   "cell": "RANDOM/SOUP/WELL_MIXED",
+   "seed": 9008000000112,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "0840b6756317b820969b415f00c4989920e39a9c296f9989686bcc92c618beaff1366ec2302c17b9e20c752cfe7063f97d7c666179402db27afe2a15945bfb59",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g010367",
+   "lane": "G7",
+   "cell": "RANDOM/SOUP/WELL_MIXED",
+   "seed": 9008000000136,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "94fea58242844bc9720140b00a205e48f942022a155627e39402a15cd3a4edae00a3bea5375fa438e71eb5985f80bfb5e6b6020e2de26fb3a0528e7df4c44392",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g010377",
+   "lane": "G7",
+   "cell": "RANDOM/SOUP/WELL_MIXED",
+   "seed": 9008000000146,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "005cc5d202c9d3975e6bfb616f899ba6d091928efc83482a420cb8da989fdf38370a0e3b02f7504bdb87d465c50031b52adc96dfa4b34b0015fc40c0dfa4b34b",
+   "profile": {
+    "Z": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "NOT_COMPETENT"
+   }
+  },
+  {
+   "id": "g010485",
+   "lane": "G7",
+   "cell": "RANDOM/GRAPH/LOCAL",
+   "seed": 9008000000064,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "99400f005d3c00c5c500a5560000c1480b6b0080112d0fbf235e2300aa5d9b0215ed0840000f005d3c15c5c500a55679004dcd0b6b0080112d0fbf235e2300aa",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g010503",
+   "lane": "G7",
+   "cell": "RANDOM/GRAPH/LOCAL",
+   "seed": 9008000000082,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "084004945b2df0c28ba1f7fe051bdd64e85465681f3c5271e68ce21f35069b5d55d7118ef431ab4b46747bb9d966a0430f157a01ceacb1fb6f8b994b5a20253c",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g010536",
+   "lane": "G7",
+   "cell": "RANDOM/GRAPH/LOCAL",
+   "seed": 9008000000115,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "14141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414146114141414141414141414",
+   "profile": {
+    "Z": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "NOT_COMPETENT"
+   }
+  },
+  {
+   "id": "g010541",
+   "lane": "G7",
+   "cell": "RANDOM/GRAPH/LOCAL",
+   "seed": 9008000000120,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "ec79ee9e292b2563f6eca9250b748d9a546d4b82ad36530ce486ed487e9b02d5abbef7cce27402caadf5378c2b2d9da4045b9ad5b17d916a4f86bd68c8251132",
+   "profile": {
+    "Z": {
+     "competent": false,
+     "rate": 0.4
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "NOT_COMPETENT"
+   }
+  },
+  {
+   "id": "g010620",
+   "lane": "G7",
+   "cell": "RANDOM/NICHES/NICHES_ISOLATED",
+   "seed": 9008000000009,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "2b98092f64d9a53ce880812b98092f64d9a5083f671c6d86444d644c20c76c64409c6645496804f55165eec304c81be49625ea04a81572a2f05174af884b4f88",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 0.55
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g010642",
+   "lane": "G7",
+   "cell": "RANDOM/NICHES/NICHES_ISOLATED",
+   "seed": 9008000000031,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "6aa8b1f4e645600840e802d5dbc61f5c8f449b1949f6b0a6ecb5ce154347a3c49403116ab8cb015b8302018f3eebbdbc982d6d11052b6e5834d711bfc79c08ae",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g010747",
+   "lane": "G7",
+   "cell": "RANDOM/NICHES/NICHES_ISOLATED",
+   "seed": 9008000000136,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "94fea58242844bc9720140b00a205e48f942022a155627e39402a15cd3a4edae00a3bea5375fa438e71eb5985f80bfb5e6b6020e2de26fb3a0528e7df4c44392",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g010752",
+   "lane": "G7",
+   "cell": "RANDOM/NICHES/NICHES_ISOLATED",
+   "seed": 9008000000141,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "e849b9948e6b032b159aed0716b6c3d78ec5faaf41e8e849b9948e6b032b159aed0716b6c3d78ec5faaf41e849b9948e6b032b159aed0716b6c3d78ec5faaf41",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g010810",
+   "lane": "G7",
+   "cell": "RANDOM/NICHES/NICHES_LOW_MIG",
+   "seed": 9008000000009,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "d7e4938e9e06433ce880812b98092f64d9a5083f671c6d80444d644c20c76c64409c6645496804f55165eec304c81be49625ea04a8156ba2f05174af884b4f88",
+   "profile": {
+    "Z": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "NOT_COMPETENT"
+   }
+  },
+  {
+   "id": "g010840",
+   "lane": "G7",
+   "cell": "RANDOM/NICHES/NICHES_LOW_MIG",
+   "seed": 9008000000039,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "14144a141414141414141414141414141f1414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414",
+   "profile": {
+    "Z": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "NOT_COMPETENT"
+   }
+  },
+  {
+   "id": "g010853",
+   "lane": "G7",
+   "cell": "RANDOM/NICHES/NICHES_LOW_MIG",
+   "seed": 9008000000052,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414143714a9141414141414",
+   "profile": {
+    "Z": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "NOT_COMPETENT"
+   }
+  },
+  {
+   "id": "g010818",
+   "lane": "G7",
+   "cell": "RANDOM/NICHES/NICHES_LOW_MIG",
+   "seed": 9008000000017,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "40997c3d5385f82800f39ab56aea12cd5b4840157c20e985f828c9f314b5ebea47ca5bebaf157c204b850000c6000000000000000000000000e800000000d800",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g010937",
+   "lane": "G7",
+   "cell": "RANDOM/NICHES/NICHES_LOW_MIG",
+   "seed": 9008000000136,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "94fea58242844bc9720140b00a205e48f942022a155627e39402a15cd3a4edae00a3bea5375fa438e71eb5985f80bfb5e6b6020e2de26fb3a0528e7df4c44392",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g010942",
+   "lane": "G7",
+   "cell": "RANDOM/NICHES/NICHES_LOW_MIG",
+   "seed": 9008000000141,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "fc0840c9585045d2ace0fe11ddba4215e5cb7630f1a9f326fa00111e282fb548fc0820c9585045d2ace0fe11ddba4215e5cb7630f1a9f326fa00111e282fb548",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g010946",
+   "lane": "G7",
+   "cell": "RANDOM/NICHES/NICHES_LOW_MIG",
+   "seed": 9008000000145,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "81db90ab93b3b308409d1d1441e94eccf7e4150030000000d16dfa096feab9c281db90ab93b3b308209d1d1441e94eccf7e4150030000000d16dfa096feab9c2",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g010991",
+   "lane": "G7",
+   "cell": "RANDOM/NICHES/NICHES_HIGH_MIG",
+   "seed": 9008000000000,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "1414141414141414141414141414141414141414141414141414141414e714141414141414141414141414141414141414141414141414141414141414141414",
+   "profile": {
+    "Z": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "NOT_COMPETENT"
+   }
+  },
+  {
+   "id": "g011008",
+   "lane": "G7",
+   "cell": "RANDOM/NICHES/NICHES_HIGH_MIG",
+   "seed": 9008000000017,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "4000b2003f0085c935c9b928280c1212f0094840159f63728af828fdf32872622000b2003f0085c935c9b928280c1212f0094840159f63728af828fdf3287262",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g011104",
+   "lane": "G7",
+   "cell": "RANDOM/NICHES/NICHES_HIGH_MIG",
+   "seed": 9008000000113,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "14141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414",
+   "profile": {
+    "Z": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "NOT_COMPETENT"
+   }
+  },
+  {
+   "id": "g011133",
+   "lane": "G7",
+   "cell": "RANDOM/NICHES/NICHES_HIGH_MIG",
+   "seed": 9008000000142,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "141414141414141414141414141414141b14141429141414141414141414141414141414141414141414141414141414141414141414141414141414141414c4",
+   "profile": {
+    "Z": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "NOT_COMPETENT"
+   }
+  },
+  {
+   "id": "g011138",
+   "lane": "G7",
+   "cell": "RANDOM/NICHES/NICHES_HIGH_MIG",
+   "seed": 9008000000147,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "14141414141414147514141414141414141414401414141414141414141414141414141414141414141414141427141414141414141414141414141414141414",
+   "profile": {
+    "Z": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "NOT_COMPETENT"
+   }
+  },
+  {
+   "id": "g011136",
+   "lane": "G7",
+   "cell": "RANDOM/NICHES/NICHES_HIGH_MIG",
+   "seed": 9008000000145,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "3171910c66e476320e4cb89a4a982208409dfd5e8e5641d1f7c015855e6933003171910c66e476320e4cb89a4a982208209dfd5e8e5655d1f7c015855e693300",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g011127",
+   "lane": "G7",
+   "cell": "RANDOM/NICHES/NICHES_HIGH_MIG",
+   "seed": 9008000000136,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "94fea58242844bc9720140b00a205e48f942022a155627e39402a15cd3a4edae00a3bea5375fa438e71eb5985f80bfb5e6b6020e2de26fb3a0528e7df4c44392",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g011221",
+   "lane": "G7",
+   "cell": "RANDOM/NICHES/NICHES_PERIODIC",
+   "seed": 9008000000040,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "d8bf62c5a2062008408450c4c57903dfc275f1e0393e15d03c621d11d7d9c26ad8bf62c5a2062008208450c4c57903dfc275f1e0393e15d03c621d11d7d9c26a",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g011317",
+   "lane": "G7",
+   "cell": "RANDOM/NICHES/NICHES_PERIODIC",
+   "seed": 9008000000136,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "94fea58242844bc9720140b00a205e48f942022a155627e39402a15cd3a4edae00a3bea5375fa438e71eb5985f80bfb5e6b6020e2de26fb3a0528e7df4c44392",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g011326",
+   "lane": "G7",
+   "cell": "RANDOM/NICHES/NICHES_PERIODIC",
+   "seed": 9008000000145,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "08409d443d41e9cb6afde4159f18e975ff2487d9a122019d3bc356c4bc588f8308209d443d41e9cb6afde4159f18e975ff2487d9a122019d3bc356c4bc588f83",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g011380",
+   "lane": "G7",
+   "cell": "RANDOM/NICHES/NICHES_COMPETENCE_MIG",
+   "seed": 9008000000009,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "06433ce880812b98092f64d9a5083f671c6d80444d644c20c76c64409c6645496804f55165eec304c81be49625ea04a81572a2f05174af884b4f88d7e4938e9e",
+   "profile": {
+    "Z": {
+     "competent": false,
+     "rate": 0.45
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "NOT_COMPETENT"
+   }
+  },
+  {
+   "id": "g011507",
+   "lane": "G7",
+   "cell": "RANDOM/NICHES/NICHES_COMPETENCE_MIG",
+   "seed": 9008000000136,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "94fea58242844bc9720140b00a205e48f942022a155627e39402a15cd3a4edae00a3bea5375fa438e71eb5985f80bfb5e6b6020e2de26fb3a0528e7df4c44392",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g011570",
+   "lane": "G7",
+   "cell": "RANDOM/NICHES/NICHES_POLLINATION",
+   "seed": 9008000000009,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "d7e4938e9e06433ce880812b98092f64d9a5083f671c6d80444d644c20c76c64409c6645496804f55165eec304c81be49625ea04a81572a2f05174af884b4f88",
+   "profile": {
+    "Z": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "NOT_COMPETENT"
+   }
+  },
+  {
+   "id": "g011635",
+   "lane": "G7",
+   "cell": "RANDOM/NICHES/NICHES_POLLINATION",
+   "seed": 9008000000074,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "40cbad89810d74358980000000000000000000002e24bcd42e24bcd410c4624815352a80000000000000000000002e24bcd42e24bcd410c4624815352a3d2e24",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g011652",
+   "lane": "G7",
+   "cell": "RANDOM/NICHES/NICHES_POLLINATION",
+   "seed": 9008000000091,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "a1aa0b4cea0d9e68084086f3a9f13a42dcbb15ddb9dbe8708e491de15cb2005da1aa0b4cea0d9e68082086f3a9f13a42dcbb15ddb9dbe8708e491de1acb2005d",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g011697",
+   "lane": "G7",
+   "cell": "RANDOM/NICHES/NICHES_POLLINATION",
+   "seed": 9008000000136,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "94fea58242844bc9720140b00a205e48f942022a155627e39402a15cd3a4edae00a3bea5375fa438e71eb5985f80bfb5e6b6020e2de26fb3a0528e7df4c44392",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g011702",
+   "lane": "G7",
+   "cell": "RANDOM/NICHES/NICHES_POLLINATION",
+   "seed": 9008000000141,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "0840ca61c36d068ac24dc5ddf7c5157b1f2c6b6b39a8acc17559ac0390e3946b0820ca61c36d068ac24dc5ddf7c5157b1f2c6b6b39a8acc17559ac0390e3946b",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g011706",
+   "lane": "G7",
+   "cell": "RANDOM/NICHES/NICHES_POLLINATION",
+   "seed": 9008000000145,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "eef222d778d16dfaee5c81b9c20e8790ab93b3b308409d1d3d41e94e6af7e415eef222d778d16dfaee5c81b9c20e8790ab93b3b308209d1d3d41e94e6af7e415",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g011760",
+   "lane": "G7",
+   "cell": "RANDOM/NICHES/NICHES_ENV_MIG",
+   "seed": 9008000000009,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "2b98092f64d9a53ce880812b98092f64d9a5083f671c6d86444d644c20c76c64409c6645496804f55165eec304c81be49625ea04a81572a2f05174af884b4f88",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 0.55
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g011782",
+   "lane": "G7",
+   "cell": "RANDOM/NICHES/NICHES_ENV_MIG",
+   "seed": 9008000000031,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "6aa8b1f4e645600840e802d5dbc61f5c8f449b1949f6b0a6ecb5ce154347a3c49403116ab8cb015b8302018f3eebbdbc982d6d11052b6e5834d711bfc79c08ae",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g011887",
+   "lane": "G7",
+   "cell": "RANDOM/NICHES/NICHES_ENV_MIG",
+   "seed": 9008000000136,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "94fea58242844bc9720140b00a205e48f942022a155627e39402a15cd3a4edae00a3bea5375fa438e71eb5985f80bfb5e6b6020e2de26fb3a0528e7df4c44392",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g011892",
+   "lane": "G7",
+   "cell": "RANDOM/NICHES/NICHES_ENV_MIG",
+   "seed": 9008000000141,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "e849b9948e6b032b159aed0716b6c3d78ec5faaf41e8e849b9948e6b032b159aed0716b6c3d78ec5faaf41e849b9948e6b032b159aed0716b6c3d78ec5faaf41",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g011950",
+   "lane": "G7",
+   "cell": "RANDOM/NICHES/RESERVOIR",
+   "seed": 9008000000009,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "433ce880812b98092f64d9a54f092f64d9a5083f671c6d80444d644c20c76cb8409ca745496804f55165eec304c81be49625ea04a81572a2f05174af88454f67",
+   "profile": {
+    "Z": {
+     "competent": false,
+     "rate": 0.35
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "NOT_COMPETENT"
+   }
+  },
+  {
+   "id": "g012070",
+   "lane": "G7",
+   "cell": "RANDOM/NICHES/RESERVOIR",
+   "seed": 9008000000129,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "14141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414",
+   "profile": {
+    "Z": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "NOT_COMPETENT"
+   }
+  },
+  {
+   "id": "g012067",
+   "lane": "G7",
+   "cell": "RANDOM/NICHES/RESERVOIR",
+   "seed": 9008000000126,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "141414141414141414141414141414141414c11414148a1414141414141414141414141414141414141414141414141414141414141414141414141414140000",
+   "profile": {
+    "Z": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "NOT_COMPETENT"
+   }
+  },
+  {
+   "id": "g012077",
+   "lane": "G7",
+   "cell": "RANDOM/NICHES/RESERVOIR",
+   "seed": 9008000000136,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "94fea58242844bc9720140b00a205e48f942022a155627e39402a15cd3a4edae00a3bea5375fa438e71eb5985f80bfb5e6b6020e2de26fb3a0528e7df4c44392",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  },
+  {
+   "id": "g012053",
+   "lane": "G7",
+   "cell": "RANDOM/NICHES/RESERVOIR",
+   "seed": 9008000000112,
+   "reproduction": "ENDOGENOUS_COPY",
+   "representation": "Z80_64",
+   "tape": "e6eb2f9c4723c75283eb77ae470e829565b22d083fbf937d15794aab01d03400e6eb2f9c4723c75283eb77ae470e829565b22d081fbf937d15794aab01d03400",
+   "profile": {
+    "Z": {
+     "competent": true,
+     "rate": 1.0
+    },
+    "R1": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "R2": {
+     "competent": false,
+     "rate": 0.0
+    },
+    "class": "ZERO_DEPENDENT"
+   }
+  }
+ ]
+}
