@@ -139,8 +139,11 @@ class World:
     def __init__(self, cfg: Config, seed: int):
         self.cfg = cfg; self.seed = seed
         self.rng = random.Random(seed)
-        assert cfg.reg_world in ("ZERO", "CARRIED", "RANDOM"), cfg.reg_world
-        assert cfg.reg_world == "ZERO" or cfg.layout == "SHARED", "register-world axis: SHARED layout only"
+        if cfg.reg_world not in ("ZERO", "CARRIED", "RANDOM"):
+            raise ValueError("unknown reg_world %r" % cfg.reg_world)
+        if cfg.reg_world != "ZERO" and cfg.layout != "SHARED":
+            raise ValueError("register-world axis: SHARED layout only")      # review tsk-c26c09590d3b fix 2 (was assert)
+        self._pre_regs = None
         self.reg_rng = random.Random("reg_world|%d" % seed) if cfg.reg_world == "RANDOM" else None
         self.L = cfg.L
         n = cfg.cells
@@ -344,9 +347,11 @@ class World:
         if w == "ZERO":
             return None
         if w == "CARRIED":
+            self._pre_regs = o.regs
             return o.regs
         r = self.reg_rng
-        return tuple(r.randrange(256) for _ in range(6)) + (bool(r.getrandbits(1)), bool(r.getrandbits(1)))
+        self._pre_regs = tuple(r.randrange(256) for _ in range(6)) + (bool(r.getrandbits(1)), bool(r.getrandbits(1)))
+        return self._pre_regs
 
     def _exit_regs(self, o: Org, tr) -> None:
         if self.cfg.reg_world == "CARRIED":
@@ -592,6 +597,8 @@ class World:
             if self.first_self_replication is None:
                 self.first_self_replication = {"tick": self.tick, "id": parent.id, "tape": self._pre_tape.hex(), "mechanism": mechanism,
                                                "fidelity_pre": round(fid_pre, 3),
+                                               **({"entry_regs": list(self._pre_regs) if self._pre_regs else None}
+                                                  if self.cfg.reg_world != "ZERO" else {}),       # replayable origin (review)
                                                "seeded": parent.glineage in self.seed_lineages or parent.lineage in self.seed_lineages,
                                                "genealogy": self._genealogy(parent.id)}
         self.events.append({"tick": self.tick, "kind": "copy", "parent": parent.id, "child": c.id, "cell": j, "fidelity": round(fidelity, 3),
@@ -659,6 +666,8 @@ class World:
             if replaced is not None:
                 self.overwrite_deaths += 1
             c = self._spawn(j, child, parent.id, "EXTERNAL", lineage=parent.lineage, glineage=parent.glineage)
+            if cfg.reg_world == "CARRIED" and replaced is not None:
+                c.regs = replaced.regs                     # review tsk-c26c09590d3b fix 1: same rule as endogenous births
             parent.replications += 1; parent.last_repro_tick = self.tick
             if j in empties:
                 empties.remove(j)
