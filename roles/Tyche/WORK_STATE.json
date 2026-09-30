@@ -3,7 +3,7 @@
   "seat": "Tyche",
   "mwo_id": "MWO-0004",
   "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
-  "updated_at_utc": "2026-09-30T14:30:00Z",
+  "updated_at_utc": "2026-09-30T15:10:00Z",
   "state": "ACTIVE",
   "branch": "tyche/dark-ecology-v0-2026-09-30",
   "head_sha": "(this commit; see git log -1 -- roles/Tyche/WORK_STATE.json)",
@@ -57,9 +57,9 @@
     "roles/Tyche/REVIEW_PACKET_v0_2026-09-30.txt",
     "tyche/runs/v0_2026-09-30/REPORT.md"
   ],
-  "work_order": "Operator v1 directive 2026-09-30 (roles/Tyche/prompts/2026-09-30_v1_directive/) within CWO 2026-09-30 and MWO-0004",
-  "current": "v1 DONE (gate 6 FAIL; counterfactual false: noisy lexicase preserves useless lineages). Awaiting operator read of REVIEW_PACKET_v1; meanwhile prepare v2 design (strict utility-gated arm, order>=3 parity needles, triple coalitions, cheap pair screening, preregistered neutral-persistence rate) -- design only, no run until reviewed",
-  "next": "v2 prereg after operator/review read",
+  "work_order": "Operator v2 pressure-map directive 2026-09-30 (roles/Tyche/prompts/2026-09-30_v2_pressure_map/) within CWO 2026-09-30 and MWO-0004",
+  "current": "v2 build per roles/Tyche/design/V2_PRESSURE_MAP_DESIGN.md: z-scored evals, worlds_v2 (7 difficulty classes, hidden precursors, exact certificates), regime switching, STRICT/LEX/RES arms, SOLO/RELATED/BROAD, triples + MI pre-screen, lens-of-lens, natural-history tracer",
+  "next": "Certificates + timing pilot -> PREREG v2 -> Block R (regime change, 18 runs) then Block M (static map, 18 runs)",
   "reserve": [
     "Gate 7: natural 122-residual habitat -- ONLY after gate 6 is shown",
     "Evolvable grammar levels (new operators -> bytecode-VM genome)",
@@ -68,5 +68,5 @@
   ],
   "blocked": [],
   "resource_status": "Item v0 used <= 15.4 CPU core-hours on M2 (envelope 16/item, 48/24h per seat); no lease claimed; nothing running",
-  "last_receipt": "v1 complete: REPORT_v1.md + REVIEW_PACKET_v1 (this commit); catalogue v0.1 8cb8d804a"
+  "last_receipt": "v2 directive db985709e; design doc (this commit)"
 }
