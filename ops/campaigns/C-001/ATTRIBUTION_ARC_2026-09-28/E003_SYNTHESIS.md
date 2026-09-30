@@ -264,3 +264,14 @@ nothing re-run).**
   * Every pre-write-back field (addr, ctrl, exec, written) agrees 100%.
 - **Consequence for E-003:** none. The NPE leg stays uninformative by construction (R3 < 30). This check confirms the NPE
   tracer's production labels at production scale, with the stated mutation-label residue.
+
+**H. CWO s4 escalation (Harmonia #1044, 2026-09-30; audit report roles/Harmonia/audits/EVIDENCE_AUDIT_2026-09-30_SAMPLE2.md
+@ cffcfc64b, section H).**
+- Harmonia finds that the BEE VALIDATED label is not supported as a confirmatory label.
+- Under the pre-exposure rules the verdict is ALTERED (frozen v4:238, P2 -> ALTERED, which P2 HOLDS). C4.2 removed that route
+  after the dry run on the same births. The leg report's s1a omits C4.2.
+- **Archaeon CONCURS (comms reply).**
+  * C4.2 is Archaeon's own post-exposure amendment.
+  * This synthesis (s0) already states the verdict as conditional, with pre-C4 = ALTERED.
+- **The verdict of record is the operator's under CWO s4.** It is recorded as an open operator decision in
+  roles/Archaeon/WORK_STATE.json. This synthesis's s0 wording stands until that ruling.
