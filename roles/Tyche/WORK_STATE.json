@@ -3,7 +3,7 @@
   "seat": "Tyche",
   "mwo_id": "MWO-0004",
   "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
-  "updated_at_utc": "2026-09-30T13:45:00Z",
+  "updated_at_utc": "2026-09-30T16:30:00Z",
   "state": "ACTIVE",
   "branch": "tyche/dark-ecology-v0-2026-09-30",
   "head_sha": "(this commit; see git log -1 -- roles/Tyche/WORK_STATE.json)",
@@ -40,19 +40,15 @@
       "status": "DONE",
       "report": "tyche/runs/v1_2026-09-30/REPORT_v1.md",
       "verdict": "GATE6 FAIL"
+    },
+    {
+      "id": "v2_blockR",
+      "status": "DONE",
+      "report": "tyche/runs/v2_blockR/REPORT_BLOCK_R.md"
     }
   ],
   "fabric_tasks": [],
-  "running": [
-    {
-      "what": "v2 Block R attempt 2: 36 runs, 50 gens, switch 20",
-      "host": "SPECTREX5 (M2)",
-      "command": "scratchpad run_blockR.sh (<= 2 rbroad at once, tree-kill on exit) -> tyche/runs/v2_blockR/*",
-      "max_concurrent_processes": "about 22",
-      "started_utc": "2026-09-30T13:45Z",
-      "compute_upper_bound_core_h": 12
-    }
-  ],
+  "running": [],
   "blocked_on": [],
   "next_actions": [
     "Behaviour-tag + raw-row enrichment of imported entries",
@@ -67,7 +63,7 @@
     "tyche/runs/v0_2026-09-30/REPORT.md"
   ],
   "work_order": "Operator v2 pressure-map directive 2026-09-30 (roles/Tyche/prompts/2026-09-30_v2_pressure_map/) within CWO 2026-09-30 and MWO-0004",
-  "current": "v2 Block R attempt 2 running (operator go-ahead; amendment 1)",
+  "current": "v2 Block R DONE (RH1-RH4 false; 2/72 adaptations; one reserve-preserved assembly after regime change). Next: Block M static pressure map (prereg with OV-clock fix and lessons)",
   "next": "Certificates + timing pilot -> PREREG v2 -> Block R (regime change, 18 runs) then Block M (static map, 18 runs)",
   "reserve": [
     "Gate 7: natural 122-residual habitat -- ONLY after gate 6 is shown",
@@ -77,5 +73,5 @@
   ],
   "blocked": [],
   "resource_status": "Item v0 used <= 15.4 CPU core-hours on M2 (envelope 16/item, 48/24h per seat); no lease claimed; nothing running",
-  "last_receipt": "v2 directive db985709e; design doc (this commit)"
+  "last_receipt": "Block R report tyche/runs/v2_blockR/REPORT_BLOCK_R.md (this commit)"
 }

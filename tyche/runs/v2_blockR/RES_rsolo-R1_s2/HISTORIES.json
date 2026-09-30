@@ -1,0 +1,141 @@
+[
+ {
+  "assembly": "COALITION",
+  "first_carrier": {
+   "0": {
+    "gen": 10,
+    "home_val": [
+     0.078667,
+     6.19
+    ],
+    "id": "L-3202549548",
+    "ops": [
+     "drift",
+     "temporal",
+     "temporal"
+    ],
+    "valued_elsewhere": []
+   },
+   "1": {
+    "gen": 0,
+    "home_val": [
+     0.046667,
+     3.914
+    ],
+    "id": "L-41bfe49f5f",
+    "ops": [
+     "init"
+    ],
+    "valued_elsewhere": []
+   },
+   "2": {
+    "gen": 12,
+    "home_val": [
+     0.111,
+     11.063
+    ],
+    "id": "L-10b42808a4",
+    "ops": [
+     "rewire",
+     "point"
+    ],
+    "valued_elsewhere": []
+   }
+  },
+  "gradient": [
+   [
+    0,
+    0.0023
+   ],
+   [
+    5,
+    0.004
+   ],
+   [
+    8,
+    0.0007
+   ],
+   [
+    9,
+    0.0143
+   ],
+   [
+    10,
+    0.0787
+   ],
+   [
+    11,
+    0.048
+   ],
+   [
+    12,
+    0.111
+   ],
+   [
+    13,
+    0.259
+   ],
+   [
+    14,
+    0.232
+   ],
+   [
+    15,
+    0.209
+   ],
+   [
+    16,
+    0.22
+   ],
+   [
+    17,
+    0.251
+   ],
+   [
+    18,
+    0.251
+   ],
+   [
+    19,
+    0.2373
+   ],
+   [
+    20,
+    0.2373
+   ],
+   [
+    -1,
+    null
+   ]
+  ],
+  "kind": "coalition",
+  "lens": "L-70df3f4608",
+  "n_ancestors": 35,
+  "oracle_deficit": 0.5006666666666666,
+  "precursors_never_carried": [],
+  "slot": "R1_v0",
+  "spec": "R1_v0@L1",
+  "strict_survivable_frac": 0.688,
+  "test": 0.25733333333333336,
+  "transition": {
+   "child": "L-71112922ec",
+   "child_gain": 0.259,
+   "donors": [],
+   "gen": 13,
+   "jump": 0.148,
+   "ops": [
+    "delete",
+    "delete"
+   ],
+   "parent": "L-10b42808a4",
+   "parent_gain": 0.111,
+   "parent_valued_elsewhere": []
+  },
+  "why_survived": {},
+  "zero_utility_gens": {
+   "0": 0,
+   "1": 0,
+   "2": 0
+  }
+ }
+]
