@@ -1,6 +1,6 @@
 # Cosmos RESULTS (four layers, never one score)
 
-Currency: 2026-09-29. Machine-checked. Each entry: `### <id> | <title>` then the keys status,
+Currency: 2026-09-30. Machine-checked. Each entry: `### <id> | <title>` then the keys status,
 observation, law, domain, falsifier, baselines (all non-empty), plus optional notes. status in
 {PROVISIONAL, SURVIVED_Z2, SURVIVED_Z3, RESTRICTED, KILLED}. A KILLED result must also have a GRAVEYARD
 entry (key: graveyard).
@@ -28,3 +28,13 @@ NOT MEASURED; it is not left out.
 - falsifier: as for R-0001; also T-F1: a world where A and B disagree beyond noise, on which B loses
 - baselines: majority .500; 5-NN .833; DEFINITION RUNG on F with v4 coords .943; McNemar law vs rung (3, 8) p .227 (Cosmos recomputed 2026-09-29 from F_adjudication.json B_c1_v4). The rung itself moves from .887 to .943 between v3 and v4 coordinates, so on F the coordinate map matters more than the law. Noise ceiling and near-boundary BA NOT MEASURED.
 - notes: status PROVISIONAL -> RESTRICTED on 2026-09-29, for the same reason as R-0001
+
+### R-0003 | C3 preliminary law (Session 1) -- killed before holdout; the falsification is the result
+- status: KILLED
+- observation: 120 visible worlds (3 families) + 12 substitution + 90 adversary worlds. The law passed its own preregistered gates L1-L5. The coordinate audit then REJECTED it (2 independent replicas). The autopsy re-executed the zero-parameter P1/P2 precondition rule: 104/120, 12/12 substitution. Law vs rule: in-sample 6:1 discordant (p .125, all 6 noise-floor cases); out-of-sample confident stratum 42 = 42. Family recoverable from the coordinate set at .77 (chance .33).
+- law: WITHHELD (GRAVEYARD G-0006; hash-committed via the withheld branch head e73e5eb26 and FREEZES F-0000)
+- domain: Cosmos-authored visible families only (one author lineage). Never exposed to a holdout; D2 unspent.
+- falsifier: (already applied) a zero-parameter rule from the certificate semantics matches the law out of sample, and the law's coordinate shares the certificate's paired-noise machinery
+- baselines: DEFINITION RUNG (zero-parameter P1/P2 preconditions) 104/120 (not preregistered; added by the autopsy); majority .673 and family-ID .788 on the 113 determinate rows (FUNCTIONAL target); a single-coordinate threshold, the constant and 5-NN were the preregistered baselines (LOLO BA in the withheld LAW store). Replicate noise ceiling NOT MEASURED.
+- graveyard: G-0006
+- notes: operator disposition 2026-09-30: CLOSED / KILLED BEFORE HOLDOUT, preserved as a scar. Public autopsy research/reviews/AUTOPSY_C3_PUBLIC_2026-09-30.md (lessons L1-L7 bind C4).
