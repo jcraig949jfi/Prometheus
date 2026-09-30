@@ -4,11 +4,11 @@
   "mwo_id": "MWO-0004",
   "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
   "mwo_sha256": "925660b2d2be53af2ee4195391e484d9649bbd4ee828cd60432ce2f0903a99df",
-  "updated_at_utc": "2026-09-30T09:30:37Z",
+  "updated_at_utc": "2026-09-30T10:21:30Z",
   "state": "WORKING",
-  "state_reason": "CWO 2026-09-30: E-010 steering lesion CLOSED (STEERING_REQUIRED: the lesion collapses rcv_str to rcv's level; regression gate PASS). promexec round-2 source and its delta reviewed pre-install (3cf32a64); round 2 proper waits on the operator install. Next rank-2 item promoted.",
+  "state_reason": "CWO 2026-09-30: E-011 trace lesion CLOSED (PARTIAL: rcv_adr 10/128 vs rcv_add 22/128, additive null 5/128; regression gate PASS). E-010 erratum applied (Harmonia #1056). Next lesion promoted.",
   "branch": "aether/mwo0001-2026-09-28",
-  "head_sha": "a797990e743416643e4f1e1c70e4e6a0ab0b2e0d",
+  "head_sha": "4f45f722b5064f85fc780426c5e0431423008cd5",
   "head_sha_note": "the latest pushed work commit before this WORK_STATE commit (the file cannot contain its own commit hash)",
   "threads": [
     {
@@ -51,6 +51,12 @@
   ],
   "experiments": [
     {
+      "id": "E-011",
+      "status": "CLOSED",
+      "verdict": "PARTIAL",
+      "report": "ops/campaigns/C-002/E-011/RESULT.md"
+    },
+    {
       "id": "E-010",
       "status": "CLOSED",
       "verdict": "STEERING_REQUIRED",
@@ -76,28 +82,28 @@
   ],
   "fabric_tasks": [
     {
-      "id": "tsk-faf0ee2a8b99",
-      "experiment": "E-010",
+      "id": "tsk-5e03e4878646",
+      "experiment": "E-011",
       "state": "completed"
     },
     {
-      "id": "tsk-a5b12c38c4fa",
-      "experiment": "E-010",
+      "id": "tsk-e3141de95e38",
+      "experiment": "E-011",
       "state": "completed"
     },
     {
-      "id": "tsk-84d2971ced12",
-      "experiment": "E-010",
+      "id": "tsk-a3751385973c",
+      "experiment": "E-011",
       "state": "completed"
     },
     {
-      "id": "tsk-000a146f4107",
-      "experiment": "E-010",
+      "id": "tsk-ac21bf162439",
+      "experiment": "E-011",
       "state": "completed"
     },
     {
-      "id": "tsk-f188e8ee7b3c",
-      "experiment": "E-010",
+      "id": "tsk-00d9b9adcb0e",
+      "experiment": "E-011",
       "state": "completed"
     }
   ],
@@ -112,9 +118,9 @@
   ],
   "operator_decisions_required": [],
   "latest_reports": [
+    "ops/campaigns/C-002/E-011/RESULT.md",
     "ops/campaigns/C-002/E-010/RESULT.md",
-    "roles/Aether/reviews/2026-09-30_promexec_round2_source/FINDINGS.md",
-    "Aether/AETH-03/FOLLOWUP_RANKING_2026-09-30.md"
+    "roles/Aether/reviews/2026-09-30_promexec_round2_source/FINDINGS.md"
   ],
   "migration_report": "roles/Aether/MIGRATION_REPORT_MWO-0002.json",
   "fp001_result": "roles/Aether/probes/FP-001_RESULT.json",
@@ -130,13 +136,12 @@
     "DEF-AETH-001 RESOLVED upstream (Odysseus #1000, DEF-ODY-015)"
   ],
   "work_order": "MWO-0004 + operator CWO 2026-09-30 (ops/fleet/CWO_2026-09-30_FLEET_ACTIVATION.md, blob ab93f646)",
-  "current": "rank 2: rcv_add trace lesion -- design + preregister (E-011), then run",
-  "next": "rcv_str frozen-energy-snapshot lesion (separates dynamic coupling from static aim-energy correlation; E-010 limit)",
+  "current": "rcv_str frozen-energy-snapshot lesion -- design + preregister (E-012), then run (separates dynamic coupling from static aim-energy correlation; E-010 limit)",
+  "next": "value-provenance detector (rank 3; also the only way to complete the rcv_add lesion, per E-011's construction limit)",
   "reserve": [
-    "value-provenance detector (Builder-lane candidate)",
     "AETH-01 arbitration finite-run diagnostic",
     "AGE/Builder friction feed"
   ],
-  "resource_status": "local CPU only; about 3 CPU-h in the rolling 24 h (MWO-0004 R2 cap 48); no GPU, no paid compute",
-  "last_receipt": "ops/campaigns/C-002/E-010/RESULT.md @ 4b29572f1 (STEERING_REQUIRED)"
+  "resource_status": "local CPU only; about 4 CPU-h in the rolling 24 h (R2 cap 48); no GPU, no paid compute",
+  "last_receipt": "ops/campaigns/C-002/E-011/RESULT.md @ 4f45f722b (PARTIAL)"
 }
