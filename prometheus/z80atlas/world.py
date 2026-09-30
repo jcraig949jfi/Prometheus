@@ -82,6 +82,9 @@ class Config:
     # at zero. RANDOM = fresh uniform registers per execution from a per-run RNG that is never the world's RNG.
     # Omitted from to_dict() at its default, so every historical config dict and plan hash is unchanged.
     reg_world: str = "ZERO"              # ZERO | CARRIED | RANDOM
+    reg_zero_p: float = 0.0             # CARRIED only: before each execution the entry registers are reset to zero with this
+                                        # probability (NPE's SCHEDULE text: "ZERO applied with probability p, else CARRIED"),
+                                        # drawn from the per-run register RNG; 0.0 = plain CARRIED; omitted from to_dict() at 0.0
 
     @property
     def L(self) -> int:
@@ -108,7 +111,8 @@ class Config:
         return {"ldir": self.ldir, "undefined": self.undefined_op}
 
     def to_dict(self) -> dict:
-        return {k: getattr(self, k) for k in self.__dataclass_fields__ if not (k == "reg_world" and self.reg_world == "ZERO")}
+        return {k: getattr(self, k) for k in self.__dataclass_fields__
+                if not ((k == "reg_world" and self.reg_world == "ZERO") or (k == "reg_zero_p" and self.reg_zero_p == 0.0))}
 
 
 @dataclass
@@ -143,8 +147,10 @@ class World:
             raise ValueError("unknown reg_world %r" % cfg.reg_world)
         if cfg.reg_world != "ZERO" and cfg.layout != "SHARED":
             raise ValueError("register-world axis: SHARED layout only")      # review tsk-c26c09590d3b fix 2 (was assert)
+        if cfg.reg_zero_p and (cfg.reg_world != "CARRIED" or not 0.0 < cfg.reg_zero_p < 1.0):
+            raise ValueError("reg_zero_p needs reg_world CARRIED and 0 < p < 1")
         self._pre_regs = None
-        self.reg_rng = random.Random("reg_world|%d" % seed) if cfg.reg_world == "RANDOM" else None
+        self.reg_rng = random.Random("reg_world|%d" % seed) if (cfg.reg_world == "RANDOM" or cfg.reg_zero_p) else None
         self.L = cfg.L
         n = cfg.cells
         self.cells: List[Optional[Org]] = [None] * n
@@ -347,6 +353,8 @@ class World:
         if w == "ZERO":
             return None
         if w == "CARRIED":
+            if self.cfg.reg_zero_p and self.reg_rng.random() < self.cfg.reg_zero_p:
+                o.regs = None                              # the scaffold applied this time: the organism enters at zero
             self._pre_regs = o.regs
             return o.regs
         r = self.reg_rng
