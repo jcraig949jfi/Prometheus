@@ -21,7 +21,7 @@ worker GitHub credentials added; the orchestrating seat commits on behalf of exe
 | E-007 | Known-answer lane: does the unit machinery dispatch, duplicate, verify and complete correctly? (Block G) | see E-007 |
 | E-008 | Are rcv_add / rcv_str locality conclusions horizon-robust to 10,000 ticks? (d_horizon falsifier; Fabric, MWO-0001) | see E-008 |
 | E-009 | Do the Block D positives (rcv_add, rcv_str) replicate on fresh seeds 4-7 under the unchanged N1 rule? (MWO-0004 G4; Fabric) | see E-009 |
-| E-010 | Does rcv_str's super-additivity need energy-coupled aim? (steering lesion rcv_sfx; controlled intervention; CWO 2026-09-30) | see E-010 |
+| E-010 | Does rcv_str's super-additivity need energy-coupled aim? (steering lesion rcv_sfx; CLOSED: STEERING_REQUIRED) | see E-010 |
 
 Task numbering is campaign-wide (as C-001). Portable-Task record, as C-001: code refs (pinned commit + LF-normalised sha256 of
 every imported module), inputs (canonical parameters + sha256; the unit id is derived from them), a host-independent command

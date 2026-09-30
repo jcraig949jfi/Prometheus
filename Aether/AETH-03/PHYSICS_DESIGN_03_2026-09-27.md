@@ -325,3 +325,18 @@ The UNRESOLVED status recorded in A1 for `rcv_str` is lifted: its §5.2
 NEW_BEHAVIOUR (N1) stands on two independent seed sets. The effect remains
 small and near the floor (per seed 3/2/5/5 of 32). N2 remains uninformative
 (E-P1). §5.5 point 2 now holds for both combinations.
+
+## AMENDMENT A4 (2026-09-30) — steering lesion (E-010)
+
+*Appended; nothing above is edited. Preregistered at 32c14e403.*
+
+`rcv_sfx` is `rcv_str` with its aim term (energy >> 6) replaced by a static
+per-site offset. On seeds 4–7 it gives P_sust 4/128, exactly `rcv`'s level,
+and P_content 0. **Verdict: STEERING_REQUIRED.** The regression gate passed
+(`rcv_str` s4 reproduced E-009 bit for bit).
+
+§5.4's mechanism for `rcv_str` ("activity re-routing activity via
+energy-steered aim") is now supported by intervention. Limits: the lesion
+removes both dynamic coupling and any static aim–energy correlation, and it
+changes the aim distribution to uniform. A frozen-energy-snapshot lesion
+would separate these (`ops/campaigns/C-002/E-010/RESULT.md`).

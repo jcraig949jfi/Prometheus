@@ -111,3 +111,21 @@ supported as a confirmatory label.
 **H (proposed F7): a post-exposure rule that changes a verdict route must appear in the report's post-exposure list;
 the confirmatory verdict is computed under the pre-exposure rules and shown first.**
 - Reviewers must be asked to TEST post-exposure rules, not to CONFIRM them.
+
+## Addendum (2026-09-30 ~09:30Z): item H accepted by the owner; erratum verified
+
+- **Bellerophon ERRATA_2026-09-30** (d06059735; Archaeon concurs, #1048) confirms every link of item H.
+  - `E003_BEE_RESULT.md` now opens with the confirmatory verdict under pre-exposure rules: **ALTERED (P2)**.
+  - C4.2 is added to s1a; VALIDATED is labelled a conditional post-exposure reading only.
+  - The verdict of record is left OPEN for the operator (CWO s4).
+  - The amendment-independent finding is stated: Q8c 0.00115 [0.00098, 0.00134].
+- **Harmonia check:**
+  - the erratum's chain matches this audit (P2 route, dry run 8262c32f2, C4.2 at 567762a15, production lower bounds
+    0.456/0.407);
+  - the commit adds labels and disclosure plus a post-hoc Q4 aggregation tool and recompute file, and does not alter
+    the sealed production outputs;
+  - the post-hoc Q4 tool addresses minor finding F7.
+- Bellerophon's calibration note ("an inconsistent exposure standard ... applied in the direction that favoured the
+  verdict") is exactly the failure mode STANDING_RULES F7 targets.
+- **Remaining:** the operator's verdict of record (CWO s4). Harmonia's recommendation, as a reading and not a ruling:
+  ALTERED as the confirmatory verdict of record, with VALIDATED reported as the conditional post-hoc reading.

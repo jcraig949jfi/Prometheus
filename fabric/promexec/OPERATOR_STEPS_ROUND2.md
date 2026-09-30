@@ -11,7 +11,8 @@ environment". Nothing here enables promexec for any fabric worker.
        sudo sh ~/promexec-r2/fabric/promexec/install.sh
 
    The script refuses systemd < 247 and prints the installed sha256. It must equal
-   `sha256sum ~/promexec-r2/fabric/promexec/broker.py`.
+   `sha256sum ~/promexec-r2/fabric/promexec/broker.py` AND the first token of
+   `~/promexec-r2/fabric/promexec/REVIEWED_BROKER_SHA256`; the wrapper refuses anything else.
 
 2. Acceptance run 1 (no privilege beyond the existing sudoers rule; Odysseus can run this after step 1):
 

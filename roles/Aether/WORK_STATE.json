@@ -4,11 +4,11 @@
   "mwo_id": "MWO-0004",
   "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
   "mwo_sha256": "925660b2d2be53af2ee4195391e484d9649bbd4ee828cd60432ce2f0903a99df",
-  "updated_at_utc": "2026-09-30T08:52:45Z",
+  "updated_at_utc": "2026-09-30T09:30:37Z",
   "state": "WORKING",
-  "state_reason": "CWO 2026-09-30: CURRENT (broker closure) is blocked on Odysseus, so NEXT is promoted per CWO s5. Follow-ups ranked (Aether/AETH-03/FOLLOWUP_RANKING_2026-09-30.md); rank 1 = rcv_str steering lesion, to be preregistered as E-010 and run.",
+  "state_reason": "CWO 2026-09-30: E-010 steering lesion CLOSED (STEERING_REQUIRED: the lesion collapses rcv_str to rcv's level; regression gate PASS). promexec round-2 source and its delta reviewed pre-install (3cf32a64); round 2 proper waits on the operator install. Next rank-2 item promoted.",
   "branch": "aether/mwo0001-2026-09-28",
-  "head_sha": "35f207ebdc89b4e6929b7b470c3d1f92a5048e4f",
+  "head_sha": "a797990e743416643e4f1e1c70e4e6a0ab0b2e0d",
   "head_sha_note": "the latest pushed work commit before this WORK_STATE commit (the file cannot contain its own commit hash)",
   "threads": [
     {
@@ -51,6 +51,12 @@
   ],
   "experiments": [
     {
+      "id": "E-010",
+      "status": "CLOSED",
+      "verdict": "STEERING_REQUIRED",
+      "report": "ops/campaigns/C-002/E-010/RESULT.md"
+    },
+    {
       "id": "E-009",
       "status": "CLOSED",
       "verdict": "rcv_add REPLICATED; rcv_str REPLICATED",
@@ -70,164 +76,34 @@
   ],
   "fabric_tasks": [
     {
-      "id": "tsk-f936bf5d83e2",
-      "unit": "E9-rcv_str-s4",
-      "experiment": "E-009",
+      "id": "tsk-faf0ee2a8b99",
+      "experiment": "E-010",
       "state": "completed"
     },
     {
-      "id": "tsk-c6ff929b112b",
-      "unit": "E9-rcv_str-s5",
-      "experiment": "E-009",
+      "id": "tsk-a5b12c38c4fa",
+      "experiment": "E-010",
       "state": "completed"
     },
     {
-      "id": "tsk-52b284756c22",
-      "unit": "E9-rcv_str-s6",
-      "experiment": "E-009",
-      "state": "failed (DEF-AETH-001; unit run natively)"
-    },
-    {
-      "id": "tsk-69ecb9a9bc1a",
-      "unit": "E9-rcv_str-s7",
-      "experiment": "E-009",
-      "state": "failed (DEF-AETH-001; unit run natively)"
-    },
-    {
-      "id": "tsk-df5c41fbdfbe",
-      "unit": "E9-rcv_add-s4",
-      "experiment": "E-009",
-      "state": "failed (DEF-AETH-001; unit run natively)"
-    },
-    {
-      "id": "tsk-52ca1d6c0e93",
-      "unit": "E9-rcv_add-s5",
-      "experiment": "E-009",
-      "state": "failed (DEF-AETH-001; unit run natively)"
-    },
-    {
-      "id": "tsk-e09d4269c89e",
-      "unit": "E9-rcv_add-s6",
-      "experiment": "E-009",
-      "state": "failed (DEF-AETH-001; unit run natively)"
-    },
-    {
-      "id": "tsk-814172ae320e",
-      "unit": "E9-rcv_add-s7",
-      "experiment": "E-009",
-      "state": "failed (DEF-AETH-001; unit run natively)"
-    },
-    {
-      "id": "tsk-8fb852d1bab3",
-      "unit": "E9-rcv-s4",
-      "experiment": "E-009",
-      "state": "failed (DEF-AETH-001; unit run natively)"
-    },
-    {
-      "id": "tsk-198642a92c8a",
-      "unit": "E9-rcv-s5",
-      "experiment": "E-009",
-      "state": "failed (DEF-AETH-001; unit run natively)"
-    },
-    {
-      "id": "tsk-f4cf2718deb9",
-      "unit": "E9-rcv-s6",
-      "experiment": "E-009",
-      "state": "failed (DEF-AETH-001; unit run natively)"
-    },
-    {
-      "id": "tsk-e87953d9e04f",
-      "unit": "E9-rcv-s7",
-      "experiment": "E-009",
-      "state": "failed (DEF-AETH-001; unit run natively)"
-    },
-    {
-      "id": "tsk-83d750b583fe",
-      "unit": "E9-add-s4",
-      "experiment": "E-009",
-      "state": "failed (DEF-AETH-001; unit run natively)"
-    },
-    {
-      "id": "tsk-33d0de30ed10",
-      "unit": "E9-add-s5",
-      "experiment": "E-009",
-      "state": "failed (DEF-AETH-001; unit run natively)"
-    },
-    {
-      "id": "tsk-737874d983e2",
-      "unit": "E9-add-s6",
-      "experiment": "E-009",
-      "state": "failed (DEF-AETH-001; unit run natively)"
-    },
-    {
-      "id": "tsk-8ec055575f87",
-      "unit": "E9-add-s7",
-      "experiment": "E-009",
-      "state": "failed (DEF-AETH-001; unit run natively)"
-    },
-    {
-      "id": "tsk-743a1db43336",
-      "unit": "E9-str-s4",
-      "experiment": "E-009",
+      "id": "tsk-84d2971ced12",
+      "experiment": "E-010",
       "state": "completed"
     },
     {
-      "id": "tsk-cf81375d1e54",
-      "unit": "E9-str-s5",
-      "experiment": "E-009",
+      "id": "tsk-000a146f4107",
+      "experiment": "E-010",
       "state": "completed"
     },
     {
-      "id": "tsk-88482dd2afe4",
-      "unit": "E9-str-s6",
-      "experiment": "E-009",
-      "state": "failed (DEF-AETH-001; unit run natively)"
-    },
-    {
-      "id": "tsk-7d6f66d41433",
-      "unit": "E9-str-s7",
-      "experiment": "E-009",
-      "state": "failed (DEF-AETH-001; unit run natively)"
-    },
-    {
-      "id": "tsk-f11c5d60cb83",
-      "unit": "T-087",
-      "state": "completed"
-    },
-    {
-      "id": "tsk-e56d9c5fea64",
-      "unit": "T-088",
-      "state": "completed"
-    },
-    {
-      "id": "tsk-eea4d3806a84",
-      "unit": "T-089",
-      "state": "completed"
-    },
-    {
-      "id": "tsk-55b1b35fab2a",
-      "unit": "T-090",
-      "state": "completed"
-    },
-    {
-      "id": "tsk-6ed598230989,tsk-d3d665f66b7f,tsk-942556352c75,tsk-eecfab9c883a",
-      "state": "failed/superseded",
-      "note": "submitted with a mistyped base SHA (c49f2ebad0); failed closed at worktree add; resubmitted with the full SHA. Operator error, not a Fabric defect."
-    },
-    {
-      "id": "tsk-c4e2b5f1afe6",
-      "unit": "T-001 (FP-001 replica)",
-      "state": "completed"
-    },
-    {
-      "id": "tsk-7509eb3a48d5",
-      "unit": "T-001 (FP-001 replica)",
+      "id": "tsk-f188e8ee7b3c",
+      "experiment": "E-010",
       "state": "completed"
     }
   ],
   "running": [],
   "blocked_on": [
-    "promexec round 2 / broker closure: owner Odysseus -- final installed broker hash + ACCEPTANCE_RUNS (#917)"
+    "promexec round 2 proper: operator install of broker 3cf32a64 (runbook fabric/promexec/OPERATOR_STEPS_ROUND2.md @ 9f95f9ea0; CWO s4 privileged host change), then Odysseus ACCEPTANCE_RUNS"
   ],
   "next_actions": [
     "s8 loop; act on MWO/comms changes",
@@ -236,11 +112,9 @@
   ],
   "operator_decisions_required": [],
   "latest_reports": [
-    "Aether/AETH-03/FOLLOWUP_RANKING_2026-09-30.md",
-    "ops/campaigns/C-002/E-009/RESULT.md",
-    "roles/Aether/DEFECTS.md",
-    "roles/Aether/probes/FP-001_RESULT.json",
-    "ops/campaigns/C-002/E-008/RESULT.md"
+    "ops/campaigns/C-002/E-010/RESULT.md",
+    "roles/Aether/reviews/2026-09-30_promexec_round2_source/FINDINGS.md",
+    "Aether/AETH-03/FOLLOWUP_RANKING_2026-09-30.md"
   ],
   "migration_report": "roles/Aether/MIGRATION_REPORT_MWO-0002.json",
   "fp001_result": "roles/Aether/probes/FP-001_RESULT.json",
@@ -256,13 +130,13 @@
     "DEF-AETH-001 RESOLVED upstream (Odysseus #1000, DEF-ODY-015)"
   ],
   "work_order": "MWO-0004 + operator CWO 2026-09-30 (ops/fleet/CWO_2026-09-30_FLEET_ACTIVATION.md, blob ab93f646)",
-  "current": "E-010 rcv_str steering lesion (rank 1): preregister, then run (controlled intervention)",
-  "next": "rank 2: rcv_add trace lesion",
+  "current": "rank 2: rcv_add trace lesion -- design + preregister (E-011), then run",
+  "next": "rcv_str frozen-energy-snapshot lesion (separates dynamic coupling from static aim-energy correlation; E-010 limit)",
   "reserve": [
-    "rank 3: value-provenance detector (Builder-lane candidate)",
-    "rank 4: AETH-01 arbitration finite-run diagnostic",
-    "AGE/Builder friction feed (CWO RESERVE)"
+    "value-provenance detector (Builder-lane candidate)",
+    "AETH-01 arbitration finite-run diagnostic",
+    "AGE/Builder friction feed"
   ],
-  "resource_status": "local CPU only; within MWO-0004 R2 (about 2 CPU-h used in the rolling 24 h); no GPU, no paid compute",
-  "last_receipt": "ops/campaigns/C-002/E-009/RESULT.md @ cabc6314a (both REPLICATED)"
+  "resource_status": "local CPU only; about 3 CPU-h in the rolling 24 h (MWO-0004 R2 cap 48); no GPU, no paid compute",
+  "last_receipt": "ops/campaigns/C-002/E-010/RESULT.md @ 4b29572f1 (STEERING_REQUIRED)"
 }

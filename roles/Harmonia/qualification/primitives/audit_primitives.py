@@ -47,7 +47,10 @@ def reachability(verdict_fn: Callable[[dict], str], design_space: Iterable[dict]
     """Evaluate verdict_fn over every design-admissible input and report which gated labels can occur at all.
 
     design_space must encode what is FIXED by the design (fixed seeds, VOID rules already decided, n) and enumerate only
-    what the run can still change. A gated label that no input reaches is UNREACHABLE_BY_DESIGN."""
+    what the run can still change. A gated label that no input reaches is UNREACHABLE_BY_DESIGN.
+    Any baseline that is a function of the EVOLVING state (e.g. a feature budget filled by admitted lenses) is part of
+    what the run can change: enumerate it too, never fix it at its t = 0 value (F1 amendment; Tyche v0 H4, RULER_QUALITY
+    C-1, where Harmonia's own t = 0 reading wrongly called H4 FAIL unreachable)."""
     seen: Dict[str, int] = {}
     for x in design_space:
         v = verdict_fn(x)
