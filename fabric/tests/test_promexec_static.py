@@ -123,3 +123,21 @@ def test_wrapper_stages_args_in_a_file_not_argv(tmp_path, monkeypatch):
     assert not any("CANARY" in c or "job.py" in c for c in seen["cmd"])
     assert "--" not in seen["cmd"] and "--script" not in seen["cmd"]
     assert seen["files"] == [".promexec_args.json", "data.csv", "main.py"]
+
+
+def test_transfer_keeps_mtime(tmp_path):
+    """DEF-ODY-001: returned files kept mtime 0 (1970). Exercise the tar producer/extractor as the current user."""
+    import os
+    src = tmp_path / "src"; dst = tmp_path / "dst"; src.mkdir()
+    f = src / "r.txt"; f.write_text("x"); os.utime(f, (1790000000, 1790000000))
+    uid, gid = os.getuid(), os.getgid()
+    if uid == 0:
+        pytest.skip("run as an ordinary user")
+    orig = broker.drop_to
+    broker.drop_to = lambda u, g: None                       # no privilege change needed for this check
+    try:
+        c1, c2 = broker.transfer(uid, gid, str(src), uid, gid, str(dst), 2**20, 10)
+    finally:
+        broker.drop_to = orig
+    assert (c1, c2) == (0, 0)
+    assert int((dst / "r.txt").stat().st_mtime) == 1790000000

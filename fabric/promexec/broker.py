@@ -149,7 +149,7 @@ def stream_tar_as(uid, gid, root, max_bytes, max_files):
                         n += 1; total += st.st_size
                         if n > max_files or total > max_bytes:
                             os._exit(3)
-                        ti = tarfile.TarInfo(os.path.relpath(p, root)); ti.size = st.st_size; ti.mode = 0o644
+                        ti = tarfile.TarInfo(os.path.relpath(p, root)); ti.size = st.st_size; ti.mode = 0o644; ti.mtime = int(st.st_mtime)  # DEF-ODY-001
                         with os.fdopen(fd, "rb") as fh:
                             t.addfile(ti, fh)
             os._exit(0)

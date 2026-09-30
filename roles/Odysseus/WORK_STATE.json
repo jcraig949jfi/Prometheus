@@ -3,10 +3,10 @@
  "seat": "Odysseus",
  "mwo_id": "MWO-0004",
  "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
- "updated_at_utc": "2026-09-29T15:04:23Z",
+ "updated_at_utc": "2026-09-30T08:51:51Z",
  "state": "ACTIVE",
  "branch": "odysseus/fabric-v0-2026-09-28",
- "head_sha": "e749fad15d3b821543f1695e3ea843c1bfae7d03",
+ "head_sha": "8cc7dc841dedc94fab5560a3620dc18fa80b790d",
  "threads": [
   {
    "id": "thr-d2-firewall-audit",
@@ -39,24 +39,31 @@
   },
   {
    "id": null,
-   "alias": "S3 CLOSED: gate MET (0.67 coordination/exec (corrected, Artemis #1019) vs 3.5; quality 10.0 vs 9.1 at the rubric ceiling; 0 leaks; 0 rescues); same-host test NOT RUN (roles/Odysseus/fabric_pilot/s3/RESULT.md)"
+   "alias": "S3 CLOSED: gate MET (0.67 coordination/exec vs control re-coded 3.5; quality 10.0 vs 9.1 at the rubric ceiling, MAJOR ruler note per Harmonia #1038; 0 leaks; 0 rescues); same-host test NOT RUN"
   }
  ],
  "fabric_tasks": [
   "D2 firewall audit COMPLETE: FIREWALL_AUDIT_1 PASS (67e05df12), anchored by Nestor (entry_hash e1a2e48b, #1021); gates pass through AUDIT; C-1/C-2 declared"
  ],
  "running": [
-  "node workers on ubu001 from ~/fabric-runtime @5266ccebe (fabric-v0.2 + DEF-ODY-015 bounded cache): worker.ubu001.a/.b (claude, script), worker.ubu001.sci (script)"
+  "node workers on ubu001 from ~/fabric-runtime @8cc7dc841 (fabric-v0.2 + DEF-ODY-015 + legacy-lease removal): worker.ubu001.a/.b (claude, script), worker.ubu001.sci (script)"
  ],
  "blocked_on": [
-  "lease cutover merge acknowledgements (#901): Ananke merged (#934); Nestor and Archaeon pending before legacy detection is removed"
+  "operator: promexec round-2 broker install (see blocked)"
  ],
  "next_actions": [
-  "adjudicate any NEW round on thr-d2-firewall-audit (a re-audit only if audited code changes, which would make FIREWALL_AUDIT_1 stale; the next record is FIREWALL_AUDIT_2)",
-  "keep the frozen v0.2 node workers operating; record Fabric limitations surfaced by MWO work (roles/Odysseus/fabric_pilot/DEFECTS.md)"
+  "BUILDER-FABRIC: hand Aporia the friction classes with evidence (DEFECTS.md)",
+  "on install: python3 fabric/promexec/acceptance.py; commit ACCEPTANCE_RUNS/1.json; hand the installed hash to Aether",
+  "adjudicate any new round on thr-d2-firewall-audit (FIREWALL_AUDIT_2)"
  ],
- "operator_decisions_required": [],
+ "operator_decisions_required": [
+  "promexec round-2 broker install (privileged host modification; CWO s4). Runbook: fabric/promexec/OPERATOR_STEPS_ROUND2.md"
+ ],
  "latest_reports": [
+  "fabric/promexec/STATUS_EXPERIMENTAL.md",
+  "fabric/promexec/OPERATOR_STEPS_ROUND2.md",
+  "fabric/FREEZE.md",
+  "roles/Odysseus/fabric_pilot/s3/CONTROL_RECODE.json",
   "roles/Odysseus/fabric_pilot/d2_audit/v13/VERDICT.md",
   "prometheus/cosmos/c3_holdout_D2/protocol/FIREWALL_AUDIT_1.json@67e05df12",
   "roles/Odysseus/fabric_pilot/s3/RESULT.md",
@@ -65,7 +72,24 @@
   "roles/Odysseus/fabric_pilot/s2/RESULT.md"
  ],
  "mwo_sha256": "925660b2d2be53af2ee4195391e484d9649bbd4ee828cd60432ce2f0903a99df",
- "comms_cursor": 1021,
+ "comms_cursor": 1038,
  "migration_report": "roles/Odysseus/MIGRATION_REPORT_MWO-0002.json",
- "hard_gates_note": "MWO-0004 R1/R5: only hard gates listed; promexec NOT ENABLED is standing policy (MWO-0001 s6), not a pending decision"
+ "hard_gates_note": "MWO-0004 R1/R5: only hard gates listed. promexec stays NOT ENABLED (MWO-0004 G4); the round-2 install is listed because it is a privileged host modification (CWO s4), not an enablement",
+ "work_order": "MWO-0004 (ops/work_orders/CURRENT.md) + CWO-2026-09-30 fleet activation (ops/fleet/CWO_2026-09-30_FLEET_ACTIVATION.md, sha256 ab93f646...b7e; queue ops/fleet/QUEUE.json)",
+ "current": "RESERVE promoted: BUILDER-FABRIC customer/guide -- turn this deployment's friction into Builder work (disk-full checkout cache DEF-ODY-015; no SKULLPORT/Windows worker DEF-ODY-012; stale worker instances DEF-ODY-008/017; base_sha validation DEF-ODY-009; per-agent cache race DEF-ODY-011)",
+ "next": "promexec round 2 acceptance run 1 and Aether handoff, as soon as the operator installs the round-2 broker",
+ "reserve": [
+  "D2 adjudication if a re-audit is submitted (standing, thr-d2-firewall-audit)"
+ ],
+ "blocked": [
+  {
+   "item": "promexec round 2 install + ACCEPTANCE_RUNS/1.json (CWO CURRENT)",
+   "dependency": "installing the round-2 broker replaces a root-owned file: privileged host/security modification (CWO s4)",
+   "owner": "operator",
+   "runbook": "fabric/promexec/OPERATOR_STEPS_ROUND2.md",
+   "source_commit": "b2fd90314 (round-2 source), plus the DEF-ODY-001 mtime fix"
+  }
+ ],
+ "resource_status": "no compute or spend held; ubu001 disk 24%; workers .a/.b/.sci on ~/fabric-runtime @8cc7dc841",
+ "last_receipt": "8cc7dc841: legacy ARC3 lease detection removed (CWO NEXT closed; FREEZE.md log; 111 tests pass) and rolled into ~/fabric-runtime"
 }
