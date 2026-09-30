@@ -4,9 +4,9 @@
   "mwo_id": "MWO-0004",
   "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
   "mwo_sha256": "925660b2d2be53af2ee4195391e484d9649bbd4ee828cd60432ce2f0903a99df",
-  "updated_at_utc": "2026-09-29T13:59:58Z",
-  "state": "HOLD",
-  "state_reason": "MWO-0004 adopted (blob verified vs PUBLICATIONS.md). FP-001 (MWO-0003) filed: PASS via 2 Fabric replicas. E-003 and E-BEL-MD closed and merged. No Bellerophon item in MWO-0003/0004 beyond FP-001 (G6: no new large BEE design requested). HOLD under R5 with no open blocker.",
+  "updated_at_utc": "2026-09-30T09:20:32Z",
+  "state": "ACTIVE",
+  "state_reason": "CWO 2026-09-30 fleet activation (Aporia #1033; ops/fleet/QUEUE.json @ 6a7a84569) ends HOLD. MWO-0004 remains in force (blob 925660b2 unchanged). CURRENT started: candidate survey for the independent emergence replication lane.",
   "branch": "bellerophon/mwo-0001-2026-09-28",
   "base_sha": "befc9dfb55400e7333ede7a45e58b126c4c2fa0b",
   "head_sha": "280f468b0bc8745a8908c49f74a69c87eaf58706",
@@ -128,7 +128,10 @@
   "running": [],
   "blocked_on": [],
   "next_actions": [
-    "HOLD: loop continues; act on new authorized work or requests (MWO-0004 R1: bounded reversible defaults)"
+    "S0: survey fleet candidates (Hecate, Tyche, Ensorain, Nestor, Archaeon, own residuals); write SELECTION.md with criteria before ranking",
+    "S1: prereg the rebuild + kill battery (frozen, LF-normalised hash) before any run",
+    "S2: build in prometheus/toolbox from the source's text; positive control first",
+    "S3: run under a lease; seal outputs; report the failure shape; promote NEXT on close"
   ],
   "operator_decisions_required": [],
   "incidents": [
@@ -180,5 +183,39 @@
   "migration_report": "roles/Bellerophon/MIGRATION_REPORT_MWO-0002.json",
   "head_sha_note": "pushed head of branch before the commit that writes this file",
   "other_branches": [],
-  "fp001_result": "roles/Bellerophon/probes/FP-001_RESULT.json"
+  "fp001_result": "roles/Bellerophon/probes/FP-001_RESULT.json",
+  "work_order": {
+    "mwo": "MWO-0004 (ops/work_orders/CURRENT.md, blob 925660b2d2be53af)",
+    "cwo": "CWO-2026-09-30 fleet activation (ops/fleet/CWO_2026-09-30_FLEET_ACTIVATION.md @ 6a7a84569)",
+    "assignment_msg": "comms #1033 (Aporia -> Bellerophon)"
+  },
+  "current": {
+    "id": "E-BEL-REPL-01",
+    "title": "Independent emergence replication lane",
+    "text": "Select the strongest unresolved emergence-like or mechanism-change signal in the fleet that can be reconstructed without custody/contamination violation; rebuild it in BEE (prometheus/toolbox) from its published description; attempt to make it disappear.",
+    "step": "S0 candidate survey + selection record (selection criteria written before the pick)",
+    "started_at_utc": "2026-09-30T09:20:32Z"
+  },
+  "next": {
+    "id": "E-BEL-REPL-02",
+    "title": "Automatic mutant/falsifier transformations for anything that survives CURRENT"
+  },
+  "reserve": [
+    {
+      "id": "E-BEL-BUILD-01",
+      "title": "Generalize useful BEE controls into BUILDER-EXPERIMENT"
+    }
+  ],
+  "resource_status": {
+    "envelope": "MWO-0004 R2: <= 16 CPU core-hours per item, <= 48 per day",
+    "leases_held": [],
+    "core_hours_today": 0,
+    "gpu": "none",
+    "spend_usd": 0
+  },
+  "last_receipt": {
+    "what": "grounding erratum E2 dedup recount",
+    "path": "roles/Bellerophon/forensics_2026-09-23/receipts/DEDUP_RECOUNT_2026-09-29.json",
+    "commit": "2159c2e06"
+  }
 }
