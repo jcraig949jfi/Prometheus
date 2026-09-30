@@ -629,3 +629,32 @@ Finding while designing it:
 - SG1: STALE, mean dAC(SD_soft) > mean dAC(SD_cp9) AND > mean dAC(SD_all).
 - SG2: SD_soft >= SD_all - .02 in >= 13/16 AND min(SD_soft - SD_all) >= -0.2. This is the MU1 criterion that hard
   gating failed.
+
+### Soft-gate result (precommit commit 657e2c837; results/pkgf_soft.json; 44 s)
+
+Mean dAC over 16 fresh W-MULTI worlds:
+
+| split | all history | hard gate (SD_cp9) | soft gate |
+|---|---|---|---|
+| STALE | -0.390 | +0.017 | +0.048 |
+| GEN | -0.060 | +0.001 | +0.007 |
+
+- **SG1 SURVIVES:** soft > hard > all.
+- **SG2 SURVIVES:** soft >= all - .02 in 15/16; min -0.115 (>= -0.2). This is the criterion hard gating failed in
+  W-MULTI.
+
+Per world vs the hard gate:
+- Soft is BETTER in 5 worlds: 9_800_133 +.239 vs +.089; 134 +.077 vs 0; 140 +.333 vs 0; 141 +.143 vs 0;
+  144 +.014 vs 0. These are the partial-switch or early-switch cases where valid old records are retained.
+- Soft is WORSE in 3: 131 -.031 vs +.078; 135 -.106 vs 0; 138 -.069 vs 0. There the per-cell mean test failed to
+  flag some changed cells (low per-cell counts), so a few stale records re-entered.
+- Equal in the rest.
+
+Reading:
+- Selection at the level of RECORDS (which stored distinctions the readout may use), not at the level of the channel
+  weight, is what makes "keep and ignore" beat both "keep everything" and "discard everything" on stale recall. In
+  these 16 worlds it is never more than .115 worse than keeping everything.
+- Its residual failure is statistical: a per-cell change test with few records per cell.
+- The earlier hard-gate framing ("the regime-gated readout") was really a channel gate. All PKG-F summaries before this
+  entry that say "gating removes the harm" mean "setting the residual weight to ~0 removes the harm". The soft gate is
+  the first genuinely SELECTIVE readout in this series.

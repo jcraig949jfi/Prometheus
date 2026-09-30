@@ -173,6 +173,14 @@ N5 (decaying reliability; the Block G nuisance kind not yet probed):
   - v5 false detection >= 4/8 (it IS variance-sensitive, and that is a limitation);
   - the recency holdout is worse than the all-history holdout on stale recall.
 
+SOFT GATE (2026-09-30, RESULTS_PKGF_PROBE.md):
+- The per-cell record-set gate (post-tau records + pre-tau records of cells tested unchanged) beats both the channel
+  gate and keep-everything on 16 fresh multi-switch worlds: STALE +.048 vs +.017 vs -.390. It is within .02 of
+  keep-everything in 15/16, worst -.115.
+- The earlier "gate" was a channel weight (a -> 0), not record selection. The soft gate is PKG-F's candidate
+  S+D/learned-regime arm.
+- Open: the per-cell test's power at low counts; W-DRIFT with the soft gate.
+
 READOUT GATE STATUS (2026-09-30, W-DRIFT + W-MULTI):
 - The hard current-regime cut removes full-switch losses. But it discards still-valid records after partial switches:
   MU1 refuted, worst -0.60.
