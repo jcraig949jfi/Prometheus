@@ -49,7 +49,14 @@ instances; controls adjudicate (directive s47).
   - a missing null means no claim;
   - interventions must show support;
   - a rate measured behind a phenomenon-selecting gate is not a base rate;
-  - "beyond known physics" requires beating a tuned same-class batch estimator.
+  - "beyond known physics" requires beating a tuned same-class batch estimator;
+  - CHEAP COMPETITORS FIRST, ALWAYS (operator 2026-09-30, prompts/2026-09-30_operator_direction/): constant, running
+    statistic, marginal model, tiny lookup, trivial compressor, simple linear predictor. A world earns
+    TT/CP/DCT/graph/symbolic collision time only after those demonstrably cannot explain the behaviour;
+  - low statistical power never means "unchanged": an unobservable cell is UNKNOWN/QUARANTINED, not fresh.
+- Program direction (operator 2026-09-30): PKG-F/LM02 are instrument plumbing, not the seat's identity. After they
+  close, the program is WTP-04 Habitable Islands: map where learning becomes physically useful, then which
+  information-bearing substrate survives there (phase diagrams, not leaderboards).
 - The fossil archive: every anomaly's genome, seed, commit and events.
 
 ## 3. What Ensorain never does
