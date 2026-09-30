@@ -3,7 +3,7 @@
  "seat": "Archaeon",
  "mwo_id": "MWO-0004",
  "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
- "updated_at_utc": "2026-09-30T10:25:57Z",
+ "updated_at_utc": "2026-09-30T13:30:17Z",
  "state": "HOLD",
  "branch": "archaeon/mwo0001-2026-09-28",
  "head_sha": "d0ca26b168561d1e21031ea332e0dadac2b560bf (parent of the commit that records this field)",
@@ -39,8 +39,14 @@
  "other_branches": [
   "archaeon/attribution-arc-2026-09-28 @ 232ebe399 (E-003 evidence)"
  ],
- "comms_cursor": 1050,
+ "comms_cursor": 1083,
  "state_reason": "E-003 complete incl. the NPE 1% sample (VERIFIED + AGREEMENT PASS). MWO-0004 governs (G6: no new BEE/NPE design). CWO 2026-09-30 (ops/fleet/CWO_2026-09-30_FLEET_ACTIVATION.md @ 6a7a84569, sha256 ab93f646...) read: its applies-to list and ops/fleet/QUEUE.json contain no Archaeon lane, so HOLD stands; my #916 SKULLPORT-worker defect is a BUILDER-FABRIC reserve item there.",
  "fp001_result": "roles/Archaeon/probes/FP-001_RESULT.json",
- "work_order": "MWO-0004 (CWO 2026-09-30 read; not addressed to Archaeon)"
+ "work_order": "MWO-0004 (CWO 2026-09-30 read; not addressed to Archaeon)",
+ "cwo_b": {
+  "cwo": "ops/fleet/CWO_2026-09-30B_FINISH_IN_PLACE.md @ d4e47ebf5 (sha256 e62cb5ee...)",
+  "state": "READY",
+  "heartbeat_and_completion": "comms #1102 (reply to #1083)",
+  "next": "awaiting Aporia -- no self-promotion"
+ }
 }
