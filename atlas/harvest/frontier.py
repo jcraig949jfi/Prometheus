@@ -7,6 +7,16 @@ Experiment = transformation / spec id (B-scatter.T000, and derived
 Segment = a chunk. Run outputs live under archaeon/frontier/runs/ on the
 executing host (git-ignored): pointers are recorded as EXPECTED:<host>,
 never as absent.
+
+frontier/4 (2026-09-26 operator directive; producer semantics from Archaeon
+comms #735): pre-repair BLOCKED_BY_SUPPRESSION rows are per-retry ENFORCEMENT
+echoes of one suppression decision, not observations. They are aggregated into
+ONE fact per distinct (lineage_id, transformation, suppression, source_state),
+carrying occurrences, first/last line and time, and the contiguous line runs,
+and pointing at the suppression record. The decision itself belongs to the
+suppression's author (e.g. Proteus's falsifier). Rows marked
+enforcement=STATE_TRANSITION (the repaired scheduler, e9c032d50) are
+transitions and stay one fact each. EVENTS.jsonl itself is never altered.
 """
 from __future__ import annotations
 
@@ -17,7 +27,7 @@ from collections import defaultdict
 from atlas import classify, db, gitsrc
 from atlas.harvest import common as C
 
-VERSION = "frontier/3"
+VERSION = "frontier/4"
 PROGRAM = "archaeon.frontier"
 CKEY = C.campaign_key(PROGRAM, "deep-frontier")
 DIM_REASON = {"organism_profile": "ORGANISM_DEFORMATION", "organism": "ORGANISM_DEFORMATION",
@@ -127,11 +137,15 @@ def run(args) -> dict:
         # events: runs, chunks, observations, interpretations, gates
         epath = "archaeon/frontier/registry/EVENTS.jsonl"
         freeze = defaultdict(int)
+        echoes = {}
         for i, ev in enumerate(_jsonl(cat.text(blobs[epath][0]) if epath in blobs else ""), 1):
             kind, lid, p = ev.get("kind"), ev.get("lineage_id"), ev.get("payload") or {}
             ikey = "{}/{}".format(PROGRAM, lid)
             if kind == "FREEZE_REF":
                 freeze[lid] += 1
+                continue
+            if kind == "BLOCKED_BY_SUPPRESSION" and p.get("enforcement") != "STATE_TRANSITION":
+                _echo(echoes, ev, p, i)
                 continue
             u = src(epath, record="{}:{}".format(kind, i), line=(i, i))
             if kind == "RUN":
@@ -185,6 +199,8 @@ def run(args) -> dict:
             rid = key[3][5:]
             e["dst_key"] = by_run.get(rid, C.attempt_key(ekey("?"), rid))
             b.edges[(key[0], key[1], key[2], e["dst_key"], key[4])] = e
+        for tup, agg in echoes.items():
+            _echo_fact(b, src, blobs, epath, tup, agg)
         for lid, n in freeze.items():
             b.fact("RAN", "telemetry_availability", "idea", "{}/{}".format(PROGRAM, lid), "frontier.freeze_refs", n,
                    src(epath), "kind=FREEZE_REF count", author="ATLAS_DERIVED")
@@ -281,6 +297,47 @@ def _run(b, ev, p, u, line):
                                 host_id=RUN_HOST, path=ch["path"],
                                 file_sha256=(ch.get("out_digest") or "").replace("sha256:", "") or None, present=None)
             b.link(cu, "segment", sk, "rows")
+
+
+def _echo(echoes, ev, p, line):
+    """Accumulate one pre-repair per-retry enforcement row under its decision tuple (Archaeon #735)."""
+    tup = (ev.get("lineage_id"), p.get("transformation"), p.get("suppression"),
+           json.dumps(p.get("source_state"), sort_keys=True, default=str))
+    a = echoes.get(tup)
+    at = ev.get("at")
+    if a is None:
+        echoes[tup] = a = {"n": 0, "first_line": line, "last_line": line, "first_at": at, "last_at": at, "runs": []}
+    a["n"] += 1
+    a["last_line"] = line
+    if at and (not a["first_at"] or at < a["first_at"]):
+        a["first_at"] = at
+    if at and (not a["last_at"] or at > a["last_at"]):
+        a["last_at"] = at
+    if a["runs"] and a["runs"][-1][1] == line - 1:
+        a["runs"][-1][1] = line
+    else:
+        a["runs"].append([line, line])
+
+
+def _echo_fact(b, src, blobs, epath, tup, a) -> None:
+    lid, t, sup, state = tup
+    stype, skey = ("experiment", ekey(t)) if t else ("idea", "{}/{}".format(PROGRAM, lid))
+    u = src(epath, record="BLOCKED_BY_SUPPRESSION:{}-{}".format(a["first_line"], a["last_line"]),
+            line=(a["first_line"], a["last_line"]))
+    rec = "archaeon/frontier/suppressions/{}.json".format(sup)
+    value = {"lineage_id": lid, "transformation": t, "suppression": sup, "source_state": json.loads(state),
+             "occurrences": a["n"], "first_line": a["first_line"], "last_line": a["last_line"],
+             "first_at": a["first_at"], "last_at": a["last_at"], "line_runs": a["runs"][:50],
+             "n_line_runs": len(a["runs"]), "enforcement_status": "BLOCKED",
+             "suppression_record": rec if rec in blobs else None,
+             "semantics": "per-retry enforcement echoes of ONE suppression decision (producer: Archaeon comms #735); "
+                          "not observations and not re-derivations"}
+    b.fact("RAN", "campaign_decision", stype, skey, "frontier.blocked_by_suppression", value, u,
+           "{}-{}".format(a["first_line"], a["last_line"]), stated_at=a["first_at"])
+    if rec in blobs:
+        fk = C.h16(stype, skey, "campaign_decision", "frontier.blocked_by_suppression", u,
+                   "{}-{}".format(a["first_line"], a["last_line"]))
+        b.fact_ev.append((fk, src(rec), "suppression record"))
 
 
 def _jsonl(text):
