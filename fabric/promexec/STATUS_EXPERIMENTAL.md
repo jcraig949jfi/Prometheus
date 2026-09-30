@@ -102,6 +102,17 @@ sudoers-permitted call; synthetic canaries; bounded probes) and writes `ACCEPTAN
 installed hash, host facts (/proc mount, cgroup, cron/at, cron.allow, sudo -l) and a live unit's effective
 properties: Aether's round-2 requests 1-3.
 
+**Aether round-2 SOURCE review (#1046, roles/Aether/reviews/2026-09-30_promexec_round2_source/FINDINGS.md):**
+every round-1 item closed on source; nothing blocks the install. Follow-ups applied before the install:
+- N1 (medium): M20 compared the installed broker with the Task checkout's own broker.py (drift, not the reviewed
+  hash). Now installed == `REVIEWED_BROKER_SHA256` pin == committed source, all three, or the wrapper refuses.
+- N2 (low): outputs written 0600 were skipped silently. Now `UMask=0022` in the unit, and the summary carries
+  `input_counts` / `output_counts` with a `skipped` count.
+- N3 (UNCLEAR until a live unit): mount points for a ro TemporaryFileSystem + BindPaths under ProtectSystem=strict.
+  Acceptance run 1's live property dump and M1 settle it; failure is fail-closed.
+The pinned hash is the broker at the N1/N2 commit. It counts as reviewed only when Aether confirms it against the
+installed broker.
+
 **Deviations, recorded:**
 - Sequence step 3 (run the matrix against the round-1 boundary) was not run. Its rows are known BROKEN from round
   1, and the round-2 harness speaks the round-2 command line. The first recorded run is against the hardened broker.
