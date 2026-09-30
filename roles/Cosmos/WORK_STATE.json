@@ -3,37 +3,52 @@
   "seat": "Cosmos",
   "mwo_id": "MWO-0004",
   "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
-  "updated_at_utc": "2026-09-29T15:25:53Z",
-  "state": "HOLD",
+  "updated_at_utc": "2026-09-30T13:55:09Z",
+  "state": "READY",
   "branch": "cosmos/c3-public-2026-09-24",
   "head_sha": "(this commit; git log -1 -- roles/Cosmos/WORK_STATE.json)",
   "threads": [
-    "thr-32389b1e7abb (T-C3, PARKED: coordinate audit REJECT, stopped before D2)",
-    "thr-ba4ccc18cc6c (T-I1: backfill done; fragment test v3 -> ceiling-atom recurrence = certificate economics, DEAD as evidence)",
-    "thr-14b16c6a4d6b (T-E1, null law = definition rung)",
-    "+8 OPEN: roles/Cosmos/research/THREADS.md"
+    "thr-32389b1e7abb (T-C3, KILLED pre-holdout; G-0006 scar; autopsy done)",
+    "thr-cac8c079f216 (T-C4, DESIGNED: v0.1, S0 frozen F-0001; execution not authorized)",
+    "thr-ba4ccc18cc6c (T-I1)",
+    "thr-14b16c6a4d6b (T-E1)",
+    "+7 OPEN: roles/Cosmos/research/THREADS.md"
   ],
   "campaigns": [
-    "C3 (causal accessibility of past information): Session 1 complete; closing via holdout D2"
+    "C3: CLOSED / KILLED BEFORE HOLDOUT (operator 2026-09-30); autopsy public + withheld",
+    "C4: DESIGNED v0.1 (design only; no holdout)"
   ],
   "experiments": [
-    "C3-D2 blind adjudication: NOT started; Cosmos blind to D2"
+    "C3-D2 adjudication: NEVER STARTED; D2 SEALED / UNREAD / UNSPENT, reserved"
   ],
-  "fabric_tasks": [
-    "tsk-2847868eeac6, tsk-0cac20173212 (FP-001 resubmit, completed, replicas agree)"
-  ],
+  "fabric_tasks": [],
   "running": [],
   "blocked_on": [],
   "next_actions": [
-    "seat loop STOPPED at the hard gate; resume on the operator's C3 disposition"
+    "completion message to Aporia",
+    "await rulings: C4 execution authority (Q1), foreign visible family (Q2), design reviewer (Q3); D2 ciphertext-grep incident ruling (Nestor/Harmonia #1105/#1106)"
   ],
-  "operator_decisions_required": [
-    "HARD GATE (MWO-0001 s7(2)): D2 governing firewall audit PASSED (FIREWALL_AUDIT_1 @67e05df12, LF sha256 4d267476..., anchored d74bd3dde; Harmonia Addendum O/P). The next D2 gate is the COSMOS COMMITMENT. Cosmos has NO admissible claim: the C3 coordinate audit was REJECTED (research/reviews/COORD_AUDIT_C3_2026-09-29.md), and by precommitment it stopped before D2. Disposition needed: (a) close C3 killed pre-holdout, leaving D2 sealed and unspent for a future claim; or (b) authorize a successor preregistration that must beat the zero-parameter definition rung before any D2 commitment. No PREDICTION_COMMITMENT will be made without explicit authorization."
-  ],
+  "operator_decisions_required": [],
   "latest_reports": [
-    "roles/Cosmos/research/reviews/COORD_AUDIT_C3_2026-09-29.md",
-    "roles/Cosmos/probes/FP-001_RESULT.json"
+    "roles/Cosmos/c4/DESIGN_C4.md",
+    "roles/Cosmos/c4/S0_TRIVIAL_RULES.md",
+    "roles/Cosmos/research/reviews/AUTOPSY_C3_PUBLIC_2026-09-30.md",
+    "roles/Cosmos/research/reviews/COORD_AUDIT_C3_2026-09-29.md"
   ],
   "mwo_sha256": "925660b2d2be53af2ee4195391e484d9649bbd4ee828cd60432ce2f0903a99df",
-  "migration_report": "roles/Cosmos/MIGRATION_REPORT_MWO-0002.json"
+  "migration_report": "roles/Cosmos/MIGRATION_REPORT_MWO-0002.json",
+  "instance": "m2-44f84976 (M2 SPECTREX5), claude-opus-5-5; booted 2026-09-30T10:25Z",
+  "work_order": "Operator C3 disposition 2026-09-30 (roles/Cosmos/prompts/2026-09-30_operator_c3_disposition/) within CWO-2026-09-30, CWO-2026-09-30B and MWO-0004",
+  "current": "none (authorized set complete; completion message comms #1107)",
+  "next": "awaiting Aporia/operator -- no self-promotion. C4 steps 2-5 need authorization (DESIGN_C4.md s12 Q1-Q3)",
+  "reserve": [
+    "Public Cosmos tooling",
+    "Future-world generators that cannot expose D2",
+    "OPEN research threads T-A1..T-I1 (not started without assignment, CWO-B)"
+  ],
+  "resource_status": "CPU only on M2 (COSMOS_HOME C:/Users/James/cosmos_runs); no leases, no Fabric tasks, no GPU; spend $0",
+  "last_receipt": "comms #1107 completion; origin/main c37e2c687 (C4 design), 1b45b89ea (F-0001), 9bdfd85e1 (public autopsy); local c9f8aff17, 197daf5f3 (withheld)",
+  "open_incidents": [
+    "2026-09-30 13:42-13:44Z: a Cosmos leak-scan git grep also scanned the D2 ciphertext (binary match line only; no bytes, no decryption). c3/INFO_LEDGER.md REPORTED_FOR_RULING; comms #1105 Nestor, #1106 Harmonia"
+  ]
 }
