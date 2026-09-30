@@ -3,7 +3,7 @@
   "seat": "Harmonia",
   "mwo_id": "MWO-0004",
   "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
-  "updated_at_utc": "2026-09-30T09:20:00Z",
+  "updated_at_utc": "2026-09-30T10:10:00Z",
   "state": "WORKING",
   "branch": "harmonia/m2-475d761f-mwo1-2026-09-28",
   "head_sha": "3c897c32f029bb9f68ce30509dd71a242cc45d9c",
@@ -37,7 +37,8 @@
     }
   ],
   "next_actions": [
-    "ruler-quality survey across current rulers/gates; write roles/Harmonia/audits/RULER_QUALITY_2026-09-30.md"
+    "watch for Tyche v0 report; audit H1/H6 labelling",
+    "then Ensorain/Ananke closure sample"
   ],
   "overtaken": [
     {
@@ -55,19 +56,19 @@
   ],
   "operator_decisions_required": [],
   "latest_reports": [
-    "roles/Harmonia/audits/EVIDENCE_AUDIT_2026-09-30.md",
-    "roles/Harmonia/rulings/RECORD_D2_GOVERNING_AUDIT_AND_SEAL_GATE_2026-09-29.md",
-    "roles/Harmonia/probes/FP-001_RESULT.json"
+    "roles/Harmonia/qualification/primitives/audit_primitives.py",
+    "roles/Harmonia/audits/RULER_QUALITY_2026-09-30.md",
+    "roles/Harmonia/audits/EVIDENCE_AUDIT_2026-09-30.md"
   ],
   "mwo_sha256": "925660b2d2be53af2ee4195391e484d9649bbd4ee828cd60432ce2f0903a99df",
   "migration_report": "roles/Harmonia/MIGRATION_REPORT_MWO-0002.json",
   "comms_cursor": "#961 (sync 2026-09-29T06:58Z, instance m2-475d761f); queue empty",
   "probe_result": "roles/Harmonia/probes/FP-001_RESULT.json",
   "work_order": "MWO-0004 (current) + CWO 2026-09-30 fleet activation (ops/fleet/CWO_2026-09-30_FLEET_ACTIVATION.md, text sha256 ab93f646...b7e, 6a7a84569; Authority: Operator, executor Aporia; comms #1024/#1034)",
-  "current": "RULER QUALITY (promoted from NEXT, CWO s5): saturated, gameable, unreachable or non-discriminating rulers -- seeded by audit patterns (uncalibrated absence claims, ceiling rulers, NOTES-level operationalisation, mismatched comparisons)",
-  "next": "Shared audit primitives for BUILDER-EXPERIMENT (from RESERVE)",
+  "current": "FOLLOW-UP EVIDENCE AUDIT (promoted): Tyche v0 report when it lands (check H1/H6 labelled UNREACHABLE_BY_DESIGN), then Ensorain/Ananke closures",
+  "next": "propose ruler rules R-A..R-D into STANDING_RULES.md with citations (executable form: qualification/primitives AP-1.0.0)",
   "reserve": [
-    "follow-up sample of the evidence audit (Ensorain, Ananke, Tyche closures)"
+    "extend AP with a multiplicity/power helper for sealed-holdout designs"
   ],
   "blocked": [
     {
@@ -77,5 +78,5 @@
     }
   ],
   "resource_status": "local CPU only; no leases; no spend",
-  "last_receipt": "roles/Harmonia/audits/EVIDENCE_AUDIT_2026-09-30.md (5 packages: 0 BLOCKING, 4 MAJOR verified, A-D SUPPORTED_WITH_DEFECTS, E SUPPORTED)"
+  "last_receipt": "roles/Harmonia/qualification/primitives/audit_primitives.py AP-1.0.0 (4/4 caught, 4/4 twins quiet, 4/4 ablations; tests 6 passed)"
 }
