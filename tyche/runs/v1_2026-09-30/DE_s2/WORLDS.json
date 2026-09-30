@@ -1,0 +1,431 @@
+[
+ {
+  "id": "Z1_xor_4_11",
+  "role": "train",
+  "cls": "Z",
+  "kind": "planted",
+  "family": "Z",
+  "law_group": "Z1",
+  "d": 6,
+  "uid": 100,
+  "proc": {
+   "kind": "bern",
+   "p": 0.5
+  },
+  "law": {
+   "kind": "xor2",
+   "a": 3,
+   "b": 0,
+   "da": 4,
+   "db": 11,
+   "group": "Z1"
+  },
+  "twin_of": null,
+  "sibling_of": null
+ },
+ {
+  "id": "Z2_xor_3_7",
+  "role": "train",
+  "cls": "Z",
+  "kind": "planted",
+  "family": "Z",
+  "law_group": "Z2",
+  "d": 6,
+  "uid": 101,
+  "proc": {
+   "kind": "bern",
+   "p": 0.5
+  },
+  "law": {
+   "kind": "xor2",
+   "a": 1,
+   "b": 3,
+   "da": 3,
+   "db": 7,
+   "group": "Z2"
+  },
+  "twin_of": null,
+  "sibling_of": null
+ },
+ {
+  "id": "Z3_par3",
+  "role": "train",
+  "cls": "Z",
+  "kind": "planted",
+  "family": "Z",
+  "law_group": "Z3",
+  "d": 6,
+  "uid": 102,
+  "proc": {
+   "kind": "bern",
+   "p": 0.5
+  },
+  "law": {
+   "kind": "par3",
+   "a": 3,
+   "b": 5,
+   "c": 1,
+   "da": 2,
+   "db": 5,
+   "dc": 9,
+   "group": "Z3"
+  },
+  "twin_of": null,
+  "sibling_of": null
+ },
+ {
+  "id": "Z4_psign_5_2",
+  "role": "train",
+  "cls": "Z",
+  "kind": "planted",
+  "family": "Z",
+  "law_group": "Z4",
+  "d": 6,
+  "uid": 103,
+  "proc": {
+   "kind": "gauss"
+  },
+  "law": {
+   "kind": "psign",
+   "a": 1,
+   "b": 2,
+   "da": 5,
+   "db": 2,
+   "group": "Z4"
+  },
+  "twin_of": null,
+  "sibling_of": null
+ },
+ {
+  "id": "Z5_wxor",
+  "role": "train",
+  "cls": "Z",
+  "kind": "planted",
+  "family": "Z",
+  "law_group": "Z5",
+  "d": 6,
+  "uid": 104,
+  "proc": {
+   "kind": "bern",
+   "p": 0.5
+  },
+  "law": {
+   "kind": "wxor",
+   "a": 2,
+   "b": 3,
+   "da": 3,
+   "db": 8,
+   "w": 5,
+   "th": 3,
+   "group": "Z5"
+  },
+  "twin_of": null,
+  "sibling_of": null
+ },
+ {
+  "id": "C1_xor_raw_6",
+  "role": "train",
+  "cls": "C",
+  "kind": "planted",
+  "family": "C",
+  "law_group": "C1",
+  "d": 6,
+  "uid": 105,
+  "proc": {
+   "kind": "bern",
+   "p": 0.5
+  },
+  "law": {
+   "kind": "xor2",
+   "a": 4,
+   "b": 5,
+   "da": 0,
+   "db": 6,
+   "group": "C1"
+  },
+  "twin_of": null,
+  "sibling_of": null
+ },
+ {
+  "id": "C2_psign_raw_4",
+  "role": "train",
+  "cls": "C",
+  "kind": "planted",
+  "family": "C",
+  "law_group": "C2",
+  "d": 6,
+  "uid": 106,
+  "proc": {
+   "kind": "gauss"
+  },
+  "law": {
+   "kind": "psign",
+   "a": 0,
+   "b": 2,
+   "da": 0,
+   "db": 4,
+   "group": "C2"
+  },
+  "twin_of": null,
+  "sibling_of": null
+ },
+ {
+  "id": "G1_cmod3",
+  "role": "train",
+  "cls": "G",
+  "kind": "planted",
+  "family": "G",
+  "law_group": "G1",
+  "d": 6,
+  "uid": 107,
+  "proc": {
+   "kind": "bern",
+   "p": 0.5
+  },
+  "law": {
+   "kind": "cmod",
+   "a": 2,
+   "m": 3,
+   "group": "G1"
+  },
+  "twin_of": null,
+  "sibling_of": null
+ },
+ {
+  "id": "N1_tsd_Z1",
+  "role": "train",
+  "cls": "N",
+  "kind": "tsd",
+  "family": "N",
+  "law_group": "Z1",
+  "d": 6,
+  "uid": 108,
+  "proc": {
+   "kind": "bern",
+   "p": 0.5
+  },
+  "law": {
+   "kind": "xor2",
+   "a": 3,
+   "b": 0,
+   "da": 4,
+   "db": 11,
+   "group": "Z1"
+  },
+  "twin_of": "Z1_xor_4_11",
+  "sibling_of": null
+ },
+ {
+  "id": "N2_tsd_Z2",
+  "role": "train",
+  "cls": "N",
+  "kind": "tsd",
+  "family": "N",
+  "law_group": "Z2",
+  "d": 6,
+  "uid": 109,
+  "proc": {
+   "kind": "bern",
+   "p": 0.5
+  },
+  "law": {
+   "kind": "xor2",
+   "a": 1,
+   "b": 3,
+   "da": 3,
+   "db": 7,
+   "group": "Z2"
+  },
+  "twin_of": "Z2_xor_3_7",
+  "sibling_of": null
+ },
+ {
+  "id": "N3_tsd_Z4",
+  "role": "train",
+  "cls": "N",
+  "kind": "tsd",
+  "family": "N",
+  "law_group": "Z4",
+  "d": 6,
+  "uid": 110,
+  "proc": {
+   "kind": "gauss"
+  },
+  "law": {
+   "kind": "psign",
+   "a": 1,
+   "b": 2,
+   "da": 5,
+   "db": 2,
+   "group": "Z4"
+  },
+  "twin_of": "Z4_psign_5_2",
+  "sibling_of": null
+ },
+ {
+  "id": "N4_tsd_Z5",
+  "role": "train",
+  "cls": "N",
+  "kind": "tsd",
+  "family": "N",
+  "law_group": "Z5",
+  "d": 6,
+  "uid": 111,
+  "proc": {
+   "kind": "bern",
+   "p": 0.5
+  },
+  "law": {
+   "kind": "wxor",
+   "a": 2,
+   "b": 3,
+   "da": 3,
+   "db": 8,
+   "w": 5,
+   "th": 3,
+   "group": "Z5"
+  },
+  "twin_of": "Z5_wxor",
+  "sibling_of": null
+ },
+ {
+  "id": "N5_prf",
+  "role": "train",
+  "cls": "N",
+  "kind": "prf",
+  "family": "N",
+  "law_group": "PRF",
+  "d": 6,
+  "uid": 112,
+  "proc": {
+   "kind": "bern",
+   "p": 0.5
+  },
+  "law": {
+   "kind": "prf",
+   "key": "tyche-v1-prf-1",
+   "w": 24,
+   "group": "PRF"
+  },
+  "twin_of": null,
+  "sibling_of": null
+ },
+ {
+  "id": "H_Z1sib_markov",
+  "role": "heldout",
+  "cls": "Z",
+  "kind": "planted",
+  "family": "Z",
+  "law_group": "Z1",
+  "d": 6,
+  "uid": 113,
+  "proc": {
+   "kind": "markov",
+   "stay": 0.7
+  },
+  "law": {
+   "kind": "xor2",
+   "a": 3,
+   "b": 0,
+   "da": 4,
+   "db": 11,
+   "group": "Z1"
+  },
+  "twin_of": null,
+  "sibling_of": "Z1_xor_4_11"
+ },
+ {
+  "id": "H_Z4sib_ar1",
+  "role": "heldout",
+  "cls": "Z",
+  "kind": "planted",
+  "family": "Z",
+  "law_group": "Z4",
+  "d": 6,
+  "uid": 114,
+  "proc": {
+   "kind": "ar1",
+   "phi": 0.5
+  },
+  "law": {
+   "kind": "psign",
+   "a": 1,
+   "b": 2,
+   "da": 5,
+   "db": 2,
+   "group": "Z4"
+  },
+  "twin_of": null,
+  "sibling_of": "Z4_psign_5_2"
+ },
+ {
+  "id": "H_Z6_xor_5_8",
+  "role": "heldout",
+  "cls": "Z",
+  "kind": "planted",
+  "family": "Z",
+  "law_group": "Z6",
+  "d": 6,
+  "uid": 115,
+  "proc": {
+   "kind": "bern",
+   "p": 0.5
+  },
+  "law": {
+   "kind": "xor2",
+   "a": 3,
+   "b": 0,
+   "da": 5,
+   "db": 8,
+   "group": "Z6"
+  },
+  "twin_of": null,
+  "sibling_of": null
+ },
+ {
+  "id": "H_N6_tsd_Z6",
+  "role": "heldout",
+  "cls": "N",
+  "kind": "tsd",
+  "family": "N",
+  "law_group": "Z6",
+  "d": 6,
+  "uid": 116,
+  "proc": {
+   "kind": "bern",
+   "p": 0.5
+  },
+  "law": {
+   "kind": "xor2",
+   "a": 3,
+   "b": 0,
+   "da": 5,
+   "db": 8,
+   "group": "Z6"
+  },
+  "twin_of": "H_Z6_xor_5_8",
+  "sibling_of": null
+ },
+ {
+  "id": "H_N7_prf",
+  "role": "heldout",
+  "cls": "N",
+  "kind": "prf",
+  "family": "N",
+  "law_group": "PRF",
+  "d": 6,
+  "uid": 117,
+  "proc": {
+   "kind": "bern",
+   "p": 0.5
+  },
+  "law": {
+   "kind": "prf",
+   "key": "tyche-v1-prf-2",
+   "w": 24,
+   "group": "PRF"
+  },
+  "twin_of": null,
+  "sibling_of": null
+ }
+]

@@ -3,7 +3,7 @@
   "seat": "Techne",
   "mwo_id": "MWO-0004",
   "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
-  "updated_at_utc": "2026-09-30T10:35:00Z",
+  "updated_at_utc": "2026-09-30T11:01:03Z",
   "state": "ACTIVE",
   "instance": "gandalf-4c0c7e64 (M3/GANDALF)",
   "branch": "techne/boot-2026-09-30",
@@ -26,23 +26,27 @@
   "experiments": [],
   "fabric_tasks": [],
   "running": [],
-  "current": "TECHNE-122 section II, unit 1: fossilize facebookresearch/dcd at a pin (PLR / ACCEL / PAIRED implementations named in directive 7 s.II; Atlas UED-2/UED-4 need it). Proof: specimen record + vault body `harvest verify` clean + licence read.",
-  "next": "TECHNE-125 catalog snapshot under MWO-0004 R1 default (smallest reversible: regenerate CATALOG.json with --no-body-check so it is a schema-only snapshot of all records), then the TECHNE-122 section II report (auto-curricula) in DONOR.md format.",
+  "current": "TECHNE-122 section II report (auto-curricula: MCC, POET, ATEP, PLR, ACCEL, JaxUED, OMNI-EPIC) in DONOR.md format, from the bodies now in the vault (dcd-facebookresearch-2022, poet-enhanced-2020, poet-original-2019). Proof: the report with organs named by file and function at the pins. Not started this pass.",
+  "next": "TECHNE-122 section III (quality diversity: QDax, AURORA), then TECHNE-128 (a committed by-name test list so a red file is never outside the run).",
   "reserve": [
-    "GEA-4 injection harness: write the contract prompt to Nyx (what is injected into what, who scores, the matched irrelevant-fossil control set); build only after the contract is answered",
-    "TECHNE-122 section III (quality diversity: QDax, AURORA) after section II",
+    "GEA-4 injection harness: a proposal from a parked seat (Atlas 09-21), not an operator directive; contract with Nyx first; not started",
     "HARM-55 Flax column via a Fabric script task on a Linux worker: CANDIDATE only, not probed (frames are host-local and jax/flax would need an isolated env on the worker)"
   ],
   "blocked": [
     {
       "item": "TECHNE-113/115 HARM-55 native Flax column (ASAL row of Harmonia gandalf-6cd1348b)",
-      "dependency": "an AVX host with jax/flax; M3 CPU has no AVX. HARM55_FLAX_NATIVE_*.json absent on origin/main bae32c682. Question #576 to Harmonia (2026-09-25) unanswered.",
-      "owner": "Harmonia (delegation) / placement"
+      "dependency": "an AVX host with jax/flax; M3 CPU has no AVX. HARM55_FLAX_NATIVE_*.json absent on origin/main. 2026-09-30: Harmonia[m2-475d761f] has taken the run over as its CURRENT (roles/Harmonia/WORK_STATE.json), to run on M2; pointers to the runbook, scorer and frames sent.",
+      "owner": "Harmonia (running it on M2)"
     },
     {
       "item": "TECHNE-123 measure open-oasis / MineWorld / Matrix-Game",
       "dependency": "a host that can run a ~500M-parameter diffusion transformer (not M3)",
       "owner": "placement"
+    },
+    {
+      "item": "TECHNE-129 remainder: grade and source_type of the 39 rollout fossils",
+      "dependency": "an answer from Harmonia or Nyx (question posted 2026-09-30)",
+      "owner": "Harmonia / Nyx"
     }
   ],
   "blocked_on": [
@@ -50,18 +54,27 @@
     "GPU-class host (TECHNE-123)"
   ],
   "next_actions": [
-    "fossilize facebookresearch/dcd (current)",
-    "TECHNE-125 catalog regen, schema-only",
-    "TECHNE-122 section II report"
+    "TECHNE-122 section II report",
+    "TECHNE-122 section III",
+    "TECHNE-128 by-name test list"
   ],
   "operator_decisions_required": [
     "TECHNE-65/100: designate the off-host mirror destination for fossil bodies (candidate measured 2026-09-17: the operator's Google Drive mount on M3). Hard gate class: external side effect (MWO-0001 s7.5). One line; nothing else waits on it."
   ],
   "resource_status": "local CPU only on M3 (2008 i7 920, no AVX, no GPU); inside MWO-0004 R2; no Fabric lease held; no paid compute",
-  "last_receipt": "roles/Techne/journal/2026-09-30_gandalf-4c0c7e64.md (boot receipt); previous unit: TECHNE-124 at 3906341d7 (2026-09-25)",
+  "last_receipt": "roles/Techne/journal/2026-09-30_gandalf-4c0c7e64.md (boot receipt + units 1-3); review packet roles/Techne/REVIEW_PACKET_TECHNE_BOOT_2026-09-30.txt",
   "latest_reports": [
     "roles/Techne/journal/2026-09-30_gandalf-4c0c7e64.md",
-    "roles/Techne/REVIEW_PACKET_TECHNE124_2026-09-25.txt",
+    "roles/Techne/REVIEW_PACKET_TECHNE_BOOT_2026-09-30.txt",
+    "roles/Techne/prompts/2026-09-30_dcd_fossil/TO_HARMONIA_NYX_handoff_filled_and_harm55_pointers.md",
+    "roles/Techne/prompts/2026-09-30_dcd_fossil/TO_NYX_ATLAS_dcd_fossil_and_record_changes.md",
     "roles/Techne/prompts/2026-09-21_prior_art_raid/FIRST_RETURN_2026-09-21.md"
+  ],
+  "done_this_pass": [
+    "TECHNE-127: facebookresearch/dcd fossilized at cefd88196f26 (142 files, tree b6eefb61...c29d); verify + independent clone + cheat control",
+    "TECHNE-126: recipe axis NO_RECIPE; 48 stored labels relabeled with a receipt; 10 tests",
+    "TECHNE-125: CATALOG.json regenerated host-neutral, 169 rows; staleness + neutrality tests (5)",
+    "stale assertion in test_instrument_hygiene.py repaired (red on main since 2026-09-16)",
+    "TECHNE-129: nyx_handoff filled for 10 records (Harmonia #1064); 39 rollout records left on purpose, question posted; 5 tests"
   ]
 }

@@ -1,0 +1,51 @@
+{
+ "arm": "DE",
+ "seed": 1,
+ "config": {
+  "world_seed": 20261001,
+  "select_seed": 1,
+  "rep_seeds": [
+   101,
+   102
+  ],
+  "N": 96,
+  "gens_per_epoch": 10,
+  "budget_units": 6000,
+  "graft_p": 0.25,
+  "v0_dark": 14,
+  "v0_dark_age": 3,
+  "elite_cap": 24,
+  "reserve_size": 48,
+  "reserve_age": 5,
+  "reserve_random_frac": 0.3333333333333333,
+  "lineage_bonus": 0.1,
+  "drift_per_gen": 12,
+  "credit_weight": 3.0,
+  "credit_protect_gens": 10,
+  "pairs_per_world": 60,
+  "pair_mix": {
+   "rr": 0.5,
+   "rp": 0.3,
+   "pp": 0.2
+  },
+  "admit_min_val_gain": 0.02,
+  "admit_top": 5,
+  "admit_z": 4.0,
+  "admit_min_conf_gain": 0.01,
+  "sig_z": 4.0,
+  "rep_z": 3.0,
+  "null_n": 64,
+  "null_n_transfer": 32,
+  "precursor_max_gain": 0.01,
+  "gate_min_test_gain": 0.1
+ },
+ "worlds_hash": "ad3f76c0c1a678ddecec3be8087c69dd91e06f42d32ca06c74879c5818759cbd",
+ "receipt": {
+  "head": "282f01c4557022549cfaacdec77669404931e8aa",
+  "branch": "tyche/dark-ecology-v0-2026-09-30",
+  "dirty": false,
+  "host": "SPECTREX5"
+ },
+ "workers": 13,
+ "started_utc": "2026-09-30T10:17:37Z"
+}
