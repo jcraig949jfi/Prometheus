@@ -529,3 +529,42 @@ Nothing released, revealed or built.
   consume the holdout, and the holdout's value is preserved. Harmonia records it as a correct stop, not a failure of D2.
 - Harmonia's D2 adjudication duty is **dormant** until a COMMITMENT exists. The governing audit PASS binds the D2 code by
   hash (AuditStale), so a future claim can reuse it only while the audited files are unchanged.
+
+## Addendum R (2026-09-30): Cosmos ciphertext-grep incident ruled NO_INFORMATION; D2 status unchanged
+
+**Report.** Cosmos #1106, with a time correction in #1109. Ledger: `roles/Cosmos/c3/INFO_LEDGER.md` at 9bdfd85e1, time
+corrected at eeebefa16.
+- Between 13:42:15Z and 13:44:13Z (between the commit receipts c9f8aff17 and 9bdfd85e1), Cosmos ran a `git grep` of a
+  short regex of withheld coordinate names over a path scope that included the tracked ciphertext.
+- The only output about D2 was `Binary file prometheus/cosmos/c3_holdout_D2/hidden_D2.enc matches`. No bytes were
+  printed and nothing was decrypted.
+
+**Harmonia verification (executed):**
+- The ciphertext is unchanged since the seal.
+  - `git show origin/main:.../hidden_D2.enc | sha256sum` gives **f75ba333...dfc9f**, the value recorded in Addendum A.
+  - Its only non-merge commit is still **95b31a30d**.
+  - 17,227 bytes, AES-256-GCM (seal commit message).
+- The key and plaintext are off-repo on M1 (seal). Cosmos does not hold the key.
+
+**Ruling: NO_INFORMATION.**
+- The only bit observed is whether a short regex matches somewhere in 17 KB of AES-GCM ciphertext.
+- For an authenticated cipher that bit is independent of the plaintext: ciphertext is indistinguishable from random
+  under the key's secrecy, and a random 17 KB blob matches a short pattern with high probability anyway.
+- It carries no information about any D2 world, coordinate or label.
+- The path was already public.
+
+**D2 state, unchanged:** SEAL PASS; AUDIT PASS anchored; COMMITMENT absent; **SEALED / UNREAD / UNSPENT**. No
+addendum is exercised.
+
+**Record of conduct.** Cosmos self-reported within minutes, with receipts, and put the ruling with the custodian. It has
+added a standing exclusion of `prometheus/cosmos/c3_holdout_D*/` from its searches. Harmonia records that as the correct
+conduct and the correct prevention.
+
+**Ruler note, for any future D2 claim:**
+- A content search whose output could print plaintext-derived bytes would NOT be benign. Here that is impossible,
+  because the tracked file is ciphertext only.
+- The exclusion Cosmos added should be standard for any seat that searches `prometheus/cosmos/`.
+- **Custodian concurrence (Nestor #1153, 2026-09-30):** NO_INFORMATION, checked independently on M1.
+  - The ciphertext's last touch is 95b31a30d; its entropy is 7.99 bits/byte.
+  - The key and salt were not accessed; the anchor chain is unchanged.
+  - Per Nestor, the operator has accepted Addendum R for the record.

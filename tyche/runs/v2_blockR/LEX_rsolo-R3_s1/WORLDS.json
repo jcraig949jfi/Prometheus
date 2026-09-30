@@ -1,0 +1,38 @@
+[
+ {
+  "id": "R3_v0",
+  "cls": "REG_D3->D3_shared_one",
+  "kind": "planted",
+  "law": {
+   "comb": "xor",
+   "prec": [
+    {
+     "type": "delay",
+     "ch": 2,
+     "lag": 8
+    },
+    {
+     "type": "delay",
+     "ch": 1,
+     "lag": 11
+    }
+   ]
+  },
+  "law2": {
+   "comb": "xor",
+   "prec": [
+    {
+     "type": "delay",
+     "ch": 2,
+     "lag": 8
+    },
+    {
+     "type": "delay",
+     "ch": 0,
+     "lag": 10
+    }
+   ]
+  },
+  "uid": 5002
+ }
+]

@@ -294,8 +294,11 @@ def main(argv=None):
                      "lane": rec["lane"], "born_step": gen}
                 reg.add(e)
                 e["behavioralFingerprint"] = r["fp"]
-                e["lensDependencies"] = sorted({p for p in pids if reg[p].get("kind") == "lens"} |
-                                               {l for p in pids for l in reg[p].get("lensDependencies", [])})
+                # amendment 1: lensDependencies = lenses the genome EXECUTES (lensmap rules); ancestry kept apart
+                e["lensDependencies"] = sorted({r_["prov"].split("|")[-1][2:] for r_ in g["rules"]
+                                                if r_["op"] == "lensmap" and "L:" in r_.get("prov", "")})
+                e["metadata"]["lens_ancestry"] = sorted({p for p in pids if reg[p].get("kind") == "lens"} |
+                                                        {l for p in pids for l in reg[p]["metadata"].get("lens_ancestry", [])})
                 evals[eid] = r
                 asmt = None
                 if r["viable"]:
@@ -339,8 +342,7 @@ def main(argv=None):
                             active.add(lid)
                             field.place(lid)
                             born_gen[lid] = gen
-                        reg[d]["lensDependencies"] = sorted(set(reg[d]["lensDependencies"]) | {lid})
-                        reg[d]["metadata"]["resolved_by_lens"] = lid
+                        reg[d]["metadata"]["resolved_by_lens"] = lid  # measured: held-out drop > null p95
             protected = archive.elite_ids() | {d for d in dark_queue if not reg[d]["metadata"].get("lens_tried")} | \
                 {l for l, _ in lenses}
             fos = ec.fossilize(reg, active, vitality, protected, gen, born_gen)
@@ -571,8 +573,8 @@ def main(argv=None):
     jl(f"{rdir}/LENS_MARGINAL.jsonl", marg_rows)
     # visual export for the strongest candidates (traces only here, to keep the tree small)
     vis = []
-    for x in sorted(cand_rows, key=lambda x: x["id"])[:20]:
-        if x["id"] in reg:
+    for x in [x for x in cand_rows if x["id"] in reg][:20]:  # amendment 1: ecology candidates only
+        if True:
             g = reg[x["id"]]["executableRepresentation"]
             tr, _ = sb.run(g, seed=0)
             np.savez_compressed(f"{rdir}/trace_{x['id']}.npz", trace=tr.astype(np.float32))
@@ -581,7 +583,12 @@ def main(argv=None):
                         "residual": evals[x["id"]].get("dark"), "lens_dependencies": reg[x["id"]]["lensDependencies"],
                         "collision_ancestry": [reg[a]["metadata"].get("collision") for a in reg[x["id"]]["ancestry"]
                                                if reg[a]["origin"] == "synthetic"]})
+    assert vis or not any(x["id"] in reg for x in cand_rows), "VISUAL_EXPORT empty with candidates present"
     jl(f"{rdir}/VISUAL_EXPORT.jsonl", vis)
+    # amendment 1: every arm row with genome and viability, so H1 is reconstructable from committed rows
+    jl(f"{root}/controls/arms_{tag}.jsonl", [{"arm": arm, "id": r["id"], "viable": r["viable"], "viability": r["viability"],
+                                              "fp": r["fp"], "dark": r.get("dark"), "genome": r["genome"], "meta": r.get("meta")}
+                                             for arm in sorted(table) for r in table[arm]])
     jdump(f"{rdir}/REPORT.json", out)
     with open(f"{root}/reports/{tag}.md", "w", encoding="utf-8") as f:
         f.write(an.render(out, tag))

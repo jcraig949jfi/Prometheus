@@ -5,8 +5,11 @@ usage (as the Task's --script): roles/Artemis/dispatch/run_frozen.py SCRIPT CWD 
 
 The script executor starts in the pinned worktree with an allow-listed env. This runner only
 supplies what the scripts' own usage lines ask for: PROMETHEUS_REPO and REPO = the worktree,
-the worktree on sys.path, argv, and a cwd (CWD is "repo" or "out"; "out" = $FABRIC_OUT_DIR, so
-files a script writes to its cwd come back as artifacts). "{repo}" in an ARG becomes the worktree.
+the worktree on sys.path, argv, and a cwd (CWD is "repo", "out" or "rootcopy"; "out" = $FABRIC_OUT_DIR,
+so files a script writes to its cwd come back as artifacts; "rootcopy" runs a byte-identical copy
+placed at the worktree root, for scripts that locate the repo from __file__; the worker restores the
+checkout afterwards). "{repo}" in an ARG becomes the worktree. stdout is line-buffered so a
+timeout keeps the output printed so far (D002 F1).
 It writes out/run_meta.json (script sha256, argv, cwd, times, versions) before and after the run.
 """
 import hashlib, json, os, platform, runpy, sys, time
@@ -32,6 +35,11 @@ def dump(**kw):
 
 
 dump()
+sys.stdout.reconfigure(line_buffering=True)
+if where == "rootcopy":
+    import shutil
+    path = os.path.join(repo, os.path.basename(script))
+    shutil.copyfile(os.path.join(repo, script), path)
 os.environ["PROMETHEUS_REPO"] = os.environ["REPO"] = repo
 sys.path.insert(0, repo)
 os.chdir(out if where == "out" else repo)

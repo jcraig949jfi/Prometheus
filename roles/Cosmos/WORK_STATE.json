@@ -3,37 +3,77 @@
   "seat": "Cosmos",
   "mwo_id": "MWO-0004",
   "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
-  "updated_at_utc": "2026-09-29T15:25:53Z",
-  "state": "HOLD",
+  "updated_at_utc": "2026-09-30T15:27:16Z",
+  "state": "ACTIVE",
   "branch": "cosmos/c3-public-2026-09-24",
   "head_sha": "(this commit; git log -1 -- roles/Cosmos/WORK_STATE.json)",
   "threads": [
-    "thr-32389b1e7abb (T-C3, PARKED: coordinate audit REJECT, stopped before D2)",
-    "thr-ba4ccc18cc6c (T-I1: backfill done; fragment test v3 -> ceiling-atom recurrence = certificate economics, DEAD as evidence)",
-    "thr-14b16c6a4d6b (T-E1, null law = definition rung)",
-    "+8 OPEN: roles/Cosmos/research/THREADS.md"
+    "thr-32389b1e7abb (T-C3, KILLED pre-holdout; autopsy accepted by the operator)",
+    "thr-cac8c079f216 (T-C4, DESIGNED v0.2; under review)",
+    "thr-ba4ccc18cc6c (T-I1)",
+    "thr-14b16c6a4d6b (T-E1)",
+    "+7 OPEN: roles/Cosmos/research/THREADS.md"
   ],
   "campaigns": [
-    "C3 (causal accessibility of past information): Session 1 complete; closing via holdout D2"
+    "C3: CLOSED / KILLED BEFORE HOLDOUT; autopsy accepted",
+    "C4: DESIGNED v0.2 (design revision authorized; F-0002 + build NOT authorized)"
   ],
   "experiments": [
-    "C3-D2 blind adjudication: NOT started; Cosmos blind to D2"
+    "C3-D2 adjudication: NEVER STARTED; D2 SEALED / UNREAD / UNSPENT, reserved"
   ],
-  "fabric_tasks": [
-    "tsk-2847868eeac6, tsk-0cac20173212 (FP-001 resubmit, completed, replicas agree)"
-  ],
+  "fabric_tasks": [],
   "running": [],
-  "blocked_on": [],
+  "blocked_on": [
+    {
+      "item": "C4 reviews",
+      "dependency": "Aporia assigns R-STAT + R-MECH (comms #1122)",
+      "owner": "Aporia"
+    },
+    {
+      "item": "foreign visible family",
+      "dependency": "Aporia assigns a non-Cosmos author (prefer off-M2); the author commits per the contract",
+      "owner": "Aporia / assigned seat"
+    },
+    {
+      "item": "C3 publication",
+      "dependency": "foreign family committed with an immutable receipt (operator Q-A ruling)",
+      "owner": "foreign author"
+    }
+  ],
   "next_actions": [
-    "seat loop STOPPED at the hard gate; resume on the operator's C3 disposition"
+    "wait for reviewer + author assignments (Aporia)",
+    "reconcile the reviews",
+    "report v0.2 + reconciliation to the operator"
   ],
   "operator_decisions_required": [
-    "HARD GATE (MWO-0001 s7(2)): D2 governing firewall audit PASSED (FIREWALL_AUDIT_1 @67e05df12, LF sha256 4d267476..., anchored d74bd3dde; Harmonia Addendum O/P). The next D2 gate is the COSMOS COMMITMENT. Cosmos has NO admissible claim: the C3 coordinate audit was REJECTED (research/reviews/COORD_AUDIT_C3_2026-09-29.md), and by precommitment it stopped before D2. Disposition needed: (a) close C3 killed pre-holdout, leaving D2 sealed and unspent for a future claim; or (b) authorize a successor preregistration that must beat the zero-parameter definition rung before any D2 commitment. No PREDICTION_COMMITMENT will be made without explicit authorization."
+    "C4 build decision after: foreign family committed, C3 published + verified, both reviews complete, RECONCILIATION_v0.2.md"
   ],
   "latest_reports": [
-    "roles/Cosmos/research/reviews/COORD_AUDIT_C3_2026-09-29.md",
-    "roles/Cosmos/probes/FP-001_RESULT.json"
+    "roles/Cosmos/c4/DESIGN_C4.md",
+    "roles/Cosmos/c4/REVIEW_BRIEF_v0.2.md",
+    "roles/Cosmos/c3/PUBLICATION_PLAN.md",
+    "roles/Cosmos/c4/VISIBLE_FAMILY_CONTRACT.md"
   ],
   "mwo_sha256": "925660b2d2be53af2ee4195391e484d9649bbd4ee828cd60432ce2f0903a99df",
-  "migration_report": "roles/Cosmos/MIGRATION_REPORT_MWO-0002.json"
+  "migration_report": "roles/Cosmos/MIGRATION_REPORT_MWO-0002.json",
+  "instance": "m2-44f84976 (M2 SPECTREX5), claude-opus-5-5; booted 2026-09-30T10:25Z",
+  "work_order": "Operator direction 2026-09-30 review 2 (roles/Cosmos/prompts/2026-09-30_operator_c4_review2_publication/) within CWO-2026-09-30(B) and MWO-0004",
+  "current": "C4 v0.2(+v0.2a) under independent review (reviewers start now; final verdicts after the foreign family commit + C3 publication). Foreign visible family commissioned. C3 publication prepared (c3/PUBLICATION_PLAN.md; dry run V1-V5 PASS), NOT executed.",
+  "next": "On the foreign-family commit: publish the C3 branch after re-running V1-V5 -> notify the reviewers -> reconcile the reviews (RECONCILIATION_v0.2.md) -> return to the operator for the C4 build decision",
+  "reserve": [
+    "Public Cosmos tooling",
+    "Future-world generators that cannot expose D2",
+    "OPEN research threads T-A1..T-I1 (not started without assignment, CWO-B)"
+  ],
+  "resource_status": "CPU only on M2 (COSMOS_HOME C:/Users/James/cosmos_runs); no leases, no Fabric tasks, no GPU; spend $0",
+  "last_receipt": "operator review 2 recorded verbatim; C3 publication dry run V1-V5 PASS (this commit)",
+  "open_incidents": [],
+  "authorization": {
+    "C4 design review": "AUTHORIZED",
+    "foreign visible family authoring": "AUTHORIZED",
+    "withheld C3 publication": "AUTHORIZED AFTER FOREIGN FAMILY COMMIT",
+    "F-0002 freeze": "NOT AUTHORIZED",
+    "C4 full build": "NOT AUTHORIZED",
+    "D2 access": "NOT AUTHORIZED"
+  }
 }

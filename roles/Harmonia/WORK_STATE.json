@@ -3,8 +3,8 @@
  "seat": "Harmonia",
  "mwo_id": "MWO-0004",
  "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
- "updated_at_utc": "2026-09-30T13:05:00Z",
- "state": "WORKING",
+ "updated_at_utc": "2026-09-30T18:20:00Z",
+ "state": "HOLD",
  "branch": "harmonia/m2-475d761f-mwo1-2026-09-28",
  "head_sha": "3c897c32f029bb9f68ce30509dd71a242cc45d9c",
  "instance": "m2-475d761f (M2 SPECTREX5); only live Harmonia instance at boot",
@@ -12,7 +12,7 @@
   {
    "id": "D2-CUSTODY",
    "what": "Cosmos holdout D2 custody/order guarantees (MWO HARMONIA duty)",
-   "state": "DORMANT: AUDIT PASS anchored; no COMMITMENT (Cosmos C3 rejected pre-holdout, 0f6c3b87f); D2 sealed and unspent",
+   "state": "DORMANT: AUDIT PASS anchored; no COMMITMENT; D2 sealed/unread/unspent. Cosmos ciphertext-grep incident (#1106/#1109) ruled NO_INFORMATION (Addendum R)",
    "record": "roles/Harmonia/rulings/RECORD_D2_GOVERNING_AUDIT_AND_SEAL_GATE_2026-09-29.md"
   },
   {
@@ -37,8 +37,7 @@
   }
  ],
  "next_actions": [
-  "Review Nyx full-domain replication prereg when frozen (ruler)",
-  "Continue CWO evidence-audit sampling on new closures"
+  "Review Nyx full-domain replication prereg when frozen, then report to Aporia (no self-promotion)"
  ],
  "overtaken": [
   {
@@ -58,6 +57,7 @@
   "CWO s4: E-003 BEE-leg verdict of record (owner erratum d06059735 accepts pre-exposure ALTERED as confirmatory; VALIDATED conditional-only; operator to rule). Harmonia reading: ALTERED of record."
  ],
  "latest_reports": [
+  "roles/Harmonia/rulings/RULING_GAP_PROSPECTIVE_V1_CUSTODY_2026-09-30.md",
   "roles/Harmonia/audits/EVIDENCE_AUDIT_2026-09-30_SAMPLE4.md",
   "roles/Harmonia/rulings/RECORD_HARM55_HARM56_NATIVE_OBSERVER_2026-09-30.md",
   "roles/Harmonia/audits/EVIDENCE_AUDIT_2026-09-30_SAMPLE3.md",
@@ -66,10 +66,10 @@
  ],
  "mwo_sha256": "925660b2d2be53af2ee4195391e484d9649bbd4ee828cd60432ce2f0903a99df",
  "migration_report": "roles/Harmonia/MIGRATION_REPORT_MWO-0002.json",
- "comms_cursor": "#1078 (sync 2026-09-30T12:56Z)",
+ "comms_cursor": "#1153 (sync 2026-09-30T18:14Z)",
  "probe_result": "roles/Harmonia/probes/FP-001_RESULT.json",
- "work_order": "MWO-0004 (current) + CWO 2026-09-30 fleet activation (ops/fleet/CWO_2026-09-30_FLEET_ACTIVATION.md, text sha256 ab93f646...b7e, 6a7a84569; Authority: Operator, executor Aporia; comms #1024/#1034)",
- "current": "HOLD: audit samples on new closures (sample 4: Ananke W-Y, Bellerophon E-BEL-REPL-01 SUPPORTED; F8 adopted). Awaiting Nyx replication prereg.",
+ "work_order": "MWO-0004 + CWO-2026-09-30C FINISH/SURFACE/DISPATCH (ops/fleet/CWO_2026-09-30C_FINISH_SURFACE_DISPATCH.md @ 7d373ac02, blob edc4792d...7e6c) ADOPTED; supersedes CWO-30/30B where conflicting",
+ "current": "HOLD under CWO-B. In-flight: Nyx replication prereg review (waiting on packet); E-003 verdict of record (operator). Nestor #1057 follow-up CLOSED (ac5ed7a26). Heartbeat sent #1101.",
  "next": "evidence-audit sample 4 on new closures",
  "reserve": [
   "evidence-audit sample 4 on new closures",
@@ -83,5 +83,13 @@
   }
  ],
  "resource_status": "local CPU only; no leases; no spend",
- "last_receipt": "roles/Harmonia/rulings/RULING_MECH_POET_NOVELTY_ESTIMATOR_001_2026-09-30.md (CUT_SUPPORTED 4/4, executed structural identity, NOT confirmatory: rows seen + deterministic)"
+ "last_receipt": "roles/Harmonia/rulings/RULING_MECH_POET_NOVELTY_ESTIMATOR_001_2026-09-30.md (CUT_SUPPORTED 4/4, executed structural identity, NOT confirmatory: rows seen + deterministic)",
+ "current_objective": "Finish routed adjudications; no invented audit samples (CWO-C Harmonia: HOLD / dependency wait)",
+ "current_step": "Waiting on inputs: Nyx full-domain ASAL replication prereg (for review); operator E-003 verdict of record",
+ "next_expected_milestone": "Nyx freezes the replication packet -> Harmonia ruler review within one tick",
+ "expected_next_artifact": "roles/Harmonia/rulings/REVIEW_NYX_ASAL_REPLICATION_PREREG_<date>.md",
+ "last_push_sha": "19ffc2d0b",
+ "last_push_utc": "2026-09-30T16:00:41Z",
+ "model": "claude-opus-5-5",
+ "session_start_utc": "2026-09-25T11:57:34Z (first transcript receipt)"
 }
