@@ -4,11 +4,11 @@
   "mwo_id": "MWO-0004",
   "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
   "mwo_sha256": "925660b2d2be53af2ee4195391e484d9649bbd4ee828cd60432ce2f0903a99df",
-  "updated_at_utc": "2026-09-30T12:40:00Z",
+  "updated_at_utc": "2026-09-30T13:30:00Z",
   "state": "ACTIVE",
-  "state_reason": "Operator direction 2026-09-30 adopted (queue re-ordered over the CWO). CURRENT = PKG-F W-DRIFT observability repair, then bounded LM02, then freeze; NEXT = WTP-04 Habitable Islands. LM01 HOLD.",
+  "state_reason": "Instrument loop closed and frozen (PKG-F strict gate of record; HIER labeled arm; LM02 WINDOW_NOT_SUPPORTED). CURRENT = WTP-04 Habitable Islands. LM01 HOLD.",
   "branch": "ensorain/base-role-adopt-2026-09-23",
-  "head_sha": "fe6393297",
+  "head_sha": "bf90a73bb",
   "base_sha": "bd48fac9b5d51262e84b76d0ca16b8d9054eb5f1",
   "threads": [
     "thr-ens-lossless-memorizer",
@@ -46,8 +46,9 @@
     },
     {
       "id": "E-ENS-LM02",
-      "status": "BOUNDED ASSAY RUNNING (prereg ensorain/arc3/lm02/PREREG_LM02_ASSAY.md @ 8b49a4456); v0.2 design PARKED",
-      "report": "ensorain/arc3/packages/PKG_LM02_DESIGN.md"
+      "status": "CLOSED: WINDOW_NOT_SUPPORTED; PKG-F-HIER POP_VALUE_REQUIRES_REPRESENTATIVENESS",
+      "report": "ensorain/arc3/lm02/RESULTS_LM02_ASSAY.md",
+      "note": "88 worlds, prereg 8b49a4456, result bf90a73bb. Instrument OK (REF_HOLD 94%). No window preserves attainable competence in any regime (data-loss vs contamination squeeze); ordering/anomaly robust. HIER: STAT recovery .76, safe <=.022 outside HIDDEN, HIDDEN .124 > .10. L4 refuted (global pool fails conservative)."
     },
     {
       "id": "E-ENS-T25-CSSR",
@@ -116,16 +117,7 @@
       "state": "completed (succeeded; outputs identical across replicas)"
     }
   ],
-  "running": [
-    {
-      "what": "LM02 assay eval (88 worlds, 9_815_xxx)",
-      "host": "M2",
-      "workers": 8,
-      "priority": "BELOW_NORMAL",
-      "precommit": "8b49a4456",
-      "output": "ensorain/arc3/lm02/results/lm02_assay.json"
-    }
-  ],
+  "running": [],
   "dependencies": {
     "LM01_b_bellerophon_campaign_ended": {
       "status": "SATISFIED",
@@ -143,7 +135,7 @@
       "owner": "operator"
     }
   ],
-  "next_actions": "Close the instrumentation loop: (1) PKG-F DONE (dev) fe6393297; (2) LM02 as a BOUNDED instrument test of window sufficiency vs full history (downstream competence, substrate ordering, anomaly detection; several drift rates, families, substrates); WINDOW_NOT_SUPPORTED is a valid stop; (3) freeze the line.",
+  "next_actions": "WTP-04 Habitable Islands (promoted from NEXT; instrument line frozen bf90a73bb): identify the genuinely independent WTP-03 founding families; perturb each family's physics outward (memory/environment ratio, change timescale, information cost, observation quality, irreversibility, credit delay, topology, compute, forgetting, active sensing, recurrence); map where learning becomes possible and where it dies. Cheap competitors first. Preregister before any campaign.",
   "operator_decisions_required": [],
   "latest_reports": [
     "ensorain/arc3/reviews/PKGF_CRYPT_REVIEW_2026-09-29.md (review packet: PKG-F v2-v5b + learned crypticity)",
@@ -175,8 +167,8 @@
     "operator_direction": "roles/Ensorain/prompts/2026-09-30_operator_direction/ (supersedes the CWO Ensorain section where they differ)",
     "operator_ruling_hier": "roles/Ensorain/prompts/2026-09-30_pkgf_pop_lm02_ruling/"
   },
-  "current": "Close the instrumentation loop: (1) PKG-F DONE (dev) fe6393297; (2) LM02 as a BOUNDED instrument test of window sufficiency vs full history (downstream competence, substrate ordering, anomaly detection; several drift rates, families, substrates); WINDOW_NOT_SUPPORTED is a valid stop; (3) freeze the line.",
-  "next": "WTP-04 Habitable Islands: take each independent WTP-03 founding family and perturb its physics outward (memory/environment ratio, change timescale, information cost, observation quality, irreversibility, credit delay, topology, compute, forgetting, active sensing, recurrence); map where learning becomes possible and where it dies. Cheap competitors first.",
+  "current": "WTP-04 Habitable Islands (promoted from NEXT; instrument line frozen bf90a73bb): identify the genuinely independent WTP-03 founding families; perturb each family's physics outward (memory/environment ratio, change timescale, information cost, observation quality, irreversibility, credit delay, topology, compute, forgetting, active sensing, recurrence); map where learning becomes possible and where it dies. Cheap competitors first. Preregister before any campaign.",
+  "next": "Substrate collision inside habitable regions (TT, CP, low-rank, DCT/spectral, sparse, graph memory, dense, symbolic/programmatic, cheap nulls): where does the preferred carrier of competence change? Lanes: paid substrate transformation; non-tensor-native worlds.",
   "reserve": [
     "Radically new world grammars not naturally TT/CP/matrix (dynamic graph laws, causal hidden state, programs, rewriting, temporal rules, recursive, topology-dependent)"
   ],
@@ -187,8 +179,7 @@
     "spend": "none"
   },
   "last_receipt": {
-    "commit": "fe6393297",
-    "what": "PKG-F observability gate: leak 3e-4, gate ~= recent window; price located (ensorain/arc3/RESULTS_PKGF_PROBE.md)"
-  },
-  "then": "Substrate collision inside habitable regions (TT, CP, low-rank, DCT/spectral, sparse, graph memory, dense, symbolic/programmatic, cheap nulls): where does the preferred carrier of competence change? Lanes: substrate transformation (paid representation conversion); non-tensor-native worlds."
+    "commit": "bf90a73bb",
+    "what": "LM02 assay closed (WINDOW_NOT_SUPPORTED; HIER needs representativeness); instrument line frozen (ensorain/arc3/INSTRUMENT_LINE_FREEZE_2026-09-30.md)"
+  }
 }
