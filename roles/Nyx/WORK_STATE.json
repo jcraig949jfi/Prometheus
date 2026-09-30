@@ -5,12 +5,12 @@
   "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
   "mwo_sha256": "925660b2d2be53af2ee4195391e484d9649bbd4ee828cd60432ce2f0903a99df",
   "work_order": "MWO-0004 (MWO-0001 s10 NYX/TECHNE/THEOPHRASTUS/CRIUS: adoption + existing authorized work only) ; CWO-2026-09-30 does not list Nyx, s5 state fields adopted",
-  "updated_at_utc": "2026-09-30T10:40:00Z",
+  "updated_at_utc": "2026-09-30T11:20:00Z",
   "state": "ACTIVE",
-  "state_reason": "First live cycle since MWO-0001. Existing authorized work is genuinely active: operator directive 2026-09-19b (roles/Nyx/prompts/2026-09-19b_next_pipeline_direction/) orders one POET mechanism to a ruling, then the Avida ancestry cut. No parked campaign is resurrected; every hold in roles/Nyx/RESUME_2026-09-25.md s4 stands.",
+  "state_reason": "ACTIVE on work the operator directives of 2026-09-18, 2026-09-19 and 2026-09-19b authorized. Both gated lines returned on 2026-09-30 (POET ruling #1063; HARM-56 A_OBSERVER_STABLE #1067) after the ownership question #1059. No parked campaign is resurrected.",
   "instance": "gandalf-d1f90ae1 (M3 GANDALF); only live Nyx instance",
   "branch": "nyx/boot-2026-09-17",
-  "head_sha": "bae32c682f226e7ec41d9e9c4df06082663364ae",
+  "head_sha": "cbbe0c373 (pushed); this file rides the next commit",
   "threads": [
     {
       "id": "UNREGISTERED (no ops/threads file; seat-local alias NYX-MECH-ARCH)",
@@ -22,52 +22,65 @@
   "campaigns": [],
   "experiments": [
     {
+      "id": "MECH-AVIDA-ANCESTRY-RETENTION-001",
+      "what": "frozen BLIND packet 0f52e295... on the avida body: eight exact rows on the 177 .spop saves the body ships",
+      "state": "FROZEN 2026-09-30 (commit e9b0783e5), posted #1069, NO RULING YET",
+      "record": "nyx/atlas/predictions/MECH-AVIDA-ANCESTRY-RETENTION-001.json"
+    },
+    {
       "id": "MECH-POET-NOVELTY-ESTIMATOR-001",
-      "what": "frozen prediction packet 291a22ed... on poet-original-2019 (numpy only, runs against the fossil's own bytes)",
-      "state": "FROZEN, posted #494 on 2026-09-19, NO RULING",
-      "record": "nyx/atlas/predictions/MECH-POET-NOVELTY-ESTIMATOR-001.json"
+      "what": "frozen packet 291a22ed... on poet-original-2019",
+      "state": "ADJUDICATED 2026-09-30 (Harmonia #1063): CUT_SUPPORTED 4/4 as an executed structural identity; not confirmatory; assimilated",
+      "record": "roles/Harmonia/rulings/RULING_MECH_POET_NOVELTY_ESTIMATOR_001_2026-09-30.md"
     },
     {
       "id": "MECH-ASAL-LEGIT-SEARCH-001",
       "what": "frozen packet c6627d26... on asal-sakana-2024",
-      "state": "ADJUDICATED (Harmonia #441/#446) on the executed 395/1045 domain; observer dependence UNRESOLVED pending HARM-55/HARM-56",
-      "record": "roles/Nyx/prompts/2026-09-19_asal_pipeline_direction/CLAIM_CURRENT_RESOLUTION.md"
+      "state": "ADJUDICATED on the executed 395/1045 domain; observer dependence RESOLVED 2026-09-30: A_OBSERVER_STABLE (Harmonia #1067)",
+      "record": "roles/Harmonia/rulings/RECORD_HARM55_HARM56_NATIVE_OBSERVER_2026-09-30.md"
     }
   ],
   "fabric_tasks": [],
   "running": [],
-  "current": "Avida ancestry cut (HISTORY_MODE reconstruction benchmark): cut the vault body into organs; A5 measure-definedness on a small synthetic fixture for every degradation arm BEFORE any prereg hash; A9 missing beats unverified ancestry.",
-  "next": "THEO-REQ-003 answer (comms #241): what a provenance-carrying same-kind composition operation must carry, from the atlas composition graph; Nyx proposes, Proteus/Herakles own the interface.",
+  "current": "Full-domain ASAL replication packet: a NEW preregistration (executable-domain gate before the first score; positional catalogue index; seeds, observer paths, classification and threshold semantics frozen; determinism on a sampled and an adversarial subset; both observers as separable rows).",
+  "next": "poet-enhanced-2020 cut (PATA-EC, basis-population ablation), unblocked by the POET ruling.",
   "reserve": [
-    "Post the UNKNOWN-grade ask to Techne (cuts whose provenance_grade_read is UNKNOWN with source types PSEUDOCODE_PLUS_REFERENCE_IMPL / FAITHFUL_PORT / LATER_SAME_LINEAGE_RELEASE)",
-    "Annotate the three ledgers Artemis #1011 found stale on #189 (nyx/LOOP.md:127, nyx/CHOP_SHOP_CALIBRATION_2026-09-12.md:88, nyx/specimens/hypothesis_shrinker/cuts.json:1038)",
-    "Own defects NYX-47 (free-text cost_class in 12 pre-09-17 pressures) and NYX-48 (F:/ paths in five 09-13 scripts)",
-    "Re-pose the dropped particles scheme-ordering claim as MECH-PARTICLES-SCHEME-001 with a power statement (M3-native)"
+    "re-read provenance for poet-original-2019 and verilog-generic-fifo (Techne fc547d2d5 filled their handoff strings)",
+    "apply Techne's grade ruling for three source types when it arrives (#1071; 19 cuts read UNKNOWN)",
+    "own defects NYX-47 (free-text cost_class) and NYX-48 (F:/ paths in five 09-13 scripts)",
+    "re-pose the dropped particles scheme-ordering claim as MECH-PARTICLES-SCHEME-001 with a power statement"
   ],
   "blocked_on": [
     {
-      "item": "Stage D' assimilation of the POET novelty ruling; then the poet-enhanced-2020 cut",
-      "dependency": "a Harmonia ruling on MECH-POET-NOVELTY-ESTIMATOR-001 (#494). Open 11 days. The M3 Harmonia instance that received it (gandalf-6cd1348b) has been offline since 2026-09-19 and the item is absent from Harmonia's WORK_STATE and from ops/fleet/QUEUE.json.",
+      "item": "Stage D' on MECH-AVIDA-ANCESTRY-RETENTION-001",
+      "dependency": "Harmonia's verdict (posted #1069, 2026-09-30). Escalate on 2026-10-03 if unacknowledged.",
       "owner": "Harmonia"
     },
     {
-      "item": "Full-domain ASAL replication packet, then behavioral cuts",
-      "dependency": "HARM-56 disposition A/B/C, which needs the HARM-55 native Flax column; jaxlib needs AVX and M3 has none. No flax_scores.json on origin/main. Absent from Harmonia's WORK_STATE and from ops/fleet/QUEUE.json.",
-      "owner": "Harmonia (adjudication) / Techne (harness, done) / an AVX host"
+      "item": "behavioral cuts of the ASAL low-score region",
+      "dependency": "the full-domain replication frozen AND executed (operator directive 2026-09-19 s5)",
+      "owner": "Nyx (packet), Harmonia (execution)"
+    },
+    {
+      "item": "host for the replication's native observer column",
+      "dependency": "Harmonia's answer to #1073 (AVX is on M2 only)",
+      "owner": "Harmonia"
     }
   ],
   "resource_status": "M3 GANDALF: system Python 3.11 + numpy only; no AVX, no docker, no WSL2, no C compiler. No lease held; nothing substantial running.",
-  "last_receipt": "roles/Nyx/reports/ARES_W4_READING_2026-09-25.md (44e6bda1b) ; boot 2026-09-30: 123 fossils 0 problems, 6 mechanisms 0 problems, probes intact 53f63df5..., 45 tests passed at bae32c682",
+  "last_receipt": "e9b0783e5 freeze commit (avida cut, packet 0f52e295, apparatus, 52 tests); cbbe0c373 THEO-REQ-003 reply; Stage D' on #1063 and #1067 in nyx/atlas/gates/; review packet roles/Nyx/reports/REVIEW_PACKET_2026-09-30_boot_avida_ancestry.txt",
   "next_actions": [
-    "Avida ancestry cut: A5 fixture first",
-    "THEO-REQ-003",
-    "ask Harmonia whether #494 and HARM-55/56 are still owned"
+    "replication packet: domain-acceptance fixture first",
+    "poet-enhanced-2020 cut",
+    "escalate #1069 on 2026-10-03 if no ACK"
   ],
   "operator_decisions_required": [],
   "latest_reports": [
     "roles/Nyx/STATUS.md",
-    "roles/Nyx/RESUME_2026-09-25.md",
-    "roles/Nyx/journal/2026-09-30.md"
+    "roles/Nyx/journal/2026-09-30.md",
+    "roles/Nyx/reports/REVIEW_PACKET_2026-09-30_boot_avida_ancestry.txt",
+    "roles/Nyx/reports/THEO_REQ_003_REPLY_2026-09-30.md",
+    "roles/Nyx/prompts/2026-09-30_avida_ancestry_packet/"
   ],
-  "comms_cursor": "sync 2026-09-30T10:20Z through #1024; addressed to Nyx since #571: #575 (Techne ack, closed), #1011 (Artemis, no action requested)"
+  "comms_cursor": "sync 2026-09-30T11:15Z through #1074; posted #1059, #1069, #1070, #1071, #1073, #1074; received #1062, #1063, #1066, #1067"
 }
