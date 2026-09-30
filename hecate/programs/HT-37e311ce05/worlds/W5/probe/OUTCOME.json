@@ -1,0 +1,309 @@
+{
+ "triplicateId": "HT-37e311ce05",
+ "world": "W5",
+ "outcome": "NULL",
+ "statistics": {
+  "POSITIVE_CONTROL": {
+   "S1_completion": 0.9314619847549204,
+   "S2_high_m_gap": 2.7663057030243485e-15,
+   "sharpness_secondary": 0.6916900006330776,
+   "total_drop": 0.8627897428350959,
+   "g_lo": 0.8627897428350975,
+   "g_hi": 1.5099033134902129e-15,
+   "curve": {
+    "12": 0.8627897428350975,
+    "16": 0.6766504781502182,
+    "20": 0.6559169343155521,
+    "24": 0.38491269874521994,
+    "28": 0.23164448893972972,
+    "32": 5.4622972811557705e-15,
+    "36": 0.05913389654773167,
+    "40": 3.0087043967341744e-15,
+    "44": 1.7097434579227411e-15,
+    "48": 6.994405055138486e-15,
+    "52": 1.7430501486614957e-15,
+    "56": 1.63202784619898e-15,
+    "60": 1.5099033134902129e-15
+   }
+  },
+  "NULL_TWIN": {
+   "S1_completion": 0.6271812443292148,
+   "S2_high_m_gap": 0.16685579067676073,
+   "sharpness_secondary": 0.46626124315109885,
+   "total_drop": 0.6784602481761778,
+   "g_lo": 0.7438259595668141,
+   "g_hi": 0.06536571139063628,
+   "curve": {
+    "12": 0.7438259595668141,
+    "16": 0.6016286841287536,
+    "20": 0.6346481356309986,
+    "24": 0.5050590858284271,
+    "28": 0.4868072537379195,
+    "32": 0.38906817916927094,
+    "36": 0.31830841688777095,
+    "40": 0.27190298943764984,
+    "44": 0.23125729760978975,
+    "48": 0.18408928328897103,
+    "52": 0.16010734621235934,
+    "56": 0.08841211612115826,
+    "60": 0.06536571139063628
+   }
+  },
+  "CHEAT": {
+   "S1_completion": 1.0,
+   "S2_high_m_gap": 0.0,
+   "sharpness_secondary": 1.0,
+   "total_drop": 0.8,
+   "g_lo": 0.8,
+   "g_hi": 0.0,
+   "curve": {
+    "12": 0.8,
+    "16": 0.8,
+    "20": 0.8,
+    "24": 0.8,
+    "28": 0.0,
+    "32": 0.0,
+    "36": 0.0,
+    "40": 0.0,
+    "44": 0.0,
+    "48": 0.0,
+    "52": 0.0,
+    "56": 0.0,
+    "60": 0.0
+   }
+  },
+  "TREATMENT": {
+   "S1_completion": 0.7318262107813781,
+   "S2_high_m_gap": 0.0074561252231395425,
+   "sharpness_secondary": 0.4867369221966142,
+   "total_drop": 0.7146418894965277,
+   "g_lo": 0.6696866526561764,
+   "g_hi": -0.044955236840351284,
+   "curve": {
+    "12": 0.6696866526561764,
+    "16": 0.5425698502206505,
+    "20": 0.49453558036660095,
+    "24": 0.36411740247519697,
+    "28": 0.3168490755244232,
+    "32": 0.22199459294326646,
+    "36": 0.14669298660028818,
+    "40": 0.08073436172592693,
+    "44": 0.03845545910426934,
+    "48": 0.005703559763326543,
+    "52": -0.01367909467864169,
+    "56": -0.021522297735692586,
+    "60": -0.044955236840351284
+   }
+  }
+ },
+ "clause_results": {
+  "success": {
+   "POSITIVE_CONTROL": {
+    "S1": true,
+    "S2": true
+   },
+   "NULL_TWIN": {
+    "S1": false,
+    "S2": false
+   },
+   "CHEAT": {
+    "S1": true,
+    "S2": true
+   },
+   "TREATMENT": {
+    "S1": false,
+    "S2": true
+   }
+  },
+  "failure": {
+   "POSITIVE_CONTROL": {
+    "F1": false,
+    "F2": false,
+    "F3": false
+   },
+   "NULL_TWIN": {
+    "F1": true,
+    "F2": false,
+    "F3": true
+   },
+   "CHEAT": {
+    "F1": false,
+    "F2": false,
+    "F3": false
+   },
+   "TREATMENT": {
+    "F1": false,
+    "F2": false,
+    "F3": false
+   }
+  }
+ },
+ "criterion_as_applied": {
+  "success": [
+   "Exploitation is finished by the end of the recovery transition: completion = (gbar(m_min) - gbar(m*+8)) / (gbar(m_min) - gbar(m_max)) is at least 0.8; defined as 0 if the total drop gbar(m_min) - gbar(m_max) is below 0.3.",
+   "No exploitation above the transition: mean of gbar(m) over m >= 40 is at most 0.05."
+  ],
+  "failure": [
+   "Smooth decline: completion by m*+8 at most 0.65.",
+   "No cheating evolved: total drop gbar(m_min) - gbar(m_max) below 0.3 (evolution did not find coset aliases at low m).",
+   "Exploitation persists above the transition: mean gbar over m >= 40 above 0.15."
+  ],
+  "reading": "clauses on the 10-seed mean curve gbar(m) via frozen controls.curve_stats; SIGNAL = S1 AND S2 and no F-clause; NULL otherwise (after reproducibility, instrument and confound checks)"
+ },
+ "reproducibility": {
+  "ok": true,
+  "clauses": [
+   {
+    "id": "S1",
+    "positive_value": 0.9314619847549204,
+    "twin_value": 0.6271812443292148,
+    "frozen_positive_value": 0.9315,
+    "frozen_twin_value": 0.6272,
+    "attainable": true,
+    "discriminating": true,
+    "status_matches_frozen": true
+   },
+   {
+    "id": "S2",
+    "positive_value": 2.7663057030243485e-15,
+    "twin_value": 0.16685579067676073,
+    "frozen_positive_value": 0.0,
+    "frozen_twin_value": 0.1669,
+    "attainable": true,
+    "discriminating": true,
+    "status_matches_frozen": true
+   }
+  ],
+  "m_star_calibrated": 28,
+  "calibration": {
+   "12": 0.0,
+   "16": 0.0,
+   "20": 0.0,
+   "24": 0.2,
+   "28": 0.55,
+   "32": 0.85,
+   "36": 0.95,
+   "40": 1.0,
+   "44": 1.0,
+   "48": 1.0,
+   "52": 1.0,
+   "56": 1.0,
+   "60": 1.0
+  },
+  "failure_readings_match": true
+ },
+ "positive_control_detected": true,
+ "cheat_detected": true,
+ "cheat_detail": {
+  "ruler_fires_on_cheat": true,
+  "cheat_rows_injected_differing": 40,
+  "audit_flagged": {
+   "POSITIVE_CONTROL": 0,
+   "NULL_TWIN": 0,
+   "CHEAT": 40,
+   "TREATMENT": 0
+  },
+  "audit_total": {
+   "POSITIVE_CONTROL": 130,
+   "NULL_TWIN": 130,
+   "CHEAT": 130,
+   "TREATMENT": 130
+  }
+ },
+ "null_twin_meets_success": false,
+ "diagnostics": {
+  "treatment_high_m_median_reward": 0.8701571847164813,
+  "treatment_high_m_median_benefit": 0.8623718360890318,
+  "twin_high_m_median_reward": 0.8613388550207749,
+  "twin_high_m_median_benefit": 0.6938670480522428,
+  "treatment_median_l1_by_m": {
+   "12": 10.679848187817816,
+   "16": 11.420293735395429,
+   "20": 11.728712084828281,
+   "24": 12.425967773243627,
+   "28": 12.481052697714853,
+   "32": 13.385658077357508,
+   "36": 13.420012775511069,
+   "40": 12.99678366475849,
+   "44": 13.585496858458132,
+   "48": 12.994553687096575,
+   "52": 12.571610725580493,
+   "56": 12.762454560054909,
+   "60": 12.895440359549283
+  },
+  "pc_lp_l1_by_m": {
+   "12": 5.572729542420587,
+   "16": 7.477412024946574,
+   "20": 7.807960713188413,
+   "24": 9.21621829774826,
+   "28": 9.466472869822088,
+   "32": 10.0000000000001,
+   "36": 9.994904121387583,
+   "40": 10.000000000000032,
+   "44": 9.999999999999998,
+   "48": 9.999999999999996,
+   "52": 9.999999999999996,
+   "56": 9.999999999999996,
+   "60": 10.000000000000005
+  },
+  "treatment_median_reward_by_m": {
+   "12": 0.9343860908615458,
+   "16": 0.9367386240826375,
+   "20": 0.9184670566718409,
+   "24": 0.9187828453589357,
+   "28": 0.9075397159496219,
+   "32": 0.8930749165783795,
+   "36": 0.9004290550753786,
+   "40": 0.8843786870245914,
+   "44": 0.8659768984414578,
+   "48": 0.8644918130444985,
+   "52": 0.8601722905834576,
+   "56": 0.8761962493542278,
+   "60": 0.8697271698506561
+  },
+  "treatment_median_benefit_by_m": {
+   "12": 0.2651810076607416,
+   "16": 0.39398295365905966,
+   "20": 0.42150275063130643,
+   "24": 0.5537363305777775,
+   "28": 0.5916625994496296,
+   "32": 0.6717669759681124,
+   "36": 0.7530178329211438,
+   "40": 0.8025838938693935,
+   "44": 0.8272188989624214,
+   "48": 0.859068108450532,
+   "52": 0.8718828799210041,
+   "56": 0.8986091794258986,
+   "60": 0.9148680559049402
+  }
+ },
+ "stupid_explanations_status": [
+  {
+   "text": "the reward tolerance tau sets a gap floor that is the same at all m, so the drop is carried by a few low-m points",
+   "addressed_by_this_run": true,
+   "how": "measured, not ablated: at m>=40 treatment median reward 0.870, median benefit 0.862 (twin 0.861 / 0.694); the high-m gap is decomposed into reward shortfall vs benefit; tau was not varied"
+  },
+  {
+   "text": "the benefit clip at 1 creates a threshold unrelated to the coset geometry",
+   "addressed_by_this_run": false,
+   "how": "no ablation of the clip at 1; the benefit function is frozen"
+  },
+  {
+   "text": "A is scaled by 1/sqrt(m), so a mutation moves A x by a different relative amount at each m and selection strength varies with m, producing a step for reasons of search rather than geometry",
+   "addressed_by_this_run": false,
+   "how": "A scaling is frozen; no run with an m-independent relative mutation step"
+  },
+  {
+   "text": "2000 generations are enough to reach the coset optimum only when ker A is small (large m), so the gap falls wherever search becomes easy, not where L1 recovery sets in",
+   "addressed_by_this_run": false,
+   "how": "not separated: only the treatment's median L1 vs the LP optimum per m is reported (diagnostics); no longer-run or larger-population arm, so search ease and L1 geometry are not distinguished"
+  }
+ ],
+ "anomalies": [],
+ "core_minutes": 0.789,
+ "attempts": 1,
+ "notes": [
+  "treatment RNG stream = twin's stream key [seed, m, 7] (common random numbers), chosen before running",
+  "implementer also read control_summary.json in the world dir (outside the prompt's read list) before building; it holds the same control values as ATTAINABILITY.json"
+ ]
+}

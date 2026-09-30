@@ -25,12 +25,12 @@ Layers: [spec] speculation, [impl] implemented candidate, [obs] experimental obs
 - [spec] I7: Dissipative-to-structural transition: a pattern maintained by continuous flux is costly; Hebbian consolidation converts it into a frozen structure whose maintenance costs less per stored bit. Experiment: dissipation per maintained bit before vs after consolidation, and persistence after flux shut-off.
 
 ## CANDIDATE PHYSICS
-- [spec] M1 (dynamical law): Coupling-plastic reaction-diffusion: edge diffusion coefficients D_ij evolve as dD_ij = eta*(a_i*a_j - theta) - lambda*(D_ij - D0), clipped to [Dmin,Dmax]; activator co-activity opens channels, anti-correlation closes them.
+- [impl] M1 (dynamical law): Coupling-plastic reaction-diffusion: edge diffusion coefficients D_ij evolve as dD_ij = eta*(a_i*a_j - theta) - lambda*(D_ij - D0), clipped to [Dmin,Dmax]; activator co-activity opens channels, anti-correlation closes them.
 - [spec] M2 (learning pressure): Oja-normalized Hebbian weights on a sheet with short-range excitatory lateral coupling and long-range inhibition generate a periodic feature map whose wavelength is jointly set by the lateral kernel and the input correlation length.
 - [spec] M3 (information bottleneck): Each cell has K readout units receiving noisy concentrations of two opposing gradients; competitive Hebbian learning (winner-take-most with Oja decay) allocates readout tuning curves where positional information per unit is highest, approaching the positional-information bound set by gradient noise.
 - [spec] M4 (memory structure): Engram tiling: a 2D plastic RD medium with coupling plasticity (M1) stores several distinct patterns sequentially; each becomes a basin of the coupled field and is recalled from a partial cue.
 - [spec] M5 (developmental process): Fossilization transition: after a consolidation period the reaction flux is shut off or the fields reset, and the pattern persists or re-forms only because couplings now carry it; a critical consolidation time t* separates forgetting from retention.
-- [spec] M6 (error-correction mechanism): Neighbour-consensus repair: consolidated couplings bias a lesioned region to re-grow the original pattern rather than a new random one; recovered bits scale with the redundancy stored in intact border couplings.
+- [impl] M6 (error-correction mechanism): Neighbour-consensus repair: consolidated couplings bias a lesioned region to re-grow the original pattern rather than a new random one; recovered bits scale with the redundancy stored in intact border couplings.
 - [spec] M7 (mutation operator): Hebbian-biased mutation: the offspring's initial coupling template is mutated preferentially on edges that were co-active during the parent's development (a Lamarckian-ish channel).
 - [spec] M8 (selection mechanism): Selection on positional-information bits: a population of developmental programs is selected for I(cell fate; position) under noise, and Hebbian plasticity during development is a heritable parameter.
 - [spec] M9 (causal constraint): Timing-asymmetric Hebbian coupling (STDP-like) under travelling morphogen waves writes an antisymmetric component D_ij - D_ji aligned with wave direction, creating a polarity field (a tissue arrow) from purely temporal order.
@@ -56,13 +56,19 @@ Layers: [spec] speculation, [impl] implemented candidate, [obs] experimental obs
 - W2 [population] Competitive Hebbian readout of two noisy opposing gradients recovers most of the optimal positional information, and bits grow with integration time as ~0.5 log2 T up to a ceiling. | success: Hebbian bits >= 0.8 x optimal-decoder bits (restricted to K=8 outputs) at T=1, and exceeds null twin by >= 0.5 bits; slope of bits vs log2 T over T<=8 in [0.3,0.7] for 10 seeds. | null twin: Readout with tuning centres drawn at random from the input range (same K, same widths), destroying learned allocation. | cost: about 1 CPU core-minute
 - W3 [network] Map wavelength formed by Oja-Hebbian learning under a Mexican-hat lateral kernel tracks the input correlation length rather than being fixed by the kernel. | success: Spearman rho(xi, lambda*) >= 0.9 pooled over 5 seeds per xi, and log-log slope >= 0.5; null-twin slope < 0.2. | null twin: Inputs with identical per-unit variance and identical temporal statistics but spatially shuffled channels (xi effectively 0) per sample. | cost: about 4 CPU core-minutes
 - W4 [reaction-diffusion] A plastic RD medium stores several patterns and recovers a lesioned pattern using stored couplings beyond what border pinning explains. | success: capacity (largest P with mean overlap >= 0.9 over 5 seeds) >= 2; lesion overlap with intact couplings exceeds scrambled-inside by >= 0.2 (paired, 10 seeds, Wilcoxon p<0.01). | null twin: scrambled-inside couplings for lesion test; permuted couplings for recall test. | cost: about 6 CPU core-minutes
+- W5 [directed transport on a cell lattice (morphogen hopping on a 48x48 torus) driven by imposed travelling morphogen waves] A timing-asymmetric Hebbian (STDP-like) update of directed transport couplings, driven by morphogen waves that always travel in +x, writes an antisymmetric coupling component aligned with the wave direction; this tissue arrow persists for one decay time after the waves stop and biases the later spread of a released morphogen downstream, beyond what the same coupling magnitudes with scrambled orientation produce. | success: [{"id": "S1", "text": "Treatment seed-mean polarity index P (10 seeds) is at least 0.5.", "statistic": "seed_mean_P", "comparison": ">=", "threshold": 0.5}, {"id": "S2", "text": "Treatment seed-mean downstream bias B is at least 0.15.", "statistic": "seed_mean_B", "comparison": ">=", "threshold": 0.15}, {"id": "S3", "text": "Paired by seed, treatment B minus null-twin B (treatment couplings with orientation scrambled) has seed-mean at least 0.10.", "statistic": "seed_mean_B_minus_twin", "comparison": ">=", "threshold": 0.1}, {"id": "S4", "text": "Treatment B exceeds its null-twin B in at least 9 of 10 seeds.", "statistic": "n_seeds_B_above_twin", "comparison": ">=", "threshold": 9}] | null twin: The treatment's own final coupling field with every eps_e (horizontal and vertical) given an independent fair random sign (RNG stream 2): g and the |eps| histogram identical, orientation relative to the wave destroyed. Same release cells and pulse test. | cost: controls: about 0.1 CPU core-minute; treatment + reversed-wave control + twin pulse tests: about 1.5 CPU core-minutes (numpy, single core)
+- W6 [reaction-diffusion (Gierer-Meinhardt on a 48x48 torus with per-edge activator couplings)] In a reaction-diffusion medium whose activator couplings were shaped by Hebbian co-activity while the pattern formed, a large lesion (24x24 cells, about 3.6 pattern wavelengths across) regrows the ORIGINAL pattern inside the lesion better than (a) the same medium with the couplings inside the lesion scrambled, and (b) an unwritten medium with uniform couplings; i.e. stored couplings carry repair information beyond what the intact border supplies. | success: [{"id": "S1", "text": "The treatment's seed-mean RIF (10 seeds) is at least 0.25.", "statistic": "seed_mean_rif", "comparison": ">=", "threshold": 0.25}, {"id": "S2", "text": "Paired by seed, treatment RIF minus null-twin RIF (same learned medium, couplings scrambled inside the lesion) has seed-mean at least 0.15.", "statistic": "seed_mean_rif_minus_twin", "comparison": ">=", "threshold": 0.15}, {"id": "S3", "text": "Paired by seed, treatment RIF minus FIXED-medium RIF (control) has seed-mean at least 0.10.", "statistic": "seed_mean_rif_minus_fixed", "comparison": ">=", "threshold": 0.1}, {"id": "S4", "text": "Treatment RIF exceeds its null-twin RIF in at least 9 of 10 seeds.", "statistic": "n_seeds_rif_above_twin", "comparison": ">=", "threshold": 9}] | null twin: The treatment's own learned coupling field, with the g values of all edges whose two endpoints both lie inside the lesion randomly permuted among themselves (RNG stream 3); all edges touching the border or outside unchanged; same original O, same lesion, same lesion noise. Coupling-value histogram inside the lesion and the entire border are matched; only the stored spatial arrangement inside the lesion is destroyed. | cost: controls: about 0.25 CPU core-minute; treatment + twin + control arms: about 0.5 CPU core-minute (numpy, single core)
 
 ## OBSERVATIONS
 - W1: SPEC_UNATTAINABLE (hecate/programs/HT-faa9277e02/worlds/W1/pilot_rows.jsonl)
 - W2: NOT_BUILT (hecate/programs/HT-faa9277e02/worlds/W2/rows.jsonl)
+- W6: NULL (hecate/programs/HT-faa9277e02/worlds/W6/probe/rows.jsonl)
 
 ## FALSIFICATIONS
-_none yet_
+- W6: border pinning: the surrounding pattern re-imposes phase inside the lesion in any medium (tested by FIXED control and by the scrambled-inside twin, which keeps the border)
+- W6: learned couplings only change mean activator diffusion inside the lesion (a wavelength/speed effect, not stored positions); the twin keeps the value histogram, so this effect is shared with the twin
+- W6: binarization at the whole-field mean makes sparse patterns look recovered by agreement alone (RIF normalizes by the entropy of the original inside the lesion; raw agreement is only a diagnostic)
+- W6: the lesion noise is too small so the lesion restarts near the old state (lesion fields are fully reset to 1 + 0.3*N(0,1) with a fresh RNG stream)
 
 ## SURVIVING ANOMALIES
 - W1: cheat r = 1.0 on all seeds but classed not-detected only because reading 4 folds the positive-control clause (>= 0.7) into the success criterion
@@ -85,13 +91,10 @@ _none yet_
 _none yet_
 
 ## OPEN QUESTIONS
-- boundary pinning makes any RD run reproduce similar stripes near edges
-- Pearson r inflated by the shared wavelength
-- clipping bounds create a static prepattern independent of learning
-- insufficient noise reset so Phase B starts near Phase A state
+- clip bounds [0.1, 5] of the learning rule create a static prepattern independent of the lesioned pattern (the twin shares the clipped values; the FIXED control has none)
 
 ## CURRENT VERDICT
-PARK (an allocation state, not a truth claim). round 1 W2 NOT_BUILT; round 2 W1 SPEC_UNATTAINABLE: Pass 3 produced no testable world in two tries (generator finding)
+PARK (an allocation state, not a truth claim). round 3 W6 NULL: revived by the generator repair and read NULL (two reasons)
 
 ## NEXT PASS
-decision after P3-probe2: PARK
+decision after P3-probe3: PARK

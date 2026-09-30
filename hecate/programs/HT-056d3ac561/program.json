@@ -497,6 +497,78 @@
         "unexpectedness": "unknown",
         "potential_importance": "unknown"
       }
+    },
+    {
+      "id": "P3v2",
+      "triplicateId": "HT-056d3ac561",
+      "index": 3,
+      "kind": "minimal_worlds_v2",
+      "added": [
+        "new falsifier",
+        "new observable"
+      ],
+      "generator": {
+        "model": "claude-opus-5-5",
+        "search": false,
+        "prompt": "hecate/programs/_prompts/pass3_v2.md",
+        "prompt_sha256": "2adcfc8da07ee9adb9b04d2214889f0965758f7fcf0a60cde08eebb62bedd461"
+      },
+      "prereg": "roles/Hecate/prereg/2026-09-30_pass3_v2/PREREG.md",
+      "inspected_prior": [
+        "W4"
+      ],
+      "unexplained": [],
+      "decision": "FALSIFY",
+      "research_state": {
+        "novelty": "unknown",
+        "mechanistic_clarity": "unknown",
+        "falsifiability": "unknown",
+        "empirical_support": "none",
+        "cross_lens_agreement": "unknown",
+        "cross_substrate_transfer": "unknown",
+        "baseline_resistance": "unknown",
+        "artifact_risk": "unknown",
+        "cost": "unknown",
+        "unexpectedness": "unknown",
+        "potential_importance": "unknown"
+      }
+    },
+    {
+      "id": "P3-probe3",
+      "triplicateId": "HT-056d3ac561",
+      "index": 3,
+      "kind": "cheap_probe",
+      "added": [
+        "new falsifier",
+        "new observable"
+      ],
+      "generator": {
+        "model": "claude-opus-5-5",
+        "search": false,
+        "prompt": "hecate/programs/_prompts/probe_impl_v3.md",
+        "prompt_sha256": "a34a8c6143f49df2b33b75871e8f9cd12e60c10c37778ba595e12fedf1621685"
+      },
+      "prereg": "roles/Hecate/prereg/2026-09-30_pass3_v2/PREREG.md",
+      "inspected_prior": [
+        "W5"
+      ],
+      "unexplained": [
+        "alternative explanation (spec): any gain comes from per-component sparse alarms, not the metamorphic relation; a per-component NIS_j alarm with the same sparse reopening would do as well"
+      ],
+      "decision": "PARK",
+      "research_state": {
+        "novelty": "unknown",
+        "mechanistic_clarity": "unknown",
+        "falsifiability": "unknown",
+        "empirical_support": "none",
+        "cross_lens_agreement": "unknown",
+        "cross_substrate_transfer": "unknown",
+        "baseline_resistance": "unknown",
+        "artifact_risk": "unknown",
+        "cost": "unknown",
+        "unexpectedness": "unknown",
+        "potential_importance": "unknown"
+      }
     }
   ],
   "hypotheses": [
@@ -628,7 +700,7 @@
       "triplicateId": "HT-056d3ac561",
       "passId": "P1",
       "kind": "mechanism",
-      "layer": "speculation",
+      "layer": "implemented_candidate",
       "form": "learning pressure",
       "statement": "Covariance reopening: the rate of metamorphic violations inflates process noise Q, so a filter that has become overconfident starts listening again when relations it should satisfy begin failing.",
       "derived_from": [
@@ -1120,6 +1192,21 @@
       "derived_from": [
         "M14",
         "M1"
+      ]
+    },
+    {
+      "id": "O-W5-r3",
+      "triplicateId": "HT-056d3ac561",
+      "passId": "P3-probe3",
+      "kind": "observation",
+      "layer": "experimental_observation",
+      "evidence_rows": [
+        "hecate/programs/HT-056d3ac561/worlds/W5/probe/rows.jsonl"
+      ],
+      "statement": "W5 probe round 3: NULL. Post-run diagnostic (NOTES.md): z_j^2 mean 0.976 under null (normalization correct) but lag-1 autocorrelation 0.97, so the 10-step window is ~one draw and h_MR=114 is high; MR alarm after the change fires in 79.8% of runs, median delay 82 steps. Treatment in controls.run_filter code path (probe/world.py mr_fn); readings A1-A5 in probe/NOTES.md. Seeds 0-4 x 200 runs, calibration seed 999.",
+      "derived_from": [
+        "M3",
+        "M8"
       ]
     }
   ],
@@ -2208,13 +2295,244 @@
         }
       ],
       "rejected_explanations": []
+    },
+    {
+      "id": "W5",
+      "triplicateId": "HT-056d3ac561",
+      "passId": "P3v2",
+      "mechanism_ids": [
+        "M3",
+        "M8"
+      ],
+      "lens_ids": [
+        "L7",
+        "L1"
+      ],
+      "hypothesis": "An overconfident (collapsed-gain) Kalman filter that reopens its covariance only on the components flagged by a metamorphic stride-consistency relation recovers from an abrupt sparse regime change faster than a filter that reopens isotropically on a windowed-NIS alarm, at a matched pre-change false-alarm rate.",
+      "mechanism": "World: 8 independent scalar random walks x_{t+1} = x_t + w, w ~ N(0, Q=1e-4), observed z_t = x_t + v, v ~ N(0, R=1), T = 600 steps; the filter model is exactly correct (Q, R known) and starts at its steady-state variance P_ss (gain ~0.01, so it barely listens: collapsed covariance). At t_c = 300, 2 of the 8 components (uniform) jump by sign*J, J = 1.5, sign uniform +/-1. Every arm that reopens uses the same action: P_jj <- P_jj + RHO (RHO = 1.0) on the chosen components before the update at the chosen step. TREATMENT (M3 with the M8 relation as alarm): alongside the stride-1 filter runs an auxiliary stride-2 filter on the even-step measurements only (2-step model: process variance 2Q, same R, same initial P_ss). At every even t, d_j = xhat1_j - xhat2_j and z_j = d_j / sqrt(max(P2_jj - P1_jj, 1e-8)) (model-predicted disagreement variance: xhat2 conditions on a subset of xhat1's data). Per component, S_j = sum of z_j^2 over the last 10 even steps. An alarm on component j fires when S_j > h_MR and t >= 50; the stride-1 AND stride-2 filters are then both reopened on the alarmed components only, and those components' windows are cleared. h_MR is a single scalar calibrated on calibration seed 999 (1000 runs, no jump, alarms disabled): the 0.95 quantile over runs of max over components and over t in [50, 300) of S_j. No other tuning.",
+      "intervention": "Which components are reopened and when is decided by the per-component stride-MR statistic (oracle-free: uses only z_t) instead of by windowed NIS.",
+      "control": "REFERENCE_NIS: the same stride-1 filter; per step NIS_t = sum_j e_j^2 / S_j; windowed sum over the last 20 steps; alarm when the sum exceeds h_NIS and t >= 50; on alarm reopen ALL 8 components by RHO and clear the window. h_NIS calibrated on calibration seed 999 (1000 runs, no jump, alarms disabled) as the 0.95 quantile over runs of the max windowed sum over window ends in [50, 300). Runs on exactly the same trajectories and noise as the treatment.",
+      "positive_control": "Oracle reopening: exactly at t_c, exactly the two changed components, same RHO. Effect present by construction.",
+      "observable": "Per run: recovery latency = smallest s >= 0 such that for every changed component |xhat_j - x_j| <= 0.5*J for 10 consecutive steps starting at t_c + s (cap 290 if never); false-alarm flag = 1 if any reopening occurs at a step in [50, 300). Secondary (reported, not a clause): mean squared error on the 6 unchanged components over [300, 350).",
+      "success_criterion": "[{\"id\": \"S1\", \"text\": \"Pooled over all 5 seeds x 200 runs, the median recovery latency is at most 12 steps.\", \"statistic\": \"median over the 1000 pooled runs of recovery latency (steps)\", \"comparison\": \"<=\", \"threshold\": 12}, {\"id\": \"S2\", \"text\": \"Pooled over all 1000 runs, the fraction of runs with any reopening in [50, 300) (before the change) is at most 0.10.\", \"statistic\": \"mean over the 1000 pooled runs of the false-alarm flag\", \"comparison\": \"<=\", \"threshold\": 0.1}, {\"id\": \"S3\", \"text\": \"The pooled median recovery latency divided by the pooled median recovery latency of REFERENCE_NIS on the same 1000 runs is at most 0.60.\", \"statistic\": \"median latency(arm) / median latency(REFERENCE_NIS), both pooled over the same 1000 runs\", \"comparison\": \"<=\", \"threshold\": 0.6}]",
+      "failure_criterion": "[{\"id\": \"F1\", \"text\": \"Median latency ratio to REFERENCE_NIS is at least 0.95 (no faster than isotropic NIS reopening).\", \"statistic\": \"median latency(TREATMENT) / median latency(REFERENCE_NIS), pooled\", \"comparison\": \">=\", \"threshold\": 0.95}, {\"id\": \"F2\", \"text\": \"Pre-change false-alarm fraction exceeds 0.15 (calibration did not hold; speed bought with false alarms).\", \"statistic\": \"mean false-alarm flag of TREATMENT, pooled\", \"comparison\": \">\", \"threshold\": 0.15}, {\"id\": \"F3\", \"text\": \"Median latency is at least 0.90 of the never-reopening filter's median latency on the same runs (the MR alarm does not act in time).\", \"statistic\": \"median latency(TREATMENT) / median latency(NO_REOPEN), pooled\", \"comparison\": \">=\", \"threshold\": 0.9}]",
+      "alternative_explanation": "Any gain comes from per-component (sparse) alarms rather than from the metamorphic relation: a per-component innovation (NIS_j) alarm with the same sparse reopening would do as well. Also: stride disagreement is a re-weighted innovation statistic and so can at best match NIS (then S3 fails).",
+      "null_twin": "One reopening of two uniformly random components at a uniformly random step in [50, 600), same RHO: the number, size and sparsity of reopenings match the oracle; the relation between the reopening and the change is destroyed.",
+      "substrate": "causal toy",
+      "cost_estimate": 1,
+      "stupid_explanations": [
+        "the MR threshold is so low that it fires continuously, so latency is short because the filter is always open (checked by S2 and by the unchanged-component MSE)",
+        "the jump is so large that any alarm fires on the first step after the change, so no statistic can beat another (checked: REFERENCE_NIS median latency is well above the oracle's)",
+        "the latency band is so loose that the collapsed filter already counts as recovered (checked: NO_REOPEN median latency ~78 steps against the oracle's 2)",
+        "calibration on the evaluation seeds rather than the separate calibration seed"
+      ],
+      "spec": "hecate/programs/HT-056d3ac561/worlds/W5/spec.json",
+      "attainability": "hecate/programs/HT-056d3ac561/worlds/W5/ATTAINABILITY.json",
+      "outcome": "NULL",
+      "round": 3,
+      "rows": "hecate/programs/HT-056d3ac561/worlds/W5/probe/rows.jsonl",
+      "outcome_file": "hecate/programs/HT-056d3ac561/worlds/W5/probe/OUTCOME.json",
+      "statistics": {
+        "treatment": {
+          "S1_median_latency": 75.0,
+          "S2_fa_fraction": 0.028,
+          "S3_ratio_to_REFERENCE_NIS": 4.166666666666667,
+          "F1_ratio_to_REFERENCE_NIS": 4.166666666666667,
+          "F2_fa_fraction": 0.028,
+          "F3_ratio_to_NO_REOPEN": 0.9615384615384616
+        },
+        "per_arm": {
+          "TREATMENT": {
+            "median_latency_pooled": 75.0,
+            "fa_fraction_pooled": 0.028,
+            "mse_unchanged_300_350_mean": 0.5110587519780188,
+            "reopen_events_per_run_mean": 1.17,
+            "per_seed_median_latency": [
+              74.0,
+              75.0,
+              76.0,
+              75.5,
+              74.0
+            ],
+            "frac_never_recovered_cap": 0.0,
+            "post_change_first_alarm_delay": {
+              "fraction_with_alarm": 0.798,
+              "median_delay_steps": 82.0
+            }
+          },
+          "REFERENCE_NIS": {
+            "median_latency_pooled": 18.0,
+            "fa_fraction_pooled": 0.043,
+            "mse_unchanged_300_350_mean": 2.708314834975819,
+            "reopen_events_per_run_mean": 1.011,
+            "per_seed_median_latency": [
+              18.5,
+              18.0,
+              18.0,
+              18.0,
+              16.0
+            ],
+            "frac_never_recovered_cap": 0.0
+          },
+          "POSITIVE_CONTROL": {
+            "median_latency_pooled": 2.0,
+            "fa_fraction_pooled": 0.0,
+            "mse_unchanged_300_350_mean": 0.5095719440199036,
+            "reopen_events_per_run_mean": 1.0,
+            "per_seed_median_latency": [
+              2.0,
+              2.0,
+              2.0,
+              2.0,
+              2.0
+            ],
+            "frac_never_recovered_cap": 0.0
+          },
+          "NULL_TWIN": {
+            "median_latency_pooled": 76.0,
+            "fa_fraction_pooled": 0.473,
+            "mse_unchanged_300_350_mean": 0.5778503092619444,
+            "reopen_events_per_run_mean": 1.0,
+            "per_seed_median_latency": [
+              77.0,
+              76.0,
+              76.0,
+              76.0,
+              75.0
+            ],
+            "frac_never_recovered_cap": 0.0
+          },
+          "NO_REOPEN": {
+            "median_latency_pooled": 78.0,
+            "fa_fraction_pooled": 0.0,
+            "mse_unchanged_300_350_mean": 0.5095719440199036,
+            "reopen_events_per_run_mean": 0.0,
+            "per_seed_median_latency": [
+              79.0,
+              77.5,
+              78.0,
+              78.0,
+              77.0
+            ],
+            "frac_never_recovered_cap": 0.0
+          },
+          "CHEAT": {
+            "median_latency_pooled": 0.0,
+            "fa_fraction_pooled": 0.0,
+            "mse_unchanged_300_350_mean": 0.5095719440199036,
+            "reopen_events_per_run_mean": 0.0,
+            "per_seed_median_latency": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "frac_never_recovered_cap": 0.0
+          }
+        },
+        "control_reproducibility": {
+          "ok": true,
+          "clauses": [
+            {
+              "id": "S1",
+              "positive_value": 2.0,
+              "twin_value": 76.0,
+              "cheat_value": 0.0,
+              "attainable": true,
+              "discriminating": true,
+              "frozen_attainable": true,
+              "frozen_discriminating": true,
+              "status_matches": true,
+              "values_identical": true
+            },
+            {
+              "id": "S2",
+              "positive_value": 0.0,
+              "twin_value": 0.473,
+              "cheat_value": 0.0,
+              "attainable": true,
+              "discriminating": true,
+              "frozen_attainable": true,
+              "frozen_discriminating": true,
+              "status_matches": true,
+              "values_identical": true
+            },
+            {
+              "id": "S3",
+              "positive_value": 0.1111111111111111,
+              "twin_value": 4.222222222222222,
+              "cheat_value": 0.0,
+              "attainable": true,
+              "discriminating": true,
+              "frozen_attainable": true,
+              "frozen_discriminating": true,
+              "status_matches": true,
+              "values_identical": true
+            }
+          ],
+          "REFERENCE_NIS_median": 18.0,
+          "REFERENCE_NIS_reproduces_18": true,
+          "h_NIS_reproduces": true
+        },
+        "calibration": {
+          "h_NIS": 223.97086372226062,
+          "h_MR": 114.31690862659673,
+          "cal_seed": 999,
+          "cal_runs": 1000,
+          "quantile": 0.95,
+          "h_MR_run_max_summary": {
+            "min": 23.063312879865638,
+            "median": 61.51126337580662,
+            "max": 210.81972635517783
+          }
+        }
+      },
+      "anomalies": [],
+      "rejected_explanations": [
+        "the MR threshold is so low that it fires continuously, so latency is short because the filter is always open (checked by S2 and by the unchanged-component MSE)",
+        "the jump is so large that any alarm fires on the first step after the change, so no statistic can beat another (checked: REFERENCE_NIS median latency is well above the oracle's)",
+        "the latency band is so loose that the collapsed filter already counts as recovered (checked: NO_REOPEN median latency ~78 steps against the oracle's 2)",
+        "calibration on the evaluation seeds rather than the separate calibration seed"
+      ]
+    },
+    {
+      "id": "W6",
+      "triplicateId": "HT-056d3ac561",
+      "passId": "P3v2",
+      "mechanism_ids": [
+        "M9"
+      ],
+      "lens_ids": [
+        "L3"
+      ],
+      "hypothesis": "Choosing which metamorphic relations to run, one at a time, by the expected covariance reduction of a recursive Gaussian belief whose per-component prior variances are re-estimated as sparse after every result, localizes a planted 2-sparse fault with a fixed test budget far more often than random selection and than the same greedy rule under a fixed (non-sparse) Gaussian belief.",
+      "mechanism": "World (per seed): hidden fault f in R^64 with exactly 2 nonzero entries, value sign*U(1,2), support and sign uniform; a pool of 256 metamorphic relations, relation i returning residual r_i = a_i . f + eps_i, eps_i ~ N(0, 0.3^2) drawn once per trial per relation; a_i has 6 nonzero entries +/-1/sqrt(6) at uniform positions (pool fixed per seed). Budget: 24 distinct relations, run sequentially; each choice may use every residual already observed. TREATMENT (M9): belief f ~ N(mu, P) with prior N(0, diag(gamma)); gamma initialised to tau2 = 2*(7/3)/64 for every component; after each observed residual, gamma is re-estimated by 10 iterations of the sparse-Bayesian-learning EM update gamma_j <- mu_j^2 + P_jj (floored at 1e-6) using all residuals so far, and (mu, P) recomputed from gamma and those residuals by the Kalman information update; the next relation is the unused i maximising a_i^T P^2 a_i / (a_i^T P a_i + 0.09) (expected reduction of trace P). After 24 relations, a FIXED decoder shared by every arm (orthogonal matching pursuit selecting exactly 2 columns of the 24 x 64 selected-row matrix, column correlations normalised by column norm, zero columns never chosen) outputs the support. The treatment's own belief is never used for decoding.",
+      "intervention": "Relation selection is adaptive through the sparse (re-estimated gamma) belief.",
+      "control": "Two controls on exactly the same pool, faults and residual noise: REFERENCE_RANDOM = 24 relations uniform without replacement; REFERENCE_GAUSSIAN_GREEDY (sparse prior removed) = the same expected-trace-reduction rule under the fixed prior N(0, tau2 I) with no gamma update, which makes the selection data-independent (one set of 24 per pool). Both decoded by the same OMP.",
+      "positive_control": "Oracle-targeted selection: knows the true support S; test b targets S[b mod 2], chosen uniformly among unused relations containing the target and not the other true component (else any unused containing the target, else any unused). Effect present by construction.",
+      "observable": "Per trial: success = 1 if the OMP support equals the true support, else 0. Secondary (reported, not a clause): whether both true components appear in at least one selected relation.",
+      "success_criterion": "[{\"id\": \"S1\", \"text\": \"Pooled over 5 seeds x 300 trials, localization accuracy is at least 0.60.\", \"statistic\": \"mean success over the 1500 pooled trials\", \"comparison\": \">=\", \"threshold\": 0.6}, {\"id\": \"S2\", \"text\": \"Pooled accuracy minus REFERENCE_RANDOM pooled accuracy on the same 1500 trials is at least 0.25.\", \"statistic\": \"mean success(arm) - mean success(REFERENCE_RANDOM), same trials\", \"comparison\": \">=\", \"threshold\": 0.25}, {\"id\": \"S3\", \"text\": \"Pooled accuracy minus REFERENCE_GAUSSIAN_GREEDY pooled accuracy on the same 1500 trials is at least 0.15.\", \"statistic\": \"mean success(arm) - mean success(REFERENCE_GAUSSIAN_GREEDY), same trials\", \"comparison\": \">=\", \"threshold\": 0.15}]",
+      "failure_criterion": "[{\"id\": \"F1\", \"text\": \"Treatment beats random selection by less than 0.10.\", \"statistic\": \"mean success(TREATMENT) - mean success(REFERENCE_RANDOM), pooled\", \"comparison\": \"<\", \"threshold\": 0.1}, {\"id\": \"F2\", \"text\": \"Treatment beats the fixed-Gaussian greedy design by less than 0.05 (the sparse belief adds nothing beyond a good fixed design).\", \"statistic\": \"mean success(TREATMENT) - mean success(REFERENCE_GAUSSIAN_GREEDY), pooled\", \"comparison\": \"<\", \"threshold\": 0.05}, {\"id\": \"F3\", \"text\": \"Treatment localization accuracy below 0.40.\", \"statistic\": \"mean success(TREATMENT), pooled\", \"comparison\": \"<\", \"threshold\": 0.4}]",
+      "alternative_explanation": "Any gain is ordinary adaptive group testing / sequential compressed sensing: any rule that follows up on relations with large residuals (no Kalman covariance, no sparse re-estimation) would do as well; the Kalman-plus-sparse framing is then decorative. This world does not rule that out; it only tests whether the stated mechanism beats random and a fixed Gaussian design.",
+      "null_twin": "Decoy-targeted selection: the positive control's targeting procedure aimed at 2 uniform components disjoint from the true support. Same targeting machinery, test sparsity and budget; the relation between selection and the fault is destroyed.",
+      "substrate": "causal toy",
+      "cost_estimate": 2,
+      "stupid_explanations": [
+        "budget large enough that random selection already localizes (checked: REFERENCE_RANDOM pooled accuracy 0.23)",
+        "the decoder, not the selection, does the work (decoder is fixed and shared by every arm)",
+        "the treatment peeks at the true support through a shared RNG stream (arms draw from their own rng; the treatment must not read the fault, the decoy, or the oracle's choices)",
+        "noise so low that one relation touching a true component reveals it (oracle needs targeted repeats; random with both components covered in ~80% of trials still succeeds in only ~23%)"
+      ],
+      "spec": "hecate/programs/HT-056d3ac561/worlds/W6/spec.json",
+      "attainability": "hecate/programs/HT-056d3ac561/worlds/W6/ATTAINABILITY.json"
     }
   ],
   "candidateEngines": [],
-  "currentVerdict": "SPECULATIVE",
+  "currentVerdict": "PARK",
   "evidenceSummary": {
     "layer": "experimental_observation",
-    "rows": "hecate/programs/HT-056d3ac561/worlds/W4/rows.jsonl",
-    "note": "round 1 W1 INSTRUMENT_FAIL; round 2 W4 NULL: one valid NULL reading; next world eligible"
+    "rows": "hecate/programs/HT-056d3ac561/worlds/W5/probe/rows.jsonl",
+    "note": "round 3 W5 NULL: two valid NULL readings (W4, W5)"
   }
 }

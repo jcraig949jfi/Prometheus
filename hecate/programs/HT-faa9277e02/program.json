@@ -487,6 +487,76 @@
         "unexpectedness": "unknown",
         "potential_importance": "unknown"
       }
+    },
+    {
+      "id": "P3v2",
+      "triplicateId": "HT-faa9277e02",
+      "index": 3,
+      "kind": "minimal_worlds_v2",
+      "added": [
+        "new falsifier",
+        "new observable"
+      ],
+      "generator": {
+        "model": "claude-opus-5-5",
+        "search": false,
+        "prompt": "hecate/programs/_prompts/pass3_v2.md",
+        "prompt_sha256": "2adcfc8da07ee9adb9b04d2214889f0965758f7fcf0a60cde08eebb62bedd461"
+      },
+      "prereg": "roles/Hecate/prereg/2026-09-30_pass3_v2/PREREG.md",
+      "inspected_prior": [],
+      "unexplained": [],
+      "decision": "FALSIFY",
+      "research_state": {
+        "novelty": "unknown",
+        "mechanistic_clarity": "unknown",
+        "falsifiability": "unknown",
+        "empirical_support": "none",
+        "cross_lens_agreement": "unknown",
+        "cross_substrate_transfer": "unknown",
+        "baseline_resistance": "unknown",
+        "artifact_risk": "unknown",
+        "cost": "unknown",
+        "unexpectedness": "unknown",
+        "potential_importance": "unknown"
+      }
+    },
+    {
+      "id": "P3-probe3",
+      "triplicateId": "HT-faa9277e02",
+      "index": 3,
+      "kind": "cheap_probe",
+      "added": [
+        "new falsifier",
+        "new observable"
+      ],
+      "generator": {
+        "model": "claude-opus-5-5",
+        "search": false,
+        "prompt": "hecate/programs/_prompts/probe_impl_v3.md",
+        "prompt_sha256": "a34a8c6143f49df2b33b75871e8f9cd12e60c10c37778ba595e12fedf1621685"
+      },
+      "prereg": "roles/Hecate/prereg/2026-09-30_pass3_v2/PREREG.md",
+      "inspected_prior": [
+        "W6"
+      ],
+      "unexplained": [
+        "clip bounds [0.1, 5] of the learning rule create a static prepattern independent of the lesioned pattern (the twin shares the clipped values; the FIXED control has none)"
+      ],
+      "decision": "PARK",
+      "research_state": {
+        "novelty": "unknown",
+        "mechanistic_clarity": "unknown",
+        "falsifiability": "unknown",
+        "empirical_support": "none",
+        "cross_lens_agreement": "unknown",
+        "cross_substrate_transfer": "unknown",
+        "baseline_resistance": "unknown",
+        "artifact_risk": "unknown",
+        "cost": "unknown",
+        "unexpectedness": "unknown",
+        "potential_importance": "unknown"
+      }
     }
   ],
   "hypotheses": [
@@ -551,7 +621,7 @@
       "triplicateId": "HT-faa9277e02",
       "passId": "P1",
       "kind": "mechanism",
-      "layer": "speculation",
+      "layer": "implemented_candidate",
       "form": "dynamical law",
       "statement": "Coupling-plastic reaction-diffusion: edge diffusion coefficients D_ij evolve as dD_ij = eta*(a_i*a_j - theta) - lambda*(D_ij - D0), clipped to [Dmin,Dmax]; activator co-activity opens channels, anti-correlation closes them.",
       "derived_from": [
@@ -718,7 +788,7 @@
       "triplicateId": "HT-faa9277e02",
       "passId": "P1",
       "kind": "mechanism",
-      "layer": "speculation",
+      "layer": "implemented_candidate",
       "form": "error-correction mechanism",
       "statement": "Neighbour-consensus repair: consolidated couplings bias a lesioned region to re-grow the original pattern rather than a new random one; recovered bits scale with the redundancy stored in intact border couplings.",
       "derived_from": [
@@ -1109,6 +1179,21 @@
       "derived_from": [
         "M1",
         "M5"
+      ]
+    },
+    {
+      "id": "O-W6-r3",
+      "triplicateId": "HT-faa9277e02",
+      "passId": "P3-probe3",
+      "kind": "observation",
+      "layer": "experimental_observation",
+      "evidence_rows": [
+        "hecate/programs/HT-faa9277e02/worlds/W6/probe/rows.jsonl"
+      ],
+      "statement": "W6 probe round 3: NULL. []",
+      "derived_from": [
+        "M6",
+        "M1"
       ]
     }
   ],
@@ -1800,13 +1885,250 @@
         "8x8 lesion below wavelength is refilled by diffusion alone",
         "binarization threshold tuned post hoc"
       ]
+    },
+    {
+      "id": "W5",
+      "triplicateId": "HT-faa9277e02",
+      "passId": "P3v2",
+      "mechanism_ids": [
+        "M9"
+      ],
+      "lens_ids": [
+        "L7"
+      ],
+      "hypothesis": "A timing-asymmetric Hebbian (STDP-like) update of directed transport couplings, driven by morphogen waves that always travel in +x, writes an antisymmetric coupling component aligned with the wave direction; this tissue arrow persists for one decay time after the waves stop and biases the later spread of a released morphogen downstream, beyond what the same coupling magnitudes with scrambled orientation produce.",
+      "mechanism": "48x48 torus of cells. Every edge e from cell i to its +x neighbour j (horizontal) or +y neighbour j (vertical) carries two directed transport rates r_{i->j} = D0*g_e*(1+eps_e) and r_{j->i} = D0*g_e*(1-eps_e); D0 = 1; g_e = exp(0.3*N(0,1)) per edge (RNG stream 0 of the seed), divided by the mean over all edges; g is fixed (not plastic). Plastic variable eps_e in [-0.9, 0.9], starting at 0. Activity u_i(t) in {0,1} is an imposed travelling morphogen wave: u_i(t) = 1 iff ((t - x_i - j_i) mod 48) < 3, speed 1 cell per time unit, width 3 cells, period 48, where j_i ~ N(0, 0.5) is a fixed per-cell timing jitter (RNG stream 6). Traces: dx_i/dt = (u_i - x_i)/tau, tau = 2, x_i(0) = 0. STDP update (treatment): d eps_e/dt = eta*(x_i*u_j - x_j*u_i) - lambda*eps_e, then clip to [-0.9, 0.9]; eta = 0.0866, lambda = 0.01. eta is fixed a priori by the normalization rule 'for jitter-free waves the analytic equilibrium eps equals 0.2' (per passage, integral of x_i*u_j - x_j*u_i = 1.1088 for delay 1, width 3, tau 2; per unit time 1.1088/48; eta = 0.2*lambda*48/1.1088). Morphogen transport of a released pulse: da_i/dt = sum_j r_{j->i}*a_j - sum_j r_{i->j}*a_i (mass conserving). Explicit Euler dt = 0.02 throughout.",
+      "intervention": "TREATMENT, per seed: wave epoch 480 time units (10 wave passages) with the STDP update on; quiet epoch 100 time units (= 1/lambda) with u = 0, traces decaying and eps decaying under -lambda*eps (update still applied; with u = 0 it is pure decay); then the pulse test with all couplings frozen: unit mass released at each of 16 release cells (RNG stream 3), transport run for t_test = 8 time units, and the observables read.",
+      "control": "Reversed-wave control: identical to the treatment (same g, jitter, traces, STDP rule, schedule, decay, release cells) except the waves travel in -x: u_i(t) = 1 iff ((t + x_i - j_i) mod 48) < 3. If the arrow is written by temporal order it must flip sign (P near -1); if it comes from code orientation (array rolls, update order) it will not. Used by failure clause F4. The eps = 0 medium (FLAT) is the instrument baseline used by F3.",
+      "positive_control": "Directed couplings written by hand: horizontal eps_e ~ N(0.2, 0.1) clipped to [-0.9, 0.9] (all pointing downstream on average), vertical eps_e = 0; same g, same release cells, same pulse test.",
+      "observable": "P = polarity index over horizontal edges = sum_e A_e / sum_e |A_e| with A_e = r_{i->j} - r_{j->i} = 2*D0*g_e*eps_e (+1 = every edge points downstream along +x, 0 = no net orientation). B = downstream bias of the released pulses at t_test: for each release cell, d = signed torus x-offset of every cell from the release column, in [-24, 23]; B_pulse = mass(d > 0) - mass(d < 0) over total mass; B = mean over the 16 pulses. Diagnostics: P_perp (same index over vertical edges), mean x displacement.",
+      "success_criterion": "[{\"id\": \"S1\", \"text\": \"Treatment seed-mean polarity index P (10 seeds) is at least 0.5.\", \"statistic\": \"seed_mean_P\", \"comparison\": \">=\", \"threshold\": 0.5}, {\"id\": \"S2\", \"text\": \"Treatment seed-mean downstream bias B is at least 0.15.\", \"statistic\": \"seed_mean_B\", \"comparison\": \">=\", \"threshold\": 0.15}, {\"id\": \"S3\", \"text\": \"Paired by seed, treatment B minus null-twin B (treatment couplings with orientation scrambled) has seed-mean at least 0.10.\", \"statistic\": \"seed_mean_B_minus_twin\", \"comparison\": \">=\", \"threshold\": 0.1}, {\"id\": \"S4\", \"text\": \"Treatment B exceeds its null-twin B in at least 9 of 10 seeds.\", \"statistic\": \"n_seeds_B_above_twin\", \"comparison\": \">=\", \"threshold\": 9}]",
+      "failure_criterion": "[{\"id\": \"F1\", \"text\": \"Treatment seed-mean P below 0.2: no arrow written or it did not survive the quiet epoch.\", \"statistic\": \"seed_mean_P\", \"comparison\": \"<\", \"threshold\": 0.2}, {\"id\": \"F2\", \"text\": \"Treatment seed-mean B below 0.05: any arrow present does not bias later transport.\", \"statistic\": \"seed_mean_B\", \"comparison\": \"<\", \"threshold\": 0.05}, {\"id\": \"F3\", \"text\": \"Instrument bias: with eps = 0 on every edge (same g, same release cells) |seed-mean B| is at least 0.05; the probe is invalid.\", \"statistic\": \"abs_seed_mean_B_flat\", \"comparison\": \">=\", \"threshold\": 0.05}, {\"id\": \"F4\", \"text\": \"Reversed-wave control seed-mean P above -0.2: the arrow does not follow the wave direction, so it is not written by temporal order.\", \"statistic\": \"seed_mean_P_control\", \"comparison\": \">\", \"threshold\": -0.2}]",
+      "alternative_explanation": "Drift without polarity: a spatial gradient in the symmetric part g along x (e.g. from wave attenuation) biases the centroid of a spreading pulse even with eps = 0; or the implementation's update order (array rolls, sweep direction) leaks asymmetry. Here waves are imposed plane waves on a torus (no attenuation, no source), g is fixed and random without gradient, the null twin keeps g and |eps| exactly, the FLAT check (F3) bounds instrument bias and the reversed-wave control (F4) must flip the arrow.",
+      "null_twin": "The treatment's own final coupling field with every eps_e (horizontal and vertical) given an independent fair random sign (RNG stream 2): g and the |eps| histogram identical, orientation relative to the wave destroyed. Same release cells and pulse test.",
+      "substrate": "directed transport on a cell lattice (morphogen hopping on a 48x48 torus) driven by imposed travelling morphogen waves",
+      "cost_estimate": "controls: about 0.1 CPU core-minute; treatment + reversed-wave control + twin pulse tests: about 1.5 CPU core-minutes (numpy, single core)",
+      "stupid_explanations": [
+        "array-roll or update-order asymmetry in the code writes an arrow by itself (F4 reversed-wave control must flip the arrow; F3 flat couplings bound the pulse instrument)",
+        "a gradient in the symmetric couplings g along x produces centroid drift without any antisymmetry (g fixed, gradient-free; the twin keeps g exactly)",
+        "torus wrap-around makes downstream and upstream mass ambiguous (t_test = 8 keeps pulse spread well below half the torus; d is measured as the shortest signed offset)",
+        "the polarity index is 1 for any tiny but uniform asymmetry, so P alone could pass with a biologically meaningless arrow (S2 and S3 require an effect on transport of a fixed size)",
+        "the release cells sit at particular wave phases when waves stop (waves are off for 100 time units before release; release cells random)"
+      ],
+      "spec": "hecate/programs/HT-faa9277e02/worlds/W5/spec.json",
+      "attainability": "hecate/programs/HT-faa9277e02/worlds/W5/ATTAINABILITY.json"
+    },
+    {
+      "id": "W6",
+      "triplicateId": "HT-faa9277e02",
+      "passId": "P3v2",
+      "mechanism_ids": [
+        "M6",
+        "M1"
+      ],
+      "lens_ids": [
+        "L5",
+        "L1"
+      ],
+      "hypothesis": "In a reaction-diffusion medium whose activator couplings were shaped by Hebbian co-activity while the pattern formed, a large lesion (24x24 cells, about 3.6 pattern wavelengths across) regrows the ORIGINAL pattern inside the lesion better than (a) the same medium with the couplings inside the lesion scrambled, and (b) an unwritten medium with uniform couplings; i.e. stored couplings carry repair information beyond what the intact border supplies.",
+      "mechanism": "Gierer-Meinhardt activator-inhibitor kinetics on a 48x48 torus (periodic in both axes, no boundaries). a_t = sum over the 4 edges e of D0*g_e*(a_j - a_i) + a^2/h - a ; h_t = Dh*lap(h) + mu*(a^2 - h); mu = 2.0, D0 = 0.5, Dh = 10.0, explicit Euler dt = 0.02, a floored at 0, h floored at 1e-6. Homogeneous steady state a = h = 1; Turing wavelength about 6.6 cells. Hebbian coupling plasticity (treatment only, Phase A): every step, for each edge e = (i,j), g_e += dt*[eta*(a_i*a_j/mean(a)^2 - 1) - lambda*(g_e - 1)], then clip g_e to [0.1, 5]; eta = 0.1, lambda = 0.1; mean(a) = spatial mean of a at that step. Plasticity is OFF in every phase except Phase A.",
+      "intervention": "TREATMENT, per seed s: Phase A = from a = h = 1 + 0.01*N(0,1) (RNG stream 0 of seed s), 3000 steps WITH plasticity starting from g = 1. Settle = 1500 further steps, plasticity off, on the learned g; the settled activator map is the original O. Lesion = a 24x24 square at a seed-determined position (RNG stream 1, wraps on the torus): a and h inside set to max(1 + 0.3*N(0,1), 0) and max(1 + 0.3*N(0,1), 1e-3) with RNG stream 2. Regrowth = 3000 steps, plasticity off, on the learned g. Observable read on the regrown activator map R.",
+      "control": "FIXED medium: g = 1 on every edge throughout; the reference pattern formed from the same initial noise (3000 steps), settled 1500 steps, same lesion position and same lesion noise, 3000 regrowth steps. Pure border pinning in an unwritten medium. Paired with the treatment by seed.",
+      "positive_control": "Couplings written by hand from the pattern instead of by Hebbian plasticity: run 3000 steps on g = 1 from the seed's initial noise (reference map); cores = cells with z-scored activator > 1; every edge joining a core cell to a non-core cell gets g = 0.1, every other edge g = 1 (domain boundaries insulated). Then settle 1500 steps on this carved field (original O), lesion, regrow 3000 steps on the same carved field. Effect present by construction: the couplings store where spot boundaries were.",
+      "observable": "Recovered information fraction RIF inside the lesion: binarize O and R each at its own whole-field mean; RIF = I_MM(O_bin; R_bin) / H(O_bin), both over the 576 lesion cells, I_MM = Miller-Madow corrected plug-in mutual information in bits, H = plug-in binary entropy of O_bin over the lesion. RIF = 1 when the lesion regrows exactly; RIF about 0 when the regrown pattern is unrelated to the original. Diagnostics (not clause statistics): raw bits, Pearson r inside the lesion, binary agreement.",
+      "success_criterion": "[{\"id\": \"S1\", \"text\": \"The treatment's seed-mean RIF (10 seeds) is at least 0.25.\", \"statistic\": \"seed_mean_rif\", \"comparison\": \">=\", \"threshold\": 0.25}, {\"id\": \"S2\", \"text\": \"Paired by seed, treatment RIF minus null-twin RIF (same learned medium, couplings scrambled inside the lesion) has seed-mean at least 0.15.\", \"statistic\": \"seed_mean_rif_minus_twin\", \"comparison\": \">=\", \"threshold\": 0.15}, {\"id\": \"S3\", \"text\": \"Paired by seed, treatment RIF minus FIXED-medium RIF (control) has seed-mean at least 0.10.\", \"statistic\": \"seed_mean_rif_minus_fixed\", \"comparison\": \">=\", \"threshold\": 0.1}, {\"id\": \"S4\", \"text\": \"Treatment RIF exceeds its null-twin RIF in at least 9 of 10 seeds.\", \"statistic\": \"n_seeds_rif_above_twin\", \"comparison\": \">=\", \"threshold\": 9}]",
+      "failure_criterion": "[{\"id\": \"F1\", \"text\": \"Seed-mean (treatment RIF minus null-twin RIF) below 0.05: border pinning and coupling statistics explain the repair; stored arrangement adds nothing.\", \"statistic\": \"seed_mean_rif_minus_twin\", \"comparison\": \"<\", \"threshold\": 0.05}, {\"id\": \"F2\", \"text\": \"Seed-mean (treatment RIF minus FIXED RIF) below 0.0: the written medium repairs no better than an unwritten one.\", \"statistic\": \"seed_mean_rif_minus_fixed\", \"comparison\": \"<\", \"threshold\": 0.0}, {\"id\": \"F3\", \"text\": \"Seed-mean treatment RIF below 0.10: no meaningful repair at all.\", \"statistic\": \"seed_mean_rif\", \"comparison\": \"<\", \"threshold\": 0.1}]",
+      "alternative_explanation": "Border pinning: the intact pattern around the lesion invades the lesion and imposes its phase, so repair would occur in any medium; learned couplings could also simply lower or raise activator diffusion inside the lesion, changing how fast the border front invades versus how fast interior noise nucleates, without storing WHERE spots were. The null twin (same coupling values inside the lesion, rearranged) keeps the second effect and the border; the FIXED control measures pure border pinning.",
+      "null_twin": "The treatment's own learned coupling field, with the g values of all edges whose two endpoints both lie inside the lesion randomly permuted among themselves (RNG stream 3); all edges touching the border or outside unchanged; same original O, same lesion, same lesion noise. Coupling-value histogram inside the lesion and the entire border are matched; only the stored spatial arrangement inside the lesion is destroyed.",
+      "substrate": "reaction-diffusion (Gierer-Meinhardt on a 48x48 torus with per-edge activator couplings)",
+      "cost_estimate": "controls: about 0.25 CPU core-minute; treatment + twin + control arms: about 0.5 CPU core-minute (numpy, single core)",
+      "stupid_explanations": [
+        "border pinning: the surrounding pattern re-imposes phase inside the lesion in any medium (tested by FIXED control and by the scrambled-inside twin, which keeps the border)",
+        "learned couplings only change mean activator diffusion inside the lesion (a wavelength/speed effect, not stored positions); the twin keeps the value histogram, so this effect is shared with the twin",
+        "binarization at the whole-field mean makes sparse patterns look recovered by agreement alone (RIF normalizes by the entropy of the original inside the lesion; raw agreement is only a diagnostic)",
+        "the lesion noise is too small so the lesion restarts near the old state (lesion fields are fully reset to 1 + 0.3*N(0,1) with a fresh RNG stream)",
+        "clip bounds [0.1, 5] of the learning rule create a static prepattern independent of the lesioned pattern (the twin shares the clipped values; the FIXED control has none)"
+      ],
+      "spec": "hecate/programs/HT-faa9277e02/worlds/W6/spec.json",
+      "attainability": "hecate/programs/HT-faa9277e02/worlds/W6/ATTAINABILITY.json",
+      "outcome": "NULL",
+      "round": 3,
+      "rows": "hecate/programs/HT-faa9277e02/worlds/W6/probe/rows.jsonl",
+      "outcome_file": "hecate/programs/HT-faa9277e02/worlds/W6/probe/OUTCOME.json",
+      "statistics": {
+        "treatment": {
+          "seed_mean_rif": 0.009256789751989156,
+          "seed_mean_rif_minus_twin": -0.009184552916600388,
+          "seed_mean_rif_minus_fixed": -0.13621229490149386,
+          "n_seeds_rif_above_twin": 3
+        },
+        "null_twin_in_arm_slot": {
+          "S1": 0.01844134266858954,
+          "S2": -0.004119471397901162,
+          "S3": -0.12702774198489347,
+          "S4": 6
+        },
+        "per_arm": {
+          "FIXED": {
+            "seed_mean_rif": 0.14546908465348302,
+            "seed_mean_r_lesion": 0.4908238041522421,
+            "seed_mean_agree": 0.746875,
+            "rif_by_seed": {
+              "0": 0.15227173384920414,
+              "1": 0.03789419073686896,
+              "2": 0.229293266590681,
+              "3": 0.046885852132644346,
+              "4": 0.2406256574556743,
+              "5": 0.20599431250738792,
+              "6": 0.15363723028816392,
+              "7": 0.2159423655356611,
+              "8": 0.09607302375891204,
+              "9": 0.07607321367963255
+            }
+          },
+          "POSITIVE_CONTROL": {
+            "seed_mean_rif": 0.38111582565381946,
+            "seed_mean_r_lesion": 0.6687056324857981,
+            "seed_mean_agree": 0.9059027777777778,
+            "rif_by_seed": {
+              "0": 0.6571786215809794,
+              "1": 0.557764711615455,
+              "2": 0.22987102937430137,
+              "3": 0.15635657356585983,
+              "4": 0.14991029403579237,
+              "5": 0.5514258812615583,
+              "6": 0.6269220892087795,
+              "7": 0.2902635203555251,
+              "8": 0.3459659987159852,
+              "9": 0.24549953682395884
+            }
+          },
+          "NULL_TWIN": {
+            "seed_mean_rif": 0.055633973230596045,
+            "seed_mean_r_lesion": 0.14686983500303477,
+            "seed_mean_agree": 0.7852430555555556,
+            "rif_by_seed": {
+              "0": 0.0504899978086332,
+              "1": 0.05730591019185345,
+              "2": 0.07417435927396085,
+              "3": 0.08445269509403916,
+              "4": 0.0020992062860583404,
+              "5": 0.022979538943117588,
+              "6": 0.1419302756900539,
+              "7": 0.04997014174966083,
+              "8": 0.004533627235831889,
+              "9": 0.06840398003275126
+            }
+          },
+          "NULL_TWIN_B": {
+            "seed_mean_rif": 0.042383341494980645,
+            "seed_mean_r_lesion": 0.12874523094400664,
+            "seed_mean_agree": 0.774826388888889,
+            "rif_by_seed": {
+              "0": 0.04020388399888477,
+              "1": 0.07330981246355273,
+              "2": 0.005660025809755468,
+              "3": 0.05331743591328782,
+              "4": 0.006763998263916963,
+              "5": 0.06131401602453683,
+              "6": 0.054893663607955286,
+              "7": 0.00026832000232885814,
+              "8": 0.028813477756674914,
+              "9": 0.09928878110891276
+            }
+          },
+          "CHEAT": {
+            "seed_mean_rif": 1.0020451200195974,
+            "seed_mean_r_lesion": 1.0,
+            "seed_mean_agree": 1.0,
+            "rif_by_seed": {
+              "0": 1.0019635701501797,
+              "1": 1.0019266096114658,
+              "2": 1.002089620715232,
+              "3": 1.0020029021971482,
+              "4": 1.0020594310323803,
+              "5": 1.0021052346214556,
+              "6": 1.0020448329720344,
+              "7": 1.0021212102936796,
+              "8": 1.00201657830872,
+              "9": 1.0021212102936796
+            }
+          },
+          "TREATMENT": {
+            "seed_mean_rif": 0.009256789751989156,
+            "seed_mean_r_lesion": 0.005923782916234466,
+            "seed_mean_agree": 0.7465277777777778,
+            "rif_by_seed": {
+              "0": -0.001226276443986913,
+              "1": -0.000623458827379821,
+              "2": 0.029202045993356237,
+              "3": 0.008015915681844921,
+              "4": 0.029139111213737027,
+              "5": 0.00697167908112894,
+              "6": 0.006945668333266866,
+              "7": -0.0009475972474706406,
+              "8": -0.0011675835897756736,
+              "9": 0.01625839332517061
+            },
+            "g_diag_seed_mean": {
+              "g_mean": 1.2022630592133816,
+              "g_std": 0.840272953249643,
+              "g_frac_at_min": 0.09900173611111111,
+              "g_frac_at_max": 0.0,
+              "g_in_lesion_mean": 1.1986590627458322,
+              "g_in_lesion_std": 0.8520423228362626
+            }
+          },
+          "TREATMENT_TWIN": {
+            "seed_mean_rif": 0.01844134266858954,
+            "seed_mean_r_lesion": 0.039818960116552116,
+            "seed_mean_agree": 0.7124999999999999,
+            "rif_by_seed": {
+              "0": 0.0011024659123977762,
+              "1": -0.0009699716870741065,
+              "2": 0.007080280324229343,
+              "3": 0.04006318350923515,
+              "4": 0.00948884769413406,
+              "5": 0.050969778497904225,
+              "6": 0.03801057351148801,
+              "7": 0.0008996770368031609,
+              "8": 0.005222240269074473,
+              "9": 0.03254635161770334
+            }
+          },
+          "TREATMENT_TWIN_B": {
+            "seed_mean_rif": 0.022560814066490704,
+            "seed_mean_r_lesion": 0.059844842082264704,
+            "seed_mean_agree": 0.7281249999999999,
+            "rif_by_seed": {
+              "0": -0.0007291502292831213,
+              "1": 0.020840880148780824,
+              "2": 0.02653889031881061,
+              "3": 0.029371250593486047,
+              "4": 0.022433552237749805,
+              "5": 0.029072888903673582,
+              "6": 0.03315171851276404,
+              "7": 0.00039072566948981187,
+              "8": 0.03647838558010369,
+              "9": 0.028058998929331766
+            }
+          }
+        }
+      },
+      "anomalies": [],
+      "rejected_explanations": [
+        "border pinning: the surrounding pattern re-imposes phase inside the lesion in any medium (tested by FIXED control and by the scrambled-inside twin, which keeps the border)",
+        "learned couplings only change mean activator diffusion inside the lesion (a wavelength/speed effect, not stored positions); the twin keeps the value histogram, so this effect is shared with the twin",
+        "binarization at the whole-field mean makes sparse patterns look recovered by agreement alone (RIF normalizes by the entropy of the original inside the lesion; raw agreement is only a diagnostic)",
+        "the lesion noise is too small so the lesion restarts near the old state (lesion fields are fully reset to 1 + 0.3*N(0,1) with a fresh RNG stream)"
+      ]
     }
   ],
   "candidateEngines": [],
   "currentVerdict": "PARK",
   "evidenceSummary": {
     "layer": "experimental_observation",
-    "rows": "hecate/programs/HT-faa9277e02/worlds/W1/pilot_rows.jsonl",
-    "note": "round 1 W2 NOT_BUILT; round 2 W1 SPEC_UNATTAINABLE: Pass 3 produced no testable world in two tries (generator finding)"
+    "rows": "hecate/programs/HT-faa9277e02/worlds/W6/probe/rows.jsonl",
+    "note": "round 3 W6 NULL: revived by the generator repair and read NULL (two reasons)"
   }
 }

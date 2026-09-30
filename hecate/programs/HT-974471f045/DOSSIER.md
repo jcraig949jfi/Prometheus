@@ -38,7 +38,7 @@ Layers: [spec] speculation, [impl] implemented candidate, [obs] experimental obs
 - [spec] M11 (dynamical law): Edge drift: under mutation plus selection on robustness of offspring fitness, spectral radius drifts toward the stability boundary because mutational robustness of readout performance peaks there; phenomenologically, horizon widens until it becomes unstable.
 - [spec] M12 (learning pressure): Protention-fulfilment fitness: fitness is the rate of fulfilled vs disappointed anticipations (sign agreement of predicted and actual next input change), not squared error; predicts selection for reservoirs that anticipate qualitative events rather than magnitudes.
 - [spec] M13 (organism architecture): Embodied reservoir: the reservoir is a mass-spring body whose morphology is heritable; the body computes by being perturbed by the world, and only a linear readout of spring lengths is learned. The lived body is the zero-point of computation.
-- [spec] M14 (selection mechanism): Eidetic variation over reservoirs: the readout is heritable but each individual's reservoir is resampled at birth from a heritable distribution. Selection keeps only readouts addressing reservoir-invariant properties (e.g., permutation-invariant aggregates), and the distribution evolves to make more properties invariant.
+- [impl] M14 (selection mechanism): Eidetic variation over reservoirs: the readout is heritable but each individual's reservoir is resampled at birth from a heritable distribution. Selection keeps only readouts addressing reservoir-invariant properties (e.g., permutation-invariant aggregates), and the distribution evolves to make more properties invariant.
 - [spec] M15 (error-correction mechanism): Adumbration voting: several small reservoirs each receive a partial profile (subset of channels); a population-level readout reconciles them. Evolution selects channel-to-reservoir assignments; the object is only decodable jointly.
 
 ## LENSES
@@ -55,19 +55,28 @@ Layers: [spec] speculation, [impl] implemented candidate, [obs] experimental obs
 - W2 [population] Selecting reservoirs for the number of decodable random functionals transfers to held-out functionals better than selecting for one task or for effective rank. | success: Richness arm held-out mean R^2 exceeds single-task arm and effective-rank arm each by >= 0.05, over 8 seeds, paired by seed, sign test 7/8 or better. | null twin: Richness fitness values permuted among individuals each generation: matched selection intensity and mutation, destroyed link to decodability. | cost: about 8 CPU core-minutes (20 ridge fits per evaluation, 24*50*8*5 evaluations)
 - W3 [population] Bracketing of distractor channels evolves when the readout budget is small but not when it is large. | success: Masked fraction >= 0.8 at k=3 and <= 0.4 at k=50, over 8 seeds (mean), and k=3 fraction exceeds permuted-fitness twin by >= 0.3. | null twin: Same k and channels, fitness permuted among individuals each generation. | cost: about 2 CPU core-minutes
 - W4 [population] Evolved memory-capacity centroid tracks environmental delay, and a slow context period beyond the horizon is carried by the reservoir, not the readout. | success: Spearman(D, centroid) >= 0.8 pooled over 3 D x 5 seeds, evolved beats random search NRMSE by >= 10%; context-bit gain from reservoir >= 0.1 NRMSE and from readout reset < 0.03. | null twin: Permuted-fitness evolution with identical mutation schedule. | cost: about 6 CPU core-minutes
+- W5 [population of fixed tanh reservoirs (echo state networks) with lifetime-fitted linear readouts] Bracketed inheritance: when the reservoir is heritable and never changed in life and the readout is relearned from scratch each life, a small lifetime sample budget (n=8) drives task information into the heritable reservoir, while a large budget (n=200) leaves the reservoir near-random. Measured by the reservoir-attributed gain of the L2 bracketing ledger. | success: [{"id": "S1", "text": "LOW arm carries task information in the reservoir.", "statistic": "mean over 6 seeds of G_task in the LOW arm", "comparison": ">=", "threshold": 0.3}, {"id": "S2", "text": "Budget interaction: the LOW arm carries more reservoir task information than the HIGH arm.", "statistic": "mean over 6 seeds of (G_task LOW - G_task HIGH), paired by seed", "comparison": ">=", "threshold": 0.25}, {"id": "S3", "text": "Content, not generic few-shot conditioning: LOW-arm gain is specific to the task channel.", "statistic": "mean over 6 seeds of (G_task LOW - G_off LOW)", "comparison": ">=", "threshold": 0.3}, {"id": "S4", "text": "Selection content, not selection intensity or mutation bias (L7).", "statistic": "mean over 6 seeds of G_task LOW minus mean over 6 seeds of G_task LOW in the permuted-fitness twin", "comparison": ">=", "threshold": 0.25}] | null twin: Permuted-fitness twin: same population size, genealogy law (keep 4, parents from top 8 of a ranking), mutation, rho cap, generations and seeds, with the ranking random each generation instead of by fitness; no fitness is used. In distribution this equals the permuted-fitness twin of L7. Measured with the identical instrument, 5 random final-generation individuals per seed; LOW and HIGH twins are two independent drift runs (budget has no effect without selection). | cost: treatment about 20*60*2 lives*2 arms*6 seeds = 28,800 reservoir runs of 350 steps (about 1-2 CPU core-minutes) plus instrument; controls measured at 6.3 CPU seconds.
+- W6 [population of heritable readouts over resampled random tanh reservoirs (reservoir ensemble)] Eidetic variation over reservoirs: when the readout is heritable but every individual's reservoir is resampled at birth from a heritable distribution, selection retains only readouts that address properties invariant across reservoir realisations, and these invariants are non-trivial (not the all-ones mean-field direction) when the task cannot be solved by the mean field. | success: [{"id": "S1", "text": "The non-all-ones component of evolved readouts decodes the contrast across resampled reservoirs, above the 0.5 ceiling of single-channel decoding.", "statistic": "mean over 6 seeds of I_perp", "comparison": ">=", "threshold": 0.6}, {"id": "S2", "text": "The invariant is non-trivial: it beats the mean-field (all-ones) readout.", "statistic": "mean over 6 seeds of (I_perp - I_ones)", "comparison": ">=", "threshold": 0.3}, {"id": "S3", "text": "Selection content, not intensity or mutation bias (L7).", "statistic": "mean over 6 seeds of I_perp minus mean over 6 seeds of I_perp of the permuted-fitness twin", "comparison": ">=", "threshold": 0.25}] | null twin: Permuted-fitness twin: identical population size, genealogy law (keep 4, parents from top 8 of a ranking), mutation, birth resampling and generations, with a random ranking each generation instead of by fitness; no fitness is used. In distribution this equals the L7 permuted-fitness twin. 5 random final-generation genomes per seed, same instrument and measurement streams. | cost: treatment about 20*60*6 = 7,200 lives of 300 steps (under 1 CPU core-minute) plus instrument; controls measured at 2.0 CPU seconds.
 
 ## OBSERVATIONS
 - W1: SPEC_UNATTAINABLE (hecate/programs/HT-974471f045/worlds/W1/pilot_rows.jsonl)
 - W3: NULL (hecate/programs/HT-974471f045/worlds/W3/rows.jsonl)
+- W6: NULL (hecate/programs/HT-974471f045/worlds/W6/probe/rows.jsonl)
 
 ## FALSIFICATIONS
 - W3: mask mutation bias toward zeros
 - W3: at k=50 ridge already ignores distractors so there is no pressure
+- W6: the recurrent reservoir contributes nothing; the result is a property of the input template alone
+- W6: a readout aligned with a single unit that happens to carry u1 - u2 at one seed drives the mean
+- W6: single-channel decoding: a readout that decodes u1 alone reaches corr^2 = 0.5 with u1 - u2 (upper bound); S1 threshold 0.60 is set above that bound so a pass requires both channels
 
 ## SURVIVING ANOMALIES
 - W1: Positive control as literally specified gave only 2.5% reduction; channel-lag-aligned repair gave 1.6%. A deposit of a readout with ||w_A*|| ~50-95 at eps=0.05 (rank-one gain ~3, then rescaled to rho 0.9) does not make task A few-shot learnable with n=20.
 - W1: PC_NULL_TWIN row (PC's content-free twin) added to pilot rows as the pilot reading of 'null twin does not meet it' (NOTES ambiguity 3).
 - W3: hand mask also helps at k=50 (rel gain 0.897): masking useful at large budget too
+- W6: elite one-life fitness (best 0.7823) far above instrument I_full 0.4576: selection partly on lucky reservoir draws (kept elites keep their one-life fitness, NOTES reading 1)
+- W6: treatment elites decode better with recurrent W removed: recurrence is noise to the selected readout
+- W6: S1 fails below the 0.5 single-channel ceiling although S2 and S3 pass: selection found a partial decoder, not the invariant the positive control carries
 
 ## CROSS-SUBSTRATE RESULTS
 _none yet_
@@ -82,13 +91,10 @@ _none yet_
 _none yet_
 
 ## OPEN QUESTIONS
-- deposits increase rho before rescaling and rescaling is imperfect
-- task A and task B share delay structure so B-training preserves A
-- 20-sample ridge is so noisy that any change in state scale shifts NRMSE
-- elites selected on B happen to carry A by chance at one seed
+- template collapse: rms(M_in) grows so large that resampling noise is irrelevant and the world is a fixed linear decoder (see alternative_explanation; record the template-to-noise ratio)
 
 ## CURRENT VERDICT
-SPECULATIVE (an allocation state, not a truth claim). round 1 W3 NULL; round 2 W1 SPEC_UNATTAINABLE: one valid NULL reading; next world eligible
+PARK (an allocation state, not a truth claim). round 3 W6 NULL: two valid NULL readings (W3, W6)
 
 ## NEXT PASS
-decision after P3-probe2: PARK
+decision after P3-probe3: PARK

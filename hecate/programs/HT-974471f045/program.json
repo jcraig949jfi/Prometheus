@@ -527,6 +527,78 @@
         "unexpectedness": "unknown",
         "potential_importance": "unknown"
       }
+    },
+    {
+      "id": "P3v2",
+      "triplicateId": "HT-974471f045",
+      "index": 3,
+      "kind": "minimal_worlds_v2",
+      "added": [
+        "new falsifier",
+        "new observable"
+      ],
+      "generator": {
+        "model": "claude-opus-5-5",
+        "search": false,
+        "prompt": "hecate/programs/_prompts/pass3_v2.md",
+        "prompt_sha256": "2adcfc8da07ee9adb9b04d2214889f0965758f7fcf0a60cde08eebb62bedd461"
+      },
+      "prereg": "roles/Hecate/prereg/2026-09-30_pass3_v2/PREREG.md",
+      "inspected_prior": [
+        "W3"
+      ],
+      "unexplained": [],
+      "decision": "FALSIFY",
+      "research_state": {
+        "novelty": "unknown",
+        "mechanistic_clarity": "unknown",
+        "falsifiability": "unknown",
+        "empirical_support": "none",
+        "cross_lens_agreement": "unknown",
+        "cross_substrate_transfer": "unknown",
+        "baseline_resistance": "unknown",
+        "artifact_risk": "unknown",
+        "cost": "unknown",
+        "unexpectedness": "unknown",
+        "potential_importance": "unknown"
+      }
+    },
+    {
+      "id": "P3-probe3",
+      "triplicateId": "HT-974471f045",
+      "index": 3,
+      "kind": "cheap_probe",
+      "added": [
+        "new falsifier",
+        "new observable"
+      ],
+      "generator": {
+        "model": "claude-opus-5-5",
+        "search": false,
+        "prompt": "hecate/programs/_prompts/probe_impl_v3.md",
+        "prompt_sha256": "a34a8c6143f49df2b33b75871e8f9cd12e60c10c37778ba595e12fedf1621685"
+      },
+      "prereg": "roles/Hecate/prereg/2026-09-30_pass3_v2/PREREG.md",
+      "inspected_prior": [
+        "W6"
+      ],
+      "unexplained": [
+        "template collapse: rms(M_in) grows so large that resampling noise is irrelevant and the world is a fixed linear decoder (see alternative_explanation; record the template-to-noise ratio)"
+      ],
+      "decision": "PARK",
+      "research_state": {
+        "novelty": "unknown",
+        "mechanistic_clarity": "unknown",
+        "falsifiability": "unknown",
+        "empirical_support": "none",
+        "cross_lens_agreement": "unknown",
+        "cross_substrate_transfer": "unknown",
+        "baseline_resistance": "unknown",
+        "artifact_risk": "unknown",
+        "cost": "unknown",
+        "unexpectedness": "unknown",
+        "potential_importance": "unknown"
+      }
     }
   ],
   "hypotheses": [
@@ -1024,7 +1096,7 @@
       "triplicateId": "HT-974471f045",
       "passId": "P1",
       "kind": "mechanism",
-      "layer": "speculation",
+      "layer": "implemented_candidate",
       "form": "selection mechanism",
       "statement": "Eidetic variation over reservoirs: the readout is heritable but each individual's reservoir is resampled at birth from a heritable distribution. Selection keeps only readouts addressing reservoir-invariant properties (e.g., permutation-invariant aggregates), and the distribution evolves to make more properties invariant.",
       "derived_from": [
@@ -1113,6 +1185,20 @@
       "derived_from": [
         "M3",
         "M2"
+      ]
+    },
+    {
+      "id": "O-W6-r3",
+      "triplicateId": "HT-974471f045",
+      "passId": "P3-probe3",
+      "kind": "observation",
+      "layer": "experimental_observation",
+      "evidence_rows": [
+        "hecate/programs/HT-974471f045/worlds/W6/probe/rows.jsonl"
+      ],
+      "statement": "W6 probe round 3: NULL. See NOTES.md. Kept elites keep their one-life fitness (reading 1). PERMUTED_TWIN is diagnostic only. The spec's alternative_explanation (template collapse) is not distinguished by any clause; read the tnr beside the outcome.",
+      "derived_from": [
+        "M14"
       ]
     }
   ],
@@ -1770,13 +1856,217 @@
         "context bit leaks into input scaling",
         "centroid defined poorly for flat profiles"
       ]
+    },
+    {
+      "id": "W5",
+      "triplicateId": "HT-974471f045",
+      "passId": "P3v2",
+      "mechanism_ids": [
+        "M2"
+      ],
+      "lens_ids": [
+        "L2",
+        "L7"
+      ],
+      "hypothesis": "Bracketed inheritance: when the reservoir is heritable and never changed in life and the readout is relearned from scratch each life, a small lifetime sample budget (n=8) drives task information into the heritable reservoir, while a large budget (n=200) leaves the reservoir near-random. Measured by the reservoir-attributed gain of the L2 bracketing ledger.",
+      "mechanism": "Genome = (W, W_in): a 40-unit tanh reservoir x_t = tanh(W x_{t-1} + W_in u_t), no leak, 2 input channels u1, u2 ~ U[-0.5,0.5] iid. Nothing in the genome changes during life. Each life the readout is fitted from scratch by ridge regression (lambda=1e-2, with intercept, dual/min-norm form) on n_life randomly chosen post-washout steps (washout 50, 350 steps) of a fresh input stream, target y_t = u1_{t-3}; lifetime fitness = NRMSE on the remaining post-washout steps, mean over 2 lives with fresh inputs. Selection: population 20, 60 generations; each generation rank by fitness (lower NRMSE better), keep the top 4 unchanged, 16 offspring each copying a parent drawn uniformly from the top 8, then mutation: every entry of W and of W_in gets N(0, (0.05 * rms of that matrix)^2) noise; if spectral radius of W exceeds 0.95 it is rescaled to 0.95. Gen-0 law: W dense N(0,1) rescaled to spectral radius 0.9; W_in ~ U[-0.5,0.5].",
+      "intervention": "Two treatment arms that differ only in lifetime budget: LOW (n_life = 8) and HIGH (n_life = 200). Everything else, including seeds and input streams, identical.",
+      "control": "Unevolved gen-0 population (reservoirs drawn from the gen-0 law), measured with the same instrument; its reservoir-attributed gain is 0 in expectation because the replacement reservoir is drawn from the same law.",
+      "positive_control": "Constructed task-carrying reservoirs in the LOW arm: a 3-step delay chain on u1 (W_in[0,0]=1, W[1,0]=1, W[2,1]=1) broadcast into units 3..39 (W[i,2]=1), plus background W ~ 0.05 N(0,1)/sqrt(40) and W_in background 0.05 U[-1,1]; so units 3..39 carry u1_{t-3} by construction. HIGH arm = reservoirs drawn from the gen-0 law (the hypothesis says high budget leaves the reservoir near-random). 5 individuals per arm per seed.",
+      "observable": "Reservoir-attributed gain (L2 ablation b minus a) at instrument budget n=8: G = NRMSE(readout fitted with n=8 on a freshly drawn gen-0-law reservoir) - NRMSE(readout fitted with n=8 on the individual's own reservoir), same input stream and same training indices, mean over R=5 repeats (fresh input and fresh replacement reservoir each), computed for the task target u1_{t-3} (G_task) and the off-task target u2_{t-3} (G_off). Per seed: mean over the 5 final-generation elites (top 5 by the arm's own fitness at generation 60). Measurement input streams are seeded 10000+seed+k (k = elite index) for every arm (common random numbers).",
+      "success_criterion": "[{\"id\": \"S1\", \"text\": \"LOW arm carries task information in the reservoir.\", \"statistic\": \"mean over 6 seeds of G_task in the LOW arm\", \"comparison\": \">=\", \"threshold\": 0.3}, {\"id\": \"S2\", \"text\": \"Budget interaction: the LOW arm carries more reservoir task information than the HIGH arm.\", \"statistic\": \"mean over 6 seeds of (G_task LOW - G_task HIGH), paired by seed\", \"comparison\": \">=\", \"threshold\": 0.25}, {\"id\": \"S3\", \"text\": \"Content, not generic few-shot conditioning: LOW-arm gain is specific to the task channel.\", \"statistic\": \"mean over 6 seeds of (G_task LOW - G_off LOW)\", \"comparison\": \">=\", \"threshold\": 0.3}, {\"id\": \"S4\", \"text\": \"Selection content, not selection intensity or mutation bias (L7).\", \"statistic\": \"mean over 6 seeds of G_task LOW minus mean over 6 seeds of G_task LOW in the permuted-fitness twin\", \"comparison\": \">=\", \"threshold\": 0.25}]",
+      "failure_criterion": "[{\"id\": \"F1\", \"text\": \"No reservoir task information under low budget.\", \"statistic\": \"mean over 6 seeds of G_task in the LOW arm\", \"comparison\": \"<\", \"threshold\": 0.1}, {\"id\": \"F2\", \"text\": \"No budget interaction.\", \"statistic\": \"mean over 6 seeds of (G_task LOW - G_task HIGH)\", \"comparison\": \"<\", \"threshold\": 0.1}, {\"id\": \"F3\", \"text\": \"LOW arm indistinguishable from the permuted-fitness twin.\", \"statistic\": \"mean G_task LOW minus mean G_task LOW of the twin\", \"comparison\": \"<\", \"threshold\": 0.1}]",
+      "alternative_explanation": "Selection at low budget improves few-shot learnability generically (e.g. lowering the effective dimension or raising the variance of whatever the state already carries) rather than depositing task content; or the HIGH arm evolves the same reservoir content because a better reservoir also lowers error at n=200 (the budget contrast then carries no pressure difference). S3 targets the first; the pressure diagnostic in the controls (constructed reservoir vs gen-0 at n=200: gain 0.008) and S2 target the second.",
+      "null_twin": "Permuted-fitness twin: same population size, genealogy law (keep 4, parents from top 8 of a ranking), mutation, rho cap, generations and seeds, with the ranking random each generation instead of by fitness; no fitness is used. In distribution this equals the permuted-fitness twin of L7. Measured with the identical instrument, 5 random final-generation individuals per seed; LOW and HIGH twins are two independent drift runs (budget has no effect without selection).",
+      "substrate": "population of fixed tanh reservoirs (echo state networks) with lifetime-fitted linear readouts",
+      "cost_estimate": "treatment about 20*60*2 lives*2 arms*6 seeds = 28,800 reservoir runs of 350 steps (about 1-2 CPU core-minutes) plus instrument; controls measured at 6.3 CPU seconds.",
+      "stupid_explanations": [
+        "the low-budget arm raises input scaling or shrinks recurrence so that u1 and u2 both dominate the state, improving any few-shot recall (S3 checks task specificity)",
+        "the replacement reservoir is noisy, so a single lucky seed drives the mean gain (6-seed mean, twin per-seed sd 0.15 recorded)",
+        "the HIGH arm has no selection pressure at all because random reservoirs already solve the task at n=200, so S2 reflects pressure absence rather than a division of labour (this IS the M2 prediction, but it also means S2 alone cannot separate M2 from 'selection only acts where error is high')",
+        "spectral radius drifts to the 0.95 cap under mutation and a longer memory alone changes few-shot error"
+      ],
+      "spec": "hecate/programs/HT-974471f045/worlds/W5/spec.json",
+      "attainability": "hecate/programs/HT-974471f045/worlds/W5/ATTAINABILITY.json"
+    },
+    {
+      "id": "W6",
+      "triplicateId": "HT-974471f045",
+      "passId": "P3v2",
+      "mechanism_ids": [
+        "M14"
+      ],
+      "lens_ids": [
+        "L5",
+        "L7"
+      ],
+      "hypothesis": "Eidetic variation over reservoirs: when the readout is heritable but every individual's reservoir is resampled at birth from a heritable distribution, selection retains only readouts that address properties invariant across reservoir realisations, and these invariants are non-trivial (not the all-ones mean-field direction) when the task cannot be solved by the mean field.",
+      "mechanism": "Genome = (M_in in R^{40x8}, w in R^40). At birth the individual's reservoir is sampled: W_in = M_in + 0.3 * xi (xi iid N(0,1)), W dense N(0,1) rescaled to spectral radius 0.9, fresh every birth and never inherited. Reservoir x_t = tanh(W x_{t-1} + W_in u_t), no leak, u = 8 channels iid U[-1,1]. Nothing is learned in life: the output is w . x_t. Lifetime fitness = corr^2(w . x_t, y_t) over one life (300 steps, 50 washout, fresh input) with target y_t = u1_t - u2_t (higher better). Selection: population 20, 60 generations; rank by fitness, keep the top 4 unchanged (they are NOT re-born; their reservoir is kept), 16 offspring copying a parent drawn uniformly from the top 8, each offspring re-sampled at birth after mutation: M_in += N(0, 0.05^2) per entry, w += N(0, (0.05 * rms(w))^2) per entry. Gen-0 law: M_in ~ N(0, 0.5^2), w ~ N(0, 1).",
+      "intervention": "Resampling of the reservoir at every birth while readout and template are heritable (the eidetic variation), under selection on the lifetime fitness above.",
+      "control": "Unevolved gen-0 genomes measured with the same instrument.",
+      "positive_control": "Constructed genomes carrying a non-trivial invariant: M_in = 0.05 N(0,1) background with +1 on channel u1 for units 0..19 and +1 on channel u2 for units 20..39; w = +1 on units 0..19, -1 on units 20..39, plus 0.05 N(0,1). The readout addresses 'u1-driven units minus u2-driven units', which survives any resample of W and any SIGMA=0.3 noise on W_in. 5 genomes per seed.",
+      "observable": "L5 noematic invariance: each measured genome's readout w is evaluated, fixed, on 20 reservoirs freshly resampled from its own distribution (fresh input per resample; measurement streams seeded 10000+100*seed+k for genome k, common across arms). w_perp = w - mean(w) (w minus its all-ones component). Per genome: I_perp = mean over resamples of corr^2(w_perp . x_t, y_t); I_ones = mean over resamples of corr^2(sum_i x_i,t, y_t); I_full likewise for w. Per seed: mean over the 5 final-generation elites (top 5 by the arm's lifetime fitness at generation 60).",
+      "success_criterion": "[{\"id\": \"S1\", \"text\": \"The non-all-ones component of evolved readouts decodes the contrast across resampled reservoirs, above the 0.5 ceiling of single-channel decoding.\", \"statistic\": \"mean over 6 seeds of I_perp\", \"comparison\": \">=\", \"threshold\": 0.6}, {\"id\": \"S2\", \"text\": \"The invariant is non-trivial: it beats the mean-field (all-ones) readout.\", \"statistic\": \"mean over 6 seeds of (I_perp - I_ones)\", \"comparison\": \">=\", \"threshold\": 0.3}, {\"id\": \"S3\", \"text\": \"Selection content, not intensity or mutation bias (L7).\", \"statistic\": \"mean over 6 seeds of I_perp minus mean over 6 seeds of I_perp of the permuted-fitness twin\", \"comparison\": \">=\", \"threshold\": 0.25}]",
+      "failure_criterion": "[{\"id\": \"F1\", \"text\": \"No invariant decodable component.\", \"statistic\": \"mean over 6 seeds of I_perp\", \"comparison\": \"<\", \"threshold\": 0.15}, {\"id\": \"F2\", \"text\": \"Indistinguishable from the permuted-fitness twin.\", \"statistic\": \"mean I_perp minus twin mean I_perp\", \"comparison\": \"<\", \"threshold\": 0.1}]",
+      "alternative_explanation": "The heritable template M_in simply grows until the resampling noise (0.3) is negligible, so the 'distribution' collapses to one fixed input map and the readout is an ordinary fixed linear decoder of the input, with the random recurrence as noise: invariance by collapse rather than by selecting an invariant functional. The treatment implementer should record the template-to-noise ratio (rms(M_in)/0.3) of elites; the clauses do not distinguish collapse from selection of an invariant, and a pass is to be read with that ratio beside it.",
+      "null_twin": "Permuted-fitness twin: identical population size, genealogy law (keep 4, parents from top 8 of a ranking), mutation, birth resampling and generations, with a random ranking each generation instead of by fitness; no fitness is used. In distribution this equals the L7 permuted-fitness twin. 5 random final-generation genomes per seed, same instrument and measurement streams.",
+      "substrate": "population of heritable readouts over resampled random tanh reservoirs (reservoir ensemble)",
+      "cost_estimate": "treatment about 20*60*6 = 7,200 lives of 300 steps (under 1 CPU core-minute) plus instrument; controls measured at 2.0 CPU seconds.",
+      "stupid_explanations": [
+        "template collapse: rms(M_in) grows so large that resampling noise is irrelevant and the world is a fixed linear decoder (see alternative_explanation; record the template-to-noise ratio)",
+        "the recurrent reservoir contributes nothing; the result is a property of the input template alone",
+        "a readout aligned with a single unit that happens to carry u1 - u2 at one seed drives the mean",
+        "single-channel decoding: a readout that decodes u1 alone reaches corr^2 = 0.5 with u1 - u2 (upper bound); S1 threshold 0.60 is set above that bound so a pass requires both channels"
+      ],
+      "spec": "hecate/programs/HT-974471f045/worlds/W6/spec.json",
+      "attainability": "hecate/programs/HT-974471f045/worlds/W6/ATTAINABILITY.json",
+      "outcome": "NULL",
+      "round": 3,
+      "rows": "hecate/programs/HT-974471f045/worlds/W6/probe/rows.jsonl",
+      "outcome_file": "hecate/programs/HT-974471f045/worlds/W6/probe/OUTCOME.json",
+      "statistics": {
+        "TREATMENT": {
+          "I_full": 0.4576,
+          "I_perp": 0.4505,
+          "I_ones": 0.0503,
+          "I_perp_per_seed": [
+            0.4046,
+            0.5535,
+            0.5324,
+            0.4102,
+            0.3315,
+            0.4708
+          ],
+          "tnr_mean": 1.7916,
+          "max_unit_share_mean": 0.1458,
+          "I_perp_norec": 0.5855,
+          "best_fit_g1": 0.4497,
+          "best_fit_g60": 0.7823,
+          "mean_fit_g60": 0.5105
+        },
+        "NULL_TWIN": {
+          "I_full": 0.0358,
+          "I_perp": 0.0375,
+          "I_ones": 0.1061,
+          "I_perp_per_seed": [
+            0.0668,
+            0.06,
+            0.0168,
+            0.0232,
+            0.0401,
+            0.0181
+          ],
+          "tnr_mean": 1.9971,
+          "max_unit_share_mean": 0.134
+        },
+        "CONTROL": {
+          "I_full": 0.1042,
+          "I_perp": 0.106,
+          "I_ones": 0.0827,
+          "I_perp_per_seed": [
+            0.0592,
+            0.0738,
+            0.1384,
+            0.1348,
+            0.1156,
+            0.1139
+          ],
+          "tnr_mean": 1.6731,
+          "max_unit_share_mean": 0.1436
+        },
+        "POSITIVE_CONTROL": {
+          "I_full": 0.928,
+          "I_perp": 0.928,
+          "I_ones": 0.0057,
+          "I_perp_per_seed": [
+            0.9274,
+            0.9291,
+            0.9302,
+            0.9278,
+            0.9278,
+            0.9257
+          ],
+          "tnr_mean": 1.1918,
+          "max_unit_share_mean": 0.0307
+        },
+        "PERMUTED_TWIN": {
+          "I_full": 0.0781,
+          "I_perp": 0.0815,
+          "I_ones": 0.0964,
+          "I_perp_per_seed": [
+            0.0279,
+            0.204,
+            0.0465,
+            0.0427,
+            0.0641,
+            0.1037
+          ],
+          "tnr_mean": 1.9892,
+          "max_unit_share_mean": 0.147
+        },
+        "CHEAT": {
+          "I_full": 1.0,
+          "I_perp": 1.0,
+          "I_ones": 0.0827,
+          "I_perp_per_seed": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "clause_values": {
+          "TREATMENT": {
+            "S1": 0.4505,
+            "S2": 0.4002,
+            "S3": 0.413
+          },
+          "POSITIVE_CONTROL": {
+            "S1": 0.928,
+            "S2": 0.9223,
+            "S3": 0.8905
+          },
+          "NULL_TWIN": {
+            "S1": 0.0375,
+            "S2": -0.0686,
+            "S3": 0.0
+          },
+          "CHEAT": {
+            "S1": 1.0,
+            "S2": 0.9173,
+            "S3": 0.9625
+          }
+        },
+        "permuted_twin_S3_diag": 0.369
+      },
+      "anomalies": [
+        {
+          "id": "A1",
+          "text": "elite one-life fitness (best 0.7823) far above instrument I_full 0.4576: selection partly on lucky reservoir draws (kept elites keep their one-life fitness, NOTES reading 1)"
+        },
+        {
+          "id": "A2",
+          "text": "treatment elites decode better with recurrent W removed: recurrence is noise to the selected readout"
+        },
+        {
+          "id": "A3",
+          "text": "S1 fails below the 0.5 single-channel ceiling although S2 and S3 pass: selection found a partial decoder, not the invariant the positive control carries"
+        }
+      ],
+      "rejected_explanations": [
+        "the recurrent reservoir contributes nothing; the result is a property of the input template alone",
+        "a readout aligned with a single unit that happens to carry u1 - u2 at one seed drives the mean",
+        "single-channel decoding: a readout that decodes u1 alone reaches corr^2 = 0.5 with u1 - u2 (upper bound); S1 threshold 0.60 is set above that bound so a pass requires both channels"
+      ]
     }
   ],
   "candidateEngines": [],
-  "currentVerdict": "SPECULATIVE",
+  "currentVerdict": "PARK",
   "evidenceSummary": {
     "layer": "experimental_observation",
-    "rows": "hecate/programs/HT-974471f045/worlds/W1/pilot_rows.jsonl",
-    "note": "round 1 W3 NULL; round 2 W1 SPEC_UNATTAINABLE: one valid NULL reading; next world eligible"
+    "rows": "hecate/programs/HT-974471f045/worlds/W6/probe/rows.jsonl",
+    "note": "round 3 W6 NULL: two valid NULL readings (W3, W6)"
   }
 }

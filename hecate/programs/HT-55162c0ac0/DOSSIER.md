@@ -36,7 +36,7 @@ Layers: [spec] speculation, [impl] implemented candidate, [obs] experimental obs
 - [spec] M9 (interaction law): Elements bound into one chunk are chaotically synchronised clusters; capacity is the number of distinct synchronised clusters that can coexist; the modulator sets coupling and hence cluster count.
 - [spec] M10 (dynamical law): Load-induced chaos: held items compete (generalised Lotka-Volterra); beyond a threshold item count the competition becomes chaotic and items drop out; a modulator scaling inter-item interaction shifts the threshold.
 - [spec] M11 (mutation operator): A population of chunk-programs evolves with a mutation rate set by a modulator tracking recent success; capacity caps population size; ruggedness from a chaotic fitness map sets the needed rate.
-- [spec] M12 (computational primitive): Finite-time Lyapunov exponents between input elements measure element interactivity for free: elements whose perturbations co-diverge interact; the modulator allocates capacity to high-FTLE groups, forming chunks of interacting elements.
+- [impl] M12 (computational primitive): Finite-time Lyapunov exponents between input elements measure element interactivity for free: elements whose perturbations co-diverge interact; the modulator allocates capacity to high-FTLE groups, forming chunks of interacting elements.
 - [spec] M13 (error-correction mechanism): A chaotic memory trace drifts at rate lambda_max; periodic broadcast resets resynchronise it to a small stored anchor set; retention time ~ Lyapunov time x number of anchors under a fixed anchor budget.
 - [spec] M14 (selection mechanism): In a population of fixed-gain agents facing time-varying load, adaptive modulation is selected only when load changes faster than the Lyapunov time of the agents' own dynamics.
 
@@ -53,13 +53,18 @@ Layers: [spec] speculation, [impl] implemented candidate, [obs] experimental obs
 - W2 [causal toy] The longest unstable periodic orbit a scalar-kick controller can stabilise is bounded by the number C of past states it holds. | success: p_max(C) (largest p with success fraction >= 0.8) is nondecreasing in C and p_max(8) - p_max(1) >= 3; shuffled-fit twin success fraction <= 0.1 for all p >= 2 | null twin: time-shuffled training series: identical marginal distribution of x, temporal structure destroyed | cost: about 2 CPU core-minutes
 - W3 [developmental] With identical exposure, presenting low-load patterns first under a rising modulator retains more pattern structure than the reverse order, because of hysteresis. | success: mean retention(easy->hard) - retention(hard->easy) >= 0.15 over 30 seeds with Wilcoxon p < 0.01, AND the same difference in the null twin < 0.05, AND L3 loop area > 0 across a in [3.7, 3.9] | null twin: replace f_a with a contracting affine map whose per-site variance matches the chaotic run: monostable, no hysteresis | cost: about 1 CPU core-minute
 - W4 [symbolic rewriting] A learner with chunk budget C extracts most structure from a chaotic source whose entropy is matched to C, and the matched entropy rises with C. | success: median over 10 seeds of the entropy at argmax gain strictly increases across C = 4, 16, 64, AND gain at argmax >= 0.05 for C >= 16 | null twin: Markov-1 surrogate sequences: matched symbol and pair frequencies, higher-order grammar destroyed | cost: about 3 CPU core-minutes
+- W5 [ecology] At a fixed number of held items (n = 4) and matched interaction strength, competitive dynamics that are chaotic lose more items than competitive dynamics that are not chaotic: item loss under load is caused by chaotic competition, not only by competitive exclusion. | success: [{"id": "S1", "text": "Pooled mean recall of non-chaotic draws minus pooled mean recall of chaotic draws is at least 0.08 (0.32 species of 4).", "statistic": "mean(recall | non-chaotic) - mean(recall | chaotic), pooled 500 draws", "comparison": ">=", "threshold": 0.08}, {"id": "S2", "text": "One-sided Mann-Whitney U test (non-chaotic recall greater than chaotic recall) has p below 0.01.", "statistic": "Mann-Whitney U one-sided p-value, pooled", "comparison": "<", "threshold": 0.01}, {"id": "S3", "text": "In the OLS regression recall ~ 1 + mean_offdiag_strength + chaotic, the negated coefficient of the chaotic indicator is at least 0.06 (the chaos effect survives adjustment for interaction strength).", "statistic": "-beta_chaotic from OLS recall ~ 1 + strength + chaotic, pooled", "comparison": ">=", "threshold": 0.06}] | null twin: Label-permutation twin: the treatment's own rows with the chaos labels permuted within each seed (fixed permutation seed 1000 + seed). Every nuisance statistic is identical (same draws, same recall values, same number of chaotic labels); only the association between chaos and recall is destroyed. A second, physical twin (symmetrised matrices) is the control arm. | cost: about 0.2 CPU core-minutes for the treatment (controls took 0.12 core-minutes)
+- W6 [causal toy] Finite-time co-divergence of perturbations in a chaotic carrier recovers which elements interact (element interactivity) even when the interaction is XOR-like, so that pairwise correlation carries no grouping information, and it does so in the presence of a weak unstructured global leak. | success: [{"id": "S1", "text": "Mean over 10 seeds of the FTLE-grouping ARI is at least 0.8.", "statistic": "mean_seed(ari_ftle)", "comparison": ">=", "threshold": 0.8}, {"id": "S2", "text": "Mean over 10 seeds of (FTLE-grouping ARI minus correlation-grouping ARI) is at least 0.5.", "statistic": "mean_seed(ari_ftle - ari_corr)", "comparison": ">=", "threshold": 0.5}] | null twin: Same map, same kappa = 0.10, same eps_g = 0.05, same in-degree 2 product coupling, but each unit's two partners drawn uniformly at random from the other 11 units (default_rng(500 + seed)); the nominal partition remains the scoring target. Nuisance statistics (coupling count, strength, map, leak) matched; group structure destroyed. | cost: about 0.02 CPU core-minutes for the treatment (all controls took 0.03)
 
 ## OBSERVATIONS
 - W2: SPEC_UNATTAINABLE (hecate/programs/HT-55162c0ac0/worlds/W2/pilot_rows.jsonl)
 - W3: INSTRUMENT_FAIL (hecate/programs/HT-55162c0ac0/worlds/W3/rows.jsonl)
+- W6: SIGNAL (hecate/programs/HT-55162c0ac0/worlds/W6/probe/rows.jsonl)
 
 ## FALSIFICATIONS
-_none yet_
+- W6: the leak synchronises units (check corr_between_mean and trajectory range; the twin at eps_g = 0.05 stays unsynchronised, mean |corr| about 0.04)
+- W6: the ARI of a 4-cluster average-linkage partition is inflated by cluster-size artefacts (report the partitions; chance ARI in the twins is about 0)
+- W6: the invariant density is not symmetric, so E[v] != 0 and product coupling leaks first-order correlation (report corr_within_mean vs corr_between_mean)
 
 ## SURVIVING ANOMALIES
 - W2: Null twin never shows the memory law (p_max=0 at every C in both attempts) but a shuffled-fit controller stabilises whole cells (50/50 trials) in single seeds: a random proportional gain lands in the finite stabilising interval of a 1-D UPO. Pooled null fraction exceeded the spec's 0.1 twin bound at p>=2 in both attempts (0.2, then 0.4 after the intercept repair).
@@ -82,12 +87,11 @@ _none yet_
 _none yet_
 
 ## OPEN QUESTIONS
-- delta too small for longer orbits (repeat at delta=0.05)
-- long-period UPOs located inaccurately
-- trajectory lands near the orbit by luck
+- tau = 8 is either too short for within-group spread or long enough for the leak to saturate everything (report ftle_within_mean and ftle_between_mean)
+- Any perturbation-response (causal intervention) readout recovers a coupling graph whether or not the carrier is chaotic; success would show that intervention beats observation, not that chaos is what measures interactivity. Separately, the global leak may synchronise units so that every readout sees one block.
 
 ## CURRENT VERDICT
-PARK (an allocation state, not a truth claim). round 1 W3 INSTRUMENT_FAIL; round 2 W2 SPEC_UNATTAINABLE: Pass 3 produced no testable world in two tries (generator finding)
+PROBING (an allocation state, not a truth claim). round 3 W6 SIGNAL: round-3 SIGNAL; Pass 4 next
 
 ## NEXT PASS
-decision after P3-probe2: PARK
+decision after P3-probe3: FALSIFY

@@ -500,6 +500,78 @@
         "unexpectedness": "unknown",
         "potential_importance": "unknown"
       }
+    },
+    {
+      "id": "P3v2",
+      "triplicateId": "HT-8a87057933",
+      "index": 3,
+      "kind": "minimal_worlds_v2",
+      "added": [
+        "new falsifier",
+        "new observable"
+      ],
+      "generator": {
+        "model": "claude-opus-5-5",
+        "search": false,
+        "prompt": "hecate/programs/_prompts/pass3_v2.md",
+        "prompt_sha256": "2adcfc8da07ee9adb9b04d2214889f0965758f7fcf0a60cde08eebb62bedd461"
+      },
+      "prereg": "roles/Hecate/prereg/2026-09-30_pass3_v2/PREREG.md",
+      "inspected_prior": [],
+      "unexplained": [],
+      "decision": "FALSIFY",
+      "research_state": {
+        "novelty": "unknown",
+        "mechanistic_clarity": "unknown",
+        "falsifiability": "unknown",
+        "empirical_support": "none",
+        "cross_lens_agreement": "unknown",
+        "cross_substrate_transfer": "unknown",
+        "baseline_resistance": "unknown",
+        "artifact_risk": "unknown",
+        "cost": "unknown",
+        "unexpectedness": "unknown",
+        "potential_importance": "unknown"
+      }
+    },
+    {
+      "id": "P3-probe3",
+      "triplicateId": "HT-8a87057933",
+      "index": 3,
+      "kind": "cheap_probe",
+      "added": [
+        "new falsifier",
+        "new observable"
+      ],
+      "generator": {
+        "model": "claude-opus-5-5",
+        "search": false,
+        "prompt": "hecate/programs/_prompts/probe_impl_v3.md",
+        "prompt_sha256": "a34a8c6143f49df2b33b75871e8f9cd12e60c10c37778ba595e12fedf1621685"
+      },
+      "prereg": "roles/Hecate/prereg/2026-09-30_pass3_v2/PREREG.md",
+      "inspected_prior": [
+        "W5"
+      ],
+      "unexplained": [
+        "the MUS is trivially the conflicting channel, so any per-channel reset-on-mismatch rule would do equally well (SAT adds nothing)",
+        "drop-oldest is a strawman here because a window of 32 over 8 channels means the stale clause is usually young; the advantage is window geometry, not conflict localisation",
+        "the treatment wins only because sensor noise is rare (3%); at higher noise 'oldest in core' deletes valid clauses and the effect vanishes"
+      ],
+      "decision": "FALSIFY",
+      "research_state": {
+        "novelty": "unknown",
+        "mechanistic_clarity": "unknown",
+        "falsifiability": "unknown",
+        "empirical_support": "low",
+        "cross_lens_agreement": "unknown",
+        "cross_substrate_transfer": "unknown",
+        "baseline_resistance": "unknown",
+        "artifact_risk": "unknown",
+        "cost": "unknown",
+        "unexpectedness": "unknown",
+        "potential_importance": "unknown"
+      }
     }
   ],
   "hypotheses": [
@@ -564,7 +636,7 @@
       "triplicateId": "HT-8a87057933",
       "passId": "P1",
       "kind": "mechanism",
-      "layer": "speculation",
+      "layer": "implemented_candidate",
       "form": "error-correction mechanism",
       "statement": "Core-guided forgetting: the agent keeps a window of observation clauses over a finite model space; on UNSAT it extracts an MUS and deletes the oldest clause(s) inside the core only, instead of forgetting uniformly by age.",
       "derived_from": [
@@ -1090,6 +1162,20 @@
         "M5",
         "M15",
         "M4"
+      ]
+    },
+    {
+      "id": "O-W5-r3",
+      "triplicateId": "HT-8a87057933",
+      "passId": "P3-probe3",
+      "kind": "observation",
+      "layer": "experimental_observation",
+      "evidence_rows": [
+        "hecate/programs/HT-8a87057933/worlds/W5/probe/rows.jsonl"
+      ],
+      "statement": "W5 probe round 3: SIGNAL. Control arms from frozen controls.run; TREATMENT from probe/world.run (verbatim loop copy + core-guided repair: MUS by deletion oldest-first, delete the oldest clause in the MUS, repeat until SAT). Seeds 0..9. See probe/NOTES.md.",
+      "derived_from": [
+        "M1"
       ]
     }
   ],
@@ -1707,13 +1793,222 @@
         }
       ],
       "rejected_explanations": []
+    },
+    {
+      "id": "W5",
+      "triplicateId": "HT-8a87057933",
+      "passId": "P3v2",
+      "mechanism_ids": [
+        "M1"
+      ],
+      "lens_ids": [
+        "L1"
+      ],
+      "hypothesis": "When a regime switch changes only part of the plant, forgetting the clauses inside a minimal unsatisfiable subset (MUS) keeps the observations that are still valid, and so halves tracking errors relative to age-based forgetting, which must discard every clause older than the stale one.",
+      "mechanism": "Factored switching plant. K=8 channels, each with an unknown offset theta_k in Z_8. Each step t a task requests channel k_t (uniform) with target r_t (uniform in Z_8). The controller reads theta_hat_k = the smallest value allowed by all window clauses on channel k (0..7 if none), applies u = (r_t - theta_hat_k) mod 8; plant output y = (u + theta_k) mod 8; tracking error iff y != r_t. Sensor: y_obs = y with prob 0.97, else a uniformly random other value. Each step appends the observation clause 'theta_k == (y_obs - u) mod 8' to a FIFO window of capacity 32 (oldest evicted on overflow). The window is SAT iff every channel's clauses agree. On UNSAT the arm's repair rule deletes clauses until SAT. TREATMENT repair (core-guided): repeat { extract one MUS by deletion, scanning window clauses oldest-first; delete the oldest clause in that MUS } until SAT.",
+      "intervention": "Every 80 steps one channel (uniform) takes a new value (uniform among the 7 others); 2400 steps per run, 29 switches.",
+      "control": "CONTROL_REF, drop-oldest: on UNSAT delete the oldest window clause, one at a time, until SAT. Same trigger times rule, same stop rule.",
+      "positive_control": "Oracle repair: on UNSAT delete exactly the window clauses inconsistent with the true current theta (stale and sensor-corrupted clauses), nothing else. Targeted forgetting present by construction, same trigger rule.",
+      "observable": "Per run: total tracking errors (y != r_t); number of UNSAT events; number of deleted clauses that were consistent with the true current theta at deletion time (valid_deleted).",
+      "success_criterion": "[{\"id\": \"S1\", \"text\": \"Pooled over 10 seeds, total errors(TREATMENT) / total errors(CONTROL_REF) <= 0.50.\", \"statistic\": \"sum_seeds errors(X) / sum_seeds errors(CONTROL_REF)\", \"comparison\": \"<=\", \"threshold\": 0.5}, {\"id\": \"S2\", \"text\": \"Fraction of the 10 seeds in which errors(TREATMENT) <= 0.50 x errors(CONTROL_REF) of the same seed is >= 0.80.\", \"statistic\": \"fraction of seeds with errors(X) <= 0.5 * errors(CONTROL_REF, same seed)\", \"comparison\": \">=\", \"threshold\": 0.8}, {\"id\": \"S3\", \"text\": \"Valid clauses deleted per UNSAT event (pooled) for TREATMENT <= 0.50 x the same statistic for CONTROL_REF (L1: deletion concentrates on conflicting clauses).\", \"statistic\": \"[sum valid_deleted(X)/sum unsat(X)] / [sum valid_deleted(CONTROL_REF)/sum unsat(CONTROL_REF)]\", \"comparison\": \"<=\", \"threshold\": 0.5}]",
+      "failure_criterion": "[{\"id\": \"F1\", \"text\": \"Core-guided is no better than drop-oldest: pooled error ratio to CONTROL_REF >= 0.90.\", \"statistic\": \"sum_seeds errors(X) / sum_seeds errors(CONTROL_REF)\", \"comparison\": \">=\", \"threshold\": 0.9}, {\"id\": \"F2\", \"text\": \"Core-guided is no better than random deletion: pooled errors(TREATMENT) / errors(NULL_TWIN) >= 1.00.\", \"statistic\": \"sum_seeds errors(X) / sum_seeds errors(NULL_TWIN)\", \"comparison\": \">=\", \"threshold\": 1.0}, {\"id\": \"F3\", \"text\": \"Deletions do not concentrate on conflicting clauses: valid-deleted-per-UNSAT ratio to CONTROL_REF >= 0.90.\", \"statistic\": \"[sum valid_deleted(X)/sum unsat(X)] / [sum valid_deleted(CONTROL_REF)/sum unsat(CONTROL_REF)]\", \"comparison\": \">=\", \"threshold\": 0.9}]",
+      "alternative_explanation": "In a factored plant the MUS is always confined to one channel, so core-guided forgetting may be nothing more than 'reset the channel that just mismatched' (per-variable change detection); the SAT/MUS machinery would then add no mechanism beyond locality of the factorisation. Separately, under sensor corruption the 'oldest clause in the core' rule blames the older valid observation instead of the new corrupted one, which could erase the advantage.",
+      "null_twin": "Random-drop: at the same trigger (UNSAT), delete one uniformly chosen window clause at a time until SAT. Same trigger rule and stop rule as the treatment; conflict localisation destroyed.",
+      "substrate": "causal toy",
+      "cost_estimate": "controls: 0.33 CPU core-seconds for 4 arms x 10 seeds; treatment with MUS-by-deletion: < 1 CPU core-minute",
+      "stupid_explanations": [
+        "the MUS is trivially the conflicting channel, so any per-channel reset-on-mismatch rule would do equally well (SAT adds nothing)",
+        "drop-oldest is a strawman here because a window of 32 over 8 channels means the stale clause is usually young; the advantage is window geometry, not conflict localisation",
+        "the treatment wins only because sensor noise is rare (3%); at higher noise 'oldest in core' deletes valid clauses and the effect vanishes",
+        "errors are dominated by the unavoidable first request after each switch, so any policy lands near the floor and ratios are noise"
+      ],
+      "spec": "hecate/programs/HT-8a87057933/worlds/W5/spec.json",
+      "attainability": "hecate/programs/HT-8a87057933/worlds/W5/ATTAINABILITY.json",
+      "outcome": "SIGNAL",
+      "round": 3,
+      "rows": "hecate/programs/HT-8a87057933/worlds/W5/probe/rows.jsonl",
+      "outcome_file": "hecate/programs/HT-8a87057933/worlds/W5/probe/OUTCOME.json",
+      "statistics": {
+        "arms": {
+          "TREATMENT": {
+            "errors_total": 1249,
+            "unsat_total": 1663,
+            "deleted_total": 4229,
+            "valid_deleted_total": 2648,
+            "valid_deleted_per_unsat": 1.592303066746843,
+            "errors_per_seed": [
+              130,
+              126,
+              118,
+              125,
+              114,
+              132,
+              125,
+              130,
+              123,
+              126
+            ],
+            "mus_size_range": [
+              2,
+              2
+            ],
+            "mus_calls_total": 4229
+          },
+          "CONTROL_REF": {
+            "errors_total": 3876,
+            "unsat_total": 1417,
+            "deleted_total": 16746,
+            "valid_deleted_total": 15376,
+            "valid_deleted_per_unsat": 10.851093860268172,
+            "errors_per_seed": [
+              397,
+              366,
+              352,
+              401,
+              365,
+              374,
+              375,
+              451,
+              375,
+              420
+            ]
+          },
+          "POSITIVE_CONTROL": {
+            "errors_total": 619,
+            "unsat_total": 951,
+            "deleted_total": 1633,
+            "valid_deleted_total": 0,
+            "valid_deleted_per_unsat": 0.0,
+            "errors_per_seed": [
+              61,
+              70,
+              59,
+              69,
+              56,
+              57,
+              55,
+              75,
+              56,
+              61
+            ]
+          },
+          "NULL_TWIN": {
+            "errors_total": 2779,
+            "unsat_total": 1558,
+            "deleted_total": 14639,
+            "valid_deleted_total": 13197,
+            "valid_deleted_per_unsat": 8.470474967907574,
+            "errors_per_seed": [
+              292,
+              263,
+              244,
+              292,
+              304,
+              266,
+              250,
+              279,
+              284,
+              305
+            ]
+          },
+          "CHEAT": {
+            "errors_total": 0,
+            "unsat_total": 1558,
+            "deleted_total": 14639,
+            "valid_deleted_total": 0,
+            "valid_deleted_per_unsat": 0.0,
+            "errors_per_seed": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          }
+        },
+        "treatment_success_values": {
+          "S1": 0.3222394220846233,
+          "S2": 1.0,
+          "S3": 0.1467412490621928
+        },
+        "treatment_success_pass": {
+          "S1": true,
+          "S2": true,
+          "S3": true
+        },
+        "treatment_failure_values": {
+          "F1": 0.3222394220846233,
+          "F2": 0.4494422454120187,
+          "F3": 0.1467412490621928
+        },
+        "treatment_failure_holds": {
+          "F1": false,
+          "F2": false,
+          "F3": false
+        },
+        "positive_control_values": {
+          "S1": 0.15970072239422084,
+          "S2": 1.0,
+          "S3": 0.0
+        },
+        "null_twin_values": {
+          "S1": 0.7169762641898865,
+          "S2": 0.0,
+          "S3": 0.7806102386527727
+        },
+        "cheat_values": {
+          "S1": 0.0,
+          "S2": 1.0,
+          "S3": 0.0
+        }
+      },
+      "anomalies": [],
+      "rejected_explanations": [
+        "errors are dominated by the unavoidable first request after each switch, so any policy lands near the floor and ratios are noise"
+      ]
+    },
+    {
+      "id": "W6",
+      "triplicateId": "HT-8a87057933",
+      "passId": "P3v2",
+      "mechanism_ids": [
+        "M4"
+      ],
+      "lens_ids": [
+        "L3"
+      ],
+      "hypothesis": "Choosing excitation probes as a minimum separating family of the candidates still consistent with the data (a hitting-set problem solved exactly) identifies an unknown plant as efficiently as greedy information-gain probing, far faster than random probing, and with a bounded worst case.",
+      "mechanism": "N=64 candidate plants; candidate c = 'component c is faulty'. A library of P=48 probes; probe p exercises a fixed subset E_p of components, |E_p| uniform in {2,4,8,16,32}, members uniform; the library is regenerated until it separates every pair of candidates. Response of the plant to probe p is 1 iff its faulty component is in E_p (noise-free). The agent keeps the version space V of candidates consistent with all responses and stops when |V| = 1; a probe is never repeated. TREATMENT (Yoneda / hitting-set probing): at each step, over the current V, solve exactly (SAT or ILP with a cardinality objective) for a minimum-size set of unapplied probes that separates every pair of candidates in V (every pair is 'hit' by a probe containing exactly one of the two); apply the lowest-index probe of that set that splits V; re-solve after each response.",
+      "intervention": "Hitting-set separating-family probe choice versus the reference and null policies on the same 10 libraries, every candidate taken as the true plant once per library (640 episodes per arm).",
+      "control": "GREEDY_REF: greedy information gain -- the unapplied probe maximising the binary entropy of the split of V (ties: lowest index). This is the simpler alternative named for M4.",
+      "positive_control": "Truth oracle: the unapplied probe whose realised response removes the most candidates (ties: lowest index). It uses the hidden truth, so it is an upper bound, not a legitimate policy; attainability of S1 by a legitimate policy is checked separately against the entropy bound (mean probes >= log2 64 = 6).",
+      "observable": "Probes applied until |V| = 1, per episode, recomputable by replaying the logged (probe, response) trace against the library and the truth.",
+      "success_criterion": "[{\"id\": \"S1\", \"text\": \"Mean probes to identification (640 episodes) is at most 1.05 x the GREEDY_REF mean on the same episodes (parity with greedy information gain).\", \"statistic\": \"mean probes(X) / mean probes(GREEDY_REF)\", \"comparison\": \"<=\", \"threshold\": 1.05}, {\"id\": \"S2\", \"text\": \"Mean probes to identification <= 9.0 (information bound 6.0).\", \"statistic\": \"mean probes(X)\", \"comparison\": \"<=\", \"threshold\": 9.0}, {\"id\": \"S3\", \"text\": \"95th percentile of probes to identification over the 640 episodes <= 8 (bounded worst case, the property a separating family is meant to buy).\", \"statistic\": \"p95 probes(X), nearest-rank\", \"comparison\": \"<=\", \"threshold\": 8}]",
+      "failure_criterion": "[{\"id\": \"F1\", \"text\": \"Hitting-set probing is materially worse than greedy information gain: mean probes ratio to GREEDY_REF >= 1.15.\", \"statistic\": \"mean probes(X) / mean probes(GREEDY_REF)\", \"comparison\": \">=\", \"threshold\": 1.15}, {\"id\": \"F2\", \"text\": \"Hitting-set probing is not clearly better than random: mean probes(X) >= 0.75 x mean probes(NULL_TWIN) (disjoint from S2: 0.75 x 13.18 = 9.89 > 9.0).\", \"statistic\": \"mean probes(X) / mean probes(NULL_TWIN)\", \"comparison\": \">=\", \"threshold\": 0.75}, {\"id\": \"F3\", \"text\": \"Worst case not bounded: p95 probes >= 10.\", \"statistic\": \"p95 probes(X), nearest-rank\", \"comparison\": \">=\", \"threshold\": 10}]",
+      "alternative_explanation": "Any policy that prefers balanced splits identifies the plant near the entropy bound on a random library; a separating-family solver may do so only because its chosen family happens to contain balanced probes, i.e. it is greedy information gain by another route, and the Yoneda framing adds a name, not a mechanism. Conversely a minimum separating family is a worst-case (non-adaptive) object and may spend probes that an adaptive greedy policy would skip, making it strictly worse in the mean.",
+      "null_twin": "Random probing: a uniformly random unapplied probe at each step, same libraries, same truths, same stop rule (probe choice destroyed).",
+      "substrate": "causal toy",
+      "cost_estimate": "controls: 0.16 CPU core-seconds for 4 arms; treatment: 640 episodes x <= ~10 exact minimum-hitting-set solves on <= 2016 pairs x 48 probes; expected < 3 CPU core-minutes in pure Python with a small branch-and-bound or a SAT cardinality encoding",
+      "stupid_explanations": [
+        "greedy information gain already sits at the entropy bound (6.02 vs 6.0), so any balanced-split rule 'matches greedy' and S1 tests nothing specific to separating families",
+        "the minimum separating family is re-solved after every response, so the treatment is adaptive greedy in disguise; its first probe is whatever the solver's tie-break picks",
+        "S3 passes for any sensible policy because the libraries contain size-32 probes that halve V; the worst-case bound comes from the library, not the solver",
+        "random probing is a strawman: excluding never-splitting probes from the twin alone would halve its count"
+      ],
+      "spec": "hecate/programs/HT-8a87057933/worlds/W6/spec.json",
+      "attainability": "hecate/programs/HT-8a87057933/worlds/W6/ATTAINABILITY.json"
     }
   ],
   "candidateEngines": [],
-  "currentVerdict": "PARK",
+  "currentVerdict": "PROBING",
   "evidenceSummary": {
     "layer": "experimental_observation",
-    "rows": "hecate/programs/HT-8a87057933/worlds/W4/pilot_rows.jsonl",
-    "note": "round 1 W1 NOT_BUILT; round 2 W4 SPEC_UNATTAINABLE: Pass 3 produced no testable world in two tries (generator finding)"
+    "rows": "hecate/programs/HT-8a87057933/worlds/W5/probe/rows.jsonl",
+    "note": "round 3 W5 SIGNAL: round-3 SIGNAL; Pass 4 next"
   }
 }

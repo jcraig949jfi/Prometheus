@@ -25,7 +25,7 @@ Layers: [spec] speculation, [impl] implemented candidate, [obs] experimental obs
 - [spec] I7: Regime changes are natural transformations: a regime maps a task category to behaviours; a regime shift is a family of components, one per task, tied by naturality squares; encoding squares as clauses lets an agent that re-adapted on a few tasks propagate the adaptation to unseen tasks. Experiment: accuracy of propagated components on unseen objects vs independent per-task adaptation.
 
 ## CANDIDATE PHYSICS
-- [spec] M1 (error-correction mechanism): Core-guided forgetting: the agent keeps a window of observation clauses over a finite model space; on UNSAT it extracts an MUS and deletes the oldest clause(s) inside the core only, instead of forgetting uniformly by age.
+- [impl] M1 (error-correction mechanism): Core-guided forgetting: the agent keeps a window of observation clauses over a finite model space; on UNSAT it extracts an MUS and deletes the oldest clause(s) inside the core only, instead of forgetting uniformly by age.
 - [spec] M2 (learning pressure): Functorial adaptation: modules adapt locally but each update must satisfy SAT-encoded interface clauses so that the adapted composite equals the composite of adapted modules.
 - [spec] M3 (dynamical law): Solver-as-plant MRAC: a local-search SAT solver's noise parameter is adjusted online by a reference-model law tracking a target decay of unsatisfied-clause count; the law uses only renaming-invariant statistics so it is equivariant under instance isomorphism.
 - [spec] M4 (representation): Yoneda probing: the plant is represented by its response profile to a probe set; probes are chosen by solving a hitting-set SAT instance so every pair of remaining candidate models is separated by at least one probe.
@@ -55,13 +55,16 @@ Layers: [spec] speculation, [impl] implemented candidate, [obs] experimental obs
 - W2 [symbolic rewriting] Naturality-square constraints let an agent that re-adapted on a few task objects infer the regime-shift components on unseen objects. | success: Mean unseen accuracy >= 0.9 with squares AND (squares - null twin) >= 0.4, averaged over 20 random categories x 3 seeds. | null twin: Shuffled squares: same number and arity of square clauses, but each square links a random object pair through a random arrow map (clause statistics matched, true naturality destroyed; only instances that remain SAT are kept). | cost: ~5 CPU core-minutes
 - W3 [optimizer] An MRAC-style noise controller tracking a reference unsat-count decay beats the best fixed noise near the 3-SAT threshold, and its effect is invariant under renaming. | success: Median flips adaptive <= 0.8 x best fixed on 100 test instances per alpha in >= 3 of 4 alphas, paired Wilcoxon p < 0.01; orbit variance under 5 renamings <= 1.2 x seed variance. | null twin: Sign-randomised controller: same update magnitudes and times, random sign (matched noise variability; feedback destroyed). | cost: ~8 CPU core-minutes
 - W4 [causal toy] Acting in the intersection of consistent models and probing on conflict reduces catastrophic errors vs certainty equivalence at modest cost in steps. | success: Forbidden entries reduced >= 50% vs CE with median steps <= 1.5 x CE over 1000 episodes; refutation probes remove >= 1.5 x bits per probe vs the null twin. | null twin: Random probing: identical probe triggers and count, action chosen uniformly among allowed actions (matched probe rate; refutation choice destroyed). | cost: ~3 CPU core-minutes
+- W5 [causal toy] When a regime switch changes only part of the plant, forgetting the clauses inside a minimal unsatisfiable subset (MUS) keeps the observations that are still valid, and so halves tracking errors relative to age-based forgetting, which must discard every clause older than the stale one. | success: [{"id": "S1", "text": "Pooled over 10 seeds, total errors(TREATMENT) / total errors(CONTROL_REF) <= 0.50.", "statistic": "sum_seeds errors(X) / sum_seeds errors(CONTROL_REF)", "comparison": "<=", "threshold": 0.5}, {"id": "S2", "text": "Fraction of the 10 seeds in which errors(TREATMENT) <= 0.50 x errors(CONTROL_REF) of the same seed is >= 0.80.", "statistic": "fraction of seeds with errors(X) <= 0.5 * errors(CONTROL_REF, same seed)", "comparison": ">=", "threshold": 0.8}, {"id": "S3", "text": "Valid clauses deleted per UNSAT event (pooled) for TREATMENT <= 0.50 x the same statistic for CONTROL_REF (L1: deletion concentrates on conflicting clauses).", "statistic": "[sum valid_deleted(X)/sum unsat(X)] / [sum valid_deleted(CONTROL_REF)/sum unsat(CONTROL_REF)]", "comparison": "<=", "threshold": 0.5}] | null twin: Random-drop: at the same trigger (UNSAT), delete one uniformly chosen window clause at a time until SAT. Same trigger rule and stop rule as the treatment; conflict localisation destroyed. | cost: controls: 0.33 CPU core-seconds for 4 arms x 10 seeds; treatment with MUS-by-deletion: < 1 CPU core-minute
+- W6 [causal toy] Choosing excitation probes as a minimum separating family of the candidates still consistent with the data (a hitting-set problem solved exactly) identifies an unknown plant as efficiently as greedy information-gain probing, far faster than random probing, and with a bounded worst case. | success: [{"id": "S1", "text": "Mean probes to identification (640 episodes) is at most 1.05 x the GREEDY_REF mean on the same episodes (parity with greedy information gain).", "statistic": "mean probes(X) / mean probes(GREEDY_REF)", "comparison": "<=", "threshold": 1.05}, {"id": "S2", "text": "Mean probes to identification <= 9.0 (information bound 6.0).", "statistic": "mean probes(X)", "comparison": "<=", "threshold": 9.0}, {"id": "S3", "text": "95th percentile of probes to identification over the 640 episodes <= 8 (bounded worst case, the property a separating family is meant to buy).", "statistic": "p95 probes(X), nearest-rank", "comparison": "<=", "threshold": 8}] | null twin: Random probing: a uniformly random unapplied probe at each step, same libraries, same truths, same stop rule (probe choice destroyed). | cost: controls: 0.16 CPU core-seconds for 4 arms; treatment: 640 episodes x <= ~10 exact minimum-hitting-set solves on <= 2016 pairs x 48 probes; expected < 3 CPU core-minutes in pure Python with a small branch-and-bound or a SAT cardinality encoding
 
 ## OBSERVATIONS
 - W1: NOT_BUILT (hecate/programs/HT-8a87057933/worlds/W1/rows.jsonl)
 - W4: SPEC_UNATTAINABLE (hecate/programs/HT-8a87057933/worlds/W4/pilot_rows.jsonl)
+- W5: SIGNAL (hecate/programs/HT-8a87057933/worlds/W5/probe/rows.jsonl)
 
 ## FALSIFICATIONS
-_none yet_
+- W5: errors are dominated by the unavoidable first request after each switch, so any policy lands near the floor and ratios are noise
 
 ## SURVIVING ANOMALIES
 - W1: oracle reset not faster than drop-oldest (median 3.0 vs 3.0)
@@ -82,12 +85,12 @@ _none yet_
 _none yet_
 
 ## OPEN QUESTIONS
-- random automata rarely disagree near the start, so every policy is safe
-- forbidden-state density decides everything
-- the intersection is often empty, forcing probes that happen to be safe
+- the MUS is trivially the conflicting channel, so any per-channel reset-on-mismatch rule would do equally well (SAT adds nothing)
+- drop-oldest is a strawman here because a window of 32 over 8 channels means the stale clause is usually young; the advantage is window geometry, not conflict localisation
+- the treatment wins only because sensor noise is rare (3%); at higher noise 'oldest in core' deletes valid clauses and the effect vanishes
 
 ## CURRENT VERDICT
-PARK (an allocation state, not a truth claim). round 1 W1 NOT_BUILT; round 2 W4 SPEC_UNATTAINABLE: Pass 3 produced no testable world in two tries (generator finding)
+PROBING (an allocation state, not a truth claim). round 3 W5 SIGNAL: round-3 SIGNAL; Pass 4 next
 
 ## NEXT PASS
-decision after P3-probe2: PARK
+decision after P3-probe3: FALSIFY

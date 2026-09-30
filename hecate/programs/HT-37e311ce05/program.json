@@ -491,6 +491,78 @@
         "unexpectedness": "unknown",
         "potential_importance": "unknown"
       }
+    },
+    {
+      "id": "P3v2",
+      "triplicateId": "HT-37e311ce05",
+      "index": 3,
+      "kind": "minimal_worlds_v2",
+      "added": [
+        "new falsifier",
+        "new observable"
+      ],
+      "generator": {
+        "model": "claude-opus-5-5",
+        "search": false,
+        "prompt": "hecate/programs/_prompts/pass3_v2.md",
+        "prompt_sha256": "2adcfc8da07ee9adb9b04d2214889f0965758f7fcf0a60cde08eebb62bedd461"
+      },
+      "prereg": "roles/Hecate/prereg/2026-09-30_pass3_v2/PREREG.md",
+      "inspected_prior": [],
+      "unexplained": [],
+      "decision": "FALSIFY",
+      "research_state": {
+        "novelty": "unknown",
+        "mechanistic_clarity": "unknown",
+        "falsifiability": "unknown",
+        "empirical_support": "none",
+        "cross_lens_agreement": "unknown",
+        "cross_substrate_transfer": "unknown",
+        "baseline_resistance": "unknown",
+        "artifact_risk": "unknown",
+        "cost": "unknown",
+        "unexpectedness": "unknown",
+        "potential_importance": "unknown"
+      }
+    },
+    {
+      "id": "P3-probe3",
+      "triplicateId": "HT-37e311ce05",
+      "index": 3,
+      "kind": "cheap_probe",
+      "added": [
+        "new falsifier",
+        "new observable"
+      ],
+      "generator": {
+        "model": "claude-opus-5-5",
+        "search": false,
+        "prompt": "hecate/programs/_prompts/probe_impl_v3.md",
+        "prompt_sha256": "a34a8c6143f49df2b33b75871e8f9cd12e60c10c37778ba595e12fedf1621685"
+      },
+      "prereg": "roles/Hecate/prereg/2026-09-30_pass3_v2/PREREG.md",
+      "inspected_prior": [
+        "W5"
+      ],
+      "unexplained": [
+        "the benefit clip at 1 creates a threshold unrelated to the coset geometry",
+        "A is scaled by 1/sqrt(m), so a mutation moves A x by a different relative amount at each m and selection strength varies with m, producing a step for reasons of search rather than geometry",
+        "2000 generations are enough to reach the coset optimum only when ker A is small (large m), so the gap falls wherever search becomes easy, not where L1 recovery sets in"
+      ],
+      "decision": "PARK",
+      "research_state": {
+        "novelty": "unknown",
+        "mechanistic_clarity": "unknown",
+        "falsifiability": "unknown",
+        "empirical_support": "none",
+        "cross_lens_agreement": "unknown",
+        "cross_substrate_transfer": "unknown",
+        "baseline_resistance": "unknown",
+        "artifact_risk": "unknown",
+        "cost": "unknown",
+        "unexpectedness": "unknown",
+        "potential_importance": "unknown"
+      }
     }
   ],
   "hypotheses": [
@@ -688,7 +760,7 @@
       "triplicateId": "HT-37e311ce05",
       "passId": "P1",
       "kind": "mechanism",
-      "layer": "speculation",
+      "layer": "implemented_candidate",
       "form": "error-correction mechanism",
       "statement": "Coset-bounded sanctions: a host rewards a symbiont on the basis of sparse recovery from its m verification measurements; cheaters evolve cheap contributions in the same measurement coset as expensive beneficial ones, and cheater success is governed by the host's verification geometry.",
       "derived_from": [
@@ -1049,6 +1121,20 @@
       "derived_from": [
         "M3",
         "M13"
+      ]
+    },
+    {
+      "id": "O-W5-r3",
+      "triplicateId": "HT-37e311ce05",
+      "passId": "P3-probe3",
+      "kind": "observation",
+      "layer": "experimental_observation",
+      "evidence_rows": [
+        "hecate/programs/HT-37e311ce05/worlds/W5/probe/rows.jsonl"
+      ],
+      "statement": "W5 probe round 3: NULL. [\"treatment RNG stream = twin's stream key [seed, m, 7] (common random numbers), chosen before running\", \"implementer also read control_summary.json in the world dir (outside the prompt's read list) before building; it holds the same control values as ATTAINABILITY.json\"]",
+      "derived_from": [
+        "M5"
       ]
     }
   ],
@@ -1645,13 +1731,179 @@
         }
       ],
       "rejected_explanations": []
+    },
+    {
+      "id": "W5",
+      "triplicateId": "HT-37e311ce05",
+      "passId": "P3v2",
+      "mechanism_ids": [
+        "M5"
+      ],
+      "lens_ids": [
+        "L5",
+        "L3"
+      ],
+      "hypothesis": "When a host pays a symbiont only for matching the host's m compressed measurements of a cooperative contribution, symbionts evolving under a per-unit (L1) production cost exploit the host with a gap (reward paid minus benefit delivered) that collapses abruptly at the basis-pursuit recovery transition m*, not smoothly in m.",
+      "mechanism": "Coset-bounded sanctions. Any contribution x in the coset x_good + ker A is paid in full; under L1 cost the cheapest element of that coset equals x_good exactly when m is above the L1 recovery transition for the k-sparse x_good, and is a cheaper, less beneficial vector below it. Evolution under L1 cost should therefore discover coset aliases only below m*.",
+      "intervention": "Symbiont population evolves under fitness = reward(A x) - c*||x||_1 at each host measurement count m in the grid.",
+      "control": "Identical world with cost c*||x||_2^2 (the null twin); cost of the cooperator x_good is equal in both (10).",
+      "positive_control": "For every (seed, m), the minimum-L1 element of x_good + ker A (linear program): the optimal L1 cheater, paid full reward by construction.",
+      "observable": "g(seed, m) = population median of reward_i - benefit_i after the final generation (the exploitation gap). gbar(m) = mean of g over seeds. Reward = exp(-||A x - A x_good||^2 / (2 tau^2 ||A x_good||^2)); benefit = mean over required set R of clip(x_i, 0, 1).",
+      "success_criterion": "[{\"id\": \"S1\", \"text\": \"Exploitation is finished by the end of the recovery transition: completion = (gbar(m_min) - gbar(m*+8)) / (gbar(m_min) - gbar(m_max)) is at least 0.8; defined as 0 if the total drop gbar(m_min) - gbar(m_max) is below 0.3.\", \"statistic\": \"S1_completion\", \"comparison\": \">=\", \"threshold\": 0.8}, {\"id\": \"S2\", \"text\": \"No exploitation above the transition: mean of gbar(m) over m >= 40 is at most 0.05.\", \"statistic\": \"S2_high_m_gap\", \"comparison\": \"<=\", \"threshold\": 0.05}]",
+      "failure_criterion": "[{\"id\": \"F1\", \"text\": \"Smooth decline: completion by m*+8 at most 0.65.\", \"statistic\": \"S1_completion\", \"comparison\": \"<=\", \"threshold\": 0.65}, {\"id\": \"F2\", \"text\": \"No cheating evolved: total drop gbar(m_min) - gbar(m_max) below 0.3 (evolution did not find coset aliases at low m).\", \"statistic\": \"total_drop\", \"comparison\": \"<\", \"threshold\": 0.3}, {\"id\": \"F3\", \"text\": \"Exploitation persists above the transition: mean gbar over m >= 40 above 0.15.\", \"statistic\": \"S2_high_m_gap\", \"comparison\": \">\", \"threshold\": 0.15}]",
+      "alternative_explanation": "Any shrinkage-inducing cost with a sparse cooperator gives the same collapse; the result would then be a property of L1 geometry (known compressed-sensing theory) acting through selection, and the symbiosis reading adds nothing beyond 'evolution approximately solves basis pursuit'.",
+      "null_twin": "Same world, reward, verification matrices, selection, mutation and population, cost c*||x||_2^2 instead of c*||x||_1 (equal cost for x_good). The L2 coset optimum is the row-space projection of x_good, whose benefit rises smoothly with m: exploitation is present but has no transition.",
+      "substrate": "population (mutation-selection over real-valued contribution vectors with a linear verification oracle)",
+      "cost_estimate": "treatment about 0.5 CPU core-minute (130 runs x ~0.2 s); controls about 0.5 core-minute",
+      "stupid_explanations": [
+        "the reward tolerance tau sets a gap floor that is the same at all m, so the drop is carried by a few low-m points",
+        "the benefit clip at 1 creates a threshold unrelated to the coset geometry",
+        "A is scaled by 1/sqrt(m), so a mutation moves A x by a different relative amount at each m and selection strength varies with m, producing a step for reasons of search rather than geometry",
+        "2000 generations are enough to reach the coset optimum only when ker A is small (large m), so the gap falls wherever search becomes easy, not where L1 recovery sets in"
+      ],
+      "spec": "hecate/programs/HT-37e311ce05/worlds/W5/spec.json",
+      "attainability": "hecate/programs/HT-37e311ce05/worlds/W5/ATTAINABILITY.json",
+      "outcome": "NULL",
+      "round": 3,
+      "rows": "hecate/programs/HT-37e311ce05/worlds/W5/probe/rows.jsonl",
+      "outcome_file": "hecate/programs/HT-37e311ce05/worlds/W5/probe/OUTCOME.json",
+      "statistics": {
+        "POSITIVE_CONTROL": {
+          "S1_completion": 0.9314619847549204,
+          "S2_high_m_gap": 2.7663057030243485e-15,
+          "sharpness_secondary": 0.6916900006330776,
+          "total_drop": 0.8627897428350959,
+          "g_lo": 0.8627897428350975,
+          "g_hi": 1.5099033134902129e-15,
+          "curve": {
+            "12": 0.8627897428350975,
+            "16": 0.6766504781502182,
+            "20": 0.6559169343155521,
+            "24": 0.38491269874521994,
+            "28": 0.23164448893972972,
+            "32": 5.4622972811557705e-15,
+            "36": 0.05913389654773167,
+            "40": 3.0087043967341744e-15,
+            "44": 1.7097434579227411e-15,
+            "48": 6.994405055138486e-15,
+            "52": 1.7430501486614957e-15,
+            "56": 1.63202784619898e-15,
+            "60": 1.5099033134902129e-15
+          }
+        },
+        "NULL_TWIN": {
+          "S1_completion": 0.6271812443292148,
+          "S2_high_m_gap": 0.16685579067676073,
+          "sharpness_secondary": 0.46626124315109885,
+          "total_drop": 0.6784602481761778,
+          "g_lo": 0.7438259595668141,
+          "g_hi": 0.06536571139063628,
+          "curve": {
+            "12": 0.7438259595668141,
+            "16": 0.6016286841287536,
+            "20": 0.6346481356309986,
+            "24": 0.5050590858284271,
+            "28": 0.4868072537379195,
+            "32": 0.38906817916927094,
+            "36": 0.31830841688777095,
+            "40": 0.27190298943764984,
+            "44": 0.23125729760978975,
+            "48": 0.18408928328897103,
+            "52": 0.16010734621235934,
+            "56": 0.08841211612115826,
+            "60": 0.06536571139063628
+          }
+        },
+        "CHEAT": {
+          "S1_completion": 1.0,
+          "S2_high_m_gap": 0.0,
+          "sharpness_secondary": 1.0,
+          "total_drop": 0.8,
+          "g_lo": 0.8,
+          "g_hi": 0.0,
+          "curve": {
+            "12": 0.8,
+            "16": 0.8,
+            "20": 0.8,
+            "24": 0.8,
+            "28": 0.0,
+            "32": 0.0,
+            "36": 0.0,
+            "40": 0.0,
+            "44": 0.0,
+            "48": 0.0,
+            "52": 0.0,
+            "56": 0.0,
+            "60": 0.0
+          }
+        },
+        "TREATMENT": {
+          "S1_completion": 0.7318262107813781,
+          "S2_high_m_gap": 0.0074561252231395425,
+          "sharpness_secondary": 0.4867369221966142,
+          "total_drop": 0.7146418894965277,
+          "g_lo": 0.6696866526561764,
+          "g_hi": -0.044955236840351284,
+          "curve": {
+            "12": 0.6696866526561764,
+            "16": 0.5425698502206505,
+            "20": 0.49453558036660095,
+            "24": 0.36411740247519697,
+            "28": 0.3168490755244232,
+            "32": 0.22199459294326646,
+            "36": 0.14669298660028818,
+            "40": 0.08073436172592693,
+            "44": 0.03845545910426934,
+            "48": 0.005703559763326543,
+            "52": -0.01367909467864169,
+            "56": -0.021522297735692586,
+            "60": -0.044955236840351284
+          }
+        }
+      },
+      "anomalies": [],
+      "rejected_explanations": [
+        "the reward tolerance tau sets a gap floor that is the same at all m, so the drop is carried by a few low-m points"
+      ]
+    },
+    {
+      "id": "W6",
+      "triplicateId": "HT-37e311ce05",
+      "passId": "P3v2",
+      "mechanism_ids": [
+        "M2",
+        "M9"
+      ],
+      "lens_ids": [
+        "L1"
+      ],
+      "hypothesis": "Under vertical (pair-level) transmission, selection on joint sparse recovery makes each symbiont's measurement rows complementary to ITS OWN host specifically (low coherence with its partner's rows, but not with the other hosts in the population); under horizontal transmission with identical selection this partner-specific complementarity is absent.",
+      "mechanism": "Selection for transverse null spaces: a pair decodes a k-sparse environment from its stacked rows [A_h; A_s]; a symbiont row coherent with a host row adds almost nothing to the stacked matrix, so co-inherited pairs whose rows are mutually incoherent recover more, and vertical inheritance lets that complementarity be partner-specific.",
+      "intervention": "Vertical transmission: selected pairs reproduce as units (host and symbiont offspring stay together).",
+      "control": "Horizontal transmission: identical pair-level truncation selection on identical pair success, identical mutation, but offspring symbionts are randomly re-paired with offspring hosts every generation (the null twin).",
+      "positive_control": "A constructed population of pairs in which each pair's host and symbiont hold rows from disjoint coherence classes (complementary by construction), with pairs drawn independently so that different pairs use different classes (partner-specific by construction).",
+      "observable": "For the final population: R_own = mean over pairs of the fraction of the symbiont's rows that are coherent (|cos| >= 0.9, which includes identical rows) with at least one row of its own host; R_other = the same fraction against every other host in the population, averaged; specificity D = R_other - R_own. Secondary: joint OMP recovery rate on 200 fixed evaluation signals.",
+      "success_criterion": "[{\"id\": \"S1\", \"text\": \"Partner-specific complementarity: seed-mean specificity D = R_other - R_own is at least 0.10.\", \"statistic\": \"S1_specificity\", \"comparison\": \">=\", \"threshold\": 0.1}, {\"id\": \"S2\", \"text\": \"Lower own-partner redundancy than the null twin: seed-mean R_own divided by the seed-mean R_own of the horizontal twin run on the same seeds is at most 0.5.\", \"statistic\": \"S2_redundancy_ratio\", \"comparison\": \"<=\", \"threshold\": 0.5}]",
+      "failure_criterion": "[{\"id\": \"F1\", \"text\": \"No partner specificity: seed-mean D below 0.03.\", \"statistic\": \"S1_specificity\", \"comparison\": \"<\", \"threshold\": 0.03}, {\"id\": \"F2\", \"text\": \"Own-partner redundancy not reduced: redundancy ratio above 0.8.\", \"statistic\": \"S2_redundancy_ratio\", \"comparison\": \">\", \"threshold\": 0.8}]",
+      "alternative_explanation": "Vertical transmission raises the heritability of pair fitness; any additive complementarity between co-inherited traits (not specifically null-space geometry) would give the same partner-specific pattern.",
+      "null_twin": "Horizontal arm: same palette, signals, selection intensity (top half of pairs by success), mutation and population size; symbionts re-paired at random every generation. Partner identity carries no information, so any complementarity can only be to the host population as a whole.",
+      "substrate": "population (two co-evolving lineages carrying index sets into a fixed row palette; OMP as the fitness oracle)",
+      "cost_estimate": "treatment about 1 CPU core-minute; controls about 2 core-minutes",
+      "stupid_explanations": [
+        "the vertical arm has higher effective heritability, so it optimises everything faster, including redundancy, without null-space geometry mattering",
+        "lineages under vertical transmission become clonal families, so R_other rises simply because other pairs belong to different families while own pairs are relatives (population structure, not complementarity)",
+        "exact-duplicate avoidance alone (a symbiont never copies its host's index) produces low R_own; near-copy coherence plays no role",
+        "noisy fitness with 8 test signals lets drift fix whatever pairs happened to be complementary at initialisation"
+      ],
+      "spec": "hecate/programs/HT-37e311ce05/worlds/W6/spec.json",
+      "attainability": "hecate/programs/HT-37e311ce05/worlds/W6/ATTAINABILITY.json"
     }
   ],
   "candidateEngines": [],
   "currentVerdict": "PARK",
   "evidenceSummary": {
     "layer": "experimental_observation",
-    "rows": "hecate/programs/HT-37e311ce05/worlds/W4/pilot_rows.jsonl",
-    "note": "round 1 W1 INSTRUMENT_FAIL; round 2 W4 SPEC_UNATTAINABLE: Pass 3 produced no testable world in two tries (generator finding)"
+    "rows": "hecate/programs/HT-37e311ce05/worlds/W5/probe/rows.jsonl",
+    "note": "round 3 W5 NULL: revived by the generator repair and read NULL (two reasons)"
   }
 }

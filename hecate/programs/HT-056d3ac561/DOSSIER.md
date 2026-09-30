@@ -27,7 +27,7 @@ Layers: [spec] speculation, [impl] implemented candidate, [obs] experimental obs
 ## CANDIDATE PHYSICS
 - [impl] M1 (error-correction mechanism): Metamorphic pseudo-measurement: the Kalman update uses the MR residual r = g(f(x)) - f(T x), whose expected value is zero under a correct model, as its measurement, estimating hidden model parameters stored as a sparse coefficient vector.
 - [spec] M2 (dynamical law): Sparse-innovation filter: after prediction, the innovation in code space is soft-thresholded, so updates are events touching few atoms; the transform T supplies the prediction.
-- [spec] M3 (learning pressure): Covariance reopening: the rate of metamorphic violations inflates process noise Q, so a filter that has become overconfident starts listening again when relations it should satisfy begin failing.
+- [impl] M3 (learning pressure): Covariance reopening: the rate of metamorphic violations inflates process noise Q, so a filter that has become overconfident starts listening again when relations it should satisfy begin failing.
 - [spec] M4 (representation): Support equivariance: a sparse code satisfies the MR supp(S(T x)) = pi_T(supp(S(x))) for some fixed permutation pi_T of atoms. Three-way dependency WEAK: the filter only enters when codes are tracked over sequences of transforms.
 - [spec] M5 (memory structure): Relation dictionary: the violation vector over a library of candidate MRs is sparse-coded against a dictionary of fault signatures, and a filter tracks the coefficients as the system under test drifts.
 - [spec] M6 (computational primitive): Transform-as-transition: fit a Kalman transition matrix A in code space from pairs (alpha(x), alpha(T x)); the MRs of T's group structure (T^n = I, commutation) become testable laws on A.
@@ -56,13 +56,19 @@ Layers: [spec] speculation, [impl] implemented candidate, [obs] experimental obs
 - W2 [tensor] Codes from a dictionary trained with a shift-MR consistency penalty admit a permutation-like code-space transition A for circular shift, and using A as the Kalman transition improves tracking of shifting signals. | success: Over 10 seeds: mean penalized PL >= 0.80 AND unpenalized PL <= 0.50 AND penalized tracking MSE <= 0.70 x identity-transition MSE AND null-twin PL <= 0.40. | null twin: Train with pairs (x, x') where x' is a random other sample: same marginals, no transform relation. | cost: 8
 - W3 [optimizer] A warm-started sparse tracker has a self-sealing region (stale support while the support MR passes) whose boundary is set by the single combined variable K/lambda. | success: At least 5 of 64 cells self-sealing AND logistic regression of the indicator on log(K/lambda) alone has AUC >= 0.90 AND adding log K and log lambda separately reduces deviance by < 10% AND null twin has <= 1 self-sealing cell. | null twin: Cold-start tracker plus an exponential moving average on codes with equal effective memory: Kalman gain structure removed, smoothing and noise matched. | cost: 9
 - W4 [causal toy] When MR residuals reveal only the projection of a fault outside the relation kernel, a sparse fault prior recovers the full fault including its kernel component, while min-norm recovery cannot. | success: For k <= 3 over 200 trials: Lasso error <= 0.20 in >= 80% of trials AND min-norm error >= 0.50 in >= 80% of trials AND null-twin Lasso error <= 0.20 in <= 20% of trials. | null twin: Dense faults (Gaussian over all 40 atoms) with the same total energy and the same kernel-energy fraction. | cost: 3
+- W5 [causal toy] An overconfident (collapsed-gain) Kalman filter that reopens its covariance only on the components flagged by a metamorphic stride-consistency relation recovers from an abrupt sparse regime change faster than a filter that reopens isotropically on a windowed-NIS alarm, at a matched pre-change false-alarm rate. | success: [{"id": "S1", "text": "Pooled over all 5 seeds x 200 runs, the median recovery latency is at most 12 steps.", "statistic": "median over the 1000 pooled runs of recovery latency (steps)", "comparison": "<=", "threshold": 12}, {"id": "S2", "text": "Pooled over all 1000 runs, the fraction of runs with any reopening in [50, 300) (before the change) is at most 0.10.", "statistic": "mean over the 1000 pooled runs of the false-alarm flag", "comparison": "<=", "threshold": 0.1}, {"id": "S3", "text": "The pooled median recovery latency divided by the pooled median recovery latency of REFERENCE_NIS on the same 1000 runs is at most 0.60.", "statistic": "median latency(arm) / median latency(REFERENCE_NIS), both pooled over the same 1000 runs", "comparison": "<=", "threshold": 0.6}] | null twin: One reopening of two uniformly random components at a uniformly random step in [50, 600), same RHO: the number, size and sparsity of reopenings match the oracle; the relation between the reopening and the change is destroyed. | cost: 1
+- W6 [causal toy] Choosing which metamorphic relations to run, one at a time, by the expected covariance reduction of a recursive Gaussian belief whose per-component prior variances are re-estimated as sparse after every result, localizes a planted 2-sparse fault with a fixed test budget far more often than random selection and than the same greedy rule under a fixed (non-sparse) Gaussian belief. | success: [{"id": "S1", "text": "Pooled over 5 seeds x 300 trials, localization accuracy is at least 0.60.", "statistic": "mean success over the 1500 pooled trials", "comparison": ">=", "threshold": 0.6}, {"id": "S2", "text": "Pooled accuracy minus REFERENCE_RANDOM pooled accuracy on the same 1500 trials is at least 0.25.", "statistic": "mean success(arm) - mean success(REFERENCE_RANDOM), same trials", "comparison": ">=", "threshold": 0.25}, {"id": "S3", "text": "Pooled accuracy minus REFERENCE_GAUSSIAN_GREEDY pooled accuracy on the same 1500 trials is at least 0.15.", "statistic": "mean success(arm) - mean success(REFERENCE_GAUSSIAN_GREEDY), same trials", "comparison": ">=", "threshold": 0.15}] | null twin: Decoy-targeted selection: the positive control's targeting procedure aimed at 2 uniform components disjoint from the true support. Same targeting machinery, test sparsity and budget; the relation between selection and the fault is destroyed. | cost: 2
 
 ## OBSERVATIONS
 - W1: INSTRUMENT_FAIL (hecate/programs/HT-056d3ac561/worlds/W1/rows.jsonl)
 - W4: NULL (hecate/programs/HT-056d3ac561/worlds/W4/rows.jsonl)
+- W5: NULL (hecate/programs/HT-056d3ac561/worlds/W5/probe/rows.jsonl)
 
 ## FALSIFICATIONS
-_none yet_
+- W5: the MR threshold is so low that it fires continuously, so latency is short because the filter is always open (checked by S2 and by the unchanged-component MSE)
+- W5: the jump is so large that any alarm fires on the first step after the change, so no statistic can beat another (checked: REFERENCE_NIS median latency is well above the oracle's)
+- W5: the latency band is so loose that the collapsed filter already counts as recovered (checked: NO_REOPEN median latency ~78 steps against the oracle's 2)
+- W5: calibration on the evaluation seeds rather than the separate calibration seed
 
 ## SURVIVING ANOMALIES
 - W1: delta=0.05: oracle true-state-RMSE AUC 0.476 ~ chance; mismatch not visible between seeds even with ground truth
@@ -85,12 +91,10 @@ _none yet_
 _none yet_
 
 ## OPEN QUESTIONS
-- projection rank high enough that no recovery is needed
-- Lasso lambda tuned on the test trials
-- an incoherent fault dictionary makes any method work
+- alternative explanation (spec): any gain comes from per-component sparse alarms, not the metamorphic relation; a per-component NIS_j alarm with the same sparse reopening would do as well
 
 ## CURRENT VERDICT
-SPECULATIVE (an allocation state, not a truth claim). round 1 W1 INSTRUMENT_FAIL; round 2 W4 NULL: one valid NULL reading; next world eligible
+PARK (an allocation state, not a truth claim). round 3 W5 NULL: two valid NULL readings (W4, W5)
 
 ## NEXT PASS
-decision after P3-probe2: PARK
+decision after P3-probe3: PARK

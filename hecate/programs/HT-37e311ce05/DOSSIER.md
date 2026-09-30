@@ -29,7 +29,7 @@ Layers: [spec] speculation, [impl] implemented candidate, [obs] experimental obs
 - [spec] M2 (selection mechanism): Selection for transverse null spaces: pair-level selection acts on the joint null-space property of the stacked matrix [A_h; A_s], pushing partners' kernels apart so that no sparse vector is invisible to both.
 - [spec] M3 (mutation operator): Singular-remainder genome reduction: under per-gene cost, the symbiont loses genes whose function lies in the support of the host's function measure; the retained genome converges to the part singular w.r.t. the host.
 - [spec] M4 (information bottleneck): Sigma-algebra exchange: partners exchange partitions (which events they can resolve) instead of estimates; the holobiont's policy must be measurable w.r.t. the join, and the partnership's value is the number of fitness-relevant events measurable only in the join.
-- [spec] M5 (error-correction mechanism): Coset-bounded sanctions: a host rewards a symbiont on the basis of sparse recovery from its m verification measurements; cheaters evolve cheap contributions in the same measurement coset as expensive beneficial ones, and cheater success is governed by the host's verification geometry.
+- [impl] M5 (error-correction mechanism): Coset-bounded sanctions: a host rewards a symbiont on the basis of sparse recovery from its m verification measurements; cheaters evolve cheap contributions in the same measurement coset as expensive beneficial ones, and cheater success is governed by the host's verification geometry.
 - [spec] M6 (memory structure): Filtration carried by the partner: a vertically transmitted symbiont stores a compressed record (few rows) of the host lineage's environmental history; the lineage's sigma-algebra grows as a filtration across generations, while horizontal transmission resets it.
 - [spec] M7 (dynamical law): Domination-bounded mutualism: the host imposes a dominating function (cap) on symbiont density; with an integrable cap the time-averaged holobiont fitness converges, without it symbiont mass escapes (sup grows, integrated benefit vanishes) - parasitism as failure of dominated convergence.
 - [spec] M8 (representation): Holobiont as a sparse density ratio: symbiosis is the departure of the joint trait distribution from the product of marginals; if dP/d(P_h x P_s) is sparse in some basis, symbiosis is detectable from O(k log n) joint observations.
@@ -54,13 +54,16 @@ Layers: [spec] speculation, [impl] implemented candidate, [obs] experimental obs
 - W2 [population] With row transfer, symbiont-level shrinkage and host sanctions, retained-symbiont holobionts cluster with the host alone just below threshold (m_h/m* in [0.6,1.0)) under CS benefit but not under a smooth benefit. | success: CS arm F_crit >= 0.5 in >=3/4 seeds for at least 2 of 3 c_u values, AND null twin F_crit <= 0.2 at the same c_u values | null twin: success = 1 - normalised error of min-norm least squares on dense Gaussian signals (about m/n), costs rescaled so initial mean fitness matches the CS arm; keeps transfer/sanction dynamics, destroys the phase transition | cost: about 6 CPU core-minutes
 - W3 [population] Vertical (pair-level) transmission drives host and symbiont to hold complementary, non-redundant measurement rows, raising joint recovery beyond horizontal transmission with matched selection. | success: in >=8/10 seeds: R(vertical) <= 0.5 * R(horizontal) AND success(vertical) - success(horizontal) >= 0.15 | null twin: horizontal arm: same mutation, selection intensity and palette, pairing randomised each generation, destroying partner-specific complementarity | cost: about 4 CPU core-minutes
 - W4 [optimizer] Sanctions based on compressed verification in the host's basis make symbiont genomes sparse in that basis beyond what matched random sanctions produce; redundancy loss alone drives host-overlap mass to ~0 in both arms. | success: M13: s_Psi(sanction) <= 0.7 * s_Psi(null) in >=8/10 seeds. M3: overlap fraction <= 0.05 in both arms in >=8/10 seeds | null twin: random sanctions at matched rate: same sanction magnitude, no dependence on legibility in Psi_h | cost: about 3 CPU core-minutes
+- W5 [population (mutation-selection over real-valued contribution vectors with a linear verification oracle)] When a host pays a symbiont only for matching the host's m compressed measurements of a cooperative contribution, symbionts evolving under a per-unit (L1) production cost exploit the host with a gap (reward paid minus benefit delivered) that collapses abruptly at the basis-pursuit recovery transition m*, not smoothly in m. | success: [{"id": "S1", "text": "Exploitation is finished by the end of the recovery transition: completion = (gbar(m_min) - gbar(m*+8)) / (gbar(m_min) - gbar(m_max)) is at least 0.8; defined as 0 if the total drop gbar(m_min) - gbar(m_max) is below 0.3.", "statistic": "S1_completion", "comparison": ">=", "threshold": 0.8}, {"id": "S2", "text": "No exploitation above the transition: mean of gbar(m) over m >= 40 is at most 0.05.", "statistic": "S2_high_m_gap", "comparison": "<=", "threshold": 0.05}] | null twin: Same world, reward, verification matrices, selection, mutation and population, cost c*||x||_2^2 instead of c*||x||_1 (equal cost for x_good). The L2 coset optimum is the row-space projection of x_good, whose benefit rises smoothly with m: exploitation is present but has no transition. | cost: treatment about 0.5 CPU core-minute (130 runs x ~0.2 s); controls about 0.5 core-minute
+- W6 [population (two co-evolving lineages carrying index sets into a fixed row palette; OMP as the fitness oracle)] Under vertical (pair-level) transmission, selection on joint sparse recovery makes each symbiont's measurement rows complementary to ITS OWN host specifically (low coherence with its partner's rows, but not with the other hosts in the population); under horizontal transmission with identical selection this partner-specific complementarity is absent. | success: [{"id": "S1", "text": "Partner-specific complementarity: seed-mean specificity D = R_other - R_own is at least 0.10.", "statistic": "S1_specificity", "comparison": ">=", "threshold": 0.1}, {"id": "S2", "text": "Lower own-partner redundancy than the null twin: seed-mean R_own divided by the seed-mean R_own of the horizontal twin run on the same seeds is at most 0.5.", "statistic": "S2_redundancy_ratio", "comparison": "<=", "threshold": 0.5}] | null twin: Horizontal arm: same palette, signals, selection intensity (top half of pairs by success), mutation and population size; symbionts re-paired at random every generation. Partner identity carries no information, so any complementarity can only be to the host population as a whole. | cost: treatment about 1 CPU core-minute; controls about 2 core-minutes
 
 ## OBSERVATIONS
 - W1: INSTRUMENT_FAIL (hecate/programs/HT-37e311ce05/worlds/W1/rows.jsonl)
 - W4: SPEC_UNATTAINABLE (hecate/programs/HT-37e311ce05/worlds/W4/pilot_rows.jsonl)
+- W5: NULL (hecate/programs/HT-37e311ce05/worlds/W5/probe/rows.jsonl)
 
 ## FALSIFICATIONS
-_none yet_
+- W5: the reward tolerance tau sets a gap floor that is the same at all m, so the drop is carried by a few low-m points
 
 ## SURVIVING ANOMALIES
 - W1: success part (b) unattainable: CONTROL mean success 0.9900, so max attainable difference is 0.0100 < 0.3 (CHEAT at 1.0 fails)
@@ -82,12 +85,12 @@ _none yet_
 _none yet_
 
 ## OPEN QUESTIONS
-- s_Psi falls because w shrinks toward zero
-- benefit saturation makes many genome directions neutral so any pressure picks one
-- a random orthonormal Psi_h makes canonical sparse vectors dense, so the tension is built in by construction
+- the benefit clip at 1 creates a threshold unrelated to the coset geometry
+- A is scaled by 1/sqrt(m), so a mutation moves A x by a different relative amount at each m and selection strength varies with m, producing a step for reasons of search rather than geometry
+- 2000 generations are enough to reach the coset optimum only when ker A is small (large m), so the gap falls wherever search becomes easy, not where L1 recovery sets in
 
 ## CURRENT VERDICT
-PARK (an allocation state, not a truth claim). round 1 W1 INSTRUMENT_FAIL; round 2 W4 SPEC_UNATTAINABLE: Pass 3 produced no testable world in two tries (generator finding)
+PARK (an allocation state, not a truth claim). round 3 W5 NULL: revived by the generator repair and read NULL (two reasons)
 
 ## NEXT PASS
-decision after P3-probe2: PARK
+decision after P3-probe3: PARK

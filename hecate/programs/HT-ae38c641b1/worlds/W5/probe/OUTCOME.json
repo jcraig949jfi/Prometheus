@@ -1,0 +1,247 @@
+{
+ "triplicateId": "HT-ae38c641b1",
+ "world": "W5",
+ "attempts": 1,
+ "core_minutes": 1.261,
+ "anomalies": [],
+ "positive_control_detected": true,
+ "cheat_detected": true,
+ "statistics": {
+  "control_reproducibility": [
+   {
+    "id": "S1",
+    "frozen_positive": 0.9682768836893294,
+    "rerun_positive": 0.9682768836893294,
+    "frozen_twin": 0.0034415062674477497,
+    "rerun_twin": 0.0034415062674477497,
+    "frozen_status": [
+     true,
+     true
+    ],
+    "rerun_status": [
+     true,
+     true
+    ],
+    "status_match": true,
+    "max_abs_delta": 0.0
+   },
+   {
+    "id": "S2",
+    "frozen_positive": 0.9720237845102346,
+    "rerun_positive": 0.9720237845102346,
+    "frozen_twin": -0.0394148535054328,
+    "rerun_twin": -0.0394148535054328,
+    "frozen_status": [
+     true,
+     true
+    ],
+    "rerun_status": [
+     true,
+     true
+    ],
+    "status_match": true,
+    "max_abs_delta": 0.0
+   },
+   {
+    "id": "CHEAT",
+    "frozen": true,
+    "rerun": true,
+    "cheat_values": [
+     1.0,
+     1.0
+    ]
+   }
+  ],
+  "clause_values": {
+   "S1": 0.3335876183417939,
+   "S2": 0.2766448446462254,
+   "F1": 0.3335876183417939,
+   "F2": -0.24091636275300882,
+   "F3": 0.4199305555555556
+  },
+  "clause_met": {
+   "S1": false,
+   "S2": false,
+   "F1": false,
+   "F2": false,
+   "F3": false
+  },
+  "twin_values": {
+   "NULL_TWIN_V_A4_0": -0.13990921667246498,
+   "NULL_TWIN_VROT_A4_22_5": 0.028900434694541587
+  },
+  "per_seed": {
+   "V_A4_0": [
+    0.9535151146268085,
+    0.9812794471962469,
+    0.907038432921099,
+    -0.16133833113114252,
+    -0.1358882971086617,
+    -0.8035532492791636,
+    0.10255002303489398,
+    -0.6674221672797374,
+    0.9099683264556566,
+    0.9523092520411283,
+    -0.31128352585735247,
+    0.9885199564008634,
+    0.9893806372836014,
+    0.9581380403847111,
+    -0.054718926286630686,
+    0.9500305612090707,
+    0.8058601423716492,
+    -0.6023299543196433,
+    -0.6299894894419756,
+    0.5396863736144567
+   ],
+   "V_rot_A4_22_5": [
+    0.3499028682003971,
+    -0.09050781233821886,
+    -0.34709936120221313,
+    0.9793729313643545,
+    0.9396914528518617,
+    -0.4414526329037351,
+    -0.06142491928947513,
+    0.9974515668204498,
+    0.984788764545005,
+    0.9773773947394983,
+    -0.33363406115401184,
+    0.07224621421686743,
+    0.8681734507604942,
+    -0.4144647393120074,
+    -0.6119204409815654,
+    0.9656401664629982,
+    0.08926741278089247,
+    -0.4355209199202031,
+    0.3527188582336107,
+    0.6922906990495088
+   ],
+   "V_rot_A4_0": [
+    -0.04236828621005946,
+    0.6845054007296301,
+    -0.40042580177946263,
+    0.09600773366841746,
+    -0.24013901537298094,
+    -0.6944592384980208,
+    -0.19631853522147316,
+    0.025277118701382398,
+    -0.008238340663643883,
+    0.059237665944747234,
+    -0.16811277428905205,
+    -0.10730071914095299,
+    -0.2082061806987639,
+    -0.8145521506970717,
+    0.41895549891696127,
+    -0.04379867508995804,
+    -0.8551745980768013,
+    -0.8092581524564669,
+    -0.8748337942936971,
+    -0.6391244105329108
+   ]
+  },
+  "sd_of_seed_mean": {
+   "V_A4_0": 0.15327294878610903,
+   "V_rot_A4_22_5": 0.13408121299703085
+  },
+  "diagnostics": {
+   "V": {
+    "A4_axes0": 0.3335876183417939,
+    "A4_axes22_5": -0.00115180030740189,
+    "A8_axes0": 0.3369852878947041,
+    "mean_w": 0.6962088555736556,
+    "median_lam": -0.027079806601539108,
+    "median_abs_ratio": 1.0004276065824882,
+    "mean_accept": 0.4199305555555556
+   },
+   "V_rot": {
+    "A4_axes0": -0.24091636275300882,
+    "A4_axes22_5": 0.2766448446462254,
+    "A8_axes0": -0.10015637415823075,
+    "mean_w": 0.7392827951982104,
+    "median_lam": -0.02721828755837103,
+    "median_abs_ratio": 1.0038483773222568,
+    "mean_accept": 0.44411805555555556
+   },
+   "NULL_TWIN_V": {
+    "A4_axes0": -0.13990921667246498,
+    "A4_axes22_5": 0.05832758327443138,
+    "A8_axes0": 0.06317069113513593,
+    "mean_w": 0.6921707979382998,
+    "median_lam": -0.0023310573685599687,
+    "median_abs_ratio": 1.0120808304738815,
+    "mean_accept": 0.41604861111111113
+   },
+   "NULL_TWIN_VROT": {
+    "A4_axes0": -0.038523776625106795,
+    "A4_axes22_5": 0.028900434694541587,
+    "A8_axes0": 0.20134367306411952,
+    "mean_w": 0.6704862687071721,
+    "median_lam": -0.0029605643877735036,
+    "median_abs_ratio": 1.0197251070174373,
+    "mean_accept": 0.4369583333333333
+   },
+   "POSITIVE_CONTROL": {
+    "A4_axes0": 0.9682768836893294,
+    "A4_axes22_5": -0.027667248729802436,
+    "A8_axes0": 0.8838868599402592,
+    "mean_w": 0.9337507182502958,
+    "median_lam": -0.004008135074792918,
+    "median_abs_ratio": 1.0027251124612087,
+    "mean_accept": 0.6407916666666666
+   },
+   "POSITIVE_CONTROL_ROT": {
+    "A4_axes0": 0.008322570637299371,
+    "A4_axes22_5": 0.9720237845102346,
+    "A8_axes0": -0.8939873960234415,
+    "mean_w": 0.9138244448869746,
+    "median_lam": -0.0039019648304658107,
+    "median_abs_ratio": 1.0338769675105324,
+    "mean_accept": 0.643125
+   },
+   "NULL_TWIN": {
+    "A4_axes0": 0.0034415062674477497,
+    "A4_axes22_5": -0.0394148535054328,
+    "A8_axes0": 0.024618356136261576,
+    "mean_w": 0.7141086567212626,
+    "median_lam": -0.001137741429317551,
+    "median_abs_ratio": 1.020867299817951,
+    "mean_accept": 0.591361111111111
+   }
+  },
+  "twin_accept_gap": {
+   "V": 0.0366875,
+   "V_rot": 0.03699305555555556
+  },
+  "spec_reading": "INCONCLUSIVE band per spec (0.15 <= A4 < 0.40), not a falsification of M2"
+ },
+ "outcome": "NULL",
+ "null_twin_meets_success": false,
+ "criterion_as_applied": "S1: mean_seeds A4(0) in V >= 0.40; S2: mean_seeds A4(22.5deg) in V_rot >= 0.40; F1: mean A4(0) in V < 0.15; F2: mean A4(0) in V_rot >= 0.40; F3: mean V accepted fraction < 0.02; twins matched per generation to V (S1) and V_rot (S2); precedence repro > controls > F3 > twin > S1&S2&!F1&!F2 > NULL",
+ "stupid_explanations_status": [
+  {
+   "text": "clonal drift: a population descends from few ancestors, so one seed's angles cluster anywhere; handled by a signed statistic averaged over 20 seeds (null SD of the mean 0.13) and the 0.40 threshold",
+   "addressed_by_this_run": true,
+   "how": "signed A4 averaged over 20 seeds; treatment-matched twins read S1 -0.140, S2 0.029; per-seed V A4(0) SD 0.685"
+  },
+  {
+   "text": "near-isotropic maps have undefined principal directions and inflate the statistic; handled by weighting by w = (s1-s2)/(s1+s2) and the shape penalty that keeps s2/s1 <= 0.5",
+   "addressed_by_this_run": true,
+   "how": "w-weighted statistic; mean w V 0.696, V_rot 0.739"
+  },
+  {
+   "text": "the verifier simply throttles evolution so the population stays at its isotropic initial state (F3 and the accepted-fraction diagnostic expose this)",
+   "addressed_by_this_run": true,
+   "how": "F3 statistic (mean V accepted fraction) = 0.4199; V_rot 0.4441"
+  },
+  {
+   "text": "hidden world anisotropy (bit order, start angles, float effects) aligns to world axes in every arm; exposed by V_rot (S2, F2) and by the twin",
+   "addressed_by_this_run": true,
+   "how": "V_rot read at world axes A4(0) = -0.241 (F2) and twins at world axes -0.140; PC_ROT at world axes 0.008"
+  },
+  {
+   "text": "the 30-step budget, not the domain geometry, does the selecting (maps near rho = 1 fail to converge in any orientation); the diagnostic median rho(|A|)/rho(A) separates orientation-dependent failure from slow convergence",
+   "addressed_by_this_run": false,
+   "how": "diagnostic only: median rho(|A|)/rho(A) V 1.000, V_rot 1.004, twin 1.012; no arm varies the Kleene budget, so budget vs domain geometry is not separated by this run"
+  }
+ ],
+ "notes": "success criterion not met"
+}

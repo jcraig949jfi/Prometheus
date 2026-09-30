@@ -1,0 +1,410 @@
+{
+ "triplicateId": "HT-55162c0ac0",
+ "world": "W6",
+ "outcome": "SIGNAL",
+ "statistics": {
+  "success": {
+   "TREATMENT": {
+    "S1": {
+     "value": 1.0,
+     "threshold": 0.8,
+     "comparison": ">=",
+     "met": true
+    },
+    "S2": {
+     "value": 1.083018601827008,
+     "threshold": 0.5,
+     "comparison": ">=",
+     "met": true
+    }
+   },
+   "POSITIVE_CONTROL": {
+    "S1": {
+     "value": 1.0,
+     "threshold": 0.8,
+     "comparison": ">=",
+     "met": true
+    },
+    "S2": {
+     "value": 0.9786190952456613,
+     "threshold": 0.5,
+     "comparison": ">=",
+     "met": true
+    }
+   },
+   "CHEAT": {
+    "S1": {
+     "value": 1.0,
+     "threshold": 0.8,
+     "comparison": ">=",
+     "met": true
+    },
+    "S2": {
+     "value": 0.9786190952456613,
+     "threshold": 0.5,
+     "comparison": ">=",
+     "met": true
+    }
+   },
+   "NULL_TWIN": {
+    "S1": {
+     "value": 0.019075615242337963,
+     "threshold": 0.8,
+     "comparison": ">=",
+     "met": false
+    },
+    "S2": {
+     "value": 0.02405499058494337,
+     "threshold": 0.5,
+     "comparison": ">=",
+     "met": false
+    }
+   },
+   "NULL_TWIN_NOLEAK": {
+    "S1": {
+     "value": -0.032775016301408756,
+     "threshold": 0.8,
+     "comparison": ">=",
+     "met": false
+    },
+    "S2": {
+     "value": -0.05869106984951923,
+     "threshold": 0.5,
+     "comparison": ">=",
+     "met": false
+    }
+   }
+  },
+  "failure": {
+   "TREATMENT": {
+    "F1": {
+     "value": 1.0,
+     "threshold": 0.3,
+     "comparison": "<",
+     "met": false
+    },
+    "F2": {
+     "value": 1.083018601827008,
+     "threshold": 0.2,
+     "comparison": "<",
+     "met": false
+    }
+   },
+   "POSITIVE_CONTROL": {
+    "F1": {
+     "value": 1.0,
+     "threshold": 0.3,
+     "comparison": "<",
+     "met": false
+    },
+    "F2": {
+     "value": 0.9786190952456613,
+     "threshold": 0.2,
+     "comparison": "<",
+     "met": false
+    }
+   },
+   "CHEAT": {
+    "F1": {
+     "value": 1.0,
+     "threshold": 0.3,
+     "comparison": "<",
+     "met": false
+    },
+    "F2": {
+     "value": 0.9786190952456613,
+     "threshold": 0.2,
+     "comparison": "<",
+     "met": false
+    }
+   },
+   "NULL_TWIN": {
+    "F1": {
+     "value": 0.019075615242337963,
+     "threshold": 0.3,
+     "comparison": "<",
+     "met": true
+    },
+    "F2": {
+     "value": 0.02405499058494337,
+     "threshold": 0.2,
+     "comparison": "<",
+     "met": true
+    }
+   },
+   "NULL_TWIN_NOLEAK": {
+    "F1": {
+     "value": -0.032775016301408756,
+     "threshold": 0.3,
+     "comparison": "<",
+     "met": true
+    },
+    "F2": {
+     "value": -0.05869106984951923,
+     "threshold": 0.2,
+     "comparison": "<",
+     "met": true
+    }
+   }
+  },
+  "treatment_diagnostics": {
+   "ari_ftle": 1.0,
+   "ari_corr": -0.083018601827008,
+   "ftle_within_mean": -7.940745924636741,
+   "ftle_between_mean": -8.710649100695711,
+   "corr_within_mean": 0.034027470373770824,
+   "corr_between_mean": 0.03926544084058133,
+   "traj_min": -0.9411111075100553,
+   "traj_max": 0.9444462335922341,
+   "per_seed_ari_ftle": [
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0
+   ],
+   "per_seed_ari_corr": [
+    -0.09561752988047807,
+    0.014336917562724002,
+    -0.13452914798206278,
+    -0.23318385650224216,
+    -0.12037037037037035,
+    -0.007968127490039834,
+    -0.03587443946188342,
+    -0.03587443946188342,
+    -0.14336917562724016,
+    -0.03773584905660378
+   ],
+   "partitions_ftle": [
+    [
+     0,
+     0,
+     0,
+     1,
+     1,
+     1,
+     2,
+     2,
+     2,
+     3,
+     3,
+     3
+    ],
+    [
+     0,
+     0,
+     0,
+     1,
+     1,
+     1,
+     2,
+     2,
+     2,
+     3,
+     3,
+     3
+    ],
+    [
+     0,
+     0,
+     0,
+     1,
+     1,
+     1,
+     2,
+     2,
+     2,
+     3,
+     3,
+     3
+    ],
+    [
+     0,
+     0,
+     0,
+     1,
+     1,
+     1,
+     2,
+     2,
+     2,
+     3,
+     3,
+     3
+    ],
+    [
+     0,
+     0,
+     0,
+     1,
+     1,
+     1,
+     2,
+     2,
+     2,
+     3,
+     3,
+     3
+    ],
+    [
+     0,
+     0,
+     0,
+     1,
+     1,
+     1,
+     2,
+     2,
+     2,
+     3,
+     3,
+     3
+    ],
+    [
+     0,
+     0,
+     0,
+     1,
+     1,
+     1,
+     2,
+     2,
+     2,
+     3,
+     3,
+     3
+    ],
+    [
+     0,
+     0,
+     0,
+     1,
+     1,
+     1,
+     2,
+     2,
+     2,
+     3,
+     3,
+     3
+    ],
+    [
+     0,
+     0,
+     0,
+     1,
+     1,
+     1,
+     2,
+     2,
+     2,
+     3,
+     3,
+     3
+    ],
+    [
+     0,
+     0,
+     0,
+     1,
+     1,
+     1,
+     2,
+     2,
+     2,
+     3,
+     3,
+     3
+    ]
+   ]
+  },
+  "n_seeds": {
+   "TREATMENT": 10,
+   "POSITIVE_CONTROL": 10,
+   "CHEAT": 10,
+   "NULL_TWIN": 10,
+   "NULL_TWIN_NOLEAK": 10
+  },
+  "control_arm_ari_corr_mean": -0.083018601827008
+ },
+ "criterion_as_applied": {
+  "success": "S1 AND S2 (seed means, 10 seeds) as frozen; SIGNAL also requires no failure clause fires",
+  "failure": "F1 OR F2 as frozen; not meeting all success clauses reads NULL",
+  "reproducibility": [
+   {
+    "id": "S1",
+    "attainable_frozen": true,
+    "attainable_rerun": true,
+    "discriminating_frozen": true,
+    "discriminating_rerun": true,
+    "positive_frozen": 1.0,
+    "positive_rerun": 1.0,
+    "twin_frozen": 0.019075615242337963,
+    "twin_rerun": 0.019075615242337963,
+    "twin_noleak_frozen": -0.032775016301408756,
+    "twin_noleak_rerun": -0.032775016301408756,
+    "cheat_frozen": 1.0,
+    "cheat_rerun": 1.0,
+    "status_equal": true
+   },
+   {
+    "id": "S2",
+    "attainable_frozen": true,
+    "attainable_rerun": true,
+    "discriminating_frozen": true,
+    "discriminating_rerun": true,
+    "positive_frozen": 0.9786190952456613,
+    "positive_rerun": 0.9786190952456613,
+    "twin_frozen": 0.02405499058494337,
+    "twin_rerun": 0.02405499058494337,
+    "twin_noleak_frozen": -0.05869106984951923,
+    "twin_noleak_rerun": -0.05869106984951923,
+    "cheat_frozen": 0.9786190952456613,
+    "cheat_rerun": 0.9786190952456613,
+    "status_equal": true
+   }
+  ],
+  "reproducible": true
+ },
+ "positive_control_detected": true,
+ "cheat_detected": true,
+ "null_twin_meets_success": false,
+ "stupid_explanations_status": [
+  {
+   "text": "the leak synchronises units (check corr_between_mean and trajectory range; the twin at eps_g = 0.05 stays unsynchronised, mean |corr| about 0.04)",
+   "addressed_by_this_run": true,
+   "how": "treatment corr_between_mean 0.0393 (twin 0.0380); trajectory range [-0.941, 0.944]"
+  },
+  {
+   "text": "the ARI of a 4-cluster average-linkage partition is inflated by cluster-size artefacts (report the partitions; chance ARI in the twins is about 0)",
+   "addressed_by_this_run": true,
+   "how": "partitions reported per seed; twin chance ARI S1 0.0191, noleak -0.0328"
+  },
+  {
+   "text": "the invariant density is not symmetric, so E[v] != 0 and product coupling leaks first-order correlation (report corr_within_mean vs corr_between_mean)",
+   "addressed_by_this_run": true,
+   "how": "treatment corr_within_mean 0.0340 vs corr_between_mean 0.0393"
+  },
+  {
+   "text": "tau = 8 is either too short for within-group spread or long enough for the leak to saturate everything (report ftle_within_mean and ftle_between_mean)",
+   "addressed_by_this_run": false,
+   "how": "reported only: ftle_within_mean -7.941 vs ftle_between_mean -8.711 (log10 |dv|) at tau=8; no tau sweep (frozen parameter)"
+  },
+  {
+   "text": "Any perturbation-response (causal intervention) readout recovers a coupling graph whether or not the carrier is chaotic; success would show that intervention beats observation, not that chaos is what measures interactivity. Separately, the global leak may synchronise units so that every readout sees one block.",
+   "addressed_by_this_run": false,
+   "how": "no non-chaotic (contracting-carrier) perturbation arm in the frozen spec; not tested"
+  }
+ ],
+ "anomalies": [],
+ "core_minutes": 0.04114583333333333,
+ "attempts": 1,
+ "notes": [
+  "treatment: S1=1.0000, S2=1.0830; success met"
+ ]
+}

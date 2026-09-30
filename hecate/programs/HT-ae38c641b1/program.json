@@ -495,6 +495,78 @@
         "unexpectedness": "unknown",
         "potential_importance": "unknown"
       }
+    },
+    {
+      "id": "P3v2",
+      "triplicateId": "HT-ae38c641b1",
+      "index": 3,
+      "kind": "minimal_worlds_v2",
+      "added": [
+        "new falsifier",
+        "new observable"
+      ],
+      "generator": {
+        "model": "claude-opus-5-5",
+        "search": false,
+        "prompt": "hecate/programs/_prompts/pass3_v2.md",
+        "prompt_sha256": "2adcfc8da07ee9adb9b04d2214889f0965758f7fcf0a60cde08eebb62bedd461"
+      },
+      "prereg": "roles/Hecate/prereg/2026-09-30_pass3_v2/PREREG.md",
+      "inspected_prior": [
+        "W3"
+      ],
+      "unexplained": [],
+      "decision": "FALSIFY",
+      "research_state": {
+        "novelty": "unknown",
+        "mechanistic_clarity": "unknown",
+        "falsifiability": "unknown",
+        "empirical_support": "none",
+        "cross_lens_agreement": "unknown",
+        "cross_substrate_transfer": "unknown",
+        "baseline_resistance": "unknown",
+        "artifact_risk": "unknown",
+        "cost": "unknown",
+        "unexpectedness": "unknown",
+        "potential_importance": "unknown"
+      }
+    },
+    {
+      "id": "P3-probe3",
+      "triplicateId": "HT-ae38c641b1",
+      "index": 3,
+      "kind": "cheap_probe",
+      "added": [
+        "new falsifier",
+        "new observable"
+      ],
+      "generator": {
+        "model": "claude-opus-5-5",
+        "search": false,
+        "prompt": "hecate/programs/_prompts/probe_impl_v3.md",
+        "prompt_sha256": "a34a8c6143f49df2b33b75871e8f9cd12e60c10c37778ba595e12fedf1621685"
+      },
+      "prereg": "roles/Hecate/prereg/2026-09-30_pass3_v2/PREREG.md",
+      "inspected_prior": [
+        "W5"
+      ],
+      "unexplained": [
+        "the 30-step budget, not the domain geometry, does the selecting (maps near rho = 1 fail to converge in any orientation); the diagnostic median rho(|A|)/rho(A) separates orientation-dependent failure from slow convergence"
+      ],
+      "decision": "PARK",
+      "research_state": {
+        "novelty": "unknown",
+        "mechanistic_clarity": "unknown",
+        "falsifiability": "unknown",
+        "empirical_support": "none",
+        "cross_lens_agreement": "unknown",
+        "cross_substrate_transfer": "unknown",
+        "baseline_resistance": "unknown",
+        "artifact_risk": "unknown",
+        "cost": "unknown",
+        "unexpectedness": "unknown",
+        "potential_importance": "unknown"
+      }
     }
   ],
   "hypotheses": [
@@ -584,7 +656,7 @@
       "triplicateId": "HT-ae38c641b1",
       "passId": "P1",
       "kind": "mechanism",
-      "layer": "speculation",
+      "layer": "implemented_candidate",
       "form": "selection mechanism",
       "statement": "Domain imprint: if survival requires certification by a budgeted sound verifier with abstract domain G, evolved dynamics align their principal directions with G's geometry (box domain -> axis-aligned eigenvectors; rotated box -> rotated alignment), because rotation relative to the domain axes causes wrapping inflation and certification failure.",
       "derived_from": [
@@ -987,7 +1059,7 @@
       "triplicateId": "HT-ae38c641b1",
       "passId": "P1",
       "kind": "mechanism",
-      "layer": "speculation",
+      "layer": "implemented_candidate",
       "form": "dynamical law",
       "statement": "Stable-but-unprovable band: for rotation-contraction loops, concrete stability needs r<1 but box-domain provability needs r(|cos t|+|sin t|)<1; the band between is a region where systems are safe but illegible. Sensitivity to rotation, not magnitude, controls legibility.",
       "derived_from": [
@@ -1045,6 +1117,21 @@
         "M3",
         "M10",
         "M7"
+      ]
+    },
+    {
+      "id": "O-W5-r3",
+      "triplicateId": "HT-ae38c641b1",
+      "passId": "P3-probe3",
+      "kind": "observation",
+      "layer": "experimental_observation",
+      "evidence_rows": [
+        "hecate/programs/HT-ae38c641b1/worlds/W5/probe/rows.jsonl"
+      ],
+      "statement": "W5 probe round 3: NULL. success criterion not met",
+      "derived_from": [
+        "M2",
+        "M14"
       ]
     }
   ],
@@ -2303,13 +2390,296 @@
         }
       ],
       "rejected_explanations": []
+    },
+    {
+      "id": "W5",
+      "triplicateId": "HT-ae38c641b1",
+      "passId": "P3v2",
+      "mechanism_ids": [
+        "M2",
+        "M14"
+      ],
+      "lens_ids": [
+        "L3",
+        "L2"
+      ],
+      "hypothesis": "When survival requires a proof by a budgeted box-domain (interval) verifier, evolved linear dynamics align their principal directions with the verifier's domain axes (4-fold, mod 90 deg), and rotating the verifier's domain rotates the alignment with it; a structure-blind gate of matched selection intensity produces no alignment.",
+      "mechanism": "World: genome = two linear maps A_1, A_2 in R^{2x2} (a switched linear system; which map acts is set by an input bit each step). Per seed: R=16 runs, x_0 on the circle of radius 0.5 at angles off + 2*pi*r/16 (off uniform in [0, 2*pi/16)), S=60 steps, map index from a fixed random bit per run and step. Task fitness = lam_hat - pen, lam_hat = mean over runs of max(-5, (ln|x_S| - ln 0.5)/S), pen = 2 * sum_j max(0, s2_j/s1_j - 0.5) with s1>=s2 the singular values of A_j. Both terms are exactly rotation invariant. GA per seed: P=60 parents; each generation every parent makes one offspring by adding N(0, 0.03^2) to each of the 8 entries (conjugation-invariant, i.e. isotropic); offspring pass the arm's gate or are discarded; the P fittest of parents + accepted offspring survive (stable sort, ties keep order: parents first). G=120 generations. Initial population: entries N(0, 0.3^2), failing genomes resampled (up to 200 rounds, then any still failing scaled by 0.3) until every genome passes the CONCRETE gate (unit-disc safety on the seed's runs); exactly as world() in controls.py; this initial population is shared by all arms of a seed. Random streams: world (runs, bits, init) np.random.default_rng([seed,7]); mutation default_rng([seed,11]); null-twin coins default_rng([seed,13]).",
+      "intervention": "Treatment gate = budgeted box verifier with domain angle dom. Arm V: dom = 0. Arm V_rot: dom = 22.5 deg. Verifier(dom): Q = rotation by dom; B_j = Q^T A_j Q; h_0 = (0.5, 0.5) (half-widths of the box hull of the start circle, valid in any rotated frame); h_{n+1} = max(h_0, |B_1| h_n, |B_2| h_n) componentwise, |B| = entrywise absolute value, for n = 0..29 (30 Kleene steps; boxes stay centred at 0 because the maps are linear); widening h* = 1.05 * h_30; PROVEN iff |B_j| h* <= h* componentwise for j = 1, 2 (h* is inductive, hence contains every reachable state from the start box) AND h*_1^2 + h*_2^2 <= 1 (box inside the unit disc). Offspring are accepted iff PROVEN. The treatment arms use no concrete gate and no alignment bonus.",
+      "control": "POSITIVE_CONTROL and NULL_TWIN below; no separate concrete-gate arm is scored.",
+      "positive_control": "Concrete gate (every state of every run within the closed unit disc; NaN/inf = unsafe) plus fitness bonus 0.1 * mean_j w_j cos(4(phi_j - dom)), dom = 0 (POSITIVE_CONTROL) or 22.5 deg (POSITIVE_CONTROL_ROT). Imprint present by construction. Implemented in controls.py.",
+      "observable": "Per seed and arm, on the final population (2P maps): phi = angle of the top right-singular vector of A_j, w = (s1 - s2)/(s1 + s2); A4(dom) = sum w cos(4(phi - dom)) / sum w. Clause statistics are means over the 20 seeds. Preregistered diagnostics (not clauses): A8(dom) (same with 8 in place of 4), median rho(|A|)/rho(A), median lam_hat, mean accepted fraction.",
+      "success_criterion": "[{\"id\": \"S1\", \"text\": \"Box-domain verification imprints world-axis alignment: arm V has mean A4(0) >= 0.40.\", \"statistic\": \"mean over seeds 0..19 of A4(dom=0) in arm V\", \"comparison\": \">=\", \"threshold\": 0.4}, {\"id\": \"S2\", \"text\": \"The imprint follows the domain: arm V_rot has mean A4(22.5 deg) >= 0.40.\", \"statistic\": \"mean over seeds 0..19 of A4(dom=22.5 deg) in arm V_rot\", \"comparison\": \">=\", \"threshold\": 0.4}]",
+      "failure_criterion": "[{\"id\": \"F1\", \"text\": \"No 4-fold axis imprint under the box verifier (M2's stated observable is falsified in this world).\", \"statistic\": \"mean over seeds 0..19 of A4(dom=0) in arm V\", \"comparison\": \"<\", \"threshold\": 0.15}, {\"id\": \"F2\", \"text\": \"Alignment is anchored to the world, not to the verifier's domain (the rotated verifier still aligns to world axes).\", \"statistic\": \"mean over seeds 0..19 of A4(dom=0) in arm V_rot\", \"comparison\": \">=\", \"threshold\": 0.4}, {\"id\": \"F3\", \"text\": \"Reading invalid (INCONCLUSIVE, not a falsification): the verifier froze evolution.\", \"statistic\": \"mean over seeds and generations of the fraction of offspring accepted in arm V\", \"comparison\": \"<\", \"threshold\": 0.02}]",
+      "alternative_explanation": "The box verifier is effectively an entrywise (infinity-norm-like) penalty whose invariance group is the signed permutations, which contain 45-deg reflections; it may imprint an 8-fold (axes AND diagonals) or sign-pattern structure, or none on singular directions at all, rather than M2's 4-fold axis alignment. A mean A4 between 0.15 and 0.40 is INCONCLUSIVE.",
+      "null_twin": "NULL_TWIN: concrete gate plus genome-independent random rejection: in generation g offspring are accepted iff concrete-safe AND u < min(1, a_ref[g] / c_g), u ~ U(0,1) from the null coin stream, c_g = fraction of this generation's offspring that are concrete-safe, a_ref[g] = accepted fraction of the compared arm in generation g of the same seed (V for S1, V_rot for S2; in controls.py: POSITIVE_CONTROL). Matches task, mutation, safety and selection intensity; has no geometric selectivity. Scored with A4(0) for S1 and A4(22.5 deg) for S2.",
+      "substrate": "population",
+      "cost_estimate": "controls.py 24 CPU core-s; treatment + twins about 1 CPU core-min",
+      "stupid_explanations": [
+        "clonal drift: a population descends from few ancestors, so one seed's angles cluster anywhere; handled by a signed statistic averaged over 20 seeds (null SD of the mean 0.13) and the 0.40 threshold",
+        "near-isotropic maps have undefined principal directions and inflate the statistic; handled by weighting by w = (s1-s2)/(s1+s2) and the shape penalty that keeps s2/s1 <= 0.5",
+        "the verifier simply throttles evolution so the population stays at its isotropic initial state (F3 and the accepted-fraction diagnostic expose this)",
+        "hidden world anisotropy (bit order, start angles, float effects) aligns to world axes in every arm; exposed by V_rot (S2, F2) and by the twin",
+        "the 30-step budget, not the domain geometry, does the selecting (maps near rho = 1 fail to converge in any orientation); the diagnostic median rho(|A|)/rho(A) separates orientation-dependent failure from slow convergence"
+      ],
+      "spec": "hecate/programs/HT-ae38c641b1/worlds/W5/spec.json",
+      "attainability": "hecate/programs/HT-ae38c641b1/worlds/W5/ATTAINABILITY.json",
+      "outcome": "NULL",
+      "round": 3,
+      "rows": "hecate/programs/HT-ae38c641b1/worlds/W5/probe/rows.jsonl",
+      "outcome_file": "hecate/programs/HT-ae38c641b1/worlds/W5/probe/OUTCOME.json",
+      "statistics": {
+        "control_reproducibility": [
+          {
+            "id": "S1",
+            "frozen_positive": 0.9682768836893294,
+            "rerun_positive": 0.9682768836893294,
+            "frozen_twin": 0.0034415062674477497,
+            "rerun_twin": 0.0034415062674477497,
+            "frozen_status": [
+              true,
+              true
+            ],
+            "rerun_status": [
+              true,
+              true
+            ],
+            "status_match": true,
+            "max_abs_delta": 0.0
+          },
+          {
+            "id": "S2",
+            "frozen_positive": 0.9720237845102346,
+            "rerun_positive": 0.9720237845102346,
+            "frozen_twin": -0.0394148535054328,
+            "rerun_twin": -0.0394148535054328,
+            "frozen_status": [
+              true,
+              true
+            ],
+            "rerun_status": [
+              true,
+              true
+            ],
+            "status_match": true,
+            "max_abs_delta": 0.0
+          },
+          {
+            "id": "CHEAT",
+            "frozen": true,
+            "rerun": true,
+            "cheat_values": [
+              1.0,
+              1.0
+            ]
+          }
+        ],
+        "clause_values": {
+          "S1": 0.3335876183417939,
+          "S2": 0.2766448446462254,
+          "F1": 0.3335876183417939,
+          "F2": -0.24091636275300882,
+          "F3": 0.4199305555555556
+        },
+        "clause_met": {
+          "S1": false,
+          "S2": false,
+          "F1": false,
+          "F2": false,
+          "F3": false
+        },
+        "twin_values": {
+          "NULL_TWIN_V_A4_0": -0.13990921667246498,
+          "NULL_TWIN_VROT_A4_22_5": 0.028900434694541587
+        },
+        "per_seed": {
+          "V_A4_0": [
+            0.9535151146268085,
+            0.9812794471962469,
+            0.907038432921099,
+            -0.16133833113114252,
+            -0.1358882971086617,
+            -0.8035532492791636,
+            0.10255002303489398,
+            -0.6674221672797374,
+            0.9099683264556566,
+            0.9523092520411283,
+            -0.31128352585735247,
+            0.9885199564008634,
+            0.9893806372836014,
+            0.9581380403847111,
+            -0.054718926286630686,
+            0.9500305612090707,
+            0.8058601423716492,
+            -0.6023299543196433,
+            -0.6299894894419756,
+            0.5396863736144567
+          ],
+          "V_rot_A4_22_5": [
+            0.3499028682003971,
+            -0.09050781233821886,
+            -0.34709936120221313,
+            0.9793729313643545,
+            0.9396914528518617,
+            -0.4414526329037351,
+            -0.06142491928947513,
+            0.9974515668204498,
+            0.984788764545005,
+            0.9773773947394983,
+            -0.33363406115401184,
+            0.07224621421686743,
+            0.8681734507604942,
+            -0.4144647393120074,
+            -0.6119204409815654,
+            0.9656401664629982,
+            0.08926741278089247,
+            -0.4355209199202031,
+            0.3527188582336107,
+            0.6922906990495088
+          ],
+          "V_rot_A4_0": [
+            -0.04236828621005946,
+            0.6845054007296301,
+            -0.40042580177946263,
+            0.09600773366841746,
+            -0.24013901537298094,
+            -0.6944592384980208,
+            -0.19631853522147316,
+            0.025277118701382398,
+            -0.008238340663643883,
+            0.059237665944747234,
+            -0.16811277428905205,
+            -0.10730071914095299,
+            -0.2082061806987639,
+            -0.8145521506970717,
+            0.41895549891696127,
+            -0.04379867508995804,
+            -0.8551745980768013,
+            -0.8092581524564669,
+            -0.8748337942936971,
+            -0.6391244105329108
+          ]
+        },
+        "sd_of_seed_mean": {
+          "V_A4_0": 0.15327294878610903,
+          "V_rot_A4_22_5": 0.13408121299703085
+        },
+        "diagnostics": {
+          "V": {
+            "A4_axes0": 0.3335876183417939,
+            "A4_axes22_5": -0.00115180030740189,
+            "A8_axes0": 0.3369852878947041,
+            "mean_w": 0.6962088555736556,
+            "median_lam": -0.027079806601539108,
+            "median_abs_ratio": 1.0004276065824882,
+            "mean_accept": 0.4199305555555556
+          },
+          "V_rot": {
+            "A4_axes0": -0.24091636275300882,
+            "A4_axes22_5": 0.2766448446462254,
+            "A8_axes0": -0.10015637415823075,
+            "mean_w": 0.7392827951982104,
+            "median_lam": -0.02721828755837103,
+            "median_abs_ratio": 1.0038483773222568,
+            "mean_accept": 0.44411805555555556
+          },
+          "NULL_TWIN_V": {
+            "A4_axes0": -0.13990921667246498,
+            "A4_axes22_5": 0.05832758327443138,
+            "A8_axes0": 0.06317069113513593,
+            "mean_w": 0.6921707979382998,
+            "median_lam": -0.0023310573685599687,
+            "median_abs_ratio": 1.0120808304738815,
+            "mean_accept": 0.41604861111111113
+          },
+          "NULL_TWIN_VROT": {
+            "A4_axes0": -0.038523776625106795,
+            "A4_axes22_5": 0.028900434694541587,
+            "A8_axes0": 0.20134367306411952,
+            "mean_w": 0.6704862687071721,
+            "median_lam": -0.0029605643877735036,
+            "median_abs_ratio": 1.0197251070174373,
+            "mean_accept": 0.4369583333333333
+          },
+          "POSITIVE_CONTROL": {
+            "A4_axes0": 0.9682768836893294,
+            "A4_axes22_5": -0.027667248729802436,
+            "A8_axes0": 0.8838868599402592,
+            "mean_w": 0.9337507182502958,
+            "median_lam": -0.004008135074792918,
+            "median_abs_ratio": 1.0027251124612087,
+            "mean_accept": 0.6407916666666666
+          },
+          "POSITIVE_CONTROL_ROT": {
+            "A4_axes0": 0.008322570637299371,
+            "A4_axes22_5": 0.9720237845102346,
+            "A8_axes0": -0.8939873960234415,
+            "mean_w": 0.9138244448869746,
+            "median_lam": -0.0039019648304658107,
+            "median_abs_ratio": 1.0338769675105324,
+            "mean_accept": 0.643125
+          },
+          "NULL_TWIN": {
+            "A4_axes0": 0.0034415062674477497,
+            "A4_axes22_5": -0.0394148535054328,
+            "A8_axes0": 0.024618356136261576,
+            "mean_w": 0.7141086567212626,
+            "median_lam": -0.001137741429317551,
+            "median_abs_ratio": 1.020867299817951,
+            "mean_accept": 0.591361111111111
+          }
+        },
+        "twin_accept_gap": {
+          "V": 0.0366875,
+          "V_rot": 0.03699305555555556
+        },
+        "spec_reading": "INCONCLUSIVE band per spec (0.15 <= A4 < 0.40), not a falsification of M2"
+      },
+      "anomalies": [],
+      "rejected_explanations": [
+        "clonal drift: a population descends from few ancestors, so one seed's angles cluster anywhere; handled by a signed statistic averaged over 20 seeds (null SD of the mean 0.13) and the 0.40 threshold",
+        "near-isotropic maps have undefined principal directions and inflate the statistic; handled by weighting by w = (s1-s2)/(s1+s2) and the shape penalty that keeps s2/s1 <= 0.5",
+        "the verifier simply throttles evolution so the population stays at its isotropic initial state (F3 and the accepted-fraction diagnostic expose this)",
+        "hidden world anisotropy (bit order, start angles, float effects) aligns to world axes in every arm; exposed by V_rot (S2, F2) and by the twin"
+      ]
+    },
+    {
+      "id": "W6",
+      "triplicateId": "HT-ae38c641b1",
+      "passId": "P3v2",
+      "mechanism_ids": [
+        "M8"
+      ],
+      "lens_ids": [
+        "L1"
+      ],
+      "hypothesis": "For an iteratively computed estimator (undamped Newton on a multi-root score), the set of misspecification parameters on which the estimated effect keeps its sign has a fractal boundary (uncertainty exponent alpha = 2 - D well below 1), while the same estimand computed without iteration (global maximiser) has a smooth boundary (alpha ~ 1). Because a sound certifier must leave undecided every cell that contains both signs, alpha < 1 means sound robustness certification of the sign costs a power law in grid resolution steeper than for a smooth boundary.",
+      "mechanism": "Data: six unit-level treated-minus-control differences d0 = (-1.9, -1.4, -1.0, 0.8, 1.2, 1.9). Misspecification (unmeasured bias in two subgroups): g = (g1, g2) in [-1, 1]^2; group labels grp = (0, 0, 1, 1, 0, 1); d_i(g) = d0_i + g1 if grp_i = 0 else d0_i + g2. Estimand: location tau of a Cauchy model with scale s = 0.5, log-likelihood l(tau) = -sum_i ln(s^2 + (d_i - tau)^2), which has up to several local maxima because the differences form two clusters.",
+      "intervention": "TREATMENT label(g): undamped Newton on the score psi(tau) = sum_i r_i / (s^2 + r_i^2), r_i = d_i(g) - tau, psi'(tau) = sum_i (r_i^2 - s^2)/(s^2 + r_i^2)^2; tau_0 = sample median of d(g) (mean of the 3rd and 4th order statistics); tau <- tau - psi(tau)/psi'(tau) for exactly 100 iterations in float64. Label = +1 if converged and tau_100 > 0, -1 if converged and tau_100 < 0, 0 otherwise; converged iff tau_100 finite, |tau_100| <= 1000 and |psi(tau_100)| <= 1e-9 (psi' = 0 or any non-finite value at any step -> label 0). Newton may converge to any stationary point (including a likelihood minimum); that is the estimator as specified.",
+      "control": "NULL_TWIN (below).",
+      "positive_control": "POSITIVE_CONTROL label(g) = index of the cube root of unity reached by 60 undamped Newton steps for z^3 - 1 from z_0 = g1 + i g2 (label 3 if not within 1e-6 of a root): a fractal (Julia-set) basin boundary by construction, measured by exactly the same pair pipeline. Implemented in controls.py.",
+      "observable": "Per arm and seed: 30000 base points x uniform in [-0.75, 0.75]^2 drawn from np.random.default_rng([seed, 101]) (then from the same generator: angles a of shape (8, 30000) uniform in [0, 2*pi)); for eps_k = 2^-k, k = 2..9, partner x + eps_k (cos a_k, sin a_k); f(eps) = fraction of the 30000 pairs whose labels differ (all label values are classes, including 0 / non-converged); alpha = OLS slope of ln f on ln eps over the 8 eps; also R^2 and the slopes of the coarse (k=2..5) and fine (k=6..9) halves. Clause statistics use the median over seeds 0-4. Identical code path for every arm (controls.py measure()/fit()).",
+      "success_criterion": "[{\"id\": \"S1\", \"text\": \"The sign-flip boundary of the Newton estimator is fractal in the window: median alpha <= 0.80 (D >= 1.20).\", \"statistic\": \"median over seeds 0-4 of alpha, TREATMENT\", \"comparison\": \"<=\", \"threshold\": 0.8}, {\"id\": \"S2\", \"text\": \"The iteration, not the estimand, makes it fractal: the global-maximiser twin's median alpha exceeds the treatment's by >= 0.15.\", \"statistic\": \"median alpha NULL_TWIN (seeds 0-4) minus median alpha TREATMENT (seeds 0-4)\", \"comparison\": \">=\", \"threshold\": 0.15}]",
+      "failure_criterion": "[{\"id\": \"F1\", \"text\": \"Smooth boundary: the Newton estimator's flip boundary is not fractal in the window (M8 reads NULL here: its 'likely common case' knockout holds).\", \"statistic\": \"median over seeds 0-4 of alpha, TREATMENT\", \"comparison\": \">=\", \"threshold\": 0.9}, {\"id\": \"F2\", \"text\": \"Not scale-free in the window (no single exponent; reading INCONCLUSIVE, not a pass).\", \"statistic\": \"median over seeds 0-4 of R^2 of the ln f vs ln eps fit, TREATMENT\", \"comparison\": \"<\", \"threshold\": 0.95}, {\"id\": \"F3\", \"text\": \"Reading invalid (INCONCLUSIVE): a boundary is nearly absent or unmeasurable.\", \"statistic\": \"min over seeds 0-4 of the smallest disagreement count over the 8 eps (TREATMENT)\", \"comparison\": \"<\", \"threshold\": 5}]",
+      "alternative_explanation": "Non-convergence (label 0) forms thin smooth bands near psi' = 0 that inflate f at small eps without being fractal; or Newton's jump from the median start is piecewise-smooth in g with many (finitely many) branches, which a finite window can mistake for a power law. The coarse/fine slope split and F2 test the second; the label-0 fraction is a preregistered diagnostic for the first.",
+      "null_twin": "NULL_TWIN label(g) = sign of the global maximiser of l(tau) for the same d(g): 200-point grid on [min d - 0.5, max d + 0.5], candidates = the best grid point within 0.6 of each datum and the overall best, each polished by 30 Newton steps on l clipped to +-0.05 (only where -l'' > 0), label = sign of the candidate with the largest l. Same data, same misspecification, same estimand, same pairs; the iteration's path-dependence is removed. Verified against a 200001-point brute-force argmax (3000/3000 agree). Seeds 5-9 are a replicate used only for the twin's value on S2.",
+      "substrate": "causal toy",
+      "cost_estimate": "controls.py 110 CPU core-s (twin dominates); treatment about 10 CPU core-s",
+      "stupid_explanations": [
+        "floating-point noise near psi' = 0 creates speckle labels that look like a fractal boundary (check: rerun a subsample with 200 iterations and with tau_0 perturbed by 1e-12; speckle changes, a real boundary does not)",
+        "non-converged points (label 0) form a band whose width shrinks slower than eps, faking alpha < 1 (check: the preregistered label-0 fraction and alpha recomputed with label 0 merged into its nearest-sign neighbour)",
+        "the fit window sits in a pre-asymptotic crossover (check: coarse vs fine half slopes and F2)",
+        "the boundary is smooth but long and wiggly (many branches), which raises f but not the slope; only the slope is scored, so this cannot pass S1 by itself"
+      ],
+      "spec": "hecate/programs/HT-ae38c641b1/worlds/W6/spec.json",
+      "attainability": "hecate/programs/HT-ae38c641b1/worlds/W6/ATTAINABILITY.json"
     }
   ],
   "candidateEngines": [],
-  "currentVerdict": "SPECULATIVE",
+  "currentVerdict": "PARK",
   "evidenceSummary": {
     "layer": "experimental_observation",
-    "rows": "hecate/programs/HT-ae38c641b1/worlds/W4/pilot_rows.jsonl",
-    "note": "round 1 W3 NULL; round 2 W4 SPEC_UNATTAINABLE: one valid NULL reading; next world eligible"
+    "rows": "hecate/programs/HT-ae38c641b1/worlds/W5/probe/rows.jsonl",
+    "note": "round 3 W5 NULL: two valid NULL readings (W3, W5)"
   }
 }

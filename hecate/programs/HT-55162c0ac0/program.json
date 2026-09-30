@@ -494,6 +494,77 @@
         "unexpectedness": "unknown",
         "potential_importance": "unknown"
       }
+    },
+    {
+      "id": "P3v2",
+      "triplicateId": "HT-55162c0ac0",
+      "index": 3,
+      "kind": "minimal_worlds_v2",
+      "added": [
+        "new falsifier",
+        "new observable"
+      ],
+      "generator": {
+        "model": "claude-opus-5-5",
+        "search": false,
+        "prompt": "hecate/programs/_prompts/pass3_v2.md",
+        "prompt_sha256": "2adcfc8da07ee9adb9b04d2214889f0965758f7fcf0a60cde08eebb62bedd461"
+      },
+      "prereg": "roles/Hecate/prereg/2026-09-30_pass3_v2/PREREG.md",
+      "inspected_prior": [],
+      "unexplained": [],
+      "decision": "FALSIFY",
+      "research_state": {
+        "novelty": "unknown",
+        "mechanistic_clarity": "unknown",
+        "falsifiability": "unknown",
+        "empirical_support": "none",
+        "cross_lens_agreement": "unknown",
+        "cross_substrate_transfer": "unknown",
+        "baseline_resistance": "unknown",
+        "artifact_risk": "unknown",
+        "cost": "unknown",
+        "unexpectedness": "unknown",
+        "potential_importance": "unknown"
+      }
+    },
+    {
+      "id": "P3-probe3",
+      "triplicateId": "HT-55162c0ac0",
+      "index": 3,
+      "kind": "cheap_probe",
+      "added": [
+        "new falsifier",
+        "new observable"
+      ],
+      "generator": {
+        "model": "claude-opus-5-5",
+        "search": false,
+        "prompt": "hecate/programs/_prompts/probe_impl_v3.md",
+        "prompt_sha256": "a34a8c6143f49df2b33b75871e8f9cd12e60c10c37778ba595e12fedf1621685"
+      },
+      "prereg": "roles/Hecate/prereg/2026-09-30_pass3_v2/PREREG.md",
+      "inspected_prior": [
+        "W6"
+      ],
+      "unexplained": [
+        "tau = 8 is either too short for within-group spread or long enough for the leak to saturate everything (report ftle_within_mean and ftle_between_mean)",
+        "Any perturbation-response (causal intervention) readout recovers a coupling graph whether or not the carrier is chaotic; success would show that intervention beats observation, not that chaos is what measures interactivity. Separately, the global leak may synchronise units so that every readout sees one block."
+      ],
+      "decision": "FALSIFY",
+      "research_state": {
+        "novelty": "unknown",
+        "mechanistic_clarity": "unknown",
+        "falsifiability": "unknown",
+        "empirical_support": "low",
+        "cross_lens_agreement": "unknown",
+        "cross_substrate_transfer": "unknown",
+        "baseline_resistance": "unknown",
+        "artifact_risk": "unknown",
+        "cost": "unknown",
+        "unexpectedness": "unknown",
+        "potential_importance": "unknown"
+      }
     }
   ],
   "hypotheses": [
@@ -923,7 +994,7 @@
       "triplicateId": "HT-55162c0ac0",
       "passId": "P1",
       "kind": "mechanism",
-      "layer": "speculation",
+      "layer": "implemented_candidate",
       "form": "computational primitive",
       "statement": "Finite-time Lyapunov exponents between input elements measure element interactivity for free: elements whose perturbations co-diverge interact; the modulator allocates capacity to high-FTLE groups, forming chunks of interacting elements.",
       "derived_from": [
@@ -1047,6 +1118,20 @@
       "statement": "W2 probe round 2: SPEC_UNATTAINABLE. Pilot attempt 1 failed on the null twin; one repair (fit with intercept, intercept dropped from controller; NOTES.md) and rerun; attempt 2 failed on the null twin again -> SPEC_UNATTAINABLE per PREREG round 2. No treatment code written. core_minutes = summed process time of pilot rows + ~0.2 min for UPO checks/evaluators.",
       "derived_from": [
         "M5"
+      ]
+    },
+    {
+      "id": "O-W6-r3",
+      "triplicateId": "HT-55162c0ac0",
+      "passId": "P3-probe3",
+      "kind": "observation",
+      "layer": "experimental_observation",
+      "evidence_rows": [
+        "hecate/programs/HT-55162c0ac0/worlds/W6/probe/rows.jsonl"
+      ],
+      "statement": "W6 probe round 3: SIGNAL. ['treatment: S1=1.0000, S2=1.0830; success met']",
+      "derived_from": [
+        "M12"
       ]
     }
   ],
@@ -1568,13 +1653,415 @@
         "finite training length favours low-entropy sources",
         "the eviction rule, not cap size, sets the argmax"
       ]
+    },
+    {
+      "id": "W5",
+      "triplicateId": "HT-55162c0ac0",
+      "passId": "P3v2",
+      "mechanism_ids": [
+        "M10"
+      ],
+      "lens_ids": [
+        "L5"
+      ],
+      "hypothesis": "At a fixed number of held items (n = 4) and matched interaction strength, competitive dynamics that are chaotic lose more items than competitive dynamics that are not chaotic: item loss under load is caused by chaotic competition, not only by competitive exclusion.",
+      "mechanism": "Competitive generalised Lotka-Volterra dx_i/dt = r_i x_i (1 - sum_j A_ij x_j), n = 4, r = (1, 0.72, 1.53, 1.27). A is drawn from a neighbourhood of the Vano et al. (2006) chaotic matrix A0 = [[1,1.09,1.52,0],[0,1,0.44,1.36],[2.33,0,1,0.47],[1.21,0.51,0.35,1]]: every nonzero off-diagonal entry is multiplied by an independent U(0.9, 1.1) factor; zeros and the unit diagonal are kept. The neighbourhood contains both chaotic and non-chaotic draws at nearly identical interaction strength. Initial state x0 ~ U(0.2, 0.4)^4 per draw.",
+      "intervention": "None is imposed on the dynamics; the contrast is the naturally occurring chaos label of each draw: chaotic if lambda_max > 0.005, measured by a renormalised twin trajectory (delta0 = 1e-8, renormalised every 1.0 time unit) over t in [300, 1500], RK4 dt = 0.05. The same draw is then integrated, unmodified, to t = 3000.",
+      "control": "Symmetrised draws (A + A^T)/2, integrated identically: these admit a Lyapunov function, cannot be chaotic, and give the loss rate from exclusion alone; reported descriptively, no clause.",
+      "positive_control": "Effect present by construction: same family and same phase-A integration and chaos label, but on t in [1500, 3000] an absorbing boundary removes permanently any species whose abundance falls below 0.02, so the large excursions of chaotic draws cost items by construction. Recall and clauses computed exactly as for the treatment.",
+      "observable": "Per draw: chaos label (above) and recall = fraction of the 4 species whose mean abundance over t in [2800, 3000] exceeds 1e-3; mean off-diagonal strength = mean of the 12 off-diagonal entries of A. Pooled over 5 seeds x 100 draws.",
+      "success_criterion": "[{\"id\": \"S1\", \"text\": \"Pooled mean recall of non-chaotic draws minus pooled mean recall of chaotic draws is at least 0.08 (0.32 species of 4).\", \"statistic\": \"mean(recall | non-chaotic) - mean(recall | chaotic), pooled 500 draws\", \"comparison\": \">=\", \"threshold\": 0.08}, {\"id\": \"S2\", \"text\": \"One-sided Mann-Whitney U test (non-chaotic recall greater than chaotic recall) has p below 0.01.\", \"statistic\": \"Mann-Whitney U one-sided p-value, pooled\", \"comparison\": \"<\", \"threshold\": 0.01}, {\"id\": \"S3\", \"text\": \"In the OLS regression recall ~ 1 + mean_offdiag_strength + chaotic, the negated coefficient of the chaotic indicator is at least 0.06 (the chaos effect survives adjustment for interaction strength).\", \"statistic\": \"-beta_chaotic from OLS recall ~ 1 + strength + chaotic, pooled\", \"comparison\": \">=\", \"threshold\": 0.06}]",
+      "failure_criterion": "[{\"id\": \"F1\", \"text\": \"The recall gap is below 0.03 (about 1.4 standard errors of the label-permutation null): overload loss is exclusion, not chaos.\", \"statistic\": \"mean(recall | non-chaotic) - mean(recall | chaotic), pooled\", \"comparison\": \"<\", \"threshold\": 0.03}, {\"id\": \"F2\", \"text\": \"Adjusted chaos coefficient below 0.02: any raw gap is carried by interaction strength.\", \"statistic\": \"-beta_chaotic from OLS recall ~ 1 + strength + chaotic, pooled\", \"comparison\": \"<\", \"threshold\": 0.02}, {\"id\": \"F3\", \"text\": \"Fewer than 20 chaotic or fewer than 20 non-chaotic draws: the world cannot test the claim (UNTESTABLE, not NULL).\", \"statistic\": \"min(n_chaotic, n_nonchaotic), pooled\", \"comparison\": \"<\", \"threshold\": 20}]",
+      "alternative_explanation": "Chaotic draws differ systematically from non-chaotic neighbours in interaction strength or in which entries were perturbed, and that difference, not chaos, causes (or prevents) exclusion; or the 1e-3 floor counts low chaotic excursions as losses.",
+      "null_twin": "Label-permutation twin: the treatment's own rows with the chaos labels permuted within each seed (fixed permutation seed 1000 + seed). Every nuisance statistic is identical (same draws, same recall values, same number of chaotic labels); only the association between chaos and recall is destroyed. A second, physical twin (symmetrised matrices) is the control arm.",
+      "substrate": "ecology",
+      "cost_estimate": "about 0.2 CPU core-minutes for the treatment (controls took 0.12 core-minutes)",
+      "stupid_explanations": [
+        "chaotic draws have different mean interaction strength (S3 adjusts for it; also report strength by class)",
+        "the 1e-3 floor on a 200-unit mean abundance misreads a slow chaotic excursion as a loss (report per-class minimum of mean abundance of surviving species)",
+        "lambda_max > 0.005 mislabels long transients or slow limit cycles as chaos (report lambda histogram; the unperturbed Vano matrix gives 0.019 and its symmetrisation -0.13 in the estimator check)",
+        "integration error at dt = 0.05 manufactures or hides chaos (repeat 50 draws at dt = 0.025 and compare labels)"
+      ],
+      "spec": "hecate/programs/HT-55162c0ac0/worlds/W5/spec.json",
+      "attainability": "hecate/programs/HT-55162c0ac0/worlds/W5/ATTAINABILITY.json"
+    },
+    {
+      "id": "W6",
+      "triplicateId": "HT-55162c0ac0",
+      "passId": "P3v2",
+      "mechanism_ids": [
+        "M12"
+      ],
+      "lens_ids": [
+        "L4"
+      ],
+      "hypothesis": "Finite-time co-divergence of perturbations in a chaotic carrier recovers which elements interact (element interactivity) even when the interaction is XOR-like, so that pairwise correlation carries no grouping information, and it does so in the presence of a weak unstructured global leak.",
+      "mechanism": "N = 12 units v_i in [-1, 1], nominal partition into 4 groups of 3. v_i' = (1 - kappa - eps_g) T(v_i) + kappa * v_p(i) * v_q(i) + eps_g * mean_j T(v_j), with T(v) = 4 v^3 - 3 v (odd cubic Chebyshev map, chaotic, symmetric invariant density), kappa = 0.10, eps_g = 0.05. In the treatment p(i), q(i) are the other two members of unit i's group: interaction is a product (XOR-like) of the partners, so partners are uncorrelated to first order; the global mean-field leak eps_g couples every unit to every other unit without group structure.",
+      "intervention": "Readout applied to the treatment world: FTLE grouping. At K = 100 base times (burn-in 500 steps, spacing 20) each unit i is perturbed by delta = 1e-9 and both copies are iterated tau = 8 steps; D_ij = mean over base times of log10(|dv_j| + 1e-18); similarity D + D^T (diagonal set to the maximum); average-linkage agglomeration into 4 clusters; adjusted Rand index (ARI) against the nominal partition.",
+      "control": "Correlation grouping on the same trajectory: similarity = max(|Pearson lag 0|, |Pearson lag 1| in either direction) over 5000 post-burn-in steps; same clustering; ARI against the nominal partition. This is M12's simpler alternative.",
+      "positive_control": "Effect present by construction: identical world and readouts with eps_g = 0, so perturbations can travel only inside groups and FTLE grouping must recover the partition; the product coupling keeps correlation near zero.",
+      "observable": "Per seed: ari_ftle, ari_corr (both against the nominal 4 x 3 partition). Statistics are means over 10 seeds (initial condition v0 ~ U(-1, 1)^12 from numpy default_rng(seed)).",
+      "success_criterion": "[{\"id\": \"S1\", \"text\": \"Mean over 10 seeds of the FTLE-grouping ARI is at least 0.8.\", \"statistic\": \"mean_seed(ari_ftle)\", \"comparison\": \">=\", \"threshold\": 0.8}, {\"id\": \"S2\", \"text\": \"Mean over 10 seeds of (FTLE-grouping ARI minus correlation-grouping ARI) is at least 0.5.\", \"statistic\": \"mean_seed(ari_ftle - ari_corr)\", \"comparison\": \">=\", \"threshold\": 0.5}]",
+      "failure_criterion": "[{\"id\": \"F1\", \"text\": \"Mean FTLE-grouping ARI below 0.3: co-divergence does not isolate interacting elements once an unstructured leak is present.\", \"statistic\": \"mean_seed(ari_ftle)\", \"comparison\": \"<\", \"threshold\": 0.3}, {\"id\": \"F2\", \"text\": \"Mean (FTLE ARI minus correlation ARI) below 0.2: the correlation baseline does as well, so FTLE adds nothing here.\", \"statistic\": \"mean_seed(ari_ftle - ari_corr)\", \"comparison\": \"<\", \"threshold\": 0.2}]",
+      "alternative_explanation": "Any perturbation-response (causal intervention) readout recovers a coupling graph whether or not the carrier is chaotic; success would show that intervention beats observation, not that chaos is what measures interactivity. Separately, the global leak may synchronise units so that every readout sees one block.",
+      "null_twin": "Same map, same kappa = 0.10, same eps_g = 0.05, same in-degree 2 product coupling, but each unit's two partners drawn uniformly at random from the other 11 units (default_rng(500 + seed)); the nominal partition remains the scoring target. Nuisance statistics (coupling count, strength, map, leak) matched; group structure destroyed.",
+      "substrate": "causal toy",
+      "cost_estimate": "about 0.02 CPU core-minutes for the treatment (all controls took 0.03)",
+      "stupid_explanations": [
+        "the leak synchronises units (check corr_between_mean and trajectory range; the twin at eps_g = 0.05 stays unsynchronised, mean |corr| about 0.04)",
+        "the ARI of a 4-cluster average-linkage partition is inflated by cluster-size artefacts (report the partitions; chance ARI in the twins is about 0)",
+        "the invariant density is not symmetric, so E[v] != 0 and product coupling leaks first-order correlation (report corr_within_mean vs corr_between_mean)",
+        "tau = 8 is either too short for within-group spread or long enough for the leak to saturate everything (report ftle_within_mean and ftle_between_mean)"
+      ],
+      "spec": "hecate/programs/HT-55162c0ac0/worlds/W6/spec.json",
+      "attainability": "hecate/programs/HT-55162c0ac0/worlds/W6/ATTAINABILITY.json",
+      "outcome": "SIGNAL",
+      "round": 3,
+      "rows": "hecate/programs/HT-55162c0ac0/worlds/W6/probe/rows.jsonl",
+      "outcome_file": "hecate/programs/HT-55162c0ac0/worlds/W6/probe/OUTCOME.json",
+      "statistics": {
+        "success": {
+          "TREATMENT": {
+            "S1": {
+              "value": 1.0,
+              "threshold": 0.8,
+              "comparison": ">=",
+              "met": true
+            },
+            "S2": {
+              "value": 1.083018601827008,
+              "threshold": 0.5,
+              "comparison": ">=",
+              "met": true
+            }
+          },
+          "POSITIVE_CONTROL": {
+            "S1": {
+              "value": 1.0,
+              "threshold": 0.8,
+              "comparison": ">=",
+              "met": true
+            },
+            "S2": {
+              "value": 0.9786190952456613,
+              "threshold": 0.5,
+              "comparison": ">=",
+              "met": true
+            }
+          },
+          "CHEAT": {
+            "S1": {
+              "value": 1.0,
+              "threshold": 0.8,
+              "comparison": ">=",
+              "met": true
+            },
+            "S2": {
+              "value": 0.9786190952456613,
+              "threshold": 0.5,
+              "comparison": ">=",
+              "met": true
+            }
+          },
+          "NULL_TWIN": {
+            "S1": {
+              "value": 0.019075615242337963,
+              "threshold": 0.8,
+              "comparison": ">=",
+              "met": false
+            },
+            "S2": {
+              "value": 0.02405499058494337,
+              "threshold": 0.5,
+              "comparison": ">=",
+              "met": false
+            }
+          },
+          "NULL_TWIN_NOLEAK": {
+            "S1": {
+              "value": -0.032775016301408756,
+              "threshold": 0.8,
+              "comparison": ">=",
+              "met": false
+            },
+            "S2": {
+              "value": -0.05869106984951923,
+              "threshold": 0.5,
+              "comparison": ">=",
+              "met": false
+            }
+          }
+        },
+        "failure": {
+          "TREATMENT": {
+            "F1": {
+              "value": 1.0,
+              "threshold": 0.3,
+              "comparison": "<",
+              "met": false
+            },
+            "F2": {
+              "value": 1.083018601827008,
+              "threshold": 0.2,
+              "comparison": "<",
+              "met": false
+            }
+          },
+          "POSITIVE_CONTROL": {
+            "F1": {
+              "value": 1.0,
+              "threshold": 0.3,
+              "comparison": "<",
+              "met": false
+            },
+            "F2": {
+              "value": 0.9786190952456613,
+              "threshold": 0.2,
+              "comparison": "<",
+              "met": false
+            }
+          },
+          "CHEAT": {
+            "F1": {
+              "value": 1.0,
+              "threshold": 0.3,
+              "comparison": "<",
+              "met": false
+            },
+            "F2": {
+              "value": 0.9786190952456613,
+              "threshold": 0.2,
+              "comparison": "<",
+              "met": false
+            }
+          },
+          "NULL_TWIN": {
+            "F1": {
+              "value": 0.019075615242337963,
+              "threshold": 0.3,
+              "comparison": "<",
+              "met": true
+            },
+            "F2": {
+              "value": 0.02405499058494337,
+              "threshold": 0.2,
+              "comparison": "<",
+              "met": true
+            }
+          },
+          "NULL_TWIN_NOLEAK": {
+            "F1": {
+              "value": -0.032775016301408756,
+              "threshold": 0.3,
+              "comparison": "<",
+              "met": true
+            },
+            "F2": {
+              "value": -0.05869106984951923,
+              "threshold": 0.2,
+              "comparison": "<",
+              "met": true
+            }
+          }
+        },
+        "treatment_diagnostics": {
+          "ari_ftle": 1.0,
+          "ari_corr": -0.083018601827008,
+          "ftle_within_mean": -7.940745924636741,
+          "ftle_between_mean": -8.710649100695711,
+          "corr_within_mean": 0.034027470373770824,
+          "corr_between_mean": 0.03926544084058133,
+          "traj_min": -0.9411111075100553,
+          "traj_max": 0.9444462335922341,
+          "per_seed_ari_ftle": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "per_seed_ari_corr": [
+            -0.09561752988047807,
+            0.014336917562724002,
+            -0.13452914798206278,
+            -0.23318385650224216,
+            -0.12037037037037035,
+            -0.007968127490039834,
+            -0.03587443946188342,
+            -0.03587443946188342,
+            -0.14336917562724016,
+            -0.03773584905660378
+          ],
+          "partitions_ftle": [
+            [
+              0,
+              0,
+              0,
+              1,
+              1,
+              1,
+              2,
+              2,
+              2,
+              3,
+              3,
+              3
+            ],
+            [
+              0,
+              0,
+              0,
+              1,
+              1,
+              1,
+              2,
+              2,
+              2,
+              3,
+              3,
+              3
+            ],
+            [
+              0,
+              0,
+              0,
+              1,
+              1,
+              1,
+              2,
+              2,
+              2,
+              3,
+              3,
+              3
+            ],
+            [
+              0,
+              0,
+              0,
+              1,
+              1,
+              1,
+              2,
+              2,
+              2,
+              3,
+              3,
+              3
+            ],
+            [
+              0,
+              0,
+              0,
+              1,
+              1,
+              1,
+              2,
+              2,
+              2,
+              3,
+              3,
+              3
+            ],
+            [
+              0,
+              0,
+              0,
+              1,
+              1,
+              1,
+              2,
+              2,
+              2,
+              3,
+              3,
+              3
+            ],
+            [
+              0,
+              0,
+              0,
+              1,
+              1,
+              1,
+              2,
+              2,
+              2,
+              3,
+              3,
+              3
+            ],
+            [
+              0,
+              0,
+              0,
+              1,
+              1,
+              1,
+              2,
+              2,
+              2,
+              3,
+              3,
+              3
+            ],
+            [
+              0,
+              0,
+              0,
+              1,
+              1,
+              1,
+              2,
+              2,
+              2,
+              3,
+              3,
+              3
+            ],
+            [
+              0,
+              0,
+              0,
+              1,
+              1,
+              1,
+              2,
+              2,
+              2,
+              3,
+              3,
+              3
+            ]
+          ]
+        },
+        "n_seeds": {
+          "TREATMENT": 10,
+          "POSITIVE_CONTROL": 10,
+          "CHEAT": 10,
+          "NULL_TWIN": 10,
+          "NULL_TWIN_NOLEAK": 10
+        },
+        "control_arm_ari_corr_mean": -0.083018601827008
+      },
+      "anomalies": [],
+      "rejected_explanations": [
+        "the leak synchronises units (check corr_between_mean and trajectory range; the twin at eps_g = 0.05 stays unsynchronised, mean |corr| about 0.04)",
+        "the ARI of a 4-cluster average-linkage partition is inflated by cluster-size artefacts (report the partitions; chance ARI in the twins is about 0)",
+        "the invariant density is not symmetric, so E[v] != 0 and product coupling leaks first-order correlation (report corr_within_mean vs corr_between_mean)"
+      ]
     }
   ],
   "candidateEngines": [],
-  "currentVerdict": "PARK",
+  "currentVerdict": "PROBING",
   "evidenceSummary": {
     "layer": "experimental_observation",
-    "rows": "hecate/programs/HT-55162c0ac0/worlds/W2/pilot_rows.jsonl",
-    "note": "round 1 W3 INSTRUMENT_FAIL; round 2 W2 SPEC_UNATTAINABLE: Pass 3 produced no testable world in two tries (generator finding)"
+    "rows": "hecate/programs/HT-55162c0ac0/worlds/W6/probe/rows.jsonl",
+    "note": "round 3 W6 SIGNAL: round-3 SIGNAL; Pass 4 next"
   }
 }

@@ -32,7 +32,7 @@ Layers: [spec] speculation, [impl] implemented candidate, [obs] experimental obs
 - [spec] M5 (selection mechanism): Error-threshold seeking: genomes carry an evolvable repetition factor on their functional bits; redundancy costs replication speed. The population evolves toward the minimum redundancy that keeps it below its heredity error threshold, and extinction or sweep events near that edge have scale-free size distributions.
 - [spec] M6 (error-correction mechanism): Failure-size criticality at threshold: the number of wrong bits left after iterative decoding is bimodal away from threshold (zero or large) and broad, possibly power-law, exactly at threshold, so the size distribution of decoding failures is an order-parameter probe of the code's phase.
 - [spec] M7 (memory structure): Scale-free burst memory: marks written into a sandpile are erased when their site topples. At criticality erasures come in spatially compact bursts of every size, so the benefit of scattering an erasure-code's symbols (interleaving) over placing them contiguously grows with system size, whereas in a subcritical pile the benefit saturates once the spread exceeds the characteristic avalanche size.
-- [spec] M8 (computational primitive): Critical slowing down as noise estimator: the number of iterations an iterative decoder needs grows sharply as noise approaches threshold, so an agent can read its own distance-to-threshold from convergence time and adjust protection without ever observing a failure.
+- [impl] M8 (computational primitive): Critical slowing down as noise estimator: the number of iterations an iterative decoder needs grows sharply as noise approaches threshold, so an agent can read its own distance-to-threshold from convergence time and adjust protection without ever observing a failure.
 - [impl] M9 (causal constraint): Parity-conserving lazy decoder: on a planar surface-code-like lattice, edge flips create defect pairs; a lazy local decoder acts only where a neighbourhood holds at least theta defects, and its moves either annihilate adjacent pairs or hop a defect (parity preserving). Defects leave only at the boundary. Parity conservation plus threshold laziness plus boundary-only loss should make decoding avalanches scale-free; allowing bulk single-defect deletion should destroy it.
 - [spec] M10 (developmental process): Failure-driven code growth: a code grows by adding a new check node over the bits involved in each decoding failure; the grown Tanner graph self-organizes to a structure whose threshold sits just above the ambient noise, and failure sizes become scale-free as the code approaches that edge.
 - [spec] M11 (information bottleneck): Coarse-graining as decoding: majority-rule block coarse-graining is a concatenated repetition decoder; its fixed-point structure (flow to all-correct or to random) is the threshold of the concatenated code, so a system that repeatedly coarse-grains its own state keeps information iff noise is below an RG critical point.
@@ -55,13 +55,18 @@ Layers: [spec] speculation, [impl] implemented candidate, [obs] experimental obs
 - W2 [graph] Under one-bit-at-a-time noise injection with bit-flip relaxation to quiescence, the stationary residual-error density of a regular (3,6) sparse code sits within 20% of the independently measured bit-flip threshold of the same ensemble. | success: |rho* - p*|/p* <= 0.2 AND drift slope over last half < 0.05 * rho* per 10^4 injections (stationary) AND null twin |rho*_twin - p*|/p* > 0.5 | null twin: syndrome-blind relaxation with matched flip counts; destroys the parity-driven mechanism while preserving drive and flip volume | cost: 7
 - W3 [reaction-diffusion] In a critical sandpile the survival advantage of scattered over contiguous placement of an erasure code's symbols grows with system size, while in a subcritical pile it saturates and in an iid-erasure world it is absent. | success: critical: R(64)/R(16) >= 1.5; subcritical: R(64)/R(16) <= 1.15; iid: R within [0.9, 1.1] at both L; 400 messages per cell, bootstrap 90% intervals non-overlapping between critical and subcritical ratios | null twin: iid erasures matched on per-site erasure rate; destroys spatial burst structure | cost: 9
 - W4 [optimizer] A storage scrubber that lowers effort after each clean epoch and raises it after each failure, with residual errors persisting between epochs, shows failure clustering (Fano factor growing with window) beyond a memoryless twin driven by the same measured failure curve. | success: adaptive: Fano(1000)/Fano(10) >= 2 AND memoryless twin: Fano(1000)/Fano(10) <= 1.3, 3 seeds each, all seeds agreeing in direction | null twin: memoryless Bernoulli failures with the same effort-to-failure curve and the same update rule; destroys the persistent-residue coupling | cost: 9
+- W5 [graph] Near the decoding threshold an iterative decoder slows down, so the number of iterations it needs carries information about the realised number of channel errors w that the syndrome weight s of the received word does not already carry. Speculation layer; the simpler alternative (M8) is that s already carries everything and the iteration count adds nothing. | success: [{"id": "S1", "text": "mean over the 5 seeds of treatment G is at least 0.20", "statistic": "mean over seeds 0-4 of G", "comparison": ">=", "threshold": 0.2}, {"id": "S2", "text": "every seed has treatment G at least 0.10", "statistic": "min over seeds 0-4 of G", "comparison": ">=", "threshold": 0.1}] | null twin: t generated from syndrome weight alone through the same slowing-down formula, noise, cap and discreteness: destroys information beyond s while keeping the shape and marginal behaviour of an iteration count. | cost: about 2 CPU core-minutes for the treatment (vectorised min-sum, 15000 blocks); controls 0.1 s
+- W6 [optimizer] A storage scrubber that lowers its protection after quiet periods and raises it after failures, with the residual errors of a failed scrub persisting into the next epoch, shows failure clustering on long time scales (Fano factor of failure counts growing with window) beyond a memoryless twin driven by the same measured failure curve and the same update rule. Speculation layer; the simpler alternative (M2) is a stochastic-approximation controller parked at a failure quantile, whose failures are regulated, not clustered. | success: [{"id": "S1", "text": "mean over 5 seeds of treatment F is at least 2.0 (failure counts over-dispersed at long windows relative to short)", "statistic": "mean over seeds 0-4 of F", "comparison": ">=", "threshold": 2.0}, {"id": "S2", "text": "every seed has treatment F at least 1.0", "statistic": "min over seeds 0-4 of F", "comparison": ">=", "threshold": 1.0}, {"id": "S3", "text": "treatment mean F is at least 4 times the frozen NULL_TWIN mean F (0.0854)", "statistic": "mean over seeds of treatment F divided by mean over seeds of NULL_TWIN F from control_rows.jsonl", "comparison": ">=", "threshold": 4.0}] | null twin: Bernoulli(Pfail(s)) failures under the same controller, Pfail measured fresh-start on the same graph; equivalent to resetting the stored word after every failure. Destroys persistence only. | cost: about 3-6 CPU core-minutes for the treatment (sparse incremental scrub; most epochs carry 0-2 new flips); controls 19 s
 
 ## OBSERVATIONS
 - W1: NULL (hecate/programs/HT-e106e1603b/worlds/W1/rows.jsonl)
 - W2: NOT_BUILT (hecate/programs/HT-e106e1603b/worlds/W2/rows.jsonl)
+- W5: NULL (hecate/programs/HT-e106e1603b/worlds/W5/probe/rows.jsonl)
 
 ## FALSIFICATIONS
-_none yet_
+- W5: the cap: blocks that never converge are the heavy-noise ones, so t acts as a coarse failure flag rather than a slowing-down clock
+- W5: the polynomial in s underfits E[w|s], and any second feature correlated with s (including t) absorbs the misfit and shows positive G
+- W5: if the decoder were given p (a per-block LLR magnitude), t would leak p and hence w directly; the fixed LLR rule prevents this and must be kept
 
 ## SURVIVING ANOMALIES
 - W1: twin mean not within 5% of conserving at L=16 (ratio 0.948) on measurement seeds
@@ -100,12 +105,10 @@ _none yet_
 _none yet_
 
 ## OPEN QUESTIONS
-- boundary walk ~L makes any size grow with L
-- laziness backlog released as lattice fills, not criticality
-- eps matches mean but not variance
+- t is discrete and saturates at 60, so G may sit on a plateau set by the cap rather than by the decoder dynamics
 
 ## CURRENT VERDICT
-SPECULATIVE (an allocation state, not a truth claim). round 1 W2 NOT_BUILT; round 2 W1 NULL: one valid NULL reading; next world eligible
+PARK (an allocation state, not a truth claim). round 3 W5 NULL: two valid NULL readings (W1, W5)
 
 ## NEXT PASS
-decision after P3-probe2: PARK
+decision after P3-probe3: PARK

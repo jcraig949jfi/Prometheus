@@ -1,0 +1,245 @@
+{
+ "triplicateId": "HT-056d3ac561",
+ "world": "W5",
+ "outcome": "NULL",
+ "outcome_reason": "treatment fails success clause(s) ['S1', 'S3']; failure clause(s) met: ['F1', 'F3']",
+ "statistics": {
+  "treatment": {
+   "S1_median_latency": 75.0,
+   "S2_fa_fraction": 0.028,
+   "S3_ratio_to_REFERENCE_NIS": 4.166666666666667,
+   "F1_ratio_to_REFERENCE_NIS": 4.166666666666667,
+   "F2_fa_fraction": 0.028,
+   "F3_ratio_to_NO_REOPEN": 0.9615384615384616
+  },
+  "per_arm": {
+   "TREATMENT": {
+    "median_latency_pooled": 75.0,
+    "fa_fraction_pooled": 0.028,
+    "mse_unchanged_300_350_mean": 0.5110587519780188,
+    "reopen_events_per_run_mean": 1.17,
+    "per_seed_median_latency": [
+     74.0,
+     75.0,
+     76.0,
+     75.5,
+     74.0
+    ],
+    "frac_never_recovered_cap": 0.0,
+    "post_change_first_alarm_delay": {
+     "fraction_with_alarm": 0.798,
+     "median_delay_steps": 82.0
+    }
+   },
+   "REFERENCE_NIS": {
+    "median_latency_pooled": 18.0,
+    "fa_fraction_pooled": 0.043,
+    "mse_unchanged_300_350_mean": 2.708314834975819,
+    "reopen_events_per_run_mean": 1.011,
+    "per_seed_median_latency": [
+     18.5,
+     18.0,
+     18.0,
+     18.0,
+     16.0
+    ],
+    "frac_never_recovered_cap": 0.0
+   },
+   "POSITIVE_CONTROL": {
+    "median_latency_pooled": 2.0,
+    "fa_fraction_pooled": 0.0,
+    "mse_unchanged_300_350_mean": 0.5095719440199036,
+    "reopen_events_per_run_mean": 1.0,
+    "per_seed_median_latency": [
+     2.0,
+     2.0,
+     2.0,
+     2.0,
+     2.0
+    ],
+    "frac_never_recovered_cap": 0.0
+   },
+   "NULL_TWIN": {
+    "median_latency_pooled": 76.0,
+    "fa_fraction_pooled": 0.473,
+    "mse_unchanged_300_350_mean": 0.5778503092619444,
+    "reopen_events_per_run_mean": 1.0,
+    "per_seed_median_latency": [
+     77.0,
+     76.0,
+     76.0,
+     76.0,
+     75.0
+    ],
+    "frac_never_recovered_cap": 0.0
+   },
+   "NO_REOPEN": {
+    "median_latency_pooled": 78.0,
+    "fa_fraction_pooled": 0.0,
+    "mse_unchanged_300_350_mean": 0.5095719440199036,
+    "reopen_events_per_run_mean": 0.0,
+    "per_seed_median_latency": [
+     79.0,
+     77.5,
+     78.0,
+     78.0,
+     77.0
+    ],
+    "frac_never_recovered_cap": 0.0
+   },
+   "CHEAT": {
+    "median_latency_pooled": 0.0,
+    "fa_fraction_pooled": 0.0,
+    "mse_unchanged_300_350_mean": 0.5095719440199036,
+    "reopen_events_per_run_mean": 0.0,
+    "per_seed_median_latency": [
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0
+    ],
+    "frac_never_recovered_cap": 0.0
+   }
+  },
+  "control_reproducibility": {
+   "ok": true,
+   "clauses": [
+    {
+     "id": "S1",
+     "positive_value": 2.0,
+     "twin_value": 76.0,
+     "cheat_value": 0.0,
+     "attainable": true,
+     "discriminating": true,
+     "frozen_attainable": true,
+     "frozen_discriminating": true,
+     "status_matches": true,
+     "values_identical": true
+    },
+    {
+     "id": "S2",
+     "positive_value": 0.0,
+     "twin_value": 0.473,
+     "cheat_value": 0.0,
+     "attainable": true,
+     "discriminating": true,
+     "frozen_attainable": true,
+     "frozen_discriminating": true,
+     "status_matches": true,
+     "values_identical": true
+    },
+    {
+     "id": "S3",
+     "positive_value": 0.1111111111111111,
+     "twin_value": 4.222222222222222,
+     "cheat_value": 0.0,
+     "attainable": true,
+     "discriminating": true,
+     "frozen_attainable": true,
+     "frozen_discriminating": true,
+     "status_matches": true,
+     "values_identical": true
+    }
+   ],
+   "REFERENCE_NIS_median": 18.0,
+   "REFERENCE_NIS_reproduces_18": true,
+   "h_NIS_reproduces": true
+  },
+  "calibration": {
+   "h_NIS": 223.97086372226062,
+   "h_MR": 114.31690862659673,
+   "cal_seed": 999,
+   "cal_runs": 1000,
+   "quantile": 0.95,
+   "h_MR_run_max_summary": {
+    "min": 23.063312879865638,
+    "median": 61.51126337580662,
+    "max": 210.81972635517783
+   }
+  }
+ },
+ "criterion_as_applied": {
+  "success": [
+   {
+    "id": "S1",
+    "comparison": "<=",
+    "threshold": 12,
+    "value": 75.0,
+    "met": false
+   },
+   {
+    "id": "S2",
+    "comparison": "<=",
+    "threshold": 0.1,
+    "value": 0.028,
+    "met": true
+   },
+   {
+    "id": "S3",
+    "comparison": "<=",
+    "threshold": 0.6,
+    "value": 4.166666666666667,
+    "met": false
+   }
+  ],
+  "failure": [
+   {
+    "id": "F1",
+    "comparison": ">=",
+    "threshold": 0.95,
+    "value": 4.166666666666667,
+    "met": true
+   },
+   {
+    "id": "F2",
+    "comparison": ">",
+    "threshold": 0.15,
+    "value": 0.028,
+    "met": false
+   },
+   {
+    "id": "F3",
+    "comparison": ">=",
+    "threshold": 0.9,
+    "value": 0.9615384615384616,
+    "met": true
+   }
+  ],
+  "rule": "SIGNAL iff controls reproduce, positive and cheat detected, twin fails some S clause, treatment meets S1-S3 and no F clause; else NULL"
+ },
+ "positive_control_detected": true,
+ "cheat_detected": true,
+ "null_twin_meets_success": false,
+ "stupid_explanations_status": [
+  {
+   "text": "the MR threshold is so low that it fires continuously, so latency is short because the filter is always open (checked by S2 and by the unchanged-component MSE)",
+   "addressed_by_this_run": true,
+   "how": "treatment pre-change FA fraction 0.028 (S2 threshold 0.10), reopen events/run 1.17, unchanged-component MSE 0.5111 vs NO_REOPEN 0.5096"
+  },
+  {
+   "text": "the jump is so large that any alarm fires on the first step after the change, so no statistic can beat another (checked: REFERENCE_NIS median latency is well above the oracle's)",
+   "addressed_by_this_run": true,
+   "how": "REFERENCE_NIS median 18.0 vs oracle 2.0 on the rerun"
+  },
+  {
+   "text": "the latency band is so loose that the collapsed filter already counts as recovered (checked: NO_REOPEN median latency ~78 steps against the oracle's 2)",
+   "addressed_by_this_run": true,
+   "how": "NO_REOPEN median 78.0 vs oracle 2.0"
+  },
+  {
+   "text": "calibration on the evaluation seeds rather than the separate calibration seed",
+   "addressed_by_this_run": true,
+   "how": "h_NIS and h_MR both calibrated on seed 999 (1000 no-jump runs) only; evaluation seeds 0-4"
+  },
+  {
+   "text": "alternative explanation (spec): any gain comes from per-component sparse alarms, not the metamorphic relation; a per-component NIS_j alarm with the same sparse reopening would do as well",
+   "addressed_by_this_run": false,
+   "how": "no per-component NIS_j arm is in the frozen spec; not built (would be a new arm)"
+  }
+ ],
+ "anomalies": [],
+ "core_minutes": 0.0216,
+ "attempts": 1,
+ "notes": "Post-run diagnostic (NOTES.md): z_j^2 mean 0.976 under null (normalization correct) but lag-1 autocorrelation 0.97, so the 10-step window is ~one draw and h_MR=114 is high; MR alarm after the change fires in 79.8% of runs, median delay 82 steps. Treatment in controls.run_filter code path (probe/world.py mr_fn); readings A1-A5 in probe/NOTES.md. Seeds 0-4 x 200 runs, calibration seed 999."
+}
