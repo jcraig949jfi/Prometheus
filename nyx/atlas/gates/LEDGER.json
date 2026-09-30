@@ -224,6 +224,16 @@
    "posted": "#(this tick)",
    "note": "the first golden-path packet: ASAL legitimate-Lenia-search exploitability; four exact rows (I0 catalogue-only no-cross, I1 crossing-mean, I2 crossing-2sd, I3 class-of-best exploit); awaiting Harmonia's typed verdict",
    "returns": []
+  },
+  {
+   "object_id": "MECH-AVIDA-ANCESTRY-RETENTION-001 (frozen 0f52e295) on cut avida; boundary systematics/Genotype.cc + GenotypeArbiter.cc, main/cPopulation.cc:6362-6563",
+   "kind": "NYX_PREDICTION_PACKET",
+   "created": "2026-09-30",
+   "host": "M3 (GANDALF)",
+   "to": "Harmonia (ancestry ruler owner)",
+   "posted": "#(this tick)",
+   "note": "the Avida ancestry packet (operator 2026-09-18 s3; directive 2026-09-19b: 'Then Avida ancestry'); eight exact rows on shipped saves; awaiting Harmonia's typed verdict",
+   "returns": []
   }
  ],
  "returns_received": [
@@ -405,9 +415,37 @@
    "evidence": "RULING_ASAL_LEGIT_SEARCH_001 s7 annotation; rows 0.8076 / 0.7665 / S2_189 METRIC_EXPLOIT",
    "disposition_by_nyx": "ASSIMILATE in Stage D': I0 failed (raw catalogue crosses; I used a 5-seed estimated mean as an exact threshold, A7); I1/I2 existential by witness; I3 only over the 395 executed. Do NOT complete the 1045 -- that is a new preregistered replication after port extension (A4). Packet stays frozen; a domain-claim supersession would carry a new CUT_ID.",
    "kind": "NYX_PREDICTION_PACKET"
+  },
+  {
+   "return_type": "CUT_SUPPORTED (4/4, EXECUTED STRUCTURAL IDENTITY; NOT CONFIRMATORY)",
+   "from": "Harmonia[m2-475d761f]",
+   "on_object": "MECH-POET-NOVELTY-ESTIMATOR-001",
+   "comms": "#1063 (after #1059, #1062)",
+   "received_tick": "2026-09-30",
+   "evidence": "RULING_MECH_POET_NOVELTY_ESTIMATOR_001_2026-09-30.md @ b055767b2; executor committed before its run (f76cc5e3b); body sha256 0575d92b verified",
+   "disposition_by_nyx": "ASSIMILATE in Stage D': mechanism MECH-POET-NOVELTY-ESTIMATOR -> EVIDENCE_SUPPORTED with evidence_kind EXECUTED_STRUCTURAL_IDENTITY; predictions_tested 0. ADMISSIBILITY RULING ADOPTED AS PRACTICE: a row whose value the author has seen is a verified code fact, not a prediction; deterministic structural rows are frozen BLIND and their definedness is checked on a model or fixture (first applied in MECH-AVIDA-ANCESTRY-RETENTION-001, frozen the same day before this ruling was read). poet-enhanced-2020 (PATA-EC) is unblocked.",
+   "kind": "NYX_PREDICTION_PACKET"
+  },
+  {
+   "return_type": "HARM-56 DISPOSITION A_OBSERVER_STABLE (replication_authorised)",
+   "from": "Harmonia[m2-475d761f]",
+   "on_object": "MECH-ASAL-LEGIT-SEARCH-001 observer dependence (HARM-55 native Flax column, HARM-56 map)",
+   "comms": "#1067",
+   "received_tick": "2026-09-30",
+   "evidence": "RECORD_HARM55_HARM56_NATIVE_OBSERVER_2026-09-30.md @ 68036a8ae; max abs error 4.77e-7 over n = 333, Spearman 1.0; C-SELF / C-STATIC tool fields null, covered by separate artifacts",
+   "disposition_by_nyx": "ASSIMILATE: MECH-ASAL-OE-SCORE.observer_dependence UNKNOWN -> OBSERVER_STABLE on the executed 395 domain. HOLD LIFTED: the full-domain replication packet may now be authored as a NEW preregistration (executable-domain gate, positional index, both observers, determinism on a sampled and an adversarial subset). Behavioral cuts stay held until that replication is frozen AND executed. The claim text at its current resolution does not change.",
+   "kind": "OBSERVER_DEPENDENCE_DISPOSITION"
   }
  ],
- "escalations": [],
+ "escalations": [
+  {
+   "object": "MECH-POET-NOVELTY-ESTIMATOR-001 (#494) and the HARM-55 / HARM-56 dependency (#485, #489)",
+   "raised": "2026-09-30",
+   "comms": "#1059 to Harmonia, cc Aporia, Techne",
+   "why": "both were addressed to Harmonia instances that had gone offline (gandalf-6cd1348b since 2026-09-19, m2-ca1148a0 since 2026-09-25); neither item was in the live instance's WORK_STATE or in ops/fleet/QUEUE.json; the packet's own return protocol (ack 1 tick, disposition 2 ticks) had been exceeded by 9 days with no escalation row",
+   "result": "#1062 (25 minutes later): the live instance m2-475d761f took both; #1063 POET ruling; #1067 HARM-56 disposition A_OBSERVER_STABLE -- all the same morning"
+  }
+ ],
  "packets_issued": [
   {
    "packet_id": "MECH-PARTICLES-ESSTRIGGER-001",
@@ -461,6 +499,21 @@
    "cut_id": "poet-original-2019",
    "lane": "m3-native-python",
    "issued_tick": "2026-09-19",
+   "verdict_tick": "2026-09-30",
+   "adjudicated": true,
+   "predictions_tested": 0,
+   "predictions_falsified": 0,
+   "cut_supported": true,
+   "mechanism_isolated": true,
+   "observer_stable": "NOT_APPLICABLE",
+   "transplant": "NONE",
+   "note": "FREEZE 291a22ed. Four EXACT deterministic rows on the fossil's OWN bytes (novelty.py runs standalone on M3 with numpy; no AVX host, no Box2D, so it does not queue behind HARM-55): I1 estimator regime change at archive size k; I2 unnormalised range dominance ratio 8/3; I3 absence == zero-presence at distance 0; I4 zero increases in the novelty series. All scouted SEEN before freezing. This is the 'one POET mechanism through an independent ruling' the 2026-09-19b directive s2 asked for. || VERDICT 2026-09-30 (Harmonia #1063): CUT_SUPPORTED 4/4 as an executed structural identity; a CONFIRMATORY reading is NOT admissible (rows seen before the freeze, deterministic payload), so predictions_tested stays 0: nothing was predicted. 11 days from issue to verdict, 9 of them because the packet was addressed to an instance that went offline and this seat did not escalate (calibration ledger 2026-09-30)."
+  },
+  {
+   "packet_id": "MECH-AVIDA-ANCESTRY-RETENTION-001",
+   "cut_id": "avida",
+   "lane": "m3-native-python",
+   "issued_tick": "2026-09-30",
    "verdict_tick": null,
    "adjudicated": false,
    "predictions_tested": 0,
@@ -469,7 +522,7 @@
    "mechanism_isolated": true,
    "observer_stable": "NOT_APPLICABLE",
    "transplant": "NONE",
-   "note": "FREEZE 291a22ed. Four EXACT deterministic rows on the fossil's OWN bytes (novelty.py runs standalone on M3 with numpy; no AVX host, no Box2D, so it does not queue behind HARM-55): I1 estimator regime change at archive size k; I2 unnormalised range dominance ratio 8/3; I3 absence == zero-presence at distance 0; I4 zero increases in the novelty series. All scouted SEEN before freezing. This is the 'one POET mechanism through an independent ruling' the 2026-09-19b directive s2 asked for."
+   "note": "FREEZE 0f52e295. Eight EXACT rows on the fossil's OWN bytes: the 177 .spop saves the body ships as upstream's expected test outputs (Python only; no Avida binary, no AVX, no docker). BLIND: the author opened none of them. I1 parent closure, I2 no dead leaf (the central row), I3 depth = parent + 1, I4 a living genome is a key, I5 save_historic=0 writes no dead row, I6 the founding clock never stamps 0, I7 persistence across the two shipped save series, I8 the u 99 re-injection severs the record. A5 definedness and all controls ran on a synthetic fixture before the hash."
   }
  ],
  "unresolved_anomalies": [
@@ -485,7 +538,10 @@
     "a new preregistered full-domain replication (s4)",
     "Nyx behavioral cuts on stable and discordant regions (s5)"
    ],
-   "note": "do NOT reduce to 'the metric is broken'; the I0 failure is evidence the phenomenon is not a search artifact. This is the object the pipeline is now chasing, not a nuisance."
+   "note": "do NOT reduce to 'the metric is broken'; the I0 failure is evidence the phenomenon is not a search artifact. This is the object the pipeline is now chasing, not a nuisance.",
+   "progress": [
+    "2026-09-30: gates 1 and 2 cleared (HARM-55 native column landed; HARM-56 = A_OBSERVER_STABLE, Harmonia #1067). The many-to-one compression is therefore a property of the observer as published, not of the torch reconstruction. Still OPEN: gated on the full-domain replication."
+   ]
   }
  ]
 }

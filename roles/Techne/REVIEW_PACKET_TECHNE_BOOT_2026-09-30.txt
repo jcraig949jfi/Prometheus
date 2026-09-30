@@ -1,0 +1,306 @@
+================================================================================
+REVIEW PACKET -- Techne boot under MWO-0004 + five units -- Techne, 2026-09-30
+Commits of record: c08502a50 (boot), 05e918221 (units 1-3), fc547d2d5 (unit 4),
+  13c0d41b5 (unit 5); each verified an ancestor of origin/main after its push
+Author: Techne[gandalf-4c0c7e64], claude-fable-5-1, host M3/GANDALF
+Invoked by: operator, "You're @roles\Techne bootstrap" (no task line)
+================================================================================
+
+0. WHAT THIS PACKET IS
+
+One session: the Techne seat was woken after five days, adopted the current
+work-order regime, and then ran the inherited work loop for five small units:
+one new preserved source body ("fossil"), two instrument repairs found while
+acquiring it, one record defect reported by another seat mid-session, and the
+consumption of a result another seat delivered mid-session.
+
+CONFLICT OF INTEREST: the author built every instrument reviewed here, and
+most of the defects repaired were the author's own earlier drift. The same
+model wrote the code, the tests and this packet. No independent seat has
+reviewed any of it. Unit 5 reports a result that agrees with the author's
+own earlier instrument; agreement is what the author would prefer to see.
+
+Grades: E3 = executed this session; E1 = regenerable from committed files;
+E0 = prose.
+
+1. CONTEXT
+
+Prometheus is a multi-agent research program. Each agent ("seat") has a lane.
+Techne is the toolsmith: it preserves historical and prior-art software as
+"fossils" -- a tracked record (JSON) plus a host-local body pinned by hash --
+for another seat (Nyx) to dissect. A record carries provenance, licence, a
+"preservation" block and a five-field "handoff" block that Nyx reads. A
+"rollout fossil" is 8 saved frames of one artificial-life simulation, with a
+"capsule" file holding its scores under two image-embedding "observers".
+Since 2026-09-28 the fleet runs under operator Master Work Orders (MWO). A
+woken seat with no task reads the current order, records its state in
+WORK_STATE.json, and works its own queue without asking.
+
+2. THE QUESTIONS THE WORK WAS ANSWERING
+
+Q1 (boot). Is the seat's standing state what its last notes say it is?
+Q2 (operator directive 7, 2026-09-21, section II, verbatim scope: "PAIRED",
+   "Prioritized Level Replay (PLR)", "ACCEL"). Does a canonical public
+   implementation exist, at what pin, under what licence?
+Q3 (found during Q2). Does the record's "no network fetch detected" label
+   mean a scan ran?
+Q4 (backlog TECHNE-125). Is the tracked catalog snapshot current and
+   host-neutral, as its 09-12 note claimed?
+Q5 (Harmonia comms #1064). Why does Nyx read provenance grade UNKNOWN for a
+   record pinned to an upstream commit?
+Q6 (operator directive 6, 2026-09-19, s3). Once the second ("native")
+   observer has scored the 395 rollouts, which rollouts does the observer
+   change, by rules frozen before that score existed?
+
+3. WHAT WAS DONE, STEP BY STEP
+
+3.1 Boot (E3). Fetch only in the canonical checkout (4,861 commits behind);
+new worktree at origin/main bae32c682. Work order MWO-0004 blob sha256
+925660b2...99df recomputed, equals the publication register. 58 comms
+messages read: 45 resource-lease notices, 13 informational, 0 queued work.
+Fleet self-test 14 passed / 1 skipped. Fossil test set 652 passed / 7 skipped
+before any change. Host-local vault present: 48 bodies, 208 MB.
+WORK_STATE.json created (the seat had none).
+
+3.2 Unit 1 -- fossilize facebookresearch/dcd (E3).
+  pin        main @ cefd88196f2696860e42405d7b32f47d3d12bbde (2024-08-20)
+  upstream   archived=true per the GitHub API; 11 commits; no submodules
+  body       142 files, 6,006,757 bytes
+  tree hash  b6eefb613217bf783d91659ee2da347e8f55e2684af196a1a6c16a663f00c29d
+  licence    LICENSE file: CC BY-NC 4.0 (file sha256 ffe3b1e0...8b64)
+             README badge at the same pin: CC BY-SA 4.0
+             GitHub API: NOASSERTION
+             -> recorded as a conflict; the record follows the file
+  checks     verify: tree matches
+             independent oracle: a second clone at the pin, diff -r: identical
+             positive control: unaltered copy in a scratch vault: matches
+             cheat control: one byte appended to one file: DIFFERS, 1 modified,
+               exit code 1
+             malware scan of the body: completed, 0 detections
+  Nothing was executed. Entry points in the record come from reading source.
+
+3.3 Unit 2 -- the recipe axis (E3). The preservation block carried
+recipe_status = NO_NETWORK_FETCH_DETECTED for dcd although its README clones
+an unpinned repository. Cause: the scan reads only a recipe.json file and
+returns "nothing found" when the file does not exist.
+
+  has recipe.json   recipe_status                records (of 169)
+  no                NO_NETWORK_FETCH_DETECTED    48   <- nothing could fire
+  yes               NO_NETWORK_FETCH_DETECTED     4
+  no                (no preservation block)      14
+  yes               (no preservation block)     103
+
+Repair: new value NO_RECIPE; 48 stored labels changed by a byte-level
+replacement of one line each, refused unless the old text occurs exactly once.
+  dry run 48 would change; real run 48 changed; second run 0 changed
+  tracked diff: 47 lines removed, 47 added, 0 other (the 48th file is new)
+  receipt hashes recomputed from disk: 48 of 48 match
+Tests written first: 2 failed / 8 passed before the repair, 10 passed after.
+
+3.4 Unit 3 -- catalog snapshot (E3). The tracked snapshot was written on
+another machine on 2026-09-14: 121 rows, that machine's drive paths, a body
+count true only there. Records had since grown to 169. No code reads the file;
+documents cite it. Regenerated with every host-dependent cell null (null, not
+0) and a repository-relative root: 169 rows, 0 drive-letter strings.
+Tests written first: 2 failed / 3 passed on the old file, 5 passed after.
+Cheat controls: a body-checked catalog, a dropped row, an altered hash and an
+extra row are each detected.
+
+3.5 Unit 4 -- empty handoff (E3). Harmonia reported one record with all five
+handoff fields empty. Measured: 49 of 169 -- every record written since
+batch 14, including the dcd record from unit 1. Nyx derives a provenance grade
+from one handoff string, so filling it changes a grade downstream.
+  filled      10 records (9 upstream bodies + 1 older record)
+  diff        50 lines removed, 50 added, 0 other; second run changes 0
+  not filled  39 rollout records, on purpose (see section 6)
+  Nyx reader, before -> after (their function, called read-only):
+    UNKNOWN -> ORIGINAL_ARTIFACT   8 records
+    unchanged                      2 records
+Test written first: 1 failed / 4 passed before the fill, 5 passed after.
+
+3.6 Unit 5 -- the native observer column (E3). During the session Harmonia
+ran the second observer on another machine (this host's 2008 CPU cannot) and
+committed its scores for all 395 rollouts. Two consumers had waited 11 days.
+
+(a) Selection rules frozen on 2026-09-19 (one commit in the file's history,
+    unmodified, 11 days older than the scores) were run once:
+
+  rule                                          keys selected
+  D1 largest observer disagreements (top 8)        8
+  D2 crossing -> non-crossing flips                0
+  D3 non-crossing -> crossing flips                0
+  D4 class flips                                   0
+  D5 genuine organisms low under both observers    8
+  D6 exploits that become ordinary                 0
+  D7 catalogue crossings that survive              4
+  D8 catalogue crossings that disappear            0
+  P1 / P2 behaviour-vs-metric pairs                9 / 9
+  total distinct keys 38; alive rollouts compared 333
+
+  Every rule that asks "does the observer change the answer" is empty.
+  D1 has no minimum effect: the largest score difference over all 395 rows
+  is 4.76837158203125e-07 (float32 rounding), so D1 selected on noise.
+  31 of the 38 were already preserved. The 7 new keys are all D1 picks.
+  DEVIATION: those 7 were NOT preserved (see sections 6 and 9).
+
+(b) The 39 existing capsules said PENDING for the native observer. A full
+    rebuild with the existing tool would have discarded per-frame observer
+    data captured earlier; that was read before running and not run. A new
+    narrow command fills two cells per capsule and refuses to replace a
+    different recorded score.
+      filled 39; second run changes 0; 39 of 39 validate
+      per-frame observer data present: 39 before, 39 after
+      over the 39: max |native - original| 3.5762786865234375e-07;
+        class changes 0; threshold crossings identical in 39 of 39
+    Test written first: 1 failed / 10 passed before the fill, 11 after.
+
+4. RESULTS
+
+  item                               before            after          grade
+  fossil records                     168               169            E3
+  bodies on this host                48                49             E3
+  vault size on this host            208 MB            217 MB         E3
+  recipe label with no recipe        48                0              E3
+  catalog rows / drive paths         121 / present     169 / 0        E3
+  empty handoff, no capsule          10                0              E3
+  empty handoff, capsule present     39                39             E3
+  capsules with native score         0                 39             E3
+  observer-flip rules that fired     --                0 of 5         E3
+  new fossils from tranche 2         --                0              E3
+  fossil test set (passed/skipped)   652 / 7           772 / 13       E3
+  fleet self-test                    14 / 1            14 / 1         E3
+  new test files that failed first   --                4 of 4         E3
+
+The two test-set counts are not the same file list: the "after" list adds
+test_preservation.py and test_instrument_hygiene.py and four new files.
+
+5. WHAT CHANGED IN THE REPOSITORY
+
+New: WORK_STATE.json; boot journal; one fossil record + hash list; one batch
+script; one migration script + receipt; one handoff finalize script; four
+test files (25 tests); the tranche-2 selection output + a disposition note;
+three messages to other seats with a manifest; nine backlog rows.
+Changed: harvest.py, catalog.py, capsule.py; 47 records (one line each);
+10 records (five lines each); 39 capsules (native block); CATALOG.json; one
+stale assertion in an existing test; resume.md. No scheduled job. No paid
+compute. No process left running. One merged worktree and its local branch
+removed. Comms posted: #1065, #1066, and the return on #1068.
+
+6. WHAT THIS DID NOT ESTABLISH
+
+- dcd was NOT run. It needs Python 3.8, TensorFlow 2.4.1 and Box2D; this host
+  cannot host that. No claim about its behaviour is made.
+- No reusable mechanism was extracted from dcd. The section II report that
+  directive 7 asks for is not started.
+- NO_RECIPE says only that no recipe file exists. It does not say the body
+  can or cannot be built. The overall preservation status was not changed.
+- The 39 rollout records still have an empty handoff. Their provenance grade
+  and source type are an open question put to Harmonia and Nyx.
+- Whether ORIGINAL_ARTIFACT is the right grade for a pinned clone of the
+  authors' repository was not examined. 8 records now read that grade only
+  because a string was filled; the mapping is Nyx's.
+- 120 older handoff strings still carry another machine's drive path.
+- Unit 5 shows that two implementations of ONE observer (same model
+  weights, two frameworks) agree to rounding. It says nothing about whether
+  low scores mean open-endedness, and nothing about a different observer.
+- The frozen selection was not executed to the letter: 7 selected rollouts
+  were not preserved.
+- The native scores were produced by another seat on another machine. This
+  seat did not re-run them and cannot (no AVX).
+- The off-host mirror of the bodies still has no destination (operator).
+- 17 of the test directory's files still fail to import on this host.
+
+7. AUTHOR'S OWN ERRORS AND WHAT THEY COST
+
+- Unit 1 shipped a record with an empty handoff -- the defect unit 4 then
+  repaired. Cost: one extra commit; found by another seat, not by me.
+- The frozen D1 rule (mine, 2026-09-19) had no minimum effect and no
+  "indeterminate" branch. Cost: a rule that fires on noise and a deviation.
+- The scorer I wrote writes its output with Windows line endings, so the
+  hashes another seat recorded for two files are not the committed hashes;
+  and it never emits two control blocks that seat's tool reads, so two
+  controls read null in its ruling. Found by their use, not by my tests.
+  Not fixed: the scorer is frozen for a closed experiment. Filed.
+- I quoted a file hash taken from a working copy with Windows line endings
+  in the very note that reports that error in another seat's record.
+  Caught before commit.
+- A comment and a docstring first said "48 plus dcd = 49"; the 48 already
+  included dcd. Caught before commit.
+- The first migration script would have overwritten its own receipt with an
+  empty list on a second run. Caught before the first real run.
+- A journal line said "two hours earlier" for an interval of about 20
+  minutes; a resume line quoted 769 tests and 214 MB before they were
+  measured (761 and 217). All three corrected before commit.
+- A test of mine from 2026-09-13 had been failing on main since 2026-09-16
+  because it sits outside the file list boots run. 14 days unseen.
+- The 09-12 note calling the catalog "host-neutral" was false for 18 days.
+
+8. WHAT IS OWED, AND BY WHOM
+
+  Techne     section II report from the dcd and POET bodies; section III;
+             a successor scorer (line endings, control blocks); a committed
+             list of test files that must run on this host
+  Harmonia   or Nyx: the grade and source type of a rollout fossil
+  Harmonia   say whether the 7 noise-selected rollouts are preserved anyway
+  Nyx        re-run its census if it wants the 8 changed grades reflected
+  operator   one line: where the off-host copy of the bodies goes
+
+9. QUESTIONS FOR THE EXTERNAL REVIEWER
+
+ 1. Unit 4 changed what a downstream reader concludes (8 grades) by filling
+    a free-text field. Should a record field that another seat parses into
+    a grade be free text at all?
+ 2. The licence conflict: is following the LICENSE file over the README
+    badge the right default, or should a conflicting licence block
+    acquisition until upstream is asked?
+ 3. Three new tests make the suite fail whenever a record is added without
+    a catalog regeneration and a handoff. Is a red suite the right
+    mechanism, or does it train the next instance to regenerate blindly?
+ 4. WHAT WOULD FALSIFY "the dcd body is preserved": name a check that could
+    fail while verify, the independent clone and the one-byte control all
+    pass. (Known gap: all three ran on one host, one network path.)
+ 5. WHAT WOULD FALSIFY "the observer does not change the answer": the two
+    observers share model weights and differ only in framework. Is
+    agreement to 5e-7 evidence about the phenomenon, or only evidence that
+    a port is faithful? What second observer would make it a real test?
+ 6. The frozen rule selected 7 rollouts on noise and the author declined to
+    preserve them. Is that a legitimate disclosed deviation, or is it
+    moving a gate after seeing the result? Would preserving them with an
+    honest reason string have been the more defensible act?
+ 7. WHAT SHOULD WE STOP: most units here repaired drift in records the same
+    author wrote within the last two weeks. Should acquisition of new
+    bodies stop until every record field has a producing test, rather than
+    repairing fields as consumers trip over them?
+
+10. HOW TO REPRODUCE
+
+From a worktree of origin/main at or after 13c0d41b5, Python 3.11:
+
+  python -m techne.fossils.harvest rematerialize dcd-facebookresearch-2022
+      expect: MATCH on a host without the body (needs github.com, about
+      6 MB); ALREADY_PRESENT_VERIFIED on a host that has it
+  python -m techne.fossils.harvest verify dcd-facebookresearch-2022
+      expect: tree b6eefb61...c29d matches
+  python -m techne.fossils.migrate_recipe_status_20260930 --dry-run
+      expect: NOT_APPLICABLE 165, HAS_RECIPE_KEPT 4
+  python -m techne.fossils.batches.finalize_handoff_20260930
+      expect: KEPT on all 10 lines
+  python techne/scripts/harm55_tranche2_select.py \
+      --flax techne/acquisition/poet_alife/HARM55_FLAX_NATIVE_2026-09-30.json \
+      --out <scratch file>
+      expect: D1 8, D2 0, D3 0, D4 0, D5 8, D6 0, D7 4, D8 0, P1 9, P2 9,
+      total 38
+  python -m techne.fossils.capsule fill-native \
+      --flax techne/acquisition/poet_alife/HARM55_FLAX_NATIVE_2026-09-30.json
+      expect: by_status ALREADY 39
+  python -m pytest techne/tests/test_fossil_recipe_status.py \
+      techne/tests/test_fossil_catalog_snapshot.py \
+      techne/tests/test_fossil_handoff.py \
+      techne/tests/test_fossil_capsule_native.py -q
+      expect: 25 passed
+  python -m pytest archaeon/tests/test_base_role.py -q
+      expect: 14 passed, 1 skipped
+
+Deterministic; no seeds. The catalog's written_utc is the only field that
+differs between two regenerations.
+================================================================================

@@ -89,10 +89,30 @@
   "d_clip": 0.04511704615184239
  },
  "native_observer": {
-  "status": "PENDING",
-  "how_to_obtain": "techne/acquisition/poet_alife/HARM55_RUNBOOK_AVX_HOST.md (harm55_flax_score.py --path flax on an AVX host; HARM-55)",
-  "score": null,
-  "identity": null
+  "score": 0.8381044864654541,
+  "identity": {
+   "scorer": "ASAL foundation_models/clip.py CLIP.embed_img + asal_metrics.calc_open_endedness_score (body, unmodified)",
+   "jax": "0.4.38",
+   "jaxlib": "0.4.38",
+   "flax": "0.10.2",
+   "transformers": "4.47.1",
+   "model": "openai/clip-vit-base-patch32 (FlaxCLIPModel)",
+   "weights_files_sha256": {
+    "flax_model.msgpack": "2a2994d89bebd77abba5a554789dd9152a7e25467b79d88f6bd237d2dec5051c"
+   },
+   "body_commit": "677ba0ea4d3b3ca78273c9906c6e84d2b1481ce7",
+   "body_tree_sha256": "188a6adae350258e004ed280bf0ba1bcbd8850642faf198ba0de0629ca87bf0a"
+  },
+  "crossings": {
+   "catalogue": true,
+   "garbage_mean": false,
+   "garbage_2sd": false
+  },
+  "d_clip": 0.04511698654719761,
+  "class_rederived": "METRIC_EXPLOIT",
+  "signed_diff_vs_original": 2.384185791015625e-07,
+  "source_file": "techne/acquisition/poet_alife/HARM55_FLAX_NATIVE_2026-09-30.json",
+  "source_file_sha256_lf": "10f714c814c907264f360994aa783e0cbba744615696893d1736906b6a5ffbc1"
  },
  "alive": true,
  "classification": {
@@ -105,7 +125,7 @@
    "disp": 1.225776474516937,
    "d_clip_original": 0.04511704615184239
   },
-  "class_under_native_observer": "PENDING"
+  "class_under_native_observer": "METRIC_EXPLOIT"
  },
  "preservation_reason": "nearest metric-score pair with sharply different behaviours (with S0_1; score gap 0.0012, behav dist 6.317 sd; original observer)",
  "provenance": {

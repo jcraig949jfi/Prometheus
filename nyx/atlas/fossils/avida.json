@@ -221,6 +221,126 @@
    {
     "grade": "SOURCE_READ",
     "ref": "vault:avida/upstream/tree/libs/apto/include/apto/scheduler/Integrated.h"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:avida/upstream/tree/avida-core/source/systematics/GenotypeArbiter.cc:39-63"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:avida/upstream/tree/avida-core/source/systematics/GenotypeArbiter.cc:85-103"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:avida/upstream/tree/avida-core/source/systematics/GenotypeArbiter.cc:123-138"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:avida/upstream/tree/avida-core/source/systematics/GenotypeArbiter.cc:278-369"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:avida/upstream/tree/avida-core/source/systematics/GenotypeArbiter.cc:372-410"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:avida/upstream/tree/avida-core/source/systematics/GenotypeArbiter.cc:498-559"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:avida/upstream/tree/avida-core/source/systematics/Genotype.cc:128-184"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:avida/upstream/tree/avida-core/source/systematics/Genotype.cc:187-263"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:avida/upstream/tree/avida-core/source/systematics/Genotype.cc:282-299"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:avida/upstream/tree/avida-core/source/systematics/Genotype.cc:321-331"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:avida/upstream/tree/avida-core/source/systematics/Genotype.cc:356-402"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:avida/upstream/tree/avida-core/source/systematics/Genotype.cc:406-478"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:avida/upstream/tree/avida-core/source/systematics/Group.cc:46-49"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:avida/upstream/tree/avida-core/source/systematics/Unit.cc:60-126"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:avida/upstream/tree/avida-core/source/output/File.cc:183-252"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:avida/upstream/tree/avida-core/source/main/cPopulation.cc:6362-6563"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:avida/upstream/tree/avida-core/source/main/cPopulation.cc:6820-7032"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:avida/upstream/tree/avida-core/source/main/cPopulation.cc:7605-7626"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:avida/upstream/tree/avida-core/source/actions/SaveLoadActions.cc:138-183"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:avida/upstream/tree/avida-core/source/actions/PopulationActions.cc:145-210"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:avida/upstream/tree/avida-core/source/targets/avida/Avida2Driver.cc:91-162"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:avida/upstream/tree/avida-core/source/main/cEventList.cc:56-76"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:avida/upstream/tree/avida-core/source/main/cEventList.cc:152-202"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:avida/upstream/tree/avida-core/source/main/cBirthChamber.cc:135-175"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:avida/upstream/tree/avida-core/source/main/cBirthChamber.cc:178-224"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:avida/upstream/tree/avida-core/source/main/cBirthChamber.cc:264-313"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:avida/upstream/tree/avida-core/source/main/cBirthChamber.cc:435-587"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:avida/upstream/tree/avida-core/source/main/cBirthEntry.cc:63-70"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:avida/upstream/tree/avida-core/source/main/cDeme.cc:950-993"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:avida/upstream/tree/avida-core/source/core/Genome.cc:87-132"
    }
   ],
   "inspected_files": [
@@ -230,16 +350,29 @@
    "main/cPhenotype.cc (merit, fitness)",
    "main/cEnvironment.cc (reaction processing)",
    "main/cTaskLib.cc (task registry)",
-   "main/cBirthChamber.cc (asexual birth)",
+   "main/cBirthChamber.cc (asexual birth; birth-entry reference holds)",
    "main/cOrganism.cc (age limit)",
    "main/cMutationRates.h",
-   "libs/apto scheduler/Integrated.h"
+   "libs/apto scheduler/Integrated.h",
+   "systematics/GenotypeArbiter.cc (all)",
+   "systematics/Genotype.cc (all)",
+   "systematics/Group.cc (all)",
+   "systematics/Unit.cc (all)",
+   "systematics/Manager.cc (all)",
+   "output/File.cc (row and header writer)",
+   "main/cPopulation.cc (SavePopulation, LoadPopulation, InjectGenome)",
+   "actions/SaveLoadActions.cc (SavePopulation action)",
+   "actions/PopulationActions.cc (whole-genome-duplication injects)",
+   "targets/avida/Avida2Driver.cc (the update loop)",
+   "main/cEventList.cc (event order and triggers)",
+   "main/cBirthEntry.cc, main/cDeme.cc (the reference holders outside the arbiter)",
+   "core/Genome.cc (equality, save columns)"
   ],
-  "date": "2026-09-17T15:31Z",
+  "date": "2026-09-30T11:12Z",
   "note": "the famous name (Avida, digital evolution) covers a small closed loop: a virtual CPU whose programs copy themselves with per-instruction copy errors; a divide that is refused unless the copy is plausible; a merit that is genome size times a task bonus; a scheduler that hands out CPU cycles in proportion to merit; a placement rule that kills whoever occupies the chosen cell; and an environment that scores logic functions on the organism's own I/O. Everything else in 60k lines is a configuration-gated extension of one of those",
   "provenance": {
    "schema": "nyx.atlas/1-provenance",
-   "migrated_at": "2026-09-17T15:31Z",
+   "migrated_at": "2026-09-30T11:12Z",
    "migrated_from": "authored under nyx.atlas/1-provenance",
    "provenance_grade_read": "ORIGINAL_ARTIFACT",
    "grade_basis": "Techne FOSSIL_PACKET.json PROVENANCE_GRADE where issued, else the record's handoff string mapped (populated per R34; Harmonia may re-grade)",
@@ -267,7 +400,7 @@
      "payload_hash_read": "221f16aeb05240e634146811f9a1b98869d6578caad95b847349d4e087952b0f",
      "techne_recorded_hash": "221f16aeb05240e634146811f9a1b98869d6578caad95b847349d4e087952b0f",
      "match": true,
-     "refs": 5
+     "refs": 10
     },
     {
      "path": "upstream/tree/avida-core/source/main/cPhenotype.cc",
@@ -295,7 +428,7 @@
      "payload_hash_read": "5a88d01a71b6f4384f4d841163dd9dc4bc0ee8c992b50d9a1f6b093fbd20ec04",
      "techne_recorded_hash": "5a88d01a71b6f4384f4d841163dd9dc4bc0ee8c992b50d9a1f6b093fbd20ec04",
      "match": true,
-     "refs": 1
+     "refs": 6
     },
     {
      "path": "upstream/tree/avida-core/source/main/cOrganism.cc",
@@ -317,6 +450,90 @@
      "techne_recorded_hash": "2cb9d7fc09ceae5908cd48e9e8315896820db1ccbb05a54b3eaf170b9e9c5a44",
      "match": true,
      "refs": 2
+    },
+    {
+     "path": "upstream/tree/avida-core/source/systematics/GenotypeArbiter.cc",
+     "payload_hash_read": "0ada071fb731613af8251a943aa91c3a7d05f33a3319cb446dfdb54f7502b4bf",
+     "techne_recorded_hash": "0ada071fb731613af8251a943aa91c3a7d05f33a3319cb446dfdb54f7502b4bf",
+     "match": true,
+     "refs": 9
+    },
+    {
+     "path": "upstream/tree/avida-core/source/systematics/Genotype.cc",
+     "payload_hash_read": "6480345d004cb1af11a47f3c2e00c34936323b0986b59941625f81c5ec797f78",
+     "techne_recorded_hash": "6480345d004cb1af11a47f3c2e00c34936323b0986b59941625f81c5ec797f78",
+     "match": true,
+     "refs": 7
+    },
+    {
+     "path": "upstream/tree/avida-core/source/systematics/Group.cc",
+     "payload_hash_read": "1894199ce243a19a10936e5f031329bb55bb0261da18c76a9a1e66502e1ec308",
+     "techne_recorded_hash": "1894199ce243a19a10936e5f031329bb55bb0261da18c76a9a1e66502e1ec308",
+     "match": true,
+     "refs": 1
+    },
+    {
+     "path": "upstream/tree/avida-core/source/systematics/Unit.cc",
+     "payload_hash_read": "2154f41a46ea5cbb5b8e29fc0136b99ff1f2c74e579a7851b051b4251e9e0dcb",
+     "techne_recorded_hash": "2154f41a46ea5cbb5b8e29fc0136b99ff1f2c74e579a7851b051b4251e9e0dcb",
+     "match": true,
+     "refs": 1
+    },
+    {
+     "path": "upstream/tree/avida-core/source/output/File.cc",
+     "payload_hash_read": "ecff50b5e7f434801abc5c8c12021040c3a9bf0c0aec3ad5de7dd917ba90079f",
+     "techne_recorded_hash": "ecff50b5e7f434801abc5c8c12021040c3a9bf0c0aec3ad5de7dd917ba90079f",
+     "match": true,
+     "refs": 1
+    },
+    {
+     "path": "upstream/tree/avida-core/source/actions/SaveLoadActions.cc",
+     "payload_hash_read": "a1060061ac6306e251c8799eaf247c8ba1f9fc4693036a63d995b298679be6a6",
+     "techne_recorded_hash": "a1060061ac6306e251c8799eaf247c8ba1f9fc4693036a63d995b298679be6a6",
+     "match": true,
+     "refs": 1
+    },
+    {
+     "path": "upstream/tree/avida-core/source/actions/PopulationActions.cc",
+     "payload_hash_read": "6e14bf4f9a380ff55d655dc6cf9abd9e8742d48a64db2bb26a833cb8b78ae1ed",
+     "techne_recorded_hash": "6e14bf4f9a380ff55d655dc6cf9abd9e8742d48a64db2bb26a833cb8b78ae1ed",
+     "match": true,
+     "refs": 1
+    },
+    {
+     "path": "upstream/tree/avida-core/source/targets/avida/Avida2Driver.cc",
+     "payload_hash_read": "ad815ced222e8e0a69a317cd2490ec74538dbc69a012faeeb686bb495d4c7f73",
+     "techne_recorded_hash": "ad815ced222e8e0a69a317cd2490ec74538dbc69a012faeeb686bb495d4c7f73",
+     "match": true,
+     "refs": 1
+    },
+    {
+     "path": "upstream/tree/avida-core/source/main/cEventList.cc",
+     "payload_hash_read": "a40f055c99c712a0eaa8524e2c7793ac839743138ef45ebd4a25138ab3c4d331",
+     "techne_recorded_hash": "a40f055c99c712a0eaa8524e2c7793ac839743138ef45ebd4a25138ab3c4d331",
+     "match": true,
+     "refs": 2
+    },
+    {
+     "path": "upstream/tree/avida-core/source/main/cBirthEntry.cc",
+     "payload_hash_read": "2da24c067066f68a5e947a01a2616a22d778e4d27baebf4f60bc268aa1419a58",
+     "techne_recorded_hash": "2da24c067066f68a5e947a01a2616a22d778e4d27baebf4f60bc268aa1419a58",
+     "match": true,
+     "refs": 1
+    },
+    {
+     "path": "upstream/tree/avida-core/source/main/cDeme.cc",
+     "payload_hash_read": "5d9a123a01eaa811bb4592ad849549f90bf3164f006303088d90359b6400c7dd",
+     "techne_recorded_hash": "5d9a123a01eaa811bb4592ad849549f90bf3164f006303088d90359b6400c7dd",
+     "match": true,
+     "refs": 1
+    },
+    {
+     "path": "upstream/tree/avida-core/source/core/Genome.cc",
+     "payload_hash_read": "df84979b6501928119f6f991ceceb88cda1c76bad9d52305ef2f9c3c621034aa",
+     "techne_recorded_hash": "df84979b6501928119f6f991ceceb88cda1c76bad9d52305ef2f9c3c621034aa",
+     "match": true,
+     "refs": 1
     }
    ],
    "unresolved_refs": []
@@ -719,7 +936,9 @@
     "avida::head_based_self_copy_with_per_instruction_copy_error_insertion_deletion_and_slip",
     "avida::divide_time_mutation_spectrum_per_site_binomial_or_per_divide_or_poisson",
     "avida::merit_as_size_base_times_accumulated_task_bonus_locked_in_at_divide_and_inherited",
-    "avida::offspring_placement_by_birth_method_that_kills_the_occupant_of_the_chosen_cell"
+    "avida::offspring_placement_by_birth_method_that_kills_the_occupant_of_the_chosen_cell",
+    "avida::genotype_as_exact_genome_class_whose_parent_edge_is_written_once_at_founding_and_never_for_breed_true_or_live_convergent_births",
+    "avida::two_parent_recombination_by_swapping_one_region_located_as_the_same_fractions_of_each_genome_with_the_majority_parent_recorded_first"
    ],
    "fitness_value_in_ancestor": "closes the shortcut of 'divide immediately'; the fractions are the world's minimum notion of a real copy",
    "failure_landscape": "UNKNOWN by run; by reading: the thresholds are constants, so an organism can sit exactly at MIN_COPIED_LINES",
@@ -843,7 +1062,8 @@
    "child_mechanisms": [],
    "composition_neighbors": [
     "avida::divide_refused_unless_the_offspring_is_plausible_by_age_size_range_executed_fraction_and_copied_fraction",
-    "avida::nop_modified_instruction_set_where_three_nops_double_as_register_selectors_and_label_alphabet"
+    "avida::nop_modified_instruction_set_where_three_nops_double_as_register_selectors_and_label_alphabet",
+    "avida::genotype_as_exact_genome_class_whose_parent_edge_is_written_once_at_founding_and_never_for_breed_true_or_live_convergent_births"
    ],
    "fitness_value_in_ancestor": "experiments can hold the genomic mutation rate constant across genome lengths (the Poisson class) -- a control the copy-time class cannot offer",
    "failure_landscape": "UNKNOWN by run",
@@ -1344,7 +1564,8 @@
    "composition_neighbors": [
     "avida::divide_refused_unless_the_offspring_is_plausible_by_age_size_range_executed_fraction_and_copied_fraction",
     "avida::cpu_time_allocated_in_proportion_to_merit_by_binary_decomposition_or_by_probability",
-    "avida::age_limit_death_with_gaussian_deviation_optionally_scaled_by_genome_length"
+    "avida::age_limit_death_with_gaussian_deviation_optionally_scaled_by_genome_length",
+    "avida::reference_counted_retention_that_keeps_living_genotypes_and_their_ancestors_and_drops_an_extinct_branch_the_moment_its_last_leaf_dies"
    ],
    "fitness_value_in_ancestor": "the geometry of placement (well-mixed vs neighbourhood) is what makes spatial structure an experimental variable",
    "failure_landscape": "by reading: FULL_SOUP_RANDOM with a full world gives every organism the same expected lifetime regardless of merit, so selection acts only through birth rate",
@@ -1569,9 +1790,920 @@
      "basis": "READ"
     }
    }
+  },
+  {
+   "organ_id": "avida::genotype_as_exact_genome_class_whose_parent_edge_is_written_once_at_founding_and_never_for_breed_true_or_live_convergent_births",
+   "fossil_ancestry": "avida",
+   "human_name": "Genotype::ClassifyNewUnit (Genotype.cc 282-299); GenotypeArbiter::ClassifyNewUnit (GenotypeArbiter.cc 278-369); the founder constructor (Genotype.cc 128-184); Matches (406-456)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "a newborn is offered to its parent's genotype. Same genome: it joins that genotype and NOTHING is recorded but a count (breed true). Different genome: the arbiter searches the hash of LIVING genotypes for an identical genome (same hardware type, instruction set and transmission class); if one exists the newborn joins it and who bore it is not recorded. Only if none exists is a new genotype founded: id = a counter that only increments, parents = the parental genotype(s), depth = first parent's depth + 1, update_born = the arbiter's clock. That founding is the ONLY moment a parent edge is written. Because only living genotypes are searched, a genome that re-arises while its genotype lives is absorbed into it, while the same genome re-arising after that genotype died founds a second genotype with a new id",
+   "input": "a newborn unit's genome and source; its parent's genotype(s)",
+   "output": "the unit's genotype; at most one new record with one parent edge",
+   "state": "a hash of living genotypes by genome; the next id; per-genotype counts",
+   "update": "per birth and per inject (an injected unit is classified with no parents and founds a ROOT)",
+   "assumptions": [
+    "identity is exact genome equality, so descent is recorded between CLASSES of identical organisms, never between organisms",
+    "a class is founded once; later arrivals by mutation from elsewhere are the same class"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "avida::divide_refused_unless_the_offspring_is_plausible_by_age_size_range_executed_fraction_and_copied_fraction",
+    "avida::divide_time_mutation_spectrum_per_site_binomial_or_per_divide_or_poisson",
+    "avida::reference_counted_retention_that_keeps_living_genotypes_and_their_ancestors_and_drops_an_extinct_branch_the_moment_its_last_leaf_dies",
+    "avida::structured_population_save_one_row_per_genotype_living_rows_with_their_cells_then_every_historic_row",
+    "avida::population_load_that_renumbers_genotypes_and_silently_drops_every_parent_not_present_in_the_file",
+    "avida::arbiter_clock_that_stamps_founding_with_the_update_after_the_last_completed_one_so_minus_one_covers_update_zero_and_zero_never_occurs",
+    "avida::two_parent_recombination_by_swapping_one_region_located_as_the_same_fractions_of_each_genome_with_the_majority_parent_recorded_first"
+   ],
+   "fitness_value_in_ancestor": "memory and bookkeeping scale with distinct genomes, not with births; the dominant genotype is one record however many organisms carry it",
+   "failure_landscape": "by reading: the recorded tree is a tree of FIRST APPEARANCES. Convergent and back-mutation births leave no edge, so gene flow into an existing class is invisible; sequence is not a key across time (a revived genome gets a new id); with DISABLE_GENOTYPE_CLASSIFICATION every genotype is founded parentless (GenotypeArbiter.cc 348-352)",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "genotype-as-class bookkeeping as written by David M. Bryson, 2009-2011 (the file headers); whether other platforms keep an organism-level pedigree instead was not checked",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:avida/upstream/tree/avida-core/source/systematics/Genotype.cc:128-184, 282-299, 406-456; vault:avida/upstream/tree/avida-core/source/systematics/GenotypeArbiter.cc:278-369"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "the two ClassifyNewUnit methods, the founder constructor and Matches",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "TREE",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "PERSISTENT",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "ARCHIVE",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "EVENT_DRIVEN",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "SENSITIVE",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "SENSITIVE",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "avida::reference_counted_retention_that_keeps_living_genotypes_and_their_ancestors_and_drops_an_extinct_branch_the_moment_its_last_leaf_dies",
+   "fossil_ancestry": "avida",
+   "human_name": "GenotypeArbiter::removeGenotype (GenotypeArbiter.cc 498-533), AdjustGenotype (372-410), PerformUpdate (85-103); Genotype::RemoveUnit (Genotype.cc 321-331); Group reference counts (Group.cc 46-49)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "every genotype carries an ACTIVE count (its living units) and a PASSIVE count (the child genotypes that name it as parent). When the last unit dies the genotype is deactivated, stamped with update_deactivated and moved to a 'historic' list. If nothing passive refers to it, each of its parents loses one passive reference and is examined in turn, recursively, and the genotype is unlinked for good. So at every instant memory holds exactly the living genotypes and the ancestors of the living; a lineage with no living descendant disappears when its last leaf does, not at the end of the run",
+   "input": "unit deaths",
+   "output": "the set of retained genotype records",
+   "state": "two counters per genotype; the historic list",
+   "update": "per death, recursively up the parent chain; a sweep at the end of every update",
+   "assumptions": [
+    "what will be asked of the record is the line of descent of what survives; extinct side branches are not worth their memory"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "avida::offspring_placement_by_birth_method_that_kills_the_occupant_of_the_chosen_cell",
+    "avida::genotype_as_exact_genome_class_whose_parent_edge_is_written_once_at_founding_and_never_for_breed_true_or_live_convergent_births",
+    "avida::structured_population_save_one_row_per_genotype_living_rows_with_their_cells_then_every_historic_row",
+    "avida::arbiter_clock_that_stamps_founding_with_the_update_after_the_last_completed_one_so_minus_one_covers_update_zero_and_zero_never_occurs",
+    "avida::coalescent_genotype_as_the_oldest_living_or_branching_genotype_on_the_first_parent_line_of_the_most_abundant_genotype"
+   ],
+   "fitness_value_in_ancestor": "a run of any length keeps memory proportional to the living population's ancestry, not to every genotype ever founded",
+   "failure_landscape": "by reading: an event that replaces organisms with INJECTED copies severs the record entirely -- the injects are roots, the old tree loses its last units and is pruned to nothing, though every new organism is a physical descendant of an old one (PopulationActions.cc 153-171). Two holders outside the arbiter break the invariant in opposite directions: a deme's founder/germline hold is PASSIVE (cDeme.cc 958, 985), so a dead leaf survives; a waiting sexual birth entry's hold is ACTIVE (cBirthChamber.cc 159-161), so a genotype with no organism stays 'living', is on neither list, and is written by nobody",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN beyond this body; here the pruning is unconditional (no configuration switch keeps the full tree: DISABLE_GENOTYPE_CLASSIFICATION only removes more)",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:avida/upstream/tree/avida-core/source/systematics/GenotypeArbiter.cc:85-103, 372-410, 498-533; vault:avida/upstream/tree/avida-core/source/systematics/Genotype.cc:321-331, 395-402; vault:avida/upstream/tree/avida-core/source/systematics/Group.cc:46-49"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "removeGenotype and its three callers",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "EVENT",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "TREE",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "PERSISTENT",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "ARCHIVE",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "RECURSIVE",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "MEMORY",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "NONE",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "avida::structured_population_save_one_row_per_genotype_living_rows_with_their_cells_then_every_historic_row",
+   "fossil_ancestry": "avida",
+   "human_name": "cPopulation::SavePopulation (cPopulation.cc 6362-6563); Genotype::LegacySave (Genotype.cc 356-392); GenotypeArbiter::LegacySave (123-131); Output::File (File.cc 183-252); the SavePopulation action (SaveLoadActions.cc 138-183)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "walks the cells, groups living organisms by genotype, and writes one line per living genotype: id, source, source arguments, parent id(s), living units, total units ever, length, mean merit / gestation / fitness, generation and update born, update deactivated, depth, hardware type, instruction set, sequence -- then the cells it occupies and per-organism offsets. Then, unless save_historic=0 (the default is 1), one line for every genotype on the historic list: the same first seventeen columns and nothing else. The header's #format line is taken from the first row written",
+   "input": "the cell array; the arbiter's historic list",
+   "output": "a text file, one genotype per line",
+   "state": "none",
+   "update": "per SavePopulation event",
+   "assumptions": [
+    "a population is restorable from genotypes plus cell lists; organisms of one genotype are interchangeable except for position and gestation offset"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "avida::reference_counted_retention_that_keeps_living_genotypes_and_their_ancestors_and_drops_an_extinct_branch_the_moment_its_last_leaf_dies",
+    "avida::genotype_as_exact_genome_class_whose_parent_edge_is_written_once_at_founding_and_never_for_breed_true_or_live_convergent_births",
+    "avida::population_load_that_renumbers_genotypes_and_silently_drops_every_parent_not_present_in_the_file"
+   ],
+   "fitness_value_in_ancestor": "the save is at once a checkpoint and the run's phylogeny (the line of descent of every survivor, with sequences)",
+   "failure_landscape": "by reading: fields are separated by single spaces and src_args is written raw, so a source argument containing spaces ('whole-genome duplication', PopulationActions.cc 169) shifts every later column of that row; a living genotype with no organism in a cell (held only by a birth entry) is written nowhere; with save_historic=0 parent ids point at rows that are not in the file; rows are NOT in ancestral order (living rows in hash-map order, 6466, then the historic list), so a parent's row may follow its child's; the #format line names the twenty columns of a living row while historic rows carry seventeen",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "the .spop (Structured POPulation) format; its columns are the experimenter's notion of what a genotype is",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:avida/upstream/tree/avida-core/source/main/cPopulation.cc:6362-6563; vault:avida/upstream/tree/avida-core/source/systematics/Genotype.cc:356-392; vault:avida/upstream/tree/avida-core/source/systematics/GenotypeArbiter.cc:123-131; vault:avida/upstream/tree/avida-core/source/output/File.cc:183-252; vault:avida/upstream/tree/avida-core/source/actions/SaveLoadActions.cc:138-183; vault:avida/upstream/tree/avida-core/source/core/Genome.cc:125-132"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "SavePopulation and the three LegacySave methods",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "TREE",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "NONE",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "DURABLE",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "SWEEP",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "CORRUPTS",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "avida::population_load_that_renumbers_genotypes_and_silently_drops_every_parent_not_present_in_the_file",
+   "fossil_ancestry": "avida",
+   "human_name": "cPopulation::LoadPopulation (cPopulation.cc 6820-7032); the load constructor (Genotype.cc 187-263); GenotypeArbiter::LegacyLoad (133-138) and the id-hint path of ClassifyNewUnit (290-332)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "reads every row, sorts them by id, and re-creates the genotypes oldest first with FRESH ids from the arbiter's counter; each row's parent list is rewritten to the new ids of parents already re-created, and a parent id that names no row in the file is dropped without a message (the warning is commented out, 6996). Then num_units organisms are injected per row with an id hint, which makes the arbiter reactivate that genotype instead of founding one",
+   "input": "a .spop (or older .pop) file",
+   "output": "a population and an arbiter state",
+   "state": "the id map old -> new",
+   "update": "per LoadPopulation event",
+   "assumptions": [
+    "a file saved with historic rows reloads its whole line of descent; one saved without them reloads as unrelated roots, and that is acceptable"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "avida::structured_population_save_one_row_per_genotype_living_rows_with_their_cells_then_every_historic_row",
+    "avida::genotype_as_exact_genome_class_whose_parent_edge_is_written_once_at_founding_and_never_for_breed_true_or_live_convergent_births"
+   ],
+   "fitness_value_in_ancestor": "runs can be resumed and populations transplanted between experiments",
+   "failure_landscape": "by reading: a save_historic=0 file loads with every living genotype whose parent is extinct turned into a ROOT that keeps its old depth (depth is read from the file, the parent is gone); ids are not stable across a save/load; the loaded organisms' source argument becomes the file name (6858-6861)",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "checkpoint/restart; the silent degradation of ancestry on load is an implementation choice, not a documented one",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:avida/upstream/tree/avida-core/source/main/cPopulation.cc:6820-7032; vault:avida/upstream/tree/avida-core/source/systematics/Genotype.cc:187-263; vault:avida/upstream/tree/avida-core/source/systematics/GenotypeArbiter.cc:133-138, 290-332"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "LoadPopulation's parent-fix loop (6968-6995, after the sort at 6960-6962) and the hinted classification",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "TREE",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "PER_CALL",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "DEGRADES",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "NONE",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "avida::arbiter_clock_that_stamps_founding_with_the_update_after_the_last_completed_one_so_minus_one_covers_update_zero_and_zero_never_occurs",
+   "fossil_ancestry": "avida",
+   "human_name": "m_cur_update (GenotypeArbiter.cc 49, 87); the driver loop (Avida2Driver.cc 91-162); event triggers (cEventList.cc 127-202)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "the arbiter's clock starts at -1 and is set to (update just completed + 1) at the END of each update; the driver fires the events for update T after update T has been processed and before the counter advances. So a genotype founded before the run or during update 0 is stamped -1; one founded while update u >= 1 runs is stamped u; one founded by an event scheduled at update T is stamped T+1; and no genotype is ever stamped 0",
+   "input": "the driver's update counter",
+   "output": "update_born / update_deactivated stamps",
+   "state": "one integer",
+   "update": "once per update",
+   "assumptions": [
+    "the stamp is for statistics (age = current update - update born), where an off-by-one at the origin is harmless"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "avida::genotype_as_exact_genome_class_whose_parent_edge_is_written_once_at_founding_and_never_for_breed_true_or_live_convergent_births",
+    "avida::reference_counted_retention_that_keeps_living_genotypes_and_their_ancestors_and_drops_an_extinct_branch_the_moment_its_last_leaf_dies"
+   ],
+   "fitness_value_in_ancestor": "a time base for genotype age",
+   "failure_landscape": "by reading: a reconstruction that orders genotypes by update_born cannot separate 'before the run' from 'during update 0', and sees an event-injected genotype as one update younger than a genotype founded in the update the event fired after; update_deactivated = -1 means 'alive' and also 'died during update 0'",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:avida/upstream/tree/avida-core/source/systematics/GenotypeArbiter.cc:39-63, 85-103; vault:avida/upstream/tree/avida-core/source/targets/avida/Avida2Driver.cc:91-162; vault:avida/upstream/tree/avida-core/source/main/cEventList.cc:152-202"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "m_cur_update and its one writer",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "EVENT",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "PERSISTENT",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "STEP",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "avida::coalescent_genotype_as_the_oldest_living_or_branching_genotype_on_the_first_parent_line_of_the_most_abundant_genotype",
+   "fossil_ancestry": "avida",
+   "human_name": "GenotypeArbiter::updateCoalescent (GenotypeArbiter.cc 535-559); provided as systematics.genotype.coalescent_depth (444)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "after each pruning step, walk from the most abundant genotype up its FIRST parents to the root; the last genotype met that is alive or is named by more than one retained child is the coalescent, and its depth is published. Below it the retained tree is a single file of dead genotypes with one child each, so it is the most recent common ancestor of everything retained -- provided everything retained descends through that line",
+   "input": "the retained tree",
+   "output": "one genotype and its depth",
+   "state": "the current coalescent",
+   "update": "per pruned genotype, skipped while the current coalescent still qualifies (537)",
+   "assumptions": [
+    "asexual: only first parents are followed (the source says so, 545)",
+    "one ancestor: with several injected roots the walk follows only the dominant's line"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "avida::reference_counted_retention_that_keeps_living_genotypes_and_their_ancestors_and_drops_an_extinct_branch_the_moment_its_last_leaf_dies"
+   ],
+   "fitness_value_in_ancestor": "the depth of the population's common ancestor, read without a tree traversal at analysis time",
+   "failure_landscape": "by reading: with two retained roots the 'coalescent' is the common ancestor of one root's descendants only",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "coalescence depth as a run statistic (Avida's 'coalescent depth')",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:avida/upstream/tree/avida-core/source/systematics/GenotypeArbiter.cc:535-559"
+   },
+   "confidence": "MEDIUM",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "updateCoalescent",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "TREE",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "PERSISTENT",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "SWEEP",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "ASSUMES",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "avida::two_parent_recombination_by_swapping_one_region_located_as_the_same_fractions_of_each_genome_with_the_majority_parent_recorded_first",
+   "fossil_ancestry": "avida",
+   "human_name": "cBirthChamber::SubmitOffspring sexual branch (cBirthChamber.cc 443-587); DoBasicRecombination (286-313); RegionSwap / GenomeSwap (178-224); DoPairAsexBirth (264-282); SetupGenotypeInfo (435-441)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "an offspring from a sexual divide waits in the birth chamber until a second one arrives. Then two random fractions of genome length are drawn, the region between them is cut out of BOTH genomes at the same fractions (so unequal lengths are allowed and the pieces may differ in size) and exchanged; merit is blended by the exchanged fraction; if more than half was exchanged the two results swap labels, so each child is named after the parent it took the MAJORITY from. Two children are built (or one, chosen by coin, under a two-fold cost), and each is classified with BOTH parents' genotypes, its majority parent first -- which is therefore the parent its depth is counted from. With MODULE_NUM > 0 the cut points are module boundaries, contiguous, independent per module, or shuffled between modules",
+   "input": "two offspring genomes and their parents' genotypes and merits; two uniform draws",
+   "output": "two (or one) recombinant genomes, each with an ordered pair of parent genotypes",
+   "state": "the waiting entries",
+   "update": "per sexual divide that finds a waiting entry",
+   "assumptions": [
+    "homology is positional and proportional: the same FRACTION of two genomes is treated as the same place",
+    "one exchanged region is enough; the operator is symmetric in the two parents"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "avida::genotype_as_exact_genome_class_whose_parent_edge_is_written_once_at_founding_and_never_for_breed_true_or_live_convergent_births",
+    "avida::divide_refused_unless_the_offspring_is_plausible_by_age_size_range_executed_fraction_and_copied_fraction"
+   ],
+   "fitness_value_in_ancestor": "recombination between programs of different lengths without alignment; the modular variants test whether exchange at module boundaries preserves function",
+   "failure_landscape": "by reading: the OPERATOR LEAVES NO RECORD -- the two fractions, the module choices and whether the labels were swapped are drawn, used and discarded; the save keeps only the two parent ids. A swap refused for illegal length (RegionSwap 192-196) still blends merit and still records two parents for a child that is genetically one parent's. A child identical to its first parent's genotype, or to any living genotype, is absorbed and records no parents at all. When recombination is skipped (RECOMBINATION_PROB, or zero cross points) the pair is born as two single-parent children (DoPairAsexBirth). Under ENERGY_ENABLED with a two-fold cost, line 576 reads child_array[1] of a one-element array",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "two-point crossover (the GA operator), located by fraction rather than by index so that variable-length programs can be crossed; the modular variants are Avida's (Misevic, Ofria, Lenski on sex and modularity, recalled not checked)",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:avida/upstream/tree/avida-core/source/main/cBirthChamber.cc:178-224, 264-313, 435-441, 443-587"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "DoBasicRecombination + RegionSwap + the two SetupGenotypeInfo calls at 553-554",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "PER_CALL",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "SEEDED_RANDOM",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "EVENT_DRIVEN",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "PARTIALLY",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "STRUCTURE",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "SHARES",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
   }
  ],
  "rejected_cuts": [
+  {
+   "candidate": "SexualAncestry.cc (162 lines), Clade.cc / CladeArbiter.cc (464 lines), GenomeTestMetrics.cc",
+   "reason": "OTHER",
+   "evidence": "NOT READ this pass; a second arbiter role and per-genotype attached data",
+   "note": "the clade arbiter is a parallel classification under another role id; the ancestry cut is of the 'genotype' role only",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "avida"
+  },
+  {
+   "candidate": "SaveFlameData (cPopulation.cc 6667-) and SaveStructuredSystematicsGroup (6566-6632)",
+   "reason": "OTHER",
+   "evidence": "vault:avida/upstream/tree/avida-core/source/main/cPopulation.cc:6566-6632 read; SaveFlameData not read beyond its header",
+   "note": "the group save is SavePopulation without the organism columns; flame data is a different file that shares the .spop extension and is out of the packet's scope by its missing #filetype line",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "avida"
+  },
+  {
+   "candidate": "threshold status and genotype names (nameGenotype 482-496; SetThreshold)",
+   "reason": "BELOW_MEANINGFUL_GRAIN",
+   "evidence": "vault:avida/upstream/tree/avida-core/source/systematics/GenotypeArbiter.cc:482-496",
+   "note": "labels for genotypes that reached an abundance; nothing reads them back into the dynamics",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "avida"
+  },
+  {
+   "candidate": "'the phylogeny' as one organ",
+   "reason": "NAME_HAS_NO_EXECUTABLE_BOUNDARY",
+   "evidence": "what is called the phylogeny is four separable acts with separate code: founding an edge, retaining by reference count, writing rows, and reading them back with renumbering; each loses different information",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "avida"
+  },
   {
    "candidate": "demes and deme competition, predator/prey, mating types and sexual birth handlers, tolerance/groups, the energy model, HGT genome fragments, promoters/regulation, resource bins, avatars, multi-process worlds",
    "reason": "OTHER",
@@ -1663,6 +2795,23 @@
    "cheat_control": "an organism given a cell that is excluded from placement must never die and must not spread: the world must show both, or placement is not the death mechanism",
    "cost_class": "CPU-scale",
    "purpose_separated_from_pressure": "PURPOSE: population structure in digital evolution (Avida birth methods)",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "pressure_id": "avida::P.a_line_of_descent_must_be_readable_at_the_end_from_memory_bounded_by_the_living_not_by_everything_that_ever_lived",
+   "source_fossil": "avida",
+   "source_evidence": "GenotypeArbiter removeGenotype 498-533; Genotype founder constructor 153-177; cPopulation SavePopulation 6557-6560",
+   "condition": "a population turns over thousands of times; nearly every lineage founded goes extinct; whoever reads the run afterwards wants to know how the survivors came to be; memory and the save file are finite",
+   "resource_or_constraint": "one record per retained class of identical organisms; a run founds far more classes than it ever holds alive",
+   "failure_condition": "memory grows with every class ever founded and the run dies, or a survivor's line of descent cannot be read back",
+   "world_punishes": "keeping every record (unbounded growth); keeping none (no history)",
+   "world_rewards": "keeping exactly the living classes and their ancestors, and forgetting an extinct branch as soon as its last member dies",
+   "observable_consequence": "in a saved population, dead records that no record names as a parent: none under this rule, the large majority of dead records without it; retained records / records ever founded falls as the run lengthens",
+   "vacuity_condition": "no extinction (nothing to forget) or no mutation (one class, no tree)",
+   "trivial_shortcuts": "found every class parentless (DISABLE_GENOTYPE_CLASSIFICATION); write only the living (save_historic=0)",
+   "cheat_control": "the same population run with forgetting switched off must show dead unnamed records in its save; if it shows none, the observable cannot see forgetting and a zero in the real save means nothing (run on the reference model, nyx/atlas/experiments/avida_ancestry: 92 unnamed dead records of 131 with forgetting off, 0 of 23 with it on)",
+   "cost_class": "memory-scale; the check on a saved file is milliseconds",
+   "purpose_separated_from_pressure": "PURPOSE: phylogeny and line-of-descent analysis of digital evolution runs",
    "cut_mode": "ANCESTRY_AWARE"
   }
  ],
@@ -1778,6 +2927,118 @@
    "evidence": "SOURCE_READ",
    "note": "every mutant is a legal program",
    "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "avida::divide_refused_unless_the_offspring_is_plausible_by_age_size_range_executed_fraction_and_copied_fraction",
+   "to": "avida::genotype_as_exact_genome_class_whose_parent_edge_is_written_once_at_founding_and_never_for_breed_true_or_live_convergent_births",
+   "label": "triggers",
+   "evidence": "SOURCE_READ",
+   "note": "every successful divide classifies the newborn (cBirthChamber.cc 257-259)",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "avida::divide_time_mutation_spectrum_per_site_binomial_or_per_divide_or_poisson",
+   "to": "avida::genotype_as_exact_genome_class_whose_parent_edge_is_written_once_at_founding_and_never_for_breed_true_or_live_convergent_births",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "a mutated offspring is what founds a genotype",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "avida::offspring_placement_by_birth_method_that_kills_the_occupant_of_the_chosen_cell",
+   "to": "avida::reference_counted_retention_that_keeps_living_genotypes_and_their_ancestors_and_drops_an_extinct_branch_the_moment_its_last_leaf_dies",
+   "label": "triggers",
+   "evidence": "SOURCE_READ",
+   "note": "the occupant of the chosen cell dies; its unit is removed (Unit.cc 60-65)",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "avida::genotype_as_exact_genome_class_whose_parent_edge_is_written_once_at_founding_and_never_for_breed_true_or_live_convergent_births",
+   "to": "avida::reference_counted_retention_that_keeps_living_genotypes_and_their_ancestors_and_drops_an_extinct_branch_the_moment_its_last_leaf_dies",
+   "label": "stores",
+   "evidence": "SOURCE_READ",
+   "note": "a founding adds one passive reference to each parent (Genotype.cc 160)",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "avida::reference_counted_retention_that_keeps_living_genotypes_and_their_ancestors_and_drops_an_extinct_branch_the_moment_its_last_leaf_dies",
+   "to": "avida::structured_population_save_one_row_per_genotype_living_rows_with_their_cells_then_every_historic_row",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "the historic list is written as is",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "avida::genotype_as_exact_genome_class_whose_parent_edge_is_written_once_at_founding_and_never_for_breed_true_or_live_convergent_births",
+   "to": "avida::structured_population_save_one_row_per_genotype_living_rows_with_their_cells_then_every_historic_row",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "parents, depth and the stamp are written as founded",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "avida::structured_population_save_one_row_per_genotype_living_rows_with_their_cells_then_every_historic_row",
+   "to": "avida::population_load_that_renumbers_genotypes_and_silently_drops_every_parent_not_present_in_the_file",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "avida::population_load_that_renumbers_genotypes_and_silently_drops_every_parent_not_present_in_the_file",
+   "to": "avida::genotype_as_exact_genome_class_whose_parent_edge_is_written_once_at_founding_and_never_for_breed_true_or_live_convergent_births",
+   "label": "restores",
+   "evidence": "SOURCE_READ",
+   "note": "loaded genotypes are reactivated by id hint, not re-founded",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "avida::arbiter_clock_that_stamps_founding_with_the_update_after_the_last_completed_one_so_minus_one_covers_update_zero_and_zero_never_occurs",
+   "to": "avida::genotype_as_exact_genome_class_whose_parent_edge_is_written_once_at_founding_and_never_for_breed_true_or_live_convergent_births",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "update_born",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "avida::arbiter_clock_that_stamps_founding_with_the_update_after_the_last_completed_one_so_minus_one_covers_update_zero_and_zero_never_occurs",
+   "to": "avida::reference_counted_retention_that_keeps_living_genotypes_and_their_ancestors_and_drops_an_extinct_branch_the_moment_its_last_leaf_dies",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "update_deactivated",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "avida::two_parent_recombination_by_swapping_one_region_located_as_the_same_fractions_of_each_genome_with_the_majority_parent_recorded_first",
+   "to": "avida::genotype_as_exact_genome_class_whose_parent_edge_is_written_once_at_founding_and_never_for_breed_true_or_live_convergent_births",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "each recombinant is classified with both parents, majority parent first (553-554)",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "avida::divide_refused_unless_the_offspring_is_plausible_by_age_size_range_executed_fraction_and_copied_fraction",
+   "to": "avida::two_parent_recombination_by_swapping_one_region_located_as_the_same_fractions_of_each_genome_with_the_majority_parent_recorded_first",
+   "label": "triggers",
+   "evidence": "SOURCE_READ",
+   "note": "only when the dividing organism's phenotype says DivideSex (448)",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "avida::reference_counted_retention_that_keeps_living_genotypes_and_their_ancestors_and_drops_an_extinct_branch_the_moment_its_last_leaf_dies",
+   "to": "avida::coalescent_genotype_as_the_oldest_living_or_branching_genotype_on_the_first_parent_line_of_the_most_abundant_genotype",
+   "label": "triggers",
+   "evidence": "SOURCE_READ",
+   "note": "recomputed at each pruning step",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "avida::reference_counted_retention_that_keeps_living_genotypes_and_their_ancestors_and_drops_an_extinct_branch_the_moment_its_last_leaf_dies",
+   "to": "avida::genotype_as_exact_genome_class_whose_parent_edge_is_written_once_at_founding_and_never_for_breed_true_or_live_convergent_births",
+   "label": "forgets",
+   "evidence": "SOURCE_READ",
+   "note": "a pruned genotype's genome, re-arising, founds a new id",
+   "cut_mode": "ANCESTRY_AWARE"
   }
  ],
  "ancestry_edges": [
@@ -1794,9 +3055,11 @@
   "unexplained": [
    "about two thirds of avida-core is unread: demes, predator/prey, mating, tolerance, energy, HGT, promoters, resource bins, alternative hardwares, analyze mode, script, stats, viewers",
    "the default instruction set and default config (which of the ~200 instructions and which BIRTH/SLICING/BASE_MERIT settings are in force) live in config files not opened this pass; every 'default' claim above names the config key instead",
-   "nothing ran; the body is a docker world (Techne TECHNE_SMOKE_HARNESS_PASS) and cannot run on M3"
+   "nothing ran; the body is a docker world (Techne TECHNE_SMOKE_HARNESS_PASS) and cannot run on M3",
+   "ancestry pass 2026-09-30: sexual ancestry (SexualAncestry.cc), the clade arbiter, and parasite genotype bookkeeping are unread, so the ancestry organs are claimed for asexual, host-only, non-deme runs only",
+   "ancestry pass 2026-09-30: whether the 177 .spop files the body ships were written by THIS revision of the code is unknown; the packet tests exactly that"
   ],
-  "note": "the core replication-selection-reward loop is located function by function; the platform's scale is why this is COARSE despite ten organs",
+  "note": "the core replication-selection-reward loop is located function by function, and the genotype-ancestry subsystem is read whole; the platform's scale is why this is COARSE despite seventeen organs",
   "cut_mode": "ANCESTRY_AWARE"
  }
 }
