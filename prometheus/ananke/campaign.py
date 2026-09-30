@@ -720,6 +720,11 @@ def promoted(cfg: CampaignConfig, rows: list[dict]) -> list[dict]:
 
 
 def wave_D(cfg: CampaignConfig, rows: list[dict]) -> list[dict]:
+    # D's own fresh-seed replicate evolve rows must not re-enter promotion:
+    # on a resume they are already in the store, and letting them compete
+    # shifts pi (and so every D cell id / search seed) -- the resume would
+    # no longer regenerate the specs the first attempt ran (module doc).
+    rows = [r for r in rows if r.get("wave") != "D"]
     specs = []
     for pi, r in enumerate(promoted(cfg, rows)):
         base = dict(physics=r["physics"], env=r["env"], levels=r["levels"], env_levels=r["env_levels"],

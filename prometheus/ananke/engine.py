@@ -68,8 +68,21 @@ class Controls:
     freeze_rule: bool = False
 
     def label(self) -> str:
+        def active(v):
+            # identity/type checks first: `array in (False, ...)` compares
+            # elementwise and raises for a reset_state_mask array
+            # and `0 in (False, ...)` is True, which hid distractor_chan=0
+            if v is None:
+                return False
+            if isinstance(v, bool):
+                return v
+            if isinstance(v, int):
+                return v != -1
+            if isinstance(v, (tuple, list)):
+                return len(v) > 0
+            return True
         on = [f.name for f in dataclasses.fields(self)
-              if f.name != "reset_parts" and getattr(self, f.name) not in (False, (), None, -1)]
+              if f.name != "reset_parts" and active(getattr(self, f.name))]
         if self.reset_state_at and tuple(self.reset_parts) != ("S",):
             on.append("reset_parts=" + ",".join(self.reset_parts))
         return "+".join(on) if on else "none"
@@ -432,7 +445,7 @@ class World:
             self.S.sub_(self.S >> ph.decay_shift)
         # 10. READOUT trace ------------------------------------------------
         s0 = torch.gather(self.S[..., 0], 1, self.read_idx)
-        self.trace.index_copy_(0, tv.reshape(1), s0[None])
+        self._record(self.trace, tv, s0)
         # telemetry ---------------------------------------------------------
         tel = self.tel
         pb = ((self.last_pay[..., 0].to(I64) + 32768) >> 12).clamp(0, 15)
@@ -442,7 +455,7 @@ class World:
         s0n = self.S[..., 0]
         tel["s0_changes"] += (s0n != tel["s0_prev"]).sum(-1)
         tel["s0_prev"].copy_(s0n)
-        tel["emit_trace"].index_copy_(0, tv.reshape(1), want.sum(-1)[None].to(I64))
+        self._record(tel["emit_trace"], tv, want.sum(-1).to(I64))
         if self.census:
             ro = self.read_idx[:, 0]
             bi = torch.arange(B, device=dev)
@@ -455,8 +468,17 @@ class World:
                 "c_r_ro": self.r[bi, ro].to(I64),
             }
             for k, v in cen.items():
-                tel[k].index_copy_(0, tv.reshape(1), v[None])
+                self._record(tel[k], tv, v)
         self.t_dev.add_(1)
+
+    def _record(self, buf: torch.Tensor, tv: torch.Tensor, v: torch.Tensor) -> None:
+        """Write per-tick record v into row tv of buf. Ticks at or past the end
+        of the schedule (t >= Tsch) leave the buffer unchanged: tv is clamped to
+        Tsch - 1, so an unconditional write would overwrite the LAST scheduled
+        tick's record. Graph-safe (no host sync, no data-dependent branch)."""
+        idx = tv.reshape(1)
+        cur = buf.index_select(0, idx)[0]
+        buf.index_copy_(0, idx, torch.where(self.t_dev < self.Tsch, v, cur)[None])
 
     def _emit(self, want, chan, pay):
         ph, ctrl = self.ph, self.ctrl
