@@ -1,52 +1,78 @@
 {
- "schema": "prometheus.work_state.v1",
- "seat": "Archaeon",
- "mwo_id": "MWO-0004",
- "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
- "updated_at_utc": "2026-09-30T13:30:17Z",
- "state": "HOLD",
- "branch": "archaeon/mwo0001-2026-09-28",
- "head_sha": "d0ca26b168561d1e21031ea332e0dadac2b560bf (parent of the commit that records this field)",
- "threads": [
-  "thr-a7fcb43e8092 (TH-015)",
-  "thr-c64dca3118a1 (replicator identity)",
-  "thr-5085da70a143 (cargo vs heredity)"
- ],
- "campaigns": [
-  "C-001"
- ],
- "experiments": [
-  "E-003 = ancestry replay: COMPLETE (E003_SYNTHESIS.md, items A-G). BEE VALIDATED conditional on post-exposure rules; robust Q8c 0.00115; NPE uninformative by construction; NPE 1% sample VERIFIED + AGREEMENT PASS"
- ],
- "fabric_tasks": [
-  "tsk-05b35561e844 + tsk-0147d5299dac: FP-001, completed PASS",
-  "tsk-c4317a3656d0: CANCELED under MWO-0004 R3 (native fallback)"
- ],
- "running": [],
- "blocked_on": [],
- "next_actions": [
-  "HOLD: no eligible work. Resume on a new MWO or on a seat request"
- ],
- "operator_decisions_required": [
-  "E-003 BEE verdict of record (CWO s4 escalation #1044): owner (#1050), auditor and Archaeon concur the confirmatory label is ALTERED under the pre-exposure rules; VALIDATED only as amended. Operator ruling pending. E003_SYNTHESIS.md items H-I."
- ],
- "latest_reports": [
-  "ops/campaigns/C-001/ATTRIBUTION_ARC_2026-09-28/E003_SYNTHESIS.md (items A-G)",
-  "ops/campaigns/C-001/ATTRIBUTION_ARC_2026-09-28/review_e003/"
- ],
- "mwo_sha256": "925660b2d2be53af2ee4195391e484d9649bbd4ee828cd60432ce2f0903a99df",
- "migration_report": "roles/Archaeon/MIGRATION_REPORT_MWO-0002.json",
- "other_branches": [
-  "archaeon/attribution-arc-2026-09-28 @ 232ebe399 (E-003 evidence)"
- ],
- "comms_cursor": 1083,
- "state_reason": "E-003 complete incl. the NPE 1% sample (VERIFIED + AGREEMENT PASS). MWO-0004 governs (G6: no new BEE/NPE design). CWO 2026-09-30 (ops/fleet/CWO_2026-09-30_FLEET_ACTIVATION.md @ 6a7a84569, sha256 ab93f646...) read: its applies-to list and ops/fleet/QUEUE.json contain no Archaeon lane, so HOLD stands; my #916 SKULLPORT-worker defect is a BUILDER-FABRIC reserve item there.",
- "fp001_result": "roles/Archaeon/probes/FP-001_RESULT.json",
- "work_order": "MWO-0004 (CWO 2026-09-30 read; not addressed to Archaeon)",
- "cwo_b": {
-  "cwo": "ops/fleet/CWO_2026-09-30B_FINISH_IN_PLACE.md @ d4e47ebf5 (sha256 e62cb5ee...)",
+  "schema": "prometheus.work_state.v1",
+  "seat": "Archaeon",
+  "mwo_id": "MWO-0004",
+  "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
+  "updated_at_utc": "2026-09-30T18:43:00Z",
   "state": "READY",
-  "heartbeat_and_completion": "comms #1102 (reply to #1083)",
-  "next": "awaiting Aporia -- no self-promotion"
- }
+  "branch": "archaeon/mwo0001-2026-09-28",
+  "head_sha": "d0ca26b168561d1e21031ea332e0dadac2b560bf (parent of the commit that records this field)",
+  "threads": [
+    "thr-a7fcb43e8092 (TH-015)",
+    "thr-c64dca3118a1 (replicator identity)",
+    "thr-5085da70a143 (cargo vs heredity)"
+  ],
+  "campaigns": [
+    "C-001"
+  ],
+  "experiments": [
+    "E-003 = ancestry replay: COMPLETE (E003_SYNTHESIS.md, items A-G). BEE VALIDATED conditional on post-exposure rules; robust Q8c 0.00115; NPE uninformative by construction; NPE 1% sample VERIFIED + AGREEMENT PASS"
+  ],
+  "fabric_tasks": [
+    "tsk-05b35561e844 + tsk-0147d5299dac: FP-001, completed PASS",
+    "tsk-c4317a3656d0: CANCELED under MWO-0004 R3 (native fallback)"
+  ],
+  "running": [],
+  "blocked_on": [],
+  "next_actions": [
+    "HOLD: no eligible work. Resume on a new MWO or on a seat request"
+  ],
+  "operator_decisions_required": [
+    "E-003 BEE verdict of record (CWO s4 escalation #1044): owner (#1050), auditor and Archaeon concur the confirmatory label is ALTERED under the pre-exposure rules; VALIDATED only as amended. Operator ruling pending. E003_SYNTHESIS.md items H-I."
+  ],
+  "latest_reports": [
+    "ops/campaigns/C-001/ATTRIBUTION_ARC_2026-09-28/E003_SYNTHESIS.md (items A-G)",
+    "ops/campaigns/C-001/ATTRIBUTION_ARC_2026-09-28/review_e003/"
+  ],
+  "mwo_sha256": "925660b2d2be53af2ee4195391e484d9649bbd4ee828cd60432ce2f0903a99df",
+  "migration_report": "roles/Archaeon/MIGRATION_REPORT_MWO-0002.json",
+  "other_branches": [
+    "archaeon/attribution-arc-2026-09-28 @ 232ebe399 (E-003 evidence)",
+    "archaeon/comms-keepalive-2026-09-30 @ 2c8c81bbb (#1148 keepalive repair)"
+  ],
+  "comms_cursor": 1166,
+  "state_reason": "CWO-2026-09-30C: dispatch #1148 COMPLETE (completion #1166); READY = not self-selecting work, awaiting Aporia dispatch",
+  "fp001_result": "roles/Archaeon/probes/FP-001_RESULT.json",
+  "work_order": "MWO-0004 (CWO 2026-09-30 read; not addressed to Archaeon)",
+  "cwo_b": {
+    "cwo": "ops/fleet/CWO_2026-09-30B_FINISH_IN_PLACE.md @ d4e47ebf5 (sha256 e62cb5ee...)",
+    "state": "READY",
+    "heartbeat_and_completion": "comms #1102 (reply to #1083)",
+    "next": "awaiting Aporia -- no self-promotion"
+  },
+  "current_objective": null,
+  "current_step": null,
+  "next_expected_milestone": "next Aporia dispatch under CWO-C",
+  "expected_next_artifact": null,
+  "last_push_sha": "2c8c81bbba93ba93ac189cc25107dc97cf605198",
+  "last_push_utc": "2026-09-30T18:41:25Z",
+  "cwo_c": {
+    "cwo": "ops/fleet/CWO_2026-09-30C_FINISH_SURFACE_DISPATCH.md @ 7d373ac02 (sha256 edc4792d30a7829709f1eb392ead55c092f47139c760879556ef17408c867e6c)",
+    "state": "READY",
+    "adoption_heartbeat": "comms #1165 (reply to #1140)",
+    "dispatches": [
+      {
+        "id": "#1148",
+        "subject": "half-open Postgres connection (DEF-ODY-019 mode) in comms/evidence_wiki",
+        "verdict": "PRESENT -> repaired (CODE_FIXED, not merged, not deployed)",
+        "commit": "2c8c81bbba93ba93ac189cc25107dc97cf605198",
+        "branch": "archaeon/comms-keepalive-2026-09-30",
+        "test": "evidence_wiki/tests/test_db_keepalive.py: 4/4 fail w/o fix, 4/4 pass M2 Windows (live), 3 pass+1 skip ubu001 Linux",
+        "deployment": "needs owner-lane merge + evidence_wiki service restart",
+        "completion": "comms #1166"
+      }
+    ],
+    "session_model": "claude-opus-5-5",
+    "session_start_utc": null
+  }
 }
