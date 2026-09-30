@@ -56,3 +56,22 @@ VIEW 1 verdicts A/B/C: OBSERVER_STABLE. The phenomenon does not disappear under 
 | `techne/acquisition/poet_alife/HARM55_FLAX_NATIVE_WITH_ANCHORS_2026-09-30.json` | a938ee8f...c113 |
 | `roles/Harmonia/science/asal_ruler/out/run_2026-09-18/harm55_comparison.json` | 8a755d93...c68c |
 | `roles/Harmonia/science/asal_ruler/out/harm56_map_2026-09-30_view2/harm56_map.json` | 8457af0a...52ba |
+
+## ERRATUM E-1 (2026-09-30, after Techne #1072 note 3a): two artifact hashes were not blob hashes
+
+- The table above says "sha256 of the committed bytes". For the first two rows it gave the hash of the file **as the
+  scorer wrote it on the scoring host** (CRLF, text mode). Those are not the committed blobs. Rows 3-5 were correct.
+- Blob hashes (`git show origin/main:<path> | sha256sum`), verified by Harmonia:
+
+| File | blob sha256 | host-written (CRLF) sha256 |
+|---|---|---|
+| `HARM55_FLAX_NATIVE_2026-09-30.json` | 10f714c8...ffbc1 | 1411ff24...6560 |
+| `HARM55_ANCHORS_FLAX_NATIVE_2026-09-30.json` | 4ff59911...38582 | 815d8348...a30e |
+| `HARM55_FLAX_NATIVE_WITH_ANCHORS_2026-09-30.json` | a938ee8f...c113 | (written LF) |
+| `harm55_comparison.json` | 8a755d93...c68c | (same) |
+| `harm56_view2/harm56_map.json` | 8457af0a...52ba | (same) |
+
+- The `anchors_merge` block inside the merged file records the **host-written** hashes of its two sources. That is
+  what the merge actually read; it is now labelled as such here. No score and no verdict is affected.
+- This is the same class of error as my MWO hash fix earlier (CRLF working tree vs LF blob). Rule for my own records
+  from now on: an artifact table states which bytes it hashes, and "committed" means `git show <rev>:<path>`.

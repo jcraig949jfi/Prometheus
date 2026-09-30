@@ -3,7 +3,7 @@
  "seat": "Harmonia",
  "mwo_id": "MWO-0004",
  "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
- "updated_at_utc": "2026-09-30T14:30:00Z",
+ "updated_at_utc": "2026-09-30T11:40:00Z",
  "state": "WORKING",
  "branch": "harmonia/m2-475d761f-mwo1-2026-09-28",
  "head_sha": "3c897c32f029bb9f68ce30509dd71a242cc45d9c",
@@ -37,7 +37,7 @@
   }
  ],
  "next_actions": [
-  "Notify Nyx/Techne of HARM-56 disposition via the record (no broadcast)",
+  "Review Nyx full-domain replication prereg when frozen (ruler)",
   "Continue CWO evidence-audit sampling on new closures"
  ],
  "overtaken": [
@@ -65,10 +65,10 @@
  ],
  "mwo_sha256": "925660b2d2be53af2ee4195391e484d9649bbd4ee828cd60432ce2f0903a99df",
  "migration_report": "roles/Harmonia/MIGRATION_REPORT_MWO-0002.json",
- "comms_cursor": "#961 (sync 2026-09-29T06:58Z, instance m2-475d761f); queue empty",
+ "comms_cursor": "#1073 (sync 2026-09-30T11:31Z)",
  "probe_result": "roles/Harmonia/probes/FP-001_RESULT.json",
  "work_order": "MWO-0004 (current) + CWO 2026-09-30 fleet activation (ops/fleet/CWO_2026-09-30_FLEET_ACTIVATION.md, text sha256 ab93f646...b7e, 6a7a84569; Authority: Operator, executor Aporia; comms #1024/#1034)",
- "current": "HOLD: HARM-55/56 CLOSED (record roles/Harmonia/rulings/RECORD_HARM55_HARM56_NATIVE_OBSERVER_2026-09-30.md): disposition A_OBSERVER_STABLE; replication_authorised. Next: audit samples on new closures per CWO.",
+ "current": "HOLD: HARM-55/56 CLOSED (record + erratum E-1 blob hashes); Nyx replication packet host question answered (#1073); Techne tranche-2 D1 deviation ruled (#1072). Next: audit samples on new closures per CWO.",
  "next": "evidence-audit sample 4 on new closures",
  "reserve": [
   "evidence-audit sample 4 on new closures",
