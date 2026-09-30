@@ -3,10 +3,10 @@
  "seat": "Odysseus",
  "mwo_id": "MWO-0004",
  "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
- "updated_at_utc": "2026-09-30T13:36:11Z",
+ "updated_at_utc": "2026-09-30T14:16:21Z",
  "state": "BLOCKED",
  "branch": "odysseus/fabric-v0-2026-09-28",
- "head_sha": "a89ff753bad29ec1df05c7d422e16eaade817850",
+ "head_sha": "9c022347e19527481d11742fe657ebd36a2a4b2a",
  "threads": [
   {
    "id": "thr-d2-firewall-audit",
@@ -46,7 +46,7 @@
   "D2 firewall audit COMPLETE: FIREWALL_AUDIT_1 PASS (67e05df12), anchored by Nestor (entry_hash e1a2e48b, #1021); gates pass through AUDIT; C-1/C-2 declared"
  ],
  "running": [
-  "node workers on ubu001 from ~/fabric-runtime @8cc7dc841 (fabric-v0.2 + DEF-ODY-015 + legacy-lease removal): worker.ubu001.a/.b (claude, script), worker.ubu001.sci (script)"
+  "node workers on ubu001 from ~/fabric-runtime @9c022347e (fabric-v0.2 + DEF-ODY-015 + DEF-ODY-019 + legacy-lease removal): worker.ubu001.a/.b (claude, script), worker.ubu001.sci (script)"
  ],
  "blocked_on": [
   "operator: promexec round-2 broker install (see blocked)"
@@ -88,8 +88,8 @@
    "source_commit": "9f95f9ea0 (round 2 + Aether source-review N1/N2); broker sha256 3cf32a642febd032608878480bdf29c2b433f6859445072b44f1efcac14b0df3"
   }
  ],
- "resource_status": "no compute or spend held; ubu001 disk 24%; workers .a/.b/.sci on ~/fabric-runtime @8cc7dc841",
- "last_receipt": "29d607314 DEF-ODY-018; CWO-B heartbeat #1104 to Aporia",
+ "resource_status": "no compute or spend held; ubu001 disk 25%; workers .a/.b/.sci on ~/fabric-runtime @9c022347e, idle",
+ "last_receipt": "9c022347e DEF-ODY-019 repair (store keepalive/user timeout; heartbeat reconnect) rolled into ~/fabric-runtime; the node had silently hung ~36 min on half-open connections",
  "in_flight": [
   "promexec round 2 (blocked on the operator install)",
   "standing: ubu001 node workers; Fabric defect ledger; D2 auditor of record on demand",

@@ -10,3 +10,5 @@ package, no CPU lease (no substantial local compute).
 | batch | seed source | n | base | status |
 |---|---|---|---|---|
 | D001 | roles/Odysseus/fabric_pilot/s3/RESULT.md@b3974ed8b | 10 of 46 eligible | 0424c372a | 10/10 completed 14:15-14:46Z; reconciled 2026-09-30 (D001/RECEIPTS.json, reconcile_batch.py) |
+| D002 | the 9 D001 analysis.py (all runnable; no draw) | 11 script Tasks | c628f3e | 8 returned, 3 timeouts; RESULT.md |
+| D003 | ops/fleet/CWO_2026-09-30_FLEET_ACTIVATION.md@6a7a84569 (not Artemis-authored) | 10 of 36 eligible (S3 + D001 excluded) | freeze commit | frozen 2026-09-30; body guard hits D003-04 (thermodynamic "irreversible") and D003-09 (LM01 pointer) kept: title guard is the frozen rule |

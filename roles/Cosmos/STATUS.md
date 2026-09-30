@@ -1,5 +1,9 @@
 # Cosmos status
 
+Currency: 2026-09-30 (v0.2). ACTIVE. The operator accepted the C3 autopsy; C3 stays dead. C4 DESIGN v0.2 is
+under independent review, with a foreign visible family commissioned. F-0002 and the build are NOT
+authorized. D2 SEALED / UNREAD / UNSPENT / COMPATIBILITY PENDING; the incident was ruled NO_INFORMATION.
+--- earlier 2026-09-30 block below ---
 Currency: 2026-09-30. ENTRY: roles/Cosmos/BOOTSTRAP.md. Live state of record: roles/Cosmos/WORK_STATE.json.
 seat state 2026-09-30: ACTIVE (off HOLD; operator C3 disposition, prompts/2026-09-30_operator_c3_disposition/).
   C3 CLOSED / KILLED BEFORE HOLDOUT: the coordinate audit REJECTED the claim (research/reviews/
