@@ -463,6 +463,44 @@
         "unexpectedness": "unknown",
         "potential_importance": "unknown"
       }
+    },
+    {
+      "id": "P4",
+      "triplicateId": "HT-5b0b3ebb8d",
+      "index": 4,
+      "kind": "first_falsification",
+      "added": [
+        "new falsifier",
+        "new substrate"
+      ],
+      "generator": {
+        "model": "claude-opus-5-5 (attacker)",
+        "search": false,
+        "prompt": "hecate/programs/_prompts/pass4_impl_v1.md",
+        "prompt_sha256": "77ff9e2d04f990b18d049dcf86bf70e10246b171cb4445cc8b34bebbcecece6e"
+      },
+      "prereg": "roles/Hecate/prereg/2026-09-30_pass4_round1/PREREG.md",
+      "inspected_prior": [
+        "W4",
+        "O-W4-r1"
+      ],
+      "unexplained": [
+        "ALT reversed the claim: unwitnessed beliefs failed LESS (OR 0.44, p 6.5e-5) when transitions, not states, are removed; confounded with path length (3.04 vs 1.57); no belief became false in the ALT world."
+      ],
+      "decision": "PARK",
+      "research_state": {
+        "novelty": "unknown",
+        "mechanistic_clarity": "unknown",
+        "falsifiability": "unknown",
+        "empirical_support": "none",
+        "cross_lens_agreement": "unknown",
+        "cross_substrate_transfer": "unknown",
+        "baseline_resistance": "none",
+        "artifact_risk": "unknown",
+        "cost": "unknown",
+        "unexpectedness": "unknown",
+        "potential_importance": "unknown"
+      }
     }
   ],
   "hypotheses": [
@@ -1103,6 +1141,21 @@
         "M11",
         "M13"
       ]
+    },
+    {
+      "id": "O-W4-p4",
+      "triplicateId": "HT-5b0b3ebb8d",
+      "passId": "P4",
+      "kind": "observation",
+      "layer": "experimental_observation",
+      "evidence_rows": [
+        "hecate/programs/HT-5b0b3ebb8d/worlds/W4/pass4/rows.jsonl"
+      ],
+      "statement": "Pass 4 on W4: PARK. ALT reversed the claim: unwitnessed beliefs failed LESS (OR 0.44, p 6.5e-5) when transitions, not states, are removed; confounded with path length (3.04 vs 1.57); no belief became false in the ALT world. R: OR 2.0596720625241645, p 2.217838906178054e-09 (null twin OR 1.0824543440177463) -> reproduced=True. ORIG (round-1 rows, endpoint x decile): OR nan, p nan, strata with outcome variance 0/20 -> fired=True. ALT: OR 0.44320199402115074, p 6.507735625173055e-05, null twin OR 1.107502758704749, p 0.6512784039073045 -> FAIL. Predicate PARK. Numbers only; toy configuration. Post-run anomalies appended (descriptive, predicate unchanged).",
+      "derived_from": [
+        "M11",
+        "M13"
+      ]
     }
   ],
   "lenses": [
@@ -1576,14 +1629,180 @@
       ],
       "rejected_explanations": [
         "visit-count strata too coarse to remove the confound"
-      ]
+      ],
+      "pass4": {
+        "predicate": "PARK",
+        "R": {
+          "reproduced": true,
+          "stats": {
+            "TREATMENT": {
+              "or_mh": 2.0596720625241645,
+              "p": 2.217838906178054e-09,
+              "chi2": 35.772255442455716,
+              "strata_used": 10,
+              "n": 1741,
+              "n_lucky": 1248,
+              "n_grounded": 493,
+              "fail_rate_lucky": 0.40544871794871795,
+              "fail_rate_grounded": 0.23935091277890466,
+              "strata_total": 10,
+              "strata_with_outcome_variance": 10
+            },
+            "NULL_TWIN": {
+              "or_mh": 1.0824543440177463,
+              "p": 0.5238228821583674,
+              "chi2": 0.40635990088910046,
+              "strata_used": 10,
+              "n": 1741,
+              "n_lucky": 1248,
+              "n_grounded": 493,
+              "fail_rate_lucky": 0.36778846153846156,
+              "fail_rate_grounded": 0.33468559837728196,
+              "strata_total": 10,
+              "strata_with_outcome_variance": 10
+            },
+            "null_twin_meets": false
+          }
+        },
+        "ORIG": {
+          "fired": true,
+          "stats": {
+            "primary_round1_rows": {
+              "or_mh": "nan",
+              "p": "nan",
+              "chi2": "nan",
+              "strata_used": 20,
+              "n": 1747,
+              "n_lucky": 1252,
+              "n_grounded": 495,
+              "fail_rate_lucky": 0.3769968051118211,
+              "fail_rate_grounded": 0.2585858585858586,
+              "strata_total": 20,
+              "strata_with_outcome_variance": 0,
+              "no_stratum_with_outcome_variance": true,
+              "or_below": true,
+              "p_not_below": true,
+              "fired": true,
+              "fail_rate_endpoint_in": 1.0,
+              "fail_rate_endpoint_out": 0.0,
+              "n_endpoint_in": 600
+            },
+            "secondary_R_rows": {
+              "or_mh": "nan",
+              "p": "nan",
+              "chi2": "nan",
+              "strata_used": 20,
+              "n": 1741,
+              "n_lucky": 1248,
+              "n_grounded": 493,
+              "fail_rate_lucky": 0.40544871794871795,
+              "fail_rate_grounded": 0.23935091277890466,
+              "strata_total": 20,
+              "strata_with_outcome_variance": 0,
+              "no_stratum_with_outcome_variance": true,
+              "or_below": true,
+              "p_not_below": true,
+              "fired": true,
+              "fail_rate_endpoint_in": 1.0,
+              "fail_rate_endpoint_out": 0.0,
+              "n_endpoint_in": 624
+            }
+          }
+        },
+        "ALT": {
+          "status": "FAIL",
+          "stats": {
+            "TREATMENT": {
+              "or_mh": 0.44320199402115074,
+              "p": 6.507735625173055e-05,
+              "chi2": 15.948848448193413,
+              "strata_used": 27,
+              "n": 1788,
+              "n_lucky": 1209,
+              "n_grounded": 579,
+              "fail_rate_lucky": 0.24400330851943755,
+              "fail_rate_grounded": 0.17789291882556132,
+              "strata_total": 50,
+              "strata_with_outcome_variance": 45
+            },
+            "NULL_TWIN": {
+              "or_mh": 1.107502758704749,
+              "p": 0.6512784039073045,
+              "chi2": 0.2042921776620945,
+              "strata_used": 27,
+              "n": 1788,
+              "n_lucky": 1209,
+              "n_grounded": 579,
+              "fail_rate_lucky": 0.2746071133167907,
+              "fail_rate_grounded": 0.15716753022452504,
+              "strata_total": 50,
+              "strata_with_outcome_variance": 44
+            },
+            "null_twin_meets": false,
+            "diagnostics": {
+              "fail_rate_endpoint_in_disabled": 0.4899845916795069,
+              "fail_rate_endpoint_not_in": 0.07023705004389816,
+              "endpoint_x_decile_strata": {
+                "or_mh": 1.4103996095686313,
+                "p": 0.030190110135640567,
+                "chi2": 4.698434176970754,
+                "strata_used": 20,
+                "n": 1788,
+                "n_lucky": 1209,
+                "n_grounded": 579,
+                "fail_rate_lucky": 0.24400330851943755,
+                "fail_rate_grounded": 0.17789291882556132,
+                "strata_total": 20,
+                "strata_with_outcome_variance": 20
+              },
+              "reach_fail_rate_lucky": 0.0,
+              "reach_fail_rate_grounded": 0.0,
+              "reach_fail_overall": 0.0,
+              "support_len_mean_lucky": 3.0413564929693964,
+              "support_len_mean_grounded": 1.5734024179620034,
+              "visit_decile_only": {
+                "or_mh": 1.4707859412718611,
+                "p": 0.0032861586524192406,
+                "chi2": 8.641360913547036,
+                "strata_used": 10,
+                "n": 1788,
+                "n_lucky": 1209,
+                "n_grounded": 579,
+                "fail_rate_lucky": 0.24400330851943755,
+                "fail_rate_grounded": 0.17789291882556132,
+                "strata_total": 10,
+                "strata_with_outcome_variance": 10
+              },
+              "witness_len_x_decile": {
+                "or_mh": 1.2414656597324027,
+                "p": 0.11609718042973405,
+                "chi2": 2.4691975814535203,
+                "strata_used": 29,
+                "n": 1788,
+                "n_lucky": 1209,
+                "n_grounded": 579,
+                "fail_rate_lucky": 0.24400330851943755,
+                "fail_rate_grounded": 0.17789291882556132,
+                "strata_total": 34,
+                "strata_with_outcome_variance": 30
+              },
+              "witness_hit_rate_lucky": 0.076095947063689,
+              "witness_hit_rate_grounded": 0.17789291882556132
+            }
+          }
+        },
+        "rows": "hecate/programs/HT-5b0b3ebb8d/worlds/W4/pass4/rows.jsonl",
+        "outcome_file": "hecate/programs/HT-5b0b3ebb8d/worlds/W4/pass4/PASS4_OUTCOME.json",
+        "note": "ALT reversed the claim: unwitnessed beliefs failed LESS (OR 0.44, p 6.5e-5) when transitions, not states, are removed; confounded with path length (3.04 vs 1.57); no belief became false in the ALT world."
+      },
+      "original_world_claim": "FOSSIL"
     }
   ],
   "candidateEngines": [],
-  "currentVerdict": "PROBING",
+  "currentVerdict": "PARK",
   "evidenceSummary": {
     "layer": "experimental_observation",
-    "note": "probe round 1: W4 SIGNAL; nothing supported (no Pass 4 yet)",
-    "rows": "hecate/programs/HT-5b0b3ebb8d/worlds/W4/rows.jsonl"
+    "rows": "hecate/programs/HT-5b0b3ebb8d/worlds/W4/pass4/rows.jsonl",
+    "note": "Pass 4 round 1: PARK"
   }
 }

@@ -76,15 +76,13 @@ _none yet_
 _none yet_
 
 ## PRIOR ART
-_none yet_
+- M3: KNOWN_ANALOGUE_FOUND -- minimum-distance decoding; Pass 4 ORIG rows hecate/programs/HT-321a8fd8e0/worlds/W1/pass4/rows.jsonl
 
 ## OPEN QUESTIONS
-- the threshold is exactly the textbook decoding radius, so nothing new
-- restricting coalition search to own symbols guarantees the result
-- majority/repetition voting would show the same robustness
+- ALT passes by counting (31 agents cannot give 16 bits 3 copies each); it could not fail. Calibration ledger row 2. Both worlds reduce to minimum-distance decoding: prior art KNOWN_ANALOGUE_FOUND.
 
 ## CURRENT VERDICT
-PROBING (an allocation state, not a truth claim). probe round 1: W1 SIGNAL; nothing supported (no Pass 4 yet)
+PROBING (an allocation state, not a truth claim). Pass 4 round 1: ORIG_FOSSIL_ALT_PASS
 
 ## NEXT PASS
-decision after P3-probe1: FALSIFY
+decision after P4: FALSIFY

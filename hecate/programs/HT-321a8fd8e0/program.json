@@ -432,6 +432,44 @@
         "unexpectedness": "unknown",
         "potential_importance": "unknown"
       }
+    },
+    {
+      "id": "P4",
+      "triplicateId": "HT-321a8fd8e0",
+      "index": 4,
+      "kind": "first_falsification",
+      "added": [
+        "new falsifier",
+        "new substrate"
+      ],
+      "generator": {
+        "model": "claude-opus-5-5 (attacker)",
+        "search": false,
+        "prompt": "hecate/programs/_prompts/pass4_impl_v1.md",
+        "prompt_sha256": "77ff9e2d04f990b18d049dcf86bf70e10246b171cb4445cc8b34bebbcecece6e"
+      },
+      "prereg": "roles/Hecate/prereg/2026-09-30_pass4_round1/PREREG.md",
+      "inspected_prior": [
+        "W1",
+        "O-W1-r1"
+      ],
+      "unexplained": [
+        "ALT passes by counting (31 agents cannot give 16 bits 3 copies each); it could not fail. Calibration ledger row 2. Both worlds reduce to minimum-distance decoding: prior art KNOWN_ANALOGUE_FOUND."
+      ],
+      "decision": "FALSIFY",
+      "research_state": {
+        "novelty": "unknown",
+        "mechanistic_clarity": "unknown",
+        "falsifiability": "unknown",
+        "empirical_support": "low",
+        "cross_lens_agreement": "unknown",
+        "cross_substrate_transfer": "unknown",
+        "baseline_resistance": "none",
+        "artifact_risk": "unknown",
+        "cost": "unknown",
+        "unexpectedness": "unknown",
+        "potential_importance": "unknown"
+      }
     }
   ],
   "hypotheses": [
@@ -589,6 +627,10 @@
         "what_can_learn": "nothing",
         "what_can_transfer": "code family to other outcome rules",
         "distinguishing_observable": "manipulation-rate step at k ~ d/2 versus a matched-redundancy random-parity null"
+      },
+      "prior_art": {
+        "label": "KNOWN_ANALOGUE_FOUND",
+        "evidence": "minimum-distance decoding; Pass 4 ORIG rows hecate/programs/HT-321a8fd8e0/worlds/W1/pass4/rows.jsonl"
       }
     },
     {
@@ -1037,6 +1079,20 @@
         "hecate/programs/HT-321a8fd8e0/worlds/W1/OUTCOME.json"
       ],
       "statement": "W1 probe round 1: SIGNAL. BCH(31,16) with verified d=7 (covering radius 5), exact nearest-codeword decoding, exhaustive 2^k coalition search, 4000 coalitions per k. TREATMENT manipulation rate by k: {1: 0.0, 2: 0.0, 3: 0.0, 4: 0.5883, 5: 0.9205, 6: 1.0, 7: 1.0, 8: 1.0}. CONTROL random-parity k=1 rate 1.0000; NULL_TWIN k=1 rate 1.0000; POSITIVE_CONTROL k=1 rate 1.0000. Outcome SIGNAL by the PREREG class rules applied in code.",
+      "derived_from": [
+        "M3"
+      ]
+    },
+    {
+      "id": "O-W1-p4",
+      "triplicateId": "HT-321a8fd8e0",
+      "passId": "P4",
+      "kind": "observation",
+      "layer": "experimental_observation",
+      "evidence_rows": [
+        "hecate/programs/HT-321a8fd8e0/worlds/W1/pass4/rows.jsonl"
+      ],
+      "statement": "Pass 4 on W1: ORIG_FOSSIL_ALT_PASS. ALT passes by counting (31 agents cannot give 16 bits 3 copies each); it could not fail. Calibration ledger row 2. Both worlds reduce to minimum-distance decoding: prior art KNOWN_ANALOGUE_FOUND. R: round-1 class on seeds 100-119 = SIGNAL; BCH16 rates {'1': 0.0, '2': 0.0, '3': 0.0, '4': 0.589, '5': 0.91, '6': 1.0, '7': 1.0, '8': 1.0}. ORIG: d=3 step True, d=5 step True -> fired=True (KNOWN_ANALOGUE_FOUND). ALT: K(code)=3 vs K(majority,31)=0 -> PASS; aux majority r=3 on 48 agents K=1. Predicate ORIG_FOSSIL_ALT_PASS.",
       "derived_from": [
         "M3"
       ]
@@ -1553,7 +1609,156 @@
         }
       },
       "anomalies": [],
-      "rejected_explanations": []
+      "rejected_explanations": [],
+      "pass4": {
+        "predicate": "ORIG_FOSSIL_ALT_PASS",
+        "R": {
+          "reproduced": true,
+          "stats": {
+            "round1_class_on_new_seeds": "SIGNAL",
+            "seeds": "100-119",
+            "TREATMENT_rate_by_k": {
+              "1": 0.0,
+              "2": 0.0,
+              "3": 0.0,
+              "4": 0.589,
+              "5": 0.91,
+              "6": 1.0,
+              "7": 1.0,
+              "8": 1.0
+            },
+            "TREATMENT_seed_range_k4": [
+              0.525,
+              0.635
+            ],
+            "CONTROL_rate_k1": 1.0,
+            "NULL_TWIN_rate_k1": 1.0,
+            "null_twin_meets_code_clause": false
+          }
+        },
+        "ORIG": {
+          "fired": true,
+          "stats": {
+            "BCH(31,26,3)": {
+              "step_at_t_plus_1": true,
+              "t": 1,
+              "rate_by_k": {
+                "1": 0.0,
+                "2": 1.0,
+                "3": 1.0,
+                "4": 1.0,
+                "5": 1.0,
+                "6": 1.0,
+                "7": 1.0,
+                "8": 1.0
+              }
+            },
+            "BCH(31,21,5)": {
+              "step_at_t_plus_1": true,
+              "t": 2,
+              "rate_by_k": {
+                "1": 0.0,
+                "2": 0.0,
+                "3": 0.882,
+                "4": 1.0,
+                "5": 1.0,
+                "6": 1.0,
+                "7": 1.0,
+                "8": 1.0
+              }
+            },
+            "codes_meta": {
+              "BCH(31,16,7) nearest-codeword decode": {
+                "generator_poly": "0b1000111110101111",
+                "dmin": 7,
+                "covering_radius": 5,
+                "t": 3
+              },
+              "BCH(31,21,5) nearest-codeword decode": {
+                "generator_poly": "0b11101101001",
+                "dmin": 5,
+                "covering_radius": 3,
+                "t": 2
+              },
+              "BCH(31,26,3) nearest-codeword decode": {
+                "generator_poly": "0b100101",
+                "dmin": 3,
+                "covering_radius": 1,
+                "t": 1
+              }
+            },
+            "prior_art_label": "KNOWN_ANALOGUE_FOUND"
+          }
+        },
+        "ALT": {
+          "status": "PASS",
+          "stats": {
+            "K_code_BCH31_16": 3,
+            "K_majority_31": 0,
+            "code_rate_by_k": {
+              "1": 0.0,
+              "2": 0.0,
+              "3": 0.0,
+              "4": 0.6025,
+              "5": 0.91,
+              "6": 1.0,
+              "7": 1.0,
+              "8": 1.0
+            },
+            "majority31_rate_by_k": {
+              "1": 0.51125,
+              "2": 0.77125,
+              "3": 0.8945,
+              "4": 0.9595,
+              "5": 0.9825,
+              "6": 0.9935,
+              "7": 0.99725,
+              "8": 0.999
+            },
+            "aux_MAJ_R3_48_K": 1,
+            "aux_MAJ_R3_48_rate_by_k": {
+              "1": 0.0,
+              "2": 0.046,
+              "3": 0.126,
+              "4": 0.24475,
+              "5": 0.379,
+              "6": 0.52575,
+              "7": 0.66125,
+              "8": 0.77575
+            },
+            "aux_exhaustive_k1_3": {
+              "EXH_CODE_BCH16": {
+                "counts": {
+                  "1": 0,
+                  "2": 0,
+                  "3": 0
+                },
+                "n_coalitions_by_k": {
+                  "1": 31,
+                  "2": 465,
+                  "3": 4495
+                }
+              },
+              "EXH_MAJ31": {
+                "counts": {
+                  "1": 18,
+                  "2": 355,
+                  "3": 4007
+                },
+                "n_coalitions_by_k": {
+                  "1": 31,
+                  "2": 465,
+                  "3": 4495
+                }
+              }
+            }
+          }
+        },
+        "rows": "hecate/programs/HT-321a8fd8e0/worlds/W1/pass4/rows.jsonl",
+        "outcome_file": "hecate/programs/HT-321a8fd8e0/worlds/W1/pass4/PASS4_OUTCOME.json",
+        "note": "ALT passes by counting (31 agents cannot give 16 bits 3 copies each); it could not fail. Calibration ledger row 2. Both worlds reduce to minimum-distance decoding: prior art KNOWN_ANALOGUE_FOUND."
+      },
+      "original_world_claim": "FOSSIL"
     },
     {
       "id": "W2",
@@ -1652,7 +1857,7 @@
   "currentVerdict": "PROBING",
   "evidenceSummary": {
     "layer": "experimental_observation",
-    "note": "probe round 1: W1 SIGNAL; nothing supported (no Pass 4 yet)",
-    "rows": "hecate/programs/HT-321a8fd8e0/worlds/W1/rows.jsonl"
+    "rows": "hecate/programs/HT-321a8fd8e0/worlds/W1/pass4/rows.jsonl",
+    "note": "Pass 4 round 1: ORIG_FOSSIL_ALT_PASS"
   }
 }

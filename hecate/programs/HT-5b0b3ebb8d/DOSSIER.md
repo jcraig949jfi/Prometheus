@@ -81,11 +81,10 @@ _none yet_
 _none yet_
 
 ## OPEN QUESTIONS
-- lucky beliefs concentrate on the disabled mechanism by construction of the shift
-- witness selection picks shortest paths that happen to use abduced edges
+- ALT reversed the claim: unwitnessed beliefs failed LESS (OR 0.44, p 6.5e-5) when transitions, not states, are removed; confounded with path length (3.04 vs 1.57); no belief became false in the ALT world.
 
 ## CURRENT VERDICT
-PROBING (an allocation state, not a truth claim). probe round 1: W4 SIGNAL; nothing supported (no Pass 4 yet)
+PARK (an allocation state, not a truth claim). Pass 4 round 1: PARK
 
 ## NEXT PASS
-decision after P3-probe1: FALSIFY
+decision after P4: PARK

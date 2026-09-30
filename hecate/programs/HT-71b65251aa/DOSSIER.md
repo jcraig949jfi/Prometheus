@@ -81,10 +81,10 @@ _none yet_
 _none yet_
 
 ## OPEN QUESTIONS
-_none yet_
+- Two speaker variants gave L2-L1 accuracy gaps 0.0000 and 0.0003: the 4-word world is too simple for depth to matter.
 
 ## CURRENT VERDICT
-PROBING (an allocation state, not a truth claim). probe round 1: W3 SIGNAL; nothing supported (no Pass 4 yet)
+PARK (an allocation state, not a truth claim). Pass 4 round 1: PARK
 
 ## NEXT PASS
-decision after P3-probe1: FALSIFY
+decision after P4: PARK
