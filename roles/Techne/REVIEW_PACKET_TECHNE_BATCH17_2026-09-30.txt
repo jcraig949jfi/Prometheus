@@ -1,0 +1,208 @@
+================================================================================
+REVIEW PACKET -- batch 17: twenty prior-art donors + the #1071 grade ruling
+Techne, 2026-09-30 (evening)
+Commits of record: b05f854a7 (ruling), a853fdf0b (batch 17); both verified
+  ancestors of origin/main after push
+Author: Techne[gandalf-4c0c7e64], claude-fable-5-1, host M3/GANDALF
+Invoked by: operator, chat: "Let's find some stuff to download for the
+  program for Nyx to chop up"; and CWO-2026-09-30B (the #1071 answer)
+================================================================================
+
+0. WHAT THIS PACKET IS
+
+Two units after the morning packet (REVIEW_PACKET_TECHNE_BOOT_2026-09-30.txt):
+a provenance-grade ruling another seat asked for, and an acquisition batch of
+twenty software bodies preserved for dissection by the seat Nyx.
+
+CONFLICT OF INTEREST: the author wrote the ruling vocabulary it applies, built
+the acquisition tooling, and delegated the reading of twenty repositories to
+ten agents of the same model. The author verified pins and licences itself
+but did not re-read every README. No independent seat has reviewed this.
+
+Grades: E3 = executed this session; E1 = regenerable from committed files;
+E0 = prose.
+
+1. CONTEXT
+
+Prometheus preserves prior-art software as "fossils": a tracked record plus a
+host-local body pinned by hash, for Nyx to dissect into reusable mechanisms.
+An operator directive of 2026-09-21 ("prior-art raid") names donor systems in
+nine sections; sections II-V cover auto-curricula, quality diversity, digital
+life and evolving programs. Nyx reads a provenance grade for every body it
+cuts; where the record has none, the cut reads UNKNOWN. A fleet order issued
+today (CWO-2026-09-30C) requires a seat to finish in-flight work, heartbeat
+a coordinating seat (Aporia), and then wait for dispatch rather than start
+its own next item; direct operator instructions outrank that.
+
+2. THE QUESTIONS THE WORK WAS ANSWERING
+
+Q1 (Nyx #1071). Which R19 provenance grade does a cut carry when its files
+   come from a record of source type PSEUDOCODE_PLUS_REFERENCE_IMPL,
+   FAITHFUL_PORT or LATER_SAME_LINEAGE_RELEASE? 19 cuts read UNKNOWN.
+Q2 (operator, chat). Which of the directive's named donors have a public
+   repository and a readable licence, and can be preserved now for Nyx?
+
+3. WHAT WAS DONE, STEP BY STEP
+
+3.1 Ruling (E3 reading, E0 judgement). The 19 records' provenance fields were
+dumped and read; the R19 vocabulary lists eight grades with one sentence of
+guidance ("a later reconstruction ... does not become original merely because
+it works"). Principle applied, from the author's own 2026-09-17 ruling: the
+source type says how the bytes were obtained; the grade says what the object
+is relative to the claim.
+  PSEUDOCODE_PLUS_REFERENCE_IMPL (13)  RECONSTRUCTION of the named mechanism
+  FAITHFUL_PORT (3)                    RECONSTRUCTION (+ one RECONSTRUCTS edge)
+  LATER_SAME_LINEAGE_RELEASE (3)       ORIGINAL_ARTIFACT of the release read,
+                                       dated; never the historical-era body
+Three phrases written from memory were removed before posting.
+
+3.2 Scout (E3). 22 candidate repositories: pin by git ls-remote; licence,
+size and archive state from the GitHub API and the raw licence file; two
+more found by search (MABE2 owner; Aevol's canonical GitLab).
+  eligible 20   deferred 6 (one 2.5 GB; three with no licence anywhere;
+                one 116 MB duplicate lineage; DeepMind systems with no
+                public source)
+
+3.3 Reading (E3, delegated). Ten read-only agents cloned each pin, read the
+licence, README, manifests and core files, and wrote a facts file each with
+"NOT_FOUND_AT_PIN" where the tree is silent. Every draft's pin was checked
+against the author's own ls-remote: 20 of 20 agree. Drafts are committed
+verbatim as provenance; the batch script builds records from them plus an
+override table (id, section, source type, domain, era, edges, tags).
+
+3.4 Acquisition (E3).
+  records validated      20 of 20
+  bodies acquired        20 of 20; 173,504,350 bytes; one submodule fetched
+                         at its pinned gitlink (MABE2's Empirical)
+  verify --all           189 specimens: 68 match, 0 differ, 120 not on host
+  malware scan           20 of 20 completed, 0 detections
+  handoff blocks         20 filled; second run fills 0
+  catalog                regenerated, 189 rows
+  tests                  fossil set 776 passed / 13 skipped
+
+3.5 Found on the way (E3). verify --all reported one body as changed:
+poet-original-2019 had gained one file, a Python bytecode cache written on
+2026-09-19 when a consumer imported a module from the body. The file was
+removed; the body matches its record again. Nyx was told; a tooling item was
+filed so verify names such rows as consumer byproducts.
+
+4. RESULTS
+
+  item                                  before        after       grade
+  cuts with an answered grade rule      0 of 19       19 of 19    E3
+  fossil records                        169           189         E3
+  bodies on this host                   49            69          E3
+  vault size on this host               217 MB        683 MB      E3
+  bodies differing from their record    1 (hidden)    0           E3
+  fossil test set (passed/skipped)      772 / 13      776 / 13    E3
+
+Licence facts recorded, not resolved:
+  jaxued        no LICENSE file at the pin; Apache-2.0 from pyproject only
+  stringmol     LICENSE is GPLv2 text; every source header says GPLv3+
+  aevol         COPYING is GPLv3; 227 source headers say GPLv2+
+  ai-scientist  custom use-restricted licence (RAIL-derived), read in full
+  sferes2 pair  CeCILL 2.1 (copyleft)
+
+Content facts a cutter must know first:
+  evolutionary-model-merge   NO evolutionary or merging search code; it is
+                             the evaluation harness for published models
+  funsearch                  LLM and sandbox are NotImplementedError stubs
+  dgm, omni-epic, openevolve, ai-scientist-v2   need a hosted model API
+                             (dgm also Docker); readable, not runnable here
+
+5. WHAT CHANGED IN THE REPOSITORY
+
+New: 20 specimen records + hash lists; one batch script; 20 reader drafts;
+one ruling with manifest; one heartbeat file with manifest; one delivery
+message; three backlog rows. Changed: CATALOG.json (189 rows); the handoff
+finalize script gained an --all-empty mode; WORK_STATE (now READY); resume;
+journal. No code of any donor was executed. Comms: #1188 (ruling), #1189
+(heartbeat), the batch delivery. No scheduled job, no paid compute.
+
+6. WHAT THIS DID NOT ESTABLISH
+
+- No donor was run, built or tested. Every run classification is
+  NOT_ATTEMPTED. Entry points and loop descriptions come from reading.
+- No mechanism was extracted. The section II report (TECHNE-122) is not
+  started and, under CWO-B, is not to be self-promoted.
+- The reader agents' facts were spot-checked (pins, licences, counts), not
+  re-derived; a wrong sentence in a draft would be a wrong sentence in a
+  record. The drafts are committed so the check can be made later.
+- The grade ruling is per source type. It does not issue per-record grade
+  blocks, does not re-grade archive mirrors, and does not settle the 39
+  rollout fossils (Harmonia to rule on Nyx's proposal).
+- Whether ORIGINAL_ARTIFACT of a later release is the right handle for a
+  cut about a historical mechanism is a judgement; the ruling requires the
+  release to be named in the basis line so a reader can see the gap.
+- Six named donors are not here (section 3.2); the raid remains incomplete
+  for sections II (DRED, ATEP, AdA, XLand), III (AURORA), IV (FlowLenia,
+  DISHTINY, MCC).
+- Who wrote the bytecode file into the POET body is inferred from a dated
+  line in Nyx's cut script, not observed.
+
+7. AUTHOR'S OWN ERRORS AND WHAT THEY COST
+
+- Three claims in the draft ruling came from memory (a Ruby reference, a
+  tag year, a paper as a reconstruction's source). Caught before posting.
+- The heartbeat and first commit message said 19 donors; the count is 20.
+  The heartbeat stands as a point-in-time record; later text says 20.
+- A push was rejected once because origin/main moved during the test run;
+  merged and re-pushed. Cost: one extra fetch/merge cycle.
+- The vault body of poet-original-2019 was contaminated for 11 days without
+  anything noticing, because verify --all is not run at boot. A boot-time
+  verify of the bodies on this host is now the obvious addition (not done).
+
+8. WHAT IS OWED, AND BY WHOM
+
+  Techne     nothing in flight; READY for Aporia dispatch. Filed: verify
+             byproduct class (TECHNE-133); successor scorer (TECHNE-131);
+             by-name test list (TECHNE-128); section II report (TECHNE-122,
+             on dispatch)
+  Nyx        import bodies without writing bytecode into them; apply the
+             grade ruling to the 19 cuts
+  Harmonia   the rollout-fossil grade (Nyx #1074 proposal)
+  Aporia     dispatch, or not
+  operator   the off-host mirror destination (one line, still open)
+
+9. QUESTIONS FOR THE EXTERNAL REVIEWER
+
+ 1. Twenty records were drafted by agents of the same model as the author
+    and spot-checked. Is "pins and licences verified, prose not re-read" an
+    acceptable evidence standard for a preservation record, or should each
+    record carry a second reader before Nyx relies on it?
+ 2. LATER_SAME_LINEAGE_RELEASE -> ORIGINAL_ARTIFACT (dated): is a grade with
+    a mandatory qualifier still a grade, or should the vocabulary gain a
+    LATER_RELEASE value so the qualifier cannot be dropped?
+ 3. Two bodies were preserved although they cannot deliver what the
+    directive wanted (no search code; stubbed pipeline). Is preserving a
+    body whose main value is the documented absence worth the vault space?
+ 4. WHAT WOULD FALSIFY "these twenty bodies are what they claim": name a
+    check beyond hash match against the author's own clone (the independent
+    oracle used in the morning packet was not repeated for the twenty).
+ 5. WHAT SHOULD WE STOP: the vault now holds 189 records and 683 MB on one
+    host with no off-host mirror (open since 2026-09-12). Should acquisition
+    pause until the mirror destination is named?
+ 6. A consumer wrote into a vault body and nothing noticed for 11 days. Is
+    read-only bodies the fix, a boot-time verify, or both?
+
+10. HOW TO REPRODUCE
+
+From a worktree of origin/main at or after a853fdf0b, Python 3.11:
+
+  python -m techne.fossils.batches.batch17_prior_art_raid_ii_v
+      expect: 20 lines ending OK  [EXISTS: not rewritten]
+  python -m techne.fossils.harvest rematerialize <any of the 20 ids>
+      expect: MATCH on a host without the body; ALREADY_PRESENT_VERIFIED here
+  python -m techne.fossils.harvest verify --all
+      expect: differs 0 among the bodies present
+  python -m techne.fossils.batches.finalize_handoff_20260930 --all-empty
+      expect: no output (nothing empty without a capsule)
+  python -m pytest techne/tests/test_fossil_catalog_snapshot.py \
+      techne/tests/test_fossil_handoff.py -q
+      expect: 10 passed
+  Ruling text: roles/Techne/prompts/2026-09-30_r19_grades/
+      RULING_R19_GRADE_BY_SOURCE_TYPE.md (MANIFEST beside it)
+
+Deterministic; no seeds. Network to github.com and gitlab.inria.fr is needed
+only to rematerialize a body.
+================================================================================
