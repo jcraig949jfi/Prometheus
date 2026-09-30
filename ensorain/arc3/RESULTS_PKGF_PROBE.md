@@ -609,3 +609,23 @@ PKG-F world series status (all dev, precommitted per tick):
 - Ramps are localized mid-ramp.
 - Hard gating is right for full switches and wrong for partial ones.
 - The preregistration candidate is therefore NOT ready. The readout gate needs a soft/per-cell version first.
+
+## Soft per-cell gate (pkgf_soft.py)
+
+Finding while designing it:
+- The earlier "gated" readouts (SD_cp, SD_cp3, SD_cp9) never excluded records. They chose the weight a on
+  current-regime records, while the residual smoother g still used ALL records.
+- Their harm removal was a -> 0, i.e. discarding the whole residual channel, valid records included. That explains the
+  W-MULTI partial-switch losses.
+- The soft gate changes g's RECORD SET instead:
+  - all post-tau records;
+  - pre-tau records of cells judged unchanged (a pre/post mean test against the within-side noise);
+  - pre-tau records of untestable cells, iff the estimated changed fraction is < .5.
+  The weight is chosen on a current-regime holdout.
+- Worlds: W-MULTI, FRESH seeds 9_800_130-145 (16 independent worlds).
+
+### Precommitment (written BEFORE running pkgf_soft.py)
+
+- SG1: STALE, mean dAC(SD_soft) > mean dAC(SD_cp9) AND > mean dAC(SD_all).
+- SG2: SD_soft >= SD_all - .02 in >= 13/16 AND min(SD_soft - SD_all) >= -0.2. This is the MU1 criterion that hard
+  gating failed.
