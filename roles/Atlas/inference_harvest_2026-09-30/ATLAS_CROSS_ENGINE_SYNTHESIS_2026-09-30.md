@@ -490,5 +490,12 @@ and older program lines, except where another digest touched them.
 ---------------------------------------------------------------------------------------------------------
 ## 7. Cross-model-family blind re-derivation (the author-prior check)
 
-See s7 of INFERENCE_HARVEST_HANDOFF.md for the result. It is appended there because it completed after this file
-was first committed.
+Full account: INFERENCE_HARVEST_HANDOFF.md s7. Two non-Claude models (Kimi K3, DeepSeek v4.1) were given a masked,
+OBSERVED-only packet with seat vocabulary stripped.
+- Both independently recovered F1, F2, F3 and R6.
+- Neither recovered F4, F5 or F6, the SUGGESTIVE tier.
+- Neither produced the "search, not physics" framing. Both described the same rows as landscape facts (flat,
+  neutral or lethal neighbourhoods), which supports the critic's reading of R3.
+- They added candidates Atlas under-weighted: timing and phase as causal variables, held-out fragility,
+  topology/locality, and a unified reading of recombination.
+- Caveat: a Claude worker selected the packet rows, so selection bias from the author family is not removed.
