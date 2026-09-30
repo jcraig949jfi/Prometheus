@@ -131,3 +131,29 @@ real claims is the NEAR-THRESHOLD SEED SENSITIVITY (AUDIT3 A3b), not the interva
 Code for the census (numpy + prometheus.ananke.swap_rel, CPU, < 2 min): per group-arm, pair means of the
 saved per-trial scores (4x-encoded, 255 = unscored), DF/DN, then the share of seed-0 resamples with
 sd* <= 1e-9, and certificate(a, s, K, method="H2") vs method="BOOTT".
+
+## RESULT: AUDIT3 consistency miss vs pure threshold noise (harvest, ~23:20Z; no engine compute)
+Question: are AUDIT3's 22/301 label disagreements (W-Z vs W-U DETERMINED rows) more than any threshold
+rule produces on a fresh draw?
+Method: for each of the 301 rows, the W-Z pair arrays give DF and DN t-statistics (mean / SE over pairs).
+Treating the W-Z estimate as the truth, a normal approximation with the 99% two-sided cut (2.576) gives
+the probability of each label on an independent redraw. The expected disagreement between two
+independent draws is 1 - sum_label p^2, summed over rows.
+Result: EXPECTED 11.8 disagreements from pure sampling noise vs 22 OBSERVED.
+Reading:
+- About half of the miss is ordinary threshold noise that any certificate rule shows near its boundary.
+  The frozen 95% consistency bar did not allow for it: a design defect in my AUDIT3 plan, not an
+  instrument defect.
+- The excess (~10) has a better candidate than "intervals too narrow": W-U's DETERMINED labels were not
+  computed from pair data. They were bounded from W-O's saved MARGINALS over all within-pair
+  correlations rho. W-Z applied the rule to real pair arrays, so the two methods are not the same
+  estimator.
+- The plug-in approximation (truth = one draw's estimate) is crude and understates disagreement when
+  the truth lies nearer the threshold.
+- The strongest-alternative claim in Level 2 ("seed sensitivity from within-group dependence") is
+  therefore WEAKENED. Within an arm, the pairs are independent worlds, so the pair bootstrap is the right
+  unit, and arms sharing one normal run does not affect a single arm's interval.
+Smallest discriminating check (compute): a replicate-seed draw of the 22 rows plus 22 matched stable
+rows, both labelled by the SAME pair-array method. If the replicate disagreement matches the ~threshold
+prediction, the instrument is fine and the policy is simply "no single-draw claims within ~1 SE of a
+certificate boundary".
