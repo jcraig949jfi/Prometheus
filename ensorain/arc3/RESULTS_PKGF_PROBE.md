@@ -539,3 +539,27 @@ Reading:
 
 - D1: detection in >= 7/8 at w = .02 and in >= 7/8 at w = .2; in <= 4/8 at w = .5.
 - D2: at w = .2, the detected start lies inside the ramp [2/3 - w/2, 2/3 + w/2] +- .03 in >= 6/8 of the detections.
+
+### W-DRIFT result (precommit commit 08c784b2c; results/pkgf_drift.json; 31 s)
+
+| w | ramp span | detected | detected start |
+|---|---|---|---|
+| .02 | .657-.677 | 8/8 | all .673 |
+| .20 | .567-.767 | 8/8 | .673-.732 (all inside the ramp) |
+| .50 | .417-.917 | 4/8 | .696-.719 (inside the ramp) |
+
+- D1 SURVIVES: 8/8, 8/8 and 4/8.
+- D2 SURVIVES: 8/8 inside the ramp at w = .2.
+
+Shape:
+- The step detector places a gradual change at the ramp's MIDDLE or later half, never at its end.
+- So the "current regime" holdout starts while the field is still only ~50-80% of the way to x_new. The readout's weight
+  is then chosen on partly stale records.
+- For a sharp switch (w = .02) this is immaterial. For slow drift it biases the selection signal toward the old
+  regime.
+- At w = .5 half the worlds show no detection at all. The readout then falls back to the all-history holdout, which
+  is the v2 failure mode (selection fooled by old data) in its mildest form.
+- Consequence for PKG-F: slow drift is the regime where a step detector is structurally the wrong tool. A drift-aware
+  selection signal, e.g. exponential down-weighting with a rate estimated from the same-cell disagreement growth, is
+  the candidate. Design only; not built.
+- W-MULTI remains the last planned world before the design can be frozen for a preregistration.
