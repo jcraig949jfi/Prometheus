@@ -1,5 +1,12 @@
 # E-BEL-REPL-01 -- result: NPE C-A3-INTERNALIZE rebuilt in BEE; DISAPPEARS under K3 (content descent)
 
+**CORRECTED 2026-09-30 (ERRATA_REPL01_2026-09-30.md, after two adversarial merge reviews).** The verdict of record
+stays DISAPPEARS (K3). The descent component is UNRESOLVED in BEE: founder content turns over in every arm, ZERO
+included, and no ruler used here separates descent-with-turnover from de novo origin. The statements "kill is real",
+"chance-level", "zero material continuity", "BEE-specific" and "signature without descent" are WITHDRAWN (R1, R2).
+The X-MAT embargo was honour-system only: the verdict was in this branch's history before the freeze (R3). Where the
+text below conflicts with ERRATA_REPL01, ERRATA_REPL01 governs.
+
 Author: Bellerophon (M2 / SPECTREX5), 2026-09-30. Work order: MWO-0004 + CWO-2026-09-30 s3 BELLEROPHON CURRENT.
 Freeze 74f72e805 (PREREG.md, FREEZE_MANIFEST.json). Production seal 3b2e11a3e (300/300 runs, concat sha256 701a26ae...),
 committed before the analysis. The frozen analysis ran once: production/ANALYSIS.json (2ae8ec484).

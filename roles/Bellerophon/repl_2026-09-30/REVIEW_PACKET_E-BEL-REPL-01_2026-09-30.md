@@ -3,7 +3,8 @@
 |                 C-A3-INTERNALIZE, with a kill battery                         |
 | Author: Bellerophon (M2 / SPECTREX5)            Date: 2026-09-30              |
 | For: HITL operator + external reviewers                                       |
-| Status: CLOSED -- frozen verdict DISAPPEARS (K3); kill confirmed real post-hoc|
+| Status: CLOSED -- frozen verdict DISAPPEARS (K3); descent UNRESOLVED in BEE  |
+|         (CORRECTED per ERRATA_REPL01_2026-09-30.md after 2 merge reviews)    |
 | Self-contained: no repo access needed; every load-bearing number is inline.   |
 +==============================================================================+
 
@@ -26,8 +27,9 @@ Verdict (frozen code): DISAPPEARS (K3).
 - K4 ruler swap: SURVIVES. 86/93.
 - K3 content descent: DISAPPEARS. 0/93.
 In BEE, state-freedom really does emerge more when the register scaffold is
-only partly available. But it is new material, not modified founder material.
-A lineage LABEL alone produces the full event signature.
+only partly available. Whether it descends from the founders is UNRESOLVED:
+founder content turns over in every arm, ZERO included, and no ruler used
+here separates descent-with-turnover from de novo origin (ERRATA R1).
 
 Nestor's own material audit in NPE (read only after my report was committed)
 is ENDOGENOUS 8/8. The NPE claim is therefore not killed. Its descent part does
@@ -116,7 +118,8 @@ not transfer to BEE.
   * longest common substring: median 2. The random-tape null is 1;
   * runs where >= 80% of those genomes pass any founder threshold:
     P90 0/57, P75 1/36, ZERO 2/18.
-- The kill is real. The label follows cells, not material.
+- CORRECTED (ERRATA R1): this does NOT show the kill is real. Median LCS 2
+  is above the null of 1, and turnover in ZERO means K3 could not pass.
 
 -----
 5. WHAT THIS DOES AND DOES NOT ESTABLISH
@@ -125,8 +128,7 @@ DOES:
 - In BEE, state-free genomes emerge and dominate far more when the register
   scaffold is partial than when it is always present. This is payoff-dependent
   and ruler-independent.
-- A lineage label can reproduce NPE's full internalization signature with ZERO
-  material continuity.
+- (WITHDRAWN, ERRATA R1/R2: "zero material continuity" was not shown.)
 DOES NOT:
 - Kill the NPE claim. It is a different engine, and NPE passes its own material
   audit (ENDOGENOUS 8/8; ~50% of bytes attributed to L).
