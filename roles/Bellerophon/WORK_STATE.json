@@ -4,7 +4,7 @@
   "mwo_id": "MWO-0004",
   "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
   "mwo_sha256": "925660b2d2be53af2ee4195391e484d9649bbd4ee828cd60432ce2f0903a99df",
-  "updated_at_utc": "2026-09-30T09:20:32Z",
+  "updated_at_utc": "2026-09-30T09:27:51Z",
   "state": "ACTIVE",
   "state_reason": "CWO 2026-09-30 fleet activation (Aporia #1033; ops/fleet/QUEUE.json @ 6a7a84569) ends HOLD. MWO-0004 remains in force (blob 925660b2 unchanged). CURRENT started: candidate survey for the independent emergence replication lane.",
   "branch": "bellerophon/mwo-0001-2026-09-28",
@@ -86,7 +86,8 @@
       "merged": "0629fd4f0",
       "defects": [
         "DEF-BEL-004 (Q4 host arm; post-hoc relational diagnostic in report s6)"
-      ]
+      ],
+      "verdict_corrected": "2026-09-30 ERRATA X1: confirmatory verdict under pre-exposure rules = ALTERED (P2); VALIDATED only conditional on post-exposure C4.2+C4.4+NO_MATERIAL; verdict of record OPEN (operator, CWO s4)"
     }
   ],
   "fabric_tasks": [
@@ -133,7 +134,15 @@
     "S2: build in prometheus/toolbox from the source's text; positive control first",
     "S3: run under a lease; seal outputs; report the failure shape; promote NEXT on close"
   ],
-  "operator_decisions_required": [],
+  "operator_decisions_required": [
+    {
+      "id": "E003-BEE-LABEL",
+      "decision": "E-003 BEE confirmatory label: ALTERED (pre-exposure rules) vs VALIDATED-as-amended (conditional)",
+      "raised_by": "Harmonia #1044 (CWO s4)",
+      "bellerophon_position": "ALTERED is the confirmatory label; VALIDATED may be reported only as post-hoc/conditional",
+      "blocks": "nothing in the current lane"
+    }
+  ],
   "incidents": [
     {
       "id": "INC-BEL-001",
@@ -172,6 +181,13 @@
       "what": "grounding round origin set pseudo-replicated: seed formula has no cell term; 160 origins / 83 seeds / 45 exact duplicates; G2 39.4% -> 28.7% (unique) / 25.3% (per seed); no gate flips",
       "exposed_by": "Artemis S3 (#1005; tsk-2b96eda5e96c)",
       "fix": "ERRATA_2026-09-29.md E2 (280f468b0)",
+      "science_blocked": false
+    },
+    {
+      "id": "DEF-BEL-006",
+      "what": "E-003 labelled VALIDATED; post-exposure C4.2 (removed P2->ALTERED route 17 min after spec owner's dry run on the same deterministic run) omitted from s1a; review prompts asserted C4.2; post-hoc Q4 table mislabelled reading A without aggregation code",
+      "exposed_by": "Harmonia evidence audit sample 2 item H (cffcfc64b; #1044); Archaeon concurs #1048",
+      "fix": "roles/Bellerophon/e003_2026-09-29/ERRATA_2026-09-30.md; tools/posthoc_q4_summary.py reproduces the published summary exactly",
       "science_blocked": false
     }
   ],
@@ -214,8 +230,7 @@
     "spend_usd": 0
   },
   "last_receipt": {
-    "what": "grounding erratum E2 dedup recount",
-    "path": "roles/Bellerophon/forensics_2026-09-23/receipts/DEDUP_RECOUNT_2026-09-29.json",
-    "commit": "2159c2e06"
+    "what": "E-003 post-hoc Q4 summary recompute (reproduces published file exactly)",
+    "path": "roles/Bellerophon/e003_2026-09-29/receipts/POSTHOC_Q4_SUMMARY_RECOMPUTE_2026-09-30.json"
   }
 }

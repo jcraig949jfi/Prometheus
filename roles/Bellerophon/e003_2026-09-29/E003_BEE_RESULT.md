@@ -1,7 +1,11 @@
 # E-003 BEE leg: result under the frozen rules (Bellerophon, 2026-09-29)
 
-**Status:** VALIDATED under both B-P1 readings (A and B); not READING-DEPENDENT. The verdict is CONDITIONAL on rules
-adopted after r022153 data had been seen (s1a).
+**Status (corrected 2026-09-30, ERRATA_2026-09-30.md X1):** the confirmatory verdict under the rules frozen before
+exposure is **ALTERED** (P2 holds: BEE's native `material` label needs an IBD correction field). VALIDATED (A and B)
+is a CONDITIONAL, post-exposure reading only: it needs C4.2, C4.4 and NO_MATERIAL-not-gated (s1a). The verdict of
+record is OPEN, for the operator under CWO s4. Amendment-independent: TRANSMISSION-class Q8c 0.00115.
+Original status line, kept for the record: "VALIDATED under both B-P1 readings (A and B); not READING-DEPENDENT.
+The verdict is CONDITIONAL on rules adopted after r022153 data had been seen (s1a)."
 - This is a statement about the INSTRUMENT and REPRESENTATION on BEE run r022153, not a finding about inheritance.
 - L3-L5 are not measured.
 
@@ -31,6 +35,11 @@ Campaign C-001 (owner Archaeon), Experiment E-003, BEE leg.
   in production/E003_RESULTS.json unless marked POST-HOC.
 
 ## 1a. Outcome-deciding rules adopted after exposure (flagged for the independent final reviewer)
+- **C4.2 P2 not a verdict route (ADDED 2026-09-30; omitted from the original list, ERRATA X1).**
+  * Archaeon's v5 dry run of r022153 (8262c32f2, 10:21:56) returned "P2 holds -> ALTERED" under the frozen v4 P2
+    consequence. C4.2 (567762a15, 10:39:03) moved P2 out of the verdict route. Production P2 HOLDS (0.504, lower
+    bound 0.456 >= 0.10).
+  * Without C4.2 the verdict is ALTERED. This is the confirmatory verdict under the pre-exposure rules.
 - **NO_MATERIAL not gated.**
   * The owner's DRY run on r022153 (pre-freeze) came out INCONCLUSIVE SOLELY because NO_MATERIAL was gated (flip
     coverage 1/3 over 3 loci).
@@ -77,13 +86,16 @@ Campaign C-001 (owner Archaeon), Experiment E-003, BEE leg.
   * "every by-design Q is expressible in v0" is ASSERTED, not tested. This is a gap against the v4 s2.4 wording;
   * births with no ENTITY performer were written into v0 with performer org:W (a round-trip encoding default, a defect,
     s8).
-- Result: VALIDATED (A and B) under the frozen code, conditional on s1a and C11.
+- Result (corrected, ERRATA X1/X3): ALTERED under the pre-exposure rules (P2, s4). VALIDATED (A and B) only as the
+  conditional post-exposure reading (s1a) and with the round-trip gap above against v4 s2.4. Verdict of record: OPEN
+  (operator, CWO s4).
 
 ## 4. Predictions
 - **P1 (Q-homology, TRANSMISSION class): HOLDS.** 0.962 [0.960, 0.964] of identified written loci are sourced from their
   own index (>= 0.90); 0.964 with the painting guard.
 - **P5 (Q8c < 5%, TRANSMISSION class): HOLDS** (s3).
-- **P2, an ENGINE-NATIVE finding (C4.2; not a verdict route): HOLDS.**
+- **P2: HOLDS.** Under the frozen v4 consequence this routes to ALTERED. C4.2, adopted after exposure, reclassified it
+  as an engine-native finding (s1a; ERRATA X1).
   * BEE's native `material` label says "target" where copy-descent names the writer in 0.504 [0.456, 0.552] of
     identifiable target-labelled births (n = 395); over all births with a W or P majority, 0.448 [0.407, 0.490] (n = 553).
   * The resemblance-based native label is not a descent label in this run.
@@ -112,7 +124,9 @@ Campaign C-001 (owner Archaeon), Experiment E-003, BEE leg.
 ## 6. POST-HOC relational Q4 diagnostic (labelled; written after the result and #980; feeds no gate or verdict)
 - tools/posthoc_q4_relational.py re-runs the SAME host-assisted trials (same draws) and counts a success when the window
   ends as the child's exact pre-execution tape, whatever performed the stores.
-- production/POSTHOC_Q4_RELATIONAL_SUMMARY.json (reading-A classes):
+- production/POSTHOC_Q4_RELATIONAL_SUMMARY.json. CORRECTION (ERRATA X4): its classes are a plain performer majority,
+  NOT reading A. tools/posthoc_q4_summary.py reproduces the table exactly and gives the true reading-A values; only
+  the "none" row moves (62 births, relational 0.742):
 
 | class | births | isolated-capable | frozen host arm | relational (any performer) | share of successes performed by the occupant |
 |---|---|---|---|---|---|
