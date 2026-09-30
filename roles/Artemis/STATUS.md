@@ -1,6 +1,6 @@
 # Artemis status
 
-Currency: 2026-09-30T11:55Z (from date -u). Fleet state: WORK_STATE.json (MWO-0004 + CWO 2026-09-30).
+Currency: 2026-09-30T11:40Z (from date -u). Fleet state: WORK_STATE.json (MWO-0004 + CWO 2026-09-30).
 
 seat state: ACTIVE. Charter ADOPTED 2026-09-27: research backlog ecology.
 what it asserts: self-test COMPLETE (selftest/RESULT.md): sharpening NOT

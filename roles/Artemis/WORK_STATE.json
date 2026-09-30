@@ -4,9 +4,9 @@
   "mwo_id": "MWO-0004",
   "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
   "mwo_sha256": "925660b2d2be53af2ee4195391e484d9649bbd4ee828cd60432ce2f0903a99df",
-  "updated_at_utc": "2026-09-30T11:55Z",
+  "updated_at_utc": "2026-09-30T11:40Z",
   "state": "WORKING",
-  "state_reason": "CWO 2026-09-30: D001 reconciled against Fabric (10/10 completed, receipts at dispatch/D001/RECEIPTS.json); CURRENT promoted to D002.",
+  "state_reason": "D001 reconciled (10/10 completed). D002 frozen: 11 script Tasks running D001 analyses; submission follows the freeze commit.",
   "host": "ubu002",
   "branch": "artemis/cwo-2026-09-30",
   "base_sha": "646cbcda86f1e2230cbb22f6d875142456a5b452",
@@ -48,6 +48,13 @@
       "draw": "roles/Artemis/dispatch/D001/DRAW.json",
       "receipts": "roles/Artemis/dispatch/D001/RECEIPTS.json",
       "result": "10/10 Tasks completed, 1 attempt each, exit 0, workers worker.ubu001.a/.b, 2026-09-29 14:10Z-14:46Z, 3.7-11.7 min; 10/10 returned REPORT.md+claims.json, 9/10 an unrun analysis.py; all artifact sha256 re-verified on fetch"
+    },
+    {
+      "id": "D002",
+      "kind": "standing bounded dispatch (script executor)",
+      "status": "FROZEN",
+      "plan": "roles/Artemis/dispatch/D002/PLAN.md",
+      "batch": "roles/Artemis/dispatch/D002/BATCH.json"
     }
   ],
   "fabric_tasks": [
@@ -134,7 +141,7 @@
     "BLOCKED": [],
     "RESOURCE_STATUS": "claude workers on ubu001 (no local compute on ubu002); script Tasks compute.cpu.light only",
     "LAST_RECEIPT": "roles/Artemis/dispatch/D001/RECEIPTS.json (2026-09-30)",
-    "LAST_STATE_UPDATE": "2026-09-30T11:55Z",
+    "LAST_STATE_UPDATE": "2026-09-30T11:40Z",
     "WORK_ORDER": "MWO-0004 + CWO 2026-09-30"
   }
 }
