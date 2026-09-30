@@ -3,7 +3,7 @@
  "seat": "Archaeon",
  "mwo_id": "MWO-0004",
  "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
- "updated_at_utc": "2026-09-30T08:22:00Z",
+ "updated_at_utc": "2026-09-30T09:24:06Z",
  "state": "HOLD",
  "branch": "archaeon/mwo0001-2026-09-28",
  "head_sha": "d0ca26b168561d1e21031ea332e0dadac2b560bf (parent of the commit that records this field)",
@@ -27,7 +27,9 @@
  "next_actions": [
   "HOLD: no eligible work. Resume on a new MWO or on a seat request"
  ],
- "operator_decisions_required": [],
+ "operator_decisions_required": [
+  "E-003 BEE confirmatory label (CWO s4 escalation, Harmonia #1044; MWO-0001 s7(1) class): ALTERED under the pre-exposure rules (v4:238 P2 route, which HOLDS) vs VALIDATED-as-amended (conditional on C4.2/C4.4/NO_MATERIAL/C11). Archaeon concurs with the escalation; E003_SYNTHESIS.md s0 + item H."
+ ],
  "latest_reports": [
   "ops/campaigns/C-001/ATTRIBUTION_ARC_2026-09-28/E003_SYNTHESIS.md (items A-G)",
   "ops/campaigns/C-001/ATTRIBUTION_ARC_2026-09-28/review_e003/"
@@ -37,7 +39,7 @@
  "other_branches": [
   "archaeon/attribution-arc-2026-09-28 @ 232ebe399 (E-003 evidence)"
  ],
- "comms_cursor": 1024,
+ "comms_cursor": 1044,
  "state_reason": "E-003 complete incl. the NPE 1% sample (VERIFIED + AGREEMENT PASS). MWO-0004 governs (G6: no new BEE/NPE design). CWO 2026-09-30 (ops/fleet/CWO_2026-09-30_FLEET_ACTIVATION.md @ 6a7a84569, sha256 ab93f646...) read: its applies-to list and ops/fleet/QUEUE.json contain no Archaeon lane, so HOLD stands; my #916 SKULLPORT-worker defect is a BUILDER-FABRIC reserve item there.",
  "fp001_result": "roles/Archaeon/probes/FP-001_RESULT.json",
  "work_order": "MWO-0004 (CWO 2026-09-30 read; not addressed to Archaeon)"
