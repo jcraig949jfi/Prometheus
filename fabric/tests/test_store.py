@@ -200,3 +200,17 @@ def test_legacy_records_and_host_files_are_no_longer_consulted(conn, monkeypatch
     assert S.lease_acquire(conn, "h1:gpu", "Tester", "h1")["result"] == "ACQUIRED"
     busy = S.lease_acquire(conn, "h1:gpu", "Other", "h1")
     assert busy["result"] == "BUSY" and busy["held_by"]["holder"] == "Tester"      # the fabric row still arbitrates
+
+
+def test_store_connections_have_keepalive_and_user_timeout(conn):
+    """DEF-ODY-019 regression: a half-open connection must fail within about a minute, not hang forever."""
+    import socket
+    s = socket.socket(fileno=os.dup(conn.fileno()))
+    try:
+        assert s.getsockopt(socket.SOL_SOCKET, socket.SO_KEEPALIVE) == 1
+        if hasattr(socket, "TCP_USER_TIMEOUT"):
+            assert s.getsockopt(socket.IPPROTO_TCP, socket.TCP_USER_TIMEOUT) == 60000
+        if hasattr(socket, "TCP_KEEPIDLE"):
+            assert s.getsockopt(socket.IPPROTO_TCP, socket.TCP_KEEPIDLE) == 30
+    finally:
+        s.close()

@@ -169,18 +169,26 @@ class Worker:
         adir = self.root / "attempts" / aid
         adir.mkdir(parents=True, exist_ok=True)
         stop = {"reason": None}
-        hb_conn = S.connect()
+        hbc = {"conn": S.connect()}
 
         def beat():
             while stop.get("done") is not True:
                 try:
-                    h = S.heartbeat(hb_conn, aid, self.actor, ttl_s=self.ttl_s)
+                    h = S.heartbeat(hbc["conn"], aid, self.actor, ttl_s=self.ttl_s)
                     if not h["ok"]:
                         stop["reason"] = "fenced"
                     elif h["cancel_requested"]:
                         stop["reason"] = "cancel"
                 except Exception as e:                    # store unreachable: keep trying; expiry will decide
                     stop["hb_error"] = str(e)[:200]
+                    try:                                  # DEF-ODY-019: a dead connection is replaced, not reused
+                        hbc["conn"].close()
+                    except Exception:
+                        pass
+                    try:
+                        hbc["conn"] = S.connect()
+                    except Exception:
+                        pass
                 for _ in range(int(self.ttl_s / 4)):
                     if stop.get("done"):
                         break
@@ -248,7 +256,10 @@ class Worker:
         fin = S.finish_attempt(self.conn, aid, outcome, self.actor, exit_code=res.exit_code, error=err, model=res.model,
                                env_receipt=receipt, worktree=str(wt) if wt else None,
                                result_summary=(res.final_text or "")[:500] or None)
-        hb_conn.close()
+        try:
+            hbc["conn"].close()
+        except Exception:
+            pass
         shutil.rmtree(adir / "claude_config", ignore_errors=True)
         return {"task_id": tid, "attempt_id": aid, "outcome": outcome, "finish": fin, "artifacts": len(up)}
 
