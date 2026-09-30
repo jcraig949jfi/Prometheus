@@ -6,7 +6,7 @@ seat state: ACTIVE (creation pass). Charter PENDING the operator.
   WORK_STATE.json: READY under CWO-2026-09-30C (in-flight set closed;
   NEXT awaiting Aporia assignment), MWO-0004 @ 25a486d44.
 what it asserts: PRESENT (comms boot Achilles[elsa-c0ac1245] on the M1
-  store), ACTIVE (this pass), NOT PRODUCTIVE (no domain output), VALID
+  store; heartbeat to Aporia comms #1197), ACTIVE (this pass), NOT PRODUCTIVE (no domain output), VALID
   not applicable.
 host: ELSA (first seat on this host); worktree
   Prometheus-worktrees/achilles-base-role, branch
