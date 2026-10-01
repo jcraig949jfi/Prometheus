@@ -330,3 +330,40 @@ Other:
   PRINCIPAL_REVIEW L19, now corrected) and 17 NAMING (W-E keys its retention table by adjudicate ids).
 - Wording proposals for C1_REPORT F2, s1 and the engine card. Covered by E-W1 / E-W2; to be refined
   with F3 at close.
+
+### W2-E (deposited wave2/W2-E/REPORT.md): strange phenomena
+- S1/S2 613162a3: the shuffle excess does NOT reproduce (fresh -.015). The "chaos" is linear one-hop
+  broadcast integration on global topology plus the decay floor (positive values < 8 never decay), and
+  div_frac reads unused divergence. Agrees with W2-A1 F3.
+- S3: W-L's builder == envs HOLD exactly; echo vs integrator is search contingency (p ~.2).
+- S4: a 4-line latch scores 1.000 at M2 physics. The latch is a needle (43% of 1-mutants -> chance) vs
+  flat echo/integrator basins: an accessibility explanation [I].
+- S5 + N2 [V]: 5/86 HOLD champions depend on distractors (2c300c47 1.0 -> .508, 0c18ce5e .958 -> .5).
+  The FIRST awake distractor acts as a store strobe; 311c465f is a distractor-entrained parity clock.
+  "Memory despite distractors" is sometimes "memory triggered by distractors".
+- S6: 4781b0a1's low pivotality is plausibly its one-copy threshold (k=1 vs the plant's k=3) [I].
+- N1 [V]: rule-mosaic lottery (setrule=0, rules=2): the actuator's random initial rule decides; held >
+  train by up to +.22.
+- N3 [V]: relay_flood scores .633 on FLIP at 926328ee by cue-repeat gating (agrees with W2-D F6).
+- N4 [V]: the transplant table had no matched normal. 62a7fff9 is one tick out of tune (+.055 at
+  latency+1). Additive patch proposed (C2 driver).
+- Compute 0.75-1.05 core-h (over the 0.5 cap); disclosed.
+
+### W2-K (deposited wave2/W2-K/REPORT.md): C1b and high-p fragility
+- 22 C1b readings re-evaluated exactly: 0 flips under t/BOOTT. 7/22 are within 2.33 SE; expected flips
+  on a fresh re-run: 1.6.
+- M2 label kept 62.5% (B false at 0.89 SE is INDETERMINATE). M3 label kept 99% / 89.5%. C1b-P1 joint
+  keep ~.77, from the absolute .62 bar, while the window effect is ~0.
+- Kill line without a competence gate: f6b6 k0 C1_CONTROL_NOT_REPRODUCED is an artefact.
+- INTEGRATION 4781b0a1: replicated (pooled 3.4 SE). TRANSFER_SUPPORT >= 10.7 SE. 613162a3 packet clause:
+  pooled 2.96 SE, which supersedes W2-H F10.
+- Census: 14/284 S/C/N records are within 1 SE of a boundary; NEITHER is the most fragile class.
+- APPLIED (NEUTRAL, additive): inference.reading3 / kill_eligible, with tests/test_reading3_w2k.py.
+
+### Fix batch: campaign.py (applied ~01:35Z, NEUTRAL; frozen C1 rows/labels untouched)
+- W2-A1 P1: physics_from_levels records the effective dest_mode (cell ids unchanged).
+- W2-A1 P2: the FLIP state transplant returns NOT_APPLICABLE instead of crashing.
+- W2-A2: classify gives REACH_BEYOND_HOP=None (not False) when no twin ran.
+- W2-A2: run_wave persists the wave clock and PARKs on a non-exact resume.
+- Tests: 4 new files, 13 tests (6 failed before, all pass after). Related existing suites: 61 passed.
+  Shared fixtures in prometheus/ananke/tests/conftest.py.

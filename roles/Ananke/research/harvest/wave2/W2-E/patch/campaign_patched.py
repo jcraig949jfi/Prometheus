@@ -87,11 +87,6 @@ def physics_from_levels(lv: dict, topo_seed: int) -> Physics:
         pass  # all n_sites levels are squares
     if kw["topology"] == "global":
         kw["dest_mode"] = "sample"
-        # record the dial that actually runs: callers store `lv` as the row's
-        # `levels`, which dial_effects / analysis_a0 / report read. Leaving the
-        # drawn "all" there mislabelled 951 of 1589 C1 global rows (harvest
-        # H-IMPL H7). cell_id does not hash levels, so ids are unchanged.
-        lv["dest_mode"] = "sample"
     return Physics(**kw, topo_seed=topo_seed).validate()
 
 
@@ -320,6 +315,11 @@ def transplant_battery(ph: Physics, champ: np.ndarray, env: envs.EnvSpec, spec: 
     }
     if ph.topology != "global":
         mods["topology->random"] = ph.replace(topology="random", k_random=max(3, ph.table_width()))
+    # matched baseline: the unmodified law on the SAME transplant seeds (W2-E A7).
+    # Without it every transplant is compared with the adjudication's normal run,
+    # which uses different worlds (0xD0D0, M_held) -- an unpaired comparison.
+    r0 = assays.evaluate(ph, champ[None], env, hseeds, device=device)
+    res["normal_same_seeds"] = {"status": "RAN", "acc": float(r0.mean()[0])}
     for name, p2 in mods.items():
         try:
             p2 = p2.validate()
@@ -350,17 +350,7 @@ def flip_state_transplant(ph, champ, env, spec, device) -> dict:
         rec = World(ph, np.repeat(champ[None], len(seeds), 0), seeds, device=device, schedule=ep.schedule)
         rec.run(T_half)                                    # recipient has its own history ...
         if use:
-            try:
-                assays.transplant_state(donor, rec)        # ... replaced by the donor's (identical here)
-            except RuntimeError as e:
-                # donor and recipient share seeds, genome and schedule, so they are
-                # bit-identical at T_half and the no-op guard always fires. Report the
-                # arm as NOT_APPLICABLE instead of failing the whole adjudication cell
-                # (which counts toward PARK). No accuracy is reported for a no-op.
-                if "NOT_APPLICABLE" not in str(e):
-                    raise
-                return {"status": "NOT_APPLICABLE",
-                        "why": "identical-history recipient: transplant changed nothing"}
+            assays.transplant_state(donor, rec)            # ... replaced by the donor's (identical here)
         else:
             for p in ("S", "Kp"):
                 getattr(rec, p).zero_()
@@ -450,10 +440,8 @@ def classify(row: dict, cfg: CampaignConfig) -> dict:
            "comm_family": comm_family}
     if fam == "MAJ":
         lab["INTEGRATION_BEYOND_ONE_SENSOR"] = bool(h["lo99"] > 0.70)
-    # A row with no twin assay (kind "transfer") has no reach reading: record
-    # None (not measured), never False (measured and absent).
-    tw = row["result"].get("twin")
-    lab["REACH_BEYOND_HOP"] = None if tw is None else bool(tw.get("beyond_hop", 0) >= 0.5)
+    tw = row["result"].get("twin", {})
+    lab["REACH_BEYOND_HOP"] = bool(tw.get("beyond_hop", 0) >= 0.5)
     return lab
 
 
@@ -789,33 +777,12 @@ def wave_E(cfg: CampaignConfig, rows: list[dict]) -> list[dict]:
 # ---------------------------------------------------------------- driver
 def run_wave(store: Store, cfg: CampaignConfig, wave: str, specs: list[dict], meta: dict, device):
     budget_s = cfg.budget_hours[wave] * 3600
-    # The hour cap is per WAVE, not per process attempt (PREREG s5 "hours are
-    # hard caps"): the first start of a wave is persisted in heartbeat.json and
-    # a watchdog relaunch continues the same clock instead of a fresh budget.
-    hb_p = store.dir / "heartbeat.json"
-    hb = json.loads(hb_p.read_text()) if hb_p.exists() else {}
-    key = f"wave_{wave}_started_epoch"
-    if key not in hb:
-        store.heartbeat(**{key: time.time()})
-        hb[key] = json.loads(hb_p.read_text())[key]
-    t0 = float(hb[key])
+    t0 = time.time()
     todo = []
     for s in specs:
         s["cell_id"] = cell_id(s)
         if s["cell_id"] not in store.done:
             todo.append(s)
-    # Resume must be exact (module doc): stored rows of this wave that the
-    # regenerated specs do not contain came from a different upstream state
-    # and would silently enter every later wave and the report. Refuse.
-    ids = {s["cell_id"] for s in specs}
-    stale = [r["cell_id"] for r in store.rows(wave) if r["cell_id"] not in ids]
-    if stale:
-        park = {"parked_at": now(), "reason": f"resume not exact: {len(stale)} stored wave-{wave} rows are not "
-                                              f"in the regenerated specs (e.g. {stale[:3]})",
-                "accountable_seat": "Ananke", "resume": "explicit clearance only"}
-        (store.dir / "PARKED.json").write_text(json.dumps(park, indent=1))
-        store.log("PARKED: " + park["reason"])
-        raise SystemExit(3)
     store.log(f"wave {wave}: {len(specs)} specs, {len(specs) - len(todo)} already done, {len(todo)} to run; "
               f"budget {cfg.budget_hours[wave]} h; gpu {gpu_snapshot()}")
     fails = 0
