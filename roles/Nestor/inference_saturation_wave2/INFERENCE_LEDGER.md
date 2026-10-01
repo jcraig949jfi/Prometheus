@@ -475,3 +475,28 @@ in completion order.
 - **Next.**
   - W2-17 is to measure m for the 49→5C variant and to check any runaway snapshots.
   - Any future C-CORE-like run should store the final consensus genome bytes, not only tag frequencies (instrument note).
+
+
+### W2-15: defect × verdict impact matrix (report saved; Nestor attack). Written at 01:22Z (clock)
+- **Result.**
+  - Matrix: 95 verdicts × 17 defects.
+  - **Flip:** C9-H3 NOT_DEMONSTRATED → INVALID (D2, D1 and D3 each suffice). X-H3-FLOW → UNINFORMATIVE.
+  - **No CONFIRMED verdict flips.**
+  - **22 relabels.** The main ones:
+    - C-A3 → CONFIRMED-FRAGILE (4 persistent events = the bar; cell split 3:1);
+    - C9-H1R → DEGENERATE;
+    - C-ZERO-SPECIFIC → run-level only;
+    - X-A3-WITHDRAW → CEILING NULL;
+    - X-MAT → 4 persistent + 4 transient. On 7ae3 alone it is ENDOGENOUS under either convention.
+  - **D1 and D9 reach no heredity verdict**, because comp does nothing in the QD pair cells.
+  - D12 re-scored: C-DENSE-COPY unaffected; C-STATELESS-FFA6 B+ but survives (cite the unconditional p = 2.3e-6).
+  - 23 FINDINGS line-ranges listed.
+- **Nestor attack.**
+  1. **The weakest INV cell is X-H1-GRADIENT.** It rests on an un-rescored held ≈ 0.9 vs an expected 0.5. This is decidable statically, so W2-19 is assigned to re-score on fresh seeds. The same applies to D8 vs E-3's depth-2 runs.
+  2. **"D1 reaches no heredity verdict" depends on `_reap` being unreachable on the pair tape.** That is consistent with W2-8 D3 and with my own read of `_pair_epoch` (no comp read except under TASK_GATED / MINIMAL_CRITERION). Accepted.
+  3. **The matrix omits the N16/N17 corrections**, which are W2-3-level and not FINDINGS verdicts. W2-18 is refocused to cover residual narrative claims plus an adversarial pass over W2-15's relabels, to avoid duplication.
+- **Confidence.** High for the flip and the D10/D12 numbers. Moderate for H1-GRADIENT pending W2-19.
+- **Strongest objection.** Breadth invites over-flagging (W-cells). NA was assigned by applicability rules while reading.
+- **Next.**
+  - W2-19: H1 re-score and D8 vs E-3.
+  - FINDINGS correction appendix at closing: dated proposals only; no frozen verdict is rewritten.
