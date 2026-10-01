@@ -475,3 +475,46 @@ in completion order.
 - **Next.**
   - W2-17 is to measure m for the 49→5C variant and to check any runaway snapshots.
   - Any future C-CORE-like run should store the final consensus genome bytes, not only tag frequencies (instrument note).
+
+
+### W2-15: defect × verdict impact matrix (report saved; Nestor attack). Written at 01:22Z (clock)
+- **Result.**
+  - Matrix: 95 verdicts × 17 defects.
+  - **Flip:** C9-H3 NOT_DEMONSTRATED → INVALID (D2, D1 and D3 each suffice). X-H3-FLOW → UNINFORMATIVE.
+  - **No CONFIRMED verdict flips.**
+  - **22 relabels.** The main ones:
+    - C-A3 → CONFIRMED-FRAGILE (4 persistent events = the bar; cell split 3:1);
+    - C9-H1R → DEGENERATE;
+    - C-ZERO-SPECIFIC → run-level only;
+    - X-A3-WITHDRAW → CEILING NULL;
+    - X-MAT → 4 persistent + 4 transient. On 7ae3 alone it is ENDOGENOUS under either convention.
+  - **D1 and D9 reach no heredity verdict**, because comp does nothing in the QD pair cells.
+  - D12 re-scored: C-DENSE-COPY unaffected; C-STATELESS-FFA6 B+ but survives (cite the unconditional p = 2.3e-6).
+  - 23 FINDINGS line-ranges listed.
+- **Nestor attack.**
+  1. **The weakest INV cell is X-H1-GRADIENT.** It rests on an un-rescored held ≈ 0.9 vs an expected 0.5. This is decidable statically, so W2-19 is assigned to re-score on fresh seeds. The same applies to D8 vs E-3's depth-2 runs.
+  2. **"D1 reaches no heredity verdict" depends on `_reap` being unreachable on the pair tape.** That is consistent with W2-8 D3 and with my own read of `_pair_epoch` (no comp read except under TASK_GATED / MINIMAL_CRITERION). Accepted.
+  3. **The matrix omits the N16/N17 corrections**, which are W2-3-level and not FINDINGS verdicts. W2-18 is refocused to cover residual narrative claims plus an adversarial pass over W2-15's relabels, to avoid duplication.
+- **Confidence.** High for the flip and the D10/D12 numbers. Moderate for H1-GRADIENT pending W2-19.
+- **Strongest objection.** Breadth invites over-flagging (W-cells). NA was assigned by applicability rules while reading.
+- **Next.**
+  - W2-19: H1 re-score and D8 vs E-3.
+  - FINDINGS correction appendix at closing: dated proposals only; no frozen verdict is rewritten.
+
+
+### W2-13: U1, chain length vs evolved epistasis (report saved; Nestor attack). Written at 01:24Z (clock)
+- **Result.**
+  - Strict synthetic lethality: evolved (EVO_SD) 3.71% vs never-evolved random-hit copiers (33 new, 1.8e-4 of 180k) 2.32%. Raw gap +1.39 pp, p = 0.048.
+  - At matched executed pre-copy chain length (L_pre): c_EVO = +0.27 pp, CI [−0.90, +1.46], p_FL = 0.83. Length-matched 2.08% vs 2.32%; Mantel-Haenszel OR 1.08.
+  - **T3 (chain length) is sufficient. T4(c′) (generic evolved epistasis) is not supported.**
+  - The earlier evolved vs PLANT contrast (3.7% vs 0.45%) was mostly a length confound.
+- **Effect on the theory tournament (W2-6).** T4(c′) was one of the two residuals left after T4 was eliminated. It is now **demoted to "not needed, not excluded"**: the CI upper bound is about the raw gap. **The only residual not yet absorbed into F is R = T4(a), home advantage.**
+- **Nestor attack.**
+  1. Selection on competence acts on random hits too, so "never evolved" means "not shaped by world dynamics beyond the screen". That is the right comparison for T4(c′).
+  2. The consistently positive point estimates plus d > 0 are a pattern, not noise, until power says otherwise. W2-20 is assigned to enlarge the long-chain random stratum, with a pre-stated rule:
+     - SUPPORTED if the CI lower bound is > 0;
+     - SUFFICIENT if the upper bound is < 0.7 pp;
+     - otherwise UNRESOLVED.
+  3. **Reusable prior:** the competent random-hit rate in 7ae3 is 1.8e-4, matching minimal_prior. That is an independent check of the minimal-prior instrument.
+- **Confidence.** Moderate.
+- **Next.** W2-20.
