@@ -24,7 +24,7 @@ This is Nestor's inference harvest of 2026-09-30. Everything here is a design. *
 | tier | item | what it separates | status | cost |
 |---|---|---|---|---|
 | **0 static** | S1 one-step map vs recorded per-donor outcomes | T6 vs a history-dependent account | **DONE: PARTIAL** (`forensics/FORENSIC_MAP_PREDICTS_OUTCOMES.md`) | done |
-| 0 | S1b two-step map, out of sample (W1 first donors; criterion frozen before computing) | T6 (with closure) vs T4 | **RUNNING** (static analysis, not a campaign) | ≤ 0.5 core-h |
+| 0 | S1b two-step map, out of sample (W1 first donors; criterion frozen before computing) | T6 (with closure) vs T4 | **DONE: PASS, qualified.** Predicts first-donor fate out of sample (AUC 0.89), but adds nothing beyond the known self-poisoning split. | done |
 | 0 | S2 EXEC-motif audit of recorded births | T5 vs T6/T7 | design | ≤ 1 core-h, no world runs |
 | 0 | **S3 pairwise knockout map of evolved state-free genomes** | **T4(c) epistasis vs T3** | design, PREREG-READY (content) | ≤ 2 core-h, VM calls only |
 | **1 replay** | **E4 GENEALOGY (redesigned)** | T4(b) shared mechanism vs T1/T3 convergence; T1's count model | PREREG-READY (content) | ≈ 6 core-h |

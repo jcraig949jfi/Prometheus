@@ -57,7 +57,7 @@ Layers: [spec] speculation, [impl] implemented candidate, [obs] experimental obs
 - W4 [causal toy] Carrier-relative phase decoding is invariant to monotone time warps only when the carrier is warped together with the message; the invariance comes from the co-moving reference, not from the code. | success: carrier-phase accuracy at w=0.4 >= 0.9 with drop from w=0 <= 0.05, AND clock decoder drop >= 0.3, AND in the null twin carrier-phase drop >= 0.3 | null twin: carrier generated unwarped while the message is warped: same spectra and symbol counts, co-moving reference destroyed | cost: 2
 
 ## OBSERVATIONS
-- W3: NULL (hecate/programs/HT-a9e2ba7618/worlds/W3/rows.jsonl)
+- W3: SPEC_UNATTAINABLE (hecate/programs/HT-a9e2ba7618/worlds/W3/rows.jsonl)
 - W4: NULL (hecate/programs/HT-a9e2ba7618/worlds/W4/rows.jsonl)
 
 ## FALSIFICATIONS
@@ -87,7 +87,7 @@ _none yet_
 - alternative_explanation: any low-pass filter would do
 
 ## CURRENT VERDICT
-PARK (an allocation state, not a truth claim). round 1 W4 NULL; round 2 W3 NULL: two worlds read, both NULL/CONFOUNDED
+SPECULATIVE (an allocation state, not a truth claim). round 1 W4 NULL; round 2 W3 NULL: two worlds read, both NULL/CONFOUNDED | CORRECTED 2026-10-01: W3 SPEC_UNATTAINABLE (K4); one valid NULL (W4) -> SPECULATIVE
 
 ## NEXT PASS
 decision after P3-probe2: PARK

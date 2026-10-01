@@ -216,14 +216,14 @@ These are proposals for FINDINGS after review. No frozen verdict of record is re
 ## 5. What remains genuinely unexplained
 
 1. **The 16000006 path.** Why a multi-step walk ended at a destination phase reset, and whether such walks recur. The C-A3 events have no per-event mechanism.
-2. **The foreign-cell victim magnet.** 9cba/e160: founder overwritten in 100/240 runs vs 0/240 for a random implant. The SELF hijack cannot operate there: single-interaction rate ≤ 1.5% (red-team R2).
+2. **The foreign-cell victim magnet.** 9cba/e160: founder overwritten in 100/240 runs vs 0/240 for a random implant. Wave-2 N1 shows it is a partner hijack of the founder's **LDIR**. The rate is about 0.1-0.5% per interaction, all of it removed by LDIR knockout. Integrated over a run that is the right order. RT B1 had compared a per-interaction rate with a per-run frequency. Not demonstrated in-world, and the integrated hazard over-predicts loss by 3-6x.
 3. **Why ffa6 27000053 took over** (L = 1.0, exposure 409k) and never became state-free: P ≈ 0.055 under the ffa6 hazard.
 4. **The k = 4 excess** at depth ≥ 5.
 5. **Founder-less runaways, C5 dominance in 14000013, AN8 self-conversion.**
 6. **Field scramblers** (ADV2 D9).
 7. **cb7f:** takeover without depth, or failure?
 8. **The cell axis the map cannot see:** CARRY 0.16 (C7) vs 0.36 (CF).
-9. **Whether the post-hoc two-generation map predicts a fresh donor panel.**
+9. **Whether single-interaction statistics predict anything beyond first-donor fate.** S1b passed out of sample, but only for first-donor fate, which self-poisoning already predicts. Post-takeover dynamics are untested.
 
 ---
 
@@ -236,6 +236,29 @@ These are proposals for FINDINGS after review. No frozen verdict of record is re
 - **Phase.** Pointer carry-over reproduces poisoning (32/44). Robust real donors reload their pointers; they do not rely on Δ ≡ 0.
 - **The central open point is the two-generation property: whether the copies copy.** It is a reproductive-closure measure (B4) that single-interaction thinking omitted. It is still genome-computable, not lineage-level.
 
+**S1b out-of-sample test (static; criterion frozen before computing): PASS, qualified.**
+File: `forensics/FORENSIC_MAP_OUT_OF_SAMPLE.md`.
+- **Test.** 43 W1 first donors, never used to build the predictors.
+- **Frozen predictor.** P_run500_causal. As coded, this is the donor's own causal offspring law over a 500-generation horizon.
+  It is *not* the children's-law repair; that is P_run2.
+- **Result.**
+  - AUC 0.891 (CI 0.77–0.98) for "the donor made ≥ 1 causal birth".
+  - Spearman 0.706 with the donor's causal births.
+  - Both permutation p = 5e-5. Both frozen thresholds were met.
+  - Scoring the 5 unrecoverable donors worst-case still passes: AUC 0.775.
+- **Qualifications.**
+  - The specified one-step P_est also passes, only just (AUC 0.779, ρ 0.41).
+  - The simplest statistics predict best: mean offspring m (AUC 0.993) and the children's conversion rate (0.991).
+  - What is predicted is essentially **whether the donor copies from its carried state at all**. 23 of the 28 donors with no
+    births never copy in that context.
+  - W1's own carried-state measurements on the same genomes predict as well: OWN_REAL AUC 0.92; SELFSTATE rate_k1 0.90.
+- **Reading.**
+  - First-donor fate in W1 is predictable out of sample from the donor's own single-interaction behaviour under carried
+    registers. That is a genome-level property, and no lineage history is needed.
+  - The map re-derives the known self-poisoning split. It adds no new information beyond it.
+  - Together with S1, this supports T6/T2 at the **first-donor** stage. It says nothing about post-takeover evolution, where
+    T4's untested predictions live.
+
 ---
 
 ## 7. The next experiment
@@ -245,7 +268,7 @@ See NPE_DECISIVE_EXPERIMENTS_NEXT.md (revision 2). In brief:
 - E2's null became a true reset-every-interaction arm.
 - E4's predictions were restated, because a monophyletic sweep is T1's prediction too.
 
-The cheapest decisive next step is still static: **test the two-generation map out of sample** on the 16 BRIDGE donors and the W1 D0 donors, whose outcomes are already on disk and were not used to build the repair.
+The out-of-sample map test has now been run (S1b: PASS, qualified; §6). The cheapest remaining decisive steps are the static pairwise-epistasis map S3 (T4(c); result in the handoff) and the replay E4 (T4(b)).
 
 ---
 

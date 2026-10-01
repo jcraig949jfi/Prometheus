@@ -66,7 +66,7 @@ def run_items(items, out_path, workers=4):
 
 
 def calibration_gate(latest):
-    with open(os.path.join(HERE, "calibration_v1.json"), encoding="utf-8") as fh:
+    with open(os.path.join(HERE, "controls_v1.json"), encoding="utf-8") as fh:
         ctl = json.load(fh)["controls"]
     table, known_hit, nonsense_fam, composite_hit = [], 0, 0, 0
     for c in ctl:
@@ -97,7 +97,7 @@ def calibration_gate(latest):
 
 if __name__ == "__main__":
     if sys.argv[1:] == ["calibrate"]:
-        with open(os.path.join(HERE, "calibration_v1.json"), encoding="utf-8") as fh:
+        with open(os.path.join(HERE, "controls_v1.json"), encoding="utf-8") as fh:
             ctl = json.load(fh)["controls"]
         latest = run_items([(c["id"], c["text"]) for c in ctl],
                            os.path.join(HERE, "calibration_rows_v1.jsonl"))
@@ -105,5 +105,5 @@ if __name__ == "__main__":
         for t in table:
             print(json.dumps(t, ensure_ascii=True))
         print(json.dumps(gate))
-        with open(os.path.join(HERE, "CALIBRATION_v1.json"), "w", encoding="utf-8", newline="\n") as fh:
+        with open(os.path.join(HERE, "gate_v1.json"), "w", encoding="utf-8", newline="\n") as fh:
             fh.write(json.dumps({"table": table, "gate": gate}, indent=2, ensure_ascii=True) + "\n")
