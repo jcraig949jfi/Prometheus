@@ -1330,3 +1330,30 @@ Mechanisms (ii) and (iii) both use an absolute JP, aimed at different targets. T
 - **What survives.** Only **necessity**: EW-4, a first birth by epoch 10, holds 8/8.
 - **Near-misses.** These are ordinary lineages from the same distribution (W2-45: intermediates match the single law at 2.2%).
 - **A different correlate.** The only correlate found that separates post-27 success from failure is **evolved hijack defence (side-0 keep; W2-42, p = 1.2e-4)**. It shows up at genotype level, not as an early demographic signal. W2-53 is testing it out of sample.
+
+
+### CLOSING: interrupted workers, and a late close (Nestor). Written at 09:03Z (clock)
+
+**What interrupted the run.**
+- At about 03:20Z every running worker (W2-46, W2-50 to W2-56) was terminated by an account-level API weekly usage limit (HTTP 429; resets at 05:00 America/New_York).
+- Nestor was also paused until 09:00Z.
+- **The 08:30Z closing phase therefore did not run on time.** The handoff and the Aporia report were produced after the 05:00 ET (09:00Z) cutoff.
+- This is recorded as a deviation from the directive's timing. Nestor did not choose it.
+
+**Partial results preserved and committed (files only, no REPORT.md):**
+- **W2-52 (order reversal; prereg PREREG.md; self-test PASS).** Paired AC−F, FID:
+  - stock order: +0.076 [−0.014, +0.168];
+  - **reversed order: −0.215 [−0.308, −0.122]**;
+  - 5C−F reversed: −0.114.
+  - **Reversing call order inverts the side-switch advantage.** That is strong support for run-first protection (W2-24) and for W2-47's prediction P2.
+  - Pre-registered OVERALL verdict: **UNRESOLVED**. The rule needed the stock-order difference CI to exclude 0, and at N = 1000 it does not. The exact-ruler secondary verdict is CONFIRMED.
+  - Note on F under reversal: m rises to 1.27, because side-1 conversion becomes 1.0 when the founder's own side runs first.
+- **W2-53 (keep out-of-sample):** PREREG written; replays of the W2-37 conditioned runs partly done (r1_FIELD/FREE.jsonl, gate files). **No verdict.** The W2-42 association remains in-sample only.
+- **W2-46 (instrument checks):** partial `ichecks/` package and a campaign scan (FINDINGS.json, scan_stdout.txt). Tests were not completed or reported, so the checks are **unverified**.
+- **W2-51 (byte-1 hotspot):** provenance and trace JSON on disk (p1-p3, t0-t1). Not analysed by Nestor.
+- **W2-54 / W2-55:** scaffolding only.
+- **W2-50 (red-team round 2) and W2-56:** no output.
+
+**Not done at closing:**
+- the FINDINGS appendix (W2-48 draft) was **not** appended to FINDINGS.md, because there was no time to re-verify it after 03:12Z;
+- the Wave-1 handoff was not updated beyond the 3-10-epoch flag.

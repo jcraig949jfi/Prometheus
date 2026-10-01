@@ -1,0 +1,84 @@
+| experiment | a screen ctx | c label/BASE | d max-of-cached | h genomes |
+|---|---|---|---|---|
+| npe-frontier/x_mat_internalize (dense_taint.py) | NV | PASS | PASS | NO_GENOMES |
+| npe-frontier/x_mat_internalize (run_xmi.py) | CONTEXT_MISMATCH | PASS | PASS | NO_GENOMES |
+| npe-frontier/x_task_gate (run_xtg.py) | NV | PASS | MAX_OF_CACHED | NV |
+| c9x-explore/c9_h1r (run_h1r.py) | NV | PASS | MAX_OF_CACHED | NO_GENOMES |
+| c9x-explore/c_ablate_confirm (run_ca.py) | NV | PASS | PASS | NO_GENOMES |
+| c9x-explore/c_atomic (run_cat.py) | NV | PASS | PASS | NO_GENOMES |
+| c9x-explore/c_core (run_ck.py) | NV | PASS | PASS | NO_GENOMES |
+| c9x-explore/c_critical_mass (run_ccm.py) | NV | PASS | PASS | NO_GENOMES |
+| c9x-explore/c_dense_confirm (run_cd.py) | NV | PASS | PASS | NO_GENOMES |
+| c9x-explore/c_energy_confirm (run_ce.py) | NV | PASS | PASS | NO_GENOMES |
+| c9x-explore/c_norecomb_confirm (run_cr.py) | NV | PASS | PASS | NO_GENOMES |
+| c9x-explore/c_runaway_confirm (run_crw.py) | NV | PASS | PASS | NO_GENOMES |
+| c9x-explore/c_selfloc_confirm (run_c.py) | NV | PASS | PASS | NO_GENOMES |
+| c9x-explore/c_swap_acquire (run_csa.py) | NV | PASS | PASS | NO_GENOMES |
+| c9x-explore/x_acquire (run_xa.py) | CONTEXT_MISMATCH | PASS | PASS | PASS |
+| c9x-explore/x_atomic (run_at.py) | NV | PASS | PASS | NO_GENOMES |
+| c9x-explore/x_atomic_random (run_ar.py) | NV | PASS | PASS | NO_GENOMES |
+| c9x-explore/x_cert_break (run_cb.py) | NV | PASS | PASS | NO_GENOMES |
+| c9x-explore/x_content (run_xc.py) | NV | PASS | PASS | NO_GENOMES |
+| c9x-explore/x_core (run_xk.py) | NV | PASS | PASS | NO_GENOMES |
+| c9x-explore/x_core_time (run_kt.py) | NV | PASS | PASS | NO_GENOMES |
+| c9x-explore/x_critical_mass (run_cm.py) | NV | PASS | PASS | NO_GENOMES |
+| c9x-explore/x_decay (run_dk.py) | NV | PASS | PASS | NO_GENOMES |
+| c9x-explore/x_dense_ablate (run_a.py) | NV | PASS | PASS | NO_GENOMES |
+| c9x-explore/x_dense_ops (run_d.py) | NV | PASS | PASS | NV |
+| c9x-explore/x_donor_rate (run_dr.py) | PASS | PASS | PASS | NO_GENOMES |
+| c9x-explore/x_donor_swap (run_ds.py) | CONTEXT_MISMATCH | PASS | PASS | NO_GENOMES |
+| c9x-explore/x_dose_curve (run_dc.py) | NV | PASS | PASS | NO_GENOMES |
+| c9x-explore/x_energy_inherit (run_n.py) | NV | PASS | PASS | NO_GENOMES |
+| c9x-explore/x_error_threshold (run_e.py) | NV | PASS | PASS | NO_GENOMES |
+| c9x-explore/x_h1_gradient (run_g.py) | NV | PASS | MAX_OF_CACHED | NO_GENOMES |
+| c9x-explore/x_h1_transplant (run_ht.py) | NV | PASS | MAX_OF_CACHED | NO_GENOMES |
+| c9x-explore/x_h2_7ae3 (run_h.py) | NV | PASS | PASS | NO_GENOMES |
+| c9x-explore/x_h2_norecomb (run_r.py) | NV | PASS | PASS | NO_GENOMES |
+| c9x-explore/x_h2_termination (run_t.py) | NV | PASS | PASS | NO_GENOMES |
+| c9x-explore/x_h3_easier (run_e3.py) | NV | PASS | MAX_OF_CACHED | NO_GENOMES |
+| c9x-explore/x_h3_flow (run_f3.py) | NV | PASS | PASS | NO_GENOMES |
+| c9x-explore/x_local_alloc (run_l.py) | NV | LABEL_READOUT_IN_BASE | PASS | NO_GENOMES |
+| c9x-explore/x_nearmiss (run_m.py) | NV | PASS | PASS | NV |
+| c9x-explore/x_nonpair_fidelity (run_f.py) | NV | PASS | PASS | NO_GENOMES |
+| c9x-explore/x_nonpair_search (run_x.py) | NV | PASS | PASS | NO_GENOMES |
+| c9x-explore/x_pair_norecomb (run_pn.py) | NV | PASS | PASS | NO_GENOMES |
+| c9x-explore/x_position (run_pos.py) | CONTEXT_MISMATCH | PASS | PASS | NO_GENOMES |
+| c9x-explore/x_root_audit (run_ra.py) | NV | PASS | PASS | NO_GENOMES |
+| c9x-explore/x_runaway (run_rw.py) | NV | LABEL_READOUT_IN_BASE | PASS | NO_GENOMES |
+| c9x-explore/x_runaway_transplant (run_rt.py) | NV | PASS | PASS | NO_GENOMES |
+| c9x-explore/x_selfloc_free (run_s.py) | NV | PASS | PASS | NO_GENOMES |
+| c9x-explore/x_selfloc_seeded (run_k.py) | NV | PASS | PASS | NO_GENOMES |
+| c9x-explore/x_spontaneous (run_p.py) | NV | PASS | PASS | NO_GENOMES |
+| c9x-explore/x_stall (run_st.py) | PASS | LABEL_READOUT_IN_BASE | PASS | NO_GENOMES |
+| c9x-explore/x_stall_f0 (run_s0.py) | PASS | LABEL_READOUT_IN_BASE | PASS | NO_GENOMES |
+| c9x-explore/x_state (run_st.py) | PASS | PASS | PASS | NO_GENOMES |
+| c9x-explore/x_sterile (run_sr.py) | PASS | PASS | PASS | NO_GENOMES |
+| c9x-explore/x_sufficiency (run_sf.py) | CONTEXT_MISMATCH | PASS | PASS | NO_GENOMES |
+| c9x-explore/x_swap_ancestry (run_sa.py) | NV | PASS | PASS | NO_GENOMES |
+| c9x-explore/x_swap_origin (run_so.py) | NV | PASS | PASS | NO_GENOMES |
+| c9x-explore/x_ticket (run_tk.py) | NV | LABEL_READOUT_IN_BASE | PASS | NO_GENOMES |
+
+c_label_absorbing X-MAT-INTERNALIZE -> ABSORBED_LABEL | 7/26 runs reached label share 1.00 and 0 ever fell, in a closed population: from that epoch on 'the label persists' carries no information about heredity
+e_blocks C-ATOMIC C2 ATOMIC per specimen (n=8 each) -> OK | blocks homogeneous (p_mc=0.403): pooling defensible on this readout
+e_blocks C-ATOMIC C2 ATOMIC_d5 per specimen (n=8 each) -> NON_EXCHANGEABLE | blocks differ (chi2=76.76, df=14, p_mc=0.0000): do not pool; report per block or a block-stratified test; dropping ['cb7f5ca1'] alone restores homogeneity (a post-hoc drop is itself a fork)
+{
+ "a_screen_context": {
+  "NOT_VERIFIED": 47,
+  "CONTEXT_MISMATCH": 5,
+  "OK": 5
+ },
+ "c_label_write_back": {
+  "OK": 52,
+  "LABEL_READOUT_IN_BASE": 5
+ },
+ "d_max_of_cached": {
+  "OK": 52,
+  "MAX_OF_CACHED": 5
+ },
+ "h_stores_genomes": {
+  "NO_GENOMES": 53,
+  "NOT_VERIFIED": 3,
+  "OK": 1
+ }
+}
+cpu_s 11.6 utc 2026-10-01T03:18:31Z
