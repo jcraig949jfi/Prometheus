@@ -280,3 +280,38 @@ Other:
 - Patches: P1 (record effective dest_mode) and P2 (FLIP transplant -> NOT_APPLICABLE) are NEUTRAL and
   touch campaign.py. DEFERRED to one campaign.py batch with W2-A2's two diffs, once the workers that
   import campaign finish. P3 (MAJ forward placement) is SEMANTIC, for C2 only.
+
+### W2-F (deposited wave2/W2-F/REPORT.md): explib shared below-engine library
+- 9 primitives (outcomes, trace, lockstep, reach, authority, controls, metamorphic, attainable,
+  provenance, stats); 40 tests pass, 35 with prometheus and torch import-blocked.
+- PTE adapter reproduces H-INST reach verdicts 4/4. It fits Bellerophon's toolbox (the Worlds Kernel)
+  as the missing audit layer. The promotion path is in API.md s5.
+- NEW F4 [V]: s(site_all) + s(channel_all) = max at every pair/trial at offset >= 1 (93/93 RELAY/MAJ
+  groups). The two arms are ONE measurement, and AUDIT3 rows double-count mirrored arms.
+- NEW F5: H-INST B4's half-width replication guard cannot fire on certificates (0/20 caught). The
+  predictive rule catches 14-20/20.
+- F6: between-namespace flips run 2.4x the pair-independent expectation (20 vs 8.3).
+  CONTRADICTION with W2-H: W2-H finds the pair is the right unit and BOOTT calibrated within run, and
+  attributes the AUDIT3 excess to a first-draw estimator plus clustering (z ~1.7).
+  Both can hold if between-namespace variance includes a term absent within run (e.g. topo/physics
+  draws shared within a namespace). -> W2-N replicate-seed estimate.
+- D5: Harmonia freeze_precedes does not check the plan blob is unchanged; Ananke freeze_check does.
+  Unify them.
+- Hygiene: W2-F/explib/__pycache__ and W2-F/tests/__pycache__ are left (gitignored).
+
+### W2-C (deposited wave2/W2-C/REPORT.md): mutation/metamorphic testing, 14 operators x 6 stages
+- 191 cells: 68 self-alarm (KILLED-A), 37 caught only differentially (no clean run in production),
+  47 SURVIVED, 36 EQUIVALENT, 3 UNRESOLVED.
+- F1: silent_sensors/disable_channel turn SIGNAL -> NULL with NO alarm. A broken experiment reads as a
+  NULL, so every NULL interpretation (H6) needs a broken-experiment guard first.
+- F2: causal_label has no competence precondition (normal acc 0.0 -> NOT_SUPPORTED). A SEMANTIC patch
+  for C2; no C1 D label is affected (all normal >= .60).
+- F3: held/selection seed disjointness is not enforced anywhere (C1 seeds are in fact disjoint per W2-A2).
+- F4: freeze_state half-way (-.25 acc) leaves labels unchanged.
+- F5: irrelevant_channel is exempt from the no-op guard by a code-only assumption.
+- F6: COMM_DEPENDENT comes from search.evolve's UNGUARDED zero_comm arm.
+- F7: forced zero_comm also makes the CRN/mirror design untestable.
+- guards.py (G0-G12): 13/14 operators self-alarm; randomize_source is not caught.
+- Proposed standing mutation gate before prereg freeze (s4).
+- Compute 0.54 core-h (slightly over 0.5).
+- Queue replenished: W2-O (run the guards over recorded C1 NULL cells).
