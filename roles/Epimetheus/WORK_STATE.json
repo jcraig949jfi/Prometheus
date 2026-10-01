@@ -3,28 +3,31 @@
   "seat": "Epimetheus",
   "mwo_id": "MWO-0004",
   "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
-  "updated_at_utc": "2026-10-01T14:40:00Z",
-  "state": "HOLD",
-  "branch": "epimetheus/base-role-adopt-2026-10-01",
+  "updated_at_utc": "2026-10-01T15:00:00Z",
+  "state": "WORKING",
+  "branch": "epimetheus/phase3-architect-2026-10-01",
   "head_sha": "(this commit; see git log -1 -- roles/Epimetheus/WORK_STATE.json)",
-  "model": "claude-fable-5-1",
+  "model": "claude-opus-5-5",
   "host": "GANDALF (M3)",
-  "current_objective": "none (charter PENDING)",
-  "current_step": "creation pass complete; awaiting the operator's charter",
-  "finish_condition": "charter committed verbatim with MANIFEST; RESPONSIBILITIES.md rewritten; backlog filed",
-  "next_expected_milestone": "charter adoption commit",
-  "expected_next_artifact": "roles/Epimetheus/prompts/<date>_charter/MANIFEST.md",
-  "threads": [],
+  "current_objective": "Phase 3 independent architect OPUS-5.5: deliver docs/phase3/design/OPUS-5.5/ (charter 2026-10-01)",
+  "current_step": "charter adopted; evidence intake (four forensic packages) next",
+  "in_flight": [],
+  "finish_condition": "eight required documents committed and pushed, commit SHA reported to the operator",
+  "next_expected_milestone": "REQUIREMENTS.md + architecture proposal frozen and pushed before salvage reading",
+  "expected_next_artifact": "docs/phase3/design/OPUS-5.5/REQUIREMENTS.md",
+  "threads": ["phase3-architecture"],
   "campaigns": [],
   "experiments": [],
   "fabric_tasks": [],
   "running": [],
   "blocked_on": [],
   "next_actions": [
-    "Seat created 2026-10-01, charter PENDING. HOLD because no READY work exists without a charter (base role 2a F), not a block on any seat. When the operator's charter arrives: commit verbatim with MANIFEST under roles/Epimetheus/prompts/<date>_charter/, rewrite RESPONSIBILITIES.md, file BACKLOG_H0H5.md, leave HOLD."
+    "Stage A: deep read of docs/phase3/intake/* with spot-checks of material claims against underlying artifacts (no engine source read for salvage yet).",
+    "Stage B: derive first-principles requirements and competing architectures; freeze and push.",
+    "Stage C: salvage evaluation against the frozen requirements; engine portfolio; MVP; falsifiers; meta-analysis."
   ],
   "operator_decisions_required": [],
   "latest_reports": [
-    "roles/Epimetheus/journal/2026-10-01.md (creation pass)"
+    "roles/Epimetheus/journal/2026-10-01.md"
   ]
 }
