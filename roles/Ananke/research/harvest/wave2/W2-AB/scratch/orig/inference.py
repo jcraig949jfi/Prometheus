@@ -76,36 +76,29 @@ def holm(pvals, alpha: float):
     return rej
 
 
-def keep_prob(dist_se, mode: str = "predictive", f: float = 1.0):
+def keep_prob(dist_se, mode: str = "predictive"):
     """P(an independent re-run of the same design keeps the label) for a statistic observed `dist_se` standard
-    errors beyond its cut. 'predictive' (flat prior; both runs carry error): Phi(d / (sqrt 2 * f)). 'plugin' (the
-    observation taken as truth): Phi(d / f). f = between-namespace SE inflation (W2-N: f = 1.00 [.91, 1.11];
-    1.12 is the robustness bound). f = 1 reproduces the original function exactly.
-    Validated on AUDIT3 (W2-H): rows >= 3 SE from a cut 0/227 disagreed."""
-    if not f > 0:
-        raise ValueError("f must be > 0")
-    d = np.asarray(dist_se, float) / f
+    errors beyond its cut. 'predictive' (flat prior; both runs carry error): Phi(d / sqrt 2). 'plugin' (the
+    observation taken as truth): Phi(d). Validated on AUDIT3 (W2-H): rows >= 3 SE from a cut 0/227 disagreed."""
+    d = np.asarray(dist_se, float)
     return _st.norm.cdf(d / math.sqrt(2)) if mode == "predictive" else _st.norm.cdf(d)
 
 
-def margin_for_keep(target: float = 0.95, mode: str = "predictive", f: float = 1.0) -> float:
-    """SE distance beyond the cut needed for keep_prob >= target (predictive, f=1: .95 -> 2.33, .99 -> 3.29;
-    f=1.12: .95 -> 2.60)."""
-    if not f > 0:
-        raise ValueError("f must be > 0")
+def margin_for_keep(target: float = 0.95, mode: str = "predictive") -> float:
+    """SE distance beyond the cut needed for keep_prob >= target (predictive .95 -> 2.33; .99 -> 3.29)."""
     z = float(_st.norm.ppf(target))
-    return (z * math.sqrt(2) if mode == "predictive" else z) * f
+    return z * math.sqrt(2) if mode == "predictive" else z
 
 
-def replication_gate(stat, se, cut: float, side: str = "above", target: float = 0.95, f: float = 1.0) -> dict:
+def replication_gate(stat, se, cut: float, side: str = "above", target: float = 0.95) -> dict:
     """Margin gate for a single-draw label 'stat beyond cut'. Returns keep probability and REPLICABLE / FRAGILE.
     FRAGILE means: do not report as a finding without a fresh-seed replicate."""
     if se <= 0:
         d = math.inf if ((stat > cut) if side == "above" else (stat < cut)) else -math.inf
     else:
         d = ((stat - cut) if side == "above" else (cut - stat)) / se
-    k = float(keep_prob(d, f=f)) if math.isfinite(d) else (1.0 if d > 0 else 0.0)
-    return {"dist_se": d, "keep": k, "f": f, "status": "REPLICABLE" if k >= target else "FRAGILE"}
+    k = float(keep_prob(d)) if math.isfinite(d) else (1.0 if d > 0 else 0.0)
+    return {"dist_se": d, "keep": k, "status": "REPLICABLE" if k >= target else "FRAGILE"}
 
 
 def mirror_structure(per_trial) -> dict:

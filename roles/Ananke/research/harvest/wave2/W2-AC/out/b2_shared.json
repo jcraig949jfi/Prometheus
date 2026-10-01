@@ -1,0 +1,238 @@
+{
+ "seed_groups": {
+  "n_seeds": 159,
+  "multi_family": 51,
+  "same_family_cross_track": 30
+ },
+ "residual_corr": {
+  "plant": {
+   "matched_pairs": 123,
+   "matched_r": 0.034,
+   "mismatched_pairs": 246,
+   "mismatched_r": -0.017,
+   "perm_p_two_sided": 0.75,
+   "perm_null_sd": 0.1,
+   "location_pairs": 41
+  },
+  "sens": {
+   "matched_pairs": 123,
+   "matched_r": 0.021,
+   "mismatched_pairs": 246,
+   "mismatched_r": -0.011,
+   "perm_p_two_sided": 0.8672,
+   "perm_null_sd": 0.118,
+   "location_pairs": 41
+  },
+  "emit": {
+   "matched_pairs": 123,
+   "matched_r": -0.176,
+   "mismatched_pairs": 246,
+   "mismatched_r": 0.088,
+   "perm_p_two_sided": 0.1207,
+   "perm_null_sd": 0.113,
+   "location_pairs": 41
+  },
+  "acc_mean_random": {
+   "matched_pairs": 123,
+   "matched_r": 0.011,
+   "mismatched_pairs": 246,
+   "mismatched_r": -0.005,
+   "perm_p_two_sided": 0.4943,
+   "perm_null_sd": 0.015,
+   "location_pairs": 41
+  },
+  "held_acc": {
+   "matched_pairs": 0,
+   "matched_r": null,
+   "mismatched_pairs": 0,
+   "mismatched_r": null
+  }
+ },
+ "genome_identity": {
+  "pairs": 111,
+  "identical_genomes": 21,
+  "by_transect": {
+   "decay_shift|False": 36,
+   "decay_shift|True": 12,
+   "economy|False": 9,
+   "rules|False": 45,
+   "rules|True": 9
+  }
+ },
+ "cross_family_agreements": {
+  "('decay_shift', 'plant', 'phys')": {
+   "verdicts": [
+    [
+     "RELAY",
+     0,
+     "SUPPORTED",
+     true
+    ],
+    [
+     "RELAY",
+     1,
+     "SUPPORTED",
+     true
+    ],
+    [
+     "FLIP",
+     0,
+     "CANDIDATE",
+     true
+    ],
+    [
+     "HOLD",
+     0,
+     "SUPPORTED",
+     true
+    ],
+    [
+     "HOLD",
+     0,
+     "SUPPORTED",
+     true
+    ],
+    [
+     "HOLD",
+     1,
+     "SUPPORTED",
+     true
+    ],
+    [
+     "HOLD",
+     1,
+     "SUPPORTED",
+     true
+    ]
+   ],
+   "families_with_B2": [
+    "FLIP",
+    "HOLD",
+    "RELAY"
+   ],
+   "shared_B2_seeds": 12,
+   "B2_seeds_per_family": {
+    "RELAY": 24,
+    "FLIP": 12,
+    "HOLD": 24
+   }
+  },
+  "('economy', 'plant', 'phys')": {
+   "verdicts": [
+    [
+     "RELAY",
+     0,
+     "SUPPORTED",
+     true
+    ],
+    [
+     "RELAY",
+     1,
+     "SUPPORTED",
+     true
+    ],
+    [
+     "MAJ",
+     1,
+     "CANDIDATE",
+     false
+    ]
+   ],
+   "families_with_B2": [
+    "MAJ",
+    "RELAY"
+   ],
+   "shared_B2_seeds": 9,
+   "B2_seeds_per_family": {
+    "RELAY": 18,
+    "MAJ": 9
+   }
+  },
+  "('rules', 'sens', 'phys')": {
+   "verdicts": [
+    [
+     "XOR",
+     1,
+     "CANDIDATE",
+     true
+    ],
+    [
+     "MAJ",
+     0,
+     "CANDIDATE",
+     true
+    ],
+    [
+     "FLIP",
+     0,
+     "CANDIDATE",
+     false
+    ]
+   ],
+   "families_with_B2": [
+    "FLIP",
+    "MAJ",
+    "XOR"
+   ],
+   "shared_B2_seeds": 9,
+   "B2_seeds_per_family": {
+    "XOR": 9,
+    "MAJ": 18,
+    "FLIP": 18
+   }
+  },
+  "('rules', 'emit', 'phys')": {
+   "verdicts": [
+    [
+     "XOR",
+     1,
+     "CANDIDATE",
+     true
+    ],
+    [
+     "MAJ",
+     0,
+     "SUPPORTED",
+     true
+    ],
+    [
+     "MAJ",
+     1,
+     "CANDIDATE",
+     false
+    ],
+    [
+     "FLIP",
+     0,
+     "SUPPORTED",
+     true
+    ],
+    [
+     "FLIP",
+     1,
+     "SUPPORTED",
+     true
+    ],
+    [
+     "HOLD",
+     0,
+     "CANDIDATE",
+     false
+    ]
+   ],
+   "families_with_B2": [
+    "FLIP",
+    "HOLD",
+    "MAJ",
+    "XOR"
+   ],
+   "shared_B2_seeds": 0,
+   "B2_seeds_per_family": {
+    "XOR": 9,
+    "MAJ": 18,
+    "FLIP": 18,
+    "HOLD": 9
+   }
+  }
+ }
+}

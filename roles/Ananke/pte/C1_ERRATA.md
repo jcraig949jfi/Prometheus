@@ -126,3 +126,13 @@ C1 labels are NOT changed. Each item names its source report; [P] marks those re
   lottery". Only the actuator's random initial rule matters (one rule works, the other is dead), and
   the best pinned rule is .09-.21 above the reported accuracy. These cells are over-represented among
   the 512-world census corrections (OR 6.5).
+- E-W19 (headline counts; W2-AC, W2-G):
+  - Pooled all-wave counts (RELAY 50/196, MAJ 19/162, HOLD 97/155) are not rates (effective n 18-60).
+  - The 50 RELAY SIGNAL rows are 6 independent lineages (32 rows from one).
+  - Quote A1 rates instead: RELAY 4/71 (5.6%, 95% CI 2.2-13.6), MAJ 3/70 (4.3%, 1.5-11.9), HOLD 34/70
+    (49%, 37-60), XOR 0/71, FLIP 0/70.
+  - "One hop": A1 one-hop 3/32 vs multi-hop 1/39 (p = .32). Multi-hop is rarer, not shown absent.
+  - P4 holds (8/352, 99% upper 4.9%), but it counts an alias of SIGNAL.
+  - W-O "84% stay CHANCE" is row-weighted; specimen-weighted it is 72% [63, 80].
+  - B2 cross-family boundary agreements share 100% of their seeds and one code cause. They are not
+    independent reproductions.
