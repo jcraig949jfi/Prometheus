@@ -105,3 +105,24 @@ C1 labels are NOT changed. Each item names its source report; [P] marks those re
     decay_shift therefore measure the plant's design, not physics.
   - Together with E-W8 (economy = budget identity; delta = light-cone near-tautology), none of C1's three
     SUPPORTED RELAY plant boundaries is a physics phase boundary in the intended sense.
+- E-W14 (MAJOR, NULL attribution; W2-T, W2-P, W2-U): 111/454 = 24% of C1 evolve NULLs (RELAY 17, MAJ 34,
+  XOR 36, FLIP 24) were unwinnable by any program (joint light cone + wake + placement). Only 48-58% are
+  admissible for a search-limitation reading. Only 11% (51, all RELAY) have a plant inside the genome
+  space. C1 NULL counts must not be read as search failures without this split. 0/113 sampled NULLs
+  were broken experiments.
+- E-W15 (MAJ INTEGRATION; W2-M): at the physics of 13/19 MAJ SIGNAL rows, the INTEGRATION ruler
+  (lo99 > .70) is unattainable by ANY program (ceiling .701). 11/19 MAJ SIGNAL champions are matched by
+  a single-sensor transport. INTEGRATION at 4781b0a1 is genuine (a plant matches; single-sensor
+  transport cannot).
+- E-W16 (A0 dial ranking; W2-U): ceiling-normalised, RELAY plant-viability top-3 = decay, economy,
+  topology. "delta"/"d"/"lat_base" effects are 64-79% the light-cone identity. The B-wave delta
+  transect (and P1) was selected by that identity. decay survives normalisation but is plant-design
+  (E-W13).
+- E-W17 (FLIP rulers; W2-L, W2-S): non-inferring "copy" policies attain balanced accuracy B <= .75
+  exactly. FLIP_FEEDBACK and the proposed FLIP_CHANGE are both cheatable (a 14-line relay latch .688; 4
+  recorded anti-copy champions pass FLIP_CHANGE). Certify FLIP inference only with B lo99 > .75. No
+  recorded C1 FLIP reading rests on copy accuracy (all are ~chance).
+- E-W18 (rules>1, setrule=0 cells; W2-Q): 5/8 SIGNAL and 6/7 near-SIGNAL cells are a "rule-mosaic
+  lottery". Only the actuator's random initial rule matters (one rule works, the other is dead), and
+  the best pinned rule is .09-.21 above the reported accuracy. These cells are over-represented among
+  the 512-world census corrections (OR 6.5).
