@@ -1,0 +1,155 @@
+{
+  "table": [
+    {
+      "id": "C01",
+      "kind": "disguised_known",
+      "truth": "PID control",
+      "classification": "FAMILIAR",
+      "prior_fit": 0.97,
+      "nearest": "Discrete-time PID controller (proportional-integral-derivative feedback control, e.g. temperature regulation) | PI controller (proportional-integral) with lag-lead / rate feedback compensation | Minor",
+      "family_matched": true,
+      "ok": true
+    },
+    {
+      "id": "C02",
+      "kind": "disguised_known",
+      "truth": "TCP congestion control (AIMD)",
+      "classification": "FAMILIAR",
+      "prior_fit": 0.96,
+      "nearest": "AIMD (Additive-Increase/Multiplicative-Decrease) congestion control, as in TCP Reno congestion avoidance (Jacobson 1988; Chiu & Jain 1989) | Binary exponential backoff (Ethernet CSMA/CD, ALOHA) | Idea",
+      "family_matched": true,
+      "ok": true
+    },
+    {
+      "id": "C03",
+      "kind": "disguised_known",
+      "truth": "Hebbian learning",
+      "classification": "FAMILIAR",
+      "prior_fit": 0.92,
+      "nearest": "Hopfield network / Hebbian associative memory with weight decay (Hebb 1949; Hopfield 1982) | Linear associator / correlation-matrix memory (Anderson 1972; Kohonen 1972; Willshaw net 1969) | Oja's rule",
+      "family_matched": true,
+      "ok": true
+    },
+    {
+      "id": "C04",
+      "kind": "disguised_known",
+      "truth": "Kalman filter",
+      "classification": "FAMILIAR",
+      "prior_fit": 0.96,
+      "nearest": "Scalar (one-dimensional) Kalman filter with steady-state gain | Recursive Bayesian estimation (Gaussian conjugate prior/likelihood update) | Exponential smoothing / alpha filter (steady-state Wiener f",
+      "family_matched": true,
+      "ok": true
+    },
+    {
+      "id": "C05",
+      "kind": "disguised_known",
+      "truth": "reaction-diffusion (Turing) pattern formation",
+      "classification": "FAMILIAR",
+      "prior_fit": 0.97,
+      "nearest": "Turing reaction-diffusion instability (activator-inhibitor, Gierer-Meinhardt local activation / lateral inhibition) | Lateral inhibition cellular automata (e.g., Young's 1984 activator-inhibitor CA, D",
+      "family_matched": true,
+      "ok": true
+    },
+    {
+      "id": "C06",
+      "kind": "disguised_known",
+      "truth": "stigmergy / ant pheromone trail formation",
+      "classification": "FAMILIAR",
+      "prior_fit": 0.95,
+      "nearest": "Ant Colony Optimization / ant foraging via pheromone trails (Dorigo's Ant System; Deneubourg double-bridge model) | Stigmergy (Grass\u00e9) | Reinforced random walk / P\u00f3lya-urn-type positive feedback with ",
+      "family_matched": true,
+      "ok": true
+    },
+    {
+      "id": "C07",
+      "kind": "disguised_known",
+      "truth": "finite-state machine / automaton control",
+      "classification": "FAMILIAR",
+      "prior_fit": 0.97,
+      "nearest": "Mealy machine (finite-state transducer with output on transitions) | Deterministic finite automaton (DFA) recognising a regular language | Sequential logic controller / sliding-window pattern detector",
+      "family_matched": true,
+      "ok": true
+    },
+    {
+      "id": "C08",
+      "kind": "disguised_known",
+      "truth": "autocatalytic cycle / autocatalytic set",
+      "classification": "FAMILIAR",
+      "prior_fit": 0.92,
+      "nearest": "Autocatalytic set / RAF set (Kauffman collectively autocatalytic sets; Hordijk-Steel reflexively autocatalytic food-generated sets) | Hypercycle (Eigen-Schuster) | Cyclic cross-catalytic network with ",
+      "family_matched": true,
+      "ok": true
+    },
+    {
+      "id": "C09",
+      "kind": "composite",
+      "truth": "PID controller whose gains are tuned by a genetic algorithm",
+      "classification": "FAMILIAR",
+      "prior_fit": 0.93,
+      "nearest": "Evolutionary / genetic-algorithm PID controller tuning | Population-based training (PBT) exploit/explore | (mu+lambda) evolution strategy / particle swarm PID tuning",
+      "family_matched": true,
+      "ok": true
+    },
+    {
+      "id": "C10",
+      "kind": "composite",
+      "truth": "Kalman-style estimation feeding a multi-armed bandit (Thompson-like)",
+      "classification": "FAMILIAR",
+      "prior_fit": 0.95,
+      "nearest": "Thompson sampling with Kalman-filter beliefs for a restless (drifting) Gaussian multi-armed bandit | Kalman-filter UCB / uncertainty-bonus exploration (e.g., Bayes-UCB, softmax with an uncertainty bon",
+      "family_matched": true,
+      "ok": true
+    },
+    {
+      "id": "C11",
+      "kind": "nonsense",
+      "truth": "incoherent",
+      "classification": "INCOHERENT",
+      "prior_fit": 0.15,
+      "nearest": "Cellular automaton with majority/plurality voting rule (e.g., Toom's rule or majority-vote CA) | Reaction-diffusion / Turing pattern with boundary-initiated front propagation | Delay-coupled lattice w",
+      "family_matched": false,
+      "ok": true
+    },
+    {
+      "id": "C12",
+      "kind": "nonsense",
+      "truth": "incoherent",
+      "classification": "INCOHERENT",
+      "prior_fit": 0.1,
+      "nearest": "Attention / message passing over tokens with a conserved quantity (e.g., softmax-normalized attention mass, or conservative flow on a graph) | Free-energy principle / active inference (surprise minimi",
+      "family_matched": false,
+      "ok": true
+    },
+    {
+      "id": "C13",
+      "kind": "nonsense",
+      "truth": "incoherent",
+      "classification": "INCOHERENT",
+      "prior_fit": 0.1,
+      "nearest": "Genetic programming / linear genome with crossover at homologous sites | RNA secondary structure folding via complementary base pairing | Niche construction / predictive processing (active inference) ",
+      "family_matched": false,
+      "ok": true
+    },
+    {
+      "id": "C14",
+      "kind": "nonsense",
+      "truth": "incoherent",
+      "classification": "INCOHERENT",
+      "prior_fit": 0.12,
+      "nearest": "Coupled map lattice / elementary cellular automaton exhibiting spatiotemporal chaos (e.g., Wolfram Class III/IV rules) | Null-space / gauge-invariant (flat-direction) learning, e.g. drift along zero-l",
+      "family_matched": false,
+      "ok": true
+    }
+  ],
+  "gate": {
+    "knowns_detected": 8,
+    "knowns_total": 8,
+    "nonsense_called_familiar": 0,
+    "nonsense_total": 4,
+    "composites_detected": 2,
+    "composites_total": 2,
+    "all_calls_ok": true,
+    "PASS": true
+  },
+  "note": "re-derived 2026-10-01 from calibration_rows_v1.jsonl + controls_v1.json; equals the gate committed (misnamed) as calibration_v1.json"
+}

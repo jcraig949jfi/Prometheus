@@ -7,7 +7,7 @@ Rows: hecate/meta/arms/arms_v1.jsonl (40 unit-arms, 400 mechanisms),
 hecate/meta/detector/detect_rows_v1.jsonl, hecate/meta/matcher/match_rows_v1.jsonl.
 Generator claude-sonnet-5; detector and matcher claude-opus-5-5; all calls
 isolated (hecate/llm.py). Detector calibration gate PASS
-(hecate/gravity/CALIBRATION_v1.json).
+(hecate/gravity/CALIBRATION_v1.json -- see CORRECTIONS 2026-10-01 K3: tracked as calibration_v1.json; controls restored at controls_v1.json, gate at gate_v1.json).
 
 ## Preregistered outcomes
 

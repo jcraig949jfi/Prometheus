@@ -170,7 +170,7 @@ if __name__ == "__main__":
         generate()
     elif cmd == "detect":
         from hecate.gravity.run import run_items
-        with open(os.path.join(os.path.dirname(HERE), "gravity", "CALIBRATION_v1.json"), encoding="utf-8") as fh:
+        with open(os.path.join(os.path.dirname(HERE), "gravity", "gate_v1.json"), encoding="utf-8") as fh:
             gate = json.load(fh)["gate"]
         if not gate["PASS"]:
             sys.exit("calibration gate did not PASS: M1 is INDETERMINATE by PREREG; detection not run")

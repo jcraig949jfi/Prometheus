@@ -1,5 +1,13 @@
 # Alien-lawful structure assay -- pilot report (Family A complete; B, C incomplete)
 
+> CORRECTIONS 2026-10-01 (roles/Hecate/harvest_w2/CORRECTIONS_2026-10-01.md; text below is unchanged):
+> K2 "affine (0.44) beats Claude (0.33)" is KILLED -- unlike subsets/metrics; like-for-like Claude 0.51 vs affine 0.49.
+> K7 the sandbox rejected 4 correct-style programs (local lambdas, str join/split); headline 28/32 unchanged (sensitivity only).
+> K8 the "textbook standard map" story is contradicted by the code; both FALSE_COLLAPSE cases are classifier artefacts (H5: 0/32 genuine).
+> K9 families ran concurrently, a deviation from PREREG s10. ATTACK_C revises: alien learning tracks how much of the rule table the
+> observations cover; "over-attribution" is low-confidence literal RULE; the prose effect is mostly one map system.
+
+
 PREREG: roles/Hecate/prereg/2026-09-30_alien_lawful_assay/PREREG.md (frozen 1fed85d95,
 before any model saw a pilot system). Scores come only from the frozen scorer
 (hecate/alien/score.py, analyze.py) against the simulator and exhaustive checks.
