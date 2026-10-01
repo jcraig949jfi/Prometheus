@@ -19,6 +19,40 @@ This is Nestor's inference harvest, done under the operator directive committed 
 - BUILDER_EXPERIMENT_SPECS_PRIMITIVES.md
 - INFERENCE_HARVEST_HANDOFF.md
 
+
+> **WAVE-2 CORRECTIONS (2026-10-01; ledger `roles/Nestor/inference_saturation_wave2/INFERENCE_LEDGER.md`).** These supersede
+> the corresponding text below.
+>
+> **(a) The cause of internalization.** "It pays because newborns inherit the victim's registers" is **withdrawn as stated**.
+> - X-A3-FAIR's ZERO world, which resets all registers before every interaction, is an existing no-payoff arm (W2-1).
+> - State-free genomes appear and sometimes sweep there too: 2/23 de novo majorities, one at 185/187. The end-of-run robust share
+>   is 0.11 under ZERO vs 0.70 under CARRIED.
+> - So **carried register state, the organism's own or inherited, raises prevalence about 6x, and payoff is not required for
+>   appearance.**
+> - Which carried channel matters (own post-execution state vs the victim's inherited state) is untested. X-DD-STATE-RESET's
+>   null concerned establishment, not state-freedom.
+>
+> **(b) The side-0 switch is not a marker of state-freedom.** The genomes that state-free genomes replaced are side-0 copiers too
+> (271/295 vs 432/433).
+>
+> **(c) "Dominate" is too strong for C-A3.** The event rule needs a single state-free genome. A state-free majority is reached in
+> 4/8 events, 2/8 are single-genome blips, and 13 non-founder populations are already majority state-free when first sighted.
+>
+> **(d) The depth gap premise is false.** Omitted arms put runs inside 22–161: X-ATOMIC BASE has 44 and 50; ATOMIC runaways
+> fall there in 8/36 and 6/47; C-A3 in 21/34. The turnover reading survives: depth vs time since first donor, ρ = 0.74.
+>
+> **(e) Founder independence is weakened.** The single-founder batches are homogeneous (p = 0.43), so the multi-founder excess at
+> depth ≥ 5 is real (C-CRITICAL-MASS k = 4, 41/80 vs 29.3 expected, p = 0.005). It vanishes at the runaway endpoint.
+>
+> **(f) The foreign-cell magnet is plausibly explained** by a partner executing the founder's LDIR, compounded over the run
+> (N1 / W2-1).
+>
+> **(g) T4(c) is dead.** S3 found no state-free-specific multi-site epistasis.
+>
+> **(h) C-ZERO-SPECIFIC's contrast is largely built in by its donor screen.** 14 of 16 donors cannot copy from 0x5A at all (N11).
+>
+> **(i) X-TASK-GATE must not be dispatched as frozen** (Stage 0 cannot exercise CD; see the erratum).
+
 ---
 
 ## 0. The answer to the harder question, stated first, with its confidence
@@ -61,7 +95,7 @@ current evidence does not require it.
 **Alter itself.**
 - After a founder lineage takes over, genomes whose copy address comes from constants rather than from the noisy inherited registers come to dominate. This happened in 8 of 15 takeover runs, or 8 of 11 if the lineage also ran away.
 - State-free genomes are present in 25 of 29 large, sustained competent compartments. For the non-founder compartments, whether the trait was *acquired* or *founding* is unknown.
-- No extra bytes are needed, by single knockouts, and state-free copiers also switch to side-0 copying.
+- No extra bytes are needed, by single knockouts, and state-free copiers also copy from side 0 (but so do the genomes they replace; see Wave-2 correction (b)).
 - In one lineage (16000006) the trait arose through a multi-step walk.
 
 **So:** the causal organization that makes hereditary machinery possible in NPE is **largely supplied**. What is endogenous
@@ -169,7 +203,7 @@ Each of these facts was invisible to the program's rulers at some point.
   - X-MAT shows they were not imported from coexisting non-founder populations.
   - Within runs the corpus drifts toward state-freedom: 28% → 62%, 16 runs up and 0 down (FOR Q5).
   - Mechanistically, state-free copiers source their copy address from constants rather than entry registers: 27% vs 56% world-dependent (FOR Q2). They also **all copy from side 0**: 48/48, against 23/80 side-1 copiers among the others. So part of what "state-freedom" registers is a switch to the side that runs first.
-  - It pays because newborns inherit noisy victim registers (U-W7). The X-A3-WITHDRAW sweep, 0.22 → 0.96 within 100 epochs, is selection on standing variation within the lineage (U-C5).
+  - It is favoured about 6x when registers persist across executions; see Wave-2 correction (a). The X-A3-WITHDRAW sweep, 0.22 → 0.96 within 100 epochs, is selection on standing variation within the lineage (U-C5).
 - **Internalization: what is open.**
   - Whether it is *generic*. State-free genomes are present in 25/29 large, sustained compartments. But the founders of non-founder compartments were never assayed. In 4/17 of them state-freedom is already the majority at the first competent checkpoint, and in 7/17 at the first checkpoint with ≥ 25 competent genomes. So for those compartments "acquired" cannot be told from "founding" (U-C2). The persistence comparison (founder lineage 4/8 vs replacements 16/18) is unmatched for the same reason (U-C3).
   - Whether its rate is supply-limited. The ffa6/7ae3 hazard ratio (about 8x) is *consistent with* the mutation-supply ratio (about 7x), but its 95% CI runs from about 1.1x to 370x, and 7ae3 has n = 1 event. That one event's state-free bytes are 91% execution-computed (MKL) and ≤ 6% mutation-made, so the OPERAND operator's supply is not obviously its source. Dossier E rated the operator account a cell-confounded hypothesis (U-T5).
