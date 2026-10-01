@@ -1,7 +1,8 @@
 # Phase 3 engine portfolio -- OPUS-5.5 (Epimetheus)
 
-Status: frozen with RSE_ARCHITECTURE.md before salvage, except the field "Reusable Prometheus components", which is
-filled in a later commit from SALVAGE_MATRIX.md (until then it reads "pending salvage"). Currency 2026-10-01.
+Status: frozen with RSE_ARCHITECTURE.md before salvage (77d3c99c3), except the field "Reusable Prometheus components",
+which was filled after salvage from SALVAGE_MATRIX.md (categories in brackets: HARDEN, EXTRACT, REBUILD = rebuild keeping
+the design, HC = historical control). Currency 2026-10-01.
 
 An "engine" here is a scientific question run on the shared observatory (R0-R5 of RSE_ARCHITECTURE.md), not a
 separately authored code base. All science engines use the same primary substrate (DGM), the same world forge, the
@@ -60,7 +61,7 @@ signed verdict job (PRV-02), the material provenance shadow (ORG-08), receipts w
   suite).
 - **Expected compute / inference / energy.** Negligible CPU; build inference M-L; no operating inference.
 - **Dominant cost.** Build inference (code authoring) and operator review of the counterfeit suite.
-- **Reusable Prometheus components.** Pending salvage.
+- **Reusable Prometheus components.** toolbox receipt schema [EXTRACT, after fixing default=str collisions and making the chain mandatory]; productive_liveness [HARDEN] for derived status; SFE prediction-before-observation and evidence-class rules, comms.manifest LF rule, workspace-guard and Alethelia contracts [HC: design rules only, each with a fail-open defect to avoid]; Agent Fabric invariants [REBUILD as the one job runner]. The signed verdict job, dependency demotion, row-class filter and token harvester are greenfield.
 - **New components.** Signed verdict batch job; row-class filter; dependency graph for demotion; counterfeit suite.
 - **Kill criteria.** If after the slice any counterfeit class passes, promotion above L1 is frozen until fixed (not a
   kill of the programme).
@@ -101,7 +102,7 @@ signed verdict job (PRV-02), the material provenance shadow (ORG-08), receipts w
 - **Expected inference.** Build M-L (plant compilation and synthesis tooling); operate none.
 - **Expected energy.** Tens of kWh.
 - **Dominant cost.** Build inference for plant tooling; CPU for X6.
-- **Reusable Prometheus components.** Pending salvage.
+- **Reusable Prometheus components.** Ananke explib qualification seed [HARDEN]; Ananke swap_rel interchange rule [HARDEN, into the statistics library]; NPE z8shadow tracer, Ananke mirror-twin lens, Archaeon taint VM, Aether one-bit twin, Hephaestus closure gauntlet, Ergon bounded-null skeleton [REBUILD keeping the design]; fixtures [HC]: VACUOUS_READINGS, NULL_BOOT, attacks/REGISTRY classes, Ensorain WTP specimens, CVT-R panel design and painters, P-11 geometry, Crius id-counter cheats, Ares zero-hidden latch, Aphrodite order-2 shape, Hecate exact AUC/CP as specimens.
 - **New components.** Plant compiler and procedural plant generator; dossiers; FAMILIAR-ONLY classification;
   rediscovery-from-distance estimator.
 - **Kill criteria.** A ruler that cannot reach sensitivity >= 0.8 at the preregistered SESOI on generated plants within
@@ -136,7 +137,7 @@ signed verdict job (PRV-02), the material provenance shadow (ORG-08), receipts w
 - **Expected inference.** Build M-L; grammar proposals at forks.
 - **Expected energy.** Low.
 - **Dominant cost.** Build inference (solvers, certificate tools, independent second tool).
-- **Reusable Prometheus components.** Pending salvage.
+- **Reusable Prometheus components.** Ensorain arc3/suff exact-Bayes processes [HARDEN] as the F3 core; Ludus leak audit, Ensorain null ladder, Cosmos holdout broker, Charon ceiling_v0 [REBUILD keeping the design]; Ludus Nim-345/Bouton and leak fixtures, alien_circuitry monoid oracle and its non-quotient-disjoint split, Tyche needle classes [HC] for WLD-17 and WLD-03 regression tests.
 - **New components.** Family grammar; certificate calculators with bound types; sealed known-answer set.
 - **Kill criteria.** If X2 shows the certificate predicts baseline failure no better than state count on fresh
   instances, the depth concept is reframed before any reasoning claim is attempted.
@@ -173,7 +174,7 @@ signed verdict job (PRV-02), the material provenance shadow (ORG-08), receipts w
 - **Expected inference.** None operating.
 - **Expected energy.** About 5-10 kWh.
 - **Dominant cost.** CPU.
-- **Reusable Prometheus components.** Pending salvage.
+- **Reusable Prometheus components.** None as code beyond the R0/R1 items; keyed-stream pattern [HARDEN behind a new key schema]; Tyche eps-lexicase [HARDEN]; external known positives (evolved plasticity under environmental change; Baldwin needles) as qualification targets.
 - **New components.** F1/F2 generators with exact Delta/rho; detect-and-dispatch baseline.
 - **Kill criteria.** If X1a fails on the DGM with qualified rulers while passing on the reference learner or probe
   kernel, the DGM is replaced (substrate trigger); if it fails everywhere, the stack is diagnosed before any other
@@ -213,7 +214,7 @@ signed verdict job (PRV-02), the material provenance shadow (ORG-08), receipts w
 - **Expected inference.** None operating; interpretation of minimal cores at forks.
 - **Expected energy.** Tens of kWh per campaign.
 - **Dominant cost.** CPU.
-- **Reusable Prometheus components.** Pending salvage.
+- **Reusable Prometheus components.** D-5 G9 shuffled-history vs random-library decomposition [HC template for DEV-02]; Crius PARTS and RELAY design [HC design source for F5]; Ensorain WTP-03 pair-block holdout [HC design reference for F6]; Ergon library-seeding decomposition [HC].
 - **New components.** F5/F6/F10 generators; curriculum builder with prerequisite verification.
 - **Kill criteria.** If, with developability proofs present and the concentration floor met, structural-development
   arms never beat retention-frozen and value-only arms on savings in two consecutive preregistered campaigns, the
@@ -246,7 +247,7 @@ signed verdict job (PRV-02), the material provenance shadow (ORG-08), receipts w
 - **Expected inference.** None operating.
 - **Expected energy.** Tens of kWh.
 - **Dominant cost.** CPU; build inference for F8.
-- **Reusable Prometheus components.** Pending salvage.
+- **Reusable Prometheus components.** None as code (F8 is new); Charon ceiling_v0 [REBUILD] as the design reference for active identification.
 - **New components.** F8 generator with exact Bayes reference; dissociation manipulations.
 - **Kill criteria.** No organism beats the first-order Bayes baseline on the dissociation arm after two campaigns
   with the concentration floor met: claim class withdrawn for year one.
@@ -278,7 +279,7 @@ signed verdict job (PRV-02), the material provenance shadow (ORG-08), receipts w
 - **Expected inference.** None operating.
 - **Expected energy.** Tens to low hundreds of kWh per campaign.
 - **Dominant cost.** CPU.
-- **Reusable Prometheus components.** Pending salvage.
+- **Reusable Prometheus components.** Aphrodite fold-DSL engine [HC: the order-2 planted shape]; NPE z8shadow label algebra [REBUILD into the write-order tracer].
 - **New components.** Write-order tracer; F9 generators with bias-growth certificates.
 - **Kill criteria.** If X8 shows power 0.8 requires more than the year's envelope, E6 is deferred (not killed). If run
   at adequate power with every null-certificate element passing and no order >= 3 effect, a null certificate is
@@ -307,7 +308,7 @@ signed verdict job (PRV-02), the material provenance shadow (ORG-08), receipts w
   proofs).
 - **Expected compute / inference / energy.** Moderate CPU; build inference L-XL for the second substrate.
 - **Dominant cost.** Build inference.
-- **Reusable Prometheus components.** Pending salvage.
+- **Reusable Prometheus components.** None (the second substrate is new by construction); Aether and Ananke independent-oracle differential tests [HC exemplars].
 - **New components.** Second substrate; cross-substrate signature matcher.
 - **Kill criteria.** Not started until a trigger fires.
 - **What success means.** A mechanism that belongs to the problem rather than to one substrate.
@@ -340,7 +341,7 @@ signed verdict job (PRV-02), the material provenance shadow (ORG-08), receipts w
   pilot); the only engine with operating inference.
 - **Expected energy.** Moderate.
 - **Dominant cost.** Inference tokens.
-- **Reusable Prometheus components.** Pending salvage.
+- **Reusable Prometheus components.** prometheus_llm [REBUILD as the single, mandatory-audit choke point]; Fabric claude-executor isolation recipe [REBUILD]; Proteus crucible [HC/REBUILD] for publishing unselected variation kernels (AGR-15).
 - **New components.** Isolated operator harness; familiarity reference library.
 - **Kill criteria.** If the LLM arm does not beat the model-free arm on validated findings per unit cost in two pilots,
   LLM variation is excluded from production search.
@@ -364,7 +365,7 @@ signed verdict job (PRV-02), the material provenance shadow (ORG-08), receipts w
 - **Primary hallucination risk.** Unqualified complexity metrics read as progress.
 - **Primary false-negative risk.** Ecology too small or short.
 - **Compute / inference / energy.** High CPU; no inference.
-- **Reusable Prometheus components.** Pending salvage.
+- **Reusable Prometheus components.** BEE ON vs YOKED contingency design [HC]; primordial/qd/archive.py [UNKNOWN, possible QD reference].
 - **Kill criteria.** Not started before month 6 and the vertical slice.
 - **What success means.** Evidence that interaction supplies pressure authored worlds cannot.
 - **Claim ceiling.** L3.
@@ -379,7 +380,7 @@ signed verdict job (PRV-02), the material provenance shadow (ORG-08), receipts w
 - **Cheap baseline.** As E3.
 - **Kill criteria / trigger.** A threshold outside the DGM's within-kernel span fires the second-substrate trigger.
 - **Compute / inference / energy.** Low CPU; build inference S-M (external author preferred).
-- **Reusable Prometheus components.** Pending salvage.
+- **Reusable Prometheus components.** None (authored outside the family by design).
 - **Claim ceiling.** L2 (a substrate-variance measurement).
 
 ----------------------------------------------------------------------------------------------------------------

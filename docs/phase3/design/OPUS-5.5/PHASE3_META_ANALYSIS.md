@@ -348,7 +348,25 @@ their results are comparable and the search budget is not split twelve ways.
 
 ## 17. Prometheus salvage analysis
 
-(Filled from SALVAGE_MATRIX.md after the salvage stage.)
+SALVAGE_MATRIX.md (written after the freeze). Seven evaluators read the source and tests of 143 components against the
+frozen requirements; an adversarial skeptic attacked every reuse recommendation with probes run in scratch copies.
+Skeptic-adjusted result: KEEP 0; HARDEN 6; EXTRACT 2; REBUILD 31 (8 greenfield, 23 keeping a predecessor's design as
+specification); HISTORICAL_CONTROL 79; RETIRE 25. Skeptics changed 55 categories, all but one downward -- the code that
+looked most reusable usually failed open where a probe could reach it (for example: a chance-floor helper that returns
+the most permissive floor when counts are missing; a store-identity guard that passes on any database when registry
+fields are null; a receipt helper that reports a clean tree when git fails; a manifest hasher that lets distinct short
+binaries collide; a ledger whose clients write their own verdicts).
+
+What carries forward: as running engines, nothing; as code, eight small primitives (a receipt schema, a liveness
+derivation, a keyed-stream pattern, eps-lexicase, exact NK/BitString landscapes, exact-Bayes hidden-state processes, a
+qualification seed, an interchange decision rule); as designs to rebuild, the write-provenance tracer, the interchange
+lens, the provenance shadow, the causal-reach twin, the capacity gauntlet, the leak audit, the null ladder, the
+sealed-split broker and the job runner; as historical controls, 79 known-answer fixtures, planted positives and
+negatives, canaries and anti-calibration items. The four load-bearing Reality-layer pieces (signed verdict job,
+dependency demotion, row-class filter, token harvester) and the four search estimators (rediscovery-from-distance,
+random-sampling needle rate, concentration floor, pressure certificate) exist nowhere and are new. No existing seat's
+code becomes a dependency of the Phase 3 core. Twenty-four defects found during salvage are listed for routing
+(SALVAGE_MATRIX.md s5; salvage/NEW_DEFECTS.md); 57 components named by skeptics were not evaluated (UNKNOWN).
 
 ## 18. Resource model
 
@@ -425,7 +443,7 @@ affordable.
 
 **Qualification experiments.** X1a (S1); X1b, X2, X3, X4, X6, X8, X9 (S2); X5, X10 (S3).
 
-**Reused.** Determined by SALVAGE_MATRIX.md (s17).
+**Reused.** Almost nothing (SALVAGE_MATRIX.md s4): the toolbox receipt schema after fixes, the keyed-stream pattern behind a new key schema, productive_liveness for derived status, SFE's NK/BitString landscapes as estimator fixtures, the exact-Bayes processes for F3 (S2), and the historical-control corpus as qualification fixtures (packaged in S2). The DGM, R0's verdict job and ledger, F1 and the rulers are new code.
 
 **Expected compute.** X1a about 1,200 runs at ~0.3 core-hours (~400 core-hours); whole MVP 2-10k core-hours.
 
@@ -536,7 +554,14 @@ dies in a coupled loop); not a family of separately authored engines (budget spl
 The X0 result (0 of 210 historical failures needed a second substrate as their cheapest repair) and the binding-constraint
 analysis support concentrating on depth first.
 
-**Q8 -- Existing machinery.** (Filled from SALVAGE_MATRIX.md after the salvage stage.)
+**Q8 -- Existing machinery.** As running engines, none: zero of roughly twenty historical engine-level systems carries
+forward as an engine. As code, about 5% of evaluated components (8 of 143), all small primitives -- well under 1% of the
+repository by lines. As designs to rebuild, about a fifth (23 components whose design becomes the specification of a new
+build). As historical controls, more than half (79): the failures of Phases 1 and 2 become the qualification fixtures of
+Phase 3. Retired, about a sixth. Conceptually, then, roughly a quarter of the scientific machinery survives (code plus
+designs) and essentially none survives as running machinery. The most valuable surviving asset is not code: it is the
+recovered failure taxonomy, encoded as 70 enforced requirements with counterfeit fixtures. Nothing was preserved for
+sentiment: every reuse claim was attacked by a skeptic, and 55 were downgraded.
 
 **Q9 -- First experiments.** The smallest experiments that discriminate between Phase 3 architectures: X0 (done: depth-first
 confirmed); X1a (can the stack reproduce a known developmental positive end to end -- discriminates "instrument works" from
