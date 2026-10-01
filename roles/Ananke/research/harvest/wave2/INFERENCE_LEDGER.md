@@ -402,3 +402,21 @@ Other:
 - Module code was unaffected.
 - P-2 UPDATE: decay_shift 1 gives refresh .792/.724/1.000 (no-decay .797/.724/1.000) vs flood .617/.604/.677.
   The artefact holds at the harshest decay level as well. Recorded as C1_ERRATA E-W13.
+
+### W2-L (deposited wave2/W2-L/REPORT.md): FLIP NULL placement + relay-only control
+- F5 PROOF: copy-class policies (readout = x_k or y_{k-1}, no sign inversion) attain exactly <= .75 on
+  FLIP. Exceeding .75 requires computing m. Changed-cue trials give exactly 1/2 for every copy policy.
+- F4 [V]: RELAY_LATCH (14 lines, inside d9cc's genome space, no mapping inference) scores .688 and passes
+  SIGNAL, COMM_DEPENDENT and FLIP_FEEDBACK. FLIP_FEEDBACK is cheatable in-space (refines W2-B "SOUND"),
+  and it is blind to weak true inference (.63-.66 fail).
+- F3: relay_flood's FLIP edge is a change-gated teacher hold, and the echo HURTS (corrects W2-D F6).
+- FLIP placement (82 evolve rows):
+  - 24 P (light cone);
+  - 3 PLANT-SOLVED in exact genome space (6f82f9c7, 996716ac, 64d33b89), so S or U;
+  - 14 R-CANDIDATE (all decay > 0; only 22-28-line plants found);
+  - 41 UNDECIDED.
+  - "FLIP NULLs search-limited" is supported 3/82, open 55/82, false 24/82.
+- P-FLIP is decay-fragile (0/49 decay > 0 rows), the same pattern as relay_flood (E-W13).
+- Proposed ruler FLIP_CHANGE (changed-cue accuracy lo99 > .55): relays .46/.47, P-FLIP .958.
+- Clock cheat in <= 16 lines at d9cc: NOT SHOWN (~21 lines needed).
+- Queue: W2-S (FLIP_CHANGE on recorded champions; physics removal on the 41 UNDECIDED).
