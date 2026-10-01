@@ -165,3 +165,32 @@ in completion order.
   - That fits the data: 8/8 events appear at or shortly after takeover, and pre-takeover foreign bytes are purged.
 - **Testable on existing data?** Partly. In X-MAT replay tags, whether a site's MUT/MKL composition correlates with free-share volatility needs per-site data that was not stored. The P-11 event rate per epoch after saturation is in X-RUNAWAY series (about 90-100 per epoch). What matters is how many of those are true content changes.
 - **Next question.** Measure, in one instrumented replay, the fraction of post-saturation accepted births whose victim differed by ≥ 10% (all, by definition) vs the rate of rejected near-kin copies. The ratio gives the effective selection rate. A design item.
+
+### N9: static decomposition of ATOMIC. The world's fidelity gate carries the heredity (Nestor). Closed 01:55Z
+- **Question.**
+  - What in the composite ATOMIC rule produces C-ATOMIC C1 (46/80 vs 1/80)?
+  - Can the single-interaction map predict BASE as well as ATOMIC? RT B7 found ADV2's BASE prediction (0.26) missed the observed 0.03.
+- **Evidence.** `inference_saturation_wave2/N9_atomic_decomp/wdecomp.py` and `wdecomp.json`.
+  - 7ae3 in its own cell, stock VM, copy errors at the cell rate.
+  - 1,500 interactions per context against uniform random partners, founder side 50/50.
+  - Four write-back rules applied to the same post-interaction tape.
+- **Result (P_est = Galton-Watson survival from the offspring law).**
+
+  | rule | ZERO context | RANDOM context |
+  |---|---|---|
+  | BASE | m 0.965 → **P_est 0.00** | m 0.97 → 0.00 |
+  | ATOMIC | m 1.18 → **0.50** | 1.18 → 0.51 |
+  | ATOMIC + self-writes kept | 0.38 | 0.29 |
+  | WRITE-GATED (keep a half if the partner wrote ≥ n/4; no fidelity clause) | **0.003** | 0.008 |
+
+  - Observed: BASE about 0.03 (4/144); ATOMIC 0.52 pooled, 0.575 in C-ATOMIC C1.
+  - **The map predicts both regimes for 7ae3.** RT B7's "BASE miss" came from omitting copy errors and the founder's own erosion. With BASE semantics applied to the founder's own half, BASE is subcritical.
+- **Reading.**
+  - About 75% of ATOMIC's establishment benefit comes from the **fidelity clause**: the world keeps a written half only if it is a ≥ 0.9 template of the writer. The rest comes from discarding self-writes.
+  - Keeping all heavily written halves without the fidelity clause is as bad as BASE.
+  - ADV1's K3 deflationary claim is supported statically: **the world's detector, not the organism, maintains copy fidelity** under ATOMIC. Every post-09-25 heredity result inherits this.
+- **Confidence.** Moderate-high for 7ae3 (static, uniform random partners). It is a single genome.
+- **Strongest objection.** In-world partners are not uniform random, and copies interact with copies. The Galton-Watson model ignores frequency dependence after the first generations.
+- **Next questions.**
+  - Run the same decomposition on S1's 16 donors × policies. Does WRITE-GATED collapse for all of them?
+  - Frozen prediction for K3: a WRITE-GATED arm of C-ATOMIC would give ≤ 5/80 runaways. A design item, with a static prediction now on record.
