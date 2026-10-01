@@ -42,8 +42,18 @@ More commits, packets, messages, experiments, seats, tokens or core-hours.
 **Never** evidence for L1+. Any claim whose ruler reduces to an L0 quantity is rejected without review.
 
 ### L1 -- OBJECT-LEVEL IMPROVEMENT
-- Criterion: eta(t2) > eta(t1) on a FIXED task family, paired, lower 95% bound > 0.
-- Ruler: VIU surprisal under calibrated pooled priors (causal model s1.1), per component resource.
+Real research has no fixed task family (critic 2, G8), so L1 is measured in two ways that are both reported.
+
+- (a) **Frozen-battery replay (the causal reading).** A frozen battery of tasks with known traps and ground truth is
+  replayed. The battery is HML plus DB (AGENT_SCIENCE s0). The comparison is the lab CONFIGURATION at t1 against the
+  configuration at t2: context packs, tools, primitives and review protocol. Both run under one PINNED model version
+  and equal budgets.
+  - Criterion: the t2 configuration has a lower trap-failure rate, or higher exact information gain, than the t1
+    configuration (paired by item, lower 95% bound > 0).
+  - This is critic 1's demand (b), and it is the only L1 reading immune to task-difficulty drift and model change.
+- (b) **The field reading.** The LBS trend (causal model s1.1). It is descriptive, because a field trend cannot separate
+  C8 from X1 and X2.
+- Ruler: as above. VIU surprisal is exploratory only.
 - Hostile controls:
   - equal-resource replay: re-run the t1 configuration with t2's resources;
   - within-seat decomposition (rules out C8 selection);
@@ -56,11 +66,15 @@ More commits, packets, messages, experiments, seats, tokens or core-hours.
   bound must be > 0 against a matched stream without e.
 - Ruler: payoff(e) (causal model s5) over a preregistered horizon.
 - Hostile controls:
-  - **sham instrument**: an announced, equally visible change of equal ceremony that does nothing (a checklist of
-    platitudes; a no-op validator). This tests whether attention/Hawthorne effects explain the gain;
+  - (rev 2) attention/sham control: ONLY in sandbox experiments (AGENT_SCIENCE E3, arm PS). A no-op sham shipped to
+    real seats would be detected by code-reading seats and would erode trust (critic 2, E5);
   - stale-ruler re-scoring: the new and the old ruler score the same outputs. If the "gain" exists only under the new
     ruler, it is a ruler change, not an improvement.
-- Falsifier: payoff concentrated on the commissioning experiment; the sham matches; or the gain is a ruler artifact.
+- Falsifier: payoff concentrated on the commissioning experiment; the sandbox sham matches; or the gain is a ruler
+  artifact.
+- (rev 2) Ruler rule refinement (critic 2, G9): a BETTER ruler legitimately lowers old scores. When the two rulers
+  disagree, the new ruler is validated on the planted battery first. If it wins there, the disagreement is a ruler
+  improvement (an L2 event of its own) and not a loss.
 
 ### L3 -- REUSABLE EXPERIMENTAL SKILL (cross-substrate)
 - Criterion: a procedure P learned on substrate A lowers the INVALID + UNTESTABLE rate, or raises eta, on a substrate B
@@ -75,9 +89,14 @@ More commits, packets, messages, experiments, seats, tokens or core-hours.
   supply). It has never been tested cross-substrate.
 
 ### L4 -- IMPROVEMENT-PROCESS IMPROVEMENT (IPI)
-- Criterion: across improvement generations g = 1..G, the cost of producing an L2-qualifying improvement falls, or its
-  payoff rises, at fixed operator-minutes and model version. The metric is the slope of log(payoff/cost) on g, with lower
-  95% bound > 0.
+- Criterion: across improvement generations g = 1..G, the NET payoff (payoff - cost, in operator-hour-equivalents) of
+  L2-qualifying improvements rises with g, at fixed model version.
+  - Every event counts, including zero-payoff and negative events. Rev 1's log ratio silently dropped them (critic 2,
+    G1).
+  - Parent links count only where the child's frozen design text uses the parent's output (critic 2, G3).
+  - Feasibility: every 14-day payoff window overlaps several fleet-wide changes (G2). So L4 is estimable only where
+    improvement events are STAGGERED, at least 5 working days apart, one at a time (findings_A2 item 15). Otherwise
+    report it as UNTESTABLE.
 - Hostile controls:
   - an operator-effort covariate (operator-minutes per improvement event);
   - a model-version event study;
@@ -86,6 +105,15 @@ More commits, packets, messages, experiments, seats, tokens or core-hours.
 - Falsifier: slope <= 0 after controls; or fully explained by operator effort or the model switch.
 
 ### L5 -- AUTONOMOUS IPI
+IDENTIFIABILITY (critic 2, F1/G5): with one operator, L5 is identifiable only if BOTH of the following hold.
+1. **Operator inputs are fully logged.** This covers comms AND prompts typed into seat sessions; `roles/*/prompts/`
+   already holds about 378 dated prompt directories in September.
+2. **Quiet windows are RANDOMISED.** The operator commits to a schedule drawn by a seed published in advance; windows
+   are not chosen. Seats still execute queues written under operator orders during quiet windows. So a lineage node
+   counts as autonomous only if its design was written AFTER the window opened, and it does not trace to an
+   operator-written queue item.
+Without both conditions, L5 is UNTESTABLE, which is not the same as failed.
+
 - Criterion: L4 holds on lineages whose internal nodes are system-originated. Origin is SEAT-AUTONOMOUS or BUILDER, with
   no OPERATOR-originated design and no human hand-edit. Operator-minutes per generation must be non-increasing.
 - Ruler: the authorship audit (Observatory `improvement_event.origin`), verified against operator text in MWOs, CWOs and
@@ -96,6 +124,13 @@ More commits, packets, messages, experiments, seats, tokens or core-hours.
 - Falsifier: lineage nodes trace to operator directives; or production stops in quiet windows.
 
 ### L6 -- BOUNDED RSI (lab scale)
+**DECLARED UNTESTABLE BY DESIGN at Prometheus's current scale (critic 2, G6/G7).** A generation knockout or a sham
+lineage needs replicate labs, and a model version rarely lasts the 3+ generations that L6 requires. The criterion is
+kept as the definition. L6-shaped questions can be tested only in two settings:
+- at ENGINE scale (Aphrodite's G1 -> G2 -> G3 apparatus, AMENDMENT 15 R1-R5);
+- in SANDBOX POPULATIONS: many small agent "labs" on HML, with knockouts and shams as arms.
+Results from either setting do not transfer to a lab-scale claim.
+
 - Criterion: L5 for at least 3 consecutive generations. The per-generation gain must be non-decreasing, or decreasing
   slower than the preregistered diminishing-returns null. It must hold inside a fixed external envelope (model version,
   compute cap, operator-minutes cap). The generation-(g+1) process must CAUSALLY depend on generation-g outputs.

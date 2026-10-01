@@ -13,36 +13,82 @@ throughput is never the ruler.
 
 ---------------------------------------------------------------------------------------------------------------------
 
-## 1. The unit of output
+## 1. The unit of output (rev 2, after critic reconciliation -- see evidence/CRITIC_RECONCILIATION.md)
 
-Commits, packets, messages, experiments run and agents live are not output. They are activity.
+Commits, packets, messages, preregistrations, experiments run and agents live are not output. They are activity. In
+September 2026 they are mostly coordination: in a fixed-subject sample, result-reporting commits stay flat at 2-6% of
+commits while coordination/state rises to 35-59% (evidence/findings_A2, critic1).
 
-**Definition (VIU -- validated information update).** A VIU is a preregistered claim with all four of the following:
-1. a frozen decision rule;
-2. a verdict of any sign (POSITIVE, NULL or KILLED counts; UNTESTABLE and INVALID do not);
-3. survival of one independent adversarial review that was free to find an invalidating defect;
-4. **consumption**: a later decision (a design, a kill, a scope change, a ruling) that names it and would have gone
-   differently without it.
+### 1.0 Design rule learned from the critics
+Rev 1 built the unit from fields that the measured seats write themselves (p_pred, difficulty forecasts, `consumes:`,
+origin trailers). Any such field is SEAT_ASSERTED and cannot carry a headline endpoint. Rev 2 builds the primary
+endpoint only from (a) random sampling, (b) an auditor outside the measured population whose recall is itself
+measured, and (c) the observable dependence of LATER FROZEN designs on earlier results.
 
-A VIU is weighted by its **information value** (s1.1). Raw VIU counts are an intermediate quantity, not the endpoint.
+### 1.1 PRIMARY ENDPOINT -- LBS (load-bearing survival)
 
-### 1.1 Information value (operationalisable today)
+One primary endpoint, with a fixed cadence and a gatekeeping order for the rest (critic 2, H1).
 
-At freeze, the seat records `p_pred`, a probability for each preregistered outcome. This is one field in the prereg
-manifest. At verdict, the information value is the surprisal under a **pooled, calibrated** prior. The seat's own prior is
-not used for this, because a seat can inflate surprisal by registering a miscalibrated prior.
+Every fortnight:
+1. **Sample.** Draw k = 12 verdicted claims at random from all seats' verdicts of the previous fortnight. Verdicts are
+   any of POSITIVE / NULL / KILLED-BY-CONTROL / diagnosed-UNTESTABLE, stratified by seat. Seats do not choose.
+2. **Audit (survival).** A FIXED audit protocol is run by an auditor OUTSIDE the measured population: a different
+   model family (the operator's Council) or a human. The question is: does the claim follow from its frozen rule and
+   its receipts, at the stated power, without an invalidating defect? The auditor's own recall is measured every round
+   on 4 planted-defect claims mixed blind into the 12. An audit round whose planted recall is < 3/4 is void.
+3. **Follow-up (load-bearing).** At +60 days, each sampled claim is LOAD-BEARING if a DIFFERENT seat's later FROZEN
+   design uses it as a premise, parameter, control or kill reason, AND that later design's own verdict survives the same
+   audit. Citation alone is not enough. Self-consumption does not count. The judgement is made by the external auditor
+   from the frozen design text.
 
-    info(v) = -log2 q(outcome)        q = calibrated forecast from the pooled forecast record (isotonic per seat)
+Reported per fortnight: survival fraction S, load-bearing fraction B, and B per operator-hour. The primary test is a
+one-sided Cochran-Armitage trend test of survival on fortnight index, preregistered. A seat random effect is not
+estimable at this N, so a seat-stratified sensitivity analysis is reported alongside. The 4 planted claims are excluded
+from S.
 
-Calibration is scored separately (Brier score per seat). A seat whose forecasts are systematically wrong gets more
-"surprise" credit, but it also gets a worse calibration score. Both are reported, never netted (Goodhart control G-4 in
-`BUILDER_EVALUATION_PROTOCOL.md`).
+Simulated power (20k simulations, a linear trend in p, alpha = 0.05 one-sided):
 
-Why surprisal and not "positive results": a lab that only confirms what it already believed is not learning, and a lab
-that only reports positives is not measuring. A clean, decision-changing NULL is worth as much as a positive of the same
-surprisal. A NULL that everyone predicted at p = 0.95 is worth 0.07 bits. That is correct.
+| Fortnights x claims | Survival change | Power |
+|---|---|---|
+| 6 x 12 | 0.40 -> 0.80 | 0.79 |
+| 6 x 12 | 0.45 -> 0.75 | 0.56 |
+| 6 x 12 | 0.50 -> 0.70 | 0.33 |
+| 12 x 12 | 0.45 -> 0.75 | 0.76 |
+| 6 x 16 | 0.45 -> 0.75 | 0.68 |
 
-### 1.2 Yield and its derivatives
+So a quarter of auditing detects only LARGE changes. Moderate changes need about 6 months, or k = 16. A
+non-detection is reported as "not detectable at this scale", which is not a failure and not "nearly there"
+(critic 2, J-11).
+
+Why this endpoint: it is the only one in this design whose numerator the measured seats cannot write, and it measures
+exactly the property the North Star needs. Results that are true by an outside audit, and that other parts of the lab
+can BUILD ON, are what "better at producing future improvements" must produce.
+
+### 1.2 SECONDARY ENDPOINTS (gatekeeping order; each is tested only if the previous one is reported)
+
+1. **Forecast skill against a fixed reference forecaster.** At freeze, the seat records p(YES) for the CANONICAL binary
+   outcome of its frozen primary decision rule. Seats do not choose the outcome set (critic 2, A2). A fixed reference
+   forecaster gives its own p(YES) from the same prereg text: a frozen model, prompt and version, with fresh context and
+   no project memory. Skill = Brier(reference) - Brier(seat). **Rising skill is evidence that the lab is learning to
+   predict its own experiments.** That learning was the most important false negative of rev 1, whose surprisal score
+   PENALISED it (critic 2, A1).
+2. **INVALID + UNTESTABLE rate** of verdicted experiments (AUTO from verdict strings via the class map).
+3. **Late-defect rate**: defects found post-report per verdict by the fixed audit (from LBS step 2). Pairs with 4.
+4. **Operator-minutes per load-bearing surviving claim.** VOID in any window in which an operator policy reduced
+   escalation by decree (e.g. MWO-0004 R1). Always reported beside 3, because fewer escalations with more late defects
+   is a cost, not an improvement (critic 2, C3).
+
+### 1.3 EXPLORATORY (never headline)
+
+**VIU and surprisal.** info(v) = -log2 q(canonical outcome), with q from the FIXED reference forecaster (not the seat;
+not recalibrated). Rules:
+- NULLs earn credit only when the frozen power analysis meets 0.8 at the stated effect.
+- A later retraction reverses the credit, and credits the finder.
+- Claims from one run are pooled into ONE unit (no salami slicing, critic 2 A4).
+Surprisal is kept exploratory because it rewards ill-posed and long-shot questions (A3) and because at this N it is
+noise.
+
+### 1.4 Yield (exploratory accounting)
 
 For a window w and resource vector r(w) = (inference tokens, CPU core-h, GPU-h, operator-minutes, wall-clock):
 
@@ -145,6 +191,14 @@ same data.
 
 Four statements of increasing strength. Each is falsifiable and none uses artifact counts.
 
+(rev 2, critic 2 I3/I4) **The North-Star question is not the RSI question.** "Is Prometheus getting better at
+producing future improvements?" is answered YES by S-a/S-b even when:
+- the gain comes from better SELECTION of questions (C8). That is real improvement and is credited as "portfolio
+  improvement", not subtracted;
+- the operator is in the loop (human-in-the-loop compounding is legitimate improvement).
+The X2/C8 decompositions exist to LABEL where the improvement lives, not to disqualify it. They disqualify only the
+word "recursive" (S-d).
+
 - **S-a (it improves).** eta rises over windows at matched task difficulty after controlling X1 and X2.
   Falsifier: eta flat or falling within seats at matched task type; the aggregate rise is fully explained by C8, C9, C1, C2.
 - **S-b (it improves its instruments).** C5, C6 and C7 stocks rise, and each improvement is followed by a measurable eta gain
@@ -175,7 +229,8 @@ Index every process improvement (tool, ruler, control-plane change, Builder outp
 
 Then:
 - improvement      = some payoff(e) > 0 (S-b);
-- IPI              = cost-normalised payoff rising with g (S-c);
+- IPI              = NET payoff (payoff - cost) rising with g, with every event included, including zero and negative
+                     ones (S-c; rev 2: rev 1's log ratio dropped them, critic 2 G1);
 - recursive        = IPI along lineages whose internal nodes are non-OPERATOR, for g >= 3, with operator-minutes per
                      generation non-increasing (S-d).
 
@@ -208,10 +263,23 @@ hand-edit inside the lineage.
 
 ---------------------------------------------------------------------------------------------------------------------
 
-## 7. Retrospective evidence (summary; details in INFERENCE_HARVEST_HANDOFF.md and evidence/)
+## 7. Retrospective evidence (summary; details in INFERENCE_HARVEST_HANDOFF.md s2 and evidence/)
 
-See s7 of the handoff. It is filled in from four independent history analyses (defects, interventions, the experiment
-ledger, human load and reuse) and one adversarial critic.
+Mapping of the history onto the causes in s2. Every row is CONFOUNDED by X1, the Opus 5 -> 5.5 switch on 09-23..26.
+That switch immediately precedes every late-September intervention (findings_A2).
+
+| Cause | What the history shows | Reading |
+|---|---|---|
+| C1/C2/C9 throughput | Commits: Aug 1080 -> Sep about 6050. Result-reporting commits flat at 2-6%. Coordination/state 35-59% of commits by 09-29 | activity, not output |
+| C3 memory | wiki commits 38/25/42 per week, then 0/1; WORK_STATE commits 61-104/day | accumulation; consumption unmeasured |
+| C6 rulers | rulers repaired often, but "gates that cannot fail or cannot pass" recur in 14 episodes across 9 seats (findings_A1) | repair without transfer |
+| C7 infra | Fabric added new friction classes (#994/#998, #916/#953); lease problems flat | leaning churn (A2) |
+| C8 selection | parking and kills dominate verdicts; CWO dispatch on 09-30 | unmeasurable without per-seat matched tasks |
+| C11 skill | only partial transfer of one lesson (CRLF hashes), and even that recurred on 09-30 | NOT SHOWN |
+| X2 operator | D2 audit loop ended only by operator decree (MWO-0004 Part 2); 7 work orders in about 72h; 378 operator prompt directories in Sep | the operator is the main improver |
+
+See the handoff (s2) for the full ledger, including the experiment ledger (A3) and the human-load and reuse analysis
+(A4).
 
 ---------------------------------------------------------------------------------------------------------------------
 

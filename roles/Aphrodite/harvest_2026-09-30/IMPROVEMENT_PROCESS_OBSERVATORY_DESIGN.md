@@ -43,6 +43,15 @@ O-3. Metric definitions are versioned and frozen. A change creates a new metric 
 O-4. Survivorship: abandoned hypotheses, killed designs and dropped Builder lanes are first-class entities with costs.
      The ingestion adapters search for them explicitly ("PARKED", "dropped", "abandon", "superseded").
 O-5. The Observatory never sees sealed holdout CONTENT, only hashes and custody events.
+O-6. (rev 2, critic 2 core finding) **Seat-written fields are SEAT_ASSERTED, whatever parses them.** This covers
+     p_pred, difficulty forecasts, `consumes:`, `Improvement-Origin:`, `Found-By:`, WORK_STATE claims and verdict text.
+     A deterministic parse of a seat-written field does NOT make it AUTO. The primary endpoint (LBS) uses NO
+     SEAT_ASSERTED field. Secondaries using them are labelled.
+O-7. (rev 2, critic 2 I1) **External anchor.** The Observatory reports, every fortnight:
+     - the WORLD-FACING share: claims about systems not built in-house (external data, known mathematics, external
+       benchmarks);
+     - the share of audited claims whose auditor is outside the model family.
+     A lab that scores well only on internally built worlds, audited only by its own model family, is flagged.
 
 ---------------------------------------------------------------------------------------------------------------------
 
@@ -138,8 +147,12 @@ seat kind"). Until it exists, `minutes` is ESTIMATED from message length and is 
 { "id": "iu-<hash>", "result": "rs-...", "info_bits": 1.7, "prior_source": "POOLED_CALIBRATED|SEAT|NONE",
   "independent_review": "rv-...", "consumed_by": ["dc-..."], "is_viu": true }
 ```
-`is_viu` = verdict class in {POSITIVE, NULL, KILLED_BY_CONTROL} AND it has an independent review AND it has at least
-one consumption edge. Info_bits is null when `p_pred` is absent. Historical records therefore yield VIU counts but not
+(rev 2) The VIU is EXPLORATORY (causal model s1.3). `is_viu` requires all of:
+- a verdict class in {POSITIVE, NULL with power >= 0.8, KILLED_BY_CONTROL with stated avoided cost};
+- an independent review;
+- at least one LOAD-BEARING edge: a DIFFERENT seat's FROZEN design text uses the claim (not a citation; not
+  self-consumption; critic 2, A7).
+Info bits are computed against the FIXED reference forecaster on the canonical binary outcome. Info_bits is null when `p_pred` is absent. Historical records therefore yield VIU counts but not
 VIU bits.
 
 ### 2.11 downstream_reuse / decision
@@ -158,8 +171,16 @@ Today, consumption edges must be MODEL_CODED from text references ("per A23", "s
   "cost": "rc-...", "payoff_window_days": 14, "payoff": {"delta_eta": x, "ci80": [a,b], "comparison": "matched stream id"} | null,
   "abandoned": false }
 ```
-This entity carries the RSI ladder (L2-L6). `origin` for MWO/CWO-era changes is AUTO-derivable: any change implementing
-text from ops/work_orders/* or ops/fleet/CWO_* is OPERATOR.
+This entity carries the RSI ladder (L2-L6). (rev 2, critic 2 F1/F2) Origin classes:
+- OPERATOR (operator text, including prompts typed into seat sessions, from roles/*/prompts/);
+- OPERATOR_RELAYED_BY_SEAT (e.g. CWOs executed by Aporia);
+- SEAT_PROPOSED_OPERATOR_APPROVED;
+- SEAT_AUTONOMOUS;
+- BUILDER;
+- EXTERNAL_MODEL.
+A change is SEAT_AUTONOMOUS only if no operator prompt or ruling to that seat in the preceding 72h is MODEL_CODED as
+covering the change. Agreement between two coders must be >= 0.8; disagreements default to OPERATOR. The self-declared
+trailer is recorded but is SEAT_ASSERTED.
 
 ---------------------------------------------------------------------------------------------------------------------
 
@@ -184,7 +205,7 @@ No write endpoint is exposed to seats (O-1).
 
 | Quantity | Source | Today | After the Builder s6 fields |
 |---|---|---|---|
-| episode start/end, state trajectory | WORK_STATE history (git log -p), comms heartbeats | AUTO (from MWO-0001, about 09-28) | AUTO |
+| episode start/end, state trajectory | WORK_STATE history (git log -p), comms heartbeats | SEAT_ASSERTED until reconciled with state_truth (rev 2, K4) | SEAT_ASSERTED + state_truth check |
 | experiment freeze / verdict timestamps | AMENDMENT/PREREG/RESULT commits; ops/campaigns | AUTO for seats using those prefixes; MODEL_CODED otherwise | AUTO |
 | verdict class | verdict strings | MODEL_CODED via the mapping table | AUTO |
 | defect records | CORRECTION/DEFECT/erratum commits; review packets; TH-021 | MODEL_CODED | MODEL_CODED + seat `DEFECT:` prefix (CWO-C s10.3) |
@@ -199,10 +220,22 @@ No write endpoint is exposed to seats (O-1).
 
 ---------------------------------------------------------------------------------------------------------------------
 
-## 5. Metric views (frozen v1 definitions)
+## 5. Metric views (frozen v1 definitions, rev 2: one primary, gatekeeping order)
 
-| Metric | Definition (v1) | Accepts |
-|---|---|---|
+| Rank | Metric | Definition (v1) | Accepts |
+|---|---|---|---|
+| PRIMARY | `lbs_survival`, `lbs_loadbearing` | causal model s1.1: a fortnightly random sample of 12 claims plus 4 planted; external audit; +60d load-bearing follow-up | external auditor only; planted recall >= 3/4 |
+| S1 | `forecast_skill` | Brier(reference forecaster) - Brier(seat) on the canonical binary outcome | SEAT_ASSERTED p (labelled); reference is AUTO |
+| S2 | `invalid_untestable_rate` | (INVALID + UNTESTABLE) / verdicted experiments, per seat-month | AUTO (class map) |
+| S3 | `late_defect_rate` | post-report defects per audited claim (from the LBS audit) | external auditor |
+| S4 | `operator_load` | operator minutes per load-bearing surviving claim; VOID when an escalation-reducing policy is in force | operator log |
+| descriptive | `defect_stage_shift`, `defect_recurrence_after_lesson`, `infra_failure_share`, `stale_state_incidence`, `nontrivial_reuse`, `world_facing_share` | as before; never headline; ALWAYS shown with the reviewer-capacity covariate (findings_A1: reviewer capacity rose about 3x in 72h) | as declared |
+| exploratory | `eta_viu_count`, `eta_viu_bits`, `self_catch_pair`, `lineage_net_payoff` | rev-1 definitions with rev-2 rules | as declared |
+
+Reporting cadence is fixed (fortnightly). Every report shows every row, including the ones that went down (critic 2,
+H1).
+
+---|---|---|
 | `eta_viu_count` | VIU count per operator-hour and per core-h, per seat-week | AUTO, MODEL_CODED>=0.8 |
 | `eta_viu_bits` | sum of info_bits per resource component | AUTO only (requires p_pred) |
 | `defect_stage_shift` | the share of defects found at DESIGN or PRE_RUN, over all found, per month, with discoverer mix | MODEL_CODED>=0.8 |
