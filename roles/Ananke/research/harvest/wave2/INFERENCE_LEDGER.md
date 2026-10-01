@@ -626,3 +626,11 @@ W2-U (XOR/FLIP ceilings + A0 normalisation)
 - MAJ economy rows: 31/50 PLANT-SOLVED by 3-5-line leaky integrators, 16 with an integration
   certificate. Champions there are ~.50, so these MAJ NULLs are search-limited relative to a
   3-5-line plant (pending the W2-AF update to eligibility). 0 P-ECONOMY.
+
+### W2-AI (deposited): do the 2 multi-hop SIGNALs forward?
+- YES, once per episode: receipt-triggered flood latches (accuracy by trial 1.0 -> .50 after ~6
+  trials; latch model fits 99-99.6% of readouts). Certified by a vertex cut against equal-size
+  controls; 64/64 worlds are true multi-hop.
+- REACH_BEYOND_HOP is a false negative for latches (trial-2 twin). One-shot latches clear SIGNAL at 12
+  trials. -> C1_ERRATA E-W22; H6 section 15.
+- Queue: W2-AL (latch prevalence across all RELAY/MAJ SIGNAL rows).
