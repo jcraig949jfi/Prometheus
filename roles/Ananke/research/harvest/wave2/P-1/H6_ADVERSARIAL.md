@@ -161,3 +161,31 @@ v3 statement:
   narrow sense is testable. One fully chained cell exists (FLIP @ d9cc: S, isolated peak, blind selector).
 H6 as a GENERAL claim is replaced by this four-class decomposition. Its falsifiers are per class
 (W2-D section 5)."
+
+## 12. v4 (population numbers; after W2-J, L, M, N, O, P, S, T, U)
+Denominators (W2-T, W2-P/U; the C1 NULL population = 454 evolve cells in RELAY/XOR/MAJ/FLIP):
+- BROKEN: 0/113 under full guarded replay. Breakage is not H6's exposure; attribution is (corrects v3
+  item 1).
+- CONSTRUCTION-CAPPED (joint light cone + wake + placement): 111/454 = 24%. With W2-J's LC2 (fanout,
+  loss, jitter) XOR rises to 62/83 capped.
+- ADMISSIBLE for any search-limitation reading: 48% strict / 58% lenient.
+- PLANT-BACKED (a plant inside the genome space at the cell): 51/454 = 11%, ALL RELAY (W2-T). MAJ
+  one-hop now has plants at 8/15 sampled NULLs (W2-M); XOR has 0 inside the sampled genome (W2-J);
+  FLIP has 3 (W2-L/S).
+Per family:
+- XOR: H6 FALSE at >= 62/83. At the 6 plant-solved rows it is representation-OR-search (no plant fits
+  the sampled genome; W2-V running).
+- FLIP: P at >= 31/82; search possible at 3 (+ <= 9 R-candidates). The FLIP readings themselves need
+  B > .75 to certify inference (W2-S).
+- MAJ: one-hop S-partial (plants beat the champion at 8/19 SIGNAL cells). Multi-hop: 25/56 P, the rest
+  unplaced. INTEGRATION unattainable at 13/19 SIGNAL physics.
+- RELAY: one-hop S-partial (spread .51-.88 against a .97 plant; mis-tuned champions, W2-R). Multi-hop
+  is the categorical wall (W2-I).
+v4 statement:
+"In C1, 'search reachability bounds PTE' is supportable as a measured claim for at most ~11-15% of
+NULLs: plant-backed and admissible. It is FALSE for ~24% (construction-capped, more for XOR under LC2)
+and UNDECIDED for the rest. Where it is testable, the search failure is of three kinds:
+- S-partial climbing (RELAY/MAJ one-hop: champions below reachable plants);
+- the one-hop wall (forwarding never discovered);
+- an isolated FLIP peak (d9cc, n = 1).
+None of these is shown at the family level under W2-D's falsifiers."
