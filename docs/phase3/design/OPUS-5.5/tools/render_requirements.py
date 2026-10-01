@@ -3,7 +3,7 @@
 Usage:  python render_requirements.py [--check]
   --check   validate and verify the committed outputs are current; exit 1 on any problem.
 
-Validation (each is a control that can fail; tests/test_requirements.py plants a violation of each):
+Validation (each is a control that can fail; tools/test_render_requirements.py plants a violation of each):
   - unique ids; valid category, priority, gate, enforce, build and op values; ASCII everywhere
   - every failure class in TAXONOMY (Tityos T01-T24, Sisyphus SD1-SD15, Tantalus TD1-TD19, Ixion ID1-ID12) is
     covered by >= 1 requirement whose priority is REQUIRED or REJECTED/AVOID AND whose enforcement is BLOCK or RULE
