@@ -1,0 +1,9 @@
+# Manifest for 2026-10-01_census_launch
+
+sha256 over LF-normalised bytes (equals the git blob for text files); see comms/manifest.py.
+
+- 00_COMMON.md  sha256:671f78694904c2a1257f7c7c1ca769af1eb0d73de27b97612e085db99f0b7710
+- 01_TO_HERMES_PRONOIA_mailer.md  sha256:5fd2bd18009924a390067dc92ed2b21199e2513acae709f0d1ddc19dce762248
+- 02_TO_APORIA_census_v2.md  sha256:c9521c38b1a7fe70d5754a44c4ba2b99176bfd39cee09844114c4c280f3cb0de
+- 03_TO_ATLAS_registry_paths.md  sha256:b03c3f9fd935da1847a91b772d4c0f985439d058e6713abc63b1af72b49b59dd
+- 04_TO_ARCHAEON_inheritance.md  sha256:5480a986b2c54b6793318b6e1835d876265b561ac359ec465a3540fa4ab14bea
