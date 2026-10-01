@@ -1,0 +1,318 @@
+{
+ "citations": 1411,
+ "distinct_cells_cited": 123,
+ "files_with_citations": 136,
+ "citations_by_kind": {
+  "evolve": 1251,
+  "adjudicate": 105,
+  "census": 25,
+  "transfer": 30
+ },
+ "flagged": 47,
+ "flagged_HIGH": 5,
+ "flagged_LOW": 25,
+ "flagged_NAMING": 17,
+ "flagged_by_kind": {
+  "adjudicate": 19,
+  "transfer": 24,
+  "census": 4
+ },
+ "flagged_cells": {
+  "f7e62fe3:adjudicate": 12,
+  "fac4aaa2:transfer": 10,
+  "ef77ef2e:transfer": 9,
+  "1b26026f:transfer": 5,
+  "aa2b8d68:census": 4,
+  "e79e72df:adjudicate": 1,
+  "544f3d24:adjudicate": 1,
+  "67ddd858:adjudicate": 1,
+  "223acaee:adjudicate": 1,
+  "a8f4ea11:adjudicate": 1,
+  "023539c4:adjudicate": 1,
+  "feadc823:adjudicate": 1
+ },
+ "flagged_by_document": {
+  "roles/Ananke/research/harvest/wave2/W2-G/REPORT.md": {
+   "HIGH": 1,
+   "LOW": 11,
+   "NAMING": 0,
+   "cells": [
+    "1b26026f",
+    "ef77ef2e",
+    "f7e62fe3",
+    "fac4aaa2"
+   ]
+  },
+  "roles/Ananke/research/workers/W-E/REPORT.md": {
+   "HIGH": 0,
+   "LOW": 0,
+   "NAMING": 8,
+   "cells": [
+    "023539c4",
+    "223acaee",
+    "67ddd858",
+    "a8f4ea11",
+    "f7e62fe3",
+    "feadc823"
+   ]
+  },
+  "roles/Ananke/research/harvest/H-PLANT/REPORT.md": {
+   "HIGH": 3,
+   "LOW": 2,
+   "NAMING": 0,
+   "cells": [
+    "1b26026f",
+    "aa2b8d68",
+    "ef77ef2e",
+    "fac4aaa2"
+   ]
+  },
+  "roles/Ananke/research/harvest/wave2/INFERENCE_LEDGER.md": {
+   "HIGH": 0,
+   "LOW": 4,
+   "NAMING": 0,
+   "cells": [
+    "1b26026f",
+    "ef77ef2e",
+    "fac4aaa2"
+   ]
+  },
+  "roles/Ananke/research/harvest/H-PLANT/PRINCIPAL_REVIEW.md": {
+   "HIGH": 0,
+   "LOW": 3,
+   "NAMING": 0,
+   "cells": [
+    "aa2b8d68",
+    "ef77ef2e",
+    "fac4aaa2"
+   ]
+  },
+  "roles/Ananke/research/harvest/INFERENCE_HARVEST_HANDOFF.md": {
+   "HIGH": 0,
+   "LOW": 3,
+   "NAMING": 0,
+   "cells": [
+    "aa2b8d68",
+    "ef77ef2e",
+    "fac4aaa2"
+   ]
+  },
+  "roles/Ananke/research/workers/W-G/REPORT.md": {
+   "HIGH": 0,
+   "LOW": 0,
+   "NAMING": 3,
+   "cells": [
+    "f7e62fe3"
+   ]
+  },
+  "roles/Ananke/research/BACKLOG_V2.md": {
+   "HIGH": 0,
+   "LOW": 0,
+   "NAMING": 2,
+   "cells": [
+    "f7e62fe3"
+   ]
+  },
+  "roles/Ananke/research/harvest/wave2/W2-A2/REPORT.md": {
+   "HIGH": 0,
+   "LOW": 2,
+   "NAMING": 0,
+   "cells": [
+    "fac4aaa2"
+   ]
+  },
+  "roles/Ananke/research/harvest/wave2/W2-G/sub_arc3/NOTES.txt": {
+   "HIGH": 0,
+   "LOW": 0,
+   "NAMING": 2,
+   "cells": [
+    "e79e72df",
+    "f7e62fe3"
+   ]
+  },
+  "roles/Ananke/research/harvest/wave2/W2-G/sub_arc3/notes_groupA.txt": {
+   "HIGH": 0,
+   "LOW": 0,
+   "NAMING": 2,
+   "cells": [
+    "544f3d24",
+    "f7e62fe3"
+   ]
+  },
+  "roles/Ananke/research/harvest/H-PLANT/PLAN.md": {
+   "HIGH": 1,
+   "LOW": 0,
+   "NAMING": 0,
+   "cells": [
+    "fac4aaa2"
+   ]
+  }
+ },
+ "review_order_top15": [
+  {
+   "file": "roles/Ananke/research/harvest/H-PLANT/PLAN.md",
+   "line": 120,
+   "token": "fac4aaa23a0bdcb2",
+   "kind": "transfer",
+   "wave": "C",
+   "family": "RELAY",
+   "severity": "HIGH",
+   "terms": "NULL|held",
+   "context": "NOP; adopt sign(SENSE+IN0_0), re-emit only on change: every site that changes is a relay). Env: RELAY d=5 at ring radius 3 (ring distance 5 > 3: at least 2 hops, forced), delta 16, block 4 = C1 cell fac4aaa23a0bdcb2 (NULL, held .5). C1-sampled point: d9cc exactly. Chosen physics M0: d9cc lossless variant (loss 0, jitter 0, cap 0, collision none). Extra (off-census env): d=6 = 2*radius as the parent plan literall"
+  },
+  {
+   "file": "roles/Ananke/research/harvest/H-PLANT/REPORT.md",
+   "line": 50,
+   "token": "ef77ef2e",
+   "kind": "transfer",
+   "wave": "C",
+   "family": "FLIP",
+   "severity": "HIGH",
+   "terms": "held|search",
+   "context": "[.491,.500] lossless. Reading: PHYSICS ALLOWS, at the exact physics where C1 searched FLIP. Implication for H6: supports \"search, not physics\" for the d9cc FLIP NULLs (cells 6f82f9c7, held .479, and ef77ef2e, held .507). A 16-line program inside C1's own genome space solves FLIP at about .98. 4. P-MULTIHOP Program: plants.relay_flood, unchanged. 0 ADD T0 = SENSE+IN0_0 1 GT T2 = T0>0 2 GT T3 = 0>T0"
+  },
+  {
+   "file": "roles/Ananke/research/harvest/H-PLANT/REPORT.md",
+   "line": 59,
+   "token": "fac4aaa23a0bdcb2",
+   "kind": "transfer",
+   "wave": "C",
+   "family": "RELAY",
+   "severity": "HIGH",
+   "terms": "NULL|held|search",
+   "context": "MOV PAY0 = T1 9 SUB T3 = T1-S0 10 MULQ T3 = T3*T2 11 ADD S0 = S0+T3 Every site that changes its value relays it. Physics and results: - d9cc exactly as C1 sampled it, env of C1 RELAY NULL cell fac4aaa23a0bdcb2 (d5 delta16; ring distance 5 > radius 3, so at least 2 hops are forced; C1 search held .5). Accuracy .984 [.969, .995]. - d9cc, d6 (= 2*radius, outside the census env levels). Accuracy .978 [.962, .9"
+  },
+  {
+   "file": "roles/Ananke/research/harvest/H-PLANT/REPORT.md",
+   "line": 29,
+   "token": "1b26026fc846d03d",
+   "kind": "transfer",
+   "wave": "C",
+   "family": "XOR",
+   "severity": "HIGH",
+   "terms": "search",
+   "context": "ll of a pre-declared screen over all 18 C1 XOR rows the plant can run on (screen accuracy .841). Accuracy .805 [.784, .826]. - d9cc, the one XOR point where C1 searched (C1 cells d64656f26736d37c and 1b26026fc846d03d): analytic light-cone bound. With the fastest possible transport and no loss or caps, both cues can reach the actuator by readout in only 14.84% of scored trials. So any program scores at most .574,"
+  },
+  {
+   "file": "roles/Ananke/research/harvest/wave2/W2-G/REPORT.md",
+   "line": 253,
+   "token": "f7e62fe3",
+   "kind": "adjudicate",
+   "wave": "D",
+   "family": "RELAY",
+   "severity": "HIGH",
+   "terms": "search",
+   "context": "A0 kinds; XOR evolve 36/83 | high | bound itself not re-implemented | P3 power | NQ2 Q: transfers cited as search NULLs | id->kind map over roles/Ananke docs | fac4aaa2, ef77ef2e, 1b26026f (H-PLANT); f7e62fe3 naming; designed_echoes in H6 | high | doc regex may miss ids <8 hex | other H6 citations | NQ4 Q: one-hop 35+4+9/50, 19/19 | rows topology/radius/d + topology.py/envs.py | MATCH; 17 distinct conditi"
+  },
+  {
+   "file": "roles/Ananke/research/workers/W-E/REPORT.md",
+   "line": 26,
+   "token": "67ddd858",
+   "kind": "adjudicate",
+   "wave": "D",
+   "family": "HOLD",
+   "severity": "NAMING",
+   "terms": "champion",
+   "context": "dules differ only at the cue ticks; G5 a full-state swap gives the twin's baseline answer in every world; G6 noise calibration p < .05 in 5.0% (single) and 3.0% (paired). PER CHAMPION FORGETS (7): D_67ddd858, D_223acaee, D_a8f4ea11, D_023539c4, D_feadc823, M2_4ab2ba01, M2_fresh1. Twins are bit-identical 1-11 ticks after the readout; decoders are exactly 0.5 afterwards. DIVERGES-UNRECOVERABLE (5, prer"
+  },
+  {
+   "file": "roles/Ananke/research/workers/W-E/REPORT.md",
+   "line": 26,
+   "token": "223acaee",
+   "kind": "adjudicate",
+   "wave": "D",
+   "family": "RELAY",
+   "severity": "NAMING",
+   "terms": "champion",
+   "context": "only at the cue ticks; G5 a full-state swap gives the twin's baseline answer in every world; G6 noise calibration p < .05 in 5.0% (single) and 3.0% (paired). PER CHAMPION FORGETS (7): D_67ddd858, D_223acaee, D_a8f4ea11, D_023539c4, D_feadc823, M2_4ab2ba01, M2_fresh1. Twins are bit-identical 1-11 ticks after the readout; decoders are exactly 0.5 afterwards. DIVERGES-UNRECOVERABLE (5, preregistered la"
+  },
+  {
+   "file": "roles/Ananke/research/workers/W-E/REPORT.md",
+   "line": 14,
+   "token": "f7e62fe3",
+   "kind": "adjudicate",
+   "wave": "D",
+   "family": "RELAY",
+   "severity": "NAMING",
+   "terms": "champion",
+   "context": "irs, k=3, lags j=0..6, CPU. VERDICT (preregistered rule): NO. No champion is RETAINS-RECOVERABLE under the primary single-world decoder (Holm over 112 tests at j >= 2; smallest adjusted p = 0.149, D_f7e62fe3). The decoder works: all 16 champions decode cue k at j=0 (p at the floor), and the trial-(k+1) control decodes in 16/16. The NO is mostly a POWER limit, which the positive control (C-POS) predicted"
+  },
+  {
+   "file": "roles/Ananke/research/workers/W-E/REPORT.md",
+   "line": 26,
+   "token": "a8f4ea11",
+   "kind": "adjudicate",
+   "wave": "D",
+   "family": "RELAY",
+   "severity": "NAMING",
+   "terms": "champion",
+   "context": "cue ticks; G5 a full-state swap gives the twin's baseline answer in every world; G6 noise calibration p < .05 in 5.0% (single) and 3.0% (paired). PER CHAMPION FORGETS (7): D_67ddd858, D_223acaee, D_a8f4ea11, D_023539c4, D_feadc823, M2_4ab2ba01, M2_fresh1. Twins are bit-identical 1-11 ticks after the readout; decoders are exactly 0.5 afterwards. DIVERGES-UNRECOVERABLE (5, preregistered label). In 4,"
+  },
+  {
+   "file": "roles/Ananke/research/harvest/wave2/W2-G/sub_arc3/notes_groupA.txt",
+   "line": 19,
+   "token": "544f3d24",
+   "kind": "adjudicate",
+   "wave": "D",
+   "family": "MAJ",
+   "severity": "NAMING",
+   "terms": "champion",
+   "context": ".58). W-A's independent base curves agree (lo99 .51-.55 in 3/4). Chance holds only from gap 16. - Minor, report-internal (inside 11a): W-E \"all 16 champions decode cue k at j=0 (p at the floor)\": D_544f3d24 has raw p 2e-4, so only 15/16 pass Holm. - Engine card (inside 8a): \"bootstrap into the zero-default rule variant in ~64%\". Only 24/42 (57%) are UNIFORM_BOOT/ZERO. The 64% (27/42) also includes 1 c"
+  },
+  {
+   "file": "roles/Ananke/research/workers/W-E/REPORT.md",
+   "line": 26,
+   "token": "023539c4",
+   "kind": "adjudicate",
+   "wave": "D",
+   "family": "MAJ",
+   "severity": "NAMING",
+   "terms": "champion",
+   "context": "G5 a full-state swap gives the twin's baseline answer in every world; G6 noise calibration p < .05 in 5.0% (single) and 3.0% (paired). PER CHAMPION FORGETS (7): D_67ddd858, D_223acaee, D_a8f4ea11, D_023539c4, D_feadc823, M2_4ab2ba01, M2_fresh1. Twins are bit-identical 1-11 ticks after the readout; decoders are exactly 0.5 afterwards. DIVERGES-UNRECOVERABLE (5, preregistered label). In 4, the PAIRED"
+  },
+  {
+   "file": "roles/Ananke/research/workers/W-E/REPORT.md",
+   "line": 26,
+   "token": "feadc823",
+   "kind": "adjudicate",
+   "wave": "D",
+   "family": "MAJ",
+   "severity": "NAMING",
+   "terms": "champion",
+   "context": "ate swap gives the twin's baseline answer in every world; G6 noise calibration p < .05 in 5.0% (single) and 3.0% (paired). PER CHAMPION FORGETS (7): D_67ddd858, D_223acaee, D_a8f4ea11, D_023539c4, D_feadc823, M2_4ab2ba01, M2_fresh1. Twins are bit-identical 1-11 ticks after the readout; decoders are exactly 0.5 afterwards. DIVERGES-UNRECOVERABLE (5, preregistered label). In 4, the PAIRED (twin-diffe"
+  },
+  {
+   "file": "roles/Ananke/research/workers/W-G/REPORT.md",
+   "line": 80,
+   "token": "f7e62fe3",
+   "kind": "adjudicate",
+   "wave": "D",
+   "family": "RELAY",
+   "severity": "NAMING",
+   "terms": "evolved",
+   "context": "ble retention: L3 in S, and L4 through a Kp/WIMM store that survives a wipe of all fast state. That was shown at M2 physics widened to state_dim 4; C-AVL fits the 16-line program length exactly. - f7e62fe3's w is itself a persistent store. - The NO is a fact about what evolved under tasks that never reward cross-trial memory, not about the substrate. 3. W-E / synthesis \"f7e62fe3 w-integrator (explor"
+  },
+  {
+   "file": "roles/Ananke/research/workers/W-E/REPORT.md",
+   "line": 53,
+   "token": "f7e62fe3",
+   "kind": "adjudicate",
+   "wave": "D",
+   "family": "RELAY",
+   "severity": "NAMING",
+   "terms": "champion",
+   "context": "overs cue k from D_f7e62fe3's w_sum at 0.97/0.97/0.94/0.89/0.88/0.89 for j=1..6 (Holm p = 0.0056 at each lag). No other champion passes at j >= 2. C-POS reaches 0.67-0.80 with the same decoder. f7e62fe3's routing weights act as an INTEGRATOR of the cue history. WHO RETAINS: the s_ct site/in-flight labels do NOT predict retention. PHYSICS does. Decay-0 rings with plastic_route=1 retain in w, and w"
+  },
+  {
+   "file": "roles/Ananke/research/workers/W-G/REPORT.md",
+   "line": 57,
+   "token": "f7e62fe3",
+   "kind": "adjudicate",
+   "wave": "D",
+   "family": "RELAY",
+   "severity": "NAMING",
+   "terms": "champion",
+   "context": "cribed as a signed w offset driving chaos. ANSWER: NO nontrivial retention regime among these 16 champions. - The decision rule was met by no specimen, with every control valid. - L2-only retention (f7e62fe3; fresh2 unreplicated) is \"trace, not memory\" under the preregistered rule. MECHANISMS (exploratory, 0x5EB, explore.py; post hoc) - f7e62fe3: the w trace is a frozen additive offset (identical at k+2"
+  }
+ ]
+}
