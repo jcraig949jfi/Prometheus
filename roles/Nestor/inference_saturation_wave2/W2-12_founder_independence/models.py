@@ -32,9 +32,11 @@ T = json.loads((HERE / "run_table.json").read_text())
 ROWS = [r for r in T if r["comparable"]]
 BLOCKS = sorted({r["block"] for r in ROWS})
 DOSE_BLOCKS = sorted({r["block"] for r in ROWS if r["k"] > 1})
-GH_X, GH_W = np.polynomial.hermite_e.hermegauss(60)
+GH_X, GH_W = np.polynomial.hermite_e.hermegauss(40)
 GH_W = GH_W / GH_W.sum()
-PGRID = np.linspace(1e-5, 1 - 1e-5, 4001)
+_Z = np.linspace(-12.0, 6.0, 721)          # logit grid for the Beta mixture
+PGRID = 1 / (1 + np.exp(-_Z))
+PJAC = PGRID * (1 - PGRID) * (_Z[1] - _Z[0])  # dp = p(1-p) dz
 EPS = 1e-12
 DOSSIER_630 = {"c_runaway_confirm", "x_h2_norecomb", "x_critical_mass", "c_critical_mass", "x_dose_curve",
                "x_ticket", "x_decay", "x_sterile"}
@@ -90,7 +92,7 @@ def block_ll_bb(u, v, arms, beta=1.0):
     for k, x, n in arms:
         tot = tot + ll_binom(x, n, Pk(A_GRID, k, beta))
     m = tot.max()
-    return float(m + math.log(float(np.trapezoid(np.exp(tot - m), PGRID))))
+    return float(m + math.log(float(np.sum(np.exp(tot - m) * PJAC))))
 
 
 def _nll_factory(model, cs):
@@ -115,9 +117,9 @@ def _nll_factory(model, cs):
         if model == "C_RE":
             return -sum(block_ll_re(th[0], math.exp(th[1]), bb[b], th[2]) for b in blocks)
         if model == "B_BB":
-            return -sum(block_ll_bb(math.exp(th[0]), math.exp(th[1]), bb[b]) for b in blocks)
+            return -sum(block_ll_bb(math.exp(min(th[0], 9.0)), math.exp(min(th[1], 11.0)), bb[b]) for b in blocks)
         if model == "C_BB":
-            return -sum(block_ll_bb(math.exp(th[0]), math.exp(th[1]), bb[b], th[2]) for b in blocks)
+            return -sum(block_ll_bb(math.exp(min(th[0], 9.0)), math.exp(min(th[1], 11.0)), bb[b], th[2]) for b in blocks)
         raise KeyError(model)
     return nll, blocks, nb
 
@@ -146,9 +148,9 @@ def fit(model, cs):
     for s0 in starts:
         meth = "L-BFGS-B" if len(s0) > 4 else "Nelder-Mead"
         r = optimize.minimize(nll, s0, method=meth) if meth == "L-BFGS-B" else optimize.minimize(
-            nll, s0, method=meth, options={"maxiter": 20000, "maxfev": 20000, "xatol": 1e-8, "fatol": 1e-10})
+            nll, s0, method=meth, options={"maxiter": 4000, "maxfev": 4000, "xatol": 1e-6, "fatol": 1e-8})
         r2 = optimize.minimize(nll, r.x, method="Nelder-Mead",
-                               options={"maxiter": 40000, "maxfev": 40000, "xatol": 1e-8, "fatol": 1e-10})
+                               options={"maxiter": 4000, "maxfev": 4000, "xatol": 1e-6, "fatol": 1e-8})
         if r2.fun < r.fun:
             r = r2
         if best is None or r.fun < best.fun:
@@ -187,7 +189,7 @@ def profile_ci(cs, model, mle, lo=0.2, hi=4.0):
     return out
 
 
-def lobo(cs, models=("A", "A2", "B_RE", "C_RE", "B_BB", "C_BB")):
+def lobo(cs, models=("A", "A2", "B_RE", "C_RE")):
     bb = by_block(cs)
     res = {m: {"marg": 0.0, "cond": 0.0, "per_block": {}} for m in models}
     for hb in sorted(bb):
@@ -230,19 +232,21 @@ def lobo(cs, models=("A", "A2", "B_RE", "C_RE", "B_BB", "C_BB")):
 def analyse_endpoint(name, endpoint, rows=ROWS, do_cv=True, do_ci=True):
     cs = cells(endpoint, rows)
     out = {"endpoint": name, "cells": {"%s|k%d" % key: list(v) for key, v in sorted(cs.items())}}
-    fits = {m: fit(m, cs) for m in ("A", "A2", "B_FE", "C_FE", "C_PW", "B_RE", "C_RE", "B_BB", "C_BB")}
+    fits = {m: fit(m, cs) for m in (("A", "A2", "B_FE", "C_FE", "C_PW", "B_RE", "C_RE", "B_BB", "C_BB") if do_cv
+                                    else ("A", "A2", "B_FE", "C_FE", "C_PW"))}
     llsat, nsat = sat_ll(cs), len(cs)
     out["fits"] = {m: {"ll": round(f["ll"], 4), "npar": f["npar"], "aic": round(2 * f["npar"] - 2 * f["ll"], 3)}
                    for m, f in fits.items()}
     out["fits"]["SAT"] = {"ll": round(llsat, 4), "npar": nsat, "aic": round(2 * nsat - 2 * llsat, 3)}
-    out["beta_hat"] = {m: round(fits[m]["theta"][-1], 4) for m in ("A2", "C_FE", "C_RE", "C_BB")}
+    out["beta_hat"] = {m: round(fits[m]["theta"][-1], 4) for m in ("A2", "C_FE", "C_RE", "C_BB") if m in fits}
     out["pairwise_g_hat"] = round(fits["C_PW"]["theta"][-1], 5)
     out["pairwise_lambda_mean"] = round(float(np.mean(np.exp(fits["C_PW"]["theta"][:-1]))), 5)
-    out["re_sd_cloglog"] = {"B_RE": round(math.exp(fits["B_RE"]["theta"][1]), 4),
-                            "C_RE": round(math.exp(fits["C_RE"]["theta"][1]), 4)}
-    u, v = math.exp(fits["B_BB"]["theta"][0]), math.exp(fits["B_BB"]["theta"][1])
-    out["bb_p1"] = {"mean": round(u / (u + v), 4), "u+v": round(u + v, 2),
-                    "sd": round(math.sqrt(u * v / ((u + v) ** 2 * (u + v + 1))), 4)}
+    if "B_RE" in fits:
+        out["re_sd_cloglog"] = {"B_RE": round(math.exp(fits["B_RE"]["theta"][1]), 4),
+                                "C_RE": round(math.exp(fits["C_RE"]["theta"][1]), 4)}
+        u, v = math.exp(fits["B_BB"]["theta"][0]), math.exp(fits["B_BB"]["theta"][1])
+        out["bb_p1"] = {"mean": round(u / (u + v), 4), "u+v": round(u + v, 2),
+                        "sd": round(math.sqrt(u * v / ((u + v) ** 2 * (u + v + 1))), 4)}
     out["p1_fixed_by_block"] = {b: round(float(1 - math.exp(-math.exp(a))), 4)
                                 for b, a in zip(fits["B_FE"]["blocks"], fits["B_FE"]["theta"])}
     out["p1_A"] = round(float(1 - math.exp(-math.exp(fits["A"]["theta"][0]))), 4)
@@ -263,15 +267,17 @@ def analyse_endpoint(name, endpoint, rows=ROWS, do_cv=True, do_ci=True):
         "B_FE_vs_C_PW (pairwise term given block p1)": lrt("B_FE", "C_PW"),
         "C_FE_vs_SAT (residual lack of fit after beta)": lrt("C_FE", "SAT"),
         "B_FE_vs_SAT (independence with block p1)": lrt("B_FE", "SAT"),
-        "A_vs_B_RE (RE variance, boundary 50:50)": lrt("A", "B_RE", df=1, boundary=True),
-        "B_RE_vs_C_RE (superadditivity given RE)": lrt("B_RE", "C_RE"),
-        "B_BB_vs_C_BB (superadditivity given Beta p1)": lrt("B_BB", "C_BB"),
     }
+    if "B_RE" in fits:
+        out["lrt"].update({
+            "A_vs_B_RE (RE variance, boundary 50:50)": lrt("A", "B_RE", df=1, boundary=True),
+            "B_RE_vs_C_RE (superadditivity given RE)": lrt("B_RE", "C_RE"),
+            "B_BB_vs_C_BB (superadditivity given Beta p1)": lrt("B_BB", "C_BB")})
     if do_ci:
-        out["beta_ci95_profile"] = {m: profile_ci(cs, m, fits[m]) for m in ("A2", "C_FE", "C_RE")}
+        out["beta_ci95_profile"] = {m: profile_ci(cs, m, fits[m]) for m in ("A2", "C_FE")}
     bb = by_block(cs)
     per = {}
-    for b in DOSE_BLOCKS:
+    for b in (DOSE_BLOCKS if do_cv else ()):
         sub = {key: v for key, v in cs.items() if key[0] == b}
         f0, f1, ls = fit("B_FE", sub), fit("C_FE", sub), sat_ll(sub)
         G = 2 * (ls - f0["ll"])
@@ -311,7 +317,11 @@ if __name__ == "__main__":
         "d20_pool798_k4": pooled_plugin(E20, lambda r: True),
         "d5_dose_blocks_k1_only_k4": pooled_plugin(E5, lambda r: r["block"] in DOSE_BLOCKS),
     }
+    import time
+    t0 = time.time()
     rep["d5"] = analyse_endpoint("depth>=5", E5)
+    print("d5 done", time.time() - t0, flush=True)
+    (HERE / "models.json").write_text(json.dumps(rep, indent=1))
     rep["d20"] = analyse_endpoint("depth>=20", E20)
     rows630 = [r for r in ROWS if r["block"] in DOSSIER_630]
     rep["d5_pool630_only"] = analyse_endpoint("depth>=5 (630 set)", E5, rows630, do_cv=False, do_ci=False)["lrt"]
