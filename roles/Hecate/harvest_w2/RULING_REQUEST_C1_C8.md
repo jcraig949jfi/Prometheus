@@ -43,3 +43,14 @@ ANNOTATE-ONLY for C2, C3, C4, C6, C7 (report both readings), APPLY C1
 and C8 (frozen spec text / literal denominator govern). These
 recommendations come from the instance that wrote the original rules,
 so they need independent review.
+
+ADDENDUM 2026-10-01 (after REDTEAM_Y_corrections.md): the recommendations
+above are WITHDRAWN. The red-team found them asymmetric (favourable readings
+APPLY, unfavourable ANNOTATE-ONLY) and found that the same readings would
+flip further decisions not listed (C1 -> 9744/W6; K4 -> 79e9/W1, 47f4/W1;
+C5 -> H4 NOT_SUPPORTED). Add K4 (already applied: a9e2 PARK -> SPECULATIVE)
+to the items needing a ruling; its stated cause is false. Request: rule on
+a READING (e.g. "exact arithmetic governs", "frozen spec bands govern",
+"literal denominators govern") and apply it to every decision it touches,
+not item by item. C8 has three readings (code, literal, instrument rule ->
+NOT_ELIGIBLE).
