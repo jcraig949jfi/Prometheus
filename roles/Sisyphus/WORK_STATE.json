@@ -3,21 +3,24 @@
   "seat": "Sisyphus",
   "mwo_id": "MWO-0004",
   "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
-  "updated_at_utc": "2026-10-01T09:17:27Z",
-  "state": "HOLD",
-  "branch": "sisyphus/base-role-adopt-2026-10-01",
+  "updated_at_utc": "2026-10-01T09:54:14Z",
+  "state": "READY",
+  "branch": "sisyphus/phase3-intake-2026-10-01",
   "head_sha": "(this commit; see git log -1 -- roles/Sisyphus/WORK_STATE.json)",
-  "threads": [],
+  "threads": [
+    "phase3-intake: forensic crawl of 15 territory seats (charter 2026-10-01) -- package delivered"
+  ],
   "campaigns": [],
   "experiments": [],
   "fabric_tasks": [],
   "running": [],
   "blocked_on": [],
   "next_actions": [
-    "Seat created 2026-10-01, charter PENDING. HOLD because no READY work exists without a charter (base role 2a F), not a block on any seat. When the operator's charter arrives: commit verbatim with MANIFEST under roles/Sisyphus/prompts/<date>_charter/, rewrite RESPONSIBILITIES.md, file BACKLOG_H0H5.md, leave HOLD."
+    "Package delivered under docs/phase3/intake/sisyphus/ (REPORT.md, 15 dossiers, artifact_index 528, engine_index 51). Await merge by the Phase 3 designers; answer questions about dossiers on request. Optional zero-cost follow-up: rerun SFE canary seed derivation to confirm parity reading (CODE-INFERRED)."
   ],
   "operator_decisions_required": [],
   "latest_reports": [
-    "roles/Sisyphus/journal/2026-10-01.md (creation pass)"
+    "docs/phase3/intake/sisyphus/REPORT.md",
+    "roles/Sisyphus/journal/2026-10-01.md"
   ]
 }
