@@ -1,0 +1,14 @@
+--- prometheus/ananke/campaign.py	2026-09-30 18:37:06.528591000 -0400
++++ prometheus/ananke/campaign.py (patched)	2026-09-30 21:18:32.843856200 -0400
+@@ -315,6 +315,11 @@
+     }
+     if ph.topology != "global":
+         mods["topology->random"] = ph.replace(topology="random", k_random=max(3, ph.table_width()))
++    # matched baseline: the unmodified law on the SAME transplant seeds (W2-E A7).
++    # Without it every transplant is compared with the adjudication's normal run,
++    # which uses different worlds (0xD0D0, M_held) -- an unpaired comparison.
++    r0 = assays.evaluate(ph, champ[None], env, hseeds, device=device)
++    res["normal_same_seeds"] = {"status": "RAN", "acc": float(r0.mean()[0])}
+     for name, p2 in mods.items():
+         try:
+             p2 = p2.validate()
