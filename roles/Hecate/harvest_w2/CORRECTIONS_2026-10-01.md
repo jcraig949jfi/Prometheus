@@ -101,6 +101,18 @@ K14 Autopsy Part A was derived before K4 and never re-run (AUDIT_Z3 Z3-1;
    the 13 untestable worlds, 6 are build/instrument failures, not
    specification failures (Z3-3). Wilson bound, joins, Part B: clean.
 
+K15 Prose claim audit (AUDIT_O: 242 numeric claims, 196 MATCH, 14 STALE, 5
+   MISMATCH, 10 UNSOURCEABLE). Journals and the 09-30 review packet are
+   records and stay unchanged; read them with K1/K3/K4/K14 (PARK 15 -> 14 +
+   SPECULATIVE 1; untestable 12 -> 13; round-2 row 7/6 -> 6/7; "wrong ORIG
+   prediction" -> K1; "+14 controls" -> K3). MISMATCH: "no false noise on
+   aliens" (journal 09-29, 09-30) holds for the 32 STANDARD aliens only --
+   adversarial SYS-41174 was called RANDOM (verified, conf 0.45); packet
+   "p <= 0.035" is 9/256 = 0.0352; LEDGER Q2 tally sums to 41 of 42 (one
+   "fragile" item dropped); LEDGER Q13 "1-2% words" is 0.6-1.9%.
+   UNSOURCEABLE: Q14 "ARI 1.0"/"97%" (auditor scratch runs, not committed).
+   STATUS.md (live state) rewritten 2026-10-01.
+
 ## Contested items -- NOT applied (recommendations; would change a frozen decision rule's outcome -> CWO-C s4 escalation class)
 
 C1 HT-ae38c641b1 W5 (round 3): frozen spec says values between F1 and S1

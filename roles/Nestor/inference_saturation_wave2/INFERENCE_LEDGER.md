@@ -743,3 +743,20 @@ in completion order.
   - the H1 family.
 
 **Confidence.** High.
+
+
+### W2-17 and N18: the depth-20 departure is a two-type mixture (W2-17 report saved; N18 fit by Nestor). Written at 01:46Z (clock)
+- **W2-17 result.**
+  - A subcritical founder type (side-1 copier, realized m 0.80–0.89) and rare heritable supercritical side-0 morphs (44 ec→ac, 37 a5→81; realized m 1.08).
+  - A morph is present in 12/12 runaways. Unselected seeds: 2/2 runs with a morph became runaways vs 0/61 without (p = 0.0015).
+  - Kin repair dominates births after saturation, but does not lift the founder type.
+- **Effect on earlier entries.**
+  - This resurrects W2-2's "second regime" as **genotype heterogeneity, not density**. W2-2's "no common heritable variant" missed a rare one.
+  - It is consistent with W2-14: per-member fertility rises only modestly.
+  - It confirms N17's side-switch mechanism, though through different sites (not 49 or 43→C3).
+- **N18 fit** (`N18_two_type_fit/twotype.py`, `twotype.json`). Negative-binomial two-type process with switch rate s and back-switch 0.07.
+  - Best two-type fits: binned deviance 2.8–3.9, predicting 3.8–6.8 runs at depth 14–21 (observed 3) and P(≥161 | ≥22) = 0.84–0.94.
+  - Best single-type fit (m 0.99, V 7): deviance 4.59, predicting 7.8 at 14–21 and 0.87.
+  - **The valley supports the two-type model only weakly against a heavy-tailed critical single type.** The decisive evidence remains W2-17's genotype data (12/12, 2/2 vs 0/61), not the shape of the tail.
+- **Confidence.** Moderate-high for the mixture; low that the tail shape discriminates between the models.
+- **Candidate for the handoff's "strongest new result since Wave 1."**
