@@ -1058,6 +1058,10 @@
         "what_can_learn": "groupings",
         "what_can_transfer": "the grouping rule",
         "distinguishing_observable": "FTLE grouping recovers interaction structure where pairwise correlation is zero (XOR-coupled elements)"
+      },
+      "prior_art": {
+        "label": "KNOWN_ANALOGUE_FOUND",
+        "evidence": "perturbation-response network inference; Pass 4 r2 ALT rows (K1)"
       }
     },
     {
@@ -2301,8 +2305,19 @@
         },
         "rows": "hecate/programs/HT-55162c0ac0/worlds/W6/pass4/rows.jsonl",
         "outcome_file": "hecate/programs/HT-55162c0ac0/worlds/W6/pass4/PASS4_OUTCOME.json",
-        "note": "R strictly not reproduced: grouping 10/10 at ARI 1.0 but correlation control -0.111 (below chance, outside |mean| <= 0.1). ORIG did NOT fire (contracting carrier r=0.2 groups 0/10) -- the author's prediction was wrong. ALT FAILED: non-chaotic levels r=0.65 (Lyapunov -0.92) and r=0.8 group perfectly; the readout tracks carrier amplitude, not chaos."
-      }
+        "note": "R strictly not reproduced: grouping 10/10 at ARI 1.0 but correlation control -0.111 (below chance, outside |mean| <= 0.1). ORIG did NOT fire (contracting carrier r=0.2 groups 0/10) -- the author's prediction was wrong. ALT FAILED: non-chaotic levels r=0.65 (Lyapunov -0.92) and r=0.8 group perfectly; the readout tracks carrier amplitude, not chaos.",
+        "corrections": [
+          {
+            "date": "2026-10-01",
+            "field": "ORIG.fired",
+            "was": false,
+            "now": true,
+            "note": "met by ALT levels r=0.65, 0.8 (LLE<0, ARI>=0.8, 10/10 seeds) at sigma 0.05 vs original sigma 0",
+            "ref": "roles/Hecate/harvest_w2/CORRECTIONS_2026-10-01.md K1"
+          }
+        ]
+      },
+      "original_world_claim": "FOSSIL"
     }
   ],
   "candidateEngines": [],

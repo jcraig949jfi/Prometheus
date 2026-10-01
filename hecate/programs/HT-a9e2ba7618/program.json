@@ -1376,7 +1376,7 @@
         "PLV threshold tuned to the favoured condition",
         "objects placed so their widths align with dyadic scales"
       ],
-      "outcome": "NULL",
+      "outcome": "SPEC_UNATTAINABLE",
       "round": 2,
       "rows": "hecate/programs/HT-a9e2ba7618/worlds/W3/rows.jsonl",
       "outcome_file": "hecate/programs/HT-a9e2ba7618/worlds/W3/OUTCOME.json",
@@ -1438,7 +1438,16 @@
           "text": "pilot needed one readout repair (frequency grid, DT, KC, PLV window); NOTES"
         }
       ],
-      "rejected_explanations": []
+      "rejected_explanations": [],
+      "corrections": [
+        {
+          "date": "2026-10-01",
+          "field": "outcome",
+          "was": "NULL",
+          "now": "SPEC_UNATTAINABLE",
+          "ref": "roles/Hecate/harvest_w2/CORRECTIONS_2026-10-01.md K4"
+        }
+      ]
     },
     {
       "id": "W4",
@@ -1565,10 +1574,19 @@
     }
   ],
   "candidateEngines": [],
-  "currentVerdict": "PARK",
+  "currentVerdict": "SPECULATIVE",
   "evidenceSummary": {
     "layer": "experimental_observation",
     "rows": "hecate/programs/HT-a9e2ba7618/worlds/W3/rows.jsonl",
-    "note": "round 1 W4 NULL; round 2 W3 NULL: two worlds read, both NULL/CONFOUNDED"
-  }
+    "note": "round 1 W4 NULL; round 2 W3 NULL: two worlds read, both NULL/CONFOUNDED | CORRECTED 2026-10-01: W3 SPEC_UNATTAINABLE (K4); one valid NULL (W4) -> SPECULATIVE"
+  },
+  "corrections": [
+    {
+      "date": "2026-10-01",
+      "field": "currentVerdict",
+      "was": "PARK",
+      "now": "SPECULATIVE",
+      "ref": "roles/Hecate/harvest_w2/CORRECTIONS_2026-10-01.md K4"
+    }
+  ]
 }
