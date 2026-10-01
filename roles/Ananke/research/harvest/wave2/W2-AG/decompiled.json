@@ -1,0 +1,87 @@
+{
+ "4781b0a1": {
+  "rules": 1,
+  "setrule": 0,
+  "programs": [
+   [
+    " 0 MAX   EMIT = MAX(S1, SENSE)",
+    " 1 SEL   PAY0 = (PAY0 > 0) ? T1 : RVAL",
+    " 2 SEL   T3 = (T3 > 0) ? ENERGY : SENSE",
+    " 3 RAND  T1 = RAND(EMIT, EMIT)",
+    " 4 RAND  RPORT = RAND(PAY1, S0)",
+    " 5 ADD   RPORT = ADD(S1, SENSE)",
+    " 7 ADDI  S0 = IN0_1 + -3",
+    " 8 WIMM  T0 = WIMM(S0, EMIT)",
+    " 9 GT    S1 = GT(RPORT, CNT0)",
+    "10 ADD   PAY1 = ADD(S1, IN0_1)",
+    "11 ADD   PAY0 = ADD(PAY0, S1)",
+    "12 SETRULE EMIT = SETRULE(T0, IN0_0)",
+    "13 MAX   PAY1 = MAX(IN0_1, T3)",
+    "15 WIMM  S1 = WIMM(RVAL, PAY1)"
+   ]
+  ]
+ },
+ "8743da7f": {
+  "rules": 1,
+  "setrule": 0,
+  "programs": [
+   [
+    " 0 ADD   T1 = ADD(CNT0, SENSE)",
+    " 1 MULQ  T2 = MULQ(T1, ZERO)",
+    " 2 SHR   S1 = IN0_0 >> 6",
+    " 3 MAX   CHAN = MAX(IN0_0, S0)",
+    " 4 MOV   PAY0 = T2",
+    " 5 XOR   PAY0 = XOR(S1, S0)",
+    " 6 SEL   T1 = (T1 > 0) ? RVAL : ENERGY",
+    " 7 SEL   RVAL = (RVAL > 0) ? S1 : IN0_0",
+    " 8 ADD   S0 = ADD(CNT0, SENSE)",
+    " 9 MAX   T2 = MAX(T2, IN0_1)",
+    "10 GT    PAY1 = GT(RPORT, S1)",
+    "11 ADDI  T2 = CNT0 + 60",
+    "12 ADD   T3 = ADD(PAY0, CHAN)",
+    "13 ADD   EMIT = ADD(T3, IN0_0)",
+    "14 MULQ  EMIT = MULQ(EMIT, T3)",
+    "15 GT    T0 = GT(T2, ENERGY)"
+   ]
+  ]
+ },
+ "964053bb": {
+  "rules": 1,
+  "setrule": 0,
+  "programs": [
+   [
+    " 0 ADD   T0 = ADD(T2, T2)",
+    " 1 SETRULE RVAL = SETRULE(RPORT, CNT0)",
+    " 2 MULQ  S1 = MULQ(T3, S2)",
+    " 3 MOV   T2 = S3",
+    " 4 CONST S2 = -36 << 6",
+    " 5 WIMM  T3 = WIMM(T1, T0)",
+    " 6 ADD   RVAL = ADD(S0, T2)",
+    " 7 MULQ  S2 = MULQ(CHAN, RVAL)",
+    " 8 MOV   S0 = RVAL",
+    " 9 GT    EMIT = GT(S2, SENSE)",
+    "10 GT    S2 = GT(S2, T2)",
+    "11 MULQ  T0 = MULQ(ENERGY, T3)",
+    "12 SHR   EMIT = S3 >> 14",
+    "13 MULQ  S3 = MULQ(RPORT, EMIT)",
+    "14 SETRULE CHAN = SETRULE(S1, S1)",
+    "15 SUB   S3 = SUB(IN0_0, SENSE)"
+   ]
+  ]
+ },
+ "613162a3": {
+  "rules": 1,
+  "setrule": 1,
+  "programs": [
+   [
+    " 0 MULQ  T3 = MULQ(S3, ENERGY)",
+    " 1 SUB   S3 = SUB(S3, SENSE)",
+    " 2 CONST EMIT = 19 << 0",
+    " 3 SUB   S0 = SUB(S0, IN0_1)",
+    " 4 MOV   PAY1 = T3",
+    " 6 GT    T2 = GT(PAY1, T3)",
+    " 7 MULQ  RPORT = MULQ(EMIT, S3)"
+   ]
+  ]
+ }
+}

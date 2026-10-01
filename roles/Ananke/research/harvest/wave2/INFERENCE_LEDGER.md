@@ -595,3 +595,20 @@ W2-U (XOR/FLIP ceilings + A0 normalisation)
   verified by refresh re-score, 7 HOLD inferred); economy 3 OPEN; 1 not reproduced.
 - No SUPPORTED boundary is established physics beyond the transport bound. -> E-W21.
 - W2-U's "global worst once normalised" is not robust (flood ceiling flips it).
+
+### W2-AG (deposited): preservation register (STRANGE_REGISTER.md, 15 entries + archive)
+- SR-01 [V]: the 2-hop collapse is EXACT. 13/14 native 2-hop conditions have lo99 = hi99 = .500 (no
+  stale residue either). Statically, in 4/5 single-rule D laws, non-sensing sites never emit; in
+  c16d5231 they emit presence only.
+  This partly qualifies W2-X's "sharp wall" strike: for the laws tested the cliff is structural (mute
+  non-sensors), not only mirror-forced. Whether C1 search can find forwarding is still undecided
+  (W2-AI running).
+- SR-03 (candidate, pre-stated check): 4781b0a1's vote travels only through reverberation between
+  ADJACENT cued sensors. One adjacent pair scores .573; a non-adjacent pair and a single sensor score
+  exactly .500. This plausibly unifies cluster-bound, DICT = .5 and low pivotality, and contradicts
+  W2-E S6's k=1 threshold story.
+- SR-04: 8/11 M3-physics MAJ champions sit above the single-sensor ceiling .590, near the any-program
+  ceiling .701. They are integrators that the INTEGRATION ruler cannot certify.
+- Top 3 for preservation: SR-01 one-hop wall, SR-02 distractor strobe/parity clock, SR-03
+  reverberation integration.
+- Queue: W2-AJ (emitter census across 69 SIGNAL champions; 4781b0a1 sensor-to-sensor edge cut).
