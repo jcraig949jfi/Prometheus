@@ -5,7 +5,7 @@ conversion decays with steps under BASE only; the plain offspring law T7 uses is
 Same physics/harness as c7_t6_t7_base_closure.py (imported). Output c7b_base_chain.json.
 """
 import json, random, sys, time
-sys.argv = sys.argv[:1] + ["1"]          # c7 runs its own N=1 demo on import; harmless
+# c7 main() is guarded; importing only loads the harness
 import c7_t6_t7_base_closure as C        # noqa: E402
 
 K, N = 12, 250

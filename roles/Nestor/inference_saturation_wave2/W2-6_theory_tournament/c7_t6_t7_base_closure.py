@@ -68,35 +68,40 @@ def one(h, g, st, pg, side):
             "p_after": (r._genome(p), (None if p.regs is None else list(p.regs), p.fz, p.fc))}
 
 
-rng = random.Random(20261001)
-parts = [bytes(rng.randrange(256) for _ in range(64)) for _ in range(3 * N)]
-out = {}
-for name, base in (("BASE", world.Runner), ("ATOMIC", run_ds.runner_cls(world))):
-    h = harness(base, 4242)
-    s1 = s2a = s2a_n = s2b = s2b_n = hij = 0
-    d_changed = []
-    for i in range(N):
-        side = i % 2
-        a = one(h, G7, (None, 0, 0), parts[3 * i], side)
-        s1 += a["conv"]
-        hij += a["hijacked"]
-        if not a["hijacked"]:
-            dg, dst = a["d_after"]
-            d_changed.append(sum(1 for x, y in zip(dg, G7) if x != y))
-            b2 = one(h, dg, dst, parts[3 * i + 1], side)
-            s2a_n += 1
-            s2a += b2["conv"]
-        if a["conv"]:
-            cg, cst = a["p_after"]
-            b3 = one(h, cg, cst, parts[3 * i + 2], side)
-            s2b_n += 1
-            s2b += b3["conv"]
-    out[name] = {"trials": N, "step1_conv": round(s1 / N, 3), "step1_founder_hijacked": round(hij / N, 3),
-                 "founder_bytes_changed_mean": round(sum(d_changed) / len(d_changed), 2) if d_changed else None,
-                 "founder_unchanged_share": round(sum(1 for x in d_changed if x == 0) / len(d_changed), 3) if d_changed else None,
-                 "step2_founder_conv": round(s2a / s2a_n, 3) if s2a_n else None,
-                 "step2_child_conv": round(s2b / s2b_n, 3) if s2b_n else None, "children": s2b_n}
-    print(name, out[name], round(time.process_time() - t0, 1), flush=True)
-out["cpu_s"] = round(time.process_time() - t0, 1)
-(HERE / "c7_t6_t7_base_closure.json").write_text(json.dumps(out, indent=1))
-print(json.dumps(out, indent=1))
+def main():
+    rng = random.Random(20261001)
+    parts = [bytes(rng.randrange(256) for _ in range(64)) for _ in range(3 * N)]
+    out = {}
+    for name, base in (("BASE", world.Runner), ("ATOMIC", run_ds.runner_cls(world))):
+        h = harness(base, 4242)
+        s1 = s2a = s2a_n = s2b = s2b_n = hij = 0
+        d_changed = []
+        for i in range(N):
+            side = i % 2
+            a = one(h, G7, (None, 0, 0), parts[3 * i], side)
+            s1 += a["conv"]
+            hij += a["hijacked"]
+            if not a["hijacked"]:
+                dg, dst = a["d_after"]
+                d_changed.append(sum(1 for x, y in zip(dg, G7) if x != y))
+                b2 = one(h, dg, dst, parts[3 * i + 1], side)
+                s2a_n += 1
+                s2a += b2["conv"]
+            if a["conv"]:
+                cg, cst = a["p_after"]
+                b3 = one(h, cg, cst, parts[3 * i + 2], side)
+                s2b_n += 1
+                s2b += b3["conv"]
+        out[name] = {"trials": N, "step1_conv": round(s1 / N, 3), "step1_founder_hijacked": round(hij / N, 3),
+                     "founder_bytes_changed_mean": round(sum(d_changed) / len(d_changed), 2) if d_changed else None,
+                     "founder_unchanged_share": round(sum(1 for x in d_changed if x == 0) / len(d_changed), 3) if d_changed else None,
+                     "step2_founder_conv": round(s2a / s2a_n, 3) if s2a_n else None,
+                     "step2_child_conv": round(s2b / s2b_n, 3) if s2b_n else None, "children": s2b_n}
+        print(name, out[name], round(time.process_time() - t0, 1), flush=True)
+    out["cpu_s"] = round(time.process_time() - t0, 1)
+    (HERE / "c7_t6_t7_base_closure.json").write_text(json.dumps(out, indent=1))
+    print(json.dumps(out, indent=1))
+
+
+if __name__ == "__main__":
+    main()

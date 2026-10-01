@@ -34,6 +34,40 @@
 
 About 3 CPU-hours went on read-only analysis and single-genome or single-interaction VM calls. There was one exception: ADV2's toy population process (256 sites, 300 epochs, 3 × 2 seeds), which is illustrative only.
 
+
+> **WAVE-2 CORRECTIONS (2026-10-01; ledger `roles/Nestor/inference_saturation_wave2/INFERENCE_LEDGER.md`).** These supersede
+> the corresponding text below.
+>
+> **(a) The cause of internalization.** "It pays because newborns inherit the victim's registers" is **withdrawn as stated**.
+> - X-A3-FAIR's ZERO world, which resets all registers before every interaction, is an existing no-payoff arm (W2-1).
+> - State-free genomes appear and sometimes sweep there too: 2/23 de novo majorities, one at 185/187. The end-of-run robust share
+>   is 0.11 under ZERO vs 0.70 under CARRIED.
+> - So **carried register state, the organism's own or inherited, raises prevalence about 6x, and payoff is not required for
+>   appearance.**
+> - Which carried channel matters (own post-execution state vs the victim's inherited state) is untested. X-DD-STATE-RESET's
+>   null concerned establishment, not state-freedom.
+>
+> **(b) The side-0 switch is not a marker of state-freedom.** The genomes that state-free genomes replaced are side-0 copiers too
+> (271/295 vs 432/433).
+>
+> **(c) "Dominate" is too strong for C-A3.** The event rule needs a single state-free genome. A state-free majority is reached in
+> 4/8 events, 2/8 are single-genome blips, and 13 non-founder populations are already majority state-free when first sighted.
+>
+> **(d) The depth gap premise is false.** Omitted arms put runs inside 22–161: X-ATOMIC BASE has 44 and 50; ATOMIC runaways
+> fall there in 8/36 and 6/47; C-A3 in 21/34. The turnover reading survives: depth vs time since first donor, ρ = 0.74.
+>
+> **(e) Founder independence is weakened.** The single-founder batches are homogeneous (p = 0.43), so the multi-founder excess at
+> depth ≥ 5 is real (C-CRITICAL-MASS k = 4, 41/80 vs 29.3 expected, p = 0.005). It vanishes at the runaway endpoint.
+>
+> **(f) The foreign-cell magnet is plausibly explained** by a partner executing the founder's LDIR, compounded over the run
+> (N1 / W2-1).
+>
+> **(g) T4(c) is dead.** S3 found no state-free-specific multi-site epistasis.
+>
+> **(h) C-ZERO-SPECIFIC's contrast is largely built in by its donor screen.** 14 of 16 donors cannot copy from 0x5A at all (N11).
+>
+> **(i) X-TASK-GATE must not be dispatched as frozen** (Stage 0 cannot exercise CD; see the erratum).
+
 ---
 
 ## 1. What we now believe more strongly
@@ -50,9 +84,9 @@ About 3 CPU-hours went on read-only analysis and single-genome or single-interac
    - The collapse core is about 8 bytes. All 128 sampled genomes are genuine copiers, and 0 are painters.
    - Acquisition matches to within an order of magnitude: 5% vs 7.3% at the first checkpoint, 66% vs about 55% by the end.
 4. **The internalization (C-A3 / X-MAT) is real, material change in the copy setup.**
-   - The address now comes from constants, and copying is from side 0.
+   - The address now comes from constants. The side-0 copying is not distinguishing; see Wave-2 correction (b).
    - It is not bookkeeping, and not import from a coexisting population. That second point is supported but not validated: there is no planted-transplant control.
-   - It pays because newborns inherit the victim site's noisy registers (U-W7, verified in code).
+   - It is favoured about 6x by carried register state, and also appears without payoff (Wave-2 correction (a)).
 5. **Material turns over while function persists.**
    - Founder bytes fall 0.94 → 0.04 in 7ae3 27000023, and make up 3–33% of the endpoint state-free genomes.
    - The copy primitive is rebuilt at new positions in foreign cells.

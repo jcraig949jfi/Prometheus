@@ -17,7 +17,8 @@ import time
 
 import common as C
 
-N = 60
+import sys
+N = int(sys.argv[1]) if len(sys.argv) > 1 else 60
 
 
 def side_of(rec):

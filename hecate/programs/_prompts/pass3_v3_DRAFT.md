@@ -38,6 +38,12 @@ L9 No attack or clause whose outcome is fixed by arithmetic: before
 L10 Output files never share a case-folded name with input files.
     Evidence: K3 (detector controls overwritten by the gate output).
 
+L11 Mechanism list order is shuffled (seeded) before world selection, and Pass 1
+    records an explicit strangeness tag per mechanism. Evidence: INV_H --
+    getting a world is predicted by list position (M1-M3 0.83 vs M4+ 0.39),
+    not by any in-record property; if generators write intuitive mechanisms
+    first, position is a silent familiarity filter.
+
 ## Spec additions (on top of pass3_v2)
 
     "simple_alt": {"from_mechanism": "<id>", "implementation": "...",
