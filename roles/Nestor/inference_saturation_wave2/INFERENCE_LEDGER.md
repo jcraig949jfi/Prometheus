@@ -838,3 +838,22 @@ in completion order.
 - Residuals:
   - T4(a) is unsupported (W2-12);
   - T4(c′) is not supported on a corruption readout (W2-13/20).
+
+
+### W2-27: D10 re-derived; red-team F11 resolved (report saved; Nestor). Written at 02:28Z (clock)
+- **Result.**
+  - The 8/4/3 C-A3 counts reproduce exactly from the records. They never depended on the ternary-L premise.
+  - That premise holds at the endpoint of the 26 eligible runs. It fails only across all checkpoints, which is where the red-team's 84 values come from.
+  - The red-team's counterexamples are ineligible runs.
+  - "Last checkpoint with" is the frozen design (`run_ci.py:20,51-53`), not a code bug. It is a validity weakness.
+- **Corrections to W2-15.**
+  1. The cell-split p values were one-sided. Two-sided they are 0.063 (as coded) and 0.62 (final checkpoint).
+  2. The cell split is an **eligibility** effect: 22 vs 4 eligible runs (p = 1.4e-4), and p = 1.0 among eligible runs.
+  3. "84-194 genomes" should read 13-194.
+  4. Only 3 runs are robust across the strict readings: 7ae3 23, ffa6 46, ffa6 48.
+  5. **X-MAT is ENDOGENOUS at every tagged checkpoint** (55/55). The "4 persistent + 4 transient" qualifier is dropped from X-MAT and belongs to C-A3's recurrence. ARTIFACT-RISK (no positive control) stands.
+- **W2-8 corrections.**
+  - Narrow "L only {0, 0.664, 1}" to "at the endpoint".
+  - Withdraw "X ≈ determined by L_share".
+- **Confidence.** High.
+- **Note for the handoff.** C-A3 stays CONFIRMED-FRAGILE, with corrected numbers. X-MAT stays ENDOGENOUS / ARTIFACT-RISK.
