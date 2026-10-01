@@ -429,3 +429,49 @@ in completion order.
   - "Erosion brake" should read "one-sided op unmakes its carrier at the other side".
   - X-TICKET "lineage size" mostly counts inactive labels.
 - **Next question.** N15b at larger N: does kin protection make R0 > 1 once q reaches about 0.1-0.3, and is that the d ≈ 20 departure? W2-14 is building a field process with realized partners and should show it.
+
+
+### N16: attack on W2-3 K5 ("age-structured, no Allee"). Nestor, code read, written at 01:11Z (clock)
+- **Question.** Does K5 really show per-site activity declining with age and no density term?
+- **Evidence.** `W2-3_no_vocabulary/k5b_age_profile.py:20-37` and `k5_kinetic_order.py`. The data are run-level trajectories `traj = (n, alive, cumulative births)` with no per-site identity. The "young" covariate is `cb - cb(t-K)`, which is **the run's own births over the last K epochs**. The age classes are cut from those lagged birth counts.
+- **Inference.**
+  1. The "age-structured" model is a **self-exciting (Hawkes/AR) model of the birth series**, not an age model. It wins by AIC over b·n and b·n + c·n² for any bursty series, whatever the cause.
+  2. Aggregate trajectories cannot attribute a birth to a site's age. Suppose one old, persistently active site writes every epoch. Its products would appear as "young", and its births would be credited to youth.
+  3. So **the 0.687 coefficient is a self-excitation coefficient, not a per-site rate.** The "2x the single-call rate" puzzle in W2-3 is therefore an estimator artifact, not physics. The puzzle dissolves.
+  4. "c → 0 once age is added" does not show the absence of a density term. A lagged-births regressor absorbs any density effect that acts through recent births.
+- **What survives.**
+  - **Age decline is independently supported by W2-2's h1 individual law:** 93% of births at age ≤ 6, built from single-interaction lives and so not aggregate-confounded.
+  - **"No Allee at n ≤ 40" is DOWNGRADED from "rejected" to "not detected by an unidentifiable test".**
+- **Confidence.** High that the K5 estimator is confounded (by reading the code). Moderate that the age decline is real (via W2-2).
+- **Strongest objection.** K5b's "winners only" check removes run-level heterogeneity, but not within-run burstiness of a single site.
+- **Unresolved.** Is there a density or kin term at n ≤ 40? Only per-site tracking can settle it (W2-2-EW snapshots or an E9-style occupancy replay).
+- **Next.** Add to the W2-2-EW spec: record a per-site write log (writer oid, target oid, epoch), so that age and density are identifiable. This is a reusable infrastructure point: **aggregate trajectories cannot carry age claims.**
+- **Effect on the N15/W2-3 resolution above.** The reconciliation still holds, but the "no Allee at n ≤ 40" premise is weaker. N15's kin protection could act at small n too. It is undetermined either way.
+
+
+### N17: why are "essential" 7ae3 positions 30/34/49 lost in C-CORE runaways? (Nestor, written at 01:19Z (clock))
+- **Question.** W2-3 K1 called positions 30/34/49 essential (E about 0.67), yet founder material there is lost in 24/27, 26/27 and 27/27 C-CORE runaways.
+- **Evidence.**
+  - Script and data: `N17_setter_turnover/scan.py` and `scan.json`.
+  - Design: a full 256-value substitution at positions 23, 30, 34, 49 and 52; 40 random partners; ZERO and RAND contexts; both sides; copy errors off; 24 s wall time.
+- **Results.**
+  1. **The founder converts ONLY from side 1:** 0.80 ZERO, 0.775 RAND. Side 0 gives 0.
+  2. **Position 30 (C6, ADD A,n) is NOT essential.** 198/255 substitutes are at or above the wildtype under ZERO, and only 22 are dead. K1's E = 0.67 came from **3 sampled values** (KOV = 3). That is a ruler artifact, of the small-sample kind.
+  3. **Position 34 (7A, LD A,D) is truly essential.** 218/255 substitutes are dead. Its founder-tag retention (0.04) nonetheless sits at the turnover background (non-core positions are about 0.1).
+  4. **Position 49 (66, LD H,(HL)): a single-byte SIDE SWITCH.** 0x59 (LD E,C) and 0x5C (LD E,H) give side-0 conversion **1.0** and side-1 conversion **0**, in both contexts. 219/255 other substitutes keep side-1 function under ZERO.
+  5. Controls: positions 23 and 52 (SELF and LDIR first bytes) are dead under every substitute.
+- **Inference.**
+  - The "essential yet lost" puzzle is mostly dissolved. Founder-tag retention at 30, 34 and 49 is at the run-wide turnover background (about 0.1), so they are not *specifically* lost. Only the SELF and LDIR world-op bytes rise above background, which is consistent with C-CORE.
+  - K1's essentiality vector is too coarse (3 values per position) to rank positions.
+  - New: one byte separates a side-1 copier from a side-0 copier. A side-0 copier runs first and is not exposed to the side-0 wrap hijack (W2-10). This is a candidate fitter morph and a candidate for the departure near depth 20. Passed to W2-17.
+- **Confidence.**
+  - High for the scan numbers.
+  - Moderate for "background turnover".
+  - Low for the side-switch mattering in the world.
+- **Strongest objection.**
+  - `freq` is the founder *tag*, not the byte value. A value-preserving rewrite (through a register path such as LD (BC),A at 42) would also read as "lost".
+  - Final-population genomes are not stored in the C-CORE records, so the value at 34/49 cannot be checked from disk.
+- **Unresolved.** Whether runaways actually carry 49 = 59/5C.
+- **Next.**
+  - W2-17 is to measure m for the 49→5C variant and to check any runaway snapshots.
+  - Any future C-CORE-like run should store the final consensus genome bytes, not only tag frequencies (instrument note).
