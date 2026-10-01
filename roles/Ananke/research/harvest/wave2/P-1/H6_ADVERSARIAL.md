@@ -96,3 +96,35 @@ It is supported only where an upper bound and a plant bracket the search outcome
 - Conversely, if plants fail broadly at uncapped rows, the honest reading is "undecided", not "physics".
   Plant failure is a lower bound only.
 OPEN: pending W2-D, W2-J and P-1b.
+
+## 10. v2 revision (after W2-D and P-1b, ~01:10Z)
+Section 6's prediction is confirmed: the plant's shaped fitness is 1.05 vs the champion's .50 (W2-D F2).
+The objective is not the barrier at FLIP @ d9cc. All of R, P, U and V(full) are excluded there, so the
+link is S. Its form is an isolated peak (6% of mutate() offspring retain function) plus an unclimbed
+.60 relay basin. That is ONE search seed.
+
+P-1b answers section 9's first branch for multi-hop:
+- 21 of 30 light-cone-reachable multi-hop RELAY rows are relay_flood-dead.
+- Conditional on a working plant, search succeeds 2/9 multi-hop vs 40/99 one-hop (not significant;
+  5 distinct conditions).
+- "Multi-hop is rare" is mostly a fact about the upper/lower bracket (plant viability under decay, caps,
+  async), not evidence of search limitation.
+
+New element neither A nor B had: the SELECTOR CEILING (W2-D F7). With 8 train worlds and 96 genomes,
+the max-of-96 chance accuracy is ~.55-.58. Competence below that is invisible to selection. Hence a
+fourth explanation (D): for many uncapped NULLs, the search was BLIND in the band where the stepping
+stones live (relay .60 for FLIP). That is neither "unreachable" nor "physics". It is a resolution limit
+of the objective's estimator (M = 8), a design parameter.
+
+Distinguishing prediction for D vs S-needle: raising M (train worlds) to 32 at fixed budget should raise
+FLIP success from the .60 basin if D holds, and should not if the needle alone binds. W2-D Q1 (seed
+relay_flood) and an M-sweep are the decisive cheap tests. Both are searches; NOT authorized in this
+harvest.
+
+v2 statement:
+"H6 holds at exactly one cell (FLIP @ d9cc) with the full link chain, and there it is S under a blind
+selector (M = 8). Across C1, NULLs are mostly bracketed by construction: light cone (XOR 43%, FLIP 29%),
+placement (MAJ), and plant viability (multi-hop). The residual uncapped, plant-viable NULLs are where
+search limitation is possible. Their placement is pending W2-J (XOR), W2-L (FLIP) and W2-M (MAJ). A
+family-level H6 claim requires >= 3 cells per family meeting W2-D's F-R/P, F-U and F-V, plus F-S
+(response to M/budget/seeding)."
