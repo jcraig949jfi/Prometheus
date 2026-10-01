@@ -1118,3 +1118,32 @@ Store final, and periodic, genome bytes plus registers in every world run. Five 
 3. W2-30's C3+AC sweep prediction.
 
 **This is the best future experiment not yet authorized.** Its core costs about 5 core-h.
+
+
+### W2-37: F\* K1 PASSED, the first frozen pass, and a weak one (report saved; Nestor attack). Written at 03:04Z (clock)
+
+**Result.**
+- **The comparison.** On fresh seeds generated after the freeze, FIELD BANK − FREE BANK on R2 gives:
+  - C−: +0.004, 95% CI [−0.014, +0.025];
+  - C+: −0.023, 95% CI [−0.043, −0.001].
+  - Both CIs lie inside ±0.05, so K1 is **PASSED** for BASE / 7ae3 / one bank.
+- **Process.** The test followed the rules:
+  - the freeze (32135ddc5) came before the prereg, and the prereg before the data;
+  - CI method and n were pre-specified;
+  - validation passed 15/15.
+
+**Nestor attack.**
+1. **The pass is one passed instance.** It is not a pass of F\*, which is universal over (g, c, W).
+2. **The frozen tolerance is weak against the base rate.** An absolute ±0.05 is coarse when R2 ≈ 0.04: the ratio CI is about 0.4-1.8, and a FIELD rate of 0 would also have passed. This is a design flaw in my W2-28-drafted block, and I accept it.
+   - The fix for future criteria is to freeze **relative (log-ratio) tolerances alongside absolute ones**.
+   - Lesson: *a tolerance must be sized against the base rate it is applied to.* This parallels the eligibility-count lesson.
+3. **Under C+ there is a small, significant FIELD deficit.** If real, density or kin lowers R2 slightly. That is the *opposite* direction from a kin "second regime", which agrees with W2-22.
+4. **K1 does not test much.** It compares rung 4 with rung 3. K4 (world vs FIELD BANK) is the substantive test and is UNRESOLVED (W2-29).
+
+**Standing of F\*** after Wave 2:
+- K1 PASSED (weak, one cell).
+- K2 bands frozen, untested in-world.
+- K3 untested.
+- K4 UNRESOLVED and underpowered (W2-29: 8/22 vs 5/33).
+- K5 untested in-world.
+- **F\* is now falsifiable and has passed one weak frozen test. No kill.**
