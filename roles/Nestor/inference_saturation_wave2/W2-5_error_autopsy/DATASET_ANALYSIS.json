@@ -1,0 +1,615 @@
+{
+ "n": 58,
+ "primary": [
+  [
+   "RCF",
+   11
+  ],
+  [
+   "SUM",
+   5
+  ],
+  [
+   "CMP",
+   4
+  ],
+  [
+   "LAC",
+   4
+  ],
+  [
+   "EAP",
+   4
+  ],
+  [
+   "SIM",
+   3
+  ],
+  [
+   "ABS",
+   3
+  ],
+  [
+   "SCH",
+   3
+  ],
+  [
+   "PHT",
+   3
+  ],
+  [
+   "NDP",
+   3
+  ],
+  [
+   "RLL",
+   3
+  ],
+  [
+   "UNW",
+   2
+  ],
+  [
+   "PAD",
+   2
+  ],
+  [
+   "SCP",
+   2
+  ],
+  [
+   "WOA",
+   2
+  ],
+  [
+   "MAV",
+   1
+  ],
+  [
+   "CAC",
+   1
+  ],
+  [
+   "RNG",
+   1
+  ],
+  [
+   "GEN",
+   1
+  ]
+ ],
+ "any": [
+  [
+   "RCF",
+   16
+  ],
+  [
+   "LAC",
+   8
+  ],
+  [
+   "SUM",
+   7
+  ],
+  [
+   "SIM",
+   5
+  ],
+  [
+   "EAP",
+   5
+  ],
+  [
+   "ABS",
+   5
+  ],
+  [
+   "WOA",
+   5
+  ],
+  [
+   "PHT",
+   5
+  ],
+  [
+   "CMP",
+   5
+  ],
+  [
+   "SCP",
+   4
+  ],
+  [
+   "NDP",
+   4
+  ],
+  [
+   "SCH",
+   3
+  ],
+  [
+   "PAD",
+   3
+  ],
+  [
+   "RLL",
+   3
+  ],
+  [
+   "GEN",
+   3
+  ],
+  [
+   "MAV",
+   2
+  ],
+  [
+   "UNW",
+   2
+  ],
+  [
+   "IDA",
+   2
+  ],
+  [
+   "CAC",
+   1
+  ],
+  [
+   "RNG",
+   1
+  ]
+ ],
+ "survival_by_class": {
+  "SIM": {
+   "n": 5,
+   "median_h": 72,
+   "max_h": 144,
+   "late_ge48h": 3
+  },
+  "MAV": {
+   "n": 2,
+   "median_h": 84.0,
+   "max_h": 96,
+   "late_ge48h": 2
+  },
+  "EAP": {
+   "n": 5,
+   "median_h": 120,
+   "max_h": 144,
+   "late_ge48h": 3
+  },
+  "ABS": {
+   "n": 5,
+   "median_h": 3,
+   "max_h": 24,
+   "late_ge48h": 0
+  },
+  "SUM": {
+   "n": 7,
+   "median_h": 18,
+   "max_h": 144,
+   "late_ge48h": 3
+  },
+  "SCH": {
+   "n": 3,
+   "median_h": 24,
+   "max_h": 192,
+   "late_ge48h": 1
+  },
+  "WOA": {
+   "n": 5,
+   "median_h": 4,
+   "max_h": 24,
+   "late_ge48h": 0
+  },
+  "CAC": {
+   "n": 1,
+   "median_h": 24,
+   "max_h": 24,
+   "late_ge48h": 0
+  },
+  "RCF": {
+   "n": 16,
+   "median_h": 7.0,
+   "max_h": 240,
+   "late_ge48h": 5
+  },
+  "PHT": {
+   "n": 5,
+   "median_h": 20,
+   "max_h": 24,
+   "late_ge48h": 0
+  },
+  "UNW": {
+   "n": 2,
+   "median_h": 40.0,
+   "max_h": 72,
+   "late_ge48h": 1
+  },
+  "CMP": {
+   "n": 5,
+   "median_h": 22,
+   "max_h": 120,
+   "late_ge48h": 1
+  },
+  "LAC": {
+   "n": 8,
+   "median_h": 21.0,
+   "max_h": 192,
+   "late_ge48h": 3
+  },
+  "IDA": {
+   "n": 2,
+   "median_h": 52.0,
+   "max_h": 96,
+   "late_ge48h": 1
+  },
+  "RNG": {
+   "n": 1,
+   "median_h": 96,
+   "max_h": 96,
+   "late_ge48h": 1
+  },
+  "PAD": {
+   "n": 3,
+   "median_h": 48,
+   "max_h": 144,
+   "late_ge48h": 2
+  },
+  "SCP": {
+   "n": 4,
+   "median_h": 33.0,
+   "max_h": 72,
+   "late_ge48h": 2
+  },
+  "NDP": {
+   "n": 4,
+   "median_h": 12.0,
+   "max_h": 54,
+   "late_ge48h": 1
+  },
+  "RLL": {
+   "n": 3,
+   "median_h": 72,
+   "max_h": 144,
+   "late_ge48h": 2
+  },
+  "GEN": {
+   "n": 3,
+   "median_h": 8,
+   "max_h": 240,
+   "late_ge48h": 1
+  }
+ },
+ "caught_by": [
+  [
+   "self",
+   35
+  ],
+  [
+   "fresh_worker",
+   13
+  ],
+  [
+   "other_seat",
+   8
+  ],
+  [
+   "audit",
+   2
+  ]
+ ],
+ "survival_by_catcher": {
+  "self": {
+   "n": 35,
+   "median_h": 18
+  },
+  "other_seat": {
+   "n": 8,
+   "median_h": 58.0
+  },
+  "audit": {
+   "n": 2,
+   "median_h": 15.0
+  },
+  "fresh_worker": {
+   "n": 13,
+   "median_h": 54
+  }
+ },
+ "early_lt12h": 25,
+ "late_ge48h": 19,
+ "recurrence_after_lesson": {
+  "SIM": {
+   "lesson": "2026-09-19",
+   "before_or_on": 2,
+   "after": 3,
+   "after_ids": [
+    "E-02",
+    "E-04",
+    "E-18"
+   ]
+  },
+  "MAV": {
+   "lesson": "2026-09-23",
+   "before_or_on": 2,
+   "after": 0,
+   "after_ids": []
+  },
+  "RCF": {
+   "lesson": "2026-09-04",
+   "before_or_on": 1,
+   "after": 15,
+   "after_ids": [
+    "E-09",
+    "E-12",
+    "E-19",
+    "E-21",
+    "E-27",
+    "E-28",
+    "E-32",
+    "E-41",
+    "E-42",
+    "E-44",
+    "E-45",
+    "E-49",
+    "E-51",
+    "E-53",
+    "E-57"
+   ]
+  },
+  "ABS": {
+   "lesson": "2026-09-18",
+   "before_or_on": 1,
+   "after": 4,
+   "after_ids": [
+    "E-05",
+    "E-09",
+    "E-27",
+    "E-56"
+   ]
+  },
+  "IDA": {
+   "lesson": "2026-09-24",
+   "before_or_on": 2,
+   "after": 0,
+   "after_ids": []
+  },
+  "UNW": {
+   "lesson": "2026-09-24",
+   "before_or_on": 2,
+   "after": 0,
+   "after_ids": []
+  },
+  "LAC": {
+   "lesson": "2026-09-24",
+   "before_or_on": 3,
+   "after": 5,
+   "after_ids": [
+    "E-29",
+    "E-43",
+    "E-44",
+    "E-45",
+    "E-49"
+   ]
+  },
+  "SUM": {
+   "lesson": "2026-09-22",
+   "before_or_on": 2,
+   "after": 5,
+   "after_ids": [
+    "E-22",
+    "E-24",
+    "E-38",
+    "E-47",
+    "E-51"
+   ]
+  },
+  "PHT": {
+   "lesson": "2026-09-24",
+   "before_or_on": 3,
+   "after": 2,
+   "after_ids": [
+    "E-30",
+    "E-36"
+   ]
+  },
+  "SCP": {
+   "lesson": "2026-09-28",
+   "before_or_on": 4,
+   "after": 0,
+   "after_ids": []
+  },
+  "PAD": {
+   "lesson": "2026-09-19",
+   "before_or_on": 1,
+   "after": 2,
+   "after_ids": [
+    "E-23",
+    "E-24"
+   ]
+  },
+  "SCH": {
+   "lesson": "2026-09-23",
+   "before_or_on": 3,
+   "after": 0,
+   "after_ids": []
+  },
+  "RNG": {
+   "lesson": "2026-09-28",
+   "before_or_on": 1,
+   "after": 0,
+   "after_ids": []
+  },
+  "EAP": {
+   "lesson": "2026-09-28",
+   "before_or_on": 5,
+   "after": 0,
+   "after_ids": []
+  },
+  "CMP": {
+   "lesson": "2026-09-24",
+   "before_or_on": 2,
+   "after": 3,
+   "after_ids": [
+    "E-35",
+    "E-37",
+    "E-50"
+   ]
+  },
+  "NDP": {
+   "lesson": "2026-09-25",
+   "before_or_on": 2,
+   "after": 2,
+   "after_ids": [
+    "E-43",
+    "E-50"
+   ]
+  }
+ },
+ "primary_by_phase": {
+  "P1 09-01..22 (Z80A)": [
+   [
+    "SIM",
+    3
+   ],
+   [
+    "ABS",
+    3
+   ],
+   [
+    "SCH",
+    3
+   ],
+   [
+    "RCF",
+    2
+   ],
+   [
+    "MAV",
+    1
+   ],
+   [
+    "SUM",
+    1
+   ],
+   [
+    "CAC",
+    1
+   ],
+   [
+    "UNW",
+    1
+   ],
+   [
+    "CMP",
+    1
+   ],
+   [
+    "PAD",
+    1
+   ],
+   [
+    "LAC",
+    1
+   ]
+  ],
+  "P2 09-23..25 (C9/C9X)": [
+   [
+    "EAP",
+    3
+   ],
+   [
+    "RCF",
+    3
+   ],
+   [
+    "LAC",
+    2
+   ],
+   [
+    "PHT",
+    2
+   ],
+   [
+    "SUM",
+    2
+   ],
+   [
+    "NDP",
+    2
+   ],
+   [
+    "CMP",
+    1
+   ],
+   [
+    "UNW",
+    1
+   ],
+   [
+    "RNG",
+    1
+   ],
+   [
+    "PAD",
+    1
+   ],
+   [
+    "SCP",
+    1
+   ],
+   [
+    "RLL",
+    1
+   ]
+  ],
+  "P3 09-26..30 (W1/P2/ARC3/harvest)": [
+   [
+    "RCF",
+    6
+   ],
+   [
+    "WOA",
+    2
+   ],
+   [
+    "CMP",
+    2
+   ],
+   [
+    "RLL",
+    2
+   ],
+   [
+    "SUM",
+    2
+   ],
+   [
+    "SCP",
+    1
+   ],
+   [
+    "PHT",
+    1
+   ],
+   [
+    "EAP",
+    1
+   ],
+   [
+    "LAC",
+    1
+   ],
+   [
+    "GEN",
+    1
+   ],
+   [
+    "NDP",
+    1
+   ]
+  ]
+ }
+}

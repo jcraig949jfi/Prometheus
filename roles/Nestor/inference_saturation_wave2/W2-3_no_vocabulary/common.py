@@ -145,3 +145,28 @@ def equivalence(r, trials=200, seed=7):
 
 def rand_genome(rng, n=64):
     return bytes(rng.randrange(256) for _ in range(n))
+
+
+import statistics as _st
+
+
+def spearman(a, b):
+    def rk(v):
+        o = sorted(range(len(v)), key=lambda i: v[i])
+        r = [0.0] * len(v)
+        i = 0
+        while i < len(o):
+            j = i
+            while j + 1 < len(o) and v[o[j + 1]] == v[o[i]]:
+                j += 1
+            for k in range(i, j + 1):
+                r[o[k]] = (i + j) / 2
+            i = j + 1
+        return r
+    ra, rb = rk(a), rk(b)
+    ma, mb = _st.mean(ra), _st.mean(rb)
+    num = sum((x - ma) * (y - mb) for x, y in zip(ra, rb))
+    den = (sum((x - ma) ** 2 for x in ra) * sum((y - mb) ** 2 for y in rb)) ** 0.5
+    return num / den if den else float("nan")
+
+

@@ -14,7 +14,7 @@ in completion order.
 - unresolved issue;
 - next questions generated.
 
-## Active queue (opened 00:30 UTC)
+## Active queue (opened about 00:25Z)
 
 | id | investigation | directive item | owner |
 |---|---|---|---|
@@ -31,7 +31,7 @@ in completion order.
 
 ## Entries
 
-### W1-S3: pairwise-knockout epistasis (T4(c)). Closed 00:55Z
+### W1-S3: pairwise-knockout epistasis (T4(c)). Closed before 00:42Z (clock-checked; earlier guessed times removed)
 - **Question.** Do state-free genomes carry multi-site organization that single knockouts miss?
 - **Evidence.** 48 state-free + 48 state-dependent genomes (FOR panel), 100 dispensable pairs each, 3 draws, re-assay. Preregistration written before computing. Positive control: a redundant-setter construct. Negative control: passenger pairs of a minimal copier. See `inference_harvest_2026-09-30/forensics/FORENSIC_PAIRWISE_EPISTASIS.md`.
 - **Result.** **T4(c) DEAD under the frozen rules.**
@@ -44,7 +44,7 @@ in completion order.
 - **Unresolved.** Establishment-level epistasis: a knockout pair that leaves the screens intact but kills the two-step map.
 - **Next questions.** Does any pair change S1b's two-step predictor while leaving the screens intact? That is cheap and static, and it overlaps W2-4.
 
-### N1: foreign-cell "victim magnet" (Nestor, primary session). Closed 00:58Z
+### N1: foreign-cell "victim magnet" (Nestor, primary session). Closed before 00:42Z (clock-checked; earlier guessed times removed)
 - **Question.** Revision 2 moved the 9cba/e160 magnet to "unexplained", following RT B1. Is that right?
 - **Evidence.** `inference_saturation_wave2/N1_foreign_magnet/magnet_rate.py` and `.json`. Static p11.interact with the C-SWAP-ACQUIRE cells, stock VM, ATOMIC predecessor criterion, 1,500 interactions per condition, attribution by `prov`.
 - **Result.**
@@ -69,7 +69,7 @@ in completion order.
   - Does LDIR-hijack exposure explain founder loss in X-TICKET (the 28%)?
   - Does it predict which C-ATOMIC C2 specimens lose their founder?
 
-### N2: X-TICKET founder loss at epoch 1 (Nestor). Closed 01:05Z
+### N2: X-TICKET founder loss at epoch 1 (Nestor). Closed before 00:42Z (clock-checked; earlier guessed times removed)
 - **Question.** Does the side-0 hijack account for the 28% founder loss at epoch 1, which no experiment named?
 - **Evidence.** N1's own-cell rate: 320/750 = 0.43 per side-0 interaction (zero context, founder intact), 0 with SELF knocked out. X-TICKET: 36/128 = 0.28 (binomial 95% CI about 0.20-0.36).
 - **Result.** The founder is at side 0 with p = 0.5 at epoch 1, so the predicted loss is about 0.5 × 0.43 = **0.21**. That is inside the observed CI.
@@ -79,7 +79,7 @@ in completion order.
 - **Objection.** BASE erosion adds other loss routes, and the predecessor criterion under BASE differs slightly.
 - **Next questions.** Does a hijack-exposure-adjusted founder ticket reconcile X-TICKET's branching prediction (0.43 vs 0.078 observed wins)?
 
-### N3: the shape of depth after saturation (Nestor). Closed 01:08Z
+### N3: the shape of depth after saturation (Nestor). Closed before 00:42Z (clock-checked; earlier guessed times removed)
 - **Question.** Is post-saturation depth linear turnover, as both adversaries assumed?
 - **Evidence.** `c9x/x_runaway/RESULTS.json` series for 2 runaways, every 20 epochs.
 - **Result.** No, it is not linear.
@@ -96,7 +96,7 @@ in completion order.
   - Fit record growth on C-CORE and X-CORE-TIME (do their files carry depth series?).
   - Is the plateau length set by the certification-break rate (X-CERT-BREAK)?
 
-### N4: copy errors are the dominant mutational supply. The U-T5 "8x ≈ 7x" agreement is likely coincidental (Nestor). Closed 01:12Z
+### N4: copy errors are the dominant mutational supply. The U-T5 "8x ≈ 7x" agreement is likely coincidental (Nestor). Closed before 00:42Z (clock-checked; earlier guessed times removed)
 - **Question.** RT M1 objected that the 7ae3 event is 91% MKL, so OPERAND supply is not its source. What *is* MKL made of?
 - **Evidence.**
   - `z8.py:413-417`: a copy error flips a random bit of **any** copied byte at rate cmr.
@@ -116,7 +116,7 @@ in completion order.
   - Decompose the 8 events' state-free-defining bytes into MUT vs MKL origin.
   - Revise U-T5 and the T1 text.
 
-### N5: the cell axis (CF vs C7). Does mutation-operator access to opcodes let founders escape self-poisoning? (Nestor) Closed 01:25Z
+### N5: the cell axis (CF vs C7). Does mutation-operator access to opcodes let founders escape self-poisoning? (Nestor) Closed before 00:42Z (clock-checked; earlier guessed times removed)
 - **Question.**
   - S1: the interaction map cannot see the cell axis; CARRY establishment is 0.36 (CF) vs 0.16 (C7).
   - C-A3: internalization ffa6 7 vs 7ae3 1.
@@ -135,7 +135,7 @@ in completion order.
 - **Unresolved.** The cell-axis establishment difference remains unexplained. Remaining candidates: the founder's *own* world mutations destroying its copy setup more or less often under each operator (degradation, not escape); a migration side effect on validation/COEVO_ENV spec; something not yet seen in the code.
 - **Next question.** Measure the per-mutation *destruction* rate of zero-context competence under each operator; static and cheap.
 
-### N6 + N7: the cell axis has no static mechanism, and the niche component has none in code (Nestor). Closed 01:45Z
+### N6 + N7: the cell axis has no static mechanism, and the niche component has none in code (Nestor). Closed before 00:42Z (clock-checked; earlier guessed times removed)
 - **Question.** What makes CF establish more than C7 (BRIDGE PERSIST: C7 4/32, C7S 9/32, C7N 10/32, CF 14/32; S1's CARRY 0.16 vs 0.36)?
 - **Evidence.**
   - N6 `destroy.py`: per-mutation destruction of zero-context copying.
@@ -166,7 +166,7 @@ in completion order.
 - **Testable on existing data?** Partly. In X-MAT replay tags, whether a site's MUT/MKL composition correlates with free-share volatility needs per-site data that was not stored. The P-11 event rate per epoch after saturation is in X-RUNAWAY series (about 90-100 per epoch). What matters is how many of those are true content changes.
 - **Next question.** Measure, in one instrumented replay, the fraction of post-saturation accepted births whose victim differed by ≥ 10% (all, by definition) vs the rate of rejected near-kin copies. The ratio gives the effective selection rate. A design item.
 
-### N9: static decomposition of ATOMIC. The world's fidelity gate carries the heredity (Nestor). Closed 01:55Z
+### N9: static decomposition of ATOMIC. The world's fidelity gate carries the heredity (Nestor). Closed before 00:42Z (clock-checked; earlier guessed times removed)
 - **Question.**
   - What in the composite ATOMIC rule produces C-ATOMIC C1 (46/80 vs 1/80)?
   - Can the single-interaction map predict BASE as well as ATOMIC? RT B7 found ADV2's BASE prediction (0.26) missed the observed 0.03.
@@ -194,3 +194,52 @@ in completion order.
 - **Next questions.**
   - Run the same decomposition on S1's 16 donors × policies. Does WRITE-GATED collapse for all of them?
   - Frozen prediction for K3: a WRITE-GATED arm of C-ATOMIC would give ≤ 5/80 runaways. A design item, with a static prediction now on record.
+
+### N10: the N9 decomposition across 16 dense panel donors (Nestor). Closed before 00:42Z (clock-checked; earlier guessed times removed)
+- **Evidence.** `N9_atomic_decomp/panel_decomp.py` and `panel_decomp.json`.
+  - C-ZERO-SPECIFIC donors, CF cell, dense VM, ZERO context, copy errors at the cell rate.
+  - 600 interactions per donor.
+  - Compared against the observed ZERO S5 (3 runs per donor).
+- **Result.**
+  - BASE is subcritical or near-critical for every donor: m 0.65-1.05, P ≈ 0 except 2 donors at ≤ 0.10. BASE never establishes, as the world shows.
+  - ATOMIC predicts P 0.40-1.00, mean 0.73. The observed ZERO mean is 0.54 (26/48).
+  - WRITE-GATED drops the mean to 0.19; 4 donors fall to 0.
+  - **Within-ZERO rank correlation with observed: ρ ≈ 0 for every rule** (−0.08, −0.01, 0.07). The high-predicted failures are donors 0, 2 and 7, which S1 identified as sterile-copy donors.
+- **Reading.**
+  - The world's write-back rule sets the regime: BASE ≈ 0, ATOMIC about 0.5-0.7. The fidelity clause is the dominant component across the panel, not just for 7ae3.
+  - **Per-donor rank within a regime needs the two-step "do the copies copy" term.** Write-back semantics do not supply it. This confirms S1 from a different construction.
+- **Confidence.** Moderate-high.
+- **Next questions.**
+  - Combine N9's W semantics with S1's children's law. Does a two-step + correct-W map recover the within-ZERO ranks? S1's post-hoc repair already did (ρ 0.81). Its out-of-sample test (S1b) passed on W1 donors, where the content was mostly self-poisoning.
+  - An out-of-sample test of the two-step term within ZERO specifically: which panel? Fresh donors would need new acquisitions (a world run), so this is a design item.
+
+
+> Correction (00:42Z, from `date -u`): earlier entries carried invented 'Closed HH:MMZ' times that ran ahead of the
+> clock. They are replaced. From now on, times come from `date -u` only (the same lesson as Harmonia #1057's WORK_STATE note).
+
+### W2-9: statistical review of the CONFIRMED verdicts (worker; report saved by Nestor). Closed by 00:55Z (clock-checked at save)
+- **Result.**
+  - All 20 frozen statistics reproduce exactly.
+  - ROBUST: 8 decisions in 7 experiments.
+  - FRAGILE: SEARCH, RUNAWAY, CORE, A3.
+  - ARTIFACT-RISK: H1R, X-MAT, and C-ZERO's reading.
+  - Uninformative nulls: ENERGY_FOR_DEPTH, NORECOMB, ATOMIC C2. SWAP-ACQUIRE is a near-miss.
+  - Expected false CONFIRMEDs about 0.02-0.05.
+  - New: the C9-H1R 2×2 is degenerate **by design** (M = −I/2 always).
+- **See** `W2-9_stats_review/REPORT.md`.
+- **Attacked by Nestor: N11** (below) confirms the C-ZERO selection argument.
+
+### N11: are the C-ZERO-SPECIFIC donors competent from 0x5A at all? (Nestor). Clock 00:58Z
+- **Evidence.** `N5_cell_axis/const_screen.py` and `const_screen.json`. The 16 donors, dense CF cell, both sides, 20 random partners per entry state.
+- **Result.**
+  - ZERO-competent: 16/16.
+  - 0x5A-competent: **2/16** (donors 1 and 15).
+  - RANDOM-competent: 2/16 (the same two).
+- **Reading.** C-ZERO-SPECIFIC's ZERO 26/48 vs CONST 2/48 is **largely built in by the zero-state donor screen**. 14 of 16 donors cannot copy from 0x5A at all, so CONST success was impossible for them. The 2 that can carry all non-zero successes, as D U4 and S1 had found.
+  - The verdict's statistic is correct.
+  - Its reading, "zero is special for establishment", is mostly a statement about the screen.
+  - The independent support for zero-specialization is X-A3-FAIR's treatment-blind ruler: zero-competent donors are discovered first even in the 5A world, and are later replaced by K_ONLY. That is the claim to keep. C-ZERO should be cited as "establishment in the world the donors were screened for".
+- **Confidence.** High.
+- **Next questions.**
+  - Re-score C-ZERO restricted to the 2 dual-competent donors: within-donor ZERO vs CONST.
+  - Does any other P2/W1 contrast use a screen-selected panel in the same way? X-P2-REGSTATE and BRIDGE use similar panels.

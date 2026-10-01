@@ -12,6 +12,7 @@ copy mutation 0.002, fresh (zero) entry state.
 
 Layout spec (dict, all optional):
   tape_len  int   (default 128 = _pow2(2n))           RING192 uses 192: halves at 0 and 64, 64-byte zero gap
+  gap       "ZERO" | "RAND"                            RAND: bytes beyond 2n are uniform random per draw
   order     "AB" | "RAND"                              RAND: side order drawn per draw (p = 1/2 partner first)
   regs      "ZERO" | "RAND"                            RAND: both contexts' entry registers + flags uniform per draw
   aoff      "NONE" | "ROT" | "REL"                     needs the AOFF vm. ROT: r ~ U[0,128) per draw, aoff = -r for
@@ -52,6 +53,9 @@ def _layout_draw(layout, seed, k):
         d["flags"] = tuple((lr.randrange(2), lr.randrange(2)) for _ in range(2))
     if layout.get("aoff") == "ROT":
         d["r"] = lr.randrange(128)
+    d["gap"] = None
+    if layout.get("gap") == "RAND":
+        d["gap"] = bytes(lr.randrange(256) for _ in range(layout.get("tape_len", 128) - 2 * N))
     return d
 
 
@@ -61,6 +65,8 @@ def interact(vm, *, n, tape_len, ga, gb, st_a, st_b, budget, ops_mask, cmr, rng,
     tape = bytearray(tape_len)
     tape[0:len(ga)] = ga
     tape[n:n + len(gb)] = gb
+    if ld.get("gap") is not None:
+        tape[2 * n:] = ld["gap"]
     if victim_bytes is not None:
         v0 = 0 if victim_side == 0 else n
         tape[v0:v0 + n] = bytes(victim_bytes)[:n]

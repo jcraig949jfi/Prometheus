@@ -172,12 +172,12 @@ def main():
         agg["wt"] = {k: med([g["wt"][k] for g in gs]) for k in ("Z", "R", "K", "C", "P2")}
         if any("suff" in g for g in gs):
             agg["suff"] = {}
-            for sname in ("S_conv", "S_convp", "S_est", "S_exec"):
+            for sname in ("S_conv", "S_est", "S_exec"):
                 v = [g["suff"][sname] for g in gs if "suff" in g]
                 agg["suff"][sname] = {"n": med([x["n"] for x in v]), "Z_ratio": med([x["Z_ratio"] for x in v]),
                                       "C_ratio": med([x["C_ratio"] for x in v]), "K_ratio": med([x["K_ratio"] for x in v]),
                                       "P2_ratio": med([x["P2_ratio"] for x in v]),
-                                      "genomes_Z_ge_half_all_draws": sum(1 for x in v if x["draws_Z_ge_half"] == 4),
+                                      "genomes_Z_ge_half_all_draws": sum(1 for x in v if x["draws_Z_ge_half"] == 2),
                                       "genomes_Z_ratio_ge_half": sum(1 for x in v if (x["Z_ratio"] or 0) >= 0.5),
                                       "genomes_C_ratio_ge_half": sum(1 for x in v if x["C_ratio"] is not None and x["C_ratio"] >= 0.5),
                                       "genomes_C_defined": sum(1 for x in v if x["C_ratio"] is not None),
