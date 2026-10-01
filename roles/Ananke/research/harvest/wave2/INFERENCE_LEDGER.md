@@ -124,3 +124,44 @@ unresolved | next. Workers' ledger blocks are folded in when their reports are d
   tests/test_inference_w2h.py (6 fail before, 7 pass after).
 - Not applied: b2_seed_key (SEMANTIC, gated default-off). Deferred.
 - Queue replenished: W2-K (C1b and high-p fragility under BOOTT/t; census class keep probabilities).
+
+### P-1b (principal): does multi-hop scarcity reflect search, or plant viability?
+- Evidence: RELAY kind=evolve rows with light-cone bound >= .95; recorded result.plant (relay_flood,
+  campaign.plant_viability). My eager re-evaluation of 16 rows reproduced the recorded plant acc to
+  4 decimals, so the recorded field is used and the census was stopped as redundant.
+- Result [V], SIGNAL rate by hop demand and plant viability:
+  | hop demand | plant | rows | distinct conditions | SIGNAL |
+  |---|---|---|---|---|
+  | one-hop | ok | 99 | 23 | 40 (40%) |
+  | multi-hop | ok | 9 | 5 | 2 (22%) |
+  | one-hop | fail | 40 | 33 | 2 |
+  | multi-hop | fail | 21 | 21 | 0 |
+  Of 30 reachable multi-hop rows, 21 are relay_flood-dead (mostly decay_shift > 0, cap/aloha, async).
+  "Multi-hop is rare" is therefore mostly a plant-viability/physics fact. Conditional on a working
+  plant, the one-hop vs multi-hop search gap is small and not significant (n = 9, 5 conditions).
+- Also: relay_flood's own A-wave viability is only 8/27 one-hop and 3/23 multi-hop. A-wave physics are
+  mostly hostile to C1's only RELAY plant.
+- Confidence: high on the counts; low on any multi-hop search inference (n = 9).
+- Objection: relay_flood failure is a lower bound (P-2 is testing decay-refresh). If a refresh plant
+  revives the decay rows, the 21 "plant-dead" multi-hop rows move to "plant-ok, search-missed".
+- Next: the P-2 matched decay counterfactual (running).
+
+### W2-D (deposited wave2/W2-D/REPORT.md): search vs physics chain
+- R/S/U/P/V instruments are defined exactly. Known-answer gate: C1 champion reproduced bit-for-bit.
+- FLIP @ d9cc 6f82f9c7:
+  - R excluded, P excluded;
+  - V excluded for full competence (the plant gets SIGNAL/COMM_DEP);
+  - U excluded over the tested horizon (seeded plant rank 0 in 2/2 runs, 4 and 2 generations;
+    extrapolated loss <= ~1% over 36 generations);
+  - objective ranks the plant first (1.05 vs .50; the bonus can never reorder a gap > .12).
+  - => link S. The plant is an isolated peak (6% of mutate() offspring keep function).
+  - A relay_flood basin at .602 [.549, .650] also exists and was not reached.
+  - n = 1 search seed.
+- The selector cannot see competence below ~.57 (M = 8 winner's curse). Weak partial solutions are not
+  retained; strong ones are.
+- No "found then lost" signature in any comm family (0 rows); 2 in HOLD.
+- Falsifiers F-R/P, F-U, F-V and F-S are stated. A family-level H6 needs >= 3 cells per family meeting
+  all of them; none does yet.
+- Ruler: FLIP SIGNAL needs a relay-only control (relay scores .602 and misses SIGNAL by .001).
+- Queue replenished: W2-L (FLIP uncapped placement + relay-only control) and W2-M (MAJ integration
+  plant, INTEGRATION attainability).
