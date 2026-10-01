@@ -88,7 +88,7 @@ About 3 CPU-hours went on read-only analysis and single-genome or single-interac
 ## 3. What remains genuinely unexplained
 
 1. **The 16000006 multi-step walk** to a destination phase reset (`LD DE,3200`). Single knock-ins give 0/5. Do such walks recur?
-2. **The foreign-cell victim magnet** (9cba/e160: 100/240 founder overwrites vs 0/240 for random implants). The SELF hijack cannot operate there.
+2. **The foreign-cell victim magnet** (9cba/e160: 100/240 founder overwrites vs 0/240 for random implants). Wave-2 N1 finds a partner hijack of the founder's *LDIR*, not its SELF: about 0.1-0.5% per interaction, removed entirely by LDIR knockout. Integrated over a run, that is the right order of magnitude, though the integrated hazard over-predicts loss by 3-6x. Plausible, not demonstrated in-world.
 3. **ffa6 27000053.** It took over (409k org-epochs of exposure) and never became state-free.
 4. **The cell axis the interaction map cannot see.** CARRY establishment is 0.16 in C7 vs 0.36 in CF.
 5. **The k = 4 excess at depth ≥ 5**, with no excess at the runaway endpoint.
@@ -100,7 +100,7 @@ About 3 CPU-hours went on read-only analysis and single-genome or single-interac
 
 The aim is three tests of T4's untested distinctive predictions. If all come back null, with rulers shown able to fire, "reproductive organization" reduces to an evolving compact copy setup in a world that supplies the rest.
 
-- **S3: pairwise-knockout epistasis.** Static. Already run in this harvest; see §8.
+- **S3: pairwise-knockout epistasis.** Static. DONE: T4(c) DEAD (§8).
 - **E4: GENEALOGY.** Exact replays of 18 existing seeds, about 6 core-h. It counts origins of state-freedom per run, tests whether independent origins share a transmitted mechanism (T4(b)), and resolves whether non-founder compartments acquired the trait or were founded with it.
 - **E1: RECONSTITUTION.** Redesigned with a HOME arm, because T4 predicts no advantage in a naive population. It uses a content-ancestry ruler, gated on a real replay, and scrambles bytes outside the *state-free* knockout set. Cost: E1a about 7 core-h, E1b about 14.
 
@@ -151,4 +151,17 @@ Also: the static map harness (`forensics/map_common.py` etc.) is a reusable geno
 
 ## 8. S3 pairwise-epistasis result
 
-*(Pending at the time of writing. Recorded in the Wave-2 ledger, `roles/Nestor/inference_saturation_wave2/`, when it lands.)*
+**T4(c) DEAD under the frozen rules.**
+- **Report:** `forensics/FORENSIC_PAIRWISE_EPISTASIS.md`. The preregistration was written before computing.
+- **Panel:** 48 state-free + 48 state-dependent genomes, 100 dispensable pairs each, 3 draws, re-assay.
+- **Controls:** both passed; the redundant-setter construct is lethal only as a pair.
+- **Rates:**
+  - state-free 0.77x the null vs state-dependent 0.71x;
+  - the state-free/state-dependent ratio is 0.56, and 1.01 in the zero-null stratum;
+  - strict synthetic lethality is 3.7% in both groups, with no recurring motif.
+- **Reading:** state-freedom carries no extra multi-site organization at the pair level.
+- **Limits:**
+  - pairwise and static only;
+  - the null over-predicts;
+  - establishment-level epistasis is untested.
+- **Consequence:** of T4's three distinctive predictions, (c) is now killed. (a) home advantage and (b) shared mechanism across independent origins remain untested; E1 and E4 test them.

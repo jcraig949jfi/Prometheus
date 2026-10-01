@@ -216,7 +216,7 @@ These are proposals for FINDINGS after review. No frozen verdict of record is re
 ## 5. What remains genuinely unexplained
 
 1. **The 16000006 path.** Why a multi-step walk ended at a destination phase reset, and whether such walks recur. The C-A3 events have no per-event mechanism.
-2. **The foreign-cell victim magnet.** 9cba/e160: founder overwritten in 100/240 runs vs 0/240 for a random implant. The SELF hijack cannot operate there: single-interaction rate ≤ 1.5% (red-team R2).
+2. **The foreign-cell victim magnet.** 9cba/e160: founder overwritten in 100/240 runs vs 0/240 for a random implant. Wave-2 N1 shows it is a partner hijack of the founder's **LDIR**. The rate is about 0.1-0.5% per interaction, all of it removed by LDIR knockout. Integrated over a run that is the right order. RT B1 had compared a per-interaction rate with a per-run frequency. Not demonstrated in-world, and the integrated hazard over-predicts loss by 3-6x.
 3. **Why ffa6 27000053 took over** (L = 1.0, exposure 409k) and never became state-free: P ≈ 0.055 under the ffa6 hazard.
 4. **The k = 4 excess** at depth ≥ 5.
 5. **Founder-less runaways, C5 dominance in 14000013, AN8 self-conversion.**
