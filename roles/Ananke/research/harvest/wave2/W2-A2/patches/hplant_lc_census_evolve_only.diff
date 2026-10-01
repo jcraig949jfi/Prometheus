@@ -1,0 +1,13 @@
+diff --git a/roles/Ananke/research/harvest/H-PLANT/lc_census.py b/roles/Ananke/research/harvest/H-PLANT/lc_census.py
+index 8f94dfc3b..a144ea513 100644
+--- a/roles/Ananke/research/harvest/H-PLANT/lc_census.py
++++ b/roles/Ananke/research/harvest/H-PLANT/lc_census.py
+@@ -9,7 +9,7 @@ from lightcone import bound
+ ck = Clock()
+ out = []
+ for r in hc.rows():
+-    if r["wave"] == "A0" or r["env"]["family"] not in ("XOR", "FLIP", "RELAY"):
++    if r["kind"] != "evolve" or r["env"]["family"] not in ("XOR", "FLIP", "RELAY"):   # docstring: EVOLVE rows
+         continue
+     b = bound(r["cell_id"], M=64)
+     held = r["result"].get("held") or {}

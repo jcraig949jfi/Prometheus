@@ -1,0 +1,17 @@
+diff --git a/prometheus/ananke/campaign.py b/prometheus/ananke/campaign.py
+index 231f9a3cd..4dcf5d432 100644
+--- a/prometheus/ananke/campaign.py
++++ b/prometheus/ananke/campaign.py
+@@ -435,8 +435,10 @@ def classify(row: dict, cfg: CampaignConfig) -> dict:
+            "comm_family": comm_family}
+     if fam == "MAJ":
+         lab["INTEGRATION_BEYOND_ONE_SENSOR"] = bool(h["lo99"] > 0.70)
+-    tw = row["result"].get("twin", {})
+-    lab["REACH_BEYOND_HOP"] = bool(tw.get("beyond_hop", 0) >= 0.5)
++    # A row with no twin assay (kind "transfer") has no reach reading: record
++    # None (not measured), never False (measured and absent).
++    tw = row["result"].get("twin")
++    lab["REACH_BEYOND_HOP"] = None if tw is None else bool(tw.get("beyond_hop", 0) >= 0.5)
+     return lab
+ 
+ 
