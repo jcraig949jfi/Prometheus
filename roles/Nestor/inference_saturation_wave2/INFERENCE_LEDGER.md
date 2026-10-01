@@ -572,3 +572,45 @@ in completion order.
 - **Nestor note.**
   - These are **proposals**. FINDINGS frozen verdicts are not rewritten. At closing, a dated "Wave-2 audit: proposed corrections" appendix will point to W2-15 and W2-18.
   - P13 cites W2-12's *unreported draft* (pooled 798 single-founder runs, min p 0.105). It is not to be used until W2-12 reports.
+
+
+### W2-4 (causal minimality) and W2-7 (alien physics): reports saved; Nestor cross-attack. Written at 01:38Z (clock)
+
+**W2-4 result**
+- Conversion = a primitive byte + about 4 instructions (~6.5 function bytes) + an inert path. Random-background refill keeps 8/40 converting; NOP refill keeps 34/40.
+- Establishment = conversion + independence from inherited registers. It is usually fused into constant loads; otherwise 0-3 "washer" moves. Knocking a washer out takes carried conversion to 0.00 (22/22).
+- SD genomes rely on the environment: zero entry registers (12/15) and a zero partner (9/15).
+- Method finding: a random-value knockout is a corruption screen, not a function screen. 36% of "necessary" bytes are corruption-only, and only 12/26 EST calls survive a second replacement value. **This applies to K1 / S3 / FOR / core_map retroactively.**
+
+**W2-7 result**
+- Physics alone moves the random copier rate by more than 1,000x. RING192 is ~40x stock, with a 2-byte copier. SELFCOPY makes 23% of random genomes competent.
+- Evolved copiers rely on absolute placement (ROTATE 0/128), the 7-bit wrap (7/128), the block op (0/128) and slice 300 (66/128 survive 5x). Under HARV, 128/128 survive, so they do NOT need partner execution.
+- New supplied pathways:
+  - S8: the long count is the terminator (113/128);
+  - S9: slice length;
+  - S10: run-first protects the donor (16/200 vs 0/200).
+- REGRAND reproduces the state-free classifier (48+3).
+
+**Cross-links (Nestor)**
+1. **Four independent lines converge on one mechanism.** Partner execution of the donor's code after the pc wrap:
+   - W2-16: the side-1 CVT failure is a first-mover smear;
+   - W2-4: SD genomes need a zero partner (9/15);
+   - W2-7 S10: run-first protects; HARV removes partner execution and *gains* side-1 copiers;
+   - N1/N2: the magnet and hijack.
+
+   W2-7's HARV_HALT is therefore the **clean causal test of the wrap/partner-execution field**. It predicts that under HARV:
+   - side-1 copiers pass CVT-R (static, cheap);
+   - the foreign-cell magnet vanishes;
+   - the X-TICKET epoch-1 loss vanishes.
+
+   The first prediction is static and can be checked now. It is a candidate for the next worker.
+2. **N17 and W2-7 S10 qualify each other.**
+   - The 7ae3 position-49 side switch gives a side-0 converter with m_base 1.20 vs 0.92 (RAND).
+   - S10 says part of any side-0 advantage is run-first protection, not address geometry.
+   - Both point the same way: a side-0 morph is fitter under BASE because it runs first.
+3. **W2-4's corruption-vs-deletion finding hits my N17 interpretation.**
+   - "Essential" in K1 (and in my N17 scan) is corruption-essential. Position 34 (218/255 dead) may be deletion-tolerant.
+   - Minor: it does not change the side-switch or supercritical-neighbour results, which are gain-of-function measures.
+4. **W2-7 pushes "2e-4 is generic" into "2e-4 is the encoding".**
+   - Every quantitative rarity claim in FINDINGS (minimal_prior, the ARC3 accessibility delegate) needs the scope "under stock Z8 physics: 128-ring, block op, slice 300".
+   - That is a wording proposal for the closing appendix.

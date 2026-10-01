@@ -8,8 +8,8 @@ panel     the 128 COMPETENT dense genomes of forensics/core_map.json (48 STATE_F
           paired survival of existing NPE solutions.
 random    uniform random 64-byte genomes, the SAME genomes for every variant (common random numbers); competence
           rate vs the 2e-4 baseline. N per variant set by cost.
-minimal   minimal copier: every 1- and 2-token program from a 45-token alphabet, and every 3-token program from a
-          20-token micro-alphabet for variants with no <= 2-token copier, at offset 0; a program counts as a copier
+minimal   minimal copier: every 1- and 2-token program from a 51-token alphabet, and every 3-token program from a
+          20-token micro-alphabet (only B_EXPLEN, E_REGRAND, F_ROTATE: CPU cap), at offset 0; a program counts as a copier
           if COMPETENT on 3 of 3 random paddings (plant_rp's rule).
 """
 from __future__ import annotations
@@ -152,7 +152,7 @@ def minimal():
     T = tokens()
     out = {"alphabet": [t.hex() for t in T], "micro": [t.hex() for t in MICRO]}
     for vname in V.VARIANTS:
-        if vname in ("STOCK_B1500",):
+        if vname in ("STOCK_B1500", "A5_NOBLOCK_B1500", "C3_RING192_RGAP", "D2_HARV_WRAP"):   # CPU cap
             continue
         vm, lay, _ = V.get(vname)
         t0 = time.process_time()
@@ -160,7 +160,7 @@ def minimal():
         for L, alpha in ((1, T), (2, T), (3, MICRO)):
             if L == 3 and found:
                 break
-            if L == 3 and vname in ("A5_NOBLOCK_B1500",):
+            if L == 3 and vname not in ("B_EXPLEN", "E_REGRAND", "F_ROTATE"):   # CPU cap (40 min budget)
                 break
             for seq in itertools.product(alpha, repeat=L):
                 prog = b"".join(seq)
@@ -176,7 +176,8 @@ def minimal():
                       "copiers": {str(k): v[:30] for k, v in found.items()},
                       "n_copiers": {str(k): len(v) for k, v in found.items()},
                       "searched": "1-2 tokens x %d alphabet%s" % (len(T), "" if found and min(found) <= 2 else
-                                                                   " + 3 tokens x %d micro" % len(MICRO)),
+                                                                   (" + 3 tokens x %d micro" % len(MICRO)
+                                                                   if vname in ("B_EXPLEN", "E_REGRAND", "F_ROTATE") else "")),
                       "cpu_s": round(time.process_time() - t0, 1)}
         print(vname, out[vname]["min_tokens"], best, out[vname]["n_copiers"], out[vname]["cpu_s"], flush=True)
         dump("minimal", out)
