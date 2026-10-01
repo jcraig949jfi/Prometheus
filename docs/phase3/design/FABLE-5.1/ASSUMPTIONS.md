@@ -135,6 +135,15 @@ report for v2 campaigns.
 - If wrong: campaigns take weeks, and the maps are sparse.
 - When: week 1 (the first deliverable is a real benchmark).
 
+> Annotation, 2026-10-01. Measured once since this was written: the P1
+> prototype kernel with a world in the loop ran 1.70 billion organism
+> instructions per second on 12 threads, about a factor of 3 below the toy
+> figure. The prototype machine is far smaller than WM, so C1 stays an
+> assumption; the planning figure for WM is unchanged at 100 million
+> instructions per second. The salvage also showed why old budgets were
+> small: the largest lifetime-scale search on record is about 2 x 10^7
+> evaluations, mostly in pure Python (salvage report 07, section A).
+
 **C2. Lifetimes of 10^4 to 10^6 instructions are long enough to show BUILD,
 COMPRESS and COMPOSE.**
 - If wrong: longer lifetimes cut the number of lifetimes per day in
@@ -148,6 +157,14 @@ honestly, because nothing in the program has ever measured token use
 (Ixion section 7).
 - Mitigation: metering from the first session (INF-03); the day-30 gate
   reviews the measured cost.
+
+> Annotation, 2026-10-01. The salvage found one exception to "nothing has
+> ever measured token use": Fabric's model attempts record the model and a
+> dollar cost per attempt, and drop the token counts (salvage report 06,
+> SURPRISES 2). One data point of my own: the seven salvage workers used
+> 4,174,516 tokens in total as reported by the harness, for more than
+> 143,000 lines of code characterised. That is the only measured inference cost in
+> this package.
 
 **C4. A second model family is available for independent implementations.**
 The operator has used several vendors. The design needs one of them
@@ -193,6 +210,12 @@ again. Tityos says this about itself. I inherit it.
   source by a worker told to say what it verified itself, and the decisive
   ones I opened myself (SALVAGE_MATRIX.md lists which).
 
+> Annotation, 2026-10-01. What "the decisive ones" came to in practice: ten
+> facts, listed in SALVAGE_MATRIX.md section 0, all of which held. That is a
+> spot check of the points the decisions lean on, not a re-verification of
+> seven reports. The workers also found 15 places where the crawler record
+> was wrong (SALVAGE_MATRIX.md section 7); none changed a requirement.
+
 **E2. I am not the independence I ask for.**
 I am one model family designing an apparatus to escape one model family's
 priors. The axes, the world families and the substrates are my choices and
@@ -204,3 +227,9 @@ separately. The meta-analysis across architects is the real check.
 **E3. The architecture is as good as its first experiment.**
 None of this has run. P1 exists to find out quickly whether the central
 instrument works, and the day-45 stop rule exists in case it does not.
+
+> Annotation, 2026-10-01. A miniature of P1 has now run
+> (prototype/p1_slice/). Its first gate failed on a defect of mine (verdicts
+> preregistered without a power check), and the amended gate passed on fresh
+> sealed lives. So the central instrument works mechanically at toy size, on
+> one host, by one author. E3 still stands for everything larger.

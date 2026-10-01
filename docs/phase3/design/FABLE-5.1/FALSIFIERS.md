@@ -95,6 +95,27 @@ mechanism.**
 - Also informative: if the online-gradient learner fails, the RETAIN family
   is mis-specified, not the hypothesis.
 
+> Annotation, 2026-10-01. F-H1 as written cannot be failed except by a leak:
+> under the harness's state partition the prediction is a theorem. I found
+> this while writing ENGINE_PORTFOLIO.md (its section 2) and recorded the
+> correction in RSE_ARCHITECTURE.md section 13.5. F-H1 is now read as two.
+>
+> F-H1a (conformance, not a hypothesis): a fast-state-only learner above
+> the no-carry bound in RETAIN means the harness is broken.
+>
+> F-H1b (the empirical claim). Prediction: a learner trained offline that
+> carries only activations or a token window certifies COMPRESS within a
+> lifetime only for kinds of structure present in its training
+> distribution, and falls to the lookup bound on RECOMBINE families with
+> withheld kinds of structure; a weight-updating learner passes on those
+> families at a sample cost at least ten times the designed constructive
+> organism's. Falsified if: a fast-state learner is certified above the
+> lookup bound on withheld-structure families in sealed worlds, with a 95%
+> lower limit clear of the bound, after an attack round on the withholding;
+> or the weight-updating learner passes at a cost within a factor of two of
+> the designed organism. Either outcome feeds F-T5, whose "H1 fails" now
+> means H1b.
+
 **F-H2. Payoff.**
 - Prediction: in each dial, the boundary where the relocation appears lies
   where computed net payoff changes sign, within the instrument's stated

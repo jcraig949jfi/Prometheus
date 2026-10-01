@@ -615,3 +615,44 @@ Fourteen components have no starting point in the tree. SALVAGE_MATRIX.md
 section 4 lists them. The four the design leans on most: demand-certificate
 solvers, the WM kernel, the search-power instrument and the runner's
 refusal gates.
+
+### 13.5 A correction to hypothesis H1
+
+Added 2026-10-01, found while writing ENGINE_PORTFOLIO.md. Section 8 above
+is left as frozen; this corrects how it is to be read.
+
+H1 as written predicts that learners with only fast state sit at the
+no-carry bound in RETAIN. In RETAIN the harness resets fast state at every
+episode boundary, and the bound is exact for any policy that carries
+nothing across the boundary. The prediction is therefore a theorem of the
+state partition, and a violation could only be a leak. It is not a
+hypothesis. I froze it as one, and that was an error.
+
+H1 is split.
+
+- H1a, conformance. Fast-state-only learners score at the no-carry bound on
+  RETAIN probes. True by construction; kept as a kernel check.
+- H1b, the empirical claim. A learner trained offline that can carry only
+  activations or a token window through a lifetime, even when that state is
+  not reset, (1) carries fewer bits as the gap and the interference grow,
+  and (2) certifies COMPRESS within a lifetime only for kinds of structure
+  present in its training distribution; on RECOMBINE families with withheld
+  kinds of structure it falls to the lookup bound. A learner that updates
+  weights during life passes on the withheld families at a sample cost at
+  least ten times that of the designed constructive organism.
+
+Consequences:
+
+- Section 6.1 gains a fourth reference learner, REF-d: a sequence model
+  with an external read-and-write memory. It is the conventional answer to
+  "it cannot build", and it is BUILD by design at scaffold level S3.
+- Section 11, day-60 gate: "the H1 result" means H1a as a conformance
+  check, and H1b's retention curves. H1b's compression half needs
+  RECOMBINE and falls in Phase 3B.
+- Section 1's second paragraph still stands as an argument: a deployed
+  transformer does not BUILD across context resets. That is a fact about
+  its architecture, not something an experiment here could discover. What
+  the experiments can discover is what H1b says: whether amortised learners
+  compress, within a lifetime, structure of a kind their training never
+  covered, and what it costs conventional machinery that is allowed to write
+  weights or an external memory.

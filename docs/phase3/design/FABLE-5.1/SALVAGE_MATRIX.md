@@ -28,7 +28,21 @@ the "Source" line of each row points to the sheet. The classification, the
 
 - No worker ran a test suite, an engine or a database query. "Shown correct"
   means what the committed tests, receipts and records show.
-- I did not re-verify the workers. Where two workers looked at the same
+- I re-checked ten facts in source myself, the ones the decisions lean on
+  most. All ten held: Crius registers are reset at every task and only the
+  workspace and block store persist (crius/vm.py:5-7); the Ares champion is
+  chosen on the held-out set (ares/search.py:291-294) and its plastic
+  weights are restored at every reset (ares/substrate.py:398-400); Fabric
+  workers import fcntl and call killpg (fabric/worker.py:18,
+  fabric/executors.py:91); the Hecate contract is a draft with five arms
+  and exact fractions (its header); the Ananke Wave-2 library's core
+  imports only numpy and the standard library; the Charon verdict carries
+  eligible and fired counts (c1c2_checks.py:66-73); the exit-review positive
+  control is planted on F-answer against F0 while its comment says F-null
+  (exit_review_3_attack.py:233-236); the ladder's R6 probe writes the truth
+  into its payload (reasoning_phase0.py:131); the model-call log is written
+  only when an environment variable is set (prometheus_llm/client.py:49-52).
+  The rest I did not re-verify. Where two workers looked at the same
   component they agreed on substance and sometimes differed on line counts.
 - All seven workers and I are one model family. In the design's own terms
   this matrix is independence level I0 to I1. A wrong classification here is
