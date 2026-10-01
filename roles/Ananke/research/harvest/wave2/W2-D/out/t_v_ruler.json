@@ -1,0 +1,88 @@
+{
+ "held": {
+  "plant": {
+   "acc": 0.9427083333333334,
+   "lo99": 0.8880208333333333,
+   "hi99": 0.984375,
+   "zero_comm": 0.5,
+   "comm_delta": 0.44270833333333337,
+   "comm_delta_lo99": 0.3880208333333333,
+   "comm_delta_hi99": 0.484375,
+   "sens_act": 0.8854166865348816,
+   "sens_any": 0.8303894996643066
+  },
+  "mf_teacher": {
+   "acc": 0.5,
+   "lo99": 0.5,
+   "hi99": 0.5,
+   "zero_comm": 0.5,
+   "comm_delta": 0.0,
+   "comm_delta_lo99": 0.0,
+   "comm_delta_hi99": 0.0,
+   "sens_act": 0.0,
+   "sens_any": 0.8303894996643066
+  },
+  "mf_readout_no_m": {
+   "acc": 0.5026041666666666,
+   "lo99": 0.47916666666666663,
+   "hi99": 0.5286458333333333,
+   "zero_comm": 0.5,
+   "comm_delta": 0.0026041666666666696,
+   "comm_delta_lo99": -0.02083333333333333,
+   "comm_delta_hi99": 0.028645833333333336,
+   "sens_act": 0.005208333022892475,
+   "sens_any": 0.8303894996643066
+  },
+  "relay_flood": {
+   "acc": 0.6015625,
+   "lo99": 0.54947265625,
+   "hi99": 0.6497460937499999,
+   "zero_comm": 0.5052083333333333,
+   "comm_delta": 0.09635416666666666,
+   "comm_delta_lo99": 0.037760416666666664,
+   "comm_delta_hi99": 0.15365234374999984,
+   "sens_act": 0.203125,
+   "sens_any": 0.7716212868690491
+  },
+  "hold_latch": {
+   "acc": 0.5,
+   "lo99": 0.5,
+   "hi99": 0.5,
+   "zero_comm": 0.5,
+   "comm_delta": 0.0,
+   "comm_delta_lo99": 0.0,
+   "comm_delta_hi99": 0.0,
+   "sens_act": 0.0,
+   "sens_any": 0.0069444249384105206
+  }
+ },
+ "twin_plant": {
+  "reach": 72.0,
+  "persist": 216.875,
+  "div_frac_readout": 0.1822916567325592,
+  "div_frac_next": 0.2161458283662796,
+  "readout_flipped": 1.0,
+  "beyond_hop": 1.0,
+  "reach_nearest": 72.0,
+  "beyond_hop_nearest": 1.0
+ },
+ "labels_plant": {
+  "SIGNAL": true,
+  "COMM_DEPENDENT": true,
+  "LOCAL_ONLY": false,
+  "comm_family": true,
+  "REACH_BEYOND_HOP": true
+ },
+ "labels_recorded_champion": {
+  "SIGNAL": false,
+  "COMM_DEPENDENT": false,
+  "LOCAL_ONLY": false,
+  "comm_family": true,
+  "REACH_BEYOND_HOP": true
+ },
+ "compute": {
+  "cpu_s": 164.59,
+  "wall_s": 105.03,
+  "threads": 2
+ }
+}
