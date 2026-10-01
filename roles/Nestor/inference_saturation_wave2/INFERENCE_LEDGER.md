@@ -518,3 +518,35 @@ in completion order.
   3. **Reusable prior:** the competent random-hit rate in 7ae3 is 1.8e-4, matching minimal_prior. That is an independent check of the minimal-prior instrument.
 - **Confidence.** Moderate.
 - **Next.** W2-20.
+
+
+### W2-16: side-1 copiers fail CVT-R (report saved; Nestor attack and cross-link). Written at 01:29Z (clock)
+- **Result.**
+  - Side-1 copiers are genuine replicators in isolation: 17/17 with no partner run; 1020/1020 good copies.
+  - They fail because of execution order. The side-0 first mover wraps into the copier's offset 0 with non-FRESH registers and runs the copier's own LDIR as a smear (300/528 damage events).
+  - They are also register-fragile: 1/17 register-independent, against 49/111 for side 0 (p = 0.0015).
+  - CVT-R compounds this: p = 0.62 becomes about 0.15 acceptance (12/85).
+  - Against side-0 copiers they transmit 0/340.
+  - Single-seed CVT-R is a coin flip when p < 1. Two of the six recorded side-0 failures pass all 4 reseeds.
+- **Cross-links (Nestor).**
+  1. **The same physics appears three times.** The pc wrap at 63 → 64 makes every copier's entry point an entry point for its partner. It drives:
+     - the foreign-cell magnet (N1);
+     - the X-TICKET epoch-1 loss (N2);
+     - the side-1 CVT failure (W2-16);
+     - and it is W2-10's "SELF floor".
+
+     This is plausibly **the most consequential single feature of NPE physics.** In the no-vocabulary frame, every half is code that either context can execute.
+  2. **N17: a single-byte side switch, and a sweep prediction.**
+     - The 7ae3 founder converts only from side 1 (0.80), yet it is register-robust (0.775 under random contexts). It is the structural exception.
+     - Changing position 49 to 0x59 or 0x5C makes it a side-0 converter (1.0).
+     - By W2-16, a side-0 copier is safe from the first-mover smear and destroys side-1 copiers on contact (340/340).
+     - **Prediction: a side-0 morph sweeps once it arises.** This fits founder material at position 49 being lost in 27/27 C-CORE runaways. It is a concrete candidate for the departure near d ≈ 20 and for the BASE second regime. Sent to W2-17.
+  3. **Hypothesis for the register asymmetry.**
+     - A side-1 copier is entered at offset 0 as a *continuation of side-0 execution*, carrying side-0's registers.
+     - A side-0 copier is entered only by the second mover after its own code has run.
+     - The corpus side-1 copiers were screened from FRESH contexts and never had to tolerate foreign-register entry, so the asymmetry may be a sampling or screen effect.
+     - Test: disassemble the setups (W2-16 next step 5).
+- **Instrument consequences.**
+  - CVT-R should be multi-seed, with a no-partner arm and a swapped-order arm.
+  - P-11's side-1 rate measures the order hazard, not competence.
+- **Confidence.** As in the report. Cross-link 2 is a hypothesis, with a moderate prior.
