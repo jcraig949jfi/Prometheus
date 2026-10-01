@@ -112,7 +112,7 @@ About 3 CPU-hours went on read-only analysis and single-genome or single-interac
 - **C-ATOMIC "erosion stops heredity; removing it sustains heredity".** Replace with: under a keep-only-promoted-overwrites rule that discards all other writes, 7ae3 runs away (46/80 vs 1/80).
 - **"Runaway heredity" / depth ≥ 20 as establishment.** Depth is *suspected* to measure turnover after saturation. E9 (a cb7f occupancy replay) would decide.
 - **C-CORE "conserved core".** Replace with: purifying selection on essential, opcode-immune copy-interface positions in 7ae3's cell only.
-- **"Establishment lottery".** Replace with: early fate (3–10 epochs), set largely by whether the founder copies from its carried state; partly side-0 hijack in SELF cells.
+- **"Establishment lottery".** Replace with: early fate (3–10 epochs), set largely by whether the founder copies from its carried state; partly side-0 hijack in SELF cells. **[Wave-2 correction, synthesis (j): withdrawn as worded. An early first copy is near-necessary but only 0.50 sufficient; BASE burst→runaway is decided at epochs 10–50 by persistence.]**
 - **"Competent donor" / "replicator".** Name the certificate level, and use random-passenger controls.
 - **W1 Block C "48% of established donors self-poison".** This was a run-level label artifact.
 - **"`1E 40 E5` is a full replicator".** With NOP padding it passes partly by zero-painting. There are 6 real 3-byte copiers, found with random padding.

@@ -912,3 +912,35 @@ Together with W2-16 (execution order) and W2-24 (own code as the weapon), this i
 **Confidence**
 - High: the per-interaction decomposition.
 - Moderate: the CVT-R counts (single seed).
+
+
+### W2-28: Wave-1 deliverables corrected; F* defined; two traces (applied by Nestor). Written at 02:36Z (clock)
+
+**Applied to the Wave-1 deliverables**
+- **NPE_COMPETING_THEORIES.md.** The WAVE-2 CORRECTIONS block (A)-(F) was inserted after the frozen-draft paragraph. It covers:
+  - the collapse into F;
+  - the T4 part statuses;
+  - **F unfalsifiable as practised;**
+  - **F\* with reference process M\*, readouts R1-R3 and kill criteria K1-K5;**
+  - the status of each kill criterion;
+  - stale-line replacements.
+- **NPE_MECHANISTIC_SYNTHESIS_2026-09-30.md.** Corrections (j)-(r) were inserted after (i). I added (s), the side-1 closure from W2-31.
+- **INFERENCE_HARVEST_HANDOFF.md:115.** The "3-10 epochs" wording is now flagged as withdrawn.
+
+**Trace results**
+- W2-2's "1 vs 7.7, P = 0.004" is **UNTRACEABLE and CONTRADICTED**. It is a denominator mismatch: the expected count comes from 320 runs, the observed count from the 192-run f = 1 pool. Supported values: P ≈ 0.054-0.056 for f = 1, and 0.045 for X-TICKET. Both use data-chosen gap edges.
+- "Fate decided in 3-10 epochs" is **CONTRADICTED as worded**. Of 199 established runs, 196 made their first copy by epoch 10, but P(established | early copy) is only 0.50.
+
+**F\* status**
+- No kill has fired and no frozen pass exists.
+- K1 is consistent post hoc: Δ = +0.017 [−0.009, +0.043].
+- **K4 is the live threat:** world vs FIELD BANK, 4/4 vs 9/33.
+- K2, K3 and K5 are untested.
+
+**Ledger corrections (accepted)**
+1. My batch entry's K1 "−0.38 / +0.06" was the R3 readout, not K1's.
+2. "The model trails by 0.07-0.23": on depth_f the sign is reversed (the model leads by 0.07).
+
+**Nestor note**
+- The F\* tolerances become frozen at this commit, as the block's own decision rule specifies.
+- Any later K-test on fresh seeds can score PASS or KILL. Data that predate this commit can only be called consistent or inconsistent.
