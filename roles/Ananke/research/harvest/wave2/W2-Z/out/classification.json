@@ -1,0 +1,23 @@
+{
+ "FLIP": {
+  "4b848d80": "UNDECIDED-ECON (relay budget kmax90=4 < 2-line dispatch + robust relay; two-rule k=5 relay over budget; .458 at 16 pairs)",
+  "603723a7": "UNDECIDED-ECON (kmax90=3; state_dim 1; two-rule k=5 over budget; .495)",
+  "f4e59e61": "UNDECIDED-ECON (kmax90=4, setrule=0 in genome; OVR two-rule .448)",
+  "d3f36006": "UNDECIDED (kmax90=5, setrule=0; OVR two-rule k=5 economy-feasible: .593 [.525], B .601 [.539] at 32 pairs; nom control .505)",
+  "56cdba0a": "UNDECIDED (kmax90=5, setrule=0; OVR two-rule .508)",
+  "d99833cb": "UNDECIDED (kmax90=5, setrule=0; OVR two-rule .516)",
+  "50060cf9": "UNDECIDED (kmax90=5, setrule=1; two-rule k=5 economy-feasible but fails with economy non-binding too: .625/.625)",
+  "f476a3ca": "UNDECIDED (kmax90=6, setrule=1; two-rule .574 vs E-light .562)",
+  "fc6972d4": "UNDECIDED (kmax90=7, setrule=1; two-rule .50 vs E-light .52)"
+ },
+ "XOR": {
+  "d01883ed": "P-ECONOMY (cE=96 > 44 income/trial; DP max 4/12 emitting trials per sensor for any >=1-line emitter; acc <= .5+.5*(4/12)*f_LC2(held .531) = .589)",
+  "4ca24b85": "P-ECONOMY, marginal (cE=48 > 44; DP max 9/12; acc <= .599 point, .663 at f's pair-CI top)",
+  "89a6a9cd": "UNDECIDED, NOT economy-capped (cE=4: one asleep tick refills; engine: .43 emissions/sensor-trial even at k=16)",
+  "93b9eeeb": "UNDECIDED-ECON (rules=1, L8: every program <=8 lines; k>=8 (m=0) or >=6 (m=1) emits only from the initial store)",
+  "33505249": "UNDECIDED-ECON (kmax90=4, setrule=0)",
+  "b3549a65": "UNDECIDED-ECON (kmax90=3; actuator unmarked)",
+  "247e0d43": "UNDECIDED-ECON (kmax90=4; actuator unmarked)"
+ },
+ "MAJ": "see out/maj_table.md: 31 PLANT-SOLVED (16 with plant-DICT lo>0), 19 UNDECIDED (9 global, 8 multi-hop, 2 one-hop), 10 P-LC (W2-M), 0 P-ECONOMY"
+}
