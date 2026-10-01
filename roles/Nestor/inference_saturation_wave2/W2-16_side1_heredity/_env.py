@@ -46,7 +46,7 @@ def traced_dense():
     src = src.replace(f_old, f_old + "        if _TR is not None: _TR.append((ctx.who, pc, op))\n")
     l_old = "                for _ in range(n):\n                    v = rd(src)\n"
     assert src.count(l_old) == 1
-    src = src.replace(l_old, "                if _LD is not None: _LD.append((ctx.who, src, dst, n, step))\n" + l_old)
+    src = src.replace(l_old, "                if _LD is not None: _LD.append((ctx.who, src, dst, n, step, pc))\n" + l_old)
     mod = types.ModuleType("z8_dense_traced")
     mod.__dict__["_DENSE"] = dict(run_dc.DENSE)
     mod.__dict__["_TR"] = None
