@@ -141,7 +141,7 @@ def reading3(pair_vals, cut: float, op: str, bound: str = "lo", method: str = "B
     """Three-valued reading of 'bound op cut' over pair statistics. bound in {'lo','hi','mean'}; method in
     {'BOOTT','t','pct'}. d_se = signed SE distance of the bound from the cut (positive = the reading holds).
     status TRUE if d_se >= margin_se, FALSE if d_se <= -margin_se, else INDETERMINATE; 'raw' is the two-valued
-    reading. Zero-variance arrays: d_se = +-inf (or 0 exactly on the cut)."""
+    reading. Zero-variance arrays: status DEGENERATE (W2-X)."""
     if op not in _OPS:
         raise KeyError(op)
     x = np.asarray(pair_vals, float)
@@ -159,10 +159,14 @@ def reading3(pair_vals, cut: float, op: str, bound: str = "lo", method: str = "B
     se = float(x.std(ddof=1) / math.sqrt(P))
     raw = bool(_OPS[op](v, cut))
     gap = (v - cut) if op in (">=", ">") else (cut - v)
-    if se > 0:
-        d = gap / se
-    else:
-        d = math.inf if gap > 0 else (-math.inf if gap < 0 else 0.0)
+    if not se > 0:
+        # W2-X: every pair is identical, so no interval exists. A forced control (zero_comm,
+        # env_permutation: exactly .5 in every pair) lands here. Report DEGENERATE, never a
+        # certified TRUE/FALSE with d_se = +-inf and keep 1.0. Callers that expect saturation
+        # (a perfect plant at 1.0) can inspect value/raw.
+        return {"value": v, "se": 0.0, "d_se": math.nan, "raw": raw, "status": "DEGENERATE",
+                "keep": math.nan, "method": method}
+    d = gap / se
     if raw and d <= 0:
         d = 0.0
     status = "TRUE" if d >= margin_se else ("FALSE" if d <= -margin_se else "INDETERMINATE")

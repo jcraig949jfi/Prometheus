@@ -194,3 +194,18 @@ None of these is shown at the family level under W2-D's falsifiers."
 Consolidated numbers supersede section 12: capped 139/454 (30.6%), eligible 62-65 (13.7-14.3%), open 250.
 P-2's decay artefact holds only for A0 matched counterfactuals; on C1 RELAY NULLs, decay does not bind
 in 35/41 (W2-W F1).
+
+## 14. Corrections from W2-X (adversarial review); these govern over the v2-v4 text above
+- STRUCK (category error): "the task distribution did not reward relaying". Each GA selects on ONE
+  cell's task; the 46 multi-hop searches were fully rewarded for forwarding. Replacement: "the 7 D laws,
+  all evolved on one-hop tasks, do not forward. Whether C1 search can discover forwarding is UNDECIDED:
+  in 30 reachable multi-hop searches there were 2 marginal SIGNALs (925caa3a, a t-flip; 882525a9),
+  mechanism untested."
+- STRUCK: "the one-hop wall is sharp". Only hop levels 1 and 2 were measured, and .500 is the
+  mirror-forced value.
+- STRUCK: "S under a blind selector (M = 8)". Comparisons are paired on shared worlds (W2-R F5), and
+  early generations have zero variance (P-3).
+- DOWNGRADED: FLIP@d9cc "U excluded" becomes "U not observed over 4+2 generations in 2 seeds".
+- DOWNGRADED: "a .60 relay basin where the stepping stones live" becomes "a .60 copy-policy basin
+  (ceiling .75) whose connection to inference is untested".
+- The measured split governs (E-W20): capped 139 (30.6%), eligible ~14%, open 250.

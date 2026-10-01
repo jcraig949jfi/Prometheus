@@ -81,7 +81,7 @@ ENV_DIALS = {"d": [1, 2, 3, 5], "delta": [4, 8, 16], "gap": [4, 8, 16], "block":
 
 
 def physics_from_levels(lv: dict, topo_seed: int) -> Physics:
-    kw = {k: v for k, v in lv.items() if k != "economy"}
+    kw = {k: v for k, v in lv.items() if k not in ("economy", "dest_mode_drawn")}
     kw.update(ECONOMY[lv["economy"]])
     if kw["topology"] in ("torus", "smallworld"):
         pass  # all n_sites levels are squares
@@ -91,6 +91,11 @@ def physics_from_levels(lv: dict, topo_seed: int) -> Physics:
         # `levels`, which dial_effects / analysis_a0 / report read. Leaving the
         # drawn "all" there mislabelled 951 of 1589 C1 global rows (harvest
         # H-IMPL H7). cell_id does not hash levels, so ids are unchanged.
+        # W2-X: keep the DRAWN dial for derivation. _transect_specs copies a base's levels
+        # and re-derives physics; without this a topology transect from a global base
+        # would run every non-global level at dest_mode "sample" instead of the draw.
+        if lv.get("dest_mode") != "sample":
+            lv.setdefault("dest_mode_drawn", lv["dest_mode"])
         lv["dest_mode"] = "sample"
     return Physics(**kw, topo_seed=topo_seed).validate()
 
@@ -528,6 +533,8 @@ def _transect_specs(cfg, fam, base, bi, dial, track, kind, search_spec, reps):
     levels = DIALS.get(dial, ENV_DIALS.get(dial))
     for li, lvval in enumerate(levels):
         lv = dict(base["levels"])
+        if "dest_mode_drawn" in lv:      # derive from the drawn dial, not the forced record (W2-X)
+            lv["dest_mode"] = lv.pop("dest_mode_drawn")
         ev = dict(base["env_levels"])
         if dial in DIALS:
             lv[dial] = lvval

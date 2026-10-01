@@ -1,0 +1,38 @@
+# | verdict | label | means | LC ceil | LC pred/resid/class | FLOOD ceil | FLOOD pred/resid/class | B2 resid (flood or LC) | FINAL
+1 | RELAY delta b1 evo acc [0, 1] | CANDIDATE | [0.592, 0.772, 0.681] | [0.75, 1.0, 1.0] | +0.090/+0.090/PARTIAL | [0.613, 0.995, 1.0] | +0.139/+0.042/IDENTITY | 0.06 | IDENTITY (transport-time ceiling)
+2 | HOLD decay_shift b1 evo acc [1, 2] | CANDIDATE | [0.643, 0.609, 0.847, 0.785] | [1.0, 1.0, 1.0, 1.0] | +0.000/+0.239/GENUINE | - | - | -0.164 | NOT REPRODUCED (B2 jump sign reversed); ceiling flat
+3 | RELAY decay_shift b0 phys plant [0, 1] | SUPPORTED | [1.0, 0.547, 0.543, 0.568] | [1.0, 1.0, 1.0, 1.0] | +0.000/-0.453/GENUINE | [1.0, 1.0, 1.0, 1.0] | +0.000/-0.453/GENUINE | -0.46 | PLANT-DESIGN (vanishes under relay_refresh) refresh means [1.0, 1.0, 1.0, 1.0]
+4 | RELAY delta b0 phys plant [0, 1] | SUPPORTED | [0.585, 0.983, 0.991] | [1.0, 1.0, 1.0] | +0.000/+0.398/GENUINE | [0.685, 0.999, 1.0] | +0.308/+0.089/IDENTITY | 0.051 | IDENTITY (transport-time ceiling)
+5 | RELAY economy b0 phys plant [1, 2] | SUPPORTED | [1.0, 1.0, 0.547] | [1.0, 1.0, 1.0] | +0.000/-0.453/GENUINE | [1.0, 1.0, 1.0] | +0.000/-0.453/GENUINE | -0.46 | NOT IDENTITY; energy budget (physics?) unresolved
+6 | RELAY decay_shift b1 phys plant [0, 1] | SUPPORTED | [0.8, 0.536, 0.535, 0.575] | [1.0, 1.0, 1.0, 1.0] | +0.000/-0.264/GENUINE | [1.0, 1.0, 1.0, 1.0] | +0.000/-0.264/GENUINE | -0.262 | PLANT-DESIGN (vanishes under relay_refresh) refresh means [0.8, 0.823, 0.783, 0.814]
+7 | RELAY delta b1 phys plant [0, 1] | SUPPORTED | [0.486, 0.641, 0.755] | [0.5, 1.0, 1.0] | +0.255/-0.101/PARTIAL | [0.5, 0.955, 1.0] | +0.232/-0.078/IDENTITY | -0.088 | IDENTITY (transport-time ceiling)
+8 | RELAY economy b1 phys plant [1, 2] | SUPPORTED | [0.812, 0.783, 0.568] | [1.0, 1.0, 1.0] | +0.000/-0.215/GENUINE | [1.0, 1.0, 1.0] | +0.000/-0.215/GENUINE | -0.187 | NOT IDENTITY; energy budget (physics?) unresolved
+9 | RELAY delta b1 evo plant [0, 1] | CANDIDATE | [0.559, 0.826, 0.95] | [0.75, 1.0, 1.0] | +0.225/+0.043/IDENTITY | [0.611, 0.995, 1.0] | +0.345/-0.078/IDENTITY | -0.118 | IDENTITY (transport-time ceiling)
+10 | MAJ topology b1 phys plant [1, 2] | CANDIDATE | [0.625, 0.611, 0.503, 0.618, 0.493] | [0.81, 0.742, 0.541, 0.798, 0.837] | -0.048/-0.060/PARTIAL | [0.726, 0.665, 0.514, 0.716, 0.511] | -0.082/-0.026/IDENTITY | 0.03 | IDENTITY (flood ceiling)
+11 | MAJ topology b1 phys plant [2, 3] | CANDIDATE | [0.625, 0.611, 0.503, 0.618, 0.493] | [0.81, 0.742, 0.541, 0.798, 0.837] | +0.060/+0.055/PARTIAL | [0.726, 0.665, 0.514, 0.716, 0.511] | +0.120/-0.005/IDENTITY | -0.015 | IDENTITY (flood ceiling)
+12 | MAJ topology b1 phys plant [3, 4] | CANDIDATE | [0.625, 0.611, 0.503, 0.618, 0.493] | [0.81, 0.742, 0.541, 0.798, 0.837] | +0.016/-0.142/GENUINE | [0.726, 0.665, 0.514, 0.716, 0.511] | -0.122/-0.003/IDENTITY | -0.005 | IDENTITY (flood ceiling)
+13 | MAJ economy b1 phys plant [1, 2] | CANDIDATE | [0.625, 0.64, 0.531] | [0.81, 0.81, 0.81] | +0.000/-0.109/GENUINE | [0.726, 0.726, 0.726] | +0.000/-0.109/GENUINE | -0.072 | NOT IDENTITY; energy budget (physics?) unresolved
+14 | FLIP decay_shift b0 phys plant [0, 1] | CANDIDATE | [0.659, 0.49, 0.521, 0.508] | [0.975, 0.975, 0.975, 0.975] | +0.000/-0.169/GENUINE | - | - | -0.112 | PLANT-DESIGN (vanishes under relay_refresh) refresh means [0.659, 0.63, 0.651, 0.635]
+15 | HOLD decay_shift b0 phys plant [0, 1] | SUPPORTED | [1.0, 0.75, 1.0, 1.0] | [1.0, 1.0, 1.0, 1.0] | +0.000/-0.250/GENUINE | - | - | -0.238 | PLANT-DESIGN [I] (write-once latch x integer decay)
+16 | HOLD decay_shift b0 phys plant [1, 2] | SUPPORTED | [1.0, 0.75, 1.0, 1.0] | [1.0, 1.0, 1.0, 1.0] | +0.000/+0.250/GENUINE | - | - | 0.25 | PLANT-DESIGN [I] (write-once latch x integer decay)
+17 | HOLD decay_shift b1 phys plant [0, 1] | SUPPORTED | [1.0, 0.75, 1.0, 1.0] | [1.0, 1.0, 1.0, 1.0] | +0.000/-0.250/GENUINE | - | - | -0.25 | PLANT-DESIGN [I] (write-once latch x integer decay)
+18 | HOLD decay_shift b1 phys plant [1, 2] | SUPPORTED | [1.0, 0.75, 1.0, 1.0] | [1.0, 1.0, 1.0, 1.0] | +0.000/+0.250/GENUINE | - | - | 0.25 | PLANT-DESIGN [I] (write-once latch x integer decay)
+19 | HOLD gap b1 phys plant [0, 1] | CANDIDATE | [1.0, 0.75, 0.75] | [1.0, 1.0, 1.0] | +0.000/-0.250/GENUINE | - | - | -0.25 | PLANT-DESIGN [I] (same latch erosion, decay 1)
+20 | HOLD decay_shift b1 evo plant [0, 1] | CANDIDATE | [1.0, 0.75, 1.0, 1.0] | [1.0, 1.0, 1.0, 1.0] | +0.000/-0.250/GENUINE | - | - | -0.25 | PLANT-DESIGN [I] (write-once latch x integer decay)
+21 | HOLD decay_shift b1 evo plant [1, 2] | CANDIDATE | [1.0, 0.75, 1.0, 1.0] | [1.0, 1.0, 1.0, 1.0] | +0.000/+0.250/GENUINE | - | - | 0.25 | PLANT-DESIGN [I] (write-once latch x integer decay)
+22 | RELAY prog_len b0 phys sens [1, 2] | CANDIDATE | [0.141, 0.151, 0.292] | [1.0, 1.0, 1.0] | NA d_ceil=0.0 | - | - | - | PROGRAM-SPACE (not an accuracy metric)
+23 | RELAY topology b0 evo sens [1, 2] | CANDIDATE | [0.26, 0.215, 0.326, 0.201, 0.274] | [0.98, 0.98, 0.98, 0.98, 0.98] | NA d_ceil=0.0 | - | - | - | PROGRAM-SPACE (not an accuracy metric)
+24 | RELAY topology b0 evo sens [2, 3] | CANDIDATE | [0.26, 0.215, 0.326, 0.201, 0.274] | [0.98, 0.98, 0.98, 0.98, 0.98] | NA d_ceil=0.0 | - | - | - | PROGRAM-SPACE (not an accuracy metric)
+25 | XOR rules b1 phys sens [1, 2] | CANDIDATE | [0.188, 0.307, 0.521] | [0.875, 0.938, 0.938] | NA d_ceil=0.0 | - | - | - | PROGRAM-SPACE (not an accuracy metric)
+26 | MAJ rules b0 phys sens [0, 1] | CANDIDATE | [0.12, 0.312, 0.49] | [0.837, 0.837, 0.837] | NA d_ceil=0.0 | - | - | - | PROGRAM-SPACE (not an accuracy metric)
+27 | MAJ state_dim b0 phys sens [2, 3] | CANDIDATE | [0.042, 0.109, 0.125, 0.234] | [0.837, 0.837, 0.837, 0.837] | NA d_ceil=0.0 | - | - | - | PROGRAM-SPACE (not an accuracy metric)
+28 | FLIP rules b0 phys sens [1, 2] | CANDIDATE | [0.068, 0.073, 0.193] | [0.975, 0.975, 0.975] | NA d_ceil=0.0 | - | - | - | PROGRAM-SPACE (not an accuracy metric)
+29 | FLIP channels b0 phys sens [1, 2] | CANDIDATE | [0.203, 0.167, 0.057] | [0.975, 0.975, 0.975] | NA d_ceil=0.0 | - | - | - | PROGRAM-SPACE (not an accuracy metric)
+30 | RELAY delta b0 evo emit [1, 2] | CANDIDATE | [0.455, 0.451, 0.562] | [0.948, 0.98, 0.98] | NA d_ceil=0.0 | - | - | - | PROGRAM-SPACE (not an accuracy metric)
+31 | XOR rules b1 phys emit [1, 2] | CANDIDATE | [0.214, 0.37, 0.542] | [0.875, 0.938, 0.938] | NA d_ceil=0.0 | - | - | - | PROGRAM-SPACE (not an accuracy metric)
+32 | XOR state_dim b1 phys emit [1, 2] | CANDIDATE | [0.474, 0.448, 0.312, 0.297] | [0.896, 0.927, 0.906, 0.938] | NA d_ceil=-0.021 | - | - | - | PROGRAM-SPACE (not an accuracy metric)
+33 | MAJ rules b0 phys emit [1, 2] | SUPPORTED | [0.151, 0.25, 0.443] | [0.837, 0.837, 0.837] | NA d_ceil=0.0 | - | - | - | PROGRAM-SPACE (not an accuracy metric)
+34 | MAJ rules b1 phys emit [1, 2] | CANDIDATE | [0.104, 0.161, 0.349] | [0.81, 0.81, 0.81] | NA d_ceil=0.0 | - | - | - | PROGRAM-SPACE (not an accuracy metric)
+35 | FLIP rules b0 phys emit [1, 2] | SUPPORTED | [0.276, 0.349, 0.688] | [0.975, 0.975, 0.975] | NA d_ceil=0.0 | - | - | - | PROGRAM-SPACE (not an accuracy metric)
+36 | FLIP rules b1 phys emit [1, 2] | SUPPORTED | [0.125, 0.224, 0.37] | [1.0, 1.0, 1.0] | NA d_ceil=0.0 | - | - | - | PROGRAM-SPACE (not an accuracy metric)
+37 | HOLD rules b0 phys emit [1, 2] | CANDIDATE | [0.109, 0.151, 0.302] | [1.0, 1.0, 1.0] | NA d_ceil=0.0 | - | - | - | PROGRAM-SPACE (not an accuracy metric)
