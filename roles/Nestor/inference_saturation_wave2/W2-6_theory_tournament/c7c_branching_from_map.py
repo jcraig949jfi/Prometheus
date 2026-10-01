@@ -7,7 +7,7 @@ Readouts per write-back rule: P(established), P(max generation >= 8), mean final
 7ae3 rates: ATOMIC ~0.52 (runaway ruler), BASE ~0.03. Output c7c_branching_from_map.json
 """
 import json, random, sys, time
-sys.argv = sys.argv[:1] + ["1"]
+# c7 main() is guarded
 import c7_t6_t7_base_closure as C  # noqa: E402
 
 CAP, T, L = 40, 60, 120

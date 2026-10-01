@@ -256,3 +256,29 @@ in completion order.
 - **Next questions.**
   - Can a genome that is both a copier and task-competent be constructed? Decide statically.
   - Notify the cross-seat owners. A short comms note in the handoff; I do not fix other seats' code.
+
+### N8 (revisited): the "invisible selection after saturation" mechanism is contradicted by existing data (Nestor). Clock 00:56Z
+- **Attack.** N8 proposed that once a family saturates the field, overwrites among near-identical kin are not accepted births, so selection stops and state-freedom drifts (transience).
+- **Evidence against.**
+  - `c9x/x_runaway/RESULTS.json`: after saturation (epoch ≥ 160), P-11 events keep accruing at about 90-100 per epoch for 1,800 epochs. There are 128 pairs per epoch.
+  - The dominant genome holds only 3-12% of the population, with identity to the implant ≈ 0.
+  - So the family is **diverse**, and accepted overwrites among diverged kin are frequent. Selection events do not vanish.
+- **Status.** N8's mechanism is **REFUTED for the BASE / 7ae3 / splice-off runaways**. It is untested under C-A3's dense + ATOMIC conditions, where the family may be less diverse, but there is no positive evidence for it.
+- **What remains.** Why state-freedom is transient in half the C-A3 events.
+- **New candidate.** In a diverse kin field, the newborn's inherited context is a *kin* copier's post-execution registers. A zero-dependent copier is poisoned by a kin context unless the kin's advance Δ ≡ 0. So selection *for* state-freedom should be strong, which deepens the transience puzzle rather than resolving it.
+- **Next question.** In C-A3 event replays, measure the conversion rate of state-free vs non-free members *in the realized kin context* (static, from replay snapshots). Without genomes on disk this needs a replay: a design item.
+
+### W2-1: contradiction mine (worker; report saved by Nestor). Clock about 01:00Z
+- **Result.**
+  - Of 13 conclusions: 3 SURVIVE, 7 WEAKENED, 1 UNDECIDABLE. C4 survives with its HL = 0 geometry half undecidable; C13 is weakened by S3.
+  - BROKEN parts: C10's depth-gap premise, C11's "dominate" and side-0 marker, C7's magnet dismissal.
+  - **Biggest correction:** X-A3-FAIR's ZERO world (per-interaction register reset) is an existing no-payoff arm. State-free genomes appear and sweep there (0.11 vs 0.70 end share).
+- **Nestor verification.**
+  - `reset_axis.py` confirms ZERO resets both organisms before every interaction.
+  - X-DD-STATE-RESET's endpoint was establishment, not state-freedom. So "the victim channel's only test was null" is true for establishment only.
+- **Applied.** A WAVE-2 CORRECTIONS block, (a)-(i), at the top of the Wave-1 synthesis and handoff; targeted line fixes.
+- **Self-correction.** **N3** explained the depth gap as early establishment plus record growth. The gap premise is false: omitted arms contain runs inside it. N3's record-growth shape (stepwise plateaus) still stands. Its gap explanation is withdrawn, and replaced by W2-1's turnover correlation (depth vs time since first donor, ρ = 0.74).
+- **Next questions.**
+  - Own vs inherited carried channel: a world rule resetting only newborn registers, combined with STATE_FREE checkpoints. A design item.
+  - k = 4 distinct vs identical founders: the kin-context T4(a) datum (W2-12 running).
+  - The HL ≡ 0 PATTERN control.
