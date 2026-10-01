@@ -59,3 +59,27 @@ K9 Also from #1037 (minor, accepted): families ran concurrently, contrary
    to PREREG s10 ("A, then B, then C") -- recorded here as a protocol
    deviation; the Gemini RESULTS verdict now reads NOT_ELIGIBLE (missing
    inputs), Claude's verdict unchanged.
+
+## Contested items -- NOT applied (recommendations; would change a frozen decision rule's outcome -> CWO-C s4 escalation class)
+
+C1 HT-ae38c641b1 W5 (round 3): frozen spec says values between F1 and S1
+   (0.15-0.40) are INCONCLUSIVE, "not a falsification"; the pass3_v2 PREREG
+   classifies with round-1 classes (no INCONCLUSIVE), giving NULL; the
+   program was PARKed on "two valid NULL readings". Recommendation: a ruling
+   that a frozen spec's explicit INCONCLUSIVE band is not a valid NULL
+   reading for consequence counting -> ae38 would return to SPECULATIVE.
+   Owner: Aporia/operator ruling (changes a frozen rule's outcome).
+C2 HT-321a8fd8e0 (Pass 4 r1): PROBING rests on an ALT fixed by counting
+   (alt_pass = Kc > Km; majority vote K = 0 for any allocation). Correct
+   under the round-1 PREREG (no counting rule); under round 2's rule the ALT
+   is NOT_ELIGIBLE -> PARK. Recommendation: annotate PROBING as "degenerate
+   ALT, prior art KNOWN_ANALOGUE_FOUND"; ruling needed to change to PARK.
+C3 HT-79e904e13a W4 (round 1): entropy observable saturates by T ~ 6-9; the
+   positive control never reaches the ceiling, so NULL is likely but not
+   shown by an in-range control. Stays NULL; flagged INSTRUMENT-WEAK.
+C4 HT-ae38c641b1 W4 (round 2): SPEC_UNATTAINABLE rests on an undefined-ratio
+   aggregation reading; stays as recorded; flagged.
+Note on K4 (applied): it enforces the frozen round-2 definition of
+SPEC_UNATTAINABLE ("cannot be reached even by a construction that has the
+effect by design") that the round-2 pilot failed to check; it is listed
+here for Aporia/operator review all the same.
