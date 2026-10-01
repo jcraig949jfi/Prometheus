@@ -1,0 +1,302 @@
+{
+ "bayes": {
+  "0": 0.5,
+  "1": 0.7,
+  "2": 0.7,
+  "3": 0.7839999999999998,
+  "4": 0.7839999999999998,
+  "5": 0.8369199999999999
+ },
+ "rows": [
+  {
+   "physics": "KA-1H",
+   "plant": "INT_CO",
+   "control": "none",
+   "acc": 0.8414713541666667,
+   "lo99": 0.826171875,
+   "hi99": 0.8561214192708334
+  },
+  {
+   "physics": "KA-1H",
+   "plant": "INT_1",
+   "control": "none",
+   "acc": 0.8414713541666667,
+   "lo99": 0.826171875,
+   "hi99": 0.8561214192708334
+  },
+  {
+   "physics": "KA-1H",
+   "plant": "INT_1G",
+   "control": "none",
+   "acc": 0.8414713541666667,
+   "lo99": 0.826171875,
+   "hi99": 0.8561214192708334
+  },
+  {
+   "physics": "KA-1H",
+   "plant": "INT_2",
+   "control": "none",
+   "acc": 0.6222330729166667,
+   "lo99": 0.6043269856770833,
+   "hi99": 0.6404638671874999
+  },
+  {
+   "physics": "KA-1H",
+   "plant": "FIRST",
+   "control": "none",
+   "acc": 0.8414713541666667,
+   "lo99": 0.826171875,
+   "hi99": 0.8561214192708334
+  },
+  {
+   "physics": "KA-1H",
+   "plant": "INT_1",
+   "control": "zero_comm",
+   "acc": 0.5,
+   "lo99": 0.5,
+   "hi99": 0.5
+  },
+  {
+   "physics": "KA-1H",
+   "plant": "INT_1",
+   "control": "DICT",
+   "acc": 0.6959635416666666,
+   "lo99": 0.6777327473958333,
+   "hi99": 0.7161474609375
+  },
+  {
+   "physics": "KA-1S",
+   "plant": "INT_CO",
+   "control": "none",
+   "acc": 0.6975911458333334,
+   "lo99": 0.68310546875,
+   "hi99": 0.71305419921875
+  },
+  {
+   "physics": "KA-1S",
+   "plant": "INT_1",
+   "control": "none",
+   "acc": 0.8414713541666667,
+   "lo99": 0.826171875,
+   "hi99": 0.8561214192708334
+  },
+  {
+   "physics": "KA-1S",
+   "plant": "INT_1G",
+   "control": "none",
+   "acc": 0.8414713541666667,
+   "lo99": 0.826171875,
+   "hi99": 0.8561214192708334
+  },
+  {
+   "physics": "KA-1S",
+   "plant": "FIRST",
+   "control": "none",
+   "acc": 0.69921875,
+   "lo99": 0.6783837890625,
+   "hi99": 0.7210302734375
+  },
+  {
+   "physics": "KA-1S",
+   "plant": "INT_1",
+   "control": "zero_comm",
+   "acc": 0.5,
+   "lo99": 0.5,
+   "hi99": 0.5
+  },
+  {
+   "physics": "KA-1S",
+   "plant": "INT_1",
+   "control": "DICT",
+   "acc": 0.6959635416666666,
+   "lo99": 0.6777327473958333,
+   "hi99": 0.7161474609375
+  },
+  {
+   "physics": "KA-MH",
+   "plant": "INT_CO",
+   "control": "none",
+   "acc": 0.6971028645833334,
+   "lo99": 0.68001220703125,
+   "hi99": 0.7124039713541667
+  },
+  {
+   "physics": "KA-MH",
+   "plant": "INT_1",
+   "control": "none",
+   "acc": 0.6971028645833334,
+   "lo99": 0.68001220703125,
+   "hi99": 0.7124039713541667
+  },
+  {
+   "physics": "KA-MH",
+   "plant": "INT_2",
+   "control": "none",
+   "acc": 0.6124674479166667,
+   "lo99": 0.5973299153645834,
+   "hi99": 0.62711669921875
+  },
+  {
+   "physics": "KA-MH",
+   "plant": "INT_3",
+   "control": "none",
+   "acc": 0.61279296875,
+   "lo99": 0.5942358398437501,
+   "hi99": 0.6308618164062499
+  },
+  {
+   "physics": "KA-MH",
+   "plant": "INT_3NB",
+   "control": "none",
+   "acc": 0.6214192708333333,
+   "lo99": 0.6059562174479167,
+   "hi99": 0.6381844075520833
+  },
+  {
+   "physics": "KA-MH",
+   "plant": "FIRST",
+   "control": "none",
+   "acc": 0.6971028645833334,
+   "lo99": 0.68001220703125,
+   "hi99": 0.7124039713541667
+  },
+  {
+   "physics": "KA-MH",
+   "plant": "INT_3NB",
+   "control": "zero_comm",
+   "acc": 0.5,
+   "lo99": 0.5,
+   "hi99": 0.5
+  },
+  {
+   "physics": "KA-MH",
+   "plant": "INT_3NB",
+   "control": "DICT",
+   "acc": 0.5686848958333333,
+   "lo99": 0.5488240559895834,
+   "hi99": 0.5891935221354166
+  }
+ ],
+ "physics": {
+  "KA-1H": {
+   "topology": "ring",
+   "n_sites": 64,
+   "radius": 3,
+   "k_random": 4,
+   "rewire": 0,
+   "state_dim": 3,
+   "payload_width": 3,
+   "channels": 1,
+   "fanout": 2,
+   "dest_mode": "all",
+   "loss": 0.0,
+   "loss_per_hop": 0,
+   "lat_base": 1,
+   "lat_hop": 0,
+   "lat_jitter": 0,
+   "dup": 0.0,
+   "noise": 0,
+   "cap": 0,
+   "collision": "none",
+   "decay_shift": 0,
+   "update_mode": "sync",
+   "update_period": 1,
+   "update_p": 1.0,
+   "rules": 1,
+   "prog_len": 16,
+   "plastic_route": 0,
+   "adapt_shift": 4,
+   "wimm": 0,
+   "setrule": 0,
+   "mut_site": 0.0,
+   "e_income": 0,
+   "e_max": 1000,
+   "c_emit": 0,
+   "c_op": 0,
+   "c_mem": 0,
+   "topo_seed": 0
+  },
+  "KA-1S": {
+   "topology": "ring",
+   "n_sites": 64,
+   "radius": 3,
+   "k_random": 4,
+   "rewire": 0,
+   "state_dim": 3,
+   "payload_width": 3,
+   "channels": 1,
+   "fanout": 2,
+   "dest_mode": "all",
+   "loss": 0.0,
+   "loss_per_hop": 0,
+   "lat_base": 1,
+   "lat_hop": 1,
+   "lat_jitter": 0,
+   "dup": 0.0,
+   "noise": 0,
+   "cap": 0,
+   "collision": "none",
+   "decay_shift": 0,
+   "update_mode": "sync",
+   "update_period": 1,
+   "update_p": 1.0,
+   "rules": 1,
+   "prog_len": 16,
+   "plastic_route": 0,
+   "adapt_shift": 4,
+   "wimm": 0,
+   "setrule": 0,
+   "mut_site": 0.0,
+   "e_income": 0,
+   "e_max": 1000,
+   "c_emit": 0,
+   "c_op": 0,
+   "c_mem": 0,
+   "topo_seed": 0
+  },
+  "KA-MH": {
+   "topology": "ring",
+   "n_sites": 64,
+   "radius": 1,
+   "k_random": 4,
+   "rewire": 0,
+   "state_dim": 3,
+   "payload_width": 3,
+   "channels": 1,
+   "fanout": 2,
+   "dest_mode": "all",
+   "loss": 0.0,
+   "loss_per_hop": 0,
+   "lat_base": 1,
+   "lat_hop": 0,
+   "lat_jitter": 0,
+   "dup": 0.0,
+   "noise": 0,
+   "cap": 0,
+   "collision": "none",
+   "decay_shift": 0,
+   "update_mode": "sync",
+   "update_period": 1,
+   "update_p": 1.0,
+   "rules": 1,
+   "prog_len": 16,
+   "plastic_route": 0,
+   "adapt_shift": 4,
+   "wimm": 0,
+   "setrule": 0,
+   "mut_site": 0.0,
+   "e_income": 0,
+   "e_max": 1000,
+   "c_emit": 0,
+   "c_op": 0,
+   "c_mem": 0,
+   "topo_seed": 0
+  }
+ },
+ "compute": {
+  "cpu_s": 272.33,
+  "wall_s": 204.97,
+  "threads": 2
+ },
+ "VOID_ROWS": "INT_2/INT_3/INT_3NB rows in this file used the pre-fix relay gate EMIT=cue+CNT0, under which zero packets circulate forever and the run tally never resets. They are void; out/ka_mh.json supersedes them."
+}
