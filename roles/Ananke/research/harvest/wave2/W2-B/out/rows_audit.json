@@ -1,0 +1,986 @@
+{
+ "zero_comm_forced": {
+  "RELAY": {
+   "n": 213,
+   "zc_exact_half": 213,
+   "SIGNAL": 55,
+   "COMM_DEPENDENT": 55,
+   "LOCAL_ONLY": 0,
+   "cdlo_eq_lo_minus_half(1e-9)": 213
+  },
+  "XOR": {
+   "n": 95,
+   "zc_exact_half": 95,
+   "SIGNAL": 0,
+   "COMM_DEPENDENT": 0,
+   "LOCAL_ONLY": 0,
+   "cdlo_eq_lo_minus_half(1e-9)": 95
+  },
+  "MAJ": {
+   "n": 174,
+   "zc_exact_half": 174,
+   "SIGNAL": 19,
+   "COMM_DEPENDENT": 19,
+   "LOCAL_ONLY": 0,
+   "cdlo_eq_lo_minus_half(1e-9)": 174
+  },
+  "FLIP": {
+   "n": 94,
+   "zc_exact_half": 62,
+   "SIGNAL": 0,
+   "COMM_DEPENDENT": 0,
+   "LOCAL_ONLY": 0,
+   "cdlo_eq_lo_minus_half(1e-9)": 59
+  },
+  "HOLD": {
+   "n": 201,
+   "zc_exact_half": 21,
+   "SIGNAL": 142,
+   "COMM_DEPENDENT": 3,
+   "LOCAL_ONLY": 139,
+   "cdlo_eq_lo_minus_half(1e-9)": 21
+  }
+ },
+ "max_abs(comm_delta_lo99-(lo99-.5))_where_zc_exact": 0.003909505208333351,
+ "FLIP_zero_comm": {
+  "n": 94,
+  "mean": 0.4988191212322695,
+  "min": 0.4375,
+  "max": 0.51171875,
+  "exact_half": 62
+ },
+ "reach_beyond_hop": {
+  "RELAY": {
+   "d>hop:n": 46,
+   "d>hop:REACH_BEYOND_HOP": 18,
+   "d>hop:RBH_with_comm_delta<.02": 11,
+   "global:n": 30,
+   "global:REACH_BEYOND_HOP": 0,
+   "global:RBH_with_comm_delta<.02": 0,
+   "d<=hop:n": 120,
+   "d<=hop:REACH_BEYOND_HOP": 48,
+   "d<=hop:RBH_with_comm_delta<.02": 12
+  },
+  "XOR": {
+   "global:n": 20,
+   "global:REACH_BEYOND_HOP": 0,
+   "global:RBH_with_comm_delta<.02": 0,
+   "d<=hop:n": 30,
+   "d<=hop:REACH_BEYOND_HOP": 17,
+   "d<=hop:RBH_with_comm_delta<.02": 16,
+   "d>hop:n": 33,
+   "d>hop:REACH_BEYOND_HOP": 31,
+   "d>hop:RBH_with_comm_delta<.02": 30
+  },
+  "MAJ": {
+   "d>hop:n": 46,
+   "d>hop:REACH_BEYOND_HOP": 39,
+   "d>hop:RBH_with_comm_delta<.02": 33,
+   "global:n": 34,
+   "global:REACH_BEYOND_HOP": 0,
+   "global:RBH_with_comm_delta<.02": 0,
+   "d<=hop:n": 82,
+   "d<=hop:REACH_BEYOND_HOP": 75,
+   "d<=hop:RBH_with_comm_delta<.02": 26
+  },
+  "FLIP": {
+   "d>hop:n": 41,
+   "d>hop:REACH_BEYOND_HOP": 9,
+   "d>hop:RBH_with_comm_delta<.02": 9,
+   "global:n": 28,
+   "global:REACH_BEYOND_HOP": 0,
+   "global:RBH_with_comm_delta<.02": 0,
+   "d<=hop:n": 13,
+   "d<=hop:REACH_BEYOND_HOP": 5,
+   "d<=hop:RBH_with_comm_delta<.02": 3
+  },
+  "HOLD": {
+   "global:n": 101,
+   "global:REACH_BEYOND_HOP": 0,
+   "global:RBH_with_comm_delta<.02": 0,
+   "d>hop:n": 36,
+   "d>hop:REACH_BEYOND_HOP": 7,
+   "d>hop:RBH_with_comm_delta<.02": 4,
+   "d<=hop:n": 18,
+   "d<=hop:REACH_BEYOND_HOP": 6,
+   "d<=hop:RBH_with_comm_delta<.02": 5
+  }
+ },
+ "adjudications": [
+  {
+   "cell": "0ad7dc00",
+   "family": "HOLD",
+   "normal": 1.0,
+   "env_perm": 0.5057123655913979,
+   "env_perm_range": [
+    0.4583333333333333,
+    0.546875
+   ],
+   "ok_perm": true,
+   "memory_ablation": 0.5,
+   "live_clause_mem": true,
+   "zero_comm": 1.0
+  },
+  {
+   "cell": "67ddd858",
+   "family": "HOLD",
+   "normal": 1.0,
+   "env_perm": 0.49613575268817195,
+   "env_perm_range": [
+    0.44791666666666663,
+    0.5364583333333334
+   ],
+   "ok_perm": true,
+   "memory_ablation": 0.5130208333333334,
+   "live_clause_mem": true,
+   "zero_comm": 1.0
+  },
+  {
+   "cell": "6a47bd68",
+   "family": "HOLD",
+   "normal": 0.9986979166666666,
+   "env_perm": 0.49512768817204306,
+   "env_perm_range": [
+    0.44791666666666663,
+    0.53125
+   ],
+   "ok_perm": true,
+   "memory_ablation": 0.5,
+   "live_clause_mem": true,
+   "zero_comm": 1.0
+  },
+  {
+   "cell": "5673ea4e",
+   "family": "HOLD",
+   "normal": 1.0,
+   "env_perm": 0.5120967741935484,
+   "env_perm_range": [
+    0.45833333333333337,
+    0.5520833333333333
+   ],
+   "ok_perm": true,
+   "memory_ablation": 0.5,
+   "live_clause_mem": true,
+   "zero_comm": 1.0
+  },
+  {
+   "cell": "223acaee",
+   "family": "RELAY",
+   "normal": 0.8880208333333333,
+   "env_perm": 0.5034022177419355,
+   "env_perm_range": [
+    0.4596354166666667,
+    0.58984375
+   ],
+   "ok_perm": true,
+   "zero_comm": 0.5,
+   "zc_clause": true,
+   "packet_ablation": 0.6328125,
+   "pa_clause": true,
+   "CAUSAL_SUPPORT": true,
+   "CAUSAL_iff_pa_clause": true
+  },
+  {
+   "cell": "a8f4ea11",
+   "family": "RELAY",
+   "normal": 0.8880208333333334,
+   "env_perm": 0.5049983198924731,
+   "env_perm_range": [
+    0.45442708333333337,
+    0.5559895833333334
+   ],
+   "ok_perm": true,
+   "zero_comm": 0.5,
+   "zc_clause": true,
+   "packet_ablation": 0.6380208333333333,
+   "pa_clause": true,
+   "CAUSAL_SUPPORT": true,
+   "CAUSAL_iff_pa_clause": true
+  },
+  {
+   "cell": "f7e62fe3",
+   "family": "RELAY",
+   "normal": 0.7825520833333334,
+   "env_perm": 0.49659778225806456,
+   "env_perm_range": [
+    0.45442708333333337,
+    0.53515625
+   ],
+   "ok_perm": true,
+   "zero_comm": 0.5,
+   "zc_clause": true,
+   "packet_ablation": 0.5,
+   "pa_clause": true,
+   "CAUSAL_SUPPORT": true,
+   "CAUSAL_iff_pa_clause": true
+  },
+  {
+   "cell": "e79e72df",
+   "family": "RELAY",
+   "normal": 0.8072916666666667,
+   "env_perm": 0.5037172379032258,
+   "env_perm_range": [
+    0.44986979166666663,
+    0.5592447916666666
+   ],
+   "ok_perm": true,
+   "zero_comm": 0.5,
+   "zc_clause": true,
+   "packet_ablation": 0.5,
+   "pa_clause": true,
+   "CAUSAL_SUPPORT": true,
+   "CAUSAL_iff_pa_clause": true
+  },
+  {
+   "cell": "9e72f9b6",
+   "family": "MAJ",
+   "normal": 0.7682291666666666,
+   "env_perm": 0.4955477150537635,
+   "env_perm_range": [
+    0.45572916666666674,
+    0.5338541666666666
+   ],
+   "ok_perm": true,
+   "zero_comm": 0.5,
+   "zc_clause": true,
+   "packet_ablation": 0.5,
+   "pa_clause": true,
+   "CAUSAL_SUPPORT": true,
+   "CAUSAL_iff_pa_clause": true
+  },
+  {
+   "cell": "023539c4",
+   "family": "MAJ",
+   "normal": 0.69140625,
+   "env_perm": 0.5007770497311828,
+   "env_perm_range": [
+    0.46158854166666663,
+    0.5501302083333333
+   ],
+   "ok_perm": true,
+   "zero_comm": 0.5,
+   "zc_clause": true,
+   "packet_ablation": 0.6966145833333333,
+   "pa_clause": false,
+   "CAUSAL_SUPPORT": false,
+   "CAUSAL_iff_pa_clause": true
+  },
+  {
+   "cell": "feadc823",
+   "family": "MAJ",
+   "normal": 0.6953124999999999,
+   "env_perm": 0.5072034610215054,
+   "env_perm_range": [
+    0.4720052083333333,
+    0.537109375
+   ],
+   "ok_perm": true,
+   "zero_comm": 0.5,
+   "zc_clause": true,
+   "packet_ablation": 0.6966145833333333,
+   "pa_clause": false,
+   "CAUSAL_SUPPORT": false,
+   "CAUSAL_iff_pa_clause": true
+  },
+  {
+   "cell": "544f3d24",
+   "family": "MAJ",
+   "normal": 0.6875,
+   "env_perm": 0.5062163978494625,
+   "env_perm_range": [
+    0.47395833333333337,
+    0.5416666666666667
+   ],
+   "ok_perm": true,
+   "zero_comm": 0.5,
+   "zc_clause": true,
+   "packet_ablation": 0.544921875,
+   "pa_clause": true,
+   "CAUSAL_SUPPORT": true,
+   "CAUSAL_iff_pa_clause": true
+  }
+ ],
+ "transects": {
+  "n": 104,
+  "levels_hist": {
+   "4": 32,
+   "3": 56,
+   "5": 8,
+   "2": 8
+  },
+  "lt3_levels_unreachable": [
+   {
+    "family": "XOR",
+    "dial": "setrule",
+    "base": 0,
+    "track": "phys",
+    "wave": "B",
+    "levels": 2
+   },
+   {
+    "family": "XOR",
+    "dial": "dup",
+    "base": 0,
+    "track": "phys",
+    "wave": "B",
+    "levels": 2
+   },
+   {
+    "family": "XOR",
+    "dial": "setrule",
+    "base": 1,
+    "track": "phys",
+    "wave": "B",
+    "levels": 2
+   },
+   {
+    "family": "XOR",
+    "dial": "dup",
+    "base": 1,
+    "track": "phys",
+    "wave": "B",
+    "levels": 2
+   },
+   {
+    "family": "FLIP",
+    "dial": "update_period",
+    "base": 0,
+    "track": "phys",
+    "wave": "B",
+    "levels": 2
+   },
+   {
+    "family": "FLIP",
+    "dial": "update_period",
+    "base": 1,
+    "track": "phys",
+    "wave": "B",
+    "levels": 2
+   },
+   {
+    "family": "HOLD",
+    "dial": "update_mode",
+    "base": 0,
+    "track": "phys",
+    "wave": "B",
+    "levels": 2
+   },
+   {
+    "family": "HOLD",
+    "dial": "update_mode",
+    "base": 1,
+    "track": "phys",
+    "wave": "B",
+    "levels": 2
+   }
+  ]
+ },
+ "boundary_dials": [
+  [
+   "FLIP",
+   "channels",
+   "sens",
+   "PHASE_BOUNDARY_CANDIDATE"
+  ],
+  [
+   "FLIP",
+   "decay_shift",
+   "plant",
+   "PHASE_BOUNDARY_CANDIDATE"
+  ],
+  [
+   "FLIP",
+   "rules",
+   "emit",
+   "PHASE_BOUNDARY_SUPPORTED"
+  ],
+  [
+   "FLIP",
+   "rules",
+   "sens",
+   "PHASE_BOUNDARY_CANDIDATE"
+  ],
+  [
+   "HOLD",
+   "decay_shift",
+   "acc",
+   "PHASE_BOUNDARY_CANDIDATE"
+  ],
+  [
+   "HOLD",
+   "decay_shift",
+   "plant",
+   "PHASE_BOUNDARY_CANDIDATE"
+  ],
+  [
+   "HOLD",
+   "decay_shift",
+   "plant",
+   "PHASE_BOUNDARY_SUPPORTED"
+  ],
+  [
+   "HOLD",
+   "gap",
+   "plant",
+   "PHASE_BOUNDARY_CANDIDATE"
+  ],
+  [
+   "HOLD",
+   "rules",
+   "emit",
+   "PHASE_BOUNDARY_CANDIDATE"
+  ],
+  [
+   "MAJ",
+   "economy",
+   "plant",
+   "PHASE_BOUNDARY_CANDIDATE"
+  ],
+  [
+   "MAJ",
+   "rules",
+   "emit",
+   "PHASE_BOUNDARY_CANDIDATE"
+  ],
+  [
+   "MAJ",
+   "rules",
+   "emit",
+   "PHASE_BOUNDARY_SUPPORTED"
+  ],
+  [
+   "MAJ",
+   "rules",
+   "sens",
+   "PHASE_BOUNDARY_CANDIDATE"
+  ],
+  [
+   "MAJ",
+   "state_dim",
+   "sens",
+   "PHASE_BOUNDARY_CANDIDATE"
+  ],
+  [
+   "MAJ",
+   "topology",
+   "plant",
+   "PHASE_BOUNDARY_CANDIDATE"
+  ],
+  [
+   "RELAY",
+   "decay_shift",
+   "plant",
+   "PHASE_BOUNDARY_SUPPORTED"
+  ],
+  [
+   "RELAY",
+   "delta",
+   "acc",
+   "PHASE_BOUNDARY_CANDIDATE"
+  ],
+  [
+   "RELAY",
+   "delta",
+   "emit",
+   "PHASE_BOUNDARY_CANDIDATE"
+  ],
+  [
+   "RELAY",
+   "delta",
+   "plant",
+   "PHASE_BOUNDARY_CANDIDATE"
+  ],
+  [
+   "RELAY",
+   "delta",
+   "plant",
+   "PHASE_BOUNDARY_SUPPORTED"
+  ],
+  [
+   "RELAY",
+   "economy",
+   "plant",
+   "PHASE_BOUNDARY_SUPPORTED"
+  ],
+  [
+   "RELAY",
+   "prog_len",
+   "sens",
+   "PHASE_BOUNDARY_CANDIDATE"
+  ],
+  [
+   "RELAY",
+   "topology",
+   "sens",
+   "PHASE_BOUNDARY_CANDIDATE"
+  ],
+  [
+   "XOR",
+   "rules",
+   "emit",
+   "PHASE_BOUNDARY_CANDIDATE"
+  ],
+  [
+   "XOR",
+   "rules",
+   "sens",
+   "PHASE_BOUNDARY_CANDIDATE"
+  ],
+  [
+   "XOR",
+   "state_dim",
+   "emit",
+   "PHASE_BOUNDARY_CANDIDATE"
+  ]
+ ],
+ "plant_viability": {
+  "RELAY": {
+   "n": 1385,
+   "max": 1.0,
+   "ge.75": 188,
+   "gt.55": 498
+  },
+  "XOR": {
+   "n": 1206,
+   "max": 0.57421875,
+   "ge.75": 0,
+   "gt.55": 10
+  },
+  "MAJ": {
+   "n": 1348,
+   "max": 0.6927083333333333,
+   "ge.75": 0,
+   "gt.55": 280
+  },
+  "FLIP": {
+   "n": 1235,
+   "max": 0.734375,
+   "ge.75": 0,
+   "gt.55": 241
+  },
+  "HOLD": {
+   "n": 1311,
+   "max": 1.0,
+   "ge.75": 1180,
+   "gt.55": 1311
+  }
+ },
+ "MAJ_integration_lo99>.70": 1,
+ "MAJ_acc>.70": 1,
+ "XOR_held_max_acc": 0.5240885416666667,
+ "XOR_held_max_lo99": 0.5052083333333334,
+ "waveE": [
+  {
+   "cell": "a23d0fe5",
+   "src": "85ca202e",
+   "topology": "global",
+   "n_sites": 400,
+   "radius": 2,
+   "d": 2,
+   "family": "HOLD",
+   "acc": 1.0,
+   "lo99": 1.0
+  },
+  {
+   "cell": "8ecda231",
+   "src": "85ca202e",
+   "topology": "global",
+   "n_sites": 1024,
+   "radius": 2,
+   "d": 2,
+   "family": "HOLD",
+   "acc": 1.0,
+   "lo99": 1.0
+  },
+  {
+   "cell": "53b63b17",
+   "src": "85ca202e",
+   "topology": "global",
+   "n_sites": 2304,
+   "radius": 2,
+   "d": 2,
+   "family": "HOLD",
+   "acc": 1.0,
+   "lo99": 1.0
+  },
+  {
+   "cell": "f92b5453",
+   "src": "ab089e45",
+   "topology": "global",
+   "n_sites": 400,
+   "radius": 2,
+   "d": 2,
+   "family": "HOLD",
+   "acc": 1.0,
+   "lo99": 1.0
+  },
+  {
+   "cell": "8b959bf0",
+   "src": "ab089e45",
+   "topology": "global",
+   "n_sites": 1024,
+   "radius": 2,
+   "d": 2,
+   "family": "HOLD",
+   "acc": 1.0,
+   "lo99": 1.0
+  },
+  {
+   "cell": "31a6c7ee",
+   "src": "ab089e45",
+   "topology": "global",
+   "n_sites": 2304,
+   "radius": 2,
+   "d": 2,
+   "family": "HOLD",
+   "acc": 1.0,
+   "lo99": 1.0
+  },
+  {
+   "cell": "9be25354",
+   "src": "a0a5244d",
+   "topology": "global",
+   "n_sites": 400,
+   "radius": 2,
+   "d": 2,
+   "family": "HOLD",
+   "acc": 1.0,
+   "lo99": 1.0
+  },
+  {
+   "cell": "07f50049",
+   "src": "a0a5244d",
+   "topology": "global",
+   "n_sites": 1024,
+   "radius": 2,
+   "d": 2,
+   "family": "HOLD",
+   "acc": 1.0,
+   "lo99": 1.0
+  },
+  {
+   "cell": "c9615425",
+   "src": "a0a5244d",
+   "topology": "global",
+   "n_sites": 2304,
+   "radius": 2,
+   "d": 2,
+   "family": "HOLD",
+   "acc": 1.0,
+   "lo99": 1.0
+  },
+  {
+   "cell": "dd06f487",
+   "src": "0c18ce5e",
+   "topology": "global",
+   "n_sites": 400,
+   "radius": 2,
+   "d": 2,
+   "family": "HOLD",
+   "acc": 0.9583333333333333,
+   "lo99": 0.9583333333333333
+  },
+  {
+   "cell": "22c8d0e5",
+   "src": "0c18ce5e",
+   "topology": "global",
+   "n_sites": 1024,
+   "radius": 2,
+   "d": 2,
+   "family": "HOLD",
+   "acc": 0.9583333333333333,
+   "lo99": 0.9583333333333333
+  },
+  {
+   "cell": "c6f313bc",
+   "src": "0c18ce5e",
+   "topology": "global",
+   "n_sites": 2304,
+   "radius": 2,
+   "d": 2,
+   "family": "HOLD",
+   "acc": 0.9583333333333333,
+   "lo99": 0.9583333333333333
+  },
+  {
+   "cell": "dd676546",
+   "src": "bbef66a1",
+   "topology": "ring",
+   "n_sites": 400,
+   "radius": 3,
+   "d": 3,
+   "family": "RELAY",
+   "acc": 0.875,
+   "lo99": 0.8489518229166666
+  },
+  {
+   "cell": "5c3c1cf6",
+   "src": "bbef66a1",
+   "topology": "ring",
+   "n_sites": 1024,
+   "radius": 3,
+   "d": 3,
+   "family": "RELAY",
+   "acc": 0.8932291666666666,
+   "lo99": 0.8658854166666666
+  },
+  {
+   "cell": "9d522f90",
+   "src": "bbef66a1",
+   "topology": "ring",
+   "n_sites": 2304,
+   "radius": 3,
+   "d": 3,
+   "family": "RELAY",
+   "acc": 0.8815104166666666,
+   "lo99": 0.8554622395833333
+  }
+ ],
+ "waveC_transfer_signal": [
+  {
+   "src_family": "HOLD",
+   "family": "HOLD",
+   "variant": false,
+   "acc": 1.0,
+   "lo99": 1.0
+  },
+  {
+   "src_family": "HOLD",
+   "family": "HOLD",
+   "variant": true,
+   "acc": 1.0,
+   "lo99": 1.0
+  },
+  {
+   "src_family": "HOLD",
+   "family": "HOLD",
+   "variant": true,
+   "acc": 1.0,
+   "lo99": 1.0
+  },
+  {
+   "src_family": "HOLD",
+   "family": "HOLD",
+   "variant": false,
+   "acc": 1.0,
+   "lo99": 1.0
+  },
+  {
+   "src_family": "HOLD",
+   "family": "HOLD",
+   "variant": true,
+   "acc": 1.0,
+   "lo99": 1.0
+  },
+  {
+   "src_family": "HOLD",
+   "family": "HOLD",
+   "variant": true,
+   "acc": 1.0,
+   "lo99": 1.0
+  },
+  {
+   "src_family": "HOLD",
+   "family": "HOLD",
+   "variant": false,
+   "acc": 0.9583333333333333,
+   "lo99": 0.9583333333333333
+  },
+  {
+   "src_family": "HOLD",
+   "family": "HOLD",
+   "variant": true,
+   "acc": 0.9583333333333333,
+   "lo99": 0.9583333333333333
+  },
+  {
+   "src_family": "HOLD",
+   "family": "HOLD",
+   "variant": true,
+   "acc": 0.9583333333333333,
+   "lo99": 0.9583333333333333
+  },
+  {
+   "src_family": "HOLD",
+   "family": "HOLD",
+   "variant": false,
+   "acc": 0.9361979166666666,
+   "lo99": 0.91015625
+  },
+  {
+   "src_family": "HOLD",
+   "family": "HOLD",
+   "variant": true,
+   "acc": 0.9166666666666667,
+   "lo99": 0.8854166666666667
+  },
+  {
+   "src_family": "HOLD",
+   "family": "HOLD",
+   "variant": true,
+   "acc": 0.9557291666666666,
+   "lo99": 0.9277311197916667
+  },
+  {
+   "src_family": "HOLD",
+   "family": "HOLD",
+   "variant": false,
+   "acc": 0.9212239583333333,
+   "lo99": 0.8776009114583334
+  },
+  {
+   "src_family": "HOLD",
+   "family": "HOLD",
+   "variant": true,
+   "acc": 0.9524739583333333,
+   "lo99": 0.9264290364583333
+  },
+  {
+   "src_family": "HOLD",
+   "family": "HOLD",
+   "variant": true,
+   "acc": 0.94921875,
+   "lo99": 0.9153645833333333
+  },
+  {
+   "src_family": "HOLD",
+   "family": "HOLD",
+   "variant": false,
+   "acc": 0.9290364583333333,
+   "lo99": 0.8951790364583334
+  },
+  {
+   "src_family": "HOLD",
+   "family": "HOLD",
+   "variant": true,
+   "acc": 0.943359375,
+   "lo99": 0.9192708333333334
+  },
+  {
+   "src_family": "HOLD",
+   "family": "HOLD",
+   "variant": true,
+   "acc": 0.9186197916666666,
+   "lo99": 0.8834635416666667
+  },
+  {
+   "src_family": "HOLD",
+   "family": "HOLD",
+   "variant": false,
+   "acc": 0.9296874999999999,
+   "lo99": 0.8899707031249999
+  },
+  {
+   "src_family": "HOLD",
+   "family": "HOLD",
+   "variant": true,
+   "acc": 0.9557291666666666,
+   "lo99": 0.921875
+  },
+  {
+   "src_family": "HOLD",
+   "family": "HOLD",
+   "variant": true,
+   "acc": 0.9537760416666666,
+   "lo99": 0.9342447916666665
+  },
+  {
+   "src_family": "HOLD",
+   "family": "HOLD",
+   "variant": false,
+   "acc": 0.9127604166666667,
+   "lo99": 0.8860644531249999
+  },
+  {
+   "src_family": "HOLD",
+   "family": "HOLD",
+   "variant": true,
+   "acc": 0.91796875,
+   "lo99": 0.8971321614583333
+  },
+  {
+   "src_family": "HOLD",
+   "family": "HOLD",
+   "variant": true,
+   "acc": 0.8990885416666667,
+   "lo99": 0.8697916666666666
+  },
+  {
+   "src_family": "HOLD",
+   "family": "HOLD",
+   "variant": false,
+   "acc": 0.8880208333333333,
+   "lo99": 0.8606738281249999
+  },
+  {
+   "src_family": "HOLD",
+   "family": "HOLD",
+   "variant": true,
+   "acc": 0.8678385416666667,
+   "lo99": 0.8326790364583334
+  },
+  {
+   "src_family": "HOLD",
+   "family": "HOLD",
+   "variant": true,
+   "acc": 0.8782552083333333,
+   "lo99": 0.8450455729166666
+  },
+  {
+   "src_family": "RELAY",
+   "family": "RELAY",
+   "variant": false,
+   "acc": 0.9075520833333334,
+   "lo99": 0.8802083333333334
+  },
+  {
+   "src_family": "RELAY",
+   "family": "RELAY",
+   "variant": true,
+   "acc": 0.7545572916666667,
+   "lo99": 0.7148404947916667
+  },
+  {
+   "src_family": "HOLD",
+   "family": "HOLD",
+   "variant": false,
+   "acc": 0.8639322916666667,
+   "lo99": 0.8365852864583334
+  },
+  {
+   "src_family": "HOLD",
+   "family": "HOLD",
+   "variant": true,
+   "acc": 0.8763020833333333,
+   "lo99": 0.84765625
+  },
+  {
+   "src_family": "HOLD",
+   "family": "HOLD",
+   "variant": true,
+   "acc": 0.8619791666666666,
+   "lo99": 0.8235677083333333
+  },
+  {
+   "src_family": "HOLD",
+   "family": "HOLD",
+   "variant": false,
+   "acc": 0.8294270833333333,
+   "lo99": 0.8033854166666667
+  },
+  {
+   "src_family": "HOLD",
+   "family": "HOLD",
+   "variant": true,
+   "acc": 0.8294270833333334,
+   "lo99": 0.8072916666666666
+  },
+  {
+   "src_family": "HOLD",
+   "family": "HOLD",
+   "variant": true,
+   "acc": 0.8020833333333333,
+   "lo99": 0.76953125
+  }
+ ]
+}

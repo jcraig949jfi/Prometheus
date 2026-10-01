@@ -130,7 +130,8 @@ def run(rule, seed, struct="FIELD", partner="FULL", ctx="CARRY", mut=True, T=300
     mrng = random.Random(repr(("W2-14", rule, seed, struct, partner, ctx, mut)))
     model = Model(partner, mrng, bank, pool, r.L)
     founder = next(o for o in r.orgs if o.anc == 0)
-    causal_set = {founder.oid}
+    f0 = founder.oid
+    causal_set = {f0}
     cnt = {"B": 0, "Ball": 0, "last_birth": 0, "calls": 0}
 
     orig_lb = r._lin_birth
@@ -213,12 +214,12 @@ def run(rule, seed, struct="FIELD", partner="FULL", ctx="CARRY", mut=True, T=300
             stop = "free_cap256"
             break
         if stop_runaway and maxA >= 40 and cnt["B"] >= 163 and ep % 10 == 9 and \
-                depth_from(r.lineage, [founder.oid]) >= 20:
+                depth_from(r.lineage, [f0]) >= 20:
             stop = "runaway_decided"
             break
     out = {"rule": rule, "seed": seed, "struct": struct, "partner": partner, "ctx": ctx, "mut": mut,
            "epochs": ep + 1, "stop": stop, "B": cnt["B"], "Ball": cnt["Ball"], "maxA": maxA,
-           "A_end": A, "N_end": N, "depth_f": depth_from(r.lineage, [founder.oid]),
+           "A_end": A, "N_end": N, "depth_f": depth_from(r.lineage, [f0]),
            "depth_world": depth_from(r.lineage), "calls": cnt["calls"]}
     if traj:
         out["traj"] = tr

@@ -1,0 +1,1657 @@
+{
+ "M": 32,
+ "certificates": {
+  "zero_comm": {
+   "ruler": "zero_comm control",
+   "claim": "communication is necessary",
+   "verdict": "DEGENERATE",
+   "attainable": [
+    0.5,
+    0.5
+   ],
+   "eligibility": {
+    "null": "6/6",
+    "adversary": "3/3",
+    "plant": "4/4",
+    "probe": "6/6"
+   },
+   "null_scores": {
+    "null@ring24/RELAY": 0.5,
+    "const+@ring24/RELAY": 0.5,
+    "null@ring24/MAJ": 0.5,
+    "const+@ring24/MAJ": 0.5,
+    "null@X0/XOR": 0.5,
+    "const+@X0/XOR": 0.5
+   },
+   "adversary_scores": {
+    "sense_copy(silent)@ring24/RELAY": 0.5,
+    "sense_copy(silent)@ring24/MAJ": 0.5,
+    "sense_copy(silent)@X0/XOR": 0.5
+   },
+   "cheapest": {
+    "cell": "ring24/RELAY",
+    "program": "null",
+    "role": "null",
+    "lacks": "",
+    "value": 0.5
+   },
+   "forced": true,
+   "always_pass": true,
+   "notes": [
+    "pair-exact: every program gives the identical per-pair vector",
+    "value forced to 0.5 for every program and cell"
+   ],
+   "rows": [
+    {
+     "cell": "ring24/RELAY",
+     "program": "null",
+     "role": "null",
+     "lacks": "",
+     "value": 0.5,
+     "passed": true,
+     "pairs": null
+    },
+    {
+     "cell": "ring24/RELAY",
+     "program": "const+",
+     "role": "null",
+     "lacks": "",
+     "value": 0.5,
+     "passed": true,
+     "pairs": null
+    },
+    {
+     "cell": "ring24/RELAY",
+     "program": "sense_copy(silent)",
+     "role": "adversary",
+     "lacks": "any transport",
+     "value": 0.5,
+     "passed": true,
+     "pairs": null
+    },
+    {
+     "cell": "ring24/RELAY",
+     "program": "random0",
+     "role": "probe",
+     "lacks": "",
+     "value": 0.5,
+     "passed": true,
+     "pairs": null
+    },
+    {
+     "cell": "ring24/RELAY",
+     "program": "random1",
+     "role": "probe",
+     "lacks": "",
+     "value": 0.5,
+     "passed": true,
+     "pairs": null
+    },
+    {
+     "cell": "ring24/RELAY",
+     "program": "relay_flood",
+     "role": "plant",
+     "lacks": "",
+     "value": 0.5,
+     "passed": true,
+     "pairs": null
+    },
+    {
+     "cell": "ring24/MAJ",
+     "program": "null",
+     "role": "null",
+     "lacks": "",
+     "value": 0.5,
+     "passed": true,
+     "pairs": null
+    },
+    {
+     "cell": "ring24/MAJ",
+     "program": "const+",
+     "role": "null",
+     "lacks": "",
+     "value": 0.5,
+     "passed": true,
+     "pairs": null
+    },
+    {
+     "cell": "ring24/MAJ",
+     "program": "sense_copy(silent)",
+     "role": "adversary",
+     "lacks": "any transport",
+     "value": 0.5,
+     "passed": true,
+     "pairs": null
+    },
+    {
+     "cell": "ring24/MAJ",
+     "program": "random0",
+     "role": "probe",
+     "lacks": "",
+     "value": 0.5,
+     "passed": true,
+     "pairs": null
+    },
+    {
+     "cell": "ring24/MAJ",
+     "program": "random1",
+     "role": "probe",
+     "lacks": "",
+     "value": 0.5,
+     "passed": true,
+     "pairs": null
+    },
+    {
+     "cell": "ring24/MAJ",
+     "program": "relay_flood",
+     "role": "plant",
+     "lacks": "",
+     "value": 0.5,
+     "passed": true,
+     "pairs": null
+    },
+    {
+     "cell": "X0/XOR",
+     "program": "null",
+     "role": "null",
+     "lacks": "",
+     "value": 0.5,
+     "passed": true,
+     "pairs": null
+    },
+    {
+     "cell": "X0/XOR",
+     "program": "const+",
+     "role": "null",
+     "lacks": "",
+     "value": 0.5,
+     "passed": true,
+     "pairs": null
+    },
+    {
+     "cell": "X0/XOR",
+     "program": "sense_copy(silent)",
+     "role": "adversary",
+     "lacks": "any transport",
+     "value": 0.5,
+     "passed": true,
+     "pairs": null
+    },
+    {
+     "cell": "X0/XOR",
+     "program": "random0",
+     "role": "probe",
+     "lacks": "",
+     "value": 0.5,
+     "passed": true,
+     "pairs": null
+    },
+    {
+     "cell": "X0/XOR",
+     "program": "random1",
+     "role": "probe",
+     "lacks": "",
+     "value": 0.5,
+     "passed": true,
+     "pairs": null
+    },
+    {
+     "cell": "X0/XOR",
+     "program": "relay_flood",
+     "role": "plant",
+     "lacks": "",
+     "value": 0.5,
+     "passed": true,
+     "pairs": null
+    },
+    {
+     "cell": "X0/XOR",
+     "program": "P_XOR",
+     "role": "plant",
+     "lacks": "",
+     "value": 0.5,
+     "passed": true,
+     "pairs": null
+    }
+   ]
+  },
+  "SIGNAL_comm": {
+   "ruler": "SIGNAL",
+   "claim": "competence on the family's task",
+   "verdict": "SOUND",
+   "attainable": [
+    0.43489583333333337,
+    1.0
+   ],
+   "eligibility": {
+    "null": "0/6",
+    "adversary": "0/3",
+    "plant": "2/4",
+    "probe": "0/6"
+   },
+   "null_scores": {
+    "null@ring24/RELAY": 0.5,
+    "const+@ring24/RELAY": 0.5,
+    "null@ring24/MAJ": 0.5,
+    "const+@ring24/MAJ": 0.5,
+    "null@X0/XOR": 0.5,
+    "const+@X0/XOR": 0.5
+   },
+   "adversary_scores": {
+    "sense_copy(silent)@ring24/RELAY": 0.5,
+    "sense_copy(silent)@ring24/MAJ": 0.5,
+    "sense_copy(silent)@X0/XOR": 0.5
+   },
+   "cheapest": null,
+   "forced": false,
+   "always_pass": false,
+   "notes": [],
+   "rows": [
+    {
+     "cell": "ring24/RELAY",
+     "program": "null",
+     "role": "null",
+     "lacks": "",
+     "value": 0.5,
+     "passed": false,
+     "pairs": null
+    },
+    {
+     "cell": "ring24/RELAY",
+     "program": "const+",
+     "role": "null",
+     "lacks": "",
+     "value": 0.5,
+     "passed": false,
+     "pairs": null
+    },
+    {
+     "cell": "ring24/RELAY",
+     "program": "sense_copy(silent)",
+     "role": "adversary",
+     "lacks": "any transport",
+     "value": 0.5,
+     "passed": false,
+     "pairs": null
+    },
+    {
+     "cell": "ring24/RELAY",
+     "program": "random0",
+     "role": "probe",
+     "lacks": "",
+     "value": 0.5,
+     "passed": false,
+     "pairs": null
+    },
+    {
+     "cell": "ring24/RELAY",
+     "program": "random1",
+     "role": "probe",
+     "lacks": "",
+     "value": 0.5,
+     "passed": false,
+     "pairs": null
+    },
+    {
+     "cell": "ring24/RELAY",
+     "program": "relay_flood",
+     "role": "plant",
+     "lacks": "",
+     "value": 1.0,
+     "passed": true,
+     "pairs": null
+    },
+    {
+     "cell": "ring24/MAJ",
+     "program": "null",
+     "role": "null",
+     "lacks": "",
+     "value": 0.5,
+     "passed": false,
+     "pairs": null
+    },
+    {
+     "cell": "ring24/MAJ",
+     "program": "const+",
+     "role": "null",
+     "lacks": "",
+     "value": 0.5,
+     "passed": false,
+     "pairs": null
+    },
+    {
+     "cell": "ring24/MAJ",
+     "program": "sense_copy(silent)",
+     "role": "adversary",
+     "lacks": "any transport",
+     "value": 0.5,
+     "passed": false,
+     "pairs": null
+    },
+    {
+     "cell": "ring24/MAJ",
+     "program": "random0",
+     "role": "probe",
+     "lacks": "",
+     "value": 0.5,
+     "passed": false,
+     "pairs": null
+    },
+    {
+     "cell": "ring24/MAJ",
+     "program": "random1",
+     "role": "probe",
+     "lacks": "",
+     "value": 0.5,
+     "passed": false,
+     "pairs": null
+    },
+    {
+     "cell": "ring24/MAJ",
+     "program": "relay_flood",
+     "role": "plant",
+     "lacks": "",
+     "value": 0.43489583333333337,
+     "passed": false,
+     "pairs": null
+    },
+    {
+     "cell": "X0/XOR",
+     "program": "null",
+     "role": "null",
+     "lacks": "",
+     "value": 0.5,
+     "passed": false,
+     "pairs": null
+    },
+    {
+     "cell": "X0/XOR",
+     "program": "const+",
+     "role": "null",
+     "lacks": "",
+     "value": 0.5,
+     "passed": false,
+     "pairs": null
+    },
+    {
+     "cell": "X0/XOR",
+     "program": "sense_copy(silent)",
+     "role": "adversary",
+     "lacks": "any transport",
+     "value": 0.5,
+     "passed": false,
+     "pairs": null
+    },
+    {
+     "cell": "X0/XOR",
+     "program": "random0",
+     "role": "probe",
+     "lacks": "",
+     "value": 0.5,
+     "passed": false,
+     "pairs": null
+    },
+    {
+     "cell": "X0/XOR",
+     "program": "random1",
+     "role": "probe",
+     "lacks": "",
+     "value": 0.5,
+     "passed": false,
+     "pairs": null
+    },
+    {
+     "cell": "X0/XOR",
+     "program": "relay_flood",
+     "role": "plant",
+     "lacks": "",
+     "value": 0.44010416666666663,
+     "passed": false,
+     "pairs": null
+    },
+    {
+     "cell": "X0/XOR",
+     "program": "P_XOR",
+     "role": "plant",
+     "lacks": "",
+     "value": 1.0,
+     "passed": true,
+     "pairs": null
+    }
+   ]
+  },
+  "COMM_DEPENDENT": {
+   "ruler": "COMM_DEPENDENT",
+   "claim": "competence depends on communication",
+   "verdict": "SOUND",
+   "attainable": [
+    -0.06510416666666667,
+    0.5
+   ],
+   "eligibility": {
+    "null": "0/6",
+    "adversary": "0/3",
+    "plant": "2/4",
+    "probe": "0/6"
+   },
+   "null_scores": {
+    "null@ring24/RELAY": 0.0,
+    "const+@ring24/RELAY": 0.0,
+    "null@ring24/MAJ": 0.0,
+    "const+@ring24/MAJ": 0.0,
+    "null@X0/XOR": 0.0,
+    "const+@X0/XOR": 0.0
+   },
+   "adversary_scores": {
+    "sense_copy(silent)@ring24/RELAY": 0.0,
+    "sense_copy(silent)@ring24/MAJ": 0.0,
+    "sense_copy(silent)@X0/XOR": 0.0
+   },
+   "cheapest": null,
+   "forced": false,
+   "always_pass": false,
+   "notes": [],
+   "rows": [
+    {
+     "cell": "ring24/RELAY",
+     "program": "null",
+     "role": "null",
+     "lacks": "",
+     "value": 0.0,
+     "passed": false,
+     "pairs": null
+    },
+    {
+     "cell": "ring24/RELAY",
+     "program": "const+",
+     "role": "null",
+     "lacks": "",
+     "value": 0.0,
+     "passed": false,
+     "pairs": null
+    },
+    {
+     "cell": "ring24/RELAY",
+     "program": "sense_copy(silent)",
+     "role": "adversary",
+     "lacks": "any transport",
+     "value": 0.0,
+     "passed": false,
+     "pairs": null
+    },
+    {
+     "cell": "ring24/RELAY",
+     "program": "random0",
+     "role": "probe",
+     "lacks": "",
+     "value": 0.0,
+     "passed": false,
+     "pairs": null
+    },
+    {
+     "cell": "ring24/RELAY",
+     "program": "random1",
+     "role": "probe",
+     "lacks": "",
+     "value": 0.0,
+     "passed": false,
+     "pairs": null
+    },
+    {
+     "cell": "ring24/RELAY",
+     "program": "relay_flood",
+     "role": "plant",
+     "lacks": "",
+     "value": 0.5,
+     "passed": true,
+     "pairs": null
+    },
+    {
+     "cell": "ring24/MAJ",
+     "program": "null",
+     "role": "null",
+     "lacks": "",
+     "value": 0.0,
+     "passed": false,
+     "pairs": null
+    },
+    {
+     "cell": "ring24/MAJ",
+     "program": "const+",
+     "role": "null",
+     "lacks": "",
+     "value": 0.0,
+     "passed": false,
+     "pairs": null
+    },
+    {
+     "cell": "ring24/MAJ",
+     "program": "sense_copy(silent)",
+     "role": "adversary",
+     "lacks": "any transport",
+     "value": 0.0,
+     "passed": false,
+     "pairs": null
+    },
+    {
+     "cell": "ring24/MAJ",
+     "program": "random0",
+     "role": "probe",
+     "lacks": "",
+     "value": 0.0,
+     "passed": false,
+     "pairs": null
+    },
+    {
+     "cell": "ring24/MAJ",
+     "program": "random1",
+     "role": "probe",
+     "lacks": "",
+     "value": 0.0,
+     "passed": false,
+     "pairs": null
+    },
+    {
+     "cell": "ring24/MAJ",
+     "program": "relay_flood",
+     "role": "plant",
+     "lacks": "",
+     "value": -0.06510416666666667,
+     "passed": false,
+     "pairs": null
+    },
+    {
+     "cell": "X0/XOR",
+     "program": "null",
+     "role": "null",
+     "lacks": "",
+     "value": 0.0,
+     "passed": false,
+     "pairs": null
+    },
+    {
+     "cell": "X0/XOR",
+     "program": "const+",
+     "role": "null",
+     "lacks": "",
+     "value": 0.0,
+     "passed": false,
+     "pairs": null
+    },
+    {
+     "cell": "X0/XOR",
+     "program": "sense_copy(silent)",
+     "role": "adversary",
+     "lacks": "any transport",
+     "value": 0.0,
+     "passed": false,
+     "pairs": null
+    },
+    {
+     "cell": "X0/XOR",
+     "program": "random0",
+     "role": "probe",
+     "lacks": "",
+     "value": 0.0,
+     "passed": false,
+     "pairs": null
+    },
+    {
+     "cell": "X0/XOR",
+     "program": "random1",
+     "role": "probe",
+     "lacks": "",
+     "value": 0.0,
+     "passed": false,
+     "pairs": null
+    },
+    {
+     "cell": "X0/XOR",
+     "program": "relay_flood",
+     "role": "plant",
+     "lacks": "",
+     "value": -0.05989583333333333,
+     "passed": false,
+     "pairs": null
+    },
+    {
+     "cell": "X0/XOR",
+     "program": "P_XOR",
+     "role": "plant",
+     "lacks": "",
+     "value": 0.5,
+     "passed": true,
+     "pairs": null
+    }
+   ]
+  },
+  "XOR_SIGNAL_as_XOR_ruler": {
+   "ruler": "SIGNAL",
+   "claim": "competence on the family's task",
+   "verdict": "CHEATABLE",
+   "attainable": [
+    0.18489583333333334,
+    1.0
+   ],
+   "eligibility": {
+    "null": "0/2",
+    "adversary": "1/3",
+    "plant": "1/1"
+   },
+   "null_scores": {
+    "null@X0/XOR": 0.5,
+    "const+@X0/XOR": 0.5
+   },
+   "adversary_scores": {
+    "sense_copy(silent)@X0/XOR": 0.5,
+    "oneflag:not_P@X0/XOR": 0.7083333333333333,
+    "oneflag:P@X0/XOR": 0.18489583333333334
+   },
+   "cheapest": {
+    "cell": "X0/XOR",
+    "program": "oneflag:not_P",
+    "role": "adversary",
+    "lacks": "parity",
+    "value": 0.7083333333333333
+   },
+   "forced": false,
+   "always_pass": false,
+   "notes": [],
+   "rows": [
+    {
+     "cell": "X0/XOR",
+     "program": "null",
+     "role": "null",
+     "lacks": "",
+     "value": 0.5,
+     "passed": false,
+     "pairs": null
+    },
+    {
+     "cell": "X0/XOR",
+     "program": "const+",
+     "role": "null",
+     "lacks": "",
+     "value": 0.5,
+     "passed": false,
+     "pairs": null
+    },
+    {
+     "cell": "X0/XOR",
+     "program": "sense_copy(silent)",
+     "role": "adversary",
+     "lacks": "any transport",
+     "value": 0.5,
+     "passed": false,
+     "pairs": null
+    },
+    {
+     "cell": "X0/XOR",
+     "program": "P_XOR(parity)",
+     "role": "plant",
+     "lacks": "",
+     "value": 1.0,
+     "passed": true,
+     "pairs": null
+    },
+    {
+     "cell": "X0/XOR",
+     "program": "oneflag:not_P",
+     "role": "adversary",
+     "lacks": "parity",
+     "value": 0.7083333333333333,
+     "passed": true,
+     "pairs": null
+    },
+    {
+     "cell": "X0/XOR",
+     "program": "oneflag:P",
+     "role": "adversary",
+     "lacks": "parity",
+     "value": 0.18489583333333334,
+     "passed": false,
+     "pairs": null
+    }
+   ]
+  },
+  "XOR_PIVOT": {
+   "ruler": "XOR_PIVOT (proposed)",
+   "claim": "computes parity of the two inputs",
+   "verdict": "SOUND",
+   "attainable": [
+    0.0,
+    1.0
+   ],
+   "eligibility": {
+    "null": "0/2",
+    "adversary": "0/3",
+    "plant": "1/1"
+   },
+   "null_scores": {
+    "null@X0/XOR": 0.0,
+    "const+@X0/XOR": 0.0
+   },
+   "adversary_scores": {
+    "sense_copy(silent)@X0/XOR": 0.0,
+    "oneflag:not_P@X0/XOR": 0.5,
+    "oneflag:P@X0/XOR": 0.5
+   },
+   "cheapest": null,
+   "forced": false,
+   "always_pass": false,
+   "notes": [],
+   "rows": [
+    {
+     "cell": "X0/XOR",
+     "program": "null",
+     "role": "null",
+     "lacks": "",
+     "value": 0.0,
+     "passed": false,
+     "pairs": null
+    },
+    {
+     "cell": "X0/XOR",
+     "program": "const+",
+     "role": "null",
+     "lacks": "",
+     "value": 0.0,
+     "passed": false,
+     "pairs": null
+    },
+    {
+     "cell": "X0/XOR",
+     "program": "sense_copy(silent)",
+     "role": "adversary",
+     "lacks": "any transport",
+     "value": 0.0,
+     "passed": false,
+     "pairs": null
+    },
+    {
+     "cell": "X0/XOR",
+     "program": "P_XOR(parity)",
+     "role": "plant",
+     "lacks": "",
+     "value": 1.0,
+     "passed": true,
+     "pairs": null
+    },
+    {
+     "cell": "X0/XOR",
+     "program": "oneflag:not_P",
+     "role": "adversary",
+     "lacks": "parity",
+     "value": 0.5,
+     "passed": false,
+     "pairs": null
+    },
+    {
+     "cell": "X0/XOR",
+     "program": "oneflag:P",
+     "role": "adversary",
+     "lacks": "parity",
+     "value": 0.5,
+     "passed": false,
+     "pairs": null
+    }
+   ]
+  },
+  "INTEGRATION_MAJ": {
+   "ruler": "INTEGRATION(MAJ)",
+   "claim": "integrates more than one sensor",
+   "verdict": "SOUND",
+   "attainable": [
+    0.5,
+    0.7708072916666666
+   ],
+   "eligibility": {
+    "null": "0/4",
+    "adversary": "0/1",
+    "plant": "1/1"
+   },
+   "null_scores": {
+    "null@X0/MAJ": 0.5,
+    "const+@X0/MAJ": 0.5,
+    "null@X0/MAJ(one live sensor)": 0.5,
+    "const+@X0/MAJ(one live sensor)": 0.5
+   },
+   "adversary_scores": {
+    "maj_sum@1sensor@X0/MAJ(one live sensor)": 0.6197656250000001
+   },
+   "cheapest": null,
+   "forced": false,
+   "always_pass": false,
+   "notes": [],
+   "rows": [
+    {
+     "cell": "X0/MAJ",
+     "program": "maj_sum",
+     "role": "plant",
+     "lacks": "",
+     "value": 0.7708072916666666,
+     "passed": true,
+     "pairs": null
+    },
+    {
+     "cell": "X0/MAJ",
+     "program": "null",
+     "role": "null",
+     "lacks": "",
+     "value": 0.5,
+     "passed": false,
+     "pairs": null
+    },
+    {
+     "cell": "X0/MAJ",
+     "program": "const+",
+     "role": "null",
+     "lacks": "",
+     "value": 0.5,
+     "passed": false,
+     "pairs": null
+    },
+    {
+     "cell": "X0/MAJ(one live sensor)",
+     "program": "null",
+     "role": "null",
+     "lacks": "",
+     "value": 0.5,
+     "passed": false,
+     "pairs": null
+    },
+    {
+     "cell": "X0/MAJ(one live sensor)",
+     "program": "const+",
+     "role": "null",
+     "lacks": "",
+     "value": 0.5,
+     "passed": false,
+     "pairs": null
+    },
+    {
+     "cell": "X0/MAJ(one live sensor)",
+     "program": "maj_sum@1sensor",
+     "role": "adversary",
+     "lacks": "more than one sensor",
+     "value": 0.6197656250000001,
+     "passed": false,
+     "pairs": null
+    }
+   ]
+  },
+  "REACH_BEYOND_HOP": {
+   "ruler": "REACH_BEYOND_HOP",
+   "claim": "a cue's influence travels beyond one hop",
+   "verdict": "CHEATABLE",
+   "attainable": [
+    0.0,
+    1.0
+   ],
+   "eligibility": {
+    "null": "0/6",
+    "adversary": "1/3",
+    "plant": "3/3"
+   },
+   "null_scores": {
+    "null@ring24/MAJ": 0.0,
+    "const+@ring24/MAJ": 0.0,
+    "null@X0/XOR": 0.0,
+    "const+@X0/XOR": 0.0,
+    "null@ring24/RELAY": 0.0,
+    "const+@ring24/RELAY": 0.0
+   },
+   "adversary_scores": {
+    "sense_copy(silent)@ring24/MAJ": 1.0,
+    "sense_copy(silent)@X0/XOR": 0.0,
+    "sense_copy(silent)@ring24/RELAY": 0.0
+   },
+   "cheapest": {
+    "cell": "ring24/MAJ",
+    "program": "sense_copy(silent)",
+    "role": "adversary",
+    "lacks": "any transport",
+    "value": 1.0
+   },
+   "forced": false,
+   "always_pass": false,
+   "notes": [],
+   "rows": [
+    {
+     "cell": "ring24/MAJ",
+     "program": "null",
+     "role": "null",
+     "lacks": "",
+     "value": 0.0,
+     "passed": false,
+     "pairs": null
+    },
+    {
+     "cell": "ring24/MAJ",
+     "program": "const+",
+     "role": "null",
+     "lacks": "",
+     "value": 0.0,
+     "passed": false,
+     "pairs": null
+    },
+    {
+     "cell": "ring24/MAJ",
+     "program": "sense_copy(silent)",
+     "role": "adversary",
+     "lacks": "any transport",
+     "value": 1.0,
+     "passed": true,
+     "pairs": null
+    },
+    {
+     "cell": "ring24/MAJ",
+     "program": "relay_flood",
+     "role": "plant",
+     "lacks": "",
+     "value": 1.0,
+     "passed": true,
+     "pairs": null
+    },
+    {
+     "cell": "X0/XOR",
+     "program": "null",
+     "role": "null",
+     "lacks": "",
+     "value": 0.0,
+     "passed": false,
+     "pairs": null
+    },
+    {
+     "cell": "X0/XOR",
+     "program": "const+",
+     "role": "null",
+     "lacks": "",
+     "value": 0.0,
+     "passed": false,
+     "pairs": null
+    },
+    {
+     "cell": "X0/XOR",
+     "program": "sense_copy(silent)",
+     "role": "adversary",
+     "lacks": "any transport",
+     "value": 0.0,
+     "passed": false,
+     "pairs": null
+    },
+    {
+     "cell": "X0/XOR",
+     "program": "relay_flood",
+     "role": "plant",
+     "lacks": "",
+     "value": 0.625,
+     "passed": true,
+     "pairs": null
+    },
+    {
+     "cell": "ring24/RELAY",
+     "program": "null",
+     "role": "null",
+     "lacks": "",
+     "value": 0.0,
+     "passed": false,
+     "pairs": null
+    },
+    {
+     "cell": "ring24/RELAY",
+     "program": "const+",
+     "role": "null",
+     "lacks": "",
+     "value": 0.0,
+     "passed": false,
+     "pairs": null
+    },
+    {
+     "cell": "ring24/RELAY",
+     "program": "sense_copy(silent)",
+     "role": "adversary",
+     "lacks": "any transport",
+     "value": 0.0,
+     "passed": false,
+     "pairs": null
+    },
+    {
+     "cell": "ring24/RELAY",
+     "program": "relay_flood",
+     "role": "plant",
+     "lacks": "",
+     "value": 1.0,
+     "passed": true,
+     "pairs": null
+    }
+   ]
+  },
+  "REACH_BEYOND_HOP_NEAREST": {
+   "ruler": "REACH_BEYOND_HOP_NEAREST",
+   "claim": "as above, from the nearest perturbed sensor",
+   "verdict": "SOUND",
+   "attainable": [
+    0.0,
+    1.0
+   ],
+   "eligibility": {
+    "null": "0/6",
+    "adversary": "0/3",
+    "plant": "3/3"
+   },
+   "null_scores": {
+    "null@ring24/MAJ": 0.0,
+    "const+@ring24/MAJ": 0.0,
+    "null@X0/XOR": 0.0,
+    "const+@X0/XOR": 0.0,
+    "null@ring24/RELAY": 0.0,
+    "const+@ring24/RELAY": 0.0
+   },
+   "adversary_scores": {
+    "sense_copy(silent)@ring24/MAJ": 0.0,
+    "sense_copy(silent)@X0/XOR": 0.0,
+    "sense_copy(silent)@ring24/RELAY": 0.0
+   },
+   "cheapest": null,
+   "forced": false,
+   "always_pass": false,
+   "notes": [],
+   "rows": [
+    {
+     "cell": "ring24/MAJ",
+     "program": "null",
+     "role": "null",
+     "lacks": "",
+     "value": 0.0,
+     "passed": false,
+     "pairs": null
+    },
+    {
+     "cell": "ring24/MAJ",
+     "program": "const+",
+     "role": "null",
+     "lacks": "",
+     "value": 0.0,
+     "passed": false,
+     "pairs": null
+    },
+    {
+     "cell": "ring24/MAJ",
+     "program": "sense_copy(silent)",
+     "role": "adversary",
+     "lacks": "any transport",
+     "value": 0.0,
+     "passed": false,
+     "pairs": null
+    },
+    {
+     "cell": "ring24/MAJ",
+     "program": "relay_flood",
+     "role": "plant",
+     "lacks": "",
+     "value": 0.875,
+     "passed": true,
+     "pairs": null
+    },
+    {
+     "cell": "X0/XOR",
+     "program": "null",
+     "role": "null",
+     "lacks": "",
+     "value": 0.0,
+     "passed": false,
+     "pairs": null
+    },
+    {
+     "cell": "X0/XOR",
+     "program": "const+",
+     "role": "null",
+     "lacks": "",
+     "value": 0.0,
+     "passed": false,
+     "pairs": null
+    },
+    {
+     "cell": "X0/XOR",
+     "program": "sense_copy(silent)",
+     "role": "adversary",
+     "lacks": "any transport",
+     "value": 0.0,
+     "passed": false,
+     "pairs": null
+    },
+    {
+     "cell": "X0/XOR",
+     "program": "relay_flood",
+     "role": "plant",
+     "lacks": "",
+     "value": 0.625,
+     "passed": true,
+     "pairs": null
+    },
+    {
+     "cell": "ring24/RELAY",
+     "program": "null",
+     "role": "null",
+     "lacks": "",
+     "value": 0.0,
+     "passed": false,
+     "pairs": null
+    },
+    {
+     "cell": "ring24/RELAY",
+     "program": "const+",
+     "role": "null",
+     "lacks": "",
+     "value": 0.0,
+     "passed": false,
+     "pairs": null
+    },
+    {
+     "cell": "ring24/RELAY",
+     "program": "sense_copy(silent)",
+     "role": "adversary",
+     "lacks": "any transport",
+     "value": 0.0,
+     "passed": false,
+     "pairs": null
+    },
+    {
+     "cell": "ring24/RELAY",
+     "program": "relay_flood",
+     "role": "plant",
+     "lacks": "",
+     "value": 1.0,
+     "passed": true,
+     "pairs": null
+    }
+   ]
+  },
+  "REACH_BEYOND_HOP_global": {
+   "ruler": "REACH_BEYOND_HOP",
+   "claim": "a cue's influence travels beyond one hop",
+   "verdict": "DEGENERATE",
+   "attainable": [
+    0.0,
+    0.0
+   ],
+   "eligibility": {
+    "null": "0/4",
+    "adversary": "0/2",
+    "plant": "0/2",
+    "probe": "0/4"
+   },
+   "null_scores": {
+    "null@global24/RELAY": 0.0,
+    "const+@global24/RELAY": 0.0,
+    "null@global24/MAJ": 0.0,
+    "const+@global24/MAJ": 0.0
+   },
+   "adversary_scores": {
+    "sense_copy(silent)@global24/RELAY": 0.0,
+    "sense_copy(silent)@global24/MAJ": 0.0
+   },
+   "cheapest": null,
+   "forced": true,
+   "always_pass": false,
+   "notes": [
+    "value forced to 0 for every program and cell"
+   ],
+   "rows": [
+    {
+     "cell": "global24/RELAY",
+     "program": "null",
+     "role": "null",
+     "lacks": "",
+     "value": 0.0,
+     "passed": false,
+     "pairs": null
+    },
+    {
+     "cell": "global24/RELAY",
+     "program": "const+",
+     "role": "null",
+     "lacks": "",
+     "value": 0.0,
+     "passed": false,
+     "pairs": null
+    },
+    {
+     "cell": "global24/RELAY",
+     "program": "sense_copy(silent)",
+     "role": "adversary",
+     "lacks": "any transport",
+     "value": 0.0,
+     "passed": false,
+     "pairs": null
+    },
+    {
+     "cell": "global24/RELAY",
+     "program": "relay_flood",
+     "role": "plant",
+     "lacks": "",
+     "value": 0.0,
+     "passed": false,
+     "pairs": null
+    },
+    {
+     "cell": "global24/RELAY",
+     "program": "random0",
+     "role": "probe",
+     "lacks": "",
+     "value": 0.0,
+     "passed": false,
+     "pairs": null
+    },
+    {
+     "cell": "global24/RELAY",
+     "program": "random1",
+     "role": "probe",
+     "lacks": "",
+     "value": 0.0,
+     "passed": false,
+     "pairs": null
+    },
+    {
+     "cell": "global24/MAJ",
+     "program": "null",
+     "role": "null",
+     "lacks": "",
+     "value": 0.0,
+     "passed": false,
+     "pairs": null
+    },
+    {
+     "cell": "global24/MAJ",
+     "program": "const+",
+     "role": "null",
+     "lacks": "",
+     "value": 0.0,
+     "passed": false,
+     "pairs": null
+    },
+    {
+     "cell": "global24/MAJ",
+     "program": "sense_copy(silent)",
+     "role": "adversary",
+     "lacks": "any transport",
+     "value": 0.0,
+     "passed": false,
+     "pairs": null
+    },
+    {
+     "cell": "global24/MAJ",
+     "program": "relay_flood",
+     "role": "plant",
+     "lacks": "",
+     "value": 0.0,
+     "passed": false,
+     "pairs": null
+    },
+    {
+     "cell": "global24/MAJ",
+     "program": "random0",
+     "role": "probe",
+     "lacks": "",
+     "value": 0.0,
+     "passed": false,
+     "pairs": null
+    },
+    {
+     "cell": "global24/MAJ",
+     "program": "random1",
+     "role": "probe",
+     "lacks": "",
+     "value": 0.0,
+     "passed": false,
+     "pairs": null
+    }
+   ]
+  },
+  "FLIP_SIGNAL_as_feedback_ruler": {
+   "ruler": "SIGNAL",
+   "claim": "competence on the family's task",
+   "verdict": "CHEATABLE",
+   "attainable": [
+    0.5,
+    1.0
+   ],
+   "eligibility": {
+    "null": "0/2",
+    "adversary": "1/2",
+    "plant": "1/1"
+   },
+   "null_scores": {
+    "null@ring24/FLIP": 0.5,
+    "const+@ring24/FLIP": 0.5
+   },
+   "adversary_scores": {
+    "sense_copy(silent)@ring24/FLIP": 0.5,
+    "FLIP_CLOCK@ring24/FLIP": 1.0
+   },
+   "cheapest": {
+    "cell": "ring24/FLIP",
+    "program": "FLIP_CLOCK",
+    "role": "adversary",
+    "lacks": "feedback after trial 0",
+    "value": 1.0
+   },
+   "forced": false,
+   "always_pass": false,
+   "notes": [],
+   "rows": [
+    {
+     "cell": "ring24/FLIP",
+     "program": "null",
+     "role": "null",
+     "lacks": "",
+     "value": 0.5,
+     "passed": false,
+     "pairs": null
+    },
+    {
+     "cell": "ring24/FLIP",
+     "program": "const+",
+     "role": "null",
+     "lacks": "",
+     "value": 0.5,
+     "passed": false,
+     "pairs": null
+    },
+    {
+     "cell": "ring24/FLIP",
+     "program": "sense_copy(silent)",
+     "role": "adversary",
+     "lacks": "any transport",
+     "value": 0.5,
+     "passed": false,
+     "pairs": null
+    },
+    {
+     "cell": "ring24/FLIP",
+     "program": "P_FLIP",
+     "role": "plant",
+     "lacks": "",
+     "value": 1.0,
+     "passed": true,
+     "pairs": null
+    },
+    {
+     "cell": "ring24/FLIP",
+     "program": "FLIP_CLOCK",
+     "role": "adversary",
+     "lacks": "feedback after trial 0",
+     "value": 1.0,
+     "passed": true,
+     "pairs": null
+    }
+   ]
+  },
+  "FLIP_FEEDBACK": {
+   "ruler": "FLIP_FEEDBACK (proposed)",
+   "claim": "tracks the mapping from feedback",
+   "verdict": "SOUND",
+   "attainable": [
+    0.0,
+    0.5
+   ],
+   "eligibility": {
+    "null": "0/2",
+    "adversary": "0/2",
+    "plant": "1/1"
+   },
+   "null_scores": {
+    "null@ring24/FLIP": 0.0,
+    "const+@ring24/FLIP": 0.0
+   },
+   "adversary_scores": {
+    "sense_copy(silent)@ring24/FLIP": 0.0,
+    "FLIP_CLOCK@ring24/FLIP": 0.0
+   },
+   "cheapest": null,
+   "forced": false,
+   "always_pass": false,
+   "notes": [],
+   "rows": [
+    {
+     "cell": "ring24/FLIP",
+     "program": "null",
+     "role": "null",
+     "lacks": "",
+     "value": 0.0,
+     "passed": false,
+     "pairs": null
+    },
+    {
+     "cell": "ring24/FLIP",
+     "program": "const+",
+     "role": "null",
+     "lacks": "",
+     "value": 0.0,
+     "passed": false,
+     "pairs": null
+    },
+    {
+     "cell": "ring24/FLIP",
+     "program": "sense_copy(silent)",
+     "role": "adversary",
+     "lacks": "any transport",
+     "value": 0.0,
+     "passed": false,
+     "pairs": null
+    },
+    {
+     "cell": "ring24/FLIP",
+     "program": "P_FLIP",
+     "role": "plant",
+     "lacks": "",
+     "value": 0.5,
+     "passed": true,
+     "pairs": null
+    },
+    {
+     "cell": "ring24/FLIP",
+     "program": "FLIP_CLOCK",
+     "role": "adversary",
+     "lacks": "feedback after trial 0",
+     "value": 0.0,
+     "passed": false,
+     "pairs": null
+    }
+   ]
+  },
+  "env_permutation_clause": {
+   "ruler": "env_permutation clause",
+   "claim": "the readout is not a target-free artefact",
+   "verdict": "DEGENERATE",
+   "attainable": [
+    0.47361111111111115,
+    0.5
+   ],
+   "eligibility": {
+    "null": "4/4",
+    "adversary": "2/2",
+    "plant": "6/6",
+    "probe": "4/4"
+   },
+   "null_scores": {
+    "null@ring24/RELAY": 0.5,
+    "const+@ring24/RELAY": 0.5,
+    "null@echo/HOLD": 0.5,
+    "const+@echo/HOLD": 0.5
+   },
+   "adversary_scores": {
+    "sense_copy(silent)@ring24/RELAY": 0.5,
+    "sense_copy(silent)@echo/HOLD": 0.5
+   },
+   "cheapest": {
+    "cell": "ring24/RELAY",
+    "program": "null",
+    "role": "null",
+    "lacks": "",
+    "value": 0.5
+   },
+   "forced": false,
+   "always_pass": true,
+   "notes": [
+    "gate passes for every program, nulls included"
+   ],
+   "rows": [
+    {
+     "cell": "ring24/RELAY",
+     "program": "null",
+     "role": "null",
+     "lacks": "",
+     "value": 0.5,
+     "passed": true,
+     "pairs": null
+    },
+    {
+     "cell": "ring24/RELAY",
+     "program": "const+",
+     "role": "null",
+     "lacks": "",
+     "value": 0.5,
+     "passed": true,
+     "pairs": null
+    },
+    {
+     "cell": "ring24/RELAY",
+     "program": "sense_copy(silent)",
+     "role": "adversary",
+     "lacks": "any transport",
+     "value": 0.5,
+     "passed": true,
+     "pairs": null
+    },
+    {
+     "cell": "ring24/RELAY",
+     "program": "random0",
+     "role": "probe",
+     "lacks": "",
+     "value": 0.5,
+     "passed": true,
+     "pairs": null
+    },
+    {
+     "cell": "ring24/RELAY",
+     "program": "random1",
+     "role": "probe",
+     "lacks": "",
+     "value": 0.5,
+     "passed": true,
+     "pairs": null
+    },
+    {
+     "cell": "ring24/RELAY",
+     "program": "relay_flood",
+     "role": "plant",
+     "lacks": "",
+     "value": 0.48611111111111105,
+     "passed": true,
+     "pairs": null
+    },
+    {
+     "cell": "ring24/RELAY",
+     "program": "hold_latch",
+     "role": "plant",
+     "lacks": "",
+     "value": 0.5,
+     "passed": true,
+     "pairs": null
+    },
+    {
+     "cell": "ring24/RELAY",
+     "program": "echo_hold",
+     "role": "plant",
+     "lacks": "",
+     "value": 0.5,
+     "passed": true,
+     "pairs": null
+    },
+    {
+     "cell": "echo/HOLD",
+     "program": "null",
+     "role": "null",
+     "lacks": "",
+     "value": 0.5,
+     "passed": true,
+     "pairs": null
+    },
+    {
+     "cell": "echo/HOLD",
+     "program": "const+",
+     "role": "null",
+     "lacks": "",
+     "value": 0.5,
+     "passed": true,
+     "pairs": null
+    },
+    {
+     "cell": "echo/HOLD",
+     "program": "sense_copy(silent)",
+     "role": "adversary",
+     "lacks": "any transport",
+     "value": 0.5,
+     "passed": true,
+     "pairs": null
+    },
+    {
+     "cell": "echo/HOLD",
+     "program": "random0",
+     "role": "probe",
+     "lacks": "",
+     "value": 0.5,
+     "passed": true,
+     "pairs": null
+    },
+    {
+     "cell": "echo/HOLD",
+     "program": "random1",
+     "role": "probe",
+     "lacks": "",
+     "value": 0.5,
+     "passed": true,
+     "pairs": null
+    },
+    {
+     "cell": "echo/HOLD",
+     "program": "relay_flood",
+     "role": "plant",
+     "lacks": "",
+     "value": 0.4947916666666667,
+     "passed": true,
+     "pairs": null
+    },
+    {
+     "cell": "echo/HOLD",
+     "program": "hold_latch",
+     "role": "plant",
+     "lacks": "",
+     "value": 0.47361111111111115,
+     "passed": true,
+     "pairs": null
+    },
+    {
+     "cell": "echo/HOLD",
+     "program": "echo_hold",
+     "role": "plant",
+     "lacks": "",
+     "value": 0.47361111111111115,
+     "passed": true,
+     "pairs": null
+    }
+   ]
+  }
+ },
+ "alias_SIGNAL_vs_COMM_DEPENDENT": {
+  "rows": 19,
+  "identical": true,
+  "disagree": []
+ },
+ "compute": {
+  "wall_s": 462.85,
+  "cpu_s": 491.27
+ }
+}

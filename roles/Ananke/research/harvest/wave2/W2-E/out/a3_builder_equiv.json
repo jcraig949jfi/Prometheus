@@ -1,0 +1,85 @@
+{
+ "exact_identity_with_rekeyed_family_id": {
+  "sense_idx": true,
+  "sense_val": true,
+  "read_idx": true,
+  "ro_tick": true,
+  "y": true,
+  "scored": true
+ },
+ "env_m2": {
+  "family": "HOLD",
+  "d": 3,
+  "delta": 16,
+  "gap": 8,
+  "cue_len": 2,
+  "amp": 256,
+  "amp_teacher": 128,
+  "amp_dist": 64,
+  "trials": 12,
+  "block": 4,
+  "flip_p": 0.3,
+  "n_maj": 5,
+  "iti": 2,
+  "variant": 0
+ },
+ "cross_eval": {
+  "M2_4ab2ba01": {
+   "envs_HOLD": [
+    0.8790690104166666,
+    0.859375,
+    0.8994140624999999
+   ],
+   "wl_builder_n0": [
+    0.87109375,
+    0.8486328125,
+    0.8902994791666666
+   ],
+   "envs_zero_comm": [
+    0.5,
+    0.5,
+    0.5
+   ]
+  },
+  "WL_n0_s0": {
+   "envs_HOLD": [
+    0.6901041666666667,
+    0.6695947265625,
+    0.7109391276041667
+   ],
+   "wl_builder_n0": [
+    0.6715494791666667,
+    0.6490885416666667,
+    0.6936848958333334
+   ],
+   "envs_zero_comm": [
+    0.6901041666666667,
+    0.6695947265625,
+    0.7109391276041667
+   ]
+  }
+ },
+ "wl_n0_s0_decompiled": [
+  " 0 SHR   S0 = ENERGY >> 5",
+  " 1 MOV   T1 = IN0_1",
+  " 2 MULQ  EMIT = MULQ(S0, PAY1)",
+  " 3 WIMM  RVAL = WIMM(S1, RPORT)",
+  " 4 ADD   S1 = ADD(SENSE, S1)",
+  " 5 ADDI  T1 = T3 + -20",
+  " 6 XOR   S0 = XOR(PAY0, S1)",
+  " 7 XOR   RVAL = XOR(ZERO, S1)",
+  " 8 MOV   T0 = CHAN",
+  " 9 GT    PAY1 = GT(RPORT, ZERO)",
+  "10 MOV   T3 = CNT0",
+  "11 MOD   RPORT = MOD(CHAN, SENSE)",
+  "12 SHR   T1 = T0 >> 3",
+  "13 XOR   CHAN = XOR(S1, RPORT)",
+  "14 SHR   T3 = IN0_1 >> 6",
+  "15 WIMM  S1 = WIMM(PAY1, EMIT)"
+ ],
+ "clock": {
+  "cpu_s": 150.84,
+  "wall_s": 91.51,
+  "threads": 2
+ }
+}

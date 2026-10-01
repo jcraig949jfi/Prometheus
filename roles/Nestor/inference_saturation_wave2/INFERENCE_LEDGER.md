@@ -429,3 +429,317 @@ in completion order.
   - "Erosion brake" should read "one-sided op unmakes its carrier at the other side".
   - X-TICKET "lineage size" mostly counts inactive labels.
 - **Next question.** N15b at larger N: does kin protection make R0 > 1 once q reaches about 0.1-0.3, and is that the d ≈ 20 departure? W2-14 is building a field process with realized partners and should show it.
+
+
+### N16: attack on W2-3 K5 ("age-structured, no Allee"). Nestor, code read, written at 01:11Z (clock)
+- **Question.** Does K5 really show per-site activity declining with age and no density term?
+- **Evidence.** `W2-3_no_vocabulary/k5b_age_profile.py:20-37` and `k5_kinetic_order.py`. The data are run-level trajectories `traj = (n, alive, cumulative births)` with no per-site identity. The "young" covariate is `cb - cb(t-K)`, which is **the run's own births over the last K epochs**. The age classes are cut from those lagged birth counts.
+- **Inference.**
+  1. The "age-structured" model is a **self-exciting (Hawkes/AR) model of the birth series**, not an age model. It wins by AIC over b·n and b·n + c·n² for any bursty series, whatever the cause.
+  2. Aggregate trajectories cannot attribute a birth to a site's age. Suppose one old, persistently active site writes every epoch. Its products would appear as "young", and its births would be credited to youth.
+  3. So **the 0.687 coefficient is a self-excitation coefficient, not a per-site rate.** The "2x the single-call rate" puzzle in W2-3 is therefore an estimator artifact, not physics. The puzzle dissolves.
+  4. "c → 0 once age is added" does not show the absence of a density term. A lagged-births regressor absorbs any density effect that acts through recent births.
+- **What survives.**
+  - **Age decline is independently supported by W2-2's h1 individual law:** 93% of births at age ≤ 6, built from single-interaction lives and so not aggregate-confounded.
+  - **"No Allee at n ≤ 40" is DOWNGRADED from "rejected" to "not detected by an unidentifiable test".**
+- **Confidence.** High that the K5 estimator is confounded (by reading the code). Moderate that the age decline is real (via W2-2).
+- **Strongest objection.** K5b's "winners only" check removes run-level heterogeneity, but not within-run burstiness of a single site.
+- **Unresolved.** Is there a density or kin term at n ≤ 40? Only per-site tracking can settle it (W2-2-EW snapshots or an E9-style occupancy replay).
+- **Next.** Add to the W2-2-EW spec: record a per-site write log (writer oid, target oid, epoch), so that age and density are identifiable. This is a reusable infrastructure point: **aggregate trajectories cannot carry age claims.**
+- **Effect on the N15/W2-3 resolution above.** The reconciliation still holds, but the "no Allee at n ≤ 40" premise is weaker. N15's kin protection could act at small n too. It is undetermined either way.
+
+
+### N17: why are "essential" 7ae3 positions 30/34/49 lost in C-CORE runaways? (Nestor, written at 01:19Z (clock))
+- **Question.** W2-3 K1 called positions 30/34/49 essential (E about 0.67), yet founder material there is lost in 24/27, 26/27 and 27/27 C-CORE runaways.
+- **Evidence.**
+  - Script and data: `N17_setter_turnover/scan.py` and `scan.json`.
+  - Design: a full 256-value substitution at positions 23, 30, 34, 49 and 52; 40 random partners; ZERO and RAND contexts; both sides; copy errors off; 24 s wall time.
+- **Results.**
+  1. **The founder converts ONLY from side 1:** 0.80 ZERO, 0.775 RAND. Side 0 gives 0.
+  2. **Position 30 (C6, ADD A,n) is NOT essential.** 198/255 substitutes are at or above the wildtype under ZERO, and only 22 are dead. K1's E = 0.67 came from **3 sampled values** (KOV = 3). That is a ruler artifact, of the small-sample kind.
+  3. **Position 34 (7A, LD A,D) is truly essential.** 218/255 substitutes are dead. Its founder-tag retention (0.04) nonetheless sits at the turnover background (non-core positions are about 0.1).
+  4. **Position 49 (66, LD H,(HL)): a single-byte SIDE SWITCH.** 0x59 (LD E,C) and 0x5C (LD E,H) give side-0 conversion **1.0** and side-1 conversion **0**, in both contexts. 219/255 other substitutes keep side-1 function under ZERO.
+  5. Controls: positions 23 and 52 (SELF and LDIR first bytes) are dead under every substitute.
+- **Inference.**
+  - The "essential yet lost" puzzle is mostly dissolved. Founder-tag retention at 30, 34 and 49 is at the run-wide turnover background (about 0.1), so they are not *specifically* lost. Only the SELF and LDIR world-op bytes rise above background, which is consistent with C-CORE.
+  - K1's essentiality vector is too coarse (3 values per position) to rank positions.
+  - New: one byte separates a side-1 copier from a side-0 copier. A side-0 copier runs first and is not exposed to the side-0 wrap hijack (W2-10). This is a candidate fitter morph and a candidate for the departure near depth 20. Passed to W2-17.
+- **Confidence.**
+  - High for the scan numbers.
+  - Moderate for "background turnover".
+  - Low for the side-switch mattering in the world.
+- **Strongest objection.**
+  - `freq` is the founder *tag*, not the byte value. A value-preserving rewrite (through a register path such as LD (BC),A at 42) would also read as "lost".
+  - Final-population genomes are not stored in the C-CORE records, so the value at 34/49 cannot be checked from disk.
+- **Unresolved.** Whether runaways actually carry 49 = 59/5C.
+- **Next.**
+  - W2-17 is to measure m for the 49→5C variant and to check any runaway snapshots.
+  - Any future C-CORE-like run should store the final consensus genome bytes, not only tag frequencies (instrument note).
+
+
+### W2-15: defect × verdict impact matrix (report saved; Nestor attack). Written at 01:22Z (clock)
+- **Result.**
+  - Matrix: 95 verdicts × 17 defects.
+  - **Flip:** C9-H3 NOT_DEMONSTRATED → INVALID (D2, D1 and D3 each suffice). X-H3-FLOW → UNINFORMATIVE.
+  - **No CONFIRMED verdict flips.**
+  - **22 relabels.** The main ones:
+    - C-A3 → CONFIRMED-FRAGILE (4 persistent events = the bar; cell split 3:1);
+    - C9-H1R → DEGENERATE;
+    - C-ZERO-SPECIFIC → run-level only;
+    - X-A3-WITHDRAW → CEILING NULL;
+    - X-MAT → 4 persistent + 4 transient. On 7ae3 alone it is ENDOGENOUS under either convention.
+  - **D1 and D9 reach no heredity verdict**, because comp does nothing in the QD pair cells.
+  - D12 re-scored: C-DENSE-COPY unaffected; C-STATELESS-FFA6 B+ but survives (cite the unconditional p = 2.3e-6).
+  - 23 FINDINGS line-ranges listed.
+- **Nestor attack.**
+  1. **The weakest INV cell is X-H1-GRADIENT.** It rests on an un-rescored held ≈ 0.9 vs an expected 0.5. This is decidable statically, so W2-19 is assigned to re-score on fresh seeds. The same applies to D8 vs E-3's depth-2 runs.
+  2. **"D1 reaches no heredity verdict" depends on `_reap` being unreachable on the pair tape.** That is consistent with W2-8 D3 and with my own read of `_pair_epoch` (no comp read except under TASK_GATED / MINIMAL_CRITERION). Accepted.
+  3. **The matrix omits the N16/N17 corrections**, which are W2-3-level and not FINDINGS verdicts. W2-18 is refocused to cover residual narrative claims plus an adversarial pass over W2-15's relabels, to avoid duplication.
+- **Confidence.** High for the flip and the D10/D12 numbers. Moderate for H1-GRADIENT pending W2-19.
+- **Strongest objection.** Breadth invites over-flagging (W-cells). NA was assigned by applicability rules while reading.
+- **Next.**
+  - W2-19: H1 re-score and D8 vs E-3.
+  - FINDINGS correction appendix at closing: dated proposals only; no frozen verdict is rewritten.
+
+
+### W2-13: U1, chain length vs evolved epistasis (report saved; Nestor attack). Written at 01:24Z (clock)
+- **Result.**
+  - Strict synthetic lethality: evolved (EVO_SD) 3.71% vs never-evolved random-hit copiers (33 new, 1.8e-4 of 180k) 2.32%. Raw gap +1.39 pp, p = 0.048.
+  - At matched executed pre-copy chain length (L_pre): c_EVO = +0.27 pp, CI [−0.90, +1.46], p_FL = 0.83. Length-matched 2.08% vs 2.32%; Mantel-Haenszel OR 1.08.
+  - **T3 (chain length) is sufficient. T4(c′) (generic evolved epistasis) is not supported.**
+  - The earlier evolved vs PLANT contrast (3.7% vs 0.45%) was mostly a length confound.
+- **Effect on the theory tournament (W2-6).** T4(c′) was one of the two residuals left after T4 was eliminated. It is now **demoted to "not needed, not excluded"**: the CI upper bound is about the raw gap. **The only residual not yet absorbed into F is R = T4(a), home advantage.**
+- **Nestor attack.**
+  1. Selection on competence acts on random hits too, so "never evolved" means "not shaped by world dynamics beyond the screen". That is the right comparison for T4(c′).
+  2. The consistently positive point estimates plus d > 0 are a pattern, not noise, until power says otherwise. W2-20 is assigned to enlarge the long-chain random stratum, with a pre-stated rule:
+     - SUPPORTED if the CI lower bound is > 0;
+     - SUFFICIENT if the upper bound is < 0.7 pp;
+     - otherwise UNRESOLVED.
+  3. **Reusable prior:** the competent random-hit rate in 7ae3 is 1.8e-4, matching minimal_prior. That is an independent check of the minimal-prior instrument.
+- **Confidence.** Moderate.
+- **Next.** W2-20.
+
+
+### W2-16: side-1 copiers fail CVT-R (report saved; Nestor attack and cross-link). Written at 01:29Z (clock)
+- **Result.**
+  - Side-1 copiers are genuine replicators in isolation: 17/17 with no partner run; 1020/1020 good copies.
+  - They fail because of execution order. The side-0 first mover wraps into the copier's offset 0 with non-FRESH registers and runs the copier's own LDIR as a smear (300/528 damage events).
+  - They are also register-fragile: 1/17 register-independent, against 49/111 for side 0 (p = 0.0015).
+  - CVT-R compounds this: p = 0.62 becomes about 0.15 acceptance (12/85).
+  - Against side-0 copiers they transmit 0/340.
+  - Single-seed CVT-R is a coin flip when p < 1. Two of the six recorded side-0 failures pass all 4 reseeds.
+- **Cross-links (Nestor).**
+  1. **The same physics appears three times.** The pc wrap at 63 → 64 makes every copier's entry point an entry point for its partner. It drives:
+     - the foreign-cell magnet (N1);
+     - the X-TICKET epoch-1 loss (N2);
+     - the side-1 CVT failure (W2-16);
+     - and it is W2-10's "SELF floor".
+
+     This is plausibly **the most consequential single feature of NPE physics.** In the no-vocabulary frame, every half is code that either context can execute.
+  2. **N17: a single-byte side switch, and a sweep prediction.**
+     - The 7ae3 founder converts only from side 1 (0.80), yet it is register-robust (0.775 under random contexts). It is the structural exception.
+     - Changing position 49 to 0x59 or 0x5C makes it a side-0 converter (1.0).
+     - By W2-16, a side-0 copier is safe from the first-mover smear and destroys side-1 copiers on contact (340/340).
+     - **Prediction: a side-0 morph sweeps once it arises.** This fits founder material at position 49 being lost in 27/27 C-CORE runaways. It is a concrete candidate for the departure near d ≈ 20 and for the BASE second regime. Sent to W2-17.
+  3. **Hypothesis for the register asymmetry.**
+     - A side-1 copier is entered at offset 0 as a *continuation of side-0 execution*, carrying side-0's registers.
+     - A side-0 copier is entered only by the second mover after its own code has run.
+     - The corpus side-1 copiers were screened from FRESH contexts and never had to tolerate foreign-register entry, so the asymmetry may be a sampling or screen effect.
+     - Test: disassemble the setups (W2-16 next step 5).
+- **Instrument consequences.**
+  - CVT-R should be multi-seed, with a no-partner arm and a swapped-order arm.
+  - P-11's side-1 rate measures the order hazard, not competence.
+- **Confidence.** As in the report. Cross-link 2 is a hypothesis, with a moderate prior.
+
+
+### W2-18: FINDINGS correction proposals (file written by the worker; Nestor note). Written at 01:33Z (clock)
+- **Result.** `W2-18_findings_corrections/CORRECTION_PROPOSALS.md` has 17 proposal rows layered on the W2-15 matrix: 8 NEW, 9 ADJUSTED. The new ones that matter most:
+  - **P01, an unwired factor.** 90/334 and 81/304 of the A-3 read-order pairs sit in COEVO_ENV cells. There the declared read order reaches the scorer only at the first validation, and its effect there is about 0. In the 467 pairs where the factor is wired, the effect is +0.13 / −0.10.
+  - **P02, INVALID clause.** E-9 H1R's "harmless when the cue is free" compares two identical arms (0.1972 = 0.1972; 60/60 seeds), which breaks FINDINGS' own lesson 9. The gated + paid-cue fact (0/60) stands.
+  - **P03.** X-A3-WITHDRAW's "not sorting": the robust share jumps 0.22 → 0.96 between epochs 300 and 400, which looks like a sweep of members already present.
+  - **P04.** The 16000006 path "lost and regained" is scored by a flickering 20-draw screen.
+  - **P08.** Lesson 1, "every test ships with a negative control", is false in practice: the cannot-fire class recurred 15 times after it.
+  - **P11.** In C-ZERO, every CONST/RANDOM success comes from donors 1 and 15. Within those donors: ZERO 1/6, CONST 2/6, RANDOM 3/6.
+  - **P14.** W2-15 over-flags X-H1-GRADIENT; it needs a re-run (W2-19 is assigned).
+  - **P16.** Three proposed lessons:
+    - screen context must match the world;
+    - aggregate trajectories cannot carry per-site age claims;
+    - each declared factor must be shown to reach the scorer.
+- **Confidence.**
+  - high: P01, P02, P05a, P08, P09, P11;
+  - moderate: P03, P04, P13;
+  - low: the size of P15.
+- **Nestor note.**
+  - These are **proposals**. FINDINGS frozen verdicts are not rewritten. At closing, a dated "Wave-2 audit: proposed corrections" appendix will point to W2-15 and W2-18.
+  - P13 cites W2-12's *unreported draft* (pooled 798 single-founder runs, min p 0.105). It is not to be used until W2-12 reports.
+
+
+### W2-4 (causal minimality) and W2-7 (alien physics): reports saved; Nestor cross-attack. Written at 01:38Z (clock)
+
+**W2-4 result**
+- Conversion = a primitive byte + about 4 instructions (~6.5 function bytes) + an inert path. Random-background refill keeps 8/40 converting; NOP refill keeps 34/40.
+- Establishment = conversion + independence from inherited registers. It is usually fused into constant loads; otherwise 0-3 "washer" moves. Knocking a washer out takes carried conversion to 0.00 (22/22).
+- SD genomes rely on the environment: zero entry registers (12/15) and a zero partner (9/15).
+- Method finding: a random-value knockout is a corruption screen, not a function screen. 36% of "necessary" bytes are corruption-only, and only 12/26 EST calls survive a second replacement value. **This applies to K1 / S3 / FOR / core_map retroactively.**
+
+**W2-7 result**
+- Physics alone moves the random copier rate by more than 1,000x. RING192 is ~40x stock, with a 2-byte copier. SELFCOPY makes 23% of random genomes competent.
+- Evolved copiers rely on absolute placement (ROTATE 0/128), the 7-bit wrap (7/128), the block op (0/128) and slice 300 (66/128 survive 5x). Under HARV, 128/128 survive, so they do NOT need partner execution.
+- New supplied pathways:
+  - S8: the long count is the terminator (113/128);
+  - S9: slice length;
+  - S10: run-first protects the donor (16/200 vs 0/200).
+- REGRAND reproduces the state-free classifier (48+3).
+
+**Cross-links (Nestor)**
+1. **Four independent lines converge on one mechanism.** Partner execution of the donor's code after the pc wrap:
+   - W2-16: the side-1 CVT failure is a first-mover smear;
+   - W2-4: SD genomes need a zero partner (9/15);
+   - W2-7 S10: run-first protects; HARV removes partner execution and *gains* side-1 copiers;
+   - N1/N2: the magnet and hijack.
+
+   W2-7's HARV_HALT is therefore the **clean causal test of the wrap/partner-execution field**. It predicts that under HARV:
+   - side-1 copiers pass CVT-R (static, cheap);
+   - the foreign-cell magnet vanishes;
+   - the X-TICKET epoch-1 loss vanishes.
+
+   The first prediction is static and can be checked now. It is a candidate for the next worker.
+2. **N17 and W2-7 S10 qualify each other.**
+   - The 7ae3 position-49 side switch gives a side-0 converter with m_base 1.20 vs 0.92 (RAND).
+   - S10 says part of any side-0 advantage is run-first protection, not address geometry.
+   - Both point the same way: a side-0 morph is fitter under BASE because it runs first.
+3. **W2-4's corruption-vs-deletion finding hits my N17 interpretation.**
+   - "Essential" in K1 (and in my N17 scan) is corruption-essential. Position 34 (218/255 dead) may be deletion-tolerant.
+   - Minor: it does not change the side-switch or supercritical-neighbour results, which are gain-of-function measures.
+4. **W2-7 pushes "2e-4 is generic" into "2e-4 is the encoding".**
+   - Every quantitative rarity claim in FINDINGS (minimal_prior, the ARC3 accessibility delegate) needs the scope "under stock Z8 physics: 128-ring, block op, slice 300".
+   - That is a wording proposal for the closing appendix.
+
+
+### W2-14: F calibration, and the 600x reconciled (report saved; Nestor attack). Written at 01:40Z (clock)
+
+**Result**
+- FIELD+FULL reproduces the world bit-for-bit, so the process is the world.
+- The 600x has three causes:
+  1. c7c's partners start with empty registers (FREE FRESH0 → POOL: B ≥ 163 goes 5/40 → 0/40, p = 0.027);
+  2. its occupancy readout is uncertified (about 3x);
+  3. W2-2 compares unlike readouts.
+- On P(reach ≥ 27 certified births), the individual law gives 0.025 and the world 0.031. **They agree.**
+- Runaways do not raise their fertility. They differ in **persistence** after saturation.
+- ATOMIC validation did not pass at 300 epochs (0.23-0.33 vs 0.575-0.67).
+
+**What this weakens (Nestor)**
+1. **W2-2's "qualitatively different second regime" is DOWNGRADED** to "large lineages persist in the field; the cause is undecided".
+   - The empty-gap evidence is weak: P = 0.045 before correcting for data-chosen edges.
+   - The "100x excess" was a comparison between unlike readouts.
+   - This is the **strongest Wave-1/early-Wave-2 conclusion weakened this wave**, and a handoff candidate.
+2. **Open contradiction 1 (W2-6 c7c over-predicts vs W2-2 h1 under-predicts) is RESOLVED.** c7c over-predicts because of FRESH0 partners. h1's tail is not comparable to the world's B.
+3. **W2-3's d ≥ 22 → ≥ 161 (16/19) is the same persistence phenomenon.** It is not a fertility switch.
+4. **My N17 morph hypothesis is reframed.**
+   - Supercritical neighbours (m 1.15-1.2 under RAND) would raise fertility.
+   - The world shows fertility does NOT rise after 27.
+   - So the morph is not the explanation for runaway persistence, unless it acts only after saturation. That is unlikely given flat per-member birth rates.
+   - **N17's sweep prediction stands as a separate claim**: founder material at 49 lost 27/27, a side-0 advantage. Its relevance to the second regime is withdrawn.
+5. **F's scope.** F is testable only with external, non-kin partners (rungs 1-3). With kin and field partners it is the world computing itself. **This must be stated in the theory record:** "F explains" claims at rung 4-5 are unfalsifiable.
+
+**Assignments**
+- W2-22 has a pre-registered conditional-persistence test, FIELD vs FREE BANK at ≥ 300 seeds per arm, plus mechanism arms for kin overwrite and kin repair.
+- W2-17 has been reoriented to persistence.
+
+**Confidence**
+- high: partner registers as the cause of the 600x;
+- medium: the readout reconciliation;
+- low: ATOMIC calibration.
+
+
+### N17b-d: supercritical one-byte neighbours of 7ae3 under BASE (Nestor; contact.py, neighbours.py, confirm_all.py). Written at 01:41Z (clock)
+
+**Question.** How many single-byte variants of the 7ae3 founder have m_base > 1 in a carried-register world, and how often does the world's copy-error rule produce one?
+
+**Evidence**
+- **Screen.** All 16,320 single-byte variants, 60 shared interactions each (random partners, random side, RAND contexts, copy errors off). 761 screen hits.
+- **Re-assay.** Every hit on a fresh 400-interaction panel.
+  - Founder: m = 1.01 (RAND), 1.105 (ZERO).
+  - **170 variants confirmed at ≥ founder + 0.15**, with mean m = 1.19 under both RAND and ZERO.
+- **Where they sit.**
+  - 14 values at each of positions 37-47; a few at 32 and 48-51.
+  - The values are always the same family: LD A,C / LD A,H / ADD|ADC|SUB|SBC|XOR|OR A,(C|H).
+  - In other words: **any "A ← f(A, C or H)" placed in the 37-47 region** raises m. Downstream, position 48 is `5F` (LD E,A), which sets the LDIR destination low byte from A.
+- **Contact (N17b v2, exact identity).** Morph (49→5C/59) vs founder is symmetric: whoever is at side 0 takes both halves. Against random partners under RAND, the morph has m = 1.20-1.23 vs 0.92-0.99 for the founder.
+- **Copy-error reachability.**
+  - A copy error is a SINGLE-BIT flip (`z8.py:413-417`), and in-place `_mutate` cannot reach positions 37-51.
+  - Only 3 of the 170 are one bit away: 44→AC, 43→81, 43→C3 (m 1.18-1.24).
+  - **Per-birth production rate = 0.002 × 3/8 = 7.5e-4**, about 1 per 1,300 births.
+
+**Inference**
+1. The founder sits on a **plateau edge**. Many neighbours are supercritical by a common mechanism: making the copy destination (E, via A at position 48) depend on a more stable register. That is a W2-4 "state-washing" gain, i.e. register independence. Supporting this, the gain is larger under RAND (+0.18) than under ZERO (+0.08).
+2. **These variants are evolutionarily hard to reach.** Under the world's mutation rules, only 3 are one bit-flip away.
+3. Combined with W2-14 (fertility does not rise after saturation), **these neighbours do not explain runaway persistence under BASE**. Over long ATOMIC horizons (C-CORE, 2,000 epochs, thousands of births), they predict **register-washing substitutions in the 37-48 region**.
+   - This is consistent with C-CORE: founder material at 30/34/49 is at background, and W2-2 reports a byte-42 sweep under ATOMIC.
+   - It is checkable only if final genomes are stored, which C-CORE does not do.
+
+**Confidence**
+- high: the counts and the plateau;
+- moderate: the mechanism, which is inferred from the opcode family and the downstream `LD E,A`, not traced;
+- low: in-world relevance.
+
+**Strongest objection**
+- Uniform random registers (RAND) are not the realized field. W2-14 showed partner register state is the single largest lever, so m under realized partner states could differ.
+
+**Next**
+- Re-assay the 3 reachable variants with W2-14's BANK partner states.
+- Trace E at the LDIR for founder vs variant under RAND, to confirm the washing mechanism.
+- Any future long run should store final genomes.
+
+
+### N17e: realized-partner re-assay; corrects N17d's mechanism (Nestor; bank_assay.py, written at 01:42Z (clock))
+
+- **Evidence.**
+  - Partners: genome + carried registers drawn from W2-14's founder-free BASE background bank (epochs 10-299). Donor context: ZERO or a bank context. N = 1,000 on a shared panel; random side; copy errors off.
+
+  | variant | m_base | keep | conv side 0 / side 1 |
+  |---|---|---|---|
+  | founder | 1.17 | 0.72 | 0.002 / 0.87 |
+  | 49→5C | 1.24 | 0.75 | 1.0 / 0.006 |
+  | 49→59 | 1.24 | 0.75 | 1.0 / 0.002 |
+  | 44→AC (one bit) | 1.25 | 0.75 | 1.0 / 0.02 |
+  | 43→81 (one bit) | 1.24 | 0.75 | 1.0 / 0.02 |
+  | **43→C3 (one bit; POP BC → JP)** | **1.39** | **0.94** | 0.002 / 0.87 |
+
+  - The donor's context (ZERO vs BANK) changes nothing (≤ 0.002). The founder is register-robust.
+- **Correction to N17d.** Most of the supercritical neighbours are **SIDE SWITCHES**, not register-washing gains. Placing A ← f(A, C|H) in positions 37-47 changes E (via `LD E,A` at 48), and that flips the copy direction. **The "state-washing" interpretation in N17d is WITHDRAWN.**
+- **New finding: 43→C3 is a one-bit "keep" variant.** It stays a side-1 copier with the same conversion, but own-half survival rises from 0.72 to **0.94**. The mechanism is untraced: removing POP BC changes the BC count the LDIR uses, or the path a partner takes through the code after the wrap. Since W2-16 and N1 show that keep losses are partner execution of the donor's code, this looks like a **one-bit defence against the wrap hijack**.
+- **Why this matters.** Under BASE, keep is half of m. A one-bit-reachable, hijack-resistant variant with m 1.39 vs 1.17 is the strongest single-step gain found for 7ae3. It is reachable at 0.002/8 = 2.5e-4 per birth.
+- **Readout caution.** m_base here counts halves with fidelity ≥ 0.9 after a call, by any author. It is not W2-2's promoted, certified births. Only within-panel comparisons are valid. The founder's 1.17 must not be read against W2-2's 0.93 or W2-3's 1.0.
+- **Next.**
+  1. Trace 43→C3 vs the founder at the hijack: who writes the donor half when keep fails.
+  2. Test whether 43→C3 resists partner LDIR runs, W2-16 style: damage attribution.
+  3. A C-CORE-like long run storing genomes would show whether C3@43 or side switches sweep. That needs authorization; it is design only.
+
+
+### W2-19: H1 re-score and D8 vs E-3 (report saved; Nestor adjudication). Written at 01:44Z (clock)
+
+**Result.**
+- **H1 competence was a cached single draw.**
+  - Re-scored with the cache bypassed: recorded held 1.0, true held 0.496 (exact 0.495). That is the answer-before-read echo floor.
+  - 0 readers in any H1-cell population.
+  - Each recorded value reproduces exactly from one validation-epoch seed.
+  - The expected maximum over N draws explains the recorded maxima (N=20 → 0.86).
+  - On true scores, C9-H1R's I falls to 0.125–0.142, below its own 0.15 threshold, so it would read NO_DETECTED_EFFECT.
+  - X-H1-TRANSPLANT is fragile (2–4 of 4 transforms).
+  - H1R, GRADIENT and TRANSPLANT saved no genomes.
+- **E-3 stands.** Both depth-2 chains are genuine consecutive-epoch interactions. D8 fires once in 1,031 runs.
+
+**Adjudication between W2-15 and W2-18.**
+- W2-18 P14 said W2-15 over-flagged X-H1-GRADIENT as INV without re-scoring.
+- **The re-score confirms W2-15**, more strongly than W2-15 itself claimed: 5/11 of the relevant runs sit at 0.72–0.91, not "about 0.9" across all.
+- So P14 resolves as **W2-15 correct, now verified**. C9-H1R → DEGENERATE / ARTIFACT-RISK.
+
+**Instrument lesson (handoff candidate).** "held_max_final" is a maximum over cached single 6-episode draws. Under selection, a coin-flip guesser reaches 1.0 with P = 0.79 per 100 validation epochs.
+- **Any readout that takes a maximum or uses a cached value of a noisy score is a selection amplifier.**
+- Where it is used:
+  - A-2 (d_held_max, which still HOLDS only as a delta);
+  - X-TASK-GATE (already blocked);
+  - the H1 family.
+
+**Confidence.** High.

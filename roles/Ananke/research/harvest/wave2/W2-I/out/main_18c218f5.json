@@ -1,0 +1,62 @@
+{
+ "cell": "18c218f5",
+ "row_kind": "evolve",
+ "wave": "D",
+ "family": "MAJ",
+ "topology": "ring",
+ "radius": 3,
+ "n_sites": 100,
+ "d0": 2,
+ "d_h": 1,
+ "dest_mode": "all",
+ "plastic_route": 1,
+ "recorded_held": 0.69921875,
+ "recorded_held_lo99": 0.6497363281249999,
+ "conds": {
+  "native@d0": {
+   "acc": 0.6829,
+   "lo99": 0.6263,
+   "hi99": 0.7324
+  },
+  "C1random@d0": {
+   "acc": 0.5299,
+   "lo99": 0.5013,
+   "hi99": 0.5703
+  },
+  "C1random@dh": {
+   "acc": 0.5221,
+   "lo99": 0.5026,
+   "hi99": 0.5508
+  },
+  "C1random@dh_inward": {
+   "acc": 0.7038,
+   "lo99": 0.6589,
+   "hi99": 0.7487
+  }
+ },
+ "hops": {
+  "native@d0": {
+   "1": 160
+  },
+  "C1random@d0": {
+   "1": 12,
+   "2": 42,
+   "3": 98,
+   "4": 8
+  },
+  "C1random@dh": {
+   "1": 6,
+   "2": 46,
+   "3": 100,
+   "4": 8
+  },
+  "C1random@dh_inward": {
+   "1": 152,
+   "2": 8
+  }
+ },
+ "_compute": {
+  "wall_s": 11.7,
+  "cpu_s": 14.8
+ }
+}

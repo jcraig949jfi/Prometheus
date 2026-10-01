@@ -1,0 +1,159 @@
+PTE WORLD: CAUSAL GRAPH DERIVED FROM CODE (W2-A1, 2026-10-01)
+Code: worktree ananke-base-role @ fd631acb2 (prometheus/ananke/engine.py 594 lines, physics.py,
+topology.py, rng.py, envs.py). Line numbers are engine.py unless prefixed.
+
+Notation
+  X[t]      value of persistent array X at the START of tick t (after tick t-1).
+  X'        value after this tick (what X[t+1] sees).
+  A <- B    "A is written from B" by the code at the given line(s).
+  (gate g)  the write happens only where boolean g holds.
+  H(s,...)  counter hash draw on stream s (rng.py; keys ws,t,n,j). Every draw is a pure function of
+            (ws, stream, t, n, j): it is an EXOGENOUS node, never written by the world.
+
+------------------------------------------------------------------------------------------------
+0. EXOGENOUS / CONSTANT NODES (set once per World; never written by a tick)
+------------------------------------------------------------------------------------------------
+  ws[B]            world seeds                      <- caller (assays.evaluate:56 passes seeds[m-m%2],
+                                                       so mirror twins share ws and EVERY draw below)
+  genome[B,G,L,5]  -> g_op,g_d,g_a,g_b,g_bf,g_imm    <- genome mod (16, NW, NR, NR, raw, raw)      132-137
+  nbr[N,R],dist    <- topology.build(ph)                                     138-145; topology.py:6-33
+                      (global: None, R=0 -> no table, no w is ever read or written)
+  surv16[maxd+1]   <- loss, loss_per_hop                                      147-150
+  p_wake,p_dup,p_mut <- update_p, dup, mut_site                               151
+  r0               <- H(ws,INIT,0,n,7) mod G      (r0 = r at t=0)             155-157
+  sch_idx,sch_val  <- envs.build (host numpy RNG H(lead,ENV,fam,variant); open loop)   203-213
+  read_idx         <- envs.build (actuator site)
+  ctrl tables      <- Controls (_reset_tab,_drop_tab,_flush_tab,_reset_mask)  186-200
+  LM               <- lat_base, lat_hop, maxdist, lat_jitter                  physics.py:127-130
+
+PERSISTENT STATE (per world b, site n):
+  S[D] E r w[R] Kp[L] Acc_sum[C,P] Acc_cnt[C]   and mailbox Msum[LM,C,P], Mcnt[LM,C] (indexed by
+  RECIPIENT), t_dev.  Init: S=0, E=e_max, r=r0, w=16, Kp=0, Acc=0, M=0        153-164
+
+------------------------------------------------------------------------------------------------
+1. DELIVERY (DESIGN s6.1)
+------------------------------------------------------------------------------------------------
+  slot              <- t_dev mod LM                                           274
+  msum,mcnt         <- Msum[slot], Mcnt[slot]                                 275-276
+  msum,mcnt         <- 0                        (gate _drop_tab[t])           277-280  [control]
+  tot               <- sum_c mcnt                                             281
+  msum,mcnt         <- 0                        (gate cap>0 & aloha & tot>cap)          282-286
+  stats.collided    <- tot                      (same gate)                   284
+  msum,mcnt         <- floor(x*cap/tot)         (gate cap>0 & saturate & tot>cap)       287-293
+  msum,mcnt         <- + H(ws,CTRL,t,n,100+p) on chan distractor_chan, +1 count         294-295, 551-561 [control]
+  Acc_sum'          <- clamp(Acc_sum + msum, +-2^20)                          296
+  Acc_cnt'          <- clamp(Acc_cnt + mcnt, 0..2^20)                         297
+  Msum[slot],Mcnt[slot] <- 0                                                  298-299
+  NOTE cap is read ONLY when collision != none; collision ONLY when cap > 0.
+
+------------------------------------------------------------------------------------------------
+2. ENVIRONMENT (open loop: no world variable feeds the schedule)
+------------------------------------------------------------------------------------------------
+  sense[b,n]        <- sum_k sch_val[t,b,k] over sch_idx[b,k]==n  (0 if t>=Tsch)        301-303
+
+------------------------------------------------------------------------------------------------
+3. WAKE
+------------------------------------------------------------------------------------------------
+  awake             <- (t mod update_period == 0)          [sync; update_p unread]       305-306
+  awake             <- (H(ws,WAKE,t,n,0)&0xFFFF) < p_wake  [async; update_period unread] 308-309
+
+------------------------------------------------------------------------------------------------
+4. RUN (register file, program, write-back)
+------------------------------------------------------------------------------------------------
+  regs[0:D]         <- S                                                      312
+  regs[D:NW]        <- 0   (T0..T3, O = emit,chan,rport,rval,pay[P])          313
+  regs[IN_sum]      <- clamp(Acc_sum', +-32767)                               314
+  regs[IN_cnt]      <- clamp(Acc_cnt', 0..32767)                              315
+  regs[SENSE]       <- clamp(sense, +-32767)                                  316
+  regs[ENERGY]      <- min(E, 32767)    (economy off: constant e_max=1000 -> a readable constant) 317
+  regs[ZERO]        <- 0                                                      318
+  Acc_sum',Acc_cnt' <- 0                (gate awake)  [asleep: keep accumulating]       320-322
+  F=(op,d,a,b,bf,imm) <- genome[b, r[t], :, :]   (r at START of tick)         331-338
+  I_all[i]          <- clamp(imm_i + Kp[t][i], +-32767)   (pre-program Kp)    339
+  h_rand[i]         <- H(ws,RANDOP,t,n,i)                                     329-330
+  for i in 0..L-1:  regs[d_i] <- op_i(regs[a_i], regs[b_i], I_i, bf_i, h_rand_i, regs[d_i])
+                                         (gate awake; else unchanged)         342-370
+  nonnop            <- count(awake & op!=0)  (SETRULE/WIMM counted even when disabled)    371
+  r_next            <- regs[a_i] mod G  (gate awake & op_i==14 & setrule & G>1 & !no_adapt & !freeze_rule; last wins) 324,372-373
+  Kp_next[A mod L]  <- regs[b_i]        (gate awake & op_i==15 & wimm & !no_adapt; in order)     325,374-377
+  S'                <- regs[0:D]                                              378
+  r'                <- r_next                                                 381
+  Kp'               <- Kp_next                                                382
+  O                 <- regs[D+4 : D+8+P]                                      383-384
+  (SENSE reaches the world ONLY through this step: an asleep site's sense is discarded, not latched.)
+
+------------------------------------------------------------------------------------------------
+5. ECONOMY (only if any of e_income,c_emit,c_op,c_mem != 0)
+------------------------------------------------------------------------------------------------
+  want              <- awake & O.emit>0                                       386
+  want              <- want & (E[t] >= c_emit*copies)                         389-390
+  E'                <- clamp(E[t] + e_income - want*c_emit*copies - c_op*nonnop - c_mem*count(S'!=0), 0, e_max)  391-393
+                       (asleep sites still earn income and pay c_mem)
+
+------------------------------------------------------------------------------------------------
+6. ROUTING WRITE (before emission: this tick's rval steers this tick's packets)
+------------------------------------------------------------------------------------------------
+  w'[j]             <- clamp(w[j] + (O.rval >> adapt_shift), 0, 1023),  j = O.rport mod R
+                       (gate plastic_route & R>0 & !no_adapt & !freeze_routing & awake & rval!=0) 398-404
+                       floor shift: rval in [1, 2^k-1] adds 0, rval in [-2^k, -1] adds -1.
+
+------------------------------------------------------------------------------------------------
+7. EMISSION (_emit 483-549); per emitting site, copy f = 0..copies-1 (copies = R if all else F)
+------------------------------------------------------------------------------------------------
+  chan              <- O.chan mod C                                           406
+  rec,dist_f        <- n+1+H(ws,ROUTE,t,n,f) mod (N-1), 1          [global; w,dest_mode,fanout-table unread] 493-496
+  rec,dist_f        <- nbr[n,f], dist[n,f]                          [dest_mode all; w and fanout unread]     497-499
+  rec,dist_f        <- nbr[n,j], dist[n,j], j ~ w' via H(ws,ROUTE,t,n,f)   [sample]                       500-509
+  alive             <- (H(ws,LOSS,t,n,f)&0xFFFF) < surv16[dist_f]             510-511
+  delay             <- clamp(lat_base + lat_hop*dist_f + H(ws,LAT,t,n,f) mod (jit+1), 1, LM-1)           512-513
+  q                 <- O.pay  (+ H(ws,NOISE,t,n,f*16+p) noise, sat)           514-518
+  rec               <- H(CTRL..,1) mod N     [shuffle_dest; dist_f, loss and delay keep the ORIGINAL edge] 522
+  delay             <- 1 + H(CTRL..,2) mod (LM-1)  [shuffle_time; widens the delay range]               524
+  q                 <- H(CTRL..,3,p) uniform in +-32767   [randomize_payload; overrides noise]           526-527
+  isdup             <- (H(ws,DUP,t,n,f)&0xFFFF) < p_dup                       528
+  alive2            <- (H(ws,LOSS,t,n,f+4096)&0xFFFF) < surv16[dist_f]        529
+  delay2            <- clamp(delay + 1 + H(ws,DUP,t,n,f+4096) mod (jit+1), 1, LM-1)   530
+  stats.attempted   <- em + dup ; zero_comm: stats.lost <- em+dup, RETURN (no mailbox write) 533-536
+  stats.delivered   <- (em&alive)+(dup&alive2)   [counted at EMISSION: includes later collided/dropped/flushed] 538
+  Msum[(t+delay) mod LM, b, rec, chan] += q   (gate want & alive)             545-549
+  Mcnt[...]                            += 1
+  Msum[(t+delay2) mod LM, b, rec, chan] += q  (gate want & isdup & alive2)
+  (row index = slot*B*N*C + (b*N+rec)*C + chan: no cross-world edge exists)
+
+------------------------------------------------------------------------------------------------
+8. LOCAL MUTATION + CONTROL HOOKS
+------------------------------------------------------------------------------------------------
+  Kp'[H(ws,MUT,t,n,1) mod L] <- H(ws,MUT,t,n,2) mod 257 - 128   (gate bern(p_mut) & !no_adapt; all sites)  414-420
+  S',Acc',Kp',w',E',r' <- 0 / 0 / 0 / 16 / e_max / r0   (gate _reset_tab[t] & mask & part in reset_parts)   422-437 [control]
+  Msum,Mcnt (ALL slots, incl. this tick's emissions) <- 0  (gate _flush_tab[t])                             438-442 [control]
+
+------------------------------------------------------------------------------------------------
+9. DECAY, 10. READOUT
+------------------------------------------------------------------------------------------------
+  S'                <- S' - (S' >> decay_shift)     (all sites; sign-asymmetric, DESIGN s10)   444-445
+  trace[t]          <- S'[read_idx, 0]   (t < Tsch only; H3 patch)            447-448, 474-481
+  score             <- sign(trace[ro_tick]) vs y; S0==0 -> 0.5   (envs.py:227-232)  [no edge back]
+  t_dev'            <- t_dev + 1                                              472
+
+------------------------------------------------------------------------------------------------
+STATE-LEVEL ADJACENCY LIST (persistent node at t+1  <-  its parents at t; exogenous draws omitted)
+------------------------------------------------------------------------------------------------
+  Acc_sum[t+1] <- Acc_sum[t], Msum[t][slot], awake, (cap, collision, Mcnt[t][slot]), ctrl.drop/distractor/reset
+  Acc_cnt[t+1] <- Acc_cnt[t], Mcnt[t][slot], awake, (cap, collision), ctrl
+  S[t+1]       <- S[t], Acc_sum[t]+Msum[t][slot], Acc_cnt[t]+Mcnt[t][slot], sense[t], E[t], r[t], Kp[t],
+                  genome, awake, H(RANDOP), decay_shift, ctrl.reset
+  r[t+1]       <- r[t] and everything S[t+1] reads (via regs[a] at a SETRULE), setrule, G, ctrl
+  Kp[t+1]      <- Kp[t], regs (WIMM), H(MUT), ctrl
+  E[t+1]       <- E[t], awake, O.emit, nonnop, S[t+1]   (economy on only)
+  w[t+1]       <- w[t], O.rval, O.rport, awake          (gate plastic_route & R>0; see NOTE w)
+  Msum[t+1]    <- Msum[t] (other slots), O.pay, O.emit, O.chan, E[t] (affordability), w[t+1] (sample),
+                  nbr/dist, H(ROUTE,LOSS,LAT,NOISE,DUP), ctrl.shuffle/zero/flush
+  Mcnt[t+1]    <- same as Msum minus payload
+  trace[t]     <- S[t+1][read_idx, 0]
+  NOTE w: plastic_route writes w whenever R>0, INCLUDING dest_mode all, where w is never read.
+  NOTE sites interact ONLY through Msum/Mcnt (indexed by recipient). There is no other inter-site
+       edge: no shared register, no neighbourhood read, no global variable. Hence (verified) with
+       zero_comm a site's whole trajectory is a function of its own sense input and the shared draws.
+  NOTE no edge leaves the world toward the environment: sch_val is fixed before tick 0 (open loop).
+       The FLIP "teacher" is the TARGET (A_teacher*y at the actuator after readout), not an error
+       signal contingent on the system's output.

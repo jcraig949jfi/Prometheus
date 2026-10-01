@@ -1,0 +1,1002 @@
+{
+ "rows": [
+  {
+   "cell": "06e99bf21c0aca14",
+   "wave": "A",
+   "variant": "base",
+   "exact_space": false,
+   "override": {
+    "state_dim": [
+     1,
+     2
+    ],
+    "prog_len": [
+     12,
+     16
+    ]
+   },
+   "acc": 0.5006510416666666,
+   "lo99": 0.48632486979166667,
+   "hi99": 0.5130208333333333,
+   "M": 64,
+   "stats": {
+    "attempted": 492,
+    "delivered": 220,
+    "lost": 272,
+    "collided": 0,
+    "emitters": 246,
+    "awake": 1327104,
+    "nonnop": 21233664,
+    "route_writes": 0,
+    "energy_spent": 21278012
+   },
+   "held_rec": 0.5013020833333333,
+   "held_rec_lo99": 0.4921875,
+   "lc_bound": 1.0,
+   "relay_rec": 0.48177083333333337,
+   "phys": {
+    "topology": "ring",
+    "n_sites": 144,
+    "radius": 2,
+    "dest_mode": "sample",
+    "fanout": 2,
+    "loss": 0.6,
+    "lat_base": 1,
+    "lat_hop": 1,
+    "lat_jitter": 3,
+    "dup": 0.0,
+    "noise": 0,
+    "cap": 0,
+    "collision": "saturate",
+    "decay_shift": 6,
+    "update_mode": "sync",
+    "update_period": 1,
+    "update_p": 0.5,
+    "state_dim": 1,
+    "prog_len": 12,
+    "payload_width": 1,
+    "rules": 1,
+    "e_income": 4,
+    "c_emit": 4,
+    "c_op": 1,
+    "c_mem": 1,
+    "mut_site": 0.0
+   },
+   "env": {
+    "d": 2,
+    "delta": 4,
+    "block": 4
+   }
+  },
+  {
+   "cell": "158bdd9a126414e5",
+   "wave": "C",
+   "variant": "base",
+   "exact_space": false,
+   "override": {
+    "state_dim": [
+     4,
+     4
+    ],
+    "prog_len": [
+     8,
+     16
+    ]
+   },
+   "acc": 0.5123697916666666,
+   "lo99": 0.48763020833333337,
+   "hi99": 0.5384114583333333,
+   "M": 64,
+   "stats": {
+    "attempted": 13150376,
+    "delivered": 11836634,
+    "lost": 1313742,
+    "collided": 0,
+    "emitters": 1643797,
+    "awake": 1721134,
+    "nonnop": 27538144,
+    "route_writes": 0,
+    "energy_spent": 0
+   },
+   "held_rec": 0.5006510416666667,
+   "held_rec_lo99": 0.48111328124999997,
+   "lc_bound": 1.0,
+   "relay_rec": 0.5,
+   "phys": {
+    "topology": "global",
+    "n_sites": 100,
+    "radius": 3,
+    "dest_mode": "sample",
+    "fanout": 8,
+    "loss": 0.1,
+    "lat_base": 4,
+    "lat_hop": 0,
+    "lat_jitter": 1,
+    "dup": 0.0,
+    "noise": 64,
+    "cap": 1,
+    "collision": "none",
+    "decay_shift": 3,
+    "update_mode": "async",
+    "update_period": 2,
+    "update_p": 0.8,
+    "state_dim": 4,
+    "prog_len": 8,
+    "payload_width": 2,
+    "rules": 1,
+    "e_income": 0,
+    "c_emit": 0,
+    "c_op": 0,
+    "c_mem": 0,
+    "mut_site": 0.0
+   },
+   "env": {
+    "d": 5,
+    "delta": 16,
+    "block": 4
+   }
+  },
+  {
+   "cell": "299a681d2e3cbee1",
+   "wave": "A",
+   "variant": "base",
+   "exact_space": true,
+   "override": {},
+   "acc": 0.48828125,
+   "lo99": 0.404287109375,
+   "hi99": 0.5722753906249998,
+   "M": 64,
+   "stats": {
+    "attempted": 9334212,
+    "delivered": 8401102,
+    "lost": 933110,
+    "collided": 0,
+    "emitters": 1555702,
+    "awake": 1719884,
+    "nonnop": 27518144,
+    "route_writes": 0,
+    "energy_spent": 9334212
+   },
+   "held_rec": 0.4921875,
+   "held_rec_lo99": 0.4375,
+   "lc_bound": 1.0,
+   "relay_rec": 0.5078125,
+   "phys": {
+    "topology": "random",
+    "n_sites": 100,
+    "radius": 2,
+    "dest_mode": "all",
+    "fanout": 2,
+    "loss": 0.1,
+    "lat_base": 1,
+    "lat_hop": 1,
+    "lat_jitter": 1,
+    "dup": 0.0,
+    "noise": 0,
+    "cap": 1,
+    "collision": "none",
+    "decay_shift": 6,
+    "update_mode": "async",
+    "update_period": 1,
+    "update_p": 0.8,
+    "state_dim": 8,
+    "prog_len": 16,
+    "payload_width": 4,
+    "rules": 2,
+    "e_income": 4,
+    "c_emit": 1,
+    "c_op": 0,
+    "c_mem": 0,
+    "mut_site": 0.001
+   },
+   "env": {
+    "d": 2,
+    "delta": 16,
+    "block": 2
+   }
+  },
+  {
+   "cell": "4b848d80ee0a7106",
+   "wave": "A",
+   "variant": "base",
+   "exact_space": false,
+   "override": {
+    "state_dim": [
+     8,
+     8
+    ],
+    "prog_len": [
+     8,
+     16
+    ]
+   },
+   "acc": 0.5,
+   "lo99": 0.5,
+   "hi99": 0.5,
+   "M": 64,
+   "stats": {
+    "attempted": 33972,
+    "delivered": 30604,
+    "lost": 3368,
+    "collided": 0,
+    "emitters": 8493,
+    "awake": 1720794,
+    "nonnop": 27532704,
+    "route_writes": 0,
+    "energy_spent": 28731152
+   },
+   "held_rec": 0.5,
+   "held_rec_lo99": 0.5,
+   "lc_bound": 1.0,
+   "relay_rec": 0.5078125,
+   "phys": {
+    "topology": "smallworld",
+    "n_sites": 100,
+    "radius": 3,
+    "dest_mode": "all",
+    "fanout": 2,
+    "loss": 0.1,
+    "lat_base": 1,
+    "lat_hop": 0,
+    "lat_jitter": 1,
+    "dup": 0.0,
+    "noise": 0,
+    "cap": 1,
+    "collision": "saturate",
+    "decay_shift": 1,
+    "update_mode": "async",
+    "update_period": 1,
+    "update_p": 0.8,
+    "state_dim": 8,
+    "prog_len": 8,
+    "payload_width": 4,
+    "rules": 2,
+    "e_income": 4,
+    "c_emit": 4,
+    "c_op": 1,
+    "c_mem": 1,
+    "mut_site": 0.001
+   },
+   "env": {
+    "d": 3,
+    "delta": 16,
+    "block": 4
+   }
+  },
+  {
+   "cell": "603723a7676b8e1d",
+   "wave": "A",
+   "variant": "base",
+   "exact_space": false,
+   "override": {
+    "state_dim": [
+     1,
+     2
+    ],
+    "prog_len": [
+     12,
+     16
+    ]
+   },
+   "acc": 0.5,
+   "lo99": 0.5,
+   "hi99": 0.5,
+   "M": 64,
+   "stats": {
+    "attempted": 16544,
+    "delivered": 16544,
+    "lost": 0,
+    "collided": 0,
+    "emitters": 1890,
+    "awake": 2476260,
+    "nonnop": 39620160,
+    "route_writes": 0,
+    "energy_spent": 40284089
+   },
+   "held_rec": 0.5,
+   "held_rec_lo99": 0.5,
+   "lc_bound": 1.0,
+   "relay_rec": 0.5364583333333333,
+   "phys": {
+    "topology": "smallworld",
+    "n_sites": 144,
+    "radius": 3,
+    "dest_mode": "sample",
+    "fanout": 8,
+    "loss": 0.0,
+    "lat_base": 1,
+    "lat_hop": 1,
+    "lat_jitter": 1,
+    "dup": 0.1,
+    "noise": 0,
+    "cap": 0,
+    "collision": "saturate",
+    "decay_shift": 3,
+    "update_mode": "async",
+    "update_period": 2,
+    "update_p": 0.8,
+    "state_dim": 1,
+    "prog_len": 12,
+    "payload_width": 4,
+    "rules": 2,
+    "e_income": 4,
+    "c_emit": 4,
+    "c_op": 1,
+    "c_mem": 1,
+    "mut_site": 0.001
+   },
+   "env": {
+    "d": 2,
+    "delta": 16,
+    "block": 4
+   }
+  },
+  {
+   "cell": "75e32ae0d386af47",
+   "wave": "A",
+   "variant": "base",
+   "exact_space": true,
+   "override": {},
+   "acc": 0.498046875,
+   "lo99": 0.4791634114583333,
+   "hi99": 0.5175846354166665,
+   "M": 64,
+   "stats": {
+    "attempted": 5666718,
+    "delivered": 3965822,
+    "lost": 1700896,
+    "collided": 0,
+    "emitters": 944453,
+    "awake": 1100328,
+    "nonnop": 17605248,
+    "route_writes": 0,
+    "energy_spent": 5666718
+   },
+   "held_rec": 0.5104166666666666,
+   "held_rec_lo99": 0.478515625,
+   "lc_bound": 1.0,
+   "relay_rec": 0.5091145833333334,
+   "phys": {
+    "topology": "random",
+    "n_sites": 64,
+    "radius": 2,
+    "dest_mode": "all",
+    "fanout": 8,
+    "loss": 0.3,
+    "lat_base": 4,
+    "lat_hop": 0,
+    "lat_jitter": 3,
+    "dup": 0.0,
+    "noise": 16,
+    "cap": 4,
+    "collision": "none",
+    "decay_shift": 1,
+    "update_mode": "async",
+    "update_period": 2,
+    "update_p": 0.8,
+    "state_dim": 8,
+    "prog_len": 16,
+    "payload_width": 1,
+    "rules": 2,
+    "e_income": 4,
+    "c_emit": 1,
+    "c_op": 0,
+    "c_mem": 0,
+    "mut_site": 0.01
+   },
+   "env": {
+    "d": 3,
+    "delta": 16,
+    "block": 4
+   }
+  },
+  {
+   "cell": "891dbf32ca704fed",
+   "wave": "A",
+   "variant": "base",
+   "exact_space": false,
+   "override": {
+    "state_dim": [
+     1,
+     2
+    ],
+    "prog_len": [
+     16,
+     16
+    ]
+   },
+   "acc": 0.49609375,
+   "lo99": 0.4775390625,
+   "hi99": 0.5126953125,
+   "M": 64,
+   "stats": {
+    "attempted": 4486085,
+    "delivered": 3139374,
+    "lost": 1346711,
+    "collided": 0,
+    "emitters": 1019109,
+    "awake": 1331200,
+    "nonnop": 21299200,
+    "route_writes": 0,
+    "energy_spent": 4076436
+   },
+   "held_rec": 0.4931640625,
+   "held_rec_lo99": 0.4765576171875,
+   "lc_bound": 1.0,
+   "relay_rec": 0.5390625,
+   "phys": {
+    "topology": "ring",
+    "n_sites": 100,
+    "radius": 1,
+    "dest_mode": "sample",
+    "fanout": 4,
+    "loss": 0.3,
+    "lat_base": 1,
+    "lat_hop": 0,
+    "lat_jitter": 1,
+    "dup": 0.1,
+    "noise": 16,
+    "cap": 2,
+    "collision": "saturate",
+    "decay_shift": 1,
+    "update_mode": "sync",
+    "update_period": 1,
+    "update_p": 0.8,
+    "state_dim": 1,
+    "prog_len": 16,
+    "payload_width": 1,
+    "rules": 4,
+    "e_income": 4,
+    "c_emit": 1,
+    "c_op": 0,
+    "c_mem": 0,
+    "mut_site": 0.0
+   },
+   "env": {
+    "d": 3,
+    "delta": 8,
+    "block": 2
+   }
+  },
+  {
+   "cell": "9d67b56354697956",
+   "wave": "A",
+   "variant": "base",
+   "exact_space": false,
+   "override": {
+    "state_dim": [
+     8,
+     8
+    ],
+    "prog_len": [
+     12,
+     16
+    ]
+   },
+   "acc": 0.5130208333333334,
+   "lo99": 0.47069986979166667,
+   "hi99": 0.5605501302083332,
+   "M": 64,
+   "stats": {
+    "attempted": 919733,
+    "delivered": 367448,
+    "lost": 552285,
+    "collided": 0,
+    "emitters": 278590,
+    "awake": 1075200,
+    "nonnop": 17203200,
+    "route_writes": 0,
+    "energy_spent": 835770
+   },
+   "held_rec": 0.501953125,
+   "held_rec_lo99": 0.484375,
+   "lc_bound": 1.0,
+   "relay_rec": 0.5260416666666666,
+   "phys": {
+    "topology": "random",
+    "n_sites": 100,
+    "radius": 1,
+    "dest_mode": "all",
+    "fanout": 4,
+    "loss": 0.6,
+    "lat_base": 1,
+    "lat_hop": 1,
+    "lat_jitter": 3,
+    "dup": 0.1,
+    "noise": 16,
+    "cap": 2,
+    "collision": "none",
+    "decay_shift": 6,
+    "update_mode": "sync",
+    "update_period": 2,
+    "update_p": 0.8,
+    "state_dim": 8,
+    "prog_len": 12,
+    "payload_width": 1,
+    "rules": 4,
+    "e_income": 4,
+    "c_emit": 1,
+    "c_op": 0,
+    "c_mem": 0,
+    "mut_site": 0.01
+   },
+   "env": {
+    "d": 5,
+    "delta": 16,
+    "block": 4
+   }
+  },
+  {
+   "cell": "ba09f3510be6c9f7",
+   "wave": "A",
+   "variant": "base",
+   "exact_space": false,
+   "override": {
+    "state_dim": [
+     1,
+     2
+    ],
+    "prog_len": [
+     16,
+     16
+    ]
+   },
+   "acc": 0.5013020833333333,
+   "lo99": 0.485673828125,
+   "hi99": 0.5175813802083332,
+   "M": 64,
+   "stats": {
+    "attempted": 6965124,
+    "delivered": 6965124,
+    "lost": 0,
+    "collided": 0,
+    "emitters": 1741281,
+    "awake": 1916928,
+    "nonnop": 30670848,
+    "route_writes": 0,
+    "energy_spent": 0
+   },
+   "held_rec": 0.4908854166666667,
+   "held_rec_lo99": 0.46354166666666663,
+   "lc_bound": 1.0,
+   "relay_rec": 0.4479166666666667,
+   "phys": {
+    "topology": "smallworld",
+    "n_sites": 144,
+    "radius": 3,
+    "dest_mode": "all",
+    "fanout": 8,
+    "loss": 0.0,
+    "lat_base": 2,
+    "lat_hop": 0,
+    "lat_jitter": 3,
+    "dup": 0.0,
+    "noise": 64,
+    "cap": 0,
+    "collision": "aloha",
+    "decay_shift": 1,
+    "update_mode": "sync",
+    "update_period": 1,
+    "update_p": 0.5,
+    "state_dim": 1,
+    "prog_len": 16,
+    "payload_width": 2,
+    "rules": 4,
+    "e_income": 0,
+    "c_emit": 0,
+    "c_op": 0,
+    "c_mem": 0,
+    "mut_site": 0.01
+   },
+   "env": {
+    "d": 3,
+    "delta": 8,
+    "block": 4
+   }
+  },
+  {
+   "cell": "c9998fe48f9341a8",
+   "wave": "A",
+   "variant": "base",
+   "exact_space": false,
+   "override": {
+    "state_dim": [
+     4,
+     4
+    ],
+    "prog_len": [
+     8,
+     16
+    ]
+   },
+   "acc": 0.46875000000000006,
+   "lo99": 0.40363932291666665,
+   "hi99": 0.5416731770833333,
+   "M": 64,
+   "stats": {
+    "attempted": 7798256,
+    "delivered": 7798256,
+    "lost": 0,
+    "collided": 0,
+    "emitters": 1772212,
+    "awake": 1916928,
+    "nonnop": 30670848,
+    "route_writes": 0,
+    "energy_spent": 0
+   },
+   "held_rec": 0.48828125,
+   "held_rec_lo99": 0.4375,
+   "lc_bound": 1.0,
+   "relay_rec": 0.5026041666666667,
+   "phys": {
+    "topology": "global",
+    "n_sites": 144,
+    "radius": 3,
+    "dest_mode": "sample",
+    "fanout": 4,
+    "loss": 0.0,
+    "lat_base": 2,
+    "lat_hop": 1,
+    "lat_jitter": 1,
+    "dup": 0.1,
+    "noise": 0,
+    "cap": 2,
+    "collision": "none",
+    "decay_shift": 6,
+    "update_mode": "sync",
+    "update_period": 1,
+    "update_p": 0.5,
+    "state_dim": 4,
+    "prog_len": 8,
+    "payload_width": 1,
+    "rules": 4,
+    "e_income": 0,
+    "c_emit": 0,
+    "c_op": 0,
+    "c_mem": 0,
+    "mut_site": 0.001
+   },
+   "env": {
+    "d": 1,
+    "delta": 8,
+    "block": 4
+   }
+  },
+  {
+   "cell": "d09510b3e567a37d",
+   "wave": "A",
+   "variant": "base",
+   "exact_space": false,
+   "override": {
+    "state_dim": [
+     8,
+     8
+    ],
+    "prog_len": [
+     8,
+     16
+    ]
+   },
+   "acc": 0.5,
+   "lo99": 0.5,
+   "hi99": 0.5,
+   "M": 64,
+   "stats": {
+    "attempted": 4187,
+    "delivered": 1611,
+    "lost": 2576,
+    "collided": 0,
+    "emitters": 3766,
+    "awake": 1376256,
+    "nonnop": 22020096,
+    "route_writes": 0,
+    "energy_spent": 0
+   },
+   "held_rec": 0.5032552083333334,
+   "held_rec_lo99": 0.4700520833333333,
+   "lc_bound": 1.0,
+   "relay_rec": 0.4895833333333333,
+   "phys": {
+    "topology": "global",
+    "n_sites": 64,
+    "radius": 2,
+    "dest_mode": "sample",
+    "fanout": 1,
+    "loss": 0.6,
+    "lat_base": 1,
+    "lat_hop": 1,
+    "lat_jitter": 0,
+    "dup": 0.1,
+    "noise": 64,
+    "cap": 0,
+    "collision": "aloha",
+    "decay_shift": 3,
+    "update_mode": "sync",
+    "update_period": 1,
+    "update_p": 0.5,
+    "state_dim": 8,
+    "prog_len": 8,
+    "payload_width": 2,
+    "rules": 4,
+    "e_income": 0,
+    "c_emit": 0,
+    "c_op": 0,
+    "c_mem": 0,
+    "mut_site": 0.01
+   },
+   "env": {
+    "d": 5,
+    "delta": 16,
+    "block": 4
+   }
+  },
+  {
+   "cell": "d99833cbd7fad41d",
+   "wave": "A",
+   "variant": "base",
+   "exact_space": false,
+   "override": {
+    "state_dim": [
+     8,
+     8
+    ],
+    "prog_len": [
+     12,
+     16
+    ]
+   },
+   "acc": 0.49153645833333326,
+   "lo99": 0.4596321614583333,
+   "hi99": 0.5162760416666666,
+   "M": 64,
+   "stats": {
+    "attempted": 2696,
+    "delivered": 2344,
+    "lost": 352,
+    "collided": 1820,
+    "emitters": 306,
+    "awake": 1547542,
+    "nonnop": 24760672,
+    "route_writes": 0,
+    "energy_spent": 24879226
+   },
+   "held_rec": 0.5,
+   "held_rec_lo99": 0.5,
+   "lc_bound": 1.0,
+   "relay_rec": 0.5416666666666667,
+   "phys": {
+    "topology": "ring",
+    "n_sites": 144,
+    "radius": 2,
+    "dest_mode": "sample",
+    "fanout": 8,
+    "loss": 0.1,
+    "lat_base": 2,
+    "lat_hop": 1,
+    "lat_jitter": 0,
+    "dup": 0.1,
+    "noise": 0,
+    "cap": 1,
+    "collision": "aloha",
+    "decay_shift": 6,
+    "update_mode": "async",
+    "update_period": 2,
+    "update_p": 0.5,
+    "state_dim": 8,
+    "prog_len": 12,
+    "payload_width": 1,
+    "rules": 4,
+    "e_income": 4,
+    "c_emit": 4,
+    "c_op": 1,
+    "c_mem": 1,
+    "mut_site": 0.01
+   },
+   "env": {
+    "d": 1,
+    "delta": 16,
+    "block": 4
+   }
+  },
+  {
+   "cell": "ec89b3d5b8bd2a31",
+   "wave": "A",
+   "variant": "base",
+   "exact_space": true,
+   "override": {},
+   "acc": 0.5498046875,
+   "lo99": 0.486318359375,
+   "hi99": 0.6181640625,
+   "M": 64,
+   "stats": {
+    "attempted": 338570,
+    "delivered": 237068,
+    "lost": 101502,
+    "collided": 0,
+    "emitters": 169285,
+    "awake": 471654,
+    "nonnop": 7546464,
+    "route_writes": 0,
+    "energy_spent": 0
+   },
+   "held_rec": 0.4921875,
+   "held_rec_lo99": 0.4560546875,
+   "lc_bound": 1.0,
+   "relay_rec": 0.48046875,
+   "phys": {
+    "topology": "global",
+    "n_sites": 64,
+    "radius": 3,
+    "dest_mode": "sample",
+    "fanout": 2,
+    "loss": 0.3,
+    "lat_base": 2,
+    "lat_hop": 0,
+    "lat_jitter": 0,
+    "dup": 0.0,
+    "noise": 16,
+    "cap": 4,
+    "collision": "none",
+    "decay_shift": 6,
+    "update_mode": "async",
+    "update_period": 2,
+    "update_p": 0.8,
+    "state_dim": 8,
+    "prog_len": 16,
+    "payload_width": 4,
+    "rules": 2,
+    "e_income": 0,
+    "c_emit": 0,
+    "c_op": 0,
+    "c_mem": 0,
+    "mut_site": 0.01
+   },
+   "env": {
+    "d": 3,
+    "delta": 4,
+    "block": 2
+   }
+  },
+  {
+   "cell": "f4e59e6154ea0c5a",
+   "wave": "A",
+   "variant": "base",
+   "exact_space": false,
+   "override": {
+    "state_dim": [
+     8,
+     8
+    ],
+    "prog_len": [
+     8,
+     16
+    ]
+   },
+   "acc": 0.5,
+   "lo99": 0.5,
+   "hi99": 0.5,
+   "M": 64,
+   "stats": {
+    "attempted": 1071,
+    "delivered": 459,
+    "lost": 612,
+    "collided": 0,
+    "emitters": 357,
+    "awake": 1719240,
+    "nonnop": 27507840,
+    "route_writes": 0,
+    "energy_spent": 27615080
+   },
+   "held_rec": 0.4954427083333333,
+   "held_rec_lo99": 0.44009114583333336,
+   "lc_bound": 1.0,
+   "relay_rec": 0.39973958333333337,
+   "phys": {
+    "topology": "random",
+    "n_sites": 100,
+    "radius": 2,
+    "dest_mode": "all",
+    "fanout": 1,
+    "loss": 0.6,
+    "lat_base": 1,
+    "lat_hop": 1,
+    "lat_jitter": 3,
+    "dup": 0.0,
+    "noise": 0,
+    "cap": 1,
+    "collision": "saturate",
+    "decay_shift": 3,
+    "update_mode": "async",
+    "update_period": 1,
+    "update_p": 0.8,
+    "state_dim": 8,
+    "prog_len": 8,
+    "payload_width": 1,
+    "rules": 2,
+    "e_income": 4,
+    "c_emit": 4,
+    "c_op": 1,
+    "c_mem": 1,
+    "mut_site": 0.01
+   },
+   "env": {
+    "d": 3,
+    "delta": 16,
+    "block": 4
+   }
+  },
+  {
+   "cell": "fc6972d4930ea3f4",
+   "wave": "A",
+   "variant": "base",
+   "exact_space": false,
+   "override": {
+    "state_dim": [
+     8,
+     8
+    ],
+    "prog_len": [
+     12,
+     16
+    ]
+   },
+   "acc": 0.494140625,
+   "lo99": 0.4736328125,
+   "hi99": 0.5146533203124999,
+   "M": 64,
+   "stats": {
+    "attempted": 25900,
+    "delivered": 23416,
+    "lost": 2484,
+    "collided": 0,
+    "emitters": 6475,
+    "awake": 1547380,
+    "nonnop": 24758080,
+    "route_writes": 0,
+    "energy_spent": 26148724
+   },
+   "held_rec": 0.5078125,
+   "held_rec_lo99": 0.4892578125,
+   "lc_bound": 1.0,
+   "relay_rec": 0.4453125,
+   "phys": {
+    "topology": "torus",
+    "n_sites": 144,
+    "radius": 1,
+    "dest_mode": "all",
+    "fanout": 8,
+    "loss": 0.1,
+    "lat_base": 2,
+    "lat_hop": 0,
+    "lat_jitter": 1,
+    "dup": 0.0,
+    "noise": 0,
+    "cap": 2,
+    "collision": "saturate",
+    "decay_shift": 6,
+    "update_mode": "async",
+    "update_period": 1,
+    "update_p": 0.5,
+    "state_dim": 8,
+    "prog_len": 12,
+    "payload_width": 1,
+    "rules": 4,
+    "e_income": 4,
+    "c_emit": 4,
+    "c_op": 1,
+    "c_mem": 1,
+    "mut_site": 0.0
+   },
+   "env": {
+    "d": 3,
+    "delta": 16,
+    "block": 2
+   }
+  }
+ ],
+ "compute": {
+  "cpu_s": 166.14,
+  "wall_s": 108.31,
+  "threads": 2
+ }
+}

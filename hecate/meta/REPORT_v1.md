@@ -1,5 +1,9 @@
 # Meta-experiment v1 -- report
 
+> CORRECTIONS 2026-10-01 (roles/Hecate/harvest_w2/CORRECTIONS_2026-10-01.md; text below unchanged): K12 M3 item 5 is
+> wrong (state named T 1.00, P 1.00; "fewest named state variables" is false). CONTESTED, NOT APPLIED: C8 M1 vs P reads
+> NO_ADDED_VALUE_vs_P (4/8) if the refused call u4-P-m8 counts in the denominator; overall M1 unchanged.
+
 PREREG: roles/Hecate/prereg/2026-09-29_meta_experiment_v1/PREREG.md (e0bd2e312).
 Analysis code frozen before any detector or matcher row was read:
 hecate/meta/analyze.py (65e0fcf80). Numbers: hecate/meta/RESULTS_v1.json.

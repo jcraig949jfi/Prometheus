@@ -1,0 +1,79 @@
+{
+ "cell": "0a23398f",
+ "row_kind": "evolve",
+ "wave": "B",
+ "family": "MAJ",
+ "topology": "ring",
+ "radius": 3,
+ "n_sites": 100,
+ "d0": 2,
+ "d_h": 1,
+ "dest_mode": "all",
+ "plastic_route": 1,
+ "recorded_held": 0.6953125,
+ "recorded_held_lo99": 0.6484309895833333,
+ "conds": {
+  "ring_relabel@d2": {
+   "acc": 0.6888,
+   "lo99": 0.6413,
+   "hi99": 0.7337
+  },
+  "ring_portshuffle@d2": {
+   "acc": 0.7188,
+   "lo99": 0.679,
+   "hi99": 0.7604
+  },
+  "ring_flatdist@d2": {
+   "acc": 0.6738,
+   "lo99": 0.6211,
+   "hi99": 0.7214
+  },
+  "schreier_ringdist@d1": {
+   "acc": 0.6999,
+   "lo99": 0.6523,
+   "hi99": 0.7441
+  },
+  "schreier_flatdist@d1": {
+   "acc": 0.6999,
+   "lo99": 0.6523,
+   "hi99": 0.7441
+  },
+  "schreier_ringdist@d2": {
+   "acc": 0.5,
+   "lo99": 0.5,
+   "hi99": 0.5
+  }
+ },
+ "hops": {
+  "ring_relabel@d2": {
+   "1": 160
+  },
+  "ring_portshuffle@d2": {
+   "1": 160
+  },
+  "ring_flatdist@d2": {
+   "1": 160
+  },
+  "schreier_ringdist@d1": {
+   "1": 160
+  },
+  "schreier_flatdist@d1": {
+   "1": 160
+  },
+  "schreier_ringdist@d2": {
+   "2": 160
+  }
+ },
+ "info": {
+  "schreier_ringdist": {
+   "nodes_with_duplicate_port": 8
+  },
+  "schreier_flatdist": {
+   "nodes_with_duplicate_port": 8
+  }
+ },
+ "_compute": {
+  "wall_s": 15.6,
+  "cpu_s": 23.0
+ }
+}

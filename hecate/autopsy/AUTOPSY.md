@@ -5,6 +5,7 @@
 > admission skew does not survive a permutation test (p ~ 0.18). K6 Part B inputs were scrubbed (rewrite rules erased;
 > R1 still holds on the other 24); R1 is a property of the definition on fully specified rules -> C6 (not C4), and does
 > not transfer to meta v1's prose as argued; meta v1's zero remains uninformative on meta v1's own rows.
+> K14 Part A predates K4: read validly 36 (not 38), untestable 13, PARK 14 + SPECULATIVE 1 -- see FLOW_postK4.json.
 
 
 PREREG: roles/Hecate/prereg/2026-09-30_novelty_autopsy/PREREG.md (frozen before
