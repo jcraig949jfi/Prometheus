@@ -1,0 +1,53 @@
+--- a/roles/Ananke/research/harvest/H-INST/pte_trace.py	2026-09-30 20:48:41.289741300 -0400
++++ b/roles/Ananke/research/harvest/H-INST/pte_trace.py	2026-09-30 20:48:59.989723500 -0400
+@@ -423,7 +423,14 @@
+       ABSORBED        the readout site was touched in some world, the readout
+                       value changed in none (an informative null candidate)
+       REACHED_OUTPUT  the readout value changed in >= 1 world
+-    'path' counts LOCAL / TRANSPORTED / BOTH over worlds with an output change."""
++    'path' counts LOCAL / TRANSPORTED / BOTH over worlds with an output change.
++    W2-B additions (keys added; the batch verdict above is unchanged except for the window):
++      * touches count only inside the trial's own window [cue onset, readout] (a hook in an earlier trial
++        whose difference died before this trial's cue no longer makes the trial ABSORBED);
++      * 'decision' = fraction of worlds whose scored decision sign(S0) in {-1,0,+1} changed
++        (the value-level 'output' also counts magnitude-only changes);
++      * 'per_world' verdicts and 'absorbed' = fraction of worlds that are admissible nulls (touched,
++        decision unchanged); a batch null is admissible only for that fraction of worlds."""
+     ep = envs.build(ph, env, seeds)
+     ws = mirrored_ws(seeds)
+     rt = ep.ro_tick[:, trial]
+@@ -435,15 +442,16 @@
+     M = len(seeds)
+     ridx = ep.schedule.read_idx.numpy()
+     applied = dt.hook_site.any((0, 2)) | dt.hook_arr.any((0, 2))
++    t_on = trial * env.period()                       # the trial's cue onset: its window starts here
+     hook_ticks = [t for t in hooks if t < T]
+-    t_h = min(hook_ticks) if hook_ticks else T
++    t_h = max(min(hook_ticks), t_on) if hook_ticks else T
+     touched = np.zeros(M, bool)
+     first = np.full(M, -1)
+     rt_tab = dt.readout_table(ep, trial)
+     for b in range(M):
+         a = int(ridx[b, ep.ro_slot[b, trial]])
+         ts = np.nonzero(node[t_h + 1:int(rt[b]) + 1, b, a])[0] if t_h < T else []
+-        # hook directly on the readout site's state also counts (LOCAL touch)
++        # hook directly on the readout site's state also counts (LOCAL touch), inside the window only
+         direct = dt.hook_site[t_h:int(rt[b]), b, a].any() if t_h < T else False
+         if len(ts) or direct:
+             touched[b] = True
+@@ -460,8 +468,14 @@
+     paths = {}
+     for p in rt_tab["path"][out]:
+         paths[p] = paths.get(p, 0) + 1
++    sl = ep.ro_slot[np.arange(M), trial]
++    dec = np.sign(dt.traceA[rt, np.arange(M), sl]) != np.sign(dt.traceB[rt, np.arange(M), sl])
++    per_world = np.where(~applied, UNAPPLIED, np.where(dec, "REACHED_DECISION", np.where(
++        out, "REACHED_VALUE_ONLY", np.where(touched, ABSORBED, NOT_REACHED))))
+     return {"verdict": v, "applied": float(applied.mean()), "touched": float(touched.mean()),
+-            "output": float(out.mean()), "first_touch_lag": (first - rt)[touched].tolist(),
++            "output": float(out.mean()), "decision": float(dec.mean()),
++            "absorbed": float((touched & ~dec).mean()), "per_world": per_world.tolist(),
++            "first_touch_lag": (first - rt)[touched].tolist(),
+             "path": paths, "unexplained_site": dt.unexplained_site,
+             "unexplained_flight": dt.unexplained_flight, "trace": dt}
+ 

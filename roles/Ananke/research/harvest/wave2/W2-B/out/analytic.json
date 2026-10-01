@@ -1,0 +1,260 @@
+{
+ "A_MAJ_k_sensor_ceiling": {
+  "1": 0.7,
+  "2": 0.7,
+  "3": 0.784,
+  "4": 0.784,
+  "5": 0.8369
+ },
+ "A_MAJ_majority_pivotality": 0.2646,
+ "B_ci_gates": {
+  "SIGNAL lo99>.55 P32 K12": {
+   "p50": 0.614,
+   "p90": 0.6442
+  },
+  "SIGNAL lo99>.55 P64 K12": {
+   "p50": 0.5956,
+   "p90": 0.6176
+  },
+  "SIGNAL lo99>.55 P128 K12": {
+   "p50": 0.5824,
+   "p90": 0.5983
+  },
+  "SIGNAL lo99>.55 P256 K11": {
+   "p50": 0.574,
+   "p90": 0.5858
+  },
+  "INTEGRATION lo99>.70 P32 K12": {
+   "p50": 0.7564,
+   "p90": 0.7814
+  },
+  "INTEGRATION lo99>.70 P64 K12": {
+   "p50": 0.7407,
+   "p90": 0.7595
+  },
+  "INTEGRATION lo99>.70 P128 K12": {
+   "p50": 0.7292,
+   "p90": 0.743
+  },
+  "INTEGRATION lo99>.70 P256 K11": {
+   "p50": 0.7218,
+   "p90": 0.7322
+  },
+  "C1b T intact lo99>=.62 P32 K12": {
+   "p50": 0.6813,
+   "p90": 0.7094
+  },
+  "C1b T intact lo99>=.62 P64 K12": {
+   "p50": 0.6639,
+   "p90": 0.6847
+  },
+  "C1b T intact lo99>=.62 P128 K12": {
+   "p50": 0.6513,
+   "p90": 0.6664
+  },
+  "C1b T intact lo99>=.62 P256 K11": {
+   "p50": 0.6433,
+   "p90": 0.6546
+  },
+  "C1b predictor lo99>.60 P32 K12": {
+   "p50": 0.6622,
+   "p90": 0.691
+  },
+  "C1b predictor lo99>.60 P64 K12": {
+   "p50": 0.6445,
+   "p90": 0.6657
+  },
+  "C1b predictor lo99>.60 P128 K12": {
+   "p50": 0.6317,
+   "p90": 0.647
+  },
+  "C1b predictor lo99>.60 P256 K11": {
+   "p50": 0.6235,
+   "p90": 0.635
+  },
+  "absolute swap FLIP (ideal follow) P32 K12": {
+   "normal_p50": 0.6622,
+   "normal_p90": 0.691
+  },
+  "absolute swap FLIP (ideal follow) P64 K12": {
+   "normal_p50": 0.6445,
+   "normal_p90": 0.6657
+  },
+  "absolute swap FLIP (ideal follow) P128 K12": {
+   "normal_p50": 0.6317,
+   "normal_p90": 0.647
+  },
+  "absolute swap FLIP (ideal follow) P256 K11": {
+   "normal_p50": 0.6235,
+   "normal_p90": 0.635
+  },
+  "INTEGRATION FP at p=.70 (P32 K12)": 0.005,
+  "INTEGRATION power at p=.784 (3 sensors, P32 K12)": 0.9228,
+  "INTEGRATION power at p=.837 (5 sensors, P32 K12)": 1.0,
+  "XOR one-flag (.75) crosses SIGNAL (P32 K12)": 1.0,
+  "XOR one-flag (.75) crosses INTEGRATION-.70 (P32 K12)": 0.3771
+ },
+ "C_swap_rel_ideal": {
+  "a0.52 P32": {
+   "ident": false,
+   "noop(s=a)": "NOT_ELIGIBLE",
+   "follow(s=1-a)": "NOT_ELIGIBLE",
+   "chance(s=.5)": "NOT_ELIGIBLE"
+  },
+  "a0.52 P64": {
+   "ident": false,
+   "noop(s=a)": "NOT_ELIGIBLE",
+   "follow(s=1-a)": "NOT_ELIGIBLE",
+   "chance(s=.5)": "NOT_ELIGIBLE"
+  },
+  "a0.52 P256": {
+   "ident": false,
+   "noop(s=a)": "NOT_ELIGIBLE",
+   "follow(s=1-a)": "NOT_ELIGIBLE",
+   "chance(s=.5)": "NOT_ELIGIBLE"
+  },
+  "a0.55 P32": {
+   "ident": false,
+   "noop(s=a)": "NOT_ELIGIBLE",
+   "follow(s=1-a)": "NOT_ELIGIBLE",
+   "chance(s=.5)": "NOT_ELIGIBLE"
+  },
+  "a0.55 P64": {
+   "ident": false,
+   "noop(s=a)": "NOT_ELIGIBLE",
+   "follow(s=1-a)": "NOT_ELIGIBLE",
+   "chance(s=.5)": "NOT_ELIGIBLE"
+  },
+  "a0.55 P256": {
+   "ident": true,
+   "noop(s=a)": "NO_EFFECT_REL",
+   "follow(s=1-a)": "FLIP_REL",
+   "chance(s=.5)": "CHANCE_REL"
+  },
+  "a0.6 P32": {
+   "ident": true,
+   "noop(s=a)": "NO_EFFECT_REL",
+   "follow(s=1-a)": "FLIP_REL",
+   "chance(s=.5)": "CHANCE_REL"
+  },
+  "a0.6 P64": {
+   "ident": true,
+   "noop(s=a)": "NO_EFFECT_REL",
+   "follow(s=1-a)": "FLIP_REL",
+   "chance(s=.5)": "CHANCE_REL"
+  },
+  "a0.6 P256": {
+   "ident": true,
+   "noop(s=a)": "NO_EFFECT_REL",
+   "follow(s=1-a)": "FLIP_REL",
+   "chance(s=.5)": "CHANCE_REL"
+  },
+  "a0.7 P32": {
+   "ident": true,
+   "noop(s=a)": "NO_EFFECT_REL",
+   "follow(s=1-a)": "FLIP_REL",
+   "chance(s=.5)": "CHANCE_REL"
+  },
+  "a0.7 P64": {
+   "ident": true,
+   "noop(s=a)": "NO_EFFECT_REL",
+   "follow(s=1-a)": "FLIP_REL",
+   "chance(s=.5)": "CHANCE_REL"
+  },
+  "a0.7 P256": {
+   "ident": true,
+   "noop(s=a)": "NO_EFFECT_REL",
+   "follow(s=1-a)": "FLIP_REL",
+   "chance(s=.5)": "CHANCE_REL"
+  },
+  "a0.9 P32": {
+   "ident": true,
+   "noop(s=a)": "NO_EFFECT_REL",
+   "follow(s=1-a)": "FLIP_REL",
+   "chance(s=.5)": "CHANCE_REL"
+  },
+  "a0.9 P64": {
+   "ident": true,
+   "noop(s=a)": "NO_EFFECT_REL",
+   "follow(s=1-a)": "FLIP_REL",
+   "chance(s=.5)": "CHANCE_REL"
+  },
+  "a0.9 P256": {
+   "ident": true,
+   "noop(s=a)": "NO_EFFECT_REL",
+   "follow(s=1-a)": "FLIP_REL",
+   "chance(s=.5)": "CHANCE_REL"
+  }
+ },
+ "D_W-Z_noop_arms": {
+  "arms": 439,
+  "identical_arms": 24,
+  "identical_by_label": {
+   "NO_EFFECT_REL": 24
+  },
+  "label_counts": {
+   "INDETERMINATE": 39,
+   "CHANCE_REL": 212,
+   "FLIP_REL": 90,
+   "NO_EFFECT_REL": 98
+  }
+ },
+ "E_XOR_boolean_agreement": {
+  "0.0": {
+   "n": 1,
+   "pivotality_sets": [
+    [
+     1.0,
+     1.0
+    ]
+   ]
+  },
+  "0.25": {
+   "n": 4,
+   "pivotality_sets": [
+    [
+     0.5,
+     0.5
+    ]
+   ]
+  },
+  "0.5": {
+   "n": 6,
+   "pivotality_sets": [
+    [
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     1.0
+    ],
+    [
+     1.0,
+     0.0
+    ]
+   ]
+  },
+  "0.75": {
+   "n": 4,
+   "pivotality_sets": [
+    [
+     0.5,
+     0.5
+    ]
+   ]
+  },
+  "1.0": {
+   "n": 1,
+   "pivotality_sets": [
+    [
+     1.0,
+     1.0
+    ]
+   ]
+  }
+ },
+ "E_XOR_odd_readouts_agreement": [
+  0.5
+ ]
+}

@@ -1,0 +1,217 @@
+{
+ "zero_comm": {
+  "verdict_run": "DEGENERATE",
+  "verdict_final": "DEGENERATE",
+  "attainable": [
+   0.5,
+   0.5
+  ],
+  "eligibility": {
+   "null": "6/6",
+   "adversary": "3/3",
+   "plant": "4/4",
+   "probe": "6/6"
+  },
+  "cheapest": {
+   "cell": "ring24/RELAY",
+   "program": "null",
+   "role": "null",
+   "lacks": "",
+   "value": 0.5
+  },
+  "forced": true
+ },
+ "SIGNAL_comm": {
+  "verdict_run": "SOUND",
+  "verdict_final": "SOUND",
+  "attainable": [
+   0.43489583333333337,
+   1.0
+  ],
+  "eligibility": {
+   "null": "0/6",
+   "adversary": "0/3",
+   "plant": "2/4",
+   "probe": "0/6"
+  },
+  "cheapest": null,
+  "forced": false
+ },
+ "COMM_DEPENDENT": {
+  "verdict_run": "SOUND",
+  "verdict_final": "SOUND",
+  "attainable": [
+   -0.06510416666666667,
+   0.5
+  ],
+  "eligibility": {
+   "null": "0/6",
+   "adversary": "0/3",
+   "plant": "2/4",
+   "probe": "0/6"
+  },
+  "cheapest": null,
+  "forced": false
+ },
+ "XOR_SIGNAL_as_XOR_ruler": {
+  "verdict_run": "CHEATABLE",
+  "verdict_final": "CHEATABLE",
+  "attainable": [
+   0.18489583333333334,
+   1.0
+  ],
+  "eligibility": {
+   "null": "0/2",
+   "adversary": "1/3",
+   "plant": "1/1"
+  },
+  "cheapest": {
+   "cell": "X0/XOR",
+   "program": "oneflag:not_P",
+   "role": "adversary",
+   "lacks": "parity",
+   "value": 0.7083333333333333
+  },
+  "forced": false
+ },
+ "XOR_PIVOT": {
+  "verdict_run": "SOUND",
+  "verdict_final": "SOUND",
+  "attainable": [
+   0.0,
+   1.0
+  ],
+  "eligibility": {
+   "null": "0/2",
+   "adversary": "0/3",
+   "plant": "1/1"
+  },
+  "cheapest": null,
+  "forced": false
+ },
+ "INTEGRATION_MAJ": {
+  "verdict_run": "SOUND",
+  "verdict_final": "SOUND",
+  "attainable": [
+   0.5,
+   0.7708072916666666
+  ],
+  "eligibility": {
+   "null": "0/4",
+   "adversary": "0/1",
+   "plant": "1/1"
+  },
+  "cheapest": null,
+  "forced": false
+ },
+ "REACH_BEYOND_HOP": {
+  "verdict_run": "CHEATABLE",
+  "verdict_final": "CHEATABLE",
+  "attainable": [
+   0.0,
+   1.0
+  ],
+  "eligibility": {
+   "null": "0/6",
+   "adversary": "1/3",
+   "plant": "3/3"
+  },
+  "cheapest": {
+   "cell": "ring24/MAJ",
+   "program": "sense_copy(silent)",
+   "role": "adversary",
+   "lacks": "any transport",
+   "value": 1.0
+  },
+  "forced": false
+ },
+ "REACH_BEYOND_HOP_NEAREST": {
+  "verdict_run": "SOUND",
+  "verdict_final": "SOUND",
+  "attainable": [
+   0.0,
+   1.0
+  ],
+  "eligibility": {
+   "null": "0/6",
+   "adversary": "0/3",
+   "plant": "3/3"
+  },
+  "cheapest": null,
+  "forced": false
+ },
+ "REACH_BEYOND_HOP_global": {
+  "verdict_run": "DEGENERATE",
+  "verdict_final": "UNREACHABLE",
+  "attainable": [
+   0.0,
+   0.0
+  ],
+  "eligibility": {
+   "null": "0/4",
+   "adversary": "0/2",
+   "plant": "0/2",
+   "probe": "0/4"
+  },
+  "cheapest": null,
+  "forced": true
+ },
+ "FLIP_SIGNAL_as_feedback_ruler": {
+  "verdict_run": "CHEATABLE",
+  "verdict_final": "CHEATABLE",
+  "attainable": [
+   0.5,
+   1.0
+  ],
+  "eligibility": {
+   "null": "0/2",
+   "adversary": "1/2",
+   "plant": "1/1"
+  },
+  "cheapest": {
+   "cell": "ring24/FLIP",
+   "program": "FLIP_CLOCK",
+   "role": "adversary",
+   "lacks": "feedback after trial 0",
+   "value": 1.0
+  },
+  "forced": false
+ },
+ "FLIP_FEEDBACK": {
+  "verdict_run": "SOUND",
+  "verdict_final": "SOUND",
+  "attainable": [
+   0.0,
+   0.5
+  ],
+  "eligibility": {
+   "null": "0/2",
+   "adversary": "0/2",
+   "plant": "1/1"
+  },
+  "cheapest": null,
+  "forced": false
+ },
+ "env_permutation_clause": {
+  "verdict_run": "DEGENERATE",
+  "verdict_final": "DEGENERATE",
+  "attainable": [
+   0.47361111111111115,
+   0.5
+  ],
+  "eligibility": {
+   "null": "4/4",
+   "adversary": "2/2",
+   "plant": "6/6",
+   "probe": "4/4"
+  },
+  "cheapest": {
+   "cell": "ring24/RELAY",
+   "program": "null",
+   "role": "null",
+   "lacks": "",
+   "value": 0.5
+  },
+  "forced": false
+ }
+}
