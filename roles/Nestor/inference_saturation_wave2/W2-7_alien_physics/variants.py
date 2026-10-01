@@ -11,6 +11,7 @@ VARIANTS = {
     "B_EXPLEN":    ("EXPLEN", {}, "(b) block copy with BC=0 copies nothing (no 65,536 long count)"),
     "C_NOWRAP":    ("NOWRAP", {}, "(c) data addresses full 16-bit, no wrap: the 7-bit alias trick fails"),
     "C2_RING192":  ("DENSE", {"tape_len": 192}, "(c') 192-byte ring: halves at 0/64, 64-byte zero gap"),
+    "C3_RING192_RGAP": ("DENSE", {"tape_len": 192, "gap": "RAND"}, "(c'') 192-byte ring, gap random per interaction"),
     "D_HARV_HALT": ("HARV_HALT", {}, "(d) Harvard: pc leaving its own half stops the context"),
     "D2_HARV_WRAP": ("HARV_WRAP", {}, "(d') Harvard: pc wraps inside its own half"),
     "E_REGRAND":   ("DENSE", {"regs": "RAND"}, "(e) entry registers+flags uniform random per interaction"),

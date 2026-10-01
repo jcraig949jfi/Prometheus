@@ -5,10 +5,9 @@ every other position, and re-measure the five readouts against the wild type.
 
 Sets per genome (from w4_results.json, initial position calls):
   S_conv  = CONV_NEC positions
-  S_convp = CONV_NEC + CONV_PARTIAL
-  S_est   = S_convp + EST_ONLY positions confirmed on re-assay (same value, fresh seeds)
+  S_est   = CONV_NEC + CONV_PARTIAL + EST_ONLY positions confirmed on re-assay (same value, fresh seeds)
   S_exec  = S_est + every byte of every instruction executed before the main copy (traced draw)
-Refill: RANDOM (uniform random bytes, 4 draws per set; primary) and NOP (00; one draw; can be inflated by zero-painting,
+Refill: RANDOM (uniform random bytes, 2 draws per set; primary; reduced from 4 for the CPU budget) and NOP (00; one draw; can be inflated by zero-painting,
 FOR Q3, so it is secondary). Readouts are the w4_common.full readouts at the per-position N, ratio to the wild type.
 """
 from __future__ import annotations
@@ -21,7 +20,7 @@ import w4_common as W
 
 OUT = W.HERE / "w4_suff.json"
 NZ, NKID, NI, NCAR = 60, 5, 8, 60
-ND = 4
+ND = 2
 t0 = time.process_time()
 
 
@@ -34,7 +33,7 @@ def sets(r):
     if r.get("trace"):
         for p0, ln in r["trace"]["instr_before_copy"]:
             ex |= set(range(p0, min(64, p0 + ln)))
-    return {"S_conv": sorted(conv), "S_convp": sorted(convp), "S_est": sorted(est), "S_exec": sorted(ex)}
+    return {"S_conv": sorted(conv), "S_est": sorted(est), "S_exec": sorted(ex)}
 
 
 def main():

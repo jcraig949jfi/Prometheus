@@ -1,0 +1,75 @@
+{
+ "pop_cap": 128,
+ "per_level": {
+  "NONE_IMPLICIT": {
+   "arena_equal_to_NONE_IMPLICIT": true,
+   "alive_after": 128,
+   "deaths": 0,
+   "cap_reaps": 0
+  },
+  "QUALITY_DIVERSITY": {
+   "arena_equal_to_NONE_IMPLICIT": true,
+   "alive_after": 128,
+   "deaths": 0,
+   "cap_reaps": 0
+  },
+  "EXEC_TIME_COST": {
+   "arena_equal_to_NONE_IMPLICIT": true,
+   "alive_after": 128,
+   "deaths": 0,
+   "cap_reaps": 0
+  },
+  "RESOURCE_GATED": {
+   "arena_equal_to_NONE_IMPLICIT": true,
+   "alive_after": 128,
+   "deaths": 0,
+   "cap_reaps": 0
+  },
+  "METABOLIC": {
+   "arena_equal_to_NONE_IMPLICIT": true,
+   "alive_after": 128,
+   "deaths": 0,
+   "cap_reaps": 0
+  },
+  "NOVELTY": {
+   "arena_equal_to_NONE_IMPLICIT": true,
+   "alive_after": 128,
+   "deaths": 0,
+   "cap_reaps": 0
+  },
+  "COMPETITION": {
+   "arena_equal_to_NONE_IMPLICIT": true,
+   "alive_after": 128,
+   "deaths": 0,
+   "cap_reaps": 0
+  },
+  "TAPE_COST": {
+   "arena_equal_to_NONE_IMPLICIT": false,
+   "alive_after": 110,
+   "deaths": 18,
+   "cap_reaps": 0
+  },
+  "PREDATION": {
+   "arena_equal_to_NONE_IMPLICIT": false,
+   "alive_after": 120,
+   "deaths": 8,
+   "cap_reaps": 0
+  },
+  "TASK_GATED_INTERACTION": {
+   "arena_equal_to_NONE_IMPLICIT": false,
+   "alive_after": 128,
+   "deaths": 0,
+   "cap_reaps": 0
+  },
+  "MINIMAL_CRITERION": {
+   "arena_equal_to_NONE_IMPLICIT": false,
+   "alive_after": 128,
+   "deaths": 0,
+   "cap_reaps": 0
+  }
+ },
+ "place_call_sites": [
+  "child = self._place(g, parent.anc, parent.oid, parent.niche)",
+  "o = self._place(g, anc, niche=self._initial_niche(i))   # P-8"
+ ]
+}
