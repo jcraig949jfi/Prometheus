@@ -45,6 +45,14 @@ one core and about 5.0 billion per second on all threads (three runs each,
 process/vm_throughput_bench.py). A real organism in a real world will be
 slower. I assume a factor of 10 until it is measured.
 
+> Annotation, 2026-10-01, after the freeze. It has now been measured once.
+> The P1 prototype kernel, with a world in the loop, ran 1.70 billion
+> organism instructions per second on 12 threads of the same machine
+> (prototype/p1_slice/RECEIPT_qualify.json, section G). That is about a
+> factor of 3 below the toy figure, not 10. The prototype machine is much
+> smaller than the workspace machine will be, so the planning figures in
+> section 13 are left as written.
+
 ## How to read this file
 
 Each requirement has an id, a status and four lines.
@@ -434,6 +442,10 @@ null and carries its label from section 1.2.
 - Record: Sis D2, D3 (world-made copies counted as organism copies; construction mistaken for heredity); T07.
 - Check: Cell ids carry the level. Seeded content is traced (PROV-10).
 
+> Annotation, 2026-10-01. "PROV-10" in the Check line should read PROV-09
+> (labelling by tracing). PROV-10 is custody of sealed worlds. Found by a
+> consistency review of the package.
+
 ### DEV-08 [HIGH VALUE] Genome bottleneck and variance spectrum as dials
 - Statement: Genome capacity and the timescale at which each world parameter varies (within episode, within life, across lives, never) are dials.
 - Why: Information settles in the slowest store whose timescale and capacity fit it. These two dials decide what must be built in life and what can be inherited.
@@ -640,6 +652,8 @@ null and carries its label from section 1.2.
 - Record: Sis 3 items 1 to 3 (26 "spontaneous replications" were all transplants).
 - Check: PROV-10.
 
+> Annotation, 2026-10-01. The Check line should read PROV-09, not PROV-10.
+
 ### SRCH-12 [EXPERIMENTAL] Survival-only pressure
 - Statement: Scaffold level S0: no task reward.
 - Why: It is the North Star's end state. It is also where nulls are least interpretable, so it comes last.
@@ -661,6 +675,10 @@ null and carries its label from section 1.2.
 - Why: A ruler without known error rates is a probe.
 - Record: Tit 2.1 (30 of 146 instruments shown able to detect, 56 partly, 60 not); T04.
 - Check: A verdict outside the envelope is returned as RULER_NOT_QUALIFIED by the ruler itself.
+
+> Annotation, 2026-10-01. The Record line's counts are over the Tityos
+> inventory's 152 records for 146 instruments: 30 yes, 56 partly, 60 no, 5
+> unknown, 1 not applicable.
 
 ### MEAS-02 [REQUIRED] Qualification is a gate in code
 - Statement: A campaign cannot start unless its rulers have a current qualification receipt: calibration set sorted, channel test passed, a fire test for every control.
@@ -785,6 +803,8 @@ null and carries its label from section 1.2.
 - Why: Label descent over-reported material descent about tenfold.
 - Record: Sis D1, D2, D3; T14.
 - Check: PROV-10.
+
+> Annotation, 2026-10-01. The Check line should read PROV-09, not PROV-10.
 
 ### CAUS-07 [HIGH VALUE] Carrier-noise opt-out test
 - Statement: In worlds with an opt-out action, noise is injected into the organism's identified memory carrier on some trials, with stimulus difficulty fixed. An organism that opts out more on those trials monitors the reliability of its own state.
@@ -1097,6 +1117,14 @@ null and carries its label from section 1.2.
 - Why: These are the places the record found irreducibly model or human work. Everything else was already deterministic or could be.
 - Record: Ixi 7 (hypothesis generation, naming rivals, framing, interpreting, authoring control documents, new adapters, hard gates).
 - Check: The token log has a fork-type field with a closed vocabulary.
+
+> Annotation, 2026-10-01. The list of forks omits one that SRCH-08 and
+> ANTI-04 already assume: GENERATION, a model proposing candidate organisms
+> or worlds. It is an eighth fork type. It is consistent with INF-01 and
+> COMP-02 only in this form: the model proposes a batch between campaigns,
+> the batch is written to a hashed file, and a deterministic campaign
+> evaluates it. No model runs inside a campaign. Found while checking P8
+> against INF-01.
 
 ### INF-03 [REQUIRED] Tokens are metered
 - Statement: Token use is recorded per session and per campaign, from the harness's own usage data, and cost per claim-ladder step is computed.

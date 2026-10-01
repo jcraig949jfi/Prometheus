@@ -19,6 +19,9 @@ shell first. Then boot in that worktree
 origin/main:ops/work_orders/CURRENT.md and
 roles/base-role/RESPONSIBILITIES.md, and follow its boot sequence.
 
-Read roles/Dionysus/WORK_STATE.json, STATUS.md and TODO.md first.
+Read roles/Dionysus/WORK_STATE.json, STATUS.md and TODO.md first, then
+roles/Dionysus/RESPONSIBILITIES.md section 0 and
+docs/phase3/design/FABLE-5.1/README.md. Do not read any other directory
+under docs/phase3/design/ until the operator opens the comparison.
 
 ----------------------------------------------------------------------
