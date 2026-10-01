@@ -280,3 +280,21 @@ Other:
 - Patches: P1 (record effective dest_mode) and P2 (FLIP transplant -> NOT_APPLICABLE) are NEUTRAL and
   touch campaign.py. DEFERRED to one campaign.py batch with W2-A2's two diffs, once the workers that
   import campaign finish. P3 (MAJ forward placement) is SEMANTIC, for C2 only.
+
+### W2-F (deposited wave2/W2-F/REPORT.md): explib shared below-engine library
+- 9 primitives (outcomes, trace, lockstep, reach, authority, controls, metamorphic, attainable,
+  provenance, stats); 40 tests pass, 35 with prometheus and torch import-blocked.
+- PTE adapter reproduces H-INST reach verdicts 4/4. It fits Bellerophon's toolbox (the Worlds Kernel)
+  as the missing audit layer. The promotion path is in API.md s5.
+- NEW F4 [V]: s(site_all) + s(channel_all) = max at every pair/trial at offset >= 1 (93/93 RELAY/MAJ
+  groups). The two arms are ONE measurement, and AUDIT3 rows double-count mirrored arms.
+- NEW F5: H-INST B4's half-width replication guard cannot fire on certificates (0/20 caught). The
+  predictive rule catches 14-20/20.
+- F6: between-namespace flips run 2.4x the pair-independent expectation (20 vs 8.3).
+  CONTRADICTION with W2-H: W2-H finds the pair is the right unit and BOOTT calibrated within run, and
+  attributes the AUDIT3 excess to a first-draw estimator plus clustering (z ~1.7).
+  Both can hold if between-namespace variance includes a term absent within run (e.g. topo/physics
+  draws shared within a namespace). -> W2-N replicate-seed estimate.
+- D5: Harmonia freeze_precedes does not check the plan blob is unchanged; Ananke freeze_check does.
+  Unify them.
+- Hygiene: W2-F/explib/__pycache__ and W2-F/tests/__pycache__ are left (gitignored).
