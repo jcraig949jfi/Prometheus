@@ -1,0 +1,38 @@
+{
+ "cell_spec": {
+  "transform": "ADD37",
+  "read_order": "FORCED_READ",
+  "bridge": "NEUTRAL_BRIDGE",
+  "n_episodes": 8,
+  "budget": 140,
+  "neutral": false,
+  "output_gate": "UNRESTRICTED",
+  "cue_cost": "VM",
+  "constant_kind": "ATOMIC"
+ },
+ "cell_cue_index_used_by_run_xtg": 2,
+ "env_epoch_transform_choice_lines": [
+  "self.env_pop = [{\"transform\": self.rng.choice([\"XOR1\", \"ADD1\", \"XOR15\", \"XOR5A\"]),",
+  "self.rng.choice([\"XOR1\", \"ADD1\", \"XOR15\", \"XOR5A\"])"
+ ],
+ "ADD37_in_any_choice_list": false,
+ "epoch0_env_pop_distribution_200_seeds_x4_niches": {
+  "ADD1/ANSWER_BEFORE_READ": 95,
+  "ADD1/FORCED_READ": 92,
+  "XOR1/ANSWER_BEFORE_READ": 124,
+  "XOR1/FORCED_READ": 80,
+  "XOR15/ANSWER_BEFORE_READ": 118,
+  "XOR15/FORCED_READ": 93,
+  "XOR5A/ANSWER_BEFORE_READ": 94,
+  "XOR5A/FORCED_READ": 104
+ },
+ "n_FORCED_READ_niches_at_epoch0": {
+  "0": 13,
+  "1": 53,
+  "2": 92,
+  "3": 36,
+  "4": 6
+ },
+ "val_cache_key": "blake2b(genome) only (world._competence) - not keyed on spec/niche; cleared only when env_pop updates (epoch % 25 == 0)",
+ "note": "run() validates once with env_pop None (cell spec ADD37/FORCED_READ); step() at epoch 0 creates env_pop, but the genome-keyed cache returns those cell-spec results until the first clear at epoch 25; from the epoch-30 validation on, every organism is scored under its niche's COEVO spec, never ADD37."
+}

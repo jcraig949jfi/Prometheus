@@ -20,7 +20,10 @@ L3 No pass-by-construction clause: for each clause, state the value a
    discriminating. Evidence: faa9 W5 design notes; 321a ALT counting (C2).
 L4 Thresholds may not be lowered to the positive control's reach without
    recording the before/after and the reason in the spec. Evidence: 5516 W5
-   S1/S3 0.15 -> 0.08 (INV_J pending).
+   S1/S3 0.15 -> 0.08/0.06 (recorded openly in ATTAINABILITY.json;
+   PC margin ~1 SE); 37e3 W5 statistic swapped; 8a87 W6 'beat' -> 'parity'
+   (INV_J: 5 PASSES_BY_CONSTRUCTION, 3 GOODHARTED, 3 NON_DISCRIMINATING of 16).
+   A parity clause can only rule out, never support.
 L5 Spec bands (INCONCLUSIVE, etc.) are mapped to the PREREG's outcome
    classes in the spec itself. Evidence: C1 (ae38 W5).
 L6 Self-contained specs; no reference to another world. Evidence: ae38 W4
@@ -31,7 +34,7 @@ L7 Cost is not a selection criterion by itself. Evidence: ledger Q5 -- all
    most discriminating clause set; break ties by cost.
 L8 Mechanisms that never receive a world are listed with the reason (not
    silently dropped). Evidence: 126/243 Pass-1 mechanisms never got a world
-   (K5; INV_H pending).
+   (K5; INV_H: selection tracks list position).
 L9 No attack or clause whose outcome is fixed by arithmetic: before
    freezing, compute it under the known-mechanism hypothesis. Evidence:
    calibration ledger row 2 (321a ALT), C2.

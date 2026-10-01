@@ -57,3 +57,22 @@ with tests in `tests/test_w2_8.py`.
 5. Add a pair-path planted positive for CD.
 
 W2-10 (static) is testing whether a genome that is both a copier and task-competent can be constructed at all.
+
+## Addendum 2: W2-10 static construction study (`inference_saturation_wave2/W2-10_copier_task_genome/`)
+- **Reachability:** a genome that is both copier and task-competent EXISTS. CT_UA:
+  - COMPETENT 1.0;
+  - state-free R1/R2;
+  - FORCED_READ ADD37 held 0.997, with the reader check passing every time;
+  - 89/120 P-11 conversions;
+  - children 6/6 and grandchildren 22/24 still both copier and competent.
+- **Further ruler defects in this cell:**
+  1. Under COEVO_ENV the niche tasks come from {XOR1, ADD1, XOR15, XOR5A}. **ADD37 is never scored after epoch 25.**
+  2. The NEUTRAL_BRIDGE floor lets a cue-reading-but-ignoring program (CT_U) pass "competent and reader" in 400/400 draws.
+  3. Pairing, cache and cue-index issues, as in Addendum 1.
+- **Amendment requirements (consolidated):**
+  - STATIC environment, or niche-aware scoring with each niche's own cue index;
+  - (genome, task)-keyed cache;
+  - a competence bar above the bridge floor, or a cue-flip use test;
+  - planted positive: CT_UA on the pair path;
+  - negative controls: CT_U (reads, does not use) and COPY_ONLY (`2E001E40E5`, random padding);
+  - `ruler_reachability` checked on the amended CD before the re-freeze.
