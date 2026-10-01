@@ -1231,3 +1231,58 @@ Store final, and periodic, genome bytes plus registers in every world run. Five 
 - O10 conflicts with W2-41: "register-robust" holds universally for intact code. It is narrowed to "carried registers switch the lineage".
 - **This is the handoff's best candidate for a compact theory statement:** L1-L8 plus "conversion and vulnerability are one act".
 - Next: test P2 (order reversal) as W2-52, which is cheap, static, and a frame-only prediction.
+
+
+### W2-48: consolidated FINDINGS appendix draft ready (Nestor). Written at 03:12Z (clock)
+
+**Result.**
+- `APPENDIX_DRAFT.md` covers 43 rows:
+  - 2 flips (C9-H3 → INVALID; X-H3-FLOW → UNINFORMATIVE);
+  - 2 withdrawn clauses;
+  - 11 relabels;
+  - 1 new entry (X-MAT);
+  - 23 wording-only rows;
+  - 5 that stand;
+  - 6 new lessons.
+- **No CONFIRMED verdict flips.**
+- 13 source conflicts were resolved, with the later verified source winning in each.
+- p-values were recomputed. **Two source p-values were one-sided and unlabelled**: C-A3 0.031/0.31, and C-RUNAWAY's 5e-4 (two-sided 9.9e-4).
+
+**Correction to my own record.**
+- "798 + 416 dose runs" (W2-12 entry, batch entry, W2-28 block (B)) should read **798 + 336** (models.json has 1134 rows).
+- The W2-12 REPORT.md text is annotated.
+- NPE_COMPETING_THEORIES block (B) still says 416. It will be fixed in the closing-phase pass.
+
+**Action at closing (08:30Z).**
+- Append the appendix to `roles/Nestor/FINDINGS.md` as a dated "proposed corrections" section. Frozen verdicts are not rewritten.
+- Re-check it first against any reports that land after 03:12Z.
+
+
+### W2-42: partner-ejection "keep" variants form a GENERAL class, and keep separates post-27 success from failure (report saved; Nestor synthesis). Written at 03:13Z (clock)
+
+**Result**
+- **Two morph-free persisters are carried by self-defence:**
+  - s1438 by a JPNC at byte 32 (arose in place at epoch 17; came before the lineage's growth);
+  - s1469 by 43→C3.
+- **s1505 is founder luck.**
+- **The general class.** An absolute jump into the upper half placed before the LDIR at 52 ejects hijackers at side 0.
+  - All 351 STRONG genomes carry such a jump.
+  - There are 25 one-byte variants at 11 sites. C3 is just the only *one-bit* member. 50=CA beats C3 (class m 1.427).
+  - A partial class redirects the hijacker's destination (bytes 0, 1, 18, 21; keep about 0.70).
+- **Across the 55 W2-29 conditioned runs,** successes have higher side-0 keep than failures: 0.894 vs 0.598 (p = 1.2e-4).
+
+**Nestor synthesis: candidate for the STRONGEST NEW RESULT of Wave 2.**
+- **The persistence anomaly's correlate is protection from the partner hijack, not a particular genotype.** The 7ae3 family has two defences against the same mechanism:
+  - (i) **run first:** a side switch, DE = 64 (W2-24, W2-26);
+  - (ii) **eject the runner:** an absolute upper-half jump before 52 (W2-24, W2-42).
+- Both raise side-0 keep, and keep separates post-27 success from failure (p = 1.2e-4).
+- **Everything converges on one causal story.** The hijack is causal for loss under confinement (W2-23, W2-31). The lineages that persist are those that acquired a defence against it. In one line: **post-burst persistence in BASE = evolved defence against partner execution.**
+- **Caveats.**
+  - The evidence is outcome-conditioned plus ordering (the jump came before growth in s1438). There is no intervention yet.
+  - W2-29 found residue (FULL > BANK) as a possible co-factor, OR about 3.8, n.s.
+- **Decisive test.** X-IMPLANT-MORPH (W2-32, W2-39, W2-40) already includes C3 and C3+AC arms. Adding a 32=D2+29=9F arm, or the 50=CA arm, would test the class causally. A paired counterfactual replay of s1438 with byte 32 pinned is a cheaper intervention, but it also needs authorization because it alters a run.
+- **Revisions.**
+  - W2-30's "C3+AC is a local optimum" stays true among one-bit neighbours, but the jump class is wider.
+  - The "strangest observation" candidate is now: **a one-byte change at almost any opcode site from 4 to 50 can install self-defence against being executed by the partner.**
+
+**Housekeeping.** NPE_COMPETING_THEORIES block (B): 416 → 336, fixed per W2-48.
