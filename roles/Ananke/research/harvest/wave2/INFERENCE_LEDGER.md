@@ -576,3 +576,22 @@ W2-U (XOR/FLIP ceilings + A0 normalisation)
 - Current HIGH hits in harvest: the 4 known H-PLANT lines (true; verbatim deposits not edited) plus 5
   meta-quotations (false).
 - Also fixed (comment only): H-PLANT/run_flip_mh.py:12 MH_CELL comment now says TRANSFER.
+
+### W2-X (deposited): adversarial review of the principal, 38 claims
+- Code corrections APPLIED (W2-X regressions: 3 failed before; 58 pass across suites after):
+  - (a) dest_mode_drawn is kept, and transects re-derive physics from the drawn value. This restores
+    future-run semantics that my dc46fd00f fix had changed (C1 unaffected).
+  - (b) reading3 returns DEGENERATE on zero variance, so forced controls are never certified.
+  - test_reading3_w2k now fails rather than skips when its committed data is missing.
+- Overreach corrected: C1_ERRATA correction block (E-W1/2/3/6/9/10/13/14), H6 section 14,
+  DEFECT_PATTERNS corrections.
+- P-2 noise figures are decay-0-conditional; the docstring is fixed.
+- Process provenance: the failing test was committed in dc46fd00f and pushed via merge 96b47d73e.
+
+### W2-Y (deposited): C1 B/B2 boundaries vs ceilings
+- A new flood ceiling (random destinations on global/sample, loss, jitter, dup) equals the light cone
+  in the deterministic limit 9/9. The W2-P/W2-U light cone overstates reach on global/sample.
+- Of 21 accuracy verdicts: IDENTITY 8 (4 delta, 3 MAJ topology, evolved acc); PLANT-DESIGN 10 (3
+  verified by refresh re-score, 7 HOLD inferred); economy 3 OPEN; 1 not reproduced.
+- No SUPPORTED boundary is established physics beyond the transport bound. -> E-W21.
+- W2-U's "global worst once normalised" is not robust (flood ceiling flips it).

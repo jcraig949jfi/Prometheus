@@ -1,0 +1,24 @@
+--- a/prometheus/ananke/tests/test_campaign_record_effective_dest_mode.py
++++ b/prometheus/ananke/tests/test_campaign_record_effective_dest_mode.py
+@@ -49,7 +49,7 @@
+     (global -> sample) applied to the drawn levels, and cell_id does not hash levels."""
+     for s in _specs():
+         lv = copy.deepcopy(s["levels"])
+-        kw = {k: v for k, v in lv.items() if k != "economy"}
++        kw = {k: v for k, v in lv.items() if k not in ("economy", "dest_mode_drawn")}
+         kw.update(campaign.ECONOMY[lv["economy"]])
+         if kw["topology"] == "global":
+             kw["dest_mode"] = "sample"
+--- a/prometheus/ananke/tests/test_reading3_w2k.py
++++ b/prometheus/ananke/tests/test_reading3_w2k.py
+@@ -48,8 +48,8 @@
+ def test_zero_variance_and_strictness():
+     x = np.full(32, 0.5)
+     r = inference.reading3(x, 0.60, "<=", "hi")
+-    assert r["status"] == "TRUE" and r["d_se"] == float("inf")
++    assert r["status"] == "DEGENERATE" and r["raw"] is True       # W2-X: no interval, no certificate
+     r = inference.reading3(x, 0.50, ">", "lo")
+-    assert r["raw"] is False and r["status"] == "INDETERMINATE" and r["d_se"] == 0.0
++    assert r["raw"] is False and r["status"] == "DEGENERATE"
+     with pytest.raises(KeyError):
+         inference.reading3(x, 0.5, "=>", "lo")

@@ -152,3 +152,36 @@ C1 labels are NOT changed. Each item names its source report; [P] marks those re
   - 250 are open.
   - Per-cell table: harvest/wave2/W2-W/null_placement.csv. This supersedes E-W14's 24% / 11% figures,
     which used narrower certificates and recorded plants only.
+
+## Corrections to the Wave-2 errata (adversarial review W2-X and transect audit W2-Y, 2026-10-01; these supersede wording above)
+- E-W1: the topology result is a REFINE, not a KILL. The D-wave collapse is hop count, not lattice
+  offsets. Residual graph dependence remains: clustering or redundant short paths for 4 laws (MAJ
+  4781b0a1, 8743da7f; RELAY bf82cb29, cd5b6fd6), and per-port latency labels for HOLD 4ab2ba01 (W2-I
+  F3). Retention at matched hops: median .78.
+- E-W2: "2.5% impossible" refers to A0 MAJ plant worlds. On C1 evolve held worlds it is 0.17%, which is
+  immaterial (W2-O/W2-T). Inward placement turns 0/35 MAJ graph champions into SIGNAL (W2-P).
+- E-W3: ">= 36/83 by the deterministic light cone (in expectation); 62/83 by LC2 (W2-J)".
+- E-W6: XOR claims need XOR_SYM (W2-J), not XOR_PIVOT. FLIP claims need B lo99 > .75 (E-W17);
+  FLIP_FEEDBACK is cheatable in-space. The non-parity .75 bound is in expectation; NOR measured .759
+  [.73, .79].
+- E-W9: 613162a3's packet clause REPLICATES (pooled 2.96 SE, keep .98; W2-K). It is not fragile.
+- E-W10: w_any INITIATES the population sensitivity climb and suffices for large persistence. The
+  attribution of the MWU/REACH labels to w_any is NOT shown (bonus-only flat runs: MWU 1/40 vs
+  37/414). First generation with accuracy variance: median ~4 (IQR 2-9).
+- E-W13: "exactly" is replaced by "within one world-pair or exactly". STRENGTHENED by W2-X and W2-Y:
+  refresh flattens the decay transect at BOTH SUPPORTED bases on the actual C1 transect rows (RELAY b0
+  1.0/1.0/1.0/1.0; b1 .80/.82/.78/.81; FLIP b0 no step).
+- E-W14: ".614" is the 50%-power bar, not impossibility. 93/454 have ceiling <= .55. E-W20 supersedes
+  both counts. "Plant-backed 51" counts recorded plants only.
+- E-W21 (C1 phase boundaries; W2-Y, flood ceiling with random routing, KA 9/9): of the 13 SUPPORTED
+  boundaries:
+  - delta x2 = transport-time IDENTITY (the flood ceiling steps .685 -> .999);
+  - RELAY decay x2 = PLANT-DESIGN (refresh is flat);
+  - HOLD decay x4 = non-refreshing-latch artefact [I];
+  - emit-vs-rules x3 = program-space;
+  - economy x2 = energy, OPEN (the only physics candidate).
+  The 3 MAJ topology CANDIDATEs and the evolved RELAY-acc delta CANDIDATE are IDENTITY.
+  "No SUPPORTED boundary is established physics beyond the transport bound."
+  P1 stays HELD as a label; its content is identity plus plant-design.
+  The W2-P/W2-U light cone overstates reach on global/sample topology (random destinations), so
+  construction-capped counts there are undercounts.

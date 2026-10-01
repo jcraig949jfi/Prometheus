@@ -49,7 +49,7 @@ def test_neutral_physics_and_ids_unchanged():
     (global -> sample) applied to the drawn levels, and cell_id does not hash levels."""
     for s in _specs():
         lv = copy.deepcopy(s["levels"])
-        kw = {k: v for k, v in lv.items() if k != "economy"}
+        kw = {k: v for k, v in lv.items() if k not in ("economy", "dest_mode_drawn")}
         kw.update(campaign.ECONOMY[lv["economy"]])
         if kw["topology"] == "global":
             kw["dest_mode"] = "sample"
