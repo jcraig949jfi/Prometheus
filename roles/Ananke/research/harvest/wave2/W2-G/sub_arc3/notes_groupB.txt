@@ -1,0 +1,54 @@
+GROUP B NOTES (W-H, W-I, W-J) -- rederive_groupB.py + make_rows_groupB.py, raw out/ only
+
+(a) MISMATCHES
+- 4f W-I "All 7 panel census-SITE RELAY cells have a channel phase first" (ARC3 s1, BACKLOG T-CT-2):
+  raw gives 6/7. bbef66a1 reads SSSSSSSSSJCCCCS (site first, channel later, site again);
+  W-I's own motif table files it under R5 S->C->S.
+- 5a W-J "29/32 presence codes": raw held_tel.emit_rate gives 27/32 at emit<=.03 (28/32 at
+  W-J's dense threshold .2). "Identical under SUM/SAT2/ARB to 3 decimals" holds for 12/32;
+  the rest differ by up to .011.
+- 5c Engine card "aggregation gain ~.13 lossless": the measured plant gain is .096 (e5b SUM-ARB).
+  .137 is the theoretical .837-.700. W-J's own E5b clause "gap >= .10" FAILED at .096.
+- Minor, not in the six docs: W-I "w differs in 8 of 20 panel" gives 9/20 by any nonzero w row;
+  "count read as count" lists 3, my rule finds 4 (adds 63d17a90).
+
+(b) WORDING THAT EXCEEDS DATA -> proposed wording
+- 3b BACKLOG/CTC "fixed-rule latches match or beat every champion (.999 vs .755)" ->
+  "designed fixed-rule programs (4-7 instr; latches in S2/S4/S5, a select in S1/S3) match or beat
+  the champion in all 5 cells (S1 within CI; most extreme S2 .999 vs .755); in S3 only a borrowed
+  S1 mechanism did, the faithful compile failed".
+- 3a ARC3 s4 "Dynamic rule switching COMPRESSES; it does not EXPAND (5/5 cells)" ->
+  "In 5 hand-picked cells switching compressed and never expanded (not found within these bounds)".
+- 3c "Every switch lasts 1-2 ticks" -> "1-2 awake ticks in the 3 cells with per-tick dumps (S1-S3)".
+- 3e ARC3/BACKLOG attribute "r never carries the bit" to W-H. W-H ran no r swap ->
+  cite W-B 18/18; W-H shows only that r returns to 0 within 2 ticks.
+- 4b ARC3 s2 "By phi only 3/7 are mixtures" is stale -> "3/7 at 64 worlds; 2/7 after W-O
+  512-world correction (c16d5231 M->S); phase-dependent per W-R".
+- 4c "site-only retention (HOLD, 8/8)" -> "8 site-only specimens, all HOLD (8 of 9 HOLD in the
+  sample; none on the panel physics)".
+- 4f -> "6 of 7 census-SITE panel relays carry the bit in the channel first (bbef66a1 is S->C->S)".
+- 5a -> "27-28/32 sparse sensor-emission champions; accuracy within ~.01 under SUM/SAT2/ARB".
+- 5c -> "measured ~.10 lossless (theory .14)".
+- 5e card "lossless -> a SUM count-threshold majority code emerged" -> "in 1 of 4 SUM seeds
+  (1 of 12 lossless searches); median SUM-ARB advantage .027 (E6-P1 failed)".
+
+(c) PROVENANCE HOLES
+- 3c/3f: no per-tick dumps or instruction counts for S4 faafa5b0 and S5 ed884172 (only accuracy
+  triples in hand_s4/hand_s5.json).
+- 3e: no W-H raw data for the r-carrier claim.
+- 5a: no saved artefact defines "presence code" or the 29/32 count. It is a LOG sentence, and
+  e2_reduce.py does not compute it.
+- 4b: the W-I raw letters are superseded by W-O/W-R registers (CORRECTIONS_2026-09-29_SWAP_AUDIT.md),
+  which W-I/CORRECTIONS_POINTER.md links. ARC3 s2 carries no pointer.
+
+(d) TRANSFER / RE-EVALUATION CITED AS SEARCH
+- None found that is mislabeled outright. Watch items:
+  - 3a/3b: the "beats" are DESIGNED hand programs. ARC3 s1 uses them correctly as
+    expressible-vs-reached evidence (H6). Rules=1 SEARCH (B_fixed_L) reached A* only in S2 (2/4).
+  - 3d: W-H "0/4 seeds" is a genuine new-search outcome.
+  - 5d/5b: the W-J lossless and lossy numbers are DESIGNED plants. ARC3 says so; the engine card
+    "gain ~.02 at C1 physics" does not say "plant".
+  - 5e: ".500 under every other operator" is a frozen-champion TRANSFER and is labeled as such.
+    The "emerged" part is n=1 search.
+  - 5a: "accuracy identical under SUM/SAT/ARB" is a transfer matrix of evolved champions,
+    not separate searches. That is consistent with the text.

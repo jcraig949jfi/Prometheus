@@ -1,0 +1,76 @@
+W2-G sub_swap NOTES (2026-09-30). Re-derivation of the 09-29 instrument arc + swap audit claims.
+Script: python roles/Ananke/research/harvest/wave2/W2-G/sub_swap/rederive_swap.py   (from worktree root; CPU, ~20 s)
+Outputs: swap_claims.csv (40 claims), rederive_facts.json (all intermediate counts).
+Inputs: saved worker outputs only (W-N..W-Z out/). No worker analysis code imported. The absolute rule, BOOTT/H2
+interval, REL label logic, z-CI class, group class and the threshold-noise model are re-implemented here.
+Status counts: MATCH 35, PARTIAL 3, MISMATCH 1, UNDERIVABLE 1. Every headline number reproduces. The problems are in
+attribution, denominators and wording.
+
+(a) MISMATCHES
+- WO-05: ARC3 CORRECTION 2 / SYNTHESIS s1 say the effect concentrates in "W-F site_all/joint arms (~23%)". ~23% is the
+  ALL-source site_all+joint rate (58/247). The W-F-only rate is 37% (47/127). The number is right but the label is wrong.
+- WU-02 (rated PARTIAL): "101 COMPLETE / 33 PARTIAL / 33 ambiguous of 170 FLIP_REL". These sum to 167, which is the count
+  of exact REL3 FLIP_REL rows. Over the 170 REL2 FLIP_REL rows the split is 101 / 36 / 33.
+- WO-07 z bins for the 42: 24 at z <= -.95, 2 in (-.95,-.75], 15 in (-.75,-.57], 1 at z = -.566. The register says 16;
+  the difference is rounding only.
+
+(b) WORDING THAT EXCEEDS THE DATA (proposed replacements)
+- ARC3 CORRECTION 2: "Most recorded CHANCE verdicts are real partial or mixed effects." This does not follow. Of the 615
+  verdicts that stay CHANCE, the relative rule gives CHANCE_REL 365, INDETERMINATE 101, NO_EFFECT_REL 54 (nulls) and
+  FLIP_REL 95. The census gives UNRESOLVED 228, UNDEFINED 175, IDENTITY-BROKEN 82, MIXTURE 50. CHANCE_REL only certifies
+  z in (-1/2, +1/2). That fits a partial transfer, an unread arm or a mixture equally well.
+  -> "Most recorded CHANCE verdicts stay CHANCE under the same absolute rule at 512 worlds. This rules out sample size as
+     their cause. It does not say what they are."
+  (The register already accepted this reading. The ARC3 text was never annotated.)
+- "84% stay CHANCE" read as a general rate: it is a mixture of very different strata. W-F 73%, W-I 90%; HOLD 55%,
+  RELAY 90%; W-F|HOLD 19% vs W-I|HOLD 97%. By arm: inbox 98%, S 90%, site_all 73%.
+  -> "84% of the 733 audited rows (73% of W-F rows, 90% of W-I rows) stay CHANCE".
+- "concentrated in HOLD (44%) and W-F site_all/joint arms" -> "concentrated in W-F's C1-row records: HOLD 34/43 flip
+  there vs 1/37 in W-I". These are mostly the same records, not two separate concentrations.
+- W-Q "certifies the 42 low-accuracy transfers" -> "all 42 are FLIP_REL by construction (W-Q P3). By paired z CI, 19 are
+  COMPLETE, 18 PARTIAL, 5 ambiguous. They come from 20 groups and 14 specimens (38 W-F, 4 W-I)."
+  W-O's own text, "Those 42 are complete transfers", is wrong too: only 24 have z <= -.95.
+- "BOOTT holds 1% at 32 pairs": the point maximum is .99%, but the Wilson-99 upper bound is 1.09% at K12 (not robust).
+  The FC model also treats the K trials per pair as independent (H-IMPL H16).
+- REL4 "power 1.00 vs .70/.72": this comes from a synthetic p = .99, P64 regime. No real group-arm reaches it (HV-01).
+- W-P "{S1, pay1} decisive in 91-95% of N at o1-o6": the sub-array split was run only at o1 (.947) and o6 (.906).
+  o2-o5 have only the coarse {S, Msum} split. -> "at o1 and o6 (coarse {S,Msum} .97-.98 at o2-o5)".
+- W-V "pivotality .10-.12 vs 1.00 / readout is NOT a majority": o14 pooled is .08 and is also classed DISTRIBUTED-NONMAJ.
+  The harvest (H-CHK C1) shows a lossy true majority also reads "not a majority".
+  -> "pivotality .08-.12, lower than both the clean and the lossy majority plants".
+- W-S "P8 decisive 1.00 in all four units": true only on covered trials (coverage .28-.75), and P8 is post hoc
+  (confirmed on 0x632).
+- Harvest 1.5 "[V: 11.8 expected vs 22]": reproduces exactly (11.8 under both the independent and the bivariate normal
+  approximation). But it is a plug-in model, and the 22 rows are about 10 dependent group events. "About half is
+  threshold noise" is a model estimate, not a measurement.
+
+(c) PROVENANCE HOLES
+- Harvest item 1.5 (439/439 and 11.8) has NO saved script or output. H-CHK/ and H-INST/ contain nothing about it. The
+  only source is prose in T_SWAP_REL4_INTERPRETATION_TREE.md. Both numbers are re-derived here from W-Z pairs/*.npz, and
+  both reproduce.
+- W-O plan freeze: PLAN.md and rerun_table.csv were first committed in the same commit (93e2e544b, read-only git log).
+  So plan-before-results is unprovable (Harmonia #1045 confirmed). The inventory sha256 matches 73eecd8a77a0c4e5, but
+  the claim that it was frozen before the re-runs rests only on W-O LOG A1.
+- W-O saved no pair arrays. Every REL label on the 733 (W-N gate, W-Q REL2, W-U REL3, W-U zclass) is a saved label
+  that I recounted, not recomputed. Only W-Z's 365 rows are recomputable from pairs, and those match 365/365.
+- W-P, W-V and W-R numbers were parsed from the workers' summary/stage-2 JSON and text, not recomputed from the truth
+  table or raw npz. W-S, W-T and W-Y were recomputed from per-trial rows or the posthoc census.
+- rerun_s4.jsonl:9 is an error record (SCT 4781b0a1, LOG A10 bug). It was re-run in s4r and is excluded. Group
+  72dd71d8 o5 ran twice with identical results.
+
+(d) DENOMINATOR PROBLEMS (733 verdict rows)
+- The rows are not independent. There are 249 groups and 85 distinct specimens. Three specimens (42716814, 369f5a5b,
+  4781b0a1) supply 196 rows (27%).
+- 18 rows are exact duplicates: W-F mid and late arms that resolve to the same offset have identical recorded numbers
+  and one re-run. Another 41 rows repeat the same specimen x offset x arm across W-F and W-I (the re-runs share ns 0x600
+  and differ only in trial set). 58 of the 59 duplicate sets give the same verdict.
+  Unique specimen x offset x arm: 674 rows, 566 stay CHANCE (84.0%). The pooled figure survives deduplication.
+- Specimen clustering: the median per-specimen stay share is 1.00, but 20 of 85 specimens have less than half their
+  rows staying. At group level, 71 of 249 groups (29%) have at least one arm that leaves CHANCE. "84%" is a row rate
+  dominated by RELAY / W-I sub-carrier arms (RELAY = 536 of 733 rows).
+- HOLD is 80/733 rows (10.9%) but supplies 35 of the 90 FLIPs. Almost all of that is W-F HOLD (34 FLIPs).
+- The 42 gated FLIP_REL rows: 20 groups, 14 specimens, 38 of them W-F.
+- AUDIT3: 279/301 counts rows, but the 22 disagreements fall in 10 groups / 8 specimens. Coverage (124/249) was ordered:
+  AMBIGUOUS-containing groups first, then by hash, so it is not a random sample. Group classes depend on the arm set:
+  all arms gives 35 NAMED; recorded arms only gives 32. 16 of the 35 NAMED groups are named only through a
+  site_all/channel_all companion arm, i.e. "the whole site array carries", not a named sub-carrier.

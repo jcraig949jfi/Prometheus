@@ -1,0 +1,103 @@
+
+==== W-L searches (held-out 0x5F3), criterion recomputed: lo99 > .60 AND diff_lo99 > 0
+n0_s0 {'n': 0, 'seed': 0, 'pop': 96, 'gens': 36, 'acc': 0.6719, 'lo99': 0.6367, 'base': 'LAG0', 'dlo': -0.3633, 'zc': 0.6719, 'crit_a': True, 'crit_ab': False, 'flag': False}
+n0_s1 {'n': 0, 'seed': 1, 'pop': 96, 'gens': 36, 'acc': 0.5117, 'lo99': 0.4935, 'base': 'LAG0', 'dlo': -0.5065, 'zc': 0.5, 'crit_a': False, 'crit_ab': False, 'flag': False}
+n1_s0 {'n': 1, 'seed': 0, 'pop': 96, 'gens': 36, 'acc': 0.6861, 'lo99': 0.642, 'base': 'LAG0', 'dlo': 0.1037, 'zc': 0.6861, 'crit_a': True, 'crit_ab': True, 'flag': True}
+n1_s1 {'n': 1, 'seed': 1, 'pop': 96, 'gens': 36, 'acc': 0.5128, 'lo99': 0.4602, 'base': 'LAG0', 'dlo': -0.125, 'zc': 0.517, 'crit_a': False, 'crit_ab': False, 'flag': False}
+n1_s2 {'n': 1, 'seed': 2, 'pop': 96, 'gens': 36, 'acc': 0.6286, 'lo99': 0.581, 'base': 'NULL', 'dlo': 0.081, 'zc': 0.6193, 'crit_a': False, 'crit_ab': False, 'flag': False}
+n1_s3 {'n': 1, 'seed': 3, 'pop': 96, 'gens': 36, 'acc': 0.7372, 'lo99': 0.6946, 'base': 'LAG0', 'dlo': 0.1548, 'zc': 0.7372, 'crit_a': True, 'crit_ab': True, 'flag': True}
+n2_s0 {'n': 2, 'seed': 0, 'pop': 96, 'gens': 36, 'acc': 0.6203, 'lo99': 0.5578, 'base': 'NULL', 'dlo': 0.0578, 'zc': 0.6203, 'crit_a': False, 'crit_ab': False, 'flag': False}
+n2_s1 {'n': 2, 'seed': 1, 'pop': 96, 'gens': 36, 'acc': 0.6711, 'lo99': 0.6172, 'base': 'P1S_lag1', 'dlo': 0.075, 'zc': 0.6719, 'crit_a': True, 'crit_ab': True, 'flag': True}
+n2_s2 {'n': 2, 'seed': 2, 'pop': 96, 'gens': 36, 'acc': 0.6906, 'lo99': 0.6391, 'base': 'P1S_lag1', 'dlo': 0.0781, 'zc': 0.6906, 'crit_a': True, 'crit_ab': True, 'flag': True}
+n2_s3 {'n': 2, 'seed': 3, 'pop': 96, 'gens': 36, 'acc': 0.4891, 'lo99': 0.4406, 'base': 'NULL', 'dlo': -0.0594, 'zc': 0.4625, 'crit_a': False, 'crit_ab': False, 'flag': False}
+rewarded searches: 8 pass (a)&(b): 4 ['n1_s0', 'n1_s3', 'n2_s1', 'n2_s2']
+flag agreement with recomputed criterion: True
+n=1: 2/4
+n=2: 2/4
+n=0 control: crit (a) only: {'n0_s0': True, 'n0_s1': False}
+local (|zero_comm-acc|) in successes: {'n1_s0': 0.0, 'n1_s3': 0.0, 'n2_s1': 0.0008, 'n2_s2': 0.0}
+
+==== W-L lag profile (post hoc, 256 worlds, no CI)
+PLANT_P1S {0: 0.501, 1: 1.0, 2: 0.504, 3: 0.521, 4: 0.501} range 0.499 selectivity(lag n - max other) None
+PLANT_P2S {0: 0.49, 1: 0.475, 2: 1.0, 3: 0.47, 4: 0.494} range 0.53 selectivity(lag n - max other) None
+PLANT_LAG0 {0: 1.0, 1: 0.488, 2: 0.491, 3: 0.535, 4: 0.504} range 0.512 selectivity(lag n - max other) None
+PLANT_INTEGRATOR {0: 0.635, 1: 0.629, 2: 0.631, 3: 0.633, 4: 0.651} range 0.022 selectivity(lag n - max other) None
+n0_s0 {0: 0.619, 1: 0.622, 2: 0.638, 3: 0.65, 4: 0.645} range 0.031 selectivity(lag n - max other) None
+n0_s1 {0: 0.51, 1: 0.497, 2: 0.502, 3: 0.508, 4: 0.508} range 0.013 selectivity(lag n - max other) None
+n1_s0 {0: 0.632, 1: 0.631, 2: 0.627, 3: 0.635, 4: 0.651} range 0.024 selectivity(lag n - max other) -0.02
+n1_s1 {0: 0.537, 1: 0.518, 2: 0.492, 3: 0.511, 4: 0.486} range 0.051 selectivity(lag n - max other) -0.019
+n1_s2 {0: 0.513, 1: 0.635, 2: 0.51, 3: 0.384, 4: 0.487} range 0.251 selectivity(lag n - max other) 0.122
+n1_s3 {0: 0.588, 1: 0.694, 2: 0.599, 3: 0.513, 4: 0.603} range 0.181 selectivity(lag n - max other) 0.091
+n2_s0 {0: 0.613, 1: 0.602, 2: 0.6, 3: 0.605, 4: 0.615} range 0.015 selectivity(lag n - max other) -0.015
+n2_s1 {0: 0.609, 1: 0.601, 2: 0.602, 3: 0.605, 4: 0.617} range 0.016 selectivity(lag n - max other) -0.015
+n2_s2 {0: 0.613, 1: 0.602, 2: 0.6, 3: 0.605, 4: 0.615} range 0.015 selectivity(lag n - max other) -0.015
+n2_s3 {0: 0.517, 1: 0.525, 2: 0.493, 3: 0.48, 4: 0.494} range 0.045 selectivity(lag n - max other) -0.032
+n=2 runs with positive lag-2 selectivity: 0 / 4
+n=1 runs with lag-1 selectivity > .05: ['n1_s2', 'n1_s3']
+n=0 control runs with flat above-chance (integrator) profile: ['n0_s0'] of ['n0_s0', 'n0_s1']
+
+==== W-L plants (checks.json) and carrier swaps (carriers_champs.json, 64-world design)
+P1S n 1 lines 9 acc 1.0 lo99 1.0 analysis
+P1S n 1 lines 9 acc 1.0 lo99 1.0 held
+P1K n 1 lines 13 acc 1.0 lo99 1.0 analysis
+P1K n 1 lines 13 acc 1.0 lo99 1.0 held
+P2S n 2 lines 16 acc 1.0 lo99 1.0 analysis
+P2S n 2 lines 16 acc 1.0 lo99 1.0 held
+P1S n 2 lines 9 acc 0.5 lo99 0.4375 analysis
+P1S n 2 lines 9 acc 0.503125 lo99 0.434375 held
+physics prog_len: 16
+n1_s0 normal 0.583 S 0.323 CHANCE S<=1-normal True others NO-EFFECT True
+n1_s3 normal 0.594 S 0.344 CHANCE S<=1-normal True others NO-EFFECT True
+n2_s1 normal 0.609 S 0.385 CHANCE S<=1-normal True others NO-EFFECT True
+n2_s2 normal 0.604 S 0.385 CHANCE S<=1-normal True others NO-EFFECT True
+n1_s2 normal 0.573 S 0.406 CHANCE S<=1-normal True others NO-EFFECT True
+
+==== W-K fixture x check matrix
+fixtures 21 broken 10 valid 11 checks 16 ['K0', 'K1', 'K1g', 'K2', 'K2iso', 'K3', 'K3b', 'K3c', 'K4c', 'K4d', 'K5', 'K6a', 'K6b', 'K7', 'K8s', 'K9']
+valid with twin field: 11 valid w/o twin: []
+K2 caught 7/10 FA 0/11 J 0.7 errors []
+K2iso caught 6/10 FA 0/11 J 0.6 errors []
+K1g caught 5/10 FA 0/11 J 0.5 errors []
+K3c caught 6/10 FA 2/11 J 0.42 errors []
+K4c caught 4/10 FA 0/11 J 0.4 errors []
+K3 caught 5/10 FA 2/11 J 0.32 errors []
+K4d caught 3/10 FA 0/11 J 0.3 errors []
+K5 caught 3/10 FA 0/11 J 0.3 errors []
+K9 caught 3/10 FA 0/11 J 0.3 errors []
+K0 caught 6/10 FA 4/11 J 0.24 errors []
+K8s caught 4/10 FA 2/11 J 0.22 errors []
+K6a caught 2/10 FA 0/11 J 0.2 errors []
+K7 caught 2/10 FA 0/11 J 0.2 errors []
+K3b caught 3/10 FA 2/11 J 0.12 errors []
+K1 caught 1/10 FA 0/11 J 0.1 errors []
+K6b caught 1/10 FA 0/11 J 0.1 errors []
+min zero-FA covers (size 3 ): [('K1g', 'K2', 'K7'), ('K2', 'K4d', 'K7'), ('K2', 'K7', 'K9')]
+scores.json K2 J: 0.7 n_broken 10 n_valid 11
+readings: {'WIN-B': 'NULL', 'WIN-V': 'EFFECT', 'INERT-B': 'NULL', 'INERT-V': 'EFFECT', 'UNWIRED-B': 'NULL', 'UNWIRED-V': 'EFFECT', 'TARGET-B': 'EFFECT', 'TARGET-V': 'NULL', 'DEAD-B': 'NULL', 'SEED-B': 'NULL', 'PROBE-B': 'EFFECT', 'COND-V': 'EFFECT', 'MASK-B': 'AMBIG', 'MASK-V': 'EFFECT', 'FORCED-B': 'EFFECT', 'FORCED-V': 'EFFECT', 'SAT-B': 'NULL', 'SAT-V': 'EFFECT', 'V0-WIN': 'NULL', 'V0-ROUTE': 'NULL', 'V0-RULE': 'NULL'}
+normal >= .99 all: True
+
+==== designed_echoes: MAE(model, engine) per design; >=.65 interval; E4 gap-8 hi99
+E1_canon               gaps 2-16 n=15 MAE 0.0179 FIT True interval pred (4, 10) engine (4, 11) HOLDS True
+E1s_canon_specroute    gaps 2-16 n=15 MAE 0.0232 FIT True interval pred (6, 11) engine (6, 11) HOLDS True
+E2_pipe2               gaps 2-16 n=15 MAE 0.0149 FIT True interval pred (8, 14) engine (7, 14) HOLDS True
+E3_pipe2_lb0           gaps 2-16 n=15 MAE 0.0150 FIT True interval pred (6, 12) engine (6, 12) HOLDS True
+E4_pipe4_mistimed      gaps 2-16 n=15 MAE 0.0119 FIT True interval pred (12, 16) engine (12, 16) HOLDS True
+E5_pipe1_up3           gaps 2-16 n=15 MAE 0.0208 FIT True interval pred (7, 15) engine (7, 15) HOLDS True
+E6_specroute_lh2       gaps 2-16 n=15 MAE 0.0180 FIT True interval pred (10, 16) engine (10, 16) HOLDS True
+designs FIT&INTERVAL-HOLDS: 7 / 7 MAE range 0.012 - 0.023
+E4 gap 8: [0.5260416666666666, 0.4609309895833333, 0.58984375] hi99<=.60: True
+
+==== designed_echoes instruments: three committed predictions (PLAN.md lines 29-39)
+E1 held: True | E2 site-part held: True transit-part held: False -> E2 held: False
+arrival mean lag E1 -1.49 E2 -5.49 shift 3.99 -> earlier held: True
+instrument predictions held: 2 / 3
+
+==== joint_carrier 4781b0a1
+normal j_probe [0.765625, 0.72916015625, 0.8007877604166665] normal j5 [0.7903645833333334, 0.7434895833333334, 0.8307291666666667]
+J5a erase S at actuator/sensors/others: {'actuator': 0.7903645833333334, 'sensors': 0.5, 'others': 0.7903645833333334}
+J3 pay0 decoder: [0.84765625, 0.8020833333333334, 0.8893294270833333] | swap pay0 t0+8: NO-EFFECT | swap pay1 t0+8: 0.516 CHANCE
+mid (t0+8) single swaps: {'S': (0.582, 'CHANCE'), 'site': (0.486, 'CHANCE'), 'channel': (0.516, 'CHANCE'), 'pay1': (0.516, 'CHANCE'), 'joint': (0.221, 'FLIP')}
+flush at t0+8: [0.5924479166666667, 0.5663997395833333, 0.6184895833333333] J4 joint swap t0-1: [[0.7786458333333333, 0.73828125, 0.81640625], 'NO-EFFECT']
+erase_S by tick: {1: 0.5, 2: 0.5, 3: 0.5, 4: 0.5, 5: 0.5, 6: 0.5, 7: 0.5, 8: 0.5, 9: 0.56, 10: 0.622, 11: 0.704, 12: 0.781, 13: 0.784, 14: 0.789, 15: 0.645}
+flush by tick  : {1: 0.5, 2: 0.5, 3: 0.613, 4: 0.613, 5: 0.611, 6: 0.6, 7: 0.6, 8: 0.609, 9: 0.609, 10: 0.616, 11: 0.611, 12: 0.535, 13: 0.546, 14: 0.62, 15: 0.745}
+erase_S exactly kills (0.50) at ticks: [1, 2, 3, 4, 5, 6, 7, 8] (report says 'kills through t0+9'; t0+9 = 0.56 )
