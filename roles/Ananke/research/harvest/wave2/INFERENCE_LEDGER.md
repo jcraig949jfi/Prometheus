@@ -103,3 +103,65 @@ unresolved | next. Workers' ledger blocks are folded in when their reports are d
 - Next: if refresh revives the decay rows, then C1's "decay kills RELAY" and P2-style physics-map
   statements are plant artifacts, and DESIGN's plant_viability "physics-dead vs search-failed" needs a
   plant-family qualifier.
+
+### W2-H (deposited wave2/W2-H/REPORT.md): statistical-method review
+- The pair is the right unit. pair_ci (percentile) undercovers at P=32: lower-tail miss .7-1.2% at
+  p <= .8, and 3-9% at high heterogeneous p (nominal .5%). BOOTT is near nominal.
+- 2 SIGNAL calls flip under BOOTT (884a64df, 8ccf6c72) and 3 under t. No prediction flips.
+- BH q=.01 keeps 210/216 SIGNAL calls; Holm .01 keeps 185.
+- H16: the swap_rel floor is on the SE scale and never binds (>= 2.4x margin), which is why H2 == REL3.
+  The INTENDED floor would break FC (1.9% at P32). DO NOT rescale it.
+- The FC model (K iid trials) is misspecified (real K_eff 3.8-56), but REL3/H2 FC stays <= .87% on the
+  real mirror structure.
+- AUDIT3 excess: 12.3 expected vs 22, cluster z ~1.7; 0/227 disagreements at >= 3 SE.
+- The search seed is the true unit for physics-level claims: D replicates drop .857 -> .706.
+- 613162a3 CAUSAL_SUPPORT is fragile (keep .88).
+- C4 S2: a universal law false-fails 21-31% (my interim said ~40%). Carry this into the C4 FINAL as a
+  calibration of finding A4; W2-H read no C4 reviews or data.
+- Process: W2-H exceeded its compute cap (1.0-1.5 core-h vs 0.5) under machine contention. One
+  self-kill of its own shell via a cmdline-matched kill, its own processes only. Recorded.
+- APPLIED (NEUTRAL, a new module that nothing frozen imports): prometheus/ananke/inference.py, with
+  tests/test_inference_w2h.py (6 fail before, 7 pass after).
+- Not applied: b2_seed_key (SEMANTIC, gated default-off). Deferred.
+- Queue replenished: W2-K (C1b and high-p fragility under BOOTT/t; census class keep probabilities).
+
+### P-1b (principal): does multi-hop scarcity reflect search, or plant viability?
+- Evidence: RELAY kind=evolve rows with light-cone bound >= .95; recorded result.plant (relay_flood,
+  campaign.plant_viability). My eager re-evaluation of 16 rows reproduced the recorded plant acc to
+  4 decimals, so the recorded field is used and the census was stopped as redundant.
+- Result [V], SIGNAL rate by hop demand and plant viability:
+  | hop demand | plant | rows | distinct conditions | SIGNAL |
+  |---|---|---|---|---|
+  | one-hop | ok | 99 | 23 | 40 (40%) |
+  | multi-hop | ok | 9 | 5 | 2 (22%) |
+  | one-hop | fail | 40 | 33 | 2 |
+  | multi-hop | fail | 21 | 21 | 0 |
+  Of 30 reachable multi-hop rows, 21 are relay_flood-dead (mostly decay_shift > 0, cap/aloha, async).
+  "Multi-hop is rare" is therefore mostly a plant-viability/physics fact. Conditional on a working
+  plant, the one-hop vs multi-hop search gap is small and not significant (n = 9, 5 conditions).
+- Also: relay_flood's own A-wave viability is only 8/27 one-hop and 3/23 multi-hop. A-wave physics are
+  mostly hostile to C1's only RELAY plant.
+- Confidence: high on the counts; low on any multi-hop search inference (n = 9).
+- Objection: relay_flood failure is a lower bound (P-2 is testing decay-refresh). If a refresh plant
+  revives the decay rows, the 21 "plant-dead" multi-hop rows move to "plant-ok, search-missed".
+- Next: the P-2 matched decay counterfactual (running).
+
+### W2-D (deposited wave2/W2-D/REPORT.md): search vs physics chain
+- R/S/U/P/V instruments are defined exactly. Known-answer gate: C1 champion reproduced bit-for-bit.
+- FLIP @ d9cc 6f82f9c7:
+  - R excluded, P excluded;
+  - V excluded for full competence (the plant gets SIGNAL/COMM_DEP);
+  - U excluded over the tested horizon (seeded plant rank 0 in 2/2 runs, 4 and 2 generations;
+    extrapolated loss <= ~1% over 36 generations);
+  - objective ranks the plant first (1.05 vs .50; the bonus can never reorder a gap > .12).
+  - => link S. The plant is an isolated peak (6% of mutate() offspring keep function).
+  - A relay_flood basin at .602 [.549, .650] also exists and was not reached.
+  - n = 1 search seed.
+- The selector cannot see competence below ~.57 (M = 8 winner's curse). Weak partial solutions are not
+  retained; strong ones are.
+- No "found then lost" signature in any comm family (0 rows); 2 in HOLD.
+- Falsifiers F-R/P, F-U, F-V and F-S are stated. A family-level H6 needs >= 3 cells per family meeting
+  all of them; none does yet.
+- Ruler: FLIP SIGNAL needs a relay-only control (relay scores .602 and misses SIGNAL by .001).
+- Queue replenished: W2-L (FLIP uncapped placement + relay-only control) and W2-M (MAJ integration
+  plant, INTEGRATION attainability).

@@ -20,24 +20,23 @@ def relay_refresh(ph):
         ("SUB", "T3", "T1", "S0", 0), ("MULQ", "T3", "T3", "T2", 0), ("ADD", "S0", "S0", "T3", 0)])
 
 N_PER = int(sys.argv[1]) if len(sys.argv) > 1 else 6
+# MATCHED COUNTERFACTUAL: A0 RELAY rows with decay_shift == 0 where relay_flood is viable (recorded acc > .7);
+# set decay_shift to 1, 3, 6 and compare relay_flood vs relay_refresh on identical worlds.
 rng = np.random.default_rng(7)
-pool = collections.defaultdict(list)
-for r in hc.rows():
-    if r["wave"] != "A0" or r["env"]["family"] != "RELAY": continue
-    p = r["result"].get("plant"); ph = r["physics"]
-    if not p: continue
-    if ph["decay_shift"] > 0 and p["acc"] <= 0.6: pool[ph["decay_shift"]].append(r)
-    if ph["decay_shift"] == 0 and p["acc"] > 0.6: pool["ctl0"].append(r)   # known-answer: viable rows
+pool = [r for r in hc.rows() if r["wave"] == "A0" and r["env"]["family"] == "RELAY" and r["result"].get("plant")
+        and r["physics"]["decay_shift"] == 0 and r["result"]["plant"]["acc"] > 0.7]
+rows = [pool[i] for i in rng.choice(len(pool), size=N_PER, replace=False)]
 out = []; t0 = time.time()
-for k in [1, 3, 6, "ctl0"]:
-    rows = [pool[k][i] for i in rng.choice(len(pool[k]), size=min(N_PER, len(pool[k])), replace=False)]
-    for r in rows:
-        ph = Physics.from_dict(r["physics"]); env = envs.EnvSpec(**r["env"])
-        p2 = ph.replace(prog_len=max(ph.prog_len, 16)).validate()
-        seeds = assays.world_seeds(H_int(r["search_seed"], 0x9147), 32)
-        a_flood = hc.evaluate(p2, plants.plant("relay_flood", p2), env, seeds)["acc"]
-        ev = hc.evaluate(p2, hc.bc(p2, relay_refresh(p2)), env, seeds)
-        o = {"cell": r["cell_id"], "decay": k, "recorded_flood": r["result"]["plant"]["acc"], "flood_L16": a_flood,
-             "refresh": ev["acc"], "refresh_lo99": ev["lo99"], "topology": ph.topology, "update_mode": ph.update_mode}
+for r in rows:
+    ph0 = Physics.from_dict(r["physics"]); env = envs.EnvSpec(**r["env"])
+    seeds = assays.world_seeds(H_int(r["search_seed"], 0x9147), 32)
+    for dk in [0, 1, 3, 6]:
+        p2 = ph0.replace(prog_len=max(ph0.prog_len, 16), decay_shift=dk).validate()
+        a_f = hc.evaluate(p2, plants.plant("relay_flood", p2), env, seeds)
+        a_r = hc.evaluate(p2, hc.bc(p2, relay_refresh(p2)), env, seeds)
+        o = {"cell": r["cell_id"], "decay": dk, "recorded_flood_d0": r["result"]["plant"]["acc"],
+             "flood": a_f["acc"], "flood_lo99": a_f["lo99"], "refresh": a_r["acc"], "refresh_lo99": a_r["lo99"],
+             "topology": ph0.topology, "update_mode": ph0.update_mode, "update_period": ph0.update_period}
         out.append(o); print(o, flush=True)
-json.dump({"rows": out, "wall_s": time.time() - t0}, open("decay_plant.json", "w"), indent=1)
+json.dump({"design": "matched counterfactual decay_shift on viable decay-0 A0 RELAY rows", "rows": out,
+           "wall_s": time.time() - t0}, open("decay_plant.json", "w"), indent=1)
