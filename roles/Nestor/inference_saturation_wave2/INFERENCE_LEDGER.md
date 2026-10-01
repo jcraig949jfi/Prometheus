@@ -960,3 +960,27 @@ Together with W2-16 (execution order) and W2-24 (own code as the weapon), this i
 Store final, and periodic, genome bytes plus registers in every world run. Five Wave-2 questions were blocked by the lack of bytes: C-CORE 34/49, H1 re-score, run 52, 0008, and W2-17 morph genotypes. This is cheap: 256 × 64 bytes per checkpoint.
 
 **Follow-up.** W2-38 has been assigned the deterministic replay of 52 and 0008 with dumps. These are replays of existing frozen runs, about 16 CPU-min, not new science runs.
+
+
+### W2-30: double mutant C3+AC is a robust local optimum; sweep prediction tested against existing data (Nestor). Written at 02:39Z (clock)
+
+**Result**
+- Rank and fitness: C3+AC is top under every ruler (exact 1.253, class 1.462, ATOMIC 1.485). It has no beneficial one-bit neighbour, so it is a local optimum.
+- Exact-identity m puts F (0.847) and C3 (0.943) below 1. FID inflation is neutral edge-byte drift (bytes 0 and 63). Class m, which matches on sites 43/44/45/49, preserves the W2-24 ordering.
+- Robustness: about 83% of one-bit neighbours keep the protection.
+- Bytes 44 and 45 are dual-use: they are both the JP operand and the code at the landing site. **In C3, operand mutation exposes them in place,** whereas in F they are immune opcodes.
+- Model prediction: C3+AC takes over long BASE runs in about 500-700 epochs (87% by epoch 2000 in the kin model).
+
+**Nestor check against existing data** (my script; read-only):
+- **BASE, W2-17 chain genomes (95 distinct, from r3/a3 replays):** 43=C3 appears in **0/95**.
+  - Byte 43 remains C1 (founder) in most. The pairs (43, 44) are c1/ec ×29, c0/ec ×6, c1/cc ×5, c1/ac ×4, …
+  - AC at 44 does occur, matching W2-17's 44 ec→ac morph.
+  - But these replays cover mostly epochs ≤ about 150. The prediction is for 500-700, so this is **not a contradiction**, only "no support yet".
+- **ATOMIC, C-CORE (27 runaways at 2000 epochs):** mean founder-tag frequency is 0.09 at 43, 0.17 at 44 and 0.21 at 45. The founder material there is mostly replaced.
+  - Tags cannot show *which* byte replaced it. Final genomes are not stored (the W2-34 lesson).
+  - Under ATOMIC, W2-30 predicts that C3+AC's advantage is only against the background. The prediction is therefore weaker there, and C-CORE cannot test it.
+- **Verdict:** the prediction stands, untested. Its test is the authorized design (W2-32 Experiment 1, or a genome-storing long BASE run).
+
+**Confidence**
+- High: the static facts.
+- Low-moderate: the sweep timing.
