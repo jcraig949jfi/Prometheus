@@ -185,3 +185,17 @@ C1 labels are NOT changed. Each item names its source report; [P] marks those re
   P1 stays HELD as a label; its content is identity plus plant-design.
   The W2-P/W2-U light cone overstates reach on global/sample topology (random destinations), so
   construction-capped counts there are undercounts.
+- E-W22 (multi-hop RELAY SIGNALs; W2-AI): both multi-hop RELAY SIGNAL rows (925caa3a48964717 ring d5;
+  882525a9d4a3d073 smallworld d3) FORWARD, but only ONCE PER EPISODE.
+  - Each is a receipt-triggered flood latch: the first positive cue fires an irreversible wave, and
+    later trials score .500.
+  - Accuracy profile 1.00, .70, .59, ... then .50. A latch model predicts 99-99.6% of readouts.
+  - 64/64 held worlds are true multi-hop, and the forwarding is certified by vertex-cut ablation
+    against equal-size controls.
+  - Consequences:
+    - (i) "multi-hop competence absent" is false. It is present as one-shot cascades. Per-trial
+      (resettable) multi-hop relay is NOT shown.
+    - (ii) At 12 trials a one-shot latch clears SIGNAL (ceiling ~.58-.59), so a RELAY SIGNAL near
+      .58-.60 does not certify per-trial competence.
+    - (iii) REACH_BEYOND_HOP (twin at trial 2) is a false negative for latches: beyond_hop is 1.0 at
+      trial 0.

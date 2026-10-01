@@ -612,3 +612,25 @@ W2-U (XOR/FLIP ceilings + A0 normalisation)
 - Top 3 for preservation: SR-01 one-hop wall, SR-02 distractor strobe/parity clock, SR-03
   reverberation integration.
 - Queue: W2-AJ (emitter census across 69 SIGNAL champions; 4781b0a1 sensor-to-sensor edge cut).
+
+### W2-Z (deposited): economy-feasible plants
+- Engine budget [V]: only emission is energy-gated. Ops are charged per static non-NOP line per awake
+  tick; deficits are forgiven. Gating cannot save energy. The actuator, which never emits, is
+  economy-free. Max sustainable activity p*k + m < 4 at I = 4.
+- An economy-feasible FLIP plant exists in principle (.924, B .934 at clean sync P=2) and starves
+  exactly at k > kmax.
+- FLIP: the 9 "PLANT-DESIGN (economy)" rows become UNDECIDED-ECON (their failures are non-economy;
+  3 lean P).
+- XOR: d01883ed and 4ca24b85 are P-ECONOMY for any program (DP + LC2: .589 / .599). 89a6a9cd is NOT
+  economy-capped (corrects W2-J F8). W2-J totals become CAPPED 64 / UNDECIDED 13.
+- MAJ economy rows: 31/50 PLANT-SOLVED by 3-5-line leaky integrators, 16 with an integration
+  certificate. Champions there are ~.50, so these MAJ NULLs are search-limited relative to a
+  3-5-line plant (pending the W2-AF update to eligibility). 0 P-ECONOMY.
+
+### W2-AI (deposited): do the 2 multi-hop SIGNALs forward?
+- YES, once per episode: receipt-triggered flood latches (accuracy by trial 1.0 -> .50 after ~6
+  trials; latch model fits 99-99.6% of readouts). Certified by a vertex cut against equal-size
+  controls; 64/64 worlds are true multi-hop.
+- REACH_BEYOND_HOP is a false negative for latches (trial-2 twin). One-shot latches clear SIGNAL at 12
+  trials. -> C1_ERRATA E-W22; H6 section 15.
+- Queue: W2-AL (latch prevalence across all RELAY/MAJ SIGNAL rows).

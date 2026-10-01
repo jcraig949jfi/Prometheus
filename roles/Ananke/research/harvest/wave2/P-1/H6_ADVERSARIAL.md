@@ -209,3 +209,11 @@ in 35/41 (W2-W F1).
 - DOWNGRADED: "a .60 relay basin where the stepping stones live" becomes "a .60 copy-policy basin
   (ceiling .75) whose connection to inference is untested".
 - The measured split governs (E-W20): capped 139 (30.6%), eligible ~14%, open 250.
+
+## 15. Update from W2-AI (supersedes the forwarding sentence in section 14)
+"C1 search DID discover forwarding in 2 multi-hop cells, as once-per-episode receipt-triggered flood
+latches at the one-shot ceiling (~.58-.59 at 12 trials). No per-trial (resettable) multi-hop relay is
+shown."
+So the "one-hop wall" is about the 7 one-hop D laws (mute non-sensors, W2-AG SR-01). Search-reachable
+multi-hop exists only as an irreversible cascade. The open question becomes whether search can find
+RESETTABLE forwarding. The selection margin above the latch ceiling is only ~+.08.
