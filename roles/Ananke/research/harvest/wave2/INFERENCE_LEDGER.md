@@ -634,3 +634,12 @@ W2-U (XOR/FLIP ceilings + A0 normalisation)
 - REACH_BEYOND_HOP is a false negative for latches (trial-2 twin). One-shot latches clear SIGNAL at 12
   trials. -> C1_ERRATA E-W22; H6 section 15.
 - Queue: W2-AL (latch prevalence across all RELAY/MAJ SIGNAL rows).
+
+### W2-V (deposited): XOR representation vs search
+- 4222a5f7 is SEARCH-LIMITED: a 12/12-line plant at its own genome scores .850 (C1 held .832 vs
+  champion .503). -> E-W23.
+- The L8/C1 rows are representation-limited for parity (strong argument); the NOR near-miss is
+  lo99 .534-.547.
+- 84cf905d and e2fd1e07 are unresolved.
+- XOR eligibility therefore rises from 0 to 1 cell (4222a5f7), pending admissibility (W2-W listed it as
+  PLANT_SOLVED_OVERRIDE).

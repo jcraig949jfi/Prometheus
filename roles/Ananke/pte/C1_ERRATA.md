@@ -199,3 +199,14 @@ C1 labels are NOT changed. Each item names its source report; [P] marks those re
       .58-.60 does not certify per-trial competence.
     - (iii) REACH_BEYOND_HOP (twin at trial 2) is a false negative for latches: beyond_hop is 1.0 at
       trial 0.
+- E-W23 (XOR representation vs search; W2-V): at 4222a5f7 (L12 D8 P1 C4) a 12-line parity plant
+  fits the row's OWN sampled genome.
+  - It scores .850 [.819] on fresh worlds and .832 [.798] on C1's own held-out worlds, against the
+    champion's .503. Must-fail .500.
+  - It uses sensor broadcast plus channel-tagged one-hop forwarding.
+  - So at least one C1 XOR NULL is SEARCH-LIMITED at its own genome. This corrects W2-J's "no plant
+    fits a row's own genome".
+  - At the three L8/C1 rows (48256f59, 1974a9cf, 333d6b2b) parity is REPRESENTATION-LIMITED (strongly
+    argued: zero-slack line accounting, a scale lemma, and an exhaustive readout enumeration with 0
+    hits plus a positive control). A 6-line NOR cheat reaches lo99 .534-.547, just under SIGNAL.
+  - 84cf905d and e2fd1e07 are unresolved.
