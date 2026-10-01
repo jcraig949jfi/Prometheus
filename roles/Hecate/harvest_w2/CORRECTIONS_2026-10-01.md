@@ -75,6 +75,12 @@ K11 REPORT_pilot taxonomy label RIGHT_STRUCTURE_WRONG_MECHANISM (5 cases, the
    (SYS-60800) is an unattainable threshold (bar 0.803 + 0.2 > 1), so H5's
    genuine count stays 0/32 as K8 says (AUDIT_A F07).
 
+K12 Meta v1 M3 (descriptive, no decision rule; AUDIT_L F3, F4): "state named"
+   missed three unit-arms that wrote what_exists as a comma-separated
+   string -> T 0.75 -> 1.00, P 0.875 -> 1.00; REPORT_v1 "T has the fewest
+   named state variables" is FALSE. The comparator check accepted "vs",
+   not in the PREREG list -> S 0.4625 -> 0.400, P 0.600 -> 0.5625.
+
 ## Contested items -- NOT applied (recommendations; would change a frozen decision rule's outcome -> CWO-C s4 escalation class)
 
 C1 HT-ae38c641b1 W5 (round 3): frozen spec says values between F1 and S1
@@ -112,6 +118,14 @@ C7 Alien H4 / H2 (AUDIT_A F02, F04): H4 code uses a binary rule instead of
    Design note (F05): with K at ceiling, H1/H2/H5 can never read
    NOT_SUPPORTED; their INDETERMINATE means "small positive, below
    threshold".
+C8 Meta v1 M1 vs P (AUDIT_L F1; verified from rows): detector call u4-P-m8
+   was refused and never retried; code divides P's unit 4 by 9 scored items
+   (2/9 = 0.222 > T 2/10), literal "FAMILIAR / items" gives 2/10 = T ->
+   tie -> NOT lower (PREREG ties rule) -> T lower in 4/8 (p 0.637) ->
+   NO_ADDED_VALUE_vs_P (recorded INDETERMINATE, 5/8). Overall M1 unchanged
+   (INDETERMINATE). Recommendation: rule on the denominator for a failed
+   call; a single re-scoring of u4-P-m8 would be post-hoc data collection
+   and also needs the ruling.
 Note on K4 (applied): it enforces the frozen round-2 definition of
 SPEC_UNATTAINABLE ("cannot be reached even by a construction that has the
 effect by design") that the round-2 pilot failed to check; it is listed
