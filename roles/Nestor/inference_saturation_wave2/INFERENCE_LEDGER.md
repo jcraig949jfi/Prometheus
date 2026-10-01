@@ -715,3 +715,31 @@ in completion order.
   1. Trace 43→C3 vs the founder at the hijack: who writes the donor half when keep fails.
   2. Test whether 43→C3 resists partner LDIR runs, W2-16 style: damage attribution.
   3. A C-CORE-like long run storing genomes would show whether C3@43 or side switches sweep. That needs authorization; it is design only.
+
+
+### W2-19: H1 re-score and D8 vs E-3 (report saved; Nestor adjudication). Written at 01:44Z (clock)
+
+**Result.**
+- **H1 competence was a cached single draw.**
+  - Re-scored with the cache bypassed: recorded held 1.0, true held 0.496 (exact 0.495). That is the answer-before-read echo floor.
+  - 0 readers in any H1-cell population.
+  - Each recorded value reproduces exactly from one validation-epoch seed.
+  - The expected maximum over N draws explains the recorded maxima (N=20 → 0.86).
+  - On true scores, C9-H1R's I falls to 0.125–0.142, below its own 0.15 threshold, so it would read NO_DETECTED_EFFECT.
+  - X-H1-TRANSPLANT is fragile (2–4 of 4 transforms).
+  - H1R, GRADIENT and TRANSPLANT saved no genomes.
+- **E-3 stands.** Both depth-2 chains are genuine consecutive-epoch interactions. D8 fires once in 1,031 runs.
+
+**Adjudication between W2-15 and W2-18.**
+- W2-18 P14 said W2-15 over-flagged X-H1-GRADIENT as INV without re-scoring.
+- **The re-score confirms W2-15**, more strongly than W2-15 itself claimed: 5/11 of the relevant runs sit at 0.72–0.91, not "about 0.9" across all.
+- So P14 resolves as **W2-15 correct, now verified**. C9-H1R → DEGENERATE / ARTIFACT-RISK.
+
+**Instrument lesson (handoff candidate).** "held_max_final" is a maximum over cached single 6-episode draws. Under selection, a coin-flip guesser reaches 1.0 with P = 0.79 per 100 validation epochs.
+- **Any readout that takes a maximum or uses a cached value of a noisy score is a selection amplifier.**
+- Where it is used:
+  - A-2 (d_held_max, which still HOLDS only as a delta);
+  - X-TASK-GATE (already blocked);
+  - the H1 family.
+
+**Confidence.** High.
