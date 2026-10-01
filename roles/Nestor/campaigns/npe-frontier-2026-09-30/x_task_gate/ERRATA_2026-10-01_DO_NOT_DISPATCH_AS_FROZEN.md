@@ -32,3 +32,28 @@ was ever executed.
      task-coupled endogenous descent is unreachable in this cell, and nothing more is claimed.
 2. **Run W2-5's `checks/ruler_reachability.py` against the amended ruler set before the re-freeze.**
 3. **Keep the original freeze as historical record.** The amendment is a new freeze with its own hash.
+
+## Addendum: defects found by the W2-8 executable-semantics audit (`inference_saturation_wave2/W2-8_semantics_audit/`)
+
+These come on top of Defect 1. Each is reproduced in `demos/`. Patches are in `patches/` (world_patch P1, xtg_patch readout),
+with tests in `tests/test_w2_8.py`.
+
+- **D1, cross-niche competence cache (INVALIDATES).**
+  - `world.py:576-584` keys `val_cache` on genome bytes only.
+  - ffa6 is COEVO_ENV with 4 niches. For seed 31,000,000 the niche tasks are XOR5A FR, XOR5A FR, ADD1 ABR and XOR1 FR.
+  - An organism's `held` and `probe` can therefore be its genome's score on another niche's task. Demonstrated: recorded 1.0 vs true 0.25.
+- **D6, reader filter uses the base cue index for every niche (INVALIDATES).** A perfect ANSWER_BEFORE_READ-niche reader (held 1.0, probe 2.0) fails `probe ≥ 3`.
+- **D15, regime-blind reader counted as competent (INVALIDATES the CS/CD reading).** A program that echoes v^key scores held 0.738 with probe 3, and counts as competent in 200/200 draws.
+- **D7.** The post-run `_validate(force=True)` is 100% cache hits, and the "not stale" comment is false.
+- **D9.** A relabelled organism keeps the destroyed genome's competence, which then feeds the gate.
+- **D13.** INIT ≠ "sorting survivors" under ATOMIC: INIT organisms mutate in place.
+- **D14.** The Stage-0 positive control runs on the private-slot path only. This is the same as Defect 1, confirmed independently.
+
+**Required before any re-freeze (in addition to the above):**
+1. Fix the cache with P1.
+2. Use the `xtg_patch` readout: own niche task, VALLEY scoring, own cue index, no cache.
+3. Pin the environment to STATIC, or report per niche.
+4. Rename INIT.
+5. Add a pair-path planted positive for CD.
+
+W2-10 (static) is testing whether a genome that is both a copier and task-competent can be constructed at all.
