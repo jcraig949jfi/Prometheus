@@ -690,3 +690,28 @@ in completion order.
 - Re-assay the 3 reachable variants with W2-14's BANK partner states.
 - Trace E at the LDIR for founder vs variant under RAND, to confirm the washing mechanism.
 - Any future long run should store final genomes.
+
+
+### N17e: realized-partner re-assay; corrects N17d's mechanism (Nestor; bank_assay.py, written at 01:42Z (clock))
+
+- **Evidence.**
+  - Partners: genome + carried registers drawn from W2-14's founder-free BASE background bank (epochs 10-299). Donor context: ZERO or a bank context. N = 1,000 on a shared panel; random side; copy errors off.
+
+  | variant | m_base | keep | conv side 0 / side 1 |
+  |---|---|---|---|
+  | founder | 1.17 | 0.72 | 0.002 / 0.87 |
+  | 49→5C | 1.24 | 0.75 | 1.0 / 0.006 |
+  | 49→59 | 1.24 | 0.75 | 1.0 / 0.002 |
+  | 44→AC (one bit) | 1.25 | 0.75 | 1.0 / 0.02 |
+  | 43→81 (one bit) | 1.24 | 0.75 | 1.0 / 0.02 |
+  | **43→C3 (one bit; POP BC → JP)** | **1.39** | **0.94** | 0.002 / 0.87 |
+
+  - The donor's context (ZERO vs BANK) changes nothing (≤ 0.002). The founder is register-robust.
+- **Correction to N17d.** Most of the supercritical neighbours are **SIDE SWITCHES**, not register-washing gains. Placing A ← f(A, C|H) in positions 37-47 changes E (via `LD E,A` at 48), and that flips the copy direction. **The "state-washing" interpretation in N17d is WITHDRAWN.**
+- **New finding: 43→C3 is a one-bit "keep" variant.** It stays a side-1 copier with the same conversion, but own-half survival rises from 0.72 to **0.94**. The mechanism is untraced: removing POP BC changes the BC count the LDIR uses, or the path a partner takes through the code after the wrap. Since W2-16 and N1 show that keep losses are partner execution of the donor's code, this looks like a **one-bit defence against the wrap hijack**.
+- **Why this matters.** Under BASE, keep is half of m. A one-bit-reachable, hijack-resistant variant with m 1.39 vs 1.17 is the strongest single-step gain found for 7ae3. It is reachable at 0.002/8 = 2.5e-4 per birth.
+- **Readout caution.** m_base here counts halves with fidelity ≥ 0.9 after a call, by any author. It is not W2-2's promoted, certified births. Only within-panel comparisons are valid. The founder's 1.17 must not be read against W2-2's 0.93 or W2-3's 1.0.
+- **Next.**
+  1. Trace 43→C3 vs the founder at the hijack: who writes the donor half when keep fails.
+  2. Test whether 43→C3 resists partner LDIR runs, W2-16 style: damage attribution.
+  3. A C-CORE-like long run storing genomes would show whether C3@43 or side switches sweep. That needs authorization; it is design only.
