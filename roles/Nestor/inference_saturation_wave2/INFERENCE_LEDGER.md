@@ -614,3 +614,79 @@ in completion order.
 4. **W2-7 pushes "2e-4 is generic" into "2e-4 is the encoding".**
    - Every quantitative rarity claim in FINDINGS (minimal_prior, the ARC3 accessibility delegate) needs the scope "under stock Z8 physics: 128-ring, block op, slice 300".
    - That is a wording proposal for the closing appendix.
+
+
+### W2-14: F calibration, and the 600x reconciled (report saved; Nestor attack). Written at 01:40Z (clock)
+
+**Result**
+- FIELD+FULL reproduces the world bit-for-bit, so the process is the world.
+- The 600x has three causes:
+  1. c7c's partners start with empty registers (FREE FRESH0 → POOL: B ≥ 163 goes 5/40 → 0/40, p = 0.027);
+  2. its occupancy readout is uncertified (about 3x);
+  3. W2-2 compares unlike readouts.
+- On P(reach ≥ 27 certified births), the individual law gives 0.025 and the world 0.031. **They agree.**
+- Runaways do not raise their fertility. They differ in **persistence** after saturation.
+- ATOMIC validation did not pass at 300 epochs (0.23-0.33 vs 0.575-0.67).
+
+**What this weakens (Nestor)**
+1. **W2-2's "qualitatively different second regime" is DOWNGRADED** to "large lineages persist in the field; the cause is undecided".
+   - The empty-gap evidence is weak: P = 0.045 before correcting for data-chosen edges.
+   - The "100x excess" was a comparison between unlike readouts.
+   - This is the **strongest Wave-1/early-Wave-2 conclusion weakened this wave**, and a handoff candidate.
+2. **Open contradiction 1 (W2-6 c7c over-predicts vs W2-2 h1 under-predicts) is RESOLVED.** c7c over-predicts because of FRESH0 partners. h1's tail is not comparable to the world's B.
+3. **W2-3's d ≥ 22 → ≥ 161 (16/19) is the same persistence phenomenon.** It is not a fertility switch.
+4. **My N17 morph hypothesis is reframed.**
+   - Supercritical neighbours (m 1.15-1.2 under RAND) would raise fertility.
+   - The world shows fertility does NOT rise after 27.
+   - So the morph is not the explanation for runaway persistence, unless it acts only after saturation. That is unlikely given flat per-member birth rates.
+   - **N17's sweep prediction stands as a separate claim**: founder material at 49 lost 27/27, a side-0 advantage. Its relevance to the second regime is withdrawn.
+5. **F's scope.** F is testable only with external, non-kin partners (rungs 1-3). With kin and field partners it is the world computing itself. **This must be stated in the theory record:** "F explains" claims at rung 4-5 are unfalsifiable.
+
+**Assignments**
+- W2-22 has a pre-registered conditional-persistence test, FIELD vs FREE BANK at ≥ 300 seeds per arm, plus mechanism arms for kin overwrite and kin repair.
+- W2-17 has been reoriented to persistence.
+
+**Confidence**
+- high: partner registers as the cause of the 600x;
+- medium: the readout reconciliation;
+- low: ATOMIC calibration.
+
+
+### N17b-d: supercritical one-byte neighbours of 7ae3 under BASE (Nestor; contact.py, neighbours.py, confirm_all.py). Written at 01:41Z (clock)
+
+**Question.** How many single-byte variants of the 7ae3 founder have m_base > 1 in a carried-register world, and how often does the world's copy-error rule produce one?
+
+**Evidence**
+- **Screen.** All 16,320 single-byte variants, 60 shared interactions each (random partners, random side, RAND contexts, copy errors off). 761 screen hits.
+- **Re-assay.** Every hit on a fresh 400-interaction panel.
+  - Founder: m = 1.01 (RAND), 1.105 (ZERO).
+  - **170 variants confirmed at ≥ founder + 0.15**, with mean m = 1.19 under both RAND and ZERO.
+- **Where they sit.**
+  - 14 values at each of positions 37-47; a few at 32 and 48-51.
+  - The values are always the same family: LD A,C / LD A,H / ADD|ADC|SUB|SBC|XOR|OR A,(C|H).
+  - In other words: **any "A ← f(A, C or H)" placed in the 37-47 region** raises m. Downstream, position 48 is `5F` (LD E,A), which sets the LDIR destination low byte from A.
+- **Contact (N17b v2, exact identity).** Morph (49→5C/59) vs founder is symmetric: whoever is at side 0 takes both halves. Against random partners under RAND, the morph has m = 1.20-1.23 vs 0.92-0.99 for the founder.
+- **Copy-error reachability.**
+  - A copy error is a SINGLE-BIT flip (`z8.py:413-417`), and in-place `_mutate` cannot reach positions 37-51.
+  - Only 3 of the 170 are one bit away: 44→AC, 43→81, 43→C3 (m 1.18-1.24).
+  - **Per-birth production rate = 0.002 × 3/8 = 7.5e-4**, about 1 per 1,300 births.
+
+**Inference**
+1. The founder sits on a **plateau edge**. Many neighbours are supercritical by a common mechanism: making the copy destination (E, via A at position 48) depend on a more stable register. That is a W2-4 "state-washing" gain, i.e. register independence. Supporting this, the gain is larger under RAND (+0.18) than under ZERO (+0.08).
+2. **These variants are evolutionarily hard to reach.** Under the world's mutation rules, only 3 are one bit-flip away.
+3. Combined with W2-14 (fertility does not rise after saturation), **these neighbours do not explain runaway persistence under BASE**. Over long ATOMIC horizons (C-CORE, 2,000 epochs, thousands of births), they predict **register-washing substitutions in the 37-48 region**.
+   - This is consistent with C-CORE: founder material at 30/34/49 is at background, and W2-2 reports a byte-42 sweep under ATOMIC.
+   - It is checkable only if final genomes are stored, which C-CORE does not do.
+
+**Confidence**
+- high: the counts and the plateau;
+- moderate: the mechanism, which is inferred from the opcode family and the downstream `LD E,A`, not traced;
+- low: in-world relevance.
+
+**Strongest objection**
+- Uniform random registers (RAND) are not the realized field. W2-14 showed partner register state is the single largest lever, so m under realized partner states could differ.
+
+**Next**
+- Re-assay the 3 reachable variants with W2-14's BANK partner states.
+- Trace E at the LDIR for founder vs variant under RAND, to confirm the washing mechanism.
+- Any future long run should store final genomes.
