@@ -189,3 +189,8 @@ and UNDECIDED for the rest. Where it is testable, the search failure is of three
 - the one-hop wall (forwarding never discovered);
 - an isolated FLIP peak (d9cc, n = 1).
 None of these is shown at the family level under W2-D's falsifiers."
+
+## 13. v4 correction (W2-W)
+Consolidated numbers supersede section 12: capped 139/454 (30.6%), eligible 62-65 (13.7-14.3%), open 250.
+P-2's decay artefact holds only for A0 matched counterfactuals; on C1 RELAY NULLs, decay does not bind
+in 35/41 (W2-W F1).

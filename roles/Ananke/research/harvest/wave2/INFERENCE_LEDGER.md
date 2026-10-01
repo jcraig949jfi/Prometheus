@@ -549,3 +549,30 @@ W2-U (XOR/FLIP ceilings + A0 normalisation)
 - -> C1_ERRATA E-W19. A1 is the right unit (352 distinct physics/seeds).
 - The namespace/family effect cannot touch C1 counts (789/789 unique seeds).
 - W-Z Pb "HELD" holds only at the point estimate (CI [.19, .41]).
+
+### W2-W (deposited): consolidated placement of 454 NULLs + 58 HOLD
+- Final classes:
+  - P_PROVEN 134, CONSTRUCTION_PLACEMENT 5 (capped 139 = 30.6%);
+  - P_CANDIDATE 17;
+  - PLANT_SOLVED_IN_SPACE 65, OVERRIDE 7;
+  - R_CANDIDATE 9, PLANT_DESIGN 7;
+  - INERT 56, FLAT 6, LATCHED_PARTIAL 12;
+  - UNDECIDED 136.
+- H6-eligible: 62 strict / 65 lenient (13.7-14.3%), mostly RELAY.
+- 13 contradictions resolved; they are definitional (thresholds .60 vs .614; certificate model terms).
+  Glossary of 9 term clashes.
+- F1 corrects the principal: P-2's decay artefact does not transfer to C1 RELAY NULLs (6/41 rescued).
+  -> E-W13 scoped, E-W20 added.
+- 69 MAJ NULLs were never plant-scored: the largest open block.
+
+### W2-AA (deposited): kind_audit production tool + advisory deposit hook
+- APPLIED (NEUTRAL; research tests 22 passed):
+  - tools/kind_audit.py (stdlib; block scope by default, window scope kept for comparison; exit 1 on
+    HIGH);
+  - deposit.py records prov["kind_audit"] and never blocks; REPORT.md bytes are unchanged (tested);
+  - 15 new tests (13 tool + 2 deposit), which failed/errored before.
+- Parity with W2-I: 5047/5047 citations. The recall gaps for under-8-hex and upper-case ids are empty in
+  practice; .py has 1 true hit.
+- Current HIGH hits in harvest: the 4 known H-PLANT lines (true; verbatim deposits not edited) plus 5
+  meta-quotations (false).
+- Also fixed (comment only): H-PLANT/run_flip_mh.py:12 MH_CELL comment now says TRANSFER.

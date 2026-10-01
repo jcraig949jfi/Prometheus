@@ -136,3 +136,19 @@ C1 labels are NOT changed. Each item names its source report; [P] marks those re
   - W-O "84% stay CHANCE" is row-weighted; specimen-weighted it is 72% [63, 80].
   - B2 cross-family boundary agreements share 100% of their seeds and one code cause. They are not
     independent reproductions.
+- E-W13 SCOPE CORRECTION (W2-W F1, 2026-10-01):
+  - E-W13 holds for the A0 MATCHED counterfactual, i.e. viable decay-0 RELAY physics with decay_shift
+    raised and nothing else changed. There relay_flood's collapse is plant design.
+  - It does NOT transfer to C1's RELAY NULL cells. Over 41 RELAY NULLs with decay > 0 and relay_flood
+    <= .60, the refresh plant reaches SIGNAL level in only 6/41. It equals decay-0 relay_flood within
+    .01 in 35/41, so other dials bind there (async, cap/aloha, loss).
+  - P-1b's "multi-hop rarity tracks plant viability" survives, but via those dials, not decay (refresh
+    revives 1/16).
+- E-W20 (NULL placement, consolidated; W2-W): of 454 C1 evolve NULLs:
+  - 139 (30.6%) are physics-capped by a sound certificate (light cone + exact wake, joint ceiling, LC2,
+    or epidemic bound), plus 17 probable caps;
+  - 62-65 (13.7-14.3%) are eligible for a search-limitation reading (admissible plus a plant inside the
+    row's own genome): RELAY 54, MAJ 5-8, FLIP 3, XOR 0;
+  - 250 are open.
+  - Per-cell table: harvest/wave2/W2-W/null_placement.csv. This supersedes E-W14's 24% / 11% figures,
+    which used narrower certificates and recorded plants only.

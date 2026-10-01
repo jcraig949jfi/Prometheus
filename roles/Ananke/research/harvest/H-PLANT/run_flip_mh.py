@@ -9,7 +9,7 @@ from prometheus.ananke import assays, envs
 from prometheus.ananke.physics import Physics
 
 FLIP_CELL = "6f82f9c7d51bcef1"     # C1 wave C, FLIP at d9cc, held .479 (NULL)
-MH_CELL = "fac4aaa23a0bdcb2"       # C1 wave C, RELAY d5 at d9cc, held .5 (NULL)
+MH_CELL = "fac4aaa23a0bdcb2"       # C1 wave C TRANSFER (RELAY champion bbef66a1 evaluated at d5; not a search) at d9cc, held .5 -- corrected 2026-10-01 (W2-G F4 / W2-AA)
 
 
 def phys(cell):
