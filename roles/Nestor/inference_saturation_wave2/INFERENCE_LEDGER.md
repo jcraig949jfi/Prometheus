@@ -268,7 +268,7 @@ in completion order.
 - **New candidate.** In a diverse kin field, the newborn's inherited context is a *kin* copier's post-execution registers. A zero-dependent copier is poisoned by a kin context unless the kin's advance Δ ≡ 0. So selection *for* state-freedom should be strong, which deepens the transience puzzle rather than resolving it.
 - **Next question.** In C-A3 event replays, measure the conversion rate of state-free vs non-free members *in the realized kin context* (static, from replay snapshots). Without genomes on disk this needs a replay: a design item.
 
-### W2-1: contradiction mine (worker; report saved by Nestor). Clock about 01:00Z
+### W2-1: contradiction mine (worker; report saved by Nestor). written before 00:59Z (clock-checked)
 - **Result.**
   - Of 13 conclusions: 3 SURVIVE, 7 WEAKENED, 1 UNDECIDABLE. C4 survives with its HL = 0 geometry half undecidable; C13 is weakened by S3.
   - BROKEN parts: C10's depth-gap premise, C11's "dominate" and side-0 marker, C7's magnet dismissal.
@@ -283,7 +283,7 @@ in completion order.
   - k = 4 distinct vs identical founders: the kin-context T4(a) datum (W2-12 running).
   - The HL ≡ 0 PATTERN control.
 
-### N12: which register bits does "ZERO" supply? The HL ≡ 0 control W2-1 found missing (Nestor). Clock about 01:00Z
+### N12: which register bits does "ZERO" supply? The HL ≡ 0 control W2-1 found missing (Nestor). written before 00:59Z (clock-checked)
 - **Evidence.** `N5_cell_axis/pattern_screen.py` and `pattern_screen.json`.
   - The 16 C-ZERO-SPECIFIC donors, dense CF cell, both sides, 12 random partners per pattern.
   - Register order B C D E H L (HL) A, as in `reset_axis`.
@@ -310,7 +310,7 @@ in completion order.
 - **Next questions.**
   - Does a PATTERN world with H = L = 0x80 and everything else 0x5A rescue in-world establishment toward ZERO levels? A design item; the static prediction is about 7/16 vs 2/16 donors.
 
-### N13: C-A3's "competent" counts use the wrong context for the world they describe (Nestor, reasoning). Clock about 01:02Z
+### N13: C-A3's "competent" counts use the wrong context for the world they describe (Nestor, reasoning). written before 00:59Z (clock-checked)
 - **Observation (W2-1).** L takes over in 5/16 takeovers with ≤ 10 zero-screen-competent genomes. 27000053 reaches L = 1.0 with ≤ 4, at depth 11. 4/16 takeovers end with 0 competent genomes while L stays at 0.66-1.0.
 - **Mechanism, from code and prior results.**
   - C-A3's per-checkpoint `competent` uses `run_de.competent`: zero entry state, blank partner.
@@ -325,7 +325,7 @@ in completion order.
 - **Confidence.** Moderate. This is reasoning consistent with U8, S1b and W2-1, untested on these runs.
 - **Class.** A single-context-point ruler (W2-5 class SCP) inside a CONFIRMED verdict's own counts.
 
-### W2-6 (theory tournament), W2-2 (near-miss) and W2-8 (semantics audit): reports saved by Nestor. Clock about 01:25Z
+### W2-6 (theory tournament), W2-2 (near-miss) and W2-8 (semantics audit): reports saved by Nestor. written before 01:01Z (clock-checked)
 - **W2-6.**
   - Six theories collapse into **F, the supplied rewrite field**: content T3, rules T2+T5, dynamics T7+T1, within an iterated T6.
   - T4 is eliminated as a theory. R = T4(a) (home advantage) and T4(c′) (generic evolved epistasis) remain open.
@@ -352,3 +352,60 @@ in completion order.
   2. **Founder independence.** W2-6 says "decided for T7" (joint p 0.108). W2-1 and W2-5 say the multi-founder excess is real (k = 1 batches homogeneous; C-CRITICAL-MASS own-data p 0.005-0.014). W2-12 is assigned.
   3. **N4 ("copy errors dominate supply, so the 8x ≈ 7x match is coincidental") is revised by D4.** World-mutation supply in ffa6 really is about 8x 7ae3's and hits opcodes 87% of the time. So the operator asymmetry is a real candidate cause, and every 7ae3-vs-ffa6 contrast is confounded by it. N4's copy-error mechanism (MKL dominance in 7ae3) still stands; its "coincidental" verdict is withdrawn and becomes "confounded and undecided".
 - **Actions.** X-TASK-GATE erratum extended with W2-8's D1/D6/D15/D7/D9/D13/D14. C9 H3 → INVALID and C-A3 final-checkpoint re-read are proposed for FINDINGS in the Wave-2 handoff.
+
+### N14: reconciling W2-8 D4 (the SLOTTED operator confound) with N4-N7 (Nestor, reasoning from code). written before 01:01Z (clock-checked)
+- **Code fact (world.py:516-551).**
+  - The per-genome world-mutation *attempt* rate is the same in both cells: about 64 × rate per epoch.
+  - In 7ae3 (Z8_64, OPERAND), attempts at instruction-start bytes are **skipped**. About 52 of 64 positions are instruction starts, so only about 12 positions are mutable. That gives about 5-7x fewer effective world mutations: ARC3's 34 vs 239.
+  - In ffa6 (SLOTTED), the slot-offset rule ignores the operator, and 87% of edits hit opcodes (W2-8 D4).
+- **What N4 got wrong.** N4 called the 8x ≈ 7x hazard agreement "likely coincidental", because copy errors dominate supply in runaways. **That is withdrawn.** World-mutation supply differs about 7x between cells and reaches opcodes only in ffa6. It is a live candidate for the ffa6 > 7ae3 internalization difference, along with copy errors, which are present in both cells. Status: CONFOUNDED / UNDECIDED. N4's other point stands: 7ae3's state-free bytes were built by copy errors (MKL 91%).
+- **Per-epoch establishment arithmetic** (CF uses the full rate, C7 about 1/7 of it):
+
+  | effect | CF | C7 | implication |
+  |---|---|---|---|
+  | escape from self-poisoning (N5) | ≈ 0.128 × 1.35% ≈ 0.17%/epoch | ≈ 0.018 × 0.42% ≈ 0.008%/epoch | ≈ 20x CF advantage, but only ≈ 1.7% over a 10-epoch window: too small |
+  | destruction of zero-context copying (N6) | ≈ 0.128 × 18% ≈ 2.3%/epoch | ≈ 0.018 × 14% ≈ 0.26%/epoch | predicts CF establishes **less** |
+
+- **Net.** The operator confound does not explain CF's higher establishment. That agrees with W2-6 C9 (the cell axis is at the noise floor; the code-inert structure factor shows an equal effect) and with N6/N7.
+- **What D4 does affect.** Long-horizon contrasts: internalization over thousands of epochs, MUT composition, X-MAT tag mixes. Every 7ae3-vs-ffa6 contrast must name it.
+- **Confidence.** Moderate-high (code-derived, per-epoch arithmetic). Establishment-window effects are second-order.
+
+
+### N15: kin pairing protects against BASE erosion. A candidate population-level mechanism for W2-2's "second regime" (Nestor). Written at 01:05Z (clock)
+- **Evidence.** `N15_kin_erosion/kin.py`, `kin_fine.py` (+ .json).
+  - 7ae3, own cell, BASE write-back, copy errors on.
+  - The founder is chained through successive interactions, carrying its BASE-written content and its registers.
+  - Partners are exact copies of the founder's current content with probability q, otherwise fresh random genomes.
+- **Result, 12-step lives (150 lives).**
+
+  | q | founder identity, step 1 → 12 | conversions per step at the end | still a copier at step 12 |
+  |---|---|---|---|
+  | 0 | 0.66 → 0.08 | 0.013 | 0.02 |
+  | 1 (all kin) | 0.99 → 0.87 | ≈ 0.40 | 0.52 |
+
+  Intermediate q falls in between.
+- **Result, 20-step lives (300 lives): mean lifetime conversions by q.**
+  - q 0 → 1.20
+  - q 0.02 → 1.44
+  - q 0.04 → 1.52
+  - q 0.06 → 1.53
+  - q 0.10 → 1.60
+  - q 0.15 → 1.74
+
+  Absolute values are inflated, because overwritten individuals are not removed here. The relative boost is about 25-30% at q 0.04-0.06, i.e. 10-15 kin among 256.
+- **Reading.**
+  - Under BASE, erosion comes from non-kin partners. A copy written onto an identical copy changes nothing.
+  - Lineage density raises the kin-pairing fraction (q ≈ N/256), which lowers erosion and raises lifetime fecundity. That is **positive density dependence (an Allee effect)**.
+  - W2-2's single-individual BASE law is near-critical (m ≈ 0.93). A 25-30% boost at about 10-15 members plausibly crosses 1, giving a **size threshold**. That fits X-TICKET: win given ≥ 8 members 7/9, ≥ 16 5/5, and the empty 27-162 gap.
+  - It is a **population-level term absent from the single-individual law**, but it is still inside F: the iterated map against the *realized* partner distribution, not uniform random partners.
+- **Consistency checks.**
+  - U-W5 (no erosion change up to 15 members, ρ 0.02) does not contradict this. At N ≤ 15, q ≤ 6%, and the per-interaction erosion change is small. The effect accumulates over a lifetime.
+  - Under ATOMIC (no erosion) the mechanism predicts no Allee effect, and ATOMIC is quantitative (W2-2). That agrees.
+- **Confidence.** Moderate. The mechanism and direction are clear; the threshold location is approximate.
+- **Strongest objection.**
+  - Individuals were not killed on overwrite.
+  - Kin partners here are exact copies of the *current* founder. Real kin are diverged copies, and the protection drops with divergence.
+  - W2-2's h2 found that lineage-*touched* partners were worse. Exact kin and touched partners differ.
+- **Next questions.**
+  - Fold q(N) into W2-2's branching law and predict the runaway fraction and the gap. W2-14 is working on this.
+  - Test protection against diverged kin (1, 3, 8 byte differences).
