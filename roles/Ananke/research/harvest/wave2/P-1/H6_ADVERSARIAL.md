@@ -128,3 +128,36 @@ placement (MAJ), and plant viability (multi-hop). The residual uncapped, plant-v
 search limitation is possible. Their placement is pending W2-J (XOR), W2-L (FLIP) and W2-M (MAJ). A
 family-level H6 claim requires >= 3 cells per family meeting W2-D's F-R/P, F-U and F-V, plus F-S
 (response to M/budget/seeding)."
+
+## 11. v3 revision (after W2-C, W2-I and the first P-2 decay result, ~01:25Z)
+Three new constraints:
+1. NULL ADMISSIBILITY (W2-C F1). Silenced sensors or a cut channel turn SIGNAL into a NULL with no
+   alarm. A NULL is not interpretable as search- or physics-limited until it passes a broken-experiment
+   check (W2-C guards plus feasibility: reachable actuator, delivered schedule). W2-O is running this
+   on 16 recorded NULLs.
+2. THE ONE-HOP WALL IS SHARP (W2-I F1). Every tested law, on its own ring, goes from SIGNAL at one hop
+   to exactly .500 at two hops (RELAY 4/4, MAJ 3/3), with nothing in between.
+   - relay_flood crosses 2 hops at the same physics (.97-.98 at d9cc d5).
+   - At d9cc, therefore: multi-hop is representable (R excluded) and physically allowed (P excluded),
+     and the evolved laws are categorically one-hop.
+   - That is strong evidence for an S-type limit SPECIFIC to relaying: C1's search never discovered
+     forwarding. It never needed to, because 77% of RELAY tasks were one-hop.
+   - This is a selection-environment explanation (the task distribution did not reward relaying),
+     distinct from "unreachable".
+   - Distinguishing prediction: a search on a multi-hop-only task distribution (authorization needed)
+     finds relays if this explanation holds.
+3. PLANT-SPECIFIC "PHYSICS-DEAD" (P-2). At decay_shift 3, relay_flood falls .797 -> .625 while a
+   3-line refresh variant keeps .797 (first matched cell; 2 more pending). If this holds, C1's
+   relay_flood-based "physics-dead" map (decay 3% viable, and the multi-hop plant-dead rows of P-1b)
+   overstates physical impossibility. Many of those rows are plant-design failures.
+
+v3 statement:
+"C1 NULLs fall into four classes:
+- (i) construction-capped: light cone (XOR 43%, FLIP 29%), MAJ placement, timing ceilings (W2-P);
+- (ii) plant-design-'dead' but physically open (decay; P-2);
+- (iii) categorically one-hop laws facing multi-hop tasks. The search never found forwarding, and the
+  task distribution rarely rewarded it (selection-environment limit);
+- (iv) a residue of uncapped, plant-solvable NULLs, the only ones where 'search reachability' in the
+  narrow sense is testable. One fully chained cell exists (FLIP @ d9cc: S, isolated peak, blind selector).
+H6 as a GENERAL claim is replaced by this four-class decomposition. Its falsifiers are per class
+(W2-D section 5)."

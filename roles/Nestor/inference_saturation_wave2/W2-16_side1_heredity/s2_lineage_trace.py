@@ -36,7 +36,7 @@ def interact_traced(G, side, sid, g, k, P, vb=None):
             "in_donor_half": sum(1 for pc in pcs if d0 <= pc < d0 + n),
             "in_victim_half": sum(1 for pc in pcs if v0 <= pc < v0 + n)}
     lds = [{"by": {donor_who: "D", victim_who: "V"}[w], "src": s & 0x7f, "dst": d & 0x7f, "n": m, "step": st}
-           for w, s, d, m, st in ld]
+           for w, s, d, m, st, _pc in ld]
     return {"child": child, "authorship": au, "own_after": own_after, "steps": steps, "ldir": lds}
 
 

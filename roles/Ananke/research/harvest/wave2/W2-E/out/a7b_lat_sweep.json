@@ -1,0 +1,54 @@
+{
+ "env": {
+  "family": "RELAY",
+  "d": 3,
+  "delta": 8,
+  "gap": 8,
+  "cue_len": 2,
+  "amp": 256,
+  "amp_teacher": 128,
+  "amp_dist": 64,
+  "trials": 12,
+  "block": 4,
+  "flip_p": 0.3,
+  "n_maj": 5,
+  "iti": 2,
+  "variant": 0
+ },
+ "lat": [
+  1,
+  1,
+  1
+ ],
+ "decompiled": [
+  " 0 SHR   PAY0 = S1 >> 13",
+  " 1 XOR   EMIT = XOR(SENSE, T1)",
+  " 2 MAX   PAY1 = MAX(IN0_1, S1)",
+  " 3 ADDI  S0 = IN0_1 + -49",
+  " 4 MOD   PAY0 = MOD(S1, PAY0)",
+  " 5 ADDI  S0 = IN0_1 + -107",
+  " 6 MOV   PAY1 = SENSE",
+  " 8 SEL   RVAL = (RVAL > 0) ? CNT0 : RVAL",
+  " 9 MOD   RVAL = MOD(S1, SENSE)",
+  "10 MAX   RVAL = MAX(S0, RVAL)",
+  "11 ADDI  T2 = PAY0 + -112",
+  "12 CONST T2 = -2 << 6",
+  "13 ADDI  T2 = IN0_1 + -107",
+  "14 WIMM  S1 = WIMM(RVAL, IN0_1)",
+  "15 ADDI  S1 = SENSE + -71"
+ ],
+ "lat_base+0": 0.84,
+ "lat_base+1": 0.899,
+ "lat_base+2": 0.846,
+ "lat_base+3": 0.701,
+ "lat_base+4": 0.641,
+ "delta-2": 0.865,
+ "delta-1": 0.917,
+ "delta+1": 0.801,
+ "delta+2": 0.654,
+ "clock": {
+  "cpu_s": 161.59,
+  "wall_s": 153.31,
+  "threads": 2
+ }
+}
