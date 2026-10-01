@@ -1005,3 +1005,21 @@ Store final, and periodic, genome bytes plus registers in every world run. Five 
 - Fix: every worker prompt must now require searches to exclude `**/*holdout*/**` and `**/nestor_secrets/**`.
 
 **Record defect.** W2-22's seeds 9_999_000-10_000_199 overlap X-DECAY, X-STERILE and X-ATOMIC. The verdict compares within one run set, so it is unbiased.
+
+
+### W2-26: the "3.5% vs 7.5e-4" contradiction is RESOLVED (report saved; Nestor). Written at 02:55Z (clock)
+- **Result.** W2-17's 3.5% control "switch" rate is an **event-side tag, not a 7ae3 genotype switch**:
+  - 72% of control switch edges have a NON-7ae3 parent: foreign side-0 copiers, or labels surviving wholesale in-place rewrites;
+  - 0/36 are birth copy-errors.
+- **Within 7ae3, side-0 converters arise mostly IN PLACE** (execution writes, about 2e-2 per child lifetime) and through **carried register state**. The birth copy-error route is 2.5e-3/birth, within about 3x of N17d.
+- **Verdicts.**
+  - "Morph necessary to cross ~27": **REFUTED**. 11/11 controls and 7/12 runaways crossed without one.
+  - "7ae3 morph necessary for persistence": **REFUTED**. 5/12 runaways have no 7ae3 morph; their side-0 converters are foreign.
+  - "Some side-0 converter precedes depth 20 in every runaway": association only, 12/12 vs 4/11, p ≈ 1.4e-3, outcome-confounded.
+- **Effect on prior entries.**
+  1. **W2-17's two-type mixture is DOWNGRADED.** Its "types" are not 7ae3 genotypes. What it measured is a heterogeneous field of side-0 replicators, many foreign. **The persistence anomaly remains open (cause unknown).** It is now associated with side-0 replicators of any origin.
+  2. **N17e / W2-24 "founder register-robust" is QUALIFIED.** Robust under bank and ZERO contexts, but **self-carried in-world contexts convert some side-1 7ae3 genomes at side 0** (0.91-1.0 vs 0.13-0.18 under ZERO). This is a fourth instance of the "screen context ≠ world context" lesson (after N11, N13 and W2-34).
+  3. **The lineage label (oid / anc) survives wholesale content replacement in place.** Founder-label readouts therefore overcount heredity. This is the same family as W2-34's "L = 1.0 absorbing" and W2-35's rotation leak (pending).
+  4. **The W2-32 X-IMPLANT-MORPH design stays useful.** It tests a genotype causally, independent of event tags. W2-26 adds a foreign-side-0-copier arm.
+- **Process note.** Two workers have now exceeded CPU caps by 15-20% (W2-21, W2-26). Both were self-reported and both stopped only their own tasks. Total Wave-2 CPU stays well inside the seat envelope. The ledger total will be tallied at close.
+- **Confidence.** High for the decomposition and timing (deterministic). Low for any causal claim about persistence.
