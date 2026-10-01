@@ -1147,3 +1147,62 @@ Store final, and periodic, genome bytes plus registers in every world run. Five 
 - K4 UNRESOLVED and underpowered (W2-29: 8/22 vs 5/33).
 - K5 untested in-world.
 - **F\* is now falsifiable and has passed one weak frozen test. No kill.**
+
+
+### W2-36: CVT-R certificate audit; false positives and seed noise (report saved; Nestor). Written at 03:08Z (clock)
+
+**Result**
+- **What the rule checks.** CVT-R accepts on a single row whose g2 signature recurs at g3 or g4 (`artemis_p11/certs.py:73,84`). It never checks:
+  - that the parent's variant is inherited;
+  - that the lineage is faithful;
+  - more than one seed.
+- **False positives.**
+  - Three recorded ACCEPTs belong to genomes whose own lineage dies at g2 or g3 (cf974a34 ×2, 40ff8d01, bac0f6af). They pass through rescue mutants.
+  - A constructed non-reproducer (HALFBLANK) passes 9/9.
+- **Seed noise.** Single-seed verdicts are coin flips: 6 recorded verdicts flip against the K = 8 majority, and 2 are ties. The noise is exactly per-seed survival of the base lineage.
+- **Proposed repair R\*.** Add inheritance, a lineage floor, and K = 8 with three outcomes. Positives pass and negatives fail.
+- **Side finding.** The HALT victim arm is not neutral for side-0 copiers: an inherited 0x76 HALT at offset 0 kills g2. This qualifies the side-0 "no partner" baselines in W2-16 and W2-31. Their side-1 conclusions are unaffected.
+
+**Nestor attack and cross-links**
+1. **Same failure class as before.** This is "similarity is not copying" (memory feedback_similarity_is_not_copying): a recurring-difference test passes on rescue neighbours. It is the fourth heredity ruler in Wave 2 shown to admit non-transmission:
+   - CVT-R (here);
+   - P-11 side-1 rates, which measure order hazard (W2-16);
+   - lineage labels in BASE (W2-26, W2-34, W2-35);
+   - X-DD-ESTABLISH's "ESTABLISHED" (W2-34).
+2. **Effect on W2-16, W2-21 and W2-31.**
+   - Their side-1 CVT-R counts (3/17 → 10/17 → 16/17) are single-seed.
+   - Their **per-interaction good-copy counts (628 → 895 → 1020 of 1020) are deterministic and carry the causal claim.** The side-1 causal chain therefore stands on the per-interaction measure.
+   - The CVT-R counts should be re-stated as single-seed indicators.
+3. **Recommendation.** Artemis (instrument owner) and the operator should consider freezing R\* as an amendment, without relabelling past verdicts. Sent to Artemis and Aporia via comms.
+
+**Confidence**
+- High: the rule reading and the false positives.
+- Medium: R\*'s thresholds.
+
+
+### W2-41 (carried context) and W2-45 (early warning): saved; Nestor attack. Written at 03:08Z (clock)
+
+**W2-41**
+- **Result.** "Register-robust" holds under **every** context tested for F, C3, AC, 5C and C3+AC. Intact 7ae3 code overwrites its whole register file by pc 29, before the copy setup. Dead-register test: 0 differences over 8,822 contexts.
+- **Correction to my W2-26 entry.** W2-26's context-dependent converters are **foreign genomes** (52/53). The "7ae3" tag came from the *parent's* family, not the assayed genome's. The only 7ae3 case (XTK_35) has lost its HL initialiser (byte 1).
+- **Qualification withdrawn.** My W2-26 ledger line *"N17e / W2-24 founder register-robust is QUALIFIED"* is **WITHDRAWN**. That is my own error, caught by W2-41: I took a parent-family label as the genotype.
+- **World-vs-static gap.** In-world, family behaviour matches the static profile (static 0.350/0.365 vs world 0.348/0.365). The gap is **genotype composition**: only 1.4% of family interactions involve the exact founder.
+
+**W2-45 (directive B)**
+- **Result.**
+  - W2-2's EW-1/EW-1b fire on 13/13 FULL intermediates and on about 96% of BANK intermediates. They measure early growth and do not discriminate runaway from intermediate.
+  - Out of sample on FULL the verdict is UNRESOLVED (data-limited). All four BANK arms FAIL.
+  - Pre-registered EW-N (side-0 or C3 by epoch 20) FAILS (6/8 vs 7/14).
+  - **The empty 27-162 gap does not replicate:** FULL has 13/600 intermediates, matching the single law's 2.4%.
+- **Nestor attack.**
+  - W2-45 states "the runaway excess persists (1.5% vs 0.03%)". That compares the world's B with the infinite-population law's tail, which is **exactly the unlike-readout comparison W2-14 resolved.** On the shared readout P(reach ≥ 27), the law gives 0.025 and FULL gives 22/600 = 0.037, in rough agreement.
+  - The "excess" is post-27 persistence, which W2-29 shows is modest against field processes.
+  - **So W2-2's bistability is now fully dissolved.**
+    - The gap does not replicate (W2-45).
+    - The excess is a readout mismatch (W2-14).
+    - Persistence against field processes is ≤ about 2x and not significant (W2-29).
+    - The morph is not necessary (W2-26, W2-29).
+  - **Handoff candidate for "strongest Wave-1 conclusion killed":** "BASE has a qualitatively different second regime."
+- **Early warning (directive B), net.** No observable tested separates runaway from intermediate before about 27 births. The best available statement is "early growth is necessary, not sufficient" (EW-4 necessity holds 8/8).
+
+**W2-36** is logged separately above. Comms to Artemis follows.
