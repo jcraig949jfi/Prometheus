@@ -531,3 +531,5 @@ W2-U (XOR/FLIP ceilings + A0 normalisation)
   - So C1's B-wave delta transect was selected by a timing identity.
 - Combined with E-W13 (decay artefact for relay_flood), "decay" survives normalisation as an effect on
   the RELAY PLANT, but P-2 shows it is plant-design, not physics.
+- X-2 (Nestor #1214): Nestor's W2-21 force-killed PID 18960 at ~01:55Z. This most likely ended W2-R's
+  tune.py part 1 early (exit 1, no traceback). Coverage reduced, no result wrong; replied #1215-ish.
