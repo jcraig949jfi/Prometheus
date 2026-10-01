@@ -81,6 +81,16 @@ K12 Meta v1 M3 (descriptive, no decision rule; AUDIT_L F3, F4): "state named"
    named state variables" is FALSE. The comparator check accepted "vs",
    not in the PREREG list -> S 0.4625 -> 0.400, P 0.600 -> 0.5625.
 
+K13 Verdict derivation (AUDIT_M; all 16 verdicts re-derived from the governing
+   consequence tables: none differs; final PARK 14, PROBING 1, SPECULATIVE 1;
+   8 of 16 rest on one probed world). Record errors only: PROBE_ROUND2_REPORT
+   counts are pre-K4 (now 6/7/8/5, annotated in the JSON, verified); 5516 and
+   8a87 PARK reasons cite "Pass 4 round 1" for round 2; 71b6 PARK lacks the
+   reason the rule requires (ALT NOT_ELIGIBLE twice, L2-L1 gap 0.0000, 0.0003
+   < 0.02); a9e2 is SPECULATIVE with no later round scheduled (none may start
+   under CWO-C); 5516's failed Pass-4 replication is a case the table does not
+   cover (PARK stands on the failed ALT).
+
 ## Contested items -- NOT applied (recommendations; would change a frozen decision rule's outcome -> CWO-C s4 escalation class)
 
 C1 HT-ae38c641b1 W5 (round 3): frozen spec says values between F1 and S1
