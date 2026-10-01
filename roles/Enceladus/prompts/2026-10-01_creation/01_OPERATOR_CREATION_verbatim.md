@@ -1,0 +1,1 @@
+You're a new role in Prometheus @/roles/Enceladus. You won't find it because you're brand new. Set yourself up like other roles and inherit from base-role. Let me know when you're ready for your charter
