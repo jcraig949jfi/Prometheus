@@ -451,3 +451,83 @@ Other:
   earlier trials add zero-mean noise). W2-B P1's "exactly .5 per pair" holds only with no information
   at all.
 - Inward placement is not uniformly easier (12 rows get lower ceilings).
+
+### Batch ~02:25Z: W2-N, M, R, Q, J, S, T, U (all deposited)
+
+W2-N (swap interval inflation; resolves the W2-F vs W2-H contradiction)
+- Namespaces differ only in world seeds. Direct f(DF) = 1.00 [.91, 1.11] (M=512, 124 groups); fresh
+  namespaces give 1.00 [.78, 1.39]. f = 2 is rejected.
+- The AUDIT3 "excess" is fully explained: 22 rows = 10 measurements = 8 specimens, plus plug-in vs
+  two-draw noise, plus first-draw selection (excluded AMBIGUOUS rows hid cert->INDET flips). The
+  estimator explains 0/22, which refutes W2-H's attribution.
+- Gate: keep = Phi(d/(sqrt2 f)) with f = 1 (1.12 robust); 2.33-2.6 SE for 95% keep.
+- The normal run is shared per specimen (r = .993), so the specimen is the cluster unit.
+
+W2-M (MAJ integration plants)
+- Plant family hits Bayes .837 at known answers.
+- One-hop MAJ placed: 18/19 SIGNAL cells and 8/15 sampled one-hop NULLs have a SIGNAL-level plant. The
+  plant beats the champion at 8 SIGNAL cells (S-partial).
+- 11/19 SIGNAL champions are matched by a single-sensor transport, so they do not demonstrate
+  integration.
+- INTEGRATION is UNATTAINABLE (ceiling .701) at the physics of 13/19 SIGNAL rows. It is genuine at
+  4781b0a1, where the plant matches and single-sensor transport cannot.
+- Multi-hop MAJ: 25/56 physics-capped; 0/15 placed.
+- The energy economy binds MAJ programs (c_op per line).
+
+W2-R (bonus-linear codes + timing)
+- W2-A1 F4's noise-cancelling bonus leaves NO footprint on C1 champions (OR 1.54, p = .17). Scope it as
+  a potential bias.
+- The bonus excess actually paid comes from one-sided codes (noise-0 RELAY SIGNAL). SIGNAL champions
+  are linear, not thresholded (the scorer applies sign).
+- Timing: 4/16 comm champions are credibly mis-tuned (+.06-.09), all in the sync-2 delta-8 RELAY
+  family. Paired M=8 selection could see such gains, so the cause is reachability or the stop, not
+  selector blindness.
+
+W2-Q (distractor strobe + lottery prevalence)
+- Distractor-schedule HOLD memory is 5/86 (5.8%; 0 new); 94% is schedule-robust under fair edits.
+  Broad-magnitude collapses come from distractors near cue amplitude (an ill-posed test).
+- Same physics + env gives strobe vs robust champions, so mechanism is decided by search seed (H5
+  fails).
+- Rule-mosaic lottery: 5/8 setrule=0 rules>1 SIGNAL cells and 6/7 near-SIGNAL. Only the actuator's
+  initial rule matters (R^2 .69-.96); best pin is +.09-.21 above normal.
+- W2-E's a1 r0 split used unmirrored seeds (16-38% wrong); corrected .98/.49.
+- Lottery cells are over-represented among census corrections (OR 6.5, p = .019).
+
+W2-J (XOR across all 83 rows)
+- New reach bound LC2 (fanout, loss, async incl. sensor wake, dup, jitter) reduces to lightcone exactly
+  in the deterministic limit.
+- XOR classes: CAPPED-LC1 36 + CAPPED-LC2 26 = 62/83 (75%) physics-capped. H6 is FALSE there.
+- PLANT-SOLVED 6 (4 with a 16-line C1-space plant, 0 within the row's own sampled genome), so these
+  are search OR representation limited. UNDECIDED 15 (8 async, 7 economy).
+- The NOR cheat passes SIGNAL at 5/6 XOR-feasible rows.
+- XOR_PIVOT has false negatives at partial reach. A conditional-symmetry ruler XOR_SYM separated 9/9.
+
+W2-S (FLIP_CHANGE + physics removal)
+- No recorded FLIP reading rests on copy accuracy (only 996716ac > .5, and symmetric).
+- W2-L's FLIP_CHANGE is UNSOUND: 4 anti-copy champions pass it with zero inference. W2-L F5 has a
+  proof error (teacher copy is always wrong on changed cues).
+- The sound certificate is B = mean(same, changed) lo99 > .75; enumeration proves non-inferring
+  policies stay <= .75.
+- 5/14 R-candidates are copy-range.
+- An epidemic bound proves P at 7 global FLIP rows.
+- Revised FLIP placement: P 31 / PLANT-SOLVED 3 / R-cand 9 / PLANT-DESIGN (economy) 9 /
+  P-candidate 11 / UNDECIDED 19.
+
+W2-T (population NULL admissibility, 454 + 58 HOLD)
+- BROKEN 0/113 under full guarded replay (95% UB 3.2%); 0/454 on partial checks.
+- Admissible for any search-limitation reading: 48.2% strict / 57.7% lenient [.53, .62].
+- Plant-backed (checklist item 12): only 51/454 = 11.2%, ALL RELAY.
+- The "TRUNCATED" class (12) is early-latch champions (partial competence), renamed LATCHED-PARTIAL.
+- lcwake exact-wake bound validated (60/60 match, 0/166 SIGNAL violations).
+
+W2-U (XOR/FLIP ceilings + A0 normalisation)
+- Construction-capped NULLs: 111/454 (24.4%; 109-113 robust). Async adds XOR +3, FLIP 0, MAJ +1.
+- 30 FLIP rows are copy-capped.
+- A0 RELAY dial ranking, ceiling-normalised: the top 3 becomes decay / economy / topology. delta falls
+  from rank 2 to 12, d from 6 to 13.
+  - "Enough time budget" is mostly the light-cone identity (79%/75%/64% of the raw spread).
+  - decay, economy and loss survive.
+  - Topology strengthens (global worst once normalised).
+  - So C1's B-wave delta transect was selected by a timing identity.
+- Combined with E-W13 (decay artefact for relay_flood), "decay" survives normalisation as an effect on
+  the RELAY PLANT, but P-2 shows it is plant-design, not physics.

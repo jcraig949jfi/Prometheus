@@ -1,0 +1,10 @@
+--- roles/Ananke/research/harvest/wave2/W2-E/a1_lottery.py
++++ roles/Ananke/research/harvest/wave2/W2-E/a1_lottery.py
+@@
+         if name == "fresh":
+             # rule index at actuator at t=0 from engine init: rerun 0 ticks
+-            w0 = World(ph, np.repeat(g[None], M, 0), [s for s in seeds(base, M)], device="cpu", schedule=ep.schedule)
+-            r0 = w0.r.numpy()[np.arange(M), a]
++            # the run uses MIRRORED world seeds (pair partners share ws, hence share r0);
++            # recompute r0 from the same mirrored seeds, or better read w.r0 from the run itself.
++            r0 = w.r0.numpy()[np.arange(M), a]
