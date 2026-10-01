@@ -91,6 +91,49 @@ def lower_bound(n, k, alpha, grid=1024):
     return Fraction(lo, grid)
 
 
+# ---------------------------------------------------------------- power (MEAS-08)
+
+def k_pass(n, R, alpha):
+    """Smallest count that earns PASS at this n."""
+    p0 = Fraction(1, R)
+    lo, hi = 0, n + 1                      # tail_ge(n, 0) = 1 > alpha ; tail_ge(n, n+1) = 0 <= alpha
+    while hi - lo > 1:
+        mid = (lo + hi) // 2
+        if tail_ge(n, mid, p0) <= alpha:
+            hi = mid
+        else:
+            lo = mid
+    return hi
+
+
+def k_fail(n, R, alpha, delta):
+    """Largest count that earns FAIL at this n, or -1 if no count does."""
+    p1 = Fraction(1, R) + delta
+    lo, hi = -1, n                         # tail_le(n, -1) = 0 <= alpha ; tail_le(n, n) = 1 > alpha
+    while hi - lo > 1:
+        mid = (lo + hi) // 2
+        if tail_le(n, mid, p1) <= alpha:
+            lo = mid
+        else:
+            hi = mid
+    return lo
+
+
+def power(n, R, expect, p_true, alpha=Fraction(1, 10 ** 6), delta=Fraction(1, 20), n_min=200):
+    """Exact probability that class_exclusion returns `expect` when the count is
+    Binomial(n, p_true). Computed before a run, from the eligible count alone."""
+    if n < n_min:
+        return Fraction(1) if expect == INDETERMINATE else Fraction(0)
+    kp, kf = k_pass(n, R, alpha), k_fail(n, R, alpha, delta)
+    p_pass = tail_ge(n, kp, p_true)
+    p_fail = tail_le(n, kf, p_true) if kf >= 0 else Fraction(0)
+    if expect == PASS:
+        return p_pass
+    if expect == FAIL:
+        return p_fail
+    return 1 - p_pass - p_fail
+
+
 # ---------------------------------------------------------------- class exclusion
 
 def class_exclusion(n, k, R, alpha=Fraction(1, 10 ** 6), delta=Fraction(1, 20), n_min=200):
@@ -321,6 +364,58 @@ def leak_probe(P, train_lives, test_lives, leaky=False, alpha=Fraction(1, 10 ** 
     out = novel_sanity(n, k, P.R, alpha=alpha, n_min=n_min)
     out["probe"] = "observation -> answer table"
     return out
+
+
+# ---------------------------------------------------------------- census (eligible counts before any organism runs)
+
+def _episode_sets(P, life):
+    """For each episode, the list of stimuli in presentation order."""
+    return [[int(wm.stimulus(P.seed, life, ep, t, P.K)) for t in range(P.T)] for ep in range(P.E)]
+
+
+def census_types(P, life0, nlives):
+    """Counts of NOVEL, REPEAT and PROBE trials over a block of lives, from the
+    schedule alone. No organism is involved, so this can be done before a run."""
+    n_novel = n_repeat = n_probe = 0
+    for life in range(life0, life0 + nlives):
+        earlier, probed, repeated = set(), set(), set()
+        for ep_stims in _episode_sets(P, life):
+            this_ep = set()
+            for s in ep_stims:
+                if s in earlier and s not in this_ep and s not in probed:
+                    n_probe += 1
+                    probed.add(s)
+                elif s not in earlier and s in this_ep and s not in repeated:
+                    n_repeat += 1
+                    repeated.add(s)
+                elif s not in earlier and s not in this_ep:
+                    n_novel += 1
+                this_ep.add(s)
+            earlier |= this_ep
+    return {"novel": n_novel, "repeat": n_repeat, "probe": n_probe}
+
+
+def census_interchange(P, life_pairs, split):
+    """Eligible trials for the interchange ruler, from schedules and mappings alone."""
+    n = 0
+    for la, lb in life_pairs:
+        eps = {la: _episode_sets(P, la), lb: _episode_sets(P, lb)}
+        ans = {la: answers(P, la), lb: answers(P, lb)}
+        for own, donor in ((la, lb), (lb, la)):
+            donor_seen = set(s for ep in eps[donor][:split] for s in ep)
+            post = set(s for ep in eps[own][split:] for s in ep)
+            n += sum(1 for s in post if s in donor_seen and ans[own][s] != ans[donor][s])
+    return n
+
+
+def census_lesion(P, lives, split):
+    n = 0
+    for life in lives:
+        eps = _episode_sets(P, life)
+        seen = set(s for ep in eps[:split] for s in ep)
+        post = set(s for ep in eps[split:] for s in ep)
+        n += len(seen & post)
+    return n
 
 
 # ---------------------------------------------------------------- bulk evaluation

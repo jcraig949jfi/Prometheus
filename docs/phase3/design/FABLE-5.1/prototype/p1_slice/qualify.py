@@ -40,8 +40,11 @@ from rulers import FAIL, INDETERMINATE, PASS
 HERE = pathlib.Path(__file__).resolve().parent
 ALPHA = Fraction(1, 10 ** 6)
 DELTA = Fraction(1, 20)
-N_LIVES = 1200           # sealed lives for section A
-N_PAIRS = 250            # sealed life pairs for interchange
+VERSION = 2              # v1 failed its gate: see PREREG_v2.md
+N_LIVES = 2400           # sealed lives for section A (v1: 1200)
+N_PAIRS = 500            # sealed life pairs for interchange (v1: 250)
+BASE = ru.SEALED_BASE + 5_000_000    # v2 uses sealed lives that v1 never touched
+MIN_POWER = Fraction(99, 100)        # every preregistered verdict must be attainable with this power
 SPLIT = 4                # episode boundary at which interventions happen
 TRAIN_LIFE_OF_LOOKUP = 7
 
@@ -66,6 +69,63 @@ EXPECTED = {
 }
 
 
+def c_pairs():
+    return [(BASE + 200_000 + 2 * i, BASE + 200_001 + 2 * i) for i in range(N_PAIRS)]
+
+
+def c_lives():
+    return range(BASE + 300_000, BASE + 300_000 + 2 * N_PAIRS)
+
+
+def power_gate(P):
+    """MEAS-08 as a gate. From the schedules alone (no organism), count the
+    eligible trials of every preregistered verdict and compute the exact
+    probability of obtaining that verdict if the organism is what it was
+    designed to be. Refuse to run if any is below MIN_POWER.
+
+    For the graded builders the count is treated as Binomial(n, p(m)). The true
+    count has a fixed part and so a smaller variance, which makes this
+    conservative.
+    """
+    cen = ru.census_types(P, BASE, N_LIVES)
+    n_inter = ru.census_interchange(P, c_pairs(), SPLIT)
+    n_les = ru.census_lesion(P, c_lives(), SPLIT)
+    chance = Fraction(1, P.R)
+
+    def pm(m):
+        return Fraction(m, P.K) + (1 - Fraction(m, P.K)) * chance
+
+    true_build = {"builder(8)": pm(8), "builder(6)": pm(6), "builder(4)": pm(4), "builder(2)": pm(2),
+                  "builder(0)": chance, "holder(8)": chance, "constant": chance, "lookup": chance,
+                  "leak_reader": chance}
+    true_hold = dict(true_build)
+    true_hold["holder(8)"] = Fraction(1)
+    rows = []
+    for name, exp in EXPECTED["A_build"].items():
+        rows.append(("A build " + name, cen["probe"], exp, true_build[name]))
+    for name, exp in EXPECTED["A_hold"].items():
+        rows.append(("A hold " + name, cen["repeat"], exp, true_hold[name]))
+    lab = {"FLIP": PASS, "NO-EFFECT": FAIL}
+    inter_true = {"builder(8)": Fraction(1), "holder(8)": chance, "builder(8) sham": chance}
+    for name, exp in EXPECTED["C_interchange"].items():
+        rows.append(("C interchange " + name, n_inter, lab[exp], inter_true[name]))
+    les_true = {"builder(8) used cells": chance, "builder(8) unused cells": Fraction(1)}
+    for name, exp in EXPECTED["C_lesion"].items():
+        rows.append(("C lesion " + name, n_les, exp, les_true[name]))
+    table, ok = [], True
+    cache = {}
+    for name, n, exp, p in rows:
+        key = (n, exp, p)
+        if key not in cache:
+            cache[key] = ru.power(n, P.R, exp, p, ALPHA, DELTA)
+        pw = cache[key]
+        ok &= pw >= MIN_POWER
+        table.append({"cell": name, "eligible": n, "expected": exp, "designed_true_rate": float(p),
+                      "power": float(pw), "adequate": bool(pw >= MIN_POWER)})
+    return {"census": cen, "interchange_eligible": n_inter, "lesion_eligible": n_les,
+            "min_power_required": float(MIN_POWER), "table": table}, bool(ok)
+
+
 def calibration_set(P):
     return {
         "builder(8)": (org.builder(8), org.empty_store(P.S)),
@@ -86,7 +146,7 @@ def section_a(P, ruler_R=None, **kw):
     R = P.R if ruler_R is None else ruler_R
     out = {}
     for name, (prog, st) in calibration_set(P).items():
-        ev = ru.evaluate(prog, st, P, ru.SEALED_BASE, N_LIVES, **kw)
+        ev = ru.evaluate(prog, st, P, BASE, N_LIVES, **kw)
         c = ev["counts"]
         out[name] = {
             "build": ru.class_exclusion(int(c[wm.T_PROBE, 0]), int(c[wm.T_PROBE, 1]), R, ALPHA, DELTA),
@@ -111,7 +171,7 @@ def section_b(P, a):
     res, ok = {}, True
     for m in (0, 2, 4, 6, 8):
         n_lo = k_lo = n_hi = k_hi = 0
-        for life in range(ru.SEALED_BASE, ru.SEALED_BASE + 300):
+        for life in range(BASE + 100_000, BASE + 100_300):
             L = ru.Life(org.builder(m), org.empty_store(P.S), life, P).run(P.E)
             for (_, _, ttype, s, _, corr) in L.rows:
                 if ttype == wm.T_PROBE:
@@ -163,8 +223,7 @@ def section_b(P, a):
 
 
 def section_c(P):
-    pairs = [(ru.SEALED_BASE + 10_000 + 2 * i, ru.SEALED_BASE + 10_001 + 2 * i) for i in range(N_PAIRS)]
-    lives = range(ru.SEALED_BASE + 20_000, ru.SEALED_BASE + 20_000 + 2 * N_PAIRS)   # 500 lives for lesions
+    pairs, lives = c_pairs(), c_lives()
     e = org.empty_store(P.S)
     inter = {
         "builder(8)": ru.interchange(org.builder(8), e, P, pairs, SPLIT),
@@ -181,7 +240,7 @@ def section_c(P):
 
 
 def section_d(P):
-    lives = range(ru.SEALED_BASE + 30_000, ru.SEALED_BASE + 30_100)
+    lives = range(BASE + 400_000, BASE + 400_100)
     e = org.empty_store(P.S)
     res = {"builder(8)": ru.reset_equivalence(org.builder(8), e, P, lives, SPLIT),
            "holder(8)": ru.reset_equivalence(org.holder(8), e, P, lives, SPLIT)}
@@ -189,7 +248,7 @@ def section_d(P):
 
 
 def section_e(P):
-    res = ru.leak_probe(P, range(0, 400), range(ru.SEALED_BASE + 40_000, ru.SEALED_BASE + 40_400))
+    res = ru.leak_probe(P, range(0, 400), range(BASE + 500_000, BASE + 500_400))
     return res, res["verdict"] == EXPECTED["E_leak_probe"]
 
 
@@ -201,20 +260,20 @@ def section_f(P, a_clean):
 
     # FT1 a harness that does not reset fast memory. The BUILD ruler alone is fooled
     # (the holder now passes); the reset-equivalence check must catch the harness.
-    ev = ru.evaluate(org.holder(8), e, P, ru.SEALED_BASE, N_LIVES, reset_fmem=False)
+    ev = ru.evaluate(org.holder(8), e, P, BASE, N_LIVES, reset_fmem=False)
     c = ev["counts"]
     fooled = ru.class_exclusion(int(c[wm.T_PROBE, 0]), int(c[wm.T_PROBE, 1]), P.R, ALPHA, DELTA)
-    chk = ru.reset_equivalence(org.holder(8), e, P, range(ru.SEALED_BASE + 30_000, ru.SEALED_BASE + 30_100),
+    chk = ru.reset_equivalence(org.holder(8), e, P, range(BASE + 400_000, BASE + 400_100),
                                SPLIT, reset_fmem=False)
     f["FT1_broken_reset"] = {"build_ruler_on_holder": fooled["verdict"], "reset_equivalence": chk,
                              "fired": fooled["verdict"] == PASS and chk["verdict"] == FAIL,
                              "note": "the ruler alone says PASS here; only the harness check exposes it"}
 
     # FT2 a world whose observation is the answer.
-    ev = ru.evaluate(org.leak_reader(), e, P, ru.SEALED_BASE, N_LIVES, leaky=True)
+    ev = ru.evaluate(org.leak_reader(), e, P, BASE, N_LIVES, leaky=True)
     c = ev["counts"]
     nov = ru.novel_sanity(int(c[wm.T_NOVEL, 0]), int(c[wm.T_NOVEL, 1]), P.R, ALPHA)
-    probe = ru.leak_probe(P, range(0, 400), range(ru.SEALED_BASE + 40_000, ru.SEALED_BASE + 40_400), leaky=True)
+    probe = ru.leak_probe(P, range(0, 400), range(BASE + 500_000, BASE + 500_400), leaky=True)
     f["FT2_leaky_world"] = {"novel_sanity": nov, "leak_probe": probe,
                             "fired": nov["verdict"] == FAIL and probe["verdict"] == FAIL}
 
@@ -253,22 +312,30 @@ def section_f(P, a_clean):
                         "fired": ch == [PASS, FAIL, INDETERMINATE]}
 
     # FT7 the store affordance switched off: the positive control must stop passing.
-    ev = ru.evaluate(org.builder(8), e, P, ru.SEALED_BASE, N_LIVES, aff_store=False)
+    ev = ru.evaluate(org.builder(8), e, P, BASE, N_LIVES, aff_store=False)
     c = ev["counts"]
     off = ru.class_exclusion(int(c[wm.T_PROBE, 0]), int(c[wm.T_PROBE, 1]), P.R, ALPHA, DELTA)
     f["FT7_affordance_off"] = {"builder8_build_verdict_without_store_writes": off["verdict"],
                                "fired": off["verdict"] == FAIL and a_clean["builder(8)"]["build"]["verdict"] == PASS}
+
+    # FT8 the power gate itself must be able to refuse. The eligible counts of the v1 design
+    # (the run whose gate failed) are fed to it: it must call all three bounded cells underpowered.
+    chance = Fraction(1, P.R)
+    v1 = {"interchange NO-EFFECT (n=2785)": 2785, "hold FAIL (n=2879)": 2879, "lesion FAIL (n=3670)": 3670}
+    pw = {k: float(ru.power(n, P.R, FAIL, chance, ALPHA, DELTA)) for k, n in v1.items()}
+    f["FT8_power_gate_refuses_v1"] = {"power_at_v1_sample_sizes": pw,
+                                      "fired": all(v < float(MIN_POWER) for v in pw.values())}
 
     return f, all(v["fired"] for v in f.values())
 
 
 def throughput(P):
     prog, st = org.builder(8), org.empty_store(P.S)
-    ru.evaluate(prog, st, P, ru.SEALED_BASE, 64)                    # compile
+    ru.evaluate(prog, st, P, BASE, 64)                              # compile
     runs = []
     for i in range(3):
         t = time.perf_counter()
-        ev = ru.evaluate(prog, st, P, ru.SEALED_BASE + 50_000 + i * 400_000, 400_000)
+        ev = ru.evaluate(prog, st, P, BASE + 1_000_000 + i * 400_000, 400_000)
         runs.append((time.perf_counter() - t, ev["instr"]))
     dt, instr = sorted(runs)[1]                                      # median of three
     return {"lives": 400_000, "instructions": instr, "seconds": round(dt, 3),
@@ -288,6 +355,17 @@ def source_hashes():
 def main():
     P = ru.Params()
     t0 = time.perf_counter()
+    pg, pg_ok = power_gate(P)
+    print("0  power gate (computed from schedules alone, before any organism runs)")
+    for row in pg["table"]:
+        print("   %-38s n=%5d  expect %-13s power %.6f %s" % (
+            row["cell"], row["eligible"], row["expected"], row["power"], "" if row["adequate"] else " <-- UNDERPOWERED"))
+    print("   every preregistered verdict attainable with power >= %.2f: %s" % (float(MIN_POWER), pg_ok))
+    if "--power-only" in sys.argv:
+        return 0 if pg_ok else 2
+    if not pg_ok:
+        print("REFUSED: underpowered design. Nothing was run.")
+        return 2
     a = section_a(P)
     a_ok = table_matches(a)
     b, b_ok = section_b(P, a)
@@ -334,6 +412,8 @@ def main():
 
     receipt = {
         "what": "P1 calibration slice prototype: qualification gate",
+        "version": VERSION, "amends": "v1 gate FAILED (C interchange holder: INDETERMINATE); see PREREG_v2.md",
+        "power_gate": pg,
         "written_at_utc": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
         "host": platform.node(), "python": platform.python_version(),
         "numba": numba.__version__, "numpy": np.__version__,
