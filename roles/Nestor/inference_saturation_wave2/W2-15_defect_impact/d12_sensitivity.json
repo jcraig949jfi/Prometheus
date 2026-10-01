@@ -1,0 +1,158 @@
+{
+ "thresholds": [
+  0.5,
+  0.6,
+  0.7
+ ],
+ "C-DENSE-COPY": {
+  "0.5": {
+   "DENSE_COPY": {
+    "n": 64,
+    "L2": 39,
+    "L4_given_L2": 15
+   },
+   "PLAIN": {
+    "n": 64,
+    "L2": 1,
+    "L4_given_L2": 0
+   },
+   "fisher_p_L2": 1.0171264457572148e-14
+  },
+  "0.6": {
+   "DENSE_COPY": {
+    "n": 64,
+    "L2": 36,
+    "L4_given_L2": 15
+   },
+   "PLAIN": {
+    "n": 64,
+    "L2": 1,
+    "L4_given_L2": 0
+   },
+   "fisher_p_L2": 3.4960688555617593e-13
+  },
+  "0.7": {
+   "DENSE_COPY": {
+    "n": 64,
+    "L2": 35,
+    "L4_given_L2": 15
+   },
+   "PLAIN": {
+    "n": 64,
+    "L2": 0,
+    "L4_given_L2": 0
+   },
+   "fisher_p_L2": 4.3049284911902614e-14
+  }
+ },
+ "C-STATELESS-FFA6": {
+  "min_L2_checkpoints_1": {
+   "DENSE": {
+    "n": 48,
+    "L2": 33,
+    "L4_given_L2": 11
+   },
+   "STATELESS": {
+    "n": 48,
+    "L2": 42,
+    "L4_given_L2": 34
+   },
+   "rate_DENSE": 0.3333,
+   "rate_STATELESS": 0.8095,
+   "fisher_p": 3.2683982483484046e-05
+  },
+  "min_L2_checkpoints_2": {
+   "DENSE": {
+    "n": 48,
+    "L2": 24,
+    "L4_given_L2": 11
+   },
+   "STATELESS": {
+    "n": 48,
+    "L2": 38,
+    "L4_given_L2": 33
+   },
+   "rate_DENSE": 0.4583,
+   "rate_STATELESS": 0.8684,
+   "fisher_p": 0.0007621352562948353
+  },
+  "min_L2_checkpoints_3": {
+   "DENSE": {
+    "n": 48,
+    "L2": 19,
+    "L4_given_L2": 11
+   },
+   "STATELESS": {
+    "n": 48,
+    "L2": 36,
+    "L4_given_L2": 33
+   },
+   "rate_DENSE": 0.5789,
+   "rate_STATELESS": 0.9167,
+   "fisher_p": 0.005024963574873686
+  },
+  "single_checkpoint_L2_runs": {
+   "DENSE": 9,
+   "STATELESS": 4,
+   "of_which_runaway": {
+    "DENSE": 0,
+    "STATELESS": 1
+   }
+  }
+ },
+ "C-STATELESS": {
+  "min_L2_checkpoints_1": {
+   "DENSE": {
+    "n": 48,
+    "L2": 24,
+    "L4_given_L2": 11
+   },
+   "STATELESS": {
+    "n": 48,
+    "L2": 29,
+    "L4_given_L2": 23
+   },
+   "rate_DENSE": 0.4583,
+   "rate_STATELESS": 0.7931,
+   "fisher_p": 0.012202679231868602
+  },
+  "min_L2_checkpoints_2": {
+   "DENSE": {
+    "n": 48,
+    "L2": 18,
+    "L4_given_L2": 11
+   },
+   "STATELESS": {
+    "n": 48,
+    "L2": 26,
+    "L4_given_L2": 23
+   },
+   "rate_DENSE": 0.6111,
+   "rate_STATELESS": 0.8846,
+   "fisher_p": 0.039605585714192454
+  },
+  "min_L2_checkpoints_3": {
+   "DENSE": {
+    "n": 48,
+    "L2": 15,
+    "L4_given_L2": 11
+   },
+   "STATELESS": {
+    "n": 48,
+    "L2": 25,
+    "L4_given_L2": 23
+   },
+   "rate_DENSE": 0.7333,
+   "rate_STATELESS": 0.92,
+   "fisher_p": 0.12754860123281175
+  },
+  "single_checkpoint_L2_runs": {
+   "DENSE": 6,
+   "STATELESS": 3,
+   "of_which_runaway": {
+    "DENSE": 0,
+    "STATELESS": 0
+   }
+  }
+ }
+}

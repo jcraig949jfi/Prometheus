@@ -39,3 +39,11 @@ yet.
 The one-hop XOR design was impossible under envs.build's actuator placement (worker A1): the plant became
 a flood plus a clock. A4 (multi-hop d=5) and A6 (post-screen strict scoring) are disclosed in
 PLAN_ADDENDUM.md.
+
+## Correction (2026-10-01, Wave 2; flagged by W2-I kind_audit, and W2-G F4 / W2-D F1)
+Item 1 above says the FLIP evidence "covers one cell (plus ef77ef2e per the worker, which I did not
+re-check)". ef77ef2e0a1026c2 is a TRANSFER (RELAY champion bbef66a1 evaluated on FLIP), not a search.
+1b26026fc846d03d (cited in REPORT L29 as an XOR cell "where C1 searched") is also a transfer.
+- d9cc has exactly ONE FLIP search (6f82f9c7) and ONE XOR search (d64656f2).
+- The FLIP search-limitation evidence rests on n = 1 search seed.
+- The worker's REPORT is a verbatim deposit and is not edited; this correction governs.

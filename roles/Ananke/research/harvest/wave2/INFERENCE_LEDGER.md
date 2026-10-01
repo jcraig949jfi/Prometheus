@@ -315,3 +315,18 @@ Other:
 - Proposed standing mutation gate before prereg freeze (s4).
 - Compute 0.54 core-h (slightly over 0.5).
 - Queue replenished: W2-O (run the guards over recorded C1 NULL cells).
+
+### W2-I (deposited wave2/W2-I/REPORT.md): hop-matched transplants + kind auditor
+- F1 [V]: every transplanted law scores exactly .500 at 2 hops on its OWN ring (RELAY 4/4, MAJ 3/3 at d6).
+  Evolved transport crosses exactly one hop.
+- F2: at matched hops on the same C1 random graph, 6/7 D laws keep SIGNAL (MAJ needs inward placement).
+  Panel: RELAY 15/18 hop-bound, MAJ 4/6.
+- F3: port order never removes SIGNAL, and Kp is not a routing index (no lattice-offset arithmetic).
+  CLUSTER-BOUND: 4781b0a1, bf82cb29, cd5b6fd6, 8743da7f (fail on tree-like graphs, recover on a K4-clique
+  graph). LATENCY-LABEL-BOUND: HOLD M2 4ab2ba01 (needs the ring's per-port delays).
+- F4: MAJ placement uses M[a] (out-distance), confirming W2-A1 F1. 79% of random-graph MAJ sensors sit
+  beyond nominal d; 0/35 MAJ graph evolve rows are SIGNAL.
+- F5: kind audit, 1411 citations: 5 true misattributions (4 in H-PLANT, plus the principal's own
+  PRINCIPAL_REVIEW L19, now corrected) and 17 NAMING (W-E keys its retention table by adjudicate ids).
+- Wording proposals for C1_REPORT F2, s1 and the engine card. Covered by E-W1 / E-W2; to be refined
+  with F3 at close.
