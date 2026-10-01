@@ -1005,3 +1005,116 @@ Store final, and periodic, genome bytes plus registers in every world run. Five 
 - Fix: every worker prompt must now require searches to exclude `**/*holdout*/**` and `**/nestor_secrets/**`.
 
 **Record defect.** W2-22's seeds 9_999_000-10_000_199 overlap X-DECAY, X-STERILE and X-ATOMIC. The verdict compares within one run set, so it is unbiased.
+
+
+### W2-26: the "3.5% vs 7.5e-4" contradiction is RESOLVED (report saved; Nestor). Written at 02:55Z (clock)
+- **Result.** W2-17's 3.5% control "switch" rate is an **event-side tag, not a 7ae3 genotype switch**:
+  - 72% of control switch edges have a NON-7ae3 parent: foreign side-0 copiers, or labels surviving wholesale in-place rewrites;
+  - 0/36 are birth copy-errors.
+- **Within 7ae3, side-0 converters arise mostly IN PLACE** (execution writes, about 2e-2 per child lifetime) and through **carried register state**. The birth copy-error route is 2.5e-3/birth, within about 3x of N17d.
+- **Verdicts.**
+  - "Morph necessary to cross ~27": **REFUTED**. 11/11 controls and 7/12 runaways crossed without one.
+  - "7ae3 morph necessary for persistence": **REFUTED**. 5/12 runaways have no 7ae3 morph; their side-0 converters are foreign.
+  - "Some side-0 converter precedes depth 20 in every runaway": association only, 12/12 vs 4/11, p ≈ 1.4e-3, outcome-confounded.
+- **Effect on prior entries.**
+  1. **W2-17's two-type mixture is DOWNGRADED.** Its "types" are not 7ae3 genotypes. What it measured is a heterogeneous field of side-0 replicators, many foreign. **The persistence anomaly remains open (cause unknown).** It is now associated with side-0 replicators of any origin.
+  2. **N17e / W2-24 "founder register-robust" is QUALIFIED.** Robust under bank and ZERO contexts, but **self-carried in-world contexts convert some side-1 7ae3 genomes at side 0** (0.91-1.0 vs 0.13-0.18 under ZERO). This is a fourth instance of the "screen context ≠ world context" lesson (after N11, N13 and W2-34).
+  3. **The lineage label (oid / anc) survives wholesale content replacement in place.** Founder-label readouts therefore overcount heredity. This is the same family as W2-34's "L = 1.0 absorbing" and W2-35's rotation leak (pending).
+  4. **The W2-32 X-IMPLANT-MORPH design stays useful.** It tests a genotype causally, independent of event tags. W2-26 adds a foreign-side-0-copier arm.
+- **Process note.** Two workers have now exceeded CPU caps by 15-20% (W2-21, W2-26). Both were self-reported and both stopped only their own tasks. Total Wave-2 CPU stays well inside the seat envelope. The ledger total will be tallied at close.
+- **Confidence.** High for the decomposition and timing (deterministic). Low for any causal claim about persistence.
+
+
+### W2-40: C3 bands re-derived; class ruler adopted; draft amended (Nestor). Written at 02:58Z (clock)
+
+**Result.**
+- **Which ruler the world uses.** world.py counts births by FID (predecessor_accepts at 0.90) and has **no keep test** under BASE, so drifted members stay in the lineage.
+  - The **class ruler** (FID plus type sites 43/44/45/49) is therefore the right input for predictions.
+  - Exact identity misdescribes the world.
+  - FID slightly overstates.
+- **Class-ruler bands.** At n = 64, C3's M2 band is 0.018-0.127 and its M3 band 0.721-0.976. They are disjoint, with power ≥ 0.98. C3+AC is also disjoint. Under exact, the C3 arm would be uninformative.
+- **Cut-offs.** C3 becomes ≤ 14 / ≥ 32. The AC M2 kill becomes ≥ 28.
+
+**Action.** Nestor Amendment A was appended to PREREG_DRAFT_IMPLANTED_MORPHS.md. The draft is still unfrozen, and the amendment is conditional on W2-41 (self-carried contexts).
+
+**Lesson (handoff, infrastructure).** Before any static-to-world prediction, answer "which ruler does the world itself use?" from the world's code. Wave 2 has produced three ruler mismatches:
+- FID vs exact (this entry);
+- zero-context vs carried registers (N11, N13, W2-26, W2-34);
+- event side vs genotype (W2-26).
+
+
+### W2-38: C-A3 competence collapses are REAL; N13 amended (report saved; Nestor). Written at 02:58Z (clock)
+
+**Result**
+- The bit-exact replays of ffa6 52 and 7ae3 0008, with genome and register dumps, show both collapses are real.
+- The world's own carried-register P-11 counter (exhaustive) goes to about 0 after each collapse, while L stays 1.0.
+- Run 52 has no ruler artifact.
+- 0008 has one lag-artifact checkpoint: at 900 the zero screen sees 1/64, carried contexts find 30/64, and the world logs 2,147 P-11 events in 900→1000. The collapse is real by 1000, in every context.
+
+**N13 AMENDED**
+- Carried-state copiers invisible to the zero screen exist. They are short-lived, they come before the collapse, and they are **not a persistence channel**.
+- (iii) "competence → 0 while L = 1.0 is a ruler event" is **refuted**.
+- (ii) "carried-state copiers carry the lineage" is **unsupported**.
+
+**Combined with W2-34**
+- L = 1.0 is absorbing and labels non-replicating populations.
+- C-A3's "transient" events are real ends of copying.
+- C-A3 stays CONFIRMED-FRAGILE (W2-27 numbers).
+
+**Instrument recommendation (handoff, infrastructure)**
+- **Report the world's own P-11 event count per checkpoint as the persistence ruler.** It is exhaustive, uses carried registers, and comes free from `self.ct`.
+- Zero-context "competent" counts can be shown alongside it, never alone.
+
+**Search disclosure**
+- Before the exclusion rule arrived, one `find -type d` ran from the worktree root. It walked directory names only and read no contents.
+- Appended to the custody report (comms follow-up to #1218).
+
+
+### Batch: W2-29 (residue), W2-35 (rotation leak) and W2-39 (K2 bands) saved; Nestor cross-attack. Written at 03:00Z (clock)
+
+**W2-29: the post-27 persistence anomaly SHRINKS.**
+- **World figure revised.** On 600 seed-matched seeds the world (FIELD FULL) persists after B ≥ 27 in only 8/22 = 0.36 runs (B_xk), or 9/22 (B).
+- **W2-22's "4/4" was a small-sample high:** 9/22 vs 4/4, p = 0.096.
+- **World vs FIELD BANK:** 8/22 vs 5/33 on B_xk (p = 0.069, ratio 2.4 [0.94, 6.24]); 9/22 vs 9/33 on B (p = 0.22).
+- **Verdict:** UNRESOLVED / underpowered. The MH OR is 3.8 (p = 0.051), a hint toward residue.
+- **Morphs are not necessary:** 3/13 successes contain zero side-0 genomes.
+  - One of these (s1469) is 78% the 43→C3 keep variant, which arose **de novo** in a BASE world run.
+  - That is the **first in-world sighting of W2-24's keep variant persisting**: partial, unplanned support for W2-30's sweep prediction.
+- **Morph definition correction:** DE ≡ 64 mod 128, not literal 0x40, because z8 masks addresses to 127.
+
+**Combined status of the persistence anomaly (W2-14, W2-22, W2-25, W2-26, W2-29).**
+- Against the infinite-population individual law (1.2%), the world (0.36-0.41) is anomalous.
+- Against field processes with bank partners (FIELD BANK 0.15-0.27; FREE BANK 0.21-0.65), the gap is modest and not significant.
+- **Most of the "anomaly" is the gap between the individual law and any finite-field process.** That is finite-field saturation plus re-conversion bookkeeping, not a hidden regime.
+- **F\* K4 (world vs FIELD BANK):** Δ = 0.21 on B_xk, with a wide CI spanning the 0.20 tolerance. **UNRESOLVED, no longer a strong strike.**
+- **W2-25's "partial restoration of the second regime" is WEAKENED.** The anomaly against field processes is ≤ about 2x and not significant. Against the individual law it is real but expected.
+
+**W2-35: rotation (frameshift) leakage.**
+- **Mechanism:** a ring LDIR with D ∉ {0, 64} gives shift s = s_src + m·D (mod 64). It is mostly the founder's own LDIR run with foreign registers.
+- **Heritable frames:** s ≤ 10 or s ≥ 41.
+- **Rate:** 0.25 rotated halves per founder birth; 0.043 viable and unlabelled.
+- **Chains:** 5/12 runaway deepest chains are rotated.
+- **All FINDINGS label-share verdicts are ATOMIC and immune** (a rotated copy is never promoted, so it is restored). **Bound: 0 mis-scored.**
+- The leak is BASE-only. It affects only descriptive readouts (X-RUNAWAY "70-97%" becomes a lower bound; X-TICKET's lineage-loss wording).
+- **Cross-link:** three label-integrity failures in BASE now form one family:
+  - absorbing L (W2-34);
+  - label surviving content replacement (W2-26);
+  - unlabelled rotated frames (W2-35).
+  - Lesson: **in BASE, the label is neither necessary nor sufficient for descent.** Use content-keyed or frame-aware membership.
+
+**W2-39: F\* K2 bands are frozen in FROZEN_PREDICTIONS.md.**
+- M\* reproduces W2-22 exactly and predicts **H-SUPER**: R1 for AC 0.27 and 81 0.30, against F 0.046; C3+AC runs away in about 74%.
+- **F\* therefore sides with W2-32's keep-leveraged mapping, not the per-call mapping.**
+- A world result of H-NEAR (morph R1 ≤ about 0.08) kills F\* at n ≥ 64.
+- M\* also produces de novo morph sweeps (2/7 founder runaways).
+- Limits:
+  - R3 is uninformative for F and C3 (cap censoring);
+  - the family-wise false-kill rate is 0.10-0.19, declared;
+  - BANK has no residue, so a K2 kill is not cleanly morph-specific.
+
+**Net decision value of X-IMPLANT-MORPH (W2-32 / 40 / 39).** One experiment (F, AC, 81, C3, C3+AC at n = 64-128, genomes stored) now has three frozen readings:
+1. W2-32's two mappings (per-call vs keep-leveraged), with class-ruler bands from W2-40;
+2. F\*'s K2 bands from M\* (W2-39);
+3. W2-30's C3+AC sweep prediction.
+
+**This is the best future experiment not yet authorized.** Its core costs about 5 core-h.

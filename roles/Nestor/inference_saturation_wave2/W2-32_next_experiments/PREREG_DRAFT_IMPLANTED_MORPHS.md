@@ -276,3 +276,23 @@ So **D1 is decisive with near certainty. D2 is decisive only if the truth is at 
 6. **A seed-index pairing artifact.** Shared seeds share the initial background.
    - The analysis is per arm (unpaired). A paired analysis is secondary only.
 7. **Readout drift.** Any change to the X-TICKET subclass beyond logging fails PC1. PC1 is the guard.
+
+
+---
+
+## NESTOR AMENDMENT A (2026-10-01, before freeze; this draft is still NOT frozen and NOT dispatched)
+
+**Source.** W2-40 (`inference_saturation_wave2/W2-40_c3_bands/`).
+
+**Why the bands change.** Keep and m are re-derived on the **class ruler**: FID ≥ 0.9, plus bytes 43, 44, 45 and 49 equal to the parent. W2-40 shows from `world.py` that births are counted by FID and that BASE write-back has no keep test. Exact identity would therefore misdescribe the world.
+
+**Replacement count bands for §5:**
+
+| arm | NEAR-CRITICAL (M2) | KEEP-LEVERAGED (M3) | static law fails |
+|---|---|---|---|
+| C3, n = 64 | ≤ 14 | ≥ 32 | 15–31 |
+| C3+AC, n = 64 | ≤ 17 | ≥ 41 | 18–40 |
+| AC, n = 384 | — | — | a count ≥ 28 kills M2 (was ≥ 27); a count < 6 kills M1 and M3 |
+| F, n = 256 | 0–13 | 0–17 | M1 1–10 |
+
+**Open condition.** W2-41 is re-measuring the static inputs with **self-carried in-world donor contexts**. W2-26 found that these flip some side-1 7ae3 genomes to side-0 conversion. If W2-41 changes the per-genome inputs materially, the bands must be re-derived again before freeze.
