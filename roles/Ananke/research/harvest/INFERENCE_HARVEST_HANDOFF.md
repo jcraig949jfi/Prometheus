@@ -114,11 +114,12 @@ GPU conformance run. No campaign.
 
 ## 8. Addendum 2026-10-01: H-PLANT (plan 01234c0ad; report H-PLANT/REPORT.md; principal review H-PLANT/PRINCIPAL_REVIEW.md)
 Item 5.1 and part of 5.2 were run. These results update s4's "XOR/FLIP/multi-hop: undecidable":
-- **FLIP @ d9cc: search-limited.** A 16-line plant scores .97-.98 (replicated on disjoint seeds) where
+- **FLIP @ d9cc: search-limited** (one searched cell, 6f82f9c7; ef77ef2e, cited by H-PLANT, is a TRANSFER, W2-G F4). A 16-line plant scores .97-.98 (replicated on disjoint seeds) where
   C1's evolve cell 6f82f9c7 held .479. This is the first direct H6 evidence, for one cell.
 - **XOR @ d9cc: physics-limited.** The light-cone bound caps any program at .574. XOR is reachable
-  elsewhere in the C1 census (aa2b8d68, lo99 .636), and 17% of C1 XOR evolve rows are light-cone-capped
-  below .60.
+  elsewhere in the C1 census (aa2b8d68, lo99 .636). CORRECTED (W2-G F3): 36/83 = 43% of C1 XOR evolve rows
+  (FLIP 24/82, RELAY 16/196) are light-cone-capped below .60; the earlier "17%" counted all non-A0 row kinds
+  (H-PLANT/out/lc_census_by_kind.json).
 - **Multi-hop @ d9cc: physics allows it (plant .97-.98), but C1 never searched it.** fac4aaa2 is a
   transfer of a one-hop champion. H6 for multi-hop is untested there.
 - **New gap:** a one-flag readout passes C1's XOR SIGNAL rule (.763). XOR claims need that control.

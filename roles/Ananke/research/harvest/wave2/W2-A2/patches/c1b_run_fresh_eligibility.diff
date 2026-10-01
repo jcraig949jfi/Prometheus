@@ -1,0 +1,15 @@
+diff --git a/prometheus/ananke/c1b_run.py b/prometheus/ananke/c1b_run.py
+index e5c1d9f9e..2a925c9bc 100644
+--- a/prometheus/ananke/c1b_run.py
++++ b/prometheus/ananke/c1b_run.py
+@@ -249,7 +249,9 @@ def _js(o):
+ 
+ 
+ def battery_row(mech: str, cid: str, ph, env, genome, seeds, elig: dict, device) -> dict:
+-    ne = elig.get(cid, {}).get("NOT_ELIGIBLE", [])
++    # fresh-seed champions run at their specimen's physics, so the specimen's
++    # eligibility table applies (A2.2); "<cell>:fresh<k>" is not a key in it
++    ne = elig.get(cid.split(":")[0], {}).get("NOT_ELIGIBLE", [])
+     if mech == "M2":
+         res = c1b.run_battery(c1b.m2_battery(ph, env), genome, env, seeds, device)
+         b = read_m2(res, env)

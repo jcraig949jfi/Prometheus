@@ -68,3 +68,38 @@ unresolved | next. Workers' ledger blocks are folded in when their reports are d
 - Strongest objection: F1's d=1 check is post hoc, one physics, 32 pairs.
 - Next: hop-matched transplants on all D cells; per-kind lc_census reissue; automated kind-audit of
   every cited cell id.
+
+### W2-A2 (deposited wave2/W2-A2/REPORT.md): executable semantics of the experiment layer
+- F1 [V]: the GA shaping terms (sens_act, sens_any) are what the twin ruler measures. On NULL cells,
+  champion persist/beyond_hop sit about 80x above random genomes. MEMORY_WITHOUT_USE (46 rows) and
+  REACH_BEYOND_HOP on NULLs are selection products. Bonus vs variance-seeking is undecided (needs the
+  w=0 A/B, a search).
+- F3 [V]: MAJ placement does not honour d (ring d=1 == d=2; 3 of 5 sensors off d). All 19 MAJ SIGNALs
+  are one-hop; multi-hop MAJ placements score 0/55.
+- F4 [V]: classify stamps transfer rows with REACH_BEYOND_HOP=False although no twin ran, and the prereg
+  NULL-with-eligibility label is implemented nowhere. This is the root cause of transfers cited as NULLs.
+- F6: summary.json gives TRANSFER_SUPPORT 23; the effective count is 1.
+- F7: the wave hour cap resets per attempt (latent).
+- F8: the c1b_run fresh-eligibility key bug (summary corrected post hoc).
+- F10: SIGNAL CI undercovers (1.2% vs 0.5% at .55 with 12 trials).
+- Held seeds are independent of selection, and the winner's curse is about -.005.
+- APPLIED by the principal (NEUTRAL; tests fail 3/5 before and pass 5/5 after; related suites 34 passed):
+  - c1b_run_fresh_eligibility.diff, with prometheus/ananke/tests/test_c1b_run_fresh_eligibility.py;
+  - report_transfer_effective_p1_track.diff, with tests/test_report_transfer_effective_p1.py. The legacy
+    summary.json values are asserted unchanged.
+- DEFERRED until the workers that import campaign.py finish: classify_transfer_reach_none,
+  run_wave_budget_and_exact_resume.
+
+### P-2 (principal): is C1's plant-viability "physics map" plant-specific?
+- Evidence: A0 RELAY rows' result.plant.acc tabulated by dial.
+- Result:
+  - In A0's independent draws, relay_flood viability (acc > .6) is 17/18/15% at noise 0/16/64 (no
+    effect), but 17% at decay 0 vs 0-5% at decay 1/3/6.
+  - The earlier "noise kills" reading came from pooling targeted non-A0 waves (my own error, caught
+    before recording; an instance of W2-G F7).
+  - Hypothesis: decay kills relay_flood by design, because it writes S0 only on change, so S0 decays
+    toward 0 before readout. A refresh plant (S0 := sign(S0)*256 every awake tick, then relay_flood) is
+    under test (wave2/P-1/decay_plant.py, running).
+- Next: if refresh revives the decay rows, then C1's "decay kills RELAY" and P2-style physics-map
+  statements are plant artifacts, and DESIGN's plant_viability "physics-dead vs search-failed" needs a
+  plant-family qualifier.
