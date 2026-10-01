@@ -1286,3 +1286,30 @@ Store final, and periodic, genome bytes plus registers in every world run. Five 
   - The "strangest observation" candidate is now: **a one-byte change at almost any opcode site from 4 to 50 can install self-defence against being executed by the partner.**
 
 **Housekeeping.** NPE_COMPETING_THEORIES block (B): 416 → 336, fixed per W2-48.
+
+
+### W2-44: side-0 rotated roots and the dual-pass copier CRW_1 (report saved; Nestor synthesis). Written at 03:16Z (clock)
+
+**Result.** Every side-0 root uses "own base → absolute DE ≡ 64". There are three routes:
+- **`ADD A,C` at founder position 43.** c1→81 (CNR_s22). Position 43 is one bit from both C3 (defence) and 81 (switch).
+- **Chained LDIR.** A duplicated `ED B0`: the first pass is an in-place self-copy that leaves DE = 0x40, and the second pass converts (CRW_78, XH2N_s1).
+- **Absolute JP back into its own LDIR (CRW_1).** This is a **dual-pass copier**: one LDIR serves two sides, and the pass is chosen by the side-specific count.
+  - Panel m is 1.87-1.94, the highest found.
+  - The intruder's JP lands on the intruder's own code, so the second pass is unreachable.
+  - In the world it arose from tiling plus a residual foreign JP plus 1 bit.
+
+**Nestor synthesis: the "protection" picture gains a third member.** Every high-m genotype in the 7ae3 family solves the same problem: **convert without exposing your copy loop to a partner running it with its own registers.** Three solutions:
+- (i) **run first:** a side switch;
+- (ii) **eject the runner:** an absolute upper-half JP;
+- (iii) **re-enter your own loop through an absolute address the intruder cannot share:** dual-pass.
+
+Mechanisms (ii) and (iii) both use an absolute JP, aimed at different targets. This sharpens the "strongest new result" candidate (W2-42):
+- **Selection in BASE NPE acts on defences against partner execution.**
+- **The absolute jump on a 7-bit ring is the main defensive primitive.**
+
+**Strangest-observation candidate.** CRW_1's copier needed a JP left behind by the *previous foreign occupant of the slot*. A one-bit change retargeted it, and the leftover became part of the copy machinery.
+
+**Caveats.**
+- The class matters only against founder-frame kin.
+- Under bank contexts CRW1fx scores below AC.
+- All static.
