@@ -60,6 +60,21 @@ K9 Also from #1037 (minor, accepted): families ran concurrently, contrary
    deviation; the Gemini RESULTS verdict now reads NOT_ELIGIBLE (missing
    inputs), Claude's verdict unchanged.
 
+K10 Alien pilot descriptive counts (AUDIT_A F06, F10, F11; verified by re-run
+   in the audit; frozen scorer and RESULTS.json unchanged, these are
+   sensitivity readings): vector-valued conserved claims crashed the SCORER
+   (set() on lists) and were filed UNTESTABLE -> A std TRUE 26 -> 30, planted
+   recall 17/32 -> 18/32; K TRUE 38 -> 42. Two lambda-using programs (K7) ->
+   alien code held-out exact 0.80 (n=30, 2 rows silently dropped) -> 0.81
+   (n=32). Eval bar computed on 100 of the 200 scored states: behavioural
+   AUC 0.974 -> 0.976. No decision changes.
+K11 REPORT_pilot taxonomy label RIGHT_STRUCTURE_WRONG_MECHANISM (5 cases, the
+   largest tag) tests nothing about structure: all 5 are adversarial aliens
+   at or below the trivial bar with 0 TRUE claims -> read as "RULE claimed,
+   no structure detected" (AUDIT_A F09). The second FALSE_COLLAPSE case
+   (SYS-60800) is an unattainable threshold (bar 0.803 + 0.2 > 1), so H5's
+   genuine count stays 0/32 as K8 says (AUDIT_A F07).
+
 ## Contested items -- NOT applied (recommendations; would change a frozen decision rule's outcome -> CWO-C s4 escalation class)
 
 C1 HT-ae38c641b1 W5 (round 3): frozen spec says values between F1 and S1
@@ -79,6 +94,24 @@ C3 HT-79e904e13a W4 (round 1): entropy observable saturates by T ~ 6-9; the
    shown by an in-range control. Stays NULL; flagged INSTRUMENT-WEAK.
 C4 HT-ae38c641b1 W4 (round 2): SPEC_UNATTAINABLE rests on an undefined-ratio
    aggregation reading; stays as recorded; flagged.
+C5 Alien H3 (AUDIT_A F01; verified with exact fractions): recorded
+   INDETERMINATE because 0.2 - 0.1 = 0.0999... in floats; under the PREREG s6
+   text, (1 - 8/10) - (1 - 9/10) = 1/10 >= 0.10 -> SUPPORTED. The effect is
+   ONE alien (SYS-19722) on a 10-alien subset. Recommendation: rule that the
+   frozen text governs (SUPPORTED, reported as n=1 fragile).
+C6 Alien detector verdict (AUDIT_A F03; verified: CONJ 7/7 + DSCRAMBLE 10/11
+   + SCRAMBLE 2/4 = 19/22 = 0.864): the AUC leg uses standard aliens, the
+   pair leg also includes the 8 adversarial-matched SEDUCTIVE pairs. The code
+   follows PREREG s7 literally. Consistent standard-only -> VALIDATED;
+   consistent all-aliens -> NOT_VALIDATED (AUC 0.940). Recorded verdict
+   stands; ruling needed on which consistent set is primary.
+C7 Alien H4 / H2 (AUDIT_A F02, F04): H4 code uses a binary rule instead of
+   the s6 general rule (which gives NOT_SUPPORTED on a degenerate [0,0] CI);
+   H2's NOT_SUPPORTED rests on a zero-variance bootstrap (Clopper-Pearson
+   upper for 0/32 is 0.109 > 0.075 -> INDETERMINATE). Both stay as recorded.
+   Design note (F05): with K at ceiling, H1/H2/H5 can never read
+   NOT_SUPPORTED; their INDETERMINATE means "small positive, below
+   threshold".
 Note on K4 (applied): it enforces the frozen round-2 definition of
 SPEC_UNATTAINABLE ("cannot be reached even by a construction that has the
 effect by design") that the round-2 pilot failed to check; it is listed
