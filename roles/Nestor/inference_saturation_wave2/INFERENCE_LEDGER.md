@@ -550,3 +550,25 @@ in completion order.
   - CVT-R should be multi-seed, with a no-partner arm and a swapped-order arm.
   - P-11's side-1 rate measures the order hazard, not competence.
 - **Confidence.** As in the report. Cross-link 2 is a hypothesis, with a moderate prior.
+
+
+### W2-18: FINDINGS correction proposals (file written by the worker; Nestor note). Written at 01:33Z (clock)
+- **Result.** `W2-18_findings_corrections/CORRECTION_PROPOSALS.md` has 17 proposal rows layered on the W2-15 matrix: 8 NEW, 9 ADJUSTED. The new ones that matter most:
+  - **P01, an unwired factor.** 90/334 and 81/304 of the A-3 read-order pairs sit in COEVO_ENV cells. There the declared read order reaches the scorer only at the first validation, and its effect there is about 0. In the 467 pairs where the factor is wired, the effect is +0.13 / −0.10.
+  - **P02, INVALID clause.** E-9 H1R's "harmless when the cue is free" compares two identical arms (0.1972 = 0.1972; 60/60 seeds), which breaks FINDINGS' own lesson 9. The gated + paid-cue fact (0/60) stands.
+  - **P03.** X-A3-WITHDRAW's "not sorting": the robust share jumps 0.22 → 0.96 between epochs 300 and 400, which looks like a sweep of members already present.
+  - **P04.** The 16000006 path "lost and regained" is scored by a flickering 20-draw screen.
+  - **P08.** Lesson 1, "every test ships with a negative control", is false in practice: the cannot-fire class recurred 15 times after it.
+  - **P11.** In C-ZERO, every CONST/RANDOM success comes from donors 1 and 15. Within those donors: ZERO 1/6, CONST 2/6, RANDOM 3/6.
+  - **P14.** W2-15 over-flags X-H1-GRADIENT; it needs a re-run (W2-19 is assigned).
+  - **P16.** Three proposed lessons:
+    - screen context must match the world;
+    - aggregate trajectories cannot carry per-site age claims;
+    - each declared factor must be shown to reach the scorer.
+- **Confidence.**
+  - high: P01, P02, P05a, P08, P09, P11;
+  - moderate: P03, P04, P13;
+  - low: the size of P15.
+- **Nestor note.**
+  - These are **proposals**. FINDINGS frozen verdicts are not rewritten. At closing, a dated "Wave-2 audit: proposed corrections" appendix will point to W2-15 and W2-18.
+  - P13 cites W2-12's *unreported draft* (pooled 798 single-founder runs, min p 0.105). It is not to be used until W2-12 reports.
