@@ -71,6 +71,7 @@ Every role below carries the banner on its primary document(s):
 | Theseus | RESPONSIBILITIES.md (created 2026-09-30 on the seat's creation pass on DESKTOP-RUAPVAI, the first seat on that host; new seat named by the operator, charter PENDING; creation directive verbatim in roles/Theseus/prompts/2026-09-30_creation/; the name's prior use as Techne's May 2026 substrate-generation engine (theseus/) is recorded, not inherited; self-service row per Archaeon ruling #39) |
 | Achilles | RESPONSIBILITIES.md (created 2026-09-30 on the seat's creation pass on ELSA, the first seat on that host; new seat named by the operator; charter ADOPTED 2026-09-30 (fleet census and status system), verbatim in roles/Achilles/prompts/2026-09-30_charter/ with MANIFEST; pre-charter file at roles/Achilles/superseded/; creation directive verbatim in roles/Achilles/prompts/2026-09-30_creation/; no prior use of the name as a seat or agent; self-service row per Archaeon ruling #39) |
 | Sisyphus | RESPONSIBILITIES.md (created 2026-10-01 on the seat's creation pass on SKULLPORT (M1); new seat named by the operator, charter PENDING; creation directive verbatim in roles/Sisyphus/prompts/2026-10-01_creation/; no prior use of the name as a seat or agent; self-service row per Archaeon ruling #39) |
+| Tantalus | RESPONSIBILITIES.md (created 2026-10-01 on the seat's creation pass on SKULLPORT (M1); new seat named by the operator, charter PENDING; creation directive verbatim in roles/Tantalus/prompts/2026-10-01_creation/; no prior use of the name as a seat or agent; self-service row per Archaeon ruling #39) |
 | Ixion | RESPONSIBILITIES.md (created 2026-10-01 on the seat's creation pass on SKULLPORT (M1); new seat named by the operator, charter PENDING; creation directive verbatim in roles/Ixion/prompts/2026-10-01_creation/; no prior use of the name as a seat or agent; self-service row per Archaeon ruling #39) |
 | Tityos | RESPONSIBILITIES.md (created 2026-10-01 on the seat's creation pass on SKULLPORT (M1); new seat named by the operator, charter PENDING; creation directive verbatim in roles/Tityos/prompts/2026-10-01_creation/; no prior use of the name as a seat or agent; self-service row per Archaeon ruling #39) |
 | Vivarium | RESPONSIBILITIES.md (already), CHARTER.md (already) |
@@ -149,6 +150,7 @@ BOOTSTRAP.md if the seat has one, else STARTUP.md, RESPONSIBILITIES.md, ROLE.md,
 | Theseus | RESPONSIBILITIES.md |
 | Achilles | RESPONSIBILITIES.md |
 | Sisyphus | RESPONSIBILITIES.md |
+| Tantalus | RESPONSIBILITIES.md |
 | Ixion | RESPONSIBILITIES.md |
 | Tityos | RESPONSIBILITIES.md |
 | Vivarium | RESPONSIBILITIES.md |
