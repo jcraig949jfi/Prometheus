@@ -1,0 +1,68 @@
+W2-G sub_arc3 group A notes (W-A, W-B, W-C, W-E, W-F, SYNTHESIS_2026-09-27, ARC2)
+Regenerate: python roles/Ananke/research/harvest/wave2/W2-G/sub_arc3/rederive_groupA.py
+(prints values, writes groupA_values.json and rows_groupA.csv; read-only, no simulation)
+24 rows: MATCH 14, MISMATCH 4, PARTIAL 4, REPORT_ONLY 2.
+
+(a) MISMATCHES
+- 8c W-B r-swap "18/18" / "0 FLIPs in 18 swaps" (ARC2 s1, engine card): raw deepdive_all.json has 17 cells
+  (6 + 11, matching LOG A10's lists). 16 NO-EFFECT, 1 CHANCE, 0 FLIP. Related report counts are also off:
+  "pin readout HURTS 12/18" is 12/17 in the raw data, and "pin others exactly 0.000 in 13/18" is 9/17 exactly zero
+  (13/17 within |d| < .005).
+- 8d ARC2 s1 "a one-rule law is bit-identical to the champion": raw m3.json X7 shows it is bit-identical to the
+  champion WITH r:=0 FROZEN. Against the champion itself it is only EQUIV (+.014 / +.007; trial 0 .53 -> .67).
+- 10c ARC2 s6 / X4_RESULT "cost made champions communicate more (3/3 vs 1/3)": A1_2 has comm_delta 0.000
+  (zero-comm accuracy = held .760; site FLIP). It fires but does not use communication. Behaviourally the result
+  is 2/3 vs 1/3. The "3/3" counts runs whose fire share is defined.
+- 7d SYNTHESIS_09-27 s2 "at chance at gap >= 12" (spike S-M2b): at gap 12 the lo99 is > .5 in 3/4 champions
+  (acc .53-.58). W-A's independent base curves agree (lo99 .51-.55 in 3/4). Chance holds only from gap 16.
+- Minor, report-internal (inside 11a): W-E "all 16 champions decode cue k at j=0 (p at the floor)":
+  D_544f3d24 has raw p 2e-4, so only 15/16 pass Holm.
+- Engine card (inside 8a): "bootstrap into the zero-default rule variant in ~64%". Only 24/42 (57%) are
+  UNIFORM_BOOT/ZERO. The 64% (27/42) also includes 1 cell that settles on rule 1 and 2 PATTERN_BOOT cells.
+
+(b) WORDING THAT EXCEEDS THE DATA (proposed wording)
+- 7a "46/46 unseen curves" -> "46/46 curves (42 distinct; 2 are bit-identical to base curves and 3 are the same
+  curve) from 4 champions of one lineage, re-evaluated under 13 conditions".
+- 7d -> "near chance by gap 12 (acc .53-.58), at chance by gap 16".
+- 8a ARC2 "SETRULE is a bootstrap ARTIFACT in 64% and a per-tick branch in 29%" -> "bootstrap suffices in 27/42
+  (the zero-default artifact in 24); ONGOING in 12/42 (5 of them one lineage); the branch mechanism was shown in
+  the deep-dived ONGOING cells".
+- 8c -> "r-swap FLIP 0/17 (16 NO-EFFECT, 1 CHANCE)".
+- 8d -> "a one-rule law is bit-identical to the champion with r reset to 0, and EQUIV to the champion".
+- 9b ARC2 s3 / ARC3_PRIORITIES "all 14 / 14/14 JOINT cells are phase mixtures": ARC3 s2 retracts this.
+  ARC3_PRIORITIES still demotes T-DM-2 on it with no correction pointer, and W-O's audit leaves 12 JOINT.
+  -> "14 census-JOINT cells (12 after the 512-world audit) have site+chan accuracy ~1. The mirror-pair identity
+  forces this, so it does not show a mixture".
+- 10a "7/13 PTE specimens carry the cue as WHO FIRES" -> "7 of 13 C1 D-wave/M2 specimens (one campaign)".
+  W-C's own class list names 8.
+- 10c -> "cost champions fired in 3/3 (vs 1/3) and used communication in 2/3 (vs 1/3); n = 3 per arm".
+- 11a ARC2 "no recoverable retention past the query" -> "no champion's cue is recoverable by the preregistered
+  single-world decoder (a power limit, per W-E). One accumulation trace (f7e62fe3 w) is recoverable post hoc
+  (later confirmed as L2 by W-G) and never changes an answer".
+- 14b "used across 166 cells with 0 errors" -> "0 runtime errors over 166 cells". W-O later revised 9-21
+  W-F classes, so "0 errors" must not be read as verdict validity.
+
+(c) PROVENANCE HOLES
+- W-D (ARC2 s4 "8 cases in 5 seats"): the worker dir has REPORT.md only (no PLAN, LOG or out/).
+- W-F "FAMILY SELECTS" (tree CV .730 vs .797): out/model.json exists, but the classifier was not refit here.
+  REPORT_ONLY.
+- SYNTHESIS_09-27 "held 15 / lost 5": there is no machine-readable prediction ledger. The log's pred column
+  gives 16 HELD (2 of them partial 3/4) and 7 LOST, so the tally depends on undocumented grouping.
+- All W-A..W-F reports are "saved by Ananke from the worker's message" (the harness refused the worker writes).
+  The text was not written by the worker itself. Only W-G onward carry REPORT.provenance.json.
+- SYNTHESIS_09-27 s2 "at chance at gap >= 12" and the coverage figures come from Ananke's own spikes
+  (spikes/out), not from a worker.
+
+(d) TRANSFER / RE-EVALUATION CITED AS A SEARCH OUTCOME
+- W-A's 46 curves are re-evaluations of frozen champions under altered physics (transfer). ARC3 s14 and
+  BACKLOG_V2 T-REACH-GAP use them, via T-DE-1, as evidence about what "search never produced". The curves say
+  nothing about search.
+- The "3/3 fresh champions" (SYNTHESIS_09-27 s2) are deterministic regenerations of stored search seeds
+  (bit-identical held accuracy). They are replays, not new independent searches.
+- W-F's "family SELECTS" is a classifier statistic over a re-evaluated census of stored champions. "Selects"
+  reads like a selection or search effect, and no search was run.
+- W-B's "transfer to three neighbouring physics" (r:=0 frozen EQUIV) is a transfer of frozen genomes. It is
+  cited correctly as transfer in W-B, but nothing downstream separates it.
+- W-E's NO is about champions evolved on tasks that never reward retention. That is a search condition, not
+  a property of the substrate. ARC2 s9 scopes it correctly ("yet"). The only genuine search outcome in group A
+  is X4 (6 searches, n = 3 per arm).

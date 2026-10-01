@@ -1,0 +1,51 @@
+W2-G sub_arc3 -- ARC3-era claim re-derivation (2026-09-30)
+CSV: arc3_claims.csv (69 rows; MATCH 40, PARTIAL 16, MISMATCH 8, REPORT_ONLY 4, UNDERIVABLE 1).
+Scripts (run from worktree root): rederive_groupG.py (W-G), rederive_groupA.py (W-A..F, 09-27, ARC2),
+rederive_groupB.py (W-H/I/J), rederive_groupC.py (W-K/L, designed_echoes, joint_carrier); make_rows_groupA.py,
+make_rows_groupB.py, _write_rows_groupC.py build the per-group rows; merge_rows.py builds arc3_claims.csv.
+Detail and full suggested wording: notes_groupA.txt, notes_groupB.txt, notes_groupC.txt.
+
+(a) MISMATCHES (raw out/ disagrees with report or doc)
+- 1e W-G: "e79e72df BLANK raw p .022 (0x5EB) ... did not replicate": raw p is .0225 in 0x5EC too. Verdict unaffected (adj 1.0).
+- 7d SYN-0927 s2 "M2 at chance at gap >= 12": 3/4 champions above chance at gap 12 (.53-.58, own 99% CI); chance from gap 16.
+- 8c ARC2/engine card "r never the carrier in 18/18 swaps": raw deepdive_all.json has 17 cells (16 NO-EFFECT, 1 CHANCE, 0 FLIP).
+- 8d ARC2 "one-rule law bit-identical to the champion": bit-identical to champion with r frozen at 0; vs champion itself only equivalent (+.014/+.007).
+- 10c ARC2 s6 X4 "3/3 vs 1/3 communicate": A1_2 has comm gain 0.000; behavioural count 2/3 vs 1/3.
+- 4f ARC3 s1 / BACKLOG T-CT-2 "census-SITE relays carry the bit in the channel first": 6/7 (bbef66a1 is S->C->S in W-I's own motif table).
+- 5a ARC3 s7 / BACKLOG "29/32 presence codes": saved emission rates give 27/32 (<=.03) or 28/32 (<=.2); a sparsity proxy, not per-champion swaps.
+- 5c engine card "aggregation gain ~.13 lossless": theoretical (.837-.700); measured on designed plant .096, failing W-J's own pre-stated >=.10 check.
+- Engine card "zero-default rule variant in ~64%": only 24/42 (57%) go to rule 0; 64% includes 1 rule-1 cell + 2 pattern bootstraps.
+
+(b) WORDING THAT EXCEEDS THE DATA (proposed corrections)
+- ARC3 s3 "no nontrivial retention regime in the evolved champions" -> "in the 16 champions tested (12 C1 D-wave cells at 7 physics points + 4 M2 HOLD champions at 1; MAJ 4, RELAY 4 [one physics], HOLD 8), none selected for cross-trial memory".
+- ARC3 s14 "PTE does NOT give: persistent memory in evolved champions" -> "PTE's current champions (16 tested, tasks without cross-trial reward) show no trial-specific memory; rewarded searches (W-L) evolve integration, not selective storage". As written it contradicts ARC3 s3 / W-L and W-G's own plants.
+- Engine card "No champion expresses trial-specific retention" -> "None of the 16 C1/M2 champions tested ..."; its next clause "evolution was never rewarded for it" is outdated after W-L.
+- BACKLOG T-RET-2 "NO retention regime" -> add "(16 champions)"; T-RET-EVO part needs a W-N pointer (carrier S comes from a 512-world re-evaluation; W-L's own verdict was CHANCE).
+- W-L "retention reachable when rewarded (4/8)": unrewarded HOLD control n0_s0 also passes criterion (a) (lo99 .637); "when rewarded" not isolated.
+- "Even the HOLD control evolved an integrator" -> "1 of 2 HOLD-control seeds"; ARC3 s2 "the search builds integrators even on HOLD" generalises from n=1.
+- ARC3 s1 "selective retention is never evolved" -> "lag-2 selective storage not reached in 4 n=2 searches (post hoc criterion, 256 worlds)"; at n=1, n1_s2/n1_s3 peak at lag 1.
+- W-H "fixed-rule latches match or beat every champion (.999 vs .755)": .999/.755 is the single most extreme cell (S2); S1 only matches (.764 CI [.736,.793] vs .741); S1/S3 use select, not a latch; S3 "beat" uses S1 mechanism, faithful S3 compile .511. "COMPRESSION 5/5" -> "in 5/5 cells examined". "every switch 1-2 ticks" verified only in 3/5 cells.
+- W-A "46/46 unseen curves": 42 distinct (2 duplicate base curves, 1 curve counted 3x), all 4 champions of one lineage.
+- W-E/ARC2 "no recoverable retention past the query": preregistered NO reproduces (min adj p .149/112 tests) but W-E calls it power-limited and its post-hoc decoder recovers f7e62fe3's trace -> "no answer-changing retention".
+- ARC3_PRIORITIES "14/14 phase mixtures" still used to demote T-DM-2 with no pointer to ARC3 s2 retraction; W-I "3/7 mixtures by phi" is 2/7 after W-O 512-world re-run.
+- ARC3 s6 instruments read trajectory "at the right time": the one tick-timing prediction (E2 handoff) is the one that failed.
+- ARC2 "166 cells with 0 errors" = no runtime errors only; W-O later changed 9-21 W-F carrier classes.
+- Spikes "held 15, lost 5": log's prediction column gives 16 held (2 partial) / 7 lost; grouping-dependent.
+
+(c) PROVENANCE HOLES (no raw path to recompute)
+- 6c "the echo model designs mechanisms search never produced" (ARC3 s1, T-REACH-GAP): UNDERIVABLE -- no search was run (T-REDISCOVER not queued).
+- 2g "search reachability, not physics" for W-L: single budget, REPORT_ONLY.
+- 3e "r never carries the bit" credited to W-H: W-H never swapped r; rests on switch length (swap evidence is W-B's, itself 17 not 18).
+- 9c W-F "family selects only via HOLD": REPORT_ONLY classifier statistic.
+- 15a W-D "8 could-not-fire cases in 5 seats": report only, no out/.
+- W-A..W-F REPORTs were saved by Ananke from worker messages (harness refused writes), not worker-written; W-G..W-L carry deposit.py provenance.
+- 3c/3f W-H per-tick data and latch lengths exist for only 3/5 cells.
+
+(d) TRANSFER / RE-EVALUATION CITED AS SEARCH OUTCOME
+- designed_echoes (hand-built plants, RESULT says "calibration, NOT emergence") counted as one of H6's four lines about SEARCH (ARC3 s1, BACKLOG T-REACH-GAP).
+- W-G (re-evaluation of frozen champions + hand plants) cited in H6 as "the substrate can retain where champions don't": a plant-vs-champion contrast, not a search measurement.
+- W-L "carrier S" (BACKLOG T-RET-EVO) is from W-N's 512-world re-evaluation of frozen champions, not W-L's search output (CHANCE).
+- W-A 46 curves are transfers of frozen champions to new physics/gaps, yet used in ARC3/BACKLOG as evidence about what search reaches.
+- "3/3 fresh champions" (SYN-0927 s2) are deterministic replays of stored seeds, not new searches.
+- W-J "exactly .500 under every other operator" is a frozen-champion re-evaluation (correctly described); emergence itself is n=1 of 12 lossless searches.
+- Genuine new-search outcomes in scope: W-H 0/4 seeds, W-L 10 searches, X4 6 searches (3/arm), W-J e2/e6 searches.
