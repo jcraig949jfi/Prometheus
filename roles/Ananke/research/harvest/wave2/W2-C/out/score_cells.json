@@ -1,0 +1,7337 @@
+{
+ "swap_labels|held|relay64": {
+  "category": "KILLED(A)",
+  "expectation": "change",
+  "verdict_changed": true,
+  "new_alarms": [
+   "TRAIN_HELD_GAP"
+  ],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "acc": -0.5,
+   "lo99": -0.5,
+   "zero_comm": 0.5,
+   "comm_delta": -1.0,
+   "comm_delta_lo99": -1.0,
+   "train_final": 0.0,
+   "twin_beyond_hop": 0.0
+  },
+  "base_verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": true,
+   "LOCAL_ONLY": false,
+   "REACH_BEYOND_HOP": true
+  },
+  "mut_verdict": {
+   "SIGNAL": false,
+   "COMM_DEPENDENT": false,
+   "LOCAL_ONLY": false,
+   "REACH_BEYOND_HOP": true
+  },
+  "cpu_s": 4.27,
+  "error": null
+ },
+ "swap_labels|controls|relay64": {
+  "category": "KILLED(A)",
+  "expectation": "change",
+  "verdict_changed": true,
+  "new_alarms": [
+   "NOT_APPLICABLE:max_loss"
+  ],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "normal": -0.5,
+   "zero_comm": 0.5,
+   "shuffle_dest": 0.0,
+   "shuffle_time": 0.0,
+   "randomize_payload": 0.0,
+   "packet_ablation": 0.0,
+   "memory_ablation": 0.0,
+   "irrelevant_channel": 0.0,
+   "env_permutation": 0.0
+  },
+  "base_verdict": {
+   "causal": "CAUSAL_SUPPORT",
+   "status": {
+    "normal": "RAN",
+    "zero_comm": "RAN",
+    "shuffle_dest": "RAN",
+    "shuffle_time": "RAN",
+    "randomize_payload": "RAN",
+    "packet_ablation": "RAN",
+    "memory_ablation": "RAN",
+    "adaptation_off": "NOT_APPLICABLE",
+    "frozen_routing": "NOT_APPLICABLE",
+    "max_loss": "RAN",
+    "irrelevant_channel": "RAN",
+    "env_permutation": "RAN"
+   }
+  },
+  "mut_verdict": {
+   "causal": "NOT_SUPPORTED",
+   "status": {
+    "normal": "RAN",
+    "zero_comm": "RAN",
+    "shuffle_dest": "RAN",
+    "shuffle_time": "RAN",
+    "randomize_payload": "RAN",
+    "packet_ablation": "RAN",
+    "memory_ablation": "RAN",
+    "adaptation_off": "NOT_APPLICABLE",
+    "frozen_routing": "NOT_APPLICABLE",
+    "max_loss": "NOT_APPLICABLE",
+    "irrelevant_channel": "RAN",
+    "env_permutation": "RAN"
+   }
+  },
+  "cpu_s": 12.53,
+  "error": null
+ },
+ "swap_labels|plant|relay64": {
+  "category": "KILLED(D)",
+  "expectation": "change",
+  "verdict_changed": true,
+  "new_alarms": [],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "acc": -0.5,
+   "zero_comm": 0.5
+  },
+  "base_verdict": {
+   "viable": true,
+   "plant": "relay_flood"
+  },
+  "mut_verdict": {
+   "viable": false,
+   "plant": "relay_flood"
+  },
+  "cpu_s": 1.7,
+  "error": null
+ },
+ "swap_labels|lens_swap|relay64": {
+  "category": "SURVIVED",
+  "expectation": "change",
+  "verdict_changed": false,
+  "new_alarms": [],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "eligible": 0,
+   "identity": 0.0,
+   "fS": -0.0417,
+   "fC": 0.0417,
+   "fN": 0.0,
+   "site_acc": 0.0417,
+   "chan_acc": -0.0417,
+   "offset": 0
+  },
+  "base_verdict": {
+   "class": "MIXTURE",
+   "follow_class": "MIXTURE",
+   "rel4_site": "CHANCE_REL",
+   "rel4_chan": "CHANCE_REL"
+  },
+  "mut_verdict": {
+   "class": "MIXTURE",
+   "follow_class": "MIXTURE",
+   "rel4_site": "CHANCE_REL",
+   "rel4_chan": "CHANCE_REL"
+  },
+  "cpu_s": 7.36,
+  "error": null
+ },
+ "swap_labels|held|hold64": {
+  "category": "EQUIVALENT",
+  "expectation": "invariant",
+  "verdict_changed": false,
+  "new_alarms": [],
+  "inert_worlds": true,
+  "numeric_delta": {
+   "acc": 0.0,
+   "lo99": 0.0,
+   "zero_comm": 0.0,
+   "comm_delta": 0.0,
+   "comm_delta_lo99": 0.0,
+   "train_final": 0.0,
+   "twin_beyond_hop": 0.0
+  },
+  "base_verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": false,
+   "LOCAL_ONLY": true,
+   "REACH_BEYOND_HOP": false
+  },
+  "mut_verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": false,
+   "LOCAL_ONLY": true,
+   "REACH_BEYOND_HOP": false
+  },
+  "cpu_s": 5.11,
+  "error": null
+ },
+ "swap_labels|plant|hold64": {
+  "category": "EQUIVALENT",
+  "expectation": "invariant",
+  "verdict_changed": false,
+  "new_alarms": [],
+  "inert_worlds": true,
+  "numeric_delta": {
+   "acc": 0.0,
+   "zero_comm": 0.0
+  },
+  "base_verdict": {
+   "viable": true,
+   "plant": "hold_latch"
+  },
+  "mut_verdict": {
+   "viable": true,
+   "plant": "hold_latch"
+  },
+  "cpu_s": 1.98,
+  "error": null
+ },
+ "swap_labels|lens_swap|hold64": {
+  "category": "KILLED(D)",
+  "expectation": "change",
+  "verdict_changed": true,
+  "new_alarms": [],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "eligible": 0,
+   "identity": 0.0,
+   "fS": -1.0,
+   "fC": 1.0,
+   "fN": 0.0,
+   "site_acc": 1.0,
+   "chan_acc": -1.0,
+   "offset": 0
+  },
+  "base_verdict": {
+   "class": "SITE",
+   "follow_class": "SITE",
+   "rel4_site": "FLIP_REL",
+   "rel4_chan": "NO_EFFECT_REL"
+  },
+  "mut_verdict": {
+   "class": "CHANNEL",
+   "follow_class": "CHANNEL",
+   "rel4_site": "NO_EFFECT_REL",
+   "rel4_chan": "FLIP_REL"
+  },
+  "cpu_s": 8.16,
+  "error": null
+ },
+ "swap_labels|held|echo": {
+  "category": "KILLED(A)",
+  "expectation": "change",
+  "verdict_changed": true,
+  "new_alarms": [
+   "TRAIN_HELD_GAP"
+  ],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "acc": -0.5,
+   "lo99": -0.5,
+   "zero_comm": 0.5,
+   "comm_delta": -1.0,
+   "comm_delta_lo99": -1.0,
+   "train_final": 0.0,
+   "twin_beyond_hop": 0.0
+  },
+  "base_verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": true,
+   "LOCAL_ONLY": false,
+   "REACH_BEYOND_HOP": true
+  },
+  "mut_verdict": {
+   "SIGNAL": false,
+   "COMM_DEPENDENT": false,
+   "LOCAL_ONLY": false,
+   "REACH_BEYOND_HOP": true
+  },
+  "cpu_s": 6.06,
+  "error": null
+ },
+ "swap_labels|controls|echo": {
+  "category": "KILLED(A)",
+  "expectation": "change",
+  "verdict_changed": true,
+  "new_alarms": [
+   "NOT_APPLICABLE:max_loss"
+  ],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "normal": -0.5,
+   "zero_comm": 0.5,
+   "shuffle_dest": 0.0,
+   "shuffle_time": 0.0,
+   "randomize_payload": 0.0,
+   "packet_ablation": 0.0,
+   "memory_ablation": 0.0,
+   "env_permutation": 0.0
+  },
+  "base_verdict": {
+   "causal": "NOT_SUPPORTED",
+   "status": {
+    "normal": "RAN",
+    "zero_comm": "RAN",
+    "shuffle_dest": "RAN",
+    "shuffle_time": "RAN",
+    "randomize_payload": "RAN",
+    "packet_ablation": "RAN",
+    "memory_ablation": "RAN",
+    "adaptation_off": "NOT_APPLICABLE",
+    "frozen_routing": "NOT_APPLICABLE",
+    "max_loss": "RAN",
+    "irrelevant_channel": "NOT_APPLICABLE",
+    "env_permutation": "RAN"
+   }
+  },
+  "mut_verdict": {
+   "causal": "NOT_SUPPORTED",
+   "status": {
+    "normal": "RAN",
+    "zero_comm": "RAN",
+    "shuffle_dest": "RAN",
+    "shuffle_time": "RAN",
+    "randomize_payload": "RAN",
+    "packet_ablation": "RAN",
+    "memory_ablation": "RAN",
+    "adaptation_off": "NOT_APPLICABLE",
+    "frozen_routing": "NOT_APPLICABLE",
+    "max_loss": "NOT_APPLICABLE",
+    "irrelevant_channel": "NOT_APPLICABLE",
+    "env_permutation": "RAN"
+   }
+  },
+  "cpu_s": 13.09,
+  "error": null
+ },
+ "swap_labels|lens_swap|echo": {
+  "category": "KILLED(D)",
+  "expectation": "change",
+  "verdict_changed": true,
+  "new_alarms": [],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "eligible": 0,
+   "identity": 0.0,
+   "fS": 1.0,
+   "fC": -1.0,
+   "fN": 0.0,
+   "site_acc": -1.0,
+   "chan_acc": 1.0,
+   "offset": 0
+  },
+  "base_verdict": {
+   "class": "CHANNEL",
+   "follow_class": "CHANNEL",
+   "rel4_site": "NO_EFFECT_REL",
+   "rel4_chan": "FLIP_REL"
+  },
+  "mut_verdict": {
+   "class": "SITE",
+   "follow_class": "SITE",
+   "rel4_site": "FLIP_REL",
+   "rel4_chan": "NO_EFFECT_REL"
+  },
+  "cpu_s": 5.75,
+  "error": null
+ },
+ "swap_labels|held|xor_hp": {
+  "category": "KILLED(A)",
+  "expectation": "change",
+  "verdict_changed": true,
+  "new_alarms": [
+   "TRAIN_HELD_GAP"
+  ],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "acc": -0.5,
+   "lo99": -0.5,
+   "zero_comm": 0.5,
+   "comm_delta": -1.0,
+   "comm_delta_lo99": -1.0,
+   "train_final": 0.0,
+   "twin_beyond_hop": 0.0
+  },
+  "base_verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": true,
+   "LOCAL_ONLY": false,
+   "REACH_BEYOND_HOP": true
+  },
+  "mut_verdict": {
+   "SIGNAL": false,
+   "COMM_DEPENDENT": false,
+   "LOCAL_ONLY": false,
+   "REACH_BEYOND_HOP": true
+  },
+  "cpu_s": 9.77,
+  "error": null
+ },
+ "swap_labels|held|c1_relay": {
+  "category": "KILLED(A)",
+  "expectation": "change",
+  "verdict_changed": true,
+  "new_alarms": [
+   "TRAIN_HELD_GAP"
+  ],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "acc": -0.2754,
+   "lo99": -0.2383,
+   "zero_comm": 0.2754,
+   "comm_delta": -0.5508,
+   "comm_delta_lo99": -0.5488,
+   "train_final": 0.0,
+   "twin_beyond_hop": 0.0
+  },
+  "base_verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": true,
+   "LOCAL_ONLY": false,
+   "REACH_BEYOND_HOP": false
+  },
+  "mut_verdict": {
+   "SIGNAL": false,
+   "COMM_DEPENDENT": false,
+   "LOCAL_ONLY": false,
+   "REACH_BEYOND_HOP": false
+  },
+  "cpu_s": 17.94,
+  "error": null
+ },
+ "swap_labels|held|c1_maj": {
+  "category": "KILLED(A)",
+  "expectation": "change",
+  "verdict_changed": true,
+  "new_alarms": [
+   "TRAIN_HELD_GAP"
+  ],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "acc": -0.1875,
+   "lo99": -0.127,
+   "zero_comm": 0.1875,
+   "comm_delta": -0.375,
+   "comm_delta_lo99": -0.3711,
+   "train_final": 0.0,
+   "twin_beyond_hop": 0.0
+  },
+  "base_verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": true,
+   "LOCAL_ONLY": false,
+   "INTEGRATION_BEYOND_ONE_SENSOR": false,
+   "REACH_BEYOND_HOP": true
+  },
+  "mut_verdict": {
+   "SIGNAL": false,
+   "COMM_DEPENDENT": false,
+   "LOCAL_ONLY": false,
+   "INTEGRATION_BEYOND_ONE_SENSOR": false,
+   "REACH_BEYOND_HOP": true
+  },
+  "cpu_s": 5.83,
+  "error": null
+ },
+ "duplicate_condition|held|relay64": {
+  "category": "KILLED(A)",
+  "expectation": "change",
+  "verdict_changed": true,
+  "new_alarms": [
+   "COMPETENT_WITHOUT_COMM"
+  ],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "acc": 0.0,
+   "lo99": 0.0,
+   "zero_comm": 0.5,
+   "comm_delta": -0.5,
+   "comm_delta_lo99": -0.5,
+   "train_final": 0.0,
+   "twin_beyond_hop": 0.0
+  },
+  "base_verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": true,
+   "LOCAL_ONLY": false,
+   "REACH_BEYOND_HOP": true
+  },
+  "mut_verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": false,
+   "LOCAL_ONLY": true,
+   "REACH_BEYOND_HOP": true
+  },
+  "cpu_s": 3.89,
+  "error": null
+ },
+ "duplicate_condition|controls|relay64": {
+  "category": "KILLED(A)",
+  "expectation": "change",
+  "verdict_changed": true,
+  "new_alarms": [
+   "CAUSAL_INCONCLUSIVE",
+   "NOT_APPLICABLE:max_loss",
+   "NOT_APPLICABLE:memory_ablation",
+   "NOT_APPLICABLE:packet_ablation",
+   "NOT_APPLICABLE:randomize_payload",
+   "NOT_APPLICABLE:shuffle_dest",
+   "NOT_APPLICABLE:shuffle_time",
+   "NOT_APPLICABLE:zero_comm"
+  ],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "normal": 0.0,
+   "irrelevant_channel": 0.0,
+   "env_permutation": 0.0
+  },
+  "base_verdict": {
+   "causal": "CAUSAL_SUPPORT",
+   "status": {
+    "normal": "RAN",
+    "zero_comm": "RAN",
+    "shuffle_dest": "RAN",
+    "shuffle_time": "RAN",
+    "randomize_payload": "RAN",
+    "packet_ablation": "RAN",
+    "memory_ablation": "RAN",
+    "adaptation_off": "NOT_APPLICABLE",
+    "frozen_routing": "NOT_APPLICABLE",
+    "max_loss": "RAN",
+    "irrelevant_channel": "RAN",
+    "env_permutation": "RAN"
+   }
+  },
+  "mut_verdict": {
+   "causal": "INCONCLUSIVE",
+   "status": {
+    "normal": "RAN",
+    "zero_comm": "NOT_APPLICABLE",
+    "shuffle_dest": "NOT_APPLICABLE",
+    "shuffle_time": "NOT_APPLICABLE",
+    "randomize_payload": "NOT_APPLICABLE",
+    "packet_ablation": "NOT_APPLICABLE",
+    "memory_ablation": "NOT_APPLICABLE",
+    "adaptation_off": "NOT_APPLICABLE",
+    "frozen_routing": "NOT_APPLICABLE",
+    "max_loss": "NOT_APPLICABLE",
+    "irrelevant_channel": "RAN",
+    "env_permutation": "RAN"
+   }
+  },
+  "cpu_s": 10.83,
+  "error": null
+ },
+ "duplicate_condition|plant|relay64": {
+  "category": "EQUIVALENT",
+  "expectation": "invariant",
+  "verdict_changed": false,
+  "new_alarms": [],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "acc": 0.0,
+   "zero_comm": 0.5
+  },
+  "base_verdict": {
+   "viable": true,
+   "plant": "relay_flood"
+  },
+  "mut_verdict": {
+   "viable": true,
+   "plant": "relay_flood"
+  },
+  "cpu_s": 1.47,
+  "error": null
+ },
+ "duplicate_condition|lens_swap|relay64": {
+  "category": "KILLED(A)",
+  "expectation": "change",
+  "verdict_changed": true,
+  "new_alarms": [
+   "class:IDENTITY-BROKEN",
+   "follow_class:IDENTITY-BROKEN"
+  ],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "eligible": 0,
+   "identity": -1.0,
+   "fS": -0.5208,
+   "fC": -0.4792,
+   "fN": 0.0,
+   "site_acc": 0.0,
+   "chan_acc": -0.0417,
+   "offset": 0
+  },
+  "base_verdict": {
+   "class": "MIXTURE",
+   "follow_class": "MIXTURE",
+   "rel4_site": "CHANCE_REL",
+   "rel4_chan": "CHANCE_REL"
+  },
+  "mut_verdict": {
+   "class": "IDENTITY-BROKEN",
+   "follow_class": "IDENTITY-BROKEN",
+   "rel4_site": "CHANCE_REL",
+   "rel4_chan": "CHANCE_REL"
+  },
+  "cpu_s": 4.94,
+  "error": null
+ },
+ "duplicate_condition|held|hold64": {
+  "category": "EQUIVALENT",
+  "expectation": "invariant",
+  "verdict_changed": false,
+  "new_alarms": [],
+  "inert_worlds": true,
+  "numeric_delta": {
+   "acc": 0.0,
+   "lo99": 0.0,
+   "zero_comm": 0.0,
+   "comm_delta": 0.0,
+   "comm_delta_lo99": 0.0,
+   "train_final": 0.0,
+   "twin_beyond_hop": 0.0
+  },
+  "base_verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": false,
+   "LOCAL_ONLY": true,
+   "REACH_BEYOND_HOP": false
+  },
+  "mut_verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": false,
+   "LOCAL_ONLY": true,
+   "REACH_BEYOND_HOP": false
+  },
+  "cpu_s": 4.59,
+  "error": null
+ },
+ "duplicate_condition|plant|hold64": {
+  "category": "EQUIVALENT",
+  "expectation": "invariant",
+  "verdict_changed": false,
+  "new_alarms": [],
+  "inert_worlds": true,
+  "numeric_delta": {
+   "acc": 0.0,
+   "zero_comm": 0.0
+  },
+  "base_verdict": {
+   "viable": true,
+   "plant": "hold_latch"
+  },
+  "mut_verdict": {
+   "viable": true,
+   "plant": "hold_latch"
+  },
+  "cpu_s": 1.8,
+  "error": null
+ },
+ "duplicate_condition|lens_swap|hold64": {
+  "category": "KILLED(A)",
+  "expectation": "change",
+  "verdict_changed": true,
+  "new_alarms": [
+   "class:IDENTITY-BROKEN",
+   "follow_class:IDENTITY-BROKEN"
+  ],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "eligible": 0,
+   "identity": -1.0,
+   "fS": -1.0,
+   "fC": 0.0,
+   "fN": 0.0,
+   "site_acc": 0.0,
+   "chan_acc": -1.0,
+   "offset": 0
+  },
+  "base_verdict": {
+   "class": "SITE",
+   "follow_class": "SITE",
+   "rel4_site": "FLIP_REL",
+   "rel4_chan": "NO_EFFECT_REL"
+  },
+  "mut_verdict": {
+   "class": "IDENTITY-BROKEN",
+   "follow_class": "IDENTITY-BROKEN",
+   "rel4_site": "FLIP_REL",
+   "rel4_chan": "FLIP_REL"
+  },
+  "cpu_s": 6.06,
+  "error": null
+ },
+ "duplicate_condition|held|echo": {
+  "category": "KILLED(D)",
+  "expectation": "change",
+  "verdict_changed": true,
+  "new_alarms": [],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "acc": 0.0,
+   "lo99": 0.0,
+   "zero_comm": 0.5,
+   "comm_delta": -0.5,
+   "comm_delta_lo99": -0.5,
+   "train_final": 0.0,
+   "twin_beyond_hop": 0.0
+  },
+  "base_verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": true,
+   "LOCAL_ONLY": false,
+   "REACH_BEYOND_HOP": true
+  },
+  "mut_verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": false,
+   "LOCAL_ONLY": true,
+   "REACH_BEYOND_HOP": true
+  },
+  "cpu_s": 6.0,
+  "error": null
+ },
+ "duplicate_condition|controls|echo": {
+  "category": "KILLED(A)",
+  "expectation": "change",
+  "verdict_changed": true,
+  "new_alarms": [
+   "CAUSAL_INCONCLUSIVE",
+   "NOT_APPLICABLE:max_loss",
+   "NOT_APPLICABLE:memory_ablation",
+   "NOT_APPLICABLE:packet_ablation",
+   "NOT_APPLICABLE:randomize_payload",
+   "NOT_APPLICABLE:shuffle_dest",
+   "NOT_APPLICABLE:shuffle_time",
+   "NOT_APPLICABLE:zero_comm"
+  ],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "normal": 0.0,
+   "env_permutation": 0.0
+  },
+  "base_verdict": {
+   "causal": "NOT_SUPPORTED",
+   "status": {
+    "normal": "RAN",
+    "zero_comm": "RAN",
+    "shuffle_dest": "RAN",
+    "shuffle_time": "RAN",
+    "randomize_payload": "RAN",
+    "packet_ablation": "RAN",
+    "memory_ablation": "RAN",
+    "adaptation_off": "NOT_APPLICABLE",
+    "frozen_routing": "NOT_APPLICABLE",
+    "max_loss": "RAN",
+    "irrelevant_channel": "NOT_APPLICABLE",
+    "env_permutation": "RAN"
+   }
+  },
+  "mut_verdict": {
+   "causal": "INCONCLUSIVE",
+   "status": {
+    "normal": "RAN",
+    "zero_comm": "NOT_APPLICABLE",
+    "shuffle_dest": "NOT_APPLICABLE",
+    "shuffle_time": "NOT_APPLICABLE",
+    "randomize_payload": "NOT_APPLICABLE",
+    "packet_ablation": "NOT_APPLICABLE",
+    "memory_ablation": "NOT_APPLICABLE",
+    "adaptation_off": "NOT_APPLICABLE",
+    "frozen_routing": "NOT_APPLICABLE",
+    "max_loss": "NOT_APPLICABLE",
+    "irrelevant_channel": "NOT_APPLICABLE",
+    "env_permutation": "RAN"
+   }
+  },
+  "cpu_s": 13.05,
+  "error": null
+ },
+ "duplicate_condition|lens_swap|echo": {
+  "category": "KILLED(A)",
+  "expectation": "change",
+  "verdict_changed": true,
+  "new_alarms": [
+   "class:IDENTITY-BROKEN",
+   "follow_class:IDENTITY-BROKEN"
+  ],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "eligible": 0,
+   "identity": -1.0,
+   "fS": 0.0,
+   "fC": -1.0,
+   "fN": 0.0,
+   "site_acc": 0.0,
+   "chan_acc": 1.0,
+   "offset": 0
+  },
+  "base_verdict": {
+   "class": "CHANNEL",
+   "follow_class": "CHANNEL",
+   "rel4_site": "NO_EFFECT_REL",
+   "rel4_chan": "FLIP_REL"
+  },
+  "mut_verdict": {
+   "class": "IDENTITY-BROKEN",
+   "follow_class": "IDENTITY-BROKEN",
+   "rel4_site": "NO_EFFECT_REL",
+   "rel4_chan": "NO_EFFECT_REL"
+  },
+  "cpu_s": 5.75,
+  "error": null
+ },
+ "duplicate_condition|held|xor_hp": {
+  "category": "KILLED(A)",
+  "expectation": "change",
+  "verdict_changed": true,
+  "new_alarms": [
+   "COMPETENT_WITHOUT_COMM"
+  ],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "acc": 0.0,
+   "lo99": 0.0,
+   "zero_comm": 0.5,
+   "comm_delta": -0.5,
+   "comm_delta_lo99": -0.5,
+   "train_final": 0.0,
+   "twin_beyond_hop": 0.0
+  },
+  "base_verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": true,
+   "LOCAL_ONLY": false,
+   "REACH_BEYOND_HOP": true
+  },
+  "mut_verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": false,
+   "LOCAL_ONLY": true,
+   "REACH_BEYOND_HOP": true
+  },
+  "cpu_s": 11.06,
+  "error": null
+ },
+ "duplicate_condition|held|c1_relay": {
+  "category": "KILLED(A)",
+  "expectation": "change",
+  "verdict_changed": true,
+  "new_alarms": [
+   "COMPETENT_WITHOUT_COMM"
+  ],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "acc": 0.0,
+   "lo99": 0.0,
+   "zero_comm": 0.2754,
+   "comm_delta": -0.2754,
+   "comm_delta_lo99": -0.2383,
+   "train_final": 0.0,
+   "twin_beyond_hop": 0.0
+  },
+  "base_verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": true,
+   "LOCAL_ONLY": false,
+   "REACH_BEYOND_HOP": false
+  },
+  "mut_verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": false,
+   "LOCAL_ONLY": true,
+   "REACH_BEYOND_HOP": false
+  },
+  "cpu_s": 18.03,
+  "error": null
+ },
+ "duplicate_condition|held|c1_maj": {
+  "category": "KILLED(A)",
+  "expectation": "change",
+  "verdict_changed": true,
+  "new_alarms": [
+   "COMPETENT_WITHOUT_COMM"
+  ],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "acc": 0.0,
+   "lo99": 0.0,
+   "zero_comm": 0.1875,
+   "comm_delta": -0.1875,
+   "comm_delta_lo99": -0.127,
+   "train_final": 0.0,
+   "twin_beyond_hop": 0.0
+  },
+  "base_verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": true,
+   "LOCAL_ONLY": false,
+   "INTEGRATION_BEYOND_ONE_SENSOR": false,
+   "REACH_BEYOND_HOP": true
+  },
+  "mut_verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": false,
+   "LOCAL_ONLY": true,
+   "INTEGRATION_BEYOND_ONE_SENSOR": false,
+   "REACH_BEYOND_HOP": true
+  },
+  "cpu_s": 6.23,
+  "error": null
+ },
+ "disable_channel|held|relay64": {
+  "category": "KILLED(D)",
+  "expectation": "change",
+  "verdict_changed": true,
+  "new_alarms": [],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "acc": -0.5,
+   "lo99": -0.5,
+   "zero_comm": 0.0,
+   "comm_delta": -0.5,
+   "comm_delta_lo99": -0.5,
+   "train_final": -0.5,
+   "twin_beyond_hop": -1.0
+  },
+  "base_verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": true,
+   "LOCAL_ONLY": false,
+   "REACH_BEYOND_HOP": true
+  },
+  "mut_verdict": {
+   "SIGNAL": false,
+   "COMM_DEPENDENT": false,
+   "LOCAL_ONLY": false,
+   "REACH_BEYOND_HOP": false
+  },
+  "cpu_s": 3.89,
+  "error": null
+ },
+ "disable_channel|controls|relay64": {
+  "category": "KILLED(A)",
+  "expectation": "change",
+  "verdict_changed": true,
+  "new_alarms": [
+   "CAUSAL_INCONCLUSIVE",
+   "NOT_APPLICABLE:max_loss",
+   "NOT_APPLICABLE:packet_ablation",
+   "NOT_APPLICABLE:randomize_payload",
+   "NOT_APPLICABLE:shuffle_dest",
+   "NOT_APPLICABLE:shuffle_time",
+   "NOT_APPLICABLE:zero_comm"
+  ],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "normal": -0.5,
+   "memory_ablation": -0.3398,
+   "irrelevant_channel": -0.5,
+   "env_permutation": -0.003
+  },
+  "base_verdict": {
+   "causal": "CAUSAL_SUPPORT",
+   "status": {
+    "normal": "RAN",
+    "zero_comm": "RAN",
+    "shuffle_dest": "RAN",
+    "shuffle_time": "RAN",
+    "randomize_payload": "RAN",
+    "packet_ablation": "RAN",
+    "memory_ablation": "RAN",
+    "adaptation_off": "NOT_APPLICABLE",
+    "frozen_routing": "NOT_APPLICABLE",
+    "max_loss": "RAN",
+    "irrelevant_channel": "RAN",
+    "env_permutation": "RAN"
+   }
+  },
+  "mut_verdict": {
+   "causal": "INCONCLUSIVE",
+   "status": {
+    "normal": "RAN",
+    "zero_comm": "NOT_APPLICABLE",
+    "shuffle_dest": "NOT_APPLICABLE",
+    "shuffle_time": "NOT_APPLICABLE",
+    "randomize_payload": "NOT_APPLICABLE",
+    "packet_ablation": "NOT_APPLICABLE",
+    "memory_ablation": "RAN",
+    "adaptation_off": "NOT_APPLICABLE",
+    "frozen_routing": "NOT_APPLICABLE",
+    "max_loss": "NOT_APPLICABLE",
+    "irrelevant_channel": "RAN",
+    "env_permutation": "RAN"
+   }
+  },
+  "cpu_s": 11.02,
+  "error": null
+ },
+ "disable_channel|plant|relay64": {
+  "category": "KILLED(D)",
+  "expectation": "change",
+  "verdict_changed": true,
+  "new_alarms": [],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "acc": -0.5,
+   "zero_comm": 0.0
+  },
+  "base_verdict": {
+   "viable": true,
+   "plant": "relay_flood"
+  },
+  "mut_verdict": {
+   "viable": false,
+   "plant": "relay_flood"
+  },
+  "cpu_s": 1.42,
+  "error": null
+ },
+ "disable_channel|lens_swap|relay64": {
+  "category": "KILLED(A)",
+  "expectation": "change",
+  "verdict_changed": true,
+  "new_alarms": [
+   "class:UNDEFINED",
+   "follow_class:UNDEFINED",
+   "rel4_chan:NOT_ELIGIBLE",
+   "rel4_site:NOT_ELIGIBLE"
+  ],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "eligible": -96,
+   "offset": 0
+  },
+  "base_verdict": {
+   "class": "MIXTURE",
+   "follow_class": "MIXTURE",
+   "rel4_site": "CHANCE_REL",
+   "rel4_chan": "CHANCE_REL"
+  },
+  "mut_verdict": {
+   "class": "UNDEFINED",
+   "follow_class": "UNDEFINED",
+   "rel4_site": "NOT_ELIGIBLE",
+   "rel4_chan": "NOT_ELIGIBLE"
+  },
+  "cpu_s": 5.42,
+  "error": null
+ },
+ "disable_channel|held|hold64": {
+  "category": "EQUIVALENT",
+  "expectation": "invariant",
+  "verdict_changed": false,
+  "new_alarms": [],
+  "inert_worlds": true,
+  "numeric_delta": {
+   "acc": 0.0,
+   "lo99": 0.0,
+   "zero_comm": 0.0,
+   "comm_delta": 0.0,
+   "comm_delta_lo99": 0.0,
+   "train_final": 0.0,
+   "twin_beyond_hop": 0.0
+  },
+  "base_verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": false,
+   "LOCAL_ONLY": true,
+   "REACH_BEYOND_HOP": false
+  },
+  "mut_verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": false,
+   "LOCAL_ONLY": true,
+   "REACH_BEYOND_HOP": false
+  },
+  "cpu_s": 4.5,
+  "error": null
+ },
+ "disable_channel|plant|hold64": {
+  "category": "EQUIVALENT",
+  "expectation": "invariant",
+  "verdict_changed": false,
+  "new_alarms": [],
+  "inert_worlds": true,
+  "numeric_delta": {
+   "acc": 0.0,
+   "zero_comm": 0.0
+  },
+  "base_verdict": {
+   "viable": true,
+   "plant": "hold_latch"
+  },
+  "mut_verdict": {
+   "viable": true,
+   "plant": "hold_latch"
+  },
+  "cpu_s": 1.95,
+  "error": null
+ },
+ "disable_channel|lens_swap|hold64": {
+  "category": "EQUIVALENT",
+  "expectation": "invariant",
+  "verdict_changed": false,
+  "new_alarms": [],
+  "inert_worlds": true,
+  "numeric_delta": {
+   "eligible": 0,
+   "identity": 0.0,
+   "fS": 0.0,
+   "fC": 0.0,
+   "fN": 0.0,
+   "site_acc": 0.0,
+   "chan_acc": 0.0,
+   "offset": 0
+  },
+  "base_verdict": {
+   "class": "SITE",
+   "follow_class": "SITE",
+   "rel4_site": "FLIP_REL",
+   "rel4_chan": "NO_EFFECT_REL"
+  },
+  "mut_verdict": {
+   "class": "SITE",
+   "follow_class": "SITE",
+   "rel4_site": "FLIP_REL",
+   "rel4_chan": "NO_EFFECT_REL"
+  },
+  "cpu_s": 6.7,
+  "error": null
+ },
+ "disable_channel|held|echo": {
+  "category": "KILLED(D)",
+  "expectation": "change",
+  "verdict_changed": true,
+  "new_alarms": [],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "acc": -0.5,
+   "lo99": -0.5,
+   "zero_comm": 0.0,
+   "comm_delta": -0.5,
+   "comm_delta_lo99": -0.5,
+   "train_final": -0.5,
+   "twin_beyond_hop": -1.0
+  },
+  "base_verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": true,
+   "LOCAL_ONLY": false,
+   "REACH_BEYOND_HOP": true
+  },
+  "mut_verdict": {
+   "SIGNAL": false,
+   "COMM_DEPENDENT": false,
+   "LOCAL_ONLY": false,
+   "REACH_BEYOND_HOP": false
+  },
+  "cpu_s": 5.83,
+  "error": null
+ },
+ "disable_channel|controls|echo": {
+  "category": "KILLED(A)",
+  "expectation": "change",
+  "verdict_changed": true,
+  "new_alarms": [
+   "CAUSAL_INCONCLUSIVE",
+   "NOT_APPLICABLE:max_loss",
+   "NOT_APPLICABLE:memory_ablation",
+   "NOT_APPLICABLE:packet_ablation",
+   "NOT_APPLICABLE:randomize_payload",
+   "NOT_APPLICABLE:shuffle_dest",
+   "NOT_APPLICABLE:shuffle_time",
+   "NOT_APPLICABLE:zero_comm"
+  ],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "normal": -0.5,
+   "env_permutation": 0.0093
+  },
+  "base_verdict": {
+   "causal": "NOT_SUPPORTED",
+   "status": {
+    "normal": "RAN",
+    "zero_comm": "RAN",
+    "shuffle_dest": "RAN",
+    "shuffle_time": "RAN",
+    "randomize_payload": "RAN",
+    "packet_ablation": "RAN",
+    "memory_ablation": "RAN",
+    "adaptation_off": "NOT_APPLICABLE",
+    "frozen_routing": "NOT_APPLICABLE",
+    "max_loss": "RAN",
+    "irrelevant_channel": "NOT_APPLICABLE",
+    "env_permutation": "RAN"
+   }
+  },
+  "mut_verdict": {
+   "causal": "INCONCLUSIVE",
+   "status": {
+    "normal": "RAN",
+    "zero_comm": "NOT_APPLICABLE",
+    "shuffle_dest": "NOT_APPLICABLE",
+    "shuffle_time": "NOT_APPLICABLE",
+    "randomize_payload": "NOT_APPLICABLE",
+    "packet_ablation": "NOT_APPLICABLE",
+    "memory_ablation": "NOT_APPLICABLE",
+    "adaptation_off": "NOT_APPLICABLE",
+    "frozen_routing": "NOT_APPLICABLE",
+    "max_loss": "NOT_APPLICABLE",
+    "irrelevant_channel": "NOT_APPLICABLE",
+    "env_permutation": "RAN"
+   }
+  },
+  "cpu_s": 12.28,
+  "error": null
+ },
+ "disable_channel|lens_swap|echo": {
+  "category": "KILLED(A)",
+  "expectation": "change",
+  "verdict_changed": true,
+  "new_alarms": [
+   "class:UNDEFINED",
+   "follow_class:UNDEFINED",
+   "rel4_chan:NOT_ELIGIBLE",
+   "rel4_site:NOT_ELIGIBLE"
+  ],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "eligible": -96,
+   "offset": 0
+  },
+  "base_verdict": {
+   "class": "CHANNEL",
+   "follow_class": "CHANNEL",
+   "rel4_site": "NO_EFFECT_REL",
+   "rel4_chan": "FLIP_REL"
+  },
+  "mut_verdict": {
+   "class": "UNDEFINED",
+   "follow_class": "UNDEFINED",
+   "rel4_site": "NOT_ELIGIBLE",
+   "rel4_chan": "NOT_ELIGIBLE"
+  },
+  "cpu_s": 4.17,
+  "error": null
+ },
+ "disable_channel|held|xor_hp": {
+  "category": "KILLED(D)",
+  "expectation": "change",
+  "verdict_changed": true,
+  "new_alarms": [],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "acc": -0.5,
+   "lo99": -0.5,
+   "zero_comm": 0.0,
+   "comm_delta": -0.5,
+   "comm_delta_lo99": -0.5,
+   "train_final": -0.5,
+   "twin_beyond_hop": -1.0
+  },
+  "base_verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": true,
+   "LOCAL_ONLY": false,
+   "REACH_BEYOND_HOP": true
+  },
+  "mut_verdict": {
+   "SIGNAL": false,
+   "COMM_DEPENDENT": false,
+   "LOCAL_ONLY": false,
+   "REACH_BEYOND_HOP": false
+  },
+  "cpu_s": 8.94,
+  "error": null
+ },
+ "disable_channel|held|c1_relay": {
+  "category": "KILLED(D)",
+  "expectation": "change",
+  "verdict_changed": true,
+  "new_alarms": [],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "acc": -0.2754,
+   "lo99": -0.2383,
+   "zero_comm": 0.0,
+   "comm_delta": -0.2754,
+   "comm_delta_lo99": -0.2383,
+   "train_final": -0.25,
+   "twin_beyond_hop": 0.0
+  },
+  "base_verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": true,
+   "LOCAL_ONLY": false,
+   "REACH_BEYOND_HOP": false
+  },
+  "mut_verdict": {
+   "SIGNAL": false,
+   "COMM_DEPENDENT": false,
+   "LOCAL_ONLY": false,
+   "REACH_BEYOND_HOP": false
+  },
+  "cpu_s": 14.2,
+  "error": null
+ },
+ "disable_channel|held|c1_maj": {
+  "category": "KILLED(D)",
+  "expectation": "change",
+  "verdict_changed": true,
+  "new_alarms": [],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "acc": -0.1875,
+   "lo99": -0.127,
+   "zero_comm": 0.0,
+   "comm_delta": -0.1875,
+   "comm_delta_lo99": -0.127,
+   "train_final": -0.3125,
+   "twin_beyond_hop": -0.75
+  },
+  "base_verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": true,
+   "LOCAL_ONLY": false,
+   "INTEGRATION_BEYOND_ONE_SENSOR": false,
+   "REACH_BEYOND_HOP": true
+  },
+  "mut_verdict": {
+   "SIGNAL": false,
+   "COMM_DEPENDENT": false,
+   "LOCAL_ONLY": false,
+   "INTEGRATION_BEYOND_ONE_SENSOR": false,
+   "REACH_BEYOND_HOP": false
+  },
+  "cpu_s": 5.17,
+  "error": null
+ },
+ "disable_channel|oracle|conformance": {
+  "category": "KILLED(A)",
+  "expectation": "change",
+  "verdict_changed": true,
+  "new_alarms": [
+   "CONFORMANCE_FAIL:controls_touch_only_their_channel[None]",
+   "CONFORMANCE_FAIL:engine_matches_oracle[3]",
+   "CONFORMANCE_FAIL:engine_matches_oracle[4]",
+   "CONFORMANCE_FAIL:transport_matches_oracle[100]",
+   "CONFORMANCE_FAIL:transport_matches_oracle[101]",
+   "CONFORMANCE_FAIL:transport_matches_oracle[103]"
+  ],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "n_checks": 0,
+   "n_fail": 6
+  },
+  "base_verdict": {
+   "pass": true
+  },
+  "mut_verdict": {
+   "pass": false
+  },
+  "cpu_s": 1.77,
+  "error": null
+ },
+ "control_ignored|held|relay64": {
+  "category": "KILLED(A)",
+  "expectation": "change",
+  "verdict_changed": true,
+  "new_alarms": [
+   "COMPETENT_WITHOUT_COMM"
+  ],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "acc": 0.0,
+   "lo99": 0.0,
+   "zero_comm": 0.5,
+   "comm_delta": -0.5,
+   "comm_delta_lo99": -0.5,
+   "train_final": 0.0,
+   "twin_beyond_hop": 0.0
+  },
+  "base_verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": true,
+   "LOCAL_ONLY": false,
+   "REACH_BEYOND_HOP": true
+  },
+  "mut_verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": false,
+   "LOCAL_ONLY": true,
+   "REACH_BEYOND_HOP": true
+  },
+  "cpu_s": 3.91,
+  "error": null
+ },
+ "control_ignored|controls|relay64": {
+  "category": "KILLED(A)",
+  "expectation": "change",
+  "verdict_changed": true,
+  "new_alarms": [
+   "CAUSAL_INCONCLUSIVE",
+   "NOT_APPLICABLE:memory_ablation",
+   "NOT_APPLICABLE:packet_ablation",
+   "NOT_APPLICABLE:randomize_payload",
+   "NOT_APPLICABLE:shuffle_dest",
+   "NOT_APPLICABLE:shuffle_time",
+   "NOT_APPLICABLE:zero_comm"
+  ],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "normal": 0.0,
+   "max_loss": 0.0,
+   "irrelevant_channel": 0.0,
+   "env_permutation": 0.0
+  },
+  "base_verdict": {
+   "causal": "CAUSAL_SUPPORT",
+   "status": {
+    "normal": "RAN",
+    "zero_comm": "RAN",
+    "shuffle_dest": "RAN",
+    "shuffle_time": "RAN",
+    "randomize_payload": "RAN",
+    "packet_ablation": "RAN",
+    "memory_ablation": "RAN",
+    "adaptation_off": "NOT_APPLICABLE",
+    "frozen_routing": "NOT_APPLICABLE",
+    "max_loss": "RAN",
+    "irrelevant_channel": "RAN",
+    "env_permutation": "RAN"
+   }
+  },
+  "mut_verdict": {
+   "causal": "INCONCLUSIVE",
+   "status": {
+    "normal": "RAN",
+    "zero_comm": "NOT_APPLICABLE",
+    "shuffle_dest": "NOT_APPLICABLE",
+    "shuffle_time": "NOT_APPLICABLE",
+    "randomize_payload": "NOT_APPLICABLE",
+    "packet_ablation": "NOT_APPLICABLE",
+    "memory_ablation": "NOT_APPLICABLE",
+    "adaptation_off": "NOT_APPLICABLE",
+    "frozen_routing": "NOT_APPLICABLE",
+    "max_loss": "RAN",
+    "irrelevant_channel": "RAN",
+    "env_permutation": "RAN"
+   }
+  },
+  "cpu_s": 10.66,
+  "error": null
+ },
+ "control_ignored|plant|relay64": {
+  "category": "EQUIVALENT",
+  "expectation": "invariant",
+  "verdict_changed": false,
+  "new_alarms": [],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "acc": 0.0,
+   "zero_comm": 0.5
+  },
+  "base_verdict": {
+   "viable": true,
+   "plant": "relay_flood"
+  },
+  "mut_verdict": {
+   "viable": true,
+   "plant": "relay_flood"
+  },
+  "cpu_s": 1.61,
+  "error": null
+ },
+ "control_ignored|held|hold64": {
+  "category": "EQUIVALENT",
+  "expectation": "invariant",
+  "verdict_changed": false,
+  "new_alarms": [],
+  "inert_worlds": true,
+  "numeric_delta": {
+   "acc": 0.0,
+   "lo99": 0.0,
+   "zero_comm": 0.0,
+   "comm_delta": 0.0,
+   "comm_delta_lo99": 0.0,
+   "train_final": 0.0,
+   "twin_beyond_hop": 0.0
+  },
+  "base_verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": false,
+   "LOCAL_ONLY": true,
+   "REACH_BEYOND_HOP": false
+  },
+  "mut_verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": false,
+   "LOCAL_ONLY": true,
+   "REACH_BEYOND_HOP": false
+  },
+  "cpu_s": 4.75,
+  "error": null
+ },
+ "control_ignored|plant|hold64": {
+  "category": "EQUIVALENT",
+  "expectation": "invariant",
+  "verdict_changed": false,
+  "new_alarms": [],
+  "inert_worlds": true,
+  "numeric_delta": {
+   "acc": 0.0,
+   "zero_comm": 0.0
+  },
+  "base_verdict": {
+   "viable": true,
+   "plant": "hold_latch"
+  },
+  "mut_verdict": {
+   "viable": true,
+   "plant": "hold_latch"
+  },
+  "cpu_s": 1.83,
+  "error": null
+ },
+ "control_ignored|held|echo": {
+  "category": "KILLED(D)",
+  "expectation": "change",
+  "verdict_changed": true,
+  "new_alarms": [],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "acc": 0.0,
+   "lo99": 0.0,
+   "zero_comm": 0.5,
+   "comm_delta": -0.5,
+   "comm_delta_lo99": -0.5,
+   "train_final": 0.0,
+   "twin_beyond_hop": 0.0
+  },
+  "base_verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": true,
+   "LOCAL_ONLY": false,
+   "REACH_BEYOND_HOP": true
+  },
+  "mut_verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": false,
+   "LOCAL_ONLY": true,
+   "REACH_BEYOND_HOP": true
+  },
+  "cpu_s": 5.89,
+  "error": null
+ },
+ "control_ignored|controls|echo": {
+  "category": "KILLED(A)",
+  "expectation": "change",
+  "verdict_changed": true,
+  "new_alarms": [
+   "CAUSAL_INCONCLUSIVE",
+   "NOT_APPLICABLE:memory_ablation",
+   "NOT_APPLICABLE:packet_ablation",
+   "NOT_APPLICABLE:randomize_payload",
+   "NOT_APPLICABLE:shuffle_dest",
+   "NOT_APPLICABLE:shuffle_time",
+   "NOT_APPLICABLE:zero_comm"
+  ],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "normal": 0.0,
+   "max_loss": 0.0,
+   "env_permutation": 0.0
+  },
+  "base_verdict": {
+   "causal": "NOT_SUPPORTED",
+   "status": {
+    "normal": "RAN",
+    "zero_comm": "RAN",
+    "shuffle_dest": "RAN",
+    "shuffle_time": "RAN",
+    "randomize_payload": "RAN",
+    "packet_ablation": "RAN",
+    "memory_ablation": "RAN",
+    "adaptation_off": "NOT_APPLICABLE",
+    "frozen_routing": "NOT_APPLICABLE",
+    "max_loss": "RAN",
+    "irrelevant_channel": "NOT_APPLICABLE",
+    "env_permutation": "RAN"
+   }
+  },
+  "mut_verdict": {
+   "causal": "INCONCLUSIVE",
+   "status": {
+    "normal": "RAN",
+    "zero_comm": "NOT_APPLICABLE",
+    "shuffle_dest": "NOT_APPLICABLE",
+    "shuffle_time": "NOT_APPLICABLE",
+    "randomize_payload": "NOT_APPLICABLE",
+    "packet_ablation": "NOT_APPLICABLE",
+    "memory_ablation": "NOT_APPLICABLE",
+    "adaptation_off": "NOT_APPLICABLE",
+    "frozen_routing": "NOT_APPLICABLE",
+    "max_loss": "RAN",
+    "irrelevant_channel": "NOT_APPLICABLE",
+    "env_permutation": "RAN"
+   }
+  },
+  "cpu_s": 12.09,
+  "error": null
+ },
+ "control_ignored|held|xor_hp": {
+  "category": "KILLED(A)",
+  "expectation": "change",
+  "verdict_changed": true,
+  "new_alarms": [
+   "COMPETENT_WITHOUT_COMM"
+  ],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "acc": 0.0,
+   "lo99": 0.0,
+   "zero_comm": 0.5,
+   "comm_delta": -0.5,
+   "comm_delta_lo99": -0.5,
+   "train_final": 0.0,
+   "twin_beyond_hop": 0.0
+  },
+  "base_verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": true,
+   "LOCAL_ONLY": false,
+   "REACH_BEYOND_HOP": true
+  },
+  "mut_verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": false,
+   "LOCAL_ONLY": true,
+   "REACH_BEYOND_HOP": true
+  },
+  "cpu_s": 9.86,
+  "error": null
+ },
+ "control_ignored|held|c1_relay": {
+  "category": "KILLED(A)",
+  "expectation": "change",
+  "verdict_changed": true,
+  "new_alarms": [
+   "COMPETENT_WITHOUT_COMM"
+  ],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "acc": 0.0,
+   "lo99": 0.0,
+   "zero_comm": 0.2754,
+   "comm_delta": -0.2754,
+   "comm_delta_lo99": -0.2383,
+   "train_final": 0.0,
+   "twin_beyond_hop": 0.0
+  },
+  "base_verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": true,
+   "LOCAL_ONLY": false,
+   "REACH_BEYOND_HOP": false
+  },
+  "mut_verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": false,
+   "LOCAL_ONLY": true,
+   "REACH_BEYOND_HOP": false
+  },
+  "cpu_s": 17.02,
+  "error": null
+ },
+ "control_ignored|held|c1_maj": {
+  "category": "KILLED(A)",
+  "expectation": "change",
+  "verdict_changed": true,
+  "new_alarms": [
+   "COMPETENT_WITHOUT_COMM"
+  ],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "acc": 0.0,
+   "lo99": 0.0,
+   "zero_comm": 0.1875,
+   "comm_delta": -0.1875,
+   "comm_delta_lo99": -0.127,
+   "train_final": 0.0,
+   "twin_beyond_hop": 0.0
+  },
+  "base_verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": true,
+   "LOCAL_ONLY": false,
+   "INTEGRATION_BEYOND_ONE_SENSOR": false,
+   "REACH_BEYOND_HOP": true
+  },
+  "mut_verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": false,
+   "LOCAL_ONLY": true,
+   "INTEGRATION_BEYOND_ONE_SENSOR": false,
+   "REACH_BEYOND_HOP": true
+  },
+  "cpu_s": 6.28,
+  "error": null
+ },
+ "control_ignored|oracle|conformance": {
+  "category": "KILLED(A)",
+  "expectation": "change",
+  "verdict_changed": true,
+  "new_alarms": [
+   "CONFORMANCE_FAIL:controls_touch_only_their_channel[None]"
+  ],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "n_checks": 0,
+   "n_fail": 1
+  },
+  "base_verdict": {
+   "pass": true
+  },
+  "mut_verdict": {
+   "pass": false
+  },
+  "cpu_s": 1.5,
+  "error": null
+ },
+ "freeze_state|held|relay64": {
+  "category": "SURVIVED",
+  "expectation": "change",
+  "verdict_changed": false,
+  "new_alarms": [],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "acc": -0.25,
+   "lo99": -0.3086,
+   "zero_comm": 0.0,
+   "comm_delta": -0.25,
+   "comm_delta_lo99": -0.3086,
+   "train_final": -0.375,
+   "twin_beyond_hop": 0.0
+  },
+  "base_verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": true,
+   "LOCAL_ONLY": false,
+   "REACH_BEYOND_HOP": true
+  },
+  "mut_verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": true,
+   "LOCAL_ONLY": false,
+   "REACH_BEYOND_HOP": true
+  },
+  "cpu_s": 4.0,
+  "error": null
+ },
+ "freeze_state|controls|relay64": {
+  "category": "SURVIVED",
+  "expectation": "change",
+  "verdict_changed": false,
+  "new_alarms": [],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "normal": -0.2539,
+   "zero_comm": 0.0,
+   "shuffle_dest": -0.2188,
+   "shuffle_time": -0.2539,
+   "randomize_payload": -0.0234,
+   "packet_ablation": 0.0,
+   "memory_ablation": -0.1758,
+   "max_loss": 0.0,
+   "irrelevant_channel": -0.2539,
+   "env_permutation": 0.0026
+  },
+  "base_verdict": {
+   "causal": "CAUSAL_SUPPORT",
+   "status": {
+    "normal": "RAN",
+    "zero_comm": "RAN",
+    "shuffle_dest": "RAN",
+    "shuffle_time": "RAN",
+    "randomize_payload": "RAN",
+    "packet_ablation": "RAN",
+    "memory_ablation": "RAN",
+    "adaptation_off": "NOT_APPLICABLE",
+    "frozen_routing": "NOT_APPLICABLE",
+    "max_loss": "RAN",
+    "irrelevant_channel": "RAN",
+    "env_permutation": "RAN"
+   }
+  },
+  "mut_verdict": {
+   "causal": "CAUSAL_SUPPORT",
+   "status": {
+    "normal": "RAN",
+    "zero_comm": "RAN",
+    "shuffle_dest": "RAN",
+    "shuffle_time": "RAN",
+    "randomize_payload": "RAN",
+    "packet_ablation": "RAN",
+    "memory_ablation": "RAN",
+    "adaptation_off": "NOT_APPLICABLE",
+    "frozen_routing": "NOT_APPLICABLE",
+    "max_loss": "RAN",
+    "irrelevant_channel": "RAN",
+    "env_permutation": "RAN"
+   }
+  },
+  "cpu_s": 10.61,
+  "error": null
+ },
+ "freeze_state|plant|relay64": {
+  "category": "KILLED(D)",
+  "expectation": "change",
+  "verdict_changed": true,
+  "new_alarms": [],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "acc": -0.2891,
+   "zero_comm": 0.0
+  },
+  "base_verdict": {
+   "viable": true,
+   "plant": "relay_flood"
+  },
+  "mut_verdict": {
+   "viable": false,
+   "plant": "relay_flood"
+  },
+  "cpu_s": 1.36,
+  "error": null
+ },
+ "freeze_state|lens_swap|relay64": {
+  "category": "SURVIVED",
+  "expectation": "change",
+  "verdict_changed": false,
+  "new_alarms": [],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "eligible": 0,
+   "identity": 0.0,
+   "fS": 0.0,
+   "fC": 0.0,
+   "fN": 0.0,
+   "site_acc": 0.0,
+   "chan_acc": 0.0,
+   "offset": 0
+  },
+  "base_verdict": {
+   "class": "MIXTURE",
+   "follow_class": "MIXTURE",
+   "rel4_site": "CHANCE_REL",
+   "rel4_chan": "CHANCE_REL"
+  },
+  "mut_verdict": {
+   "class": "MIXTURE",
+   "follow_class": "MIXTURE",
+   "rel4_site": "CHANCE_REL",
+   "rel4_chan": "CHANCE_REL"
+  },
+  "cpu_s": 5.44,
+  "error": null
+ },
+ "freeze_state|held|hold64": {
+  "category": "SURVIVED",
+  "expectation": "change",
+  "verdict_changed": false,
+  "new_alarms": [],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "acc": -0.2656,
+   "lo99": -0.3203,
+   "zero_comm": -0.2656,
+   "comm_delta": 0.0,
+   "comm_delta_lo99": 0.0,
+   "train_final": -0.375,
+   "twin_beyond_hop": 0.0
+  },
+  "base_verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": false,
+   "LOCAL_ONLY": true,
+   "REACH_BEYOND_HOP": false
+  },
+  "mut_verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": false,
+   "LOCAL_ONLY": true,
+   "REACH_BEYOND_HOP": false
+  },
+  "cpu_s": 4.28,
+  "error": null
+ },
+ "freeze_state|plant|hold64": {
+  "category": "KILLED(D)",
+  "expectation": "change",
+  "verdict_changed": true,
+  "new_alarms": [],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "acc": -0.2812,
+   "zero_comm": -0.2812
+  },
+  "base_verdict": {
+   "viable": true,
+   "plant": "hold_latch"
+  },
+  "mut_verdict": {
+   "viable": false,
+   "plant": "hold_latch"
+  },
+  "cpu_s": 1.66,
+  "error": null
+ },
+ "freeze_state|lens_swap|hold64": {
+  "category": "SURVIVED",
+  "expectation": "change",
+  "verdict_changed": false,
+  "new_alarms": [],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "eligible": 0,
+   "identity": 0.0,
+   "fS": 0.0,
+   "fC": 0.0,
+   "fN": 0.0,
+   "site_acc": 0.0,
+   "chan_acc": 0.0,
+   "offset": 0
+  },
+  "base_verdict": {
+   "class": "SITE",
+   "follow_class": "SITE",
+   "rel4_site": "FLIP_REL",
+   "rel4_chan": "NO_EFFECT_REL"
+  },
+  "mut_verdict": {
+   "class": "SITE",
+   "follow_class": "SITE",
+   "rel4_site": "FLIP_REL",
+   "rel4_chan": "NO_EFFECT_REL"
+  },
+  "cpu_s": 6.5,
+  "error": null
+ },
+ "freeze_state|held|echo": {
+  "category": "SURVIVED",
+  "expectation": "change",
+  "verdict_changed": false,
+  "new_alarms": [],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "acc": -0.2656,
+   "lo99": -0.3203,
+   "zero_comm": 0.0,
+   "comm_delta": -0.2656,
+   "comm_delta_lo99": -0.3203,
+   "train_final": -0.375,
+   "twin_beyond_hop": 0.0
+  },
+  "base_verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": true,
+   "LOCAL_ONLY": false,
+   "REACH_BEYOND_HOP": true
+  },
+  "mut_verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": true,
+   "LOCAL_ONLY": false,
+   "REACH_BEYOND_HOP": true
+  },
+  "cpu_s": 6.2,
+  "error": null
+ },
+ "freeze_state|controls|echo": {
+  "category": "SURVIVED",
+  "expectation": "change",
+  "verdict_changed": false,
+  "new_alarms": [],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "normal": -0.2383,
+   "zero_comm": 0.0,
+   "shuffle_dest": -0.0996,
+   "shuffle_time": -0.2383,
+   "randomize_payload": 0.0,
+   "packet_ablation": 0.0,
+   "memory_ablation": -0.2383,
+   "max_loss": 0.0,
+   "env_permutation": 0.0042
+  },
+  "base_verdict": {
+   "causal": "NOT_SUPPORTED",
+   "status": {
+    "normal": "RAN",
+    "zero_comm": "RAN",
+    "shuffle_dest": "RAN",
+    "shuffle_time": "RAN",
+    "randomize_payload": "RAN",
+    "packet_ablation": "RAN",
+    "memory_ablation": "RAN",
+    "adaptation_off": "NOT_APPLICABLE",
+    "frozen_routing": "NOT_APPLICABLE",
+    "max_loss": "RAN",
+    "irrelevant_channel": "NOT_APPLICABLE",
+    "env_permutation": "RAN"
+   }
+  },
+  "mut_verdict": {
+   "causal": "NOT_SUPPORTED",
+   "status": {
+    "normal": "RAN",
+    "zero_comm": "RAN",
+    "shuffle_dest": "RAN",
+    "shuffle_time": "RAN",
+    "randomize_payload": "RAN",
+    "packet_ablation": "RAN",
+    "memory_ablation": "RAN",
+    "adaptation_off": "NOT_APPLICABLE",
+    "frozen_routing": "NOT_APPLICABLE",
+    "max_loss": "RAN",
+    "irrelevant_channel": "NOT_APPLICABLE",
+    "env_permutation": "RAN"
+   }
+  },
+  "cpu_s": 12.98,
+  "error": null
+ },
+ "freeze_state|lens_swap|echo": {
+  "category": "SURVIVED",
+  "expectation": "change",
+  "verdict_changed": false,
+  "new_alarms": [],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "eligible": 0,
+   "identity": 0.0,
+   "fS": 0.0,
+   "fC": 0.0,
+   "fN": 0.0,
+   "site_acc": 0.0,
+   "chan_acc": 0.0,
+   "offset": 0
+  },
+  "base_verdict": {
+   "class": "CHANNEL",
+   "follow_class": "CHANNEL",
+   "rel4_site": "NO_EFFECT_REL",
+   "rel4_chan": "FLIP_REL"
+  },
+  "mut_verdict": {
+   "class": "CHANNEL",
+   "follow_class": "CHANNEL",
+   "rel4_site": "NO_EFFECT_REL",
+   "rel4_chan": "FLIP_REL"
+  },
+  "cpu_s": 4.08,
+  "error": null
+ },
+ "freeze_state|held|xor_hp": {
+  "category": "SURVIVED",
+  "expectation": "change",
+  "verdict_changed": false,
+  "new_alarms": [],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "acc": -0.2734,
+   "lo99": -0.3151,
+   "zero_comm": 0.0,
+   "comm_delta": -0.2734,
+   "comm_delta_lo99": -0.3151,
+   "train_final": -0.3333,
+   "twin_beyond_hop": 0.0
+  },
+  "base_verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": true,
+   "LOCAL_ONLY": false,
+   "REACH_BEYOND_HOP": true
+  },
+  "mut_verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": true,
+   "LOCAL_ONLY": false,
+   "REACH_BEYOND_HOP": true
+  },
+  "cpu_s": 9.42,
+  "error": null
+ },
+ "freeze_state|held|c1_relay": {
+  "category": "SURVIVED",
+  "expectation": "change",
+  "verdict_changed": false,
+  "new_alarms": [],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "acc": -0.1445,
+   "lo99": -0.1445,
+   "zero_comm": 0.0,
+   "comm_delta": -0.1445,
+   "comm_delta_lo99": -0.1445,
+   "train_final": -0.1875,
+   "twin_beyond_hop": 0.0
+  },
+  "base_verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": true,
+   "LOCAL_ONLY": false,
+   "REACH_BEYOND_HOP": false
+  },
+  "mut_verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": true,
+   "LOCAL_ONLY": false,
+   "REACH_BEYOND_HOP": false
+  },
+  "cpu_s": 15.59,
+  "error": null
+ },
+ "freeze_state|held|c1_maj": {
+  "category": "KILLED(D)",
+  "expectation": "change",
+  "verdict_changed": true,
+  "new_alarms": [],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "acc": -0.1094,
+   "lo99": -0.0996,
+   "zero_comm": 0.0,
+   "comm_delta": -0.1094,
+   "comm_delta_lo99": -0.0996,
+   "train_final": -0.1875,
+   "twin_beyond_hop": 0.0
+  },
+  "base_verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": true,
+   "LOCAL_ONLY": false,
+   "INTEGRATION_BEYOND_ONE_SENSOR": false,
+   "REACH_BEYOND_HOP": true
+  },
+  "mut_verdict": {
+   "SIGNAL": false,
+   "COMM_DEPENDENT": false,
+   "LOCAL_ONLY": false,
+   "INTEGRATION_BEYOND_ONE_SENSOR": false,
+   "REACH_BEYOND_HOP": true
+  },
+  "cpu_s": 5.8,
+  "error": null
+ },
+ "freeze_state|oracle|conformance": {
+  "category": "KILLED(A)",
+  "expectation": "change",
+  "verdict_changed": true,
+  "new_alarms": [
+   "CONFORMANCE_FAIL:engine_matches_oracle[0]",
+   "CONFORMANCE_FAIL:engine_matches_oracle[1]",
+   "CONFORMANCE_FAIL:engine_matches_oracle[5]",
+   "CONFORMANCE_FAIL:transport_matches_oracle[100]",
+   "CONFORMANCE_FAIL:transport_matches_oracle[101]"
+  ],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "n_checks": 0,
+   "n_fail": 5
+  },
+  "base_verdict": {
+   "pass": true
+  },
+  "mut_verdict": {
+   "pass": false
+  },
+  "cpu_s": 1.64,
+  "error": null
+ },
+ "randomize_source|held|relay64": {
+  "category": "SURVIVED",
+  "expectation": "change",
+  "verdict_changed": false,
+  "new_alarms": [],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "acc": -0.0117,
+   "lo99": -0.0391,
+   "zero_comm": 0.0,
+   "comm_delta": -0.0117,
+   "comm_delta_lo99": -0.0391,
+   "train_final": 0.0,
+   "twin_beyond_hop": 0.0
+  },
+  "base_verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": true,
+   "LOCAL_ONLY": false,
+   "REACH_BEYOND_HOP": true
+  },
+  "mut_verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": true,
+   "LOCAL_ONLY": false,
+   "REACH_BEYOND_HOP": true
+  },
+  "cpu_s": 4.11,
+  "error": null
+ },
+ "randomize_source|controls|relay64": {
+  "category": "SURVIVED",
+  "expectation": "change",
+  "verdict_changed": false,
+  "new_alarms": [],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "normal": -0.0117,
+   "zero_comm": 0.0,
+   "shuffle_dest": 0.0156,
+   "shuffle_time": -0.0098,
+   "randomize_payload": 0.0098,
+   "packet_ablation": 0.0,
+   "memory_ablation": -0.1094,
+   "max_loss": 0.0,
+   "irrelevant_channel": -0.0117,
+   "env_permutation": -0.0008
+  },
+  "base_verdict": {
+   "causal": "CAUSAL_SUPPORT",
+   "status": {
+    "normal": "RAN",
+    "zero_comm": "RAN",
+    "shuffle_dest": "RAN",
+    "shuffle_time": "RAN",
+    "randomize_payload": "RAN",
+    "packet_ablation": "RAN",
+    "memory_ablation": "RAN",
+    "adaptation_off": "NOT_APPLICABLE",
+    "frozen_routing": "NOT_APPLICABLE",
+    "max_loss": "RAN",
+    "irrelevant_channel": "RAN",
+    "env_permutation": "RAN"
+   }
+  },
+  "mut_verdict": {
+   "causal": "CAUSAL_SUPPORT",
+   "status": {
+    "normal": "RAN",
+    "zero_comm": "RAN",
+    "shuffle_dest": "RAN",
+    "shuffle_time": "RAN",
+    "randomize_payload": "RAN",
+    "packet_ablation": "RAN",
+    "memory_ablation": "RAN",
+    "adaptation_off": "NOT_APPLICABLE",
+    "frozen_routing": "NOT_APPLICABLE",
+    "max_loss": "RAN",
+    "irrelevant_channel": "RAN",
+    "env_permutation": "RAN"
+   }
+  },
+  "cpu_s": 11.94,
+  "error": null
+ },
+ "randomize_source|plant|relay64": {
+  "category": "SURVIVED",
+  "expectation": "change",
+  "verdict_changed": false,
+  "new_alarms": [],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "acc": -0.0039,
+   "zero_comm": 0.0
+  },
+  "base_verdict": {
+   "viable": true,
+   "plant": "relay_flood"
+  },
+  "mut_verdict": {
+   "viable": true,
+   "plant": "relay_flood"
+  },
+  "cpu_s": 1.58,
+  "error": null
+ },
+ "randomize_source|lens_swap|relay64": {
+  "category": "KILLED(D)",
+  "expectation": "change",
+  "verdict_changed": true,
+  "new_alarms": [],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "eligible": -2,
+   "identity": 0.0,
+   "fS": 0.1707,
+   "fC": -0.1707,
+   "fN": 0.0,
+   "site_acc": -0.1562,
+   "chan_acc": 0.1562,
+   "offset": 0
+  },
+  "base_verdict": {
+   "class": "MIXTURE",
+   "follow_class": "MIXTURE",
+   "rel4_site": "CHANCE_REL",
+   "rel4_chan": "CHANCE_REL"
+  },
+  "mut_verdict": {
+   "class": "MIXTURE",
+   "follow_class": "MIXTURE",
+   "rel4_site": "INDETERMINATE",
+   "rel4_chan": "INDETERMINATE"
+  },
+  "cpu_s": 5.78,
+  "error": null
+ },
+ "randomize_source|held|hold64": {
+  "category": "EQUIVALENT",
+  "expectation": "invariant",
+  "verdict_changed": false,
+  "new_alarms": [],
+  "inert_worlds": true,
+  "numeric_delta": {
+   "acc": 0.0,
+   "lo99": 0.0,
+   "zero_comm": 0.0,
+   "comm_delta": 0.0,
+   "comm_delta_lo99": 0.0,
+   "train_final": 0.0,
+   "twin_beyond_hop": 0.0
+  },
+  "base_verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": false,
+   "LOCAL_ONLY": true,
+   "REACH_BEYOND_HOP": false
+  },
+  "mut_verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": false,
+   "LOCAL_ONLY": true,
+   "REACH_BEYOND_HOP": false
+  },
+  "cpu_s": 5.03,
+  "error": null
+ },
+ "randomize_source|plant|hold64": {
+  "category": "EQUIVALENT",
+  "expectation": "invariant",
+  "verdict_changed": false,
+  "new_alarms": [],
+  "inert_worlds": true,
+  "numeric_delta": {
+   "acc": 0.0,
+   "zero_comm": 0.0
+  },
+  "base_verdict": {
+   "viable": true,
+   "plant": "hold_latch"
+  },
+  "mut_verdict": {
+   "viable": true,
+   "plant": "hold_latch"
+  },
+  "cpu_s": 1.95,
+  "error": null
+ },
+ "randomize_source|lens_swap|hold64": {
+  "category": "EQUIVALENT",
+  "expectation": "invariant",
+  "verdict_changed": false,
+  "new_alarms": [],
+  "inert_worlds": true,
+  "numeric_delta": {
+   "eligible": 0,
+   "identity": 0.0,
+   "fS": 0.0,
+   "fC": 0.0,
+   "fN": 0.0,
+   "site_acc": 0.0,
+   "chan_acc": 0.0,
+   "offset": 0
+  },
+  "base_verdict": {
+   "class": "SITE",
+   "follow_class": "SITE",
+   "rel4_site": "FLIP_REL",
+   "rel4_chan": "NO_EFFECT_REL"
+  },
+  "mut_verdict": {
+   "class": "SITE",
+   "follow_class": "SITE",
+   "rel4_site": "FLIP_REL",
+   "rel4_chan": "NO_EFFECT_REL"
+  },
+  "cpu_s": 7.31,
+  "error": null
+ },
+ "randomize_source|held|echo": {
+  "category": "KILLED(A)",
+  "expectation": "change",
+  "verdict_changed": false,
+  "new_alarms": [
+   "TRAIN_HELD_GAP"
+  ],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "acc": -0.3848,
+   "lo99": -0.4336,
+   "zero_comm": 0.0,
+   "comm_delta": -0.3848,
+   "comm_delta_lo99": -0.4336,
+   "train_final": -0.1875,
+   "twin_beyond_hop": 0.0
+  },
+  "base_verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": true,
+   "LOCAL_ONLY": false,
+   "REACH_BEYOND_HOP": true
+  },
+  "mut_verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": true,
+   "LOCAL_ONLY": false,
+   "REACH_BEYOND_HOP": true
+  },
+  "cpu_s": 6.22,
+  "error": null
+ },
+ "randomize_source|controls|echo": {
+  "category": "KILLED(D)",
+  "expectation": "change",
+  "verdict_changed": true,
+  "new_alarms": [],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "normal": -0.3242,
+   "zero_comm": 0.0,
+   "shuffle_dest": -0.0098,
+   "shuffle_time": -0.2754,
+   "randomize_payload": 0.0,
+   "packet_ablation": 0.0,
+   "memory_ablation": -0.4258,
+   "max_loss": 0.0,
+   "env_permutation": 0.0036
+  },
+  "base_verdict": {
+   "causal": "NOT_SUPPORTED",
+   "status": {
+    "normal": "RAN",
+    "zero_comm": "RAN",
+    "shuffle_dest": "RAN",
+    "shuffle_time": "RAN",
+    "randomize_payload": "RAN",
+    "packet_ablation": "RAN",
+    "memory_ablation": "RAN",
+    "adaptation_off": "NOT_APPLICABLE",
+    "frozen_routing": "NOT_APPLICABLE",
+    "max_loss": "RAN",
+    "irrelevant_channel": "NOT_APPLICABLE",
+    "env_permutation": "RAN"
+   }
+  },
+  "mut_verdict": {
+   "causal": "CAUSAL_SUPPORT",
+   "status": {
+    "normal": "RAN",
+    "zero_comm": "RAN",
+    "shuffle_dest": "RAN",
+    "shuffle_time": "RAN",
+    "randomize_payload": "RAN",
+    "packet_ablation": "RAN",
+    "memory_ablation": "RAN",
+    "adaptation_off": "NOT_APPLICABLE",
+    "frozen_routing": "NOT_APPLICABLE",
+    "max_loss": "RAN",
+    "irrelevant_channel": "NOT_APPLICABLE",
+    "env_permutation": "RAN"
+   }
+  },
+  "cpu_s": 13.06,
+  "error": null
+ },
+ "randomize_source|lens_swap|echo": {
+  "category": "KILLED(D)",
+  "expectation": "change",
+  "verdict_changed": true,
+  "new_alarms": [],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "eligible": -44,
+   "identity": 0.0,
+   "fS": 0.6923,
+   "fC": -0.6923,
+   "fN": 0.0,
+   "site_acc": -0.474,
+   "chan_acc": 0.474,
+   "offset": 0
+  },
+  "base_verdict": {
+   "class": "CHANNEL",
+   "follow_class": "CHANNEL",
+   "rel4_site": "NO_EFFECT_REL",
+   "rel4_chan": "FLIP_REL"
+  },
+  "mut_verdict": {
+   "class": "MIXTURE",
+   "follow_class": "MIXTURE",
+   "rel4_site": "INDETERMINATE",
+   "rel4_chan": "INDETERMINATE"
+  },
+  "cpu_s": 5.0,
+  "error": null
+ },
+ "randomize_source|held|relay_dirgraph": {
+  "category": "SURVIVED",
+  "expectation": "change",
+  "verdict_changed": false,
+  "new_alarms": [],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "acc": -0.0625,
+   "lo99": -0.1133,
+   "zero_comm": 0.0,
+   "comm_delta": -0.0625,
+   "comm_delta_lo99": -0.1133,
+   "train_final": 0.0,
+   "twin_beyond_hop": 0.0
+  },
+  "base_verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": true,
+   "LOCAL_ONLY": false,
+   "REACH_BEYOND_HOP": true
+  },
+  "mut_verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": true,
+   "LOCAL_ONLY": false,
+   "REACH_BEYOND_HOP": true
+  },
+  "cpu_s": 4.11,
+  "error": null
+ },
+ "randomize_source|plant|relay_dirgraph": {
+  "category": "SURVIVED",
+  "expectation": "change",
+  "verdict_changed": false,
+  "new_alarms": [],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "acc": -0.0703,
+   "zero_comm": 0.0
+  },
+  "base_verdict": {
+   "viable": true,
+   "plant": "relay_flood"
+  },
+  "mut_verdict": {
+   "viable": true,
+   "plant": "relay_flood"
+  },
+  "cpu_s": 1.55,
+  "error": null
+ },
+ "randomize_source|held|xor_hp": {
+  "category": "SURVIVED",
+  "expectation": "change",
+  "verdict_changed": false,
+  "new_alarms": [],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "acc": 0.0,
+   "lo99": 0.0,
+   "zero_comm": 0.0,
+   "comm_delta": 0.0,
+   "comm_delta_lo99": 0.0,
+   "train_final": 0.0,
+   "twin_beyond_hop": 0.0
+  },
+  "base_verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": true,
+   "LOCAL_ONLY": false,
+   "REACH_BEYOND_HOP": true
+  },
+  "mut_verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": true,
+   "LOCAL_ONLY": false,
+   "REACH_BEYOND_HOP": true
+  },
+  "cpu_s": 9.62,
+  "error": null
+ },
+ "randomize_source|held|c1_relay": {
+  "category": "KILLED(D)",
+  "expectation": "change",
+  "verdict_changed": true,
+  "new_alarms": [],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "acc": -0.2051,
+   "lo99": -0.1934,
+   "zero_comm": 0.0,
+   "comm_delta": -0.2051,
+   "comm_delta_lo99": -0.1934,
+   "train_final": -0.1875,
+   "twin_beyond_hop": 1.0
+  },
+  "base_verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": true,
+   "LOCAL_ONLY": false,
+   "REACH_BEYOND_HOP": false
+  },
+  "mut_verdict": {
+   "SIGNAL": false,
+   "COMM_DEPENDENT": false,
+   "LOCAL_ONLY": false,
+   "REACH_BEYOND_HOP": true
+  },
+  "cpu_s": 14.55,
+  "error": null
+ },
+ "randomize_source|held|c1_maj": {
+  "category": "KILLED(D)",
+  "expectation": "change",
+  "verdict_changed": true,
+  "new_alarms": [],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "acc": -0.1602,
+   "lo99": -0.127,
+   "zero_comm": 0.0,
+   "comm_delta": -0.1602,
+   "comm_delta_lo99": -0.127,
+   "train_final": -0.3125,
+   "twin_beyond_hop": 0.0
+  },
+  "base_verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": true,
+   "LOCAL_ONLY": false,
+   "INTEGRATION_BEYOND_ONE_SENSOR": false,
+   "REACH_BEYOND_HOP": true
+  },
+  "mut_verdict": {
+   "SIGNAL": false,
+   "COMM_DEPENDENT": false,
+   "LOCAL_ONLY": false,
+   "INTEGRATION_BEYOND_ONE_SENSOR": false,
+   "REACH_BEYOND_HOP": true
+  },
+  "cpu_s": 5.94,
+  "error": null
+ },
+ "randomize_source|oracle|conformance": {
+  "category": "KILLED(A)",
+  "expectation": "change",
+  "verdict_changed": true,
+  "new_alarms": [
+   "CONFORMANCE_FAIL:engine_matches_oracle[3]",
+   "CONFORMANCE_FAIL:engine_matches_oracle[4]",
+   "CONFORMANCE_FAIL:transport_matches_oracle[101]",
+   "CONFORMANCE_FAIL:transport_matches_oracle[103]"
+  ],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "n_checks": 0,
+   "n_fail": 4
+  },
+  "base_verdict": {
+   "pass": true
+  },
+  "mut_verdict": {
+   "pass": false
+  },
+  "cpu_s": 1.59,
+  "error": null
+ },
+ "reverse_edges|held|relay64": {
+  "category": "EQUIVALENT",
+  "expectation": "invariant",
+  "verdict_changed": false,
+  "new_alarms": [],
+  "inert_worlds": true,
+  "numeric_delta": {
+   "acc": 0.0,
+   "lo99": 0.0,
+   "zero_comm": 0.0,
+   "comm_delta": 0.0,
+   "comm_delta_lo99": 0.0,
+   "train_final": 0.0,
+   "twin_beyond_hop": 0.0
+  },
+  "base_verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": true,
+   "LOCAL_ONLY": false,
+   "REACH_BEYOND_HOP": true
+  },
+  "mut_verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": true,
+   "LOCAL_ONLY": false,
+   "REACH_BEYOND_HOP": true
+  },
+  "cpu_s": 4.02,
+  "error": null
+ },
+ "reverse_edges|controls|relay64": {
+  "category": "EQUIVALENT",
+  "expectation": "invariant",
+  "verdict_changed": false,
+  "new_alarms": [],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "normal": 0.0,
+   "zero_comm": 0.0,
+   "shuffle_dest": 0.0,
+   "shuffle_time": 0.0,
+   "randomize_payload": 0.0254,
+   "packet_ablation": 0.0,
+   "memory_ablation": 0.0,
+   "max_loss": 0.0,
+   "irrelevant_channel": 0.0,
+   "env_permutation": 0.0
+  },
+  "base_verdict": {
+   "causal": "CAUSAL_SUPPORT",
+   "status": {
+    "normal": "RAN",
+    "zero_comm": "RAN",
+    "shuffle_dest": "RAN",
+    "shuffle_time": "RAN",
+    "randomize_payload": "RAN",
+    "packet_ablation": "RAN",
+    "memory_ablation": "RAN",
+    "adaptation_off": "NOT_APPLICABLE",
+    "frozen_routing": "NOT_APPLICABLE",
+    "max_loss": "RAN",
+    "irrelevant_channel": "RAN",
+    "env_permutation": "RAN"
+   }
+  },
+  "mut_verdict": {
+   "causal": "CAUSAL_SUPPORT",
+   "status": {
+    "normal": "RAN",
+    "zero_comm": "RAN",
+    "shuffle_dest": "RAN",
+    "shuffle_time": "RAN",
+    "randomize_payload": "RAN",
+    "packet_ablation": "RAN",
+    "memory_ablation": "RAN",
+    "adaptation_off": "NOT_APPLICABLE",
+    "frozen_routing": "NOT_APPLICABLE",
+    "max_loss": "RAN",
+    "irrelevant_channel": "RAN",
+    "env_permutation": "RAN"
+   }
+  },
+  "cpu_s": 11.84,
+  "error": null
+ },
+ "reverse_edges|plant|relay64": {
+  "category": "EQUIVALENT",
+  "expectation": "invariant",
+  "verdict_changed": false,
+  "new_alarms": [],
+  "inert_worlds": true,
+  "numeric_delta": {
+   "acc": 0.0,
+   "zero_comm": 0.0
+  },
+  "base_verdict": {
+   "viable": true,
+   "plant": "relay_flood"
+  },
+  "mut_verdict": {
+   "viable": true,
+   "plant": "relay_flood"
+  },
+  "cpu_s": 1.59,
+  "error": null
+ },
+ "reverse_edges|lens_swap|relay64": {
+  "category": "EQUIVALENT",
+  "expectation": "invariant",
+  "verdict_changed": false,
+  "new_alarms": [],
+  "inert_worlds": true,
+  "numeric_delta": {
+   "eligible": 0,
+   "identity": 0.0,
+   "fS": 0.0,
+   "fC": 0.0,
+   "fN": 0.0,
+   "site_acc": 0.0,
+   "chan_acc": 0.0,
+   "offset": 0
+  },
+  "base_verdict": {
+   "class": "MIXTURE",
+   "follow_class": "MIXTURE",
+   "rel4_site": "CHANCE_REL",
+   "rel4_chan": "CHANCE_REL"
+  },
+  "mut_verdict": {
+   "class": "MIXTURE",
+   "follow_class": "MIXTURE",
+   "rel4_site": "CHANCE_REL",
+   "rel4_chan": "CHANCE_REL"
+  },
+  "cpu_s": 5.95,
+  "error": null
+ },
+ "reverse_edges|held|hold64": {
+  "category": "EQUIVALENT",
+  "expectation": "invariant",
+  "verdict_changed": false,
+  "new_alarms": [],
+  "inert_worlds": true,
+  "numeric_delta": {
+   "acc": 0.0,
+   "lo99": 0.0,
+   "zero_comm": 0.0,
+   "comm_delta": 0.0,
+   "comm_delta_lo99": 0.0,
+   "train_final": 0.0,
+   "twin_beyond_hop": 0.0
+  },
+  "base_verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": false,
+   "LOCAL_ONLY": true,
+   "REACH_BEYOND_HOP": false
+  },
+  "mut_verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": false,
+   "LOCAL_ONLY": true,
+   "REACH_BEYOND_HOP": false
+  },
+  "cpu_s": 4.86,
+  "error": null
+ },
+ "reverse_edges|plant|hold64": {
+  "category": "EQUIVALENT",
+  "expectation": "invariant",
+  "verdict_changed": false,
+  "new_alarms": [],
+  "inert_worlds": true,
+  "numeric_delta": {
+   "acc": 0.0,
+   "zero_comm": 0.0
+  },
+  "base_verdict": {
+   "viable": true,
+   "plant": "hold_latch"
+  },
+  "mut_verdict": {
+   "viable": true,
+   "plant": "hold_latch"
+  },
+  "cpu_s": 1.84,
+  "error": null
+ },
+ "reverse_edges|lens_swap|hold64": {
+  "category": "EQUIVALENT",
+  "expectation": "invariant",
+  "verdict_changed": false,
+  "new_alarms": [],
+  "inert_worlds": true,
+  "numeric_delta": {
+   "eligible": 0,
+   "identity": 0.0,
+   "fS": 0.0,
+   "fC": 0.0,
+   "fN": 0.0,
+   "site_acc": 0.0,
+   "chan_acc": 0.0,
+   "offset": 0
+  },
+  "base_verdict": {
+   "class": "SITE",
+   "follow_class": "SITE",
+   "rel4_site": "FLIP_REL",
+   "rel4_chan": "NO_EFFECT_REL"
+  },
+  "mut_verdict": {
+   "class": "SITE",
+   "follow_class": "SITE",
+   "rel4_site": "FLIP_REL",
+   "rel4_chan": "NO_EFFECT_REL"
+  },
+  "cpu_s": 6.95,
+  "error": null
+ },
+ "reverse_edges|held|echo": {
+  "category": "EQUIVALENT",
+  "expectation": "invariant",
+  "verdict_changed": false,
+  "new_alarms": [],
+  "inert_worlds": true,
+  "numeric_delta": {
+   "acc": 0.0,
+   "lo99": 0.0,
+   "zero_comm": 0.0,
+   "comm_delta": 0.0,
+   "comm_delta_lo99": 0.0,
+   "train_final": 0.0,
+   "twin_beyond_hop": 0.0
+  },
+  "base_verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": true,
+   "LOCAL_ONLY": false,
+   "REACH_BEYOND_HOP": true
+  },
+  "mut_verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": true,
+   "LOCAL_ONLY": false,
+   "REACH_BEYOND_HOP": true
+  },
+  "cpu_s": 5.84,
+  "error": null
+ },
+ "reverse_edges|controls|echo": {
+  "category": "EQUIVALENT",
+  "expectation": "invariant",
+  "verdict_changed": false,
+  "new_alarms": [],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "normal": 0.0,
+   "zero_comm": 0.0,
+   "shuffle_dest": 0.0,
+   "shuffle_time": 0.0,
+   "randomize_payload": 0.0,
+   "packet_ablation": 0.0,
+   "memory_ablation": 0.0,
+   "max_loss": 0.0,
+   "env_permutation": 0.0
+  },
+  "base_verdict": {
+   "causal": "NOT_SUPPORTED",
+   "status": {
+    "normal": "RAN",
+    "zero_comm": "RAN",
+    "shuffle_dest": "RAN",
+    "shuffle_time": "RAN",
+    "randomize_payload": "RAN",
+    "packet_ablation": "RAN",
+    "memory_ablation": "RAN",
+    "adaptation_off": "NOT_APPLICABLE",
+    "frozen_routing": "NOT_APPLICABLE",
+    "max_loss": "RAN",
+    "irrelevant_channel": "NOT_APPLICABLE",
+    "env_permutation": "RAN"
+   }
+  },
+  "mut_verdict": {
+   "causal": "NOT_SUPPORTED",
+   "status": {
+    "normal": "RAN",
+    "zero_comm": "RAN",
+    "shuffle_dest": "RAN",
+    "shuffle_time": "RAN",
+    "randomize_payload": "RAN",
+    "packet_ablation": "RAN",
+    "memory_ablation": "RAN",
+    "adaptation_off": "NOT_APPLICABLE",
+    "frozen_routing": "NOT_APPLICABLE",
+    "max_loss": "RAN",
+    "irrelevant_channel": "NOT_APPLICABLE",
+    "env_permutation": "RAN"
+   }
+  },
+  "cpu_s": 12.39,
+  "error": null
+ },
+ "reverse_edges|lens_swap|echo": {
+  "category": "EQUIVALENT",
+  "expectation": "invariant",
+  "verdict_changed": false,
+  "new_alarms": [],
+  "inert_worlds": true,
+  "numeric_delta": {
+   "eligible": 0,
+   "identity": 0.0,
+   "fS": 0.0,
+   "fC": 0.0,
+   "fN": 0.0,
+   "site_acc": 0.0,
+   "chan_acc": 0.0,
+   "offset": 0
+  },
+  "base_verdict": {
+   "class": "CHANNEL",
+   "follow_class": "CHANNEL",
+   "rel4_site": "NO_EFFECT_REL",
+   "rel4_chan": "FLIP_REL"
+  },
+  "mut_verdict": {
+   "class": "CHANNEL",
+   "follow_class": "CHANNEL",
+   "rel4_site": "NO_EFFECT_REL",
+   "rel4_chan": "FLIP_REL"
+  },
+  "cpu_s": 3.81,
+  "error": null
+ },
+ "reverse_edges|held|relay_dirgraph": {
+  "category": "SURVIVED",
+  "expectation": "change",
+  "verdict_changed": false,
+  "new_alarms": [],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "acc": -0.0312,
+   "lo99": -0.0938,
+   "zero_comm": 0.0,
+   "comm_delta": -0.0312,
+   "comm_delta_lo99": -0.0938,
+   "train_final": 0.0,
+   "twin_beyond_hop": 0.0
+  },
+  "base_verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": true,
+   "LOCAL_ONLY": false,
+   "REACH_BEYOND_HOP": true
+  },
+  "mut_verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": true,
+   "LOCAL_ONLY": false,
+   "REACH_BEYOND_HOP": true
+  },
+  "cpu_s": 3.7,
+  "error": null
+ },
+ "reverse_edges|plant|relay_dirgraph": {
+  "category": "SURVIVED",
+  "expectation": "change",
+  "verdict_changed": false,
+  "new_alarms": [],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "acc": -0.0625,
+   "zero_comm": 0.0
+  },
+  "base_verdict": {
+   "viable": true,
+   "plant": "relay_flood"
+  },
+  "mut_verdict": {
+   "viable": true,
+   "plant": "relay_flood"
+  },
+  "cpu_s": 1.45,
+  "error": null
+ },
+ "reverse_edges|held|xor_hp": {
+  "category": "EQUIVALENT",
+  "expectation": "invariant",
+  "verdict_changed": false,
+  "new_alarms": [],
+  "inert_worlds": true,
+  "numeric_delta": {
+   "acc": 0.0,
+   "lo99": 0.0,
+   "zero_comm": 0.0,
+   "comm_delta": 0.0,
+   "comm_delta_lo99": 0.0,
+   "train_final": 0.0,
+   "twin_beyond_hop": 0.0
+  },
+  "base_verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": true,
+   "LOCAL_ONLY": false,
+   "REACH_BEYOND_HOP": true
+  },
+  "mut_verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": true,
+   "LOCAL_ONLY": false,
+   "REACH_BEYOND_HOP": true
+  },
+  "cpu_s": 9.2,
+  "error": null
+ },
+ "reverse_edges|held|c1_relay": {
+  "category": "EQUIVALENT",
+  "expectation": "invariant",
+  "verdict_changed": false,
+  "new_alarms": [],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "acc": -0.0234,
+   "lo99": -0.0274,
+   "zero_comm": 0.0,
+   "comm_delta": -0.0234,
+   "comm_delta_lo99": -0.0274,
+   "train_final": 0.0,
+   "twin_beyond_hop": 0.0
+  },
+  "base_verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": true,
+   "LOCAL_ONLY": false,
+   "REACH_BEYOND_HOP": false
+  },
+  "mut_verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": true,
+   "LOCAL_ONLY": false,
+   "REACH_BEYOND_HOP": false
+  },
+  "cpu_s": 14.05,
+  "error": null
+ },
+ "reverse_edges|held|c1_maj": {
+  "category": "EQUIVALENT",
+  "expectation": "invariant",
+  "verdict_changed": false,
+  "new_alarms": [],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "acc": -0.002,
+   "lo99": -0.002,
+   "zero_comm": 0.0,
+   "comm_delta": -0.002,
+   "comm_delta_lo99": -0.002,
+   "train_final": 0.0,
+   "twin_beyond_hop": 0.0
+  },
+  "base_verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": true,
+   "LOCAL_ONLY": false,
+   "INTEGRATION_BEYOND_ONE_SENSOR": false,
+   "REACH_BEYOND_HOP": true
+  },
+  "mut_verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": true,
+   "LOCAL_ONLY": false,
+   "INTEGRATION_BEYOND_ONE_SENSOR": false,
+   "REACH_BEYOND_HOP": true
+  },
+  "cpu_s": 5.33,
+  "error": null
+ },
+ "reverse_edges|oracle|conformance": {
+  "category": "KILLED(A)",
+  "expectation": "change",
+  "verdict_changed": true,
+  "new_alarms": [
+   "CONFORMANCE_FAIL:engine_matches_oracle[3]",
+   "CONFORMANCE_FAIL:engine_matches_oracle[4]",
+   "CONFORMANCE_FAIL:transport_matches_oracle[103]"
+  ],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "n_checks": 0,
+   "n_fail": 3
+  },
+  "base_verdict": {
+   "pass": true
+  },
+  "mut_verdict": {
+   "pass": false
+  },
+  "cpu_s": 1.66,
+  "error": null
+ },
+ "alter_timing|held|relay64": {
+  "category": "SURVIVED",
+  "expectation": "alarm_only",
+  "verdict_changed": false,
+  "new_alarms": [],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "acc": 0.0,
+   "lo99": 0.0,
+   "zero_comm": 0.0,
+   "comm_delta": 0.0,
+   "comm_delta_lo99": 0.0,
+   "train_final": 0.0,
+   "twin_beyond_hop": 0.0
+  },
+  "base_verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": true,
+   "LOCAL_ONLY": false,
+   "REACH_BEYOND_HOP": true
+  },
+  "mut_verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": true,
+   "LOCAL_ONLY": false,
+   "REACH_BEYOND_HOP": true
+  },
+  "cpu_s": 3.92,
+  "error": null
+ },
+ "alter_timing|controls|relay64": {
+  "category": "SURVIVED",
+  "expectation": "alarm_only",
+  "verdict_changed": false,
+  "new_alarms": [],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "normal": 0.0,
+   "zero_comm": 0.0,
+   "shuffle_dest": -0.2207,
+   "shuffle_time": -0.1113,
+   "randomize_payload": 0.0137,
+   "packet_ablation": 0.0,
+   "memory_ablation": -0.3262,
+   "max_loss": 0.0,
+   "irrelevant_channel": 0.0,
+   "env_permutation": 0.0
+  },
+  "base_verdict": {
+   "causal": "CAUSAL_SUPPORT",
+   "status": {
+    "normal": "RAN",
+    "zero_comm": "RAN",
+    "shuffle_dest": "RAN",
+    "shuffle_time": "RAN",
+    "randomize_payload": "RAN",
+    "packet_ablation": "RAN",
+    "memory_ablation": "RAN",
+    "adaptation_off": "NOT_APPLICABLE",
+    "frozen_routing": "NOT_APPLICABLE",
+    "max_loss": "RAN",
+    "irrelevant_channel": "RAN",
+    "env_permutation": "RAN"
+   }
+  },
+  "mut_verdict": {
+   "causal": "CAUSAL_SUPPORT",
+   "status": {
+    "normal": "RAN",
+    "zero_comm": "RAN",
+    "shuffle_dest": "RAN",
+    "shuffle_time": "RAN",
+    "randomize_payload": "RAN",
+    "packet_ablation": "RAN",
+    "memory_ablation": "RAN",
+    "adaptation_off": "NOT_APPLICABLE",
+    "frozen_routing": "NOT_APPLICABLE",
+    "max_loss": "RAN",
+    "irrelevant_channel": "RAN",
+    "env_permutation": "RAN"
+   }
+  },
+  "cpu_s": 11.16,
+  "error": null
+ },
+ "alter_timing|plant|relay64": {
+  "category": "SURVIVED",
+  "expectation": "alarm_only",
+  "verdict_changed": false,
+  "new_alarms": [],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "acc": 0.0,
+   "zero_comm": 0.0
+  },
+  "base_verdict": {
+   "viable": true,
+   "plant": "relay_flood"
+  },
+  "mut_verdict": {
+   "viable": true,
+   "plant": "relay_flood"
+  },
+  "cpu_s": 1.53,
+  "error": null
+ },
+ "alter_timing|lens_swap|relay64": {
+  "category": "KILLED(D)",
+  "expectation": "alarm_only",
+  "verdict_changed": true,
+  "new_alarms": [],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "eligible": 0,
+   "identity": 0.0,
+   "fS": 0.1979,
+   "fC": -0.1979,
+   "fN": 0.0,
+   "site_acc": -0.1979,
+   "chan_acc": 0.1979,
+   "offset": 0
+  },
+  "base_verdict": {
+   "class": "MIXTURE",
+   "follow_class": "MIXTURE",
+   "rel4_site": "CHANCE_REL",
+   "rel4_chan": "CHANCE_REL"
+  },
+  "mut_verdict": {
+   "class": "MIXTURE",
+   "follow_class": "MIXTURE",
+   "rel4_site": "INDETERMINATE",
+   "rel4_chan": "INDETERMINATE"
+  },
+  "cpu_s": 5.05,
+  "error": null
+ },
+ "alter_timing|held|hold64": {
+  "category": "SURVIVED",
+  "expectation": "alarm_only",
+  "verdict_changed": false,
+  "new_alarms": [],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "acc": 0.0,
+   "lo99": 0.0,
+   "zero_comm": 0.0,
+   "comm_delta": 0.0,
+   "comm_delta_lo99": 0.0,
+   "train_final": 0.0,
+   "twin_beyond_hop": 0.0
+  },
+  "base_verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": false,
+   "LOCAL_ONLY": true,
+   "REACH_BEYOND_HOP": false
+  },
+  "mut_verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": false,
+   "LOCAL_ONLY": true,
+   "REACH_BEYOND_HOP": false
+  },
+  "cpu_s": 4.61,
+  "error": null
+ },
+ "alter_timing|plant|hold64": {
+  "category": "SURVIVED",
+  "expectation": "alarm_only",
+  "verdict_changed": false,
+  "new_alarms": [],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "acc": 0.0,
+   "zero_comm": 0.0
+  },
+  "base_verdict": {
+   "viable": true,
+   "plant": "hold_latch"
+  },
+  "mut_verdict": {
+   "viable": true,
+   "plant": "hold_latch"
+  },
+  "cpu_s": 1.83,
+  "error": null
+ },
+ "alter_timing|lens_swap|hold64": {
+  "category": "SURVIVED",
+  "expectation": "alarm_only",
+  "verdict_changed": false,
+  "new_alarms": [],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "eligible": 0,
+   "identity": 0.0,
+   "fS": 0.0,
+   "fC": 0.0,
+   "fN": 0.0,
+   "site_acc": 0.0,
+   "chan_acc": 0.0,
+   "offset": 0
+  },
+  "base_verdict": {
+   "class": "SITE",
+   "follow_class": "SITE",
+   "rel4_site": "FLIP_REL",
+   "rel4_chan": "NO_EFFECT_REL"
+  },
+  "mut_verdict": {
+   "class": "SITE",
+   "follow_class": "SITE",
+   "rel4_site": "FLIP_REL",
+   "rel4_chan": "NO_EFFECT_REL"
+  },
+  "cpu_s": 5.78,
+  "error": null
+ },
+ "alter_timing|held|echo": {
+  "category": "KILLED(D)",
+  "expectation": "change",
+  "verdict_changed": true,
+  "new_alarms": [],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "acc": -0.5195,
+   "lo99": -0.582,
+   "zero_comm": 0.0,
+   "comm_delta": -0.5195,
+   "comm_delta_lo99": -0.582,
+   "train_final": -0.6875,
+   "twin_beyond_hop": 0.0
+  },
+  "base_verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": true,
+   "LOCAL_ONLY": false,
+   "REACH_BEYOND_HOP": true
+  },
+  "mut_verdict": {
+   "SIGNAL": false,
+   "COMM_DEPENDENT": false,
+   "LOCAL_ONLY": false,
+   "REACH_BEYOND_HOP": true
+  },
+  "cpu_s": 6.08,
+  "error": null
+ },
+ "alter_timing|controls|echo": {
+  "category": "SURVIVED",
+  "expectation": "change",
+  "verdict_changed": false,
+  "new_alarms": [],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "normal": -0.4766,
+   "zero_comm": 0.0,
+   "shuffle_dest": -0.0684,
+   "shuffle_time": -0.041,
+   "randomize_payload": 0.0,
+   "packet_ablation": 0.0,
+   "memory_ablation": -0.5,
+   "max_loss": 0.0,
+   "env_permutation": 0.0078
+  },
+  "base_verdict": {
+   "causal": "NOT_SUPPORTED",
+   "status": {
+    "normal": "RAN",
+    "zero_comm": "RAN",
+    "shuffle_dest": "RAN",
+    "shuffle_time": "RAN",
+    "randomize_payload": "RAN",
+    "packet_ablation": "RAN",
+    "memory_ablation": "RAN",
+    "adaptation_off": "NOT_APPLICABLE",
+    "frozen_routing": "NOT_APPLICABLE",
+    "max_loss": "RAN",
+    "irrelevant_channel": "NOT_APPLICABLE",
+    "env_permutation": "RAN"
+   }
+  },
+  "mut_verdict": {
+   "causal": "NOT_SUPPORTED",
+   "status": {
+    "normal": "RAN",
+    "zero_comm": "RAN",
+    "shuffle_dest": "RAN",
+    "shuffle_time": "RAN",
+    "randomize_payload": "RAN",
+    "packet_ablation": "RAN",
+    "memory_ablation": "RAN",
+    "adaptation_off": "NOT_APPLICABLE",
+    "frozen_routing": "NOT_APPLICABLE",
+    "max_loss": "RAN",
+    "irrelevant_channel": "NOT_APPLICABLE",
+    "env_permutation": "RAN"
+   }
+  },
+  "cpu_s": 12.64,
+  "error": null
+ },
+ "alter_timing|lens_swap|echo": {
+  "category": "KILLED(A)",
+  "expectation": "change",
+  "verdict_changed": true,
+  "new_alarms": [
+   "rel4_chan:NOT_ELIGIBLE",
+   "rel4_site:NOT_ELIGIBLE"
+  ],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "eligible": -55,
+   "identity": 0.0,
+   "fS": 1.0,
+   "fC": -1.0,
+   "fN": 0.0,
+   "site_acc": -0.4375,
+   "chan_acc": 0.4375,
+   "offset": 0
+  },
+  "base_verdict": {
+   "class": "CHANNEL",
+   "follow_class": "CHANNEL",
+   "rel4_site": "NO_EFFECT_REL",
+   "rel4_chan": "FLIP_REL"
+  },
+  "mut_verdict": {
+   "class": "SITE",
+   "follow_class": "SITE",
+   "rel4_site": "NOT_ELIGIBLE",
+   "rel4_chan": "NOT_ELIGIBLE"
+  },
+  "cpu_s": 3.67,
+  "error": null
+ },
+ "alter_timing|held|xor_hp": {
+  "category": "SURVIVED",
+  "expectation": "change",
+  "verdict_changed": false,
+  "new_alarms": [],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "acc": 0.0,
+   "lo99": 0.0,
+   "zero_comm": 0.0,
+   "comm_delta": 0.0,
+   "comm_delta_lo99": 0.0,
+   "train_final": 0.0,
+   "twin_beyond_hop": 0.0
+  },
+  "base_verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": true,
+   "LOCAL_ONLY": false,
+   "REACH_BEYOND_HOP": true
+  },
+  "mut_verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": true,
+   "LOCAL_ONLY": false,
+   "REACH_BEYOND_HOP": true
+  },
+  "cpu_s": 9.55,
+  "error": null
+ },
+ "alter_timing|held|c1_relay": {
+  "category": "UNRESOLVED",
+  "expectation": "unknown",
+  "verdict_changed": false,
+  "new_alarms": [],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "acc": -0.0059,
+   "lo99": -0.0039,
+   "zero_comm": 0.0,
+   "comm_delta": -0.0059,
+   "comm_delta_lo99": -0.0039,
+   "train_final": 0.0,
+   "twin_beyond_hop": 0.0
+  },
+  "base_verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": true,
+   "LOCAL_ONLY": false,
+   "REACH_BEYOND_HOP": false
+  },
+  "mut_verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": true,
+   "LOCAL_ONLY": false,
+   "REACH_BEYOND_HOP": false
+  },
+  "cpu_s": 13.81,
+  "error": null
+ },
+ "alter_timing|held|c1_maj": {
+  "category": "KILLED(D)",
+  "expectation": "unknown",
+  "verdict_changed": true,
+  "new_alarms": [],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "acc": -0.1875,
+   "lo99": -0.1348,
+   "zero_comm": 0.0,
+   "comm_delta": -0.1875,
+   "comm_delta_lo99": -0.1348,
+   "train_final": -0.3125,
+   "twin_beyond_hop": 0.0
+  },
+  "base_verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": true,
+   "LOCAL_ONLY": false,
+   "INTEGRATION_BEYOND_ONE_SENSOR": false,
+   "REACH_BEYOND_HOP": true
+  },
+  "mut_verdict": {
+   "SIGNAL": false,
+   "COMM_DEPENDENT": false,
+   "LOCAL_ONLY": false,
+   "INTEGRATION_BEYOND_ONE_SENSOR": false,
+   "REACH_BEYOND_HOP": true
+  },
+  "cpu_s": 5.06,
+  "error": null
+ },
+ "alter_timing|oracle|conformance": {
+  "category": "KILLED(A)",
+  "expectation": "change",
+  "verdict_changed": true,
+  "new_alarms": [
+   "CONFORMANCE_FAIL:engine_matches_oracle[0]",
+   "CONFORMANCE_FAIL:engine_matches_oracle[1]",
+   "CONFORMANCE_FAIL:engine_matches_oracle[2]",
+   "CONFORMANCE_FAIL:engine_matches_oracle[3]",
+   "CONFORMANCE_FAIL:engine_matches_oracle[4]",
+   "CONFORMANCE_FAIL:engine_matches_oracle[5]",
+   "CONFORMANCE_FAIL:transport_matches_oracle[100]",
+   "CONFORMANCE_FAIL:transport_matches_oracle[101]",
+   "CONFORMANCE_FAIL:transport_matches_oracle[102]",
+   "CONFORMANCE_FAIL:transport_matches_oracle[103]"
+  ],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "n_checks": 0,
+   "n_fail": 10
+  },
+  "base_verdict": {
+   "pass": true
+  },
+  "mut_verdict": {
+   "pass": false
+  },
+  "cpu_s": 1.47,
+  "error": null
+ },
+ "sever_search_ruler|held|relay64": {
+  "category": "KILLED(A)",
+  "expectation": "change",
+  "verdict_changed": true,
+  "new_alarms": [
+   "TRAIN_HELD_GAP"
+  ],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "acc": -0.5,
+   "lo99": -0.5,
+   "zero_comm": 0.0,
+   "comm_delta": -0.5,
+   "comm_delta_lo99": -0.5,
+   "train_final": 0.0,
+   "twin_beyond_hop": -1.0
+  },
+  "base_verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": true,
+   "LOCAL_ONLY": false,
+   "REACH_BEYOND_HOP": true
+  },
+  "mut_verdict": {
+   "SIGNAL": false,
+   "COMM_DEPENDENT": false,
+   "LOCAL_ONLY": false,
+   "REACH_BEYOND_HOP": false
+  },
+  "cpu_s": 3.72,
+  "error": null
+ },
+ "sever_search_ruler|held|hold64": {
+  "category": "KILLED(A)",
+  "expectation": "change",
+  "verdict_changed": true,
+  "new_alarms": [
+   "TRAIN_HELD_GAP"
+  ],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "acc": -0.5,
+   "lo99": -0.5,
+   "zero_comm": -0.5,
+   "comm_delta": 0.0,
+   "comm_delta_lo99": 0.0,
+   "train_final": 0.0,
+   "twin_beyond_hop": 0.0
+  },
+  "base_verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": false,
+   "LOCAL_ONLY": true,
+   "REACH_BEYOND_HOP": false
+  },
+  "mut_verdict": {
+   "SIGNAL": false,
+   "COMM_DEPENDENT": false,
+   "LOCAL_ONLY": false,
+   "REACH_BEYOND_HOP": false
+  },
+  "cpu_s": 4.58,
+  "error": null
+ },
+ "sever_search_ruler|held|echo": {
+  "category": "KILLED(A)",
+  "expectation": "change",
+  "verdict_changed": true,
+  "new_alarms": [
+   "TRAIN_HELD_GAP"
+  ],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "acc": -0.5,
+   "lo99": -0.5,
+   "zero_comm": 0.0,
+   "comm_delta": -0.5,
+   "comm_delta_lo99": -0.5,
+   "train_final": 0.0,
+   "twin_beyond_hop": -1.0
+  },
+  "base_verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": true,
+   "LOCAL_ONLY": false,
+   "REACH_BEYOND_HOP": true
+  },
+  "mut_verdict": {
+   "SIGNAL": false,
+   "COMM_DEPENDENT": false,
+   "LOCAL_ONLY": false,
+   "REACH_BEYOND_HOP": false
+  },
+  "cpu_s": 5.86,
+  "error": null
+ },
+ "sever_search_ruler|held|xor_hp": {
+  "category": "KILLED(A)",
+  "expectation": "change",
+  "verdict_changed": true,
+  "new_alarms": [
+   "TRAIN_HELD_GAP"
+  ],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "acc": -0.5,
+   "lo99": -0.5,
+   "zero_comm": 0.0,
+   "comm_delta": -0.5,
+   "comm_delta_lo99": -0.5,
+   "train_final": 0.0,
+   "twin_beyond_hop": -1.0
+  },
+  "base_verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": true,
+   "LOCAL_ONLY": false,
+   "REACH_BEYOND_HOP": true
+  },
+  "mut_verdict": {
+   "SIGNAL": false,
+   "COMM_DEPENDENT": false,
+   "LOCAL_ONLY": false,
+   "REACH_BEYOND_HOP": false
+  },
+  "cpu_s": 9.14,
+  "error": null
+ },
+ "sever_search_ruler|held|c1_relay": {
+  "category": "KILLED(A)",
+  "expectation": "change",
+  "verdict_changed": true,
+  "new_alarms": [
+   "TRAIN_HELD_GAP"
+  ],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "acc": -0.2754,
+   "lo99": -0.2383,
+   "zero_comm": 0.0,
+   "comm_delta": -0.2754,
+   "comm_delta_lo99": -0.2383,
+   "train_final": 0.0,
+   "twin_beyond_hop": 0.0
+  },
+  "base_verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": true,
+   "LOCAL_ONLY": false,
+   "REACH_BEYOND_HOP": false
+  },
+  "mut_verdict": {
+   "SIGNAL": false,
+   "COMM_DEPENDENT": false,
+   "LOCAL_ONLY": false,
+   "REACH_BEYOND_HOP": false
+  },
+  "cpu_s": 13.31,
+  "error": null
+ },
+ "sever_search_ruler|held|c1_maj": {
+  "category": "KILLED(A)",
+  "expectation": "change",
+  "verdict_changed": true,
+  "new_alarms": [
+   "TRAIN_HELD_GAP"
+  ],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "acc": -0.1875,
+   "lo99": -0.127,
+   "zero_comm": 0.0,
+   "comm_delta": -0.1875,
+   "comm_delta_lo99": -0.127,
+   "train_final": 0.0,
+   "twin_beyond_hop": -1.0
+  },
+  "base_verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": true,
+   "LOCAL_ONLY": false,
+   "INTEGRATION_BEYOND_ONE_SENSOR": false,
+   "REACH_BEYOND_HOP": true
+  },
+  "mut_verdict": {
+   "SIGNAL": false,
+   "COMM_DEPENDENT": false,
+   "LOCAL_ONLY": false,
+   "INTEGRATION_BEYOND_ONE_SENSOR": false,
+   "REACH_BEYOND_HOP": false
+  },
+  "cpu_s": 4.97,
+  "error": null
+ },
+ "reuse_selection_seeds|held|relay64": {
+  "category": "SURVIVED",
+  "expectation": "alarm_only",
+  "verdict_changed": false,
+  "new_alarms": [],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "acc": 0.0,
+   "lo99": 0.0,
+   "zero_comm": 0.0,
+   "comm_delta": 0.0,
+   "comm_delta_lo99": 0.0,
+   "train_final": 0.0,
+   "twin_beyond_hop": 0.0
+  },
+  "base_verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": true,
+   "LOCAL_ONLY": false,
+   "REACH_BEYOND_HOP": true
+  },
+  "mut_verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": true,
+   "LOCAL_ONLY": false,
+   "REACH_BEYOND_HOP": true
+  },
+  "cpu_s": 4.78,
+  "error": null
+ },
+ "reuse_selection_seeds|held|hold64": {
+  "category": "SURVIVED",
+  "expectation": "alarm_only",
+  "verdict_changed": false,
+  "new_alarms": [],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "acc": 0.0,
+   "lo99": 0.0,
+   "zero_comm": 0.0,
+   "comm_delta": 0.0,
+   "comm_delta_lo99": 0.0,
+   "train_final": 0.0,
+   "twin_beyond_hop": 0.0
+  },
+  "base_verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": false,
+   "LOCAL_ONLY": true,
+   "REACH_BEYOND_HOP": false
+  },
+  "mut_verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": false,
+   "LOCAL_ONLY": true,
+   "REACH_BEYOND_HOP": false
+  },
+  "cpu_s": 5.78,
+  "error": null
+ },
+ "reuse_selection_seeds|held|echo": {
+  "category": "SURVIVED",
+  "expectation": "alarm_only",
+  "verdict_changed": false,
+  "new_alarms": [],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "acc": 0.0,
+   "lo99": 0.0,
+   "zero_comm": 0.0,
+   "comm_delta": 0.0,
+   "comm_delta_lo99": 0.0,
+   "train_final": 0.0,
+   "twin_beyond_hop": 0.0
+  },
+  "base_verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": true,
+   "LOCAL_ONLY": false,
+   "REACH_BEYOND_HOP": true
+  },
+  "mut_verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": true,
+   "LOCAL_ONLY": false,
+   "REACH_BEYOND_HOP": true
+  },
+  "cpu_s": 6.16,
+  "error": null
+ },
+ "reuse_selection_seeds|held|xor_hp": {
+  "category": "SURVIVED",
+  "expectation": "alarm_only",
+  "verdict_changed": false,
+  "new_alarms": [],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "acc": 0.0,
+   "lo99": 0.0,
+   "zero_comm": 0.0,
+   "comm_delta": 0.0,
+   "comm_delta_lo99": 0.0,
+   "train_final": 0.0,
+   "twin_beyond_hop": 0.0
+  },
+  "base_verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": true,
+   "LOCAL_ONLY": false,
+   "REACH_BEYOND_HOP": true
+  },
+  "mut_verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": true,
+   "LOCAL_ONLY": false,
+   "REACH_BEYOND_HOP": true
+  },
+  "cpu_s": 12.92,
+  "error": null
+ },
+ "reuse_selection_seeds|held|c1_relay": {
+  "category": "SURVIVED",
+  "expectation": "alarm_only",
+  "verdict_changed": false,
+  "new_alarms": [],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "acc": 0.0,
+   "lo99": 0.0,
+   "zero_comm": 0.0,
+   "comm_delta": 0.0,
+   "comm_delta_lo99": 0.0,
+   "train_final": 0.0254,
+   "twin_beyond_hop": 0.0
+  },
+  "base_verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": true,
+   "LOCAL_ONLY": false,
+   "REACH_BEYOND_HOP": false
+  },
+  "mut_verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": true,
+   "LOCAL_ONLY": false,
+   "REACH_BEYOND_HOP": false
+  },
+  "cpu_s": 20.16,
+  "error": null
+ },
+ "reuse_selection_seeds|held|c1_maj": {
+  "category": "SURVIVED",
+  "expectation": "alarm_only",
+  "verdict_changed": false,
+  "new_alarms": [],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "acc": 0.0,
+   "lo99": 0.0,
+   "zero_comm": 0.0,
+   "comm_delta": 0.0,
+   "comm_delta_lo99": 0.0,
+   "train_final": -0.125,
+   "twin_beyond_hop": 0.0
+  },
+  "base_verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": true,
+   "LOCAL_ONLY": false,
+   "INTEGRATION_BEYOND_ONE_SENSOR": false,
+   "REACH_BEYOND_HOP": true
+  },
+  "mut_verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": true,
+   "LOCAL_ONLY": false,
+   "INTEGRATION_BEYOND_ONE_SENSOR": false,
+   "REACH_BEYOND_HOP": true
+  },
+  "cpu_s": 8.41,
+  "error": null
+ },
+ "reuse_selection_seeds|held|sel_random": {
+  "category": "SURVIVED",
+  "expectation": "change",
+  "verdict_changed": false,
+  "new_alarms": [],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "acc": 0.0,
+   "lo99": 0.0,
+   "zero_comm": 0.0,
+   "comm_delta": 0.0,
+   "comm_delta_lo99": 0.0,
+   "train_final": 0.0352,
+   "twin_beyond_hop": 0.0
+  },
+  "base_verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": true,
+   "LOCAL_ONLY": false,
+   "REACH_BEYOND_HOP": false
+  },
+  "mut_verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": true,
+   "LOCAL_ONLY": false,
+   "REACH_BEYOND_HOP": false
+  },
+  "cpu_s": 31.98,
+  "error": null
+ },
+ "drop_mirror|held|relay64": {
+  "category": "SURVIVED",
+  "expectation": "alarm_only",
+  "verdict_changed": false,
+  "new_alarms": [],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "acc": 0.0,
+   "lo99": 0.0,
+   "zero_comm": 0.0,
+   "comm_delta": 0.0,
+   "comm_delta_lo99": 0.0,
+   "train_final": 0.0,
+   "twin_beyond_hop": 0.0
+  },
+  "base_verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": true,
+   "LOCAL_ONLY": false,
+   "REACH_BEYOND_HOP": true
+  },
+  "mut_verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": true,
+   "LOCAL_ONLY": false,
+   "REACH_BEYOND_HOP": true
+  },
+  "cpu_s": 3.86,
+  "error": null
+ },
+ "drop_mirror|controls|relay64": {
+  "category": "SURVIVED",
+  "expectation": "alarm_only",
+  "verdict_changed": false,
+  "new_alarms": [],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "normal": 0.0,
+   "zero_comm": 0.0,
+   "shuffle_dest": 0.0,
+   "shuffle_time": 0.0,
+   "randomize_payload": -0.0098,
+   "packet_ablation": 0.0,
+   "memory_ablation": 0.0,
+   "max_loss": 0.0,
+   "irrelevant_channel": 0.0,
+   "env_permutation": 0.0
+  },
+  "base_verdict": {
+   "causal": "CAUSAL_SUPPORT",
+   "status": {
+    "normal": "RAN",
+    "zero_comm": "RAN",
+    "shuffle_dest": "RAN",
+    "shuffle_time": "RAN",
+    "randomize_payload": "RAN",
+    "packet_ablation": "RAN",
+    "memory_ablation": "RAN",
+    "adaptation_off": "NOT_APPLICABLE",
+    "frozen_routing": "NOT_APPLICABLE",
+    "max_loss": "RAN",
+    "irrelevant_channel": "RAN",
+    "env_permutation": "RAN"
+   }
+  },
+  "mut_verdict": {
+   "causal": "CAUSAL_SUPPORT",
+   "status": {
+    "normal": "RAN",
+    "zero_comm": "RAN",
+    "shuffle_dest": "RAN",
+    "shuffle_time": "RAN",
+    "randomize_payload": "RAN",
+    "packet_ablation": "RAN",
+    "memory_ablation": "RAN",
+    "adaptation_off": "NOT_APPLICABLE",
+    "frozen_routing": "NOT_APPLICABLE",
+    "max_loss": "RAN",
+    "irrelevant_channel": "RAN",
+    "env_permutation": "RAN"
+   }
+  },
+  "cpu_s": 10.38,
+  "error": null
+ },
+ "drop_mirror|plant|relay64": {
+  "category": "SURVIVED",
+  "expectation": "alarm_only",
+  "verdict_changed": false,
+  "new_alarms": [],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "acc": 0.0,
+   "zero_comm": 0.0
+  },
+  "base_verdict": {
+   "viable": true,
+   "plant": "relay_flood"
+  },
+  "mut_verdict": {
+   "viable": true,
+   "plant": "relay_flood"
+  },
+  "cpu_s": 1.36,
+  "error": null
+ },
+ "drop_mirror|lens_swap|relay64": {
+  "category": "KILLED(A)",
+  "expectation": "change",
+  "verdict_changed": true,
+  "new_alarms": [
+   "class:IDENTITY-BROKEN",
+   "follow_class:UNDEFINED"
+  ],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "eligible": 0,
+   "identity": -1.0,
+   "fS": -0.5208,
+   "fC": -0.4792,
+   "fN": 0.0,
+   "site_acc": 0.5208,
+   "chan_acc": 0.4792,
+   "offset": 0
+  },
+  "base_verdict": {
+   "class": "MIXTURE",
+   "follow_class": "MIXTURE",
+   "rel4_site": "CHANCE_REL",
+   "rel4_chan": "CHANCE_REL"
+  },
+  "mut_verdict": {
+   "class": "IDENTITY-BROKEN",
+   "follow_class": "UNDEFINED",
+   "rel4_site": "NO_EFFECT_REL",
+   "rel4_chan": "NO_EFFECT_REL"
+  },
+  "cpu_s": 5.17,
+  "error": null
+ },
+ "drop_mirror|held|hold64": {
+  "category": "SURVIVED",
+  "expectation": "alarm_only",
+  "verdict_changed": false,
+  "new_alarms": [],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "acc": 0.0,
+   "lo99": 0.0,
+   "zero_comm": 0.0,
+   "comm_delta": 0.0,
+   "comm_delta_lo99": 0.0,
+   "train_final": 0.0,
+   "twin_beyond_hop": 0.0
+  },
+  "base_verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": false,
+   "LOCAL_ONLY": true,
+   "REACH_BEYOND_HOP": false
+  },
+  "mut_verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": false,
+   "LOCAL_ONLY": true,
+   "REACH_BEYOND_HOP": false
+  },
+  "cpu_s": 4.47,
+  "error": null
+ },
+ "drop_mirror|plant|hold64": {
+  "category": "SURVIVED",
+  "expectation": "alarm_only",
+  "verdict_changed": false,
+  "new_alarms": [],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "acc": 0.0,
+   "zero_comm": 0.0
+  },
+  "base_verdict": {
+   "viable": true,
+   "plant": "hold_latch"
+  },
+  "mut_verdict": {
+   "viable": true,
+   "plant": "hold_latch"
+  },
+  "cpu_s": 1.77,
+  "error": null
+ },
+ "drop_mirror|lens_swap|hold64": {
+  "category": "KILLED(A)",
+  "expectation": "change",
+  "verdict_changed": true,
+  "new_alarms": [
+   "class:IDENTITY-BROKEN",
+   "follow_class:UNDEFINED"
+  ],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "eligible": 0,
+   "identity": -1.0,
+   "fS": -1.0,
+   "fC": 0.0,
+   "fN": 0.0,
+   "site_acc": 1.0,
+   "chan_acc": 0.0,
+   "offset": 0
+  },
+  "base_verdict": {
+   "class": "SITE",
+   "follow_class": "SITE",
+   "rel4_site": "FLIP_REL",
+   "rel4_chan": "NO_EFFECT_REL"
+  },
+  "mut_verdict": {
+   "class": "IDENTITY-BROKEN",
+   "follow_class": "UNDEFINED",
+   "rel4_site": "NO_EFFECT_REL",
+   "rel4_chan": "NO_EFFECT_REL"
+  },
+  "cpu_s": 5.89,
+  "error": null
+ },
+ "drop_mirror|held|echo": {
+  "category": "SURVIVED",
+  "expectation": "alarm_only",
+  "verdict_changed": false,
+  "new_alarms": [],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "acc": 0.0,
+   "lo99": 0.0,
+   "zero_comm": 0.0,
+   "comm_delta": 0.0,
+   "comm_delta_lo99": 0.0,
+   "train_final": 0.0,
+   "twin_beyond_hop": 0.0
+  },
+  "base_verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": true,
+   "LOCAL_ONLY": false,
+   "REACH_BEYOND_HOP": true
+  },
+  "mut_verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": true,
+   "LOCAL_ONLY": false,
+   "REACH_BEYOND_HOP": true
+  },
+  "cpu_s": 5.81,
+  "error": null
+ },
+ "drop_mirror|controls|echo": {
+  "category": "SURVIVED",
+  "expectation": "alarm_only",
+  "verdict_changed": false,
+  "new_alarms": [],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "normal": 0.0,
+   "zero_comm": 0.0,
+   "shuffle_dest": 0.0,
+   "shuffle_time": 0.0,
+   "randomize_payload": 0.0,
+   "packet_ablation": 0.0,
+   "memory_ablation": 0.0,
+   "max_loss": 0.0,
+   "env_permutation": 0.0
+  },
+  "base_verdict": {
+   "causal": "NOT_SUPPORTED",
+   "status": {
+    "normal": "RAN",
+    "zero_comm": "RAN",
+    "shuffle_dest": "RAN",
+    "shuffle_time": "RAN",
+    "randomize_payload": "RAN",
+    "packet_ablation": "RAN",
+    "memory_ablation": "RAN",
+    "adaptation_off": "NOT_APPLICABLE",
+    "frozen_routing": "NOT_APPLICABLE",
+    "max_loss": "RAN",
+    "irrelevant_channel": "NOT_APPLICABLE",
+    "env_permutation": "RAN"
+   }
+  },
+  "mut_verdict": {
+   "causal": "NOT_SUPPORTED",
+   "status": {
+    "normal": "RAN",
+    "zero_comm": "RAN",
+    "shuffle_dest": "RAN",
+    "shuffle_time": "RAN",
+    "randomize_payload": "RAN",
+    "packet_ablation": "RAN",
+    "memory_ablation": "RAN",
+    "adaptation_off": "NOT_APPLICABLE",
+    "frozen_routing": "NOT_APPLICABLE",
+    "max_loss": "RAN",
+    "irrelevant_channel": "NOT_APPLICABLE",
+    "env_permutation": "RAN"
+   }
+  },
+  "cpu_s": 12.22,
+  "error": null
+ },
+ "drop_mirror|lens_swap|echo": {
+  "category": "KILLED(A)",
+  "expectation": "change",
+  "verdict_changed": true,
+  "new_alarms": [
+   "class:IDENTITY-BROKEN",
+   "follow_class:UNDEFINED"
+  ],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "eligible": 0,
+   "identity": -1.0,
+   "fS": 0.0,
+   "fC": -1.0,
+   "fN": 0.0,
+   "site_acc": 0.0,
+   "chan_acc": 1.0,
+   "offset": 0
+  },
+  "base_verdict": {
+   "class": "CHANNEL",
+   "follow_class": "CHANNEL",
+   "rel4_site": "NO_EFFECT_REL",
+   "rel4_chan": "FLIP_REL"
+  },
+  "mut_verdict": {
+   "class": "IDENTITY-BROKEN",
+   "follow_class": "UNDEFINED",
+   "rel4_site": "NO_EFFECT_REL",
+   "rel4_chan": "NO_EFFECT_REL"
+  },
+  "cpu_s": 4.48,
+  "error": null
+ },
+ "drop_mirror|held|xor_hp": {
+  "category": "SURVIVED",
+  "expectation": "alarm_only",
+  "verdict_changed": false,
+  "new_alarms": [],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "acc": 0.0,
+   "lo99": 0.0,
+   "zero_comm": 0.0104,
+   "comm_delta": -0.0104,
+   "comm_delta_lo99": -0.0625,
+   "train_final": 0.0,
+   "twin_beyond_hop": 0.0
+  },
+  "base_verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": true,
+   "LOCAL_ONLY": false,
+   "REACH_BEYOND_HOP": true
+  },
+  "mut_verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": true,
+   "LOCAL_ONLY": false,
+   "REACH_BEYOND_HOP": true
+  },
+  "cpu_s": 9.44,
+  "error": null
+ },
+ "drop_mirror|held|c1_relay": {
+  "category": "SURVIVED",
+  "expectation": "alarm_only",
+  "verdict_changed": false,
+  "new_alarms": [],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "acc": -0.002,
+   "lo99": -0.0352,
+   "zero_comm": -0.0078,
+   "comm_delta": 0.0059,
+   "comm_delta_lo99": -0.0313,
+   "train_final": 0.0,
+   "twin_beyond_hop": 0.0
+  },
+  "base_verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": true,
+   "LOCAL_ONLY": false,
+   "REACH_BEYOND_HOP": false
+  },
+  "mut_verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": true,
+   "LOCAL_ONLY": false,
+   "REACH_BEYOND_HOP": false
+  },
+  "cpu_s": 14.75,
+  "error": null
+ },
+ "drop_mirror|held|c1_maj": {
+  "category": "KILLED(A)",
+  "expectation": "alarm_only",
+  "verdict_changed": false,
+  "new_alarms": [
+   "TRAIN_HELD_GAP"
+  ],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "acc": -0.0078,
+   "lo99": -0.0234,
+   "zero_comm": 0.0,
+   "comm_delta": -0.0078,
+   "comm_delta_lo99": -0.0234,
+   "train_final": 0.0625,
+   "twin_beyond_hop": 0.0
+  },
+  "base_verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": true,
+   "LOCAL_ONLY": false,
+   "INTEGRATION_BEYOND_ONE_SENSOR": false,
+   "REACH_BEYOND_HOP": true
+  },
+  "mut_verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": true,
+   "LOCAL_ONLY": false,
+   "INTEGRATION_BEYOND_ONE_SENSOR": false,
+   "REACH_BEYOND_HOP": true
+  },
+  "cpu_s": 5.22,
+  "error": null
+ },
+ "permute_seeds|held|relay64": {
+  "category": "EQUIVALENT",
+  "expectation": "invariant",
+  "verdict_changed": false,
+  "new_alarms": [],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "acc": 0.0,
+   "lo99": 0.0,
+   "zero_comm": 0.0,
+   "comm_delta": 0.0,
+   "comm_delta_lo99": 0.0,
+   "train_final": 0.0,
+   "twin_beyond_hop": 0.0
+  },
+  "base_verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": true,
+   "LOCAL_ONLY": false,
+   "REACH_BEYOND_HOP": true
+  },
+  "mut_verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": true,
+   "LOCAL_ONLY": false,
+   "REACH_BEYOND_HOP": true
+  },
+  "cpu_s": 3.66,
+  "error": null
+ },
+ "permute_seeds|controls|relay64": {
+  "category": "UNRESOLVED",
+  "expectation": "unknown",
+  "verdict_changed": false,
+  "new_alarms": [],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "normal": 0.0,
+   "zero_comm": 0.0,
+   "shuffle_dest": 0.0,
+   "shuffle_time": 0.0,
+   "randomize_payload": 0.0,
+   "packet_ablation": 0.0,
+   "memory_ablation": 0.0,
+   "max_loss": 0.0,
+   "irrelevant_channel": 0.0,
+   "env_permutation": 0.0
+  },
+  "base_verdict": {
+   "causal": "CAUSAL_SUPPORT",
+   "status": {
+    "normal": "RAN",
+    "zero_comm": "RAN",
+    "shuffle_dest": "RAN",
+    "shuffle_time": "RAN",
+    "randomize_payload": "RAN",
+    "packet_ablation": "RAN",
+    "memory_ablation": "RAN",
+    "adaptation_off": "NOT_APPLICABLE",
+    "frozen_routing": "NOT_APPLICABLE",
+    "max_loss": "RAN",
+    "irrelevant_channel": "RAN",
+    "env_permutation": "RAN"
+   }
+  },
+  "mut_verdict": {
+   "causal": "CAUSAL_SUPPORT",
+   "status": {
+    "normal": "RAN",
+    "zero_comm": "RAN",
+    "shuffle_dest": "RAN",
+    "shuffle_time": "RAN",
+    "randomize_payload": "RAN",
+    "packet_ablation": "RAN",
+    "memory_ablation": "RAN",
+    "adaptation_off": "NOT_APPLICABLE",
+    "frozen_routing": "NOT_APPLICABLE",
+    "max_loss": "RAN",
+    "irrelevant_channel": "RAN",
+    "env_permutation": "RAN"
+   }
+  },
+  "cpu_s": 10.47,
+  "error": null
+ },
+ "permute_seeds|plant|relay64": {
+  "category": "EQUIVALENT",
+  "expectation": "invariant",
+  "verdict_changed": false,
+  "new_alarms": [],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "acc": 0.0,
+   "zero_comm": 0.0
+  },
+  "base_verdict": {
+   "viable": true,
+   "plant": "relay_flood"
+  },
+  "mut_verdict": {
+   "viable": true,
+   "plant": "relay_flood"
+  },
+  "cpu_s": 1.39,
+  "error": null
+ },
+ "permute_seeds|lens_swap|relay64": {
+  "category": "EQUIVALENT",
+  "expectation": "unknown",
+  "verdict_changed": false,
+  "new_alarms": [],
+  "inert_worlds": true,
+  "numeric_delta": {
+   "eligible": 0,
+   "identity": 0.0,
+   "fS": 0.0,
+   "fC": 0.0,
+   "fN": 0.0,
+   "site_acc": 0.0,
+   "chan_acc": 0.0,
+   "offset": 0
+  },
+  "base_verdict": {
+   "class": "MIXTURE",
+   "follow_class": "MIXTURE",
+   "rel4_site": "CHANCE_REL",
+   "rel4_chan": "CHANCE_REL"
+  },
+  "mut_verdict": {
+   "class": "MIXTURE",
+   "follow_class": "MIXTURE",
+   "rel4_site": "CHANCE_REL",
+   "rel4_chan": "CHANCE_REL"
+  },
+  "cpu_s": 4.7,
+  "error": null
+ },
+ "permute_seeds|held|hold64": {
+  "category": "EQUIVALENT",
+  "expectation": "invariant",
+  "verdict_changed": false,
+  "new_alarms": [],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "acc": 0.0,
+   "lo99": 0.0,
+   "zero_comm": 0.0,
+   "comm_delta": 0.0,
+   "comm_delta_lo99": 0.0,
+   "train_final": 0.0,
+   "twin_beyond_hop": 0.0
+  },
+  "base_verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": false,
+   "LOCAL_ONLY": true,
+   "REACH_BEYOND_HOP": false
+  },
+  "mut_verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": false,
+   "LOCAL_ONLY": true,
+   "REACH_BEYOND_HOP": false
+  },
+  "cpu_s": 4.38,
+  "error": null
+ },
+ "permute_seeds|plant|hold64": {
+  "category": "EQUIVALENT",
+  "expectation": "invariant",
+  "verdict_changed": false,
+  "new_alarms": [],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "acc": 0.0,
+   "zero_comm": 0.0
+  },
+  "base_verdict": {
+   "viable": true,
+   "plant": "hold_latch"
+  },
+  "mut_verdict": {
+   "viable": true,
+   "plant": "hold_latch"
+  },
+  "cpu_s": 1.66,
+  "error": null
+ },
+ "permute_seeds|lens_swap|hold64": {
+  "category": "KILLED(D)",
+  "expectation": "unknown",
+  "verdict_changed": true,
+  "new_alarms": [],
+  "inert_worlds": true,
+  "numeric_delta": {
+   "eligible": 0,
+   "identity": 0.0,
+   "fS": 0.0,
+   "fC": 0.0,
+   "fN": 0.0,
+   "site_acc": 0.0,
+   "chan_acc": 0.0,
+   "offset": 0
+  },
+  "base_verdict": {
+   "class": "SITE",
+   "follow_class": "SITE",
+   "rel4_site": "FLIP_REL",
+   "rel4_chan": "NO_EFFECT_REL"
+  },
+  "mut_verdict": {
+   "class": "SITE",
+   "follow_class": "MIXTURE",
+   "rel4_site": "FLIP_REL",
+   "rel4_chan": "NO_EFFECT_REL"
+  },
+  "cpu_s": 5.52,
+  "error": null
+ },
+ "permute_seeds|held|echo": {
+  "category": "EQUIVALENT",
+  "expectation": "invariant",
+  "verdict_changed": false,
+  "new_alarms": [],
+  "inert_worlds": true,
+  "numeric_delta": {
+   "acc": 0.0,
+   "lo99": 0.0,
+   "zero_comm": 0.0,
+   "comm_delta": 0.0,
+   "comm_delta_lo99": 0.0,
+   "train_final": 0.0,
+   "twin_beyond_hop": 0.0
+  },
+  "base_verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": true,
+   "LOCAL_ONLY": false,
+   "REACH_BEYOND_HOP": true
+  },
+  "mut_verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": true,
+   "LOCAL_ONLY": false,
+   "REACH_BEYOND_HOP": true
+  },
+  "cpu_s": 5.41,
+  "error": null
+ },
+ "permute_seeds|controls|echo": {
+  "category": "UNRESOLVED",
+  "expectation": "unknown",
+  "verdict_changed": false,
+  "new_alarms": [],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "normal": 0.0,
+   "zero_comm": 0.0,
+   "shuffle_dest": 0.0,
+   "shuffle_time": 0.0,
+   "randomize_payload": 0.0,
+   "packet_ablation": 0.0,
+   "memory_ablation": 0.0,
+   "max_loss": 0.0,
+   "env_permutation": 0.0
+  },
+  "base_verdict": {
+   "causal": "NOT_SUPPORTED",
+   "status": {
+    "normal": "RAN",
+    "zero_comm": "RAN",
+    "shuffle_dest": "RAN",
+    "shuffle_time": "RAN",
+    "randomize_payload": "RAN",
+    "packet_ablation": "RAN",
+    "memory_ablation": "RAN",
+    "adaptation_off": "NOT_APPLICABLE",
+    "frozen_routing": "NOT_APPLICABLE",
+    "max_loss": "RAN",
+    "irrelevant_channel": "NOT_APPLICABLE",
+    "env_permutation": "RAN"
+   }
+  },
+  "mut_verdict": {
+   "causal": "NOT_SUPPORTED",
+   "status": {
+    "normal": "RAN",
+    "zero_comm": "RAN",
+    "shuffle_dest": "RAN",
+    "shuffle_time": "RAN",
+    "randomize_payload": "RAN",
+    "packet_ablation": "RAN",
+    "memory_ablation": "RAN",
+    "adaptation_off": "NOT_APPLICABLE",
+    "frozen_routing": "NOT_APPLICABLE",
+    "max_loss": "RAN",
+    "irrelevant_channel": "NOT_APPLICABLE",
+    "env_permutation": "RAN"
+   }
+  },
+  "cpu_s": 11.81,
+  "error": null
+ },
+ "permute_seeds|lens_swap|echo": {
+  "category": "KILLED(D)",
+  "expectation": "unknown",
+  "verdict_changed": true,
+  "new_alarms": [],
+  "inert_worlds": true,
+  "numeric_delta": {
+   "eligible": 0,
+   "identity": 0.0,
+   "fS": 0.0,
+   "fC": 0.0,
+   "fN": 0.0,
+   "site_acc": 0.0,
+   "chan_acc": 0.0,
+   "offset": 0
+  },
+  "base_verdict": {
+   "class": "CHANNEL",
+   "follow_class": "CHANNEL",
+   "rel4_site": "NO_EFFECT_REL",
+   "rel4_chan": "FLIP_REL"
+  },
+  "mut_verdict": {
+   "class": "CHANNEL",
+   "follow_class": "MIXTURE",
+   "rel4_site": "NO_EFFECT_REL",
+   "rel4_chan": "FLIP_REL"
+  },
+  "cpu_s": 3.73,
+  "error": null
+ },
+ "permute_seeds|held|xor_hp": {
+  "category": "EQUIVALENT",
+  "expectation": "invariant",
+  "verdict_changed": false,
+  "new_alarms": [],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "acc": 0.0,
+   "lo99": 0.0,
+   "zero_comm": 0.0,
+   "comm_delta": 0.0,
+   "comm_delta_lo99": 0.0,
+   "train_final": 0.0,
+   "twin_beyond_hop": 0.0
+  },
+  "base_verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": true,
+   "LOCAL_ONLY": false,
+   "REACH_BEYOND_HOP": true
+  },
+  "mut_verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": true,
+   "LOCAL_ONLY": false,
+   "REACH_BEYOND_HOP": true
+  },
+  "cpu_s": 9.14,
+  "error": null
+ },
+ "permute_seeds|held|c1_relay": {
+  "category": "EQUIVALENT",
+  "expectation": "invariant",
+  "verdict_changed": false,
+  "new_alarms": [],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "acc": 0.0,
+   "lo99": 0.0,
+   "zero_comm": 0.0,
+   "comm_delta": 0.0,
+   "comm_delta_lo99": 0.0,
+   "train_final": 0.0,
+   "twin_beyond_hop": 0.0
+  },
+  "base_verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": true,
+   "LOCAL_ONLY": false,
+   "REACH_BEYOND_HOP": false
+  },
+  "mut_verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": true,
+   "LOCAL_ONLY": false,
+   "REACH_BEYOND_HOP": false
+  },
+  "cpu_s": 13.75,
+  "error": null
+ },
+ "permute_seeds|held|c1_maj": {
+  "category": "EQUIVALENT",
+  "expectation": "invariant",
+  "verdict_changed": false,
+  "new_alarms": [],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "acc": 0.0,
+   "lo99": 0.0,
+   "zero_comm": 0.0,
+   "comm_delta": 0.0,
+   "comm_delta_lo99": 0.0,
+   "train_final": 0.0,
+   "twin_beyond_hop": 0.0
+  },
+  "base_verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": true,
+   "LOCAL_ONLY": false,
+   "INTEGRATION_BEYOND_ONE_SENSOR": false,
+   "REACH_BEYOND_HOP": true
+  },
+  "mut_verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": true,
+   "LOCAL_ONLY": false,
+   "INTEGRATION_BEYOND_ONE_SENSOR": false,
+   "REACH_BEYOND_HOP": true
+  },
+  "cpu_s": 5.17,
+  "error": null
+ },
+ "silent_sensors|held|relay64": {
+  "category": "KILLED(D)",
+  "expectation": "change",
+  "verdict_changed": true,
+  "new_alarms": [],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "acc": -0.5,
+   "lo99": -0.5,
+   "zero_comm": 0.0,
+   "comm_delta": -0.5,
+   "comm_delta_lo99": -0.5,
+   "train_final": -0.5,
+   "twin_beyond_hop": -1.0
+  },
+  "base_verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": true,
+   "LOCAL_ONLY": false,
+   "REACH_BEYOND_HOP": true
+  },
+  "mut_verdict": {
+   "SIGNAL": false,
+   "COMM_DEPENDENT": false,
+   "LOCAL_ONLY": false,
+   "REACH_BEYOND_HOP": false
+  },
+  "cpu_s": 3.73,
+  "error": null
+ },
+ "silent_sensors|controls|relay64": {
+  "category": "KILLED(A)",
+  "expectation": "change",
+  "verdict_changed": true,
+  "new_alarms": [
+   "CAUSAL_INCONCLUSIVE",
+   "NOT_APPLICABLE:max_loss",
+   "NOT_APPLICABLE:memory_ablation",
+   "NOT_APPLICABLE:packet_ablation",
+   "NOT_APPLICABLE:randomize_payload",
+   "NOT_APPLICABLE:shuffle_dest",
+   "NOT_APPLICABLE:shuffle_time",
+   "NOT_APPLICABLE:zero_comm"
+  ],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "normal": -0.5,
+   "irrelevant_channel": -0.5,
+   "env_permutation": -0.003
+  },
+  "base_verdict": {
+   "causal": "CAUSAL_SUPPORT",
+   "status": {
+    "normal": "RAN",
+    "zero_comm": "RAN",
+    "shuffle_dest": "RAN",
+    "shuffle_time": "RAN",
+    "randomize_payload": "RAN",
+    "packet_ablation": "RAN",
+    "memory_ablation": "RAN",
+    "adaptation_off": "NOT_APPLICABLE",
+    "frozen_routing": "NOT_APPLICABLE",
+    "max_loss": "RAN",
+    "irrelevant_channel": "RAN",
+    "env_permutation": "RAN"
+   }
+  },
+  "mut_verdict": {
+   "causal": "INCONCLUSIVE",
+   "status": {
+    "normal": "RAN",
+    "zero_comm": "NOT_APPLICABLE",
+    "shuffle_dest": "NOT_APPLICABLE",
+    "shuffle_time": "NOT_APPLICABLE",
+    "randomize_payload": "NOT_APPLICABLE",
+    "packet_ablation": "NOT_APPLICABLE",
+    "memory_ablation": "NOT_APPLICABLE",
+    "adaptation_off": "NOT_APPLICABLE",
+    "frozen_routing": "NOT_APPLICABLE",
+    "max_loss": "NOT_APPLICABLE",
+    "irrelevant_channel": "RAN",
+    "env_permutation": "RAN"
+   }
+  },
+  "cpu_s": 10.48,
+  "error": null
+ },
+ "silent_sensors|plant|relay64": {
+  "category": "KILLED(D)",
+  "expectation": "change",
+  "verdict_changed": true,
+  "new_alarms": [],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "acc": -0.5,
+   "zero_comm": 0.0
+  },
+  "base_verdict": {
+   "viable": true,
+   "plant": "relay_flood"
+  },
+  "mut_verdict": {
+   "viable": false,
+   "plant": "relay_flood"
+  },
+  "cpu_s": 1.41,
+  "error": null
+ },
+ "silent_sensors|lens_swap|relay64": {
+  "category": "KILLED(A)",
+  "expectation": "change",
+  "verdict_changed": true,
+  "new_alarms": [
+   "class:UNDEFINED",
+   "follow_class:UNDEFINED",
+   "rel4_chan:NOT_ELIGIBLE",
+   "rel4_site:NOT_ELIGIBLE"
+  ],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "eligible": -96,
+   "offset": 0
+  },
+  "base_verdict": {
+   "class": "MIXTURE",
+   "follow_class": "MIXTURE",
+   "rel4_site": "CHANCE_REL",
+   "rel4_chan": "CHANCE_REL"
+  },
+  "mut_verdict": {
+   "class": "UNDEFINED",
+   "follow_class": "UNDEFINED",
+   "rel4_site": "NOT_ELIGIBLE",
+   "rel4_chan": "NOT_ELIGIBLE"
+  },
+  "cpu_s": 4.56,
+  "error": null
+ },
+ "silent_sensors|held|hold64": {
+  "category": "KILLED(D)",
+  "expectation": "change",
+  "verdict_changed": true,
+  "new_alarms": [],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "acc": -0.5,
+   "lo99": -0.5,
+   "zero_comm": -0.5,
+   "comm_delta": 0.0,
+   "comm_delta_lo99": 0.0,
+   "train_final": -0.5,
+   "twin_beyond_hop": 0.0
+  },
+  "base_verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": false,
+   "LOCAL_ONLY": true,
+   "REACH_BEYOND_HOP": false
+  },
+  "mut_verdict": {
+   "SIGNAL": false,
+   "COMM_DEPENDENT": false,
+   "LOCAL_ONLY": false,
+   "REACH_BEYOND_HOP": false
+  },
+  "cpu_s": 4.42,
+  "error": null
+ },
+ "silent_sensors|plant|hold64": {
+  "category": "KILLED(D)",
+  "expectation": "change",
+  "verdict_changed": true,
+  "new_alarms": [],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "acc": -0.5,
+   "zero_comm": -0.5
+  },
+  "base_verdict": {
+   "viable": true,
+   "plant": "hold_latch"
+  },
+  "mut_verdict": {
+   "viable": false,
+   "plant": "hold_latch"
+  },
+  "cpu_s": 1.69,
+  "error": null
+ },
+ "silent_sensors|lens_swap|hold64": {
+  "category": "KILLED(A)",
+  "expectation": "change",
+  "verdict_changed": true,
+  "new_alarms": [
+   "class:UNDEFINED",
+   "follow_class:UNDEFINED",
+   "rel4_chan:NOT_ELIGIBLE",
+   "rel4_site:NOT_ELIGIBLE"
+  ],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "eligible": -96,
+   "offset": 0
+  },
+  "base_verdict": {
+   "class": "SITE",
+   "follow_class": "SITE",
+   "rel4_site": "FLIP_REL",
+   "rel4_chan": "NO_EFFECT_REL"
+  },
+  "mut_verdict": {
+   "class": "UNDEFINED",
+   "follow_class": "UNDEFINED",
+   "rel4_site": "NOT_ELIGIBLE",
+   "rel4_chan": "NOT_ELIGIBLE"
+  },
+  "cpu_s": 5.55,
+  "error": null
+ },
+ "silent_sensors|held|echo": {
+  "category": "KILLED(D)",
+  "expectation": "change",
+  "verdict_changed": true,
+  "new_alarms": [],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "acc": -0.5,
+   "lo99": -0.5,
+   "zero_comm": 0.0,
+   "comm_delta": -0.5,
+   "comm_delta_lo99": -0.5,
+   "train_final": -0.5,
+   "twin_beyond_hop": -1.0
+  },
+  "base_verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": true,
+   "LOCAL_ONLY": false,
+   "REACH_BEYOND_HOP": true
+  },
+  "mut_verdict": {
+   "SIGNAL": false,
+   "COMM_DEPENDENT": false,
+   "LOCAL_ONLY": false,
+   "REACH_BEYOND_HOP": false
+  },
+  "cpu_s": 5.7,
+  "error": null
+ },
+ "silent_sensors|controls|echo": {
+  "category": "KILLED(A)",
+  "expectation": "change",
+  "verdict_changed": true,
+  "new_alarms": [
+   "CAUSAL_INCONCLUSIVE",
+   "NOT_APPLICABLE:max_loss",
+   "NOT_APPLICABLE:memory_ablation",
+   "NOT_APPLICABLE:packet_ablation",
+   "NOT_APPLICABLE:randomize_payload",
+   "NOT_APPLICABLE:shuffle_dest",
+   "NOT_APPLICABLE:shuffle_time",
+   "NOT_APPLICABLE:zero_comm"
+  ],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "normal": -0.5,
+   "env_permutation": 0.0093
+  },
+  "base_verdict": {
+   "causal": "NOT_SUPPORTED",
+   "status": {
+    "normal": "RAN",
+    "zero_comm": "RAN",
+    "shuffle_dest": "RAN",
+    "shuffle_time": "RAN",
+    "randomize_payload": "RAN",
+    "packet_ablation": "RAN",
+    "memory_ablation": "RAN",
+    "adaptation_off": "NOT_APPLICABLE",
+    "frozen_routing": "NOT_APPLICABLE",
+    "max_loss": "RAN",
+    "irrelevant_channel": "NOT_APPLICABLE",
+    "env_permutation": "RAN"
+   }
+  },
+  "mut_verdict": {
+   "causal": "INCONCLUSIVE",
+   "status": {
+    "normal": "RAN",
+    "zero_comm": "NOT_APPLICABLE",
+    "shuffle_dest": "NOT_APPLICABLE",
+    "shuffle_time": "NOT_APPLICABLE",
+    "randomize_payload": "NOT_APPLICABLE",
+    "packet_ablation": "NOT_APPLICABLE",
+    "memory_ablation": "NOT_APPLICABLE",
+    "adaptation_off": "NOT_APPLICABLE",
+    "frozen_routing": "NOT_APPLICABLE",
+    "max_loss": "NOT_APPLICABLE",
+    "irrelevant_channel": "NOT_APPLICABLE",
+    "env_permutation": "RAN"
+   }
+  },
+  "cpu_s": 12.14,
+  "error": null
+ },
+ "silent_sensors|lens_swap|echo": {
+  "category": "KILLED(A)",
+  "expectation": "change",
+  "verdict_changed": true,
+  "new_alarms": [
+   "class:UNDEFINED",
+   "follow_class:UNDEFINED",
+   "rel4_chan:NOT_ELIGIBLE",
+   "rel4_site:NOT_ELIGIBLE"
+  ],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "eligible": -96,
+   "offset": 0
+  },
+  "base_verdict": {
+   "class": "CHANNEL",
+   "follow_class": "CHANNEL",
+   "rel4_site": "NO_EFFECT_REL",
+   "rel4_chan": "FLIP_REL"
+  },
+  "mut_verdict": {
+   "class": "UNDEFINED",
+   "follow_class": "UNDEFINED",
+   "rel4_site": "NOT_ELIGIBLE",
+   "rel4_chan": "NOT_ELIGIBLE"
+  },
+  "cpu_s": 3.75,
+  "error": null
+ },
+ "silent_sensors|held|xor_hp": {
+  "category": "KILLED(D)",
+  "expectation": "change",
+  "verdict_changed": true,
+  "new_alarms": [],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "acc": -0.5,
+   "lo99": -0.5,
+   "zero_comm": 0.0,
+   "comm_delta": -0.5,
+   "comm_delta_lo99": -0.5,
+   "train_final": -0.5,
+   "twin_beyond_hop": -1.0
+  },
+  "base_verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": true,
+   "LOCAL_ONLY": false,
+   "REACH_BEYOND_HOP": true
+  },
+  "mut_verdict": {
+   "SIGNAL": false,
+   "COMM_DEPENDENT": false,
+   "LOCAL_ONLY": false,
+   "REACH_BEYOND_HOP": false
+  },
+  "cpu_s": 9.28,
+  "error": null
+ },
+ "silent_sensors|held|c1_relay": {
+  "category": "KILLED(D)",
+  "expectation": "change",
+  "verdict_changed": true,
+  "new_alarms": [],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "acc": -0.2754,
+   "lo99": -0.2383,
+   "zero_comm": 0.0,
+   "comm_delta": -0.2754,
+   "comm_delta_lo99": -0.2383,
+   "train_final": -0.25,
+   "twin_beyond_hop": 0.0
+  },
+  "base_verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": true,
+   "LOCAL_ONLY": false,
+   "REACH_BEYOND_HOP": false
+  },
+  "mut_verdict": {
+   "SIGNAL": false,
+   "COMM_DEPENDENT": false,
+   "LOCAL_ONLY": false,
+   "REACH_BEYOND_HOP": false
+  },
+  "cpu_s": 14.06,
+  "error": null
+ },
+ "silent_sensors|held|c1_maj": {
+  "category": "KILLED(D)",
+  "expectation": "change",
+  "verdict_changed": true,
+  "new_alarms": [],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "acc": -0.1875,
+   "lo99": -0.127,
+   "zero_comm": 0.0,
+   "comm_delta": -0.1875,
+   "comm_delta_lo99": -0.127,
+   "train_final": -0.3125,
+   "twin_beyond_hop": -1.0
+  },
+  "base_verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": true,
+   "LOCAL_ONLY": false,
+   "INTEGRATION_BEYOND_ONE_SENSOR": false,
+   "REACH_BEYOND_HOP": true
+  },
+  "mut_verdict": {
+   "SIGNAL": false,
+   "COMM_DEPENDENT": false,
+   "LOCAL_ONLY": false,
+   "INTEGRATION_BEYOND_ONE_SENSOR": false,
+   "REACH_BEYOND_HOP": false
+  },
+  "cpu_s": 5.2,
+  "error": null
+ },
+ "silent_sensors|oracle|conformance": {
+  "category": "KILLED(A)",
+  "expectation": "change",
+  "verdict_changed": true,
+  "new_alarms": [
+   "CONFORMANCE_FAIL:engine_matches_oracle[0]",
+   "CONFORMANCE_FAIL:engine_matches_oracle[5]",
+   "CONFORMANCE_FAIL:transport_matches_oracle[100]",
+   "CONFORMANCE_FAIL:transport_matches_oracle[101]",
+   "CONFORMANCE_FAIL:transport_matches_oracle[103]"
+  ],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "n_checks": 0,
+   "n_fail": 5
+  },
+  "base_verdict": {
+   "pass": true
+  },
+  "mut_verdict": {
+   "pass": false
+  },
+  "cpu_s": 1.58,
+  "error": null
+ },
+ "invert_sign|held|relay64": {
+  "category": "KILLED(A)",
+  "expectation": "change",
+  "verdict_changed": true,
+  "new_alarms": [
+   "ANTI_CORRELATED"
+  ],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "acc": -1.0,
+   "lo99": -1.0,
+   "zero_comm": 0.0,
+   "comm_delta": -1.0,
+   "comm_delta_lo99": -1.0,
+   "train_final": -1.0,
+   "twin_beyond_hop": 0.0
+  },
+  "base_verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": true,
+   "LOCAL_ONLY": false,
+   "REACH_BEYOND_HOP": true
+  },
+  "mut_verdict": {
+   "SIGNAL": false,
+   "COMM_DEPENDENT": false,
+   "LOCAL_ONLY": false,
+   "REACH_BEYOND_HOP": true
+  },
+  "cpu_s": 3.81,
+  "error": null
+ },
+ "invert_sign|controls|relay64": {
+  "category": "KILLED(D)",
+  "expectation": "change",
+  "verdict_changed": true,
+  "new_alarms": [],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "normal": -1.0,
+   "zero_comm": 0.0,
+   "shuffle_dest": -0.9141,
+   "shuffle_time": -1.0,
+   "randomize_payload": 0.0195,
+   "packet_ablation": 0.0,
+   "memory_ablation": -0.6797,
+   "max_loss": 0.0,
+   "irrelevant_channel": -1.0,
+   "env_permutation": -0.006
+  },
+  "base_verdict": {
+   "causal": "CAUSAL_SUPPORT",
+   "status": {
+    "normal": "RAN",
+    "zero_comm": "RAN",
+    "shuffle_dest": "RAN",
+    "shuffle_time": "RAN",
+    "randomize_payload": "RAN",
+    "packet_ablation": "RAN",
+    "memory_ablation": "RAN",
+    "adaptation_off": "NOT_APPLICABLE",
+    "frozen_routing": "NOT_APPLICABLE",
+    "max_loss": "RAN",
+    "irrelevant_channel": "RAN",
+    "env_permutation": "RAN"
+   }
+  },
+  "mut_verdict": {
+   "causal": "NOT_SUPPORTED",
+   "status": {
+    "normal": "RAN",
+    "zero_comm": "RAN",
+    "shuffle_dest": "RAN",
+    "shuffle_time": "RAN",
+    "randomize_payload": "RAN",
+    "packet_ablation": "RAN",
+    "memory_ablation": "RAN",
+    "adaptation_off": "NOT_APPLICABLE",
+    "frozen_routing": "NOT_APPLICABLE",
+    "max_loss": "RAN",
+    "irrelevant_channel": "RAN",
+    "env_permutation": "RAN"
+   }
+  },
+  "cpu_s": 10.8,
+  "error": null
+ },
+ "invert_sign|plant|relay64": {
+  "category": "KILLED(D)",
+  "expectation": "change",
+  "verdict_changed": true,
+  "new_alarms": [],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "acc": -1.0,
+   "zero_comm": 0.0
+  },
+  "base_verdict": {
+   "viable": true,
+   "plant": "relay_flood"
+  },
+  "mut_verdict": {
+   "viable": false,
+   "plant": "relay_flood"
+  },
+  "cpu_s": 1.48,
+  "error": null
+ },
+ "invert_sign|lens_swap|relay64": {
+  "category": "KILLED(A)",
+  "expectation": "change",
+  "verdict_changed": true,
+  "new_alarms": [
+   "class:UNDEFINED",
+   "rel4_chan:NOT_ELIGIBLE",
+   "rel4_site:NOT_ELIGIBLE"
+  ],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "eligible": -96,
+   "offset": 0
+  },
+  "base_verdict": {
+   "class": "MIXTURE",
+   "follow_class": "MIXTURE",
+   "rel4_site": "CHANCE_REL",
+   "rel4_chan": "CHANCE_REL"
+  },
+  "mut_verdict": {
+   "class": "UNDEFINED",
+   "follow_class": "MIXTURE",
+   "rel4_site": "NOT_ELIGIBLE",
+   "rel4_chan": "NOT_ELIGIBLE"
+  },
+  "cpu_s": 5.25,
+  "error": null
+ },
+ "invert_sign|held|hold64": {
+  "category": "KILLED(A)",
+  "expectation": "change",
+  "verdict_changed": true,
+  "new_alarms": [
+   "ANTI_CORRELATED"
+  ],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "acc": -1.0,
+   "lo99": -1.0,
+   "zero_comm": -1.0,
+   "comm_delta": 0.0,
+   "comm_delta_lo99": 0.0,
+   "train_final": -1.0,
+   "twin_beyond_hop": 0.0
+  },
+  "base_verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": false,
+   "LOCAL_ONLY": true,
+   "REACH_BEYOND_HOP": false
+  },
+  "mut_verdict": {
+   "SIGNAL": false,
+   "COMM_DEPENDENT": false,
+   "LOCAL_ONLY": false,
+   "REACH_BEYOND_HOP": false
+  },
+  "cpu_s": 4.66,
+  "error": null
+ },
+ "invert_sign|plant|hold64": {
+  "category": "KILLED(D)",
+  "expectation": "change",
+  "verdict_changed": true,
+  "new_alarms": [],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "acc": -1.0,
+   "zero_comm": -1.0
+  },
+  "base_verdict": {
+   "viable": true,
+   "plant": "hold_latch"
+  },
+  "mut_verdict": {
+   "viable": false,
+   "plant": "hold_latch"
+  },
+  "cpu_s": 1.84,
+  "error": null
+ },
+ "invert_sign|lens_swap|hold64": {
+  "category": "KILLED(A)",
+  "expectation": "change",
+  "verdict_changed": true,
+  "new_alarms": [
+   "class:UNDEFINED",
+   "rel4_chan:NOT_ELIGIBLE",
+   "rel4_site:NOT_ELIGIBLE"
+  ],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "eligible": -96,
+   "offset": 0
+  },
+  "base_verdict": {
+   "class": "SITE",
+   "follow_class": "SITE",
+   "rel4_site": "FLIP_REL",
+   "rel4_chan": "NO_EFFECT_REL"
+  },
+  "mut_verdict": {
+   "class": "UNDEFINED",
+   "follow_class": "SITE",
+   "rel4_site": "NOT_ELIGIBLE",
+   "rel4_chan": "NOT_ELIGIBLE"
+  },
+  "cpu_s": 5.95,
+  "error": null
+ },
+ "invert_sign|held|echo": {
+  "category": "KILLED(A)",
+  "expectation": "change",
+  "verdict_changed": true,
+  "new_alarms": [
+   "ANTI_CORRELATED"
+  ],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "acc": -1.0,
+   "lo99": -1.0,
+   "zero_comm": 0.0,
+   "comm_delta": -1.0,
+   "comm_delta_lo99": -1.0,
+   "train_final": -1.0,
+   "twin_beyond_hop": 0.0
+  },
+  "base_verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": true,
+   "LOCAL_ONLY": false,
+   "REACH_BEYOND_HOP": true
+  },
+  "mut_verdict": {
+   "SIGNAL": false,
+   "COMM_DEPENDENT": false,
+   "LOCAL_ONLY": false,
+   "REACH_BEYOND_HOP": true
+  },
+  "cpu_s": 5.62,
+  "error": null
+ },
+ "invert_sign|controls|echo": {
+  "category": "SURVIVED",
+  "expectation": "change",
+  "verdict_changed": false,
+  "new_alarms": [],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "normal": -1.0,
+   "zero_comm": 0.0,
+   "shuffle_dest": -0.3398,
+   "shuffle_time": -0.9727,
+   "randomize_payload": 0.0,
+   "packet_ablation": 0.0,
+   "memory_ablation": -1.0,
+   "max_loss": 0.0,
+   "env_permutation": 0.0187
+  },
+  "base_verdict": {
+   "causal": "NOT_SUPPORTED",
+   "status": {
+    "normal": "RAN",
+    "zero_comm": "RAN",
+    "shuffle_dest": "RAN",
+    "shuffle_time": "RAN",
+    "randomize_payload": "RAN",
+    "packet_ablation": "RAN",
+    "memory_ablation": "RAN",
+    "adaptation_off": "NOT_APPLICABLE",
+    "frozen_routing": "NOT_APPLICABLE",
+    "max_loss": "RAN",
+    "irrelevant_channel": "NOT_APPLICABLE",
+    "env_permutation": "RAN"
+   }
+  },
+  "mut_verdict": {
+   "causal": "NOT_SUPPORTED",
+   "status": {
+    "normal": "RAN",
+    "zero_comm": "RAN",
+    "shuffle_dest": "RAN",
+    "shuffle_time": "RAN",
+    "randomize_payload": "RAN",
+    "packet_ablation": "RAN",
+    "memory_ablation": "RAN",
+    "adaptation_off": "NOT_APPLICABLE",
+    "frozen_routing": "NOT_APPLICABLE",
+    "max_loss": "RAN",
+    "irrelevant_channel": "NOT_APPLICABLE",
+    "env_permutation": "RAN"
+   }
+  },
+  "cpu_s": 12.53,
+  "error": null
+ },
+ "invert_sign|lens_swap|echo": {
+  "category": "KILLED(A)",
+  "expectation": "change",
+  "verdict_changed": true,
+  "new_alarms": [
+   "class:UNDEFINED",
+   "rel4_chan:NOT_ELIGIBLE",
+   "rel4_site:NOT_ELIGIBLE"
+  ],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "eligible": -96,
+   "offset": 0
+  },
+  "base_verdict": {
+   "class": "CHANNEL",
+   "follow_class": "CHANNEL",
+   "rel4_site": "NO_EFFECT_REL",
+   "rel4_chan": "FLIP_REL"
+  },
+  "mut_verdict": {
+   "class": "UNDEFINED",
+   "follow_class": "CHANNEL",
+   "rel4_site": "NOT_ELIGIBLE",
+   "rel4_chan": "NOT_ELIGIBLE"
+  },
+  "cpu_s": 3.67,
+  "error": null
+ },
+ "invert_sign|held|xor_hp": {
+  "category": "KILLED(A)",
+  "expectation": "change",
+  "verdict_changed": true,
+  "new_alarms": [
+   "ANTI_CORRELATED"
+  ],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "acc": -1.0,
+   "lo99": -1.0,
+   "zero_comm": 0.0,
+   "comm_delta": -1.0,
+   "comm_delta_lo99": -1.0,
+   "train_final": -1.0,
+   "twin_beyond_hop": 0.0
+  },
+  "base_verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": true,
+   "LOCAL_ONLY": false,
+   "REACH_BEYOND_HOP": true
+  },
+  "mut_verdict": {
+   "SIGNAL": false,
+   "COMM_DEPENDENT": false,
+   "LOCAL_ONLY": false,
+   "REACH_BEYOND_HOP": true
+  },
+  "cpu_s": 8.84,
+  "error": null
+ },
+ "invert_sign|held|c1_relay": {
+  "category": "KILLED(A)",
+  "expectation": "change",
+  "verdict_changed": true,
+  "new_alarms": [
+   "ANTI_CORRELATED"
+  ],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "acc": -0.5508,
+   "lo99": -0.5488,
+   "zero_comm": 0.0,
+   "comm_delta": -0.5508,
+   "comm_delta_lo99": -0.5488,
+   "train_final": -0.5,
+   "twin_beyond_hop": 0.0
+  },
+  "base_verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": true,
+   "LOCAL_ONLY": false,
+   "REACH_BEYOND_HOP": false
+  },
+  "mut_verdict": {
+   "SIGNAL": false,
+   "COMM_DEPENDENT": false,
+   "LOCAL_ONLY": false,
+   "REACH_BEYOND_HOP": false
+  },
+  "cpu_s": 13.19,
+  "error": null
+ },
+ "invert_sign|held|c1_maj": {
+  "category": "KILLED(A)",
+  "expectation": "change",
+  "verdict_changed": true,
+  "new_alarms": [
+   "ANTI_CORRELATED"
+  ],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "acc": -0.375,
+   "lo99": -0.3711,
+   "zero_comm": 0.0,
+   "comm_delta": -0.375,
+   "comm_delta_lo99": -0.3711,
+   "train_final": -0.625,
+   "twin_beyond_hop": 0.0
+  },
+  "base_verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": true,
+   "LOCAL_ONLY": false,
+   "INTEGRATION_BEYOND_ONE_SENSOR": false,
+   "REACH_BEYOND_HOP": true
+  },
+  "mut_verdict": {
+   "SIGNAL": false,
+   "COMM_DEPENDENT": false,
+   "LOCAL_ONLY": false,
+   "INTEGRATION_BEYOND_ONE_SENSOR": false,
+   "REACH_BEYOND_HOP": true
+  },
+  "cpu_s": 4.78,
+  "error": null
+ },
+ "swap_labels|report|all": {
+  "category": "KILLED(A)",
+  "expectation": "change",
+  "verdict_changed": true,
+  "new_alarms": [
+   "anomaly:TRAIN_HELD_GAP"
+  ],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "n_rows": 0
+  },
+  "base_verdict": {
+   "A1": {
+    "RELAY": {
+     "n": 3,
+     "SIGNAL": 3,
+     "COMM_DEPENDENT": 3,
+     "LOCAL_ONLY": 0
+    },
+    "XOR": {
+     "n": 1,
+     "SIGNAL": 1,
+     "COMM_DEPENDENT": 1,
+     "LOCAL_ONLY": 0
+    },
+    "MAJ": {
+     "n": 1,
+     "SIGNAL": 1,
+     "COMM_DEPENDENT": 1,
+     "LOCAL_ONLY": 0
+    },
+    "FLIP": {
+     "n": 1,
+     "SIGNAL": 1,
+     "COMM_DEPENDENT": 1,
+     "LOCAL_ONLY": 0
+    },
+    "HOLD": {
+     "n": 3,
+     "SIGNAL": 3,
+     "COMM_DEPENDENT": 1,
+     "LOCAL_ONLY": 2
+    }
+   },
+   "A0_viable_frac": {
+    "RELAY": 1.0,
+    "HOLD": 1.0
+   },
+   "D_causal": {
+    "relay64:A": "CAUSAL_SUPPORT",
+    "hold64:A": "CAUSAL_SUPPORT",
+    "echo:A": "NOT_SUPPORTED",
+    "c1_relay:A": "CAUSAL_SUPPORT"
+   },
+   "predictions": {
+    "P3": false,
+    "P4": false,
+    "P6": true,
+    "P8": false
+   }
+  },
+  "mut_verdict": {
+   "A1": {
+    "RELAY": {
+     "n": 3,
+     "SIGNAL": 1,
+     "COMM_DEPENDENT": 1,
+     "LOCAL_ONLY": 0
+    },
+    "XOR": {
+     "n": 1,
+     "SIGNAL": 0,
+     "COMM_DEPENDENT": 0,
+     "LOCAL_ONLY": 0
+    },
+    "MAJ": {
+     "n": 1,
+     "SIGNAL": 0,
+     "COMM_DEPENDENT": 0,
+     "LOCAL_ONLY": 0
+    },
+    "FLIP": {
+     "n": 1,
+     "SIGNAL": 1,
+     "COMM_DEPENDENT": 1,
+     "LOCAL_ONLY": 0
+    },
+    "HOLD": {
+     "n": 3,
+     "SIGNAL": 2,
+     "COMM_DEPENDENT": 0,
+     "LOCAL_ONLY": 2
+    }
+   },
+   "A0_viable_frac": {
+    "RELAY": 0.667,
+    "HOLD": 1.0
+   },
+   "D_causal": {
+    "relay64:A": "NOT_SUPPORTED",
+    "hold64:A": "CAUSAL_SUPPORT",
+    "echo:A": "NOT_SUPPORTED",
+    "c1_relay:A": "CAUSAL_SUPPORT"
+   },
+   "predictions": {
+    "P3": true,
+    "P4": false,
+    "P6": true,
+    "P8": false
+   }
+  }
+ },
+ "duplicate_condition|report|all": {
+  "category": "KILLED(A)",
+  "expectation": "change",
+  "verdict_changed": true,
+  "new_alarms": [
+   "D:echo:A:INCONCLUSIVE",
+   "D:relay64:A:INCONCLUSIVE",
+   "anomaly:COMPETENT_WITHOUT_COMM"
+  ],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "n_rows": 0
+  },
+  "base_verdict": {
+   "A1": {
+    "RELAY": {
+     "n": 3,
+     "SIGNAL": 3,
+     "COMM_DEPENDENT": 3,
+     "LOCAL_ONLY": 0
+    },
+    "XOR": {
+     "n": 1,
+     "SIGNAL": 1,
+     "COMM_DEPENDENT": 1,
+     "LOCAL_ONLY": 0
+    },
+    "MAJ": {
+     "n": 1,
+     "SIGNAL": 1,
+     "COMM_DEPENDENT": 1,
+     "LOCAL_ONLY": 0
+    },
+    "FLIP": {
+     "n": 1,
+     "SIGNAL": 1,
+     "COMM_DEPENDENT": 1,
+     "LOCAL_ONLY": 0
+    },
+    "HOLD": {
+     "n": 3,
+     "SIGNAL": 3,
+     "COMM_DEPENDENT": 1,
+     "LOCAL_ONLY": 2
+    }
+   },
+   "A0_viable_frac": {
+    "RELAY": 1.0,
+    "HOLD": 1.0
+   },
+   "D_causal": {
+    "relay64:A": "CAUSAL_SUPPORT",
+    "hold64:A": "CAUSAL_SUPPORT",
+    "echo:A": "NOT_SUPPORTED",
+    "c1_relay:A": "CAUSAL_SUPPORT"
+   },
+   "predictions": {
+    "P3": false,
+    "P4": false,
+    "P6": true,
+    "P8": false
+   }
+  },
+  "mut_verdict": {
+   "A1": {
+    "RELAY": {
+     "n": 3,
+     "SIGNAL": 3,
+     "COMM_DEPENDENT": 1,
+     "LOCAL_ONLY": 2
+    },
+    "XOR": {
+     "n": 1,
+     "SIGNAL": 1,
+     "COMM_DEPENDENT": 0,
+     "LOCAL_ONLY": 1
+    },
+    "MAJ": {
+     "n": 1,
+     "SIGNAL": 1,
+     "COMM_DEPENDENT": 0,
+     "LOCAL_ONLY": 1
+    },
+    "FLIP": {
+     "n": 1,
+     "SIGNAL": 1,
+     "COMM_DEPENDENT": 1,
+     "LOCAL_ONLY": 0
+    },
+    "HOLD": {
+     "n": 3,
+     "SIGNAL": 3,
+     "COMM_DEPENDENT": 0,
+     "LOCAL_ONLY": 3
+    }
+   },
+   "A0_viable_frac": {
+    "RELAY": 1.0,
+    "HOLD": 1.0
+   },
+   "D_causal": {
+    "relay64:A": "INCONCLUSIVE",
+    "hold64:A": "CAUSAL_SUPPORT",
+    "echo:A": "INCONCLUSIVE",
+    "c1_relay:A": "CAUSAL_SUPPORT"
+   },
+   "predictions": {
+    "P3": false,
+    "P4": false,
+    "P6": true,
+    "P8": false
+   }
+  }
+ },
+ "disable_channel|report|all": {
+  "category": "KILLED(A)",
+  "expectation": "change",
+  "verdict_changed": true,
+  "new_alarms": [
+   "D:echo:A:INCONCLUSIVE",
+   "D:relay64:A:INCONCLUSIVE"
+  ],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "n_rows": 0
+  },
+  "base_verdict": {
+   "A1": {
+    "RELAY": {
+     "n": 3,
+     "SIGNAL": 3,
+     "COMM_DEPENDENT": 3,
+     "LOCAL_ONLY": 0
+    },
+    "XOR": {
+     "n": 1,
+     "SIGNAL": 1,
+     "COMM_DEPENDENT": 1,
+     "LOCAL_ONLY": 0
+    },
+    "MAJ": {
+     "n": 1,
+     "SIGNAL": 1,
+     "COMM_DEPENDENT": 1,
+     "LOCAL_ONLY": 0
+    },
+    "FLIP": {
+     "n": 1,
+     "SIGNAL": 1,
+     "COMM_DEPENDENT": 1,
+     "LOCAL_ONLY": 0
+    },
+    "HOLD": {
+     "n": 3,
+     "SIGNAL": 3,
+     "COMM_DEPENDENT": 1,
+     "LOCAL_ONLY": 2
+    }
+   },
+   "A0_viable_frac": {
+    "RELAY": 1.0,
+    "HOLD": 1.0
+   },
+   "D_causal": {
+    "relay64:A": "CAUSAL_SUPPORT",
+    "hold64:A": "CAUSAL_SUPPORT",
+    "echo:A": "NOT_SUPPORTED",
+    "c1_relay:A": "CAUSAL_SUPPORT"
+   },
+   "predictions": {
+    "P3": false,
+    "P4": false,
+    "P6": true,
+    "P8": false
+   }
+  },
+  "mut_verdict": {
+   "A1": {
+    "RELAY": {
+     "n": 3,
+     "SIGNAL": 1,
+     "COMM_DEPENDENT": 1,
+     "LOCAL_ONLY": 0
+    },
+    "XOR": {
+     "n": 1,
+     "SIGNAL": 0,
+     "COMM_DEPENDENT": 0,
+     "LOCAL_ONLY": 0
+    },
+    "MAJ": {
+     "n": 1,
+     "SIGNAL": 0,
+     "COMM_DEPENDENT": 0,
+     "LOCAL_ONLY": 0
+    },
+    "FLIP": {
+     "n": 1,
+     "SIGNAL": 1,
+     "COMM_DEPENDENT": 1,
+     "LOCAL_ONLY": 0
+    },
+    "HOLD": {
+     "n": 3,
+     "SIGNAL": 2,
+     "COMM_DEPENDENT": 0,
+     "LOCAL_ONLY": 2
+    }
+   },
+   "A0_viable_frac": {
+    "RELAY": 0.667,
+    "HOLD": 1.0
+   },
+   "D_causal": {
+    "relay64:A": "INCONCLUSIVE",
+    "hold64:A": "CAUSAL_SUPPORT",
+    "echo:A": "INCONCLUSIVE",
+    "c1_relay:A": "CAUSAL_SUPPORT"
+   },
+   "predictions": {
+    "P3": true,
+    "P4": false,
+    "P6": true,
+    "P8": false
+   }
+  }
+ },
+ "control_ignored|report|all": {
+  "category": "KILLED(A)",
+  "expectation": "change",
+  "verdict_changed": true,
+  "new_alarms": [
+   "D:echo:A:INCONCLUSIVE",
+   "D:relay64:A:INCONCLUSIVE",
+   "anomaly:COMPETENT_WITHOUT_COMM"
+  ],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "n_rows": 0
+  },
+  "base_verdict": {
+   "A1": {
+    "RELAY": {
+     "n": 3,
+     "SIGNAL": 3,
+     "COMM_DEPENDENT": 3,
+     "LOCAL_ONLY": 0
+    },
+    "XOR": {
+     "n": 1,
+     "SIGNAL": 1,
+     "COMM_DEPENDENT": 1,
+     "LOCAL_ONLY": 0
+    },
+    "MAJ": {
+     "n": 1,
+     "SIGNAL": 1,
+     "COMM_DEPENDENT": 1,
+     "LOCAL_ONLY": 0
+    },
+    "FLIP": {
+     "n": 1,
+     "SIGNAL": 1,
+     "COMM_DEPENDENT": 1,
+     "LOCAL_ONLY": 0
+    },
+    "HOLD": {
+     "n": 3,
+     "SIGNAL": 3,
+     "COMM_DEPENDENT": 1,
+     "LOCAL_ONLY": 2
+    }
+   },
+   "A0_viable_frac": {
+    "RELAY": 1.0,
+    "HOLD": 1.0
+   },
+   "D_causal": {
+    "relay64:A": "CAUSAL_SUPPORT",
+    "hold64:A": "CAUSAL_SUPPORT",
+    "echo:A": "NOT_SUPPORTED",
+    "c1_relay:A": "CAUSAL_SUPPORT"
+   },
+   "predictions": {
+    "P3": false,
+    "P4": false,
+    "P6": true,
+    "P8": false
+   }
+  },
+  "mut_verdict": {
+   "A1": {
+    "RELAY": {
+     "n": 3,
+     "SIGNAL": 3,
+     "COMM_DEPENDENT": 1,
+     "LOCAL_ONLY": 2
+    },
+    "XOR": {
+     "n": 1,
+     "SIGNAL": 1,
+     "COMM_DEPENDENT": 0,
+     "LOCAL_ONLY": 1
+    },
+    "MAJ": {
+     "n": 1,
+     "SIGNAL": 1,
+     "COMM_DEPENDENT": 0,
+     "LOCAL_ONLY": 1
+    },
+    "FLIP": {
+     "n": 1,
+     "SIGNAL": 1,
+     "COMM_DEPENDENT": 1,
+     "LOCAL_ONLY": 0
+    },
+    "HOLD": {
+     "n": 3,
+     "SIGNAL": 3,
+     "COMM_DEPENDENT": 0,
+     "LOCAL_ONLY": 3
+    }
+   },
+   "A0_viable_frac": {
+    "RELAY": 1.0,
+    "HOLD": 1.0
+   },
+   "D_causal": {
+    "relay64:A": "INCONCLUSIVE",
+    "hold64:A": "CAUSAL_SUPPORT",
+    "echo:A": "INCONCLUSIVE",
+    "c1_relay:A": "CAUSAL_SUPPORT"
+   },
+   "predictions": {
+    "P3": false,
+    "P4": false,
+    "P6": true,
+    "P8": false
+   }
+  }
+ },
+ "freeze_state|report|all": {
+  "category": "KILLED(D)",
+  "expectation": "change",
+  "verdict_changed": true,
+  "new_alarms": [],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "n_rows": 0
+  },
+  "base_verdict": {
+   "A1": {
+    "RELAY": {
+     "n": 3,
+     "SIGNAL": 3,
+     "COMM_DEPENDENT": 3,
+     "LOCAL_ONLY": 0
+    },
+    "XOR": {
+     "n": 1,
+     "SIGNAL": 1,
+     "COMM_DEPENDENT": 1,
+     "LOCAL_ONLY": 0
+    },
+    "MAJ": {
+     "n": 1,
+     "SIGNAL": 1,
+     "COMM_DEPENDENT": 1,
+     "LOCAL_ONLY": 0
+    },
+    "FLIP": {
+     "n": 1,
+     "SIGNAL": 1,
+     "COMM_DEPENDENT": 1,
+     "LOCAL_ONLY": 0
+    },
+    "HOLD": {
+     "n": 3,
+     "SIGNAL": 3,
+     "COMM_DEPENDENT": 1,
+     "LOCAL_ONLY": 2
+    }
+   },
+   "A0_viable_frac": {
+    "RELAY": 1.0,
+    "HOLD": 1.0
+   },
+   "D_causal": {
+    "relay64:A": "CAUSAL_SUPPORT",
+    "hold64:A": "CAUSAL_SUPPORT",
+    "echo:A": "NOT_SUPPORTED",
+    "c1_relay:A": "CAUSAL_SUPPORT"
+   },
+   "predictions": {
+    "P3": false,
+    "P4": false,
+    "P6": true,
+    "P8": false
+   }
+  },
+  "mut_verdict": {
+   "A1": {
+    "RELAY": {
+     "n": 3,
+     "SIGNAL": 3,
+     "COMM_DEPENDENT": 3,
+     "LOCAL_ONLY": 0
+    },
+    "XOR": {
+     "n": 1,
+     "SIGNAL": 1,
+     "COMM_DEPENDENT": 1,
+     "LOCAL_ONLY": 0
+    },
+    "MAJ": {
+     "n": 1,
+     "SIGNAL": 0,
+     "COMM_DEPENDENT": 0,
+     "LOCAL_ONLY": 0
+    },
+    "FLIP": {
+     "n": 1,
+     "SIGNAL": 1,
+     "COMM_DEPENDENT": 1,
+     "LOCAL_ONLY": 0
+    },
+    "HOLD": {
+     "n": 3,
+     "SIGNAL": 3,
+     "COMM_DEPENDENT": 1,
+     "LOCAL_ONLY": 2
+    }
+   },
+   "A0_viable_frac": {
+    "RELAY": 0.667,
+    "HOLD": 0.5
+   },
+   "D_causal": {
+    "relay64:A": "CAUSAL_SUPPORT",
+    "hold64:A": "CAUSAL_SUPPORT",
+    "echo:A": "NOT_SUPPORTED",
+    "c1_relay:A": "CAUSAL_SUPPORT"
+   },
+   "predictions": {
+    "P3": false,
+    "P4": false,
+    "P6": true,
+    "P8": false
+   }
+  }
+ },
+ "randomize_source|report|all": {
+  "category": "KILLED(A)",
+  "expectation": "change",
+  "verdict_changed": true,
+  "new_alarms": [
+   "anomaly:TRAIN_HELD_GAP"
+  ],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "n_rows": 0
+  },
+  "base_verdict": {
+   "A1": {
+    "RELAY": {
+     "n": 3,
+     "SIGNAL": 3,
+     "COMM_DEPENDENT": 3,
+     "LOCAL_ONLY": 0
+    },
+    "XOR": {
+     "n": 1,
+     "SIGNAL": 1,
+     "COMM_DEPENDENT": 1,
+     "LOCAL_ONLY": 0
+    },
+    "MAJ": {
+     "n": 1,
+     "SIGNAL": 1,
+     "COMM_DEPENDENT": 1,
+     "LOCAL_ONLY": 0
+    },
+    "FLIP": {
+     "n": 1,
+     "SIGNAL": 1,
+     "COMM_DEPENDENT": 1,
+     "LOCAL_ONLY": 0
+    },
+    "HOLD": {
+     "n": 3,
+     "SIGNAL": 3,
+     "COMM_DEPENDENT": 1,
+     "LOCAL_ONLY": 2
+    }
+   },
+   "A0_viable_frac": {
+    "RELAY": 1.0,
+    "HOLD": 1.0
+   },
+   "D_causal": {
+    "relay64:A": "CAUSAL_SUPPORT",
+    "hold64:A": "CAUSAL_SUPPORT",
+    "echo:A": "NOT_SUPPORTED",
+    "c1_relay:A": "CAUSAL_SUPPORT"
+   },
+   "predictions": {
+    "P3": false,
+    "P4": false,
+    "P6": true,
+    "P8": false
+   }
+  },
+  "mut_verdict": {
+   "A1": {
+    "RELAY": {
+     "n": 3,
+     "SIGNAL": 2,
+     "COMM_DEPENDENT": 2,
+     "LOCAL_ONLY": 0
+    },
+    "XOR": {
+     "n": 1,
+     "SIGNAL": 1,
+     "COMM_DEPENDENT": 1,
+     "LOCAL_ONLY": 0
+    },
+    "MAJ": {
+     "n": 1,
+     "SIGNAL": 0,
+     "COMM_DEPENDENT": 0,
+     "LOCAL_ONLY": 0
+    },
+    "FLIP": {
+     "n": 1,
+     "SIGNAL": 1,
+     "COMM_DEPENDENT": 1,
+     "LOCAL_ONLY": 0
+    },
+    "HOLD": {
+     "n": 3,
+     "SIGNAL": 3,
+     "COMM_DEPENDENT": 1,
+     "LOCAL_ONLY": 2
+    }
+   },
+   "A0_viable_frac": {
+    "RELAY": 1.0,
+    "HOLD": 1.0
+   },
+   "D_causal": {
+    "relay64:A": "CAUSAL_SUPPORT",
+    "hold64:A": "CAUSAL_SUPPORT",
+    "echo:A": "CAUSAL_SUPPORT",
+    "c1_relay:A": "CAUSAL_SUPPORT"
+   },
+   "predictions": {
+    "P3": false,
+    "P4": false,
+    "P6": true,
+    "P8": false
+   }
+  }
+ },
+ "reverse_edges|report|all": {
+  "category": "SURVIVED",
+  "expectation": "change",
+  "verdict_changed": false,
+  "new_alarms": [],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "n_rows": 0
+  },
+  "base_verdict": {
+   "A1": {
+    "RELAY": {
+     "n": 3,
+     "SIGNAL": 3,
+     "COMM_DEPENDENT": 3,
+     "LOCAL_ONLY": 0
+    },
+    "XOR": {
+     "n": 1,
+     "SIGNAL": 1,
+     "COMM_DEPENDENT": 1,
+     "LOCAL_ONLY": 0
+    },
+    "MAJ": {
+     "n": 1,
+     "SIGNAL": 1,
+     "COMM_DEPENDENT": 1,
+     "LOCAL_ONLY": 0
+    },
+    "FLIP": {
+     "n": 1,
+     "SIGNAL": 1,
+     "COMM_DEPENDENT": 1,
+     "LOCAL_ONLY": 0
+    },
+    "HOLD": {
+     "n": 3,
+     "SIGNAL": 3,
+     "COMM_DEPENDENT": 1,
+     "LOCAL_ONLY": 2
+    }
+   },
+   "A0_viable_frac": {
+    "RELAY": 1.0,
+    "HOLD": 1.0
+   },
+   "D_causal": {
+    "relay64:A": "CAUSAL_SUPPORT",
+    "hold64:A": "CAUSAL_SUPPORT",
+    "echo:A": "NOT_SUPPORTED",
+    "c1_relay:A": "CAUSAL_SUPPORT"
+   },
+   "predictions": {
+    "P3": false,
+    "P4": false,
+    "P6": true,
+    "P8": false
+   }
+  },
+  "mut_verdict": {
+   "A1": {
+    "RELAY": {
+     "n": 3,
+     "SIGNAL": 3,
+     "COMM_DEPENDENT": 3,
+     "LOCAL_ONLY": 0
+    },
+    "XOR": {
+     "n": 1,
+     "SIGNAL": 1,
+     "COMM_DEPENDENT": 1,
+     "LOCAL_ONLY": 0
+    },
+    "MAJ": {
+     "n": 1,
+     "SIGNAL": 1,
+     "COMM_DEPENDENT": 1,
+     "LOCAL_ONLY": 0
+    },
+    "FLIP": {
+     "n": 1,
+     "SIGNAL": 1,
+     "COMM_DEPENDENT": 1,
+     "LOCAL_ONLY": 0
+    },
+    "HOLD": {
+     "n": 3,
+     "SIGNAL": 3,
+     "COMM_DEPENDENT": 1,
+     "LOCAL_ONLY": 2
+    }
+   },
+   "A0_viable_frac": {
+    "RELAY": 1.0,
+    "HOLD": 1.0
+   },
+   "D_causal": {
+    "relay64:A": "CAUSAL_SUPPORT",
+    "hold64:A": "CAUSAL_SUPPORT",
+    "echo:A": "NOT_SUPPORTED",
+    "c1_relay:A": "CAUSAL_SUPPORT"
+   },
+   "predictions": {
+    "P3": false,
+    "P4": false,
+    "P6": true,
+    "P8": false
+   }
+  }
+ },
+ "alter_timing|report|all": {
+  "category": "KILLED(D)",
+  "expectation": "change",
+  "verdict_changed": true,
+  "new_alarms": [],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "n_rows": 0
+  },
+  "base_verdict": {
+   "A1": {
+    "RELAY": {
+     "n": 3,
+     "SIGNAL": 3,
+     "COMM_DEPENDENT": 3,
+     "LOCAL_ONLY": 0
+    },
+    "XOR": {
+     "n": 1,
+     "SIGNAL": 1,
+     "COMM_DEPENDENT": 1,
+     "LOCAL_ONLY": 0
+    },
+    "MAJ": {
+     "n": 1,
+     "SIGNAL": 1,
+     "COMM_DEPENDENT": 1,
+     "LOCAL_ONLY": 0
+    },
+    "FLIP": {
+     "n": 1,
+     "SIGNAL": 1,
+     "COMM_DEPENDENT": 1,
+     "LOCAL_ONLY": 0
+    },
+    "HOLD": {
+     "n": 3,
+     "SIGNAL": 3,
+     "COMM_DEPENDENT": 1,
+     "LOCAL_ONLY": 2
+    }
+   },
+   "A0_viable_frac": {
+    "RELAY": 1.0,
+    "HOLD": 1.0
+   },
+   "D_causal": {
+    "relay64:A": "CAUSAL_SUPPORT",
+    "hold64:A": "CAUSAL_SUPPORT",
+    "echo:A": "NOT_SUPPORTED",
+    "c1_relay:A": "CAUSAL_SUPPORT"
+   },
+   "predictions": {
+    "P3": false,
+    "P4": false,
+    "P6": true,
+    "P8": false
+   }
+  },
+  "mut_verdict": {
+   "A1": {
+    "RELAY": {
+     "n": 3,
+     "SIGNAL": 3,
+     "COMM_DEPENDENT": 3,
+     "LOCAL_ONLY": 0
+    },
+    "XOR": {
+     "n": 1,
+     "SIGNAL": 1,
+     "COMM_DEPENDENT": 1,
+     "LOCAL_ONLY": 0
+    },
+    "MAJ": {
+     "n": 1,
+     "SIGNAL": 0,
+     "COMM_DEPENDENT": 0,
+     "LOCAL_ONLY": 0
+    },
+    "FLIP": {
+     "n": 1,
+     "SIGNAL": 1,
+     "COMM_DEPENDENT": 1,
+     "LOCAL_ONLY": 0
+    },
+    "HOLD": {
+     "n": 3,
+     "SIGNAL": 2,
+     "COMM_DEPENDENT": 0,
+     "LOCAL_ONLY": 2
+    }
+   },
+   "A0_viable_frac": {
+    "RELAY": 1.0,
+    "HOLD": 1.0
+   },
+   "D_causal": {
+    "relay64:A": "CAUSAL_SUPPORT",
+    "hold64:A": "CAUSAL_SUPPORT",
+    "echo:A": "NOT_SUPPORTED",
+    "c1_relay:A": "CAUSAL_SUPPORT"
+   },
+   "predictions": {
+    "P3": false,
+    "P4": false,
+    "P6": true,
+    "P8": false
+   }
+  }
+ },
+ "sever_search_ruler|report|all": {
+  "category": "KILLED(A)",
+  "expectation": "change",
+  "verdict_changed": true,
+  "new_alarms": [
+   "anomaly:TRAIN_HELD_GAP"
+  ],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "n_rows": 0
+  },
+  "base_verdict": {
+   "A1": {
+    "RELAY": {
+     "n": 3,
+     "SIGNAL": 3,
+     "COMM_DEPENDENT": 3,
+     "LOCAL_ONLY": 0
+    },
+    "XOR": {
+     "n": 1,
+     "SIGNAL": 1,
+     "COMM_DEPENDENT": 1,
+     "LOCAL_ONLY": 0
+    },
+    "MAJ": {
+     "n": 1,
+     "SIGNAL": 1,
+     "COMM_DEPENDENT": 1,
+     "LOCAL_ONLY": 0
+    },
+    "FLIP": {
+     "n": 1,
+     "SIGNAL": 1,
+     "COMM_DEPENDENT": 1,
+     "LOCAL_ONLY": 0
+    },
+    "HOLD": {
+     "n": 3,
+     "SIGNAL": 3,
+     "COMM_DEPENDENT": 1,
+     "LOCAL_ONLY": 2
+    }
+   },
+   "A0_viable_frac": {
+    "RELAY": 1.0,
+    "HOLD": 1.0
+   },
+   "D_causal": {
+    "relay64:A": "CAUSAL_SUPPORT",
+    "hold64:A": "CAUSAL_SUPPORT",
+    "echo:A": "NOT_SUPPORTED",
+    "c1_relay:A": "CAUSAL_SUPPORT"
+   },
+   "predictions": {
+    "P3": false,
+    "P4": false,
+    "P6": true,
+    "P8": false
+   }
+  },
+  "mut_verdict": {
+   "A1": {
+    "RELAY": {
+     "n": 3,
+     "SIGNAL": 1,
+     "COMM_DEPENDENT": 1,
+     "LOCAL_ONLY": 0
+    },
+    "XOR": {
+     "n": 1,
+     "SIGNAL": 0,
+     "COMM_DEPENDENT": 0,
+     "LOCAL_ONLY": 0
+    },
+    "MAJ": {
+     "n": 1,
+     "SIGNAL": 0,
+     "COMM_DEPENDENT": 0,
+     "LOCAL_ONLY": 0
+    },
+    "FLIP": {
+     "n": 1,
+     "SIGNAL": 1,
+     "COMM_DEPENDENT": 1,
+     "LOCAL_ONLY": 0
+    },
+    "HOLD": {
+     "n": 3,
+     "SIGNAL": 1,
+     "COMM_DEPENDENT": 0,
+     "LOCAL_ONLY": 1
+    }
+   },
+   "A0_viable_frac": {
+    "RELAY": 1.0,
+    "HOLD": 1.0
+   },
+   "D_causal": {
+    "relay64:A": "CAUSAL_SUPPORT",
+    "hold64:A": "CAUSAL_SUPPORT",
+    "echo:A": "NOT_SUPPORTED",
+    "c1_relay:A": "CAUSAL_SUPPORT"
+   },
+   "predictions": {
+    "P3": true,
+    "P4": false,
+    "P6": true,
+    "P8": false
+   }
+  }
+ },
+ "reuse_selection_seeds|report|all": {
+  "category": "SURVIVED",
+  "expectation": "change",
+  "verdict_changed": false,
+  "new_alarms": [],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "n_rows": 0
+  },
+  "base_verdict": {
+   "A1": {
+    "RELAY": {
+     "n": 3,
+     "SIGNAL": 3,
+     "COMM_DEPENDENT": 3,
+     "LOCAL_ONLY": 0
+    },
+    "XOR": {
+     "n": 1,
+     "SIGNAL": 1,
+     "COMM_DEPENDENT": 1,
+     "LOCAL_ONLY": 0
+    },
+    "MAJ": {
+     "n": 1,
+     "SIGNAL": 1,
+     "COMM_DEPENDENT": 1,
+     "LOCAL_ONLY": 0
+    },
+    "FLIP": {
+     "n": 1,
+     "SIGNAL": 1,
+     "COMM_DEPENDENT": 1,
+     "LOCAL_ONLY": 0
+    },
+    "HOLD": {
+     "n": 3,
+     "SIGNAL": 3,
+     "COMM_DEPENDENT": 1,
+     "LOCAL_ONLY": 2
+    }
+   },
+   "A0_viable_frac": {
+    "RELAY": 1.0,
+    "HOLD": 1.0
+   },
+   "D_causal": {
+    "relay64:A": "CAUSAL_SUPPORT",
+    "hold64:A": "CAUSAL_SUPPORT",
+    "echo:A": "NOT_SUPPORTED",
+    "c1_relay:A": "CAUSAL_SUPPORT"
+   },
+   "predictions": {
+    "P3": false,
+    "P4": false,
+    "P6": true,
+    "P8": false
+   }
+  },
+  "mut_verdict": {
+   "A1": {
+    "RELAY": {
+     "n": 3,
+     "SIGNAL": 3,
+     "COMM_DEPENDENT": 3,
+     "LOCAL_ONLY": 0
+    },
+    "XOR": {
+     "n": 1,
+     "SIGNAL": 1,
+     "COMM_DEPENDENT": 1,
+     "LOCAL_ONLY": 0
+    },
+    "MAJ": {
+     "n": 1,
+     "SIGNAL": 1,
+     "COMM_DEPENDENT": 1,
+     "LOCAL_ONLY": 0
+    },
+    "FLIP": {
+     "n": 1,
+     "SIGNAL": 1,
+     "COMM_DEPENDENT": 1,
+     "LOCAL_ONLY": 0
+    },
+    "HOLD": {
+     "n": 3,
+     "SIGNAL": 3,
+     "COMM_DEPENDENT": 1,
+     "LOCAL_ONLY": 2
+    }
+   },
+   "A0_viable_frac": {
+    "RELAY": 1.0,
+    "HOLD": 1.0
+   },
+   "D_causal": {
+    "relay64:A": "CAUSAL_SUPPORT",
+    "hold64:A": "CAUSAL_SUPPORT",
+    "echo:A": "NOT_SUPPORTED",
+    "c1_relay:A": "CAUSAL_SUPPORT"
+   },
+   "predictions": {
+    "P3": false,
+    "P4": false,
+    "P6": true,
+    "P8": false
+   }
+  }
+ },
+ "drop_mirror|report|all": {
+  "category": "KILLED(A)",
+  "expectation": "change",
+  "verdict_changed": false,
+  "new_alarms": [
+   "anomaly:TRAIN_HELD_GAP"
+  ],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "n_rows": 0
+  },
+  "base_verdict": {
+   "A1": {
+    "RELAY": {
+     "n": 3,
+     "SIGNAL": 3,
+     "COMM_DEPENDENT": 3,
+     "LOCAL_ONLY": 0
+    },
+    "XOR": {
+     "n": 1,
+     "SIGNAL": 1,
+     "COMM_DEPENDENT": 1,
+     "LOCAL_ONLY": 0
+    },
+    "MAJ": {
+     "n": 1,
+     "SIGNAL": 1,
+     "COMM_DEPENDENT": 1,
+     "LOCAL_ONLY": 0
+    },
+    "FLIP": {
+     "n": 1,
+     "SIGNAL": 1,
+     "COMM_DEPENDENT": 1,
+     "LOCAL_ONLY": 0
+    },
+    "HOLD": {
+     "n": 3,
+     "SIGNAL": 3,
+     "COMM_DEPENDENT": 1,
+     "LOCAL_ONLY": 2
+    }
+   },
+   "A0_viable_frac": {
+    "RELAY": 1.0,
+    "HOLD": 1.0
+   },
+   "D_causal": {
+    "relay64:A": "CAUSAL_SUPPORT",
+    "hold64:A": "CAUSAL_SUPPORT",
+    "echo:A": "NOT_SUPPORTED",
+    "c1_relay:A": "CAUSAL_SUPPORT"
+   },
+   "predictions": {
+    "P3": false,
+    "P4": false,
+    "P6": true,
+    "P8": false
+   }
+  },
+  "mut_verdict": {
+   "A1": {
+    "RELAY": {
+     "n": 3,
+     "SIGNAL": 3,
+     "COMM_DEPENDENT": 3,
+     "LOCAL_ONLY": 0
+    },
+    "XOR": {
+     "n": 1,
+     "SIGNAL": 1,
+     "COMM_DEPENDENT": 1,
+     "LOCAL_ONLY": 0
+    },
+    "MAJ": {
+     "n": 1,
+     "SIGNAL": 1,
+     "COMM_DEPENDENT": 1,
+     "LOCAL_ONLY": 0
+    },
+    "FLIP": {
+     "n": 1,
+     "SIGNAL": 1,
+     "COMM_DEPENDENT": 1,
+     "LOCAL_ONLY": 0
+    },
+    "HOLD": {
+     "n": 3,
+     "SIGNAL": 3,
+     "COMM_DEPENDENT": 1,
+     "LOCAL_ONLY": 2
+    }
+   },
+   "A0_viable_frac": {
+    "RELAY": 1.0,
+    "HOLD": 1.0
+   },
+   "D_causal": {
+    "relay64:A": "CAUSAL_SUPPORT",
+    "hold64:A": "CAUSAL_SUPPORT",
+    "echo:A": "NOT_SUPPORTED",
+    "c1_relay:A": "CAUSAL_SUPPORT"
+   },
+   "predictions": {
+    "P3": false,
+    "P4": false,
+    "P6": true,
+    "P8": false
+   }
+  }
+ },
+ "permute_seeds|report|all": {
+  "category": "SURVIVED",
+  "expectation": "change",
+  "verdict_changed": false,
+  "new_alarms": [],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "n_rows": 0
+  },
+  "base_verdict": {
+   "A1": {
+    "RELAY": {
+     "n": 3,
+     "SIGNAL": 3,
+     "COMM_DEPENDENT": 3,
+     "LOCAL_ONLY": 0
+    },
+    "XOR": {
+     "n": 1,
+     "SIGNAL": 1,
+     "COMM_DEPENDENT": 1,
+     "LOCAL_ONLY": 0
+    },
+    "MAJ": {
+     "n": 1,
+     "SIGNAL": 1,
+     "COMM_DEPENDENT": 1,
+     "LOCAL_ONLY": 0
+    },
+    "FLIP": {
+     "n": 1,
+     "SIGNAL": 1,
+     "COMM_DEPENDENT": 1,
+     "LOCAL_ONLY": 0
+    },
+    "HOLD": {
+     "n": 3,
+     "SIGNAL": 3,
+     "COMM_DEPENDENT": 1,
+     "LOCAL_ONLY": 2
+    }
+   },
+   "A0_viable_frac": {
+    "RELAY": 1.0,
+    "HOLD": 1.0
+   },
+   "D_causal": {
+    "relay64:A": "CAUSAL_SUPPORT",
+    "hold64:A": "CAUSAL_SUPPORT",
+    "echo:A": "NOT_SUPPORTED",
+    "c1_relay:A": "CAUSAL_SUPPORT"
+   },
+   "predictions": {
+    "P3": false,
+    "P4": false,
+    "P6": true,
+    "P8": false
+   }
+  },
+  "mut_verdict": {
+   "A1": {
+    "RELAY": {
+     "n": 3,
+     "SIGNAL": 3,
+     "COMM_DEPENDENT": 3,
+     "LOCAL_ONLY": 0
+    },
+    "XOR": {
+     "n": 1,
+     "SIGNAL": 1,
+     "COMM_DEPENDENT": 1,
+     "LOCAL_ONLY": 0
+    },
+    "MAJ": {
+     "n": 1,
+     "SIGNAL": 1,
+     "COMM_DEPENDENT": 1,
+     "LOCAL_ONLY": 0
+    },
+    "FLIP": {
+     "n": 1,
+     "SIGNAL": 1,
+     "COMM_DEPENDENT": 1,
+     "LOCAL_ONLY": 0
+    },
+    "HOLD": {
+     "n": 3,
+     "SIGNAL": 3,
+     "COMM_DEPENDENT": 1,
+     "LOCAL_ONLY": 2
+    }
+   },
+   "A0_viable_frac": {
+    "RELAY": 1.0,
+    "HOLD": 1.0
+   },
+   "D_causal": {
+    "relay64:A": "CAUSAL_SUPPORT",
+    "hold64:A": "CAUSAL_SUPPORT",
+    "echo:A": "NOT_SUPPORTED",
+    "c1_relay:A": "CAUSAL_SUPPORT"
+   },
+   "predictions": {
+    "P3": false,
+    "P4": false,
+    "P6": true,
+    "P8": false
+   }
+  }
+ },
+ "silent_sensors|report|all": {
+  "category": "KILLED(A)",
+  "expectation": "change",
+  "verdict_changed": true,
+  "new_alarms": [
+   "D:echo:A:INCONCLUSIVE",
+   "D:relay64:A:INCONCLUSIVE"
+  ],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "n_rows": 0
+  },
+  "base_verdict": {
+   "A1": {
+    "RELAY": {
+     "n": 3,
+     "SIGNAL": 3,
+     "COMM_DEPENDENT": 3,
+     "LOCAL_ONLY": 0
+    },
+    "XOR": {
+     "n": 1,
+     "SIGNAL": 1,
+     "COMM_DEPENDENT": 1,
+     "LOCAL_ONLY": 0
+    },
+    "MAJ": {
+     "n": 1,
+     "SIGNAL": 1,
+     "COMM_DEPENDENT": 1,
+     "LOCAL_ONLY": 0
+    },
+    "FLIP": {
+     "n": 1,
+     "SIGNAL": 1,
+     "COMM_DEPENDENT": 1,
+     "LOCAL_ONLY": 0
+    },
+    "HOLD": {
+     "n": 3,
+     "SIGNAL": 3,
+     "COMM_DEPENDENT": 1,
+     "LOCAL_ONLY": 2
+    }
+   },
+   "A0_viable_frac": {
+    "RELAY": 1.0,
+    "HOLD": 1.0
+   },
+   "D_causal": {
+    "relay64:A": "CAUSAL_SUPPORT",
+    "hold64:A": "CAUSAL_SUPPORT",
+    "echo:A": "NOT_SUPPORTED",
+    "c1_relay:A": "CAUSAL_SUPPORT"
+   },
+   "predictions": {
+    "P3": false,
+    "P4": false,
+    "P6": true,
+    "P8": false
+   }
+  },
+  "mut_verdict": {
+   "A1": {
+    "RELAY": {
+     "n": 3,
+     "SIGNAL": 1,
+     "COMM_DEPENDENT": 1,
+     "LOCAL_ONLY": 0
+    },
+    "XOR": {
+     "n": 1,
+     "SIGNAL": 0,
+     "COMM_DEPENDENT": 0,
+     "LOCAL_ONLY": 0
+    },
+    "MAJ": {
+     "n": 1,
+     "SIGNAL": 0,
+     "COMM_DEPENDENT": 0,
+     "LOCAL_ONLY": 0
+    },
+    "FLIP": {
+     "n": 1,
+     "SIGNAL": 1,
+     "COMM_DEPENDENT": 1,
+     "LOCAL_ONLY": 0
+    },
+    "HOLD": {
+     "n": 3,
+     "SIGNAL": 1,
+     "COMM_DEPENDENT": 0,
+     "LOCAL_ONLY": 1
+    }
+   },
+   "A0_viable_frac": {
+    "RELAY": 0.667,
+    "HOLD": 0.5
+   },
+   "D_causal": {
+    "relay64:A": "INCONCLUSIVE",
+    "hold64:A": "CAUSAL_SUPPORT",
+    "echo:A": "INCONCLUSIVE",
+    "c1_relay:A": "CAUSAL_SUPPORT"
+   },
+   "predictions": {
+    "P3": true,
+    "P4": false,
+    "P6": true,
+    "P8": false
+   }
+  }
+ },
+ "invert_sign|report|all": {
+  "category": "KILLED(A)",
+  "expectation": "change",
+  "verdict_changed": true,
+  "new_alarms": [
+   "anomaly:ANTI_CORRELATED"
+  ],
+  "inert_worlds": false,
+  "numeric_delta": {
+   "n_rows": 0
+  },
+  "base_verdict": {
+   "A1": {
+    "RELAY": {
+     "n": 3,
+     "SIGNAL": 3,
+     "COMM_DEPENDENT": 3,
+     "LOCAL_ONLY": 0
+    },
+    "XOR": {
+     "n": 1,
+     "SIGNAL": 1,
+     "COMM_DEPENDENT": 1,
+     "LOCAL_ONLY": 0
+    },
+    "MAJ": {
+     "n": 1,
+     "SIGNAL": 1,
+     "COMM_DEPENDENT": 1,
+     "LOCAL_ONLY": 0
+    },
+    "FLIP": {
+     "n": 1,
+     "SIGNAL": 1,
+     "COMM_DEPENDENT": 1,
+     "LOCAL_ONLY": 0
+    },
+    "HOLD": {
+     "n": 3,
+     "SIGNAL": 3,
+     "COMM_DEPENDENT": 1,
+     "LOCAL_ONLY": 2
+    }
+   },
+   "A0_viable_frac": {
+    "RELAY": 1.0,
+    "HOLD": 1.0
+   },
+   "D_causal": {
+    "relay64:A": "CAUSAL_SUPPORT",
+    "hold64:A": "CAUSAL_SUPPORT",
+    "echo:A": "NOT_SUPPORTED",
+    "c1_relay:A": "CAUSAL_SUPPORT"
+   },
+   "predictions": {
+    "P3": false,
+    "P4": false,
+    "P6": true,
+    "P8": false
+   }
+  },
+  "mut_verdict": {
+   "A1": {
+    "RELAY": {
+     "n": 3,
+     "SIGNAL": 1,
+     "COMM_DEPENDENT": 1,
+     "LOCAL_ONLY": 0
+    },
+    "XOR": {
+     "n": 1,
+     "SIGNAL": 0,
+     "COMM_DEPENDENT": 0,
+     "LOCAL_ONLY": 0
+    },
+    "MAJ": {
+     "n": 1,
+     "SIGNAL": 0,
+     "COMM_DEPENDENT": 0,
+     "LOCAL_ONLY": 0
+    },
+    "FLIP": {
+     "n": 1,
+     "SIGNAL": 1,
+     "COMM_DEPENDENT": 1,
+     "LOCAL_ONLY": 0
+    },
+    "HOLD": {
+     "n": 3,
+     "SIGNAL": 1,
+     "COMM_DEPENDENT": 0,
+     "LOCAL_ONLY": 1
+    }
+   },
+   "A0_viable_frac": {
+    "RELAY": 0.667,
+    "HOLD": 0.5
+   },
+   "D_causal": {
+    "relay64:A": "NOT_SUPPORTED",
+    "hold64:A": "CAUSAL_SUPPORT",
+    "echo:A": "NOT_SUPPORTED",
+    "c1_relay:A": "CAUSAL_SUPPORT"
+   },
+   "predictions": {
+    "P3": true,
+    "P4": false,
+    "P6": true,
+    "P8": true
+   }
+  }
+ }
+}

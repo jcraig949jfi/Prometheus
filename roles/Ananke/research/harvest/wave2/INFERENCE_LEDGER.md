@@ -298,3 +298,20 @@ Other:
 - D5: Harmonia freeze_precedes does not check the plan blob is unchanged; Ananke freeze_check does.
   Unify them.
 - Hygiene: W2-F/explib/__pycache__ and W2-F/tests/__pycache__ are left (gitignored).
+
+### W2-C (deposited wave2/W2-C/REPORT.md): mutation/metamorphic testing, 14 operators x 6 stages
+- 191 cells: 68 self-alarm (KILLED-A), 37 caught only differentially (no clean run in production),
+  47 SURVIVED, 36 EQUIVALENT, 3 UNRESOLVED.
+- F1: silent_sensors/disable_channel turn SIGNAL -> NULL with NO alarm. A broken experiment reads as a
+  NULL, so every NULL interpretation (H6) needs a broken-experiment guard first.
+- F2: causal_label has no competence precondition (normal acc 0.0 -> NOT_SUPPORTED). A SEMANTIC patch
+  for C2; no C1 D label is affected (all normal >= .60).
+- F3: held/selection seed disjointness is not enforced anywhere (C1 seeds are in fact disjoint per W2-A2).
+- F4: freeze_state half-way (-.25 acc) leaves labels unchanged.
+- F5: irrelevant_channel is exempt from the no-op guard by a code-only assumption.
+- F6: COMM_DEPENDENT comes from search.evolve's UNGUARDED zero_comm arm.
+- F7: forced zero_comm also makes the CRN/mirror design untestable.
+- guards.py (G0-G12): 13/14 operators self-alarm; randomize_source is not caught.
+- Proposed standing mutation gate before prereg freeze (s4).
+- Compute 0.54 core-h (slightly over 0.5).
+- Queue replenished: W2-O (run the guards over recorded C1 NULL cells).
