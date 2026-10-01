@@ -883,3 +883,32 @@ in completion order.
 **Confidence.**
 - High: no harness difference.
 - About 0.7: chance.
+
+
+### W2-31: the side-1 residual is decomposed and closed (report saved; Nestor). Written at 02:34Z (clock)
+
+**Result**
+- Both pre-registered predictions PASS. The HARV control reproduces W2-23 exactly.
+- With HARV plus order-protected confinement of block and byte writes:
+  - side-1 CVT-R is **16/17**;
+  - good copies are **1020/1020**, matching no-partner.
+- Partner data-path writes explain all 125 residual bad copies: 81% need a block write, 19% are byte-only.
+- The one remaining failure, q1:59, is a genome whose own lineage collapses at generation 2. Its residual travels through the read path.
+
+**Chain closed.** Side-1 heredity failure in NPE has three causes, now each demonstrated by knockout:
+1. **The partner executes the copier's code after the pc wrap.** HARV removes it (W2-23).
+2. **The partner writes into the copier's half through its own data path before the copier runs.** Order protection removes it (W2-31).
+3. **A small read-path coupling** through wraparound LDIRs.
+
+Together with W2-16 (execution order) and W2-24 (own code as the weapon), this is the **most complete causal account produced in Wave 2.** It is a handoff candidate for "strongest new result", alongside the red-team's choice (partner execution).
+
+**Nestor attack**
+- Order protection kills side-0 conversion (0/18). So the result says **"in NPE, the first mover's ability to write into the partner is both the reproductive channel and the main hazard."**
+- No order rule removes the hazard while keeping the channel. This is a **structural trade-off of pair-tape physics**, not a tunable defect.
+- Candidate statement for the theory record: *in NPE, conversion and vulnerability are the same act seen from opposite sides.*
+
+**Instrument note.** CVT-R accepts q1:59 with no partner, even though its lineage is garbage by generation 2. This is a possible certificate false positive (audit next).
+
+**Confidence**
+- High: the per-interaction decomposition.
+- Moderate: the CVT-R counts (single seed).
