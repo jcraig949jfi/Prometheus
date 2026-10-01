@@ -29,8 +29,8 @@ rows = [pool[i] for i in rng.choice(len(pool), size=N_PER, replace=False)]
 out = []; t0 = time.time()
 for r in rows:
     ph0 = Physics.from_dict(r["physics"]); env = envs.EnvSpec(**r["env"])
-    seeds = assays.world_seeds(H_int(r["search_seed"], 0x9147), 32)
-    for dk in [0, 1, 3, 6]:
+    seeds = assays.world_seeds(H_int(r["search_seed"], 0x9147), 16)
+    for dk in [1]:
         p2 = ph0.replace(prog_len=max(ph0.prog_len, 16), decay_shift=dk).validate()
         a_f = hc.evaluate(p2, plants.plant("relay_flood", p2), env, seeds)
         a_r = hc.evaluate(p2, hc.bc(p2, relay_refresh(p2)), env, seeds)
@@ -39,4 +39,4 @@ for r in rows:
              "topology": ph0.topology, "update_mode": ph0.update_mode, "update_period": ph0.update_period}
         out.append(o); print(o, flush=True)
 json.dump({"design": "matched counterfactual decay_shift on viable decay-0 A0 RELAY rows", "rows": out,
-           "wall_s": time.time() - t0}, open("decay_plant.json", "w"), indent=1)
+           "wall_s": time.time() - t0}, open("decay_plant_d1.json", "w"), indent=1)
