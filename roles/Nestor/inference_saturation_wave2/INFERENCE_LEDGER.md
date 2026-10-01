@@ -1313,3 +1313,20 @@ Mechanisms (ii) and (iii) both use an absolute JP, aimed at different targets. T
 - The class matters only against founder-frame kin.
 - Under bank contexts CRW1fx scores below AC.
 - All static.
+
+
+### W2-49: early warnings FAIL out of sample, resolving directive item B (report saved; Nestor). Written at 03:16Z (clock)
+
+**Result.**
+- **All unknowns resolved.** The 72 unknown seeds were replayed bit-exactly.
+- **Final verdicts under W2-45's frozen rule:**
+  - EW-1 FAIL (FA 0.047 [0.033, 0.068]);
+  - EW-1b FAIL (FA 0.039);
+  - EW-2 FAIL.
+- **What the observables actually catch.** They catch every runaway (8/8), every intermediate (14/14) and about 2.4% of small lineages. **They measure early growth, not runaway.**
+
+**Directive B closing statement.**
+- **The observables.** Of the in-sample early warnings for BASE 7ae3 runaways, none survives out of sample, and none (EW-N included) discriminates runaway from intermediate.
+- **What survives.** Only **necessity**: EW-4, a first birth by epoch 10, holds 8/8.
+- **Near-misses.** These are ordinary lineages from the same distribution (W2-45: intermediates match the single law at 2.2%).
+- **A different correlate.** The only correlate found that separates post-27 success from failure is **evolved hijack defence (side-0 keep; W2-42, p = 1.2e-4)**. It shows up at genotype level, not as an early demographic signal. W2-53 is testing it out of sample.
