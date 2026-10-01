@@ -295,8 +295,12 @@ with no history. Once (iii) is included, the prediction transfers to strings not
 
 **Decisive falsifier.** The two-step pair statistics fail on an independent string panel.
 
-**Existing test.** The out-of-sample test on W1's first donors is running now (`forensics/FORENSIC_MAP_OUT_OF_SAMPLE.md`). It
-is static, and its criterion was frozen before computation.
+**Existing test (S1b, static, criterion frozen before computing): PASS, qualified.**
+- The donor's own causal offspring law over a horizon predicts first-donor fate for 43 W1 first donors out of sample: AUC 0.89,
+  ρ 0.71, permutation p 5e-5.
+- The content is essentially "does it copy from its carried state". The simplest statistics do best, and W1's self-poisoning
+  measurements do as well.
+- So T6 holds at the first-donor stage. Post-takeover prediction is untested.
 
 **Missing data.**
 - a panel beyond W1;
