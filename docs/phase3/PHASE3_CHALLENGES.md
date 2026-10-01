@@ -1,6 +1,6 @@
 # Prometheus Phase 3: challenges to address
 
-Status: working statement of program-level concerns, 2026-10-01. It originates in an operator discussion and was
+Status: working statement of program-level concerns, 2026-10-01 (Challenge 4 added the same day). It originates in an operator discussion and was
 drafted by Harmonia[m2-475d761f]. It is not a plan or a preregistration. It names the problems Phase 3 must solve,
 or must show it cannot solve, before Phase 3 results can be read as science.
 
@@ -9,8 +9,8 @@ tityos). They exist so these questions are settled from what the systems actuall
 account of itself. Where this document asserts something about past engines, the intake packages and the cited
 records are the authority. Where they disagree with this document, they win.
 
-Taken together, the three challenges below may change what Phase 3 means by a "lens". A lens is not only a way of
-looking at an output. It includes the apparatus that makes a phenomenon possible, demanded and detectable. A lens
+Taken together, the four challenges below may change what Phase 3 means by a "lens". A lens is not only a way of
+looking at an output. It includes the apparatus that makes a phenomenon possible, demanded, detectable and reachable by development. A lens
 that leaves any of those out is not yet an instrument.
 
 ---
@@ -319,9 +319,205 @@ selection pressure. Selecting for "alienness" directly is a Goodhart target, so 
 
 ---
 
-## The three meta-analysis investigations
 
-These three challenges become explicit Phase 3 investigations. Each should produce a written result even if the
+## Challenge 4 -- Developmental adequacy: searching for what an organism can become, not only what it does
+
+### The concern
+
+This may be one of the most important corrections to how Prometheus has framed its search. The program keeps
+talking about discovering a **reasoning architecture**, as though the object of interest were a finished circuit.
+Human cognition suggests that may be the wrong unit.
+
+A human infant and a highly trained researcher share broadly the same biological substrate. They do not share the
+same effective cognitive architecture. Development builds layers of usable machinery over years:
+- representations and working strategies;
+- learned abstractions and metacognitive habits;
+- language-mediated structure and external tool use;
+- culturally transmitted concepts;
+- enormous amounts of compressed experience.
+
+The substrate permits these. The mature architecture is partly **constructed through interaction**.
+
+The object Prometheus may need to search for is therefore not
+
+> a reasoning circuit
+
+but
+
+> **a developmental program capable of constructing increasingly powerful reasoning circuits.**
+
+That is a much more interesting target.
+
+### The spectrum: precompiled versus self-constructed cognition
+
+**The fruit fly and the human.**
+- A fruit fly shows impressive decision behavior, with much of its useful machinery strongly canalized by evolution.
+- A human has relatively less behavior specified in finished form, and vastly more capacity to build internal
+  structure through development.
+
+Both are neural systems, but they sit at very different points on a spectrum from precompiled to self-constructed
+cognition. Two organisms can share the same nominal substrate and differ radically in intelligence because they
+differ in what has been instantiated inside it.
+
+**Capacity versus realization.** This gives a distinction Prometheus has not been measuring: **reasoning capacity**
+versus **reasoning realization**.
+
+| | Low realized competence | High realized competence |
+|---|---|---|
+| **High developmental capacity** | Newborn: enormous latent capacity, little realized competence | Trained human researcher |
+| **Low developmental capacity** | Inert or degenerate organism | Specialized insect: limited general developmental capacity, highly competent niche circuits; also a conventionally trained neural network, competent but with almost no capacity to reorganize its own architecture after training |
+
+An alien Prometheus organism might occupy some entirely different region of this space. That is fertile ground, but
+only if capacity and realization are measured separately (4d).
+
+### Four separable layers
+
+| Layer | Question |
+|---|---|
+| Substrate | What computational structures are physically possible? |
+| Developmental rules | How can new internal structures form, stabilize, combine and disappear? |
+| Experience / curriculum | What pressures and exposures cause those structures to emerge? |
+| Mature cognitive organization | What reasoning machinery eventually exists? |
+
+**Prometheus has often jumped from the first layer straight to the fourth.** It builds a substrate, mutates
+programs, puts them in a world, and asks whether the desired behavior appears. Human cognition suggests **the
+missing middle may be everything**. A substrate could support sophisticated reasoning and still produce nothing if
+no developmental process can cross the enormous distance from an unstructured initial state to a mature cognitive
+organization.
+
+Challenge 2 asks whether the substrate and the world are sufficient. Challenge 4 asks whether anything can **get
+there**.
+
+### What must be addressed
+
+**4a. Treat development as an experimental variable, separate from evolution.** There are two timescales:
+- **Search or evolution**: across generations, it acts on substrates and developmental rules.
+- **Development**: within an organism's lifetime, it acts on internal structure through experience.
+
+Search then does not have to find a complete mature intelligence in one jump. It only has to find a developmental
+rule that bootstraps progressively better machinery. That mirrors biology: DNA does not specify an adult's
+understanding of neural networks; it specifies machinery that can eventually acquire it.
+
+The search space is larger: **developmental dynamics over architecture space**, not architecture space alone. The
+search may nonetheless be easier, because each step only has to improve the developmental rule.
+
+**4b. Give organisms mechanisms for structural development, not only parameter learning.** Humans do not just fill a
+fixed memory bank with more facts. Development alters effective connectivity, representations, control strategies,
+abstraction boundaries, attention, metacognition, and what counts as salient. Candidate structural-development
+affordances, which extend the Challenge 2 viability floor:
+- forming new modules or subunits;
+- modifying connectivity;
+- consolidating frequently used pathways;
+- pruning unused structures;
+- creating longer-lived memories from short-lived ones;
+- changing what is addressable;
+- altering routing;
+- building internal interfaces between previously separate mechanisms.
+
+As with 2b, these are affordances whose use is decided by pressure, not prescribed modules. Each needs a
+**developmental capacity proof**: a hand-built organism whose development uses the affordance and gains from it.
+
+**4c. Turn the reasoning ladder into a developmental curriculum.** The ladder is more than a benchmark. Instead of
+asking an organism to solve a high-rung problem immediately, ask whether an initially weak organism can
+progressively acquire structures that carry it along a sequence like:
+
+    simple discrimination -> persistent state -> conditional behavior -> reusable memory
+      -> latent-state inference -> compositional structure -> counterfactual manipulation
+      -> abstraction -> strategy selection -> metacognition
+
+The world has to **teach**: not by explicit instruction, but through a sequence of environments in which earlier
+structures are useful prerequisites for later ones.
+- The prerequisites need not be ones we specify.
+- Success at one stage changes the organism's accessible future, without telling it which internal mechanism to use.
+
+Done right, this produces something closer to **cognitive ontogeny** than to optimization.
+
+Two cautions from the ladder's own history:
+- **Grading must stay outside the organism's reach.** The R6 oracle once shipped `truth` inside the probe, an answer
+  key leak. A curriculum that leaks its answers teaches only reading.
+- **A rung is occupied only when a mechanism is shown,** not merely a score (ladder v0.1 rule).
+
+**4d. Make the trajectory the measured object, not the final score.** For each rung transition, the record should
+answer:
+
+| Question | Operational test |
+|---|---|
+| What changed internally between rung n and rung n+1? | Structural diff of the organism before and after the transition |
+| What structure appeared? | Localization by ablation: which new structure carries the new capability |
+| Did it persist after the original task disappeared? | Retention test after the task is removed from the curriculum |
+| Did it become reusable? | Use of the same structure on a different task (shared-ablation test) |
+| Did acquiring it make rung n+2 easier? | **Savings test**: learning time for n+2 with vs without prior acquisition of n+1 |
+| Can it be transplanted? | Install the structure in a naive organism and measure the gain |
+| Can another history reach the same capability by a different mechanism? | Independent developmental runs; compare mechanisms, not just scores |
+
+The last question matters most for discovery. Convergent capability through **divergent mechanisms** is how
+Prometheus would tell an alien solution from a re-derivation of the obvious one (compare 3a).
+
+**4e. Measure capacity separately from realization.**
+- **Realization** is what the organism can do now: the familiar score.
+- **Capacity** is what it can become: performance after a standard developmental exposure, from a standard initial
+  state, within a stated budget.
+
+Candidate capacity measures:
+- the rung reached under a fixed curriculum and budget;
+- the slope of the developmental trajectory;
+- savings on novel rungs;
+- recovery after damage, i.e. re-development after ablation.
+
+An organism that scores poorly now but develops fast is a different and possibly more valuable find than one that
+scores well and cannot change.
+
+**4f. Reinterpret false negatives a second time.** Suppose an organism has writable memory, dynamic routing,
+compositional structures, recurrence and self-modification. It is put straight into a hard world for 10,000
+generations, and nothing resembling reasoning emerges. Concluding "this substrate does not support reasoning" may be
+the equivalent of dropping newborns into graduate mathematics and concluding that primate cortex cannot do abstract
+reasoning. The missing variable is **developmental scaffolding**. A null result is therefore labelled by the
+conditions it was obtained under:
+
+| Condition missing | What the null is about |
+|---|---|
+| Substrate capacity not shown (2b) | The substrate |
+| World demand not shown (2c) | The world |
+| No developmental mechanism, or no curriculum | **Direct emergence only**; silent on developmental emergence |
+| Curriculum present but no developmental capacity proof (4b) | The developmental rule |
+
+**4g. Required controls for any developmental claim.**
+- **Same-compute direct control:** the same organism and total compute on the final world only. This shows the
+  curriculum matters.
+- **Shuffled-order curriculum:** the same environments in a scrambled order. This shows the ordering matters.
+- **Frozen-development control:** structural development disabled, with parameter learning only if the substrate has
+  it. This shows development matters, not just exposure.
+- **Constant twin and memorization baselines at every rung** (Challenge 1, axis B).
+
+Without these, "the curriculum produced reasoning" cannot be told apart from "more compute produced reasoning".
+
+### The connection to Sagacity
+
+Sagacity may not be a property of a static architecture at all. It may be an emergent property of a system that can
+repeatedly:
+
+    experience -> restructure -> compress -> generalize -> reuse -> reflect -> restructure again
+
+That recursive developmental loop may be far closer to what Prometheus is actually hunting than any single circuit.
+If so, the measured object is the loop:
+- its rate;
+- its stability, i.e. whether restructuring preserves earlier competence;
+- whether each pass makes the next pass more productive.
+
+### The scientific question this sharpens
+
+> What substrate, developmental rules, environmental curriculum and timescale are needed for progressively more
+> capable reasoning machinery to construct itself? And how can latent cognitive capacity be distinguished from
+> realized competence?
+
+It also changes the Phase 3 lenses. They should not only ask "what can this organism do?" They should increasingly
+ask **"what can this organism become?"** That is a very different experiment.
+
+---
+
+## The four meta-analysis investigations
+
+These four challenges become explicit Phase 3 investigations. Each should produce a written result even if the
 result is negative.
 
 1. **Scientific Legitimacy.** Which parts of Prometheus are calibrated scientific instruments rather than
@@ -336,25 +532,39 @@ result is negative.
    outside that ontology, and can Prometheus preserve them without forcing them into familiar categories?
    - Deliverables: the three-layer authority separation, enforced in code; the anti-gravity rule with its guard;
      the calibrated multi-model disagreement instrument.
+4. **Developmental Adequacy.** What substrate, developmental rules, curriculum and timescale are needed for
+   progressively more capable reasoning machinery to construct itself, and how is latent capacity distinguished from
+   realized competence?
+   - Deliverables:
+     - structural-development affordances with capacity proofs;
+     - the ladder rebuilt as a developmental curriculum with out-of-reach grading;
+     - trajectory instrumentation (structural diff, retention, reuse, savings, transplant, divergent-mechanism runs);
+     - capacity and realization measured separately;
+     - the developmental control set.
 
 ## Order of dependence
 
-The three are not independent.
+The four are not independent.
 - Without Investigation 1, no Phase 3 positive can be trusted.
 - Without Investigation 2, no Phase 3 negative can be interpreted.
+- Without Investigation 4, a negative obtained without development or curriculum says nothing about developmental
+  emergence. It may be the newborn-in-graduate-school result.
 - Without Investigation 3, any positive found by an LLM-in-the-loop search may be the corpus recognizing itself.
 
 A sensible order:
 1. Start with the legitimacy profile of the historical record, which the intake crawls already make possible.
-2. Then build the affordance floor and world depth certificates.
-3. Only then run generation at scale under the three-layer separation.
+2. Build the affordance floor (static and structural-development), the world depth certificates, and the
+   developmental curriculum with its controls.
+3. Only then run generation at scale, over developmental rules as well as architectures, under the three-layer
+   separation.
 
 ## The deeper question
 
-If Phase 3 answers these three questions, that is a worthwhile research contribution even before it finds an alien
+If Phase 3 answers these four questions, that is a worthwhile research contribution even before it finds an alien
 reasoning architecture. The deeper subject may turn out not to be "can we evolve reasoning?" but:
 
-> **What experimental conditions make genuinely unfamiliar cognition observable at all?**
+> **What experimental conditions make genuinely unfamiliar cognition observable at all, and what conditions let it
+> build itself?**
 
 That is a much stronger scientific question for Prometheus, and one it is unusually well placed to ask, because it
 has already spent a year discovering, the hard way, how instruments fail.
