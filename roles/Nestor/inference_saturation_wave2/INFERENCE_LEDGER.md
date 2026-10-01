@@ -324,3 +324,31 @@ in completion order.
 - **Prediction.** In replay snapshots of takeover-without-competence runs, most L members convert partners from their realized carried context and fail the zero screen. A design item: one replay with per-checkpoint carried-context conversion.
 - **Confidence.** Moderate. This is reasoning consistent with U8, S1b and W2-1, untested on these runs.
 - **Class.** A single-context-point ruler (W2-5 class SCP) inside a CONFIRMED verdict's own counts.
+
+### W2-6 (theory tournament), W2-2 (near-miss) and W2-8 (semantics audit): reports saved by Nestor. Clock about 01:25Z
+- **W2-6.**
+  - Six theories collapse into **F, the supplied rewrite field**: content T3, rules T2+T5, dynamics T7+T1, within an iterated T6.
+  - T4 is eliminated as a theory. R = T4(a) (home advantage) and T4(c′) (generic evolved epistasis) remain open.
+  - E2 as designed decides by its counting unit.
+  - The cell axis is at the noise floor.
+  - Erosion is the iterated map under BASE.
+- **W2-2.**
+  - Under BASE, bursts follow one subcritical individual law (m_c 0.77), but runaways are about 100x in excess with an empty gap: a **second regime**.
+  - ATOMIC is quantitative.
+  - cb7f is very probably takeover without depth.
+  - C-A3 near-misses are mostly artifacts; 27000053 is the one genuine near-miss.
+  - A byte-42 sweep occurs after takeover.
+  - Best early warning: births in epochs 11-15.
+- **W2-8.** 15 code defects, 4 INVALIDATES.
+  - D1: cross-niche cache.
+  - D2: C9 H3 A ≡ B, so H3 could not be positive.
+  - D3: 7 of 12 pressures identical on the pair tape; "native QD" = no pressure.
+  - D4: SLOTTED ignores the operator; ffa6 has about 8x supply, 87% on opcodes.
+  - D5: anticheat guards cannot fire.
+  - D10: C-A3 counts 8 → 4 → 3.
+  - X-TASK-GATE: D1, D6, D15, D14.
+- **Contradictions found between workers (Nestor):**
+  1. **The BASE map models disagree about 600x.** W2-6's c7c *over*predicts BASE (0.175 vs 0.03); W2-2's h1 *under*predicts BASE runaways (0.0003 vs 0.031). Sent to W2-14 for reconciliation, top priority.
+  2. **Founder independence.** W2-6 says "decided for T7" (joint p 0.108). W2-1 and W2-5 say the multi-founder excess is real (k = 1 batches homogeneous; C-CRITICAL-MASS own-data p 0.005-0.014). W2-12 is assigned.
+  3. **N4 ("copy errors dominate supply, so the 8x ≈ 7x match is coincidental") is revised by D4.** World-mutation supply in ffa6 really is about 8x 7ae3's and hits opcodes 87% of the time. So the operator asymmetry is a real candidate cause, and every 7ae3-vs-ffa6 contrast is confounded by it. N4's copy-error mechanism (MKL dominance in 7ae3) still stands; its "coincidental" verdict is withdrawn and becomes "confounded and undecided".
+- **Actions.** X-TASK-GATE erratum extended with W2-8's D1/D6/D15/D7/D9/D13/D14. C9 H3 → INVALID and C-A3 final-checkpoint re-read are proposed for FINDINGS in the Wave-2 handoff.
