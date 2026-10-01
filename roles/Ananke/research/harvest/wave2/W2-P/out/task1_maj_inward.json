@@ -1,0 +1,1841 @@
+{
+ "summary": {
+  "all": {
+   "n": 35,
+   "ka_exact": 35,
+   "ka_exact_nontrivial": 23,
+   "signal_fresh_orig": 0,
+   "signal_fresh_in": 0,
+   "signal_held_in": 0,
+   "mean_fresh_orig": 0.5026971726190477,
+   "mean_fresh_in": 0.49996279761904766,
+   "mean_delta_fresh": -0.0027343749999999985,
+   "mean_delta_held": -0.001209077380952382,
+   "max_fresh_in": 0.533203125,
+   "max_fresh_in_lo99": 0.5188769531249999,
+   "n_fresh_orig_exact_half": 11,
+   "n_fresh_in_exact_half": 10
+  },
+  "random": {
+   "n": 15,
+   "ka_exact": 15,
+   "ka_exact_nontrivial": 9,
+   "signal_fresh_orig": 0,
+   "signal_fresh_in": 0,
+   "signal_held_in": 0,
+   "mean_fresh_orig": 0.50078125,
+   "mean_fresh_in": 0.4992621527777778,
+   "mean_delta_fresh": -0.0015190972222222173,
+   "mean_delta_held": -0.002690972222222221,
+   "max_fresh_in": 0.5130208333333334,
+   "max_fresh_in_lo99": 0.5,
+   "n_fresh_orig_exact_half": 6,
+   "n_fresh_in_exact_half": 4
+  },
+  "smallworld": {
+   "n": 20,
+   "ka_exact": 20,
+   "ka_exact_nontrivial": 14,
+   "signal_fresh_orig": 0,
+   "signal_fresh_in": 0,
+   "signal_held_in": 0,
+   "mean_fresh_orig": 0.5041341145833332,
+   "mean_fresh_in": 0.50048828125,
+   "mean_delta_fresh": -0.0036458333333333343,
+   "mean_delta_held": -9.765625000000277e-05,
+   "max_fresh_in": 0.533203125,
+   "max_fresh_in_lo99": 0.5188769531249999,
+   "n_fresh_orig_exact_half": 5,
+   "n_fresh_in_exact_half": 6
+  },
+  "sync": {
+   "n": 16,
+   "ka_exact": 16,
+   "ka_exact_nontrivial": 9,
+   "signal_fresh_orig": 0,
+   "signal_fresh_in": 0,
+   "signal_held_in": 0,
+   "mean_fresh_orig": 0.5038248697916666,
+   "mean_fresh_in": 0.5025634765625,
+   "mean_delta_fresh": -0.0012613932291666713,
+   "mean_delta_held": -0.0015869140625000035,
+   "max_fresh_in": 0.533203125,
+   "max_fresh_in_lo99": 0.5188769531249999,
+   "n_fresh_orig_exact_half": 7,
+   "n_fresh_in_exact_half": 6
+  },
+  "async": {
+   "n": 19,
+   "ka_exact": 19,
+   "ka_exact_nontrivial": 14,
+   "signal_fresh_orig": 0,
+   "signal_fresh_in": 0,
+   "signal_held_in": 0,
+   "mean_fresh_orig": 0.5017475328947367,
+   "mean_fresh_in": 0.4977727521929825,
+   "mean_delta_fresh": -0.003974780701754379,
+   "mean_delta_held": -0.0008908991228070165,
+   "max_fresh_in": 0.5104166666666667,
+   "max_fresh_in_lo99": 0.5,
+   "n_fresh_orig_exact_half": 4,
+   "n_fresh_in_exact_half": 4
+  }
+ },
+ "rows": [
+  {
+   "cell": "4a06cfed8cb264fb",
+   "wave": "A",
+   "topology": "random",
+   "update_mode": "async",
+   "update_period": 2,
+   "update_p": 0.5,
+   "d": 3,
+   "delta": 8,
+   "rec_held_acc": 0.5,
+   "rec_held_lo99": 0.5,
+   "SIGNAL_label": false,
+   "held_orig": {
+    "acc": 0.5,
+    "lo99": 0.5,
+    "hi99": 0.5,
+    "emit": 0
+   },
+   "held_in": {
+    "acc": 0.5,
+    "lo99": 0.5,
+    "hi99": 0.5,
+    "emit": 0
+   },
+   "fresh_orig": {
+    "acc": 0.5,
+    "lo99": 0.5,
+    "hi99": 0.5,
+    "emit": 0
+   },
+   "fresh_in": {
+    "acc": 0.5,
+    "lo99": 0.5,
+    "hi99": 0.5,
+    "emit": 0
+   },
+   "ka_exact": true,
+   "place_orig": {
+    "frac_eq_d": 0.20625,
+    "frac_gt_d": 0.6375,
+    "frac_unreach": 0.03125,
+    "mean_hops_reach": 3.9612903225806453
+   },
+   "place_in": {
+    "frac_eq_d": 0.95625,
+    "frac_gt_d": 0.0,
+    "frac_unreach": 0.03125,
+    "mean_hops_reach": 2.9870967741935486
+   }
+  },
+  {
+   "cell": "3a2f01523a2b139c",
+   "wave": "A",
+   "topology": "smallworld",
+   "update_mode": "sync",
+   "update_period": 2,
+   "update_p": 0.8,
+   "d": 1,
+   "delta": 16,
+   "rec_held_acc": 0.509765625,
+   "rec_held_lo99": 0.4902311197916666,
+   "SIGNAL_label": false,
+   "held_orig": {
+    "acc": 0.509765625,
+    "lo99": 0.4902311197916666,
+    "hi99": 0.5345084635416665,
+    "emit": 13688
+   },
+   "held_in": {
+    "acc": 0.5091145833333333,
+    "lo99": 0.4921875,
+    "hi99": 0.52734375,
+    "emit": 13679
+   },
+   "fresh_orig": {
+    "acc": 0.49739583333333326,
+    "lo99": 0.481767578125,
+    "hi99": 0.5123697916666666,
+    "emit": 13508
+   },
+   "fresh_in": {
+    "acc": 0.5052083333333333,
+    "lo99": 0.48762695312500004,
+    "hi99": 0.5221354166666666,
+    "emit": 13947
+   },
+   "ka_exact": true,
+   "place_orig": {
+    "frac_eq_d": 0.71875,
+    "frac_gt_d": 0.28125,
+    "frac_unreach": 0.0,
+    "mean_hops_reach": 1.4625
+   },
+   "place_in": {
+    "frac_eq_d": 0.78125,
+    "frac_gt_d": 0.21875,
+    "frac_unreach": 0.0,
+    "mean_hops_reach": 1.21875
+   }
+  },
+  {
+   "cell": "0677e0ae71c3bc64",
+   "wave": "A",
+   "topology": "smallworld",
+   "update_mode": "async",
+   "update_period": 1,
+   "update_p": 0.5,
+   "d": 2,
+   "delta": 4,
+   "rec_held_acc": 0.5045572916666667,
+   "rec_held_lo99": 0.4895833333333333,
+   "SIGNAL_label": false,
+   "held_orig": {
+    "acc": 0.5045572916666667,
+    "lo99": 0.4895833333333333,
+    "hi99": 0.5201822916666666,
+    "emit": 118825
+   },
+   "held_in": {
+    "acc": 0.5026041666666667,
+    "lo99": 0.48958333333333337,
+    "hi99": 0.517578125,
+    "emit": 118377
+   },
+   "fresh_orig": {
+    "acc": 0.5084635416666667,
+    "lo99": 0.49609375,
+    "hi99": 0.5227897135416666,
+    "emit": 111760
+   },
+   "fresh_in": {
+    "acc": 0.49609375,
+    "lo99": 0.48176757812499993,
+    "hi99": 0.5104166666666666,
+    "emit": 110450
+   },
+   "ka_exact": true,
+   "place_orig": {
+    "frac_eq_d": 0.7375,
+    "frac_gt_d": 0.25625,
+    "frac_unreach": 0.0,
+    "mean_hops_reach": 2.625
+   },
+   "place_in": {
+    "frac_eq_d": 1.0,
+    "frac_gt_d": 0.0,
+    "frac_unreach": 0.0,
+    "mean_hops_reach": 2.0
+   }
+  },
+  {
+   "cell": "67e459d74a2a15ab",
+   "wave": "A",
+   "topology": "smallworld",
+   "update_mode": "sync",
+   "update_period": 1,
+   "update_p": 0.5,
+   "d": 3,
+   "delta": 4,
+   "rec_held_acc": 0.4934895833333333,
+   "rec_held_lo99": 0.4772135416666667,
+   "SIGNAL_label": false,
+   "held_orig": {
+    "acc": 0.4934895833333333,
+    "lo99": 0.4772135416666667,
+    "hi99": 0.505859375,
+    "emit": 1887
+   },
+   "held_in": {
+    "acc": 0.49869791666666663,
+    "lo99": 0.4830729166666667,
+    "hi99": 0.5162760416666666,
+    "emit": 2162
+   },
+   "fresh_orig": {
+    "acc": 0.4986979166666667,
+    "lo99": 0.490234375,
+    "hi99": 0.5078125,
+    "emit": 2243
+   },
+   "fresh_in": {
+    "acc": 0.5078125,
+    "lo99": 0.49869791666666663,
+    "hi99": 0.5221354166666666,
+    "emit": 2361
+   },
+   "ka_exact": true,
+   "place_orig": {
+    "frac_eq_d": 0.6,
+    "frac_gt_d": 0.35625,
+    "frac_unreach": 0.0,
+    "mean_hops_reach": 3.7875
+   },
+   "place_in": {
+    "frac_eq_d": 1.0,
+    "frac_gt_d": 0.0,
+    "frac_unreach": 0.0,
+    "mean_hops_reach": 3.0
+   }
+  },
+  {
+   "cell": "699c8b2a187a1b9b",
+   "wave": "A",
+   "topology": "random",
+   "update_mode": "async",
+   "update_period": 2,
+   "update_p": 0.8,
+   "d": 2,
+   "delta": 4,
+   "rec_held_acc": 0.5026041666666666,
+   "rec_held_lo99": 0.4882779947916666,
+   "SIGNAL_label": false,
+   "held_orig": {
+    "acc": 0.5026041666666666,
+    "lo99": 0.4882779947916666,
+    "hi99": 0.5162760416666666,
+    "emit": 127705
+   },
+   "held_in": {
+    "acc": 0.4895833333333333,
+    "lo99": 0.47395833333333337,
+    "hi99": 0.501953125,
+    "emit": 126426
+   },
+   "fresh_orig": {
+    "acc": 0.5078125,
+    "lo99": 0.4960904947916666,
+    "hi99": 0.5227864583333333,
+    "emit": 129811
+   },
+   "fresh_in": {
+    "acc": 0.5071614583333333,
+    "lo99": 0.49609375,
+    "hi99": 0.5221354166666667,
+    "emit": 130235
+   },
+   "ka_exact": true,
+   "place_orig": {
+    "frac_eq_d": 0.1125,
+    "frac_gt_d": 0.825,
+    "frac_unreach": 0.03125,
+    "mean_hops_reach": 4.006451612903226
+   },
+   "place_in": {
+    "frac_eq_d": 0.775,
+    "frac_gt_d": 0.13125,
+    "frac_unreach": 0.03125,
+    "mean_hops_reach": 2.096774193548387
+   }
+  },
+  {
+   "cell": "c9d2ff6e919b0da4",
+   "wave": "A",
+   "topology": "random",
+   "update_mode": "async",
+   "update_period": 1,
+   "update_p": 0.8,
+   "d": 5,
+   "delta": 4,
+   "rec_held_acc": 0.5,
+   "rec_held_lo99": 0.5,
+   "SIGNAL_label": false,
+   "held_orig": {
+    "acc": 0.5,
+    "lo99": 0.5,
+    "hi99": 0.5,
+    "emit": 105
+   },
+   "held_in": {
+    "acc": 0.5,
+    "lo99": 0.5,
+    "hi99": 0.5,
+    "emit": 84
+   },
+   "fresh_orig": {
+    "acc": 0.5,
+    "lo99": 0.5,
+    "hi99": 0.5,
+    "emit": 79
+   },
+   "fresh_in": {
+    "acc": 0.5,
+    "lo99": 0.5,
+    "hi99": 0.5,
+    "emit": 108
+   },
+   "ka_exact": true,
+   "place_orig": {
+    "frac_eq_d": 0.0,
+    "frac_gt_d": 0.0,
+    "frac_unreach": 0.0,
+    "mean_hops_reach": 2.89375
+   },
+   "place_in": {
+    "frac_eq_d": 0.1375,
+    "frac_gt_d": 0.0,
+    "frac_unreach": 0.0,
+    "mean_hops_reach": 4.1375
+   }
+  },
+  {
+   "cell": "3fd0dbcd746033bd",
+   "wave": "A",
+   "topology": "random",
+   "update_mode": "async",
+   "update_period": 1,
+   "update_p": 0.5,
+   "d": 2,
+   "delta": 16,
+   "rec_held_acc": 0.49609375,
+   "rec_held_lo99": 0.479814453125,
+   "SIGNAL_label": false,
+   "held_orig": {
+    "acc": 0.49609375,
+    "lo99": 0.479814453125,
+    "hi99": 0.5123697916666666,
+    "emit": 159985
+   },
+   "held_in": {
+    "acc": 0.4967447916666667,
+    "lo99": 0.48632486979166667,
+    "hi99": 0.5071614583333333,
+    "emit": 153396
+   },
+   "fresh_orig": {
+    "acc": 0.501953125,
+    "lo99": 0.484375,
+    "hi99": 0.5182291666666667,
+    "emit": 173234
+   },
+   "fresh_in": {
+    "acc": 0.48046875000000006,
+    "lo99": 0.45507486979166667,
+    "hi99": 0.5078125,
+    "emit": 183946
+   },
+   "ka_exact": true,
+   "place_orig": {
+    "frac_eq_d": 0.275,
+    "frac_gt_d": 0.6625,
+    "frac_unreach": 0.0,
+    "mean_hops_reach": 2.7625
+   },
+   "place_in": {
+    "frac_eq_d": 0.9875,
+    "frac_gt_d": 0.00625,
+    "frac_unreach": 0.0,
+    "mean_hops_reach": 2.0
+   }
+  },
+  {
+   "cell": "0327a9ab4568fd05",
+   "wave": "A",
+   "topology": "smallworld",
+   "update_mode": "sync",
+   "update_period": 2,
+   "update_p": 0.5,
+   "d": 2,
+   "delta": 4,
+   "rec_held_acc": 0.5,
+   "rec_held_lo99": 0.5,
+   "SIGNAL_label": false,
+   "held_orig": {
+    "acc": 0.5,
+    "lo99": 0.5,
+    "hi99": 0.5,
+    "emit": 0
+   },
+   "held_in": {
+    "acc": 0.5,
+    "lo99": 0.5,
+    "hi99": 0.5,
+    "emit": 0
+   },
+   "fresh_orig": {
+    "acc": 0.5,
+    "lo99": 0.5,
+    "hi99": 0.5,
+    "emit": 0
+   },
+   "fresh_in": {
+    "acc": 0.5,
+    "lo99": 0.5,
+    "hi99": 0.5,
+    "emit": 0
+   },
+   "ka_exact": true,
+   "place_orig": {
+    "frac_eq_d": 0.3875,
+    "frac_gt_d": 0.6125,
+    "frac_unreach": 0.0,
+    "mean_hops_reach": 3.475
+   },
+   "place_in": {
+    "frac_eq_d": 0.99375,
+    "frac_gt_d": 0.0,
+    "frac_unreach": 0.0,
+    "mean_hops_reach": 1.99375
+   }
+  },
+  {
+   "cell": "afc07cc5b7ac209a",
+   "wave": "A",
+   "topology": "smallworld",
+   "update_mode": "sync",
+   "update_period": 1,
+   "update_p": 0.5,
+   "d": 3,
+   "delta": 4,
+   "rec_held_acc": 0.5,
+   "rec_held_lo99": 0.5,
+   "SIGNAL_label": false,
+   "held_orig": {
+    "acc": 0.5,
+    "lo99": 0.5,
+    "hi99": 0.5,
+    "emit": 52307
+   },
+   "held_in": {
+    "acc": 0.5,
+    "lo99": 0.5,
+    "hi99": 0.5,
+    "emit": 52885
+   },
+   "fresh_orig": {
+    "acc": 0.5,
+    "lo99": 0.5,
+    "hi99": 0.5,
+    "emit": 42664
+   },
+   "fresh_in": {
+    "acc": 0.5,
+    "lo99": 0.5,
+    "hi99": 0.5,
+    "emit": 45999
+   },
+   "ka_exact": true,
+   "place_orig": {
+    "frac_eq_d": 0.85625,
+    "frac_gt_d": 0.11875,
+    "frac_unreach": 0.0,
+    "mean_hops_reach": 3.175
+   },
+   "place_in": {
+    "frac_eq_d": 1.0,
+    "frac_gt_d": 0.0,
+    "frac_unreach": 0.0,
+    "mean_hops_reach": 3.0
+   }
+  },
+  {
+   "cell": "911e70489fb820e6",
+   "wave": "A",
+   "topology": "smallworld",
+   "update_mode": "async",
+   "update_period": 1,
+   "update_p": 0.5,
+   "d": 2,
+   "delta": 4,
+   "rec_held_acc": 0.4934895833333333,
+   "rec_held_lo99": 0.462236328125,
+   "SIGNAL_label": false,
+   "held_orig": {
+    "acc": 0.4934895833333333,
+    "lo99": 0.462236328125,
+    "hi99": 0.5266927083333333,
+    "emit": 290220
+   },
+   "held_in": {
+    "acc": 0.5110677083333335,
+    "lo99": 0.47786132812500004,
+    "hi99": 0.5423177083333334,
+    "emit": 290229
+   },
+   "fresh_orig": {
+    "acc": 0.49804687499999994,
+    "lo99": 0.47265299479166667,
+    "hi99": 0.5221451822916665,
+    "emit": 290338
+   },
+   "fresh_in": {
+    "acc": 0.47526041666666663,
+    "lo99": 0.44921549479166667,
+    "hi99": 0.501953125,
+    "emit": 289928
+   },
+   "ka_exact": true,
+   "place_orig": {
+    "frac_eq_d": 0.4,
+    "frac_gt_d": 0.56875,
+    "frac_unreach": 0.0,
+    "mean_hops_reach": 3.3
+   },
+   "place_in": {
+    "frac_eq_d": 0.98125,
+    "frac_gt_d": 0.0,
+    "frac_unreach": 0.0,
+    "mean_hops_reach": 1.98125
+   }
+  },
+  {
+   "cell": "773e7fa3ef984f6f",
+   "wave": "A",
+   "topology": "smallworld",
+   "update_mode": "async",
+   "update_period": 1,
+   "update_p": 0.5,
+   "d": 2,
+   "delta": 4,
+   "rec_held_acc": 0.49999999999999994,
+   "rec_held_lo99": 0.49153320312499993,
+   "SIGNAL_label": false,
+   "held_orig": {
+    "acc": 0.49999999999999994,
+    "lo99": 0.49153320312499993,
+    "hi99": 0.5078125,
+    "emit": 5900
+   },
+   "held_in": {
+    "acc": 0.5013020833333333,
+    "lo99": 0.49348958333333337,
+    "hi99": 0.5091145833333333,
+    "emit": 5776
+   },
+   "fresh_orig": {
+    "acc": 0.4973958333333333,
+    "lo99": 0.4895833333333333,
+    "hi99": 0.505859375,
+    "emit": 5253
+   },
+   "fresh_in": {
+    "acc": 0.498046875,
+    "lo99": 0.491533203125,
+    "hi99": 0.50390625,
+    "emit": 4879
+   },
+   "ka_exact": true,
+   "place_orig": {
+    "frac_eq_d": 0.54375,
+    "frac_gt_d": 0.45625,
+    "frac_unreach": 0.0,
+    "mean_hops_reach": 2.79375
+   },
+   "place_in": {
+    "frac_eq_d": 1.0,
+    "frac_gt_d": 0.0,
+    "frac_unreach": 0.0,
+    "mean_hops_reach": 2.0
+   }
+  },
+  {
+   "cell": "8bf069cf05f425e1",
+   "wave": "A",
+   "topology": "smallworld",
+   "update_mode": "async",
+   "update_period": 2,
+   "update_p": 0.5,
+   "d": 3,
+   "delta": 16,
+   "rec_held_acc": 0.5013020833333334,
+   "rec_held_lo99": 0.49609375,
+   "SIGNAL_label": false,
+   "held_orig": {
+    "acc": 0.5013020833333334,
+    "lo99": 0.49609375,
+    "hi99": 0.5071614583333334,
+    "emit": 6624
+   },
+   "held_in": {
+    "acc": 0.4993489583333333,
+    "lo99": 0.49609375,
+    "hi99": 0.5026041666666666,
+    "emit": 7126
+   },
+   "fresh_orig": {
+    "acc": 0.5032552083333333,
+    "lo99": 0.4954427083333333,
+    "hi99": 0.518232421875,
+    "emit": 7475
+   },
+   "fresh_in": {
+    "acc": 0.49348958333333337,
+    "lo99": 0.4798177083333333,
+    "hi99": 0.5,
+    "emit": 7657
+   },
+   "ka_exact": true,
+   "place_orig": {
+    "frac_eq_d": 0.36875,
+    "frac_gt_d": 0.38125,
+    "frac_unreach": 0.0,
+    "mean_hops_reach": 3.18125
+   },
+   "place_in": {
+    "frac_eq_d": 1.0,
+    "frac_gt_d": 0.0,
+    "frac_unreach": 0.0,
+    "mean_hops_reach": 3.0
+   }
+  },
+  {
+   "cell": "14e62ff559e4906d",
+   "wave": "A",
+   "topology": "random",
+   "update_mode": "async",
+   "update_period": 2,
+   "update_p": 0.8,
+   "d": 1,
+   "delta": 16,
+   "rec_held_acc": 0.498046875,
+   "rec_held_lo99": 0.49283854166666663,
+   "SIGNAL_label": false,
+   "held_orig": {
+    "acc": 0.498046875,
+    "lo99": 0.49283854166666663,
+    "hi99": 0.5,
+    "emit": 1824
+   },
+   "held_in": {
+    "acc": 0.517578125,
+    "lo99": 0.5,
+    "hi99": 0.5364615885416666,
+    "emit": 1811
+   },
+   "fresh_orig": {
+    "acc": 0.5006510416666666,
+    "lo99": 0.4921875,
+    "hi99": 0.5110677083333333,
+    "emit": 1821
+   },
+   "fresh_in": {
+    "acc": 0.5045572916666666,
+    "lo99": 0.4889290364583333,
+    "hi99": 0.521484375,
+    "emit": 1813
+   },
+   "ka_exact": true,
+   "place_orig": {
+    "frac_eq_d": 0.03125,
+    "frac_gt_d": 0.90625,
+    "frac_unreach": 0.0625,
+    "mean_hops_reach": 3.7
+   },
+   "place_in": {
+    "frac_eq_d": 0.6,
+    "frac_gt_d": 0.3375,
+    "frac_unreach": 0.0625,
+    "mean_hops_reach": 1.4
+   }
+  },
+  {
+   "cell": "bf1f3a100b294455",
+   "wave": "A",
+   "topology": "smallworld",
+   "update_mode": "async",
+   "update_period": 2,
+   "update_p": 0.5,
+   "d": 3,
+   "delta": 4,
+   "rec_held_acc": 0.486328125,
+   "rec_held_lo99": 0.453125,
+   "SIGNAL_label": false,
+   "held_orig": {
+    "acc": 0.486328125,
+    "lo99": 0.453125,
+    "hi99": 0.5234375,
+    "emit": 58605
+   },
+   "held_in": {
+    "acc": 0.4778645833333333,
+    "lo99": 0.45442708333333337,
+    "hi99": 0.5,
+    "emit": 57871
+   },
+   "fresh_orig": {
+    "acc": 0.490234375,
+    "lo99": 0.46027994791666665,
+    "hi99": 0.51953125,
+    "emit": 58693
+   },
+   "fresh_in": {
+    "acc": 0.4921875,
+    "lo99": 0.4609375,
+    "hi99": 0.524091796875,
+    "emit": 58684
+   },
+   "ka_exact": true,
+   "place_orig": {
+    "frac_eq_d": 0.58125,
+    "frac_gt_d": 0.33125,
+    "frac_unreach": 0.0,
+    "mean_hops_reach": 3.44375
+   },
+   "place_in": {
+    "frac_eq_d": 1.0,
+    "frac_gt_d": 0.0,
+    "frac_unreach": 0.0,
+    "mean_hops_reach": 3.0
+   }
+  },
+  {
+   "cell": "6dd65b5afd66f16b",
+   "wave": "A",
+   "topology": "smallworld",
+   "update_mode": "sync",
+   "update_period": 1,
+   "update_p": 0.8,
+   "d": 3,
+   "delta": 16,
+   "rec_held_acc": 0.4973958333333333,
+   "rec_held_lo99": 0.47264973958333334,
+   "SIGNAL_label": false,
+   "held_orig": {
+    "acc": 0.4973958333333333,
+    "lo99": 0.47264973958333334,
+    "hi99": 0.5182356770833333,
+    "emit": 1761
+   },
+   "held_in": {
+    "acc": 0.5052083333333333,
+    "lo99": 0.47785807291666665,
+    "hi99": 0.5286458333333333,
+    "emit": 1834
+   },
+   "fresh_orig": {
+    "acc": 0.49609375,
+    "lo99": 0.48046875,
+    "hi99": 0.5091145833333333,
+    "emit": 1931
+   },
+   "fresh_in": {
+    "acc": 0.49739583333333337,
+    "lo99": 0.47395833333333337,
+    "hi99": 0.5208333333333334,
+    "emit": 1883
+   },
+   "ka_exact": true,
+   "place_orig": {
+    "frac_eq_d": 0.6875,
+    "frac_gt_d": 0.2875,
+    "frac_unreach": 0.0,
+    "mean_hops_reach": 3.6875
+   },
+   "place_in": {
+    "frac_eq_d": 1.0,
+    "frac_gt_d": 0.0,
+    "frac_unreach": 0.0,
+    "mean_hops_reach": 3.0
+   }
+  },
+  {
+   "cell": "ab5c2944884a70c4",
+   "wave": "A",
+   "topology": "random",
+   "update_mode": "sync",
+   "update_period": 2,
+   "update_p": 0.5,
+   "d": 3,
+   "delta": 4,
+   "rec_held_acc": 0.50390625,
+   "rec_held_lo99": 0.491533203125,
+   "SIGNAL_label": false,
+   "held_orig": {
+    "acc": 0.50390625,
+    "lo99": 0.491533203125,
+    "hi99": 0.5169303385416666,
+    "emit": 185237
+   },
+   "held_in": {
+    "acc": 0.49609374999999994,
+    "lo99": 0.4798177083333333,
+    "hi99": 0.509765625,
+    "emit": 185938
+   },
+   "fresh_orig": {
+    "acc": 0.4993489583333333,
+    "lo99": 0.4850227864583333,
+    "hi99": 0.514326171875,
+    "emit": 185226
+   },
+   "fresh_in": {
+    "acc": 0.49739583333333337,
+    "lo99": 0.484375,
+    "hi99": 0.5091178385416666,
+    "emit": 184383
+   },
+   "ka_exact": true,
+   "place_orig": {
+    "frac_eq_d": 0.525,
+    "frac_gt_d": 0.16875,
+    "frac_unreach": 0.0,
+    "mean_hops_reach": 2.79375
+   },
+   "place_in": {
+    "frac_eq_d": 1.0,
+    "frac_gt_d": 0.0,
+    "frac_unreach": 0.0,
+    "mean_hops_reach": 3.0
+   }
+  },
+  {
+   "cell": "44a3159d47c56344",
+   "wave": "A",
+   "topology": "smallworld",
+   "update_mode": "sync",
+   "update_period": 1,
+   "update_p": 0.8,
+   "d": 2,
+   "delta": 4,
+   "rec_held_acc": 0.5,
+   "rec_held_lo99": 0.5,
+   "SIGNAL_label": false,
+   "held_orig": {
+    "acc": 0.5,
+    "lo99": 0.5,
+    "hi99": 0.5,
+    "emit": 7196
+   },
+   "held_in": {
+    "acc": 0.5,
+    "lo99": 0.5,
+    "hi99": 0.5,
+    "emit": 7241
+   },
+   "fresh_orig": {
+    "acc": 0.5,
+    "lo99": 0.5,
+    "hi99": 0.5,
+    "emit": 7318
+   },
+   "fresh_in": {
+    "acc": 0.5,
+    "lo99": 0.5,
+    "hi99": 0.5,
+    "emit": 7283
+   },
+   "ka_exact": true,
+   "place_orig": {
+    "frac_eq_d": 0.54375,
+    "frac_gt_d": 0.45,
+    "frac_unreach": 0.0,
+    "mean_hops_reach": 2.99375
+   },
+   "place_in": {
+    "frac_eq_d": 0.9625,
+    "frac_gt_d": 0.00625,
+    "frac_unreach": 0.0,
+    "mean_hops_reach": 1.975
+   }
+  },
+  {
+   "cell": "de60a65c3f0d93a7",
+   "wave": "A",
+   "topology": "random",
+   "update_mode": "sync",
+   "update_period": 2,
+   "update_p": 0.8,
+   "d": 5,
+   "delta": 4,
+   "rec_held_acc": 0.494140625,
+   "rec_held_lo99": 0.4654915364583333,
+   "SIGNAL_label": false,
+   "held_orig": {
+    "acc": 0.494140625,
+    "lo99": 0.4654915364583333,
+    "hi99": 0.5214941406249998,
+    "emit": 207608
+   },
+   "held_in": {
+    "acc": 0.48893229166666663,
+    "lo99": 0.46679361979166667,
+    "hi99": 0.5117220052083332,
+    "emit": 207126
+   },
+   "fresh_orig": {
+    "acc": 0.49023437500000006,
+    "lo99": 0.454423828125,
+    "hi99": 0.525390625,
+    "emit": 207998
+   },
+   "fresh_in": {
+    "acc": 0.5130208333333334,
+    "lo99": 0.477861328125,
+    "hi99": 0.5481803385416665,
+    "emit": 207619
+   },
+   "ka_exact": true,
+   "place_orig": {
+    "frac_eq_d": 0.0,
+    "frac_gt_d": 0.0,
+    "frac_unreach": 0.0,
+    "mean_hops_reach": 2.94375
+   },
+   "place_in": {
+    "frac_eq_d": 0.05625,
+    "frac_gt_d": 0.0,
+    "frac_unreach": 0.0,
+    "mean_hops_reach": 4.03125
+   }
+  },
+  {
+   "cell": "19df30b98692cf37",
+   "wave": "A",
+   "topology": "smallworld",
+   "update_mode": "async",
+   "update_period": 2,
+   "update_p": 0.5,
+   "d": 3,
+   "delta": 4,
+   "rec_held_acc": 0.4928385416666667,
+   "rec_held_lo99": 0.4720052083333333,
+   "SIGNAL_label": false,
+   "held_orig": {
+    "acc": 0.4928385416666667,
+    "lo99": 0.4720052083333333,
+    "hi99": 0.5136751302083332,
+    "emit": 45691
+   },
+   "held_in": {
+    "acc": 0.5032552083333333,
+    "lo99": 0.477861328125,
+    "hi99": 0.527998046875,
+    "emit": 46170
+   },
+   "fresh_orig": {
+    "acc": 0.509765625,
+    "lo99": 0.4928385416666667,
+    "hi99": 0.529296875,
+    "emit": 45339
+   },
+   "fresh_in": {
+    "acc": 0.5,
+    "lo99": 0.47526041666666663,
+    "hi99": 0.5240917968749998,
+    "emit": 45927
+   },
+   "ka_exact": true,
+   "place_orig": {
+    "frac_eq_d": 0.48125,
+    "frac_gt_d": 0.35625,
+    "frac_unreach": 0.0,
+    "mean_hops_reach": 3.2625
+   },
+   "place_in": {
+    "frac_eq_d": 1.0,
+    "frac_gt_d": 0.0,
+    "frac_unreach": 0.0,
+    "mean_hops_reach": 3.0
+   }
+  },
+  {
+   "cell": "c7ec809750bd4748",
+   "wave": "A",
+   "topology": "smallworld",
+   "update_mode": "sync",
+   "update_period": 1,
+   "update_p": 0.8,
+   "d": 2,
+   "delta": 16,
+   "rec_held_acc": 0.5,
+   "rec_held_lo99": 0.5,
+   "SIGNAL_label": false,
+   "held_orig": {
+    "acc": 0.5,
+    "lo99": 0.5,
+    "hi99": 0.5,
+    "emit": 1454650
+   },
+   "held_in": {
+    "acc": 0.5,
+    "lo99": 0.5,
+    "hi99": 0.5,
+    "emit": 1454650
+   },
+   "fresh_orig": {
+    "acc": 0.5,
+    "lo99": 0.5,
+    "hi99": 0.5,
+    "emit": 1455180
+   },
+   "fresh_in": {
+    "acc": 0.5,
+    "lo99": 0.5,
+    "hi99": 0.5,
+    "emit": 1455180
+   },
+   "ka_exact": true,
+   "place_orig": {
+    "frac_eq_d": 0.49375,
+    "frac_gt_d": 0.50625,
+    "frac_unreach": 0.0,
+    "mean_hops_reach": 3.0375
+   },
+   "place_in": {
+    "frac_eq_d": 1.0,
+    "frac_gt_d": 0.0,
+    "frac_unreach": 0.0,
+    "mean_hops_reach": 2.0
+   }
+  },
+  {
+   "cell": "a4685b67e340ca2b",
+   "wave": "A",
+   "topology": "random",
+   "update_mode": "async",
+   "update_period": 1,
+   "update_p": 0.5,
+   "d": 3,
+   "delta": 4,
+   "rec_held_acc": 0.5,
+   "rec_held_lo99": 0.5,
+   "SIGNAL_label": false,
+   "held_orig": {
+    "acc": 0.5,
+    "lo99": 0.5,
+    "hi99": 0.5,
+    "emit": 22082
+   },
+   "held_in": {
+    "acc": 0.5,
+    "lo99": 0.5,
+    "hi99": 0.5,
+    "emit": 22074
+   },
+   "fresh_orig": {
+    "acc": 0.5,
+    "lo99": 0.5,
+    "hi99": 0.5,
+    "emit": 22078
+   },
+   "fresh_in": {
+    "acc": 0.5032552083333334,
+    "lo99": 0.5,
+    "hi99": 0.5130208333333334,
+    "emit": 22075
+   },
+   "ka_exact": true,
+   "place_orig": {
+    "frac_eq_d": 0.1875,
+    "frac_gt_d": 0.65625,
+    "frac_unreach": 0.125,
+    "mean_hops_reach": 4.321428571428571
+   },
+   "place_in": {
+    "frac_eq_d": 0.84375,
+    "frac_gt_d": 0.0,
+    "frac_unreach": 0.125,
+    "mean_hops_reach": 2.9571428571428573
+   }
+  },
+  {
+   "cell": "b75a498190609744",
+   "wave": "A",
+   "topology": "random",
+   "update_mode": "async",
+   "update_period": 2,
+   "update_p": 0.5,
+   "d": 3,
+   "delta": 4,
+   "rec_held_acc": 0.5,
+   "rec_held_lo99": 0.5,
+   "SIGNAL_label": false,
+   "held_orig": {
+    "acc": 0.5,
+    "lo99": 0.5,
+    "hi99": 0.5,
+    "emit": 673
+   },
+   "held_in": {
+    "acc": 0.5,
+    "lo99": 0.5,
+    "hi99": 0.5,
+    "emit": 614
+   },
+   "fresh_orig": {
+    "acc": 0.5,
+    "lo99": 0.5,
+    "hi99": 0.5,
+    "emit": 624
+   },
+   "fresh_in": {
+    "acc": 0.5,
+    "lo99": 0.5,
+    "hi99": 0.5,
+    "emit": 656
+   },
+   "ka_exact": true,
+   "place_orig": {
+    "frac_eq_d": 0.1875,
+    "frac_gt_d": 0.6875,
+    "frac_unreach": 0.03125,
+    "mean_hops_reach": 4.051612903225807
+   },
+   "place_in": {
+    "frac_eq_d": 0.96875,
+    "frac_gt_d": 0.0,
+    "frac_unreach": 0.03125,
+    "mean_hops_reach": 3.0
+   }
+  },
+  {
+   "cell": "cf195eaf67f49dcc",
+   "wave": "A",
+   "topology": "smallworld",
+   "update_mode": "sync",
+   "update_period": 2,
+   "update_p": 0.5,
+   "d": 3,
+   "delta": 8,
+   "rec_held_acc": 0.5065104166666666,
+   "rec_held_lo99": 0.475908203125,
+   "SIGNAL_label": false,
+   "held_orig": {
+    "acc": 0.5065104166666666,
+    "lo99": 0.475908203125,
+    "hi99": 0.533203125,
+    "emit": 228904
+   },
+   "held_in": {
+    "acc": 0.494140625,
+    "lo99": 0.45833007812500004,
+    "hi99": 0.5332063802083332,
+    "emit": 227918
+   },
+   "fresh_orig": {
+    "acc": 0.5182291666666666,
+    "lo99": 0.483720703125,
+    "hi99": 0.5533854166666666,
+    "emit": 228616
+   },
+   "fresh_in": {
+    "acc": 0.48893229166666663,
+    "lo99": 0.4576790364583333,
+    "hi99": 0.5266959635416666,
+    "emit": 228672
+   },
+   "ka_exact": true,
+   "place_orig": {
+    "frac_eq_d": 0.7875,
+    "frac_gt_d": 0.15625,
+    "frac_unreach": 0.0,
+    "mean_hops_reach": 3.23125
+   },
+   "place_in": {
+    "frac_eq_d": 1.0,
+    "frac_gt_d": 0.0,
+    "frac_unreach": 0.0,
+    "mean_hops_reach": 3.0
+   }
+  },
+  {
+   "cell": "7977cef54ce2e720",
+   "wave": "B",
+   "topology": "random",
+   "update_mode": "async",
+   "update_period": 2,
+   "update_p": 0.8,
+   "d": 3,
+   "delta": 4,
+   "rec_held_acc": 0.5026041666666666,
+   "rec_held_lo99": 0.4869791666666667,
+   "SIGNAL_label": false,
+   "held_orig": {
+    "acc": 0.5026041666666666,
+    "lo99": 0.4869791666666667,
+    "hi99": 0.517578125,
+    "emit": 42385
+   },
+   "held_in": {
+    "acc": 0.49479166666666663,
+    "lo99": 0.46940104166666674,
+    "hi99": 0.513671875,
+    "emit": 43898
+   },
+   "fresh_orig": {
+    "acc": 0.5013020833333333,
+    "lo99": 0.48697916666666663,
+    "hi99": 0.517578125,
+    "emit": 36118
+   },
+   "fresh_in": {
+    "acc": 0.5091145833333333,
+    "lo99": 0.4928352864583333,
+    "hi99": 0.5266927083333333,
+    "emit": 36218
+   },
+   "ka_exact": true,
+   "place_orig": {
+    "frac_eq_d": 0.19375,
+    "frac_gt_d": 0.68125,
+    "frac_unreach": 0.0,
+    "mean_hops_reach": 3.98125
+   },
+   "place_in": {
+    "frac_eq_d": 1.0,
+    "frac_gt_d": 0.0,
+    "frac_unreach": 0.0,
+    "mean_hops_reach": 3.0
+   }
+  },
+  {
+   "cell": "4704ff70df1b4992",
+   "wave": "B",
+   "topology": "random",
+   "update_mode": "async",
+   "update_period": 2,
+   "update_p": 0.8,
+   "d": 3,
+   "delta": 4,
+   "rec_held_acc": 0.509765625,
+   "rec_held_lo99": 0.4986946614583333,
+   "SIGNAL_label": false,
+   "held_orig": {
+    "acc": 0.509765625,
+    "lo99": 0.4986946614583333,
+    "hi99": 0.521484375,
+    "emit": 28398
+   },
+   "held_in": {
+    "acc": 0.5032552083333333,
+    "lo99": 0.4889290364583333,
+    "hi99": 0.5188802083333333,
+    "emit": 29609
+   },
+   "fresh_orig": {
+    "acc": 0.5104166666666666,
+    "lo99": 0.49544270833333326,
+    "hi99": 0.5247395833333333,
+    "emit": 29480
+   },
+   "fresh_in": {
+    "acc": 0.5026041666666667,
+    "lo99": 0.48893229166666663,
+    "hi99": 0.5188802083333334,
+    "emit": 28517
+   },
+   "ka_exact": true,
+   "place_orig": {
+    "frac_eq_d": 0.225,
+    "frac_gt_d": 0.625,
+    "frac_unreach": 0.03125,
+    "mean_hops_reach": 3.8451612903225807
+   },
+   "place_in": {
+    "frac_eq_d": 0.95,
+    "frac_gt_d": 0.0,
+    "frac_unreach": 0.03125,
+    "mean_hops_reach": 2.9741935483870967
+   }
+  },
+  {
+   "cell": "f88e529974e24202",
+   "wave": "B",
+   "topology": "random",
+   "update_mode": "async",
+   "update_period": 2,
+   "update_p": 0.8,
+   "d": 3,
+   "delta": 4,
+   "rec_held_acc": 0.5052083333333333,
+   "rec_held_lo99": 0.486328125,
+   "SIGNAL_label": false,
+   "held_orig": {
+    "acc": 0.5052083333333333,
+    "lo99": 0.486328125,
+    "hi99": 0.526044921875,
+    "emit": 5099
+   },
+   "held_in": {
+    "acc": 0.49869791666666663,
+    "lo99": 0.48111979166666663,
+    "hi99": 0.5149772135416666,
+    "emit": 5090
+   },
+   "fresh_orig": {
+    "acc": 0.5006510416666666,
+    "lo99": 0.4876302083333333,
+    "hi99": 0.51171875,
+    "emit": 5166
+   },
+   "fresh_in": {
+    "acc": 0.49348958333333326,
+    "lo99": 0.4739583333333333,
+    "hi99": 0.5091178385416665,
+    "emit": 5046
+   },
+   "ka_exact": true,
+   "place_orig": {
+    "frac_eq_d": 0.19375,
+    "frac_gt_d": 0.63125,
+    "frac_unreach": 0.03125,
+    "mean_hops_reach": 3.9419354838709677
+   },
+   "place_in": {
+    "frac_eq_d": 0.9625,
+    "frac_gt_d": 0.0,
+    "frac_unreach": 0.03125,
+    "mean_hops_reach": 2.9935483870967743
+   }
+  },
+  {
+   "cell": "9279672760c5132c",
+   "wave": "B",
+   "topology": "smallworld",
+   "update_mode": "async",
+   "update_period": 2,
+   "update_p": 0.8,
+   "d": 3,
+   "delta": 4,
+   "rec_held_acc": 0.5026041666666667,
+   "rec_held_lo99": 0.48567708333333337,
+   "SIGNAL_label": false,
+   "held_orig": {
+    "acc": 0.5026041666666667,
+    "lo99": 0.48567708333333337,
+    "hi99": 0.5188802083333334,
+    "emit": 191202
+   },
+   "held_in": {
+    "acc": 0.48893229166666674,
+    "lo99": 0.46679361979166667,
+    "hi99": 0.5110677083333333,
+    "emit": 191301
+   },
+   "fresh_orig": {
+    "acc": 0.49088541666666674,
+    "lo99": 0.47330729166666663,
+    "hi99": 0.509765625,
+    "emit": 191039
+   },
+   "fresh_in": {
+    "acc": 0.5104166666666667,
+    "lo99": 0.49153645833333337,
+    "hi99": 0.5299479166666666,
+    "emit": 191122
+   },
+   "ka_exact": true,
+   "place_orig": {
+    "frac_eq_d": 0.40625,
+    "frac_gt_d": 0.4875,
+    "frac_unreach": 0.0,
+    "mean_hops_reach": 3.55
+   },
+   "place_in": {
+    "frac_eq_d": 1.0,
+    "frac_gt_d": 0.0,
+    "frac_unreach": 0.0,
+    "mean_hops_reach": 3.0
+   }
+  },
+  {
+   "cell": "16e48268e24cd3f0",
+   "wave": "B",
+   "topology": "smallworld",
+   "update_mode": "async",
+   "update_period": 2,
+   "update_p": 0.8,
+   "d": 3,
+   "delta": 4,
+   "rec_held_acc": 0.49674479166666663,
+   "rec_held_lo99": 0.4765625,
+   "SIGNAL_label": false,
+   "held_orig": {
+    "acc": 0.49674479166666663,
+    "lo99": 0.4765625,
+    "hi99": 0.5188802083333333,
+    "emit": 31005
+   },
+   "held_in": {
+    "acc": 0.48046875,
+    "lo99": 0.4537760416666667,
+    "hi99": 0.5071614583333333,
+    "emit": 30464
+   },
+   "fresh_orig": {
+    "acc": 0.5201822916666667,
+    "lo99": 0.48307291666666663,
+    "hi99": 0.556640625,
+    "emit": 30508
+   },
+   "fresh_in": {
+    "acc": 0.49348958333333337,
+    "lo99": 0.4661458333333333,
+    "hi99": 0.5208333333333333,
+    "emit": 31013
+   },
+   "ka_exact": true,
+   "place_orig": {
+    "frac_eq_d": 0.4625,
+    "frac_gt_d": 0.46875,
+    "frac_unreach": 0.0,
+    "mean_hops_reach": 3.65
+   },
+   "place_in": {
+    "frac_eq_d": 1.0,
+    "frac_gt_d": 0.0,
+    "frac_unreach": 0.0,
+    "mean_hops_reach": 3.0
+   }
+  },
+  {
+   "cell": "6f9bd0886ed4d2bd",
+   "wave": "B",
+   "topology": "smallworld",
+   "update_mode": "async",
+   "update_period": 2,
+   "update_p": 0.8,
+   "d": 3,
+   "delta": 4,
+   "rec_held_acc": 0.4921875,
+   "rec_held_lo99": 0.47655924479166667,
+   "SIGNAL_label": false,
+   "held_orig": {
+    "acc": 0.4921875,
+    "lo99": 0.47655924479166667,
+    "hi99": 0.5084635416666666,
+    "emit": 370645
+   },
+   "held_in": {
+    "acc": 0.501953125,
+    "lo99": 0.4882779947916666,
+    "hi99": 0.515625,
+    "emit": 370747
+   },
+   "fresh_orig": {
+    "acc": 0.4921875,
+    "lo99": 0.477861328125,
+    "hi99": 0.5071614583333334,
+    "emit": 370872
+   },
+   "fresh_in": {
+    "acc": 0.498046875,
+    "lo99": 0.4830729166666667,
+    "hi99": 0.5136751302083332,
+    "emit": 370309
+   },
+   "ka_exact": true,
+   "place_orig": {
+    "frac_eq_d": 0.3875,
+    "frac_gt_d": 0.525,
+    "frac_unreach": 0.0,
+    "mean_hops_reach": 3.64375
+   },
+   "place_in": {
+    "frac_eq_d": 1.0,
+    "frac_gt_d": 0.0,
+    "frac_unreach": 0.0,
+    "mean_hops_reach": 3.0
+   }
+  },
+  {
+   "cell": "e41b7b138e503512",
+   "wave": "B",
+   "topology": "random",
+   "update_mode": "sync",
+   "update_period": 2,
+   "update_p": 0.5,
+   "d": 1,
+   "delta": 8,
+   "rec_held_acc": 0.5,
+   "rec_held_lo99": 0.5,
+   "SIGNAL_label": false,
+   "held_orig": {
+    "acc": 0.5,
+    "lo99": 0.5,
+    "hi99": 0.5,
+    "emit": 0
+   },
+   "held_in": {
+    "acc": 0.5,
+    "lo99": 0.5,
+    "hi99": 0.5,
+    "emit": 0
+   },
+   "fresh_orig": {
+    "acc": 0.5,
+    "lo99": 0.5,
+    "hi99": 0.5,
+    "emit": 0
+   },
+   "fresh_in": {
+    "acc": 0.5,
+    "lo99": 0.5,
+    "hi99": 0.5,
+    "emit": 0
+   },
+   "ka_exact": true,
+   "place_orig": {
+    "frac_eq_d": 0.0625,
+    "frac_gt_d": 0.9375,
+    "frac_unreach": 0.0,
+    "mean_hops_reach": 2.44375
+   },
+   "place_in": {
+    "frac_eq_d": 0.84375,
+    "frac_gt_d": 0.15625,
+    "frac_unreach": 0.0,
+    "mean_hops_reach": 1.15625
+   }
+  },
+  {
+   "cell": "09c6dc85b98d84c4",
+   "wave": "B",
+   "topology": "random",
+   "update_mode": "sync",
+   "update_period": 2,
+   "update_p": 0.5,
+   "d": 1,
+   "delta": 8,
+   "rec_held_acc": 0.5130208333333333,
+   "rec_held_lo99": 0.493486328125,
+   "SIGNAL_label": false,
+   "held_orig": {
+    "acc": 0.5130208333333333,
+    "lo99": 0.493486328125,
+    "hi99": 0.5312565104166665,
+    "emit": 14159
+   },
+   "held_in": {
+    "acc": 0.5078125,
+    "lo99": 0.48827799479166667,
+    "hi99": 0.52734375,
+    "emit": 14376
+   },
+   "fresh_orig": {
+    "acc": 0.5,
+    "lo99": 0.48307291666666663,
+    "hi99": 0.5175813802083332,
+    "emit": 14359
+   },
+   "fresh_in": {
+    "acc": 0.49479166666666663,
+    "lo99": 0.4752604166666667,
+    "hi99": 0.5149739583333333,
+    "emit": 14284
+   },
+   "ka_exact": true,
+   "place_orig": {
+    "frac_eq_d": 0.06875,
+    "frac_gt_d": 0.93125,
+    "frac_unreach": 0.0,
+    "mean_hops_reach": 2.43125
+   },
+   "place_in": {
+    "frac_eq_d": 0.8625,
+    "frac_gt_d": 0.1375,
+    "frac_unreach": 0.0,
+    "mean_hops_reach": 1.1375
+   }
+  },
+  {
+   "cell": "5edb4474c352b07e",
+   "wave": "B",
+   "topology": "random",
+   "update_mode": "sync",
+   "update_period": 2,
+   "update_p": 0.5,
+   "d": 1,
+   "delta": 8,
+   "rec_held_acc": 0.49999999999999994,
+   "rec_held_lo99": 0.490234375,
+   "SIGNAL_label": false,
+   "held_orig": {
+    "acc": 0.49999999999999994,
+    "lo99": 0.490234375,
+    "hi99": 0.509765625,
+    "emit": 17394
+   },
+   "held_in": {
+    "acc": 0.4915364583333333,
+    "lo99": 0.4778645833333333,
+    "hi99": 0.5065104166666666,
+    "emit": 17197
+   },
+   "fresh_orig": {
+    "acc": 0.4993489583333333,
+    "lo99": 0.486328125,
+    "hi99": 0.5123697916666666,
+    "emit": 17530
+   },
+   "fresh_in": {
+    "acc": 0.48307291666666663,
+    "lo99": 0.46549479166666663,
+    "hi99": 0.5013020833333333,
+    "emit": 17607
+   },
+   "ka_exact": true,
+   "place_orig": {
+    "frac_eq_d": 0.10625,
+    "frac_gt_d": 0.89375,
+    "frac_unreach": 0.0,
+    "mean_hops_reach": 2.35
+   },
+   "place_in": {
+    "frac_eq_d": 0.9125,
+    "frac_gt_d": 0.0875,
+    "frac_unreach": 0.0,
+    "mean_hops_reach": 1.0875
+   }
+  },
+  {
+   "cell": "acf58f3434a3cc93",
+   "wave": "B",
+   "topology": "smallworld",
+   "update_mode": "sync",
+   "update_period": 2,
+   "update_p": 0.5,
+   "d": 1,
+   "delta": 8,
+   "rec_held_acc": 0.5358072916666666,
+   "rec_held_lo99": 0.5208300781249999,
+   "SIGNAL_label": false,
+   "held_orig": {
+    "acc": 0.5358072916666666,
+    "lo99": 0.5208300781249999,
+    "hi99": 0.55078125,
+    "emit": 1146
+   },
+   "held_in": {
+    "acc": 0.5319010416666666,
+    "lo99": 0.5188769531249999,
+    "hi99": 0.5475292968749998,
+    "emit": 1151
+   },
+   "fresh_orig": {
+    "acc": 0.5358072916666667,
+    "lo99": 0.51953125,
+    "hi99": 0.5520833333333333,
+    "emit": 1143
+   },
+   "fresh_in": {
+    "acc": 0.533203125,
+    "lo99": 0.5188769531249999,
+    "hi99": 0.5481770833333334,
+    "emit": 1135
+   },
+   "ka_exact": true,
+   "place_orig": {
+    "frac_eq_d": 0.675,
+    "frac_gt_d": 0.325,
+    "frac_unreach": 0.0,
+    "mean_hops_reach": 1.71875
+   },
+   "place_in": {
+    "frac_eq_d": 0.76875,
+    "frac_gt_d": 0.23125,
+    "frac_unreach": 0.0,
+    "mean_hops_reach": 1.23125
+   }
+  },
+  {
+   "cell": "81c3013444835406",
+   "wave": "B",
+   "topology": "smallworld",
+   "update_mode": "sync",
+   "update_period": 2,
+   "update_p": 0.5,
+   "d": 1,
+   "delta": 8,
+   "rec_held_acc": 0.5,
+   "rec_held_lo99": 0.5,
+   "SIGNAL_label": false,
+   "held_orig": {
+    "acc": 0.5,
+    "lo99": 0.5,
+    "hi99": 0.5,
+    "emit": 0
+   },
+   "held_in": {
+    "acc": 0.5,
+    "lo99": 0.5,
+    "hi99": 0.5,
+    "emit": 0
+   },
+   "fresh_orig": {
+    "acc": 0.5,
+    "lo99": 0.5,
+    "hi99": 0.5,
+    "emit": 0
+   },
+   "fresh_in": {
+    "acc": 0.5,
+    "lo99": 0.5,
+    "hi99": 0.5,
+    "emit": 0
+   },
+   "ka_exact": true,
+   "place_orig": {
+    "frac_eq_d": 0.69375,
+    "frac_gt_d": 0.30625,
+    "frac_unreach": 0.0,
+    "mean_hops_reach": 1.48125
+   },
+   "place_in": {
+    "frac_eq_d": 0.7875,
+    "frac_gt_d": 0.2125,
+    "frac_unreach": 0.0,
+    "mean_hops_reach": 1.2125
+   }
+  },
+  {
+   "cell": "f29ca123a2beb542",
+   "wave": "B",
+   "topology": "smallworld",
+   "update_mode": "sync",
+   "update_period": 2,
+   "update_p": 0.5,
+   "d": 1,
+   "delta": 8,
+   "rec_held_acc": 0.5130208333333333,
+   "rec_held_lo99": 0.48697265624999997,
+   "SIGNAL_label": false,
+   "held_orig": {
+    "acc": 0.5130208333333333,
+    "lo99": 0.48697265624999997,
+    "hi99": 0.5371126302083332,
+    "emit": 1761
+   },
+   "held_in": {
+    "acc": 0.5182291666666666,
+    "lo99": 0.4921875,
+    "hi99": 0.5410188802083332,
+    "emit": 1757
+   },
+   "fresh_orig": {
+    "acc": 0.5260416666666667,
+    "lo99": 0.50390625,
+    "hi99": 0.5501302083333334,
+    "emit": 1748
+   },
+   "fresh_in": {
+    "acc": 0.5201822916666667,
+    "lo99": 0.498046875,
+    "hi99": 0.5442708333333334,
+    "emit": 1752
+   },
+   "ka_exact": true,
+   "place_orig": {
+    "frac_eq_d": 0.73125,
+    "frac_gt_d": 0.26875,
+    "frac_unreach": 0.0,
+    "mean_hops_reach": 1.4875
+   },
+   "place_in": {
+    "frac_eq_d": 0.8,
+    "frac_gt_d": 0.2,
+    "frac_unreach": 0.0,
+    "mean_hops_reach": 1.2
+   }
+  }
+ ],
+ "compute": {
+  "cpu_s": 570.95,
+  "wall_s": 368.57,
+  "threads": 2
+ }
+}

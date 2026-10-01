@@ -436,3 +436,18 @@ Other:
 - Wake loss (SENSE not latched) caps 54 async NULL cells at <= .875: the light cone is optimistic on async.
 - NULL admissibility checklist (A integrity, B feasibility, C interpretation) delivered.
 - Queue: W2-T (checklist over all 454 NULL cells -> population rates).
+
+### W2-P (deposited wave2/W2-P/REPORT.md): MAJ placement counterfactual + timing ceilings
+- 35 MAJ graph champions under inward placement: 0/35 become SIGNAL (mean change -.003). Known-answer
+  35/35 exact. The relay_flood plant is also 0/35.
+- Joint light-cone + async cue-loss + wake ceiling for all 358 RELAY/MAJ evolve rows. It reproduces
+  H-PLANT 18/18, and 0/69 SIGNAL rows exceed their ceiling.
+- CONSTRUCTION-CAPPED NULLs (ceiling < .614, the 50%-power SIGNAL-attainable accuracy):
+  RELAY 17/146, MAJ 34/143 (6 placement-only), XOR 36/83, FLIP 24/82 (light cone only).
+  TOTAL 111/454 = 24% of C1's evolve NULLs were unwinnable by any program.
+- MAJ graph rows: 24 capped as placed, 18 capped even under correct placement, 11 open under both
+  (search failures).
+- F4: held acc up to .518 where no current-trial information can reach the actuator (stale cues from
+  earlier trials add zero-mean noise). W2-B P1's "exactly .5 per pair" holds only with no information
+  at all.
+- Inward placement is not uniformly easier (12 rows get lower ceilings).
