@@ -8,7 +8,10 @@ import pytest
 
 from prometheus.ananke import inference
 
-OUT = pathlib.Path(__file__).resolve().parents[1] / "out"
+# W2-K's saved C1b pair arrays (force-added; roles/**/*.npz is gitignored)
+OUT = pathlib.Path(__file__).resolve().parents[3] / "roles/Ananke/research/harvest/wave2/W2-K/out"
+if not (OUT / "pairs_m2spec.npz").exists():
+    pytest.skip("W2-K pair arrays not present", allow_module_level=True)
 
 
 def test_api_exists():

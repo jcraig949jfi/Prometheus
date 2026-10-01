@@ -367,3 +367,72 @@ Other:
 - W2-A2: run_wave persists the wave clock and PARKs on a non-exact resume.
 - Tests: 4 new files, 13 tests (6 failed before, all pass after). Related existing suites: 61 passed.
   Shared fixtures in prometheus/ananke/tests/conftest.py.
+
+### P-2 RESULT (principal): C1's decay "physics-dead" map is a relay_flood design artefact (decay 3)
+- Design (wave2/P-1/decay_plant.py): matched counterfactual on 3 random A0 RELAY rows where relay_flood
+  is viable at decay 0. decay_shift set to 3; relay_flood vs relay_refresh (3 lines renormalising S0 to
+  sign(S0)*256 each awake tick, then relay_flood unchanged); identical worlds (campaign.plant_viability
+  seeds, 16 worlds); eager CPU.
+- Result [V]: at decay 3, relay_flood falls in all 3 cells while refresh is EXACTLY its no-decay value.
+  | cell | decay 0 | relay_flood @ decay 3 | refresh @ decay 3 |
+  |---|---|---|---|
+  | dd265721 (random, async) | .797 | .625 | .797 |
+  | 7f193b43 (random, sync) | .724 | .604 | .724 |
+  | 5d87ec87 (ring, sync) | 1.000 | .677 | 1.000 |
+- Inference:
+  - decay_shift 3 does not physically prevent RELAY. C1's RELAY plant-viability collapse at decay > 0
+    (17% -> 0-5% viable in A0) and the SUPPORTED phase boundary on decay_shift (plant 1.0 -> .547) measure
+    relay_flood's write-on-change design.
+  - The same holds for the multi-hop "plant-dead" rows in P-1b, where most failures involve decay.
+  - The economy boundary is a budget identity (W2-A1 F5). So of C1's three SUPPORTED RELAY plant
+    boundaries (delta, decay, economy): delta is a light-cone near-tautology, decay is a plant artefact,
+    and economy is arithmetic.
+- Confidence: high for decay 3 on these 3 cells (exact equality); decay 1 is running.
+- Objection: 16 worlds per cell, 3 cells; refresh needs prog_len >= 15 (it ran at 16, as C1's plant
+  ran at max(L, 12)).
+- Next: append to C1_ERRATA as E-W13 once decay 1 is in.
+
+### Process incident (principal, ~01:30Z)
+- I committed and pushed 96b47d73e with test_reading3_w2k.py failing (3/12). The test read its data
+  relative to its own folder, and the .npz arrays are gitignored.
+- The commit command did not gate on pytest's RC: the same defect as memory
+  feedback_gate_commits_on_tool_exit_not_pipe.
+- Fixed in the next commit: path corrected, skip if the data is absent, the 40 KB arrays force-added,
+  12/12 pass, commit gated on RC.
+- Module code was unaffected.
+- P-2 UPDATE: decay_shift 1 gives refresh .792/.724/1.000 (no-decay .797/.724/1.000) vs flood .617/.604/.677.
+  The artefact holds at the harshest decay level as well. Recorded as C1_ERRATA E-W13.
+
+### W2-L (deposited wave2/W2-L/REPORT.md): FLIP NULL placement + relay-only control
+- F5 PROOF: copy-class policies (readout = x_k or y_{k-1}, no sign inversion) attain exactly <= .75 on
+  FLIP. Exceeding .75 requires computing m. Changed-cue trials give exactly 1/2 for every copy policy.
+- F4 [V]: RELAY_LATCH (14 lines, inside d9cc's genome space, no mapping inference) scores .688 and passes
+  SIGNAL, COMM_DEPENDENT and FLIP_FEEDBACK. FLIP_FEEDBACK is cheatable in-space (refines W2-B "SOUND"),
+  and it is blind to weak true inference (.63-.66 fail).
+- F3: relay_flood's FLIP edge is a change-gated teacher hold, and the echo HURTS (corrects W2-D F6).
+- FLIP placement (82 evolve rows):
+  - 24 P (light cone);
+  - 3 PLANT-SOLVED in exact genome space (6f82f9c7, 996716ac, 64d33b89), so S or U;
+  - 14 R-CANDIDATE (all decay > 0; only 22-28-line plants found);
+  - 41 UNDECIDED.
+  - "FLIP NULLs search-limited" is supported 3/82, open 55/82, false 24/82.
+- P-FLIP is decay-fragile (0/49 decay > 0 rows), the same pattern as relay_flood (E-W13).
+- Proposed ruler FLIP_CHANGE (changed-cue accuracy lo99 > .55): relays .46/.47, P-FLIP .958.
+- Clock cheat in <= 16 lines at d9cc: NOT SHOWN (~21 lines needed).
+- Queue: W2-S (FLIP_CHANGE on recorded champions; physics removal on the 41 UNDECIDED).
+
+### W2-O (deposited wave2/W2-O/REPORT.md): are C1 NULLs broken experiments?
+- 16/16 sampled NULLs reproduce bit-for-bit (held, final ranking, telemetry). BROKEN 0/16 (95% UB 17%).
+- Actuator reachability: 0 impossible worlds in XOR/FLIP/RELAY; MAJ 0.17%. Immaterial (W2-A1's 2.5% was
+  on A0 plant worlds).
+- Admissibility classes:
+  - CAPPED 4 (light cone);
+  - INERT 4 (readout never written in >= 50/64 worlds; 3 also FLAT, i.e. max_acc never > .5);
+  - ADMISSIBLE for an S/U reading 8 (strict 7).
+  - 49/454 C1 NULLs are FLAT searches.
+- So H6's exposure is attribution (capped/inert/flat mixed into the NULL population), not breakage.
+  Corrects my P-1 v3 emphasis on "possibly broken".
+- G12 false-alarms on zero_comm control arms (2/4 SIGNAL cells). NEUTRAL patch to the proposed guards.
+- Wake loss (SENSE not latched) caps 54 async NULL cells at <= .875: the light cone is optimistic on async.
+- NULL admissibility checklist (A integrity, B feasibility, C interpretation) delivered.
+- Queue: W2-T (checklist over all 454 NULL cells -> population rates).

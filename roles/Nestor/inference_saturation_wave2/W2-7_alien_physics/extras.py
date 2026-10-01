@@ -31,9 +31,9 @@ LD0 = {"swap": False, "regs": (None, None), "flags": ((0, 0), (0, 0)), "r": 0, "
 def victim_fid(vm, g, side, lay, ld, seed):
     n = 64
     ga, gb = (g, bytes(n)) if side == 0 else (bytes(n), g)
-    vb = bytes(random.Random(seed).randrange(256) for _ in range(n))
+    vb = bytes(random.Random(repr(seed)).randrange(256) for _ in range(n))
     tape, _, _, _ = AP.interact(vm, n=n, tape_len=lay.get("tape_len", 128), ga=ga, gb=gb, st_a=FRESH, st_b=FRESH,
-                                budget=300, ops_mask=0x2A, cmr=0.0, rng=random.Random(seed), layout=lay, ld=ld,
+                                budget=300, ops_mask=0x2A, cmr=0.0, rng=random.Random(repr(seed)), layout=lay, ld=ld,
                                 victim_side=1 - side, victim_bytes=vb)
     v0 = 0 if side == 1 else n
     return sum(a == b for a, b in zip(tape[v0:v0 + n], g)) / n
@@ -90,7 +90,8 @@ crit = {"C2_fail": 0, "C4_fail_given_C2": 0, "C5_fail_given_C2C4": 0, "n_draws":
 term = {"copy_truncated_by_slice_end": 0, "n": 0}
 for i, r in enumerate(rows):
     g = bytes.fromhex(r["hex"])
-    spc = ast.literal_eval(r["trace"]).get("side_pass_counts", [1, 0])
+    tr = r["trace"] if isinstance(r["trace"], dict) else ast.literal_eval(r["trace"])
+    spc = tr.get("side_pass_counts", [1, 0])
     side = 0 if spc[0] >= spc[1] else 1
     ga, gb = (g, bytes(64)) if side == 0 else (bytes(64), g)
     if i not in surv1500:

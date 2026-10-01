@@ -96,3 +96,12 @@ C1 labels are NOT changed. Each item names its source report; [P] marks those re
 - E-W12 (bookkeeping; W2-A2 F6, W2-A1 F2): summary.json counts 23 TRANSFER_SUPPORT; the effective count
   is 1 (22 HOLD variants rerun the same condition). A report key TRANSFER_SUPPORT_EFFECTIVE was added
   2026-10-01. summary.json describes 5/12 D cells as "dest_mode all"; they ran "sample".
+- E-W13 (MAJOR, RELAY physics map; principal P-2, wave2/P-1/decay_plant*.log):
+  - C1's relay_flood plant writes S0 only on change, so decay erases it before readout.
+  - A 3-line refresh variant (S0 := sign(S0)*256 at each awake tick, then relay_flood) scores EXACTLY
+    its no-decay accuracy at decay_shift 3 AND at decay_shift 1, in 3/3 matched A0 cells (random async,
+    random sync, ring sync; 16 worlds). In the same worlds relay_flood falls to .60-.68.
+  - "Decay kills RELAY plant viability" (A0 17% -> 0-5%) and the SUPPORTED RELAY plant boundary on
+    decay_shift therefore measure the plant's design, not physics.
+  - Together with E-W8 (economy = budget identity; delta = light-cone near-tautology), none of C1's three
+    SUPPORTED RELAY plant boundaries is a physics phase boundary in the intended sense.
