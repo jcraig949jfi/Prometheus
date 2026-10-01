@@ -1,0 +1,94 @@
+{
+ "panel_strata": {
+  "0/3+0/3": {
+   "pairs": 3495,
+   "lethal_raw": 132,
+   "lethal": 131,
+   "rate": 0.0375,
+   "null": 0.0
+  },
+  "0/3+1/3": {
+   "pairs": 1097,
+   "lethal_raw": 109,
+   "lethal": 108,
+   "rate": 0.0985,
+   "null": 0.2593
+  },
+  "1/3+1/3": {
+   "pairs": 108,
+   "lethal_raw": 30,
+   "lethal": 30,
+   "rate": 0.2778,
+   "null": 0.583
+  }
+ },
+ "panel_raw_excess": 0.7801,
+ "panel_excess_quantiles": {
+  "min": 0.0,
+  "median": 0.643,
+  "max": 2.314,
+  "n_ge1": 15,
+  "n_ge1.5": 4,
+  "n": 47
+ },
+ "comparators_strata": {
+  "0/3+0/3": {
+   "pairs": 2722,
+   "lethal_raw": 117,
+   "lethal": 101,
+   "rate": 0.0371,
+   "null": 0.0
+  },
+  "0/3+1/3": {
+   "pairs": 1462,
+   "lethal_raw": 272,
+   "lethal": 206,
+   "rate": 0.1409,
+   "null": 0.2593
+  },
+  "1/3+1/3": {
+   "pairs": 519,
+   "lethal_raw": 254,
+   "lethal": 174,
+   "rate": 0.3353,
+   "null": 0.583
+  }
+ },
+ "comparators_raw_excess": 0.9434,
+ "comparators_excess_quantiles": {
+  "min": 0.0,
+  "median": 0.696,
+  "max": 1.715,
+  "n_ge1": 6,
+  "n_ge1.5": 1,
+  "n": 48
+ },
+ "bootstrap_95": {
+  "SF_pooled_excess": [
+   0.643,
+   0.914
+  ],
+  "SF_over_SD_rate": [
+   0.373,
+   0.852
+  ]
+ },
+ "loc_SF_enrichment": {
+  "EXEC_PRE": 1.36,
+  "NOT_EXEC": 0.37,
+  "DEST": 1.81,
+  "COPY": 0.0,
+  "COUNT": 1.46,
+  "SRC": 1.36,
+  "EXEC_POST": 0.0
+ },
+ "loc_SD_enrichment": {
+  "EXEC_PRE": 1.35,
+  "SRC": 0.68,
+  "NOT_EXEC": 0.58,
+  "COUNT": 0.88,
+  "DEST": 0.81,
+  "EXEC_POST": 1.13,
+  "COPY": 5.21
+ }
+}
