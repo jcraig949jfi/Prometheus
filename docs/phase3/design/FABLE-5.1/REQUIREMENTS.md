@@ -45,6 +45,14 @@ one core and about 5.0 billion per second on all threads (three runs each,
 process/vm_throughput_bench.py). A real organism in a real world will be
 slower. I assume a factor of 10 until it is measured.
 
+> Annotation, 2026-10-01, after the freeze. It has now been measured once.
+> The P1 prototype kernel, with a world in the loop, ran 1.70 billion
+> organism instructions per second on 12 threads of the same machine
+> (prototype/p1_slice/RECEIPT_qualify.json, section G). That is about a
+> factor of 3 below the toy figure, not 10. The prototype machine is much
+> smaller than the workspace machine will be, so the planning figures in
+> section 13 are left as written.
+
 ## How to read this file
 
 Each requirement has an id, a status and four lines.

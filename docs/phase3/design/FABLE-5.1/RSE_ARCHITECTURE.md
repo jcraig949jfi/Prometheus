@@ -505,4 +505,113 @@ and OPEN_QUESTIONS.md carries it.
 
 ## 13. Slots filled after salvage
 
-(Added after SALVAGE_MATRIX.md. Empty at the freeze.)
+Added 2026-10-01, after SALVAGE_MATRIX.md. Sections 1 to 12 are unchanged
+since the freeze (a0e3a4d03). Row ids (O-03, W-01, ...) are rows of
+SALVAGE_MATRIX.md section 3.
+
+### 13.1 What fills each slot
+
+| layer | slot | filled by | status |
+|---|---|---|---|
+| kernel | queue and lease | Agent Fabric store and lease (I-01) | harden; workers are Linux-only, so Phase 3A runs a local runner on M1 under a Fabric lease |
+| kernel | receipt, ledger | toolbox receipt.v1 (I-02), with a hash chain and prediction window (I-03) and database triggers for append-only records (I-04) | harden |
+| kernel | verdict type | Charon three-valued checks with counts (M-01); Hecate contract in exact fractions (W-09); Techne measurement type (M-02) | extract |
+| kernel | qualification gate | Techne certify and constancy probe (M-02); Hecate corruption operators (M-03); Ananke Wave-2 lockstep library (C-01) | extract, harden |
+| kernel | preregistration checks | Harmonia primitives and adjudicator (M-05); Diomedes census (M-09) | extract |
+| kernel | failure fixtures | Necropolis cases (M-12); 31 real defects in salvage report 04 list B; 30 in SALVAGE_MATRIX section 5 | port |
+| kernel | sealed-world broker | Cosmos ordering-and-commitment protocol (W-11) | harden; custody is new |
+| kernel | index, digest | Atlas tables (I-07); mailer and honest renderer (I-09) | harden |
+| kernel | model-call path | prometheus_llm (I-08) | harden |
+| worlds | RECALL | Archaeon event-stream grammar (W-01) | extract |
+| worlds | TRACK, IDENTIFY | Ensorain exact-Bayes streams (W-02) | extract |
+| worlds | RETAIN | none; the P1 prototype is the first version | new |
+| worlds | RECOMBINE | Ensorain surrogate and pair-block holdout (W-03) | extract parts |
+| worlds | CHAIN | compositional asks of W-01; exact closure method (S-09) | extract parts |
+| worlds | FAMILIES | none | new |
+| worlds | DOUBT | Ludus solver pattern (W-04); Cosmos misleading-hint dial (W-12) | extract parts |
+| worlds | MINED | Hecate sampled finite systems (W-10) | extract |
+| worlds | demand certificates | none: no code computes the best value of a restricted policy class | new |
+| substrates | REF | none | new |
+| substrates | WM | none as code; layout from Crius (O-03), conventions from Proteus (O-01), kernel pattern from D-5 (O-04) | rebuild |
+| substrates | PN | none: no network in the tree keeps weights across episodes (O-11) | rebuild |
+| substrates | first open arm | Ananke packet-tensor engine, message-passing (O-09) | harden, after P1 to P3 |
+| rulers | class exclusion | none | new; first version in the P1 prototype |
+| rulers | interchange, lesion | Ananke lens design and failure modes (C-02); Cosmos planted-system gate (C-03); Crius store conditions (C-04); Ares cuts (C-05) | extract |
+| rulers | material tracing | Archaeon record format and fixtures (C-06) | extract; a tracer per substrate is new |
+| rulers | search-power curve | vocabulary from Ergon and D-5 (S-06) | new; first version in the P1 prototype |
+| rulers | cost meters | none | new |
+| search | protocol | reach classes and typed states (S-01); escrow and keyed pairing (S-08) | extract |
+| experiments | P6 negative control | Aphrodite engine as the fixed-procedure learner (O-13) | harden |
+| experiments | P8 statistic | Theseus divergence statistic (S-07) | extract |
+
+No old engine continues as an engine.
+
+### 13.2 Adjustments the salvage evidence asks for
+
+These add to the frozen sections. None removes anything.
+
+1. To section 6.2 (WM). The Crius machine already has the three-store
+   layout. Its defects become three kernel tests for WM: every instruction
+   field decodes by modulus; no identifier counter is visible to the
+   organism; no capability-specific opcode exists above scaffold level S3.
+2. To section 4 (kernel) and DEV-04. The developmental control set gains an
+   identifiers-only sham: the store's identifiers kept, its contents
+   emptied.
+3. To section 4 (rulers) and CAUS-03. An interchange verdict is reported
+   over a sweep of swap ticks, with the declared state boundary on the row.
+   Every intervention first passes a control-identity audit: it is not a
+   no-op, not a constant, not identical by design to another arm, and it is
+   reversible by a witness.
+4. To section 10 (operating model). Phase 3A does not need a distributed
+   queue. One host runs campaigns under one lease; the two small Linux nodes
+   are used for clean-clone and cross-host replay.
+5. To section 11 (gates). Sealed worlds leave the working tree by the day-30
+   gate. The search-rule incident of 2026-10-01
+   (salvage_reports/00_SEARCH_RULE_INCIDENT.md) is the reason.
+6. To section 6.4 (open arms). The first open arm is named: message
+   passing, on the Ananke engine. It still waits for P1 to P3.
+7. To section 7, P6. The negative control exists. The positive control does
+   not, and the old record is a warning: a fixed-procedure learner starting
+   from nothing built no reusable structure in 8 of 8 runs.
+8. To section 4. One vocabulary for controls, the five names of
+   REQUIREMENTS 1.3. The old tree uses "cheat control" for three different
+   things.
+
+### 13.3 What the P1 prototype added
+
+prototype/p1_slice/ is a working miniature of the calibration slice, built
+and run on 2026-10-01 after the freeze. Its results are C0 observations
+about an instrument. Four of them change how the first build is planned.
+
+1. Throughput. With a world in the loop the compiled kernel ran 1.70
+   billion organism instructions per second on 12 threads (1.86 million
+   lifetimes per second). REQUIREMENTS assumed a factor of 10 below the toy
+   benchmark; the measured factor is about 3. The planning figure of 100
+   million instructions per second for the real WM kernel keeps a wide
+   margin.
+2. The harness is part of the instrument. With the fast-state reset
+   deliberately broken, the BUILD ruler passed an organism that cannot
+   build. Only a separate reset-equivalence check caught it. The kernel
+   therefore qualifies the harness (ORG-02) with its own fire test, beside
+   every ruler.
+3. Power is a gate, not a paragraph. The first gate run failed because
+   thresholds and sample sizes were frozen without checking that every
+   preregistered verdict was attainable. The runner now computes exact power
+   from the schedules alone, before any organism runs, and refuses below
+   0.99.
+4. The acceptance rule is a first-order factor in reach. Recovery of one
+   missing instruction was 24, 9 or 1 of 24 lineages depending only on the
+   rule, and no rule dominated across distances. Every search-power curve is
+   therefore measured under at least three acceptance rules, and SRCH-01's
+   "declared, varied factor" includes the acceptance rule by name.
+
+It also produced one small unplanned observation. Blind search from an empty
+program found a builder with no jump, which used never-written registers as
+constants. Register initialisation is a world variable and is swept in P3.
+
+### 13.4 Slots that stay empty
+
+Fourteen components have no starting point in the tree. SALVAGE_MATRIX.md
+section 4 lists them. The four the design leans on most: demand-certificate
+solvers, the WM kernel, the search-power instrument and the runner's
+refusal gates.
