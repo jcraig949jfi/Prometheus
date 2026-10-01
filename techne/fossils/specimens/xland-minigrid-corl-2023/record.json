@@ -1,0 +1,195 @@
+{
+  "schema": "techne.fossil.record/1",
+  "specimen_id": "xland-minigrid-corl-2023",
+  "canonical_name": "XLand-MiniGrid -- XLand-MiniGrid: Scalable Meta-Reinforcement Learning Environments in JAX (Alexander Nikulin, Vladislav Kurenkov, Ilya Zisman, Viacheslav Sinii, Artem Agarkov, Sergey Kolesnikov; NOT_FOUND_AT_PIN (GitHub org 'corl-team'; institution not stated in tree); 2023-2025)",
+  "aliases": [
+    "xminigrid (PyPI/package name)",
+    "XLand-MiniGrid",
+    "xland-minigrid (repo name)"
+  ],
+  "lineage": "README: 'inspired by the diversity and depth of XLand and the simplicity and minimalism of MiniGrid'; 'comes with example environments ported from the original MiniGrid'; benchmarks 'following the procedure used to train DeepMind AdA agent from the original XLand'; baselines 'in the PureJaxRL style'; API 'combines dm_env and gymnax interfaces' after trying Jumanji; See Also lists Brax, Gymnax, Jumanji, Pgx, JaxMARL, Craftax, Purejaxql. Commented-out README note references XLand-100B dataset (github.com/dunno-lab/xland-minigrid-datasets) 'based on XLand-MiniGrid'. || main loop (reader, from the code): Environment.step applies the agent's action to the grid (take_action), then lax.scan's over the task's encoded production rules (check_rule, lax.switch dispatch per rule) to transform grid/agent, then evaluates the encoded goal (check_goal) to decide termination and a time-discounted reward of 1 - 0.9*step/max_steps, truncating at max_steps; the meta-training loop (train_meta_task.make_train) samples a fresh batch of rulesets from a Benchmark each meta-update and runs recurrent PPO over multi-trial rollouts.",
+  "domain": [
+    "meta-reinforcement-learning",
+    "procedural-environments",
+    "gridworld",
+    "jax"
+  ],
+  "era": "2023-2025",
+  "version": "github.com/corl-team/xland-minigrid main @ 0d306d1414dcb6e451358d94e7d9a91879462ee1 (committed 2025-12-16; 70 commits since 2023-12-01; 70 tracked files)",
+  "source_origin": {
+    "artifacts": [
+      {
+        "kind": "git",
+        "url": "https://github.com/corl-team/xland-minigrid",
+        "commit": "0d306d1414dcb6e451358d94e7d9a91879462ee1",
+        "commit_resolved": "0d306d1414dcb6e451358d94e7d9a91879462ee1",
+        "commit_date": "2025-12-16T18:56:07+03:00"
+      }
+    ]
+  },
+  "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+  "source_identity": {
+    "repo": "github.com/corl-team/xland-minigrid",
+    "branch": "main",
+    "other_branches_or_versions": "Remote branches: origin/main only. Tags: v0.3.0 (inital benchmarks), v0.6.0, v0.7.0, v0.8.0, v0.9.0, v0.9.1, v0.9.2 (migrate to uv). Pinned HEAD is one commit past v0.9.2 ('compatibility with python3.9 (#55)') and __version__ = 0.9.3 (untagged)."
+  },
+  "hashes": {
+    "tree_sha256": "6226e0ec157b64a5f8f436ccd361d2376318a0a2c4706257d1d20aaae480d4c6",
+    "n_files": 70,
+    "bytes": 2086628,
+    "artifacts": [
+      {
+        "filename": "https://github.com/corl-team/xland-minigrid",
+        "sha256": null,
+        "commit": "0d306d1414dcb6e451358d94e7d9a91879462ee1"
+      }
+    ],
+    "body_location": "C:\\Prometheus\\vault\\fossils\\xland-minigrid-corl-2023",
+    "hash_list": "techne/fossils/specimens/xland-minigrid-corl-2023/UPSTREAM_HASHES.txt"
+  },
+  "license": {
+    "spdx": "Apache-2.0",
+    "status": "permissive",
+    "evidence": "licence file LICENSE, first line 'Apache License'; metadata field: pyproject.toml: license = {file = \"LICENSE\"}; classifier \"License :: OSI Approved :: Apache Software License\"; LICENSE is the stock Apache-2.0 text; the appendix boilerplate 'Copyright [yyyy] [name of copyright owner]' is left unfilled, so no copyright holder is named anywhere in the tree. README licence badge is commented out ([//]: # markdown comments mention license-Apache_2.0). No third-party copyright headers in source."
+  },
+  "acquisition_date": "2026-09-30",
+  "language": [
+    "Python",
+    "Jupyter Notebook (examples/)",
+    "YAML (configs/)",
+    "shell (scripts/generate_benchmarks.sh)"
+  ],
+  "build_system": "pyproject.toml with setuptools>=61.0 + wheel backend (setuptools.build_meta), src/ layout, dynamic version from xminigrid.__version__ (0.9.3); uv.lock (lockfile version 1, revision 3) present; CONTRIBUTING.md says 'We use uv for dependency management'",
+  "compiler_or_interpreter": "CPython >=3.9 per pyproject requires-python; classifiers list 3.9 and 3.10; ruff target-version py310; pyright pythonVersion 3.10",
+  "dependencies": [
+    "jax>=0.4.27 (uv.lock: 0.8.1)",
+    "jaxlib>=0.4.27 (uv.lock: 0.8.1)",
+    "flax>=0.8.0 (uv.lock: 0.12.1)",
+    "rich>=13.4.2",
+    "tqdm>=4.67.1",
+    "chex>=0.1.85 (uv.lock: 0.1.91)",
+    "imageio>=2.31.2",
+    "imageio-ffmpeg>=0.4.9",
+    "[dev] ruff>=0.1.6, pre-commit>=3.3.3, pyright>=1.1.347",
+    "[baselines] matplotlib>=3.7.2, wandb>=0.15.10, pyrallis>=0.3.1, distrax>=0.1.4 (lock 0.1.7), optax>=0.1.5 (lock 0.2.6), orbax>=0.1.9, tqdm>=4.66.4",
+    "FLAG: README install alternative 'uv pip install \"xminigrid @ git+https://github.com/corl-team/xland-minigrid.git\"' is an unpinned git install",
+    "FLAG: README says 'the installation of JAX may differ depending on your hardware accelerator' and defers to the JAX install guide",
+    "SETUP FETCH: uv pip install \"xminigrid @ git+https://github.com/corl-team/xland-minigrid.git\" (README, unpinned)",
+    "SETUP FETCH: git clone git@github.com:corl-team/xland-minigrid.git (README/CONTRIBUTING)",
+    "SETUP FETCH: RUNTIME: xminigrid.load_benchmark() downloads pre-sampled benchmarks via urllib.request.urlretrieve from https://huggingface.co/datasets/Howuhh/xland_minigrid/resolve/main/<filename> on first use, cached to XLAND_MINIGRID_DATA (default ~/.xland_minigrid); repo id overridable via XLAND_MINIGRID_HF_REPO_ID (src/xminigrid/benchmarks.py _download_from_hf)",
+    "SETUP FETCH: Colab badge links to examples/walkthrough.ipynb; wandb logging in training scripts (wandb.init) requires network"
+  ],
+  "run_classification": "NOT_ATTEMPTED",
+  "test_classification": "NOT_ATTEMPTED",
+  "entry_points": [
+    "src/xminigrid/environment.py Environment (abstract base; reset() calls _generate_problem then builds a TimeStep; step() applies take_action, then check_rule over the rule encodings, then check_goal for termination, reward = 1 - 0.9*(step_num/max_steps) on success, truncation at max_steps)",
+    "src/xminigrid/envs/xland.py XLandMiniGrid (the meta-RL environment: default_params sets view_size=5 and max_steps=3*H*W; _generate_problem picks a room layout R1/R2/R4/R6/R9, places ruleset.init_tiles at random coordinates and the agent, and stores goal_encoding/rule_encoding from the ruleset)",
+    "src/xminigrid/core/rules.py check_rule + BaseRule subclasses (jax.lax.scan over rule encodings, jax.lax.switch on encoding[0] to dispatch among 12 rule classes: EmptyRule, AgentHoldRule, AgentNearRule, TileNearRule, TileNear{Up,Right,Down,Left}Rule, AgentNear{Up,Right,Down,Left}Rule; each rule transforms grid/agent when its condition holds)",
+    "src/xminigrid/core/goals.py check_goal + BaseGoal subclasses (same dispatch pattern over 15 goal classes; goals only test conditions, never mutate state)",
+    "src/xminigrid/benchmarks.py Benchmark / load_benchmark (flax struct holding padded arrays of goals, rules, init_tiles, num_rules; sample_ruleset/get_ruleset/shuffle/split/filter_split; load_benchmark downloads from HuggingFace on first use; registered names trivial-21k, small-1m, medium-1m, medium-3m, high-1m, high-3m)",
+    "scripts/ruleset_generator.py sample_ruleset / __main__ (offline, python-random based generator: samples a goal, then a chain of production rules of depth chain_depth whose outputs feed the level above, optional pruning, distractor objects and distractor rules; rejection-samples unique rulesets, pads and saves bz2 pickle)",
+    "training/train_meta_task.py make_train / train (pmap'd recurrent PPO meta-training loop: per meta-update vmap benchmark.sample_ruleset over envs, reset, then inner PPO updates over trials with prev_action/prev_reward inputs; logs to wandb, optional orbax checkpoint)",
+    "src/xminigrid/registration.py make / register / registered_environments (gym-style registry; src/xminigrid/__init__.py registers XLand-MiniGrid-R{1,2,4,6,9}-NxN and ported MiniGrid-* envs)"
+  ],
+  "example": {
+    "command": "python -m xminigrid.manual_control --env-id=\"MiniGrid-Empty-8x8\"",
+    "input": "Python snippet in README: benchmark = xminigrid.load_benchmark(name=\"trivial-21k\"); ruleset = benchmark.sample_ruleset(ruleset_key); env, env_params = xminigrid.make(\"XLand-MiniGrid-R9-25x25\"); env_params = env_params.replace(ruleset=ruleset); timestep = jax.jit(env.reset)(env_params, reset_key); timestep = jax.jit(env.step)(env_params, timestep, action=0)",
+    "output": "README: 'timestep is a dataclass containing step_type, reward, discount, observation, as well as the internal environment state'; env.render(env_params, timestep) returns an rgb_array (np.ndarray) or rich_text string per environment.py. Training script prints 'Final return: <float>' and logs eval/returns_mean to wandb. No literal output values given in README."
+  },
+  "environment": {
+    "runner": "native",
+    "note": "NOT RUN in this pass (nothing executed from the tree); host class from the reader draft: Any CPython >=3.9 host with JAX (CPU works per README); paper-scale training in README/configs assumes one or more GPUs/TPUs ('millions of steps per second on a single GPU', 'Multi-GPU PPO baselines')"
+  },
+  "patches": [],
+  "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+  "upstream_docs": [
+    "https://arxiv.org/abs/2312.12044",
+    "https://openreview.net/forum?id=xALDC4aHGz",
+    "bibtex: @inproceedings{nikulin2023xlandminigrid, title={{XL}and-MiniGrid: Scalable Meta-Reinforcement Learning Environments in {JAX}}, booktitle={Intrinsically-Motivated and Open-Ended Learning Workshop, NeurIPS2023}, year={2023}}",
+    "https://huggingface.co/datasets/Howuhh/xland_minigrid/tree/main (pre-sampled benchmarks)",
+    "https://wandb.ai/state-machine/xminigrid/reports/XLand-MiniGrid-Public-Logs--Vmlldzo4NjUxMTcw (open logs)",
+    "https://colab.research.google.com/github/corl-team/xland-minigrid/blob/main/examples/walkthrough.ipynb",
+    "README badge img shows 'arXiv-2210.07105' text but links to https://arxiv.org/abs/2312.12044 (badge label mismatch)"
+  ],
+  "human_capability_summary": {
+    "built_to": "README: 'a suite of tools, grid-world environments and benchmarks for meta-reinforcement learning research inspired by the diversity and depth of XLand and the simplicity and minimalism of MiniGrid', 'written in JAX from scratch and designed to be highly scalable, democratizing large-scale experimentation with limited resources' -- 'Ever wanted to reproduce a DeepMind AdA agent? Now you can'.",
+    "pressure": "README: 'In the original MiniGrid some environments have dynamic goals, but the dynamics are never changed. To train and evaluate highly adaptive agents, we need to be able to change the dynamics in non-trivial ways'; plus existing JAX env APIs (Jumanji, Gymnax) were 'not suitable for meta learning' or 'not actively supported'.",
+    "success_means": "README: scalability metrics -- 'Easily scales to 2^16 parallel environments and millions of steps per second on a single GPU', PPO baselines 'can achieve 1 trillion environment steps under two days'; agent quality via eval returns (training scripts log eval/returns_mean; README warns 'Do not expect that provided baselines will solve the hardest environments or benchmarks')."
+  },
+  "known_human_problem_solved": "README: 'a suite of tools, grid-world environments and benchmarks for meta-reinforcement learning research inspired by the diversity and depth of XLand and the simplicity and minimalism of MiniGrid', 'written in JAX from scratch and designed to be highly scalable, democratizing large-scale experimentation with limited resources' -- 'Ever wanted to reproduce a DeepMind AdA agent? Now you can'.",
+  "hardware_assumptions": "",
+  "human_environmental_pressure": "",
+  "human_failure_condition": "",
+  "behavioral_entry_point": "src/xminigrid/core/rules.py:check_rule and BaseRule subclasses (rule dynamics); src/xminigrid/core/goals.py:check_goal (goal semantics); scripts/ruleset_generator.py:sample_ruleset (task-distribution generation: chain depth, pruning, distractors); src/xminigrid/envs/xland.py:XLandMiniGrid._generate_problem (layout/object placement); src/xminigrid/environment.py:Environment.step (reward shaping)",
+  "observability": {
+    "EXECUTABLE": "unknown",
+    "OBSERVABLE": "unknown",
+    "ORACLE_BACKED": "unknown",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "unknown"
+  },
+  "lineage_relations": [],
+  "acquisition_tags": [
+    "operator-chat-2026-09-30-download-for-nyx",
+    "prior_art_raid",
+    "section-II",
+    "TECHNE-132",
+    "reader-draft:READER_DRAFTS_2026-09-30/xland-minigrid.json"
+  ],
+  "historical_disposition": {
+    "state": "UNKNOWN",
+    "failure_reasons": [],
+    "superseded_by": "",
+    "rival_of": "",
+    "evidence": []
+  },
+  "versions_preserved": [],
+  "receipts": [],
+  "nyx_handoff": {
+    "here_is_the_machine": "vault body <vault>/xland-minigrid-corl-2023 (host-local; `python -m techne.fossils.harvest rematerialize xland-minigrid-corl-2023` on a host without it) ; tracked techne/fossils/specimens/xland-minigrid-corl-2023",
+    "where_it_came_from": "https://github.com/corl-team/xland-minigrid ; ORIGINAL_AUTHORITATIVE_RELEASE ; commit 0d306d1414dcb6e451358d94e7d9a91879462ee1 ; licence Apache-2.0",
+    "how_to_run_it": "not executed from this record (NOT_ATTEMPTED); upstream entry: python -m xminigrid.manual_control --env-id=\"MiniGrid-Empty-8x8\" ; host class: Any CPython >=3.9 host with JAX (CPU works per README); paper-scale training in README/configs assumes one or more GPUs/TPUs ('millions of steps per second on a single GPU', 'Multi-GPU PPO baselines')",
+    "how_we_know_it_runs": "we do not: no run receipt. The body is pinned (tree_sha256 6226e0ec157b64a5, UPSTREAM_HASHES.txt) and verifies by hash; that is preservation, not execution",
+    "what_humans_used_it_for": "README: 'a suite of tools, grid-world environments and benchmarks for meta-reinforcement learning research inspired by the diversity and depth of XLand and the simplicity and minimalism of MiniGrid', 'written in JAX from scratch and designed to be highly scalable, democratizing large-scale experimentation with limited resources' -- 'Ever wanted to reproduce a DeepMind AdA agent? Now you can'."
+  },
+  "seat": "Techne",
+  "runtime": {
+    "python_major": 3,
+    "native_deps": [
+      "JAX / jaxlib (README: 'can run on CPU, GPU and TPU'; baselines use jax.pmap across local devices; configs/meta.yaml uses num_envs 16384 and 10B timesteps implying accelerator)",
+      "imageio + imageio-ffmpeg (rendering/video)",
+      "wandb (baselines, network logging)",
+      "orbax (checkpointing, baselines)"
+    ],
+    "host_class": "Any CPython >=3.9 host with JAX (CPU works per README); paper-scale training in README/configs assumes one or more GPUs/TPUs ('millions of steps per second on a single GPU', 'Multi-GPU PPO baselines')"
+  },
+  "reader_notes": {
+    "draft": "techne/acquisition/prior_art_raid/READER_DRAFTS_2026-09-30/xland-minigrid.json",
+    "copyright_holders_by_header_count": {},
+    "things_the_reader_could_not_verify": [
+      "Institution/affiliation of authors: not stated anywhere in the tree (only GitHub org 'corl-team' and a maintainer email in pyproject).",
+      "Copyright holder: LICENSE appendix placeholder unfilled; zero copyright headers in source.",
+      "Whether the HuggingFace benchmark files still resolve (no network fetches performed).",
+      "Notebook contents (examples/*.ipynb) not read in full.",
+      "Actual runtime behaviour, FPS claims, and 'trillion steps' claim (no code executed).",
+      "README example command in Baselines section references 'training/train_singe_task.py' (typo; tree has train_single_task.py)."
+    ],
+    "has_gitmodules_at_pin": false,
+    "has_lfs_at_pin": false,
+    "approx_tree_bytes_at_pin": 2086628
+  },
+  "preservation": {
+    "status": "SELF_CONTAINED",
+    "body_status": "SELF_CONTAINED",
+    "recipe_status": "NO_RECIPE",
+    "submodules": [],
+    "submodules_missing": [],
+    "submodules_drifted": [],
+    "unpinned_artifacts": [],
+    "git_lfs": false,
+    "network_fetch_in_recipe": [],
+    "checked_utc": "2026-09-30T23:03:40Z",
+    "note": "status is the worse of body_status and the recipe axis; a matching tree hash alone never implies completeness."
+  }
+}

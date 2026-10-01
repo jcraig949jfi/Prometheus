@@ -1,0 +1,39 @@
+{
+ "cell": "0187372b",
+ "row_kind": "evolve",
+ "wave": "A",
+ "family": "HOLD",
+ "topology": "torus",
+ "radius": 1,
+ "n_sites": 100,
+ "d0": 3,
+ "d_h": 3,
+ "dest_mode": "sample",
+ "plastic_route": 0,
+ "recorded_held": 0.75,
+ "recorded_held_lo99": 0.6490852864583333,
+ "conds": {
+  "native@d0": {
+   "acc": 0.6361,
+   "lo99": 0.5391,
+   "hi99": 0.75
+  },
+  "C1random@dh": {
+   "acc": 0.6536,
+   "lo99": 0.5625,
+   "hi99": 0.7617
+  }
+ },
+ "hops": {
+  "native@d0": {
+   "0": 32
+  },
+  "C1random@dh": {
+   "0": 32
+  }
+ },
+ "_compute": {
+  "wall_s": 6.4,
+  "cpu_s": 7.5
+ }
+}

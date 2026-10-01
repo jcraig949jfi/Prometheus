@@ -1,0 +1,5687 @@
+{
+ "N": 1000000,
+ "found": {
+  "0": 247,
+  "1": 183
+ },
+ "summary": {
+  "side0": {
+   "also_copies_other_side": 0,
+   "both_addr_set": 4,
+   "cnt_inherited": 211,
+   "dst_inherited": 172,
+   "geom_0->0": 3,
+   "geom_0->127": 1,
+   "geom_0->64": 76,
+   "geom_0->96": 4,
+   "geom_1->65": 9,
+   "geom_109->77": 1,
+   "geom_126->62": 2,
+   "geom_127->63": 13,
+   "geom_127->67": 1,
+   "geom_2->66": 2,
+   "geom_23->87": 1,
+   "geom_4->68": 1,
+   "geom_5->69": 1,
+   "geom_59->123": 1,
+   "geom_62->126": 2,
+   "geom_63->127": 12,
+   "geom_64->0": 74,
+   "geom_64->127": 1,
+   "geom_64->64": 1,
+   "geom_65->1": 12,
+   "geom_66->2": 1,
+   "geom_68->4": 1,
+   "geom_86->118": 1,
+   "geom_92->124": 1,
+   "geom_94->126": 2,
+   "geom_95->127": 4,
+   "geom_96->0": 13,
+   "geom_97->1": 5,
+   "geom_98->2": 1,
+   "n": 247,
+   "n_inh_addr=0": 4,
+   "n_inh_addr=1": 162,
+   "n_inh_addr=2": 81,
+   "op_LDDR": 134,
+   "op_LDIR": 113,
+   "randregs_ge_0.9": 3,
+   "randregs_good": 157,
+   "src_inherited": 152,
+   "trials": 7410
+  },
+  "side1": {
+   "also_copies_other_side": 0,
+   "both_addr_set": 4,
+   "cnt_inherited": 142,
+   "dst_inherited": 117,
+   "geom_0->0": 1,
+   "geom_0->32": 3,
+   "geom_0->64": 60,
+   "geom_1->65": 9,
+   "geom_101->37": 1,
+   "geom_126->62": 1,
+   "geom_127->31": 1,
+   "geom_127->63": 6,
+   "geom_27->91": 1,
+   "geom_31->127": 7,
+   "geom_32->0": 10,
+   "geom_33->1": 5,
+   "geom_34->2": 2,
+   "geom_34->66": 1,
+   "geom_48->16": 1,
+   "geom_62->126": 2,
+   "geom_63->127": 10,
+   "geom_64->0": 55,
+   "geom_65->1": 4,
+   "geom_66->2": 3,
+   "n": 183,
+   "n_inh_addr=0": 4,
+   "n_inh_addr=1": 147,
+   "n_inh_addr=2": 32,
+   "op_LDDR": 83,
+   "op_LDIR": 100,
+   "randregs_ge_0.9": 2,
+   "randregs_good": 114,
+   "src_inherited": 94,
+   "trials": 5490
+  }
+ },
+ "genomes": {
+  "side0": [
+   {
+    "hex": "cbeb540981430a1140a66cc1e50aa0c8c6c32938073ca0d24e0162be8359d92cd9172d52c7ddd798f4585ee32ae2b7a053578b91f86c857f47bd0baa3ccf9af0",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 0,
+    "dst": 64,
+    "inh": {
+     "src": true,
+     "dst": false,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "9d098d664ff7e3a836b2def8345d39258e724eb0ee7d5d903ff14ec0fd21e02985e2227f0d42d4e76f0bc66b7e339fa4f3f75204474cb3dc99f762a4db6a05ee",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 96,
+    "dst": 0,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "65d8149a2387ef509637ff99aa4148aa71b81e45941035915629241f849e05ae3d9d3e5d2105eae56faebfca9515b96718d823cfcfdc4daf32084b2421a18549",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 5,
+    "dst": 69,
+    "inh": {
+     "src": false,
+     "dst": false,
+     "cnt": true
+    },
+    "randregs_good_of_30": 28
+   },
+   {
+    "hex": "74a7c9522ca5c858f4f6e966ef23bf2a9806c3b30489be77c95518643a1fce926cd11c02d18eec6e5becaaafd66ccdeed9ec76dea45655045def4a2daccabfcd",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 4,
+    "dst": 68,
+    "inh": {
+     "src": true,
+     "dst": false,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "d0c1f121407b4c12079cc11ad0f288cf6ddf7dcd9898e72d28e44f3fc1570f744dfb47863ca374fe849cbc0272c3eb46cf7b106f7116fb16b08bdb22397d9985",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 64,
+    "dst": 0,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "facf86333e4107c127a11959a3804a8b0c0325317dd1e9226e680d7dc1f5595f07d388700d0eb65fbf2ddeb8bf95b7d3ff71113fcce55697cec1efaf6931848e",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 127,
+    "dst": 63,
+    "inh": {
+     "src": true,
+     "dst": false,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "83a5fb4050fbba7e4c43b5fe8957b3a9abc542af2802ed8571759b02665e80686467958291e1f704ad6edec8e76313048b5dffe4eda2cd688449a1f31a186a98",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 64,
+    "dst": 0,
+    "inh": {
+     "src": true,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "4d180b87f23684dc110486e017f86a7c16dd3b53adbaac3843f2c19010674aeceb8792dffb06943aaa0c9e6bfc1140b9e5af9606a5a84bcfefdb138880639a12",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 0,
+    "dst": 64,
+    "inh": {
+     "src": true,
+     "dst": false,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "a4a81e99d1fbbbc53371ad976f807055eef1833fd57f1ecd3ac48f3ffa0e179c11c028b8e5c3238b046b69b51f759e0a98dfe4c6ddcba0365a95ffc3e1cf8b13",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 23,
+    "dst": 87,
+    "inh": {
+     "src": true,
+     "dst": true,
+     "cnt": false
+    },
+    "randregs_good_of_30": 27
+   },
+   {
+    "hex": "51d1a5b54e2140b890c4e75585ea8b15740b4afc0e68ae200570ad4d38661968c52b3ca6f2956006b537a7b359932d77e68116d4124cf423ec4d7ee053f7e21c",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 64,
+    "dst": 0,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "93a88ab9b87ce6bd7dd7b9a80983f411c0e84ce591f7c0df6a6cfe7e93a2e67682d4d77212467ee4c96d1d7f2464def38f2c284db961ecbe5e69fddf07cd03ff",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 0,
+    "dst": 64,
+    "inh": {
+     "src": true,
+     "dst": false,
+     "cnt": true
+    },
+    "randregs_good_of_30": 1
+   },
+   {
+    "hex": "c0e15e534947fd53e15414d85f5ec7558852b46ae579d8512925c96e636c5d20be2b0976c8ef1551484ff89fad06f65f78b7f49b3c5ef8d6c4f626c2d7a7a330",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 0,
+    "dst": 64,
+    "inh": {
+     "src": true,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "1e7ffa472f0d87f771580a94df507208c4dfdad298d111bfb2be2bd7b3557ee152d778cb3ece32cdece5d7260d8424276538580a32258251761659923a49cd3d",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 127,
+    "dst": 63,
+    "inh": {
+     "src": true,
+     "dst": false,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "4094fd2cc0ec6808400af8640c51aab94f6ece1a9ce7f32664885b9f56a5af572eda298d6b068c7df2ed20e6c8de20b8bf1daea3a19622fc18aa07cbc279c2f4",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 64,
+    "dst": 0,
+    "inh": {
+     "src": true,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "8e9e0963ec36c0ab5aa9f4a6456ef1b104e7cb3b63b3592ce64eac8be10536a615aaf10c2af935af1cd0e9a2525104b4b7b21416ee470ce83dfcdfaede8ed5d5",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 64,
+    "dst": 0,
+    "inh": {
+     "src": true,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 1
+   },
+   {
+    "hex": "5683dedc23131a2fbe0f22d45c2f35c915941141a7fb8ff787e5b75c1cf4dca7f971827ca45405a1ea43402adb66e53ea122d28c1709a5cd69d1c1d06a357aa0",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 1,
+    "dst": 65,
+    "inh": {
+     "src": true,
+     "dst": false,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "21c0e4430045e79c34078878e370d3623e58912b982aedf14f0beb7c151a28178d2f2e8d089fb397a3c182e923aedff202a5115895f5a224bb43d194947e7e49",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 64,
+    "dst": 0,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "4b7304268421401b90c7ce60956765df7536d79a03d4ba8c02cc3eb7b4bec0e7492fc214b86ce1b9b94914ccbd194bc42787d29a05b88852669ae351c77f80d0",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 64,
+    "dst": 0,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "da50817a7c602ec0e7cae6b6767a3148ea5251a42eb1a030d7cccd32445fdc41456783ae5898fd66495981ecfe1eb765de572e2aadd3e5d37ff4d46a4fde6d33",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 64,
+    "dst": 0,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "f3f8130ebb5f29a97bd8e3f8252ebef3ef1363cfc99b65d40324fd37b75e706c495aa54e3c1d6c01c21225eeb6f7e7224a65c9afbfcb8e0bb2fdc2ccf1da61d2",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 63,
+    "dst": 127,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": false
+    },
+    "randregs_good_of_30": 1
+   },
+   {
+    "hex": "40cba0ae3c45ab4e59898c8bbe24e51697c12a0bde9121ee828a3a57992da5f29732aac0af9538758bc7bbff4d5677b1e83b0cbf37679f1e3535274fcebc6509",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 0,
+    "dst": 64,
+    "inh": {
+     "src": true,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "955d92563eb9ad6ea1f2eddbc44f59c8361908b5e870e32ec085978eb479f7a4b1bbc27e9c37aae4829e26a930e893c8f124e7a568031ada7eae4dbb3aa6b43c",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 64,
+    "dst": 0,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 2
+   },
+   {
+    "hex": "2752e1b4ab39a2245b0e844990b312b68586e704ee5cc181bd4c6b2e3bcba44cf91be793f9fba9be549eb6882b59275b5ef4f2f4027c76dafa318f90acc1d97a",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 59,
+    "dst": 123,
+    "inh": {
+     "src": true,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "f7e1c595e9206e947fbe9819b3911ed987a49e7d5aadb5cf4f8bfaad2346b98792d321a6d70d8a568c1a9f840d485f40995d6ee7ee91200ccbd4c95b76165531",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 97,
+    "dst": 1,
+    "inh": {
+     "src": true,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "ca4df573e940c4fc5c7f1e40e8e57e59e79d9c66dd79644c196dd363c472a0d83e9e1c4d4fb6aaad3c8cc890f1abccd17ae1b5a67577fd65be2773c912d8c7d5",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 0,
+    "dst": 64,
+    "inh": {
+     "src": true,
+     "dst": false,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "d13640e182e03ba23267ade897d766a0001a27f7881a4af28ea5e9f0961692cc8ea536cd3b5ce5d4d65052346b3cd547a941fc7319d94806953e17bdb4e269f1",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 0,
+    "dst": 64,
+    "inh": {
+     "src": true,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "f59d1e40e498f0e573d3133abca143b215762af3be6f2a9d14a135adf242109b553c92c711d3f449726174a4935d5340162c19e0b48adc438f67e2fe5b97c6ef",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 0,
+    "dst": 64,
+    "inh": {
+     "src": true,
+     "dst": false,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "406e99e6be7c66b8b49e36af7e3e3900b1e7f30ed299ed5930c53f893966ea4fb072706e2c8978bca97b77ea1f73f46d83542cf81a5d4dabc701feb0f011aaf6",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 64,
+    "dst": 0,
+    "inh": {
+     "src": true,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "ea57062fec2ec0c4b2d5b389e752a0e3d31807f30b5076bd65a811e075746c0b06431ead06495ba268aa46dbfac4e36ee408ca6ee72982b463930fdbf8d5cb3b",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 64,
+    "dst": 0,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "4d689daf3352662297a1278a051790a4bb32b0d79e59145e355c4c15f270292f276102642ee07eb25f725bee95a75ae7623ca1d8170e400a11ef1e3a5ec72e9a",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 96,
+    "dst": 0,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "c1ffc85e081939d03545b23484170d1da9a1330745a3e59e1d3893d22b4e1495838f0126fe01456d941fb95af0c412f5b2789ec9bf46d1850b2c3d87b78f8e75",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 0,
+    "dst": 64,
+    "inh": {
+     "src": true,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "0b0f7168742aa45cd90a0a4402703c1a21c0e531ddf6e4e7ae0a1502a1afbe14a5e7a019322e75bd3d2174201a853738bc759deffcd3b5ded7b3b1eacd399ff9",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 64,
+    "dst": 0,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "b224b99a6b8cceb223da11210b0821c0d35b51578b5bd036e97166d717a64bb5e7da1f721b4649f4366c9544eb4ec65ee409f2ac44e3ac435d9022a99f4e6379",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 64,
+    "dst": 0,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "98b25b3d9db038e94c1e539eb1bb25d4f7bed3f8adf27d723a3351869491953e188397d01efe8301c6409d193ccfe67baab23958429b8e15bfeba101d3e6e5a5",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 0,
+    "dst": 64,
+    "inh": {
+     "src": true,
+     "dst": false,
+     "cnt": false
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "2140625d809446cd334f3c911f0036a24b37069d6ae584322f78de21f87c7a68f08238dfe04e6f228ab97a38dbd965d7a6b9dc7602ff99c68207b0d99ead7ef2",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 0,
+    "dst": 64,
+    "inh": {
+     "src": true,
+     "dst": false,
+     "cnt": false
+    },
+    "randregs_good_of_30": 1
+   },
+   {
+    "hex": "ea59047186a7f9e9db458cab04b92140ed89d696ef1a4a2f48b0e70933895247b070afdf319307b872d9e4245d22d1640eb6f83458cf1e596ba7c2ac81c0370c",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 64,
+    "dst": 0,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "4ef2bae377824c6ba7b1941ca1683099186f9185c5b5afada11af82dc8854ee979e9b416fbe00e3dd9c5d18bacdefe39a33baf87a5b39da321c110a3cbf0a1e7",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 65,
+    "dst": 1,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "b138987e212f06a6192259c0624ae414120ccbda87d1aa2ffa86522d5147f2c0a44efb296693215f3d068b64abaa720933f2b7838bbe2c0635be2927e3e73842",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 96,
+    "dst": 0,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": false
+    },
+    "randregs_good_of_30": 1
+   },
+   {
+    "hex": "e145f4e0bc7acb13d3c680a5ff3512df0a6105f41140b0ff65c2a5ee48f83af63ecc79c637574ee5e6c88014f9a736c5a5089ec2733cb4f20f51f6c25fc0c345",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 0,
+    "dst": 64,
+    "inh": {
+     "src": true,
+     "dst": false,
+     "cnt": true
+    },
+    "randregs_good_of_30": 1
+   },
+   {
+    "hex": "c0836c5e25c5a1a06148ccdbb5406cf342ae1777bbd9ade5a200d3270dffdf1a3e16c44fc8f4c78f548b005bdc5359166fabdac7377747e415785424f7dcf1f2",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 0,
+    "dst": 64,
+    "inh": {
+     "src": true,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "025d1ec017a3cbc20155d4cce5418e7ade447b6257c8255ef2e601a379f2192d12924bd024bcfd2c0ae098565e4f3bbb41adfb14d29c0c2b282aad6df951df11",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 0,
+    "dst": 64,
+    "inh": {
+     "src": true,
+     "dst": false,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "f9f4e085e8c421c042d6bf24e1a732ee88634cd0f733e3dd4236fec55b47d2a4147ac6a3e97f534c0f90c21daaf08f5c9617a8cc46fae9b0e7eed8a281bcdfcb",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 64,
+    "dst": 0,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "fee82bc7e811403f2c3afa02e8d57c5024052a250c6ef08253c4dfe5ec7d655cd114ae2bf922c6212b3a3cc87b6ed064beeacca21c7d3e3f1108bf8a78b3677f",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 0,
+    "dst": 64,
+    "inh": {
+     "src": true,
+     "dst": false,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "fff0b4b72739abff6a632c2b872f199450666e113e4919a285f2e97f272f8d258ea99f2b550a8d8dece5a21bebc317f2138e69f32da40c8ead9ea4022ae3b309",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 126,
+    "dst": 62,
+    "inh": {
+     "src": true,
+     "dst": false,
+     "cnt": true
+    },
+    "randregs_good_of_30": 1
+   },
+   {
+    "hex": "2cdc91fb4edd94462c16d1dac9942adb9304797107eec089889764e9a7c7d6219aa5e44d57f73af51ec2acc9cfdae1b008bbf94dafdee5332c1d6651ef405e12",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 2,
+    "dst": 66,
+    "inh": {
+     "src": true,
+     "dst": false,
+     "cnt": true
+    },
+    "randregs_good_of_30": 1
+   },
+   {
+    "hex": "8c3a634f9e57e121c002d8e70bdffab19a87dbdb45968aff3befb02d4e0f0da62347a33f7c861006e0968ab404e714667566c1e761f853e70cdd65694aeff588",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 64,
+    "dst": 0,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "35a921402fa3b5a2c6649326e0165ac836b395554280812395337fbdbd620a7c2fba80e641512d9dbc01fac8460f8a39ee4274d32361e4e7ffe7c110cb04ec22",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 64,
+    "dst": 0,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": false
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "19dc8b0ec140d75a5e916f5f62195aa57f19ddd19912d82f1d5c51e20574ee28a95df50daf71c58358648cfde11697b379c6584092e139163952e7278ee844d3",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 63,
+    "dst": 127,
+    "inh": {
+     "src": true,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "504e66c12ffc7ef4635fb7114047c0ffe56d2c76710064a1fd5c9aa604c114152d22c081858de069c9a7902fbc07e7b6a0139ecf03c6408d94242485d711ba7b",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 0,
+    "dst": 64,
+    "inh": {
+     "src": true,
+     "dst": false,
+     "cnt": true
+    },
+    "randregs_good_of_30": 2
+   },
+   {
+    "hex": "c80da85d196db1714a08c1be6317fa749af71ec0e53ba1edfc275c01ba552e2a9c7d489f0d412dfaddf3a25cb59493b62f3e10a255c388d2a3b1216b58f42696",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 0,
+    "dst": 64,
+    "inh": {
+     "src": true,
+     "dst": false,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "26cb7c289925d52a7e29bbb755cdca6654541ebf42872d31fa78f325b4b8cf9c3429c7e551d0e83e879680048670738631625216edf27b9d057207157e8f9b19",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 127,
+    "dst": 63,
+    "inh": {
+     "src": true,
+     "dst": false,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "16180b66600c91477e2d41c9a810af072a5c5c9401233011bfa19ce99cd1e54f08863ed8d3c03cddd6661b89d3b280317581571f5ccddcb71c19dfe791e8fd9a",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 127,
+    "dst": 63,
+    "inh": {
+     "src": true,
+     "dst": false,
+     "cnt": false
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "e9d03690fae37aab91acd889bdd356416b5706503dd1cbee641e403d2b6486842bde9ac4a469090294dde560716a1d5569cef3b894a0654c06ea6bc8a6ab6775",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 0,
+    "dst": 64,
+    "inh": {
+     "src": true,
+     "dst": false,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "c0d49cb60abd6f1458e7ed61d8693d52a4eef39fee7ab0748413d32575af4c5ce48d2873f8ef8b9c4ff079c4e23aa69a2efe125b087f5d501ebfd76aa5b11eca",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 64,
+    "dst": 0,
+    "inh": {
+     "src": true,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "40f75e68c18f172f2f16d0bcccae0d06c520140137bcb25b8b84eade0d0e95f5c149bea1cb6f62e559a73c1d21be62ba388c8e6850dfc7da90439d4e214ebcea",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 0,
+    "dst": 64,
+    "inh": {
+     "src": true,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "be40e1017cd83a6beed26ccbeab6913d5b9d34ac7b4a7d3c0ab83f05b964f0045f4bb48977ad3dccdc7a8b4cbf20a2a7a7c9ae2b3ab1e5202640872d946b338d",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 127,
+    "dst": 63,
+    "inh": {
+     "src": true,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "402493ab63335e6fa73b4de5345d6f6bb7b2a2f94fd098802f30101d83a7be3b2057fc969026e9b7e1811d036e6ca78c39ee5c13bc719a7305eef2a497fe5003",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 0,
+    "dst": 64,
+    "inh": {
+     "src": true,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "963f6ef8f9e16e1354b00d4588e75a02e32494517e4341d2f498040485a9e5df1f0477400774b944dd1b6943eeaa7a3866d0e4e1d5fb684f969da2ebcad3e4e6",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 65,
+    "dst": 1,
+    "inh": {
+     "src": true,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "c05ee5d6d28287213d38f3b1975390f3153c30c7df673094aadad02bfaa74ca0a7624952529d481277dc42daae1fa2b1026b626a3760c58c04a90e48ff19ddb9",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 0,
+    "dst": 64,
+    "inh": {
+     "src": true,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 1
+   },
+   {
+    "hex": "bb926f0b1f9b47cf2ecb6d3d2ec03c791534efe78b4333fc71c41750e507432f38167e7618e03db86b9f80c8c1e6e02524b82f6fe97a630cbffed2ed03229a7d",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 64,
+    "dst": 0,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "519db5991140ad3a1a9a96b939eb0c42fd7a121f98e5d33cdc85d4a2a9003da0735af8663371468091207987af1f47cf39f7fcfaadbd74acc38f4817b89bcc29",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 0,
+    "dst": 64,
+    "inh": {
+     "src": true,
+     "dst": false,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "c146e2dafd338ca8bb6ff7974f449c1be2512d844f1e3e565cd10192b265fb8d2214e717f125889d90d9829c6091fe09dbb2dbeb4d6c1c9a11f04d02647a4f58",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 64,
+    "dst": 0,
+    "inh": {
+     "src": true,
+     "dst": true,
+     "cnt": false
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "1e6b11e03fc1b8d1aa3f8253405d013e1c1784a8e4ee11ea03f654c5919b696dac1887759eaf9fd235b1058cbca6a6d11b3f16c7f24c09f0e7b0898d23975f2b",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 63,
+    "dst": 127,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "2b0ed7a33c387ea143e40ea5d1aa3a4e81f5c029646456d64d251f23eeeaf02b6f9606dddb45ecd7feb11748edce6574a58f29e7d6b71be3a9d756c63a579dba",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 64,
+    "dst": 0,
+    "inh": {
+     "src": true,
+     "dst": true,
+     "cnt": false
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "13d6953640549e1c529b5e9a74e514d31f5d362da15ddf23d4b5c05bd264fea7634c855521dc517438afc67216baca4a2ebf140df87e47e9167affd413c5011c",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 0,
+    "dst": 64,
+    "inh": {
+     "src": true,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "bddb5873175d1ec0dd943be543a8a5f4044dc7b52f53ec1aae970e7c1955f15b4bd1f3849ff3142040bf52dd63262ab49c98b9d729ff7baef56e92a689bef7ed",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 0,
+    "dst": 64,
+    "inh": {
+     "src": true,
+     "dst": false,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "d38c21c02f12a26d4940e453938800fe12e70dc88a30d7e2d2873c7e8025e70e87efe4348ddd9b26546e89c1e4e547fea9c5b39243303bf9ca4de2832ad4a51b",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 64,
+    "dst": 0,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "c09a4aa7a55eb3e0e5dc1db848c0f4e5e2126dffd22dcefbbdd5fd15f9c4cc3b080cce36f4ab450d7d08040468cec2101e739a1272b5026a5a58712ef6bbac3a",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 0,
+    "dst": 64,
+    "inh": {
+     "src": true,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "b8a94593aa3c1a1726f5cdde48c43a404ee2bddc1e609cba71c9821565149fd65ce5b3493bfc009c55ecc81cde2e0587c1ddd35073e1032abfe0a872f7afaada",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 0,
+    "dst": 96,
+    "inh": {
+     "src": true,
+     "dst": false,
+     "cnt": true
+    },
+    "randregs_good_of_30": 1
+   },
+   {
+    "hex": "401896728f9e43e75e69a55eeeca13cf122e7f59af431bc57d5ebfe9fae50ab3050603e269885285197b59b6b164476a31bd5642ddd8c6f8e66e773af0240157",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 0,
+    "dst": 64,
+    "inh": {
+     "src": true,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "e49748ebfa6ce910fb82bb8dffefe3950021870ba5f40f969a8f6837a5bf8375882ee004a0e7517ced19ccae39c619d5ac85dc334036c3d73b83bf5b0ad9a747",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 96,
+    "dst": 0,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "b3830d94bcf5d00444891445a24e4b4512833fc550c1702ec093a6cc459bea568c07190382b4d65ae30986ee7be76b81d7996a004d8432e742106c646f023643",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 64,
+    "dst": 0,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 1
+   },
+   {
+    "hex": "52a35996b184cc678b60a5fc901141ca0dc95146a92ae87aa303239933b480fc8b368bb9984ee0abe4c7c8f9f2c93295d8c998efc190d9e57b77b52c90272e16",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 1,
+    "dst": 65,
+    "inh": {
+     "src": true,
+     "dst": false,
+     "cnt": true
+    },
+    "randregs_good_of_30": 1
+   },
+   {
+    "hex": "12748dfca31cb0c08e731890298e7a47c31a7e1b8d517169cedc42711699b80141d56e516aa1d34354aca5b115e77fb01595b9bd3ac2ad1b6bbd5d27d5ca6bee",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 65,
+    "dst": 1,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": false
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "d70ce5151004f42306fa7e1a566dd4c0adf88016e2f58111c13bb91337fc39b0e5c20c27e6c05280a9467aaa1bc0083f8fc75b4cc127181f3f89c87e011e8a62",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 2,
+    "dst": 66,
+    "inh": {
+     "src": true,
+     "dst": false,
+     "cnt": false
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "c00e3f2bd9a61707af7a2b33d721e1612fb4cfd44b9c8c04ca467267172be7363cab5d36551f4be44b82a741e07fb33fd42a2a771ae4e0bc8d7b059fbdf64bf8",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 96,
+    "dst": 0,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "21e0f1cb04e791251ba20db7119597e5680b23e08a1fce73104e034a1475e5bfc4781c5450f0a2af18ceace402019a5d739e6b699c4ed02c1d9f2d7ef2d3c631",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 96,
+    "dst": 0,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "215cce21c064ffbfe18d29e849228494e1b4e77bde7702296777c57123a3b65fc086b1121a2a2f7b658d9a303aa014cf7f2fbf7e85f474a41205502a4c83cc17",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 64,
+    "dst": 0,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "40a8df7b5b566a7af8c6f307e77ffba66910ba5308abdd34d099132a0f14f6d25a1484066de09b65b0e197dcd4a53d52bbc89b6441a1b0aed3f512dbb2fa3d9d",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 64,
+    "dst": 0,
+    "inh": {
+     "src": true,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "3640dc378e6f78874df15bab9b863ee2e2135561cc75e4b6df23381b9d38847504e4ad4219b11728dde7e94214a5d47f9199113725cc1befc00326ce4ab7d7cf",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 65,
+    "dst": 1,
+    "inh": {
+     "src": true,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "315cc421c097afe15be7acff4dd65cc4f76dbe1ab597a910f164dd1cfadde5b08dc33bbe27e295c5a4629302927af783e51caaf2f0bf5c4ea5396aa015edf39f",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 64,
+    "dst": 0,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "fb2733d8dcb4cb11401980e545f1e1ebb269fcaa2c9b898615d0d32f2fea952278d03adb3f9bafa1b10bbe15c5afe5f33844149859bbff4d9b52e0958c2b188d",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 0,
+    "dst": 64,
+    "inh": {
+     "src": true,
+     "dst": false,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "643d9077788cf3abbac00199fd7df57910d39b4679b23980457bed07163efb236a6c5c40b799a4d42141362b824be7fa93610e3e9de7b688d85ecc071f338fda",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 64,
+    "dst": 0,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "ca6c119d77e102db656d898342dc3c751b2722a054223321ddfc5c01360b2bc50d1f903f248316fc1f9207639455d2e7642fe14894ca4ad5a68627e76ae27579",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 92,
+    "dst": 124,
+    "inh": {
+     "src": false,
+     "dst": false,
+     "cnt": false
+    },
+    "randregs_good_of_30": 6
+   },
+   {
+    "hex": "c385be4196c427595a923c1a350e8ff9400745a0e5b370a7f0b62874af5c04e21427bc0e335650f2c9ff23a93dd60e4098a3a6ee09a52f6e6de6e6e798d22749",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 0,
+    "dst": 0,
+    "inh": {
+     "src": true,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "6558f9e4b1f7143443ff241140d1d2b2a89feac2cca0414d44b595ce6632da7ca3b71e2b7124ec0c93b88fff1fc5ff5722eda3e5b54f42538ef189ae65de30e3",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 0,
+    "dst": 64,
+    "inh": {
+     "src": true,
+     "dst": false,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "39292be17c8a857fa0c1c26e076a4aadc833da5fbd130353f043dc7eac2d154458113fc93d747b419b2a6e7d5bf1a7e5dba5212df5f6e86b875a7e47551bac8e",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 127,
+    "dst": 63,
+    "inh": {
+     "src": true,
+     "dst": false,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "c06655452570c0a3ff99994cc6529afbe016ca5bb2f57dc9a6cb81595b5fadc8e83801060f55a49d4740ebdfab29da3526eda4ee17e3fc45ac1c6593e0d1e599",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 0,
+    "dst": 64,
+    "inh": {
+     "src": true,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "cb042160b366a807c1e7a79633d6d443724af6bc4e1427736734be761d20f164500d2b1e1e3d11294ab28748de83f241dd1c21cf5aaa570d260af421541bc0ea",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 96,
+    "dst": 0,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "888ed4b0f5d663a92140b8e76086b46f6ec6296980fbaffccd87ab574b0e7db3b57ce5929bcce7e6ec4165abed840d3337c3a515084123cb82fe2232d6fd0068",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 64,
+    "dst": 0,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "40f9f00ad1b6057251435bebe10b8df473ad44131e60d54f60d41a7b6859edb0cd6533867374c1117f6b801e08a380965283339a82c7bb08ef286f793bdedccc",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 64,
+    "dst": 64,
+    "inh": {
+     "src": true,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "ac3fa759ff088b0d4c52806f26eaec3ba9154a6c47b16b0f090b1b66114015e400d5373c3ae55a3a58f5409f547520388d7cb45da028f8e75bb84d58c3d5854f",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 0,
+    "dst": 64,
+    "inh": {
+     "src": true,
+     "dst": false,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "3206aff6bbf14cbe027156159b8c2dd789137d60cd082395a4547e70fd62dec7064029580bf5e462e328820bc80de58e2a447c4a1657221391fdfe61efe551f9",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 0,
+    "dst": 64,
+    "inh": {
+     "src": true,
+     "dst": false,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "a52c580051cc1e412a14d59573e573bd352f82c31a45b9b15faeb4ad7892f41c62b94cc64b178245ebb2cb0cf4ca513469671395f8060e79bdc7fa36a5f3b5cc",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 1,
+    "dst": 65,
+    "inh": {
+     "src": true,
+     "dst": false,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "c1f6665e1be58712db5c9cb5b0f2518677ab7571140d31555bae7bfdaed340378424ed0eac405ce61909ec57621eb71bb4c584dc8ac0ac3828c995f7e5692ec3",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 0,
+    "dst": 64,
+    "inh": {
+     "src": true,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "0de110a0f2e40fd516276c827cc52e3fc188610b548c7ca62423e73cb81917703e618ae941601e585a1f9e55b25763875255bce19b609a7dedc258cbc3ad101a",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 64,
+    "dst": 0,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "aca46f5f9d25eaba20e0862626507cca085ac7d8a83dd88017b9af6a72e3312af551658411c0c6b6b4e52c3d728291d1f6323a40adf0cbfcf58eb05f681194d8",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 0,
+    "dst": 64,
+    "inh": {
+     "src": true,
+     "dst": false,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "e04eca3b4a5e0d898d1717e5fc192bda8f1831e6f9ea311adbf1d300d32be90f4d34c0d1a744c58974592cbedc2a7908452bb9648aa27c971215f5a217b764a3",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 0,
+    "dst": 96,
+    "inh": {
+     "src": true,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "5a6a96931a0d7c9bf3c424e0ade211bf263b93249d60b8b80fe6edabcf040d3bcf9d1401e529542ad08a7f749007b135c61b82b07891e96e9a0ae9ca2826e546",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 127,
+    "dst": 63,
+    "inh": {
+     "src": true,
+     "dst": false,
+     "cnt": false
+    },
+    "randregs_good_of_30": 1
+   },
+   {
+    "hex": "cc21ef291a78dbc2b829b83f254f64e1266b0b659653583042a716bf8fa0916af36de2c0b053c03b51a0d54028fa4872d39e1c29bbf45f1aac5367bce1e75ac1",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 63,
+    "dst": 127,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "1e4049e062a48220ad3dcde5b6d716cc6e983d22bcdff10df34566d2e129c87fe0feef480cfe35e3f516b2676a6f04bea38d908c29c359a4a5e9069998795ed1",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 0,
+    "dst": 64,
+    "inh": {
+     "src": true,
+     "dst": false,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "85a20176c15d64ae582c3efca0e5ab1ab2d2a9c358608b0f7d2ba51e06a6bfbcfe57fac47532c1c8dc51fcefb3dc465150aed9eb411653ca99747b072d507518",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 1,
+    "dst": 65,
+    "inh": {
+     "src": true,
+     "dst": false,
+     "cnt": false
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "40814a65c5aee0178bae525eb8c1933fee15ca281eab3eaa0240e57f0b9097cbf601cbfe901a0a283f7e953c4f0a77186e3d3849edadc7fe342ffa2167ff3dea",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 0,
+    "dst": 64,
+    "inh": {
+     "src": true,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 1
+   },
+   {
+    "hex": "6d3ed2092ec080e7fb0d7944b239c0c1d3358b007e4ed7eb817307117f3acf865b8c4e3fc33d89f5ff6f4b39d54c427b296243204fcb887bd7d32fc4da29f1e4",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 64,
+    "dst": 0,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "40d1970a47b0f58124feb668d2fdafe7aa8c46231828ad631e8fadb5734f777bab8a7aa8b08d6652a4a336b4e45d75349ffe731c98d625c3f0ec7e7e087351fd",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 64,
+    "dst": 0,
+    "inh": {
+     "src": true,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "bc06dc3c369c41f95d483c8c469a2ec028f95a2f3809d54d8ce71deeeea19261a9163f9149278d04f2d754c25fcfe3b39fd05da37f092cbf93ce9636ae141ed8",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 64,
+    "dst": 0,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 1
+   },
+   {
+    "hex": "c0a36ee76cb7f9609722339d061421ff7672bf42d79ed050f156dcc956468ee6c4093433cbd8cafcfc81dc458bb70545b8a1805e59920250aae03ff723d0df9b",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 64,
+    "dst": 0,
+    "inh": {
+     "src": true,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "0dacb50b9ea6a400c523168097478358687aa9c6426ff9e7fbb00ce64ff8f1dc37c88c9758b782ea835da34c71aa274fe7f765136d676169a05b37acafefec38",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 64,
+    "dst": 0,
+    "inh": {
+     "src": true,
+     "dst": false,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "2315528587ec3647f8cf777b7421a3f69643f2d729774955d3932140e18fe77449cfd030f2c834124c4b9b432691809f7be0818b5fc45c58427a82605c2292dc",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 64,
+    "dst": 0,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "3fb8462b65d8081c5833789fbf190f64fbb952bbe559d34120b7367b12cbc4ac6c2bff6751e5dd4cfe6b4defb4193ab5886a5c59c3db84f56967396ddb8c5589",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 127,
+    "dst": 63,
+    "inh": {
+     "src": true,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 1
+   },
+   {
+    "hex": "2ebde009b774754a35bb33e8e0060fab9f6c43cc56641024d57111401a0fe91ad01ffbe5805a95d45d3b5c7c0eecd0b7a55d901195a43ac4ef813d263b710873",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 0,
+    "dst": 64,
+    "inh": {
+     "src": true,
+     "dst": false,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "64ef2e40bbd2a8c3ebe774479882df3093cf475ad4bed6d89dae6cafe31eb45b196cf7dc6e64610be0e71e21a95882f58a7d5221df6c3ee3bcc8ff568e0b9c1a",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 64,
+    "dst": 0,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "05654f68f1a0e92195c6dc68444ec04e54d8c82f742b722e40f55a3fa3f8b9495fa3ffe78918774c47a0af677ed28eb9ed7a237f660cb24507acc113698d220c",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 64,
+    "dst": 0,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 14
+   },
+   {
+    "hex": "c17f0f57d7d1885feeda66356e8a79fa50a7e7db4673e4eb7ec2b14ee902ee697c80066d360e1af2447655bd24d4b2bc2901ac27279a1e22fc0a104b6ffbc482",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 64,
+    "dst": 0,
+    "inh": {
+     "src": true,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "e63819066db22c41938a3553c14fc696599af16bcc810f262c68a43595f5559278ccd49501b0813c7104b4997c35138a646d642f21e11738972aa5df0ae7e7d9",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 97,
+    "dst": 1,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": false
+    },
+    "randregs_good_of_30": 1
+   },
+   {
+    "hex": "40bc6c1948cf7816ccef698f625ee41414f2aec034e567c37b3faa5663592a02f19f328a2f889d24aebcc58251485c43be626c67054fbedb67062629ee17d967",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 0,
+    "dst": 64,
+    "inh": {
+     "src": true,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "19671bcf0e461b64c856ef407f5b5378a1f0c47940b42fbecc7a3be32cbdad3c881bcfc0e56f1f58b24b95f46a7cc0e59522ccc1f3e936478cb6ca7d6e1b7719",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 127,
+    "dst": 67,
+    "inh": {
+     "src": true,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "4016f337f091f15e6010b547aa3802e5e3a9b55d3b4ae53db54d317903ed409dbdc3f7ca6147bded35ed3940cc3f32763bf18bae8109782afef223842b4884bc",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 0,
+    "dst": 64,
+    "inh": {
+     "src": true,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "837365137de421415bc2b3cce2a8e7a757e9a3f811a166da7a07cafe1385b8a34cada3d110438e9107b8941e8f65b0d4dbe3087e61728f6b40e5709419a861a9",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 65,
+    "dst": 1,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "f9232ecd9c2c6ba06ecf31014a778b5b61252d4fbf6a6738de74363f7e805b0791f380a56d40698160430f9e171b5099b56ee7c375ad3fb1fdb13a5bc9016fac",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 63,
+    "dst": 127,
+    "inh": {
+     "src": true,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "4095fe0206b3ce504ed9ff590301d2ce41f1733be5d17928b02ea7ddd6b6567ebfcd4a316a2593c59b15219401f6cd702d134d4c8e8af55afdb74f529741bac1",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 0,
+    "dst": 64,
+    "inh": {
+     "src": true,
+     "dst": true,
+     "cnt": false
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "3d2e185647968eed3236e614c09b4369e287094988e79cf23c7713bdb72608fdf3ff0f40a0ab12e13f54f2b82e9925789d48a8688ec263d7ef69875c41501f93",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 64,
+    "dst": 0,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "7b83378c1e2d7c32a388c65fb56f4fd45a32861c4323175a7934ca1321e45b8fa6a27c334392455fde0ed6177e444d90f727cc32465587e793546d1da48cf503",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 96,
+    "dst": 0,
+    "inh": {
+     "src": true,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "9cb103d1bde3700d7b45914869598483bf8f912140d9bc70ac017b0cb92725c508e749055d330ae9573142966aaccb14fc3c6d5e25a5b2cf1e4ee9a94b324f51",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 64,
+    "dst": 0,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": false
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "6c4512b12f75333ceb52325a2f75661e40554996447864c60063a3fe74377190e36ae67c681965f62c01b44ce91664e5c39a6737c2603d0468abda91038eaf19",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 0,
+    "dst": 64,
+    "inh": {
+     "src": true,
+     "dst": false,
+     "cnt": false
+    },
+    "randregs_good_of_30": 1
+   },
+   {
+    "hex": "3b2b2ec1dcde25a3c7f9e487b052cfdfc819cbb183b6422d92055b4de7090528eaea1e4b63fbfc08a5caf3be6a0690a3cacfff2711d5dad499c29328068f3956",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 64,
+    "dst": 0,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 1
+   },
+   {
+    "hex": "b08d71cc35ba6af28711401ab521c89db42686788d99b6d92268e52643779ba0f931fa133d51e4851007c4a3eb5318bfa105af721393a3b7edfd476d8aaf91f9",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 0,
+    "dst": 64,
+    "inh": {
+     "src": true,
+     "dst": false,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "4055c48284c72a3c5e19eea02956e50393d057a1d633ac20b513e38107f074b011a1c416e490b5823af2d805284eb53cd23708d4f4ce2b21aef2c72d6232e428",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 0,
+    "dst": 64,
+    "inh": {
+     "src": true,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "164b99b503ba694c0e41409b9e62ff92b6cac9f1b358592ac4e3e5464802ce05001ac6f4608e72ec29bd0227a984b829bdc5030f07e79bd8a05d6dec9dec0390",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 66,
+    "dst": 2,
+    "inh": {
+     "src": true,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "9e56266c8c2e400c24b48a9df12972d38bc8bf420ee1e7f1bea291f782e81d0734782306bfa750879bb4c4d3ab25fcbc510fadd4d919c92f8d3e46ca6b2c961b",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 64,
+    "dst": 0,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "4736009e1ec000e57d3b5931e63886c83008ea7ff099169fb19f45b7a0233c38ef84eb9f4dddcea2f2f55efa5ed89c98664d779bd153fdd344b61c885eecd5cd",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 0,
+    "dst": 64,
+    "inh": {
+     "src": true,
+     "dst": false,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "2c92c6fd8e5d84c4b27f78a09b9e214d87c198403f0438bb4c5d072ccf350c2ff04e3c706f18805173a8afa5ec569826245eb78d94ea6310fcf049e532bf9a9c",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 109,
+    "dst": 77,
+    "inh": {
+     "src": true,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "26de9bc540aaa159c58b45dd8cdeb2c754014b1b411b79409eda3f239cd1f8a7de1d891a6cabae80b08c8702e607282c86e72f5d809b075f2338e15b62e5b114",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 94,
+    "dst": 126,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": false
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "bf8c60bbacc0486ad09ef114deb6cba7a4d16e0e62e961ab1667acf3c8951dd178a391e192e8c7e70a764c1468c1e512969e701e56aa189a352a303e68dc0eb6",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 63,
+    "dst": 127,
+    "inh": {
+     "src": true,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "bf3d403567fea90faa8bed2f561721417396b113433eb170e7ceee58019778de8c0e6eb327f2e547acd5c85cbfa26f8ac613fba879020fbe9a3bde6a7cd7c3fb",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 65,
+    "dst": 1,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 1
+   },
+   {
+    "hex": "a22ee057c48fd8c89b70a60da15c46e708cf7e28863cbeab23fd80e1fb127e9edcb804a2861873c2687d7e603ffe79f3d72aeb28a4f45a64d9477c6e4ba12f75",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 96,
+    "dst": 0,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "abb1af2c10f0671ec00b1a1c2857e134b2a3b296de9c439a538bc9e5b3df3f38e137dd4ebd139ddd366cba6f0fc7bd1dafcc8b4847f341a05dddd805f2b312f2",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 1,
+    "dst": 65,
+    "inh": {
+     "src": true,
+     "dst": false,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "f4db366b5461558fda9ec58db9152465f4e2a411406dc99df0004fe54e24e4d8cc4570dfa3e44618a9cb149ca0144ad316c0710bd0a29b1873b2b0849fff196e",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 0,
+    "dst": 64,
+    "inh": {
+     "src": true,
+     "dst": false,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "d64c13a46000ac9800c8525a0b719d516bdf6fc66ac60688d74d5d96b136dae3f7feda5f5a727afb1b21df5c9d65bf9352bf08531ce3716d82e7dfa73ea6845f",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 95,
+    "dst": 127,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "19720ec66fb7b82b942c11409c3a12c4e58d1d07bc21f3db407af623fa27fd8ff00af461f120c5f054ced2f84fa3ca54b9bb91b195e7f7f7fb9317c99297b1f7",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 0,
+    "dst": 64,
+    "inh": {
+     "src": true,
+     "dst": false,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "40b6ec5ead52ff72a1fc68af53e5a09c8d47a4f0e102c83f9bbfefa6576f8d1eab0eece658d9eacc3c3e63f0da48c94335bbc7e854f4f5f5c0e6acee198855e4",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 0,
+    "dst": 64,
+    "inh": {
+     "src": true,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "682a22998b07dfd446684331b932a7573fea253b21405d7ce75ae02adc5e61338eea129456109511b4c5e25ec8a928b8e5a0f9861caf402f12f76267f1585ba0",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 64,
+    "dst": 0,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "e94de91df96f62be2e3faebe64fc9ec589344d32e7ab92e1075ba0d2538535fa815465640cc5ad19fdb52655d148c733e954adb65073a31fdc255d9247b055d1",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 0,
+    "dst": 64,
+    "inh": {
+     "src": true,
+     "dst": true,
+     "cnt": false
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "eb4f6ef36b0055166fc21aff1ae6d8306e0b1bd9feb7768c2fbb23b4bc1ec1f29ea529891478b298ab95247c3adfd3fbf2e5d09afe60a868e5c027fbb24b4183",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 1,
+    "dst": 65,
+    "inh": {
+     "src": true,
+     "dst": false,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "07bb7e276da7e32f2d2e496f3a52c5b57bd97dd2a27823441866e89f6bbe083eee1f122ec0e017609befe79b71df90acaccfb7de90aa632014b4b5ad6a56917d",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 64,
+    "dst": 0,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 2
+   },
+   {
+    "hex": "8d3595740f741c334d66f6d996a89921e156ad41ba0cd0b71fc9ad7ccecaaa1f8f9ae8af4d2599f329e78a235ac4476ad7cd72089f5bdac211cbfde106891825",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 97,
+    "dst": 1,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "6b7844cc662162882db9feb18f6436e9469f79f977e2e60d419f56ae178ea40af498802b5b5877d321fb2698d482e70e116bbfe5b2565afbb2142064a18daa98",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 96,
+    "dst": 0,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "4b9e2d419e9ced7ea9e341631bff8c1df4226fe746bbaeca26a0afbca3b16498d216a0dcc61093ab0cf635e68ec6d98f0e8b6a5440fc3fcd30b2c76708b013fd",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 62,
+    "dst": 126,
+    "inh": {
+     "src": true,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "f236a7eaf1e28879036d8cbaa7ee8438fe386747410e40ff6f37c52da1ffc68acf5893646931a7c17c39a04898f79171774cad5471d97ef35ce27d860a9c37e7",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 64,
+    "dst": 0,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 1
+   },
+   {
+    "hex": "379ad6536b891a8a1140f87e7be503eb5ecf6f6493b1585d5afa2525f9e1966b3316c51ea6710b618a9b961a29711d0cc8567384faac88d090b8ed2cefb2c735",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 0,
+    "dst": 64,
+    "inh": {
+     "src": true,
+     "dst": false,
+     "cnt": true
+    },
+    "randregs_good_of_30": 1
+   },
+   {
+    "hex": "ea450e6b63f9dfb0b10bb42aa9ba149d4eab62eaa6beb8c0b82f2e604d87493eda53067df0090b0b91703b57ee4d31d9eed682e7d2855c66f615701ac41147cd",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 96,
+    "dst": 0,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": false
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "41f562ee8146e171fef8b302f068efe82d5cb8d8e7f9b784ecd0b1014dc532997697694c4ad8115458ae7bef95c5ccdd8995fc9fd12dec1522bde257bee7f7b1",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 64,
+    "dst": 0,
+    "inh": {
+     "src": true,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "20a0824a8bc0e921cd88dbaed30997b4fbda1207316356932ad9aa16a057aad0549790473c98780ec05168869a6ac066b90f7fd5e739c5e69026a09519206240",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 64,
+    "dst": 0,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "d5cc834eee10a822bb021c52c511e025bf57e565e0d3bd4ab46851d450b0d404db94764468fb2d2cb69642f2b9cd4a58db485dce688832a1b34f3a5d48164999",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 0,
+    "dst": 96,
+    "inh": {
+     "src": true,
+     "dst": false,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "4034c77e052a9a7fc4fe3610a889afcce4293930030f2bbf44921c9bb16eb7e745f0e7c8e2d5abfd9bd249a407e1a6d0e4285e5f78247c040434ae674320f73b",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 65,
+    "dst": 1,
+    "inh": {
+     "src": true,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "96c9f539167eff974edac17696a046575e5a72204a003d746e396ec9fe3c897186c5bc5ab60caa47f1c5b32b5f90d648b27be59ede65baa4cc78b481fa9e5b33",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 127,
+    "dst": 63,
+    "inh": {
+     "src": true,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "9846477e03f2070f64eb095bce2b74aab36bd1b2908a3ec0774e9d04b2ad5ec8ab470a73d575b65348b7ea9b273243ec3cc72ae5cebf8f2d8e4deca95689d4ba",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 0,
+    "dst": 64,
+    "inh": {
+     "src": true,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "c91b410e42cfcf86d860777260d2a3aed9a62fb6311d03a2b25e197ae30ee3b23e5529e723c2559fb0e2313a23c6d39267a5d2665980cb9a9d0230d9d6ee8d8b",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 63,
+    "dst": 127,
+    "inh": {
+     "src": true,
+     "dst": true,
+     "cnt": false
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "13885b9acfcf3087c019d0dd2e8653d98af9856ece902174c04e06b92320924347e3e384313a5b34f220803a4b4e0450922ee1b3080fe7402b2b9a175b9ce6ec",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 97,
+    "dst": 1,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "375ad87bf69a5cecf61c38305c918ac9ce8bd121c04798dccdd5a5d4a4f366df150ef85535e725536799251dc81939e7fc3bb9a070267f7f90955e2ddce4c81a",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 64,
+    "dst": 0,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "c152e887f5d456c0116b3ec449c1aa94dfafe958c8e01cca7c183e7ee9e03a7ac12b112e3bfa10086896bbe28b790d25995e6f52e52fcb88688c8368bc4f4aeb",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 1,
+    "dst": 65,
+    "inh": {
+     "src": true,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "be84002fc721c0c808f20b10c1da9a219807288bdbd257e7c910f35099c227dfb01c52b3ccc45697d0b4d6fddb62a8b2bb19cbddb3ef7b108b5e60d474b24c90",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 64,
+    "dst": 0,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "67308f88b7dafcae92d8ec7e8e2f378ea43edcbfa1f23afaeff9fab5635d31d4a11ec0e56f5ae6f3f56e63053d1bca171bd3395d5fd3cd9c79f54b7a8cfefb48",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 0,
+    "dst": 64,
+    "inh": {
+     "src": true,
+     "dst": false,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "40d70afc9c4ec3a6f8325641083c54fe7d758357b517d4143ab7e0e7599caa818ae867a7e1d3929b7fa425c291bde3a81225e2109e9267b2a6298e938547528b",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 64,
+    "dst": 0,
+    "inh": {
+     "src": true,
+     "dst": false,
+     "cnt": false
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "99fb53cd03b40b9109606b26db9eac5fb4c10b1bef0e409c59f9e5fe7311ea6bf6a8dbee98ebf29f5934ba15a6f67c0d87f51b429e83768230fd34a07baa6cdc",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 0,
+    "dst": 64,
+    "inh": {
+     "src": true,
+     "dst": false,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "0f2c1d0fd70ae43a88ea96dd0f8f9baf4bf4a8fdc6be6fd7651b9bb3e366661296eca6e47ab0017a7fe79e212ddd2e3562bfc96b338b6f611cebeb0e90e2d4f0",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 62,
+    "dst": 126,
+    "inh": {
+     "src": true,
+     "dst": true,
+     "cnt": false
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "559887bc5210ce8baf8423fa4da8db3558adc16bb73138e5054dd415941d03dd4d53c61ef335341ec03b9a9b7c96a09ec483b9eeff33e5ad42232afa3fbc2f50",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 0,
+    "dst": 64,
+    "inh": {
+     "src": true,
+     "dst": false,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "54a32ecda7ed64f5019e32330219aea788c98fd87779c1f279702ec02496db8be98304a24fe7fbca8eaf1e0695118f854fd9d272d4825429953c4c073c86ca48",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 64,
+    "dst": 0,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "3d061ff7051e5d69e3a64037917854a7de44bc786233073913111f632fc9bed0df92c4ceabc962c566e17f5f4279df6a71b385562b0ce7cfb8759c80b96ee55a",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 98,
+    "dst": 2,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "c0fa5e96ebe5225505b84d0691705b2838ad1b0b517694c9914935acc8bd67047b2442931757d67476a208be87e6b91debc6651b5828a64fc04f37ec237c92fb",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 0,
+    "dst": 64,
+    "inh": {
+     "src": true,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 1
+   },
+   {
+    "hex": "f30ec2ef5140c9e7d78ce9d438a5d81b5c0d1de7838e7f12e326348ab5b9b4a7e9abfb6cd53d44395054cc7d1521a8f5b23196120768cf0354a8a5b2905fb161",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 0,
+    "dst": 0,
+    "inh": {
+     "src": true,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "7e25c53bff415cc4385acbc4c7fd77aae015a945327a6621df960efed1ffc8e7a72ff1ff0d5f1cad6740ab2c1603320807b8070de88b28d01b966a344e91203a",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 95,
+    "dst": 127,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "b6b43966ba6c5fe67187a6a6e6c619bcc4b2a9ec5fb86864518ae6e9e53aebce17a4be8d10a34a17d16a3bbdab76c4d2451a8132e00d76f55a15e12dd7a81c8a",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 0,
+    "dst": 64,
+    "inh": {
+     "src": true,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "f560942b3b19a0f72bcdc3911a82b2329bfa9c6cbea074954172b8b97cba4bd6b398a6dd8f3e5517f70b634c920ac4eab4e2af2140a494e7d23bae3d459624bc",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 64,
+    "dst": 0,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "2ff32644cd39ddcdbcb0d7164d4f9630e4069e11bb142201928452584bab31d9fd6c0cfdd9fa31da1329e7cdfc738f0855a4439c5538348f7acd052cdccb073f",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 68,
+    "dst": 4,
+    "inh": {
+     "src": false,
+     "dst": false,
+     "cnt": false
+    },
+    "randregs_good_of_30": 5
+   },
+   {
+    "hex": "40f2333338eabd7b48ef4c4ddd55800effbdf2795f5bef1105c3eb7ecb3e645e345b12d1e518bb50780eb60b88d416aad29ccb337646768e1b2e2cbe1f08c374",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 0,
+    "dst": 64,
+    "inh": {
+     "src": true,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "eedcd9a70e56e634de267b3ed20868211fe9ed03c0f9d122a37f33d3acb59721c0273ae72ee227c6e0a5fece350eba639062ce530585e00b252dfefbfbb6a776",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 64,
+    "dst": 0,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "40a40355e35cd9379d51194cebcfebaf7aede3b90ed896a9e4b5af8cb2b8dbcb6ef6f447b8ff85c2aeb21a1e2d79e7db51f7fc7f99034ed7ed23a996dcad221b",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 64,
+    "dst": 0,
+    "inh": {
+     "src": true,
+     "dst": true,
+     "cnt": false
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "8f5738f59d5b015979812bccac013ffd6559e50f53069cd82a9ac2b7c8e6ddcb59b4c5f5245cc1d73059da969d6a6c615ae6487b8999c5edfd108b95eb9a8199",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 127,
+    "dst": 63,
+    "inh": {
+     "src": true,
+     "dst": false,
+     "cnt": false
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "ded662a8f39ef3cc97e24c752102f8faad928fc4725148a72a2bd55c0c6ceb5e7fec510e1a8b53cfe78b3f3715bd9f003d5f0aebe713c4050285bac918bd295a",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 94,
+    "dst": 126,
+    "inh": {
+     "src": true,
+     "dst": true,
+     "cnt": false
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "01c04bdc29d773594a563ebbf40197d3a5023c1500c9a879659129e9adccda5d9a07e530d7dd45938966bf813e360e997ddd39392e57a0490d524c9bf23fba4c",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 0,
+    "dst": 64,
+    "inh": {
+     "src": true,
+     "dst": false,
+     "cnt": false
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "87f6c0511c6f73022cc9c2b767c5e4b1a96d0eff39807280267c20a8eae42f69b82dab64220d232ddea67bc1893953535cb366a7b185dcee417d08e79d746a0a",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 65,
+    "dst": 1,
+    "inh": {
+     "src": true,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "1eac846614d9d43e1d1edd79728861417c055888f7504154e1cf82f4fd4244ebe4577c38c64cf6218b48ea4178c7fe264b6aeca410113ff9e50aec5d5d1591d0",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 127,
+    "dst": 63,
+    "inh": {
+     "src": true,
+     "dst": false,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "440f10337b065fdac3f86dc1c1a18be6a6bd8474c6491b38baa2f5f8674df8bac708d6e813de122be1fd4c487b4ba471075d093968b4e11f22cc62db05abe712",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 95,
+    "dst": 127,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "2e4097810de772069f8c47d96f04bd79e42c78522d3f6ad75fd40bd8168c04be59b40c6c112da4a95c11205230a4f74f36d9e8aa4aa78966170838ecfae593db",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 64,
+    "dst": 0,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "be9b15388f8632d04829cd0d58863bbcb5c07597a4b7c0c56211c082a6e5243921d66d3d0001842bfc7c097e66833f57b5f9ae87d149f8bd94b7ff75851ca717",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 0,
+    "dst": 64,
+    "inh": {
+     "src": true,
+     "dst": false,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "f92cb58f0fd13c83cd0cfd6851994b2140c9ded32faa9f3fb1e7a2ace88212e51c07ac4a591db73961aaea3c8af25fd2d9ba5ed700744e6871759d892db91fe8",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 64,
+    "dst": 0,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 1
+   },
+   {
+    "hex": "51ff2ec17b5180370bd22f62400eea2141a5256e62224d74a391d9894730e38e07146f6f30ee6c9902c9e4754b78b20344229cdd2b59e2e427a327e725a15a6c",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 64,
+    "dst": 0,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 1
+   },
+   {
+    "hex": "1da3142b757fcf5db86904f60d85fc56bb1e4015e53e65b8b93ba5c0bc5c8aadb07648dc53b453eefa64c7a86d80a7f32dc4b33cd16e2a8eed50f350e2ea0ba7",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 0,
+    "dst": 64,
+    "inh": {
+     "src": true,
+     "dst": false,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "2e40839605c57ca1e7586b77419da59373ac686a08ffd7b73debd633dc7df0f3a46a130436146a24d3dfd1ca97d247723f2e9a6198dad97720cd6e442bca6fa3",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 64,
+    "dst": 0,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 2
+   },
+   {
+    "hex": "2e40e6b7ef3daa51e889c49bc7f8e4e6e4e47fca3ce3316eed9fa41e40d7608607534474e86c4dbb8d66e58a9ea23d2791ec155d41bb0c36d7f21a1cf16cd89e",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 0,
+    "dst": 64,
+    "inh": {
+     "src": true,
+     "dst": false,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "9761796b77a75c4e6b2e5293518a2aeb656141ec462ec113482e166ebfefd99127c1f180e748ea6356cedd892e750a796beb5ecb363a737de3837372627d5c48",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 65,
+    "dst": 1,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": false
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "8f02d55f3eff91ee16bbee8c8f01bfc0f3703dac14db3dae5fe428f3e50d4266e91512cdb102dff87bfaae38c98a297f7d258367c7f0c471aea9baccfe6f82c6",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 0,
+    "dst": 64,
+    "inh": {
+     "src": true,
+     "dst": true,
+     "cnt": false
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "c03b42ad11cd0505bd7a5e40e5690ed6a2114f0e8fa9deffeaf837e025bb7ea1d3af96f5d03d822465d95508cc8e758e2227afde2ac23f5be23659a1ab61e173",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 0,
+    "dst": 64,
+    "inh": {
+     "src": true,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "0f44d65946e213d071249995da3faa16bf8192293a422d1c52a21570488dee0ce88740ebcb81ac9ea750e2db46107d60e6e653ba59a9e5230e377fc8e1ab4f7a",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 127,
+    "dst": 63,
+    "inh": {
+     "src": true,
+     "dst": false,
+     "cnt": false
+    },
+    "randregs_good_of_30": 2
+   },
+   {
+    "hex": "c436206abfc14ac8d77993c76327cfc21614b283a7a5abc721c08865771072f2ae85377502e7ff39d6dd9d898d88a8afdf9d033b65f6d730fbf99b88b9b51ec4",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 64,
+    "dst": 0,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "219d5f254843db0de8f52442696d680313d41140e005e5b8ade9bc412d6d1ef8e1f126cd5b262b4fa6c65c6772cd36b35f66ae7dc26483b97bce3dc85707716c",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 0,
+    "dst": 64,
+    "inh": {
+     "src": true,
+     "dst": false,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "5aa0a01ba52161995162653efa4272fa57e3514b499c44ec0fb0e2d06bcfc4fbb11ebf9b576142cee65cd65b47e542fca9086b825425c13402c462ee3441af12",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 127,
+    "dst": 63,
+    "inh": {
+     "src": true,
+     "dst": false,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "c0fa549e745c6f4158c4ef9877e784dfdf43efee03ac78a28953f346ff0c79f550d55888b38d1d7f5d24894922b5b07f809eb0159e94064f6ef23c83ee295ec5",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 64,
+    "dst": 0,
+    "inh": {
+     "src": true,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "9fbfc99cdf1ddcb4f8e4dad7d6cd4a236ee7829e04e309530f75ccb21d329d4d0f71d9bc1d8f6f82977e58312c58e5ac7d7584758320fc9a592f963a8ab087d1",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 63,
+    "dst": 127,
+    "inh": {
+     "src": true,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "d8c1cfc75dc63e2c935eb379cfe50b40454eb3d2bf7c9219fed3cd37aed4c1e8444a923b637acbf2df1f45154145c055f7a52f9643cd3424d4be46f66db32f91",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 1,
+    "dst": 65,
+    "inh": {
+     "src": true,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "c6416fe2c86123578ca6b6adf013899260401f2a2d9862e7b3194cc9667e588e62bf3d366ba79cf77d827ebcf4614e162b19b502d76abe9c1f286e81fb08aab5",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 65,
+    "dst": 1,
+    "inh": {
+     "src": true,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "51c28f37a1cdd68170a4f35117506e1d717f7b115fa54a1ca0eacbe4c49ea94fbe637e3ecae5ec6c4a0e77fbcb35cb3eeb9f01f1f5720c994517b05f61b81328",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 0,
+    "dst": 96,
+    "inh": {
+     "src": true,
+     "dst": false,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "2398090859936f1e4027e5e00165c94584d677293956c1c7010b3e04fb8be97852455f3caa16d2cc3fa998e56110945cdba42c7cbf23d62f6f0a6ba950aa8c42",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 0,
+    "dst": 64,
+    "inh": {
+     "src": true,
+     "dst": false,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "39b7d7dc8f1dac66662610293a507c99a7ffce2dcca6c0265fbf3d440da271abadcccdeb8f7fd3e174a9a1a9d1a37c6824d1e76be6f1d0651abb92417e1e5129",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 95,
+    "dst": 127,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "888c67a0f12e6d11f777789980bc78789fba95ce00cd5cb81a4127220ec0f58910d4a8fe7a63b458252ca6f4ba8c47446995e76c1644e4f062c0ba4e8528e63b",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 64,
+    "dst": 0,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 1
+   },
+   {
+    "hex": "227e5d9e4c9c666e339360c42e40e72897844bc3b9942418d480a4d4c228916525cb01b84fbf07c50e208cb9dd083f850f53a76f8601c6cf27b46733e25e9e15",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 64,
+    "dst": 0,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 1
+   },
+   {
+    "hex": "151c559f1a1ec02a17164fc8e6c8f4f0e5088c0ac61dfe63837dcaa828b85baaa5f688f20ddd70448a7c8d130a8af0d7dcc75046eeb23583fed7e8fe8e6d95ff",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 0,
+    "dst": 64,
+    "inh": {
+     "src": true,
+     "dst": false,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "15889ff7b504da1446b26b8ae3569c6be1d7248a16f7dcc421605919a4a65bb3ceae523ef77ca472276285d9e7dc2431569817def4583ce8731260ae63a95249",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 96,
+    "dst": 0,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "4b4366722e40a00adb74e73049276e88eddfb0388e8de0faeda64357de6582593b07ec44982ed3f139fc9399522fbd438d88d92d2e71cea65f90830c4a7f4798",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 64,
+    "dst": 0,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "10ef62e00ee304a12141ec9f4b952ddd49db4aa28ee6f4270c83e7b3de4a25cbe0543f038f64bd341070bb0b95c5ebb8e6ef53dcd0150790adccb344b2ee819c",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 64,
+    "dst": 0,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 1
+   },
+   {
+    "hex": "a18fc4bad19723bd56969fa3fd2e6d80ed4f9f2148d6e6f3c044a6bf3da5d6d89ade6cbfac5f6c3de88f5eebfff6f0432a92793808751570a6dfef344ce7b269",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 86,
+    "dst": 118,
+    "inh": {
+     "src": false,
+     "dst": false,
+     "cnt": false
+    },
+    "randregs_good_of_30": 27
+   },
+   {
+    "hex": "c03837fb83d06d8607604a5d9c1dfd137155ae1132f2865f60270434a28161a25344e5a0c8a9c3f124e55d6681dd95e09dc9eb85732083fb091fd82488fdbaca",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 0,
+    "dst": 64,
+    "inh": {
+     "src": true,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "00a4062509252140935579eba2d62de7951169afd2675bf8860ccc297fc51867cbbac5b754289ce1ed00bf0543139c2b5c0ea68387ec19c0472074191d053a6d",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 64,
+    "dst": 0,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "8320e6de6b9df2a016f1c2986611c1a4866725c919d61c1d48dd5704e94638a40238ad467105e53d952e272cd28bff23207edd2efdf7508f26c3f5fb4c9bbbf5",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 0,
+    "dst": 64,
+    "inh": {
+     "src": true,
+     "dst": false,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "c0dbb58c43934fe1534e6c3ba67fcc3ded552cb470e9c069d5e78defc10275ea4dd5d8d81886f522458b45424cbf6b5194937824cf021e89dcec11a8a1d26ec4",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 64,
+    "dst": 0,
+    "inh": {
+     "src": true,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "8a7a7f97707d01bf6651ecf09f8cb121c84f3717b194dc69aeffecc061b0e986de282c558654ce19304c71eb8735e92c79a2e71db82bbc5f6e0d4c6e5dfa4b46",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 64,
+    "dst": 0,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": false
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "83d541901bff71c0a895851678f10b4821bf8ce73554b7a5839abe311a40d16d93ac1f187e4b16c703cb30f3fe9fcf18373b0e90f791f7cca99dd964dbe6bff8",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 63,
+    "dst": 127,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 1
+   },
+   {
+    "hex": "1d540ec40ae5ac997e36e72a913b620c463bb3ebe8eef56dd4896922fedcd6571c44e67a8a242fc4609bf60cc50a931da0c5a60696bfe5f2bde8f093b26c7753",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 0,
+    "dst": 127,
+    "inh": {
+     "src": true,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "1c7931d97529a7ab28335624ec27bb38c89e354f0a98db988124a464457221c19010ed1864e70b62d96624cbcd19a6e446c8b01283f193a0d13b0f492a2cf562",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 65,
+    "dst": 1,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 1
+   },
+   {
+    "hex": "176ab96c70f33210fe1da742ce9c149ace81dcc1852e4040d8078a2d492ce161e7bfd1071fa0c0d5d881873ede914fa8482774fb854c91ee9b01612f0c21803e",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 64,
+    "dst": 0,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "24390e004487ae0013ea59055c3b278e0d3b73818ae00f38218e0fe6ea2ee1c62013db52de0fa5d37232809e305fcdaf1b7ee7386f6d1857bc2f1aae96f306da",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 97,
+    "dst": 1,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "f5e885861e796c1e7448b893fb14ebc0a8b2584df6022809e3113ff73c0a98d90fb39fba13365c4fd50838041a3b42e581f8de3a6d027e78f9c53e2955c328b3",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 0,
+    "dst": 64,
+    "inh": {
+     "src": true,
+     "dst": false,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "f37a604bb9707180d0b41fad1bb8b2af8dbe5e47db402b2e3f4b14444529a51ddfe75599e503cdff64871d7f87c76e9f349adfa5c2ed82257509e35299eb3a0b",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 63,
+    "dst": 127,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "fa21c0db8f4d0b3fe7fe924e36ac7e45c34d3fbf359e14b8d421215bd937b39e3e1ea61f1187d8ed14672af7a5f88e0ff6e14b01192cd18771673567ef48e3b2",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 64,
+    "dst": 0,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "40684619c6d34e6ecb283a473a820ea512db53f960e7f32f81ec41c54265c6ecf0f9941fe1b75ef64ceb8382671631439479b28a0e0f6cafaf2da86ad6287c20",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 64,
+    "dst": 0,
+    "inh": {
+     "src": true,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "c4650ec024ba68e7925edd80cd135a3f605ca42493ffdcdb707f410ac65760ff5c739183dd9a7c66b7e8e76e7acdbb4737aeedd3a60716cc26fb9a3e7883d205",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 0,
+    "dst": 0,
+    "inh": {
+     "src": true,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 1
+   },
+   {
+    "hex": "bff8451caf4eda6f485ecf3f1379e5af0d35ce093bf7ebd1fb72559f796cb7c53febf190573e5d20fc56e9395d1642ea13fe13bec58ca26c8522574da90d4f5f",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 0,
+    "dst": 64,
+    "inh": {
+     "src": true,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 1
+   },
+   {
+    "hex": "6ec110952fb094732e40d7bf73799b5ae7bd95b2ad15c83883182fc77d0576790570cc651cea7205bdcec626f8985db19dc9d795597b8a553fb29c341a80c0a1",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 64,
+    "dst": 0,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "70495c561dd4bf770611f1e267ec2945d66c9ecc4b67d7bd140277ec0d7115a950dfa366ec1ebefdce9dada669c6a4ef2fe2cee5835ffbe354f350af35355ae7",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 126,
+    "dst": 62,
+    "inh": {
+     "src": true,
+     "dst": false,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "0447496ce179e67dee4478511634ef5d5c894a5417e6b1e30557e29f07f7f9f08661379111c014ccf21488ee2ae589004c2dadea25e43112c0f449e6727daad0",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 0,
+    "dst": 64,
+    "inh": {
+     "src": true,
+     "dst": false,
+     "cnt": true
+    },
+    "randregs_good_of_30": 2
+   },
+   {
+    "hex": "7c35498e1dd50ad82ebe0cf067a5189e4601cb8ae3b3a9ded0e4107feb4cd3714cec484b354ce760f8ee6e0a9d24a30b0ea14b9005fc842357d2a4aafa10214f",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 63,
+    "dst": 127,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 1
+   },
+   {
+    "hex": "1e27d18260aa2cd0581495e4c142083e05e1a47a493d322176bfcc8c3f1b706f82e75d8fa2c11bacc1f1df3c5816f8b0a2432e24bcfbda090c5d664a99667a00",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 63,
+    "dst": 127,
+    "inh": {
+     "src": true,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "401a7e5e03cb8fc5b1b2954322d8cff357bfb2b59eb81a9e35eaacec96ccb19441e5660dfc1a1eb147508d096c095ce82c943668576c5b6b042633d9ec9cbe2d",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 0,
+    "dst": 64,
+    "inh": {
+     "src": true,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 1
+   },
+   {
+    "hex": "6107ac07fa5f6ef4f7d1eaf87770fcea392641f043da7d8d2da65856d3ce9032dfad939fbef3bc06eaa84eed6b7584a4a07e7ef956e7ca7684263f06494cb7a2",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 96,
+    "dst": 0,
+    "inh": {
+     "src": true,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "cad07412fcc8adf6309d114295fe620671a11e4064e532a3169938716fb2e4fbc6d7630de3476b25ce347604eb608d23d0cb600aeb74969d60cabe143944c8ad",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 0,
+    "dst": 64,
+    "inh": {
+     "src": true,
+     "dst": false,
+     "cnt": true
+    },
+    "randregs_good_of_30": 1
+   },
+   {
+    "hex": "002ae65f51684740c2a7562ff614ae440b4242f73640daa0484abe325445a4465ea61fe00679e5aa80cfb1be34debe0ccafc0e7656c5d1bfb4153302464d36c2",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 0,
+    "dst": 64,
+    "inh": {
+     "src": true,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "80fc499baa93b86cd33cf7a917443c804724ef16c1c6df5a7dfc7368eb98069abb669d5bfccce56cd769bbc7130135874ef9590691c5ad72f87a9175a1e04ea0",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 1,
+    "dst": 65,
+    "inh": {
+     "src": true,
+     "dst": false,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "f7832e4039aaae498077e76f5565b29f61ac2c070aea53f2e42759a5eea2df6a96606c72322343a47c8fdb15d2779ee8b150b4af43a4a487315d6f25cf77f42b",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 64,
+    "dst": 0,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 1
+   },
+   {
+    "hex": "21c0d0e7b3dde1c90dbd6027f675d7ca23bef76f3b78de99904d56549437363af689280298c68c2fc0dd795fba1127930783f326bf4f86d7c84d2e291ef2db61",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 64,
+    "dst": 0,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 1
+   },
+   {
+    "hex": "c088c01d525043ff87b8c7fe2ee09b1d4e935e6ce544dc9067b66105c43991063e0d5004dd278c30956ca996c3c46899f7fb129556ff008f979ffe18d0931b2e",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 0,
+    "dst": 64,
+    "inh": {
+     "src": true,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "e8d4c5abb67c7060801140283fb5a33f204b8256b1e5510aaa9c9f162ac33c1b769d820d09b9be34b6f5ff60d241640ac2bcb04205876ab3e7e11d043ccf3993",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 0,
+    "dst": 64,
+    "inh": {
+     "src": true,
+     "dst": false,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "2e40a6dde7c23ba9dc1c7651a69c5438183a13aee4b09fcaff33f663145d15e248aa29c7ffa58ef4334e439e49fa0ff2901e6a37912f4f8eb108840e4391cbd3",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 64,
+    "dst": 0,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "251ac64786855f6b4e8411125c0f69551c5fc0355a9e52b08f4a5af4e5b2d3aa51b0384fc16ce00f2f371c13b36ae5df58dff3b5ebabeeb12b09df9740907108",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 0,
+    "dst": 64,
+    "inh": {
+     "src": true,
+     "dst": true,
+     "cnt": false
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "ad93e20953e19d59876d7cb0aa050a221fecaae91347eb9a612ec1cfdcafe7a55fc0e6b43b599536407e8c412797ae382b140679d5ac20475214b7965e39fe38",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 65,
+    "dst": 1,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 1
+   },
+   {
+    "hex": "51c4e31152e8bad8fb4411412efa4671a7443f1b88aee5a8c4f724aa5da37d3a101c44a6f65a61796a572d57d0d9f04d9597423c6e5ba55df6958287e5798c10",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 0,
+    "dst": 64,
+    "inh": {
+     "src": true,
+     "dst": false,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "2836e1c04ca72a9674d324eb5aed32b2ad664952c22bea47d68a41421280991d3bb3fa6f5575bdb8b1fc21c09efb8a88b369e3e6368e50e76c7ea56a34f20c38",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 64,
+    "dst": 127,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": false
+    },
+    "randregs_good_of_30": 0
+   }
+  ],
+  "side1": [
+   {
+    "hex": "1dc7b7f113160ece207642241a1a2e40e53f3f5e49593e1c0237a6c010160a9114ac218f8d10dc8c34a2cc79f4099fdd6a345e3a92be380cc88fda7656b2b77b",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 64,
+    "dst": 0,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "5599f92f896f9b29acaa385e3bababcdf0ba4fb47238477c07eef5b10e7c5047c71e40e770f743fff21d16e58ec759cfe137c5defa664c4bd73af80fa19a9c70",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 0,
+    "dst": 64,
+    "inh": {
+     "src": true,
+     "dst": false,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "d1f4061fee410e62bd6f544c34c0f16a590d3f8e93c6d900c5b18151ca57cafe15e88fb9823a9d5948c8d5328269b065407ac405e10985837e7eb0b13b06c5e5",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 31,
+    "dst": 127,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": false
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "f0b265be5713013a3226650b68404c151d363d2bc70d923c7e372e40cb8040a54d32e5ce632762b53e4b593eedccce7f40bda14c0cb0d9557fa83dd78cb30651",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 64,
+    "dst": 0,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": false
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "3bd50bf7cf5987dc8d974ee441674e6c4be00b29c54ba93ba75a2b90373d3406383a865e34cc62cae0342c0dfd844f7b53d4e7b90ebd1dba5c6f58bfb3d29ebf",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 0,
+    "dst": 64,
+    "inh": {
+     "src": false,
+     "dst": false,
+     "cnt": true
+    },
+    "randregs_good_of_30": 30
+   },
+   {
+    "hex": "748eded8d021a127138b6796651bb1d547acd5277cffa7c97fc6cb227387d1aca92dd677d1794db674d5d142054ce5ba628588161ade4a71011af277a5bc342e",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 32,
+    "dst": 0,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "ff9838837787e2afc63b2ec08d131698fc2f23e000094f4d00e5b6165f30abfe9a4f7d9ab88e404527a28b6d5446b0f9f26e49825b34ddaa23ace840fe49bfbb",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 65,
+    "dst": 1,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 1
+   },
+   {
+    "hex": "07ed3266000ff3e5e507a7833faa16db5daff0305e44fc5dd772ca63da4dd50781c20d9cd95c19090dfbcbf4165e79c9d8733b66f072ed9121919ffc95784228",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 0,
+    "dst": 64,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": false
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "750592c49897156d6c50aa8663471296e310025120fb252e20d81a77c53ae342a87d58990c8ee725e5875bfb194ea50945bcb54fd87e1b6f6116bf74a8ee7015",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 31,
+    "dst": 127,
+    "inh": {
+     "src": true,
+     "dst": true,
+     "cnt": false
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "08cd21c013ca06c22708ed44129f03b135bf48e5248a8d445c0f5bcf80db5b0b6da5458af8b45d547febf4237dd92286db378ca48701080b012f375434a7b6cb",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 64,
+    "dst": 0,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "a947f6740c8379c191b3f4dc3ebbfd234b0709f104249a7aa9ffdc8a5c46d8c1088c214726edc317c4ca82596e974efbe50d7d9f83ad5be388e78cd2d1f816b0",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 65,
+    "dst": 1,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "90f2740f1f58cdab59347f7a374bddfc2b3a3f0af0a7be7c7ecc6b413023bd075ebb9951ba07f72ea1e51a91727926a597fb4827e8a1754e77dcbd2f5459c531",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 33,
+    "dst": 1,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "5b11c09d70537ebb9a4ee7db860ef2510cc9c7d6c8f2743e5840df9f49a30806845c84d44c2896656dbd02e44f93ee0b24a4e26a437e54849aa123012398ba32",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 0,
+    "dst": 64,
+    "inh": {
+     "src": true,
+     "dst": false,
+     "cnt": true
+    },
+    "randregs_good_of_30": 1
+   },
+   {
+    "hex": "10af4b47176a62e86dce4fdce3a71a5cb9e0a8940c4c2d162db4a02c4f4b1ec0e7f42a08fe7554cfe1c49ad120c6ce7827d23c46362dc8b73fc2ceb613b0bff8",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 0,
+    "dst": 64,
+    "inh": {
+     "src": true,
+     "dst": false,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "07d8e04b2140cde5ddfd8e5b924262cea409aa872f571df7f9aa6d449d481f233097b90d32d53a022b55d44a0651600115d47a678d32e76e4df726fb61aa9cd2",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 64,
+    "dst": 0,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 1
+   },
+   {
+    "hex": "3d8f28bcfd626d6bb116c01c3d3a7b7242a1c145877e035a7515a0f1cc1272e32bc8374ee26804cfa478a50be75fd2493ace6aee1c59fade37ac09b0e07fecdb",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 0,
+    "dst": 64,
+    "inh": {
+     "src": true,
+     "dst": false,
+     "cnt": true
+    },
+    "randregs_good_of_30": 1
+   },
+   {
+    "hex": "b6dcb79d03259d5cc6ca5ff000f31f44e3a9d80cb31ae73365346a52bfc878722534ea96c3ac5dc6a507e63f3aecfa6dd1cae31732ef6469eb79b254536a44a2",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 0,
+    "dst": 64,
+    "inh": {
+     "src": true,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "3ba62e405cc856487ce50e61768c14078f16368857c4d341e7f2df986fc6c4efee44560160f0fe881ef9477a776eef210cb65b5de6da56d524d200a723832c51",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 64,
+    "dst": 0,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "7d964cb9784c5f26feec505aad8b5e3e7d14b9ef0acb9aed57679b371ec009b6373e70e7be5439130484185b5162ecc1890d82e82a5cf72bfba40ab92d5f9252",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 0,
+    "dst": 64,
+    "inh": {
+     "src": true,
+     "dst": false,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "e9408ca28e6455b059d1ab24ed325a387ad391281bb64917232bc454e4c608ce73bf26182ff17c3a747fd0e57c9da555572a8270b2150aa07af0a244a86d129a",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 64,
+    "dst": 0,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": false
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "f6fd7ae2660f8a21c0e5eba7b0e5f52572c8deec8e4e16721dd4408c5c454baeacb53b3b9b78db5e5bbbb26be240ae252e0f34bd186d6328b447c67566093775",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 64,
+    "dst": 0,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "0845bd3899a97ff44d21c08f1943339017efd137f15f42e5c3eb50f949ae620bdaeb280c93eb1b1728778f2b7e4b54c3052ad1efcd4f1f3dbdb3edf3d2085e60",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 64,
+    "dst": 0,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "9b152994ca537b9f396f9318f67e62f0a5725f4c10f4ed32aa5754b9c7d84c540f0b49a4155e820420a18087368d0cde3d3d11005be574291334df053c98a86e",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 64,
+    "dst": 0,
+    "inh": {
+     "src": false,
+     "dst": false,
+     "cnt": false
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "599d3edd013981e41b44785937eab992d8fc49130d07475f707efa404bd6d1538c86f8cf37e9643a5601ca79c42bf121a1f12951e5fd3fd0c4a7bc4e7b0f39e5",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 33,
+    "dst": 1,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": false
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "4ab3164125eb2331cb5c82b240b9c45fe72a0db7b83b65a71b162bff67e1d1077d5ea7e72291e8fbac73f7ff57a49eefcdc07052bd28c7b1d6fbf6a45b63abde",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 1,
+    "dst": 65,
+    "inh": {
+     "src": true,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "5ee8f586b7efde569a9bff69ca21d1a281e189481f650c26c108975cde0601df3c6aace65d6ab4d9d0b69b126960e7fc973515a5969b7233d67825c40623a9ee",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 1,
+    "dst": 65,
+    "inh": {
+     "src": true,
+     "dst": false,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "07f58717013fe68a5c0729edc81c64aed5efc73bfac924a66f6973d656febf5b197883c9ed5c21c202d30996170d6963655a253a1b2cd061cd0887e5b27723ed",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 63,
+    "dst": 127,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": false
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "fcb6482aed326270a3b817eade967e71714343d1f3c24dc83c53cf8beb98ae8ed8ea3136a8db6dbffcf1ceffe563c35bab3f7a8f311205f214c98971e8689789",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 64,
+    "dst": 0,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "539c6d8e475353ed32ec6534016cae28da91e5adabfb84aa6285b738c41c24da34950c7ef45acea1fa1ddc789829d9028f28d3aadba452fa1af4a3de9a911635",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 64,
+    "dst": 0,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": false
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "a026bb967cbcded39b10af4d78f6f515272a93ae2d4cd51ec9606c340ec142593e988cb03590db1c54f20d1d00f99429c0d9e746b98610ed8534b472a31eea7b",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 0,
+    "dst": 64,
+    "inh": {
+     "src": true,
+     "dst": false,
+     "cnt": true
+    },
+    "randregs_good_of_30": 1
+   },
+   {
+    "hex": "71486523e4c618691a275b87e094596f8cf427b155d5a512c0e22f8e5e8d1d9b8101c325150e96bb3f2d5fdd26702ea126253ce51647c4cf87b0fe503934401f",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 33,
+    "dst": 1,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": false
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "41cd55542cfe12a5c9f8250142d3ca3ae5b15e9a84315cbea5770b6c3780bfa51dada0ab6961021f9cf8b4f1843ba16a80b45c80acdb1a1be7472db8782736ef",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 0,
+    "dst": 64,
+    "inh": {
+     "src": true,
+     "dst": false,
+     "cnt": false
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "47be1bd7ab7d32478850b63c40114037e7af7fa266bdf16f9397ab85ac9117a234cc51edfe25bed75e7b96818b9b4fe25311cd477704bef4643823c18d5ac364",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 0,
+    "dst": 64,
+    "inh": {
+     "src": true,
+     "dst": false,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "9022858d154b94bfcb65435a8d7bd7ee09f63d11c1a7ef16b31b52b0dcdbe8e7ce6277e45a671c8bdc61569fe0ed858fb39eb8ed7104786e417467a7e2317b53",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 0,
+    "dst": 64,
+    "inh": {
+     "src": true,
+     "dst": false,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "bb8d14cbae69dd67ede843fb97581f319440dba606842ec12d50dee578abbd671e5a6c3e745f0545d74995bdb6030cdadfae3990849e9848d0786e4d6bb0cbd2",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 64,
+    "dst": 0,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "0805684d344eebccfd71ea1b1369ce02cdf1d357517c3ce660d268c08f6b6447b3a414e27bf509fb44eb0f8b06d54ee52c33339a691137b441bdb7ef9a6498bf",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 64,
+    "dst": 0,
+    "inh": {
+     "src": true,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "6583349827f6432c2140e9e5ea31415c1f0e0956ac942c42cfcbf61e2c6d1af7e4dfbfb7fb9385b885501280a2ca4dfc7d0a1bae46206688fafcb82a466158b9",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 64,
+    "dst": 0,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "211f323989afbd92e1b9aad95dba844f3bf0f95817ff238aceab56d7f1bee3f5d30d8d508dfb3fe344da1002a2ee2707e5a2e08fa759556bbe7fd42b798f0e7a",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 32,
+    "dst": 0,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 1
+   },
+   {
+    "hex": "37b0fffd3d241ffec0fd35d06ab70fcb88e960af2a9e2a554a02ef6035ee8815fb31fa37283a6a6c21a0f36783a0e5f1b681af58d48baeea8bff800ba6c98d5e",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 32,
+    "dst": 0,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "ae81194f72e08ec3649c68e333f119b24268d83b9af4e5459fd79207e8d57c78e999668c0ec051a0d24d1e9bf390283dbf419fb311ef3949220aefdf962aa7a4",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 64,
+    "dst": 0,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": false
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "dc6e47a312bc14a0ea0f4a1c85444e12a2c43fb27f4f243a5bb37a146eefe6d29aaa28f5a4490e9ebbd47445bd8456bf7332a3d4e53aa1a841137de819cd7d3e",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 33,
+    "dst": 1,
+    "inh": {
+     "src": true,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "2087a9ae2e641084f14cd6eebab68882fb21c088b297ee178795f57ee585837ee3e0d5c7fc6b08e2c209e7a53fcfe3f4a208aa3f1e2e02d31350a23da12b9cb8",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 64,
+    "dst": 0,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "1e40d0b9e1e7cc5216d28b45cade295a90bebd7f470dbfe1980f0093f6b4d035945339b4a170c6a887eb8ec42fdd440b8945db1e6077758040c6e6f0eeb619a6",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 0,
+    "dst": 64,
+    "inh": {
+     "src": true,
+     "dst": false,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "df456941d8f7f32dbc816f7a7bdfcb6f3e6a725605afbe4672273c21c089e5cd53bcedec0632ad1e70a96fcc497f6d12516d546c18d38ca31dde0378069d31c3",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 64,
+    "dst": 0,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 1
+   },
+   {
+    "hex": "e39c12b38d8fd3eaad1eff9e88b10a3de31c0fed2af2ac329f8e783cd91f1e40dc9ce74f17c90a536458a9771a9d9b7bc1fd0ab79312186e0d424fefc5731756",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 0,
+    "dst": 64,
+    "inh": {
+     "src": true,
+     "dst": false,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "d9f465c833af0bac5da405672dd50ccf7fcd7bbcb4d6f3fe67d247060dd609198d8480dee6a111bf7cbb4840c5bb3ac40e9be74d13a7247e295f31b61d38b9ac",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 127,
+    "dst": 63,
+    "inh": {
+     "src": true,
+     "dst": false,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "21c05f3b9004e51a6ba3675e193307ed8a239e36eb16b89a0e31ba36eb695fca7c61c190df8a7e02296b62b7598e5754774a5a6227038a44fa1fbac64c6f0eb4",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 64,
+    "dst": 0,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "ad79f9e90f7c35511bf6c143c74c5b4fb108404c8367bc29e92b057e38dc781529746ee5fea0ba2b4cfdd3eba3528635a24d3d6907c0208ce19cbf6b905803d5",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 63,
+    "dst": 127,
+    "inh": {
+     "src": true,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "66ea115bcb2ef73b85eb358eb05899bcf999a00b51035a160b275d193821b121102560c1286f10cfe2eea688a2d9a35321305f5615739dbb800f465be5eef046",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 48,
+    "dst": 16,
+    "inh": {
+     "src": false,
+     "dst": false,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "becd7784c68f35e6f4028c01dd86610a31bf9c709d94d9421be8f699feacabd86f6d58e54d31188cac82fb621868bc15c5dc2ca5432720118d358df3cd2c4b39",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 32,
+    "dst": 0,
+    "inh": {
+     "src": true,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "fcaac65352fbf41a6ce01dba6302dca1482a49a81e4a140427d4faa3fca448ca4b67ed91df7eddaebc1218ffb0ca7faf861ea11bc5fbee34a6600e7be70a4b47",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 0,
+    "dst": 32,
+    "inh": {
+     "src": true,
+     "dst": false,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "3acb750be41760b5d324bb33064dbf8e9d6ae31dc0581ec0e2848d7d2f5b7bcce10eb99415190c1409d89e95f5863c623d1fe7e1fa50a596c582b6a89c42feb0",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 0,
+    "dst": 64,
+    "inh": {
+     "src": true,
+     "dst": false,
+     "cnt": false
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "321ec09206bd261e9599e7f4029337ce0b95f0f44a3dc16d275d1a193f2f87de83794ad705ad44213fd70ad8079e766c9e2ac3aad7f3c62d8469e06fbc123a63",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 0,
+    "dst": 64,
+    "inh": {
+     "src": true,
+     "dst": false,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "c87d73cd114014f0bc8eb40968947b950b5b95c15f089fb8e756ca24393c7e54203663117195f6fe28a63b626ffb36d079dc1ae367877228be9b61f6a6cfeed3",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 0,
+    "dst": 64,
+    "inh": {
+     "src": true,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "3caddf211b3d1396b4150328435f9703ba80874a2a3a3ad25f00f20fbfcd73bc6c0334c7d5693ae01314a94ce71afaa852e3261aa7b4d7f36e6c1cadc5b3aab5",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 0,
+    "dst": 64,
+    "inh": {
+     "src": true,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "2175a8a16a99f7f844e03dfb5f6d84ff9bccdbacc1679b213fa3c5e5daf893950a0a71025995383c42e07c18b1bb2131c90f7f5c90a444ce20ed6fdd4456360c",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 63,
+    "dst": 127,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 4
+   },
+   {
+    "hex": "11c0ade74935f79885dec41a57ed4fc0edbc95f19057df31ff139135767454997b25c4b717bd2f2a7885f987e3a39ee6d229c2d6e3441b57a7fbe9c55be86cce",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 0,
+    "dst": 64,
+    "inh": {
+     "src": true,
+     "dst": false,
+     "cnt": true
+    },
+    "randregs_good_of_30": 1
+   },
+   {
+    "hex": "3a961ec07e40537ae795d77082648f131266566055d488cd9b49b50479d0a800447fa3b99e309d0403baaa578984595689a2de08940455cab26146bd999f1c8c",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 0,
+    "dst": 64,
+    "inh": {
+     "src": true,
+     "dst": false,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "21d0a90ec890f577dd7a94833de8e49eae7a36d570bc01402aa41a93c769e2e5773eaceeae3f5593ee8ff37a94eb17c85b15497bfcdd21e14c42737bc23f820a",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 64,
+    "dst": 0,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": false
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "36419e77b2002ad1b41e948db38ad55f014e1c2d5594a6f300aab31fad55c05057e76aef98bbe64b6510f9ebf60f444df31a248cbce470b71b5691dfc8f3fdbb",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 127,
+    "dst": 63,
+    "inh": {
+     "src": true,
+     "dst": true,
+     "cnt": false
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "abf1a9507c1397db0bd1fbd330b68d5b06da2140b97d07a85360245aba9c50811b8ce57a6e3b539bbd87950d0ae8c39ce5fd36792581fbc802576e52aa76e5be",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 64,
+    "dst": 0,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "16150640195dc888d2eef64cae8f425e8071f31544bc4aaff7c5d2868c48557ab5e114428b35d856847fcd290bfcdbf8aab79bd8bee0775dd05848a2e4e7f7d8",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 0,
+    "dst": 64,
+    "inh": {
+     "src": true,
+     "dst": false,
+     "cnt": false
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "5925d1be74fa5433cb69ac231c954cc56a775d5c197f79e98e057f0fdcb5b9d50c8e70175a219f95199b4fdca7e0297184c9e5a3289ea2f027f702a26dc21bc6",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 31,
+    "dst": 127,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "5ba8222c0e00c4e3944fe97e0fa3388e8caefa4b9d600cf2db62cab4ac0f0bd45ce0071141de84874ef1b267b67c00adb2baca6fbfe75593efe11e7a569fc08e",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 1,
+    "dst": 65,
+    "inh": {
+     "src": true,
+     "dst": false,
+     "cnt": true
+    },
+    "randregs_good_of_30": 1
+   },
+   {
+    "hex": "d80c241121d5bd772d817569e614c66f7f0f4b847ce8b7c15b49877cafd0c189509195e55457e79f366ca8bc5d2b720e7023b652f35a592e99d32662afe66136",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 34,
+    "dst": 66,
+    "inh": {
+     "src": true,
+     "dst": true,
+     "cnt": false
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "29f3a92cad3ebb09d18dbb07f39ee296f3a98405b11f1b42b797df23b80f2b1d0b8e43ad254561b31ec14c4722b9e746ec1916f353adb3b5e9774a5f6b13dce5",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 1,
+    "dst": 65,
+    "inh": {
+     "src": true,
+     "dst": false,
+     "cnt": true
+    },
+    "randregs_good_of_30": 2
+   },
+   {
+    "hex": "cad5de9ff40ec02e83e4616ca954c1a7ef43ddf2e559fdd612f115e9340c5edf4350fdd67095f829f6204dc1e6b4812a103b04ba62fb4ac181290bed4d589168",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 64,
+    "dst": 0,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "9b1d92840534b4079598f5cffbf9d7d5a92fa87a05942cbf69b10b836a46cc213fa4df3f59fcaf5af01b50a1ff43c6f85b28e6e5385dc7c8e4540e31a9e87e7f",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 63,
+    "dst": 127,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "5f7ccaac25939e8f47876bfcdde35a8d6e1ffcbf55cee02e421f427ff6e554dc5287deb935f7923cb033880467b8f4ac5566571ce2d93b134be5e70d55ffc6ba",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 66,
+    "dst": 2,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "21c009e5ec0cc6be092b867d56169bf1c99c580123b31268aad93aa5db331318df35c33f9adddd3c7302f9913faffe849b583cfd77da61f31d07a1e5adb17c4d",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 64,
+    "dst": 0,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "c75762f140ac3d7f8b44165c86aecb9ca6113ca8ec813a1ec002d2704aa3abbfce4dcf9c9847a7974339ce791bb278737aba970f87e74aa1ba62abe484e098ba",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 0,
+    "dst": 64,
+    "inh": {
+     "src": true,
+     "dst": false,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "3174f811bf9eba8af29c3ec3a71a6201a0cb96dc13c046490647972283bd431f4fe1a1140be7382b265dbdcc76bb320d8ea3f339141b6941f722a7966c31c2cd",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 0,
+    "dst": 64,
+    "inh": {
+     "src": true,
+     "dst": false,
+     "cnt": false
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "9777a251e621b606c017eb48b21230aa1736a1bd144b417cce6a421b95adbde651989b311a6c276c5c585951dc237a1fead73b7c7b9d2be7223be663a0bec35c",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 0,
+    "dst": 64,
+    "inh": {
+     "src": true,
+     "dst": false,
+     "cnt": false
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "d66e3536ca5aa663107ba7195580aa74b42915e9ace4a9d87afaaad93c10bf1d337b69685360253c4aea00a8ebe3a4e2c0159fc0211ecce66c9fcc73fc2cc7e5",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 31,
+    "dst": 127,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 1
+   },
+   {
+    "hex": "358d80d0937e4ea39ed2ba8c23bca8dd4d8377cfa1e06836134dfc43ff3fd7dfcdfed390da6b4d4d386a2140e594d756d918f16a962d986aba87d2a6a78ba2b9",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 64,
+    "dst": 0,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "0bd53620f31a930902588af8169d351f8ed069fade4f2769d5637fb3e593724ce859564a8ea3c69dc1736139103aa34492bf1addcc3198f030337e9da7c23825",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 63,
+    "dst": 127,
+    "inh": {
+     "src": true,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "8ebd590ee3b7f1219f32cdbf2cf3e559af0d18fbd275ed76bfd0aad1c5802c238f86f537d17484a03ae6c67befeea285756f80ebf07312d39e0eba3c76111beb",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 32,
+    "dst": 0,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "55b473923844914f92ccb5f8f707ac5559fa0ae0bb689938d10b15fdb3b2da29d025b645bbf97a1986d3a0de2b21c0d7f9b0d9041f48b052d035e01f804ee5d4",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 64,
+    "dst": 0,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "fe30ea11c0e166febfcbe79cd0b062cf6e73afaec71c09d27bf054e0366f3a6af421fd96e08e989e9685859f64213191f7c7aae6a108cd22f3a1896d501a8fd7",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 0,
+    "dst": 64,
+    "inh": {
+     "src": true,
+     "dst": false,
+     "cnt": true
+    },
+    "randregs_good_of_30": 1
+   },
+   {
+    "hex": "5c0ca349d712f12ea056c72a91c0d1c6f704f2e55517e537d9c0d2749c2573caec72f1e4a83ad01557ca36032ff0a97a7eccd7d9457c669082e13f3ebf8087d0",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 32,
+    "dst": 0,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "71dc66d24c2dd56ed82d4881e638a8fbee783b36570d337a53ebda86c990e21ec0e761903cca768ec2bfefeeb7764199ee15311d27e9476b96d27f2ef1b9e7d8",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 0,
+    "dst": 64,
+    "inh": {
+     "src": true,
+     "dst": false,
+     "cnt": true
+    },
+    "randregs_good_of_30": 1
+   },
+   {
+    "hex": "b3bceaeb66fe1c2fb28bbfcdf8783183c04c1140b443b8a3d5e15b603ffbbd3232e7fee48d6efeb293fbb97c76577b3b8958e53ec5c86e7df224784e8f4e3956",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 0,
+    "dst": 64,
+    "inh": {
+     "src": true,
+     "dst": false,
+     "cnt": true
+    },
+    "randregs_good_of_30": 1
+   },
+   {
+    "hex": "15a5bee3819eb23699537ed6596f0bf118012ee8dedd7a7b8b37e57f909fb64dc9e5f86d13a3b3b0bcd3509d0eaf461f9cb1b404e709d67d6a94a89b5b19720a",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 64,
+    "dst": 0,
+    "inh": {
+     "src": true,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "d477d17fa17736362c97400b6292ee6296b860a9ceb445432ec0cb94a1d37fa4610a2af00e83202c73a6bb4fcce5e827f6c0a561b1fcd30ede11abdab23b4f12",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 64,
+    "dst": 0,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "68518104ed32a81b0eb75f9079580a4df635b7f78b758885003ccc5155af466d0a65065f07799b6dff67f14fe5fa369257c3ce0233b7fba82041f5a84910dc3e",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 64,
+    "dst": 0,
+    "inh": {
+     "src": false,
+     "dst": false,
+     "cnt": false
+    },
+    "randregs_good_of_30": 30
+   },
+   {
+    "hex": "c7f691eeb1270c4b34b45772d1ff0640d39eb8a67eac6d587589da22889e3d12b8501460719c770e953357bbbca3e7ea68947d341ad19c94b21eacbed7730fb9",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 0,
+    "dst": 64,
+    "inh": {
+     "src": true,
+     "dst": false,
+     "cnt": false
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "0f1c9e89f768c8ce6bc870817a6af003c6ab4e705464e91d926ab2977014f1239307c97921a0d61f7fa6449b1794dde51c2a72f927ab609c4ed2abae4e6f09a5",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 32,
+    "dst": 0,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 2
+   },
+   {
+    "hex": "3557dc7521c0b6f85b72b6e5b58626952f4dd315c80dabca2a1a64583a2c0e90592c6e351f25c0e4f785ca0d55bd140f38d1573b4690c3fc8660c8c97d2e31fe",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 64,
+    "dst": 0,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 1
+   },
+   {
+    "hex": "4fdf0ceda03db9c5c71daec95bb87e003889e12d3cc8591c17fee66b77b7cc13fec828474991284e72e74f168c4605d973e17a98c5b5c798e0df3f6f3b6de5e0",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 34,
+    "dst": 2,
+    "inh": {
+     "src": true,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "8da80761839c2626aff236840259453e206dcc020f67b7648bd5ecb5b1b52dac7c8c6f0861ffd6799a59afce4cd8d34229d7e545a8265d443633bf9c00f1e45d",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 64,
+    "dst": 0,
+    "inh": {
+     "src": true,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "114020780fe7c496339aa5e41f24d04d8c0179c443463f578de0c132951740fdd09d3cdb2a535a2d2c3aacc48c42f2f58669e4a4a76504d7394bdccf322ae59a",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 0,
+    "dst": 64,
+    "inh": {
+     "src": true,
+     "dst": false,
+     "cnt": true
+    },
+    "randregs_good_of_30": 2
+   },
+   {
+    "hex": "886c5dc2767d2274b61c1140f1544c9cb93d0b07e74d47e5887e8821028130af767e0c5e4137c6157ed5fc79314fbe140246bee90d76753e42aaac37e2f793aa",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 0,
+    "dst": 64,
+    "inh": {
+     "src": true,
+     "dst": false,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "67e63960da4986497d52a38d8ec8409ca6219fbbfbbd000efcdb40faf53dc901f80a50ad3848234d741f0f6dcd9397e51a813ac6510b2b505a50ad5ecaf0ad69",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 32,
+    "dst": 0,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": false
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "7b955f9ead8b0cf5757ff5ed326719fdc5bd9dc7798447f0e5b5adcf14b12f2949a8255e9d3fde566cba8bc986de4a0e02abe34818ed4cd661be8256b0b1409c",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 64,
+    "dst": 0,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "1ec0e789c9cf34d37a578f91e62b2773380b5ce35af91a89a69fac7af65fc30c94bc7b9e5e727d97c67832ebada4f2b6e5c8699fd1c59d879bf1341fdcbe83e9",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 0,
+    "dst": 64,
+    "inh": {
+     "src": true,
+     "dst": false,
+     "cnt": true
+    },
+    "randregs_good_of_30": 2
+   },
+   {
+    "hex": "c4907427e913720b1e40f9d5f241fb65a379ef663345ab6544fb0be7762cf2f97257746171c84d0df90252bef3561031f94d8d814cbd3e0da29d4fc3928f907e",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 0,
+    "dst": 64,
+    "inh": {
+     "src": true,
+     "dst": false,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "36642ffaa9a954e8381333ddd8b9eea821406cce292594f14a7242a63be523acb77c78aaf163d68e97762f9f16e10a75838ff4d16ce9ac780b615026de5f5243",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 64,
+    "dst": 0,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "17f06e10d6a71f15c8bdd319db0941bf31a52b3bd8731b06d89fad526bffb242349591ae93df012c5a4a50fb5e1fc933d7e7dc45cf1c0d0f6ac14a8d82440bbe",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 127,
+    "dst": 63,
+    "inh": {
+     "src": true,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "557e8efdefb3a51a327eaf047f01fda37e5b65ceaeee6ac08a27e2c40acb5c19646ebfcc0a985521ef9fabf41b923201627dc636dc854c699bb87ceb3c6de552",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 31,
+    "dst": 127,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": false
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "771163c06a9e04f7bab4f2fcf26d1bad595007e52337c53046a040c6607418a1c8afac7c697899264fd7552a028f307373f724040468a44b1392fd1859727222",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 64,
+    "dst": 0,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "08410ead64e8bcb026aa9199cabdf7b9307afea14cc81ec0e7b5c7b9f1f0a543d30455bd42eb5f4ba612178c27e5017fe4ef0252933071656170fc729fff2514",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 0,
+    "dst": 64,
+    "inh": {
+     "src": true,
+     "dst": false,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "f39156bf16f58de98b2456114069bf5026f99966b57aa4d50e656195e8dffd0012a6e7628e74b4d3a925b5a2e7db3af9fe42b73de0fdfa31e2ac05f9fc1258e0",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 27,
+    "dst": 91,
+    "inh": {
+     "src": true,
+     "dst": true,
+     "cnt": false
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "47c843afe406c93302132c608b4935105eec4af52f4cb96348f187c0cd0bed52e87493aef2885f16a099fc4eb51808d8a3f7d183bd59475446e7662c58172166",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 1,
+    "dst": 65,
+    "inh": {
+     "src": true,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "6393d3d0529ba00f22661ae63e4424603e58166df2502417412921c078e5c7cc907dab8366470754f55d64afd5292f708c08834a9f0da38120bfea1ef89637d2",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 64,
+    "dst": 0,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 1
+   },
+   {
+    "hex": "f3de2140fd3ccf9a74fddb1e14e5a9d82e7e8104f8c5eac0d555f6af1c9e4591f22db5a0ac9759b209259cc5dfc8535924dcfac6fb9d89576edc2c06a1f65a17",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 64,
+    "dst": 0,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "7e21400ee5974429a4d1b4686bba0d08d9a111e48bb1d684479249f2b7dd5e028a27bbea8e7d3436efbfccd75a0dc5e46225812515cb8635b3285bc6e04a0f76",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 64,
+    "dst": 0,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "70eed2fd881ae9ff24b68d17e0f28512cdbe8ec27ab3d4f1fefbbfa6e1b9d94f33967757dab0742f1140dfb4b057a1e743ad0645b9d30448ec20d57d525fe3fc",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 0,
+    "dst": 64,
+    "inh": {
+     "src": true,
+     "dst": false,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "eec0505ff245e7b5c81a811358b4ad42123b1e1bf1ab05e6c802ca256d7fcc4ffc5849cb56378635d4bcadd587c662887dd39624c57dff40ba98a99d65133da3",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 0,
+    "dst": 64,
+    "inh": {
+     "src": true,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "479d0d228e6b78114052f322e084e7e204986c7bfb2a367b1015e5a3c74e368fd04af23c45e97c0685e7a44f1d8e912a222be6049a7eb126c5136d04c72cee4a",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 0,
+    "dst": 64,
+    "inh": {
+     "src": true,
+     "dst": false,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "85f20502dfa02aa200cea079dcad99a1b8cec014f100e8b21ba894f0fdef05bd759659a678fa58ce0820ed10adb73d0b7cab11c08d847991a5e7392272ad8074",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 0,
+    "dst": 64,
+    "inh": {
+     "src": true,
+     "dst": false,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "7c3606b88c755f2fbdf2c0ad623bdefc279aa07355da4502165e22590ad421c0b3163f8846e12aaa0fcb1abd162529b4e564a4b2923a9d9b29bfec3c43226731",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 64,
+    "dst": 0,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "d319530e1f10dc417237b7bdc5665410c72293c941796fcf21408ee5c8ede35105f5d47ed2d81cb0d994ea3171f3ef1485c8798c5432000c9d6f79553798bd2f",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 64,
+    "dst": 0,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": false
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "f8d3e640508560196c595b9d9503f1d5b07ee54e7db6ee34f3a6c9fdea5f365e04811072359414b0bc1bb806d3eca2cfa173ddf8d7a3e173bc50361ac7e7c4c8",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 1,
+    "dst": 65,
+    "inh": {
+     "src": true,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "15b5d352f5ee582b8550ed32bee5b6c420dc7e16f4b9063ec9288584ae6edf7d25e186a0ac74003af54e97d21e2a2427bf6e20b93fb8db6d9120532b9a99247f",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 64,
+    "dst": 0,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": false
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "7b5ac75dd72a271bfcf3de4d784786032c82c355c9b7c4c94fc9b93ac1ce5127ff6def1b213e2299e5b6e94700a4ce699685fa514d357d9fddd42b694e194202",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 62,
+    "dst": 126,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "08717f6b0f313df898e85c072e4045f5234ef578d0cece8a0cec2cf513631324026db8e573b3de90ae4f77403d4826bcbe80ea051a1fa20f849ffe93a027c362",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 66,
+    "dst": 2,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": false
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "5b40d05c996c9b999ceb1c1f61a8c6797fbc9c8d4187535bbea1c3687a82a888c5772b0a76a66bd2e93dc71415ff6c92a5df44a15d81da882fc0483b2e40e58e",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 64,
+    "dst": 0,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 1
+   },
+   {
+    "hex": "729230902e6b07e5e1e3ba42e7c7371e4ba8ae1d52a67880a3fd3df570df86d09345cb064192671438f34aa9d6dca7586a4a3ae7af6ba51b8d56430539be6ab6",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 1,
+    "dst": 65,
+    "inh": {
+     "src": true,
+     "dst": false,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "bd21c0692c852d348caee559bc95620de4755c622809b1a1d4d61be4da4d31ee9e691beb88c618da61cc221d605af58007157cfb4b46447c018a2a1ab27bcb7c",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 64,
+    "dst": 0,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "432e78792676081dbee4ba034b14f29fb30b10c66d6c72019fd8acdba59074f9cdef98835108af12ccb2276fcd03ec7a8ca2578ce5c6630ed1a604e6c0b84250",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 31,
+    "dst": 127,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": false
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "6281b14ba373b8734148f50f0ebf8c1da96f4b8939d0797409b5790a00b0b964fb8b4be5f3fc412402669a2e11396d29f70604548a71c0da2e2410cf90c21f7d",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 63,
+    "dst": 127,
+    "inh": {
+     "src": true,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "a88735f8bb690665baf02ec114df19cccdef345b99efe6af61e4bc322bc779033c4572ab39852f8c450961e5e0392cf9ff0d4ad615f49ca5bcf149c460094d0b",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 64,
+    "dst": 0,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "9460d01090cb60c71daebcf2213fc6344dd67925016b343ddca42875c6317be595c65cd715c28ef122b09a9b04cf843a60db6aa99958af02352f29f10a81e624",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 63,
+    "dst": 127,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": false
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "8a3cea276f84a985c19ff21e3f150c3b6d7a4b6d62f06709a94c816612e384be2810c16a0e1af257a93c627ee7c29be2d52838f0185a0bcf07bbeb405a719d49",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 101,
+    "dst": 37,
+    "inh": {
+     "src": true,
+     "dst": true,
+     "cnt": false
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "6a31635d6dfc2ec0e561a8c217fcde554685370d012fef7224c2188d8a25ec2fdbffb5ca0b71956e4c8b804a0a0807b4484349ffe496923602b8eb840c895228",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 64,
+    "dst": 0,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "105ca7f5beac99c9541ec05579d84b3e929a1f41897edf3f7f393a270d3e09e79d0921efa220014191a163232e2923e85c0d3c20ccc9e17a06c7fda4dd0c8f5a",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 0,
+    "dst": 64,
+    "inh": {
+     "src": true,
+     "dst": false,
+     "cnt": false
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "f6a0aa4f98353abbd3555f743f3dc475849073dde7aba99ae5bf519822e4b925a8a094fdf03f02a215ab562599f39487ccfc1a11a9b582b2043bf0921deafbd6",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 0,
+    "dst": 32,
+    "inh": {
+     "src": true,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "53a2df27f19ea29cb4e2edb90b36d0453d44b5ca3c2ae86672dc1e2df561f7a69a4aad81f22f5f29600da7fc2e4004e520716f88e48867df879d92ec7f6fdbc8",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 64,
+    "dst": 0,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "70771e3f8b33dbad53ea498aa048f0ed9f0eb3a3cf15ec87550c31284b3ba3a34d8dec26ff0a7f9a13e7fb84d3cb8960304810dcf5722d7ad29c8ebef22b609f",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 0,
+    "dst": 64,
+    "inh": {
+     "src": true,
+     "dst": false,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "38470104f56a9d957e7bc3daa8baece5222cbedcb9af0bb089a390d87ecc6c8d94dfcbd111c0f2049738ac779a72c7035b1604407879be62bddbd2e76c70431d",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 0,
+    "dst": 64,
+    "inh": {
+     "src": true,
+     "dst": false,
+     "cnt": false
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "5af60e23879198a6e26a1ed12df24b0a519d3c0f775ebb844926b27b0a85e71e01217111710fabbfd85356d88d737e3a2e88eca44fdfae13efef280b18d3a21f",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 127,
+    "dst": 31,
+    "inh": {
+     "src": true,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "d95a4f14adb6901e40e98a69447dfc3ba2bbe7b258b9c17006ef89ec0d17bc2302cfd3f40cba3b5f5ca66e9b37542aca540326aa410cbcfb7a73abe88169f52e",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 0,
+    "dst": 64,
+    "inh": {
+     "src": true,
+     "dst": false,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "067c687a53883ba1bb6a44505c3f8258a6e2cfac75f5848d062a3f912e9f9e3502fd0017285c751bdf08d39c673593a8ee2373e5ff4bf2062046d6239f08d1c1",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 31,
+    "dst": 127,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "85afd3f160ff2ec05a727f9502e5e298b33e101fe7f8055f6e4d852bde9d3eedd576be4e7be840850d8a844e0f0bdd5a8ad39f1478ef99c635c0a36b98e3f25d",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 64,
+    "dst": 0,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "7181c15dc1c3d4cd0f0e8718ecab72e9bbe2f62cf52c6c47931b53eaa7e1d128f7b5342609a9f5ba1ee7a6ef11402ce7957686fcb9c74e6db3121742bfe92086",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 0,
+    "dst": 64,
+    "inh": {
+     "src": true,
+     "dst": false,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "47c64a80eb0f608e77ca4d87ca26133d09f2e9ca4b17d16ebfe5bb1f23dd588a400015d0012696e9e3977d0503113b4dd15f635c39934c12a1f3960447a3c521",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 64,
+    "dst": 0,
+    "inh": {
+     "src": true,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "718e7b2f4f2d3dc516e15efc8e74a947a82798e72e1a1e3d985ffdfc4b0fa3359725b990d4e9e4b971cb77c4ae3d77ce07b8967502e4e87c091c9bb1f27a7a3f",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 127,
+    "dst": 63,
+    "inh": {
+     "src": true,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "88f4d4ea72ae826d106dd64092c86f341cd5231973283864e585e82aaf1a7b90151a2589f57b21642b01e59a1a11a1e80bde8c2ad34a299a1ecd944cb90b1b89",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 65,
+    "dst": 1,
+    "inh": {
+     "src": true,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "3a1ec07cfeefd42955df0a9a3d86f0e348c9c624a6140849d3f45394e2acadaa829483e73f599812f1d272f598a3ee9bcd8c88ed55c098ee8f2cd87187171893",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 0,
+    "dst": 64,
+    "inh": {
+     "src": true,
+     "dst": false,
+     "cnt": true
+    },
+    "randregs_good_of_30": 1
+   },
+   {
+    "hex": "f22b252c7943eee653fd873e3e2b495f8e0299c7afaf5b454eed8965b2c08d96de2de1b3e7396d8bf1e9008eb138b9934f961f5712b5e3d1119178ad4443e7a6",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 126,
+    "dst": 62,
+    "inh": {
+     "src": true,
+     "dst": false,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "c70ec0db79be91aabd259bdd8e699496dcc64b1fb3c04ce8bad0def6a2e57c7ad651e274b3beb2e2ae9c2d7469d46527691148beec64a4cfa682586d1553df44",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 64,
+    "dst": 0,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "12e8a44d880893c1882ec0fdc5bc7ee54545baccf2517708d3863f04d5977671babb001d7e4b623f8cffb9b5860c235c83eb47c707efc8fa715bb0601fe2f6f8",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 64,
+    "dst": 0,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 2
+   },
+   {
+    "hex": "7e7748178da5ead3b39c7aa101ff40407581cb583cb56e7c9e87e70805f8862d7c0f9ebb824b0905bc6cef0755039d5248de19e9b2f903929d734c63d6ddf902",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 0,
+    "dst": 64,
+    "inh": {
+     "src": true,
+     "dst": false,
+     "cnt": false
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "1c2ec100edd3dbb616cbacc6b8cb9abdd5489ef302b8c419cf9d524fe5b93bb541a0075a77136e0522b03de903fd3fa017ebacace02bd2d54ddc64e62f79c648",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 65,
+    "dst": 1,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 1
+   },
+   {
+    "hex": "1d431efbb6cc1f3953f44802bf0301162dd30d4b60f695f9624b12eacf8b1e409db166d564dce79b1c59ab81fb983553bc4196c65f65a3007e4e0cd0c1c3f0e5",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 0,
+    "dst": 64,
+    "inh": {
+     "src": true,
+     "dst": false,
+     "cnt": false
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "8ff35fd94163bad0c487233e094cbecfc51e404a343fc5cf32a99e029da78ec379a25b164df81fb90b1ff4d05faa9b1d4e41ddba07a2c086aef1ba6ae7cb6017",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 0,
+    "dst": 64,
+    "inh": {
+     "src": true,
+     "dst": false,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "8c421529a4b6176411cae01ece2774a3e4c5fb9e4b629ce81236a68ba2d172ba5e5dd75f61e784993a91683578d92cd1e7d215ef5c72dd357c257ae00bef85d1",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 0,
+    "dst": 32,
+    "inh": {
+     "src": true,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 1
+   },
+   {
+    "hex": "d8cedf605d85606443bacc11c091c53ca91f00c0e7b5f3fb943bcba2bceefd347381809e7530036bd5ec4ff75b680111fadfbfc488f59116f00cd8c5544b8632",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 0,
+    "dst": 64,
+    "inh": {
+     "src": true,
+     "dst": false,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "1af258522b35cf622e4ea47a827ec629e2b97889ccb694a8e8ee72d4992ea071317e07713002d887ee41cb079f9cdca6bd5f1b50e95fccdfe5d30ff4728da8a5",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 32,
+    "dst": 0,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 8
+   },
+   {
+    "hex": "5d1e4002367dd1e772ac7401cf9a35a0e6d0cd8154484c6134f7a443e31dabda7e3ac321cb6a1c25c5f4feb5e7af94d5075e81bbfd354411ea1f0c216a06ddef",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 0,
+    "dst": 64,
+    "inh": {
+     "src": true,
+     "dst": false,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "4ff64044412521ff1b5f373382c1aa4e65cecb8e86db3d4b1004c3f87935b8db9f04c5913ba9d1582ef81f01c80d3fee93ed29b3859e75756ff19fa9b0e7f0f2",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 0,
+    "dst": 64,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 2
+   },
+   {
+    "hex": "f5ff84246989863ddce351c91e41ea6cb79bb62e142e30d41a6c3232ecefe805dbec129fcbd5866353a950c99dfb43ace71cbf00c63e966a20700dbbc43cef59",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 1,
+    "dst": 65,
+    "inh": {
+     "src": true,
+     "dst": false,
+     "cnt": true
+    },
+    "randregs_good_of_30": 1
+   },
+   {
+    "hex": "c5c3530affc9579a9bf0713c67f8bc34deb76f3789213f4106d1f2afb5ca3a8270a4f59792bbd073bd4d67437b349e303a93252abff75f145c6043e54e757a55",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 63,
+    "dst": 127,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "576efc584411411268077116e7451dd6c3fe1f10b6e0f00645fe770ae708d4f23b492e73fa68c4ed3df5cb8d19e87c4978db6040605ef741431a32a62be9d984",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 0,
+    "dst": 64,
+    "inh": {
+     "src": true,
+     "dst": false,
+     "cnt": true
+    },
+    "randregs_good_of_30": 2
+   },
+   {
+    "hex": "5dfdedc9a3f3e914df896e0c3c21a2d0e242cb09f4825758101253ef478bfc98583660eadc504fbeb8d0d5c03561a1e50936bf416c5f2e7c39a67e8f631fc492",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 34,
+    "dst": 2,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "1e410292bc3757eea9f1291dbacf1638dab783d6a340d80b254701ed3bce7af1dc63e7d666b746a34714ad9d45805690da0cf1e1d651aa38a4613e71d71b270d",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 0,
+    "dst": 64,
+    "inh": {
+     "src": true,
+     "dst": false,
+     "cnt": false
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "0c2426600577525a0ec090596af7d493c88db42ae707a5a1da889380809c5f2b053ab2f7ce0a1215faddcd039b5518b0f6c6af8a930353949a883d448a633817",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 0,
+    "dst": 64,
+    "inh": {
+     "src": true,
+     "dst": false,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "a294517c95e821de32ebdc2a95e6d36ea9db10d81b461882c58189c7b2e83e70fdb0d423a59d3fff91e5a8eb5e6d8c466366ecb55e6bc6efb701c2f2fdd552da",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 63,
+    "dst": 127,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "8b23fb58e8cef5b749d017774ce1ce27250a2e673a9ce9733bb6397c9a05ba3bb657ad75bcf8f24021bd7edcb6231b39fbb61be5a4948986ab5fe447f659cac3",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 62,
+    "dst": 126,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "d6fab51101c0e9f57c6c625a4e0f0be7dab3aed05f7468db95b82e00438b996de7da64f927e99390fdd4b14fb2a2829e2cdab891c188c704434c90f54f0cde19",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 0,
+    "dst": 0,
+    "inh": {
+     "src": true,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 2
+   },
+   {
+    "hex": "1e5d1140c11f87f9f5e7b7c1d3f1e7db2ede9a7eea658f26aaaabe50776bbc7f2530eb635d0bfaa3e7bcae14de04cec8861f50925287b5ef5fed7c83bb103b58",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 0,
+    "dst": 64,
+    "inh": {
+     "src": true,
+     "dst": false,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "31b5699bf32002f0e09a539d0523ed5e9ddc8eed32e51f1d2d2af4c17674bd56d347c6b8006a8f88a9e68831f9605e79c096586fafcb9a5e3250949df1fe4f75",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 64,
+    "dst": 0,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": false
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "f2287b7479a4c2195fb0666500393d4209ed0e8922da11d7d8221e40c0e78f8f1ff71b82f483178eee65c43cebca76a1fcd5ddc564a9ca6a2177fe8c4d5b30e2",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 0,
+    "dst": 64,
+    "inh": {
+     "src": true,
+     "dst": false,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "875bea379031dae439a204e2dcc2d5a70f50ad6274aab9f2613619d06ecdde51c6d42807f97534dc812ea072c90226635d5a9a986d43e0bea6c18e3e0c5e15e5",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 32,
+    "dst": 0,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "f2fdfb6e437e5c014861ce8b7d4ab82e40e57076490f2afc80ca2080e00898fd1b0bdf07fa41c4fec541caedd65b900eb8d14a9dc5f1b403b56bf5b9f4988887",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 64,
+    "dst": 0,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "84c07d90781517d0f63d9241c9fc534faf23dd91eed282701980c0957fa62ec0a4e99f1543019864dbe7569274b1da559f1a742faec1f287e5b086edc1564531",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 64,
+    "dst": 0,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": false
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "b29c2ffa68d5e3522411401b06ca29357f0f0f3631a03db17d3891fa503cfae7a4f394438b44847f76ef54cda1a7f64d10f595756d3c44d3afc16a5ef3980904",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 0,
+    "dst": 64,
+    "inh": {
+     "src": true,
+     "dst": false,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "81ec851142ea93f405971b6177e8b38d1bb5e7fac2e1a0419ff99834e0621e319edafcb612ab6b4f18bd82fb4f2a0ca2fe4fe73218d0f40951dc671a2aff9979",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 0,
+    "dst": 64,
+    "inh": {
+     "src": true,
+     "dst": false,
+     "cnt": true
+    },
+    "randregs_good_of_30": 1
+   },
+   {
+    "hex": "3ac0f18f3b4558e12636d4aba1ffd413c19a0ad6ac950cd52143a19804d1af2fa92b7a0da1abac00170b24619b3e67eceeaab8541c8b9a4e6475e5bb98742239",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 66,
+    "dst": 2,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "b6009d0911be58a4092f1f0758b5a7b2f3426e59bdf36fad9bc9722ec02720fde5e321238d8c4dd647bb988e4bc269fe5847ecc130a5af9df3bb85051781a531",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 64,
+    "dst": 0,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "47bcf8a7c074ae7fe152af1dd059f95d8226bfd1be3a53395f485c2de746d478e67be2be354d37811e74bacdc21dd35ec386e37a4e7c798cdfee6a337ecf869d",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 127,
+    "dst": 63,
+    "inh": {
+     "src": true,
+     "dst": false,
+     "cnt": true
+    },
+    "randregs_good_of_30": 1
+   },
+   {
+    "hex": "4eef4bbd8d4d3adc6464b4e25e189846a6ae4cc3b411ef580d68aafdb253c6952def2de3fae00f1b3590064bf8e11ec099c96f24c1437dfd0facbee786ba87ba",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 0,
+    "dst": 64,
+    "inh": {
+     "src": true,
+     "dst": false,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "f4e81706c243a4115e2f0ab63f91193e5b58a570f91477fbabce9370e2ae614a772ebf55b8d9fbe1708e0710bf42671dba4895e56daa48b45e4ec12ee81f35f9",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 63,
+    "dst": 127,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": false
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "5f5df521c055004245b34e4d0cb9c860e5fe3e34dfa94e205bd22ff0eb1e7517a143921dd081cc16760e76024c92df4244815067a11d17c1d73ab7044b71e508",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 64,
+    "dst": 0,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": false
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "83666f551011c0f5b199e76da885ebdf36b37150730e93eae87d8a9564807ad06c19a0721c8a04809204f0811c17246ebb228746121627b754e93fe1656687aa",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 0,
+    "dst": 64,
+    "inh": {
+     "src": true,
+     "dst": false,
+     "cnt": true
+    },
+    "randregs_good_of_30": 1
+   },
+   {
+    "hex": "4ee4acb1d5ca4bf39ba0784d431aff26bf326c884e8e671fe9234fdb9a3ab3cbaee4e1d941bcc5e50029274067d3aa7a3057d17e20cf1e1edd7ed50e42ba9cd5",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 64,
+    "dst": 0,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "38afa827cddf10bc85f601c06d27825b114cd842bc7d78d026c05ce7bdd49df0fc39a50e78f971d2b64f535b7b81a091df5f18c5733483f3ebcc2ba29ef55b22",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 0,
+    "dst": 64,
+    "inh": {
+     "src": true,
+     "dst": false,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "edffb8c46143252ae0167d2ec4c8ed3251f73e688793eddaa7d150e52de07fe6c7632516a68767a1629d10ea13cdb49c8bccdc8294e447691b9ae9a8332cd404",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 64,
+    "dst": 0,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": false
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "172a2640c5f2071714648294814be217066b278a2aecb856bae9b579d8c736c0e890bf4005d5a0e3e98a40332aeb24fb56be222314a5855ae71fb71aaa353d93",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 1,
+    "dst": 65,
+    "inh": {
+     "src": true,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 2
+   },
+   {
+    "hex": "07bb8527fa2a1333c612f33ad0df3e136acc532e5c4ec4a82b0a4401e605ad01a7c2e0816f08759e81100140a6868df1a137bc1f01a182d6ab423b8bfa69cde5",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 33,
+    "dst": 1,
+    "inh": {
+     "src": false,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 1
+   },
+   {
+    "hex": "56fb090d8552cb5cf2781ec3c845c0ed5270eb1c2bd6414411770a654f5c574335007d41043e21b0247db6845abae9ad16c4e72894f2e505600f5e144b6ea50b",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 127,
+    "dst": 63,
+    "inh": {
+     "src": true,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "b4dc7c60cfc4fb5b4e05f2ada1172935f2b8a13b718c1afc4e61160ad3bc8a2bf7ff6eeff0bc5b162feaa4dad47a7c610e0266cf34be5b24d1e5bd349f052240",
+    "copies_other_side": false,
+    "op": "LDIR",
+    "src": 64,
+    "dst": 0,
+    "inh": {
+     "src": true,
+     "dst": true,
+     "cnt": true
+    },
+    "randregs_good_of_30": 0
+   },
+   {
+    "hex": "46ba7db00a17919824f3b6f738b6f77953c5d9289ea68c69e20b298aeb01ad7a7e3c5db8f9af7780af731e40944b287e55e746e527c21ca80253f8257cd6fe20",
+    "copies_other_side": false,
+    "op": "LDDR",
+    "src": 0,
+    "dst": 64,
+    "inh": {
+     "src": true,
+     "dst": false,
+     "cnt": false
+    },
+    "randregs_good_of_30": 0
+   }
+  ]
+ },
+ "seconds": 273
+}

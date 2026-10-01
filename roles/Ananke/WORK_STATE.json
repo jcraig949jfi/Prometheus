@@ -4,9 +4,9 @@
   "mwo_id": "MWO-0004",
   "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
   "mwo_sha256": "925660b2d2be53af2ee4195391e484d9649bbd4ee828cd60432ce2f0903a99df",
-  "updated_at_utc": "2026-09-30T13:23:10Z",
-  "state": "READY",
-  "state_reason": "CWO-2026-09-30B: in-flight set complete (T-SWAP-AUDIT3). READY; heartbeat + completion sent to Aporia (comms #1100). No self-promotion; awaiting Aporia.",
+  "updated_at_utc": "2026-09-30T23:45:13Z",
+  "state": "WORKING",
+  "state_reason": "Operator inference harvest: all five deliverables committed (harvest/INFERENCE_HARVEST_HANDOFF.md). C4 R-STAT Phase 2 still blocked on Cosmos.",
   "branch": "ananke/base-role-adopt-2026-09-24",
   "head_sha": "cee7957f5b57de35fc4f7b83970440206d3588d9",
   "head_sha_note": "last pushed commit before this WORK_STATE commit",
@@ -95,6 +95,12 @@
     }
   ],
   "experiments": [
+    {
+      "id": "R-STAT-C4",
+      "alias": "C4 DESIGN v0.2 review",
+      "status": "RUNNING",
+      "assignment": "comms #1137"
+    },
     {
       "id": "E-ANANKE-W-Z",
       "thread": "thr-5df816e9b844",
@@ -197,13 +203,18 @@
   "experiments_note": "completed E-ANANKE-* rows are in work_map",
   "fabric_tasks": [],
   "leases": [],
-  "running": [],
+  "running": [
+    "C4 R-STAT review (principal, no compute)"
+  ],
   "blocked_on": [],
   "next_actions": [
     "await Aporia assignment; seat loop continues (MWO/comms/Fabric checks only)"
   ],
   "operator_decisions_required": [],
   "latest_reports": [
+    "roles/Ananke/research/harvest/INFERENCE_HARVEST_HANDOFF.md",
+    "roles/Ananke/research/harvest/PTE_CAUSAL_AUDIT_2026-09-30.md",
+    "roles/Cosmos/c4/reviews/R-STAT_Ananke_2026-09-30_INTERIM.md",
     "roles/Ananke/research/workers/W-Z/REPORT.md",
     "roles/Ananke/research/workers/W-Y/REPORT.md",
     "roles/Ananke/research/workers/W-X/REPORT.md",
@@ -227,18 +238,32 @@
   ],
   "migration_report": "roles/Ananke/MIGRATION_REPORT_MWO-0002.json",
   "fp001_result": "roles/Ananke/probes/FP-001_RESULT.json",
-  "work_order": "MWO-0004 + CWO-2026-09-30B finish-in-place (ops/fleet/CWO_2026-09-30B_FINISH_IN_PLACE.md; supersedes CWO-2026-09-30 auto-promotion)",
+  "work_order": "MWO-0004 + CWO-2026-09-30C (ops/fleet/CWO_2026-09-30C_FINISH_SURFACE_DISPATCH.md @ 7d373ac02, blob edc4792d...6e6c)",
   "queue": {
-    "CURRENT": "none (READY)",
-    "NEXT": "awaiting Aporia -- no self-promotion (CWO-2026-09-30B)",
+    "CURRENT": "C4 R-STAT review (Phase 2 blocked on Cosmos); harvest complete",
+    "NEXT": "awaiting Aporia (no self-promotion)",
     "RESERVE": [
-      "replicate-seed AUDIT4 design (not started)",
-      "no-compute synthesis update (not started)",
-      "T-INS-17; T-INS-19/21 PARKED"
+      "replicate-seed AUDIT4 design (planning only)"
     ],
-    "BLOCKED": [],
-    "RESOURCE_STATUS": "no leases, no workers; rolling 24 h CPU ~36 core-h of 48",
-    "LAST_RECEIPT": "E-ANANKE-W-Z report, workers/W-Z/REPORT.md; completion message comms #1100",
-    "LAST_STATE_UPDATE": "2026-09-30T13:23:10Z"
-  }
+    "BLOCKED": [
+      {
+        "item": "C4 R-STAT Phase 2 / FINAL verdict",
+        "dependency": "Cosmos posts (a) foreign family committed, (b) C3 substrate code published",
+        "owner": "Cosmos (foreign family author: Theseus)"
+      }
+    ],
+    "RESOURCE_STATUS": "no compute needed; no leases",
+    "LAST_RECEIPT": "roles/Ananke/research/harvest/INFERENCE_HARVEST_HANDOFF.md",
+    "LAST_STATE_UPDATE": "2026-09-30T23:45:13Z"
+  },
+  "current_objective": "Operator OPUS INFERENCE SATURATION WAVE 2 (to 08:30Z close / 09:00Z stop); C4 R-STAT Phase 2 still blocked on Cosmos",
+  "current_step": "Wave-2: 27 Opus worker reports deposited (W2-A1..U); 8 new in flight (V,W,X,Y,Z,AA,AB,AC); 10+ neutral fixes on main with tests; C1_ERRATA E-W1..E-W13; principal P-1..P-4",
+  "next_expected_milestone": "Cosmos Phase-2 post (C4 FINAL review)",
+  "expected_next_artifact": "roles/Ananke/research/harvest/wave2/INFERENCE_SATURATION_WAVE2_HANDOFF.md (08:30Z)",
+  "model": "claude-opus-5-5[1m] (runtime-reported)",
+  "session_start": "UNKNOWN (not exposed to the agent); comms instance m1-7d1e2413 first seen 2026-09-25T21:23Z",
+  "last_push_sha": "ec8682701",
+  "last_push_utc": "2026-09-30T18:33:33Z",
+  "updated_at": "2026-10-01T02:32Z",
+  "LAST_RECEIPT": "roles/Ananke/research/harvest/H-PLANT/PRINCIPAL_REVIEW.md"
 }

@@ -1,0 +1,177 @@
+{
+ "physics": {
+  "topology": "ring",
+  "n_sites": 24,
+  "radius": 1,
+  "k_random": 4,
+  "rewire": 0,
+  "state_dim": 4,
+  "payload_width": 2,
+  "channels": 1,
+  "fanout": 2,
+  "dest_mode": "all",
+  "loss": 0.0,
+  "loss_per_hop": 0,
+  "lat_base": 1,
+  "lat_hop": 0,
+  "lat_jitter": 0,
+  "dup": 0.0,
+  "noise": 0,
+  "cap": 0,
+  "collision": "none",
+  "decay_shift": 0,
+  "update_mode": "sync",
+  "update_period": 1,
+  "update_p": 1.0,
+  "rules": 1,
+  "prog_len": 28,
+  "plastic_route": 0,
+  "adapt_shift": 4,
+  "wimm": 0,
+  "setrule": 0,
+  "mut_site": 0.0,
+  "e_income": 0,
+  "e_max": 1000,
+  "c_emit": 0,
+  "c_op": 0,
+  "c_mem": 0,
+  "topo_seed": 0
+ },
+ "M": 64,
+ "results": {
+  "block4": {
+   "env": {
+    "family": "FLIP",
+    "d": 3,
+    "delta": 8,
+    "gap": 8,
+    "cue_len": 2,
+    "amp": 256,
+    "amp_teacher": 128,
+    "amp_dist": 64,
+    "trials": 16,
+    "block": 4,
+    "flip_p": 0.3,
+    "n_maj": 5,
+    "iti": 2,
+    "variant": 0
+   },
+   "arms": {
+    "P_FLIP(H-PLANT)|normal": {
+     "acc": 1.0,
+     "lo99": 1.0,
+     "hi99": 1.0
+    },
+    "P_FLIP(H-PLANT)|teacher_zeroed_after_trial0": {
+     "acc": 0.5,
+     "lo99": 0.5,
+     "hi99": 0.5
+    },
+    "P_FLIP(H-PLANT)|teacher_zeroed_all": {
+     "acc": 0.5,
+     "lo99": 0.5,
+     "hi99": 0.5
+    },
+    "FLIP_CLOCK(adversary)|normal": {
+     "acc": 1.0,
+     "lo99": 1.0,
+     "hi99": 1.0
+    },
+    "FLIP_CLOCK(adversary)|teacher_zeroed_after_trial0": {
+     "acc": 1.0,
+     "lo99": 1.0,
+     "hi99": 1.0
+    },
+    "FLIP_CLOCK(adversary)|teacher_zeroed_all": {
+     "acc": 0.5,
+     "lo99": 0.5,
+     "hi99": 0.5
+    },
+    "relay_flood|normal": {
+     "acc": 0.5807291666666666,
+     "lo99": 0.5130208333333333,
+     "hi99": 0.6432421874999997
+    },
+    "relay_flood|teacher_zeroed_after_trial0": {
+     "acc": 0.5338541666666667,
+     "lo99": 0.5025911458333333,
+     "hi99": 0.5755338541666664
+    },
+    "relay_flood|teacher_zeroed_all": {
+     "acc": 0.5,
+     "lo99": 0.5,
+     "hi99": 0.5
+    }
+   }
+  },
+  "block2": {
+   "env": {
+    "family": "FLIP",
+    "d": 3,
+    "delta": 8,
+    "gap": 8,
+    "cue_len": 2,
+    "amp": 256,
+    "amp_teacher": 128,
+    "amp_dist": 64,
+    "trials": 16,
+    "block": 2,
+    "flip_p": 0.3,
+    "n_maj": 5,
+    "iti": 2,
+    "variant": 0
+   },
+   "arms": {
+    "P_FLIP(H-PLANT)|normal": {
+     "acc": 1.0,
+     "lo99": 1.0,
+     "hi99": 1.0
+    },
+    "P_FLIP(H-PLANT)|teacher_zeroed_after_trial0": {
+     "acc": 0.5,
+     "lo99": 0.5,
+     "hi99": 0.5
+    },
+    "P_FLIP(H-PLANT)|teacher_zeroed_all": {
+     "acc": 0.5,
+     "lo99": 0.5,
+     "hi99": 0.5
+    },
+    "FLIP_CLOCK(adversary)|normal": {
+     "acc": 1.0,
+     "lo99": 1.0,
+     "hi99": 1.0
+    },
+    "FLIP_CLOCK(adversary)|teacher_zeroed_after_trial0": {
+     "acc": 1.0,
+     "lo99": 1.0,
+     "hi99": 1.0
+    },
+    "FLIP_CLOCK(adversary)|teacher_zeroed_all": {
+     "acc": 0.5,
+     "lo99": 0.5,
+     "hi99": 0.5
+    },
+    "relay_flood|normal": {
+     "acc": 0.55078125,
+     "lo99": 0.48046875,
+     "hi99": 0.6250195312499995
+    },
+    "relay_flood|teacher_zeroed_after_trial0": {
+     "acc": 0.515625,
+     "lo99": 0.47265625,
+     "hi99": 0.5742382812499995
+    },
+    "relay_flood|teacher_zeroed_all": {
+     "acc": 0.5,
+     "lo99": 0.5,
+     "hi99": 0.5
+    }
+   }
+  }
+ },
+ "compute": {
+  "wall_s": 53.02,
+  "cpu_s": 77.77
+ }
+}

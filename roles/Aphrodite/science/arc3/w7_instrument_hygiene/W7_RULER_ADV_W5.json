@@ -1,0 +1,3820 @@
+{
+ "world": "W5",
+ "ruler": "RULER_v2.1_DRAFT_W7",
+ "cases": [
+  {
+   "class": "a_reexpr",
+   "schema": "(acc - (0 - {H}))",
+   "expected_NEW": false,
+   "expected_rel": "REEXPR",
+   "why": "double sign: acc + H",
+   "instantiations": 161,
+   "v2": {
+    "NEW_V2": false,
+    "NEW_TRAJ": false,
+    "NEW_FINAL": false,
+    "EQUAL": false,
+    "REFINES": false,
+    "COMPOSES": false,
+    "novel": 0,
+    "novel_traj": 0
+   },
+   "v21": {
+    "ruler": "RULER_v2.1_DRAFT_W7",
+    "schema": "(acc - (0 - {H}))",
+    "instantiations": 161,
+    "accumulating": 42,
+    "grid_novel": 0,
+    "traj_novel": 0,
+    "both_novel": 0,
+    "NEW_GRID": false,
+    "NEW_TRAJ": false,
+    "NEW_BOTH": false,
+    "domain_hist": {
+     "30": 1,
+     "40": 68,
+     "None": 15
+    },
+    "examples": [],
+    "EQUAL_ANY": true,
+    "REFINES_ANY": false,
+    "COMPOSES_ANY": false,
+    "EQUAL": false,
+    "REFINES": true,
+    "COMPOSES": false,
+    "EQUAL_C": true,
+    "REFINES_C": false,
+    "COMPOSES_C": false,
+    "via": [
+     "REFINES:literal:(acc - {H})"
+    ],
+    "NEW_FINAL": false,
+    "COMPOSITIONAL_NOVELTY": false
+   },
+   "v2_matches_W3_stored": true,
+   "v2_error": "OK",
+   "v21_error": "OK"
+  },
+  {
+   "class": "a_reexpr",
+   "schema": "({H} - (0 - acc))",
+   "expected_NEW": false,
+   "expected_rel": "REEXPR",
+   "why": "H + acc via subtraction",
+   "instantiations": 7,
+   "v2": {
+    "NEW_V2": false,
+    "NEW_TRAJ": false,
+    "NEW_FINAL": false,
+    "EQUAL": false,
+    "REFINES": false,
+    "COMPOSES": false,
+    "novel": 0,
+    "novel_traj": 0
+   },
+   "v21": {
+    "ruler": "RULER_v2.1_DRAFT_W7",
+    "schema": "({H} - (0 - acc))",
+    "instantiations": 7,
+    "accumulating": 1,
+    "grid_novel": 0,
+    "traj_novel": 0,
+    "both_novel": 0,
+    "NEW_GRID": false,
+    "NEW_TRAJ": false,
+    "NEW_BOTH": false,
+    "domain_hist": {
+     "40": 2
+    },
+    "examples": [],
+    "EQUAL_ANY": true,
+    "REFINES_ANY": false,
+    "COMPOSES_ANY": false,
+    "EQUAL": false,
+    "REFINES": false,
+    "COMPOSES": false,
+    "EQUAL_C": true,
+    "REFINES_C": false,
+    "COMPOSES_C": false,
+    "via": [],
+    "NEW_FINAL": false,
+    "COMPOSITIONAL_NOVELTY": false
+   },
+   "v2_matches_W3_stored": true,
+   "v2_error": "OK",
+   "v21_error": "OK"
+  },
+  {
+   "class": "a_reexpr",
+   "schema": "(0 - ((0 - acc) - {H}))",
+   "expected_NEW": false,
+   "expected_rel": "REEXPR",
+   "why": "double negation of accumulator",
+   "instantiations": 2,
+   "v2": {
+    "NEW_V2": false,
+    "NEW_TRAJ": false,
+    "NEW_FINAL": false,
+    "EQUAL": false,
+    "REFINES": false,
+    "COMPOSES": false,
+    "novel": 0,
+    "novel_traj": 0
+   },
+   "v21": {
+    "ruler": "RULER_v2.1_DRAFT_W7",
+    "schema": "(0 - ((0 - acc) - {H}))",
+    "instantiations": 2,
+    "accumulating": 0,
+    "grid_novel": 0,
+    "traj_novel": 0,
+    "both_novel": 0,
+    "NEW_GRID": false,
+    "NEW_TRAJ": false,
+    "NEW_BOTH": false,
+    "domain_hist": {},
+    "examples": [],
+    "EQUAL_ANY": true,
+    "REFINES_ANY": false,
+    "COMPOSES_ANY": false,
+    "EQUAL": false,
+    "REFINES": false,
+    "COMPOSES": false,
+    "EQUAL_C": true,
+    "REFINES_C": false,
+    "COMPOSES_C": false,
+    "via": [],
+    "NEW_FINAL": false,
+    "COMPOSITIONAL_NOVELTY": false
+   },
+   "v2_matches_W3_stored": true,
+   "v2_error": "OK",
+   "v21_error": "OK"
+  },
+  {
+   "class": "a_reexpr",
+   "schema": "(0 - (0 - (acc + {H})))",
+   "expected_NEW": false,
+   "expected_rel": "REEXPR",
+   "why": "double negation of G1",
+   "instantiations": 6,
+   "v2": {
+    "NEW_V2": false,
+    "NEW_TRAJ": false,
+    "NEW_FINAL": false,
+    "EQUAL": false,
+    "REFINES": false,
+    "COMPOSES": true,
+    "novel": 0,
+    "novel_traj": 0
+   },
+   "v21": {
+    "ruler": "RULER_v2.1_DRAFT_W7",
+    "schema": "(0 - (0 - (acc + {H})))",
+    "instantiations": 6,
+    "accumulating": 1,
+    "grid_novel": 0,
+    "traj_novel": 0,
+    "both_novel": 0,
+    "NEW_GRID": false,
+    "NEW_TRAJ": false,
+    "NEW_BOTH": false,
+    "domain_hist": {
+     "40": 2
+    },
+    "examples": [],
+    "EQUAL_ANY": true,
+    "REFINES_ANY": false,
+    "COMPOSES_ANY": true,
+    "EQUAL": false,
+    "REFINES": false,
+    "COMPOSES": true,
+    "EQUAL_C": true,
+    "REFINES_C": false,
+    "COMPOSES_C": false,
+    "via": [
+     "COMPOSES:literal:(acc + {H})"
+    ],
+    "NEW_FINAL": false,
+    "COMPOSITIONAL_NOVELTY": false
+   },
+   "v2_matches_W3_stored": true,
+   "v2_error": "OK",
+   "v21_error": "OK"
+  },
+  {
+   "class": "a_reexpr",
+   "schema": "((acc + {H}) + 0)",
+   "expected_NEW": false,
+   "expected_rel": "EQUAL",
+   "why": "neutral element",
+   "instantiations": 161,
+   "v2": {
+    "NEW_V2": false,
+    "NEW_TRAJ": false,
+    "NEW_FINAL": false,
+    "EQUAL": true,
+    "REFINES": false,
+    "COMPOSES": false,
+    "novel": 0,
+    "novel_traj": 0
+   },
+   "v21": {
+    "ruler": "RULER_v2.1_DRAFT_W7",
+    "schema": "((acc + {H}) + 0)",
+    "instantiations": 161,
+    "accumulating": 42,
+    "grid_novel": 0,
+    "traj_novel": 0,
+    "both_novel": 0,
+    "NEW_GRID": false,
+    "NEW_TRAJ": false,
+    "NEW_BOTH": false,
+    "domain_hist": {
+     "30": 1,
+     "40": 68,
+     "None": 15
+    },
+    "examples": [],
+    "EQUAL_ANY": true,
+    "REFINES_ANY": false,
+    "COMPOSES_ANY": false,
+    "EQUAL": true,
+    "REFINES": false,
+    "COMPOSES": false,
+    "EQUAL_C": true,
+    "REFINES_C": false,
+    "COMPOSES_C": false,
+    "via": [
+     "EQUAL:literal:(acc + {H})"
+    ],
+    "NEW_FINAL": false,
+    "COMPOSITIONAL_NOVELTY": false
+   },
+   "v2_matches_W3_stored": true,
+   "v2_error": "OK",
+   "v21_error": "OK"
+  },
+  {
+   "class": "a_reexpr",
+   "schema": "(acc + ({H} + 0))",
+   "expected_NEW": false,
+   "expected_rel": "EQUAL",
+   "why": "neutral element inside",
+   "instantiations": 161,
+   "v2": {
+    "NEW_V2": false,
+    "NEW_TRAJ": false,
+    "NEW_FINAL": false,
+    "EQUAL": true,
+    "REFINES": false,
+    "COMPOSES": false,
+    "novel": 0,
+    "novel_traj": 0
+   },
+   "v21": {
+    "ruler": "RULER_v2.1_DRAFT_W7",
+    "schema": "(acc + ({H} + 0))",
+    "instantiations": 161,
+    "accumulating": 42,
+    "grid_novel": 0,
+    "traj_novel": 0,
+    "both_novel": 0,
+    "NEW_GRID": false,
+    "NEW_TRAJ": false,
+    "NEW_BOTH": false,
+    "domain_hist": {
+     "30": 1,
+     "40": 68,
+     "None": 15
+    },
+    "examples": [],
+    "EQUAL_ANY": true,
+    "REFINES_ANY": false,
+    "COMPOSES_ANY": false,
+    "EQUAL": true,
+    "REFINES": false,
+    "COMPOSES": false,
+    "EQUAL_C": true,
+    "REFINES_C": false,
+    "COMPOSES_C": false,
+    "via": [
+     "EQUAL:literal:(acc + {H})"
+    ],
+    "NEW_FINAL": false,
+    "COMPOSITIONAL_NOVELTY": false
+   },
+   "v2_matches_W3_stored": true,
+   "v2_error": "OK",
+   "v21_error": "OK"
+  },
+  {
+   "class": "a_reexpr",
+   "schema": "(({H} + acc) - 0)",
+   "expected_NEW": false,
+   "expected_rel": "EQUAL",
+   "why": "commuted, neutral",
+   "instantiations": 161,
+   "v2": {
+    "NEW_V2": false,
+    "NEW_TRAJ": false,
+    "NEW_FINAL": false,
+    "EQUAL": true,
+    "REFINES": false,
+    "COMPOSES": false,
+    "novel": 0,
+    "novel_traj": 0
+   },
+   "v21": {
+    "ruler": "RULER_v2.1_DRAFT_W7",
+    "schema": "(({H} + acc) - 0)",
+    "instantiations": 161,
+    "accumulating": 42,
+    "grid_novel": 0,
+    "traj_novel": 0,
+    "both_novel": 0,
+    "NEW_GRID": false,
+    "NEW_TRAJ": false,
+    "NEW_BOTH": false,
+    "domain_hist": {
+     "30": 1,
+     "40": 68,
+     "None": 15
+    },
+    "examples": [],
+    "EQUAL_ANY": true,
+    "REFINES_ANY": false,
+    "COMPOSES_ANY": false,
+    "EQUAL": true,
+    "REFINES": false,
+    "COMPOSES": false,
+    "EQUAL_C": true,
+    "REFINES_C": false,
+    "COMPOSES_C": false,
+    "via": [
+     "EQUAL:literal:(acc + {H})"
+    ],
+    "NEW_FINAL": false,
+    "COMPOSITIONAL_NOVELTY": false
+   },
+   "v2_matches_W3_stored": true,
+   "v2_error": "OK",
+   "v21_error": "OK"
+  },
+  {
+   "class": "a_reexpr",
+   "schema": "((acc + {H}) - (v - v))",
+   "expected_NEW": false,
+   "expected_rel": "EQUAL",
+   "why": "cancelling term",
+   "instantiations": 161,
+   "v2": {
+    "NEW_V2": false,
+    "NEW_TRAJ": false,
+    "NEW_FINAL": false,
+    "EQUAL": true,
+    "REFINES": false,
+    "COMPOSES": false,
+    "novel": 0,
+    "novel_traj": 0
+   },
+   "v21": {
+    "ruler": "RULER_v2.1_DRAFT_W7",
+    "schema": "((acc + {H}) - (v - v))",
+    "instantiations": 161,
+    "accumulating": 42,
+    "grid_novel": 0,
+    "traj_novel": 0,
+    "both_novel": 0,
+    "NEW_GRID": false,
+    "NEW_TRAJ": false,
+    "NEW_BOTH": false,
+    "domain_hist": {
+     "30": 1,
+     "40": 68,
+     "None": 15
+    },
+    "examples": [],
+    "EQUAL_ANY": true,
+    "REFINES_ANY": false,
+    "COMPOSES_ANY": false,
+    "EQUAL": true,
+    "REFINES": false,
+    "COMPOSES": false,
+    "EQUAL_C": true,
+    "REFINES_C": false,
+    "COMPOSES_C": false,
+    "via": [
+     "EQUAL:literal:(acc + {H})"
+    ],
+    "NEW_FINAL": false,
+    "COMPOSITIONAL_NOVELTY": false
+   },
+   "v2_matches_W3_stored": true,
+   "v2_error": "OK",
+   "v21_error": "OK"
+  },
+  {
+   "class": "a_reexpr_comp",
+   "schema": "((acc * v) + ({H} * v))",
+   "expected_NEW": true,
+   "expected_rel": "COMPOSES",
+   "why": "distributed ((acc + H) * v)",
+   "instantiations": 2,
+   "v2": {
+    "NEW_V2": true,
+    "NEW_TRAJ": false,
+    "NEW_FINAL": false,
+    "EQUAL": false,
+    "REFINES": false,
+    "COMPOSES": false,
+    "novel": 2,
+    "novel_traj": 0
+   },
+   "v21": {
+    "ruler": "RULER_v2.1_DRAFT_W7",
+    "schema": "((acc * v) + ({H} * v))",
+    "instantiations": 2,
+    "accumulating": 2,
+    "grid_novel": 2,
+    "traj_novel": 2,
+    "both_novel": 2,
+    "NEW_GRID": true,
+    "NEW_TRAJ": true,
+    "NEW_BOTH": true,
+    "domain_hist": {
+     "30": 3,
+     "40": 1
+    },
+    "examples": [
+     "(acc * v)",
+     "(v + (acc * v))"
+    ],
+    "EQUAL_ANY": false,
+    "REFINES_ANY": false,
+    "COMPOSES_ANY": false,
+    "EQUAL": false,
+    "REFINES": false,
+    "COMPOSES": false,
+    "EQUAL_C": false,
+    "REFINES_C": false,
+    "COMPOSES_C": false,
+    "via": [],
+    "NEW_FINAL": true,
+    "COMPOSITIONAL_NOVELTY": false
+   },
+   "v2_matches_W3_stored": true,
+   "v2_error": "FN",
+   "v21_error": "OK"
+  },
+  {
+   "class": "a_reexpr_comp",
+   "schema": "(v - (acc - {H}))",
+   "expected_NEW": true,
+   "expected_rel": "COMPOSES",
+   "why": "SHAM_0 = (v - (acc + H')) with H' = 0 - H",
+   "instantiations": 161,
+   "v2": {
+    "NEW_V2": true,
+    "NEW_TRAJ": true,
+    "NEW_FINAL": true,
+    "EQUAL": false,
+    "REFINES": false,
+    "COMPOSES": false,
+    "novel": 133,
+    "novel_traj": 103
+   },
+   "v21": {
+    "ruler": "RULER_v2.1_DRAFT_W7",
+    "schema": "(v - (acc - {H}))",
+    "instantiations": 161,
+    "accumulating": 134,
+    "grid_novel": 133,
+    "traj_novel": 106,
+    "both_novel": 106,
+    "NEW_GRID": true,
+    "NEW_TRAJ": true,
+    "NEW_BOTH": true,
+    "domain_hist": {
+     "20": 2,
+     "30": 4,
+     "40": 207,
+     "None": 55
+    },
+    "examples": [
+     "(v - (acc - (0 % first)))",
+     "(v - (acc - (0 % last)))",
+     "(v - (acc - (0 % v)))",
+     "(v - (acc - (0 - 1)))"
+    ],
+    "EQUAL_ANY": false,
+    "REFINES_ANY": false,
+    "COMPOSES_ANY": true,
+    "EQUAL": false,
+    "REFINES": false,
+    "COMPOSES": true,
+    "EQUAL_C": false,
+    "REFINES_C": false,
+    "COMPOSES_C": true,
+    "via": [
+     "COMPOSES:literal:(acc - {H})",
+     "COMPOSES:negated-reference-at-root"
+    ],
+    "NEW_FINAL": true,
+    "COMPOSITIONAL_NOVELTY": true
+   },
+   "v2_matches_W3_stored": true,
+   "v2_error": "OK",
+   "v21_error": "OK"
+  },
+  {
+   "class": "a_reexpr_comp",
+   "schema": "((v - acc) - {H})",
+   "expected_NEW": true,
+   "expected_rel": "COMPOSES",
+   "why": "(v - (acc + H)) re-associated",
+   "instantiations": 2,
+   "v2": {
+    "NEW_V2": false,
+    "NEW_TRAJ": false,
+    "NEW_FINAL": false,
+    "EQUAL": false,
+    "REFINES": false,
+    "COMPOSES": false,
+    "novel": 1,
+    "novel_traj": 1
+   },
+   "v21": {
+    "ruler": "RULER_v2.1_DRAFT_W7",
+    "schema": "((v - acc) - {H})",
+    "instantiations": 2,
+    "accumulating": 1,
+    "grid_novel": 1,
+    "traj_novel": 1,
+    "both_novel": 1,
+    "NEW_GRID": false,
+    "NEW_TRAJ": false,
+    "NEW_BOTH": false,
+    "domain_hist": {
+     "40": 2
+    },
+    "examples": [
+     "(v - acc)"
+    ],
+    "EQUAL_ANY": false,
+    "REFINES_ANY": false,
+    "COMPOSES_ANY": true,
+    "EQUAL": false,
+    "REFINES": false,
+    "COMPOSES": false,
+    "EQUAL_C": false,
+    "REFINES_C": false,
+    "COMPOSES_C": true,
+    "via": [
+     "COMPOSES:negated-reference-at-root"
+    ],
+    "NEW_FINAL": false,
+    "COMPOSITIONAL_NOVELTY": false
+   },
+   "v2_matches_W3_stored": true,
+   "v2_error": "FN",
+   "v21_error": "FN"
+  },
+  {
+   "class": "a_reexpr_comp",
+   "schema": "((v - {H}) - acc)",
+   "expected_NEW": true,
+   "expected_rel": "COMPOSES",
+   "why": "(v - (acc + H)) commuted",
+   "instantiations": 2,
+   "v2": {
+    "NEW_V2": false,
+    "NEW_TRAJ": false,
+    "NEW_FINAL": false,
+    "EQUAL": false,
+    "REFINES": false,
+    "COMPOSES": false,
+    "novel": 1,
+    "novel_traj": 1
+   },
+   "v21": {
+    "ruler": "RULER_v2.1_DRAFT_W7",
+    "schema": "((v - {H}) - acc)",
+    "instantiations": 2,
+    "accumulating": 1,
+    "grid_novel": 1,
+    "traj_novel": 1,
+    "both_novel": 1,
+    "NEW_GRID": false,
+    "NEW_TRAJ": false,
+    "NEW_BOTH": false,
+    "domain_hist": {
+     "40": 2
+    },
+    "examples": [
+     "(v - acc)"
+    ],
+    "EQUAL_ANY": false,
+    "REFINES_ANY": false,
+    "COMPOSES_ANY": true,
+    "EQUAL": false,
+    "REFINES": false,
+    "COMPOSES": false,
+    "EQUAL_C": false,
+    "REFINES_C": false,
+    "COMPOSES_C": true,
+    "via": [
+     "COMPOSES:negated-reference-at-root"
+    ],
+    "NEW_FINAL": false,
+    "COMPOSITIONAL_NOVELTY": false
+   },
+   "v2_matches_W3_stored": true,
+   "v2_error": "FN",
+   "v21_error": "FN"
+  },
+  {
+   "class": "a_reexpr_comp",
+   "schema": "(0 - (acc + {H}))",
+   "expected_NEW": true,
+   "expected_rel": "COMPOSES",
+   "why": "negated G1 (alternating fold)",
+   "instantiations": 161,
+   "v2": {
+    "NEW_V2": true,
+    "NEW_TRAJ": true,
+    "NEW_FINAL": true,
+    "EQUAL": false,
+    "REFINES": false,
+    "COMPOSES": true,
+    "novel": 42,
+    "novel_traj": 33
+   },
+   "v21": {
+    "ruler": "RULER_v2.1_DRAFT_W7",
+    "schema": "(0 - (acc + {H}))",
+    "instantiations": 161,
+    "accumulating": 42,
+    "grid_novel": 42,
+    "traj_novel": 35,
+    "both_novel": 35,
+    "NEW_GRID": true,
+    "NEW_TRAJ": true,
+    "NEW_BOTH": true,
+    "domain_hist": {
+     "25": 1,
+     "30": 1,
+     "40": 68,
+     "None": 14
+    },
+    "examples": [
+     "(0 - (acc + (0 - v)))",
+     "(0 - (acc + (1 - v)))",
+     "(0 - (acc + (acc % v)))",
+     "(0 - (acc + (acc * v)))"
+    ],
+    "EQUAL_ANY": false,
+    "REFINES_ANY": false,
+    "COMPOSES_ANY": true,
+    "EQUAL": false,
+    "REFINES": false,
+    "COMPOSES": true,
+    "EQUAL_C": false,
+    "REFINES_C": false,
+    "COMPOSES_C": true,
+    "via": [
+     "COMPOSES:literal:(acc + {H})",
+     "COMPOSES:negated-reference-at-root"
+    ],
+    "NEW_FINAL": true,
+    "COMPOSITIONAL_NOVELTY": true
+   },
+   "v2_matches_W3_stored": true,
+   "v2_error": "OK",
+   "v21_error": "OK"
+  },
+  {
+   "class": "a_reexpr_comp",
+   "schema": "((0 - acc) - {H})",
+   "expected_NEW": true,
+   "expected_rel": "COMPOSES",
+   "why": "negated G1 distributed",
+   "instantiations": 2,
+   "v2": {
+    "NEW_V2": false,
+    "NEW_TRAJ": false,
+    "NEW_FINAL": false,
+    "EQUAL": false,
+    "REFINES": false,
+    "COMPOSES": false,
+    "novel": 0,
+    "novel_traj": 0
+   },
+   "v21": {
+    "ruler": "RULER_v2.1_DRAFT_W7",
+    "schema": "((0 - acc) - {H})",
+    "instantiations": 2,
+    "accumulating": 0,
+    "grid_novel": 0,
+    "traj_novel": 0,
+    "both_novel": 0,
+    "NEW_GRID": false,
+    "NEW_TRAJ": false,
+    "NEW_BOTH": false,
+    "domain_hist": {},
+    "examples": [],
+    "EQUAL_ANY": false,
+    "REFINES_ANY": false,
+    "COMPOSES_ANY": true,
+    "EQUAL": false,
+    "REFINES": false,
+    "COMPOSES": false,
+    "EQUAL_C": false,
+    "REFINES_C": false,
+    "COMPOSES_C": true,
+    "via": [
+     "COMPOSES:negated-reference-at-root"
+    ],
+    "NEW_FINAL": false,
+    "COMPOSITIONAL_NOVELTY": false
+   },
+   "v2_matches_W3_stored": true,
+   "v2_error": "FN",
+   "v21_error": "FN"
+  },
+  {
+   "class": "b_domain",
+   "schema": "(math.gcd(abs(acc), abs(0)) - {H})",
+   "expected_NEW": true,
+   "expected_rel": "COMPOSES?",
+   "why": "|acc| - H; = acc - H only for acc >= 0",
+   "instantiations": 2,
+   "v2": {
+    "NEW_V2": false,
+    "NEW_TRAJ": false,
+    "NEW_FINAL": false,
+    "EQUAL": false,
+    "REFINES": false,
+    "COMPOSES": false,
+    "novel": 0,
+    "novel_traj": 0
+   },
+   "v21": {
+    "ruler": "RULER_v2.1_DRAFT_W7",
+    "schema": "(math.gcd(abs(acc), abs(0)) - {H})",
+    "instantiations": 2,
+    "accumulating": 0,
+    "grid_novel": 0,
+    "traj_novel": 0,
+    "both_novel": 0,
+    "NEW_GRID": false,
+    "NEW_TRAJ": false,
+    "NEW_BOTH": false,
+    "domain_hist": {},
+    "examples": [],
+    "EQUAL_ANY": false,
+    "REFINES_ANY": false,
+    "COMPOSES_ANY": false,
+    "EQUAL": false,
+    "REFINES": false,
+    "COMPOSES": false,
+    "EQUAL_C": false,
+    "REFINES_C": false,
+    "COMPOSES_C": false,
+    "via": [],
+    "NEW_FINAL": false,
+    "COMPOSITIONAL_NOVELTY": false
+   },
+   "v2_matches_W3_stored": true,
+   "v2_error": "FN",
+   "v21_error": "FN"
+  },
+  {
+   "class": "b_domain",
+   "schema": "(math.gcd(abs(acc), abs(0)) + {H})",
+   "expected_NEW": true,
+   "expected_rel": "COMPOSES?",
+   "why": "|acc| + H",
+   "instantiations": 6,
+   "v2": {
+    "NEW_V2": false,
+    "NEW_TRAJ": false,
+    "NEW_FINAL": false,
+    "EQUAL": false,
+    "REFINES": false,
+    "COMPOSES": false,
+    "novel": 0,
+    "novel_traj": 0
+   },
+   "v21": {
+    "ruler": "RULER_v2.1_DRAFT_W7",
+    "schema": "(math.gcd(abs(acc), abs(0)) + {H})",
+    "instantiations": 6,
+    "accumulating": 1,
+    "grid_novel": 0,
+    "traj_novel": 0,
+    "both_novel": 0,
+    "NEW_GRID": false,
+    "NEW_TRAJ": false,
+    "NEW_BOTH": false,
+    "domain_hist": {
+     "40": 2
+    },
+    "examples": [],
+    "EQUAL_ANY": false,
+    "REFINES_ANY": false,
+    "COMPOSES_ANY": false,
+    "EQUAL": false,
+    "REFINES": false,
+    "COMPOSES": false,
+    "EQUAL_C": false,
+    "REFINES_C": false,
+    "COMPOSES_C": false,
+    "via": [],
+    "NEW_FINAL": false,
+    "COMPOSITIONAL_NOVELTY": false
+   },
+   "v2_matches_W3_stored": true,
+   "v2_error": "FN",
+   "v21_error": "FN"
+  },
+  {
+   "class": "b_domain",
+   "schema": "math.gcd(abs((acc + {H})), abs(0))",
+   "expected_NEW": true,
+   "expected_rel": "COMPOSES",
+   "why": "|acc + H|",
+   "instantiations": 161,
+   "v2": {
+    "NEW_V2": true,
+    "NEW_TRAJ": true,
+    "NEW_FINAL": true,
+    "EQUAL": false,
+    "REFINES": false,
+    "COMPOSES": true,
+    "novel": 7,
+    "novel_traj": 7
+   },
+   "v21": {
+    "ruler": "RULER_v2.1_DRAFT_W7",
+    "schema": "math.gcd(abs((acc + {H})), abs(0))",
+    "instantiations": 161,
+    "accumulating": 42,
+    "grid_novel": 7,
+    "traj_novel": 7,
+    "both_novel": 7,
+    "NEW_GRID": true,
+    "NEW_TRAJ": true,
+    "NEW_BOTH": true,
+    "domain_hist": {
+     "30": 1,
+     "40": 68,
+     "None": 15
+    },
+    "examples": [
+     "math.gcd(abs(0), abs((acc + (0 - v))))",
+     "math.gcd(abs(0), abs((acc + (1 - v))))",
+     "math.gcd(abs(0), abs((acc + (acc - v))))",
+     "math.gcd(abs(0), abs((acc + (first - v))))"
+    ],
+    "EQUAL_ANY": false,
+    "REFINES_ANY": false,
+    "COMPOSES_ANY": true,
+    "EQUAL": false,
+    "REFINES": false,
+    "COMPOSES": true,
+    "EQUAL_C": false,
+    "REFINES_C": false,
+    "COMPOSES_C": true,
+    "via": [
+     "COMPOSES:literal:(acc + {H})",
+     "COMPOSES:subchain"
+    ],
+    "NEW_FINAL": true,
+    "COMPOSITIONAL_NOVELTY": true
+   },
+   "v2_matches_W3_stored": true,
+   "v2_error": "OK",
+   "v21_error": "OK"
+  },
+  {
+   "class": "b_domain",
+   "schema": "(math.gcd(abs(acc), abs(acc)) + {H})",
+   "expected_NEW": true,
+   "expected_rel": "none",
+   "why": "|acc| + H (gcd(a,a))",
+   "instantiations": 6,
+   "v2": {
+    "NEW_V2": false,
+    "NEW_TRAJ": false,
+    "NEW_FINAL": false,
+    "EQUAL": false,
+    "REFINES": false,
+    "COMPOSES": false,
+    "novel": 0,
+    "novel_traj": 0
+   },
+   "v21": {
+    "ruler": "RULER_v2.1_DRAFT_W7",
+    "schema": "(math.gcd(abs(acc), abs(acc)) + {H})",
+    "instantiations": 6,
+    "accumulating": 1,
+    "grid_novel": 0,
+    "traj_novel": 0,
+    "both_novel": 0,
+    "NEW_GRID": false,
+    "NEW_TRAJ": false,
+    "NEW_BOTH": false,
+    "domain_hist": {
+     "40": 2
+    },
+    "examples": [],
+    "EQUAL_ANY": false,
+    "REFINES_ANY": false,
+    "COMPOSES_ANY": false,
+    "EQUAL": false,
+    "REFINES": false,
+    "COMPOSES": false,
+    "EQUAL_C": false,
+    "REFINES_C": false,
+    "COMPOSES_C": false,
+    "via": [],
+    "NEW_FINAL": false,
+    "COMPOSITIONAL_NOVELTY": false
+   },
+   "v2_matches_W3_stored": true,
+   "v2_error": "FN",
+   "v21_error": "FN"
+  },
+  {
+   "class": "b_domain",
+   "schema": "(pow(acc, 1) + {H})",
+   "expected_NEW": false,
+   "expected_rel": "EQUAL",
+   "why": "pow(.,1) neutral",
+   "instantiations": 161,
+   "v2": {
+    "NEW_V2": false,
+    "NEW_TRAJ": false,
+    "NEW_FINAL": false,
+    "EQUAL": true,
+    "REFINES": false,
+    "COMPOSES": false,
+    "novel": 0,
+    "novel_traj": 0
+   },
+   "v21": {
+    "ruler": "RULER_v2.1_DRAFT_W7",
+    "schema": "(pow(acc, 1) + {H})",
+    "instantiations": 161,
+    "accumulating": 42,
+    "grid_novel": 0,
+    "traj_novel": 0,
+    "both_novel": 0,
+    "NEW_GRID": false,
+    "NEW_TRAJ": false,
+    "NEW_BOTH": false,
+    "domain_hist": {
+     "30": 1,
+     "40": 68,
+     "None": 15
+    },
+    "examples": [],
+    "EQUAL_ANY": true,
+    "REFINES_ANY": false,
+    "COMPOSES_ANY": false,
+    "EQUAL": true,
+    "REFINES": false,
+    "COMPOSES": false,
+    "EQUAL_C": true,
+    "REFINES_C": false,
+    "COMPOSES_C": false,
+    "via": [
+     "EQUAL:literal:(acc + {H})"
+    ],
+    "NEW_FINAL": false,
+    "COMPOSITIONAL_NOVELTY": false
+   },
+   "v2_matches_W3_stored": true,
+   "v2_error": "OK",
+   "v21_error": "OK"
+  },
+  {
+   "class": "c_inert",
+   "schema": "((acc + {H}) * 1)",
+   "expected_NEW": false,
+   "expected_rel": "EQUAL",
+   "why": "*1",
+   "instantiations": 161,
+   "v2": {
+    "NEW_V2": false,
+    "NEW_TRAJ": false,
+    "NEW_FINAL": false,
+    "EQUAL": true,
+    "REFINES": false,
+    "COMPOSES": false,
+    "novel": 0,
+    "novel_traj": 0
+   },
+   "v21": {
+    "ruler": "RULER_v2.1_DRAFT_W7",
+    "schema": "((acc + {H}) * 1)",
+    "instantiations": 161,
+    "accumulating": 42,
+    "grid_novel": 0,
+    "traj_novel": 0,
+    "both_novel": 0,
+    "NEW_GRID": false,
+    "NEW_TRAJ": false,
+    "NEW_BOTH": false,
+    "domain_hist": {
+     "30": 1,
+     "40": 68,
+     "None": 15
+    },
+    "examples": [],
+    "EQUAL_ANY": true,
+    "REFINES_ANY": false,
+    "COMPOSES_ANY": false,
+    "EQUAL": true,
+    "REFINES": false,
+    "COMPOSES": false,
+    "EQUAL_C": true,
+    "REFINES_C": false,
+    "COMPOSES_C": false,
+    "via": [
+     "EQUAL:literal:(acc + {H})"
+    ],
+    "NEW_FINAL": false,
+    "COMPOSITIONAL_NOVELTY": false
+   },
+   "v2_matches_W3_stored": true,
+   "v2_error": "OK",
+   "v21_error": "OK"
+  },
+  {
+   "class": "c_inert",
+   "schema": "pow((acc + {H}), 1)",
+   "expected_NEW": false,
+   "expected_rel": "EQUAL",
+   "why": "pow 1",
+   "instantiations": 161,
+   "v2": {
+    "NEW_V2": false,
+    "NEW_TRAJ": false,
+    "NEW_FINAL": false,
+    "EQUAL": true,
+    "REFINES": false,
+    "COMPOSES": false,
+    "novel": 0,
+    "novel_traj": 0
+   },
+   "v21": {
+    "ruler": "RULER_v2.1_DRAFT_W7",
+    "schema": "pow((acc + {H}), 1)",
+    "instantiations": 161,
+    "accumulating": 42,
+    "grid_novel": 0,
+    "traj_novel": 0,
+    "both_novel": 0,
+    "NEW_GRID": false,
+    "NEW_TRAJ": false,
+    "NEW_BOTH": false,
+    "domain_hist": {
+     "30": 1,
+     "40": 68,
+     "None": 15
+    },
+    "examples": [],
+    "EQUAL_ANY": true,
+    "REFINES_ANY": false,
+    "COMPOSES_ANY": false,
+    "EQUAL": true,
+    "REFINES": false,
+    "COMPOSES": false,
+    "EQUAL_C": true,
+    "REFINES_C": false,
+    "COMPOSES_C": false,
+    "via": [
+     "EQUAL:literal:(acc + {H})"
+    ],
+    "NEW_FINAL": false,
+    "COMPOSITIONAL_NOVELTY": false
+   },
+   "v2_matches_W3_stored": true,
+   "v2_error": "OK",
+   "v21_error": "OK"
+  },
+  {
+   "class": "c_inert",
+   "schema": "((acc + {H}) // 1)",
+   "expected_NEW": false,
+   "expected_rel": "EQUAL",
+   "why": "//1",
+   "instantiations": 161,
+   "v2": {
+    "NEW_V2": false,
+    "NEW_TRAJ": false,
+    "NEW_FINAL": false,
+    "EQUAL": true,
+    "REFINES": false,
+    "COMPOSES": false,
+    "novel": 0,
+    "novel_traj": 0
+   },
+   "v21": {
+    "ruler": "RULER_v2.1_DRAFT_W7",
+    "schema": "((acc + {H}) // 1)",
+    "instantiations": 161,
+    "accumulating": 42,
+    "grid_novel": 0,
+    "traj_novel": 0,
+    "both_novel": 0,
+    "NEW_GRID": false,
+    "NEW_TRAJ": false,
+    "NEW_BOTH": false,
+    "domain_hist": {
+     "30": 1,
+     "40": 68,
+     "None": 15
+    },
+    "examples": [],
+    "EQUAL_ANY": true,
+    "REFINES_ANY": false,
+    "COMPOSES_ANY": false,
+    "EQUAL": true,
+    "REFINES": false,
+    "COMPOSES": false,
+    "EQUAL_C": true,
+    "REFINES_C": false,
+    "COMPOSES_C": false,
+    "via": [
+     "EQUAL:literal:(acc + {H})"
+    ],
+    "NEW_FINAL": false,
+    "COMPOSITIONAL_NOVELTY": false
+   },
+   "v2_matches_W3_stored": true,
+   "v2_error": "OK",
+   "v21_error": "OK"
+  },
+  {
+   "class": "c_inert",
+   "schema": "((acc + {H}) * (v // v))",
+   "expected_NEW": false,
+   "expected_rel": "COMPOSES(inert)",
+   "why": "* (v//v) = *1 on v != 0",
+   "instantiations": 1,
+   "v2": {
+    "NEW_V2": false,
+    "NEW_TRAJ": false,
+    "NEW_FINAL": false,
+    "EQUAL": false,
+    "REFINES": false,
+    "COMPOSES": true,
+    "novel": 0,
+    "novel_traj": 0
+   },
+   "v21": {
+    "ruler": "RULER_v2.1_DRAFT_W7",
+    "schema": "((acc + {H}) * (v // v))",
+    "instantiations": 1,
+    "accumulating": 0,
+    "grid_novel": 0,
+    "traj_novel": 0,
+    "both_novel": 0,
+    "NEW_GRID": false,
+    "NEW_TRAJ": false,
+    "NEW_BOTH": false,
+    "domain_hist": {},
+    "examples": [],
+    "EQUAL_ANY": false,
+    "REFINES_ANY": false,
+    "COMPOSES_ANY": true,
+    "EQUAL": false,
+    "REFINES": false,
+    "COMPOSES": true,
+    "EQUAL_C": false,
+    "REFINES_C": false,
+    "COMPOSES_C": true,
+    "via": [
+     "COMPOSES:literal:(acc + {H})",
+     "COMPOSES:subchain"
+    ],
+    "NEW_FINAL": false,
+    "COMPOSITIONAL_NOVELTY": false
+   },
+   "v2_matches_W3_stored": true,
+   "v2_error": "OK",
+   "v21_error": "OK"
+  },
+  {
+   "class": "c_inert",
+   "schema": "((acc + {H}) * pow(v, 0))",
+   "expected_NEW": false,
+   "expected_rel": "COMPOSES(inert)",
+   "why": "* v^0",
+   "instantiations": 161,
+   "v2": {
+    "NEW_V2": false,
+    "NEW_TRAJ": false,
+    "NEW_FINAL": false,
+    "EQUAL": true,
+    "REFINES": false,
+    "COMPOSES": false,
+    "novel": 0,
+    "novel_traj": 0
+   },
+   "v21": {
+    "ruler": "RULER_v2.1_DRAFT_W7",
+    "schema": "((acc + {H}) * pow(v, 0))",
+    "instantiations": 161,
+    "accumulating": 42,
+    "grid_novel": 0,
+    "traj_novel": 0,
+    "both_novel": 0,
+    "NEW_GRID": false,
+    "NEW_TRAJ": false,
+    "NEW_BOTH": false,
+    "domain_hist": {
+     "30": 1,
+     "40": 68,
+     "None": 15
+    },
+    "examples": [],
+    "EQUAL_ANY": true,
+    "REFINES_ANY": false,
+    "COMPOSES_ANY": false,
+    "EQUAL": true,
+    "REFINES": false,
+    "COMPOSES": false,
+    "EQUAL_C": true,
+    "REFINES_C": false,
+    "COMPOSES_C": false,
+    "via": [
+     "EQUAL:literal:(acc + {H})"
+    ],
+    "NEW_FINAL": false,
+    "COMPOSITIONAL_NOVELTY": false
+   },
+   "v2_matches_W3_stored": true,
+   "v2_error": "OK",
+   "v21_error": "OK"
+  },
+  {
+   "class": "c_inert",
+   "schema": "((acc + {H}) + (0 * v))",
+   "expected_NEW": false,
+   "expected_rel": "EQUAL",
+   "why": "+ 0*v",
+   "instantiations": 161,
+   "v2": {
+    "NEW_V2": false,
+    "NEW_TRAJ": false,
+    "NEW_FINAL": false,
+    "EQUAL": true,
+    "REFINES": false,
+    "COMPOSES": false,
+    "novel": 0,
+    "novel_traj": 0
+   },
+   "v21": {
+    "ruler": "RULER_v2.1_DRAFT_W7",
+    "schema": "((acc + {H}) + (0 * v))",
+    "instantiations": 161,
+    "accumulating": 42,
+    "grid_novel": 0,
+    "traj_novel": 0,
+    "both_novel": 0,
+    "NEW_GRID": false,
+    "NEW_TRAJ": false,
+    "NEW_BOTH": false,
+    "domain_hist": {
+     "30": 1,
+     "40": 68,
+     "None": 15
+    },
+    "examples": [],
+    "EQUAL_ANY": true,
+    "REFINES_ANY": false,
+    "COMPOSES_ANY": false,
+    "EQUAL": true,
+    "REFINES": false,
+    "COMPOSES": false,
+    "EQUAL_C": true,
+    "REFINES_C": false,
+    "COMPOSES_C": false,
+    "via": [
+     "EQUAL:literal:(acc + {H})"
+    ],
+    "NEW_FINAL": false,
+    "COMPOSITIONAL_NOVELTY": false
+   },
+   "v2_matches_W3_stored": true,
+   "v2_error": "OK",
+   "v21_error": "OK"
+  },
+  {
+   "class": "c_inert",
+   "schema": "((acc + {H}) * math.gcd(abs(v), abs(1)))",
+   "expected_NEW": false,
+   "expected_rel": "COMPOSES(inert)",
+   "why": "* gcd(v,1)=1",
+   "instantiations": 1,
+   "v2": {
+    "NEW_V2": false,
+    "NEW_TRAJ": false,
+    "NEW_FINAL": false,
+    "EQUAL": false,
+    "REFINES": false,
+    "COMPOSES": true,
+    "novel": 0,
+    "novel_traj": 0
+   },
+   "v21": {
+    "ruler": "RULER_v2.1_DRAFT_W7",
+    "schema": "((acc + {H}) * math.gcd(abs(v), abs(1)))",
+    "instantiations": 1,
+    "accumulating": 0,
+    "grid_novel": 0,
+    "traj_novel": 0,
+    "both_novel": 0,
+    "NEW_GRID": false,
+    "NEW_TRAJ": false,
+    "NEW_BOTH": false,
+    "domain_hist": {},
+    "examples": [],
+    "EQUAL_ANY": false,
+    "REFINES_ANY": false,
+    "COMPOSES_ANY": true,
+    "EQUAL": false,
+    "REFINES": false,
+    "COMPOSES": true,
+    "EQUAL_C": false,
+    "REFINES_C": false,
+    "COMPOSES_C": true,
+    "via": [
+     "COMPOSES:literal:(acc + {H})",
+     "COMPOSES:subchain"
+    ],
+    "NEW_FINAL": false,
+    "COMPOSITIONAL_NOVELTY": false
+   },
+   "v2_matches_W3_stored": true,
+   "v2_error": "OK",
+   "v21_error": "OK"
+  },
+  {
+   "class": "c_inert",
+   "schema": "((acc + {H}) // pow(v, 0))",
+   "expected_NEW": false,
+   "expected_rel": "COMPOSES(inert)",
+   "why": "// 1 in disguise",
+   "instantiations": 161,
+   "v2": {
+    "NEW_V2": false,
+    "NEW_TRAJ": false,
+    "NEW_FINAL": false,
+    "EQUAL": true,
+    "REFINES": false,
+    "COMPOSES": false,
+    "novel": 0,
+    "novel_traj": 0
+   },
+   "v21": {
+    "ruler": "RULER_v2.1_DRAFT_W7",
+    "schema": "((acc + {H}) // pow(v, 0))",
+    "instantiations": 161,
+    "accumulating": 42,
+    "grid_novel": 0,
+    "traj_novel": 0,
+    "both_novel": 0,
+    "NEW_GRID": false,
+    "NEW_TRAJ": false,
+    "NEW_BOTH": false,
+    "domain_hist": {
+     "30": 1,
+     "40": 68,
+     "None": 15
+    },
+    "examples": [],
+    "EQUAL_ANY": true,
+    "REFINES_ANY": false,
+    "COMPOSES_ANY": false,
+    "EQUAL": true,
+    "REFINES": false,
+    "COMPOSES": false,
+    "EQUAL_C": true,
+    "REFINES_C": false,
+    "COMPOSES_C": false,
+    "via": [
+     "EQUAL:literal:(acc + {H})"
+    ],
+    "NEW_FINAL": false,
+    "COMPOSITIONAL_NOVELTY": false
+   },
+   "v2_matches_W3_stored": true,
+   "v2_error": "OK",
+   "v21_error": "OK"
+  },
+  {
+   "class": "c_inert",
+   "schema": "((acc + {H}) % (v - v))",
+   "expected_NEW": false,
+   "expected_rel": "junk",
+   "why": "mod 0 -> always error",
+   "instantiations": 1,
+   "v2": {
+    "NEW_V2": false,
+    "NEW_TRAJ": false,
+    "NEW_FINAL": false,
+    "EQUAL": false,
+    "REFINES": false,
+    "COMPOSES": true,
+    "novel": 0,
+    "novel_traj": 0
+   },
+   "v21": {
+    "ruler": "RULER_v2.1_DRAFT_W7",
+    "schema": "((acc + {H}) % (v - v))",
+    "instantiations": 1,
+    "accumulating": 0,
+    "grid_novel": 0,
+    "traj_novel": 0,
+    "both_novel": 0,
+    "NEW_GRID": false,
+    "NEW_TRAJ": false,
+    "NEW_BOTH": false,
+    "domain_hist": {},
+    "examples": [],
+    "EQUAL_ANY": false,
+    "REFINES_ANY": false,
+    "COMPOSES_ANY": true,
+    "EQUAL": false,
+    "REFINES": false,
+    "COMPOSES": true,
+    "EQUAL_C": false,
+    "REFINES_C": false,
+    "COMPOSES_C": true,
+    "via": [
+     "COMPOSES:literal:(acc + {H})",
+     "COMPOSES:subchain"
+    ],
+    "NEW_FINAL": false,
+    "COMPOSITIONAL_NOVELTY": false
+   },
+   "v2_matches_W3_stored": true,
+   "v2_error": "OK",
+   "v21_error": "OK"
+  },
+  {
+   "class": "c_inert",
+   "schema": "((acc + {H}) - (first - first))",
+   "expected_NEW": false,
+   "expected_rel": "EQUAL",
+   "why": "cancel",
+   "instantiations": 161,
+   "v2": {
+    "NEW_V2": false,
+    "NEW_TRAJ": false,
+    "NEW_FINAL": false,
+    "EQUAL": true,
+    "REFINES": false,
+    "COMPOSES": false,
+    "novel": 0,
+    "novel_traj": 0
+   },
+   "v21": {
+    "ruler": "RULER_v2.1_DRAFT_W7",
+    "schema": "((acc + {H}) - (first - first))",
+    "instantiations": 161,
+    "accumulating": 42,
+    "grid_novel": 0,
+    "traj_novel": 0,
+    "both_novel": 0,
+    "NEW_GRID": false,
+    "NEW_TRAJ": false,
+    "NEW_BOTH": false,
+    "domain_hist": {
+     "30": 1,
+     "40": 68,
+     "None": 15
+    },
+    "examples": [],
+    "EQUAL_ANY": true,
+    "REFINES_ANY": false,
+    "COMPOSES_ANY": false,
+    "EQUAL": true,
+    "REFINES": false,
+    "COMPOSES": false,
+    "EQUAL_C": true,
+    "REFINES_C": false,
+    "COMPOSES_C": false,
+    "via": [
+     "EQUAL:literal:(acc + {H})"
+    ],
+    "NEW_FINAL": false,
+    "COMPOSITIONAL_NOVELTY": false
+   },
+   "v2_matches_W3_stored": true,
+   "v2_error": "OK",
+   "v21_error": "OK"
+  },
+  {
+   "class": "d_special",
+   "schema": "(acc + ({H} * v))",
+   "expected_NEW": false,
+   "expected_rel": "REFINES",
+   "why": "K5 style",
+   "instantiations": 161,
+   "v2": {
+    "NEW_V2": true,
+    "NEW_TRAJ": true,
+    "NEW_FINAL": false,
+    "EQUAL": false,
+    "REFINES": true,
+    "COMPOSES": false,
+    "novel": 48,
+    "novel_traj": 57
+   },
+   "v21": {
+    "ruler": "RULER_v2.1_DRAFT_W7",
+    "schema": "(acc + ({H} * v))",
+    "instantiations": 161,
+    "accumulating": 130,
+    "grid_novel": 48,
+    "traj_novel": 70,
+    "both_novel": 26,
+    "NEW_GRID": true,
+    "NEW_TRAJ": true,
+    "NEW_BOTH": true,
+    "domain_hist": {
+     "25": 1,
+     "30": 26,
+     "40": 196,
+     "None": 37
+    },
+    "examples": [
+     "(acc + (v * (1 - acc)))",
+     "(acc + (v * (acc % first)))",
+     "(acc + (v * (acc % last)))",
+     "(acc + (v * (acc % v)))"
+    ],
+    "EQUAL_ANY": false,
+    "REFINES_ANY": true,
+    "COMPOSES_ANY": false,
+    "EQUAL": false,
+    "REFINES": true,
+    "COMPOSES": false,
+    "EQUAL_C": false,
+    "REFINES_C": true,
+    "COMPOSES_C": false,
+    "via": [
+     "REFINES:literal:(acc + {H})"
+    ],
+    "NEW_FINAL": false,
+    "COMPOSITIONAL_NOVELTY": false
+   },
+   "v2_matches_W3_stored": true,
+   "v2_error": "OK",
+   "v21_error": "OK"
+  },
+  {
+   "class": "d_special",
+   "schema": "(acc + (v % {H}))",
+   "expected_NEW": false,
+   "expected_rel": "REFINES",
+   "why": "K5 style",
+   "instantiations": 161,
+   "v2": {
+    "NEW_V2": true,
+    "NEW_TRAJ": true,
+    "NEW_FINAL": false,
+    "EQUAL": false,
+    "REFINES": true,
+    "COMPOSES": false,
+    "novel": 58,
+    "novel_traj": 33
+   },
+   "v21": {
+    "ruler": "RULER_v2.1_DRAFT_W7",
+    "schema": "(acc + (v % {H}))",
+    "instantiations": 161,
+    "accumulating": 99,
+    "grid_novel": 58,
+    "traj_novel": 36,
+    "both_novel": 18,
+    "NEW_GRID": true,
+    "NEW_TRAJ": true,
+    "NEW_BOTH": true,
+    "domain_hist": {
+     "25": 6,
+     "40": 120,
+     "None": 72
+    },
+    "examples": [
+     "(acc + (v % (1 - last)))",
+     "(acc + (v % (acc * first)))",
+     "(acc + (v % (acc * last)))",
+     "(acc + (v % (acc + 1)))"
+    ],
+    "EQUAL_ANY": false,
+    "REFINES_ANY": true,
+    "COMPOSES_ANY": false,
+    "EQUAL": false,
+    "REFINES": true,
+    "COMPOSES": false,
+    "EQUAL_C": false,
+    "REFINES_C": true,
+    "COMPOSES_C": false,
+    "via": [
+     "REFINES:literal:(acc + {H})"
+    ],
+    "NEW_FINAL": false,
+    "COMPOSITIONAL_NOVELTY": false
+   },
+   "v2_matches_W3_stored": true,
+   "v2_error": "OK",
+   "v21_error": "OK"
+  },
+  {
+   "class": "d_special",
+   "schema": "(acc + ({H} + v))",
+   "expected_NEW": false,
+   "expected_rel": "REFINES",
+   "why": "K5 style",
+   "instantiations": 161,
+   "v2": {
+    "NEW_V2": true,
+    "NEW_TRAJ": true,
+    "NEW_FINAL": false,
+    "EQUAL": false,
+    "REFINES": true,
+    "COMPOSES": false,
+    "novel": 46,
+    "novel_traj": 69
+   },
+   "v21": {
+    "ruler": "RULER_v2.1_DRAFT_W7",
+    "schema": "(acc + ({H} + v))",
+    "instantiations": 161,
+    "accumulating": 139,
+    "grid_novel": 46,
+    "traj_novel": 72,
+    "both_novel": 30,
+    "NEW_GRID": true,
+    "NEW_TRAJ": true,
+    "NEW_BOTH": true,
+    "domain_hist": {
+     "20": 2,
+     "30": 4,
+     "40": 230,
+     "None": 42
+    },
+    "examples": [
+     "(acc + (v + (1 // acc)))",
+     "(acc + (v + (acc % first)))",
+     "(acc + (v + (acc % last)))",
+     "(acc + (v + (acc % v)))"
+    ],
+    "EQUAL_ANY": false,
+    "REFINES_ANY": true,
+    "COMPOSES_ANY": false,
+    "EQUAL": false,
+    "REFINES": true,
+    "COMPOSES": false,
+    "EQUAL_C": false,
+    "REFINES_C": true,
+    "COMPOSES_C": false,
+    "via": [
+     "REFINES:literal:(acc + {H})"
+    ],
+    "NEW_FINAL": false,
+    "COMPOSITIONAL_NOVELTY": false
+   },
+   "v2_matches_W3_stored": true,
+   "v2_error": "OK",
+   "v21_error": "OK"
+  },
+  {
+   "class": "d_special",
+   "schema": "(acc - ({H} - v))",
+   "expected_NEW": false,
+   "expected_rel": "REFINES",
+   "why": "acc + (v - H): specialisation via subtraction",
+   "instantiations": 6,
+   "v2": {
+    "NEW_V2": false,
+    "NEW_TRAJ": false,
+    "NEW_FINAL": false,
+    "EQUAL": false,
+    "REFINES": false,
+    "COMPOSES": false,
+    "novel": 0,
+    "novel_traj": 0
+   },
+   "v21": {
+    "ruler": "RULER_v2.1_DRAFT_W7",
+    "schema": "(acc - ({H} - v))",
+    "instantiations": 6,
+    "accumulating": 4,
+    "grid_novel": 0,
+    "traj_novel": 0,
+    "both_novel": 0,
+    "NEW_GRID": false,
+    "NEW_TRAJ": false,
+    "NEW_BOTH": false,
+    "domain_hist": {
+     "40": 8
+    },
+    "examples": [],
+    "EQUAL_ANY": false,
+    "REFINES_ANY": true,
+    "COMPOSES_ANY": false,
+    "EQUAL": false,
+    "REFINES": true,
+    "COMPOSES": false,
+    "EQUAL_C": false,
+    "REFINES_C": true,
+    "COMPOSES_C": false,
+    "via": [
+     "REFINES:literal:(acc - {H})"
+    ],
+    "NEW_FINAL": false,
+    "COMPOSITIONAL_NOVELTY": false
+   },
+   "v2_matches_W3_stored": true,
+   "v2_error": "OK",
+   "v21_error": "OK"
+  },
+  {
+   "class": "d_special",
+   "schema": "((acc + v) + {H})",
+   "expected_NEW": false,
+   "expected_rel": "REFINES",
+   "why": "assoc refinement",
+   "instantiations": 6,
+   "v2": {
+    "NEW_V2": false,
+    "NEW_TRAJ": false,
+    "NEW_FINAL": false,
+    "EQUAL": false,
+    "REFINES": true,
+    "COMPOSES": false,
+    "novel": 0,
+    "novel_traj": 0
+   },
+   "v21": {
+    "ruler": "RULER_v2.1_DRAFT_W7",
+    "schema": "((acc + v) + {H})",
+    "instantiations": 6,
+    "accumulating": 6,
+    "grid_novel": 0,
+    "traj_novel": 0,
+    "both_novel": 0,
+    "NEW_GRID": false,
+    "NEW_TRAJ": false,
+    "NEW_BOTH": false,
+    "domain_hist": {
+     "40": 12
+    },
+    "examples": [],
+    "EQUAL_ANY": false,
+    "REFINES_ANY": true,
+    "COMPOSES_ANY": false,
+    "EQUAL": false,
+    "REFINES": true,
+    "COMPOSES": false,
+    "EQUAL_C": false,
+    "REFINES_C": true,
+    "COMPOSES_C": false,
+    "via": [
+     "REFINES:literal:(acc + {H})"
+    ],
+    "NEW_FINAL": false,
+    "COMPOSITIONAL_NOVELTY": false
+   },
+   "v2_matches_W3_stored": true,
+   "v2_error": "OK",
+   "v21_error": "OK"
+  },
+  {
+   "class": "d_special",
+   "schema": "(acc - ({H} * first))",
+   "expected_NEW": false,
+   "expected_rel": "REFINES",
+   "why": "acc + (-(H*first))",
+   "instantiations": 161,
+   "v2": {
+    "NEW_V2": true,
+    "NEW_TRAJ": true,
+    "NEW_FINAL": true,
+    "EQUAL": false,
+    "REFINES": false,
+    "COMPOSES": false,
+    "novel": 14,
+    "novel_traj": 27
+   },
+   "v21": {
+    "ruler": "RULER_v2.1_DRAFT_W7",
+    "schema": "(acc - ({H} * first))",
+    "instantiations": 161,
+    "accumulating": 43,
+    "grid_novel": 14,
+    "traj_novel": 30,
+    "both_novel": 7,
+    "NEW_GRID": true,
+    "NEW_TRAJ": true,
+    "NEW_BOTH": true,
+    "domain_hist": {
+     "30": 6,
+     "40": 66,
+     "None": 14
+    },
+    "examples": [
+     "(acc - (first * (acc % v)))",
+     "(acc - (first * (acc + v)))",
+     "(acc - (first * (acc - v)))",
+     "(acc - (first * (v - acc)))"
+    ],
+    "EQUAL_ANY": false,
+    "REFINES_ANY": true,
+    "COMPOSES_ANY": false,
+    "EQUAL": false,
+    "REFINES": true,
+    "COMPOSES": false,
+    "EQUAL_C": false,
+    "REFINES_C": true,
+    "COMPOSES_C": false,
+    "via": [
+     "REFINES:literal:(acc - {H})"
+    ],
+    "NEW_FINAL": false,
+    "COMPOSITIONAL_NOVELTY": false
+   },
+   "v2_matches_W3_stored": true,
+   "v2_error": "FP",
+   "v21_error": "OK"
+  },
+  {
+   "class": "d_special",
+   "schema": "((acc - {H}) + v)",
+   "expected_NEW": false,
+   "expected_rel": "REFINES",
+   "why": "re-expressed + specialised",
+   "instantiations": 161,
+   "v2": {
+    "NEW_V2": true,
+    "NEW_TRAJ": true,
+    "NEW_FINAL": true,
+    "EQUAL": false,
+    "REFINES": false,
+    "COMPOSES": false,
+    "novel": 42,
+    "novel_traj": 58
+   },
+   "v21": {
+    "ruler": "RULER_v2.1_DRAFT_W7",
+    "schema": "((acc - {H}) + v)",
+    "instantiations": 161,
+    "accumulating": 128,
+    "grid_novel": 42,
+    "traj_novel": 61,
+    "both_novel": 23,
+    "NEW_GRID": true,
+    "NEW_TRAJ": true,
+    "NEW_BOTH": true,
+    "domain_hist": {
+     "20": 2,
+     "30": 3,
+     "40": 207,
+     "None": 44
+    },
+    "examples": [
+     "(v + (acc - (1 % acc)))",
+     "(v + (acc - (1 - acc)))",
+     "(v + (acc - (acc % first)))",
+     "(v + (acc - (acc % last)))"
+    ],
+    "EQUAL_ANY": false,
+    "REFINES_ANY": true,
+    "COMPOSES_ANY": true,
+    "EQUAL": false,
+    "REFINES": false,
+    "COMPOSES": true,
+    "EQUAL_C": false,
+    "REFINES_C": true,
+    "COMPOSES_C": false,
+    "via": [
+     "COMPOSES:literal:(acc - {H})"
+    ],
+    "NEW_FINAL": false,
+    "COMPOSITIONAL_NOVELTY": false
+   },
+   "v2_matches_W3_stored": true,
+   "v2_error": "FP",
+   "v21_error": "OK"
+  },
+  {
+   "class": "e_compose",
+   "schema": "(v - (acc + {H}))",
+   "expected_NEW": true,
+   "expected_rel": "COMPOSES",
+   "why": "CON1 selected (alternating)",
+   "instantiations": 161,
+   "v2": {
+    "NEW_V2": true,
+    "NEW_TRAJ": true,
+    "NEW_FINAL": true,
+    "EQUAL": false,
+    "REFINES": false,
+    "COMPOSES": true,
+    "novel": 134,
+    "novel_traj": 103
+   },
+   "v21": {
+    "ruler": "RULER_v2.1_DRAFT_W7",
+    "schema": "(v - (acc + {H}))",
+    "instantiations": 161,
+    "accumulating": 134,
+    "grid_novel": 134,
+    "traj_novel": 106,
+    "both_novel": 106,
+    "NEW_GRID": true,
+    "NEW_TRAJ": true,
+    "NEW_BOTH": true,
+    "domain_hist": {
+     "20": 2,
+     "30": 4,
+     "40": 206,
+     "None": 56
+    },
+    "examples": [
+     "(v - (acc + (0 % first)))",
+     "(v - (acc + (0 % last)))",
+     "(v - (acc + (0 % v)))",
+     "(v - (acc + (0 - 1)))"
+    ],
+    "EQUAL_ANY": false,
+    "REFINES_ANY": false,
+    "COMPOSES_ANY": true,
+    "EQUAL": false,
+    "REFINES": false,
+    "COMPOSES": true,
+    "EQUAL_C": false,
+    "REFINES_C": false,
+    "COMPOSES_C": true,
+    "via": [
+     "COMPOSES:literal:(acc + {H})",
+     "COMPOSES:negated-reference-at-root"
+    ],
+    "NEW_FINAL": true,
+    "COMPOSITIONAL_NOVELTY": true
+   },
+   "v2_matches_W3_stored": true,
+   "v2_error": "OK",
+   "v21_error": "OK"
+  },
+  {
+   "class": "e_compose",
+   "schema": "((acc + {H}) * v)",
+   "expected_NEW": true,
+   "expected_rel": "COMPOSES",
+   "why": "CON7 selected (weighted product-sum)",
+   "instantiations": 161,
+   "v2": {
+    "NEW_V2": true,
+    "NEW_TRAJ": false,
+    "NEW_FINAL": false,
+    "EQUAL": false,
+    "REFINES": false,
+    "COMPOSES": true,
+    "novel": 144,
+    "novel_traj": 0
+   },
+   "v21": {
+    "ruler": "RULER_v2.1_DRAFT_W7",
+    "schema": "((acc + {H}) * v)",
+    "instantiations": 161,
+    "accumulating": 144,
+    "grid_novel": 144,
+    "traj_novel": 126,
+    "both_novel": 126,
+    "NEW_GRID": true,
+    "NEW_TRAJ": true,
+    "NEW_BOTH": true,
+    "domain_hist": {
+     "20": 2,
+     "25": 12,
+     "30": 194,
+     "35": 3,
+     "40": 34,
+     "None": 43
+    },
+    "examples": [
+     "(acc * v)",
+     "(v * (acc + (0 % acc)))",
+     "(v * (acc + (0 % first)))",
+     "(v * (acc + (0 % last)))"
+    ],
+    "EQUAL_ANY": false,
+    "REFINES_ANY": false,
+    "COMPOSES_ANY": true,
+    "EQUAL": false,
+    "REFINES": false,
+    "COMPOSES": true,
+    "EQUAL_C": false,
+    "REFINES_C": false,
+    "COMPOSES_C": true,
+    "via": [
+     "COMPOSES:literal:(acc + {H})",
+     "COMPOSES:subchain"
+    ],
+    "NEW_FINAL": true,
+    "COMPOSITIONAL_NOVELTY": true
+   },
+   "v2_matches_W3_stored": true,
+   "v2_error": "FN",
+   "v21_error": "OK"
+  },
+  {
+   "class": "e_compose",
+   "schema": "((acc + {H}) * last)",
+   "expected_NEW": true,
+   "expected_rel": "COMPOSES",
+   "why": "scaling by query",
+   "instantiations": 161,
+   "v2": {
+    "NEW_V2": true,
+    "NEW_TRAJ": false,
+    "NEW_FINAL": false,
+    "EQUAL": false,
+    "REFINES": false,
+    "COMPOSES": true,
+    "novel": 42,
+    "novel_traj": 0
+   },
+   "v21": {
+    "ruler": "RULER_v2.1_DRAFT_W7",
+    "schema": "((acc + {H}) * last)",
+    "instantiations": 161,
+    "accumulating": 42,
+    "grid_novel": 42,
+    "traj_novel": 33,
+    "both_novel": 33,
+    "NEW_GRID": true,
+    "NEW_TRAJ": true,
+    "NEW_BOTH": true,
+    "domain_hist": {
+     "20": 60,
+     "30": 1,
+     "40": 4,
+     "None": 19
+    },
+    "examples": [
+     "(last * (acc + (0 - v)))",
+     "(last * (acc + (1 - v)))",
+     "(last * (acc + (acc % v)))",
+     "(last * (acc + (acc // v)))"
+    ],
+    "EQUAL_ANY": false,
+    "REFINES_ANY": false,
+    "COMPOSES_ANY": true,
+    "EQUAL": false,
+    "REFINES": false,
+    "COMPOSES": true,
+    "EQUAL_C": false,
+    "REFINES_C": false,
+    "COMPOSES_C": true,
+    "via": [
+     "COMPOSES:literal:(acc + {H})",
+     "COMPOSES:subchain"
+    ],
+    "NEW_FINAL": true,
+    "COMPOSITIONAL_NOVELTY": true
+   },
+   "v2_matches_W3_stored": true,
+   "v2_error": "FN",
+   "v21_error": "OK"
+  },
+  {
+   "class": "e_compose",
+   "schema": "math.gcd(abs(first), abs((acc + {H})))",
+   "expected_NEW": true,
+   "expected_rel": "COMPOSES",
+   "why": "CON0 selected",
+   "instantiations": 161,
+   "v2": {
+    "NEW_V2": true,
+    "NEW_TRAJ": true,
+    "NEW_FINAL": true,
+    "EQUAL": false,
+    "REFINES": false,
+    "COMPOSES": true,
+    "novel": 40,
+    "novel_traj": 38
+   },
+   "v21": {
+    "ruler": "RULER_v2.1_DRAFT_W7",
+    "schema": "math.gcd(abs(first), abs((acc + {H})))",
+    "instantiations": 161,
+    "accumulating": 40,
+    "grid_novel": 40,
+    "traj_novel": 38,
+    "both_novel": 38,
+    "NEW_GRID": true,
+    "NEW_TRAJ": true,
+    "NEW_BOTH": true,
+    "domain_hist": {
+     "40": 78,
+     "None": 2
+    },
+    "examples": [
+     "math.gcd(abs(first), abs((acc + (0 - v))))",
+     "math.gcd(abs(first), abs((acc + (1 - v))))",
+     "math.gcd(abs(first), abs((acc + (acc % v))))",
+     "math.gcd(abs(first), abs((acc + (acc * v))))"
+    ],
+    "EQUAL_ANY": false,
+    "REFINES_ANY": false,
+    "COMPOSES_ANY": true,
+    "EQUAL": false,
+    "REFINES": false,
+    "COMPOSES": true,
+    "EQUAL_C": false,
+    "REFINES_C": false,
+    "COMPOSES_C": true,
+    "via": [
+     "COMPOSES:literal:(acc + {H})",
+     "COMPOSES:subchain"
+    ],
+    "NEW_FINAL": true,
+    "COMPOSITIONAL_NOVELTY": true
+   },
+   "v2_matches_W3_stored": true,
+   "v2_error": "OK",
+   "v21_error": "OK"
+  },
+  {
+   "class": "e_compose",
+   "schema": "(first + (acc + {H}))",
+   "expected_NEW": false,
+   "expected_rel": "REFINES",
+   "why": "CON2 selected (additive)",
+   "instantiations": 161,
+   "v2": {
+    "NEW_V2": true,
+    "NEW_TRAJ": true,
+    "NEW_FINAL": false,
+    "EQUAL": false,
+    "REFINES": true,
+    "COMPOSES": true,
+    "novel": 13,
+    "novel_traj": 29
+   },
+   "v21": {
+    "ruler": "RULER_v2.1_DRAFT_W7",
+    "schema": "(first + (acc + {H}))",
+    "instantiations": 161,
+    "accumulating": 42,
+    "grid_novel": 13,
+    "traj_novel": 30,
+    "both_novel": 8,
+    "NEW_GRID": true,
+    "NEW_TRAJ": true,
+    "NEW_BOTH": true,
+    "domain_hist": {
+     "30": 2,
+     "40": 66,
+     "None": 16
+    },
+    "examples": [
+     "(first + (acc + (acc % v)))",
+     "(first + (acc + (acc * v)))",
+     "(first + (acc + (acc + v)))",
+     "(first + (acc + (acc - v)))"
+    ],
+    "EQUAL_ANY": false,
+    "REFINES_ANY": true,
+    "COMPOSES_ANY": true,
+    "EQUAL": false,
+    "REFINES": true,
+    "COMPOSES": true,
+    "EQUAL_C": false,
+    "REFINES_C": true,
+    "COMPOSES_C": false,
+    "via": [
+     "REFINES:literal:(acc + {H})",
+     "COMPOSES:literal:(acc + {H})"
+    ],
+    "NEW_FINAL": false,
+    "COMPOSITIONAL_NOVELTY": false
+   },
+   "v2_matches_W3_stored": true,
+   "v2_error": "OK",
+   "v21_error": "OK"
+  },
+  {
+   "class": "e_compose",
+   "schema": "((acc + {H}) // v)",
+   "expected_NEW": true,
+   "expected_rel": "COMPOSES",
+   "why": "running quotient",
+   "instantiations": 1,
+   "v2": {
+    "NEW_V2": false,
+    "NEW_TRAJ": false,
+    "NEW_FINAL": false,
+    "EQUAL": false,
+    "REFINES": false,
+    "COMPOSES": true,
+    "novel": 1,
+    "novel_traj": 0
+   },
+   "v21": {
+    "ruler": "RULER_v2.1_DRAFT_W7",
+    "schema": "((acc + {H}) // v)",
+    "instantiations": 1,
+    "accumulating": 1,
+    "grid_novel": 1,
+    "traj_novel": 0,
+    "both_novel": 0,
+    "NEW_GRID": false,
+    "NEW_TRAJ": false,
+    "NEW_BOTH": false,
+    "domain_hist": {
+     "40": 2
+    },
+    "examples": [],
+    "EQUAL_ANY": false,
+    "REFINES_ANY": false,
+    "COMPOSES_ANY": true,
+    "EQUAL": false,
+    "REFINES": false,
+    "COMPOSES": true,
+    "EQUAL_C": false,
+    "REFINES_C": false,
+    "COMPOSES_C": true,
+    "via": [
+     "COMPOSES:literal:(acc + {H})",
+     "COMPOSES:subchain"
+    ],
+    "NEW_FINAL": false,
+    "COMPOSITIONAL_NOVELTY": false
+   },
+   "v2_matches_W3_stored": true,
+   "v2_error": "FN",
+   "v21_error": "FN"
+  },
+  {
+   "class": "e_compose",
+   "schema": "((acc + {H}) % last)",
+   "expected_NEW": true,
+   "expected_rel": "COMPOSES",
+   "why": "modular sum",
+   "instantiations": 1,
+   "v2": {
+    "NEW_V2": false,
+    "NEW_TRAJ": false,
+    "NEW_FINAL": false,
+    "EQUAL": false,
+    "REFINES": false,
+    "COMPOSES": true,
+    "novel": 0,
+    "novel_traj": 0
+   },
+   "v21": {
+    "ruler": "RULER_v2.1_DRAFT_W7",
+    "schema": "((acc + {H}) % last)",
+    "instantiations": 1,
+    "accumulating": 0,
+    "grid_novel": 0,
+    "traj_novel": 0,
+    "both_novel": 0,
+    "NEW_GRID": false,
+    "NEW_TRAJ": false,
+    "NEW_BOTH": false,
+    "domain_hist": {},
+    "examples": [],
+    "EQUAL_ANY": false,
+    "REFINES_ANY": false,
+    "COMPOSES_ANY": true,
+    "EQUAL": false,
+    "REFINES": false,
+    "COMPOSES": true,
+    "EQUAL_C": false,
+    "REFINES_C": false,
+    "COMPOSES_C": true,
+    "via": [
+     "COMPOSES:literal:(acc + {H})",
+     "COMPOSES:subchain"
+    ],
+    "NEW_FINAL": false,
+    "COMPOSITIONAL_NOVELTY": false
+   },
+   "v2_matches_W3_stored": true,
+   "v2_error": "FN",
+   "v21_error": "FN"
+  },
+  {
+   "class": "f_efficiency",
+   "schema": "(acc * {H})",
+   "expected_NEW": true,
+   "expected_rel": "none",
+   "why": "multiplicative; PRISTINE reachable",
+   "instantiations": 161,
+   "v2": {
+    "NEW_V2": true,
+    "NEW_TRAJ": true,
+    "NEW_FINAL": true,
+    "EQUAL": false,
+    "REFINES": false,
+    "COMPOSES": false,
+    "novel": 41,
+    "novel_traj": 6
+   },
+   "v21": {
+    "ruler": "RULER_v2.1_DRAFT_W7",
+    "schema": "(acc * {H})",
+    "instantiations": 161,
+    "accumulating": 43,
+    "grid_novel": 41,
+    "traj_novel": 17,
+    "both_novel": 17,
+    "NEW_GRID": true,
+    "NEW_TRAJ": true,
+    "NEW_BOTH": true,
+    "domain_hist": {
+     "20": 4,
+     "30": 9,
+     "40": 56,
+     "None": 17
+    },
+    "examples": [
+     "(acc * (0 - v))",
+     "(acc * (first // v))",
+     "(acc * (last % v))",
+     "(acc * (last - v))"
+    ],
+    "EQUAL_ANY": false,
+    "REFINES_ANY": false,
+    "COMPOSES_ANY": false,
+    "EQUAL": false,
+    "REFINES": false,
+    "COMPOSES": false,
+    "EQUAL_C": false,
+    "REFINES_C": false,
+    "COMPOSES_C": false,
+    "via": [],
+    "NEW_FINAL": true,
+    "COMPOSITIONAL_NOVELTY": false
+   },
+   "v2_matches_W3_stored": true,
+   "v2_error": "OK",
+   "v21_error": "OK"
+  },
+  {
+   "class": "f_efficiency",
+   "schema": "((acc * v) + {H})",
+   "expected_NEW": true,
+   "expected_rel": "none",
+   "why": "affine; depth-2 reachable",
+   "instantiations": 6,
+   "v2": {
+    "NEW_V2": true,
+    "NEW_TRAJ": false,
+    "NEW_FINAL": false,
+    "EQUAL": false,
+    "REFINES": false,
+    "COMPOSES": false,
+    "novel": 5,
+    "novel_traj": 0
+   },
+   "v21": {
+    "ruler": "RULER_v2.1_DRAFT_W7",
+    "schema": "((acc * v) + {H})",
+    "instantiations": 6,
+    "accumulating": 6,
+    "grid_novel": 5,
+    "traj_novel": 5,
+    "both_novel": 5,
+    "NEW_GRID": true,
+    "NEW_TRAJ": true,
+    "NEW_BOTH": true,
+    "domain_hist": {
+     "30": 10,
+     "40": 2
+    },
+    "examples": [
+     "(1 + (acc * v))",
+     "(acc * v)",
+     "(first + (acc * v))",
+     "(last + (acc * v))"
+    ],
+    "EQUAL_ANY": false,
+    "REFINES_ANY": false,
+    "COMPOSES_ANY": false,
+    "EQUAL": false,
+    "REFINES": false,
+    "COMPOSES": false,
+    "EQUAL_C": false,
+    "REFINES_C": false,
+    "COMPOSES_C": false,
+    "via": [],
+    "NEW_FINAL": true,
+    "COMPOSITIONAL_NOVELTY": false
+   },
+   "v2_matches_W3_stored": true,
+   "v2_error": "FN",
+   "v21_error": "OK"
+  },
+  {
+   "class": "f_efficiency",
+   "schema": "(acc + ((v * v) + {H}))",
+   "expected_NEW": false,
+   "expected_rel": "REFINES",
+   "why": "pins a common filler",
+   "instantiations": 6,
+   "v2": {
+    "NEW_V2": false,
+    "NEW_TRAJ": true,
+    "NEW_FINAL": false,
+    "EQUAL": false,
+    "REFINES": true,
+    "COMPOSES": false,
+    "novel": 1,
+    "novel_traj": 5
+   },
+   "v21": {
+    "ruler": "RULER_v2.1_DRAFT_W7",
+    "schema": "(acc + ((v * v) + {H}))",
+    "instantiations": 6,
+    "accumulating": 6,
+    "grid_novel": 1,
+    "traj_novel": 5,
+    "both_novel": 1,
+    "NEW_GRID": false,
+    "NEW_TRAJ": true,
+    "NEW_BOTH": false,
+    "domain_hist": {
+     "40": 12
+    },
+    "examples": [
+     "(acc + (acc + (v * v)))"
+    ],
+    "EQUAL_ANY": false,
+    "REFINES_ANY": true,
+    "COMPOSES_ANY": false,
+    "EQUAL": false,
+    "REFINES": true,
+    "COMPOSES": false,
+    "EQUAL_C": false,
+    "REFINES_C": true,
+    "COMPOSES_C": false,
+    "via": [
+     "REFINES:literal:(acc + {H})"
+    ],
+    "NEW_FINAL": false,
+    "COMPOSITIONAL_NOVELTY": false
+   },
+   "v2_matches_W3_stored": true,
+   "v2_error": "OK",
+   "v21_error": "OK"
+  },
+  {
+   "class": "f_efficiency",
+   "schema": "math.gcd(abs(acc), abs({H}))",
+   "expected_NEW": true,
+   "expected_rel": "none",
+   "why": "gcd fold",
+   "instantiations": 161,
+   "v2": {
+    "NEW_V2": true,
+    "NEW_TRAJ": true,
+    "NEW_FINAL": true,
+    "EQUAL": false,
+    "REFINES": false,
+    "COMPOSES": false,
+    "novel": 41,
+    "novel_traj": 5
+   },
+   "v21": {
+    "ruler": "RULER_v2.1_DRAFT_W7",
+    "schema": "math.gcd(abs(acc), abs({H}))",
+    "instantiations": 161,
+    "accumulating": 41,
+    "grid_novel": 41,
+    "traj_novel": 5,
+    "both_novel": 5,
+    "NEW_GRID": true,
+    "NEW_TRAJ": true,
+    "NEW_BOTH": true,
+    "domain_hist": {
+     "40": 76,
+     "None": 6
+    },
+    "examples": [
+     "math.gcd(abs(acc), abs((first % v)))",
+     "math.gcd(abs(acc), abs((last % v)))",
+     "math.gcd(abs(acc), abs((v % first)))",
+     "math.gcd(abs(acc), abs((v * first)))"
+    ],
+    "EQUAL_ANY": false,
+    "REFINES_ANY": false,
+    "COMPOSES_ANY": false,
+    "EQUAL": false,
+    "REFINES": false,
+    "COMPOSES": false,
+    "EQUAL_C": false,
+    "REFINES_C": false,
+    "COMPOSES_C": false,
+    "via": [],
+    "NEW_FINAL": true,
+    "COMPOSITIONAL_NOVELTY": false
+   },
+   "v2_matches_W3_stored": true,
+   "v2_error": "OK",
+   "v21_error": "OK"
+  }
+ ],
+ "flips": [
+  {
+   "class": "a_reexpr",
+   "schema": "(acc - (0 - {H}))",
+   "expected_NEW": false,
+   "expected_rel": "REEXPR",
+   "changes": [
+    "EQUAL False->True"
+   ],
+   "v2_error": "OK",
+   "v21_error": "OK"
+  },
+  {
+   "class": "a_reexpr",
+   "schema": "({H} - (0 - acc))",
+   "expected_NEW": false,
+   "expected_rel": "REEXPR",
+   "changes": [
+    "EQUAL False->True"
+   ],
+   "v2_error": "OK",
+   "v21_error": "OK"
+  },
+  {
+   "class": "a_reexpr",
+   "schema": "(0 - ((0 - acc) - {H}))",
+   "expected_NEW": false,
+   "expected_rel": "REEXPR",
+   "changes": [
+    "EQUAL False->True"
+   ],
+   "v2_error": "OK",
+   "v21_error": "OK"
+  },
+  {
+   "class": "a_reexpr",
+   "schema": "(0 - (0 - (acc + {H})))",
+   "expected_NEW": false,
+   "expected_rel": "REEXPR",
+   "changes": [
+    "EQUAL False->True"
+   ],
+   "v2_error": "OK",
+   "v21_error": "OK"
+  },
+  {
+   "class": "a_reexpr_comp",
+   "schema": "((acc * v) + ({H} * v))",
+   "expected_NEW": true,
+   "expected_rel": "COMPOSES",
+   "changes": [
+    "NEW_FINAL False->True"
+   ],
+   "v2_error": "FN",
+   "v21_error": "OK"
+  },
+  {
+   "class": "a_reexpr_comp",
+   "schema": "(v - (acc - {H}))",
+   "expected_NEW": true,
+   "expected_rel": "COMPOSES",
+   "changes": [
+    "COMPOSES False->True"
+   ],
+   "v2_error": "OK",
+   "v21_error": "OK"
+  },
+  {
+   "class": "a_reexpr_comp",
+   "schema": "((v - acc) - {H})",
+   "expected_NEW": true,
+   "expected_rel": "COMPOSES",
+   "changes": [
+    "COMPOSES False->True"
+   ],
+   "v2_error": "FN",
+   "v21_error": "FN"
+  },
+  {
+   "class": "a_reexpr_comp",
+   "schema": "((v - {H}) - acc)",
+   "expected_NEW": true,
+   "expected_rel": "COMPOSES",
+   "changes": [
+    "COMPOSES False->True"
+   ],
+   "v2_error": "FN",
+   "v21_error": "FN"
+  },
+  {
+   "class": "a_reexpr_comp",
+   "schema": "((0 - acc) - {H})",
+   "expected_NEW": true,
+   "expected_rel": "COMPOSES",
+   "changes": [
+    "COMPOSES False->True"
+   ],
+   "v2_error": "FN",
+   "v21_error": "FN"
+  },
+  {
+   "class": "d_special",
+   "schema": "(acc - ({H} - v))",
+   "expected_NEW": false,
+   "expected_rel": "REFINES",
+   "changes": [
+    "REFINES False->True"
+   ],
+   "v2_error": "OK",
+   "v21_error": "OK"
+  },
+  {
+   "class": "d_special",
+   "schema": "(acc - ({H} * first))",
+   "expected_NEW": false,
+   "expected_rel": "REFINES",
+   "changes": [
+    "NEW_FINAL True->False",
+    "REFINES False->True"
+   ],
+   "v2_error": "FP",
+   "v21_error": "OK"
+  },
+  {
+   "class": "d_special",
+   "schema": "((acc - {H}) + v)",
+   "expected_NEW": false,
+   "expected_rel": "REFINES",
+   "changes": [
+    "NEW_FINAL True->False",
+    "REFINES False->True",
+    "COMPOSES False->True"
+   ],
+   "v2_error": "FP",
+   "v21_error": "OK"
+  },
+  {
+   "class": "e_compose",
+   "schema": "((acc + {H}) * v)",
+   "expected_NEW": true,
+   "expected_rel": "COMPOSES",
+   "changes": [
+    "NEW_FINAL False->True"
+   ],
+   "v2_error": "FN",
+   "v21_error": "OK"
+  },
+  {
+   "class": "e_compose",
+   "schema": "((acc + {H}) * last)",
+   "expected_NEW": true,
+   "expected_rel": "COMPOSES",
+   "changes": [
+    "NEW_FINAL False->True"
+   ],
+   "v2_error": "FN",
+   "v21_error": "OK"
+  },
+  {
+   "class": "f_efficiency",
+   "schema": "((acc * v) + {H})",
+   "expected_NEW": true,
+   "expected_rel": "none",
+   "changes": [
+    "NEW_FINAL False->True"
+   ],
+   "v2_error": "FN",
+   "v21_error": "OK"
+  }
+ ],
+ "tally": {
+  "a_reexpr": {
+   "n": 8,
+   "v2_err": 0,
+   "v21_err": 0
+  },
+  "a_reexpr_comp": {
+   "n": 6,
+   "v2_err": 4,
+   "v21_err": 3
+  },
+  "b_domain": {
+   "n": 5,
+   "v2_err": 3,
+   "v21_err": 3
+  },
+  "c_inert": {
+   "n": 10,
+   "v2_err": 0,
+   "v21_err": 0
+  },
+  "d_special": {
+   "n": 7,
+   "v2_err": 2,
+   "v21_err": 0
+  },
+  "e_compose": {
+   "n": 7,
+   "v2_err": 4,
+   "v21_err": 2
+  },
+  "f_efficiency": {
+   "n": 4,
+   "v2_err": 1,
+   "v21_err": 0
+  }
+ },
+ "panel": {
+  "G1": {
+   "schema": "(acc + {H})",
+   "v2": {
+    "NEW_V2": false,
+    "NEW_TRAJ": false,
+    "NEW_FINAL": false,
+    "EQUAL": true,
+    "REFINES": false,
+    "COMPOSES": false,
+    "novel": 0,
+    "novel_traj": 0
+   },
+   "v21": {
+    "ruler": "RULER_v2.1_DRAFT_W7",
+    "schema": "(acc + {H})",
+    "instantiations": 161,
+    "accumulating": 42,
+    "grid_novel": 0,
+    "traj_novel": 0,
+    "both_novel": 0,
+    "NEW_GRID": false,
+    "NEW_TRAJ": false,
+    "NEW_BOTH": false,
+    "domain_hist": {
+     "30": 1,
+     "40": 68,
+     "None": 15
+    },
+    "examples": [],
+    "EQUAL_ANY": true,
+    "REFINES_ANY": false,
+    "COMPOSES_ANY": false,
+    "EQUAL": true,
+    "REFINES": false,
+    "COMPOSES": false,
+    "EQUAL_C": true,
+    "REFINES_C": false,
+    "COMPOSES_C": false,
+    "via": [
+     "EQUAL:literal:(acc + {H})"
+    ],
+    "NEW_FINAL": false,
+    "COMPOSITIONAL_NOVELTY": false
+   }
+  },
+  "OFF_0": {
+   "schema": "(1 + (v - {H}))",
+   "v2": {
+    "NEW_V2": true,
+    "NEW_TRAJ": true,
+    "NEW_FINAL": true,
+    "EQUAL": false,
+    "REFINES": false,
+    "COMPOSES": false,
+    "novel": 45,
+    "novel_traj": 28
+   },
+   "v21": {
+    "ruler": "RULER_v2.1_DRAFT_W7",
+    "schema": "(1 + (v - {H}))",
+    "instantiations": 161,
+    "accumulating": 49,
+    "grid_novel": 45,
+    "traj_novel": 31,
+    "both_novel": 29,
+    "NEW_GRID": true,
+    "NEW_TRAJ": true,
+    "NEW_BOTH": true,
+    "domain_hist": {
+     "20": 2,
+     "30": 3,
+     "40": 62,
+     "None": 31
+    },
+    "examples": [
+     "(1 + (v - (0 % acc)))",
+     "(1 + (v - (0 // acc)))",
+     "(1 + (v - (1 // acc)))",
+     "(1 + (v - (acc % acc)))"
+    ],
+    "EQUAL_ANY": false,
+    "REFINES_ANY": false,
+    "COMPOSES_ANY": false,
+    "EQUAL": false,
+    "REFINES": false,
+    "COMPOSES": false,
+    "EQUAL_C": false,
+    "REFINES_C": false,
+    "COMPOSES_C": false,
+    "via": [],
+    "NEW_FINAL": true,
+    "COMPOSITIONAL_NOVELTY": false
+   }
+  },
+  "SHAM_0": {
+   "schema": "(v - (acc - {H}))",
+   "v2": {
+    "NEW_V2": true,
+    "NEW_TRAJ": true,
+    "NEW_FINAL": true,
+    "EQUAL": false,
+    "REFINES": false,
+    "COMPOSES": false,
+    "novel": 133,
+    "novel_traj": 103
+   },
+   "v21": {
+    "ruler": "RULER_v2.1_DRAFT_W7",
+    "schema": "(v - (acc - {H}))",
+    "instantiations": 161,
+    "accumulating": 134,
+    "grid_novel": 133,
+    "traj_novel": 106,
+    "both_novel": 106,
+    "NEW_GRID": true,
+    "NEW_TRAJ": true,
+    "NEW_BOTH": true,
+    "domain_hist": {
+     "20": 2,
+     "30": 4,
+     "40": 207,
+     "None": 55
+    },
+    "examples": [
+     "(v - (acc - (0 % first)))",
+     "(v - (acc - (0 % last)))",
+     "(v - (acc - (0 % v)))",
+     "(v - (acc - (0 - 1)))"
+    ],
+    "EQUAL_ANY": false,
+    "REFINES_ANY": false,
+    "COMPOSES_ANY": true,
+    "EQUAL": false,
+    "REFINES": false,
+    "COMPOSES": true,
+    "EQUAL_C": false,
+    "REFINES_C": false,
+    "COMPOSES_C": true,
+    "via": [
+     "COMPOSES:literal:(acc - {H})",
+     "COMPOSES:negated-reference-at-root"
+    ],
+    "NEW_FINAL": true,
+    "COMPOSITIONAL_NOVELTY": true
+   }
+  },
+  "SHAM_1": {
+   "schema": "({H} + v)",
+   "v2": {
+    "NEW_V2": true,
+    "NEW_TRAJ": true,
+    "NEW_FINAL": true,
+    "EQUAL": false,
+    "REFINES": false,
+    "COMPOSES": false,
+    "novel": 39,
+    "novel_traj": 23
+   },
+   "v21": {
+    "ruler": "RULER_v2.1_DRAFT_W7",
+    "schema": "({H} + v)",
+    "instantiations": 161,
+    "accumulating": 50,
+    "grid_novel": 39,
+    "traj_novel": 26,
+    "both_novel": 26,
+    "NEW_GRID": true,
+    "NEW_TRAJ": true,
+    "NEW_BOTH": true,
+    "domain_hist": {
+     "20": 2,
+     "30": 4,
+     "40": 66,
+     "None": 28
+    },
+    "examples": [
+     "(v + (0 - acc))",
+     "(v + (1 % acc))",
+     "(v + (1 - acc))",
+     "(v + (acc % first))"
+    ],
+    "EQUAL_ANY": false,
+    "REFINES_ANY": false,
+    "COMPOSES_ANY": false,
+    "EQUAL": false,
+    "REFINES": false,
+    "COMPOSES": false,
+    "EQUAL_C": false,
+    "REFINES_C": false,
+    "COMPOSES_C": false,
+    "via": [],
+    "NEW_FINAL": true,
+    "COMPOSITIONAL_NOVELTY": false
+   }
+  }
+ },
+ "selections": [
+  {
+   "schema": "((acc + {H}) * v)",
+   "where": [
+    "CON7/G1"
+   ],
+   "v2_vs_G1": {
+    "NEW_V2": true,
+    "NEW_TRAJ": false,
+    "NEW_FINAL": false,
+    "EQUAL": false,
+    "REFINES": false,
+    "COMPOSES": true,
+    "novel": 144,
+    "novel_traj": 0
+   },
+   "v21_vs_G1": {
+    "ruler": "RULER_v2.1_DRAFT_W7",
+    "schema": "((acc + {H}) * v)",
+    "instantiations": 161,
+    "accumulating": 144,
+    "grid_novel": 144,
+    "traj_novel": 126,
+    "both_novel": 126,
+    "NEW_GRID": true,
+    "NEW_TRAJ": true,
+    "NEW_BOTH": true,
+    "domain_hist": {
+     "20": 2,
+     "25": 12,
+     "30": 194,
+     "35": 3,
+     "40": 34,
+     "None": 43
+    },
+    "examples": [
+     "(acc * v)",
+     "(v * (acc + (0 % acc)))",
+     "(v * (acc + (0 % first)))",
+     "(v * (acc + (0 % last)))"
+    ],
+    "EQUAL_ANY": false,
+    "REFINES_ANY": false,
+    "COMPOSES_ANY": true,
+    "EQUAL": false,
+    "REFINES": false,
+    "COMPOSES": true,
+    "EQUAL_C": false,
+    "REFINES_C": false,
+    "COMPOSES_C": true,
+    "via": [
+     "COMPOSES:literal:(acc + {H})",
+     "COMPOSES:subchain"
+    ],
+    "NEW_FINAL": true,
+    "COMPOSITIONAL_NOVELTY": true
+   },
+   "v21_rel_vs_OFF_0": {
+    "EQUAL_ANY": false,
+    "REFINES_ANY": false,
+    "COMPOSES_ANY": false
+   },
+   "v21_rel_vs_SHAM_0": {
+    "EQUAL_ANY": false,
+    "REFINES_ANY": false,
+    "COMPOSES_ANY": false
+   },
+   "v21_rel_vs_SHAM_1": {
+    "EQUAL_ANY": false,
+    "REFINES_ANY": false,
+    "COMPOSES_ANY": false
+   }
+  },
+  {
+   "schema": "(({H} + v) * first)",
+   "where": [
+    "CON2/SHAM_1"
+   ],
+   "v2_vs_G1": {
+    "NEW_V2": true,
+    "NEW_TRAJ": true,
+    "NEW_FINAL": true,
+    "EQUAL": false,
+    "REFINES": false,
+    "COMPOSES": false,
+    "novel": 50,
+    "novel_traj": 23
+   },
+   "v21_vs_G1": {
+    "ruler": "RULER_v2.1_DRAFT_W7",
+    "schema": "(({H} + v) * first)",
+    "instantiations": 161,
+    "accumulating": 50,
+    "grid_novel": 50,
+    "traj_novel": 39,
+    "both_novel": 39,
+    "NEW_GRID": true,
+    "NEW_TRAJ": true,
+    "NEW_BOTH": true,
+    "domain_hist": {
+     "20": 2,
+     "30": 30,
+     "40": 36,
+     "None": 32
+    },
+    "examples": [
+     "(first * (acc + v))",
+     "(first * (v + (0 % acc)))",
+     "(first * (v + (0 - acc)))",
+     "(first * (v + (0 // acc)))"
+    ],
+    "EQUAL_ANY": false,
+    "REFINES_ANY": false,
+    "COMPOSES_ANY": false,
+    "EQUAL": false,
+    "REFINES": false,
+    "COMPOSES": false,
+    "EQUAL_C": false,
+    "REFINES_C": false,
+    "COMPOSES_C": false,
+    "via": [],
+    "NEW_FINAL": true,
+    "COMPOSITIONAL_NOVELTY": false
+   },
+   "v21_rel_vs_OFF_0": {
+    "EQUAL_ANY": false,
+    "REFINES_ANY": false,
+    "COMPOSES_ANY": false
+   },
+   "v21_rel_vs_SHAM_0": {
+    "EQUAL_ANY": false,
+    "REFINES_ANY": false,
+    "COMPOSES_ANY": false
+   },
+   "v21_rel_vs_SHAM_1": {
+    "EQUAL_ANY": false,
+    "REFINES_ANY": false,
+    "COMPOSES_ANY": true
+   }
+  },
+  {
+   "schema": "(({H} + v) * v)",
+   "where": [
+    "CON7/SHAM_1"
+   ],
+   "v2_vs_G1": {
+    "NEW_V2": true,
+    "NEW_TRAJ": true,
+    "NEW_FINAL": true,
+    "EQUAL": false,
+    "REFINES": false,
+    "COMPOSES": false,
+    "novel": 51,
+    "novel_traj": 25
+   },
+   "v21_vs_G1": {
+    "ruler": "RULER_v2.1_DRAFT_W7",
+    "schema": "(({H} + v) * v)",
+    "instantiations": 161,
+    "accumulating": 51,
+    "grid_novel": 51,
+    "traj_novel": 42,
+    "both_novel": 42,
+    "NEW_GRID": true,
+    "NEW_TRAJ": true,
+    "NEW_BOTH": true,
+    "domain_hist": {
+     "25": 2,
+     "30": 31,
+     "40": 38,
+     "None": 31
+    },
+    "examples": [
+     "(v * (acc + v))",
+     "(v * (v + (0 % acc)))",
+     "(v * (v + (0 - acc)))",
+     "(v * (v + (0 // acc)))"
+    ],
+    "EQUAL_ANY": false,
+    "REFINES_ANY": false,
+    "COMPOSES_ANY": false,
+    "EQUAL": false,
+    "REFINES": false,
+    "COMPOSES": false,
+    "EQUAL_C": false,
+    "REFINES_C": false,
+    "COMPOSES_C": false,
+    "via": [],
+    "NEW_FINAL": true,
+    "COMPOSITIONAL_NOVELTY": false
+   },
+   "v21_rel_vs_OFF_0": {
+    "EQUAL_ANY": false,
+    "REFINES_ANY": false,
+    "COMPOSES_ANY": false
+   },
+   "v21_rel_vs_SHAM_0": {
+    "EQUAL_ANY": false,
+    "REFINES_ANY": false,
+    "COMPOSES_ANY": false
+   },
+   "v21_rel_vs_SHAM_1": {
+    "EQUAL_ANY": false,
+    "REFINES_ANY": false,
+    "COMPOSES_ANY": true
+   }
+  },
+  {
+   "schema": "(({H} + v) + acc)",
+   "where": [
+    "CON4/SHAM_1",
+    "CON5/SHAM_1"
+   ],
+   "v2_vs_G1": {
+    "NEW_V2": true,
+    "NEW_TRAJ": true,
+    "NEW_FINAL": false,
+    "EQUAL": false,
+    "REFINES": true,
+    "COMPOSES": false,
+    "novel": 46,
+    "novel_traj": 69
+   },
+   "v21_vs_G1": {
+    "ruler": "RULER_v2.1_DRAFT_W7",
+    "schema": "(({H} + v) + acc)",
+    "instantiations": 161,
+    "accumulating": 139,
+    "grid_novel": 46,
+    "traj_novel": 72,
+    "both_novel": 30,
+    "NEW_GRID": true,
+    "NEW_TRAJ": true,
+    "NEW_BOTH": true,
+    "domain_hist": {
+     "20": 2,
+     "30": 4,
+     "40": 230,
+     "None": 42
+    },
+    "examples": [
+     "(acc + (v + (1 // acc)))",
+     "(acc + (v + (acc % first)))",
+     "(acc + (v + (acc % last)))",
+     "(acc + (v + (acc % v)))"
+    ],
+    "EQUAL_ANY": false,
+    "REFINES_ANY": true,
+    "COMPOSES_ANY": false,
+    "EQUAL": false,
+    "REFINES": true,
+    "COMPOSES": false,
+    "EQUAL_C": false,
+    "REFINES_C": true,
+    "COMPOSES_C": false,
+    "via": [
+     "REFINES:literal:(acc + {H})"
+    ],
+    "NEW_FINAL": false,
+    "COMPOSITIONAL_NOVELTY": false
+   },
+   "v21_rel_vs_OFF_0": {
+    "EQUAL_ANY": false,
+    "REFINES_ANY": false,
+    "COMPOSES_ANY": false
+   },
+   "v21_rel_vs_SHAM_0": {
+    "EQUAL_ANY": false,
+    "REFINES_ANY": false,
+    "COMPOSES_ANY": false
+   },
+   "v21_rel_vs_SHAM_1": {
+    "EQUAL_ANY": false,
+    "REFINES_ANY": true,
+    "COMPOSES_ANY": true
+   }
+  },
+  {
+   "schema": "(0 - (v - (acc - {H})))",
+   "where": [
+    "CON5/SHAM_0"
+   ],
+   "v2_vs_G1": {
+    "NEW_V2": false,
+    "NEW_TRAJ": false,
+    "NEW_FINAL": false,
+    "EQUAL": false,
+    "REFINES": false,
+    "COMPOSES": false,
+    "novel": 0,
+    "novel_traj": 0
+   },
+   "v21_vs_G1": {
+    "ruler": "RULER_v2.1_DRAFT_W7",
+    "schema": "(0 - (v - (acc - {H})))",
+    "instantiations": 6,
+    "accumulating": 5,
+    "grid_novel": 0,
+    "traj_novel": 0,
+    "both_novel": 0,
+    "NEW_GRID": false,
+    "NEW_TRAJ": false,
+    "NEW_BOTH": false,
+    "domain_hist": {
+     "40": 10
+    },
+    "examples": [],
+    "EQUAL_ANY": false,
+    "REFINES_ANY": true,
+    "COMPOSES_ANY": true,
+    "EQUAL": false,
+    "REFINES": false,
+    "COMPOSES": true,
+    "EQUAL_C": false,
+    "REFINES_C": true,
+    "COMPOSES_C": false,
+    "via": [
+     "COMPOSES:literal:(acc - {H})"
+    ],
+    "NEW_FINAL": false,
+    "COMPOSITIONAL_NOVELTY": false
+   },
+   "v21_rel_vs_OFF_0": {
+    "EQUAL_ANY": false,
+    "REFINES_ANY": false,
+    "COMPOSES_ANY": false
+   },
+   "v21_rel_vs_SHAM_0": {
+    "EQUAL_ANY": false,
+    "REFINES_ANY": false,
+    "COMPOSES_ANY": true
+   },
+   "v21_rel_vs_SHAM_1": {
+    "EQUAL_ANY": false,
+    "REFINES_ANY": false,
+    "COMPOSES_ANY": true
+   }
+  },
+  {
+   "schema": "(acc + ({H} + v))",
+   "where": [
+    "CON0/G1_NC",
+    "CON7/G1_NC"
+   ],
+   "v2_vs_G1": {
+    "NEW_V2": true,
+    "NEW_TRAJ": true,
+    "NEW_FINAL": false,
+    "EQUAL": false,
+    "REFINES": true,
+    "COMPOSES": false,
+    "novel": 46,
+    "novel_traj": 69
+   },
+   "v21_vs_G1": {
+    "ruler": "RULER_v2.1_DRAFT_W7",
+    "schema": "(acc + ({H} + v))",
+    "instantiations": 161,
+    "accumulating": 139,
+    "grid_novel": 46,
+    "traj_novel": 72,
+    "both_novel": 30,
+    "NEW_GRID": true,
+    "NEW_TRAJ": true,
+    "NEW_BOTH": true,
+    "domain_hist": {
+     "20": 2,
+     "30": 4,
+     "40": 230,
+     "None": 42
+    },
+    "examples": [
+     "(acc + (v + (1 // acc)))",
+     "(acc + (v + (acc % first)))",
+     "(acc + (v + (acc % last)))",
+     "(acc + (v + (acc % v)))"
+    ],
+    "EQUAL_ANY": false,
+    "REFINES_ANY": true,
+    "COMPOSES_ANY": false,
+    "EQUAL": false,
+    "REFINES": true,
+    "COMPOSES": false,
+    "EQUAL_C": false,
+    "REFINES_C": true,
+    "COMPOSES_C": false,
+    "via": [
+     "REFINES:literal:(acc + {H})"
+    ],
+    "NEW_FINAL": false,
+    "COMPOSITIONAL_NOVELTY": false
+   },
+   "v21_rel_vs_OFF_0": {
+    "EQUAL_ANY": false,
+    "REFINES_ANY": false,
+    "COMPOSES_ANY": false
+   },
+   "v21_rel_vs_SHAM_0": {
+    "EQUAL_ANY": false,
+    "REFINES_ANY": false,
+    "COMPOSES_ANY": false
+   },
+   "v21_rel_vs_SHAM_1": {
+    "EQUAL_ANY": false,
+    "REFINES_ANY": true,
+    "COMPOSES_ANY": true
+   }
+  },
+  {
+   "schema": "(first * (v - (acc - {H})))",
+   "where": [
+    "CON2/SHAM_0"
+   ],
+   "v2_vs_G1": {
+    "NEW_V2": true,
+    "NEW_TRAJ": false,
+    "NEW_FINAL": false,
+    "EQUAL": false,
+    "REFINES": false,
+    "COMPOSES": false,
+    "novel": 5,
+    "novel_traj": 0
+   },
+   "v21_vs_G1": {
+    "ruler": "RULER_v2.1_DRAFT_W7",
+    "schema": "(first * (v - (acc - {H})))",
+    "instantiations": 6,
+    "accumulating": 5,
+    "grid_novel": 5,
+    "traj_novel": 5,
+    "both_novel": 5,
+    "NEW_GRID": true,
+    "NEW_TRAJ": true,
+    "NEW_BOTH": true,
+    "domain_hist": {
+     "30": 10
+    },
+    "examples": [
+     "(first * (v - (acc - 1)))",
+     "(first * (v - (acc - first)))",
+     "(first * (v - (acc - last)))",
+     "(first * (v - (acc - v)))"
+    ],
+    "EQUAL_ANY": false,
+    "REFINES_ANY": false,
+    "COMPOSES_ANY": true,
+    "EQUAL": false,
+    "REFINES": false,
+    "COMPOSES": true,
+    "EQUAL_C": false,
+    "REFINES_C": false,
+    "COMPOSES_C": true,
+    "via": [
+     "COMPOSES:literal:(acc - {H})",
+     "COMPOSES:subchain"
+    ],
+    "NEW_FINAL": true,
+    "COMPOSITIONAL_NOVELTY": true
+   },
+   "v21_rel_vs_OFF_0": {
+    "EQUAL_ANY": false,
+    "REFINES_ANY": false,
+    "COMPOSES_ANY": false
+   },
+   "v21_rel_vs_SHAM_0": {
+    "EQUAL_ANY": false,
+    "REFINES_ANY": false,
+    "COMPOSES_ANY": true
+   },
+   "v21_rel_vs_SHAM_1": {
+    "EQUAL_ANY": false,
+    "REFINES_ANY": false,
+    "COMPOSES_ANY": true
+   }
+  },
+  {
+   "schema": "(first + (acc + {H}))",
+   "where": [
+    "CON2/G1"
+   ],
+   "v2_vs_G1": {
+    "NEW_V2": true,
+    "NEW_TRAJ": true,
+    "NEW_FINAL": false,
+    "EQUAL": false,
+    "REFINES": true,
+    "COMPOSES": true,
+    "novel": 13,
+    "novel_traj": 29
+   },
+   "v21_vs_G1": {
+    "ruler": "RULER_v2.1_DRAFT_W7",
+    "schema": "(first + (acc + {H}))",
+    "instantiations": 161,
+    "accumulating": 42,
+    "grid_novel": 13,
+    "traj_novel": 30,
+    "both_novel": 8,
+    "NEW_GRID": true,
+    "NEW_TRAJ": true,
+    "NEW_BOTH": true,
+    "domain_hist": {
+     "30": 2,
+     "40": 66,
+     "None": 16
+    },
+    "examples": [
+     "(first + (acc + (acc % v)))",
+     "(first + (acc + (acc * v)))",
+     "(first + (acc + (acc + v)))",
+     "(first + (acc + (acc - v)))"
+    ],
+    "EQUAL_ANY": false,
+    "REFINES_ANY": true,
+    "COMPOSES_ANY": true,
+    "EQUAL": false,
+    "REFINES": true,
+    "COMPOSES": true,
+    "EQUAL_C": false,
+    "REFINES_C": true,
+    "COMPOSES_C": false,
+    "via": [
+     "REFINES:literal:(acc + {H})",
+     "COMPOSES:literal:(acc + {H})"
+    ],
+    "NEW_FINAL": false,
+    "COMPOSITIONAL_NOVELTY": false
+   },
+   "v21_rel_vs_OFF_0": {
+    "EQUAL_ANY": false,
+    "REFINES_ANY": false,
+    "COMPOSES_ANY": false
+   },
+   "v21_rel_vs_SHAM_0": {
+    "EQUAL_ANY": false,
+    "REFINES_ANY": false,
+    "COMPOSES_ANY": false
+   },
+   "v21_rel_vs_SHAM_1": {
+    "EQUAL_ANY": false,
+    "REFINES_ANY": false,
+    "COMPOSES_ANY": false
+   }
+  },
+  {
+   "schema": "(first - (v - (acc - {H})))",
+   "where": [
+    "CON6/SHAM_0"
+   ],
+   "v2_vs_G1": {
+    "NEW_V2": false,
+    "NEW_TRAJ": true,
+    "NEW_FINAL": false,
+    "EQUAL": false,
+    "REFINES": false,
+    "COMPOSES": false,
+    "novel": 0,
+    "novel_traj": 3
+   },
+   "v21_vs_G1": {
+    "ruler": "RULER_v2.1_DRAFT_W7",
+    "schema": "(first - (v - (acc - {H})))",
+    "instantiations": 6,
+    "accumulating": 5,
+    "grid_novel": 0,
+    "traj_novel": 3,
+    "both_novel": 0,
+    "NEW_GRID": false,
+    "NEW_TRAJ": true,
+    "NEW_BOTH": false,
+    "domain_hist": {
+     "40": 10
+    },
+    "examples": [],
+    "EQUAL_ANY": false,
+    "REFINES_ANY": true,
+    "COMPOSES_ANY": true,
+    "EQUAL": false,
+    "REFINES": false,
+    "COMPOSES": true,
+    "EQUAL_C": false,
+    "REFINES_C": true,
+    "COMPOSES_C": false,
+    "via": [
+     "COMPOSES:literal:(acc - {H})"
+    ],
+    "NEW_FINAL": false,
+    "COMPOSITIONAL_NOVELTY": false
+   },
+   "v21_rel_vs_OFF_0": {
+    "EQUAL_ANY": false,
+    "REFINES_ANY": false,
+    "COMPOSES_ANY": false
+   },
+   "v21_rel_vs_SHAM_0": {
+    "EQUAL_ANY": false,
+    "REFINES_ANY": false,
+    "COMPOSES_ANY": true
+   },
+   "v21_rel_vs_SHAM_1": {
+    "EQUAL_ANY": false,
+    "REFINES_ANY": false,
+    "COMPOSES_ANY": true
+   }
+  },
+  {
+   "schema": "(v - (acc + {H}))",
+   "where": [
+    "CON1/G1"
+   ],
+   "v2_vs_G1": {
+    "NEW_V2": true,
+    "NEW_TRAJ": true,
+    "NEW_FINAL": true,
+    "EQUAL": false,
+    "REFINES": false,
+    "COMPOSES": true,
+    "novel": 134,
+    "novel_traj": 103
+   },
+   "v21_vs_G1": {
+    "ruler": "RULER_v2.1_DRAFT_W7",
+    "schema": "(v - (acc + {H}))",
+    "instantiations": 161,
+    "accumulating": 134,
+    "grid_novel": 134,
+    "traj_novel": 106,
+    "both_novel": 106,
+    "NEW_GRID": true,
+    "NEW_TRAJ": true,
+    "NEW_BOTH": true,
+    "domain_hist": {
+     "20": 2,
+     "30": 4,
+     "40": 206,
+     "None": 56
+    },
+    "examples": [
+     "(v - (acc + (0 % first)))",
+     "(v - (acc + (0 % last)))",
+     "(v - (acc + (0 % v)))",
+     "(v - (acc + (0 - 1)))"
+    ],
+    "EQUAL_ANY": false,
+    "REFINES_ANY": false,
+    "COMPOSES_ANY": true,
+    "EQUAL": false,
+    "REFINES": false,
+    "COMPOSES": true,
+    "EQUAL_C": false,
+    "REFINES_C": false,
+    "COMPOSES_C": true,
+    "via": [
+     "COMPOSES:literal:(acc + {H})",
+     "COMPOSES:negated-reference-at-root"
+    ],
+    "NEW_FINAL": true,
+    "COMPOSITIONAL_NOVELTY": true
+   },
+   "v21_rel_vs_OFF_0": {
+    "EQUAL_ANY": false,
+    "REFINES_ANY": false,
+    "COMPOSES_ANY": false
+   },
+   "v21_rel_vs_SHAM_0": {
+    "EQUAL_ANY": true,
+    "REFINES_ANY": false,
+    "COMPOSES_ANY": false
+   },
+   "v21_rel_vs_SHAM_1": {
+    "EQUAL_ANY": false,
+    "REFINES_ANY": true,
+    "COMPOSES_ANY": false
+   }
+  },
+  {
+   "schema": "(v - (acc - ({H} // first)))",
+   "where": [
+    "CON1/SHAM_0"
+   ],
+   "v2_vs_G1": {
+    "NEW_V2": true,
+    "NEW_TRAJ": true,
+    "NEW_FINAL": true,
+    "EQUAL": false,
+    "REFINES": false,
+    "COMPOSES": false,
+    "novel": 6,
+    "novel_traj": 6
+   },
+   "v21_vs_G1": {
+    "ruler": "RULER_v2.1_DRAFT_W7",
+    "schema": "(v - (acc - ({H} // first)))",
+    "instantiations": 6,
+    "accumulating": 6,
+    "grid_novel": 6,
+    "traj_novel": 6,
+    "both_novel": 6,
+    "NEW_GRID": true,
+    "NEW_TRAJ": true,
+    "NEW_BOTH": true,
+    "domain_hist": {
+     "40": 12
+    },
+    "examples": [
+     "(v - (acc - (0 // first)))",
+     "(v - (acc - (1 // first)))",
+     "(v - (acc - (acc // first)))",
+     "(v - (acc - (first // first)))"
+    ],
+    "EQUAL_ANY": false,
+    "REFINES_ANY": false,
+    "COMPOSES_ANY": true,
+    "EQUAL": false,
+    "REFINES": false,
+    "COMPOSES": true,
+    "EQUAL_C": false,
+    "REFINES_C": false,
+    "COMPOSES_C": true,
+    "via": [
+     "COMPOSES:literal:(acc - {H})",
+     "COMPOSES:negated-reference-at-root"
+    ],
+    "NEW_FINAL": true,
+    "COMPOSITIONAL_NOVELTY": true
+   },
+   "v21_rel_vs_OFF_0": {
+    "EQUAL_ANY": false,
+    "REFINES_ANY": false,
+    "COMPOSES_ANY": false
+   },
+   "v21_rel_vs_SHAM_0": {
+    "EQUAL_ANY": false,
+    "REFINES_ANY": true,
+    "COMPOSES_ANY": false
+   },
+   "v21_rel_vs_SHAM_1": {
+    "EQUAL_ANY": false,
+    "REFINES_ANY": true,
+    "COMPOSES_ANY": false
+   }
+  },
+  {
+   "schema": "math.gcd(abs(first), abs((acc + {H})))",
+   "where": [
+    "CON0/G1"
+   ],
+   "v2_vs_G1": {
+    "NEW_V2": true,
+    "NEW_TRAJ": true,
+    "NEW_FINAL": true,
+    "EQUAL": false,
+    "REFINES": false,
+    "COMPOSES": true,
+    "novel": 40,
+    "novel_traj": 38
+   },
+   "v21_vs_G1": {
+    "ruler": "RULER_v2.1_DRAFT_W7",
+    "schema": "math.gcd(abs(first), abs((acc + {H})))",
+    "instantiations": 161,
+    "accumulating": 40,
+    "grid_novel": 40,
+    "traj_novel": 38,
+    "both_novel": 38,
+    "NEW_GRID": true,
+    "NEW_TRAJ": true,
+    "NEW_BOTH": true,
+    "domain_hist": {
+     "40": 78,
+     "None": 2
+    },
+    "examples": [
+     "math.gcd(abs(first), abs((acc + (0 - v))))",
+     "math.gcd(abs(first), abs((acc + (1 - v))))",
+     "math.gcd(abs(first), abs((acc + (acc % v))))",
+     "math.gcd(abs(first), abs((acc + (acc * v))))"
+    ],
+    "EQUAL_ANY": false,
+    "REFINES_ANY": false,
+    "COMPOSES_ANY": true,
+    "EQUAL": false,
+    "REFINES": false,
+    "COMPOSES": true,
+    "EQUAL_C": false,
+    "REFINES_C": false,
+    "COMPOSES_C": true,
+    "via": [
+     "COMPOSES:literal:(acc + {H})",
+     "COMPOSES:subchain"
+    ],
+    "NEW_FINAL": true,
+    "COMPOSITIONAL_NOVELTY": true
+   },
+   "v21_rel_vs_OFF_0": {
+    "EQUAL_ANY": false,
+    "REFINES_ANY": false,
+    "COMPOSES_ANY": false
+   },
+   "v21_rel_vs_SHAM_0": {
+    "EQUAL_ANY": false,
+    "REFINES_ANY": false,
+    "COMPOSES_ANY": false
+   },
+   "v21_rel_vs_SHAM_1": {
+    "EQUAL_ANY": false,
+    "REFINES_ANY": false,
+    "COMPOSES_ANY": false
+   }
+  },
+  {
+   "schema": "math.gcd(abs(first), abs(({H} + v)))",
+   "where": [
+    "CON0/SHAM_1"
+   ],
+   "v2_vs_G1": {
+    "NEW_V2": true,
+    "NEW_TRAJ": true,
+    "NEW_FINAL": true,
+    "EQUAL": false,
+    "REFINES": false,
+    "COMPOSES": false,
+    "novel": 49,
+    "novel_traj": 49
+   },
+   "v21_vs_G1": {
+    "ruler": "RULER_v2.1_DRAFT_W7",
+    "schema": "math.gcd(abs(first), abs(({H} + v)))",
+    "instantiations": 161,
+    "accumulating": 49,
+    "grid_novel": 49,
+    "traj_novel": 49,
+    "both_novel": 49,
+    "NEW_GRID": true,
+    "NEW_TRAJ": true,
+    "NEW_BOTH": true,
+    "domain_hist": {
+     "40": 86,
+     "None": 12
+    },
+    "examples": [
+     "math.gcd(abs(first), abs((acc + v)))",
+     "math.gcd(abs(first), abs((v + (0 % acc))))",
+     "math.gcd(abs(first), abs((v + (0 - acc))))",
+     "math.gcd(abs(first), abs((v + (0 // acc))))"
+    ],
+    "EQUAL_ANY": false,
+    "REFINES_ANY": false,
+    "COMPOSES_ANY": false,
+    "EQUAL": false,
+    "REFINES": false,
+    "COMPOSES": false,
+    "EQUAL_C": false,
+    "REFINES_C": false,
+    "COMPOSES_C": false,
+    "via": [],
+    "NEW_FINAL": true,
+    "COMPOSITIONAL_NOVELTY": false
+   },
+   "v21_rel_vs_OFF_0": {
+    "EQUAL_ANY": false,
+    "REFINES_ANY": false,
+    "COMPOSES_ANY": false
+   },
+   "v21_rel_vs_SHAM_0": {
+    "EQUAL_ANY": false,
+    "REFINES_ANY": false,
+    "COMPOSES_ANY": false
+   },
+   "v21_rel_vs_SHAM_1": {
+    "EQUAL_ANY": false,
+    "REFINES_ANY": false,
+    "COMPOSES_ANY": true
+   }
+  }
+ ]
+}

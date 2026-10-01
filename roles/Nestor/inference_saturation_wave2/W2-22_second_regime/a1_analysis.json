@@ -1,0 +1,135 @@
+{
+ "C+": {
+  "readouts": {
+   "FIELD": {
+    "n": 600,
+    "E27": 33,
+    "cond_succ": 9,
+    "P_B163": 0.015,
+    "P_E27": 0.055,
+    "xk_E27": 33,
+    "xk_cond_succ": 5,
+    "maxA_ge128": 35,
+    "cap256_in_cond_below163": 0,
+    "stops_cond": {
+     "horizon": 9,
+     "runaway_decided": 5,
+     "frozen": 19
+    },
+    "cpu_s": 2157.3
+   },
+   "FREE": {
+    "n": 1200,
+    "E27": 48,
+    "cond_succ": 31,
+    "P_B163": 0.04666666666666667,
+    "P_E27": 0.04,
+    "xk_E27": 48,
+    "xk_cond_succ": 31,
+    "maxA_ge128": 59,
+    "cap256_in_cond_below163": 21,
+    "stops_cond": {
+     "free_cap256": 30,
+     "runaway_decided": 1,
+     "frozen": 17
+    },
+    "cpu_s": 417.0
+   }
+  },
+  "primary_FIELD_vs_FREE": {
+   "x1/n1": "9/33",
+   "x2/n2": "31/48",
+   "rate1": 0.273,
+   "rate2": 0.646,
+   "ratio": 0.422,
+   "fisher_1s": 0.9998278652070282,
+   "fisher_2s": 0.0014345566933498194,
+   "koopman95": [
+    0.22646443075930595,
+    0.72443596007499
+   ],
+   "diff": -0.373
+  },
+  "diag_xk_FIELD_vs_FREE": {
+   "x1/n1": "5/33",
+   "x2/n2": "31/48",
+   "rate1": 0.152,
+   "rate2": 0.646,
+   "ratio": 0.235,
+   "fisher_1s": 0.9999992439586128,
+   "fisher_2s": 1.1126006789888123e-05,
+   "koopman95": [
+    0.10115794542598985,
+    0.49545019080479025
+   ],
+   "diff": -0.494
+  }
+ },
+ "C-": {
+  "readouts": {
+   "FIELD": {
+    "n": 600,
+    "E27": 33,
+    "cond_succ": 9,
+    "P_B163": 0.015,
+    "P_E27": 0.055,
+    "xk_E27": 33,
+    "xk_cond_succ": 5,
+    "maxA_ge128": 35,
+    "cap256_in_cond_below163": 0,
+    "stops_cond": {
+     "horizon": 9,
+     "runaway_decided": 5,
+     "frozen": 19
+    },
+    "cpu_s": 2157.3
+   },
+   "FREE": {
+    "n": 1200,
+    "E27": 48,
+    "cond_succ": 10,
+    "P_B163": 0.008333333333333333,
+    "P_E27": 0.04,
+    "xk_E27": 48,
+    "xk_cond_succ": 10,
+    "maxA_ge128": 59,
+    "cap256_in_cond_below163": 21,
+    "stops_cond": {
+     "free_cap256": 30,
+     "runaway_decided": 1,
+     "frozen": 17
+    },
+    "cpu_s": 417.0
+   }
+  },
+  "primary_FIELD_vs_FREE": {
+   "x1/n1": "9/33",
+   "x2/n2": "10/48",
+   "rate1": 0.273,
+   "rate2": 0.208,
+   "ratio": 1.309,
+   "fisher_1s": 0.3402854825885815,
+   "fisher_2s": 0.5962961226721958,
+   "koopman95": [
+    0.6025595860743578,
+    2.802205621666747
+   ],
+   "diff": 0.064
+  },
+  "diag_xk_FIELD_vs_FREE": {
+   "x1/n1": "5/33",
+   "x2/n2": "10/48",
+   "rate1": 0.152,
+   "rate2": 0.208,
+   "ratio": 0.727,
+   "fisher_1s": 0.8251990145616143,
+   "fisher_2s": 0.5739743038759532,
+   "koopman95": [
+    0.278612116862977,
+    1.8197008586099834
+   ],
+   "diff": -0.057
+  }
+ },
+ "verdict": "NO SECOND REGIME"
+}

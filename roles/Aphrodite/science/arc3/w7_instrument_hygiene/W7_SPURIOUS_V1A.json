@@ -1,0 +1,1201 @@
+[
+ {
+  "name": "qaia",
+  "cell": 1,
+  "kind": "spurious_fallback",
+  "prog": [
+   "fold",
+   "(last * 0)",
+   "(v * (last + (0 + 1)))",
+   "(acc // last)"
+  ],
+  "v1": false,
+  "v1a": false,
+  "v1_fail_counts": {
+   "ext": 65,
+   "stress": 21,
+   "ce": 36,
+   "order": 78
+  },
+  "v1_ce_fail_queries": [
+   1,
+   2,
+   5,
+   12,
+   19,
+   50
+  ],
+  "extra_examples_to_reject": 3,
+  "v1a_acc": {
+   "ext": 0.5666666666666667,
+   "stress": 0.475,
+   "ce": 0.55,
+   "order": 0.675
+  }
+ },
+ {
+  "name": "qcga",
+  "cell": 2,
+  "kind": "spurious_fallback",
+  "prog": [
+   "fold",
+   "(last * 1)",
+   "(first + math.gcd(abs(last), abs((v // 1))))",
+   "(acc + acc)"
+  ],
+  "v1": false,
+  "v1a": false,
+  "v1_fail_counts": {
+   "ext": 70,
+   "stress": 18,
+   "ce": 13,
+   "order": 143
+  },
+  "v1_ce_fail_queries": [
+   2,
+   9,
+   12,
+   27,
+   28,
+   38
+  ],
+  "extra_examples_to_reject": 1,
+  "v1a_acc": {
+   "ext": 0.5333333333333333,
+   "stress": 0.55,
+   "ce": 0.55,
+   "order": 0.4041666666666667
+  }
+ },
+ {
+  "name": "qcia",
+  "cell": 0,
+  "kind": "spurious_cov",
+  "prog": [
+   "fold",
+   "0",
+   "(v + math.gcd(abs(acc), abs(acc)))",
+   "(acc % first)"
+  ],
+  "v1": false,
+  "v1a": false,
+  "v1_fail_counts": {
+   "ext": 94,
+   "stress": 28,
+   "ce": 14,
+   "order": 141
+  },
+  "v1_ce_fail_queries": [
+   1,
+   2,
+   10,
+   27,
+   45,
+   48
+  ],
+  "extra_examples_to_reject": 1,
+  "v1a_acc": {
+   "ext": 0.37333333333333335,
+   "stress": 0.3,
+   "ce": 0.65,
+   "order": 0.4125
+  }
+ },
+ {
+  "name": "qfga",
+  "cell": 2,
+  "kind": "spurious_fallback",
+  "prog": [
+   "fold",
+   "pow(first, 1)",
+   "(v * (acc + (first * first)))",
+   "math.gcd(abs(acc), abs(last))"
+  ],
+  "v1": false,
+  "v1a": false,
+  "v1_fail_counts": {
+   "ext": 11,
+   "stress": 7,
+   "ce": 1,
+   "order": 17
+  },
+  "v1_ce_fail_queries": [
+   49
+  ],
+  "extra_examples_to_reject": 9,
+  "v1a_acc": {
+   "ext": 0.9266666666666666,
+   "stress": 0.825,
+   "ce": 0.875,
+   "order": 0.9291666666666667
+  }
+ },
+ {
+  "name": "qhga",
+  "cell": 3,
+  "kind": "spurious_fallback",
+  "prog": [
+   "fold",
+   "(0 + first)",
+   "(v % math.gcd(abs(acc), abs((last * v))))",
+   "(acc - 1)"
+  ],
+  "v1": false,
+  "v1a": false,
+  "v1_fail_counts": {
+   "ext": 8,
+   "stress": 3,
+   "ce": 8,
+   "order": 17
+  },
+  "v1_ce_fail_queries": [
+   2,
+   5
+  ],
+  "extra_examples_to_reject": null,
+  "v1a_acc": {
+   "ext": 0.9466666666666667,
+   "stress": 0.925,
+   "ce": 0.925,
+   "order": 0.9291666666666667
+  }
+ },
+ {
+  "name": "qija",
+  "cell": 1,
+  "kind": "spurious_fallback",
+  "prog": [
+   "fold",
+   "(first // last)",
+   "(0 + (v - (1 + acc)))",
+   "(last - acc)"
+  ],
+  "v1": false,
+  "v1a": false,
+  "v1_fail_counts": {
+   "ext": 31,
+   "stress": 7,
+   "ce": 29,
+   "order": 19
+  },
+  "v1_ce_fail_queries": [
+   1,
+   2,
+   19
+  ],
+  "extra_examples_to_reject": 5,
+  "v1a_acc": {
+   "ext": 0.7933333333333333,
+   "stress": 0.825,
+   "ce": 0.8,
+   "order": 0.9208333333333333
+  }
+ },
+ {
+  "name": "qjia",
+  "cell": 3,
+  "kind": "spurious_fallback",
+  "prog": [
+   "fold",
+   "(0 + 1)",
+   "(acc - math.gcd(abs(v), abs((v + last))))",
+   "(acc + first)"
+  ],
+  "v1": false,
+  "v1a": false,
+  "v1_fail_counts": {
+   "ext": 60,
+   "stress": 11,
+   "ce": 5,
+   "order": 97
+  },
+  "v1_ce_fail_queries": [
+   16,
+   24,
+   60,
+   75,
+   92
+  ],
+  "extra_examples_to_reject": 1,
+  "v1a_acc": {
+   "ext": 0.6,
+   "stress": 0.725,
+   "ce": 0.675,
+   "order": 0.5958333333333333
+  }
+ },
+ {
+  "name": "qkia",
+  "cell": 2,
+  "kind": "spurious_fallback",
+  "prog": [
+   "fold",
+   "(1 // last)",
+   "(1 * (v - (acc + 1)))",
+   "math.gcd(abs(acc), abs(acc))"
+  ],
+  "v1": false,
+  "v1a": true,
+  "v1_fail_counts": {
+   "ext": 0,
+   "stress": 0,
+   "ce": 10,
+   "order": 0
+  },
+  "v1_ce_fail_queries": [
+   1
+  ],
+  "extra_examples_to_reject": null,
+  "v1a_acc": {
+   "ext": 1.0,
+   "stress": 1.0,
+   "ce": 1.0,
+   "order": 1.0
+  }
+ },
+ {
+  "name": "qlga",
+  "cell": 1,
+  "kind": "spurious_fallback",
+  "prog": [
+   "fold",
+   "pow(0, last)",
+   "(v + (0 + (acc % first)))",
+   "(1 + acc)"
+  ],
+  "v1": false,
+  "v1a": false,
+  "v1_fail_counts": {
+   "ext": 17,
+   "stress": 6,
+   "ce": 0,
+   "order": 26
+  },
+  "v1_ce_fail_queries": [],
+  "extra_examples_to_reject": 3,
+  "v1a_acc": {
+   "ext": 0.8866666666666667,
+   "stress": 0.85,
+   "ce": 1.0,
+   "order": 0.8916666666666667
+  }
+ },
+ {
+  "name": "qlja",
+  "cell": 0,
+  "kind": "spurious_fallback",
+  "prog": [
+   "fold",
+   "(0 // first)",
+   "(last + (acc + (v + 0)))",
+   "(acc // last)"
+  ],
+  "v1": false,
+  "v1a": false,
+  "v1_fail_counts": {
+   "ext": 9,
+   "stress": 2,
+   "ce": 22,
+   "order": 10
+  },
+  "v1_ce_fail_queries": [
+   1,
+   2
+  ],
+  "extra_examples_to_reject": 15,
+  "v1a_acc": {
+   "ext": 0.94,
+   "stress": 0.95,
+   "ce": 1.0,
+   "order": 0.9583333333333334
+  }
+ },
+ {
+  "name": "qlja",
+  "cell": 2,
+  "kind": "spurious_fallback",
+  "prog": [
+   "fold",
+   "(first // first)",
+   "(last - (1 - (v + acc)))",
+   "(acc // last)"
+  ],
+  "v1": false,
+  "v1a": false,
+  "v1_fail_counts": {
+   "ext": 117,
+   "stress": 40,
+   "ce": 33,
+   "order": 123
+  },
+  "v1_ce_fail_queries": [
+   1,
+   2,
+   7,
+   21,
+   33,
+   84
+  ],
+  "extra_examples_to_reject": 6,
+  "v1a_acc": {
+   "ext": 0.22,
+   "stress": 0.0,
+   "ce": 0.525,
+   "order": 0.4875
+  }
+ },
+ {
+  "name": "qlja",
+  "cell": 3,
+  "kind": "spurious_fallback",
+  "prog": [
+   "fold",
+   "(0 // 1)",
+   "(last + (acc + pow(v, 1)))",
+   "(acc // last)"
+  ],
+  "v1": false,
+  "v1a": false,
+  "v1_fail_counts": {
+   "ext": 9,
+   "stress": 2,
+   "ce": 22,
+   "order": 10
+  },
+  "v1_ce_fail_queries": [
+   1,
+   2
+  ],
+  "extra_examples_to_reject": 15,
+  "v1a_acc": {
+   "ext": 0.94,
+   "stress": 0.95,
+   "ce": 1.0,
+   "order": 0.9583333333333334
+  }
+ },
+ {
+  "name": "qmja",
+  "cell": 2,
+  "kind": "spurious_fallback",
+  "prog": [
+   "fold",
+   "(first % 1)",
+   "(v + (acc + (1 % last)))",
+   "(1 - acc)"
+  ],
+  "v1": false,
+  "v1a": true,
+  "v1_fail_counts": {
+   "ext": 0,
+   "stress": 0,
+   "ce": 15,
+   "order": 0
+  },
+  "v1_ce_fail_queries": [
+   1
+  ],
+  "extra_examples_to_reject": null,
+  "v1a_acc": {
+   "ext": 1.0,
+   "stress": 1.0,
+   "ce": 1.0,
+   "order": 1.0
+  }
+ },
+ {
+  "name": "qofa",
+  "cell": 1,
+  "kind": "spurious_fallback",
+  "prog": [
+   "fold",
+   "(last * 0)",
+   "(v + (acc % (last * 1)))",
+   "(1 + acc)"
+  ],
+  "v1": false,
+  "v1a": false,
+  "v1_fail_counts": {
+   "ext": 5,
+   "stress": 2,
+   "ce": 22,
+   "order": 10
+  },
+  "v1_ce_fail_queries": [
+   1,
+   2
+  ],
+  "extra_examples_to_reject": 9,
+  "v1a_acc": {
+   "ext": 0.9666666666666667,
+   "stress": 0.95,
+   "ce": 0.95,
+   "order": 0.9583333333333334
+  }
+ },
+ {
+  "name": "qofa",
+  "cell": 2,
+  "kind": "spurious_fallback",
+  "prog": [
+   "fold",
+   "(0 // first)",
+   "(v + (acc % (last - 0)))",
+   "(acc + 1)"
+  ],
+  "v1": false,
+  "v1a": false,
+  "v1_fail_counts": {
+   "ext": 5,
+   "stress": 2,
+   "ce": 22,
+   "order": 10
+  },
+  "v1_ce_fail_queries": [
+   1,
+   2
+  ],
+  "extra_examples_to_reject": 9,
+  "v1a_acc": {
+   "ext": 0.9666666666666667,
+   "stress": 0.95,
+   "ce": 0.95,
+   "order": 0.9583333333333334
+  }
+ },
+ {
+  "name": "qoja",
+  "cell": 0,
+  "kind": "spurious_cov",
+  "prog": [
+   "fold",
+   "1",
+   "(v + acc)",
+   "(acc + first)"
+  ],
+  "v1": false,
+  "v1a": true,
+  "v1_fail_counts": {
+   "ext": 0,
+   "stress": 0,
+   "ce": 11,
+   "order": 0
+  },
+  "v1_ce_fail_queries": [
+   1
+  ],
+  "extra_examples_to_reject": null,
+  "v1a_acc": {
+   "ext": 1.0,
+   "stress": 1.0,
+   "ce": 1.0,
+   "order": 1.0
+  }
+ },
+ {
+  "name": "qoja",
+  "cell": 1,
+  "kind": "spurious_cov",
+  "prog": [
+   "fold",
+   "1",
+   "(acc + math.gcd(abs(v), abs(v)))",
+   "(first + acc)"
+  ],
+  "v1": false,
+  "v1a": true,
+  "v1_fail_counts": {
+   "ext": 0,
+   "stress": 0,
+   "ce": 11,
+   "order": 0
+  },
+  "v1_ce_fail_queries": [
+   1
+  ],
+  "extra_examples_to_reject": null,
+  "v1a_acc": {
+   "ext": 1.0,
+   "stress": 1.0,
+   "ce": 1.0,
+   "order": 1.0
+  }
+ },
+ {
+  "name": "qoja",
+  "cell": 2,
+  "kind": "spurious_cov",
+  "prog": [
+   "fold",
+   "1",
+   "(acc + math.gcd(abs(v), abs(v)))",
+   "(acc + first)"
+  ],
+  "v1": false,
+  "v1a": true,
+  "v1_fail_counts": {
+   "ext": 0,
+   "stress": 0,
+   "ce": 11,
+   "order": 0
+  },
+  "v1_ce_fail_queries": [
+   1
+  ],
+  "extra_examples_to_reject": null,
+  "v1a_acc": {
+   "ext": 1.0,
+   "stress": 1.0,
+   "ce": 1.0,
+   "order": 1.0
+  }
+ },
+ {
+  "name": "qoja",
+  "cell": 3,
+  "kind": "spurious_cov",
+  "prog": [
+   "fold",
+   "1",
+   "(acc + v)",
+   "(acc + first)"
+  ],
+  "v1": false,
+  "v1a": true,
+  "v1_fail_counts": {
+   "ext": 0,
+   "stress": 0,
+   "ce": 11,
+   "order": 0
+  },
+  "v1_ce_fail_queries": [
+   1
+  ],
+  "extra_examples_to_reject": null,
+  "v1a_acc": {
+   "ext": 1.0,
+   "stress": 1.0,
+   "ce": 1.0,
+   "order": 1.0
+  }
+ },
+ {
+  "name": "qqja",
+  "cell": 0,
+  "kind": "spurious_fallback",
+  "prog": [
+   "fold",
+   "(first + 1)",
+   "(v * (v - (v - acc)))",
+   "(0 + acc)"
+  ],
+  "v1": false,
+  "v1a": false,
+  "v1_fail_counts": {
+   "ext": 10,
+   "stress": 1,
+   "ce": 0,
+   "order": 9
+  },
+  "v1_ce_fail_queries": [],
+  "extra_examples_to_reject": 40,
+  "v1a_acc": {
+   "ext": 0.9333333333333333,
+   "stress": 0.975,
+   "ce": 1.0,
+   "order": 0.9625
+  }
+ },
+ {
+  "name": "qsia",
+  "cell": 3,
+  "kind": "spurious_fallback",
+  "prog": [
+   "fold",
+   "(first // 1)",
+   "(v // math.gcd(abs(first), abs((1 + v))))",
+   "(acc + 0)"
+  ],
+  "v1": false,
+  "v1a": false,
+  "v1_fail_counts": {
+   "ext": 83,
+   "stress": 25,
+   "ce": 29,
+   "order": 132
+  },
+  "v1_ce_fail_queries": [
+   1,
+   2,
+   17,
+   19,
+   23,
+   31
+  ],
+  "extra_examples_to_reject": 5,
+  "v1a_acc": {
+   "ext": 0.44666666666666666,
+   "stress": 0.375,
+   "ce": 0.275,
+   "order": 0.45
+  }
+ },
+ {
+  "name": "quja",
+  "cell": 0,
+  "kind": "spurious_fallback",
+  "prog": [
+   "fold",
+   "(0 * last)",
+   "(v - (acc % (0 - last)))",
+   "(1 * acc)"
+  ],
+  "v1": false,
+  "v1a": false,
+  "v1_fail_counts": {
+   "ext": 11,
+   "stress": 0,
+   "ce": 24,
+   "order": 8
+  },
+  "v1_ce_fail_queries": [
+   1,
+   2,
+   7
+  ],
+  "extra_examples_to_reject": 35,
+  "v1a_acc": {
+   "ext": 0.9266666666666666,
+   "stress": 1.0,
+   "ce": 0.825,
+   "order": 0.9666666666666667
+  }
+ },
+ {
+  "name": "qvha",
+  "cell": 0,
+  "kind": "spurious_fallback",
+  "prog": [
+   "fold",
+   "math.gcd(abs(0), abs(0))",
+   "(0 - (1 - (acc * v)))",
+   "(acc // first)"
+  ],
+  "v1": false,
+  "v1a": false,
+  "v1_fail_counts": {
+   "ext": 25,
+   "stress": 6,
+   "ce": 18,
+   "order": 57
+  },
+  "v1_ce_fail_queries": [
+   1,
+   2,
+   15,
+   34,
+   55,
+   73
+  ],
+  "extra_examples_to_reject": 8,
+  "v1a_acc": {
+   "ext": 0.8333333333333334,
+   "stress": 0.85,
+   "ce": 0.55,
+   "order": 0.7625
+  }
+ },
+ {
+  "name": "qvha",
+  "cell": 3,
+  "kind": "spurious_fallback",
+  "prog": [
+   "fold",
+   "math.gcd(abs(1), abs(first))",
+   "(v * (acc - (1 % last)))",
+   "(acc // first)"
+  ],
+  "v1": false,
+  "v1a": true,
+  "v1_fail_counts": {
+   "ext": 0,
+   "stress": 0,
+   "ce": 6,
+   "order": 0
+  },
+  "v1_ce_fail_queries": [
+   1
+  ],
+  "extra_examples_to_reject": null,
+  "v1a_acc": {
+   "ext": 1.0,
+   "stress": 1.0,
+   "ce": 1.0,
+   "order": 1.0
+  }
+ },
+ {
+  "name": "qwga",
+  "cell": 0,
+  "kind": "spurious_fallback",
+  "prog": [
+   "fold",
+   "(first * first)",
+   "(v - (last // (1 - acc)))",
+   "(acc - 1)"
+  ],
+  "v1": false,
+  "v1a": false,
+  "v1_fail_counts": {
+   "ext": 18,
+   "stress": 3,
+   "ce": 8,
+   "order": 25
+  },
+  "v1_ce_fail_queries": [
+   29,
+   30,
+   45,
+   48,
+   50,
+   53
+  ],
+  "extra_examples_to_reject": 25,
+  "v1a_acc": {
+   "ext": 0.88,
+   "stress": 0.925,
+   "ce": 0.675,
+   "order": 0.8958333333333334
+  }
+ },
+ {
+  "name": "qwka",
+  "cell": 1,
+  "kind": "spurious_fallback",
+  "prog": [
+   "fold",
+   "pow(1, last)",
+   "(acc - (v + pow(1, first)))",
+   "(acc - 1)"
+  ],
+  "v1": false,
+  "v1a": false,
+  "v1_fail_counts": {
+   "ext": 48,
+   "stress": 13,
+   "ce": 30,
+   "order": 40
+  },
+  "v1_ce_fail_queries": [
+   1,
+   2,
+   29
+  ],
+  "extra_examples_to_reject": 1,
+  "v1a_acc": {
+   "ext": 0.68,
+   "stress": 0.675,
+   "ce": 0.825,
+   "order": 0.8333333333333334
+  }
+ },
+ {
+  "name": "qxfa",
+  "cell": 1,
+  "kind": "spurious_fallback",
+  "prog": [
+   "fold",
+   "(last * 0)",
+   "(v - (acc + (1 % last)))",
+   "(acc + first)"
+  ],
+  "v1": false,
+  "v1a": true,
+  "v1_fail_counts": {
+   "ext": 0,
+   "stress": 0,
+   "ce": 4,
+   "order": 0
+  },
+  "v1_ce_fail_queries": [
+   1
+  ],
+  "extra_examples_to_reject": null,
+  "v1a_acc": {
+   "ext": 1.0,
+   "stress": 1.0,
+   "ce": 1.0,
+   "order": 1.0
+  }
+ },
+ {
+  "name": "qxja",
+  "cell": 1,
+  "kind": "spurious_fallback",
+  "prog": [
+   "fold",
+   "(0 - 1)",
+   "math.gcd(abs(0), abs((acc * (last - v))))",
+   "(acc % last)"
+  ],
+  "v1": false,
+  "v1a": false,
+  "v1_fail_counts": {
+   "ext": 38,
+   "stress": 25,
+   "ce": 5,
+   "order": 2
+  },
+  "v1_ce_fail_queries": [
+   50,
+   61,
+   68,
+   85
+  ],
+  "extra_examples_to_reject": 9,
+  "v1a_acc": {
+   "ext": 0.7466666666666667,
+   "stress": 0.375,
+   "ce": 0.7,
+   "order": 0.9916666666666667
+  }
+ },
+ {
+  "name": "qxka",
+  "cell": 0,
+  "kind": "spurious_fallback",
+  "prog": [
+   "fold",
+   "(first * 0)",
+   "(acc - (last + (first // v)))",
+   "(acc % last)"
+  ],
+  "v1": false,
+  "v1a": false,
+  "v1_fail_counts": {
+   "ext": 65,
+   "stress": 34,
+   "ce": 31,
+   "order": 36
+  },
+  "v1_ce_fail_queries": [
+   1,
+   2,
+   3,
+   9,
+   31,
+   50
+  ],
+  "extra_examples_to_reject": 11,
+  "v1a_acc": {
+   "ext": 0.5666666666666667,
+   "stress": 0.15,
+   "ce": 0.475,
+   "order": 0.85
+  }
+ },
+ {
+  "name": "qxka",
+  "cell": 3,
+  "kind": "spurious_fallback",
+  "prog": [
+   "fold",
+   "(1 + 1)",
+   "math.gcd(abs(first), abs(math.gcd(abs(v), abs((1 + 1)))))",
+   "(last - acc)"
+  ],
+  "v1": false,
+  "v1a": false,
+  "v1_fail_counts": {
+   "ext": 147,
+   "stress": 40,
+   "ce": 37,
+   "order": 223
+  },
+  "v1_ce_fail_queries": [
+   1,
+   2,
+   3,
+   6,
+   9,
+   21
+  ],
+  "extra_examples_to_reject": 1,
+  "v1a_acc": {
+   "ext": 0.02,
+   "stress": 0.0,
+   "ce": 0.075,
+   "order": 0.07083333333333333
+  }
+ },
+ {
+  "name": "qaga",
+  "cell": 0,
+  "kind": "true_fallback",
+  "prog": [
+   "fold",
+   "(1 % first)",
+   "(last - (acc % v))",
+   "math.gcd(abs(last), abs(acc))"
+  ],
+  "v1": true,
+  "v1a": true,
+  "v1_fail_counts": {
+   "ext": 0,
+   "stress": 0,
+   "ce": 0,
+   "order": 0
+  },
+  "v1_ce_fail_queries": [],
+  "extra_examples_to_reject": null,
+  "v1a_acc": {
+   "ext": 1.0,
+   "stress": 1.0,
+   "ce": 1.0,
+   "order": 1.0
+  }
+ },
+ {
+  "name": "qaga",
+  "cell": 2,
+  "kind": "true_fallback",
+  "prog": [
+   "fold",
+   "(1 % last)",
+   "(last - (1 * (acc % v)))",
+   "math.gcd(abs(acc), abs(last))"
+  ],
+  "v1": true,
+  "v1a": true,
+  "v1_fail_counts": {
+   "ext": 0,
+   "stress": 0,
+   "ce": 0,
+   "order": 0
+  },
+  "v1_ce_fail_queries": [],
+  "extra_examples_to_reject": null,
+  "v1a_acc": {
+   "ext": 1.0,
+   "stress": 1.0,
+   "ce": 1.0,
+   "order": 1.0
+  }
+ },
+ {
+  "name": "qaka",
+  "cell": 0,
+  "kind": "true_fallback",
+  "prog": [
+   "fold",
+   "(0 * first)",
+   "(acc + (v + math.gcd(abs(last), abs(1))))",
+   "(first - acc)"
+  ],
+  "v1": true,
+  "v1a": true,
+  "v1_fail_counts": {
+   "ext": 0,
+   "stress": 0,
+   "ce": 0,
+   "order": 0
+  },
+  "v1_ce_fail_queries": [],
+  "extra_examples_to_reject": null,
+  "v1a_acc": {
+   "ext": 1.0,
+   "stress": 1.0,
+   "ce": 1.0,
+   "order": 1.0
+  }
+ },
+ {
+  "name": "qaka",
+  "cell": 2,
+  "kind": "true_fallback",
+  "prog": [
+   "fold",
+   "(0 * 1)",
+   "(acc - (1 + math.gcd(abs(0), abs(v))))",
+   "(acc + first)"
+  ],
+  "v1": true,
+  "v1a": true,
+  "v1_fail_counts": {
+   "ext": 0,
+   "stress": 0,
+   "ce": 0,
+   "order": 0
+  },
+  "v1_ce_fail_queries": [],
+  "extra_examples_to_reject": null,
+  "v1a_acc": {
+   "ext": 1.0,
+   "stress": 1.0,
+   "ce": 1.0,
+   "order": 1.0
+  }
+ },
+ {
+  "name": "qbga",
+  "cell": 3,
+  "kind": "true_fallback",
+  "prog": [
+   "fold",
+   "math.gcd(abs(first), abs(first))",
+   "(v - (0 + math.gcd(abs(first), abs(acc))))",
+   "(acc * last)"
+  ],
+  "v1": true,
+  "v1a": true,
+  "v1_fail_counts": {
+   "ext": 0,
+   "stress": 0,
+   "ce": 0,
+   "order": 0
+  },
+  "v1_ce_fail_queries": [],
+  "extra_examples_to_reject": null,
+  "v1a_acc": {
+   "ext": 1.0,
+   "stress": 1.0,
+   "ce": 1.0,
+   "order": 1.0
+  }
+ },
+ {
+  "name": "qbka",
+  "cell": 0,
+  "kind": "true_fallback",
+  "prog": [
+   "fold",
+   "pow(first, 0)",
+   "(last + (acc + math.gcd(abs(v), abs(first))))",
+   "(acc * last)"
+  ],
+  "v1": true,
+  "v1a": true,
+  "v1_fail_counts": {
+   "ext": 0,
+   "stress": 0,
+   "ce": 0,
+   "order": 0
+  },
+  "v1_ce_fail_queries": [],
+  "extra_examples_to_reject": null,
+  "v1a_acc": {
+   "ext": 1.0,
+   "stress": 1.0,
+   "ce": 1.0,
+   "order": 1.0
+  }
+ },
+ {
+  "name": "qbla",
+  "cell": 2,
+  "kind": "true_fallback",
+  "prog": [
+   "fold",
+   "(1 * 0)",
+   "(acc + (v + (acc - last)))",
+   "(acc - 0)"
+  ],
+  "v1": true,
+  "v1a": true,
+  "v1_fail_counts": {
+   "ext": 0,
+   "stress": 0,
+   "ce": 0,
+   "order": 0
+  },
+  "v1_ce_fail_queries": [],
+  "extra_examples_to_reject": null,
+  "v1a_acc": {
+   "ext": 1.0,
+   "stress": 1.0,
+   "ce": 1.0,
+   "order": 1.0
+  }
+ },
+ {
+  "name": "qcka",
+  "cell": 2,
+  "kind": "true_fallback",
+  "prog": [
+   "fold",
+   "(0 // last)",
+   "(1 - math.gcd(abs(acc), abs((v + 1))))",
+   "(acc - 0)"
+  ],
+  "v1": true,
+  "v1a": true,
+  "v1_fail_counts": {
+   "ext": 0,
+   "stress": 0,
+   "ce": 0,
+   "order": 0
+  },
+  "v1_ce_fail_queries": [],
+  "extra_examples_to_reject": null,
+  "v1a_acc": {
+   "ext": 1.0,
+   "stress": 1.0,
+   "ce": 1.0,
+   "order": 1.0
+  }
+ },
+ {
+  "name": "qdga",
+  "cell": 0,
+  "kind": "true_fallback",
+  "prog": [
+   "fold",
+   "(1 + 0)",
+   "(v % (first - (acc % first)))",
+   "(first - acc)"
+  ],
+  "v1": true,
+  "v1a": true,
+  "v1_fail_counts": {
+   "ext": 0,
+   "stress": 0,
+   "ce": 0,
+   "order": 0
+  },
+  "v1_ce_fail_queries": [],
+  "extra_examples_to_reject": null,
+  "v1a_acc": {
+   "ext": 1.0,
+   "stress": 1.0,
+   "ce": 1.0,
+   "order": 1.0
+  }
+ },
+ {
+  "name": "qdia",
+  "cell": 1,
+  "kind": "true_fallback",
+  "prog": [
+   "fold",
+   "math.gcd(abs(1), abs(first))",
+   "(acc + (first * (first * v)))",
+   "(acc - 1)"
+  ],
+  "v1": true,
+  "v1a": true,
+  "v1_fail_counts": {
+   "ext": 0,
+   "stress": 0,
+   "ce": 0,
+   "order": 0
+  },
+  "v1_ce_fail_queries": [],
+  "extra_examples_to_reject": null,
+  "v1a_acc": {
+   "ext": 1.0,
+   "stress": 1.0,
+   "ce": 1.0,
+   "order": 1.0
+  }
+ }
+]

@@ -1,5 +1,13 @@
 # Novelty autopsy -- why zero UNFAMILIAR mechanisms (CWO 2026-09-30, Hecate CURRENT)
 
+> CORRECTIONS 2026-10-01 (roles/Hecate/harvest_w2/CORRECTIONS_2026-10-01.md; text below is unchanged):
+> K5 the largest loss is at world SPECIFICATION (126/243 mechanisms never in any world; admission 58/117); the by-form
+> admission skew does not survive a permutation test (p ~ 0.18). K6 Part B inputs were scrubbed (rewrite rules erased;
+> R1 still holds on the other 24); R1 is a property of the definition on fully specified rules -> C6 (not C4), and does
+> not transfer to meta v1's prose as argued; meta v1's zero remains uninformative on meta v1's own rows.
+> K14 Part A predates K4: read validly 36 (not 38), untestable 13, PARK 14 + SPECULATIVE 1 -- see FLOW_postK4.json.
+
+
 PREREG: roles/Hecate/prereg/2026-09-30_novelty_autopsy/PREREG.md (frozen before
 Part B ran). Rows: hecate/autopsy/FLOW.json (Part A, no model calls),
 hecate/autopsy/reach_rows.jsonl + REACH.json (Part B). Related:

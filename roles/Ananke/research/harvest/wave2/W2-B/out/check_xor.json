@@ -1,0 +1,123 @@
+{
+ "physics": {
+  "topology": "torus",
+  "n_sites": 64,
+  "radius": 3,
+  "k_random": 4,
+  "rewire": 0,
+  "state_dim": 4,
+  "payload_width": 2,
+  "channels": 1,
+  "fanout": 2,
+  "dest_mode": "all",
+  "loss": 0.0,
+  "loss_per_hop": 0,
+  "lat_base": 1,
+  "lat_hop": 0,
+  "lat_jitter": 0,
+  "dup": 0.0,
+  "noise": 0,
+  "cap": 0,
+  "collision": "none",
+  "decay_shift": 0,
+  "update_mode": "sync",
+  "update_period": 1,
+  "update_p": 1.0,
+  "rules": 1,
+  "prog_len": 18,
+  "plastic_route": 0,
+  "adapt_shift": 4,
+  "wimm": 0,
+  "setrule": 0,
+  "mut_site": 0.0,
+  "e_income": 0,
+  "e_max": 1000,
+  "c_emit": 0,
+  "c_op": 0,
+  "c_mem": 0,
+  "topo_seed": 0
+ },
+ "env": {
+  "family": "XOR",
+  "d": 3,
+  "delta": 8,
+  "gap": 8,
+  "cue_len": 2,
+  "amp": 256,
+  "amp_teacher": 128,
+  "amp_dist": 64,
+  "trials": 12,
+  "block": 4,
+  "flip_p": 0.3,
+  "n_maj": 5,
+  "iti": 2,
+  "variant": 0
+ },
+ "M": 128,
+ "results": {
+  "P_XOR(parity)": {
+   "acc": {
+    "acc": 1.0,
+    "lo99": 1.0,
+    "hi99": 1.0
+   },
+   "pivotality": {
+    "0": 1.0,
+    "1": 1.0
+   },
+   "SIGNAL": true
+  },
+  "oneflag:not_P": {
+   "acc": {
+    "acc": 0.7591145833333333,
+    "lo99": 0.7298177083333333,
+    "hi99": 0.7851595052083332
+   },
+   "pivotality": {
+    "0": 0.5625,
+    "1": 0.5
+   },
+   "SIGNAL": true
+  },
+  "oneflag:not_Q": {
+   "acc": {
+    "acc": 0.25911458333333337,
+    "lo99": 0.22981770833333331,
+    "hi99": 0.2851595052083333
+   },
+   "pivotality": {
+    "0": 0.4375,
+    "1": 0.5
+   },
+   "SIGNAL": false
+  },
+  "oneflag:P": {
+   "acc": {
+    "acc": 0.24088541666666666,
+    "lo99": 0.21484049479166667,
+    "hi99": 0.27018229166666663
+   },
+   "pivotality": {
+    "0": 0.5625,
+    "1": 0.5
+   },
+   "SIGNAL": false
+  },
+  "oneflag:P_and_notQ_neg": {
+   "acc": {
+    "acc": 0.25911458333333337,
+    "lo99": 0.22981770833333331,
+    "hi99": 0.2851595052083333
+   },
+   "pivotality": {
+    "0": 0.4375,
+    "1": 0.5
+   },
+   "SIGNAL": false
+  }
+ },
+ "compute": {
+  "wall_s": 68.96,
+  "cpu_s": 106.58
+ }
+}

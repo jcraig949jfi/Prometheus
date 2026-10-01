@@ -1,0 +1,88 @@
+{
+ "decompiled": [
+  " 0 MULQ  T3 = MULQ(S3, ENERGY)",
+  " 1 SUB   S3 = SUB(S3, SENSE)",
+  " 2 CONST EMIT = 19 << 0",
+  " 3 SUB   S0 = SUB(S0, IN0_1)",
+  " 4 MOV   PAY1 = T3",
+  " 6 GT    T2 = GT(PAY1, T3)",
+  " 7 MULQ  RPORT = MULQ(EMIT, S3)"
+ ],
+ "normal": [
+  0.7247721354166667,
+  0.6987288411458333,
+  0.7465836588541667
+ ],
+ "shuffle_dest": [
+  0.7099609375,
+  0.6834277343749999,
+  0.7363297526041667
+ ],
+ "paired_diff": {
+  "mean": -0.014811197916666661,
+  "se": 0.012225881524962127,
+  "ci": [
+   -0.014811197916666661,
+   -0.04459716796874999,
+   0.01611979166666651
+  ]
+ },
+ "lag_agreement": {
+  "0": 0.7251385718943593,
+  "1": 0.5293489861259338,
+  "2": 0.5095890410958904,
+  "3": 0.4936929099608525,
+  "frac_zero": 0.0016276041666666667
+ },
+ "recorded_D_paired": {
+  "mean": 0.03255208333333334,
+  "se": 0.026440783949489382
+ },
+ "perturb": {
+  "cue": {
+   "div_frac_at_ro": 0.9712499976158142,
+   "div_frac_next_ro": 0.9975000023841858,
+   "div_frac_end": 0.0,
+   "mean_abs_dS0_nonsensor_at_ro": 1160.2486572265625,
+   "mean_abs_dS0_nonsensor_next_ro": 201.51644897460938,
+   "mean_abs_dS0_nonsensor_end": 0.0
+  },
+  "S0+1": {
+   "div_frac_at_ro": 0.0018749999580904841,
+   "div_frac_next_ro": 0.0003124999930150807,
+   "div_frac_end": 0.0,
+   "mean_abs_dS0_nonsensor_at_ro": 0.0019736841786652803,
+   "mean_abs_dS0_nonsensor_next_ro": 0.0003289473825134337,
+   "mean_abs_dS0_nonsensor_end": 0.0
+  },
+  "S3+1": {
+   "div_frac_at_ro": 0.4753125011920929,
+   "div_frac_next_ro": 0.5643749833106995,
+   "div_frac_end": 0.5543749928474426,
+   "mean_abs_dS0_nonsensor_at_ro": 1.050657868385315,
+   "mean_abs_dS0_nonsensor_next_ro": 1.2296053171157837,
+   "mean_abs_dS0_nonsensor_end": 1.1493420600891113
+  },
+  "S0+256": {
+   "div_frac_at_ro": 0.009999999776482582,
+   "div_frac_next_ro": 0.009999999776482582,
+   "div_frac_end": 0.0,
+   "mean_abs_dS0_nonsensor_at_ro": 0.27828946709632874,
+   "mean_abs_dS0_nonsensor_next_ro": 0.02368421107530594,
+   "mean_abs_dS0_nonsensor_end": 0.0
+  },
+  "S3+256": {
+   "div_frac_at_ro": 0.5862500071525574,
+   "div_frac_next_ro": 0.8643749952316284,
+   "div_frac_end": 0.8256250023841858,
+   "mean_abs_dS0_nonsensor_at_ro": 117.49177551269531,
+   "mean_abs_dS0_nonsensor_next_ro": 26.136184692382812,
+   "mean_abs_dS0_nonsensor_end": 10.378618240356445
+  }
+ },
+ "clock": {
+  "cpu_s": 97.72,
+  "wall_s": 63.69,
+  "threads": 2
+ }
+}

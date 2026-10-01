@@ -1,5 +1,9 @@
 # Meta-experiment v1 -- report
 
+> CORRECTIONS 2026-10-01 (roles/Hecate/harvest_w2/CORRECTIONS_2026-10-01.md; text below unchanged): K12 M3 item 5 is
+> wrong (state named T 1.00, P 1.00; "fewest named state variables" is false). CONTESTED, NOT APPLIED: C8 M1 vs P reads
+> NO_ADDED_VALUE_vs_P (4/8) if the refused call u4-P-m8 counts in the denominator; overall M1 unchanged.
+
 PREREG: roles/Hecate/prereg/2026-09-29_meta_experiment_v1/PREREG.md (e0bd2e312).
 Analysis code frozen before any detector or matcher row was read:
 hecate/meta/analyze.py (65e0fcf80). Numbers: hecate/meta/RESULTS_v1.json.
@@ -7,7 +11,7 @@ Rows: hecate/meta/arms/arms_v1.jsonl (40 unit-arms, 400 mechanisms),
 hecate/meta/detector/detect_rows_v1.jsonl, hecate/meta/matcher/match_rows_v1.jsonl.
 Generator claude-sonnet-5; detector and matcher claude-opus-5-5; all calls
 isolated (hecate/llm.py). Detector calibration gate PASS
-(hecate/gravity/CALIBRATION_v1.json).
+(hecate/gravity/CALIBRATION_v1.json -- see CORRECTIONS 2026-10-01 K3: tracked as calibration_v1.json; controls restored at controls_v1.json, gate at gate_v1.json).
 
 ## Preregistered outcomes
 

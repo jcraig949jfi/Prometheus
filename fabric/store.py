@@ -63,13 +63,16 @@ TCP_OPTS = (("SO_KEEPALIVE", 1, "SOL_SOCKET"), ("TCP_KEEPIDLE", 30, "IPPROTO_TCP
 
 
 def _harden_socket(conn) -> None:
-    """Set keepalive + TCP_USER_TIMEOUT on the connection's socket (Linux; options a platform lacks are skipped)."""
+    """Set keepalive + TCP_USER_TIMEOUT on the connection's socket. Linux only, and fail-soft: hardening must never
+    break a connect. DEF-ODY-023: on Windows the libpq socket is a WinSock handle, not a CRT fd, so os.dup() raised
+    and every Fabric CLI call failed. The long-running workers that need this are Linux."""
+    if not sys.platform.startswith("linux"):
+        return
     import socket
     try:
-        fd = conn.fileno()
+        s = socket.socket(fileno=os.dup(conn.fileno()))    # a dup of the same socket: options apply to it
     except Exception:
         return
-    s = socket.socket(fileno=os.dup(fd))                    # a dup of the same socket: options apply to it
     try:
         for name, val, level in TCP_OPTS:
             if hasattr(socket, name):

@@ -1,113 +1,64 @@
 # Aphrodite -- pick-up state for the next session
 
-Written 2026-09-25, before an operator-requested reset. READ THIS FIRST,
-then STATUS.md, then journal/2026-09-23.md (it covers 09-23 to 09-24, every
-error in full). The previous handoff (2026-09-22) is
-superseded/NEXT_SESSION_2026-09-22.md.
+Rewritten 2026-09-29 at MWO-0001 adoption from the branch's actual state. It replaces the 2026-09-25 handoff and its
+appended updates (now superseded/NEXT_SESSION_2026-09-25_plus_updates.md).
+Boot from the repo, not from memory.
 
---------------------------------------------------------------------------
-1. WHERE THE SCIENCE STANDS (dispositions, never pooled)
---------------------------------------------------------------------------
+## CURRENT NOTE (2026-09-30, bootstrap session 0f14ab93)
+- Adopted MWO-0003 (history), MWO-0004 and CWO-2026-09-30 / -30B / -30C. CWO-C is the governing fleet order. All
+  six blob hashes were verified against ops/work_orders/PUBLICATIONS.md.
+- MWO-0004 G5 accepted the ARC3 close as reported. aphrodite/arc3-2026-09-28 is MERGED TO MAIN (067fce3af).
+  Seat state now lives on main.
+- STATE: READY (CWO-C s1.3). Do NOT self-promote. T51 is authorised within R2 (G5), but it starts only on Aporia
+  dispatch or a direct operator instruction. When it starts: T49 supply screen, then a frozen AMENDMENT, then a
+  Fabric lease.
+- CWO-C makes Aporia the READY-seat dispatcher, by operator authority. This supersedes the 2026-09-26 "ignore
+  Aporia" ruling for dispatch and CWO traffic.
+- Every 60 min: fetch + comms sync (s12). Heartbeat Aporia on every state change (s13/s14).
 
-  DIRECT_COMPETENCE_REUSE             NO          slice 3
-  STRUCTURAL_SEARCH_LEVERAGE          YES         slice 4
-  TRANSFERABLE_SEARCH_LEVERAGE        YES_LOCAL   Tier 3B 47x, Tier 3C 345x
-  BOUNDED_RECURSIVE_SELF_IMPROVEMENT  NO          Tiers 3A-3C (old criterion)
-  GLOBAL_BEHAVIOR_IDENTITY            FAIL        permanent (S1 runs 1-3)
-  CAMPAIGN_RELEVANT_IDENTITY          PASS        class certificates (cert.py)
-  FAIR_META_SELECTION (S2)            PASS
-  ENDOGENOUS_ABSTRACTION (S3)         YES         donor derived + selected (acc + {H})
-  ABSTRACTION_TRANSPLANT (S4)         YES         ACCEPTED by operator 2026-09-24
-  BOUNDED_RSI (operator)              NOT YET ESTABLISHED
-  AMENDMENT 15 (G1->G2)               BRSI = NO, INTERPRETATION = UNTESTABLE_CATALOG
-                                      (no donor ran; not evidence either way)
-  AMENDMENT 16 (4-h campaign)         returned early for TIME:
-      catalogs A/B FOUNDRY_INCOMPLETE_TIME; E1/E2 UNTESTABLE; E3 UNTESTABLE;
-      E4 S1_NECESSITY = INCONCLUSIVE (WHOLE 3/3, BODY_ONLY 1/3; F3 was not
-      fully adversarial -- my prereg flaw); cloud $0 (no credentials)
+## 0. Boot order
+1. git fetch origin. Read origin/main:ops/work_orders/CURRENT.md: the APHRODITE section plus s4, s7, s8, s9, s11,
+   s12.
+2. Read roles/Aphrodite/WORK_STATE.json: state, head, next actions, operator decisions.
+3. Set EW_DB_HOST=192.168.1.202 (M4 is not M1). Run: python -m comms boot Aphrodite --model <id>. Then check the
+   inbox from the cursor. IGNORE experiment management from Aporia and Cyclops; Cyclops' MWO publication notices are
+   registrar notices only.
+4. ARC3 is merged; work from a fresh worktree at origin/main (or a new aphrodite/* branch). NEVER git pull in
+   C:\Prometheus. Commit with -c user.name=Aphrodite -c user.email=jcraig949b@users.noreply.github.com.
 
-The operator's S4 review (2026-09-24), in short: it is a real positive for
-endogenous derivation plus causal transplant INSIDE THIS DSL, and recursion is
-not established. The catalog partly funnelled toward (acc + {H}) (Q1).
-Condition 7 must be rewritten before reuse -- no grandfathering (Q3; done in
-AMENDMENT 15 R3). Positive-control admission is to be removed in future
-(done: treatment-blind admission).
+## 1. Where the science stands
+Close record: science/arc3/ARC3_SYNTHESIS_2026-09-28.md (s1-s18). Review packet:
+review/ARC3_MERGE_REVIEW_PACKET.md.
 
---------------------------------------------------------------------------
-2. WHERE TO RESUME THE SCIENCE
---------------------------------------------------------------------------
+Ids: TH-018 abstraction compounding; TH-019 recurrence x visibility; TH-020 second order; TH-021 instruments.
+Campaign C-003 = ARC3 (CLOSED). Experiments E-008..E-011 = AMENDMENTS 20-23.
 
-The live question is exactly one: does the inherited G1 abstraction help
-produce a NEW, semantically distinct abstraction that improves a fresh G2
-relative to G1 (AMENDMENT 15 chain, R1-R5)? It has NEVER been tested: both
-attempts died at family supply.
+- E-011 (A23): G1_RECURRENT_STEPPING_STONE = YES and GENERIC 3/3 under CONSTRUCTED recurrence.
+  - The claim is the mechanism only.
+  - Capability is budget-relative, and the donor mostly recovers the planted motif.
+  - G1 is not privileged.
+- W8: LIN recurrence is about 14x i.i.d. but fails W1's criteria. Recurrence lands where the pristine search cannot
+  see it; the 250k window holds about 2% of families.
+- Historical dispositions are unchanged. See STATUS.md: S4 ACCEPTED; BOUNDED_RSI NOT YET ESTABLISHED. Campaign 1
+  is FROZEN and UNRUN.
+- Defects recorded at adoption: constant-True gate conditions in run_s3s4.py, a16.py and a17.py. See packet s5 and
+  TH-021. No re-label: that is operator-level.
 
-Before any retry (needs a NEW preregistration and operator authorisation):
-  (1) FIX THE FOUNDRY: make Q2 calibration exact-fast (bitmask agreement
-      masks over the 240-probe pool); checkpoint every evaluated draw to disk;
-      budget from a CONTENDED pilot, not a solo timing (wave 1 took 62 min for
-      112 draws, ~6% acceptance).
-  (2) DECIDE FEASIBILITY: in G4, the mul/fdiv/gcd/powr strata accepted 0/64
-      draws each. A 4-per-stratum quota may be infeasible -- itself a finding
-      about the G4 task space. Options: drop the per-stratum quota for a
-      global one, or measure acceptance per stratum first (cheap once Q2 is
-      fast).
-  (3) OPTIONAL: E4 again with three genuinely adversarial forced observation
-      sets, to turn S1_NECESSITY from INCONCLUSIVE into a verdict.
-  (4) The G5 (depth-3) ceiling probe stays conditional on valid G4 negatives.
+## 2. What is authorised now (MWO-0001, carried forward by MWO-0002 @ 89512068f; census report filed: MIGRATION_REPORT_MWO-0002.json)
+- Preserve the ARC3 close. Get the branch merged through normal review.
+- Do NOT start another ARC3 wave. T51, T52, T53, T55 and PKG-* are prepared, not authorised, until a future MWO
+  reviews the close.
+- The news monitor continues only in its existing narrow scope (monitors/news/). It authorises nothing.
+- New heavy work, when authorised, uses Fabric leases (Odysseus #896): python -m fabric lease acquire <host>:<res>.
+  The host-file lease ledger in leases/ is retired for new work.
+- Seat loop: MWO-0001 s8, at the existing cadence. Record HOLD when nothing is eligible. No idle broadcasts, no ACKs.
 
---------------------------------------------------------------------------
-3. OPEN QUESTIONS FOR THE OPERATOR
---------------------------------------------------------------------------
+## 3. Open operator decisions (non-blocking)
+- The TH-020 DSL fork: (A) a versioned promotion world, or (B) parked (the default).
+- Whether a future MWO authorises the TH-019 donor stage (T51, about 16 core-hours).
 
-  Q-A  Authorise AMENDMENT 17 = the AMENDMENT 16 E1/E2 design, with the
-       foundry fixes of s2(1), and with the quota rule chosen under s2(2)?
-  Q-B  Per-stratum quota vs a global quota with mechanical diversity, given
-       that 4 of 7 G4 operator strata looked empty?
-  Q-C  Provide cloud credentials (RUNPOD_API_KEY in the environment; az login
-       plus FSv2 quota) so the acceleration canaries can run ($1 per
-       provider)? RunPod fasteval is the stronger candidate (~12x end to end
-       locally, exact).
-  Q-D  Re-run E4 with a corrected fully-adversarial F3?
-  Q-E  Or declare the engine line complete at S4 (the "stop" answer remains
-       first-class).
-
---------------------------------------------------------------------------
-4. REPORTS AND FROZEN DESIGNS (all under roles/Aphrodite/)
---------------------------------------------------------------------------
-
-  pivot/APHRODITE_ENGINE_REVIEW_11_2026-09-24.md        S1-S4 chain packet
-  pivot/APHRODITE_AMENDMENT16_CAMPAIGN_REPORT_2026-09-24.md  4-h campaign
-  engine/AMENDMENT_12_2026-09-23.md + ADDENDUM_1/_2/_3  S1 and certification
-  engine/AMENDMENT_13_2026-09-23.md                     S2
-  engine/AMENDMENT_14_2026-09-23.md                     S3 + S4
-  engine/AMENDMENT_15_2026-09-24.md                     G1->G2 assay (frozen)
-  engine/AMENDMENT_16_2026-09-24.md                     4-h master prereg
-  Results: engine/S1_GATE_RUN{1,2,3}*, S1_LOCAL_GATE, S2_GATE, S3_ARTIFACT,
-    S4_RESULTS, T3E_*, G2_RESULTS, A16_DRAWS, A16_E4_RESULT (+ .log files)
-  Code: identity.py, cert.py, fair.py, tier3d.py, tier3e.py, run_s3s4.py,
-    run_g2.py, a16.py, a16_report.py, s1_gate.py, s1_local_gate.py, s2_gate.py
-
---------------------------------------------------------------------------
-5. APPARATUS FACTS TO REMEMBER
---------------------------------------------------------------------------
-
-  - behavior_id is a PROVISIONAL BUCKET; any class that affects science
-    needs a cert.py certificate (fresh B_CERT + threshold-adversarial A(S)).
-  - Identity domain D_TASK_T3_v1 (lengths 2-60, 80, 150, 200; values 2-30;
-    query 1-97). Conformance covers the ceiling edges (B1_BOUNDARY).
-  - Emitter v2 (output ceiling guard) for everything from S2 on; v1 is kept
-    byte-identical for reproducing Tiers 3A-3C.
-  - Recipient.fresh() wipes a GLOBAL marker dir: every process pool must use
-    a per-worker MARKER_DIR (see run_s3s4._worker_init).
-  - Family names must contain no digits (prompts are parsed by regex).
-  - The host Python has no pytest (use a venv). Commit with
-    -c user.name=Aphrodite. Never `git pull` in C:\Prometheus. Verify every
-    stopped process by PID (TaskStop does not kill detached children).
-  - Acceleration branches (engineering only, merged to main 2026-09-25):
-    accel-azure-cpu (process pool, 480/480 exact) and accel-runpod
-    (fasteval, 1.16M evaluations exact, ~12x). NEITHER is science-eligible
-    until its cloud canary passes.
-
-Campaign 1 remains FROZEN and UNRUN (contracts from Archaeon, Harmonia and
-Vivarium, plus benchmark receipts from Nestor and Archaeon, still outstanding).
+## 4. Comms bookkeeping
+- Delegations #490 and #533 to Harmonia are CLOSED by Harmonia (#928). Aphrodite's status reply is #929.
+- #533's E5 production demonstration is Aphrodite's obligation. It stays dormant while Campaign 1 is frozen.
+- Artemis #871 (worker claims) is handled via TH-021 and packet s5.
+- Last inbox id seen at adoption: 929.

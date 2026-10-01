@@ -1,0 +1,37 @@
+GCD_RICH_2 L1 classes 4 1h 5 2h 2 -> 2 sec 1365.1
+   V0_BASE    S1_1      (acc + math.gcd(abs({H}), abs(v)))                           sel     16997 hold     10864 g1b 1 new 0
+   V1_H2ONLY  MEMORISE                                                               sel     16467 hold     10440 g1b 0 new 0
+   V1_H12     S1_1      (acc + math.gcd(abs({H}), abs(v)))                           sel     16997 hold     10864 g1b 1 new 0
+   V3_MEDIAN  S1_4      (acc + ({H} * v))                                            sel     16940 hold     10656 g1b 1 new 0
+   V2_LOOK    S1_1      (acc + math.gcd(abs({H}), abs(v)))                           sel     16997 hold     10864 g1b 1 new 0
+G1_PLUS_4 L1 classes 5 1h 5 2h 1 -> 1 sec 1431.1
+   V0_BASE    S1_3      (acc + math.gcd(abs({H}), abs(v)))                           sel     15064 hold     17776 g1b 1 new 0
+   V1_H2ONLY  MEMORISE                                                               sel     14910 hold     17430 g1b 0 new 0
+   V1_H12     S1_3      (acc + math.gcd(abs({H}), abs(v)))                           sel     15064 hold     17776 g1b 1 new 0
+   V3_MEDIAN  S1_3      (acc + math.gcd(abs({H}), abs(v)))                           sel     15064 hold     17776 g1b 1 new 0
+   V2_LOOK    S1_3      (acc + math.gcd(abs({H}), abs(v)))                           sel     15064 hold     17776 g1b 1 new 0
+G1_PLUS_1 L1 classes 4 1h 4 2h 1 -> 1 sec 326.0
+   V0_BASE    S1_1      (acc + math.gcd(abs({H}), abs(v)))                           sel     11161 hold     12642 g1b 1 new 0
+   V1_H2ONLY  MEMORISE                                                               sel     11064 hold     12702 g1b 0 new 0
+   V1_H12     S1_1      (acc + math.gcd(abs({H}), abs(v)))                           sel     11161 hold     12642 g1b 1 new 0
+   V3_MEDIAN  S1_1      (acc + math.gcd(abs({H}), abs(v)))                           sel     11161 hold     12642 g1b 1 new 0
+   V2_LOOK    S1_1      (acc + math.gcd(abs({H}), abs(v)))                           sel     11161 hold     12642 g1b 1 new 0
+Traceback (most recent call last):
+  File "C:\Prometheus-worktrees\aphrodite-base-role\roles\Aphrodite\science\compounding\rb6\rb6_lever_check.py", line 331, in <module>
+    for r in ex.map(run_supply, jobs, chunksize=1):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\jcrai\AppData\Local\Programs\Python\Python312\Lib\concurrent\futures\process.py", line 636, in _chain_from_iterable_of_lists
+    for element in iterable:
+                   ^^^^^^^^
+  File "C:\Users\jcrai\AppData\Local\Programs\Python\Python312\Lib\concurrent\futures\_base.py", line 619, in result_iterator
+    yield _result_or_cancel(fs.pop())
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\jcrai\AppData\Local\Programs\Python\Python312\Lib\concurrent\futures\_base.py", line 317, in _result_or_cancel
+    return fut.result(timeout)
+           ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\jcrai\AppData\Local\Programs\Python\Python312\Lib\concurrent\futures\_base.py", line 456, in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\jcrai\AppData\Local\Programs\Python\Python312\Lib\concurrent\futures\_base.py", line 401, in __get_result
+    raise self._exception
+concurrent.futures.process.BrokenProcessPool: A process in the process pool was terminated abruptly while the future was running or pending.

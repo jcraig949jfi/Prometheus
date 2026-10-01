@@ -97,11 +97,24 @@ def fill(sid: str, write: bool) -> str:
     return "WOULD_FILL"
 
 
+def empty_without_capsule() -> list[str]:
+    """Every tracked record whose handoff is empty and that has no CAPSULE.json (the rollouts keep
+    the capsule as their handoff). This is what a new batch runs before it commits."""
+    out = []
+    for d in sorted(vault.specimen_dir("_").parent.iterdir()):
+        if (d / "record.json").exists() and not (d / "CAPSULE.json").exists() and is_empty(R.load(d.name)):
+            out.append(d.name)
+    return out
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--write", action="store_true")
+    ap.add_argument("--all-empty", action="store_true", help="every record with an empty handoff and no CAPSULE.json, not just the 2026-09-30 ten")
+    ap.add_argument("--ids", nargs="*", default=None)
     a = ap.parse_args()
-    for sid in IDS:
+    ids = a.ids if a.ids else (empty_without_capsule() if a.all_empty else IDS)
+    for sid in ids:
         if not (vault.specimen_dir(sid) / "record.json").exists():
             print("%-34s NO_RECORD" % sid)
             continue

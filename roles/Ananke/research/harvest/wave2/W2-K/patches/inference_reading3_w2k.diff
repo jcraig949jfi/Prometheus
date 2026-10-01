@@ -1,0 +1,55 @@
+--- a/prometheus/ananke/inference.py
++++ b/prometheus/ananke/inference.py
+@@ -119,3 +119,52 @@
+     v = float(pm.var(ddof=1))
+     return {"p": p, "K_per_world": K, "mirror_rho": rho, "world_icc": icc,
+             "K_eff_per_pair": (p * (1 - p) / v) if v > 0 else float("inf")}
++
++
++# ---------------------------------------------------------------- three-valued readings (W2-K)
++# Why: a C1b-style reading "bound beyond cut" is two-valued, so a FAILED absence reading is read as presence
++# (C1b M2: "not B" -> IN_FLIGHT_PLUS_JOINT at 0.89 SE from the cut, keep .73), and an absolute kill line is
++# satisfied by a cell whose normal accuracy already sits below it (C1b fresh f6b6 k0: normal hi99 .578 <= .60 ->
++# "C1 window kills" -> C1_CONTROL_NOT_REPRODUCED with a +.007 effect). roles/Ananke/research/harvest/wave2/W2-K.
++_OPS = {">=": lambda v, c: v >= c, ">": lambda v, c: v > c, "<=": lambda v, c: v <= c, "<": lambda v, c: v < c}
++
++
++def reading3(pair_vals, cut: float, op: str, bound: str = "lo", method: str = "BOOTT", level: float = 0.99,
++             margin_se: float = 2.33) -> dict:
++    """Three-valued reading of 'bound op cut' over pair statistics. bound in {'lo','hi','mean'}; method in
++    {'BOOTT','t','pct'}. d_se = signed SE distance of the bound from the cut (positive = the reading holds).
++    status TRUE if d_se >= margin_se, FALSE if d_se <= -margin_se, else INDETERMINATE; 'raw' is the two-valued
++    reading. Zero-variance arrays: d_se = +-inf (or 0 exactly on the cut)."""
++    if op not in _OPS:
++        raise KeyError(op)
++    x = np.asarray(pair_vals, float)
++    P = x.shape[-1]
++    if method == "BOOTT":
++        m, lo, hi = pair_ci_student(x, level)
++    elif method == "t":
++        m, lo, hi = pair_ci_t(x, level)
++    elif method == "pct":
++        from . import assays
++        m, lo, hi = assays.pair_ci(x, level=level)
++    else:
++        raise KeyError(method)
++    v = float({"lo": lo, "hi": hi, "mean": m}[bound])
++    se = float(x.std(ddof=1) / math.sqrt(P))
++    raw = bool(_OPS[op](v, cut))
++    gap = (v - cut) if op in (">=", ">") else (cut - v)
++    if se > 0:
++        d = gap / se
++    else:
++        d = math.inf if gap > 0 else (-math.inf if gap < 0 else 0.0)
++    if raw and d <= 0:
++        d = 0.0
++    status = "TRUE" if d >= margin_se else ("FALSE" if d <= -margin_se else "INDETERMINATE")
++    k = float(keep_prob(abs(d))) if math.isfinite(d) else 1.0
++    return {"value": v, "se": se, "d_se": d, "raw": raw, "status": status, "keep": k, "method": method}
++
++
++def kill_eligible(normal_pairs, kill_hi: float = 0.60, method: str = "BOOTT", level: float = 0.99,
++                  margin_se: float = 2.33) -> bool:
++    """A 'kills' reading (arm hi99 <= kill_hi) is informative only if the NORMAL arm is decisively above the kill
++    line: reading3(normal, kill_hi, '>', 'lo') is TRUE. Otherwise every non-improving arm 'kills'."""
++    return reading3(normal_pairs, kill_hi, ">", "lo", method, level, margin_se)["status"] == "TRUE"

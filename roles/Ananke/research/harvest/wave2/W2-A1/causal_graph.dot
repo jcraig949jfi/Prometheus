@@ -1,0 +1,49 @@
+// PTE world, one tick, derived from engine.py @ fd631acb2 (edge labels = engine.py line numbers).
+// Boxes = persistent state at t (left) / t+1 (right). Ellipses = transients. Diamonds = exogenous draws.
+// Dashed = control hooks (Controls, off in normal physics). Render: dot -Tsvg causal_graph.dot
+digraph PTE_tick {
+  rankdir=LR; node [fontname="Helvetica", fontsize=10]; edge [fontsize=8];
+  subgraph cluster_t  { label="state at t";   node [shape=box];
+    S_t [label="S[D]"]; E_t [label="E"]; r_t [label="r"]; w_t [label="w[R]"]; Kp_t [label="Kp[L]"];
+    Acc_t [label="Acc_sum/Acc_cnt"]; M_t [label="Msum/Mcnt[LM]\n(by recipient)"]; }
+  subgraph cluster_t1 { label="state at t+1"; node [shape=box];
+    S_1 [label="S'"]; E_1 [label="E'"]; r_1 [label="r'"]; w_1 [label="w'"]; Kp_1 [label="Kp'"];
+    Acc_1 [label="Acc'"]; M_1 [label="M'"]; trace [label="trace[t]\n(S0 at actuator)", shape=box, style=bold]; }
+  node [shape=diamond];
+  Hwake [label="H(WAKE)"]; Hroute [label="H(ROUTE)"]; Hloss [label="H(LOSS)"]; Hlat [label="H(LAT)"];
+  Hnoise [label="H(NOISE)"]; Hdup [label="H(DUP)"]; Hrand [label="H(RANDOP)"]; Hmut [label="H(MUT)"];
+  Hctrl [label="H(CTRL)"]; sched [label="schedule\n(open loop, envs.build)"]; genome [label="genome"];
+  table [label="nbr/dist\n(topology.build)"];
+  node [shape=ellipse];
+  deliv [label="delivered\nmsum/mcnt"]; sense [label="sense"]; awake [label="awake"];
+  regs [label="register file\n+ program"]; O [label="O: emit,chan,\nrport,rval,pay"];
+  rnext [label="r_next"]; kpnext [label="Kp_next"]; want [label="want"]; copies [label="copies:\nrec,dist,alive,\ndelay,q,dup"];
+
+  M_t -> deliv [label="275-276"]; deliv -> deliv [label="aloha/saturate 282-293"];
+  Hctrl -> deliv [label="distractor 294,551", style=dashed];
+  Acc_t -> Acc_1 [label="296-297"]; deliv -> Acc_1 [label="296-297"];
+  sched -> sense [label="301-303"];
+  Hwake -> awake [label="async 308-309"];
+  S_t -> regs [label="312"]; Acc_t -> regs [label="314-315 (incl. this tick's delivery)"]; deliv -> regs;
+  sense -> regs [label="316 (only if awake)"]; E_t -> regs [label="317"];
+  r_t -> regs [label="rule select 331-338"]; genome -> regs; Kp_t -> regs [label="I_all 339"];
+  Hrand -> regs [label="RAND 329,364"]; awake -> regs [label="369"];
+  awake -> Acc_1 [label="zero if awake 321-322"];
+  regs -> S_1 [label="378"]; regs -> rnext [label="SETRULE 373"]; regs -> kpnext [label="WIMM 375-377"];
+  rnext -> r_1 [label="381"]; kpnext -> Kp_1 [label="382"]; Kp_t -> kpnext;
+  regs -> O [label="383"];
+  O -> want [label="386"]; awake -> want; E_t -> want [label="affordability 390"];
+  E_t -> E_1 [label="393"]; want -> E_1; regs -> E_1 [label="nonnop"]; S_1 -> E_1 [label="c_mem"];
+  O -> w_1 [label="rval>>shift 398-403"]; w_t -> w_1;
+  w_1 -> copies [label="sample only 500-509"]; table -> copies [label="497-509"];
+  Hroute -> copies [label="493/501"]; Hloss -> copies [label="511,529"]; Hlat -> copies [label="513"];
+  Hnoise -> copies [label="516-518"]; Hdup -> copies [label="528,530"];
+  Hctrl -> copies [label="shuffle_dest/time, randomize_payload 519-527", style=dashed];
+  want -> copies; O -> copies [label="chan, pay 406,514"];
+  copies -> M_1 [label="index_add 545-549"]; M_t -> M_1 [label="other slots"];
+  Hmut -> Kp_1 [label="mutation 414-420"];
+  S_1 -> S_1 [label="decay 444-445"];
+  S_1 -> trace [label="447-448"];
+  ctrl [shape=note, label="Controls: drop 277, reset 422-437,\nflush 438-442, zero_comm 534,\nfreeze_* 324/398, no_adapt"];
+  ctrl -> deliv [style=dashed]; ctrl -> S_1 [style=dashed]; ctrl -> M_1 [style=dashed];
+}

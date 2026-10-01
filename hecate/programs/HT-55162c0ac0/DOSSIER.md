@@ -84,7 +84,7 @@ _none yet_
 _none yet_
 
 ## PRIOR ART
-_none yet_
+- M12: KNOWN_ANALOGUE_FOUND -- perturbation-response network inference; Pass 4 r2 ALT rows (K1)
 
 ## OPEN QUESTIONS
 - R strictly not reproduced: grouping 10/10 at ARI 1.0 but correlation control -0.111 (below chance, outside |mean| <= 0.1). ORIG did NOT fire (contracting carrier r=0.2 groups 0/10) -- the author's prediction was wrong. ALT FAILED: non-chaotic levels r=0.65 (Lyapunov -0.92) and r=0.8 group perfectly; the readout tracks carrier amplitude, not chaos.

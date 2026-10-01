@@ -1,0 +1,1727 @@
+{
+  "schema": "prometheus.achilles_registry.v1",
+  "part": 4,
+  "built_at_utc": "2026-10-01T01:23:16Z",
+  "base_sha": "9e4d75e62",
+  "seats": [
+    {
+      "seat": "PipelineOrchestrator",
+      "kind": "HISTORICAL_ROLE_DOC",
+      "short_role": "Gen-1 forge/intelligence pipeline orchestrator",
+      "declared_role": {
+        "text": "Forge & Intelligence Pipeline Orchestrator: ran the Nous->Hephaestus->Nemesis forge pipeline and the Pronoia-chained intelligence pipeline, with break-glass authority to forge tools itself when the NVIDIA API was down.",
+        "source": "roles/PipelineOrchestrator/RESPONSIBILITIES.md:5",
+        "source_currency": "2026-04-04"
+      },
+      "observed_role": {
+        "text": "No seat activity since April 2026; the only later commit touching the directory is the 2026-09-11 base-role banner stamp. Its files are now cited as historical evidence (Necropolis nous dossier, pivot docs).",
+        "differs": false,
+        "evidence": [
+          "249bb0f98 2026-09-11 roles/base-role: the responsibilities and working contract every seat inherits (banner stamp only)",
+          "c07c5b173 2026-04-04 Apollo v2.1 roadmap, council research, Forge T2 liar detection batch, Charon deep research packages",
+          "b674a9976 2026-04-03 Fix cross-arch bugs (multilayer_eval, ghost_trap, corpus_first), E1 rerun, Batch E journal, M1/M2 overnight scripts"
+        ]
+      },
+      "domain": "historical",
+      "lifecycle_marker": {
+        "state": "NONE",
+        "date": null,
+        "quote": "",
+        "source": null
+      },
+      "documented_host": {
+        "value": null,
+        "source": null
+      },
+      "aliases": [
+        {
+          "name": "Athena (ScienceAdvisor)",
+          "relation": "role-doc",
+          "source": "roles/PipelineOrchestrator/athena_forge_status_20260329.md (filename); RESPONSIBILITIES.md 'Provide status summaries to Athena (Science Advisor)'"
+        }
+      ],
+      "engines": [
+        {
+          "engine_id": "agents/hephaestus",
+          "relationship": "maintainer",
+          "evidence": "roles/PipelineOrchestrator/RESPONSIBILITIES.md (Pipelines Owned s1, Forge Pipeline)"
+        },
+        {
+          "engine_id": "agents/nous",
+          "relationship": "maintainer",
+          "evidence": "roles/PipelineOrchestrator/RESPONSIBILITIES.md (Pipelines Owned s1)"
+        },
+        {
+          "engine_id": "agents/nemesis",
+          "relationship": "maintainer",
+          "evidence": "roles/PipelineOrchestrator/RESPONSIBILITIES.md (Pipelines Owned s1)"
+        },
+        {
+          "engine_id": "agents/pronoia",
+          "relationship": "maintainer",
+          "evidence": "roles/PipelineOrchestrator/RESPONSIBILITIES.md (Pipelines Owned s2; entry point pronoia.py deleted 2026-04-23 in 3b3c74bc0)"
+        }
+      ],
+      "entry_file": "roles/PipelineOrchestrator/RESPONSIBILITIES.md",
+      "notes": "Gen-1 (March-April 2026) Claude Code role-title directory, not a named seat: no STATUS.md, no seat-state line, no comms boot. INHERITANCE.md lists it 'RESPONSIBILITIES.md (already)', i.e. only the banner was stamped 2026-09-11. No machine line in the file; host unknown (null). Persona name not stated; the athena_* filename suggests it worked alongside the ScienceAdvisor (Athena) window -- not verified."
+    },
+    {
+      "seat": "Polyhymnia",
+      "kind": "SEAT",
+      "short_role": "Representation scavenger for 2.0 ecology",
+      "declared_role": {
+        "text": "Representation scavenger: finds unusual ways information can be represented, compressed or indexed and delivers each as a testable candidate through an existing consumer interface (first consumer: Archaeon's H5 decoder slot); never decides usefulness itself.",
+        "source": "roles/Polyhymnia/RESPONSIBILITIES.md:14",
+        "source_currency": "2026-09-11"
+      },
+      "observed_role": {
+        "text": "Matches declared: re-premise pass 2026-09-11 and PROBE-01 lincode decoder family preregistered and run through the H5 gate. No commits since 2026-09-11.",
+        "differs": false,
+        "evidence": [
+          "7b166723a 2026-09-11 Polyhymnia: re-premised seat files (RESPONSIBILITIES rewritten, 24-row backlog, STATUS); H5 contract question #67 to Archaeon",
+          "8313700c1 2026-09-11 Polyhymnia PROBE-01 run: lincode family admitted by the H5 gate, measured exactly; 8/8 controls PASS",
+          "38e0ca5e9 2026-05-24 Polyhymnia Phase 0: the one-tensor-of-all-tensor-knowledge agent"
+        ]
+      },
+      "domain": "science",
+      "lifecycle_marker": {
+        "state": "ACTIVE",
+        "date": "2026-09-11",
+        "quote": "seat state: ACTIVE. Re-premised by the operator 2026-09-11",
+        "source": "roles/Polyhymnia/STATUS.md:5"
+      },
+      "documented_host": {
+        "value": "M1",
+        "source": "roles/Polyhymnia/journal/2026-09-11.md:51"
+      },
+      "aliases": [
+        {
+          "name": "Polyhymnia (agents/polyhymnia, May 2026 Omnitensor daemon)",
+          "relation": "predecessor",
+          "source": "engine/necropolis/ROSTER.jsonl:16; roles/Polyhymnia/RESPONSIBILITIES.md s5"
+        }
+      ],
+      "engines": [
+        {
+          "engine_id": "agents/polyhymnia",
+          "relationship": "primary",
+          "evidence": "roles/base-role/MONITORS.md:59 (PolyhymniaDaemon, DORMANT, not to be restarted)"
+        }
+      ],
+      "entry_file": "roles/Polyhymnia/RESPONSIBILITIES.md",
+      "notes": "STATUS says ACTIVE but also BLOCKED for consumption on POLY-06 (Archaeon's H5 contract answer); no commits after 2026-09-11, so the ACTIVE marker is 19 days stale at base. Host from comms boot 'booted Polyhymnia on SKULLPORT' (journal :51) and worktree F:\\Prometheus-worktrees (atlas/registry.json maps F: to M1); ROSTER.jsonl:16 also M1."
+    },
+    {
+      "seat": "Pronoia",
+      "kind": "SEAT",
+      "short_role": "Productive-liveness auditor; reporting loop owner",
+      "declared_role": {
+        "text": "Seat holding two eras under one name: Era 1 Forethought Orchestrator (pronoia.py, March-April 2026, deleted) and Era 2 fleet-visibility loop scripts/intelligence_loop.py, which the seat claims; its first mission audited productive liveness (alive vs working) across agora heartbeats.",
+        "source": "roles/Pronoia/RESPONSIBILITIES.md:29",
+        "source_currency": "2026-09-11"
+      },
+      "observed_role": {
+        "text": "Matches declared: adoption pass separating the two eras, ghost actuator on M2 disarmed, heartbeat writer patched (not deployed), 36-row liveness survey. No seat commits since 2026-09-11.",
+        "differs": false,
+        "evidence": [
+          "18fee46d0 2026-09-11 Pronoia: adoption pass -- seat created, two eras separated, Era 2 found alive and not producing",
+          "8b0cecadc 2026-09-11 Pronoia mission 1: ghost disarmed, heartbeat made honest, 36-row liveness survey",
+          "373d81469 2026-05-23 Pronoia: dual-write heartbeat to Postgres (parity with Apollo/Hephaestus)"
+        ]
+      },
+      "domain": "infrastructure",
+      "lifecycle_marker": {
+        "state": "BLOCKED",
+        "date": "2026-09-11",
+        "quote": "SEAT     Returns to BLOCKED on PRON-01.",
+        "source": "roles/Pronoia/STATUS.md:235"
+      },
+      "documented_host": {
+        "value": "M2",
+        "source": "roles/Pronoia/STATUS.md:8"
+      },
+      "aliases": [
+        {
+          "name": "Pronoia Era 1 (pronoia.py Forethought Orchestrator, agents/pronoia)",
+          "relation": "predecessor",
+          "source": "roles/Pronoia/RESPONSIBILITIES.md:29"
+        },
+        {
+          "name": "Pronoia Era 2 (scripts/intelligence_loop.py, agent:Pronoia heartbeat on M4)",
+          "relation": "lane",
+          "source": "roles/Pronoia/RESPONSIBILITIES.md:56; engine/necropolis/ROSTER.jsonl:5"
+        }
+      ],
+      "engines": [
+        {
+          "engine_id": "scripts/intelligence_loop.py",
+          "relationship": "primary",
+          "evidence": "roles/base-role/MONITORS.md:40 (Pronoia annotation: 'this seat CLAIMS the row'); MONITORS.md:37"
+        },
+        {
+          "engine_id": "agents/pronoia",
+          "relationship": "primary",
+          "evidence": "roles/Pronoia/RESPONSIBILITIES.md:29 (Era 1; pronoia.py deleted 2026-04-23 in 3b3c74bc0; RETIRED)"
+        },
+        {
+          "engine_id": "scripts/machine_probe.py",
+          "relationship": "maintainer",
+          "evidence": "roles/base-role/MONITORS.md:21 (OWNER Pronoia BY RULING 2026-09-11 evening; 'Pronoia confirms or corrects')"
+        },
+        {
+          "engine_id": "roles/Pronoia/science/liveness_survey.py",
+          "relationship": "primary",
+          "evidence": "roles/base-role/MONITORS.md:47"
+        }
+      ],
+      "entry_file": "roles/Pronoia/RESPONSIBILITIES.md",
+      "notes": "Seat ran on M2 (SPECTREX5) but the Era 2 loop it claims runs on M4 (harry1) as pid 9620 (STATUS.md:28; ROSTER.jsonl:5 says M4); host listed = where the seat ran. STATUS addendum: BLOCKED -> ACTIVE for mission 1, returns to BLOCKED at close (STATUS.md:166-167, 235). Commit 6be994430 2026-09-17 'M4: stop console-window popups; slow M4 probe/heartbeats to 30 min' later touched scripts/intelligence_loop.py and scripts/machine_probe.py; it carries no seat prefix and its author seat was not determined. MachineProbe ownership by ruling is pending Pronoia's confirmation."
+    },
+    {
+      "seat": "Proteus",
+      "kind": "SEAT",
+      "short_role": "Player/organism foundry maintainer",
+      "declared_role": {
+        "text": "Maintainer of the Prometheus Player Foundry: manufactures large numbers of small, semantically sterile, replayable, lineage-traceable computational organisms from seeded manifests, without looking inside qualification worlds or judging survivors.",
+        "source": "roles/Proteus/RESPONSIBILITIES.md:1",
+        "source_currency": "2026-09-16"
+      },
+      "observed_role": {
+        "text": "Matches declared, extended under Campaign 6 / Round 2: population manifests minted for Archaeon's C4, a graph-organism substrate (proteus/graph), behaviour fingerprints, and a preregistered falsifier (PROTEUS-46) that killed its own motivating claim. Last commit 2026-09-18.",
+        "differs": false,
+        "evidence": [
+          "6a98ef0bb 2026-09-18 Proteus[m2-7d051790]: PROTEUS-46 RUN -- CLIFF_SURVIVES, FALSIFIER_FAILED as formulated",
+          "348d12816 2026-09-18 Proteus[m2-7d051790]: PROTEUS-43 OPENED by operator (Yes) -- proteus.graph_organism.v1 built",
+          "e11e22370 2026-09-17 Proteus[m2-7d051790]: G5 mint -- population_manifest.v1 over Archaeon's exact C4 starting population"
+        ]
+      },
+      "domain": "science",
+      "lifecycle_marker": {
+        "state": "NONE",
+        "date": null,
+        "quote": "",
+        "source": null
+      },
+      "documented_host": {
+        "value": "M2",
+        "source": "roles/Proteus/RESPONSIBILITIES.md:6"
+      },
+      "aliases": [],
+      "engines": [
+        {
+          "engine_id": "proteus",
+          "relationship": "primary",
+          "evidence": "roles/Proteus/RESPONSIBILITIES.md:57 (s3 What I maintain: everything under proteus/); atlas/registry.json engine 'proteus' owner_seats [Proteus]"
+        }
+      ],
+      "entry_file": "roles/Proteus/RESPONSIBILITIES.md",
+      "notes": "No STATUS.md and no WORK_STATE.json (only dated STATUS_2026-09-0x_*.md files and per-instance journals); no seat-state line found, so lifecycle NONE. Last activity 2026-09-18 (roles/Proteus/journal/2026-09-18_m2-7d051790.md). RESPONSIBILITIES header line 4 still says 'Machine: unassigned' (founding record); line 6 records the 2026-09-16 operator ruling M2 (SPECTREX5); atlas/registry.json home_host M2. Theophrastus STATUS (2026-09-14) says 'Proteus has never booted' (comms), while Proteus commits exist from 2026-09-02 -- comms boot vs work, not resolved."
+    },
+    {
+      "seat": "Rhadamanthus",
+      "kind": "SEAT",
+      "short_role": "Necropolis keeper and judge",
+      "declared_role": {
+        "text": "Keeper and Judge of the Necropolis realm: adjudicates the boundaries between the Necromancer, Cleric, Frankenstein and Zombie functions and records what each grave's evidence supports; Necropolis does not inherit death certificates.",
+        "source": "roles/Rhadamanthus/RESPONSIBILITIES.md:25",
+        "source_currency": "2026-09-11"
+      },
+      "observed_role": {
+        "text": "Matches declared: native trial, tool-harvest charter (93-row workshop registry, coroner contract), then the 2026-09-14 court charter adjudicating case POLLUX. Last commit 2026-09-14 (resume point before reboot).",
+        "differs": false,
+        "evidence": [
+          "1f45aa8b8 2026-09-14 Rhadamanthus: resume point logged before reboot (tree clean at 641174d72; H-A..H-D open; RHAD-45/48 next)",
+          "5a95f4071 2026-09-14 necropolis court: case POLLUX adjudicated; role separation measured; FQ-07 demoted; RQ-14..19",
+          "9ac363786 2026-09-13 rhadamanthus: tool-harvest charter verbatim (RHAD-36)"
+        ]
+      },
+      "domain": "audit",
+      "lifecycle_marker": {
+        "state": "ACTIVE",
+        "date": "2026-09-14",
+        "quote": "seat state: ACTIVE under the 2026-09-11 charter",
+        "source": "roles/Rhadamanthus/STATUS.md:39"
+      },
+      "documented_host": {
+        "value": "M2",
+        "source": "roles/Rhadamanthus/STATUS.md:41"
+      },
+      "aliases": [],
+      "engines": [
+        {
+          "engine_id": "engine/necropolis",
+          "relationship": "maintainer",
+          "evidence": "roles/Rhadamanthus/RESPONSIBILITIES.md:25; engine/necropolis/README.md:128 (founded by Mnemosyne, Keeper of the Necropolis)"
+        },
+        {
+          "engine_id": "engine/necropolis/workshop",
+          "relationship": "builder",
+          "evidence": "roles/Rhadamanthus/STATUS.md:25; 641174d72"
+        }
+      ],
+      "entry_file": "roles/Rhadamanthus/RESPONSIBILITIES.md",
+      "notes": "ACTIVE marker dated 2026-09-14 (STATUS currency) with no seat commits since -- 16 days stale at base. Host from 'booted in comms ... on SPECTREX5' (STATUS.md:41) and RESPONSIBILITIES.md:123 '(M2)'. engine/necropolis was founded by Mnemosyne (README.md:128); Rhadamanthus is the later Keeper/Judge seat, so recorded as maintainer, not primary."
+    },
+    {
+      "seat": "ScienceAdvisor",
+      "kind": "HISTORICAL_ROLE_DOC",
+      "short_role": "Gen-1 chief science advisor (Athena)",
+      "declared_role": {
+        "text": "Athena, Chief Science Advisor: interpreted results across projects (primary focus Ignis steering-vector evolution / convergence theory), kept the daily and narrative journals, wrote NotebookLM syntheses and coordinated Council of Titans review.",
+        "source": "roles/ScienceAdvisor/RESPONSIBILITIES.md:5",
+        "source_currency": "2026-04-03"
+      },
+      "observed_role": {
+        "text": "No seat activity since early April 2026; the only later commit is the 2026-09-11 banner stamp.",
+        "differs": false,
+        "evidence": [
+          "249bb0f98 2026-09-11 roles/base-role: the responsibilities and working contract every seat inherits (banner stamp only)",
+          "b674a9976 2026-04-03 Fix cross-arch bugs (multilayer_eval, ghost_trap, corpus_first), E1 rerun, Batch E journal, M1/M2 overnight scripts",
+          "509142e4f 2026-04-02 Ignis: Phi-2 batch, Llama batch, v3 battery, new rig setup, role updates"
+        ]
+      },
+      "domain": "historical",
+      "lifecycle_marker": {
+        "state": "NONE",
+        "date": null,
+        "quote": "",
+        "source": null
+      },
+      "documented_host": {
+        "value": "M1",
+        "source": "roles/ScienceAdvisor/RESPONSIBILITIES.md:7"
+      },
+      "aliases": [
+        {
+          "name": "Athena",
+          "relation": "role-doc",
+          "source": "roles/ScienceAdvisor/RESPONSIBILITIES.md:5"
+        }
+      ],
+      "engines": [
+        {
+          "engine_id": "ignis",
+          "relationship": "maintainer",
+          "evidence": "roles/ScienceAdvisor/RESPONSIBILITIES.md (s1: 'ignis/src/evolve_1_5b.py -- CMA-ES evolution script (I maintain this)')"
+        }
+      ],
+      "entry_file": "roles/ScienceAdvisor/RESPONSIBILITIES.md",
+      "notes": "Gen-1 role-title directory (one file). No STATUS, no seat-state line, no comms boot. 'Athena' is a persona name only; no roles/Athena exists. Noesis and Forge are listed as projects it interpreted (consumer), not recorded as engines."
+    },
+    {
+      "seat": "Skopos",
+      "kind": "SEAT",
+      "short_role": "Parked relevance-filter instrument specimen",
+      "declared_role": {
+        "text": "PARKED / INSTRUMENT_SPECIMEN by operator ruling: the March 2026 relevance filter is not revived; its latent charter (measure whether a selector had a fair opportunity to decide) is preserved but inactive until an active seat owning a selector requests it.",
+        "source": "roles/Skopos/RESPONSIBILITIES.md:5",
+        "source_currency": "2026-09-11"
+      },
+      "observed_role": {
+        "text": "Matches declared: adoption pass autopsied the scorer (1 entity scored of 448 eligible, 5x units error), then parked; one reply to Metis afterwards.",
+        "differs": false,
+        "evidence": [
+          "b3e27f7f4 2026-09-11 Skopos: seat adopted, and the autopsy says it scored one entity in its life",
+          "aca768424 2026-09-11 Skopos: PARKED / INSTRUMENT_SPECIMEN; SKOPOS-06 and SKOPOS-07 discharged",
+          "8bec88eb2 2026-09-11 Skopos: reply to Metis #109 -- third instance given, base rate declined"
+        ]
+      },
+      "domain": "audit",
+      "lifecycle_marker": {
+        "state": "PARKED",
+        "date": "2026-09-11",
+        "quote": "disposition       PARKED / INSTRUMENT_SPECIMEN",
+        "source": "roles/Skopos/STATUS.md:9"
+      },
+      "documented_host": {
+        "value": "M2",
+        "source": "roles/Skopos/STATUS.md:25"
+      },
+      "aliases": [
+        {
+          "name": "Skopos (agents/skopos, March 2026 relevance scorer in the Pronoia pipeline)",
+          "relation": "predecessor",
+          "source": "roles/Skopos/RESPONSIBILITIES.md:60"
+        }
+      ],
+      "engines": [
+        {
+          "engine_id": "agents/skopos",
+          "relationship": "primary",
+          "evidence": "roles/base-role/MONITORS.md:72 (SkoposScoreCycle, PARKED / INSTRUMENT_SPECIMEN)"
+        }
+      ],
+      "entry_file": "roles/Skopos/RESPONSIBILITIES.md",
+      "notes": "The original March agent ran on a host the seat file calls gone; the 2026-09-11 seat pass ran on M2. Domain 'audit' reflects the latent charter; historically it was an intelligence-pipeline filter. Not in engine/necropolis/ROSTER.jsonl."
+    },
+    {
+      "seat": "StructuralMathematician",
+      "kind": "HISTORICAL_ROLE_DOC",
+      "short_role": "Gen-1 Noesis structural mathematician (Aletheia)",
+      "declared_role": {
+        "text": "Aletheia -- Structural Mathematician & Tensor Architect for Noesis v2: mine and SymPy-verify equations and transformation primitives, build derivation-lineage graphs, and design the tensor encoding.",
+        "source": "roles/StructuralMathematician/RESPONSIBILITIES.md:5",
+        "source_currency": "2026-03-29"
+      },
+      "observed_role": {
+        "text": "Single substantive commit (Noesis v2, 2026-03-29); only later change is the 2026-09-11 banner stamp.",
+        "differs": false,
+        "evidence": [
+          "249bb0f98 2026-09-11 roles/base-role: the responsibilities and working contract every seat inherits (banner stamp only)",
+          "d5b0130e1 2026-03-29 Noesis v2: 11-primitive basis, damage algebra, 30 impossibility hubs, 2396-row database"
+        ]
+      },
+      "domain": "historical",
+      "lifecycle_marker": {
+        "state": "NONE",
+        "date": null,
+        "quote": "",
+        "source": null
+      },
+      "documented_host": {
+        "value": null,
+        "source": null
+      },
+      "aliases": [
+        {
+          "name": "Aletheia",
+          "relation": "role-doc",
+          "source": "roles/StructuralMathematician/RESPONSIBILITIES.md:1 ('Aletheia -- Structural Mathematician, Project Prometheus')"
+        },
+        {
+          "name": "aletheia (agents/aletheia knowledge-graph harvester)",
+          "relation": "same-name-different-referent",
+          "source": "agents/aletheia/README.md:9 (claims a dual role incl. 'Structural Mathematician for Noesis')"
+        }
+      ],
+      "engines": [],
+      "entry_file": "roles/StructuralMathematician/RESPONSIBILITIES.md",
+      "notes": "Gen-1 role-title directory (one file); title verified at line 1. Noesis v2 code (noesis/) was added in d5b0130e1 but no noesis/ directory exists at origin/main 9e4d75e62, so no engine id recorded. agents/aletheia README asserts one name holds both the pipeline harvester and this role; they are different programs, so recorded as same-name-different-referent. Not roles/Alethelia (truthful reporter). No machine line in the file; host null."
+    },
+    {
+      "seat": "Talos",
+      "kind": "SEAT",
+      "short_role": "Reasoning-code corpus builder (dormant daemon)",
+      "declared_role": {
+        "text": "Old Aporia-forged agent (May 2026 Phase-0 corpus builder for a reasoning-code specialist model) reanimated as a seat; under the TALOS-01 ruling the daemon is not relaunched and the seat characterizes the existing 24,847-row corpus and searches for a real consumer.",
+        "source": "roles/Talos/RESPONSIBILITIES.md:13",
+        "source_currency": "2026-09-11"
+      },
+      "observed_role": {
+        "text": "Matches declared: corpus preserved byte-identical, characterized with controls, per-family semantic faithfulness measured; TALOS-10 consumer search answered NONE by several seats. No commits since 2026-09-11.",
+        "differs": false,
+        "evidence": [
+          "c236551ab 2026-09-11 Talos: TALOS-24 measured per family (746 rows, pre-registered, six controls)",
+          "905be25f7 2026-09-11 Talos: TALOS-01 ruled (committed verbatim); corpus preserved byte-identical (TALOS-02); 24,847 rows characterized",
+          "0c35c1c30 2026-09-11 Techne -> Talos: TALOS-10 answered NONE, with the two preconditions that would change it"
+        ]
+      },
+      "domain": "science",
+      "lifecycle_marker": {
+        "state": "ACTIVE",
+        "date": "2026-09-11",
+        "quote": "seat state: ACTIVE (operator ruling 2026-09-11: \"Talos is awake\")",
+        "source": "roles/Talos/STATUS.md:6"
+      },
+      "documented_host": {
+        "value": "M1",
+        "source": "roles/Talos/journal/2026-09-11.md:48"
+      },
+      "aliases": [
+        {
+          "name": "Talos (agents/talos, Aporia 2026-05-23, Ergon-supervised tool)",
+          "relation": "predecessor",
+          "source": "roles/Talos/RESPONSIBILITIES.md:13; engine/necropolis/ROSTER.jsonl:20"
+        }
+      ],
+      "engines": [
+        {
+          "engine_id": "agents/talos",
+          "relationship": "primary",
+          "evidence": "roles/base-role/MONITORS.md:54 (TalosCorpusDaemon, DORMANT)"
+        }
+      ],
+      "entry_file": "roles/Talos/RESPONSIBILITIES.md",
+      "notes": "RESPONSIBILITIES s0 says standing state BLOCKED on TALOS-01; STATUS (later the same day) says ACTIVE after TALOS-01 was ruled. ACTIVE marker 19 days stale at base. Host from comms boot '(SKULLPORT, ...)' and worktree F:\\Prometheus-worktrees (M1 per atlas); ROSTER.jsonl:20 also M1. INHERITANCE.md:43 also stamps agents/talos/CHARTER.md."
+    },
+    {
+      "seat": "Techne",
+      "kind": "SEAT",
+      "short_role": "Toolsmith, donor foundry, fossil archaeology",
+      "declared_role": {
+        "text": "Toolsmith and substrate owner (sigma_kernel, prometheus_math) with a calibration discipline, extended by operator rulings into the Donor Foundry (acquisition receipts) and the Mechanism Archaeology Pipeline (fossil packets, provenance recovery, historical world reconstruction).",
+        "source": "roles/Techne/RESPONSIBILITIES.md:224",
+        "source_currency": "2026-09-16"
+      },
+      "observed_role": {
+        "text": "Recent work is fossil refinery and prior-art acquisition for Nyx (donor batches, fossil records and capsules, rulings on R19 grades), not tool forging; consistent with the 2026-09-12/16 sections that supersede the April toolsmith framing.",
+        "differs": false,
+        "evidence": [
+          "a853fdf0b 2026-09-30 Techne[gandalf-4c0c7e64]: batch 17 -- 20 prior-art donors fossilized for Nyx",
+          "891250062 2026-09-30 Techne[gandalf-4c0c7e64]: RULING for Nyx #1071 -- R19 grade per source type",
+          "1182e5328 2026-09-21 Techne[gandalf-a04f7c25]: operator directive 7 (prior-art raid, verbatim + MANIFEST) -- FIRST RETURN"
+        ]
+      },
+      "domain": "infrastructure",
+      "lifecycle_marker": {
+        "state": "IDLE",
+        "date": "2026-09-30",
+        "quote": "\"state\": \"READY\"",
+        "source": "roles/Techne/WORK_STATE.json:7"
+      },
+      "documented_host": {
+        "value": "M3",
+        "source": "roles/Techne/WORK_STATE.json:8"
+      },
+      "aliases": [],
+      "engines": [
+        {
+          "engine_id": "techne",
+          "relationship": "primary",
+          "evidence": "roles/Techne/RESPONSIBILITIES.md (Output Artifacts: techne/lib, techne/inventory.json; techne/fossils at :236)"
+        },
+        {
+          "engine_id": "sigma_kernel",
+          "relationship": "maintainer",
+          "evidence": "roles/Techne/RESPONSIBILITIES.md (Core Responsibilities, Substrate, extended 2026-05-05)"
+        },
+        {
+          "engine_id": "prometheus_math",
+          "relationship": "maintainer",
+          "evidence": "roles/Techne/RESPONSIBILITIES.md (Core Responsibilities, Substrate)"
+        },
+        {
+          "engine_id": "theseus",
+          "relationship": "primary",
+          "evidence": "roles/base-role/INHERITANCE.md:71 (\"Techne's May 2026 substrate-generation engine (theseus/)\"); engine/necropolis/ROSTER.jsonl:17"
+        }
+      ],
+      "entry_file": "roles/Techne/RESPONSIBILITIES.md",
+      "notes": "No STATUS.md; WORK_STATE.json state READY ('none in flight. READY: awaiting Aporia assignment') mapped to IDLE. Host conflict: ROSTER.jsonl:8 says Techne M1; commits show m2 instances on 2026-09-16 (feab5d00e) and gandalf (M3) instances since 2026-09-17; WORK_STATE.json:8 'gandalf-4c0c7e64 (M3/GANDALF)' is newest. RESPONSIBILITIES line 7 'Status: Active as of 2026-04-21' is stale relative to its later sections. The 'theseus' engine here is the May engine, not the 2026-09-30 Theseus seat's theseus/synth. No techne/theseus engine rows in atlas/registry.json."
+    },
+    {
+      "seat": "Theophrastus",
+      "kind": "SEAT",
+      "short_role": "Computational ecology contrast explorer",
+      "declared_role": {
+        "text": "Computational ecology / combinatorial exploration: explores mechanism x pressure x world x branch x intervention over the shared SFE + PEW substrate by contrast between replayable cells, emitting reproducible signals for other seats, never discoveries.",
+        "source": "roles/Theophrastus/RESPONSIBILITIES.md:10",
+        "source_currency": "2026-09-13"
+      },
+      "observed_role": {
+        "text": "Matches declared: founding crucible (46 rows, 23 admitted signals), round 2 mechanism harvest (SPEC-001/002, CAND-003), THEO-14 cross-consumer re-derivation of Vivarium bench fossils. Last seat commit 2026-09-14.",
+        "differs": false,
+        "evidence": [
+          "1b067751f 2026-09-14 Theophrastus THEO-14: SPEC-001 instrument re-derives 150/150 Vivarium bench fossils",
+          "cd8d4c87c 2026-09-14 Theophrastus round 2: mechanism harvest -- SPEC-001 MARGIN_RESPONSE (specimen), SPEC-002 ONE_CLASS_COLLAPSE (bounded), CAND-003",
+          "fcbbdd2da 2026-09-13 Theophrastus founding round: loop is real; 46 rows, 23 admitted signals"
+        ]
+      },
+      "domain": "science",
+      "lifecycle_marker": {
+        "state": "ACTIVE",
+        "date": "2026-09-14",
+        "quote": "State: ACTIVE (PRESENT: comms boot",
+        "source": "roles/Theophrastus/STATUS.md:3"
+      },
+      "documented_host": {
+        "value": "M1",
+        "source": "roles/Theophrastus/journal/2026-09-13.md:1"
+      },
+      "aliases": [],
+      "engines": [
+        {
+          "engine_id": "theophrastus",
+          "relationship": "primary",
+          "evidence": "fcbbdd2da (first commit of theophrastus/, founding round)"
+        }
+      ],
+      "entry_file": "roles/Theophrastus/RESPONSIBILITIES.md",
+      "notes": "Host inferred from instance id 'm1-af618b77' in the founding journal header; no explicit host line in STATUS. ACTIVE marker 16 days stale at base. Theophrastus has no row in the INHERITANCE.md entry-file table (only the stamp table, :70); entry file by rule order is RESPONSIBILITIES.md. Open THEO-REQs to Mnemosyne, Vivarium, Proteus, Herakles."
+    },
+    {
+      "seat": "Theseus",
+      "kind": "SEAT",
+      "short_role": "Concept tensor / synthetic ancestry ecology",
+      "declared_role": {
+        "text": "Builds and runs an executable ecology in which human-derived G0 concepts are compiled into primitives and collided k-way in a substrate (never by an LLM), whose synthetic descendants, lenses and dark objects become new collision matter, measured against controls built to say no.",
+        "source": "roles/Theseus/RESPONSIBILITIES.md:15",
+        "source_currency": "2026-09-30"
+      },
+      "observed_role": {
+        "text": "Matches declared: created and chartered 2026-09-30; theseus/synth machinery preregistered; v0 (H1 FAIL) and corrected v0_1 (H1 INDETERMINATE) run; then READY.",
+        "differs": false,
+        "evidence": [
+          "56f0fc547 2026-09-30 Theseus: state READY under CWO-2026-09-30B (completion sent to Aporia #1125)",
+          "c96bc5538 2026-09-30 Theseus v0_1 RESULT (corrected replication): H1 INDETERMINATE; review packet",
+          "66f7f0db1 2026-09-30 Theseus v0 PREREGISTRATION + machinery: theseus/synth/ -- committed before any full run"
+        ]
+      },
+      "domain": "science",
+      "lifecycle_marker": {
+        "state": "IDLE",
+        "date": "2026-09-30",
+        "quote": "seat state: READY under CWO-2026-09-30B",
+        "source": "roles/Theseus/STATUS.md:5"
+      },
+      "documented_host": {
+        "value": "DESKTOP-RUAPVAI",
+        "source": "roles/Theseus/STATUS.md:13"
+      },
+      "aliases": [
+        {
+          "name": "Theseus (May 2026 substrate-generation engine theseus/, Techne's)",
+          "relation": "same-name-different-referent",
+          "source": "roles/Theseus/RESPONSIBILITIES.md:63; roles/base-role/INHERITANCE.md:71; engine/necropolis/ROSTER.jsonl:17"
+        }
+      ],
+      "engines": [
+        {
+          "engine_id": "theseus/synth",
+          "relationship": "primary",
+          "evidence": "roles/Theseus/RESPONSIBILITIES.md:27; 66f7f0db1"
+        },
+        {
+          "engine_id": "tyche",
+          "relationship": "consumer",
+          "evidence": "roles/Theseus/RESPONSIBILITIES.md s2 (imports tyche.lens READ-ONLY)"
+        },
+        {
+          "engine_id": "hecate",
+          "relationship": "consumer",
+          "evidence": "roles/Theseus/RESPONSIBILITIES.md s2 (reads Hecate Pass-0 concept extractions)"
+        }
+      ],
+      "entry_file": "roles/Theseus/RESPONSIBILITIES.md",
+      "notes": "READY mapped to IDLE (awaiting Aporia assignment; charter thread T-THESEUS-SYNTHETIC-ANCESTRY still RUNNING in WORK_STATE). Internal conflict: STATUS.md:6 says 'WORK_STATE ACTIVE' but roles/Theseus/WORK_STATE.json:7 says READY. Shares the theseus/ directory with the May engine and writes only new subdirectories (89c5166da report to Techne). THESEUS-06 blocked on Tyche."
+    },
+    {
+      "seat": "Tyche",
+      "kind": "SEAT",
+      "short_role": "Dark-residual lens evolution",
+      "declared_role": {
+        "text": "Evolves executable perceptual lenses against dark residuals (structure the current ecology has not made exploitable) and keeps a lens only for measured, replicated, causal marginal consequence, never for intelligibility; extends Hecate.",
+        "source": "roles/Tyche/RESPONSIBILITIES.md:15",
+        "source_currency": "2026-09-30"
+      },
+      "observed_role": {
+        "text": "Matches declared: v0 (mixed verdicts), residual catalogue v0/v0.1 (122 residuals from 30 seats), v1 GATE 6 FAIL, v2 Block R regime-change run complete, all on 2026-09-30.",
+        "differs": false,
+        "evidence": [
+          "4dbbc07d0 2026-09-30 Tyche[m2-ebcbbd6b]: v2 Block R COMPLETE -- regime change: RH1-RH4 false, 2/72 adaptations",
+          "d32dbfb49 2026-09-30 Tyche[m2-ebcbbd6b]: v1 COMPLETE -- GATE 6 FAIL; counterfactual false",
+          "3c7b9783e 2026-09-30 Tyche[m2-ebcbbd6b]: residual catalogue v0 (CWO CURRENT) -- 122 residuals from 30 seats"
+        ]
+      },
+      "domain": "science",
+      "lifecycle_marker": {
+        "state": "ACTIVE",
+        "date": "2026-09-30",
+        "quote": "\"state\": \"ACTIVE\"",
+        "source": "roles/Tyche/WORK_STATE.json:7"
+      },
+      "documented_host": {
+        "value": "M2",
+        "source": "roles/base-role/INHERITANCE.md:40"
+      },
+      "aliases": [],
+      "engines": [
+        {
+          "engine_id": "tyche",
+          "relationship": "primary",
+          "evidence": "roles/Tyche/RESPONSIBILITIES.md:58"
+        },
+        {
+          "engine_id": "hecate",
+          "relationship": "consumer",
+          "evidence": "roles/Tyche/RESPONSIBILITIES.md s2 (Hecate's hecate/alien/systems.py are Tyche world families; does not edit hecate/)"
+        }
+      ],
+      "entry_file": "roles/Tyche/RESPONSIBILITIES.md",
+      "notes": "STATUS.md:5 (14:30Z) also ACTIVE; WORK_STATE.json (16:30Z) is newer and adds v2 Block R. Host from INHERITANCE ('creation pass on M2') and m2-* instance ids on every commit. Not in atlas/registry.json engines. INHERITANCE records no prior use of the name as a seat or agent."
+    },
+    {
+      "seat": "Vivarium",
+      "kind": "SEAT",
+      "short_role": "Experiment queue executor (data plane)",
+      "declared_role": {
+        "text": "The trustworthy mechanical hand at the bench: executes Archaeon's PostgreSQL experiment queue faithfully against SFE and records to PEW, with database-enforced invariants, preserved failures and no scientific opinion.",
+        "source": "roles/Vivarium/CHARTER.md:1",
+        "source_currency": "2026-09-05"
+      },
+      "observed_role": {
+        "text": "Matches declared: M2 deployment window C4-20260917-W1, canary runs, C4 gate proofs, then an incident record 2026-09-24 (M2 host exhaustion; consumer and dead-man parks cleared).",
+        "differs": false,
+        "evidence": [
+          "8c5a1a23b 2026-09-24 Vivarium[m2-fce3fe0b]: INCIDENT 2026-09-24 -- M2 host at 98% commit ... Both parks cleared with recorded clearances",
+          "1db58c264 2026-09-17 Vivarium[m2-fce3fe0b]: canary run 11 (CANARY_AUTO=1) OK 35/35 on production at 6e7ac48f0 with ZERO human commands",
+          "1dbdbde26 2026-09-17 Vivarium[m2-fce3fe0b]: STATUS/journal -- consumer ALIVE on M2 from the pinned worktree; disposition QUALIFIED_FOR_CAMPAIGN"
+        ]
+      },
+      "domain": "infrastructure",
+      "lifecycle_marker": {
+        "state": "ACTIVE",
+        "date": "2026-09-17",
+        "quote": "## Is Vivarium alive / **YES.**",
+        "source": "roles/Vivarium/STATUS.md:14"
+      },
+      "documented_host": {
+        "value": "M2",
+        "source": "roles/Vivarium/STATUS.md:9"
+      },
+      "aliases": [],
+      "engines": [
+        {
+          "engine_id": "vivarium/viv",
+          "relationship": "primary",
+          "evidence": "roles/Vivarium/RESPONSIBILITIES.md:7; atlas/registry.json engine 'vivarium' (code_paths vivarium/viv, owner Vivarium, home M2, LIVE); roles/base-role/MONITORS.md:31-34"
+        }
+      ],
+      "entry_file": "roles/Vivarium/RESPONSIBILITIES.md",
+      "notes": "STATUS currency 2026-09-17; the 2026-09-24 incident file (roles/Vivarium/INCIDENT_2026-09-24_M2_HOST_EXHAUSTION.md, 8c5a1a23b) is newer and records a consumer park 09-19 (24h idle bound, empty queue) and a dead-man park 09-23, both cleared, with SFE 8811 unreachable at the time. Canonical store (schema viv) is on M1 Postgres; consumer runs on M2. Last seat commit 2026-09-24."
+    },
+    {
+      "seat": "Chiron",
+      "kind": "BRANCH_ONLY_SEAT",
+      "short_role": "Engine Five (CDE) design and delegation",
+      "declared_role": {
+        "text": "Design, delegation of coding work, and some coding for the prospective fifth engine (Chiron Developmental Engine) under the CDE thesis and the program-wide synthesis capture directive: build early experiment rungs, not the engine, and not at scale.",
+        "source": "origin/chiron/base-role-adopt-2026-09-21:roles/Chiron/RESPONSIBILITIES.md:1",
+        "source_currency": "2026-09-21"
+      },
+      "observed_role": {
+        "text": "Documents only, on one unmerged branch: seat creation, verbatim capture and review of the CDE thesis, capture of the synthesis directive, remit clarification. No experiment designed or run.",
+        "differs": false,
+        "evidence": [
+          "ad7b05339 2026-09-21 Chiron: remit clarified (design + delegate coding + build some); comms de-escalated",
+          "9e54a51ce 2026-09-21 PROGRAM-WIDE: synthesis capture directive (supersedes parts of the Engine Five thesis)",
+          "fe3140d66 2026-09-21 Chiron: CDE design thesis captured verbatim and reviewed (no implementation)",
+          "481dbfe40 2026-09-21 Chiron: new seat created and base role adopted (charter PENDING)"
+        ]
+      },
+      "domain": "science",
+      "lifecycle_marker": {
+        "state": "ACTIVE",
+        "date": "2026-09-21",
+        "quote": "seat state: ON POINT FOR DESIGN, FOR DELEGATION OF CODING WORK, AND FOR SOME OF THAT CODING ITSELF -- NOT FOR SCALE.",
+        "source": "origin/chiron/base-role-adopt-2026-09-21:roles/Chiron/STATUS.md:7"
+      },
+      "documented_host": {
+        "value": "BUCKKEEP",
+        "source": "origin/chiron/base-role-adopt-2026-09-21:roles/Chiron/STATUS.md:20"
+      },
+      "aliases": [],
+      "engines": [],
+      "entry_file": "origin/chiron/base-role-adopt-2026-09-21:roles/Chiron/RESPONSIBILITIES.md",
+      "notes": "Exists only on origin/chiron/base-role-adopt-2026-09-21 (4 commits not on origin/main; the branch is not an ancestor of 9e4d75e62). No roles/Chiron, INHERITANCE row, MONITORS row or atlas engine on main; git grep for 'chiron' in roles/base-role, ops and atlas/registry.json on main returns nothing. The 'PROGRAM-WIDE' synthesis directive commit 9e54a51ce is also only on this branch. BUCKKEEP is outside the M1-M4 fleet; the seat branch was checked out in the canonical clone (recorded deviation, STATUS.md:20-23). Seat-state line is not a standard state word; mapped to ACTIVE. Marker 9 days stale at base; no engine code."
+    },
+    {
+      "seat": "aletheia (agent)",
+      "kind": "AGENT_TOOL",
+      "short_role": "Era-1 paper knowledge-graph harvester",
+      "declared_role": {
+        "text": "Knowledge harvesting and taxonomy agent: extracts entities from Eos-discovered papers into a persistent SQLite knowledge graph (downstream: Skopos). The README also claims a second role as Structural Mathematician for Noesis.",
+        "source": "agents/aletheia/README.md:1",
+        "source_currency": "2026-04-03"
+      },
+      "observed_role": {
+        "text": "Not reconstructed (historical agent/tool; brief entry). Evidence is the last commit touching its code.",
+        "differs": false,
+        "evidence": [
+          "b674a9976 2026-04-03 Fix cross-arch bugs (multilayer_eval, ghost_trap, corpus_first), E1 rerun, Batch E journal, M1/M2 overnight scripts"
+        ]
+      },
+      "domain": "historical",
+      "lifecycle_marker": {
+        "state": "ACTIVE",
+        "date": null,
+        "quote": "pipeline-stage active | knowledge graph harvester",
+        "source": "engine/necropolis/ROSTER.jsonl:46"
+      },
+      "documented_host": {
+        "value": null,
+        "source": "engine/necropolis/ROSTER.jsonl:46"
+      },
+      "aliases": [
+        {
+          "name": "StructuralMathematician (Aletheia persona)",
+          "relation": "same-name-different-referent",
+          "source": "roles/StructuralMathematician/RESPONSIBILITIES.md:1; agents/aletheia/README.md:9"
+        }
+      ],
+      "engines": [
+        {
+          "engine_id": "agents/aletheia",
+          "relationship": "primary",
+          "evidence": "agents/aletheia/README.md"
+        }
+      ],
+      "entry_file": "agents/aletheia/README.md",
+      "notes": "ROSTER says 'active' (undated) but the Era-1 intelligence pipeline that ran it (pronoia.py) was deleted 2026-04-23 (roles/Pronoia/RESPONSIBILITIES.md:29); last code change 2026-04-03. ROSTER machine '?' so host null. No roles/Aletheia dir; not roles/Alethelia (different seat)."
+    },
+    {
+      "seat": "auditor (agent)",
+      "kind": "AGENT_TOOL",
+      "short_role": "Gen-1 pipeline health log aggregator",
+      "declared_role": {
+        "text": "Pipeline health monitor and structured-log aggregator: scrapes events.jsonl from all agents and writes per-agent health, key metrics, anomaly detection and alerts for James.",
+        "source": "agents/auditor/src/auditor.py:2",
+        "source_currency": "2026-03-27"
+      },
+      "observed_role": {
+        "text": "Not reconstructed (historical agent/tool; brief entry). Evidence is the last commit touching its code.",
+        "differs": false,
+        "evidence": [
+          "82d77e63f 2026-03-27 v5 metacognition merge, 58-cat gate, auditor agent, structlog, pipeline launchers"
+        ]
+      },
+      "domain": "historical",
+      "lifecycle_marker": {
+        "state": "NONE",
+        "date": null,
+        "quote": "",
+        "source": null
+      },
+      "documented_host": {
+        "value": null,
+        "source": null
+      },
+      "aliases": [],
+      "engines": [
+        {
+          "engine_id": "agents/auditor",
+          "relationship": "primary",
+          "evidence": "agents/auditor/src/auditor.py"
+        }
+      ],
+      "entry_file": "agents/auditor/src/auditor.py",
+      "notes": "No README (src/auditor.py docstring used). Not in engine/necropolis/ROSTER.jsonl; no lifecycle marker found. Only commit 82d77e63f 2026-03-27."
+    },
+    {
+      "seat": "acheron (charon agent)",
+      "kind": "AGENT_TOOL",
+      "short_role": "HARD-5 coordinate-collision detector",
+      "declared_role": {
+        "text": "Walks a rotating slice of the prose substrate and flags places where distinct mathematical coordinates are silently treated as one (collision_candidate artifacts); complement to Harmonia's Iris.",
+        "source": "charon/agents/acheron/CHARTER.md:1",
+        "source_currency": "2026-05-19"
+      },
+      "observed_role": {
+        "text": "Not reconstructed (historical agent/tool; brief entry). Evidence is the last commit touching its code.",
+        "differs": false,
+        "evidence": [
+          "0255a86bb 2026-05-19 Charon swarm: adopt dr_prompt_discipline doctrine across all 5 members"
+        ]
+      },
+      "domain": "historical",
+      "lifecycle_marker": {
+        "state": "ACTIVE",
+        "date": null,
+        "quote": "M2 tool active",
+        "source": "engine/necropolis/ROSTER.jsonl:30"
+      },
+      "documented_host": {
+        "value": "M2",
+        "source": "engine/necropolis/ROSTER.jsonl:30"
+      },
+      "aliases": [
+        {
+          "name": "Charon (seat)",
+          "relation": "lane",
+          "source": "scripts/charon_loop.py:2 (Charon swarm rotation)"
+        }
+      ],
+      "engines": [
+        {
+          "engine_id": "charon/agents/acheron",
+          "relationship": "primary",
+          "evidence": "charon/agents/acheron/CHARTER.md"
+        }
+      ],
+      "entry_file": "charon/agents/acheron/CHARTER.md",
+      "notes": "Charon swarm member rotated by scripts/charon_loop.py. ROSTER 'active' is undated and sits against a last code change of 2026-05-19. Necropolis dossier engine/necropolis/dossiers/acheron.dossier.json classification NEEDS_MORE_EVIDENCE."
+    },
+    {
+      "seat": "erebos (charon agent)",
+      "kind": "AGENT_TOOL",
+      "short_role": "Charon swarm hypothesis composer/forger",
+      "declared_role": {
+        "text": "Forger/composer agent (Charon swarm v0.8): plugin host for hypothesis-generator archetypes, the swarm's generative layer; renamed from Hephaestus 2026-05-26 after a name collision with agents/hephaestus.",
+        "source": "charon/agents/erebos/__init__.py:1",
+        "source_currency": "2026-06-03"
+      },
+      "observed_role": {
+        "text": "Not reconstructed (historical agent/tool; brief entry). Evidence is the last commit touching its code.",
+        "differs": false,
+        "evidence": [
+          "d7120eb5a 2026-06-03 Erebos Phase 3.K ITER-83+84: pair-aware + triplet permutation nulls -- strongest claim DOWNGRADED"
+        ]
+      },
+      "domain": "historical",
+      "lifecycle_marker": {
+        "state": "ACTIVE",
+        "date": null,
+        "quote": "M2 tool active",
+        "source": "engine/necropolis/ROSTER.jsonl:34"
+      },
+      "documented_host": {
+        "value": "M2",
+        "source": "engine/necropolis/ROSTER.jsonl:34"
+      },
+      "aliases": [
+        {
+          "name": "Charon (seat)",
+          "relation": "lane",
+          "source": "scripts/charon_loop.py:2 (Charon swarm rotation)"
+        },
+        {
+          "name": "Hephaestus (Charon swarm member, pre-rename)",
+          "relation": "predecessor",
+          "source": "charon/agents/erebos/__init__.py:3"
+        },
+        {
+          "name": "Hephaestus (roles/Hephaestus, agents/hephaestus forge)",
+          "relation": "same-name-different-referent",
+          "source": "charon/agents/erebos/__init__.py:3"
+        }
+      ],
+      "engines": [
+        {
+          "engine_id": "charon/agents/erebos",
+          "relationship": "primary",
+          "evidence": "charon/agents/erebos/__init__.py"
+        }
+      ],
+      "entry_file": "charon/agents/erebos/__init__.py",
+      "notes": "Charon swarm member rotated by scripts/charon_loop.py. ROSTER 'active' is undated and sits against a last code change of 2026-06-03. No README/CHARTER (package docstring used). Necropolis dossier erebos.dossier.json classification NO_FAIR_TEST_ON_RECORD."
+    },
+    {
+      "seat": "lethe (charon agent)",
+      "kind": "AGENT_TOOL",
+      "short_role": "Anti-anchor miner (cold LLM probes)",
+      "declared_role": {
+        "text": "Fires cold LLM completions against recently-settled conjectures that models still treat as open and emits anti_anchor_candidate artifacts when the false form appears above threshold.",
+        "source": "charon/agents/lethe/CHARTER.md:1",
+        "source_currency": "2026-05-23"
+      },
+      "observed_role": {
+        "text": "Not reconstructed (historical agent/tool; brief entry). Evidence is the last commit touching its code.",
+        "differs": false,
+        "evidence": [
+          "1aaad0277 2026-05-23 Charon swarm v0.4: Stygian executor (MVP1 Lehmer) + Hecate audit"
+        ]
+      },
+      "domain": "historical",
+      "lifecycle_marker": {
+        "state": "ACTIVE",
+        "date": null,
+        "quote": "M2 tool active",
+        "source": "engine/necropolis/ROSTER.jsonl:29"
+      },
+      "documented_host": {
+        "value": "M2",
+        "source": "engine/necropolis/ROSTER.jsonl:29"
+      },
+      "aliases": [
+        {
+          "name": "Charon (seat)",
+          "relation": "lane",
+          "source": "scripts/charon_loop.py:2 (Charon swarm rotation)"
+        }
+      ],
+      "engines": [
+        {
+          "engine_id": "charon/agents/lethe",
+          "relationship": "primary",
+          "evidence": "charon/agents/lethe/CHARTER.md"
+        }
+      ],
+      "entry_file": "charon/agents/lethe/CHARTER.md",
+      "notes": "Charon swarm member rotated by scripts/charon_loop.py. ROSTER 'active' is undated and sits against a last code change of 2026-05-23."
+    },
+    {
+      "seat": "moros (charon agent)",
+      "kind": "AGENT_TOOL",
+      "short_role": "Cross-pollination adversarial critique automator",
+      "declared_role": {
+        "text": "Dispatches load-bearing artifacts (pivot docs, charters, specs) to frontier models for adversarial critique and writes feedback/meta-analysis files; upstream of Phylax.",
+        "source": "charon/agents/moros/CHARTER.md:1",
+        "source_currency": "2026-05-25"
+      },
+      "observed_role": {
+        "text": "Not reconstructed (historical agent/tool; brief entry). Evidence is the last commit touching its code.",
+        "differs": false,
+        "evidence": [
+          "43b094552 2026-05-25 Charon swarm v0.6: 4-patch tuning (Moros + Pollux + Hecate + Stygian)"
+        ]
+      },
+      "domain": "historical",
+      "lifecycle_marker": {
+        "state": "ACTIVE",
+        "date": null,
+        "quote": "M2 tool active",
+        "source": "engine/necropolis/ROSTER.jsonl:31"
+      },
+      "documented_host": {
+        "value": "M2",
+        "source": "engine/necropolis/ROSTER.jsonl:31"
+      },
+      "aliases": [
+        {
+          "name": "Charon (seat)",
+          "relation": "lane",
+          "source": "scripts/charon_loop.py:2 (Charon swarm rotation)"
+        }
+      ],
+      "engines": [
+        {
+          "engine_id": "charon/agents/moros",
+          "relationship": "primary",
+          "evidence": "charon/agents/moros/CHARTER.md"
+        }
+      ],
+      "entry_file": "charon/agents/moros/CHARTER.md",
+      "notes": "Charon swarm member rotated by scripts/charon_loop.py. ROSTER 'active' is undated and sits against a last code change of 2026-05-25."
+    },
+    {
+      "seat": "nephele (charon agent)",
+      "kind": "AGENT_TOOL",
+      "short_role": "Clio-fallback arxiv RSS gatherer",
+      "declared_role": {
+        "text": "Slow-roll substrate gatherer that rotates curated arxiv RSS feeds only when Clio has been inactive for 4 hours.",
+        "source": "charon/agents/nephele/daemon.py:1",
+        "source_currency": "2026-05-24"
+      },
+      "observed_role": {
+        "text": "Not reconstructed (historical agent/tool; brief entry). Evidence is the last commit touching its code.",
+        "differs": false,
+        "evidence": [
+          "8c619443a 2026-05-24 Charon swarm v0.5: Moros multi-provider + Nephele (Clio fallback) + Pollux"
+        ]
+      },
+      "domain": "historical",
+      "lifecycle_marker": {
+        "state": "ACTIVE",
+        "date": null,
+        "quote": "M2 tool active",
+        "source": "engine/necropolis/ROSTER.jsonl:33"
+      },
+      "documented_host": {
+        "value": "M2",
+        "source": "engine/necropolis/ROSTER.jsonl:33"
+      },
+      "aliases": [
+        {
+          "name": "Charon (seat)",
+          "relation": "lane",
+          "source": "scripts/charon_loop.py:2 (Charon swarm rotation)"
+        }
+      ],
+      "engines": [
+        {
+          "engine_id": "charon/agents/nephele",
+          "relationship": "primary",
+          "evidence": "charon/agents/nephele/daemon.py"
+        }
+      ],
+      "entry_file": "charon/agents/nephele/daemon.py",
+      "notes": "Charon swarm member rotated by scripts/charon_loop.py. ROSTER 'active' is undated and sits against a last code change of 2026-05-24. No README/CHARTER (daemon docstring used)."
+    },
+    {
+      "seat": "pollux (charon agent)",
+      "kind": "AGENT_TOOL",
+      "short_role": "Numerical-coincidence scanner",
+      "declared_role": {
+        "text": "Per tick compares Mahler-measure subset pairs by Spearman correlation before and after mean-spacing normalization and emits kill_ledger rows in Theseus's shape for Hecate's gradient archaeology.",
+        "source": "charon/agents/pollux/daemon.py:1",
+        "source_currency": "2026-05-25"
+      },
+      "observed_role": {
+        "text": "Not reconstructed (historical agent/tool; brief entry). Evidence is the last commit touching its code.",
+        "differs": false,
+        "evidence": [
+          "43b094552 2026-05-25 Charon swarm v0.6: 4-patch tuning (Moros + Pollux + Hecate + Stygian)"
+        ]
+      },
+      "domain": "historical",
+      "lifecycle_marker": {
+        "state": "ACTIVE",
+        "date": null,
+        "quote": "M2 tool active",
+        "source": "engine/necropolis/ROSTER.jsonl:35"
+      },
+      "documented_host": {
+        "value": "M2",
+        "source": "engine/necropolis/ROSTER.jsonl:35"
+      },
+      "aliases": [
+        {
+          "name": "Charon (seat)",
+          "relation": "lane",
+          "source": "scripts/charon_loop.py:2 (Charon swarm rotation)"
+        }
+      ],
+      "engines": [
+        {
+          "engine_id": "charon/agents/pollux",
+          "relationship": "primary",
+          "evidence": "charon/agents/pollux/daemon.py"
+        }
+      ],
+      "entry_file": "charon/agents/pollux/daemon.py",
+      "notes": "Charon swarm member rotated by scripts/charon_loop.py. ROSTER 'active' is undated and sits against a last code change of 2026-05-25. No README/CHARTER (daemon docstring used). Necropolis case POLLUX adjudicated by Rhadamanthus 2026-09-14 (NO_FAIR_TEST_ON_RECORD; dossier pollux.dossier.json)."
+    },
+    {
+      "seat": "stygian (charon agent)",
+      "kind": "AGENT_TOOL",
+      "short_role": "v10-battery attack-plan worker",
+      "declared_role": {
+        "text": "Picks un-attacked Atlas number-theoretic problems and emits attack-plan artifacts for the frozen v10 battery (propose-and-record).",
+        "source": "charon/agents/stygian/CHARTER.md:1",
+        "source_currency": "2026-05-30"
+      },
+      "observed_role": {
+        "text": "Not reconstructed (historical agent/tool; brief entry). Evidence is the last commit touching its code.",
+        "differs": false,
+        "evidence": [
+          "d679607a4 2026-05-30 Erebos Phase 3 follow-ons ITER-59/60/61/62: pair-robust, triplets, BSD MVP"
+        ]
+      },
+      "domain": "historical",
+      "lifecycle_marker": {
+        "state": "ACTIVE",
+        "date": null,
+        "quote": "M2 tool active",
+        "source": "engine/necropolis/ROSTER.jsonl:28"
+      },
+      "documented_host": {
+        "value": "M2",
+        "source": "engine/necropolis/ROSTER.jsonl:28"
+      },
+      "aliases": [
+        {
+          "name": "Charon (seat)",
+          "relation": "lane",
+          "source": "scripts/charon_loop.py:2 (Charon swarm rotation)"
+        }
+      ],
+      "engines": [
+        {
+          "engine_id": "charon/agents/stygian",
+          "relationship": "primary",
+          "evidence": "charon/agents/stygian/CHARTER.md"
+        }
+      ],
+      "entry_file": "charon/agents/stygian/CHARTER.md",
+      "notes": "Charon swarm member rotated by scripts/charon_loop.py. ROSTER 'active' is undated and sits against a last code change of 2026-05-30."
+    },
+    {
+      "seat": "hecate (charon agent)",
+      "kind": "AGENT_TOOL",
+      "short_role": "Continuous gradient archaeology (Charon swarm)",
+      "declared_role": {
+        "text": "Re-runs gradient archaeology over the growing kill ledger (primarily the May Theseus engine corpus), computing MI(kill_pattern, operator-class) against a permutation null and emitting gradient_archaeology_run artifacts.",
+        "source": "charon/agents/hecate/CHARTER.md:1",
+        "source_currency": "2026-05-26"
+      },
+      "observed_role": {
+        "text": "Not reconstructed (historical agent/tool; brief entry). Evidence is the last commit touching its code.",
+        "differs": false,
+        "evidence": [
+          "48444edca 2026-05-26 Charon swarm v0.8: Hephaestus -> Erebos rename + plugin host + G01/G02 generators"
+        ]
+      },
+      "domain": "historical",
+      "lifecycle_marker": {
+        "state": "ACTIVE",
+        "date": null,
+        "quote": "M2 tool active",
+        "source": "engine/necropolis/ROSTER.jsonl:32"
+      },
+      "documented_host": {
+        "value": "M2",
+        "source": "engine/necropolis/ROSTER.jsonl:32"
+      },
+      "aliases": [
+        {
+          "name": "Hecate (roles/Hecate seat, created 2026-09-29, triplicate deep search)",
+          "relation": "same-name-different-referent",
+          "source": "roles/base-role/INHERITANCE.md (Hecate row: prior use as a May 2026 Charon-swarm agent recorded, not inherited)"
+        },
+        {
+          "name": "Charon (seat)",
+          "relation": "lane",
+          "source": "scripts/charon_loop.py:2"
+        }
+      ],
+      "engines": [
+        {
+          "engine_id": "charon/agents/hecate",
+          "relationship": "primary",
+          "evidence": "charon/agents/hecate/CHARTER.md"
+        },
+        {
+          "engine_id": "theseus",
+          "relationship": "consumer",
+          "evidence": "charon/agents/hecate/CHARTER.md (scans theseus/corpus/*.jsonl.gz)"
+        }
+      ],
+      "entry_file": "charon/agents/hecate/CHARTER.md",
+      "notes": "Charon swarm member (May 2026), distinct from the 2026-09-29 Hecate seat and its hecate/ tree. ROSTER 'active' is undated; last code change 2026-05-26."
+    },
+    {
+      "seat": "Phylax",
+      "kind": "AGENT_TOOL",
+      "short_role": "Pre-promotion gate and retraction sentinel",
+      "declared_role": {
+        "text": "Pre-promotion gate and retraction-adjacency sentinel: runs graded checks on claims and promotions before they land.",
+        "source": "harmonia/agents/phylax/CHARTER.md:1",
+        "source_currency": "2026-05-22"
+      },
+      "observed_role": {
+        "text": "Not reconstructed (historical agent/tool; brief entry). Evidence is the last commit touching its code.",
+        "differs": false,
+        "evidence": [
+          "a853d0f8c 2026-05-22 Harmonia swarm: per-agent READMEs + cross-cutting ROADMAP"
+        ]
+      },
+      "domain": "historical",
+      "lifecycle_marker": {
+        "state": "PARKED",
+        "date": null,
+        "quote": "M2 tool shelved",
+        "source": "engine/necropolis/ROSTER.jsonl:24"
+      },
+      "documented_host": {
+        "value": "M2",
+        "source": "engine/necropolis/ROSTER.jsonl:24"
+      },
+      "aliases": [
+        {
+          "name": "Harmonia (seat)",
+          "relation": "lane",
+          "source": "harmonia/agents/__init__.py:1 (Harmonia agent swarm)"
+        }
+      ],
+      "engines": [
+        {
+          "engine_id": "harmonia/agents/phylax",
+          "relationship": "primary",
+          "evidence": "harmonia/agents/phylax/CHARTER.md"
+        }
+      ],
+      "entry_file": "harmonia/agents/phylax/CHARTER.md",
+      "notes": "Harmonia swarm child (harmonia/agents/__init__.py AGENT_NAMES), rotated by scripts/harmonia_loop.py; machine M2 per its charter and ROSTER. ROSTER status undated."
+    },
+    {
+      "seat": "Sophia",
+      "kind": "AGENT_TOOL",
+      "short_role": "Coordinate-system scout",
+      "declared_role": {
+        "text": "Coordinate-system scout: closed-loop incarnation of gen_11 axis-space invention (Harmonia child).",
+        "source": "harmonia/agents/sophia/CHARTER.md:1",
+        "source_currency": "2026-05-24"
+      },
+      "observed_role": {
+        "text": "Not reconstructed (historical agent/tool; brief entry). Evidence is the last commit touching its code.",
+        "differs": false,
+        "evidence": [
+          "4e140ada9 2026-05-24 Phase 1.5: 5 swarm-audit patches + telos top_n=5 config"
+        ]
+      },
+      "domain": "historical",
+      "lifecycle_marker": {
+        "state": "PARKED",
+        "date": null,
+        "quote": "M2 tool shelved",
+        "source": "engine/necropolis/ROSTER.jsonl:25"
+      },
+      "documented_host": {
+        "value": "M2",
+        "source": "engine/necropolis/ROSTER.jsonl:25"
+      },
+      "aliases": [
+        {
+          "name": "Harmonia (seat)",
+          "relation": "lane",
+          "source": "harmonia/agents/__init__.py:1 (Harmonia agent swarm)"
+        }
+      ],
+      "engines": [
+        {
+          "engine_id": "harmonia/agents/sophia",
+          "relationship": "primary",
+          "evidence": "harmonia/agents/sophia/CHARTER.md"
+        }
+      ],
+      "entry_file": "harmonia/agents/sophia/CHARTER.md",
+      "notes": "Harmonia swarm child (harmonia/agents/__init__.py AGENT_NAMES), rotated by scripts/harmonia_loop.py; machine M2 per its charter and ROSTER. ROSTER status undated."
+    },
+    {
+      "seat": "Iris",
+      "kind": "AGENT_TOOL",
+      "short_role": "Prose-to-symbol compressor",
+      "declared_role": {
+        "text": "Prose-to-symbol compressor / substrate self-densifier; one of five Harmonia children rotated by scripts/harmonia_loop.py.",
+        "source": "harmonia/agents/iris/CHARTER.md:1",
+        "source_currency": "2026-05-24"
+      },
+      "observed_role": {
+        "text": "Not reconstructed (historical agent/tool; brief entry). Evidence is the last commit touching its code.",
+        "differs": false,
+        "evidence": [
+          "b2e0b2dee 2026-05-24 Phase 1 ship: Iris auto-promotion pipeline (proof-of-concept)"
+        ]
+      },
+      "domain": "historical",
+      "lifecycle_marker": {
+        "state": "PARKED",
+        "date": null,
+        "quote": "M2 tool shelved",
+        "source": "engine/necropolis/ROSTER.jsonl:23"
+      },
+      "documented_host": {
+        "value": "M2",
+        "source": "engine/necropolis/ROSTER.jsonl:23"
+      },
+      "aliases": [
+        {
+          "name": "Harmonia (seat)",
+          "relation": "lane",
+          "source": "harmonia/agents/__init__.py:1 (Harmonia agent swarm)"
+        }
+      ],
+      "engines": [
+        {
+          "engine_id": "harmonia/agents/iris",
+          "relationship": "primary",
+          "evidence": "harmonia/agents/iris/CHARTER.md"
+        }
+      ],
+      "entry_file": "harmonia/agents/iris/CHARTER.md",
+      "notes": "Harmonia swarm child (harmonia/agents/__init__.py AGENT_NAMES), rotated by scripts/harmonia_loop.py; machine M2 per its charter and ROSTER. ROSTER status undated."
+    },
+    {
+      "seat": "Argos",
+      "kind": "AGENT_TOOL",
+      "short_role": "Problem lens-catalog expander",
+      "declared_role": {
+        "text": "Extends per-problem lens catalogs under PROBLEM_LENS_CATALOG@v1 (lens-fingerprint accretion).",
+        "source": "harmonia/agents/argos/CHARTER.md:1",
+        "source_currency": "2026-05-22"
+      },
+      "observed_role": {
+        "text": "Not reconstructed (historical agent/tool; brief entry). Evidence is the last commit touching its code.",
+        "differs": false,
+        "evidence": [
+          "a853d0f8c 2026-05-22 Harmonia swarm: per-agent READMEs + cross-cutting ROADMAP"
+        ]
+      },
+      "domain": "historical",
+      "lifecycle_marker": {
+        "state": "PARKED",
+        "date": null,
+        "quote": "M2 tool shelved",
+        "source": "engine/necropolis/ROSTER.jsonl:22"
+      },
+      "documented_host": {
+        "value": "M2",
+        "source": "engine/necropolis/ROSTER.jsonl:22"
+      },
+      "aliases": [
+        {
+          "name": "Harmonia (seat)",
+          "relation": "lane",
+          "source": "harmonia/agents/__init__.py:1 (Harmonia agent swarm)"
+        }
+      ],
+      "engines": [
+        {
+          "engine_id": "harmonia/agents/argos",
+          "relationship": "primary",
+          "evidence": "harmonia/agents/argos/CHARTER.md"
+        }
+      ],
+      "entry_file": "harmonia/agents/argos/CHARTER.md",
+      "notes": "Harmonia swarm child (harmonia/agents/__init__.py AGENT_NAMES), rotated by scripts/harmonia_loop.py; machine M2 per its charter and ROSTER. ROSTER status undated. Necropolis dossier engine/necropolis/dossiers/argos.dossier.json classification ORCHESTRATION_FAILURE."
+    },
+    {
+      "seat": "Telos",
+      "kind": "AGENT_TOOL",
+      "short_role": "Stalled-specimen reviver",
+      "declared_role": {
+        "text": "Stalled-specimen reviver and negative-space patroller over the live-specimen pile.",
+        "source": "harmonia/agents/telos/CHARTER.md:1",
+        "source_currency": "2026-05-24"
+      },
+      "observed_role": {
+        "text": "Not reconstructed (historical agent/tool; brief entry). Evidence is the last commit touching its code.",
+        "differs": false,
+        "evidence": [
+          "4e140ada9 2026-05-24 Phase 1.5: 5 swarm-audit patches + telos top_n=5 config"
+        ]
+      },
+      "domain": "historical",
+      "lifecycle_marker": {
+        "state": "PARKED",
+        "date": null,
+        "quote": "M2 tool shelved",
+        "source": "engine/necropolis/ROSTER.jsonl:26"
+      },
+      "documented_host": {
+        "value": "M2",
+        "source": "engine/necropolis/ROSTER.jsonl:26"
+      },
+      "aliases": [
+        {
+          "name": "Harmonia (seat)",
+          "relation": "lane",
+          "source": "harmonia/agents/__init__.py:1 (Harmonia agent swarm)"
+        }
+      ],
+      "engines": [
+        {
+          "engine_id": "harmonia/agents/telos",
+          "relationship": "primary",
+          "evidence": "harmonia/agents/telos/CHARTER.md"
+        }
+      ],
+      "entry_file": "harmonia/agents/telos/CHARTER.md",
+      "notes": "Harmonia swarm child (harmonia/agents/__init__.py AGENT_NAMES), rotated by scripts/harmonia_loop.py; machine M2 per its charter and ROSTER. ROSTER status undated."
+    },
+    {
+      "seat": "Clio",
+      "kind": "AGENT_TOOL",
+      "short_role": "Arxiv paper-mining daemon",
+      "declared_role": {
+        "text": "Substrate paper-mining daemon (arxiv, substrate-priority queries) writing agora.clio_papers with an agora heartbeat; no LLM extraction in v0.1.",
+        "source": "scripts/clio_daemon.py:2",
+        "source_currency": "2026-05-23"
+      },
+      "observed_role": {
+        "text": "Not reconstructed (historical agent/tool; brief entry). Evidence is the last commit touching its code.",
+        "differs": false,
+        "evidence": [
+          "750dfcafe 2026-05-23 Clio revival: MemoryError hardening + detached launcher + roster update"
+        ]
+      },
+      "domain": "historical",
+      "lifecycle_marker": {
+        "state": "ACTIVE",
+        "date": null,
+        "quote": "M1 tool active",
+        "source": "engine/necropolis/ROSTER.jsonl:12"
+      },
+      "documented_host": {
+        "value": "M1",
+        "source": "engine/necropolis/ROSTER.jsonl:12"
+      },
+      "aliases": [],
+      "engines": [
+        {
+          "engine_id": "scripts/clio_daemon.py",
+          "relationship": "primary",
+          "evidence": "scripts/clio_daemon.py"
+        }
+      ],
+      "entry_file": "scripts/clio_daemon.py",
+      "notes": "ROSTER status undated. Nephele (charon agent) is its fallback."
+    },
+    {
+      "seat": "Pythia",
+      "kind": "AGENT_TOOL",
+      "short_role": "Deep-research dispatch tool (Aporia)",
+      "declared_role": {
+        "text": "Aporia's tool for Gemini Deep Research dispatch, sitting between Aporia/James and the external deep-research model.",
+        "source": "scripts/pythia_daemon.py:2",
+        "source_currency": "2026-08-20"
+      },
+      "observed_role": {
+        "text": "Not reconstructed (historical agent/tool; brief entry). Evidence is the last commit touching its code.",
+        "differs": false,
+        "evidence": [
+          "b781e06af 2026-08-20 Aporia P31: DR event trail live with a born-alive consumer; trap 8 enters the book"
+        ]
+      },
+      "domain": "historical",
+      "lifecycle_marker": {
+        "state": "ACTIVE",
+        "date": null,
+        "quote": "M1 tool active",
+        "source": "engine/necropolis/ROSTER.jsonl:13"
+      },
+      "documented_host": {
+        "value": "M1",
+        "source": "engine/necropolis/ROSTER.jsonl:13"
+      },
+      "aliases": [
+        {
+          "name": "Aporia (seat)",
+          "relation": "lane",
+          "source": "scripts/pythia_daemon.py:3 (Aporia's tool)"
+        }
+      ],
+      "engines": [
+        {
+          "engine_id": "scripts/pythia_daemon.py",
+          "relationship": "primary",
+          "evidence": "scripts/pythia_daemon.py"
+        }
+      ],
+      "entry_file": "scripts/pythia_daemon.py",
+      "notes": "ROSTER status undated."
+    },
+    {
+      "seat": "Penelope",
+      "kind": "AGENT_TOOL",
+      "short_role": "Ergon substrate-ingest loop",
+      "declared_role": {
+        "text": "Ergon's substrate-ingest loop: ingests upstream substrate producers (Theseus handoffs, Aporia blocks) not yet processed and emits batch telemetry; never auto-kicks training.",
+        "source": "ergon/penelope/daemon.py:1",
+        "source_currency": "2026-06-09"
+      },
+      "observed_role": {
+        "text": "Not reconstructed (historical agent/tool; brief entry). Evidence is the last commit touching its code.",
+        "differs": false,
+        "evidence": [
+          "a8a276a40 2026-06-09 Session sync checkpoint (cross-role) -- local commit, push pending"
+        ]
+      },
+      "domain": "historical",
+      "lifecycle_marker": {
+        "state": "ACTIVE",
+        "date": null,
+        "quote": "M2 tool active",
+        "source": "engine/necropolis/ROSTER.jsonl:18"
+      },
+      "documented_host": {
+        "value": "M2",
+        "source": "engine/necropolis/ROSTER.jsonl:18"
+      },
+      "aliases": [
+        {
+          "name": "Ergon (seat)",
+          "relation": "lane",
+          "source": "ergon/penelope/daemon.py:1"
+        }
+      ],
+      "engines": [
+        {
+          "engine_id": "ergon/penelope",
+          "relationship": "primary",
+          "evidence": "ergon/penelope/daemon.py"
+        }
+      ],
+      "entry_file": "ergon/penelope/daemon.py",
+      "notes": "ROSTER status undated. Consumes the May theseus/ engine's handoffs."
+    },
+    {
+      "seat": "Calliope",
+      "kind": "AGENT_TOOL",
+      "short_role": "Daily NotebookLM narrative synthesizer",
+      "declared_role": {
+        "text": "Accumulates the last 24h of Prometheus activity and writes a narrative markdown in docs/notebook_lm/ for NotebookLM.",
+        "source": "scripts/calliope_daily.py:3",
+        "source_currency": "2026-05-19"
+      },
+      "observed_role": {
+        "text": "Not reconstructed (historical agent/tool; brief entry). Evidence is the last commit touching its code.",
+        "differs": false,
+        "evidence": [
+          "f2b194d8b 2026-05-19 Calliope: read commit bodies + file numstat for richer narratives"
+        ]
+      },
+      "domain": "historical",
+      "lifecycle_marker": {
+        "state": "ACTIVE",
+        "date": null,
+        "quote": "M4 tool active",
+        "source": "engine/necropolis/ROSTER.jsonl:36"
+      },
+      "documented_host": {
+        "value": "M4",
+        "source": "engine/necropolis/ROSTER.jsonl:36"
+      },
+      "aliases": [],
+      "engines": [
+        {
+          "engine_id": "scripts/calliope_daily.py",
+          "relationship": "primary",
+          "evidence": "scripts/calliope_daily.py"
+        }
+      ],
+      "entry_file": "scripts/calliope_daily.py",
+      "notes": "ROSTER status undated. Invoke-on-demand per ROSTER."
+    },
+    {
+      "seat": "Charon_Loop",
+      "kind": "AGENT_TOOL",
+      "short_role": "Charon swarm rotation orchestrator",
+      "declared_role": {
+        "text": "Rotation orchestrator for the Charon agent swarm, one member tick per invocation under Claude Code /loop.",
+        "source": "scripts/charon_loop.py:2",
+        "source_currency": "2026-08-20"
+      },
+      "observed_role": {
+        "text": "Not reconstructed (historical agent/tool; brief entry). Evidence is the last commit touching its code.",
+        "differs": false,
+        "evidence": [
+          "25c21a868 2026-08-20 Design critique answered; P18 self-corrected; 21 dead-host references swept fleet-wide"
+        ]
+      },
+      "domain": "historical",
+      "lifecycle_marker": {
+        "state": "ACTIVE",
+        "date": null,
+        "quote": "M2 tool active",
+        "source": "engine/necropolis/ROSTER.jsonl:27"
+      },
+      "documented_host": {
+        "value": "M2",
+        "source": "engine/necropolis/ROSTER.jsonl:27"
+      },
+      "aliases": [
+        {
+          "name": "Charon (seat)",
+          "relation": "lane",
+          "source": "scripts/charon_loop.py:2"
+        }
+      ],
+      "engines": [
+        {
+          "engine_id": "scripts/charon_loop.py",
+          "relationship": "primary",
+          "evidence": "scripts/charon_loop.py"
+        }
+      ],
+      "entry_file": "scripts/charon_loop.py",
+      "notes": "ROSTER status undated. Docstring lists Stygian/Lethe/Acheron/Moros/Hecate; ROSTER role adds Nephele/Erebos/Pollux."
+    },
+    {
+      "seat": "Harmonia_Loop",
+      "kind": "AGENT_TOOL",
+      "short_role": "Harmonia swarm rotation orchestrator",
+      "declared_role": {
+        "text": "Rotation orchestrator for the Harmonia agent swarm (Phylax/Sophia/Iris/Argos/Telos), one tick per invocation under /loop.",
+        "source": "scripts/harmonia_loop.py:2",
+        "source_currency": "2026-08-20"
+      },
+      "observed_role": {
+        "text": "Not reconstructed (historical agent/tool; brief entry). Evidence is the last commit touching its code.",
+        "differs": false,
+        "evidence": [
+          "25c21a868 2026-08-20 Design critique answered; P18 self-corrected; 21 dead-host references swept fleet-wide"
+        ]
+      },
+      "domain": "historical",
+      "lifecycle_marker": {
+        "state": "PARKED",
+        "date": null,
+        "quote": "M2 tool shelved",
+        "source": "engine/necropolis/ROSTER.jsonl:21"
+      },
+      "documented_host": {
+        "value": "M2",
+        "source": "engine/necropolis/ROSTER.jsonl:21"
+      },
+      "aliases": [
+        {
+          "name": "Harmonia (seat)",
+          "relation": "lane",
+          "source": "scripts/harmonia_loop.py:2"
+        }
+      ],
+      "engines": [
+        {
+          "engine_id": "scripts/harmonia_loop.py",
+          "relationship": "primary",
+          "evidence": "scripts/harmonia_loop.py"
+        }
+      ],
+      "entry_file": "scripts/harmonia_loop.py",
+      "notes": "ROSTER status undated."
+    },
+    {
+      "seat": "HealthCheck (probe family)",
+      "kind": "AGENT_TOOL",
+      "short_role": "Per-host hourly resource snapshot",
+      "declared_role": {
+        "text": "Per-machine resource snapshot (CPU, memory, disk, uptime, top processes) designed to run hourly on each of M1-M4 via the local scheduler.",
+        "source": "scripts/machine_healthcheck.py:3",
+        "source_currency": "2026-09-17"
+      },
+      "observed_role": {
+        "text": "Not reconstructed (historical agent/tool; brief entry). Evidence is the last commit touching its code.",
+        "differs": false,
+        "evidence": [
+          "6be994430 2026-09-17 M4: stop console-window popups; slow M4 probe/heartbeats to 30 min"
+        ]
+      },
+      "domain": "infrastructure",
+      "lifecycle_marker": {
+        "state": "ACTIVE",
+        "date": null,
+        "quote": "HealthCheck-M4 ... M4 healthcheck active",
+        "source": "engine/necropolis/ROSTER.jsonl:40"
+      },
+      "documented_host": {
+        "value": null,
+        "source": "engine/necropolis/ROSTER.jsonl:37-40"
+      },
+      "aliases": [],
+      "engines": [
+        {
+          "engine_id": "scripts/machine_healthcheck.py",
+          "relationship": "primary",
+          "evidence": "scripts/machine_healthcheck.py"
+        }
+      ],
+      "entry_file": "scripts/machine_healthcheck.py",
+      "notes": "One entry for ROSTER rows 37-40 (HealthCheck-M1..M4): M1, M2, M3 shelved; M4 active. Host is per instance, so value null. roles/base-role/MONITORS.md:26 PrometheusHealthCheckM4: OWNER UNCLAIMED, registered 2026-05-24, fired once. Conflict: ROSTER 'active' vs MONITORS 'fired once'."
+    },
+    {
+      "seat": "MachineProbe (probe family)",
+      "kind": "AGENT_TOOL",
+      "short_role": "Per-host resource time-series probe",
+      "declared_role": {
+        "text": "Fire-and-forget daemon probing CPU, GPU VRAM, RAM and disk every N seconds and writing snapshots to agora.machine_probes.",
+        "source": "scripts/machine_probe.py:3",
+        "source_currency": "2026-09-17"
+      },
+      "observed_role": {
+        "text": "Not reconstructed (historical agent/tool; brief entry). Evidence is the last commit touching its code.",
+        "differs": false,
+        "evidence": [
+          "6be994430 2026-09-17 M4: stop console-window popups; slow M4 probe/heartbeats to 30 min"
+        ]
+      },
+      "domain": "infrastructure",
+      "lifecycle_marker": {
+        "state": "ACTIVE",
+        "date": null,
+        "quote": "MachineProbe-M4 ... M4 daemon active",
+        "source": "engine/necropolis/ROSTER.jsonl:44"
+      },
+      "documented_host": {
+        "value": null,
+        "source": "engine/necropolis/ROSTER.jsonl:41-44"
+      },
+      "aliases": [
+        {
+          "name": "Pronoia (owner by ruling)",
+          "relation": "lane",
+          "source": "roles/base-role/MONITORS.md:21"
+        }
+      ],
+      "engines": [
+        {
+          "engine_id": "scripts/machine_probe.py",
+          "relationship": "primary",
+          "evidence": "scripts/machine_probe.py"
+        }
+      ],
+      "entry_file": "scripts/machine_probe.py",
+      "notes": "One entry for ROSTER rows 41-44 (MachineProbe-M1..M4): M1-M3 shelved, M4 active. MONITORS.md:21/24/25 (PrometheusMachineProbeM1/M2/M4) assign OWNER Pronoia BY RULING 2026-09-11, pending Pronoia's confirmation; MONITORS.md:21 says the M1 task is DEAD (0x80070002 on every fire). Host per instance, value null."
+    }
+  ]
+}

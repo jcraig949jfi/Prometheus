@@ -1,0 +1,204 @@
+{
+  "schema": "techne.fossil.record/1",
+  "specimen_id": "pyribs-icaros-2020",
+  "canonical_name": "pyribs -- 'Pyribs: A Bare-Bones Python Library for Quality Diversity Optimization' (Tjanaka, Bryon and Fontaine, Matthew C and Lee, David H and Zhang, Yulun and Balam, Nivedit Reddy and Dennler, Nathaniel and Garlanka, Sujay S and Klapsis, Nikitas Dimitri and Nikolaidis, Stefanos; ICAROS Lab, University of Southern California; 2020-2026, GECCO 2023 paper)",
+  "aliases": [
+    "pyribs",
+    "ribs (PyPI / import name)",
+    "RIBS (Rapid Illumination of Behavior Space framework)",
+    "version 0.12.0 per ribs/__init__.py",
+    "conda-forge pyribs"
+  ],
+  "lineage": "README: implements the 'Rapid Illumination of Behavior Space (RIBS)' framework; adopts the ask-tell interface from pycma ('Users of pycma will be familiar with the ask-tell interface (which pyribs adopted)'); 'We thank Amy K. Hoover and Julian Togelius for their contributions deriving the CMA-ME algorithm'; package skeleton from Cookiecutter audreyr/cookiecutter-pypackage. README 'Additional QD Libraries' names peers QDax, qdpy, sferes (not predecessors). Algorithms implemented and their sources are tabulated in docs/supported-algorithms.md (MAP-Elites Mouret 2015; CVT-MAP-Elites Vassiliades 2018; CMA-ME Fontaine 2020; CMA-MEGA/OMG-MEGA Fontaine 2021; CMA-MAE Fontaine 2023; DDS Lee 2024; DMS Tjanaka 2026; BOP-Elites Kent 2024; Novelty Search/NSLC Lehman 2011; QDAIF, QDHF). HISTORY.md tracks releases back through 0.x. || main loop (reader, from the code): The user loop calls Scheduler.ask(), which concatenates each emitter's ask() (GaussianEmitter: random archive elites plus Gaussian noise; EvolutionStrategyEmitter: samples from an internal CMA-ES), the user evaluates objectives and measures, then Scheduler.tell() inserts the batch into the archive (GridArchive.add: measure -> cell index, keep the per-cell argmax objective only if it exceeds the cell's threshold, returning a status/value add_info) and hands each emitter its slice of solutions and add_info so the emitter can rank, adapt its distribution and possibly restart from a sampled elite.",
+  "domain": [
+    "quality-diversity",
+    "map-elites",
+    "cma-me",
+    "evolutionary-computation"
+  ],
+  "era": "2020-2026",
+  "version": "github.com/icaros-usc/pyribs master @ 7bd723cf9863d480c8f2fec5ba9aa36f3b68c083 (committed 2026-07-22; 674 commits since 2020-09-11; 362 tracked files)",
+  "source_origin": {
+    "artifacts": [
+      {
+        "kind": "git",
+        "url": "https://github.com/icaros-usc/pyribs",
+        "commit": "7bd723cf9863d480c8f2fec5ba9aa36f3b68c083",
+        "commit_resolved": "7bd723cf9863d480c8f2fec5ba9aa36f3b68c083",
+        "commit_date": "2026-07-22T02:09:33-07:00"
+      }
+    ]
+  },
+  "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+  "source_identity": {
+    "repo": "github.com/icaros-usc/pyribs",
+    "branch": "master",
+    "other_branches_or_versions": "Remote branches: master (default) only. Tags: v0.2.0, v0.2.1, v0.3.0, v0.3.1, v0.4.0, v0.5.0, v0.5.1, v0.5.2, v0.6.0, v0.6.2, v0.6.3, v0.6.4, v0.7.0, v0.7.1, v0.8.0, v0.8.1, v0.8.2, v0.8.3, v0.9.0, v0.10.0, v0.11.0, v0.12.0. Pinned commit reports __version__ 0.12.0."
+  },
+  "hashes": {
+    "tree_sha256": "9336714f544cd94a38ade7bf678b3cc56a769f057afde20d34a2ac5a2973e63a",
+    "n_files": 362,
+    "bytes": 36924897,
+    "artifacts": [
+      {
+        "filename": "https://github.com/icaros-usc/pyribs",
+        "sha256": null,
+        "commit": "7bd723cf9863d480c8f2fec5ba9aa36f3b68c083"
+      }
+    ],
+    "body_location": "C:\\Prometheus\\vault\\fossils\\pyribs-icaros-2020",
+    "hash_list": "techne/fossils/specimens/pyribs-icaros-2020/UPSTREAM_HASHES.txt"
+  },
+  "license": {
+    "spdx": "MIT",
+    "status": "permissive",
+    "evidence": "licence file LICENSE, first line 'MIT License'; metadata field: license = \"MIT\" (pyproject.toml [project]); LICENSE line 3: 'Copyright (c) 2020, ICAROS Lab'. README 'License' section: 'pyribs is released under the MIT License'. No copyright headers in .py source files; the only 'copyright' hit is the Sphinx conf.py variable (docs/conf.py: copyright = f\"2021-{datetime.datetime.now().year}, ICAROS Lab\"). README 'Credits': package skeleton from audreyr/cookiecutter-pypackage. .gitattributes contains only '*.ipynb -linguist-detectable' (no LFS filter). Tree contains binary model files tutorials/mnist/mnist_generator.pth (5977207 B) and mnist_discriminator.pth (5844087 B) with no separate licence stated."
+  },
+  "acquisition_date": "2026-09-30",
+  "language": [
+    "Python"
+  ],
+  "build_system": "setuptools via pyproject.toml ([build-system] requires = [\"setuptools\"], build-backend setuptools.build_meta); version dynamic from ribs.__version__; readme dynamic from README.md + HISTORY.md; MANIFEST.in; Makefile with lint/test/benchmark/docs targets; no requirements*.txt, setup.py or setup.cfg; no lock file",
+  "compiler_or_interpreter": "CPython >=3.10.0 per pyproject requires-python; classifiers 3.10-3.14; CI workflows use python-version 3.12; pylint py-version 3.12",
+  "dependencies": [
+    "array_api_compat",
+    "numba>=0.51.0",
+    "numpy>=2.0.0",
+    "numpy_groupies>=0.9.16",
+    "pandas>=1.0.0",
+    "scikit-learn>=1.1.0",
+    "scipy>=1.7.0",
+    "sortedcontainers>=2.0.0",
+    "threadpoolctl>=3.0.0",
+    "typing-extensions>=4.12.0",
+    "optional visualize: matplotlib>=3.0.0, shapely>=2.0.0, seaborn>=0.11.0",
+    "optional all: visualize + cma, pymoo, torch, zuko>=1.0.0",
+    "optional dev: ruff>=0.13.0, pylint, pre-commit, python-box[all]~=7.0, pytest==8.3.5, pytest-cov==6.0.0, pytest-benchmark==5.1.0, pytest-xdist==3.8.0, myst-nb==1.3.0, Sphinx==8.1.3, sphinx-autobuild==2021.3.14, sphinx-autodoc-typehints==3.0.1, sphinx-jinja2-compat==0.4.1, sphinx-prompt==1.9.0, sphinx-tabs==3.4.5, sphinx-toolbox==4.0.0, sphinx_immaterial==0.13.5, sphinxcontrib-* pinned, build, check-wheel-contents, twine",
+    "optional dev-array-api: cupy-cuda12x",
+    "examples/sphere.py header asks for: pip install ribs[visualize] torch \"zuko>=1.0.0\" tqdm fire loguru tabulate (torch unpinned)",
+    "SETUP FETCH: README: pip install ribs[visualize] / pip install ribs (PyPI); links to https://pyribs.org/#installation for conda/source variants",
+    "SETUP FETCH: CONTRIBUTING.md: git clone git@github.com:USERNAME/pyribs.git / git clone https://github.com/USERNAME/pyribs.git (fork clone for development)",
+    "SETUP FETCH: No curl/wget/download steps in README, Makefile or examples/README.md"
+  ],
+  "run_classification": "NOT_ATTEMPTED",
+  "test_classification": "NOT_ATTEMPTED",
+  "entry_points": [
+    "ribs/schedulers/_scheduler.py Scheduler (ask() concatenates each emitter's ask(); tell() validates data, adds the batch to archive (and optional result_archive) via _add_to_archives, then slices add_info back to each emitter's tell())",
+    "ribs/archives/_grid_archive.py GridArchive.add (index_of maps measures to grid cells; can_insert = objective > cell threshold; per-cell argmax via numpy_groupies aggregate; threshold update per Fontaine 2023 when learning_rate/threshold_min set, otherwise vanilla MAP-Elites replacement; returns status/value add_info)",
+    "ribs/archives/_cvt_archive.py CVTArchive + k_means_centroids (CVT-MAP-Elites archive: cells are nearest centroids; centroids from sklearn k_means on uniform samples)",
+    "ribs/archives/_archive_base.py ArchiveBase (abstract add/add_single/retrieve/sample_elites/data interface all archives implement)",
+    "ribs/emitters/_evolution_strategy_emitter.py EvolutionStrategyEmitter (CMA-ME emitter: ask() samples from self._opt (CMA-ES etc. in ribs/emitters/opt); tell() ranks via ranker, selects parents by 'mu' or 'filter', updates ES, restarts from a random archive elite when stopped or no improvement)",
+    "ribs/emitters/_gaussian_emitter.py GaussianEmitter.ask (MAP-Elites emitter: sample elites from archive and add Gaussian noise; x0 / initial_solutions when archive empty)",
+    "ribs/emitters/_iso_line_emitter.py IsoLineEmitter and ribs/emitters/operators/_iso_line.py (MAP-Elites (line) variation operator)",
+    "ribs/emitters/_emitter_base.py EmitterBase (ask/tell/ask_dqd/tell_dqd abstract interface); ribs/emitters/rankers.py (ranking criteria e.g. TwoStageImprovementRanker used by CMA-ME)"
+  ],
+  "example": {
+    "command": "README 'Usage' Python snippet: GridArchive(solution_dim=10, dims=[20, 20], ranges=[(-1, 1), (-1, 1)]); three EvolutionStrategyEmitter(archive, x0=[0.0]*10, sigma0=0.1, batch_size=36); Scheduler(archive, emitters); 1000 iterations of scheduler.ask() / scheduler.tell(objectives, measures). Smallest shell commands: python -c \"import ribs; print(ribs.__version__)\" (README) and python sphere.py map_elites (examples/sphere.py docstring).",
+    "input": "10-D negative Sphere function: objectives = -np.sum(np.square(solutions), axis=1); measures = solutions[:, :2]; 3 emitters x batch 36 = 108 solutions per iteration for 1000 iterations",
+    "output": "A populated GridArchive (20x20 cells of best solutions per measure cell) visualised with ribs.visualize.grid_archive_heatmap(archive); README shows readme_assets/sphere_heatmap.png"
+  },
+  "environment": {
+    "runner": "native",
+    "note": "NOT RUN in this pass (nothing executed from the tree); host class from the reader draft: Any CPython >=3.10 host (CPU only for the core; README 'Accessible ... for beginners with limited computational resources'); optional NVIDIA CUDA 12 via cupy for the Array API extra; optional torch for CNF/DQD tutorials"
+  },
+  "patches": [],
+  "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+  "upstream_docs": [
+    "https://pyribs.org",
+    "https://docs.pyribs.org",
+    "https://pyribs.org/paper",
+    "@inproceedings{10.1145/3583131.3590374, ... doi = {10.1145/3583131.3590374}, booktitle = {Proceedings of the Genetic and Evolutionary Computation Conference}, series = {GECCO '23}}",
+    "Quality diversity optimization https://arxiv.org/abs/2012.04322",
+    "CMA-ME: https://dl.acm.org/doi/10.1145/3377930.3390232 / doi = {10.1145/3377930.3390232} (Fontaine 2020); code docstrings cite https://arxiv.org/abs/1912.02400",
+    "CMA-MEGA: https://proceedings.neurips.cc/paper/2021/hash/532923f11ac97d3e7cb0130315b067dc-Abstract.html (Fontaine 2021, Differentiable Quality Diversity); supported-algorithms.md https://arxiv.org/abs/2106.03894",
+    "CMA-MAE: https://arxiv.org/abs/2205.10752 / doi = {10.48550/ARXIV.2205.10752} (Fontaine 2022)",
+    "Scalable CMA-MAE: https://arxiv.org/abs/2210.02622 / doi={10.1109/LRA.2023.3313012} (Tjanaka 2023)",
+    "Discount Model Search: https://discount-models.github.io/ / https://openreview.net/forum?id=m6Hv0yZO3n (Tjanaka 2026, ICLR)",
+    "docs/supported-algorithms.md also names: Kent 2024 https://ieeexplore.ieee.org/abstract/document/10472301 (BOP-Elites); Vassiliades 2018 https://ieeexplore.ieee.org/document/8000667 (CVT-MAP-Elites); Vassiliades 2018 https://arxiv.org/abs/1804.03906 (MAP-Elites line); Lee 2024 https://dl.acm.org/doi/10.1145/3638529.3654001 (DDS); Mouret 2015 https://arxiv.org/pdf/1504.04909.pdf (MAP-Elites); Fontaine 2019 https://arxiv.org/abs/1904.10656 (sliding boundaries); Cully 2021 https://arxiv.org/abs/2007.05352 (Multi-Emitter MAP-Elites); Lehman 2011 (Novelty Search, NSLC, web.archive.org links); Bradley 2024 https://qdaif.github.io (QDAIF); Ding 2024 https://liding.info/qdhf/ (QDHF)"
+  ],
+  "human_capability_summary": {
+    "built_to": "README: 'A bare-bones Python library for quality diversity (QD) optimization. Pyribs implements the highly modular Rapid Illumination of Behavior Space (RIBS) framework for QD optimization', and is 'the official implementation of' CMA-ME, CMA-MEGA, CMA-MAE, scalable CMA-MAE and Discount Model Search (DMS).",
+    "pressure": "README BibTeX abstract: 'we believe the QD community faces two challenges: developing a framework to represent the field's growing array of algorithms, and implementing that framework in software that supports a range of researchers and practitioners'; README: 'like pycma, pyribs focuses on optimizing fixed-dimensional continuous domains. Focusing on this one commonly-occurring problem allows us to optimize the library for performance as well as ease of use.'",
+    "success_means": "README does not state a numeric metric; it frames success as the three principles 'Simple', 'Flexible', 'Accessible' and the ability to 'compose a large number of QD algorithms' by interchanging archive/emitter/scheduler; the code tracks archive stats (ArchiveStats, QD score via qd_score_offset, ribs/archives/_cqd_score.py) and the examples visualise archive heatmaps."
+  },
+  "known_human_problem_solved": "README: 'A bare-bones Python library for quality diversity (QD) optimization. Pyribs implements the highly modular Rapid Illumination of Behavior Space (RIBS) framework for QD optimization', and is 'the official implementation of' CMA-ME, CMA-MEGA, CMA-MAE, scalable CMA-MAE and Discount Model Search (DMS).",
+  "hardware_assumptions": "",
+  "human_environmental_pressure": "",
+  "human_failure_condition": "",
+  "behavioral_entry_point": "ribs/emitters/_emitter_base.py:EmitterBase.ask / EmitterBase.tell (subclass to change proposal behaviour), ribs/emitters/rankers.py (ranking criterion for the ES emitter), ribs/archives/_grid_archive.py:GridArchive.add (insertion threshold rule; learning_rate/threshold_min switch MAP-Elites vs CMA-MAE), ribs/schedulers/_scheduler.py:Scheduler.tell (orchestration)",
+  "observability": {
+    "EXECUTABLE": "unknown",
+    "OBSERVABLE": "unknown",
+    "ORACLE_BACKED": "unknown",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "unknown"
+  },
+  "lineage_relations": [],
+  "acquisition_tags": [
+    "operator-chat-2026-09-30-download-for-nyx",
+    "prior_art_raid",
+    "section-III",
+    "TECHNE-132",
+    "reader-draft:READER_DRAFTS_2026-09-30/pyribs.json"
+  ],
+  "historical_disposition": {
+    "state": "UNKNOWN",
+    "failure_reasons": [],
+    "superseded_by": "",
+    "rival_of": "",
+    "evidence": []
+  },
+  "versions_preserved": [],
+  "receipts": [],
+  "nyx_handoff": {
+    "here_is_the_machine": "vault body <vault>/pyribs-icaros-2020 (host-local; `python -m techne.fossils.harvest rematerialize pyribs-icaros-2020` on a host without it) ; tracked techne/fossils/specimens/pyribs-icaros-2020",
+    "where_it_came_from": "https://github.com/icaros-usc/pyribs ; ORIGINAL_AUTHORITATIVE_RELEASE ; commit 7bd723cf9863d480c8f2fec5ba9aa36f3b68c083 ; licence MIT",
+    "how_to_run_it": "not executed from this record (NOT_ATTEMPTED); upstream entry: README 'Usage' Python snippet: GridArchive(solution_dim=10, dims=[20, 20], ranges=[(-1, 1), (-1, 1)]); three EvolutionStrategyEmitter(archive, x0=[0.0]*10, sigma0=0.1, batch_size=36); Scheduler(archive, emitters); 1000 iterations of scheduler.ask() / scheduler.tell(objectives, measures). Smallest shell commands: python -c \"import ribs; print(ribs.__version__)\" (README) and python sphere.py map_elites (examples/sphere.py docstring). ; host class: Any CPython >=3.10 host (CPU only for the core; README 'Accessible ... for beginners with limited computational resources'); optional NVIDIA CUDA 12 via cupy for the Array API extra; optional torch for CNF/DQD tutorials",
+    "how_we_know_it_runs": "we do not: no run receipt. The body is pinned (tree_sha256 9336714f544cd94a, UPSTREAM_HASHES.txt) and verifies by hash; that is preservation, not execution",
+    "what_humans_used_it_for": "README: 'A bare-bones Python library for quality diversity (QD) optimization. Pyribs implements the highly modular Rapid Illumination of Behavior Space (RIBS) framework for QD optimization', and is 'the official implementation of' CMA-ME, CMA-MEGA, CMA-MAE, scalable CMA-MAE and Discount Model Search (DMS)."
+  },
+  "seat": "Techne",
+  "runtime": {
+    "python_major": 3,
+    "native_deps": [
+      "numba>=0.51.0 (JIT compiler; Makefile test-coverage target sets NUMBA_DISABLE_JIT=1)",
+      "numpy, scipy, scikit-learn, pandas (CPU numeric stack)",
+      "optional: torch and zuko (DensityArchive cnf, some emitters/tests), cma (pycma ES backend), pymoo (tests/emitters_pymoo, schedulers_pymoo), cupy-cuda12x (dev-array-api extra, Array API on GPU)",
+      "optional visualize: matplotlib, shapely, seaborn",
+      "PGA-ME is NOT present in this tree (no policy-gradient emitter; not in docs/supported-algorithms.md); MOME is NOT present (no multi-objective archive listed)"
+    ],
+    "host_class": "Any CPython >=3.10 host (CPU only for the core; README 'Accessible ... for beginners with limited computational resources'); optional NVIDIA CUDA 12 via cupy for the Array API extra; optional torch for CNF/DQD tutorials"
+  },
+  "reader_notes": {
+    "draft": "techne/acquisition/prior_art_raid/READER_DRAFTS_2026-09-30/pyribs.json",
+    "copyright_holders_by_header_count": {
+      "ICAROS Lab (docs/conf.py Sphinx variable, not a source header)": 1
+    },
+    "things_the_reader_could_not_verify": [
+      "No CITATION.cff / CITATION file in tree; citation taken from README BibTeX only",
+      "Whether the pinned commit equals the v0.12.0 tag commit (not checked)",
+      "Whether the code runs or the README example reproduces sphere_heatmap.png (not executed)",
+      "Provenance/licence of the binary tutorials/mnist/*.pth model files",
+      "Whether PyPI 'ribs' 0.12.0 matches this commit",
+      "Years range: LICENSE says 2020, docs/conf.py says 2021-current, first commit 2020-09-11; no single authoritative statement",
+      "PGA-ME and MOME are absent from this tree per file listing and docs/supported-algorithms.md; the caller's request to list them therefore yields NOT_FOUND_AT_PIN for pyribs"
+    ],
+    "has_gitmodules_at_pin": false,
+    "has_lfs_at_pin": false,
+    "approx_tree_bytes_at_pin": 36924897
+  },
+  "preservation": {
+    "status": "SELF_CONTAINED",
+    "body_status": "SELF_CONTAINED",
+    "recipe_status": "NO_RECIPE",
+    "submodules": [],
+    "submodules_missing": [],
+    "submodules_drifted": [],
+    "unpinned_artifacts": [],
+    "git_lfs": false,
+    "network_fetch_in_recipe": [],
+    "checked_utc": "2026-09-30T23:04:06Z",
+    "note": "status is the worse of body_status and the recipe axis; a matching tree hash alone never implies completeness."
+  }
+}

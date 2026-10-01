@@ -1,0 +1,76 @@
+{
+ "tag": "m2fresh",
+ "status": {
+  "fresh1_normal": "RAN",
+  "fresh2_normal": "RAN",
+  "fresh3_normal": "RAN"
+ },
+ "repro": {
+  "fresh1_normal": {
+   "cpu": [
+    0.821,
+    0.7767,
+    0.8646
+   ],
+   "recorded": [
+    0.821,
+    0.7767,
+    0.8646
+   ],
+   "match": true
+  },
+  "fresh2_normal": {
+   "cpu": [
+    0.8704,
+    0.8398,
+    0.8971
+   ],
+   "recorded": [
+    0.8704,
+    0.8398,
+    0.8971
+   ],
+   "match": true
+  },
+  "fresh3_normal": {
+   "cpu": [
+    0.8594,
+    0.8294,
+    0.8913
+   ],
+   "recorded": [
+    0.8594,
+    0.8294,
+    0.8913
+   ],
+   "match": true
+  }
+ },
+ "extra": {
+  "fresh1_census_C": {
+   "acc": 1.0,
+   "lo99": 1.0,
+   "hi99": 1.0,
+   "perm_p": 0.0004997501249375312,
+   "pass": true
+  },
+  "fresh2_census_C": {
+   "acc": 0.43424479166666663,
+   "lo99": 0.37499674479166667,
+   "hi99": 0.490234375,
+   "perm_p": 0.9980009995002499,
+   "pass": false
+  },
+  "fresh3_census_C": {
+   "acc": 0.45442708333333337,
+   "lo99": 0.393876953125,
+   "hi99": 0.5110709635416665,
+   "perm_p": 0.9825087456271864,
+   "pass": false
+  }
+ },
+ "wall_s": 17.418384552001953,
+ "seeds_ns": "0xc1b0",
+ "device": "cpu",
+ "graph": false
+}

@@ -1,0 +1,178 @@
+{
+ "generated_utc": "2026-10-01T01:41:43Z",
+ "source": "F:\\Prometheus-worktrees\\nestor-s1-forensics\\roles\\Nestor\\campaigns\\z80atlas-forensics-2026-09-23\\replays\\p11",
+ "e3_runs": {
+  "7ae3f9c1437c8000-s54765-tL-a0": {
+   "n_events": 14,
+   "p11_edges": {
+    "387": 334,
+    "388": 337,
+    "389": 334,
+    "391": 388
+   },
+   "recomputed_max_p11_depth": 2,
+   "recorded_max_p11_depth": 2,
+   "depth2_chains": [
+    {
+     "chain_root_to_leaf": [
+      337,
+      388,
+      391
+     ],
+     "edges": [
+      {
+       "child": 388,
+       "parent": 337,
+       "epoch": 1746,
+       "pair": 32,
+       "victim_side": 0,
+       "draws_passed": 2,
+       "p11_literal": true,
+       "fid_other": 0.9531,
+       "donor_wrote": 187
+      },
+      {
+       "child": 391,
+       "parent": 388,
+       "epoch": 1747,
+       "pair": 148,
+       "victim_side": 0,
+       "draws_passed": 3,
+       "p11_literal": true,
+       "fid_other": 1.0,
+       "donor_wrote": 186
+      }
+     ],
+     "edges_share_one_interaction": false
+    }
+   ],
+   "any_same_epoch_pair_events": [],
+   "d8_fixed_max_p11_depth": 2,
+   "donor_genome_len": 64,
+   "donor_zero_bytes": 5,
+   "donor_trailing_zero_bytes": 0,
+   "tape_half_n": [
+    64
+   ],
+   "representation": "Z8_64"
+  },
+  "c2a87e5970ad345d-s80949-tL-a0": {
+   "n_events": 19,
+   "p11_edges": {
+    "392": 391,
+    "393": 392,
+    "395": 391,
+    "397": 391,
+    "398": 391
+   },
+   "recomputed_max_p11_depth": 2,
+   "recorded_max_p11_depth": 2,
+   "depth2_chains": [
+    {
+     "chain_root_to_leaf": [
+      391,
+      392,
+      393
+     ],
+     "edges": [
+      {
+       "child": 392,
+       "parent": 391,
+       "epoch": 2455,
+       "pair": 342,
+       "victim_side": 1,
+       "draws_passed": 2,
+       "p11_literal": false,
+       "fid_other": 0.9688,
+       "donor_wrote": 202
+      },
+      {
+       "child": 393,
+       "parent": 392,
+       "epoch": 2456,
+       "pair": 178,
+       "victim_side": 1,
+       "draws_passed": 3,
+       "p11_literal": false,
+       "fid_other": 0.9844,
+       "donor_wrote": 201
+      }
+     ],
+     "edges_share_one_interaction": false
+    }
+   ],
+   "any_same_epoch_pair_events": [],
+   "d8_fixed_max_p11_depth": 2,
+   "donor_genome_len": 64,
+   "donor_zero_bytes": 1,
+   "donor_trailing_zero_bytes": 0,
+   "tape_half_n": [
+    64
+   ],
+   "representation": "Z8_64"
+  }
+ },
+ "all_runs": {
+  "n_runs": 1031,
+  "missing_event_files": 0,
+  "runs_with_same_interaction_double_birth": 1,
+  "same_interaction_double_births": 1,
+  "mutual_edges_pred": 1,
+  "mutual_edges_p11": 0,
+  "mutual_edges_lit": 0,
+  "depth_distributions": {
+   "pred": {
+    "recorded": {
+     "1": 911,
+     "2": 111,
+     "3": 9
+    },
+    "d8_fixed": {
+     "1": 912,
+     "2": 110,
+     "3": 9
+    }
+   },
+   "p11": {
+    "recorded": {
+     "0": 974,
+     "1": 55,
+     "2": 2
+    },
+    "d8_fixed": {
+     "0": 974,
+     "1": 55,
+     "2": 2
+    }
+   },
+   "lit": {
+    "recorded": {
+     "0": 983,
+     "1": 47,
+     "2": 1
+    },
+    "d8_fixed": {
+     "0": 983,
+     "1": 47,
+     "2": 1
+    }
+   }
+  },
+  "examples": [
+   {
+    "run": "860dec731227326b-s39457-tL-a0",
+    "set": "pred",
+    "mutual_edges": 1,
+    "depth_raw": 2,
+    "depth_fixed": 1,
+    "interactions": [
+     [
+      2137,
+      382
+     ]
+    ]
+   }
+  ]
+ },
+ "wall_s": 27.0
+}

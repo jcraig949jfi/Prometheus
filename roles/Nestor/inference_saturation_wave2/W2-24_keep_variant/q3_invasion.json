@@ -1,0 +1,477 @@
+{
+ "names": [
+  "F",
+  "C3",
+  "5C",
+  "AC",
+  "C3+AC"
+ ],
+ "NB": 200,
+ "ZERO": {
+  "F|F": {
+   "BASE": 1.0,
+   "ATOMIC": 1.0
+  },
+  "F|C3": {
+   "BASE": 1.0,
+   "ATOMIC": 1.0
+  },
+  "F|5C": {
+   "BASE": 1.0,
+   "ATOMIC": 1.0
+  },
+  "F|AC": {
+   "BASE": 1.0,
+   "ATOMIC": 1.0
+  },
+  "F|C3+AC": {
+   "BASE": 0.0,
+   "ATOMIC": 1.0
+  },
+  "C3|F": {
+   "BASE": 1.0,
+   "ATOMIC": 1.0
+  },
+  "C3|C3": {
+   "BASE": 1.0,
+   "ATOMIC": 1.0
+  },
+  "C3|5C": {
+   "BASE": 1.0,
+   "ATOMIC": 1.0
+  },
+  "C3|AC": {
+   "BASE": 1.0,
+   "ATOMIC": 1.0
+  },
+  "C3|C3+AC": {
+   "BASE": 1.0,
+   "ATOMIC": 1.0
+  },
+  "5C|F": {
+   "BASE": 1.0,
+   "ATOMIC": 1.0
+  },
+  "5C|C3": {
+   "BASE": 1.0,
+   "ATOMIC": 1.0
+  },
+  "5C|5C": {
+   "BASE": 1.0,
+   "ATOMIC": 1.0
+  },
+  "5C|AC": {
+   "BASE": 1.0,
+   "ATOMIC": 1.0
+  },
+  "5C|C3+AC": {
+   "BASE": 1.0,
+   "ATOMIC": 1.0
+  },
+  "AC|F": {
+   "BASE": 1.0,
+   "ATOMIC": 1.0
+  },
+  "AC|C3": {
+   "BASE": 1.0,
+   "ATOMIC": 1.0
+  },
+  "AC|5C": {
+   "BASE": 1.0,
+   "ATOMIC": 1.0
+  },
+  "AC|AC": {
+   "BASE": 1.0,
+   "ATOMIC": 1.0
+  },
+  "AC|C3+AC": {
+   "BASE": 1.0,
+   "ATOMIC": 1.0
+  },
+  "C3+AC|F": {
+   "BASE": 2.0,
+   "ATOMIC": 1.0
+  },
+  "C3+AC|C3": {
+   "BASE": 1.0,
+   "ATOMIC": 1.0
+  },
+  "C3+AC|5C": {
+   "BASE": 1.0,
+   "ATOMIC": 1.0
+  },
+  "C3+AC|AC": {
+   "BASE": 1.0,
+   "ATOMIC": 1.0
+  },
+  "C3+AC|C3+AC": {
+   "BASE": 1.0,
+   "ATOMIC": 1.0
+  }
+ },
+ "BANK": {
+  "F|F": {
+   "BASE": 1.0,
+   "ATOMIC": 1.0
+  },
+  "F|C3": {
+   "BASE": 1.0,
+   "ATOMIC": 1.0
+  },
+  "F|5C": {
+   "BASE": 1.0,
+   "ATOMIC": 1.0
+  },
+  "F|AC": {
+   "BASE": 1.0,
+   "ATOMIC": 1.0
+  },
+  "F|C3+AC": {
+   "BASE": 0.0,
+   "ATOMIC": 1.0
+  },
+  "C3|F": {
+   "BASE": 1.0,
+   "ATOMIC": 1.0
+  },
+  "C3|C3": {
+   "BASE": 1.0,
+   "ATOMIC": 1.0
+  },
+  "C3|5C": {
+   "BASE": 1.0,
+   "ATOMIC": 1.0
+  },
+  "C3|AC": {
+   "BASE": 1.0,
+   "ATOMIC": 1.0
+  },
+  "C3|C3+AC": {
+   "BASE": 1.0,
+   "ATOMIC": 1.0
+  },
+  "5C|F": {
+   "BASE": 1.0,
+   "ATOMIC": 1.0
+  },
+  "5C|C3": {
+   "BASE": 1.0,
+   "ATOMIC": 1.0
+  },
+  "5C|5C": {
+   "BASE": 1.0,
+   "ATOMIC": 1.0
+  },
+  "5C|AC": {
+   "BASE": 1.0,
+   "ATOMIC": 1.0
+  },
+  "5C|C3+AC": {
+   "BASE": 1.0,
+   "ATOMIC": 1.0
+  },
+  "AC|F": {
+   "BASE": 1.0,
+   "ATOMIC": 1.0
+  },
+  "AC|C3": {
+   "BASE": 1.0,
+   "ATOMIC": 1.0
+  },
+  "AC|5C": {
+   "BASE": 1.0,
+   "ATOMIC": 1.0
+  },
+  "AC|AC": {
+   "BASE": 1.0,
+   "ATOMIC": 1.0
+  },
+  "AC|C3+AC": {
+   "BASE": 1.0,
+   "ATOMIC": 1.0
+  },
+  "C3+AC|F": {
+   "BASE": 2.0,
+   "ATOMIC": 1.0
+  },
+  "C3+AC|C3": {
+   "BASE": 1.0,
+   "ATOMIC": 1.0
+  },
+  "C3+AC|5C": {
+   "BASE": 1.0,
+   "ATOMIC": 1.0
+  },
+  "C3+AC|AC": {
+   "BASE": 1.0,
+   "ATOMIC": 1.0
+  },
+  "C3+AC|C3+AC": {
+   "BASE": 1.0,
+   "ATOMIC": 1.0
+  }
+ },
+ "ZERO_placements": {
+  "F@0 vs F@1": {
+   "BASE": [
+    "F",
+    "F"
+   ],
+   "ATOMIC": [
+    "F",
+    "F"
+   ]
+  },
+  "F@0 vs C3@1": {
+   "BASE": [
+    "C3",
+    "C3"
+   ],
+   "ATOMIC": [
+    "F",
+    "C3"
+   ]
+  },
+  "F@0 vs 5C@1": {
+   "BASE": [
+    "F",
+    "F"
+   ],
+   "ATOMIC": [
+    "F",
+    "5C"
+   ]
+  },
+  "F@0 vs AC@1": {
+   "BASE": [
+    "F",
+    "F"
+   ],
+   "ATOMIC": [
+    "F",
+    "AC"
+   ]
+  },
+  "F@0 vs C3+AC@1": {
+   "BASE": [
+    "C3+AC",
+    "C3+AC"
+   ],
+   "ATOMIC": [
+    "F",
+    "C3+AC"
+   ]
+  },
+  "C3@0 vs F@1": {
+   "BASE": [
+    "F",
+    "F"
+   ],
+   "ATOMIC": [
+    "C3",
+    "F"
+   ]
+  },
+  "C3@0 vs C3@1": {
+   "BASE": [
+    "C3",
+    "C3"
+   ],
+   "ATOMIC": [
+    "C3",
+    "C3"
+   ]
+  },
+  "C3@0 vs 5C@1": {
+   "BASE": [
+    "C3",
+    "C3"
+   ],
+   "ATOMIC": [
+    "C3",
+    "5C"
+   ]
+  },
+  "C3@0 vs AC@1": {
+   "BASE": [
+    "C3",
+    "C3"
+   ],
+   "ATOMIC": [
+    "C3",
+    "AC"
+   ]
+  },
+  "C3@0 vs C3+AC@1": {
+   "BASE": [
+    "C3",
+    "C3"
+   ],
+   "ATOMIC": [
+    "C3",
+    "C3+AC"
+   ]
+  },
+  "5C@0 vs F@1": {
+   "BASE": [
+    "5C",
+    "5C"
+   ],
+   "ATOMIC": [
+    "5C",
+    "F"
+   ]
+  },
+  "5C@0 vs C3@1": {
+   "BASE": [
+    "5C",
+    "5C"
+   ],
+   "ATOMIC": [
+    "5C",
+    "C3"
+   ]
+  },
+  "5C@0 vs 5C@1": {
+   "BASE": [
+    "5C",
+    "5C"
+   ],
+   "ATOMIC": [
+    "5C",
+    "5C"
+   ]
+  },
+  "5C@0 vs AC@1": {
+   "BASE": [
+    "5C",
+    "5C"
+   ],
+   "ATOMIC": [
+    "5C",
+    "AC"
+   ]
+  },
+  "5C@0 vs C3+AC@1": {
+   "BASE": [
+    "5C",
+    "5C"
+   ],
+   "ATOMIC": [
+    "5C",
+    "C3+AC"
+   ]
+  },
+  "AC@0 vs F@1": {
+   "BASE": [
+    "AC",
+    "AC"
+   ],
+   "ATOMIC": [
+    "AC",
+    "F"
+   ]
+  },
+  "AC@0 vs C3@1": {
+   "BASE": [
+    "AC",
+    "AC"
+   ],
+   "ATOMIC": [
+    "AC",
+    "C3"
+   ]
+  },
+  "AC@0 vs 5C@1": {
+   "BASE": [
+    "AC",
+    "AC"
+   ],
+   "ATOMIC": [
+    "AC",
+    "5C"
+   ]
+  },
+  "AC@0 vs AC@1": {
+   "BASE": [
+    "AC",
+    "AC"
+   ],
+   "ATOMIC": [
+    "AC",
+    "AC"
+   ]
+  },
+  "AC@0 vs C3+AC@1": {
+   "BASE": [
+    "AC",
+    "AC"
+   ],
+   "ATOMIC": [
+    "AC",
+    "C3+AC"
+   ]
+  },
+  "C3+AC@0 vs F@1": {
+   "BASE": [
+    "C3+AC",
+    "C3+AC"
+   ],
+   "ATOMIC": [
+    "C3+AC",
+    "F"
+   ]
+  },
+  "C3+AC@0 vs C3@1": {
+   "BASE": [
+    "C3+AC",
+    "C3+AC"
+   ],
+   "ATOMIC": [
+    "C3+AC",
+    "C3"
+   ]
+  },
+  "C3+AC@0 vs 5C@1": {
+   "BASE": [
+    "C3+AC",
+    "C3+AC"
+   ],
+   "ATOMIC": [
+    "C3+AC",
+    "5C"
+   ]
+  },
+  "C3+AC@0 vs AC@1": {
+   "BASE": [
+    "C3+AC",
+    "C3+AC"
+   ],
+   "ATOMIC": [
+    "C3+AC",
+    "AC"
+   ]
+  },
+  "C3+AC@0 vs C3+AC@1": {
+   "BASE": [
+    "C3+AC",
+    "C3+AC"
+   ],
+   "ATOMIC": [
+    "C3+AC",
+    "C3+AC"
+   ]
+  }
+ },
+ "bank_panel_C3+AC": {
+  "m_base": 1.469,
+  "keep": 0.98,
+  "m_atomic": 1.487,
+  "conv_side0": 1.0,
+  "conv_side1": 0.01
+ },
+ "bank_panel_m_atomic_F": 1.263,
+ "bank_panel_m_atomic_C3": 1.448,
+ "bank_panel_m_atomic_5C": 1.288,
+ "bank_panel_m_atomic_AC": 1.304
+}

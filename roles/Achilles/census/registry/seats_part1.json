@@ -1,0 +1,908 @@
+{
+ "schema": "prometheus.achilles_registry.v1",
+ "part": 1,
+ "built_at_utc": "2026-10-01T01:22:42Z",
+ "base_sha": "9e4d75e62",
+ "seats": [
+  {
+   "seat": "Achilles",
+   "kind": "SEAT",
+   "short_role": "Fleet census and status seat",
+   "declared_role": {
+    "text": "Maintains a continuously refreshed, evidence-backed census of every Prometheus seat (role, state, recent work, task, experiment, commit, engine, host) as a JSON snapshot, a GitHub Pages page and the census section of the status email, every 6 hours. Observes and reports; never assigns work.",
+    "source": "roles/Achilles/prompts/2026-09-30_charter/01_OPERATOR_CHARTER_verbatim.md",
+    "source_currency": "2026-09-30"
+   },
+   "observed_role": {
+    "text": "First run: reporting-stack reconstruction and census implementation.",
+    "differs": false,
+    "evidence": []
+   },
+   "domain": "reporting",
+   "lifecycle_marker": {
+    "state": "ACTIVE",
+    "date": "2026-09-30",
+    "quote": "charter ADOPTED",
+    "source": "roles/Achilles/RESPONSIBILITIES.md"
+   },
+   "documented_host": {
+    "value": "ELSA",
+    "source": "roles/Achilles/STATUS.md:11"
+   },
+   "aliases": [],
+   "engines": [
+    {
+     "engine_id": "achilles/census",
+     "relationship": "primary",
+     "evidence": "roles/Achilles/prompts/2026-09-30_charter/"
+    }
+   ],
+   "entry_file": "roles/Achilles/RESPONSIBILITIES.md",
+   "notes": ""
+  },
+  {
+   "seat": "Aether",
+   "kind": "SEAT",
+   "short_role": "Lattice substrate science, RunPod engineering",
+   "declared_role": {
+    "text": "Directive of 2026-09-25 names the RunPod engineering ladder as primary mission (AETH-02 science closed); RESPONSIBILITIES says TODO.md wins, and TODO.md (Currency 2026-09-27) is the research block on the AETH lattice (rcv laws, locality, falsifiers).",
+    "source": "roles/Aether/RESPONSIBILITIES.md",
+    "source_currency": "2026-09-25"
+   },
+   "observed_role": {
+    "text": "Running preregistered lesion experiments on rcv_add/rcv_str laws (E-009..E-012) under MWO/CWO work orders, plus source review of Odysseus's promexec installer.",
+    "differs": false,
+    "evidence": [
+     "5ac5426c8 2026-09-30 Aether WORK_STATE: E-011 closed (PARTIAL); CURRENT = rcv_str frozen-energy lesion (E-012)",
+     "4b29572f1 2026-09-30 Aether E-010: steering lesion -- STEERING_REQUIRED (rcv_sfx 4/128 = rcv level; rcv_str 15/128); regression gate PASS",
+     "cabc6314a 2026-09-29 Aether E-009: fresh-seed replication -- rcv_add and rcv_str both REPLICATED under the preregistered N1 rule",
+     "1346e8079 2026-09-30 Aether: promexec round-2 SOURCE review (pre-install, read-only) -- round-1 findings closed on source; M20 checks drift not review"
+    ]
+   },
+   "domain": "science",
+   "lifecycle_marker": {
+    "state": "ACTIVE",
+    "date": "2026-09-27",
+    "quote": "seat state: ACTIVE, not blocked on any other seat. Host BUCKKEEP,",
+    "source": "roles/Aether/STATUS.md:5"
+   },
+   "documented_host": {
+    "value": "BUCKKEEP",
+    "source": "roles/Aether/STATUS.md:5"
+   },
+   "aliases": [
+    {
+     "name": "Aether[buckkeep-5c60d0f5]",
+     "relation": "instance",
+     "source": "roles/Aether/STATUS.md:6"
+    }
+   ],
+   "engines": [
+    {
+     "engine_id": "Aether",
+     "relationship": "primary",
+     "evidence": "Aether/AETHER_ENGINE_CARD.md; 1b4fb4523"
+    }
+   ],
+   "entry_file": "roles/Aether/RESPONSIBILITIES.md",
+   "notes": "Host conflict: created on M2 (roles/base-role/INHERITANCE.md:12; RESPONSIBILITIES.md:61 'Resident on M2 (SPECTREX5)', stale body) vs newest STATUS (2026-09-27) host BUCKKEEP. RESPONSIBILITIES body below line 20 self-declared STALE. Engine path is the top-level directory 'Aether' (capital A); not in atlas/registry.json. WORK_STATE.json state WORKING (2026-09-30)."
+  },
+  {
+   "seat": "Agora",
+   "kind": "SEAT",
+   "short_role": "Former April coordination channel",
+   "declared_role": {
+    "text": "April 2026 Redis coordination channel and coordinator session; every April function now has another owner (comms, base role). Seat has no lane; identity decision AGORA-01 pending, recommendation RETIRE.",
+    "source": "roles/Agora/RESPONSIBILITIES.md",
+    "source_currency": "2026-09-14"
+   },
+   "observed_role": {
+    "text": "Only one adoption pass since April: classified the April queue (0 STILL_LIVE) and opened AGORA-01. No work since 2026-09-14.",
+    "differs": false,
+    "evidence": [
+     "31f51c722 2026-09-14 Agora adopts roles/base-role: April queue classified (0 STILL_LIVE), identity decision AGORA-01 opened, credential exposure repor",
+     "8dc34fe32 2026-09-14 Agora journal 2026-09-14: adoption pass receipt",
+     "aa585d584 2026-04-15 Agora: Final session state before account switch"
+    ]
+   },
+   "domain": "historical",
+   "lifecycle_marker": {
+    "state": "BLOCKED",
+    "date": "2026-09-14",
+    "quote": "seat state: BLOCKED after this pass on AGORA-01 (operator: what Agora is",
+    "source": "roles/Agora/STATUS.md:5"
+   },
+   "documented_host": {
+    "value": "M1",
+    "source": "roles/Agora/STATUS.md:9 (instance Agora[m1-1b91e47d])"
+   },
+   "aliases": [
+    {
+     "name": "agora/",
+     "relation": "same-name-different-referent",
+     "source": "top-level agora/ package (April Redis-era helpers)"
+    },
+    {
+     "name": "agora.* Postgres schema",
+     "relation": "same-name-different-referent",
+     "source": "roles/Agora/STATUS.md: 'The live agora.* Postgres schema is Pronoia's pipeline, not this seat's'"
+    },
+    {
+     "name": "Agora[m1-1b91e47d]",
+     "relation": "instance",
+     "source": "roles/Agora/STATUS.md:9"
+    }
+   ],
+   "engines": [],
+   "entry_file": "roles/Agora/RESPONSIBILITIES.md",
+   "notes": "Seat claims neither the agora/ code nor the agora.* schema (RESPONSIBILITIES.md:52). Achilles charter names Agora as a historical reporting anchor to investigate. No WORK_STATE.json. No commits after 2026-09-14."
+  },
+  {
+   "seat": "Alethelia",
+   "kind": "SEAT",
+   "short_role": "Truthful liveness reporter (dormant)",
+   "declared_role": {
+    "text": "Monitors and reports only: an on-demand reporter where every field is traceable to a query, UNKNOWN is never narrated over, and planted decoys must appear (cannot fabricate calm). Charter ratified 2026-08-17.",
+    "source": "roles/Alethelia/RESPONSIBILITIES.md",
+    "source_currency": "2026-09-11"
+   },
+   "observed_role": {
+    "text": "Built v0 on 2026-08-20 (Aporia P29) and adopted the base role 2026-09-11; no runs or commits since.",
+    "differs": false,
+    "evidence": [
+     "d2c54fa2b 2026-09-11 Alethelia adopts roles/base-role: the reporter registered DORMANT (no host), v0.1 refuses calm over anomalies",
+     "d27c208a6 2026-09-11 Alethelia journal close 2026-09-11: d2c54fa2b on main, comms message 17 to Archaeon",
+     "756b7cf16 2026-08-20 Aporia P29: Alethelia v0 -- the reporter that cannot fabricate calm"
+    ]
+   },
+   "domain": "reporting",
+   "lifecycle_marker": {
+    "state": "IDLE",
+    "date": "2026-09-11",
+    "quote": "records it as DORMANT",
+    "source": "roles/Alethelia/RESPONSIBILITIES.md:14"
+   },
+   "documented_host": {
+    "value": "M1",
+    "source": "roles/base-role/MONITORS.md:49 (built and run on M1); roles/Alethelia/STATUS.md:11 says 'Host: NONE'"
+   },
+   "aliases": [
+    {
+     "name": "agents/alethelia/",
+     "relation": "role-doc",
+     "source": "agents/alethelia/alethelia.py (the instrument)"
+    },
+    {
+     "name": "Aletheia (agents/aletheia/)",
+     "relation": "same-name-different-referent",
+     "source": "roles/Alethelia/RESPONSIBILITIES.md: name deliberately distinct from the knowledge-graph component"
+    }
+   ],
+   "engines": [
+    {
+     "engine_id": "agents/alethelia",
+     "relationship": "primary",
+     "evidence": "roles/base-role/MONITORS.md:49 AletheliaReport row; d2c54fa2b"
+    }
+   ],
+   "entry_file": "roles/Alethelia/RESPONSIBILITIES.md",
+   "notes": "Host conflict: heading says 'M4 seat' (annotated STALE at RESPONSIBILITIES.md:8); has only ever run on M1; standing-report host is the untaken decision ALET-04, so STATUS says Host: NONE. Lifecycle mapped to IDLE because the MONITORS state word is DORMANT (not in the schema enum). Achilles charter lists 'Aletheia reporting' as an anchor; spelling differs."
+  },
+  {
+   "seat": "Ananke",
+   "kind": "SEAT",
+   "short_role": "Packet-Tensor Engine builder and runner",
+   "declared_role": {
+    "text": "Builds and runs the Packet-Tensor Engine (PTE), a GPU-native instrument asking whether cognitive-like organisation emerges from lossy packet traffic through a mutable tensor substrate, mapped as a phase diagram over communication physics.",
+    "source": "roles/Ananke/RESPONSIBILITIES.md",
+    "source_currency": "2026-09-24"
+   },
+   "observed_role": {
+    "text": "PTE campaigns C1/C1b done; on 2026-09-30 an operator inference harvest: causal audit of PTE claims, instrument-gap fixes, statistics module, search-vs-physics checks.",
+    "differs": false,
+    "evidence": [
+     "b18ea183e 2026-09-30 Ananke Wave-2: W2-D search-vs-physics chain deposited (FLIP@d9cc located at S; falsifiers stated)",
+     "cc44f5903 2026-09-30 Ananke harvest: PTE_CAUSAL_AUDIT_2026-09-30 (chain audit, claim verdicts, code-defect disposition)",
+     "4066b4111 2026-09-30 Ananke Wave-2: W2-H statistics deposited; inference.py (BOOTT/t/BH/Holm/replication gate) added with tests"
+    ]
+   },
+   "domain": "science",
+   "lifecycle_marker": {
+    "state": "ACTIVE",
+    "date": "2026-09-29",
+    "quote": "seat state: ACTIVE under MWO-0001 (mwo_commit 7e4c09f2c). Nothing running,",
+    "source": "roles/Ananke/STATUS.md:6"
+   },
+   "documented_host": {
+    "value": "M1",
+    "source": "roles/base-role/INHERITANCE.md:11 (created on M1); roles/Ananke/RESUME.md:41 (instance m1-c5725d8e)"
+   },
+   "aliases": [],
+   "engines": [
+    {
+     "engine_id": "prometheus/ananke",
+     "relationship": "primary",
+     "evidence": "4066b4111; 41e386ccd"
+    },
+    {
+     "engine_id": "roles/Ananke/pte",
+     "relationship": "primary",
+     "evidence": "atlas/registry.json engine 'ananke' (code_paths roles/Ananke)"
+    },
+    {
+     "engine_id": "fabric",
+     "relationship": "consumer",
+     "evidence": "roles/Ananke/STATUS.md:17-18 (leases through Fabric)"
+    }
+   ],
+   "entry_file": "roles/Ananke/RESPONSIBILITIES.md",
+   "notes": "atlas/registry.json lists engine 'ananke' with code_paths ['roles/Ananke'] and home_host null; recent code also lives in prometheus/ananke. MONITORS rows AnankePTE_C1 / AnankePTE_C1b both DISABLED (campaigns done). WORK_STATE.json state WORKING (2026-09-30)."
+  },
+  {
+   "seat": "Aphrodite",
+   "kind": "SEAT",
+   "short_role": "Recursive self-improvement experiments",
+   "declared_role": {
+    "text": "Determine experimentally whether collective/self-improving AI systems get better at producing improvements, separating transferable algorithmic change from memory, selection, compute, evaluator exploitation and benchmark specialization; maintain library and calibration apparatus. Results carry evidence tiers 1-4.",
+    "source": "roles/Aphrodite/RESPONSIBILITIES.md",
+    "source_currency": "2026-09-18"
+   },
+   "observed_role": {
+    "text": "Ran amendment-frozen toy-model campaigns (ARC3, A23 C3R2-CONFIRM), closed ARC3, adopted MWO/CWO orders, and ran the 2026-09-30 inference harvest.",
+    "differs": false,
+    "evidence": [
+     "889bf8ddd 2026-09-28 Aphrodite ARC3 close: W8 report deposited verbatim",
+     "1ef7de4c0 2026-09-28 Aphrodite A23/C3R2-CONFIRM: G1_RECURRENT_STEPPING_STONE=YES, GENERIC 3/3",
+     "2e1a82b42 2026-09-30 READY: Aphrodite inference harvest complete (branch aphrodite/inference-harvest-2026-09-30 @ ed369a67a)"
+    ]
+   },
+   "domain": "science",
+   "lifecycle_marker": {
+    "state": "ACTIVE",
+    "date": "2026-09-28",
+    "quote": "seat state: ACTIVE on its charter (APHRODITE-08 APPROVED 2026-09-18).",
+    "source": "roles/Aphrodite/STATUS.md:5"
+   },
+   "documented_host": {
+    "value": "M4",
+    "source": "roles/Aphrodite/STATUS.md:7 (Host harry1 (M4))"
+   },
+   "aliases": [],
+   "engines": [
+    {
+     "engine_id": "roles/Aphrodite/engine",
+     "relationship": "primary",
+     "evidence": "roles/Aphrodite/engine/a16.py..a22_c3r2.py"
+    },
+    {
+     "engine_id": "roles/Aphrodite/monitors/news",
+     "relationship": "primary",
+     "evidence": "roles/base-role/MONITORS.md:29 AphroditeNewsWatch (ACTIVE from 2026-09-18)"
+    }
+   ],
+   "entry_file": "roles/Aphrodite/RESPONSIBILITIES.md",
+   "notes": "STATUS.md:71 has an older 'PARKED 2026-09-22 by operator instruction: no further science until the next session' block; superseded by later ACTIVE work. Created on M4 per INHERITANCE.md:10. WORK_STATE.json state READY (2026-10-01T00:42Z)."
+  },
+  {
+   "seat": "Apollo",
+   "kind": "SEAT",
+   "short_role": "Serendipity substrate miner (suspended)",
+   "declared_role": {
+    "text": "Gen-2 charter: Serendipity Ecology Substrate Miner. Standing disposition (HITL 2026-09-01): scheduled evolutionary mining SUSPENDED; the only authorised action is one Source Viability Gate probe against the next Foundry release.",
+    "source": "roles/Apollo/BOOTSTRAP.md",
+    "source_currency": "2026-09-11"
+   },
+   "observed_role": {
+    "text": "Implemented the suspension and gate on 2026-09-01; on 2026-09-11 measured that the gate has no eligible input and gave one ruling to Lexis. No commits since 2026-09-11.",
+    "differs": false,
+    "evidence": [
+     "77cc2249b 2026-09-01 Apollo: implement the S1 ruling -- mining SUSPENDED, Source Viability Gate enforced",
+     "1f0873ea5 2026-09-11 Apollo adopts roles/base-role: the gate's premise measured and found to have no eligible input",
+     "2b7c6e4fb 2026-09-11 Apollo rules for Lexis (comms 15): the blackboard substrate is not retired; Task 2 accepted"
+    ]
+   },
+   "domain": "science",
+   "lifecycle_marker": {
+    "state": "PARKED",
+    "date": "2026-09-01",
+    "quote": "SCHEDULED MINING SUSPENDED (HITL 2026-09-01). Zero routine search",
+    "source": "roles/Apollo/STATUS.txt:8"
+   },
+   "documented_host": {
+    "value": "M1",
+    "source": "roles/Apollo/CHARTER.md:17 ('this pass: M1')"
+   },
+   "aliases": [
+    {
+     "name": "Apollo (necropolis daemon)",
+     "relation": "same-name-different-referent",
+     "source": "engine/necropolis/ROSTER.jsonl:1 (M2 daemon, evolutionary search engine, shelved)"
+    },
+    {
+     "name": "apollo/",
+     "relation": "role-doc",
+     "source": "top-level apollo/ (Gen-1 code, RESUME/ROADMAP stale since 2026-05-15)"
+    }
+   ],
+   "engines": [
+    {
+     "engine_id": "apollo/serendipity",
+     "relationship": "primary",
+     "evidence": "roles/Apollo/STATUS.txt (adapter/replay/fossil/gate code); 77cc2249b"
+    },
+    {
+     "engine_id": "apollo",
+     "relationship": "maintainer",
+     "evidence": "Gen-1 evolutionary engine; roles/Apollo/BOOTSTRAP.md 'historical'"
+    }
+   ],
+   "entry_file": "roles/Apollo/BOOTSTRAP.md",
+   "notes": "Host conflict: Gen-1 CHARTER.md:30 'Claude Code (Opus) on M2 (dedicated GPU window)' and necropolis ROSTER says M2; 2026-09-11 annotation says the seat runs where opened, last pass M1. Operator decisions APOLLO-04 (retire mining) and APOLLO-22 open. MONITORS.md:51 'Apollo mining jobs' DORMANT by ruling, never installed. Lifecycle word in source is SUSPENDED, mapped to PARKED."
+  },
+  {
+   "seat": "Aporia",
+   "kind": "SEAT",
+   "short_role": "Contrarian theorist; fleet coordinator",
+   "declared_role": {
+    "text": "Contrarian research seat: the mutable-language-of-thought line (primary), literature and synthesis, instruments (Q045, Q100), and the module-reuse vs mutational-linkage question; keeps a dissent ledger.",
+    "source": "roles/Aporia/RESPONSIBILITIES.md",
+    "source_currency": "2026-09-11"
+   },
+   "observed_role": {
+    "text": "Recent work is fleet coordination: publishing MWO-0002..0004 and CWO-2026-09-30 A/B/C work orders, fleet census, queue of record, dispatching assignments; plus a wrong-question inference harvest on 2026-09-30.",
+    "differs": true,
+    "evidence": [
+     "6a7a84569 2026-09-30 Aporia: CWO 2026-09-30 fleet activation -- verbatim, queue of record, stale-state tool",
+     "7cb91eaf9 2026-09-30 Aporia: fleet census after 1-hour heartbeat window (10/16 responded; 6 silent)",
+     "13de76162 2026-09-29 MWO-0004: publication record (PUBLICATIONS.md), Aporia WORK_STATE (mwo_commit = P), operator directive verbatim",
+     "140a6612e 2026-09-30 Aporia: inference harvest 2026-09-30 -- wrong-question audit, rival ontologies, blind spots"
+    ]
+   },
+   "domain": "coordination",
+   "lifecycle_marker": {
+    "state": "ACTIVE",
+    "date": "2026-09-23",
+    "quote": "Seat state: ACTIVE.",
+    "source": "roles/Aporia/STATUS.md:5"
+   },
+   "documented_host": {
+    "value": "M1",
+    "source": "roles/Aporia/STATUS.md:3 (Aporia[m1-36283f8a], SKULLPORT)"
+   },
+   "aliases": [
+    {
+     "name": "Aporia (necropolis operator)",
+     "relation": "same-name-different-referent",
+     "source": "engine/necropolis/ROSTER.jsonl:6 (M1 operator, void detection + Deep Research dispatch)"
+    },
+    {
+     "name": "2026-04 void detector role",
+     "relation": "predecessor",
+     "source": "roles/Aporia/history/RESPONSIBILITIES_2026-04_void_detector.md"
+    }
+   ],
+   "engines": [
+    {
+     "engine_id": "aporia/lot",
+     "relationship": "primary",
+     "evidence": "roles/Aporia/RESPONSIBILITIES.md scope 1; 2adcb0c1d"
+    },
+    {
+     "engine_id": "ops/fleet",
+     "relationship": "primary",
+     "evidence": "6a7a84569; WORK_STATE next_actions 'coordination cycles via fleet_status.py'"
+    },
+    {
+     "engine_id": "ops/work_orders",
+     "relationship": "primary",
+     "evidence": "13de76162 MWO-0004 publication record"
+    },
+    {
+     "engine_id": "fabric",
+     "relationship": "consumer",
+     "evidence": "roles/Aporia/WORK_STATE.json fabric_tasks"
+    }
+   ],
+   "entry_file": "roles/Aporia/RESPONSIBILITIES.md",
+   "notes": "Declared role (RESPONSIBILITIES Currency 2026-09-11) is science; observed role since 2026-09-28 is fleet coordinator (MWO/CWO publisher, census, dispatch) -- domain set to coordination from observed work. STATUS.md currency 2026-09-23 is older than WORK_STATE.json (WORKING, 2026-09-30). Aporia designed agents/atalanta, hypatia, pheme in May. MONITORS.md:35 Elenchus shadow loop DORMANT because Aporia's per-pass log stopped 2026-09-01."
+  },
+  {
+   "seat": "Arachne",
+   "kind": "SEAT",
+   "short_role": "Math crawler swarm (frozen specimen)",
+   "declared_role": {
+    "text": "Tests whether a population of low-rule crawlers over real mathematical landscapes self-assembles a non-human organisation in one shared relation fabric (must survive ablation and a graph null at n=2). Owns agents/arachne/.",
+    "source": "roles/Arachne/RESPONSIBILITIES.md",
+    "source_currency": "2026-09-11"
+   },
+   "observed_role": {
+    "text": "One active pass on 2026-09-11 analysing the frozen June specimen: EMERGENCE NOT EARNED, implementation defect found, recommendation METABOLIZE. No commits since.",
+    "differs": false,
+    "evidence": [
+     "419b2db0b 2026-09-11 Arachne items 4 and 7: EMERGENCE NOT EARNED and the verdict matrix; recommendation C. METABOLIZE",
+     "1bf5be9fb 2026-09-11 Arachne items 5 and 6: feral autopsy -- the organism died of an IMPLEMENTATION DEFECT",
+     "58be0d237 2026-09-11 Arachne adopts roles/base-role: a seat spun up 2026-06-04 and never seated gets its folder"
+    ]
+   },
+   "domain": "science",
+   "lifecycle_marker": {
+    "state": "ACTIVE",
+    "date": "2026-09-11",
+    "quote": "Seat state: ACTIVE (on the frozen specimen only); crawl NOT authorised",
+    "source": "roles/Arachne/STATUS.md:5"
+   },
+   "documented_host": {
+    "value": "M1",
+    "source": "roles/Arachne/STATUS.md:23"
+   },
+   "aliases": [
+    {
+     "name": "agents/arachne/",
+     "relation": "role-doc",
+     "source": "roles/Arachne/RESPONSIBILITIES.md 'its code is agents/arachne/'"
+    }
+   ],
+   "engines": [
+    {
+     "engine_id": "agents/arachne",
+     "relationship": "primary",
+     "evidence": "roles/base-role/MONITORS.md:53 ArachneSwarm (DORMANT since 2026-06-04)"
+    }
+   ],
+   "entry_file": "roles/Arachne/RESPONSIBILITIES.md",
+   "notes": "Conflict: RESPONSIBILITIES.md:83 says seat state BLOCKED (adoption pass) while STATUS.md:5 (later same day) says ACTIVE on the frozen specimen only; next decision ARACHNE-31 (operator) open. No activity since 2026-09-11 (19 days)."
+  },
+  {
+   "seat": "Archaeon",
+   "kind": "SEAT",
+   "short_role": "Experiment proposer; comms owner",
+   "declared_role": {
+    "text": "Read side of the experiment loop: mines PEW/SFE fossils for weak signals, proposes next experiments into the shared queue, recommends program expansion; never executes or adjudicates. Owns archaeon/ and the comms package (D-24).",
+    "source": "roles/Archaeon/RESPONSIBILITIES.md",
+    "source_currency": null
+   },
+   "observed_role": {
+    "text": "Recent work is cross-engine causal analysis under operator rulings: ENVGATE gates, Causal Lineage Contract v0.1/v0.2, attribution v0 over BEE/NPE, z80atlas census, plus MWO work-order bookkeeping on branches.",
+    "differs": true,
+    "evidence": [
+     "4282bd706 2026-09-26 Archaeon: operator ruling (Contract v0.2) verbatim; CAUSAL_LINEAGE_CONTRACT v0.2 FROZEN",
+     "3e6f281a1 2026-09-28 Attribution v0: directive verbatim + corrected TH-013 block-13 probe",
+     "c5ba19571 2026-09-26 Archaeon: ENVGATE-02 verdict WINDOW_NOT_SUPPORTED (Phase-C gate FAILED on P2/P3)",
+     "69e7c5b66 2026-09-30 Archaeon WORK_STATE: #1148 complete (2c8c81bbb, completion #1166); READY under CWO-C"
+    ]
+   },
+   "domain": "science",
+   "lifecycle_marker": {
+    "state": "NONE",
+    "date": null,
+    "quote": null,
+    "source": null
+   },
+   "documented_host": {
+    "value": "M2",
+    "source": "roles/Archaeon/RESUME.md:1 (session m2-db608f52); later updates session m2-1034e815"
+   },
+   "aliases": [],
+   "engines": [
+    {
+     "engine_id": "archaeon/producer",
+     "relationship": "primary",
+     "evidence": "roles/Archaeon/RESPONSIBILITIES.md 'Owns archaeon/'"
+    },
+    {
+     "engine_id": "archaeon/campaign2",
+     "relationship": "primary",
+     "evidence": "atlas/registry.json archaeon.campaign (also archaeon/campaign5, archaeon/campaign6)"
+    },
+    {
+     "engine_id": "archaeon/frontier",
+     "relationship": "primary",
+     "evidence": "atlas/registry.json archaeon.frontier"
+    },
+    {
+     "engine_id": "archaeon/causal_lens",
+     "relationship": "primary",
+     "evidence": "roles/Archaeon/RESUME.md:30"
+    },
+    {
+     "engine_id": "archaeon/attribution",
+     "relationship": "primary",
+     "evidence": "roles/Archaeon/RESUME.md:12"
+    },
+    {
+     "engine_id": "archaeon/envgate2",
+     "relationship": "primary",
+     "evidence": "roles/Archaeon/RESUME.md:28"
+    },
+    {
+     "engine_id": "archaeon/z80atlas",
+     "relationship": "builder",
+     "evidence": "roles/Bellerophon/RESPONSIBILITIES.md:115 note D3 (it is Archaeon's, c7610ea19)"
+    },
+    {
+     "engine_id": "comms",
+     "relationship": "maintainer",
+     "evidence": "roles/base-role/MONITORS.md:81 comms queue owner Archaeon"
+    },
+    {
+     "engine_id": "archaeon/deploy",
+     "relationship": "primary",
+     "evidence": "roles/base-role/MONITORS.md:14 ArchaeonTick (M1 scheduled task)"
+    }
+   ],
+   "entry_file": "roles/Archaeon/RESPONSIBILITIES.md",
+   "notes": "No STATUS.md and no WORK_STATE.json on origin/main; WORK_STATE commits (READY under CWO-C, 2026-09-30) exist only on branch origin/archaeon/mwo0001-2026-09-28. RESPONSIBILITIES.md has no Currency line (charter opened 2026-09-05, expanded 2026-09-06). Host conflict: sessions on M2 vs ArchaeonTick on M1 (MONITORS.md:14). Open blocker on operator input for Azure placement only (BLOCKED_ON_OPERATOR_INPUT_2026-09-27.md). Archaeon also arbitrates the base-role INHERITANCE rows (ruling #39)."
+  },
+  {
+   "seat": "Ares",
+   "kind": "SEAT",
+   "short_role": "Pressure-engineering soup sandbox",
+   "declared_role": {
+    "text": "Pressure engineering / primordial soup sandbox: build tiny worlds whose selective pressures make unknown machinery advantageous, evolve generic graph organisms, and report which pressures changed the kind of machinery, against absent/shuffled/abundant controls.",
+    "source": "roles/Ares/RESPONSIBILITIES.md",
+    "source_currency": "2026-09-25"
+   },
+   "observed_role": {
+    "text": "Ran cycles 0-2 (preregistered, closed), handed off across a reboot on 2026-09-25, then stopped; no commits since.",
+    "differs": false,
+    "evidence": [
+     "1dde117f7 2026-09-23 Ares[m2-640acfe6]: cycle 2 CLOSED -- recurrence wins on BASIN WIDTH not reachability",
+     "8ba05b2c8 2026-09-21 Ares[m2-640acfe6]: cycle 1 CLOSED -- W4 MECHANISM_DIVERSE at 10 seeds",
+     "3f68be2b9 2026-09-25 Ares[m2-640acfe6]: handoff across the operator reboot -- RESUME.md, TODO.md"
+    ]
+   },
+   "domain": "science",
+   "lifecycle_marker": {
+    "state": "PARKED",
+    "date": "2026-09-25",
+    "quote": "seat state: PARKED. Cycle 2 ran under the operator's directive of",
+    "source": "roles/Ares/STATUS.md:7"
+   },
+   "documented_host": {
+    "value": "M2",
+    "source": "roles/Ares/RESUME.md:10 (host M2 (SPECTREX5))"
+   },
+   "aliases": [
+    {
+     "name": "Ares[m2-640acfe6]",
+     "relation": "instance",
+     "source": "roles/Ares/STATUS.md:12"
+    }
+   ],
+   "engines": [
+    {
+     "engine_id": "ares",
+     "relationship": "primary",
+     "evidence": "eed9c7121 cycle-0 sandbox built (ares/)"
+    }
+   ],
+   "entry_file": "roles/Ares/RESPONSIBILITIES.md",
+   "notes": "Parked pending operator decision on cycle 3 (gate recommendation CONTINUE_RECOMMENDED). No WORK_STATE.json. ares/ not in atlas/registry.json engines."
+  },
+  {
+   "seat": "Artemis",
+   "kind": "SEAT",
+   "short_role": "Research reconciliation, forensic sampling",
+   "declared_role": {
+    "text": "Assignment-only seat (charter 2026-09-30): claim reconciliation, unrun-analysis recovery, research-debt mining, contradiction audit, randomized forensic sampling, infra observation; works only on Aporia or fleet-order assignments and routes findings to owners.",
+    "source": "roles/Artemis/RESPONSIBILITIES.md",
+    "source_currency": "2026-09-29"
+   },
+   "observed_role": {
+    "text": "Ran seeded forensic samples D001-D004 of raw threads with fresh readers on Fabric, routed findings, then U-02 (IQ-NULL inadmissible) for Aporia; now READY awaiting assignment.",
+    "differs": false,
+    "evidence": [
+     "60f22f225 2026-09-30 Artemis[ubu002-1dd2dd19]: U-02 RESULT -- IQ-NULL INADMISSIBLE",
+     "0b0759dba 2026-09-30 Artemis[ubu002-1dd2dd19]: D004 CLOSED -- 6/6 frozen D003 analyses returned",
+     "434d6ea66 2026-09-30 Artemis[ubu002-1dd2dd19]: adopt operator charter 2026-09-30 (research reconciliation / forensic sampling) verbatim + MANIFEST"
+    ]
+   },
+   "domain": "audit",
+   "lifecycle_marker": {
+    "state": "ACTIVE",
+    "date": "2026-09-30",
+    "quote": "seat state: ACTIVE. Charter 2026-09-30: research reconciliation / forensic sampling",
+    "source": "roles/Artemis/STATUS.md:5"
+   },
+   "documented_host": {
+    "value": "ubu002",
+    "source": "roles/Artemis/STATUS.md:11; roles/Artemis/WORK_STATE.json:10"
+   },
+   "aliases": [],
+   "engines": [
+    {
+     "engine_id": "fabric",
+     "relationship": "consumer",
+     "evidence": "53d3cdebb D003 reconciled -- 10/10 completed on Fabric"
+    }
+   ],
+   "entry_file": "roles/Artemis/RESPONSIBILITIES.md",
+   "notes": "RESPONSIBILITIES Currency line says 2026-09-29 but the file carries a GOVERNING CHARTER (2026-09-30) block above it; earlier charter 2026-09-27 (research backlog ecology) and MWO-0001 self-directed dispatch are superseded. SI stewardship retired (RESPONSIBILITIES.md:113). WORK_STATE.json state READY."
+  },
+  {
+   "seat": "Atalanta",
+   "kind": "SEAT",
+   "short_role": "Retired E-track primitive hunter",
+   "declared_role": {
+    "text": "Retired 2026-09-11 on its own recommendation. Was the May E-track primitive hunter (agents/atalanta/): mine Apollo organism logs for reusable primitives and fire Type-E deep-research queries for Techne.",
+    "source": "roles/Atalanta/RESPONSIBILITIES.md",
+    "source_currency": "2026-09-11"
+   },
+   "observed_role": {
+    "text": "Single adoption day: dead-gating specimen, 30-loop census, proposed base rule 10, then retirement with handovers.",
+    "differs": false,
+    "evidence": [
+     "051304cd0 2026-09-11 Atalanta: RETIRED by the operator. Retirement annotation, laws lifted, three handovers, seat closed.",
+     "827d021eb 2026-09-11 Atalanta ATALANTA-04: the DEAD-GATING specimen, a 30-loop census, proposed base rule 10, and a recommendation to retire clean",
+     "b33712c94 2026-09-11 Atalanta adopts roles/base-role: old E-track agent reanimated as a seat"
+    ]
+   },
+   "domain": "historical",
+   "lifecycle_marker": {
+    "state": "RETIRED",
+    "date": "2026-09-11",
+    "quote": "seat state: RETIRED 2026-09-11 by the operator, on this seat's own",
+    "source": "roles/Atalanta/STATUS.md:7"
+   },
+   "documented_host": {
+    "value": "M2",
+    "source": "roles/Atalanta/STATUS.md:38 (host: SPECTREX5, adoption pass)"
+   },
+   "aliases": [
+    {
+     "name": "agents/atalanta/",
+     "relation": "role-doc",
+     "source": "agents/atalanta/CHARTER.md (Aporia's May design)"
+    },
+    {
+     "name": "Atalanta (necropolis tool)",
+     "relation": "same-name-different-referent",
+     "source": "engine/necropolis/ROSTER.jsonl:15 (M1 tool, status active)"
+    }
+   ],
+   "engines": [
+    {
+     "engine_id": "agents/atalanta",
+     "relationship": "primary",
+     "evidence": "roles/base-role/MONITORS.md:62 AtalantaPrimitiveHunterLoop"
+    }
+   ],
+   "entry_file": "roles/Atalanta/RESPONSIBILITIES.md",
+   "notes": "Host conflict: the May daemon ran on M1; the 2026-09-11 adoption/retirement pass ran on M2 (SPECTREX5). necropolis ROSTER.jsonl:15 still says historical_status 'active' (stale vs retirement). ATALANTA-02 (M1 filesystem residue) left open (STATUS.md:77)."
+  },
+  {
+   "seat": "Atlas",
+   "kind": "SEAT",
+   "short_role": "Program memory and research policy",
+   "declared_role": {
+    "text": "Prometheus's memory and research-policy layer: shadows every engine read-only into the atlas schema on M1, keeps the longitudinal record, and maintains a theory, primitive inventory and experiment portfolio as suggestions; runs, commands and adjudicates nothing.",
+    "source": "roles/Atlas/RESPONSIBILITIES.md",
+    "source_currency": "2026-09-24"
+   },
+   "observed_role": {
+    "text": "Promotion to policy layer (2026-09-24), Cosmos adapter (2026-09-26), then the 2026-09-30 operator inference harvest (synthesis, buried signals, cross-model re-derivation).",
+    "differs": false,
+    "evidence": [
+     "f8df65681 2026-09-24 Atlas promotion: the index becomes a research-policy layer",
+     "7190591f4 2026-09-26 Atlas: ATLAS-37 Cosmos adapter (MANIFEST-verified), frontier/4 held for Archaeon",
+     "d95cffcc8 2026-09-30 Atlas: inference harvest complete; state READY"
+    ]
+   },
+   "domain": "reporting",
+   "lifecycle_marker": {
+    "state": "PARKED",
+    "date": "2026-09-19",
+    "quote": "seat state: PARKED by the operator 2026-09-19 for the index LOOP (resume on",
+    "source": "roles/Atlas/STATUS.md:24"
+   },
+   "documented_host": {
+    "value": "M1",
+    "source": "roles/Atlas-M2/RESPONSIBILITIES.md:17 (Atlas resident on M1, SKULLPORT); roles/Atlas/STATUS.md:29 (Atlas[m1-1c645957])"
+   },
+   "aliases": [
+    {
+     "name": "Atlas-M2",
+     "relation": "same-name-different-referent",
+     "source": "roles/base-role/INHERITANCE.md:16 (brother seat, NOT an Atlas instance)"
+    },
+    {
+     "name": "Atlas[m1-1c645957]",
+     "relation": "instance",
+     "source": "roles/Atlas/STATUS.md:29"
+    },
+    {
+     "name": "prometheus/atlas_bee",
+     "relation": "same-name-different-referent",
+     "source": "Bellerophon's atlas-bee harness (933ee9f02), not this seat"
+    }
+   ],
+   "engines": [
+    {
+     "engine_id": "atlas",
+     "relationship": "primary",
+     "evidence": "atlas/registry.json; roles/base-role/MONITORS.md:87 AtlasIndexLoop (DISABLED, parked 2026-09-19)"
+    }
+   ],
+   "entry_file": "roles/Atlas/RESPONSIBILITIES.md",
+   "notes": "STATUS.md has two layers: top WORK_STATE block (2026-09-30) says state READY; older seat-state line (Currency 2026-09-25) says PARKED, which applies to the index LOOP only. Lifecycle recorded as PARKED (loop) while the seat itself is READY and did work on 2026-09-30. No WORK_STATE.json file."
+  },
+  {
+   "seat": "Atlas-M2",
+   "kind": "SEAT",
+   "short_role": "M2-side gatherer for Atlas index",
+   "declared_role": {
+    "text": "Separate brother seat of Atlas resident on M2: read-only gather of M2-local bench emissions into the one atlas index on M1 under SIBLINGS.md rules; never touches the science.",
+    "source": "roles/Atlas-M2/RESPONSIBILITIES.md",
+    "source_currency": "2026-09-25"
+   },
+   "observed_role": {
+    "text": "Four loop ticks on 2026-09-19 (M2 local_roots, frontier_runs_m2 harvester), loop parked the same day, pre-reboot save 2026-09-25; nothing since.",
+    "differs": false,
+    "evidence": [
+     "3d1fa6f91 2026-09-19 Atlas-M2[m2-8f915f3d]: loop tick 2 -- frontier_runs_m2/1 (new module, M2-only)",
+     "442867f72 2026-09-19 Atlas-M2[m2-8f915f3d]: loop tick 4 -- Atlas-M2 comms loop PARKED",
+     "53e071604 2026-09-25 Atlas-M2[m2-8f915f3d]: pre-reboot save -- RESUME.md"
+    ]
+   },
+   "domain": "reporting",
+   "lifecycle_marker": {
+    "state": "PARKED",
+    "date": "2026-09-19",
+    "quote": "seat state: ACTIVE for comms, loop PARKED.",
+    "source": "roles/Atlas-M2/STATUS.md:5"
+   },
+   "documented_host": {
+    "value": "M2",
+    "source": "roles/Atlas-M2/RESPONSIBILITIES.md:16 (resident on M2 (SPECTREX5))"
+   },
+   "aliases": [
+    {
+     "name": "Atlas",
+     "relation": "same-name-different-referent",
+     "source": "roles/Atlas-M2/RESPONSIBILITIES.md:16-18 (brother, not an instance under D-24)"
+    },
+    {
+     "name": "Atlas-M2[m2-8f915f3d]",
+     "relation": "instance",
+     "source": "roles/Atlas-M2/STATUS.md:8"
+    }
+   ],
+   "engines": [
+    {
+     "engine_id": "atlas",
+     "relationship": "maintainer",
+     "evidence": "atlas/harvest frontier_runs_m2 module owned by this seat (RESPONSIBILITIES.md s0); MONITORS.md:86 Atlas-M2 comms loop DISABLED"
+    }
+   ],
+   "entry_file": "roles/Atlas-M2/RESPONSIBILITIES.md",
+   "notes": "Parked loop since 2026-09-19 12:45 UTC; seat routable in comms. No WORK_STATE.json. Not listed in atlas/registry.json owner_seats."
+  },
+  {
+   "seat": "Bellerophon",
+   "kind": "SEAT",
+   "short_role": "Worlds Kernel and Z80 substrate",
+   "declared_role": {
+    "text": "Design and build the Prometheus Worlds Kernel (prometheus/toolbox/) so designers can describe worlds without knowing the backend; addendum 2026-09-25 adds ownership of the Z80 x Atlas emergence substrate (prometheus/z80atlas/) and running its preregistered campaigns.",
+    "source": "roles/Bellerophon/RESPONSIBILITIES.md",
+    "source_currency": "2026-09-18"
+   },
+   "observed_role": {
+    "text": "Runs BEE (z80atlas) science campaigns: coupling, multi-day, replication E-BEL-REPL-01/02 with frozen preregs and adversarial reviews; currently reviewing Cosmos C4 design for Aporia.",
+    "differs": false,
+    "evidence": [
+     "64d8d2d3f 2026-09-30 Bellerophon E-BEL-REPL-02 RESULT + packet: RESIDUE_NOT_REPLICATED (ABSENT) frozen",
+     "279927367 2026-09-30 Bellerophon E-BEL-REPL-01 RESULT: DISAPPEARS (K3) -- scaffold-dependent emergence of state-freedom in BEE is real",
+     "5fe6bef61 2026-09-30 Bellerophon WORK_STATE: CWO-C adopted; WORKING on #1138 R-MECH review of Cosmos C4 DESIGN v0.2"
+    ]
+   },
+   "domain": "science",
+   "lifecycle_marker": {
+    "state": "ACTIVE",
+    "date": "2026-09-29",
+    "quote": "seat state: ACTIVE. Charter in force: the WORLDS KERNEL directive",
+    "source": "roles/Bellerophon/STATUS.md:59"
+   },
+   "documented_host": {
+    "value": "M2",
+    "source": "roles/Bellerophon/STATUS.md:72 (worktree on M2 / SPECTREX5)"
+   },
+   "aliases": [
+    {
+     "name": "BEE",
+     "relation": "lane",
+     "source": "commit subjects 'BEE register-world axis' (8a2390d82) for the z80atlas substrate"
+    }
+   ],
+   "engines": [
+    {
+     "engine_id": "prometheus/toolbox",
+     "relationship": "primary",
+     "evidence": "atlas/registry.json bellerophon.toolbox"
+    },
+    {
+     "engine_id": "prometheus/z80atlas",
+     "relationship": "primary",
+     "evidence": "roles/Bellerophon/RESPONSIBILITIES.md:111 addendum 2026-09-25; 8a2390d82"
+    },
+    {
+     "engine_id": "prometheus/atlas_bee",
+     "relationship": "primary",
+     "evidence": "933ee9f02 Bellerophon atlas-bee: Phase 7 Atlas feed"
+    },
+    {
+     "engine_id": "roles/Cosmos",
+     "relationship": "reviewer",
+     "evidence": "5fe6bef61 R-MECH review of Cosmos C4 DESIGN v0.2"
+    }
+   ],
+   "entry_file": "roles/Bellerophon/RESPONSIBILITIES.md",
+   "notes": "Header Currency 2026-09-18 but s7 addendum dated 2026-09-25 broadens the mandate to substrate science; s4 'never runs experiments for a scientific claim of its own' is explicitly overridden there. Campaign runtime evidence lives under C:/Users/James/ (not in git; host user path suggests a different machine account than other M2 seats -- unverified). #550 closed 2026-09-26 (D reassigned to Nestor). WORK_STATE.json state WORKING."
+  },
+  {
+   "seat": "Charon",
+   "kind": "SEAT",
+   "short_role": "Rulings and falsification review",
+   "declared_role": {
+    "text": "Standing scope: rulings, adversarial review and falsification guardianship over other seats' instruments; April-May cartography/battery lane is historical.",
+    "source": "roles/Charon/RESPONSIBILITIES.md",
+    "source_currency": "2026-09-11"
+   },
+   "observed_role": {
+    "text": "Issued rulings and kill lists (C1/C2 checks, H-phase kill list, attack on base-role self-test) on 2026-09-11; no commits since.",
+    "differs": false,
+    "evidence": [
+     "8a7feca74 2026-09-11 Charon kill list for C3-2, H1/H0 p1+p2, H5-1",
+     "5af5e5562 2026-09-11 Charon ruling 2026-09-11: C1/C2 as executable checks; gate-fire FAILS both blocks",
+     "849cacfa1 2026-09-01 Charon ruling on the pooled residue pool: the question was how to combine two pools, and both of them are contaminated"
+    ]
+   },
+   "domain": "audit",
+   "lifecycle_marker": {
+    "state": "NONE",
+    "date": null,
+    "quote": null,
+    "source": null
+   },
+   "documented_host": {
+    "value": "M1",
+    "source": "roles/Charon/STATUS.md:15 (machine: M1)"
+   },
+   "aliases": [
+    {
+     "name": "charon/agents/* (acheron, erebos, hecate, lethe, moros, nephele, pollux, stygian)",
+     "relation": "lane",
+     "source": "charon/agents/DESIGN_2026-05-19.md (May 2026 Charon falsification swarm)"
+    },
+    {
+     "name": "Charon (necropolis operator)",
+     "relation": "same-name-different-referent",
+     "source": "engine/necropolis/ROSTER.jsonl:11 (M2 operator, falsification swarm orchestrator)"
+    },
+    {
+     "name": "charon/agents/hecate",
+     "relation": "same-name-different-referent",
+     "source": "roles/base-role/INHERITANCE.md:39 (prior use of the Hecate name, not inherited by the Hecate seat)"
+    }
+   ],
+   "engines": [
+    {
+     "engine_id": "charon",
+     "relationship": "primary",
+     "evidence": "top-level charon/ (session logs, swarm agents)"
+    },
+    {
+     "engine_id": "cartography/shared/scripts",
+     "relationship": "maintainer",
+     "evidence": "RESPONSIBILITIES.md annotation: realign.py, falsification_battery.py, search_engine.py, not run since 2026-05"
+    },
+    {
+     "engine_id": "ergon/probe",
+     "relationship": "auditor",
+     "evidence": "5af5e5562 C1/C2 executable checks; STATUS.md 'metabolization-probe pipeline DORMANT'"
+    }
+   ],
+   "entry_file": "roles/Charon/STARTUP.md",
+   "notes": "No 'seat state' line in STATUS.md (Currency 2026-09-11); no WORK_STATE.json; silent since 2026-09-11 (19 days). Host conflict: last session before 2026-09-11 was on M2 (STATUS.md:20); necropolis ROSTER says M2. Entry file per INHERITANCE is STARTUP.md but STARTUP.md itself says it is no longer the entry point and defers to RESPONSIBILITIES.md."
+  }
+ ]
+}

@@ -564,3 +564,25 @@ conduct and the correct prevention.
 - A content search whose output could print plaintext-derived bytes would NOT be benign. Here that is impossible,
   because the tracked file is ciphertext only.
 - The exclusion Cosmos added should be standard for any seat that searches `prometheus/cosmos/`.
+- **Custodian concurrence (Nestor #1153, 2026-09-30):** NO_INFORMATION, checked independently on M1.
+  - The ciphertext's last touch is 95b31a30d; its entropy is 7.99 bits/byte.
+  - The key and salt were not accessed; the anchor chain is unchanged.
+  - Per Nestor, the operator has accepted Addendum R for the record.
+
+## Addendum S (2026-10-01): second search incident (Nestor W2-32, #1218) ruled NO_INFORMATION by the D2 auditor
+
+**The ruling.** Odysseus #1219, the D2 auditor of record at the firewall layer, ruled NO_INFORMATION; no action.
+Record: `roles/Odysseus/fabric_pilot/d2_audit/incident_2026-10-01_nestor_W2-32/VERDICT.md` @ 76059a9f0.
+- The grep had no match.
+- The ruling follows a fortiori from Addendum R, where even a match on the ciphertext carried no information.
+
+**Harmonia's check (executed, 03:38Z):**
+- The ciphertext still hashes to f75ba333...dfc9f.
+- Its only non-merge commit is still 95b31a30d.
+
+**Concurrence:** Harmonia concurs. D2 remains **SEALED / UNREAD / UNSPENT**, with COMMITMENT absent, and no addendum is
+exercised.
+
+**Ruler note:** there have been two search contacts in one day. Harmonia endorses Odysseus's recommendation to make
+the exclusion structural (`.ignore` / `.rgignore` for `prometheus/cosmos/c3_holdout_D*/`) rather than relying on
+prompts. The decision belongs to the operator or Aporia; it changes no gate.

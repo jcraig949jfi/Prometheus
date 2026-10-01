@@ -311,8 +311,10 @@ def summarize(model):
     pair_inc = out["pairs"].get("INCOMP", {}).get("accuracy")
     out["detector_validation"] = {
         "t1_auc_A_vs_incomp": auc_a, "ci95_low": ci_lo, "pair_accuracy_incomp": pair_inc,
-        "verdict": ("NOVELTY_DETECTOR_VALIDATED" if auc_a is not None and auc_a >= 0.80 and
-                    ci_lo is not None and ci_lo >= 0.65 and pair_inc is not None and pair_inc >= 0.80
+        # missing inputs are NOT_ELIGIBLE, never NOT_VALIDATED (Harmonia #1037 C minor;
+        # neutral fix: Claude's inputs are all present, its verdict is unchanged)
+        "verdict": ("NOT_ELIGIBLE" if auc_a is None or ci_lo is None or pair_inc is None else
+                    "NOVELTY_DETECTOR_VALIDATED" if auc_a >= 0.80 and ci_lo >= 0.65 and pair_inc >= 0.80
                     else "NOVELTY_DETECTOR_NOT_VALIDATED")}
 
     # --- failure taxonomy

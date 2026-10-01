@@ -67,3 +67,8 @@ It is never printed, logged or committed.
     `fabric/worker.py` heartbeat reconnect.
   - Regression test: `fabric/tests/test_store.py::test_store_connections_have_keepalive_and_user_timeout`.
   - Rolled into `~/fabric-runtime` immediately (the node was idle).
+- **2026-09-30, DEF-ODY-023** (regression introduced by the DEF-ODY-019 repair): `os.dup()` of the libpq socket
+  failed on Windows (a WinSock handle), so every Windows Fabric CLI call failed (Aporia #1135).
+  - Repair: `_harden_socket` is Linux-only and fail-soft.
+  - Regression test: `fabric/tests/test_store.py::test_harden_socket_never_breaks_connect`.
+  - Linux worker behaviour is unchanged. The runtime rolls at the next quiet point.

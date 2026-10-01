@@ -1,0 +1,832 @@
+{
+ "families": [
+  "qyba",
+  "qoda",
+  "fraaa",
+  "frbaa",
+  "frcaa",
+  "frdaa",
+  "freaa",
+  "frfaa",
+  "frgaa",
+  "frhaa",
+  "friaa",
+  "frjaa",
+  "frkaa",
+  "frlaa"
+ ],
+ "pool_tries": 366,
+ "rows": [
+  {
+   "anycomp_covers": [
+    "qyba",
+    "qoda",
+    "fraaa",
+    "frbaa",
+    "frcaa",
+    "frdaa",
+    "freaa",
+    "frfaa",
+    "frgaa",
+    "frhaa",
+    "friaa",
+    "frjaa",
+    "frkaa",
+    "frlaa"
+   ],
+   "leaves": 2,
+   "schema": "(acc + {H})",
+   "self_covers": [],
+   "tag": "CTRL:G1",
+   "wrap": "(v - ((acc + {H})))",
+   "wrap_covers": [
+    "qyba",
+    "qoda",
+    "fraaa",
+    "frbaa",
+    "frcaa",
+    "frdaa",
+    "freaa",
+    "frfaa",
+    "frgaa",
+    "frhaa",
+    "friaa",
+    "frjaa",
+    "frkaa",
+    "frlaa"
+   ],
+   "wrap_instances": 161
+  },
+  {
+   "anycomp_covers": [
+    "qyba",
+    "qoda",
+    "frcaa",
+    "freaa",
+    "frfaa"
+   ],
+   "leaves": 3,
+   "schema": "(v - (acc - {H}))",
+   "self_covers": [
+    "qyba",
+    "qoda",
+    "frcaa",
+    "freaa",
+    "frfaa"
+   ],
+   "tag": "CTRL:SHAM_0",
+   "wrap": "(v - ((v - (acc - {H}))))",
+   "wrap_covers": [],
+   "wrap_instances": 6
+  },
+  {
+   "anycomp_covers": [
+    "qyba",
+    "frcaa",
+    "freaa",
+    "frfaa"
+   ],
+   "leaves": 2,
+   "schema": "({H} + v)",
+   "self_covers": [
+    "frcaa",
+    "freaa",
+    "frfaa"
+   ],
+   "tag": "CTRL:SHAM_1",
+   "wrap": "(v - (({H} + v)))",
+   "wrap_covers": [
+    "freaa",
+    "frfaa"
+   ],
+   "wrap_instances": 161
+  },
+  {
+   "anycomp_covers": [
+    "frcaa",
+    "freaa",
+    "frfaa"
+   ],
+   "leaves": 3,
+   "schema": "(1 + (v - {H}))",
+   "self_covers": [
+    "frcaa",
+    "freaa",
+    "frfaa"
+   ],
+   "tag": "CTRL:OFF_0",
+   "wrap": "(v - ((1 + (v - {H}))))",
+   "wrap_covers": [],
+   "wrap_instances": 6
+  },
+  {
+   "anycomp_covers": [],
+   "leaves": 2,
+   "schema": "(v % {H})",
+   "self_covers": [],
+   "tag": "POOL",
+   "wrap": "(v - ((v % {H})))",
+   "wrap_covers": [],
+   "wrap_instances": 161
+  },
+  {
+   "anycomp_covers": [
+    "freaa",
+    "frfaa"
+   ],
+   "leaves": 2,
+   "schema": "(acc * {H})",
+   "self_covers": [],
+   "tag": "POOL",
+   "wrap": "(v - ((acc * {H})))",
+   "wrap_covers": [
+    "freaa",
+    "frfaa"
+   ],
+   "wrap_instances": 161
+  },
+  {
+   "anycomp_covers": [
+    "freaa"
+   ],
+   "leaves": 3,
+   "schema": "(({H} + first) + v)",
+   "self_covers": [],
+   "tag": "POOL",
+   "wrap": "(v - ((({H} + first) + v)))",
+   "wrap_covers": [],
+   "wrap_instances": 6
+  },
+  {
+   "anycomp_covers": [],
+   "leaves": 3,
+   "schema": "(({H} * v) + v)",
+   "self_covers": [],
+   "tag": "POOL",
+   "wrap": "(v - ((({H} * v) + v)))",
+   "wrap_covers": [],
+   "wrap_instances": 6
+  },
+  {
+   "anycomp_covers": [],
+   "leaves": 3,
+   "schema": "(first // (v // {H}))",
+   "self_covers": [],
+   "tag": "POOL",
+   "wrap": "(v - ((first // (v // {H}))))",
+   "wrap_covers": [],
+   "wrap_instances": 6
+  },
+  {
+   "anycomp_covers": [
+    "qyba",
+    "frcaa",
+    "freaa",
+    "frfaa"
+   ],
+   "leaves": 2,
+   "schema": "({H} + v)",
+   "self_covers": [
+    "frcaa",
+    "freaa",
+    "frfaa"
+   ],
+   "tag": "POOL",
+   "wrap": "(v - (({H} + v)))",
+   "wrap_covers": [
+    "freaa",
+    "frfaa"
+   ],
+   "wrap_instances": 161
+  },
+  {
+   "anycomp_covers": [],
+   "leaves": 3,
+   "schema": "(1 + math.gcd(abs(acc), abs({H})))",
+   "self_covers": [],
+   "tag": "POOL",
+   "wrap": "(v - ((1 + math.gcd(abs(acc), abs({H})))))",
+   "wrap_covers": [],
+   "wrap_instances": 6
+  },
+  {
+   "anycomp_covers": [
+    "qyba",
+    "qoda",
+    "frcaa",
+    "freaa",
+    "frfaa"
+   ],
+   "leaves": 2,
+   "schema": "(v - {H})",
+   "self_covers": [
+    "frcaa",
+    "freaa",
+    "frfaa"
+   ],
+   "tag": "POOL",
+   "wrap": "(v - ((v - {H})))",
+   "wrap_covers": [
+    "freaa",
+    "frfaa"
+   ],
+   "wrap_instances": 161
+  },
+  {
+   "anycomp_covers": [],
+   "leaves": 2,
+   "schema": "math.gcd(abs({H}), abs(v))",
+   "self_covers": [],
+   "tag": "POOL",
+   "wrap": "(v - (math.gcd(abs({H}), abs(v))))",
+   "wrap_covers": [],
+   "wrap_instances": 161
+  },
+  {
+   "anycomp_covers": [],
+   "leaves": 3,
+   "schema": "(1 - math.gcd(abs({H}), abs(v)))",
+   "self_covers": [],
+   "tag": "POOL",
+   "wrap": "(v - ((1 - math.gcd(abs({H}), abs(v)))))",
+   "wrap_covers": [],
+   "wrap_instances": 6
+  },
+  {
+   "anycomp_covers": [],
+   "leaves": 2,
+   "schema": "(v // {H})",
+   "self_covers": [],
+   "tag": "POOL",
+   "wrap": "(v - ((v // {H})))",
+   "wrap_covers": [],
+   "wrap_instances": 161
+  },
+  {
+   "anycomp_covers": [],
+   "leaves": 3,
+   "schema": "math.gcd(abs((acc * {H})), abs(v))",
+   "self_covers": [],
+   "tag": "POOL",
+   "wrap": "(v - (math.gcd(abs((acc * {H})), abs(v))))",
+   "wrap_covers": [],
+   "wrap_instances": 6
+  },
+  {
+   "anycomp_covers": [
+    "freaa",
+    "frfaa"
+   ],
+   "leaves": 2,
+   "schema": "({H} * v)",
+   "self_covers": [],
+   "tag": "POOL",
+   "wrap": "(v - (({H} * v)))",
+   "wrap_covers": [],
+   "wrap_instances": 161
+  },
+  {
+   "anycomp_covers": [
+    "freaa",
+    "frfaa"
+   ],
+   "leaves": 2,
+   "schema": "pow(v, {H})",
+   "self_covers": [],
+   "tag": "POOL",
+   "wrap": "(v - (pow(v, {H})))",
+   "wrap_covers": [],
+   "wrap_instances": 161
+  },
+  {
+   "anycomp_covers": [],
+   "leaves": 3,
+   "schema": "(v % pow(first, {H}))",
+   "self_covers": [],
+   "tag": "POOL",
+   "wrap": "(v - ((v % pow(first, {H}))))",
+   "wrap_covers": [],
+   "wrap_instances": 6
+  },
+  {
+   "anycomp_covers": [],
+   "leaves": 3,
+   "schema": "math.gcd(abs((last // {H})), abs(v))",
+   "self_covers": [],
+   "tag": "POOL",
+   "wrap": "(v - (math.gcd(abs((last // {H})), abs(v))))",
+   "wrap_covers": [],
+   "wrap_instances": 6
+  },
+  {
+   "anycomp_covers": [],
+   "leaves": 3,
+   "schema": "math.gcd(abs((last % {H})), abs(v))",
+   "self_covers": [],
+   "tag": "POOL",
+   "wrap": "(v - (math.gcd(abs((last % {H})), abs(v))))",
+   "wrap_covers": [],
+   "wrap_instances": 6
+  },
+  {
+   "anycomp_covers": [],
+   "leaves": 3,
+   "schema": "(last + (acc * {H}))",
+   "self_covers": [],
+   "tag": "POOL",
+   "wrap": "(v - ((last + (acc * {H}))))",
+   "wrap_covers": [],
+   "wrap_instances": 6
+  },
+  {
+   "anycomp_covers": [],
+   "leaves": 3,
+   "schema": "(last * pow(v, {H}))",
+   "self_covers": [],
+   "tag": "POOL",
+   "wrap": "(v - ((last * pow(v, {H}))))",
+   "wrap_covers": [],
+   "wrap_instances": 6
+  },
+  {
+   "anycomp_covers": [],
+   "leaves": 3,
+   "schema": "(last + pow(v, {H}))",
+   "self_covers": [],
+   "tag": "POOL",
+   "wrap": "(v - ((last + pow(v, {H}))))",
+   "wrap_covers": [],
+   "wrap_instances": 6
+  },
+  {
+   "anycomp_covers": [
+    "qyba",
+    "frcaa",
+    "freaa",
+    "frfaa"
+   ],
+   "leaves": 2,
+   "schema": "(v + {H})",
+   "self_covers": [
+    "frcaa",
+    "freaa",
+    "frfaa"
+   ],
+   "tag": "POOL",
+   "wrap": "(v - ((v + {H})))",
+   "wrap_covers": [
+    "freaa",
+    "frfaa"
+   ],
+   "wrap_instances": 161
+  },
+  {
+   "anycomp_covers": [],
+   "leaves": 3,
+   "schema": "(math.gcd(abs(0), abs({H})) * v)",
+   "self_covers": [],
+   "tag": "POOL",
+   "wrap": "(v - ((math.gcd(abs(0), abs({H})) * v)))",
+   "wrap_covers": [],
+   "wrap_instances": 6
+  },
+  {
+   "anycomp_covers": [],
+   "leaves": 3,
+   "schema": "(1 - math.gcd(abs(acc), abs({H})))",
+   "self_covers": [],
+   "tag": "POOL",
+   "wrap": "(v - ((1 - math.gcd(abs(acc), abs({H})))))",
+   "wrap_covers": [],
+   "wrap_instances": 6
+  },
+  {
+   "anycomp_covers": [
+    "frcaa",
+    "freaa",
+    "frfaa"
+   ],
+   "leaves": 3,
+   "schema": "((0 - {H}) + v)",
+   "self_covers": [
+    "frcaa",
+    "freaa",
+    "frfaa"
+   ],
+   "tag": "POOL",
+   "wrap": "(v - (((0 - {H}) + v)))",
+   "wrap_covers": [],
+   "wrap_instances": 6
+  },
+  {
+   "anycomp_covers": [],
+   "leaves": 3,
+   "schema": "pow(v, pow(1, {H}))",
+   "self_covers": [],
+   "tag": "POOL",
+   "wrap": "(v - (pow(v, pow(1, {H}))))",
+   "wrap_covers": [],
+   "wrap_instances": 5
+  },
+  {
+   "anycomp_covers": [],
+   "leaves": 2,
+   "schema": "math.gcd(abs(acc), abs({H}))",
+   "self_covers": [],
+   "tag": "POOL",
+   "wrap": "(v - (math.gcd(abs(acc), abs({H}))))",
+   "wrap_covers": [],
+   "wrap_instances": 161
+  },
+  {
+   "anycomp_covers": [],
+   "leaves": 3,
+   "schema": "(v // (0 - {H}))",
+   "self_covers": [],
+   "tag": "POOL",
+   "wrap": "(v - ((v // (0 - {H}))))",
+   "wrap_covers": [],
+   "wrap_instances": 6
+  },
+  {
+   "anycomp_covers": [
+    "freaa",
+    "frfaa"
+   ],
+   "leaves": 3,
+   "schema": "(acc * math.gcd(abs(0), abs({H})))",
+   "self_covers": [],
+   "tag": "POOL",
+   "wrap": "(v - ((acc * math.gcd(abs(0), abs({H})))))",
+   "wrap_covers": [
+    "freaa",
+    "frfaa"
+   ],
+   "wrap_instances": 6
+  },
+  {
+   "anycomp_covers": [],
+   "leaves": 3,
+   "schema": "pow(v, pow(first, {H}))",
+   "self_covers": [],
+   "tag": "POOL",
+   "wrap": "(v - (pow(v, pow(first, {H}))))",
+   "wrap_covers": [],
+   "wrap_instances": 6
+  },
+  {
+   "anycomp_covers": [],
+   "leaves": 3,
+   "schema": "math.gcd(abs((acc // {H})), abs(last))",
+   "self_covers": [],
+   "tag": "POOL",
+   "wrap": "(v - (math.gcd(abs((acc // {H})), abs(last))))",
+   "wrap_covers": [],
+   "wrap_instances": 6
+  },
+  {
+   "anycomp_covers": [],
+   "leaves": 3,
+   "schema": "(first // ({H} * v))",
+   "self_covers": [],
+   "tag": "POOL",
+   "wrap": "(v - ((first // ({H} * v))))",
+   "wrap_covers": [],
+   "wrap_instances": 6
+  },
+  {
+   "anycomp_covers": [
+    "freaa",
+    "frfaa"
+   ],
+   "leaves": 3,
+   "schema": "(acc * ({H} + 1))",
+   "self_covers": [],
+   "tag": "POOL",
+   "wrap": "(v - ((acc * ({H} + 1))))",
+   "wrap_covers": [
+    "freaa",
+    "frfaa"
+   ],
+   "wrap_instances": 6
+  },
+  {
+   "anycomp_covers": [
+    "freaa",
+    "frfaa"
+   ],
+   "leaves": 2,
+   "schema": "(v * {H})",
+   "self_covers": [],
+   "tag": "POOL",
+   "wrap": "(v - ((v * {H})))",
+   "wrap_covers": [],
+   "wrap_instances": 161
+  },
+  {
+   "anycomp_covers": [],
+   "leaves": 3,
+   "schema": "(first * math.gcd(abs(acc), abs({H})))",
+   "self_covers": [],
+   "tag": "POOL",
+   "wrap": "(v - ((first * math.gcd(abs(acc), abs({H})))))",
+   "wrap_covers": [],
+   "wrap_instances": 6
+  },
+  {
+   "anycomp_covers": [],
+   "leaves": 3,
+   "schema": "math.gcd(abs(({H} + last)), abs(v))",
+   "self_covers": [],
+   "tag": "POOL",
+   "wrap": "(v - (math.gcd(abs(({H} + last)), abs(v))))",
+   "wrap_covers": [],
+   "wrap_instances": 6
+  },
+  {
+   "anycomp_covers": [
+    "freaa",
+    "frfaa"
+   ],
+   "leaves": 3,
+   "schema": "(acc * (last // {H}))",
+   "self_covers": [],
+   "tag": "POOL",
+   "wrap": "(v - ((acc * (last // {H}))))",
+   "wrap_covers": [
+    "freaa",
+    "frfaa"
+   ],
+   "wrap_instances": 6
+  },
+  {
+   "anycomp_covers": [],
+   "leaves": 3,
+   "schema": "math.gcd(abs((0 - {H})), abs(v))",
+   "self_covers": [],
+   "tag": "POOL",
+   "wrap": "(v - (math.gcd(abs((0 - {H})), abs(v))))",
+   "wrap_covers": [],
+   "wrap_instances": 6
+  },
+  {
+   "anycomp_covers": [],
+   "leaves": 3,
+   "schema": "((first * {H}) + v)",
+   "self_covers": [],
+   "tag": "POOL",
+   "wrap": "(v - (((first * {H}) + v)))",
+   "wrap_covers": [],
+   "wrap_instances": 6
+  },
+  {
+   "anycomp_covers": [],
+   "leaves": 3,
+   "schema": "(v - math.gcd(abs({H}), abs(acc)))",
+   "self_covers": [],
+   "tag": "POOL",
+   "wrap": "(v - ((v - math.gcd(abs({H}), abs(acc)))))",
+   "wrap_covers": [],
+   "wrap_instances": 6
+  },
+  {
+   "anycomp_covers": [],
+   "leaves": 3,
+   "schema": "(v % ({H} * last))",
+   "self_covers": [],
+   "tag": "POOL",
+   "wrap": "(v - ((v % ({H} * last))))",
+   "wrap_covers": [],
+   "wrap_instances": 6
+  },
+  {
+   "anycomp_covers": [],
+   "leaves": 3,
+   "schema": "math.gcd(abs(math.gcd(abs({H}), abs(last))), abs(v))",
+   "self_covers": [],
+   "tag": "POOL",
+   "wrap": "(v - (math.gcd(abs(math.gcd(abs({H}), abs(last))), abs(v))))",
+   "wrap_covers": [],
+   "wrap_instances": 6
+  },
+  {
+   "anycomp_covers": [],
+   "leaves": 3,
+   "schema": "math.gcd(abs(acc), abs(math.gcd(abs({H}), abs(first))))",
+   "self_covers": [],
+   "tag": "POOL",
+   "wrap": "(v - (math.gcd(abs(acc), abs(math.gcd(abs({H}), abs(first))))))",
+   "wrap_covers": [],
+   "wrap_instances": 6
+  },
+  {
+   "anycomp_covers": [],
+   "leaves": 3,
+   "schema": "(last // math.gcd(abs({H}), abs(acc)))",
+   "self_covers": [],
+   "tag": "POOL",
+   "wrap": "(v - ((last // math.gcd(abs({H}), abs(acc)))))",
+   "wrap_covers": [],
+   "wrap_instances": 6
+  },
+  {
+   "anycomp_covers": [
+    "frcaa",
+    "freaa",
+    "frfaa"
+   ],
+   "leaves": 3,
+   "schema": "((acc * {H}) + v)",
+   "self_covers": [
+    "freaa",
+    "frfaa"
+   ],
+   "tag": "POOL",
+   "wrap": "(v - (((acc * {H}) + v)))",
+   "wrap_covers": [],
+   "wrap_instances": 6
+  },
+  {
+   "anycomp_covers": [],
+   "leaves": 3,
+   "schema": "math.gcd(abs(({H} + v)), abs(first))",
+   "self_covers": [],
+   "tag": "POOL",
+   "wrap": "(v - (math.gcd(abs(({H} + v)), abs(first))))",
+   "wrap_covers": [],
+   "wrap_instances": 6
+  },
+  {
+   "anycomp_covers": [],
+   "leaves": 3,
+   "schema": "(math.gcd(abs(0), abs({H})) + v)",
+   "self_covers": [],
+   "tag": "POOL",
+   "wrap": "(v - ((math.gcd(abs(0), abs({H})) + v)))",
+   "wrap_covers": [],
+   "wrap_instances": 6
+  },
+  {
+   "anycomp_covers": [],
+   "leaves": 3,
+   "schema": "math.gcd(abs(math.gcd(abs({H}), abs(first))), abs(v))",
+   "self_covers": [],
+   "tag": "POOL",
+   "wrap": "(v - (math.gcd(abs(math.gcd(abs({H}), abs(first))), abs(v))))",
+   "wrap_covers": [],
+   "wrap_instances": 6
+  },
+  {
+   "anycomp_covers": [],
+   "leaves": 3,
+   "schema": "(math.gcd(abs({H}), abs(v)) + last)",
+   "self_covers": [],
+   "tag": "POOL",
+   "wrap": "(v - ((math.gcd(abs({H}), abs(v)) + last)))",
+   "wrap_covers": [],
+   "wrap_instances": 6
+  },
+  {
+   "anycomp_covers": [],
+   "leaves": 2,
+   "schema": "math.gcd(abs({H}), abs(acc))",
+   "self_covers": [],
+   "tag": "POOL",
+   "wrap": "(v - (math.gcd(abs({H}), abs(acc))))",
+   "wrap_covers": [],
+   "wrap_instances": 161
+  },
+  {
+   "anycomp_covers": [],
+   "leaves": 3,
+   "schema": "(v // ({H} + last))",
+   "self_covers": [],
+   "tag": "POOL",
+   "wrap": "(v - ((v // ({H} + last))))",
+   "wrap_covers": [],
+   "wrap_instances": 6
+  },
+  {
+   "anycomp_covers": [
+    "qoda",
+    "freaa",
+    "frfaa"
+   ],
+   "leaves": 3,
+   "schema": "((last - {H}) + v)",
+   "self_covers": [
+    "qoda",
+    "freaa",
+    "frfaa"
+   ],
+   "tag": "POOL",
+   "wrap": "(v - (((last - {H}) + v)))",
+   "wrap_covers": [],
+   "wrap_instances": 6
+  },
+  {
+   "anycomp_covers": [],
+   "leaves": 3,
+   "schema": "(first % ({H} + v))",
+   "self_covers": [],
+   "tag": "POOL",
+   "wrap": "(v - ((first % ({H} + v))))",
+   "wrap_covers": [],
+   "wrap_instances": 6
+  },
+  {
+   "anycomp_covers": [],
+   "leaves": 3,
+   "schema": "math.gcd(abs(acc), abs((first + {H})))",
+   "self_covers": [],
+   "tag": "POOL",
+   "wrap": "(v - (math.gcd(abs(acc), abs((first + {H})))))",
+   "wrap_covers": [],
+   "wrap_instances": 6
+  },
+  {
+   "anycomp_covers": [],
+   "leaves": 3,
+   "schema": "(({H} + v) * v)",
+   "self_covers": [],
+   "tag": "POOL",
+   "wrap": "(v - ((({H} + v) * v)))",
+   "wrap_covers": [],
+   "wrap_instances": 6
+  },
+  {
+   "anycomp_covers": [],
+   "leaves": 3,
+   "schema": "((first + {H}) * v)",
+   "self_covers": [],
+   "tag": "POOL",
+   "wrap": "(v - (((first + {H}) * v)))",
+   "wrap_covers": [],
+   "wrap_instances": 6
+  },
+  {
+   "anycomp_covers": [],
+   "leaves": 3,
+   "schema": "((first // {H}) + v)",
+   "self_covers": [],
+   "tag": "POOL",
+   "wrap": "(v - (((first // {H}) + v)))",
+   "wrap_covers": [],
+   "wrap_instances": 6
+  },
+  {
+   "anycomp_covers": [],
+   "leaves": 3,
+   "schema": "(last - (v // {H}))",
+   "self_covers": [],
+   "tag": "POOL",
+   "wrap": "(v - ((last - (v // {H}))))",
+   "wrap_covers": [],
+   "wrap_instances": 6
+  },
+  {
+   "anycomp_covers": [],
+   "leaves": 3,
+   "schema": "(last * ({H} * v))",
+   "self_covers": [],
+   "tag": "POOL",
+   "wrap": "(v - ((last * ({H} * v))))",
+   "wrap_covers": [],
+   "wrap_instances": 6
+  },
+  {
+   "anycomp_covers": [
+    "frcaa",
+    "freaa",
+    "frfaa"
+   ],
+   "leaves": 3,
+   "schema": "(v - (1 + {H}))",
+   "self_covers": [
+    "frcaa",
+    "freaa",
+    "frfaa"
+   ],
+   "tag": "POOL",
+   "wrap": "(v - ((v - (1 + {H}))))",
+   "wrap_covers": [],
+   "wrap_instances": 6
+  },
+  {
+   "anycomp_covers": [
+    "frcaa",
+    "freaa"
+   ],
+   "leaves": 3,
+   "schema": "(1 - ({H} + v))",
+   "self_covers": [
+    "frcaa",
+    "freaa"
+   ],
+   "tag": "POOL",
+   "wrap": "(v - ((1 - ({H} + v))))",
+   "wrap_covers": [],
+   "wrap_instances": 6
+  }
+ ]
+}

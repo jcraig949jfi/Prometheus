@@ -1,0 +1,52 @@
+[a18 00:11:42] A19 stage donors workers 8
+[a18 00:11:42] donor jobs to run: 48
+[a18 00:15:22] donor CON1 G1_NC  sel=None origin=None COMP=False NOV=False 218.0s
+[a18 00:16:03] donor CON0 G1_NC  sel=(acc + ({H} + v)) origin=LGG COMP=False NOV=False 259.7s
+[a18 00:16:05] donor CON0 OFF_0  sel=None origin=None COMP=False NOV=False 260.6s
+[a18 00:16:39] donor CON0 P      sel=None origin=None COMP=False NOV=False 294.5s
+[a18 00:19:08] donor CON1 OFF_0  sel=None origin=None COMP=False NOV=False 183.6s
+[a18 00:19:19] donor CON1 P      sel=None origin=None COMP=False NOV=False 159.7s
+[a18 00:20:14] donor CON0 G1     sel=math.gcd(abs(first), abs((acc + {H}))) origin=COMPOSITION COMP=True NOV=True 510.3s
+[a18 00:20:20] donor CON1 G1     sel=(v - (acc + {H})) origin=COMPOSITION COMP=True NOV=True 515.5s
+[a18 00:20:22] donor CON0 SHAM_0 sel=None origin=None COMP=False NOV=False 518.0s
+[a18 00:22:16] donor CON1 SHAM_0 sel=(v - (acc - ({H} // first))) origin=LGG COMP=False NOV=True 413.7s
+[a18 00:22:32] donor CON0 SHAM_1 sel=math.gcd(abs(first), abs(({H} + v))) origin=COMPOSITION COMP=True NOV=True 648.3s
+[a18 00:22:48] donor CON1 SHAM_1 sel=None origin=None COMP=False NOV=False 404.2s
+[a18 00:23:01] donor CON2 G1_NC  sel=None origin=None COMP=False NOV=False 222.2s
+[a18 00:24:07] donor CON2 OFF_0  sel=None origin=None COMP=False NOV=False 225.0s
+[a18 00:25:13] donor CON2 P      sel=None origin=None COMP=False NOV=False 176.5s
+[a18 00:25:15] donor CON3 G1_NC  sel=None origin=None COMP=False NOV=False 147.4s
+[a18 00:25:39] donor CON2 SHAM_0 sel=(first * (v - (acc - {H}))) origin=COMPOSITION COMP=True NOV=False 325.4s
+[a18 00:26:32] donor CON2 SHAM_1 sel=(({H} + v) * first) origin=COMPOSITION COMP=True NOV=True 372.3s
+[a18 00:27:33] donor CON3 P      sel=None origin=None COMP=False NOV=False 137.7s
+[a18 00:28:00] donor CON2 G1     sel=(first + (acc + {H})) origin=COMPOSITION COMP=True NOV=False 531.9s
+[a18 00:29:05] donor CON3 G1     sel=None origin=None COMP=False NOV=False 392.9s
+[a18 00:29:22] donor CON4 G1_NC  sel=None origin=None COMP=False NOV=False 170.2s
+[a18 00:29:31] donor CON3 SHAM_0 sel=None origin=None COMP=False NOV=False 389.8s
+[a18 00:29:49] donor CON3 OFF_0  sel=None origin=None COMP=False NOV=False 276.1s
+[a18 00:31:14] donor CON4 P      sel=None origin=None COMP=False NOV=False 111.6s
+[a18 00:31:51] donor CON5 G1_NC  sel=None origin=None COMP=False NOV=False 121.9s
+[a18 00:32:31] donor CON3 SHAM_1 sel=None origin=None COMP=False NOV=False 503.5s
+[a18 00:34:03] donor CON4 G1     sel=None origin=None COMP=False NOV=False 503.8s
+[a18 00:34:31] donor CON4 SHAM_0 sel=None origin=None COMP=False NOV=False 417.9s
+[a18 00:34:50] donor CON4 OFF_0  sel=None origin=None COMP=False NOV=False 344.6s
+[a18 00:35:37] donor CON5 SHAM_0 sel=(0 - (v - (acc - {H}))) origin=COMPOSITION COMP=True NOV=False 262.5s
+[a18 00:35:40] donor CON5 OFF_0  sel=None origin=None COMP=False NOV=False 189.5s
+[a18 00:36:41] donor CON6 G1_NC  sel=None origin=None COMP=False NOV=False 111.4s
+[a18 00:36:55] donor CON4 SHAM_1 sel=(({H} + v) + acc) origin=COMPOSITION COMP=True NOV=False 534.6s
+[a18 00:36:59] donor CON5 P      sel=None origin=None COMP=False NOV=False 175.3s
+[a18 00:37:16] donor CON5 G1     sel=None origin=None COMP=False NOV=False 465.7s
+[a18 00:38:24] donor CON5 SHAM_1 sel=(({H} + v) + acc) origin=COMPOSITION COMP=True NOV=False 393.4s
+[a18 00:39:37] donor CON6 OFF_0  sel=None origin=None COMP=False NOV=False 175.5s
+[a18 00:40:21] donor CON6 P      sel=None origin=None COMP=False NOV=False 206.4s
+[a18 00:41:06] donor CON7 G1_NC  sel=(acc + ({H} + v)) origin=LGG COMP=False NOV=False 229.6s
+[a18 00:42:04] donor CON6 G1     sel=None origin=None COMP=False NOV=False 452.9s
+[a18 00:42:52] donor CON7 P      sel=None origin=None COMP=False NOV=False 105.6s
+[a18 00:42:59] donor CON7 SHAM_0 sel=None origin=None COMP=False NOV=False 275.2s
+[a18 00:43:08] donor CON6 SHAM_1 sel=None origin=None COMP=False NOV=False 448.0s
+[a18 00:43:22] donor CON6 SHAM_0 sel=(first - (v - (acc - {H}))) origin=COMPOSITION COMP=True NOV=False 465.5s
+[a18 00:43:38] donor CON7 G1     sel=((acc + {H}) * v) origin=COMPOSITION COMP=True NOV=False 399.8s
+[a18 00:43:44] donor CON7 OFF_0  sel=None origin=None COMP=False NOV=False 202.3s
+[a18 00:45:32] donor CON7 SHAM_1 sel=(({H} + v) * v) origin=COMPOSITION COMP=True NOV=True 354.8s
+[a18 00:45:40] A19 stage donors done
+EXIT=0

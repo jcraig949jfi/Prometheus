@@ -1,0 +1,210 @@
+{
+ "C9_H1_frozen": {
+  "check": "identical_arms",
+  "verdict": "IDENTICAL_SUMMARY",
+  "reason": "6 arm pair(s) identical on all 3 summary metrics",
+  "details": {
+   "declared": []
+  },
+  "findings": [
+   {
+    "arms": [
+     "gate_off_cost_free",
+     "gate_off_cost_vm"
+    ],
+    "metrics": [
+     "crossed_at_final",
+     "crossed_ever",
+     "held"
+    ]
+   },
+   {
+    "arms": [
+     "gate_off_cost_free",
+     "gate_on_cost_free"
+    ],
+    "metrics": [
+     "crossed_at_final",
+     "crossed_ever",
+     "held"
+    ]
+   },
+   {
+    "arms": [
+     "gate_off_cost_free",
+     "gate_on_cost_vm"
+    ],
+    "metrics": [
+     "crossed_at_final",
+     "crossed_ever",
+     "held"
+    ]
+   },
+   {
+    "arms": [
+     "gate_off_cost_vm",
+     "gate_on_cost_free"
+    ],
+    "metrics": [
+     "crossed_at_final",
+     "crossed_ever",
+     "held"
+    ]
+   },
+   {
+    "arms": [
+     "gate_off_cost_vm",
+     "gate_on_cost_vm"
+    ],
+    "metrics": [
+     "crossed_at_final",
+     "crossed_ever",
+     "held"
+    ]
+   },
+   {
+    "arms": [
+     "gate_on_cost_free",
+     "gate_on_cost_vm"
+    ],
+    "metrics": [
+     "crossed_at_final",
+     "crossed_ever",
+     "held"
+    ]
+   }
+  ]
+ },
+ "C9_H1R_undeclared": {
+  "check": "identical_arms",
+  "verdict": "IDENTICAL_PER_SEED",
+  "reason": "1 undeclared identical arm pair(s): treat as unwired intervention or same simulation, not as a null",
+  "details": {
+   "metrics": [
+    "crossed_at_final",
+    "crossed_ever",
+    "held_max_final"
+   ],
+   "declared": []
+  },
+  "findings": [
+   {
+    "arms": [
+     "gate_off_cost_free",
+     "gate_on_cost_free"
+    ],
+    "kind": "IDENTICAL_PER_SEED",
+    "shared_seeds": 60,
+    "metrics": [
+     "crossed_at_final",
+     "crossed_ever",
+     "held_max_final"
+    ]
+   }
+  ]
+ },
+ "C9_H1R_declared": {
+  "check": "identical_arms",
+  "verdict": "OK",
+  "reason": "no undeclared identical arm pair",
+  "details": {
+   "metrics": [
+    "crossed_at_final",
+    "crossed_ever",
+    "held_max_final"
+   ],
+   "declared": [
+    {
+     "arms": [
+      "gate_off_cost_free",
+      "gate_on_cost_free"
+     ],
+     "kind": "IDENTICAL_PER_SEED",
+     "shared_seeds": 60,
+     "metrics": [
+      "crossed_at_final",
+      "crossed_ever",
+      "held_max_final"
+     ],
+     "declared_reason": "author-declared: a free cue makes the gate a no-op (GRAPH:75)"
+    }
+   ]
+  },
+  "findings": []
+ },
+ "XDD_ESTABLISH_label": {
+  "check": "run_level_label",
+  "verdict": "LABEL_NOT_UNIT",
+  "reason": "8 of 23 runs labelled 'ESTABLISHED' show no evidence for the named unit (lineage_births): the label is a run property",
+  "details": {
+   "labelled": 23,
+   "violations": 8,
+   "holds_fraction": 0.6521739130434783
+  },
+  "findings": [
+   {
+    "id": "7ae3_16000033",
+    "lineage_births": 0
+   },
+   {
+    "id": "7ae3_16000036",
+    "lineage_births": 0
+   },
+   {
+    "id": "ffa6_16000008",
+    "lineage_births": 0
+   },
+   {
+    "id": "ffa6_16000020",
+    "lineage_births": 0
+   },
+   {
+    "id": "ffa6_16000027",
+    "lineage_births": 0
+   },
+   {
+    "id": "ffa6_16000032",
+    "lineage_births": 0
+   },
+   {
+    "id": "ffa6_16000044",
+    "lineage_births": 0
+   },
+   {
+    "id": "ffa6_16000045",
+    "lineage_births": 0
+   }
+  ]
+ },
+ "C_CRITICAL_MASS_two_doses": {
+  "check": "plugin_baseline",
+  "verdict": "OK",
+  "reason": "excess survives a jointly fitted null (LRT p=0.014)",
+  "details": {
+   "p1_plugin": 0.0625,
+   "plugin_expected_at_k": 0.2275238037109375,
+   "p_plugin": 2.64429421799463e-08,
+   "p_joint_fit": 0.13902459364505304,
+   "G": 6.012795102380039,
+   "df": 1,
+   "p_joint_lrt": 0.014202513036128286
+  },
+  "findings": []
+ },
+ "X_DOSE_CURVE": {
+  "check": "plugin_baseline",
+  "verdict": "OK",
+  "reason": "no plug-in excess",
+  "details": {
+   "p1_plugin": 0.09375,
+   "plugin_expected_at_k": 0.3254842758178711,
+   "p_plugin": 0.163604115426964,
+   "p_joint_fit": 0.1316743539324321,
+   "G": 2.8011651240296374,
+   "df": 3,
+   "p_joint_lrt": 0.42330815280828443
+  },
+  "findings": [],
+  "recorded_lrt_p": 0.423308134175172
+ }
+}

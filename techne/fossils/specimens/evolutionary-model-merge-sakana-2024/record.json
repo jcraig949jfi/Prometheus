@@ -1,0 +1,200 @@
+{
+  "schema": "techne.fossil.record/1",
+  "specimen_id": "evolutionary-model-merge-sakana-2024",
+  "canonical_name": "evomerge -- Evolutionary Optimization of Model Merging Recipes (authors: 'Sakana AI' per pyproject.toml; no author names in README/CITATION; Sakana AI; 2024)",
+  "aliases": [
+    "evomerge (pyproject package name)",
+    "Evolutionary Model Merge",
+    "EvoLLM-JP",
+    "EvoVLM-JP"
+  ],
+  "lineage": "README: source models for the merges are shisa-gamma-7b-v1, WizardMath-7B-V1.1, GAIR/Abel-7B-002, Arithmo2-Mistral-7B, LLaVA-1.6-Mistral-7B; EvoLLM-JP-v1-10B is built from EvoLLM-JP-v1-7B + shisa-gamma-7b-v1. 'Our math evaluation code builds on the WizardMath repository.' evomerge/utils.py functions 'copied from https://github.com/Stability-AI/generative-models'. Vendored heron/video_blip modules carry HuggingFace/Salesforce headers. Compared against lm-eval-harness jp-stable branch (Stability-AI). || main loop (reader, from the code): evaluate.py loads a config, instantiates one model wrapper, then for each evaluator config instantiates the evaluator, calls evaluator(model) to generate answers over a HuggingFace dataset and score them, and dumps all metrics to a JSON file; there is NO evolutionary search, merging (no CMA-ES, DARE, TIES, SLERP, layer-stacking) or optimisation code anywhere in the tree -- the repo is evaluation-only, and the evolved weights are consumed as pre-built HuggingFace checkpoints.",
+  "domain": [
+    "model-merging",
+    "evolutionary-computation",
+    "foundation-models",
+    "evaluation-harness"
+  ],
+  "era": "2024",
+  "version": "github.com/SakanaAI/evolutionary-model-merge main @ 09aff543dd2ae966b3dfe457b750563ab063eb03 (committed 2024-03-31; 2 commits since 2024-03-21; 41 tracked files)",
+  "source_origin": {
+    "artifacts": [
+      {
+        "kind": "git",
+        "url": "https://github.com/SakanaAI/evolutionary-model-merge",
+        "commit": "09aff543dd2ae966b3dfe457b750563ab063eb03",
+        "commit_resolved": "09aff543dd2ae966b3dfe457b750563ab063eb03",
+        "commit_date": "2024-03-31T07:02:33+09:00"
+      }
+    ]
+  },
+  "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+  "source_identity": {
+    "repo": "github.com/SakanaAI/evolutionary-model-merge",
+    "branch": "main",
+    "other_branches_or_versions": "Single remote branch origin/main; one tag v0.1.0 (matches pyproject version 0.1.0); 2 commits total."
+  },
+  "hashes": {
+    "tree_sha256": "69d1b447d3c5b931f41b24eaadf7b4fc22363b8be22b79af4d5c1b10e25f0435",
+    "n_files": 41,
+    "bytes": 1639539,
+    "artifacts": [
+      {
+        "filename": "https://github.com/SakanaAI/evolutionary-model-merge",
+        "sha256": null,
+        "commit": "09aff543dd2ae966b3dfe457b750563ab063eb03"
+      }
+    ],
+    "body_location": "C:\\Prometheus\\vault\\fossils\\evolutionary-model-merge-sakana-2024",
+    "hash_list": "techne/fossils/specimens/evolutionary-model-merge-sakana-2024/UPSTREAM_HASHES.txt"
+  },
+  "license": {
+    "spdx": "Apache-2.0",
+    "status": "permissive",
+    "evidence": "licence file LICENSE, first line 'Apache License'; metadata field: Apache 2.0; README model table lists per-model licences: EvoLLM-JP-v1-7B and -10B are 'Microsoft Research License', EvoLLM-JP-A-v1-7B and EvoVLM-JP-v1-7B are 'Apache 2.0' (these are weight licences, not code). Vendored evomerge/modules/heron/video_blip/*.py carry HuggingFace Inc. / Salesforce Authors copyright headers. evomerge/utils.py notes two functions 'copied from https://github.com/Stability-AI/generative-models'. README acknowledges math eval code 'builds on the WizardMath repository'."
+  },
+  "acquisition_date": "2026-09-30",
+  "language": [
+    "Python"
+  ],
+  "build_system": "poetry (pyproject.toml with [tool.poetry], poetry-core build backend, poetry.lock present); README installs with 'pip install -e .'; GitHub Actions workflow runs black --check only",
+  "compiler_or_interpreter": "CPython ^3.10 per pyproject.toml; README: 'Python Version 3.10.12 and CUDA Version 12.3'",
+  "dependencies": [
+    "python = ^3.10",
+    "transformers = ^4.38.2",
+    "pillow = ^10.2.0",
+    "datasets = ^2.18.0",
+    "gradio = ^4.21.0",
+    "accelerate = ^0.27.2",
+    "rouge-score = ^0.1.2",
+    "emoji = ^2.10.1",
+    "fugashi = ^1.3.1",
+    "neologdn = ^0.5.2",
+    "unidic-lite = ^1.0.8",
+    "fasttext = ^0.9.2",
+    "einops = ^0.7.0",
+    "sentencepiece = ^0.2.0",
+    "vllm = {git = https://github.com/SakanaAI/vllm.git, rev = 538aa22a278dc731bc09bb968af2eae909a834c7} (git dependency, pinned to a rev on a Sakana fork)",
+    "torch, numpy, yaml are imported but not declared directly in pyproject (pulled transitively)",
+    "SETUP FETCH: pip install -e . pulls vllm from git+https://github.com/SakanaAI/vllm.git at rev 538aa22a278dc731bc09bb968af2eae909a834c7",
+    "SETUP FETCH: README step 2: manual download of fasttext 'lid.176.ftz' from https://fasttext.cc/docs/en/language-identification.html (path via LID176FTZ_PATH env var)",
+    "SETUP FETCH: At runtime: HuggingFace datasets load_dataset of 'juletxara/mgsm' (name='ja'), 'SakanaAI/JA-VG-VQA-500', 'SakanaAI/JA-VLM-Bench-In-the-Wild'",
+    "SETUP FETCH: At runtime: HuggingFace model weights via vllm.LLM(model=...) / from_pretrained for model_path values in configs: SakanaAI/EvoLLM-JP-v1-7B, SakanaAI/EvoLLM-JP-v1-10B, SakanaAI/EvoLLM-JP-A-v1-7B, SakanaAI/EvoVLM-JP-v1-7B, GAIR/Abel-7B-002, upaya07/Arithmo2-Mistral-7B, WizardLM/WizardMath-7B-V1.1, llava-hf/llava-v1.6-mistral-7b-hf, turing-motors/heron-chat-blip-ja-stablelm-base-7b-v1-llava-620k, stabilityai/japanese-stable-vlm (trust_remote_code=True), Salesforce/blip2-opt-2.7b (processor); augmxnt/shisa-gamma-7b-v1 config points at a local cache path"
+  ],
+  "run_classification": "NOT_ATTEMPTED",
+  "test_classification": "NOT_ATTEMPTED",
+  "entry_points": [
+    "evaluate.py main (loads a YAML config, instantiates a model wrapper and one or more evaluators via evomerge.instantiate_from_config, runs each evaluator on the model, writes results/<config>.json)",
+    "evomerge/utils.py instantiate_from_config / get_obj_from_str (dotted-path 'target' + 'params' object factory, copied from Stability-AI generative-models)",
+    "evomerge/eval/ja_mgsm.py JaMGSM (loads juletxara/mgsm ja test split, prompts the model, extracts a numeric answer, computes acc and fasttext-gated acc_ja)",
+    "evomerge/eval/ja_vg_vqa.py JaVGVQA and evomerge/eval/ja_vlm_wild.py JaVLMBenchIntheWild (load SakanaAI VQA datasets, batch through the VLM, ROUGE-L via evomerge/eval/utils.py evaluate)",
+    "evomerge/eval/metrics.py rouge_ja / MecabTokenizer / LanguageDetector (Japanese ROUGE with MeCab tokenisation; fasttext language ID)",
+    "evomerge/models/causallm.py CausalLMWithvLLM (vLLM-backed text generation with a prompt template and stop tokens)",
+    "evomerge/models/llava.py LLaVA, evomerge/models/heron_v1.py HeronV1, evomerge/models/jsvlm.py JSVLM (VLM inference wrappers)"
+  ],
+  "example": {
+    "command": "python evaluate.py --config_path {path-to-config}",
+    "input": "A YAML config such as configs/llm/evollm-v1-jp-7b.yaml: model.target evomerge.CausalLMWithvLLM with model_path SakanaAI/EvoLLM-JP-v1-7B, template ja-alpaca-cot; eval.target evomerge.eval.JaMGSM",
+    "output": "results/<config-name>.json containing per-evaluator metrics (e.g. acc, acc_ja for MGSM-JA; ROUGE-L for the VQA benchmarks) and per-example question/answer/response/prediction lists; README reports e.g. EvoLLM-JP-v1-7B MGSM-JA acc 52.0"
+  },
+  "environment": {
+    "runner": "native",
+    "note": "NOT RUN in this pass (nothing executed from the tree); host class from the reader draft: Linux + NVIDIA GPU with CUDA 12.x, CPython 3.10, enough VRAM for 7B-10B parameter models in bf16/fp16; network access to huggingface.co"
+  },
+  "patches": [],
+  "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+  "upstream_docs": [
+    "https://arxiv.org/abs/2403.13187",
+    "https://sakana.ai/evolutionary-model-merge/",
+    "https://huggingface.co/SakanaAI",
+    "https://huggingface.co/spaces/SakanaAI/EvoVLM-JP",
+    "https://github.com/Stability-AI/lm-evaluation-harness/tree/jp-stable",
+    "https://github.com/yahoojapan/ja-vg-vqa (cited in evomerge/eval/ja_vg_vqa.py docstring)"
+  ],
+  "human_capability_summary": {
+    "built_to": "Serve as 'a central hub for SakanaAI's Evolutionary Model Merge series' with 'models and code for reproducing the evaluation presented in our paper' (README).",
+    "pressure": "NOT_FOUND_AT_PIN (README gives no motivation text or abstract; it only links the arXiv paper and lists benchmark tables)",
+    "success_means": "Benchmark scores of the merged models versus source models: MGSM-JA accuracy and lm-eval-harness (jp-stable) average for LLMs; ROUGE-L on JA-VG-VQA-500 and JA-VLM-Bench-In-the-Wild for VLMs (README tables)."
+  },
+  "known_human_problem_solved": "Serve as 'a central hub for SakanaAI's Evolutionary Model Merge series' with 'models and code for reproducing the evaluation presented in our paper' (README).",
+  "hardware_assumptions": "",
+  "human_environmental_pressure": "",
+  "human_failure_condition": "",
+  "behavioral_entry_point": "evaluate.py:main (which model and evaluator classes are built from the config) and evomerge/models/causallm.py:CausalLMWithvLLM.__init__ (prompt template, sampling params); to vary the merge itself there is nothing in this tree -- only the model_path in configs/*.yaml",
+  "observability": {
+    "EXECUTABLE": "unknown",
+    "OBSERVABLE": "unknown",
+    "ORACLE_BACKED": "unknown",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "unknown"
+  },
+  "lineage_relations": [],
+  "acquisition_tags": [
+    "operator-chat-2026-09-30-download-for-nyx",
+    "prior_art_raid",
+    "section-VIII",
+    "TECHNE-132",
+    "reader-draft:READER_DRAFTS_2026-09-30/evolutionary-model-merge.json",
+    "evaluation-only-no-search-code"
+  ],
+  "historical_disposition": {
+    "state": "UNKNOWN",
+    "failure_reasons": [],
+    "superseded_by": "",
+    "rival_of": "",
+    "evidence": []
+  },
+  "versions_preserved": [],
+  "receipts": [],
+  "nyx_handoff": {
+    "here_is_the_machine": "vault body <vault>/evolutionary-model-merge-sakana-2024 (host-local; `python -m techne.fossils.harvest rematerialize evolutionary-model-merge-sakana-2024` on a host without it) ; tracked techne/fossils/specimens/evolutionary-model-merge-sakana-2024",
+    "where_it_came_from": "https://github.com/SakanaAI/evolutionary-model-merge ; ORIGINAL_AUTHORITATIVE_RELEASE ; commit 09aff543dd2ae966b3dfe457b750563ab063eb03 ; licence Apache-2.0",
+    "how_to_run_it": "not executed from this record (NOT_ATTEMPTED); upstream entry: python evaluate.py --config_path {path-to-config} ; host class: Linux + NVIDIA GPU with CUDA 12.x, CPython 3.10, enough VRAM for 7B-10B parameter models in bf16/fp16; network access to huggingface.co",
+    "how_we_know_it_runs": "we do not: no run receipt. The body is pinned (tree_sha256 69d1b447d3c5b931, UPSTREAM_HASHES.txt) and verifies by hash; that is preservation, not execution",
+    "what_humans_used_it_for": "Serve as 'a central hub for SakanaAI's Evolutionary Model Merge series' with 'models and code for reproducing the evaluation presented in our paper' (README)."
+  },
+  "seat": "Techne",
+  "runtime": {
+    "python_major": 3,
+    "native_deps": [
+      "CUDA GPU (torch.cuda calls in evaluate.py and utils.py; README tested with CUDA 12.3)",
+      "vLLM (Sakana fork) for LLM inference",
+      "PyTorch / transformers / accelerate",
+      "fasttext native extension + lid.176.ftz model file",
+      "MeCab via fugashi + unidic-lite for Japanese tokenisation"
+    ],
+    "host_class": "Linux + NVIDIA GPU with CUDA 12.x, CPython 3.10, enough VRAM for 7B-10B parameter models in bf16/fp16; network access to huggingface.co"
+  },
+  "reader_notes": {
+    "draft": "techne/acquisition/prior_art_raid/READER_DRAFTS_2026-09-30/evolutionary-model-merge.json",
+    "copyright_holders_by_header_count": {
+      "The HuggingFace Inc. team (2023)": 3,
+      "The HuggingFace Team (2023)": 1,
+      "The Salesforce Authors and The HuggingFace Team (2023)": 1
+    },
+    "things_the_reader_could_not_verify": [
+      "Author names: README and pyproject give only 'Sakana AI'; no CITATION file at pin.",
+      "Whether the arXiv paper's evolutionary search (CMA-ES over merge parameters) was ever released -- it is absent from this tree at this commit.",
+      "Exact content/licences of the HuggingFace model weights and datasets fetched at runtime (not in tree).",
+      "Whether the pinned SakanaAI/vllm fork rev still resolves.",
+      "Poetry lock resolution / whether 'pip install -e .' succeeds on a current host (not executed)."
+    ],
+    "has_gitmodules_at_pin": false,
+    "has_lfs_at_pin": false,
+    "approx_tree_bytes_at_pin": 1639539
+  },
+  "preservation": {
+    "status": "SELF_CONTAINED",
+    "body_status": "SELF_CONTAINED",
+    "recipe_status": "NO_RECIPE",
+    "submodules": [],
+    "submodules_missing": [],
+    "submodules_drifted": [],
+    "unpinned_artifacts": [],
+    "git_lfs": false,
+    "network_fetch_in_recipe": [],
+    "checked_utc": "2026-09-30T23:06:12Z",
+    "note": "status is the worse of body_status and the recipe axis; a matching tree hash alone never implies completeness."
+  }
+}

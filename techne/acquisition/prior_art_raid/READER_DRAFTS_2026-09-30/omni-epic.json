@@ -1,0 +1,90 @@
+{
+  "specimen_id": "omni-epic",
+  "url": "https://github.com/maxencefaldor/omni-epic",
+  "commit": "af2a3c64f40bc48178c08e1beb76a0aafdd2a167",
+  "commit_date": "2024-12-26T15:54:51-08:00",
+  "default_branch": "main",
+  "n_tracked_files": 234,
+  "n_commits": 5,
+  "first_commit_date": "2024-08-30T14:25:29+00:00",
+  "has_gitmodules": false,
+  "has_lfs": false,
+  "approx_tree_bytes": 3367636,
+  "canonical_name": "OMNI-EPIC -- OMNI-EPIC: Open-endedness via Models of human Notions of Interestingness with Environments Programmed in Code (Faldor, Maxence and Zhang, Jenny and Cully, Antoine and Clune, Jeff; NOT_FOUND_AT_PIN (institution not stated in tree); 2024)",
+  "aliases": ["OMNI-EPIC", "omni-epic (repo name)", "omni_epic (python package dir)", "OMNI (Open-endedness via Models of human Notions of Interestingness)", "EPIC (Environments Programmed in Code)"],
+  "license": {
+    "file": "LICENSE",
+    "first_line": "Apache License",
+    "spdx_guess": "Apache-2.0",
+    "metadata_license_field": "NOT_FOUND_AT_PIN (no pyproject.toml/setup.py/setup.cfg; game/frontend/package.json has no license field)",
+    "notes": "LICENSE appendix is filled in: 'Copyright 2024 Jenny Zhang and Maxence Faldor'. README badge says 'License-Apache 2.0' and matches. git history shows commit 0e49ab1 'Update LICENSE' (2024-12-26) replaced a GNU GENERAL PUBLIC LICENSE Version 3 text (present from the 2024-08-30 initial commit) with Apache-2.0, so earlier commits of this repo were GPL-3.0. The tree vendors a DreamerV3 implementation (dreamerv3/, embodied/) with no licence file, copyright header, or attribution to its upstream author anywhere in the tree (grep for hafner/danijar: none). Zero copyright headers in any source file."
+  },
+  "copyright_holders_by_header_count": {},
+  "language": ["Python (156 tracked .py files)", "TypeScript/TSX (game/frontend, Next.js 14.2.2)", "YAML (configs/)", "shell (embodied/scripts)", "Apptainer definition (apptainer/container.def)", "URDF (omni_epic/robots/assets/r2d2.urdf)"],
+  "build_system": "No Python packaging (no pyproject/setup.py); run in-place with PYTHONPATH=/workspace/src inside an Apptainer container built from apptainer/container.def (Bootstrap: docker, From: ubuntu:22.04, python3.11 venv, pip install -r requirements.txt). Frontend: npm/bun with Next.js scripts (dev/build/start/lint) per game/frontend/package.json. dreamerv3/Dockerfile also present (upstream DreamerV3 docker instructions).",
+  "interpreter_or_compiler": "CPython 3.11 per apptainer/container.def (deadsnakes ppa python3.11 venv); Node.js for the frontend (typescript ^5, next 14.2.2)",
+  "dependencies": [
+    "requirements.txt (top-level, mostly UNPINNED): --find-links https://storage.googleapis.com/jax-releases/jax_cuda_releases.html; numpy==1.26.4; scipy; jax[cuda12_pip]; flax; torch; tensorflow_probability; scikit-learn; pybullet; gym; statsmodels; seaborn; ipython; ipykernel; opencv-python; moviepy; imageio; mediapy; hydra-core; wandb; openai; anthropic; google-generativeai; memory_profiler; ruamel.yaml; einops; colored; flask; flask-cors; flask-socketio; eventlet; pyvis; manim",
+    "dreamerv3/requirements.txt (unpinned): chex; einops; jax[cuda12_pip]; jaxlib; optax; tensorflow_probability",
+    "embodied/requirements.txt (unpinned): cloudpickle; colored; gputil; msgpack; numpy; psutil; ruamel.yaml; tensorflow-cpu; zmq",
+    "game/backend/requirements.txt (fully pinned freeze, 170 lines) incl. jax==0.4.26, jaxlib==0.4.26, flax==0.8.2, pybullet==3.2.6, openai==1.23.1, anthropic==0.25.6, google-generativeai==0.5.2, hydra-core==1.3.2, gym==0.26.2, Flask==3.0.3, wandb==0.16.6, mujoco==3.1.4, brax==0.10.3",
+    "game/frontend/package.json: next 14.2.2, react ^18, socket.io-client ^4.7.5, @radix-ui/* , framer-motion ^11.2.4, tailwindcss ^3.4.1",
+    "rag_utils.py lazily imports transformers / sentence_transformers / torch for non-openai embedding methods (codet5, mxbai, bert, nomic, mistral) -- not listed in requirements.txt",
+    "FLAG: apptainer/container.def does 'git clone https://github.com/maxencefaldor/omni-epic.git src/' with no pin, and 'pip install -r requirements.txt' of mostly unpinned deps",
+    "FLAG: requires OPENAI_API_KEY / ANTHROPIC_API_KEY (and optionally WANDB_API_KEY) as environment variables per README"
+  ],
+  "network_fetches_in_setup": [
+    "git clone https://github.com/maxencefaldor/omni-epic.git (README Step 1 and inside container.def %post, unpinned)",
+    "apptainer build from docker ubuntu:22.04 base; apt update/install; add-apt-repository ppa:deadsnakes/ppa (apptainer/container.def)",
+    "pip --find-links https://storage.googleapis.com/jax-releases/jax_cuda_releases.html (requirements.txt)",
+    "npm i / bun install for game/frontend (README)",
+    "RUNTIME: every iteration calls a hosted foundation model API -- OpenAI (default client/model gpt-4o-2024-05-13 and gpt-4-turbo-2024-04-09 per configs/omni_epic.yaml), or Anthropic / Google generativeai per omni_epic/core/fm.py FM._create_client; embeddings via OpenAI text-embedding-3-small (rag_utils.get_openai_embeddings, embedding_method: openai default)",
+    "RUNTIME (optional embedding methods): HuggingFace model downloads Salesforce/codet5p-110m-embedding, mixedbread-ai/mxbai-embed-large-v1, BERT, nomic, mistral via transformers/sentence_transformers (rag_utils.py)",
+    "RUNTIME (optional): wandb logging when dreamer config wandb: True"
+  ],
+  "entry_points": [
+    "main_omni_epic.py main (hydra entry, configs/omni_epic.yaml; the open-ended outer loop: for each of config.iterations, pick a task description -- seeded from robot_dict[robot]['task_descs_init'] for the first iterations, else generated by the FM from archive examples chosen by embedding similarity -- generate environment code, repair compile errors, judge interestingness, train DreamerV3, detect success, and sort the env file into archive_codepaths / archive_failedgens / archive_failedint / archive_failedtrain; appends archive.jsonl and metadata.json each iteration)",
+    "main_omni_epic.py init_archive (loads archive lists from a previous archive.jsonl checkpoint)",
+    "omni_epic/core/fm.py FM (wraps OpenAI / anthropic / google.generativeai chat clients; methods query_env_code, reflect_error, iterate_on_errors (write env_<i>.py, test_env_halts with 10s timeout, test_env, on failure ask the FM to reflect on the traceback up to iteration_max times), get_next_task_desc, query_interestingness (FM compares the candidate env code against the N most similar archived codes and returns an is_interesting boolean), query_success_with_vision, reflect_task / reflect_task_with_vision)",
+    "omni_epic/core/prompts/*.py (system/user prompt templates: query_env_code, query_next_task_desc, query_next_task_desc_no_moi, query_interestingness, query_success, reflect_error, reflect_task, reflect_task_with_vision)",
+    "rag_utils.py get_similar_codepaths / get_embeddings (embeds env source files and ranks by cosine distance; embedding_method openai|codet5|mxbai|bert|nomic|mistral)",
+    "omni_epic/envs/__init__.py test_env / test_env_halts / env_run_all (validation harness for generated Env code: checks observation types, collisions, that step does not terminate/succeed immediately, 100 zero-action steps for object collisions/robot falling, and a multiprocessing timeout)",
+    "omni_epic/envs/base.py Env(gym.Env) and omni_epic/robots/{ant,humanoid,r2d2}.py (PyBullet robot/env base classes that generated code subclasses: step() applies action, steps the bullet simulation, sums task rewards + robot rewards; get_task_rewards/get_terminated/get_truncated/get_success are abstract for the FM to write)",
+    "main_dreamer.py main_dreamer (hydra entry, configs/dreamer/dreamer_xxs.yaml; builds embodied PyBullet env from config.env.path, Replay, dreamerv3.Agent, and calls embodied.run.train; run.steps default 2097152, jax.platform gpu)",
+    "game/backend/app.py (Flask + SocketIO backend for the human-playable game; frontend in game/frontend, Next.js)"
+  ],
+  "example_command": "python main_omni_epic.py",
+  "example_input": "configs/omni_epic.yaml defaults (robot: r2d2, iterations: 50, error_max_iterations: 5, enable_moi: True, enable_sd: True, train_agent: True, embedding_method: openai, FM client openai model gpt-4o-2024-05-13, temperature 0) plus seeded natural-language task descriptions in omni_epic/robots/__init__.py robot_dict[robot]['task_descs_init'] and few-shot example env files omni_epic/envs/<robot>/*.py; requires OPENAI_API_KEY in the environment",
+  "example_output": "Per code (README gives no sample output): a run directory ./output/omni_epic/<timestamp>/ containing task_<i>/env_<gen>.py (FM-generated PyBullet environment code), task_<i>/render.mp4 and render3p.mp4, task_<i>/metadata.json, task_<i>/dreamer/ (DreamerV3 logdir with checkpoint.ckpt, metrics.jsonl, eval renders), and an appended archive.jsonl with keys codepaths / failedgens / failedint / failedtrain",
+  "runtime_native_deps": [
+    "NVIDIA GPU + CUDA 12 (requirements: jax[cuda12_pip]; dreamer config jax.platform: gpu; apptainer shell --nv; EGL vendor json apptainer/10_nvidia.json for headless rendering)",
+    "PyBullet physics simulator (pybullet; robots as MJCF/URDF; r2d2.urdf shipped)",
+    "JAX/flax/optax + tensorflow_probability (vendored DreamerV3), tensorflow-cpu (embodied), torch (embeddings / optional)",
+    "ffmpeg, libcairo2-dev, libpango1.0-dev (container.def apt installs; manim/mediapy/moviepy)",
+    "Hosted LLM/VLM API access (OpenAI / Anthropic / Google) -- mandatory for the main loop",
+    "Node.js/bun for the optional game frontend"
+  ],
+  "host_class": "Linux x86_64 with NVIDIA GPU (CUDA 12) running Apptainer (ubuntu:22.04 container, CPython 3.11), plus internet access and paid API keys for OpenAI (default) or Anthropic/Google foundation models; the frontend additionally needs Node.js",
+  "upstream_docs": [
+    "https://arxiv.org/abs/2405.15568",
+    "bibtex: @article{faldor2024omni, title={OMNI-EPIC: Open-endedness via Models of human Notions of Interestingness with Environments Programmed in Code}, author={Faldor, Maxence and Zhang, Jenny and Cully, Antoine and Clune, Jeff}, journal={arXiv preprint arXiv:2405.15568}, year={2024}}",
+    "https://omni-epic.vercel.app/ (project website)",
+    "https://x.com/jeffclune/status/1795787632435212732 (README badge)"
+  ],
+  "built_to": "README: a system 'that endlessly create[s] learnable and interesting environments, further propelling the development of self-improving AI systems and AI-Generating Algorithms' -- Open-endedness via Models of human Notions of Interestingness with Environments Programmed in Code.",
+  "pressure": "NOT_FOUND_AT_PIN as an explicit statement (README has no motivation paragraph beyond the one-sentence description); the code and config names imply the pressure: generating tasks that are simultaneously learnable (compilable, trainable by DreamerV3, success-detectable) and interesting (judged by a foundation model against the archive) rather than random or repetitive.",
+  "success_means": "README does not state metrics; per code, per-task success is DreamerV3 training followed by a success detector (get_task_success_from_folder majority vote over eval episodes, or a VLM judging concatenated render frames when success_detector.use_vision), and the archive growth (archive_codepaths vs failedgens/failedint/failedtrain in archive.jsonl); analysis/ has plot_annecs.py, plot_diversity.py, plot_envgen_success.py, plot_percentlearned.py suggesting ANNECS, diversity, env-generation success and percent-learned metrics.",
+  "main_loop_one_sentence": "main_omni_epic.main iterates config.iterations times: it picks a seeded task description or asks a foundation model for the next task given embedding-similar archived and failed environment codes, asks the FM to write a PyBullet gym Env subclass and repairs it via reflect_error until test_env passes (or gives up after error_max_iterations), asks the FM whether the new environment is interesting relative to its nearest archived neighbours, trains a DreamerV3 agent (warm-started from the most similar archived task's checkpoint), checks success from eval files or a VLM, and appends the env path to the success archive or to one of three failure archives (with one retry via reflect_task when training fails).",
+  "behavioral_entry_point": "main_omni_epic.py:main (outer loop policy: example selection via taskgen_choose_probs and get_similar_codepaths, archive gating); omni_epic/core/fm.py:FM.get_next_task_desc / query_interestingness / iterate_on_errors (FM query behaviour); omni_epic/core/prompts/*.py (prompt text); configs/omni_epic.yaml (model choices, enable_moi/enable_sd/train_agent switches); omni_epic/envs/__init__.py:test_env (environment validity criteria)",
+  "lineage_notes": "README names no predecessors explicitly. Tree shows: vendored DreamerV3 (dreamerv3/, embodied/ with atari, crafter, dmc, minecraft, procgen env adapters and a Dockerfile referencing 'python dreamerv3/main.py --configs atari') as the RL learner; PyBullet robots ant/humanoid (MJCF) and r2d2 (URDF); OMNI acronym in the title ('Open-endedness via Models of human Notions of Interestingness'). Branch origin/kinetix ('Env Generation with Jax2D', 'Add few-shot examples envs for kinetix', 'Fix prompt for Kinetix') indicates a later port to the Kinetix/Jax2D environment.",
+  "other_branches_or_versions": "Remote branches: origin/main (pinned HEAD, 5 commits: Initial commit 2024-08-30, three README updates, Update LICENSE 2024-12-26 GPL-3.0 -> Apache-2.0) and origin/kinetix (additional commits: 'Add few-shot examples envs for kinetix', 'Env Generation with Jax2D', 'Fix prompt for Kinetix'). No tags.",
+  "things_i_could_not_verify": [
+    "Author institutions (not in tree; only names in bibtex and LICENSE).",
+    "Provenance and licence of the vendored dreamerv3/ and embodied/ directories (no attribution, NOTICE, or licence header in tree).",
+    "Whether GPL-3.0 -> Apache-2.0 relicensing in commit 0e49ab1 was accompanied by any notice (none in tree).",
+    "Exact contents of prompt templates and the game backend were only listed, not read in full.",
+    "Runtime behaviour, model outputs, and API costs (no code executed, no network).",
+    "container.def %runscript references /workspace/src/main.py, which does not exist in the tree (main_omni_epic.py / main_dreamer.py do).",
+    "game/frontend/README.md says 'the frontend here contains placeholder text and not the actual OMNI-EPIC website'."
+  ]
+}

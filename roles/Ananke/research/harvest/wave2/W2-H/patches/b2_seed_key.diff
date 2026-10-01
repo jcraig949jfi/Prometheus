@@ -1,0 +1,25 @@
+diff --git a/prometheus/ananke/campaign.py b/prometheus/ananke/campaign.py
+--- a/prometheus/ananke/campaign.py
++++ b/prometheus/ananke/campaign.py
+@@ -128,6 +128,9 @@ class CampaignConfig:
+     jump_abs: float = 0.10
+     jump_se: float = 3.0
+     jump_frac: float = 0.5
++    # W2-H: key B2 search seeds by family and track too (C1 used the dial only, so RELAY/FLIP/HOLD phys
++    # transects of one dial shared genomes and worlds). Default False reproduces C1 exactly.
++    b2_seed_v2: bool = False
+ 
+     def to_dict(self):
+         d = dataclasses.asdict(self)
+@@ -628,8 +631,9 @@ def wave_B2(cfg: CampaignConfig, B: list[dict], candidates: list[dict]) -> list[
+         for rep in range(cfg.b_reps):
+             specs.append(dict(wave="B2", kind=r["kind"], physics=r["physics"], env=r["env"],
+                               levels=r["levels"], env_levels=r["env_levels"], search=r["search"],
+-                              search_seed=H_int(cfg.seed, 0xB2, hash_str(e["transect"]), e["base"],
+-                                                e["level_index"], rep),
++                              search_seed=H_int(cfg.seed, 0xB2, hash_str(
++                                  (r["env"]["family"] + e.get("track", "evo") + e["transect"]) if cfg.b2_seed_v2
++                                  else e["transect"]), e["base"], e["level_index"], rep),
+                               extra=dict(e, rep=rep, reproduction_of=r["cell_id"]), parent=r["cell_id"]))
+     return specs
+ 

@@ -1,8 +1,8 @@
 # Artemis status
 
-Currency: 2026-09-30T14:19Z (from date -u). Fleet state: WORK_STATE.json (MWO-0004 + CWO 2026-09-30).
+Currency: 2026-09-30T20:31Z (from date -u). Fleet state: WORK_STATE.json (MWO-0004 + CWO-2026-09-30C; charter 2026-09-30).
 
-seat state: ACTIVE. Charter ADOPTED 2026-09-27: research backlog ecology.
+seat state: ACTIVE. Charter 2026-09-30: research reconciliation / forensic sampling (prompts/2026-09-30_charter_*); assignment-only.
 what it asserts: self-test COMPLETE (selftest/RESULT.md): sharpening NOT
   shown to add yield; Artemis's priority forecasts worse than constant on
   raw questions. Method changed accordingly (RESPONSIBILITIES s4): no full
@@ -13,5 +13,5 @@ host: ubu002 (see ABOUT.md). worktree
 monitors owned or fed: none.
 D001: reconciled 2026-09-30 -- 10/10 completed on Fabric (dispatch/D001/RECEIPTS.json).
 blockers: none.
-CURRENT: D003 submitted 14:18Z (10 claude Tasks); barrier running. D001+D002 routed (#1116-#1121).
-NEXT: D004 = run D003 analysis.py on the script executor; re-run D002 timeouts after F1 fix.
+STATE: READY -- U-02 complete (u02/RESULT.md; Aporia #1173). Awaiting Aporia.
+NEXT: awaiting Aporia after U-02; no self-promotion.

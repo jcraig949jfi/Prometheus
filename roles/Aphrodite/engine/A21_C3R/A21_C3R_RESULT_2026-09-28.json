@@ -1,0 +1,18 @@
+{
+ "assay": "AMENDMENT 21 C3R",
+ "DISPOSITION": "INVALID_DESIGN_DEFECT",
+ "G1_RECURRENT_STEPPING_STONE": "NOT ADJUDICATED (invalid design)",
+ "defect": "The frozen motif rule (a composition with >= 8 T4-admissible instances) admitted INERT identity wraps and refinements of the inherited schema. Classified mechanically from the frozen plan (pre-donor): G1 motifs GENUINE 2/8 (INERT 5, REFINES 1); SHAM_0 GENUINE 2/8; SHAM_1 and SHAM_2 GENUINE 0/8 (all INERT). The 'recurring structure' was mostly the inherited abstraction itself, which the START library already solves. The assay could not test composition reuse.",
+ "found_by": "principal, inspecting G1 selection tables after the donor stage; confirmed from the frozen plan alone. Worker W3 had flagged that inert wraps count as COMPOSES; the seat did not carry that into the motif rule.",
+ "action": "Transfer stage stopped (PID-verified) as known-uninformative compute; donor data kept (A18_DONORS / A18_ROLES in engine/A21_C3R/). Corrected design -> AMENDMENT 22.",
+ "donor_level_forensics": {
+  "G1 selected a composition": "2/7",
+  "G1_NC": "0/7",
+  "P": "0/7",
+  "OFF_0": "0/7",
+  "SHAM_0": "3/7",
+  "SHAM_1": "3/7",
+  "SHAM_2": "3/7"
+ },
+ "no_BOUNDED_RSI_label_written": true
+}

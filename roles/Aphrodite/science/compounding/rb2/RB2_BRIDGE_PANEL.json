@@ -1,0 +1,2478 @@
+{
+ "forensic": "not a disposition",
+ "summary": [
+  {
+   "name": "hA_add_ah",
+   "source": "A17 catalog A (OBSERVE)",
+   "prog": [
+    "1",
+    "(v + (acc + last))",
+    "acc"
+   ],
+   "body_class": "ADDITIVE",
+   "Q2": 4,
+   "OLD_q3": true,
+   "T4_q3": true,
+   "OLD_components": {
+    "held_out_extrapolation": 1.0,
+    "stress_length_200": 1.0,
+    "counterexample_accuracy": 1.0,
+    "metamorphic_pass": true
+   },
+   "T4_components": {
+    "held_out_extrapolation": 1.0,
+    "stress_at_domain_max": 1.0,
+    "counterexample_accuracy": 1.0,
+    "order_battery_accuracy": 1.0,
+    "domain_L_max": 200,
+    "family_reasons": []
+   },
+   "disagreement": false,
+   "mechanics": [],
+   "near_misses": 0,
+   "near_miss_disagreements": 0,
+   "wrong_artifact_admitted": {
+    "OLD": 0,
+    "T4": 0
+   }
+  },
+  {
+   "name": "hA_sub_az",
+   "source": "A17 catalog A (OBSERVE)",
+   "prog": [
+    "1",
+    "(acc - (v // last))",
+    "(acc * 1)"
+   ],
+   "body_class": "ADDITIVE",
+   "Q2": 16,
+   "OLD_q3": true,
+   "T4_q3": false,
+   "OLD_components": {
+    "held_out_extrapolation": 1.0,
+    "stress_length_200": 1.0,
+    "counterexample_accuracy": 1.0,
+    "metamorphic_pass": true
+   },
+   "T4_components": {
+    "held_out_extrapolation": 1.0,
+    "stress_at_domain_max": 1.0,
+    "counterexample_accuracy": 1.0,
+    "order_battery_accuracy": 1.0,
+    "domain_L_max": 200,
+    "family_reasons": [
+     "CONSTANT_OR_NEAR_CONSTANT",
+     "LAST_INSENSITIVE",
+     "MIDDLE_INSENSITIVE"
+    ]
+   },
+   "disagreement": true,
+   "mechanics": [
+    "T4 rejects family: ['CONSTANT_OR_NEAR_CONSTANT', 'LAST_INSENSITIVE', 'MIDDLE_INSENSITIVE']"
+   ],
+   "near_misses": 5,
+   "near_miss_disagreements": 0,
+   "wrong_artifact_admitted": {
+    "OLD": 0,
+    "T4": 0
+   }
+  },
+  {
+   "name": "hA_fdiv_bf",
+   "source": "A17 catalog A (OBSERVE)",
+   "prog": [
+    "1",
+    "(acc // math.gcd(abs(v), abs(last)))",
+    "math.gcd(abs(first), abs(acc))"
+   ],
+   "body_class": "NA_FDIV",
+   "Q2": 24,
+   "OLD_q3": true,
+   "T4_q3": false,
+   "OLD_components": {
+    "held_out_extrapolation": 1.0,
+    "stress_length_200": 1.0,
+    "counterexample_accuracy": 1.0,
+    "metamorphic_pass": true
+   },
+   "T4_components": {
+    "held_out_extrapolation": 1.0,
+    "stress_at_domain_max": 1.0,
+    "counterexample_accuracy": 1.0,
+    "order_battery_accuracy": 1.0,
+    "domain_L_max": 200,
+    "family_reasons": [
+     "FIXED_POINT_DYNAMICS",
+     "LAST_INSENSITIVE",
+     "MIDDLE_INSENSITIVE"
+    ]
+   },
+   "disagreement": true,
+   "mechanics": [
+    "T4 rejects family: ['FIXED_POINT_DYNAMICS', 'LAST_INSENSITIVE', 'MIDDLE_INSENSITIVE']"
+   ],
+   "near_misses": 3,
+   "near_miss_disagreements": 0,
+   "wrong_artifact_admitted": {
+    "OLD": 0,
+    "T4": 0
+   }
+  },
+  {
+   "name": "hA_gcd_al",
+   "source": "A17 catalog A (OBSERVE)",
+   "prog": [
+    "1",
+    "math.gcd(abs(last), abs((v * acc)))",
+    "(first - acc)"
+   ],
+   "body_class": "NA_GCD",
+   "Q2": 6,
+   "OLD_q3": true,
+   "T4_q3": false,
+   "OLD_components": {
+    "held_out_extrapolation": 1.0,
+    "stress_length_200": 1.0,
+    "counterexample_accuracy": 1.0,
+    "metamorphic_pass": true
+   },
+   "T4_components": {
+    "held_out_extrapolation": 1.0,
+    "stress_at_domain_max": 1.0,
+    "counterexample_accuracy": 1.0,
+    "order_battery_accuracy": 1.0,
+    "domain_L_max": 200,
+    "family_reasons": [
+     "LAST_INSENSITIVE",
+     "MIDDLE_INSENSITIVE"
+    ]
+   },
+   "disagreement": true,
+   "mechanics": [
+    "T4 rejects family: ['LAST_INSENSITIVE', 'MIDDLE_INSENSITIVE']"
+   ],
+   "near_misses": 0,
+   "near_miss_disagreements": 0,
+   "wrong_artifact_admitted": {
+    "OLD": 0,
+    "T4": 0
+   }
+  },
+  {
+   "name": "hA_gcd_bf",
+   "source": "A17 catalog A (VALIDATE)",
+   "prog": [
+    "0",
+    "math.gcd(abs(acc), abs((first % v)))",
+    "(acc % first)"
+   ],
+   "body_class": "NA_GCD",
+   "Q2": 16,
+   "OLD_q3": true,
+   "T4_q3": false,
+   "OLD_components": {
+    "held_out_extrapolation": 1.0,
+    "stress_length_200": 1.0,
+    "counterexample_accuracy": 1.0,
+    "metamorphic_pass": true
+   },
+   "T4_components": {
+    "held_out_extrapolation": 1.0,
+    "stress_at_domain_max": 1.0,
+    "counterexample_accuracy": 1.0,
+    "order_battery_accuracy": 1.0,
+    "domain_L_max": 200,
+    "family_reasons": [
+     "CONSTANT_OR_NEAR_CONSTANT",
+     "LAST_INSENSITIVE",
+     "MIDDLE_INSENSITIVE"
+    ]
+   },
+   "disagreement": true,
+   "mechanics": [
+    "T4 rejects family: ['CONSTANT_OR_NEAR_CONSTANT', 'LAST_INSENSITIVE', 'MIDDLE_INSENSITIVE']"
+   ],
+   "near_misses": 0,
+   "near_miss_disagreements": 0,
+   "wrong_artifact_admitted": {
+    "OLD": 0,
+    "T4": 0
+   }
+  },
+  {
+   "name": "kb_mod_onemodaccv",
+   "source": "K2 admissible pool",
+   "prog": [
+    "0",
+    "(1 % (acc - v))",
+    "(last * acc)"
+   ],
+   "body_class": "NA_MOD",
+   "Q2": 4,
+   "OLD_q3": true,
+   "T4_q3": true,
+   "OLD_components": {
+    "held_out_extrapolation": 1.0,
+    "stress_length_200": 1.0,
+    "counterexample_accuracy": 1.0,
+    "metamorphic_pass": true
+   },
+   "T4_components": {
+    "held_out_extrapolation": 1.0,
+    "stress_at_domain_max": 1.0,
+    "counterexample_accuracy": 1.0,
+    "order_battery_accuracy": 1.0,
+    "domain_L_max": 200,
+    "family_reasons": []
+   },
+   "disagreement": false,
+   "mechanics": [],
+   "near_misses": 0,
+   "near_miss_disagreements": 0,
+   "wrong_artifact_admitted": {
+    "OLD": 0,
+    "T4": 0
+   }
+  },
+  {
+   "name": "kb_powr_lastdivv",
+   "source": "K2 admissible pool",
+   "prog": [
+    "0",
+    "pow(acc, (last // v))",
+    "(first * acc)"
+   ],
+   "body_class": "NA_POWR",
+   "Q2": 24,
+   "OLD_q3": true,
+   "T4_q3": false,
+   "OLD_components": {
+    "held_out_extrapolation": 1.0,
+    "stress_length_200": 1.0,
+    "counterexample_accuracy": 1.0,
+    "metamorphic_pass": true
+   },
+   "T4_components": {
+    "held_out_extrapolation": 1.0,
+    "stress_at_domain_max": 1.0,
+    "counterexample_accuracy": 1.0,
+    "order_battery_accuracy": 1.0,
+    "domain_L_max": null,
+    "family_reasons": [
+     "CONSTANT_OR_NEAR_CONSTANT",
+     "FIXED_POINT_DYNAMICS",
+     "GUARD_ON_DOMAIN",
+     "LAST_INSENSITIVE",
+     "MIDDLE_INSENSITIVE",
+     "NONE_OR_GUARD_ON_DEV_LENGTHS",
+     "POW_GUARD_HIT"
+    ]
+   },
+   "disagreement": true,
+   "mechanics": [
+    "T4 rejects family: ['CONSTANT_OR_NEAR_CONSTANT', 'FIXED_POINT_DYNAMICS', 'GUARD_ON_DOMAIN', 'LAST_INSENSITIVE', 'MIDDLE_INSENSITIVE', 'NONE_OR_GUARD_ON_DEV_LENGTHS', 'POW_GUARD_HIT']"
+   ],
+   "near_misses": 5,
+   "near_miss_disagreements": 0,
+   "wrong_artifact_admitted": {
+    "OLD": 0,
+    "T4": 0
+   }
+  },
+  {
+   "name": "kb_mul_gcdvacc",
+   "source": "K2 admissible pool",
+   "prog": [
+    "0",
+    "(1 * math.gcd(abs(v), abs(acc)))",
+    "(last + acc)"
+   ],
+   "body_class": "NA_MUL",
+   "Q2": null,
+   "OLD_q3": true,
+   "T4_q3": false,
+   "OLD_components": {
+    "held_out_extrapolation": 1.0,
+    "stress_length_200": 1.0,
+    "counterexample_accuracy": 1.0,
+    "metamorphic_pass": true
+   },
+   "T4_components": {
+    "held_out_extrapolation": 1.0,
+    "stress_at_domain_max": 1.0,
+    "counterexample_accuracy": 1.0,
+    "order_battery_accuracy": 1.0,
+    "domain_L_max": 200,
+    "family_reasons": [
+     "FIXED_POINT_DYNAMICS",
+     "LAST_INSENSITIVE",
+     "MIDDLE_INSENSITIVE"
+    ]
+   },
+   "disagreement": true,
+   "mechanics": [
+    "T4 rejects family: ['FIXED_POINT_DYNAMICS', 'LAST_INSENSITIVE', 'MIDDLE_INSENSITIVE']"
+   ],
+   "near_misses": 5,
+   "near_miss_disagreements": 0,
+   "wrong_artifact_admitted": {
+    "OLD": 0,
+    "T4": 0
+   }
+  },
+  {
+   "name": "kb_gcd_absaccv",
+   "source": "K2 admissible pool",
+   "prog": [
+    "1",
+    "math.gcd(abs(0), abs((acc + v)))",
+    "(acc + first)"
+   ],
+   "body_class": "ADDITIVE",
+   "Q2": 4,
+   "OLD_q3": true,
+   "T4_q3": true,
+   "OLD_components": {
+    "held_out_extrapolation": 1.0,
+    "stress_length_200": 1.0,
+    "counterexample_accuracy": 1.0,
+    "metamorphic_pass": true
+   },
+   "T4_components": {
+    "held_out_extrapolation": 1.0,
+    "stress_at_domain_max": 1.0,
+    "counterexample_accuracy": 1.0,
+    "order_battery_accuracy": 1.0,
+    "domain_L_max": 200,
+    "family_reasons": []
+   },
+   "disagreement": false,
+   "mechanics": [],
+   "near_misses": 5,
+   "near_miss_disagreements": 0,
+   "wrong_artifact_admitted": {
+    "OLD": 0,
+    "T4": 0
+   }
+  },
+  {
+   "name": "s_alt_sum",
+   "source": "successor (designed): alternating sum",
+   "prog": [
+    "0",
+    "(v - acc)",
+    "acc"
+   ],
+   "body_class": "AFFINE_CONST_SLOPE",
+   "Q2": 12,
+   "OLD_q3": false,
+   "T4_q3": true,
+   "OLD_components": {
+    "held_out_extrapolation": 1.0,
+    "stress_length_200": 1.0,
+    "counterexample_accuracy": 1.0,
+    "metamorphic_pass": false
+   },
+   "T4_components": {
+    "held_out_extrapolation": 1.0,
+    "stress_at_domain_max": 1.0,
+    "counterexample_accuracy": 1.0,
+    "order_battery_accuracy": 1.0,
+    "domain_L_max": 200,
+    "family_reasons": []
+   },
+   "disagreement": true,
+   "mechanics": [
+    "OLD fails: ",
+    "OLD fails permutation invariance"
+   ],
+   "near_misses": 5,
+   "near_miss_disagreements": 5,
+   "wrong_artifact_admitted": {
+    "OLD": 0,
+    "T4": 0
+   }
+  },
+  {
+   "name": "s_product",
+   "source": "successor (designed): product, growth-bounded domain",
+   "prog": [
+    "1",
+    "(acc * v)",
+    "acc"
+   ],
+   "body_class": "AFFINE_SCALE_V",
+   "Q2": 4,
+   "OLD_q3": false,
+   "T4_q3": true,
+   "OLD_components": {
+    "held_out_extrapolation": 0.3933333333333333,
+    "stress_length_200": 0.0,
+    "counterexample_accuracy": 0.45,
+    "metamorphic_pass": true
+   },
+   "T4_components": {
+    "held_out_extrapolation": 1.0,
+    "stress_at_domain_max": 1.0,
+    "counterexample_accuracy": 1.0,
+    "order_battery_accuracy": 1.0,
+    "domain_L_max": 25,
+    "family_reasons": []
+   },
+   "disagreement": true,
+   "mechanics": [
+    "OLD fails: held_out_extrapolation, stress_length_200, counterexample_accuracy"
+   ],
+   "near_misses": 5,
+   "near_miss_disagreements": 5,
+   "wrong_artifact_admitted": {
+    "OLD": 0,
+    "T4": 0
+   }
+  },
+  {
+   "name": "s_census_na_gcd",
+   "source": "successor (RB-2 V7 census survivor, NA_GCD)",
+   "prog": [
+    "1",
+    "(v + math.gcd(abs(first), abs(acc)))",
+    "(first * acc)"
+   ],
+   "body_class": "NA_GCD",
+   "Q2": 8,
+   "OLD_q3": false,
+   "T4_q3": true,
+   "OLD_components": {
+    "held_out_extrapolation": 1.0,
+    "stress_length_200": 1.0,
+    "counterexample_accuracy": 1.0,
+    "metamorphic_pass": false
+   },
+   "T4_components": {
+    "held_out_extrapolation": 1.0,
+    "stress_at_domain_max": 1.0,
+    "counterexample_accuracy": 1.0,
+    "order_battery_accuracy": 1.0,
+    "domain_L_max": 200,
+    "family_reasons": []
+   },
+   "disagreement": true,
+   "mechanics": [
+    "OLD fails: ",
+    "OLD fails permutation invariance"
+   ],
+   "near_misses": 5,
+   "near_miss_disagreements": 0,
+   "wrong_artifact_admitted": {
+    "OLD": 0,
+    "T4": 0
+   }
+  },
+  {
+   "name": "s_census_affine_scale_v",
+   "source": "successor (RB-2 V7 census survivor, AFFINE_SCALE_V)",
+   "prog": [
+    "0",
+    "(last + (v * acc))",
+    "(0 + acc)"
+   ],
+   "body_class": "AFFINE_SCALE_V",
+   "Q2": 4,
+   "OLD_q3": false,
+   "T4_q3": true,
+   "OLD_components": {
+    "held_out_extrapolation": 0.37333333333333335,
+    "stress_length_200": 0.0,
+    "counterexample_accuracy": 0.575,
+    "metamorphic_pass": false
+   },
+   "T4_components": {
+    "held_out_extrapolation": 1.0,
+    "stress_at_domain_max": 1.0,
+    "counterexample_accuracy": 1.0,
+    "order_battery_accuracy": 1.0,
+    "domain_L_max": 25,
+    "family_reasons": []
+   },
+   "disagreement": true,
+   "mechanics": [
+    "OLD fails: held_out_extrapolation, stress_length_200, counterexample_accuracy",
+    "OLD fails permutation invariance"
+   ],
+   "near_misses": 0,
+   "near_miss_disagreements": 0,
+   "wrong_artifact_admitted": {
+    "OLD": 0,
+    "T4": 0
+   }
+  }
+ ],
+ "detail": [
+  {
+   "name": "hA_add_ah",
+   "source": "A17 catalog A (OBSERVE)",
+   "init": "1",
+   "body": "(v + (acc + last))",
+   "final": "acc",
+   "Q2_size": 4,
+   "body_class": "ADDITIVE",
+   "T4_profile": {
+    "L_max": 200,
+    "base_ok": true,
+    "distinct": 58,
+    "mode_share": 0.033,
+    "middle_sensitivity": 1.0,
+    "last_sensitivity": 1.0,
+    "copy_share": 0.0,
+    "absorbed_share": 0.0,
+    "pow_guard_hits": 0,
+    "reasons": [],
+    "admissible": true
+   },
+   "witness": {
+    "OLD": {
+     "held_out_extrapolation": 1.0,
+     "stress_length_200": 1.0,
+     "counterexample_accuracy": 1.0,
+     "metamorphic_pass": true,
+     "qualified": true
+    },
+    "T4": {
+     "tribunal": "TRIBUNAL_T4_ORDER_AWARE_v1",
+     "held_out_extrapolation": 1.0,
+     "stress_at_domain_max": 1.0,
+     "counterexample_accuracy": 1.0,
+     "order_battery_accuracy": 1.0,
+     "domain_L_max": 200,
+     "family_admissible": true,
+     "family_reasons": [],
+     "qualified": true
+    }
+   },
+   "near_misses": [],
+   "disagreement": false,
+   "disagreement_mechanics": [],
+   "near_miss_disagreements": 0,
+   "wrong_artifact_admitted": {
+    "OLD": 0,
+    "T4": 0
+   }
+  },
+  {
+   "name": "hA_sub_az",
+   "source": "A17 catalog A (OBSERVE)",
+   "init": "1",
+   "body": "(acc - (v // last))",
+   "final": "(acc * 1)",
+   "Q2_size": 16,
+   "body_class": "ADDITIVE",
+   "T4_profile": {
+    "L_max": 200,
+    "base_ok": true,
+    "distinct": 11,
+    "mode_share": 0.767,
+    "middle_sensitivity": 0.167,
+    "last_sensitivity": 0.183,
+    "copy_share": 0.0,
+    "absorbed_share": 0.667,
+    "pow_guard_hits": 0,
+    "reasons": [
+     "CONSTANT_OR_NEAR_CONSTANT",
+     "LAST_INSENSITIVE",
+     "MIDDLE_INSENSITIVE"
+    ],
+    "admissible": false
+   },
+   "witness": {
+    "OLD": {
+     "held_out_extrapolation": 1.0,
+     "stress_length_200": 1.0,
+     "counterexample_accuracy": 1.0,
+     "metamorphic_pass": true,
+     "qualified": true
+    },
+    "T4": {
+     "tribunal": "TRIBUNAL_T4_ORDER_AWARE_v1",
+     "held_out_extrapolation": 1.0,
+     "stress_at_domain_max": 1.0,
+     "counterexample_accuracy": 1.0,
+     "order_battery_accuracy": 1.0,
+     "domain_L_max": 200,
+     "family_admissible": false,
+     "family_reasons": [
+      "CONSTANT_OR_NEAR_CONSTANT",
+      "LAST_INSENSITIVE",
+      "MIDDLE_INSENSITIVE"
+     ],
+     "qualified": false
+    }
+   },
+   "near_misses": [
+    {
+     "program": [
+      "fold",
+      "0",
+      "pow(v, pow(acc, v))",
+      "math.gcd(abs(0), abs(1))"
+     ],
+     "charges": 10,
+     "extensionally_equal_to_witness": false,
+     "OLD_qualified": false,
+     "T4_qualified": false,
+     "OLD": {
+      "held_out_extrapolation": 0.7066666666666667,
+      "stress_length_200": 0.675,
+      "counterexample_accuracy": 0.275,
+      "metamorphic_pass": true,
+      "qualified": false
+     },
+     "T4": {
+      "tribunal": "TRIBUNAL_T4_ORDER_AWARE_v1",
+      "held_out_extrapolation": 0.6733333333333333,
+      "stress_at_domain_max": 0.85,
+      "counterexample_accuracy": 0.325,
+      "order_battery_accuracy": 0.7666666666666667,
+      "domain_L_max": 200,
+      "family_admissible": false,
+      "family_reasons": [
+       "CONSTANT_OR_NEAR_CONSTANT",
+       "LAST_INSENSITIVE",
+       "MIDDLE_INSENSITIVE"
+      ],
+      "qualified": false
+     }
+    },
+    {
+     "program": [
+      "fold",
+      "0",
+      "pow(v, pow(acc, v))",
+      "(0 + 1)"
+     ],
+     "charges": 20,
+     "extensionally_equal_to_witness": false,
+     "OLD_qualified": false,
+     "T4_qualified": false,
+     "OLD": {
+      "held_out_extrapolation": 0.7066666666666667,
+      "stress_length_200": 0.675,
+      "counterexample_accuracy": 0.275,
+      "metamorphic_pass": true,
+      "qualified": false
+     },
+     "T4": {
+      "tribunal": "TRIBUNAL_T4_ORDER_AWARE_v1",
+      "held_out_extrapolation": 0.6733333333333333,
+      "stress_at_domain_max": 0.85,
+      "counterexample_accuracy": 0.325,
+      "order_battery_accuracy": 0.7666666666666667,
+      "domain_L_max": 200,
+      "family_admissible": false,
+      "family_reasons": [
+       "CONSTANT_OR_NEAR_CONSTANT",
+       "LAST_INSENSITIVE",
+       "MIDDLE_INSENSITIVE"
+      ],
+      "qualified": false
+     }
+    },
+    {
+     "program": [
+      "fold",
+      "0",
+      "pow(v, pow(acc, v))",
+      "(1 // 1)"
+     ],
+     "charges": 29,
+     "extensionally_equal_to_witness": false,
+     "OLD_qualified": false,
+     "T4_qualified": false,
+     "OLD": {
+      "held_out_extrapolation": 0.7066666666666667,
+      "stress_length_200": 0.675,
+      "counterexample_accuracy": 0.275,
+      "metamorphic_pass": true,
+      "qualified": false
+     },
+     "T4": {
+      "tribunal": "TRIBUNAL_T4_ORDER_AWARE_v1",
+      "held_out_extrapolation": 0.6733333333333333,
+      "stress_at_domain_max": 0.85,
+      "counterexample_accuracy": 0.325,
+      "order_battery_accuracy": 0.7666666666666667,
+      "domain_L_max": 200,
+      "family_admissible": false,
+      "family_reasons": [
+       "CONSTANT_OR_NEAR_CONSTANT",
+       "LAST_INSENSITIVE",
+       "MIDDLE_INSENSITIVE"
+      ],
+      "qualified": false
+     }
+    },
+    {
+     "program": [
+      "fold",
+      "0",
+      "pow(v, pow(acc, v))",
+      "(1 * 1)"
+     ],
+     "charges": 31,
+     "extensionally_equal_to_witness": false,
+     "OLD_qualified": false,
+     "T4_qualified": false,
+     "OLD": {
+      "held_out_extrapolation": 0.7066666666666667,
+      "stress_length_200": 0.675,
+      "counterexample_accuracy": 0.275,
+      "metamorphic_pass": true,
+      "qualified": false
+     },
+     "T4": {
+      "tribunal": "TRIBUNAL_T4_ORDER_AWARE_v1",
+      "held_out_extrapolation": 0.6733333333333333,
+      "stress_at_domain_max": 0.85,
+      "counterexample_accuracy": 0.325,
+      "order_battery_accuracy": 0.7666666666666667,
+      "domain_L_max": 200,
+      "family_admissible": false,
+      "family_reasons": [
+       "CONSTANT_OR_NEAR_CONSTANT",
+       "LAST_INSENSITIVE",
+       "MIDDLE_INSENSITIVE"
+      ],
+      "qualified": false
+     }
+    },
+    {
+     "program": [
+      "fold",
+      "0",
+      "pow(v, pow(acc, v))",
+      "(1 % first)"
+     ],
+     "charges": 35,
+     "extensionally_equal_to_witness": false,
+     "OLD_qualified": false,
+     "T4_qualified": false,
+     "OLD": {
+      "held_out_extrapolation": 0.7066666666666667,
+      "stress_length_200": 0.675,
+      "counterexample_accuracy": 0.275,
+      "metamorphic_pass": true,
+      "qualified": false
+     },
+     "T4": {
+      "tribunal": "TRIBUNAL_T4_ORDER_AWARE_v1",
+      "held_out_extrapolation": 0.6733333333333333,
+      "stress_at_domain_max": 0.85,
+      "counterexample_accuracy": 0.325,
+      "order_battery_accuracy": 0.7666666666666667,
+      "domain_L_max": 200,
+      "family_admissible": false,
+      "family_reasons": [
+       "CONSTANT_OR_NEAR_CONSTANT",
+       "LAST_INSENSITIVE",
+       "MIDDLE_INSENSITIVE"
+      ],
+      "qualified": false
+     }
+    }
+   ],
+   "disagreement": true,
+   "disagreement_mechanics": [
+    "T4 rejects family: ['CONSTANT_OR_NEAR_CONSTANT', 'LAST_INSENSITIVE', 'MIDDLE_INSENSITIVE']"
+   ],
+   "near_miss_disagreements": 0,
+   "wrong_artifact_admitted": {
+    "OLD": 0,
+    "T4": 0
+   }
+  },
+  {
+   "name": "hA_fdiv_bf",
+   "source": "A17 catalog A (OBSERVE)",
+   "init": "1",
+   "body": "(acc // math.gcd(abs(v), abs(last)))",
+   "final": "math.gcd(abs(first), abs(acc))",
+   "Q2_size": 24,
+   "body_class": "NA_FDIV",
+   "T4_profile": {
+    "L_max": 200,
+    "base_ok": true,
+    "distinct": 24,
+    "mode_share": 0.25,
+    "middle_sensitivity": 0.033,
+    "last_sensitivity": 0.017,
+    "copy_share": 0.75,
+    "absorbed_share": 0.9,
+    "pow_guard_hits": 0,
+    "reasons": [
+     "FIXED_POINT_DYNAMICS",
+     "LAST_INSENSITIVE",
+     "MIDDLE_INSENSITIVE"
+    ],
+    "admissible": false
+   },
+   "witness": {
+    "OLD": {
+     "held_out_extrapolation": 1.0,
+     "stress_length_200": 1.0,
+     "counterexample_accuracy": 1.0,
+     "metamorphic_pass": true,
+     "qualified": true
+    },
+    "T4": {
+     "tribunal": "TRIBUNAL_T4_ORDER_AWARE_v1",
+     "held_out_extrapolation": 1.0,
+     "stress_at_domain_max": 1.0,
+     "counterexample_accuracy": 1.0,
+     "order_battery_accuracy": 1.0,
+     "domain_L_max": 200,
+     "family_admissible": false,
+     "family_reasons": [
+      "FIXED_POINT_DYNAMICS",
+      "LAST_INSENSITIVE",
+      "MIDDLE_INSENSITIVE"
+     ],
+     "qualified": false
+    }
+   },
+   "near_misses": [
+    {
+     "program": [
+      "fold",
+      "(0 - 0)",
+      "(1 // math.gcd(abs(first), abs(last)))",
+      "math.gcd(abs(first), abs(acc))"
+     ],
+     "charges": 180606,
+     "extensionally_equal_to_witness": false,
+     "OLD_qualified": false,
+     "T4_qualified": false,
+     "OLD": {
+      "held_out_extrapolation": 0.5533333333333333,
+      "stress_length_200": 0.625,
+      "counterexample_accuracy": 0.9,
+      "metamorphic_pass": true,
+      "qualified": false
+     },
+     "T4": {
+      "tribunal": "TRIBUNAL_T4_ORDER_AWARE_v1",
+      "held_out_extrapolation": 0.5133333333333333,
+      "stress_at_domain_max": 0.65,
+      "counterexample_accuracy": 0.8,
+      "order_battery_accuracy": 0.6,
+      "domain_L_max": 200,
+      "family_admissible": false,
+      "family_reasons": [
+       "FIXED_POINT_DYNAMICS",
+       "LAST_INSENSITIVE",
+       "MIDDLE_INSENSITIVE"
+      ],
+      "qualified": false
+     }
+    },
+    {
+     "program": [
+      "fold",
+      "(0 - 0)",
+      "(1 // math.gcd(abs(first), abs(last)))",
+      "math.gcd(abs(acc), abs(first))"
+     ],
+     "charges": 180620,
+     "extensionally_equal_to_witness": false,
+     "OLD_qualified": false,
+     "T4_qualified": false,
+     "OLD": {
+      "held_out_extrapolation": 0.5533333333333333,
+      "stress_length_200": 0.625,
+      "counterexample_accuracy": 0.9,
+      "metamorphic_pass": true,
+      "qualified": false
+     },
+     "T4": {
+      "tribunal": "TRIBUNAL_T4_ORDER_AWARE_v1",
+      "held_out_extrapolation": 0.5133333333333333,
+      "stress_at_domain_max": 0.65,
+      "counterexample_accuracy": 0.8,
+      "order_battery_accuracy": 0.6,
+      "domain_L_max": 200,
+      "family_admissible": false,
+      "family_reasons": [
+       "FIXED_POINT_DYNAMICS",
+       "LAST_INSENSITIVE",
+       "MIDDLE_INSENSITIVE"
+      ],
+      "qualified": false
+     }
+    },
+    {
+     "program": [
+      "fold",
+      "(0 - 0)",
+      "pow(acc, (v // first))",
+      "pow(first, acc)"
+     ],
+     "charges": 182141,
+     "extensionally_equal_to_witness": false,
+     "OLD_qualified": false,
+     "T4_qualified": false,
+     "OLD": {
+      "held_out_extrapolation": 0.8066666666666666,
+      "stress_length_200": 0.825,
+      "counterexample_accuracy": 0.5,
+      "metamorphic_pass": true,
+      "qualified": false
+     },
+     "T4": {
+      "tribunal": "TRIBUNAL_T4_ORDER_AWARE_v1",
+      "held_out_extrapolation": 0.8,
+      "stress_at_domain_max": 0.825,
+      "counterexample_accuracy": 0.65,
+      "order_battery_accuracy": 0.6958333333333333,
+      "domain_L_max": 200,
+      "family_admissible": false,
+      "family_reasons": [
+       "FIXED_POINT_DYNAMICS",
+       "LAST_INSENSITIVE",
+       "MIDDLE_INSENSITIVE"
+      ],
+      "qualified": false
+     }
+    }
+   ],
+   "disagreement": true,
+   "disagreement_mechanics": [
+    "T4 rejects family: ['FIXED_POINT_DYNAMICS', 'LAST_INSENSITIVE', 'MIDDLE_INSENSITIVE']"
+   ],
+   "near_miss_disagreements": 0,
+   "wrong_artifact_admitted": {
+    "OLD": 0,
+    "T4": 0
+   }
+  },
+  {
+   "name": "hA_gcd_al",
+   "source": "A17 catalog A (OBSERVE)",
+   "init": "1",
+   "body": "math.gcd(abs(last), abs((v * acc)))",
+   "final": "(first - acc)",
+   "Q2_size": 6,
+   "body_class": "NA_GCD",
+   "T4_profile": {
+    "L_max": 200,
+    "base_ok": true,
+    "distinct": 39,
+    "mode_share": 0.067,
+    "middle_sensitivity": 0.133,
+    "last_sensitivity": 0.067,
+    "copy_share": 0.083,
+    "absorbed_share": 0.7,
+    "pow_guard_hits": 0,
+    "reasons": [
+     "LAST_INSENSITIVE",
+     "MIDDLE_INSENSITIVE"
+    ],
+    "admissible": false
+   },
+   "witness": {
+    "OLD": {
+     "held_out_extrapolation": 1.0,
+     "stress_length_200": 1.0,
+     "counterexample_accuracy": 1.0,
+     "metamorphic_pass": true,
+     "qualified": true
+    },
+    "T4": {
+     "tribunal": "TRIBUNAL_T4_ORDER_AWARE_v1",
+     "held_out_extrapolation": 1.0,
+     "stress_at_domain_max": 1.0,
+     "counterexample_accuracy": 1.0,
+     "order_battery_accuracy": 1.0,
+     "domain_L_max": 200,
+     "family_admissible": false,
+     "family_reasons": [
+      "LAST_INSENSITIVE",
+      "MIDDLE_INSENSITIVE"
+     ],
+     "qualified": false
+    }
+   },
+   "near_misses": [],
+   "disagreement": true,
+   "disagreement_mechanics": [
+    "T4 rejects family: ['LAST_INSENSITIVE', 'MIDDLE_INSENSITIVE']"
+   ],
+   "near_miss_disagreements": 0,
+   "wrong_artifact_admitted": {
+    "OLD": 0,
+    "T4": 0
+   }
+  },
+  {
+   "name": "hA_gcd_bf",
+   "source": "A17 catalog A (VALIDATE)",
+   "init": "0",
+   "body": "math.gcd(abs(acc), abs((first % v)))",
+   "final": "(acc % first)",
+   "Q2_size": 16,
+   "body_class": "NA_GCD",
+   "T4_profile": {
+    "L_max": 200,
+    "base_ok": true,
+    "distinct": 4,
+    "mode_share": 0.683,
+    "middle_sensitivity": 0.1,
+    "last_sensitivity": 0.1,
+    "copy_share": 0.017,
+    "absorbed_share": 0.767,
+    "pow_guard_hits": 0,
+    "reasons": [
+     "CONSTANT_OR_NEAR_CONSTANT",
+     "LAST_INSENSITIVE",
+     "MIDDLE_INSENSITIVE"
+    ],
+    "admissible": false
+   },
+   "witness": {
+    "OLD": {
+     "held_out_extrapolation": 1.0,
+     "stress_length_200": 1.0,
+     "counterexample_accuracy": 1.0,
+     "metamorphic_pass": true,
+     "qualified": true
+    },
+    "T4": {
+     "tribunal": "TRIBUNAL_T4_ORDER_AWARE_v1",
+     "held_out_extrapolation": 1.0,
+     "stress_at_domain_max": 1.0,
+     "counterexample_accuracy": 1.0,
+     "order_battery_accuracy": 1.0,
+     "domain_L_max": 200,
+     "family_admissible": false,
+     "family_reasons": [
+      "CONSTANT_OR_NEAR_CONSTANT",
+      "LAST_INSENSITIVE",
+      "MIDDLE_INSENSITIVE"
+     ],
+     "qualified": false
+    }
+   },
+   "near_misses": [],
+   "disagreement": true,
+   "disagreement_mechanics": [
+    "T4 rejects family: ['CONSTANT_OR_NEAR_CONSTANT', 'LAST_INSENSITIVE', 'MIDDLE_INSENSITIVE']"
+   ],
+   "near_miss_disagreements": 0,
+   "wrong_artifact_admitted": {
+    "OLD": 0,
+    "T4": 0
+   }
+  },
+  {
+   "name": "kb_mod_onemodaccv",
+   "source": "K2 admissible pool",
+   "init": "0",
+   "body": "(1 % (acc - v))",
+   "final": "(last * acc)",
+   "Q2_size": 4,
+   "body_class": "NA_MOD",
+   "T4_profile": {
+    "L_max": 200,
+    "base_ok": true,
+    "distinct": 60,
+    "mode_share": 0.017,
+    "middle_sensitivity": 1.0,
+    "last_sensitivity": 1.0,
+    "copy_share": 0.0,
+    "absorbed_share": 0.0,
+    "pow_guard_hits": 0,
+    "reasons": [],
+    "admissible": true
+   },
+   "witness": {
+    "OLD": {
+     "held_out_extrapolation": 1.0,
+     "stress_length_200": 1.0,
+     "counterexample_accuracy": 1.0,
+     "metamorphic_pass": true,
+     "qualified": true
+    },
+    "T4": {
+     "tribunal": "TRIBUNAL_T4_ORDER_AWARE_v1",
+     "held_out_extrapolation": 1.0,
+     "stress_at_domain_max": 1.0,
+     "counterexample_accuracy": 1.0,
+     "order_battery_accuracy": 1.0,
+     "domain_L_max": 200,
+     "family_admissible": true,
+     "family_reasons": [],
+     "qualified": true
+    }
+   },
+   "near_misses": [],
+   "disagreement": false,
+   "disagreement_mechanics": [],
+   "near_miss_disagreements": 0,
+   "wrong_artifact_admitted": {
+    "OLD": 0,
+    "T4": 0
+   }
+  },
+  {
+   "name": "kb_powr_lastdivv",
+   "source": "K2 admissible pool",
+   "init": "0",
+   "body": "pow(acc, (last // v))",
+   "final": "(first * acc)",
+   "Q2_size": 24,
+   "body_class": "NA_POWR",
+   "T4_profile": {
+    "L_max": null,
+    "base_ok": false,
+    "distinct": 12,
+    "mode_share": 0.683,
+    "middle_sensitivity": 0.0,
+    "last_sensitivity": 0.0,
+    "copy_share": 0.317,
+    "absorbed_share": 0.967,
+    "pow_guard_hits": 8,
+    "reasons": [
+     "CONSTANT_OR_NEAR_CONSTANT",
+     "FIXED_POINT_DYNAMICS",
+     "LAST_INSENSITIVE",
+     "MIDDLE_INSENSITIVE",
+     "NONE_OR_GUARD_ON_DEV_LENGTHS",
+     "POW_GUARD_HIT"
+    ],
+    "admissible": false
+   },
+   "witness": {
+    "OLD": {
+     "held_out_extrapolation": 1.0,
+     "stress_length_200": 1.0,
+     "counterexample_accuracy": 1.0,
+     "metamorphic_pass": true,
+     "qualified": true
+    },
+    "T4": {
+     "tribunal": "TRIBUNAL_T4_ORDER_AWARE_v1",
+     "held_out_extrapolation": 1.0,
+     "stress_at_domain_max": 1.0,
+     "counterexample_accuracy": 1.0,
+     "order_battery_accuracy": 1.0,
+     "domain_L_max": null,
+     "family_admissible": false,
+     "family_reasons": [
+      "CONSTANT_OR_NEAR_CONSTANT",
+      "FIXED_POINT_DYNAMICS",
+      "GUARD_ON_DOMAIN",
+      "LAST_INSENSITIVE",
+      "MIDDLE_INSENSITIVE",
+      "NONE_OR_GUARD_ON_DEV_LENGTHS",
+      "POW_GUARD_HIT"
+     ],
+     "qualified": false
+    }
+   },
+   "near_misses": [
+    {
+     "program": [
+      "fold",
+      "1",
+      "pow(v, (acc % v))",
+      "(first // acc)"
+     ],
+     "charges": 16733,
+     "extensionally_equal_to_witness": false,
+     "OLD_qualified": false,
+     "T4_qualified": false,
+     "OLD": {
+      "held_out_extrapolation": 0.49333333333333335,
+      "stress_length_200": 0.325,
+      "counterexample_accuracy": 0.325,
+      "metamorphic_pass": false,
+      "qualified": false
+     },
+     "T4": {
+      "tribunal": "TRIBUNAL_T4_ORDER_AWARE_v1",
+      "held_out_extrapolation": 0.5666666666666667,
+      "stress_at_domain_max": 0.625,
+      "counterexample_accuracy": 0.25,
+      "order_battery_accuracy": 0.6125,
+      "domain_L_max": null,
+      "family_admissible": false,
+      "family_reasons": [
+       "CONSTANT_OR_NEAR_CONSTANT",
+       "FIXED_POINT_DYNAMICS",
+       "GUARD_ON_DOMAIN",
+       "LAST_INSENSITIVE",
+       "MIDDLE_INSENSITIVE",
+       "NONE_OR_GUARD_ON_DEV_LENGTHS",
+       "POW_GUARD_HIT"
+      ],
+      "qualified": false
+     }
+    },
+    {
+     "program": [
+      "fold",
+      "0",
+      "pow(v, (acc % v))",
+      "pow(first, acc)"
+     ],
+     "charges": 92522,
+     "extensionally_equal_to_witness": false,
+     "OLD_qualified": false,
+     "T4_qualified": false,
+     "OLD": {
+      "held_out_extrapolation": 0.4066666666666667,
+      "stress_length_200": 0.325,
+      "counterexample_accuracy": 0.15,
+      "metamorphic_pass": false,
+      "qualified": false
+     },
+     "T4": {
+      "tribunal": "TRIBUNAL_T4_ORDER_AWARE_v1",
+      "held_out_extrapolation": 0.46,
+      "stress_at_domain_max": 0.55,
+      "counterexample_accuracy": 0.05,
+      "order_battery_accuracy": 0.5333333333333333,
+      "domain_L_max": null,
+      "family_admissible": false,
+      "family_reasons": [
+       "CONSTANT_OR_NEAR_CONSTANT",
+       "FIXED_POINT_DYNAMICS",
+       "GUARD_ON_DOMAIN",
+       "LAST_INSENSITIVE",
+       "MIDDLE_INSENSITIVE",
+       "NONE_OR_GUARD_ON_DEV_LENGTHS",
+       "POW_GUARD_HIT"
+      ],
+      "qualified": false
+     }
+    },
+    {
+     "program": [
+      "fold",
+      "0",
+      "pow(v, (acc % v))",
+      "(first // acc)"
+     ],
+     "charges": 92693,
+     "extensionally_equal_to_witness": false,
+     "OLD_qualified": false,
+     "T4_qualified": false,
+     "OLD": {
+      "held_out_extrapolation": 0.5,
+      "stress_length_200": 0.325,
+      "counterexample_accuracy": 0.15,
+      "metamorphic_pass": false,
+      "qualified": false
+     },
+     "T4": {
+      "tribunal": "TRIBUNAL_T4_ORDER_AWARE_v1",
+      "held_out_extrapolation": 0.5666666666666667,
+      "stress_at_domain_max": 0.6,
+      "counterexample_accuracy": 0.05,
+      "order_battery_accuracy": 0.6125,
+      "domain_L_max": null,
+      "family_admissible": false,
+      "family_reasons": [
+       "CONSTANT_OR_NEAR_CONSTANT",
+       "FIXED_POINT_DYNAMICS",
+       "GUARD_ON_DOMAIN",
+       "LAST_INSENSITIVE",
+       "MIDDLE_INSENSITIVE",
+       "NONE_OR_GUARD_ON_DEV_LENGTHS",
+       "POW_GUARD_HIT"
+      ],
+      "qualified": false
+     }
+    },
+    {
+     "program": [
+      "fold",
+      "math.gcd(abs(first), abs(first))",
+      "(first // math.gcd(abs(v), abs(0)))",
+      "(first * acc)"
+     ],
+     "charges": 183164,
+     "extensionally_equal_to_witness": false,
+     "OLD_qualified": false,
+     "T4_qualified": false,
+     "OLD": {
+      "held_out_extrapolation": 0.43333333333333335,
+      "stress_length_200": 0.475,
+      "counterexample_accuracy": 0.45,
+      "metamorphic_pass": false,
+      "qualified": false
+     },
+     "T4": {
+      "tribunal": "TRIBUNAL_T4_ORDER_AWARE_v1",
+      "held_out_extrapolation": 0.4533333333333333,
+      "stress_at_domain_max": 0.4,
+      "counterexample_accuracy": 0.4,
+      "order_battery_accuracy": 0.4375,
+      "domain_L_max": null,
+      "family_admissible": false,
+      "family_reasons": [
+       "CONSTANT_OR_NEAR_CONSTANT",
+       "FIXED_POINT_DYNAMICS",
+       "GUARD_ON_DOMAIN",
+       "LAST_INSENSITIVE",
+       "MIDDLE_INSENSITIVE",
+       "NONE_OR_GUARD_ON_DEV_LENGTHS",
+       "POW_GUARD_HIT"
+      ],
+      "qualified": false
+     }
+    },
+    {
+     "program": [
+      "fold",
+      "math.gcd(abs(first), abs(first))",
+      "(first // math.gcd(abs(v), abs(0)))",
+      "(acc * first)"
+     ],
+     "charges": 183177,
+     "extensionally_equal_to_witness": false,
+     "OLD_qualified": false,
+     "T4_qualified": false,
+     "OLD": {
+      "held_out_extrapolation": 0.43333333333333335,
+      "stress_length_200": 0.475,
+      "counterexample_accuracy": 0.45,
+      "metamorphic_pass": false,
+      "qualified": false
+     },
+     "T4": {
+      "tribunal": "TRIBUNAL_T4_ORDER_AWARE_v1",
+      "held_out_extrapolation": 0.4533333333333333,
+      "stress_at_domain_max": 0.4,
+      "counterexample_accuracy": 0.4,
+      "order_battery_accuracy": 0.4375,
+      "domain_L_max": null,
+      "family_admissible": false,
+      "family_reasons": [
+       "CONSTANT_OR_NEAR_CONSTANT",
+       "FIXED_POINT_DYNAMICS",
+       "GUARD_ON_DOMAIN",
+       "LAST_INSENSITIVE",
+       "MIDDLE_INSENSITIVE",
+       "NONE_OR_GUARD_ON_DEV_LENGTHS",
+       "POW_GUARD_HIT"
+      ],
+      "qualified": false
+     }
+    }
+   ],
+   "disagreement": true,
+   "disagreement_mechanics": [
+    "T4 rejects family: ['CONSTANT_OR_NEAR_CONSTANT', 'FIXED_POINT_DYNAMICS', 'GUARD_ON_DOMAIN', 'LAST_INSENSITIVE', 'MIDDLE_INSENSITIVE', 'NONE_OR_GUARD_ON_DEV_LENGTHS', 'POW_GUARD_HIT']"
+   ],
+   "near_miss_disagreements": 0,
+   "wrong_artifact_admitted": {
+    "OLD": 0,
+    "T4": 0
+   }
+  },
+  {
+   "name": "kb_mul_gcdvacc",
+   "source": "K2 admissible pool",
+   "init": "0",
+   "body": "(1 * math.gcd(abs(v), abs(acc)))",
+   "final": "(last + acc)",
+   "Q2_size": null,
+   "body_class": "NA_MUL",
+   "T4_profile": {
+    "L_max": 200,
+    "base_ok": true,
+    "distinct": 45,
+    "mode_share": 0.05,
+    "middle_sensitivity": 0.017,
+    "last_sensitivity": 0.017,
+    "copy_share": 0.05,
+    "absorbed_share": 0.967,
+    "pow_guard_hits": 0,
+    "reasons": [
+     "FIXED_POINT_DYNAMICS",
+     "LAST_INSENSITIVE",
+     "MIDDLE_INSENSITIVE"
+    ],
+    "admissible": false
+   },
+   "witness": {
+    "OLD": {
+     "held_out_extrapolation": 1.0,
+     "stress_length_200": 1.0,
+     "counterexample_accuracy": 1.0,
+     "metamorphic_pass": true,
+     "qualified": true
+    },
+    "T4": {
+     "tribunal": "TRIBUNAL_T4_ORDER_AWARE_v1",
+     "held_out_extrapolation": 1.0,
+     "stress_at_domain_max": 1.0,
+     "counterexample_accuracy": 1.0,
+     "order_battery_accuracy": 1.0,
+     "domain_L_max": 200,
+     "family_admissible": false,
+     "family_reasons": [
+      "FIXED_POINT_DYNAMICS",
+      "LAST_INSENSITIVE",
+      "MIDDLE_INSENSITIVE"
+     ],
+     "qualified": false
+    }
+   },
+   "near_misses": [
+    {
+     "program": [
+      "fold",
+      "0",
+      "pow(v, pow(acc, v))",
+      "(1 + last)"
+     ],
+     "charges": 217,
+     "extensionally_equal_to_witness": false,
+     "OLD_qualified": false,
+     "T4_qualified": false,
+     "OLD": {
+      "held_out_extrapolation": 1.0,
+      "stress_length_200": 1.0,
+      "counterexample_accuracy": 0.625,
+      "metamorphic_pass": true,
+      "qualified": false
+     },
+     "T4": {
+      "tribunal": "TRIBUNAL_T4_ORDER_AWARE_v1",
+      "held_out_extrapolation": 1.0,
+      "stress_at_domain_max": 1.0,
+      "counterexample_accuracy": 0.55,
+      "order_battery_accuracy": 1.0,
+      "domain_L_max": 200,
+      "family_admissible": false,
+      "family_reasons": [
+       "FIXED_POINT_DYNAMICS",
+       "LAST_INSENSITIVE",
+       "MIDDLE_INSENSITIVE"
+      ],
+      "qualified": false
+     }
+    },
+    {
+     "program": [
+      "fold",
+      "0",
+      "pow(v, pow(acc, v))",
+      "(last + 1)"
+     ],
+     "charges": 254,
+     "extensionally_equal_to_witness": false,
+     "OLD_qualified": false,
+     "T4_qualified": false,
+     "OLD": {
+      "held_out_extrapolation": 1.0,
+      "stress_length_200": 1.0,
+      "counterexample_accuracy": 0.625,
+      "metamorphic_pass": true,
+      "qualified": false
+     },
+     "T4": {
+      "tribunal": "TRIBUNAL_T4_ORDER_AWARE_v1",
+      "held_out_extrapolation": 1.0,
+      "stress_at_domain_max": 1.0,
+      "counterexample_accuracy": 0.55,
+      "order_battery_accuracy": 1.0,
+      "domain_L_max": 200,
+      "family_admissible": false,
+      "family_reasons": [
+       "FIXED_POINT_DYNAMICS",
+       "LAST_INSENSITIVE",
+       "MIDDLE_INSENSITIVE"
+      ],
+      "qualified": false
+     }
+    },
+    {
+     "program": [
+      "fold",
+      "0",
+      "(v + (acc + acc))",
+      "(1 + last)"
+     ],
+     "charges": 397,
+     "extensionally_equal_to_witness": false,
+     "OLD_qualified": false,
+     "T4_qualified": false,
+     "OLD": {
+      "held_out_extrapolation": 1.0,
+      "stress_length_200": 0.0,
+      "counterexample_accuracy": 0.475,
+      "metamorphic_pass": true,
+      "qualified": false
+     },
+     "T4": {
+      "tribunal": "TRIBUNAL_T4_ORDER_AWARE_v1",
+      "held_out_extrapolation": 1.0,
+      "stress_at_domain_max": 0.0,
+      "counterexample_accuracy": 0.475,
+      "order_battery_accuracy": 1.0,
+      "domain_L_max": 200,
+      "family_admissible": false,
+      "family_reasons": [
+       "FIXED_POINT_DYNAMICS",
+       "LAST_INSENSITIVE",
+       "MIDDLE_INSENSITIVE"
+      ],
+      "qualified": false
+     }
+    },
+    {
+     "program": [
+      "fold",
+      "0",
+      "(v + (acc + acc))",
+      "(last + 1)"
+     ],
+     "charges": 434,
+     "extensionally_equal_to_witness": false,
+     "OLD_qualified": false,
+     "T4_qualified": false,
+     "OLD": {
+      "held_out_extrapolation": 1.0,
+      "stress_length_200": 0.0,
+      "counterexample_accuracy": 0.475,
+      "metamorphic_pass": true,
+      "qualified": false
+     },
+     "T4": {
+      "tribunal": "TRIBUNAL_T4_ORDER_AWARE_v1",
+      "held_out_extrapolation": 1.0,
+      "stress_at_domain_max": 0.0,
+      "counterexample_accuracy": 0.475,
+      "order_battery_accuracy": 1.0,
+      "domain_L_max": 200,
+      "family_admissible": false,
+      "family_reasons": [
+       "FIXED_POINT_DYNAMICS",
+       "LAST_INSENSITIVE",
+       "MIDDLE_INSENSITIVE"
+      ],
+      "qualified": false
+     }
+    },
+    {
+     "program": [
+      "fold",
+      "0",
+      "(v + (v + v))",
+      "(1 + last)"
+     ],
+     "charges": 577,
+     "extensionally_equal_to_witness": false,
+     "OLD_qualified": false,
+     "T4_qualified": false,
+     "OLD": {
+      "held_out_extrapolation": 1.0,
+      "stress_length_200": 1.0,
+      "counterexample_accuracy": 0.625,
+      "metamorphic_pass": true,
+      "qualified": false
+     },
+     "T4": {
+      "tribunal": "TRIBUNAL_T4_ORDER_AWARE_v1",
+      "held_out_extrapolation": 1.0,
+      "stress_at_domain_max": 1.0,
+      "counterexample_accuracy": 0.55,
+      "order_battery_accuracy": 1.0,
+      "domain_L_max": 200,
+      "family_admissible": false,
+      "family_reasons": [
+       "FIXED_POINT_DYNAMICS",
+       "LAST_INSENSITIVE",
+       "MIDDLE_INSENSITIVE"
+      ],
+      "qualified": false
+     }
+    }
+   ],
+   "disagreement": true,
+   "disagreement_mechanics": [
+    "T4 rejects family: ['FIXED_POINT_DYNAMICS', 'LAST_INSENSITIVE', 'MIDDLE_INSENSITIVE']"
+   ],
+   "near_miss_disagreements": 0,
+   "wrong_artifact_admitted": {
+    "OLD": 0,
+    "T4": 0
+   }
+  },
+  {
+   "name": "kb_gcd_absaccv",
+   "source": "K2 admissible pool",
+   "init": "1",
+   "body": "math.gcd(abs(0), abs((acc + v)))",
+   "final": "(acc + first)",
+   "Q2_size": 4,
+   "body_class": "ADDITIVE",
+   "T4_profile": {
+    "L_max": 200,
+    "base_ok": true,
+    "distinct": 46,
+    "mode_share": 0.05,
+    "middle_sensitivity": 1.0,
+    "last_sensitivity": 1.0,
+    "copy_share": 0.0,
+    "absorbed_share": 0.0,
+    "pow_guard_hits": 0,
+    "reasons": [],
+    "admissible": true
+   },
+   "witness": {
+    "OLD": {
+     "held_out_extrapolation": 1.0,
+     "stress_length_200": 1.0,
+     "counterexample_accuracy": 1.0,
+     "metamorphic_pass": true,
+     "qualified": true
+    },
+    "T4": {
+     "tribunal": "TRIBUNAL_T4_ORDER_AWARE_v1",
+     "held_out_extrapolation": 1.0,
+     "stress_at_domain_max": 1.0,
+     "counterexample_accuracy": 1.0,
+     "order_battery_accuracy": 1.0,
+     "domain_L_max": 200,
+     "family_admissible": true,
+     "family_reasons": [],
+     "qualified": true
+    }
+   },
+   "near_misses": [
+    {
+     "program": [
+      "fold",
+      "1",
+      "(acc + math.gcd(abs(v), abs(v)))",
+      "(acc + first)"
+     ],
+     "charges": 18105,
+     "extensionally_equal_to_witness": true,
+     "OLD_qualified": true,
+     "T4_qualified": true,
+     "OLD": {
+      "held_out_extrapolation": 1.0,
+      "stress_length_200": 1.0,
+      "counterexample_accuracy": 1.0,
+      "metamorphic_pass": true,
+      "qualified": true
+     },
+     "T4": {
+      "tribunal": "TRIBUNAL_T4_ORDER_AWARE_v1",
+      "held_out_extrapolation": 1.0,
+      "stress_at_domain_max": 1.0,
+      "counterexample_accuracy": 1.0,
+      "order_battery_accuracy": 1.0,
+      "domain_L_max": 200,
+      "family_admissible": true,
+      "family_reasons": [],
+      "qualified": true
+     }
+    },
+    {
+     "program": [
+      "fold",
+      "1",
+      "(acc + math.gcd(abs(v), abs(v)))",
+      "(first + acc)"
+     ],
+     "charges": 18150,
+     "extensionally_equal_to_witness": true,
+     "OLD_qualified": true,
+     "T4_qualified": true,
+     "OLD": {
+      "held_out_extrapolation": 1.0,
+      "stress_length_200": 1.0,
+      "counterexample_accuracy": 1.0,
+      "metamorphic_pass": true,
+      "qualified": true
+     },
+     "T4": {
+      "tribunal": "TRIBUNAL_T4_ORDER_AWARE_v1",
+      "held_out_extrapolation": 1.0,
+      "stress_at_domain_max": 1.0,
+      "counterexample_accuracy": 1.0,
+      "order_battery_accuracy": 1.0,
+      "domain_L_max": 200,
+      "family_admissible": true,
+      "family_reasons": [],
+      "qualified": true
+     }
+    },
+    {
+     "program": [
+      "fold",
+      "1",
+      "(v + math.gcd(abs(acc), abs(acc)))",
+      "(acc + first)"
+     ],
+     "charges": 19005,
+     "extensionally_equal_to_witness": true,
+     "OLD_qualified": true,
+     "T4_qualified": true,
+     "OLD": {
+      "held_out_extrapolation": 1.0,
+      "stress_length_200": 1.0,
+      "counterexample_accuracy": 1.0,
+      "metamorphic_pass": true,
+      "qualified": true
+     },
+     "T4": {
+      "tribunal": "TRIBUNAL_T4_ORDER_AWARE_v1",
+      "held_out_extrapolation": 1.0,
+      "stress_at_domain_max": 1.0,
+      "counterexample_accuracy": 1.0,
+      "order_battery_accuracy": 1.0,
+      "domain_L_max": 200,
+      "family_admissible": true,
+      "family_reasons": [],
+      "qualified": true
+     }
+    },
+    {
+     "program": [
+      "fold",
+      "1",
+      "(v + math.gcd(abs(acc), abs(acc)))",
+      "(first + acc)"
+     ],
+     "charges": 19050,
+     "extensionally_equal_to_witness": true,
+     "OLD_qualified": true,
+     "T4_qualified": true,
+     "OLD": {
+      "held_out_extrapolation": 1.0,
+      "stress_length_200": 1.0,
+      "counterexample_accuracy": 1.0,
+      "metamorphic_pass": true,
+      "qualified": true
+     },
+     "T4": {
+      "tribunal": "TRIBUNAL_T4_ORDER_AWARE_v1",
+      "held_out_extrapolation": 1.0,
+      "stress_at_domain_max": 1.0,
+      "counterexample_accuracy": 1.0,
+      "order_battery_accuracy": 1.0,
+      "domain_L_max": 200,
+      "family_admissible": true,
+      "family_reasons": [],
+      "qualified": true
+     }
+    },
+    {
+     "program": [
+      "fold",
+      "1",
+      "(v + acc)",
+      "(acc + first)"
+     ],
+     "charges": 24045,
+     "extensionally_equal_to_witness": true,
+     "OLD_qualified": true,
+     "T4_qualified": true,
+     "OLD": {
+      "held_out_extrapolation": 1.0,
+      "stress_length_200": 1.0,
+      "counterexample_accuracy": 1.0,
+      "metamorphic_pass": true,
+      "qualified": true
+     },
+     "T4": {
+      "tribunal": "TRIBUNAL_T4_ORDER_AWARE_v1",
+      "held_out_extrapolation": 1.0,
+      "stress_at_domain_max": 1.0,
+      "counterexample_accuracy": 1.0,
+      "order_battery_accuracy": 1.0,
+      "domain_L_max": 200,
+      "family_admissible": true,
+      "family_reasons": [],
+      "qualified": true
+     }
+    }
+   ],
+   "disagreement": false,
+   "disagreement_mechanics": [],
+   "near_miss_disagreements": 0,
+   "wrong_artifact_admitted": {
+    "OLD": 0,
+    "T4": 0
+   }
+  },
+  {
+   "name": "s_alt_sum",
+   "source": "successor (designed): alternating sum",
+   "init": "0",
+   "body": "(v - acc)",
+   "final": "acc",
+   "Q2_size": 12,
+   "body_class": "AFFINE_CONST_SLOPE",
+   "T4_profile": {
+    "L_max": 200,
+    "base_ok": true,
+    "distinct": 41,
+    "mode_share": 0.05,
+    "middle_sensitivity": 1.0,
+    "last_sensitivity": 1.0,
+    "copy_share": 0.1,
+    "absorbed_share": 0.0,
+    "pow_guard_hits": 0,
+    "reasons": [],
+    "admissible": true
+   },
+   "witness": {
+    "OLD": {
+     "held_out_extrapolation": 1.0,
+     "stress_length_200": 1.0,
+     "counterexample_accuracy": 1.0,
+     "metamorphic_pass": false,
+     "qualified": false
+    },
+    "T4": {
+     "tribunal": "TRIBUNAL_T4_ORDER_AWARE_v1",
+     "held_out_extrapolation": 1.0,
+     "stress_at_domain_max": 1.0,
+     "counterexample_accuracy": 1.0,
+     "order_battery_accuracy": 1.0,
+     "domain_L_max": 200,
+     "family_admissible": true,
+     "family_reasons": [],
+     "qualified": true
+    }
+   },
+   "near_misses": [
+    {
+     "program": [
+      "fold",
+      "0",
+      "(v - acc)",
+      "(0 + acc)"
+     ],
+     "charges": 68045,
+     "extensionally_equal_to_witness": true,
+     "OLD_qualified": false,
+     "T4_qualified": true,
+     "OLD": {
+      "held_out_extrapolation": 1.0,
+      "stress_length_200": 1.0,
+      "counterexample_accuracy": 1.0,
+      "metamorphic_pass": false,
+      "qualified": false
+     },
+     "T4": {
+      "tribunal": "TRIBUNAL_T4_ORDER_AWARE_v1",
+      "held_out_extrapolation": 1.0,
+      "stress_at_domain_max": 1.0,
+      "counterexample_accuracy": 1.0,
+      "order_battery_accuracy": 1.0,
+      "domain_L_max": 200,
+      "family_admissible": true,
+      "family_reasons": [],
+      "qualified": true
+     }
+    },
+    {
+     "program": [
+      "fold",
+      "0",
+      "(v - acc)",
+      "acc"
+     ],
+     "charges": 68051,
+     "extensionally_equal_to_witness": true,
+     "OLD_qualified": false,
+     "T4_qualified": true,
+     "OLD": {
+      "held_out_extrapolation": 1.0,
+      "stress_length_200": 1.0,
+      "counterexample_accuracy": 1.0,
+      "metamorphic_pass": false,
+      "qualified": false
+     },
+     "T4": {
+      "tribunal": "TRIBUNAL_T4_ORDER_AWARE_v1",
+      "held_out_extrapolation": 1.0,
+      "stress_at_domain_max": 1.0,
+      "counterexample_accuracy": 1.0,
+      "order_battery_accuracy": 1.0,
+      "domain_L_max": 200,
+      "family_admissible": true,
+      "family_reasons": [],
+      "qualified": true
+     }
+    },
+    {
+     "program": [
+      "fold",
+      "0",
+      "(v - acc)",
+      "pow(acc, 1)"
+     ],
+     "charges": 68062,
+     "extensionally_equal_to_witness": true,
+     "OLD_qualified": false,
+     "T4_qualified": true,
+     "OLD": {
+      "held_out_extrapolation": 1.0,
+      "stress_length_200": 1.0,
+      "counterexample_accuracy": 1.0,
+      "metamorphic_pass": false,
+      "qualified": false
+     },
+     "T4": {
+      "tribunal": "TRIBUNAL_T4_ORDER_AWARE_v1",
+      "held_out_extrapolation": 1.0,
+      "stress_at_domain_max": 1.0,
+      "counterexample_accuracy": 1.0,
+      "order_battery_accuracy": 1.0,
+      "domain_L_max": 200,
+      "family_admissible": true,
+      "family_reasons": [],
+      "qualified": true
+     }
+    },
+    {
+     "program": [
+      "fold",
+      "0",
+      "(v - acc)",
+      "(1 * acc)"
+     ],
+     "charges": 68075,
+     "extensionally_equal_to_witness": true,
+     "OLD_qualified": false,
+     "T4_qualified": true,
+     "OLD": {
+      "held_out_extrapolation": 1.0,
+      "stress_length_200": 1.0,
+      "counterexample_accuracy": 1.0,
+      "metamorphic_pass": false,
+      "qualified": false
+     },
+     "T4": {
+      "tribunal": "TRIBUNAL_T4_ORDER_AWARE_v1",
+      "held_out_extrapolation": 1.0,
+      "stress_at_domain_max": 1.0,
+      "counterexample_accuracy": 1.0,
+      "order_battery_accuracy": 1.0,
+      "domain_L_max": 200,
+      "family_admissible": true,
+      "family_reasons": [],
+      "qualified": true
+     }
+    },
+    {
+     "program": [
+      "fold",
+      "0",
+      "(v - acc)",
+      "(acc + 0)"
+     ],
+     "charges": 68076,
+     "extensionally_equal_to_witness": true,
+     "OLD_qualified": false,
+     "T4_qualified": true,
+     "OLD": {
+      "held_out_extrapolation": 1.0,
+      "stress_length_200": 1.0,
+      "counterexample_accuracy": 1.0,
+      "metamorphic_pass": false,
+      "qualified": false
+     },
+     "T4": {
+      "tribunal": "TRIBUNAL_T4_ORDER_AWARE_v1",
+      "held_out_extrapolation": 1.0,
+      "stress_at_domain_max": 1.0,
+      "counterexample_accuracy": 1.0,
+      "order_battery_accuracy": 1.0,
+      "domain_L_max": 200,
+      "family_admissible": true,
+      "family_reasons": [],
+      "qualified": true
+     }
+    }
+   ],
+   "disagreement": true,
+   "disagreement_mechanics": [
+    "OLD fails: ",
+    "OLD fails permutation invariance"
+   ],
+   "near_miss_disagreements": 5,
+   "wrong_artifact_admitted": {
+    "OLD": 0,
+    "T4": 0
+   }
+  },
+  {
+   "name": "s_product",
+   "source": "successor (designed): product, growth-bounded domain",
+   "init": "1",
+   "body": "(acc * v)",
+   "final": "acc",
+   "Q2_size": 4,
+   "body_class": "AFFINE_SCALE_V",
+   "T4_profile": {
+    "L_max": 25,
+    "base_ok": true,
+    "distinct": 60,
+    "mode_share": 0.017,
+    "middle_sensitivity": 1.0,
+    "last_sensitivity": 1.0,
+    "copy_share": 0.0,
+    "absorbed_share": 0.0,
+    "pow_guard_hits": 0,
+    "reasons": [],
+    "admissible": true
+   },
+   "witness": {
+    "OLD": {
+     "held_out_extrapolation": 0.3933333333333333,
+     "stress_length_200": 0.0,
+     "counterexample_accuracy": 0.45,
+     "metamorphic_pass": true,
+     "qualified": false
+    },
+    "T4": {
+     "tribunal": "TRIBUNAL_T4_ORDER_AWARE_v1",
+     "held_out_extrapolation": 1.0,
+     "stress_at_domain_max": 1.0,
+     "counterexample_accuracy": 1.0,
+     "order_battery_accuracy": 1.0,
+     "domain_L_max": 25,
+     "family_admissible": true,
+     "family_reasons": [],
+     "qualified": true
+    }
+   },
+   "near_misses": [
+    {
+     "program": [
+      "fold",
+      "1",
+      "(acc * v)",
+      "math.gcd(abs(0), abs(acc))"
+     ],
+     "charges": 367,
+     "extensionally_equal_to_witness": true,
+     "OLD_qualified": false,
+     "T4_qualified": true,
+     "OLD": {
+      "held_out_extrapolation": 0.3933333333333333,
+      "stress_length_200": 0.0,
+      "counterexample_accuracy": 0.45,
+      "metamorphic_pass": true,
+      "qualified": false
+     },
+     "T4": {
+      "tribunal": "TRIBUNAL_T4_ORDER_AWARE_v1",
+      "held_out_extrapolation": 1.0,
+      "stress_at_domain_max": 1.0,
+      "counterexample_accuracy": 1.0,
+      "order_battery_accuracy": 1.0,
+      "domain_L_max": 25,
+      "family_admissible": true,
+      "family_reasons": [],
+      "qualified": true
+     }
+    },
+    {
+     "program": [
+      "fold",
+      "1",
+      "(acc * v)",
+      "(acc * 1)"
+     ],
+     "charges": 368,
+     "extensionally_equal_to_witness": true,
+     "OLD_qualified": false,
+     "T4_qualified": true,
+     "OLD": {
+      "held_out_extrapolation": 0.3933333333333333,
+      "stress_length_200": 0.0,
+      "counterexample_accuracy": 0.45,
+      "metamorphic_pass": true,
+      "qualified": false
+     },
+     "T4": {
+      "tribunal": "TRIBUNAL_T4_ORDER_AWARE_v1",
+      "held_out_extrapolation": 1.0,
+      "stress_at_domain_max": 1.0,
+      "counterexample_accuracy": 1.0,
+      "order_battery_accuracy": 1.0,
+      "domain_L_max": 25,
+      "family_admissible": true,
+      "family_reasons": [],
+      "qualified": true
+     }
+    },
+    {
+     "program": [
+      "fold",
+      "1",
+      "(acc * v)",
+      "pow(acc, 1)"
+     ],
+     "charges": 405,
+     "extensionally_equal_to_witness": true,
+     "OLD_qualified": false,
+     "T4_qualified": true,
+     "OLD": {
+      "held_out_extrapolation": 0.3933333333333333,
+      "stress_length_200": 0.0,
+      "counterexample_accuracy": 0.45,
+      "metamorphic_pass": true,
+      "qualified": false
+     },
+     "T4": {
+      "tribunal": "TRIBUNAL_T4_ORDER_AWARE_v1",
+      "held_out_extrapolation": 1.0,
+      "stress_at_domain_max": 1.0,
+      "counterexample_accuracy": 1.0,
+      "order_battery_accuracy": 1.0,
+      "domain_L_max": 25,
+      "family_admissible": true,
+      "family_reasons": [],
+      "qualified": true
+     }
+    },
+    {
+     "program": [
+      "fold",
+      "1",
+      "(acc * v)",
+      "math.gcd(abs(acc), abs(acc))"
+     ],
+     "charges": 411,
+     "extensionally_equal_to_witness": true,
+     "OLD_qualified": false,
+     "T4_qualified": true,
+     "OLD": {
+      "held_out_extrapolation": 0.3933333333333333,
+      "stress_length_200": 0.0,
+      "counterexample_accuracy": 0.45,
+      "metamorphic_pass": true,
+      "qualified": false
+     },
+     "T4": {
+      "tribunal": "TRIBUNAL_T4_ORDER_AWARE_v1",
+      "held_out_extrapolation": 1.0,
+      "stress_at_domain_max": 1.0,
+      "counterexample_accuracy": 1.0,
+      "order_battery_accuracy": 1.0,
+      "domain_L_max": 25,
+      "family_admissible": true,
+      "family_reasons": [],
+      "qualified": true
+     }
+    },
+    {
+     "program": [
+      "fold",
+      "1",
+      "(acc * v)",
+      "(0 + acc)"
+     ],
+     "charges": 421,
+     "extensionally_equal_to_witness": true,
+     "OLD_qualified": false,
+     "T4_qualified": true,
+     "OLD": {
+      "held_out_extrapolation": 0.3933333333333333,
+      "stress_length_200": 0.0,
+      "counterexample_accuracy": 0.45,
+      "metamorphic_pass": true,
+      "qualified": false
+     },
+     "T4": {
+      "tribunal": "TRIBUNAL_T4_ORDER_AWARE_v1",
+      "held_out_extrapolation": 1.0,
+      "stress_at_domain_max": 1.0,
+      "counterexample_accuracy": 1.0,
+      "order_battery_accuracy": 1.0,
+      "domain_L_max": 25,
+      "family_admissible": true,
+      "family_reasons": [],
+      "qualified": true
+     }
+    }
+   ],
+   "disagreement": true,
+   "disagreement_mechanics": [
+    "OLD fails: held_out_extrapolation, stress_length_200, counterexample_accuracy"
+   ],
+   "near_miss_disagreements": 5,
+   "wrong_artifact_admitted": {
+    "OLD": 0,
+    "T4": 0
+   }
+  },
+  {
+   "name": "s_census_na_gcd",
+   "source": "successor (RB-2 V7 census survivor, NA_GCD)",
+   "init": "1",
+   "body": "(v + math.gcd(abs(first), abs(acc)))",
+   "final": "(first * acc)",
+   "Q2_size": 8,
+   "body_class": "NA_GCD",
+   "T4_profile": {
+    "L_max": 200,
+    "base_ok": true,
+    "distinct": 54,
+    "mode_share": 0.033,
+    "middle_sensitivity": 0.35,
+    "last_sensitivity": 1.0,
+    "copy_share": 0.0,
+    "absorbed_share": 0.0,
+    "pow_guard_hits": 0,
+    "reasons": [],
+    "admissible": true
+   },
+   "witness": {
+    "OLD": {
+     "held_out_extrapolation": 1.0,
+     "stress_length_200": 1.0,
+     "counterexample_accuracy": 1.0,
+     "metamorphic_pass": false,
+     "qualified": false
+    },
+    "T4": {
+     "tribunal": "TRIBUNAL_T4_ORDER_AWARE_v1",
+     "held_out_extrapolation": 1.0,
+     "stress_at_domain_max": 1.0,
+     "counterexample_accuracy": 1.0,
+     "order_battery_accuracy": 1.0,
+     "domain_L_max": 200,
+     "family_admissible": true,
+     "family_reasons": [],
+     "qualified": true
+    }
+   },
+   "near_misses": [
+    {
+     "program": [
+      "fold",
+      "0",
+      "(v + (v // v))",
+      "(first * acc)"
+     ],
+     "charges": 2342,
+     "extensionally_equal_to_witness": false,
+     "OLD_qualified": false,
+     "T4_qualified": false,
+     "OLD": {
+      "held_out_extrapolation": 0.5933333333333334,
+      "stress_length_200": 0.625,
+      "counterexample_accuracy": 0.8,
+      "metamorphic_pass": false,
+      "qualified": false
+     },
+     "T4": {
+      "tribunal": "TRIBUNAL_T4_ORDER_AWARE_v1",
+      "held_out_extrapolation": 0.62,
+      "stress_at_domain_max": 0.525,
+      "counterexample_accuracy": 0.875,
+      "order_battery_accuracy": 0.675,
+      "domain_L_max": 200,
+      "family_admissible": true,
+      "family_reasons": [],
+      "qualified": false
+     }
+    },
+    {
+     "program": [
+      "fold",
+      "0",
+      "(v + (v // v))",
+      "(acc * first)"
+     ],
+     "charges": 2464,
+     "extensionally_equal_to_witness": false,
+     "OLD_qualified": false,
+     "T4_qualified": false,
+     "OLD": {
+      "held_out_extrapolation": 0.5933333333333334,
+      "stress_length_200": 0.625,
+      "counterexample_accuracy": 0.8,
+      "metamorphic_pass": false,
+      "qualified": false
+     },
+     "T4": {
+      "tribunal": "TRIBUNAL_T4_ORDER_AWARE_v1",
+      "held_out_extrapolation": 0.62,
+      "stress_at_domain_max": 0.525,
+      "counterexample_accuracy": 0.875,
+      "order_battery_accuracy": 0.675,
+      "domain_L_max": 200,
+      "family_admissible": true,
+      "family_reasons": [],
+      "qualified": false
+     }
+    },
+    {
+     "program": [
+      "fold",
+      "1",
+      "(v + (v // v))",
+      "(first * acc)"
+     ],
+     "charges": 78302,
+     "extensionally_equal_to_witness": false,
+     "OLD_qualified": false,
+     "T4_qualified": false,
+     "OLD": {
+      "held_out_extrapolation": 0.5933333333333334,
+      "stress_length_200": 0.625,
+      "counterexample_accuracy": 0.8,
+      "metamorphic_pass": false,
+      "qualified": false
+     },
+     "T4": {
+      "tribunal": "TRIBUNAL_T4_ORDER_AWARE_v1",
+      "held_out_extrapolation": 0.62,
+      "stress_at_domain_max": 0.525,
+      "counterexample_accuracy": 0.875,
+      "order_battery_accuracy": 0.675,
+      "domain_L_max": 200,
+      "family_admissible": true,
+      "family_reasons": [],
+      "qualified": false
+     }
+    },
+    {
+     "program": [
+      "fold",
+      "1",
+      "(v + (v // v))",
+      "(acc * first)"
+     ],
+     "charges": 78424,
+     "extensionally_equal_to_witness": false,
+     "OLD_qualified": false,
+     "T4_qualified": false,
+     "OLD": {
+      "held_out_extrapolation": 0.5933333333333334,
+      "stress_length_200": 0.625,
+      "counterexample_accuracy": 0.8,
+      "metamorphic_pass": false,
+      "qualified": false
+     },
+     "T4": {
+      "tribunal": "TRIBUNAL_T4_ORDER_AWARE_v1",
+      "held_out_extrapolation": 0.62,
+      "stress_at_domain_max": 0.525,
+      "counterexample_accuracy": 0.875,
+      "order_battery_accuracy": 0.675,
+      "domain_L_max": 200,
+      "family_admissible": true,
+      "family_reasons": [],
+      "qualified": false
+     }
+    },
+    {
+     "program": [
+      "fold",
+      "1",
+      "(v + (acc // acc))",
+      "(first * acc)"
+     ],
+     "charges": 89642,
+     "extensionally_equal_to_witness": false,
+     "OLD_qualified": false,
+     "T4_qualified": false,
+     "OLD": {
+      "held_out_extrapolation": 0.5933333333333334,
+      "stress_length_200": 0.625,
+      "counterexample_accuracy": 0.8,
+      "metamorphic_pass": false,
+      "qualified": false
+     },
+     "T4": {
+      "tribunal": "TRIBUNAL_T4_ORDER_AWARE_v1",
+      "held_out_extrapolation": 0.62,
+      "stress_at_domain_max": 0.525,
+      "counterexample_accuracy": 0.875,
+      "order_battery_accuracy": 0.675,
+      "domain_L_max": 200,
+      "family_admissible": true,
+      "family_reasons": [],
+      "qualified": false
+     }
+    }
+   ],
+   "disagreement": true,
+   "disagreement_mechanics": [
+    "OLD fails: ",
+    "OLD fails permutation invariance"
+   ],
+   "near_miss_disagreements": 0,
+   "wrong_artifact_admitted": {
+    "OLD": 0,
+    "T4": 0
+   }
+  },
+  {
+   "name": "s_census_affine_scale_v",
+   "source": "successor (RB-2 V7 census survivor, AFFINE_SCALE_V)",
+   "init": "0",
+   "body": "(last + (v * acc))",
+   "final": "(0 + acc)",
+   "Q2_size": 4,
+   "body_class": "AFFINE_SCALE_V",
+   "T4_profile": {
+    "L_max": 25,
+    "base_ok": true,
+    "distinct": 60,
+    "mode_share": 0.017,
+    "middle_sensitivity": 1.0,
+    "last_sensitivity": 1.0,
+    "copy_share": 0.0,
+    "absorbed_share": 0.0,
+    "pow_guard_hits": 0,
+    "reasons": [],
+    "admissible": true
+   },
+   "witness": {
+    "OLD": {
+     "held_out_extrapolation": 0.37333333333333335,
+     "stress_length_200": 0.0,
+     "counterexample_accuracy": 0.575,
+     "metamorphic_pass": false,
+     "qualified": false
+    },
+    "T4": {
+     "tribunal": "TRIBUNAL_T4_ORDER_AWARE_v1",
+     "held_out_extrapolation": 1.0,
+     "stress_at_domain_max": 1.0,
+     "counterexample_accuracy": 1.0,
+     "order_battery_accuracy": 1.0,
+     "domain_L_max": 25,
+     "family_admissible": true,
+     "family_reasons": [],
+     "qualified": true
+    }
+   },
+   "near_misses": [],
+   "disagreement": true,
+   "disagreement_mechanics": [
+    "OLD fails: held_out_extrapolation, stress_length_200, counterexample_accuracy",
+    "OLD fails permutation invariance"
+   ],
+   "near_miss_disagreements": 0,
+   "wrong_artifact_admitted": {
+    "OLD": 0,
+    "T4": 0
+   }
+  }
+ ]
+}

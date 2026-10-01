@@ -1,0 +1,194 @@
+{
+  "schema": "techne.fossil.record/1",
+  "specimen_id": "map-elites-sferes2-2015",
+  "canonical_name": "map_elites (MAP-Elites module for Sferes2) -- Illuminating search spaces by mapping elites (Mouret, J. B., & Clune, J. (2015) per README reference; module authors Jean-Baptiste Mouret and Danesh Tarapore; Inria per author e-mail, copyright headers ISIR / UPMC; 2015-2017)",
+  "aliases": [
+    "map_elites",
+    "MAP-Elites",
+    "Multi-dimensional Archive of Phenotypic Elites",
+    "sferes::ea::MapElites"
+  ],
+  "lineage": "README: 'MAP-Elites module for Sferes2', reference 'Mouret, J. B., & Clune, J. (2015). Illuminating search spaces by mapping elites'; every licensed header says 'This file is a part of the sferes2 framework.' and the module builds via use='sferes2' with includes '../../' (i.e. lives at sferes2/modules/map_elites). sferes2's README at its own pin says 'we will soon integrate a more flexible version in the master branch of sferes_v2', i.e. this module is the standalone precursor of the later in-tree QD code. || main loop (reader, from the code): Per generation MapElites::epoch() flattens every occupied cell of the boost::multi_array archive into the working population, then Params::pop::size times picks two uniformly random elites, crosses and mutates them into two children, evaluates the whole child batch (in parallel via sferes::eval), and for each child computes its cell from round(desc_i * shape_i) and overwrites the occupant if the cell is empty, the child is fitter by more than epsilon, or it ties and lies closer to the cell centre; sferes2's Ea::run() drives this for nb_gen generations and dumps stats every dump_period.",
+  "domain": [
+    "quality-diversity",
+    "map-elites",
+    "evolutionary-computation"
+  ],
+  "era": "2015-2017",
+  "version": "github.com/sferes2/map_elites master @ 854eb3a4c4b8da592675f54fbb8667942b6eaf20 (committed 2017-07-25; 33 commits since 2015-05-07; 14 tracked files)",
+  "source_origin": {
+    "artifacts": [
+      {
+        "kind": "git",
+        "url": "https://github.com/sferes2/map_elites",
+        "commit": "854eb3a4c4b8da592675f54fbb8667942b6eaf20",
+        "commit_resolved": "854eb3a4c4b8da592675f54fbb8667942b6eaf20",
+        "commit_date": "2017-07-25T12:33:56+02:00"
+      }
+    ]
+  },
+  "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+  "source_identity": {
+    "repo": "github.com/sferes2/map_elites",
+    "branch": "master",
+    "other_branches_or_versions": "No tags. Remote branches: equisized_tiles, generic_print, master (default), normalization, stat_new."
+  },
+  "hashes": {
+    "tree_sha256": "94e1679ab32c92838f77b4e2420c3117c883a791546e387d57384478212a4580",
+    "n_files": 14,
+    "bytes": 81511,
+    "artifacts": [
+      {
+        "filename": "https://github.com/sferes2/map_elites",
+        "sha256": null,
+        "commit": "854eb3a4c4b8da592675f54fbb8667942b6eaf20"
+      }
+    ],
+    "body_location": "C:\\Prometheus\\vault\\fossils\\map-elites-sferes2-2015",
+    "hash_list": "techne/fossils/specimens/map-elites-sferes2-2015/UPSTREAM_HASHES.txt"
+  },
+  "license": {
+    "spdx": "CECILL-2.1",
+    "status": "copyleft; preservation and research permitted; derivative distribution inherits the licence",
+    "evidence": "licence file COPYING, first line 'CeCILL FREE SOFTWARE LICENSE AGREEMENT'; metadata field: NOT_FOUND_AT_PIN; COPYING is byte-identical to sferes2's COPYING (line 4: 'Version 2.1 dated 2013-06-21'); COPYING.fr present. README has no licence statement. Only 4 of 14 files carry the CeCILL header ('This file is a part of the sferes2 framework.' / 'Copyright 2009, ISIR / Universite Pierre et Marie Curie (UPMC)'): 3 C++ files plus wscript; the remaining sources (binary_map.hpp, extract_binary_map.cpp, plot_map.py, stat_map.hpp, stat_map_binary.hpp, stat_progress.hpp) have no copyright line; map_elites.hpp, fit_map.hpp, test_map_elites.cpp and wscript carry it."
+  },
+  "acquisition_date": "2026-09-30",
+  "language": [
+    "C++ (C++11: std::array, auto; header-only module + 2 program sources)",
+    "Python 2 (plot_map.py uses print statements; numpy, matplotlib)",
+    "Python (wscript)"
+  ],
+  "build_system": "waf via the parent sferes2 tree: wscript with includes '. ../../' and use = 'sferes2', i.e. expects to be checked out as sferes2/modules/map_elites and listed in sferes2's modules.conf; builds 'test_map_elites' (features 'cxx test', uselib EIGEN BOOST BOOST_UNIT_TEST_FRAMEWORK TBB) and 'extract_binary_map' (uselib EIGEN BOOST)",
+  "compiler_or_interpreter": "C++11 compiler via sferes2's waf configure (inherits -std=c++11); Python 2 for plot_map.py (print statement syntax)",
+  "dependencies": [
+    "sferes2 (unpinned; headers <sferes/stc.hpp>, <sferes/ea/ea.hpp>, <sferes/fit/fitness.hpp>, <sferes/eval/parallel.hpp>, <sferes/gen/evo_float.hpp>, <sferes/phen/parameters.hpp>, <sferes/modif/dummy.hpp>, <sferes/run.hpp>, <sferes/stat/best_fit.hpp>; linked via waf use='sferes2')",
+    "Boost (multi_array, foreach, fusion, shared_ptr, lexical_cast, unit_test_framework)",
+    "Intel TBB (via sferes::eval::Parallel unless NO_PARALLEL)",
+    "Eigen (uselib EIGEN in wscript; no direct include seen in the headers read)",
+    "numpy, matplotlib (plot_map.py, unpinned)",
+    "No manifest with versions; README gives no install instructions",
+    "SETUP FETCH: NOT_FOUND_AT_PIN (README has no setup section; the implicit requirement is cloning sferes2 and this repo, both unpinned, per sferes2's README module list)"
+  ],
+  "run_classification": "NOT_ATTEMPTED",
+  "test_classification": "NOT_ATTEMPTED",
+  "entry_points": [
+    "map_elites.hpp sferes::ea::MapElites (SFERES_EA(MapElites, Ea)): random_pop() creates Params::pop::init_size random individuals, evaluates them, adds each to the archive; epoch() gathers all filled cells into _pop, draws Params::pop::size uniform-random parent pairs, cross()+mutate()+develop(), evaluates the batch, _add_to_archive each child",
+    "map_elites.hpp MapElites::_add_to_archive(i1, parent): maps fit().desc() to a boost::multi_array<phen_ptr, behav_dim> cell by round(desc*shape), replaces the occupant if empty, better by > Params::ea::epsilon, or tied and closer to cell centre (_dist_center)",
+    "map_elites.hpp MapElites::_selection(pop): uniform random pick from the archive contents",
+    "fit_map.hpp sferes::fit::FitMap and macro FIT_MAP(Name): fitness base holding a std::vector<float> _desc of size Params::ea::behav_dim in [0,1], set via set_desc()",
+    "stat_map.hpp sferes::stat::Map::refresh(ea): every dump_period writes res_dir/archive_<gen>.dat lines 'offset  desc_0 desc_1 ...  fitness  genotype...'; stat_map_binary.hpp MapBinary and binary_map.hpp write/load a binary archive; stat_progress.hpp MapProgress",
+    "test_map_elites.cpp BOOST_AUTO_TEST_CASE(map_elites): Rastrigin on EvoFloat<10> in [-5,5], desc = first two genes, behav_shape 128x128, init_size 1000, batch 1000, nb_gen 1001; BOOST_CHECK(best > -1e-3)",
+    "extract_binary_map.cpp main(argv[1]): loads a binary_map file and prints dims then 'pos... fit phen...' per elem",
+    "plot_map.py <archive.dat> <size>: loads 'k, x, y, z' columns, builds size x size heatmap, saves heatmap.pdf"
+  ],
+  "example": {
+    "command": "NOT_FOUND_AT_PIN (README gives no command; the tree's runnable is the waf target test_map_elites built from sferes2 with ./waf --tests, and 'python plot_map.py <archive_N.dat> <size>')",
+    "input": "No data input; test_map_elites.cpp compiles in the Rastrigin problem and a Params struct (behav_dim 2, epsilon 0, behav_shape 128 128, init_size 1000, size 1000, nb_gen 1001, dump_period 100, parameters min -5 max 5, cross_rate 0.25, mutation_rate 0.1, eta_m 10, eta_c 10, polynomial mutation, sbx crossover)",
+    "output": "res_dir/archive_<gen>.dat text files (one line per filled cell: cell offset, normalized descriptor coordinates, fitness, genotype values) every dump_period generations; optional parents_<gen>.dat under MAP_WRITE_PARENTS; binary map via MapBinary; sferes2 gen_<N> dumps; test prints 'best fit (map_elites):<value>'; plot_map.py writes heatmap.pdf"
+  },
+  "environment": {
+    "runner": "native",
+    "note": "NOT RUN in this pass (nothing executed from the tree); host class from the reader draft: Same as sferes2: Unix-like host (Linux/OSX) with C++11 compiler, Boost, optional TBB; CPU only; must be placed inside a sferes2 checkout as modules/map_elites"
+  },
+  "patches": [],
+  "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+  "upstream_docs": [
+    "Mouret, J. B., & Clune, J. (2015). Illuminating search spaces by mapping elites. arXiv preprint arXiv:1504.04909.",
+    "http://arxiv.org/abs/1504.04909"
+  ],
+  "human_capability_summary": {
+    "built_to": "README: 'MAP-Elites module for Sferes2.' implementing an algorithm that 'creates a map of high-performing solutions at each point in a space defined by dimensions of variation that a user gets to choose'.",
+    "pressure": "README (abstract): 'The goal of search algorithms has traditionally been to return the single highest-performing solution in a search space' whereas a 'holistic view of how high-performing solutions are distributed throughout a search space' is 'more useful'.",
+    "success_means": "README: MAP-Elites '(1) illuminates the relationship between performance and dimensions of interest in solutions, (2) returns a set of high-performing, yet diverse solutions, and (3) improves finding a single, best solution'; in-tree test: BOOST_CHECK(best > -1e-3) on Rastrigin after 1001 generations."
+  },
+  "known_human_problem_solved": "README: 'MAP-Elites module for Sferes2.' implementing an algorithm that 'creates a map of high-performing solutions at each point in a space defined by dimensions of variation that a user gets to choose'.",
+  "hardware_assumptions": "",
+  "human_environmental_pressure": "",
+  "human_failure_condition": "",
+  "behavioral_entry_point": "map_elites.hpp:MapElites::_selection (uniform random parent choice), MapElites::_add_to_archive (replacement rule / epsilon / centre tie-break), MapElites::_get_point (descriptor-to-cell mapping); descriptors are user-defined in the FIT_MAP fitness eval() via set_desc()",
+  "observability": {
+    "EXECUTABLE": "unknown",
+    "OBSERVABLE": "unknown",
+    "ORACLE_BACKED": "unknown",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "unknown"
+  },
+  "lineage_relations": [
+    {
+      "relation": "algorithm_from",
+      "to": "Mouret & Clune 2015 (arXiv:1504.04909)",
+      "note": "the MAP-Elites paper; this module is the authors' own sferes2 implementation"
+    },
+    {
+      "relation": "derived_from",
+      "to": "sferes2-mouret-2014",
+      "note": "a sferes2 module: builds only inside sferes2/modules/map_elites via waf use=sferes2 (reader draft)"
+    }
+  ],
+  "acquisition_tags": [
+    "operator-chat-2026-09-30-download-for-nyx",
+    "prior_art_raid",
+    "section-III",
+    "TECHNE-132",
+    "reader-draft:READER_DRAFTS_2026-09-30/map-elites-sferes2.json"
+  ],
+  "historical_disposition": {
+    "state": "UNKNOWN",
+    "failure_reasons": [],
+    "superseded_by": "",
+    "rival_of": "",
+    "evidence": []
+  },
+  "versions_preserved": [],
+  "receipts": [],
+  "nyx_handoff": {
+    "here_is_the_machine": "vault body <vault>/map-elites-sferes2-2015 (host-local; `python -m techne.fossils.harvest rematerialize map-elites-sferes2-2015` on a host without it) ; tracked techne/fossils/specimens/map-elites-sferes2-2015",
+    "where_it_came_from": "https://github.com/sferes2/map_elites ; ORIGINAL_AUTHORITATIVE_RELEASE ; commit 854eb3a4c4b8da592675f54fbb8667942b6eaf20 ; licence CECILL-2.1",
+    "how_to_run_it": "not executed from this record (NOT_ATTEMPTED); upstream entry: NOT_FOUND_AT_PIN (README gives no command; the tree's runnable is the waf target test_map_elites built from sferes2 with ./waf --tests, and 'python plot_map.py <archive_N.dat> <size>') ; host class: Same as sferes2: Unix-like host (Linux/OSX) with C++11 compiler, Boost, optional TBB; CPU only; must be placed inside a sferes2 checkout as modules/map_elites",
+    "how_we_know_it_runs": "we do not: no run receipt. The body is pinned (tree_sha256 94e1679ab32c9283, UPSTREAM_HASHES.txt) and verifies by hash; that is preservation, not execution",
+    "what_humans_used_it_for": "README: 'MAP-Elites module for Sferes2.' implementing an algorithm that 'creates a map of high-performing solutions at each point in a space defined by dimensions of variation that a user gets to choose'."
+  },
+  "seat": "Techne",
+  "runtime": {
+    "python_major": 3,
+    "native_deps": [
+      "C++11 toolchain",
+      "sferes2 static lib and headers",
+      "Boost (multi_array, fusion, serialization, unit_test_framework)",
+      "Intel TBB (optional via NO_PARALLEL)",
+      "Eigen (per wscript uselib)",
+      "Python 2 + numpy + matplotlib for plotting only"
+    ],
+    "host_class": "Same as sferes2: Unix-like host (Linux/OSX) with C++11 compiler, Boost, optional TBB; CPU only; must be placed inside a sferes2 checkout as modules/map_elites"
+  },
+  "reader_notes": {
+    "draft": "techne/acquisition/prior_art_raid/READER_DRAFTS_2026-09-30/map-elites-sferes2.json",
+    "copyright_holders_by_header_count": {
+      "ISIR / Universite Pierre et Marie Curie (UPMC) (2009)": 3
+    },
+    "things_the_reader_could_not_verify": [
+      "Whether it compiles against sferes2 at commit 21c5384 (module is 2017, sferes2 pin is 2021; no code executed)",
+      "Which sferes2 revision the authors used",
+      "Content of arXiv:1504.04909 beyond the abstract quoted in README",
+      "Whether the Eigen uselib is actually required by any include",
+      "Institution/years in canonical_name inferred from headers (ISIR/UPMC 2009), author e-mail (inria.fr), first commit (2015) and pin (2017)"
+    ],
+    "has_gitmodules_at_pin": false,
+    "has_lfs_at_pin": false,
+    "approx_tree_bytes_at_pin": 81511
+  },
+  "preservation": {
+    "status": "SELF_CONTAINED",
+    "body_status": "SELF_CONTAINED",
+    "recipe_status": "NO_RECIPE",
+    "submodules": [],
+    "submodules_missing": [],
+    "submodules_drifted": [],
+    "unpinned_artifacts": [],
+    "git_lfs": false,
+    "network_fetch_in_recipe": [],
+    "checked_utc": "2026-09-30T23:04:11Z",
+    "note": "status is the worse of body_status and the recipe axis; a matching tree hash alone never implies completeness."
+  }
+}

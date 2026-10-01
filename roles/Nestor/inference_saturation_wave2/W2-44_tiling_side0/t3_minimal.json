@@ -1,0 +1,1050 @@
+{
+ "CNR_s22_first": {
+  "frame": 62,
+  "two_sided_target": false,
+  "passes": 2,
+  "core_hex": "005cf6b5f0d026490a070cd1d13fc0fd42e61455d797ed32dba1049ec6e864617a5aa4a5002700450281ec22ffdf5f66e2f3edb06e1005eeff9540c100a40021",
+  "core_positions": [
+   {
+    "pos": 21,
+    "founder_pos": 23,
+    "byte": "97",
+    "P": "ed"
+   },
+   {
+    "pos": 22,
+    "founder_pos": 24,
+    "byte": "ed",
+    "P": "32"
+   },
+   {
+    "pos": 23,
+    "founder_pos": 25,
+    "byte": "32",
+    "P": "5a"
+   },
+   {
+    "pos": 41,
+    "founder_pos": 43,
+    "byte": "81",
+    "P": "c1"
+   }
+  ],
+  "core_assay": {
+   "keep_s0": 1.0,
+   "keep_s1": 0.51,
+   "conv_s0": 1.0,
+   "conv_s1": 0.01,
+   "exact_child": 0.274,
+   "m_base": 1.236,
+   "founder_frame_children": 0
+  },
+  "orig_assay": {
+   "keep_s0": 1.0,
+   "keep_s1": 0.517,
+   "conv_s0": 1.0,
+   "conv_s1": 0.508,
+   "exact_child": 0.699,
+   "m_base": 1.497,
+   "founder_frame_children": 0
+  },
+  "P_assay": {
+   "keep_s0": 0.64,
+   "keep_s1": 0.901,
+   "conv_s0": 0.006,
+   "conv_s1": 0.89,
+   "exact_child": 0.34,
+   "m_base": 1.237,
+   "founder_frame_children": 1
+  },
+  "knockouts": {
+   "21": {
+    "conv_s0": 0.004,
+    "conv_s1": 0.0,
+    "keep_s1": 0.492,
+    "m": 0.43
+   },
+   "22": {
+    "conv_s0": 0.002,
+    "conv_s1": 0.0,
+    "keep_s1": 0.492,
+    "m": 0.428
+   },
+   "23": {
+    "conv_s0": 0.002,
+    "conv_s1": 0.0,
+    "keep_s1": 0.494,
+    "m": 0.429
+   },
+   "41": {
+    "conv_s0": 0.006,
+    "conv_s1": 0.89,
+    "keep_s1": 0.903,
+    "m": 1.24
+   }
+  },
+  "ldir_s0": {
+   "n_side": 200,
+   "n_conv": 200,
+   "conv_ldir": {
+    "(0, 50, 64, 'n<=64', 'direct')": 200
+   }
+  },
+  "ldir_s1": {
+   "n_side": 200,
+   "n_conv": 2,
+   "conv_ldir": {
+    "(0, 50, 0, 'n>64', 'direct')": 2
+   }
+  },
+  "transplant_founder_frame": {
+   "hex": "0021005cf6b5f0d026490a070cd1d13fc0fd42e61455d797ed32dba1049ec6e864617a5aa4a5002700450281ec22ffdf5f66e2f3edb06e1005eeff9540c100a4",
+   "assay": {
+    "keep_s0": 1.0,
+    "keep_s1": 0.516,
+    "conv_s0": 1.0,
+    "conv_s1": 0.017,
+    "exact_child": 0.484,
+    "m_base": 1.243,
+    "founder_frame_children": 493
+   }
+  },
+  "dis": [
+   "0:NOP",
+   "1:LD E,H",
+   "2:OR A,B5",
+   "4:nop(F0)",
+   "5:nop(D0)",
+   "6:LD H,49",
+   "8:LD A,(BC)",
+   "9:nop(07)",
+   "10:INC C",
+   "11:nop(D1)",
+   "12:nop(D1)",
+   "13:nop(3F)",
+   "14:nop(C0)",
+   "15:nop(FD)",
+   "16:LD B,D",
+   "17:AND A,14",
+   "19:LD D,L",
+   "20:nop(D7)",
+   "21:SUB A,A",
+   "22:SELF",
+   "24:IN",
+   "26:INC B",
+   "27:SBC A,(HL)",
+   "28:ADD A,E8",
+   "30:LD H,H",
+   "31:LD H,C",
+   "32:LD A,D",
+   "33:LD E,D",
+   "34:AND A,H",
+   "35:AND A,L",
+   "36:NOP",
+   "37:nop(27)",
+   "38:NOP",
+   "39:LD B,L",
+   "40:LD (BC),A",
+   "41:ADD A,C",
+   "42:nop(EC)",
+   "43:nop(22)",
+   "44:nop(FF)",
+   "45:nop(DF)",
+   "46:LD E,A",
+   "47:LD H,(HL)",
+   "48:nop(E2)",
+   "49:nop(F3)",
+   "50:LDIR",
+   "52:LD L,(HL)",
+   "53:nop(10)",
+   "54:DEC B",
+   "55:XOR A,FF",
+   "57:SUB A,L",
+   "58:LD B,B",
+   "59:nop(C1)",
+   "60:NOP",
+   "61:AND A,H",
+   "62:NOP",
+   "63:LD HL,0000"
+  ]
+ },
+ "CRW_78_first": {
+  "frame": 57,
+  "two_sided_target": false,
+  "passes": 2,
+  "core_hex": "d026490a070cd1d13fc0fd42e61455d7ed325adba1049ec6e864617a5aa4a50027004502c1ec22ffdf5f66e2f3edb06e1005eeffedb0c100a40021005cf6b5f0",
+  "core_positions": [
+   {
+    "pos": 52,
+    "founder_pos": 59,
+    "byte": "ed",
+    "P": "95"
+   },
+   {
+    "pos": 53,
+    "founder_pos": 60,
+    "byte": "b0",
+    "P": "40"
+   }
+  ],
+  "core_assay": {
+   "keep_s0": 1.0,
+   "keep_s1": 0.529,
+   "conv_s0": 1.0,
+   "conv_s1": 0.517,
+   "exact_child": 0.0,
+   "m_base": 1.508,
+   "founder_frame_children": 0
+  },
+  "orig_assay": {
+   "keep_s0": 1.0,
+   "keep_s1": 0.543,
+   "conv_s0": 1.0,
+   "conv_s1": 0.535,
+   "exact_child": 0.695,
+   "m_base": 1.524,
+   "founder_frame_children": 0
+  },
+  "P_assay": {
+   "keep_s0": 0.663,
+   "keep_s1": 0.919,
+   "conv_s0": 0.008,
+   "conv_s1": 0.888,
+   "exact_child": 0.0,
+   "m_base": 1.257,
+   "founder_frame_children": 0
+  },
+  "knockouts": {
+   "52": {
+    "conv_s0": 0.008,
+    "conv_s1": 0.888,
+    "keep_s1": 0.919,
+    "m": 1.257
+   },
+   "53": {
+    "conv_s0": 0.008,
+    "conv_s1": 0.888,
+    "keep_s1": 0.919,
+    "m": 1.258
+   }
+  },
+  "ldir_s0": {
+   "n_side": 200,
+   "n_conv": 200,
+   "conv_ldir": {
+    "(1, 52, 64, 'n>64', 'chained')": 200
+   }
+  },
+  "ldir_s1": {
+   "n_side": 200,
+   "n_conv": 117,
+   "conv_ldir": {
+    "(0, 45, 0, 'n>64', 'direct')": 117
+   }
+  },
+  "transplant_founder_frame": {
+   "hex": "0021005cf6b5f0d026490a070cd1d13fc0fd42e61455d7ed325adba1049ec6e864617a5aa4a50027004502c1ec22ffdf5f66e2f3edb06e1005eeffedb0c100a4",
+   "assay": {
+    "keep_s0": 1.0,
+    "keep_s1": 0.479,
+    "conv_s0": 1.0,
+    "conv_s1": 0.467,
+    "exact_child": 0.677,
+    "m_base": 1.456,
+    "founder_frame_children": 725
+   }
+  },
+  "dis": [
+   "0:nop(D0)",
+   "1:LD H,49",
+   "3:LD A,(BC)",
+   "4:nop(07)",
+   "5:INC C",
+   "6:nop(D1)",
+   "7:nop(D1)",
+   "8:nop(3F)",
+   "9:nop(C0)",
+   "10:nop(FD)",
+   "11:LD B,D",
+   "12:AND A,14",
+   "14:LD D,L",
+   "15:nop(D7)",
+   "16:SELF",
+   "18:LD E,D",
+   "19:IN",
+   "21:INC B",
+   "22:SBC A,(HL)",
+   "23:ADD A,E8",
+   "25:LD H,H",
+   "26:LD H,C",
+   "27:LD A,D",
+   "28:LD E,D",
+   "29:AND A,H",
+   "30:AND A,L",
+   "31:NOP",
+   "32:nop(27)",
+   "33:NOP",
+   "34:LD B,L",
+   "35:LD (BC),A",
+   "36:nop(C1)",
+   "37:nop(EC)",
+   "38:nop(22)",
+   "39:nop(FF)",
+   "40:nop(DF)",
+   "41:LD E,A",
+   "42:LD H,(HL)",
+   "43:nop(E2)",
+   "44:nop(F3)",
+   "45:LDIR",
+   "47:LD L,(HL)",
+   "48:nop(10)",
+   "49:DEC B",
+   "50:XOR A,FF",
+   "52:LDIR",
+   "54:nop(C1)",
+   "55:NOP",
+   "56:AND A,H",
+   "57:NOP",
+   "58:LD HL,5C00",
+   "61:OR A,B5",
+   "63:nop(F0)"
+  ]
+ },
+ "XH2N_s1_first": {
+  "frame": 47,
+  "two_sided_target": false,
+  "passes": 2,
+  "core_hex": "fd42e61455d7ed325adba1049ec6e864617a5aa4a50027004502c1ec22ffdf5f66e2f3edb06e1005edb09540c100a40021005cf6b5f0d026490a070cd1d13fc0",
+  "core_positions": [
+   {
+    "pos": 40,
+    "founder_pos": 57,
+    "byte": "ed",
+    "P": "ee"
+   },
+   {
+    "pos": 41,
+    "founder_pos": 58,
+    "byte": "b0",
+    "P": "ff"
+   }
+  ],
+  "core_assay": {
+   "keep_s0": 1.0,
+   "keep_s1": 0.543,
+   "conv_s0": 1.0,
+   "conv_s1": 0.531,
+   "exact_child": 0.0,
+   "m_base": 1.522,
+   "founder_frame_children": 0
+  },
+  "orig_assay": {
+   "keep_s0": 1.0,
+   "keep_s1": 0.49,
+   "conv_s0": 1.0,
+   "conv_s1": 0.006,
+   "exact_child": 0.271,
+   "m_base": 1.224,
+   "founder_frame_children": 0
+  },
+  "P_assay": {
+   "keep_s0": 0.649,
+   "keep_s1": 0.878,
+   "conv_s0": 0.002,
+   "conv_s1": 0.855,
+   "exact_child": 0.0,
+   "m_base": 1.209,
+   "founder_frame_children": 0
+  },
+  "knockouts": {
+   "40": {
+    "conv_s0": 0.002,
+    "conv_s1": 0.855,
+    "keep_s1": 0.878,
+    "m": 1.209
+   },
+   "41": {
+    "conv_s0": 0.002,
+    "conv_s1": 0.855,
+    "keep_s1": 0.878,
+    "m": 1.209
+   }
+  },
+  "ldir_s0": {
+   "n_side": 200,
+   "n_conv": 200,
+   "conv_ldir": {
+    "(1, 40, 64, 'n>64', 'chained')": 200
+   }
+  },
+  "ldir_s1": {
+   "n_side": 200,
+   "n_conv": 119,
+   "conv_ldir": {
+    "(0, 35, 0, 'n>64', 'direct')": 119
+   }
+  },
+  "transplant_founder_frame": {
+   "hex": "0021005cf6b5f0d026490a070cd1d13fc0fd42e61455d7ed325adba1049ec6e864617a5aa4a50027004502c1ec22ffdf5f66e2f3edb06e1005edb09540c100a4",
+   "assay": {
+    "keep_s0": 1.0,
+    "keep_s1": 0.486,
+    "conv_s0": 1.0,
+    "conv_s1": 0.475,
+    "exact_child": 0.684,
+    "m_base": 1.464,
+    "founder_frame_children": 729
+   }
+  },
+  "dis": [
+   "0:nop(FD)",
+   "1:LD B,D",
+   "2:AND A,14",
+   "4:LD D,L",
+   "5:nop(D7)",
+   "6:SELF",
+   "8:LD E,D",
+   "9:IN",
+   "11:INC B",
+   "12:SBC A,(HL)",
+   "13:ADD A,E8",
+   "15:LD H,H",
+   "16:LD H,C",
+   "17:LD A,D",
+   "18:LD E,D",
+   "19:AND A,H",
+   "20:AND A,L",
+   "21:NOP",
+   "22:nop(27)",
+   "23:NOP",
+   "24:LD B,L",
+   "25:LD (BC),A",
+   "26:nop(C1)",
+   "27:nop(EC)",
+   "28:nop(22)",
+   "29:nop(FF)",
+   "30:nop(DF)",
+   "31:LD E,A",
+   "32:LD H,(HL)",
+   "33:nop(E2)",
+   "34:nop(F3)",
+   "35:LDIR",
+   "37:LD L,(HL)",
+   "38:nop(10)",
+   "39:DEC B",
+   "40:LDIR",
+   "42:SUB A,L",
+   "43:LD B,B",
+   "44:nop(C1)",
+   "45:NOP",
+   "46:AND A,H",
+   "47:NOP",
+   "48:LD HL,5C00",
+   "51:OR A,B5",
+   "53:nop(F0)",
+   "54:nop(D0)",
+   "55:LD H,49",
+   "57:LD A,(BC)",
+   "58:nop(07)",
+   "59:INC C",
+   "60:nop(D1)",
+   "61:nop(D1)",
+   "62:nop(3F)",
+   "63:nop(C0)"
+  ]
+ },
+ "CRW_1_first": {
+  "frame": 46,
+  "two_sided_target": true,
+  "passes": 3,
+  "core_hex": "42e61455d7ed325adba1049ec6e864617a5aa4a50027004502c1ec22ffdf5f66e2f3edb06e1005eeff9540d2a2a40021005cf6b5f0d026490a070cd1d13fc0fd",
+  "core_positions": [
+   {
+    "pos": 43,
+    "founder_pos": 61,
+    "byte": "d2",
+    "P": "c1"
+   },
+   {
+    "pos": 44,
+    "founder_pos": 62,
+    "byte": "a2",
+    "P": "00"
+   }
+  ],
+  "core_assay": {
+   "keep_s0": 1.0,
+   "keep_s1": 0.888,
+   "conv_s0": 1.0,
+   "conv_s1": 0.868,
+   "exact_child": 0.0,
+   "m_base": 1.874,
+   "founder_frame_children": 0
+  },
+  "orig_assay": {
+   "keep_s0": 1.0,
+   "keep_s1": 0.893,
+   "conv_s0": 1.0,
+   "conv_s1": 0.876,
+   "exact_child": 0.21,
+   "m_base": 1.881,
+   "founder_frame_children": 0
+  },
+  "P_assay": {
+   "keep_s0": 0.649,
+   "keep_s1": 0.893,
+   "conv_s0": 0.004,
+   "conv_s1": 0.87,
+   "exact_child": 0.0,
+   "m_base": 1.226,
+   "founder_frame_children": 0
+  },
+  "knockouts": {
+   "43": {
+    "conv_s0": 0.004,
+    "conv_s1": 0.87,
+    "keep_s1": 0.893,
+    "m": 1.226
+   },
+   "44": {
+    "conv_s0": 0.0,
+    "conv_s1": 0.87,
+    "keep_s1": 0.888,
+    "m": 1.23
+   }
+  },
+  "ldir_s0": {
+   "n_side": 200,
+   "n_conv": 200,
+   "conv_ldir": {
+    "(1, 34, 64, 'n>64', 'chained')": 200
+   }
+  },
+  "ldir_s1": {
+   "n_side": 200,
+   "n_conv": 178,
+   "conv_ldir": {
+    "(0, 34, 0, 'n>64', 'direct')": 178
+   }
+  },
+  "transplant_founder_frame": {
+   "hex": "0021005cf6b5f0d026490a070cd1d13fc0fd42e61455d7ed325adba1049ec6e864617a5aa4a50027004502c1ec22ffdf5f66e2f3edb06e1005eeff9540d2a2a4",
+   "assay": {
+    "keep_s0": 0.475,
+    "keep_s1": 0.901,
+    "conv_s0": 0.0,
+    "conv_s1": 0.87,
+    "exact_child": 0.335,
+    "m_base": 1.144,
+    "founder_frame_children": 449
+   }
+  },
+  "dis": [
+   "0:LD B,D",
+   "1:AND A,14",
+   "3:LD D,L",
+   "4:nop(D7)",
+   "5:SELF",
+   "7:LD E,D",
+   "8:IN",
+   "10:INC B",
+   "11:SBC A,(HL)",
+   "12:ADD A,E8",
+   "14:LD H,H",
+   "15:LD H,C",
+   "16:LD A,D",
+   "17:LD E,D",
+   "18:AND A,H",
+   "19:AND A,L",
+   "20:NOP",
+   "21:nop(27)",
+   "22:NOP",
+   "23:LD B,L",
+   "24:LD (BC),A",
+   "25:nop(C1)",
+   "26:nop(EC)",
+   "27:nop(22)",
+   "28:nop(FF)",
+   "29:nop(DF)",
+   "30:LD E,A",
+   "31:LD H,(HL)",
+   "32:nop(E2)",
+   "33:nop(F3)",
+   "34:LDIR",
+   "36:LD L,(HL)",
+   "37:nop(10)",
+   "38:DEC B",
+   "39:XOR A,FF",
+   "41:SUB A,L",
+   "42:LD B,B",
+   "43:JPNC A4A2",
+   "46:NOP",
+   "47:LD HL,5C00",
+   "50:OR A,B5",
+   "52:nop(F0)",
+   "53:nop(D0)",
+   "54:LD H,49",
+   "56:LD A,(BC)",
+   "57:nop(07)",
+   "58:INC C",
+   "59:nop(D1)",
+   "60:nop(D1)",
+   "61:nop(3F)",
+   "62:nop(C0)",
+   "63:nop(FD)"
+  ]
+ },
+ "CRW_1_last": {
+  "frame": 46,
+  "two_sided_target": true,
+  "passes": 3,
+  "core_hex": "42e61455d7ed325adba1049ec6e864617a5aa4a50027004502c1ec22ffdf5f66e2f3edb06e1005eeff9540d2a2a40021005cf6b5f0d026490a070cd1d13fc0fd",
+  "core_positions": [
+   {
+    "pos": 43,
+    "founder_pos": 61,
+    "byte": "d2",
+    "P": "c1"
+   },
+   {
+    "pos": 44,
+    "founder_pos": 62,
+    "byte": "a2",
+    "P": "00"
+   }
+  ],
+  "core_assay": {
+   "keep_s0": 1.0,
+   "keep_s1": 0.888,
+   "conv_s0": 1.0,
+   "conv_s1": 0.868,
+   "exact_child": 0.0,
+   "m_base": 1.874,
+   "founder_frame_children": 0
+  },
+  "orig_assay": {
+   "keep_s0": 1.0,
+   "keep_s1": 0.897,
+   "conv_s0": 1.0,
+   "conv_s1": 0.88,
+   "exact_child": 0.2,
+   "m_base": 1.885,
+   "founder_frame_children": 0
+  },
+  "P_assay": {
+   "keep_s0": 0.649,
+   "keep_s1": 0.893,
+   "conv_s0": 0.004,
+   "conv_s1": 0.87,
+   "exact_child": 0.0,
+   "m_base": 1.226,
+   "founder_frame_children": 0
+  },
+  "knockouts": {
+   "43": {
+    "conv_s0": 0.004,
+    "conv_s1": 0.87,
+    "keep_s1": 0.893,
+    "m": 1.226
+   },
+   "44": {
+    "conv_s0": 0.0,
+    "conv_s1": 0.87,
+    "keep_s1": 0.888,
+    "m": 1.23
+   }
+  },
+  "ldir_s0": {
+   "n_side": 200,
+   "n_conv": 200,
+   "conv_ldir": {
+    "(1, 34, 64, 'n>64', 'chained')": 200
+   }
+  },
+  "ldir_s1": {
+   "n_side": 200,
+   "n_conv": 178,
+   "conv_ldir": {
+    "(0, 34, 0, 'n>64', 'direct')": 178
+   }
+  },
+  "transplant_founder_frame": {
+   "hex": "0021005cf6b5f0d026490a070cd1d13fc0fd42e61455d7ed325adba1049ec6e864617a5aa4a50027004502c1ec22ffdf5f66e2f3edb06e1005eeff9540d2a2a4",
+   "assay": {
+    "keep_s0": 0.475,
+    "keep_s1": 0.901,
+    "conv_s0": 0.0,
+    "conv_s1": 0.87,
+    "exact_child": 0.335,
+    "m_base": 1.144,
+    "founder_frame_children": 449
+   }
+  },
+  "dis": [
+   "0:LD B,D",
+   "1:AND A,14",
+   "3:LD D,L",
+   "4:nop(D7)",
+   "5:SELF",
+   "7:LD E,D",
+   "8:IN",
+   "10:INC B",
+   "11:SBC A,(HL)",
+   "12:ADD A,E8",
+   "14:LD H,H",
+   "15:LD H,C",
+   "16:LD A,D",
+   "17:LD E,D",
+   "18:AND A,H",
+   "19:AND A,L",
+   "20:NOP",
+   "21:nop(27)",
+   "22:NOP",
+   "23:LD B,L",
+   "24:LD (BC),A",
+   "25:nop(C1)",
+   "26:nop(EC)",
+   "27:nop(22)",
+   "28:nop(FF)",
+   "29:nop(DF)",
+   "30:LD E,A",
+   "31:LD H,(HL)",
+   "32:nop(E2)",
+   "33:nop(F3)",
+   "34:LDIR",
+   "36:LD L,(HL)",
+   "37:nop(10)",
+   "38:DEC B",
+   "39:XOR A,FF",
+   "41:SUB A,L",
+   "42:LD B,B",
+   "43:JPNC A4A2",
+   "46:NOP",
+   "47:LD HL,5C00",
+   "50:OR A,B5",
+   "52:nop(F0)",
+   "53:nop(D0)",
+   "54:LD H,49",
+   "56:LD A,(BC)",
+   "57:nop(07)",
+   "58:INC C",
+   "59:nop(D1)",
+   "60:nop(D1)",
+   "61:nop(3F)",
+   "62:nop(C0)",
+   "63:nop(FD)"
+  ]
+ },
+ "CNR_s22_last": {
+  "frame": 62,
+  "two_sided_target": false,
+  "passes": 2,
+  "core_hex": "005cf6b5f0d026490a070cd1d13fc0fd42e61455d797ed32dba1049ec6e864617a5aa4a5002700450281ec22ffdf5f66e2f3edb06e1005eeff9540c100a40021",
+  "core_positions": [
+   {
+    "pos": 21,
+    "founder_pos": 23,
+    "byte": "97",
+    "P": "ed"
+   },
+   {
+    "pos": 22,
+    "founder_pos": 24,
+    "byte": "ed",
+    "P": "32"
+   },
+   {
+    "pos": 23,
+    "founder_pos": 25,
+    "byte": "32",
+    "P": "5a"
+   },
+   {
+    "pos": 41,
+    "founder_pos": 43,
+    "byte": "81",
+    "P": "c1"
+   }
+  ],
+  "core_assay": {
+   "keep_s0": 1.0,
+   "keep_s1": 0.51,
+   "conv_s0": 1.0,
+   "conv_s1": 0.01,
+   "exact_child": 0.274,
+   "m_base": 1.236,
+   "founder_frame_children": 0
+  },
+  "orig_assay": {
+   "keep_s0": 1.0,
+   "keep_s1": 0.521,
+   "conv_s0": 1.0,
+   "conv_s1": 0.512,
+   "exact_child": 0.699,
+   "m_base": 1.501,
+   "founder_frame_children": 0
+  },
+  "P_assay": {
+   "keep_s0": 0.64,
+   "keep_s1": 0.901,
+   "conv_s0": 0.006,
+   "conv_s1": 0.89,
+   "exact_child": 0.34,
+   "m_base": 1.237,
+   "founder_frame_children": 1
+  },
+  "knockouts": {
+   "21": {
+    "conv_s0": 0.004,
+    "conv_s1": 0.0,
+    "keep_s1": 0.492,
+    "m": 0.43
+   },
+   "22": {
+    "conv_s0": 0.002,
+    "conv_s1": 0.0,
+    "keep_s1": 0.492,
+    "m": 0.428
+   },
+   "23": {
+    "conv_s0": 0.002,
+    "conv_s1": 0.0,
+    "keep_s1": 0.494,
+    "m": 0.429
+   },
+   "41": {
+    "conv_s0": 0.006,
+    "conv_s1": 0.89,
+    "keep_s1": 0.903,
+    "m": 1.24
+   }
+  },
+  "ldir_s0": {
+   "n_side": 200,
+   "n_conv": 200,
+   "conv_ldir": {
+    "(0, 50, 64, 'n<=64', 'direct')": 200
+   }
+  },
+  "ldir_s1": {
+   "n_side": 200,
+   "n_conv": 2,
+   "conv_ldir": {
+    "(0, 50, 0, 'n>64', 'direct')": 2
+   }
+  },
+  "transplant_founder_frame": {
+   "hex": "0021005cf6b5f0d026490a070cd1d13fc0fd42e61455d797ed32dba1049ec6e864617a5aa4a5002700450281ec22ffdf5f66e2f3edb06e1005eeff9540c100a4",
+   "assay": {
+    "keep_s0": 1.0,
+    "keep_s1": 0.516,
+    "conv_s0": 1.0,
+    "conv_s1": 0.017,
+    "exact_child": 0.484,
+    "m_base": 1.243,
+    "founder_frame_children": 493
+   }
+  },
+  "dis": [
+   "0:NOP",
+   "1:LD E,H",
+   "2:OR A,B5",
+   "4:nop(F0)",
+   "5:nop(D0)",
+   "6:LD H,49",
+   "8:LD A,(BC)",
+   "9:nop(07)",
+   "10:INC C",
+   "11:nop(D1)",
+   "12:nop(D1)",
+   "13:nop(3F)",
+   "14:nop(C0)",
+   "15:nop(FD)",
+   "16:LD B,D",
+   "17:AND A,14",
+   "19:LD D,L",
+   "20:nop(D7)",
+   "21:SUB A,A",
+   "22:SELF",
+   "24:IN",
+   "26:INC B",
+   "27:SBC A,(HL)",
+   "28:ADD A,E8",
+   "30:LD H,H",
+   "31:LD H,C",
+   "32:LD A,D",
+   "33:LD E,D",
+   "34:AND A,H",
+   "35:AND A,L",
+   "36:NOP",
+   "37:nop(27)",
+   "38:NOP",
+   "39:LD B,L",
+   "40:LD (BC),A",
+   "41:ADD A,C",
+   "42:nop(EC)",
+   "43:nop(22)",
+   "44:nop(FF)",
+   "45:nop(DF)",
+   "46:LD E,A",
+   "47:LD H,(HL)",
+   "48:nop(E2)",
+   "49:nop(F3)",
+   "50:LDIR",
+   "52:LD L,(HL)",
+   "53:nop(10)",
+   "54:DEC B",
+   "55:XOR A,FF",
+   "57:SUB A,L",
+   "58:LD B,B",
+   "59:nop(C1)",
+   "60:NOP",
+   "61:AND A,H",
+   "62:NOP",
+   "63:LD HL,0000"
+  ]
+ },
+ "CRW_78_last": {
+  "frame": 57,
+  "two_sided_target": false,
+  "passes": 2,
+  "core_hex": "d026490a070cd1d13fc0fd42e61455d7ed325adba1049ec6e864617a5aa4a50027004502c1ec22ffdf5f66e2f3edb06e1005eeffedb0c100a40021005cf6b5f0",
+  "core_positions": [
+   {
+    "pos": 52,
+    "founder_pos": 59,
+    "byte": "ed",
+    "P": "95"
+   },
+   {
+    "pos": 53,
+    "founder_pos": 60,
+    "byte": "b0",
+    "P": "40"
+   }
+  ],
+  "core_assay": {
+   "keep_s0": 1.0,
+   "keep_s1": 0.529,
+   "conv_s0": 1.0,
+   "conv_s1": 0.517,
+   "exact_child": 0.0,
+   "m_base": 1.508,
+   "founder_frame_children": 0
+  },
+  "orig_assay": {
+   "keep_s0": 1.0,
+   "keep_s1": 0.535,
+   "conv_s0": 1.0,
+   "conv_s1": 0.527,
+   "exact_child": 0.7,
+   "m_base": 1.516,
+   "founder_frame_children": 0
+  },
+  "P_assay": {
+   "keep_s0": 0.663,
+   "keep_s1": 0.919,
+   "conv_s0": 0.008,
+   "conv_s1": 0.888,
+   "exact_child": 0.0,
+   "m_base": 1.257,
+   "founder_frame_children": 0
+  },
+  "knockouts": {
+   "52": {
+    "conv_s0": 0.008,
+    "conv_s1": 0.888,
+    "keep_s1": 0.919,
+    "m": 1.257
+   },
+   "53": {
+    "conv_s0": 0.008,
+    "conv_s1": 0.888,
+    "keep_s1": 0.919,
+    "m": 1.258
+   }
+  },
+  "ldir_s0": {
+   "n_side": 200,
+   "n_conv": 200,
+   "conv_ldir": {
+    "(1, 52, 64, 'n>64', 'chained')": 200
+   }
+  },
+  "ldir_s1": {
+   "n_side": 200,
+   "n_conv": 117,
+   "conv_ldir": {
+    "(0, 45, 0, 'n>64', 'direct')": 117
+   }
+  },
+  "transplant_founder_frame": {
+   "hex": "0021005cf6b5f0d026490a070cd1d13fc0fd42e61455d7ed325adba1049ec6e864617a5aa4a50027004502c1ec22ffdf5f66e2f3edb06e1005eeffedb0c100a4",
+   "assay": {
+    "keep_s0": 1.0,
+    "keep_s1": 0.479,
+    "conv_s0": 1.0,
+    "conv_s1": 0.467,
+    "exact_child": 0.677,
+    "m_base": 1.456,
+    "founder_frame_children": 725
+   }
+  },
+  "dis": [
+   "0:nop(D0)",
+   "1:LD H,49",
+   "3:LD A,(BC)",
+   "4:nop(07)",
+   "5:INC C",
+   "6:nop(D1)",
+   "7:nop(D1)",
+   "8:nop(3F)",
+   "9:nop(C0)",
+   "10:nop(FD)",
+   "11:LD B,D",
+   "12:AND A,14",
+   "14:LD D,L",
+   "15:nop(D7)",
+   "16:SELF",
+   "18:LD E,D",
+   "19:IN",
+   "21:INC B",
+   "22:SBC A,(HL)",
+   "23:ADD A,E8",
+   "25:LD H,H",
+   "26:LD H,C",
+   "27:LD A,D",
+   "28:LD E,D",
+   "29:AND A,H",
+   "30:AND A,L",
+   "31:NOP",
+   "32:nop(27)",
+   "33:NOP",
+   "34:LD B,L",
+   "35:LD (BC),A",
+   "36:nop(C1)",
+   "37:nop(EC)",
+   "38:nop(22)",
+   "39:nop(FF)",
+   "40:nop(DF)",
+   "41:LD E,A",
+   "42:LD H,(HL)",
+   "43:nop(E2)",
+   "44:nop(F3)",
+   "45:LDIR",
+   "47:LD L,(HL)",
+   "48:nop(10)",
+   "49:DEC B",
+   "50:XOR A,FF",
+   "52:LDIR",
+   "54:nop(C1)",
+   "55:NOP",
+   "56:AND A,H",
+   "57:NOP",
+   "58:LD HL,5C00",
+   "61:OR A,B5",
+   "63:nop(F0)"
+  ]
+ },
+ "_cpu_s": 46.4
+}
