@@ -304,6 +304,11 @@ docs/*
 # served, so anything added here becomes public on the next push to main.
 !docs/essays/
 !docs/essays/**
+# Fleet census (Achilles, 2026-09-30): page, canonical snapshot, email block, run status.
+# Served at https://jcraig949jfi.github.io/Prometheus/fleet/ ; written every 6 h by
+# achilles/census/run.py (PrometheusFleetCensus on ELSA).
+!docs/fleet/
+!docs/fleet/**
 
 # Papers — UNPUBLISHED (gitignore until ready to publish)
 papers/
