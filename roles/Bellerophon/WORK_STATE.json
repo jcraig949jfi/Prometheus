@@ -4,7 +4,7 @@
   "mwo_id": "MWO-0004",
   "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
   "mwo_sha256": "925660b2d2be53af2ee4195391e484d9649bbd4ee828cd60432ce2f0903a99df",
-  "updated_at_utc": "2026-09-30T18:16:11Z",
+  "updated_at_utc": "2026-10-01T01:24:12Z",
   "state": "WORKING",
   "state_reason": "Aporia #1138: R-MECH reviewer of Cosmos C4 DESIGN v0.2 (bounded review item)",
   "branch": "bellerophon/mwo-0001-2026-09-28",
@@ -204,6 +204,30 @@
       "what": "E-BEL-REPL-01 overclaims (K3 'kill real', BEE-specific, zero continuity) + false 'sealed' blinding via merge of main; pair-900 smoke output deleted",
       "exposed_by": "adversarial reviews tsk-ad966fa39590/tsk-750695b70564",
       "fix": "ERRATA_REPL01_2026-09-30.md; correction #1113; ledger",
+      "science_blocked": false
+    },
+    {
+      "id": "DEF-BEL-008",
+      "what": "world.py:562-569 glineage assigned by resemblance (label-as-content); consumers seed/fixture_lineage_share",
+      "exposed_by": "Nestor Wave-2 defect-class sweep #1207",
+      "status": "CONFIRMED; known (REPL-01 ERRATA R1)",
+      "fix": "not started (CWO-C: no scope growth; fix if assigned)",
+      "science_blocked": false
+    },
+    {
+      "id": "DEF-BEL-009",
+      "what": "world.py:261-268 transplant slots take 0 world-RNG draws vs L for random: transplant-vs-control same-seed runs are not CRN-paired",
+      "exposed_by": "Nestor Wave-2 defect-class sweep #1207",
+      "status": "CONFIRMED mechanism; REPL-01/02 pairs unaffected; historical transplant-vs-control contrasts affected",
+      "fix": "not started (CWO-C: no scope growth; fix if assigned)",
+      "science_blocked": false
+    },
+    {
+      "id": "DEF-BEL-010",
+      "what": "geometry.py zero padding + zero child window inflate `replicates` (ENDOGENOUS_PARTIAL need=1)",
+      "exposed_by": "Nestor Wave-2 defect-class sweep #1207",
+      "status": "CONFIRMED candidate",
+      "fix": "not started (CWO-C: no scope growth; fix if assigned)",
       "science_blocked": false
     }
   ],
