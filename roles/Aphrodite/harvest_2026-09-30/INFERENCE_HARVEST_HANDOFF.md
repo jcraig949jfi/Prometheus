@@ -21,6 +21,9 @@ improvements, rather than merely accumulating code, memory, compute, agents and 
    L0 is established (RSI_BOUNDARY s5).
 2. **What the record DOES show is a lab that catches its own errors when an auditor and the operator are involved, and
    whose lessons mostly do not transfer between seats.**
+   - Within a seat, the failure share falls from 0.28 (first 24 h) to 0.15 (after 72 h). New seats re-learn the same
+     failures. Positives compound inside seats (e.g. Nestor's 7-link chain) but have never crossed a seat or substrate
+     boundary (A3).
    - "Gates that cannot fail or cannot pass" is the commonest defect class: 14 episodes across 9 seats. It recurred after
      seat-local lessons, including Aphrodite's own recurrence: an unpassable gate was caught on 09-22, and hard-coded
      True gates were shipped on 09-23 (D55).
@@ -74,7 +77,7 @@ Sources: four independent read-only analysts and critic 1, using git (10,337 non
 | Defect recurrence | "gate that cannot fail or cannot pass": 14 episodes, 9 seats; seed/pairing errors rediscovered by 4 seats; CRLF-hash lesson only partly transferred; exposure/freeze-ordering slips across 12 seats | lessons are seat-local; no transfer shown | A1, critic 1 O3 |
 | Auditor fallibility | Harmonia committed its audited error twice (D79, D87); audit J wrong (#1113); Fabric reviewers passed a post-exposure change because prompts told them to (D73) | the review layer needs its own recall measurement | A1, critic 1 |
 | 09-30 audit outcomes | of 12 audited packages: 4 clean, 6 MAJOR, 1 BLOCKING, 1 audit wrong; dispositions mostly survive, while attached positive claims carry the defects | no baseline exists, so this cannot show a trend | critic 1 O2 |
-| Positive-result compounding | no case found where a surviving result became a load-bearing input to another seat's later surviving verdict | results do not compound across seats (yet) | critic 1 O4 |
+| Positive-result compounding | WITHIN seats, yes: Nestor's 7-link confirmed chain, Aether E-006 -> E-010, Aphrodite S1-S4 -> A23. Some chains were built on positives later restricted or killed (Cosmos laws A/B, Archaeon CMP1, Ensorain WTP-02). ACROSS seats or substrates, none: Nestor internalisation vanished in BEE; Atlas-BEE inverted or absent; cross-engine ancestry UNTESTABLE. Only about 3 cross-seat attempts exist | compounding is seat-local; cross-seat portability is unshown (n too small to call it absent) | A3, critic 1 O4 |
 | Operator load | 177 operator prompts / 20 days / 41 seats; redirect-science 101, approve-gate 36, infra 34; all waiting chains end at the operator; 0 operator prompts on 09-15, 09-20, 09-22, when only 2 seats were active | operator availability throttles throughput | A4 |
 | Review cycles | D2: 13 rounds in about 20.5 h; 8 found NEW defect classes, often repair-introduced; 2 re-reported an operator-blocked item | audit churn: repair-induced defects | A4, critic 1 O5 |
 | Stale-state incidents | 12 catalogued, 9 of them in 09-28..30. Examples: Artemis 16 Fabric tasks under a superseded order (#1134); a leftover Nestor scheduled task destroyed 10/11 sample files (#943); the census marked Aphrodite not_live 3 h after a commit | control-plane churn creates stale authority | A4 |
@@ -83,8 +86,47 @@ Sources: four independent read-only analysts and critic 1, using git (10,337 non
 | World-facing share | 997/1198 messages about the lab itself vs 149 about any external domain; every studied "world" is built in-house | the lab is mostly studying itself | critic 1 O7 |
 | Experiment ledger, verdict mix | see s2.1 | | A3 |
 
-### 2.1 Experiment ledger (A3)
-PENDING-A3
+### 2.1 Experiment ledger (A3; evidence/findings_A3_experiments.md, findings_A3_ledger.csv)
+
+281 experiments across 14 seats, 09-06..09-30. Verdict classes are A3's mapping of seat-local wording; 16% of rows were
+later relabelled by their seats.
+
+| Class | Count |
+|---|---|
+| POSITIVE | 107 |
+| NULL | 89 |
+| KILLED by baseline/control | 23 |
+| UNTESTABLE | 25 |
+| INVALID | 21 |
+| PARKED | 10 |
+| OPEN | 6 |
+
+- **UNTESTABLE + INVALID share by verdict date:** 0.33 -> 0.29 -> 0.14 -> 0.09 -> 0.13, then 0.31 on 09-30. Of the 9
+  failures on 09-30, 8 came from Hecate, Tyche and Theseus on their first day.
+- **Seat age drives it.** A seat's first 24 h run at 0.28; after 72 h, 0.15. This is the cleanest "improvement-shaped"
+  signal in the record, and it is WITHIN-SEAT LEARNING THAT DOES NOT TRANSFER: every new seat re-learns the old failures
+  (no quota screen, no planted positive control, compute oversizing). Within-seat trends are mixed. Nestor fell
+  0.67 -> about 0.07; Archaeon and Ensorain fell. Aphrodite ROSE 0.14 -> 0.60 once its assays became supply-limited.
+- **Freeze-to-verdict** median is under 1 h, with no trend. The real cost is RE-FREEZES. Aphrodite's recurrence line took
+  6 amendments and 15.7 h to reach one valid YES; its bounded-RSI line took 4.2 days to reach a valid NO.
+- **Screens.** 35 problems were caught pre-run vs 70 post-run. Where screens existed they worked (Aether $0 scouts;
+  Cosmos killing a law before spending the sealed holdout; Nestor gates). The expensive failures all had a screen that
+  did not test the thing that failed: a positive control unable to fire, ceiling rulers, compute sizing. Examples:
+  Nestor's 72 h Z80 run, Archaeon ENVGATE-01, Ananke PTE-C1, Tyche's 13 lost core-h. This cross-tab is partly circular,
+  because missing screens were often learned only from failures.
+- **T49 (Aphrodite's supply-screen lesson).**
+  - Built after A21. A22 used it and STILL failed quota (5/8 vs 6).
+  - The lesson was written 3 min after A23 froze, so its "worked" rests on A23 alone.
+  - NO other seat cites it; equivalents arose earlier and independently elsewhere.
+  - Not evidence of transfer in either direction.
+- **Reused instruments carry their defects.** Nestor's P-11 assay was reused about 10 times before being ruled unsound.
+  Bellerophon's BEE replications repeated its own logged defect.
+
+**Implication for the causal model.** The seat-age curve says the binding constraint is not per-seat learning. Seats
+learn within about 72 h. The constraint is that the lab has no channel through which a lesson becomes a NEW seat's
+default. Lesson channels today are per-seat STANDING_RULES, operator prompts and documents. That is exactly what C11
+(reusable skill) would need, and exactly what E4 tests. The gate-reachability lint (s5 item 1) is the cheapest channel
+that does not depend on reading.
 
 ---------------------------------------------------------------------------------------------------------------------
 
@@ -102,7 +144,11 @@ PENDING-A3
    windows and a full operator-input log.
 8. Any claim about information yield per resource. Tokens are unmetered, operator-minutes are unlogged, and p_pred is
    never recorded.
-9. That a positive result compounds. Load-bearing cross-seat use is unrecorded and, per critic 1, so far absent.
+9. That positive results compound ACROSS seats or substrates. Within-seat chains exist (A3). About 3 cross-seat
+   attempts all failed or ended UNTESTABLE, which is too few to call portability absent. Load-bearing use is not
+   recorded anywhere.
+10. That T49, or any single lesson, transferred. No other seat cites T49, and its own success rests on one experiment
+    (A23).
 
 ---------------------------------------------------------------------------------------------------------------------
 

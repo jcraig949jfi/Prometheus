@@ -275,7 +275,7 @@ That switch immediately precedes every late-September intervention (findings_A2)
 | C6 rulers | rulers repaired often, but "gates that cannot fail or cannot pass" recur in 14 episodes across 9 seats (findings_A1) | repair without transfer |
 | C7 infra | Fabric added new friction classes (#994/#998, #916/#953); lease problems flat | leaning churn (A2) |
 | C8 selection | parking and kills dominate verdicts; CWO dispatch on 09-30 | unmeasurable without per-seat matched tasks |
-| C11 skill | only partial transfer of one lesson (CRLF hashes), and even that recurred on 09-30 | NOT SHOWN |
+| C11 skill | within-seat learning (failure share 0.28 in a seat's first 24h -> 0.15 after 72h) but new seats re-learn old failures; one lesson partly transferred (CRLF hashes) and recurred; T49 cited by no other seat (A3) | within-seat C10/C11 mix; cross-seat transfer NOT SHOWN |
 | X2 operator | D2 audit loop ended only by operator decree (MWO-0004 Part 2); 7 work orders in about 72h; 378 operator prompt directories in Sep | the operator is the main improver |
 
 See the handoff (s2) for the full ledger, including the experiment ledger (A3) and the human-load and reuse analysis
