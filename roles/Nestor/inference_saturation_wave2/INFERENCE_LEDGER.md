@@ -1206,3 +1206,28 @@ Store final, and periodic, genome bytes plus registers in every world run. Five 
 - **Early warning (directive B), net.** No observable tested separates runaway from intermediate before about 27 births. The best available statement is "early growth is necessary, not sufficient" (EW-4 necessity holds 8/8).
 
 **W2-36** is logged separately above. Comms to Artemis follows.
+
+
+### W2-47: no-vocabulary account v2 (doc saved by the worker; Nestor note). Written at 03:10Z (clock)
+
+**Result.**
+- **Eight laws.** `NO_VOCAB_V2.md` derives every Wave-2 result from eight laws:
+  - L1 ring geometry;
+  - L2 position-anchored code run by any context;
+  - L3 channel = hazard;
+  - L4 operands from code or context;
+  - L5 write-back gate;
+  - L6 label = site tag;
+  - L7 closed finite field;
+  - L8 edit routes.
+- **14 overclaims (O1-O14)** are identified in the laden account.
+- **8 frame-only predictions.**
+- **Operational heredity** = operative span 23-53, conserved up to a viable frame; context and label are not transmitted.
+- **Self-attack.**
+  - L2 fails under exact identity: the edge bytes 0 and 63 are altered by an unnamed author.
+  - Static composition overshoots lifetime yield by about 1.7-2x.
+
+**Nestor.**
+- O10 conflicts with W2-41: "register-robust" holds universally for intact code. It is narrowed to "carried registers switch the lineage".
+- **This is the handoff's best candidate for a compact theory statement:** L1-L8 plus "conversion and vulnerability are one act".
+- Next: test P2 (order reversal) as W2-52, which is cheap, static, and a frame-only prediction.
