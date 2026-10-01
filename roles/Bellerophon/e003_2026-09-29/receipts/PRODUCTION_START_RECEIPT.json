@@ -1,0 +1,76 @@
+{
+ "about": "E-003 BEE production START RECEIPT (GO aa958093 @ 232ebe399, condition 1)",
+ "utc": "2026-09-29T08:03:03Z",
+ "branch_head": "eb68d24c6347d292c45ab434f6fde8ed3338b610",
+ "manifest_sha256_lf": "da1c73a4a672327c68868ce9b748a2d03429cedb9760cda8181b966960a9950a",
+ "manifest_expected": "da1c73a4a672327c68868ce9b748a2d03429cedb9760cda8181b966960a9950a",
+ "manifest_ok": true,
+ "files": {
+  "tools/bee_tracer.py": {
+   "expected": "823cbef18bdab2fad64b8623938e24a381e625fa087c83b2ca29d42844589f68",
+   "actual": "823cbef18bdab2fad64b8623938e24a381e625fa087c83b2ca29d42844589f68",
+   "ok": true
+  },
+  "tools/traced_world.py": {
+   "expected": "1e3136de0443085c4730c7ef3cb805c4dc403f202fd51ca45674d6ebac709dc7",
+   "actual": "1e3136de0443085c4730c7ef3cb805c4dc403f202fd51ca45674d6ebac709dc7",
+   "ok": true
+  },
+  "tools/replay_births.py": {
+   "expected": "196c1b9f61dd915621da1c7d6131e0f9b0e05f4020ca14c33aeb99f16505652d",
+   "actual": "196c1b9f61dd915621da1c7d6131e0f9b0e05f4020ca14c33aeb99f16505652d",
+   "ok": true
+  },
+  "tools/q4.py": {
+   "expected": "a60f466f68512c96da87afa056c216b5eafbfba94966e53161014e60ab7a7c19",
+   "actual": "a60f466f68512c96da87afa056c216b5eafbfba94966e53161014e60ab7a7c19",
+   "ok": true
+  },
+  "tools/s4_tests.py": {
+   "expected": "5403be1f62076a863af56ec155b8cbc69b6e558e8999723685f9718ef60b37a6",
+   "actual": "5403be1f62076a863af56ec155b8cbc69b6e558e8999723685f9718ef60b37a6",
+   "ok": true
+  },
+  "tools/e003_analysis.py": {
+   "expected": "09f2f989c2cad0a8db004ed01dcbe3270edfef7fe8c19c65ae4f4b12a351e462",
+   "actual": "09f2f989c2cad0a8db004ed01dcbe3270edfef7fe8c19c65ae4f4b12a351e462",
+   "ok": true
+  },
+  "tools/run_fixtures.py": {
+   "expected": "b4a5672c388a010e3c6052513ef21244258806eba75e1f8f64ae08d1afa52e17",
+   "actual": "b4a5672c388a010e3c6052513ef21244258806eba75e1f8f64ae08d1afa52e17",
+   "ok": true
+  },
+  "../forensics_2026-09-23/tools/traced_replay.py": {
+   "expected": "fcb280d0bca5ca9a134df5ccc5e25f6341040325d66e087a223ffcd2bdb481ec",
+   "actual": "fcb280d0bca5ca9a134df5ccc5e25f6341040325d66e087a223ffcd2bdb481ec",
+   "ok": true
+  },
+  "../forensics_2026-09-23/tools/load.py": {
+   "expected": "58cfa801d4571ba634b7cb6a1a11a5a812130f4b47e3b67c11b874efab7a80f9",
+   "actual": "58cfa801d4571ba634b7cb6a1a11a5a812130f4b47e3b67c11b874efab7a80f9",
+   "ok": true
+  },
+  "tools/agreement_export.py": {
+   "expected": "a320d94b7144f157c2f3e35db31313ca17e516e9042d956abaa3868cd11f0d7f",
+   "actual": "a320d94b7144f157c2f3e35db31313ca17e516e9042d956abaa3868cd11f0d7f",
+   "ok": true
+  }
+ },
+ "harness_pins": {
+  "world": "5b985241",
+  "vm": "2536b1ac",
+  "grammar": "3767d73d",
+  "tasks": "e2c37f76"
+ },
+ "pins_ok": true,
+ "declared_packaging": {
+  "tools/sample_prestate_export.py": "70f1688063ed2d07d3061fc7ab3bb4149b3421826a6d146a693782ae06a8610f",
+  "tools/run_production.sh": "a11680df71b1d781ac66bd39ab1204cc50e0a70b9626f05e2d47eb0043d01890"
+ },
+ "v0_schema_sha256_lf": "100c6d360b814715aadd5aa801797ceaec6fb78de94f7afdf8f90a1c25f7a84b",
+ "v0_schema_ok": true,
+ "go_record_sha256": "aa9580932289d1ae9d8d603d257ba92554cbc5c29e33672cd7b25629a32c5a58",
+ "go_ok": true,
+ "PASS": true
+}

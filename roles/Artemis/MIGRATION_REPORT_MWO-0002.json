@@ -1,0 +1,120 @@
+{
+  "schema": "prometheus.migration_report.v1",
+  "seat": "Artemis",
+  "mwo_id": "MWO-0002",
+  "mwo_commit": "89512068ff07f0bab6953a36313d550167340722",
+  "reported_at_utc": "2026-09-29T07:35Z",
+  "branch": "artemis/mwo-0001-2026-09-29",
+  "head_sha": "parent of the commit adding this file: a3b2c5a24057c51307f046a7a347aa72eb16cae1",
+  "bootstrap_independence": {
+    "answer": "CONDITIONAL",
+    "conditions": [
+      "The seat loop runs only while a Claude Code session is open on ubu002; it was started with /loop at the operator's MWO-0001 adoption prompt. A new session needs a boot instruction to read roles/Artemis/WAKE.md, which is not MWO-specific."
+    ],
+    "how_mwo_0001_was_found": "operator_prompt",
+    "how_mwo_0002_was_found": "own_loop_fetch",
+    "evidence": [
+      "loop tick 2026-09-29T07:20Z: git fetch showed CURRENT.md sha256 6f5a6a8b... != 007054ad... recorded in roles/Artemis/WORK_STATE.json; the same sync delivered comms #961"
+    ],
+    "note": "MWO-0002 was found by the self-paced seat loop, with no per-seat prompt."
+  },
+  "criteria": {
+    "C1_adopted_mwo_0001": {
+      "status": "YES",
+      "evidence": [
+        "roles/Artemis/WORK_STATE.json@85789d907 (mwo_commit 7e4c09f2c, mwo_sha256 007054ad...)",
+        "roles/Artemis/journal/2026-09-29.md@85789d907"
+      ],
+      "note": "Blob hash verified from git show origin/main:ops/work_orders/CURRENT.md before adoption."
+    },
+    "C2_discovers_next_mwo_unprompted": {
+      "status": "YES",
+      "evidence": [
+        "comms #961 received in loop sync 2026-09-29T07:20Z",
+        "origin/main:ops/work_orders/PUBLICATIONS.md (hash matched)"
+      ],
+      "note": "No per-seat prompt for MWO-0002."
+    },
+    "C3_work_state_useful": {
+      "status": "YES",
+      "evidence": [
+        "roles/Artemis/WORK_STATE.json (this commit)"
+      ],
+      "note": "v1 core fields filled; head_sha is written as a pointer because the file cannot hold its own commit."
+    },
+    "C4_identifies_authorized_work": {
+      "status": "YES",
+      "evidence": [
+        "origin/main:ops/work_orders/archive/MWO-0001_2026-09-28.md s10 ARTEMIS",
+        "roles/Artemis/WORK_STATE.json blocked_on"
+      ],
+      "note": "S3 principal (blocked on session placement), day-30 follow-up, bounded raw dispatch, and Nestor CVT-R follow-ups on request."
+    },
+    "C5_checks_comms_correctly": {
+      "status": "YES",
+      "evidence": [
+        "comms sync at loop ticks 03:43Z, 04:16Z, 04:47Z, 05:18Z, 06:19Z, 07:20Z",
+        "sent since MWO-0001: #936 only (blocker notice)"
+      ],
+      "note": "No heartbeats, no ACKs; Aether #938 and Nestor #894 were read and not answered, as neither needed a reply."
+    },
+    "C6_uses_fabric_where_appropriate": {
+      "status": "PARTIAL",
+      "evidence": [
+        "roles/Artemis/s3/DRAFT_WORKLOAD.md@fda8cbc28 (not submitted)"
+      ],
+      "note": "No Fabric Task submitted this cycle. S3 is the planned Fabric work, blocked on session placement; other bounded raw dispatch was deferred so it would not confound S3."
+    },
+    "C7_uses_common_hierarchy": {
+      "status": "PARTIAL",
+      "evidence": [
+        "roles/Artemis/WORK_STATE.json experiments[]"
+      ],
+      "note": "Artemis's closed experiments (self-test, CVT-R) have no registry Campaign id, and thr-s3 does not resolve under ops/threads."
+    },
+    "C8_uses_canonical_leases": {
+      "status": "NOT_APPLICABLE",
+      "evidence": [],
+      "note": "No substantial resource claims since MWO-0001. The earlier self-test used comms lease #816, released at #866, before the Fabric lease ruling (#896)."
+    },
+    "C9_distinguishes_gates_from_routine": {
+      "status": "YES",
+      "evidence": [
+        "roles/Artemis/WORK_STATE.json blocked_on / operator_decisions_required",
+        "origin/main:ops/work_orders/CURRENT.md s8 (Artemis / Odysseus: S3 principal session on ubu001)"
+      ],
+      "note": "The S3 stop is not an MWO-0001 s7 gate. The operator ruling (roles/Odysseus/prompts/2026-09-28_fabric/06_*, Part 1) places the principal on ubu001, and this session cannot relocate itself. It is recorded as a migration blocker."
+    }
+  },
+  "hard_gates_current": [],
+  "migration_blockers": [
+    {
+      "what": "The S3 principal must run on ubu001 (operator ruling 06_* Part 1). The live Artemis session is on ubu002, and starting a session on ubu001 is an operator host/session action.",
+      "kind": "host",
+      "evidence": [
+        "comms #923",
+        "comms #936",
+        "roles/Artemis/WORK_STATE.json"
+      ]
+    }
+  ],
+  "legacy_conventions_still_used": [
+    {
+      "convention": "comms queue item #751 (Odysseus offer of packet R3, 2026-09-27, pre-MWO) is still queued",
+      "why": "a pre-MWO offer that no current assignment picks up",
+      "retire_plan": "seat"
+    },
+    {
+      "convention": "roles/Artemis/STATUS.md and TODO.md prose alongside WORK_STATE.json",
+      "why": "narrative record, permitted by MWO-0001 s9",
+      "retire_plan": "none"
+    }
+  ],
+  "identifier_check": {
+    "thread_ids_unresolved": [
+      "thr-s3"
+    ],
+    "campaign_ids_unresolved": [],
+    "note": "thr-s3 is the Fabric --thread tag named in Odysseus's S3 brief, not an ops/threads file. Backlog FR-001..FR-139 have canonical thr- ids in roles/Artemis/challenge/identity/ARTEMIS_FR_IDS.json but no ops/threads files. Not repaired for the census; ops/README.md banner not relied on."
+  }
+}

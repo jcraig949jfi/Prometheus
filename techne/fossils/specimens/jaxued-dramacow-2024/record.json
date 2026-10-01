@@ -1,0 +1,192 @@
+{
+  "schema": "techne.fossil.record/1",
+  "specimen_id": "jaxued-dramacow-2024",
+  "canonical_name": "JaxUED -- JaxUED: A simple and useable UED library in Jax (Samuel Coward and Michael Beukman and Jakob Foerster; no institution named in README, pyproject author email domain robots.ox.ac.uk; 2024-2025)",
+  "aliases": [
+    "JaxUED",
+    "jaxued",
+    "Jax UED (mkdocs site_name)",
+    "JAXUED_TEST (default wandb project name in examples)"
+  ],
+  "lineage": "README: 'similar goals to CleanRL'; inspirations listed under See Also: Minimax (facebookresearch/minimax: 'UED baselines, with support for multi-gpu training, and more parallel versions of PLR/ACCEL'), PureJaxRL, JaxIRL, Mava, JaxMARL, Gymnax, Jumanji, Pgx, Brax, XLand-MiniGrid, Craftax. docs/maze_dr.md: 'It follows the PureJaxRL-style training loop.' docs/maze.md: maze 'based on Minigrid'. Source comments credit minimax for utils.py (ued_scores) and make_level_mutator_minimax. Downstream per README 'Projects using JaxUED': Craftax, ReMiDi. || main loop (reader, from the code): In examples/maze_plr.py, train_step (jax.lax.scan-ned eval_freq times inside train_and_eval_step, itself looped num_updates//eval_freq times in main) draws a replay decision from the LevelSampler (or, with --use_accel, uses the previous update_state to force a mutate step after each replay step) and jax.lax.switch-es into one of on_new_levels (sample random mazes, roll out the PPO-LSTM agent, score trajectories with MaxMC or positive value loss, insert_batch into the buffer, update the policy only if exploratory_grad_updates), on_replay_levels (sample_replay_levels weighted by rank-score and staleness, roll out, update_batch scores, always update the policy) or on_mutate_levels (mutate the last replayed batch with make_level_mutator_minimax, roll out, score and insert the children).",
+  "domain": [
+    "unsupervised-environment-design",
+    "curriculum",
+    "reinforcement-learning",
+    "jax"
+  ],
+  "era": "2024-2025",
+  "version": "github.com/DramaCow/jaxued main @ 0f8f1284677375b889e4f13a32c9617cd009f8c4 (committed 2025-09-09; 27 commits since 2024-02-25; 52 tracked files)",
+  "source_origin": {
+    "artifacts": [
+      {
+        "kind": "git",
+        "url": "https://github.com/DramaCow/jaxued",
+        "commit": "0f8f1284677375b889e4f13a32c9617cd009f8c4",
+        "commit_resolved": "0f8f1284677375b889e4f13a32c9617cd009f8c4",
+        "commit_date": "2025-09-09T07:01:29+01:00"
+      }
+    ]
+  },
+  "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+  "source_identity": {
+    "repo": "github.com/DramaCow/jaxued",
+    "branch": "main",
+    "other_branches_or_versions": "Remote branches: origin/main (default), origin/gh-pages, origin/pypi. No tags. pyproject version 0.0.2. 27 commits on main; the pin is the tip of main at clone time."
+  },
+  "hashes": {
+    "tree_sha256": "569d3ab9ebd323ad7e1ea1316d525f0d9c672acba7f3928ac27e91fc646e6319",
+    "n_files": 52,
+    "bytes": 760149,
+    "artifacts": [
+      {
+        "filename": "https://github.com/DramaCow/jaxued",
+        "sha256": null,
+        "commit": "0f8f1284677375b889e4f13a32c9617cd009f8c4"
+      }
+    ],
+    "body_location": "C:\\Prometheus\\vault\\fossils\\jaxued-dramacow-2024",
+    "hash_list": "techne/fossils/specimens/jaxued-dramacow-2024/UPSTREAM_HASHES.txt"
+  },
+  "license": {
+    "spdx": "Apache-2.0 (from pyproject metadata only; no licence text in tree at pin)",
+    "status": "permissive",
+    "evidence": "licence file NOT_FOUND_AT_PIN, first line 'NOT_FOUND_AT_PIN'; metadata field: license = { text = \"Apache-2.0\" } and classifier \"License :: OSI Approved :: Apache Software License\" (pyproject.toml); No LICENSE/LICENSE.md/COPYING/LICENCE file exists at the pinned commit (confirmed by find and git ls-files). git history in the clone shows LICENSE was ADDED in 647f05f 'Initial commit' (2024-02-25; its first non-empty lines were 'Apache License' / 'Version 2.0, January 2004') and DELETED in 0824b4b 'Updated dependencies and packaging for PyPI release' (2025-03-20), which is an ancestor of the pin. README has no licence badge or licence section. No copyright headers in any .py file. Two files (src/jaxued/utils.py; src/jaxued/environments/maze/util.py make_level_mutator_minimax) carry comments 'This file/function is a modified version of https://github.com/facebookresearch/minimax/blob/2ae9e04d37f97d7c14308f5a26237dcfca63470f/... Credit: minimax' (minimax is Apache-2.0 per its own tree) without reproducing the Meta copyright notice."
+  },
+  "acquisition_date": "2026-09-30",
+  "language": [
+    "Python"
+  ],
+  "build_system": "setuptools>=61.0 via pyproject.toml (setuptools.build_meta); src/ layout; tox.ini envlist py39-py313 running pytest",
+  "compiler_or_interpreter": "CPython >=3.9 per pyproject requires-python; classifiers list 3.9, 3.10, 3.11, 3.12, 3.13",
+  "dependencies": [
+    "core (pyproject [project].dependencies, all unpinned): numpy, jax, flax, chex, gymnax",
+    "optional 'examples' extra: distrax, optax, orbax-checkpoint==0.5.3, orbax, wandb, pillow, imageio, moviepy",
+    "test (tox.ini): pytest, pytest-cov",
+    "docs (mkdocs.yml, not declared as deps): mkdocs material theme, mkdocstrings",
+    "README Craftax example: pip install git+https://github.com/MichaelTMatthews/Craftax.git@main (UNPINNED git branch install)",
+    "README GPU jax: pip install --upgrade \"jax[cuda12_pip]\" -f https://storage.googleapis.com/jax-releases/jax_cuda_releases.html (unpinned)",
+    "SETUP FETCH: pip install --upgrade \"jax[cuda12_pip]\" -f https://storage.googleapis.com/jax-releases/jax_cuda_releases.html (README and docs/getting_started.md)",
+    "SETUP FETCH: pip install git+https://github.com/MichaelTMatthews/Craftax.git@main (README, Craftax section)",
+    "SETUP FETCH: wandb.init(...) is called at the start of main() in every example script; README advertises 'Wandb integration'; scripts set WANDB_MODE=disabled only in eval mode (tests set it too)"
+  ],
+  "run_classification": "NOT_ATTEMPTED",
+  "test_classification": "NOT_ATTEMPTED",
+  "entry_points": [
+    "examples/maze_plr.py main (PLR / Robust PLR / ACCEL: PPO-LSTM student on Maze levels; train_step switches between on_new_levels, on_replay_levels, on_mutate_levels; argparse CLI; wandb logging; orbax checkpoints)",
+    "examples/maze_dr.py main (Domain Randomization baseline: sample random levels every step, PPO update)",
+    "examples/maze_paired.py main (PAIRED: ActorCritic student/antagonist plus AdversaryActorCritic teacher that builds levels)",
+    "examples/craftax/craftax_plr.py (DR/PLR/ACCEL on Craftax-Symbolic; mutators in examples/craftax/mutators.py)",
+    "examples/gymnax/gymnax_plr.py (PLR over parameterised gymnax Acrobot/Pendulum/Cartpole)",
+    "src/jaxued/level_sampler.py LevelSampler (functional PLR level buffer: initialize, sample_replay_decision, sample_replay_levels, insert_batch, update_batch; level_weights = (1-staleness_coeff)*score_weights + staleness_coeff*staleness_weights; rank or topk prioritization)",
+    "src/jaxued/environments/underspecified_env.py UnderspecifiedEnv (abstract env interface: step, reset_to_level, step_env, reset_env_to_level, action_space)",
+    "src/jaxued/environments/maze/env.py Maze (UnderspecifiedEnv subclass; partially observable Minigrid-style maze; make_maze_map)"
+  ],
+  "example": {
+    "command": "python examples/maze_plr.py",
+    "input": "None required: CLI defaults (seed 0, num_updates 30000, num_train_envs 32, num_steps 256, level_buffer_capacity 4000, replay_prob 0.8, score_function MaxMC, eval_levels SixteenRooms/SixteenRooms2/Labyrinth/LabyrinthFlipped/Labyrinth2/StandardMaze/StandardMaze2/StandardMaze3); training levels come from make_level_generator(13,13,n_walls=25). Eval mode: --mode eval --checkpoint_directory=./checkpoints/<run_name>/<seed> --checkpoint_to_eval <update_step>",
+    "output": "wandb metrics (solve_rate/*, level_sampler/*, agent/*, return/*, eval_ep_lengths/*, rendered level images and animations); orbax checkpoints in ./checkpoints/<run_name>/<seed>/models/<update_step>; eval mode writes .npz to ./results/ with keys states, cum_rewards, episode_lengths, levels (README)"
+  },
+  "environment": {
+    "runner": "native",
+    "note": "NOT RUN in this pass (nothing executed from the tree); host class from the reader draft: Any CPython >=3.9 host with a working JAX install; README targets Linux + NVIDIA CUDA 12 GPU for training, but no hard GPU requirement is declared (core deps are pure-Python wheels)."
+  },
+  "patches": [],
+  "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+  "upstream_docs": [
+    "https://arxiv.org/abs/2403.13091 (README 'Paper' link)",
+    "https://dramacow.github.io/jaxued/ (README 'Docs' link)",
+    "@article{coward2024JaxUED, title={JaxUED: A simple and useable UED library in Jax}, author={Samuel Coward and Michael Beukman and Jakob Foerster}, journal={arXiv preprint}, year={2024}}",
+    "Method references in README: https://arxiv.org/abs/1703.06907 (DR), https://arxiv.org/abs/2010.03934 (PLR), https://arxiv.org/abs/2110.02439 (RPLR), https://arxiv.org/abs/2203.01302 (ACCEL), https://arxiv.org/abs/2012.02096 (PAIRED)",
+    "Derived-code pointers in source: https://github.com/facebookresearch/minimax/blob/2ae9e04d37f97d7c14308f5a26237dcfca63470f/src/minimax/util/rl/ued_scores.py and .../src/minimax/envs/maze/maze_mutators.py"
+  ],
+  "human_capability_summary": {
+    "built_to": "Provide CleanRL-style single-file, understandable JAX reference implementations of common Unsupervised Environment Design methods (DR, PLR, ACCEL, PAIRED) plus a LevelSampler, an UnderspecifiedEnv interface and a Maze environment, for researchers to modify and prototype on.",
+    "pressure": "README: existing UED code hides implementation details behind abstraction; JaxUED is 'primarily intended for researchers looking to get in the weeds of UED algorithm development' with 'minimal dependency implementations' that 'expose all implementation details' and facilitate 'easy, rapid prototyping of new ideas'.",
+    "success_means": "README states no quantitative criterion; the scripts log solve rates and returns on fixed held-out eval mazes (SixteenRooms, Labyrinth, StandardMaze variants) every eval_freq updates plus level-sampler statistics, and eval mode writes cum_rewards and episode_lengths per level."
+  },
+  "known_human_problem_solved": "Provide CleanRL-style single-file, understandable JAX reference implementations of common Unsupervised Environment Design methods (DR, PLR, ACCEL, PAIRED) plus a LevelSampler, an UnderspecifiedEnv interface and a Maze environment, for researchers to modify and prototype on.",
+  "hardware_assumptions": "",
+  "human_environmental_pressure": "",
+  "human_failure_condition": "",
+  "behavioral_entry_point": "examples/maze_plr.py:train_step (branch choice and the three on_* handlers); examples/maze_plr.py:compute_score (level scoring); src/jaxued/level_sampler.py:LevelSampler.level_weights / score_weights (replay prioritisation); src/jaxued/environments/maze/util.py:make_level_generator / make_level_mutator_minimax (level generation and mutation)",
+  "observability": {
+    "EXECUTABLE": "unknown",
+    "OBSERVABLE": "unknown",
+    "ORACLE_BACKED": "unknown",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "unknown"
+  },
+  "lineage_relations": [
+    {
+      "relation": "reimplementation_of",
+      "to": "dcd-facebookresearch-2022",
+      "note": "reader draft: two files credit facebookresearch/minimax as source, which itself reimplements dcd; JaxUED implements the same UED methods (DR, PLR, Robust PLR, ACCEL, PAIRED) as single-file JAX programs"
+    }
+  ],
+  "acquisition_tags": [
+    "operator-chat-2026-09-30-download-for-nyx",
+    "prior_art_raid",
+    "section-II",
+    "TECHNE-132",
+    "reader-draft:READER_DRAFTS_2026-09-30/jaxued.json"
+  ],
+  "historical_disposition": {
+    "state": "UNKNOWN",
+    "failure_reasons": [],
+    "superseded_by": "",
+    "rival_of": "",
+    "evidence": []
+  },
+  "versions_preserved": [],
+  "receipts": [],
+  "nyx_handoff": {
+    "here_is_the_machine": "vault body <vault>/jaxued-dramacow-2024 (host-local; `python -m techne.fossils.harvest rematerialize jaxued-dramacow-2024` on a host without it) ; tracked techne/fossils/specimens/jaxued-dramacow-2024",
+    "where_it_came_from": "https://github.com/DramaCow/jaxued ; ORIGINAL_AUTHORITATIVE_RELEASE ; commit 0f8f1284677375b889e4f13a32c9617cd009f8c4 ; licence Apache-2.0 (from pyproject metadata only; no licence text in tree at pin)",
+    "how_to_run_it": "not executed from this record (NOT_ATTEMPTED); upstream entry: python examples/maze_plr.py ; host class: Any CPython >=3.9 host with a working JAX install; README targets Linux + NVIDIA CUDA 12 GPU for training, but no hard GPU requirement is declared (core deps are pure-Python wheels).",
+    "how_we_know_it_runs": "we do not: no run receipt. The body is pinned (tree_sha256 569d3ab9ebd323ad, UPSTREAM_HASHES.txt) and verifies by hash; that is preservation, not execution",
+    "what_humans_used_it_for": "Provide CleanRL-style single-file, understandable JAX reference implementations of common Unsupervised Environment Design methods (DR, PLR, ACCEL, PAIRED) plus a LevelSampler, an UnderspecifiedEnv interface and a Maze environment, for researchers to modify and prototype on."
+  },
+  "seat": "Techne",
+  "runtime": {
+    "python_major": 3,
+    "native_deps": [
+      "JAX/XLA (jax, jaxlib; GPU optional via jax[cuda12_pip] per README)",
+      "flax, chex, optax, distrax, orbax-checkpoint (examples)",
+      "wandb (network logging; examples)",
+      "gymnax",
+      "Craftax (optional, git install)",
+      "pillow/imageio/moviepy for rendering"
+    ],
+    "host_class": "Any CPython >=3.9 host with a working JAX install; README targets Linux + NVIDIA CUDA 12 GPU for training, but no hard GPU requirement is declared (core deps are pure-Python wheels)."
+  },
+  "reader_notes": {
+    "draft": "techne/acquisition/prior_art_raid/READER_DRAFTS_2026-09-30/jaxued.json",
+    "copyright_holders_by_header_count": {},
+    "things_the_reader_could_not_verify": [
+      "Whether the LICENSE deletion in 0824b4b was intentional (commit message only says 'Updated dependencies and packaging for PyPI release').",
+      "Authors' institution: README/CITATION give none; only the pyproject author email domain robots.ox.ac.uk is in the tree.",
+      "arXiv 2403.13091 content (not in tree); README bibtex title quoted as given.",
+      "docs/getting_started.md tells users to run 'python examples/minigid_plr.py' and docs/craftax.md 'python examples/craftax/maze_plr.py'; neither path exists in the tree (actual files: examples/maze_plr.py, examples/craftax/craftax_plr.py).",
+      "That the example scripts run: not executed; tests/test_examples_kinda.py only launches each script for 30 s with WANDB_MODE=disabled.",
+      "src/jaxued/.DS_Store is a tracked file (macOS artefact)."
+    ],
+    "has_gitmodules_at_pin": false,
+    "has_lfs_at_pin": false,
+    "approx_tree_bytes_at_pin": 760149
+  },
+  "preservation": {
+    "status": "SELF_CONTAINED",
+    "body_status": "SELF_CONTAINED",
+    "recipe_status": "NO_RECIPE",
+    "submodules": [],
+    "submodules_missing": [],
+    "submodules_drifted": [],
+    "unpinned_artifacts": [],
+    "git_lfs": false,
+    "network_fetch_in_recipe": [],
+    "checked_utc": "2026-09-30T23:03:34Z",
+    "note": "status is the worse of body_status and the recipe axis; a matching tree hash alone never implies completeness."
+  }
+}

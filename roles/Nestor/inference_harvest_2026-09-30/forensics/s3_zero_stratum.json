@@ -1,0 +1,473 @@
+{
+ "panel": {
+  "pairs": 3495,
+  "lethal": 131,
+  "rate": 0.0375,
+  "genomes_with_any": 39,
+  "max_per_genome": 12,
+  "class_pairs_lethal": {
+   "EXEC_PRE + EXEC_PRE": 88,
+   "EXEC_PRE + NOT_EXEC": 27,
+   "COUNT + EXEC_PRE": 8,
+   "NOT_EXEC + NOT_EXEC": 4,
+   "DEST + EXEC_PRE": 2,
+   "COUNT + NOT_EXEC": 1,
+   "EXEC_PRE + SRC": 1
+  },
+  "class_pair_rate": {
+   "EXEC_PRE + EXEC_PRE": 0.073,
+   "EXEC_PRE + NOT_EXEC": 0.025,
+   "NOT_EXEC + NOT_EXEC": 0.005,
+   "COUNT + EXEC_PRE": 0.11,
+   "COUNT + NOT_EXEC": 0.016,
+   "EXEC_POST + EXEC_PRE": 0.0
+  },
+  "distance_lethal": {
+   ">=4": 127,
+   "2-3": 3,
+   "1": 1
+  },
+  "examples": [
+   {
+    "genome": 6,
+    "i": 8,
+    "j": 35,
+    "i_ann": {
+     "cls": "EXEC_PRE",
+     "byte": "FF",
+     "instr": "FF",
+     "is_opcode": true
+    },
+    "j_ann": {
+     "cls": "EXEC_PRE",
+     "byte": "F2",
+     "instr": "F2",
+     "is_opcode": true
+    }
+   },
+   {
+    "genome": 6,
+    "i": 27,
+    "j": 35,
+    "i_ann": {
+     "cls": "EXEC_PRE",
+     "byte": "DB",
+     "instr": "DB",
+     "is_opcode": true
+    },
+    "j_ann": {
+     "cls": "EXEC_PRE",
+     "byte": "F2",
+     "instr": "F2",
+     "is_opcode": true
+    }
+   },
+   {
+    "genome": 6,
+    "i": 36,
+    "j": 48,
+    "i_ann": {
+     "cls": "EXEC_PRE",
+     "byte": "29",
+     "instr": "29",
+     "is_opcode": true
+    },
+    "j_ann": {
+     "cls": "NOT_EXEC",
+     "byte": "A6",
+     "instr": null,
+     "is_opcode": null
+    }
+   },
+   {
+    "genome": 6,
+    "i": 44,
+    "j": 62,
+    "i_ann": {
+     "cls": "EXEC_PRE",
+     "byte": "C2",
+     "instr": "C2",
+     "is_opcode": true
+    },
+    "j_ann": {
+     "cls": "NOT_EXEC",
+     "byte": "11",
+     "instr": null,
+     "is_opcode": null
+    }
+   },
+   {
+    "genome": 17,
+    "i": 16,
+    "j": 23,
+    "i_ann": {
+     "cls": "EXEC_PRE",
+     "byte": "E4",
+     "instr": "E4",
+     "is_opcode": true
+    },
+    "j_ann": {
+     "cls": "NOT_EXEC",
+     "byte": "74",
+     "instr": null,
+     "is_opcode": null
+    }
+   },
+   {
+    "genome": 27,
+    "i": 23,
+    "j": 28,
+    "i_ann": {
+     "cls": "COUNT",
+     "byte": "05",
+     "instr": "05",
+     "is_opcode": true
+    },
+    "j_ann": {
+     "cls": "NOT_EXEC",
+     "byte": "D0",
+     "instr": null,
+     "is_opcode": null
+    }
+   },
+   {
+    "genome": 38,
+    "i": 21,
+    "j": 62,
+    "i_ann": {
+     "cls": "EXEC_PRE",
+     "byte": "EA",
+     "instr": "EA",
+     "is_opcode": true
+    },
+    "j_ann": {
+     "cls": "NOT_EXEC",
+     "byte": "CB",
+     "instr": null,
+     "is_opcode": null
+    }
+   },
+   {
+    "genome": 40,
+    "i": 4,
+    "j": 7,
+    "i_ann": {
+     "cls": "EXEC_PRE",
+     "byte": "54",
+     "instr": "54",
+     "is_opcode": true
+    },
+    "j_ann": {
+     "cls": "EXEC_PRE",
+     "byte": "FB",
+     "instr": "FB",
+     "is_opcode": true
+    }
+   },
+   {
+    "genome": 40,
+    "i": 8,
+    "j": 17,
+    "i_ann": {
+     "cls": "EXEC_PRE",
+     "byte": "7A",
+     "instr": "7A",
+     "is_opcode": true
+    },
+    "j_ann": {
+     "cls": "EXEC_PRE",
+     "byte": "F1",
+     "instr": "F1",
+     "is_opcode": true
+    }
+   },
+   {
+    "genome": 40,
+    "i": 10,
+    "j": 39,
+    "i_ann": {
+     "cls": "NOT_EXEC",
+     "byte": "D0",
+     "instr": null,
+     "is_opcode": null
+    },
+    "j_ann": {
+     "cls": "EXEC_PRE",
+     "byte": "FA",
+     "instr": "F3",
+     "is_opcode": false
+    }
+   },
+   {
+    "genome": 40,
+    "i": 16,
+    "j": 50,
+    "i_ann": {
+     "cls": "EXEC_PRE",
+     "byte": "A1",
+     "instr": "A1",
+     "is_opcode": true
+    },
+    "j_ann": {
+     "cls": "NOT_EXEC",
+     "byte": "97",
+     "instr": null,
+     "is_opcode": null
+    }
+   },
+   {
+    "genome": 46,
+    "i": 19,
+    "j": 34,
+    "i_ann": {
+     "cls": "NOT_EXEC",
+     "byte": "2F",
+     "instr": null,
+     "is_opcode": null
+    },
+    "j_ann": {
+     "cls": "NOT_EXEC",
+     "byte": "8C",
+     "instr": null,
+     "is_opcode": null
+    }
+   }
+  ]
+ },
+ "comparators": {
+  "pairs": 2722,
+  "lethal": 101,
+  "rate": 0.0371,
+  "genomes_with_any": 39,
+  "max_per_genome": 7,
+  "class_pairs_lethal": {
+   "EXEC_PRE + EXEC_PRE": 53,
+   "EXEC_PRE + NOT_EXEC": 22,
+   "COUNT + EXEC_PRE": 6,
+   "NOT_EXEC + NOT_EXEC": 6,
+   "EXEC_POST + EXEC_PRE": 6,
+   "DEST + EXEC_PRE": 3,
+   "DEST + NOT_EXEC": 2,
+   "EXEC_PRE + SRC": 1
+  },
+  "class_pair_rate": {
+   "EXEC_PRE + NOT_EXEC": 0.023,
+   "NOT_EXEC + NOT_EXEC": 0.008,
+   "EXEC_PRE + EXEC_PRE": 0.092,
+   "COUNT + EXEC_PRE": 0.094,
+   "COUNT + NOT_EXEC": 0.016,
+   "DEST + EXEC_PRE": 0.057
+  },
+  "distance_lethal": {
+   ">=4": 94,
+   "1": 4,
+   "2-3": 3
+  },
+  "examples": [
+   {
+    "genome": 15,
+    "i": 2,
+    "j": 39,
+    "i_ann": {
+     "cls": "EXEC_PRE",
+     "byte": "14",
+     "instr": "14",
+     "is_opcode": true
+    },
+    "j_ann": {
+     "cls": "EXEC_PRE",
+     "byte": "72",
+     "instr": "72",
+     "is_opcode": true
+    }
+   },
+   {
+    "genome": 12,
+    "i": 19,
+    "j": 43,
+    "i_ann": {
+     "cls": "EXEC_PRE",
+     "byte": "96",
+     "instr": "96",
+     "is_opcode": true
+    },
+    "j_ann": {
+     "cls": "NOT_EXEC",
+     "byte": "23",
+     "instr": null,
+     "is_opcode": null
+    }
+   },
+   {
+    "genome": 18,
+    "i": 5,
+    "j": 30,
+    "i_ann": {
+     "cls": "EXEC_PRE",
+     "byte": "A2",
+     "instr": "A2",
+     "is_opcode": true
+    },
+    "j_ann": {
+     "cls": "EXEC_PRE",
+     "byte": "80",
+     "instr": "80",
+     "is_opcode": true
+    }
+   },
+   {
+    "genome": 18,
+    "i": 5,
+    "j": 37,
+    "i_ann": {
+     "cls": "EXEC_PRE",
+     "byte": "A2",
+     "instr": "A2",
+     "is_opcode": true
+    },
+    "j_ann": {
+     "cls": "NOT_EXEC",
+     "byte": "0A",
+     "instr": null,
+     "is_opcode": null
+    }
+   },
+   {
+    "genome": 18,
+    "i": 8,
+    "j": 49,
+    "i_ann": {
+     "cls": "EXEC_PRE",
+     "byte": "68",
+     "instr": "68",
+     "is_opcode": true
+    },
+    "j_ann": {
+     "cls": "NOT_EXEC",
+     "byte": "4B",
+     "instr": null,
+     "is_opcode": null
+    }
+   },
+   {
+    "genome": 18,
+    "i": 15,
+    "j": 62,
+    "i_ann": {
+     "cls": "EXEC_PRE",
+     "byte": "00",
+     "instr": "00",
+     "is_opcode": true
+    },
+    "j_ann": {
+     "cls": "NOT_EXEC",
+     "byte": "9B",
+     "instr": null,
+     "is_opcode": null
+    }
+   },
+   {
+    "genome": 47,
+    "i": 7,
+    "j": 8,
+    "i_ann": {
+     "cls": "EXEC_PRE",
+     "byte": "9C",
+     "instr": "9C",
+     "is_opcode": true
+    },
+    "j_ann": {
+     "cls": "EXEC_PRE",
+     "byte": "57",
+     "instr": "57",
+     "is_opcode": true
+    }
+   },
+   {
+    "genome": 47,
+    "i": 7,
+    "j": 54,
+    "i_ann": {
+     "cls": "EXEC_PRE",
+     "byte": "9C",
+     "instr": "9C",
+     "is_opcode": true
+    },
+    "j_ann": {
+     "cls": "EXEC_PRE",
+     "byte": "EF",
+     "instr": "EF",
+     "is_opcode": true
+    }
+   },
+   {
+    "genome": 47,
+    "i": 48,
+    "j": 52,
+    "i_ann": {
+     "cls": "EXEC_PRE",
+     "byte": "3F",
+     "instr": "3F",
+     "is_opcode": true
+    },
+    "j_ann": {
+     "cls": "EXEC_PRE",
+     "byte": "7B",
+     "instr": "7B",
+     "is_opcode": true
+    }
+   },
+   {
+    "genome": 34,
+    "i": 2,
+    "j": 4,
+    "i_ann": {
+     "cls": "COUNT",
+     "byte": "4E",
+     "instr": "4E",
+     "is_opcode": true
+    },
+    "j_ann": {
+     "cls": "EXEC_PRE",
+     "byte": "16",
+     "instr": "16",
+     "is_opcode": true
+    }
+   },
+   {
+    "genome": 34,
+    "i": 4,
+    "j": 17,
+    "i_ann": {
+     "cls": "EXEC_PRE",
+     "byte": "16",
+     "instr": "16",
+     "is_opcode": true
+    },
+    "j_ann": {
+     "cls": "DEST",
+     "byte": "DB",
+     "instr": "16",
+     "is_opcode": false
+    }
+   },
+   {
+    "genome": 39,
+    "i": 17,
+    "j": 55,
+    "i_ann": {
+     "cls": "EXEC_PRE",
+     "byte": "C2",
+     "instr": "C2",
+     "is_opcode": true
+    },
+    "j_ann": {
+     "cls": "NOT_EXEC",
+     "byte": "72",
+     "instr": null,
+     "is_opcode": null
+    }
+   }
+  ]
+ }
+}

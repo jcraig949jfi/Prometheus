@@ -3,13 +3,17 @@ name: Deploy docs/ to GitHub Pages
 # Replaces the auto-generated Pages workflow (which fails because the repo
 # has an orphan submodule gitlink at cartography/mathlib/mathlib4_source
 # with no .gitmodules entry). This workflow checks out without recursing
-# submodules, then publishes docs/ verbatim.
+# submodules, then publishes docs/ verbatim, plus the Prometheus Collider
+# (collider/) built fresh into docs/collider/ -> <site>/collider/. The built
+# app is never committed. A broken collider build must not stop docs/ from
+# publishing, so that step is continue-on-error and copies only on success.
 
 on:
   push:
     branches: [main]
     paths:
       - 'docs/**'
+      - 'collider/**'
       - '.github/workflows/pages.yml'
   workflow_dispatch:
 
@@ -40,6 +44,20 @@ jobs:
       - uses: actions/checkout@v4
         with:
           submodules: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: collider/package-lock.json
+      - name: Build Prometheus Collider into docs/collider
+        continue-on-error: true
+        working-directory: collider
+        run: |
+          npm ci --no-audit --no-fund
+          npm test
+          npm run build
+          rm -rf ../docs/collider
+          cp -r dist ../docs/collider
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:

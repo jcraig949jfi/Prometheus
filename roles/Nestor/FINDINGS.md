@@ -57,6 +57,12 @@ a positive value means the LEFT level scored higher.
 | read_order ANSWER_BEFORE_READ -> FORCED_READ | 334 | +0.1029 | ANSWER_BEFORE_READ |
 | read_order FORCED_READ -> ANSWER_BEFORE_READ | 304 | -0.0687 | ANSWER_BEFORE_READ |
 
+**Scope note (2026-09-29; Artemis S3 Q8, comms #1010; Fabric tsk-2b96eda5e96c):** the pressure row (+0.30,
+EXPLICIT_FITNESS over NONE_IMPLICIT) is a valid selection-vs-drift contrast ONLY inside EXTERNAL reproduction
+(grammar.py:175-177; world.py:644-652, :838-839). It is not evidence about endogenous (PAIR_EXECUTION) reproduction:
+NPE has never had a task-coupled endogenous-vs-external test. Any citation of this row carries that scope. The row
+itself is unchanged; this narrows it and does not retract it.
+
 ### A-3 The cycle-8 read-order discrepancy -- OPEN
 
 Both read-order rows are independent pair sets and both favour `ANSWER_BEFORE_READ`.
@@ -545,3 +551,94 @@ internalized in the same corpora (280/280 SELF-free copiers tape-anchored).
   C-A3-INTERNALIZE, which was in the default world.
 - EXPLORE only. The frozen CONFIRM C-A3-WITHDRAW-ROBUST is declared (PLANNED).
 - Theory-aware; not offered as SI evidence.
+
+## DEFECT C9-D24 (found 2026-09-28 during the ancestry-replay pin, prompted by Archaeon #834): implant arms are not paired; RANDOM_MATCHED == in situ
+- **Mechanism** (frozen world.py `run`, `_implant_genome`, `_seed_genome`; RANDOM seeding):
+  - A_in_situ draws organism 0 as L random bytes from the runner RNG.
+  - C RANDOM_MATCHED with implant_len == L draws organism 0 as the SAME L bytes from the SAME RNG state. So C is the same
+    simulation as A, for every seed. It was verified on s9200006 and s9200008, where the lineage_sha256 values are
+    identical (NPE_T003_HASHES.txt; my PIN_REPRODUCE.json).
+  - B ACTUAL_GENOME consumes no RNG draws for organism 0. So B's whole RNG stream is shifted by L draws: B's organism k is
+    A's organism k−1, and every later draw differs.
+  - The code comment "B and C share the same background population and differ only in these bytes" is FALSE.
+- **Impact:**
+  - Cycle-9 H2 "implanted 4/16, random bytes 0/16, in situ 0/16": the random and in-situ counts are the SAME 16 runs, so
+    the random null is not independent of in situ.
+  - GENOME-vs-RANDOM contrasts in C-SWAP-ACQUIRE, X-ATOMIC-RANDOM and X-SWAP-ORIGIN (RANDOM_MATCHED, implant_len = L)
+    compare DIFFERENT backgrounds per seed.
+  - All of these remain valid as UNPAIRED contrasts across seeds, because every background is random in both arms. Any
+    per-seed pairing or "same background, only the bytes differ" reasoning is invalid. That includes paired tests,
+    matched-seed differences, and "the implant alone caused X in seed s".
+- **Status:**
+  - The frozen harness is NOT edited.
+  - Audit of the affected experiments' analyses for paired reasoning: OPEN (T-DEF-D24).
+  - Future implant arms must consume the RNG identically across arms: draw the background first, or burn L draws in the
+    ACTUAL arm.
+- **T-DEF-D24 audit (2026-09-28, read-only):** NO verdict changes. Every contrast of a genome implant arm with a random or
+  in-situ arm used marginal counts or an unpaired Fisher test:
+  - Cycle-9 H2 rule (B >= 8/16, C <= 2/16);
+  - C-SWAP-ACQUIRE 9/240 vs 0/240;
+  - X-ATOMIC-RANDOM 0/80 vs 46/80.
+- **Corrections to the D24 text:**
+  - RANDOM_MATCHED equals in situ for ANY implant_len <= L, because `_pad` fills with RNG draws.
+  - The identity A == C was ALREADY logged as C9-D17 (CAMPAIGN_REPORT.md:101). D24 adds the B stream shift and the audit.
+- **Wording errata** (reasoning, not verdicts):
+  - The H2 prose counts "random 0/16 and in situ 0/16" as two nulls (C9_OUTCOME_AND_ADDENDUM:35-41, the H2 line above,
+    x_h2_7ae3/run_h.py:5). It is ONE null of 16 runs.
+  - The H2 design claims "background_population / rng_seed held fixed" (manifest.py:109, PREREGISTRATION:277, world.py
+    comments). These are FALSE for B vs C.
+  - X-SWAP-ORIGIN Part B is framed as the "background, same 8 seeds". Unpaired, it is 1/8 vs 0/8, which is uninformative.
+    The conclusion is carried by X-SWAP-ANCESTRY and C-SWAP-ACQUIRE.
+  - FINDINGS' X-ATOMIC-RANDOM "random 64-byte implant in place of the genome": arm R is the ATOMIC world with no genome.
+- T-DEF-D24 is CLOSED. Frozen files are unedited.
+
+## QUALIFICATION (2026-09-28, Artemis #891; CVT-R on Nestor donor sets, prereg 77bc0dbce, result d050937ec): construction is not heredity, measured
+- **CVT-R accept per set** (either side; Wilson 95% CIs):
+
+  | set | accepted | rate (CI) |
+  |---|---|---|
+  | (a) the 32 P2 donors (bridge 12/16, czs 11/16) | 23/32 | 0.72 (0.55-0.84) |
+  | (b) 100 W1 q1-competent genomes | 83/100 | 0.83 (0.74-0.89) |
+  | (c) the 16000006 epoch-700 modal genomes (the lineage behind C-A3-INTERNALIZE / X-A3-SFLINEAGE) | 8/8 | 1.00 (0.68-1.00) |
+
+  No genome was unscorable.
+- **19 P-11-certified genomes FAIL CVT-R.** 11 fail at generation 2: the copy carries the parental change but does not
+  pass it on. 8 fail only the recurrence clause. By recorded competence status, 26 fail. They are not painters (the DOM
+  screen agrees): they are competent CONSTRUCTORS whose children do not carry variation forward.
+- **Consequence (wording and scope, no verdict flips):**
+  - Every earlier Nestor statement that a donor set is "competent" (P-11 / fresh-start copy rate) is a CONSTRUCTION claim.
+  - For sets (a) and (b), 17-28% of those genomes are not heredity-capable under CVT-R.
+  - Claims that rest on heredity must say so and use CVT-R-passing genomes. That covers "lineages inherit X", "donors
+    transmit", and C-ZERO-SPECIFIC's zero-state specialists read as heritable.
+  - The ARC3 central lineage (c) passes 8/8.
+  - ARC3 remains CLOSED; this is a qualification, not a reopening.
+
+## RECEIVED, UNVERIFIED (Artemis #888, disposable workers' claims; to be checked before any use)
+- **R-11:** the X-PAIR-NORECOMB CLEAN_NULL had no positive arm (tier M vs P-11 firing only at tier L). If true, that null
+  is uninformative.
+- **R-08:** NPE board_eligible (primordial/core/contract.py) accepts any non-empty cheat string and still feeds refutation
+  credit.
+- **R-05:** the P-11 reassay's per-draw values are gitignored, and 26 of the 57 survivors rest on one event passing
+  exactly 2 of 3 draws.
+
+Status: OPEN, read-only verification queued behind the ancestry-replay gates.
+- **Verification of the received claims (2026-09-28, read-only):**
+  - **R-11: PARTLY TRUE.**
+    - X-PAIR-NORECOMB had no positive arm, and both arms sat at the floor (P-11 events 0/0). Its CLEAN_NULL is DOWNGRADED
+      to INVALID as a test of splice suppression; graph updated.
+    - The predecessor-criterion readout (57 -> 8) stands.
+    - The claim "P-11 fires only at tier L" is FALSE: it fires at tier M (all H2 implant runs, including T-003's births),
+      and 4 of the 57 spontaneous survivors are tier M.
+    - ERRATUM: the graph note "the 57 P-11 survivors arose at tier L" is wrong; it is 53 L + 4 M.
+  - **R-08: PARTLY TRUE.**
+    - primordial board_eligible accepts any non-empty cheat string (contract.py:108-112).
+    - The bus git guard checks the rows only.
+    - The code is legacy R4-R8 (board scoring is off by default), so no current verdict changes. The historical swarm
+      error-metabolism credit is weakened.
+  - **R-05: TRUE.**
+    - The P-11 reassay per-draw files are gitignored (replays/p11/).
+    - 26 of the 57 survivors rest on a single event passing exactly 2 of 3 draws.
+    - 18 of the 57 first events have fid_other < 0.92, with a minimum of 0.906.
+    - Two survivors show low ordinary authorship (0.0 and 0.48): check which authorship measure C4 uses.
+    - The "57" must be reported as "57, of which 26 rest on one 2-of-3 event". It cannot be re-audited unless the
+      per-draw files are committed or regenerated (queued, low priority).

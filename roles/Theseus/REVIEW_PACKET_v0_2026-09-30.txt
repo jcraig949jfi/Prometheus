@@ -1,0 +1,317 @@
++==============================================================================+
+| THESEUS v0 -- CONCEPT TENSOR / SYNTHETIC ANCESTRY: FIRST HARD TEST          |
+| Author: Theseus (Prometheus seat), DESKTOP-RUAPVAI, Claude Opus 5.5          |
+| Date: 2026-09-30                                                             |
+| For: operator (HITL) + external reviewers                                    |
+| Status: v0 H1 = FAIL; corrected replication v0_1 H1 = INDETERMINATE          |
+| Self-contained: every load-bearing number is inline; no repo access needed. |
++==============================================================================+
+
+-----
+0. SUMMARY
+-----
+Charter (operator, 2026-09-30): test whether synthetic novelty can emerge
+when human concepts are compiled into an EXECUTABLE substrate and collided
+recursively (not by an LLM), so that later generations operate on
+structures produced by the ecology's own history. Build machinery that can
+falsify this.
+
+Built in one day: an executable substrate, a deterministic compiler for 95
+human concepts (G0), an ordered k-way collision engine with a low-rank
+"concept tensor", a 22-intervention behavioural fingerprint with 7
+viability gates, 3 niche grids + 3 distance metrics (no scalar novelty),
+12 executable known-mechanism families as competitors, dark objects routed
+to lens evolution (Tyche lens genomes), and a population ecology with
+lanes G0 / SHALLOW / DEEP / VERY_DEEP / DEEP_LENS.
+
+First hard test (preregistered): do deep descendants (D) occupy behavioural
+niches not reached by LLM semantic synthesis (A), one-shot triplets (B),
+one-shot sextuplets (C), or complexity-matched random programs (R)?
+
+  v0   (preregistered run)          H1 = FAIL
+  v0_1 (corrected replication)      H1 = INDETERMINATE
+  Neither run comes near PASS. At v0 scale, recursive ancestry does not
+  measurably expand behavioural space beyond one-shot, LLM-synthesised
+  and random machinery under these rulers.
+
+The verdict flipped between two runs whose only differences are four bug
+fixes and a different effective random stream. That flip is itself a
+result: at n = 51 per arm (bounded by the 60-genome LLM arm), the H1
+statistic is too noisy for a single run to decide.
+
+-----
+1. WHAT WAS BUILT, AND WHAT WAS COMMITTED BEFORE MEASUREMENT
+-----
+Order in git (all on origin/main):
+  46a8faf82  charter adopted (verbatim charter + MANIFEST)
+  66f7f0db1  v0 PREREGISTRATION + all machinery + the LLM arm's genomes
+             (committed before any full run; one smoke run proved the
+             pipeline, and its outputs were deleted unread except for
+             health lines)
+  b63ae617f  v0 result rows + report (H1 FAIL)
+  308330aaf  PREREG AMENDMENT 1 (bug fixes, rules unchanged) before v0_1
+  (this commit) v0_1 rows + report + this packet
+
+Substrate: a genome is a program over a field X[C<=4 channels, N=32 cells]
+plus memory, T=128 steps. Its rules apply SEQUENTIALLY, so collisions are
+noncommutative. There are 19 ops: diffuse, advect, react (k-ary), saturate,
+conserve, decay, remember, recall, threshold, replicate, select, mirror,
+coarse, delay, wrap, rank, drive, gate, lensmap. THE OP SET IS A HUMAN
+PRIOR: nothing can leave the space it spans.
+
+G0: 95 concepts from the historical Nous/Hephaestus dictionary (source
+"hephaestus"). 45 of them also have Hecate's structured Pass-0 extractions.
+A deterministic keyword compiler maps them to 16 charter properties
+(evidence words stored), then to ops through a fixed table. No LLM decides
+a mechanism. Known confound: enriched concepts compile to about 10-14 rules
+and description-only ones to 2-3.
+
+Collision: bind seeded rule subsets with a position-dependent channel
+remap, add a generated k-ary interaction law (gains from latent factors, CP
+form), apply a random subset of 8 operators, and cap the result at 14
+rules. Rule provenance is exact.
+
+Fingerprint: 12 descriptors + 22 intervention responses (34 dims),
+averaged over 2 initial-condition seeds. Calibration is frozen from G0
+before any arm runs.
+
+Viability: deterministic, stable, nontrivial, lifetime, transforms,
+responsive (not inert and not saturated), replicable (replicate distance <
+tau_rep = 4.31).
+
+-----
+2. THE ENDPOINT AND WHY IT MATTERS
+-----
+H1 is the charter's FIRST HARD TEST. If deep synthetic ancestry cannot
+reach behaviour that cheap alternatives miss, the "synthetic ancestry"
+thesis has no behavioural footprint at this scale, whatever the genealogy
+numbers say.
+
+Decision rule (frozen):
+- Viable candidates only. Equal n = min over D, A, B, C, R. n < 30 gives
+  INDETERMINATE.
+- EX_g(D) = the number of grid cells occupied by D and by none of A, B, C,
+  R. Permutation null: 1000 label shuffles.
+- O_m(X) = the median minimum distance from X to the other four arms.
+  Bootstrap CI of O(D) - O(R).
+- PASS: at least 2 of 3 grids with p < .05 and EX(D) > EX(R), AND at least
+  2 of 3 metrics with the CI above 0.
+- FAIL: at least 2 of 3 grids at or below the null median, OR at least 2
+  of 3 metrics with the CI below 0.
+- INDETERMINATE otherwise.
+
+-----
+3. RESULTS: H1 (exact numbers)
+-----
+Viable counts. v0: D 336, A 51, B 212, C 216, R 171.
+               v0_1: D 338, A 51, B 223, C 219, R 175.
+Equal n = 51 in both runs.
+
+                    v0                          v0_1
+grid   EX(D)  null med  p          EX(D)  null med  p
+pca     23     22.0    0.483        21     21.0    0.564
+desc    24     24.0    0.545        23     21.0    0.293
+resp     8      8.0    0.621        11      7.0    0.089
+
+metric       O(D)-O(R)  CI95                O(D)-O(R)  CI95
+euclid_z       0.314   [-0.329, 0.940]       0.320   [-0.331, 0.760]
+cosine        -0.035   [-0.072, 0.056]      -0.022   [-0.081, 0.021]
+quantile_l1    0.000   [-0.015, 0.007]      -0.006   [-0.018, 0.011]
+
+v0 is FAIL: 2 of 3 grids are at or below the null median.
+v0_1 is INDETERMINATE: only pca is at the null median, and no metric CI
+excludes 0.
+The failure shape: D sits inside the same region as every comparison arm.
+Its euclid_z outreach is positive in both runs (+0.31, +0.32), but the CIs
+straddle 0 and the cosine and quantile metrics show nothing. D is not
+closer to the others than they are to each other; it is simply not
+farther.
+
+Validity gates (both runs):
+- hidden-known (20 known mechanisms behind SYN names): 20/20 reproduced
+  or partial (19 exact).
+- execution-neutral programs: 0/40 viable (all fail "transforms").
+- lineage integrity: 0 mismatches in 1202 (v0) and 1173 (v0_1) entities.
+- one-shot law depth max = 1; recursive lanes reach up to 9. Descendants
+  reach executable forms that one-shot collisions structurally cannot.
+
+-----
+4. RESULTS: SECONDARY (descriptive)
+-----
+Arity, one-shot, viable fraction with Wilson CI 95 (v0):
+  pairs 0.703 [.649, .752]   triplets 0.707 [.653, .755]
+  sextuplets 0.720 [.667, .768]
+Flat. Arity does not change viability under a 14-rule cap.
+
+Depth vs distance to the one-shot union, Spearman(generation, d) over about
+908 viable ecology children:
+  v0:   0.080 / 0.100 / 0.076 (euclid / cosine / quantile)
+  v0_1: 0.105 on euclid; lineage-shuffle perm p = 0.018 (v0), 0.001 (v0_1)
+A real but small drift outward with generation. It is not niche expansion.
+
+Genealogy (v0_1):
+  DEEP: min depth to G0 median 2; raw-human rule fraction 0.35
+  VERY_DEEP: min depth 4-5; raw-human rule fraction 0.24; grandparents
+    all synthetic in 100%
+Unchanged human rules survive many collisions, because binding copies
+contiguous runs verbatim.
+
+Mechanistic reproduction against 12 known families (top-sparse candidates
+per arm), counts of NOT_REPRODUCED_YET:
+  v0:   D 11/20, E 7/10, R 9/10, C 5/10, B 1/10, A 0/10
+  v0_1: D 12/20, E 2/10, R 8/10, B 5/10, C 1/10, A 0/10
+RANDOM PROGRAMS ARE "NOT REPRODUCED" AT LEAST AS OFTEN AS DEEP
+DESCENDANTS. On this library, NOT_REPRODUCED_YET mostly measures distance
+from the library, not mechanism.
+
+Lens loop:
+- about 290-299 dark objects; 60 evolution attempts per run; 8 (v0) and 10
+  (v0_1) lenses admitted (held-out drop >= .05 and > random-lens p95).
+- Lens-dependent fraction (drop >= .05), v0_1: D 5/60, E 8/60, B 8/60,
+  R 12/60.
+- The lens-marginal ruler is NOT specific to synthetic descendants: random
+  programs gain more from the evolved lenses than deep ones do.
+
+Controls: weird high-gain programs are 38-39 viable of 60, so the viability
+gate lets a lot of "weird" through. Rule-destroyed twins: 4/80 and 7/80
+viable.
+
+Predictions (9 preregistered + P10 made after v0):
+  RIGHT in both runs: P1 (H1 not PASS), P3, P5, P6, P7, P8
+  WRONG in both runs: P2 (arity monotone), P4 (DEEP raw rule fraction
+    < .2)
+  P9 (Spearman > .1): WRONG in v0, RIGHT in v0_1
+  P10 (H1 FAIL again in v0_1): WRONG
+Every wrong call is in roles/Theseus/calibration/LEDGER.md.
+
+-----
+5. INCIDENTS AND DEFECTS FOUND (and what they validated)
+-----
+D1 Evolved lenses (generation-0 roots) were eligible parents in DEEP and
+   VERY_DEEP, so v0's arm D contained generation-1 children and
+   overlapped E. Seen in the gen-5 log line, not fixed mid-run. Fixed in
+   amendment 1.
+D2 Coalition pools iterated a Python set, so the v0 run is not
+   reproducible from its seed (PYTHONHASHSEED). Fixed. v0_1 uses sorted
+   pools and PYTHONHASHSEED=0. v0_1's bitwise reproducibility is asserted
+   by the code but NOT yet verified by a rerun.
+D3 lensDependencies was inherited through ancestry, so nearly every v0
+   candidate "carried" lenses while the measured drop was about 0.004. It
+   now records executed lenses only.
+D4 VISUAL_EXPORT was silently empty in v0, and arm rows were not
+   exported. Fixed; v0_1 exports 20 visual rows and 2648 arm rows.
+D5 The population cap (400) does not bind: QD elites across 3 grids plus
+   untried dark objects are protected, and the active population reached
+   581.
+D6 Before any full run, the dark-object gate changed. A full-state linear
+   observer was worse than the identity lenses on G0 (median residual 0.67
+   vs 0.19), so "structured" became |lag-1 autocorrelation| >= 0.5.
+D7 The strongest-candidate table ranks by distance to the controls. None
+   of its top entries was in the 60-candidate lens-marginal sample, so
+   "requires evolved lens" is UNMEASURED for every one of them.
+
+-----
+6. STRONGEST CANDIDATES (v0_1, the charter's precise language only)
+-----
+M000617 (D):
+- no direct raw-human parent; minimum ancestry depth to G0 = 4;
+  generation 15; raw-human rule fraction 0.08
+- occupies cells of the pca and desc grids absent from every control arm
+  and from G0; euclid_z niche distance to controls 8.1 (tau_rep 4.31)
+- best known-family distance 10.0 (NOT_REPRODUCED_YET against 12 families,
+  about 40 library entries each plus 16 refinements)
+- replicates at IC seeds 2 and 3; substrate-transfer score 0.90; its
+  rule-destroyed twin is not viable
+- executes lens L-b96786c607; lens dependence NOT MEASURED
+- state INTERPRET; interpretation not attempted
+
+M000946 (E):
+- minimum depth 2; raw-human rule fraction 0.36
+- cells absent from controls in all 3 grids; distance 10.6
+- NOT_REPRODUCED_YET (18.3); replicates; transfer score 0.69
+
+Neither is "novel". Section 4 shows random programs also land far away
+and also go unreproduced, so these rows have not yet beaten the
+random-program explanation.
+
+-----
+7. WHAT THIS DOES AND DOES NOT ESTABLISH
+-----
+DOES:
+- the executable loop works end to end: compile, collide, fingerprint,
+  archive, dark objects, lenses, lenses re-entering as matter
+- lineage bookkeeping is exact
+- the three validity gates pass
+- under this op set, battery and rulers, deep ancestry shows no detectable
+  behavioural-space advantage over one-shot, LLM-synthesised or random
+  programs at n = 51
+- generation drifts slightly outward (rho about 0.1)
+
+DOES NOT:
+- say anything about larger scale, other substrates or other fingerprints
+- establish that the rulers can see mechanism-level novelty at all. The
+  mechanistic and lens rulers failed to separate random programs from deep
+  descendants, so a null from them is weak.
+- establish anything about human priors. The op set, compiler, library and
+  rulers are all human-designed by the same model that built the LLM arm
+  (conflict of interest declared).
+
+-----
+8. RECOMMENDATION
+-----
+Do NOT scale v0 as it is. Scaling a loop whose rulers cannot separate
+random programs from deep descendants buys compute, not evidence.
+
+Next, in this order (backlog THESEUS-05 and on):
+(a) Make the RULERS discriminate first. Positive controls where
+    deep-ancestry structure is planted and must be detected; mechanistic
+    and lens rulers must separate R from planted structure before they
+    judge D.
+(b) Raise n. The A arm caps n at 51: generate about 300 LLM-arm genomes,
+    or report H1 without A as a secondary.
+(c) Replicate across 3+ master seeds and report the H1 statistic's
+    variance.
+(d) Only then vary the op set and the fingerprint, which are the likeliest
+    bottleneck.
+
+The seat's lean: continue, at small compute, on (a) through (c).
+"Not worth continuing" is a legitimate answer if (a) shows the rulers
+cannot be made discriminating at this substrate scale.
+
+-----
+9. QUESTIONS FOR THE REVIEWER (written to resist agreement)
+-----
+Q1 Is H1 even the right first test when the known-mechanism ruler cannot
+   tell random programs from descendants? Should v0 have been voided
+   rather than scored?
+Q2 Replicate distance tau_rep = the median nearest-neighbour distance
+   among G0. Is that so permissive that "viable/replicable" admits
+   near-random dynamics? 38/60 deliberately weird programs passed.
+Q3 Does the 14-rule cap plus contiguous binding force every lineage back
+   toward the G0 rule pool, making depth meaningless by construction?
+Q4 Is a same-model LLM arm a fair "LLM synthesis" baseline, or does it
+   flatter or handicap A?
+Q5 What single experiment would most cheaply show this whole approach is
+   a dead end?
+
+-----
+10. ARTIFACTS (repository paths; commits on origin/main)
+-----
+- charter: roles/Theseus/prompts/2026-09-30_charter/ (46a8faf82)
+- prereg: roles/Theseus/prereg/2026-09-30_v0/PREREG.md (66f7f0db1);
+  PREREG_AMENDMENT_1.md (308330aaf)
+- code: theseus/synth/ (10 tests); LLM arm: theseus/controls/llm_arm_v0/
+- v0 rows: theseus/{corpus/g0,entities,fingerprints,lineages,collisions,
+  tensor,archive,dark_objects,controls}/*v0_2026-09-30*,
+  theseus/runs/v0_2026-09-30/REPORT.json, theseus/reports/v0_2026-09-30.md
+  (b63ae617f)
+- v0_1 rows: same layout with tag v0_1_2026-09-30, plus
+  theseus/controls/arms_v0_1_2026-09-30.jsonl (this commit)
+- calibration ledger: roles/Theseus/calibration/LEDGER.md
+- compute: v0 48 min wall, 9049 s measured worker CPU; v0_1 36 min wall,
+  about 7100 s. Both under 16 core-hours (MWO-0004 R2), on 4 local CPUs.
+
++==============================================================================+
+| END. "Not worth continuing" is a first-class answer. So is "your rulers are |
+| the experiment; fix them before asking the ecology anything."               |
++==============================================================================+

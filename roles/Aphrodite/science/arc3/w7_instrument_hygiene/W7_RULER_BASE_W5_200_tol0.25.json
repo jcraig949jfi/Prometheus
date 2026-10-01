@@ -1,0 +1,2110 @@
+{
+ "summary": {
+  "world": "W5",
+  "n": 200,
+  "v2": {
+   "NEW": 46,
+   "rate": 0.23,
+   "wilson95": [
+    0.1771,
+    0.2931
+   ]
+  },
+  "v21": {
+   "NEW": 58,
+   "rate": 0.29,
+   "wilson95": [
+    0.2315,
+    0.3564
+   ]
+  },
+  "abl_rel_only": {
+   "NEW": 46,
+   "rate": 0.23,
+   "wilson95": [
+    0.1771,
+    0.2931
+   ]
+  },
+  "abl_traj_only": {
+   "NEW": 58,
+   "rate": 0.29,
+   "wilson95": [
+    0.2315,
+    0.3564
+   ]
+  },
+  "abl_same_witness_only": {
+   "NEW": 58,
+   "rate": 0.29,
+   "wilson95": [
+    0.2315,
+    0.3564
+   ]
+  },
+  "flips_v2_to_v21": [
+   {
+    "schema": "((({H} + acc) + v) * v)",
+    "v2": false,
+    "v21": true
+   },
+   {
+    "schema": "(({H} - acc) * v)",
+    "v2": false,
+    "v21": true
+   },
+   {
+    "schema": "(acc % {H})",
+    "v2": false,
+    "v21": true
+   },
+   {
+    "schema": "(acc * (math.gcd(abs({H}), abs(first)) + v))",
+    "v2": false,
+    "v21": true
+   },
+   {
+    "schema": "(acc * pow(first, {H}))",
+    "v2": false,
+    "v21": true
+   },
+   {
+    "schema": "(acc * pow(last, {H}))",
+    "v2": false,
+    "v21": true
+   },
+   {
+    "schema": "(first - (1 // {H}))",
+    "v2": false,
+    "v21": true
+   },
+   {
+    "schema": "(v // (last + (acc - {H})))",
+    "v2": false,
+    "v21": true
+   },
+   {
+    "schema": "math.gcd(abs(0), abs(({H} - (v // acc))))",
+    "v2": false,
+    "v21": true
+   },
+   {
+    "schema": "pow(first, (v % {H}))",
+    "v2": false,
+    "v21": true
+   },
+   {
+    "schema": "pow(last, {H})",
+    "v2": false,
+    "v21": true
+   },
+   {
+    "schema": "pow(v, ({H} + v))",
+    "v2": false,
+    "v21": true
+   }
+  ]
+ },
+ "rows": [
+  {
+   "schema": "(((v // 0) + {H}) * v)",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "((({H} + acc) + v) * v)",
+   "v2": false,
+   "v21": true,
+   "abl_rel_only": false,
+   "abl_traj_only": true,
+   "abl_same_witness_only": true,
+   "accumulating": 6,
+   "COMPOSES_v21": true
+  },
+  {
+   "schema": "((first * ({H} % acc)) + v)",
+   "v2": true,
+   "v21": true,
+   "abl_rel_only": true,
+   "abl_traj_only": true,
+   "abl_same_witness_only": true,
+   "accumulating": 6,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "((first + math.gcd(abs(acc), abs({H}))) + v)",
+   "v2": true,
+   "v21": true,
+   "abl_rel_only": true,
+   "abl_traj_only": true,
+   "abl_same_witness_only": true,
+   "accumulating": 5,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "((first // (last + {H})) * last)",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "((last % (last % last)) + {H})",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "((last * (first * {H})) + v)",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(({H} + pow(v, first)) * last)",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(({H} + pow(v, v)) * last)",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(({H} - acc) * v)",
+   "v2": false,
+   "v21": true,
+   "abl_rel_only": false,
+   "abl_traj_only": true,
+   "abl_same_witness_only": true,
+   "accumulating": 5,
+   "COMPOSES_v21": true
+  },
+  {
+   "schema": "(({H} // 0) * first)",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(0 % pow({H}, pow(v, v)))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(0 % {H})",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 6,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(0 * math.gcd(abs(1), abs(({H} // first))))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(0 * math.gcd(abs({H}), abs(v)))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(0 - (v // {H}))",
+   "v2": true,
+   "v21": true,
+   "abl_rel_only": true,
+   "abl_traj_only": true,
+   "abl_same_witness_only": true,
+   "accumulating": 46,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(0 // ({H} * last))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 6,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(0 // pow(first, {H}))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 7,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(0 // {H})",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 6,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(1 % (1 + {H}))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 6,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(1 % (first + {H}))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 2,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(1 % ({H} * last))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 7,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(1 % ({H} - v))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(1 % {H})",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 7,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(1 + ({H} % 0))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(1 + math.gcd(abs(first), abs(pow(v, {H}))))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(1 + math.gcd(abs({H}), abs(pow(1, last))))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(1 + {H})",
+   "v2": true,
+   "v21": true,
+   "abl_rel_only": true,
+   "abl_traj_only": true,
+   "abl_same_witness_only": true,
+   "accumulating": 11,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(1 - (last * {H}))",
+   "v2": true,
+   "v21": true,
+   "abl_rel_only": true,
+   "abl_traj_only": true,
+   "abl_same_witness_only": true,
+   "accumulating": 11,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(1 - math.gcd(abs(0), abs(math.gcd(abs({H}), abs(1)))))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(1 - pow(1, math.gcd(abs(first), abs({H}))))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(1 // (1 // {H}))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 7,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(1 // ({H} - (v % v)))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(1 // math.gcd(abs(1), abs(({H} + last))))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(1 // math.gcd(abs({H}), abs((last % acc))))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(1 // {H})",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 7,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(acc % ({H} // (last - acc)))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(acc % pow(0, (0 // {H})))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(acc % pow(0, math.gcd(abs(1), abs({H}))))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(acc % pow(1, {H}))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 7,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(acc % {H})",
+   "v2": false,
+   "v21": true,
+   "abl_rel_only": false,
+   "abl_traj_only": true,
+   "abl_same_witness_only": true,
+   "accumulating": 38,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(acc * (first % ({H} // first)))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(acc * (last // ({H} % 0)))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(acc * (math.gcd(abs({H}), abs(first)) + v))",
+   "v2": false,
+   "v21": true,
+   "abl_rel_only": false,
+   "abl_traj_only": true,
+   "abl_same_witness_only": true,
+   "accumulating": 6,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(acc * ({H} // (0 % last)))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(acc * pow(first, {H}))",
+   "v2": false,
+   "v21": true,
+   "abl_rel_only": false,
+   "abl_traj_only": true,
+   "abl_same_witness_only": true,
+   "accumulating": 41,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(acc * pow(last, {H}))",
+   "v2": false,
+   "v21": true,
+   "abl_rel_only": false,
+   "abl_traj_only": true,
+   "abl_same_witness_only": true,
+   "accumulating": 41,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(acc * {H})",
+   "v2": true,
+   "v21": true,
+   "abl_rel_only": true,
+   "abl_traj_only": true,
+   "abl_same_witness_only": true,
+   "accumulating": 43,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(acc + ({H} * v))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 130,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(acc + ({H} + (acc * v)))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 6,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(acc + ({H} // math.gcd(abs(0), abs(0))))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(acc + math.gcd(abs(last), abs(({H} - 1))))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(acc + pow({H}, pow(acc, acc)))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(acc - math.gcd(abs(0), abs(math.gcd(abs(0), abs({H})))))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(acc - math.gcd(abs(0), abs({H})))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 42,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(acc - math.gcd(abs({H}), abs(pow(acc, last))))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(acc // (v // (acc - {H})))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 5,
+   "COMPOSES_v21": true
+  },
+  {
+   "schema": "(acc // {H})",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 39,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(first % ({H} * v))",
+   "v2": true,
+   "v21": true,
+   "abl_rel_only": true,
+   "abl_traj_only": true,
+   "abl_same_witness_only": true,
+   "accumulating": 46,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(first % ({H} + pow(v, last)))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(first % pow(first, ({H} // acc)))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(first % {H})",
+   "v2": true,
+   "v21": true,
+   "abl_rel_only": true,
+   "abl_traj_only": true,
+   "abl_same_witness_only": true,
+   "accumulating": 11,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(first * (last * {H}))",
+   "v2": true,
+   "v21": true,
+   "abl_rel_only": true,
+   "abl_traj_only": true,
+   "abl_same_witness_only": true,
+   "accumulating": 11,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(first * (v - ({H} * v)))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(first + (first * {H}))",
+   "v2": true,
+   "v21": true,
+   "abl_rel_only": true,
+   "abl_traj_only": true,
+   "abl_same_witness_only": true,
+   "accumulating": 11,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(first + {H})",
+   "v2": true,
+   "v21": true,
+   "abl_rel_only": true,
+   "abl_traj_only": true,
+   "abl_same_witness_only": true,
+   "accumulating": 11,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(first - (1 // {H}))",
+   "v2": false,
+   "v21": true,
+   "abl_rel_only": false,
+   "abl_traj_only": true,
+   "abl_same_witness_only": true,
+   "accumulating": 7,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(first - math.gcd(abs(acc), abs({H})))",
+   "v2": true,
+   "v21": true,
+   "abl_rel_only": true,
+   "abl_traj_only": true,
+   "abl_same_witness_only": true,
+   "accumulating": 41,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(first - {H})",
+   "v2": true,
+   "v21": true,
+   "abl_rel_only": true,
+   "abl_traj_only": true,
+   "abl_same_witness_only": true,
+   "accumulating": 11,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(first // (0 // {H}))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(first // ({H} % math.gcd(abs(1), abs(acc))))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(last % (acc * pow({H}, first)))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(last % (v % math.gcd(abs(0), abs({H}))))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(last % ({H} * (1 - v)))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(last % pow(acc, {H}))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 41,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(last % pow({H}, acc))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(last % {H})",
+   "v2": true,
+   "v21": true,
+   "abl_rel_only": true,
+   "abl_traj_only": true,
+   "abl_same_witness_only": true,
+   "accumulating": 11,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(last * ({H} * v))",
+   "v2": true,
+   "v21": true,
+   "abl_rel_only": true,
+   "abl_traj_only": true,
+   "abl_same_witness_only": true,
+   "accumulating": 48,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(last * pow(acc, pow({H}, v)))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 4,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(last + (v % {H}))",
+   "v2": true,
+   "v21": true,
+   "abl_rel_only": true,
+   "abl_traj_only": true,
+   "abl_same_witness_only": true,
+   "accumulating": 42,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(last + {H})",
+   "v2": true,
+   "v21": true,
+   "abl_rel_only": true,
+   "abl_traj_only": true,
+   "abl_same_witness_only": true,
+   "accumulating": 11,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(last - (last % ({H} // first)))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(last - ({H} * (v - last)))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(last // (math.gcd(abs({H}), abs(last)) + last))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(last // {H})",
+   "v2": true,
+   "v21": true,
+   "abl_rel_only": true,
+   "abl_traj_only": true,
+   "abl_same_witness_only": true,
+   "accumulating": 11,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(math.gcd(abs(acc), abs({H})) * v)",
+   "v2": true,
+   "v21": true,
+   "abl_rel_only": true,
+   "abl_traj_only": true,
+   "abl_same_witness_only": true,
+   "accumulating": 130,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(math.gcd(abs({H}), abs(v)) + v)",
+   "v2": true,
+   "v21": true,
+   "abl_rel_only": true,
+   "abl_traj_only": true,
+   "abl_same_witness_only": true,
+   "accumulating": 50,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(pow(acc, {H}) * v)",
+   "v2": true,
+   "v21": true,
+   "abl_rel_only": true,
+   "abl_traj_only": true,
+   "abl_same_witness_only": true,
+   "accumulating": 126,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(pow(first, {H}) + v)",
+   "v2": true,
+   "v21": true,
+   "abl_rel_only": true,
+   "abl_traj_only": true,
+   "abl_same_witness_only": true,
+   "accumulating": 51,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(v % ({H} % (last - acc)))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 5,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(v % pow(acc, (acc * {H})))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 5,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(v % pow(acc, {H}))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 119,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(v % {H})",
+   "v2": true,
+   "v21": true,
+   "abl_rel_only": true,
+   "abl_traj_only": true,
+   "abl_same_witness_only": true,
+   "accumulating": 42,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(v + {H})",
+   "v2": true,
+   "v21": true,
+   "abl_rel_only": true,
+   "abl_traj_only": true,
+   "abl_same_witness_only": true,
+   "accumulating": 50,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(v - (1 // math.gcd(abs({H}), abs(1))))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(v - (acc * {H}))",
+   "v2": true,
+   "v21": true,
+   "abl_rel_only": true,
+   "abl_traj_only": true,
+   "abl_same_witness_only": true,
+   "accumulating": 132,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(v - ({H} % (first % 0)))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(v - {H})",
+   "v2": true,
+   "v21": true,
+   "abl_rel_only": true,
+   "abl_traj_only": true,
+   "abl_same_witness_only": true,
+   "accumulating": 49,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(v // (0 - {H}))",
+   "v2": true,
+   "v21": true,
+   "abl_rel_only": true,
+   "abl_traj_only": true,
+   "abl_same_witness_only": true,
+   "accumulating": 46,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(v // (1 % {H}))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 41,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(v // (last + (acc - {H})))",
+   "v2": false,
+   "v21": true,
+   "abl_rel_only": false,
+   "abl_traj_only": true,
+   "abl_same_witness_only": true,
+   "accumulating": 5,
+   "COMPOSES_v21": true
+  },
+  {
+   "schema": "(v // ({H} // (acc + first)))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 3,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "({H} % (0 % acc))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "({H} % (1 + 1))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "({H} % (1 - (v // first)))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "({H} % 0)",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "({H} % first)",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "({H} % v)",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "({H} * (last * pow(v, v)))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "({H} * v)",
+   "v2": true,
+   "v21": true,
+   "abl_rel_only": true,
+   "abl_traj_only": true,
+   "abl_same_witness_only": true,
+   "accumulating": 48,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "({H} + (acc - (1 + v)))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 5,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "({H} + last)",
+   "v2": true,
+   "v21": true,
+   "abl_rel_only": true,
+   "abl_traj_only": true,
+   "abl_same_witness_only": true,
+   "accumulating": 11,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "({H} + v)",
+   "v2": true,
+   "v21": true,
+   "abl_rel_only": true,
+   "abl_traj_only": true,
+   "abl_same_witness_only": true,
+   "accumulating": 50,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "({H} - (0 - (0 % v)))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "({H} - (0 // last))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "({H} - (0 // pow(0, acc)))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "({H} - (1 % (acc % last)))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "({H} - (1 % (last - acc)))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "({H} - (1 + 1))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "({H} - (acc % v))",
+   "v2": true,
+   "v21": true,
+   "abl_rel_only": true,
+   "abl_traj_only": true,
+   "abl_same_witness_only": true,
+   "accumulating": 6,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "({H} - (acc * (acc // 0)))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "({H} - (acc // 0))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "({H} - 1)",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "({H} - acc)",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": true
+  },
+  {
+   "schema": "({H} - math.gcd(abs(last), abs(v)))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "({H} - pow(acc, (acc // v)))",
+   "v2": true,
+   "v21": true,
+   "abl_rel_only": true,
+   "abl_traj_only": true,
+   "abl_same_witness_only": true,
+   "accumulating": 6,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "({H} // ((first // first) + first))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "({H} // (last // (0 % last)))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "({H} // 0)",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "({H} // math.gcd(abs(first), abs(math.gcd(abs(1), abs(acc)))))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "({H} // math.gcd(abs(last), abs((acc * acc))))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "({H} // pow(0, (v - last)))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "math.gcd(abs(((first + {H}) * first)), abs(v))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "math.gcd(abs((1 + (0 % {H}))), abs(last))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "math.gcd(abs((1 // ({H} + v))), abs(first))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "math.gcd(abs((acc % math.gcd(abs(0), abs(0)))), abs({H}))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "math.gcd(abs((acc // (0 // {H}))), abs(last))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "math.gcd(abs((first + pow({H}, v))), abs(v))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "math.gcd(abs(({H} // (last * last))), abs(last))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "math.gcd(abs(({H} // acc)), abs(last))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "math.gcd(abs(({H} // pow(v, v))), abs(first))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "math.gcd(abs(0), abs((acc % pow(last, {H}))))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "math.gcd(abs(0), abs((v - (acc % {H}))))",
+   "v2": true,
+   "v21": true,
+   "abl_rel_only": true,
+   "abl_traj_only": true,
+   "abl_same_witness_only": true,
+   "accumulating": 4,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "math.gcd(abs(0), abs(({H} - (v // acc))))",
+   "v2": false,
+   "v21": true,
+   "abl_rel_only": false,
+   "abl_traj_only": true,
+   "abl_same_witness_only": true,
+   "accumulating": 6,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "math.gcd(abs(0), abs({H}))",
+   "v2": true,
+   "v21": true,
+   "abl_rel_only": true,
+   "abl_traj_only": true,
+   "abl_same_witness_only": true,
+   "accumulating": 11,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "math.gcd(abs(1), abs((0 - {H})))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "math.gcd(abs(1), abs(({H} % (last * last))))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "math.gcd(abs(1), abs(pow(v, (0 // {H}))))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "math.gcd(abs(acc), abs((acc * {H})))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "math.gcd(abs(acc), abs(pow(0, math.gcd(abs({H}), abs(last)))))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "math.gcd(abs(acc), abs(pow(1, {H})))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 23,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "math.gcd(abs(acc), abs({H}))",
+   "v2": true,
+   "v21": true,
+   "abl_rel_only": true,
+   "abl_traj_only": true,
+   "abl_same_witness_only": true,
+   "accumulating": 41,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "math.gcd(abs(first), abs((0 * (first % {H}))))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "math.gcd(abs(first), abs(pow(first, ({H} - last))))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "math.gcd(abs(first), abs(pow(last, ({H} % acc))))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "math.gcd(abs(first), abs({H}))",
+   "v2": true,
+   "v21": true,
+   "abl_rel_only": true,
+   "abl_traj_only": true,
+   "abl_same_witness_only": true,
+   "accumulating": 10,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "math.gcd(abs(last), abs(({H} - (last * v))))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "math.gcd(abs(math.gcd(abs(0), abs({H}))), abs(last))",
+   "v2": true,
+   "v21": true,
+   "abl_rel_only": true,
+   "abl_traj_only": true,
+   "abl_same_witness_only": true,
+   "accumulating": 10,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "math.gcd(abs(math.gcd(abs({H}), abs(acc))), abs(last))",
+   "v2": true,
+   "v21": true,
+   "abl_rel_only": true,
+   "abl_traj_only": true,
+   "abl_same_witness_only": true,
+   "accumulating": 37,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "math.gcd(abs(pow(1, math.gcd(abs(0), abs(acc)))), abs({H}))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "math.gcd(abs(pow(last, ({H} * first))), abs(v))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "math.gcd(abs({H}), abs((first % first)))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "math.gcd(abs({H}), abs((v - (acc % v))))",
+   "v2": true,
+   "v21": true,
+   "abl_rel_only": true,
+   "abl_traj_only": true,
+   "abl_same_witness_only": true,
+   "accumulating": 5,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "math.gcd(abs({H}), abs((v - acc)))",
+   "v2": true,
+   "v21": true,
+   "abl_rel_only": true,
+   "abl_traj_only": true,
+   "abl_same_witness_only": true,
+   "accumulating": 5,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "math.gcd(abs({H}), abs((v // first)))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "math.gcd(abs({H}), abs(acc))",
+   "v2": true,
+   "v21": true,
+   "abl_rel_only": true,
+   "abl_traj_only": true,
+   "abl_same_witness_only": true,
+   "accumulating": 41,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "math.gcd(abs({H}), abs(first))",
+   "v2": true,
+   "v21": true,
+   "abl_rel_only": true,
+   "abl_traj_only": true,
+   "abl_same_witness_only": true,
+   "accumulating": 10,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "math.gcd(abs({H}), abs(math.gcd(abs(first), abs(math.gcd(abs(0), abs(first))))))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "math.gcd(abs({H}), abs(v))",
+   "v2": true,
+   "v21": true,
+   "abl_rel_only": true,
+   "abl_traj_only": true,
+   "abl_same_witness_only": true,
+   "accumulating": 49,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "pow(0, (acc % ({H} + acc)))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": true
+  },
+  {
+   "schema": "pow(0, pow(1, {H}))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 7,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "pow(0, {H})",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 6,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "pow(1, (0 // ({H} % first)))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "pow(1, (1 - math.gcd(abs(0), abs({H}))))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "pow(1, (1 // ({H} * v)))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "pow(1, (acc - {H}))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 35,
+   "COMPOSES_v21": true
+  },
+  {
+   "schema": "pow(1, (last % {H}))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 10,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "pow(1, pow(last, (acc + {H})))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": true
+  },
+  {
+   "schema": "pow(acc, (acc % {H}))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 38,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "pow(acc, math.gcd(abs(acc), abs((1 - {H}))))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "pow(acc, pow(first, ({H} * last)))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "pow(acc, {H})",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 41,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "pow(first, ((1 + {H}) * v))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "pow(first, (0 // {H}))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 6,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "pow(first, (v % {H}))",
+   "v2": false,
+   "v21": true,
+   "abl_rel_only": false,
+   "abl_traj_only": true,
+   "abl_same_witness_only": true,
+   "accumulating": 42,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "pow(last, (first * math.gcd(abs(acc), abs({H}))))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "pow(last, (v // (0 - {H})))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "pow(last, ({H} // (last * last)))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "pow(last, math.gcd(abs(1), abs(({H} * first))))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "pow(last, {H})",
+   "v2": false,
+   "v21": true,
+   "abl_rel_only": false,
+   "abl_traj_only": true,
+   "abl_same_witness_only": true,
+   "accumulating": 11,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "pow(v, (1 - {H}))",
+   "v2": true,
+   "v21": true,
+   "abl_rel_only": true,
+   "abl_traj_only": true,
+   "abl_same_witness_only": true,
+   "accumulating": 44,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "pow(v, ({H} + v))",
+   "v2": false,
+   "v21": true,
+   "abl_rel_only": false,
+   "abl_traj_only": true,
+   "abl_same_witness_only": true,
+   "accumulating": 51,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "pow(v, ({H} // pow(acc, first)))",
+   "v2": true,
+   "v21": true,
+   "abl_rel_only": true,
+   "abl_traj_only": true,
+   "abl_same_witness_only": true,
+   "accumulating": 5,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "pow(v, {H})",
+   "v2": true,
+   "v21": true,
+   "abl_rel_only": true,
+   "abl_traj_only": true,
+   "abl_same_witness_only": true,
+   "accumulating": 47,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "pow({H}, (0 // 0))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "pow({H}, (first * math.gcd(abs(acc), abs(last))))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "pow({H}, (first // first))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "pow({H}, (pow(v, first) + v))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "pow({H}, math.gcd(abs(acc), abs(acc)))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "pow({H}, pow(last, (first + v)))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  }
+ ]
+}

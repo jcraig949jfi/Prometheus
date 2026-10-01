@@ -1,0 +1,2685 @@
+{
+  "id": "HT-ae38c641b1",
+  "key": "Abstract Interpretation + Fractal Geometry + Sensitivity Analysis",
+  "stratum": "S4_nous_failure",
+  "concepts": [
+    {
+      "field": "Formal Methods",
+      "mechanism": "measure",
+      "name": "Abstract Interpretation",
+      "short_description": "Compute properties of programs without executing them; soundness vs completeness tradeoff; over/under-approximation."
+    },
+    {
+      "field": "Mathematics",
+      "mechanism": "structure",
+      "name": "Fractal Geometry",
+      "short_description": "Self-similar structures at every scale; Hausdorff dimension, iterated function systems, power-law scaling."
+    },
+    {
+      "field": "Statistics",
+      "mechanism": "measure",
+      "name": "Sensitivity Analysis",
+      "short_description": "How do output variations depend on input perturbations? Robustness of causal estimates under model misspecification."
+    }
+  ],
+  "provenance": {
+    "historicalId": "Abstract Interpretation + Fractal Geometry + Sensitivity Analysis",
+    "humanreadable": "agents/hephaestus/humanreadable/Fractal_Geometry---Abstract_Interpretation---Sensitivity_Analysis.md",
+    "ledger_lines": [
+      6449
+    ],
+    "source": "hephaestus",
+    "sourceArtifact": "agents/hephaestus/ledger.jsonl#L6449",
+    "upstream_nous": [
+      "agents/nous/runs/20260325_132552/responses.jsonl#L984"
+    ],
+    "selected_by": "roles/Hecate/prereg/2026-09-29_first_selection/"
+  },
+  "history": {
+    "forged": false,
+    "ledger_n": 1,
+    "ledger_reasons": [
+      "trap_battery_failed"
+    ],
+    "nous_composite_max": 5.33,
+    "nous_high_potential": false,
+    "nous_models": [
+      "nvidia/nemotron-3-super-120b-a12b"
+    ],
+    "nous_n": 1,
+    "nous_unproductive_any": false
+  },
+  "passes": [
+    {
+      "id": "P0",
+      "triplicateId": "HT-ae38c641b1",
+      "index": 0,
+      "kind": "raw_interpretation",
+      "added": [
+        "new interpretation"
+      ],
+      "generator": {
+        "model": "claude-opus-5-5",
+        "search": false,
+        "prompt": "hecate/programs/_prompts/pass0_3_v1.md",
+        "prompt_sha256": "9ac5468dffb0a5792840809c84b3ad1ab22056397741dacb893386fd206baf3d"
+      },
+      "inspected_prior": [],
+      "concept_extractions": [
+        {
+          "concept": "Abstract Interpretation",
+          "defining_structures": [
+            "concrete semantics as a lattice of state sets",
+            "abstract domain lattice (intervals, octagons, polyhedra)",
+            "Galois connection alpha/gamma",
+            "abstract transformers",
+            "join, widening, narrowing operators"
+          ],
+          "invariants": [
+            "soundness: every concrete state lies in gamma(abstract state)",
+            "monotonicity of abstract transformers",
+            "loop-head invariants as post-fixed points"
+          ],
+          "transformations": [
+            "abstraction alpha",
+            "concretization gamma",
+            "Kleene iteration",
+            "widening extrapolation",
+            "narrowing refinement",
+            "domain reduction/product"
+          ],
+          "conserved_quantities": [
+            "inclusion of the concrete reachable set in the abstract one",
+            "lattice order along ascending chains"
+          ],
+          "failure_modes": [
+            "false alarms from over-approximation",
+            "wrapping effect (boxes inflate under rotation)",
+            "precision loss at joins",
+            "non-termination without widening",
+            "widening overshoot that narrowing cannot recover"
+          ],
+          "dynamics": [
+            "monotone ascending chain to a fixed point",
+            "extrapolation jumps at widening points",
+            "descending narrowing chain"
+          ],
+          "scales": [
+            "lattice height",
+            "domain granularity (threshold sets, grid size)",
+            "iteration count before widening"
+          ],
+          "locality": [
+            "per program point",
+            "non-relational domains are per-variable; relational domains couple variables"
+          ],
+          "memory": [
+            "invariant stored at each loop head",
+            "iteration history only through current abstract element"
+          ],
+          "identity": [
+            "concrete states are identified if they share an abstract element (equivalence classes)"
+          ],
+          "reproduction": [
+            "invariants are reused across calls/contexts (summaries)"
+          ],
+          "selection": [
+            "choice of domain and widening strategy selects which properties are provable"
+          ],
+          "information": [
+            "precision = size of gamma(a) relative to concrete set",
+            "abstraction is a lossy but sound code"
+          ],
+          "constraint": [
+            "must never under-approximate (soundness)",
+            "must terminate (widening)"
+          ]
+        },
+        {
+          "concept": "Fractal Geometry",
+          "defining_structures": [
+            "iterated function system of contractions",
+            "attractor as unique fixed point of the Hutchinson set operator",
+            "self-similar and self-affine sets",
+            "fractal basin boundaries"
+          ],
+          "invariants": [
+            "similarity/scaling ratios",
+            "Hausdorff and box-counting dimension",
+            "attractor invariance under Hutchinson operator"
+          ],
+          "transformations": [
+            "contractive affine maps",
+            "rescaling / zoom",
+            "coding maps from symbol sequences to points"
+          ],
+          "conserved_quantities": [
+            "dimension under bi-Lipschitz maps",
+            "scaling exponents across scales"
+          ],
+          "failure_modes": [
+            "overlap violating open-set condition (dimension formula breaks)",
+            "only statistical or approximate self-similarity",
+            "finite-resolution cutoff hides the scaling range"
+          ],
+          "dynamics": [
+            "chaos game convergence to attractor",
+            "geometric convergence of Hutchinson iteration (Banach)"
+          ],
+          "scales": [
+            "scaling range between inner and outer cutoff",
+            "number of octaves"
+          ],
+          "locality": [
+            "every local patch resembles the whole (up to maps)"
+          ],
+          "memory": [
+            "address of a point = infinite symbol sequence of maps applied"
+          ],
+          "identity": [
+            "a set is identified by its IFS code (finite description of infinite detail)"
+          ],
+          "reproduction": [
+            "each piece is a scaled copy of the whole"
+          ],
+          "selection": [
+            "which maps survive determines the attractor (e.g., which sub-squares are kept)"
+          ],
+          "information": [
+            "information dimension; description length logarithmic in resolution for IFS sets",
+            "box count grows as eps^-D"
+          ],
+          "constraint": [
+            "contraction ratio < 1 for existence of attractor",
+            "open-set condition for dimension formula"
+          ]
+        },
+        {
+          "concept": "Sensitivity Analysis",
+          "defining_structures": [
+            "input-output map with perturbation model",
+            "local derivatives / Jacobians",
+            "global variance decomposition (Sobol indices)",
+            "screening (Morris elementary effects)",
+            "misspecification sets for causal estimates"
+          ],
+          "invariants": [
+            "variance decomposition sums to total variance",
+            "Lipschitz bounds",
+            "sign/robustness value of an estimate under bounded misspecification"
+          ],
+          "transformations": [
+            "input perturbation",
+            "freezing subsets of inputs",
+            "reparameterisation",
+            "local linearisation"
+          ],
+          "conserved_quantities": [
+            "total output variance across index decomposition"
+          ],
+          "failure_modes": [
+            "local derivatives miss global interactions",
+            "correlated inputs break index interpretation",
+            "non-smooth outputs make derivative sensitivity meaningless",
+            "chaotic maps make sensitivity horizon-dependent"
+          ],
+          "dynamics": [
+            "perturbation growth along trajectories (Lyapunov exponents)"
+          ],
+          "scales": [
+            "perturbation magnitude",
+            "time horizon"
+          ],
+          "locality": [
+            "local (derivative) versus global (variance-based) sensitivity"
+          ],
+          "memory": [
+            "none intrinsic; sensitivity accumulates along a trajectory"
+          ],
+          "identity": [
+            "an input is 'important' if freezing it removes output variance"
+          ],
+          "reproduction": [
+            "none"
+          ],
+          "selection": [
+            "screening selects which inputs deserve modelling precision"
+          ],
+          "information": [
+            "which inputs carry information about the output",
+            "how many bits of input precision are needed per bit of output"
+          ],
+          "constraint": [
+            "conclusions are conditional on the assumed perturbation class"
+          ]
+        }
+      ],
+      "unexplained": [
+        "whether the Hutchinson-operator / Kleene-iteration parallel is structural or only verbal",
+        "whether sensitivity contributes anything separable from dimension",
+        "whether I6 (fractal robustness regions) has any instance at all"
+      ],
+      "decision": "DEEPEN",
+      "research_state": {
+        "novelty": "unknown",
+        "mechanistic_clarity": "low",
+        "falsifiability": "low",
+        "empirical_support": "none",
+        "cross_lens_agreement": "unknown",
+        "cross_substrate_transfer": "unknown",
+        "baseline_resistance": "unknown",
+        "artifact_risk": "medium",
+        "cost": "low",
+        "unexpectedness": "medium",
+        "potential_importance": "medium"
+      }
+    },
+    {
+      "id": "P1",
+      "triplicateId": "HT-ae38c641b1",
+      "index": 1,
+      "kind": "collision",
+      "added": [
+        "new mechanism"
+      ],
+      "generator": {
+        "model": "claude-opus-5-5",
+        "search": false,
+        "prompt": "hecate/programs/_prompts/pass0_3_v1.md",
+        "prompt_sha256": "9ac5468dffb0a5792840809c84b3ad1ab22056397741dacb893386fd206baf3d"
+      },
+      "inspected_prior": [
+        "I1",
+        "I2",
+        "I3",
+        "I4",
+        "I5",
+        "I6"
+      ],
+      "unexplained": [
+        "M1 and M7 may be one mechanism in two notations",
+        "M2/M11/M14 may all reduce to the classical wrapping effect",
+        "M6, M12 and M14 have weak three-way dependency",
+        "M8 may be empty for realistic estimators"
+      ],
+      "decision": "DEEPEN",
+      "research_state": {
+        "novelty": "low",
+        "mechanistic_clarity": "medium",
+        "falsifiability": "medium",
+        "empirical_support": "none",
+        "cross_lens_agreement": "unknown",
+        "cross_substrate_transfer": "unknown",
+        "baseline_resistance": "low",
+        "artifact_risk": "medium",
+        "cost": "low",
+        "unexpectedness": "medium",
+        "potential_importance": "medium"
+      }
+    },
+    {
+      "id": "P2",
+      "triplicateId": "HT-ae38c641b1",
+      "index": 2,
+      "kind": "lens_explosion",
+      "added": [
+        "new lens",
+        "new observable"
+      ],
+      "generator": {
+        "model": "claude-opus-5-5",
+        "search": false,
+        "prompt": "hecate/programs/_prompts/pass0_3_v1.md",
+        "prompt_sha256": "9ac5468dffb0a5792840809c84b3ad1ab22056397741dacb893386fd206baf3d"
+      },
+      "inspected_prior": [
+        "M1",
+        "M2",
+        "M3",
+        "M4",
+        "M5",
+        "M6",
+        "M7",
+        "M8",
+        "M9",
+        "M10",
+        "M11",
+        "M12",
+        "M13",
+        "M14"
+      ],
+      "unexplained": [
+        "whether lambda*T and D can be varied independently (L7 identifiability)",
+        "whether goniometer imprint survives controlling for norm",
+        "L4 variance split untested against L5 breakpoint scaling"
+      ],
+      "decision": "DEEPEN",
+      "research_state": {
+        "novelty": "low",
+        "mechanistic_clarity": "medium",
+        "falsifiability": "high",
+        "empirical_support": "none",
+        "cross_lens_agreement": "unknown",
+        "cross_substrate_transfer": "unknown",
+        "baseline_resistance": "unknown",
+        "artifact_risk": "medium",
+        "cost": "low",
+        "unexpectedness": "medium",
+        "potential_importance": "medium"
+      }
+    },
+    {
+      "id": "P3",
+      "triplicateId": "HT-ae38c641b1",
+      "index": 3,
+      "kind": "minimal_worlds",
+      "added": [
+        "new substrate",
+        "new falsifier",
+        "new intervention"
+      ],
+      "generator": {
+        "model": "claude-opus-5-5",
+        "search": false,
+        "prompt": "hecate/programs/_prompts/pass0_3_v1.md",
+        "prompt_sha256": "9ac5468dffb0a5792840809c84b3ad1ab22056397741dacb893386fd206baf3d"
+      },
+      "inspected_prior": [
+        "M1",
+        "M2",
+        "M3",
+        "M4",
+        "M7",
+        "M10",
+        "M14",
+        "L1",
+        "L2",
+        "L3",
+        "L4",
+        "L5",
+        "L6",
+        "L7"
+      ],
+      "unexplained": [
+        "whether W1's rotation intervention truly leaves alpha_c invariant in a finite window",
+        "whether W2's imprint is more than a norm penalty",
+        "whether W3 breakpoints saturate",
+        "M5, M6, M8, M9, M11, M12, M13 have no world yet"
+      ],
+      "decision": "FALSIFY",
+      "research_state": {
+        "novelty": "low",
+        "mechanistic_clarity": "medium",
+        "falsifiability": "high",
+        "empirical_support": "none",
+        "cross_lens_agreement": "unknown",
+        "cross_substrate_transfer": "unknown",
+        "baseline_resistance": "unknown",
+        "artifact_risk": "medium",
+        "cost": "low",
+        "unexpectedness": "medium",
+        "potential_importance": "medium"
+      }
+    },
+    {
+      "id": "P3-probe1",
+      "triplicateId": "HT-ae38c641b1",
+      "index": 3,
+      "kind": "cheap_probe",
+      "added": [
+        "new observable"
+      ],
+      "generator": {
+        "model": "claude-opus-5-5 (implementer)",
+        "search": false,
+        "prompt": "hecate/programs/_prompts/probe_impl_v1.md",
+        "prompt_sha256": "cf4bd374bce1b817a12d3607063278183ce0a8b7c4a7b771061dc8ce133bcea2"
+      },
+      "prereg": "roles/Hecate/prereg/2026-09-29_probe_round1/PREREG.md",
+      "inspected_prior": [
+        "W3"
+      ],
+      "unexplained": [
+        "count grows because the threshold set is the only source of steps and the fit window is too short to see saturation"
+      ],
+      "decision": "DEEPEN",
+      "research_state": {
+        "novelty": "unknown",
+        "mechanistic_clarity": "unknown",
+        "falsifiability": "unknown",
+        "empirical_support": "none",
+        "cross_lens_agreement": "unknown",
+        "cross_substrate_transfer": "unknown",
+        "baseline_resistance": "unknown",
+        "artifact_risk": "unknown",
+        "cost": "unknown",
+        "unexpectedness": "unknown",
+        "potential_importance": "unknown"
+      }
+    },
+    {
+      "id": "P3-probe2",
+      "triplicateId": "HT-ae38c641b1",
+      "index": 3,
+      "kind": "cheap_probe",
+      "added": [
+        "new observable"
+      ],
+      "generator": {
+        "model": "claude-opus-5-5 (implementer)",
+        "search": false,
+        "prompt": "hecate/programs/_prompts/probe_impl_v2.md",
+        "prompt_sha256": "2021ed66e8fefd807203ae1d814b74091b4eabdacef16668e7a025d82128185e"
+      },
+      "prereg": "roles/Hecate/prereg/2026-09-30_probe_round2/PREREG.md",
+      "inspected_prior": [
+        "W3",
+        "W4"
+      ],
+      "unexplained": [
+        "budget range too small to leave the pre-asymptotic regime",
+        "ties in width signal broken by a spatial order that happens to follow the boundary",
+        "oracle exponent itself is off because the ground-truth grid is too coarse"
+      ],
+      "decision": "PARK",
+      "research_state": {
+        "novelty": "unknown",
+        "mechanistic_clarity": "unknown",
+        "falsifiability": "unknown",
+        "empirical_support": "none",
+        "cross_lens_agreement": "unknown",
+        "cross_substrate_transfer": "unknown",
+        "baseline_resistance": "unknown",
+        "artifact_risk": "unknown",
+        "cost": "unknown",
+        "unexpectedness": "unknown",
+        "potential_importance": "unknown"
+      }
+    },
+    {
+      "id": "P3v2",
+      "triplicateId": "HT-ae38c641b1",
+      "index": 3,
+      "kind": "minimal_worlds_v2",
+      "added": [
+        "new falsifier",
+        "new observable"
+      ],
+      "generator": {
+        "model": "claude-opus-5-5",
+        "search": false,
+        "prompt": "hecate/programs/_prompts/pass3_v2.md",
+        "prompt_sha256": "2adcfc8da07ee9adb9b04d2214889f0965758f7fcf0a60cde08eebb62bedd461"
+      },
+      "prereg": "roles/Hecate/prereg/2026-09-30_pass3_v2/PREREG.md",
+      "inspected_prior": [
+        "W3"
+      ],
+      "unexplained": [],
+      "decision": "FALSIFY",
+      "research_state": {
+        "novelty": "unknown",
+        "mechanistic_clarity": "unknown",
+        "falsifiability": "unknown",
+        "empirical_support": "none",
+        "cross_lens_agreement": "unknown",
+        "cross_substrate_transfer": "unknown",
+        "baseline_resistance": "unknown",
+        "artifact_risk": "unknown",
+        "cost": "unknown",
+        "unexpectedness": "unknown",
+        "potential_importance": "unknown"
+      }
+    },
+    {
+      "id": "P3-probe3",
+      "triplicateId": "HT-ae38c641b1",
+      "index": 3,
+      "kind": "cheap_probe",
+      "added": [
+        "new falsifier",
+        "new observable"
+      ],
+      "generator": {
+        "model": "claude-opus-5-5",
+        "search": false,
+        "prompt": "hecate/programs/_prompts/probe_impl_v3.md",
+        "prompt_sha256": "a34a8c6143f49df2b33b75871e8f9cd12e60c10c37778ba595e12fedf1621685"
+      },
+      "prereg": "roles/Hecate/prereg/2026-09-30_pass3_v2/PREREG.md",
+      "inspected_prior": [
+        "W5"
+      ],
+      "unexplained": [
+        "the 30-step budget, not the domain geometry, does the selecting (maps near rho = 1 fail to converge in any orientation); the diagnostic median rho(|A|)/rho(A) separates orientation-dependent failure from slow convergence"
+      ],
+      "decision": "PARK",
+      "research_state": {
+        "novelty": "unknown",
+        "mechanistic_clarity": "unknown",
+        "falsifiability": "unknown",
+        "empirical_support": "none",
+        "cross_lens_agreement": "unknown",
+        "cross_substrate_transfer": "unknown",
+        "baseline_resistance": "unknown",
+        "artifact_risk": "unknown",
+        "cost": "unknown",
+        "unexpectedness": "unknown",
+        "potential_importance": "unknown"
+      }
+    }
+  ],
+  "hypotheses": [
+    {
+      "id": "I1",
+      "triplicateId": "HT-ae38c641b1",
+      "passId": "P0",
+      "kind": "interpretation",
+      "layer": "speculation",
+      "statement": "Cost of soundness on self-similar sets: a reasoner that certifies decisions soundly with finite-resolution abstract cells pays a power-law precision cost whose exponent is fixed by the box dimension of the decision boundary, and the horizon-dependent sensitivity (Jacobian growth) of the dynamics adds an extra, separable term via the wrapping effect."
+    },
+    {
+      "id": "I2",
+      "triplicateId": "HT-ae38c641b1",
+      "passId": "P0",
+      "kind": "interpretation",
+      "layer": "speculation",
+      "statement": "The abstract domain as an environment: when survival of a program/organism requires certification by a budgeted sound verifier, selection imprints the verifier's geometry (its axes, its relational shape) on the evolved dynamics; 'legibility' becomes a heritable trait."
+    },
+    {
+      "id": "I3",
+      "triplicateId": "HT-ae38c641b1",
+      "passId": "P0",
+      "kind": "interpretation",
+      "layer": "speculation",
+      "statement": "The analyzer as a dynamical system: Kleene iteration with widening is a set-valued iteration like the Hutchinson operator; its output as a function of program parameters may have a fractal set of discontinuities, i.e., sound reasoners are brittle to perturbation in a scale-free way."
+    },
+    {
+      "id": "I4",
+      "triplicateId": "HT-ae38c641b1",
+      "passId": "P0",
+      "kind": "interpretation",
+      "layer": "speculation",
+      "statement": "Sensitivity as attention for sound reasoning: output-width/input-width ratios of abstract transformers are a sensitivity signal that can direct where to refine an abstraction; on fractal boundaries the payoff of directed refinement is quantitatively predictable from the dimension, and sensitivity misleads when wrapping dominates."
+    },
+    {
+      "id": "I5",
+      "triplicateId": "HT-ae38c641b1",
+      "passId": "P0",
+      "kind": "interpretation",
+      "layer": "speculation",
+      "statement": "Scale-invariant knowledge: self-similarity allows certificates proven at one scale to be transported to all others by the similarity maps, so memory of verified invariants can be stored as an IFS-like code whose size is logarithmic in the scale range."
+    },
+    {
+      "id": "I6",
+      "triplicateId": "HT-ae38c641b1",
+      "passId": "P0",
+      "kind": "interpretation",
+      "layer": "speculation",
+      "statement": "Robustness certificates over model sets: a set of plausible misspecifications is an abstract element; for iterative (fixed-point) estimators the boundary between 'conclusion holds' and 'conclusion flips' may be fractal, so sound robustness certificates for causal conclusions have a dimension-governed cost."
+    },
+    {
+      "id": "M1",
+      "triplicateId": "HT-ae38c641b1",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "computational primitive",
+      "statement": "Sound-precision power law: partition state space into eps-cells, propagate each by interval arithmetic for horizon T, call a cell decided iff its abstract image lies inside one outcome class. The undecided fraction scales as eps^alpha_s with alpha_s = n - D_B(boundary) when propagation is wrapping-free, and alpha_s falls below the concrete uncertainty exponent alpha_c by an amount that grows with lambda_max*T.",
+      "derived_from": [
+        "I1"
+      ],
+      "concept_contributions": {
+        "Abstract Interpretation": "soundness defines 'decided' (whole-cell certification, not point sampling)",
+        "Fractal Geometry": "box dimension of the basin boundary sets the baseline exponent",
+        "Sensitivity Analysis": "Lyapunov growth over the horizon inflates abstract cells and shifts the exponent"
+      },
+      "knockouts": {
+        "Abstract Interpretation": "reduces to the Monte-Carlo uncertainty exponent of fractal basin boundaries (a known quantity); nothing new",
+        "Fractal Geometry": "smooth boundary gives alpha = 1 at every resolution; no scale-dependent tax",
+        "Sensitivity Analysis": "with T=1 or isometries the wrapping term vanishes; exponent becomes purely geometric"
+      },
+      "simpler_alternative": "Uncertainty exponent of fractal basin boundaries measured by point sampling; interval analysis merely reproduces it with extra constant-factor overhead.",
+      "questions": {
+        "what_exists": "eps-grid cells, interval images, a map with fractal basin boundary",
+        "what_changes": "resolution eps and horizon T",
+        "what_persists": "class labels of decided cells (sound certificates)",
+        "what_is_selected": "nothing is selected; this is a measurement primitive",
+        "what_can_reproduce": "nothing reproduces",
+        "what_can_learn": "an agent could learn the exponent to budget precision",
+        "what_can_transfer": "the exponent should transfer across maps with equal D and equal lambda*T",
+        "distinguishing_observable": "alpha_c - alpha_s as a function of lambda_max*T at fixed D"
+      }
+    },
+    {
+      "id": "M2",
+      "triplicateId": "HT-ae38c641b1",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "implemented_candidate",
+      "form": "selection mechanism",
+      "statement": "Domain imprint: if survival requires certification by a budgeted sound verifier with abstract domain G, evolved dynamics align their principal directions with G's geometry (box domain -> axis-aligned eigenvectors; rotated box -> rotated alignment), because rotation relative to the domain axes causes wrapping inflation and certification failure.",
+      "derived_from": [
+        "I2",
+        "I4"
+      ],
+      "concept_contributions": {
+        "Abstract Interpretation": "the verifier's domain geometry is the selective filter",
+        "Fractal Geometry": "reachable sets of multi-map loops are IFS attractors; their extent and dimension set how tight the certificate must be",
+        "Sensitivity Analysis": "wrapping inflation is a sensitivity of the abstract image to rotation; it is the gradient of selection"
+      },
+      "knockouts": {
+        "Abstract Interpretation": "replace verifier with concrete testing: no geometric preference expected",
+        "Fractal Geometry": "WEAK dependency: single linear maps (no IFS) should still show imprint; fractal structure only modulates certificate tightness",
+        "Sensitivity Analysis": "if the verifier were exact (no over-approximation sensitivity to rotation) the preference vanishes"
+      },
+      "simpler_alternative": "The verifier just penalises large matrix norms; alignment is a side effect of diagonal dominance from the mutation operator.",
+      "questions": {
+        "what_exists": "population of 2-map affine loop programs, a box-domain verifier, a task",
+        "what_changes": "matrix entries by mutation",
+        "what_persists": "verified programs and their lineages",
+        "what_is_selected": "programs whose dynamics are provable within budget",
+        "what_can_reproduce": "programs (copy with mutation)",
+        "what_can_learn": "the population learns verifier-compatible geometry",
+        "what_can_transfer": "imprint direction should follow the domain when the domain is rotated",
+        "distinguishing_observable": "circular statistic of eigenvector angles mod 90 degrees relative to domain axes, at matched spectral radius"
+      }
+    },
+    {
+      "id": "M3",
+      "triplicateId": "HT-ae38c641b1",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "learning pressure",
+      "statement": "Sensitivity-directed refinement: refine the abstract cell with the largest abstract-output-width times area. On a boundary of dimension D the undecided area falls as B^-(2-D)/D under ideal adaptive refinement versus B^-(2-D)/2 under uniform refinement; width-based sensitivity approximates the ideal only when wrapping is small.",
+      "derived_from": [
+        "I4",
+        "I1"
+      ],
+      "concept_contributions": {
+        "Abstract Interpretation": "abstract output width is the refinement signal and the certification criterion",
+        "Fractal Geometry": "D fixes the achievable exponent ratio 2/D",
+        "Sensitivity Analysis": "sensitivity (width ratio) chooses where to spend budget; wrapping corrupts it"
+      },
+      "knockouts": {
+        "Abstract Interpretation": "without sound images there is no width signal; one would use point disagreement sampling",
+        "Fractal Geometry": "smooth boundary: ratio 2/D = 2, a standard adaptive-mesh gain",
+        "Sensitivity Analysis": "refine uniformly or randomly; exponent drops to (2-D)/2"
+      },
+      "simpler_alternative": "Adaptive mesh refinement on a boundary indicator.",
+      "questions": {
+        "what_exists": "quadtree of abstract cells, a budget, a refinement policy",
+        "what_changes": "which leaves are split",
+        "what_persists": "decided leaves",
+        "what_is_selected": "leaves with high width signal get split",
+        "what_can_reproduce": "nothing reproduces",
+        "what_can_learn": "policy could be learned from width signals",
+        "what_can_transfer": "policy should transfer to maps with other D if it only uses width",
+        "distinguishing_observable": "gamma_sens / gamma_oracle as a function of lambda*T"
+      }
+    },
+    {
+      "id": "M4",
+      "triplicateId": "HT-ae38c641b1",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "implemented_candidate",
+      "form": "dynamical law",
+      "statement": "Analyzer staircase: the result of a widening-based interval analysis, as a function of a continuous program parameter theta, is piecewise constant with a breakpoint set whose count grows as a power of resolution (fractal-like) rather than saturating, while the concrete invariant varies continuously.",
+      "derived_from": [
+        "I3"
+      ],
+      "concept_contributions": {
+        "Abstract Interpretation": "widening/threshold jumps create discontinuities in the analyzer output",
+        "Fractal Geometry": "the breakpoint set is predicted to be self-similar in theta",
+        "Sensitivity Analysis": "the object measured is the sensitivity of the analyzer's output to program parameters"
+      },
+      "knockouts": {
+        "Abstract Interpretation": "no analyzer, no staircase: the concrete invariant is continuous",
+        "Fractal Geometry": "if breakpoints are finite (threshold set finite) the count saturates and the effect is ordinary step brittleness",
+        "Sensitivity Analysis": "without asking how the output varies with theta nothing is observed"
+      },
+      "simpler_alternative": "A finite threshold set yields finitely many steps; the count grows only logarithmically with threshold set size.",
+      "questions": {
+        "what_exists": "a parametric loop family and an interval analyzer with widening",
+        "what_changes": "theta",
+        "what_persists": "the analyzer's step values between breakpoints",
+        "what_is_selected": "nothing selected",
+        "what_can_reproduce": "nothing reproduces",
+        "what_can_learn": "an agent reasoning with this analyzer would learn unstable conclusions near breakpoints",
+        "what_can_transfer": "breakpoint scaling may transfer to other widening operators",
+        "distinguishing_observable": "breakpoint count N(delta) versus resolution delta: power law vs saturation vs log"
+      }
+    },
+    {
+      "id": "M5",
+      "triplicateId": "HT-ae38c641b1",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "representation",
+      "statement": "IFS abstract domain: represent a reachable set by a finite set of contractions whose attractor over-approximates it; join = union of maps; widening = replace an orbit's growth by the attractor of the fitted contractions, with contraction ratios chosen by local sensitivity (Jacobian norms). Precision on self-similar reachable sets should exceed box/polyhedral domains at equal description size.",
+      "derived_from": [
+        "I5",
+        "I1"
+      ],
+      "concept_contributions": {
+        "Abstract Interpretation": "soundness requirement on the attractor cover; lattice operations",
+        "Fractal Geometry": "the domain elements are fractals",
+        "Sensitivity Analysis": "Jacobian norms set contraction ratios / widening extrapolation"
+      },
+      "knockouts": {
+        "Abstract Interpretation": "without soundness this is plain IFS fitting (fractal compression)",
+        "Fractal Geometry": "for non-self-similar reachable sets the domain degenerates to boxes",
+        "Sensitivity Analysis": "fixed contraction ratios require more maps for same precision"
+      },
+      "simpler_alternative": "Disjunctive (union of boxes) domain with the same number of components.",
+      "questions": {
+        "what_exists": "abstract elements as IFS codes",
+        "what_changes": "maps added/merged at joins",
+        "what_persists": "the attractor cover",
+        "what_is_selected": "codes that are sound and small",
+        "what_can_reproduce": "codes can be composed",
+        "what_can_learn": "nothing learns unless map fitting is adaptive",
+        "what_can_transfer": "representation transfers across programs with affine loop bodies",
+        "distinguishing_observable": "precision (gamma volume / true volume) at fixed description size vs union-of-boxes"
+      }
+    },
+    {
+      "id": "M6",
+      "triplicateId": "HT-ae38c641b1",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "memory structure",
+      "statement": "Scale-conjugated certificate cache: a certificate proven at scale s is transported to scale r^k s by conjugating with the similarity map, so the memory needed to certify a property across K octaves grows as O(1) or O(log K) instead of O(K).",
+      "derived_from": [
+        "I5"
+      ],
+      "concept_contributions": {
+        "Abstract Interpretation": "certificates are sound abstract invariants",
+        "Fractal Geometry": "self-similarity provides the transport maps",
+        "Sensitivity Analysis": "weak: sensitivity only sets tolerance when self-similarity is approximate"
+      },
+      "knockouts": {
+        "Abstract Interpretation": "without certificates there is nothing to transport",
+        "Fractal Geometry": "without self-similarity each scale needs its own proof",
+        "Sensitivity Analysis": "WEAK three-way dependency: remove SA and exact self-similar worlds still work; SA matters only for approximate similarity"
+      },
+      "simpler_alternative": "Proof by induction over scale (standard) - the cache is induction.",
+      "questions": {
+        "what_exists": "certificates indexed by scale",
+        "what_changes": "scale",
+        "what_persists": "the base certificate and transport map",
+        "what_is_selected": "certificates that transport successfully",
+        "what_can_reproduce": "certificates copied to new scales",
+        "what_can_learn": "which transports are valid under approximate similarity",
+        "what_can_transfer": "transfers across octaves by construction",
+        "distinguishing_observable": "memory cost versus K octaves and failure rate under approximate self-similarity"
+      }
+    },
+    {
+      "id": "M7",
+      "triplicateId": "HT-ae38c641b1",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "information bottleneck",
+      "statement": "Sound certification rate: to keep false-alarm (undecided) mass below delta, a reasoner needs about delta^(-D/(n-D)) abstract cells under adaptive refinement; D acts as a capacity limit on how cheaply sound knowledge of the world can be stored.",
+      "derived_from": [
+        "I1",
+        "I4"
+      ],
+      "concept_contributions": {
+        "Abstract Interpretation": "false-alarm mass is the distortion measure only a sound method has",
+        "Fractal Geometry": "D sets the rate exponent",
+        "Sensitivity Analysis": "horizon sensitivity inflates the effective D (cells needed grow with lambda*T)"
+      },
+      "knockouts": {
+        "Abstract Interpretation": "point-sampling rate-distortion (known for fractal sources)",
+        "Fractal Geometry": "smooth boundaries give rate ~ delta^-1/(n-1)",
+        "Sensitivity Analysis": "exponent purely geometric"
+      },
+      "simpler_alternative": "Rate-distortion theory of fractal sources / information dimension.",
+      "questions": {
+        "what_exists": "cell budgets and distortion targets",
+        "what_changes": "budget",
+        "what_persists": "cell cover",
+        "what_is_selected": "covers meeting delta at minimal size",
+        "what_can_reproduce": "nothing",
+        "what_can_learn": "an agent learns where to store cells",
+        "what_can_transfer": "rate exponent across maps with equal D",
+        "distinguishing_observable": "cells-needed vs delta exponent against D/(n-D) and its lambda*T dependence"
+      }
+    },
+    {
+      "id": "M8",
+      "triplicateId": "HT-ae38c641b1",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "causal constraint",
+      "statement": "Fractal robustness regions: for iterative estimators (fixed-point adjustment of a confounded effect), the region of misspecification parameters in which the estimate's sign flips can have a fractal boundary; sound interval propagation of the misspecification set then certifies robustness only at power-law cost in grid resolution. Strange and possibly empty.",
+      "derived_from": [
+        "I6"
+      ],
+      "concept_contributions": {
+        "Abstract Interpretation": "the misspecification set is propagated as an abstract element",
+        "Fractal Geometry": "the flip boundary is predicted to be fractal for non-contractive iterations",
+        "Sensitivity Analysis": "robustness of causal estimates is the question"
+      },
+      "knockouts": {
+        "Abstract Interpretation": "one would sample misspecifications and miss thin regions",
+        "Fractal Geometry": "for closed-form estimators the boundary is smooth and the effect disappears (likely the common case)",
+        "Sensitivity Analysis": "no question to answer"
+      },
+      "simpler_alternative": "Estimator non-convergence / multiple fixed points produce a smooth but complicated boundary; nothing fractal.",
+      "questions": {
+        "what_exists": "an iterative estimator and a misspecification box",
+        "what_changes": "misspecification parameters",
+        "what_persists": "sign certificates",
+        "what_is_selected": "nothing",
+        "what_can_reproduce": "nothing",
+        "what_can_learn": "analysts learn which parameters matter",
+        "what_can_transfer": "to other iterative estimators",
+        "distinguishing_observable": "box dimension of the sign-flip boundary in misspecification space"
+      }
+    },
+    {
+      "id": "M9",
+      "triplicateId": "HT-ae38c641b1",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "mutation operator",
+      "statement": "Certified scale-free mutation: mutation sizes drawn from a self-similar (heavy-tailed) distribution rescaled by inverse local sensitivity, accepted only if an abstract interpreter certifies that declared invariants still hold; predicted to explore more certified volume per evaluation than Gaussian mutation.",
+      "derived_from": [
+        "I2",
+        "I4"
+      ],
+      "concept_contributions": {
+        "Abstract Interpretation": "certification is the acceptance gate",
+        "Fractal Geometry": "heavy-tailed self-similar step distribution",
+        "Sensitivity Analysis": "steps normalised by sensitivity"
+      },
+      "knockouts": {
+        "Abstract Interpretation": "unchecked Levy flight (known)",
+        "Fractal Geometry": "Gaussian steps: fewer long certified jumps",
+        "Sensitivity Analysis": "isotropic heavy-tailed steps waste certifications in sensitive directions"
+      },
+      "simpler_alternative": "Adaptive step-size control (1/5 success rule) with a rejection gate.",
+      "questions": {
+        "what_exists": "genomes, invariants, a verifier",
+        "what_changes": "genomes via mutation",
+        "what_persists": "invariants",
+        "what_is_selected": "certified variants",
+        "what_can_reproduce": "genomes",
+        "what_can_learn": "step scale adapts",
+        "what_can_transfer": "operator transfers to any parametric program",
+        "distinguishing_observable": "certified volume explored per verifier call vs Gaussian and isotropic Levy"
+      }
+    },
+    {
+      "id": "M10",
+      "triplicateId": "HT-ae38c641b1",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "organism architecture",
+      "statement": "Multi-resolution abstainer: an organism holds interval beliefs in a quadtree, acts only in decided cells and abstains elsewhere; selection on reward minus resolution cost should drive evolved resolution depth to a value predicted by the boundary dimension (depth* increasing with D).",
+      "derived_from": [
+        "I1",
+        "I4"
+      ],
+      "concept_contributions": {
+        "Abstract Interpretation": "decisions only on sound certificates; abstention otherwise",
+        "Fractal Geometry": "boundary dimension sets abstention scaling",
+        "Sensitivity Analysis": "value of extra depth depends on sensitivity of outcome to position"
+      },
+      "knockouts": {
+        "Abstract Interpretation": "point estimates: no abstention structure",
+        "Fractal Geometry": "smooth boundary: depth* nearly constant",
+        "Sensitivity Analysis": "depth chosen by D alone"
+      },
+      "simpler_alternative": "A classifier with a reject option and a cost per feature bit.",
+      "questions": {
+        "what_exists": "organisms with quadtree beliefs and a resolution gene",
+        "what_changes": "depth gene",
+        "what_persists": "decided cells",
+        "what_is_selected": "depth trading reward vs cost",
+        "what_can_reproduce": "organisms",
+        "what_can_learn": "depth adapts across generations",
+        "what_can_transfer": "depth rule across worlds with different D",
+        "distinguishing_observable": "evolved depth* vs D slope"
+      }
+    },
+    {
+      "id": "M11",
+      "triplicateId": "HT-ae38c641b1",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "developmental process",
+      "statement": "Certified IFS morphogenesis: bodies grow by applying heritable affine maps each developmental step; each step must pass a sound envelope check; wrapping penalises rotated growth, so certified bodies evolve rotation-poor, axis-aligned morphologies while uncertified bodies do not.",
+      "derived_from": [
+        "I2",
+        "I5"
+      ],
+      "concept_contributions": {
+        "Abstract Interpretation": "per-step envelope certification",
+        "Fractal Geometry": "bodies are IFS-generated self-similar sets",
+        "Sensitivity Analysis": "rotation sensitivity of the box image is the selective gradient"
+      },
+      "knockouts": {
+        "Abstract Interpretation": "no rotation bias",
+        "Fractal Geometry": "growth still happens but with no self-similar body plan; imprint may persist",
+        "Sensitivity Analysis": "no gradient; certification is a constant cost"
+      },
+      "simpler_alternative": "Same as M2 in another substrate; any bounded-extent constraint favours compact shapes.",
+      "questions": {
+        "what_exists": "bodies as IFS codes",
+        "what_changes": "maps across generations",
+        "what_persists": "body plan",
+        "what_is_selected": "bodies passing certification",
+        "what_can_reproduce": "bodies",
+        "what_can_learn": "growth rules",
+        "what_can_transfer": "imprint to other developmental substrates",
+        "distinguishing_observable": "rotation-angle histogram of growth maps vs uncertified control at matched body extent"
+      }
+    },
+    {
+      "id": "M12",
+      "triplicateId": "HT-ae38c641b1",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "error-correction mechanism",
+      "statement": "Narrowing as error correction: after widening overshoot, narrowing recovers precision at a rate set by the loop's contraction (sensitivity < 1); recovered fraction after k narrowing steps approx 1 - r^k, independent of the fractal detail of the reachable set.",
+      "derived_from": [
+        "I3"
+      ],
+      "concept_contributions": {
+        "Abstract Interpretation": "widening/narrowing pair",
+        "Fractal Geometry": "reachable set detail predicted NOT to matter (a negative dependency)",
+        "Sensitivity Analysis": "contraction ratio sets recovery rate"
+      },
+      "knockouts": {
+        "Abstract Interpretation": "no overshoot, nothing to correct",
+        "Fractal Geometry": "predicted irrelevant: WEAK three-way dependency by design",
+        "Sensitivity Analysis": "recovery rate undetermined"
+      },
+      "simpler_alternative": "Geometric convergence of any contraction (Banach); this is almost certainly just that.",
+      "questions": {
+        "what_exists": "widened invariant, narrowing steps",
+        "what_changes": "bound width",
+        "what_persists": "sound inclusion",
+        "what_is_selected": "nothing",
+        "what_can_reproduce": "nothing",
+        "what_can_learn": "nothing",
+        "what_can_transfer": "to any contractive loop",
+        "distinguishing_observable": "recovered fraction vs r^k"
+      }
+    },
+    {
+      "id": "M13",
+      "triplicateId": "HT-ae38c641b1",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "interaction law",
+      "statement": "Precision pricing: two agents exchange interval messages about a state near a fractal decision boundary; the marginal value of one extra bit of message precision decays as 2^-alpha with alpha = n - D, so a market over precision should price bits with a D-dependent decay.",
+      "derived_from": [
+        "I1"
+      ],
+      "concept_contributions": {
+        "Abstract Interpretation": "messages are sound intervals",
+        "Fractal Geometry": "D sets the decay",
+        "Sensitivity Analysis": "value of precision is a sensitivity of decision quality to message resolution"
+      },
+      "knockouts": {
+        "Abstract Interpretation": "point messages: value of precision set by noise, not geometry",
+        "Fractal Geometry": "smooth boundary: exponential-in-bits halving (alpha=1)",
+        "Sensitivity Analysis": "no pricing question"
+      },
+      "simpler_alternative": "Value of information for a threshold decision.",
+      "questions": {
+        "what_exists": "two agents and interval messages",
+        "what_changes": "message bit budget",
+        "what_persists": "decisions",
+        "what_is_selected": "bit allocations",
+        "what_can_reproduce": "nothing",
+        "what_can_learn": "agents learn bit prices",
+        "what_can_transfer": "prices across worlds of equal D",
+        "distinguishing_observable": "decision-quality gain per added bit vs 2^-(n-D)"
+      }
+    },
+    {
+      "id": "M14",
+      "triplicateId": "HT-ae38c641b1",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "implemented_candidate",
+      "form": "dynamical law",
+      "statement": "Stable-but-unprovable band: for rotation-contraction loops, concrete stability needs r<1 but box-domain provability needs r(|cos t|+|sin t|)<1; the band between is a region where systems are safe but illegible. Sensitivity to rotation, not magnitude, controls legibility.",
+      "derived_from": [
+        "I2",
+        "I4"
+      ],
+      "concept_contributions": {
+        "Abstract Interpretation": "box domain defines provability",
+        "Fractal Geometry": "weak: only enters if loop has several maps (IFS); single map suffices for the band",
+        "Sensitivity Analysis": "legibility depends on rotation sensitivity of abstract image"
+      },
+      "knockouts": {
+        "Abstract Interpretation": "no provability notion",
+        "Fractal Geometry": "WEAK three-way dependency; the band exists without fractals",
+        "Sensitivity Analysis": "no band"
+      },
+      "simpler_alternative": "The classical wrapping effect of interval arithmetic.",
+      "questions": {
+        "what_exists": "rotation-contraction loops",
+        "what_changes": "t and r",
+        "what_persists": "safety",
+        "what_is_selected": "provable systems if under verifier selection",
+        "what_can_reproduce": "nothing",
+        "what_can_learn": "nothing",
+        "what_can_transfer": "to other non-relational domains with different band shapes",
+        "distinguishing_observable": "fraction of stable systems that are provable vs t"
+      }
+    },
+    {
+      "id": "O-W3-r1",
+      "triplicateId": "HT-ae38c641b1",
+      "passId": "P3-probe1",
+      "kind": "observation",
+      "layer": "experimental_observation",
+      "evidence_rows": [
+        "hecate/programs/HT-ae38c641b1/worlds/W3/rows.jsonl",
+        "hecate/programs/HT-ae38c641b1/worlds/W3/OUTCOME.json"
+      ],
+      "statement": "W3 probe round 1: NULL. Default analyzer median beta=0.9944945323865083, null twin median beta=2.1544263673577042e-17, control median beta=0.9995899492996126. success=False, failure reasons=[]. Outcome decided by PREREG class rules in code.",
+      "derived_from": [
+        "M4"
+      ]
+    },
+    {
+      "id": "O-W4-r2",
+      "triplicateId": "HT-ae38c641b1",
+      "passId": "P3-probe2",
+      "kind": "observation",
+      "layer": "experimental_observation",
+      "evidence_rows": [
+        "hecate/programs/HT-ae38c641b1/worlds/W4/pilot_rows.jsonl"
+      ],
+      "statement": "W4 probe round 2: SPEC_UNATTAINABLE. Pilot failed twice -> SPEC_UNATTAINABLE per round-2 PREREG. No treatment code written. Files: NOTES.md, common.py, pilot.py, pilot_eval.py, PILOT.json (attempt 2), PILOT_attempt1.json, pilot_rows.jsonl (attempt 2), pilot_rows_attempt1.jsonl.",
+      "derived_from": [
+        "M3",
+        "M10",
+        "M7"
+      ]
+    },
+    {
+      "id": "O-W5-r3",
+      "triplicateId": "HT-ae38c641b1",
+      "passId": "P3-probe3",
+      "kind": "observation",
+      "layer": "experimental_observation",
+      "evidence_rows": [
+        "hecate/programs/HT-ae38c641b1/worlds/W5/probe/rows.jsonl"
+      ],
+      "statement": "W5 probe round 3: NULL. success criterion not met",
+      "derived_from": [
+        "M2",
+        "M14"
+      ]
+    }
+  ],
+  "lenses": [
+    {
+      "id": "L1",
+      "name": "Galois-dimension ladder",
+      "triplicateId": "HT-ae38c641b1",
+      "passId": "P2",
+      "targets": [
+        "M1",
+        "M3",
+        "M7"
+      ],
+      "rationale": "Measure the dimension of the world as seen through a sound abstraction rather than through samples; divergence between the two is the object of interest.",
+      "sourceRepresentation": "eps-grid of abstract cells with decided/undecided labels at resolutions 2^-3..2^-10",
+      "transformation": "log-log regression of undecided fraction vs eps, paired with Monte-Carlo pair-disagreement fraction at the same eps",
+      "observables": [
+        "alpha_s (sound exponent)",
+        "alpha_c (concrete exponent)",
+        "alpha_c - alpha_s"
+      ],
+      "predictedSignals": [
+        "alpha_s = alpha_c = n - D for wrapping-free maps",
+        "alpha_s < alpha_c growing with lambda*T"
+      ],
+      "nullExpectation": "alpha_s equals alpha_c within fit error at all lambda*T (abstraction adds only a constant factor)",
+      "failureModes": [
+        "fit window choice dominates",
+        "finite-size curvature",
+        "interval dependency problem from expression form masquerading as geometry"
+      ],
+      "informationAddedBeyondExistingLenses": "separates the geometric cost of certainty from the abstraction-induced cost, which box-counting alone cannot"
+    },
+    {
+      "id": "L2",
+      "name": "Wrapping ledger",
+      "triplicateId": "HT-ae38c641b1",
+      "passId": "P2",
+      "targets": [
+        "M1",
+        "M2",
+        "M14"
+      ],
+      "rationale": "Attribute interval inflation per step to stretch versus rotation so selection or exponent shifts can be traced to one or the other.",
+      "sourceRepresentation": "per-step Jacobians along propagated cells and the interval hull volumes",
+      "transformation": "polar decomposition J = R S; log(hull volume / true image volume) split into rotation term and stretch term",
+      "observables": [
+        "cumulative rotation inflation",
+        "cumulative stretch inflation",
+        "their ratio per cell"
+      ],
+      "predictedSignals": [
+        "exponent gap tracks rotation inflation, not stretch",
+        "verifier-selected genomes show vanishing rotation inflation"
+      ],
+      "nullExpectation": "inflation explained by stretch alone (norms), rotation term ~0 after controlling norm",
+      "failureModes": [
+        "polar decomposition ill-conditioned near singular maps",
+        "hull vs true volume estimated by sampling adds noise"
+      ],
+      "informationAddedBeyondExistingLenses": "distinguishes geometric legibility from mere magnitude penalties"
+    },
+    {
+      "id": "L3",
+      "name": "Domain-imprint goniometer",
+      "triplicateId": "HT-ae38c641b1",
+      "passId": "P2",
+      "targets": [
+        "M2",
+        "M11"
+      ],
+      "rationale": "If a verifier imprints geometry, the imprint must be visible as an angular preference relative to the domain's axes and must rotate when the domain rotates.",
+      "sourceRepresentation": "eigenvectors / right singular vectors of evolved affine maps",
+      "transformation": "angles phi mod 90 deg relative to domain axes; circular statistic R4 = |mean exp(4i phi)| and mean direction",
+      "observables": [
+        "R4",
+        "mean direction",
+        "R4 within spectral-radius bins"
+      ],
+      "predictedSignals": [
+        "R4 >= 0.3 at domain axes for box verifier; peak shifted by the domain rotation"
+      ],
+      "nullExpectation": "R4 ~ 1/sqrt(N) (uniform angles) under structure-blind acceptance",
+      "failureModes": [
+        "mutation operator anisotropy",
+        "small-population drift clustering",
+        "degenerate eigenvectors for near-scalar matrices"
+      ],
+      "informationAddedBeyondExistingLenses": "domain-rotation intervention makes the imprint causal rather than correlational"
+    },
+    {
+      "id": "L4",
+      "name": "Analyzer-vs-program variance split",
+      "triplicateId": "HT-ae38c641b1",
+      "passId": "P2",
+      "targets": [
+        "M4",
+        "M1"
+      ],
+      "rationale": "Ask how much variation in a sound conclusion is due to the analyzer's own settings versus the program being analysed.",
+      "sourceRepresentation": "analysis output as function of program params and analyzer params (widening delay, thresholds, narrowing steps)",
+      "transformation": "Sobol first-order and total indices over the joint parameter space",
+      "observables": [
+        "share of output variance from analyzer params",
+        "interaction indices program x analyzer"
+      ],
+      "predictedSignals": [
+        "analyzer total index large and dominated by interactions near breakpoints"
+      ],
+      "nullExpectation": "analyzer params explain < 5% of variance",
+      "failureModes": [
+        "discontinuous outputs make variance estimates slow to converge",
+        "parameter ranges arbitrary"
+      ],
+      "informationAddedBeyondExistingLenses": "quantifies reasoner-induced variability, which breakpoint counting alone does not"
+    },
+    {
+      "id": "L5",
+      "name": "Staircase counter",
+      "triplicateId": "HT-ae38c641b1",
+      "passId": "P2",
+      "targets": [
+        "M4"
+      ],
+      "rationale": "Direct test of whether analyzer breakpoints form a scale-free set.",
+      "sourceRepresentation": "analyzer output W(theta) on dyadic theta grids",
+      "transformation": "count adjacent-pair jumps N(delta) for delta = 2^-6..2^-16; fit power, log and saturating models",
+      "observables": [
+        "N(delta)",
+        "beta",
+        "AIC differences among models"
+      ],
+      "predictedSignals": [
+        "power law with beta in (0.2,0.9) over >= 4 octaves"
+      ],
+      "nullExpectation": "N saturates (finite staircase) or grows logarithmically",
+      "failureModes": [
+        "floating-point jitter creates false breakpoints",
+        "too few octaves to discriminate models"
+      ],
+      "informationAddedBeyondExistingLenses": "converts 'brittle reasoner' into a scaling exponent"
+    },
+    {
+      "id": "L6",
+      "name": "Refinement-budget exponent ratio",
+      "triplicateId": "HT-ae38c641b1",
+      "passId": "P2",
+      "targets": [
+        "M3",
+        "M7",
+        "M10"
+      ],
+      "rationale": "Adaptive refinement has an ideal exponent ratio 2/D over uniform; deviation of a policy from the ideal measures how good its sensitivity signal is.",
+      "sourceRepresentation": "quadtree refinement traces under budgets 64..16384",
+      "transformation": "undecided area vs budget exponents per policy; ratio to uniform and to oracle",
+      "observables": [
+        "gamma_uniform",
+        "gamma_sens",
+        "gamma_oracle",
+        "gamma_sens/gamma_oracle"
+      ],
+      "predictedSignals": [
+        "gamma_oracle/gamma_uniform = 2/D",
+        "gamma_sens/gamma_oracle falls with lambda*T"
+      ],
+      "nullExpectation": "gamma_sens/gamma_oracle independent of lambda*T",
+      "failureModes": [
+        "budget range too small to reach scaling regime",
+        "oracle itself mis-specified near boundary"
+      ],
+      "informationAddedBeyondExistingLenses": "tests whether the sensitivity signal a sound reasoner has access to is a good attention signal"
+    },
+    {
+      "id": "L7",
+      "name": "Kaplan-Yorke cross-check",
+      "triplicateId": "HT-ae38c641b1",
+      "passId": "P2",
+      "targets": [
+        "M1",
+        "M7"
+      ],
+      "rationale": "Stock dynamical-systems lens to ensure the dimension and Lyapunov estimates used elsewhere are mutually consistent, not independent knobs.",
+      "sourceRepresentation": "Lyapunov spectrum of the maps and measured box dimensions",
+      "transformation": "compare Kaplan-Yorke dimension with box-count dimension of attractors/boundaries across the parameter sweep",
+      "observables": [
+        "D_KY",
+        "D_B",
+        "corr(lambda*T, D_B)"
+      ],
+      "predictedSignals": [
+        "lambda*T and D_B not collinear across the sweep (|r| < 0.7)"
+      ],
+      "nullExpectation": "lambda and D collinear, making the M1 sensitivity term unidentifiable",
+      "failureModes": [
+        "Lyapunov estimates noisy at short horizons"
+      ],
+      "informationAddedBeyondExistingLenses": "identifiability check for separating dimension from sensitivity"
+    }
+  ],
+  "experiments": [
+    {
+      "id": "W1",
+      "triplicateId": "HT-ae38c641b1",
+      "passId": "P3",
+      "mechanism_ids": [
+        "M1",
+        "M7"
+      ],
+      "lens_ids": [
+        "L1",
+        "L2",
+        "L7"
+      ],
+      "hypothesis": "The sound undecided-fraction exponent alpha_s equals n - D_B for wrapping-free maps and falls below the concrete exponent alpha_c by an amount increasing with lambda_max*T.",
+      "mechanism": "Interval propagation of eps-cells through a 2D piecewise-affine map with fractal basin boundary; a cell is decided iff its image box lies in one class.",
+      "intervention": "Sweep horizon T in {2,5,10,20} and conjugate an axis-aligned map by rotation R_t, t in {0,10,20,30,45} deg (leaves D and the concrete exponent invariant but changes wrapping).",
+      "control": "t = 0 (axis-aligned, wrapping-free) at each T.",
+      "positive_control": "Generalized Cantor-escape map on [0,1]^2 keeping k of 9 sub-squares (k in 4..8), label = parity of escape time; analytic D = log k / log 3; require |alpha_s - (2 - D)| <= 0.1 at t = 0.",
+      "observable": "alpha_s and alpha_c from OLS slopes of log undecided fraction vs log eps over eps = 2^-5..2^-10; alpha_c from 1e5 random point pairs at distance eps per eps.",
+      "success_criterion": "Positive control passes for >= 4 of 5 k; and alpha_c - alpha_s at T=10 increases monotonically in t with Spearman rho >= 0.8 across (t,T) cells and reaches >= 0.2 at t = 45 deg, while alpha_c varies by <= 0.05 across t.",
+      "failure_criterion": "Positive control fails for >= 2 k (instrument invalid); or max over t of (alpha_c - alpha_s) < 0.1 (abstraction adds only a constant factor; mechanism reduces to the known uncertainty exponent); or rho < 0.5.",
+      "alternative_explanation": "The gap is the interval dependency problem from how the map expression is written, not geometry; or rotation changes the effective grid alignment of the boundary rather than wrapping.",
+      "null_twin": "Same rotated maps and same eps grid, but cells decided by an exact image oracle (true image polygon of the cell, computed from the affine pieces) instead of interval hulls: matches grid, map, D, class balance and horizon, destroys wrapping.",
+      "substrate": "causal toy",
+      "why_this_implementation": "A piecewise-affine planar map makes both the true image and the interval hull computable exactly, so the abstraction cost can be isolated; no learning component is needed to test a measurement law.",
+      "size": "grids up to 1024x1024 cells, T up to 20, 5 k values, 5 rotations x 4 horizons, 3 seeds for the Monte-Carlo pairs",
+      "cost_estimate": "~4 CPU core-minutes (vectorised numpy)",
+      "stupid_explanations": [
+        "grid aligned with the axis-aligned boundary makes the positive control trivially exact",
+        "fit window choice moves the slope by more than the claimed gap",
+        "the rotation changes basin geometry within the finite window so alpha_c silently changes",
+        "the dependency problem in naive interval evaluation, fixed by single-use-expression rewriting"
+      ]
+    },
+    {
+      "id": "W2",
+      "triplicateId": "HT-ae38c641b1",
+      "passId": "P3",
+      "mechanism_ids": [
+        "M2",
+        "M14"
+      ],
+      "lens_ids": [
+        "L3",
+        "L2"
+      ],
+      "hypothesis": "Selection through a budgeted box-domain verifier imprints axis alignment on evolved affine dynamics; rotating the verifier's domain rotates the imprint.",
+      "mechanism": "Programs = 2 affine maps on R^2 chosen by an input bit stream (reachable set is an IFS attractor); fitness = negative distance of orbit mean to a target plus a diameter floor of 0.5; survival gate = proof that the reachable set stays in S = [-1,1]^2.",
+      "intervention": "Arm V: box verifier (10 Kleene steps, widening, 3 narrowing). Arm V_rot: same verifier in coordinates rotated by 30 deg (S also rotated). Mutation is rotation-invariant (A <- A + sigma * Q diag(g) Q^T with random orthogonal Q).",
+      "control": "Arm T: gate = 64 random concrete runs of 200 steps stay in S.",
+      "positive_control": "Arm P: arm T plus explicit fitness bonus 0.2*R4 alignment term; goniometer must report R4 >= 0.5.",
+      "observable": "R4 and mean direction of eigenvector angles mod 90 deg of accepted genomes at final generation, pooled per seed; spectral radius; task fitness; box dimension of reachable set.",
+      "success_criterion": "R4(V) - R4(N) >= 0.2 with permutation p < 0.01 over 10 seeds; V mean direction within 10 deg of 0; V_rot within 10 deg of 30 deg; median task fitness of V within 10% of T; effect persists within spectral-radius bins.",
+      "failure_criterion": "R4(V) - R4(N) < 0.1, or V_rot direction not shifted (|dir - 30| > 15 deg), or effect vanishes within spectral-radius bins (it was a norm penalty).",
+      "alternative_explanation": "The verifier penalises operator norm and alignment is a correlated side effect; or widening thresholds are axis-aligned constants.",
+      "null_twin": "Arm N: arm T gate plus genome-independent random rejection tuned per generation to match arm V acceptance rate: matched selection intensity, matched concrete safety, no geometric selectivity.",
+      "substrate": "population",
+      "why_this_implementation": "A small evolving population of explicit affine programs keeps the verifier exact and inspectable; a neural policy was displaced because its geometry would not be readable against the domain axes.",
+      "size": "population 100, 150 generations, 10 seeds, 5 arms (V, V_rot, T, N, P)",
+      "cost_estimate": "~8 CPU core-minutes (per-generation batched interval analysis)",
+      "stupid_explanations": [
+        "mutation operator anisotropy favouring diagonal matrices (mitigated by rotation-invariant mutation, checked by arm N)",
+        "verifier equals a norm penalty; alignment appears through diagonal dominance",
+        "small-population drift clusters angles in every arm",
+        "near-scalar matrices have ill-defined eigenvectors and inflate R4"
+      ]
+    },
+    {
+      "id": "W3",
+      "triplicateId": "HT-ae38c641b1",
+      "passId": "P3",
+      "mechanism_ids": [
+        "M4"
+      ],
+      "lens_ids": [
+        "L5",
+        "L4"
+      ],
+      "hypothesis": "The output of a widening-based interval analyzer, as a function of a continuous loop parameter, has breakpoints whose count scales as a power of resolution over >= 4 octaves.",
+      "mechanism": "Loop x <- r R_theta x + b (r=0.9) with interval analysis: widening after 3 iterations with thresholds {+-2^k, k=-4..8}, then 2 narrowing steps; output W(theta) = width of the final box.",
+      "intervention": "Vary widening delay d in {1,3,6} and threshold set density (13 vs 50 thresholds).",
+      "control": "Concrete invariant width W*(theta) from a 5000-point orbit hull (expected continuous).",
+      "positive_control": "Synthetic Cantor staircase function sampled on the same grids; counter must recover beta = log2/log3 = 0.63 within +-0.05.",
+      "observable": "N(delta) = number of dyadic neighbours with |dW| > 1e-9 * median W, delta = 2^-6..2^-16; beta from OLS on the last 6 octaves; AIC of power vs log vs saturating fits.",
+      "success_criterion": "beta >= 0.2 with R^2 >= 0.95 and power-law AIC better than log and saturating fits by >= 10 for the default analyzer, and the null twin has beta < 0.1.",
+      "failure_criterion": "The last 3 octaves add < 5% new breakpoints (finite staircase), or log model wins by AIC >= 10, or null twin shows the same beta within 0.1.",
+      "alternative_explanation": "Breakpoints come from the integer number of iterations to convergence changing with theta, which yields many but not self-similar breakpoints.",
+      "null_twin": "Same loop and same threshold set used only as a final rounding step (Kleene iteration to 1e-12 convergence, then outward rounding to thresholds): matches output quantisation, removes widening extrapolation dynamics.",
+      "substrate": "symbolic rewriting",
+      "why_this_implementation": "A deterministic one-parameter analyzer sweep is the cheapest direct probe of analyzer sensitivity; no population or learner is needed.",
+      "size": "up to 65536 theta values x 3 delays x 2 threshold sets x 2 analyzers",
+      "cost_estimate": "~2 CPU core-minutes",
+      "stupid_explanations": [
+        "floating-point jitter produces fake breakpoints (recheck a subsample in exact rational arithmetic)",
+        "count grows because the threshold set is the only source of steps and the fit window is too short to see saturation",
+        "iteration-count changes give dense but non-scaling breakpoints"
+      ],
+      "outcome": "NULL",
+      "raw_outcome": "NULL",
+      "procedural_notes": [],
+      "rows": "hecate/programs/HT-ae38c641b1/worlds/W3/rows.jsonl",
+      "outcome_file": "hecate/programs/HT-ae38c641b1/worlds/W3/OUTCOME.json",
+      "statistics": {
+        "TREATMENT_VARIANT:{\"d\": 1, \"n_thresholds\": 13, \"narrowing_steps\": 2}": {
+          "n": 5,
+          "median_beta": 0.9944945323865083,
+          "median_r2": 0.9999909276955816,
+          "median_dAIC_log": 69.98765168449665,
+          "median_dAIC_sat": 7.639102453164398,
+          "all_seeds_S": false,
+          "per_seed": [
+            {
+              "seed": 0,
+              "beta": 0.9944945323865083,
+              "r2": 0.9999809094466607,
+              "dAIC_log": 64.80539125711364,
+              "dAIC_sat": 4.984864535263867,
+              "new_frac_last3": 0.875,
+              "finite_frac": 0.14447021484375,
+              "S": false
+            },
+            {
+              "seed": 1,
+              "beta": 0.995560312999357,
+              "r2": 0.9999952036295263,
+              "dAIC_log": 74.44086135123477,
+              "dAIC_sat": 8.04211295478521,
+              "new_frac_last3": 0.8746170909475018,
+              "finite_frac": 0.1444091796875,
+              "S": false
+            },
+            {
+              "seed": 2,
+              "beta": 0.995690879553505,
+              "r2": 0.9999949401308318,
+              "dAIC_log": 74.06880013527908,
+              "dAIC_sat": 7.639102453164398,
+              "new_frac_last3": 0.8746700454017527,
+              "finite_frac": 0.14447021484375,
+              "S": false
+            },
+            {
+              "seed": 3,
+              "beta": 0.9943215227578367,
+              "r2": 0.9999909276955816,
+              "dAIC_log": 69.98765168449665,
+              "dAIC_sat": 7.531829713765674,
+              "new_frac_last3": 0.8745777027027027,
+              "finite_frac": 0.14447021484375,
+              "S": false
+            },
+            {
+              "seed": 4,
+              "beta": 0.9941475625710364,
+              "r2": 0.9999904217909588,
+              "dAIC_log": 69.60735161282334,
+              "dAIC_sat": 7.715724149228208,
+              "new_frac_last3": 0.8745777027027027,
+              "finite_frac": 0.14447021484375,
+              "S": false
+            }
+          ],
+          "N_seed0": {
+            "6": 12,
+            "7": 20,
+            "8": 40,
+            "9": 80,
+            "10": 152,
+            "11": 300,
+            "12": 592,
+            "13": 1184,
+            "14": 2368,
+            "15": 4736,
+            "16": 9472
+          }
+        },
+        "TREATMENT_VARIANT:{\"d\": 1, \"n_thresholds\": 50, \"narrowing_steps\": 2}": {
+          "n": 5,
+          "median_beta": 0.9948524811242382,
+          "median_r2": 0.9999922158014078,
+          "median_dAIC_log": 71.05931685441874,
+          "median_dAIC_sat": 7.363957364720605,
+          "all_seeds_S": false,
+          "per_seed": [
+            {
+              "seed": 0,
+              "beta": 0.9951354181444044,
+              "r2": 0.9999864407562918,
+              "dAIC_log": 67.1937423857764,
+              "dAIC_sat": 5.212697791982734,
+              "new_frac_last3": 0.8748700893785076,
+              "finite_frac": 0.146759033203125,
+              "S": false
+            },
+            {
+              "seed": 1,
+              "beta": 0.9948524811242382,
+              "r2": 0.9999922158014078,
+              "dAIC_log": 71.05931685441874,
+              "dAIC_sat": 7.363957364720605,
+              "new_frac_last3": 0.8746231416987212,
+              "finite_frac": 0.146728515625,
+              "S": false
+            },
+            {
+              "seed": 2,
+              "beta": 0.9949274474658585,
+              "r2": 0.9999920349252945,
+              "dAIC_log": 70.8998020066309,
+              "dAIC_sat": 7.1786502973914565,
+              "new_frac_last3": 0.8746492048643593,
+              "finite_frac": 0.146759033203125,
+              "S": false
+            },
+            {
+              "seed": 3,
+              "beta": 0.9946478915816771,
+              "r2": 0.9999927168050772,
+              "dAIC_log": 71.51798188234915,
+              "dAIC_sat": 8.013695343527743,
+              "new_frac_last3": 0.8746622323841198,
+              "finite_frac": 0.146759033203125,
+              "S": false
+            },
+            {
+              "seed": 4,
+              "beta": 0.9945408648081333,
+              "r2": 0.9999923460805169,
+              "dAIC_log": 71.1703979708936,
+              "dAIC_sat": 8.091173547065651,
+              "new_frac_last3": 0.8746622323841198,
+              "finite_frac": 0.146759033203125,
+              "S": false
+            }
+          ],
+          "N_seed0": {
+            "6": 12,
+            "7": 20,
+            "8": 40,
+            "9": 80,
+            "10": 154,
+            "11": 304,
+            "12": 602,
+            "13": 1204,
+            "14": 2406,
+            "15": 4812,
+            "16": 9622
+          }
+        },
+        "TREATMENT": {
+          "n": 5,
+          "median_beta": 0.9944945323865083,
+          "median_r2": 0.9999909276955816,
+          "median_dAIC_log": 69.98765168449665,
+          "median_dAIC_sat": 7.639102453164398,
+          "all_seeds_S": false,
+          "per_seed": [
+            {
+              "seed": 0,
+              "beta": 0.9944945323865083,
+              "r2": 0.9999809094466607,
+              "dAIC_log": 64.80539125711364,
+              "dAIC_sat": 4.984864535263867,
+              "new_frac_last3": 0.875,
+              "finite_frac": 0.14447021484375,
+              "S": false
+            },
+            {
+              "seed": 1,
+              "beta": 0.995560312999357,
+              "r2": 0.9999952036295263,
+              "dAIC_log": 74.44086135123477,
+              "dAIC_sat": 8.04211295478521,
+              "new_frac_last3": 0.8746170909475018,
+              "finite_frac": 0.1444091796875,
+              "S": false
+            },
+            {
+              "seed": 2,
+              "beta": 0.995690879553505,
+              "r2": 0.9999949401308318,
+              "dAIC_log": 74.06880013527908,
+              "dAIC_sat": 7.639102453164398,
+              "new_frac_last3": 0.8746700454017527,
+              "finite_frac": 0.14447021484375,
+              "S": false
+            },
+            {
+              "seed": 3,
+              "beta": 0.9943215227578367,
+              "r2": 0.9999909276955816,
+              "dAIC_log": 69.98765168449665,
+              "dAIC_sat": 7.531829713765674,
+              "new_frac_last3": 0.8745777027027027,
+              "finite_frac": 0.14447021484375,
+              "S": false
+            },
+            {
+              "seed": 4,
+              "beta": 0.9941475625710364,
+              "r2": 0.9999904217909588,
+              "dAIC_log": 69.60735161282334,
+              "dAIC_sat": 7.715724149228208,
+              "new_frac_last3": 0.8745777027027027,
+              "finite_frac": 0.14447021484375,
+              "S": false
+            }
+          ],
+          "N_seed0": {
+            "6": 12,
+            "7": 20,
+            "8": 40,
+            "9": 80,
+            "10": 152,
+            "11": 300,
+            "12": 592,
+            "13": 1184,
+            "14": 2368,
+            "15": 4736,
+            "16": 9472
+          }
+        },
+        "TREATMENT_VARIANT:{\"d\": 3, \"n_thresholds\": 50, \"narrowing_steps\": 2}": {
+          "n": 5,
+          "median_beta": 0.9948524811242382,
+          "median_r2": 0.9999922158014078,
+          "median_dAIC_log": 71.05931685441874,
+          "median_dAIC_sat": 7.363957364720605,
+          "all_seeds_S": false,
+          "per_seed": [
+            {
+              "seed": 0,
+              "beta": 0.9951354181444044,
+              "r2": 0.9999864407562918,
+              "dAIC_log": 67.1937423857764,
+              "dAIC_sat": 5.212697791982734,
+              "new_frac_last3": 0.8748700893785076,
+              "finite_frac": 0.146759033203125,
+              "S": false
+            },
+            {
+              "seed": 1,
+              "beta": 0.9948524811242382,
+              "r2": 0.9999922158014078,
+              "dAIC_log": 71.05931685441874,
+              "dAIC_sat": 7.363957364720605,
+              "new_frac_last3": 0.8746231416987212,
+              "finite_frac": 0.146728515625,
+              "S": false
+            },
+            {
+              "seed": 2,
+              "beta": 0.9949274474658585,
+              "r2": 0.9999920349252945,
+              "dAIC_log": 70.8998020066309,
+              "dAIC_sat": 7.1786502973914565,
+              "new_frac_last3": 0.8746492048643593,
+              "finite_frac": 0.146759033203125,
+              "S": false
+            },
+            {
+              "seed": 3,
+              "beta": 0.9946478915816771,
+              "r2": 0.9999927168050772,
+              "dAIC_log": 71.51798188234915,
+              "dAIC_sat": 8.013695343527743,
+              "new_frac_last3": 0.8746622323841198,
+              "finite_frac": 0.146759033203125,
+              "S": false
+            },
+            {
+              "seed": 4,
+              "beta": 0.9945408648081333,
+              "r2": 0.9999923460805169,
+              "dAIC_log": 71.1703979708936,
+              "dAIC_sat": 8.091173547065651,
+              "new_frac_last3": 0.8746622323841198,
+              "finite_frac": 0.146759033203125,
+              "S": false
+            }
+          ],
+          "N_seed0": {
+            "6": 12,
+            "7": 20,
+            "8": 40,
+            "9": 80,
+            "10": 154,
+            "11": 304,
+            "12": 602,
+            "13": 1204,
+            "14": 2406,
+            "15": 4812,
+            "16": 9622
+          }
+        },
+        "TREATMENT_VARIANT:{\"d\": 6, \"n_thresholds\": 13, \"narrowing_steps\": 2}": {
+          "n": 5,
+          "median_beta": 0.9944945323865083,
+          "median_r2": 0.9999909276955816,
+          "median_dAIC_log": 69.98765168449665,
+          "median_dAIC_sat": 7.639102453164398,
+          "all_seeds_S": false,
+          "per_seed": [
+            {
+              "seed": 0,
+              "beta": 0.9944945323865083,
+              "r2": 0.9999809094466607,
+              "dAIC_log": 64.80539125711364,
+              "dAIC_sat": 4.984864535263867,
+              "new_frac_last3": 0.875,
+              "finite_frac": 0.14447021484375,
+              "S": false
+            },
+            {
+              "seed": 1,
+              "beta": 0.995560312999357,
+              "r2": 0.9999952036295263,
+              "dAIC_log": 74.44086135123477,
+              "dAIC_sat": 8.04211295478521,
+              "new_frac_last3": 0.8746170909475018,
+              "finite_frac": 0.1444091796875,
+              "S": false
+            },
+            {
+              "seed": 2,
+              "beta": 0.995690879553505,
+              "r2": 0.9999949401308318,
+              "dAIC_log": 74.06880013527908,
+              "dAIC_sat": 7.639102453164398,
+              "new_frac_last3": 0.8746700454017527,
+              "finite_frac": 0.14447021484375,
+              "S": false
+            },
+            {
+              "seed": 3,
+              "beta": 0.9943215227578367,
+              "r2": 0.9999909276955816,
+              "dAIC_log": 69.98765168449665,
+              "dAIC_sat": 7.531829713765674,
+              "new_frac_last3": 0.8745777027027027,
+              "finite_frac": 0.14447021484375,
+              "S": false
+            },
+            {
+              "seed": 4,
+              "beta": 0.9941475625710364,
+              "r2": 0.9999904217909588,
+              "dAIC_log": 69.60735161282334,
+              "dAIC_sat": 7.715724149228208,
+              "new_frac_last3": 0.8745777027027027,
+              "finite_frac": 0.14447021484375,
+              "S": false
+            }
+          ],
+          "N_seed0": {
+            "6": 12,
+            "7": 20,
+            "8": 40,
+            "9": 80,
+            "10": 152,
+            "11": 300,
+            "12": 592,
+            "13": 1184,
+            "14": 2368,
+            "15": 4736,
+            "16": 9472
+          }
+        },
+        "TREATMENT_VARIANT:{\"d\": 6, \"n_thresholds\": 50, \"narrowing_steps\": 2}": {
+          "n": 5,
+          "median_beta": 0.9948524811242382,
+          "median_r2": 0.9999922158014078,
+          "median_dAIC_log": 71.05931685441874,
+          "median_dAIC_sat": 7.363957364720605,
+          "all_seeds_S": false,
+          "per_seed": [
+            {
+              "seed": 0,
+              "beta": 0.9951354181444044,
+              "r2": 0.9999864407562918,
+              "dAIC_log": 67.1937423857764,
+              "dAIC_sat": 5.212697791982734,
+              "new_frac_last3": 0.8748700893785076,
+              "finite_frac": 0.146759033203125,
+              "S": false
+            },
+            {
+              "seed": 1,
+              "beta": 0.9948524811242382,
+              "r2": 0.9999922158014078,
+              "dAIC_log": 71.05931685441874,
+              "dAIC_sat": 7.363957364720605,
+              "new_frac_last3": 0.8746231416987212,
+              "finite_frac": 0.146728515625,
+              "S": false
+            },
+            {
+              "seed": 2,
+              "beta": 0.9949274474658585,
+              "r2": 0.9999920349252945,
+              "dAIC_log": 70.8998020066309,
+              "dAIC_sat": 7.1786502973914565,
+              "new_frac_last3": 0.8746492048643593,
+              "finite_frac": 0.146759033203125,
+              "S": false
+            },
+            {
+              "seed": 3,
+              "beta": 0.9946478915816771,
+              "r2": 0.9999927168050772,
+              "dAIC_log": 71.51798188234915,
+              "dAIC_sat": 8.013695343527743,
+              "new_frac_last3": 0.8746622323841198,
+              "finite_frac": 0.146759033203125,
+              "S": false
+            },
+            {
+              "seed": 4,
+              "beta": 0.9945408648081333,
+              "r2": 0.9999923460805169,
+              "dAIC_log": 71.1703979708936,
+              "dAIC_sat": 8.091173547065651,
+              "new_frac_last3": 0.8746622323841198,
+              "finite_frac": 0.146759033203125,
+              "S": false
+            }
+          ],
+          "N_seed0": {
+            "6": 12,
+            "7": 20,
+            "8": 40,
+            "9": 80,
+            "10": 154,
+            "11": 304,
+            "12": 602,
+            "13": 1204,
+            "14": 2406,
+            "15": 4812,
+            "16": 9622
+          }
+        },
+        "NULL_TWIN": {
+          "n": 5,
+          "median_beta": 2.1544263673577042e-17,
+          "median_r2": 0.0,
+          "median_dAIC_log": 172.20498931960884,
+          "median_dAIC_sat": 172.71560651511328,
+          "all_seeds_S": false,
+          "per_seed": [
+            {
+              "seed": 0,
+              "beta": 2.1544263673577042e-17,
+              "r2": 0.0,
+              "dAIC_log": 172.20498931960884,
+              "dAIC_sat": 172.71560651511328,
+              "new_frac_last3": 0.0,
+              "finite_frac": 0.15069580078125,
+              "S": false
+            },
+            {
+              "seed": 1,
+              "beta": 2.1544263673577042e-17,
+              "r2": 0.0,
+              "dAIC_log": 172.20498931960884,
+              "dAIC_sat": 172.71560651511328,
+              "new_frac_last3": 0.0,
+              "finite_frac": 0.1507568359375,
+              "S": false
+            },
+            {
+              "seed": 2,
+              "beta": 2.1544263673577042e-17,
+              "r2": 0.0,
+              "dAIC_log": 172.20498931960884,
+              "dAIC_sat": 172.71560651511328,
+              "new_frac_last3": 0.0,
+              "finite_frac": 0.15069580078125,
+              "S": false
+            },
+            {
+              "seed": 3,
+              "beta": 2.1544263673577042e-17,
+              "r2": 0.0,
+              "dAIC_log": 172.20498931960884,
+              "dAIC_sat": 172.71560651511328,
+              "new_frac_last3": 0.0,
+              "finite_frac": 0.15069580078125,
+              "S": false
+            },
+            {
+              "seed": 4,
+              "beta": 2.1544263673577042e-17,
+              "r2": 0.0,
+              "dAIC_log": 172.20498931960884,
+              "dAIC_sat": 172.71560651511328,
+              "new_frac_last3": 0.0,
+              "finite_frac": 0.15069580078125,
+              "S": false
+            }
+          ],
+          "N_seed0": {
+            "6": 8,
+            "7": 8,
+            "8": 8,
+            "9": 8,
+            "10": 8,
+            "11": 8,
+            "12": 8,
+            "13": 8,
+            "14": 8,
+            "15": 8,
+            "16": 8
+          }
+        },
+        "NULL_TWIN_VARIANT:{\"kleene_cap\": 20000, \"kleene_tol\": 1e-12, \"n_thresholds\": 50}": {
+          "n": 5,
+          "median_beta": 0.03061655167862951,
+          "median_r2": 0.7731951344440828,
+          "median_dAIC_log": -0.4147619098966473,
+          "median_dAIC_sat": 1.5157436567310967,
+          "all_seeds_S": false,
+          "per_seed": [
+            {
+              "seed": 0,
+              "beta": 0.009976007613372927,
+              "r2": 0.3749999999999988,
+              "dAIC_log": -0.049262176185770556,
+              "dAIC_sat": -35.974978995612965,
+              "new_frac_last3": 0.0,
+              "finite_frac": 0.15069580078125,
+              "S": false
+            },
+            {
+              "seed": 1,
+              "beta": 0.037726242646552076,
+              "r2": 0.7938799370627162,
+              "dAIC_log": -0.45706362741050555,
+              "dAIC_sat": 6.8515857862722385,
+              "new_frac_last3": 0.0,
+              "finite_frac": 0.1507568359375,
+              "S": false
+            },
+            {
+              "seed": 2,
+              "beta": 0.016626679355621503,
+              "r2": 0.6249999999999976,
+              "dAIC_log": -0.13610982934483218,
+              "dAIC_sat": 2.395402638553037,
+              "new_frac_last3": 0.0,
+              "finite_frac": 0.15069580078125,
+              "S": false
+            },
+            {
+              "seed": 3,
+              "beta": 0.03061655167862951,
+              "r2": 0.7731951344440828,
+              "dAIC_log": -0.4147619098966473,
+              "dAIC_sat": 1.5157436567310967,
+              "new_frac_last3": 0.0,
+              "finite_frac": 0.15069580078125,
+              "S": false
+            },
+            {
+              "seed": 4,
+              "beta": 0.03061655167862951,
+              "r2": 0.7731951344440828,
+              "dAIC_log": -0.4147619098966473,
+              "dAIC_sat": 1.5157436567310967,
+              "new_frac_last3": 0.0,
+              "finite_frac": 0.15069580078125,
+              "S": false
+            }
+          ],
+          "N_seed0": {
+            "6": 9,
+            "7": 9,
+            "8": 11,
+            "9": 14,
+            "10": 15,
+            "11": 16,
+            "12": 16,
+            "13": 16,
+            "14": 16,
+            "15": 16,
+            "16": 16
+          }
+        },
+        "CONTROL": {
+          "n": 5,
+          "median_beta": 0.9995899492996126,
+          "median_r2": 0.9999999499758075,
+          "median_dAIC_log": 106.37073107212159,
+          "median_dAIC_sat": 7.342265042828956,
+          "all_seeds_S": false,
+          "per_seed": [
+            {
+              "seed": 0,
+              "beta": 0.9995899492996126,
+              "r2": 0.9999999499758075,
+              "dAIC_log": 106.37073107212159,
+              "dAIC_sat": 7.342265042828956,
+              "new_frac_last3": 0.874973297934023,
+              "finite_frac": 1.0,
+              "S": false
+            },
+            {
+              "seed": 1,
+              "beta": 0.9995899492996126,
+              "r2": 0.9999999499758075,
+              "dAIC_log": 106.37073107212159,
+              "dAIC_sat": 7.342265042828956,
+              "new_frac_last3": 0.874973297934023,
+              "finite_frac": 1.0,
+              "S": false
+            },
+            {
+              "seed": 2,
+              "beta": 0.9995899492996126,
+              "r2": 0.9999999499758075,
+              "dAIC_log": 106.37073107212159,
+              "dAIC_sat": 7.342265042828956,
+              "new_frac_last3": 0.874973297934023,
+              "finite_frac": 1.0,
+              "S": false
+            },
+            {
+              "seed": 3,
+              "beta": 1.0000000000000004,
+              "r2": 1.0,
+              "dAIC_log": 479.54865485619723,
+              "dAIC_sat": 348.62077301956117,
+              "new_frac_last3": 0.875,
+              "finite_frac": 1.0,
+              "S": true
+            },
+            {
+              "seed": 4,
+              "beta": 1.0000000000000004,
+              "r2": 1.0,
+              "dAIC_log": 479.54865485619723,
+              "dAIC_sat": 348.62077301956117,
+              "new_frac_last3": 0.875,
+              "finite_frac": 1.0,
+              "S": true
+            }
+          ],
+          "N_seed0": {
+            "6": 33,
+            "7": 65,
+            "8": 129,
+            "9": 257,
+            "10": 513,
+            "11": 1025,
+            "12": 2049,
+            "13": 4097,
+            "14": 8193,
+            "15": 16385,
+            "16": 32769
+          }
+        },
+        "POSITIVE_CONTROL": {
+          "n": 5,
+          "median_beta": 0.6328404297326805,
+          "median_r2": 0.999893242341076,
+          "median_dAIC_log": 48.495866407503215,
+          "median_dAIC_sat": 43.752156018769,
+          "all_seeds_S": true,
+          "per_seed": [
+            {
+              "seed": 0,
+              "beta": 0.6328404297326805,
+              "r2": 0.9997789106867777,
+              "dAIC_log": 43.367434213148485,
+              "dAIC_sat": 38.69235572475874,
+              "new_frac_last3": 0.7344763670064874,
+              "finite_frac": 1.0,
+              "S": true
+            },
+            {
+              "seed": 1,
+              "beta": 0.6326057189590132,
+              "r2": 0.999893242341076,
+              "dAIC_log": 48.495866407503215,
+              "dAIC_sat": 43.752156018769,
+              "new_frac_last3": 0.7339194817214253,
+              "finite_frac": 1.0,
+              "S": true
+            },
+            {
+              "seed": 2,
+              "beta": 0.6329305051691465,
+              "r2": 0.9999141635735977,
+              "dAIC_log": 50.01950690855486,
+              "dAIC_sat": 45.2476956372279,
+              "new_frac_last3": 0.7339194817214253,
+              "finite_frac": 1.0,
+              "S": true
+            },
+            {
+              "seed": 3,
+              "beta": 0.6362776832098997,
+              "r2": 0.9999444593351569,
+              "dAIC_log": 53.03015198806503,
+              "dAIC_sat": 47.94119964951498,
+              "new_frac_last3": 0.7333333333333333,
+              "finite_frac": 1.0,
+              "S": true
+            },
+            {
+              "seed": 4,
+              "beta": 0.6321558493475857,
+              "r2": 0.9997803863231832,
+              "dAIC_log": 43.32925051984709,
+              "dAIC_sat": 38.72776836136653,
+              "new_frac_last3": 0.7345993515516442,
+              "finite_frac": 1.0,
+              "S": true
+            }
+          ],
+          "N_seed0": {
+            "6": 27,
+            "7": 41,
+            "8": 64,
+            "9": 98,
+            "10": 152,
+            "11": 241,
+            "12": 364,
+            "13": 573,
+            "14": 888,
+            "15": 1340,
+            "16": 2158
+          }
+        },
+        "CHEAT": {
+          "n": 5,
+          "median_beta": 0.5031449060567083,
+          "median_r2": 0.9981785859146561,
+          "median_dAIC_log": 25.452915821861357,
+          "median_dAIC_sat": 28.451699610391323,
+          "all_seeds_S": true,
+          "per_seed": [
+            {
+              "seed": 0,
+              "beta": 0.5031449060567083,
+              "r2": 0.9981785859146561,
+              "dAIC_log": 25.452915821861357,
+              "dAIC_sat": 28.451699610391323,
+              "new_frac_last3": 0.6262230919765166,
+              "finite_frac": 1.0,
+              "S": true
+            },
+            {
+              "seed": 1,
+              "beta": 0.5031449060567083,
+              "r2": 0.9981785859146561,
+              "dAIC_log": 25.452915821861357,
+              "dAIC_sat": 28.451699610391323,
+              "new_frac_last3": 0.6262230919765166,
+              "finite_frac": 1.0,
+              "S": true
+            },
+            {
+              "seed": 2,
+              "beta": 0.5031449060567083,
+              "r2": 0.9981785859146561,
+              "dAIC_log": 25.452915821861357,
+              "dAIC_sat": 28.451699610391323,
+              "new_frac_last3": 0.6262230919765166,
+              "finite_frac": 1.0,
+              "S": true
+            },
+            {
+              "seed": 3,
+              "beta": 0.5031449060567083,
+              "r2": 0.9981785859146561,
+              "dAIC_log": 25.452915821861357,
+              "dAIC_sat": 28.451699610391323,
+              "new_frac_last3": 0.6262230919765166,
+              "finite_frac": 1.0,
+              "S": true
+            },
+            {
+              "seed": 4,
+              "beta": 0.5031449060567083,
+              "r2": 0.9981785859146561,
+              "dAIC_log": 25.452915821861357,
+              "dAIC_sat": 28.451699610391323,
+              "new_frac_last3": 0.6262230919765166,
+              "finite_frac": 1.0,
+              "S": true
+            }
+          ],
+          "N_seed0": {
+            "6": 15,
+            "7": 23,
+            "8": 31,
+            "9": 47,
+            "10": 63,
+            "11": 95,
+            "12": 127,
+            "13": 191,
+            "14": 255,
+            "15": 383,
+            "16": 511
+          }
+        }
+      },
+      "anomalies": [
+        {
+          "id": "A1",
+          "text": "CONTROL (continuous concrete hull) has median beta 1.000 >= 0.2: the |dW|>1e-9*median counter registers continuous variation as breakpoints at every grid pair"
+        },
+        {
+          "id": "A2",
+          "text": "TREATMENT finite fraction of theta = 0.144; rest of circle W=inf (box expansion r(|cos|+|sin|)>1)"
+        },
+        {
+          "id": "A3",
+          "text": "TREATMENT distinct finite W values per seed: [8749, 8758, 9115, 8747, 8770]"
+        },
+        {
+          "id": "A4",
+          "text": "NULL_TWIN distinct finite W values per seed: [2, 2, 2, 2, 2]"
+        },
+        {
+          "id": "A5",
+          "text": "NULL_TWIN had Kleene-cap unconverged theta: [31, 29, 30, 31, 33]"
+        }
+      ],
+      "rejected_explanations": [
+        "floating-point jitter produces fake breakpoints (recheck a subsample in exact rational arithmetic)",
+        "iteration-count changes give dense but non-scaling breakpoints"
+      ]
+    },
+    {
+      "id": "W4",
+      "triplicateId": "HT-ae38c641b1",
+      "passId": "P3",
+      "mechanism_ids": [
+        "M3",
+        "M10",
+        "M7"
+      ],
+      "lens_ids": [
+        "L6",
+        "L1"
+      ],
+      "hypothesis": "Width-guided (sensitivity) refinement approaches the oracle adaptive exponent ratio 2/D on wrapping-free maps but falls short as lambda*T grows.",
+      "mechanism": "Quadtree of abstract cells over [0,1]^2; each step split the leaf maximising interval-image width times area among undecided leaves; decided test as in W1.",
+      "intervention": "Vary horizon T in {2,5,10,20} and rotation t in {0,30} deg on the Cantor-escape family k in {4,6,8}.",
+      "control": "Uniform refinement (full levels).",
+      "positive_control": "Oracle policy splitting only leaves that truly intersect the boundary (ground truth at 2^-12): gamma_oracle/gamma_uniform must be within 10% of 2/D.",
+      "observable": "gamma_policy = -slope of log undecided area vs log budget B, B = 64..16384.",
+      "success_criterion": "Positive control within 10%; gamma_sens/gamma_oracle >= 0.8 at (t=0,T=2) and <= 0.6 at (t=30,T=20), with a monotone decline (Spearman rho <= -0.7 against lambda*T over the grid).",
+      "failure_criterion": "gamma_sens/gamma_oracle >= 0.8 at all lambda*T (then it is just adaptive mesh refinement and sensitivity adds nothing), or the positive control misses 2/D by > 20%.",
+      "alternative_explanation": "Decline comes from the oracle getting relatively better at long T rather than the width signal getting worse.",
+      "null_twin": "Random-leaf refinement matched to the width-guided policy's leaf-depth histogram at each budget: same cell-size distribution, no sensitivity signal.",
+      "substrate": "optimizer",
+      "why_this_implementation": "A budgeted greedy refinement loop is the minimal agent that allocates precision; no learned policy is needed to test whether the signal is informative.",
+      "size": "budgets 64..16384 leaves, 3 k values, 4 horizons, 2 rotations, 3 seeds for tie-breaking",
+      "cost_estimate": "~3 CPU core-minutes",
+      "stupid_explanations": [
+        "budget range too small to leave the pre-asymptotic regime",
+        "ties in width signal broken by a spatial order that happens to follow the boundary",
+        "oracle exponent itself is off because the ground-truth grid is too coarse"
+      ],
+      "outcome": "SPEC_UNATTAINABLE",
+      "round": 2,
+      "rows": "hecate/programs/HT-ae38c641b1/worlds/W4/pilot_rows.jsonl",
+      "outcome_file": "hecate/programs/HT-ae38c641b1/worlds/W4/OUTCOME.json",
+      "statistics": {
+        "pilot_attempt1": {
+          "positive_meets_success": true,
+          "cheat_detected": false,
+          "null_twin_meets_success": false,
+          "cause": "gamma_oracle undefined at (k=4,T=2,t=0): grid-aligned boundary resolved exactly, undecided area 0 at B=64"
+        },
+        "pilot_attempt2": {
+          "positive_meets_success": false,
+          "cheat_detected": true,
+          "null_twin_meets_success": false,
+          "positive_control_failures": [
+            {
+              "k": 8,
+              "T": 5,
+              "t": 0,
+              "gamma_oracle": 0.40037915610276553,
+              "gamma_uniform_true": 0.30107674490103564,
+              "ratio": 1.3298242487455174,
+              "target_2_over_D": 1.4999999999999998,
+              "rel_err": 0.11345050083632159,
+              "within_10pct": false,
+              "within_20pct": true,
+              "oracle_stopped_early_any": false
+            },
+            {
+              "k": 8,
+              "T": 10,
+              "t": 0,
+              "gamma_oracle": 0.40037915610276553,
+              "gamma_uniform_true": 0.30107674490103564,
+              "ratio": 1.3298242487455174,
+              "target_2_over_D": 1.4999999999999998,
+              "rel_err": 0.11345050083632159,
+              "within_10pct": false,
+              "within_20pct": true,
+              "oracle_stopped_early_any": false
+            },
+            {
+              "k": 8,
+              "T": 20,
+              "t": 0,
+              "gamma_oracle": 0.40037915610276553,
+              "gamma_uniform_true": 0.30107674490103564,
+              "ratio": 1.3298242487455174,
+              "target_2_over_D": 1.4999999999999998,
+              "rel_err": 0.11345050083632159,
+              "within_10pct": false,
+              "within_20pct": true,
+              "oracle_stopped_early_any": false
+            }
+          ],
+          "positive_control_max_rel_err": 0.11345050083632159,
+          "cheat_rho": -0.9982563195104296,
+          "null_twin_criterion": {
+            "S1": false,
+            "S2": true,
+            "S3": false,
+            "rho": 0.024454157797968182,
+            "meets": false,
+            "n_configs": 24
+          }
+        },
+        "treatment": "not built (no treatment statistic exists)"
+      },
+      "procedural_notes": [
+        "spec defers its map family and decided-test to W1, which the v2 prompt forbade reading: implementer's own reading (prompt defect)"
+      ],
+      "anomalies": [
+        {
+          "id": "A1",
+          "text": "Map family and decided test are the implementer's reading: W4 defers both to W1, which the implementer rules forbid reading"
+        },
+        {
+          "id": "A2",
+          "text": "Attempt 1 PC passed (max err 6.2%) but cheat undetectable: S1 denominator undefined at (4,2,0)"
+        },
+        {
+          "id": "A3",
+          "text": "Attempt 2 (closed-cell truth) fixed the cheat but moved k=8,t=0 PC to 11.3% error (k=4,t=0 to 8.3%): the positive control's verdict hinges on a boundary convention for grid-aligned sets"
+        },
+        {
+          "id": "A4",
+          "text": "Pilot null twin matched to the oracle's depth sequence, not sens (no treatment may exist in phase 1)"
+        }
+      ],
+      "rejected_explanations": []
+    },
+    {
+      "id": "W5",
+      "triplicateId": "HT-ae38c641b1",
+      "passId": "P3v2",
+      "mechanism_ids": [
+        "M2",
+        "M14"
+      ],
+      "lens_ids": [
+        "L3",
+        "L2"
+      ],
+      "hypothesis": "When survival requires a proof by a budgeted box-domain (interval) verifier, evolved linear dynamics align their principal directions with the verifier's domain axes (4-fold, mod 90 deg), and rotating the verifier's domain rotates the alignment with it; a structure-blind gate of matched selection intensity produces no alignment.",
+      "mechanism": "World: genome = two linear maps A_1, A_2 in R^{2x2} (a switched linear system; which map acts is set by an input bit each step). Per seed: R=16 runs, x_0 on the circle of radius 0.5 at angles off + 2*pi*r/16 (off uniform in [0, 2*pi/16)), S=60 steps, map index from a fixed random bit per run and step. Task fitness = lam_hat - pen, lam_hat = mean over runs of max(-5, (ln|x_S| - ln 0.5)/S), pen = 2 * sum_j max(0, s2_j/s1_j - 0.5) with s1>=s2 the singular values of A_j. Both terms are exactly rotation invariant. GA per seed: P=60 parents; each generation every parent makes one offspring by adding N(0, 0.03^2) to each of the 8 entries (conjugation-invariant, i.e. isotropic); offspring pass the arm's gate or are discarded; the P fittest of parents + accepted offspring survive (stable sort, ties keep order: parents first). G=120 generations. Initial population: entries N(0, 0.3^2), failing genomes resampled (up to 200 rounds, then any still failing scaled by 0.3) until every genome passes the CONCRETE gate (unit-disc safety on the seed's runs); exactly as world() in controls.py; this initial population is shared by all arms of a seed. Random streams: world (runs, bits, init) np.random.default_rng([seed,7]); mutation default_rng([seed,11]); null-twin coins default_rng([seed,13]).",
+      "intervention": "Treatment gate = budgeted box verifier with domain angle dom. Arm V: dom = 0. Arm V_rot: dom = 22.5 deg. Verifier(dom): Q = rotation by dom; B_j = Q^T A_j Q; h_0 = (0.5, 0.5) (half-widths of the box hull of the start circle, valid in any rotated frame); h_{n+1} = max(h_0, |B_1| h_n, |B_2| h_n) componentwise, |B| = entrywise absolute value, for n = 0..29 (30 Kleene steps; boxes stay centred at 0 because the maps are linear); widening h* = 1.05 * h_30; PROVEN iff |B_j| h* <= h* componentwise for j = 1, 2 (h* is inductive, hence contains every reachable state from the start box) AND h*_1^2 + h*_2^2 <= 1 (box inside the unit disc). Offspring are accepted iff PROVEN. The treatment arms use no concrete gate and no alignment bonus.",
+      "control": "POSITIVE_CONTROL and NULL_TWIN below; no separate concrete-gate arm is scored.",
+      "positive_control": "Concrete gate (every state of every run within the closed unit disc; NaN/inf = unsafe) plus fitness bonus 0.1 * mean_j w_j cos(4(phi_j - dom)), dom = 0 (POSITIVE_CONTROL) or 22.5 deg (POSITIVE_CONTROL_ROT). Imprint present by construction. Implemented in controls.py.",
+      "observable": "Per seed and arm, on the final population (2P maps): phi = angle of the top right-singular vector of A_j, w = (s1 - s2)/(s1 + s2); A4(dom) = sum w cos(4(phi - dom)) / sum w. Clause statistics are means over the 20 seeds. Preregistered diagnostics (not clauses): A8(dom) (same with 8 in place of 4), median rho(|A|)/rho(A), median lam_hat, mean accepted fraction.",
+      "success_criterion": "[{\"id\": \"S1\", \"text\": \"Box-domain verification imprints world-axis alignment: arm V has mean A4(0) >= 0.40.\", \"statistic\": \"mean over seeds 0..19 of A4(dom=0) in arm V\", \"comparison\": \">=\", \"threshold\": 0.4}, {\"id\": \"S2\", \"text\": \"The imprint follows the domain: arm V_rot has mean A4(22.5 deg) >= 0.40.\", \"statistic\": \"mean over seeds 0..19 of A4(dom=22.5 deg) in arm V_rot\", \"comparison\": \">=\", \"threshold\": 0.4}]",
+      "failure_criterion": "[{\"id\": \"F1\", \"text\": \"No 4-fold axis imprint under the box verifier (M2's stated observable is falsified in this world).\", \"statistic\": \"mean over seeds 0..19 of A4(dom=0) in arm V\", \"comparison\": \"<\", \"threshold\": 0.15}, {\"id\": \"F2\", \"text\": \"Alignment is anchored to the world, not to the verifier's domain (the rotated verifier still aligns to world axes).\", \"statistic\": \"mean over seeds 0..19 of A4(dom=0) in arm V_rot\", \"comparison\": \">=\", \"threshold\": 0.4}, {\"id\": \"F3\", \"text\": \"Reading invalid (INCONCLUSIVE, not a falsification): the verifier froze evolution.\", \"statistic\": \"mean over seeds and generations of the fraction of offspring accepted in arm V\", \"comparison\": \"<\", \"threshold\": 0.02}]",
+      "alternative_explanation": "The box verifier is effectively an entrywise (infinity-norm-like) penalty whose invariance group is the signed permutations, which contain 45-deg reflections; it may imprint an 8-fold (axes AND diagonals) or sign-pattern structure, or none on singular directions at all, rather than M2's 4-fold axis alignment. A mean A4 between 0.15 and 0.40 is INCONCLUSIVE.",
+      "null_twin": "NULL_TWIN: concrete gate plus genome-independent random rejection: in generation g offspring are accepted iff concrete-safe AND u < min(1, a_ref[g] / c_g), u ~ U(0,1) from the null coin stream, c_g = fraction of this generation's offspring that are concrete-safe, a_ref[g] = accepted fraction of the compared arm in generation g of the same seed (V for S1, V_rot for S2; in controls.py: POSITIVE_CONTROL). Matches task, mutation, safety and selection intensity; has no geometric selectivity. Scored with A4(0) for S1 and A4(22.5 deg) for S2.",
+      "substrate": "population",
+      "cost_estimate": "controls.py 24 CPU core-s; treatment + twins about 1 CPU core-min",
+      "stupid_explanations": [
+        "clonal drift: a population descends from few ancestors, so one seed's angles cluster anywhere; handled by a signed statistic averaged over 20 seeds (null SD of the mean 0.13) and the 0.40 threshold",
+        "near-isotropic maps have undefined principal directions and inflate the statistic; handled by weighting by w = (s1-s2)/(s1+s2) and the shape penalty that keeps s2/s1 <= 0.5",
+        "the verifier simply throttles evolution so the population stays at its isotropic initial state (F3 and the accepted-fraction diagnostic expose this)",
+        "hidden world anisotropy (bit order, start angles, float effects) aligns to world axes in every arm; exposed by V_rot (S2, F2) and by the twin",
+        "the 30-step budget, not the domain geometry, does the selecting (maps near rho = 1 fail to converge in any orientation); the diagnostic median rho(|A|)/rho(A) separates orientation-dependent failure from slow convergence"
+      ],
+      "spec": "hecate/programs/HT-ae38c641b1/worlds/W5/spec.json",
+      "attainability": "hecate/programs/HT-ae38c641b1/worlds/W5/ATTAINABILITY.json",
+      "outcome": "NULL",
+      "round": 3,
+      "rows": "hecate/programs/HT-ae38c641b1/worlds/W5/probe/rows.jsonl",
+      "outcome_file": "hecate/programs/HT-ae38c641b1/worlds/W5/probe/OUTCOME.json",
+      "statistics": {
+        "control_reproducibility": [
+          {
+            "id": "S1",
+            "frozen_positive": 0.9682768836893294,
+            "rerun_positive": 0.9682768836893294,
+            "frozen_twin": 0.0034415062674477497,
+            "rerun_twin": 0.0034415062674477497,
+            "frozen_status": [
+              true,
+              true
+            ],
+            "rerun_status": [
+              true,
+              true
+            ],
+            "status_match": true,
+            "max_abs_delta": 0.0
+          },
+          {
+            "id": "S2",
+            "frozen_positive": 0.9720237845102346,
+            "rerun_positive": 0.9720237845102346,
+            "frozen_twin": -0.0394148535054328,
+            "rerun_twin": -0.0394148535054328,
+            "frozen_status": [
+              true,
+              true
+            ],
+            "rerun_status": [
+              true,
+              true
+            ],
+            "status_match": true,
+            "max_abs_delta": 0.0
+          },
+          {
+            "id": "CHEAT",
+            "frozen": true,
+            "rerun": true,
+            "cheat_values": [
+              1.0,
+              1.0
+            ]
+          }
+        ],
+        "clause_values": {
+          "S1": 0.3335876183417939,
+          "S2": 0.2766448446462254,
+          "F1": 0.3335876183417939,
+          "F2": -0.24091636275300882,
+          "F3": 0.4199305555555556
+        },
+        "clause_met": {
+          "S1": false,
+          "S2": false,
+          "F1": false,
+          "F2": false,
+          "F3": false
+        },
+        "twin_values": {
+          "NULL_TWIN_V_A4_0": -0.13990921667246498,
+          "NULL_TWIN_VROT_A4_22_5": 0.028900434694541587
+        },
+        "per_seed": {
+          "V_A4_0": [
+            0.9535151146268085,
+            0.9812794471962469,
+            0.907038432921099,
+            -0.16133833113114252,
+            -0.1358882971086617,
+            -0.8035532492791636,
+            0.10255002303489398,
+            -0.6674221672797374,
+            0.9099683264556566,
+            0.9523092520411283,
+            -0.31128352585735247,
+            0.9885199564008634,
+            0.9893806372836014,
+            0.9581380403847111,
+            -0.054718926286630686,
+            0.9500305612090707,
+            0.8058601423716492,
+            -0.6023299543196433,
+            -0.6299894894419756,
+            0.5396863736144567
+          ],
+          "V_rot_A4_22_5": [
+            0.3499028682003971,
+            -0.09050781233821886,
+            -0.34709936120221313,
+            0.9793729313643545,
+            0.9396914528518617,
+            -0.4414526329037351,
+            -0.06142491928947513,
+            0.9974515668204498,
+            0.984788764545005,
+            0.9773773947394983,
+            -0.33363406115401184,
+            0.07224621421686743,
+            0.8681734507604942,
+            -0.4144647393120074,
+            -0.6119204409815654,
+            0.9656401664629982,
+            0.08926741278089247,
+            -0.4355209199202031,
+            0.3527188582336107,
+            0.6922906990495088
+          ],
+          "V_rot_A4_0": [
+            -0.04236828621005946,
+            0.6845054007296301,
+            -0.40042580177946263,
+            0.09600773366841746,
+            -0.24013901537298094,
+            -0.6944592384980208,
+            -0.19631853522147316,
+            0.025277118701382398,
+            -0.008238340663643883,
+            0.059237665944747234,
+            -0.16811277428905205,
+            -0.10730071914095299,
+            -0.2082061806987639,
+            -0.8145521506970717,
+            0.41895549891696127,
+            -0.04379867508995804,
+            -0.8551745980768013,
+            -0.8092581524564669,
+            -0.8748337942936971,
+            -0.6391244105329108
+          ]
+        },
+        "sd_of_seed_mean": {
+          "V_A4_0": 0.15327294878610903,
+          "V_rot_A4_22_5": 0.13408121299703085
+        },
+        "diagnostics": {
+          "V": {
+            "A4_axes0": 0.3335876183417939,
+            "A4_axes22_5": -0.00115180030740189,
+            "A8_axes0": 0.3369852878947041,
+            "mean_w": 0.6962088555736556,
+            "median_lam": -0.027079806601539108,
+            "median_abs_ratio": 1.0004276065824882,
+            "mean_accept": 0.4199305555555556
+          },
+          "V_rot": {
+            "A4_axes0": -0.24091636275300882,
+            "A4_axes22_5": 0.2766448446462254,
+            "A8_axes0": -0.10015637415823075,
+            "mean_w": 0.7392827951982104,
+            "median_lam": -0.02721828755837103,
+            "median_abs_ratio": 1.0038483773222568,
+            "mean_accept": 0.44411805555555556
+          },
+          "NULL_TWIN_V": {
+            "A4_axes0": -0.13990921667246498,
+            "A4_axes22_5": 0.05832758327443138,
+            "A8_axes0": 0.06317069113513593,
+            "mean_w": 0.6921707979382998,
+            "median_lam": -0.0023310573685599687,
+            "median_abs_ratio": 1.0120808304738815,
+            "mean_accept": 0.41604861111111113
+          },
+          "NULL_TWIN_VROT": {
+            "A4_axes0": -0.038523776625106795,
+            "A4_axes22_5": 0.028900434694541587,
+            "A8_axes0": 0.20134367306411952,
+            "mean_w": 0.6704862687071721,
+            "median_lam": -0.0029605643877735036,
+            "median_abs_ratio": 1.0197251070174373,
+            "mean_accept": 0.4369583333333333
+          },
+          "POSITIVE_CONTROL": {
+            "A4_axes0": 0.9682768836893294,
+            "A4_axes22_5": -0.027667248729802436,
+            "A8_axes0": 0.8838868599402592,
+            "mean_w": 0.9337507182502958,
+            "median_lam": -0.004008135074792918,
+            "median_abs_ratio": 1.0027251124612087,
+            "mean_accept": 0.6407916666666666
+          },
+          "POSITIVE_CONTROL_ROT": {
+            "A4_axes0": 0.008322570637299371,
+            "A4_axes22_5": 0.9720237845102346,
+            "A8_axes0": -0.8939873960234415,
+            "mean_w": 0.9138244448869746,
+            "median_lam": -0.0039019648304658107,
+            "median_abs_ratio": 1.0338769675105324,
+            "mean_accept": 0.643125
+          },
+          "NULL_TWIN": {
+            "A4_axes0": 0.0034415062674477497,
+            "A4_axes22_5": -0.0394148535054328,
+            "A8_axes0": 0.024618356136261576,
+            "mean_w": 0.7141086567212626,
+            "median_lam": -0.001137741429317551,
+            "median_abs_ratio": 1.020867299817951,
+            "mean_accept": 0.591361111111111
+          }
+        },
+        "twin_accept_gap": {
+          "V": 0.0366875,
+          "V_rot": 0.03699305555555556
+        },
+        "spec_reading": "INCONCLUSIVE band per spec (0.15 <= A4 < 0.40), not a falsification of M2"
+      },
+      "anomalies": [],
+      "rejected_explanations": [
+        "clonal drift: a population descends from few ancestors, so one seed's angles cluster anywhere; handled by a signed statistic averaged over 20 seeds (null SD of the mean 0.13) and the 0.40 threshold",
+        "near-isotropic maps have undefined principal directions and inflate the statistic; handled by weighting by w = (s1-s2)/(s1+s2) and the shape penalty that keeps s2/s1 <= 0.5",
+        "the verifier simply throttles evolution so the population stays at its isotropic initial state (F3 and the accepted-fraction diagnostic expose this)",
+        "hidden world anisotropy (bit order, start angles, float effects) aligns to world axes in every arm; exposed by V_rot (S2, F2) and by the twin"
+      ]
+    },
+    {
+      "id": "W6",
+      "triplicateId": "HT-ae38c641b1",
+      "passId": "P3v2",
+      "mechanism_ids": [
+        "M8"
+      ],
+      "lens_ids": [
+        "L1"
+      ],
+      "hypothesis": "For an iteratively computed estimator (undamped Newton on a multi-root score), the set of misspecification parameters on which the estimated effect keeps its sign has a fractal boundary (uncertainty exponent alpha = 2 - D well below 1), while the same estimand computed without iteration (global maximiser) has a smooth boundary (alpha ~ 1). Because a sound certifier must leave undecided every cell that contains both signs, alpha < 1 means sound robustness certification of the sign costs a power law in grid resolution steeper than for a smooth boundary.",
+      "mechanism": "Data: six unit-level treated-minus-control differences d0 = (-1.9, -1.4, -1.0, 0.8, 1.2, 1.9). Misspecification (unmeasured bias in two subgroups): g = (g1, g2) in [-1, 1]^2; group labels grp = (0, 0, 1, 1, 0, 1); d_i(g) = d0_i + g1 if grp_i = 0 else d0_i + g2. Estimand: location tau of a Cauchy model with scale s = 0.5, log-likelihood l(tau) = -sum_i ln(s^2 + (d_i - tau)^2), which has up to several local maxima because the differences form two clusters.",
+      "intervention": "TREATMENT label(g): undamped Newton on the score psi(tau) = sum_i r_i / (s^2 + r_i^2), r_i = d_i(g) - tau, psi'(tau) = sum_i (r_i^2 - s^2)/(s^2 + r_i^2)^2; tau_0 = sample median of d(g) (mean of the 3rd and 4th order statistics); tau <- tau - psi(tau)/psi'(tau) for exactly 100 iterations in float64. Label = +1 if converged and tau_100 > 0, -1 if converged and tau_100 < 0, 0 otherwise; converged iff tau_100 finite, |tau_100| <= 1000 and |psi(tau_100)| <= 1e-9 (psi' = 0 or any non-finite value at any step -> label 0). Newton may converge to any stationary point (including a likelihood minimum); that is the estimator as specified.",
+      "control": "NULL_TWIN (below).",
+      "positive_control": "POSITIVE_CONTROL label(g) = index of the cube root of unity reached by 60 undamped Newton steps for z^3 - 1 from z_0 = g1 + i g2 (label 3 if not within 1e-6 of a root): a fractal (Julia-set) basin boundary by construction, measured by exactly the same pair pipeline. Implemented in controls.py.",
+      "observable": "Per arm and seed: 30000 base points x uniform in [-0.75, 0.75]^2 drawn from np.random.default_rng([seed, 101]) (then from the same generator: angles a of shape (8, 30000) uniform in [0, 2*pi)); for eps_k = 2^-k, k = 2..9, partner x + eps_k (cos a_k, sin a_k); f(eps) = fraction of the 30000 pairs whose labels differ (all label values are classes, including 0 / non-converged); alpha = OLS slope of ln f on ln eps over the 8 eps; also R^2 and the slopes of the coarse (k=2..5) and fine (k=6..9) halves. Clause statistics use the median over seeds 0-4. Identical code path for every arm (controls.py measure()/fit()).",
+      "success_criterion": "[{\"id\": \"S1\", \"text\": \"The sign-flip boundary of the Newton estimator is fractal in the window: median alpha <= 0.80 (D >= 1.20).\", \"statistic\": \"median over seeds 0-4 of alpha, TREATMENT\", \"comparison\": \"<=\", \"threshold\": 0.8}, {\"id\": \"S2\", \"text\": \"The iteration, not the estimand, makes it fractal: the global-maximiser twin's median alpha exceeds the treatment's by >= 0.15.\", \"statistic\": \"median alpha NULL_TWIN (seeds 0-4) minus median alpha TREATMENT (seeds 0-4)\", \"comparison\": \">=\", \"threshold\": 0.15}]",
+      "failure_criterion": "[{\"id\": \"F1\", \"text\": \"Smooth boundary: the Newton estimator's flip boundary is not fractal in the window (M8 reads NULL here: its 'likely common case' knockout holds).\", \"statistic\": \"median over seeds 0-4 of alpha, TREATMENT\", \"comparison\": \">=\", \"threshold\": 0.9}, {\"id\": \"F2\", \"text\": \"Not scale-free in the window (no single exponent; reading INCONCLUSIVE, not a pass).\", \"statistic\": \"median over seeds 0-4 of R^2 of the ln f vs ln eps fit, TREATMENT\", \"comparison\": \"<\", \"threshold\": 0.95}, {\"id\": \"F3\", \"text\": \"Reading invalid (INCONCLUSIVE): a boundary is nearly absent or unmeasurable.\", \"statistic\": \"min over seeds 0-4 of the smallest disagreement count over the 8 eps (TREATMENT)\", \"comparison\": \"<\", \"threshold\": 5}]",
+      "alternative_explanation": "Non-convergence (label 0) forms thin smooth bands near psi' = 0 that inflate f at small eps without being fractal; or Newton's jump from the median start is piecewise-smooth in g with many (finitely many) branches, which a finite window can mistake for a power law. The coarse/fine slope split and F2 test the second; the label-0 fraction is a preregistered diagnostic for the first.",
+      "null_twin": "NULL_TWIN label(g) = sign of the global maximiser of l(tau) for the same d(g): 200-point grid on [min d - 0.5, max d + 0.5], candidates = the best grid point within 0.6 of each datum and the overall best, each polished by 30 Newton steps on l clipped to +-0.05 (only where -l'' > 0), label = sign of the candidate with the largest l. Same data, same misspecification, same estimand, same pairs; the iteration's path-dependence is removed. Verified against a 200001-point brute-force argmax (3000/3000 agree). Seeds 5-9 are a replicate used only for the twin's value on S2.",
+      "substrate": "causal toy",
+      "cost_estimate": "controls.py 110 CPU core-s (twin dominates); treatment about 10 CPU core-s",
+      "stupid_explanations": [
+        "floating-point noise near psi' = 0 creates speckle labels that look like a fractal boundary (check: rerun a subsample with 200 iterations and with tau_0 perturbed by 1e-12; speckle changes, a real boundary does not)",
+        "non-converged points (label 0) form a band whose width shrinks slower than eps, faking alpha < 1 (check: the preregistered label-0 fraction and alpha recomputed with label 0 merged into its nearest-sign neighbour)",
+        "the fit window sits in a pre-asymptotic crossover (check: coarse vs fine half slopes and F2)",
+        "the boundary is smooth but long and wiggly (many branches), which raises f but not the slope; only the slope is scored, so this cannot pass S1 by itself"
+      ],
+      "spec": "hecate/programs/HT-ae38c641b1/worlds/W6/spec.json",
+      "attainability": "hecate/programs/HT-ae38c641b1/worlds/W6/ATTAINABILITY.json"
+    }
+  ],
+  "candidateEngines": [],
+  "currentVerdict": "PARK",
+  "evidenceSummary": {
+    "layer": "experimental_observation",
+    "rows": "hecate/programs/HT-ae38c641b1/worlds/W5/probe/rows.jsonl",
+    "note": "round 3 W5 NULL: two valid NULL readings (W3, W5)"
+  }
+}

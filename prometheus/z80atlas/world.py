@@ -76,6 +76,15 @@ class Config:
     resource_cap: int = 256
     yoke: tuple = ()                    # YOKED: per-tick bonus totals of the matched ON run
     delay: int = 60                     # DELAYED: ticks between a correct output and its credit
+    # register-world axis (2026-09-30, E-BEL-REPL-01; roles/Bellerophon/repl_2026-09-30/): what registers an organism
+    # enters an execution with. ZERO = the historical physics (all zero every execution). CARRIED = it keeps its own exit
+    # registers; a newborn inherits the registers of the occupant it overwrote, and one born into an empty cell starts
+    # at zero. RANDOM = fresh uniform registers per execution from a per-run RNG that is never the world's RNG.
+    # Omitted from to_dict() at its default, so every historical config dict and plan hash is unchanged.
+    reg_world: str = "ZERO"              # ZERO | CARRIED | RANDOM
+    reg_zero_p: float = 0.0             # CARRIED only: before each execution the entry registers are reset to zero with this
+                                        # probability (NPE's SCHEDULE text: "ZERO applied with probability p, else CARRIED"),
+                                        # drawn from the per-run register RNG; 0.0 = plain CARRIED; omitted from to_dict() at 0.0
 
     @property
     def L(self) -> int:
@@ -102,7 +111,8 @@ class Config:
         return {"ldir": self.ldir, "undefined": self.undefined_op}
 
     def to_dict(self) -> dict:
-        return {k: getattr(self, k) for k in self.__dataclass_fields__}
+        return {k: getattr(self, k) for k in self.__dataclass_fields__
+                if not ((k == "reg_world" and self.reg_world == "ZERO") or (k == "reg_zero_p" and self.reg_zero_p == 0.0))}
 
 
 @dataclass
@@ -126,12 +136,21 @@ class Org:
     last_out: Optional[int] = None
     glineage: int = 0                 # GENETIC lineage: whose bytes this tape descends from (lineage = CAUSAL: who wrote it)
     res: int = 0                      # v3 copy resource (World ledger; not in VM memory; newborns start at 0)
+    regs: Optional[tuple] = None      # register-world axis: entry registers under CARRIED (None = all zero)
 
 
 class World:
     def __init__(self, cfg: Config, seed: int):
         self.cfg = cfg; self.seed = seed
         self.rng = random.Random(seed)
+        if cfg.reg_world not in ("ZERO", "CARRIED", "RANDOM"):
+            raise ValueError("unknown reg_world %r" % cfg.reg_world)
+        if cfg.reg_world != "ZERO" and cfg.layout != "SHARED":
+            raise ValueError("register-world axis: SHARED layout only")      # review tsk-c26c09590d3b fix 2 (was assert)
+        if cfg.reg_zero_p and (cfg.reg_world != "CARRIED" or not 0.0 < cfg.reg_zero_p < 1.0):
+            raise ValueError("reg_zero_p needs reg_world CARRIED and 0 < p < 1")
+        self._pre_regs = None
+        self.reg_rng = random.Random("reg_world|%d" % seed) if (cfg.reg_world == "RANDOM" or cfg.reg_zero_p) else None
         self.L = cfg.L
         n = cfg.cells
         self.cells: List[Optional[Org]] = [None] * n
@@ -329,6 +348,23 @@ class World:
         return changes
 
     # ---- execution ----------------------------------------------------------------------------------------------------
+    def _entry_regs(self, o: Org):
+        w = self.cfg.reg_world
+        if w == "ZERO":
+            return None
+        if w == "CARRIED":
+            if self.cfg.reg_zero_p and self.reg_rng.random() < self.cfg.reg_zero_p:
+                o.regs = None                              # the scaffold applied this time: the organism enters at zero
+            self._pre_regs = o.regs
+            return o.regs
+        r = self.reg_rng
+        self._pre_regs = tuple(r.randrange(256) for _ in range(6)) + (bool(r.getrandbits(1)), bool(r.getrandbits(1)))
+        return self._pre_regs
+
+    def _exit_regs(self, o: Org, tr) -> None:
+        if self.cfg.reg_world == "CARRIED":
+            o.regs = tr.regs_out
+
     def _execute(self, o: Org, partner_tape: Optional[bytearray], inputs: List[int]):
         cfg = self.cfg; L = self.L
         self._pre_tape = bytes(o.tape)
@@ -356,7 +392,9 @@ class World:
                 tr.opcodes[k] = tr.opcodes.get(k, 0) + v
             tr.writes.update(tr2.writes)
         else:
-            tr = vm.execute(mem, L, 0, cfg.budget, inputs, allow_copyall=cfg.allow_copyall, strict_budget=sb, **cfg.chem)
+            tr = vm.execute(mem, L, 0, cfg.budget, inputs, allow_copyall=cfg.allow_copyall, strict_budget=sb,
+                            regs=self._entry_regs(o), **cfg.chem)
+            self._exit_regs(o, tr)
         return mem, tr
 
     def _pair_execute(self, a: Org, b: Org, inputs: List[int]):
@@ -367,7 +405,9 @@ class World:
         self._pre_tape = bytes(a.tape)
         for k, v in enumerate(inputs[:16]):
             mem[vm.IN_BASE + k] = v
-        tr = vm.execute(mem, 2 * L, 0, cfg.budget, inputs, allow_copyall=cfg.allow_copyall, strict_budget=cfg.physics != "v1", prov_L=L, **cfg.chem)
+        tr = vm.execute(mem, 2 * L, 0, cfg.budget, inputs, allow_copyall=cfg.allow_copyall, strict_budget=cfg.physics != "v1", prov_L=L,
+                        regs=self._entry_regs(a), **cfg.chem)
+        self._exit_regs(a, tr)
         return mem, tr
 
     # ---- the tick ---------------------------------------------------------------------------------------------------------
@@ -535,6 +575,8 @@ class World:
         # roles/Bellerophon/forensics_2026-09-23/POST_CAMPAIGN_FORENSICS.md s3.1)
         self_copy, fid_pre = self._is_self_copy(child, parent, material, tr)
         c = self._spawn(j, child, parent.id, mechanism, lineage=parent.lineage, glineage=glin)     # fresh energy, no registers: nothing non-heritable travels
+        if self.cfg.reg_world == "CARRIED" and replaced is not None:
+            c.regs = replaced.regs                         # the overwritten occupant's registers stay in the cell (NPE CARRIED text)
         if self.cfg.physics == "v1" or material == "writer":            # v2 (C8): a capture birth credits no writer
             parent.replications += 1; parent.last_repro_tick = self.tick
             parent.fidelity_last = fidelity
@@ -563,6 +605,8 @@ class World:
             if self.first_self_replication is None:
                 self.first_self_replication = {"tick": self.tick, "id": parent.id, "tape": self._pre_tape.hex(), "mechanism": mechanism,
                                                "fidelity_pre": round(fid_pre, 3),
+                                               **({"entry_regs": list(self._pre_regs) if self._pre_regs else None}
+                                                  if self.cfg.reg_world != "ZERO" else {}),       # replayable origin (review)
                                                "seeded": parent.glineage in self.seed_lineages or parent.lineage in self.seed_lineages,
                                                "genealogy": self._genealogy(parent.id)}
         self.events.append({"tick": self.tick, "kind": "copy", "parent": parent.id, "child": c.id, "cell": j, "fidelity": round(fidelity, 3),
@@ -630,6 +674,8 @@ class World:
             if replaced is not None:
                 self.overwrite_deaths += 1
             c = self._spawn(j, child, parent.id, "EXTERNAL", lineage=parent.lineage, glineage=parent.glineage)
+            if cfg.reg_world == "CARRIED" and replaced is not None:
+                c.regs = replaced.regs                     # review tsk-c26c09590d3b fix 1: same rule as endogenous births
             parent.replications += 1; parent.last_repro_tick = self.tick
             if j in empties:
                 empties.remove(j)

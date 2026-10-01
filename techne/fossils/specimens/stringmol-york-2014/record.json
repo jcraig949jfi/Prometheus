@@ -1,0 +1,193 @@
+{
+  "schema": "techne.fossil.record/1",
+  "specimen_id": "stringmol-york-2014",
+  "canonical_name": "stringmol -- Automata Chemistry (README gives no paper title; technical report file smtr0.2.pdf is in the tree) (Simon Hickinbotham per source headers, with Adam Nellis, Ed Clark, Verena Fischer on some files; README contact sjh436@gmail.com; institution NOT_FOUND_AT_PIN in README (GitHub org uoy-research; src/DEVNOTES.md names the Plazzmid and EvoEvo projects and Susan Stepney); 2009-2015 per headers, repo 2014-2025)",
+  "aliases": [
+    "stringmol",
+    "Stringmol",
+    "STRINGMOL",
+    "TestSM (name printed in README usage text)",
+    "Spatial Stringmol",
+    "SMSp"
+  ],
+  "lineage": "README: 'brief instructions to install, compile and run stringmol version 0.2.2' and 'url https://github.com/franticspider/stringmol.git' (a different GitHub owner than the pinned uoy-research repo). src/DEVNOTES.md: 'It begain in the Plazzmid project ... 2 years further work during EvoEvo'; flavours 'Vanilla' (papers before 2016), 'RUTSAC' (with Adam Nellis for the stringmol web app), 'Spatial' (with Paulien Hogeweg for R-P evolution, actively under development), 'FPGA' (Matthew Rowlings/Martin Trezfer, external), 'RStringmol' (external). Trial type 1 'ALife XII' is called 'the grand-daddy stringmol program'. CGI.md describes a web API (bind/step/bucket) from Adam Nellis. Headers on microbial_ga.* credit Verena Fischer. || main loop (reader, from the code): Each timestep (stringPM::TimestepIncrement) drains the 'now' agent list by picking molecules at random, applying decay at decayrate, and -- while energy remains -- either trying to bind an unbound molecule to a random unbound partner with probability from a Smith-Waterman alignment against the substitution matrix (setting one as active executor and one as passive), or executing the active molecule's current opcode on the pair (search, move, copy-with-mutation, increment, toggle, if-label, cleave which releases a product into the population, or terminate), each executed step costing one unit of energy, then moving the molecules to the 'next' list which becomes 'now' for the following step.",
+  "domain": [
+    "artificial-chemistry",
+    "artificial-life",
+    "self-replication",
+    "string-rewriting"
+  ],
+  "era": "2010-2025",
+  "version": "github.com/uoy-research/stringmol dev @ 15dad84da126a4f887ba945c23a13e89e827f067 (committed 2025-01-17; 137 commits since 2014-09-23; 129 tracked files)",
+  "source_origin": {
+    "artifacts": [
+      {
+        "kind": "git",
+        "url": "https://github.com/uoy-research/stringmol",
+        "commit": "15dad84da126a4f887ba945c23a13e89e827f067",
+        "commit_resolved": "15dad84da126a4f887ba945c23a13e89e827f067",
+        "commit_date": "2025-01-17T16:06:01+00:00"
+      }
+    ]
+  },
+  "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+  "source_identity": {
+    "repo": "github.com/uoy-research/stringmol",
+    "branch": "dev",
+    "other_branches_or_versions": "Remote branches: dev (default), main, gh-pages, 10-remove-youshare, 23-doxygen-smspatial-call-stack, 46-re-start-rng-state. Tags: 0.2.3, 0.2.3.1, 0.2.3.2, 0.2.3.3, 0.2.3.4, 0.2.3.5, 0.2.4, 0.2.4.1. src/DEVNOTES.md has 'Tasks for release 0.2.3.6'. config/ holds spatial_stringmol_v1.0.1 ... v2.0.3.r4 .conf files."
+  },
+  "hashes": {
+    "tree_sha256": "783cd1df03734133c38d69de276f7eb2ea3f656ac07fef85d37c680250907d8b",
+    "n_files": 129,
+    "bytes": 5695846,
+    "artifacts": [
+      {
+        "filename": "https://github.com/uoy-research/stringmol",
+        "sha256": null,
+        "commit": "15dad84da126a4f887ba945c23a13e89e827f067"
+      }
+    ],
+    "body_location": "C:\\Prometheus\\vault\\fossils\\stringmol-york-2014",
+    "hash_list": "techne/fossils/specimens/stringmol-york-2014/UPSTREAM_HASHES.txt"
+  },
+  "license": {
+    "spdx": "GPL-2.0-only per LICENSE file text ('Version 2, June 1991'); source headers say 'GNU General Public License ... either version 3 of the License, or (at your option) any later version' (GPL-3.0-or-later) -- CONFLICT",
+    "status": "copyleft; preservation and research permitted; derivative distribution inherits the licence",
+    "evidence": "licence file LICENSE, first line 'GNU GENERAL PUBLIC LICENSE'; metadata field: NOT_FOUND_AT_PIN; LICENSE file is the verbatim GPL v2 text (340 lines) while every stringmol source header states GPL v3 or later. Third-party code with own terms: src/lodepng.cpp/.h 'Copyright (c) 2005-2016 Lode Vandevenne' (LodePNG version 20160501, zlib-style licence in file); src/mt19937-2.c 'Coded by Takuji Nishimura' under 'GNU Library General Public License ... version 2 ... or any later version'; tests/catch.hpp 'Catch v2.13.10' 'Copyright (c) 2022 Two Blue Cubes Ltd.' 'Distributed under the Boost Software License, Version 1.0'. Headers also request: 'When you use this, send an email to: sjh436@gmail.com with an appropriate reference to your work.'"
+  },
+  "acquisition_date": "2026-09-30",
+  "language": [
+    "C++",
+    "C",
+    "Bash",
+    "R (util/sp_ancestry.R, util/sp_community.R, src/file.R)"
+  ],
+  "build_system": "GNU make (src/Makefile: 'gcc -O3 -Wall -Wunused' for .c, 'g++ -O3 -Wall -Wunused -std=c++11' for .cpp; targets all/debug/web_api/clean; outputs ../release/stringmol or ../debug/stringmol); 'sh install' wrapper script; Eclipse CDT project files (.cproject/.project); .travis.yml (language: cpp, compiler: gcc); tests via RunAllTests.sh + Catch (tests/catch.hpp)",
+  "compiler_or_interpreter": "gcc/g++ with -std=c++11 (src/Makefile); README: 'Stringmol only builds in linux'",
+  "dependencies": [
+    "C standard library + libm (-lm) only; no external libraries declared",
+    "vendored: src/lodepng.cpp (PNG writing), src/mt19937-2.c (Mersenne Twister RNG), tests/catch.hpp (Catch v2.13.10)",
+    "#include <unistd.h> for getopt (POSIX)",
+    "optional dev tools: cppcheck (RunAllTests.sh, .travis.yml 'sudo apt-get install -qq cppcheck'), doxygen (src/Doxyfile, src/dox.sh)",
+    "SETUP FETCH: none in README/install/Makefile for building; .travis.yml CI does 'sudo apt-get update -qq' and 'sudo apt-get install -qq cppcheck'"
+  ],
+  "run_classification": "NOT_ATTEMPTED",
+  "test_classification": "NOT_ATTEMPTED",
+  "entry_points": [
+    "src/stringmol.cpp main (getopt -h; argv[1] = integer trial type dispatched by switch: 0 SmPm_1on1, 1 SmPm_AlifeXII, 2 SmPm_conpop, 3 origlife, 4 comass_GA, 5 joinsplists, 7 swdist, 8 comass_AlifeXII, 9 speigmonst, 30 run_stringmol_spatial, 34/35/36 spatial analysis, 44 comass_GA_boostwinners)",
+    "src/setupSM.cpp SmPm_AlifeXII (the 'grand-daddy' well-mixed container run: loads .conf, loops NTRIALS trials, each calling stringPM::TimestepIncrement per step and writing popdy/species/epoch files)",
+    "src/stringPM.cpp stringPM::TimestepIncrement (one timestep: repeatedly pick a random agent from the 'now' list, attempt decay, then if energy>0 either ReactionAttemptBind (unbound) or ReactionExecuteOpcode (bound pair), append to 'next' list)",
+    "src/stringPM.cpp stringPM::ReactionAttemptBind (picks a random unbound partner, aligns the two strings with AgentsAlign/Smith-Waterman, binds with probability bprob, sets active/passive roles, energy--)",
+    "src/stringPM.cpp stringPM::ReactionExecuteOpcode (switch on current opcode char: $ search, > move, = copy (mutation), + inc read, ^ toggle, ? if-label, % cleave, } terminate; default no-op)",
+    "src/opcodes.cpp OpcodeCopy (copy with indel/substitution mutation at indelrate/subrate when domut) and OpcodeCleave / OpcodeTerminate (product release, species registration in SMspp)",
+    "src/alignment.cpp SmithWaterman / SmithWatermanAlignment / ReactionCalculateBindProbability (string alignment against a substitution table .mtx to decide binding)",
+    "src/sm_spatial.cpp Stringmol_Spatial::Run (spatial variant on a GRIDX x GRIDY toroidal grid; loop while timestep<nsteps and molecules>0, saving PNG grids every IMAGEEVERY)"
+  ],
+  "example": {
+    "command": "mkdir test1; cd test1; ../src/stringmol   (README: prints usage). Smallest running trial per README: ../src/stringmol 1 ../../config/ALXII.conf ../../config/ALXII.mtx ; per RunAllTests.sh: ../release/stringmol 1 ../config/quick_test1.conf",
+    "input": "A .conf text file (e.g. config/quick_test1.conf: CELLRAD 2500, AGRAD 10, ENERGY 1600, NSTEPS 5000, MUTATE 0.002, REPORTEVERY 50, RANDSEED 1, and an AGENT line 'AGENT  WWGEWLHHHRLUEUWJJJRJXUUUDYGRHJLRWWRE$BLUBO^B>C$=?>$$BLUBO%}OYHOB 150 Q' giving a seed replicase string, count and label) plus an optional substitution matrix .mtx (config/ALXII.mtx, config/RANDOM.mtx, config/p0.mtx ...)",
+    "output": "Per README for trial type 2: alternating console lines of timestep/container ids and 'Count:' molecule totals, 'Printing species list' every 10000 steps. Per code (SmPm_AlifeXII): files <conf>.spatial.summary.dat ('Random seed is ...'), epochs.dat, popdy<proc><run>.dat; spatial runs write reload_<timestep>.conf and PNG grid images. README trial 10 shows a parameter dump 'BEFORE/AFTER loading the config'."
+  },
+  "environment": {
+    "runner": "native",
+    "note": "NOT RUN in this pass (nothing executed from the tree); host class from the reader draft: Linux with gcc/g++ and make (README: 'Stringmol only builds in linux'); any CPU"
+  },
+  "patches": [],
+  "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+  "upstream_docs": [
+    "smtr0.2.pdf (technical report file in tree root; README: 'see the technical report \"smtr0.2.pdf\" included in the same directory')",
+    "https://github.com/franticspider/stringmol.git (README 'url' section)",
+    "README refers to a paper file 'ALxii_dif.pdf' 'included in the tarball' -- NOT present in the tree",
+    "No DOI or arXiv id anywhere in the tree"
+  ],
+  "human_capability_summary": {
+    "built_to": "An 'Automata Chemistry': simulate containers (well-mixed, or spatial grids) of string molecules that bind by sequence alignment and execute each other as micro-programs (copy, cleave, search, move, toggle, if) so that replicase strings reproduce with mutation, and study the resulting species/population dynamics.",
+    "pressure": "NOT_FOUND_AT_PIN (README gives no motivation statement; src/DEVNOTES.md lists past themes: 'Particle metabolome', 'molecular microprograms', 'Diversity from a monoculture', 'reaction logic', 'Degeneracy enriches', 'conservation of matter', 'maximize adjacent possible', 'extinction in replicase models')",
+    "success_means": "NOT_FOUND_AT_PIN in README as a metric; the code records per-step molecule counts, species lists (SMspp), epochs and ancestry; README 'Issues' section lists repeatability, logging, zero-percent binds and SOFT_SEARCH as open problems"
+  },
+  "known_human_problem_solved": "An 'Automata Chemistry': simulate containers (well-mixed, or spatial grids) of string molecules that bind by sequence alignment and execute each other as micro-programs (copy, cleave, search, move, toggle, if) so that replicase strings reproduce with mutation, and study the resulting species/population dynamics.",
+  "hardware_assumptions": "",
+  "human_environmental_pressure": "",
+  "human_failure_condition": "",
+  "behavioral_entry_point": "src/stringPM.cpp:stringPM::ReactionExecuteOpcode (opcode semantics) and src/opcodes.cpp:OpcodeCopy (mutation rates indelrate/subrate); binding in src/stringPM.cpp:stringPM::ReactionAttemptBind + src/alignment.cpp:ReactionCalculateBindProbability; instruction/substitution table in config/*.mtx and src/alignment.cpp:default_table",
+  "observability": {
+    "EXECUTABLE": "unknown",
+    "OBSERVABLE": "unknown",
+    "ORACLE_BACKED": "unknown",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "unknown"
+  },
+  "lineage_relations": [],
+  "acquisition_tags": [
+    "operator-chat-2026-09-30-download-for-nyx",
+    "prior_art_raid",
+    "section-IV",
+    "TECHNE-132",
+    "reader-draft:READER_DRAFTS_2026-09-30/stringmol.json"
+  ],
+  "historical_disposition": {
+    "state": "UNKNOWN",
+    "failure_reasons": [],
+    "superseded_by": "",
+    "rival_of": "",
+    "evidence": []
+  },
+  "versions_preserved": [],
+  "receipts": [],
+  "nyx_handoff": {
+    "here_is_the_machine": "vault body <vault>/stringmol-york-2014 (host-local; `python -m techne.fossils.harvest rematerialize stringmol-york-2014` on a host without it) ; tracked techne/fossils/specimens/stringmol-york-2014",
+    "where_it_came_from": "https://github.com/uoy-research/stringmol ; ORIGINAL_AUTHORITATIVE_RELEASE ; commit 15dad84da126a4f887ba945c23a13e89e827f067 ; licence GPL-2.0-only per LICENSE file text ('Version 2, June 1991'); source headers say 'GNU General Public License ... either version 3 of the License, or (at your option) any later version' (GPL-3.0-or-later) -- CONFLICT",
+    "how_to_run_it": "not executed from this record (NOT_ATTEMPTED); upstream entry: mkdir test1; cd test1; ../src/stringmol   (README: prints usage). Smallest running trial per README: ../src/stringmol 1 ../../config/ALXII.conf ../../config/ALXII.mtx ; per RunAllTests.sh: ../release/stringmol 1 ../config/quick_test1.conf ; host class: Linux with gcc/g++ and make (README: 'Stringmol only builds in linux'); any CPU",
+    "how_we_know_it_runs": "we do not: no run receipt. The body is pinned (tree_sha256 783cd1df03734133, UPSTREAM_HASHES.txt) and verifies by hash; that is preservation, not execution",
+    "what_humans_used_it_for": "An 'Automata Chemistry': simulate containers (well-mixed, or spatial grids) of string molecules that bind by sequence alignment and execute each other as micro-programs (copy, cleave, search, move, toggle, if) so that replicase strings reproduce with mutation, and study the resulting species/population dynamics."
+  },
+  "seat": "Techne",
+  "runtime": {
+    "python_major": null,
+    "native_deps": [
+      "C/C++ toolchain (gcc, g++ -std=c++11, make)",
+      "POSIX (unistd.h getopt, bash scripts)",
+      "no GPU, no external libraries"
+    ],
+    "host_class": "Linux with gcc/g++ and make (README: 'Stringmol only builds in linux'); any CPU"
+  },
+  "reader_notes": {
+    "draft": "techne/acquisition/prior_art_raid/READER_DRAFTS_2026-09-30/stringmol.json",
+    "copyright_holders_by_header_count": {
+      "Simon Hickinbotham (2009-2012)": 24,
+      "Simon Hickinbotham, Adam Nellis, Ed Clark (2009-2015)": 3,
+      "Simon Hickinbotham (2009-2015)": 3,
+      "Lode Vandevenne (2005-2016)": 3,
+      "Two Blue Cubes Ltd (2017 and 2022, Catch)": 2,
+      "Catch2 Authors": 1,
+      "Verena Fischer and Simon Hickinbotham (2009-2012)": 1
+    },
+    "things_the_reader_could_not_verify": [
+      "Title/authors of the technical report smtr0.2.pdf (binary PDF not read)",
+      "Which GPL version governs: LICENSE file (v2) vs source headers (v3-or-later)",
+      "README references config files not present at pin: config/test_replicase.conf, config/test_1on1.conf, config/ALXII.conf; README usage text ('TestSM', 'Origlife (3)' etc.) differs from code's StringmolPrintTrialTypes (adds 30/33/34/35/36/44)",
+      "Trial type 33 is listed in README/RunAllTests.sh and printed by usage, but in main() case 33 is commented out and case 30 runs run_stringmol_spatial",
+      "Institution (only GitHub org 'uoy-research' and DEVNOTES mention of Susan Stepney; nothing explicit in README)",
+      "Whether tests/Makefile builds (its own comment: 'this Makefile doesn't work at the moment')",
+      "README.html is a pandoc render of some README; not compared line by line with README.md",
+      "Stray files in tree: TODO.md~, config/test1.conf~, output/.spatial.summary.dat (run artefact committed)"
+    ],
+    "has_gitmodules_at_pin": false,
+    "has_lfs_at_pin": false,
+    "approx_tree_bytes_at_pin": 5695846
+  },
+  "preservation": {
+    "status": "SELF_CONTAINED",
+    "body_status": "SELF_CONTAINED",
+    "recipe_status": "NO_RECIPE",
+    "submodules": [],
+    "submodules_missing": [],
+    "submodules_drifted": [],
+    "unpinned_artifacts": [],
+    "git_lfs": false,
+    "network_fetch_in_recipe": [],
+    "checked_utc": "2026-09-30T23:04:20Z",
+    "note": "status is the worse of body_status and the recipe axis; a matching tree hash alone never implies completeness."
+  }
+}

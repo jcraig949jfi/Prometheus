@@ -1,0 +1,145 @@
+{
+ "runs": {
+  "t1_balanced.json": {
+   "cpu_s": 117.75,
+   "wall_s": 121.8,
+   "threads": 1
+  },
+  "t1_controls.json": {
+   "cpu_s": 98.08,
+   "wall_s": 64.09,
+   "threads": 2
+  },
+  "t1_record_0of2.json": {
+   "cpu_s": 211.62,
+   "wall_s": 239.46,
+   "threads": 1
+  },
+  "t1_record_1of2.json": {
+   "cpu_s": 295.06,
+   "wall_s": 328.95,
+   "threads": 1
+  },
+  "t2_ALLX_a.json": {
+   "cpu_s": 88.53,
+   "wall_s": 93.76,
+   "threads": 1
+  },
+  "t2_ALLX_b.json": {
+   "cpu_s": 66.59,
+   "wall_s": 70.05,
+   "threads": 1
+  },
+  "t2_ALL_a.json": {
+   "cpu_s": 119.69,
+   "wall_s": 133.92,
+   "threads": 1
+  },
+  "t2_ALL_b.json": {
+   "cpu_s": 98.27,
+   "wall_s": 113.19,
+   "threads": 1
+  },
+  "t2_C1a.json": {
+   "cpu_s": 5.73,
+   "wall_s": 5.77,
+   "threads": 1
+  },
+  "t2_C1b.json": {
+   "cpu_s": 22.05,
+   "wall_s": 22.37,
+   "threads": 1
+  },
+  "t2_C1c.json": {
+   "cpu_s": 6.25,
+   "wall_s": 6.4,
+   "threads": 1
+  },
+  "t2_C2_E.json": {
+   "cpu_s": 61.44,
+   "wall_s": 62.25,
+   "threads": 1
+  },
+  "t2_C2_J.json": {
+   "cpu_s": 6.62,
+   "wall_s": 6.63,
+   "threads": 1
+  },
+  "t2_C2_LJ.json": {
+   "cpu_s": 16.28,
+   "wall_s": 17.49,
+   "threads": 1
+  },
+  "t2_C2_LJb.json": {
+   "cpu_s": 6.5,
+   "wall_s": 6.64,
+   "threads": 1
+  },
+  "t2_C2_LU.json": {
+   "cpu_s": 30.55,
+   "wall_s": 30.9,
+   "threads": 1
+  },
+  "t2_C2_LUJ.json": {
+   "cpu_s": 4.67,
+   "wall_s": 4.74,
+   "threads": 1
+  },
+  "t2_C2_UJ.json": {
+   "cpu_s": 12.0,
+   "wall_s": 12.02,
+   "threads": 1
+  },
+  "t2_E1.json": {
+   "cpu_s": 60.22,
+   "wall_s": 60.85,
+   "threads": 1
+  },
+  "t2_LOO.json": {
+   "cpu_s": 150.45,
+   "wall_s": 151.94,
+   "threads": 1
+  },
+  "t2_RC64_refresh.json": {
+   "cpu_s": 56.0,
+   "wall_s": 56.63,
+   "threads": 1
+  },
+  "t2_RC64_thin.json": {
+   "cpu_s": 3.44,
+   "wall_s": 3.49,
+   "threads": 1
+  },
+  "t2_RC_refresh.json": {
+   "cpu_s": 82.45,
+   "wall_s": 83.18,
+   "threads": 1
+  },
+  "t2_RC_thin.json": {
+   "cpu_s": 1.92,
+   "wall_s": 1.92,
+   "threads": 1
+  },
+  "t2_S1_a.json": {
+   "cpu_s": 179.8,
+   "wall_s": 185.85,
+   "threads": 1
+  },
+  "t2_S1_b.json": {
+   "cpu_s": 148.14,
+   "wall_s": 153.22,
+   "threads": 1
+  }
+ },
+ "timed_cpu_s": 1950.1,
+ "untimed_estimate_cpu_s": {
+  "profiling (2 threads, 4 runs)": 75,
+  "python+torch import overhead ~33 processes x ~3 s": 100,
+  "tabulation/analytic scripts": 5
+ },
+ "total_estimate_cpu_s": 2130.1,
+ "total_estimate_core_hours": 0.592,
+ "cap_core_hours": 0.6,
+ "threads": "1 per process (measured ~45% fewer CPU-s than 2 on the loaded host)",
+ "gpu": "none"
+}

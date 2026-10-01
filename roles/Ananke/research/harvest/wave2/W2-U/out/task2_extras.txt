@@ -1,0 +1,134 @@
+===== A0_plant
+delta
+     raw_all: r2 s8.26 {'16': 0.5474, '4': 0.5185, '8': 0.5287}
+     ceiling_itself: r1 s23.85 {'16': 0.9374, '4': 0.7008, '8': 0.8348}
+     raw_open(ceil>.55): r6 s4.26 {'16': 0.5503, '4': 0.5319, '8': 0.5381}
+     normalised_open(ceil>.55): r12 s2.49 {'16': 0.1087, '4': 0.0828, '8': 0.0845}
+lat_base
+     raw_all: r5 s7.09 {'1': 0.541, '2': 0.536, '4': 0.5164}
+     ceiling_itself: r3 s15.06 {'1': 0.8959, '2': 0.8299, '4': 0.7329}
+     raw_open(ceil>.55): r8 s3.97 {'1': 0.5456, '2': 0.5461, '4': 0.529}
+     normalised_open(ceil>.55): r6 s4.39 {'1': 0.1013, '2': 0.1082, '4': 0.0638}
+update_mode
+     raw_all: r9 s4.19 {'"async"': 0.5254, '"sync"': 0.5376}
+     ceiling_itself: r6 s6.82 {'"async"': 0.7915, '"sync"': 0.8542}
+     raw_open(ceil>.55): r7 s4.2 {'"async"': 0.5342, '"sync"': 0.5498}
+     normalised_open(ceil>.55): r11 s2.54 {'"async"': 0.0838, '"sync"': 0.1055}
+topology
+     raw_all: r4 s7.41 {'"global"': 0.5171, '"random"': 0.5311, '"ring"': 0.5504, '"smallworld"': 0.5278, '"torus"': 0.5317}
+     ceiling_itself: r4 s10.68 {'"global"': 0.9123, '"random"': 0.7638, '"ring"': 0.8349, '"smallworld"': 0.7599, '"torus"': 0.8223}
+     raw_open(ceil>.55): r3 s8.23 {'"global"': 0.5179, '"random"': 0.5487, '"ring"': 0.5661, '"smallworld"': 0.5441, '"torus"': 0.5427}
+     normalised_open(ceil>.55): r3 s8.1 {'"global"': 0.0376, '"random"': 0.1107, '"ring"': 0.1488, '"smallworld"': 0.1046, '"torus"': 0.0972}
+decay_shift
+     raw_all: r1 s9.58 {'0': 0.5586, '1': 0.5202, '3': 0.5252, '6': 0.5218}
+     ceiling_itself: r12 s1.96 {'0': 0.8254, '1': 0.8339, '3': 0.8179, '6': 0.8083}
+     raw_open(ceil>.55): r1 s10.26 {'0': 0.5769, '1': 0.5256, '3': 0.5333, '6': 0.5314}
+     normalised_open(ceil>.55): r1 s10.54 {'0': 0.1769, '1': 0.0559, '3': 0.0753, '6': 0.0703}
+economy
+     raw_all: r3 s7.85 {'"high"': 0.5144, '"low"': 0.5392, '"off"': 0.5428}
+     ceiling_itself: r9 s2.45 {'"high"': 0.8301, '"low"': 0.8033, '"off"': 0.831}
+     raw_open(ceil>.55): r2 s8.31 {'"high"': 0.5191, '"low"': 0.5529, '"off"': 0.5575}
+     normalised_open(ceil>.55): r2 s8.4 {'"high"': 0.0425, '"low"': 0.1192, '"off"': 0.1314}
+d
+     raw_all: r6 s6.92 {'1': 0.5461, '2': 0.5339, '3': 0.5268, '5': 0.5183}
+     ceiling_itself: r2 s17.98 {'1': 0.9126, '2': 0.8671, '3': 0.8098, '5': 0.6962}
+     raw_open(ceil>.55): r14 s2.28 {'1': 0.549, '2': 0.5397, '3': 0.5359, '5': 0.5397}
+     normalised_open(ceil>.55): r13 s2.43 {'1': 0.111, '2': 0.0921, '3': 0.079, '5': 0.0882}
+loss
+     raw_all: r7 s4.64 {'0.0': 0.5371, '0.1': 0.5401, '0.3': 0.5276, '0.6': 0.521}
+     ceiling_itself: r20 s1.4 {'0.0': 0.8273, '0.1': 0.8234, '0.3': 0.826, '0.6': 0.8089}
+     raw_open(ceil>.55): r5 s4.42 {'0.0': 0.5491, '0.1': 0.5522, '0.3': 0.5367, '0.6': 0.529}
+     normalised_open(ceil>.55): r7 s3.79 {'0.0': 0.112, '0.1': 0.1153, '0.3': 0.0808, '0.6': 0.0697}
+lat_hop
+     raw_all: r18 s1.85 {'0': 0.534, '1': 0.5287}
+     ceiling_itself: r5 s8.35 {'0': 0.8604, '1': 0.7848}
+     raw_open(ceil>.55): r30 s0.73 {'0': 0.5404, '1': 0.5431}
+     normalised_open(ceil>.55): r30 s0.59 {'0': 0.0919, '1': 0.0969}
+update_p
+     raw_all: r19 s1.8 {'0.5': 0.5339, '0.8': 0.5287}
+     ceiling_itself: r17 s1.72 {'0.5': 0.8133, '0.8': 0.8292}
+     raw_open(ceil>.55): r27 s0.89 {'0.5': 0.5432, '0.8': 0.54}
+     normalised_open(ceil>.55): r20 s1.52 {'0.5': 0.1004, '0.8': 0.0876}
+===== A1_heldacc
+delta
+     raw_all: r2 s5.01 {'16': 0.5176, '4': 0.504, '8': 0.4997}
+     ceiling_itself: r2 s4.97 {'16': 0.9141, '4': 0.7145, '8': 0.7863}
+     raw_open(ceil>.55): r2 s4.36 {'16': 0.5181, '4': 0.507, '8': 0.4998}
+     normalised_open(ceil>.55): r4 s3.42 {'16': 0.0381, '4': 0.0199, '8': -0.0023}
+lat_base
+     raw_all: r26 s0.84 {'1': 0.5116, '2': 0.5086, '4': 0.5074}
+     ceiling_itself: r10 s2.18 {'1': 0.8472, '2': 0.8553, '4': 0.7714}
+     raw_open(ceil>.55): r31 s0.46 {'1': 0.5133, '2': 0.5105, '4': 0.5108}
+     normalised_open(ceil>.55): r30 s0.51 {'1': 0.028, '2': 0.0272, '4': 0.0209}
+update_mode
+     raw_all: r20 s1.35 {'"async"': 0.5066, '"sync"': 0.5119}
+     ceiling_itself: r20 s1.41 {'"async"': 0.8429, '"sync"': 0.7964}
+     raw_open(ceil>.55): r13 s1.89 {'"async"': 0.5076, '"sync"': 0.5172}
+     normalised_open(ceil>.55): r10 s1.98 {'"async"': 0.0157, '"sync"': 0.0389}
+topology
+     raw_all: r1 s5.46 {'"global"': 0.5002, '"random"': 0.5025, '"ring"': 0.5318, '"smallworld"': 0.5068, '"torus"': 0.5076}
+     ceiling_itself: r12 s2.05 {'"global"': 0.8906, '"random"': 0.7939, '"ring"': 0.859, '"smallworld"': 0.786, '"torus"': 0.8167}
+     raw_open(ceil>.55): r1 s5.52 {'"global"': 0.5002, '"random"': 0.5034, '"ring"': 0.5382, '"smallworld"': 0.5104, '"torus"': 0.5085}
+     normalised_open(ceil>.55): r1 s5.75 {'"global"': -0.0039, '"random"': 0.0085, '"ring"': 0.0873, '"smallworld"': 0.0234, '"torus"': 0.0162}
+decay_shift
+     raw_all: r4 s3.23 {'0': 0.5181, '1': 0.5036, '3': 0.5047, '6': 0.5047}
+     ceiling_itself: r13 s2.03 {'0': 0.8426, '1': 0.7516, '3': 0.8278, '6': 0.851}
+     raw_open(ceil>.55): r6 s3.16 {'0': 0.5215, '1': 0.5044, '3': 0.5072, '6': 0.5053}
+     normalised_open(ceil>.55): r6 s2.55 {'0': 0.044, '1': 0.0116, '3': 0.0145, '6': 0.015}
+economy
+     raw_all: r6 s2.85 {'"high"': 0.504, '"low"': 0.5064, '"off"': 0.5179}
+     ceiling_itself: r29 s0.61 {'"high"': 0.8242, '"low"': 0.8304, '"off"': 0.8058}
+     raw_open(ceil>.55): r5 s3.59 {'"high"': 0.5047, '"low"': 0.5064, '"off"': 0.5276}
+     normalised_open(ceil>.55): r5 s2.84 {'"high"': 0.0112, '"low"': 0.0186, '"off"': 0.0528}
+d
+     raw_all: r16 s1.76 {'1': 0.5164, '2': 0.5074, '3': 0.507, '5': 0.5065}
+     ceiling_itself: r4 s3.48 {'1': 0.8683, '2': 0.8343, '3': 0.8409, '5': 0.7064}
+     raw_open(ceil>.55): r19 s1.46 {'1': 0.5194, '2': 0.509, '3': 0.5082, '5': 0.5108}
+     normalised_open(ceil>.55): r24 s1.16 {'1': 0.0377, '2': 0.0265, '3': 0.0175, '5': 0.0185}
+loss
+     raw_all: r9 s2.13 {'0.0': 0.5161, '0.1': 0.5073, '0.3': 0.5043, '0.6': 0.5087}
+     ceiling_itself: r17 s1.89 {'0.0': 0.8204, '0.1': 0.7858, '0.3': 0.7914, '0.6': 0.8734}
+     raw_open(ceil>.55): r8 s2.19 {'0.0': 0.5205, '0.1': 0.5111, '0.3': 0.5053, '0.6': 0.5096}
+     normalised_open(ceil>.55): r18 s1.58 {'0.0': 0.0418, '0.1': 0.0249, '0.3': 0.0161, '0.6': 0.0193}
+lat_hop
+     raw_all: r32 s0.42 {'0': 0.5082, '1': 0.5098}
+     ceiling_itself: r1 s5.01 {'0': 0.9073, '1': 0.7675}
+     raw_open(ceil>.55): r20 s1.41 {'0': 0.5082, '1': 0.515}
+     normalised_open(ceil>.55): r17 s1.72 {'0': 0.0157, '1': 0.0348}
+update_p
+     raw_all: r23 s1.07 {'0.5': 0.5111, '0.8': 0.5069}
+     ceiling_itself: r24 s1.2 {'0.5': 0.8023, '0.8': 0.8417}
+     raw_open(ceil>.55): r28 s0.86 {'0.5': 0.5135, '0.8': 0.5093}
+     normalised_open(ceil>.55): r26 s1.12 {'0.5': 0.031, '0.8': 0.0186}
+viable (plant>=.75) / open(ceil>.55) / all, by level
+delta {'16': '14/309/328 meanceil 0.937', '4': '2/186/351 meanceil 0.701', '8': '3/246/321 meanceil 0.835'}
+lat_base {'1': '10/321/361 meanceil 0.896', '2': '7/236/306 meanceil 0.830', '4': '2/184/333 meanceil 0.733'}
+update_mode {'async': '8/387/523 meanceil 0.791', 'sync': '11/354/477 meanceil 0.854'}
+decay_shift {'0': '19/184/245 meanceil 0.825', '1': '0/198/255 meanceil 0.834', '3': '0/183/250 meanceil 0.818', '6': '0/176/250 meanceil 0.808'}
+economy {'high': '0/278/364 meanceil 0.830', 'low': '9/236/335 meanceil 0.803', 'off': '10/227/301 meanceil 0.831'}
+loss {'0.0': '8/188/251 meanceil 0.827', '0.1': '9/175/235 meanceil 0.823', '0.3': '2/197/261 meanceil 0.826', '0.6': '0/181/253 meanceil 0.809'}
+topology {'global': '3/207/220 meanceil 0.912', 'random': '4/123/198 meanceil 0.764', 'ring': '8/147/193 meanceil 0.835', 'smallworld': '1/113/185 meanceil 0.760', 'torus': '3/151/204 meanceil 0.822'}
+d {'1': '3/225/242 meanceil 0.913', '2': '5/227/262 meanceil 0.867', '3': '6/175/247 meanceil 0.810', '5': '5/114/249 meanceil 0.696'}
+viable / eligible(ceil_exact>=.80) by level  [viability needs plant>=.75, so ceiling>=.75 is necessary]
+delta {'16': '14/306', '4': '2/144', '8': '3/231'}
+lat_base {'1': '10/312', '2': '7/209', '4': '2/160'}
+update_mode {'async': '8/358', 'sync': '11/323'}
+d {'1': '3/215', '2': '5/202', '3': '6/161', '5': '5/103'}
+topology {'global': '3/193', 'random': '4/112', 'ring': '8/139', 'smallworld': '1/102', 'torus': '3/135'}
+decay_shift {'0': '19/172', '1': '0/180', '3': '0/169', '6': '0/160'}
+economy {'high': '0/255', 'low': '9/214', 'off': '10/212'}
+loss {'0.0': '8/177', '0.1': '9/160', '0.3': '2/179', '0.6': '0/165'}
+eligible 681 viable 19 min ceil among viable 0.84375
+delta 16 [[14, 292], [5, 370]] fisher p=0.0170
+  unconditioned [[14, 314], [5, 667]] fisher p=0.0003
+lat_base 1 [[10, 302], [9, 360]] fisher p=0.6426
+  unconditioned [[10, 351], [9, 630]] fisher p=0.1501
+RELAY A0 L2 cells: 7
+77bff1cb contrast_pos 0.031 ceil_exact 1.000 big 1.000 plant 0.525
+4ac66a01 contrast_pos 0.031 ceil_exact 1.000 big 1.000 plant 0.523
+a6bd533d contrast_pos 0.047 ceil_exact 1.000 big 1.000 plant 0.518
+db9e16af contrast_pos 0.031 ceil_exact 1.000 big 1.000 plant 0.576
+2d25ebef contrast_pos 0.047 ceil_exact 0.625 big 0.625 plant 0.490
+57e793cd contrast_pos 0.031 ceil_exact 1.000 big 1.000 plant 0.536
+3352c977 contrast_pos 0.031 ceil_exact 1.000 big 1.000 plant 0.560
+frac_contrast_pos>0 cells: 33 of which big ceiling<=.55: 3 base rate ceil<=.55: 0.259

@@ -1,0 +1,78 @@
+{
+  "specimen_id": "aevol",
+  "url": "https://gitlab.inria.fr/aevol/aevol.git",
+  "commit": "bea4a252d592e525677f1306aaa9fe604e14c5d3",
+  "commit_date": "2026-06-09T13:33:09+02:00",
+  "default_branch": "aevol-9",
+  "n_tracked_files": 393,
+  "n_commits": 5099,
+  "first_commit_date": "2010-12-13T17:04:17+00:00",
+  "has_gitmodules": false,
+  "has_lfs": false,
+  "approx_tree_bytes": 2303379,
+  "canonical_name": "Aevol -- An in silico experimental evolution platform (Original authors: Guillaume Beslon, Carole Knibbe, David P. Parsons, per AUTHORS; institution not named in README -- source strings say 'Copyright (C) 2009  LIRIS.' and hosting is gitlab.inria.fr; git history 2010-2026, CMake project version 9.4.0)",
+  "aliases": ["aevol", "Aevol", "aevol_2b / aevol_4b / aevol_eukaryote_2b (build flavors)", "RAevol (mentioned in ChangeLog 8.0)"],
+  "license": {
+    "file": "COPYING",
+    "first_line": "GNU GENERAL PUBLIC LICENSE",
+    "spdx_guess": "GPL-3.0-only (COPYING text; see notes)",
+    "metadata_license_field": "NOT_FOUND_AT_PIN",
+    "notes": "COPYING is the verbatim GPLv3 text ('Version 3, 29 June 2007'). However 227 source headers under src/ say 'either version 2 of the License, or (at your option) any later version' (GPL-2.0-or-later), and 0 headers say version 3; doc/user_guide/0_introduction.tex says 'either version 3 of the License, or (at your option) any later version' (GPL-3.0-or-later). Bundled third party: src/libaevol/SFMT-src-1.4 (SIMD-oriented Fast Mersenne Twister) with its own LICENSE.txt, 'Copyright (c) 2006,2007 Mutsuo Saito, Makoto Matsumoto and Hiroshima University' (BSD-style); AUTHORS says SFMT is 'considered a separate package, not part of Aevol proper'. Also a Mersenne Twister header 'Copyright (C) 2000 - 2003, Richard J. Wagner' / 'Copyright (C) 1997 - 2002, Makoto Matsumoto and Takuji Nishimura' with BSD redistribution clauses. No README licence badge."
+  },
+  "copyright_holders_by_header_count": {
+    "// Copyright: See the AUTHORS file provided with the package or <www.aevol.fr>": 238,
+    "printf(\"Copyright (C) 2009  LIRIS.\\n\");": 10,
+    "Mutsuo Saito, Makoto Matsumoto and Hiroshima University (SFMT, 2006/2007/2012 variants)": 8,
+    "Richard J. Wagner (2000-2003)": 1,
+    "Makoto Matsumoto and Takuji Nishimura (1997-2002)": 1
+  },
+  "language": ["C++ (C++20 per CMakeLists.txt; CMAKE_CXX_STANDARD 20)", "C (SFMT)", "Python (src/misc helper scripts)", "LaTeX (doc/user_guide)", "CMake"],
+  "build_system": "CMake >= 3.11 (top-level CMakeLists.txt, project(aevol VERSION 9.4.0 LANGUAGES C CXX)); out-of-source build in build/; builds flavors aevol_create_{2b,4b,eukaryote_2b} and aevol_run_{2b,4b,eukaryote_2b} plus post_treatments; tests via ctest and googletest (EXCLUDE_FROM_ALL)",
+  "interpreter_or_compiler": "C++20 compiler: GCC >= 13 (>= 14 on Apple) or Clang >= 19; AppleClang rejected by CMakeLists.txt",
+  "dependencies": [
+    "cmake >= 3.11 (CMakeLists.txt)",
+    "ZLIB (find_package(ZLIB REQUIRED))",
+    "OpenMP (find_package(OpenMP REQUIRED) when with-omp=ON, default ON)",
+    "nlohmann/json v3.12.0 via FetchContent URL https://github.com/nlohmann/json/releases/download/v3.12.0/json.tar.xz, SHA256 pinned 42f6e95cad6ec532fd372391373363b62a14af6d771056dbfc86160e6dfff7aa",
+    "googletest via FetchContent GIT_REPOSITORY https://github.com/google/googletest.git GIT_TAG v1.14.0 (tests only, test/gtest/CMakeLists.txt; tag-pinned, not hash-pinned)",
+    "SFMT-src-1.4 (vendored in src/libaevol/SFMT-src-1.4)",
+    "README Debian packages: build-essential cmake zlib1g-dev libboost-dev libx11-dev libboost-filesystem1.67-dev (README list; boost/X11 not referenced by top-level CMakeLists.txt at pin -- possibly stale)"
+  ],
+  "network_fetches_in_setup": [
+    "cmake configure: FetchContent download of https://github.com/nlohmann/json/releases/download/v3.12.0/json.tar.xz (hash-pinned)",
+    "cmake configure of tests: git clone https://github.com/google/googletest.git at tag v1.14.0",
+    "sudo apt install build-essential cmake zlib1g-dev libboost-dev libx11-dev libboost-filesystem1.67-dev (README)",
+    "Mac: CMakeLists.txt runs `brew --prefix llvm` to locate a compiler (local command, no fetch)"
+  ],
+  "entry_points": [
+    "src/aevol_create.cpp main (reads a param.in file and writes a generation-0 checkpoint: setup file, fasta population, checkpoint file, last_gener.txt)",
+    "src/aevol_run.cpp main (parses --begin/--end/--parallel etc., EvolutionRunner::make_from_checkpoint(t0), then run_evolution(t_end, selection_pressure))",
+    "src/libaevol/orchestration/EvolutionRunner.cpp EvolutionRunner::run_evolution / run_a_step (the generation loop, OpenMP parallel region)",
+    "src/libaevol/population/selection/Selection_Asexual.cpp global_selection / local_selection (fitness-proportionate choice of reproducers, global or per-grid-cell neighbourhood)",
+    "src/libaevol/biochemistry/mutations/mutators/{Prokaryote,Eukaryote}IndividualMutator.cpp generate_mutations (draw point mutations, small indels, duplications, deletions, translocations, inversions from per-cell PRNG)",
+    "src/libaevol/biochemistry/Dna.cpp do_switch / do_small_insertion / do_small_deletion / do_duplication / do_inversion / do_deletion (apply mutations to the circular binary genome)",
+    "src/libaevol/population/Individual.cpp locate_promoters / do_trancription / translate_protein / compute_phenotype / compute_metabolic_error / compute_fitness (genotype-to-phenotype decoding and fitness against a fuzzy phenotypic target)",
+    "src/post_treatments/{lineage,ancestor_stats,mutagenesis,replicative_robustness,extract_genomes}.cpp (analysis tools built when with-post-treatments=ON)"
+  ],
+  "example_command": "cd examples/basic && ../../build/bin/aevol_create && ../../build/bin/aevol_run   (top-level README; examples/basic/README.md instead gives `aevol_2b_create param.in` then `aevol_2b_run --begin 0 --end 1000 --parallel -1`; src/CMakeLists.txt actually names the binaries aevol_create_2b / aevol_run_2b)",
+  "example_input": "examples/basic/param.in: CHROMOSOME_INITIAL_LENGTH 5000, SEED 7250909, GRID_SIZE 32 32, SELECTION_SCOPE local 3 3, SELECTION_SCHEME fitness_proportionate 1000, all mutation/rearrangement rates 1e-6, three ENV_ADD_GAUSSIAN target components, CHECKPOINT_STEP 1000, RECORD_TREE ON 1000, STATS_BEST ON 100, STATS_POP ON 100",
+  "example_output": "checkpoint/ directory (setup file, fasta population, checkpoint file) plus last_gener.txt; stats/stats_best.csv and stats/stats_means.csv; CLI prints 'Best individual's fitness' every cli_output_frequency generations (examples/basic/README.md, EvolutionRunner.cpp)",
+  "runtime_native_deps": ["C++20 toolchain (GCC>=13 / Clang>=19)", "OpenMP runtime", "zlib", "nlohmann/json (header-only, fetched at configure)", "SFMT (vendored)", "no GPU, no Python runtime required for the simulator"],
+  "host_class": "Linux or macOS CPU host with a recent C++20 compiler, CMake, zlib, OpenMP; multi-core recommended (--parallel); Debian package list given in README",
+  "upstream_docs": ["www.aevol.fr (README, doc/README.txt)", "http://www.aevol.fr/ (source headers)", "https://aevol.fr/doc/install (CMakeLists.txt)", "http://aevol.fr/download/ (doc/user_guide/1_installation.tex)", "http://lists.gforge.liris.cnrs.fr/mailman/listinfo/aevol-users (doc/user_guide/0_introduction.tex)", "no arXiv id, DOI, or CITATION file found at pin"],
+  "built_to": "Aevol is an in silico experimental evolution platform: a digital genetics model in which populations of digital organisms undergo selection and variation, creating a Darwinian dynamics, so that one can study experimentally the impact of selection and variation parameters on the structure of evolved organisms (README).",
+  "pressure": "The README motivates it by the need to study experimentally how selection (population size, environment, environmental variation) and variation (mutation and rearrangement rates, types of rearrangements, horizontal transfer) shape genome structure (number of genes, synteny, proportion of coding sequences), which requires a precise and realistic model of the genome.",
+  "success_means": "The README does not state a success metric; the code and examples/basic/README.md measure per-generation fitness of the best individual and population means (stats_best.csv, stats_means.csv), with fitness derived from the metabolic error between an individual's fuzzy phenotype and the phenotypic target (Individual::compute_metabolic_error / compute_fitness).",
+  "main_loop_one_sentence": "EvolutionRunner::run_evolution loops generation by generation inside one OpenMP parallel region: run_a_step advances AeTime, chooses a reproducer for every grid cell by fitness-proportionate selection (global or local 3x3 neighbourhood), draws mutations per offspring with the cell's PRNG, applies them to the DNA (clones of unmutated parents are reused), re-decodes and re-evaluates mutants (promoters -> RNAs -> proteins -> fuzzy phenotype -> metabolic error -> fitness), records the phylogenetic tree, replaces the population with the new generation and updates the best individual; every checkpoint_frequency generations a checkpoint (and optionally the tree) is written.",
+  "behavioral_entry_point": "src/libaevol/orchestration/EvolutionRunner.cpp:run_a_step (generation step); src/libaevol/population/selection/Selection_Asexual.cpp:global_selection/local_selection (selection); src/libaevol/biochemistry/mutations/mutators/ProkaryoteIndividualMutator.cpp:generate_mutations (variation); src/libaevol/population/Individual.cpp:compute_fitness (fitness)",
+  "lineage_notes": "README names no predecessor. AUTHORS lists 'Original authors: Guillaume Beslon, Carole Knibbe, David P. Parsons' and major/other contributors. ChangeLog has entries 'New in 8.0' (MPI support, RAevol, discrete fuzzy) and 'New in 4.4'; CMake project version is 9.4.0. AUTHORS notes SFMT is distributed with Aevol but is a separate package. Legacy autotools remnants remain (doc/Makefile.am, SFMT Makefile.am; user guide still describes ./configure).",
+  "other_branches_or_versions": "Remote branches: aevol-7, aevol-9 (HEAD), aevol-9.4.0, aevol_7_to_merge, rob_by_mut. Tags: 9.1, 9.2, 9.3.0, 9.4.0, v9.1, aevol_6_alpha, v4.3, v4.4, v4.4.3, v5.0, v5.0-beta1..beta8, v5.0-beta8-tarball, mpi_optim_ldna, mpi_optim_no_ldna_tag, mpi_vanilla_ldna, mpi_vanilla_no_ldna.",
+  "things_i_could_not_verify": [
+    "Which licence version governs: COPYING (GPLv3 text) vs 227 source headers (GPL-2.0-or-later) vs user guide (GPL-3.0-or-later)",
+    "Institution/affiliation: only 'LIRIS' (2009 printf strings) and Inria GitLab hosting are in the tree; no CITATION file, DOI, or paper reference at pin",
+    "Whether the README's Debian dependency list (boost, libx11) is still needed; top-level CMakeLists.txt at pin does not find_package Boost or X11",
+    "Whether README's `aevol_create` / `aevol_run` command names match built binaries (src/CMakeLists.txt produces aevol_create_2b etc.; examples/basic/README.md says aevol_2b_create) -- not executed",
+    "Behaviour of `git status`-based version string (CMakeScripts/aevol_version.cmake) and any build; nothing was compiled or run",
+    "Content of the full documentation, which README says is not included and lives at www.aevol.fr"
+  ]
+}

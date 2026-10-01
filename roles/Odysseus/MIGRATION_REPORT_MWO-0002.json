@@ -1,0 +1,173 @@
+{
+ "schema": "prometheus.migration_report.v1",
+ "seat": "Odysseus",
+ "mwo_id": "MWO-0002",
+ "mwo_commit": "89512068ff07f0bab6953a36313d550167340722",
+ "reported_at_utc": "2026-09-29T07:26:30Z",
+ "branch": "odysseus/fabric-v0-2026-09-28 (pushed to main)",
+ "head_sha": "78a9694d36bcef50696c2e1a37c511cb26f3cd7f",
+ "bootstrap_independence": {
+  "answer": "CONDITIONAL",
+  "conditions": [
+   "a Claude session for the seat must be running; the self-paced /loop keeps it alive, but if the session ends a person or a supervisor must start one",
+   "until this commit the seat's cold-boot document (roles/Odysseus/WAKE.md, 2026-09-25) did not mention the MWO loop; it does now. The shared roles/base-role boot documents (WAKE_DIRECTIVE.md, RESPONSIBILITIES.md) still do not"
+  ],
+  "how_mwo_0001_was_found": "operator_prompt",
+  "how_mwo_0002_was_found": "own_loop_fetch",
+  "evidence": [
+   "roles/Odysseus/WAKE.md at this report's commit",
+   "comms #961 (publication broadcast, received in the same loop tick that saw the CURRENT.md hash change)"
+  ],
+  "note": "MWO-0001 arrived in a per-seat operator prompt. MWO-0002 was detected by the seat's own s8 loop (sha256 check of origin/main:ops/work_orders/CURRENT.md at the 07:24Z tick)."
+ },
+ "criteria": {
+  "C1_adopted_mwo_0001": {
+   "status": "YES",
+   "evidence": [
+    "roles/Odysseus/WORK_STATE.json@60f2ea1f3 (mwo_commit 7e4c09f2c)",
+    "roles/Odysseus/WORK_STATE.json@c11aeeeba"
+   ],
+   "note": "The blob sha256 007054ad... was verified from origin/main before adoption, and on every loop tick after."
+  },
+  "C2_discovers_next_mwo_unprompted": {
+   "status": "YES",
+   "evidence": [
+    "comms #961",
+    "roles/Odysseus/WORK_STATE.json at this commit (mwo_commit 89512068f, mwo_sha256 6f5a6a8b...)"
+   ],
+   "note": "Found by the own-loop fetch plus the one publication broadcast; no per-seat prompt. The blob was verified against PUBLICATIONS.md with git show origin/main:<path> | sha256sum."
+  },
+  "C3_work_state_useful": {
+   "status": "YES",
+   "evidence": [
+    "roles/Odysseus/WORK_STATE.json at this commit"
+   ],
+   "note": "Core fields filled, plus extras mwo_sha256, comms_cursor and migration_report."
+  },
+  "C4_identifies_authorized_work": {
+   "status": "YES",
+   "evidence": [
+    "ops/work_orders/archive/MWO-0001_2026-09-28.md s10 ODYSSEUS (carried by MWO-0002 s6)",
+    "roles/Odysseus/fabric_pilot/d2_audit/v6/VERDICT.md",
+    "roles/Odysseus/fabric_pilot/s3/S3_PROTOCOL.md"
+   ],
+   "note": "Fabric principal under the freeze; D2 auditor of record; S3 ready for principal Artemis."
+  },
+  "C5_checks_comms_correctly": {
+   "status": "YES",
+   "evidence": [
+    "comms #921/#939/#944/#954/#959 (pointers to Git verdicts)",
+    "WORK_STATE comms_cursor 961"
+   ],
+   "note": "The inbox is checked from the last-seen id at each tick; no ACKs or idle broadcasts. Verdicts live in Git; comms only points to them. One correction was posted (#922) after a shell quoting error. Before this commit the cursor was not persisted in WORK_STATE."
+  },
+  "C6_uses_fabric_where_appropriate": {
+   "status": "YES",
+   "evidence": [
+    "thr-fabric-s2: 18 Tasks (roles/Odysseus/fabric_pilot/s2/TASKS.json)",
+    "D2 re-audits v2-v6 adjudicated from Fabric artifacts, e.g. tsk-76beeeeab3ae, tsk-8dd16e12e036",
+    "fabric/pilot/evidence/P2-crosshost.json"
+   ],
+   "note": "Portable execution goes through Fabric. Odysseus executes no D2 code itself."
+  },
+  "C7_uses_common_hierarchy": {
+   "status": "PARTIAL",
+   "evidence": [
+    "roles/Odysseus/WORK_STATE.json threads (object form)"
+   ],
+   "note": "Attempt/Task/Thread ids are kept distinct in the verdicts, but the Fabric thread labels (thr-d2-firewall-audit, thr-fabric-s2, thr-s3) and the adoption campaign are not registered under ops/threads or ops/campaigns."
+  },
+  "C8_uses_canonical_leases": {
+   "status": "NOT_APPLICABLE",
+   "evidence": [
+    "fabric/lease_compat.py@8370083ae (the seat implemented the cutover)"
+   ],
+   "note": "The seat made no new substantial resource claims this cycle."
+  },
+  "C9_distinguishes_gates_from_routine": {
+   "status": "YES",
+   "evidence": [
+    "hard_gates_current below",
+    "roles/Odysseus/WORK_STATE.json blocked_on"
+   ],
+   "note": "Waiting on Nestor's D2 repairs is routine (a blocker, not a gate). The stops listed as gates name MWO-0001 s6/s7 or MWO-0002 s8 operator decisions."
+  }
+ },
+ "hard_gates_current": [
+  {
+   "gate": "MWO-0001 s6 + s7.5 (privileged host changes); MWO-0002 s9",
+   "item": "promexec stays EXPERIMENTAL / UNVERIFIED / NOT ENABLED: no matrix runs, no host changes",
+   "evidence": [
+    "fabric/promexec/STATUS_EXPERIMENTAL.md"
+   ]
+  },
+  {
+   "gate": "MWO-0002 s8 operator decision (host/session action)",
+   "item": "S3 principal session: Artemis on ubu001 in its own worktree",
+   "evidence": [
+    "comms #936",
+    "roles/Odysseus/fabric_pilot/s3/S3_PROTOCOL.md"
+   ]
+  },
+  {
+   "gate": "MWO-0002 s8 operator decision; custody contract prometheus/cosmos/c3_holdout_D2/AUDIT_BRIEF.md",
+   "item": "D2 root of trust for protocol records (#925) and branch protection on main; no PASS record is possible while S1 is open",
+   "evidence": [
+    "roles/Odysseus/fabric_pilot/d2_audit/v6/VERDICT.md"
+   ]
+  }
+ ],
+ "migration_blockers": [
+  {
+   "what": "the shared base-role boot documents do not mention the MWO loop, so a cold start of any seat relies on its own WAKE/STATUS being current",
+   "kind": "policy",
+   "evidence": [
+    "roles/base-role/WAKE_DIRECTIVE.md",
+    "roles/base-role/RESPONSIBILITIES.md"
+   ]
+  },
+  {
+   "what": "no Windows Fabric worker: SKULLPORT host-local Tasks are unclaimable, and Windows-only D2 checks cannot be settled on Fabric",
+   "kind": "fabric",
+   "evidence": [
+    "roles/Odysseus/fabric_pilot/DEFECTS.md#DEF-ODY-012",
+    "tsk-c4317a3656d0"
+   ]
+  },
+  {
+   "what": "Fabric Tasks read base_sha from origin, so custody-withheld inputs cannot be used without publishing them",
+   "kind": "custody",
+   "evidence": [
+    "roles/Odysseus/fabric_pilot/DEFECTS.md#DEF-ODY-013"
+   ]
+  }
+ ],
+ "legacy_conventions_still_used": [
+  {
+   "convention": "legacy ARC3 host-file lease DETECTION in fabric/store.py (migration surface only; acquisition is retired)",
+   "why": "old helper copies may still run until Nestor and Archaeon confirm the merge of 8370083ae (Ananke confirmed, #934)",
+   "retire_plan": "seat"
+  },
+  {
+   "convention": "STATUS.md / TODO.md narrative files",
+   "why": "kept as narrative; WORK_STATE is the fleet pointer (MWO-0001 s9)",
+   "retire_plan": "none"
+  },
+  {
+   "convention": "seat WAKE.md predating the MWO model",
+   "why": "fixed at this commit",
+   "retire_plan": "seat"
+  }
+ ],
+ "identifier_check": {
+  "thread_ids_unresolved": [
+   "thr-d2-firewall-audit",
+   "thr-fabric-s2",
+   "thr-s3"
+  ],
+  "campaign_ids_unresolved": [
+   "Fabric adoption experiment (no id)"
+  ],
+  "note": "thr-5c716f1f61da (TH-006) resolves (ops/tools/thread_check.py ops/threads: threads=17 migrated=17 failures=0). The stale ops/README.md banner was not consulted and did not shape this seat's work."
+ }
+}

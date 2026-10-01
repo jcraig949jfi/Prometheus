@@ -1,0 +1,150 @@
+{
+ "clauses": [
+  {
+   "id": "A1",
+   "threshold": 0.5,
+   "positive_value": 0.09271523178807947,
+   "twin_value": 0.8555781966377993,
+   "attainable": true,
+   "discriminating": true
+  },
+  {
+   "id": "A2",
+   "threshold": 0.8,
+   "positive_value": 0.1319318593693367,
+   "twin_value": 1.217470097861544,
+   "attainable": true,
+   "discriminating": true
+  }
+ ],
+ "cheat_detected": true,
+ "cheat_detail": {
+  "cheat_meets_all_alt_clauses": true,
+  "cheat_flagged_by_error_floor": true,
+  "positive_control_flagged_by_floor": false,
+  "null_twin_flagged_by_floor": false
+ },
+ "eligible": true,
+ "arm_totals": {
+  "CONTROL_REF": {
+   "errors": 3926,
+   "unsat_events": 2250,
+   "deleted": 17824,
+   "valid_deleted": 15786,
+   "unsat_touching_last_switched": 757
+  },
+  "CHANNEL_RESET": {
+   "errors": 2759,
+   "unsat_events": 1642,
+   "deleted": 14840,
+   "valid_deleted": 12447,
+   "unsat_touching_last_switched": 593
+  },
+  "POSITIVE_CONTROL": {
+   "errors": 364,
+   "unsat_events": 996,
+   "deleted": 2769,
+   "valid_deleted": 0,
+   "unsat_touching_last_switched": 446
+  },
+  "NULL_TWIN": {
+   "errors": 3359,
+   "unsat_events": 2536,
+   "deleted": 16806,
+   "valid_deleted": 14436,
+   "unsat_touching_last_switched": 1205
+  },
+  "CHEAT": {
+   "errors": 0,
+   "unsat_events": 2536,
+   "deleted": 16806,
+   "valid_deleted": 0,
+   "unsat_touching_last_switched": 1205
+  }
+ },
+ "errors_per_seed": {
+  "CONTROL_REF": [
+   421,
+   384,
+   393,
+   411,
+   430,
+   363,
+   387,
+   396,
+   361,
+   380
+  ],
+  "CHANNEL_RESET": [
+   297,
+   280,
+   275,
+   290,
+   282,
+   253,
+   268,
+   280,
+   259,
+   275
+  ],
+  "POSITIVE_CONTROL": [
+   35,
+   38,
+   35,
+   36,
+   37,
+   40,
+   38,
+   35,
+   35,
+   35
+  ],
+  "NULL_TWIN": [
+   357,
+   372,
+   321,
+   369,
+   361,
+   331,
+   318,
+   322,
+   322,
+   286
+  ],
+  "CHEAT": [
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0
+  ]
+ },
+ "control_cpu_seconds": 2.125,
+ "seeds": [
+  100,
+  101,
+  102,
+  103,
+  104,
+  105,
+  106,
+  107,
+  108,
+  109
+ ],
+ "params": {
+  "world": "ALT_relational",
+  "K": 8,
+  "V": 8,
+  "W": 32,
+  "EPS": 0.03,
+  "STEPS": 2400,
+  "SWITCH_EVERY": 80
+ },
+ "written_before_any_alt_treatment_code": true
+}

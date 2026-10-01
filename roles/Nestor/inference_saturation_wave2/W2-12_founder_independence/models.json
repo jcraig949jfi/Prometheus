@@ -1,0 +1,1312 @@
+{
+ "n_rows": 1134,
+ "blocks": [
+  "c_atomic",
+  "c_critical_mass",
+  "c_norecomb_confirm",
+  "c_runaway_confirm",
+  "x_atomic",
+  "x_critical_mass",
+  "x_decay",
+  "x_dose_curve",
+  "x_h2_norecomb",
+  "x_sterile",
+  "x_ticket"
+ ],
+ "dose_blocks": [
+  "c_critical_mass",
+  "x_critical_mass",
+  "x_dose_curve"
+ ],
+ "plugin": {
+  "d5_pool630_k4": {
+   "pool_n": 630,
+   "p1": 0.1079,
+   "k": 4,
+   "obs": 98,
+   "n": 208,
+   "exp": 76.28,
+   "upper_tail_p": 0.0013
+  },
+  "d5_pool798_k4": {
+   "pool_n": 798,
+   "p1": 0.1115,
+   "k": 4,
+   "obs": 98,
+   "n": 208,
+   "exp": 78.39,
+   "upper_tail_p": 0.00342
+  },
+  "d5_pool798_k2": {
+   "pool_n": 798,
+   "p1": 0.1115,
+   "k": 2,
+   "obs": 20,
+   "n": 64,
+   "exp": 13.48,
+   "upper_tail_p": 0.03681
+  },
+  "d5_pool798_k8": {
+   "pool_n": 798,
+   "p1": 0.1115,
+   "k": 8,
+   "obs": 44,
+   "n": 64,
+   "exp": 39.15,
+   "upper_tail_p": 0.13166
+  },
+  "d20_pool630_k4": {
+   "pool_n": 630,
+   "p1": 0.0349,
+   "k": 4,
+   "obs": 34,
+   "n": 208,
+   "exp": 27.57,
+   "upper_tail_p": 0.1144
+  },
+  "d20_pool798_k4": {
+   "pool_n": 798,
+   "p1": 0.0338,
+   "k": 4,
+   "obs": 34,
+   "n": 208,
+   "exp": 26.75,
+   "upper_tail_p": 0.08434
+  },
+  "d5_dose_blocks_k1_only_k4": {
+   "pool_n": 208,
+   "p1": 0.0913,
+   "k": 4,
+   "obs": 98,
+   "n": 208,
+   "exp": 66.21,
+   "upper_tail_p": 0.0
+  }
+ },
+ "d5": {
+  "endpoint": "depth>=5",
+  "cells": {
+   "c_atomic|k1": [
+    9,
+    80
+   ],
+   "c_critical_mass|k1": [
+    5,
+    80
+   ],
+   "c_critical_mass|k4": [
+    41,
+    80
+   ],
+   "c_norecomb_confirm|k1": [
+    5,
+    24
+   ],
+   "c_runaway_confirm|k1": [
+    20,
+    150
+   ],
+   "x_atomic|k1": [
+    7,
+    64
+   ],
+   "x_critical_mass|k1": [
+    8,
+    64
+   ],
+   "x_critical_mass|k4": [
+    32,
+    64
+   ],
+   "x_decay|k1": [
+    6,
+    64
+   ],
+   "x_dose_curve|k1": [
+    6,
+    64
+   ],
+   "x_dose_curve|k2": [
+    20,
+    64
+   ],
+   "x_dose_curve|k4": [
+    25,
+    64
+   ],
+   "x_dose_curve|k8": [
+    44,
+    64
+   ],
+   "x_h2_norecomb|k1": [
+    3,
+    16
+   ],
+   "x_sterile|k1": [
+    10,
+    64
+   ],
+   "x_ticket|k1": [
+    10,
+    128
+   ]
+  },
+  "fits": {
+   "A": {
+    "ll": -505.2722,
+    "npar": 1,
+    "aic": 1012.544
+   },
+   "A2": {
+    "ll": -503.8763,
+    "npar": 2,
+    "aic": 1011.753
+   },
+   "B_FE": {
+    "ll": -501.3445,
+    "npar": 11,
+    "aic": 1024.689
+   },
+   "C_FE": {
+    "ll": -500.2042,
+    "npar": 12,
+    "aic": 1024.408
+   },
+   "C_PW": {
+    "ll": -500.8883,
+    "npar": 12,
+    "aic": 1025.777
+   },
+   "B_RE": {
+    "ll": -505.2722,
+    "npar": 2,
+    "aic": 1014.544
+   },
+   "C_RE": {
+    "ll": -503.8763,
+    "npar": 3,
+    "aic": 1013.753
+   },
+   "B_BB": {
+    "ll": -505.0474,
+    "npar": 2,
+    "aic": 1014.095
+   },
+   "C_BB": {
+    "ll": -503.631,
+    "npar": 3,
+    "aic": 1013.262
+   },
+   "SAT": {
+    "ll": -496.7111,
+    "npar": 16,
+    "aic": 1025.422
+   }
+  },
+  "beta_hat": {
+   "A2": 1.1326,
+   "C_FE": 1.1844,
+   "C_RE": 1.1326,
+   "C_BB": 1.1247
+  },
+  "pairwise_g_hat": 0.00996,
+  "pairwise_lambda_mean": 0.14359,
+  "re_sd_cloglog": {
+   "B_RE": 0.0,
+   "C_RE": 0.0
+  },
+  "bb_p1": {
+   "mean": 0.1309,
+   "u+v": 62335.64,
+   "sd": 0.0014
+  },
+  "p1_fixed_by_block": {
+   "c_atomic": 0.1125,
+   "c_critical_mass": 0.139,
+   "c_norecomb_confirm": 0.2083,
+   "c_runaway_confirm": 0.1333,
+   "x_atomic": 0.1094,
+   "x_critical_mass": 0.1506,
+   "x_decay": 0.0938,
+   "x_dose_curve": 0.1317,
+   "x_h2_norecomb": 0.1875,
+   "x_sterile": 0.1563,
+   "x_ticket": 0.0781
+  },
+  "p1_A": 0.1315,
+  "lrt": {
+   "A_vs_SAT (one p1, independence, every cell)": {
+    "G": 17.122,
+    "df": 15,
+    "p": 0.31161
+   },
+   "A_vs_B_FE (batch heterogeneity of p1, beta=1)": {
+    "G": 7.856,
+    "df": 10,
+    "p": 0.64294
+   },
+   "A_vs_A2 (superadditivity with pooled p1)": {
+    "G": 2.792,
+    "df": 1,
+    "p": 0.09474
+   },
+   "B_FE_vs_C_FE (superadditivity given block p1)": {
+    "G": 2.28,
+    "df": 1,
+    "p": 0.13101
+   },
+   "B_FE_vs_C_PW (pairwise term given block p1)": {
+    "G": 0.912,
+    "df": 1,
+    "p": 0.33953
+   },
+   "C_FE_vs_SAT (residual lack of fit after beta)": {
+    "G": 6.986,
+    "df": 4,
+    "p": 0.13662
+   },
+   "B_FE_vs_SAT (independence with block p1)": {
+    "G": 9.267,
+    "df": 5,
+    "p": 0.09889
+   },
+   "A_vs_B_RE (RE variance, boundary 50:50)": {
+    "G": 0.0,
+    "df": 1,
+    "p": 1.0
+   },
+   "B_RE_vs_C_RE (superadditivity given RE)": {
+    "G": 2.792,
+    "df": 1,
+    "p": 0.09474
+   },
+   "B_BB_vs_C_BB (superadditivity given Beta p1)": {
+    "G": 2.833,
+    "df": 1,
+    "p": 0.09236
+   }
+  },
+  "beta_ci95_profile": {
+   "A2": [
+    0.977,
+    1.289
+   ],
+   "C_FE": [
+    0.947,
+    1.436
+   ]
+  },
+  "per_dose_block": {
+   "c_critical_mass": {
+    "arms(k,x,n)": [
+     [
+      1,
+      5,
+      80
+     ],
+     [
+      4,
+      41,
+      80
+     ]
+    ],
+    "p1_joint": 0.139,
+    "beta_hat": 1.738,
+    "lrt_indep_vs_sat": {
+     "G": 6.013,
+     "df": 1,
+     "p": 0.0142
+    },
+    "expected_under_own_joint_p1": {
+     "1": 11.12,
+     "4": 36.04
+    }
+   },
+   "x_critical_mass": {
+    "arms(k,x,n)": [
+     [
+      1,
+      8,
+      64
+     ],
+     [
+      4,
+      32,
+      64
+     ]
+    ],
+    "p1_joint": 0.1506,
+    "beta_hat": 1.188,
+    "lrt_indep_vs_sat": {
+     "G": 0.453,
+     "df": 1,
+     "p": 0.50106
+    },
+    "expected_under_own_joint_p1": {
+     "1": 9.64,
+     "4": 30.69
+    }
+   },
+   "x_dose_curve": {
+    "arms(k,x,n)": [
+     [
+      1,
+      6,
+      64
+     ],
+     [
+      2,
+      20,
+      64
+     ],
+     [
+      4,
+      25,
+      64
+     ],
+     [
+      8,
+      44,
+      64
+     ]
+    ],
+    "p1_joint": 0.1317,
+    "beta_hat": 1.024,
+    "lrt_indep_vs_sat": {
+     "G": 2.801,
+     "df": 3,
+     "p": 0.42331
+    },
+    "expected_under_own_joint_p1": {
+     "1": 8.43,
+     "2": 15.74,
+     "4": 27.62,
+     "8": 43.32
+    }
+   }
+  },
+  "cv_lobo": {
+   "A": {
+    "marg": -505.784,
+    "cond": -225.032,
+    "per_block": {
+     "c_atomic": {
+      "marg": -28.28,
+      "cond": null
+     },
+     "c_critical_mass": {
+      "marg": -77.254,
+      "cond": -56.614
+     },
+     "c_norecomb_confirm": {
+      "marg": -12.839,
+      "cond": null
+     },
+     "c_runaway_confirm": {
+      "marg": -58.904,
+      "cond": null
+     },
+     "x_atomic": {
+      "marg": -22.247,
+      "cond": null
+     },
+     "x_critical_mass": {
+      "marg": -69.251,
+      "cond": -45.135
+     },
+     "x_decay": {
+      "marg": -20.378,
+      "cond": null
+     },
+     "x_dose_curve": {
+      "marg": -143.63,
+      "cond": -123.283
+     },
+     "x_h2_norecomb": {
+      "marg": -7.923,
+      "cond": null
+     },
+     "x_sterile": {
+      "marg": -27.914,
+      "cond": null
+     },
+     "x_ticket": {
+      "marg": -37.164,
+      "cond": null
+     }
+    }
+   },
+   "A2": {
+    "marg": -508.898,
+    "cond": -228.96,
+    "per_block": {
+     "c_atomic": {
+      "marg": -28.15,
+      "cond": null
+     },
+     "c_critical_mass": {
+      "marg": -76.523,
+      "cond": -56.25
+     },
+     "c_norecomb_confirm": {
+      "marg": -13.131,
+      "cond": null
+     },
+     "c_runaway_confirm": {
+      "marg": -59.15,
+      "cond": null
+     },
+     "x_atomic": {
+      "marg": -22.119,
+      "cond": null
+     },
+     "x_critical_mass": {
+      "marg": -68.91,
+      "cond": -44.774
+     },
+     "x_decay": {
+      "marg": -20.13,
+      "cond": null
+     },
+     "x_dose_curve": {
+      "marg": -147.974,
+      "cond": -127.936
+     },
+     "x_h2_norecomb": {
+      "marg": -8.06,
+      "cond": null
+     },
+     "x_sterile": {
+      "marg": -28.232,
+      "cond": null
+     },
+     "x_ticket": {
+      "marg": -36.52,
+      "cond": null
+     }
+    }
+   },
+   "B_RE": {
+    "marg": -505.784,
+    "cond": -225.032,
+    "per_block": {
+     "c_atomic": {
+      "marg": -28.28,
+      "cond": null
+     },
+     "c_critical_mass": {
+      "marg": -77.254,
+      "cond": -56.614
+     },
+     "c_norecomb_confirm": {
+      "marg": -12.839,
+      "cond": null
+     },
+     "c_runaway_confirm": {
+      "marg": -58.904,
+      "cond": null
+     },
+     "x_atomic": {
+      "marg": -22.247,
+      "cond": null
+     },
+     "x_critical_mass": {
+      "marg": -69.251,
+      "cond": -45.135
+     },
+     "x_decay": {
+      "marg": -20.378,
+      "cond": null
+     },
+     "x_dose_curve": {
+      "marg": -143.63,
+      "cond": -123.283
+     },
+     "x_h2_norecomb": {
+      "marg": -7.923,
+      "cond": null
+     },
+     "x_sterile": {
+      "marg": -27.914,
+      "cond": null
+     },
+     "x_ticket": {
+      "marg": -37.164,
+      "cond": null
+     }
+    }
+   },
+   "C_RE": {
+    "marg": -508.898,
+    "cond": -228.96,
+    "per_block": {
+     "c_atomic": {
+      "marg": -28.15,
+      "cond": null
+     },
+     "c_critical_mass": {
+      "marg": -76.523,
+      "cond": -56.25
+     },
+     "c_norecomb_confirm": {
+      "marg": -13.131,
+      "cond": null
+     },
+     "c_runaway_confirm": {
+      "marg": -59.15,
+      "cond": null
+     },
+     "x_atomic": {
+      "marg": -22.119,
+      "cond": null
+     },
+     "x_critical_mass": {
+      "marg": -68.91,
+      "cond": -44.774
+     },
+     "x_decay": {
+      "marg": -20.13,
+      "cond": null
+     },
+     "x_dose_curve": {
+      "marg": -147.974,
+      "cond": -127.936
+     },
+     "x_h2_norecomb": {
+      "marg": -8.06,
+      "cond": null
+     },
+     "x_sterile": {
+      "marg": -28.232,
+      "cond": null
+     },
+     "x_ticket": {
+      "marg": -36.52,
+      "cond": null
+     }
+    }
+   },
+   "B_FE_plugin": {
+    "cond": -245.07,
+    "per_block": {
+     "c_critical_mass": {
+      "cond": -70.769,
+      "beta_train": 1.0
+     },
+     "x_critical_mass": {
+      "cond": -45.327,
+      "beta_train": 1.0
+     },
+     "x_dose_curve": {
+      "cond": -128.975,
+      "beta_train": 1.0
+     }
+    }
+   },
+   "C_FE_plugin": {
+    "cond": -245.15,
+    "per_block": {
+     "c_critical_mass": {
+      "cond": -68.558,
+      "beta_train": 1.063
+     },
+     "x_critical_mass": {
+      "cond": -44.362,
+      "beta_train": 1.184
+     },
+     "x_dose_curve": {
+      "cond": -132.23,
+      "beta_train": 1.45
+     }
+    }
+   }
+  }
+ },
+ "d20": {
+  "endpoint": "depth>=20",
+  "cells": {
+   "c_atomic|k1": [
+    1,
+    80
+   ],
+   "c_critical_mass|k1": [
+    2,
+    80
+   ],
+   "c_critical_mass|k4": [
+    15,
+    80
+   ],
+   "c_norecomb_confirm|k1": [
+    1,
+    24
+   ],
+   "c_runaway_confirm|k1": [
+    7,
+    150
+   ],
+   "x_atomic|k1": [
+    3,
+    64
+   ],
+   "x_critical_mass|k1": [
+    0,
+    64
+   ],
+   "x_critical_mass|k4": [
+    9,
+    64
+   ],
+   "x_decay|k1": [
+    2,
+    64
+   ],
+   "x_dose_curve|k1": [
+    1,
+    64
+   ],
+   "x_dose_curve|k2": [
+    7,
+    64
+   ],
+   "x_dose_curve|k4": [
+    10,
+    64
+   ],
+   "x_dose_curve|k8": [
+    18,
+    64
+   ],
+   "x_h2_norecomb|k1": [
+    1,
+    16
+   ],
+   "x_sterile|k1": [
+    5,
+    64
+   ],
+   "x_ticket|k1": [
+    4,
+    128
+   ]
+  },
+  "fits": {
+   "A": {
+    "ll": -271.6504,
+    "npar": 1,
+    "aic": 545.301
+   },
+   "A2": {
+    "ll": -271.3659,
+    "npar": 2,
+    "aic": 546.732
+   },
+   "B_FE": {
+    "ll": -268.5767,
+    "npar": 11,
+    "aic": 559.153
+   },
+   "C_FE": {
+    "ll": -267.8572,
+    "npar": 12,
+    "aic": 559.714
+   },
+   "C_PW": {
+    "ll": -268.278,
+    "npar": 12,
+    "aic": 560.556
+   },
+   "B_RE": {
+    "ll": -271.6504,
+    "npar": 2,
+    "aic": 547.301
+   },
+   "C_RE": {
+    "ll": -271.3659,
+    "npar": 3,
+    "aic": 548.732
+   },
+   "B_BB": {
+    "ll": -271.6614,
+    "npar": 2,
+    "aic": 547.323
+   },
+   "C_BB": {
+    "ll": -271.3779,
+    "npar": 3,
+    "aic": 548.756
+   },
+   "SAT": {
+    "ll": -264.8712,
+    "npar": 16,
+    "aic": 561.742
+   }
+  },
+  "beta_hat": {
+   "A2": 1.0996,
+   "C_FE": 1.2616,
+   "C_RE": 1.0996,
+   "C_BB": 1.0996
+  },
+  "pairwise_g_hat": 0.00402,
+  "pairwise_lambda_mean": 0.0417,
+  "re_sd_cloglog": {
+   "B_RE": 0.0,
+   "C_RE": 0.0
+  },
+  "bb_p1": {
+   "mean": 0.0307,
+   "u+v": 81359.88,
+   "sd": 0.0006
+  },
+  "p1_fixed_by_block": {
+   "c_atomic": 0.0125,
+   "c_critical_mass": 0.0451,
+   "c_norecomb_confirm": 0.0417,
+   "c_runaway_confirm": 0.0467,
+   "x_atomic": 0.0469,
+   "x_critical_mass": 0.0294,
+   "x_decay": 0.0313,
+   "x_dose_curve": 0.0412,
+   "x_h2_norecomb": 0.0625,
+   "x_sterile": 0.0781,
+   "x_ticket": 0.0312
+  },
+  "p1_A": 0.0401,
+  "lrt": {
+   "A_vs_SAT (one p1, independence, every cell)": {
+    "G": 13.558,
+    "df": 15,
+    "p": 0.55925
+   },
+   "A_vs_B_FE (batch heterogeneity of p1, beta=1)": {
+    "G": 6.147,
+    "df": 10,
+    "p": 0.80273
+   },
+   "A_vs_A2 (superadditivity with pooled p1)": {
+    "G": 0.569,
+    "df": 1,
+    "p": 0.45067
+   },
+   "B_FE_vs_C_FE (superadditivity given block p1)": {
+    "G": 1.439,
+    "df": 1,
+    "p": 0.23031
+   },
+   "B_FE_vs_C_PW (pairwise term given block p1)": {
+    "G": 0.597,
+    "df": 1,
+    "p": 0.43958
+   },
+   "C_FE_vs_SAT (residual lack of fit after beta)": {
+    "G": 5.972,
+    "df": 4,
+    "p": 0.20125
+   },
+   "B_FE_vs_SAT (independence with block p1)": {
+    "G": 7.411,
+    "df": 5,
+    "p": 0.19182
+   },
+   "A_vs_B_RE (RE variance, boundary 50:50)": {
+    "G": 0.0,
+    "df": 1,
+    "p": 1.0
+   },
+   "B_RE_vs_C_RE (superadditivity given RE)": {
+    "G": 0.569,
+    "df": 1,
+    "p": 0.45067
+   },
+   "B_BB_vs_C_BB (superadditivity given Beta p1)": {
+    "G": 0.567,
+    "df": 1,
+    "p": 0.45147
+   }
+  },
+  "beta_ci95_profile": {
+   "A2": [
+    0.841,
+    1.362
+   ],
+   "C_FE": [
+    0.843,
+    1.734
+   ]
+  },
+  "per_dose_block": {
+   "c_critical_mass": {
+    "arms(k,x,n)": [
+     [
+      1,
+      2,
+      80
+     ],
+     [
+      4,
+      15,
+      80
+     ]
+    ],
+    "p1_joint": 0.0451,
+    "beta_hat": 1.518,
+    "lrt_indep_vs_sat": {
+     "G": 1.089,
+     "df": 1,
+     "p": 0.29678
+    },
+    "expected_under_own_joint_p1": {
+     "1": 3.61,
+     "4": 13.49
+    }
+   },
+   "x_critical_mass": {
+    "arms(k,x,n)": [
+     [
+      1,
+      0,
+      64
+     ],
+     [
+      4,
+      9,
+      64
+     ]
+    ],
+    "p1_joint": 0.0294,
+    "beta_hat": 20.328,
+    "lrt_indep_vs_sat": {
+     "G": 4.293,
+     "df": 1,
+     "p": 0.03826
+    },
+    "expected_under_own_joint_p1": {
+     "1": 1.88,
+     "4": 7.2
+    }
+   },
+   "x_dose_curve": {
+    "arms(k,x,n)": [
+     [
+      1,
+      1,
+      64
+     ],
+     [
+      2,
+      7,
+      64
+     ],
+     [
+      4,
+      10,
+      64
+     ],
+     [
+      8,
+      18,
+      64
+     ]
+    ],
+    "p1_joint": 0.0412,
+    "beta_hat": 1.049,
+    "lrt_indep_vs_sat": {
+     "G": 2.029,
+     "df": 3,
+     "p": 0.5664
+    },
+    "expected_under_own_joint_p1": {
+     "1": 2.64,
+     "2": 5.16,
+     "4": 9.91,
+     "8": 18.29
+    }
+   }
+  },
+  "cv_lobo": {
+   "A": {
+    "marg": -272.074,
+    "cond": -153.452,
+    "per_block": {
+     "c_atomic": {
+      "marg": -6.509,
+      "cond": null
+     },
+     "c_critical_mass": {
+      "marg": -48.684,
+      "cond": -39.094
+     },
+     "c_norecomb_confirm": {
+      "marg": -4.158,
+      "cond": null
+     },
+     "c_runaway_confirm": {
+      "marg": -28.382,
+      "cond": null
+     },
+     "x_atomic": {
+      "marg": -12.149,
+      "cond": null
+     },
+     "x_critical_mass": {
+      "marg": -28.793,
+      "cond": -26.058
+     },
+     "x_decay": {
+      "marg": -8.974,
+      "cond": null
+     },
+     "x_dose_curve": {
+      "marg": -94.062,
+      "cond": -88.3
+     },
+     "x_h2_norecomb": {
+      "marg": -3.832,
+      "cond": null
+     },
+     "x_sterile": {
+      "marg": -18.576,
+      "cond": null
+     },
+     "x_ticket": {
+      "marg": -17.956,
+      "cond": null
+     }
+    }
+   },
+   "A2": {
+    "marg": -272.583,
+    "cond": -153.823,
+    "per_block": {
+     "c_atomic": {
+      "marg": -6.367,
+      "cond": null
+     },
+     "c_critical_mass": {
+      "marg": -48.535,
+      "cond": -39.007
+     },
+     "c_norecomb_confirm": {
+      "marg": -4.167,
+      "cond": null
+     },
+     "c_runaway_confirm": {
+      "marg": -28.602,
+      "cond": null
+     },
+     "x_atomic": {
+      "marg": -12.219,
+      "cond": null
+     },
+     "x_critical_mass": {
+      "marg": -28.663,
+      "cond": -26.092
+     },
+     "x_decay": {
+      "marg": -8.928,
+      "cond": null
+     },
+     "x_dose_curve": {
+      "marg": -94.337,
+      "cond": -88.725
+     },
+     "x_h2_norecomb": {
+      "marg": -3.876,
+      "cond": null
+     },
+     "x_sterile": {
+      "marg": -19.024,
+      "cond": null
+     },
+     "x_ticket": {
+      "marg": -17.866,
+      "cond": null
+     }
+    }
+   },
+   "B_RE": {
+    "marg": -272.074,
+    "cond": -153.452,
+    "per_block": {
+     "c_atomic": {
+      "marg": -6.509,
+      "cond": null
+     },
+     "c_critical_mass": {
+      "marg": -48.684,
+      "cond": -39.094
+     },
+     "c_norecomb_confirm": {
+      "marg": -4.158,
+      "cond": null
+     },
+     "c_runaway_confirm": {
+      "marg": -28.382,
+      "cond": null
+     },
+     "x_atomic": {
+      "marg": -12.149,
+      "cond": null
+     },
+     "x_critical_mass": {
+      "marg": -28.793,
+      "cond": -26.058
+     },
+     "x_decay": {
+      "marg": -8.974,
+      "cond": null
+     },
+     "x_dose_curve": {
+      "marg": -94.062,
+      "cond": -88.3
+     },
+     "x_h2_norecomb": {
+      "marg": -3.832,
+      "cond": null
+     },
+     "x_sterile": {
+      "marg": -18.576,
+      "cond": null
+     },
+     "x_ticket": {
+      "marg": -17.956,
+      "cond": null
+     }
+    }
+   },
+   "C_RE": {
+    "marg": -272.583,
+    "cond": -153.823,
+    "per_block": {
+     "c_atomic": {
+      "marg": -6.367,
+      "cond": null
+     },
+     "c_critical_mass": {
+      "marg": -48.535,
+      "cond": -39.007
+     },
+     "c_norecomb_confirm": {
+      "marg": -4.167,
+      "cond": null
+     },
+     "c_runaway_confirm": {
+      "marg": -28.602,
+      "cond": null
+     },
+     "x_atomic": {
+      "marg": -12.219,
+      "cond": null
+     },
+     "x_critical_mass": {
+      "marg": -28.663,
+      "cond": -26.092
+     },
+     "x_decay": {
+      "marg": -8.928,
+      "cond": null
+     },
+     "x_dose_curve": {
+      "marg": -94.337,
+      "cond": -88.725
+     },
+     "x_h2_norecomb": {
+      "marg": -3.876,
+      "cond": null
+     },
+     "x_sterile": {
+      "marg": -19.024,
+      "cond": null
+     },
+     "x_ticket": {
+      "marg": -17.866,
+      "cond": null
+     }
+    }
+   },
+   "B_FE_plugin": {
+    "cond": -193.29,
+    "per_block": {
+     "c_critical_mass": {
+      "cond": -41.685,
+      "beta_train": 1.0
+     },
+     "x_critical_mass": {
+      "cond": -49.927,
+      "beta_train": 1.0
+     },
+     "x_dose_curve": {
+      "cond": -101.678,
+      "beta_train": 1.0
+     }
+    }
+   },
+   "C_FE_plugin": {
+    "cond": -185.199,
+    "per_block": {
+     "c_critical_mass": {
+      "cond": -39.882,
+      "beta_train": 1.198
+     },
+     "x_critical_mass": {
+      "cond": -48.078,
+      "beta_train": 1.153
+     },
+     "x_dose_curve": {
+      "cond": -97.239,
+      "beta_train": 1.853
+     }
+    }
+   }
+  }
+ },
+ "d5_pool630_only": {
+  "A_vs_SAT (one p1, independence, every cell)": {
+   "G": 15.483,
+   "df": 12,
+   "p": 0.2161
+  },
+  "A_vs_B_FE (batch heterogeneity of p1, beta=1)": {
+   "G": 6.216,
+   "df": 7,
+   "p": 0.51477
+  },
+  "A_vs_A2 (superadditivity with pooled p1)": {
+   "G": 2.827,
+   "df": 1,
+   "p": 0.09266
+  },
+  "B_FE_vs_C_FE (superadditivity given block p1)": {
+   "G": 2.28,
+   "df": 1,
+   "p": 0.13101
+  },
+  "B_FE_vs_C_PW (pairwise term given block p1)": {
+   "G": 0.912,
+   "df": 1,
+   "p": 0.33953
+  },
+  "C_FE_vs_SAT (residual lack of fit after beta)": {
+   "G": 6.986,
+   "df": 4,
+   "p": 0.13662
+  },
+  "B_FE_vs_SAT (independence with block p1)": {
+   "G": 9.267,
+   "df": 5,
+   "p": 0.09889
+  }
+ },
+ "d20_pool630_only": {
+  "A_vs_SAT (one p1, independence, every cell)": {
+   "G": 11.301,
+   "df": 12,
+   "p": 0.50329
+  },
+  "A_vs_B_FE (batch heterogeneity of p1, beta=1)": {
+   "G": 3.89,
+   "df": 7,
+   "p": 0.79233
+  },
+  "A_vs_A2 (superadditivity with pooled p1)": {
+   "G": 0.289,
+   "df": 1,
+   "p": 0.59108
+  },
+  "B_FE_vs_C_FE (superadditivity given block p1)": {
+   "G": 1.439,
+   "df": 1,
+   "p": 0.23031
+  },
+  "B_FE_vs_C_PW (pairwise term given block p1)": {
+   "G": 0.597,
+   "df": 1,
+   "p": 0.43958
+  },
+  "C_FE_vs_SAT (residual lack of fit after beta)": {
+   "G": 5.972,
+   "df": 4,
+   "p": 0.20125
+  },
+  "B_FE_vs_SAT (independence with block p1)": {
+   "G": 7.411,
+   "df": 5,
+   "p": 0.19182
+  }
+ },
+ "drop_one_dose_block": {
+  "d5_without_c_critical_mass": {
+   "beta_C_FE": 1.0633,
+   "lrt": {
+    "A_vs_SAT (one p1, independence, every cell)": 0.61784,
+    "A_vs_B_FE (batch heterogeneity of p1, beta=1)": 0.56851,
+    "A_vs_A2 (superadditivity with pooled p1)": 0.33764,
+    "B_FE_vs_C_FE (superadditivity given block p1)": 0.63987,
+    "B_FE_vs_C_PW (pairwise term given block p1)": 0.78445,
+    "C_FE_vs_SAT (residual lack of fit after beta)": 0.38627,
+    "B_FE_vs_SAT (independence with block p1)": 0.51627
+   }
+  },
+  "d20_without_c_critical_mass": {
+   "beta_C_FE": 1.198,
+   "lrt": {
+    "A_vs_SAT (one p1, independence, every cell)": 0.51349,
+    "A_vs_B_FE (batch heterogeneity of p1, beta=1)": 0.75475,
+    "A_vs_A2 (superadditivity with pooled p1)": 0.65877,
+    "B_FE_vs_C_FE (superadditivity given block p1)": 0.41736,
+    "B_FE_vs_C_PW (pairwise term given block p1)": 0.61188,
+    "C_FE_vs_SAT (residual lack of fit after beta)": 0.12911,
+    "B_FE_vs_SAT (independence with block p1)": 0.17633
+   }
+  },
+  "d5_without_x_critical_mass": {
+   "beta_C_FE": 1.1836,
+   "lrt": {
+    "A_vs_SAT (one p1, independence, every cell)": 0.26405,
+    "A_vs_B_FE (batch heterogeneity of p1, beta=1)": 0.64592,
+    "A_vs_A2 (superadditivity with pooled p1)": 0.14431,
+    "B_FE_vs_C_FE (superadditivity given block p1)": 0.17637,
+    "B_FE_vs_C_PW (pairwise term given block p1)": 0.4183,
+    "C_FE_vs_SAT (residual lack of fit after beta)": 0.07235,
+    "B_FE_vs_SAT (independence with block p1)": 0.06592
+   }
+  },
+  "d20_without_x_critical_mass": {
+   "beta_C_FE": 1.1526,
+   "lrt": {
+    "A_vs_SAT (one p1, independence, every cell)": 0.83547,
+    "A_vs_B_FE (batch heterogeneity of p1, beta=1)": 0.8338,
+    "A_vs_A2 (superadditivity with pooled p1)": 0.63566,
+    "B_FE_vs_C_FE (superadditivity given block p1)": 0.49971,
+    "B_FE_vs_C_PW (pairwise term given block p1)": 0.78617,
+    "C_FE_vs_SAT (residual lack of fit after beta)": 0.4467,
+    "B_FE_vs_SAT (independence with block p1)": 0.53833
+   }
+  },
+  "d5_without_x_dose_curve": {
+   "beta_C_FE": 1.4503,
+   "lrt": {
+    "A_vs_SAT (one p1, independence, every cell)": 0.21575,
+    "A_vs_B_FE (batch heterogeneity of p1, beta=1)": 0.5488,
+    "A_vs_A2 (superadditivity with pooled p1)": 0.01774,
+    "B_FE_vs_C_FE (superadditivity given block p1)": 0.02681,
+    "B_FE_vs_C_PW (pairwise term given block p1)": 0.02186,
+    "C_FE_vs_SAT (residual lack of fit after beta)": 0.21126,
+    "B_FE_vs_SAT (independence with block p1)": 0.03945
+   }
+  },
+  "d20_without_x_dose_curve": {
+   "beta_C_FE": 1.8534,
+   "lrt": {
+    "A_vs_SAT (one p1, independence, every cell)": 0.40393,
+    "A_vs_B_FE (batch heterogeneity of p1, beta=1)": 0.73002,
+    "A_vs_A2 (superadditivity with pooled p1)": 0.40973,
+    "B_FE_vs_C_FE (superadditivity given block p1)": 0.05724,
+    "B_FE_vs_C_PW (pairwise term given block p1)": 0.02291,
+    "C_FE_vs_SAT (residual lack of fit after beta)": 0.18383,
+    "B_FE_vs_SAT (independence with block p1)": 0.06782
+   }
+  }
+ }
+}

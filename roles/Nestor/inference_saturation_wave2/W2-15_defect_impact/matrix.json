@@ -1,0 +1,1799 @@
+{
+ "defects": [
+  "D1",
+  "H1C",
+  "D2",
+  "D3",
+  "D4",
+  "D5",
+  "D8",
+  "D9",
+  "VR",
+  "AC",
+  "D24",
+  "D10",
+  "D11",
+  "D12",
+  "XTG",
+  "W25",
+  "W29"
+ ],
+ "applies_rule": {
+  "D1": "multi-niche cell with niche-dependent spec AND comp/held used (readout or dynamics)",
+  "H1C": "single-niche cell, comp/held readout; one cached 6-episode draw per genome",
+  "D2": "C9 H3 and descendants",
+  "D3": "PAIR_TAPE claim attributing an effect to pressure, death, or non-overwrite selection",
+  "D4": "7ae3-vs-ffa6 or SLOTTED-vs-other contrast, or SLOTTED-scoped claim",
+  "D5": "claims of 0 voided / anticheat clean",
+  "D8": "depth endpoint with padding possible",
+  "D9": "newborn bookkeeping readouts, PREDATION, comp-gated pairing",
+  "VR": "register-state claims in a CARRIED pair-tape world",
+  "AC": "claims reading ATOMIC as erosion removal / organismal fidelity",
+  "D24": "paired / same-background reasoning across arms",
+  "D10": "C-A3 and descendants",
+  "D11": "X-A3-FAIR",
+  "D12": "L2 from run_dd.screen",
+  "XTG": "X-TASK-GATE",
+  "W25": "W2-5 sweep hit at this runner",
+  "W29": "W2-9 statistical finding"
+ },
+ "rows": [
+  {
+   "id": "Z80A-72H / A-1",
+   "family": "72h",
+   "verdict": "1,031 ADMISSIBLE (NARROWED x3)",
+   "cell": "observatory, all grammar cells; flags all PAIR_EXECUTION",
+   "cells": {
+    "D5": [
+     "WORDING",
+     "'23,471 runs, 0 voided' carries no information: RUNNER_BIRTH and IMMORTAL are unsatisfiable, so voided is always False; the splice (Z80A-D05) passed anticheat as an invisible runner copy."
+    ],
+    "D3": [
+     "WORDING",
+     "all 1,031 are pair-tape; any per-pressure breakdown of flags is realization noise for 7 aliased levels, and TAPE_COST/PREDATION cells shrink without replacement (fewer organisms -> fewer flags)."
+    ],
+    "D8": [
+     "BIAS+",
+     "72h genomes vary in length (indels) so padding exists; mutual acceptance can manufacture exactly depth 2. Affects 'depth >= 2 in 120' (predecessor ancestry) only upward, i.e. in the direction of the existing narrowing."
+    ],
+    "W25": [
+     "NONE",
+     "SCH/SIM already recorded (dossier C 5.1, E-11); nothing new."
+    ]
+   },
+   "relabel": null,
+   "findings_lines": [
+    15,
+    "19-37"
+   ]
+  },
+  {
+   "id": "A-2 matched pairs",
+   "family": "72h",
+   "verdict": "HOLDS (pressure row EXTERNAL-scoped)",
+   "cell": "metric d_held_max (packet.py:95), predecessor world with the same genome-keyed cache",
+   "cells": {
+    "D1": [
+     "BIAS?",
+     "held_max in COEVO_ENV x NICHES_* and RESERVOIR cells is read from a cache keyed on genome only, so a genome carries its first niche's score; within a pair both arms share the contamination except when the axis is environment/structure. Direction undetermined; the 4 printed rows are not environment/structure axes."
+    ],
+    "H1C": [
+     "BIAS?",
+     "held_max is a population MAXIMUM over single cached held-out draws. EXPLICIT_FITNESS converges the population (few distinct genomes, few draws) while NONE keeps many distinct genomes (many draws, higher max by chance): this attenuates EXPLICIT>NONE; selection on cached comp inflates it only via comp/held correlation. Net sign unknown."
+    ],
+    "D3": [
+     "WORDING",
+     "the scope note's reason should cite D3: on PAIR_TAPE 7 of 12 pressure levels are byte-identical, so pressure contrasts there are realization noise, not weak effects."
+    ]
+   },
+   "relabel": "HOLDS as recorded deltas of a cached single-draw metric",
+   "findings_lines": [
+    43,
+    58,
+    "60-64"
+   ]
+  },
+  {
+   "id": "A-4 / E-4 (H4 source)",
+   "family": "72h",
+   "verdict": "WITHDRAWN",
+   "cell": "COEVO_ENV cell, frozen population",
+   "cells": {
+    "D1": [
+     "NONE",
+     "cross-niche cache only reinforces the withdrawal (held moved only with COEVO env redraws)."
+    ]
+   },
+   "relabel": null,
+   "findings_lines": []
+  },
+  {
+   "id": "S1A funnels / S2-P11",
+   "family": "forensics",
+   "verdict": "HOLDS / INSTRUMENT",
+   "cell": "FREE / OVERWRITE replays; P-11 spec",
+   "cells": {},
+   "relabel": null,
+   "findings_lines": []
+  },
+  {
+   "id": "S1C-P11-REASSAY / E-3",
+   "family": "forensics",
+   "verdict": "57 survive; max P-11 depth 2 (2 runs)",
+   "cell": "72h pair cells, variable genome length",
+   "cells": {
+    "D8": [
+     "BIAS+",
+     "padding exists in 72h genomes; the 2 depth-2 survivors are exactly what a mutual acceptance manufactures. Unverified either way; direction is toward further narrowing."
+    ],
+    "D5": [
+     "NONE",
+     ""
+    ]
+   },
+   "relabel": "57 survive; 'max depth 2' unverified against D8",
+   "findings_lines": [
+    "198-201"
+   ]
+  },
+  {
+   "id": "C9-H1R",
+   "family": "C9",
+   "verdict": "COST_INTERACTION_ONLY (CONFIRM)",
+   "cell": "H1: EXTERNAL, STATIC, WELL_MIXED (1 niche), EXPLICIT_FITNESS, tier S",
+   "cells": {
+    "D1": [
+     "NA",
+     "single niche, STATIC: no cross-niche spec."
+    ],
+    "H1C": [
+     "BIAS+",
+     "I equals the ungated-VM mean, a cached single 6-episode draw under selection on that same cached score (lucky-draw sweeps); the label hinges on that one mean (>= 0.15 / < 0.30). gated+VM = 0 is immune."
+    ],
+    "W29": [
+     "WORDING",
+     "degenerate 2x2: FREE arms identical by construction (gate satisfied at entry), M = -I/2 always; GATE_EFFECT alone unattainable. Only 'gated+VM = 0/60' discriminates."
+    ]
+   },
+   "relabel": "COST_INTERACTION_ONLY -> DEGENERATE DESIGN (label ARTIFACT-RISK); robust fact: gated+VM recorded competence 0/60 (180/180 with transplant)",
+   "findings_lines": [
+    "269-279"
+   ]
+  },
+  {
+   "id": "X-H1-TRANSPLANT",
+   "family": "C9",
+   "verdict": "SIGNAL",
+   "cell": "H1 cell, 4 transforms",
+   "cells": {
+    "H1C": [
+     "BIAS+",
+     "same cached ungated level in every transform."
+    ],
+    "W29": [
+     "WORDING",
+     "same degeneracy (FREE arms identical); 'gate+free cue harmless' is true by construction."
+    ]
+   },
+   "relabel": null,
+   "findings_lines": [
+    "274-276"
+   ]
+  },
+  {
+   "id": "X-H1-GRADIENT",
+   "family": "C9",
+   "verdict": "WEAK_SIGNAL (mechanism: guessers carry ungated competence)",
+   "cell": "H1 cell",
+   "cells": {
+    "H1C": [
+     "INVALIDATES",
+     "the mechanism reading. An answer-before-read genome has expected score 0.5/episode, yet >85% ABR populations hold mean training competence ~0.9 (dossier B U10): the recorded 'competence' of guessers is luck-of-cache selected by EXPLICIT_FITNESS. 'Guessers carry the gradient' describes cached scores, not task competence. The composition fact (no reader evolves) stands."
+    ]
+   },
+   "relabel": "WEAK_SIGNAL (composition only); 'competence carried by guessers' -> 'cached scores carried by guessers'",
+   "findings_lines": [
+    "276-279"
+   ]
+  },
+  {
+   "id": "C9-H2",
+   "family": "C9",
+   "verdict": "REPLICATION_EVENTS_WITHOUT_PROPAGATION; 7ae3 WEAK_SIGNAL",
+   "cell": "16 panel pair cells (pressures QD/METABOLIC/EXEC_TIME/NONE/NOVELTY/COMPETITION)",
+   "cells": {
+    "D24": [
+     "WORDING",
+     "'random 0/16, in situ 0/16' is one null of 16 runs (already in the D24 errata, line not yet edited)."
+    ],
+    "D3": [
+     "WORDING",
+     "every panel pressure is an aliased level: specimen cells differ effectively only in representation, ops mask / self_location, copy primitive, mutation operator/locality/rate, atlas axis and tier."
+    ],
+    "D8": [
+     "NONE",
+     "15/16 never reach depth 2; an upward artefact cannot create the null."
+    ]
+   },
+   "relabel": null,
+   "findings_lines": [
+    "280-282"
+   ]
+  },
+  {
+   "id": "C9-H3",
+   "family": "C9",
+   "verdict": "NOT_DEMONSTRATED",
+   "cell": "RESERVOIR (4 niches), PAIR_TAPE, pressures EXEC_TIME_COST / NOVELTY, envs RESOURCE_LIMITED / NONSTATIONARY",
+   "cells": {
+    "D2": [
+     "INVALIDATES",
+     "A and B are the same simulation in 64/64 bundles (same cell_id and seed); the easy niche exists only in scoring; C is unpaired from epoch 0 and is not a transport control."
+    ],
+    "D1": [
+     "INVALIDATES",
+     "the only A-vs-B differences are scoring: n_cross_events differs in 15/64, crossed_ever 5/64, from genome-keyed held crossing RESERVOIR niches."
+    ],
+    "D3": [
+     "INVALIDATES",
+     "both H3 pressures are aliased on the pair tape, so no channel exists by which easy-niche competence could be amplified or transported preferentially; the hypothesis was untestable in these cells."
+    ],
+    "D9": [
+     "BIAS?",
+     "relabelled newborns carry the victim's comp/held until the next validation."
+    ]
+   },
+   "relabel": "NOT_DEMONSTRATED -> INVALID / UNTESTABLE AS DESIGNED (withdraw the E-9 negative)",
+   "findings_lines": [
+    "283-284"
+   ]
+  },
+  {
+   "id": "C9-H3-RULER",
+   "family": "C9",
+   "verdict": "INVALID (tournament)",
+   "cell": "H3 bundles",
+   "cells": {
+    "D2": [
+     "NONE",
+     "already INVALID."
+    ]
+   },
+   "relabel": null,
+   "findings_lines": []
+  },
+  {
+   "id": "C9-H3-NULL / X-H3-FLOW",
+   "family": "C9",
+   "verdict": "CLEAN_NULL: NOT_COMPETENT (niche-0 held 0.000)",
+   "cell": "a621: PAIR_TAPE, NOVELTY, NONSTATIONARY, RESERVOIR",
+   "cells": {
+    "D1": [
+     "BIAS-",
+     "per-niche mean held is read from the genome-keyed cache; a genome first validated in one of the 3 hard niches carries that score into niche 0, pulling niche-0 held toward the hard value (toward NOT_COMPETENT)."
+    ],
+    "D3": [
+     "INVALIDATES",
+     "the localization. NOVELTY is aliased to NONE on the pair tape: nothing selects for competence in any niche, so 'the chain fails at its first link' is guaranteed by design, not located by measurement."
+    ],
+    "D2": [
+     "NONE",
+     "the replay attaches to the frozen arms; A and B being identical is consistent with its own replay note."
+    ],
+    "D9": [
+     "BIAS?",
+     "stale comp on relabelled newborns."
+    ]
+   },
+   "relabel": "CLEAN_NULL -> UNINFORMATIVE (no selection channel; cached cross-niche held); 'transport works ~21%' stands (material tags)",
+   "findings_lines": [
+    "58 graph"
+   ]
+  },
+  {
+   "id": "X-H3-EASIER",
+   "family": "C9",
+   "verdict": "CLEAN_NULL -> RETIRE_H3_STRUCTURAL",
+   "cell": "a621 with niche 0 = XOR1",
+   "cells": {
+    "D3": [
+     "WORDING",
+     "retirement stands, but the reason is 'no task-coupled selection exists on the pair tape under NOVELTY', not 'random pair-tape populations do not evolve competence at this scale'."
+    ],
+    "D1": [
+     "BIAS-",
+     "niche-0 held cached cross-niche."
+    ]
+   },
+   "relabel": "RETIRE stands; reason re-worded",
+   "findings_lines": [
+    "graph row 58"
+   ]
+  },
+  {
+   "id": "X-NONPAIR-SEARCH",
+   "family": "c9x-FREE",
+   "verdict": "WEAK_SIGNAL",
+   "cell": "non-pair FREE physics, random grammar cells; readouts births/fidelity/depth",
+   "cells": {},
+   "relabel": null,
+   "findings_lines": []
+  },
+  {
+   "id": "X-NONPAIR-FIDELITY",
+   "family": "c9x-FREE",
+   "verdict": "WEAK_SIGNAL",
+   "cell": "non-pair FREE physics, random grammar cells; readouts births/fidelity/depth",
+   "cells": {},
+   "relabel": null,
+   "findings_lines": []
+  },
+  {
+   "id": "X-SELFLOC-FREE",
+   "family": "c9x-FREE",
+   "verdict": "CLEAN_NULL",
+   "cell": "non-pair FREE physics, random grammar cells; readouts births/fidelity/depth",
+   "cells": {},
+   "relabel": null,
+   "findings_lines": []
+  },
+  {
+   "id": "X-SELFLOC-SEEDED",
+   "family": "c9x-FREE",
+   "verdict": "SIGNAL",
+   "cell": "non-pair FREE physics, random grammar cells; readouts births/fidelity/depth",
+   "cells": {},
+   "relabel": null,
+   "findings_lines": []
+  },
+  {
+   "id": "X-ERROR-THRESHOLD",
+   "family": "c9x-FREE",
+   "verdict": "CLEAN_NULL",
+   "cell": "non-pair FREE physics, random grammar cells; readouts births/fidelity/depth",
+   "cells": {},
+   "relabel": null,
+   "findings_lines": []
+  },
+  {
+   "id": "X-ENERGY-INHERIT",
+   "family": "c9x-FREE",
+   "verdict": "SIGNAL",
+   "cell": "non-pair FREE physics, random grammar cells; readouts births/fidelity/depth",
+   "cells": {},
+   "relabel": null,
+   "findings_lines": []
+  },
+  {
+   "id": "X-LOCAL-ALLOC",
+   "family": "c9x-FREE",
+   "verdict": "WEAK_SIGNAL",
+   "cell": "non-pair FREE physics, random grammar cells; readouts births/fidelity/depth",
+   "cells": {},
+   "relabel": null,
+   "findings_lines": []
+  },
+  {
+   "id": "X-SPONTANEOUS",
+   "family": "c9x-FREE",
+   "verdict": "CLEAN_NULL",
+   "cell": "non-pair FREE physics, random grammar cells; readouts births/fidelity/depth",
+   "cells": {},
+   "relabel": null,
+   "findings_lines": []
+  },
+  {
+   "id": "X-NEARMISS",
+   "family": "c9x-FREE",
+   "verdict": "WEAK_SIGNAL",
+   "cell": "non-pair FREE physics, random grammar cells; readouts births/fidelity/depth",
+   "cells": {},
+   "relabel": null,
+   "findings_lines": []
+  },
+  {
+   "id": "X-DENSE-OPS",
+   "family": "c9x-FREE",
+   "verdict": "INVALID",
+   "cell": "non-pair FREE physics, random grammar cells; readouts births/fidelity/depth",
+   "cells": {},
+   "relabel": null,
+   "findings_lines": []
+  },
+  {
+   "id": "X-DENSE-OPS-R",
+   "family": "c9x-FREE",
+   "verdict": "SIGNAL",
+   "cell": "non-pair FREE physics, random grammar cells; readouts births/fidelity/depth",
+   "cells": {},
+   "relabel": null,
+   "findings_lines": []
+  },
+  {
+   "id": "X-DENSE-ABLATE",
+   "family": "c9x-FREE",
+   "verdict": "SIGNAL",
+   "cell": "non-pair FREE physics, random grammar cells; readouts births/fidelity/depth",
+   "cells": {},
+   "relabel": null,
+   "findings_lines": []
+  },
+  {
+   "id": "C-SELFLOC",
+   "family": "c9x-FREE",
+   "verdict": "CONFIRMED",
+   "cell": "FREE physics, implanted copier",
+   "cells": {
+    "W29": [
+     "NONE",
+     "ROBUST (power 0.97)."
+    ]
+   },
+   "relabel": null,
+   "findings_lines": []
+  },
+  {
+   "id": "C-ENERGY",
+   "family": "c9x-FREE",
+   "verdict": "CONFIRMED",
+   "cell": "FREE physics, energy pressures active (D3 is pair-tape only)",
+   "cells": {
+    "W29": [
+     "WORDING",
+     "effect ROBUST; mechanism ('cannot afford its copy') not separated from lowest-energy-first reaping of zero-energy newborns (dossier B A3)."
+    ]
+   },
+   "relabel": null,
+   "findings_lines": [
+    "236-245"
+   ]
+  },
+  {
+   "id": "C-DENSE",
+   "family": "c9x-FREE",
+   "verdict": "CONFIRMED",
+   "cell": "FREE permissive world",
+   "cells": {
+    "W29": [
+     "WORDING",
+     "ROBUST as 'certified replication occurs'; 5/13 cells have exactly 1 event; >= 2 events p = 0.0027 fails both frozen bars, so not a heredity claim."
+    ]
+   },
+   "relabel": "CONFIRMED (replication occurs; not heredity)",
+   "findings_lines": [
+    "247-257"
+   ]
+  },
+  {
+   "id": "C-ABLATE LOC",
+   "family": "c9x-FREE",
+   "verdict": "CONFIRMED",
+   "cell": "FREE",
+   "cells": {
+    "W29": [
+     "NONE",
+     "ROBUST."
+    ]
+   },
+   "relabel": null,
+   "findings_lines": []
+  },
+  {
+   "id": "C-ABLATE SEARCH",
+   "family": "c9x-FREE",
+   "verdict": "CONFIRMED",
+   "cell": "FREE",
+   "cells": {
+    "W29": [
+     "WORDING",
+     "FRAGILE: exactly the 10 up-cells needed; 10/40 single-cell deletions flip it; fails Holm at 0.01; 'necessary' = a 60% drop, not abolition."
+    ]
+   },
+   "relabel": "CONFIRMED-FRAGILE",
+   "findings_lines": [
+    "258-260"
+   ]
+  },
+  {
+   "id": "C-ABLATE ENERGY_FOR_DEPTH",
+   "family": "c9x-FREE",
+   "verdict": "NOT_CONFIRMED",
+   "cell": "FREE",
+   "cells": {
+    "W29": [
+     "WORDING",
+     "unattainable once FULL D2 = 3 (best possible p = 0.125): an eligibility failure, not evidence."
+    ]
+   },
+   "relabel": "NOT_CONFIRMED -> INELIGIBLE",
+   "findings_lines": [
+    "260-262"
+   ]
+  },
+  {
+   "id": "X-H2-7AE3",
+   "family": "c9x-pair",
+   "verdict": "WEAK_SIGNAL",
+   "cell": "7ae3 cell, splice on, BASE",
+   "cells": {},
+   "relabel": null,
+   "findings_lines": []
+  },
+  {
+   "id": "X-H2-TERMINATION",
+   "family": "c9x-pair",
+   "verdict": "WEAK_SIGNAL (12 OVERWRITTEN / 9 PROPAGATED / 3 DIED)",
+   "cell": "7ae3 cell (QD, no death on the pair tape)",
+   "cells": {
+    "D3": [
+     "WORDING",
+     "nothing can die in this cell (QD aliased, no reaping, no replenishment); 'DIED' = 'replaced as an id' = relabelled by another accepted overwrite. Read: 15/24 lost to overwrite, 9 propagated."
+    ],
+    "D9": [
+     "NONE",
+     "fates keyed on oid; D8 latent."
+    ]
+   },
+   "relabel": null,
+   "findings_lines": [
+    "287 (graph)"
+   ]
+  },
+  {
+   "id": "X-H2-NORECOMB",
+   "family": "c9x-pair",
+   "verdict": "WEAK_SIGNAL",
+   "cell": "7ae3 cell",
+   "cells": {},
+   "relabel": null,
+   "findings_lines": []
+  },
+  {
+   "id": "C-NORECOMB",
+   "family": "c9x-pair",
+   "verdict": "NOT_CONFIRMED",
+   "cell": "7ae3 + c2a8 cells",
+   "cells": {
+    "W29": [
+     "WORDING",
+     "power ~0.08 (pooling halved the effect); BASE arm 5/24 vs C-RUNAWAY BASE 4/150 (p = 0.003)."
+    ]
+   },
+   "relabel": "NOT_CONFIRMED -> UNDERPOWERED",
+   "findings_lines": [
+    "288"
+   ]
+  },
+  {
+   "id": "X-PAIR-NORECOMB",
+   "family": "c9x-pair",
+   "verdict": "INVALID (downgraded)",
+   "cell": "24 RECOMBINATION cells",
+   "cells": {},
+   "relabel": null,
+   "findings_lines": []
+  },
+  {
+   "id": "X-RUNAWAY",
+   "family": "c9x-pair",
+   "verdict": "SIGNAL (descriptive)",
+   "cell": "7ae3 cell, BASE, splice off",
+   "cells": {
+    "D8": [
+     "NONE",
+     "64-byte implant fills its half: no padding."
+    ]
+   },
+   "relabel": null,
+   "findings_lines": []
+  },
+  {
+   "id": "C-RUNAWAY",
+   "family": "c9x-pair",
+   "verdict": "CONFIRMED",
+   "cell": "7ae3 cell, BASE, splice off vs on",
+   "cells": {
+    "W29": [
+     "WORDING",
+     "FRAGILE: 7/150 is the minimum passing count; prior power 0.05-0.56; second try after C-NORECOMB; claim-level x2 gives 0.0145 > 0.01."
+    ],
+    "D8": [
+     "NONE",
+     "no padding; d >= 20 is not reachable by a one-step inflation."
+    ]
+   },
+   "relabel": "CONFIRMED-FRAGILE",
+   "findings_lines": [
+    "286-296"
+   ]
+  },
+  {
+   "id": "X-RUNAWAY-TRANSPLANT",
+   "family": "c9x-pair",
+   "verdict": "CLEAN_NULL",
+   "cell": "8 RECOMBINATION specimen cells",
+   "cells": {
+    "D3": [
+     "NONE",
+     ""
+    ]
+   },
+   "relabel": null,
+   "findings_lines": []
+  },
+  {
+   "id": "X-STATE",
+   "family": "c9x-pair",
+   "verdict": "WEAK_SIGNAL",
+   "cell": "7ae3 / foreign pair cells; genome- or P-11-based readouts",
+   "cells": {},
+   "relabel": null,
+   "findings_lines": []
+  },
+  {
+   "id": "X-SUFFICIENCY",
+   "family": "c9x-pair",
+   "verdict": "CLEAN_NULL",
+   "cell": "7ae3 / foreign pair cells; genome- or P-11-based readouts",
+   "cells": {},
+   "relabel": null,
+   "findings_lines": []
+  },
+  {
+   "id": "X-POSITION",
+   "family": "c9x-pair",
+   "verdict": "INVALID (withdrawn)",
+   "cell": "7ae3 / foreign pair cells; genome- or P-11-based readouts",
+   "cells": {},
+   "relabel": null,
+   "findings_lines": []
+  },
+  {
+   "id": "X-CRITICAL-MASS",
+   "family": "c9x-pair",
+   "verdict": "WEAK_SIGNAL",
+   "cell": "7ae3 / foreign pair cells; genome- or P-11-based readouts",
+   "cells": {},
+   "relabel": null,
+   "findings_lines": []
+  },
+  {
+   "id": "X-DECAY",
+   "family": "c9x-pair",
+   "verdict": "WEAK_SIGNAL",
+   "cell": "7ae3 / foreign pair cells; genome- or P-11-based readouts",
+   "cells": {},
+   "relabel": null,
+   "findings_lines": []
+  },
+  {
+   "id": "X-STALL",
+   "family": "c9x-pair",
+   "verdict": "SIGNAL",
+   "cell": "7ae3 / foreign pair cells; genome- or P-11-based readouts",
+   "cells": {},
+   "relabel": null,
+   "findings_lines": []
+  },
+  {
+   "id": "X-STERILE",
+   "family": "c9x-pair",
+   "verdict": "CLEAN_NULL",
+   "cell": "7ae3 / foreign pair cells; genome- or P-11-based readouts",
+   "cells": {},
+   "relabel": null,
+   "findings_lines": []
+  },
+  {
+   "id": "X-STALL-F0",
+   "family": "c9x-pair",
+   "verdict": "SIGNAL",
+   "cell": "7ae3 / foreign pair cells; genome- or P-11-based readouts",
+   "cells": {},
+   "relabel": null,
+   "findings_lines": []
+  },
+  {
+   "id": "X-ROOT-AUDIT",
+   "family": "c9x-pair",
+   "verdict": "WEAK_SIGNAL",
+   "cell": "7ae3 / foreign pair cells; genome- or P-11-based readouts",
+   "cells": {},
+   "relabel": null,
+   "findings_lines": []
+  },
+  {
+   "id": "X-ACQUIRE",
+   "family": "c9x-pair",
+   "verdict": "WEAK_SIGNAL",
+   "cell": "7ae3 / foreign pair cells; genome- or P-11-based readouts",
+   "cells": {},
+   "relabel": null,
+   "findings_lines": []
+  },
+  {
+   "id": "X-CONTENT",
+   "family": "c9x-pair",
+   "verdict": "WEAK_SIGNAL",
+   "cell": "7ae3 / foreign pair cells; genome- or P-11-based readouts",
+   "cells": {},
+   "relabel": null,
+   "findings_lines": []
+  },
+  {
+   "id": "X-CORE",
+   "family": "c9x-pair",
+   "verdict": "WEAK_SIGNAL",
+   "cell": "7ae3 / foreign pair cells; genome- or P-11-based readouts",
+   "cells": {},
+   "relabel": null,
+   "findings_lines": []
+  },
+  {
+   "id": "X-CORE-TIME",
+   "family": "c9x-pair",
+   "verdict": "SIGNAL",
+   "cell": "7ae3 / foreign pair cells; genome- or P-11-based readouts",
+   "cells": {},
+   "relabel": null,
+   "findings_lines": []
+  },
+  {
+   "id": "X-CERT-BREAK",
+   "family": "c9x-pair",
+   "verdict": "WEAK_SIGNAL",
+   "cell": "7ae3 / foreign pair cells; genome- or P-11-based readouts",
+   "cells": {},
+   "relabel": null,
+   "findings_lines": []
+  },
+  {
+   "id": "C-CRITICAL-MASS",
+   "family": "c9x-pair",
+   "verdict": "CONFIRMED",
+   "cell": "7ae3 cell, BASE, k=4 vs k=1",
+   "cells": {
+    "W29": [
+     "NONE",
+     "ROBUST for the weak stated claim."
+    ],
+    "W25": [
+     "WORDING",
+     "its own two doses still reject independence (joint p = 0.014); the superadditivity retraction rests on X-DOSE-CURVE alone."
+    ]
+   },
+   "relabel": null,
+   "findings_lines": [
+    "303-307"
+   ]
+  },
+  {
+   "id": "X-DOSE-CURVE",
+   "family": "c9x-pair",
+   "verdict": "CLEAN_NULL ('founders are independent lottery tickets')",
+   "cell": "7ae3 cell, k = 1,2,4,8",
+   "cells": {
+    "W25": [
+     "BIAS-",
+     "the LRT (p = 0.42) is on its own doses only; C-CRITICAL-MASS's k=1/k=4 data reject independence at p = 0.014 and W2-1 finds the k=1 batches homogeneous. 'Independent' is not established; UNRESOLVED (W2-12)."
+    ]
+   },
+   "relabel": "CLEAN_NULL on its own doses; founder independence UNRESOLVED",
+   "findings_lines": [
+    "308-310",
+    "436-439"
+   ]
+  },
+  {
+   "id": "X-TICKET",
+   "family": "c9x-pair",
+   "verdict": "WEAK_SIGNAL",
+   "cell": "7ae3 cell, BASE",
+   "cells": {
+    "D3": [
+     "WORDING",
+     "'causal lineage extinct' cannot mean death (no deaths in the cell): every label holder was overwritten (N1/N2: side-0 LDIR hijack explains ~0.21 of the 0.28 epoch-1 loss)."
+    ]
+   },
+   "relabel": null,
+   "findings_lines": [
+    "311-314"
+   ]
+  },
+  {
+   "id": "X-ATOMIC",
+   "family": "c9x-pair",
+   "verdict": "SIGNAL",
+   "cell": "7ae3 cell, ATOMIC vs BASE",
+   "cells": {
+    "AC": [
+     "WORDING",
+     "composite treatment: keeps predecessor-accepted overwrites (causal or not) and discards self-writes; N9 attributes ~3/4 of the static establishment gain to the fidelity clause."
+    ]
+   },
+   "relabel": null,
+   "findings_lines": [
+    "325-327"
+   ]
+  },
+  {
+   "id": "C-ATOMIC C1",
+   "family": "c9x-pair",
+   "verdict": "CONFIRMED",
+   "cell": "7ae3 cell, ATOMIC vs BASE, 80+80",
+   "cells": {
+    "AC": [
+     "WORDING",
+     "'Tape-write erosion is what stops pair-tape heredity' -> 'the composite ATOMIC rule (keep only predecessor-accepted overwrites, causal or not; discard all other writes including self-writes) produces runaway'; N9: fidelity clause ~75%, self-write discard the rest."
+    ],
+    "W29": [
+     "NONE",
+     "ROBUST (composite)."
+    ],
+    "D8": [
+     "NONE",
+     ""
+    ]
+   },
+   "relabel": null,
+   "findings_lines": [
+    "328-331"
+   ]
+  },
+  {
+   "id": "C-ATOMIC C2",
+   "family": "c9x-pair",
+   "verdict": "NOT_CONFIRMED",
+   "cell": "15 other panel cells",
+   "cells": {
+    "W29": [
+     "WORDING",
+     "only 2 of 15 specimens ever reached d >= 5; rule needed >= 4 favouring ATOMIC: ineligible."
+    ],
+    "D3": [
+     "NONE",
+     "pressures inert, but C2 never attributed the null to pressure."
+    ],
+    "D4": [
+     "NONE",
+     "pooled over cells."
+    ]
+   },
+   "relabel": "NOT_CONFIRMED -> INELIGIBLE",
+   "findings_lines": [
+    "331-334"
+   ]
+  },
+  {
+   "id": "X-DONOR-RATE",
+   "family": "c9x-pair",
+   "verdict": "SIGNAL",
+   "cell": "static P-11 assay in 16 panel cells",
+   "cells": {
+    "D3": [
+     "NONE",
+     "static assay."
+    ]
+   },
+   "relabel": null,
+   "findings_lines": []
+  },
+  {
+   "id": "X-DONOR-SWAP",
+   "family": "c9x-pair",
+   "verdict": "WEAK_SIGNAL",
+   "cell": "7ae3 genome in 11 foreign cells, ATOMIC",
+   "cells": {
+    "D3": [
+     "WORDING",
+     "'competence is a property of genome x cell': on the pair tape pressure, environment, task and niche structure are inert for copying, so 'cell' reduces to representation / ops mask (SELF) / copy primitive / mutation factors."
+    ],
+    "D4": [
+     "BIAS?",
+     "in-world runaway counts compare ffa6 and e160 (Z8_SLOTTED, ~8x opcode-hitting supply) with Z8_64 cells; the static assay rates are unaffected."
+    ],
+    "AC": [
+     "NONE",
+     "ATOMIC declared."
+    ]
+   },
+   "relabel": null,
+   "findings_lines": [
+    "336-342"
+   ]
+  },
+  {
+   "id": "X-SWAP-ORIGIN",
+   "family": "c9x-pair",
+   "verdict": "CLEAN_NULL (labels corrected)",
+   "cell": "9cba/e160/ffa6",
+   "cells": {
+    "D24": [
+     "NONE",
+     "already corrected (Part B 1/8 vs 0/8 uninformative)."
+    ]
+   },
+   "relabel": null,
+   "findings_lines": []
+  },
+  {
+   "id": "X-ATOMIC-RANDOM",
+   "family": "c9x-pair",
+   "verdict": "SIGNAL",
+   "cell": "7ae3 cell, genome vs random implant, ATOMIC",
+   "cells": {
+    "D24": [
+     "NONE",
+     "unpaired Fisher; audited (T-DEF-D24)."
+    ],
+    "AC": [
+     "NONE",
+     "'descendants' already narrowed to label descent by X-CONTENT."
+    ]
+   },
+   "relabel": null,
+   "findings_lines": []
+  },
+  {
+   "id": "X-SWAP-ANCESTRY",
+   "family": "c9x-pair",
+   "verdict": "SIGNAL",
+   "cell": "foreign cells, ATOMIC",
+   "cells": {
+    "AC": [
+     "NONE",
+     "spread through kept non-causal overwrites (dossier B A2) is already covered by 'lineage descent, not content'."
+    ]
+   },
+   "relabel": null,
+   "findings_lines": []
+  },
+  {
+   "id": "C-SWAP-ACQUIRE",
+   "family": "c9x-pair",
+   "verdict": "NOT_CONFIRMED",
+   "cell": "9cba/e160, genome vs random, 240+240",
+   "cells": {
+    "W29": [
+     "WORDING",
+     "near-miss (p = 0.0018; minimum attainable 10 vs 0); flips at d >= 10 (11 vs 0, p = 4.3e-4); power 0.41."
+    ],
+    "D24": [
+     "NONE",
+     "unpaired."
+    ]
+   },
+   "relabel": "NOT_CONFIRMED -> NEAR-MISS / UNDERPOWERED",
+   "findings_lines": [
+    "363-365"
+   ]
+  },
+  {
+   "id": "C-CORE",
+   "family": "c9x-pair",
+   "verdict": "CONFIRMED",
+   "cell": "7ae3 cell, ATOMIC, 64 seeds",
+   "cells": {
+    "W29": [
+     "WORDING",
+     "FRAGILE: 17/27 vs bar 16.2; one classification flip fails it; 'conserves SELF+LDIR' ROBUST, 'and little else' FRAGILE."
+    ],
+    "AC": [
+     "NONE",
+     "purifying-selection limit already recorded (Aporia #621)."
+    ]
+   },
+   "relabel": "CONFIRMED-FRAGILE",
+   "findings_lines": [
+    "376-381"
+   ]
+  },
+  {
+   "id": "X-DONOR-DISCOVERY",
+   "family": "W1",
+   "verdict": "SIGNAL (1/96)",
+   "cell": "7ae3 + ffa6 cells, ATOMIC, random populations",
+   "cells": {
+    "D12": [
+     "NONE",
+     "one L2 run; the screen's noise cannot move 1/96 across the <= 10% bar."
+    ]
+   },
+   "relabel": null,
+   "findings_lines": []
+  },
+  {
+   "id": "X-DD-DENSE-COPY",
+   "family": "W1",
+   "verdict": "SIGNAL (0/96 vs 49/96)",
+   "cell": "7ae3 + ffa6",
+   "cells": {
+    "D12": [
+     "BIAS?",
+     "8/49 DENSE L2 runs rest on a best rate < 0.6 (W2-8); 41 vs 0 still SIGNAL."
+    ],
+    "D4": [
+     "WORDING",
+     "per-cell 19/48 vs 30/48 is a SLOTTED-vs-Z8_64 contrast."
+    ]
+   },
+   "relabel": null,
+   "findings_lines": []
+  },
+  {
+   "id": "C-DENSE-COPY",
+   "family": "W1",
+   "verdict": "CONFIRMED (1/64 vs 39/64)",
+   "cell": "7ae3 + ffa6, ATOMIC",
+   "cells": {
+    "D12": [
+     "NONE",
+     "checked here (d12_sensitivity.json): strict L2 >= 0.6: 36/64 vs 1/64 (p = 3.5e-13); >= 0.7: 35 vs 0."
+    ],
+    "D4": [
+     "WORDING",
+     "secondary per-cell split (7ae3 14/32, ffa6 25/32) is operator-confounded."
+    ],
+    "W29": [
+     "NONE",
+     "ROBUST."
+    ]
+   },
+   "relabel": null,
+   "findings_lines": [
+    "443-451"
+   ]
+  },
+  {
+   "id": "X-DD-ESTABLISH",
+   "family": "W1",
+   "verdict": "SIGNAL",
+   "cell": "7ae3 + ffa6, CARRIED",
+   "cells": {
+    "W25": [
+     "BIAS?",
+     "LAC: 8/23 'ESTABLISHED' first donors made 0 causal births (dossier D U1); SCP: run_de.competent is a zero-context screen."
+    ],
+    "VR": [
+     "WORDING",
+     "in-world, a newborn's first execution starts from the victim's registers, not its own."
+    ]
+   },
+   "relabel": null,
+   "findings_lines": []
+  },
+  {
+   "id": "X-DD-NOCOPY-CONTEXT",
+   "family": "W1",
+   "verdict": "WEAK_SIGNAL",
+   "cell": "",
+   "cells": {
+    "VR": [
+     "WORDING",
+     "STATE/PARTNER labels: a newborn's carried state is the victim's."
+    ]
+   },
+   "relabel": null,
+   "findings_lines": []
+  },
+  {
+   "id": "X-DD-STATE-RESET",
+   "family": "W1",
+   "verdict": "CLEAN_NULL",
+   "cell": "reset registers on genome change",
+   "cells": {
+    "VR": [
+     "NONE",
+     "this IS the victim-register test; its endpoint was establishment only (W2-1)."
+    ],
+    "D12": [
+     "BIAS?",
+     "conditional on L2 from run_dd.screen."
+    ]
+   },
+   "relabel": null,
+   "findings_lines": []
+  },
+  {
+   "id": "X-DD-SELFSTATE",
+   "family": "W1",
+   "verdict": "WEAK_SIGNAL",
+   "cell": "",
+   "cells": {
+    "VR": [
+     "WORDING",
+     "'the state its OWN execution leaves' is the static assay; in-world the first context is the victim's."
+    ]
+   },
+   "relabel": null,
+   "findings_lines": []
+  },
+  {
+   "id": "X-DD-STATELESS",
+   "family": "W1",
+   "verdict": "SIGNAL",
+   "cell": "7ae3 + ffa6",
+   "cells": {
+    "D12": [
+     "BIAS?",
+     "runaway-given-L2 with L2 from the re-drawn screen."
+    ],
+    "D4": [
+     "WORDING",
+     "7ae3 0.32->0.74 vs ffa6 0.43->0.98 is operator-confounded."
+    ]
+   },
+   "relabel": null,
+   "findings_lines": []
+  },
+  {
+   "id": "C-STATELESS",
+   "family": "W1",
+   "verdict": "NOT_CONFIRMED (p = 0.012)",
+   "cell": "7ae3 + ffa6",
+   "cells": {
+    "D12": [
+     "NONE",
+     "checked: requiring L2 at >= 2 checkpoints gives p = 0.040; stays NOT_CONFIRMED."
+    ],
+    "D4": [
+     "WORDING",
+     "'the effect sat entirely in ffa6' is a SLOTTED-vs-Z8_64 contrast; X-P2-BRIDGE later reversed the split."
+    ]
+   },
+   "relabel": null,
+   "findings_lines": [
+    "460-461"
+   ]
+  },
+  {
+   "id": "C-STATELESS-FFA6",
+   "family": "W1",
+   "verdict": "CONFIRMED (11/33 vs 34/42, p = 3.3e-5)",
+   "cell": "ffa6 only (Z8_SLOTTED, NICHES_HIGH_MIG, COEVO_ENV), ATOMIC",
+   "cells": {
+    "D12": [
+     "BIAS+",
+     "flicker admissions are differential: 9 DENSE vs 4 STATELESS runs have L2 at exactly one checkpoint (0 and 1 establish), inflating the DENSE denominator. L2 at >= 2 checkpoints: 11/24 vs 33/38, p = 7.6e-4 (passes 0.001); >= 3: p = 0.005 (fails). The unconditional endpoint 34/48 vs 11/48 (p = 2.3e-6, W2-9) is screen-free."
+    ],
+    "D4": [
+     "WORDING",
+     "the confirmed scope is a SLOTTED-operator cell; the 7ae3-vs-ffa6 split that motivated the restriction is operator-confounded (and was later withdrawn by X-P2-BRIDGE)."
+    ],
+    "D1": [
+     "NONE",
+     "4 COEVO niches, but readouts are P-11 assays and depth; comp has no dynamical role under QD on the pair tape."
+    ],
+    "W29": [
+     "NONE",
+     "ROBUST (unconditional p = 2.3e-6)."
+    ],
+    "VR": [
+     "NONE",
+     "the 'persistence' reading is already withdrawn."
+    ]
+   },
+   "relabel": "CONFIRMED (prefer the unconditional endpoint)",
+   "findings_lines": [
+    "453-462"
+   ]
+  },
+  {
+   "id": "X-P2-ATTRIB",
+   "family": "P2",
+   "verdict": "SIGNAL",
+   "cell": "static",
+   "cells": {},
+   "relabel": null,
+   "findings_lines": []
+  },
+  {
+   "id": "X-P2-SHAM",
+   "family": "P2",
+   "verdict": "CLEAN_NULL",
+   "cell": "",
+   "cells": {
+    "D12": [
+     "NONE",
+     "0/96: screen noise cannot create donors at rate 0."
+    ]
+   },
+   "relabel": null,
+   "findings_lines": []
+  },
+  {
+   "id": "X-P2-PLANT",
+   "family": "P2",
+   "verdict": "SIGNAL (32/96)",
+   "cell": "",
+   "cells": {
+    "D12": [
+     "BIAS?",
+     "L2 from re-drawn screen; bar 25/96."
+    ],
+    "D4": [
+     "WORDING",
+     "per-cell 15/17."
+    ]
+   },
+   "relabel": null,
+   "findings_lines": []
+  },
+  {
+   "id": "X-P2-BRIDGE",
+   "family": "P2",
+   "verdict": "CLEAN_NULL (split reverses)",
+   "cell": "C7 / C7S / C7N / CF bridge cells, implanted panel",
+   "cells": {
+    "D4": [
+     "WORDING",
+     "the axis reading 'mutation topology' is wrong: SLOTTED (C7S, CF) differs from Z8_64 by ~7x effective supply and 87% opcode targeting (N14). The null on the split stands."
+    ],
+    "D24": [
+     "WORDING",
+     "C7N vs C7 (10/32 vs 4/32) has no code mechanism (niches inert, N6/N7); migration draws unpair the runs."
+    ],
+    "W25": [
+     "WORDING",
+     "LAC at run_br.py:159 (label lineage)."
+    ]
+   },
+   "relabel": null,
+   "findings_lines": [
+    "472-474",
+    "484-489"
+   ]
+  },
+  {
+   "id": "X-P2-REGSTATE",
+   "family": "P2",
+   "verdict": "SIGNAL (ZERO_SPECIFIC)",
+   "cell": "CF / C7, implanted 16-donor panel",
+   "cells": {
+    "W29": [
+     "BIAS+",
+     "panel admitted by a zero-state screen (as C-ZERO); ZERO > CONST partly built in."
+    ],
+    "VR": [
+     "WORDING",
+     "CARRY arm's carried state includes victim registers."
+    ]
+   },
+   "relabel": null,
+   "findings_lines": []
+  },
+  {
+   "id": "C-ZERO-SPECIFIC",
+   "family": "P2",
+   "verdict": "CONFIRMED (26/48 vs 2/48)",
+   "cell": "ffa6 cell (CF), fresh 16-donor panel screened from zeros",
+   "cells": {
+    "W29": [
+     "BIAS+",
+     "donor-clustered (ICC 0.44): donor-level sign p = 0.003 fails the frozen 0.001; and N11: 14/16 donors cannot copy from 0x5A at all, so CONST 2/48 was forced by the screen. 'Zero is special' is mostly a statement about the screen; N12: what zero supplies is mainly the HL pointer phase."
+    ],
+    "D12": [
+     "NONE",
+     "panel screen re-run 16/16; admission noise is not arm-differential."
+    ],
+    "VR": [
+     "WORDING",
+     "CARRY 6/48 is establishment from victim-carried registers."
+    ],
+    "D4": [
+     "WORDING",
+     "scope is a SLOTTED-operator cell."
+    ]
+   },
+   "relabel": "CONFIRMED at run level -> 'establishment in the world the donors were screened for' (ARTIFACT-RISK for 'zero is special')",
+   "findings_lines": [
+    "466-471"
+   ]
+  },
+  {
+   "id": "X-P2-ENDOSTATE",
+   "family": "P2",
+   "verdict": "CLEAN_NULL",
+   "cell": "",
+   "cells": {
+    "W25": [
+     "NONE",
+     "ruler (one-point self-state) defect already recorded."
+    ]
+   },
+   "relabel": null,
+   "findings_lines": []
+  },
+  {
+   "id": "X-P2-LINEAGE",
+   "family": "P2",
+   "verdict": "WEAK_SIGNAL",
+   "cell": "",
+   "cells": {
+    "W25": [
+     "NONE",
+     "LAC already in dossier D U1."
+    ]
+   },
+   "relabel": null,
+   "findings_lines": []
+  },
+  {
+   "id": "X-P2-D0CHECK",
+   "family": "P2",
+   "verdict": "CLEAN_NULL",
+   "cell": "",
+   "cells": {},
+   "relabel": null,
+   "findings_lines": []
+  },
+  {
+   "id": "ARC3 accessibility delegate",
+   "family": "ARC3",
+   "verdict": "operator CORRECTED; carrier exposure SUGGESTIVE",
+   "cell": "7ae3 / ffa6",
+   "cells": {
+    "D4": [
+     "WORDING",
+     "the delegate described SLOTTED correctly (opcode positions at offsets 1-3 mutate, frame shifts), but FINDINGS condensed it to 'both use the OPERAND operator' and 'in ffa6 slot offsets 1-3 mutate': in effect ffa6 has an opcode-randomizing operator (87% of edits)."
+    ],
+    "D12": [
+     "BIAS?",
+     "neutral-walk pilot screens with run_dd.screen."
+    ]
+   },
+   "relabel": null,
+   "findings_lines": [
+    "484-489"
+   ]
+  },
+  {
+   "id": "X-A3-FAIR",
+   "family": "ARC3",
+   "verdict": "SIGNAL ZERO_LITERAL (S_ZERO 0.867)",
+   "cell": "7ae3 + ffa6, reset worlds",
+   "cells": {
+    "D11": [
+     "WORDING",
+     "first-donor profiles truncated to 20; full set: S_ZERO 0.833 (one run flips). Label unchanged."
+    ],
+    "W25": [
+     "NONE",
+     "SCP at run_fair:94-95 (fixed entry states) is the declared ruler."
+    ],
+    "VR": [
+     "NONE",
+     ""
+    ]
+   },
+   "relabel": null,
+   "findings_lines": []
+  },
+  {
+   "id": "X-A3-FORENSIC-16000006",
+   "family": "ARC3",
+   "verdict": "KILLED as single change; distributed change real",
+   "cell": "",
+   "cells": {},
+   "relabel": null,
+   "findings_lines": []
+  },
+  {
+   "id": "X-A3-ENDOSTATE-R",
+   "family": "ARC3",
+   "verdict": "WEAK_SIGNAL / CLEAN_NULL",
+   "cell": "",
+   "cells": {},
+   "relabel": null,
+   "findings_lines": []
+  },
+  {
+   "id": "X-A3-SFLINEAGE",
+   "family": "ARC3",
+   "verdict": "SIGNAL (3/5 runs, 100% in L)",
+   "cell": "C-A3's parent instrument",
+   "cells": {
+    "D10": [
+     "BIAS+",
+     "same 'last checkpoint with a state-free genome' reading as C-A3; persistence not required."
+    ],
+    "W25": [
+     "WORDING",
+     "LAC (run_sfl:55-61,77-79): L is label descent through accepted replications, including non-P-11 edges; X-MAT checked content only for C-A3's events, not these 5 runs."
+    ]
+   },
+   "relabel": null,
+   "findings_lines": []
+  },
+  {
+   "id": "X-A3-AUTOPSY",
+   "family": "ARC3",
+   "verdict": "SIGNAL (C3 = material)",
+   "cell": "",
+   "cells": {
+    "W25": [
+     "WORDING",
+     "SIM/LAC (run_ap:94-106) MED."
+    ]
+   },
+   "relabel": null,
+   "findings_lines": []
+  },
+  {
+   "id": "C-A3-INTERNALIZE",
+   "family": "ARC3",
+   "verdict": "CONFIRMED (8 events, bar 4)",
+   "cell": "7ae3 + ffa6, dense VM, ATOMIC, CARRIED, 72+72 runs",
+   "cells": {
+    "D10": [
+     "BIAS+",
+     "8 as coded -> 4 with state-free genomes at the final checkpoint (exactly the bar) -> 3 if they must be the majority of competent genomes. The free_in_L clause is equivalent to the L_share clause; 4 events rest on transient genomes (1, 1, 11, 7 genomes; 0 at final)."
+    ],
+    "W29": [
+     "WORDING",
+     "FRAGILE: no control arm, no null calibration; the 20-seed state-free assay flickers."
+    ],
+    "W25": [
+     "BIAS?",
+     "RCF: the replay control re-applies event() to stored JSON (cannot refuse); LAC: L follows labels, including non-P-11 edges; SCP (N13): 'competent' is a zero-context screen in a CARRIED world, so the counts cover only the zero-competent subset of the reproducing population."
+    ],
+    "D4": [
+     "WORDING",
+     "per-cell 'ffa6 7, 7ae3 1' becomes 3 vs 1 at the final checkpoint (one-sided p ~ 0.31) and is operator-confounded either way."
+    ],
+    "D3": [
+     "WORDING",
+     "'native QD pressure' (XTG PREREG:31) is no pressure: the only selection is overwriting."
+    ],
+    "VR": [
+     "WORDING",
+     "in the CARRIED world newborns start from the victim's registers."
+    ],
+    "AC": [
+     "WORDING",
+     "N9: under ATOMIC the world's fidelity gate maintains copies; 'endogenous' refers to the register-setting content, not to organismal copy fidelity."
+    ],
+    "D1": [
+     "NONE",
+     "ffa6 multi-niche but readouts are assays; comp is dynamically inert."
+    ]
+   },
+   "relabel": "CONFIRMED (as coded) -> CONFIRMED-FRAGILE: 4 persistent events = exactly the bar; 3 on a majority reading",
+   "findings_lines": [
+    "524-531"
+   ]
+  },
+  {
+   "id": "X-A3-WITHDRAW",
+   "family": "ARC3",
+   "verdict": "CLEAN_NULL (speed)",
+   "cell": "7ae3 + ffa6, ZERO scaffold withdrawn",
+   "cells": {
+    "W25": [
+     "BIAS-",
+     "PERSISTS is 12/12 in GRADUAL, ABRUPT and CONTROL_ZERO: the endpoint is at its ceiling, so a GRADUAL > ABRUPT speed effect was undetectable (RCF). First drafted as INVALIDATES; downgraded by the adversarial pass: the gradual-withdrawal hypothesis predicts ABRUPT collapse, and ABRUPT 12/12 contradicts that directly (n = 12). LAC at run_wd:94-95,133-134."
+    ],
+    "VR": [
+     "WORDING",
+     "the robustness rise after withdrawal is measured in a CARRIED world where newborns start from victim registers."
+    ],
+    "D24": [
+     "NONE",
+     "arms identical to epoch 300, then unpaired; no paired test used."
+    ]
+   },
+   "relabel": "CLEAN_NULL -> CEILING NULL: abrupt withdrawal did not reduce persistence (12/12); a speed effect was undetectable",
+   "findings_lines": [
+    "533-553"
+   ]
+  },
+  {
+   "id": "X-MAT-INTERNALIZE",
+   "family": "frontier",
+   "verdict": "ENDOGENOUS (8/8 ENDOGENOUS_MATERIAL)",
+   "cell": "replays of C-A3's 26 eligible runs",
+   "cells": {
+    "D10": [
+     "WORDING",
+     "inherits the transient endpoint: 4 of 8 endpoints are at epochs 1200-1900 with 1-11 organisms and 0 at final. At the final checkpoint 4/4 are ENDOGENOUS (X 0.000-0.027): the verdict holds on 4."
+    ],
+    "D4": [
+     "WORDING",
+     "MUT share 0.19-0.56 in the 7 ffa6 runs vs 0.045 in 7ae3: ffa6's 'endogenous' bytes are ~43% output of the SLOTTED opcode-randomizing world operator. W2-9's MIXED-if-MUT-foreign alternative is entirely an ffa6 / D4 phenomenon."
+    ],
+    "W29": [
+     "WORDING",
+     "ARTIFACT-RISK: 7/8 endpoints at L_share 1.0 where X ~ 0 by structure; no planted-transplant control."
+    ],
+    "W25": [
+     "NONE",
+     "PAD/LAC at run_xmi MED; the bit-identical replay gate is good practice."
+    ]
+   },
+   "relabel": "ENDOGENOUS (MUT-neutral, 4 persistent + 4 transient; ARTIFACT-RISK, no positive control)",
+   "findings_lines": [
+    "(absent from FINDINGS)"
+   ]
+  },
+  {
+   "id": "X-TASK-GATE",
+   "family": "frontier",
+   "verdict": "frozen, NOT RUN",
+   "cell": "ffa6 + 7ae3, TASK_GATED pair tape",
+   "cells": {
+    "D1": [
+     "INVALIDATES",
+     "ffa6 is COEVO_ENV x 4 niches; cached competence crosses niches and is the gate input."
+    ],
+    "XTG": [
+     "INVALIDATES",
+     "D6 reader filter uses the base cue index (ABR-niche readers never count); D15 a regime-blind echo scores held 0.74 and counts competent 200/200; D14 Stage 0 never exercises the pair path or CD; D13 INIT != sorting under ATOMIC; D7 revalidation is 100% cache hits."
+    ],
+    "D9": [
+     "BIAS?",
+     "stale victim competence becomes the gate input for newborns."
+    ],
+    "D3": [
+     "WORDING",
+     "TASK_GATED is one of the few non-aliased pressures, but the 'regime' eligibility (25/72) came from a pressure-free world."
+    ],
+    "W25": [
+     "INVALIDATES",
+     "RCF: CD = 0 by construction in Stage 0's EXTERNAL arms (confirmed in code by Nestor)."
+    ]
+   },
+   "relabel": "DO NOT DISPATCH AS FROZEN (errata filed)",
+   "findings_lines": []
+  }
+ ],
+ "counts_by_defect": {
+  "D1": {
+   "NA": 87,
+   "BIAS?": 1,
+   "NONE": 3,
+   "INVALIDATES": 2,
+   "BIAS-": 2
+  },
+  "H1C": {
+   "NA": 91,
+   "BIAS?": 1,
+   "BIAS+": 2,
+   "INVALIDATES": 1
+  },
+  "D2": {
+   "NA": 92,
+   "INVALIDATES": 1,
+   "NONE": 2
+  },
+  "D3": {
+   "WORDING": 9,
+   "NA": 81,
+   "INVALIDATES": 2,
+   "NONE": 3
+  },
+  "D4": {
+   "NA": 82,
+   "NONE": 1,
+   "BIAS?": 1,
+   "WORDING": 11
+  },
+  "D5": {
+   "WORDING": 1,
+   "NA": 93,
+   "NONE": 1
+  },
+  "D8": {
+   "BIAS+": 2,
+   "NA": 89,
+   "NONE": 4
+  },
+  "D9": {
+   "NA": 91,
+   "BIAS?": 3,
+   "NONE": 1
+  },
+  "VR": {
+   "NA": 85,
+   "WORDING": 7,
+   "NONE": 3
+  },
+  "AC": {
+   "NA": 88,
+   "WORDING": 3,
+   "NONE": 4
+  },
+  "D24": {
+   "NA": 89,
+   "WORDING": 2,
+   "NONE": 4
+  },
+  "D10": {
+   "NA": 92,
+   "BIAS+": 2,
+   "WORDING": 1
+  },
+  "D11": {
+   "NA": 94,
+   "WORDING": 1
+  },
+  "D12": {
+   "NA": 84,
+   "NONE": 5,
+   "BIAS?": 5,
+   "BIAS+": 1
+  },
+  "XTG": {
+   "NA": 94,
+   "INVALIDATES": 1
+  },
+  "W25": {
+   "NONE": 5,
+   "NA": 81,
+   "WORDING": 4,
+   "BIAS-": 2,
+   "BIAS?": 2,
+   "INVALIDATES": 1
+  },
+  "W29": {
+   "NA": 74,
+   "WORDING": 13,
+   "NONE": 6,
+   "BIAS+": 2
+  }
+ },
+ "n_rows": 95,
+ "relabels": [
+  {
+   "id": "A-2 matched pairs",
+   "from": "HOLDS (pressure row EXTERNAL-scoped)",
+   "to": "HOLDS as recorded deltas of a cached single-draw metric"
+  },
+  {
+   "id": "S1C-P11-REASSAY / E-3",
+   "from": "57 survive; max P-11 depth 2 (2 runs)",
+   "to": "57 survive; 'max depth 2' unverified against D8"
+  },
+  {
+   "id": "C9-H1R",
+   "from": "COST_INTERACTION_ONLY (CONFIRM)",
+   "to": "COST_INTERACTION_ONLY -> DEGENERATE DESIGN (label ARTIFACT-RISK); robust fact: gated+VM recorded competence 0/60 (180/180 with transplant)"
+  },
+  {
+   "id": "X-H1-GRADIENT",
+   "from": "WEAK_SIGNAL (mechanism: guessers carry ungated competence)",
+   "to": "WEAK_SIGNAL (composition only); 'competence carried by guessers' -> 'cached scores carried by guessers'"
+  },
+  {
+   "id": "C9-H3",
+   "from": "NOT_DEMONSTRATED",
+   "to": "NOT_DEMONSTRATED -> INVALID / UNTESTABLE AS DESIGNED (withdraw the E-9 negative)"
+  },
+  {
+   "id": "C9-H3-NULL / X-H3-FLOW",
+   "from": "CLEAN_NULL: NOT_COMPETENT (niche-0 held 0.000)",
+   "to": "CLEAN_NULL -> UNINFORMATIVE (no selection channel; cached cross-niche held); 'transport works ~21%' stands (material tags)"
+  },
+  {
+   "id": "X-H3-EASIER",
+   "from": "CLEAN_NULL -> RETIRE_H3_STRUCTURAL",
+   "to": "RETIRE stands; reason re-worded"
+  },
+  {
+   "id": "C-DENSE",
+   "from": "CONFIRMED",
+   "to": "CONFIRMED (replication occurs; not heredity)"
+  },
+  {
+   "id": "C-ABLATE SEARCH",
+   "from": "CONFIRMED",
+   "to": "CONFIRMED-FRAGILE"
+  },
+  {
+   "id": "C-ABLATE ENERGY_FOR_DEPTH",
+   "from": "NOT_CONFIRMED",
+   "to": "NOT_CONFIRMED -> INELIGIBLE"
+  },
+  {
+   "id": "C-NORECOMB",
+   "from": "NOT_CONFIRMED",
+   "to": "NOT_CONFIRMED -> UNDERPOWERED"
+  },
+  {
+   "id": "C-RUNAWAY",
+   "from": "CONFIRMED",
+   "to": "CONFIRMED-FRAGILE"
+  },
+  {
+   "id": "X-DOSE-CURVE",
+   "from": "CLEAN_NULL ('founders are independent lottery tickets')",
+   "to": "CLEAN_NULL on its own doses; founder independence UNRESOLVED"
+  },
+  {
+   "id": "C-ATOMIC C2",
+   "from": "NOT_CONFIRMED",
+   "to": "NOT_CONFIRMED -> INELIGIBLE"
+  },
+  {
+   "id": "C-SWAP-ACQUIRE",
+   "from": "NOT_CONFIRMED",
+   "to": "NOT_CONFIRMED -> NEAR-MISS / UNDERPOWERED"
+  },
+  {
+   "id": "C-CORE",
+   "from": "CONFIRMED",
+   "to": "CONFIRMED-FRAGILE"
+  },
+  {
+   "id": "C-STATELESS-FFA6",
+   "from": "CONFIRMED (11/33 vs 34/42, p = 3.3e-5)",
+   "to": "CONFIRMED (prefer the unconditional endpoint)"
+  },
+  {
+   "id": "C-ZERO-SPECIFIC",
+   "from": "CONFIRMED (26/48 vs 2/48)",
+   "to": "CONFIRMED at run level -> 'establishment in the world the donors were screened for' (ARTIFACT-RISK for 'zero is special')"
+  },
+  {
+   "id": "C-A3-INTERNALIZE",
+   "from": "CONFIRMED (8 events, bar 4)",
+   "to": "CONFIRMED (as coded) -> CONFIRMED-FRAGILE: 4 persistent events = exactly the bar; 3 on a majority reading"
+  },
+  {
+   "id": "X-A3-WITHDRAW",
+   "from": "CLEAN_NULL (speed)",
+   "to": "CLEAN_NULL -> CEILING NULL: abrupt withdrawal did not reduce persistence (12/12); a speed effect was undetectable"
+  },
+  {
+   "id": "X-MAT-INTERNALIZE",
+   "from": "ENDOGENOUS (8/8 ENDOGENOUS_MATERIAL)",
+   "to": "ENDOGENOUS (MUT-neutral, 4 persistent + 4 transient; ARTIFACT-RISK, no positive control)"
+  },
+  {
+   "id": "X-TASK-GATE",
+   "from": "frozen, NOT RUN",
+   "to": "DO NOT DISPATCH AS FROZEN (errata filed)"
+  }
+ ],
+ "invalidations": [
+  {
+   "id": "X-H1-GRADIENT",
+   "defect": "H1C",
+   "why": "the mechanism reading. An answer-before-read genome has expected score 0.5/episode, yet >85% ABR populations hold mean training competence ~0.9 (dossier B U10): the recorded 'competence' of guessers is luck-of-cache selected by EXPLICIT_FITNESS. 'Guessers carry the gradient' describes cached scores, not task competence. The composition fact (no reader evolves) stands."
+  },
+  {
+   "id": "C9-H3",
+   "defect": "D2",
+   "why": "A and B are the same simulation in 64/64 bundles (same cell_id and seed); the easy niche exists only in scoring; C is unpaired from epoch 0 and is not a transport control."
+  },
+  {
+   "id": "C9-H3",
+   "defect": "D1",
+   "why": "the only A-vs-B differences are scoring: n_cross_events differs in 15/64, crossed_ever 5/64, from genome-keyed held crossing RESERVOIR niches."
+  },
+  {
+   "id": "C9-H3",
+   "defect": "D3",
+   "why": "both H3 pressures are aliased on the pair tape, so no channel exists by which easy-niche competence could be amplified or transported preferentially; the hypothesis was untestable in these cells."
+  },
+  {
+   "id": "C9-H3-NULL / X-H3-FLOW",
+   "defect": "D3",
+   "why": "the localization. NOVELTY is aliased to NONE on the pair tape: nothing selects for competence in any niche, so 'the chain fails at its first link' is guaranteed by design, not located by measurement."
+  },
+  {
+   "id": "X-TASK-GATE",
+   "defect": "D1",
+   "why": "ffa6 is COEVO_ENV x 4 niches; cached competence crosses niches and is the gate input."
+  },
+  {
+   "id": "X-TASK-GATE",
+   "defect": "XTG",
+   "why": "D6 reader filter uses the base cue index (ABR-niche readers never count); D15 a regime-blind echo scores held 0.74 and counts competent 200/200; D14 Stage 0 never exercises the pair path or CD; D13 INIT != sorting under ATOMIC; D7 revalidation is 100% cache hits."
+  },
+  {
+   "id": "X-TASK-GATE",
+   "defect": "W25",
+   "why": "RCF: CD = 0 by construction in Stage 0's EXTERNAL arms (confirmed in code by Nestor)."
+  }
+ ]
+}

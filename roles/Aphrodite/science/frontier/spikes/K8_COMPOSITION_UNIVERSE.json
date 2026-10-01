@@ -1,0 +1,946 @@
+{
+ "base": 557,
+ "composed": 199,
+ "rows": 179,
+ "fresh": [
+  {
+   "schema": "(1 + (acc + {H}))",
+   "inst": 6,
+   "NEW": false,
+   "n_new": 0,
+   "contains_G1": true
+  },
+  {
+   "schema": "(({H} + acc) * first)",
+   "inst": 6,
+   "NEW": true,
+   "n_new": 1,
+   "contains_G1": false
+  },
+  {
+   "schema": "pow({H}, (acc + first))",
+   "inst": 6,
+   "NEW": true,
+   "n_new": 1,
+   "contains_G1": true
+  },
+  {
+   "schema": "math.gcd(abs((1 + acc)), abs({H}))",
+   "inst": 6,
+   "NEW": true,
+   "n_new": 1,
+   "contains_G1": false
+  },
+  {
+   "schema": "math.gcd(abs((acc + {H})), abs(last))",
+   "inst": 6,
+   "NEW": true,
+   "n_new": 1,
+   "contains_G1": true
+  },
+  {
+   "schema": "(({H} + acc) * last)",
+   "inst": 6,
+   "NEW": true,
+   "n_new": 1,
+   "contains_G1": false
+  },
+  {
+   "schema": "(last - (acc + {H}))",
+   "inst": 6,
+   "NEW": true,
+   "n_new": 1,
+   "contains_G1": true
+  },
+  {
+   "schema": "math.gcd(abs(({H} + acc)), abs(v))",
+   "inst": 6,
+   "NEW": true,
+   "n_new": 6,
+   "contains_G1": false
+  },
+  {
+   "schema": "({H} * first)",
+   "inst": 161,
+   "NEW": true,
+   "n_new": 43,
+   "contains_G1": false
+  },
+  {
+   "schema": "({H} // (1 + acc))",
+   "inst": 6,
+   "NEW": true,
+   "n_new": 1,
+   "contains_G1": false
+  },
+  {
+   "schema": "(first - ({H} + acc))",
+   "inst": 6,
+   "NEW": true,
+   "n_new": 1,
+   "contains_G1": false
+  },
+  {
+   "schema": "(1 // ({H} + acc))",
+   "inst": 6,
+   "NEW": true,
+   "n_new": 1,
+   "contains_G1": false
+  },
+  {
+   "schema": "math.gcd(abs((acc + last)), abs({H}))",
+   "inst": 6,
+   "NEW": true,
+   "n_new": 1,
+   "contains_G1": true
+  },
+  {
+   "schema": "(first % {H})",
+   "inst": 161,
+   "NEW": true,
+   "n_new": 38,
+   "contains_G1": false
+  },
+  {
+   "schema": "pow(last, {H})",
+   "inst": 161,
+   "NEW": true,
+   "n_new": 41,
+   "contains_G1": false
+  },
+  {
+   "schema": "math.gcd(abs(0), abs((acc + {H})))",
+   "inst": 6,
+   "NEW": true,
+   "n_new": 1,
+   "contains_G1": true
+  },
+  {
+   "schema": "math.gcd(abs(({H} + acc)), abs(first))",
+   "inst": 6,
+   "NEW": true,
+   "n_new": 1,
+   "contains_G1": false
+  },
+  {
+   "schema": "((acc + first) + {H})",
+   "inst": 6,
+   "NEW": false,
+   "n_new": 0,
+   "contains_G1": true
+  },
+  {
+   "schema": "(last // (acc + {H}))",
+   "inst": 6,
+   "NEW": true,
+   "n_new": 1,
+   "contains_G1": true
+  },
+  {
+   "schema": "(last - ({H} + acc))",
+   "inst": 6,
+   "NEW": true,
+   "n_new": 1,
+   "contains_G1": false
+  },
+  {
+   "schema": "((acc + {H}) + {H})",
+   "inst": 6,
+   "NEW": false,
+   "n_new": 0,
+   "contains_G1": true
+  },
+  {
+   "schema": "(1 // {H})",
+   "inst": 161,
+   "NEW": true,
+   "n_new": 28,
+   "contains_G1": false
+  },
+  {
+   "schema": "(first % (acc + {H}))",
+   "inst": 6,
+   "NEW": true,
+   "n_new": 1,
+   "contains_G1": true
+  },
+  {
+   "schema": "pow(last, (acc + {H}))",
+   "inst": 6,
+   "NEW": true,
+   "n_new": 1,
+   "contains_G1": true
+  },
+  {
+   "schema": "math.gcd(abs(1), abs({H}))",
+   "inst": 161,
+   "NEW": true,
+   "n_new": 2,
+   "contains_G1": false
+  },
+  {
+   "schema": "({H} - (acc + first))",
+   "inst": 7,
+   "NEW": true,
+   "n_new": 1,
+   "contains_G1": true
+  },
+  {
+   "schema": "(0 // ({H} + acc))",
+   "inst": 6,
+   "NEW": true,
+   "n_new": 1,
+   "contains_G1": false
+  },
+  {
+   "schema": "math.gcd(abs({H}), abs((acc + v)))",
+   "inst": 6,
+   "NEW": true,
+   "n_new": 5,
+   "contains_G1": true
+  },
+  {
+   "schema": "(first % ({H} + acc))",
+   "inst": 6,
+   "NEW": true,
+   "n_new": 1,
+   "contains_G1": false
+  },
+  {
+   "schema": "(({H} + acc) + first)",
+   "inst": 6,
+   "NEW": false,
+   "n_new": 0,
+   "contains_G1": false
+  },
+  {
+   "schema": "({H} % (acc + first))",
+   "inst": 6,
+   "NEW": true,
+   "n_new": 1,
+   "contains_G1": true
+  },
+  {
+   "schema": "(1 - (acc + {H}))",
+   "inst": 6,
+   "NEW": true,
+   "n_new": 1,
+   "contains_G1": true
+  },
+  {
+   "schema": "(last % ({H} + acc))",
+   "inst": 6,
+   "NEW": true,
+   "n_new": 1,
+   "contains_G1": false
+  },
+  {
+   "schema": "((acc + acc) + {H})",
+   "inst": 6,
+   "NEW": false,
+   "n_new": 0,
+   "contains_G1": true
+  },
+  {
+   "schema": "(1 + ({H} + acc))",
+   "inst": 6,
+   "NEW": false,
+   "n_new": 0,
+   "contains_G1": false
+  },
+  {
+   "schema": "math.gcd(abs({H}), abs(last))",
+   "inst": 161,
+   "NEW": true,
+   "n_new": 41,
+   "contains_G1": false
+  },
+  {
+   "schema": "((acc + last) + {H})",
+   "inst": 6,
+   "NEW": false,
+   "n_new": 0,
+   "contains_G1": true
+  },
+  {
+   "schema": "math.gcd(abs({H}), abs((acc + acc)))",
+   "inst": 6,
+   "NEW": true,
+   "n_new": 1,
+   "contains_G1": true
+  },
+  {
+   "schema": "(first // ({H} + acc))",
+   "inst": 6,
+   "NEW": true,
+   "n_new": 1,
+   "contains_G1": false
+  },
+  {
+   "schema": "(acc - ({H} + acc))",
+   "inst": 6,
+   "NEW": false,
+   "n_new": 0,
+   "contains_G1": false
+  },
+  {
+   "schema": "pow(acc, ({H} + acc))",
+   "inst": 6,
+   "NEW": true,
+   "n_new": 1,
+   "contains_G1": false
+  },
+  {
+   "schema": "({H} + first)",
+   "inst": 161,
+   "NEW": true,
+   "n_new": 44,
+   "contains_G1": false
+  },
+  {
+   "schema": "((acc + v) + {H})",
+   "inst": 6,
+   "NEW": false,
+   "n_new": 0,
+   "contains_G1": true
+  },
+  {
+   "schema": "(1 - ({H} + acc))",
+   "inst": 6,
+   "NEW": true,
+   "n_new": 1,
+   "contains_G1": false
+  },
+  {
+   "schema": "math.gcd(abs(acc), abs(({H} + acc)))",
+   "inst": 6,
+   "NEW": true,
+   "n_new": 1,
+   "contains_G1": false
+  },
+  {
+   "schema": "({H} + (acc + first))",
+   "inst": 6,
+   "NEW": false,
+   "n_new": 0,
+   "contains_G1": true
+  },
+  {
+   "schema": "pow({H}, ({H} + acc))",
+   "inst": 6,
+   "NEW": true,
+   "n_new": 1,
+   "contains_G1": false
+  },
+  {
+   "schema": "(1 % {H})",
+   "inst": 161,
+   "NEW": true,
+   "n_new": 30,
+   "contains_G1": false
+  },
+  {
+   "schema": "math.gcd(abs({H}), abs((acc + last)))",
+   "inst": 6,
+   "NEW": true,
+   "n_new": 1,
+   "contains_G1": true
+  },
+  {
+   "schema": "pow(v, ({H} + acc))",
+   "inst": 6,
+   "NEW": true,
+   "n_new": 6,
+   "contains_G1": false
+  },
+  {
+   "schema": "(({H} + acc) + last)",
+   "inst": 6,
+   "NEW": false,
+   "n_new": 0,
+   "contains_G1": false
+  },
+  {
+   "schema": "(0 - ({H} + acc))",
+   "inst": 6,
+   "NEW": true,
+   "n_new": 1,
+   "contains_G1": false
+  },
+  {
+   "schema": "(acc % ({H} + acc))",
+   "inst": 6,
+   "NEW": true,
+   "n_new": 1,
+   "contains_G1": false
+  },
+  {
+   "schema": "(({H} + acc) + v)",
+   "inst": 6,
+   "NEW": false,
+   "n_new": 0,
+   "contains_G1": false
+  },
+  {
+   "schema": "(0 - (acc + {H}))",
+   "inst": 6,
+   "NEW": true,
+   "n_new": 1,
+   "contains_G1": true
+  },
+  {
+   "schema": "((acc + {H}) + first)",
+   "inst": 6,
+   "NEW": false,
+   "n_new": 0,
+   "contains_G1": true
+  },
+  {
+   "schema": "(last % {H})",
+   "inst": 161,
+   "NEW": true,
+   "n_new": 40,
+   "contains_G1": false
+  },
+  {
+   "schema": "(first // (acc + {H}))",
+   "inst": 6,
+   "NEW": true,
+   "n_new": 1,
+   "contains_G1": true
+  },
+  {
+   "schema": "math.gcd(abs((acc + {H})), abs(first))",
+   "inst": 6,
+   "NEW": true,
+   "n_new": 1,
+   "contains_G1": true
+  },
+  {
+   "schema": "({H} % (1 + acc))",
+   "inst": 6,
+   "NEW": true,
+   "n_new": 1,
+   "contains_G1": false
+  },
+  {
+   "schema": "(1 - {H})",
+   "inst": 161,
+   "NEW": true,
+   "n_new": 40,
+   "contains_G1": false
+  },
+  {
+   "schema": "({H} - (1 + acc))",
+   "inst": 7,
+   "NEW": true,
+   "n_new": 1,
+   "contains_G1": false
+  },
+  {
+   "schema": "((acc + first) * {H})",
+   "inst": 6,
+   "NEW": true,
+   "n_new": 1,
+   "contains_G1": true
+  },
+  {
+   "schema": "math.gcd(abs({H}), abs((acc + first)))",
+   "inst": 6,
+   "NEW": true,
+   "n_new": 1,
+   "contains_G1": true
+  },
+  {
+   "schema": "math.gcd(abs((acc + first)), abs({H}))",
+   "inst": 6,
+   "NEW": true,
+   "n_new": 1,
+   "contains_G1": true
+  },
+  {
+   "schema": "(first - (acc + {H}))",
+   "inst": 6,
+   "NEW": true,
+   "n_new": 1,
+   "contains_G1": true
+  },
+  {
+   "schema": "({H} + last)",
+   "inst": 161,
+   "NEW": true,
+   "n_new": 44,
+   "contains_G1": false
+  },
+  {
+   "schema": "(v - ({H} + acc))",
+   "inst": 6,
+   "NEW": true,
+   "n_new": 6,
+   "contains_G1": false
+  },
+  {
+   "schema": "(0 % {H})",
+   "inst": 161,
+   "NEW": true,
+   "n_new": 23,
+   "contains_G1": false
+  },
+  {
+   "schema": "((acc + {H}) + last)",
+   "inst": 6,
+   "NEW": false,
+   "n_new": 0,
+   "contains_G1": true
+  },
+  {
+   "schema": "({H} // ({H} + acc))",
+   "inst": 6,
+   "NEW": true,
+   "n_new": 1,
+   "contains_G1": false
+  },
+  {
+   "schema": "(({H} + acc) * v)",
+   "inst": 6,
+   "NEW": true,
+   "n_new": 6,
+   "contains_G1": false
+  },
+  {
+   "schema": "math.gcd(abs({H}), abs(first))",
+   "inst": 161,
+   "NEW": true,
+   "n_new": 41,
+   "contains_G1": false
+  },
+  {
+   "schema": "(last // {H})",
+   "inst": 161,
+   "NEW": true,
+   "n_new": 41,
+   "contains_G1": false
+  },
+  {
+   "schema": "(acc * ({H} + acc))",
+   "inst": 6,
+   "NEW": true,
+   "n_new": 1,
+   "contains_G1": false
+  },
+  {
+   "schema": "(last % (acc + {H}))",
+   "inst": 6,
+   "NEW": true,
+   "n_new": 1,
+   "contains_G1": true
+  },
+  {
+   "schema": "pow({H}, (acc + last))",
+   "inst": 6,
+   "NEW": true,
+   "n_new": 1,
+   "contains_G1": true
+  },
+  {
+   "schema": "math.gcd(abs((acc + acc)), abs({H}))",
+   "inst": 6,
+   "NEW": true,
+   "n_new": 1,
+   "contains_G1": true
+  },
+  {
+   "schema": "pow(0, ({H} + acc))",
+   "inst": 6,
+   "NEW": true,
+   "n_new": 1,
+   "contains_G1": false
+  },
+  {
+   "schema": "((1 + acc) * {H})",
+   "inst": 6,
+   "NEW": true,
+   "n_new": 1,
+   "contains_G1": false
+  },
+  {
+   "schema": "((1 + acc) + {H})",
+   "inst": 6,
+   "NEW": false,
+   "n_new": 0,
+   "contains_G1": false
+  },
+  {
+   "schema": "math.gcd(abs({H}), abs((1 + acc)))",
+   "inst": 6,
+   "NEW": true,
+   "n_new": 1,
+   "contains_G1": false
+  },
+  {
+   "schema": "(0 % ({H} + acc))",
+   "inst": 6,
+   "NEW": true,
+   "n_new": 1,
+   "contains_G1": false
+  },
+  {
+   "schema": "pow(last, ({H} + acc))",
+   "inst": 6,
+   "NEW": true,
+   "n_new": 1,
+   "contains_G1": false
+  },
+  {
+   "schema": "(acc // ({H} + acc))",
+   "inst": 6,
+   "NEW": true,
+   "n_new": 1,
+   "contains_G1": false
+  },
+  {
+   "schema": "((acc + v) * {H})",
+   "inst": 6,
+   "NEW": true,
+   "n_new": 4,
+   "contains_G1": true
+  },
+  {
+   "schema": "({H} + (acc + last))",
+   "inst": 6,
+   "NEW": false,
+   "n_new": 0,
+   "contains_G1": true
+  },
+  {
+   "schema": "((acc + {H}) * first)",
+   "inst": 6,
+   "NEW": true,
+   "n_new": 1,
+   "contains_G1": true
+  },
+  {
+   "schema": "(last // ({H} + acc))",
+   "inst": 6,
+   "NEW": true,
+   "n_new": 1,
+   "contains_G1": false
+  },
+  {
+   "schema": "(first // {H})",
+   "inst": 161,
+   "NEW": true,
+   "n_new": 39,
+   "contains_G1": false
+  },
+  {
+   "schema": "({H} % (acc + last))",
+   "inst": 6,
+   "NEW": true,
+   "n_new": 1,
+   "contains_G1": true
+  },
+  {
+   "schema": "(first - {H})",
+   "inst": 161,
+   "NEW": true,
+   "n_new": 44,
+   "contains_G1": false
+  },
+  {
+   "schema": "({H} - acc)",
+   "inst": 6,
+   "NEW": true,
+   "n_new": 1,
+   "contains_G1": false
+  },
+  {
+   "schema": "({H} - ({H} + acc))",
+   "inst": 6,
+   "NEW": true,
+   "n_new": 1,
+   "contains_G1": false
+  },
+  {
+   "schema": "math.gcd(abs(1), abs((acc + {H})))",
+   "inst": 6,
+   "NEW": false,
+   "n_new": 0,
+   "contains_G1": true
+  },
+  {
+   "schema": "(1 // (acc + {H}))",
+   "inst": 6,
+   "NEW": true,
+   "n_new": 1,
+   "contains_G1": true
+  },
+  {
+   "schema": "pow(1, ({H} + acc))",
+   "inst": 6,
+   "NEW": true,
+   "n_new": 1,
+   "contains_G1": false
+  },
+  {
+   "schema": "math.gcd(abs(0), abs(({H} + acc)))",
+   "inst": 6,
+   "NEW": true,
+   "n_new": 1,
+   "contains_G1": false
+  },
+  {
+   "schema": "math.gcd(abs(1), abs(({H} + acc)))",
+   "inst": 6,
+   "NEW": false,
+   "n_new": 0,
+   "contains_G1": false
+  },
+  {
+   "schema": "pow(0, {H})",
+   "inst": 161,
+   "NEW": true,
+   "n_new": 23,
+   "contains_G1": false
+  },
+  {
+   "schema": "math.gcd(abs((acc + {H})), abs({H}))",
+   "inst": 6,
+   "NEW": true,
+   "n_new": 1,
+   "contains_G1": true
+  },
+  {
+   "schema": "(v // ({H} + acc))",
+   "inst": 6,
+   "NEW": true,
+   "n_new": 6,
+   "contains_G1": false
+  },
+  {
+   "schema": "(1 % ({H} + acc))",
+   "inst": 6,
+   "NEW": true,
+   "n_new": 1,
+   "contains_G1": false
+  },
+  {
+   "schema": "({H} + (1 + acc))",
+   "inst": 6,
+   "NEW": false,
+   "n_new": 0,
+   "contains_G1": false
+  },
+  {
+   "schema": "math.gcd(abs(({H} + acc)), abs(last))",
+   "inst": 6,
+   "NEW": true,
+   "n_new": 1,
+   "contains_G1": false
+  },
+  {
+   "schema": "({H} % ({H} + acc))",
+   "inst": 6,
+   "NEW": true,
+   "n_new": 1,
+   "contains_G1": false
+  },
+  {
+   "schema": "({H} // (acc + first))",
+   "inst": 6,
+   "NEW": true,
+   "n_new": 1,
+   "contains_G1": true
+  },
+  {
+   "schema": "(0 % (acc + {H}))",
+   "inst": 6,
+   "NEW": true,
+   "n_new": 1,
+   "contains_G1": true
+  },
+  {
+   "schema": "((acc + acc) * {H})",
+   "inst": 6,
+   "NEW": true,
+   "n_new": 1,
+   "contains_G1": true
+  },
+  {
+   "schema": "(0 // (acc + {H}))",
+   "inst": 6,
+   "NEW": true,
+   "n_new": 1,
+   "contains_G1": true
+  },
+  {
+   "schema": "({H} - (acc + last))",
+   "inst": 7,
+   "NEW": true,
+   "n_new": 1,
+   "contains_G1": true
+  },
+  {
+   "schema": "({H} + ({H} + acc))",
+   "inst": 6,
+   "NEW": false,
+   "n_new": 0,
+   "contains_G1": false
+  },
+  {
+   "schema": "pow(first, {H})",
+   "inst": 161,
+   "NEW": true,
+   "n_new": 41,
+   "contains_G1": false
+  },
+  {
+   "schema": "(1 + {H})",
+   "inst": 161,
+   "NEW": true,
+   "n_new": 44,
+   "contains_G1": false
+  },
+  {
+   "schema": "(0 - {H})",
+   "inst": 161,
+   "NEW": true,
+   "n_new": 38,
+   "contains_G1": false
+  },
+  {
+   "schema": "math.gcd(abs({H}), abs(({H} + acc)))",
+   "inst": 6,
+   "NEW": true,
+   "n_new": 1,
+   "contains_G1": false
+  },
+  {
+   "schema": "pow(1, {H})",
+   "inst": 160,
+   "NEW": true,
+   "n_new": 25,
+   "contains_G1": false
+  },
+  {
+   "schema": "pow(1, (acc + {H}))",
+   "inst": 6,
+   "NEW": true,
+   "n_new": 1,
+   "contains_G1": true
+  },
+  {
+   "schema": "({H} // (acc + last))",
+   "inst": 6,
+   "NEW": true,
+   "n_new": 1,
+   "contains_G1": true
+  },
+  {
+   "schema": "((acc + {H}) * {H})",
+   "inst": 6,
+   "NEW": true,
+   "n_new": 1,
+   "contains_G1": true
+  },
+  {
+   "schema": "(last - {H})",
+   "inst": 161,
+   "NEW": true,
+   "n_new": 44,
+   "contains_G1": false
+  },
+  {
+   "schema": "({H} + (acc + acc))",
+   "inst": 6,
+   "NEW": false,
+   "n_new": 0,
+   "contains_G1": true
+  },
+  {
+   "schema": "pow({H}, (1 + acc))",
+   "inst": 6,
+   "NEW": true,
+   "n_new": 1,
+   "contains_G1": false
+  },
+  {
+   "schema": "(0 // {H})",
+   "inst": 161,
+   "NEW": true,
+   "n_new": 23,
+   "contains_G1": false
+  },
+  {
+   "schema": "pow(first, ({H} + acc))",
+   "inst": 6,
+   "NEW": true,
+   "n_new": 1,
+   "contains_G1": false
+  },
+  {
+   "schema": "((acc + {H}) * last)",
+   "inst": 6,
+   "NEW": true,
+   "n_new": 1,
+   "contains_G1": true
+  },
+  {
+   "schema": "((acc + last) * {H})",
+   "inst": 6,
+   "NEW": true,
+   "n_new": 1,
+   "contains_G1": true
+  },
+  {
+   "schema": "math.gcd(abs((acc + v)), abs({H}))",
+   "inst": 6,
+   "NEW": true,
+   "n_new": 5,
+   "contains_G1": true
+  },
+  {
+   "schema": "(1 % (acc + {H}))",
+   "inst": 6,
+   "NEW": true,
+   "n_new": 1,
+   "contains_G1": true
+  },
+  {
+   "schema": "pow(first, (acc + {H}))",
+   "inst": 6,
+   "NEW": true,
+   "n_new": 1,
+   "contains_G1": true
+  },
+  {
+   "schema": "({H} + (acc + v))",
+   "inst": 6,
+   "NEW": false,
+   "n_new": 0,
+   "contains_G1": true
+  },
+  {
+   "schema": "(v % ({H} + acc))",
+   "inst": 6,
+   "NEW": true,
+   "n_new": 6,
+   "contains_G1": false
+  },
+  {
+   "schema": "({H} * last)",
+   "inst": 161,
+   "NEW": true,
+   "n_new": 43,
+   "contains_G1": false
+  },
+  {
+   "schema": "pow(0, (acc + {H}))",
+   "inst": 6,
+   "NEW": true,
+   "n_new": 1,
+   "contains_G1": true
+  }
+ ],
+ "fresh_new": 112
+}

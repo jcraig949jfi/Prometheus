@@ -1,0 +1,18 @@
+[
+ {
+  "rev": 1,
+  "what": "initial spec: S1 mean probes(X)/mean probes(GREEDY_REF) <= 0.95 (beat greedy information gain by 5%); S2 mean probes <= 9.0; S3 bits per probe log2(64)/mean >= 0.65",
+  "result": "PC (truth oracle) S1=0.389 S2=2.34 S3=2.56; NULL_TWIN S1=2.19 S2=13.18 S3=0.455; all attainable and discriminating on the oracle, BUT GREEDY_REF mean = 6.019 probes against an entropy lower bound of 6.0 for any policy that does not know the truth, so the S1 bar (5.718) is reachable ONLY by the oracle. Not frozen by the added legitimate-policy feasibility check.",
+  "why_changed": "this is the W4 defect in another form (a threshold the positive control reaches only because it is an oracle). Beating greedy in mean probes is information-theoretically impossible on this substrate; S1 reformulated as parity with greedy, S3 (redundant with S2: bits = 6/mean) replaced by a worst-case clause, the property a separating family is supposed to buy"
+ },
+ {
+  "rev": 2,
+  "what": "S1 mean probes(X)/mean probes(GREEDY_REF) <= 1.05 (parity: no more than 5% worse than greedy); S2 unchanged (<= 9.0); S3 95th-percentile probes over 640 episodes <= 8",
+  "why_changed": "see rev 1; thresholds set before any treatment exists, from control values and the entropy bound only"
+ },
+ {
+  "rev": 3,
+  "what": "F2 threshold 0.60 -> 0.75 (spec only; controls unchanged)",
+  "why_changed": "at 0.60 a treatment with mean 7.9-9.0 probes would meet S2 and F2 at once (contradictory clauses); 0.75 x twin 13.18 = 9.89 > S2 bar 9.0, and any treatment meeting S1 (<= 6.32) has F2 ratio <= 0.48, F1 <= 1.05, F3 p95 <= 8, so success and failure regions are disjoint"
+ }
+]

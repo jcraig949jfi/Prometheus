@@ -20,13 +20,10 @@ Invariants this module enforces:
 """
 from __future__ import annotations
 
-import datetime
 import hashlib
 import json
 import os
-import re
 import secrets
-import time
 import sys
 from pathlib import Path
 from typing import Any, Dict, Iterable, List, Optional, Sequence
@@ -58,6 +55,35 @@ def schema() -> str:
     return s
 
 
+# DEF-ODY-019: libpq connections had no TCP keepalive or user timeout. After a network blip, a half-open socket made
+# every store call wait forever (the ubu001 workers stopped claiming for ~36 min, 2026-09-30). These options make a
+# dead peer raise within about a minute, so the callers' existing reconnect paths run.
+TCP_OPTS = (("SO_KEEPALIVE", 1, "SOL_SOCKET"), ("TCP_KEEPIDLE", 30, "IPPROTO_TCP"), ("TCP_KEEPINTVL", 10, "IPPROTO_TCP"),
+            ("TCP_KEEPCNT", 3, "IPPROTO_TCP"), ("TCP_USER_TIMEOUT", 60000, "IPPROTO_TCP"))
+
+
+def _harden_socket(conn) -> None:
+    """Set keepalive + TCP_USER_TIMEOUT on the connection's socket. Linux only, and fail-soft: hardening must never
+    break a connect. DEF-ODY-023: on Windows the libpq socket is a WinSock handle, not a CRT fd, so os.dup() raised
+    and every Fabric CLI call failed. The long-running workers that need this are Linux."""
+    if not sys.platform.startswith("linux"):
+        return
+    import socket
+    try:
+        s = socket.socket(fileno=os.dup(conn.fileno()))    # a dup of the same socket: options apply to it
+    except Exception:
+        return
+    try:
+        for name, val, level in TCP_OPTS:
+            if hasattr(socket, name):
+                try:
+                    s.setsockopt(getattr(socket, level), getattr(socket, name), val)
+                except OSError:
+                    pass
+    finally:
+        s.close()
+
+
 def connect(require_schema: bool = True):
     """The canonical store, through comms's resolver and identity guard: a
     fabric on the wrong cluster fails closed (WrongEnvironment), exactly as
@@ -67,6 +93,7 @@ def connect(require_schema: bool = True):
     from evidence_wiki.ew import db as ewdb
     from comms import identity
     conn = ewdb.connect()
+    _harden_socket(conn)
     try:
         identity.require(conn, identity.current_environment())
     except identity.WrongEnvironment:
@@ -243,77 +270,16 @@ def _expire_stale_lease(cur, resource: str, actor: str) -> None:
         _event(cur, actor, "lease_expired", attempt_id=aid, lease_id=lid, resource=resource, holder=holder)
 
 
-# ---------------------------------------------------------------- legacy host-file leases (migration surface)
-# Operator ruling 2026-09-28: the fabric lease is the ONE authority for new work. The ARC3 convention (Ananke/Nestor:
-# ~/ananke_runs/leases/<res>.json on the host + a comms record "LEASE ACQUIRE|EXTEND|RELEASE <HOST> <res>: ...")
-# is a compatibility surface only: before granting a fabric lease on "<host>:<res>" the store checks it, so legacy
-# holders are never invisible. It is read-only and fails closed (an unreadable legacy view raises -> no lease).
-LEGACY_SUBJECT = re.compile(r"^LEASE (ACQUIRE|EXTEND|RELEASE) (\S+) (\S+?):", re.I)
-LEGACY_UNTIL = re.compile(r"until (\d{4}-\d\d-\d\d)[ T](\d\d:\d\d)(?::\d\d)?Z")
-HOST_RESOURCE = re.compile(r"^([A-Za-z0-9_.-]+):([A-Za-z0-9_.-]+)$")
-
-
-def _legacy_table() -> str:
-    t = os.environ.get("FABRIC_LEGACY_LEASE_TABLE", os.environ.get("COMMS_SCHEMA", "comms") + ".messages")
-    if not re.fullmatch(r"[A-Za-z_][A-Za-z0-9_]*\.[A-Za-z_][A-Za-z0-9_]*", t):
-        raise FabricError("bad FABRIC_LEGACY_LEASE_TABLE")
-    return t
-
-
-def _epoch(v) -> Optional[float]:
-    if isinstance(v, (int, float)):
-        return float(v)
-    if isinstance(v, str):
-        m = re.match(r"(\d{4}-\d\d-\d\d)[ T](\d\d:\d\d)(?::(\d\d))?", v)
-        if m:
-            return datetime.datetime.strptime(m.group(1) + " " + m.group(2) + ":" + (m.group(3) or "00"),
-                                              "%Y-%m-%d %H:%M:%S").replace(tzinfo=datetime.timezone.utc).timestamp()
-    return None
-
-
-def legacy_holder(cur, resource: str, claimant_host: str) -> Optional[str]:
-    """A description of a live legacy lease on `resource` ("<host>:<res>"), else None."""
-    m = HOST_RESOURCE.match(resource)
-    if not m:
-        return None
-    lhost, lres = m.group(1), m.group(2)
-    cur.execute("SELECT extract(epoch FROM now())")
-    now = float(cur.fetchone()[0])
-    cur.execute("SELECT id, subject, body FROM {} WHERE subject ~* %s ORDER BY id DESC LIMIT 1".format(_legacy_table()),
-                ("^LEASE (ACQUIRE|EXTEND|RELEASE) " + re.escape(lhost) + " " + re.escape(lres) + ":",))
-    row = cur.fetchone()
-    if row and row[1].split()[1].upper() in ("ACQUIRE", "EXTEND"):
-        u = LEGACY_UNTIL.search(row[1])
-        until = _epoch(u.group(1) + " " + u.group(2)) if u else None
-        if until is None:
-            try:
-                until = _epoch(json.loads(row[2]).get("until"))
-            except (ValueError, AttributeError):
-                until = None
-        if until is None or until > now:                          # unparsable expiry: held (fail closed)
-            return "legacy lease (comms #{}): {}".format(row[0], row[1][:160])
-    if claimant_host.lower() == lhost.lower():
-        f = Path(os.environ.get("FABRIC_LEGACY_LEASE_DIR", os.path.expanduser("~/ananke_runs/leases"))) / (lres + ".json")
-        if f.exists():
-            try:
-                rec = json.loads(f.read_text())
-                until = _epoch(rec.get("until"))
-            except (OSError, ValueError, AttributeError):
-                rec, until = {}, None
-            if until is None or until > time.time():
-                return "legacy lease file {} (owner {!r})".format(f, rec.get("owner"))
-    return None
+# ---------------------------------------------------------------- leases
+# The fabric lease is the ONE authority (operator ruling 2026-09-28). The ARC3 legacy detection (comms LEASE records,
+# ~/ananke_runs/leases/*.json host files) was removed on 2026-09-30 under CWO 2026-09-30 (Odysseus NEXT), after the
+# lease cutover 8370083ae was merged by every helper user (Archaeon #902, Nestor #904, Ananke #934). See FREEZE.md.
 
 
 def _try_lease(cur, resource: str, holder: str, host: str, purpose: str, ttl_s: int, actor: str,
                attempt_id: Optional[str] = None) -> Optional[Dict[str, Any]]:
-    """Inside the caller's transaction: refuse if a legacy lease holds it,
-    expire a stale holder, then insert. A unique violation means BUSY; the
-    savepoint keeps the transaction usable."""
-    legacy = legacy_holder(cur, resource, host)
-    if legacy:
-        _event(cur, actor, "legacy_lease_busy", attempt_id=attempt_id, resource=resource, legacy=legacy)
-        return None
+    """Inside the caller's transaction: expire a stale holder, then insert.
+    A unique violation means BUSY; the savepoint keeps the transaction usable."""
     _expire_stale_lease(cur, resource, actor)
     lid, token = new_id("lse"), secrets.token_hex(8)
     cur.execute("SAVEPOINT lease_try")
@@ -345,7 +311,7 @@ def lease_acquire(conn, resource: str, holder: str, host: str, *, purpose: str =
     cur = conn.cursor()
     got = _try_lease(cur, resource, holder, host, purpose, ttl_s, holder)
     if got is None:
-        h = lease_holder(cur, resource) or {"legacy": legacy_holder(cur, resource, host)}; conn.commit()
+        h = lease_holder(cur, resource); conn.commit()
         return {"result": "BUSY", "resource": resource, "held_by": h}
     conn.commit()
     return dict(got, result="ACQUIRED")
@@ -418,11 +384,10 @@ def claim(conn, agent: str, instance: str, host: str, capabilities: Sequence[str
         if busy is not None:
             cur.execute("ROLLBACK TO SAVEPOINT claim_try")
             h = lease_holder(cur, busy)
-            legacy = None if h else legacy_holder(cur, busy, host)
-            reason = "resource {} busy".format(busy) + (" ({})".format(legacy[:120]) if legacy else "")
+            reason = "resource {} busy".format(busy)
             if waiting != reason:
                 cur.execute("UPDATE {} SET waiting_reason = %s, updated_at = now() WHERE task_id = %s".format(_t("tasks")), (reason, task_id))
-                _event(cur, actor, "resource_busy", task_id=task_id, resource=busy, held_by=(h or {}).get("holder") or legacy)
+                _event(cur, actor, "resource_busy", task_id=task_id, resource=busy, held_by=(h or {}).get("holder"))
             continue
         cur.execute("RELEASE SAVEPOINT claim_try")
         cur.execute("UPDATE {} SET lease_ids = %s WHERE attempt_id = %s".format(_t("attempts")), ([g["lease_id"] for g in got], aid))

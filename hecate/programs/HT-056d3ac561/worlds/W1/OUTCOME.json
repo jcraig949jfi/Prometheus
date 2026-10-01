@@ -1,0 +1,126 @@
+{
+ "triplicateId": "HT-056d3ac561",
+ "world": "W1",
+ "outcome": "INSTRUMENT_FAIL",
+ "statistics": {
+  "criterion_delta_0.1": {
+   "n_mismatched": 50,
+   "n_matched": 50,
+   "AUC_D": 0.4932,
+   "AUC_NIS": 0.49039999999999995,
+   "AUC_null_twin": 0.4168,
+   "loc_top1_acc": 0.0,
+   "loc_literal_mean_reading_acc": 0.02,
+   "loc_sensitivity_norm_only_acc": 0.16,
+   "AUC_oracle_rmse": 0.49,
+   "AUC_cheat": 1.0,
+   "loc_cheat": 1.0,
+   "mean_D_mismatched": 4.036191130495718,
+   "mean_NIS_mismatched": 4.022545417030738,
+   "success_met": false,
+   "failure_met": true
+  },
+  "other_deltas": {
+   "0.05": {
+    "n_mismatched": 50,
+    "n_matched": 50,
+    "AUC_D": 0.48560000000000003,
+    "AUC_NIS": 0.4724,
+    "AUC_null_twin": 0.486,
+    "loc_top1_acc": 0.12,
+    "loc_literal_mean_reading_acc": 0.02,
+    "loc_sensitivity_norm_only_acc": 0.16,
+    "AUC_oracle_rmse": 0.47640000000000005,
+    "AUC_cheat": 1.0,
+    "loc_cheat": 1.0,
+    "mean_D_mismatched": 4.030960522870414,
+    "mean_NIS_mismatched": 4.013041697787798,
+    "success_met": false,
+    "failure_met": true
+   },
+   "0.2": {
+    "n_mismatched": 50,
+    "n_matched": 50,
+    "AUC_D": 0.522,
+    "AUC_NIS": 0.5604,
+    "AUC_null_twin": 0.2864,
+    "loc_top1_acc": 0.0,
+    "loc_literal_mean_reading_acc": 0.02,
+    "loc_sensitivity_norm_only_acc": 0.16,
+    "AUC_oracle_rmse": 0.5576,
+    "AUC_cheat": 1.0,
+    "loc_cheat": 1.0,
+    "mean_D_mismatched": 4.063305902472024,
+    "mean_NIS_mismatched": 4.056659044415027,
+    "success_met": false,
+    "failure_met": true
+   }
+  },
+  "CONTROL": {
+   "n": 50,
+   "mean_D": 4.027940878984006,
+   "mean_NIS": 4.026843169769284,
+   "mean_D_null": 23624.325820686117,
+   "min_eig_P2_minus_P1": 4.2707425557185725e-05,
+   "top1_distribution": {
+    "8": 1,
+    "13": 49
+   }
+  },
+  "TREATMENT_delta_0.1": {
+   "n": 50,
+   "mean_D": 4.036191130495718,
+   "mean_NIS": 4.022545417030738,
+   "true_entry_distribution": {
+    "0": 2,
+    "2": 3,
+    "3": 2,
+    "4": 5,
+    "5": 3,
+    "6": 4,
+    "7": 1,
+    "8": 4,
+    "9": 8,
+    "10": 2,
+    "11": 7,
+    "12": 1,
+    "13": 2,
+    "14": 4,
+    "15": 2
+   }
+  }
+ },
+ "criterion_as_applied": "delta=0.1, 50 mismatched (seeds 1000-1049, +delta on one uniformly drawn entry of A in the filter model) vs 50 matched (seeds 0-49): success iff AUC(D)>=0.80 AND AUC(D)>=AUC(NIS)+0.05 AND Lasso top-1 accuracy>=0.60 AND null-twin AUC<=0.60; failure iff AUC(D)<0.70 or AUC(D)<=AUC(NIS) or accuracy<0.25 or null-twin AUC>0.60. AUC one-sided (larger stat = mismatch). D = mean over even t in [50,498] of d^T (P2-P1)^-1 d. PC detected iff oracle-RMSE AUC>=0.80; cheat detected iff success criterion met on CHEAT values; null twin meets success iff AUC(D_null)>=0.80 and >=AUC(NIS)+0.05.",
+ "success_met": false,
+ "failure_met": true,
+ "positive_control_detected": false,
+ "cheat_detected": true,
+ "null_twin_meets_success": false,
+ "stupid_explanations_status": [
+  {
+   "text": "mismatch also inflates innovations, so any statistic detects it",
+   "addressed_by_this_run": true,
+   "how": "AUC(D)=0.493 vs AUC(NIS)=0.490 on the same runs; null-twin AUC=0.417"
+  },
+  {
+   "text": "normalization miscomputed so the matched model already looks mismatched",
+   "addressed_by_this_run": true,
+   "how": "matched-model mean D=4.028 (exact expectation 4 if normalization is right); mean NIS=4.027"
+  },
+  {
+   "text": "Lasso localizes by sensitivity magnitude alone regardless of data",
+   "addressed_by_this_run": true,
+   "how": "data-free argmax-sensitivity-norm accuracy=0.160 vs Lasso 0.000; matched-run top-1 distribution recorded"
+  }
+ ],
+ "anomalies": [
+  "delta=0.05: oracle true-state-RMSE AUC 0.476 ~ chance; mismatch not visible between seeds even with ground truth",
+  "delta=0.1: oracle true-state-RMSE AUC 0.490 ~ chance; mismatch not visible between seeds even with ground truth",
+  "delta=0.2: oracle true-state-RMSE AUC 0.558 ~ chance; mismatch not visible between seeds even with ground truth",
+  "Lasso top-1 accuracy 0.000 below data-free sensitivity-norm baseline 0.160",
+  "matched-run Lasso top-1 concentrated on entry 13 (49/50)"
+ ],
+ "core_minutes": 0.778,
+ "attempts": 1,
+ "notes": "At delta=0.1 the stride disagreement statistic D gave AUC 0.493 against NIS AUC 0.490 (50 vs 50 runs); Lasso top-1 localization accuracy was 0.000 (chance 0.0625; data-free sensitivity-norm baseline 0.160); null-twin AUC 0.417. Oracle RMSE AUC 0.490; cheat success=True. Matched-model mean D 4.028 (expected 4). Outcome INSTRUMENT_FAIL by the PREREG class rules applied in code."
+}

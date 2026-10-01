@@ -1,0 +1,773 @@
+{
+ "all_expectations_met": true,
+ "controls_and_expectations": [
+  {
+   "check": "A5 I1 defined and HOLDS on BASE",
+   "detail": {
+    "count": 0,
+    "eligible": 74,
+    "verdict": "HOLDS"
+   },
+   "ok": true
+  },
+  {
+   "check": "A5 I1 defined and HOLDS on SEVER",
+   "detail": {
+    "count": 0,
+    "eligible": 32,
+    "verdict": "HOLDS"
+   },
+   "ok": true
+  },
+  {
+   "check": "A5 I2 defined and HOLDS on BASE",
+   "detail": {
+    "count": 0,
+    "eligible": 23,
+    "verdict": "HOLDS"
+   },
+   "ok": true
+  },
+  {
+   "check": "A5 I2 defined and HOLDS on SEVER",
+   "detail": {
+    "count": 0,
+    "eligible": 8,
+    "verdict": "HOLDS"
+   },
+   "ok": true
+  },
+  {
+   "check": "A5 I3 defined and HOLDS on BASE",
+   "detail": {
+    "count": 0,
+    "eligible": 74,
+    "verdict": "HOLDS"
+   },
+   "ok": true
+  },
+  {
+   "check": "A5 I3 defined and HOLDS on SEVER",
+   "detail": {
+    "count": 0,
+    "eligible": 32,
+    "verdict": "HOLDS"
+   },
+   "ok": true
+  },
+  {
+   "check": "A5 I4 defined and HOLDS on BASE",
+   "detail": {
+    "count": 0,
+    "eligible": 57,
+    "verdict": "HOLDS"
+   },
+   "ok": true
+  },
+  {
+   "check": "A5 I4 defined and HOLDS on SEVER",
+   "detail": {
+    "count": 0,
+    "eligible": 58,
+    "verdict": "HOLDS"
+   },
+   "ok": true
+  },
+  {
+   "check": "A5 I6a defined and HOLDS on BASE",
+   "detail": {
+    "count": 0,
+    "eligible": 80,
+    "verdict": "HOLDS"
+   },
+   "ok": true
+  },
+  {
+   "check": "A5 I6a defined and HOLDS on SEVER",
+   "detail": {
+    "count": 0,
+    "eligible": 66,
+    "verdict": "HOLDS"
+   },
+   "ok": true
+  },
+  {
+   "check": "A5 I6b defined and HOLDS on BASE",
+   "detail": {
+    "count": 0,
+    "eligible": 80,
+    "verdict": "HOLDS"
+   },
+   "ok": true
+  },
+  {
+   "check": "A5 I6b defined and HOLDS on SEVER",
+   "detail": {
+    "count": 0,
+    "eligible": 66,
+    "verdict": "HOLDS"
+   },
+   "ok": true
+  },
+  {
+   "check": "A5 I7 defined and HOLDS on BASE",
+   "detail": {
+    "count": 0,
+    "eligible": 41,
+    "verdict": "HOLDS"
+   },
+   "ok": true
+  },
+  {
+   "check": "A5 I7 defined and HOLDS on SEVER",
+   "detail": {
+    "count": 0,
+    "eligible": 21,
+    "verdict": "HOLDS"
+   },
+   "ok": true
+  },
+  {
+   "check": "A5 I5 defined and HOLDS on HIST0",
+   "detail": {
+    "count": 0,
+    "eligible": 57,
+    "verdict": "HOLDS"
+   },
+   "ok": true
+  },
+  {
+   "check": "A5 I8 defined and HOLDS on SEVER",
+   "detail": {
+    "count": 0,
+    "eligible": 50,
+    "max_rows_before": 14,
+    "roots": 31,
+    "verdict": "HOLDS"
+   },
+   "ok": true
+  },
+  {
+   "check": "reader survives src_args containing spaces (SEVER rows are shifted, none unparsed)",
+   "detail": {
+    "files": 6,
+    "in_scope": true,
+    "multi_parent": false,
+    "parasite": false,
+    "shifted_rows": 31,
+    "unparsed": 0
+   },
+   "ok": true
+  },
+  {
+   "check": "I7 HOLDS on UNPRUNED (ids are stable identities under every arm without an outside holder)",
+   "detail": {
+    "count": 0,
+    "eligible": 113,
+    "verdict": "HOLDS"
+   },
+   "ok": true
+  },
+  {
+   "check": "I7 HOLDS on HIST0 (ids are stable identities under every arm without an outside holder)",
+   "detail": {
+    "count": 0,
+    "eligible": 20,
+    "verdict": "HOLDS"
+   },
+   "ok": true
+  },
+  {
+   "check": "I7 HOLDS on SEXUAL (ids are stable identities under every arm without an outside holder)",
+   "detail": {
+    "count": 0,
+    "eligible": 39,
+    "verdict": "HOLDS"
+   },
+   "ok": true
+  },
+  {
+   "check": "I7 HOLDS on PARASITE (ids are stable identities under every arm without an outside holder)",
+   "detail": {
+    "count": 0,
+    "eligible": 45,
+    "verdict": "HOLDS"
+   },
+   "ok": true
+  },
+  {
+   "check": "the fixtures exercise the update-0 fencepost (rows stamped -1 that the begin save cannot hold); I7 excludes that pair",
+   "detail": {
+    "ACTIVE_HOLDER": 0,
+    "BASE": 0,
+    "HIST0": 0,
+    "PARASITE": 0,
+    "PASSIVE_HOLDER": 0,
+    "SEVER": 0,
+    "SEXUAL": 3,
+    "UNPRUNED": 0
+   },
+   "ok": true
+  },
+  {
+   "check": "REFUSED I2 on HIST0 really is NOT_ELIGIBLE",
+   "detail": {
+    "count": 0,
+    "eligible": 0,
+    "verdict": "NOT_ELIGIBLE"
+   },
+   "ok": true
+  },
+  {
+   "check": "PASSIVE_HOLDER (deme-like) produces a dead leaf -> justifies excluding deme runs from I2",
+   "detail": {
+    "count": 4,
+    "eligible": 24,
+    "verdict": "VIOLATED"
+   },
+   "ok": true
+  },
+  {
+   "check": "ACTIVE_HOLDER (birth-chamber-like) produces a dangling parent -> justifies excluding sexual runs from I1",
+   "detail": {
+    "count": 6,
+    "eligible": 82,
+    "verdict": "VIOLATED"
+   },
+   "ok": true
+  },
+  {
+   "check": "content rule sees a sexual file",
+   "detail": "",
+   "ok": true
+  },
+  {
+   "check": "content rule sees a parasite file",
+   "detail": "",
+   "ok": true
+  },
+  {
+   "check": "HIST0 leaves dangling parents (what LoadPopulation then drops)",
+   "detail": {
+    "count": 17,
+    "eligible": 51,
+    "verdict": "VIOLATED"
+   },
+   "ok": true
+  },
+  {
+   "check": "C-POS: with pruning off the same harness reports dead leaves",
+   "detail": {
+    "count": 92,
+    "eligible": 131,
+    "verdict": "VIOLATED"
+   },
+   "ok": true
+  },
+  {
+   "check": "C-NEG: the begin save (ancestor only) is NOT_ELIGIBLE for I1, I2, I3 -- never a pass",
+   "detail": {
+    "I1": "NOT_ELIGIBLE",
+    "I2": "NOT_ELIGIBLE",
+    "I3": "NOT_ELIGIBLE"
+   },
+   "ok": true
+  },
+  {
+   "check": "C-CHEAT: I1 delete a dead row that is named as a parent -> count moves",
+   "detail": {
+    "delta": 1
+   },
+   "ok": true
+  },
+  {
+   "check": "C-CHEAT: I2 append a dead row nobody names -> count moves",
+   "detail": {
+    "delta": 1
+   },
+   "ok": true
+  },
+  {
+   "check": "C-CHEAT: I3 add one to a child's depth -> count moves",
+   "detail": {
+    "delta": 3
+   },
+   "ok": true
+  },
+  {
+   "check": "C-CHEAT: I4 copy a living row under a new id -> count moves",
+   "detail": {
+    "delta": 1
+   },
+   "ok": true
+  },
+  {
+   "check": "C-CHEAT: I6 stamp a row update_born 0 -> count moves",
+   "detail": {
+    "delta": 1
+   },
+   "ok": true
+  },
+  {
+   "check": "C-CHEAT: I7 drop a persisting row from the earlier save -> count moves",
+   "detail": {
+    "missing": 1
+   },
+   "ok": true
+  }
+ ],
+ "fixture": "model.World(seed=20260930, n_cells=30, births_per_update=6, mu=0.35), 40 updates",
+ "refused_at_plan_time": [
+  {
+   "arm": "HIST0",
+   "measure": "I2 (dead leaves)",
+   "observed": {
+    "count": 0,
+    "eligible": 0,
+    "verdict": "NOT_ELIGIBLE"
+   },
+   "why": "save_historic=0 writes no dead rows: eligible is 0 by construction"
+  },
+  {
+   "arm": "every .spop",
+   "measure": "organism-level parent-edge recall",
+   "why": "the record is genotype-level: a birth that breeds true, or converges on a living genotype, writes no edge; no organism pedigree exists to score against"
+  },
+  {
+   "arm": "every .spop from the body",
+   "measure": "genotype-level edge recall against truth",
+   "why": "the truth (every genotype ever founded) is exactly what the save does not contain; defined on the model only"
+  },
+  {
+   "arm": "any run without a parentless re-injection event",
+   "measure": "I8 (severance)",
+   "why": "no severing event: nothing to sever"
+  },
+  {
+   "arm": "a pair of saves whose earlier save is the begin save (T = -1)",
+   "measure": "I7 (persistence)",
+   "why": "the stamp -1 means both 'before the run' and 'during update 0'; a row stamped -1 may postdate that save. FOUND BY THIS FIXTURE: the first draft of I7 counted such rows as violations (3 in the SEXUAL arm)"
+  }
+ ],
+ "schema": "nyx.avida_ancestry_definedness/1",
+ "synthetic_calibration": {
+  "births": 246,
+  "births_that_wrote_a_parent_edge": 73,
+  "fraction_of_births_with_a_recorded_edge": 0.2967,
+  "fraction_of_founded_genotypes_retained": 0.3108,
+  "genotypes_ever_founded": 74,
+  "genotypes_retained_at_end": 23,
+  "label": "SYNTHETIC MODEL ONLY -- not a measurement of the fossil",
+  "pruned_rows_at_end": 23,
+  "unpruned_rows_at_end": 74
+ },
+ "table": {
+  "ACTIVE_HOLDER": {
+   "I1": {
+    "count": 6,
+    "eligible": 82,
+    "verdict": "VIOLATED"
+   },
+   "I2": {
+    "count": 0,
+    "eligible": 30,
+    "verdict": "HOLDS"
+   },
+   "I3": {
+    "count": 0,
+    "eligible": 76,
+    "verdict": "HOLDS"
+   },
+   "I4": {
+    "count": 0,
+    "eligible": 54,
+    "verdict": "HOLDS"
+   },
+   "I5": {
+    "count": 30,
+    "eligible": 84,
+    "verdict": "VIOLATED"
+   },
+   "I6a": {
+    "count": 0,
+    "eligible": 84,
+    "verdict": "HOLDS"
+   },
+   "I6b": {
+    "count": 0,
+    "eligible": 84,
+    "verdict": "HOLDS"
+   },
+   "I7": {
+    "count": 0,
+    "eligible": 43,
+    "verdict": "HOLDS"
+   },
+   "content": {
+    "files": 6,
+    "in_scope": true,
+    "multi_parent": false,
+    "parasite": false,
+    "shifted_rows": 0,
+    "unparsed": 0
+   }
+  },
+  "BASE": {
+   "I1": {
+    "count": 0,
+    "eligible": 74,
+    "verdict": "HOLDS"
+   },
+   "I2": {
+    "count": 0,
+    "eligible": 23,
+    "verdict": "HOLDS"
+   },
+   "I3": {
+    "count": 0,
+    "eligible": 74,
+    "verdict": "HOLDS"
+   },
+   "I4": {
+    "count": 0,
+    "eligible": 57,
+    "verdict": "HOLDS"
+   },
+   "I5": {
+    "count": 23,
+    "eligible": 80,
+    "verdict": "VIOLATED"
+   },
+   "I6a": {
+    "count": 0,
+    "eligible": 80,
+    "verdict": "HOLDS"
+   },
+   "I6b": {
+    "count": 0,
+    "eligible": 80,
+    "verdict": "HOLDS"
+   },
+   "I7": {
+    "count": 0,
+    "eligible": 41,
+    "verdict": "HOLDS"
+   },
+   "content": {
+    "files": 6,
+    "in_scope": true,
+    "multi_parent": false,
+    "parasite": false,
+    "shifted_rows": 0,
+    "unparsed": 0
+   }
+  },
+  "HIST0": {
+   "I1": {
+    "count": 17,
+    "eligible": 51,
+    "verdict": "VIOLATED"
+   },
+   "I2": {
+    "count": 0,
+    "eligible": 0,
+    "verdict": "NOT_ELIGIBLE"
+   },
+   "I3": {
+    "count": 0,
+    "eligible": 34,
+    "verdict": "HOLDS"
+   },
+   "I4": {
+    "count": 0,
+    "eligible": 57,
+    "verdict": "HOLDS"
+   },
+   "I5": {
+    "count": 0,
+    "eligible": 57,
+    "verdict": "HOLDS"
+   },
+   "I6a": {
+    "count": 0,
+    "eligible": 57,
+    "verdict": "HOLDS"
+   },
+   "I6b": {
+    "count": 0,
+    "eligible": 57,
+    "verdict": "HOLDS"
+   },
+   "I7": {
+    "count": 0,
+    "eligible": 20,
+    "verdict": "HOLDS"
+   },
+   "content": {
+    "files": 6,
+    "in_scope": true,
+    "multi_parent": false,
+    "parasite": false,
+    "shifted_rows": 0,
+    "unparsed": 0
+   }
+  },
+  "PARASITE": {
+   "I1": {
+    "count": 0,
+    "eligible": 74,
+    "verdict": "HOLDS"
+   },
+   "I2": {
+    "count": 0,
+    "eligible": 23,
+    "verdict": "HOLDS"
+   },
+   "I3": {
+    "count": 0,
+    "eligible": 74,
+    "verdict": "HOLDS"
+   },
+   "I4": {
+    "count": 0,
+    "eligible": 63,
+    "verdict": "HOLDS"
+   },
+   "I5": {
+    "count": 23,
+    "eligible": 86,
+    "verdict": "VIOLATED"
+   },
+   "I6a": {
+    "count": 0,
+    "eligible": 86,
+    "verdict": "HOLDS"
+   },
+   "I6b": {
+    "count": 0,
+    "eligible": 86,
+    "verdict": "HOLDS"
+   },
+   "I7": {
+    "count": 0,
+    "eligible": 45,
+    "verdict": "HOLDS"
+   },
+   "content": {
+    "files": 6,
+    "in_scope": true,
+    "multi_parent": false,
+    "parasite": true,
+    "shifted_rows": 0,
+    "unparsed": 0
+   }
+  },
+  "PASSIVE_HOLDER": {
+   "I1": {
+    "count": 0,
+    "eligible": 73,
+    "verdict": "HOLDS"
+   },
+   "I2": {
+    "count": 4,
+    "eligible": 24,
+    "verdict": "VIOLATED"
+   },
+   "I3": {
+    "count": 0,
+    "eligible": 73,
+    "verdict": "HOLDS"
+   },
+   "I4": {
+    "count": 0,
+    "eligible": 55,
+    "verdict": "HOLDS"
+   },
+   "I5": {
+    "count": 24,
+    "eligible": 79,
+    "verdict": "VIOLATED"
+   },
+   "I6a": {
+    "count": 0,
+    "eligible": 79,
+    "verdict": "HOLDS"
+   },
+   "I6b": {
+    "count": 0,
+    "eligible": 79,
+    "verdict": "HOLDS"
+   },
+   "I7": {
+    "count": 0,
+    "eligible": 41,
+    "verdict": "HOLDS"
+   },
+   "content": {
+    "files": 6,
+    "in_scope": true,
+    "multi_parent": false,
+    "parasite": false,
+    "shifted_rows": 0,
+    "unparsed": 0
+   }
+  },
+  "SEVER": {
+   "I1": {
+    "count": 0,
+    "eligible": 32,
+    "verdict": "HOLDS"
+   },
+   "I2": {
+    "count": 0,
+    "eligible": 8,
+    "verdict": "HOLDS"
+   },
+   "I3": {
+    "count": 0,
+    "eligible": 32,
+    "verdict": "HOLDS"
+   },
+   "I4": {
+    "count": 0,
+    "eligible": 58,
+    "verdict": "HOLDS"
+   },
+   "I5": {
+    "count": 8,
+    "eligible": 66,
+    "verdict": "VIOLATED"
+   },
+   "I6a": {
+    "count": 0,
+    "eligible": 66,
+    "verdict": "HOLDS"
+   },
+   "I6b": {
+    "count": 0,
+    "eligible": 66,
+    "verdict": "HOLDS"
+   },
+   "I7": {
+    "count": 0,
+    "eligible": 21,
+    "verdict": "HOLDS"
+   },
+   "I8": {
+    "count": 0,
+    "eligible": 50,
+    "max_rows_before": 14,
+    "roots": 31,
+    "verdict": "HOLDS"
+   },
+   "content": {
+    "files": 6,
+    "in_scope": true,
+    "multi_parent": false,
+    "parasite": false,
+    "shifted_rows": 31,
+    "unparsed": 0
+   }
+  },
+  "SEXUAL": {
+   "I1": {
+    "count": 0,
+    "eligible": 116,
+    "verdict": "HOLDS"
+   },
+   "I2": {
+    "count": 0,
+    "eligible": 17,
+    "verdict": "HOLDS"
+   },
+   "I3": {
+    "count": 0,
+    "eligible": 78,
+    "verdict": "HOLDS"
+   },
+   "I4": {
+    "count": 0,
+    "eligible": 67,
+    "verdict": "HOLDS"
+   },
+   "I5": {
+    "count": 17,
+    "eligible": 84,
+    "verdict": "VIOLATED"
+   },
+   "I6a": {
+    "count": 0,
+    "eligible": 84,
+    "verdict": "HOLDS"
+   },
+   "I6b": {
+    "count": 0,
+    "eligible": 84,
+    "verdict": "HOLDS"
+   },
+   "I7": {
+    "count": 0,
+    "eligible": 39,
+    "verdict": "HOLDS"
+   },
+   "content": {
+    "files": 6,
+    "in_scope": true,
+    "multi_parent": true,
+    "parasite": false,
+    "shifted_rows": 0,
+    "unparsed": 0
+   }
+  },
+  "UNPRUNED": {
+   "I1": {
+    "count": 0,
+    "eligible": 182,
+    "verdict": "HOLDS"
+   },
+   "I2": {
+    "count": 92,
+    "eligible": 131,
+    "verdict": "VIOLATED"
+   },
+   "I3": {
+    "count": 0,
+    "eligible": 182,
+    "verdict": "HOLDS"
+   },
+   "I4": {
+    "count": 0,
+    "eligible": 57,
+    "verdict": "HOLDS"
+   },
+   "I5": {
+    "count": 131,
+    "eligible": 188,
+    "verdict": "VIOLATED"
+   },
+   "I6a": {
+    "count": 0,
+    "eligible": 188,
+    "verdict": "HOLDS"
+   },
+   "I6b": {
+    "count": 0,
+    "eligible": 188,
+    "verdict": "HOLDS"
+   },
+   "I7": {
+    "count": 0,
+    "eligible": 113,
+    "verdict": "HOLDS"
+   },
+   "content": {
+    "files": 6,
+    "in_scope": true,
+    "multi_parent": false,
+    "parasite": false,
+    "shifted_rows": 0,
+    "unparsed": 0
+   }
+  }
+ }
+}

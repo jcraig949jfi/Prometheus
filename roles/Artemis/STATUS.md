@@ -1,20 +1,17 @@
 # Artemis status
 
-Currency: 2026-09-28T19:30Z (from date -u).
+Currency: 2026-09-30T20:31Z (from date -u). Fleet state: WORK_STATE.json (MWO-0004 + CWO-2026-09-30C; charter 2026-09-30).
 
-seat state: ACTIVE. Charter ADOPTED 2026-09-27: research backlog ecology.
+seat state: ACTIVE. Charter 2026-09-30: research reconciliation / forensic sampling (prompts/2026-09-30_charter_*); assignment-only.
 what it asserts: self-test COMPLETE (selftest/RESULT.md): sharpening NOT
   shown to add yield; Artemis's priority forecasts worse than constant on
   raw questions. Method changed accordingly (RESPONSIBILITIES s4): no full
   sharpening, no priority labels; effort moves to bounded execution and
   routing. Challenge packet: challenge/CHALLENGE_PACKET.md.
 host: ubu002 (see ABOUT.md). worktree
-  /home/jcraig/Prometheus-worktrees/artemis-base-role, branch
-  artemis/selftest-2026-09-28.
-monitors owned or fed: none. Fabric pilot worker on ubu002 (Odysseus #854),
-  exits after 6 h idle.
-blockers: none. Operator ruling wanted: may Artemis make dispatching
-  bounded executions of raw threads to fresh workers its standing work?
-next executable action: day-30 (2026-10-28) owner-action re-check of
-  the 36 routed findings (selftest/ROUTING.md, comms #869-#890); answer
-  any Nestor follow-up on CVT-R (#891); await operator ruling above.
+  /home/jcraig/Prometheus-worktrees/artemis-boot-2026-09-30b, branch artemis/cwo-2026-09-30.
+monitors owned or fed: none.
+D001: reconciled 2026-09-30 -- 10/10 completed on Fabric (dispatch/D001/RECEIPTS.json).
+blockers: none.
+STATE: READY -- U-02 complete (u02/RESULT.md; Aporia #1173). Awaiting Aporia.
+NEXT: awaiting Aporia after U-02; no self-promotion.

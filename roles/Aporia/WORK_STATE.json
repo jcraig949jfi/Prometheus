@@ -1,0 +1,53 @@
+{
+  "schema": "prometheus.work_state.v1",
+  "seat": "Aporia",
+  "mwo_id": "MWO-0004",
+  "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
+  "mwo_sha256": "925660b2d2be53af2ee4195391e484d9649bbd4ee828cd60432ce2f0903a99df",
+  "updated_at_utc": "2026-09-30T23:40:00Z",
+  "state": "WORKING",
+  "branch": "aporia/cwo-fleet-activation-2026-09-30",
+  "head_sha": "6a7a845694d81ea94f65bada5725d5cf30a5dc36",
+  "threads": [],
+  "campaigns": [],
+  "experiments": [],
+  "fabric_tasks": [
+    {
+      "id": "tsk-19b2d3b84026",
+      "state": "completed"
+    },
+    {
+      "id": "tsk-c2dc0b39b658",
+      "state": "completed"
+    }
+  ],
+  "running": [],
+  "blocked_on": [],
+  "next_actions": [
+    "activation pass",
+    "coordination cycles via fleet_status.py"
+  ],
+  "operator_decisions_required": [],
+  "latest_reports": [
+    "ops/fleet/CWO_2026-09-30_FLEET_ACTIVATION.md (sha256 ab93f646...b7e) ; ops/fleet/QUEUE.json",
+    "roles/base-role (NORTH_STAR addendum, RESPONSIBILITIES 2a, WAKE optional task line) @ 1e90420174fb73cd0c212a52f8bc44b3e3de5d21; directive roles/Aporia/prompts/2026-09-29_base_role_work_conserving/",
+    "ops/work_orders/archive/MWO-0004_2026-09-29.md (published, P=25a486d44)",
+    "roles/Aporia/probes/FP-001_RESULT.json",
+    "roles/base-role/RESPONSIBILITIES.md boot line (MWO-0004 R4) @ 17e25e67be040d04925ec04e63353503a4c03090"
+  ],
+  "state_reason": "Completion coordinator under CWO-2026-09-30B; no NEXT/RESERVE promotion, no new Builder lanes, no scientific authority.",
+  "migration_report": "roles/Aporia/MIGRATION_REPORT_MWO-0002.json",
+  "comms_cursor": "sync 2026-09-29T06:57:55Z (through #914 and later; 2 addressed to Aporia, no action requested: #798, #873)",
+  "r4_boot_line_commit": "17e25e67be040d04925ec04e63353503a4c03090",
+  "base_role_work_conserving_commit": "1e90420174fb73cd0c212a52f8bc44b3e3de5d21",
+  "work_order": "MWO-0004 + CWO-2026-09-30C",
+  "current": "CWO-C s27 immediate actions",
+  "next": "coordination cycles (<= 60 min)",
+  "reserve": [],
+  "resource_status": "no compute of its own",
+  "last_receipt": "roles/Aporia/harvest/2026-09-30/ @ 140a6612e",
+  "current_objective": "Operator inference harvest (until 2026-10-01 05:00 ET) + CWO-C coordination (light)",
+  "current_step": "harvest deliverables committed; available for refinement until cutoff",
+  "last_push_sha": "140a6612e",
+  "next_expected_milestone": "harvest close at 05:00 ET, return to CWO-C role"
+}

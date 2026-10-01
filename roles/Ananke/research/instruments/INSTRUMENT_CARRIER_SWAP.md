@@ -89,3 +89,34 @@ INTERPRETATION BOUNDARIES
   came from, or that X is the only carrier. Verdict thresholds are
   absolute on accuracy, so weak champions (normal < ~0.65) cannot show
   NO-EFFECT vs CHANCE crisply. Report normal lo99 beside every verdict.
+
+## UPDATE 2026-09-29: use the mixture census, SINGLE-trial arms (T-INS-6/7)
+Do not read site_acc + chan_acc ~ 1 as a mixture, nor as evidence the mirror
+identity holds. Use prometheus/ananke/lens_swap.py: Arm(label, names, offset,
+trial=k) for SINGLE-trial swaps (default), mixture_scan() for the per-offset
+S/C/N census with phi and 99% pair-bootstrap CIs, classify() for the frozen
+SITE/CHANNEL/MIXTURE/NEITHER/UNRESOLVED/IDENTITY-BROKEN/UNDEFINED rule,
+census_follow() for one-sided abstainers. Evidence: workers/W-M/REPORT.md;
+known-answer tests prometheus/ananke/tests/test_lens_swap.py.
+
+## UPDATE 2026-09-29 (W-P): stratify by update-clock phase
+In sync physics with update_period > 1, a pooled per-offset census mixes two
+clock phases (4781b0a1 o14: C 1.00 on even swap ticks, N .70 on odd). Report
+S/C/N per swap-tick phase. N always needs a site AND a channel component
+(lemma, W-P PLAN s0): name WHICH sub-arrays with the truth-table method in
+workers/W-P/tt.py before calling it a mixture or joint code.
+
+## UPDATE 2026-09-29 (W-R): phase-index classes on sync period-p physics
+On sync physics with update_period p > 1, report the carrier class per
+swap-tick phase q = (t0 + offset) mod p (workers/W-R/fork.py); the pooled
+class is only a weighted summary. Phase-difference CIs need trial-level as
+well as pair-level resampling when a stratum holds few trials.
+
+## UPDATE 2026-09-30: relative swap verdict promoted (prometheus/ananke/swap_rel.py)
+For specimens whose normal accuracy is not near 1, use the relative verdict
+(FLIP_REL / NO_EFFECT_REL / CHANCE_REL, per-verdict attainability, P >= 32
+pairs) instead of lens.swap_verdict's absolute rule, on SINGLE-trial pair
+statistics from lens_swap. Interval: studentized pair bootstrap with a fixed
+SD floor (REL4 H2), chosen by frozen plans T-SWAP-REL4/REL5; false-certificate
+rate <= 1% on all tested designs. Report z with its paired CI beside every
+FLIP_REL (complete vs partial transfer). Scope limits: see the module header.

@@ -1,0 +1,71 @@
+{
+  "schema": "prometheus.unowned_findings.v1",
+  "maintainer": "Aporia (CWO-C s20)",
+  "updated_at_utc": "2026-09-30T18:05Z",
+  "findings": [
+    {
+      "id": "U-01",
+      "finding": "Gemini queue: 423 entries, 53 fired, 370 never fired; Moros prompt off-target by construction",
+      "source": "Artemis #1118",
+      "why": "370 research prompts silently dropped; 32 reports off-target",
+      "owner": null,
+      "state": "unowned (firing may need Deep Research quota/spend)"
+    },
+    {
+      "id": "U-02",
+      "finding": "IQ-NULL / Lexis G1: deltas 0 ADVANCE with no partition key (inadmissible); winners load-bearing 0.0997 vs 0.10 bar",
+      "source": "Artemis #1118",
+      "why": "a claim sits on a knife edge and is inadmissible as recorded",
+      "owner": "Artemis",
+      "state": "assigned"
+    },
+    {
+      "id": "U-03",
+      "finding": "D8 'history beyond diversity' NOT SHOWN (7/6, p=1.0); ~669 tasks for a .05 effect",
+      "source": "Artemis #1118",
+      "why": "open program question; needs a major run",
+      "owner": null,
+      "state": "parked (major campaign -> operator authority)"
+    },
+    {
+      "id": "U-04",
+      "finding": "FR-091 XE-07/AL-5: scalar objective changes copy summaries, not SR origin; copy primitive necessary",
+      "source": "Artemis #1132",
+      "why": "BEE-lane result with no owner; Atlas parked; blind-lane constraint",
+      "owner": null,
+      "state": "unowned"
+    },
+    {
+      "id": "U-05",
+      "finding": "comms / evidence_wiki share the connection setup that hung ubu001 Fabric workers (no keepalive/timeout)",
+      "source": "Odysseus #1115",
+      "why": "common-mode failure of execution + coordination",
+      "owner": "Archaeon",
+      "state": "assigned (CWO-C s6)"
+    },
+    {
+      "id": "U-06",
+      "finding": "evidence_wiki gap_prospective_v1 sealed slate mapping inferable from public scores",
+      "source": "Artemis #1128",
+      "why": "custody",
+      "owner": "Harmonia",
+      "state": "closed (VOID_BY_CONSTRUCTION 19ffc2d0b)"
+    },
+    {
+      "id": "U-07",
+      "finding": "NPE board_eligible (primordial/core/contract.py) accepts any non-empty cheat string",
+      "source": "Artemis #888 R-08 via Nestor reserve",
+      "why": "bookkeeping artifact could count as competence",
+      "owner": null,
+      "state": "unowned (prepared for Nestor after current dispatch)"
+    },
+    {
+      "id": "U-08",
+      "finding": "Fabric script executor F1-F4 (timeouts lose output, deterministic retries, head-of-line, --arg)",
+      "source": "Artemis #1119; DEF-ODY-018/020-022",
+      "why": "every script-executor user",
+      "owner": "Odysseus",
+      "state": "assigned-deferred (after P0 Windows fix)"
+    }
+  ]
+}

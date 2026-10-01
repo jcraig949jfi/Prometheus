@@ -1,0 +1,96 @@
+{
+ "T1_dense_equals_run_dc": {
+  "cases": 6000,
+  "mismatches": 0,
+  "pass": true
+ },
+ "T2_variant_identity_where_unmodified": {
+  "NOBLOCK": {
+   "hits0": 1000,
+   "hits0_identical": 1000,
+   "hits_pos": 500,
+   "hits_pos_differ": 500,
+   "pass": true
+  },
+  "EXPLEN": {
+   "hits0": 1342,
+   "hits0_identical": 1342,
+   "hits_pos": 158,
+   "hits_pos_differ": 158,
+   "pass": true
+  },
+  "NOWRAP": {
+   "hits0": 501,
+   "hits0_identical": 501,
+   "hits_pos": 999,
+   "hits_pos_differ": 967,
+   "pass": true
+  },
+  "HARV_HALT": {
+   "hits0": 912,
+   "hits0_identical": 912,
+   "hits_pos": 588,
+   "hits_pos_differ": 585,
+   "pass": true
+  },
+  "HARV_WRAP": {
+   "hits0": 917,
+   "hits0_identical": 917,
+   "hits_pos": 583,
+   "hits_pos_differ": 575,
+   "pass": true
+  },
+  "BLOCK_OWN": {
+   "hits0": 975,
+   "hits0_identical": 975,
+   "hits_pos": 525,
+   "hits_pos_differ": 525,
+   "pass": true
+  },
+  "AOFF": {
+   "hits0": 750,
+   "hits0_identical": 750,
+   "hits_pos": 750,
+   "hits_pos_differ": 617,
+   "pass": true
+  },
+  "SELFCOPY": {
+   "hits0": 960,
+   "hits0_identical": 960,
+   "hits_pos": 540,
+   "hits_pos_differ": 540,
+   "pass": true
+  }
+ },
+ "T3_assay_equals_p11": {
+  "cases": 160,
+  "draw_mismatches": 0,
+  "early_verdict_mismatches": 0,
+  "pass": true
+ },
+ "T4_competent_equals_run_de": {
+  "panel_competent": {
+   "n": 128,
+   "mismatches": 0,
+   "competent_here": 128
+  },
+  "panel_noncompetent": {
+   "n": 38,
+   "mismatches": 0,
+   "competent_here": 0
+  },
+  "known_random_passes": {
+   "n": 3,
+   "mismatches": 0,
+   "competent_here": 3
+  },
+  "random": {
+   "n": 150,
+   "mismatches": 0,
+   "competent_here": 0
+  },
+  "pass": true
+ },
+ "ALL_PASS": true,
+ "cpu_s": 37.0
+}

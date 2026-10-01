@@ -1,6 +1,6 @@
 """Holdout D2 evidence bundle for adjudication (Harmonia), built on M1 after the result seal.
 
-  COSMOS_BROKER=1 python -m prometheus.cosmos.c3_holdout_D2.evidence --run RUN_DIR --out DIR [--revealed DIR] [--ref origin/main]
+  COSMOS_BROKER=1 python -I -B <repo>/prometheus/cosmos/c3_holdout_D2/entry.py evidence --run RUN_DIR --out DIR [--revealed DIR]
 
 Refused unless protocol.check_gates(..., "RESULT_SEAL") passes, the run's receipt chain verifies and ends at the
 sealed chain head, and RESULT.json hashes to the sealed result hash. So no bundle (and no result) can leave M1
@@ -55,7 +55,7 @@ def build(run_dir, out_dir, revealed_dir=None, repo=DEFAULT_REPO, ref=protocol.D
     g = protocol.check_gates(repo, "RESULT_SEAL", ref=ref, host=host, pins=pins, verify_loaded=verify_loaded,
                              allowlist=protocol.DEFAULT_ALLOWLIST if allowlist is None else allowlist)
     ok, recs, why = runner.verify_receipts(run_dir / "receipts.jsonl")
-    if not ok or not recs or recs[-1]["kind"] != "close" or recs[-1]["hash"] != g["chain_head"]:
+    if not ok or not recs or recs[-1]["kind"] not in ("close", "abort") or recs[-1]["hash"] != g["chain_head"]:
         raise EvidenceRefusal("receipts do not verify or do not end at the sealed chain head (%s)" % why)
     if sealbox.sha256_file(run_dir / "RESULT.json") != g["result_sha256"]:
         raise EvidenceRefusal("RESULT.json does not match the sealed result hash")
@@ -92,6 +92,12 @@ def main(argv=None) -> int:
     ap.add_argument("--revealed")
     ap.add_argument("--ref", default=protocol.DEFAULT_REF)
     a = ap.parse_args(argv)
+    if os.environ.get("C3D2_ENTRY") != "verified":                # v4 (Odysseus v3 claim 4 note)
+        print(json.dumps({"refused": True, "reason": "start evidence through entry.py (pre-import code verification)"}))
+        return 3
+    if a.ref != protocol.DEFAULT_REF:                             # v5 (Odysseus v4 S-4)
+        print(json.dumps({"refused": True, "reason": "records are read from %s only" % protocol.DEFAULT_REF}))
+        return 3
     try:
         r = build(a.run, a.out, a.revealed, ref=a.ref)
     except (protocol.GateRefusal, EvidenceRefusal) as e:

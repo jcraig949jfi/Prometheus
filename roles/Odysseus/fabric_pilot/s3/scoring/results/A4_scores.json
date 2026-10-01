@@ -1,0 +1,32 @@
+{
+ "X016": {"evidence": 2, "correctness": 2, "answers": 2, "limits": 2, "usable": 2, "total": 10,
+  "checked_claims": [
+   "AETH-02 negative scoped to four dimensions; the report quotes the five blind-spot classes -> verified, Aether/AETH-01/AETH-02_CLOSE_2026-09-24.md:276-286 (minor: the '~94%' figure comes from AETHER_ENGINE_CARD.md:131, and the close report says ~95%)",
+   "Astra closure review marks S04/M08 PARTIALLY_CLOSED and records a funded-writer false negative classed only CAUSAL_VALUE_CONSTRUCTION -> verified, Aether/AETH-01/ASTRA_CLOSURE_REVIEW_02.md:78,88,104-110",
+   "Terminology linter's deprecated list omits parent/template/copy/inherit/Mu -> verified, Aether/test/test_aeth01_terminology_audit.py:34-61; also HEREDITY_REQUIREMENTS.md:4 'DRAFT REQUIREMENTS ONLY' and :159 mutual-constructor row verified"],
+  "notes": "Densely cited with path:line, and every sampled citation checks out. It gives a clear three-layer answer to each sub-question, with explicit limits and falsifiers."},
+ "X017": {"evidence": 1, "correctness": 2, "answers": 2, "limits": 2, "usable": 2, "total": 9,
+  "checked_claims": [
+   "Current committed fixture: random -0.126, oracle +0.506, keep_worst -0.182, residual_reservoir +0.023, gap +0.63 -> verified, ensorain/lm01/dev/fixture_reservoir.json:18-23",
+   "At 6a48ff937 residual_reservoir -0.457 vs random -0.335, oracle gap +0.91 -> verified, rogit show 6a48ff937:ensorain/lm01/dev/fixture_reservoir.json",
+   "Review text still quoted the old '+.91; both lose' -> verified as stale by the program's own ensorain/lm01/ERRATA.md:5-10 (an erratum added later that cites this finding)"],
+  "notes": "The new dose-response and F3 numbers come from uncommitted work/ outputs, so they cannot be checked in the repo. Committed anchors are cited by file or commit, not by line. The analysis is careful, well scoped and actionable."},
+ "X018": {"evidence": 1, "correctness": 2, "answers": 2, "limits": 2, "usable": 2, "total": 9,
+  "checked_claims": [
+   "C3-SFE-01 rows.json carries final-elite manifests -> verified, archaeon/campaign3/C3-SFE-01/rows.json (72 'manifest' hits, 23 SHELF hits, consistent with 19 unique)",
+   "C3-SFE-08 two-value elites' manifests are not committed -> verified, 0 'manifest' hits under archaeon/campaign3/C3-SFE-08/",
+   "Apollo injection fixture committed at roles/Lexis/handoff/state_injection_fixture.json@9962f6bd4; POS_TABLE positive control exists -> verified, rogit log 9962f6bd4; archaeon/wse/controls.py:189"],
+  "notes": "The core key-invariance results come from uncommitted scripts and cannot be checked here, though the method is fully specified. It answers precisely why the shelf is uninformative and why the ranking question stays open."},
+ "X019": {"evidence": 2, "correctness": 2, "answers": 2, "limits": 2, "usable": 2, "total": 10,
+  "checked_claims": [
+   "Source only predicts the observable ('No experiment is proposed here', 'none of this is measured') -> verified, techne/research/evolution-as-learning/FAILURE_LANDSCAPE_IMPLICATIONS.md:3,9-10,28-30,34",
+   "E1 cycles targets every generation, returns only the final population, and C0 is a separate run_arm -> verified, techne/research/evolution-as-learning/e1_experiment.py:59-60,70,191,227",
+   "Herakles HC-T01 T2 precedence NOT ATTEMPTED; lead not reported as precedence -> verified, herakles/specimens/spec-toussaint-exploration/HC_T01_EXECUTION_REVIEW_PACKET.txt:190,204"],
+  "notes": "It gives a clear 'open, never measured' answer backed by an evidence table with path:line. Delegated and unopened pointers are explicitly flagged, and it proposes a pre-registered decision rule."},
+ "X020": {"evidence": 1, "correctness": 2, "answers": 2, "limits": 2, "usable": 2, "total": 9,
+  "checked_claims": [
+   "Legacy PROMOTE only checks that a verdict exists and is non-BLOCK; last touched 2026-05-08 -> verified, sigma_kernel/sigma_kernel.py:827-849; rogit log shows 2026-05-08",
+   "NPE board_eligible accepts any non-empty cheat string and rows path -> verified, primordial/core/contract.py:108-112",
+   "a16 hardcodes donor_adjudication_valid = True; atlas policy says learning target is NOT 'which experiments succeed' -> verified, roles/Aphrodite/engine/a16.py:489 (the report says :490, likely commit drift); atlas/policy.py:13"],
+  "notes": "The defect claims it samples are accurate. Much of the 10-engine selection classification is asserted without file:line pointers. The fix list is concrete, and the report is candid about read depth."}
+}

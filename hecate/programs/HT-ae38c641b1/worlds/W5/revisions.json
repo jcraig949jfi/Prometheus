@@ -1,0 +1,19 @@
+[
+ {
+  "rev": 0,
+  "what": "Genome = two affine maps (A_j, b_j); task = radius of gyration of concrete orbits; P=100, G=150, R=32, S=120; offsets b included.",
+  "result": "Controls met clauses numerically (S1 pos 0.966 / twin -0.089; S2 pos 0.963 / twin -0.036; cheat detected) but NOT frozen: (a) 6.2 CPU core-min > 5 budget; (b) the task was solvable with A ~ 0 and b_1 = -b_2 (orbit hops between two antipodal points, spread 0.93-0.96 of the disc radius), so the linear part carried no selection and the observable (principal direction of A) would measure noise in the treatment. Files kept in _rev0/.",
+  "why_changed": "design flaw of the kind that made earlier worlds unreadable: the observable must be under selection in every arm"
+ },
+ {
+  "rev": 1,
+  "what": "Genome = two LINEAR maps (no offsets); task = persistence (mean log-norm growth rate over S steps from x_0 on the radius-0.5 circle) minus rotation-invariant shape penalty 2*sum max(0, s2/s1-0.5); safety region the unit disc; P=60, G=120, R=16, S=60; LAM 0.2 -> 0.1; seeds 20; threshold 0.30 unchanged.",
+  "why_changed": "linear part is now the only thing the task and the gates act on; the task manifold is exactly rotation invariant, so the verifier's domain is the only anisotropy; cost cut to fit the budget",
+  "result": "Frozen-eligible at TH 0.30: S1 pos 0.968 / twin 0.003; S2 pos 0.972 / twin -0.039; cheat 1.0/1.0; 23.8 CPU s. Null-twin per-seed SD of A4 = 0.576 (clonal drift), so the SD of the 20-seed mean is 0.129 and 0.30 sits only 2.3 SD above the twin."
+ },
+ {
+  "rev": 2,
+  "what": "Success threshold for S1 and S2 raised 0.30 -> 0.40 (3.1 null SDs of the 20-seed mean); nothing else changed.",
+  "why_changed": "a drifted null population can reach 0.30 with ~1% probability; 0.40 keeps the positive control (0.97) far above and cuts the twin false-positive rate to ~0.1%"
+ }
+]

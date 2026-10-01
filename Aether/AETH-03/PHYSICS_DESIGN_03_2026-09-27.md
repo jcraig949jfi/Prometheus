@@ -246,3 +246,112 @@ Reading:
    to re-run: `python flight.py aether_units --env AETHER_UNIT_SET=d_horizon
    --budget 0.25 --seat Aether --keep-large C:/Prometheus-data/runpod_artifacts --go`.
 5. No law earns GPU scale-up.
+
+---
+
+## AMENDMENT A1 (2026-09-28) — `rcv_str` verdict strength (Artemis R-05, comms #869)
+
+*Appended; nothing above is edited. Reviewer finding R-05 (Artemis
+routing, "Aether rcv_str N2 exact tie") checked against the §2 rule and
+the §5.2 counts, and accepted.*
+
+In origin counts (128 OFF origins; component `rcv` P_sust 6/128, P_content
+4/128; `str` 0/128 for both):
+
+| clause | `rcv_str` | threshold | margin |
+|:--|--:|--:|:--|
+| N1 propagation | 14/128 = 0.109 | max(0.10, 2 × 6/128) = 0.100 | minimum pass is 13/128; losing 2 origins (12/128) fails; per seed 4/4/4/2 of 32, the last below the floor |
+| N2 content | 12/128 = 0.09375 | max(0.05, 3 × 4/128) = 0.09375 | **exact tie**; passes only because the rule says `≥` |
+
+Corrections:
+1. The §5.2 annotation "(both)" for `rcv_str` is wrong in substance. N2
+   passes only by an exact tie, and its metric failed its own positive
+   control (E-P1, §5.3), so N2 carries no evidential weight for any law.
+   It should read **N1 only**. (`rcv_add` is unaffected. N1 22/128 against a
+   minimum pass of 13/128; its N2 is also uninformative for the same
+   E-P1 reason, but it does not depend on N2.)
+2. The mechanical verdict under the preregistered rule stays
+   NEW_BEHAVIOUR, via N1. The rule is not rewritten after the fact.
+3. **Evidential status: `rcv_str` = UNRESOLVED.** It rests on one clause
+   passing with 1 origin to spare (2 fewer fails), with one seed
+   below the floor. That margin would not survive a modest change of bar or seed. Section 5.5
+   point 2 ("two pairwise combinations produce super-additive
+   propagation") therefore stands firmly for `rcv_add` only; for
+   `rcv_str` it is a candidate.
+4. What would resolve it: the 10,000-tick d_horizon falsifier (§5.5
+   point 4), now submitted as Fabric Tasks per operator ruling
+   2026-09-28 (MWO-0001; no RunPod). Its outcome is reported against the
+   §1 horizon rule as declared, not against a new bar.
+
+## AMENDMENT A2 (2026-09-29) — the horizon falsifier ran (E-008)
+
+*Appended; nothing above is edited.*
+
+The d_horizon units T-087..T-090 ran as Fabric Tasks on ubu001 (no
+RunPod), same unit IDs, code pinned c49f2ebad4. Record:
+`ops/campaigns/C-002/E-008/RESULT.md`.
+
+- **Verdict under the §1 rule: HORIZON-DEPENDENT for both `rcv_add` and
+  `rcv_str`, through clause (iii) only.** 6 of 32 origins in each law set
+  a new maximum generation after tick 2,000 (3 of 16 in every seed).
+  Clause (i) does not fire (radius ≥ 5 share ×1.10 and ×1.29). Clause (ii)
+  does not fire (no breach; largest radius 19 against the 28 bar).
+- These are the first OFF arms where the horizon matters. The components
+  were horizon-robust (§5.1). The dependence is slow deepening inside a
+  bounded region, not escape. `rcv_str` reaches radius 8 at +500 and 19 at
+  +10,000.
+- The combinations' effect is not a short-horizon transient. Differences
+  persist and keep deepening, so nothing here weakens the `rcv_add`
+  positive.
+- **Correction to A1 point 4:** this run does not resolve `rcv_str`'s
+  Block D status. That verdict rests on the assay's N1 clause at 128
+  origins, and this instrument asks a different question at 32 origins.
+  `rcv_str` stays UNRESOLVED for §5.2.
+- §5.5 point 4 ("not completed") is superseded by E-008. Point 1 holds
+  for v1, `add` and `rcv`, and does NOT hold for the two combinations.
+
+## AMENDMENT A3 (2026-09-29) — fresh-seed replication (E-009)
+
+*Appended; nothing above is edited. Preregistered at c6196efb4 before any run.*
+
+On seeds 4–7 (never run before), with the unchanged N1 rule and components from
+the same seeds (`ops/campaigns/C-002/E-009/RESULT.md`):
+
+- `rcv_add`: P_sust 22/128 (components 4/128 and 1/128) — **REPLICATED**.
+- `rcv_str`: P_sust 15/128 (components 4/128 and 0/128; minimum pass 13/128) —
+  **REPLICATED**.
+
+The UNRESOLVED status recorded in A1 for `rcv_str` is lifted: its §5.2
+NEW_BEHAVIOUR (N1) stands on two independent seed sets. The effect remains
+small and near the floor (per seed 3/2/5/5 of 32). N2 remains uninformative
+(E-P1). §5.5 point 2 now holds for both combinations.
+
+## AMENDMENT A4 (2026-09-30) — steering lesion (E-010)
+
+*Appended; nothing above is edited. Preregistered at 32c14e403.*
+
+`rcv_sfx` is `rcv_str` with its aim term (energy >> 6) replaced by a static
+per-site offset. On seeds 4–7 it gives P_sust 4/128, exactly `rcv`'s level,
+and P_content 0. **Verdict: STEERING_REQUIRED.** The regression gate passed
+(`rcv_str` s4 reproduced E-009 bit for bit).
+
+§5.4's mechanism for `rcv_str` ("activity re-routing activity via
+energy-steered aim") is now supported by intervention. Limits: the lesion
+removes both dynamic coupling and any static aim–energy correlation, and it
+changes the aim distribution to uniform. A frozen-energy-snapshot lesion
+would separate these (`ops/campaigns/C-002/E-010/RESULT.md`).
+
+## AMENDMENT A5 (2026-09-30) — trace lesion (E-011)
+
+*Appended; nothing above is edited. Preregistered at 1c7b3249d.*
+
+`rcv_adr` is `rcv_add` with relay-won writes committing by replacement (WRITE-site
+writes still add). On seeds 4–7 it gives P_sust 10/128, against 22/128 for
+`rcv_add` and an additive null of 5/128. **Verdict: PARTIAL.** The regression gate
+passed (`rcv_add` s4 reproduced E-009 bit for bit).
+
+Compounding relay traces carry most of `rcv_add`'s excess (22 → 10), but the
+lesion is incomplete by construction: later add-writes can still carry a relay's
+trace forward. §5.4's `rcv_add` mechanism is therefore partly supported by
+intervention; a complete lesion needs last-writer provenance
+(`ops/campaigns/C-002/E-011/RESULT.md`).

@@ -1,0 +1,1889 @@
+{
+ "generated_utc": "2026-10-01T03:18:31Z",
+ "cpu_s": 11.6,
+ "rows": [
+  {
+   "experiment": "npe-frontier/x_mat_internalize",
+   "script": "dense_taint.py",
+   "checks": {
+    "a_screen_context": {
+     "verdict": "NOT_VERIFIED",
+     "reason": "no screen call (st_a/st_b or forwarded world kwargs) found in the script or in the helper functions it reaches",
+     "contexts": []
+    },
+    "c_label_write_back": {
+     "verdict": "OK",
+     "reason": "no label-share / label-membership readout",
+     "readouts": [],
+     "write_back": {}
+    },
+    "d_max_of_cached": {
+     "verdict": "OK",
+     "keys": []
+    },
+    "h_stores_genomes": {
+     "verdict": "NO_GENOMES",
+     "n_records": 26,
+     "genome_sites": 0,
+     "register_sites": 0
+    }
+   }
+  },
+  {
+   "experiment": "npe-frontier/x_mat_internalize",
+   "script": "run_xmi.py",
+   "checks": {
+    "a_screen_context": {
+     "verdict": "CONTEXT_MISMATCH",
+     "reason": "every screen context is SYNTHETIC/ZERO while the world carries registers: read this screen as fresh-context competence only, never as in-world competence",
+     "contexts": [
+      "run_dd.py:81 ZERO",
+      "run_fair.py:69 SYNTHETIC"
+     ]
+    },
+    "c_label_write_back": {
+     "verdict": "OK",
+     "reason": "label readouts only under ATOMIC write-back (immune to the W2-35 leak)",
+     "readouts": [
+      "run_ci.py:53",
+      "run_ci.py:54",
+      "run_xmi.py:157",
+      "run_xmi.py:164",
+      "run_xmi.py:166",
+      "run_xmi.py:171",
+      "run_xmi.py:99"
+     ],
+     "write_back": {
+      "ATOMIC": [
+       "line 115: runner_cls(world) (X-DONOR-SWAP ATOMIC runner)"
+      ]
+     }
+    },
+    "d_max_of_cached": {
+     "verdict": "OK",
+     "keys": []
+    },
+    "h_stores_genomes": {
+     "verdict": "NO_GENOMES",
+     "n_records": 26,
+     "genome_sites": 0,
+     "register_sites": 0
+    }
+   }
+  },
+  {
+   "experiment": "npe-frontier/x_task_gate",
+   "script": "run_xtg.py",
+   "checks": {
+    "a_screen_context": {
+     "verdict": "NOT_VERIFIED",
+     "reason": "no screen call (st_a/st_b or forwarded world kwargs) found in the script or in the helper functions it reaches",
+     "contexts": []
+    },
+    "c_label_write_back": {
+     "verdict": "OK",
+     "reason": "label readouts only under ATOMIC write-back (immune to the W2-35 leak)",
+     "readouts": [
+      "run_xtg.py:105"
+     ],
+     "write_back": {
+      "ATOMIC": [
+       "line 69: runner_cls(world) (X-DONOR-SWAP ATOMIC runner)"
+      ]
+     }
+    },
+    "d_max_of_cached": {
+     "verdict": "MAX_OF_CACHED",
+     "keys": [
+      "held_max_final"
+     ]
+    },
+    "h_stores_genomes": {
+     "verdict": "NOT_VERIFIED",
+     "reason": "no parseable records"
+    }
+   }
+  },
+  {
+   "experiment": "c9x-explore/c9_h1r",
+   "script": "run_h1r.py",
+   "checks": {
+    "a_screen_context": {
+     "verdict": "NOT_VERIFIED",
+     "reason": "no screen call (st_a/st_b or forwarded world kwargs) found in the script or in the helper functions it reaches",
+     "contexts": []
+    },
+    "c_label_write_back": {
+     "verdict": "OK",
+     "reason": "no label-share / label-membership readout",
+     "readouts": [],
+     "write_back": {
+      "BASE": [
+       "line 36: class H1Runner(world.Runner)"
+      ]
+     }
+    },
+    "d_max_of_cached": {
+     "verdict": "MAX_OF_CACHED",
+     "keys": [
+      "held_max_final"
+     ]
+    },
+    "h_stores_genomes": {
+     "verdict": "NO_GENOMES",
+     "n_records": 1,
+     "genome_sites": 0,
+     "register_sites": 0
+    }
+   }
+  },
+  {
+   "experiment": "c9x-explore/c_ablate_confirm",
+   "script": "run_ca.py",
+   "checks": {
+    "a_screen_context": {
+     "verdict": "NOT_VERIFIED",
+     "reason": "no screen call (st_a/st_b or forwarded world kwargs) found in the script or in the helper functions it reaches",
+     "contexts": []
+    },
+    "c_label_write_back": {
+     "verdict": "OK",
+     "reason": "no label-share / label-membership readout",
+     "readouts": [],
+     "write_back": {}
+    },
+    "d_max_of_cached": {
+     "verdict": "OK",
+     "keys": []
+    },
+    "h_stores_genomes": {
+     "verdict": "NO_GENOMES",
+     "n_records": 1,
+     "genome_sites": 0,
+     "register_sites": 0
+    }
+   }
+  },
+  {
+   "experiment": "c9x-explore/c_atomic",
+   "script": "run_cat.py",
+   "checks": {
+    "a_screen_context": {
+     "verdict": "NOT_VERIFIED",
+     "reason": "no screen call (st_a/st_b or forwarded world kwargs) found in the script or in the helper functions it reaches",
+     "contexts": []
+    },
+    "c_label_write_back": {
+     "verdict": "OK",
+     "reason": "no label-share / label-membership readout",
+     "readouts": [],
+     "write_back": {
+      "ATOMIC": [
+       "line 72: class At(world.Runner) restores halves"
+      ],
+      "BASE": [
+       "arm literal 'BASE' beside an ATOMIC runner"
+      ]
+     }
+    },
+    "d_max_of_cached": {
+     "verdict": "OK",
+     "keys": []
+    },
+    "h_stores_genomes": {
+     "verdict": "NO_GENOMES",
+     "n_records": 40,
+     "genome_sites": 0,
+     "register_sites": 0
+    }
+   }
+  },
+  {
+   "experiment": "c9x-explore/c_core",
+   "script": "run_ck.py",
+   "checks": {
+    "a_screen_context": {
+     "verdict": "NOT_VERIFIED",
+     "reason": "no screen call (st_a/st_b or forwarded world kwargs) found in the script or in the helper functions it reaches",
+     "contexts": []
+    },
+    "c_label_write_back": {
+     "verdict": "OK",
+     "reason": "label readouts only under ATOMIC write-back (immune to the W2-35 leak)",
+     "readouts": [
+      "run_ck.py:115",
+      "run_ck.py:94"
+     ],
+     "write_back": {
+      "ATOMIC": [
+       "line 56: runner_cls(world) (X-DONOR-SWAP ATOMIC runner)"
+      ]
+     }
+    },
+    "d_max_of_cached": {
+     "verdict": "OK",
+     "keys": []
+    },
+    "h_stores_genomes": {
+     "verdict": "NO_GENOMES",
+     "n_records": 40,
+     "genome_sites": 0,
+     "register_sites": 0
+    }
+   }
+  },
+  {
+   "experiment": "c9x-explore/c_critical_mass",
+   "script": "run_ccm.py",
+   "checks": {
+    "a_screen_context": {
+     "verdict": "NOT_VERIFIED",
+     "reason": "no screen call (st_a/st_b or forwarded world kwargs) found in the script or in the helper functions it reaches",
+     "contexts": []
+    },
+    "c_label_write_back": {
+     "verdict": "OK",
+     "reason": "no label-share / label-membership readout",
+     "readouts": [],
+     "write_back": {
+      "BASE": [
+       "line 40: class K(world.Runner)"
+      ]
+     }
+    },
+    "d_max_of_cached": {
+     "verdict": "OK",
+     "keys": []
+    },
+    "h_stores_genomes": {
+     "verdict": "NO_GENOMES",
+     "n_records": 40,
+     "genome_sites": 0,
+     "register_sites": 0
+    }
+   }
+  },
+  {
+   "experiment": "c9x-explore/c_dense_confirm",
+   "script": "run_cd.py",
+   "checks": {
+    "a_screen_context": {
+     "verdict": "NOT_VERIFIED",
+     "reason": "no screen call (st_a/st_b or forwarded world kwargs) found in the script or in the helper functions it reaches",
+     "contexts": []
+    },
+    "c_label_write_back": {
+     "verdict": "OK",
+     "reason": "no label-share / label-membership readout",
+     "readouts": [],
+     "write_back": {
+      "BASE": [
+       "line 69: class Permissive(world.Runner)"
+      ]
+     }
+    },
+    "d_max_of_cached": {
+     "verdict": "OK",
+     "keys": []
+    },
+    "h_stores_genomes": {
+     "verdict": "NO_GENOMES",
+     "n_records": 1,
+     "genome_sites": 0,
+     "register_sites": 0
+    }
+   }
+  },
+  {
+   "experiment": "c9x-explore/c_energy_confirm",
+   "script": "run_ce.py",
+   "checks": {
+    "a_screen_context": {
+     "verdict": "NOT_VERIFIED",
+     "reason": "no screen call (st_a/st_b or forwarded world kwargs) found in the script or in the helper functions it reaches",
+     "contexts": []
+    },
+    "c_label_write_back": {
+     "verdict": "OK",
+     "reason": "no label-share / label-membership readout",
+     "readouts": [],
+     "write_back": {
+      "BASE": [
+       "line 68: class Base(world.Runner)"
+      ]
+     }
+    },
+    "d_max_of_cached": {
+     "verdict": "OK",
+     "keys": []
+    },
+    "h_stores_genomes": {
+     "verdict": "NO_GENOMES",
+     "n_records": 1,
+     "genome_sites": 0,
+     "register_sites": 0
+    }
+   }
+  },
+  {
+   "experiment": "c9x-explore/c_norecomb_confirm",
+   "script": "run_cr.py",
+   "checks": {
+    "a_screen_context": {
+     "verdict": "NOT_VERIFIED",
+     "reason": "no screen call (st_a/st_b or forwarded world kwargs) found in the script or in the helper functions it reaches",
+     "contexts": []
+    },
+    "c_label_write_back": {
+     "verdict": "OK",
+     "reason": "no label-share / label-membership readout",
+     "readouts": [],
+     "write_back": {
+      "BASE": [
+       "line 43: world.Runner(...) instantiated directly"
+      ]
+     }
+    },
+    "d_max_of_cached": {
+     "verdict": "OK",
+     "keys": []
+    },
+    "h_stores_genomes": {
+     "verdict": "NO_GENOMES",
+     "n_records": 1,
+     "genome_sites": 0,
+     "register_sites": 0
+    }
+   }
+  },
+  {
+   "experiment": "c9x-explore/c_runaway_confirm",
+   "script": "run_crw.py",
+   "checks": {
+    "a_screen_context": {
+     "verdict": "NOT_VERIFIED",
+     "reason": "no screen call (st_a/st_b or forwarded world kwargs) found in the script or in the helper functions it reaches",
+     "contexts": []
+    },
+    "c_label_write_back": {
+     "verdict": "OK",
+     "reason": "no label-share / label-membership readout",
+     "readouts": [],
+     "write_back": {
+      "BASE": [
+       "line 47: world.Runner(...) instantiated directly"
+      ]
+     }
+    },
+    "d_max_of_cached": {
+     "verdict": "OK",
+     "keys": []
+    },
+    "h_stores_genomes": {
+     "verdict": "NO_GENOMES",
+     "n_records": 1,
+     "genome_sites": 0,
+     "register_sites": 0
+    }
+   }
+  },
+  {
+   "experiment": "c9x-explore/c_selfloc_confirm",
+   "script": "run_c.py",
+   "checks": {
+    "a_screen_context": {
+     "verdict": "NOT_VERIFIED",
+     "reason": "no screen call (st_a/st_b or forwarded world kwargs) found in the script or in the helper functions it reaches",
+     "contexts": []
+    },
+    "c_label_write_back": {
+     "verdict": "OK",
+     "reason": "no label-share / label-membership readout",
+     "readouts": [],
+     "write_back": {
+      "BASE": [
+       "line 43: class Search(world.Runner)"
+      ]
+     }
+    },
+    "d_max_of_cached": {
+     "verdict": "OK",
+     "keys": []
+    },
+    "h_stores_genomes": {
+     "verdict": "NO_GENOMES",
+     "n_records": 1,
+     "genome_sites": 0,
+     "register_sites": 0
+    }
+   }
+  },
+  {
+   "experiment": "c9x-explore/c_swap_acquire",
+   "script": "run_csa.py",
+   "checks": {
+    "a_screen_context": {
+     "verdict": "NOT_VERIFIED",
+     "reason": "no screen call (st_a/st_b or forwarded world kwargs) found in the script or in the helper functions it reaches",
+     "contexts": []
+    },
+    "c_label_write_back": {
+     "verdict": "OK",
+     "reason": "label readouts only under ATOMIC write-back (immune to the W2-35 leak)",
+     "readouts": [
+      "run_csa.py:108",
+      "run_csa.py:77",
+      "run_csa.py:90"
+     ],
+     "write_back": {
+      "ATOMIC": [
+       "line 71: runner_cls(world) (X-DONOR-SWAP ATOMIC runner)"
+      ]
+     }
+    },
+    "d_max_of_cached": {
+     "verdict": "OK",
+     "keys": []
+    },
+    "h_stores_genomes": {
+     "verdict": "NO_GENOMES",
+     "n_records": 40,
+     "genome_sites": 0,
+     "register_sites": 0
+    }
+   }
+  },
+  {
+   "experiment": "c9x-explore/x_acquire",
+   "script": "run_xa.py",
+   "checks": {
+    "a_screen_context": {
+     "verdict": "CONTEXT_MISMATCH",
+     "reason": "every screen context is ZERO while the world carries registers: read this screen as fresh-context competence only, never as in-world competence",
+     "contexts": [
+      "run_xa.py:53 ZERO"
+     ]
+    },
+    "c_label_write_back": {
+     "verdict": "OK",
+     "reason": "no label-share / label-membership readout",
+     "readouts": [],
+     "write_back": {
+      "ATOMIC": [
+       "line 66: runner_cls(world) (X-DONOR-SWAP ATOMIC runner)"
+      ],
+      "BASE": [
+       "line 94: world.Runner(...) instantiated directly"
+      ]
+     }
+    },
+    "d_max_of_cached": {
+     "verdict": "OK",
+     "keys": []
+    },
+    "h_stores_genomes": {
+     "verdict": "OK",
+     "n_records": 3,
+     "genome_sites": 84,
+     "register_sites": 0
+    }
+   }
+  },
+  {
+   "experiment": "c9x-explore/x_atomic",
+   "script": "run_at.py",
+   "checks": {
+    "a_screen_context": {
+     "verdict": "NOT_VERIFIED",
+     "reason": "no screen call (st_a/st_b or forwarded world kwargs) found in the script or in the helper functions it reaches",
+     "contexts": []
+    },
+    "c_label_write_back": {
+     "verdict": "OK",
+     "reason": "no label-share / label-membership readout",
+     "readouts": [],
+     "write_back": {
+      "ATOMIC": [
+       "line 48: class At(world.Runner) restores halves"
+      ],
+      "BASE": [
+       "arm literal 'BASE' beside an ATOMIC runner"
+      ]
+     }
+    },
+    "d_max_of_cached": {
+     "verdict": "OK",
+     "keys": []
+    },
+    "h_stores_genomes": {
+     "verdict": "NO_GENOMES",
+     "n_records": 40,
+     "genome_sites": 0,
+     "register_sites": 0
+    }
+   }
+  },
+  {
+   "experiment": "c9x-explore/x_atomic_random",
+   "script": "run_ar.py",
+   "checks": {
+    "a_screen_context": {
+     "verdict": "NOT_VERIFIED",
+     "reason": "no screen call (st_a/st_b or forwarded world kwargs) found in the script or in the helper functions it reaches",
+     "contexts": []
+    },
+    "c_label_write_back": {
+     "verdict": "OK",
+     "reason": "label readouts only under ATOMIC write-back (immune to the W2-35 leak)",
+     "readouts": [
+      "run_ar.py:55",
+      "run_ar.py:71",
+      "run_ar.py:72"
+     ],
+     "write_back": {
+      "ATOMIC": [
+       "line 49: runner_cls(world) (X-DONOR-SWAP ATOMIC runner)"
+      ]
+     }
+    },
+    "d_max_of_cached": {
+     "verdict": "OK",
+     "keys": []
+    },
+    "h_stores_genomes": {
+     "verdict": "NO_GENOMES",
+     "n_records": 40,
+     "genome_sites": 0,
+     "register_sites": 0
+    }
+   }
+  },
+  {
+   "experiment": "c9x-explore/x_cert_break",
+   "script": "run_cb.py",
+   "checks": {
+    "a_screen_context": {
+     "verdict": "NOT_VERIFIED",
+     "reason": "no screen call (st_a/st_b or forwarded world kwargs) found in the script or in the helper functions it reaches",
+     "contexts": []
+    },
+    "c_label_write_back": {
+     "verdict": "OK",
+     "reason": "label readouts only under ATOMIC write-back (immune to the W2-35 leak)",
+     "readouts": [
+      "run_cb.py:39"
+     ],
+     "write_back": {
+      "ATOMIC": [
+       "line 55: runner_cls(world) (X-DONOR-SWAP ATOMIC runner)"
+      ]
+     }
+    },
+    "d_max_of_cached": {
+     "verdict": "OK",
+     "keys": []
+    },
+    "h_stores_genomes": {
+     "verdict": "NO_GENOMES",
+     "n_records": 7,
+     "genome_sites": 0,
+     "register_sites": 0
+    }
+   }
+  },
+  {
+   "experiment": "c9x-explore/x_content",
+   "script": "run_xc.py",
+   "checks": {
+    "a_screen_context": {
+     "verdict": "NOT_VERIFIED",
+     "reason": "no screen call (st_a/st_b or forwarded world kwargs) found in the script or in the helper functions it reaches",
+     "contexts": []
+    },
+    "c_label_write_back": {
+     "verdict": "OK",
+     "reason": "label readouts only under ATOMIC write-back (immune to the W2-35 leak)",
+     "readouts": [
+      "run_xc.py:51",
+      "run_xc.py:99"
+     ],
+     "write_back": {
+      "ATOMIC": [
+       "line 62: runner_cls(world) (X-DONOR-SWAP ATOMIC runner)"
+      ]
+     }
+    },
+    "d_max_of_cached": {
+     "verdict": "OK",
+     "keys": []
+    },
+    "h_stores_genomes": {
+     "verdict": "NO_GENOMES",
+     "n_records": 20,
+     "genome_sites": 0,
+     "register_sites": 0
+    }
+   }
+  },
+  {
+   "experiment": "c9x-explore/x_core",
+   "script": "run_xk.py",
+   "checks": {
+    "a_screen_context": {
+     "verdict": "NOT_VERIFIED",
+     "reason": "no screen call (st_a/st_b or forwarded world kwargs) found in the script or in the helper functions it reaches",
+     "contexts": []
+    },
+    "c_label_write_back": {
+     "verdict": "OK",
+     "reason": "label readouts only under ATOMIC write-back (immune to the W2-35 leak)",
+     "readouts": [
+      "run_xc.py:51"
+     ],
+     "write_back": {
+      "ATOMIC": [
+       "line 52: runner_cls(world) (X-DONOR-SWAP ATOMIC runner)"
+      ]
+     }
+    },
+    "d_max_of_cached": {
+     "verdict": "OK",
+     "keys": []
+    },
+    "h_stores_genomes": {
+     "verdict": "NO_GENOMES",
+     "n_records": 11,
+     "genome_sites": 0,
+     "register_sites": 0
+    }
+   }
+  },
+  {
+   "experiment": "c9x-explore/x_core_time",
+   "script": "run_kt.py",
+   "checks": {
+    "a_screen_context": {
+     "verdict": "NOT_VERIFIED",
+     "reason": "no screen call (st_a/st_b or forwarded world kwargs) found in the script or in the helper functions it reaches",
+     "contexts": []
+    },
+    "c_label_write_back": {
+     "verdict": "OK",
+     "reason": "label readouts only under ATOMIC write-back (immune to the W2-35 leak)",
+     "readouts": [
+      "run_kt.py:40"
+     ],
+     "write_back": {
+      "ATOMIC": [
+       "line 65: runner_cls(world) (X-DONOR-SWAP ATOMIC runner)"
+      ]
+     }
+    },
+    "d_max_of_cached": {
+     "verdict": "OK",
+     "keys": []
+    },
+    "h_stores_genomes": {
+     "verdict": "NO_GENOMES",
+     "n_records": 9,
+     "genome_sites": 0,
+     "register_sites": 0
+    }
+   }
+  },
+  {
+   "experiment": "c9x-explore/x_critical_mass",
+   "script": "run_cm.py",
+   "checks": {
+    "a_screen_context": {
+     "verdict": "NOT_VERIFIED",
+     "reason": "no screen call (st_a/st_b or forwarded world kwargs) found in the script or in the helper functions it reaches",
+     "contexts": []
+    },
+    "c_label_write_back": {
+     "verdict": "OK",
+     "reason": "no label-share / label-membership readout",
+     "readouts": [],
+     "write_back": {
+      "BASE": [
+       "line 36: class K(world.Runner)"
+      ]
+     }
+    },
+    "d_max_of_cached": {
+     "verdict": "OK",
+     "keys": []
+    },
+    "h_stores_genomes": {
+     "verdict": "NO_GENOMES",
+     "n_records": 2,
+     "genome_sites": 0,
+     "register_sites": 0
+    }
+   }
+  },
+  {
+   "experiment": "c9x-explore/x_decay",
+   "script": "run_dk.py",
+   "checks": {
+    "a_screen_context": {
+     "verdict": "NOT_VERIFIED",
+     "reason": "no screen call (st_a/st_b or forwarded world kwargs) found in the script or in the helper functions it reaches",
+     "contexts": []
+    },
+    "c_label_write_back": {
+     "verdict": "OK",
+     "reason": "no label-share / label-membership readout",
+     "readouts": [],
+     "write_back": {
+      "BASE": [
+       "line 44: class Dk(world.Runner)"
+      ]
+     }
+    },
+    "d_max_of_cached": {
+     "verdict": "OK",
+     "keys": []
+    },
+    "h_stores_genomes": {
+     "verdict": "NO_GENOMES",
+     "n_records": 40,
+     "genome_sites": 0,
+     "register_sites": 0
+    }
+   }
+  },
+  {
+   "experiment": "c9x-explore/x_dense_ablate",
+   "script": "run_a.py",
+   "checks": {
+    "a_screen_context": {
+     "verdict": "NOT_VERIFIED",
+     "reason": "no screen call (st_a/st_b or forwarded world kwargs) found in the script or in the helper functions it reaches",
+     "contexts": []
+    },
+    "c_label_write_back": {
+     "verdict": "OK",
+     "reason": "no label-share / label-membership readout",
+     "readouts": [],
+     "write_back": {
+      "BASE": [
+       "line 40: class W(world.Runner)"
+      ]
+     }
+    },
+    "d_max_of_cached": {
+     "verdict": "OK",
+     "keys": []
+    },
+    "h_stores_genomes": {
+     "verdict": "NO_GENOMES",
+     "n_records": 2,
+     "genome_sites": 0,
+     "register_sites": 0
+    }
+   }
+  },
+  {
+   "experiment": "c9x-explore/x_dense_ops",
+   "script": "run_d.py",
+   "checks": {
+    "a_screen_context": {
+     "verdict": "NOT_VERIFIED",
+     "reason": "no screen call (st_a/st_b or forwarded world kwargs) found in the script or in the helper functions it reaches",
+     "contexts": []
+    },
+    "c_label_write_back": {
+     "verdict": "OK",
+     "reason": "no label-share / label-membership readout",
+     "readouts": [],
+     "write_back": {
+      "BASE": [
+       "line 80: class Permissive(world.Runner)"
+      ]
+     }
+    },
+    "d_max_of_cached": {
+     "verdict": "OK",
+     "keys": []
+    },
+    "h_stores_genomes": {
+     "verdict": "NOT_VERIFIED",
+     "reason": "no parseable records"
+    }
+   }
+  },
+  {
+   "experiment": "c9x-explore/x_donor_rate",
+   "script": "run_dr.py",
+   "checks": {
+    "a_screen_context": {
+     "verdict": "OK",
+     "reason": "a carried-register context is screened (alongside ZERO: a deliberate comparison?)",
+     "contexts": [
+      "run_dr.py:49 ZERO",
+      "run_dr.py:52 CARRIED"
+     ]
+    },
+    "c_label_write_back": {
+     "verdict": "OK",
+     "reason": "no label-share / label-membership readout",
+     "readouts": [],
+     "write_back": {
+      "BASE": [
+       "line 38: world.Runner(...) instantiated directly"
+      ]
+     }
+    },
+    "d_max_of_cached": {
+     "verdict": "OK",
+     "keys": []
+    },
+    "h_stores_genomes": {
+     "verdict": "NO_GENOMES",
+     "n_records": 1,
+     "genome_sites": 0,
+     "register_sites": 0
+    }
+   }
+  },
+  {
+   "experiment": "c9x-explore/x_donor_swap",
+   "script": "run_ds.py",
+   "checks": {
+    "a_screen_context": {
+     "verdict": "CONTEXT_MISMATCH",
+     "reason": "every screen context is ZERO while the world carries registers: read this screen as fresh-context competence only, never as in-world competence",
+     "contexts": [
+      "run_ds.py:78 ZERO"
+     ]
+    },
+    "c_label_write_back": {
+     "verdict": "OK",
+     "reason": "no label-share / label-membership readout",
+     "readouts": [],
+     "write_back": {
+      "ATOMIC": [
+       "line 48: class At(world.Runner) restores halves",
+       "line 89: runner_cls(world) (X-DONOR-SWAP ATOMIC runner)"
+      ],
+      "BASE": [
+       "line 69: world.Runner(...) instantiated directly",
+       "line 102: world.Runner(...) instantiated directly"
+      ]
+     }
+    },
+    "d_max_of_cached": {
+     "verdict": "OK",
+     "keys": []
+    },
+    "h_stores_genomes": {
+     "verdict": "NO_GENOMES",
+     "n_records": 40,
+     "genome_sites": 0,
+     "register_sites": 0
+    }
+   }
+  },
+  {
+   "experiment": "c9x-explore/x_dose_curve",
+   "script": "run_dc.py",
+   "checks": {
+    "a_screen_context": {
+     "verdict": "NOT_VERIFIED",
+     "reason": "no screen call (st_a/st_b or forwarded world kwargs) found in the script or in the helper functions it reaches",
+     "contexts": []
+    },
+    "c_label_write_back": {
+     "verdict": "OK",
+     "reason": "no label-share / label-membership readout",
+     "readouts": [],
+     "write_back": {
+      "BASE": [
+       "line 42: class K(world.Runner)"
+      ]
+     }
+    },
+    "d_max_of_cached": {
+     "verdict": "OK",
+     "keys": []
+    },
+    "h_stores_genomes": {
+     "verdict": "NO_GENOMES",
+     "n_records": 40,
+     "genome_sites": 0,
+     "register_sites": 0
+    }
+   }
+  },
+  {
+   "experiment": "c9x-explore/x_energy_inherit",
+   "script": "run_n.py",
+   "checks": {
+    "a_screen_context": {
+     "verdict": "NOT_VERIFIED",
+     "reason": "no screen call (st_a/st_b or forwarded world kwargs) found in the script or in the helper functions it reaches",
+     "contexts": []
+    },
+    "c_label_write_back": {
+     "verdict": "OK",
+     "reason": "no label-share / label-membership readout",
+     "readouts": [],
+     "write_back": {
+      "BASE": [
+       "line 41: class Base(world.Runner)"
+      ]
+     }
+    },
+    "d_max_of_cached": {
+     "verdict": "OK",
+     "keys": []
+    },
+    "h_stores_genomes": {
+     "verdict": "NO_GENOMES",
+     "n_records": 2,
+     "genome_sites": 0,
+     "register_sites": 0
+    }
+   }
+  },
+  {
+   "experiment": "c9x-explore/x_error_threshold",
+   "script": "run_e.py",
+   "checks": {
+    "a_screen_context": {
+     "verdict": "NOT_VERIFIED",
+     "reason": "no screen call (st_a/st_b or forwarded world kwargs) found in the script or in the helper functions it reaches",
+     "contexts": []
+    },
+    "c_label_write_back": {
+     "verdict": "OK",
+     "reason": "no label-share / label-membership readout",
+     "readouts": [],
+     "write_back": {
+      "BASE": [
+       "line 41: class Dosed(world.Runner)"
+      ]
+     }
+    },
+    "d_max_of_cached": {
+     "verdict": "OK",
+     "keys": []
+    },
+    "h_stores_genomes": {
+     "verdict": "NO_GENOMES",
+     "n_records": 2,
+     "genome_sites": 0,
+     "register_sites": 0
+    }
+   }
+  },
+  {
+   "experiment": "c9x-explore/x_h1_gradient",
+   "script": "run_g.py",
+   "checks": {
+    "a_screen_context": {
+     "verdict": "NOT_VERIFIED",
+     "reason": "no screen call (st_a/st_b or forwarded world kwargs) found in the script or in the helper functions it reaches",
+     "contexts": []
+    },
+    "c_label_write_back": {
+     "verdict": "OK",
+     "reason": "no label-share / label-membership readout",
+     "readouts": [],
+     "write_back": {}
+    },
+    "d_max_of_cached": {
+     "verdict": "MAX_OF_CACHED",
+     "keys": [
+      "held_max_final",
+      "max_comp",
+      "max_comp_ever"
+     ]
+    },
+    "h_stores_genomes": {
+     "verdict": "NO_GENOMES",
+     "n_records": 2,
+     "genome_sites": 0,
+     "register_sites": 0
+    }
+   }
+  },
+  {
+   "experiment": "c9x-explore/x_h1_transplant",
+   "script": "run_ht.py",
+   "checks": {
+    "a_screen_context": {
+     "verdict": "NOT_VERIFIED",
+     "reason": "no screen call (st_a/st_b or forwarded world kwargs) found in the script or in the helper functions it reaches",
+     "contexts": []
+    },
+    "c_label_write_back": {
+     "verdict": "OK",
+     "reason": "no label-share / label-membership readout",
+     "readouts": [],
+     "write_back": {}
+    },
+    "d_max_of_cached": {
+     "verdict": "MAX_OF_CACHED",
+     "keys": [
+      "held_max_final"
+     ]
+    },
+    "h_stores_genomes": {
+     "verdict": "NO_GENOMES",
+     "n_records": 2,
+     "genome_sites": 0,
+     "register_sites": 0
+    }
+   }
+  },
+  {
+   "experiment": "c9x-explore/x_h2_7ae3",
+   "script": "run_h.py",
+   "checks": {
+    "a_screen_context": {
+     "verdict": "NOT_VERIFIED",
+     "reason": "no screen call (st_a/st_b or forwarded world kwargs) found in the script or in the helper functions it reaches",
+     "contexts": []
+    },
+    "c_label_write_back": {
+     "verdict": "OK",
+     "reason": "no label-share / label-membership readout",
+     "readouts": [],
+     "write_back": {
+      "BASE": [
+       "line 39: class KFounders(world.Runner)"
+      ]
+     }
+    },
+    "d_max_of_cached": {
+     "verdict": "OK",
+     "keys": []
+    },
+    "h_stores_genomes": {
+     "verdict": "NO_GENOMES",
+     "n_records": 2,
+     "genome_sites": 0,
+     "register_sites": 0
+    }
+   }
+  },
+  {
+   "experiment": "c9x-explore/x_h2_norecomb",
+   "script": "run_r.py",
+   "checks": {
+    "a_screen_context": {
+     "verdict": "NOT_VERIFIED",
+     "reason": "no screen call (st_a/st_b or forwarded world kwargs) found in the script or in the helper functions it reaches",
+     "contexts": []
+    },
+    "c_label_write_back": {
+     "verdict": "OK",
+     "reason": "no label-share / label-membership readout",
+     "readouts": [],
+     "write_back": {
+      "BASE": [
+       "line 39: world.Runner(...) instantiated directly"
+      ]
+     }
+    },
+    "d_max_of_cached": {
+     "verdict": "OK",
+     "keys": []
+    },
+    "h_stores_genomes": {
+     "verdict": "NO_GENOMES",
+     "n_records": 2,
+     "genome_sites": 0,
+     "register_sites": 0
+    }
+   }
+  },
+  {
+   "experiment": "c9x-explore/x_h2_termination",
+   "script": "run_t.py",
+   "checks": {
+    "a_screen_context": {
+     "verdict": "NOT_VERIFIED",
+     "reason": "no screen call (st_a/st_b or forwarded world kwargs) found in the script or in the helper functions it reaches",
+     "contexts": []
+    },
+    "c_label_write_back": {
+     "verdict": "OK",
+     "reason": "no label-share / label-membership readout",
+     "readouts": [],
+     "write_back": {
+      "BASE": [
+       "line 38: class T(world.Runner)"
+      ]
+     }
+    },
+    "d_max_of_cached": {
+     "verdict": "OK",
+     "keys": []
+    },
+    "h_stores_genomes": {
+     "verdict": "NO_GENOMES",
+     "n_records": 2,
+     "genome_sites": 0,
+     "register_sites": 0
+    }
+   }
+  },
+  {
+   "experiment": "c9x-explore/x_h3_easier",
+   "script": "run_e3.py",
+   "checks": {
+    "a_screen_context": {
+     "verdict": "NOT_VERIFIED",
+     "reason": "no screen call (st_a/st_b or forwarded world kwargs) found in the script or in the helper functions it reaches",
+     "contexts": []
+    },
+    "c_label_write_back": {
+     "verdict": "OK",
+     "reason": "no label-share / label-membership readout",
+     "readouts": [],
+     "write_back": {
+      "BASE": [
+       "line 38: class Easier(world.Runner)"
+      ]
+     }
+    },
+    "d_max_of_cached": {
+     "verdict": "MAX_OF_CACHED",
+     "keys": [
+      "held_max_ever"
+     ]
+    },
+    "h_stores_genomes": {
+     "verdict": "NO_GENOMES",
+     "n_records": 2,
+     "genome_sites": 0,
+     "register_sites": 0
+    }
+   }
+  },
+  {
+   "experiment": "c9x-explore/x_h3_flow",
+   "script": "run_f3.py",
+   "checks": {
+    "a_screen_context": {
+     "verdict": "NOT_VERIFIED",
+     "reason": "no screen call (st_a/st_b or forwarded world kwargs) found in the script or in the helper functions it reaches",
+     "contexts": []
+    },
+    "c_label_write_back": {
+     "verdict": "OK",
+     "reason": "no label-share / label-membership readout",
+     "readouts": [],
+     "write_back": {
+      "BASE": [
+       "line 41: class Obs(world.Runner)"
+      ]
+     }
+    },
+    "d_max_of_cached": {
+     "verdict": "OK",
+     "keys": []
+    },
+    "h_stores_genomes": {
+     "verdict": "NO_GENOMES",
+     "n_records": 2,
+     "genome_sites": 0,
+     "register_sites": 0
+    }
+   }
+  },
+  {
+   "experiment": "c9x-explore/x_local_alloc",
+   "script": "run_l.py",
+   "checks": {
+    "a_screen_context": {
+     "verdict": "NOT_VERIFIED",
+     "reason": "no screen call (st_a/st_b or forwarded world kwargs) found in the script or in the helper functions it reaches",
+     "contexts": []
+    },
+    "c_label_write_back": {
+     "verdict": "LABEL_READOUT_IN_BASE",
+     "reason": "a label readout (3 sites) is computed in a BASE write-back run: in BASE the label is neither necessary nor sufficient for descent (absorbing L, labels surviving content replacement, unlabelled rotated frames); use content-keyed / frame-aware membership",
+     "readouts": [
+      "run_l.py:54",
+      "run_l.py:72",
+      "run_l.py:77"
+     ],
+     "write_back": {
+      "BASE": [
+       "line 36: class R(world.Runner)"
+      ]
+     }
+    },
+    "d_max_of_cached": {
+     "verdict": "OK",
+     "keys": []
+    },
+    "h_stores_genomes": {
+     "verdict": "NO_GENOMES",
+     "n_records": 1,
+     "genome_sites": 0,
+     "register_sites": 0
+    }
+   }
+  },
+  {
+   "experiment": "c9x-explore/x_nearmiss",
+   "script": "run_m.py",
+   "checks": {
+    "a_screen_context": {
+     "verdict": "NOT_VERIFIED",
+     "reason": "no screen call (st_a/st_b or forwarded world kwargs) found in the script or in the helper functions it reaches",
+     "contexts": []
+    },
+    "c_label_write_back": {
+     "verdict": "OK",
+     "reason": "no label-share / label-membership readout",
+     "readouts": [],
+     "write_back": {
+      "BASE": [
+       "line 36: class Permissive(world.Runner)"
+      ]
+     }
+    },
+    "d_max_of_cached": {
+     "verdict": "OK",
+     "keys": []
+    },
+    "h_stores_genomes": {
+     "verdict": "NOT_VERIFIED",
+     "reason": "no parseable records"
+    }
+   }
+  },
+  {
+   "experiment": "c9x-explore/x_nonpair_fidelity",
+   "script": "run_f.py",
+   "checks": {
+    "a_screen_context": {
+     "verdict": "NOT_VERIFIED",
+     "reason": "no screen call (st_a/st_b or forwarded world kwargs) found in the script or in the helper functions it reaches",
+     "contexts": []
+    },
+    "c_label_write_back": {
+     "verdict": "OK",
+     "reason": "no label-share / label-membership readout",
+     "readouts": [],
+     "write_back": {
+      "BASE": [
+       "line 38: class InPlace(world.Runner)"
+      ]
+     }
+    },
+    "d_max_of_cached": {
+     "verdict": "OK",
+     "keys": []
+    },
+    "h_stores_genomes": {
+     "verdict": "NO_GENOMES",
+     "n_records": 1,
+     "genome_sites": 0,
+     "register_sites": 0
+    }
+   }
+  },
+  {
+   "experiment": "c9x-explore/x_nonpair_search",
+   "script": "run_x.py",
+   "checks": {
+    "a_screen_context": {
+     "verdict": "NOT_VERIFIED",
+     "reason": "no screen call (st_a/st_b or forwarded world kwargs) found in the script or in the helper functions it reaches",
+     "contexts": []
+    },
+    "c_label_write_back": {
+     "verdict": "OK",
+     "reason": "no label-share / label-membership readout",
+     "readouts": [],
+     "write_back": {
+      "BASE": [
+       "line 41: class InPlace(world.Runner)"
+      ]
+     }
+    },
+    "d_max_of_cached": {
+     "verdict": "OK",
+     "keys": []
+    },
+    "h_stores_genomes": {
+     "verdict": "NO_GENOMES",
+     "n_records": 1,
+     "genome_sites": 0,
+     "register_sites": 0
+    }
+   }
+  },
+  {
+   "experiment": "c9x-explore/x_pair_norecomb",
+   "script": "run_pn.py",
+   "checks": {
+    "a_screen_context": {
+     "verdict": "NOT_VERIFIED",
+     "reason": "no screen call (st_a/st_b or forwarded world kwargs) found in the script or in the helper functions it reaches",
+     "contexts": []
+    },
+    "c_label_write_back": {
+     "verdict": "OK",
+     "reason": "no label-share / label-membership readout",
+     "readouts": [],
+     "write_back": {
+      "BASE": [
+       "line 42: world.Runner(...) instantiated directly"
+      ]
+     }
+    },
+    "d_max_of_cached": {
+     "verdict": "OK",
+     "keys": []
+    },
+    "h_stores_genomes": {
+     "verdict": "NO_GENOMES",
+     "n_records": 2,
+     "genome_sites": 0,
+     "register_sites": 0
+    }
+   }
+  },
+  {
+   "experiment": "c9x-explore/x_position",
+   "script": "run_pos.py",
+   "checks": {
+    "a_screen_context": {
+     "verdict": "CONTEXT_MISMATCH",
+     "reason": "every screen context is ZERO while the world carries registers: read this screen as fresh-context competence only, never as in-world competence",
+     "contexts": [
+      "run_pos.py:46 ZERO"
+     ]
+    },
+    "c_label_write_back": {
+     "verdict": "OK",
+     "reason": "no label-share / label-membership readout",
+     "readouts": [],
+     "write_back": {
+      "BASE": [
+       "line 40: world.Runner(...) instantiated directly"
+      ]
+     }
+    },
+    "d_max_of_cached": {
+     "verdict": "OK",
+     "keys": []
+    },
+    "h_stores_genomes": {
+     "verdict": "NO_GENOMES",
+     "n_records": 1,
+     "genome_sites": 0,
+     "register_sites": 0
+    }
+   }
+  },
+  {
+   "experiment": "c9x-explore/x_root_audit",
+   "script": "run_ra.py",
+   "checks": {
+    "a_screen_context": {
+     "verdict": "NOT_VERIFIED",
+     "reason": "no screen call (st_a/st_b or forwarded world kwargs) found in the script or in the helper functions it reaches",
+     "contexts": []
+    },
+    "c_label_write_back": {
+     "verdict": "OK",
+     "reason": "no label-share / label-membership readout",
+     "readouts": [],
+     "write_back": {
+      "ATOMIC": [
+       "line 55: runner_cls(world) (X-DONOR-SWAP ATOMIC runner)"
+      ],
+      "BASE": [
+       "arm literal 'BASE' beside an ATOMIC runner"
+      ]
+     }
+    },
+    "d_max_of_cached": {
+     "verdict": "OK",
+     "keys": []
+    },
+    "h_stores_genomes": {
+     "verdict": "NO_GENOMES",
+     "n_records": 40,
+     "genome_sites": 0,
+     "register_sites": 0
+    }
+   }
+  },
+  {
+   "experiment": "c9x-explore/x_runaway",
+   "script": "run_rw.py",
+   "checks": {
+    "a_screen_context": {
+     "verdict": "NOT_VERIFIED",
+     "reason": "no screen call (st_a/st_b or forwarded world kwargs) found in the script or in the helper functions it reaches",
+     "contexts": []
+    },
+    "c_label_write_back": {
+     "verdict": "LABEL_READOUT_IN_BASE",
+     "reason": "a label readout (1 sites) is computed in a BASE write-back run: in BASE the label is neither necessary nor sufficient for descent (absorbing L, labels surviving content replacement, unlabelled rotated frames); use content-keyed / frame-aware membership",
+     "readouts": [
+      "run_rw.py:60"
+     ],
+     "write_back": {
+      "BASE": [
+       "line 41: class R(world.Runner)"
+      ]
+     }
+    },
+    "d_max_of_cached": {
+     "verdict": "OK",
+     "keys": []
+    },
+    "h_stores_genomes": {
+     "verdict": "NO_GENOMES",
+     "n_records": 1,
+     "genome_sites": 0,
+     "register_sites": 0
+    }
+   }
+  },
+  {
+   "experiment": "c9x-explore/x_runaway_transplant",
+   "script": "run_rt.py",
+   "checks": {
+    "a_screen_context": {
+     "verdict": "NOT_VERIFIED",
+     "reason": "no screen call (st_a/st_b or forwarded world kwargs) found in the script or in the helper functions it reaches",
+     "contexts": []
+    },
+    "c_label_write_back": {
+     "verdict": "OK",
+     "reason": "no label-share / label-membership readout",
+     "readouts": [],
+     "write_back": {
+      "BASE": [
+       "line 48: world.Runner(...) instantiated directly"
+      ]
+     }
+    },
+    "d_max_of_cached": {
+     "verdict": "OK",
+     "keys": []
+    },
+    "h_stores_genomes": {
+     "verdict": "NO_GENOMES",
+     "n_records": 2,
+     "genome_sites": 0,
+     "register_sites": 0
+    }
+   }
+  },
+  {
+   "experiment": "c9x-explore/x_selfloc_free",
+   "script": "run_s.py",
+   "checks": {
+    "a_screen_context": {
+     "verdict": "NOT_VERIFIED",
+     "reason": "no screen call (st_a/st_b or forwarded world kwargs) found in the script or in the helper functions it reaches",
+     "contexts": []
+    },
+    "c_label_write_back": {
+     "verdict": "OK",
+     "reason": "no label-share / label-membership readout",
+     "readouts": [],
+     "write_back": {
+      "BASE": [
+       "line 40: class Search(world.Runner)"
+      ]
+     }
+    },
+    "d_max_of_cached": {
+     "verdict": "OK",
+     "keys": []
+    },
+    "h_stores_genomes": {
+     "verdict": "NO_GENOMES",
+     "n_records": 2,
+     "genome_sites": 0,
+     "register_sites": 0
+    }
+   }
+  },
+  {
+   "experiment": "c9x-explore/x_selfloc_seeded",
+   "script": "run_k.py",
+   "checks": {
+    "a_screen_context": {
+     "verdict": "NOT_VERIFIED",
+     "reason": "no screen call (st_a/st_b or forwarded world kwargs) found in the script or in the helper functions it reaches",
+     "contexts": []
+    },
+    "c_label_write_back": {
+     "verdict": "OK",
+     "reason": "no label-share / label-membership readout",
+     "readouts": [],
+     "write_back": {
+      "BASE": [
+       "line 43: class Search(world.Runner)"
+      ]
+     }
+    },
+    "d_max_of_cached": {
+     "verdict": "OK",
+     "keys": []
+    },
+    "h_stores_genomes": {
+     "verdict": "NO_GENOMES",
+     "n_records": 2,
+     "genome_sites": 0,
+     "register_sites": 0
+    }
+   }
+  },
+  {
+   "experiment": "c9x-explore/x_spontaneous",
+   "script": "run_p.py",
+   "checks": {
+    "a_screen_context": {
+     "verdict": "NOT_VERIFIED",
+     "reason": "no screen call (st_a/st_b or forwarded world kwargs) found in the script or in the helper functions it reaches",
+     "contexts": []
+    },
+    "c_label_write_back": {
+     "verdict": "OK",
+     "reason": "no label-share / label-membership readout",
+     "readouts": [],
+     "write_back": {
+      "BASE": [
+       "line 35: class Permissive(world.Runner)"
+      ]
+     }
+    },
+    "d_max_of_cached": {
+     "verdict": "OK",
+     "keys": []
+    },
+    "h_stores_genomes": {
+     "verdict": "NO_GENOMES",
+     "n_records": 2,
+     "genome_sites": 0,
+     "register_sites": 0
+    }
+   }
+  },
+  {
+   "experiment": "c9x-explore/x_stall",
+   "script": "run_st.py",
+   "checks": {
+    "a_screen_context": {
+     "verdict": "OK",
+     "reason": "a carried-register context is screened",
+     "contexts": [
+      "run_st.py:101 CARRIED",
+      "run_st.py:98 CARRIED"
+     ]
+    },
+    "c_label_write_back": {
+     "verdict": "LABEL_READOUT_IN_BASE",
+     "reason": "a label readout (5 sites) is computed in a BASE write-back run: in BASE the label is neither necessary nor sufficient for descent (absorbing L, labels surviving content replacement, unlabelled rotated frames); use content-keyed / frame-aware membership",
+     "readouts": [
+      "run_st.py:59",
+      "run_st.py:72",
+      "run_st.py:80",
+      "run_st.py:81"
+     ],
+     "write_back": {
+      "BASE": [
+       "line 49: class St(world.Runner)"
+      ]
+     }
+    },
+    "d_max_of_cached": {
+     "verdict": "OK",
+     "keys": []
+    },
+    "h_stores_genomes": {
+     "verdict": "NO_GENOMES",
+     "n_records": 40,
+     "genome_sites": 0,
+     "register_sites": 0
+    }
+   }
+  },
+  {
+   "experiment": "c9x-explore/x_stall_f0",
+   "script": "run_s0.py",
+   "checks": {
+    "a_screen_context": {
+     "verdict": "OK",
+     "reason": "a carried-register context is screened",
+     "contexts": [
+      "run_s0.py:133 CARRIED",
+      "run_s0.py:136 CARRIED",
+      "run_s0.py:142 CARRIED"
+     ]
+    },
+    "c_label_write_back": {
+     "verdict": "LABEL_READOUT_IN_BASE",
+     "reason": "a label readout (4 sites) is computed in a BASE write-back run: in BASE the label is neither necessary nor sufficient for descent (absorbing L, labels surviving content replacement, unlabelled rotated frames); use content-keyed / frame-aware membership",
+     "readouts": [
+      "run_s0.py:110",
+      "run_s0.py:111",
+      "run_s0.py:113",
+      "run_s0.py:77"
+     ],
+     "write_back": {
+      "BASE": [
+       "line 57: class S0(world.Runner)"
+      ]
+     }
+    },
+    "d_max_of_cached": {
+     "verdict": "OK",
+     "keys": []
+    },
+    "h_stores_genomes": {
+     "verdict": "NO_GENOMES",
+     "n_records": 40,
+     "genome_sites": 0,
+     "register_sites": 0
+    }
+   }
+  },
+  {
+   "experiment": "c9x-explore/x_state",
+   "script": "run_st.py",
+   "checks": {
+    "a_screen_context": {
+     "verdict": "OK",
+     "reason": "a carried-register context is screened (alongside ZERO: a deliberate comparison?)",
+     "contexts": [
+      "run_st.py:57 CARRIED",
+      "run_st.py:58 ZERO"
+     ]
+    },
+    "c_label_write_back": {
+     "verdict": "OK",
+     "reason": "no label-share / label-membership readout",
+     "readouts": [],
+     "write_back": {
+      "BASE": [
+       "line 49: world.Runner(...) instantiated directly"
+      ]
+     }
+    },
+    "d_max_of_cached": {
+     "verdict": "OK",
+     "keys": []
+    },
+    "h_stores_genomes": {
+     "verdict": "NO_GENOMES",
+     "n_records": 1,
+     "genome_sites": 0,
+     "register_sites": 0
+    }
+   }
+  },
+  {
+   "experiment": "c9x-explore/x_sterile",
+   "script": "run_sr.py",
+   "checks": {
+    "a_screen_context": {
+     "verdict": "OK",
+     "reason": "a carried-register context is screened",
+     "contexts": [
+      "run_sr.py:61 CARRIED",
+      "run_sr.py:91 CARRIED"
+     ]
+    },
+    "c_label_write_back": {
+     "verdict": "OK",
+     "reason": "no label-share / label-membership readout",
+     "readouts": [],
+     "write_back": {
+      "BASE": [
+       "line 53: class Sr(world.Runner)"
+      ]
+     }
+    },
+    "d_max_of_cached": {
+     "verdict": "OK",
+     "keys": []
+    },
+    "h_stores_genomes": {
+     "verdict": "NO_GENOMES",
+     "n_records": 40,
+     "genome_sites": 0,
+     "register_sites": 0
+    }
+   }
+  },
+  {
+   "experiment": "c9x-explore/x_sufficiency",
+   "script": "run_sf.py",
+   "checks": {
+    "a_screen_context": {
+     "verdict": "CONTEXT_MISMATCH",
+     "reason": "every screen context is ZERO while the world carries registers: read this screen as fresh-context competence only, never as in-world competence",
+     "contexts": [
+      "run_sf.py:59 ZERO"
+     ]
+    },
+    "c_label_write_back": {
+     "verdict": "OK",
+     "reason": "no label-share / label-membership readout",
+     "readouts": [],
+     "write_back": {
+      "BASE": [
+       "line 51: world.Runner(...) instantiated directly"
+      ]
+     }
+    },
+    "d_max_of_cached": {
+     "verdict": "OK",
+     "keys": []
+    },
+    "h_stores_genomes": {
+     "verdict": "NO_GENOMES",
+     "n_records": 2,
+     "genome_sites": 0,
+     "register_sites": 0
+    }
+   }
+  },
+  {
+   "experiment": "c9x-explore/x_swap_ancestry",
+   "script": "run_sa.py",
+   "checks": {
+    "a_screen_context": {
+     "verdict": "NOT_VERIFIED",
+     "reason": "no screen call (st_a/st_b or forwarded world kwargs) found in the script or in the helper functions it reaches",
+     "contexts": []
+    },
+    "c_label_write_back": {
+     "verdict": "OK",
+     "reason": "label readouts only under ATOMIC write-back (immune to the W2-35 leak)",
+     "readouts": [
+      "run_sa.py:49",
+      "run_sa.py:62"
+     ],
+     "write_back": {
+      "ATOMIC": [
+       "line 43: runner_cls(world) (X-DONOR-SWAP ATOMIC runner)"
+      ]
+     }
+    },
+    "d_max_of_cached": {
+     "verdict": "OK",
+     "keys": []
+    },
+    "h_stores_genomes": {
+     "verdict": "NO_GENOMES",
+     "n_records": 6,
+     "genome_sites": 0,
+     "register_sites": 0
+    }
+   }
+  },
+  {
+   "experiment": "c9x-explore/x_swap_origin",
+   "script": "run_so.py",
+   "checks": {
+    "a_screen_context": {
+     "verdict": "NOT_VERIFIED",
+     "reason": "no screen call (st_a/st_b or forwarded world kwargs) found in the script or in the helper functions it reaches",
+     "contexts": []
+    },
+    "c_label_write_back": {
+     "verdict": "OK",
+     "reason": "no label-share / label-membership readout",
+     "readouts": [],
+     "write_back": {
+      "ATOMIC": [
+       "line 65: runner_cls(world) (X-DONOR-SWAP ATOMIC runner)"
+      ]
+     }
+    },
+    "d_max_of_cached": {
+     "verdict": "OK",
+     "keys": []
+    },
+    "h_stores_genomes": {
+     "verdict": "NO_GENOMES",
+     "n_records": 26,
+     "genome_sites": 0,
+     "register_sites": 0
+    }
+   }
+  },
+  {
+   "experiment": "c9x-explore/x_ticket",
+   "script": "run_tk.py",
+   "checks": {
+    "a_screen_context": {
+     "verdict": "NOT_VERIFIED",
+     "reason": "no screen call (st_a/st_b or forwarded world kwargs) found in the script or in the helper functions it reaches",
+     "contexts": []
+    },
+    "c_label_write_back": {
+     "verdict": "LABEL_READOUT_IN_BASE",
+     "reason": "a label readout (2 sites) is computed in a BASE write-back run: in BASE the label is neither necessary nor sufficient for descent (absorbing L, labels surviving content replacement, unlabelled rotated frames); use content-keyed / frame-aware membership",
+     "readouts": [
+      "run_tk.py:64",
+      "run_tk.py:65"
+     ],
+     "write_back": {
+      "BASE": [
+       "line 47: class Tk(world.Runner)"
+      ]
+     }
+    },
+    "d_max_of_cached": {
+     "verdict": "OK",
+     "keys": []
+    },
+    "h_stores_genomes": {
+     "verdict": "NO_GENOMES",
+     "n_records": 40,
+     "genome_sites": 0,
+     "register_sites": 0
+    }
+   }
+  }
+ ],
+ "extra": {
+  "c_label_absorbing X-MAT-INTERNALIZE": {
+   "verdict": "ABSORBED_LABEL",
+   "reason": "7/26 runs reached label share 1.00 and 0 ever fell, in a closed population: from that epoch on 'the label persists' carries no information about heredity",
+   "reached_full": [
+    "7ae3_27000023",
+    "ffa6_27000020",
+    "ffa6_27000024",
+    "ffa6_27000046",
+    "ffa6_27000048",
+    "ffa6_27000051",
+    "ffa6_27000052"
+   ],
+   "dropped": []
+  },
+  "e_blocks C-ATOMIC C2 ATOMIC per specimen (n=8 each)": {
+   "verdict": "OK",
+   "reason": "blocks homogeneous (p_mc=0.403): pooling defensible on this readout",
+   "p_mc": 0.40263,
+   "culprits": null
+  },
+  "e_blocks C-ATOMIC C2 ATOMIC_d5 per specimen (n=8 each)": {
+   "verdict": "NON_EXCHANGEABLE",
+   "reason": "blocks differ (chi2=76.76, df=14, p_mc=0.0000): do not pool; report per block or a block-stratified test; dropping ['cb7f5ca1'] alone restores homogeneity (a post-hoc drop is itself a fork)",
+   "p_mc": 5e-05,
+   "culprits": [
+    "cb7f5ca1"
+   ]
+  }
+ }
+}

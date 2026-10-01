@@ -1,0 +1,3436 @@
+{
+ "schema": "prometheus.achilles_engines.v1",
+ "built_at_utc": "2026-10-01T01:35:22Z",
+ "base_sha": "9e4d75e62",
+ "method": "Reconstructed from: git ls-tree -d origin/main (every top-level directory classified), atlas/registry.json engines, roles/base-role/MONITORS.md rows, each engine README/CHARTER, git grep of roles/*/RESPONSIBILITIES.md for the path, and roles/Artemis/threads/sfe_retrospective/notes/C_engines.md (2026-09-27 engine inventory). state_marker is a verbatim quote with path:line where a document carries one (monitor rows and WORK_STATE files are dated; see notes), otherwise derived from the last origin/main commit on the paths with the rule ACTIVE if >= 2026-09-24 else DORMANT. MONITORS words mapped: DISABLED-by-decision -> PARKED, DEAD -> DORMANT, DEPRECATED -> RETIRED, WORKING -> ACTIVE. Unknown values are null.",
+ "engines": [
+  {
+   "engine_id": "primordial",
+   "name": "Nestor Primordial Engine (NPE)",
+   "kind": "research-engine",
+   "purpose": "The Primordial Machine swarm: worlds, kernels and tensor brains on a Redis-stream bus with a durable ledger, used to ask whether a computational primordial soup produces open-ended structure.",
+   "paths": [
+    "primordial",
+    "roles/Nestor/campaigns"
+   ],
+   "excluded_subpaths": [],
+   "primary_seat": "Nestor",
+   "other_seats": [
+    {
+     "seat": "Atlas",
+     "relationship": "consumer",
+     "evidence": "atlas/registry.json engine npe; Atlas harvests npe rows"
+    },
+    {
+     "seat": "Bellerophon",
+     "relationship": "consumer",
+     "evidence": "roles/Bellerophon/RESPONSIBILITIES.md:37 (primordial/core seam for the Worlds Kernel)"
+    }
+   ],
+   "home_host": "M1",
+   "state_marker": {
+    "state": "ACTIVE",
+    "quote": "derived: last commit 004a689c4 2026-09-30; rule ACTIVE if last commit >= 2026-09-24 else DORMANT; engine code under primordial/ last changed 2026-09-16; campaigns under roles/Nestor/campaigns continue",
+    "source": "git log -1 --format='%h %ad' --date=short origin/main -- primordial roles/Nestor/campaigns"
+   },
+   "description_source": "primordial/README.md",
+   "last_commit": "004a689c4 2026-09-30",
+   "notes": "atlas/registry.json owner_seats [Nestor], home_host M1, status LIVE. Registry note \"code only on nestor/* branches (not origin/main) as of 2026-09-19\" is now stale: primordial/ is on origin/main (first-parent arrival 2026-09-25 per roles/Artemis C_engines.md). Recent primordial/ commits carry instance tags E[m1-ba44317c] and D[m1-...] rather than a seat name; who E and D are is not resolved here (roles/Cosmos/RESPONSIBILITIES.md:37 uses D/E for Cosmos holdout authors, but those commits predate Cosmos and are probably unrelated). roles/Nestor/WORK_STATE.json state READY. Last 40 commit subject prefixes on the path: Ancestry 11, Nestor 5, G2 5, s4 4."
+  },
+  {
+   "engine_id": "SerendipityFoundry/SerendipityFoundryEngine",
+   "name": "Serendipity Foundry Engine (SFE) + client",
+   "kind": "experiment-ecosystem",
+   "purpose": "HTTP experiment-ledger engine (SQLite ledger, schema 8-10) that hosts worlds, experiments and read grants for the Incubator ecology; the client package sfclient is how runners talk to it.",
+   "paths": [
+    "SerendipityFoundry/SerendipityFoundryEngine",
+    "SerendipityFoundry/SerendipityFoundryClient"
+   ],
+   "excluded_subpaths": [],
+   "primary_seat": "Daedalus",
+   "other_seats": [
+    {
+     "seat": "Archaeon",
+     "relationship": "consumer",
+     "evidence": "atlas/registry.json archaeon.campaign notes \"drives the SFE\""
+    },
+    {
+     "seat": "Vivarium",
+     "relationship": "consumer",
+     "evidence": "vivarium/README.md (Vivarium -> SFE / worlds / players)"
+    },
+    {
+     "seat": "Theophrastus",
+     "relationship": "consumer",
+     "evidence": "roles/Artemis/threads/sfe_retrospective/notes/C_engines.md (67 exps in M1 SFE ledger as client theophrastus)"
+    },
+    {
+     "seat": "Kairos",
+     "relationship": "auditor",
+     "evidence": "roles/Kairos/RESPONSIBILITIES.md:79 (SCIENTIFIC_PROVENANCE)"
+    }
+   ],
+   "home_host": "M2",
+   "state_marker": {
+    "state": "ACTIVE",
+    "quote": "ACTIVE (state file last_success_at 2026-09-16T11:48:31Z",
+    "source": "roles/base-role/MONITORS.md:23"
+   },
+   "description_source": "roles/Daedalus/RESPONSIBILITIES.md",
+   "last_commit": "9cfcd3779 2026-09-18",
+   "notes": "atlas/registry.json: owner Daedalus, home_host M2, status LIVE, \"has run on M1 and M2\". MONITORS row SFEngine (M1, Daedalus) also ACTIVE schema 8 as of 2026-09-11; Artemis C_engines.md says M1 retired 09-11. Monitor row currency is 2026-09-16; no engine commit since 2026-09-18. Artemis classes it INSTRUMENTATION, Atlas ENGINE. Last 40 commit subject prefixes on the path: Daedalus 35, Merge 2, Revert 2, Vivarium 1."
+  },
+  {
+   "engine_id": "SerendipityFoundry/worldfoundry",
+   "name": "World Foundry v0 (wforge)",
+   "kind": "research-engine",
+   "purpose": "Genome-to-world grammar that generates worlds for the SFE ecology.",
+   "paths": [
+    "SerendipityFoundry/worldfoundry"
+   ],
+   "excluded_subpaths": [],
+   "primary_seat": "Daedalus",
+   "other_seats": [],
+   "home_host": "M2",
+   "state_marker": {
+    "state": "DORMANT",
+    "quote": "derived: last commit 85c74304c 2026-09-02; rule ACTIVE if last commit >= 2026-09-24 else DORMANT",
+    "source": "git log -1 --format='%h %ad' --date=short origin/main -- SerendipityFoundry/worldfoundry"
+   },
+   "description_source": "roles/Artemis/threads/sfe_retrospective/notes/C_engines.md",
+   "last_commit": "85c74304c 2026-09-02",
+   "notes": "Ownership from roles/Artemis C_engines.md (\"Daedalus (author of packet)\"); no seat RESPONSIBILITIES file claims the path. Single-day burst 2026-09-02. Last 40 commit subject prefixes on the path: MHC 3, Microstructure 1, World 1."
+  },
+  {
+   "engine_id": "SerendipityFoundry",
+   "name": "Serendipity Foundry D-series and incubator history",
+   "kind": "legacy",
+   "purpose": "Pre-engine Serendipity Foundry work: D6-D10 build phases, incubator, forensics, selection_boundary, stackvm_admission and wow experiments that preceded and fed the SFE.",
+   "paths": [
+    "SerendipityFoundry"
+   ],
+   "excluded_subpaths": [
+    "SerendipityFoundry/SerendipityFoundryEngine",
+    "SerendipityFoundry/SerendipityFoundryClient",
+    "SerendipityFoundry/worldfoundry"
+   ],
+   "primary_seat": null,
+   "other_seats": [
+    {
+     "seat": "Artemis",
+     "relationship": "auditor",
+     "evidence": "roles/Artemis/backlog/harvest/D4_sfe_era.md (harvested this tree)"
+    }
+   ],
+   "home_host": null,
+   "state_marker": {
+    "state": "DORMANT",
+    "quote": "derived: last commit ef504133f 2026-09-03; rule ACTIVE if last commit >= 2026-09-24 else DORMANT",
+    "source": "git log -1 --format='%h %ad' --date=short origin/main -- SerendipityFoundry"
+   },
+   "description_source": "SerendipityFoundry/D10/README.md",
+   "last_commit": "ef504133f 2026-09-03",
+   "notes": "Umbrella entry for SerendipityFoundry/ minus the Engine, Client and worldfoundry (listed separately). No seat document claims these subdirectories. Separate repository F:/SerendipityD (atlas engine serendipity.foundry.d, status IGNORED by operator 2026-09-19) is outside this repository and not catalogued here. Last 40 commit subject prefixes on the path: stackvm-v1 2, Selection 1, RETRACTION 1, WOW 1."
+  },
+  {
+   "engine_id": "archaeon/frontier",
+   "name": "Archaeon DEEP FRONTIER scheduler",
+   "kind": "experiment-ecosystem",
+   "purpose": "Code-first lineage scheduler that runs Archaeon's deep-frontier lineages on the SFE client with evidence controls and suppression logging.",
+   "paths": [
+    "archaeon/frontier"
+   ],
+   "excluded_subpaths": [],
+   "primary_seat": "Archaeon",
+   "other_seats": [
+    {
+     "seat": "Atlas",
+     "relationship": "consumer",
+     "evidence": "atlas/registry.json archaeon.frontier (422 experiments indexed per Artemis C_engines.md)"
+    },
+    {
+     "seat": "Bellerophon",
+     "relationship": "consumer",
+     "evidence": "roles/Bellerophon/RESPONSIBILITIES.md:39 (archaeon/frontier specs)"
+    }
+   ],
+   "home_host": "M2",
+   "state_marker": {
+    "state": "ACTIVE",
+    "quote": "derived: last commit 1049aac73 2026-09-26; rule ACTIVE if last commit >= 2026-09-24 else DORMANT",
+    "source": "git log -1 --format='%h %ad' --date=short origin/main -- archaeon/frontier"
+   },
+   "description_source": "archaeon/frontier/DEEP_FRONTIER_CHARTER.md",
+   "last_commit": "1049aac73 2026-09-26",
+   "notes": "atlas/registry.json status LIVE; runs/ and logs/ git-ignored on the executing host. MONITORS ArchaeonTick row (M1) is UNKNOWN since 2026-09-15. Last 40 commit subject prefixes on the path: archaeon 14, Frontier 1, Z80 1, P-boom 1."
+  },
+  {
+   "engine_id": "archaeon/campaign2",
+   "name": "Archaeon campaign runner (Campaigns 1-6)",
+   "kind": "experiment-ecosystem",
+   "purpose": "Campaign runners that drive the SFE and proteus.foundry through Archaeon's preregistered Campaigns C1-C6.",
+   "paths": [
+    "archaeon/campaign1",
+    "archaeon/campaign2",
+    "archaeon/campaign3",
+    "archaeon/campaign4",
+    "archaeon/campaign5",
+    "archaeon/campaign6"
+   ],
+   "excluded_subpaths": [],
+   "primary_seat": "Archaeon",
+   "other_seats": [
+    {
+     "seat": "Vivarium",
+     "relationship": "builder",
+     "evidence": "vivarium/viv executes the queued campaign experiments (vivarium/README.md)"
+    }
+   ],
+   "home_host": "M2",
+   "state_marker": {
+    "state": "DORMANT",
+    "quote": "derived: last commit 9471a5771 2026-09-19; rule ACTIVE if last commit >= 2026-09-24 else DORMANT",
+    "source": "git log -1 --format='%h %ad' --date=short origin/main -- archaeon/campaign1 archaeon/campaign2 archaeon/campaign3 archaeon/campaign4 archaeon/campaign5 archaeon/campaign6"
+   },
+   "description_source": "atlas/registry.json",
+   "last_commit": "9471a5771 2026-09-19",
+   "notes": "Keyed on archaeon/campaign2 because atlas/registry.json code_paths starts with archaeon/campaign2/runner.py. Campaign 5 accepted by operator ruling (archaeon c5 commit); campaign6 is design-only per Artemis. Last 40 commit subject prefixes on the path: archaeon 40."
+  },
+  {
+   "engine_id": "archaeon/wse",
+   "name": "Archaeon workspace ecology (WSE)",
+   "kind": "research-engine",
+   "purpose": "Worlds built on proteus.foundry and run as an Archaeon workspace ecology.",
+   "paths": [
+    "archaeon/wse"
+   ],
+   "excluded_subpaths": [],
+   "primary_seat": "Archaeon",
+   "other_seats": [],
+   "home_host": "M2",
+   "state_marker": {
+    "state": "DORMANT",
+    "quote": "derived: last commit cb9135104 2026-09-17; rule ACTIVE if last commit >= 2026-09-24 else DORMANT",
+    "source": "git log -1 --format='%h %ad' --date=short origin/main -- archaeon/wse"
+   },
+   "description_source": "roles/Artemis/threads/sfe_retrospective/notes/C_engines.md",
+   "last_commit": "cb9135104 2026-09-17",
+   "notes": "Classification and owner from roles/Artemis C_engines.md; not in atlas/registry.json. Last 40 commit subject prefixes on the path: Archaeon 15, archaeon 2, CMP3 1, CMP2-08 1."
+  },
+  {
+   "engine_id": "archaeon/z80atlas",
+   "name": "Archaeon z80atlas world",
+   "kind": "research-engine",
+   "purpose": "Archaeon's Z80-like substrate world (census, de novo, post-campaign) for the Z80 x Atlas campaign.",
+   "paths": [
+    "archaeon/z80atlas"
+   ],
+   "excluded_subpaths": [],
+   "primary_seat": "Archaeon",
+   "other_seats": [],
+   "home_host": "M2",
+   "state_marker": {
+    "state": "DORMANT",
+    "quote": "derived: last commit 863d34a55 2026-09-23; rule ACTIVE if last commit >= 2026-09-24 else DORMANT",
+    "source": "git log -1 --format='%h %ad' --date=short origin/main -- archaeon/z80atlas"
+   },
+   "description_source": "roles/Artemis/threads/sfe_retrospective/notes/C_engines.md",
+   "last_commit": "863d34a55 2026-09-23",
+   "notes": "Third Z80 build per Artemis; distinct from prometheus/z80atlas (Bellerophon). Last 40 commit subject prefixes on the path: archaeon 10, Archaeon 2, Z80 1."
+  },
+  {
+   "engine_id": "archaeon/producer",
+   "name": "Archaeon producer loop",
+   "kind": "infrastructure",
+   "purpose": "PEW -> queue -> Vivarium -> SFE producer loop that feeds Archaeon proposals into the execution queue.",
+   "paths": [
+    "archaeon/producer"
+   ],
+   "excluded_subpaths": [],
+   "primary_seat": "Archaeon",
+   "other_seats": [
+    {
+     "seat": "Vivarium",
+     "relationship": "consumer",
+     "evidence": "vivarium/README.md (Archaeon -> PostgreSQL queue -> Vivarium)"
+    }
+   ],
+   "home_host": "M2",
+   "state_marker": {
+    "state": "DORMANT",
+    "quote": "derived: last commit 7017dc79e 2026-09-17; rule ACTIVE if last commit >= 2026-09-24 else DORMANT",
+    "source": "git log -1 --format='%h %ad' --date=short origin/main -- archaeon/producer"
+   },
+   "description_source": "roles/Artemis/threads/sfe_retrospective/notes/C_engines.md",
+   "last_commit": "7017dc79e 2026-09-17",
+   "notes": "Last 40 commit subject prefixes on the path: Archaeon 36, ARCH-26 2, H5 1, H5-1 1."
+  },
+  {
+   "engine_id": "archaeon/causal_lens",
+   "name": "Archaeon causal lens / attribution assay",
+   "kind": "auditor",
+   "purpose": "Cross-engine causal-attribution assay (contract v0.2/v0.3) used in the ops pilot threads.",
+   "paths": [
+    "archaeon/causal_lens",
+    "archaeon/attribution"
+   ],
+   "excluded_subpaths": [],
+   "primary_seat": "Archaeon",
+   "other_seats": [
+    {
+     "seat": "Artemis",
+     "relationship": "consumer",
+     "evidence": "commit subject \"Attribution v0 spec ... (Artemis FR-011)\""
+    }
+   ],
+   "home_host": "M2",
+   "state_marker": {
+    "state": "ACTIVE",
+    "quote": "derived: last commit a7781b857 2026-09-28; rule ACTIVE if last commit >= 2026-09-24 else DORMANT",
+    "source": "git log -1 --format='%h %ad' --date=short origin/main -- archaeon/causal_lens archaeon/attribution"
+   },
+   "description_source": "roles/Artemis/threads/sfe_retrospective/notes/C_engines.md",
+   "last_commit": "a7781b857 2026-09-28",
+   "notes": "Dominant commit prefixes are ops/PORTABILITY-01/Deep (ops pilot on ubu001/ubu002 per Artemis), not \"Archaeon\"; ownership taken from Artemis C_engines.md. Last 40 commit subject prefixes on the path: ops 6, PORTABILITY-01 6, Attribution 4, Deep 3."
+  },
+  {
+   "engine_id": "archaeon",
+   "name": "Archaeon research tree (other)",
+   "kind": "research-engine",
+   "purpose": "Archaeon's remaining research code: envgate/envgate2, lineage, rie, detectors, ledgers, policies, synth, provenance and supporting modules.",
+   "paths": [
+    "archaeon"
+   ],
+   "excluded_subpaths": [
+    "archaeon/frontier",
+    "archaeon/campaign1",
+    "archaeon/campaign2",
+    "archaeon/campaign3",
+    "archaeon/campaign4",
+    "archaeon/campaign5",
+    "archaeon/campaign6",
+    "archaeon/wse",
+    "archaeon/z80atlas",
+    "archaeon/producer",
+    "archaeon/causal_lens",
+    "archaeon/attribution"
+   ],
+   "primary_seat": "Archaeon",
+   "other_seats": [],
+   "home_host": "M2",
+   "state_marker": {
+    "state": "ACTIVE",
+    "quote": "derived: last commit 1e9042017 2026-09-29; rule ACTIVE if last commit >= 2026-09-24 else DORMANT",
+    "source": "git log -1 --format='%h %ad' --date=short origin/main -- archaeon"
+   },
+   "description_source": "roles/Artemis/threads/sfe_retrospective/notes/C_engines.md",
+   "last_commit": "1e9042017 2026-09-29",
+   "notes": "Umbrella for archaeon/ minus the separately listed frontier, campaign1-6, wse, z80atlas, producer, causal_lens, attribution. Last 40 commit subject prefixes on the path: Archaeon 17, archaeon 11, Attribution 2, base-role 1."
+  },
+  {
+   "engine_id": "vivarium/viv",
+   "name": "Vivarium data plane / executor",
+   "kind": "infrastructure",
+   "purpose": "The experimental execution service: takes queued experiments, executes them faithfully against SFE, worlds and players, and records what happened; it does not judge results.",
+   "paths": [
+    "vivarium"
+   ],
+   "excluded_subpaths": [],
+   "primary_seat": "Vivarium",
+   "other_seats": [
+    {
+     "seat": "Archaeon",
+     "relationship": "consumer",
+     "evidence": "vivarium/README.md (Archaeon -> PostgreSQL queue -> Vivarium)"
+    },
+    {
+     "seat": "Mnemosyne",
+     "relationship": "consumer",
+     "evidence": "roles/Mnemosyne/RESPONSIBILITIES.md (viv among PEW sources)"
+    }
+   ],
+   "home_host": "M2",
+   "state_marker": {
+    "state": "ACTIVE",
+    "quote": "ACTIVE since 2026-09-17 13:52Z",
+    "source": "roles/base-role/MONITORS.md:32"
+   },
+   "description_source": "vivarium/README.md",
+   "last_commit": "1db58c264 2026-09-17",
+   "notes": "atlas/registry.json: queue viv.research_experiment_queue on M1 Postgres, status LIVE. Monitor row currency 2026-09-17; no vivarium/ commit since 2026-09-17. M1 consumer row (VivariumConsumer) last recorded ACTIVE after relaunch. Last 40 commit subject prefixes on the path: Vivarium 40."
+  },
+  {
+   "engine_id": "prometheus/toolbox",
+   "name": "Bellerophon Worlds Kernel (BEE toolbox)",
+   "kind": "infrastructure",
+   "purpose": "Contracts, Experiment IR, capability model, adapters, lowering and conformance tests that make designers' experiments executable across backends (local/sfe/npe) without deciding what is interesting.",
+   "paths": [
+    "prometheus/toolbox"
+   ],
+   "excluded_subpaths": [],
+   "primary_seat": "Bellerophon",
+   "other_seats": [
+    {
+     "seat": "Ares",
+     "relationship": "consumer",
+     "evidence": "roles/Ares/RESPONSIBILITIES.md:47"
+    }
+   ],
+   "home_host": null,
+   "state_marker": {
+    "state": "DORMANT",
+    "quote": "derived: last commit 97109bd95 2026-09-19; rule ACTIVE if last commit >= 2026-09-24 else DORMANT",
+    "source": "git log -1 --format='%h %ad' --date=short origin/main -- prometheus/toolbox"
+   },
+   "description_source": "prometheus/toolbox/README.md",
+   "last_commit": "97109bd95 2026-09-19",
+   "notes": "atlas/registry.json home_host null, status LIVE; Artemis C_engines.md places it on M2. Last 40 commit subject prefixes on the path: Bellerophon 40."
+  },
+  {
+   "engine_id": "prometheus/z80atlas",
+   "name": "BEE z80atlas substrate",
+   "kind": "research-engine",
+   "purpose": "Bellerophon's Z80-like substrate (physics v1/v2/v3, register-world axis) used for the Z80 x Atlas campaign.",
+   "paths": [
+    "prometheus/z80atlas"
+   ],
+   "excluded_subpaths": [],
+   "primary_seat": "Bellerophon",
+   "other_seats": [],
+   "home_host": "M2",
+   "state_marker": {
+    "state": "ACTIVE",
+    "quote": "derived: last commit 8a2390d82 2026-09-30; rule ACTIVE if last commit >= 2026-09-24 else DORMANT",
+    "source": "git log -1 --format='%h %ad' --date=short origin/main -- prometheus/z80atlas"
+   },
+   "description_source": "roles/Bellerophon/RESPONSIBILITIES.md",
+   "last_commit": "8a2390d82 2026-09-30",
+   "notes": "Owner from roles/Bellerophon/RESPONSIBILITIES.md:111. Not in atlas/registry.json. Last 40 commit subject prefixes on the path: Bellerophon 7, z80atlas 7, BEE 3."
+  },
+  {
+   "engine_id": "prometheus/atlas_bee",
+   "name": "atlas_bee shim",
+   "kind": "infrastructure",
+   "purpose": "Shim that turns Atlas questions into BEE (Worlds Kernel) runs and feeds results back to Atlas.",
+   "paths": [
+    "prometheus/atlas_bee"
+   ],
+   "excluded_subpaths": [],
+   "primary_seat": "Bellerophon",
+   "other_seats": [
+    {
+     "seat": "Atlas",
+     "relationship": "consumer",
+     "evidence": "commit 933ee9f02 \"Phase 7 Atlas feed\""
+    }
+   ],
+   "home_host": "M2",
+   "state_marker": {
+    "state": "DORMANT",
+    "quote": "derived: last commit 933ee9f02 2026-09-19; rule ACTIVE if last commit >= 2026-09-24 else DORMANT",
+    "source": "git log -1 --format='%h %ad' --date=short origin/main -- prometheus/atlas_bee"
+   },
+   "description_source": "roles/Artemis/threads/sfe_retrospective/notes/C_engines.md",
+   "last_commit": "933ee9f02 2026-09-19",
+   "notes": "All commits prefixed Bellerophon; no seat RESPONSIBILITIES line names the path. Last 40 commit subject prefixes on the path: Bellerophon 6."
+  },
+  {
+   "engine_id": "prometheus/cosmos",
+   "name": "Cosmos World-Graph Engine (CWE)",
+   "kind": "research-engine",
+   "purpose": "Cosmos world-physics engine: world graph, campaigns C0-C4, law mining and holdout worlds.",
+   "paths": [
+    "prometheus/cosmos",
+    "roles/Cosmos"
+   ],
+   "excluded_subpaths": [],
+   "primary_seat": "Cosmos",
+   "other_seats": [
+    {
+     "seat": "Odysseus",
+     "relationship": "auditor",
+     "evidence": "commit \"D2: FIREWALL_AUDIT_1.json -- firewall audit PASS (auditor Odysseus)\""
+    },
+    {
+     "seat": "Ananke",
+     "relationship": "reviewer",
+     "evidence": "commit \"C4 review: R-STAT (Ananke) INTERIM note\""
+    },
+    {
+     "seat": "Bellerophon",
+     "relationship": "reviewer",
+     "evidence": "roles/Bellerophon/WORK_STATE.json current C4-RMECH review"
+    },
+    {
+     "seat": "Nestor",
+     "relationship": "builder",
+     "evidence": "roles/Cosmos/RESPONSIBILITIES.md:37 (holdout author D)"
+    },
+    {
+     "seat": "Aether",
+     "relationship": "builder",
+     "evidence": "roles/Cosmos/RESPONSIBILITIES.md:37 (holdout author E)"
+    },
+    {
+     "seat": "Atlas",
+     "relationship": "consumer",
+     "evidence": "atlas/registry.json cosmos; ATLAS-37 Cosmos adapter"
+    }
+   ],
+   "home_host": "M2",
+   "state_marker": {
+    "state": "ACTIVE",
+    "quote": "\"ACTIVE\"",
+    "source": "roles/Cosmos/WORK_STATE.json:7"
+   },
+   "description_source": "roles/Cosmos/RESPONSIBILITIES.md",
+   "last_commit": "ded6f5729 2026-09-30",
+   "notes": "atlas/registry.json code_paths is roles/Cosmos only; engine code is prometheus/cosmos (roles/Cosmos/RESPONSIBILITIES.md:61). Commit prefixes include D2/Holdout from holdout and audit work by other seats. Last 40 commit subject prefixes on the path: Cosmos 25, D2 12, Merge 2, C4 1."
+  },
+  {
+   "engine_id": "prometheus/ananke",
+   "name": "Ananke Packet-Tensor Engine (PTE)",
+   "kind": "research-engine",
+   "purpose": "Ananke's engine: substrate, primitive VM and packet-tensor machinery for the PTE campaigns (C1, C1b, Wave-2).",
+   "paths": [
+    "prometheus/ananke",
+    "roles/Ananke"
+   ],
+   "excluded_subpaths": [],
+   "primary_seat": "Ananke",
+   "other_seats": [
+    {
+     "seat": "Aether",
+     "relationship": "builder",
+     "evidence": "roles/Ananke/RESPONSIBILITIES.md:43 (AETH-01 lattice, CPU oracle, RunPod path)"
+    }
+   ],
+   "home_host": "M1",
+   "state_marker": {
+    "state": "ACTIVE",
+    "quote": "\"WORKING\"",
+    "source": "roles/Ananke/WORK_STATE.json:8"
+   },
+   "description_source": "roles/Ananke/RESPONSIBILITIES.md",
+   "last_commit": "b18ea183e 2026-09-30",
+   "notes": "atlas/registry.json home_host null, status UNKNOWN, code_paths roles/Ananke only; engine package is prometheus/ananke (roles/Ananke/RESPONSIBILITIES.md:54). Host M1 from MONITORS AnankePTE_C1/C1b rows (both DISABLED: campaigns done). Last 40 commit subject prefixes on the path: Ananke 40."
+  },
+  {
+   "engine_id": "ensorain",
+   "name": "Ensorain Tensor World Engine (WTP)",
+   "kind": "research-engine",
+   "purpose": "Tensor world engine: World Genome schema, operator registry and legality checks; WTP-01..04 world-tensor programs with bounded organisms.",
+   "paths": [
+    "ensorain",
+    "roles/Ensorain"
+   ],
+   "excluded_subpaths": [],
+   "primary_seat": "Ensorain",
+   "other_seats": [
+    {
+     "seat": "Atlas",
+     "relationship": "consumer",
+     "evidence": "atlas/registry.json ensorain"
+    }
+   ],
+   "home_host": "M2",
+   "state_marker": {
+    "state": "ACTIVE",
+    "quote": "\"ACTIVE\"",
+    "source": "roles/Ensorain/WORK_STATE.json:8"
+   },
+   "description_source": "roles/Ensorain/RESPONSIBILITIES.md",
+   "last_commit": "4d0ddb001 2026-09-30",
+   "notes": "atlas/registry.json code_paths roles/Ensorain only; code lives in ensorain/ (roles/Ensorain/RESPONSIBILITIES.md:38). Last 40 commit subject prefixes on the path: Ensorain 39, FREEZE 1."
+  },
+  {
+   "engine_id": "crius",
+   "name": "Crius accessibility-frontier engine",
+   "kind": "research-engine",
+   "purpose": "Isolated sandbox (world, tasks, workspace, VM, evaluate) for measuring which machinery makes later learning cheaper.",
+   "paths": [
+    "crius"
+   ],
+   "excluded_subpaths": [],
+   "primary_seat": "Crius",
+   "other_seats": [
+    {
+     "seat": "Atlas",
+     "relationship": "consumer",
+     "evidence": "atlas/registry.json crius; ATLAS-34"
+    }
+   ],
+   "home_host": "M2",
+   "state_marker": {
+    "state": "DORMANT",
+    "quote": "derived: last commit 7069c0ce6 2026-09-23; rule ACTIVE if last commit >= 2026-09-24 else DORMANT; last commit subject: \"Crius: Campaign 2 CLOSED -- ACCESSIBILITY FRONTIER MAPPED\"",
+    "source": "git log -1 --format='%h %ad' --date=short origin/main -- crius"
+   },
+   "description_source": "roles/Crius/RESPONSIBILITIES.md",
+   "last_commit": "7069c0ce6 2026-09-23",
+   "notes": "atlas/registry.json status LIVE (2026-09-24) but Campaign 2 is CLOSED and the code has not changed since 2026-09-23. Last 40 commit subject prefixes on the path: Crius 29."
+  },
+  {
+   "engine_id": "ares",
+   "name": "Ares pressure sandbox",
+   "kind": "research-engine",
+   "purpose": "Isolated sandbox with a generic graph organism used to attack mechanisms under pressure (cycles 1-2).",
+   "paths": [
+    "ares"
+   ],
+   "excluded_subpaths": [],
+   "primary_seat": "Ares",
+   "other_seats": [],
+   "home_host": "M2",
+   "state_marker": {
+    "state": "PARKED",
+    "quote": "seat PARKED pending an",
+    "source": "roles/Ares/RESPONSIBILITIES.md:5"
+   },
+   "description_source": "roles/Ares/RESPONSIBILITIES.md",
+   "last_commit": "3f68be2b9 2026-09-25",
+   "notes": "Host from roles/Ares/RESPONSIBILITIES.md:117 (Host M2 SPECTREX5). Not in atlas/registry.json. Last 40 commit subject prefixes on the path: Ares 7."
+  },
+  {
+   "engine_id": "Aether",
+   "name": "Aether (AGE) engine and RunPod ladder",
+   "kind": "research-engine",
+   "purpose": "Aether's native-circuitry engine (AETH-01/02, lesion laws E-0xx) plus a RunPod GPU path that any seat can use.",
+   "paths": [
+    "Aether",
+    "roles/Aether"
+   ],
+   "excluded_subpaths": [
+    "Aether/runpod"
+   ],
+   "primary_seat": "Aether",
+   "other_seats": [
+    {
+     "seat": "Ananke",
+     "relationship": "consumer",
+     "evidence": "roles/Ananke/RESPONSIBILITIES.md:43 (RunPod path, CPU oracle)"
+    }
+   ],
+   "home_host": "BUCKKEEP",
+   "state_marker": {
+    "state": "ACTIVE",
+    "quote": "\"WORKING\"",
+    "source": "roles/Aether/WORK_STATE.json:8"
+   },
+   "description_source": "roles/Aether/RESPONSIBILITIES.md",
+   "last_commit": "1b4fb4523 2026-09-30",
+   "notes": "HOST CONFLICT: roles/Aether/RESPONSIBILITIES.md:61 says \"Resident on M2 (SPECTREX5)\", while roles/Aether/STATUS.md:5 and roles/Odysseus/RESPONSIBILITIES.md:97 say BUCKKEEP. Not in atlas/registry.json. Aether/runpod is listed separately. Last 40 commit subject prefixes on the path: Aether 29, Platform 2, AETH-03 2, RunPod 2."
+  },
+  {
+   "engine_id": "Aether/runpod",
+   "name": "prometheus_gpu RunPod ladder",
+   "kind": "infrastructure",
+   "purpose": "GPU experiments on RunPod for any Prometheus seat: module contract, telemetry and run-receipt schemas.",
+   "paths": [
+    "Aether/runpod"
+   ],
+   "excluded_subpaths": [],
+   "primary_seat": "Aether",
+   "other_seats": [
+    {
+     "seat": "Ananke",
+     "relationship": "consumer",
+     "evidence": "roles/Ananke/RESPONSIBILITIES.md:43"
+    }
+   ],
+   "home_host": "BUCKKEEP",
+   "state_marker": {
+    "state": "ACTIVE",
+    "quote": "derived: last commit 77b11cef5 2026-09-27; rule ACTIVE if last commit >= 2026-09-24 else DORMANT",
+    "source": "git log -1 --format='%h %ad' --date=short origin/main -- Aether/runpod"
+   },
+   "description_source": "Aether/runpod/README.md",
+   "last_commit": "77b11cef5 2026-09-27",
+   "notes": "Same host conflict as Aether (M2 vs BUCKKEEP). Last 40 commit subject prefixes on the path: RUNPOD 16, Aether 9, ITERATION 4, RunPod 3."
+  },
+  {
+   "engine_id": "herakles/evca",
+   "name": "Herakles EVCA / ca_stream",
+   "kind": "research-engine",
+   "purpose": "Cellular-automaton executor library (kind ca_density_v0 for Vivarium) and CA stream used for the C1-e synchronisation work.",
+   "paths": [
+    "herakles/evca",
+    "herakles/ca_stream"
+   ],
+   "excluded_subpaths": [],
+   "primary_seat": "Herakles",
+   "other_seats": [
+    {
+     "seat": "Theophrastus",
+     "relationship": "consumer",
+     "evidence": "git grep herakles/evca in roles/Theophrastus (7 files)"
+    },
+    {
+     "seat": "Archaeon",
+     "relationship": "consumer",
+     "evidence": "git grep herakles/evca in roles/Archaeon (13 files)"
+    }
+   ],
+   "home_host": "M2",
+   "state_marker": {
+    "state": "DORMANT",
+    "quote": "derived: last commit 6c9c55bfb 2026-09-16; rule ACTIVE if last commit >= 2026-09-24 else DORMANT",
+    "source": "git log -1 --format='%h %ad' --date=short origin/main -- herakles/evca herakles/ca_stream"
+   },
+   "description_source": "atlas/registry.json",
+   "last_commit": "6c9c55bfb 2026-09-16",
+   "notes": "atlas/registry.json status UNKNOWN (\"not yet harvested\"). Last 40 commit subject prefixes on the path: WP-C1-e 3, Herakles 2, D-23 1, C1-e 1."
+  },
+  {
+   "engine_id": "herakles/HERAKLES_HISTORICAL_COLLIDER_V0",
+   "name": "Herakles Historical Collider (retrospective instrument)",
+   "kind": "auditor",
+   "purpose": "Retrospective instrument that recovers and reproduces historical artificial-life results (Juille-Pollack, ABK 1996, Das 1995) as hashed specimens.",
+   "paths": [
+    "herakles"
+   ],
+   "excluded_subpaths": [
+    "herakles/evca",
+    "herakles/ca_stream"
+   ],
+   "primary_seat": "Herakles",
+   "other_seats": [],
+   "home_host": "M2",
+   "state_marker": {
+    "state": "DORMANT",
+    "quote": "derived: last commit 6c9c55bfb 2026-09-16; rule ACTIVE if last commit >= 2026-09-24 else DORMANT",
+    "source": "git log -1 --format='%h %ad' --date=short origin/main -- herakles"
+   },
+   "description_source": "herakles/HERAKLES_HISTORICAL_COLLIDER_V0/README.md",
+   "last_commit": "6c9c55bfb 2026-09-16",
+   "notes": "Umbrella for herakles/ minus evca and ca_stream. Last 40 commit subject prefixes on the path: HC-T01 7, Herakles 6, HC-R01 6, HERAKLES 5."
+  },
+  {
+   "engine_id": "proteus",
+   "name": "Proteus Player Foundry / graph substrate",
+   "kind": "research-engine",
+   "purpose": "Player foundry (25-op player VM, mutation grammar) and graph substrate whose populations run as SFE artifacts.",
+   "paths": [
+    "proteus"
+   ],
+   "excluded_subpaths": [],
+   "primary_seat": "Proteus",
+   "other_seats": [
+    {
+     "seat": "Bellerophon",
+     "relationship": "consumer",
+     "evidence": "roles/Bellerophon/RESPONSIBILITIES.md:38 (proteus/graph/handover.py)"
+    }
+   ],
+   "home_host": "M2",
+   "state_marker": {
+    "state": "DORMANT",
+    "quote": "derived: last commit 6a98ef0bb 2026-09-18; rule ACTIVE if last commit >= 2026-09-24 else DORMANT",
+    "source": "git log -1 --format='%h %ad' --date=short origin/main -- proteus"
+   },
+   "description_source": "proteus/ARCHITECTURE.md",
+   "last_commit": "6a98ef0bb 2026-09-18",
+   "notes": "Host from roles/Proteus/RESPONSIBILITIES.md:6 (operator ruling 2026-09-16, M2 SPECTREX5). atlas/registry.json status UNKNOWN. Last 40 commit subject prefixes on the path: Proteus 39, PROTEUS 1."
+  },
+  {
+   "engine_id": "ludus",
+   "name": "Ludus World Foundry, arena and bench",
+   "kind": "research-engine",
+   "purpose": "Catalogue of board games as worlds (Atlas of Worlds), arena and bench, audited against published rules.",
+   "paths": [
+    "ludus"
+   ],
+   "excluded_subpaths": [],
+   "primary_seat": "Ludus",
+   "other_seats": [
+    {
+     "seat": "Proteus",
+     "relationship": "consumer",
+     "evidence": "roles/Proteus/RESPONSIBILITIES.md:73 (ludus/bench/worlds.py)"
+    }
+   ],
+   "home_host": "M2",
+   "state_marker": {
+    "state": "DORMANT",
+    "quote": "derived: last commit fb858dd5c 2026-09-16; rule ACTIVE if last commit >= 2026-09-24 else DORMANT",
+    "source": "git log -1 --format='%h %ad' --date=short origin/main -- ludus"
+   },
+   "description_source": "roles/Ludus/STATUS.md",
+   "last_commit": "fb858dd5c 2026-09-16",
+   "notes": "roles/Ludus has no RESPONSIBILITIES.md (entry via BOOTSTRAP.md). roles/Ludus/STATUS.md (currency 2026-09-16) says seat ACTIVE; MONITORS \"Ludus (no standing loop)\" row says host M1 and DISABLED; atlas/registry.json and commit instance tags (m2-c3a5ef7a) say M2. Atlas world store is Postgres schema ludus_atlas on M1. Last 40 commit subject prefixes on the path: ludus 6, Ludus 5."
+  },
+  {
+   "engine_id": "roles/Harmonia/science",
+   "name": "Harmonia rulers and qualification",
+   "kind": "auditor",
+   "purpose": "Calibration and adjudication scripts, rulers and H0-H5 qualification rules that audit other engines' claims.",
+   "paths": [
+    "roles/Harmonia/science",
+    "roles/Harmonia/qualification"
+   ],
+   "excluded_subpaths": [],
+   "primary_seat": "Harmonia",
+   "other_seats": [],
+   "home_host": "M2",
+   "state_marker": {
+    "state": "ACTIVE",
+    "quote": "derived: last commit 68036a8ae 2026-09-30; rule ACTIVE if last commit >= 2026-09-24 else DORMANT; roles/Harmonia/WORK_STATE.json state is HOLD under CWO-B",
+    "source": "git log -1 --format='%h %ad' --date=short origin/main -- roles/Harmonia/science roles/Harmonia/qualification"
+   },
+   "description_source": "roles/Harmonia/RESPONSIBILITIES.md",
+   "last_commit": "68036a8ae 2026-09-30",
+   "notes": "atlas/registry.json: instances on M2 and M3, home_host null, status UNKNOWN. Commit instance tag m2-475d761f. Last 40 commit subject prefixes on the path: Harmonia 36, Merge 4."
+  },
+  {
+   "engine_id": "genesis",
+   "name": "Genesis Harmonia A/B/C qualification",
+   "kind": "auditor",
+   "purpose": "Harmonia A/B/C genesis-ecology qualification and SFE precursor work (D14-D16, GEN2/GEN3 review packets).",
+   "paths": [
+    "genesis"
+   ],
+   "excluded_subpaths": [],
+   "primary_seat": "Harmonia",
+   "other_seats": [
+    {
+     "seat": "Ergon",
+     "relationship": "consumer",
+     "evidence": "roles/Ergon/RESPONSIBILITIES.md:21 (experience seat of the genesis ecology)"
+    }
+   ],
+   "home_host": "M2",
+   "state_marker": {
+    "state": "DORMANT",
+    "quote": "genesis/harmonia_c is dormant since 2026-09-05",
+    "source": "roles/Artemis/dispatch/D003/DIGEST.md:84"
+   },
+   "description_source": "roles/Artemis/threads/sfe_retrospective/notes/C_engines.md",
+   "last_commit": "f2e3148e3 2026-09-05",
+   "notes": "All commits prefixed Harmonia. No Harmonia RESPONSIBILITIES line names genesis/ directly. Last 40 commit subject prefixes on the path: Harmonia 38, harmonia_c 2."
+  },
+  {
+   "engine_id": "hecate",
+   "name": "Hecate triplicate deep search",
+   "kind": "research-engine",
+   "purpose": "Reads the historical Hephaestus/Nous conceptual ore and runs each triplicate through escalating passes until the evidence says ENGINE, FOSSIL or REJECT.",
+   "paths": [
+    "hecate"
+   ],
+   "excluded_subpaths": [],
+   "primary_seat": "Hecate",
+   "other_seats": [
+    {
+     "seat": "Tyche",
+     "relationship": "consumer",
+     "evidence": "roles/Tyche/RESPONSIBILITIES.md:44 (hecate/alien/systems.py as Tyche worlds)"
+    },
+    {
+     "seat": "Theseus",
+     "relationship": "consumer",
+     "evidence": "roles/Theseus/RESPONSIBILITIES.md:53"
+    },
+    {
+     "seat": "Harmonia",
+     "relationship": "auditor",
+     "evidence": "roles/Hecate/WORK_STATE.json (Harmonia audit #1037)"
+    }
+   ],
+   "home_host": "M1",
+   "state_marker": {
+    "state": "ACTIVE",
+    "quote": "derived: last commit 931784f94 2026-09-30; rule ACTIVE if last commit >= 2026-09-24 else DORMANT; roles/Hecate/WORK_STATE.json state is BLOCKED",
+    "source": "git log -1 --format='%h %ad' --date=short origin/main -- hecate"
+   },
+   "description_source": "hecate/README.md",
+   "last_commit": "931784f94 2026-09-30",
+   "notes": "Host from roles/Hecate/RESPONSIBILITIES.md:27 (Resident on M1). Last 40 commit subject prefixes on the path: Hecate 32."
+  },
+  {
+   "engine_id": "tyche",
+   "name": "Tyche dark residual / dark ecology",
+   "kind": "research-engine",
+   "purpose": "Evolves executable perceptual lenses against dark residuals and keeps a lens only for measured marginal consequence.",
+   "paths": [
+    "tyche"
+   ],
+   "excluded_subpaths": [],
+   "primary_seat": "Tyche",
+   "other_seats": [
+    {
+     "seat": "Theseus",
+     "relationship": "consumer",
+     "evidence": "roles/Theseus/RESPONSIBILITIES.md:59 (imports tyche.lens read-only)"
+    }
+   ],
+   "home_host": null,
+   "state_marker": {
+    "state": "ACTIVE",
+    "quote": "\"ACTIVE\"",
+    "source": "roles/Tyche/WORK_STATE.json:7"
+   },
+   "description_source": "tyche/README.md",
+   "last_commit": "4dbbc07d0 2026-09-30",
+   "notes": "No documented host found in roles/Tyche/RESPONSIBILITIES.md; commit instance tag is m2-ebcbbd6b (M2 inferred, not documented). Last 40 commit subject prefixes on the path: Tyche 14."
+  },
+  {
+   "engine_id": "theseus/synth",
+   "name": "Theseus concept tensor / synthetic ancestry",
+   "kind": "research-engine",
+   "purpose": "Compiles human-derived G0 concepts into primitive properties, collides them k-way in a substrate without an LLM, and measures whether later synthetic generations reach behaviour shallow machinery does not.",
+   "paths": [
+    "theseus/synth",
+    "theseus/tensor",
+    "theseus/collisions",
+    "theseus/entities",
+    "theseus/lineages",
+    "theseus/fingerprints",
+    "theseus/archive",
+    "theseus/dark_objects",
+    "theseus/controls",
+    "theseus/runs",
+    "theseus/reports"
+   ],
+   "excluded_subpaths": [],
+   "primary_seat": "Theseus",
+   "other_seats": [],
+   "home_host": "DESKTOP-RUAPVAI",
+   "state_marker": {
+    "state": "ACTIVE",
+    "quote": "derived: last commit c96bc5538 2026-09-30; rule ACTIVE if last commit >= 2026-09-24 else DORMANT; roles/Theseus/WORK_STATE.json state is READY",
+    "source": "git log -1 --format='%h %ad' --date=short origin/main -- theseus/synth theseus/tensor theseus/collisions theseus/entities theseus/lineages theseus/fingerprints theseus/archive theseus/dark_objects theseus/controls theseus/runs theseus/reports"
+   },
+   "description_source": "theseus/synth/README.md",
+   "last_commit": "c96bc5538 2026-09-30",
+   "notes": "Host from roles/Theseus/RESPONSIBILITIES.md:98. Shares theseus/ with the May engine but does not touch its files (theseus/synth/README.md). Charter output dirs theseus/{tensor,collisions,entities,lineages,fingerprints,archive,dark_objects,controls,runs,reports} (roles/Theseus/RESPONSIBILITIES.md:34) first appear 2026-09-30 and are included here; theseus/corpus is shared with the May engine (May 2026 origin, new Theseus run files added 2026-09-30). Last 40 commit subject prefixes on the path: Theseus 4."
+  },
+  {
+   "engine_id": "theseus",
+   "name": "Theseus substrate generation engine (May 2026)",
+   "kind": "legacy",
+   "purpose": "May-2026 continuously-running generator of mathematical claims for sigma to verify (40 generator types across 10 families).",
+   "paths": [
+    "theseus"
+   ],
+   "excluded_subpaths": [
+    "theseus/synth",
+    "theseus/corpus",
+    "theseus/tensor",
+    "theseus/collisions",
+    "theseus/entities",
+    "theseus/lineages",
+    "theseus/fingerprints",
+    "theseus/archive",
+    "theseus/dark_objects",
+    "theseus/controls",
+    "theseus/runs",
+    "theseus/reports"
+   ],
+   "primary_seat": "Techne",
+   "other_seats": [],
+   "home_host": null,
+   "state_marker": {
+    "state": "DORMANT",
+    "quote": "derived: last commit 2f666d46d 2026-08-18; rule ACTIVE if last commit >= 2026-09-24 else DORMANT",
+    "source": "git log -1 --format='%h %ad' --date=short origin/main -- theseus"
+   },
+   "description_source": "theseus/README.md",
+   "last_commit": "2f666d46d 2026-08-18",
+   "notes": "Owner attribution from theseus/synth/README.md (\"the May 2026 substrate-generation engine (Techne)\"); dominant commit prefix Techne. theseus/CHARTER.md is dated 2026-05-18 and written in the engine's own voice. The NEW Theseus seat (roles/Theseus) owns only theseus/synth and the charter output dirs; it does not claim this code. Last commit excludes theseus/corpus, which the new seat now also writes. Last 40 commit subject prefixes on the path: Techne 29, Ergon 2, Recovery 1, salvage 1."
+  },
+  {
+   "engine_id": "nyx",
+   "name": "Nyx Chop Shop",
+   "kind": "research-engine",
+   "purpose": "Disassembles external and Prometheus computational machinery into transferable ORGAN mechanisms and other substrate for the SFE ecology, with ancestry preserved.",
+   "paths": [
+    "nyx"
+   ],
+   "excluded_subpaths": [],
+   "primary_seat": "Nyx",
+   "other_seats": [
+    {
+     "seat": "Techne",
+     "relationship": "builder",
+     "evidence": "commit \"Techne ... batch 17 -- 20 prior-art donors fossilized for Nyx\""
+    },
+    {
+     "seat": "Harmonia",
+     "relationship": "auditor",
+     "evidence": "roles/Harmonia/WORK_STATE.json (Nyx replication prereg review)"
+    }
+   ],
+   "home_host": "M3",
+   "state_marker": {
+    "state": "ACTIVE",
+    "quote": "\"ACTIVE\"",
+    "source": "roles/Nyx/WORK_STATE.json:9"
+   },
+   "description_source": "nyx/README.md",
+   "last_commit": "c343e28dd 2026-09-30",
+   "notes": "Host from roles/Artemis C_engines.md (M3) and commit instance tag gandalf-d1f90ae1 (GANDALF = M3 per roles/Odysseus/RESPONSIBILITIES.md:95). Last 40 commit subject prefixes on the path: Nyx 40."
+  },
+  {
+   "engine_id": "techne",
+   "name": "Techne arsenal",
+   "kind": "infrastructure",
+   "purpose": "The toolsmith's arsenal: callable mathematical tools, donor fossils and acquisition locks, built on request for researchers.",
+   "paths": [
+    "techne"
+   ],
+   "excluded_subpaths": [
+    "techne/loop"
+   ],
+   "primary_seat": "Techne",
+   "other_seats": [
+    {
+     "seat": "Nyx",
+     "relationship": "consumer",
+     "evidence": "roles/Nyx/RESPONSIBILITIES.md:41 (techne/acquisition locks)"
+    }
+   ],
+   "home_host": "M3",
+   "state_marker": {
+    "state": "ACTIVE",
+    "quote": "derived: last commit a853fdf0b 2026-09-30; rule ACTIVE if last commit >= 2026-09-24 else DORMANT; roles/Techne/WORK_STATE.json state is READY",
+    "source": "git log -1 --format='%h %ad' --date=short origin/main -- techne"
+   },
+   "description_source": "techne/README.md",
+   "last_commit": "a853fdf0b 2026-09-30",
+   "notes": "Host: Artemis C_engines.md says M3 + M2; commit instance tag gandalf-4c0c7e64. techne/loop listed separately. Last 40 commit subject prefixes on the path: Techne 35, Merge 2, Nyx 2, Harmonia 1."
+  },
+  {
+   "engine_id": "techne/loop",
+   "name": "Techne Arsenal + Ladder loop",
+   "kind": "infrastructure",
+   "purpose": "Authorized 60-minute autonomous cycles that chip at the arsenal round-robin and climb the ladder track.",
+   "paths": [
+    "techne/loop"
+   ],
+   "excluded_subpaths": [],
+   "primary_seat": "Techne",
+   "other_seats": [],
+   "home_host": null,
+   "state_marker": {
+    "state": "DORMANT",
+    "quote": "derived: last commit 3e15c54e8 2026-08-27; rule ACTIVE if last commit >= 2026-09-24 else DORMANT",
+    "source": "git log -1 --format='%h %ad' --date=short origin/main -- techne/loop"
+   },
+   "description_source": "techne/loop/LOOP_CHARTER.md",
+   "last_commit": "3e15c54e8 2026-08-27",
+   "notes": "Charter authorized 2026-08-21; last cycle commits 2026-08-27. Last 40 commit subject prefixes on the path: Techne 39, Aporia 1."
+  },
+  {
+   "engine_id": "prometheus_math",
+   "name": "prometheus_math library (arsenal capability matrix)",
+   "kind": "infrastructure",
+   "purpose": "Python math library behind the arsenal: discovery pipeline, kill vector and capability matrix.",
+   "paths": [
+    "prometheus_math"
+   ],
+   "excluded_subpaths": [],
+   "primary_seat": "Techne",
+   "other_seats": [],
+   "home_host": null,
+   "state_marker": {
+    "state": "ACTIVE",
+    "quote": "derived: last commit eb2f4ec41 2026-09-30; rule ACTIVE if last commit >= 2026-09-24 else DORMANT",
+    "source": "git log -1 --format='%h %ad' --date=short origin/main -- prometheus_math"
+   },
+   "description_source": "roles/Techne/RESPONSIBILITIES.md",
+   "last_commit": "eb2f4ec41 2026-09-30",
+   "notes": "Owner from roles/Techne/RESPONSIBILITIES.md:23-25. Frequent \"arsenal: capability matrix updated\" commits look automated; their producer is not identified here. Last 40 commit subject prefixes on the path: Techne 20, arsenal 17, Stop 1, techne 1."
+  },
+  {
+   "engine_id": "odysseus",
+   "name": "Odysseus distributed brain substrate",
+   "kind": "research-engine",
+   "purpose": "A spiking circuit sharded across machines, advanced in lockstep ticks over UDP and recorded so any run can be replayed, rewound or forked.",
+   "paths": [
+    "odysseus"
+   ],
+   "excluded_subpaths": [],
+   "primary_seat": "Odysseus",
+   "other_seats": [],
+   "home_host": "ubu001",
+   "state_marker": {
+    "state": "PARKED",
+    "quote": "the 2026-09-26 brain charter is a PARKED lane below",
+    "source": "roles/Odysseus/RESPONSIBILITIES.md:6"
+   },
+   "description_source": "odysseus/README.md",
+   "last_commit": "33e2ee2c8 2026-09-26",
+   "notes": "Seat durable role is now expeditionary research (roles/Odysseus/RESPONSIBILITIES.md:5); the brain is a parked lane. Last 40 commit subject prefixes on the path: Odysseus 4."
+  },
+  {
+   "engine_id": "roles/Aphrodite/engine",
+   "name": "Aphrodite local engine",
+   "kind": "research-engine",
+   "purpose": "Cheapest self-contained local engine able to execute the frozen Campaign 1 causal structure, built for auditability and reset integrity.",
+   "paths": [
+    "roles/Aphrodite/engine"
+   ],
+   "excluded_subpaths": [],
+   "primary_seat": "Aphrodite",
+   "other_seats": [],
+   "home_host": "M4",
+   "state_marker": {
+    "state": "ACTIVE",
+    "quote": "derived: last commit 1ef7de4c0 2026-09-28; rule ACTIVE if last commit >= 2026-09-24 else DORMANT",
+    "source": "git log -1 --format='%h %ad' --date=short origin/main -- roles/Aphrodite/engine"
+   },
+   "description_source": "roles/Aphrodite/engine/README.md",
+   "last_commit": "1ef7de4c0 2026-09-28",
+   "notes": "Host from roles/Aphrodite/RESPONSIBILITIES.md:97 (M4 harry1). Not in atlas/registry.json. Last 40 commit subject prefixes on the path: Aphrodite 38, Merge 2."
+  },
+  {
+   "engine_id": "alien_circuitry",
+   "name": "Alien Circuitry AC-01 and nursery",
+   "kind": "research-engine",
+   "purpose": "Asks whether the decision-relevant structure of a combinatorially large inference frontier occupies a much smaller space that can replace search; the nursery ran crucibles B and C.",
+   "paths": [
+    "alien_circuitry"
+   ],
+   "excluded_subpaths": [],
+   "primary_seat": null,
+   "other_seats": [
+    {
+     "seat": "Artemis",
+     "relationship": "auditor",
+     "evidence": "roles/Artemis/dispatch/D003/DIGEST.md:83"
+    }
+   ],
+   "home_host": null,
+   "state_marker": {
+    "state": "DORMANT",
+    "quote": "The directory has been dormant since 2026-09-14",
+    "source": "roles/Artemis/dispatch/D003/DIGEST.md:83"
+   },
+   "description_source": "alien_circuitry/README.md",
+   "last_commit": "93cdb3392 2026-09-14",
+   "notes": "No role directory; commits by the operator account with no seat prefix (AC-01/Nursery). CRUCIBLE-C concerns Diomedes states (Artemis DIGEST). Last 40 commit subject prefixes on the path: AC-01D-v1 16, AC-01 10, Nursery 5, AC-01D-v2 3."
+  },
+  {
+   "engine_id": "incubation",
+   "name": "Incubation / Lens Genesis",
+   "kind": "research-engine",
+   "purpose": "Executable symbolic learning substrate testing whether a composition learned in one world becomes a reusable entity that cheapens related worlds.",
+   "paths": [
+    "incubation"
+   ],
+   "excluded_subpaths": [],
+   "primary_seat": null,
+   "other_seats": [],
+   "home_host": null,
+   "state_marker": {
+    "state": "DORMANT",
+    "quote": "derived: last commit 5531f053f 2026-08-27; rule ACTIVE if last commit >= 2026-09-24 else DORMANT",
+    "source": "git log -1 --format='%h %ad' --date=short origin/main -- incubation"
+   },
+   "description_source": "incubation/README.md",
+   "last_commit": "5531f053f 2026-08-27",
+   "notes": "No seat claims it (Artemis C_engines.md: seat UNKNOWN). Closed with verdict RECURSIVE_REPRESENTATION_EFFECT 2026-08-27. Last 40 commit subject prefixes on the path: Incubation 5, Lens 3, Operator 2."
+  },
+  {
+   "engine_id": "incubation_d",
+   "name": "Agent D homoiconic attack",
+   "kind": "research-engine",
+   "purpose": "Tests whether accumulated executable experience can create reusable transformations of the system's own machinery without a human taxonomy (D-VM stack machine).",
+   "paths": [
+    "incubation_d"
+   ],
+   "excluded_subpaths": [],
+   "primary_seat": null,
+   "other_seats": [],
+   "home_host": null,
+   "state_marker": {
+    "state": "DORMANT",
+    "quote": "derived: last commit 62e5649d8 2026-08-27; rule ACTIVE if last commit >= 2026-09-24 else DORMANT",
+    "source": "git log -1 --format='%h %ad' --date=short origin/main -- incubation_d"
+   },
+   "description_source": "incubation_d/README.md",
+   "last_commit": "62e5649d8 2026-08-27",
+   "notes": "Commits prefixed \"Agent D\"; no roles/ seat. Grammar frozen, worlds not built (README, 2026-08-27). Last 40 commit subject prefixes on the path: Agent 3."
+  },
+  {
+   "engine_id": "agent_d2_blind",
+   "name": "Blind agent experiment D2",
+   "kind": "research-engine",
+   "purpose": "Blind, preregistered agent experiment from the August D-series; closed with \"D-2 phase 1 VERDICT: SUBSTRATE_INVALID\".",
+   "paths": [
+    "agent_d2_blind"
+   ],
+   "excluded_subpaths": [],
+   "primary_seat": null,
+   "other_seats": [],
+   "home_host": null,
+   "state_marker": {
+    "state": "DORMANT",
+    "quote": "derived: last commit 4f17f6a0c 2026-08-27; rule ACTIVE if last commit >= 2026-09-24 else DORMANT",
+    "source": "git log -1 --format='%h %ad' --date=short origin/main -- agent_d2_blind"
+   },
+   "description_source": "agent_d2_blind",
+   "last_commit": "4f17f6a0c 2026-08-27",
+   "notes": "No README; purpose from commit subjects. No seat claims the directory. Last 40 commit subject prefixes on the path: D-2 2."
+  },
+  {
+   "engine_id": "agent_d3_blind",
+   "name": "Blind agent experiment D3",
+   "kind": "research-engine",
+   "purpose": "Blind, preregistered agent experiment from the August D-series; closed with \"D-3 Phase 1 VERDICT: NO_BASIS_PASSED\".",
+   "paths": [
+    "agent_d3_blind"
+   ],
+   "excluded_subpaths": [],
+   "primary_seat": null,
+   "other_seats": [],
+   "home_host": null,
+   "state_marker": {
+    "state": "DORMANT",
+    "quote": "derived: last commit 9aee3c163 2026-08-27; rule ACTIVE if last commit >= 2026-09-24 else DORMANT",
+    "source": "git log -1 --format='%h %ad' --date=short origin/main -- agent_d3_blind"
+   },
+   "description_source": "agent_d3_blind",
+   "last_commit": "9aee3c163 2026-08-27",
+   "notes": "No README; purpose from commit subjects. No seat claims the directory. Last 40 commit subject prefixes on the path: AGENT 2, D-3 1."
+  },
+  {
+   "engine_id": "agent_d4_blind",
+   "name": "Blind agent experiment D4",
+   "kind": "research-engine",
+   "purpose": "Blind, preregistered agent experiment from the August D-series; closed with \"D-4 PHASE 1 VERDICT: ACCESSIBILITY_GEOMETRY_ESTABLISHED\".",
+   "paths": [
+    "agent_d4_blind"
+   ],
+   "excluded_subpaths": [],
+   "primary_seat": null,
+   "other_seats": [],
+   "home_host": null,
+   "state_marker": {
+    "state": "DORMANT",
+    "quote": "derived: last commit 8380785ff 2026-08-27; rule ACTIVE if last commit >= 2026-09-24 else DORMANT",
+    "source": "git log -1 --format='%h %ad' --date=short origin/main -- agent_d4_blind"
+   },
+   "description_source": "agent_d4_blind",
+   "last_commit": "8380785ff 2026-08-27",
+   "notes": "No README; purpose from commit subjects. No seat claims the directory. Last 40 commit subject prefixes on the path: AGENT 6, D-4 2."
+  },
+  {
+   "engine_id": "agent_d5_blind",
+   "name": "Blind agent experiment D5",
+   "kind": "research-engine",
+   "purpose": "Blind, preregistered agent experiment from the August D-series; closed with \"D-5 FINAL VERDICT: HISTORY_FINDABILITY_ADVANTAGE\".",
+   "paths": [
+    "agent_d5_blind"
+   ],
+   "excluded_subpaths": [],
+   "primary_seat": null,
+   "other_seats": [
+    {
+     "seat": "Ergon",
+     "relationship": "auditor",
+     "evidence": "git grep agent_d*_blind in roles/Ergon (4 files); ERGON CORRECTION commit on agent_d5_blind"
+    }
+   ],
+   "home_host": null,
+   "state_marker": {
+    "state": "DORMANT",
+    "quote": "derived: last commit 8e7a6f505 2026-09-01; rule ACTIVE if last commit >= 2026-09-24 else DORMANT",
+    "source": "git log -1 --format='%h %ad' --date=short origin/main -- agent_d5_blind"
+   },
+   "description_source": "agent_d5_blind",
+   "last_commit": "8e7a6f505 2026-09-01",
+   "notes": "No README; purpose from commit subjects. No seat claims the directory. Last 40 commit subject prefixes on the path: AGENT 9, ERGON 1."
+  },
+  {
+   "engine_id": "ama_game",
+   "name": "AMA navigation game",
+   "kind": "research-engine",
+   "purpose": "Metered navigation game with a verifier that measures the cost of reaching claims (A0 baselines, blind runs).",
+   "paths": [
+    "ama_game"
+   ],
+   "excluded_subpaths": [],
+   "primary_seat": null,
+   "other_seats": [],
+   "home_host": null,
+   "state_marker": {
+    "state": "DORMANT",
+    "quote": "derived: last commit c98086ac3 2026-08-27; rule ACTIVE if last commit >= 2026-09-24 else DORMANT",
+    "source": "git log -1 --format='%h %ad' --date=short origin/main -- ama_game"
+   },
+   "description_source": "ama_game",
+   "last_commit": "c98086ac3 2026-08-27",
+   "notes": "No README; purpose from commit subjects (AMA v0.2 A0 etc.). One Ludus file mentions ama_game; no seat claims it. Last 40 commit subject prefixes on the path: AMA 10."
+  },
+  {
+   "engine_id": "theophrastus",
+   "name": "Theophrastus signal re-derivation lens",
+   "kind": "auditor",
+   "purpose": "Runner and analysis lens that re-derives signals from Vivarium/SFE fossils and admits or rejects them as dispositions; owns no engine.",
+   "paths": [
+    "theophrastus"
+   ],
+   "excluded_subpaths": [],
+   "primary_seat": "Theophrastus",
+   "other_seats": [
+    {
+     "seat": "Vivarium",
+     "relationship": "consumer",
+     "evidence": "commit THEO-14 re-derives Vivarium bench fossils"
+    }
+   ],
+   "home_host": null,
+   "state_marker": {
+    "state": "DORMANT",
+    "quote": "derived: last commit 1b067751f 2026-09-14; rule ACTIVE if last commit >= 2026-09-24 else DORMANT",
+    "source": "git log -1 --format='%h %ad' --date=short origin/main -- theophrastus"
+   },
+   "description_source": "roles/Theophrastus/RESPONSIBILITIES.md",
+   "last_commit": "1b067751f 2026-09-14",
+   "notes": "Host UNKNOWN (Artemis C_engines.md: runs on M2-only SFE+PEW stack). Last 40 commit subject prefixes on the path: Theophrastus 3."
+  },
+  {
+   "engine_id": "evidence_wiki",
+   "name": "Prometheus Evidence Wiki (PEW) / Mnemosyne Evidence Tensor",
+   "kind": "index-search",
+   "purpose": "One knowledge substrate (Postgres schema ew) with rebuildable projections (wiki, REST, BM25, embeddings, graph, tensors); derived content can never become evidence.",
+   "paths": [
+    "evidence_wiki"
+   ],
+   "excluded_subpaths": [],
+   "primary_seat": "Mnemosyne",
+   "other_seats": [
+    {
+     "seat": "Vivarium",
+     "relationship": "consumer",
+     "evidence": "roles/Vivarium/RESPONSIBILITIES.md:35"
+    },
+    {
+     "seat": "Archaeon",
+     "relationship": "consumer",
+     "evidence": "archaeon/producer (PEW -> queue loop)"
+    }
+   ],
+   "home_host": "M1",
+   "state_marker": {
+    "state": "ACTIVE",
+    "quote": "ACTIVE from the pinned worktree mnemosyne-pew",
+    "source": "roles/base-role/MONITORS.md:22"
+   },
+   "description_source": "evidence_wiki/README.md",
+   "last_commit": "0d448387e 2026-09-18",
+   "notes": "Store on M1 (prometheus_fire); the ACTIVE watchdog row is the M2 instance (MnemosyneEvidenceWikiWatchdogM2); the M1 watchdog row is DORMANT since 2026-09-15. Monitor row currency mid-September; last commit 2026-09-18. Last 40 commit subject prefixes on the path: Mnemosyne 29, PEW 9, WP-X5 1, M1 1."
+  },
+  {
+   "engine_id": "integration",
+   "name": "PEW / SFE integration batteries",
+   "kind": "auditor",
+   "purpose": "Integration batteries (pew_battery E0-E14, seam_battery) and preflight instruments that check reachability and provenance across PEW and the SFE.",
+   "paths": [
+    "integration"
+   ],
+   "excluded_subpaths": [],
+   "primary_seat": "Mnemosyne",
+   "other_seats": [
+    {
+     "seat": "Harmonia",
+     "relationship": "builder",
+     "evidence": "commit 6714c3a4d \"Harmonia: three instruments\""
+    },
+    {
+     "seat": "Daedalus",
+     "relationship": "builder",
+     "evidence": "commit prefixes Daedalus/SFE"
+    }
+   ],
+   "home_host": null,
+   "state_marker": {
+    "state": "DORMANT",
+    "quote": "derived: last commit 6714c3a4d 2026-09-11; rule ACTIVE if last commit >= 2026-09-24 else DORMANT",
+    "source": "git log -1 --format='%h %ad' --date=short origin/main -- integration"
+   },
+   "description_source": "roles/Mnemosyne/RESPONSIBILITIES.md",
+   "last_commit": "6714c3a4d 2026-09-11",
+   "notes": "Owner from roles/Mnemosyne/RESPONSIBILITIES.md:77-83; commits come from Harmonia and Daedalus, not Mnemosyne. Last 40 commit subject prefixes on the path: Harmonia 3, Daedalus 3, Document 2, SFE 2."
+  },
+  {
+   "engine_id": "atlas",
+   "name": "Atlas experiment index + policy layer",
+   "kind": "index-search",
+   "purpose": "Two-tier relational index of every experiment the engines ran (schema atlas on M1): pointers not copies, read-only against every engine, plus the research-policy layer.",
+   "paths": [
+    "atlas"
+   ],
+   "excluded_subpaths": [],
+   "primary_seat": "Atlas",
+   "other_seats": [
+    {
+     "seat": "Atlas-M2",
+     "relationship": "maintainer",
+     "evidence": "roles/Atlas-M2/RESPONSIBILITIES.md:21 (M2 evidence into the one index)"
+    }
+   ],
+   "home_host": "M1",
+   "state_marker": {
+    "state": "PARKED",
+    "quote": "DISABLED -- parked by the operator 2026-",
+    "source": "roles/base-role/MONITORS.md:87"
+   },
+   "description_source": "atlas/README.md",
+   "last_commit": "244ef7691 2026-09-30",
+   "notes": "MONITORS AtlasIndexLoop row: loop parked 2026-09-19 pending operator; nonetheless atlas/ commits continue to 2026-09-30 (frontier/4, ATLAS-37), so the seat works on demand. Mapped DISABLED -> PARKED. Last 40 commit subject prefixes on the path: Atlas 11, Atlas-M2 4, Merge 1."
+  },
+  {
+   "engine_id": "comms",
+   "name": "comms inter-agent queue",
+   "kind": "communication",
+   "purpose": "Postgres-native inter-agent message queue (messages, receipts, task_queue in schema comms) revived from the April Agora; part of the base role.",
+   "paths": [
+    "comms"
+   ],
+   "excluded_subpaths": [],
+   "primary_seat": "Archaeon",
+   "other_seats": [
+    {
+     "seat": "Mnemosyne",
+     "relationship": "maintainer",
+     "evidence": "MONITORS comms row: \"substrate: Mnemosyne's Postgres\""
+    }
+   ],
+   "home_host": "M1",
+   "state_marker": {
+    "state": "ACTIVE",
+    "quote": "ACTIVE since 2026-09-11",
+    "source": "roles/base-role/MONITORS.md:81"
+   },
+   "description_source": "comms/README.md",
+   "last_commit": "8216dd3de 2026-09-17",
+   "notes": "Owner from the MONITORS comms row (Archaeon). Every seat is a consumer (roles/base-role boot step 7). Last code commit 2026-09-17. Last 40 commit subject prefixes on the path: comms 5, Mnemosyne 1, Constitution 1."
+  },
+  {
+   "engine_id": "fabric",
+   "name": "Prometheus Agent Fabric v0",
+   "kind": "infrastructure",
+   "purpose": "Durable work queue for the fleet, a sidecar to comms on the M1 Postgres (schema fabric) with an A2A v1.0 gateway, so work survives the end of a Claude session.",
+   "paths": [
+    "fabric"
+   ],
+   "excluded_subpaths": [],
+   "primary_seat": "Odysseus",
+   "other_seats": [
+    {
+     "seat": "Aporia",
+     "relationship": "reviewer",
+     "evidence": "commit \"DEF-ODY-023 Windows smoke PASS (Aporia #1181)\""
+    },
+    {
+     "seat": "Aether",
+     "relationship": "reviewer",
+     "evidence": "roles/Odysseus/WORK_STATE.json (promexec source-reviewed by Aether)"
+    }
+   ],
+   "home_host": "M1",
+   "state_marker": {
+    "state": "ACTIVE",
+    "quote": "derived: last commit b36c5a8e4 2026-09-30; rule ACTIVE if last commit >= 2026-09-24 else DORMANT; roles/Odysseus/WORK_STATE.json: promexec BLOCKED on operator install; P0 closed",
+    "source": "git log -1 --format='%h %ad' --date=short origin/main -- fabric"
+   },
+   "description_source": "fabric/README.md",
+   "last_commit": "b36c5a8e4 2026-09-30",
+   "notes": "README: \"Owner: Odysseus (ubu001)\"; the store is the canonical Postgres on M1. Grep hits for \"fabric\" in roles/Arachne are the word, not this path. Last 40 commit subject prefixes on the path: Odysseus 10, fabric 5, promexec 2, READY 1."
+  },
+  {
+   "engine_id": "agora",
+   "name": "agora client library (April substrate)",
+   "kind": "infrastructure",
+   "purpose": "Python client library for the April Prometheus substrate (Redis streams + Postgres): tensor state, symbols, work queue, signals and sync stream.",
+   "paths": [
+    "agora"
+   ],
+   "excluded_subpaths": [],
+   "primary_seat": "Agora",
+   "other_seats": [
+    {
+     "seat": "Pronoia",
+     "relationship": "consumer",
+     "evidence": "roles/Pronoia/RESPONSIBILITIES.md:194 (agora.agent_heartbeats)"
+    },
+    {
+     "seat": "Harmonia",
+     "relationship": "builder",
+     "evidence": "dominant commit prefix Harmonia"
+    }
+   ],
+   "home_host": null,
+   "state_marker": {
+    "state": "DORMANT",
+    "quote": "and went dark when Redis under WSL would not stay up",
+    "source": "roles/Agora/RESPONSIBILITIES.md:24"
+   },
+   "description_source": "agora/README.md",
+   "last_commit": "6be994430 2026-09-17",
+   "notes": "Redis retired; agora.* Postgres tables are still written by scripts/intelligence_loop.py (heartbeats). Last commit 2026-09-17 (M4 popup fix). Last 40 commit subject prefixes on the path: Harmonia 5, agora 2, Phase 2, symbols 2."
+  },
+  {
+   "engine_id": "engine",
+   "name": "Aporia standing loop (engine/)",
+   "kind": "infrastructure",
+   "purpose": "Aporia's resumable standing loop: loop state, steering, queues, ledger, SDK and decoys; the loop is state, not a process.",
+   "paths": [
+    "engine"
+   ],
+   "excluded_subpaths": [
+    "engine/necropolis",
+    "engine/shadow",
+    "engine/driver"
+   ],
+   "primary_seat": "Aporia",
+   "other_seats": [],
+   "home_host": null,
+   "state_marker": {
+    "state": "DORMANT",
+    "quote": "derived: last commit bdfce6af7 2026-09-11; rule ACTIVE if last commit >= 2026-09-24 else DORMANT",
+    "source": "git log -1 --format='%h %ad' --date=short origin/main -- engine"
+   },
+   "description_source": "engine/LOOP_APORIA.md",
+   "last_commit": "bdfce6af7 2026-09-11",
+   "notes": "Umbrella for engine/ minus necropolis, shadow, driver. Last 40 commit subject prefixes on the path: Aporia 38, Charon 1, Merge 1."
+  },
+  {
+   "engine_id": "engine/shadow",
+   "name": "Shadow worklog and review loop",
+   "kind": "auditor",
+   "purpose": "Aporia writes a per-pass WORKLOG; Elenchus reads it and writes adversarial REVIEWS.",
+   "paths": [
+    "engine/shadow"
+   ],
+   "excluded_subpaths": [],
+   "primary_seat": "Aporia",
+   "other_seats": [
+    {
+     "seat": "Elenchus",
+     "relationship": "reviewer",
+     "evidence": "roles/Elenchus/RESPONSIBILITIES.md:14"
+    }
+   ],
+   "home_host": null,
+   "state_marker": {
+    "state": "DORMANT",
+    "quote": "DORMANT since 2026-09-01 (P177): its INPUT stopped",
+    "source": "roles/base-role/MONITORS.md:35"
+   },
+   "description_source": "roles/Elenchus/RESPONSIBILITIES.md",
+   "last_commit": "d1d877b39 2026-09-23",
+   "notes": "MONITORS row is the Elenchus shadow loop (owner Elenchus); the worklog is Aporia's (roles/Aporia/RESPONSIBILITIES.md:96). Commit \"Aporia P181: the shadow worklog resumes\" on 2026-09-23 postdates the DORMANT row. Last 40 commit subject prefixes on the path: Aporia 34, Elenchus 4, A3 1, Charon 1."
+  },
+  {
+   "engine_id": "engine/driver",
+   "name": "Non-agentic driver",
+   "kind": "infrastructure",
+   "purpose": "A Python while-loop that decides what runs next from the queue and calls claude -p only for bounded judgement tasks, so the model never chooses whether to continue.",
+   "paths": [
+    "engine/driver"
+   ],
+   "excluded_subpaths": [],
+   "primary_seat": null,
+   "other_seats": [
+    {
+     "seat": "Aporia",
+     "relationship": "maintainer",
+     "evidence": "all commits prefixed Aporia P50..P138"
+    }
+   ],
+   "home_host": null,
+   "state_marker": {
+    "state": "DORMANT",
+    "quote": "derived: last commit 2e06ccf49 2026-08-23; rule ACTIVE if last commit >= 2026-09-24 else DORMANT",
+    "source": "git log -1 --format='%h %ad' --date=short origin/main -- engine/driver"
+   },
+   "description_source": "engine/driver/README.md",
+   "last_commit": "2e06ccf49 2026-08-23",
+   "notes": "No seat document names engine/driver; Aporia authored every commit. Last 40 commit subject prefixes on the path: Aporia 7, Generator 2, CAT-MATH-0332 1, AA-RUBRIC 1."
+  },
+  {
+   "engine_id": "engine/necropolis",
+   "name": "Operation Necropolis",
+   "kind": "auditor",
+   "purpose": "Systematic archaeology and selective resurrection of historical Prometheus agents as experimental organisms, with a court that adjudicates each grave.",
+   "paths": [
+    "engine/necropolis"
+   ],
+   "excluded_subpaths": [],
+   "primary_seat": "Mnemosyne",
+   "other_seats": [
+    {
+     "seat": "Rhadamanthus",
+     "relationship": "auditor",
+     "evidence": "roles/Rhadamanthus/RESPONSIBILITIES.md:50 (necropolis court)"
+    },
+    {
+     "seat": "Kairos",
+     "relationship": "consumer",
+     "evidence": "roles/Kairos/RESPONSIBILITIES.md:92"
+    }
+   ],
+   "home_host": "M2",
+   "state_marker": {
+    "state": "DORMANT",
+    "quote": "derived: last commit 641174d72 2026-09-14; rule ACTIVE if last commit >= 2026-09-24 else DORMANT; last commit subject: \"necropolis court: receipt (15 items), freeze 2026-09-14\"",
+    "source": "git log -1 --format='%h %ad' --date=short origin/main -- engine/necropolis"
+   },
+   "description_source": "engine/necropolis/CHARTER.md",
+   "last_commit": "641174d72 2026-09-14",
+   "notes": "CHARTER names \"Keeper: Mnemosyne -- Keeper of the Necropolis (M2)\", but roles/Mnemosyne/RESPONSIBILITIES.md does not mention engine/necropolis and the commits are \"necropolis court\"/Rhadamanthus. Several seats cite ROSTER/dossiers on unmerged necropolis/* branches. Last 40 commit subject prefixes on the path: necropolis 22, ? 2, Rhadamanthus 2, Merge 1."
+  },
+  {
+   "engine_id": "aporia",
+   "name": "Aporia open-questions catalog and instrument",
+   "kind": "research-engine",
+   "purpose": "Catalog of 1,047 open questions across mathematics and science, connected to data by a calibrated instrument; also holds Aporia doctrine and deep-research reports.",
+   "paths": [
+    "aporia"
+   ],
+   "excluded_subpaths": [],
+   "primary_seat": "Aporia",
+   "other_seats": [],
+   "home_host": "M1",
+   "state_marker": {
+    "state": "ACTIVE",
+    "quote": "\"WORKING\"",
+    "source": "roles/Aporia/WORK_STATE.json:8"
+   },
+   "description_source": "aporia/README.md",
+   "last_commit": "d1d877b39 2026-09-23",
+   "notes": "Host M1 from programs/selective_irreversibility/README.md (Aporia M1 SKULLPORT). The IQ arc is PARKED (roles/Aporia/RESPONSIBILITIES.md:87). Last 40 commit subject prefixes on the path: Aporia 13, Waves 3, Deep 2, A3 2."
+  },
+  {
+   "engine_id": "programs/selective_irreversibility",
+   "name": "Selective Irreversibility program record",
+   "kind": "research-engine",
+   "purpose": "The one shared canonical record for the Selective Irreversibility hypothesis, stewarded by Aporia (M1) and Cyclops (M2).",
+   "paths": [
+    "programs/selective_irreversibility"
+   ],
+   "excluded_subpaths": [],
+   "primary_seat": "Cyclops",
+   "other_seats": [
+    {
+     "seat": "Aporia",
+     "relationship": "maintainer",
+     "evidence": "programs/selective_irreversibility/README.md (co-steward)"
+    }
+   ],
+   "home_host": null,
+   "state_marker": {
+    "state": "PARKED",
+    "quote": "parked/advisory",
+    "source": "roles/Artemis/RESPONSIBILITIES.md:115"
+   },
+   "description_source": "programs/selective_irreversibility/README.md",
+   "last_commit": "4f5d9bac8 2026-09-26",
+   "notes": "README names Aporia and Cyclops as peer stewards; roles/Artemis/RESPONSIBILITIES.md:113-115 says the SI stewardship is retired under MWO-0001 (Cyclops MWO registrar only, Aporia parked/advisory). primary_seat set to Cyclops because roles/Cyclops/RESPONSIBILITIES.md:45 claims the record; Cyclops WORK_STATE is PARKED. Last 40 commit subject prefixes on the path: SI 21, Cyclops 16, Operator 2, Merge 1."
+  },
+  {
+   "engine_id": "collider",
+   "name": "Prometheus Collider",
+   "kind": "dashboard",
+   "purpose": "Mobile swipe feed of generative 3-concept collisions seeded with the 5,727 concept triples Nous evaluated, published on GitHub Pages.",
+   "paths": [
+    "collider"
+   ],
+   "excluded_subpaths": [],
+   "primary_seat": "Cyclops",
+   "other_seats": [
+    {
+     "seat": "Hecate",
+     "relationship": "consumer",
+     "evidence": "roles/Hecate/RESPONSIBILITIES.md:49"
+    }
+   ],
+   "home_host": null,
+   "state_marker": {
+    "state": "ACTIVE",
+    "quote": "derived: last commit df7a328fe 2026-09-29; rule ACTIVE if last commit >= 2026-09-24 else DORMANT",
+    "source": "git log -1 --format='%h %ad' --date=short origin/main -- collider"
+   },
+   "description_source": "collider/README.md",
+   "last_commit": "df7a328fe 2026-09-29",
+   "notes": "Only roles/Hecate/RESPONSIBILITIES.md:49 attributes it (\"collider/, Cyclops lane\"); roles/Cyclops does not mention collider/ and commits are by the operator account without a seat prefix. Treat owner as weakly evidenced. Last 40 commit subject prefixes on the path: collider 2."
+  },
+  {
+   "engine_id": "docs",
+   "name": "Portfolio dashboard (docs/)",
+   "kind": "dashboard",
+   "purpose": "Published portfolio state (docs/state.json, docs/portfolio_brief.md) refreshed by the intelligence loop, plus older program docs and charters.",
+   "paths": [
+    "docs"
+   ],
+   "excluded_subpaths": [],
+   "primary_seat": null,
+   "other_seats": [
+    {
+     "seat": "Pronoia",
+     "relationship": "maintainer",
+     "evidence": "roles/Pronoia/RESPONSIBILITIES.md:67 (pushes docs/state.json and docs/portfolio_brief.md)"
+    },
+    {
+     "seat": "Hermes",
+     "relationship": "consumer",
+     "evidence": "roles/Hermes/RESPONSIBILITIES.md:92 (reads docs/portfolio_brief.md)"
+    },
+    {
+     "seat": "Metis",
+     "relationship": "auditor",
+     "evidence": "MONITORS MetisStateProducerUNLOCATED row (who writes docs/state.json is UNKNOWN)"
+    }
+   ],
+   "home_host": null,
+   "state_marker": {
+    "state": "ACTIVE",
+    "quote": "derived: last commit 7195c4bba 2026-09-30; rule ACTIVE if last commit >= 2026-09-24 else DORMANT; last commit subject: \"auto: portfolio update 2026-10-01T00:15:09Z\" (4-hourly)",
+    "source": "git log -1 --format='%h %ad' --date=short origin/main -- docs"
+   },
+   "description_source": "roles/Pronoia/RESPONSIBILITIES.md",
+   "last_commit": "7195c4bba 2026-09-30",
+   "notes": "STATE CONFLICT: MONITORS rows (Portfolio brief producer, MetisPortfolioBrief) say DORMANT since 2026-09-09; origin/main shows \"auto: portfolio update\" commits every 4 h through 2026-10-01, so the producer is running again from an unrecorded host. Owner: MONITORS says OWNER UNCLAIMED; Pronoia's annotation claims the producer. Last 40 commit subject prefixes on the path: auto 38, Merge 1, Essay 1."
+  },
+  {
+   "engine_id": "scripts/intelligence_loop.py",
+   "name": "Intelligence loop (portfolio producer)",
+   "kind": "reporting",
+   "purpose": "Pronoia-era orchestrator loop that heartbeats, runs the hourly portfolio monitor/brief and the daily email, and pushes the dashboard to main.",
+   "paths": [
+    "scripts/intelligence_loop.py",
+    "scripts/start_intelligence_loop.bat",
+    "scripts/start_intelligence_loop.sh"
+   ],
+   "excluded_subpaths": [],
+   "primary_seat": "Pronoia",
+   "other_seats": [
+    {
+     "seat": "Hermes",
+     "relationship": "consumer",
+     "evidence": "roles/Pronoia/RESPONSIBILITIES.md:74 (Hermes owns the delivery hop)"
+    }
+   ],
+   "home_host": "M4",
+   "state_marker": {
+    "state": "ACTIVE",
+    "quote": "PRESENT and ACTIVE and NOT PRODUCTIVE",
+    "source": "roles/base-role/MONITORS.md:36"
+   },
+   "description_source": "roles/base-role/MONITORS.md",
+   "last_commit": "6be994430 2026-09-17",
+   "notes": "OWNER CONFLICT: MONITORS row says \"OWNER UNCLAIMED (Hermes lineage code, May 2026...)\"; the Pronoia annotation directly beneath (2026-09-11) claims it. Host M4 from the annotation (pid 9620 on M4). docs/ auto commits through 2026-10-01 suggest it is now productive again. Last 40 commit subject prefixes on the path: Pronoia 2, M4 1, Orchestration 1, intelligence_loop 1."
+  },
+  {
+   "engine_id": "scripts/portfolio_monitor.py",
+   "name": "Portfolio monitor",
+   "kind": "reporting",
+   "purpose": "Hourly portfolio refresh fired by the intelligence loop.",
+   "paths": [
+    "scripts/portfolio_monitor.py"
+   ],
+   "excluded_subpaths": [],
+   "primary_seat": "Pronoia",
+   "other_seats": [],
+   "home_host": null,
+   "state_marker": {
+    "state": "DORMANT",
+    "quote": "derived: last commit 5bdd5f9af 2026-08-20; rule ACTIVE if last commit >= 2026-09-24 else DORMANT",
+    "source": "git log -1 --format='%h %ad' --date=short origin/main -- scripts/portfolio_monitor.py"
+   },
+   "description_source": "roles/Pronoia/RESPONSIBILITIES.md",
+   "last_commit": "5bdd5f9af 2026-08-20",
+   "notes": "Ownership inferred via roles/Pronoia/RESPONSIBILITIES.md:65 (the loop Pronoia claims fires it); no row of its own in MONITORS. MONITORS says docs/state.json is NOT written by this script on main (MetisStateProducerUNLOCATED). Last 40 commit subject prefixes on the path: Orchestration 4, Intelligence 2, Portfolio 2, Elenchus 1."
+  },
+  {
+   "engine_id": "scripts/metis_portfolio.py",
+   "name": "Metis portfolio brief",
+   "kind": "reporting",
+   "purpose": "Writes the portfolio brief (docs/portfolio_brief.md) consumed by the Hermes mailer and Elenchus.",
+   "paths": [
+    "scripts/metis_portfolio.py"
+   ],
+   "excluded_subpaths": [],
+   "primary_seat": null,
+   "other_seats": [
+    {
+     "seat": "Hermes",
+     "relationship": "consumer",
+     "evidence": "MONITORS MetisPortfolioBrief row"
+    },
+    {
+     "seat": "Elenchus",
+     "relationship": "consumer",
+     "evidence": "MONITORS MetisPortfolioBrief row"
+    }
+   ],
+   "home_host": null,
+   "state_marker": {
+    "state": "UNKNOWN",
+    "quote": "OWNER UNCLAIMED, and now owner-less by RULING",
+    "source": "roles/base-role/MONITORS.md:84"
+   },
+   "description_source": "roles/base-role/MONITORS.md",
+   "last_commit": "6be994430 2026-09-17",
+   "notes": "MONITORS row: owner-less by ruling (METIS-01 closed NO), DORMANT since 2026-09-09; set to UNKNOWN because docs/ auto commits resumed through 2026-10-01 and whether this script is the producer is not verified. Last 40 commit subject prefixes on the path: Metis 4, Intelligence 3, Fix 2, Orchestration 2."
+  },
+  {
+   "engine_id": "scripts/send_brief_email.py",
+   "name": "Portfolio brief mailer",
+   "kind": "communication",
+   "purpose": "Daily multipart Gmail SMTPS mailer that sends docs/portfolio_brief.md to the operator.",
+   "paths": [
+    "scripts/send_brief_email.py"
+   ],
+   "excluded_subpaths": [],
+   "primary_seat": "Hermes",
+   "other_seats": [
+    {
+     "seat": "Pronoia",
+     "relationship": "consumer",
+     "evidence": "roles/Pronoia/RESPONSIBILITIES.md:66 (fired daily by the loop)"
+    }
+   ],
+   "home_host": null,
+   "state_marker": {
+    "state": "UNKNOWN",
+    "quote": "ACTIVE-UNVERIFIED, not ACTIVE",
+    "source": "roles/base-role/MONITORS.md:36"
+   },
+   "description_source": "roles/Hermes/RESPONSIBILITIES.md",
+   "last_commit": "cce4505ed 2026-05-23",
+   "notes": "MONITORS: Hermes CLAIMED 2026-09-11; host \"M3 or M4 (operator)\". Last code change 2026-05-23. Last 40 commit subject prefixes on the path: Orchestration 2, Email 2, Pythia 2, send_brief_email 1."
+  },
+  {
+   "engine_id": "scripts/machine_probe.py",
+   "name": "Machine probe (PrometheusMachineProbe M1/M2/M4)",
+   "kind": "infrastructure",
+   "purpose": "Continuous CPU/GPU/RAM/disk probe writing agora.machine_probes, scheduled per host.",
+   "paths": [
+    "scripts/machine_probe.py",
+    "scripts/register_machine_probe_m1.ps1"
+   ],
+   "excluded_subpaths": [],
+   "primary_seat": "Pronoia",
+   "other_seats": [],
+   "home_host": "M4",
+   "state_marker": {
+    "state": "DORMANT",
+    "quote": "DEAD -- fires every 5 min and returns 0x80070002 every time",
+    "source": "roles/base-role/MONITORS.md:21"
+   },
+   "description_source": "roles/base-role/MONITORS.md",
+   "last_commit": "6be994430 2026-09-17",
+   "notes": "Owner Pronoia BY RULING 2026-09-11 (Archaeon) per MONITORS; earlier \"Daedalus? (unclaimed)\". M1/M2 tasks DEAD (mapped to DORMANT), M4 PRESENT with ACTIVE UNKNOWN. Last 40 commit subject prefixes on the path: M4 1, M1 1, machine_probe 1."
+  },
+  {
+   "engine_id": "scripts/machine_healthcheck.py",
+   "name": "Machine healthcheck (PrometheusHealthCheckM4)",
+   "kind": "infrastructure",
+   "purpose": "Hourly per-machine CPU/memory/disk snapshot via the local scheduler.",
+   "paths": [
+    "scripts/machine_healthcheck.py"
+   ],
+   "excluded_subpaths": [],
+   "primary_seat": null,
+   "other_seats": [],
+   "home_host": "M4",
+   "state_marker": {
+    "state": "UNKNOWN",
+    "quote": "UNLOCATED script. A task whose action is not in the tree",
+    "source": "roles/base-role/MONITORS.md:26"
+   },
+   "description_source": "roles/base-role/MONITORS.md",
+   "last_commit": "6be994430 2026-09-17",
+   "notes": "MONITORS PrometheusHealthCheckM4: OWNER UNCLAIMED; the row says the task action is not located in the tree, so linking it to this script is itself unverified. Last 40 commit subject prefixes on the path: M4 1, Healthchecks 1."
+  },
+  {
+   "engine_id": "scripts/agent_roster.py",
+   "name": "Agent roster (PrometheusAgentRosterDaily)",
+   "kind": "reporting",
+   "purpose": "April-era daily agent roster producer; comms roster superseded it 2026-09-11.",
+   "paths": [
+    "scripts/agent_roster.py"
+   ],
+   "excluded_subpaths": [],
+   "primary_seat": null,
+   "other_seats": [],
+   "home_host": "M4",
+   "state_marker": {
+    "state": "UNKNOWN",
+    "quote": "likely a producer for the April agent roster",
+    "source": "roles/base-role/MONITORS.md:27"
+   },
+   "description_source": "roles/base-role/MONITORS.md",
+   "last_commit": "6be994430 2026-09-17",
+   "notes": "MONITORS: OWNER UNCLAIMED, ACTIVE/PRODUCTIVE UNKNOWN. Last 40 commit subject prefixes on the path: M4 1, EXPECTED_AGENTS 1."
+  },
+  {
+   "engine_id": "scripts/intelligence_watchdog.ps1",
+   "name": "Intelligence watchdog (PrometheusIntelligenceWatchdog)",
+   "kind": "infrastructure",
+   "purpose": "Restarts scripts/intelligence_loop.py if it dies.",
+   "paths": [
+    "scripts/intelligence_watchdog.ps1",
+    "scripts/register_intelligence_watchdog.ps1"
+   ],
+   "excluded_subpaths": [],
+   "primary_seat": null,
+   "other_seats": [],
+   "home_host": "M4",
+   "state_marker": {
+    "state": "UNKNOWN",
+    "quote": "ACTIVE UNKNOWN; PRODUCTIVE NO by its product",
+    "source": "roles/base-role/MONITORS.md:28"
+   },
+   "description_source": "roles/base-role/MONITORS.md",
+   "last_commit": "6be994430 2026-09-17",
+   "notes": "MONITORS: OWNER UNCLAIMED. Last 40 commit subject prefixes on the path: Watchdog 2, M4 1."
+  },
+  {
+   "engine_id": "scripts/backup_prometheus.ps1",
+   "name": "Weekly database backup (PrometheusBackupWeekly)",
+   "kind": "infrastructure",
+   "purpose": "Weekly unattended second copy of the Prometheus databases.",
+   "paths": [
+    "scripts/backup_prometheus.ps1"
+   ],
+   "excluded_subpaths": [],
+   "primary_seat": null,
+   "other_seats": [
+    {
+     "seat": "Aporia",
+     "relationship": "builder",
+     "evidence": "commit 46749d121 INFRA-BACKUP; Aporia NEGCAT commit"
+    }
+   ],
+   "home_host": "M1",
+   "state_marker": {
+    "state": "ACTIVE",
+    "quote": "ACTIVE; runs from the canonical checkout",
+    "source": "roles/base-role/MONITORS.md:20"
+   },
+   "description_source": "roles/base-role/MONITORS.md",
+   "last_commit": "46749d121 2026-08-18",
+   "notes": "MONITORS owner is \"operator\", not a seat. Last 40 commit subject prefixes on the path: Aporia 1, INFRA-BACKUP 1."
+  },
+  {
+   "engine_id": "scripts",
+   "name": "Legacy scripts (April-August loops and tools)",
+   "kind": "legacy",
+   "purpose": "Assorted April-August scripts: charon/harmonia/clio/pythia/techne cartography loops, launchers, seeders, status and health dashboards.",
+   "paths": [
+    "scripts"
+   ],
+   "excluded_subpaths": [
+    "scripts/intelligence_loop.py",
+    "scripts/start_intelligence_loop.bat",
+    "scripts/start_intelligence_loop.sh",
+    "scripts/portfolio_monitor.py",
+    "scripts/metis_portfolio.py",
+    "scripts/send_brief_email.py",
+    "scripts/machine_probe.py",
+    "scripts/register_machine_probe_m1.ps1",
+    "scripts/machine_healthcheck.py",
+    "scripts/agent_roster.py",
+    "scripts/intelligence_watchdog.ps1",
+    "scripts/register_intelligence_watchdog.ps1",
+    "scripts/backup_prometheus.ps1"
+   ],
+   "primary_seat": null,
+   "other_seats": [
+    {
+     "seat": "PipelineOrchestrator",
+     "relationship": "maintainer",
+     "evidence": "roles/PipelineOrchestrator/RESPONSIBILITIES.md:48 (scripts/health_dashboard.py)"
+    }
+   ],
+   "home_host": null,
+   "state_marker": {
+    "state": "DORMANT",
+    "quote": "derived: last commit 6be994430 2026-09-17; rule ACTIVE if last commit >= 2026-09-24 else DORMANT",
+    "source": "git log -1 --format='%h %ad' --date=short origin/main -- scripts"
+   },
+   "description_source": "scripts/README_HEALTH_MONITORING.md",
+   "last_commit": "6be994430 2026-09-17",
+   "notes": "Umbrella for scripts/ minus the files listed as their own engines. Last 40 commit subject prefixes on the path: Harmonia 4, Merge 4, TECHNE 3, Aporia 3."
+  },
+  {
+   "engine_id": "ops/fleet",
+   "name": "Fleet orders and census tools",
+   "kind": "infrastructure",
+   "purpose": "Fleet work orders (CWO-2026-09-30, -B, -C), the census/queue/unowned ledgers and fleet_status.py, which flags stale seat state without a fleet review.",
+   "paths": [
+    "ops/fleet"
+   ],
+   "excluded_subpaths": [],
+   "primary_seat": null,
+   "other_seats": [
+    {
+     "seat": "Aporia",
+     "relationship": "maintainer",
+     "evidence": "all commits prefixed Aporia (CWO publish, census updates)"
+    },
+    {
+     "seat": "Achilles",
+     "relationship": "consumer",
+     "evidence": "roles/Achilles/RESPONSIBILITIES.md:44 (governed by CWO-30C)"
+    }
+   ],
+   "home_host": null,
+   "state_marker": {
+    "state": "ACTIVE",
+    "quote": "derived: last commit 7d373ac02 2026-09-30; rule ACTIVE if last commit >= 2026-09-24 else DORMANT",
+    "source": "git log -1 --format='%h %ad' --date=short origin/main -- ops/fleet"
+   },
+   "description_source": "ops/fleet/fleet_status.py",
+   "last_commit": "7d373ac02 2026-09-30",
+   "notes": "No seat document claims ownership of ops/fleet; Aporia publishes and updates it. MWO-0004 says publishing confers no steward or coordinator authority (ops/work_orders/CURRENT.md). Last 40 commit subject prefixes on the path: Aporia 5."
+  },
+  {
+   "engine_id": "ops/work_orders",
+   "name": "Master work orders (MWO)",
+   "kind": "infrastructure",
+   "purpose": "The operator's master work orders (CURRENT.md, archive MWO-0001..0004, PUBLICATIONS.md); every seat reads CURRENT.md at boot step 1.",
+   "paths": [
+    "ops/work_orders"
+   ],
+   "excluded_subpaths": [],
+   "primary_seat": null,
+   "other_seats": [
+    {
+     "seat": "Aporia",
+     "relationship": "maintainer",
+     "evidence": "ops/work_orders/CURRENT.md (Publisher for MWO-0004: Aporia, by operator designation)"
+    },
+    {
+     "seat": "Cyclops",
+     "relationship": "maintainer",
+     "evidence": "roles/Artemis/RESPONSIBILITIES.md:113 (Cyclops is MWO registrar)"
+    }
+   ],
+   "home_host": null,
+   "state_marker": {
+    "state": "ACTIVE",
+    "quote": "derived: last commit 7d373ac02 2026-09-30; rule ACTIVE if last commit >= 2026-09-24 else DORMANT",
+    "source": "git log -1 --format='%h %ad' --date=short origin/main -- ops/work_orders"
+   },
+   "description_source": "ops/work_orders/CURRENT.md",
+   "last_commit": "7d373ac02 2026-09-30",
+   "notes": "Author is the operator; no seat owns it. All seats are consumers (roles/base-role/RESPONSIBILITIES.md:235). Last 40 commit subject prefixes on the path: Aporia 3, MWO-0004 2, MWO-0003 2, MWO-0002 2."
+  },
+  {
+   "engine_id": "ops",
+   "name": "Git-native lab control plane (ops pilot)",
+   "kind": "infrastructure",
+   "purpose": "Proposed Git-native lab control plane: initiatives, threads TH-001..021, campaigns C-001..003 and thread_check tooling; a pilot, not a universal mandate.",
+   "paths": [
+    "ops"
+   ],
+   "excluded_subpaths": [
+    "ops/fleet",
+    "ops/work_orders"
+   ],
+   "primary_seat": null,
+   "other_seats": [
+    {
+     "seat": "Harmonia",
+     "relationship": "builder",
+     "evidence": "ops/README.md (captured 2026-09-27 by Harmonia)"
+    },
+    {
+     "seat": "Aether",
+     "relationship": "consumer",
+     "evidence": "dominant commit prefix Aether in ops/campaigns"
+    },
+    {
+     "seat": "Artemis",
+     "relationship": "consumer",
+     "evidence": "roles/Artemis/RESPONSIBILITIES.md:90"
+    }
+   ],
+   "home_host": null,
+   "state_marker": {
+    "state": "ACTIVE",
+    "quote": "derived: last commit 69e460f99 2026-09-30; rule ACTIVE if last commit >= 2026-09-24 else DORMANT",
+    "source": "git log -1 --format='%h %ad' --date=short origin/main -- ops"
+   },
+   "description_source": "ops/README.md",
+   "last_commit": "69e460f99 2026-09-30",
+   "notes": "Umbrella for ops/ minus fleet and work_orders. Last 40 commit subject prefixes on the path: Aether 11, Merge 6, Attribution 4, Review 4."
+  },
+  {
+   "engine_id": "infra",
+   "name": "Ubuntu swarm nodes",
+   "kind": "infrastructure",
+   "purpose": "Runbook, setup script and machine log for converting old machines to Ubuntu servers running always-on Claude Code (ubu001, ubu002).",
+   "paths": [
+    "infra"
+   ],
+   "excluded_subpaths": [],
+   "primary_seat": null,
+   "other_seats": [
+    {
+     "seat": "Harmonia",
+     "relationship": "builder",
+     "evidence": "infra/ubuntu_nodes/README.md (started by Harmonia[m2-475d761f])"
+    }
+   ],
+   "home_host": null,
+   "state_marker": {
+    "state": "ACTIVE",
+    "quote": "derived: last commit 04972c3cb 2026-09-27; rule ACTIVE if last commit >= 2026-09-24 else DORMANT",
+    "source": "git log -1 --format='%h %ad' --date=short origin/main -- infra"
+   },
+   "description_source": "infra/ubuntu_nodes/README.md",
+   "last_commit": "04972c3cb 2026-09-27",
+   "notes": "Last 40 commit subject prefixes on the path: infra 1."
+  },
+  {
+   "engine_id": ".github",
+   "name": "CI and Pages workflows",
+   "kind": "infrastructure",
+   "purpose": "GitHub Actions CI and the Pages deploy that publishes the Collider.",
+   "paths": [
+    ".github"
+   ],
+   "excluded_subpaths": [],
+   "primary_seat": null,
+   "other_seats": [],
+   "home_host": null,
+   "state_marker": {
+    "state": "ACTIVE",
+    "quote": "derived: last commit 29d7913b7 2026-09-29; rule ACTIVE if last commit >= 2026-09-24 else DORMANT",
+    "source": "git log -1 --format='%h %ad' --date=short origin/main -- .github"
+   },
+   "description_source": ".github/workflows",
+   "last_commit": "29d7913b7 2026-09-29",
+   "notes": "Last 40 commit subject prefixes on the path: CI 5, Pages 3, ci 2, prometheus_math 2."
+  },
+  {
+   "engine_id": ".claude",
+   "name": "Tracked Claude Code skills",
+   "kind": "infrastructure",
+   "purpose": "Repository-tracked Claude Code skills (evidence-wiki, review-packet).",
+   "paths": [
+    ".claude"
+   ],
+   "excluded_subpaths": [],
+   "primary_seat": null,
+   "other_seats": [
+    {
+     "seat": "Mnemosyne",
+     "relationship": "builder",
+     "evidence": "commit c711c5bf6 (evidence-wiki skill)"
+    },
+    {
+     "seat": "Apollo",
+     "relationship": "builder",
+     "evidence": "commit (review-packet skill)"
+    }
+   ],
+   "home_host": null,
+   "state_marker": {
+    "state": "DORMANT",
+    "quote": "derived: last commit c711c5bf6 2026-09-01; rule ACTIVE if last commit >= 2026-09-24 else DORMANT",
+    "source": "git log -1 --format='%h %ad' --date=short origin/main -- .claude"
+   },
+   "description_source": ".claude",
+   "last_commit": "c711c5bf6 2026-09-01",
+   "notes": "Last 40 commit subject prefixes on the path: Mnemosyne 1, Apollo 1."
+  },
+  {
+   "engine_id": "hephaestus",
+   "name": "Hephaestus Forge Queue / Apprentice Forge",
+   "kind": "research-engine",
+   "purpose": "Forge queue that turns ore into Mint Packets: an unattended Apprentice Forge on cheap models and an operator-invoked Master Smith regime.",
+   "paths": [
+    "hephaestus"
+   ],
+   "excluded_subpaths": [],
+   "primary_seat": "Hephaestus",
+   "other_seats": [
+    {
+     "seat": "Hecate",
+     "relationship": "consumer",
+     "evidence": "roles/Hecate/RESPONSIBILITIES.md:46"
+    }
+   ],
+   "home_host": null,
+   "state_marker": {
+    "state": "DORMANT",
+    "quote": "derived: last commit 8d9e9ff6a 2026-09-23; rule ACTIVE if last commit >= 2026-09-24 else DORMANT",
+    "source": "git log -1 --format='%h %ad' --date=short origin/main -- hephaestus"
+   },
+   "description_source": "hephaestus/README.md",
+   "last_commit": "8d9e9ff6a 2026-09-23",
+   "notes": "MONITORS Hephaestus jobs row: \"ACTIVE again from this pass\" (2026-09-11); host: launched from whichever host (roles/Hephaestus/RESPONSIBILITIES.md:70); Artemis says M2 (earlier M3). Last 40 commit subject prefixes on the path: Hephaestus 18, auto 1."
+  },
+  {
+   "engine_id": "charon",
+   "name": "Charon geometric embedding + probe",
+   "kind": "research-engine",
+   "purpose": "Tests whether geometric proximity in an embedding of arithmetic objects predicts Langlands-type correspondences; charon/probe holds the metabolization-probe pipeline.",
+   "paths": [
+    "charon"
+   ],
+   "excluded_subpaths": [],
+   "primary_seat": "Charon",
+   "other_seats": [],
+   "home_host": "M1",
+   "state_marker": {
+    "state": "DORMANT",
+    "quote": "The probe pipeline is DORMANT",
+    "source": "roles/Charon/RESPONSIBILITIES.md:64"
+   },
+   "description_source": "charon/README.md",
+   "last_commit": "5af5e5562 2026-09-11",
+   "notes": "Host M1 from roles/Artemis C_engines.md (Charon admissibility, M1). roles/Charon/RESPONSIBILITIES.md:66 says the residue thesis is RETIRED on evidence. Last 40 commit subject prefixes on the path: Charon 27, TECHNE 5, iteration 3, Aporia 2."
+  },
+  {
+   "engine_id": "attacks",
+   "name": "Attack registry (ATK-*)",
+   "kind": "auditor",
+   "purpose": "Charon's admissibility preflight ratchet: recorded attacks on measurement implementations and rulings on pooled evidence.",
+   "paths": [
+    "attacks"
+   ],
+   "excluded_subpaths": [],
+   "primary_seat": "Charon",
+   "other_seats": [
+    {
+     "seat": "Techne",
+     "relationship": "builder",
+     "evidence": "commits \"Techne ATTACK on Ergon's four measurement implementations\""
+    }
+   ],
+   "home_host": null,
+   "state_marker": {
+    "state": "DORMANT",
+    "quote": "derived: last commit 849cacfa1 2026-09-01; rule ACTIVE if last commit >= 2026-09-24 else DORMANT",
+    "source": "git log -1 --format='%h %ad' --date=short origin/main -- attacks"
+   },
+   "description_source": "roles/Pheme/RESPONSIBILITIES.md",
+   "last_commit": "849cacfa1 2026-09-01",
+   "notes": "Owner from roles/Pheme/RESPONSIBILITIES.md:44 (\"Charon's admissibility preflight and its ratchet (attacks/)\"); Charon's own file does not name attacks/. Last 40 commit subject prefixes on the path: Charon 6, Techne 2, Ergon 1, Pre-flight 1."
+  },
+  {
+   "engine_id": "elenchus",
+   "name": "Elenchus review notes",
+   "kind": "auditor",
+   "purpose": "Elenchus's cross-seat comparison and adjudication notes from its first reviewing passes.",
+   "paths": [
+    "elenchus"
+   ],
+   "excluded_subpaths": [],
+   "primary_seat": "Elenchus",
+   "other_seats": [],
+   "home_host": "M2",
+   "state_marker": {
+    "state": "DORMANT",
+    "quote": "derived: last commit 7cb1693e9 2026-09-04; rule ACTIVE if last commit >= 2026-09-24 else DORMANT",
+    "source": "git log -1 --format='%h %ad' --date=short origin/main -- elenchus"
+   },
+   "description_source": "roles/Elenchus/RESPONSIBILITIES.md",
+   "last_commit": "7cb1693e9 2026-09-04",
+   "notes": "Host from roles/Elenchus/RESPONSIBILITIES.md:28 (machine=\"M2\"). The Elenchus shadow loop is in engine/shadow. Last 40 commit subject prefixes on the path: Elenchus 7."
+  },
+  {
+   "engine_id": "roles/Kairos/science",
+   "name": "Kairos claim lint",
+   "kind": "auditor",
+   "purpose": "On-demand predicate lint that attacks live claims once rows exist.",
+   "paths": [
+    "roles/Kairos/science"
+   ],
+   "excluded_subpaths": [],
+   "primary_seat": "Kairos",
+   "other_seats": [],
+   "home_host": null,
+   "state_marker": {
+    "state": "DORMANT",
+    "quote": "DORMANT since registration 2026-09-11: NO INPUT",
+    "source": "roles/base-role/MONITORS.md:52"
+   },
+   "description_source": "roles/base-role/MONITORS.md",
+   "last_commit": "30313d8e7 2026-09-11",
+   "notes": "No SFE claim scope or PEW token, so no input. Last 40 commit subject prefixes on the path: Kairos 1."
+  },
+  {
+   "engine_id": "stations",
+   "name": "Station status files",
+   "kind": "reporting",
+   "purpose": "Per-host station status files (M1/M3 STATUS) and Alethelia's REPORT_latest outputs.",
+   "paths": [
+    "stations"
+   ],
+   "excluded_subpaths": [],
+   "primary_seat": null,
+   "other_seats": [
+    {
+     "seat": "Alethelia",
+     "relationship": "maintainer",
+     "evidence": "roles/Alethelia/RESPONSIBILITIES.md:51 (writes stations/REPORT_latest)"
+    },
+    {
+     "seat": "Hephaestus",
+     "relationship": "maintainer",
+     "evidence": "roles/Hephaestus/RESPONSIBILITIES.md:69 (stations/M3_STATUS.md)"
+    }
+   ],
+   "home_host": null,
+   "state_marker": {
+    "state": "DORMANT",
+    "quote": "derived: last commit d2c54fa2b 2026-09-11; rule ACTIVE if last commit >= 2026-09-24 else DORMANT",
+    "source": "git log -1 --format='%h %ad' --date=short origin/main -- stations"
+   },
+   "description_source": "roles/Alethelia/RESPONSIBILITIES.md",
+   "last_commit": "d2c54fa2b 2026-09-11",
+   "notes": "Dominant commit prefixes Ergon/Hephaestus/M1_STATUS; no single owner. Last 40 commit subject prefixes on the path: Ergon 13, Hephaestus 6, M1_STATUS 6, Aporia 3."
+  },
+  {
+   "engine_id": "watchers",
+   "name": "Scored-shadow watcher ledgers",
+   "kind": "auditor",
+   "purpose": "Append-only ledgers of typed watcher findings and execution-only adjudications, scored by scripts/watcher_scorecard.py.",
+   "paths": [
+    "watchers"
+   ],
+   "excluded_subpaths": [],
+   "primary_seat": null,
+   "other_seats": [],
+   "home_host": null,
+   "state_marker": {
+    "state": "DORMANT",
+    "quote": "derived: last commit 84cf1cb50 2026-08-20; rule ACTIVE if last commit >= 2026-09-24 else DORMANT",
+    "source": "git log -1 --format='%h %ad' --date=short origin/main -- watchers"
+   },
+   "description_source": "watchers/README.md",
+   "last_commit": "84cf1cb50 2026-08-20",
+   "notes": "Any seat may run the scorer (README); no seat claims the path. Last 40 commit subject prefixes on the path: Watchers 1."
+  },
+  {
+   "engine_id": "mnemosyne",
+   "name": "Mnemosyne working directory",
+   "kind": "data",
+   "purpose": "Mnemosyne's DBA and data-steward workspace: data audits, ingestion scripts, migration plans, STATE.md survey.",
+   "paths": [
+    "mnemosyne"
+   ],
+   "excluded_subpaths": [],
+   "primary_seat": "Mnemosyne",
+   "other_seats": [],
+   "home_host": null,
+   "state_marker": {
+    "state": "DORMANT",
+    "quote": "derived: last commit 4616c9797 2026-09-11; rule ACTIVE if last commit >= 2026-09-24 else DORMANT",
+    "source": "git log -1 --format='%h %ad' --date=short origin/main -- mnemosyne"
+   },
+   "description_source": "mnemosyne/README.md",
+   "last_commit": "4616c9797 2026-09-11",
+   "notes": "README status block dated 2026-04-15; mnemosyne/STATE.md is the 2026-09-01 world-state survey (roles/Mnemosyne/RESPONSIBILITIES.md:124). Last 40 commit subject prefixes on the path: Mnemosyne 7, Team 1, Reorganize 1, Update 1."
+  },
+  {
+   "engine_id": "roles",
+   "name": "Seat documents",
+   "kind": "data",
+   "purpose": "Every seat's entry file, charter, status, work state, journals and the base role (inheritance, MONITORS registry).",
+   "paths": [
+    "roles"
+   ],
+   "excluded_subpaths": [],
+   "primary_seat": null,
+   "other_seats": [],
+   "home_host": null,
+   "state_marker": {
+    "state": "ACTIVE",
+    "quote": "derived: last commit 9e4d75e62 2026-09-30; rule ACTIVE if last commit >= 2026-09-24 else DORMANT",
+    "source": "git log -1 --format='%h %ad' --date=short origin/main -- roles"
+   },
+   "description_source": "roles/base-role/RESPONSIBILITIES.md",
+   "last_commit": "9e4d75e62 2026-09-30",
+   "notes": "Not an engine; listed so every top-level directory is classified. Engine code under roles/ (Cosmos, Ananke, Ensorain, Harmonia science, Aphrodite engine, Kairos science, Nestor campaigns) has its own entries. Last 40 commit subject prefixes on the path: Merge 20, Hecate 8, Ananke 4, RESULT 3."
+  },
+  {
+   "engine_id": "data",
+   "name": "data/",
+   "kind": "data",
+   "purpose": "Single session-sync checkpoint file.",
+   "paths": [
+    "data"
+   ],
+   "excluded_subpaths": [],
+   "primary_seat": null,
+   "other_seats": [],
+   "home_host": null,
+   "state_marker": {
+    "state": "DORMANT",
+    "quote": "derived: last commit a8a276a40 2026-06-09; rule ACTIVE if last commit >= 2026-09-24 else DORMANT",
+    "source": "git log -1 --format='%h %ad' --date=short origin/main -- data"
+   },
+   "description_source": "data",
+   "last_commit": "a8a276a40 2026-06-09",
+   "notes": "Last 40 commit subject prefixes on the path: Session 1."
+  },
+  {
+   "engine_id": "prometheus_llm",
+   "name": "prometheus_llm model API",
+   "kind": "infrastructure",
+   "purpose": "One model API (hosted, local, CLI) replacing seven competing client implementations; requests-only, no provider SDKs.",
+   "paths": [
+    "prometheus_llm"
+   ],
+   "excluded_subpaths": [],
+   "primary_seat": null,
+   "other_seats": [
+    {
+     "seat": "Eos",
+     "relationship": "consumer",
+     "evidence": "roles/Eos/RESPONSIBILITIES.md:61 (prometheus_llm/registry.py)"
+    }
+   ],
+   "home_host": null,
+   "state_marker": {
+    "state": "DORMANT",
+    "quote": "derived: last commit 391f811c0 2026-08-22; rule ACTIVE if last commit >= 2026-09-24 else DORMANT",
+    "source": "git log -1 --format='%h %ad' --date=short origin/main -- prometheus_llm"
+   },
+   "description_source": "prometheus_llm/README.md",
+   "last_commit": "391f811c0 2026-08-22",
+   "notes": "Built in an M1/M2 review exchange 2026-08-22; no seat claims it. Last 40 commit subject prefixes on the path: Add 2, M2 1, Scope 1, M1 1."
+  },
+  {
+   "engine_id": "pivot",
+   "name": "Pivot / methodology docs",
+   "kind": "reporting",
+   "purpose": "Pivot, status and methodology documents (round-2 charter, preregistrations, handoffs) from the May-August program.",
+   "paths": [
+    "pivot"
+   ],
+   "excluded_subpaths": [],
+   "primary_seat": null,
+   "other_seats": [
+    {
+     "seat": "Techne",
+     "relationship": "maintainer",
+     "evidence": "roles/Techne/RESPONSIBILITIES.md:85"
+    }
+   ],
+   "home_host": null,
+   "state_marker": {
+    "state": "DORMANT",
+    "quote": "derived: last commit 1be87a0fe 2026-08-31; rule ACTIVE if last commit >= 2026-09-24 else DORMANT",
+    "source": "git log -1 --format='%h %ad' --date=short origin/main -- pivot"
+   },
+   "description_source": "pivot/ROUND2_CHARTER_2026-08-20.md",
+   "last_commit": "1be87a0fe 2026-08-31",
+   "notes": "Many seats wrote here (Kickoff, Ergon, Techne, Charon, Harmonia). Last 40 commit subject prefixes on the path: Kickoff 7, Ergon 6, Techne 5, Charon 5."
+  },
+  {
+   "engine_id": "whitepapers",
+   "name": "Whitepapers",
+   "kind": "reporting",
+   "purpose": "Working papers describing Prometheus findings and architectures.",
+   "paths": [
+    "whitepapers"
+   ],
+   "excluded_subpaths": [],
+   "primary_seat": null,
+   "other_seats": [],
+   "home_host": null,
+   "state_marker": {
+    "state": "DORMANT",
+    "quote": "derived: last commit bcb157d20 2026-05-29; rule ACTIVE if last commit >= 2026-09-24 else DORMANT",
+    "source": "git log -1 --format='%h %ad' --date=short origin/main -- whitepapers"
+   },
+   "description_source": "whitepapers/README.md",
+   "last_commit": "bcb157d20 2026-05-29",
+   "notes": "Last 40 commit subject prefixes on the path: whitepapers 3, Team 2, Whitepaper 1, Icarus 1."
+  },
+  {
+   "engine_id": "thesauros",
+   "name": "Thesauros data treasury",
+   "kind": "data",
+   "purpose": "Master catalog of Prometheus data assets: where they live, provenance, state and access (and the PgRedis bus shim).",
+   "paths": [
+    "thesauros"
+   ],
+   "excluded_subpaths": [],
+   "primary_seat": null,
+   "other_seats": [],
+   "home_host": null,
+   "state_marker": {
+    "state": "DORMANT",
+    "quote": "derived: last commit 471fee0f6 2026-08-18; rule ACTIVE if last commit >= 2026-09-24 else DORMANT",
+    "source": "git log -1 --format='%h %ad' --date=short origin/main -- thesauros"
+   },
+   "description_source": "thesauros/README.md",
+   "last_commit": "471fee0f6 2026-08-18",
+   "notes": "No seat claims it; commits by Thesauros/Ergon. Last 40 commit subject prefixes on the path: Thesauros 7, Merge 3, Ergon 2, Dataset 2."
+  },
+  {
+   "engine_id": "aethon",
+   "name": "Project AETHON",
+   "kind": "legacy",
+   "purpose": "Evolves reasoning-module configurations of local LLMs with MAP-Elites, maximizing structured novelty.",
+   "paths": [
+    "aethon"
+   ],
+   "excluded_subpaths": [],
+   "primary_seat": null,
+   "other_seats": [],
+   "home_host": null,
+   "state_marker": {
+    "state": "DORMANT",
+    "quote": "derived: last commit ffb3639d4 2026-03-22; rule ACTIVE if last commit >= 2026-09-24 else DORMANT",
+    "source": "git log -1 --format='%h %ad' --date=short origin/main -- aethon"
+   },
+   "description_source": "aethon/README.md",
+   "last_commit": "ffb3639d4 2026-03-22",
+   "notes": "Last 40 commit subject prefixes on the path: feat 1."
+  },
+  {
+   "engine_id": "arcanum",
+   "name": "Arcanum Infinity",
+   "kind": "legacy",
+   "purpose": "Catalogs recurring non-human tensor patterns (\"Arcanum\") from the discarded waste stream of LLM inference.",
+   "paths": [
+    "arcanum"
+   ],
+   "excluded_subpaths": [],
+   "primary_seat": null,
+   "other_seats": [],
+   "home_host": null,
+   "state_marker": {
+    "state": "DORMANT",
+    "quote": "derived: last commit 57caa85f9 2026-04-23; rule ACTIVE if last commit >= 2026-09-24 else DORMANT",
+    "source": "git log -1 --format='%h %ad' --date=short origin/main -- arcanum"
+   },
+   "description_source": "arcanum/README.md",
+   "last_commit": "57caa85f9 2026-04-23",
+   "notes": "Last 40 commit subject prefixes on the path: Consolidate 1, Bulk 1, feat 1."
+  },
+  {
+   "engine_id": "rhea",
+   "name": "Rhea forge",
+   "kind": "legacy",
+   "purpose": "Evolutionary forge growing small language models without the late-layer ejection of correct answers.",
+   "paths": [
+    "rhea"
+   ],
+   "excluded_subpaths": [],
+   "primary_seat": null,
+   "other_seats": [],
+   "home_host": null,
+   "state_marker": {
+    "state": "DORMANT",
+    "quote": "derived: last commit 35092f0a8 2026-03-25; rule ACTIVE if last commit >= 2026-09-24 else DORMANT",
+    "source": "git log -1 --format='%h %ad' --date=short origin/main -- rhea"
+   },
+   "description_source": "rhea/README.md",
+   "last_commit": "35092f0a8 2026-03-25",
+   "notes": "Last 40 commit subject prefixes on the path: Rhea 4, ? 3, Batch 3, Overnight 2."
+  },
+  {
+   "engine_id": "ignis",
+   "name": "Ignis latent vector evolution",
+   "kind": "legacy",
+   "purpose": "Latent-vector evolution of small LLMs (CMA-ES).",
+   "paths": [
+    "ignis"
+   ],
+   "excluded_subpaths": [],
+   "primary_seat": "ScienceAdvisor",
+   "other_seats": [],
+   "home_host": null,
+   "state_marker": {
+    "state": "DORMANT",
+    "quote": "DORMANT",
+    "source": "ignis/README.md:4"
+   },
+   "description_source": "ignis/README.md",
+   "last_commit": "e07d166ae 2026-08-24",
+   "notes": "ignis/README.md: \"DORMANT -- closed out 2026-08-24. Last science 2026-04-04.\" roles/ScienceAdvisor/RESPONSIBILITIES.md:45 says \"I maintain this\" (historical role doc). Last 40 commit subject prefixes on the path: Ignis 3, Fix 2, Lexis 1, Reorganize 1."
+  },
+  {
+   "engine_id": "apollo",
+   "name": "Apollo LLM evolution pipeline (v2d)",
+   "kind": "legacy",
+   "purpose": "Evolutionary pipeline training small LLMs against novel fitness functions; Gen-2 mining is suspended.",
+   "paths": [
+    "apollo"
+   ],
+   "excluded_subpaths": [],
+   "primary_seat": "Apollo",
+   "other_seats": [
+    {
+     "seat": "Atalanta",
+     "relationship": "consumer",
+     "evidence": "roles/Atalanta/RESPONSIBILITIES.md:85 (apollo/runs)"
+    },
+    {
+     "seat": "Lexis",
+     "relationship": "consumer",
+     "evidence": "git grep apollo/ in roles/Lexis (21 files)"
+    }
+   ],
+   "home_host": null,
+   "state_marker": {
+    "state": "DORMANT",
+    "quote": "DORMANT by ruling, NEVER INSTALLED",
+    "source": "roles/base-role/MONITORS.md:51"
+   },
+   "description_source": "apollo/README.md",
+   "last_commit": "1f0873ea5 2026-09-11",
+   "notes": "roles/Apollo/STATUS.txt: \"SCHEDULED MINING SUSPENDED (HITL 2026-09-01)\". roles/Apollo has no RESPONSIBILITIES.md (entry file BOOTSTRAP.md). Last commit 2026-09-11 (base-role adoption), so not strictly March-May. Last 40 commit subject prefixes on the path: Apollo 24, apollo 5, Phase 2, Hephaestus 1."
+  },
+  {
+   "engine_id": "cartography",
+   "name": "Cartography cross-domain pipeline",
+   "kind": "legacy",
+   "purpose": "Pipeline for structural connections between mathematical datasets with a falsification battery; reported zero novel cross-domain discoveries.",
+   "paths": [
+    "cartography"
+   ],
+   "excluded_subpaths": [],
+   "primary_seat": "Charon",
+   "other_seats": [
+    {
+     "seat": "Harmonia",
+     "relationship": "builder",
+     "evidence": "dominant commit prefix Harmonia (23 of 40)"
+    }
+   ],
+   "home_host": null,
+   "state_marker": {
+    "state": "DORMANT",
+    "quote": "derived: last commit cf2438a5d 2026-08-18; rule ACTIVE if last commit >= 2026-09-24 else DORMANT",
+    "source": "git log -1 --format='%h %ad' --date=short origin/main -- cartography"
+   },
+   "description_source": "cartography/README.md",
+   "last_commit": "cf2438a5d 2026-08-18",
+   "notes": "OWNER CONFLICT: roles/Charon/RESPONSIBILITIES.md:15-16 says this seat performed the cartography/battery lane; recent commits are mostly Harmonia. Last commit 2026-08-18. Last 40 commit subject prefixes on the path: Harmonia 23, Recovery 2, Ergon 2, Methodology 2."
+  },
+  {
+   "engine_id": "forge",
+   "name": "Forge T2/T3 ratchet",
+   "kind": "legacy",
+   "purpose": "Tiered evolutionary forge: each tier's tools become the next tier's primitives (T1 agents/hephaestus, T2, T3).",
+   "paths": [
+    "forge"
+   ],
+   "excluded_subpaths": [],
+   "primary_seat": "PipelineOrchestrator",
+   "other_seats": [
+    {
+     "seat": "Coeus",
+     "relationship": "consumer",
+     "evidence": "roles/Coeus/RESPONSIBILITIES.md:23"
+    },
+    {
+     "seat": "Ergon",
+     "relationship": "builder",
+     "evidence": "commit prefixes Ergon"
+    }
+   ],
+   "home_host": null,
+   "state_marker": {
+    "state": "DORMANT",
+    "quote": "derived: last commit 25623303e 2026-08-22; rule ACTIVE if last commit >= 2026-09-24 else DORMANT",
+    "source": "git log -1 --format='%h %ad' --date=short origin/main -- forge"
+   },
+   "description_source": "forge/README.md",
+   "last_commit": "25623303e 2026-08-22",
+   "notes": "roles/PipelineOrchestrator/RESPONSIBILITIES.md:7 claims \"break-glass forge authority\" (historical role doc). Last commit 2026-08-22. MONITORS: forge dead since 2026-05-28. Last 40 commit subject prefixes on the path: Forge 9, Ergon 4, Apollo 2, Add 1."
+  },
+  {
+   "engine_id": "harmonia",
+   "name": "Harmonia TT exploration engine (April)",
+   "kind": "legacy",
+   "purpose": "Tensor-train exploration of cross-domain mathematical structure; bond dimension read as cross-domain coupling.",
+   "paths": [
+    "harmonia"
+   ],
+   "excluded_subpaths": [],
+   "primary_seat": "Harmonia",
+   "other_seats": [
+    {
+     "seat": "Techne",
+     "relationship": "consumer",
+     "evidence": "roles/Techne/RESPONSIBILITIES.md:97 (writes harmonia/memory/symbols)"
+    }
+   ],
+   "home_host": null,
+   "state_marker": {
+    "state": "DORMANT",
+    "quote": "derived: last commit 1be87a0fe 2026-08-31; rule ACTIVE if last commit >= 2026-09-24 else DORMANT",
+    "source": "git log -1 --format='%h %ad' --date=short origin/main -- harmonia"
+   },
+   "description_source": "harmonia/README.md",
+   "last_commit": "1be87a0fe 2026-08-31",
+   "notes": "Last commit 2026-08-31 (Harmonia-A/B/C reviews). Distinct from the current Harmonia rulers (roles/Harmonia/science). Last 40 commit subject prefixes on the path: Harmonia-A 32, Harmonia 5, Aporia 2, ? 1."
+  },
+  {
+   "engine_id": "ergon",
+   "name": "Ergon tensor hypothesis search",
+   "kind": "legacy",
+   "purpose": "Cheap evolutionary screening layer that generates hypotheses, kills most with a tensor battery and promotes survivors; seat re-chartered to memory metabolism.",
+   "paths": [
+    "ergon"
+   ],
+   "excluded_subpaths": [],
+   "primary_seat": "Ergon",
+   "other_seats": [],
+   "home_host": null,
+   "state_marker": {
+    "state": "PARKED",
+    "quote": "DISABLED by Ergon 2026-09-11 (772edf15e)",
+    "source": "roles/base-role/MONITORS.md:46"
+   },
+   "description_source": "ergon/README.md",
+   "last_commit": "7c1ad3729 2026-09-11",
+   "notes": "MONITORS Ergon scheduled tasks (Campaign, ColdbandDrip, ...) DISABLED by Ergon (mapped to PARKED). Last commit 2026-09-11 (P3 verdict). Last 40 commit subject prefixes on the path: ERGON 28, Ergon 8, Merge 2, CORRECTION 1."
+  },
+  {
+   "engine_id": "koios",
+   "name": "Koios rank analyst",
+   "kind": "legacy",
+   "purpose": "MPA coordinate admission gating and invariance-tensor rank analysis.",
+   "paths": [
+    "koios"
+   ],
+   "excluded_subpaths": [],
+   "primary_seat": "Koios",
+   "other_seats": [],
+   "home_host": null,
+   "state_marker": {
+    "state": "DORMANT",
+    "quote": "derived: last commit d13f20df3 2026-04-23; rule ACTIVE if last commit >= 2026-09-24 else DORMANT",
+    "source": "git log -1 --format='%h %ad' --date=short origin/main -- koios"
+   },
+   "description_source": "roles/Koios/RESPONSIBILITIES.md",
+   "last_commit": "d13f20df3 2026-04-23",
+   "notes": "Last 40 commit subject prefixes on the path: Koios 4, Update 1, Add 1."
+  },
+  {
+   "engine_id": "kairos",
+   "name": "kairos/ (April Kairos files)",
+   "kind": "legacy",
+   "purpose": "April-era Kairos working files (5 files).",
+   "paths": [
+    "kairos"
+   ],
+   "excluded_subpaths": [],
+   "primary_seat": "Kairos",
+   "other_seats": [],
+   "home_host": null,
+   "state_marker": {
+    "state": "DORMANT",
+    "quote": "derived: last commit 3250f751f 2026-05-05; rule ACTIVE if last commit >= 2026-09-24 else DORMANT",
+    "source": "git log -1 --format='%h %ad' --date=short origin/main -- kairos"
+   },
+   "description_source": "kairos",
+   "last_commit": "3250f751f 2026-05-05",
+   "notes": "Kairos seat current instrument is roles/Kairos/science (listed separately). Last 40 commit subject prefixes on the path: Team 1."
+  },
+  {
+   "engine_id": "sigma_kernel",
+   "name": "sigma_kernel",
+   "kind": "legacy",
+   "purpose": "Minimal substrate kernel enforcing append-only storage, linear capability tokens, three-valued gates and falsification-first promotion.",
+   "paths": [
+    "sigma_kernel"
+   ],
+   "excluded_subpaths": [],
+   "primary_seat": "Techne",
+   "other_seats": [],
+   "home_host": null,
+   "state_marker": {
+    "state": "DORMANT",
+    "quote": "derived: last commit 6eeb1c823 2026-05-09; rule ACTIVE if last commit >= 2026-09-24 else DORMANT",
+    "source": "git log -1 --format='%h %ad' --date=short origin/main -- sigma_kernel"
+   },
+   "description_source": "sigma_kernel/README.md",
+   "last_commit": "6eeb1c823 2026-05-09",
+   "notes": "Owner from roles/Techne/RESPONSIBILITIES.md:21; commits prefixed Substrate-Tester/sigma_kernel. Last 40 commit subject prefixes on the path: Substrate-Tester 13, sigma_kernel 9, Contract 6, sigma_env 3."
+  },
+  {
+   "engine_id": "zoo",
+   "name": "zoo (conjecture GP)",
+   "kind": "legacy",
+   "purpose": "Conjecture genetic-programming experiments.",
+   "paths": [
+    "zoo"
+   ],
+   "excluded_subpaths": [],
+   "primary_seat": null,
+   "other_seats": [],
+   "home_host": null,
+   "state_marker": {
+    "state": "DORMANT",
+    "quote": "derived: last commit 2b63fc95d 2026-05-05; rule ACTIVE if last commit >= 2026-09-24 else DORMANT",
+    "source": "git log -1 --format='%h %ad' --date=short origin/main -- zoo"
+   },
+   "description_source": "zoo/conjecture_gp/README.md",
+   "last_commit": "2b63fc95d 2026-05-05",
+   "notes": "Last 40 commit subject prefixes on the path: Team 1, Reorganize 1, Working-tree 1."
+  },
+  {
+   "engine_id": "exploratory",
+   "name": "exploratory/",
+   "kind": "legacy",
+   "purpose": "Exploratory pilots (tensor_decomp_qd, grammata, pilot_Q_3x3, LLM mutation).",
+   "paths": [
+    "exploratory"
+   ],
+   "excluded_subpaths": [],
+   "primary_seat": null,
+   "other_seats": [],
+   "home_host": null,
+   "state_marker": {
+    "state": "DORMANT",
+    "quote": "derived: last commit 2b63fc95d 2026-05-05; rule ACTIVE if last commit >= 2026-09-24 else DORMANT",
+    "source": "git log -1 --format='%h %ad' --date=short origin/main -- exploratory"
+   },
+   "description_source": "exploratory/tensor_decomp_qd/README.md",
+   "last_commit": "2b63fc95d 2026-05-05",
+   "notes": "Last 40 commit subject prefixes on the path: tensor_decomp_qd 3, Team 1, PROJECT_SUMMARY_FOR_REVIEW 1, pilot_LLM_mutation 1."
+  },
+  {
+   "engine_id": "stoa",
+   "name": "Stoa",
+   "kind": "legacy",
+   "purpose": "Team meeting place for Prometheus agents: discussions, feedback, ideas.",
+   "paths": [
+    "stoa"
+   ],
+   "excluded_subpaths": [],
+   "primary_seat": null,
+   "other_seats": [],
+   "home_host": null,
+   "state_marker": {
+    "state": "DORMANT",
+    "quote": "derived: last commit 2b63fc95d 2026-05-05; rule ACTIVE if last commit >= 2026-09-24 else DORMANT",
+    "source": "git log -1 --format='%h %ad' --date=short origin/main -- stoa"
+   },
+   "description_source": "stoa/README.md",
+   "last_commit": "2b63fc95d 2026-05-05",
+   "notes": "Last 40 commit subject prefixes on the path: Stoa 9, sigma_kernel 6, Ergon 3, stoa 3."
+  },
+  {
+   "engine_id": "falsification",
+   "name": "falsification/",
+   "kind": "legacy",
+   "purpose": "April falsification scripts (legacy DuckDB).",
+   "paths": [
+    "falsification"
+   ],
+   "excluded_subpaths": [],
+   "primary_seat": null,
+   "other_seats": [],
+   "home_host": null,
+   "state_marker": {
+    "state": "DORMANT",
+    "quote": "derived: last commit 3bf3aed47 2026-04-16; rule ACTIVE if last commit >= 2026-09-24 else DORMANT",
+    "source": "git log -1 --format='%h %ad' --date=short origin/main -- falsification"
+   },
+   "description_source": "falsification",
+   "last_commit": "3bf3aed47 2026-04-16",
+   "notes": "Last 40 commit subject prefixes on the path: Add 1, Pipeline 1."
+  },
+  {
+   "engine_id": "pipelines",
+   "name": "Pipeline manifests",
+   "kind": "legacy",
+   "purpose": "Declarative self-describing pipeline manifests (v0 sketch).",
+   "paths": [
+    "pipelines"
+   ],
+   "excluded_subpaths": [],
+   "primary_seat": null,
+   "other_seats": [
+    {
+     "seat": "PipelineOrchestrator",
+     "relationship": "consumer",
+     "evidence": "roles/PipelineOrchestrator/RESPONSIBILITIES.md"
+    }
+   ],
+   "home_host": null,
+   "state_marker": {
+    "state": "DORMANT",
+    "quote": "derived: last commit a090f5e8f 2026-05-17; rule ACTIVE if last commit >= 2026-09-24 else DORMANT",
+    "source": "git log -1 --format='%h %ad' --date=short origin/main -- pipelines"
+   },
+   "description_source": "pipelines/README.md",
+   "last_commit": "a090f5e8f 2026-05-17",
+   "notes": "Last 40 commit subject prefixes on the path: Cycle 1."
+  },
+  {
+   "engine_id": "prometheus_data",
+   "name": "prometheus_data/",
+   "kind": "legacy",
+   "purpose": "April data loaders migrated from DuckDB to Postgres + Redis.",
+   "paths": [
+    "prometheus_data"
+   ],
+   "excluded_subpaths": [],
+   "primary_seat": null,
+   "other_seats": [],
+   "home_host": null,
+   "state_marker": {
+    "state": "DORMANT",
+    "quote": "derived: last commit 3250f751f 2026-05-05; rule ACTIVE if last commit >= 2026-09-24 else DORMANT",
+    "source": "git log -1 --format='%h %ad' --date=short origin/main -- prometheus_data"
+   },
+   "description_source": "prometheus_data",
+   "last_commit": "3250f751f 2026-05-05",
+   "notes": "Last 40 commit subject prefixes on the path: Team 1, Reorganize 1, Kill 1, Reconstruct 1."
+  },
+  {
+   "engine_id": "external_deps",
+   "name": "Lean interaction substrate",
+   "kind": "legacy",
+   "purpose": "Lean interaction layers 0-2 and Mathlib bridge.",
+   "paths": [
+    "external_deps"
+   ],
+   "excluded_subpaths": [],
+   "primary_seat": null,
+   "other_seats": [
+    {
+     "seat": "Techne",
+     "relationship": "consumer",
+     "evidence": "git grep external_deps in roles/Techne (3 files)"
+    }
+   ],
+   "home_host": null,
+   "state_marker": {
+    "state": "DORMANT",
+    "quote": "derived: last commit d576dc98d 2026-05-29; rule ACTIVE if last commit >= 2026-09-24 else DORMANT",
+    "source": "git log -1 --format='%h %ad' --date=short origin/main -- external_deps"
+   },
+   "description_source": "external_deps",
+   "last_commit": "d576dc98d 2026-05-29",
+   "notes": "Last 40 commit subject prefixes on the path: Lean 1."
+  },
+  {
+   "engine_id": "tests",
+   "name": "tests/ (Clio, Pythia)",
+   "kind": "legacy",
+   "purpose": "Tests for the May Clio and Pythia agents.",
+   "paths": [
+    "tests"
+   ],
+   "excluded_subpaths": [],
+   "primary_seat": null,
+   "other_seats": [],
+   "home_host": null,
+   "state_marker": {
+    "state": "DORMANT",
+    "quote": "derived: last commit 4556b2ac4 2026-05-18; rule ACTIVE if last commit >= 2026-09-24 else DORMANT",
+    "source": "git log -1 --format='%h %ad' --date=short origin/main -- tests"
+   },
+   "description_source": "tests",
+   "last_commit": "4556b2ac4 2026-05-18",
+   "notes": "Last 40 commit subject prefixes on the path: Clio 4, Pythia 1, Working-tree 1."
+  },
+  {
+   "engine_id": "agents/_shared",
+   "name": "agents/_shared (no seat)",
+   "kind": "legacy",
+   "purpose": "Shared agent libraries (SelfImproving daemon, Lean helpers).",
+   "paths": [
+    "agents/_shared"
+   ],
+   "excluded_subpaths": [],
+   "primary_seat": null,
+   "other_seats": [],
+   "home_host": null,
+   "state_marker": {
+    "state": "DORMANT",
+    "quote": "derived: last commit 54e91768d 2026-09-11; rule ACTIVE if last commit >= 2026-09-24 else DORMANT",
+    "source": "git log -1 --format='%h %ad' --date=short origin/main -- agents/_shared"
+   },
+   "description_source": "agents/_shared",
+   "last_commit": "54e91768d 2026-09-11",
+   "notes": "Last commit 2026-09-11 (Techne donor-foundry closeout). Last 40 commit subject prefixes on the path: SelfImproving 9, TECHNE 1, Aporia 1, Lean 1."
+  },
+  {
+   "engine_id": "agents/shared",
+   "name": "agents/shared (no seat)",
+   "kind": "legacy",
+   "purpose": "March shared agent utilities.",
+   "paths": [
+    "agents/shared"
+   ],
+   "excluded_subpaths": [],
+   "primary_seat": null,
+   "other_seats": [],
+   "home_host": null,
+   "state_marker": {
+    "state": "DORMANT",
+    "quote": "derived: last commit 6058e6eb1 2026-03-29; rule ACTIVE if last commit >= 2026-09-24 else DORMANT",
+    "source": "git log -1 --format='%h %ad' --date=short origin/main -- agents/shared"
+   },
+   "description_source": "agents/shared",
+   "last_commit": "6058e6eb1 2026-03-29",
+   "notes": "Last 40 commit subject prefixes on the path: Hephaestus 1, v5 1."
+  },
+  {
+   "engine_id": "agents/auditor",
+   "name": "agents/auditor (no seat)",
+   "kind": "legacy",
+   "purpose": "March v5 auditor agent.",
+   "paths": [
+    "agents/auditor"
+   ],
+   "excluded_subpaths": [],
+   "primary_seat": null,
+   "other_seats": [],
+   "home_host": null,
+   "state_marker": {
+    "state": "DORMANT",
+    "quote": "derived: last commit 82d77e63f 2026-03-27; rule ACTIVE if last commit >= 2026-09-24 else DORMANT",
+    "source": "git log -1 --format='%h %ad' --date=short origin/main -- agents/auditor"
+   },
+   "description_source": "agents/auditor",
+   "last_commit": "82d77e63f 2026-03-27",
+   "notes": "Last 40 commit subject prefixes on the path: v5 1."
+  },
+  {
+   "engine_id": "agents/aletheia",
+   "name": "agents/aletheia (no seat)",
+   "kind": "legacy",
+   "purpose": "March-April Aletheia taxonomy agent.",
+   "paths": [
+    "agents/aletheia"
+   ],
+   "excluded_subpaths": [],
+   "primary_seat": null,
+   "other_seats": [],
+   "home_host": null,
+   "state_marker": {
+    "state": "DORMANT",
+    "quote": "derived: last commit b674a9976 2026-04-03; rule ACTIVE if last commit >= 2026-09-24 else DORMANT",
+    "source": "git log -1 --format='%h %ad' --date=short origin/main -- agents/aletheia"
+   },
+   "description_source": "agents/aletheia/README.md",
+   "last_commit": "b674a9976 2026-04-03",
+   "notes": "Not the same as Alethelia (agents/alethelia). Last 40 commit subject prefixes on the path: pronoia 20, Fix 1, Complete 1, agents 1."
+  },
+  {
+   "engine_id": "agents/alethelia",
+   "name": "agents/alethelia (Alethelia)",
+   "kind": "legacy",
+   "purpose": "On-demand liveness reporter that writes stations/REPORT_latest and refuses calm over anomalies.",
+   "paths": [
+    "agents/alethelia"
+   ],
+   "excluded_subpaths": [],
+   "primary_seat": "Alethelia",
+   "other_seats": [],
+   "home_host": "M1",
+   "state_marker": {
+    "state": "DORMANT",
+    "quote": "DORMANT -- no host.",
+    "source": "roles/base-role/MONITORS.md:49"
+   },
+   "description_source": "roles/Alethelia/RESPONSIBILITIES.md",
+   "last_commit": "d2c54fa2b 2026-09-11",
+   "notes": "Last 40 commit subject prefixes on the path: Aporia 3, Alethelia 1."
+  },
+  {
+   "engine_id": "agents/arachne",
+   "name": "agents/arachne (Arachne)",
+   "kind": "legacy",
+   "purpose": "Population of math crawlers weaving one relation fabric and void map.",
+   "paths": [
+    "agents/arachne"
+   ],
+   "excluded_subpaths": [],
+   "primary_seat": "Arachne",
+   "other_seats": [],
+   "home_host": "M1",
+   "state_marker": {
+    "state": "DORMANT",
+    "quote": "DORMANT since 2026-06-04",
+    "source": "roles/base-role/MONITORS.md:53"
+   },
+   "description_source": "roles/Arachne/RESPONSIBILITIES.md",
+   "last_commit": "4ebb1643c 2026-09-11",
+   "notes": "Last 40 commit subject prefixes on the path: Arachne 10."
+  },
+  {
+   "engine_id": "agents/atalanta",
+   "name": "agents/atalanta (Atalanta)",
+   "kind": "legacy",
+   "purpose": "May E-track primitive hunter loop.",
+   "paths": [
+    "agents/atalanta"
+   ],
+   "excluded_subpaths": [],
+   "primary_seat": "Atalanta",
+   "other_seats": [],
+   "home_host": "M1",
+   "state_marker": {
+    "state": "RETIRED",
+    "quote": "RETIRED by operator ruling 2026-09-11",
+    "source": "roles/base-role/MONITORS.md:62"
+   },
+   "description_source": "agents/atalanta/CHARTER.md",
+   "last_commit": "827d021eb 2026-09-11",
+   "notes": "Last 40 commit subject prefixes on the path: Atalanta 2, Aporia 1."
+  },
+  {
+   "engine_id": "agents/clymene",
+   "name": "agents/clymene (Clymene)",
+   "kind": "legacy",
+   "purpose": "72-hour hoard cycle collecting a data vault.",
+   "paths": [
+    "agents/clymene"
+   ],
+   "excluded_subpaths": [],
+   "primary_seat": "Clymene",
+   "other_seats": [],
+   "home_host": "M1",
+   "state_marker": {
+    "state": "DORMANT",
+    "quote": "DORMANT since 2026-03-31",
+    "source": "roles/base-role/MONITORS.md:67"
+   },
+   "description_source": "agents/clymene/README.md",
+   "last_commit": "b674a9976 2026-04-03",
+   "notes": "Last 40 commit subject prefixes on the path: Fix 1, Pipeline 1, Complete 1, Bulk 1."
+  },
+  {
+   "engine_id": "agents/coeus",
+   "name": "agents/coeus (Coeus)",
+   "kind": "legacy",
+   "purpose": "Per-concept forge-effect rebuild fed back as forge-queue priority.",
+   "paths": [
+    "agents/coeus"
+   ],
+   "excluded_subpaths": [],
+   "primary_seat": "Coeus",
+   "other_seats": [],
+   "home_host": null,
+   "state_marker": {
+    "state": "PARKED",
+    "quote": "the seat was PARKED by operator ruling 2026-09-11",
+    "source": "roles/base-role/MONITORS.md:65"
+   },
+   "description_source": "agents/coeus/README.md",
+   "last_commit": "8af6ba9e5 2026-03-27",
+   "notes": "4,040 tracked files (largest agents/ subtree after hephaestus). Last 40 commit subject prefixes on the path: Phase 2, Complete 1, CAITL 1, Batch 1."
+  },
+  {
+   "engine_id": "agents/eos",
+   "name": "agents/eos (Eos)",
+   "kind": "legacy",
+   "purpose": "Hourly paper-scan daemon feeding digests; Season II KEEP_DARK.",
+   "paths": [
+    "agents/eos"
+   ],
+   "excluded_subpaths": [],
+   "primary_seat": "Eos",
+   "other_seats": [],
+   "home_host": "M4",
+   "state_marker": {
+    "state": "DORMANT",
+    "quote": "DORMANT since 2026-05-17",
+    "source": "roles/base-role/MONITORS.md:61"
+   },
+   "description_source": "agents/eos/README.md",
+   "last_commit": "54a1f97cc 2026-09-11",
+   "notes": "Last 40 commit subject prefixes on the path: pronoia 32, Eos 3, Fix 1, Pipeline 1."
+  },
+  {
+   "engine_id": "agents/hephaestus",
+   "name": "agents/hephaestus (Hephaestus)",
+   "kind": "legacy",
+   "purpose": "Tier-1 code forge: generates Python reasoning tools from top Nous triples and validates them against a trap battery.",
+   "paths": [
+    "agents/hephaestus"
+   ],
+   "excluded_subpaths": [],
+   "primary_seat": "Hephaestus",
+   "other_seats": [],
+   "home_host": null,
+   "state_marker": {
+    "state": "DORMANT",
+    "quote": "derived: last commit c0954083b 2026-09-01; rule ACTIVE if last commit >= 2026-09-24 else DORMANT",
+    "source": "git log -1 --format='%h %ad' --date=short origin/main -- agents/hephaestus"
+   },
+   "description_source": "agents/hephaestus/README.md",
+   "last_commit": "c0954083b 2026-09-01",
+   "notes": "17,364 tracked files. roles/PipelineOrchestrator/RESPONSIBILITIES.md:20 describes it; current Hephaestus seat works in hephaestus/. Hecate and Theseus read its ledger read-only. Last 40 commit subject prefixes on the path: Hephaestus 9, Day 5, Fix 4, Model 2."
+  },
+  {
+   "engine_id": "agents/hermes",
+   "name": "agents/hermes (Hermes)",
+   "kind": "legacy",
+   "purpose": "April deep-research submitter and brief pipeline.",
+   "paths": [
+    "agents/hermes"
+   ],
+   "excluded_subpaths": [],
+   "primary_seat": "Hermes",
+   "other_seats": [],
+   "home_host": null,
+   "state_marker": {
+    "state": "RETIRED",
+    "quote": "describes a pipeline that was formally deprecated on 2026-05-17",
+    "source": "roles/Hermes/RESPONSIBILITIES.md:10"
+   },
+   "description_source": "agents/hermes/README.md",
+   "last_commit": "da5d6880e 2026-09-11",
+   "notes": "DEPRECATED mapped to RETIRED. Last 40 commit subject prefixes on the path: pronoia 32, Hermes 1, Merge 1, Fix 1."
+  },
+  {
+   "engine_id": "agents/hypatia",
+   "name": "agents/hypatia (Hypatia)",
+   "kind": "legacy",
+   "purpose": "May D-track loop.",
+   "paths": [
+    "agents/hypatia"
+   ],
+   "excluded_subpaths": [],
+   "primary_seat": "Hypatia",
+   "other_seats": [],
+   "home_host": "M1",
+   "state_marker": {
+    "state": "DORMANT",
+    "quote": "DEAD / present-not-active: registered by Hypatia",
+    "source": "roles/base-role/MONITORS.md:63"
+   },
+   "description_source": "agents/hypatia/CHARTER.md",
+   "last_commit": "d5ce130a4 2026-09-11",
+   "notes": "MONITORS says DEAD (mapped to DORMANT). Last 40 commit subject prefixes on the path: Hypatia 1, Aporia 1."
+  },
+  {
+   "engine_id": "agents/icarus",
+   "name": "agents/icarus (Icarus)",
+   "kind": "legacy",
+   "purpose": "Self-improvement daemon (R1-R6 conjecture ladder).",
+   "paths": [
+    "agents/icarus"
+   ],
+   "excluded_subpaths": [],
+   "primary_seat": "Icarus",
+   "other_seats": [],
+   "home_host": "M2",
+   "state_marker": {
+    "state": "PARKED",
+    "quote": "DISABLED since 2026-06-15",
+    "source": "roles/base-role/MONITORS.md:56"
+   },
+   "description_source": "agents/icarus/README.md",
+   "last_commit": "d7fee8a26 2026-09-11",
+   "notes": "MONITORS says DISABLED; seat BLOCKED on ICARUS-XL-1 (mapped to PARKED). Last 40 commit subject prefixes on the path: Icarus 23, Catch-up 1, Snapshot 1."
+  },
+  {
+   "engine_id": "agents/metis",
+   "name": "agents/metis (Metis)",
+   "kind": "legacy",
+   "purpose": "March analyst producing briefs from Eos digests and priorities.",
+   "paths": [
+    "agents/metis"
+   ],
+   "excluded_subpaths": [],
+   "primary_seat": "Metis",
+   "other_seats": [],
+   "home_host": "M4",
+   "state_marker": {
+    "state": "DORMANT",
+    "quote": "DORMANT since 2026-04-01T07:26Z",
+    "source": "roles/base-role/MONITORS.md:83"
+   },
+   "description_source": "agents/metis/README.md",
+   "last_commit": "b674a9976 2026-04-03",
+   "notes": "Last 40 commit subject prefixes on the path: pronoia 36, Fix 1, Hephaestus 1, Complete 1."
+  },
+  {
+   "engine_id": "agents/nemesis",
+   "name": "agents/nemesis (Nemesis)",
+   "kind": "legacy",
+   "purpose": "Adversarial co-evolution cycle against forge tools.",
+   "paths": [
+    "agents/nemesis"
+   ],
+   "excluded_subpaths": [],
+   "primary_seat": "Nemesis",
+   "other_seats": [],
+   "home_host": "M1",
+   "state_marker": {
+    "state": "DORMANT",
+    "quote": "DEAD / present-not-active: registered by Nemesis",
+    "source": "roles/base-role/MONITORS.md:69"
+   },
+   "description_source": "agents/nemesis/README.md",
+   "last_commit": "a95d67ed8 2026-09-11",
+   "notes": "MONITORS says DEAD (mapped to DORMANT). Last 40 commit subject prefixes on the path: Nemesis 3, Phase 2, Charon 1, Fix 1."
+  },
+  {
+   "engine_id": "agents/nous",
+   "name": "agents/nous (Nous)",
+   "kind": "legacy",
+   "purpose": "Concept-triple combination generator feeding the forge.",
+   "paths": [
+    "agents/nous"
+   ],
+   "excluded_subpaths": [],
+   "primary_seat": "Nous",
+   "other_seats": [],
+   "home_host": "M1",
+   "state_marker": {
+    "state": "DORMANT",
+    "quote": "DORMANT since 2026-04-02",
+    "source": "roles/base-role/MONITORS.md:70"
+   },
+   "description_source": "agents/nous/README.md",
+   "last_commit": "8b8676272 2026-05-13",
+   "notes": "Last 40 commit subject prefixes on the path: Portfolio 1, Hephaestus 1, Wire 1, Overnight 1."
+  },
+  {
+   "engine_id": "agents/pheme",
+   "name": "agents/pheme (Pheme)",
+   "kind": "legacy",
+   "purpose": "May demand-voicer loop.",
+   "paths": [
+    "agents/pheme"
+   ],
+   "excluded_subpaths": [],
+   "primary_seat": "Pheme",
+   "other_seats": [],
+   "home_host": "M1",
+   "state_marker": {
+    "state": "DORMANT",
+    "quote": "DEAD / present-not-active: PID 5768",
+    "source": "roles/base-role/MONITORS.md:57"
+   },
+   "description_source": "agents/pheme/CHARTER.md",
+   "last_commit": "e6b3746f0 2026-05-23",
+   "notes": "MONITORS says DEAD (mapped to DORMANT). Last 40 commit subject prefixes on the path: Aporia 1."
+  },
+  {
+   "engine_id": "agents/polyhymnia",
+   "name": "agents/polyhymnia (Polyhymnia)",
+   "kind": "legacy",
+   "purpose": "Daemon producing game/tensor rows; awaiting re-premise.",
+   "paths": [
+    "agents/polyhymnia"
+   ],
+   "excluded_subpaths": [],
+   "primary_seat": "Polyhymnia",
+   "other_seats": [],
+   "home_host": "M1",
+   "state_marker": {
+    "state": "DORMANT",
+    "quote": "DORMANT since 2026-05-30: expected to run",
+    "source": "roles/base-role/MONITORS.md:59"
+   },
+   "description_source": "agents/polyhymnia/CHARTER.md",
+   "last_commit": "54221bfdb 2026-09-11",
+   "notes": "Last 40 commit subject prefixes on the path: Polyhymnia 5, SelfImproving 1, SelfImprovingDaemon 1."
+  },
+  {
+   "engine_id": "agents/pronoia",
+   "name": "agents/pronoia (Pronoia)",
+   "kind": "legacy",
+   "purpose": "Era-1 orchestrator logs and README (pronoia.py itself was deleted 2026-04-23).",
+   "paths": [
+    "agents/pronoia"
+   ],
+   "excluded_subpaths": [],
+   "primary_seat": "Pronoia",
+   "other_seats": [],
+   "home_host": "M1",
+   "state_marker": {
+    "state": "RETIRED",
+    "quote": "DISABLED 2026-04-23 by commit 3b3c74bc0",
+    "source": "roles/base-role/MONITORS.md:45"
+   },
+   "description_source": "agents/pronoia/README.md",
+   "last_commit": "b674a9976 2026-04-03",
+   "notes": "MONITORS: the seat lane it served is RETIRED with annotation. Last 40 commit subject prefixes on the path: pronoia 35, Fix 1, Complete 1, Bulk 1."
+  },
+  {
+   "engine_id": "agents/skopos",
+   "name": "agents/skopos (Skopos)",
+   "kind": "legacy",
+   "purpose": "Two-stage relevance scoring cycle.",
+   "paths": [
+    "agents/skopos"
+   ],
+   "excluded_subpaths": [],
+   "primary_seat": "Skopos",
+   "other_seats": [],
+   "home_host": "M1",
+   "state_marker": {
+    "state": "PARKED",
+    "quote": "PARKED / INSTRUMENT_SPECIMEN by operator",
+    "source": "roles/base-role/MONITORS.md:72"
+   },
+   "description_source": "agents/skopos/README.md",
+   "last_commit": "aca768424 2026-09-11",
+   "notes": "Last 40 commit subject prefixes on the path: Skopos 1, Fix 1, Pipeline 1, Complete 1."
+  },
+  {
+   "engine_id": "agents/talos",
+   "name": "agents/talos (Talos)",
+   "kind": "legacy",
+   "purpose": "Hourly corpus daemon.",
+   "paths": [
+    "agents/talos"
+   ],
+   "excluded_subpaths": [],
+   "primary_seat": "Talos",
+   "other_seats": [],
+   "home_host": "M1",
+   "state_marker": {
+    "state": "PARKED",
+    "quote": "PARKED by the operator's ruling on TALOS-01",
+    "source": "roles/base-role/MONITORS.md:54"
+   },
+   "description_source": "agents/talos/CHARTER.md",
+   "last_commit": "7eef9cc9b 2026-09-11",
+   "notes": "Fail-closed since TALOS-04. Last 40 commit subject prefixes on the path: Talos 3, Session 1, GPU 1."
+  },
+  {
+   "engine_id": "achilles/census",
+   "name": "Achilles fleet census (snapshot, page, email block)",
+   "kind": "reporting",
+   "purpose": "Evidence-backed census of every Prometheus seat (role, state, last activity, task, experiment, commit, engine, host) rebuilt every 6 hours into docs/fleet/fleet_state.json, rendered as the GitHub Pages fleet page and as the census section of the existing status email.",
+   "paths": [
+    "achilles",
+    "docs/fleet",
+    "roles/Achilles/census"
+   ],
+   "excluded_subpaths": [],
+   "primary_seat": "Achilles",
+   "other_seats": [
+    {
+     "seat": "Hermes",
+     "relationship": "consumer",
+     "evidence": "scripts/send_brief_email.py build_fleet_census (mailer, claimed by Hermes)"
+    },
+    {
+     "seat": "Aporia",
+     "relationship": "consumer",
+     "evidence": "ops/fleet/CENSUS.json v1 is the schema the snapshot extends"
+    }
+   ],
+   "home_host": "ELSA",
+   "state_marker": {
+    "state": "ACTIVE",
+    "quote": "charter ADOPTED 2026-09-30",
+    "source": "roles/Achilles/prompts/2026-09-30_charter/00_README.md:1"
+   },
+   "description_source": "achilles/README.md",
+   "last_commit": null,
+   "notes": "created 2026-09-30 by Achilles's first run"
+  }
+ ]
+}

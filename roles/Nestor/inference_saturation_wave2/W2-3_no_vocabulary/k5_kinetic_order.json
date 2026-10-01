@@ -1,0 +1,68 @@
+{
+ "n_obs": 22975,
+ "K": 5,
+ "first_order": {
+  "b": [
+   0.02702388900177063
+  ],
+  "ll": -5301.1,
+  "aic": 10604.1
+ },
+ "second_order": {
+  "b,c": [
+   1.961352037233904e-44,
+   0.00338880638304068
+  ],
+  "ll": -3618.4,
+  "aic": 7240.8
+ },
+ "age_structured": {
+  "a_young,b_old": [
+   0.29558782524401045,
+   0.00019493310808668776
+  ],
+  "ll": -1117.4,
+  "aic": 2238.8
+ },
+ "age_plus_n2": {
+  "a,b,c": [
+   0.29558782524401045,
+   0.0001949331080866878,
+   4.9657157359291196e-70
+  ],
+  "ll": -1117.4,
+  "aic": 2240.8
+ },
+ "per_capita_by_n": {
+  "1-1": {
+   "member_epochs": 11665,
+   "births_per_member_epoch": 0.0011,
+   "young_share": 0.005
+  },
+  "2-2": {
+   "member_epochs": 4928,
+   "births_per_member_epoch": 0.0112,
+   "young_share": 0.029
+  },
+  "3-4": {
+   "member_epochs": 20279,
+   "births_per_member_epoch": 0.0038,
+   "young_share": 0.021
+  },
+  "5-8": {
+   "member_epochs": 10916,
+   "births_per_member_epoch": 0.0069,
+   "young_share": 0.039
+  },
+  "9-16": {
+   "member_epochs": 11351,
+   "births_per_member_epoch": 0.0234,
+   "young_share": 0.082
+  },
+  "17-40": {
+   "member_epochs": 9763,
+   "births_per_member_epoch": 0.1408,
+   "young_share": 0.438
+  }
+ }
+}

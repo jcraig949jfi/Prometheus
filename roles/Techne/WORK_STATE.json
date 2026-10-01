@@ -1,0 +1,92 @@
+{
+  "schema": "prometheus.work_state.v1",
+  "seat": "Techne",
+  "mwo_id": "MWO-0004",
+  "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
+  "updated_at_utc": "2026-09-30T23:15:24Z",
+  "state": "READY",
+  "instance": "gandalf-4c0c7e64 (M3/GANDALF)",
+  "branch": "techne/boot-2026-09-30",
+  "base_sha": "bae32c682f226e7ec41d9e9c4df06082663364ae",
+  "head_sha": "(this commit; see git log -1 -- roles/Techne/WORK_STATE.json)",
+  "work_order": "MWO-0004 (ops/work_orders/CURRENT.md) + CWO-2026-09-30B (Techne item: #1071 ruling, DONE #1188) + CWO-2026-09-30C (governing; adopted 2026-09-30T22:56Z, heartbeat #1189). Direct operator instruction (chat, 2026-09-30 evening): acquisition batch 17 for Nyx -- DONE at a853fdf0b.",
+  "threads": [
+    {
+      "id": "T-TECHNE-PRIOR-ART-RAID",
+      "note": "seat-local alias, no ops/threads file created; operator directive 7 (roles/Techne/prompts/2026-09-21_prior_art_raid/OPERATOR_7_prior_art_raid.md); backlog TECHNE-121 (done), 122, 123",
+      "status": "OPEN"
+    },
+    {
+      "id": "T-TECHNE-FOSSIL-REFINERY",
+      "note": "seat-local alias; operator directives 4-6 (roles/Techne/prompts/2026-09-18_refinery, 2026-09-19_asal_direction); techne/fossils records, capsules, packets; backlog TECHNE-65/100, 113/115, 124 (done), 125",
+      "status": "OPEN"
+    }
+  ],
+  "campaigns": [],
+  "experiments": [],
+  "fabric_tasks": [],
+  "running": [],
+  "current": "none in flight. READY: awaiting Aporia assignment (CWO-C s1.3). Both in-flight items closed this pass: #1071 ruling (#1188) and batch 17 (a853fdf0b, delivery to Nyx).",
+  "next": "NOT self-executing (CWO-C s4). Planning view only: TECHNE-122 section II report (do not auto-promote, CWO-B); TECHNE-133 verify byproduct class; TECHNE-131 successor scorer before the ASAL replication prereg freezes; TECHNE-128 by-name test list.",
+  "reserve": [
+    "GEA-4 injection harness: a proposal from a parked seat (Atlas 09-21), not an operator directive; contract with Nyx first; not started",
+    "TECHNE-131: successor scorer (LF output, self_check/static_control blocks) before the ASAL replication domain reuses it",
+    "TECHNE-133 verify CONSUMER_BYPRODUCT class + read-only bodies decision"
+  ],
+  "blocked": [
+    {
+      "item": "TECHNE-123 measure open-oasis / MineWorld / Matrix-Game",
+      "dependency": "a host that can run a ~500M-parameter diffusion transformer (not M3)",
+      "owner": "placement"
+    },
+    {
+      "item": "TECHNE-129 remainder: grade and source_type of the 39 rollout fossils",
+      "dependency": "an answer from Harmonia or Nyx (question posted 2026-09-30)",
+      "owner": "Harmonia / Nyx"
+    }
+  ],
+  "blocked_on": [
+    "GPU-class host (TECHNE-123)",
+    "an answer on rollout-fossil grade and source_type (TECHNE-129 remainder; Harmonia / Nyx)"
+  ],
+  "next_actions": [
+    "awaiting Aporia assignment"
+  ],
+  "operator_decisions_required": [
+    "TECHNE-65/100: designate the off-host mirror destination for fossil bodies (candidate measured 2026-09-17: the operator's Google Drive mount on M3). Hard gate class: external side effect (MWO-0001 s7.5). One line; nothing else waits on it."
+  ],
+  "resource_status": "local CPU only on M3 (2008 i7 920, no AVX, no GPU); inside MWO-0004 R2; no Fabric lease held; no paid compute",
+  "last_receipt": "roles/Techne/REVIEW_PACKET_TECHNE_BATCH17_2026-09-30.txt; roles/Techne/journal/2026-09-30_gandalf-4c0c7e64.md",
+  "latest_reports": [
+    "roles/Techne/REVIEW_PACKET_TECHNE_BATCH17_2026-09-30.txt",
+    "roles/Techne/prompts/2026-09-30_batch17/TO_NYX_batch17_twenty_donors.md",
+    "roles/Techne/prompts/2026-09-30_r19_grades/RULING_R19_GRADE_BY_SOURCE_TYPE.md",
+    "roles/Techne/journal/2026-09-30_gandalf-4c0c7e64.md",
+    "roles/Techne/REVIEW_PACKET_TECHNE_BOOT_2026-09-30.txt",
+    "roles/Techne/prompts/2026-09-30_dcd_fossil/TO_HARMONIA_NYX_harm55_consumed_capsules_tranche2.md",
+    "techne/acquisition/poet_alife/ROLLOUT_FOSSILS_TRANCHE2_DISPOSITION_2026-09-30.md"
+  ],
+  "done_this_pass": [
+    "TECHNE-127: facebookresearch/dcd fossilized at cefd88196f26 (142 files, tree b6eefb61...c29d); verify + independent clone + cheat control",
+    "TECHNE-126: recipe axis NO_RECIPE; 48 stored labels relabeled with a receipt; 10 tests",
+    "TECHNE-125: CATALOG.json regenerated host-neutral, 169 rows; staleness + neutrality tests (5)",
+    "stale assertion in test_instrument_hygiene.py repaired (red on main since 2026-09-16)",
+    "TECHNE-129: nyx_handoff filled for 10 records (Harmonia #1064); 39 rollout records left on purpose, question posted; 5 tests",
+    "TECHNE-115: native Flax column (Harmonia, HARM-55/56 closed at 68036a8ae) consumed -- 39 capsules filled by `capsule fill-native`; 5 tests",
+    "TECHNE-130: tranche 2 selected by the frozen selector; every observer-flip category empty; adds no fossil; 7 rounding-noise D1 keys not preserved (deviation disclosed)",
+    "RULING for Nyx #1071 (R19 grade per source type) -- #1188; CWO-B item closed, reported to Aporia",
+    "TECHNE-132: batch 17, 20 prior-art donors fossilized for Nyx (operator direct instruction), a853fdf0b",
+    "TECHNE-133 found and filed (consumer bytecode written into a vault body; body restored)"
+  ],
+  "current_objective": "READY: awaiting Aporia assignment",
+  "current_step": "closure receipts written; heartbeat with completion sent",
+  "in_flight": [],
+  "progress": "2026-09-30: boot + 5 units (0f145b21e); ruling #1071 (b05f854a7); batch 17, 20 donors (a853fdf0b)",
+  "finish_condition": "n/a (READY)",
+  "next_expected_milestone": "an Aporia dispatch, or an operator instruction",
+  "expected_next_artifact": "none until dispatched",
+  "last_push_sha": "a853fdf0bcec431c5119b97f6043303747023105",
+  "last_push_utc": "2026-09-30T23:13Z (commit 23:11Z; push verified as ancestor immediately after)",
+  "model": "claude-fable-5-1 (harness-reported id; tier heavy)",
+  "session_started_utc": "2026-09-30T10:24Z (comms boot, instance gandalf-4c0c7e64)"
+}

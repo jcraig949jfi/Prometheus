@@ -1,0 +1,12 @@
+e06701a5 o5 q0 (follow)
+  census {'C': 138, 'N': 304, 'S': 140}
+  P8 decisive 1.000 [1.000,1.000] n146 cov 0.525 | strict 0.525 [0.430,0.614] n278 | dec-shuf 0.548 [0.449,0.636] n146
+  P8any 0.734 [0.659,0.807] n278 | shuf 0.475 [0.402,0.551] n278 | P8all dec 1.000 [1.000,1.000] n146 cov 0.525
+  xtab {'C>C': 80, 'C>M': 58, 'N>M': 304, 'S>M': 74, 'S>S': 66}
+  VERDICT DOES NOT REACH ['P8any strict lo99 <= .80']
+e06701a5 o5 q1 (follow)
+  census {'S': 375}
+  P8 decisive 1.000 [1.000,1.000] n375 cov 1.000 | strict 1.000 [1.000,1.000] n375 | dec-shuf 1.000 [1.000,1.000] n375
+  P8any 1.000 [1.000,1.000] n375 | shuf 1.000 [1.000,1.000] n375 | P8all dec 1.000 [1.000,1.000] n375 cov 1.000
+  xtab {'S>S': 375}
+  VERDICT REACHES []

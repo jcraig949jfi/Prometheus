@@ -1,0 +1,108 @@
+{
+ "schema": "prometheus.work_state.v1",
+ "seat": "Odysseus",
+ "mwo_id": "MWO-0004",
+ "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
+ "updated_at_utc": "2026-09-30T22:08:11Z",
+ "state": "BLOCKED (promexec, operator); P0 CLOSED",
+ "branch": "odysseus/fabric-v0-2026-09-28",
+ "head_sha": "76c21cb486be1fdbca1095b9c22f4f3e8f57011a",
+ "threads": [
+  {
+   "id": "thr-d2-firewall-audit",
+   "alias": "D2 firewall audit (Fabric thread label; NOT in ops/threads)",
+   "role": "auditor of record, firewall layer only"
+  },
+  {
+   "id": "thr-fabric-s2",
+   "alias": "Fabric adoption S2 (Fabric thread label; NOT in ops/threads)"
+  },
+  {
+   "id": "thr-s3",
+   "alias": "Fabric adoption S3 (planned label; NOT in ops/threads)"
+  },
+  {
+   "id": "thr-5c716f1f61da",
+   "alias": "TH-006 (closed slice: M2 attestation MATCH #799)"
+  }
+ ],
+ "campaigns": [
+  {
+   "id": null,
+   "alias": "Fabric adoption experiment (unregistered; no ops/campaigns entry)"
+  }
+ ],
+ "experiments": [
+  {
+   "id": null,
+   "alias": "S2 CLOSED (roles/Odysseus/fabric_pilot/s2/RESULT.md)"
+  },
+  {
+   "id": null,
+   "alias": "S3 CLOSED: gate MET (0.67 coordination/exec vs control re-coded 3.5; quality 10.0 vs 9.1 at the rubric ceiling, MAJOR ruler note per Harmonia #1038; 0 leaks; 0 rescues); same-host test NOT RUN"
+  }
+ ],
+ "fabric_tasks": [
+  "D2 firewall audit COMPLETE: FIREWALL_AUDIT_1 PASS (67e05df12), anchored by Nestor (entry_hash e1a2e48b, #1021); gates pass through AUDIT; C-1/C-2 declared"
+ ],
+ "running": [
+  "node workers on ubu001 from ~/fabric-runtime @9c022347e (fabric-v0.2 + DEF-ODY-015 + DEF-ODY-019 + legacy-lease removal): worker.ubu001.a/.b (claude, script), worker.ubu001.sci (script)"
+ ],
+ "blocked_on": [
+  "operator: promexec round-2 broker install (see blocked)"
+ ],
+ "next_actions": [
+  "on install: acceptance run 1, commit ACCEPTANCE_RUNS/1.json, hand the installed hash to Aether, send the CWO-B s11 completion message to Aporia",
+  "adjudicate any new thr-d2-firewall-audit round (FIREWALL_AUDIT_2)",
+  "record Fabric defects; route build work to Aporia (no BUILDER-FABRIC build under CWO-B)"
+ ],
+ "operator_decisions_required": [
+  "promexec round-2 broker install (privileged host modification; CWO s4). Runbook: fabric/promexec/OPERATOR_STEPS_ROUND2.md"
+ ],
+ "latest_reports": [
+  "fabric/promexec/STATUS_EXPERIMENTAL.md",
+  "fabric/promexec/OPERATOR_STEPS_ROUND2.md",
+  "fabric/FREEZE.md",
+  "roles/Odysseus/fabric_pilot/s3/CONTROL_RECODE.json",
+  "roles/Odysseus/fabric_pilot/d2_audit/v13/VERDICT.md",
+  "prometheus/cosmos/c3_holdout_D2/protocol/FIREWALL_AUDIT_1.json@67e05df12",
+  "roles/Odysseus/fabric_pilot/s3/RESULT.md",
+  "roles/Odysseus/probes/FP-001_RESULT.json",
+  "roles/Odysseus/fabric_pilot/DEFECTS.md",
+  "roles/Odysseus/fabric_pilot/s2/RESULT.md"
+ ],
+ "mwo_sha256": "925660b2d2be53af2ee4195391e484d9649bbd4ee828cd60432ce2f0903a99df",
+ "comms_cursor": 1181,
+ "migration_report": "roles/Odysseus/MIGRATION_REPORT_MWO-0002.json",
+ "hard_gates_note": "MWO-0004 R1/R5: only hard gates listed. promexec stays NOT ENABLED (MWO-0004 G4); the round-2 install is listed because it is a privileged host modification (CWO s4), not an enablement",
+ "work_order": "MWO-0004 + CWO-2026-09-30C (governing; ops/fleet/CWO_2026-09-30C_FINISH_SURFACE_DISPATCH.md, sha256 edc4792d...7e6c; supersedes the conflicting -30/-30B text)",
+ "current": "promexec round 2 (Fabric broker transition): source DONE and source-reviewed by Aether (#1046/#1052); BLOCKED on the privileged install; then acceptance run 1 and Aether's round 2 proper",
+ "next": "none: awaiting Aporia after completion (CWO-C: no self-promotion)",
+ "reserve": [],
+ "blocked": [
+  {
+   "item": "promexec round 2 install + ACCEPTANCE_RUNS/1.json (CWO CURRENT)",
+   "dependency": "installing the round-2 broker replaces a root-owned file: privileged host/security modification (CWO s4)",
+   "owner": "operator",
+   "runbook": "fabric/promexec/OPERATOR_STEPS_ROUND2.md",
+   "source_commit": "9f95f9ea0 (round 2 + Aether source-review N1/N2); broker sha256 3cf32a642febd032608878480bdf29c2b433f6859445072b44f1efcac14b0df3"
+  }
+ ],
+ "resource_status": "no compute or spend held; ubu001 disk 25%; workers .a/.b/.sci on ~/fabric-runtime @9c022347e, idle",
+ "last_receipt": "P0 #1135 closed (Aporia #1181); Windows test skips",
+ "in_flight": [
+  "promexec round 2: BLOCKED on the operator install",
+  "standing: ubu001 node workers; Fabric defect ledger; D2 auditor of record on demand",
+  "ops aid: ubu001->ubu002 ssh key waiting for the operator's paste"
+ ],
+ "current_objective": "promexec round 2 (Fabric broker transition)",
+ "current_step": "source done and Aether-reviewed; BLOCKED on the operator's privileged install (commit 9f95f9ea0, pin 3cf32a64...0df3)",
+ "progress": "P0 #1135 (DEF-ODY-023) CLOSED: Windows smoke PASS on M1 (Aporia #1181); Windows-only test skips added. DEF-ODY-019 repaired and rolled. promexec source done and Aether-reviewed.",
+ "finish_condition": "ACCEPTANCE_RUNS/1.json against the installed pinned broker, handed to Aether",
+ "next_expected_milestone": "operator installs the round-2 broker (timing is the operator's)",
+ "expected_next_artifact": "fabric/promexec/ACCEPTANCE_RUNS/1.json",
+ "last_push_sha": "14f3f2742",
+ "last_push_utc": "2026-09-30T17:56:24Z",
+ "model": "claude-opus-5-5 (runtime model id); Claude Code 2.1.283",
+ "session_started_utc": "2026-09-25T18:55:52Z (process start; context compacted several times since)"
+}

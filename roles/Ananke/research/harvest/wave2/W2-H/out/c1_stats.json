@@ -1,0 +1,444 @@
+{
+ "signal": {
+  "n_tests": 777,
+  "M_held": {
+   "64": 777
+  },
+  "n_SIGNAL": 216,
+  "SIGNAL_by_wave": {
+   "A": 41,
+   "B": 75,
+   "B2": 25,
+   "C": 40,
+   "D": 15,
+   "E": 20
+  },
+  "BH_q05_mu55": 221,
+  "BH_q01_mu55": 210,
+  "Holm_a01_mu55": 185,
+  "Holm_a05_mu55": 195,
+  "BH_q01_mu50": 326,
+  "Holm_a01_mu50": 281,
+  "SIGNAL_and_not_Holm01_mu55": [
+   "9dd25cb21750f3c5",
+   "c868a87bcd47d94b",
+   "884a64df866756b0",
+   "faafa5b049e1d4b4",
+   "8d1c8213ad576bd9",
+   "7ca102eb518ac124",
+   "925caa3a48964717",
+   "83d0ff565cd49433",
+   "b4e404f606bd2bb8",
+   "4ecdfb3f4f9bad5a",
+   "c7d7d2a488a86d6f",
+   "13b6ae2c0e08b007",
+   "606ce18c96c8f0de",
+   "882525a9d4a3d073",
+   "0f5451c3b3cdf250",
+   "d839fabb34a9b3d9",
+   "62062b100b757168",
+   "046d7c303740e9da",
+   "8ccf6c723ec57b3d",
+   "26f9428bd464d37f",
+   "8e1caf6bcc7897fb",
+   "3c3d996aa4ea15c7",
+   "e341694d05b42dbb",
+   "688b9f6f5ccfb225",
+   "62c6fa31078b1a9c",
+   "0b3c855a80022a98",
+   "a8544b2d21f40659",
+   "d2738b3c8992346a",
+   "9f0380884cbeec46",
+   "63abaede82660280",
+   "747885cece26407b"
+  ],
+  "SIGNAL_and_not_BH01_mu55": [
+   "884a64df866756b0",
+   "925caa3a48964717",
+   "83d0ff565cd49433",
+   "0f5451c3b3cdf250",
+   "62062b100b757168",
+   "8ccf6c723ec57b3d"
+  ],
+  "SIGNAL_lost_under_t_interval": [
+   "884a64df866756b0",
+   "925caa3a48964717",
+   "0f5451c3b3cdf250"
+  ],
+  "expected_false_SIGNAL_if_all_at_boundary_mu55_alpha_005": 3.8850000000000002,
+  "nonSIGNAL_cells_with_acc_le_055": 520,
+  "A1": {
+   "n": 352,
+   "SIGNAL": 41,
+   "Holm01": 32,
+   "BH01": 38,
+   "BH05": 41
+  },
+  "margin_SE_quantiles_SIGNAL": [
+   0.15315567567566687,
+   0.982158796786248,
+   1.4958683099452736,
+   4.1122622063154814,
+   10.786068096663678
+  ],
+  "n_SIGNAL_margin_lt_1SE": 11,
+  "n_SIGNAL_margin_lt_2SE": 24,
+  "expected_SIGNAL_lost_on_rerun_predictive": 6.44242089303305
+ },
+ "transect": {
+  "acc": {
+   "tests": 50,
+   "groups": 18,
+   "observed_candidates": 2,
+   "perm_null_mean": 0.57,
+   "perm_null_q95": 2.0
+  },
+  "plant": {
+   "tests": 176,
+   "groups": 78,
+   "observed_candidates": 19,
+   "perm_null_mean": 1.43,
+   "perm_null_q95": 4.0
+  },
+  "sens": {
+   "tests": 176,
+   "groups": 78,
+   "observed_candidates": 8,
+   "perm_null_mean": 2.595,
+   "perm_null_q95": 6.0
+  },
+  "emit": {
+   "tests": 176,
+   "groups": 78,
+   "observed_candidates": 8,
+   "perm_null_mean": 2.73,
+   "perm_null_q95": 6.0
+  }
+ },
+ "selection": {
+  "n": 678,
+  "gap_mean": 0.01813410306047198,
+  "gap_median": 0.013020833333333481,
+  "gap_q": [
+   -0.01376953125000001,
+   0.0,
+   0.013020833333333481,
+   0.03125,
+   0.06910807291666671
+  ],
+  "gap_mean_when_held_gt_055": 0.01220309983896941,
+  "gap_mean_when_held_le_055": 0.020740722310686483,
+  "frac_train_gt_held": 0.7256637168141593,
+  "C_same_family_refresh": {
+   "n": 12,
+   "mean_source_held": 0.9276801215277777,
+   "mean_fresh_held": 0.9230143229166666,
+   "mean_drop": 0.0046657986111111145,
+   "SIGNAL_kept": "12/12",
+   "rows": [
+    [
+     "85ca202e89057873",
+     1.0,
+     1.0
+    ],
+    [
+     "ab089e45b85e990b",
+     1.0,
+     1.0
+    ],
+    [
+     "0c18ce5e1a7721bc",
+     0.9583,
+     0.9583
+    ],
+    [
+     "d276ae3ebec543c8",
+     0.9557,
+     0.9362
+    ],
+    [
+     "fa7d3bf3867a6e61",
+     0.9525,
+     0.9212
+    ],
+    [
+     "f5ce6a2afd321482",
+     0.9557,
+     0.929
+    ],
+    [
+     "7380191e69dc8aa3",
+     0.9277,
+     0.9297
+    ],
+    [
+     "5f4e21d85eb4dda7",
+     0.9219,
+     0.9128
+    ],
+    [
+     "12c2b57ff995f973",
+     0.8932,
+     0.888
+    ],
+    [
+     "bbef66a1ee9558ac",
+     0.8828,
+     0.9076
+    ],
+    [
+     "1c0a1bc76d7a69dc",
+     0.8457,
+     0.8639
+    ],
+    [
+     "56d72b6e96b12bd9",
+     0.8385,
+     0.8294
+    ]
+   ]
+  },
+  "held_train_seed_overlap_total": 0
+ },
+ "seeds": {
+  "held_lead_seeds_shared_between_cells": 0,
+  "search_seed_dup_groups": 69,
+  "dup_rows": 180,
+  "dup_kinds": {
+   "((('B2', 'census'),), True)": 39,
+   "((('B2', 'census'), ('B2', 'evolve')), False)": 18,
+   "((('B2', 'census'), ('B2', 'evolve')), True)": 12
+  },
+  "examples": [
+   {
+    "seed": 2176773745,
+    "rows": [
+     [
+      "B2",
+      "census",
+      "RELAY",
+      "decay_shift",
+      "phys",
+      0,
+      0,
+      0,
+      64
+     ],
+     [
+      "B2",
+      "census",
+      "FLIP",
+      "decay_shift",
+      "phys",
+      0,
+      0,
+      0,
+      100
+     ],
+     [
+      "B2",
+      "census",
+      "HOLD",
+      "decay_shift",
+      "phys",
+      0,
+      0,
+      0,
+      64
+     ]
+    ]
+   },
+   {
+    "seed": 3550881821,
+    "rows": [
+     [
+      "B2",
+      "census",
+      "RELAY",
+      "decay_shift",
+      "phys",
+      0,
+      0,
+      1,
+      64
+     ],
+     [
+      "B2",
+      "census",
+      "FLIP",
+      "decay_shift",
+      "phys",
+      0,
+      0,
+      1,
+      100
+     ],
+     [
+      "B2",
+      "census",
+      "HOLD",
+      "decay_shift",
+      "phys",
+      0,
+      0,
+      1,
+      64
+     ]
+    ]
+   },
+   {
+    "seed": 165670567,
+    "rows": [
+     [
+      "B2",
+      "census",
+      "RELAY",
+      "decay_shift",
+      "phys",
+      0,
+      0,
+      2,
+      64
+     ],
+     [
+      "B2",
+      "census",
+      "FLIP",
+      "decay_shift",
+      "phys",
+      0,
+      0,
+      2,
+      100
+     ],
+     [
+      "B2",
+      "census",
+      "HOLD",
+      "decay_shift",
+      "phys",
+      0,
+      0,
+      2,
+      64
+     ]
+    ]
+   },
+   {
+    "seed": 1311199528,
+    "rows": [
+     [
+      "B2",
+      "census",
+      "RELAY",
+      "decay_shift",
+      "phys",
+      0,
+      1,
+      0,
+      64
+     ],
+     [
+      "B2",
+      "census",
+      "FLIP",
+      "decay_shift",
+      "phys",
+      0,
+      1,
+      0,
+      100
+     ],
+     [
+      "B2",
+      "census",
+      "HOLD",
+      "decay_shift",
+      "phys",
+      0,
+      1,
+      0,
+      64
+     ]
+    ]
+   },
+   {
+    "seed": 2334273537,
+    "rows": [
+     [
+      "B2",
+      "census",
+      "RELAY",
+      "decay_shift",
+      "phys",
+      0,
+      1,
+      1,
+      64
+     ],
+     [
+      "B2",
+      "census",
+      "FLIP",
+      "decay_shift",
+      "phys",
+      0,
+      1,
+      1,
+      100
+     ],
+     [
+      "B2",
+      "census",
+      "HOLD",
+      "decay_shift",
+      "phys",
+      0,
+      1,
+      1,
+      64
+     ]
+    ]
+   },
+   {
+    "seed": 972485976,
+    "rows": [
+     [
+      "B2",
+      "census",
+      "RELAY",
+      "decay_shift",
+      "phys",
+      0,
+      1,
+      2,
+      64
+     ],
+     [
+      "B2",
+      "census",
+      "FLIP",
+      "decay_shift",
+      "phys",
+      0,
+      1,
+      2,
+      100
+     ],
+     [
+      "B2",
+      "census",
+      "HOLD",
+      "decay_shift",
+      "phys",
+      0,
+      1,
+      2,
+      64
+     ]
+    ]
+   }
+  ],
+  "dup_evolve_pairs": 0
+ }
+}

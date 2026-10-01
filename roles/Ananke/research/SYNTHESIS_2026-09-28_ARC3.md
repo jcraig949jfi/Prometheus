@@ -190,3 +190,20 @@ Optional program-level note, not a decision: H6 suggests that PTE's most
 consequential next question is about SEARCH (diversity / novelty /
 curriculum, backlog ANANKE-14) rather than new physics dials. That choice
 can be made autonomously within PTE.
+
+## CORRECTION (2026-09-29, W-N)
+W-L's swap verdict CHANCE (s3 above and W-L REPORT "formal verdict is
+CHANCE ... a limit of the rule") was a sample-size effect: at 512 worlds the
+absolute rule gives FLIP (S carrier, z ~ -1) on every W-L champion.
+Recorded CHANCE verdicts from 64-world designs are not mechanism evidence
+until re-run at adequate sample size (backlog T-SWAP-AUDIT).
+
+## CORRECTION 2 (2026-09-29, W-O audit; supersedes the last sentence of CORRECTION above)
+The W-N effect does not generalise: of all 733 recorded CHANCE swap verdicts,
+84% stay CHANCE at 512 worlds under the same rule (readable: 8% -> FLIP).
+It is concentrated in HOLD (44% -> FLIP) and W-F site_all/joint arms (~23%).
+Most recorded CHANCE verdicts are real partial or mixed effects. Specific
+reading changes (13 W-F classes, 11 W-I letters): research/
+CORRECTIONS_2026-09-29_SWAP_AUDIT.md. The absolute rule stays blind to
+complete transfers at normal ~.57-.62 (42 gated FLIP_REL cases): the
+relative rule is needed there, sample size alone does not fix it.

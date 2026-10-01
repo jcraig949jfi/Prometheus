@@ -1,0 +1,66 @@
+{
+ "cell": "613162a3",
+ "row_kind": "evolve",
+ "wave": "C",
+ "family": "MAJ",
+ "topology": "global",
+ "radius": 3,
+ "n_sites": 100,
+ "d0": 5,
+ "d_h": 1,
+ "dest_mode": "sample",
+ "plastic_route": 0,
+ "recorded_held": 0.681640625,
+ "recorded_held_lo99": 0.6295572916666667,
+ "conds": {
+  "native@d0": {
+   "acc": 0.7604,
+   "lo99": 0.7031,
+   "hi99": 0.8125
+  },
+  "C1random@d0": {
+   "acc": 0.5195,
+   "lo99": 0.4948,
+   "hi99": 0.5521
+  },
+  "C1random@dh": {
+   "acc": 0.5078,
+   "lo99": 0.5,
+   "hi99": 0.526
+  },
+  "C1random@dh_inward": {
+   "acc": 0.7513,
+   "lo99": 0.6914,
+   "hi99": 0.8073
+  }
+ },
+ "hops": {
+  "native@d0": {
+   "1": 160
+  },
+  "C1random@d0": {
+   "1": 8,
+   "2": 10,
+   "3": 38,
+   "4": 54,
+   "5": 40,
+   "6": 10
+  },
+  "C1random@dh": {
+   "1": 2,
+   "2": 14,
+   "3": 44,
+   "4": 66,
+   "5": 28,
+   "6": 6
+  },
+  "C1random@dh_inward": {
+   "1": 108,
+   "2": 52
+  }
+ },
+ "_compute": {
+  "wall_s": 17.0,
+  "cpu_s": 27.1
+ }
+}

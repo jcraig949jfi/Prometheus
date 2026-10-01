@@ -1,21 +1,21 @@
 {
  "schema": "nyx.atlas/0",
- "built": "2026-09-19T10:08Z",
- "n": 651,
+ "built": "2026-09-30T11:20Z",
+ "n": 665,
  "by_label": {
-  "feeds": 348,
+  "feeds": 355,
   "updates": 69,
-  "triggers": 51,
+  "triggers": 55,
   "competes": 27,
+  "stores": 16,
+  "restores": 16,
+  "forgets": 4,
   "gates": 69,
-  "restores": 15,
   "predicts": 1,
   "schedules": 11,
   "suppresses": 8,
-  "forgets": 3,
   "verifies": 2,
   "transforms": 10,
-  "stores": 15,
   "selects": 20,
   "retries": 2
  },
@@ -170,6 +170,118 @@
    "label": "updates",
    "evidence": "SOURCE_READ",
    "note": "every mutant is a legal program",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "avida::divide_refused_unless_the_offspring_is_plausible_by_age_size_range_executed_fraction_and_copied_fraction",
+   "to": "avida::genotype_as_exact_genome_class_whose_parent_edge_is_written_once_at_founding_and_never_for_breed_true_or_live_convergent_births",
+   "label": "triggers",
+   "evidence": "SOURCE_READ",
+   "note": "every successful divide classifies the newborn (cBirthChamber.cc 257-259)",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "avida::divide_time_mutation_spectrum_per_site_binomial_or_per_divide_or_poisson",
+   "to": "avida::genotype_as_exact_genome_class_whose_parent_edge_is_written_once_at_founding_and_never_for_breed_true_or_live_convergent_births",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "a mutated offspring is what founds a genotype",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "avida::offspring_placement_by_birth_method_that_kills_the_occupant_of_the_chosen_cell",
+   "to": "avida::reference_counted_retention_that_keeps_living_genotypes_and_their_ancestors_and_drops_an_extinct_branch_the_moment_its_last_leaf_dies",
+   "label": "triggers",
+   "evidence": "SOURCE_READ",
+   "note": "the occupant of the chosen cell dies; its unit is removed (Unit.cc 60-65)",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "avida::genotype_as_exact_genome_class_whose_parent_edge_is_written_once_at_founding_and_never_for_breed_true_or_live_convergent_births",
+   "to": "avida::reference_counted_retention_that_keeps_living_genotypes_and_their_ancestors_and_drops_an_extinct_branch_the_moment_its_last_leaf_dies",
+   "label": "stores",
+   "evidence": "SOURCE_READ",
+   "note": "a founding adds one passive reference to each parent (Genotype.cc 160)",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "avida::reference_counted_retention_that_keeps_living_genotypes_and_their_ancestors_and_drops_an_extinct_branch_the_moment_its_last_leaf_dies",
+   "to": "avida::structured_population_save_one_row_per_genotype_living_rows_with_their_cells_then_every_historic_row",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "the historic list is written as is",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "avida::genotype_as_exact_genome_class_whose_parent_edge_is_written_once_at_founding_and_never_for_breed_true_or_live_convergent_births",
+   "to": "avida::structured_population_save_one_row_per_genotype_living_rows_with_their_cells_then_every_historic_row",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "parents, depth and the stamp are written as founded",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "avida::structured_population_save_one_row_per_genotype_living_rows_with_their_cells_then_every_historic_row",
+   "to": "avida::population_load_that_renumbers_genotypes_and_silently_drops_every_parent_not_present_in_the_file",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "avida::population_load_that_renumbers_genotypes_and_silently_drops_every_parent_not_present_in_the_file",
+   "to": "avida::genotype_as_exact_genome_class_whose_parent_edge_is_written_once_at_founding_and_never_for_breed_true_or_live_convergent_births",
+   "label": "restores",
+   "evidence": "SOURCE_READ",
+   "note": "loaded genotypes are reactivated by id hint, not re-founded",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "avida::arbiter_clock_that_stamps_founding_with_the_update_after_the_last_completed_one_so_minus_one_covers_update_zero_and_zero_never_occurs",
+   "to": "avida::genotype_as_exact_genome_class_whose_parent_edge_is_written_once_at_founding_and_never_for_breed_true_or_live_convergent_births",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "update_born",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "avida::arbiter_clock_that_stamps_founding_with_the_update_after_the_last_completed_one_so_minus_one_covers_update_zero_and_zero_never_occurs",
+   "to": "avida::reference_counted_retention_that_keeps_living_genotypes_and_their_ancestors_and_drops_an_extinct_branch_the_moment_its_last_leaf_dies",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "update_deactivated",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "avida::two_parent_recombination_by_swapping_one_region_located_as_the_same_fractions_of_each_genome_with_the_majority_parent_recorded_first",
+   "to": "avida::genotype_as_exact_genome_class_whose_parent_edge_is_written_once_at_founding_and_never_for_breed_true_or_live_convergent_births",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "each recombinant is classified with both parents, majority parent first (553-554)",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "avida::divide_refused_unless_the_offspring_is_plausible_by_age_size_range_executed_fraction_and_copied_fraction",
+   "to": "avida::two_parent_recombination_by_swapping_one_region_located_as_the_same_fractions_of_each_genome_with_the_majority_parent_recorded_first",
+   "label": "triggers",
+   "evidence": "SOURCE_READ",
+   "note": "only when the dividing organism's phenotype says DivideSex (448)",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "avida::reference_counted_retention_that_keeps_living_genotypes_and_their_ancestors_and_drops_an_extinct_branch_the_moment_its_last_leaf_dies",
+   "to": "avida::coalescent_genotype_as_the_oldest_living_or_branching_genotype_on_the_first_parent_line_of_the_most_abundant_genotype",
+   "label": "triggers",
+   "evidence": "SOURCE_READ",
+   "note": "recomputed at each pruning step",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "avida::reference_counted_retention_that_keeps_living_genotypes_and_their_ancestors_and_drops_an_extinct_branch_the_moment_its_last_leaf_dies",
+   "to": "avida::genotype_as_exact_genome_class_whose_parent_edge_is_written_once_at_founding_and_never_for_breed_true_or_live_convergent_births",
+   "label": "forgets",
+   "evidence": "SOURCE_READ",
+   "note": "a pruned genotype's genome, re-arising, founds a new id",
    "cut_mode": "ANCESTRY_AWARE"
   },
   {

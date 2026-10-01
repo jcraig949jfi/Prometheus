@@ -1,0 +1,95 @@
+{
+ "probe": "roles/Odysseus/probes/fp001_recovery.py",
+ "runtime_head": "54e42c6957a7c2481cb472dbbccf7e0a22409c15",
+ "task": "tsk-8336e01d66d9",
+ "attempts": [
+  [
+   "att-6e69b188ddae",
+   "worker.ubu001.probe1",
+   "abandoned"
+  ],
+  [
+   "att-da6f9c6994cb",
+   "worker.ubu001.probe2",
+   "succeeded"
+  ]
+ ],
+ "leases": [
+  [
+   "lse-a5dfab634b0f",
+   "att-6e69b188ddae",
+   true,
+   "attempt_abandoned"
+  ],
+  [
+   "lse-360b7995093c",
+   "att-da6f9c6994cb",
+   true,
+   "attempt_succeeded"
+  ]
+ ],
+ "artifacts": [
+  [
+   "final_text.md",
+   "att-da6f9c6994cb",
+   "5d5cec57dfd1a730efb0f15349f091fdbc3fea633e13deb7d5f8d3904237955c"
+  ],
+  [
+   "stdout",
+   "att-da6f9c6994cb",
+   "5d5cec57dfd1a730efb0f15349f091fdbc3fea633e13deb7d5f8d3904237955c"
+  ],
+  [
+   "stderr",
+   "att-da6f9c6994cb",
+   "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  ],
+  [
+   "env_receipt.json",
+   "att-da6f9c6994cb",
+   "f18425bd73e6a01ce6aa2d0affa74927d320ec11bca9b0d7c4482bdf1d8be728"
+  ],
+  [
+   "fp001.txt",
+   "att-da6f9c6994cb",
+   "dde5a8604bb8dce49e4527c37f511587b4f492e55a934941e18153cc7d429775"
+  ]
+ ],
+ "events": [
+  "submitted",
+  "claimed",
+  "attempt_started",
+  "heartbeat",
+  "attempt_abandoned",
+  "requeued",
+  "claimed",
+  "attempt_started",
+  "heartbeat",
+  "heartbeat",
+  "heartbeat",
+  "heartbeat",
+  "heartbeat",
+  "heartbeat",
+  "artifact_added",
+  "artifact_added",
+  "artifact_added",
+  "artifact_added",
+  "artifact_added",
+  "completed"
+ ],
+ "checks": {
+  "task_completed": true,
+  "attempts_abandoned_then_succeeded": true,
+  "first_attempt_is_the_killed_one": true,
+  "lease_held_during_attempt1": true,
+  "one_lease_per_attempt": true,
+  "all_leases_released": true,
+  "no_unreleased_lease_on_resource": true,
+  "no_artifacts_from_killed_attempt": true,
+  "successor_artifacts_present": true,
+  "reap_events_present": true
+ },
+ "pass": true,
+ "seconds_kill_to_completion": 50.3,
+ "wall_seconds": 54.4
+}

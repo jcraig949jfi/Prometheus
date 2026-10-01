@@ -36,6 +36,7 @@ Nothing in this module reads secrets.
 from __future__ import annotations
 
 import json
+import os
 import re
 import socket
 import subprocess
@@ -53,14 +54,20 @@ DEFAULT_REF = "refs/remotes/origin/main"
 SHORT_REF = "origin/main"
 SEAL_COMMIT = "95b31a30d06daa973a27ca0cacd4b768ec7d5fff"                             # pinned (S5)
 SPEC_ID = "e2d3213b02aae58b0b20bbd6b5a296545b6335078ae6a0a382ceaf346dc0d9fe"         # pinned (S5)
-DEFAULT_ALLOWLIST = Path("C:/Users/jcrai/nestor_receipts/holdout_D2/ALLOWLIST.json")
+# v12 (MWO-0004 D2-1): the custodian ALLOW-LIST is now the append-only, hash-chained M1 ANCHOR (the parameter keeps
+# its historic name "allowlist" throughout the code).
+DEFAULT_ALLOWLIST = Path("C:/Users/jcrai/nestor_receipts/holdout_D2/ANCHOR.jsonl")
+RUN_OUT_ROOT = Path("C:/Users/jcrai/nestor_receipts/holdout_D2/runs")   # v7: not shared with the allow-list / custody log
+PREFLIGHT_FORMAT = "c3-D2-preflight/1"
 CUSTODIAN_ACCOUNT = "jcrai"
 
 AUDIT_RE = re.compile(r"^FIREWALL_AUDIT_([1-9][0-9]*)\.json$")
 COMMITMENT_FILE = "PREDICTION_COMMITMENT.json"
 DESIGNATION_FILE = "RUNNER_DESIGNATION.json"
 RESULT_SEAL_FILE = "RESULT_SEAL.json"
-FIXED_RECORDS = {COMMITMENT_FILE, DESIGNATION_FILE, RESULT_SEAL_FILE}
+KEY_RELEASED_FILE = "KEY_RELEASED.json"                      # v3: "once only" rests on git, not on the custody log
+REVEALED_FILE = "REVEALED.json"
+FIXED_RECORDS = {COMMITMENT_FILE, DESIGNATION_FILE, RESULT_SEAL_FILE, KEY_RELEASED_FILE, REVEALED_FILE}
 RESULT_SEAL_FORMAT = "c3-D2-result-seal/2"
 AUDIT_FORMAT = "c3-D2-firewall-audit/2"
 COMMITMENT_FORMAT = "c3-D2-prediction-commitment/1"
@@ -151,14 +158,146 @@ class RunParamsMismatch(GateRefusal):
     pass
 
 
+class PreflightMissing(GateRefusal):
+    pass
+
+
 # ---------------------------------------------------------------- git access (committed trees only)
+def git_exe(repo: Optional[Path] = None) -> str:
+    """v4 (Odysseus v3 F-CWD): git by ABSOLUTE path from an absolute PATH entry that is neither the current directory
+    nor inside the repository (same rule as entry.git_exe)."""
+    root = Path(repo).resolve() if repo is not None else HERE.parents[2].resolve()
+    cwd = Path.cwd().resolve()
+    names = ("git.exe",) if os.name == "nt" else ("git",)
+    for d in os.environ.get("PATH", "").split(os.pathsep):
+        if not d or not os.path.isabs(d):
+            continue
+        try:
+            rd = Path(d).resolve()
+        except OSError:
+            continue
+        if rd == cwd or rd == root or root in rd.parents:
+            continue
+        for n in names:
+            if (rd / n).is_file():
+                return str(rd / n)
+    raise GateRefusal("no git on an absolute PATH entry outside the repository and the current directory")
+
+
+def git_env() -> dict:
+    """v4 (F-GITENV): no GIT_* steering, replace objects disabled, no current-directory executable search."""
+    env = {k: v for k, v in os.environ.items()
+           if not k.upper().startswith("GIT_") and k.upper() != "NODEFAULTCURRENTDIRECTORYINEXEPATH"}
+    env["GIT_NO_REPLACE_OBJECTS"] = "1"
+    env["NoDefaultCurrentDirectoryInExePath"] = "1"
+    return env
+
+
+# v5 (Odysseus v4 S-5): hooks off (a fetch or auto-gc could run one), auto-gc/maintenance off
+GIT_HARDEN = ("-c", "core.hooksPath=" + os.devnull, "-c", "gc.auto=0", "-c", "maintenance.auto=false")
+
+
 def _git(repo: Path, *args: str) -> subprocess.CompletedProcess:
-    return subprocess.run(["git", "-C", str(repo), *args], capture_output=True, text=True)
+    return subprocess.run([git_exe(repo), *GIT_HARDEN, "-C", str(repo), *args], capture_output=True, text=True,
+                          env=git_env())
 
 
 def _show(repo: Path, ref: str, rel: str) -> Optional[bytes]:
-    p = subprocess.run(["git", "-C", str(repo), "show", "%s:%s" % (ref, rel)], capture_output=True)
+    p = subprocess.run([git_exe(repo), *GIT_HARDEN, "-C", str(repo), "show", "%s:%s" % (ref, rel)],
+                       capture_output=True, env=git_env())
     return p.stdout if p.returncode == 0 else None
+
+
+def git_state_ok(repo: Path) -> None:
+    """v5 (S-5): refuse a repository whose history can be re-parented by grafts or truncated by a shallow file
+    (GIT_NO_REPLACE_OBJECTS does not cover these)."""
+    p = _git(repo, "rev-parse", "--git-common-dir")
+    if p.returncode != 0:
+        raise AmbiguousRef("not a git repository: %s" % repo)
+    g = Path(p.stdout.strip())
+    g = g if g.is_absolute() else Path(repo) / g
+    for f in ("info/grafts", "shallow"):
+        if (g / f).exists():
+            raise AmbiguousRef("%s exists in the git directory: history could be rewritten" % f)
+
+
+def os_account() -> str:
+    """The OS account from the OS (GetUserNameW / pwd), never from USERNAME/USER (v3 F-ACCT; v5 used by custody too)."""
+    if os.name == "nt":
+        import ctypes
+        n = ctypes.c_uint32(257)
+        buf = ctypes.create_unicode_buffer(257)
+        if not ctypes.windll.advapi32.GetUserNameW(buf, ctypes.byref(n)):
+            raise GateRefusal("GetUserNameW failed")
+        return buf.value
+    import pwd
+    return pwd.getpwuid(os.getuid()).pw_name
+
+
+def account_sid(name: str):
+    """v6 (Odysseus v5 should-fix): the account's SID bytes on Windows (None if it does not resolve); the name elsewhere."""
+    if not name:
+        return None
+    if os.name != "nt":
+        return name
+    import ctypes
+    from ctypes import wintypes
+    sid = ctypes.create_string_buffer(256)
+    cb = wintypes.DWORD(256)
+    dom = ctypes.create_unicode_buffer(256)
+    cd = wintypes.DWORD(256)
+    use = wintypes.DWORD(0)
+    if not ctypes.windll.advapi32.LookupAccountNameW(None, ctypes.c_wchar_p(name), sid, ctypes.byref(cb), dom,
+                                                     ctypes.byref(cd), ctypes.byref(use)):
+        return None
+    return sid.raw[:cb.value]
+
+
+def same_account(a, b) -> bool:
+    """SID equality when both resolve (aliases such as DOMAIN\\user or case variants cannot slip past); otherwise a
+    case-insensitive name comparison (accounts that do not exist on this host, e.g. in throwaway tests)."""
+    sa, sb = account_sid(str(a)), account_sid(str(b))
+    if sa is not None and sb is not None:
+        return sa == sb
+    return str(a).lower() == str(b).lower()
+
+
+def preflight_ok(record_dir, st: dict) -> None:
+    """v6 (Odysseus v5 BP-1): custody releases the key only after a PASSING runner preflight (package validated, child
+    started, isolation probed) for exactly this designation, package and account."""
+    p = Path(record_dir) / ("PREFLIGHT_%s.json" % st.get("run_nonce"))
+    try:
+        rec = json.loads(p.read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        raise PreflightMissing("no passing runner preflight record %s (run: entry.py runner --preflight ...)" % p.name)
+    if rec.get("format") != PREFLIGHT_FORMAT or rec.get("verdict") != "PASS" or rec.get("run_nonce") != st.get("run_nonce") \
+            or rec.get("spec_id") != st.get("spec_id") or rec.get("package_sha256") != st.get("package_sha256") \
+            or rec.get("runner_id") != st.get("runner_id") or not same_account(rec.get("account"), st.get("account")):
+        raise PreflightMissing("the preflight record does not match this designation, package, runner and account")
+
+
+def is_single_user_account(name: str) -> bool:
+    """v5 (Odysseus v4 S-3): True iff `name` resolves to ONE user account (SidTypeUser), not a group or well-known
+    principal such as Everyone / Users (a designation naming a group would make the released key widely readable)."""
+    if not name or any(c in name for c in "*?,;"):
+        return False
+    if os.name == "nt":
+        import ctypes
+        from ctypes import wintypes
+        sid = ctypes.create_string_buffer(256)
+        cb = wintypes.DWORD(256)
+        dom = ctypes.create_unicode_buffer(256)
+        cd = wintypes.DWORD(256)
+        use = wintypes.DWORD(0)
+        ok = ctypes.windll.advapi32.LookupAccountNameW(None, ctypes.c_wchar_p(name), sid, ctypes.byref(cb), dom,
+                                                       ctypes.byref(cd), ctypes.byref(use))
+        return bool(ok) and use.value == 1                        # SidTypeUser
+    try:
+        import pwd
+        pwd.getpwnam(name)
+        return True
+    except KeyError:
+        return False
 
 
 def resolve_ref(repo: Path, ref: str) -> str:
@@ -174,14 +313,19 @@ def resolve_ref(repo: Path, ref: str) -> str:
     return p.stdout.strip()
 
 
-def _commits_touching(repo: Path, ref: str, rel: str) -> list:
-    """F4: --full-history, so a record replaced through a merge shows up."""
-    p = _git(repo, "log", "--full-history", "--format=%H %P", ref, "--", rel)
-    out = []
+def _record_history(repo: Path, ref: str, rel: str):
+    """Every commit in the FULL history of `ref` that touches `rel` (merges diffed against EACH parent, -m), as
+    (commit, n_parents, status, new_blob). F4 (Odysseus v1) + DEF-HARM-D2-001 (Harmonia, 2026-09-29)."""
+    p = _git(repo, "log", "--full-history", "-m", "--raw", "--no-abbrev", "--format=C %H %P", ref, "--", rel)
+    out, cur, npar = [], None, 0
     for line in p.stdout.splitlines() if p.returncode == 0 else []:
-        parts = line.split()
-        if parts:
-            out.append((parts[0], len(parts) - 1))
+        if line.startswith("C "):
+            parts = line.split()
+            cur, npar = parts[1], len(parts) - 2
+        elif line.startswith(":") and cur:
+            meta, _path = line.split("	", 1)
+            f = meta.split()
+            out.append((cur, npar, f[4], f[3]))
     return out
 
 
@@ -190,14 +334,30 @@ def _strict_ancestor(repo: Path, a: str, b: str) -> bool:
 
 
 def _added_once(repo: Path, ref: str, rel: str, err_missing) -> str:
-    cs = _commits_touching(repo, ref, rel)
-    if not cs:
+    """v3 rule (DEF-HARM-D2-001 repair; keeps F4): a record is valid iff
+      - EVERY commit in the full history that touches it carries ONE AND THE SAME blob (a merge that carries the sealed
+        blob unchanged is NOT a rewrite; a replacement through a merge brings a second blob and is refused);
+      - exactly ONE non-merge commit ADDS it, and no non-merge commit modifies, deletes or renames it;
+      - the blob at `ref` is that blob.
+    Returns the adding commit."""
+    hist = _record_history(repo, ref, rel)
+    if not hist:
         raise err_missing("%s is not committed on %s" % (rel, ref))
-    if any(npar > 1 for _c, npar in cs):
-        raise RecordRewritten("%s is touched by a merge commit; records may not arrive or change through merges" % rel)
-    if len(cs) != 1:
-        raise RecordRewritten("%s was changed after it was recorded (%d commits touch it, full history)" % (rel, len(cs)))
-    return cs[0][0]
+    blobs = {b for _c, _n, st, b in hist if st != "D" and set(b) != {"0"}}
+    if any(st[0] in "DR" for _c, _n, st, _b in hist):
+        raise RecordRewritten("%s was deleted or renamed somewhere in its history" % rel)
+    if len(blobs) != 1:
+        raise RecordRewritten("%s carries %d different contents in its full history (replaced, incl. through a merge)"
+                              % (rel, len(blobs)))
+    adds = [c for c, n, st, _b in hist if n <= 1 and st == "A"]
+    mods = [c for c, n, st, _b in hist if n <= 1 and st != "A"]
+    if mods or len(adds) != 1:
+        raise RecordRewritten("%s: %d non-merge adds and %d non-merge modifications (must be exactly one add, none else)"
+                              % (rel, len(adds), len(mods)))
+    at_ref = _git(repo, "rev-parse", "%s:%s" % (ref, rel)).stdout.strip()
+    if at_ref != next(iter(blobs)):
+        raise RecordRewritten("%s at %s is not the recorded blob" % (rel, ref))
+    return adds[0]
 
 
 def _proto_tree(repo: Path, ref: str) -> list:
@@ -234,12 +394,21 @@ def worktree_code_hashes(repo: Path) -> Dict[str, Optional[str]]:
 
 
 def loaded_closure(repo: Path) -> Dict[str, str]:
-    """{repo-relative path: sha256 LF} of every loaded prometheus.* module; a module whose file is outside the repo, or
-    has no file, is reported as such (and is refused by check_gates)."""
+    """{repo-relative path: sha256 LF} of every loaded prometheus.* module AND (v4, Odysseus v3 P2) of every other
+    loaded module whose file lies inside the repository; a prometheus module whose file is outside the repo, or has no
+    file, is reported as such. check_gates refuses anything here that the audit does not bind."""
     root = Path(repo).resolve()
     out = {}
     for name, mod in list(sys.modules.items()):
         if not (name == "prometheus" or name.startswith("prometheus.")):
+            f = getattr(mod, "__file__", None)
+            if not f:
+                continue
+            try:
+                rel = str(Path(f).resolve().relative_to(root)).replace("\\", "/")
+            except (ValueError, OSError):
+                continue                                          # stdlib / site-packages: declared residual F-3P
+            out[rel] = sealbox.src_sha_lf(Path(f)) if Path(f).suffix == ".py" else "<not-source>"
             continue
         f = getattr(mod, "__file__", None)
         if not f:
@@ -272,17 +441,164 @@ def record_sha(b: bytes) -> str:
     return sealbox.sha256_hex(b.replace(b"\r\n", b"\n"))
 
 
-def _allowlisted(allowlist, role: str, name: str, b: bytes):
+ANCHOR_FORMAT = "c3-D2-anchor/1"
+ANCHOR_GENESIS = "0" * 64
+
+
+def _entry_hash(e: dict) -> str:
+    return sealbox.sha256_hex(json.dumps({k: v for k, v in e.items() if k != "entry_hash"}, sort_keys=True,
+                                         separators=(",", ":")).encode("utf-8"))
+
+
+def anchor_entries(path) -> list:
+    """v12 (MWO-0004 D2-1): read the append-only M1 anchor (JSONL, one entry per line) and VERIFY its hash chain: every
+    entry carries prev = the previous entry's entry_hash (genesis 0*64) and entry_hash = sha256 of its canonical body.
+    An edited, removed or reordered entry breaks the chain -> NotAllowListed (fail closed)."""
+    path = Path(path)
+    if not path.is_absolute():
+        raise NotAllowListed("the anchor path %s is not absolute on this OS" % path)
+    try:
+        lines = path.read_text(encoding="utf-8").splitlines()
+    except FileNotFoundError:
+        return []
+    except OSError as e:
+        raise NotAllowListed("anchor unreadable (%s): %s" % (path, type(e).__name__))
+    out, prev = [], ANCHOR_GENESIS
+    for n, line in enumerate(x for x in lines if x.strip()):
+        try:
+            e = json.loads(line)
+        except ValueError:
+            raise NotAllowListed("anchor line %d is not JSON" % n)
+        if e.get("format") != ANCHOR_FORMAT or e.get("prev") != prev or e.get("entry_hash") != _entry_hash(e):
+            raise NotAllowListed("anchor hash chain broken at entry %d" % n)
+        out.append(e)
+        prev = e["entry_hash"]
+    return out
+
+
+def anchor_append(path, entry: dict) -> dict:
+    """Append ONE entry to the anchor (O_APPEND, fsync), chained to the last entry. Never rewrites the file.
+    v13: serialised by an O_EXCL lock file (<anchor>.lock), so two appends can never chain from the same predecessor."""
+    path = Path(path)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    lock = path.with_name(path.name + ".lock")
+    try:
+        lfd = os.open(str(lock), os.O_CREAT | os.O_EXCL | os.O_WRONLY)
+    except FileExistsError:
+        raise NotAllowListed("anchor append refused: %s exists (another append in progress, or a stale lock the "
+                             "custodian must inspect)" % lock.name)
+    os.close(lfd)
+    try:
+        prior = anchor_entries(path)
+        e = dict(entry, format=ANCHOR_FORMAT, prev=prior[-1]["entry_hash"] if prior else ANCHOR_GENESIS)
+        e["entry_hash"] = _entry_hash(e)
+        fd = os.open(str(path), os.O_WRONLY | os.O_CREAT | os.O_APPEND | getattr(os, "O_BINARY", 0))
+        try:
+            os.write(fd, (json.dumps(e, sort_keys=True, separators=(",", ":")) + "\n").encode("utf-8"))
+            os.fsync(fd)
+        finally:
+            os.close(fd)
+        return e
+    finally:
+        lock.unlink()
+
+
+# v13 (Odysseus v12 V12-1/V12-3): every anchored RECORD must still be on origin/main, unchanged; PREAUDIT_TOOL pins are
+# code pins, not records, and are checked by entry.py separately.
+RECORD_ROLES = ("AUDIT", "COMMITMENT", "DESIGNATION", "RESULT_SEAL", "KEY_RELEASED", "REVEALED")
+
+
+class AnchorMismatch(GateRefusal):
+    pass
+
+
+def verify_anchor_state(repo, ref_commit: str, allowlist) -> int:
+    """v13 (Odysseus v12 V12-1): the governing state is built FROM THE ANCHOR, not filtered from the tree. For EVERY
+    anchored record (all roles, including the once-only KEY_RELEASED and REVEALED):
+      1. it is present at the resolved origin/main commit with the anchored blob (not deleted, not edited);
+      2. its anchored commit exists and is an ancestor of (or equal to) origin/main (no force-push rollback);
+      3. the record at the anchored commit has the anchored blob.
+    Any failure refuses (fail closed). Returns the number of anchored records verified."""
+    if allowlist is False:
+        return 0
+    n = 0
+    for e in anchor_entries(allowlist):
+        if e.get("role") not in RECORD_ROLES:
+            continue
+        rel, h, c = e.get("path"), e.get("sha256"), str(e.get("commit") or "")
+        now = _show(Path(repo), ref_commit, rel) if rel else None
+        if now is None:
+            raise AnchorMismatch("anchored %s record %s is missing on origin/main" % (e.get("role"), e.get("record")))
+        if record_sha(now) != h:
+            raise AnchorMismatch("anchored %s record %s was changed on origin/main" % (e.get("role"), e.get("record")))
+        if _git(Path(repo), "cat-file", "-e", c + "^{commit}").returncode != 0 or (
+                c != ref_commit and _git(Path(repo), "merge-base", "--is-ancestor", c, ref_commit).returncode != 0):
+            raise AnchorMismatch("anchored %s record %s: its commit %s is not on origin/main's history (rollback?)"
+                                 % (e.get("role"), e.get("record"), c[:12]))
+        at = _show(Path(repo), c, rel)
+        if at is None or record_sha(at) != h:
+            raise AnchorMismatch("anchored %s record %s: the anchored commit does not hold the anchored blob"
+                                 % (e.get("role"), e.get("record")))
+        n += 1
+    return n
+
+
+def anchored_role(allowlist, role: str) -> bool:
+    """v13 (V12-3): True if the anchor holds any record of this role (e.g. KEY_RELEASED): once released, always released,
+    whatever git's history later shows."""
+    if allowlist is False:
+        return False
+    return any(e.get("role") == role for e in anchor_entries(allowlist))
+
+
+def _is_allowlisted(allowlist, role, name, b, repo=None, ref=None) -> bool:
+    try:
+        _allowlisted(allowlist, role, name, b, repo=repo, ref=ref)
+        return True
+    except NotAllowListed:
+        return False
+
+
+def once_record_present(repo, ref, name) -> bool:
+    """v3: a KEY_RELEASED / REVEALED record makes a second release or reveal impossible whatever the custody log says.
+    v4 (Odysseus v3 F-ONCE): True iff protocol/<name> was EVER committed in the full history of `ref` (deleting the
+    record later does not re-enable a release)."""
+    rel = PROTO_REL + "/" + name
+    p = _git(Path(repo), "log", "--full-history", "-m", "--format=%H", ref, "--", rel)
+    if p.returncode != 0:                                         # v5 (S-6): a git error never reads as "no record"
+        raise AmbiguousRef("git log failed while checking %s (rc %d): refusing" % (name, p.returncode))
+    return bool(p.stdout.strip())
+
+
+def _allowlisted(allowlist, role: str, name: str, b: bytes, repo=None, ref=None, added_commit=None):
+    """v12 (MWO-0004 D2-1): the record is trusted only if the M1 ANCHOR (hash chain verified) holds an entry for this
+    role, record and blob sha256, AND -- verified against the repository before every gated step --
+      1. the anchored commit exists;
+      2. it is an ancestor of (or equal to) the resolved origin/main commit;
+      3. the record at that commit still has the anchored blob sha256;
+      4. it is the commit that added the record (when the caller knows it).
+    Any mismatch fails closed."""
     if allowlist is False:                                        # explicitly disabled (tests of other gates only)
         return
-    path = Path(allowlist)
-    try:
-        entries = json.loads(path.read_text(encoding="utf-8"))["entries"]
-    except Exception as e:                                        # noqa: BLE001
-        raise NotAllowListed("custodian allow-list unreadable (%s): %s" % (path, type(e).__name__))
+    entries = anchor_entries(allowlist)
     h = record_sha(b)
-    if not any(e.get("role") == role and e.get("record") == name and e.get("sha256") == h for e in entries):
-        raise NotAllowListed("%s (%s, sha256 %s...) is not in the custodian's allow-list" % (name, role, h[:12]))
+    cands = [e for e in entries if e.get("role") == role and e.get("record") == name and e.get("sha256") == h]
+    if not cands:
+        raise NotAllowListed("%s (%s, sha256 %s...) is not anchored" % (name, role, h[:12]))
+    if repo is None:
+        return
+    e = cands[0]
+    c = str(e.get("commit") or "")
+    rel = e.get("path") or (PROTO_REL + "/" + name)
+    if _git(Path(repo), "cat-file", "-e", c + "^{commit}").returncode != 0:
+        raise NotAllowListed("%s: the anchored commit %s does not exist" % (name, c[:12]))
+    if ref is not None and c != ref and _git(Path(repo), "merge-base", "--is-ancestor", c, ref).returncode != 0:
+        raise NotAllowListed("%s: the anchored commit %s is not an ancestor of %s" % (name, c[:12], ref[:12]))
+    at = _show(Path(repo), c, rel)
+    if at is None or record_sha(at) != h:
+        raise NotAllowListed("%s: the record at the anchored commit does not have the anchored sha256" % name)
+    if added_commit is not None and c != added_commit:
+        raise NotAllowListed("%s: anchored commit %s is not the commit that added the record" % (name, c[:12]))
 
 
 # ---------------------------------------------------------------- the gates
@@ -290,13 +606,28 @@ def check_gates(repo, through: str = "DESIGNATION", ref: str = DEFAULT_REF, pack
                 runner_id: Optional[str] = None, host: Optional[str] = None, check_worktree_code: bool = True,
                 allowlist=DEFAULT_ALLOWLIST, verify_loaded: bool = False, account: Optional[str] = None,
                 run_params: Optional[dict] = None, pins: Optional[dict] = None) -> dict:
+    """The stage checks, then (v13, V12-1) the anchor state: every anchored record must still be on origin/main,
+    unchanged and on its history. The anchor check runs after the stage checks so an earlier refusal keeps its reason;
+    a state that passes every stage but contradicts the anchor (a deleted, edited or rolled-back anchored record) is
+    refused here."""
+    st = _check_gates_stages(repo, through, ref, package_sha256, runner_id, host, check_worktree_code, allowlist,
+                             verify_loaded, account, run_params, pins)
+    if through != "SEAL":                                     # SEAL involves no protocol record
+        st["anchored_records_verified"] = verify_anchor_state(repo, st["ref_commit"], allowlist)
+    return st
+
+
+def _check_gates_stages(repo, through, ref, package_sha256, runner_id, host, check_worktree_code, allowlist,
+                        verify_loaded, account, run_params, pins) -> dict:
     order = ("SEAL", "AUDIT", "COMMITMENT", "DESIGNATION", "RESULT_SEAL")
     if through not in order:
         raise ValueError(through)
     need = order[: order.index(through) + 1]
     repo = Path(repo)
     pins = pins or {"seal_commit": SEAL_COMMIT, "spec_id": SPEC_ID}
+    git_state_ok(repo)                        # v5 (S-5)
     st: dict = {"ref": ref, "ref_commit": resolve_ref(repo, ref)}
+    ref = st["ref_commit"]                    # v4 (TOCTOU note): resolved ONCE; every read below uses this commit
     check_records_dir(repo, ref)
 
     # 1. SEAL
@@ -318,10 +649,15 @@ def check_gates(repo, through: str = "DESIGNATION", ref: str = DEFAULT_REF, pack
     if "AUDIT" not in need:
         return st
 
-    # 2. AUDIT (versioned; the highest n governs)
-    audits = sorted((int(AUDIT_RE.match(n).group(1)), n) for n in _proto_tree(repo, ref) if AUDIT_RE.match(n))
+    # 2. AUDIT (versioned). v3 (Odysseus v2 should-fix: an unauthenticated later record must not supersede): ONLY
+    # allow-listed audit records are considered; the highest-n allow-listed one governs; others are reported, ignored.
+    all_audits = sorted((int(AUDIT_RE.match(n).group(1)), n) for n in _proto_tree(repo, ref) if AUDIT_RE.match(n))
+    audits = [(n, name) for n, name in all_audits
+              if _is_allowlisted(allowlist, "AUDIT", name, _show(repo, ref, PROTO_REL + "/" + name) or b"",
+                                 repo=repo, ref=ref)]
+    st["audits_ignored_not_allowlisted"] = [name for _n, name in all_audits if (_n, name) not in audits]
     if not audits:
-        raise AuditMissing("no protocol/FIREWALL_AUDIT_<n>.json on %s" % ref)
+        raise AuditMissing("no allow-listed protocol/FIREWALL_AUDIT_<n>.json on %s" % ref)
     prev_c = seal_c
     for _n, name in audits:                                       # each added once, in increasing commit order
         c = _added_once(repo, ref, PROTO_REL + "/" + name, AuditMissing)
@@ -335,7 +671,7 @@ def check_gates(repo, through: str = "DESIGNATION", ref: str = DEFAULT_REF, pack
         raise AuditMissing("governing audit %s has the wrong format, spec_id or n" % gov)
     if au.get("verdict") != "PASS":
         raise AuditNotPass("governing audit %s verdict is %r, not PASS" % (gov, au.get("verdict")))
-    _allowlisted(allowlist, "AUDIT", gov, au_b)
+    _allowlisted(allowlist, "AUDIT", gov, au_b, repo=repo, ref=ref, added_commit=au_c)
     bound = au.get("code_sha256") or {}
     if set(bound) != set(AUDITED_FILES):
         raise AuditStale("the audit does not bind exactly AUDITED_FILES")
@@ -363,7 +699,7 @@ def check_gates(repo, through: str = "DESIGNATION", ref: str = DEFAULT_REF, pack
         raise CommitmentMissing("prediction commitment has the wrong format, spec_id or package hash")
     if not _strict_ancestor(repo, au_c, cm_c):
         raise RecordOrderViolation("predictions were committed before the governing firewall audit")
-    _allowlisted(allowlist, "COMMITMENT", COMMITMENT_FILE, cm_b)
+    _allowlisted(allowlist, "COMMITMENT", COMMITMENT_FILE, cm_b, repo=repo, ref=ref, added_commit=cm_c)
     if package_sha256 is not None and package_sha256.lower() != cm["package_sha256"].lower():
         raise PackageNotCommitted("package sha256 differs from the committed prediction package")
     st.update(commitment_commit=cm_c, package_sha256=cm["package_sha256"])
@@ -379,11 +715,11 @@ def check_gates(repo, through: str = "DESIGNATION", ref: str = DEFAULT_REF, pack
         raise DesignationMissing("runner designation has the wrong format, spec_id, account, run_params or nonce")
     if str(ds["host"]).upper() in FORBIDDEN_HOSTS:
         raise ForbiddenHost("designated host %s is Cosmos's machine" % ds["host"])
-    if str(ds["account"]).lower() == CUSTODIAN_ACCOUNT:
+    if same_account(ds["account"], CUSTODIAN_ACCOUNT):
         raise RunnerNotDesignated("the designated runner account must not be the custodian's account")
     if not _strict_ancestor(repo, cm_c, ds_c):
         raise RecordOrderViolation("runner designated before the prediction commitment")
-    _allowlisted(allowlist, "DESIGNATION", DESIGNATION_FILE, ds_b)
+    _allowlisted(allowlist, "DESIGNATION", DESIGNATION_FILE, ds_b, repo=repo, ref=ref, added_commit=ds_c)
     h = (host or socket.gethostname()).upper()
     if h in FORBIDDEN_HOSTS:
         raise ForbiddenHost("this host (%s) is Cosmos's machine" % h)
@@ -391,7 +727,7 @@ def check_gates(repo, through: str = "DESIGNATION", ref: str = DEFAULT_REF, pack
         raise RunnerNotDesignated("this host %s is not the designated host %s" % (h, ds["host"]))
     if runner_id is not None and runner_id != ds["runner_id"]:
         raise RunnerNotDesignated("runner %r is not the designated runner" % runner_id)
-    if account is not None and account.lower() != str(ds["account"]).lower():
+    if account is not None and not same_account(account, ds["account"]):
         raise RunnerNotDesignated("this OS account %r is not the designated runner account" % account)
     if run_params is not None and run_params != ds["run_params"]:
         raise RunParamsMismatch("run parameters differ from the designation (S4)")
@@ -401,8 +737,9 @@ def check_gates(repo, through: str = "DESIGNATION", ref: str = DEFAULT_REF, pack
         return st
 
     # 5. RESULT_SEAL
-    rs = _load_bytes(repo, ref, RESULT_SEAL_FILE, ResultNotSealed)[1]
+    rs_b, rs = _load_bytes(repo, ref, RESULT_SEAL_FILE, ResultNotSealed)
     rs_c = _added_once(repo, ref, PROTO_REL + "/" + RESULT_SEAL_FILE, ResultNotSealed)
+    _allowlisted(allowlist, "RESULT_SEAL", RESULT_SEAL_FILE, rs_b, repo=repo, ref=ref, added_commit=rs_c)
     if rs.get("format") != RESULT_SEAL_FORMAT or rs.get("spec_id") != spec_id or \
             rs.get("package_sha256") != cm["package_sha256"] or not rs.get("chain_head") or \
             not rs.get("result_sha256") or rs.get("run_nonce") != ds["run_nonce"]:
@@ -423,6 +760,28 @@ def status(repo, ref: str = DEFAULT_REF, allowlist=DEFAULT_ALLOWLIST) -> dict:
             out[stage] = "%s: %s" % (type(e).__name__, e)
             break
     return out
+
+
+def main(argv=None) -> int:
+    """v4: `entry.py gates [STAGE]`: the gate check through STAGE on the real repository, run through the verified
+    entry (loaded closure verified). Prints public commit ids and booleans only."""
+    import argparse
+    ap = argparse.ArgumentParser(description="holdout D2 gates through a stage (public; through entry.py)")
+    ap.add_argument("stage", nargs="?", default="DESIGNATION",
+                    choices=("SEAL", "AUDIT", "COMMITMENT", "DESIGNATION", "RESULT_SEAL"))
+    a = ap.parse_args(argv)
+    if os.environ.get("C3D2_ENTRY") != "verified":
+        print(json.dumps({"refused": True, "reason": "start through entry.py"}))
+        return 3
+    try:
+        st = check_gates(HERE.parents[2], a.stage, verify_loaded=True, host=socket.gethostname())
+    except GateRefusal as e:
+        print(json.dumps({"refused": True, "stage": a.stage, "reason": "%s: %s" % (type(e).__name__, e)}))
+        return 3
+    print(json.dumps({"gates": "PASSED", "stage": a.stage,
+                      "commits": {k: v for k, v in st.items() if k.endswith("_commit")},
+                      "audits_ignored_not_allowlisted": st.get("audits_ignored_not_allowlisted", [])}, sort_keys=True))
+    return 0
 
 
 if __name__ == "__main__":

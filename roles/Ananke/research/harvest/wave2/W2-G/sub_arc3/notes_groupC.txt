@@ -1,0 +1,47 @@
+W2-G sub_arc3 GROUP C notes (W-L, W-K, designed_echoes, joint_carrier)
+Script: python roles/Ananke/research/harvest/wave2/W2-G/sub_arc3/rederive_groupC.py  (output saved in rederive_groupC.out.txt)
+Rows: rows_groupC.csv (21 rows: 12 MATCH, 7 PARTIAL, 1 REPORT_ONLY, 1 UNDERIVABLE; wording_exceeds=yes on 9)
+
+(a) MISMATCHES (numbers)
+- None material. All W-K counts (21 fixtures, 10/11, 16 checks, K2 7/10 and 0/11, J .70, three size-3 zero-FA covers), all designed-echo
+  numbers (MAE .0119-.0232, 7/7 FIT, E4 gap 8 hi99 .590, instruments 2/3, arrival shift 3.99), and W-L counts (4/8, 2/4 + 2/4, 0/4 lag-2)
+  recompute exactly from the raw JSON.
+- Minor: joint_carrier RESULT says "erasing S kills through t0+9". Raw: exactly .50 at t0+1..8, .56 at t0+9 (a partial kill).
+- Minor: W-L's raw recorded swap verdict is CHANCE for all 5 champions. "Carrier S" was an informal 1-normal reading until W-N's 512-world re-run.
+
+(b) WORDING THAT EXCEEDS THE DATA (proposed corrections)
+- ARC3 s1 "selective retention is never evolved (W-L)". At n=1, n1_s3 (a SUCCESS) has lag-1 .694 vs .603 elsewhere, and n1_s2 has .635 vs .513.
+  -> "Selective lag-2 retention was not reached (0/4 n=2 searches, pop96/gens36). At n=1, partial lag-1 selectivity appeared in 2/4 runs,
+     mixed with integration."
+- ARC3 s2 "The search builds integrators even on HOLD" / BACKLOG "Even the HOLD control evolved an integrator". This is 1 of 2 seeds; n0_s1 reached nothing.
+  -> "One of two HOLD-control searches (n0_s0) evolved an integrator."
+- ARC3 s3 / BACKLOG "retention IS reachable when rewarded (4/8)". The unrewarded n=0 control also passes criterion (a) by integrating (lo99 .637),
+  and criterion (a) cannot separate retention from integration (W-L's own caveat).
+  -> "4/8 rewarded searches passed a criterion that a pure integrator also passes. What evolved was integration, which also appeared without the reward (n0_s0)."
+- ARC3 s1/s3 and the H6 framing "search reachability, not physics": W-L ran one budget (pop96/gens36, 4 seeds per arm), and budget scaling was not run.
+  -> "At the M2 search budget, ..."
+- ARC3 s1 "the echo model designs mechanisms search never produced (T-DE-1)" and BACKLOG T-REACH-GAP "the model designs what search never found".
+  No search was run (T-REDISCOVER was deliberately not queued; RESULT says "calibration, NOT emergence").
+  -> "The model designs mechanisms not seen among existing champions; whether search can reach them is untested."
+  This line should not count as one of H6's "four independent lines".
+- ARC3 s6 "The instruments read the designed channel -> site trajectory at the right time". The only tick-timing prediction (E2 in transit at -6/-4) FAILED.
+  -> "The instruments read channel-then-site in the designed order; the predicted handoff tick was wrong (2/3)."
+- ARC2 s3 "4781b0a1 IS source-latched regeneration ..." is stated as the mechanism. The preregistered verdict was UNRESOLVED (H-RED/H-SYN/H-HAND/H-ADD all failed their rules), so the reading is descriptive and post hoc.
+  -> Add "(descriptive reading; preset verdict UNRESOLVED)".
+- PTE_ENGINE_CARD "a JOINT channel+site carrier (MAJ 4781b0a1)" is stale against the joint_carrier RESULT and ARC2 s3 ("not a synergistic code").
+  -> "a source-latch -> channel handoff carrier, both stages necessary mid-interval; not shown to be synergistic".
+- ARC3 s8 "Best single check (J .70, 0 false alarms)" is fine but should be scoped: 10 broken / 11 valid fixtures, one author for both fixtures and checks,
+  one specimen each, perfect-solver plants (degenerate CIs).
+
+(c) PROVENANCE HOLES (no raw data path)
+- "search never produced/found" (T-DE-1 line of H6): no search outputs exist. UNDERIVABLE.
+- "search reachability, not physics" for W-L: no budget-scaling outputs. REPORT_ONLY.
+- "5 sensors" (ARC2 s3) and "~readout minus max delay": not in joint_carrier out/ (they come from env/physics, which were not stored with the outputs).
+- W-L's integrator and lag-selectivity readings are post hoc (256 worlds, no CI, no preregistered selectivity criterion). They are derivable, but not as a test.
+
+(d) TRANSFER / RE-EVALUATION CITED AS A SEARCH OUTCOME
+- W-L "carrier S": the 64-world in-report swap gave CHANCE; FLIP comes from W-N's 512-world RE-EVALUATION of the frozen champions.
+  ARC3's CORRECTION block labels this correctly. The BACKLOG T-RET-2 row "carrier S" carries no pointer to W-N.
+- designed_echoes / H6: engine evaluations of HAND-BUILT genomes are cited (ARC3 s1, BACKLOG T-REACH-GAP) as evidence about what SEARCH does or does not produce.
+  This is the clearest case of non-search evidence standing in for a search outcome.
+- W-K: all fixtures are hand-built (no search); nothing is mis-cited.

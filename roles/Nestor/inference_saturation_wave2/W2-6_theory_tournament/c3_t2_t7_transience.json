@@ -1,0 +1,162 @@
+{
+ "events": [
+  {
+   "cell": "7ae3",
+   "seed": 27000023,
+   "first_seen": 1600,
+   "first_count": 9,
+   "peak_share": 0.667,
+   "peak_count": 120,
+   "peak_epoch": 1800,
+   "final_free": 84,
+   "final_competent": 167,
+   "final_L": 1.0,
+   "checkpoints_with_free": 5,
+   "disappearances": 0,
+   "kind": "SWEPT_PERSISTS",
+   "max_count_ever": 120
+  },
+  {
+   "cell": "ffa6",
+   "seed": 27000012,
+   "first_seen": 1600,
+   "first_count": 1,
+   "peak_share": 0.01,
+   "peak_count": 1,
+   "peak_epoch": 1600,
+   "final_free": 0,
+   "final_competent": 1,
+   "final_L": 0.0312,
+   "checkpoints_with_free": 1,
+   "disappearances": 1,
+   "kind": "LOW_COPY_FLICKER",
+   "max_count_ever": 1
+  },
+  {
+   "cell": "ffa6",
+   "seed": 27000020,
+   "first_seen": 400,
+   "first_count": 1,
+   "peak_share": 0.206,
+   "peak_count": 13,
+   "peak_epoch": 2000,
+   "final_free": 13,
+   "final_competent": 63,
+   "final_L": 1.0,
+   "checkpoints_with_free": 5,
+   "disappearances": 4,
+   "kind": "INTERMEDIATE",
+   "max_count_ever": 18
+  },
+  {
+   "cell": "ffa6",
+   "seed": 27000024,
+   "first_seen": 1900,
+   "first_count": 1,
+   "peak_share": 0.007,
+   "peak_count": 1,
+   "peak_epoch": 1900,
+   "final_free": 0,
+   "final_competent": 87,
+   "final_L": 1.0,
+   "checkpoints_with_free": 1,
+   "disappearances": 1,
+   "kind": "LOW_COPY_FLICKER",
+   "max_count_ever": 1
+  },
+  {
+   "cell": "ffa6",
+   "seed": 27000046,
+   "first_seen": 700,
+   "first_count": 27,
+   "peak_share": 0.982,
+   "peak_count": 111,
+   "peak_epoch": 1300,
+   "final_free": 41,
+   "final_competent": 69,
+   "final_L": 1.0,
+   "checkpoints_with_free": 14,
+   "disappearances": 0,
+   "kind": "SWEPT_PERSISTS",
+   "max_count_ever": 141
+  },
+  {
+   "cell": "ffa6",
+   "seed": 27000048,
+   "first_seen": 200,
+   "first_count": 90,
+   "peak_share": 0.951,
+   "peak_count": 194,
+   "peak_epoch": 2000,
+   "final_free": 194,
+   "final_competent": 204,
+   "final_L": 1.0,
+   "checkpoints_with_free": 19,
+   "disappearances": 0,
+   "kind": "SWEPT_PERSISTS",
+   "max_count_ever": 199
+  },
+  {
+   "cell": "ffa6",
+   "seed": 27000051,
+   "first_seen": 1100,
+   "first_count": 1,
+   "peak_share": 0.169,
+   "peak_count": 11,
+   "peak_epoch": 1200,
+   "final_free": 0,
+   "final_competent": 178,
+   "final_L": 1.0,
+   "checkpoints_with_free": 2,
+   "disappearances": 1,
+   "kind": "LOW_COPY_FLICKER",
+   "max_count_ever": 11
+  },
+  {
+   "cell": "ffa6",
+   "seed": 27000052,
+   "first_seen": 800,
+   "first_count": 14,
+   "peak_share": 1.0,
+   "peak_count": 10,
+   "peak_epoch": 1500,
+   "final_free": 0,
+   "final_competent": 0,
+   "final_L": 1.0,
+   "checkpoints_with_free": 8,
+   "disappearances": 2,
+   "kind": "SWEPT_THEN_COMPETENCE_COLLAPSE",
+   "max_count_ever": 112
+  }
+ ],
+ "kinds": {
+  "SWEPT_PERSISTS": 3,
+  "LOW_COPY_FLICKER": 3,
+  "INTERMEDIATE": 1,
+  "SWEPT_THEN_COMPETENCE_COLLAPSE": 1
+ },
+ "s_implied_by_withdraw_per_epoch": 0.0444,
+ "low_copy_losses": [
+  {
+   "run": 27000012,
+   "max_count": 1,
+   "P_loss_under_T2_s": 0.915
+  },
+  {
+   "run": 27000024,
+   "max_count": 1,
+   "P_loss_under_T2_s": 0.915
+  },
+  {
+   "run": 27000051,
+   "max_count": 11,
+   "P_loss_under_T2_s": 0.376
+  }
+ ],
+ "P_all_low_copy_losses_under_T2_s": 0.3149418523355373,
+ "caveats": [
+  "free counts are single assay calls per checkpoint (no repeatability re-assay; RT B6)",
+  "generation := epoch is an assumption; s from a different arm/world (X-A3-WITHDRAW 7ae3)",
+  "appearances within a run are not independent if the same lineage persists below detection"
+ ]
+}

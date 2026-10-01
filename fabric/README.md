@@ -110,22 +110,15 @@ with their claims. Humans and scripts use `python -m fabric lease acquire|renew|
   `skullport:gpu`.
 - **No fallback.** If the store is unreachable, nothing is granted, and nothing falls back to a local file. For a
   shared heavy resource, not being able to see the global lease state means wait, never "probably free".
-- **Legacy host-file leases (ARC3: Ananke/Nestor) are a migration surface, not an authority.** Before granting
-  `<host>:<res>`, the store checks both:
-  - the newest comms record `LEASE ACQUIRE|EXTEND|RELEASE <HOST> <res>: ... until <UTC>Z`. It is held while
-    unexpired, and a record with no parsable expiry counts as held;
-  - when the claimant is on that host, the lease file `~/ananke_runs/leases/<res>.json`.
-
-  A live legacy lease makes the fabric lease BUSY, and the task's `waiting_reason` names it. If the legacy view is
-  unreadable, the claim fails closed.
 - **Cut over (2026-09-28).** `roles/Ananke/research/lease.py` and `roles/Nestor/tools/nestor_lease.py` keep their
   CLIs, but they are now thin frontends onto `fabric/lease_compat.py`, so they use the SAME resource row as fabric
   Attempts. They no longer write host files, post comms LEASE records, or use the primordial.bus Redis lease.
   Tests: a legacy CLI and a fabric Attempt racing for one resource, exactly one wins in every round, with wins on
   both sides. An unreachable store grants nothing.
-- **Remaining transition.** Old copies of the helpers on unmerged branches (for example archaeon/*) still create
-  host files. The detection above covers them until their users merge main. After that, the detection is removed
-  and the host-file convention is gone.
+- **Transition complete (2026-09-30).** Every helper user merged the cutover (Archaeon #902, Nestor #904, Ananke
+  #934), and no legacy LEASE record has been posted since #866 (2026-09-28). The store's detection of legacy comms
+  LEASE records and `~/ananke_runs/leases/*.json` host files was removed under CWO 2026-09-30. The host-file
+  convention is gone: the fabric lease row is the only lease.
 
 ## 5a. Workers are node executors, not seats
 

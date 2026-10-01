@@ -1,0 +1,281 @@
+{
+  "schema": "prometheus.work_state.v1",
+  "seat": "Bellerophon",
+  "mwo_id": "MWO-0004",
+  "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
+  "mwo_sha256": "925660b2d2be53af2ee4195391e484d9649bbd4ee828cd60432ce2f0903a99df",
+  "updated_at_utc": "2026-10-01T06:35:18Z",
+  "state": "WORKING",
+  "state_reason": "Aporia #1138: R-MECH reviewer of Cosmos C4 DESIGN v0.2 (bounded review item)",
+  "branch": "bellerophon/mwo-0001-2026-09-28",
+  "base_sha": "befc9dfb55400e7333ede7a45e58b126c4c2fa0b",
+  "head_sha": "280f468b0bc8745a8908c49f74a69c87eaf58706",
+  "threads": [
+    "thr-bel-computation-reproduction-coupling",
+    "thr-bel-worlds-kernel"
+  ],
+  "campaigns": [
+    {
+      "id": "C-BEL-COUPLING",
+      "status": "CLOSED",
+      "report": "roles/Bellerophon/coupling_2026-09-24/COUPLING_CAMPAIGN_REPORT.md",
+      "merged": "cc63d7e8a"
+    },
+    {
+      "id": "C-BEL-MULTIDAY",
+      "status": "CLOSED",
+      "branch": "bellerophon/multiday-campaign-2026-09-26",
+      "branch_head": "bcab1d5ff47ddd6da91f1c1868a2d02382d9b901",
+      "merged": "e51c8dec6",
+      "merge": "MERGED after Fabric reviews tsk-bc42e48a52be/tsk-def7523bd2f2 (MERGE_WITH_FIXES; prose/receipt fixes 1c6bca786)",
+      "report": "roles/Bellerophon/multiday_2026-09-26/MULTIDAY_CAMPAIGN_REPORT.md (on branch)"
+    },
+    {
+      "id": "C-001",
+      "owner": "Archaeon",
+      "role": "BEE leg executor (E-003)"
+    }
+  ],
+  "experiments": [
+    {
+      "id": "E-BEL-MD",
+      "campaign": "C-BEL-MULTIDAY",
+      "status": "TERMINAL",
+      "prereg": "roles/Bellerophon/multiday_2026-09-26/MULTIDAY_PREREG.md",
+      "freeze": "12ce26e23",
+      "code": "a3086cece",
+      "plan_sha256": "1ab324d59bc702688716514d95de46b9ea944a59f6612f5d5318b63e2c7f4259",
+      "runs": "4160/4160, 0 voids, 169689 s active",
+      "workdir": "M2 C:/Users/James/md_campaign_2026-09-26 (host-local)",
+      "analysis": "md_analysis.py frozen 12ce26e23, 2026-09-29 03:06-05:05Z; instrument_ok; replay 114/114",
+      "dispositions": {
+        "Q1_LADDER1": "HOLDS",
+        "Q1_COPIER": "HOLDS",
+        "Q1_LADDER2": "FAILS",
+        "Q2": "HOLDS (small)",
+        "Q3": "FAILS (baseline clause)"
+      },
+      "tags": [
+        "LADDER_CLIMBED",
+        "PROTECTION_EVOLVED"
+      ],
+      "results": "roles/Bellerophon/multiday_2026-09-26/receipts/MD_RESULTS.json (on branch)"
+    },
+    {
+      "id": "E-003",
+      "campaign": "C-001",
+      "owner": "Archaeon",
+      "status": "CLOSED",
+      "spec": "ANCESTRY_PREREG_v4 + v5 delta, Amendments C1-C4 @567762a15 (archaeon/attribution-arc-2026-09-28)",
+      "bee_run": "r022153",
+      "comms": "#811 #817 #824 #833 #920 -> #919 #950",
+      "branch": "bellerophon/e003-bee-ancestry-2026-09-29",
+      "freeze": "4c38603dd",
+      "tracer_sha256": "823cbef18bdab2fad64b8623938e24a381e625fa087c83b2ca29d42844589f68",
+      "fixtures": "28/28",
+      "dry_run": "disclosed (receipts/DRY_RESULTS_r022153_pipeline_validation.json; not production)",
+      "agreement": "s4.3 fresh set PASS (#956): owner~Archaeon 1.0 all fields; owner~reference gated 1.0 except 1 label locus (reference outlier)",
+      "pending": null,
+      "manifest_sha256": "da1c73a4a672327c68868ce9b748a2d03429cedb9760cda8181b966960a9950a",
+      "go": "GO aa958093 + GO v2 (#974)",
+      "start_receipt": "roles/Bellerophon/e003_2026-09-29/receipts/PRODUCTION_START_RECEIPT.json @ d0b005fb3",
+      "production": "roles/Bellerophon/e003_2026-09-29/production/ @ 72ed6e160 (PRODUCTION_SEAL.json)",
+      "agreement_production": "FAIL then C11 repair on Archaeon side (#972)",
+      "result": "VALIDATED (A and B; not reading-dependent)",
+      "report": "roles/Bellerophon/e003_2026-09-29/E003_BEE_RESULT.md",
+      "merged": "0629fd4f0",
+      "defects": [
+        "DEF-BEL-004 (Q4 host arm; post-hoc relational diagnostic in report s6)"
+      ],
+      "verdict_corrected": "2026-09-30 ERRATA X1: confirmatory verdict under pre-exposure rules = ALTERED (P2); VALIDATED only conditional on post-exposure C4.2+C4.4+NO_MATERIAL; verdict of record OPEN (operator, CWO s4)"
+    },
+    {
+      "id": "E-BEL-REPL-01",
+      "status": "CLOSED",
+      "verdict": "DISAPPEARS (K3) frozen; descent UNRESOLVED in BEE (ERRATA_REPL01); K1 = mostly transient appearance (REPL-02 post-hoc)",
+      "summary": "C-A3-INTERNALIZE rebuilt in BEE: K1 SURVIVES 93/200 vs 18/100 p=6.6e-7; K4 SURVIVES 86/93; K3 0/93 (founder content). NPE X-MAT ENDOGENOUS 8/8 (read after seal): NPE claim not killed; descent does not transfer",
+      "branch": "bellerophon/repl-internalize-2026-09-30",
+      "freeze": "74f72e805",
+      "seal": "3b2e11a3e",
+      "analysis": "2ae8ec484",
+      "result": "279927367 (+addendum 9c2c42938)",
+      "packet": "roles/Bellerophon/repl_2026-09-30/REVIEW_PACKET_E-BEL-REPL-01_2026-09-30.md (19026e76b, on branch)",
+      "comms": "#1051 #1055 #1077 #1078",
+      "merge": "MERGED c776cea6a after adversarial reviews tsk-ad966fa39590/tsk-750695b70564 (MERGE_WITH_FIXES; fixes applied)"
+    },
+    {
+      "id": "E-BEL-REPL-02",
+      "status": "CLOSED",
+      "verdict": "RESIDUE_NOT_REPLICATED (ABSENT) -- frozen; caveat: dominance readout reachability undemonstrated",
+      "freeze": "4d1a7c885",
+      "seal": "bb8c66fd2",
+      "result": "roles/Bellerophon/repl_2026-09-30/RESULT_02.md (64d8d2d3f)",
+      "posthoc": "REPL-01 K1 events mostly transient (state-free at tick 2000: P90 8/100, P75 17/100, ZERO 4/100)"
+    }
+  ],
+  "fabric_tasks": [
+    {
+      "id": "tsk-ad966fa39590",
+      "state": "completed",
+      "result": "MERGE_WITH_FIXES (applied)"
+    },
+    {
+      "id": "tsk-750695b70564",
+      "state": "completed",
+      "result": "MERGE_WITH_FIXES (applied)"
+    }
+  ],
+  "leases": [
+    {
+      "lease_id": "lse-4e19412ded95",
+      "status": "EXPIRED (TTL)"
+    },
+    {
+      "lease_id": "lse-ede8c1ed2167",
+      "status": "RELEASED"
+    }
+  ],
+  "running": [],
+  "blocked_on": [],
+  "next_actions": [
+    "S0: survey fleet candidates (Hecate, Tyche, Ensorain, Nestor, Archaeon, own residuals); write SELECTION.md with criteria before ranking",
+    "S1: prereg the rebuild + kill battery (frozen, LF-normalised hash) before any run",
+    "S2: build in prometheus/toolbox from the source's text; positive control first",
+    "S3: run under a lease; seal outputs; report the failure shape; promote NEXT on close"
+  ],
+  "operator_decisions_required": [
+    {
+      "id": "E003-BEE-LABEL",
+      "decision": "E-003 BEE confirmatory label: ALTERED (pre-exposure rules) vs VALIDATED-as-amended (conditional)",
+      "raised_by": "Harmonia #1044 (CWO s4)",
+      "bellerophon_position": "ALTERED is the confirmatory label; VALIDATED may be reported only as post-hoc/conditional",
+      "blocks": "nothing in the current lane"
+    }
+  ],
+  "incidents": [
+    {
+      "id": "INC-BEL-001",
+      "what": "git pull --ff-only in the canonical checkout D:/Prometheus on 2026-09-25 moved it 45 commits (WORKING_CONTRACT s1/s3 violation), done to make comms see roles/Cyclops",
+      "exposed_by": "comms post unknown-recipient error",
+      "science_blocked": false
+    },
+    {
+      "id": "DEF-BEL-001",
+      "what": "grounding_analysis.g6_class tests mechanism == 'init'; World._spawn never sets birth_class for initial organisms -> G6a published 160/160, true 103/160",
+      "exposed_by": "Artemis R-26 (#877)",
+      "frozen_sha": "a1b066309 (grounding prereg)",
+      "science_blocked": false
+    },
+    {
+      "id": "DEF-BEL-002",
+      "what": "md_analysis.py sets 'holds' without conditioning on instrument_ok (prereg s9 rule applied in the report instead; frozen script not edited)",
+      "exposed_by": "Artemis R-08 (#877)",
+      "frozen_sha": "12ce26e23",
+      "science_blocked": false
+    },
+    {
+      "id": "DEF-BEL-003",
+      "what": "competent-SR label is sr_depth > 0 (birth event), not isolated capability; E-BEL-MD primary endpoint reads it",
+      "exposed_by": "Odysseus #748, #804; Archaeon #741 (location vs material)",
+      "science_blocked": false
+    },
+    {
+      "id": "DEF-BEL-004",
+      "what": "E-003 Q4 host-assisted arm kept the own-stores condition; cannot measure relational capability",
+      "exposed_by": "Archaeon #980",
+      "science_blocked": false
+    },
+    {
+      "id": "DEF-BEL-005",
+      "what": "grounding round origin set pseudo-replicated: seed formula has no cell term; 160 origins / 83 seeds / 45 exact duplicates; G2 39.4% -> 28.7% (unique) / 25.3% (per seed); no gate flips",
+      "exposed_by": "Artemis S3 (#1005; tsk-2b96eda5e96c)",
+      "fix": "ERRATA_2026-09-29.md E2 (280f468b0)",
+      "science_blocked": false
+    },
+    {
+      "id": "DEF-BEL-006",
+      "what": "E-003 labelled VALIDATED; post-exposure C4.2 (removed P2->ALTERED route 17 min after spec owner's dry run on the same deterministic run) omitted from s1a; review prompts asserted C4.2; post-hoc Q4 table mislabelled reading A without aggregation code",
+      "exposed_by": "Harmonia evidence audit sample 2 item H (cffcfc64b; #1044); Archaeon concurs #1048",
+      "fix": "roles/Bellerophon/e003_2026-09-29/ERRATA_2026-09-30.md; tools/posthoc_q4_summary.py reproduces the published summary exactly",
+      "science_blocked": false
+    },
+    {
+      "id": "DEF-BEL-007",
+      "what": "E-BEL-REPL-01 overclaims (K3 'kill real', BEE-specific, zero continuity) + false 'sealed' blinding via merge of main; pair-900 smoke output deleted",
+      "exposed_by": "adversarial reviews tsk-ad966fa39590/tsk-750695b70564",
+      "fix": "ERRATA_REPL01_2026-09-30.md; correction #1113; ledger",
+      "science_blocked": false
+    },
+    {
+      "id": "DEF-BEL-008",
+      "what": "world.py:562-569 glineage assigned by resemblance (label-as-content); consumers seed/fixture_lineage_share",
+      "exposed_by": "Nestor Wave-2 defect-class sweep #1207",
+      "status": "CONFIRMED; known (REPL-01 ERRATA R1)",
+      "fix": "not started (CWO-C: no scope growth; fix if assigned)",
+      "science_blocked": false
+    },
+    {
+      "id": "DEF-BEL-009",
+      "what": "world.py:261-268 transplant slots take 0 world-RNG draws vs L for random: transplant-vs-control same-seed runs are not CRN-paired",
+      "exposed_by": "Nestor Wave-2 defect-class sweep #1207",
+      "status": "CONFIRMED mechanism; REPL-01/02 pairs unaffected; historical transplant-vs-control contrasts affected",
+      "fix": "not started (CWO-C: no scope growth; fix if assigned)",
+      "science_blocked": false
+    },
+    {
+      "id": "DEF-BEL-010",
+      "what": "geometry.py zero padding + zero child window inflate `replicates` (ENDOGENOUS_PARTIAL need=1)",
+      "exposed_by": "Nestor Wave-2 defect-class sweep #1207",
+      "status": "CONFIRMED candidate",
+      "fix": "not started (CWO-C: no scope growth; fix if assigned)",
+      "science_blocked": false
+    }
+  ],
+  "latest_reports": [
+    "roles/Bellerophon/e003_2026-09-29/E003_BEE_RESULT.md",
+    "roles/Bellerophon/e003_2026-09-29/REVIEW_PACKET_E003_BEE_2026-09-29.md",
+    "roles/Bellerophon/multiday_2026-09-26/MULTIDAY_CAMPAIGN_REPORT.md",
+    "roles/Bellerophon/STATUS_REPORT_2026-10-01.md"
+  ],
+  "migration_report": "roles/Bellerophon/MIGRATION_REPORT_MWO-0002.json",
+  "head_sha_note": "pushed head of branch before the commit that writes this file",
+  "other_branches": [],
+  "fp001_result": "roles/Bellerophon/probes/FP-001_RESULT.json",
+  "work_order": {
+    "mwo": "MWO-0004 (ops/work_orders/CURRENT.md, blob 925660b2d2be53af)",
+    "cwo": "CWO-2026-09-30 fleet activation (ops/fleet/CWO_2026-09-30_FLEET_ACTIVATION.md @ 6a7a84569)",
+    "assignment_msg": "comms #1033 (Aporia -> Bellerophon)",
+    "cwo_b": "CWO-2026-09-30B finish-in-place (ops/fleet/CWO_2026-09-30B_FINISH_IN_PLACE.md); heartbeat #1112",
+    "cwo_c": "CWO-2026-09-30C finish/surface/dispatch (ops/fleet/CWO_2026-09-30C_FINISH_SURFACE_DISPATCH.md @ 7d373ac02, blob edc4792d30a78297); heartbeat #1156"
+  },
+  "current": {
+    "id": "C4-RMECH",
+    "title": "R-MECH review of Cosmos C4 DESIGN v0.2",
+    "assigned": "Aporia #1138"
+  },
+  "next": null,
+  "reserve": [],
+  "resource_status": {
+    "leases_held": [],
+    "core_hours_today": 19.1,
+    "gpu": "none",
+    "spend_usd": 0,
+    "envelope": "MWO-0004 R2"
+  },
+  "last_receipt": {
+    "what": "C4 R-MECH INTERIM + attack harness/data/analysis",
+    "path": "roles/Cosmos/c4/reviews/ (branch bellerophon/c4-rmech-2026-09-30)",
+    "commit": "164df3cdd"
+  },
+  "blinding": "released: E-BEL-REPL-01 sealed and reported before X-MAT was read",
+  "current_objective": "R-MECH (mechanistic/adversarial) review of Cosmos C4 DESIGN v0.2; final report = DESIGN REVIEW + IMPLEMENTATION-DIVERSITY REVIEW; verdict PROCEED_TO_F-0002 / REVISE / NOT_WORTH_BUILDING",
+  "current_step": "Phase 1 INTERIM committed 164df3cdd (branch bellerophon/c4-rmech-2026-09-30) and posted to Cosmos #1158: F1/F2 BLOCKING, F3-F5 REPAIR, F6 NOTE (executed on a continuous planted family). Waiting on the Phase-2 gate (Cosmos: foreign family committed + C3 code published).",
+  "next_expected_milestone": "Cosmos Phase-2 post -> PART B (I1-I5) + final verdict",
+  "expected_next_artifact": "roles/Cosmos/c4/reviews/R-MECH_Bellerophon_<date>.md (final)",
+  "final_gate": "FINAL verdict only after Cosmos posts (a) committed foreign family and (b) published C3 substrate code",
+  "last_push_sha": "164df3cdd",
+  "last_push_utc": "2026-09-30T18:16:11Z",
+  "model": "claude-opus-5-5",
+  "session_start_utc": "2026-09-25T12:08:57Z",
+  "eta": "C4 R-MECH final: ~1.5-3 h after Cosmos gate opens (foreign family committed + C3 published); gate ETA unknown (no families/ dir on main; no Cosmos commits since ~2026-09-30T18Z)"
+}

@@ -1,0 +1,652 @@
+== 2dccdaa5 sync period 2 Pd 11 strat update_clock M 256 ns 0x620 ro_off 8 normal acc by t0 phase {'t0mod2=0': 0.7421875, 't0mod2=1': 0.873046875} wall 290s
+ o 0 pooled IDENTITY-B n 883 S0.00[0.00,0.00] C0.35[0.32,0.38] N0.00[0.00,0.00] id0.35
+     q0     CHANNEL    n 310 S0.00[0.00,0.00] C1.00[1.00,1.00] N0.00[0.00,0.00] id1.00   trials [2, 4, 6, 8, 10]
+     q1     IDENTITY-B n 573 S0.00[0.00,0.00] C0.00[0.00,0.00] N0.00[0.00,0.00] id0.00   trials [1, 3, 5, 7, 9, 11]
+     diff q1-q0 dS+0.00[+0.00,+0.00] dC-1.00[-1.00,-1.00] dN+0.00[+0.00,+0.00]  EFFECT CHANGE
+ o 1 pooled CHANNEL    n 883 S0.00[0.00,0.00] C1.00[1.00,1.00] N0.00[0.00,0.00] id1.00
+     q0     CHANNEL    n 573 S0.00[0.00,0.00] C1.00[1.00,1.00] N0.00[0.00,0.00] id1.00   trials [1, 3, 5, 7, 9, 11]
+     q1     CHANNEL    n 310 S0.00[0.00,0.00] C1.00[1.00,1.00] N0.00[0.00,0.00] id1.00   trials [2, 4, 6, 8, 10]
+     diff q1-q0 dS+0.00[+0.00,+0.00] dC+0.00[+0.00,+0.00] dN+0.00[+0.00,+0.00]  
+ o 2 pooled CHANNEL    n 883 S0.00[0.00,0.00] C1.00[1.00,1.00] N0.00[0.00,0.00] id1.00
+     q0     CHANNEL    n 310 S0.00[0.00,0.00] C1.00[1.00,1.00] N0.00[0.00,0.00] id1.00   trials [2, 4, 6, 8, 10]
+     q1     CHANNEL    n 573 S0.00[0.00,0.00] C1.00[1.00,1.00] N0.00[0.00,0.00] id1.00   trials [1, 3, 5, 7, 9, 11]
+     diff q1-q0 dS+0.00[+0.00,+0.00] dC+0.00[+0.00,+0.00] dN+0.00[+0.00,+0.00]  
+ o 3 pooled CHANNEL    n 883 S0.00[0.00,0.00] C1.00[1.00,1.00] N0.00[0.00,0.00] id1.00
+     q0     CHANNEL    n 573 S0.00[0.00,0.00] C1.00[1.00,1.00] N0.00[0.00,0.00] id1.00   trials [1, 3, 5, 7, 9, 11]
+     q1     CHANNEL    n 310 S0.00[0.00,0.00] C1.00[1.00,1.00] N0.00[0.00,0.00] id1.00   trials [2, 4, 6, 8, 10]
+     diff q1-q0 dS+0.00[+0.00,+0.00] dC+0.00[+0.00,+0.00] dN+0.00[+0.00,+0.00]  
+ o 4 pooled CHANNEL    n 883 S0.00[0.00,0.00] C1.00[1.00,1.00] N0.00[0.00,0.00] id1.00
+     q0     CHANNEL    n 310 S0.00[0.00,0.00] C1.00[1.00,1.00] N0.00[0.00,0.00] id1.00   trials [2, 4, 6, 8, 10]
+     q1     CHANNEL    n 573 S0.00[0.00,0.00] C1.00[1.00,1.00] N0.00[0.00,0.00] id1.00   trials [1, 3, 5, 7, 9, 11]
+     diff q1-q0 dS+0.00[+0.00,+0.00] dC+0.00[+0.00,+0.00] dN+0.00[+0.00,+0.00]  
+ o 5 pooled MIXTURE    n 883 S0.66[0.61,0.69] C0.32[0.28,0.36] N0.01[0.00,0.02] id1.00
+     q0     MIXTURE    n 573 S0.47[0.41,0.53] C0.49[0.44,0.55] N0.01[0.00,0.03] id1.00   trials [1, 3, 5, 7, 9, 11]
+     q1     SITE       n 310 S1.00[1.00,1.00] C0.00[0.00,0.00] N0.00[0.00,0.00] id1.00   trials [2, 4, 6, 8, 10]
+     diff q1-q0 dS+0.53[+0.47,+0.59] dC-0.49[-0.55,-0.44] dN-0.01[-0.03,-0.00]  EFFECT CHANGE PARTLY
+ o 6 pooled SITE       n 883 S1.00[1.00,1.00] C0.00[0.00,0.00] N0.00[0.00,0.00] id1.00
+     q0     SITE       n 310 S1.00[1.00,1.00] C0.00[0.00,0.00] N0.00[0.00,0.00] id1.00   trials [2, 4, 6, 8, 10]
+     q1     SITE       n 573 S1.00[1.00,1.00] C0.00[0.00,0.00] N0.00[0.00,0.00] id1.00   trials [1, 3, 5, 7, 9, 11]
+     diff q1-q0 dS+0.00[+0.00,+0.00] dC+0.00[+0.00,+0.00] dN+0.00[+0.00,+0.00]  
+ o 7 pooled SITE       n 883 S1.00[1.00,1.00] C0.00[0.00,0.00] N0.00[0.00,0.00] id1.00
+     q0     SITE       n 573 S1.00[1.00,1.00] C0.00[0.00,0.00] N0.00[0.00,0.00] id1.00   trials [1, 3, 5, 7, 9, 11]
+     q1     SITE       n 310 S1.00[1.00,1.00] C0.00[0.00,0.00] N0.00[0.00,0.00] id1.00   trials [2, 4, 6, 8, 10]
+     diff q1-q0 dS+0.00[+0.00,+0.00] dC+0.00[+0.00,+0.00] dN+0.00[+0.00,+0.00]  
+ SUMMARY 2dccdaa5: phase-effect offsets [0, 5]; supported class changes [0, 5]; jitter []
+   pooled-mixed resolution (frozen): RESOLVES [], PARTLY [5], STAYS_MIXED []
+   no-phase-effect rule (PLAN s2): {'effect_offsets': ['0', '5'], 'supported_class_changes': ['0', '5'], 'pass': False}
+
+== c16d5231 sync period 2 Pd 11 strat update_clock M 256 ns 0x620 ro_off 8 normal acc by t0 phase {'t0mod2=0': 0.873828125, 't0mod2=1': 0.8782552083333334} wall 297s
+ o 0 pooled IDENTITY-B n1211 S0.15[0.12,0.18] C0.38[0.35,0.40] N0.01[0.00,0.01] id0.53
+     q0     CHANNEL    n 550 S0.15[0.11,0.20] C0.83[0.78,0.87] N0.01[0.00,0.03] id1.00   trials [2, 4, 6, 8, 10]
+     q1     IDENTITY-B n 661 S0.14[0.11,0.18] C0.00[0.00,0.00] N0.00[0.00,0.00] id0.14   trials [1, 3, 5, 7, 9, 11]
+     diff q1-q0 dS-0.01[-0.07,+0.05] dC-0.83[-0.87,-0.78] dN-0.01[-0.03,-0.00]  EFFECT CHANGE
+ o 1 pooled CHANNEL    n1211 S0.15[0.12,0.18] C0.84[0.81,0.87] N0.01[0.00,0.02] id1.00
+     q0     CHANNEL    n 661 S0.14[0.11,0.18] C0.85[0.81,0.88] N0.00[0.00,0.01] id1.00   trials [1, 3, 5, 7, 9, 11]
+     q1     CHANNEL    n 550 S0.15[0.11,0.20] C0.83[0.78,0.87] N0.01[0.00,0.03] id1.00   trials [2, 4, 6, 8, 10]
+     diff q1-q0 dS+0.01[-0.05,+0.07] dC-0.02[-0.08,+0.04] dN+0.01[-0.00,+0.03]  
+ o 2 pooled CHANNEL    n1211 S0.15[0.12,0.18] C0.84[0.81,0.87] N0.01[0.00,0.02] id1.00
+     q0     CHANNEL    n 550 S0.15[0.11,0.20] C0.83[0.78,0.87] N0.01[0.00,0.03] id1.00   trials [2, 4, 6, 8, 10]
+     q1     CHANNEL    n 661 S0.14[0.11,0.18] C0.85[0.81,0.88] N0.00[0.00,0.01] id1.00   trials [1, 3, 5, 7, 9, 11]
+     diff q1-q0 dS-0.01[-0.07,+0.05] dC+0.02[-0.04,+0.08] dN-0.01[-0.03,+0.00]  
+ o 3 pooled CHANNEL    n1211 S0.15[0.12,0.18] C0.84[0.81,0.87] N0.01[0.00,0.02] id1.00
+     q0     CHANNEL    n 661 S0.14[0.11,0.18] C0.85[0.81,0.88] N0.00[0.00,0.01] id1.00   trials [1, 3, 5, 7, 9, 11]
+     q1     CHANNEL    n 550 S0.15[0.11,0.20] C0.83[0.78,0.87] N0.02[0.00,0.03] id1.00   trials [2, 4, 6, 8, 10]
+     diff q1-q0 dS+0.01[-0.05,+0.07] dC-0.02[-0.08,+0.04] dN+0.01[-0.00,+0.03]  
+ o 4 pooled MIXTURE    n1211 S0.28[0.25,0.31] C0.71[0.69,0.74] N0.00[0.00,0.01] id1.00
+     q0     MIXTURE    n 550 S0.45[0.39,0.50] C0.55[0.50,0.61] N0.00[0.00,0.01] id1.00   trials [2, 4, 6, 8, 10]
+     q1     CHANNEL    n 661 S0.14[0.11,0.18] C0.85[0.81,0.88] N0.00[0.00,0.01] id1.00   trials [1, 3, 5, 7, 9, 11]
+     diff q1-q0 dS-0.30[-0.37,-0.23] dC+0.30[+0.23,+0.37] dN+0.00[-0.01,+0.01]  EFFECT CHANGE PARTLY
+ o 5 pooled MIXTURE    n1211 S0.69[0.67,0.72] C0.31[0.28,0.33] N0.00[0.00,0.01] id1.00
+     q0     MIXTURE    n 661 S0.44[0.39,0.49] C0.56[0.51,0.61] N0.00[0.00,0.01] id1.00   trials [1, 3, 5, 7, 9, 11]
+     q1     SITE       n 550 S1.00[1.00,1.00] C0.00[0.00,0.00] N0.00[0.00,0.00] id1.00   trials [2, 4, 6, 8, 10]
+     diff q1-q0 dS+0.56[+0.51,+0.61] dC-0.56[-0.61,-0.51] dN-0.00[-0.01,+0.00]  EFFECT CHANGE PARTLY
+ o 6 pooled SITE       n1211 S1.00[1.00,1.00] C0.00[0.00,0.00] N0.00[0.00,0.00] id1.00
+     q0     SITE       n 550 S1.00[1.00,1.00] C0.00[0.00,0.00] N0.00[0.00,0.00] id1.00   trials [2, 4, 6, 8, 10]
+     q1     SITE       n 661 S1.00[1.00,1.00] C0.00[0.00,0.00] N0.00[0.00,0.00] id1.00   trials [1, 3, 5, 7, 9, 11]
+     diff q1-q0 dS+0.00[+0.00,+0.00] dC+0.00[+0.00,+0.00] dN+0.00[+0.00,+0.00]  
+ o 7 pooled SITE       n1211 S1.00[1.00,1.00] C0.00[0.00,0.00] N0.00[0.00,0.00] id1.00
+     q0     SITE       n 661 S1.00[1.00,1.00] C0.00[0.00,0.00] N0.00[0.00,0.00] id1.00   trials [1, 3, 5, 7, 9, 11]
+     q1     SITE       n 550 S1.00[1.00,1.00] C0.00[0.00,0.00] N0.00[0.00,0.00] id1.00   trials [2, 4, 6, 8, 10]
+     diff q1-q0 dS+0.00[+0.00,+0.00] dC+0.00[+0.00,+0.00] dN+0.00[+0.00,+0.00]  
+ SUMMARY c16d5231: phase-effect offsets [0, 4, 5]; supported class changes [0, 4, 5]; jitter []
+   pooled-mixed resolution (frozen): RESOLVES [], PARTLY [4, 5], STAYS_MIXED []
+   no-phase-effect rule (PLAN s2): {'effect_offsets': ['0', '4', '5'], 'supported_class_changes': ['0', '4', '5'], 'pass': False}
+
+== 8c37f32e sync period 2 Pd 11 strat update_clock M 256 ns 0x620 ro_off 8 normal acc by t0 phase {'t0mod2=0': 0.78203125, 't0mod2=1': 0.912109375} wall 233s
+ o 0 pooled IDENTITY-B n 995 S0.00[0.00,0.00] C0.36[0.34,0.38] N0.00[0.00,0.01] id0.36
+     q0     CHANNEL    n 361 S0.00[0.00,0.01] C0.99[0.97,1.00] N0.01[0.00,0.03] id1.00   trials [2, 4, 6, 8, 10]
+     q1     IDENTITY-B n 634 S0.00[0.00,0.00] C0.00[0.00,0.01] N0.00[0.00,0.00] id0.00   trials [1, 3, 5, 7, 9, 11]
+     diff q1-q0 dS-0.00[-0.01,+0.00] dC-0.98[-1.00,-0.97] dN-0.01[-0.03,+0.00]  EFFECT CHANGE
+ o 1 pooled CHANNEL    n 995 S0.00[0.00,0.00] C0.99[0.99,1.00] N0.01[0.00,0.01] id1.00
+     q0     CHANNEL    n 634 S0.00[0.00,0.00] C1.00[0.99,1.00] N0.00[0.00,0.01] id1.00   trials [1, 3, 5, 7, 9, 11]
+     q1     CHANNEL    n 361 S0.00[0.00,0.01] C0.99[0.97,1.00] N0.01[0.00,0.03] id1.00   trials [2, 4, 6, 8, 10]
+     diff q1-q0 dS+0.00[+0.00,+0.01] dC-0.01[-0.03,+0.00] dN+0.01[-0.00,+0.03]  
+ o 2 pooled CHANNEL    n 995 S0.00[0.00,0.00] C1.00[0.99,1.00] N0.00[0.00,0.01] id1.00
+     q0     CHANNEL    n 361 S0.00[0.00,0.00] C0.99[0.98,1.00] N0.01[0.00,0.02] id1.00   trials [2, 4, 6, 8, 10]
+     q1     CHANNEL    n 634 S0.00[0.00,0.00] C1.00[0.99,1.00] N0.00[0.00,0.01] id1.00   trials [1, 3, 5, 7, 9, 11]
+     diff q1-q0 dS+0.00[+0.00,+0.00] dC+0.00[-0.01,+0.01] dN-0.00[-0.01,+0.01]  
+ o 3 pooled CHANNEL    n 995 S0.00[0.00,0.00] C1.00[0.99,1.00] N0.00[0.00,0.01] id1.00
+     q0     CHANNEL    n 634 S0.00[0.00,0.00] C1.00[1.00,1.00] N0.00[0.00,0.00] id1.00   trials [1, 3, 5, 7, 9, 11]
+     q1     CHANNEL    n 361 S0.00[0.00,0.00] C0.99[0.98,1.00] N0.01[0.00,0.02] id1.00   trials [2, 4, 6, 8, 10]
+     diff q1-q0 dS+0.00[+0.00,+0.00] dC-0.01[-0.02,+0.00] dN+0.01[+0.00,+0.02]  
+ o 4 pooled CHANNEL    n 995 S0.00[0.00,0.01] C1.00[0.99,1.00] N0.00[0.00,0.00] id1.00
+     q0     CHANNEL    n 361 S0.00[0.00,0.00] C1.00[1.00,1.00] N0.00[0.00,0.00] id1.00   trials [2, 4, 6, 8, 10]
+     q1     CHANNEL    n 634 S0.00[0.00,0.01] C1.00[0.99,1.00] N0.00[0.00,0.00] id1.00   trials [1, 3, 5, 7, 9, 11]
+     diff q1-q0 dS+0.00[+0.00,+0.01] dC-0.00[-0.01,+0.00] dN+0.00[+0.00,+0.00]  
+ o 5 pooled UNRESOLVED n 995 S0.57[0.54,0.60] C0.23[0.20,0.26] N0.18[0.16,0.21] id1.00
+     q0     UNRESOLVED n 634 S0.33[0.29,0.38] C0.36[0.32,0.41] N0.28[0.24,0.33] id1.00   trials [1, 3, 5, 7, 9, 11]
+     q1     SITE       n 361 S0.99[0.97,1.00] C0.00[0.00,0.01] N0.01[0.00,0.03] id1.00   trials [2, 4, 6, 8, 10]
+     diff q1-q0 dS+0.65[+0.61,+0.70] dC-0.36[-0.41,-0.32] dN-0.27[-0.32,-0.22]  EFFECT CHANGE PARTLY
+ o 6 pooled SITE       n 995 S0.99[0.99,1.00] C0.00[0.00,0.00] N0.01[0.00,0.01] id1.00
+     q0     SITE       n 361 S0.99[0.98,1.00] C0.00[0.00,0.00] N0.01[0.00,0.02] id1.00   trials [2, 4, 6, 8, 10]
+     q1     SITE       n 634 S1.00[0.99,1.00] C0.00[0.00,0.00] N0.00[0.00,0.01] id1.00   trials [1, 3, 5, 7, 9, 11]
+     diff q1-q0 dS+0.00[-0.01,+0.01] dC+0.00[+0.00,+0.00] dN-0.00[-0.01,+0.01]  
+ o 7 pooled SITE       n 995 S1.00[0.99,1.00] C0.00[0.00,0.00] N0.00[0.00,0.01] id1.00
+     q0     SITE       n 634 S1.00[1.00,1.00] C0.00[0.00,0.00] N0.00[0.00,0.00] id1.00   trials [1, 3, 5, 7, 9, 11]
+     q1     SITE       n 361 S0.99[0.98,1.00] C0.00[0.00,0.00] N0.01[0.00,0.02] id1.00   trials [2, 4, 6, 8, 10]
+     diff q1-q0 dS-0.01[-0.02,+0.00] dC+0.00[+0.00,+0.00] dN+0.01[+0.00,+0.02]  
+ SUMMARY 8c37f32e: phase-effect offsets [0, 5]; supported class changes [0, 5]; jitter []
+   pooled-mixed resolution (frozen): RESOLVES [], PARTLY [5], STAYS_MIXED []
+   no-phase-effect rule (PLAN s2): {'effect_offsets': ['0', '5'], 'supported_class_changes': ['0', '5'], 'pass': False}
+
+== e06701a5 sync period 2 Pd 11 strat update_clock M 256 ns 0x620 ro_off 8 normal acc by t0 phase {'t0mod2=0': 0.650390625, 't0mod2=1': 0.6930338541666666} wall 218s
+ o 0 pooled UNDEFINED  n   0
+     q0     UNDEFINED  n   0   trials [2, 4, 6, 8, 10]
+     q1     UNDEFINED  n   0   trials [1, 3, 5, 7, 9, 11]
+     diff q1-q0 -  
+     FOLLOW pooled IDENTITY-B n 978 S0.00[0.00,0.00] C0.39[0.37,0.41] N0.00[0.00,0.00] id0.39
+     FOLLOW q0     CHANNEL    n 385 S0.00[0.00,0.00] C1.00[1.00,1.00] N0.00[0.00,0.00] id1.00
+     FOLLOW q1     IDENTITY-B n 593 S0.00[0.00,0.00] C0.00[0.00,0.00] N0.00[0.00,0.00] id0.00  
+ o 1 pooled UNDEFINED  n   0
+     q0     UNDEFINED  n   0   trials [1, 3, 5, 7, 9, 11]
+     q1     UNDEFINED  n   0   trials [2, 4, 6, 8, 10]
+     diff q1-q0 -  
+     FOLLOW pooled CHANNEL    n 978 S0.00[0.00,0.00] C1.00[1.00,1.00] N0.00[0.00,0.00] id1.00
+     FOLLOW q0     CHANNEL    n 593 S0.00[0.00,0.00] C1.00[1.00,1.00] N0.00[0.00,0.00] id1.00
+     FOLLOW q1     CHANNEL    n 385 S0.00[0.00,0.00] C1.00[1.00,1.00] N0.00[0.00,0.00] id1.00  
+ o 2 pooled UNDEFINED  n   0
+     q0     UNDEFINED  n   0   trials [2, 4, 6, 8, 10]
+     q1     UNDEFINED  n   0   trials [1, 3, 5, 7, 9, 11]
+     diff q1-q0 -  
+     FOLLOW pooled CHANNEL    n 978 S0.00[0.00,0.00] C1.00[1.00,1.00] N0.00[0.00,0.00] id1.00
+     FOLLOW q0     CHANNEL    n 385 S0.00[0.00,0.00] C1.00[1.00,1.00] N0.00[0.00,0.00] id1.00
+     FOLLOW q1     CHANNEL    n 593 S0.00[0.00,0.00] C1.00[1.00,1.00] N0.00[0.00,0.00] id1.00  
+ o 3 pooled UNDEFINED  n   0
+     q0     UNDEFINED  n   0   trials [1, 3, 5, 7, 9, 11]
+     q1     UNDEFINED  n   0   trials [2, 4, 6, 8, 10]
+     diff q1-q0 -  
+     FOLLOW pooled CHANNEL    n 978 S0.00[0.00,0.00] C1.00[1.00,1.00] N0.00[0.00,0.00] id1.00
+     FOLLOW q0     CHANNEL    n 593 S0.00[0.00,0.00] C1.00[1.00,1.00] N0.00[0.00,0.00] id1.00
+     FOLLOW q1     CHANNEL    n 385 S0.00[0.00,0.00] C1.00[1.00,1.00] N0.00[0.00,0.00] id1.00  
+ o 4 pooled UNDEFINED  n   0
+     q0     UNDEFINED  n   0   trials [2, 4, 6, 8, 10]
+     q1     UNDEFINED  n   0   trials [1, 3, 5, 7, 9, 11]
+     diff q1-q0 -  
+     FOLLOW pooled CHANNEL    n 978 S0.00[0.00,0.00] C1.00[1.00,1.00] N0.00[0.00,0.00] id1.00
+     FOLLOW q0     CHANNEL    n 385 S0.00[0.00,0.00] C1.00[1.00,1.00] N0.00[0.00,0.00] id1.00
+     FOLLOW q1     CHANNEL    n 593 S0.00[0.00,0.00] C1.00[1.00,1.00] N0.00[0.00,0.00] id1.00  
+ o 5 pooled UNDEFINED  n   0
+     q0     UNDEFINED  n   0   trials [1, 3, 5, 7, 9, 11]
+     q1     UNDEFINED  n   0   trials [2, 4, 6, 8, 10]
+     diff q1-q0 -  
+     FOLLOW pooled UNRESOLVED n 978 S0.52[0.49,0.55] C0.14[0.11,0.18] N0.34[0.29,0.37] id1.00
+     FOLLOW q0     NEITHER    n 593 S0.21[0.17,0.26] C0.24[0.18,0.29] N0.55[0.48,0.62] id1.00
+     FOLLOW q1     SITE       n 385 S1.00[1.00,1.00] C0.00[0.00,0.00] N0.00[0.00,0.00] id1.00  PARTLY
+ o 6 pooled UNDEFINED  n   0
+     q0     UNDEFINED  n   0   trials [2, 4, 6, 8, 10]
+     q1     UNDEFINED  n   0   trials [1, 3, 5, 7, 9, 11]
+     diff q1-q0 -  
+     FOLLOW pooled SITE       n 978 S1.00[1.00,1.00] C0.00[0.00,0.00] N0.00[0.00,0.00] id1.00
+     FOLLOW q0     SITE       n 385 S1.00[1.00,1.00] C0.00[0.00,0.00] N0.00[0.00,0.00] id1.00
+     FOLLOW q1     SITE       n 593 S1.00[1.00,1.00] C0.00[0.00,0.00] N0.00[0.00,0.00] id1.00  
+ o 7 pooled UNDEFINED  n   0
+     q0     UNDEFINED  n   0   trials [1, 3, 5, 7, 9, 11]
+     q1     UNDEFINED  n   0   trials [2, 4, 6, 8, 10]
+     diff q1-q0 -  
+     FOLLOW pooled SITE       n 978 S1.00[1.00,1.00] C0.00[0.00,0.00] N0.00[0.00,0.00] id1.00
+     FOLLOW q0     SITE       n 593 S1.00[1.00,1.00] C0.00[0.00,0.00] N0.00[0.00,0.00] id1.00
+     FOLLOW q1     SITE       n 385 S1.00[1.00,1.00] C0.00[0.00,0.00] N0.00[0.00,0.00] id1.00  
+ SUMMARY e06701a5: phase-effect offsets []; supported class changes []; jitter []
+   pooled-mixed resolution (frozen): RESOLVES [], PARTLY [], STAYS_MIXED []
+   pooled-mixed resolution (follow): RESOLVES [], PARTLY [5], STAYS_MIXED []
+   no-phase-effect rule (PLAN s2): {'effect_offsets': [], 'supported_class_changes': [], 'pass': True}
+
+== 78f3b0ec sync period 2 Pd 19 strat update_clock M 256 ns 0x620 ro_off 16 normal acc by t0 phase {'t0mod2=0': 0.67265625, 't0mod2=1': 0.6770833333333334} wall 910s
+ o 0 pooled UNDEFINED  n   0
+     q0     UNDEFINED  n   0   trials [2, 4, 6, 8, 10]
+     q1     UNDEFINED  n   0   trials [1, 3, 5, 7, 9, 11]
+     diff q1-q0 -  
+     FOLLOW pooled IDENTITY-B n 986 S0.45[0.42,0.47] C0.00[0.00,0.00] N0.00[0.00,0.00] id0.45
+     FOLLOW q0     SITE       n 442 S1.00[1.00,1.00] C0.00[0.00,0.00] N0.00[0.00,0.00] id1.00
+     FOLLOW q1     IDENTITY-B n 544 S0.00[0.00,0.00] C0.00[0.00,0.00] N0.00[0.00,0.00] id0.00  
+ o 1 pooled UNDEFINED  n   0
+     q0     UNDEFINED  n   0   trials [1, 3, 5, 7, 9, 11]
+     q1     UNDEFINED  n   0   trials [2, 4, 6, 8, 10]
+     diff q1-q0 -  
+     FOLLOW pooled SITE       n 986 S1.00[1.00,1.00] C0.00[0.00,0.00] N0.00[0.00,0.00] id1.00
+     FOLLOW q0     SITE       n 544 S1.00[1.00,1.00] C0.00[0.00,0.00] N0.00[0.00,0.00] id1.00
+     FOLLOW q1     SITE       n 442 S1.00[1.00,1.00] C0.00[0.00,0.00] N0.00[0.00,0.00] id1.00  
+ o 2 pooled UNDEFINED  n   0
+     q0     UNDEFINED  n   0   trials [2, 4, 6, 8, 10]
+     q1     UNDEFINED  n   0   trials [1, 3, 5, 7, 9, 11]
+     diff q1-q0 -  
+     FOLLOW pooled SITE       n 986 S1.00[1.00,1.00] C0.00[0.00,0.00] N0.00[0.00,0.00] id1.00
+     FOLLOW q0     SITE       n 442 S1.00[1.00,1.00] C0.00[0.00,0.00] N0.00[0.00,0.00] id1.00
+     FOLLOW q1     SITE       n 544 S1.00[1.00,1.00] C0.00[0.00,0.00] N0.00[0.00,0.00] id1.00  
+ o 3 pooled UNDEFINED  n   0
+     q0     UNDEFINED  n   0   trials [1, 3, 5, 7, 9, 11]
+     q1     UNDEFINED  n   0   trials [2, 4, 6, 8, 10]
+     diff q1-q0 -  
+     FOLLOW pooled SITE       n 986 S1.00[1.00,1.00] C0.00[0.00,0.00] N0.00[0.00,0.00] id1.00
+     FOLLOW q0     SITE       n 544 S1.00[1.00,1.00] C0.00[0.00,0.00] N0.00[0.00,0.00] id1.00
+     FOLLOW q1     SITE       n 442 S1.00[1.00,1.00] C0.00[0.00,0.00] N0.00[0.00,0.00] id1.00  
+ o 4 pooled UNDEFINED  n   0
+     q0     UNDEFINED  n   0   trials [2, 4, 6, 8, 10]
+     q1     UNDEFINED  n   0   trials [1, 3, 5, 7, 9, 11]
+     diff q1-q0 -  
+     FOLLOW pooled SITE       n 986 S1.00[1.00,1.00] C0.00[0.00,0.00] N0.00[0.00,0.00] id1.00
+     FOLLOW q0     SITE       n 442 S1.00[1.00,1.00] C0.00[0.00,0.00] N0.00[0.00,0.00] id1.00
+     FOLLOW q1     SITE       n 544 S1.00[1.00,1.00] C0.00[0.00,0.00] N0.00[0.00,0.00] id1.00  
+ o 5 pooled UNDEFINED  n   0
+     q0     UNDEFINED  n   0   trials [1, 3, 5, 7, 9, 11]
+     q1     UNDEFINED  n   0   trials [2, 4, 6, 8, 10]
+     diff q1-q0 -  
+     FOLLOW pooled SITE       n 986 S1.00[1.00,1.00] C0.00[0.00,0.00] N0.00[0.00,0.00] id1.00
+     FOLLOW q0     SITE       n 544 S1.00[1.00,1.00] C0.00[0.00,0.00] N0.00[0.00,0.00] id1.00
+     FOLLOW q1     SITE       n 442 S1.00[1.00,1.00] C0.00[0.00,0.00] N0.00[0.00,0.00] id1.00  
+ o 6 pooled UNDEFINED  n   0
+     q0     UNDEFINED  n   0   trials [2, 4, 6, 8, 10]
+     q1     UNDEFINED  n   0   trials [1, 3, 5, 7, 9, 11]
+     diff q1-q0 -  
+     FOLLOW pooled SITE       n 986 S1.00[1.00,1.00] C0.00[0.00,0.00] N0.00[0.00,0.00] id1.00
+     FOLLOW q0     SITE       n 442 S1.00[1.00,1.00] C0.00[0.00,0.00] N0.00[0.00,0.00] id1.00
+     FOLLOW q1     SITE       n 544 S1.00[1.00,1.00] C0.00[0.00,0.00] N0.00[0.00,0.00] id1.00  
+ o 7 pooled UNDEFINED  n   0
+     q0     UNDEFINED  n   0   trials [1, 3, 5, 7, 9, 11]
+     q1     UNDEFINED  n   0   trials [2, 4, 6, 8, 10]
+     diff q1-q0 -  
+     FOLLOW pooled SITE       n 986 S1.00[1.00,1.00] C0.00[0.00,0.00] N0.00[0.00,0.00] id1.00
+     FOLLOW q0     SITE       n 544 S1.00[1.00,1.00] C0.00[0.00,0.00] N0.00[0.00,0.00] id1.00
+     FOLLOW q1     SITE       n 442 S1.00[1.00,1.00] C0.00[0.00,0.00] N0.00[0.00,0.00] id1.00  
+ o 8 pooled UNDEFINED  n   0
+     q0     UNDEFINED  n   0   trials [2, 4, 6, 8, 10]
+     q1     UNDEFINED  n   0   trials [1, 3, 5, 7, 9, 11]
+     diff q1-q0 -  
+     FOLLOW pooled SITE       n 986 S1.00[1.00,1.00] C0.00[0.00,0.00] N0.00[0.00,0.00] id1.00
+     FOLLOW q0     SITE       n 442 S1.00[1.00,1.00] C0.00[0.00,0.00] N0.00[0.00,0.00] id1.00
+     FOLLOW q1     SITE       n 544 S1.00[1.00,1.00] C0.00[0.00,0.00] N0.00[0.00,0.00] id1.00  
+ o 9 pooled UNDEFINED  n   0
+     q0     UNDEFINED  n   0   trials [1, 3, 5, 7, 9, 11]
+     q1     UNDEFINED  n   0   trials [2, 4, 6, 8, 10]
+     diff q1-q0 -  
+     FOLLOW pooled MIXTURE    n 986 S0.65[0.62,0.69] C0.18[0.15,0.21] N0.17[0.14,0.20] id1.00
+     FOLLOW q0     UNRESOLVED n 544 S0.37[0.33,0.42] C0.32[0.27,0.37] N0.31[0.26,0.36] id1.00
+     FOLLOW q1     SITE       n 442 S1.00[1.00,1.00] C0.00[0.00,0.00] N0.00[0.00,0.00] id1.00  PARTLY
+ o10 pooled UNDEFINED  n   0
+     q0     UNDEFINED  n   0   trials [2, 4, 6, 8, 10]
+     q1     UNDEFINED  n   0   trials [1, 3, 5, 7, 9, 11]
+     diff q1-q0 -  
+     FOLLOW pooled UNRESOLVED n 986 S0.36[0.32,0.39] C0.34[0.30,0.38] N0.30[0.27,0.34] id1.00
+     FOLLOW q0     UNRESOLVED n 442 S0.34[0.28,0.39] C0.37[0.31,0.43] N0.30[0.24,0.36] id1.00
+     FOLLOW q1     UNRESOLVED n 544 S0.37[0.33,0.42] C0.32[0.27,0.37] N0.31[0.26,0.36] id1.00  STAYS_MIXED
+ o11 pooled UNDEFINED  n   0
+     q0     UNDEFINED  n   0   trials [1, 3, 5, 7, 9, 11]
+     q1     UNDEFINED  n   0   trials [2, 4, 6, 8, 10]
+     diff q1-q0 -  
+     FOLLOW pooled MIXTURE    n 986 S0.15[0.13,0.18] C0.72[0.68,0.75] N0.13[0.11,0.16] id1.00
+     FOLLOW q0     CHANNEL    n 544 S0.00[0.00,0.00] C1.00[1.00,1.00] N0.00[0.00,0.00] id1.00
+     FOLLOW q1     UNRESOLVED n 442 S0.34[0.28,0.39] C0.37[0.31,0.43] N0.30[0.24,0.36] id1.00  PARTLY
+ o12 pooled UNDEFINED  n   0
+     q0     UNDEFINED  n   0   trials [2, 4, 6, 8, 10]
+     q1     UNDEFINED  n   0   trials [1, 3, 5, 7, 9, 11]
+     diff q1-q0 -  
+     FOLLOW pooled CHANNEL    n 986 S0.00[0.00,0.00] C1.00[1.00,1.00] N0.00[0.00,0.00] id1.00
+     FOLLOW q0     CHANNEL    n 442 S0.00[0.00,0.00] C1.00[1.00,1.00] N0.00[0.00,0.00] id1.00
+     FOLLOW q1     CHANNEL    n 544 S0.00[0.00,0.00] C1.00[1.00,1.00] N0.00[0.00,0.00] id1.00  
+ o13 pooled UNDEFINED  n   0
+     q0     UNDEFINED  n   0   trials [1, 3, 5, 7, 9, 11]
+     q1     UNDEFINED  n   0   trials [2, 4, 6, 8, 10]
+     diff q1-q0 -  
+     FOLLOW pooled CHANNEL    n 986 S0.00[0.00,0.00] C1.00[1.00,1.00] N0.00[0.00,0.00] id1.00
+     FOLLOW q0     CHANNEL    n 544 S0.00[0.00,0.00] C1.00[1.00,1.00] N0.00[0.00,0.00] id1.00
+     FOLLOW q1     CHANNEL    n 442 S0.00[0.00,0.00] C1.00[1.00,1.00] N0.00[0.00,0.00] id1.00  
+ o14 pooled UNDEFINED  n   0
+     q0     UNDEFINED  n   0   trials [2, 4, 6, 8, 10]
+     q1     UNDEFINED  n   0   trials [1, 3, 5, 7, 9, 11]
+     diff q1-q0 -  
+     FOLLOW pooled MIXTURE    n 986 S0.18[0.15,0.21] C0.65[0.62,0.69] N0.17[0.14,0.20] id1.00
+     FOLLOW q0     CHANNEL    n 442 S0.00[0.00,0.00] C1.00[1.00,1.00] N0.00[0.00,0.00] id1.00
+     FOLLOW q1     UNRESOLVED n 544 S0.32[0.27,0.37] C0.37[0.33,0.42] N0.31[0.26,0.36] id1.00  PARTLY
+ o15 pooled UNDEFINED  n   0
+     q0     UNDEFINED  n   0   trials [1, 3, 5, 7, 9, 11]
+     q1     UNDEFINED  n   0   trials [2, 4, 6, 8, 10]
+     diff q1-q0 -  
+     FOLLOW pooled MIXTURE    n 986 S0.72[0.68,0.75] C0.15[0.13,0.18] N0.13[0.11,0.16] id1.00
+     FOLLOW q0     SITE       n 544 S1.00[1.00,1.00] C0.00[0.00,0.00] N0.00[0.00,0.00] id1.00
+     FOLLOW q1     UNRESOLVED n 442 S0.37[0.31,0.43] C0.34[0.28,0.39] N0.30[0.24,0.36] id1.00  PARTLY
+ SUMMARY 78f3b0ec: phase-effect offsets []; supported class changes []; jitter []
+   pooled-mixed resolution (frozen): RESOLVES [], PARTLY [], STAYS_MIXED []
+   pooled-mixed resolution (follow): RESOLVES [], PARTLY [9, 11, 14, 15], STAYS_MIXED [10]
+   no-phase-effect rule (PLAN s2): {'effect_offsets': [], 'supported_class_changes': [], 'pass': True}
+
+== 4781b0a1 sync period 2 Pd 19 strat update_clock M 256 ns 0x620 ro_off 16 normal acc by t0 phase {'t0mod2=0': 0.74453125, 't0mod2=1': 0.7552083333333334} wall 911s
+ o 0 pooled IDENTITY-B n 892 S0.30[0.26,0.33] C0.00[0.00,0.01] N0.14[0.11,0.17] id0.44
+     q0     UNRESOLVED n 395 S0.67[0.61,0.74] C0.01[0.00,0.02] N0.32[0.26,0.38] id1.00   trials [2, 4, 6, 8, 10]
+     q1     IDENTITY-B n 497 S0.00[0.00,0.00] C0.00[0.00,0.01] N0.00[0.00,0.00] id0.00   trials [1, 3, 5, 7, 9, 11]
+     diff q1-q0 dS-0.67[-0.74,-0.61] dC-0.00[-0.02,+0.01] dN-0.32[-0.39,-0.26]  EFFECT CHANGE
+ o 1 pooled UNRESOLVED n 892 S0.73[0.69,0.76] C0.00[0.00,0.01] N0.27[0.23,0.31] id1.00
+     q0     UNRESOLVED n 497 S0.65[0.59,0.70] C0.00[0.00,0.01] N0.35[0.30,0.40] id1.00   trials [1, 3, 5, 7, 9, 11]
+     q1     SITE       n 395 S0.83[0.78,0.87] C0.01[0.00,0.02] N0.17[0.12,0.22] id1.00   trials [2, 4, 6, 8, 10]
+     diff q1-q0 dS+0.18[+0.10,+0.25] dC+0.00[-0.01,+0.01] dN-0.18[-0.25,-0.11]  EFFECT CHANGE PARTLY
+ o 2 pooled UNRESOLVED n 892 S0.72[0.68,0.76] C0.00[0.00,0.00] N0.28[0.24,0.32] id1.00
+     q0     UNRESOLVED n 395 S0.62[0.56,0.68] C0.00[0.00,0.01] N0.38[0.32,0.44] id1.00   trials [2, 4, 6, 8, 10]
+     q1     SITE       n 497 S0.80[0.76,0.85] C0.00[0.00,0.00] N0.20[0.15,0.24] id1.00   trials [1, 3, 5, 7, 9, 11]
+     diff q1-q0 dS+0.19[+0.11,+0.26] dC-0.00[-0.01,+0.00] dN-0.18[-0.26,-0.11]  EFFECT CHANGE PARTLY
+ o 3 pooled UNRESOLVED n 892 S0.70[0.67,0.73] C0.00[0.00,0.01] N0.30[0.26,0.33] id1.00
+     q0     UNRESOLVED n 497 S0.57[0.52,0.61] C0.00[0.00,0.01] N0.43[0.38,0.48] id1.00   trials [1, 3, 5, 7, 9, 11]
+     q1     SITE       n 395 S0.87[0.83,0.91] C0.00[0.00,0.01] N0.13[0.09,0.17] id1.00   trials [2, 4, 6, 8, 10]
+     diff q1-q0 dS+0.31[+0.23,+0.38] dC-0.00[-0.01,+0.01] dN-0.30[-0.37,-0.23]  EFFECT CHANGE PARTLY
+ o 4 pooled UNRESOLVED n 892 S0.62[0.58,0.65] C0.01[0.00,0.02] N0.37[0.34,0.41] id1.00
+     q0     NEITHER    n 395 S0.30[0.25,0.36] C0.02[0.00,0.03] N0.68[0.63,0.74] id1.00   trials [2, 4, 6, 8, 10]
+     q1     SITE       n 497 S0.87[0.83,0.90] C0.00[0.00,0.01] N0.13[0.10,0.16] id1.00   trials [1, 3, 5, 7, 9, 11]
+     diff q1-q0 dS+0.57[+0.50,+0.64] dC-0.01[-0.03,+0.00] dN-0.55[-0.62,-0.49]  EFFECT CHANGE PARTLY
+ o 5 pooled UNRESOLVED n 892 S0.49[0.45,0.52] C0.07[0.05,0.09] N0.44[0.40,0.48] id1.00
+     q0     NEITHER    n 497 S0.25[0.20,0.30] C0.11[0.08,0.15] N0.63[0.57,0.69] id1.00   trials [1, 3, 5, 7, 9, 11]
+     q1     UNRESOLVED n 395 S0.78[0.73,0.83] C0.01[0.00,0.03] N0.21[0.16,0.26] id1.00   trials [2, 4, 6, 8, 10]
+     diff q1-q0 dS+0.53[+0.45,+0.61] dC-0.10[-0.15,-0.06] dN-0.43[-0.50,-0.34]  EFFECT CHANGE STAYS_MIXED
+ o 6 pooled NEITHER    n 892 S0.40[0.37,0.44] C0.09[0.06,0.11] N0.51[0.47,0.55] id1.00
+     q0     NEITHER    n 395 S0.09[0.06,0.13] C0.13[0.09,0.17] N0.78[0.73,0.83] id1.00   trials [2, 4, 6, 8, 10]
+     q1     UNRESOLVED n 497 S0.65[0.60,0.70] C0.05[0.03,0.08] N0.30[0.24,0.35] id1.00   trials [1, 3, 5, 7, 9, 11]
+     diff q1-q0 dS+0.56[+0.49,+0.62] dC-0.07[-0.12,-0.02] dN-0.48[-0.56,-0.41]  EFFECT CHANGE STAYS_MIXED
+ o 7 pooled UNRESOLVED n 892 S0.33[0.30,0.36] C0.19[0.16,0.23] N0.48[0.43,0.52] id1.00
+     q0     NEITHER    n 497 S0.07[0.05,0.11] C0.30[0.25,0.36] N0.62[0.57,0.68] id1.00   trials [1, 3, 5, 7, 9, 11]
+     q1     UNRESOLVED n 395 S0.66[0.60,0.72] C0.05[0.03,0.08] N0.29[0.23,0.35] id1.00   trials [2, 4, 6, 8, 10]
+     diff q1-q0 dS+0.58[+0.51,+0.65] dC-0.25[-0.31,-0.19] dN-0.33[-0.42,-0.25]  EFFECT CHANGE STAYS_MIXED
+ o 8 pooled UNRESOLVED n 892 S0.29[0.25,0.33] C0.21[0.18,0.24] N0.50[0.45,0.54] id1.00
+     q0     NEITHER    n 395 S0.03[0.01,0.05] C0.33[0.27,0.39] N0.64[0.57,0.70] id1.00   trials [2, 4, 6, 8, 10]
+     q1     UNRESOLVED n 497 S0.50[0.44,0.57] C0.11[0.08,0.15] N0.39[0.33,0.44] id1.00   trials [1, 3, 5, 7, 9, 11]
+     diff q1-q0 dS+0.47[+0.40,+0.54] dC-0.22[-0.29,-0.15] dN-0.25[-0.33,-0.16]  EFFECT CHANGE STAYS_MIXED
+ o 9 pooled UNRESOLVED n 892 S0.22[0.19,0.25] C0.42[0.39,0.46] N0.36[0.32,0.40] id1.00
+     q0     UNRESOLVED n 497 S0.01[0.00,0.03] C0.65[0.60,0.70] N0.34[0.29,0.39] id1.00   trials [1, 3, 5, 7, 9, 11]
+     q1     UNRESOLVED n 395 S0.48[0.41,0.54] C0.14[0.09,0.19] N0.38[0.32,0.45] id1.00   trials [2, 4, 6, 8, 10]
+     diff q1-q0 dS+0.47[+0.40,+0.53] dC-0.51[-0.57,-0.44] dN+0.04[-0.04,+0.13]  EFFECT STAYS_MIXED
+ o10 pooled UNRESOLVED n 892 S0.17[0.15,0.20] C0.36[0.32,0.40] N0.47[0.43,0.51] id1.00
+     q0     UNRESOLVED n 395 S0.02[0.00,0.04] C0.59[0.53,0.66] N0.39[0.32,0.45] id1.00   trials [2, 4, 6, 8, 10]
+     q1     NEITHER    n 497 S0.30[0.25,0.34] C0.17[0.13,0.22] N0.53[0.48,0.59] id1.00   trials [1, 3, 5, 7, 9, 11]
+     diff q1-q0 dS+0.28[+0.23,+0.33] dC-0.42[-0.50,-0.34] dN+0.14[+0.06,+0.23]  EFFECT CHANGE STAYS_MIXED
+ o11 pooled UNRESOLVED n 892 S0.17[0.14,0.20] C0.59[0.57,0.62] N0.24[0.21,0.27] id1.00
+     q0     CHANNEL    n 497 S0.00[0.00,0.01] C0.95[0.93,0.97] N0.05[0.02,0.07] id1.00   trials [1, 3, 5, 7, 9, 11]
+     q1     UNRESOLVED n 395 S0.38[0.31,0.45] C0.14[0.09,0.19] N0.48[0.42,0.54] id1.00   trials [2, 4, 6, 8, 10]
+     diff q1-q0 dS+0.38[+0.32,+0.45] dC-0.81[-0.86,-0.76] dN+0.43[+0.37,+0.50]  EFFECT CHANGE PARTLY
+ o12 pooled CHANNEL    n 892 S0.02[0.01,0.03] C0.81[0.77,0.84] N0.17[0.14,0.21] id1.00
+     q0     CHANNEL    n 395 S0.01[0.00,0.02] C0.96[0.94,0.98] N0.03[0.01,0.06] id1.00   trials [2, 4, 6, 8, 10]
+     q1     UNRESOLVED n 497 S0.02[0.01,0.04] C0.69[0.63,0.75] N0.29[0.23,0.35] id1.00   trials [1, 3, 5, 7, 9, 11]
+     diff q1-q0 dS+0.02[+0.00,+0.04] dC-0.27[-0.34,-0.21] dN+0.25[+0.20,+0.32]  EFFECT CHANGE
+ o13 pooled CHANNEL    n 892 S0.01[0.00,0.02] C0.87[0.84,0.90] N0.12[0.09,0.15] id1.00
+     q0     CHANNEL    n 497 S0.00[0.00,0.00] C1.00[1.00,1.00] N0.00[0.00,0.00] id1.00   trials [1, 3, 5, 7, 9, 11]
+     q1     UNRESOLVED n 395 S0.02[0.01,0.04] C0.71[0.65,0.77] N0.27[0.21,0.33] id1.00   trials [2, 4, 6, 8, 10]
+     diff q1-q0 dS+0.02[+0.01,+0.04] dC-0.29[-0.35,-0.23] dN+0.27[+0.22,+0.33]  EFFECT CHANGE
+ o14 pooled UNRESOLVED n 892 S0.10[0.08,0.13] C0.54[0.51,0.56] N0.36[0.33,0.40] id1.00
+     q0     CHANNEL    n 395 S0.00[0.00,0.00] C1.00[1.00,1.00] N0.00[0.00,0.00] id1.00   trials [2, 4, 6, 8, 10]
+     q1     NEITHER    n 497 S0.18[0.14,0.23] C0.17[0.13,0.21] N0.65[0.59,0.71] id1.00   trials [1, 3, 5, 7, 9, 11]
+     diff q1-q0 dS+0.18[+0.14,+0.22] dC-0.83[-0.87,-0.79] dN+0.65[+0.59,+0.71]  EFFECT CHANGE PARTLY
+ o15 pooled UNRESOLVED n 892 S0.64[0.61,0.66] C0.08[0.06,0.11] N0.28[0.25,0.31] id1.00
+     q0     SITE       n 497 S1.00[1.00,1.00] C0.00[0.00,0.00] N0.00[0.00,0.00] id1.00   trials [1, 3, 5, 7, 9, 11]
+     q1     NEITHER    n 395 S0.18[0.14,0.23] C0.18[0.13,0.24] N0.64[0.57,0.70] id1.00   trials [2, 4, 6, 8, 10]
+     diff q1-q0 dS-0.82[-0.87,-0.78] dC+0.18[+0.13,+0.24] dN+0.64[+0.57,+0.70]  EFFECT CHANGE PARTLY
+ SUMMARY 4781b0a1: phase-effect offsets [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]; supported class changes [0, 1, 2, 3, 4, 5, 6, 7, 8, 10, 11, 12, 13, 14, 15]; jitter []
+   pooled-mixed resolution (frozen): RESOLVES [], PARTLY [1, 2, 3, 4, 11, 14, 15], STAYS_MIXED [5, 6, 7, 8, 9, 10]
+   no-phase-effect rule (PLAN s2): {'effect_offsets': ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15'], 'supported_class_changes': ['0', '1', '2', '3', '4', '5', '6', '7', '8', '10', '11', '12', '13', '14', '15'], 'pass': False}
+
+== 369f5a5b async period 1 Pd 19 strat pseudo_parity M 256 ns 0x620 ro_off 16 normal acc by t0 phase {'t0mod2=0': 0.67265625, 't0mod2=1': 0.6744791666666666} wall 923s
+ o 0 pooled IDENTITY-B n 486 S0.15[0.11,0.19] C0.05[0.03,0.08] N0.20[0.15,0.24] id0.42
+     q0     IDENTITY-B n 222 S0.13[0.08,0.20] C0.06[0.02,0.12] N0.17[0.11,0.23] id0.40   trials [2, 4, 6, 8, 10]
+     q1     IDENTITY-B n 264 S0.16[0.11,0.21] C0.04[0.01,0.07] N0.22[0.16,0.29] id0.44   trials [1, 3, 5, 7, 9, 11]
+     diff q1-q0 dS+0.03[-0.04,+0.10] dC-0.02[-0.08,+0.04] dN+0.05[-0.04,+0.15]  
+ o 1 pooled UNRESOLVED n 486 S0.52[0.46,0.58] C0.09[0.05,0.13] N0.32[0.27,0.37] id1.00
+     q0     UNRESOLVED n 264 S0.49[0.41,0.57] C0.06[0.03,0.10] N0.39[0.32,0.47] id1.00   trials [1, 3, 5, 7, 9, 11]
+     q1     UNRESOLVED n 222 S0.55[0.46,0.64] C0.12[0.06,0.19] N0.23[0.17,0.31] id1.00   trials [2, 4, 6, 8, 10]
+     diff q1-q0 dS+0.06[-0.05,+0.17] dC+0.06[-0.01,+0.13] dN-0.15[-0.25,-0.04]  EFFECT STAYS_MIXED
+ o 2 pooled UNRESOLVED n 486 S0.50[0.44,0.56] C0.09[0.06,0.13] N0.34[0.29,0.40] id1.00
+     q0     UNRESOLVED n 222 S0.51[0.43,0.60] C0.12[0.07,0.18] N0.30[0.22,0.38] id1.00   trials [2, 4, 6, 8, 10]
+     q1     UNRESOLVED n 264 S0.49[0.42,0.57] C0.07[0.04,0.12] N0.38[0.31,0.45] id1.00   trials [1, 3, 5, 7, 9, 11]
+     diff q1-q0 dS-0.02[-0.13,+0.10] dC-0.05[-0.12,+0.02] dN+0.08[-0.03,+0.18]  STAYS_MIXED
+ o 3 pooled UNRESOLVED n 486 S0.46[0.40,0.51] C0.11[0.08,0.15] N0.37[0.31,0.42] id1.00
+     q0     UNRESOLVED n 264 S0.43[0.36,0.51] C0.08[0.04,0.12] N0.43[0.36,0.50] id1.00   trials [1, 3, 5, 7, 9, 11]
+     q1     UNRESOLVED n 222 S0.50[0.41,0.57] C0.15[0.09,0.21] N0.29[0.21,0.37] id1.00   trials [2, 4, 6, 8, 10]
+     diff q1-q0 dS+0.06[-0.05,+0.18] dC+0.07[+0.00,+0.15] dN-0.14[-0.23,-0.03]  EFFECT STAYS_MIXED
+ o 4 pooled UNRESOLVED n 486 S0.45[0.40,0.50] C0.13[0.09,0.17] N0.36[0.31,0.43] id1.00
+     q0     UNRESOLVED n 222 S0.50[0.42,0.58] C0.11[0.06,0.16] N0.33[0.25,0.42] id1.00   trials [2, 4, 6, 8, 10]
+     q1     UNRESOLVED n 264 S0.41[0.34,0.48] C0.15[0.09,0.21] N0.39[0.32,0.47] id1.00   trials [1, 3, 5, 7, 9, 11]
+     diff q1-q0 dS-0.09[-0.19,+0.01] dC+0.04[-0.04,+0.12] dN+0.07[-0.04,+0.17]  STAYS_MIXED
+ o 5 pooled UNRESOLVED n 486 S0.42[0.37,0.48] C0.14[0.10,0.18] N0.38[0.33,0.44] id1.00
+     q0     UNRESOLVED n 264 S0.40[0.33,0.47] C0.14[0.09,0.20] N0.42[0.34,0.50] id1.00   trials [1, 3, 5, 7, 9, 11]
+     q1     UNRESOLVED n 222 S0.45[0.37,0.54] C0.14[0.08,0.20] N0.34[0.25,0.43] id1.00   trials [2, 4, 6, 8, 10]
+     diff q1-q0 dS+0.06[-0.07,+0.17] dC+0.00[-0.08,+0.08] dN-0.08[-0.20,+0.04]  STAYS_MIXED
+ o 6 pooled UNRESOLVED n 486 S0.43[0.38,0.49] C0.13[0.10,0.17] N0.39[0.33,0.45] id1.00
+     q0     UNRESOLVED n 222 S0.48[0.39,0.57] C0.13[0.07,0.19] N0.35[0.27,0.44] id1.00   trials [2, 4, 6, 8, 10]
+     q1     UNRESOLVED n 264 S0.39[0.31,0.48] C0.14[0.09,0.19] N0.42[0.34,0.51] id1.00   trials [1, 3, 5, 7, 9, 11]
+     diff q1-q0 dS-0.09[-0.22,+0.04] dC+0.01[-0.07,+0.10] dN+0.07[-0.04,+0.19]  STAYS_MIXED
+ o 7 pooled UNRESOLVED n 486 S0.41[0.35,0.48] C0.13[0.10,0.17] N0.41[0.35,0.47] id1.00
+     q0     UNRESOLVED n 264 S0.37[0.30,0.45] C0.14[0.09,0.19] N0.44[0.35,0.51] id1.00   trials [1, 3, 5, 7, 9, 11]
+     q1     UNRESOLVED n 222 S0.46[0.37,0.56] C0.12[0.07,0.17] N0.37[0.28,0.46] id1.00   trials [2, 4, 6, 8, 10]
+     diff q1-q0 dS+0.09[-0.03,+0.21] dC-0.02[-0.09,+0.05] dN-0.06[-0.17,+0.05]  STAYS_MIXED
+ o 8 pooled UNRESOLVED n 486 S0.41[0.35,0.46] C0.15[0.12,0.20] N0.39[0.33,0.46] id1.00
+     q0     UNRESOLVED n 222 S0.41[0.32,0.49] C0.16[0.10,0.24] N0.38[0.30,0.46] id1.00   trials [2, 4, 6, 8, 10]
+     q1     UNRESOLVED n 264 S0.41[0.32,0.48] C0.15[0.10,0.20] N0.41[0.32,0.49] id1.00   trials [1, 3, 5, 7, 9, 11]
+     diff q1-q0 dS-0.00[-0.13,+0.11] dC-0.01[-0.09,+0.06] dN+0.03[-0.07,+0.14]  STAYS_MIXED
+ o 9 pooled UNRESOLVED n 486 S0.42[0.37,0.47] C0.15[0.12,0.20] N0.38[0.33,0.43] id1.00
+     q0     UNRESOLVED n 264 S0.44[0.35,0.53] C0.15[0.10,0.20] N0.37[0.29,0.45] id1.00   trials [1, 3, 5, 7, 9, 11]
+     q1     UNRESOLVED n 222 S0.40[0.32,0.47] C0.16[0.10,0.23] N0.39[0.32,0.47] id1.00   trials [2, 4, 6, 8, 10]
+     diff q1-q0 dS-0.04[-0.16,+0.09] dC+0.01[-0.07,+0.10] dN+0.02[-0.10,+0.13]  STAYS_MIXED
+ o10 pooled UNRESOLVED n 486 S0.43[0.38,0.49] C0.17[0.13,0.21] N0.38[0.32,0.43] id1.00
+     q0     UNRESOLVED n 222 S0.43[0.35,0.52] C0.21[0.14,0.29] N0.33[0.26,0.40] id1.00   trials [2, 4, 6, 8, 10]
+     q1     UNRESOLVED n 264 S0.44[0.36,0.52] C0.13[0.08,0.18] N0.42[0.34,0.50] id1.00   trials [1, 3, 5, 7, 9, 11]
+     diff q1-q0 dS+0.00[-0.10,+0.12] dC-0.08[-0.17,+0.00] dN+0.09[-0.01,+0.19]  STAYS_MIXED
+ o11 pooled UNRESOLVED n 486 S0.47[0.42,0.53] C0.14[0.10,0.18] N0.36[0.32,0.41] id1.00
+     q0     UNRESOLVED n 264 S0.47[0.39,0.54] C0.14[0.09,0.20] N0.36[0.30,0.44] id1.00   trials [1, 3, 5, 7, 9, 11]
+     q1     UNRESOLVED n 222 S0.48[0.40,0.56] C0.14[0.08,0.19] N0.36[0.29,0.45] id1.00   trials [2, 4, 6, 8, 10]
+     diff q1-q0 dS+0.01[-0.10,+0.13] dC-0.01[-0.08,+0.06] dN+0.00[-0.10,+0.11]  STAYS_MIXED
+ o12 pooled UNRESOLVED n 486 S0.53[0.47,0.59] C0.13[0.09,0.17] N0.33[0.28,0.39] id1.00
+     q0     UNRESOLVED n 222 S0.55[0.47,0.63] C0.12[0.07,0.17] N0.31[0.24,0.39] id1.00   trials [2, 4, 6, 8, 10]
+     q1     UNRESOLVED n 264 S0.51[0.42,0.59] C0.14[0.08,0.19] N0.34[0.26,0.43] id1.00   trials [1, 3, 5, 7, 9, 11]
+     diff q1-q0 dS-0.04[-0.15,+0.07] dC+0.02[-0.05,+0.10] dN+0.03[-0.07,+0.14]  STAYS_MIXED
+ o13 pooled UNRESOLVED n 486 S0.63[0.57,0.69] C0.10[0.06,0.13] N0.26[0.21,0.31] id1.00
+     q0     UNRESOLVED n 264 S0.61[0.52,0.69] C0.11[0.06,0.16] N0.28[0.20,0.36] id1.00   trials [1, 3, 5, 7, 9, 11]
+     q1     UNRESOLVED n 222 S0.66[0.58,0.74] C0.08[0.04,0.14] N0.24[0.17,0.31] id1.00   trials [2, 4, 6, 8, 10]
+     diff q1-q0 dS+0.05[-0.05,+0.16] dC-0.03[-0.11,+0.05] dN-0.04[-0.14,+0.06]  STAYS_MIXED
+ o14 pooled UNRESOLVED n 486 S0.74[0.69,0.79] C0.07[0.04,0.11] N0.18[0.14,0.22] id1.00
+     q0     UNRESOLVED n 222 S0.77[0.69,0.84] C0.06[0.02,0.12] N0.16[0.10,0.23] id1.00   trials [2, 4, 6, 8, 10]
+     q1     UNRESOLVED n 264 S0.72[0.64,0.79] C0.07[0.03,0.12] N0.19[0.13,0.25] id1.00   trials [1, 3, 5, 7, 9, 11]
+     diff q1-q0 dS-0.05[-0.15,+0.05] dC+0.01[-0.05,+0.07] dN+0.03[-0.06,+0.12]  STAYS_MIXED
+ o15 pooled SITE       n 486 S0.87[0.83,0.91] C0.03[0.01,0.05] N0.10[0.06,0.13] id1.00
+     q0     SITE       n 264 S0.86[0.81,0.91] C0.02[0.00,0.05] N0.11[0.07,0.16] id1.00   trials [1, 3, 5, 7, 9, 11]
+     q1     SITE       n 222 S0.89[0.82,0.94] C0.04[0.00,0.08] N0.08[0.03,0.14] id1.00   trials [2, 4, 6, 8, 10]
+     diff q1-q0 dS+0.02[-0.05,+0.09] dC+0.01[-0.03,+0.06] dN-0.04[-0.10,+0.04]  
+ SUMMARY 369f5a5b: phase-effect offsets [1, 3]; supported class changes []; jitter []
+   pooled-mixed resolution (frozen): RESOLVES [], PARTLY [], STAYS_MIXED [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]
+   no-phase-effect rule (PLAN s2): {'effect_offsets': ['1', '3'], 'supported_class_changes': [], 'pass': False}
+
+== E1 sync period 2 Pd 12 strat update_clock M 256 ns 0x620 ro_off 9 normal acc by t0 phase {'t0mod2=0': 0.9549005681818182, 't0mod2=1': None} wall 261s
+ o 0 pooled CHANNEL    n1331 S0.00[0.00,0.00] C0.97[0.95,0.98] N0.00[0.00,0.00] id0.97
+     q0     CHANNEL    n1331 S0.00[0.00,0.00] C0.97[0.95,0.98] N0.00[0.00,0.00] id0.97   trials [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+     q1     UNDEFINED  n   0   trials []
+     diff q1-q0 -  
+ o 1 pooled CHANNEL    n1331 S0.01[0.00,0.02] C0.95[0.94,0.97] N0.00[0.00,0.00] id0.96
+     q0     UNDEFINED  n   0   trials []
+     q1     CHANNEL    n1331 S0.01[0.00,0.02] C0.95[0.94,0.97] N0.00[0.00,0.00] id0.96   trials [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+     diff q1-q0 -  
+ o 2 pooled CHANNEL    n1331 S0.00[0.00,0.00] C0.98[0.98,0.99] N0.00[0.00,0.00] id0.98
+     q0     CHANNEL    n1331 S0.00[0.00,0.00] C0.98[0.98,0.99] N0.00[0.00,0.00] id0.98   trials [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+     q1     UNDEFINED  n   0   trials []
+     diff q1-q0 -  
+ o 3 pooled MIXTURE    n1331 S0.44[0.41,0.48] C0.49[0.45,0.52] N0.00[0.00,0.01] id0.94
+     q0     UNDEFINED  n   0   trials []
+     q1     MIXTURE    n1331 S0.44[0.41,0.48] C0.49[0.45,0.52] N0.00[0.00,0.01] id0.94   trials [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+     diff q1-q0 -  STAYS_MIXED
+ o 4 pooled CHANNEL    n1331 S0.00[0.00,0.00] C1.00[1.00,1.00] N0.00[0.00,0.00] id1.00
+     q0     CHANNEL    n1331 S0.00[0.00,0.00] C1.00[1.00,1.00] N0.00[0.00,0.00] id1.00   trials [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+     q1     UNDEFINED  n   0   trials []
+     diff q1-q0 -  
+ o 5 pooled CHANNEL    n1331 S0.02[0.01,0.03] C0.98[0.97,0.99] N0.00[0.00,0.00] id1.00
+     q0     UNDEFINED  n   0   trials []
+     q1     CHANNEL    n1331 S0.02[0.01,0.03] C0.98[0.97,0.99] N0.00[0.00,0.00] id1.00   trials [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+     diff q1-q0 -  
+ o 6 pooled CHANNEL    n1331 S0.00[0.00,0.00] C1.00[1.00,1.00] N0.00[0.00,0.00] id1.00
+     q0     CHANNEL    n1331 S0.00[0.00,0.00] C1.00[1.00,1.00] N0.00[0.00,0.00] id1.00   trials [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+     q1     UNDEFINED  n   0   trials []
+     diff q1-q0 -  
+ o 7 pooled MIXTURE    n1331 S0.50[0.47,0.54] C0.48[0.45,0.52] N0.01[0.00,0.01] id1.00
+     q0     UNDEFINED  n   0   trials []
+     q1     MIXTURE    n1331 S0.50[0.47,0.54] C0.48[0.45,0.52] N0.01[0.00,0.01] id1.00   trials [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+     diff q1-q0 -  STAYS_MIXED
+ o 8 pooled SITE       n1331 S1.00[1.00,1.00] C0.00[0.00,0.00] N0.00[0.00,0.00] id1.00
+     q0     SITE       n1331 S1.00[1.00,1.00] C0.00[0.00,0.00] N0.00[0.00,0.00] id1.00   trials [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+     q1     UNDEFINED  n   0   trials []
+     diff q1-q0 -  
+ SUMMARY E1: phase-effect offsets []; supported class changes []; jitter []
+   pooled-mixed resolution (frozen): RESOLVES [], PARTLY [], STAYS_MIXED [3, 7]
+   no-phase-effect rule (PLAN s2): {'effect_offsets': [], 'supported_class_changes': [], 'pass': True}
+
+== E2 sync period 2 Pd 16 strat update_clock M 256 ns 0x620 ro_off 13 normal acc by t0 phase {'t0mod2=0': 0.9488636363636364, 't0mod2=1': None} wall 373s
+ o 0 pooled CHANNEL    n1326 S0.00[0.00,0.00] C0.96[0.95,0.97] N0.00[0.00,0.00] id0.96
+     q0     CHANNEL    n1326 S0.00[0.00,0.00] C0.96[0.95,0.97] N0.00[0.00,0.00] id0.96   trials [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+     q1     UNDEFINED  n   0   trials []
+     diff q1-q0 -  
+ o 1 pooled CHANNEL    n1326 S0.02[0.01,0.03] C0.94[0.93,0.96] N0.00[0.00,0.00] id0.96
+     q0     UNDEFINED  n   0   trials []
+     q1     CHANNEL    n1326 S0.02[0.01,0.03] C0.94[0.93,0.96] N0.00[0.00,0.00] id0.96   trials [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+     diff q1-q0 -  
+ o 2 pooled CHANNEL    n1326 S0.00[0.00,0.00] C0.98[0.98,0.99] N0.00[0.00,0.00] id0.98
+     q0     CHANNEL    n1326 S0.00[0.00,0.00] C0.98[0.98,0.99] N0.00[0.00,0.00] id0.98   trials [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+     q1     UNDEFINED  n   0   trials []
+     diff q1-q0 -  
+ o 3 pooled MIXTURE    n1326 S0.45[0.42,0.48] C0.48[0.45,0.51] N0.00[0.00,0.01] id0.94
+     q0     UNDEFINED  n   0   trials []
+     q1     MIXTURE    n1326 S0.45[0.42,0.48] C0.48[0.45,0.51] N0.00[0.00,0.01] id0.94   trials [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+     diff q1-q0 -  STAYS_MIXED
+ o 4 pooled CHANNEL    n1326 S0.00[0.00,0.00] C1.00[1.00,1.00] N0.00[0.00,0.00] id1.00
+     q0     CHANNEL    n1326 S0.00[0.00,0.00] C1.00[1.00,1.00] N0.00[0.00,0.00] id1.00   trials [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+     q1     UNDEFINED  n   0   trials []
+     diff q1-q0 -  
+ o 5 pooled CHANNEL    n1326 S0.01[0.00,0.02] C0.99[0.98,0.99] N0.00[0.00,0.00] id1.00
+     q0     UNDEFINED  n   0   trials []
+     q1     CHANNEL    n1326 S0.01[0.00,0.02] C0.99[0.98,0.99] N0.00[0.00,0.00] id1.00   trials [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+     diff q1-q0 -  
+ o 6 pooled CHANNEL    n1326 S0.00[0.00,0.00] C1.00[1.00,1.00] N0.00[0.00,0.00] id1.00
+     q0     CHANNEL    n1326 S0.00[0.00,0.00] C1.00[1.00,1.00] N0.00[0.00,0.00] id1.00   trials [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+     q1     UNDEFINED  n   0   trials []
+     diff q1-q0 -  
+ o 7 pooled MIXTURE    n1326 S0.47[0.44,0.50] C0.52[0.48,0.55] N0.01[0.00,0.02] id1.00
+     q0     UNDEFINED  n   0   trials []
+     q1     MIXTURE    n1326 S0.47[0.44,0.50] C0.52[0.48,0.55] N0.01[0.00,0.02] id1.00   trials [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+     diff q1-q0 -  STAYS_MIXED
+ o 8 pooled SITE       n1326 S1.00[1.00,1.00] C0.00[0.00,0.00] N0.00[0.00,0.00] id1.00
+     q0     SITE       n1326 S1.00[1.00,1.00] C0.00[0.00,0.00] N0.00[0.00,0.00] id1.00   trials [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+     q1     UNDEFINED  n   0   trials []
+     diff q1-q0 -  
+ o 9 pooled SITE       n1326 S1.00[1.00,1.00] C0.00[0.00,0.00] N0.00[0.00,0.00] id1.00
+     q0     UNDEFINED  n   0   trials []
+     q1     SITE       n1326 S1.00[1.00,1.00] C0.00[0.00,0.00] N0.00[0.00,0.00] id1.00   trials [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+     diff q1-q0 -  
+ o10 pooled SITE       n1326 S1.00[1.00,1.00] C0.00[0.00,0.00] N0.00[0.00,0.00] id1.00
+     q0     SITE       n1326 S1.00[1.00,1.00] C0.00[0.00,0.00] N0.00[0.00,0.00] id1.00   trials [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+     q1     UNDEFINED  n   0   trials []
+     diff q1-q0 -  
+ o11 pooled SITE       n1326 S1.00[1.00,1.00] C0.00[0.00,0.00] N0.00[0.00,0.00] id1.00
+     q0     UNDEFINED  n   0   trials []
+     q1     SITE       n1326 S1.00[1.00,1.00] C0.00[0.00,0.00] N0.00[0.00,0.00] id1.00   trials [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+     diff q1-q0 -  
+ o12 pooled SITE       n1326 S1.00[1.00,1.00] C0.00[0.00,0.00] N0.00[0.00,0.00] id1.00
+     q0     SITE       n1326 S1.00[1.00,1.00] C0.00[0.00,0.00] N0.00[0.00,0.00] id1.00   trials [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+     q1     UNDEFINED  n   0   trials []
+     diff q1-q0 -  
+ SUMMARY E2: phase-effect offsets []; supported class changes []; jitter []
+   pooled-mixed resolution (frozen): RESOLVES [], PARTLY [], STAYS_MIXED [3, 7]
+   no-phase-effect rule (PLAN s2): {'effect_offsets': [], 'supported_class_changes': [], 'pass': True}
+
+== PLANT2 sync period 2 Pd 17 strat update_clock M 256 ns 0x620 ro_off 13 normal acc by t0 phase {'t0mod2=0': 1.0, 't0mod2=1': 1.0} wall 99s
+ o 0 pooled IDENTITY-B n1408 S0.00[0.00,0.00] C0.45[0.45,0.45] N0.00[0.00,0.00] id0.45
+     q0     CHANNEL    n 640 S0.00[0.00,0.00] C1.00[1.00,1.00] N0.00[0.00,0.00] id1.00   trials [2, 4, 6, 8, 10]
+     q1     IDENTITY-B n 768 S0.00[0.00,0.00] C0.00[0.00,0.00] N0.00[0.00,0.00] id0.00   trials [1, 3, 5, 7, 9, 11]
+     diff q1-q0 dS+0.00[+0.00,+0.00] dC-1.00[-1.00,-1.00] dN+0.00[+0.00,+0.00]  EFFECT CHANGE
+ o 1 pooled CHANNEL    n1408 S0.00[0.00,0.00] C1.00[1.00,1.00] N0.00[0.00,0.00] id1.00
+     q0     CHANNEL    n 768 S0.00[0.00,0.00] C1.00[1.00,1.00] N0.00[0.00,0.00] id1.00   trials [1, 3, 5, 7, 9, 11]
+     q1     CHANNEL    n 640 S0.00[0.00,0.00] C1.00[1.00,1.00] N0.00[0.00,0.00] id1.00   trials [2, 4, 6, 8, 10]
+     diff q1-q0 dS+0.00[+0.00,+0.00] dC+0.00[+0.00,+0.00] dN+0.00[+0.00,+0.00]  
+ o 2 pooled CHANNEL    n1408 S0.00[0.00,0.00] C1.00[1.00,1.00] N0.00[0.00,0.00] id1.00
+     q0     CHANNEL    n 640 S0.00[0.00,0.00] C1.00[1.00,1.00] N0.00[0.00,0.00] id1.00   trials [2, 4, 6, 8, 10]
+     q1     CHANNEL    n 768 S0.00[0.00,0.00] C1.00[1.00,1.00] N0.00[0.00,0.00] id1.00   trials [1, 3, 5, 7, 9, 11]
+     diff q1-q0 dS+0.00[+0.00,+0.00] dC+0.00[+0.00,+0.00] dN+0.00[+0.00,+0.00]  
+ o 3 pooled CHANNEL    n1408 S0.00[0.00,0.00] C1.00[1.00,1.00] N0.00[0.00,0.00] id1.00
+     q0     CHANNEL    n 768 S0.00[0.00,0.00] C1.00[1.00,1.00] N0.00[0.00,0.00] id1.00   trials [1, 3, 5, 7, 9, 11]
+     q1     CHANNEL    n 640 S0.00[0.00,0.00] C1.00[1.00,1.00] N0.00[0.00,0.00] id1.00   trials [2, 4, 6, 8, 10]
+     diff q1-q0 dS+0.00[+0.00,+0.00] dC+0.00[+0.00,+0.00] dN+0.00[+0.00,+0.00]  
+ o 4 pooled CHANNEL    n1408 S0.00[0.00,0.00] C1.00[1.00,1.00] N0.00[0.00,0.00] id1.00
+     q0     CHANNEL    n 640 S0.00[0.00,0.00] C1.00[1.00,1.00] N0.00[0.00,0.00] id1.00   trials [2, 4, 6, 8, 10]
+     q1     CHANNEL    n 768 S0.00[0.00,0.00] C1.00[1.00,1.00] N0.00[0.00,0.00] id1.00   trials [1, 3, 5, 7, 9, 11]
+     diff q1-q0 dS+0.00[+0.00,+0.00] dC+0.00[+0.00,+0.00] dN+0.00[+0.00,+0.00]  
+ o 5 pooled MIXTURE    n1408 S0.45[0.45,0.45] C0.55[0.55,0.55] N0.00[0.00,0.00] id1.00
+     q0     CHANNEL    n 768 S0.00[0.00,0.00] C1.00[1.00,1.00] N0.00[0.00,0.00] id1.00   trials [1, 3, 5, 7, 9, 11]
+     q1     SITE       n 640 S1.00[1.00,1.00] C0.00[0.00,0.00] N0.00[0.00,0.00] id1.00   trials [2, 4, 6, 8, 10]
+     diff q1-q0 dS+1.00[+1.00,+1.00] dC-1.00[-1.00,-1.00] dN+0.00[+0.00,+0.00]  EFFECT CHANGE RESOLVES
+ o 6 pooled MIXTURE    n1408 S0.55[0.55,0.55] C0.45[0.45,0.45] N0.00[0.00,0.00] id1.00
+     q0     CHANNEL    n 640 S0.00[0.00,0.00] C1.00[1.00,1.00] N0.00[0.00,0.00] id1.00   trials [2, 4, 6, 8, 10]
+     q1     SITE       n 768 S1.00[1.00,1.00] C0.00[0.00,0.00] N0.00[0.00,0.00] id1.00   trials [1, 3, 5, 7, 9, 11]
+     diff q1-q0 dS+1.00[+1.00,+1.00] dC-1.00[-1.00,-1.00] dN+0.00[+0.00,+0.00]  EFFECT CHANGE RESOLVES
+ o 7 pooled CHANNEL    n1408 S0.00[0.00,0.00] C1.00[1.00,1.00] N0.00[0.00,0.00] id1.00
+     q0     CHANNEL    n 768 S0.00[0.00,0.00] C1.00[1.00,1.00] N0.00[0.00,0.00] id1.00   trials [1, 3, 5, 7, 9, 11]
+     q1     CHANNEL    n 640 S0.00[0.00,0.00] C1.00[1.00,1.00] N0.00[0.00,0.00] id1.00   trials [2, 4, 6, 8, 10]
+     diff q1-q0 dS+0.00[+0.00,+0.00] dC+0.00[+0.00,+0.00] dN+0.00[+0.00,+0.00]  
+ o 8 pooled CHANNEL    n1408 S0.00[0.00,0.00] C1.00[1.00,1.00] N0.00[0.00,0.00] id1.00
+     q0     CHANNEL    n 640 S0.00[0.00,0.00] C1.00[1.00,1.00] N0.00[0.00,0.00] id1.00   trials [2, 4, 6, 8, 10]
+     q1     CHANNEL    n 768 S0.00[0.00,0.00] C1.00[1.00,1.00] N0.00[0.00,0.00] id1.00   trials [1, 3, 5, 7, 9, 11]
+     diff q1-q0 dS+0.00[+0.00,+0.00] dC+0.00[+0.00,+0.00] dN+0.00[+0.00,+0.00]  
+ o 9 pooled CHANNEL    n1408 S0.00[0.00,0.00] C1.00[1.00,1.00] N0.00[0.00,0.00] id1.00
+     q0     CHANNEL    n 768 S0.00[0.00,0.00] C1.00[1.00,1.00] N0.00[0.00,0.00] id1.00   trials [1, 3, 5, 7, 9, 11]
+     q1     CHANNEL    n 640 S0.00[0.00,0.00] C1.00[1.00,1.00] N0.00[0.00,0.00] id1.00   trials [2, 4, 6, 8, 10]
+     diff q1-q0 dS+0.00[+0.00,+0.00] dC+0.00[+0.00,+0.00] dN+0.00[+0.00,+0.00]  
+ o10 pooled CHANNEL    n1408 S0.00[0.00,0.00] C1.00[1.00,1.00] N0.00[0.00,0.00] id1.00
+     q0     CHANNEL    n 640 S0.00[0.00,0.00] C1.00[1.00,1.00] N0.00[0.00,0.00] id1.00   trials [2, 4, 6, 8, 10]
+     q1     CHANNEL    n 768 S0.00[0.00,0.00] C1.00[1.00,1.00] N0.00[0.00,0.00] id1.00   trials [1, 3, 5, 7, 9, 11]
+     diff q1-q0 dS+0.00[+0.00,+0.00] dC+0.00[+0.00,+0.00] dN+0.00[+0.00,+0.00]  
+ o11 pooled MIXTURE    n1408 S0.45[0.45,0.45] C0.55[0.55,0.55] N0.00[0.00,0.00] id1.00
+     q0     CHANNEL    n 768 S0.00[0.00,0.00] C1.00[1.00,1.00] N0.00[0.00,0.00] id1.00   trials [1, 3, 5, 7, 9, 11]
+     q1     SITE       n 640 S1.00[1.00,1.00] C0.00[0.00,0.00] N0.00[0.00,0.00] id1.00   trials [2, 4, 6, 8, 10]
+     diff q1-q0 dS+1.00[+1.00,+1.00] dC-1.00[-1.00,-1.00] dN+0.00[+0.00,+0.00]  EFFECT CHANGE RESOLVES
+ o12 pooled SITE       n1408 S1.00[1.00,1.00] C0.00[0.00,0.00] N0.00[0.00,0.00] id1.00
+     q0     SITE       n 640 S1.00[1.00,1.00] C0.00[0.00,0.00] N0.00[0.00,0.00] id1.00   trials [2, 4, 6, 8, 10]
+     q1     SITE       n 768 S1.00[1.00,1.00] C0.00[0.00,0.00] N0.00[0.00,0.00] id1.00   trials [1, 3, 5, 7, 9, 11]
+     diff q1-q0 dS+0.00[+0.00,+0.00] dC+0.00[+0.00,+0.00] dN+0.00[+0.00,+0.00]  
+ SUMMARY PLANT2: phase-effect offsets [0, 5, 6, 11]; supported class changes [0, 5, 6, 11]; jitter []
+   pooled-mixed resolution (frozen): RESOLVES [5, 6, 11], PARTLY [], STAYS_MIXED []
+   no-phase-effect rule (PLAN s2): {'effect_offsets': ['0', '5', '6', '11'], 'supported_class_changes': ['0', '5', '6', '11'], 'pass': False}
+
+== PLANT1 sync period 1 Pd 17 strat pseudo_parity M 256 ns 0x620 ro_off 13 normal acc by t0 phase {'t0mod2=0': 1.0, 't0mod2=1': 1.0} wall 173s
+ o 0 pooled IDENTITY-B n1408 S0.00[0.00,0.00] C0.00[0.00,0.00] N0.00[0.00,0.00] id0.00
+     q0     IDENTITY-B n 640 S0.00[0.00,0.00] C0.00[0.00,0.00] N0.00[0.00,0.00] id0.00   trials [2, 4, 6, 8, 10]
+     q1     IDENTITY-B n 768 S0.00[0.00,0.00] C0.00[0.00,0.00] N0.00[0.00,0.00] id0.00   trials [1, 3, 5, 7, 9, 11]
+     diff q1-q0 dS+0.00[+0.00,+0.00] dC+0.00[+0.00,+0.00] dN+0.00[+0.00,+0.00]  
+ o 1 pooled CHANNEL    n1408 S0.00[0.00,0.00] C1.00[1.00,1.00] N0.00[0.00,0.00] id1.00
+     q0     CHANNEL    n 768 S0.00[0.00,0.00] C1.00[1.00,1.00] N0.00[0.00,0.00] id1.00   trials [1, 3, 5, 7, 9, 11]
+     q1     CHANNEL    n 640 S0.00[0.00,0.00] C1.00[1.00,1.00] N0.00[0.00,0.00] id1.00   trials [2, 4, 6, 8, 10]
+     diff q1-q0 dS+0.00[+0.00,+0.00] dC+0.00[+0.00,+0.00] dN+0.00[+0.00,+0.00]  
+ o 2 pooled CHANNEL    n1408 S0.00[0.00,0.00] C1.00[1.00,1.00] N0.00[0.00,0.00] id1.00
+     q0     CHANNEL    n 640 S0.00[0.00,0.00] C1.00[1.00,1.00] N0.00[0.00,0.00] id1.00   trials [2, 4, 6, 8, 10]
+     q1     CHANNEL    n 768 S0.00[0.00,0.00] C1.00[1.00,1.00] N0.00[0.00,0.00] id1.00   trials [1, 3, 5, 7, 9, 11]
+     diff q1-q0 dS+0.00[+0.00,+0.00] dC+0.00[+0.00,+0.00] dN+0.00[+0.00,+0.00]  
+ o 3 pooled CHANNEL    n1408 S0.00[0.00,0.00] C1.00[1.00,1.00] N0.00[0.00,0.00] id1.00
+     q0     CHANNEL    n 768 S0.00[0.00,0.00] C1.00[1.00,1.00] N0.00[0.00,0.00] id1.00   trials [1, 3, 5, 7, 9, 11]
+     q1     CHANNEL    n 640 S0.00[0.00,0.00] C1.00[1.00,1.00] N0.00[0.00,0.00] id1.00   trials [2, 4, 6, 8, 10]
+     diff q1-q0 dS+0.00[+0.00,+0.00] dC+0.00[+0.00,+0.00] dN+0.00[+0.00,+0.00]  
+ o 4 pooled CHANNEL    n1408 S0.00[0.00,0.00] C1.00[1.00,1.00] N0.00[0.00,0.00] id1.00
+     q0     CHANNEL    n 640 S0.00[0.00,0.00] C1.00[1.00,1.00] N0.00[0.00,0.00] id1.00   trials [2, 4, 6, 8, 10]
+     q1     CHANNEL    n 768 S0.00[0.00,0.00] C1.00[1.00,1.00] N0.00[0.00,0.00] id1.00   trials [1, 3, 5, 7, 9, 11]
+     diff q1-q0 dS+0.00[+0.00,+0.00] dC+0.00[+0.00,+0.00] dN+0.00[+0.00,+0.00]  
+ o 5 pooled CHANNEL    n1408 S0.00[0.00,0.00] C1.00[1.00,1.00] N0.00[0.00,0.00] id1.00
+     q0     CHANNEL    n 768 S0.00[0.00,0.00] C1.00[1.00,1.00] N0.00[0.00,0.00] id1.00   trials [1, 3, 5, 7, 9, 11]
+     q1     CHANNEL    n 640 S0.00[0.00,0.00] C1.00[1.00,1.00] N0.00[0.00,0.00] id1.00   trials [2, 4, 6, 8, 10]
+     diff q1-q0 dS+0.00[+0.00,+0.00] dC+0.00[+0.00,+0.00] dN+0.00[+0.00,+0.00]  
+ o 6 pooled CHANNEL    n1408 S0.00[0.00,0.00] C1.00[1.00,1.00] N0.00[0.00,0.00] id1.00
+     q0     CHANNEL    n 640 S0.00[0.00,0.00] C1.00[1.00,1.00] N0.00[0.00,0.00] id1.00   trials [2, 4, 6, 8, 10]
+     q1     CHANNEL    n 768 S0.00[0.00,0.00] C1.00[1.00,1.00] N0.00[0.00,0.00] id1.00   trials [1, 3, 5, 7, 9, 11]
+     diff q1-q0 dS+0.00[+0.00,+0.00] dC+0.00[+0.00,+0.00] dN+0.00[+0.00,+0.00]  
+ o 7 pooled CHANNEL    n1408 S0.00[0.00,0.00] C1.00[1.00,1.00] N0.00[0.00,0.00] id1.00
+     q0     CHANNEL    n 768 S0.00[0.00,0.00] C1.00[1.00,1.00] N0.00[0.00,0.00] id1.00   trials [1, 3, 5, 7, 9, 11]
+     q1     CHANNEL    n 640 S0.00[0.00,0.00] C1.00[1.00,1.00] N0.00[0.00,0.00] id1.00   trials [2, 4, 6, 8, 10]
+     diff q1-q0 dS+0.00[+0.00,+0.00] dC+0.00[+0.00,+0.00] dN+0.00[+0.00,+0.00]  
+ o 8 pooled CHANNEL    n1408 S0.00[0.00,0.00] C1.00[1.00,1.00] N0.00[0.00,0.00] id1.00
+     q0     CHANNEL    n 640 S0.00[0.00,0.00] C1.00[1.00,1.00] N0.00[0.00,0.00] id1.00   trials [2, 4, 6, 8, 10]
+     q1     CHANNEL    n 768 S0.00[0.00,0.00] C1.00[1.00,1.00] N0.00[0.00,0.00] id1.00   trials [1, 3, 5, 7, 9, 11]
+     diff q1-q0 dS+0.00[+0.00,+0.00] dC+0.00[+0.00,+0.00] dN+0.00[+0.00,+0.00]  
+ o 9 pooled CHANNEL    n1408 S0.00[0.00,0.00] C1.00[1.00,1.00] N0.00[0.00,0.00] id1.00
+     q0     CHANNEL    n 768 S0.00[0.00,0.00] C1.00[1.00,1.00] N0.00[0.00,0.00] id1.00   trials [1, 3, 5, 7, 9, 11]
+     q1     CHANNEL    n 640 S0.00[0.00,0.00] C1.00[1.00,1.00] N0.00[0.00,0.00] id1.00   trials [2, 4, 6, 8, 10]
+     diff q1-q0 dS+0.00[+0.00,+0.00] dC+0.00[+0.00,+0.00] dN+0.00[+0.00,+0.00]  
+ o10 pooled CHANNEL    n1408 S0.00[0.00,0.00] C1.00[1.00,1.00] N0.00[0.00,0.00] id1.00
+     q0     CHANNEL    n 640 S0.00[0.00,0.00] C1.00[1.00,1.00] N0.00[0.00,0.00] id1.00   trials [2, 4, 6, 8, 10]
+     q1     CHANNEL    n 768 S0.00[0.00,0.00] C1.00[1.00,1.00] N0.00[0.00,0.00] id1.00   trials [1, 3, 5, 7, 9, 11]
+     diff q1-q0 dS+0.00[+0.00,+0.00] dC+0.00[+0.00,+0.00] dN+0.00[+0.00,+0.00]  
+ o11 pooled SITE       n1408 S1.00[1.00,1.00] C0.00[0.00,0.00] N0.00[0.00,0.00] id1.00
+     q0     SITE       n 768 S1.00[1.00,1.00] C0.00[0.00,0.00] N0.00[0.00,0.00] id1.00   trials [1, 3, 5, 7, 9, 11]
+     q1     SITE       n 640 S1.00[1.00,1.00] C0.00[0.00,0.00] N0.00[0.00,0.00] id1.00   trials [2, 4, 6, 8, 10]
+     diff q1-q0 dS+0.00[+0.00,+0.00] dC+0.00[+0.00,+0.00] dN+0.00[+0.00,+0.00]  
+ o12 pooled SITE       n1408 S1.00[1.00,1.00] C0.00[0.00,0.00] N0.00[0.00,0.00] id1.00
+     q0     SITE       n 640 S1.00[1.00,1.00] C0.00[0.00,0.00] N0.00[0.00,0.00] id1.00   trials [2, 4, 6, 8, 10]
+     q1     SITE       n 768 S1.00[1.00,1.00] C0.00[0.00,0.00] N0.00[0.00,0.00] id1.00   trials [1, 3, 5, 7, 9, 11]
+     diff q1-q0 dS+0.00[+0.00,+0.00] dC+0.00[+0.00,+0.00] dN+0.00[+0.00,+0.00]  
+ SUMMARY PLANT1: phase-effect offsets []; supported class changes []; jitter []
+   pooled-mixed resolution (frozen): RESOLVES [], PARTLY [], STAYS_MIXED []
+   no-phase-effect rule (PLAN s2): {'effect_offsets': [], 'supported_class_changes': [], 'pass': True}
+
+== KA-P plant known-answer (PASS required for PLANT2; must FAIL for PLANT1 and PLANT2-permuted)
+ {"spec": "PLANT2", "permuted": false, "discordant": [0, 5, 6, 11], "i": true, "ii": true, "ii_mismatch": [], "iii": true, "normal_ok": true, "normal": {"t0mod2=0": 1.0, "t0mod2=1": 1.0}, "PASS": true}
+ {"spec": "PLANT1", "permuted": false, "discordant": [], "i": false, "ii": false, "ii_mismatch": [[0, 0, "IDENTITY-BROKEN", "CHANNEL"], [5, 1, "CHANNEL", "SITE"], [6, 1, "CHANNEL", "SITE"], [11, 0, "SITE", "CHANNEL"]], "iii": false, "normal_ok": true, "normal": {"t0mod2=0": 1.0, "t0mod2=1": 1.0}, "PASS": false}
+ {"spec": "PLANT2", "permuted": true, "discordant": [6], "i": false, "ii": false, "ii_mismatch": [[0, 0, "IDENTITY-BROKEN", "CHANNEL"], [5, 0, "MIXTURE", "CHANNEL"], [5, 1, "MIXTURE", "SITE"], [11, 0, "MIXTURE", "CHANNEL"], [11, 1, "MIXTURE", "SITE"]], "iii": false, "normal_ok": true, "normal": {"t0mod2=0": 1.0, "t0mod2=1": 1.0}, "PASS": false}
+== KA-N: no-phase-effect rule must FAIL on positives (4781b0a1, PLANT2) and PASS on 369f5a5b
+ 369f5a5b: pass=False effect offsets ['1', '3']
+ 4781b0a1: pass=False effect offsets ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15']
+ PLANT2: pass=False effect offsets ['0', '5', '6', '11']
+ PLANT1: pass=True effect offsets []
+== TOTAL pooled-mixed readings over the 9 specs (frozen census): {'RESOLVES': 0, 'PARTLY': 11, 'STAYS_MIXED': 24}
+== TOTAL pooled-mixed readings, abstainers' follow census: {'RESOLVES': 0, 'PARTLY': 5, 'STAYS_MIXED': 1}

@@ -1,0 +1,229 @@
+{
+ "triplicateId": "HT-79e904e13a",
+ "world": "W1",
+ "outcome": "NULL",
+ "statistics": {
+  "arms": {
+   "CHEAT": {
+    "median": {
+     "-0.5": 1.0,
+     "-0.2": 1.0,
+     "-0.05": 1.0,
+     "-0.01": -0.0017482517482517463
+    },
+    "decline": 1.0017482517482517,
+    "wilcoxon_p": 9.313225746154785e-10,
+    "n_seeds": 30
+   },
+   "CHEAT_NULL": {
+    "median": {
+     "-0.5": -0.015734265734265736,
+     "-0.2": 0.0034965034965034926,
+     "-0.05": 0.0017482517482517483,
+     "-0.01": 0.02972027972027972
+    },
+    "decline": -0.045454545454545456,
+    "wilcoxon_p": 0.866655488797953,
+    "n_seeds": 30
+   },
+   "CONTROL": {
+    "median": {
+     "-0.5": 0.22027972027972031,
+     "-0.2": 0.20629370629370633,
+     "-0.05": 0.24475524475524477,
+     "-0.01": 0.20104895104895107
+    },
+    "decline": 0.019230769230769246,
+    "wilcoxon_p": 0.29635318366412544,
+    "n_seeds": 30
+   },
+   "DET_VS_STOCH": {
+    "median": {
+     "-0.5": 1.0,
+     "-0.2": 1.0,
+     "-0.05": 1.0,
+     "-0.01": 1.0
+    },
+    "decline": 0.0,
+    "wilcoxon_p": 1.0,
+    "n_seeds": 30
+   },
+   "NULL_TWIN": {
+    "median": {
+     "-0.5": 0.25,
+     "-0.2": 0.21853146853146857,
+     "-0.05": 0.1958041958041958,
+     "-0.01": 0.12412587412587414
+    },
+    "decline": 0.12587412587412586,
+    "wilcoxon_p": 0.0009461309247436456,
+    "n_seeds": 30
+   },
+   "ORACLE": {
+    "median": {
+     "-0.5": 1.0,
+     "-0.2": 1.0,
+     "-0.05": 1.0,
+     "-0.01": 1.0
+    },
+    "decline": 0.0,
+    "wilcoxon_p": 1.0,
+    "n_seeds": 30
+   },
+   "POSITIVE_CONTROL": {
+    "median": {
+     "-0.5": 0.9545454545454546,
+     "-0.2": 0.9510489510489513,
+     "-0.05": 0.9597902097902098,
+     "-0.01": 0.9685314685314685
+    },
+    "decline": -0.013986013986013957,
+    "wilcoxon_p": 0.9933850927546788,
+    "n_seeds": 30
+   },
+   "SE1_ABUNDANCE": {
+    "median": {
+     "-0.5": -0.0034965034965035,
+     "-0.2": -0.026652094402794403,
+     "-0.05": -0.015734265734265736,
+     "-0.01": 0.0004283181790181792
+    },
+    "decline": -0.003924821675521679,
+    "wilcoxon_p": 0.0872810510219873,
+    "n_seeds": 30
+   },
+   "SE2_DIAGONAL": {
+    "median": {
+     "-0.5": 0.4803844614152615,
+     "-0.2": 0.4803844614152615,
+     "-0.05": 0.4803844614152615,
+     "-0.01": 0.4803844614152615
+    },
+    "decline": 0.0,
+    "wilcoxon_p": 1.0,
+    "n_seeds": 30
+   },
+   "SE4_LINEAR_VS_EXACT": {
+    "median": {
+     "-0.5": 1.0,
+     "-0.2": 1.0,
+     "-0.05": 1.0,
+     "-0.01": 1.0
+    },
+    "decline": 0.0,
+    "wilcoxon_p": 1.0,
+    "n_seeds": 30
+   },
+   "TREATMENT": {
+    "median": {
+     "-0.5": 0.9562937062937064,
+     "-0.2": 0.9510489510489512,
+     "-0.05": 0.9440559440559442,
+     "-0.01": 0.931818181818182
+    },
+    "decline": 0.02447552447552437,
+    "wilcoxon_p": 2.2794066471485846e-05,
+    "n_seeds": 30
+   }
+  },
+  "success": false,
+  "failure": true
+ },
+ "criterion_as_applied": {
+  "reading": "per-seed median over 12 presses of Spearman(pred, true); median over 30 seeds; Wilcoxon one-sided paired over seeds -0.5 vs -0.01; control <= 0.2 at -0.5 and -0.2 (NOTES A1-A4, A9)",
+  "clauses": {
+   "treat_median_-0.5_ge_0.8": true,
+   "treat_median_-0.2_ge_0.8": true,
+   "control_median_le_0.2_at_-0.5_and_-0.2": false,
+   "decline_-0.5_minus_-0.01_ge_0.3": false,
+   "wilcoxon_p_lt_0.01": true,
+   "failure: treat_-0.5_lt_0.5": false,
+   "failure: control_within_0.2_of_treat_at_-0.5": false,
+   "failure: decline_lt_0.1": true
+  }
+ },
+ "positive_control_detected": true,
+ "cheat_detected": true,
+ "null_twin_meets_success": false,
+ "stupid_explanations_status": {
+  "response rank simply tracks abundance rank": {
+   "status": "RULED_OUT",
+   "evidence": {
+    "SE1_abundance_predictor_medians": {
+     "-0.5": -0.0034965034965035,
+     "-0.2": -0.026652094402794403,
+     "-0.05": -0.015734265734265736,
+     "-0.01": 0.0004283181790181792
+    },
+    "treatment_medians": {
+     "-0.5": 0.9562937062937064,
+     "-0.2": 0.9510489510489512,
+     "-0.05": 0.9440559440559442,
+     "-0.01": 0.931818181818182
+    }
+   }
+  },
+  "the estimator is dominated by the diagonal (self-regulation) terms": {
+   "status": "NOT_RULED_OUT",
+   "evidence": {
+    "control_circular_shift_medians": {
+     "-0.5": 0.22027972027972031,
+     "-0.2": 0.20629370629370633,
+     "-0.05": 0.24475524475524477,
+     "-0.01": 0.20104895104895107
+    },
+    "SE2_diagonal_only_medians": {
+     "-0.5": 0.4803844614152615,
+     "-0.2": 0.4803844614152615,
+     "-0.05": 0.4803844614152615,
+     "-0.01": 0.4803844614152615
+    }
+   }
+  },
+  "near the fold, noise-induced excursions to other states contaminate the covariance": {
+   "status": "NOT_TESTED_AS_CAUSE",
+   "evidence": {
+    "min_x_over_xstar_over_seeds": {
+     "-0.5": 0.8873787402177664,
+     "-0.2": 0.8261644284146907,
+     "-0.05": 0.738241335674395,
+     "-0.01": 0.4503882721674378
+    },
+    "oracle_trueJ_vs_stochastic_truth_medians": {
+     "-0.5": 1.0,
+     "-0.2": 1.0,
+     "-0.05": 1.0,
+     "-0.01": 1.0
+    }
+   }
+  },
+  "the press magnitude is large enough to trigger nonlinear responses at all distances": {
+   "status": "RULED_OUT",
+   "evidence": {
+    "linear_trueJ_vs_exact_deterministic_shift_medians": {
+     "-0.5": 1.0,
+     "-0.2": 1.0,
+     "-0.05": 1.0,
+     "-0.01": 1.0
+    },
+    "deterministic_vs_stochastic_truth_medians": {
+     "-0.5": 1.0,
+     "-0.2": 1.0,
+     "-0.05": 1.0,
+     "-0.01": 1.0
+    }
+   }
+  }
+ },
+ "anomalies": [
+  "CONTROL: logm had imaginary part up to 3.17; real part used (A8)",
+  "gLV community redraws needed for 8 of 30 seeds (A10)",
+  "pilot attempt 1 failed: cheat was coupled to the real null twin (0.25 > 0.2); repaired once (NOTES.md)"
+ ],
+ "core_minutes": 2.612,
+ "attempts": {
+  "pilot": 2,
+  "phase2": 1
+ },
+ "notes": "Pilot passed on attempt 2 (PILOT.json). CONTROL = spec's null twin on gLV series decides CONFOUNDED; pilot arms rerun on OU in world.py. See NOTES.md."
+}

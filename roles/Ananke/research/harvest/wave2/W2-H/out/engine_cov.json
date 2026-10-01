@@ -1,0 +1,147 @@
+{
+ "pool_6d2571cda44dd2b5": {
+  "family": "HOLD",
+  "M": 2048,
+  "K_per_world": 12,
+  "p": 0.7011311848958334,
+  "pair_sd": 0.23535786330300867,
+  "mirror_concordance": 0.9423014322916666,
+  "mirror_rho": 0.7979373438984179,
+  "world_trial_ICC": 0.34051471151020585,
+  "K_eff_per_pair": 3.7828790911477403,
+  "K_eff_over_2K": 0.15761996213115584,
+  "lag1_pair_corr": -0.01881742541428976,
+  "held_recorded": {
+   "acc": 0.6536458333333334,
+   "lo99": 0.5429622395833333,
+   "hi99": 0.761731770833333,
+   "zero_comm": 0.6536458333333334,
+   "comm_delta": 0.0,
+   "comm_delta_lo99": 0.0,
+   "comm_delta_hi99": 0.0
+  },
+  "coverage_P8": {
+   "pct": {
+    "lo_miss": 0.0225,
+    "hi_miss": 0.015,
+    "miss": 0.0375
+   },
+   "t": {
+    "lo_miss": 0.011,
+    "hi_miss": 0.00575,
+    "miss": 0.01675
+   },
+   "boott": {
+    "lo_miss": 0.003,
+    "hi_miss": 0.00575,
+    "miss": 0.00875
+   }
+  },
+  "coverage_P32": {
+   "pct": {
+    "lo_miss": 0.00675,
+    "hi_miss": 0.006,
+    "miss": 0.01275
+   },
+   "t": {
+    "lo_miss": 0.005,
+    "hi_miss": 0.004,
+    "miss": 0.009
+   },
+   "boott": {
+    "lo_miss": 0.0005,
+    "hi_miss": 0.001,
+    "miss": 0.0015
+   }
+  },
+  "coverage_P32_world_unit": {
+   "miss": 0.08525
+  }
+ },
+ "pool_87494b3d54a6c915": {
+  "family": "XOR",
+  "M": 4096,
+  "K_per_world": 12,
+  "p": 0.4997965494791667,
+  "pair_sd": 0.0667628456848894,
+  "mirror_concordance": 0.4683024088541667,
+  "mirror_rho": -0.3064300352297228,
+  "world_trial_ICC": -0.0014188920992649092,
+  "K_eff_per_pair": 56.08803917220142,
+  "K_eff_over_2K": 2.3370016321750593,
+  "lag1_pair_corr": -0.005814281861236645,
+  "held_recorded": {
+   "acc": 0.48372395833333337,
+   "lo99": 0.44726236979166667,
+   "hi99": 0.5156282552083332,
+   "zero_comm": 0.5,
+   "comm_delta": -0.016276041666666664,
+   "comm_delta_lo99": -0.05273763020833334,
+   "comm_delta_hi99": 0.015628255208333275
+  },
+  "coverage_P8": {
+   "pct": {
+    "lo_miss": 0.038,
+    "hi_miss": 0.02675,
+    "miss": 0.06475
+   },
+   "t": {
+    "lo_miss": 0.006,
+    "hi_miss": 0.00425,
+    "miss": 0.01025
+   },
+   "boott": {
+    "lo_miss": 0.00725,
+    "hi_miss": 0.0085,
+    "miss": 0.01575
+   }
+  },
+  "coverage_P32": {
+   "pct": {
+    "lo_miss": 0.011,
+    "hi_miss": 0.0065,
+    "miss": 0.0175
+   },
+   "t": {
+    "lo_miss": 0.00475,
+    "hi_miss": 0.003,
+    "miss": 0.00775
+   },
+   "boott": {
+    "lo_miss": 0.0075,
+    "hi_miss": 0.00625,
+    "miss": 0.01375
+   }
+  },
+  "coverage_P32_world_unit": {
+   "miss": 0.0035
+  }
+ },
+ "pool_null_4271681452d29aee": {
+  "family": "RELAY",
+  "M": 512,
+  "K_per_world": 12,
+  "p": 0.5,
+  "pair_sd": 0.0,
+  "mirror_concordance": 1.0,
+  "mirror_rho": null,
+  "world_trial_ICC": null,
+  "K_eff_per_pair": null,
+  "K_eff_over_2K": null,
+  "lag1_pair_corr": null,
+  "held_recorded": {
+   "acc": 0.6471354166666666,
+   "lo99": 0.6106770833333334,
+   "hi99": 0.6888085937499998,
+   "zero_comm": 0.5,
+   "comm_delta": 0.14713541666666666,
+   "comm_delta_lo99": 0.11067708333333333,
+   "comm_delta_hi99": 0.18880859374999984
+  },
+  "note": "all pairs identical (pair sd 0): CI is the point; coverage trivially exact",
+  "unique_pair_values": [
+   0.5
+  ],
+  "world_acc_sd": 0.0
+ }
+}

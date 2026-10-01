@@ -117,11 +117,11 @@
   "versions_preserved": [],
   "receipts": [],
   "nyx_handoff": {
-    "here_is_the_machine": "",
-    "where_it_came_from": "",
-    "how_to_run_it": "",
-    "how_we_know_it_runs": "",
-    "what_humans_used_it_for": ""
+    "here_is_the_machine": "vault body <vault>/tierra-6.02-ray-1998 (host-local; `python -m techne.fossils.harvest rematerialize tierra-6.02-ray-1998` on a host without it) ; tracked techne/fossils/specimens/tierra-6.02-ray-1998",
+    "where_it_came_from": "https://github.com/acisternino/tierra ; HISTORICAL_ARCHIVE_MIRROR ; commit 195c2eb84d91a1938faabad38e24b9b47d0e262c ; licence custom non-commercial (Ray, tierra/license.h 1995): free copying and distribution without fees; no commercial use; modified versions must document changes and notify the principal author; notice must not be removed",
+    "how_to_run_it": "not executed from this record (NOT_ATTEMPTED); upstream entry: make -C tierra && ./tierra soup_in ; host class: compiler host (M2 / Linux); NOT M3",
+    "how_we_know_it_runs": "we do not: no run receipt. The body is pinned (tree_sha256 c289644b4fe19c51, UPSTREAM_HASHES.txt) and verifies by hash; that is preservation, not execution",
+    "what_humans_used_it_for": "evolve self-replicating machine-code creatures in a shared memory 'soup' under CPU-time and space competition"
   },
   "seat": "Techne",
   "runtime": {
@@ -135,7 +135,7 @@
   "preservation": {
     "status": "SELF_CONTAINED",
     "body_status": "SELF_CONTAINED",
-    "recipe_status": "NO_NETWORK_FETCH_DETECTED",
+    "recipe_status": "NO_RECIPE",
     "submodules": [],
     "submodules_missing": [],
     "submodules_drifted": [],

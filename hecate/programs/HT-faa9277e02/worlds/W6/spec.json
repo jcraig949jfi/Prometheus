@@ -1,0 +1,38 @@
+{
+  "id": "W6",
+  "triplicateId": "HT-faa9277e02",
+  "passId": "P3v2",
+  "mechanism_ids": ["M6", "M1"],
+  "lens_ids": ["L5", "L1"],
+  "hypothesis": "In a reaction-diffusion medium whose activator couplings were shaped by Hebbian co-activity while the pattern formed, a large lesion (24x24 cells, about 3.6 pattern wavelengths across) regrows the ORIGINAL pattern inside the lesion better than (a) the same medium with the couplings inside the lesion scrambled, and (b) an unwritten medium with uniform couplings; i.e. stored couplings carry repair information beyond what the intact border supplies.",
+  "mechanism": "Gierer-Meinhardt activator-inhibitor kinetics on a 48x48 torus (periodic in both axes, no boundaries). a_t = sum over the 4 edges e of D0*g_e*(a_j - a_i) + a^2/h - a ; h_t = Dh*lap(h) + mu*(a^2 - h); mu = 2.0, D0 = 0.5, Dh = 10.0, explicit Euler dt = 0.02, a floored at 0, h floored at 1e-6. Homogeneous steady state a = h = 1; Turing wavelength about 6.6 cells. Hebbian coupling plasticity (treatment only, Phase A): every step, for each edge e = (i,j), g_e += dt*[eta*(a_i*a_j/mean(a)^2 - 1) - lambda*(g_e - 1)], then clip g_e to [0.1, 5]; eta = 0.1, lambda = 0.1; mean(a) = spatial mean of a at that step. Plasticity is OFF in every phase except Phase A.",
+  "intervention": "TREATMENT, per seed s: Phase A = from a = h = 1 + 0.01*N(0,1) (RNG stream 0 of seed s), 3000 steps WITH plasticity starting from g = 1. Settle = 1500 further steps, plasticity off, on the learned g; the settled activator map is the original O. Lesion = a 24x24 square at a seed-determined position (RNG stream 1, wraps on the torus): a and h inside set to max(1 + 0.3*N(0,1), 0) and max(1 + 0.3*N(0,1), 1e-3) with RNG stream 2. Regrowth = 3000 steps, plasticity off, on the learned g. Observable read on the regrown activator map R.",
+  "control": "FIXED medium: g = 1 on every edge throughout; the reference pattern formed from the same initial noise (3000 steps), settled 1500 steps, same lesion position and same lesion noise, 3000 regrowth steps. Pure border pinning in an unwritten medium. Paired with the treatment by seed.",
+  "positive_control": "Couplings written by hand from the pattern instead of by Hebbian plasticity: run 3000 steps on g = 1 from the seed's initial noise (reference map); cores = cells with z-scored activator > 1; every edge joining a core cell to a non-core cell gets g = 0.1, every other edge g = 1 (domain boundaries insulated). Then settle 1500 steps on this carved field (original O), lesion, regrow 3000 steps on the same carved field. Effect present by construction: the couplings store where spot boundaries were.",
+  "observable": "Recovered information fraction RIF inside the lesion: binarize O and R each at its own whole-field mean; RIF = I_MM(O_bin; R_bin) / H(O_bin), both over the 576 lesion cells, I_MM = Miller-Madow corrected plug-in mutual information in bits, H = plug-in binary entropy of O_bin over the lesion. RIF = 1 when the lesion regrows exactly; RIF about 0 when the regrown pattern is unrelated to the original. Diagnostics (not clause statistics): raw bits, Pearson r inside the lesion, binary agreement.",
+  "success_clauses": [
+    {"id": "S1", "text": "The treatment's seed-mean RIF (10 seeds) is at least 0.25.", "statistic": "seed_mean_rif", "comparison": ">=", "threshold": 0.25},
+    {"id": "S2", "text": "Paired by seed, treatment RIF minus null-twin RIF (same learned medium, couplings scrambled inside the lesion) has seed-mean at least 0.15.", "statistic": "seed_mean_rif_minus_twin", "comparison": ">=", "threshold": 0.15},
+    {"id": "S3", "text": "Paired by seed, treatment RIF minus FIXED-medium RIF (control) has seed-mean at least 0.10.", "statistic": "seed_mean_rif_minus_fixed", "comparison": ">=", "threshold": 0.10},
+    {"id": "S4", "text": "Treatment RIF exceeds its null-twin RIF in at least 9 of 10 seeds.", "statistic": "n_seeds_rif_above_twin", "comparison": ">=", "threshold": 9}
+  ],
+  "failure_clauses": [
+    {"id": "F1", "text": "Seed-mean (treatment RIF minus null-twin RIF) below 0.05: border pinning and coupling statistics explain the repair; stored arrangement adds nothing.", "statistic": "seed_mean_rif_minus_twin", "comparison": "<", "threshold": 0.05},
+    {"id": "F2", "text": "Seed-mean (treatment RIF minus FIXED RIF) below 0.0: the written medium repairs no better than an unwritten one.", "statistic": "seed_mean_rif_minus_fixed", "comparison": "<", "threshold": 0.0},
+    {"id": "F3", "text": "Seed-mean treatment RIF below 0.10: no meaningful repair at all.", "statistic": "seed_mean_rif", "comparison": "<", "threshold": 0.10}
+  ],
+  "alternative_explanation": "Border pinning: the intact pattern around the lesion invades the lesion and imposes its phase, so repair would occur in any medium; learned couplings could also simply lower or raise activator diffusion inside the lesion, changing how fast the border front invades versus how fast interior noise nucleates, without storing WHERE spots were. The null twin (same coupling values inside the lesion, rearranged) keeps the second effect and the border; the FIXED control measures pure border pinning.",
+  "null_twin": "The treatment's own learned coupling field, with the g values of all edges whose two endpoints both lie inside the lesion randomly permuted among themselves (RNG stream 3); all edges touching the border or outside unchanged; same original O, same lesion, same lesion noise. Coupling-value histogram inside the lesion and the entire border are matched; only the stored spatial arrangement inside the lesion is destroyed.",
+  "substrate": "reaction-diffusion (Gierer-Meinhardt on a 48x48 torus with per-edge activator couplings)",
+  "why_this_implementation": "The memory lives in transport coefficients of a morphogen field and repair is done by the field's own pattern-forming dynamics; no network, learner or attractor-memory abstraction is introduced. A torus removes edge pinning; a 24x24 lesion (about 3.6 wavelengths) with strong lesion noise (0.3) lets the lesion interior nucleate its own pattern before the border front arrives, so border pinning does not trivially repair it (measured: FIXED RIF about 0.15).",
+  "size": "48x48 cells, 4608 edges, lesion 24x24 = 576 cells; per seed 3000 + 1500 + 3000 steps per arm; 10 seeds; arms TREATMENT, NULL_TWIN, CONTROL (FIXED); controls POSITIVE_CONTROL, NULL_TWIN (of the positive control), CHEAT.",
+  "seeds": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+  "cost_estimate": "controls: about 0.25 CPU core-minute; treatment + twin + control arms: about 0.5 CPU core-minute (numpy, single core)",
+  "stupid_explanations": [
+    "border pinning: the surrounding pattern re-imposes phase inside the lesion in any medium (tested by FIXED control and by the scrambled-inside twin, which keeps the border)",
+    "learned couplings only change mean activator diffusion inside the lesion (a wavelength/speed effect, not stored positions); the twin keeps the value histogram, so this effect is shared with the twin",
+    "binarization at the whole-field mean makes sparse patterns look recovered by agreement alone (RIF normalizes by the entropy of the original inside the lesion; raw agreement is only a diagnostic)",
+    "the lesion noise is too small so the lesion restarts near the old state (lesion fields are fully reset to 1 + 0.3*N(0,1) with a fresh RNG stream)",
+    "clip bounds [0.1, 5] of the learning rule create a static prepattern independent of the lesioned pattern (the twin shares the clipped values; the FIXED control has none)"
+  ]
+}

@@ -1,0 +1,62 @@
+diff --git a/prometheus/ananke/report.py b/prometheus/ananke/report.py
+index 99fe6365b..629f42634 100644
+--- a/prometheus/ananke/report.py
++++ b/prometheus/ananke/report.py
+@@ -50,6 +50,27 @@ def by(rows, key):
+     return d
+ 
+ 
++# env fields each family's envs.build actually reads (envs.py:155-221)
++_READS = {"HOLD": ("gap", "cue_len", "amp", "amp_dist", "trials", "iti"),
++          "RELAY": ("d", "delta", "cue_len", "amp", "trials", "iti"),
++          "XOR": ("d", "delta", "cue_len", "amp", "trials", "iti"),
++          "MAJ": ("d", "delta", "cue_len", "amp", "trials", "iti", "n_maj", "flip_p"),
++          "FLIP": ("d", "delta", "cue_len", "amp", "amp_teacher", "trials", "block", "iti")}
++
++
++def effective_env(row) -> dict:
++    env = row["env"]
++    keys = [k for k in _READS[env["family"]] if not (k == "d" and row["physics"]["topology"] == "global")]
++    return {"family": env["family"], **{k: env[k] for k in keys}}
++
++
++def condition_changed(src, row) -> bool:
++    """True iff the transfer row's (physics, effective env) differs from its source's."""
++    if src is None:
++        return True
++    return src["physics"] != row["physics"] or effective_env(src) != effective_env(row)
++
++
+ def dial_table(rows, fam, metric, top=8):
+     eff = C.dial_effects(rows, fam, metric)[:top]
+     out = []
+@@ -129,12 +150,19 @@ def build(run: pathlib.Path, cfg: C.CampaignConfig) -> dict:
+     S["boundary_counts"] = collections.Counter(v["label"] for v in verd)
+     # ---------------- C: transfer + re-evolution
+     Ct = [r for r in rows if r["wave"] == "C" and r["kind"] == "transfer"]
++    by_id = {r["cell_id"]: r for r in rows}
+     S["C_transfer"] = [{"source": r["extra"]["source_cell"], "from": r["extra"]["source_family"],
+                         "to": r["env"]["family"], "variant": r["extra"].get("variant"),
+                         "held": r["result"]["held"]["acc"], "lo99": r["result"]["held"]["lo99"],
+                         "TRANSFER_SUPPORT": bool(r["result"]["held"]["lo99"] > 0.5 + cfg.signal_margin
+                                                  and (r["env"]["family"] != r["extra"]["source_family"]
+-                                                      or r["extra"].get("variant")))}
++                                                      or r["extra"].get("variant"))),
++                        # additive (legacy key unchanged): a variant counts only if it changes an
++                        # env field the family actually reads (HOLD never reads d/delta; d is inert
++                        # on global topology), i.e. the condition really is new
++                        "condition_changed": condition_changed(by_id.get(r["extra"]["source_cell"]), r),
++                        "TRANSFER_SUPPORT_EFFECTIVE": bool(r["result"]["held"]["lo99"] > 0.5 + cfg.signal_margin
++                                                           and condition_changed(by_id.get(r["extra"]["source_cell"]), r))}
+                        for r in Ct]
+     Ce = [r for r in EV if r["wave"] == "C"]
+     S["C_reevolve"] = [{"source": r["extra"]["source_cell"], "family": r["env"]["family"],
+@@ -178,7 +206,7 @@ def build(run: pathlib.Path, cfg: C.CampaignConfig) -> dict:
+ 
+ def score_predictions(S, EV, A0, A1, verd, cfg):
+     P = {}
+-    rel = [v for v in verd if v["family"] == "RELAY" and v["metric"] == "plant"
++    rel = [v for v in verd if v["family"] == "RELAY" and v["metric"] == "plant" and v.get("track") == "phys"
+            and v["dial"] in ("lat_base", "loss", "delta", "d") and v["label"] == "PHASE_BOUNDARY_SUPPORTED"]
+     P["P1"] = {"claim": "RELAY plant boundary SUPPORTED on lat_base/loss/delta/d", "held": bool(rel),
+                "evidence": [(v["dial"], v["between"]) for v in rel]}

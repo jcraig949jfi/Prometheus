@@ -1,0 +1,336 @@
+{
+ "prereg": "roles/Hecate/prereg/2026-09-30_novelty_autopsy/PREREG.md",
+ "groups": {
+  "ALIEN": {
+   "n": 32,
+   "failed_calls": 0,
+   "counts": {
+    "FAMILIAR": 28,
+    "COMPOSITE": 4
+   },
+   "unfamiliar_rate": 0.0,
+   "unfamiliar_wilson95": [
+    0.0,
+    0.107
+   ],
+   "median_prior_fit": 0.85
+  },
+  "DESTROY": {
+   "n": 10,
+   "failed_calls": 0,
+   "counts": {
+    "FAMILIAR": 10
+   },
+   "unfamiliar_rate": 0.0,
+   "unfamiliar_wilson95": [
+    -0.0,
+    0.278
+   ],
+   "median_prior_fit": 0.9
+  },
+  "KNOWN": {
+   "n": 20,
+   "failed_calls": 0,
+   "counts": {
+    "FAMILIAR": 20
+   },
+   "unfamiliar_rate": 0.0,
+   "unfamiliar_wilson95": [
+    -0.0,
+    0.161
+   ],
+   "median_prior_fit": 0.93
+  }
+ },
+ "decision": "R1 DETECTOR_CANNOT_REACH_UNFAMILIAR",
+ "alien_nearest": [
+  [
+   "SYS-12423",
+   "FAMILIAR",
+   [
+    "Synchronous automata network (cellular automaton on an arbitrary finite graph) with an outer-totalistic local rule",
+    "Modular (mod-k) totalistic / additive cellular automaton, e.g. sum-mod-k rules and sigma-games",
+    "Boolean/multi-valued regulatory network (Kauffman-style) with a synchronous update"
+   ]
+  ],
+  [
+   "SYS-14118",
+   "FAMILIAR",
+   [
+    "Outer-totalistic cellular automaton on an arbitrary graph (synchronous graph dynamical system / automata network)",
+    "Kauffman-style discrete (multi-valued) random network / Boolean network generalised to 4 states",
+    "Greenberg-Hastings / excitable-medium multi-state automaton (e.g. Brian's Brain-like)"
+   ]
+  ],
+  [
+   "SYS-19722",
+   "FAMILIAR",
+   [
+    "Finite register machine / program-counter interpreter (a Minsky-style counter machine or goto program over Z7 registers)",
+    "S-box substitution round / Feistel- or ARX-style mixing network over GF(7)",
+    "Randomly generated finite dynamical system / random mapping on a finite state set"
+   ]
+  ],
+  [
+   "SYS-26937",
+   "FAMILIAR",
+   [
+    "Number-conserving automaton on a graph (conservative pairwise flux, antisymmetric flux table), updated asynchronously along a fixed edge schedule",
+    "Population protocol / conservative pairwise-interaction model with a transition table",
+    "Kawasaki exchange / chip-firing (sandpile) type conserved-quantity transfer with capacity limits"
+   ]
+  ],
+  [
+   "SYS-28905",
+   "FAMILIAR",
+   [
+    "Two-round (unbalanced-free) Feistel network over a prime field, as in arithmetization-oriented ciphers such as GMiMC and MiMC-Feistel",
+    "Composition of two elementary (triangular / shear) polynomial automorphisms of the affine plane, i.e. a tame automorphism in the Jung\u2013van der Kulk sense, related to H\u00e9non-type maps",
+    "Symplectic kick-drift splitting (St\u00f6rmer\u2013Verlet / leapfrog step, standard-map-like updates)"
+   ]
+  ],
+  [
+   "SYS-29535",
+   "FAMILIAR",
+   [
+    "Generalized (unbalanced/type-3) Feistel network over Z_5, one round per position",
+    "Sequential dynamical system (Barrett\u2013Mortveit\u2013Reidys) / asynchronous automaton network with a fixed update schedule",
+    "Composition of elementary (triangular/de Jonqui\u00e8res) automorphisms of an affine space over a finite ring"
+   ]
+  ],
+  [
+   "SYS-34740",
+   "FAMILIAR",
+   [
+    "Program-counter register machine (random-access/Minsky-style counter machine with conditional jump) over finite modular registers",
+    "Deterministic finite-state machine / iterated map on a finite set (functional graph with transients and cycles)",
+    "S-box / lookup-table round function (Feistel- or ARX-like mixing step)"
+   ]
+  ],
+  [
+   "SYS-34934",
+   "FAMILIAR",
+   [
+    "Polynomial dynamical system over a finite field (finite dynamical system / functional graph of a polynomial map on F_p^n, e.g. Laubenbacher\u2013Stigler algebraic models)",
+    "Symmetrically coupled pair of nonlinear maps (two-site coupled map lattice / coupled logistic-type maps)",
+    "Discrete-time two-population / two-strategy interaction model (Lotka\u2013Volterra or replicator-type update) reduced mod p"
+   ]
+  ],
+  [
+   "SYS-39367",
+   "FAMILIAR",
+   [
+    "Single step of a string rewriting system / semi-Thue system with leftmost-first rule application (as in Markov algorithms, but applying one step only)",
+    "Tag system / cellular-automaton-like local pair rewriting (e.g., Wolfram's sequential substitution systems)",
+    "One pass of a bubble-sort / adjacent transposition step (e.g., rules like BA -> AB)"
+   ]
+  ],
+  [
+   "SYS-44623",
+   "COMPOSITE",
+   [
+    "Random (Kauffman NK-style) multi-valued discrete network / finite-state automata network with K=2 lookup-table update rules",
+    "Linear conservation-law enforcement / checksum (parity) correction symbol, i.e. projection onto an invariant hyperplane",
+    "Number-conserving / additive-invariant cellular automata (e.g. Hattori\u2013Takesue conservation criteria)"
+   ]
+  ],
+  [
+   "SYS-44707",
+   "FAMILIAR",
+   [
+    "Semi-Thue / string rewriting system under a deterministic leftmost single-step strategy",
+    "Markov normal algorithm (one step)",
+    "Wolfram sequential substitution system / peephole rewriting (e.g., adjacent-swap bubble-sort step)"
+   ]
+  ],
+  [
+   "SYS-45738",
+   "FAMILIAR",
+   [
+    "Register machine / program-counter machine (Minsky/Shepherdson\u2013Sturgis style) with bounded modular registers",
+    "Deterministic finite automaton / finite discrete dynamical system (iterated map on a finite set)",
+    "Table-driven microcode / lookup-table (S-box-like) arithmetic, as in a Feistel-like or LFSR-with-S-box round function over Z7"
+   ]
+  ],
+  [
+   "SYS-46959",
+   "FAMILIAR",
+   [
+    "Two-round Feistel network / Lai-Massey-free additive Feistel (unbalanced two-branch Feistel over a prime field)",
+    "Composition of elementary (triangular/de Jonquieres) polynomial automorphisms \u2014 tame automorphisms of the affine plane",
+    "Symplectic (leapfrog/Stormer-Verlet) splitting map, discrete-time kick-drift update"
+   ]
+  ],
+  [
+   "SYS-53677",
+   "FAMILIAR",
+   [
+    "Outer-totalistic cellular automaton on a finite graph (graph/network automaton, synchronous update)",
+    "Synchronous Boolean/multi-valued network (Kauffman-style discrete network)",
+    "Modular-sum (additive) cellular automaton / sandpile-like mod-k counting on graphs"
+   ]
+  ],
+  [
+   "SYS-58162",
+   "FAMILIAR",
+   [
+    "Semi-Thue (string rewriting) system with a leftmost-first, single-step strategy",
+    "Markov normal algorithm",
+    "Single step of a local-swap sort or adjacent-pair reduction (e.g., one bubble-sort swap 'ba'->'ab', or cancellation of adjacent inverse pairs in free-group word reduction)"
+   ]
+  ],
+  [
+   "SYS-59756",
+   "FAMILIAR",
+   [
+    "Iterated polynomial map (discrete dynamical system) over a finite field F_p",
+    "Swap-equivariant (S2-symmetric) coupled map / two-cell coupled map lattice",
+    "Multivariate polynomial (MQ/cubic) map as used in multivariate cryptography / T-functions / polynomial permutation tests"
+   ]
+  ],
+  [
+   "SYS-60800",
+   "FAMILIAR",
+   [
+    "Semi-Thue (string rewriting) system with a deterministic leftmost-redex strategy, single rewrite step",
+    "Markov normal algorithm (one step)",
+    "Single adjacent-transposition step of bubble sort / sorting by adjacent swaps (e.g., rewriting 'ba'->'ab' at the first inversion)"
+   ]
+  ],
+  [
+   "SYS-65579",
+   "COMPOSITE",
+   [
+    "Finite automata network / cellular automaton on a ring (5-cycle neighbourhood 0\u21922\u21924\u21923\u21921\u21920) with arbitrary lookup-table local rules, modified to conserve an additive invariant (a number-conserving or conservative CA)",
+    "Weighted check-digit or parity correction (ISBN/Luhn-style mod-p checksum; single-symbol syndrome correction)",
+    "Projected or constrained dynamics (for example SHAKE/RATTLE-style constraint enforcement, or projection onto an invariant manifold after a free step)"
+   ]
+  ],
+  [
+   "SYS-67770",
+   "FAMILIAR",
+   [
+    "Kauffman random Boolean / NK network, generalised to multi-valued (5-state) nodes: a random discrete network with synchronous update",
+    "Cellular automaton on an irregular interaction graph (non-uniform, graph-based CA)",
+    "Finite-state automata network / coupled map lattice over Z_5 (discrete-time dynamical system on a finite set)"
+   ]
+  ],
+  [
+   "SYS-69242",
+   "FAMILIAR",
+   [
+    "Register (counter) machine program, Minsky/Lambek style, with registers bounded mod 7",
+    "Finite deterministic automaton / finite-state transition system (functional graph on 6*7^3 = 2058 states)",
+    "Table-driven microcode / assembly program on a small word-size CPU (looked-up operand, multiply-accumulate into registers, branch-if-nonzero)"
+   ]
+  ],
+  [
+   "SYS-70053",
+   "FAMILIAR",
+   [
+    "Straight-line program on a register machine with a program counter (bounded-register / finite-word bytecode interpreter)",
+    "Deterministic finite automaton / iterated map on a finite set (functional-graph dynamics, rho-shaped orbits)",
+    "Feistel-like / S-box round structure (table-driven mixing of registers, as in block ciphers or ARX/LUT hash rounds)"
+   ]
+  ],
+  [
+   "SYS-73520",
+   "FAMILIAR",
+   [
+    "Single step of a string rewriting system with leftmost-first rule application (semi-Thue system / Markov-algorithm-like step restricted to length-2 patterns)",
+    "One pass-step of bubble sort / adjacent-transposition rewriting (e.g. ba -> ab) applied at the first inversion",
+    "Tag system / cellular-automaton-style local rewriting with sequential (non-parallel) update; also the Markov normal algorithm"
+   ]
+  ],
+  [
+   "SYS-75695",
+   "COMPOSITE",
+   [
+    "Register machine / straight-line program with a program counter and a conditional jump (Minsky/Shepherdson-Sturgis style, bounded to registers mod 7)",
+    "S-box / lookup-table round function with additive mixing (Feistel-like or generalized substitution-permutation rounds over Z_7)",
+    "Finite deterministic dynamical system / finite-state automaton iterated map (functional graph on 6*7^3 = 2058 states)"
+   ]
+  ],
+  [
+   "SYS-79080",
+   "FAMILIAR",
+   [
+    "Semi-Thue (string rewriting) system with a deterministic leftmost-first strategy, applying one rewrite per step",
+    "Markov normal algorithm / Wolfram sequential substitution system",
+    "Adjacent-transposition step of bubble sort / odd-even transposition (as with rules like ba->ab)"
+   ]
+  ],
+  [
+   "SYS-80858",
+   "COMPOSITE",
+   [
+    "Finite-state automata network (Kauffman NK-style random network over Z_5, each node reading itself plus one input via a lookup table)",
+    "Check-digit / parity-check completion (ISBN-style weighted checksum mod p: solve for one symbol so the weighted sum hits a target)",
+    "Constraint projection in discrete dynamics (SHAKE/RATTLE-style correction; cellular automata with an imposed conserved or monotone linear quantity)"
+   ]
+  ],
+  [
+   "SYS-81058",
+   "FAMILIAR",
+   [
+    "Markov algorithm (normal algorithm) single step / semi-Thue string rewriting with leftmost-first, priority-ordered rule application",
+    "Tag system / cyclic tag or cellular-automaton-like local pair rewriting (e.g., one step of a string rewriting system with leftmost-outermost strategy)",
+    "Single pass of bubble-sort-style adjacent transposition (e.g., 'ba'->'ab' at first inversion) / leftmost-innermost reduction strategy"
+   ]
+  ],
+  [
+   "SYS-82332",
+   "FAMILIAR",
+   [
+    "Outer-totalistic cellular automaton on a graph (synchronous automata network / graph cellular automaton)",
+    "Finite-state automata network / multi-valued Kauffman-style discrete network",
+    "Sandpile / chip-firing and linear automata over Z_4 (additive cellular automata)"
+   ]
+  ],
+  [
+   "SYS-87863",
+   "FAMILIAR",
+   [
+    "Sequential (Gauss-Seidel-style) pairwise load balancing / quantized gossip averaging on a graph",
+    "Conservative antisymmetric-flux discrete transport (finite-volume flux / Kawasaki-type exchange dynamics)",
+    "Abelian sandpile / chip-firing on a graph"
+   ]
+  ],
+  [
+   "SYS-91539",
+   "FAMILIAR",
+   [
+    "Conservative pairwise exchange on a graph (Kawasaki-type exchange dynamics / kinetic exchange 'money' models) with a Gauss-Seidel sequential sweep",
+    "Conservative finite-volume scheme with an antisymmetric numerical flux on a graph (discrete conservation law, sequential update)",
+    "Population protocol / chip-firing-style asynchronous network automaton (Abelian sandpile variants)"
+   ]
+  ],
+  [
+   "SYS-96628",
+   "FAMILIAR",
+   [
+    "Polynomial dynamical system over a finite field (iterated polynomial map on F_31^2)",
+    "Symmetrically coupled map lattice (two identical sites with cross-coupling)",
+    "H\u00e9non-type / triangular polynomial map over a finite field (as in multivariate cryptography and PRNG studies)"
+   ]
+  ],
+  [
+   "SYS-98078",
+   "FAMILIAR",
+   [
+    "Sequential dynamical system (SDS) with conservative edge-local update rules (Barrett\u2013Mortveit\u2013Reidys graph dynamical systems)",
+    "Conservative kinetic exchange / bounded chip-transfer model (econophysics wealth exchange such as Dragulescu\u2013Yakovenko, or chip-firing with capacity limits)",
+    "Population protocol / tournament (rock-paper-scissors) interaction game on a graph"
+   ]
+  ],
+  [
+   "SYS-99585",
+   "FAMILIAR",
+   [
+    "Semi-Thue / string rewriting system with a deterministic leftmost-innermost reduction strategy (one-step rewrite relation)",
+    "Markov normal algorithm (single step)",
+    "Adjacent-transposition step of bubble/odd-even sort, or a sequential particle-hopping update (e.g. rules like ba->ab)"
+   ]
+  ]
+ ]
+}

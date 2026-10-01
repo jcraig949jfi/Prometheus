@@ -1,0 +1,82 @@
+{
+ "triplicateId": "HT-974471f045",
+ "world": "W1",
+ "outcome": "SPEC_UNATTAINABLE",
+ "statistics": {
+  "attempt1": {
+   "positive_control": {
+    "mean": 0.9502242745544136,
+    "ref_mean": 0.9743058344586688,
+    "ratio": 0.9752833668314888,
+    "p_one_sided": 0.13651816987559418,
+    "meets": false,
+    "reduction": 0.02471663316851125
+   },
+   "cheat": {
+    "mean": 0.00694897129366948,
+    "ref_mean": 0.9743058344586688,
+    "ratio": 0.007132227939012988,
+    "p_one_sided": 9.133589555477501e-05,
+    "meets": true
+   },
+   "pc_content_free_twin": {
+    "mean": 0.9873790657446737,
+    "ref_mean": 0.9743058344586688,
+    "ratio": 1.0134179954831826,
+    "p_one_sided": 0.6884118880589414,
+    "meets": false,
+    "reduction": -0.013417995483182565
+   }
+  },
+  "attempt2_repaired": {
+   "positive_control": {
+    "mean": 0.9589378619600181,
+    "ref_mean": 0.9743058344586688,
+    "ratio": 0.9842267469257338,
+    "p_one_sided": 0.3668649978481236,
+    "meets": false,
+    "reduction": 0.015773253074266247
+   },
+   "cheat": {
+    "mean": 0.00694897129366948,
+    "ref_mean": 0.9743058344586688,
+    "ratio": 0.007132227939012988,
+    "p_one_sided": 9.133589555477501e-05,
+    "meets": true
+   },
+   "pc_content_free_twin": {
+    "mean": 1.0006512533102807,
+    "ref_mean": 0.9743058344586688,
+    "ratio": 1.02704019407443,
+    "p_one_sided": 0.8634818301244058,
+    "meets": false,
+    "reduction": -0.027040194074430035
+   }
+  },
+  "info_null_twin_gen80_vs_gen0": {
+   "mean": 0.9743058344586688,
+   "ref_mean": 1.054972121456587,
+   "ratio": 0.9235370439111289,
+   "p_one_sided": 0.01056696406458055,
+   "meets": false
+  },
+  "treatment": "not built (phase 2 never started)"
+ },
+ "criterion_as_applied": "Pilot (PREREG round 2): PC arm mean NRMSE_A <= 0.85 x NULL_TWIN mean, one-sided MWU p<0.05 over 10 seeds, AND PC reduces NRMSE_A by >=15% vs the same gen-80 elites pre-deposit; cheat must meet ratio/p vs NULL_TWIN; the PC's content-free twin (random r, ||r||=||w_A*||) must NOT meet it. Pilot failed twice on the positive control -> SPEC_UNATTAINABLE.",
+ "positive_control_detected": false,
+ "cheat_detected": true,
+ "null_twin_meets_success": false,
+ "stupid_explanations_status": {
+  "deposits increase rho before rescaling and rescaling is imperfect": "not applicable to a treatment reading; rescale is exact (eigvals, rho=0.9 to machine precision)",
+  "task A and task B share delay structure so B-training preserves A": "untested (no treatment arm); NULL_TWIN gen-80 elites are 7.7% better on A than gen-0 elites (p=0.011), consistent with memory carried through B",
+  "20-sample ridge is so noisy that any change in state scale shifts NRMSE": "NOT ruled out; few-shot NRMSE_A ~0.97 (near chance) for every non-cheat arm, so the instrument has little room to show a 15% gain",
+  "elites selected on B happen to carry A by chance at one seed": "untested (no treatment arm)"
+ },
+ "anomalies": [
+  "Positive control as literally specified gave only 2.5% reduction; channel-lag-aligned repair gave 1.6%. A deposit of a readout with ||w_A*|| ~50-95 at eps=0.05 (rank-one gain ~3, then rescaled to rho 0.9) does not make task A few-shot learnable with n=20.",
+  "PC_NULL_TWIN row (PC's content-free twin) added to pilot rows as the pilot reading of 'null twin does not meet it' (NOTES ambiguity 3)."
+ ],
+ "core_minutes": 1.34,
+ "attempts": 2,
+ "notes": "No treatment or control-arm code was written; no treatment statistic exists. Repair = readout fitted to u_{t-4} so the one-step deposit feedback carries u_{t-5} (NOTES Pilot log). Thresholds unchanged. Files: NOTES.md, pilot.py, pilot_eval.py, pilot_rows.jsonl, pilot_rows_attempt2.jsonl, PILOT.json, cpu_ledger.jsonl."
+}

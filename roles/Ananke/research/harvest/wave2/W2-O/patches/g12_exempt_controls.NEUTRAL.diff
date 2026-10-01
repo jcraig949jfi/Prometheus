@@ -1,0 +1,14 @@
+--- a/roles/Ananke/research/harvest/wave2/W2-C/pte_mut/guards.py	2026-09-30 21:13:10.470137500 -0400
++++ b/roles/Ananke/research/harvest/wave2/W2-C/pte_mut/guards.py	2026-09-30 21:34:06.643711700 -0400
+@@ -111,7 +111,10 @@
+                 A.add("G11_TRANSPORT_LIVE")
+             tr = w.trace.cpu().numpy()
+             T = min(w.t, tr.shape[0])
+-            if T >= 8 and w.Tsch > 1 and w.B >= 16:
++            # W2-O: G12 asks whether the NORMAL arm stays live. A control World (zero_comm, ...) is meant to
++            # silence the specimen; on a comm SIGNAL its readout legitimately goes quiet (false alarm on 2/4
++            # recorded C1 SIGNAL cells and on NULL 3222a6ff, raised by the zero_comm World only).
++            if T >= 8 and w.Tsch > 1 and w.B >= 16 and w.ctrl.label() == "none":
+                 # a live specimen's readout keeps changing; under i.i.d. targets a pair shows no change in
+                 # half a schedule with small probability, so require >= 16 worlds and >= 90% of the worlds that
+                 # changed in the first half to be silent in the second (a 4-world batch tripped a stricter form)

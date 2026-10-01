@@ -89,10 +89,30 @@
   "d_clip": 0.06748410633632115
  },
  "native_observer": {
-  "status": "PENDING",
-  "how_to_obtain": "techne/acquisition/poet_alife/HARM55_RUNBOOK_AVX_HOST.md (harm55_flax_score.py --path flax on an AVX host; HARM-55)",
-  "score": null,
-  "identity": null
+  "score": 0.815951406955719,
+  "identity": {
+   "scorer": "ASAL foundation_models/clip.py CLIP.embed_img + asal_metrics.calc_open_endedness_score (body, unmodified)",
+   "jax": "0.4.38",
+   "jaxlib": "0.4.38",
+   "flax": "0.10.2",
+   "transformers": "4.47.1",
+   "model": "openai/clip-vit-base-patch32 (FlaxCLIPModel)",
+   "weights_files_sha256": {
+    "flax_model.msgpack": "2a2994d89bebd77abba5a554789dd9152a7e25467b79d88f6bd237d2dec5051c"
+   },
+   "body_commit": "677ba0ea4d3b3ca78273c9906c6e84d2b1481ce7",
+   "body_tree_sha256": "188a6adae350258e004ed280bf0ba1bcbd8850642faf198ba0de0629ca87bf0a"
+  },
+  "crossings": {
+   "catalogue": true,
+   "garbage_mean": true,
+   "garbage_2sd": false
+  },
+  "d_clip": 0.06748415742601667,
+  "class_rederived": "GENUINE_DYNAMICAL_NOVELTY",
+  "signed_diff_vs_original": 5.960464477539063e-08,
+  "source_file": "techne/acquisition/poet_alife/HARM55_FLAX_NATIVE_2026-09-30.json",
+  "source_file_sha256_lf": "10f714c814c907264f360994aa783e0cbba744615696893d1736906b6a5ffbc1"
  },
  "alive": true,
  "classification": {
@@ -105,7 +125,7 @@
    "disp": 0.4579219814439841,
    "d_clip_original": 0.06748410633632115
   },
-  "class_under_native_observer": "PENDING"
+  "class_under_native_observer": "GENUINE_DYNAMICAL_NOVELTY"
  },
  "preservation_reason": "genuine organism with very low score (GENUINE_DYNAMICAL_NOVELTY below garbage_mean under the original observer)",
  "provenance": {

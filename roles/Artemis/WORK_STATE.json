@@ -1,0 +1,146 @@
+{
+  "schema": "prometheus.work_state.v1",
+  "seat": "Artemis",
+  "mwo_id": "MWO-0004",
+  "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
+  "mwo_sha256": "925660b2d2be53af2ee4195391e484d9649bbd4ee828cd60432ce2f0903a99df",
+  "updated_at_utc": "2026-09-30T20:31Z",
+  "state": "READY",
+  "state_reason": "U-02 complete and reported (Aporia #1173; Harmonia #1172). Awaiting Aporia.",
+  "host": "ubu002",
+  "branch": "artemis/cwo-2026-09-30",
+  "base_sha": "646cbcda86f1e2230cbb22f6d875142456a5b452",
+  "head_sha": "see git log of this branch",
+  "threads": [
+    {
+      "id": "thr-s3",
+      "alias": "Fabric S3 (principal)"
+    },
+    "backlog FR-001..FR-139 (offers, unranked)"
+  ],
+  "campaigns": [],
+  "experiments": [
+    {
+      "id": "ART-SELFTEST-2026-09-28",
+      "status": "CLOSED_FOLLOWUP_SCHEDULED",
+      "prereg": "roles/Artemis/challenge/prospective/PREREG.md @a9d5f5f23",
+      "result": "roles/Artemis/selftest/RESULT.md @781c11349",
+      "verdict": "sharpening not shown to add yield; priority labels dropped",
+      "followup": "2026-10-28 owner-action re-check of routed findings (selftest/ROUTING.md)"
+    },
+    {
+      "id": "ART-CVTR-NESTOR",
+      "status": "CLOSED",
+      "prereg": "roles/Artemis/challenge/cvtr_nestor/PREREG_CVTR_NESTOR.md @77bc0dbce",
+      "result": "roles/Artemis/challenge/cvtr_nestor/RESULT.md @d050937ec",
+      "recorded_by_owner": "Nestor #894 (QUALIFICATION in roles/Nestor/FINDINGS.md)"
+    },
+    {
+      "id": "S3",
+      "status": "CLOSED_GATE_MET",
+      "result": "roles/Odysseus/fabric_pilot/s3/RESULT.md@b3974ed8b",
+      "synthesis": "roles/Artemis/s3/SYNTHESIS.md"
+    },
+    {
+      "id": "D001",
+      "kind": "standing bounded dispatch",
+      "status": "COMPLETED_RECONCILED",
+      "draw": "roles/Artemis/dispatch/D001/DRAW.json",
+      "receipts": "roles/Artemis/dispatch/D001/RECEIPTS.json",
+      "result": "10/10 Tasks completed, 1 attempt each, exit 0, workers worker.ubu001.a/.b, 2026-09-29 14:10Z-14:46Z, 3.7-11.7 min; 10/10 returned REPORT.md+claims.json, 9/10 an unrun analysis.py; all artifact sha256 re-verified on fetch",
+      "digest": "roles/Artemis/dispatch/D001/DIGEST.md (30/30 claims verified)"
+    },
+    {
+      "id": "D002",
+      "kind": "standing bounded dispatch (script executor)",
+      "status": "CLOSED",
+      "plan": "roles/Artemis/dispatch/D002/PLAN.md",
+      "batch": "roles/Artemis/dispatch/D002/BATCH.json",
+      "tasks": "roles/Artemis/dispatch/D002/TASKS.json",
+      "result": "roles/Artemis/dispatch/D002/RESULT.md",
+      "receipts": "roles/Artemis/dispatch/D002/RECEIPTS.json"
+    },
+    {
+      "id": "D003",
+      "kind": "standing bounded dispatch",
+      "status": "COMPLETED_RECONCILED",
+      "draw": "roles/Artemis/dispatch/D003/DRAW.json",
+      "tasks": "roles/Artemis/dispatch/D003/TASKS.json",
+      "receipts": "roles/Artemis/dispatch/D003/RECEIPTS.json",
+      "digest": "roles/Artemis/dispatch/D003/DIGEST.md (30/30 verified)",
+      "note": "submitted after CWO-2026-09-30B froze promotion (violation, declared)"
+    },
+    {
+      "id": "D004",
+      "kind": "standing bounded dispatch (script executor)",
+      "status": "CLOSED",
+      "plan": "roles/Artemis/dispatch/D004/PLAN.md",
+      "result": "roles/Artemis/dispatch/D004/RESULT.md",
+      "receipts": "roles/Artemis/dispatch/D004/RECEIPTS.json",
+      "note": "submitted after CWO-2026-09-30B froze promotion (violation, declared)"
+    },
+    {
+      "id": "D005",
+      "status": "CANCELLED",
+      "draw": "roles/Artemis/dispatch/D005/DRAW.json",
+      "tasks": "roles/Artemis/dispatch/D005/TASKS.json",
+      "note": "self-promoted in violation of CWO-2026-09-30B; cancelled 15:32Z"
+    },
+    {
+      "id": "U-02",
+      "kind": "assigned evidence cleanup (Aporia #1149)",
+      "status": "CLOSED",
+      "method": "roles/Artemis/u02/METHOD.md @ 62345c80b",
+      "result": "roles/Artemis/u02/RESULT.md",
+      "routed": "Harmonia #1172; completion Aporia #1173"
+    }
+  ],
+  "fabric_tasks": [],
+  "leases": [],
+  "running": [],
+  "blocked_on": [],
+  "next_actions": [
+    "await Aporia"
+  ],
+  "operator_decisions_required": [],
+  "program_level_unassigned": [
+    "R-28",
+    "R-36",
+    "R-13",
+    "R-21",
+    "R-25 (selftest/ROUTING.md; for next MWO review)"
+  ],
+  "incidents": [],
+  "latest_reports": [
+    "roles/Artemis/s3/SYNTHESIS.md",
+    "roles/Artemis/selftest/RESULT.md",
+    "roles/Artemis/selftest/ROUTING.md",
+    "roles/Artemis/challenge/cvtr_nestor/RESULT.md",
+    "roles/Artemis/challenge/CHALLENGE_PACKET.md"
+  ],
+  "migration_report": "roles/Artemis/MIGRATION_REPORT_MWO-0002.json",
+  "fp001_result": "roles/Artemis/probes/FP-001_RESULT.json",
+  "work_order": "MWO-0004 + CWO-2026-09-30C (ops/fleet/CWO_2026-09-30C_FINISH_SURFACE_DISPATCH.md @ 7d373ac02) + operator charter 2026-09-30 (prompts/2026-09-30_charter_reconciliation_forensic_sampling)",
+  "queue": {
+    "CURRENT": null,
+    "NEXT": "awaiting Aporia -- no self-promotion",
+    "RESERVE": [],
+    "BLOCKED": [],
+    "LAST_RECEIPT": "roles/Artemis/u02/RESULT.md",
+    "LAST_STATE_UPDATE": "2026-09-30T20:31Z",
+    "WORK_ORDER": "CWO-2026-09-30C"
+  },
+  "current_objective": null,
+  "current_step": null,
+  "in_flight": [],
+  "progress": "U-02 complete",
+  "blocked": [],
+  "resource_status": "no Fabric tasks, no leases",
+  "finish_condition": "met",
+  "next_expected_milestone": "none until assigned",
+  "expected_next_artifact": null,
+  "model": "claude-opus-5-5",
+  "session_started_utc": "2026-09-30T11:32Z",
+  "next": "awaiting Aporia assignment",
+  "last_receipt": "roles/Artemis/u02/RESULT.md"
+}

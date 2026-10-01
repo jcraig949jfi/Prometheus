@@ -1,0 +1,146 @@
+{
+  "schema": "prometheus.migration_report.v1",
+  "seat": "Ananke",
+  "mwo_id": "MWO-0002",
+  "mwo_commit": "89512068ff07f0bab6953a36313d550167340722",
+  "reported_at_utc": "2026-09-29T09:48:39Z",
+  "branch": "ananke/base-role-adopt-2026-09-24",
+  "head_sha": "cee7957f5b57de35fc4f7b83970440206d3588d9",
+  "bootstrap_independence": {
+    "answer": "YES",
+    "conditions": [],
+    "how_mwo_0001_was_found": "operator_prompt",
+    "how_mwo_0002_was_found": "own_loop_fetch",
+    "evidence": [
+      "comms #961 received by `python -m comms sync Ananke` inside the self-paced s8 loop at 2026-09-29T07:21Z",
+      "CURRENT.md sha256 changed 007054ad -> 6f5a6a8b on the same loop pass (git show origin/main:ops/work_orders/CURRENT.md | sha256sum)"
+    ],
+    "note": "MWO-0001 arrived by the operator's adoption prompt; MWO-0002 was found by the seat's own s8 loop (fetch + comms sync), no per-seat prompt."
+  },
+  "criteria": {
+    "C1_adopted_mwo_0001": {
+      "status": "YES",
+      "evidence": [
+        "roles/Ananke/WORK_STATE.json @ a90dede19 (mwo_commit 7e4c09f2c, mwo_sha256 007054ad...)",
+        "blob verified via git show origin/main:ops/work_orders/CURRENT.md | sha256sum"
+      ],
+      "note": ""
+    },
+    "C2_discovers_next_mwo_unprompted": {
+      "status": "YES",
+      "evidence": [
+        "comms #961 via own loop 2026-09-29T07:21Z",
+        "blob 6f5a6a8b verified against ops/work_orders/PUBLICATIONS.md MWO-0002 row"
+      ],
+      "note": "No bespoke prompt for MWO-0002."
+    },
+    "C3_work_state_useful": {
+      "status": "YES",
+      "evidence": [
+        "roles/Ananke/WORK_STATE.json (all v1 core fields; updated at each material transition: a90dede19, ffd452047, W-M/W-N/W-O commits)"
+      ],
+      "note": ""
+    },
+    "C4_identifies_authorized_work": {
+      "status": "YES",
+      "evidence": [
+        "MWO-0001 s10 ANANKE + MWO-0002 s6 (no new large campaign)",
+        "E-ANANKE-W-O (T-SWAP-AUDIT) running; roles/Ananke/research/THREADS.md"
+      ],
+      "note": "Small bounded CPU research blocks from MACHINE_WORK.md; no large PTE campaign."
+    },
+    "C5_checks_comms_correctly": {
+      "status": "YES",
+      "evidence": [
+        "comms sync Ananke at every loop pass",
+        "#605/#631/#901/#914 closed with `comms done`; one substantive reply #934 (Odysseus asked for 'merged'); no idle broadcasts"
+      ],
+      "note": ""
+    },
+    "C6_uses_fabric_where_appropriate": {
+      "status": "PARTIAL",
+      "evidence": [
+        "E-ANANKE-W-M, W-N, W-O ran as in-session delegated workers on SKULLPORT under Fabric leases lse-10ae2cf693e4, lse-4124e1f2992d, lse-9ef8ebed677c; none was submitted as a Fabric Task",
+        "`python -m fabric agents` 2026-09-29T09:50Z: no live worker; no worker ever advertised python.torch (worker.ubu001.sci: numpy/scipy only; claude executor has no python, README D3)"
+      ],
+      "note": "PTE compute needs torch; no Fabric worker can host it, and adding torch is a host package change (MWO-0001 s6) under the Fabric freeze. So PTE blocks run in-session under Fabric leases; analysis-only work could go to a claude-executor Task."
+    },
+    "C7_uses_common_hierarchy": {
+      "status": "PARTIAL",
+      "evidence": [
+        "roles/Ananke/research/THREADS.md (genesis thr- ids, C-ANANKE-*, E-ANANKE-*)"
+      ],
+      "note": "Thread/Campaign/Experiment kept distinct, but no tsk-/att- ids (no Fabric Tasks) and ids are seat-local, not registered under ops/."
+    },
+    "C8_uses_canonical_leases": {
+      "status": "YES",
+      "evidence": [
+        "lse-10ae2cf693e4",
+        "lse-4124e1f2992d",
+        "lse-9ef8ebed677c (python -m fabric lease status)",
+        "branch contains lease cutover 8370083ae; comms #934"
+      ],
+      "note": "No host-file leases since adoption."
+    },
+    "C9_distinguishes_gates_from_routine": {
+      "status": "YES",
+      "evidence": [
+        "WORK_STATE operator_decisions_required=[] and blocked_on=[]"
+      ],
+      "note": "No current stop; the only restriction is MWO-0001 s10 / MWO-0002 s6 'no new large campaign', which the seat follows, not a stop."
+    }
+  },
+  "hard_gates_current": [],
+  "migration_blockers": [
+    {
+      "what": "Ananke thread and campaign ids are not registered under ops/threads or ops/campaigns",
+      "kind": "identifier",
+      "evidence": [
+        "roles/Ananke/research/THREADS.md",
+        "git grep of each thr- id in origin/main:ops/threads ops/campaigns -> 0 hits"
+      ]
+    },
+    {
+      "what": "No Fabric worker advertises torch (PTE engine dependency); Fabric workers are Linux-only, SKULLPORT is Windows",
+      "kind": "fabric",
+      "evidence": [
+        "python -m fabric agents (2026-09-29T09:50Z)",
+        "fabric/README.md s4 D3, s11"
+      ]
+    }
+  ],
+  "legacy_conventions_still_used": [
+    {
+      "convention": "in-session delegated workers (Agent subagents) instead of Fabric Tasks for portable CPU blocks",
+      "why": "ARC3 practice; for PTE compute also forced by the torch blocker",
+      "retire_plan": "seat"
+    },
+    {
+      "convention": "handoffs/COMMON_RULES_ARC3.md s4 and MACHINE_WORK.md setup still describe lease.py / host-file + comms lease records; overridden in each worker brief",
+      "why": "docs not yet updated after cutover 8370083ae",
+      "retire_plan": "seat"
+    }
+  ],
+  "identifier_check": {
+    "thread_ids_unresolved": [
+      "thr-82e9c44ffc71",
+      "thr-52e8bb034fba",
+      "thr-8c7342a7d513",
+      "thr-ea0c97a4d5e9",
+      "thr-5df816e9b844",
+      "thr-f36dd8035762",
+      "thr-3cb97e823f61",
+      "thr-597dda593a1f",
+      "thr-a1dd79b7de09",
+      "thr-56144b624b97",
+      "thr-66db7bdd95ce",
+      "thr-5d13521c558d"
+    ],
+    "campaign_ids_unresolved": [
+      "C-ANANKE-PTE-C1",
+      "C-ANANKE-PTE-C1B",
+      "C-ANANKE-ARC3"
+    ],
+    "note": "Genesis ids derivable via roles/Artemis/challenge/identity/thread_id.py (rules in roles/Ananke/research/THREADS.md); not repaired for the census. ops/README.md banner was not read by the seat and did not affect it."
+  }
+}

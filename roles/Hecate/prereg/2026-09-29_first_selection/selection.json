@@ -1,0 +1,833 @@
+{
+  "meta": {
+    "composite_bottom_decile_max": 5.33,
+    "composite_top_decile_min": 7.33,
+    "eligible_per_stratum": {
+      "S1_cross_extreme": 2346,
+      "S2_forged": 385,
+      "S3_nous_high": 554,
+      "S4_nous_failure": 941,
+      "S5_random": 6939
+    },
+    "seed": 20260929
+  },
+  "selection": [
+    {
+      "concepts": [
+        {
+          "field": "Signal Processing",
+          "mechanism": "dynamics",
+          "name": "Kalman Filtering",
+          "short_description": "Optimal recursive state estimation under noise; prediction-update cycle, Gaussian state space models."
+        },
+        {
+          "field": "Software Engineering",
+          "mechanism": "constraint",
+          "name": "Metamorphic Testing",
+          "short_description": "Testing without oracle: define relations between outputs (double input, ordering unchanged). Metamorphic relations as formal mutation taxonomy."
+        },
+        {
+          "field": "Neuroscience",
+          "mechanism": "structure",
+          "name": "Sparse Coding",
+          "short_description": "Neural representations using few active neurons; energy efficiency, pattern separation, Olshausen-Field model."
+        }
+      ],
+      "history": {
+        "forged": false,
+        "ledger_n": 1,
+        "ledger_reasons": [
+          "api_call_failed"
+        ],
+        "nous_composite_max": 6.33,
+        "nous_high_potential": false,
+        "nous_models": [
+          "nvidia/nemotron-3-super-120b-a12b"
+        ],
+        "nous_n": 1,
+        "nous_unproductive_any": false
+      },
+      "id": "HT-056d3ac561",
+      "key": "Kalman Filtering + Metamorphic Testing + Sparse Coding",
+      "provenance": {
+        "historicalId": "Kalman Filtering + Metamorphic Testing + Sparse Coding",
+        "humanreadable": "agents/hephaestus/humanreadable/Kalman_Filtering---Sparse_Coding---Metamorphic_Testing.md",
+        "ledger_lines": [
+          3859
+        ],
+        "source": "hephaestus",
+        "sourceArtifact": "agents/hephaestus/ledger.jsonl#L3859",
+        "upstream_nous": [
+          "agents/nous/runs/20260325_132552/responses.jsonl#L844"
+        ]
+      },
+      "stratum": "S1_cross_extreme"
+    },
+    {
+      "concepts": [
+        {
+          "field": "Control Theory",
+          "mechanism": "dynamics",
+          "name": "Adaptive Control",
+          "short_description": "Controllers that adjust parameters online to handle uncertainty; model reference, self-tuning regulators."
+        },
+        {
+          "field": "Mathematics",
+          "mechanism": "structure",
+          "name": "Category Theory",
+          "short_description": "Abstract algebra of mappings between structures; functors, natural transformations, universal properties."
+        },
+        {
+          "field": "Logic",
+          "mechanism": "constraint",
+          "name": "Satisfiability",
+          "short_description": "Determining if a logical formula has a satisfying assignment; SAT/SMT solvers; minimal unsatisfiable cores for conflict localization."
+        }
+      ],
+      "history": {
+        "forged": false,
+        "ledger_n": 1,
+        "ledger_reasons": [
+          "api_call_failed"
+        ],
+        "nous_composite_max": 6.33,
+        "nous_high_potential": false,
+        "nous_models": [
+          "nvidia/nemotron-3-super-120b-a12b"
+        ],
+        "nous_n": 2,
+        "nous_unproductive_any": true
+      },
+      "id": "HT-8a87057933",
+      "key": "Adaptive Control + Category Theory + Satisfiability",
+      "provenance": {
+        "historicalId": "Adaptive Control + Category Theory + Satisfiability",
+        "humanreadable": "agents/hephaestus/humanreadable/Category_Theory---Adaptive_Control---Satisfiability.md",
+        "ledger_lines": [
+          4282
+        ],
+        "source": "hephaestus",
+        "sourceArtifact": "agents/hephaestus/ledger.jsonl#L4282",
+        "upstream_nous": [
+          "agents/nous/runs/20260325_132552/responses.jsonl#L2773",
+          "agents/nous/runs/20260327_203534/responses.jsonl#L24"
+        ]
+      },
+      "stratum": "S1_cross_extreme"
+    },
+    {
+      "concepts": [
+        {
+          "field": "Neuroscience",
+          "mechanism": "dynamics",
+          "name": "Neural Oscillations",
+          "short_description": "Rhythmic brain activity at multiple frequencies; gamma binding, theta sequences, cross-frequency coupling."
+        },
+        {
+          "field": "Mathematics",
+          "mechanism": "structure",
+          "name": "Topology",
+          "short_description": "Study of properties preserved under continuous deformations; connectedness, holes, and invariants."
+        },
+        {
+          "field": "Signal Processing",
+          "mechanism": "measure",
+          "name": "Wavelet Transforms",
+          "short_description": "Multi-resolution time-frequency analysis; localized basis functions, multiresolution analysis, denoising."
+        }
+      ],
+      "history": {
+        "forged": false,
+        "ledger_n": 1,
+        "ledger_reasons": [
+          "trap_battery_failed"
+        ],
+        "nous_composite_max": 7.0,
+        "nous_high_potential": false,
+        "nous_models": [
+          "nvidia/nemotron-3-super-120b-a12b"
+        ],
+        "nous_n": 1,
+        "nous_unproductive_any": false
+      },
+      "id": "HT-a9e2ba7618",
+      "key": "Neural Oscillations + Topology + Wavelet Transforms",
+      "provenance": {
+        "historicalId": "Neural Oscillations + Topology + Wavelet Transforms",
+        "humanreadable": "agents/hephaestus/humanreadable/Topology---Wavelet_Transforms---Neural_Oscillations.md",
+        "ledger_lines": [
+          1480
+        ],
+        "source": "hephaestus",
+        "sourceArtifact": "agents/hephaestus/ledger.jsonl#L1480",
+        "upstream_nous": [
+          "agents/nous/runs/20260324_131206/responses.jsonl#L486"
+        ]
+      },
+      "stratum": "S1_cross_extreme"
+    },
+    {
+      "concepts": [
+        {
+          "field": "Biology",
+          "mechanism": "dynamics",
+          "name": "Evolution",
+          "short_description": "Descent with modification via natural selection; fitness landscapes, speciation, genetic drift."
+        },
+        {
+          "field": "Philosophy",
+          "mechanism": "structure",
+          "name": "Phenomenology",
+          "short_description": "First-person study of conscious experience and its structures; intentionality, bracketing, lifeworld."
+        },
+        {
+          "field": "Computer Science",
+          "mechanism": "dynamics",
+          "name": "Reservoir Computing",
+          "short_description": "Fixed random recurrent network with trainable readout; echo state networks, liquid state machines."
+        }
+      ],
+      "history": {
+        "forged": true,
+        "ledger_n": 1,
+        "ledger_reasons": [
+          ""
+        ],
+        "nous_composite_max": 7.33,
+        "nous_high_potential": true,
+        "nous_models": [
+          "nvidia/nemotron-3-super-120b-a12b"
+        ],
+        "nous_n": 1,
+        "nous_unproductive_any": false
+      },
+      "id": "HT-974471f045",
+      "key": "Evolution + Phenomenology + Reservoir Computing",
+      "provenance": {
+        "historicalId": "Evolution + Phenomenology + Reservoir Computing",
+        "humanreadable": "agents/hephaestus/humanreadable/Reservoir_Computing---Evolution---Phenomenology.md",
+        "ledger_lines": [
+          1448
+        ],
+        "source": "hephaestus",
+        "sourceArtifact": "agents/hephaestus/ledger.jsonl#L1448",
+        "upstream_nous": [
+          "agents/nous/runs/20260325_062155/responses.jsonl#L175"
+        ]
+      },
+      "stratum": "S2_forged"
+    },
+    {
+      "concepts": [
+        {
+          "field": "Physics",
+          "mechanism": "dynamics",
+          "name": "Chaos Theory",
+          "short_description": "Sensitive dependence on initial conditions in deterministic systems; strange attractors, Lyapunov exponents."
+        },
+        {
+          "field": "Cognitive Science",
+          "mechanism": "constraint",
+          "name": "Cognitive Load Theory",
+          "short_description": "Limited working memory constrains learning; intrinsic, extraneous, and germane load; chunking."
+        },
+        {
+          "field": "Neuroscience",
+          "mechanism": "dynamics",
+          "name": "Neuromodulation",
+          "short_description": "Chemical signals that alter neural circuit dynamics; dopamine, serotonin, gain control, state-dependent processing."
+        }
+      ],
+      "history": {
+        "forged": true,
+        "ledger_n": 1,
+        "ledger_reasons": [
+          ""
+        ],
+        "nous_composite_max": 7.0,
+        "nous_high_potential": false,
+        "nous_models": [
+          "nvidia/nemotron-3-super-120b-a12b"
+        ],
+        "nous_n": 1,
+        "nous_unproductive_any": false
+      },
+      "id": "HT-55162c0ac0",
+      "key": "Chaos Theory + Cognitive Load Theory + Neuromodulation",
+      "provenance": {
+        "historicalId": "Chaos Theory + Cognitive Load Theory + Neuromodulation",
+        "humanreadable": "agents/hephaestus/humanreadable/Chaos_Theory---Cognitive_Load_Theory---Neuromodulation.md",
+        "ledger_lines": [
+          618
+        ],
+        "source": "hephaestus",
+        "sourceArtifact": "agents/hephaestus/ledger.jsonl#L618",
+        "upstream_nous": [
+          "agents/nous/runs/20260325_132552/responses.jsonl#L98"
+        ]
+      },
+      "stratum": "S2_forged"
+    },
+    {
+      "concepts": [
+        {
+          "field": "Computer Science",
+          "mechanism": "measure",
+          "name": "Compressed Sensing",
+          "short_description": "Recovering sparse signals from far fewer measurements than Nyquist; RIP, basis pursuit, L1 minimization."
+        },
+        {
+          "field": "Mathematics",
+          "mechanism": "measure",
+          "name": "Measure Theory",
+          "short_description": "Rigorous foundation for integration and probability; sigma-algebras, Lebesgue measure, convergence theorems."
+        },
+        {
+          "field": "Biology",
+          "mechanism": "dynamics",
+          "name": "Symbiosis",
+          "short_description": "Long-term interspecies interaction with mutual benefit; mutualism, endosymbiosis, holobiont theory."
+        }
+      ],
+      "history": {
+        "forged": true,
+        "ledger_n": 1,
+        "ledger_reasons": [
+          ""
+        ],
+        "nous_composite_max": 7.33,
+        "nous_high_potential": true,
+        "nous_models": [
+          "nvidia/nemotron-3-super-120b-a12b"
+        ],
+        "nous_n": 1,
+        "nous_unproductive_any": false
+      },
+      "id": "HT-37e311ce05",
+      "key": "Compressed Sensing + Measure Theory + Symbiosis",
+      "provenance": {
+        "historicalId": "Compressed Sensing + Measure Theory + Symbiosis",
+        "humanreadable": "agents/hephaestus/humanreadable/Measure_Theory---Compressed_Sensing---Symbiosis.md",
+        "ledger_lines": [
+          866
+        ],
+        "source": "hephaestus",
+        "sourceArtifact": "agents/hephaestus/ledger.jsonl#L866",
+        "upstream_nous": [
+          "agents/nous/runs/20260324_214225/responses.jsonl#L586"
+        ]
+      },
+      "stratum": "S2_forged"
+    },
+    {
+      "concepts": [
+        {
+          "field": "Statistical Physics",
+          "mechanism": "measure",
+          "name": "Maximum Entropy",
+          "short_description": "Least biased inference consistent with constraints; Jaynes' principle, exponential families, log-linear models."
+        },
+        {
+          "field": "Control Theory",
+          "mechanism": "dynamics",
+          "name": "Optimal Control",
+          "short_description": "Minimizing cost over trajectories; Pontryagin's principle, Hamilton-Jacobi-Bellman, LQR."
+        },
+        {
+          "field": "Mathematics",
+          "mechanism": "structure",
+          "name": "Tensor Decomposition",
+          "short_description": "Factoring multi-dimensional arrays into simpler components; CP, Tucker, and tensor train formats."
+        }
+      ],
+      "history": {
+        "forged": false,
+        "ledger_n": 1,
+        "ledger_reasons": [
+          "api_call_failed"
+        ],
+        "nous_composite_max": 7.67,
+        "nous_high_potential": true,
+        "nous_models": [
+          "nvidia/nemotron-3-super-120b-a12b"
+        ],
+        "nous_n": 1,
+        "nous_unproductive_any": false
+      },
+      "id": "HT-2a8a3aedeb",
+      "key": "Maximum Entropy + Optimal Control + Tensor Decomposition",
+      "provenance": {
+        "historicalId": "Maximum Entropy + Optimal Control + Tensor Decomposition",
+        "humanreadable": "agents/hephaestus/humanreadable/Tensor_Decomposition---Optimal_Control---Maximum_Entropy.md",
+        "ledger_lines": [
+          2160
+        ],
+        "source": "hephaestus",
+        "sourceArtifact": "agents/hephaestus/ledger.jsonl#L2160",
+        "upstream_nous": [
+          "agents/nous/runs/20260324_131206/responses.jsonl#L547"
+        ]
+      },
+      "stratum": "S3_nous_high"
+    },
+    {
+      "concepts": [
+        {
+          "field": "Information Science",
+          "mechanism": "structure",
+          "name": "Error Correcting Codes",
+          "short_description": "Redundancy-based protection against noise; Hamming distance, Reed-Solomon, LDPC, turbo codes."
+        },
+        {
+          "field": "Physics",
+          "mechanism": "dynamics",
+          "name": "Phase Transitions",
+          "short_description": "Abrupt qualitative changes in system behavior at critical parameters; universality classes, order parameters."
+        },
+        {
+          "field": "Complex Systems",
+          "mechanism": "dynamics",
+          "name": "Self-Organized Criticality",
+          "short_description": "Systems naturally evolve to critical states with power-law avalanches; sandpile models, 1/f noise."
+        }
+      ],
+      "history": {
+        "forged": false,
+        "ledger_n": 1,
+        "ledger_reasons": [
+          "api_call_failed"
+        ],
+        "nous_composite_max": 7.33,
+        "nous_high_potential": true,
+        "nous_models": [
+          "nvidia/nemotron-3-super-120b-a12b"
+        ],
+        "nous_n": 1,
+        "nous_unproductive_any": false
+      },
+      "id": "HT-e106e1603b",
+      "key": "Error Correcting Codes + Phase Transitions + Self-Organized Criticality",
+      "provenance": {
+        "historicalId": "Error Correcting Codes + Phase Transitions + Self-Organized Criticality",
+        "humanreadable": "agents/hephaestus/humanreadable/Phase_Transitions---Self-Organized_Criticality---Error_Correcting_Codes.md",
+        "ledger_lines": [
+          2240
+        ],
+        "source": "hephaestus",
+        "sourceArtifact": "agents/hephaestus/ledger.jsonl#L2240",
+        "upstream_nous": [
+          "agents/nous/runs/20260324_214225/responses.jsonl#L637"
+        ]
+      },
+      "stratum": "S3_nous_high"
+    },
+    {
+      "concepts": [
+        {
+          "field": "Physics",
+          "mechanism": "structure",
+          "name": "Holography Principle",
+          "short_description": "Bulk information encoded on boundary; AdS/CFT correspondence, information density bounds."
+        },
+        {
+          "field": "Information Science",
+          "mechanism": "measure",
+          "name": "Kolmogorov Complexity",
+          "short_description": "Minimum description length of an object; algorithmic randomness, incompressibility, MDL principle."
+        },
+        {
+          "field": "Economics",
+          "mechanism": "constraint",
+          "name": "Mechanism Design",
+          "short_description": "Engineering rules to achieve desired outcomes with self-interested agents; auctions, incentive compatibility."
+        }
+      ],
+      "history": {
+        "forged": false,
+        "ledger_n": 1,
+        "ledger_reasons": [
+          "trap_battery_failed"
+        ],
+        "nous_composite_max": 7.33,
+        "nous_high_potential": true,
+        "nous_models": [
+          "nvidia/nemotron-3-super-120b-a12b"
+        ],
+        "nous_n": 1,
+        "nous_unproductive_any": false
+      },
+      "id": "HT-321a8fd8e0",
+      "key": "Holography Principle + Kolmogorov Complexity + Mechanism Design",
+      "provenance": {
+        "historicalId": "Holography Principle + Kolmogorov Complexity + Mechanism Design",
+        "humanreadable": "agents/hephaestus/humanreadable/Holography_Principle---Kolmogorov_Complexity---Mechanism_Design.md",
+        "ledger_lines": [
+          714
+        ],
+        "source": "hephaestus",
+        "sourceArtifact": "agents/hephaestus/ledger.jsonl#L714",
+        "upstream_nous": [
+          "agents/nous/runs/20260324_131206/responses.jsonl#L683"
+        ]
+      },
+      "stratum": "S3_nous_high"
+    },
+    {
+      "concepts": [
+        {
+          "field": "Control Theory",
+          "mechanism": "dynamics",
+          "name": "Feedback Control",
+          "short_description": "Using output error to adjust input; PID controllers, stability margins, Bode plots, Nyquist criterion."
+        },
+        {
+          "field": "Theoretical Neuroscience",
+          "mechanism": "dynamics",
+          "name": "Free Energy Principle",
+          "short_description": "Biological systems minimize variational free energy; prediction error minimization, Markov blankets."
+        },
+        {
+          "field": "Biology",
+          "mechanism": "dynamics",
+          "name": "Immune Systems",
+          "short_description": "Adaptive defense via clonal selection and memory; antibody diversity, self/non-self discrimination."
+        }
+      ],
+      "history": {
+        "forged": false,
+        "ledger_n": 1,
+        "ledger_reasons": [
+          "validation:runtime_error: UnboundLocalError: cannot access local variable 'ab' where it is not associated with a value"
+        ],
+        "nous_composite_max": 5.33,
+        "nous_high_potential": false,
+        "nous_models": [
+          "nvidia/nemotron-3-super-120b-a12b"
+        ],
+        "nous_n": 1,
+        "nous_unproductive_any": false
+      },
+      "id": "HT-e743909f97",
+      "key": "Feedback Control + Free Energy Principle + Immune Systems",
+      "provenance": {
+        "historicalId": "Feedback Control + Free Energy Principle + Immune Systems",
+        "humanreadable": "agents/hephaestus/humanreadable/Immune_Systems---Feedback_Control---Free_Energy_Principle.md",
+        "ledger_lines": [
+          4971
+        ],
+        "source": "hephaestus",
+        "sourceArtifact": "agents/hephaestus/ledger.jsonl#L4971",
+        "upstream_nous": [
+          "agents/nous/runs/20260325_132552/responses.jsonl#L1646"
+        ]
+      },
+      "stratum": "S4_nous_failure"
+    },
+    {
+      "concepts": [
+        {
+          "field": "Cognitive Science",
+          "mechanism": "dynamics",
+          "name": "Predictive Coding",
+          "short_description": "Brain as prediction engine minimizing surprise; prediction errors, hierarchical generative models."
+        },
+        {
+          "field": "Mathematics",
+          "mechanism": "structure",
+          "name": "Prime Number Theory",
+          "short_description": "Distribution and structure of primes; Riemann zeta function, prime gaps, multiplicative number theory."
+        },
+        {
+          "field": "Physics",
+          "mechanism": "constraint",
+          "name": "Thermodynamics",
+          "short_description": "Energy, entropy, and equilibrium; laws governing heat transfer and the arrow of time."
+        }
+      ],
+      "history": {
+        "forged": false,
+        "ledger_n": 1,
+        "ledger_reasons": [
+          "trap_battery_failed"
+        ],
+        "nous_composite_max": 5.33,
+        "nous_high_potential": false,
+        "nous_models": [
+          "nvidia/nemotron-3-super-120b-a12b"
+        ],
+        "nous_n": 1,
+        "nous_unproductive_any": false
+      },
+      "id": "HT-47f4c02be4",
+      "key": "Predictive Coding + Prime Number Theory + Thermodynamics",
+      "provenance": {
+        "historicalId": "Predictive Coding + Prime Number Theory + Thermodynamics",
+        "humanreadable": "agents/hephaestus/humanreadable/Prime_Number_Theory---Thermodynamics---Predictive_Coding.md",
+        "ledger_lines": [
+          6417
+        ],
+        "source": "hephaestus",
+        "sourceArtifact": "agents/hephaestus/ledger.jsonl#L6417",
+        "upstream_nous": [
+          "agents/nous/runs/20260325_085453/responses.jsonl#L15"
+        ]
+      },
+      "stratum": "S4_nous_failure"
+    },
+    {
+      "concepts": [
+        {
+          "field": "Formal Methods",
+          "mechanism": "measure",
+          "name": "Abstract Interpretation",
+          "short_description": "Compute properties of programs without executing them; soundness vs completeness tradeoff; over/under-approximation."
+        },
+        {
+          "field": "Mathematics",
+          "mechanism": "structure",
+          "name": "Fractal Geometry",
+          "short_description": "Self-similar structures at every scale; Hausdorff dimension, iterated function systems, power-law scaling."
+        },
+        {
+          "field": "Statistics",
+          "mechanism": "measure",
+          "name": "Sensitivity Analysis",
+          "short_description": "How do output variations depend on input perturbations? Robustness of causal estimates under model misspecification."
+        }
+      ],
+      "history": {
+        "forged": false,
+        "ledger_n": 1,
+        "ledger_reasons": [
+          "trap_battery_failed"
+        ],
+        "nous_composite_max": 5.33,
+        "nous_high_potential": false,
+        "nous_models": [
+          "nvidia/nemotron-3-super-120b-a12b"
+        ],
+        "nous_n": 1,
+        "nous_unproductive_any": false
+      },
+      "id": "HT-ae38c641b1",
+      "key": "Abstract Interpretation + Fractal Geometry + Sensitivity Analysis",
+      "provenance": {
+        "historicalId": "Abstract Interpretation + Fractal Geometry + Sensitivity Analysis",
+        "humanreadable": "agents/hephaestus/humanreadable/Fractal_Geometry---Abstract_Interpretation---Sensitivity_Analysis.md",
+        "ledger_lines": [
+          6449
+        ],
+        "source": "hephaestus",
+        "sourceArtifact": "agents/hephaestus/ledger.jsonl#L6449",
+        "upstream_nous": [
+          "agents/nous/runs/20260325_132552/responses.jsonl#L984"
+        ]
+      },
+      "stratum": "S4_nous_failure"
+    },
+    {
+      "concepts": [
+        {
+          "field": "Philosophy",
+          "mechanism": "dynamics",
+          "name": "Counterfactual Reasoning",
+          "short_description": "Reasoning about what would have happened under different conditions; Lewis's possible worlds, Pearl's do-calculus."
+        },
+        {
+          "field": "Mathematics",
+          "mechanism": "dynamics",
+          "name": "Dynamical Systems",
+          "short_description": "Evolution of state over time via deterministic rules; attractors, bifurcations, Lyapunov exponents."
+        },
+        {
+          "field": "Biology",
+          "mechanism": "dynamics",
+          "name": "Ecosystem Dynamics",
+          "short_description": "Energy flows, trophic cascades, and succession in ecological communities; resilience, keystone species."
+        }
+      ],
+      "history": {
+        "forged": false,
+        "ledger_n": 1,
+        "ledger_reasons": [
+          "trap_battery_failed"
+        ],
+        "nous_composite_max": 8.0,
+        "nous_high_potential": true,
+        "nous_models": [
+          "nvidia/nemotron-3-super-120b-a12b"
+        ],
+        "nous_n": 1,
+        "nous_unproductive_any": false
+      },
+      "id": "HT-79e904e13a",
+      "key": "Counterfactual Reasoning + Dynamical Systems + Ecosystem Dynamics",
+      "provenance": {
+        "historicalId": "Counterfactual Reasoning + Dynamical Systems + Ecosystem Dynamics",
+        "humanreadable": "agents/hephaestus/humanreadable/Dynamical_Systems---Ecosystem_Dynamics---Counterfactual_Reasoning.md",
+        "ledger_lines": [
+          489
+        ],
+        "source": "hephaestus",
+        "sourceArtifact": "agents/hephaestus/ledger.jsonl#L489",
+        "upstream_nous": [
+          "agents/nous/runs/20260325_062155/responses.jsonl#L101"
+        ]
+      },
+      "stratum": "S5_random"
+    },
+    {
+      "concepts": [
+        {
+          "field": "Cognitive Science",
+          "mechanism": "measure",
+          "name": "Metacognition",
+          "short_description": "Thinking about thinking; confidence calibration, error monitoring, strategy selection."
+        },
+        {
+          "field": "Game Theory",
+          "mechanism": "constraint",
+          "name": "Nash Equilibrium",
+          "short_description": "Stable strategy profiles where no agent benefits from unilateral deviation; mixed strategies, coordination games."
+        },
+        {
+          "field": "Linguistics",
+          "mechanism": "structure",
+          "name": "Pragmatics",
+          "short_description": "Context-dependent meaning beyond literal semantics; implicature, speech acts, Grice's maxims."
+        }
+      ],
+      "history": {
+        "forged": false,
+        "ledger_n": 1,
+        "ledger_reasons": [
+          "trap_battery_failed"
+        ],
+        "nous_composite_max": 7.0,
+        "nous_high_potential": false,
+        "nous_models": [
+          "nvidia/nemotron-3-super-120b-a12b"
+        ],
+        "nous_n": 1,
+        "nous_unproductive_any": false
+      },
+      "id": "HT-71b65251aa",
+      "key": "Metacognition + Nash Equilibrium + Pragmatics",
+      "provenance": {
+        "historicalId": "Metacognition + Nash Equilibrium + Pragmatics",
+        "humanreadable": "agents/hephaestus/humanreadable/Metacognition---Pragmatics---Nash_Equilibrium.md",
+        "ledger_lines": [
+          1736
+        ],
+        "source": "hephaestus",
+        "sourceArtifact": "agents/hephaestus/ledger.jsonl#L1736",
+        "upstream_nous": [
+          "agents/nous/runs/20260325_132552/responses.jsonl#L2172"
+        ]
+      },
+      "stratum": "S5_random"
+    },
+    {
+      "concepts": [
+        {
+          "field": "Neuroscience",
+          "mechanism": "dynamics",
+          "name": "Hebbian Learning",
+          "short_description": "Neurons that fire together wire together; activity-dependent synaptic strengthening, LTP/LTD."
+        },
+        {
+          "field": "Mathematics",
+          "mechanism": "measure",
+          "name": "Information Theory",
+          "short_description": "Quantification of information, entropy, and channel capacity; Shannon entropy, mutual information, KL divergence."
+        },
+        {
+          "field": "Biology",
+          "mechanism": "dynamics",
+          "name": "Morphogenesis",
+          "short_description": "Self-organized pattern formation in development; Turing patterns, morphogen gradients, reaction-diffusion."
+        }
+      ],
+      "history": {
+        "forged": false,
+        "ledger_n": 1,
+        "ledger_reasons": [
+          "trap_battery_failed"
+        ],
+        "nous_composite_max": 5.0,
+        "nous_high_potential": false,
+        "nous_models": [
+          "nvidia/nemotron-3-super-120b-a12b"
+        ],
+        "nous_n": 1,
+        "nous_unproductive_any": false
+      },
+      "id": "HT-faa9277e02",
+      "key": "Hebbian Learning + Information Theory + Morphogenesis",
+      "provenance": {
+        "historicalId": "Hebbian Learning + Information Theory + Morphogenesis",
+        "humanreadable": "agents/hephaestus/humanreadable/Information_Theory---Morphogenesis---Hebbian_Learning.md",
+        "ledger_lines": [
+          6368
+        ],
+        "source": "hephaestus",
+        "sourceArtifact": "agents/hephaestus/ledger.jsonl#L6368",
+        "upstream_nous": [
+          "agents/nous/runs/20260325_132552/responses.jsonl#L552"
+        ]
+      },
+      "stratum": "S5_random"
+    },
+    {
+      "concepts": [
+        {
+          "field": "Philosophy",
+          "mechanism": "dynamics",
+          "name": "Abductive Reasoning",
+          "short_description": "Inference to best explanation from incomplete data; hypothesis generation, explanatory virtues."
+        },
+        {
+          "field": "Philosophy",
+          "mechanism": "structure",
+          "name": "Epistemology",
+          "short_description": "Study of knowledge, justification, and belief; foundationalism, coherentism, reliabilism."
+        },
+        {
+          "field": "Formal Methods",
+          "mechanism": "constraint",
+          "name": "Model Checking",
+          "short_description": "Exhaustive verification of finite-state systems against specifications; temporal logic, state space exploration."
+        }
+      ],
+      "history": {
+        "forged": false,
+        "ledger_n": 1,
+        "ledger_reasons": [
+          "api_call_failed"
+        ],
+        "nous_composite_max": 7.0,
+        "nous_high_potential": false,
+        "nous_models": [
+          "nvidia/nemotron-3-super-120b-a12b"
+        ],
+        "nous_n": 1,
+        "nous_unproductive_any": false
+      },
+      "id": "HT-5b0b3ebb8d",
+      "key": "Abductive Reasoning + Epistemology + Model Checking",
+      "provenance": {
+        "historicalId": "Abductive Reasoning + Epistemology + Model Checking",
+        "humanreadable": "agents/hephaestus/humanreadable/Epistemology---Abductive_Reasoning---Model_Checking.md",
+        "ledger_lines": [
+          3012
+        ],
+        "source": "hephaestus",
+        "sourceArtifact": "agents/hephaestus/ledger.jsonl#L3012",
+        "upstream_nous": [
+          "agents/nous/runs/20260325_132552/responses.jsonl#L852"
+        ]
+      },
+      "stratum": "S5_random"
+    }
+  ]
+}

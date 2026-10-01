@@ -1,0 +1,16 @@
+{
+  "seat": "Harmonia",
+  "mwo": "MWO-0003",
+  "discovered_by": "own_loop_fetch",
+  "probe": "roles/Harmonia/qualification/campaign1/c1_hostile_adjudication.py (HA-1.0.1 C1 hostile adjudication fixture suite; existing, stdlib-only, deterministic)",
+  "base_sha": "13f1bb5669426d4eb79ed256234074091b5f2677",
+  "execution": "fabric",
+  "fabric_tasks": ["tsk-68d1805f8bb9", "tsk-6977ea115cc8"],
+  "fabric_attempts": ["att-e0a30c0ebc4d", "att-8634340535d0"],
+  "lease": null,
+  "wall_seconds": 24,
+  "result": "PASS",
+  "artifact_hashes": ["stdout 43dd0e359c386dcd (replica 1 = replica 2)", "stderr e3b0c44298fc1c14 (empty, both)", "env_receipt c951ae4a57fe8f62 (r1, worker.ubu001.sci) / c8d6b62a67be859e (r2, worker.ubu001.sci3)"],
+  "fabric_blocker": null,
+  "notes": "Script executor, --replicas 2, cap python.stdlib, max_attempts 1. Both replicas completed on the first attempt on different workers with byte-identical stdout: contract PASS, 12/12 cheats caught, 7/7 clean quiet, 5/5 ablations. wall_seconds = longest claim-to-artifact (~16 s r1, ~24 s r2, including checkout). MWO-0003 was found by the seat loop's git-fetch monitor (P 624a686ea) before the publication broadcast was read."
+}

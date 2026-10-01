@@ -1,0 +1,70 @@
+{
+  "specimen_id": "map-elites-sferes2",
+  "url": "https://github.com/sferes2/map_elites",
+  "commit": "854eb3a4c4b8da592675f54fbb8667942b6eaf20",
+  "commit_date": "2017-07-25T12:33:56+02:00",
+  "default_branch": "master",
+  "n_tracked_files": 14,
+  "n_commits": 33,
+  "first_commit_date": "2015-05-07T18:45:50+02:00",
+  "has_gitmodules": false,
+  "has_lfs": false,
+  "approx_tree_bytes": 81511,
+  "canonical_name": "map_elites (MAP-Elites module for Sferes2) -- Illuminating search spaces by mapping elites (Mouret, J. B., & Clune, J. (2015) per README reference; module authors Jean-Baptiste Mouret and Danesh Tarapore; Inria per author e-mail, copyright headers ISIR / UPMC; 2015-2017)",
+  "aliases": ["map_elites", "MAP-Elites", "Multi-dimensional Archive of Phenotypic Elites", "sferes::ea::MapElites"],
+  "license": {
+    "file": "COPYING",
+    "first_line": "CeCILL FREE SOFTWARE LICENSE AGREEMENT",
+    "spdx_guess": "CECILL-2.1",
+    "metadata_license_field": "NOT_FOUND_AT_PIN",
+    "notes": "COPYING is byte-identical to sferes2's COPYING (line 4: 'Version 2.1 dated 2013-06-21'); COPYING.fr present. README has no licence statement. Only 4 of 14 files carry the CeCILL header ('This file is a part of the sferes2 framework.' / 'Copyright 2009, ISIR / Universite Pierre et Marie Curie (UPMC)'): 3 C++ files plus wscript; the remaining sources (binary_map.hpp, extract_binary_map.cpp, plot_map.py, stat_map.hpp, stat_map_binary.hpp, stat_progress.hpp) have no copyright line; map_elites.hpp, fit_map.hpp, test_map_elites.cpp and wscript carry it."
+  },
+  "copyright_holders_by_header_count": {
+    "ISIR / Universite Pierre et Marie Curie (UPMC) (2009)": 3
+  },
+  "language": ["C++ (C++11: std::array, auto; header-only module + 2 program sources)", "Python 2 (plot_map.py uses print statements; numpy, matplotlib)", "Python (wscript)"],
+  "build_system": "waf via the parent sferes2 tree: wscript with includes '. ../../' and use = 'sferes2', i.e. expects to be checked out as sferes2/modules/map_elites and listed in sferes2's modules.conf; builds 'test_map_elites' (features 'cxx test', uselib EIGEN BOOST BOOST_UNIT_TEST_FRAMEWORK TBB) and 'extract_binary_map' (uselib EIGEN BOOST)",
+  "interpreter_or_compiler": "C++11 compiler via sferes2's waf configure (inherits -std=c++11); Python 2 for plot_map.py (print statement syntax)",
+  "dependencies": [
+    "sferes2 (unpinned; headers <sferes/stc.hpp>, <sferes/ea/ea.hpp>, <sferes/fit/fitness.hpp>, <sferes/eval/parallel.hpp>, <sferes/gen/evo_float.hpp>, <sferes/phen/parameters.hpp>, <sferes/modif/dummy.hpp>, <sferes/run.hpp>, <sferes/stat/best_fit.hpp>; linked via waf use='sferes2')",
+    "Boost (multi_array, foreach, fusion, shared_ptr, lexical_cast, unit_test_framework)",
+    "Intel TBB (via sferes::eval::Parallel unless NO_PARALLEL)",
+    "Eigen (uselib EIGEN in wscript; no direct include seen in the headers read)",
+    "numpy, matplotlib (plot_map.py, unpinned)",
+    "No manifest with versions; README gives no install instructions"
+  ],
+  "network_fetches_in_setup": ["NOT_FOUND_AT_PIN (README has no setup section; the implicit requirement is cloning sferes2 and this repo, both unpinned, per sferes2's README module list)"],
+  "entry_points": [
+    "map_elites.hpp sferes::ea::MapElites (SFERES_EA(MapElites, Ea)): random_pop() creates Params::pop::init_size random individuals, evaluates them, adds each to the archive; epoch() gathers all filled cells into _pop, draws Params::pop::size uniform-random parent pairs, cross()+mutate()+develop(), evaluates the batch, _add_to_archive each child",
+    "map_elites.hpp MapElites::_add_to_archive(i1, parent): maps fit().desc() to a boost::multi_array<phen_ptr, behav_dim> cell by round(desc*shape), replaces the occupant if empty, better by > Params::ea::epsilon, or tied and closer to cell centre (_dist_center)",
+    "map_elites.hpp MapElites::_selection(pop): uniform random pick from the archive contents",
+    "fit_map.hpp sferes::fit::FitMap and macro FIT_MAP(Name): fitness base holding a std::vector<float> _desc of size Params::ea::behav_dim in [0,1], set via set_desc()",
+    "stat_map.hpp sferes::stat::Map::refresh(ea): every dump_period writes res_dir/archive_<gen>.dat lines 'offset  desc_0 desc_1 ...  fitness  genotype...'; stat_map_binary.hpp MapBinary and binary_map.hpp write/load a binary archive; stat_progress.hpp MapProgress",
+    "test_map_elites.cpp BOOST_AUTO_TEST_CASE(map_elites): Rastrigin on EvoFloat<10> in [-5,5], desc = first two genes, behav_shape 128x128, init_size 1000, batch 1000, nb_gen 1001; BOOST_CHECK(best > -1e-3)",
+    "extract_binary_map.cpp main(argv[1]): loads a binary_map file and prints dims then 'pos... fit phen...' per elem",
+    "plot_map.py <archive.dat> <size>: loads 'k, x, y, z' columns, builds size x size heatmap, saves heatmap.pdf"
+  ],
+  "example_command": "NOT_FOUND_AT_PIN (README gives no command; the tree's runnable is the waf target test_map_elites built from sferes2 with ./waf --tests, and 'python plot_map.py <archive_N.dat> <size>')",
+  "example_input": "No data input; test_map_elites.cpp compiles in the Rastrigin problem and a Params struct (behav_dim 2, epsilon 0, behav_shape 128 128, init_size 1000, size 1000, nb_gen 1001, dump_period 100, parameters min -5 max 5, cross_rate 0.25, mutation_rate 0.1, eta_m 10, eta_c 10, polynomial mutation, sbx crossover)",
+  "example_output": "res_dir/archive_<gen>.dat text files (one line per filled cell: cell offset, normalized descriptor coordinates, fitness, genotype values) every dump_period generations; optional parents_<gen>.dat under MAP_WRITE_PARENTS; binary map via MapBinary; sferes2 gen_<N> dumps; test prints 'best fit (map_elites):<value>'; plot_map.py writes heatmap.pdf",
+  "runtime_native_deps": ["C++11 toolchain", "sferes2 static lib and headers", "Boost (multi_array, fusion, serialization, unit_test_framework)", "Intel TBB (optional via NO_PARALLEL)", "Eigen (per wscript uselib)", "Python 2 + numpy + matplotlib for plotting only"],
+  "host_class": "Same as sferes2: Unix-like host (Linux/OSX) with C++11 compiler, Boost, optional TBB; CPU only; must be placed inside a sferes2 checkout as modules/map_elites",
+  "upstream_docs": [
+    "Mouret, J. B., & Clune, J. (2015). Illuminating search spaces by mapping elites. arXiv preprint arXiv:1504.04909.",
+    "http://arxiv.org/abs/1504.04909"
+  ],
+  "built_to": "README: 'MAP-Elites module for Sferes2.' implementing an algorithm that 'creates a map of high-performing solutions at each point in a space defined by dimensions of variation that a user gets to choose'.",
+  "pressure": "README (abstract): 'The goal of search algorithms has traditionally been to return the single highest-performing solution in a search space' whereas a 'holistic view of how high-performing solutions are distributed throughout a search space' is 'more useful'.",
+  "success_means": "README: MAP-Elites '(1) illuminates the relationship between performance and dimensions of interest in solutions, (2) returns a set of high-performing, yet diverse solutions, and (3) improves finding a single, best solution'; in-tree test: BOOST_CHECK(best > -1e-3) on Rastrigin after 1001 generations.",
+  "main_loop_one_sentence": "Per generation MapElites::epoch() flattens every occupied cell of the boost::multi_array archive into the working population, then Params::pop::size times picks two uniformly random elites, crosses and mutates them into two children, evaluates the whole child batch (in parallel via sferes::eval), and for each child computes its cell from round(desc_i * shape_i) and overwrites the occupant if the cell is empty, the child is fitter by more than epsilon, or it ties and lies closer to the cell centre; sferes2's Ea::run() drives this for nb_gen generations and dumps stats every dump_period.",
+  "behavioral_entry_point": "map_elites.hpp:MapElites::_selection (uniform random parent choice), MapElites::_add_to_archive (replacement rule / epsilon / centre tie-break), MapElites::_get_point (descriptor-to-cell mapping); descriptors are user-defined in the FIT_MAP fitness eval() via set_desc()",
+  "lineage_notes": "README: 'MAP-Elites module for Sferes2', reference 'Mouret, J. B., & Clune, J. (2015). Illuminating search spaces by mapping elites'; every licensed header says 'This file is a part of the sferes2 framework.' and the module builds via use='sferes2' with includes '../../' (i.e. lives at sferes2/modules/map_elites). sferes2's README at its own pin says 'we will soon integrate a more flexible version in the master branch of sferes_v2', i.e. this module is the standalone precursor of the later in-tree QD code.",
+  "other_branches_or_versions": "No tags. Remote branches: equisized_tiles, generic_print, master (default), normalization, stat_new.",
+  "things_i_could_not_verify": [
+    "Whether it compiles against sferes2 at commit 21c5384 (module is 2017, sferes2 pin is 2021; no code executed)",
+    "Which sferes2 revision the authors used",
+    "Content of arXiv:1504.04909 beyond the abstract quoted in README",
+    "Whether the Eigen uselib is actually required by any include",
+    "Institution/years in canonical_name inferred from headers (ISIR/UPMC 2009), author e-mail (inria.fr), first commit (2015) and pin (2017)"
+  ]
+}

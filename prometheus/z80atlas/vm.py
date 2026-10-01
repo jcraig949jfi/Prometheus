@@ -77,6 +77,7 @@ class Trace:
     # only, added 2026-09-23 (forensics M1/M2/C8): lets the observer tell a self-copy from a sweep, a smear or a capture
     win_prov: Dict[int, Tuple[Optional[int], int, int]] = field(default_factory=dict)
     pcs: Optional[set] = None                                  # executed PCs (only when execute(trace_pcs=True))
+    regs_out: Optional[tuple] = None                           # (A, B, C, D, S, T, Z, CF) at exit (register-world axis)
 
 
 COPY_OPS = frozenset((LDI, LDIR, COPYALL))
@@ -84,7 +85,8 @@ COPY_OPS = frozenset((LDI, LDIR, COPYALL))
 
 def execute(mem: bytearray, L: int, entry: int, budget: int, inputs: List[int], region: Optional[Tuple[int, int]] = None,
             allow_copyall: bool = False, cost_per_step: int = 1, strict_budget: bool = False, prov_L: Optional[int] = None,
-            ldir: str = "on", undefined: str = "NOP", trace_pcs: bool = False) -> Trace:
+            ldir: str = "on", undefined: str = "NOP", trace_pcs: bool = False, stop_at_first_out: bool = False,
+            regs: Optional[tuple] = None) -> Trace:
     """Run from `entry` for at most `budget` steps. `region` restricts the PC to [lo, hi) (the SEPARATED layout):
     leaving it halts. Undefined opcodes are NOP (1 step). Returns the Trace; `mem` is mutated in place.
     strict_budget (physics v2): COPYALL executes only if its L//8 step cost fits the remaining budget (v1 overran it).
@@ -92,9 +94,17 @@ def execute(mem: bytearray, L: int, entry: int, budget: int, inputs: List[int], 
     world's L because it runs with 2L).
     Chemistry ablations (Phase 8 of the 2026-09-23 forensics; defaults = the historical chemistry):
       ldir       "on" | "off" (LDIR executes as an undefined byte) | "cost4" (each LDIR byte costs 4 steps)
-      undefined  "NOP" | "HALT" (an undefined opcode stops execution: no neutral NOP slides)"""
-    A = B = C = D = S = T = 0
-    Z = False; CF = False
+      undefined  "NOP" | "HALT" (an undefined opcode stops execution: no neutral NOP slides)
+    stop_at_first_out (2026-09-26, measurement only): return right after the first OUT. Used by tasks.verify_exact,
+    whose score reads only the first output and the first IN/OUT steps -- all fixed at that point. Never used by the
+    world's own executions (default False keeps every historical trace unchanged).
+    regs (2026-09-30, register-world axis, E-BEL-REPL-01): entry state (A, B, C, D, S, T, Z, CF); None = all zero, the
+    historical and default behaviour. The exit state is recorded in Trace.regs_out either way."""
+    if regs is None:
+        A = B = C = D = S = T = 0
+        Z = False; CF = False
+    else:
+        A, B, C, D, S, T = (int(x) & 0xFF for x in regs[:6]); Z = bool(regs[6]); CF = bool(regs[7])
     pc = entry & 0xFF
     tr = Trace()
     if trace_pcs:
@@ -212,6 +222,8 @@ def execute(mem: bytearray, L: int, entry: int, budget: int, inputs: List[int], 
             if len(tr.outputs) < 16:
                 mem[OUT_BASE + len(tr.outputs)] = A
                 tr.outputs.append(A)
+            if stop_at_first_out:
+                break
         elif op in (LD_B_A, LD_A_B, LD_C_A, LD_A_C, LD_S_A, LD_T_A, LD_A_S, LD_A_T, LD_D_A, LD_A_D, SWAP_A_B):
             if op == LD_B_A: B = A
             elif op == LD_A_B: A = B
@@ -226,6 +238,7 @@ def execute(mem: bytearray, L: int, entry: int, budget: int, inputs: List[int], 
             else: A, B = B, A
         # undefined opcode: NOP
         pc = npc
+    tr.regs_out = (A, B, C, D, S, T, Z, CF)
     return tr
 
 

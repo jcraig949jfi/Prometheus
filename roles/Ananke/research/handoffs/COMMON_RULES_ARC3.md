@@ -18,7 +18,15 @@
 3 DISAGREEMENT IS A RESULT. Where your evidence contradicts a principal
   interpretation, say so explicitly in a "DISAGREEMENTS" section of the
   report.
-4 LEASES: unchanged (roles/Ananke/research/lease.py). Acquire BEFORE
+4 LEASES: unchanged (roles/Ananke/research/lease.py; since cutover 8370083ae
+  it is a frontend onto the Fabric lease row, equivalently `python -m fabric
+  lease acquire <host>:<res> --as Ananke`). Acquire BEFORE
   starting any process that uses the GPU, or > 2 CPU threads for > 5 min.
   Release on completion, abandonment or crash. If BUSY: queue in your
   QUEUE.md and do other work; do not start a weaker substitute experiment.
+5 GATES AND DEVICES (2026-09-30). If a pre-registered known-answer gate fails,
+  do NOT run the champion: stop and report (a principal decides). Run every
+  engine process with CUDA_VISIBLE_DEVICES=-1 and pass device="cpu" explicitly,
+  unless the brief grants a GPU lease (World defaults to device="cuda").
+  CORRECTED 2026-09-30 (H-INST): an EMPTY CUDA_VISIBLE_DEVICES= does NOT hide
+  the GPU on SKULLPORT (torch.cuda.is_available() stays True); use -1.

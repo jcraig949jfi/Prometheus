@@ -1,0 +1,163 @@
+{
+ "triplicateId": "HT-faa9277e02",
+ "world": "W1",
+ "outcome": "SPEC_UNATTAINABLE",
+ "statistics": {
+  "pilot_attempt1": {
+   "n_seeds": 10,
+   "positive": {
+    "mean_r": -0.046639726672203986,
+    "null_mean_r": 0.001968858611443888,
+    "diff": -0.04860858528364787,
+    "wilcoxon_p": 0.8837890625,
+    "clauses": {
+     "mean_ge_0.5": false,
+     "minus_null_ge_0.3": false,
+     "wilcoxon_p_lt_0.01": false,
+     "poscontrol_mean_ge_0.7": false
+    },
+    "per_seed": [
+     -0.02602144596407843,
+     0.377871338394832,
+     -0.11628184689467992,
+     -0.003068058228907449,
+     -0.2223215144891736,
+     0.006674400633148996,
+     0.13603519525294244,
+     -0.3373454868945255,
+     -0.24762295334192247,
+     -0.03431689518967597
+    ]
+   },
+   "cheat": {
+    "mean_r": 1.0,
+    "null_mean_r": 0.001968858611443888,
+    "diff": 0.9980311413885561,
+    "wilcoxon_p": 0.0009765625,
+    "clauses": {
+     "mean_ge_0.5": true,
+     "minus_null_ge_0.3": true,
+     "wilcoxon_p_lt_0.01": true,
+     "poscontrol_mean_ge_0.7": false
+    },
+    "per_seed": [
+     1.0,
+     1.0,
+     0.9999999999999998,
+     1.0,
+     1.0,
+     1.0,
+     0.9999999999999998,
+     1.0,
+     1.0000000000000004,
+     1.0
+    ]
+   },
+   "null_twin": {
+    "mean_r": 0.001968858611443888,
+    "per_seed": [
+     0.042492272566250384,
+     0.03362915655911556,
+     -0.025446007004415905,
+     0.01161539669149321,
+     -0.054618951473746895,
+     0.05610348503685841,
+     0.03908164404371181,
+     0.013991077706730803,
+     -0.05088609962372423,
+     -0.04627338838783426
+    ]
+   },
+   "degenerate_rows": 0,
+   "cpu_s_total": 5.578125
+  },
+  "pilot_attempt2": {
+   "n_seeds": 10,
+   "positive": {
+    "mean_r": 0.2817014877591514,
+    "null_mean_r": 0.001968858611443888,
+    "diff": 0.27973262914770747,
+    "wilcoxon_p": 0.0009765625,
+    "clauses": {
+     "mean_ge_0.5": false,
+     "minus_null_ge_0.3": false,
+     "wilcoxon_p_lt_0.01": true,
+     "poscontrol_mean_ge_0.7": false
+    },
+    "per_seed": [
+     0.3194023954692338,
+     0.34739377651324316,
+     0.35074936081484875,
+     0.20741660049004274,
+     0.2851897212562611,
+     0.33696459430188413,
+     0.29108698525790655,
+     0.18356077732124332,
+     0.29079076927070047,
+     0.20445989689615007
+    ]
+   },
+   "cheat": {
+    "mean_r": 1.0,
+    "null_mean_r": 0.001968858611443888,
+    "diff": 0.9980311413885561,
+    "wilcoxon_p": 0.0009765625,
+    "clauses": {
+     "mean_ge_0.5": true,
+     "minus_null_ge_0.3": true,
+     "wilcoxon_p_lt_0.01": true,
+     "poscontrol_mean_ge_0.7": false
+    },
+    "per_seed": [
+     1.0,
+     1.0,
+     0.9999999999999998,
+     1.0,
+     1.0,
+     1.0,
+     0.9999999999999998,
+     1.0,
+     1.0000000000000004,
+     1.0
+    ]
+   },
+   "null_twin": {
+    "mean_r": 0.001968858611443888,
+    "per_seed": [
+     0.042492272566250384,
+     0.03362915655911556,
+     -0.025446007004415905,
+     0.01161539669149321,
+     -0.054618951473746895,
+     0.05610348503685841,
+     0.03908164404371181,
+     0.013991077706730803,
+     -0.05088609962372423,
+     -0.04627338838783426
+    ]
+   },
+   "degenerate_rows": 0,
+   "cpu_s_total": 6.25
+  },
+  "treatment": null,
+  "control": null
+ },
+ "criterion_as_applied": "success: arm mean r (10 seeds) >= 0.5 AND arm mean - null-twin mean >= 0.3 AND exact one-sided paired Wilcoxon p < 0.01 (arm > null twin) AND positive-control mean r >= 0.7; null twin 'meets success' read as null mean r >= 0.5. Pilot pass = positive meets success AND cheat meets success AND null twin does not.",
+ "positive_control_detected": false,
+ "cheat_detected": false,
+ "null_twin_meets_success": false,
+ "stupid_explanations_status": {
+  "boundary pinning makes any RD run reproduce similar stripes near edges": "NOT_TESTED (no phase 2); null twin r ~0.00 suggests pinning alone gives no recurrence here",
+  "Pearson r inflated by the shared wavelength": "NOT_TESTED; null twin shares wavelength and gives r ~0.00",
+  "clipping bounds create a static prepattern independent of learning": "NOT_TESTED (treatment not run)",
+  "insufficient noise reset so Phase B starts near Phase A state": "RULED OUT by construction: full reset to uniform + fresh RNG(seed+1000)"
+ },
+ "anomalies": [
+  "cheat r = 1.0 on all seeds but classed not-detected only because reading 4 folds the positive-control clause (>= 0.7) into the success criterion",
+  "attempt 1 carved graph (z>0) was one percolating domain; repaired to z>1 cores; positive r rose -0.05 -> 0.28, still < 0.5 (failure_criterion: world cannot express the effect)",
+  "learned g in Phase A never reached the 5 clip (0% at max, ~16% at 0.2)"
+ ],
+ "core_minutes": 0.197,
+ "attempts": 2,
+ "notes": "Pilot failed twice; per round-2 PREREG outcome SPEC_UNATTAINABLE. No treatment or CONTROL code was written or run. See NOTES.md."
+}

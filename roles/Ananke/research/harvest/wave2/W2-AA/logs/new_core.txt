@@ -1,0 +1,97 @@
+def _indent(line: str) -> int:
+    return len(line) - len(line.lstrip(" \t"))
+
+
+def _is_table(line: str) -> bool:
+    return line.count("|") >= 2
+
+
+def _block(text: str, s: int, e: int, lo: int, hi: int) -> list[tuple[int, int]]:
+    """Spans [start, end) of the citation's own text block, clipped to [lo, hi).
+
+    Table/ledger row (2+ '|'): the whole line (a row is a record about its cell; other columns count).
+    Otherwise: the citation's paragraph or list item, joined across hard-wrapped lines, PLUS the
+    item's nested children (more-indented lines below it) and the first line of each enclosing parent
+    item (less-indented lines above it). Sibling items, other paragraphs and other table rows are out.
+    A blank line, a heading or a table row always ends the block."""
+    ls, le = _line_bounds(text, s)
+    if _is_table(text[ls:le]):
+        return [(max(lo, ls), min(hi, le))]
+    start = ls
+    while start > lo and not BLOCK_START.match(text[start:_line_bounds(text, start)[1]]):
+        ps, pe = _line_bounds(text, start - 1)
+        prev = text[ps:pe]
+        if not prev.strip() or BLOCK_START.match(prev) and not _ITEM.match(prev) or _is_table(prev):
+            break  # blank, heading or table above: this paragraph starts here
+        start = ps
+        if _ITEM.match(prev):
+            break  # we were a hard-wrapped continuation of this item
+    base = _indent(text[start:_line_bounds(text, start)[1]])
+    end = le
+    while end < hi:
+        ns, ne = _line_bounds(text, end + 1)
+        nxt = text[ns:ne]
+        if not nxt.strip() or _is_table(nxt) or (BLOCK_START.match(nxt) and _indent(nxt) <= base):
+            break
+        end = ne
+    spans = [(max(lo, start), min(hi, end))]
+    k, cur = start, base
+    while k > lo and cur > 0:  # enclosing parent items: first less-indented line above, repeatedly
+        ps, pe = _line_bounds(text, k - 1)
+        prev = text[ps:pe]
+        if not prev.strip() or _is_table(prev):
+            break
+        if _indent(prev) < cur:
+            spans.append((max(lo, ps), min(hi, pe)))
+            cur = _indent(prev)
+        k = ps
+    return spans
+
+
+def audit_text(text: str, path: str = "<text>", index: Index | None = None, min_len: int = 8,
+               scope: str = "block") -> list[dict]:
+    """Every resolved C1 citation in text, flagged or not. Line numbers are 1-based in text.
+
+    scope="block" (default): outcome terms count only inside the citation's own block (see _block),
+    within +-WINDOW chars. scope="window": the whole +-WINDOW (W2-I behaviour). Each record carries
+    both "severity" (the chosen scope) and "severity_window" (W2-I), so nothing is lost by the
+    narrower default. The true-kind exoneration (LOW) always looks at the whole +-WINDOW."""
+    if min_len < 6 or min_len > MAX_HEX:
+        raise ValueError(f"min_len must be in 6..{MAX_HEX}")
+    if scope not in ("block", "window"):
+        raise ValueError("scope must be 'block' or 'window'")
+    index = index or load_index()
+    out = []
+    for m in _id_re(min_len).finditer(text):
+        tok = m.group(1)
+        cid = index.resolve(tok)
+        if cid is None:
+            continue
+        meta = index.cells[cid]
+        a, b = max(0, m.start() - WINDOW), min(len(text), m.end() + WINDOW)
+        spans = _block(text, m.start(), m.end(), a, b)
+        block, wide, dmin = set(), set(), None
+        for name, rx in OUTCOME_RES:
+            for t in rx.finditer(text, a, min(len(text), b + 16)):
+                if t.end() > b:
+                    continue
+                wide.add(name)
+                inside = any(lo <= t.start() and t.end() <= hi for lo, hi in spans)
+                if scope == "block" and not inside:
+                    continue
+                block.add(name)
+                d = min(abs(t.start() - m.start()), abs(t.end() - m.end()))
+                dmin = d if dmin is None else min(dmin, d)
+        win = text[a:b]
+        kind_named = bool(KIND_WORDS[meta["kind"]].search(win))
+        sev = _severity(meta["kind"], block, kind_named)
+        out.append({
+            "file": path, "line": text.count("\n", 0, m.start()) + 1, "token": tok, "cell_id": cid,
+            "kind": meta["kind"], "wave": meta["wave"], "family": meta["family"],
+            "flagged": int(bool(sev)), "severity": sev,
+            "severity_window": _severity(meta["kind"], wide, kind_named), "scope": scope,
+            "terms": "|".join(sorted(block)), "terms_outside_block": "|".join(sorted(wide - block)),
+            "nearest_term_chars": "" if dmin is None else dmin, "kind_named_in_window": int(kind_named),
+            "context": " ".join(win.split())[:420],
+        })
+    return out

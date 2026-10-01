@@ -1,0 +1,912 @@
+[
+ {
+  "id": "P1_xor2",
+  "role": "train",
+  "kind": "planted",
+  "family": "planted",
+  "law_group": "P1",
+  "d": 6,
+  "uid": 1,
+  "proc": {
+   "kind": "bern",
+   "p": 0.5
+  },
+  "law": {
+   "kind": "xor2",
+   "a": 5,
+   "b": 2,
+   "da": 4,
+   "db": 11
+  }
+ },
+ {
+  "id": "P2_cmod",
+  "role": "train",
+  "kind": "planted",
+  "family": "planted",
+  "law_group": "P2",
+  "d": 6,
+  "uid": 2,
+  "proc": {
+   "kind": "bern",
+   "p": 0.5
+  },
+  "law": {
+   "kind": "cmod",
+   "a": 1,
+   "m": 3
+  }
+ },
+ {
+  "id": "P3_wmaj",
+  "role": "train",
+  "kind": "planted",
+  "family": "planted",
+  "law_group": "P3",
+  "d": 6,
+  "uid": 3,
+  "proc": {
+   "kind": "bern",
+   "p": 0.5
+  },
+  "law": {
+   "kind": "wmaj",
+   "a": 4,
+   "lo": 4,
+   "hi": 15,
+   "thr": 7
+  }
+ },
+ {
+  "id": "P4_gate",
+  "role": "train",
+  "kind": "planted",
+  "family": "planted",
+  "law_group": "P4",
+  "d": 6,
+  "uid": 4,
+  "proc": {
+   "kind": "bern",
+   "p": 0.5
+  },
+  "law": {
+   "kind": "gate",
+   "b": 0,
+   "c": 1,
+   "d": 4,
+   "db": 3,
+   "dc": 2,
+   "dd": 6
+  }
+ },
+ {
+  "id": "P5_psign",
+  "role": "train",
+  "kind": "planted",
+  "family": "planted",
+  "law_group": "P5",
+  "d": 6,
+  "uid": 5,
+  "proc": {
+   "kind": "gauss"
+  },
+  "law": {
+   "kind": "psign",
+   "a": 2,
+   "b": 4,
+   "da": 5,
+   "db": 2
+  }
+ },
+ {
+  "id": "P6_fsm",
+  "role": "train",
+  "kind": "planted",
+  "family": "planted",
+  "law_group": "P6",
+  "d": 6,
+  "uid": 6,
+  "proc": {
+   "kind": "bern",
+   "p": 0.5
+  },
+  "law": {
+   "kind": "fsm",
+   "a": 4,
+   "table": [
+    1,
+    1,
+    2,
+    1,
+    0,
+    2
+   ]
+  }
+ },
+ {
+  "id": "TSD1_xor2",
+  "role": "train",
+  "kind": "tsd",
+  "family": "tsd",
+  "law_group": "P1",
+  "d": 6,
+  "uid": 7,
+  "proc": {
+   "kind": "bern",
+   "p": 0.5
+  },
+  "law": {
+   "kind": "xor2",
+   "a": 5,
+   "b": 2,
+   "da": 4,
+   "db": 11
+  }
+ },
+ {
+  "id": "TSD2_cmod",
+  "role": "train",
+  "kind": "tsd",
+  "family": "tsd",
+  "law_group": "P2",
+  "d": 6,
+  "uid": 8,
+  "proc": {
+   "kind": "bern",
+   "p": 0.5
+  },
+  "law": {
+   "kind": "cmod",
+   "a": 1,
+   "m": 3
+  }
+ },
+ {
+  "id": "TSD3_wmaj",
+  "role": "train",
+  "kind": "tsd",
+  "family": "tsd",
+  "law_group": "P3",
+  "d": 6,
+  "uid": 9,
+  "proc": {
+   "kind": "bern",
+   "p": 0.5
+  },
+  "law": {
+   "kind": "wmaj",
+   "a": 4,
+   "lo": 4,
+   "hi": 15,
+   "thr": 7
+  }
+ },
+ {
+  "id": "TSD4_gate",
+  "role": "train",
+  "kind": "tsd",
+  "family": "tsd",
+  "law_group": "P4",
+  "d": 6,
+  "uid": 10,
+  "proc": {
+   "kind": "bern",
+   "p": 0.5
+  },
+  "law": {
+   "kind": "gate",
+   "b": 0,
+   "c": 1,
+   "d": 4,
+   "db": 3,
+   "dc": 2,
+   "dd": 6
+  }
+ },
+ {
+  "id": "PRF1",
+  "role": "train",
+  "kind": "prf",
+  "family": "prf",
+  "law_group": "PRF",
+  "d": 6,
+  "uid": 11,
+  "proc": {
+   "kind": "bern",
+   "p": 0.5
+  },
+  "law": {
+   "kind": "prf",
+   "key": "tyche-prf-1",
+   "w": 24
+  }
+ },
+ {
+  "id": "PRF2",
+  "role": "train",
+  "kind": "prf",
+  "family": "prf",
+  "law_group": "PRF",
+  "d": 6,
+  "uid": 12,
+  "proc": {
+   "kind": "bern",
+   "p": 0.5
+  },
+  "law": {
+   "kind": "prf",
+   "key": "tyche-prf-2",
+   "w": 24
+  }
+ },
+ {
+  "id": "K1_ident",
+  "role": "train",
+  "kind": "known",
+  "family": "known",
+  "law_group": "K1",
+  "d": 6,
+  "uid": 13,
+  "proc": {
+   "kind": "bern",
+   "p": 0.5
+  },
+  "law": {
+   "kind": "ident",
+   "a": 1
+  }
+ },
+ {
+  "id": "K2_and",
+  "role": "train",
+  "kind": "known",
+  "family": "known",
+  "law_group": "K2",
+  "d": 6,
+  "uid": 14,
+  "proc": {
+   "kind": "bern",
+   "p": 0.5
+  },
+  "law": {
+   "kind": "kand",
+   "a": 1,
+   "b": 0
+  }
+ },
+ {
+  "id": "K3_sum",
+  "role": "train",
+  "kind": "known",
+  "family": "known",
+  "law_group": "K3",
+  "d": 6,
+  "uid": 15,
+  "proc": {
+   "kind": "gauss"
+  },
+  "law": {
+   "kind": "ksum",
+   "a": 1,
+   "b": 0
+  }
+ },
+ {
+  "id": "HA_tab",
+  "role": "train",
+  "kind": "hec_alien",
+  "family": "hec_alien",
+  "law_group": "HA_tab",
+  "d": 4,
+  "uid": 16,
+  "sys_id": "SYS-29535",
+  "params": {
+   "D": [
+    [
+     3,
+     2,
+     3,
+     3,
+     4
+    ],
+    [
+     1,
+     2,
+     2,
+     2,
+     1
+    ],
+    [
+     0,
+     1,
+     4,
+     4,
+     2
+    ],
+    [
+     2,
+     3,
+     3,
+     0,
+     0
+    ],
+    [
+     3,
+     3,
+     3,
+     3,
+     2
+    ]
+   ],
+   "family": "tab",
+   "kind": "tab_rev",
+   "nb": [
+    2,
+    4,
+    3,
+    2,
+    1
+   ],
+   "order": [
+    1,
+    3,
+    0,
+    4,
+    2
+   ]
+  },
+  "hidden": 4,
+  "target": 1,
+  "restart": 25
+ },
+ {
+  "id": "HA_graph",
+  "role": "train",
+  "kind": "hec_alien",
+  "family": "hec_alien",
+  "law_group": "HA_graph",
+  "d": 5,
+  "uid": 17,
+  "sys_id": "SYS-12423",
+  "params": {
+   "G": [
+    [
+     2,
+     0,
+     2,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     3
+    ],
+    [
+     2,
+     2,
+     2,
+     2
+    ],
+    [
+     1,
+     0,
+     1,
+     3
+    ]
+   ],
+   "edges": [
+    [
+     0,
+     1
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     1,
+     3
+    ],
+    [
+     1,
+     4
+    ],
+    [
+     1,
+     5
+    ],
+    [
+     2,
+     4
+    ],
+    [
+     2,
+     5
+    ],
+    [
+     3,
+     4
+    ]
+   ],
+   "family": "graph",
+   "kind": "graph_attr"
+  },
+  "hidden": 5,
+  "target": 1,
+  "restart": 25
+ },
+ {
+  "id": "HA_rewrite",
+  "role": "train",
+  "kind": "hec_alien",
+  "family": "hec_alien",
+  "law_group": "HA_rewrite",
+  "d": 5,
+  "uid": 18,
+  "sys_id": "SYS-39367",
+  "params": {
+   "family": "rewrite",
+   "kind": "rewrite",
+   "rules": [
+    [
+     [
+      2,
+      3
+     ],
+     [
+      1,
+      0
+     ]
+    ],
+    [
+     [
+      0,
+      2
+     ],
+     [
+      3,
+      1
+     ]
+    ],
+    [
+     [
+      0,
+      1
+     ],
+     [
+      3,
+      2
+     ]
+    ]
+   ]
+  },
+  "hidden": 5,
+  "target": 4,
+  "restart": 25
+ },
+ {
+  "id": "HA_vm",
+  "role": "train",
+  "kind": "hec_alien",
+  "family": "hec_alien",
+  "law_group": "HA_vm",
+  "d": 3,
+  "uid": 19,
+  "sys_id": "SYS-14818",
+  "params": {
+   "family": "vm",
+   "kind": "vm_long",
+   "program": [
+    [
+     "aff",
+     2,
+     0,
+     2,
+     4,
+     2,
+     4
+    ],
+    [
+     "jnz",
+     2,
+     4
+    ],
+    [
+     "tab",
+     1,
+     1,
+     [
+      3,
+      4,
+      2,
+      6,
+      5,
+      0,
+      1
+     ]
+    ],
+    [
+     "aff",
+     0,
+     1,
+     2,
+     4,
+     6,
+     1
+    ],
+    [
+     "jz",
+     1,
+     2
+    ],
+    [
+     "tab",
+     1,
+     0,
+     [
+      6,
+      2,
+      0,
+      4,
+      5,
+      3,
+      1
+     ]
+    ]
+   ]
+  },
+  "hidden": 3,
+  "target": 1,
+  "restart": 25
+ },
+ {
+  "id": "HN_tab",
+  "role": "train",
+  "kind": "hec_null",
+  "family": "hec_null",
+  "law_group": "HN_tab",
+  "d": 4,
+  "uid": 20,
+  "sys_id": "SYS-10772",
+  "params": {
+   "family": "tab",
+   "seed": 1762501026,
+   "wrap": "smooth"
+  },
+  "hidden": 4,
+  "target": 2,
+  "restart": 25
+ },
+ {
+  "id": "HN_graph",
+  "role": "train",
+  "kind": "hec_null",
+  "family": "hec_null",
+  "law_group": "HN_graph",
+  "d": 5,
+  "uid": 21,
+  "sys_id": "SYS-11297",
+  "params": {
+   "base": {
+    "F": [
+     [
+      0,
+      1,
+      1,
+      1
+     ],
+     [
+      -1,
+      0,
+      1,
+      -1
+     ],
+     [
+      -1,
+      -1,
+      0,
+      1
+     ],
+     [
+      -1,
+      1,
+      -1,
+      0
+     ]
+    ],
+    "edges": [
+     [
+      0,
+      3
+     ],
+     [
+      0,
+      4
+     ],
+     [
+      1,
+      2
+     ],
+     [
+      1,
+      5
+     ],
+     [
+      2,
+      4
+     ],
+     [
+      2,
+      5
+     ],
+     [
+      3,
+      5
+     ],
+     [
+      4,
+      5
+     ]
+    ],
+    "family": "graph",
+    "kind": "graph_flow"
+   },
+   "family": "graph",
+   "perm_seed": 2007651029,
+   "wrap": "conj"
+  },
+  "hidden": 5,
+  "target": 4,
+  "restart": 25
+ },
+ {
+  "id": "ADV_decoy",
+  "role": "train",
+  "kind": "adv",
+  "family": "adv",
+  "law_group": "A1",
+  "d": 6,
+  "uid": 22,
+  "proc": {
+   "kind": "bern",
+   "p": 0.5
+  },
+  "law": {
+   "kind": "decoy",
+   "b": 3,
+   "c": 0,
+   "e": 1,
+   "d": 6,
+   "agree": 0.65
+  }
+ },
+ {
+  "id": "ADV_noisymaj",
+  "role": "train",
+  "kind": "adv",
+  "family": "adv",
+  "law_group": "A2",
+  "d": 6,
+  "uid": 23,
+  "proc": {
+   "kind": "bern",
+   "p": 0.5
+  },
+  "law": {
+   "kind": "noisymaj",
+   "a": 3,
+   "w": 21,
+   "flip": 0.3
+  }
+ },
+ {
+  "id": "ADV_alias",
+  "role": "train",
+  "kind": "adv",
+  "family": "adv",
+  "law_group": "A3",
+  "d": 6,
+  "uid": 24,
+  "proc": {
+   "kind": "bern",
+   "p": 0.5
+  },
+  "law": {
+   "kind": "alias",
+   "a": 4,
+   "period": 11,
+   "cut": 4,
+   "flip": 0.2
+  }
+ },
+ {
+  "id": "H_P1sib_markov",
+  "role": "heldout",
+  "kind": "planted",
+  "family": "planted",
+  "law_group": "P1",
+  "d": 6,
+  "uid": 25,
+  "proc": {
+   "kind": "markov",
+   "stay": 0.7
+  },
+  "law": {
+   "kind": "xor2",
+   "a": 5,
+   "b": 2,
+   "da": 4,
+   "db": 11
+  }
+ },
+ {
+  "id": "H_P3sib_bern45",
+  "role": "heldout",
+  "kind": "planted",
+  "family": "planted",
+  "law_group": "P3",
+  "d": 6,
+  "uid": 26,
+  "proc": {
+   "kind": "bern",
+   "p": 0.45
+  },
+  "law": {
+   "kind": "wmaj",
+   "a": 4,
+   "lo": 4,
+   "hi": 15,
+   "thr": 7
+  }
+ },
+ {
+  "id": "H_P7_par3",
+  "role": "heldout",
+  "kind": "planted",
+  "family": "planted",
+  "law_group": "P7",
+  "d": 6,
+  "uid": 27,
+  "proc": {
+   "kind": "bern",
+   "p": 0.5
+  },
+  "law": {
+   "kind": "par3",
+   "a": 5,
+   "b": 0,
+   "c": 1,
+   "da": 2,
+   "db": 5,
+   "dc": 9
+  }
+ },
+ {
+  "id": "H_TSD7_par3",
+  "role": "heldout",
+  "kind": "tsd",
+  "family": "tsd",
+  "law_group": "P7",
+  "d": 6,
+  "uid": 28,
+  "proc": {
+   "kind": "bern",
+   "p": 0.5
+  },
+  "law": {
+   "kind": "par3",
+   "a": 5,
+   "b": 0,
+   "c": 1,
+   "da": 2,
+   "db": 5,
+   "dc": 9
+  }
+ },
+ {
+  "id": "H_PRF3",
+  "role": "heldout",
+  "kind": "prf",
+  "family": "prf",
+  "law_group": "PRF",
+  "d": 6,
+  "uid": 29,
+  "proc": {
+   "kind": "bern",
+   "p": 0.5
+  },
+  "law": {
+   "kind": "prf",
+   "key": "tyche-prf-3",
+   "w": 24
+  }
+ },
+ {
+  "id": "H_K4_xor",
+  "role": "heldout",
+  "kind": "known",
+  "family": "known",
+  "law_group": "K4",
+  "d": 6,
+  "uid": 30,
+  "proc": {
+   "kind": "bern",
+   "p": 0.5
+  },
+  "law": {
+   "kind": "kxor",
+   "a": 1,
+   "b": 0
+  }
+ },
+ {
+  "id": "H_HA_map",
+  "role": "heldout",
+  "kind": "hec_alien",
+  "family": "hec_alien",
+  "law_group": "HA_map",
+  "d": 1,
+  "uid": 31,
+  "sys_id": "SYS-28905",
+  "params": {
+   "family": "map",
+   "h1": [
+    [
+     1,
+     0,
+     19
+    ],
+    [
+     2,
+     0,
+     3
+    ],
+    [
+     3,
+     0,
+     24
+    ]
+   ],
+   "h2": [
+    [
+     1,
+     0,
+     30
+    ],
+    [
+     2,
+     0,
+     19
+    ],
+    [
+     3,
+     0,
+     2
+    ]
+   ],
+   "kind": "shear"
+  },
+  "hidden": 1,
+  "target": 0,
+  "restart": 25
+ },
+ {
+  "id": "H_ADV_sparse",
+  "role": "heldout",
+  "kind": "adv",
+  "family": "adv",
+  "law_group": "A4",
+  "d": 8,
+  "uid": 32,
+  "proc": {
+   "kind": "gauss"
+  },
+  "law": {
+   "kind": "sparse",
+   "a": 5,
+   "b": 7,
+   "da": 9
+  }
+ }
+]

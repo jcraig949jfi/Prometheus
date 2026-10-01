@@ -1,0 +1,85 @@
+{
+ "schema": "artemis.script_batch.v1",
+ "batch": "D004",
+ "runner": "roles/Artemis/dispatch/run_frozen.py",
+ "note": "one Task per row; args after SCRIPT CWD are the script's own documented usage; {repo} = pinned worktree",
+ "tasks": [
+  {
+   "id": "D004-01",
+   "from": "D003-01",
+   "script": "D003-01.py",
+   "cwd": "out",
+   "args": [],
+   "caps": [
+    "python.stdlib"
+   ],
+   "wall_s": 3600,
+   "thread": "thr-414cbf71b6dc"
+  },
+  {
+   "id": "D004-02",
+   "from": "D003-02",
+   "script": "D003-02.py",
+   "cwd": "repo",
+   "args": [
+    "roles/Bellerophon/forensics_2026-09-23/receipts/GROUNDING_RESULTS_RAW.jsonl.gz",
+    "roles/Bellerophon/coupling_2026-09-24/receipts/COUPLING_RESULTS.json"
+   ],
+   "caps": [
+    "python.stdlib"
+   ],
+   "wall_s": 1800,
+   "thread": "thr-ffce4baa2703"
+  },
+  {
+   "id": "D004-04",
+   "from": "D003-04",
+   "script": "D003-04.py",
+   "cwd": "repo",
+   "args": [],
+   "caps": [
+    "python.numpy"
+   ],
+   "wall_s": 3600,
+   "thread": "thr-3a2ceccf09e1"
+  },
+  {
+   "id": "D004-05",
+   "from": "D003-05",
+   "script": "D003-05.py",
+   "cwd": "repo",
+   "args": [],
+   "caps": [
+    "python.stdlib"
+   ],
+   "wall_s": 900,
+   "thread": "thr-d55f6e68707c"
+  },
+  {
+   "id": "D004-09",
+   "from": "D003-09",
+   "script": "D003-09.py",
+   "cwd": "repo",
+   "args": [
+    "{repo}"
+   ],
+   "caps": [
+    "python.numpy"
+   ],
+   "wall_s": 1800,
+   "thread": "thr-8558482dd253"
+  },
+  {
+   "id": "D004-10",
+   "from": "D003-10",
+   "script": "D003-10.py",
+   "cwd": "rootcopy",
+   "args": [],
+   "caps": [
+    "python.numpy"
+   ],
+   "wall_s": 1800,
+   "thread": "thr-13dc5babd76b"
+  }
+ ]
+}

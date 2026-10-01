@@ -1,0 +1,80 @@
+{
+ "triplicateId": "HT-a9e2ba7618",
+ "world": "W3",
+ "outcome": "NULL",
+ "statistics": {
+  "TREATMENT": {
+   "n": 50,
+   "median_ari_osc": 0.7893121730323038,
+   "q10": 0.5723141180827741,
+   "q90": 0.9265912141470388,
+   "median_ari_comp": 0.8043534565293551,
+   "median_edges": 81.5
+  },
+  "NULL_TWIN": {
+   "n": 50,
+   "median_ari_osc": 0.16734408362489284,
+   "q10": 0.04787282020641303,
+   "q90": 0.4945069381149249,
+   "median_ari_comp": 0.04408972036641881,
+   "median_edges": 81.5
+  },
+  "CONTROL": {
+   "n": 50,
+   "median_ari_osc": 0.08277344108014191,
+   "q10": -0.03125780569602929,
+   "q90": 0.3640532393925838,
+   "median_ari_comp": 0.08519273364460792,
+   "median_edges": 70.0
+  },
+  "POSITIVE_CONTROL": {
+   "n": 50,
+   "median_ari_osc": 1.0,
+   "q10": 0.9321266193646002,
+   "q90": 1.0,
+   "median_ari_comp": 1.0,
+   "median_edges": 87.5
+  },
+  "CHEAT": {
+   "n": 50,
+   "median_ari_osc": 1.0,
+   "q10": 1.0,
+   "q90": 1.0
+  },
+  "paired": {
+   "median_diff_treatment_minus_twin": 0.5694705375096785,
+   "wilcoxon_p_greater": 5.550477317542801e-10,
+   "median_osc_minus_comp": 0.0
+  }
+ },
+ "criterion_as_applied": {
+  "success": "median ARI_osc(T) >= 0.7 AND median paired (T - twin) >= 0.2 with one-sided paired Wilcoxon p < 0.01 AND median ARI_osc(T) > median ARI_comp(T) + 0.02 (50 seeds)",
+  "parts": {
+   "abs": true,
+   "gap": true,
+   "osc_over_comp": false
+  },
+  "success_met": false,
+  "failure_met": true,
+  "failure": "median paired gap < 0.1 OR median ARI_osc(T) <= median ARI_comp(T) + 0.02"
+ },
+ "positive_control_detected": true,
+ "cheat_detected": true,
+ "null_twin_meets_success": false,
+ "stupid_explanations_status": {
+  "cross-scale rule just has larger components because coarse scales merge everything": "partially checked: edge counts matched to twin; component sizes in rows (n_graph_components); not isolated",
+  "PLV threshold tuned to the favoured condition": "ruled out procedurally: PLV_THR 0.9 from spec, never changed; readout repair fixed before any treatment statistic",
+  "objects placed so their widths align with dyadic scales": "addressed by design: widths drawn from non-dyadic ranges U[40,70],U[90,140],U[160,240]; not tested with dyadic placement",
+  "alternative_explanation: any low-pass filter would do": "NOT ruled out: the build uses the low-pass (smoothing) planes of the wavelet stack (NOTES 1)"
+ },
+ "anomalies": [
+  "null twin matches edge count only; degree distribution not matched (NOTES 4)",
+  "pilot needed one readout repair (frequency grid, DT, KC, PLV window); NOTES"
+ ],
+ "core_minutes": 0.92,
+ "attempts": {
+  "pilot": 2,
+  "world": 1
+ },
+ "notes": "See NOTES.md. Pilot attempt 1 failed (positive 0.904) from spurious PLV of uncoupled units; one readout repair; attempt 2 passed. Parameters frozen before world.py ran."
+}

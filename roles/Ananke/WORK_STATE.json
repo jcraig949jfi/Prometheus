@@ -1,0 +1,269 @@
+{
+  "schema": "prometheus.work_state.v1",
+  "seat": "Ananke",
+  "mwo_id": "MWO-0004",
+  "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
+  "mwo_sha256": "925660b2d2be53af2ee4195391e484d9649bbd4ee828cd60432ce2f0903a99df",
+  "updated_at_utc": "2026-09-30T23:45:13Z",
+  "state": "WORKING",
+  "state_reason": "Operator inference harvest: all five deliverables committed (harvest/INFERENCE_HARVEST_HANDOFF.md). C4 R-STAT Phase 2 still blocked on Cosmos.",
+  "branch": "ananke/base-role-adopt-2026-09-24",
+  "head_sha": "cee7957f5b57de35fc4f7b83970440206d3588d9",
+  "head_sha_note": "last pushed commit before this WORK_STATE commit",
+  "work_map": "roles/Ananke/research/THREADS.md",
+  "threads": [
+    {
+      "id": "thr-82e9c44ffc71",
+      "alias": "T-REACH-GAP",
+      "state": "OPEN"
+    },
+    {
+      "id": "thr-52e8bb034fba",
+      "alias": "T-RET-SEL",
+      "state": "OPEN"
+    },
+    {
+      "id": "thr-8c7342a7d513",
+      "alias": "T-INS-6",
+      "state": "CLOSED"
+    },
+    {
+      "id": "thr-ea0c97a4d5e9",
+      "alias": "T-CT-3'",
+      "state": "OPEN"
+    },
+    {
+      "id": "thr-5df816e9b844",
+      "alias": "T-SWAP-LOWACC",
+      "state": "CLOSED"
+    },
+    {
+      "id": "thr-f36dd8035762",
+      "alias": "T-WJ-1",
+      "state": "OPEN"
+    },
+    {
+      "id": "thr-3cb97e823f61",
+      "alias": "T-WJ-2",
+      "state": "OPEN"
+    },
+    {
+      "id": "thr-597dda593a1f",
+      "alias": "T-H3",
+      "state": "OPEN"
+    },
+    {
+      "id": "thr-a1dd79b7de09",
+      "alias": "T-REDISCOVER",
+      "state": "PARKED"
+    },
+    {
+      "id": "thr-56144b624b97",
+      "alias": "T-RET-2 (PTE-SI01)",
+      "state": "CLOSED"
+    },
+    {
+      "id": "thr-66db7bdd95ce",
+      "alias": "PTE-C1b",
+      "state": "CLOSED"
+    },
+    {
+      "id": "thr-5d13521c558d",
+      "alias": "PTE-C1",
+      "state": "CLOSED"
+    }
+  ],
+  "threads_note": "closed/answered arc threads (T-CT-1, T-INS-1, T-RET-1, T-TA-1, T-X-1, T-X-4, T-M2-2, T-M3-1, T-BR-1, T-CT-2, T-RS-1, T-DE-1) and their genesis rules are in work_map",
+  "campaigns": [
+    {
+      "id": "C-ANANKE-PTE-C1",
+      "alias": "PTE-C1",
+      "status": "COMPLETE",
+      "report": "roles/Ananke/pte/C1_REPORT.md"
+    },
+    {
+      "id": "C-ANANKE-PTE-C1B",
+      "alias": "PTE-C1b",
+      "status": "COMPLETE",
+      "report": "roles/Ananke/pte/c1b/REVIEW_PACKET_PTE_C1b.txt"
+    },
+    {
+      "id": "C-ANANKE-ARC3",
+      "alias": "ARC3",
+      "status": "CLOSED",
+      "report": "roles/Ananke/research/SYNTHESIS_2026-09-28_ARC3.md"
+    }
+  ],
+  "experiments": [
+    {
+      "id": "R-STAT-C4",
+      "alias": "C4 DESIGN v0.2 review",
+      "status": "RUNNING",
+      "assignment": "comms #1137"
+    },
+    {
+      "id": "E-ANANKE-W-Z",
+      "thread": "thr-5df816e9b844",
+      "alias": "T-SWAP-AUDIT3",
+      "status": "COMPLETE",
+      "report": "roles/Ananke/research/workers/W-Z/REPORT.md"
+    },
+    {
+      "id": "E-ANANKE-W-Y",
+      "thread": "thr-8c7342a7d513",
+      "alias": "T-INS-20",
+      "status": "COMPLETE",
+      "report": "roles/Ananke/research/workers/W-Y/REPORT.md"
+    },
+    {
+      "id": "E-ANANKE-W-X",
+      "thread": "thr-5df816e9b844",
+      "alias": "T-SWAP-REL5",
+      "status": "COMPLETE",
+      "report": "roles/Ananke/research/workers/W-X/REPORT.md"
+    },
+    {
+      "id": "E-ANANKE-W-W",
+      "thread": "thr-5df816e9b844",
+      "alias": "T-SWAP-REL4",
+      "status": "COMPLETE",
+      "report": "roles/Ananke/research/workers/W-W/REPORT.md"
+    },
+    {
+      "id": "E-ANANKE-W-V",
+      "thread": "thr-8c7342a7d513",
+      "alias": "T-INS-18",
+      "status": "COMPLETE",
+      "report": "roles/Ananke/research/workers/W-V/REPORT.md"
+    },
+    {
+      "id": "E-ANANKE-W-U",
+      "thread": "thr-5df816e9b844",
+      "alias": "T-SWAP-REL3",
+      "status": "COMPLETE",
+      "report": "roles/Ananke/research/workers/W-U/REPORT.md"
+    },
+    {
+      "id": "E-ANANKE-W-T",
+      "thread": "thr-8c7342a7d513",
+      "alias": "T-INS-16",
+      "status": "COMPLETE",
+      "report": "roles/Ananke/research/workers/W-T/REPORT.md"
+    },
+    {
+      "id": "E-ANANKE-W-S",
+      "thread": "thr-8c7342a7d513",
+      "alias": "T-INS-11",
+      "status": "COMPLETE",
+      "report": "roles/Ananke/research/workers/W-S/REPORT.md"
+    },
+    {
+      "id": "E-ANANKE-W-R",
+      "thread": "thr-8c7342a7d513",
+      "alias": "T-INS-9",
+      "status": "COMPLETE",
+      "report": "roles/Ananke/research/workers/W-R/REPORT.md"
+    },
+    {
+      "id": "E-ANANKE-W-Q",
+      "thread": "thr-5df816e9b844",
+      "alias": "T-SWAP-REL2",
+      "status": "COMPLETE",
+      "report": "roles/Ananke/research/workers/W-Q/REPORT.md"
+    },
+    {
+      "id": "E-ANANKE-W-P",
+      "thread": "thr-8c7342a7d513",
+      "alias": "T-INS-8",
+      "status": "COMPLETE",
+      "report": "roles/Ananke/research/workers/W-P/REPORT.md"
+    },
+    {
+      "id": "E-ANANKE-W-O",
+      "thread": "thr-5df816e9b844",
+      "alias": "T-SWAP-AUDIT",
+      "status": "COMPLETE",
+      "report": "roles/Ananke/research/workers/W-O/REPORT.md"
+    },
+    {
+      "id": "E-ANANKE-W-N",
+      "thread": "thr-5df816e9b844",
+      "alias": "T-SWAP-LOWACC",
+      "status": "COMPLETE",
+      "report": "roles/Ananke/research/workers/W-N/REPORT.md"
+    },
+    {
+      "id": "E-ANANKE-W-M",
+      "thread": "thr-8c7342a7d513",
+      "alias": "T-INS-6",
+      "status": "COMPLETE",
+      "report": "roles/Ananke/research/workers/W-M/REPORT.md"
+    }
+  ],
+  "experiments_note": "completed E-ANANKE-* rows are in work_map",
+  "fabric_tasks": [],
+  "leases": [],
+  "running": [
+    "C4 R-STAT review (principal, no compute)"
+  ],
+  "blocked_on": [],
+  "next_actions": [
+    "await Aporia assignment; seat loop continues (MWO/comms/Fabric checks only)"
+  ],
+  "operator_decisions_required": [],
+  "latest_reports": [
+    "roles/Ananke/research/harvest/INFERENCE_HARVEST_HANDOFF.md",
+    "roles/Ananke/research/harvest/PTE_CAUSAL_AUDIT_2026-09-30.md",
+    "roles/Cosmos/c4/reviews/R-STAT_Ananke_2026-09-30_INTERIM.md",
+    "roles/Ananke/research/workers/W-Z/REPORT.md",
+    "roles/Ananke/research/workers/W-Y/REPORT.md",
+    "roles/Ananke/research/workers/W-X/REPORT.md",
+    "roles/Ananke/research/workers/W-W/REPORT.md",
+    "roles/Ananke/research/workers/W-V/REPORT.md",
+    "roles/Ananke/research/SYNTHESIS_2026-09-29.md",
+    "roles/Ananke/research/workers/W-U/REPORT.md",
+    "roles/Ananke/research/workers/W-T/REPORT.md",
+    "roles/Ananke/research/workers/W-S/REPORT.md",
+    "roles/Ananke/research/workers/W-R/REPORT.md",
+    "roles/Ananke/research/workers/W-Q/REPORT.md",
+    "roles/Ananke/research/workers/W-P/REPORT.md",
+    "roles/Ananke/research/CORRECTIONS_2026-09-29_SWAP_AUDIT.md",
+    "roles/Ananke/research/workers/W-O/REPORT.md",
+    "roles/Ananke/research/workers/W-N/REPORT.md",
+    "roles/Ananke/research/workers/W-M/REPORT.md",
+    "roles/Ananke/research/SYNTHESIS_2026-09-28_ARC3.md (7fc642367)",
+    "roles/Ananke/research/SYNTHESIS_2026-09-28_ARC2.md (8eabc990b)",
+    "roles/Ananke/pte/c1b/REVIEW_PACKET_PTE_C1b.txt (cc98596dd)",
+    "roles/Ananke/pte/C1_ERRATA.md"
+  ],
+  "migration_report": "roles/Ananke/MIGRATION_REPORT_MWO-0002.json",
+  "fp001_result": "roles/Ananke/probes/FP-001_RESULT.json",
+  "work_order": "MWO-0004 + CWO-2026-09-30C (ops/fleet/CWO_2026-09-30C_FINISH_SURFACE_DISPATCH.md @ 7d373ac02, blob edc4792d...6e6c)",
+  "queue": {
+    "CURRENT": "C4 R-STAT review (Phase 2 blocked on Cosmos); harvest complete",
+    "NEXT": "awaiting Aporia (no self-promotion)",
+    "RESERVE": [
+      "replicate-seed AUDIT4 design (planning only)"
+    ],
+    "BLOCKED": [
+      {
+        "item": "C4 R-STAT Phase 2 / FINAL verdict",
+        "dependency": "Cosmos posts (a) foreign family committed, (b) C3 substrate code published",
+        "owner": "Cosmos (foreign family author: Theseus)"
+      }
+    ],
+    "RESOURCE_STATUS": "no compute needed; no leases",
+    "LAST_RECEIPT": "roles/Ananke/research/harvest/INFERENCE_HARVEST_HANDOFF.md",
+    "LAST_STATE_UPDATE": "2026-09-30T23:45:13Z"
+  },
+  "current_objective": "Wave-2 inference saturation CLOSED (stopped 05:00 ET); C4 R-STAT Phase 2 blocked on Cosmos",
+  "current_step": "Wave-2 handoff FINAL; 7 workers cut off by API weekly limit at ~03:20Z (marked INCOMPLETE); no in-flight work",
+  "next_expected_milestone": "Cosmos Phase-2 post (C4 FINAL review)",
+  "expected_next_artifact": "roles/Cosmos/c4/reviews/R-STAT_Ananke_<date>.md (FINAL) when Cosmos posts",
+  "model": "claude-opus-5-5[1m] (runtime-reported)",
+  "session_start": "UNKNOWN (not exposed to the agent); comms instance m1-7d1e2413 first seen 2026-09-25T21:23Z",
+  "last_push_sha": "ec8682701",
+  "last_push_utc": "2026-09-30T18:33:33Z",
+  "updated_at": "2026-10-01T09:05Z",
+  "LAST_RECEIPT": "roles/Ananke/research/harvest/wave2/INFERENCE_SATURATION_WAVE2_HANDOFF.md"
+}

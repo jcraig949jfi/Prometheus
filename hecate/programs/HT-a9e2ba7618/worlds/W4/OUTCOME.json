@@ -1,0 +1,113 @@
+{
+ "triplicateId": "HT-a9e2ba7618",
+ "world": "W4",
+ "outcome": "NULL",
+ "statistics": {
+  "statistic": "mean over seeds of per-seed symbol decoding accuracy (4000 symbols per seed per w)",
+  "TREATMENT_carrier_phase_cowarped": {
+   "mean_by_w": {
+    "0.0": 1.0,
+    "0.1": 1.0,
+    "0.2": 0.9929749999999998,
+    "0.4": 0.8748250000000001
+   },
+   "sd_by_w": {
+    "0.0": 0.0,
+    "0.1": 0.0,
+    "0.2": 0.0012272937708633735,
+    "0.4": 0.008395642057374487
+   },
+   "n_seeds": 10,
+   "drop_0_to_0.4": 0.12517499999999993
+  },
+  "CONTROL_clock_time": {
+   "mean_by_w": {
+    "0.0": 1.0,
+    "0.1": 1.0,
+    "0.2": 0.934225,
+    "0.4": 0.712925
+   },
+   "sd_by_w": {
+    "0.0": 0.0,
+    "0.1": 0.0,
+    "0.2": 0.005691672767200229,
+    "0.4": 0.006298203006502028
+   },
+   "n_seeds": 10,
+   "drop_0_to_0.4": 0.28707499999999997
+  },
+  "NULL_TWIN_carrier_phase_unwarped_carrier": {
+   "mean_by_w": {
+    "0.0": 1.0,
+    "0.1": 0.411925,
+    "0.2": 0.24244999999999997,
+    "0.4": 0.2045
+   },
+   "sd_by_w": {
+    "0.0": 0.0,
+    "0.1": 0.02052033205817532,
+    "0.2": 0.014169509518681303,
+    "0.4": 0.00874404559304978
+   },
+   "n_seeds": 10,
+   "drop_0_to_0.4": 0.7955
+  },
+  "POSITIVE_CONTROL_w0": {
+   "carrier": 1.0,
+   "clock": 1.0,
+   "n_seeds": 10
+  },
+  "CHEAT": {
+   "T": {
+    "0.0": 1.0,
+    "0.1": 1.0,
+    "0.2": 1.0,
+    "0.4": 1.0
+   },
+   "C": {
+    "0.0": 1.0,
+    "0.1": 0.20097500000000004,
+    "0.2": 0.1995,
+    "0.4": 0.201225
+   },
+   "N": {
+    "0.0": 1.0,
+    "0.1": 0.201275,
+    "0.2": 0.2037,
+    "0.4": 0.19855
+   },
+   "n_seeds": 10
+  },
+  "frac_symbols_crossing_clock_slot_boundary_by_w": {
+   "0.0": 0.0,
+   "0.1": 0.0,
+   "0.2": 0.065775,
+   "0.4": 0.28707499999999997
+  }
+ },
+ "criterion_as_applied": "SUCCESS iff mean acc_T(0.4) >= 0.9 AND acc_T(0)-acc_T(0.4) <= 0.05 AND acc_C(0)-acc_C(0.4) >= 0.3 AND acc_N(0)-acc_N(0.4) >= 0.3; FAILURE iff acc_T(0)-acc_T(0.4) > 0.1 OR (acc_N(0.4) >= 0.9 AND acc_N(0)-acc_N(0.4) <= 0.05). success=False, failure=True. PC detected iff both decoders mean >= 0.98 at w=0 (separate seeds). CHEAT detected iff success and not failure on injected values.",
+ "positive_control_detected": true,
+ "cheat_detected": true,
+ "null_twin_meets_success": false,
+ "stupid_explanations_status": [
+  {
+   "text": "monotone warps preserve order so any order decoder is invariant",
+   "addressed_by_this_run": true,
+   "how": "one symbol per cycle, so within-cycle order carries no slot information; the null twin keeps pulse order and timing identical yet its drop is 0.795 vs treatment 0.125"
+  },
+  {
+   "text": "warps too weak to move symbols across slot boundaries",
+   "addressed_by_this_run": true,
+   "how": "fraction of symbols whose elapsed time crosses a clock slot boundary at w=0.4: 0.287"
+  },
+  {
+   "text": "adaptive-scale decoder overfits the warp family",
+   "addressed_by_this_run": false,
+   "how": "only one warp family (piecewise-linear, slopes 1+w*U[-1,1]) was run"
+  }
+ ],
+ "anomalies": [],
+ "core_minutes": 0.5041666666666667,
+ "attempts": 1,
+ "notes": "Carrier-phase decoding with a co-warped carrier: accuracy 1.000 at w=0 and 0.875 at w=0.4. Clock-time decoder with oracle cycle onsets: 1.000 -> 0.713. Same carrier-phase decoder with the carrier left unwarped (null twin): 1.000 -> 0.204. Positive control (w=0, separate seeds) carrier 1.000, clock 1.000. Outcome NULL by the PREREG class rules applied in code. The run does not test other warp families or a non-oscillatory co-warped clock (the spec's alternative explanation)."
+}

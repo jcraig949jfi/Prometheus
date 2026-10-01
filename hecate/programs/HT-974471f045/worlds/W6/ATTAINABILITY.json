@@ -1,0 +1,59 @@
+{
+ "world": "W6",
+ "triplicateId": "HT-974471f045",
+ "control_run": "r1",
+ "rows": "control_rows.jsonl",
+ "clauses": [
+  {
+   "id": "S1",
+   "threshold": 0.6,
+   "positive_value": 0.928,
+   "twin_value": 0.0375,
+   "cheat_value": 1.0,
+   "attainable": true,
+   "discriminating": true,
+   "treatment_must_reach": ">= 0.60 (mean I_perp)"
+  },
+  {
+   "id": "S2",
+   "threshold": 0.3,
+   "positive_value": 0.9223,
+   "twin_value": -0.0686,
+   "cheat_value": 0.9173,
+   "attainable": true,
+   "discriminating": true,
+   "treatment_must_reach": ">= 0.30 (mean I_perp - I_ones)"
+  },
+  {
+   "id": "S3",
+   "threshold": 0.25,
+   "positive_value": 0.8905,
+   "twin_value": 0.0,
+   "cheat_value": 0.9625,
+   "attainable": true,
+   "discriminating": true,
+   "treatment_must_reach": "treatment mean I_perp >= twin mean I_perp + 0.25 (controls gave twin I_perp = 0.038, so about 0.288)"
+  }
+ ],
+ "cheat_detected": true,
+ "diagnostics": {
+  "pc_I_ones": 0.0055,
+  "twin_I_ones_mean": 0.106,
+  "pc_I_perp_sd_across_resamples": 0.024,
+  "single_channel_ceiling": 0.5,
+  "note": "mean-field readout carries ~0 of the contrast in the positive control; S1 threshold sits above the 0.5 single-channel ceiling"
+ },
+ "cpu_seconds_control_runs": {
+  "r1": 2.05,
+  "total": 2.05
+ },
+ "frozen": true,
+ "revisions": [
+  {
+   "rev": 1,
+   "after_run": "r1 (rows unchanged, clauses re-evaluated on the same rows)",
+   "what": "S1 threshold 0.40 -> 0.60",
+   "why": "a readout decoding u1 alone reaches corr^2 = 0.5 with the target u1 - u2, so 0.40 would have let single-channel decoding pass without the contrast; 0.60 is above that analytic ceiling and below the positive control (0.928). Not chosen from treatment data (none exists)."
+  }
+ ]
+}

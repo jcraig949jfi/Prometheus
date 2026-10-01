@@ -33,6 +33,24 @@ from . import store as S
 from .executors import EXECUTORS, TOKEN_ENV_FILE
 
 CANONICAL = Path(os.environ.get("FABRIC_CANONICAL_CLONE", os.path.expanduser("~/Prometheus")))
+# DEF-ODY-015 (2026-09-29): each cached base is a full checkout (~3 GB). Unbounded, the cache filled ubu001's disk
+# and failed 20+ real Tasks at `worktree add`. A worker keeps only its KEEP_BASES most recently used bases.
+KEEP_BASES = max(1, int(os.environ.get("FABRIC_KEEP_BASES", "2")))
+
+
+def gc_bases(bases_dir: Path, canonical: Path, keep: int) -> List[str]:
+    """Remove this worker's least recently used cached bases so that at most `keep - 1` remain (room for one new
+    base). Only directories directly under bases_dir are touched, and only through `git worktree remove`. The
+    caller holds the per-host worktree lock and runs no Attempt, so none of these checkouts is in use."""
+    if not bases_dir.is_dir():
+        return []
+    dirs = sorted((d for d in bases_dir.iterdir() if d.is_dir() and not d.is_symlink()), key=lambda d: (d.stat().st_mtime, d.name))
+    removed = []
+    for d in dirs[:max(0, len(dirs) - (keep - 1))]:
+        if _git("worktree", "remove", "--force", str(d), cwd=canonical).returncode == 0:
+            removed.append(d.name)
+    _git("worktree", "prune", cwd=canonical)
+    return removed
 
 
 def host_label() -> str:
@@ -115,11 +133,15 @@ class Worker:
         sha = sha or _git("rev-parse", "origin/main", cwd=CANONICAL).stdout.strip()
         path = self.root / "bases" / sha[:12]
         if (path / ".git").exists():
+            os.utime(path)                                     # most recently used (DEF-ODY-015 LRU)
             return path
         path.parent.mkdir(parents=True, exist_ok=True)
         lock = open(Path(os.path.expanduser("~")) / ".fabric-worktree.lock", "w")
         fcntl.flock(lock, fcntl.LOCK_EX)
         try:
+            gone = gc_bases(path.parent, CANONICAL, KEEP_BASES)
+            if gone:
+                print(json.dumps({"worker": self.actor, "gc_bases_removed": gone}), flush=True)
             if _git("cat-file", "-e", sha + "^{commit}", cwd=CANONICAL).returncode != 0:
                 _git("fetch", "-q", "origin", cwd=CANONICAL)
             r = _git("worktree", "add", "--detach", str(path), sha, cwd=CANONICAL)
@@ -147,18 +169,26 @@ class Worker:
         adir = self.root / "attempts" / aid
         adir.mkdir(parents=True, exist_ok=True)
         stop = {"reason": None}
-        hb_conn = S.connect()
+        hbc = {"conn": S.connect()}
 
         def beat():
             while stop.get("done") is not True:
                 try:
-                    h = S.heartbeat(hb_conn, aid, self.actor, ttl_s=self.ttl_s)
+                    h = S.heartbeat(hbc["conn"], aid, self.actor, ttl_s=self.ttl_s)
                     if not h["ok"]:
                         stop["reason"] = "fenced"
                     elif h["cancel_requested"]:
                         stop["reason"] = "cancel"
                 except Exception as e:                    # store unreachable: keep trying; expiry will decide
                     stop["hb_error"] = str(e)[:200]
+                    try:                                  # DEF-ODY-019: a dead connection is replaced, not reused
+                        hbc["conn"].close()
+                    except Exception:
+                        pass
+                    try:
+                        hbc["conn"] = S.connect()
+                    except Exception:
+                        pass
                 for _ in range(int(self.ttl_s / 4)):
                     if stop.get("done"):
                         break
@@ -226,7 +256,10 @@ class Worker:
         fin = S.finish_attempt(self.conn, aid, outcome, self.actor, exit_code=res.exit_code, error=err, model=res.model,
                                env_receipt=receipt, worktree=str(wt) if wt else None,
                                result_summary=(res.final_text or "")[:500] or None)
-        hb_conn.close()
+        try:
+            hbc["conn"].close()
+        except Exception:
+            pass
         shutil.rmtree(adir / "claude_config", ignore_errors=True)
         return {"task_id": tid, "attempt_id": aid, "outcome": outcome, "finish": fin, "artifacts": len(up)}
 

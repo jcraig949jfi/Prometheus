@@ -1,0 +1,2936 @@
+[
+ {
+  "tag": "A19",
+  "name": "qaaa",
+  "group": "affected",
+  "Q2_frozen": 4,
+  "p_PRISTINE_frozen": 1.0,
+  "p_L1_frozen": 1.0,
+  "Q2_b": 4,
+  "cells_b_PRISTINE": [
+   {
+    "charge": 292,
+    "prog": [
+     "fold",
+     "1",
+     "(acc + v)",
+     "(acc - 1)"
+    ],
+    "T4_v1": true
+   },
+   {
+    "charge": 8291,
+    "prog": [
+     "fold",
+     "1",
+     "(v + acc)",
+     "(acc - 1)"
+    ],
+    "T4_v1": true
+   },
+   {
+    "charge": 3569,
+    "prog": [
+     "fold",
+     "1",
+     "(v + acc)",
+     "(acc - 1)"
+    ],
+    "T4_v1": true
+   },
+   {
+    "charge": 3427,
+    "prog": [
+     "fold",
+     "0",
+     "(acc + v)",
+     "acc"
+    ],
+    "T4_v1": true
+   }
+  ],
+  "p_PRISTINE_b": 1.0,
+  "cells_b_L1": [
+   {
+    "charge": 1804,
+    "prog": [
+     "fold",
+     "0",
+     "(acc + math.gcd(abs(v), abs(0)))",
+     "math.gcd(abs(acc), abs(acc))"
+    ],
+    "T4_v1": true
+   },
+   {
+    "charge": 10849,
+    "prog": [
+     "fold",
+     "0",
+     "(acc + (v * last))",
+     "(acc // last)"
+    ],
+    "T4_v1": true
+   },
+   {
+    "charge": 460,
+    "prog": [
+     "fold",
+     "1",
+     "(acc + (v * first))",
+     "(acc // first)"
+    ],
+    "T4_v1": true
+   },
+   {
+    "charge": 533,
+    "prog": [
+     "fold",
+     "1",
+     "(acc + v)",
+     "(acc - 1)"
+    ],
+    "T4_v1": true
+   }
+  ],
+  "p_L1_b": 1.0,
+  "sec": 27.6
+ },
+ {
+  "tag": "A19",
+  "name": "qnaa",
+  "group": "affected",
+  "Q2_frozen": 4,
+  "p_PRISTINE_frozen": 1.0,
+  "p_L1_frozen": 1.0,
+  "Q2_b": 4,
+  "cells_b_PRISTINE": [
+   {
+    "charge": 13563,
+    "prog": [
+     "fold",
+     "1",
+     "(acc + v)",
+     "(acc - 1)"
+    ],
+    "T4_v1": true
+   },
+   {
+    "charge": 9214,
+    "prog": [
+     "fold",
+     "0",
+     "(v + acc)",
+     "(acc * 1)"
+    ],
+    "T4_v1": true
+   },
+   {
+    "charge": 28827,
+    "prog": [
+     "fold",
+     "0",
+     "(acc - math.gcd(abs(v), abs(v)))",
+     "math.gcd(abs(0), abs(acc))"
+    ],
+    "T4_v1": true
+   },
+   {
+    "charge": 4004,
+    "prog": [
+     "fold",
+     "1",
+     "(v + acc)",
+     "(acc - 1)"
+    ],
+    "T4_v1": true
+   }
+  ],
+  "p_PRISTINE_b": 1.0,
+  "cells_b_L1": [
+   {
+    "charge": 812,
+    "prog": [
+     "fold",
+     "0",
+     "(acc + (v * last))",
+     "(acc // last)"
+    ],
+    "T4_v1": true
+   },
+   {
+    "charge": 7024,
+    "prog": [
+     "fold",
+     "0",
+     "(acc + math.gcd(abs(v), abs(0)))",
+     "(acc // 1)"
+    ],
+    "T4_v1": true
+   },
+   {
+    "charge": 12243,
+    "prog": [
+     "fold",
+     "0",
+     "(acc + math.gcd(abs(v), abs(0)))",
+     "(acc // 1)"
+    ],
+    "T4_v1": true
+   },
+   {
+    "charge": 9689,
+    "prog": [
+     "fold",
+     "1",
+     "(acc + math.gcd(abs(v), abs(0)))",
+     "(acc - 1)"
+    ],
+    "T4_v1": true
+   }
+  ],
+  "p_L1_b": 1.0,
+  "sec": 29.2
+ },
+ {
+  "tag": "A19",
+  "name": "qbda",
+  "group": "affected",
+  "Q2_frozen": 12,
+  "p_PRISTINE_frozen": 0.0,
+  "p_L1_frozen": 0.0,
+  "Q2_b": 8,
+  "cells_b_PRISTINE": [
+   {
+    "charge": 21079,
+    "prog": [
+     "fold",
+     "1",
+     "(v - acc)",
+     "(acc // 1)"
+    ],
+    "T4_v1": false
+   },
+   {
+    "charge": 94525,
+    "prog": [
+     "fold",
+     "1",
+     "(v - acc)",
+     "(0 + acc)"
+    ],
+    "T4_v1": false
+   },
+   {
+    "charge": 41663,
+    "prog": [
+     "fold",
+     "1",
+     "(v - acc)",
+     "(1 * acc)"
+    ],
+    "T4_v1": false
+   },
+   {
+    "charge": 25942,
+    "prog": [
+     "fold",
+     "1",
+     "(v - acc)",
+     "(acc - 0)"
+    ],
+    "T4_v1": false
+   }
+  ],
+  "p_PRISTINE_b": 0.0,
+  "cells_b_L1": [
+   {
+    "charge": 109996,
+    "prog": [
+     "fold",
+     "1",
+     "(v - acc)",
+     "acc"
+    ],
+    "T4_v1": false
+   },
+   {
+    "charge": 100623,
+    "prog": [
+     "fold",
+     "1",
+     "(v - acc)",
+     "acc"
+    ],
+    "T4_v1": false
+   },
+   {
+    "charge": 102605,
+    "prog": [
+     "fold",
+     "1",
+     "(v - acc)",
+     "(acc - 0)"
+    ],
+    "T4_v1": false
+   },
+   {
+    "charge": 144372,
+    "prog": [
+     "fold",
+     "1",
+     "(v - acc)",
+     "(acc * 1)"
+    ],
+    "T4_v1": false
+   }
+  ],
+  "p_L1_b": 0.0,
+  "sec": 23.5
+ },
+ {
+  "tag": "A19",
+  "name": "qvda",
+  "group": "affected",
+  "Q2_frozen": 4,
+  "p_PRISTINE_frozen": 1.0,
+  "p_L1_frozen": 1.0,
+  "Q2_b": 4,
+  "cells_b_PRISTINE": [
+   {
+    "charge": 3989,
+    "prog": [
+     "fold",
+     "1",
+     "(v + acc)",
+     "(acc - 1)"
+    ],
+    "T4_v1": true
+   },
+   {
+    "charge": 1801,
+    "prog": [
+     "fold",
+     "0",
+     "(acc + v)",
+     "(1 * acc)"
+    ],
+    "T4_v1": true
+   },
+   {
+    "charge": 615,
+    "prog": [
+     "fold",
+     "1",
+     "(acc + math.gcd(abs(v), abs(v)))",
+     "(acc - 1)"
+    ],
+    "T4_v1": true
+   },
+   {
+    "charge": 4327,
+    "prog": [
+     "fold",
+     "0",
+     "(v + math.gcd(abs(acc), abs(acc)))",
+     "(acc // 1)"
+    ],
+    "T4_v1": true
+   }
+  ],
+  "p_PRISTINE_b": 1.0,
+  "cells_b_L1": [
+   {
+    "charge": 7047,
+    "prog": [
+     "fold",
+     "0",
+     "(acc + (v * first))",
+     "(acc // first)"
+    ],
+    "T4_v1": true
+   },
+   {
+    "charge": 909,
+    "prog": [
+     "fold",
+     "0",
+     "(acc + math.gcd(abs(v), abs(v)))",
+     "acc"
+    ],
+    "T4_v1": true
+   },
+   {
+    "charge": 1572,
+    "prog": [
+     "fold",
+     "1",
+     "(acc + v)",
+     "(acc - 1)"
+    ],
+    "T4_v1": true
+   },
+   {
+    "charge": 2715,
+    "prog": [
+     "fold",
+     "0",
+     "(acc + (v * first))",
+     "(acc // first)"
+    ],
+    "T4_v1": true
+   }
+  ],
+  "p_L1_b": 1.0,
+  "sec": 22.0
+ },
+ {
+  "tag": "A19",
+  "name": "qcja",
+  "group": "affected",
+  "Q2_frozen": 4,
+  "p_PRISTINE_frozen": 1.0,
+  "p_L1_frozen": 1.0,
+  "Q2_b": 4,
+  "cells_b_PRISTINE": [
+   {
+    "charge": 5526,
+    "prog": [
+     "fold",
+     "1",
+     "(acc + math.gcd(abs(v), abs(v)))",
+     "(acc - 1)"
+    ],
+    "T4_v1": true
+   },
+   {
+    "charge": 10511,
+    "prog": [
+     "fold",
+     "1",
+     "(acc - v)",
+     "(1 - acc)"
+    ],
+    "T4_v1": true
+   },
+   {
+    "charge": 19793,
+    "prog": [
+     "fold",
+     "1",
+     "(acc - math.gcd(abs(v), abs(v)))",
+     "(1 - acc)"
+    ],
+    "T4_v1": true
+   },
+   {
+    "charge": 5604,
+    "prog": [
+     "fold",
+     "0",
+     "(acc - math.gcd(abs(v), abs(v)))",
+     "math.gcd(abs(acc), abs(0))"
+    ],
+    "T4_v1": true
+   }
+  ],
+  "p_PRISTINE_b": 1.0,
+  "cells_b_L1": [
+   {
+    "charge": 3673,
+    "prog": [
+     "fold",
+     "0",
+     "(acc + (v * last))",
+     "(acc // last)"
+    ],
+    "T4_v1": true
+   },
+   {
+    "charge": 997,
+    "prog": [
+     "fold",
+     "0",
+     "(acc + (v * last))",
+     "(acc // last)"
+    ],
+    "T4_v1": true
+   },
+   {
+    "charge": 2900,
+    "prog": [
+     "fold",
+     "0",
+     "(acc + math.gcd(abs(v), abs(0)))",
+     "(acc // 1)"
+    ],
+    "T4_v1": true
+   },
+   {
+    "charge": 854,
+    "prog": [
+     "fold",
+     "1",
+     "(acc + v)",
+     "(acc - 1)"
+    ],
+    "T4_v1": true
+   }
+  ],
+  "p_L1_b": 1.0,
+  "sec": 18.4
+ },
+ {
+  "tag": "A19",
+  "name": "qyfa",
+  "group": "affected",
+  "Q2_frozen": 4,
+  "p_PRISTINE_frozen": 1.0,
+  "p_L1_frozen": 0.75,
+  "Q2_b": 4,
+  "cells_b_PRISTINE": [
+   {
+    "charge": 6675,
+    "prog": [
+     "fold",
+     "0",
+     "(acc + math.gcd(abs(v), abs(v)))",
+     "(acc * 1)"
+    ],
+    "T4_v1": true
+   },
+   {
+    "charge": 23226,
+    "prog": [
+     "fold",
+     "0",
+     "(v + acc)",
+     "(acc - 0)"
+    ],
+    "T4_v1": true
+   },
+   {
+    "charge": 9364,
+    "prog": [
+     "fold",
+     "0",
+     "(acc + v)",
+     "math.gcd(abs(0), abs(acc))"
+    ],
+    "T4_v1": true
+   },
+   {
+    "charge": 5312,
+    "prog": [
+     "fold",
+     "1",
+     "(acc + v)",
+     "(acc - 1)"
+    ],
+    "T4_v1": true
+   }
+  ],
+  "p_PRISTINE_b": 1.0,
+  "cells_b_L1": [
+   {
+    "charge": 96,
+    "prog": [
+     "fold",
+     "1",
+     "(acc + v)",
+     "(acc - 1)"
+    ],
+    "T4_v1": true
+   },
+   {
+    "charge": 2721,
+    "prog": [
+     "fold",
+     "0",
+     "(acc + (v % last))",
+     "(0 + acc)"
+    ],
+    "T4_v1": false
+   },
+   {
+    "charge": 6712,
+    "prog": [
+     "fold",
+     "0",
+     "(acc + v)",
+     "(acc + 0)"
+    ],
+    "T4_v1": true
+   },
+   {
+    "charge": 1,
+    "prog": [
+     "fold",
+     "0",
+     "(acc + (v % last))",
+     "(1 * acc)"
+    ],
+    "T4_v1": false
+   }
+  ],
+  "p_L1_b": 0.5,
+  "sec": 18.9
+ },
+ {
+  "tag": "A19",
+  "name": "qoja",
+  "group": "affected",
+  "Q2_frozen": 4,
+  "p_PRISTINE_frozen": 0.0,
+  "p_L1_frozen": 0.0,
+  "Q2_b": null,
+  "sec": 23.0
+ },
+ {
+  "tag": "A20",
+  "name": "cgfa",
+  "group": "affected",
+  "Q2_frozen": 4,
+  "p_PRISTINE_frozen": 0.0,
+  "p_L1_frozen": 0.0,
+  "Q2_b": null,
+  "sec": 22.9
+ },
+ {
+  "tag": "A20",
+  "name": "cmka",
+  "group": "affected",
+  "Q2_frozen": 4,
+  "p_PRISTINE_frozen": 1.0,
+  "p_L1_frozen": 1.0,
+  "Q2_b": 4,
+  "cells_b_PRISTINE": [
+   {
+    "charge": 18228,
+    "prog": [
+     "fold",
+     "1",
+     "(acc - math.gcd(abs(v), abs(v)))",
+     "(1 - acc)"
+    ],
+    "T4_v1": true
+   },
+   {
+    "charge": 11724,
+    "prog": [
+     "fold",
+     "0",
+     "(acc + math.gcd(abs(v), abs(v)))",
+     "(acc + 0)"
+    ],
+    "T4_v1": true
+   },
+   {
+    "charge": 6348,
+    "prog": [
+     "fold",
+     "0",
+     "(acc - math.gcd(abs(v), abs(v)))",
+     "math.gcd(abs(0), abs(acc))"
+    ],
+    "T4_v1": true
+   },
+   {
+    "charge": 3070,
+    "prog": [
+     "fold",
+     "0",
+     "(acc + math.gcd(abs(v), abs(v)))",
+     "(acc + 0)"
+    ],
+    "T4_v1": true
+   }
+  ],
+  "p_PRISTINE_b": 1.0,
+  "cells_b_L1": [
+   {
+    "charge": 2094,
+    "prog": [
+     "fold",
+     "1",
+     "(acc + math.gcd(abs(v), abs(v)))",
+     "(acc - 1)"
+    ],
+    "T4_v1": true
+   },
+   {
+    "charge": 2538,
+    "prog": [
+     "fold",
+     "0",
+     "(acc + v)",
+     "math.gcd(abs(0), abs(acc))"
+    ],
+    "T4_v1": true
+   },
+   {
+    "charge": 8025,
+    "prog": [
+     "fold",
+     "1",
+     "(acc + (v * first))",
+     "(acc // first)"
+    ],
+    "T4_v1": true
+   },
+   {
+    "charge": 1806,
+    "prog": [
+     "fold",
+     "0",
+     "(acc + v)",
+     "math.gcd(abs(0), abs(acc))"
+    ],
+    "T4_v1": true
+   }
+  ],
+  "p_L1_b": 1.0,
+  "sec": 22.8
+ },
+ {
+  "tag": "A20",
+  "name": "ccma",
+  "group": "affected",
+  "Q2_frozen": 4,
+  "p_PRISTINE_frozen": 1.0,
+  "p_L1_frozen": 1.0,
+  "Q2_b": 4,
+  "cells_b_PRISTINE": [
+   {
+    "charge": 21970,
+    "prog": [
+     "fold",
+     "0",
+     "(v + math.gcd(abs(acc), abs(acc)))",
+     "pow(acc, 1)"
+    ],
+    "T4_v1": true
+   },
+   {
+    "charge": 18545,
+    "prog": [
+     "fold",
+     "0",
+     "(v + math.gcd(abs(acc), abs(acc)))",
+     "(acc * 1)"
+    ],
+    "T4_v1": true
+   },
+   {
+    "charge": 12604,
+    "prog": [
+     "fold",
+     "0",
+     "(v + acc)",
+     "(acc - 0)"
+    ],
+    "T4_v1": true
+   },
+   {
+    "charge": 14405,
+    "prog": [
+     "fold",
+     "1",
+     "(acc - math.gcd(abs(v), abs(v)))",
+     "(1 - acc)"
+    ],
+    "T4_v1": true
+   }
+  ],
+  "p_PRISTINE_b": 1.0,
+  "cells_b_L1": [
+   {
+    "charge": 6513,
+    "prog": [
+     "fold",
+     "0",
+     "(acc + math.gcd(abs(v), abs(0)))",
+     "(acc + 0)"
+    ],
+    "T4_v1": true
+   },
+   {
+    "charge": 3818,
+    "prog": [
+     "fold",
+     "0",
+     "(acc + (0 - v))",
+     "(0 - acc)"
+    ],
+    "T4_v1": true
+   },
+   {
+    "charge": 1642,
+    "prog": [
+     "fold",
+     "0",
+     "(acc + v)",
+     "acc"
+    ],
+    "T4_v1": true
+   },
+   {
+    "charge": 12326,
+    "prog": [
+     "fold",
+     "1",
+     "(acc + math.gcd(abs(v), abs(v)))",
+     "(acc - 1)"
+    ],
+    "T4_v1": true
+   }
+  ],
+  "p_L1_b": 1.0,
+  "sec": 23.0
+ },
+ {
+  "tag": "A20",
+  "name": "crna",
+  "group": "affected",
+  "Q2_frozen": 4,
+  "p_PRISTINE_frozen": 1.0,
+  "p_L1_frozen": 1.0,
+  "Q2_b": 4,
+  "cells_b_PRISTINE": [
+   {
+    "charge": 6826,
+    "prog": [
+     "fold",
+     "1",
+     "(v + acc)",
+     "(acc - 1)"
+    ],
+    "T4_v1": true
+   },
+   {
+    "charge": 2482,
+    "prog": [
+     "fold",
+     "1",
+     "(acc - math.gcd(abs(v), abs(v)))",
+     "(1 - acc)"
+    ],
+    "T4_v1": true
+   },
+   {
+    "charge": 9593,
+    "prog": [
+     "fold",
+     "0",
+     "(acc - math.gcd(abs(v), abs(v)))",
+     "math.gcd(abs(acc), abs(acc))"
+    ],
+    "T4_v1": true
+   },
+   {
+    "charge": 2534,
+    "prog": [
+     "fold",
+     "0",
+     "(acc + math.gcd(abs(v), abs(v)))",
+     "math.gcd(abs(0), abs(acc))"
+    ],
+    "T4_v1": true
+   }
+  ],
+  "p_PRISTINE_b": 1.0,
+  "cells_b_L1": [
+   {
+    "charge": 5167,
+    "prog": [
+     "fold",
+     "0",
+     "(acc + (v * first))",
+     "(acc // first)"
+    ],
+    "T4_v1": true
+   },
+   {
+    "charge": 8654,
+    "prog": [
+     "fold",
+     "0",
+     "(acc + v)",
+     "pow(acc, 1)"
+    ],
+    "T4_v1": true
+   },
+   {
+    "charge": 1386,
+    "prog": [
+     "fold",
+     "0",
+     "(acc + (v * last))",
+     "(acc // last)"
+    ],
+    "T4_v1": true
+   },
+   {
+    "charge": 3290,
+    "prog": [
+     "fold",
+     "0",
+     "(acc + (v * first))",
+     "(acc // first)"
+    ],
+    "T4_v1": true
+   }
+  ],
+  "p_L1_b": 1.0,
+  "sec": 20.4
+ },
+ {
+  "tag": "A20",
+  "name": "csca",
+  "group": "control",
+  "Q2_frozen": 4,
+  "p_PRISTINE_frozen": 1.0,
+  "p_L1_frozen": 1.0,
+  "Q2_b": 4,
+  "cells_b_PRISTINE": [
+   {
+    "charge": 10339,
+    "prog": [
+     "fold",
+     "1",
+     "(v - (acc % v))",
+     "(last * acc)"
+    ],
+    "T4_v1": true
+   },
+   {
+    "charge": 49395,
+    "prog": [
+     "fold",
+     "1",
+     "(v - (acc % v))",
+     "(acc * last)"
+    ],
+    "T4_v1": true
+   },
+   {
+    "charge": 149323,
+    "prog": [
+     "fold",
+     "1",
+     "(v - (acc % v))",
+     "(last * acc)"
+    ],
+    "T4_v1": true
+   },
+   {
+    "charge": 61941,
+    "prog": [
+     "fold",
+     "1",
+     "(v - (acc % v))",
+     "(last * acc)"
+    ],
+    "T4_v1": true
+   }
+  ],
+  "p_PRISTINE_b": 1.0,
+  "cells_b_L1": [
+   {
+    "charge": 87951,
+    "prog": [
+     "fold",
+     "1",
+     "(v - (acc % v))",
+     "(last * acc)"
+    ],
+    "T4_v1": true
+   },
+   {
+    "charge": 176782,
+    "prog": [
+     "fold",
+     "1",
+     "(v - (acc % v))",
+     "(last * acc)"
+    ],
+    "T4_v1": true
+   },
+   {
+    "charge": 137906,
+    "prog": [
+     "fold",
+     "1",
+     "(v - (acc % v))",
+     "(last * acc)"
+    ],
+    "T4_v1": true
+   },
+   {
+    "charge": 187948,
+    "prog": [
+     "fold",
+     "1",
+     "(v - (acc % v))",
+     "(last * acc)"
+    ],
+    "T4_v1": true
+   }
+  ],
+  "p_L1_b": 1.0,
+  "sec": 22.1
+ },
+ {
+  "tag": "A20",
+  "name": "cfea",
+  "group": "control",
+  "Q2_frozen": 4,
+  "p_PRISTINE_frozen": 0.0,
+  "p_L1_frozen": 1.0,
+  "Q2_b": 4,
+  "cells_b_PRISTINE": [
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   },
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   },
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   },
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   }
+  ],
+  "p_PRISTINE_b": 0.0,
+  "cells_b_L1": [
+   {
+    "charge": 26847,
+    "prog": [
+     "fold",
+     "0",
+     "(acc + (v + first))",
+     "(acc + 1)"
+    ],
+    "T4_v1": true
+   },
+   {
+    "charge": 3254,
+    "prog": [
+     "fold",
+     "0",
+     "(acc + (v + first))",
+     "(1 + acc)"
+    ],
+    "T4_v1": true
+   },
+   {
+    "charge": 27201,
+    "prog": [
+     "fold",
+     "1",
+     "(acc + (v + first))",
+     "acc"
+    ],
+    "T4_v1": true
+   },
+   {
+    "charge": 19124,
+    "prog": [
+     "fold",
+     "1",
+     "(acc + (v + first))",
+     "(acc * 1)"
+    ],
+    "T4_v1": true
+   }
+  ],
+  "p_L1_b": 1.0,
+  "sec": 36.0
+ },
+ {
+  "tag": "A19",
+  "name": "qwba",
+  "group": "control",
+  "Q2_frozen": 6,
+  "p_PRISTINE_frozen": 0.25,
+  "p_L1_frozen": 0.0,
+  "Q2_b": 6,
+  "cells_b_PRISTINE": [
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   },
+   {
+    "charge": 200825,
+    "prog": [
+     "fold",
+     "(1 - 1)",
+     "(1 * (v - (acc - 1)))",
+     "(acc - first)"
+    ],
+    "T4_v1": true
+   },
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   },
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   }
+  ],
+  "p_PRISTINE_b": 0.25,
+  "cells_b_L1": [
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   },
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   },
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   },
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   }
+  ],
+  "p_L1_b": 0.0,
+  "sec": 52.4
+ },
+ {
+  "tag": "A20",
+  "name": "cika",
+  "group": "control",
+  "Q2_frozen": 4,
+  "p_PRISTINE_frozen": 1.0,
+  "p_L1_frozen": 1.0,
+  "Q2_b": 4,
+  "cells_b_PRISTINE": [
+   {
+    "charge": 8340,
+    "prog": [
+     "fold",
+     "1",
+     "(v + acc)",
+     "(0 - acc)"
+    ],
+    "T4_v1": true
+   },
+   {
+    "charge": 22000,
+    "prog": [
+     "fold",
+     "1",
+     "(acc + math.gcd(abs(v), abs(v)))",
+     "(0 - acc)"
+    ],
+    "T4_v1": true
+   },
+   {
+    "charge": 13063,
+    "prog": [
+     "fold",
+     "1",
+     "(v + math.gcd(abs(acc), abs(acc)))",
+     "(0 - acc)"
+    ],
+    "T4_v1": true
+   },
+   {
+    "charge": 51631,
+    "prog": [
+     "fold",
+     "1",
+     "(v + acc)",
+     "(0 - acc)"
+    ],
+    "T4_v1": true
+   }
+  ],
+  "p_PRISTINE_b": 1.0,
+  "cells_b_L1": [
+   {
+    "charge": 8174,
+    "prog": [
+     "fold",
+     "0",
+     "(acc + (0 - v))",
+     "(acc - 1)"
+    ],
+    "T4_v1": true
+   },
+   {
+    "charge": 10089,
+    "prog": [
+     "fold",
+     "1",
+     "(acc + math.gcd(abs(v), abs(0)))",
+     "(0 - acc)"
+    ],
+    "T4_v1": true
+   },
+   {
+    "charge": 27008,
+    "prog": [
+     "fold",
+     "0",
+     "(acc + (0 - v))",
+     "(acc - 1)"
+    ],
+    "T4_v1": true
+   },
+   {
+    "charge": 13675,
+    "prog": [
+     "fold",
+     "0",
+     "(acc + (0 - v))",
+     "(acc - 1)"
+    ],
+    "T4_v1": true
+   }
+  ],
+  "p_L1_b": 1.0,
+  "sec": 23.6
+ },
+ {
+  "tag": "A19",
+  "name": "qtaa",
+  "group": "control",
+  "Q2_frozen": 4,
+  "p_PRISTINE_frozen": 1.0,
+  "p_L1_frozen": 1.0,
+  "Q2_b": 4,
+  "cells_b_PRISTINE": [
+   {
+    "charge": 23043,
+    "prog": [
+     "fold",
+     "1",
+     "(acc + (acc - v))",
+     "(1 - acc)"
+    ],
+    "T4_v1": true
+   },
+   {
+    "charge": 23332,
+    "prog": [
+     "fold",
+     "1",
+     "(acc + (acc - v))",
+     "(1 - acc)"
+    ],
+    "T4_v1": true
+   },
+   {
+    "charge": 101804,
+    "prog": [
+     "fold",
+     "1",
+     "(acc + (acc - v))",
+     "(1 - acc)"
+    ],
+    "T4_v1": true
+   },
+   {
+    "charge": 87260,
+    "prog": [
+     "fold",
+     "1",
+     "(acc - (v - acc))",
+     "(1 - acc)"
+    ],
+    "T4_v1": true
+   }
+  ],
+  "p_PRISTINE_b": 1.0,
+  "cells_b_L1": [
+   {
+    "charge": 37070,
+    "prog": [
+     "fold",
+     "1",
+     "(acc + (acc - v))",
+     "(1 - acc)"
+    ],
+    "T4_v1": true
+   },
+   {
+    "charge": 52697,
+    "prog": [
+     "fold",
+     "1",
+     "(acc + (acc - v))",
+     "(1 - acc)"
+    ],
+    "T4_v1": true
+   },
+   {
+    "charge": 55087,
+    "prog": [
+     "fold",
+     "1",
+     "(acc + (acc - v))",
+     "(1 - acc)"
+    ],
+    "T4_v1": true
+   },
+   {
+    "charge": 2708,
+    "prog": [
+     "fold",
+     "1",
+     "(acc + (acc - v))",
+     "(1 - acc)"
+    ],
+    "T4_v1": true
+   }
+  ],
+  "p_L1_b": 1.0,
+  "sec": 26.3
+ },
+ {
+  "tag": "A20",
+  "name": "cvba",
+  "group": "control",
+  "Q2_frozen": 4,
+  "p_PRISTINE_frozen": 0.0,
+  "p_L1_frozen": 0.0,
+  "Q2_b": 4,
+  "cells_b_PRISTINE": [
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   },
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   },
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   },
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   }
+  ],
+  "p_PRISTINE_b": 0.0,
+  "cells_b_L1": [
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   },
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   },
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   },
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   }
+  ],
+  "p_L1_b": 0.0,
+  "sec": 57.3
+ },
+ {
+  "tag": "A20",
+  "name": "cmma",
+  "group": "control",
+  "Q2_frozen": 4,
+  "p_PRISTINE_frozen": 0.0,
+  "p_L1_frozen": 1.0,
+  "Q2_b": 4,
+  "cells_b_PRISTINE": [
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   },
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   },
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   },
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   }
+  ],
+  "p_PRISTINE_b": 0.0,
+  "cells_b_L1": [
+   {
+    "charge": 12086,
+    "prog": [
+     "fold",
+     "1",
+     "(acc + (first - v))",
+     "(acc * last)"
+    ],
+    "T4_v1": true
+   },
+   {
+    "charge": 1862,
+    "prog": [
+     "fold",
+     "1",
+     "(acc + (first - v))",
+     "(acc * last)"
+    ],
+    "T4_v1": true
+   },
+   {
+    "charge": 51172,
+    "prog": [
+     "fold",
+     "1",
+     "(acc + (first - v))",
+     "(acc * last)"
+    ],
+    "T4_v1": true
+   },
+   {
+    "charge": 759,
+    "prog": [
+     "fold",
+     "1",
+     "(acc + (first - v))",
+     "(last * acc)"
+    ],
+    "T4_v1": true
+   }
+  ],
+  "p_L1_b": 1.0,
+  "sec": 43.7
+ },
+ {
+  "tag": "A19",
+  "name": "qjga",
+  "group": "control",
+  "Q2_frozen": 8,
+  "p_PRISTINE_frozen": 0.0,
+  "p_L1_frozen": 0.0,
+  "Q2_b": 6,
+  "cells_b_PRISTINE": [
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   },
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   },
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   },
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   }
+  ],
+  "p_PRISTINE_b": 0.0,
+  "cells_b_L1": [
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   },
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   },
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   },
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   }
+  ],
+  "p_L1_b": 0.0,
+  "sec": 54.2
+ },
+ {
+  "tag": "A20",
+  "name": "cnla",
+  "group": "control",
+  "Q2_frozen": 4,
+  "p_PRISTINE_frozen": 0.0,
+  "p_L1_frozen": 0.0,
+  "Q2_b": 4,
+  "cells_b_PRISTINE": [
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   },
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   },
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   },
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   }
+  ],
+  "p_PRISTINE_b": 0.0,
+  "cells_b_L1": [
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   },
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   },
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   },
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   }
+  ],
+  "p_L1_b": 0.0,
+  "sec": 52.8
+ },
+ {
+  "tag": "A20",
+  "name": "cqba",
+  "group": "control",
+  "Q2_frozen": 4,
+  "p_PRISTINE_frozen": 1.0,
+  "p_L1_frozen": 0.75,
+  "Q2_b": 4,
+  "cells_b_PRISTINE": [
+   {
+    "charge": 30603,
+    "prog": [
+     "fold",
+     "1",
+     "(v + math.gcd(abs(acc), abs(acc)))",
+     "(0 + acc)"
+    ],
+    "T4_v1": true
+   },
+   {
+    "charge": 2410,
+    "prog": [
+     "fold",
+     "0",
+     "(v + math.gcd(abs(acc), abs(acc)))",
+     "(1 + acc)"
+    ],
+    "T4_v1": true
+   },
+   {
+    "charge": 1991,
+    "prog": [
+     "fold",
+     "1",
+     "(v + acc)",
+     "(1 * acc)"
+    ],
+    "T4_v1": true
+   },
+   {
+    "charge": 20917,
+    "prog": [
+     "fold",
+     "1",
+     "(acc + v)",
+     "acc"
+    ],
+    "T4_v1": true
+   }
+  ],
+  "p_PRISTINE_b": 1.0,
+  "cells_b_L1": [
+   {
+    "charge": 9574,
+    "prog": [
+     "fold",
+     "1",
+     "(acc + (v % last))",
+     "math.gcd(abs(0), abs(acc))"
+    ],
+    "T4_v1": false
+   },
+   {
+    "charge": 446,
+    "prog": [
+     "fold",
+     "0",
+     "(acc + v)",
+     "(1 + acc)"
+    ],
+    "T4_v1": true
+   },
+   {
+    "charge": 3985,
+    "prog": [
+     "fold",
+     "0",
+     "(acc + v)",
+     "(1 + acc)"
+    ],
+    "T4_v1": true
+   },
+   {
+    "charge": 2026,
+    "prog": [
+     "fold",
+     "0",
+     "(acc + math.gcd(abs(v), abs(v)))",
+     "(acc + 1)"
+    ],
+    "T4_v1": true
+   }
+  ],
+  "p_L1_b": 0.75,
+  "sec": 19.4
+ },
+ {
+  "tag": "A19",
+  "name": "qufa",
+  "group": "control",
+  "Q2_frozen": 12,
+  "p_PRISTINE_frozen": 1.0,
+  "p_L1_frozen": 1.0,
+  "Q2_b": 12,
+  "cells_b_PRISTINE": [
+   {
+    "charge": 30746,
+    "prog": [
+     "fold",
+     "0",
+     "(acc + math.gcd(abs(acc), abs(v)))",
+     "(acc % last)"
+    ],
+    "T4_v1": true
+   },
+   {
+    "charge": 18885,
+    "prog": [
+     "fold",
+     "0",
+     "(acc + math.gcd(abs(v), abs(acc)))",
+     "(acc % last)"
+    ],
+    "T4_v1": true
+   },
+   {
+    "charge": 68216,
+    "prog": [
+     "fold",
+     "0",
+     "(acc + math.gcd(abs(v), abs(acc)))",
+     "(acc % last)"
+    ],
+    "T4_v1": true
+   },
+   {
+    "charge": 16697,
+    "prog": [
+     "fold",
+     "0",
+     "(acc + math.gcd(abs(acc), abs(v)))",
+     "(acc % last)"
+    ],
+    "T4_v1": true
+   }
+  ],
+  "p_PRISTINE_b": 1.0,
+  "cells_b_L1": [
+   {
+    "charge": 26709,
+    "prog": [
+     "fold",
+     "0",
+     "(acc + math.gcd(abs(acc), abs(v)))",
+     "(acc % last)"
+    ],
+    "T4_v1": true
+   },
+   {
+    "charge": 45023,
+    "prog": [
+     "fold",
+     "0",
+     "(acc + math.gcd(abs(acc), abs(v)))",
+     "(acc % last)"
+    ],
+    "T4_v1": true
+   },
+   {
+    "charge": 15356,
+    "prog": [
+     "fold",
+     "0",
+     "(acc + math.gcd(abs(acc), abs(v)))",
+     "(acc % last)"
+    ],
+    "T4_v1": true
+   },
+   {
+    "charge": 40856,
+    "prog": [
+     "fold",
+     "0",
+     "(acc + math.gcd(abs(acc), abs(v)))",
+     "(acc % last)"
+    ],
+    "T4_v1": true
+   }
+  ],
+  "p_L1_b": 1.0,
+  "sec": 21.2
+ },
+ {
+  "tag": "A19",
+  "name": "qnka",
+  "group": "control",
+  "Q2_frozen": 4,
+  "p_PRISTINE_frozen": 0.0,
+  "p_L1_frozen": 0.0,
+  "Q2_b": 4,
+  "cells_b_PRISTINE": [
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   },
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   },
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   },
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   }
+  ],
+  "p_PRISTINE_b": 0.0,
+  "cells_b_L1": [
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   },
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   },
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   },
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   }
+  ],
+  "p_L1_b": 0.0,
+  "sec": 47.9
+ },
+ {
+  "tag": "A19",
+  "name": "qhba",
+  "group": "control",
+  "Q2_frozen": 4,
+  "p_PRISTINE_frozen": 0.0,
+  "p_L1_frozen": 0.0,
+  "Q2_b": 4,
+  "cells_b_PRISTINE": [
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   },
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   },
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   },
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   }
+  ],
+  "p_PRISTINE_b": 0.0,
+  "cells_b_L1": [
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   },
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   },
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   },
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   }
+  ],
+  "p_L1_b": 0.0,
+  "sec": 47.0
+ },
+ {
+  "tag": "A19",
+  "name": "qmia",
+  "group": "control",
+  "Q2_frozen": 8,
+  "p_PRISTINE_frozen": 0.0,
+  "p_L1_frozen": 0.0,
+  "Q2_b": 8,
+  "cells_b_PRISTINE": [
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   },
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   },
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   },
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   }
+  ],
+  "p_PRISTINE_b": 0.0,
+  "cells_b_L1": [
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   },
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   },
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   },
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   }
+  ],
+  "p_L1_b": 0.0,
+  "sec": 46.9
+ },
+ {
+  "tag": "A20",
+  "name": "ctha",
+  "group": "control",
+  "Q2_frozen": 4,
+  "p_PRISTINE_frozen": 0.0,
+  "p_L1_frozen": 1.0,
+  "Q2_b": 4,
+  "cells_b_PRISTINE": [
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   },
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   },
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   },
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   }
+  ],
+  "p_PRISTINE_b": 0.0,
+  "cells_b_L1": [
+   {
+    "charge": 19803,
+    "prog": [
+     "fold",
+     "1",
+     "(acc + (v - last))",
+     "acc"
+    ],
+    "T4_v1": true
+   },
+   {
+    "charge": 19987,
+    "prog": [
+     "fold",
+     "1",
+     "(acc + (v - last))",
+     "(acc // 1)"
+    ],
+    "T4_v1": true
+   },
+   {
+    "charge": 15330,
+    "prog": [
+     "fold",
+     "1",
+     "(acc + (v - last))",
+     "(1 * acc)"
+    ],
+    "T4_v1": true
+   },
+   {
+    "charge": 5959,
+    "prog": [
+     "fold",
+     "0",
+     "(acc + (last - v))",
+     "(1 - acc)"
+    ],
+    "T4_v1": true
+   }
+  ],
+  "p_L1_b": 1.0,
+  "sec": 31.4
+ },
+ {
+  "tag": "A19",
+  "name": "qnja",
+  "group": "control",
+  "Q2_frozen": 6,
+  "p_PRISTINE_frozen": 0.0,
+  "p_L1_frozen": 0.0,
+  "Q2_b": 6,
+  "cells_b_PRISTINE": [
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   },
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   },
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   },
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   }
+  ],
+  "p_PRISTINE_b": 0.0,
+  "cells_b_L1": [
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   },
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   },
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   },
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   }
+  ],
+  "p_L1_b": 0.0,
+  "sec": 46.1
+ },
+ {
+  "tag": "A20",
+  "name": "cbba",
+  "group": "control",
+  "Q2_frozen": 4,
+  "p_PRISTINE_frozen": 0.0,
+  "p_L1_frozen": 0.0,
+  "Q2_b": 6,
+  "cells_b_PRISTINE": [
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   },
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   },
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   },
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   }
+  ],
+  "p_PRISTINE_b": 0.0,
+  "cells_b_L1": [
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   },
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   },
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   },
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   }
+  ],
+  "p_L1_b": 0.0,
+  "sec": 45.4
+ },
+ {
+  "tag": "A19",
+  "name": "qwea",
+  "group": "control",
+  "Q2_frozen": 4,
+  "p_PRISTINE_frozen": 0.0,
+  "p_L1_frozen": 0.0,
+  "Q2_b": 4,
+  "cells_b_PRISTINE": [
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   },
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   },
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   },
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   }
+  ],
+  "p_PRISTINE_b": 0.0,
+  "cells_b_L1": [
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   },
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   },
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   },
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   }
+  ],
+  "p_L1_b": 0.0,
+  "sec": 46.3
+ },
+ {
+  "tag": "A20",
+  "name": "cdea",
+  "group": "control",
+  "Q2_frozen": 8,
+  "p_PRISTINE_frozen": 0.0,
+  "p_L1_frozen": 0.0,
+  "Q2_b": 8,
+  "cells_b_PRISTINE": [
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   },
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   },
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   },
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   }
+  ],
+  "p_PRISTINE_b": 0.0,
+  "cells_b_L1": [
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   },
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   },
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   },
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   }
+  ],
+  "p_L1_b": 0.0,
+  "sec": 47.2
+ },
+ {
+  "tag": "A20",
+  "name": "cbla",
+  "group": "control",
+  "Q2_frozen": 4,
+  "p_PRISTINE_frozen": 0.0,
+  "p_L1_frozen": 0.0,
+  "Q2_b": 4,
+  "cells_b_PRISTINE": [
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   },
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   },
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   },
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   }
+  ],
+  "p_PRISTINE_b": 0.0,
+  "cells_b_L1": [
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   },
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   },
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   },
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   }
+  ],
+  "p_L1_b": 0.0,
+  "sec": 44.7
+ },
+ {
+  "tag": "A20",
+  "name": "cdca",
+  "group": "control",
+  "Q2_frozen": 6,
+  "p_PRISTINE_frozen": 0.0,
+  "p_L1_frozen": 0.0,
+  "Q2_b": 8,
+  "cells_b_PRISTINE": [
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   },
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   },
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   },
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   }
+  ],
+  "p_PRISTINE_b": 0.0,
+  "cells_b_L1": [
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   },
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   },
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   },
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   }
+  ],
+  "p_L1_b": 0.0,
+  "sec": 46.3
+ },
+ {
+  "tag": "A19",
+  "name": "qeja",
+  "group": "control",
+  "Q2_frozen": 4,
+  "p_PRISTINE_frozen": 1.0,
+  "p_L1_frozen": 1.0,
+  "Q2_b": 4,
+  "cells_b_PRISTINE": [
+   {
+    "charge": 128346,
+    "prog": [
+     "fold",
+     "1",
+     "(acc - (v * acc))",
+     "(acc - last)"
+    ],
+    "T4_v1": true
+   },
+   {
+    "charge": 81748,
+    "prog": [
+     "fold",
+     "1",
+     "(acc - (v * acc))",
+     "(acc - last)"
+    ],
+    "T4_v1": true
+   },
+   {
+    "charge": 29731,
+    "prog": [
+     "fold",
+     "1",
+     "(acc - (acc * v))",
+     "(acc - last)"
+    ],
+    "T4_v1": true
+   },
+   {
+    "charge": 187,
+    "prog": [
+     "fold",
+     "1",
+     "(acc - (acc * v))",
+     "(acc - last)"
+    ],
+    "T4_v1": true
+   }
+  ],
+  "p_PRISTINE_b": 1.0,
+  "cells_b_L1": [
+   {
+    "charge": 175415,
+    "prog": [
+     "fold",
+     "1",
+     "(acc - (acc * v))",
+     "(acc - last)"
+    ],
+    "T4_v1": true
+   },
+   {
+    "charge": 151777,
+    "prog": [
+     "fold",
+     "1",
+     "(acc - (v * acc))",
+     "(acc - last)"
+    ],
+    "T4_v1": true
+   },
+   {
+    "charge": 169132,
+    "prog": [
+     "fold",
+     "1",
+     "(acc - (v * acc))",
+     "(acc - last)"
+    ],
+    "T4_v1": true
+   },
+   {
+    "charge": 106610,
+    "prog": [
+     "fold",
+     "1",
+     "(acc - (acc * v))",
+     "(acc - last)"
+    ],
+    "T4_v1": true
+   }
+  ],
+  "p_L1_b": 1.0,
+  "sec": 20.0
+ },
+ {
+  "tag": "A20",
+  "name": "cgha",
+  "group": "control",
+  "Q2_frozen": 4,
+  "p_PRISTINE_frozen": 0.0,
+  "p_L1_frozen": 0.0,
+  "Q2_b": 4,
+  "cells_b_PRISTINE": [
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   },
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   },
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   },
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   }
+  ],
+  "p_PRISTINE_b": 0.0,
+  "cells_b_L1": [
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   },
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   },
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   },
+   {
+    "charge": 159570,
+    "prog": [
+     "fold",
+     "1",
+     "(acc - pow(v, acc))",
+     "(acc * acc)"
+    ],
+    "T4_v1": false
+   }
+  ],
+  "p_L1_b": 0.0,
+  "sec": 44.2
+ },
+ {
+  "tag": "A19",
+  "name": "qgfa",
+  "group": "control",
+  "Q2_frozen": 4,
+  "p_PRISTINE_frozen": 0.0,
+  "p_L1_frozen": 1.0,
+  "Q2_b": 4,
+  "cells_b_PRISTINE": [
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   },
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   },
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   },
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   }
+  ],
+  "p_PRISTINE_b": 0.0,
+  "cells_b_L1": [
+   {
+    "charge": 40844,
+    "prog": [
+     "fold",
+     "1",
+     "(acc + (v + 1))",
+     "(acc * acc)"
+    ],
+    "T4_v1": true
+   },
+   {
+    "charge": 29240,
+    "prog": [
+     "fold",
+     "1",
+     "(acc + (v + 1))",
+     "(acc * acc)"
+    ],
+    "T4_v1": true
+   },
+   {
+    "charge": 45933,
+    "prog": [
+     "fold",
+     "1",
+     "(acc + (v + 1))",
+     "(acc * acc)"
+    ],
+    "T4_v1": true
+   },
+   {
+    "charge": 6657,
+    "prog": [
+     "fold",
+     "1",
+     "(acc + (v + 1))",
+     "(acc * acc)"
+    ],
+    "T4_v1": true
+   }
+  ],
+  "p_L1_b": 1.0,
+  "sec": 32.3
+ },
+ {
+  "tag": "A19",
+  "name": "qaia",
+  "group": "control",
+  "Q2_frozen": 8,
+  "p_PRISTINE_frozen": 0.0,
+  "p_L1_frozen": 0.0,
+  "Q2_b": 12,
+  "cells_b_PRISTINE": [
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   },
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   },
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   },
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   }
+  ],
+  "p_PRISTINE_b": 0.0,
+  "cells_b_L1": [
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   },
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   },
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   },
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   }
+  ],
+  "p_L1_b": 0.0,
+  "sec": 45.4
+ },
+ {
+  "tag": "A20",
+  "name": "cuma",
+  "group": "control",
+  "Q2_frozen": 4,
+  "p_PRISTINE_frozen": 0.0,
+  "p_L1_frozen": 0.0,
+  "Q2_b": 4,
+  "cells_b_PRISTINE": [
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   },
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   },
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   },
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   }
+  ],
+  "p_PRISTINE_b": 0.0,
+  "cells_b_L1": [
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   },
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   },
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   },
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   }
+  ],
+  "p_L1_b": 0.0,
+  "sec": 45.6
+ },
+ {
+  "tag": "A19",
+  "name": "qxca",
+  "group": "control",
+  "Q2_frozen": 4,
+  "p_PRISTINE_frozen": 0.0,
+  "p_L1_frozen": 0.0,
+  "Q2_b": 4,
+  "cells_b_PRISTINE": [
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   },
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   },
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   },
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   }
+  ],
+  "p_PRISTINE_b": 0.0,
+  "cells_b_L1": [
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   },
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   },
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   },
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   }
+  ],
+  "p_L1_b": 0.0,
+  "sec": 46.2
+ },
+ {
+  "tag": "A19",
+  "name": "qsia",
+  "group": "control",
+  "Q2_frozen": 8,
+  "p_PRISTINE_frozen": 0.0,
+  "p_L1_frozen": 0.0,
+  "Q2_b": 8,
+  "cells_b_PRISTINE": [
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   },
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   },
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   },
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   }
+  ],
+  "p_PRISTINE_b": 0.0,
+  "cells_b_L1": [
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   },
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   },
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   },
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   }
+  ],
+  "p_L1_b": 0.0,
+  "sec": 47.1
+ },
+ {
+  "tag": "A19",
+  "name": "qqea",
+  "group": "control",
+  "Q2_frozen": 4,
+  "p_PRISTINE_frozen": 0.0,
+  "p_L1_frozen": 0.0,
+  "Q2_b": 4,
+  "cells_b_PRISTINE": [
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   },
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   },
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   },
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   }
+  ],
+  "p_PRISTINE_b": 0.0,
+  "cells_b_L1": [
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   },
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   },
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   },
+   {
+    "charge": 250000,
+    "prog": null,
+    "T4_v1": false
+   }
+  ],
+  "p_L1_b": 0.0,
+  "sec": 45.9
+ },
+ {
+  "tag": "A19",
+  "name": "qnca",
+  "group": "control",
+  "Q2_frozen": 4,
+  "p_PRISTINE_frozen": 1.0,
+  "p_L1_frozen": 1.0,
+  "Q2_b": 4,
+  "cells_b_PRISTINE": [
+   {
+    "charge": 15898,
+    "prog": [
+     "fold",
+     "0",
+     "(v + (v - acc))",
+     "(acc - last)"
+    ],
+    "T4_v1": true
+   },
+   {
+    "charge": 24601,
+    "prog": [
+     "fold",
+     "0",
+     "(v + (v - acc))",
+     "(acc - last)"
+    ],
+    "T4_v1": true
+   },
+   {
+    "charge": 34203,
+    "prog": [
+     "fold",
+     "0",
+     "(v + (v - acc))",
+     "(acc - last)"
+    ],
+    "T4_v1": true
+   },
+   {
+    "charge": 55906,
+    "prog": [
+     "fold",
+     "0",
+     "(v + (v - acc))",
+     "(acc - last)"
+    ],
+    "T4_v1": true
+   }
+  ],
+  "p_PRISTINE_b": 1.0,
+  "cells_b_L1": [
+   {
+    "charge": 68511,
+    "prog": [
+     "fold",
+     "0",
+     "(v - (acc - v))",
+     "(acc - last)"
+    ],
+    "T4_v1": true
+   },
+   {
+    "charge": 152263,
+    "prog": [
+     "fold",
+     "0",
+     "(v - (acc - v))",
+     "(acc - last)"
+    ],
+    "T4_v1": true
+   },
+   {
+    "charge": 64698,
+    "prog": [
+     "fold",
+     "0",
+     "(v - (acc - v))",
+     "(acc - last)"
+    ],
+    "T4_v1": true
+   },
+   {
+    "charge": 148100,
+    "prog": [
+     "fold",
+     "0",
+     "(v - (acc - v))",
+     "(acc - last)"
+    ],
+    "T4_v1": true
+   }
+  ],
+  "p_L1_b": 1.0,
+  "sec": 18.1
+ }
+]

@@ -108,7 +108,7 @@ def make_throwaway_set(tmp: Path) -> dict:
 def new_run(ts, pkg, sha, out, **kw):
     return runner.FirewallRun(ts["manifest"], ts["enc"], kcopy(ts), pkg, sha, out, delete_key=True,
                               certify_kwargs=SMALL, predict_timeout=300, runner_id="selftest", enforce_run_dir=False,
-                              secret_paths=(), verify_loaded=False, **kw)
+                              secret_paths=(), write_probe_paths=(), preflight=False, verify_loaded=False, **kw)
 
 
 # ------------------------------------------------------------------ check A: end to end
@@ -237,7 +237,7 @@ def refuses_early_certify(tmp: Path, ts: dict, cls, tag: str) -> bool:
     refused = []
     # C1: certify right after open (no predictions at all)
     r = cls(ts["manifest"], ts["enc"], kcopy(ts), pkg, sha, tmp / ("ord1_" + tag), certify_kwargs=SMALL,
-            runner_id="selftest", enforce_run_dir=False, secret_paths=(), verify_loaded=False, delete_key=True)
+            runner_id="selftest", enforce_run_dir=False, secret_paths=(), write_probe_paths=(), preflight=False, verify_loaded=False, delete_key=True)
     r.open()
     try:
         r.certify_world(0)
@@ -246,7 +246,7 @@ def refuses_early_certify(tmp: Path, ts: dict, cls, tag: str) -> bool:
         refused.append(True)
     # C2: predictions for all but the last world -> seal and certify both refused
     r = cls(ts["manifest"], ts["enc"], kcopy(ts), pkg, sha, tmp / ("ord2_" + tag), certify_kwargs=SMALL,
-            runner_id="selftest", enforce_run_dir=False, secret_paths=(), verify_loaded=False, delete_key=True)
+            runner_id="selftest", enforce_run_dir=False, secret_paths=(), write_probe_paths=(), preflight=False, verify_loaded=False, delete_key=True)
     r.open()
     try:
         for i in range(r.N - 1):
@@ -268,7 +268,7 @@ def refuses_early_certify(tmp: Path, ts: dict, cls, tag: str) -> bool:
     refused.append(ok2)
     # C3: full predictions + seal, then one prediction line is deleted ON DISK -> certify refused
     r = cls(ts["manifest"], ts["enc"], kcopy(ts), pkg, sha, tmp / ("ord3_" + tag), certify_kwargs=SMALL,
-            runner_id="selftest", enforce_run_dir=False, secret_paths=(), verify_loaded=False, delete_key=True)
+            runner_id="selftest", enforce_run_dir=False, secret_paths=(), write_probe_paths=(), preflight=False, verify_loaded=False, delete_key=True)
     r.open()
     r.predict_all()
     r.seal_predictions()

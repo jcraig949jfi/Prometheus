@@ -1,0 +1,148 @@
+{
+ "all_mutants_caught": true,
+ "archaeon_additions_merged": 12,
+ "fixtures": 26,
+ "inapplicable": {
+  "K10": "no LDIR/COPYALL under op mask 0x0C",
+  "K13": "no task inputs in the pair context",
+  "K14": "OUT is not memory in Z8",
+  "K19": "LOCAL mutation: no insertions/deletions",
+  "K20": "in-VM copy noise exists only inside LDIR/LDDR (disabled)",
+  "K24": "no task inputs in the pair context",
+  "K26": "no LDIR",
+  "K27": "no COPYALL",
+  "K33": "the NPE pair interaction is itself the two-call shared-memory case (K21)"
+ },
+ "mutants_caught_by": {
+  "exec_all": [
+   "K1_copy_shifted",
+   "K4_copy_positional",
+   "K2_scratch_copy",
+   "K16_self_code_in_window",
+   "K32_reset_pointer_overlap_fill"
+  ],
+  "implicit_move": [
+   "K6_computed",
+   "K31_K11_bit_decoder",
+   "K23_operand_cipher",
+   "K35_or_zero_register"
+  ],
+  "loc0": [
+   "K1_copy_shifted",
+   "K4_copy_positional",
+   "K2_scratch_copy",
+   "K3_K25_partner_executed_copy",
+   "K5_K8_painter_literal",
+   "K7_retention",
+   "K12_translation_table",
+   "K16_self_code_in_window",
+   "K16b_occupant_code_run_in_writer_half",
+   "K16c_writer_code_run_by_occupant",
+   "K17_address_wrap",
+   "K17b_budget_ended",
+   "K21_both_halves",
+   "K30_residue_majority_birth",
+   "K32_reset_pointer_overlap_fill",
+   "K37_painting_one_source"
+  ],
+  "noctrl": [
+   "K1_copy_shifted",
+   "K31_K11_bit_decoder",
+   "K22_guard_not_taken",
+   "K36_count_from_occupant"
+  ],
+  "noexec": [
+   "K4_copy_positional",
+   "K2_scratch_copy",
+   "K3_K25_partner_executed_copy",
+   "K32_reset_pointer_overlap_fill"
+  ],
+  "performer_by_location": [
+   "K16_self_code_in_window",
+   "K16b_occupant_code_run_in_writer_half",
+   "K16c_writer_code_run_by_occupant"
+  ],
+  "positional": [
+   "K1_copy_shifted",
+   "K2_scratch_copy",
+   "K3_K25_partner_executed_copy",
+   "K5_K8_painter_literal",
+   "K12_translation_table",
+   "K16_self_code_in_window",
+   "K16b_occupant_code_run_in_writer_half",
+   "K16c_writer_code_run_by_occupant",
+   "K17_address_wrap",
+   "K17b_budget_ended",
+   "K21_both_halves",
+   "K32_reset_pointer_overlap_fill",
+   "K37_painting_one_source"
+  ],
+  "ptrlabel": [
+   "K1_copy_shifted",
+   "K4_copy_positional",
+   "K2_scratch_copy",
+   "K3_K25_partner_executed_copy",
+   "K5_K8_painter_literal",
+   "K6_computed",
+   "K31_K11_bit_decoder",
+   "K12_translation_table",
+   "K15_persisted_register",
+   "K15b_zero_reset_register",
+   "K16_self_code_in_window",
+   "K16b_occupant_code_run_in_writer_half",
+   "K16c_writer_code_run_by_occupant",
+   "K17_address_wrap",
+   "K17b_budget_ended",
+   "K21_both_halves",
+   "K23_operand_cipher",
+   "K29_getpc_stored",
+   "K32_reset_pointer_overlap_fill",
+   "K34_in_exhausted",
+   "K35_or_zero_register",
+   "K37_painting_one_source"
+  ],
+  "reverse": [
+   "K1_copy_shifted",
+   "K4_copy_positional",
+   "K2_scratch_copy",
+   "K3_K25_partner_executed_copy",
+   "K5_K8_painter_literal",
+   "K7_retention",
+   "K12_translation_table",
+   "K16_self_code_in_window",
+   "K16b_occupant_code_run_in_writer_half",
+   "K16c_writer_code_run_by_occupant",
+   "K17_address_wrap",
+   "K17b_budget_ended",
+   "K21_both_halves",
+   "K30_residue_majority_birth",
+   "K32_reset_pointer_overlap_fill",
+   "K37_painting_one_source"
+  ],
+  "value_alignment": [
+   "K6_computed",
+   "K7_retention",
+   "K31_K11_bit_decoder",
+   "K15b_zero_reset_register",
+   "K29_getpc_stored",
+   "K30_residue_majority_birth",
+   "K32_reset_pointer_overlap_fill",
+   "K34_in_exhausted",
+   "K35_or_zero_register"
+  ]
+ },
+ "pass": true,
+ "real_tracer_failures": {},
+ "real_tracer_pass": true,
+ "world": {
+  "K18_order_two_writebacks_a_then_b": true,
+  "K9_K28_mutation_at_draw": true,
+  "world_value_identity": true
+ },
+ "world_level": {
+  "K18": "order: slice a, slice b, then each half mutated",
+  "K28": "write-back with mutation",
+  "K9": "write-back mutation labelled at the RNG draw"
+ },
+ "world_pass": true
+}

@@ -1,0 +1,1909 @@
+{
+  "id": "HT-37e311ce05",
+  "key": "Compressed Sensing + Measure Theory + Symbiosis",
+  "stratum": "S2_forged",
+  "concepts": [
+    {
+      "field": "Computer Science",
+      "mechanism": "measure",
+      "name": "Compressed Sensing",
+      "short_description": "Recovering sparse signals from far fewer measurements than Nyquist; RIP, basis pursuit, L1 minimization."
+    },
+    {
+      "field": "Mathematics",
+      "mechanism": "measure",
+      "name": "Measure Theory",
+      "short_description": "Rigorous foundation for integration and probability; sigma-algebras, Lebesgue measure, convergence theorems."
+    },
+    {
+      "field": "Biology",
+      "mechanism": "dynamics",
+      "name": "Symbiosis",
+      "short_description": "Long-term interspecies interaction with mutual benefit; mutualism, endosymbiosis, holobiont theory."
+    }
+  ],
+  "provenance": {
+    "historicalId": "Compressed Sensing + Measure Theory + Symbiosis",
+    "humanreadable": "agents/hephaestus/humanreadable/Measure_Theory---Compressed_Sensing---Symbiosis.md",
+    "ledger_lines": [
+      866
+    ],
+    "source": "hephaestus",
+    "sourceArtifact": "agents/hephaestus/ledger.jsonl#L866",
+    "upstream_nous": [
+      "agents/nous/runs/20260324_214225/responses.jsonl#L586"
+    ],
+    "selected_by": "roles/Hecate/prereg/2026-09-29_first_selection/"
+  },
+  "history": {
+    "forged": true,
+    "ledger_n": 1,
+    "ledger_reasons": [
+      ""
+    ],
+    "nous_composite_max": 7.33,
+    "nous_high_potential": true,
+    "nous_models": [
+      "nvidia/nemotron-3-super-120b-a12b"
+    ],
+    "nous_n": 1,
+    "nous_unproductive_any": false
+  },
+  "passes": [
+    {
+      "id": "P0",
+      "triplicateId": "HT-37e311ce05",
+      "index": 0,
+      "kind": "raw_interpretation",
+      "added": [
+        "new interpretation"
+      ],
+      "generator": {
+        "model": "claude-opus-5-5",
+        "search": false,
+        "prompt": "hecate/programs/_prompts/pass0_3_v1.md",
+        "prompt_sha256": "9ac5468dffb0a5792840809c84b3ad1ab22056397741dacb893386fd206baf3d"
+      },
+      "inspected_prior": [],
+      "concept_extractions": [
+        {
+          "concept": "Compressed Sensing",
+          "defining_structures": [
+            "k-sparse vector x in R^n (or sparse in a dictionary Psi)",
+            "measurement matrix A (m x n, m << n)",
+            "measurements y = A x (+ noise)",
+            "decoder: L1 minimisation / basis pursuit / greedy pursuit"
+          ],
+          "invariants": [
+            "restricted isometry: ||A x|| ~ ||x|| for all k-sparse x",
+            "null space property: no k-sparse-dominated vector in ker A",
+            "spark(A) > 2k implies unique k-sparse preimage"
+          ],
+          "transformations": [
+            "linear projection to fewer dimensions",
+            "change of sparsifying basis",
+            "L1 convex relaxation of L0"
+          ],
+          "conserved_quantities": [
+            "energy of sparse vectors (approximately, under RIP)",
+            "identifiability of the support set"
+          ],
+          "failure_modes": [
+            "abrupt phase transition: recovery collapses once k/m crosses a curve",
+            "coherent dictionaries (aliasing)",
+            "signal not sparse in the assumed basis",
+            "noise folding"
+          ],
+          "dynamics": [
+            "iterative thresholding converges to a sparse fixed point",
+            "sharp success/failure transition as m or k varies"
+          ],
+          "scales": [
+            "m ~ C k log(n/k)",
+            "ambient n vs intrinsic k"
+          ],
+          "locality": [
+            "sparsity is locality in coefficient index, not in space",
+            "incoherent measurements are maximally non-local"
+          ],
+          "memory": [
+            "a small set of measurements stores the whole sparse signal",
+            "support set = compressed record"
+          ],
+          "identity": [
+            "the support set identifies the signal",
+            "two signals are equivalent iff they differ by an element of ker A"
+          ],
+          "reproduction": [
+            "none intrinsic; a measurement row can be copied or transferred"
+          ],
+          "selection": [
+            "support selection (which coefficients survive thresholding)"
+          ],
+          "information": [
+            "about k log(n/k) measurements suffice for the support",
+            "prior (sparsity) substitutes for measurements"
+          ],
+          "constraint": [
+            "measurement budget m",
+            "incoherence between sensing and sparsity bases"
+          ]
+        },
+        {
+          "concept": "Measure Theory",
+          "defining_structures": [
+            "sigma-algebra of measurable events",
+            "measure mu (countably additive)",
+            "measurable functions and integrals",
+            "null sets"
+          ],
+          "invariants": [
+            "countable additivity",
+            "absolute continuity nu << mu is preserved under restriction",
+            "integral is invariant under modification on null sets"
+          ],
+          "transformations": [
+            "pushforward of measures",
+            "Radon-Nikodym derivative dnu/dmu",
+            "Lebesgue decomposition nu = nu_ac + nu_sing",
+            "conditional expectation = projection onto a sub-sigma-algebra",
+            "product measure / Fubini"
+          ],
+          "conserved_quantities": [
+            "total mass",
+            "mass of each measurable set under measure-preserving maps"
+          ],
+          "failure_modes": [
+            "non-measurable sets",
+            "escape of mass to infinity (failure of tightness / domination)",
+            "limits and integrals not commuting without monotonicity or domination",
+            "singular measures invisible to a density"
+          ],
+          "dynamics": [
+            "monotone convergence",
+            "dominated convergence",
+            "martingale convergence along a filtration"
+          ],
+          "scales": [
+            "null vs positive measure",
+            "finite vs sigma-finite"
+          ],
+          "locality": [
+            "support of a measure",
+            "atoms vs diffuse mass"
+          ],
+          "memory": [
+            "filtration F_t: the growing sigma-algebra of what has been observed"
+          ],
+          "identity": [
+            "equality almost everywhere: objects differing on a null set are the same"
+          ],
+          "reproduction": [
+            "product measures (independent copies)"
+          ],
+          "selection": [
+            "restriction to a measurable subset",
+            "conditioning"
+          ],
+          "information": [
+            "a sigma-algebra is the information: which events can be distinguished",
+            "finer sigma-algebra = more information"
+          ],
+          "constraint": [
+            "only measurable events can be acted on",
+            "integrability / domination conditions"
+          ]
+        },
+        {
+          "concept": "Symbiosis",
+          "defining_structures": [
+            "host and symbiont lineages with distinct reproduction",
+            "exchange of goods/services",
+            "holobiont as composite unit"
+          ],
+          "invariants": [
+            "mutual dependence once established tends to persist (ratchet)",
+            "partner fidelity under vertical transmission"
+          ],
+          "transformations": [
+            "genome reduction of endosymbionts",
+            "gene transfer from symbiont to host",
+            "horizontal vs vertical acquisition",
+            "shift mutualism <-> parasitism"
+          ],
+          "conserved_quantities": [
+            "the complementary function set of the holobiont (division of labour)"
+          ],
+          "failure_modes": [
+            "cheating / free-riding",
+            "symbiont overgrowth (parasitism)",
+            "breakdown after environment change",
+            "irreversible dependence on a degraded partner"
+          ],
+          "dynamics": [
+            "coevolution",
+            "partner choice and sanctions",
+            "dependence ratchet"
+          ],
+          "scales": [
+            "within-host symbiont population",
+            "host population",
+            "holobiont lineage"
+          ],
+          "locality": [
+            "intracellular vs extracellular",
+            "spatial structure promotes partner fidelity"
+          ],
+          "memory": [
+            "vertically transmitted symbiont carries lineage history"
+          ],
+          "identity": [
+            "holobiont vs separate individuals; the unit of selection is ambiguous"
+          ],
+          "reproduction": [
+            "coupled (vertical) or decoupled (horizontal) reproduction"
+          ],
+          "selection": [
+            "multi-level: within-host and between-holobiont",
+            "partner choice, sanctions"
+          ],
+          "information": [
+            "partners sense different aspects of the environment",
+            "signalling and honesty problems"
+          ],
+          "constraint": [
+            "cost of maintaining a partner",
+            "verification limits of the host"
+          ]
+        }
+      ],
+      "unexplained": [
+        "whether measure theory contributes mechanism or only vocabulary",
+        "which interpretation gives a prediction beyond threshold public goods"
+      ],
+      "decision": "DEEPEN",
+      "research_state": {
+        "novelty": "unknown",
+        "mechanistic_clarity": "low",
+        "falsifiability": "low",
+        "empirical_support": "none",
+        "cross_lens_agreement": "unknown",
+        "cross_substrate_transfer": "unknown",
+        "baseline_resistance": "unknown",
+        "artifact_risk": "medium",
+        "cost": "low",
+        "unexpectedness": "low",
+        "potential_importance": "unknown"
+      }
+    },
+    {
+      "id": "P1",
+      "triplicateId": "HT-37e311ce05",
+      "index": 1,
+      "kind": "collision",
+      "added": [
+        "new mechanism",
+        "new observable"
+      ],
+      "generator": {
+        "model": "claude-opus-5-5",
+        "search": false,
+        "prompt": "hecate/programs/_prompts/pass0_3_v1.md",
+        "prompt_sha256": "9ac5468dffb0a5792840809c84b3ad1ab22056397741dacb893386fd206baf3d"
+      },
+      "inspected_prior": [
+        "I1",
+        "I2",
+        "I3",
+        "I4",
+        "I5",
+        "I6",
+        "I7"
+      ],
+      "unexplained": [
+        "Measure Theory knockout is weak for M1, M2, M9, M12, M13; Compressed Sensing is weak for M3, M7, M11, M14",
+        "M12 critical dependence may reduce to cost accounting"
+      ],
+      "decision": "DEEPEN",
+      "research_state": {
+        "novelty": "unknown",
+        "mechanistic_clarity": "medium",
+        "falsifiability": "medium",
+        "empirical_support": "none",
+        "cross_lens_agreement": "unknown",
+        "cross_substrate_transfer": "unknown",
+        "baseline_resistance": "unknown",
+        "artifact_risk": "medium",
+        "cost": "low",
+        "unexpectedness": "medium",
+        "potential_importance": "medium"
+      }
+    },
+    {
+      "id": "P2",
+      "triplicateId": "HT-37e311ce05",
+      "index": 2,
+      "kind": "lens_explosion",
+      "added": [
+        "new lens",
+        "new observable"
+      ],
+      "generator": {
+        "model": "claude-opus-5-5",
+        "search": false,
+        "prompt": "hecate/programs/_prompts/pass0_3_v1.md",
+        "prompt_sha256": "9ac5468dffb0a5792840809c84b3ad1ab22056397741dacb893386fd206baf3d"
+      },
+      "inspected_prior": [
+        "M1",
+        "M2",
+        "M3",
+        "M4",
+        "M5",
+        "M6",
+        "M7",
+        "M8",
+        "M9",
+        "M10",
+        "M11",
+        "M12",
+        "M13",
+        "M14"
+      ],
+      "unexplained": [
+        "L2 on finite spaces risks trivial absolute continuity",
+        "no lens yet separates steepness of the benefit from CS specifically"
+      ],
+      "decision": "FALSIFY",
+      "research_state": {
+        "novelty": "unknown",
+        "mechanistic_clarity": "medium",
+        "falsifiability": "medium",
+        "empirical_support": "none",
+        "cross_lens_agreement": "unknown",
+        "cross_substrate_transfer": "unknown",
+        "baseline_resistance": "unknown",
+        "artifact_risk": "medium",
+        "cost": "low",
+        "unexpectedness": "medium",
+        "potential_importance": "medium"
+      }
+    },
+    {
+      "id": "P3",
+      "triplicateId": "HT-37e311ce05",
+      "index": 3,
+      "kind": "minimal_worlds",
+      "added": [
+        "new substrate",
+        "new intervention",
+        "new falsifier"
+      ],
+      "generator": {
+        "model": "claude-opus-5-5",
+        "search": false,
+        "prompt": "hecate/programs/_prompts/pass0_3_v1.md",
+        "prompt_sha256": "9ac5468dffb0a5792840809c84b3ad1ab22056397741dacb893386fd206baf3d"
+      },
+      "inspected_prior": [
+        "M1",
+        "M2",
+        "M3",
+        "M9",
+        "M12",
+        "M13",
+        "L1",
+        "L2",
+        "L3",
+        "L5",
+        "L7"
+      ],
+      "unexplained": [
+        "M4, M5, M6, M7, M8, M10, M11, M14 have no world yet",
+        "W1 may only confirm a known threshold public-goods effect"
+      ],
+      "decision": "FALSIFY",
+      "research_state": {
+        "novelty": "unknown",
+        "mechanistic_clarity": "medium",
+        "falsifiability": "high",
+        "empirical_support": "none",
+        "cross_lens_agreement": "unknown",
+        "cross_substrate_transfer": "unknown",
+        "baseline_resistance": "low",
+        "artifact_risk": "medium",
+        "cost": "low",
+        "unexpectedness": "medium",
+        "potential_importance": "medium"
+      }
+    },
+    {
+      "id": "P3-probe1",
+      "triplicateId": "HT-37e311ce05",
+      "index": 3,
+      "kind": "cheap_probe",
+      "added": [
+        "new observable"
+      ],
+      "generator": {
+        "model": "claude-opus-5-5 (implementer)",
+        "search": false,
+        "prompt": "hecate/programs/_prompts/probe_impl_v1.md",
+        "prompt_sha256": "cf4bd374bce1b817a12d3607063278183ce0a8b7c4a7b771061dc8ce133bcea2"
+      },
+      "prereg": "roles/Hecate/prereg/2026-09-29_probe_round1/PREREG.md",
+      "inspected_prior": [
+        "W1"
+      ],
+      "unexplained": [
+        "the linear null has lower marginal return near m*, so selection intensity differs"
+      ],
+      "decision": "DEEPEN",
+      "research_state": {
+        "novelty": "unknown",
+        "mechanistic_clarity": "unknown",
+        "falsifiability": "unknown",
+        "empirical_support": "none",
+        "cross_lens_agreement": "unknown",
+        "cross_substrate_transfer": "unknown",
+        "baseline_resistance": "unknown",
+        "artifact_risk": "unknown",
+        "cost": "unknown",
+        "unexpectedness": "unknown",
+        "potential_importance": "unknown"
+      }
+    },
+    {
+      "id": "P3-probe2",
+      "triplicateId": "HT-37e311ce05",
+      "index": 3,
+      "kind": "cheap_probe",
+      "added": [
+        "new observable"
+      ],
+      "generator": {
+        "model": "claude-opus-5-5 (implementer)",
+        "search": false,
+        "prompt": "hecate/programs/_prompts/probe_impl_v2.md",
+        "prompt_sha256": "2021ed66e8fefd807203ae1d814b74091b4eabdacef16668e7a025d82128185e"
+      },
+      "prereg": "roles/Hecate/prereg/2026-09-30_probe_round2/PREREG.md",
+      "inspected_prior": [
+        "W1",
+        "W4"
+      ],
+      "unexplained": [
+        "s_Psi falls because w shrinks toward zero",
+        "benefit saturation makes many genome directions neutral so any pressure picks one",
+        "a random orthonormal Psi_h makes canonical sparse vectors dense, so the tension is built in by construction"
+      ],
+      "decision": "PARK",
+      "research_state": {
+        "novelty": "unknown",
+        "mechanistic_clarity": "unknown",
+        "falsifiability": "unknown",
+        "empirical_support": "none",
+        "cross_lens_agreement": "unknown",
+        "cross_substrate_transfer": "unknown",
+        "baseline_resistance": "unknown",
+        "artifact_risk": "unknown",
+        "cost": "unknown",
+        "unexpectedness": "unknown",
+        "potential_importance": "unknown"
+      }
+    },
+    {
+      "id": "P3v2",
+      "triplicateId": "HT-37e311ce05",
+      "index": 3,
+      "kind": "minimal_worlds_v2",
+      "added": [
+        "new falsifier",
+        "new observable"
+      ],
+      "generator": {
+        "model": "claude-opus-5-5",
+        "search": false,
+        "prompt": "hecate/programs/_prompts/pass3_v2.md",
+        "prompt_sha256": "2adcfc8da07ee9adb9b04d2214889f0965758f7fcf0a60cde08eebb62bedd461"
+      },
+      "prereg": "roles/Hecate/prereg/2026-09-30_pass3_v2/PREREG.md",
+      "inspected_prior": [],
+      "unexplained": [],
+      "decision": "FALSIFY",
+      "research_state": {
+        "novelty": "unknown",
+        "mechanistic_clarity": "unknown",
+        "falsifiability": "unknown",
+        "empirical_support": "none",
+        "cross_lens_agreement": "unknown",
+        "cross_substrate_transfer": "unknown",
+        "baseline_resistance": "unknown",
+        "artifact_risk": "unknown",
+        "cost": "unknown",
+        "unexpectedness": "unknown",
+        "potential_importance": "unknown"
+      }
+    },
+    {
+      "id": "P3-probe3",
+      "triplicateId": "HT-37e311ce05",
+      "index": 3,
+      "kind": "cheap_probe",
+      "added": [
+        "new falsifier",
+        "new observable"
+      ],
+      "generator": {
+        "model": "claude-opus-5-5",
+        "search": false,
+        "prompt": "hecate/programs/_prompts/probe_impl_v3.md",
+        "prompt_sha256": "a34a8c6143f49df2b33b75871e8f9cd12e60c10c37778ba595e12fedf1621685"
+      },
+      "prereg": "roles/Hecate/prereg/2026-09-30_pass3_v2/PREREG.md",
+      "inspected_prior": [
+        "W5"
+      ],
+      "unexplained": [
+        "the benefit clip at 1 creates a threshold unrelated to the coset geometry",
+        "A is scaled by 1/sqrt(m), so a mutation moves A x by a different relative amount at each m and selection strength varies with m, producing a step for reasons of search rather than geometry",
+        "2000 generations are enough to reach the coset optimum only when ker A is small (large m), so the gap falls wherever search becomes easy, not where L1 recovery sets in"
+      ],
+      "decision": "PARK",
+      "research_state": {
+        "novelty": "unknown",
+        "mechanistic_clarity": "unknown",
+        "falsifiability": "unknown",
+        "empirical_support": "none",
+        "cross_lens_agreement": "unknown",
+        "cross_substrate_transfer": "unknown",
+        "baseline_resistance": "unknown",
+        "artifact_risk": "unknown",
+        "cost": "unknown",
+        "unexpectedness": "unknown",
+        "potential_importance": "unknown"
+      }
+    }
+  ],
+  "hypotheses": [
+    {
+      "id": "I1",
+      "triplicateId": "HT-37e311ce05",
+      "passId": "P0",
+      "kind": "interpretation",
+      "layer": "speculation",
+      "statement": "Mutualism as crossing a joint recovery phase transition: host and symbiont each hold too few measurements of a shared sparse environment to decode it alone, but their stacked measurements exceed the threshold; the sharpness of the CS transition is what makes the partnership obligate."
+    },
+    {
+      "id": "I2",
+      "triplicateId": "HT-37e311ce05",
+      "passId": "P0",
+      "kind": "interpretation",
+      "layer": "speculation",
+      "statement": "Endosymbiotic genome reduction as Lebesgue decomposition: the symbiont's functional measure splits into a part absolutely continuous w.r.t. the host's (redundant, lost under cost) and a singular part (retained); the reduced symbiont is the singular remainder."
+    },
+    {
+      "id": "I3",
+      "triplicateId": "HT-37e311ce05",
+      "passId": "P0",
+      "kind": "interpretation",
+      "layer": "speculation",
+      "statement": "Symbiosis as exchange of sigma-algebras rather than of goods: each partner's sensors define a partition of environmental states; the holobiont acts on the join partition, and the currency of the partnership is resolvable events, not resources."
+    },
+    {
+      "id": "I4",
+      "triplicateId": "HT-37e311ce05",
+      "passId": "P0",
+      "kind": "interpretation",
+      "layer": "speculation",
+      "statement": "Complementarity as null-space transversality: what one partner cannot see (ker A_host) is what the other sees; selection on partnerships is selection for the joint null-space property of the stacked measurement matrix."
+    },
+    {
+      "id": "I5",
+      "triplicateId": "HT-37e311ce05",
+      "passId": "P0",
+      "kind": "interpretation",
+      "layer": "speculation",
+      "statement": "Cheating as aliasing: a cheater is a strategy lying in the same measurement coset (x + ker A) as a cooperator; the host's ability to sanction is bounded by the RIP/spark of its verification matrix, so cheater evolution is an attack on the host's sensing geometry."
+    },
+    {
+      "id": "I6",
+      "triplicateId": "HT-37e311ce05",
+      "passId": "P0",
+      "kind": "interpretation",
+      "layer": "speculation",
+      "statement": "Dependence dynamics as convergence theorems: the monotone ratchet of gene loss is monotone convergence; a host-imposed cap is a dominating function that makes the symbiont limit exist; lack of domination is escape of mass, i.e. the mutualism-to-parasitism blowout."
+    },
+    {
+      "id": "I7",
+      "triplicateId": "HT-37e311ce05",
+      "passId": "P0",
+      "kind": "interpretation",
+      "layer": "speculation",
+      "statement": "Critical dependence: gene transfer from symbiont to host proceeds until the host alone sits just below the recovery threshold, so endosymbioses are poised at a phase boundary where the symbiont's residual contribution is minimal but indispensable."
+    },
+    {
+      "id": "M1",
+      "triplicateId": "HT-37e311ce05",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "implemented_candidate",
+      "form": "interaction law",
+      "statement": "Free-rider stabilisation by a steep recovery curve: partners pool measurement rows to decode a k-sparse environment; because success collapses abruptly below m*(k), any partner that trims its rows sinks the pair, so the steepness of the CS phase transition polices free-riding.",
+      "derived_from": [
+        "I1"
+      ],
+      "concept_contributions": {
+        "Compressed Sensing": "steep, threshold-like benefit curve P(success | m, k)",
+        "Measure Theory": "success probability as the measure of the set of recovered signals/draws (concentration of measure makes it steep)",
+        "Symbiosis": "two lineages that pool contributions and can free-ride"
+      },
+      "knockouts": {
+        "Compressed Sensing": "benefit becomes smooth in m; free-riding erodes contributions gradually (tragedy of the commons)",
+        "Measure Theory": "weak: only the probabilistic reading of success; a deterministic threshold gives the same effect",
+        "Symbiosis": "no partners: reduces to single-agent budget optimisation"
+      },
+      "simpler_alternative": "threshold public-goods game / volunteer's dilemma with an arbitrary step benefit",
+      "questions": {
+        "what_exists": "agents with heritable row budget m_i and a pooling bit",
+        "what_changes": "m_i, pooling frequency",
+        "what_persists": "pooled total near m*",
+        "what_is_selected": "row budget and willingness to pool",
+        "what_can_reproduce": "agents",
+        "what_can_learn": "nothing within a lifetime",
+        "what_can_transfer": "rows via pooling",
+        "distinguishing_observable": "pooled total m concentrates within +-15% of m*(k) under CS benefit but decays under a smooth benefit with matched mean"
+      }
+    },
+    {
+      "id": "M2",
+      "triplicateId": "HT-37e311ce05",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "selection mechanism",
+      "statement": "Selection for transverse null spaces: pair-level selection acts on the joint null-space property of the stacked matrix [A_h; A_s], pushing partners' kernels apart so that no sparse vector is invisible to both.",
+      "derived_from": [
+        "I4"
+      ],
+      "concept_contributions": {
+        "Compressed Sensing": "null space / spark as the object of selection",
+        "Measure Theory": "kernel as a null set of the partner's measurement pushforward",
+        "Symbiosis": "paired lineages under vertical transmission"
+      },
+      "knockouts": {
+        "Compressed Sensing": "nothing to be transverse; complementarity becomes resource-based only",
+        "Measure Theory": "weak: kernels are linear algebra; the null-set reading is interpretive",
+        "Symbiosis": "no pairing: each agent optimises its own matrix, cross-kernel angles random"
+      },
+      "simpler_alternative": "classic coevolutionary complementarity / division of labour under vertical transmission",
+      "questions": {
+        "what_exists": "host and symbiont measurement row sets",
+        "what_changes": "which rows each holds",
+        "what_persists": "partner-specific complementary rows",
+        "what_is_selected": "joint recoverability",
+        "what_can_reproduce": "pairs (vertical) or individuals (horizontal)",
+        "what_can_learn": "none",
+        "what_can_transfer": "rows",
+        "distinguishing_observable": "cross-partner row redundancy and joint coherence lower under vertical than horizontal transmission with matched selection"
+      }
+    },
+    {
+      "id": "M3",
+      "triplicateId": "HT-37e311ce05",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "mutation operator",
+      "statement": "Singular-remainder genome reduction: under per-gene cost, the symbiont loses genes whose function lies in the support of the host's function measure; the retained genome converges to the part singular w.r.t. the host.",
+      "derived_from": [
+        "I2",
+        "I6"
+      ],
+      "concept_contributions": {
+        "Compressed Sensing": "weak: enters only through the M13 variant where the host verifies via compressed checks",
+        "Measure Theory": "Lebesgue decomposition and monotone decrease of overlapping mass",
+        "Symbiosis": "endosymbiotic gene loss under host provisioning"
+      },
+      "knockouts": {
+        "Compressed Sensing": "weak - mechanism survives as plain redundancy loss",
+        "Measure Theory": "lose the prediction that overlap mass goes to ~0 rather than merely decreasing",
+        "Symbiosis": "no host support to be singular against"
+      },
+      "simpler_alternative": "redundant genes are lost because they are costly and unneeded",
+      "questions": {
+        "what_exists": "symbiont gene-expression vector, host support set",
+        "what_changes": "symbiont expression",
+        "what_persists": "genes outside host support",
+        "what_is_selected": "non-redundant coverage",
+        "what_can_reproduce": "symbionts",
+        "what_can_learn": "none",
+        "what_can_transfer": "none",
+        "distinguishing_observable": "overlap energy of the symbiont genome on host support falls below 5% while off-support required genes are retained"
+      }
+    },
+    {
+      "id": "M4",
+      "triplicateId": "HT-37e311ce05",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "information bottleneck",
+      "statement": "Sigma-algebra exchange: partners exchange partitions (which events they can resolve) instead of estimates; the holobiont's policy must be measurable w.r.t. the join, and the partnership's value is the number of fitness-relevant events measurable only in the join.",
+      "derived_from": [
+        "I3"
+      ],
+      "concept_contributions": {
+        "Compressed Sensing": "each partition is induced by few quantised measurements of a sparse state",
+        "Measure Theory": "join of sigma-algebras; measurability of the policy",
+        "Symbiosis": "two partners whose partitions are coarse alone"
+      },
+      "knockouts": {
+        "Compressed Sensing": "partitions arbitrary; no reason joins are small or efficient",
+        "Measure Theory": "lose the event-level accounting; becomes feature concatenation",
+        "Symbiosis": "single agent with the union of sensors"
+      },
+      "simpler_alternative": "feature concatenation / multi-view learning",
+      "questions": {
+        "what_exists": "partitions of environment state",
+        "what_changes": "partition refinement",
+        "what_persists": "join atoms",
+        "what_is_selected": "refinements that separate fitness events",
+        "what_can_reproduce": "partners",
+        "what_can_learn": "partitions",
+        "what_can_transfer": "partition labels",
+        "distinguishing_observable": "the holobiont policy uses events outside each partner's sigma-algebra; the count of such events predicts benefit better than total bits exchanged"
+      }
+    },
+    {
+      "id": "M5",
+      "triplicateId": "HT-37e311ce05",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "implemented_candidate",
+      "form": "error-correction mechanism",
+      "statement": "Coset-bounded sanctions: a host rewards a symbiont on the basis of sparse recovery from its m verification measurements; cheaters evolve cheap contributions in the same measurement coset as expensive beneficial ones, and cheater success is governed by the host's verification geometry.",
+      "derived_from": [
+        "I5"
+      ],
+      "concept_contributions": {
+        "Compressed Sensing": "verification by m measurements; aliasing in ker A",
+        "Measure Theory": "coset x + ker A as the equivalence class 'equal as far as the host can measure'",
+        "Symbiosis": "sanctions, cheating, arms race"
+      },
+      "knockouts": {
+        "Compressed Sensing": "host sees contributions fully: no aliasing, no cheaters",
+        "Measure Theory": "lose the equivalence-class view; minor",
+        "Symbiosis": "no rewards to cheat on"
+      },
+      "simpler_alternative": "imperfect monitoring in principal-agent games",
+      "questions": {
+        "what_exists": "host verification matrix, symbiont contribution vectors",
+        "what_changes": "contribution vectors, host m",
+        "what_persists": "cheater lineages in ker A directions",
+        "what_is_selected": "reward minus production cost",
+        "what_can_reproduce": "symbionts",
+        "what_can_learn": "none",
+        "what_can_transfer": "none",
+        "distinguishing_observable": "exploitation gap (paid reward minus delivered benefit) vs host m shows a threshold near the L1 transition rather than a smooth decline"
+      }
+    },
+    {
+      "id": "M6",
+      "triplicateId": "HT-37e311ce05",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "memory structure",
+      "statement": "Filtration carried by the partner: a vertically transmitted symbiont stores a compressed record (few rows) of the host lineage's environmental history; the lineage's sigma-algebra grows as a filtration across generations, while horizontal transmission resets it.",
+      "derived_from": [
+        "I3",
+        "I6"
+      ],
+      "concept_contributions": {
+        "Compressed Sensing": "history stored as few measurements of a sparse environment history",
+        "Measure Theory": "filtration and martingale convergence of the lineage estimate",
+        "Symbiosis": "vertical vs horizontal transmission"
+      },
+      "knockouts": {
+        "Compressed Sensing": "memory capacity scales with rows, not with k log(n/k)",
+        "Measure Theory": "lose the convergence claim",
+        "Symbiosis": "memory held in host genome instead; no transmission-mode effect"
+      },
+      "simpler_alternative": "maternal effects / transgenerational epigenetic memory",
+      "questions": {
+        "what_exists": "symbiont-held measurement record",
+        "what_changes": "record content",
+        "what_persists": "lineage estimate",
+        "what_is_selected": "records predicting the environment",
+        "what_can_reproduce": "symbiont with host",
+        "what_can_learn": "lineage estimate",
+        "what_can_transfer": "record",
+        "distinguishing_observable": "memory capacity scales as m/log(n/k) environments under vertical transmission and collapses to one generation under horizontal"
+      }
+    },
+    {
+      "id": "M7",
+      "triplicateId": "HT-37e311ce05",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "dynamical law",
+      "statement": "Domination-bounded mutualism: the host imposes a dominating function (cap) on symbiont density; with an integrable cap the time-averaged holobiont fitness converges, without it symbiont mass escapes (sup grows, integrated benefit vanishes) - parasitism as failure of dominated convergence.",
+      "derived_from": [
+        "I6"
+      ],
+      "concept_contributions": {
+        "Compressed Sensing": "weak: host monitors symbiont density through compressed measurements; dependency is weak",
+        "Measure Theory": "dominated vs undominated convergence; escape of mass",
+        "Symbiosis": "host control of symbiont proliferation"
+      },
+      "knockouts": {
+        "Compressed Sensing": "weak - dynamics unchanged if the host measures density directly",
+        "Measure Theory": "lose the escape-of-mass diagnostic",
+        "Symbiosis": "no symbiont growth to dominate"
+      },
+      "simpler_alternative": "logistic growth with a carrying capacity set by the host",
+      "questions": {
+        "what_exists": "symbiont density profiles",
+        "what_changes": "density",
+        "what_persists": "cap",
+        "what_is_selected": "caps that keep the limit integrable",
+        "what_can_reproduce": "both",
+        "what_can_learn": "none",
+        "what_can_transfer": "none",
+        "distinguishing_observable": "mass outside a compact region diverges exactly when the cap is non-integrable, independent of mean cap level"
+      }
+    },
+    {
+      "id": "M8",
+      "triplicateId": "HT-37e311ce05",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "representation",
+      "statement": "Holobiont as a sparse density ratio: symbiosis is the departure of the joint trait distribution from the product of marginals; if dP/d(P_h x P_s) is sparse in some basis, symbiosis is detectable from O(k log n) joint observations.",
+      "derived_from": [
+        "I1",
+        "I3"
+      ],
+      "concept_contributions": {
+        "Compressed Sensing": "sparse recovery of the density ratio from few co-occurrence probes",
+        "Measure Theory": "product measure, Radon-Nikodym derivative",
+        "Symbiosis": "partner association statistics"
+      },
+      "knockouts": {
+        "Compressed Sensing": "sample complexity scales with ambient dimension",
+        "Measure Theory": "no reference product measure",
+        "Symbiosis": "nothing to detect"
+      },
+      "simpler_alternative": "mutual-information estimation from co-occurrence tables",
+      "questions": {
+        "what_exists": "joint distribution of host and symbiont traits",
+        "what_changes": "association",
+        "what_persists": "sparse interaction terms",
+        "what_is_selected": "n/a (measurement mechanism)",
+        "what_can_reproduce": "n/a",
+        "what_can_learn": "n/a",
+        "what_can_transfer": "n/a",
+        "distinguishing_observable": "detection sample complexity scales with sparsity of the density ratio, not with number of trait pairs"
+      }
+    },
+    {
+      "id": "M9",
+      "triplicateId": "HT-37e311ce05",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "learning pressure",
+      "statement": "Coherence minimisation as division of labour: a consortium with fixed total row budget evolves so that each member's rows are incoherent with the others', making mutual incoherence the emergent signature of specialisation.",
+      "derived_from": [
+        "I4",
+        "I1"
+      ],
+      "concept_contributions": {
+        "Compressed Sensing": "mutual coherence of the stacked matrix governs recovery",
+        "Measure Theory": "weak: none beyond M2",
+        "Symbiosis": "members specialise within the consortium"
+      },
+      "knockouts": {
+        "Compressed Sensing": "specialisation driven by resources only",
+        "Measure Theory": "weak - little lost",
+        "Symbiosis": "single member holds all rows"
+      },
+      "simpler_alternative": "niche partitioning to reduce competition",
+      "questions": {
+        "what_exists": "members' row sets",
+        "what_changes": "rows",
+        "what_persists": "low joint coherence",
+        "what_is_selected": "joint recovery",
+        "what_can_reproduce": "members",
+        "what_can_learn": "none",
+        "what_can_transfer": "rows",
+        "distinguishing_observable": "joint column coherence falls below each member's own coherence more than under random re-pairing"
+      }
+    },
+    {
+      "id": "M10",
+      "triplicateId": "HT-37e311ce05",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "computational primitive",
+      "statement": "Dictionary-union symbiosis: partners carry different sparsifying dictionaries (e.g. spikes vs oscillations); signals sparse only in the union are decodable only by the holobiont, provided the dictionaries are mutually incoherent.",
+      "derived_from": [
+        "I1",
+        "I4"
+      ],
+      "concept_contributions": {
+        "Compressed Sensing": "union-of-bases recovery and the uncertainty principle",
+        "Measure Theory": "support in the union as a decomposition of the signal",
+        "Symbiosis": "partners contribute different representational bases"
+      },
+      "knockouts": {
+        "Compressed Sensing": "no representational advantage from the union",
+        "Measure Theory": "weak",
+        "Symbiosis": "one agent holds the union dictionary"
+      },
+      "simpler_alternative": "ensemble of two specialised decoders",
+      "questions": {
+        "what_exists": "two dictionaries",
+        "what_changes": "dictionary atoms",
+        "what_persists": "incoherent pair",
+        "what_is_selected": "dictionaries whose union decodes the environment",
+        "what_can_reproduce": "partners",
+        "what_can_learn": "dictionaries",
+        "what_can_transfer": "atoms",
+        "distinguishing_observable": "recovery on mixed signals succeeds only when both partners are present and dictionaries are incoherent"
+      }
+    },
+    {
+      "id": "M11",
+      "triplicateId": "HT-37e311ce05",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "causal constraint",
+      "statement": "Cryptic variation in null sets: symbiont traits whose effects lie on environment events of measure zero are invisible to selection and drift; when the environment shifts to a measure not absolutely continuous w.r.t. the old one, this reservoir is exposed at once.",
+      "derived_from": [
+        "I2",
+        "I3"
+      ],
+      "concept_contributions": {
+        "Compressed Sensing": "weak: only that kernel directions go unseen",
+        "Measure Theory": "absolute continuity of new vs old environment measure",
+        "Symbiosis": "symbiont as reservoir of hidden variation"
+      },
+      "knockouts": {
+        "Compressed Sensing": "weak - little changes",
+        "Measure Theory": "lose the prediction that only non-a.c. shifts release variance",
+        "Symbiosis": "variation held in the host; mechanism is ordinary cryptic genetic variation"
+      },
+      "simpler_alternative": "cryptic genetic variation released by environment change",
+      "questions": {
+        "what_exists": "trait vectors, environment measure",
+        "what_changes": "drifting traits",
+        "what_persists": "hidden reservoir",
+        "what_is_selected": "traits on supported events",
+        "what_can_reproduce": "holobionts",
+        "what_can_learn": "none",
+        "what_can_transfer": "hidden traits",
+        "distinguishing_observable": "fitness variance jump after a shift is large only for shifts with mass outside the old support"
+      }
+    },
+    {
+      "id": "M12",
+      "triplicateId": "HT-37e311ce05",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "world rule",
+      "statement": "Critical dependence under endosymbiotic row transfer: symbiont measurement rows migrate to the host; the symbiont, selected to shrink, and the host, sanctioning a dispensable partner, settle where the host alone sits just below m*(k) and the symbiont supplies the few rows that cross it.",
+      "derived_from": [
+        "I7",
+        "I1"
+      ],
+      "concept_contributions": {
+        "Compressed Sensing": "the threshold m*(k) that defines 'just below'",
+        "Measure Theory": "monotone ratchet of transfer; loss is irreversible",
+        "Symbiosis": "two-level selection, gene transfer, sanctions"
+      },
+      "knockouts": {
+        "Compressed Sensing": "no threshold: dependence ends at an arbitrary level set by costs",
+        "Measure Theory": "weak: the ratchet can be modelled without measure theory",
+        "Symbiosis": "no second level; host simply acquires rows"
+      },
+      "simpler_alternative": "cost accounting: host keeps partner iff upkeep < cost of the rows it would need",
+      "questions": {
+        "what_exists": "holobionts with host rows and symbiont rows",
+        "what_changes": "row counts via transfer, gain, loss",
+        "what_persists": "holobionts near threshold",
+        "what_is_selected": "hosts retaining minimal partners",
+        "what_can_reproduce": "holobionts",
+        "what_can_learn": "none",
+        "what_can_transfer": "rows host<-symbiont",
+        "distinguishing_observable": "retained-partner hosts cluster at m_h/m* in [0.6,1.0) under CS benefit but not under a smooth benefit with matched costs"
+      }
+    },
+    {
+      "id": "M13",
+      "triplicateId": "HT-37e311ce05",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "selection mechanism",
+      "statement": "Verifiability-driven reduction: hosts sanction contributions they cannot explain from compressed checks in their own basis, so symbiont genomes become sparse in the host's basis rather than merely non-redundant.",
+      "derived_from": [
+        "I5",
+        "I2"
+      ],
+      "concept_contributions": {
+        "Compressed Sensing": "host verifies via sparse recovery in its basis",
+        "Measure Theory": "weak: singular vs a.c. parts are not the driver",
+        "Symbiosis": "sanctions shape the symbiont"
+      },
+      "knockouts": {
+        "Compressed Sensing": "reduction direction arbitrary w.r.t. host basis",
+        "Measure Theory": "weak",
+        "Symbiosis": "no sanctioning partner"
+      },
+      "simpler_alternative": "hosts reward legible signals (honest signalling)",
+      "questions": {
+        "what_exists": "symbiont expression vectors, host basis and checks",
+        "what_changes": "expression",
+        "what_persists": "host-legible genome",
+        "what_is_selected": "legible contributions",
+        "what_can_reproduce": "symbionts",
+        "what_can_learn": "none",
+        "what_can_transfer": "none",
+        "distinguishing_observable": "90%-energy coefficient count of symbiont genome in host basis <= 0.7x that under matched random sanctions"
+      }
+    },
+    {
+      "id": "M14",
+      "triplicateId": "HT-37e311ce05",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "interaction law",
+      "statement": "Singular coexistence: partners whose resource-use measures are mutually singular coexist without competition even when supports interleave densely (Cantor-like); interaction strength is the mass of the absolutely continuous overlap, not support proximity.",
+      "derived_from": [
+        "I2",
+        "I3"
+      ],
+      "concept_contributions": {
+        "Compressed Sensing": "weak: only that singular supports can be sparse in a wavelet basis",
+        "Measure Theory": "Lebesgue decomposition, singular measures",
+        "Symbiosis": "coexistence / mutualism on resources"
+      },
+      "knockouts": {
+        "Compressed Sensing": "weak",
+        "Measure Theory": "the whole prediction disappears",
+        "Symbiosis": "no partners"
+      },
+      "simpler_alternative": "niche differentiation measured by overlap indices",
+      "questions": {
+        "what_exists": "resource-use measures",
+        "what_changes": "use measures",
+        "what_persists": "singular partition",
+        "what_is_selected": "low a.c. overlap",
+        "what_can_reproduce": "partners",
+        "what_can_learn": "none",
+        "what_can_transfer": "none",
+        "distinguishing_observable": "coexistence predicted by a.c.-overlap mass but not by a smoothed overlap index when supports are fractal and interleaved"
+      }
+    },
+    {
+      "id": "O-W1-r1",
+      "triplicateId": "HT-37e311ce05",
+      "passId": "P3-probe1",
+      "kind": "observation",
+      "layer": "experimental_observation",
+      "evidence_rows": [
+        "hecate/programs/HT-37e311ce05/worlds/W1/rows.jsonl",
+        "hecate/programs/HT-37e311ce05/worlds/W1/OUTCOME.json"
+      ],
+      "statement": "W1 probe round 1: INSTRUMENT_FAIL. OMP transition midpoint m*=25. Final pooling frequency (mean over seeds): TREATMENT 0.89, CONTROL 0.73, NULL_TWIN 0.94, POSITIVE_CONTROL 0.48. Seeds meeting the stability part: TREATMENT 0/10, NULL_TWIN 0/10. Mean success difference TREATMENT-CONTROL -0.007 (threshold 0.3). Outcome INSTRUMENT_FAIL decided in code from the PREREG classes.",
+      "derived_from": [
+        "M1"
+      ]
+    },
+    {
+      "id": "O-W4-r2",
+      "triplicateId": "HT-37e311ce05",
+      "passId": "P3-probe2",
+      "kind": "observation",
+      "layer": "experimental_observation",
+      "evidence_rows": [
+        "hecate/programs/HT-37e311ce05/worlds/W4/pilot_rows.jsonl"
+      ],
+      "statement": "W4 probe round 2: SPEC_UNATTAINABLE. Pilot failed twice (see NOTES.md repair log). No treatment or control code was written; no treatment statistic exists. Cheat detected both attempts; null twin never met success (M13 ratio ~1). SPEC_UNATTAINABLE per round-2 PREREG: the conjoined success criterion was not reached by the spec's own positive control even with legibility held by construction.",
+      "derived_from": [
+        "M3",
+        "M13"
+      ]
+    },
+    {
+      "id": "O-W5-r3",
+      "triplicateId": "HT-37e311ce05",
+      "passId": "P3-probe3",
+      "kind": "observation",
+      "layer": "experimental_observation",
+      "evidence_rows": [
+        "hecate/programs/HT-37e311ce05/worlds/W5/probe/rows.jsonl"
+      ],
+      "statement": "W5 probe round 3: NULL. [\"treatment RNG stream = twin's stream key [seed, m, 7] (common random numbers), chosen before running\", \"implementer also read control_summary.json in the world dir (outside the prompt's read list) before building; it holds the same control values as ATTAINABILITY.json\"]",
+      "derived_from": [
+        "M5"
+      ]
+    }
+  ],
+  "lenses": [
+    {
+      "id": "L1",
+      "name": "Null-space cartography",
+      "rationale": "Complementarity claims (I4) live in the geometry of kernels; this lens makes kernels first-class.",
+      "sourceRepresentation": "each partner's measurement matrix",
+      "transformation": "compute kernels, principal angles between kernels, empirical joint null-space constant by sampling sparse vectors",
+      "observables": [
+        "min principal angle between ker A_h and ker A_s",
+        "fraction of random k-sparse vectors with ||[A_h;A_s]x|| < eps||x||",
+        "cross-partner duplicate rows"
+      ],
+      "predictedSignals": [
+        "angles rise and duplicates fall under vertical transmission"
+      ],
+      "nullExpectation": "random pairing gives angle and duplicate distributions of independent draws",
+      "failureModes": [
+        "angles uninformative when m_h+m_s is near n",
+        "sampled NSP constant is high-variance"
+      ],
+      "informationAddedBeyondExistingLenses": "measures complementarity without reference to fitness",
+      "passId": "P2",
+      "targets": [
+        "M2",
+        "M9",
+        "M10"
+      ],
+      "triplicateId": "HT-37e311ce05"
+    },
+    {
+      "id": "L2",
+      "name": "Radon-Nikodym ledger",
+      "rationale": "Genome reduction and coexistence claims are about a.c. vs singular mass.",
+      "sourceRepresentation": "partner function/resource profiles as measures on a finite function set",
+      "transformation": "Lebesgue decomposition of the symbiont measure w.r.t. the host measure over time; RN derivative on the overlap",
+      "observables": [
+        "a.c. mass fraction",
+        "singular mass",
+        "total variation distance"
+      ],
+      "predictedSignals": [
+        "a.c. mass fraction decays monotonically to <0.05 under M3"
+      ],
+      "nullExpectation": "a.c. fraction decays only in proportion to total genome loss",
+      "failureModes": [
+        "on finite spaces every measure is a.c. w.r.t. counting measure; the host measure must be the reference"
+      ],
+      "informationAddedBeyondExistingLenses": "separates 'lost because redundant' from 'lost because costly'",
+      "passId": "P2",
+      "targets": [
+        "M3",
+        "M8",
+        "M14"
+      ],
+      "triplicateId": "HT-37e311ce05"
+    },
+    {
+      "id": "L3",
+      "name": "Donoho-Tanner placement",
+      "rationale": "Several mechanisms predict where populations sit relative to the recovery transition.",
+      "sourceRepresentation": "per-holobiont (m_h, m_s, k, n)",
+      "transformation": "map each agent and pair to (delta=m/n, rho=k/m) and to distance from an empirically calibrated transition curve",
+      "observables": [
+        "m_h/m*",
+        "(m_h+m_s)/m*",
+        "histogram of distances to the curve"
+      ],
+      "predictedSignals": [
+        "host alone just below, pair just above the curve (M12)"
+      ],
+      "nullExpectation": "distances spread without a mode at the curve",
+      "failureModes": [
+        "transition curve calibrated with a different decoder than the agents use"
+      ],
+      "informationAddedBeyondExistingLenses": "reads population state in the native coordinates of compressed sensing",
+      "passId": "P2",
+      "targets": [
+        "M1",
+        "M12"
+      ],
+      "triplicateId": "HT-37e311ce05"
+    },
+    {
+      "id": "L4",
+      "name": "Sigma-algebra lattice",
+      "rationale": "I3 claims the currency of the partnership is resolvable events.",
+      "sourceRepresentation": "each partner's quantised sensor as a partition of environment states",
+      "transformation": "compute join/meet, partition entropy, and which fitness-relevant events are measurable in each partner and in the join",
+      "observables": [
+        "number of fitness events measurable only in the join",
+        "atoms of the join",
+        "entropy gap H(join) - max H(each)"
+      ],
+      "predictedSignals": [
+        "benefit tracks join-only event count more than bits exchanged"
+      ],
+      "nullExpectation": "benefit tracks bits exchanged",
+      "failureModes": [
+        "partition explosion in continuous state spaces",
+        "events defined post hoc"
+      ],
+      "informationAddedBeyondExistingLenses": "event-level rather than bit-level accounting",
+      "passId": "P2",
+      "targets": [
+        "M4",
+        "M6",
+        "M11"
+      ],
+      "triplicateId": "HT-37e311ce05"
+    },
+    {
+      "id": "L5",
+      "name": "Cheater coset census",
+      "rationale": "I5 frames cheaters as members of measurement cosets.",
+      "sourceRepresentation": "symbiont contribution vectors and host verification matrix",
+      "transformation": "project each contribution onto ker A and range(A^T); decompose into verified and unverified components",
+      "observables": [
+        "norm of the ker-A component",
+        "exploitation gap reward - delivered benefit",
+        "coset occupancy per host m"
+      ],
+      "predictedSignals": [
+        "cheater lineages accumulate mass in ker A",
+        "gap drops sharply near the L1 transition"
+      ],
+      "nullExpectation": "gap declines smoothly with m",
+      "failureModes": [
+        "cost structure alone determines cheating; geometry irrelevant"
+      ],
+      "informationAddedBeyondExistingLenses": "locates cheating in the host's sensing geometry",
+      "passId": "P2",
+      "targets": [
+        "M5",
+        "M13"
+      ],
+      "triplicateId": "HT-37e311ce05"
+    },
+    {
+      "id": "L6",
+      "name": "Escape-of-mass tracker",
+      "rationale": "I6 recasts parasitism as a convergence failure.",
+      "sourceRepresentation": "time series of symbiont density profiles",
+      "transformation": "compute tightness (mass outside compact K), sup vs integral, dominated-convergence checks",
+      "observables": [
+        "mass outside K over time",
+        "ratio sup density / integrated benefit"
+      ],
+      "predictedSignals": [
+        "non-integrable cap gives tightness failure preceding host collapse"
+      ],
+      "nullExpectation": "collapse predicted equally well by mean cap level",
+      "failureModes": [
+        "finite simulations never show true escape"
+      ],
+      "informationAddedBeyondExistingLenses": "early-warning diagnostic distinct from mean density",
+      "passId": "P2",
+      "targets": [
+        "M7"
+      ],
+      "triplicateId": "HT-37e311ce05"
+    },
+    {
+      "id": "L7",
+      "name": "Replicator frequency dynamics",
+      "rationale": "Stock evolutionary lens to anchor strategy frequencies against the invented lenses.",
+      "sourceRepresentation": "strategy frequencies (pool/solo, cooperator/cheater)",
+      "transformation": "replicator or Wright-Fisher dynamics",
+      "observables": [
+        "pooling frequency",
+        "cheater frequency",
+        "mean row budget"
+      ],
+      "predictedSignals": [
+        "pooling stable only near the transition"
+      ],
+      "nullExpectation": "pooling frequency independent of benefit curvature",
+      "failureModes": [
+        "mean-field hides pairing structure"
+      ],
+      "informationAddedBeyondExistingLenses": "baseline population-genetic reading",
+      "passId": "P2",
+      "targets": [
+        "M1",
+        "M5",
+        "M12"
+      ],
+      "triplicateId": "HT-37e311ce05"
+    }
+  ],
+  "experiments": [
+    {
+      "id": "W1",
+      "triplicateId": "HT-37e311ce05",
+      "passId": "P3",
+      "mechanism_ids": [
+        "M1"
+      ],
+      "lens_ids": [
+        "L3",
+        "L7"
+      ],
+      "hypothesis": "A steep (CS) benefit curve stabilises pooled measurement budgets against free-riding; a smooth benefit curve with matched mean does not.",
+      "mechanism": "Agents carry heritable row budget m_i (0..60) and a pooling bit; random pairs; if both pool, success = P(m_1+m_2, k), else P(m_i, k); fitness = success - c*m_i.",
+      "intervention": "benefit table P(m,k) estimated by OMP on Gaussian A (n=100, k=8, 40 trials per m, m=0..120)",
+      "control": "same dynamics with the null-twin benefit table",
+      "positive_control": "step benefit P = 1[m >= m*]; must give pooled total within +-15% of m*, else the world is uninformative",
+      "observable": "final pooling frequency f_pool; mean pooled total T = mean(m_1+m_2) over pooling pairs; mean success",
+      "success_criterion": "in >=8/10 seeds: f_pool >= 0.8 and |T/m* - 1| <= 0.15 in the CS arm, AND mean success(CS) - mean success(null) >= 0.3",
+      "failure_criterion": "f_pool < 0.5 in the CS arm in >=5/10 seeds, OR success difference < 0.1",
+      "alternative_explanation": "any convex-then-saturating benefit gives the same result; CS contributes nothing beyond steepness",
+      "null_twin": "benefit table replaced by a monotone linear ramp between P(0) and P(120), rescaled to equal mean over m=0..120 (matches mean and endpoints, destroys the transition)",
+      "substrate": "population",
+      "why_this_implementation": "Wright-Fisher population with integer traits and a lookup benefit table; the claim is about selection on budgets, so no learning system is needed. Displaced alternative: multi-agent RL, which would add credit-assignment confounds.",
+      "size": "n=100, k=8, 100 agents, 500 generations, mutation m +-1 at 0.05, pooling flip 0.01, c=0.005, 10 seeds x 3 arms",
+      "cost_estimate": "about 1 CPU core-minute",
+      "stupid_explanations": [
+        "mutation bias toward lower m drives free-riding in both arms",
+        "m* sits near the max budget so the cap does the work",
+        "the linear null has lower marginal return near m*, so selection intensity differs"
+      ],
+      "outcome": "INSTRUMENT_FAIL",
+      "raw_outcome": "INSTRUMENT_FAIL",
+      "procedural_notes": [],
+      "rows": "hecate/programs/HT-37e311ce05/worlds/W1/rows.jsonl",
+      "outcome_file": "hecate/programs/HT-37e311ce05/worlds/W1/OUTCOME.json",
+      "statistics": {
+        "TREATMENT": {
+          "n": 10,
+          "f_pool_per_seed": [
+            0.99,
+            0.98,
+            1.0,
+            0.93,
+            0.71,
+            0.99,
+            0.95,
+            0.85,
+            0.99,
+            0.54
+          ],
+          "T_per_seed": [
+            54.71,
+            64.75,
+            48.68,
+            70.58,
+            74.85,
+            49.55,
+            69.58,
+            70.0,
+            51.2,
+            84.87
+          ],
+          "T_over_mstar_mean": 2.5551083176009417,
+          "mean_success_mean": 0.9828999999999999,
+          "mean_m_mean": 32.019,
+          "seeds_meeting_part_a": 0,
+          "seeds_f_pool_below_0_5": 0
+        },
+        "CONTROL": {
+          "n": 10,
+          "f_pool_per_seed": [
+            0.4,
+            0.97,
+            0.51,
+            0.99,
+            0.43,
+            0.87,
+            0.24,
+            0.96,
+            0.99,
+            0.96
+          ],
+          "T_per_seed": [
+            107.22,
+            60.04,
+            112.55,
+            54.67,
+            112.1,
+            99.16,
+            101.0,
+            99.76,
+            84.1,
+            66.72
+          ],
+          "T_over_mstar_mean": 3.5893046527799,
+          "mean_success_mean": 0.9900228592162555,
+          "mean_m_mean": 45.011,
+          "seeds_meeting_part_a": 0,
+          "seeds_f_pool_below_0_5": 3
+        },
+        "NULL_TWIN": {
+          "n": 10,
+          "f_pool_per_seed": [
+            0.99,
+            0.95,
+            1.0,
+            0.96,
+            0.99,
+            0.74,
+            0.97,
+            0.9,
+            0.99,
+            0.96
+          ],
+          "T_per_seed": [
+            88.61,
+            55.62,
+            52.56,
+            60.72,
+            52.18,
+            103.72,
+            65.04,
+            71.98,
+            52.69,
+            54.07
+          ],
+          "T_over_mstar_mean": 2.628787710859452,
+          "mean_success_mean": 0.970247369375907,
+          "mean_m_mean": 32.898999999999994,
+          "seeds_meeting_part_a": 0,
+          "seeds_f_pool_below_0_5": 0
+        },
+        "POSITIVE_CONTROL": {
+          "n": 10,
+          "f_pool_per_seed": [
+            0.69,
+            0.07,
+            0.76,
+            0.75,
+            0.65,
+            0.67,
+            0.4,
+            0.04,
+            0.31,
+            0.51
+          ],
+          "T_per_seed": [
+            53.92,
+            null,
+            52.0,
+            51.59,
+            52.76,
+            52.3,
+            53.0,
+            null,
+            59.0,
+            53.21
+          ],
+          "T_over_mstar_mean": 2.138973305561541,
+          "mean_success_mean": 0.992,
+          "mean_m_mean": 26.887999999999998,
+          "seeds_meeting_part_a": 0,
+          "seeds_f_pool_below_0_5": 4
+        },
+        "CHEAT": {
+          "n": 10,
+          "f_pool_per_seed": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "T_per_seed": [
+            25.0,
+            25.0,
+            25.0,
+            25.0,
+            25.0,
+            25.0,
+            25.0,
+            25.0,
+            25.0,
+            25.0
+          ],
+          "T_over_mstar_mean": 1.0,
+          "mean_success_mean": 1.0,
+          "mean_m_mean": null,
+          "seeds_meeting_part_a": 10,
+          "seeds_f_pool_below_0_5": 0
+        },
+        "success_difference_TREATMENT_minus_CONTROL": -0.007122859216255661,
+        "m_star": 25
+      },
+      "anomalies": [
+        {
+          "id": "A1",
+          "text": "success part (b) unattainable: CONTROL mean success 0.9900, so max attainable difference is 0.0100 < 0.3 (CHEAT at 1.0 fails)"
+        },
+        {
+          "id": "A2",
+          "text": "m*=25 <= individual cap 60: a lone agent can reach m*, so pooling is not required; POSITIVE_CONTROL mean T/m* = 2.14 (pairs sum two solo budgets)"
+        }
+      ],
+      "rejected_explanations": []
+    },
+    {
+      "id": "W2",
+      "triplicateId": "HT-37e311ce05",
+      "passId": "P3",
+      "mechanism_ids": [
+        "M12"
+      ],
+      "lens_ids": [
+        "L3",
+        "L7"
+      ],
+      "hypothesis": "With row transfer, symbiont-level shrinkage and host sanctions, retained-symbiont holobionts cluster with the host alone just below threshold (m_h/m* in [0.6,1.0)) under CS benefit but not under a smooth benefit.",
+      "mechanism": "Holobiont = host rows H (m_h) + symbiont rows S (m_s), Gaussian, n=64, k=4. Per generation: success s = OMP recovery rate on 4 fresh k-sparse signals from [H;S]; host tests H alone and expels S if alone-success >= 0.75. Host fitness = s - c_h*m_h - c_u*1[S retained]. Mutations: host gain/lose row p=0.05 each, transfer S->H p=0.02, symbiont loses a row p=0.1 (proxy for within-host selection for smaller symbionts).",
+      "intervention": "sweep c_u in {0.005, 0.02, 0.05} with c_h=0.01",
+      "control": "null-twin benefit",
+      "positive_control": "success = step 1[m_h+m_s >= m*]; must give F_crit >= 0.7, else the world is uninformative",
+      "observable": "F_crit = fraction of final holobionts with S retained and m_h/m* in [0.6,1.0); IQR of m_h/m*",
+      "success_criterion": "CS arm F_crit >= 0.5 in >=3/4 seeds for at least 2 of 3 c_u values, AND null twin F_crit <= 0.2 at the same c_u values",
+      "failure_criterion": "CS arm F_crit < 0.3 at all c_u, OR null twin F_crit >= 0.4 (clustering from cost structure, not the transition)",
+      "alternative_explanation": "host keeps the partner purely because c_u < c_h * rows_needed; clustering near m* is an artefact of initial conditions",
+      "null_twin": "success = 1 - normalised error of min-norm least squares on dense Gaussian signals (about m/n), costs rescaled so initial mean fitness matches the CS arm; keeps transfer/sanction dynamics, destroys the phase transition",
+      "substrate": "population",
+      "why_this_implementation": "Explicit two-level evolutionary simulation with a linear-algebra fitness oracle; the phenomenon concerns row counts relative to a threshold, so no neural or RL component is warranted.",
+      "size": "n=64, k=4, 30 holobionts, 200 generations, 4 test signals per eval, 3 c_u values x 3 arms (CS, null, positive control) x 4 seeds = 36 runs",
+      "cost_estimate": "about 6 CPU core-minutes",
+      "stupid_explanations": [
+        "initial m_h already near 0.8 m* and dynamics too slow to move it",
+        "the 0.75 expulsion threshold itself defines the band",
+        "OMP noise with 4 test signals makes success near threshold random, retaining partners by chance"
+      ]
+    },
+    {
+      "id": "W3",
+      "triplicateId": "HT-37e311ce05",
+      "passId": "P3",
+      "mechanism_ids": [
+        "M2",
+        "M9"
+      ],
+      "lens_ids": [
+        "L1",
+        "L7"
+      ],
+      "hypothesis": "Vertical (pair-level) transmission drives host and symbiont to hold complementary, non-redundant measurement rows, raising joint recovery beyond horizontal transmission with matched selection.",
+      "mechanism": "Fixed palette of 64 candidate rows over n=32 (32 Hadamard rows + 32 random sparse +-1 rows with 4 nonzeros); each partner holds 8 palette indices; pair success = OMP recovery rate for k=3 signals from the 16 stacked rows; mutation replaces one index (p=0.1 per partner).",
+      "intervention": "vertical arm: pairs reproduce as units under tournament selection on pair success",
+      "control": "horizontal arm: identical selection on pair success, but offspring hosts and symbionts re-paired at random each generation",
+      "positive_control": "hand-built pair with disjoint Hadamard halves must reach success >= 0.9; random-pair baseline recorded",
+      "observable": "R = mean fraction of symbiont indices duplicated in the host; mean pair success; stacked column coherence",
+      "success_criterion": "in >=8/10 seeds: R(vertical) <= 0.5 * R(horizontal) AND success(vertical) - success(horizontal) >= 0.15",
+      "failure_criterion": "R ratio > 0.8 or success difference < 0.05 in >=5/10 seeds",
+      "alternative_explanation": "vertical transmission simply raises heritability of pair fitness; any additive complementarity would show this",
+      "null_twin": "horizontal arm: same mutation, selection intensity and palette, pairing randomised each generation, destroying partner-specific complementarity",
+      "substrate": "population",
+      "why_this_implementation": "A discrete palette makes redundancy exactly countable and OMP recovery is the fitness oracle. Graph or neural encodings would obscure the kernel geometry that L1 measures.",
+      "size": "n=32, k=3, 50 pairs, 300 generations, 6 test signals, 10 seeds x 2 arms",
+      "cost_estimate": "about 4 CPU core-minutes",
+      "stupid_explanations": [
+        "the horizontal arm has lower effective selection so everything is worse there",
+        "duplicates are purged in the vertical arm simply because they are wasted rows, independent of kernels",
+        "Hadamard rows are near-optimal so any selection converges on them"
+      ]
+    },
+    {
+      "id": "W4",
+      "triplicateId": "HT-37e311ce05",
+      "passId": "P3",
+      "mechanism_ids": [
+        "M3",
+        "M13"
+      ],
+      "lens_ids": [
+        "L2",
+        "L5"
+      ],
+      "hypothesis": "Sanctions based on compressed verification in the host's basis make symbiont genomes sparse in that basis beyond what matched random sanctions produce; redundancy loss alone drives host-overlap mass to ~0 in both arms.",
+      "mechanism": "n=64 functions; required set R (|R|=24); host support S_h (12 of R); symbiont expression w in R^64 starts at 0.5 everywhere. Benefit = sum over R of min(host_i + w_i, 1)/24; cost 0.01*||w||_1. Sanction arm: host takes 24 measurements y = A Psi_h^T w (Psi_h random orthonormal), recovers 6-sparse Psi_h coefficients by OMP, sanction probability = unexplained energy fraction.",
+      "intervention": "verifiability sanctions on",
+      "control": "random sanctions with per-generation rate matched to the sanction arm",
+      "positive_control": "a symbiont initialised 6-sparse in Psi_h must incur a sanction rate < 0.05",
+      "observable": "s_Psi = number of Psi_h coefficients holding 90% of ||w||^2; overlap fraction = ||w on S_h||^2 / ||w||^2",
+      "success_criterion": "M13: s_Psi(sanction) <= 0.7 * s_Psi(null) in >=8/10 seeds. M3: overlap fraction <= 0.05 in both arms in >=8/10 seeds",
+      "failure_criterion": "M13 fails if the s_Psi ratio > 0.9 in >=5/10 seeds; M3 fails if the overlap fraction > 0.2 in >=5/10 seeds",
+      "alternative_explanation": "sanctions just shrink ||w|| overall, which lowers s_Psi via thresholding noise",
+      "null_twin": "random sanctions at matched rate: same sanction magnitude, no dependence on legibility in Psi_h",
+      "substrate": "optimizer",
+      "why_this_implementation": "Mutation-selection hill-climbing over expression vectors (population of 60) is the minimal setting in which a verification matrix can shape genome direction; no learned model is needed.",
+      "size": "n=64, m=24 checks, 60 symbionts, 400 generations, 10 seeds x 2 arms",
+      "cost_estimate": "about 3 CPU core-minutes",
+      "stupid_explanations": [
+        "s_Psi falls because w shrinks toward zero",
+        "benefit saturation makes many genome directions neutral so any pressure picks one",
+        "a random orthonormal Psi_h makes canonical sparse vectors dense, so the tension is built in by construction"
+      ],
+      "outcome": "SPEC_UNATTAINABLE",
+      "round": 2,
+      "rows": "hecate/programs/HT-37e311ce05/worlds/W4/pilot_rows.jsonl",
+      "outcome_file": "hecate/programs/HT-37e311ce05/worlds/W4/OUTCOME.json",
+      "statistics": {
+        "pilot_attempt1": {
+          "positive_meets_success": false,
+          "pc_gen0_rate_lt_0p05_seeds": 7,
+          "pc_m13_seeds": 0,
+          "pc_m3_seeds": 6,
+          "cheat_detected": true,
+          "null_twin_meets_success": false
+        },
+        "pilot_attempt2": {
+          "pc_gen0_rate_lt_0p05_seeds": 10,
+          "pc_s_psi": [
+            4.0,
+            4.0,
+            4.0,
+            4.0,
+            3.0,
+            4.0,
+            4.0,
+            3.0,
+            3.0,
+            3.0
+          ],
+          "pc_overlap": [
+            0.3168,
+            0.1573,
+            0.1249,
+            0.1414,
+            0.211,
+            0.1672,
+            0.2243,
+            0.1818,
+            0.0973,
+            0.128
+          ],
+          "null_twin_s_psi": [
+            29.0,
+            36.0,
+            31.0,
+            33.0,
+            29.0,
+            30.0,
+            29.0,
+            26.0,
+            31.0,
+            31.0
+          ],
+          "null_twin_overlap": [
+            0.012,
+            0.0213,
+            0.011,
+            0.0073,
+            0.0094,
+            0.0212,
+            0.0174,
+            0.0086,
+            0.0173,
+            0.0077
+          ],
+          "pc_m13_seeds_ratio_le_0p7": 10,
+          "pc_m3_seeds_overlap_le_0p05": 0,
+          "null_twin_m3_seeds_overlap_le_0p05": 10,
+          "null_twin_vs_b_ratios": [
+            0.967,
+            1.059,
+            1.148,
+            1.179,
+            0.935,
+            0.938,
+            0.967,
+            0.963,
+            1.033,
+            1.033
+          ]
+        },
+        "treatment": null,
+        "control": null
+      },
+      "procedural_notes": [],
+      "anomalies": [
+        {
+          "id": "A1",
+          "text": "attempt 1: clonal 6-sparse PC failed OMP recovery in 3/10 seeds (gen-0 rate >0.05) and drifted dense (s_Psi 28-35) under its own sanctions"
+        },
+        {
+          "id": "A2",
+          "text": "attempt 2 (repaired PC): M13 10/10 by design, M3 0/10; pilot fails on the M3 conjunct only"
+        },
+        {
+          "id": "A3",
+          "text": "NULL_TWIN rate in the pilot is matched to the PC schedule (no treatment exists), per NOTES reading 4"
+        }
+      ],
+      "rejected_explanations": []
+    },
+    {
+      "id": "W5",
+      "triplicateId": "HT-37e311ce05",
+      "passId": "P3v2",
+      "mechanism_ids": [
+        "M5"
+      ],
+      "lens_ids": [
+        "L5",
+        "L3"
+      ],
+      "hypothesis": "When a host pays a symbiont only for matching the host's m compressed measurements of a cooperative contribution, symbionts evolving under a per-unit (L1) production cost exploit the host with a gap (reward paid minus benefit delivered) that collapses abruptly at the basis-pursuit recovery transition m*, not smoothly in m.",
+      "mechanism": "Coset-bounded sanctions. Any contribution x in the coset x_good + ker A is paid in full; under L1 cost the cheapest element of that coset equals x_good exactly when m is above the L1 recovery transition for the k-sparse x_good, and is a cheaper, less beneficial vector below it. Evolution under L1 cost should therefore discover coset aliases only below m*.",
+      "intervention": "Symbiont population evolves under fitness = reward(A x) - c*||x||_1 at each host measurement count m in the grid.",
+      "control": "Identical world with cost c*||x||_2^2 (the null twin); cost of the cooperator x_good is equal in both (10).",
+      "positive_control": "For every (seed, m), the minimum-L1 element of x_good + ker A (linear program): the optimal L1 cheater, paid full reward by construction.",
+      "observable": "g(seed, m) = population median of reward_i - benefit_i after the final generation (the exploitation gap). gbar(m) = mean of g over seeds. Reward = exp(-||A x - A x_good||^2 / (2 tau^2 ||A x_good||^2)); benefit = mean over required set R of clip(x_i, 0, 1).",
+      "success_criterion": "[{\"id\": \"S1\", \"text\": \"Exploitation is finished by the end of the recovery transition: completion = (gbar(m_min) - gbar(m*+8)) / (gbar(m_min) - gbar(m_max)) is at least 0.8; defined as 0 if the total drop gbar(m_min) - gbar(m_max) is below 0.3.\", \"statistic\": \"S1_completion\", \"comparison\": \">=\", \"threshold\": 0.8}, {\"id\": \"S2\", \"text\": \"No exploitation above the transition: mean of gbar(m) over m >= 40 is at most 0.05.\", \"statistic\": \"S2_high_m_gap\", \"comparison\": \"<=\", \"threshold\": 0.05}]",
+      "failure_criterion": "[{\"id\": \"F1\", \"text\": \"Smooth decline: completion by m*+8 at most 0.65.\", \"statistic\": \"S1_completion\", \"comparison\": \"<=\", \"threshold\": 0.65}, {\"id\": \"F2\", \"text\": \"No cheating evolved: total drop gbar(m_min) - gbar(m_max) below 0.3 (evolution did not find coset aliases at low m).\", \"statistic\": \"total_drop\", \"comparison\": \"<\", \"threshold\": 0.3}, {\"id\": \"F3\", \"text\": \"Exploitation persists above the transition: mean gbar over m >= 40 above 0.15.\", \"statistic\": \"S2_high_m_gap\", \"comparison\": \">\", \"threshold\": 0.15}]",
+      "alternative_explanation": "Any shrinkage-inducing cost with a sparse cooperator gives the same collapse; the result would then be a property of L1 geometry (known compressed-sensing theory) acting through selection, and the symbiosis reading adds nothing beyond 'evolution approximately solves basis pursuit'.",
+      "null_twin": "Same world, reward, verification matrices, selection, mutation and population, cost c*||x||_2^2 instead of c*||x||_1 (equal cost for x_good). The L2 coset optimum is the row-space projection of x_good, whose benefit rises smoothly with m: exploitation is present but has no transition.",
+      "substrate": "population (mutation-selection over real-valued contribution vectors with a linear verification oracle)",
+      "cost_estimate": "treatment about 0.5 CPU core-minute (130 runs x ~0.2 s); controls about 0.5 core-minute",
+      "stupid_explanations": [
+        "the reward tolerance tau sets a gap floor that is the same at all m, so the drop is carried by a few low-m points",
+        "the benefit clip at 1 creates a threshold unrelated to the coset geometry",
+        "A is scaled by 1/sqrt(m), so a mutation moves A x by a different relative amount at each m and selection strength varies with m, producing a step for reasons of search rather than geometry",
+        "2000 generations are enough to reach the coset optimum only when ker A is small (large m), so the gap falls wherever search becomes easy, not where L1 recovery sets in"
+      ],
+      "spec": "hecate/programs/HT-37e311ce05/worlds/W5/spec.json",
+      "attainability": "hecate/programs/HT-37e311ce05/worlds/W5/ATTAINABILITY.json",
+      "outcome": "NULL",
+      "round": 3,
+      "rows": "hecate/programs/HT-37e311ce05/worlds/W5/probe/rows.jsonl",
+      "outcome_file": "hecate/programs/HT-37e311ce05/worlds/W5/probe/OUTCOME.json",
+      "statistics": {
+        "POSITIVE_CONTROL": {
+          "S1_completion": 0.9314619847549204,
+          "S2_high_m_gap": 2.7663057030243485e-15,
+          "sharpness_secondary": 0.6916900006330776,
+          "total_drop": 0.8627897428350959,
+          "g_lo": 0.8627897428350975,
+          "g_hi": 1.5099033134902129e-15,
+          "curve": {
+            "12": 0.8627897428350975,
+            "16": 0.6766504781502182,
+            "20": 0.6559169343155521,
+            "24": 0.38491269874521994,
+            "28": 0.23164448893972972,
+            "32": 5.4622972811557705e-15,
+            "36": 0.05913389654773167,
+            "40": 3.0087043967341744e-15,
+            "44": 1.7097434579227411e-15,
+            "48": 6.994405055138486e-15,
+            "52": 1.7430501486614957e-15,
+            "56": 1.63202784619898e-15,
+            "60": 1.5099033134902129e-15
+          }
+        },
+        "NULL_TWIN": {
+          "S1_completion": 0.6271812443292148,
+          "S2_high_m_gap": 0.16685579067676073,
+          "sharpness_secondary": 0.46626124315109885,
+          "total_drop": 0.6784602481761778,
+          "g_lo": 0.7438259595668141,
+          "g_hi": 0.06536571139063628,
+          "curve": {
+            "12": 0.7438259595668141,
+            "16": 0.6016286841287536,
+            "20": 0.6346481356309986,
+            "24": 0.5050590858284271,
+            "28": 0.4868072537379195,
+            "32": 0.38906817916927094,
+            "36": 0.31830841688777095,
+            "40": 0.27190298943764984,
+            "44": 0.23125729760978975,
+            "48": 0.18408928328897103,
+            "52": 0.16010734621235934,
+            "56": 0.08841211612115826,
+            "60": 0.06536571139063628
+          }
+        },
+        "CHEAT": {
+          "S1_completion": 1.0,
+          "S2_high_m_gap": 0.0,
+          "sharpness_secondary": 1.0,
+          "total_drop": 0.8,
+          "g_lo": 0.8,
+          "g_hi": 0.0,
+          "curve": {
+            "12": 0.8,
+            "16": 0.8,
+            "20": 0.8,
+            "24": 0.8,
+            "28": 0.0,
+            "32": 0.0,
+            "36": 0.0,
+            "40": 0.0,
+            "44": 0.0,
+            "48": 0.0,
+            "52": 0.0,
+            "56": 0.0,
+            "60": 0.0
+          }
+        },
+        "TREATMENT": {
+          "S1_completion": 0.7318262107813781,
+          "S2_high_m_gap": 0.0074561252231395425,
+          "sharpness_secondary": 0.4867369221966142,
+          "total_drop": 0.7146418894965277,
+          "g_lo": 0.6696866526561764,
+          "g_hi": -0.044955236840351284,
+          "curve": {
+            "12": 0.6696866526561764,
+            "16": 0.5425698502206505,
+            "20": 0.49453558036660095,
+            "24": 0.36411740247519697,
+            "28": 0.3168490755244232,
+            "32": 0.22199459294326646,
+            "36": 0.14669298660028818,
+            "40": 0.08073436172592693,
+            "44": 0.03845545910426934,
+            "48": 0.005703559763326543,
+            "52": -0.01367909467864169,
+            "56": -0.021522297735692586,
+            "60": -0.044955236840351284
+          }
+        }
+      },
+      "anomalies": [],
+      "rejected_explanations": [
+        "the reward tolerance tau sets a gap floor that is the same at all m, so the drop is carried by a few low-m points"
+      ]
+    },
+    {
+      "id": "W6",
+      "triplicateId": "HT-37e311ce05",
+      "passId": "P3v2",
+      "mechanism_ids": [
+        "M2",
+        "M9"
+      ],
+      "lens_ids": [
+        "L1"
+      ],
+      "hypothesis": "Under vertical (pair-level) transmission, selection on joint sparse recovery makes each symbiont's measurement rows complementary to ITS OWN host specifically (low coherence with its partner's rows, but not with the other hosts in the population); under horizontal transmission with identical selection this partner-specific complementarity is absent.",
+      "mechanism": "Selection for transverse null spaces: a pair decodes a k-sparse environment from its stacked rows [A_h; A_s]; a symbiont row coherent with a host row adds almost nothing to the stacked matrix, so co-inherited pairs whose rows are mutually incoherent recover more, and vertical inheritance lets that complementarity be partner-specific.",
+      "intervention": "Vertical transmission: selected pairs reproduce as units (host and symbiont offspring stay together).",
+      "control": "Horizontal transmission: identical pair-level truncation selection on identical pair success, identical mutation, but offspring symbionts are randomly re-paired with offspring hosts every generation (the null twin).",
+      "positive_control": "A constructed population of pairs in which each pair's host and symbiont hold rows from disjoint coherence classes (complementary by construction), with pairs drawn independently so that different pairs use different classes (partner-specific by construction).",
+      "observable": "For the final population: R_own = mean over pairs of the fraction of the symbiont's rows that are coherent (|cos| >= 0.9, which includes identical rows) with at least one row of its own host; R_other = the same fraction against every other host in the population, averaged; specificity D = R_other - R_own. Secondary: joint OMP recovery rate on 200 fixed evaluation signals.",
+      "success_criterion": "[{\"id\": \"S1\", \"text\": \"Partner-specific complementarity: seed-mean specificity D = R_other - R_own is at least 0.10.\", \"statistic\": \"S1_specificity\", \"comparison\": \">=\", \"threshold\": 0.1}, {\"id\": \"S2\", \"text\": \"Lower own-partner redundancy than the null twin: seed-mean R_own divided by the seed-mean R_own of the horizontal twin run on the same seeds is at most 0.5.\", \"statistic\": \"S2_redundancy_ratio\", \"comparison\": \"<=\", \"threshold\": 0.5}]",
+      "failure_criterion": "[{\"id\": \"F1\", \"text\": \"No partner specificity: seed-mean D below 0.03.\", \"statistic\": \"S1_specificity\", \"comparison\": \"<\", \"threshold\": 0.03}, {\"id\": \"F2\", \"text\": \"Own-partner redundancy not reduced: redundancy ratio above 0.8.\", \"statistic\": \"S2_redundancy_ratio\", \"comparison\": \">\", \"threshold\": 0.8}]",
+      "alternative_explanation": "Vertical transmission raises the heritability of pair fitness; any additive complementarity between co-inherited traits (not specifically null-space geometry) would give the same partner-specific pattern.",
+      "null_twin": "Horizontal arm: same palette, signals, selection intensity (top half of pairs by success), mutation and population size; symbionts re-paired at random every generation. Partner identity carries no information, so any complementarity can only be to the host population as a whole.",
+      "substrate": "population (two co-evolving lineages carrying index sets into a fixed row palette; OMP as the fitness oracle)",
+      "cost_estimate": "treatment about 1 CPU core-minute; controls about 2 core-minutes",
+      "stupid_explanations": [
+        "the vertical arm has higher effective heritability, so it optimises everything faster, including redundancy, without null-space geometry mattering",
+        "lineages under vertical transmission become clonal families, so R_other rises simply because other pairs belong to different families while own pairs are relatives (population structure, not complementarity)",
+        "exact-duplicate avoidance alone (a symbiont never copies its host's index) produces low R_own; near-copy coherence plays no role",
+        "noisy fitness with 8 test signals lets drift fix whatever pairs happened to be complementary at initialisation"
+      ],
+      "spec": "hecate/programs/HT-37e311ce05/worlds/W6/spec.json",
+      "attainability": "hecate/programs/HT-37e311ce05/worlds/W6/ATTAINABILITY.json"
+    }
+  ],
+  "candidateEngines": [],
+  "currentVerdict": "PARK",
+  "evidenceSummary": {
+    "layer": "experimental_observation",
+    "rows": "hecate/programs/HT-37e311ce05/worlds/W5/probe/rows.jsonl",
+    "note": "round 3 W5 NULL: revived by the generator repair and read NULL (two reasons)"
+  }
+}

@@ -1,0 +1,223 @@
+{
+ "G1_U_genuine": {
+  "share": 0.0579,
+  "COND": 0.0044,
+  "members": 50
+ },
+ "G1_U_raw": {
+  "share": 0.1296,
+  "COND": 0.0046,
+  "members": 112
+ },
+ "n_clean_candidates": 40,
+ "candidates": [
+  {
+   "schema": "({H} * v)",
+   "U_raw": {
+    "share": 0.125,
+    "COND": 0.0244,
+    "members": 108
+   },
+   "U_genuine": {
+    "share": 0.1157,
+    "COND": 0.0263,
+    "members": 100
+   },
+   "ratio_share": 1.998,
+   "ratio_COND": 5.977,
+   "matched": false
+  },
+  {
+   "schema": "(v - {H})",
+   "U_raw": {
+    "share": 0.1192,
+    "COND": 0.0226,
+    "members": 103
+   },
+   "U_genuine": {
+    "share": 0.1007,
+    "COND": 0.0264,
+    "members": 87
+   },
+   "ratio_share": 1.739,
+   "ratio_COND": 6.0,
+   "matched": false
+  },
+  {
+   "schema": "(acc * {H})",
+   "U_raw": {
+    "share": 0.1019,
+    "COND": 0.0158,
+    "members": 88
+   },
+   "U_genuine": {
+    "share": 0.0868,
+    "COND": 0.0183,
+    "members": 75
+   },
+   "ratio_share": 1.499,
+   "ratio_COND": 4.159,
+   "matched": false
+  },
+  {
+   "schema": "math.gcd(abs({H}), abs(v))",
+   "U_raw": {
+    "share": 0.0764,
+    "COND": 0.0158,
+    "members": 66
+   },
+   "U_genuine": {
+    "share": 0.0764,
+    "COND": 0.0158,
+    "members": 66
+   },
+   "ratio_share": 1.32,
+   "ratio_COND": 3.591,
+   "matched": false
+  },
+  {
+   "schema": "(v // {H})",
+   "U_raw": {
+    "share": 0.066,
+    "COND": 0.0141,
+    "members": 57
+   },
+   "U_genuine": {
+    "share": 0.0648,
+    "COND": 0.0144,
+    "members": 56
+   },
+   "ratio_share": 1.119,
+   "ratio_COND": 3.273,
+   "matched": false
+  },
+  {
+   "schema": "math.gcd(abs(acc), abs({H}))",
+   "U_raw": {
+    "share": 0.0648,
+    "COND": 0.0062,
+    "members": 56
+   },
+   "U_genuine": {
+    "share": 0.0648,
+    "COND": 0.0062,
+    "members": 56
+   },
+   "ratio_share": 1.119,
+   "ratio_COND": 1.409,
+   "matched": true
+  },
+  {
+   "schema": "math.gcd(abs({H}), abs(acc))",
+   "U_raw": {
+    "share": 0.0648,
+    "COND": 0.0062,
+    "members": 56
+   },
+   "U_genuine": {
+    "share": 0.0648,
+    "COND": 0.0062,
+    "members": 56
+   },
+   "ratio_share": 1.119,
+   "ratio_COND": 1.409,
+   "matched": true
+  },
+  {
+   "schema": "({H} + v)",
+   "U_raw": {
+    "share": 0.1019,
+    "COND": 0.0042,
+    "members": 88
+   },
+   "U_genuine": {
+    "share": 0.0579,
+    "COND": 0.0043,
+    "members": 50
+   },
+   "ratio_share": 1.0,
+   "ratio_COND": 0.977,
+   "matched": true
+  },
+  {
+   "schema": "pow(v, {H})",
+   "U_raw": {
+    "share": 0.0625,
+    "COND": 0.0144,
+    "members": 54
+   },
+   "U_genuine": {
+    "share": 0.0451,
+    "COND": 0.0194,
+    "members": 39
+   },
+   "ratio_share": 0.779,
+   "ratio_COND": 4.409,
+   "matched": false
+  },
+  {
+   "schema": "((1 % {H}) + v)",
+   "U_raw": {
+    "share": 0.0509,
+    "COND": 0.0141,
+    "members": 44
+   },
+   "U_genuine": {
+    "share": 0.0417,
+    "COND": 0.0169,
+    "members": 36
+   },
+   "ratio_share": 0.72,
+   "ratio_COND": 3.841,
+   "matched": false
+  },
+  {
+   "schema": "(v - (v % {H}))",
+   "U_raw": {
+    "share": 0.0509,
+    "COND": 0.0141,
+    "members": 44
+   },
+   "U_genuine": {
+    "share": 0.0417,
+    "COND": 0.0169,
+    "members": 36
+   },
+   "ratio_share": 0.72,
+   "ratio_COND": 3.841,
+   "matched": false
+  },
+  {
+   "schema": "((acc * {H}) + v)",
+   "U_raw": {
+    "share": 0.0486,
+    "COND": 0.0009,
+    "members": 42
+   },
+   "U_genuine": {
+    "share": 0.0023,
+    "COND": 0.0,
+    "members": 2
+   },
+   "ratio_share": 0.04,
+   "ratio_COND": 0.0,
+   "matched": false
+  },
+  {
+   "schema": "((1 - {H}) + v)",
+   "U_raw": {
+    "share": 0.059,
+    "COND": 0.0183,
+    "members": 51
+   },
+   "U_genuine": {
+    "share": 0.0,
+    "COND": 0.0,
+    "members": 0
+   },
+   "ratio_share": 0.0,
+   "ratio_COND": 0.0,
+   "matched": false
+  }
+ ]
+}

@@ -1,40 +1,85 @@
 {
   "schema": "prometheus.work_state.v1",
   "seat": "Cosmos",
-  "mwo_id": "MWO-0001",
-  "mwo_commit": "7e4c09f2ca8eae4a3a019dc43b3054e08bec3e77",
-  "updated_at_utc": "2026-09-29T02:48:18Z",
+  "mwo_id": "MWO-0004",
+  "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
+  "updated_at_utc": "2026-10-01T06:38:38Z",
   "state": "BLOCKED",
   "branch": "cosmos/c3-public-2026-09-24",
   "head_sha": "(this commit; git log -1 -- roles/Cosmos/WORK_STATE.json)",
   "threads": [
-    "thr-32389b1e7abb (T-C3, BLOCKED)",
-    "thr-ba4ccc18cc6c (T-I1, public-side work)",
+    "thr-32389b1e7abb (T-C3, KILLED pre-holdout; autopsy accepted by the operator)",
+    "thr-cac8c079f216 (T-C4, DESIGNED v0.2; under review)",
+    "thr-ba4ccc18cc6c (T-I1)",
     "thr-14b16c6a4d6b (T-E1)",
-    "+8 OPEN: roles/Cosmos/research/THREADS.md"
+    "+7 OPEN: roles/Cosmos/research/THREADS.md"
   ],
   "campaigns": [
-    "C3 (causal accessibility of past information): Session 1 complete; closing via holdout D2"
+    "C3: CLOSED / KILLED BEFORE HOLDOUT; autopsy accepted",
+    "C4: DESIGNED v0.2 (design revision authorized; F-0002 + build NOT authorized)"
   ],
   "experiments": [
-    "C3-D2 blind adjudication: NOT started; Cosmos blind to D2"
+    "C3-D2 adjudication: NEVER STARTED; D2 SEALED / UNREAD / UNSPENT, reserved"
   ],
   "fabric_tasks": [],
   "running": [],
   "blocked_on": [
-    "D2 independent firewall RE-AUDIT (after audit 1 FAILED 982819f8b; v2 repairs 7d759a203, f4cde414d)"
+    {
+      "item": "foreign visible family",
+      "dependency": "Theseus has not started (no receipt since 2026-09-30 14:45Z; assigned ~17:30Z)",
+      "owner": "Theseus / Aporia"
+    },
+    {
+      "item": "C3 publication",
+      "dependency": "foreign family commit",
+      "owner": "Theseus"
+    },
+    {
+      "item": "final reviews",
+      "dependency": "foreign family + C3 publication",
+      "owner": "Ananke (R-STAT), Bellerophon (R-MECH)"
+    }
   ],
   "next_actions": [
-    "T-I1 graveyard backfill from C0 stores",
-    "verify Artemis #878 claims R-05/R-14/R-10 against Cosmos records",
-    "prepare moved coordinate-layer audit Task (dispatch held: see operator_decisions_required)",
-    "after governing FIREWALL_AUDIT PASS: report readiness to operator; commit PREDICTION_COMMITMENT.json only when authorized"
+    "wait for reviewer + author assignments (Aporia)",
+    "reconcile the reviews",
+    "report v0.2 + reconciliation to the operator"
   ],
   "operator_decisions_required": [
-    "Coordinate-layer audit Task: Fabric workers check out base_sha from origin, so the Task can only run if the withheld coordinate-layer files (C3 substrates + geometry) are pushed to origin first, which publishes them irreversibly before the C3 freeze. Confirm that publication (coordinate layer only; law, results, failure regions, substitution attacks and predictions stay withheld)? Cosmos's default is to hold the dispatch until confirmed."
+    "C4 build decision after: foreign family committed, C3 published + verified, both reviews complete, RECONCILIATION_v0.2.md"
   ],
   "latest_reports": [
-    "roles/Cosmos/campaigns/REVIEW_PACKET_COSMOS_D_SEAL_2026-09-26.txt",
-    "roles/Cosmos/research/README.md"
-  ]
+    "roles/Cosmos/c4/DESIGN_C4.md",
+    "roles/Cosmos/c4/REVIEW_BRIEF_v0.2.md",
+    "roles/Cosmos/c3/PUBLICATION_PLAN.md",
+    "roles/Cosmos/c4/VISIBLE_FAMILY_CONTRACT.md"
+  ],
+  "mwo_sha256": "925660b2d2be53af2ee4195391e484d9649bbd4ee828cd60432ce2f0903a99df",
+  "migration_report": "roles/Cosmos/MIGRATION_REPORT_MWO-0002.json",
+  "instance": "m2-44f84976 (M2 SPECTREX5), claude-opus-5-5; booted 2026-09-30T10:25Z",
+  "work_order": "Operator C4 direction review 2 (99541a365) within CWO-2026-09-30C (governing), MWO-0004",
+  "current": "C4 review cycle (blocked on the foreign family)",
+  "next": "On the foreign-family commit: publish the C3 branch after re-running V1-V5 -> notify the reviewers -> reconcile the reviews (RECONCILIATION_v0.2.md) -> return to the operator for the C4 build decision",
+  "reserve": [
+    "Public Cosmos tooling",
+    "Future-world generators that cannot expose D2",
+    "OPEN research threads T-A1..T-I1 (not started without assignment, CWO-B)"
+  ],
+  "resource_status": "CPU only on M2 (COSMOS_HOME C:/Users/James/cosmos_runs); no leases, no Fabric tasks, no GPU; spend $0",
+  "last_receipt": "status report roles/Cosmos/reports/STATUS_2026-10-01.md (this commit); interims ded6f5729 / 164df3cdd; I2 closed (#1110 + Nestor #1153)",
+  "open_incidents": [],
+  "authorization": {
+    "C4 design review": "AUTHORIZED",
+    "foreign visible family authoring": "AUTHORIZED",
+    "withheld C3 publication": "AUTHORIZED AFTER FOREIGN FAMILY COMMIT",
+    "F-0002 freeze": "NOT AUTHORIZED",
+    "C4 full build": "NOT AUTHORIZED",
+    "D2 access": "NOT AUTHORIZED"
+  },
+  "model": "claude-opus-5-5",
+  "session_start_utc": "2026-09-30T10:25Z",
+  "current_objective": "C4 v0.2 review cycle -> operator build decision",
+  "current_step": "waiting for the foreign visible family (Theseus, #1139; not started); interim reviews received (5 BLOCKING)",
+  "next_expected_milestone": "foreign family committed on main -> C3 publication (V1-V5) -> final reviews -> RECONCILIATION_v0.2.md",
+  "expected_next_artifact": "C3 publication merge commit + INFO_LEDGER row (after the Theseus commit)"
 }

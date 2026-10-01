@@ -1,0 +1,93 @@
+{
+ "rows": {
+  "4222_sbf_c800": {
+   "cell": "4222a5f7",
+   "len": 12,
+   "prog_len": 12,
+   "strict": true,
+   "program": [
+    " 0 ADD   S3 = ADD(S3, SENSE)",
+    " 1 MULQ  PAY0 = MULQ(S3, ENERGY)",
+    " 2 ADD   PAY0 = ADD(PAY0, IN0_0)",
+    " 3 MULQ  EMIT = MULQ(PAY0, PAY0)",
+    " 4 MOV   CHAN = CNT0",
+    " 5 ADD   T3 = ADD(IN0_0, IN1_0)",
+    " 6 MAX   S1 = MAX(S1, T3)",
+    " 7 SUB   T0 = SUB(ZERO, T3)",
+    " 8 MAX   S2 = MAX(S2, T0)",
+    " 9 MULQ  T1 = MULQ(S1, S2)",
+    "10 CONST T2 = 100 << 3",
+    "11 SUB   S0 = SUB(T2, T1)"
+   ],
+   "normal": {
+    "acc": 0.8503,
+    "lo99": 0.819,
+    "hi99": 0.8789,
+    "pairs": 32
+   },
+   "mf_s2_zeroed": {
+    "acc": 0.5,
+    "lo99": 0.5,
+    "hi99": 0.5,
+    "pairs": 32
+   },
+   "stats": {
+    "attempted": 569858,
+    "delivered": 512543,
+    "lost": 57315,
+    "collided": 1318,
+    "emitters": 129438,
+    "awake": 933888,
+    "nonnop": 11206656,
+    "route_writes": 0,
+    "energy_spent": 0
+   }
+  },
+  "4222_sbf_c400": {
+   "cell": "4222a5f7",
+   "len": 12,
+   "prog_len": 12,
+   "strict": true,
+   "program": [
+    " 0 ADD   S3 = ADD(S3, SENSE)",
+    " 1 MULQ  PAY0 = MULQ(S3, ENERGY)",
+    " 2 ADD   PAY0 = ADD(PAY0, IN0_0)",
+    " 3 MULQ  EMIT = MULQ(PAY0, PAY0)",
+    " 4 MOV   CHAN = CNT0",
+    " 5 ADD   T3 = ADD(IN0_0, IN1_0)",
+    " 6 MAX   S1 = MAX(S1, T3)",
+    " 7 SUB   T0 = SUB(ZERO, T3)",
+    " 8 MAX   S2 = MAX(S2, T0)",
+    " 9 MULQ  T1 = MULQ(S1, S2)",
+    "10 CONST T2 = 100 << 2",
+    "11 SUB   S0 = SUB(T2, T1)"
+   ],
+   "normal": {
+    "acc": 0.8815,
+    "lo99": 0.849,
+    "hi99": 0.9115,
+    "pairs": 32
+   },
+   "mf_s2_zeroed": {
+    "acc": 0.4987,
+    "lo99": 0.4948,
+    "hi99": 0.5,
+    "pairs": 32
+   },
+   "stats": {
+    "attempted": 569858,
+    "delivered": 512543,
+    "lost": 57315,
+    "collided": 1318,
+    "emitters": 129438,
+    "awake": 933888,
+    "nonnop": 11206656,
+    "route_writes": 0,
+    "energy_spent": 0
+   }
+  }
+ },
+ "ns": "0x57325653",
+ "M": 64,
+ "cpu_s": 20.7
+}

@@ -1,0 +1,25 @@
+{
+ "spec": {
+  "transform": "ADD37",
+  "read_order": "FORCED_READ",
+  "bridge": "NEUTRAL_BRIDGE",
+  "n_episodes": 8,
+  "budget": 140,
+  "neutral": false,
+  "output_gate": "UNRESTRICTED",
+  "cue_cost": "VM",
+  "constant_kind": "ATOMIC"
+ },
+ "programs": {
+  "reads_all_three_then_echoes_base": {
+   "mean_held": 0.738,
+   "mean_probe": 3.0,
+   "share_of_draws_counted_competent": 1.0
+  },
+  "witness": {
+   "mean_held": 1.0,
+   "mean_probe": 3.0,
+   "share_of_draws_counted_competent": 1.0
+  }
+ }
+}

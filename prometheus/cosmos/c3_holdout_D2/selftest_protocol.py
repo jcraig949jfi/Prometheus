@@ -80,7 +80,7 @@ def _git(repo: Path, *a: str) -> str:
 class GateRepo:
     def __init__(self, path: Path, ts: dict):
         self.p, self.ts = path, ts
-        self.al = path.parent / (path.name + "_ALLOWLIST.json")
+        self.al = path.parent / (path.name + "_ANCHOR.jsonl")     # v12: the append-only anchor (MWO-0004 D2-1)
         path.mkdir(parents=True)
         _git(path, "init", "-q", "-b", "main")
         _git(path, "config", "user.name", "selftest")
@@ -115,11 +115,16 @@ class GateRepo:
             self.commit(name)
 
     def allow(self, role, name):
-        b = subprocess.run(["git", "-C", str(self.p), "show", "%s:%s/%s" % (REF, protocol.PROTO_REL, name)],
-                           capture_output=True, check=True).stdout
-        data = json.loads(self.al.read_text()) if self.al.exists() else {"entries": []}
-        data["entries"].append({"role": role, "record": name, "sha256": protocol.record_sha(b)})
-        self.al.write_text(json.dumps(data))
+        """v12: anchor the record as the custodian would: blob sha256 + the commit that added it, hash-chained."""
+        rel = "%s/%s" % (protocol.PROTO_REL, name)
+        b = subprocess.run(["git", "-C", str(self.p), "show", "%s:%s" % (REF, rel)], capture_output=True,
+                           check=True).stdout
+        try:
+            c = protocol._added_once(self.p, REF, rel, protocol.GateRefusal)
+        except protocol.GateRefusal:                           # a deliberately rewritten record: its last commit
+            c = _git(self.p, "log", "-1", "--format=%H", REF, "--", rel)
+        protocol.anchor_append(self.al, {"role": role, "record": name, "path": rel, "sha256": protocol.record_sha(b),
+                                         "commit": c})
 
     def audit(self, n=1, verdict="PASS", commit=True, allow=True):
         name = "FIREWALL_AUDIT_%d.json" % n
@@ -170,7 +175,7 @@ def try_open(tmp, r, pkg, sha, tag, runner_id=RID, account=ACCT, manifest=None, 
     rr = runner.FirewallRun(manifest or r.ts["manifest"], r.ts["enc"], tmp / "no_such_key.hex", pkg, sha, out,
                             runner_id=runner_id, gate_repo=r.p, gate_ref=REF, certify_kwargs=SMALL,
                             predict_timeout=timeout or PARAMS["predict_timeout"], account=account,
-                            allowlist=r.al, gate_pins=r.pins(), verify_loaded=False, secret_paths=())
+                            allowlist=r.al, gate_pins=r.pins(), verify_loaded=False, secret_paths=(), write_probe_paths=(), preflight=False)
     try:
         rr.open()
         return "OPENED"
@@ -258,7 +263,7 @@ def runner_gate_cases(tmp, ts, pkg, sha):
     r = R(); r.seal(); r.audit(); r.commitment(sha, allow=False); r.designate()
     c["S1_commitment_not_allowlisted"] = (gates(r), ("NotAllowListed",))
     r = R(); r.seal(); r.audit(allow=False); r.commitment(sha); r.designate()
-    c["S1_audit_not_allowlisted"] = (gates(r), ("NotAllowListed",))
+    c["S1_audit_not_allowlisted"] = (gates(r), ("AuditMissing",))    # v3: a non-allow-listed audit is IGNORED
     r = R(); r.seal(); r.audit(1)
     with open(r.p / protocol.PKG_REL / "runner.py", "a", encoding="utf-8") as f:
         f.write("\n# a later, re-audited change\n")
@@ -321,10 +326,10 @@ def package_checks(tmp):
 
 
 def entry_checks():
-    env = dict(os.environ, C3D2_NO_FETCH="1")
+    env = dict(os.environ)                                # v4: no fetch bypass exists any more
     env.pop("C3D2_ENTRY", None)
-    p = subprocess.run([sys.executable, str(HERE / "entry.py"), "runner", "--help"], capture_output=True, text=True,
-                       env=env)
+    p = subprocess.run([sys.executable, "-I", "-B", str(HERE / "entry.py"), "runner", "--help"], capture_output=True,
+                       text=True, env=env)
     refused_real = p.returncode != 0 and "REFUSED" in (p.stdout + p.stderr)
     saved = os.environ.pop("C3D2_ENTRY", None)
     try:
@@ -343,7 +348,8 @@ def end_to_end(tmp, ts, pkg, sha):
     repo = GateRepo(tmp / "repos" / "e2e", ts).full(sha)
     log = tmp / "custody.jsonl"
     cu = custody.Custody(repo=repo.p, ref=REF, secrets_dir=ts["secrets"], log=log, host=HOST, allowlist=repo.al,
-                         pins=repo.pins(), verify_loaded=False)
+                         pins=repo.pins(), verify_loaded=False, restrict_acl=False,   # ACL tested in v4_checks
+                         require_preflight=False)                                    # preflight tested in v6_checks
 
     def refused(fn, *a):
         try:
@@ -355,12 +361,19 @@ def end_to_end(tmp, ts, pkg, sha):
     pre = GateRepo(tmp / "repos" / "pre", ts)
     pre.seal()
     cu_pre = custody.Custody(repo=pre.p, ref=REF, secrets_dir=ts["secrets"], log=tmp / "cpre.jsonl", host=HOST,
-                             allowlist=pre.al, pins=pre.pins(), verify_loaded=False)
+                             allowlist=pre.al, pins=pre.pins(), verify_loaded=False, restrict_acl=False,
+                             require_preflight=False)
     out["release_before_audit_refused"] = refused(cu_pre.release_key, RID, tmp / "rel_pre") == "AuditMissing"
     out["release_into_git_refused"] = refused(cu.release_key, RID, repo.p / "k") == "CustodyRefusal"
     rel = tmp / "released"
     out["release_key_ok"] = cu.release_key(RID, rel)["event"] == "KEY_RELEASED"
     out["release_twice_refused"] = refused(cu.release_key, RID, tmp / "rel2") == "CustodyRefusal"
+    # v3: once-only rests on git. Commit the KEY_RELEASED record custody wrote, then clear the custody log:
+    # a second release must STILL be refused.
+    out["v3_key_released_record_written"] = (repo.p / protocol.PROTO_REL / protocol.KEY_RELEASED_FILE).exists()
+    repo.commit("key released record")
+    log.write_text("", encoding="utf-8")
+    out["v3_release_refused_from_git_after_log_cleared"] = refused(cu.release_key, RID, tmp / "rel3") == "CustodyRefusal"
     # F2: a child that CAN open a secret path is refused before any world is served
     fake = tmp / "fake_secret.hex"
     fake.write_text("00")
@@ -372,7 +385,7 @@ def end_to_end(tmp, ts, pkg, sha):
     r0 = runner.FirewallRun(ts["manifest"], ts["enc"], keyc / custody.KEY_NAME, pkg, sha, iso, runner_id=RID,
                             gate_repo=repo.p, gate_ref=REF, certify_kwargs=SMALL, predict_timeout=300, account=ACCT,
                             allowlist=repo.al, gate_pins=repo.pins(), verify_loaded=False, delete_key=True,
-                            secret_paths=(fake,))
+                            secret_paths=(fake,), write_probe_paths=(), preflight=False)
     r0.open()
     try:
         r0.predict_all()
@@ -386,7 +399,7 @@ def end_to_end(tmp, ts, pkg, sha):
     r = runner.FirewallRun(ts["manifest"], ts["enc"], rel / custody.KEY_NAME, pkg, sha, run_dir, runner_id=RID,
                            gate_repo=repo.p, gate_ref=REF, certify_kwargs=SMALL, predict_timeout=300, account=ACCT,
                            allowlist=repo.al, gate_pins=repo.pins(), verify_loaded=False, delete_key=True,
-                           secret_paths=(fake,), extra_probe_paths=[str(ts["secrets"] / "nonexistent")])
+                           secret_paths=(fake,), write_probe_paths=(), preflight=False, extra_probe_paths=[str(ts["secrets"] / "nonexistent")])
     r.open()
     out["key_deleted_after_read"] = not (rel / custody.KEY_NAME).exists()
     r.predict_all(); r.seal_predictions(); r.certify_all(); res = r.close()
@@ -396,6 +409,8 @@ def end_to_end(tmp, ts, pkg, sha):
     rec_path = repo.p / protocol.PROTO_REL / protocol.RESULT_SEAL_FILE
     cu.result_seal_record(run_dir, rec_path)
     repo.commit("result seal")
+    out["v3_reveal_refused_result_seal_not_allowlisted"] = refused(cu.reveal, run_dir, tmp / "rev_nal") == "NotAllowListed"
+    repo.allow("RESULT_SEAL", protocol.RESULT_SEAL_FILE)
     out["result_seal_carries_nonce"] = json.loads(rec_path.read_text())["run_nonce"] == RUN_NONCE
     tam = tmp / "runs" / "tam" / ("run_" + RUN_NONCE)
     shutil.copytree(run_dir, tam)
@@ -412,32 +427,74 @@ def end_to_end(tmp, ts, pkg, sha):
 
 
 def allowlist_checks(tmp, ts, sha):
+    """v12 (MWO-0004 D2-1): the anchor. The custodian tool anchors blob sha256 + adding commit, hash-chained and
+    append-only; every gated step re-verifies commit existence, ancestry, the blob at that commit and the chain."""
     r = GateRepo(tmp / "repos" / "al", ts)
     r.seal(); r.audit(allow=False)
     name = "FIREWALL_AUDIT_1.json"
-    b = subprocess.run(["git", "-C", str(r.p), "show", "%s:%s/%s" % (REF, protocol.PROTO_REL, name)],
-                       capture_output=True, check=True).stdout
-    h = protocol.record_sha(b)
-    al = tmp / "al.json"
+    rel = "%s/%s" % (protocol.PROTO_REL, name)
+    b = subprocess.run(["git", "-C", str(r.p), "show", "%s:%s" % (REF, rel)], capture_output=True, check=True).stdout
+    ref_c = _git(r.p, "rev-parse", REF)
+    anc = tmp / "anchor_checks.jsonl"
     allowlist.REPO = r.p
     res = {}
-    for tag, msg, want_ok in (("good", {"sender": "Odysseus", "subject": "PASS " + h, "body": ""}, True),
-                              ("wrong_sender", {"sender": "Cosmos", "subject": h, "body": ""}, False),
-                              ("no_sha", {"sender": "Odysseus", "subject": "PASS", "body": "looks fine"}, False)):
+    try:
+        e = allowlist.add("AUDIT", name, REF, path=anc)
+        res["S1_anchor_add_records_adding_commit"] = e["commit"] == protocol._added_once(r.p, REF, rel, protocol.AuditMissing)
+        res["S1_anchor_verifies_against_git"] = protocol._is_allowlisted(anc, "AUDIT", name, b, repo=r.p, ref=ref_c)
+        res["S1_anchor_readd_same_blob_idempotent"] = allowlist.add("AUDIT", name, REF, path=anc)["entry_hash"] == \
+            e["entry_hash"]
+        other = tmp / "anchor_other.jsonl"
+        protocol.anchor_append(other, {"role": "AUDIT", "record": name, "path": rel, "sha256": "0" * 64, "commit": ref_c})
         try:
-            allowlist.add("AUDIT", name, 1, REF, path=al, message=msg)
-            ok = True
+            allowlist.add("AUDIT", name, REF, path=other)
+            res["S1_anchor_different_blob_refused"] = False
         except SystemExit:
-            ok = False
-        res["S1_allowlist_" + tag] = ok == want_ok
-    allowlist.REPO = REAL_REPO
+            res["S1_anchor_different_blob_refused"] = True
+        fake = tmp / "anchor_fake_commit.jsonl"
+        protocol.anchor_append(fake, {"role": "AUDIT", "record": name, "path": rel, "sha256": protocol.record_sha(b),
+                                      "commit": "d" * 40})
+        res["S1_anchor_nonexistent_commit_refused"] = not protocol._is_allowlisted(fake, "AUDIT", name, b, repo=r.p,
+                                                                                    ref=ref_c)
+        # a commit that exists but is NOT an ancestor of the reference (a side branch holding the same blob)
+        _git(r.p, "checkout", "-q", "-b", "side")
+        (r.p / "side.txt").write_text("x")
+        side = r.commit("side commit")
+        _git(r.p, "checkout", "-q", "main")
+        nonanc = tmp / "anchor_nonancestor.jsonl"
+        protocol.anchor_append(nonanc, {"role": "AUDIT", "record": name, "path": rel, "sha256": protocol.record_sha(b),
+                                        "commit": side})
+        res["S1_anchor_non_ancestor_commit_refused"] = not protocol._is_allowlisted(nonanc, "AUDIT", name, b,
+                                                                                     repo=r.p, ref=ref_c)
+        # the append-only chain: editing any entry breaks it (fail closed); so does reordering
+        raw = anc.read_text(encoding="utf-8")
+        tam = tmp / "anchor_tampered.jsonl"
+        tam.write_text(raw.replace(e["commit"], e["commit"][:-1] + ("0" if e["commit"][-1] != "0" else "1")),
+                       encoding="utf-8")
+        try:
+            protocol.anchor_entries(tam)
+            res["S1_anchor_edited_entry_breaks_chain"] = False
+        except protocol.NotAllowListed:
+            res["S1_anchor_edited_entry_breaks_chain"] = True
+        protocol.anchor_append(anc, {"role": "COMMITMENT", "record": "X.json", "path": "x", "sha256": "1" * 64,
+                                     "commit": ref_c})
+        lines = anc.read_text(encoding="utf-8").splitlines()
+        swp = tmp / "anchor_swapped.jsonl"
+        swp.write_text("\n".join([lines[1], lines[0]]) + "\n", encoding="utf-8")
+        try:
+            protocol.anchor_entries(swp)
+            res["S1_anchor_reordered_breaks_chain"] = False
+        except protocol.NotAllowListed:
+            res["S1_anchor_reordered_breaks_chain"] = True
+    finally:
+        allowlist.REPO = REAL_REPO
     return res
 
 
 def defect_controls(tmp, ts, pkg, sha, f4_repo):
     res = {}
     saved = (protocol._strict_ancestor, protocol.worktree_code_hashes, protocol.code_hashes,
-             set(protocol.FORBIDDEN_HOSTS), protocol._commits_touching)
+             set(protocol.FORBIDDEN_HOSTS), protocol._record_history)
     try:
         protocol._strict_ancestor = lambda repo, a, b: True
         r = GateRepo(tmp / "repos" / "dc1", ts); r.seal(); r.commitment(sha); r.audit(); r.designate()
@@ -458,15 +515,1056 @@ def defect_controls(tmp, ts, pkg, sha, f4_repo):
         protocol.FORBIDDEN_HOSTS.update(saved[3])
 
         def plain_log(repo, ref, rel):                                    # the v1 behaviour Odysseus broke
-            p = protocol._git(repo, "log", "--format=%H", ref, "--", rel)
-            return [(c, 1) for c in p.stdout.split() if c]
-        protocol._commits_touching = plain_log
+            p = protocol._git(repo, "log", "--raw", "--no-abbrev", "--format=C %H %P", ref, "--", rel)
+            out, cur, npar = [], None, 0
+            for line in p.stdout.splitlines():
+                if line.startswith("C "):
+                    parts = line.split(); cur, npar = parts[1], len(parts) - 2
+                elif line.startswith(":") and cur:
+                    f = line.split("\t", 1)[0].split()
+                    out.append((cur, npar, f[4], f[3]))
+            return out
+        protocol._record_history = plain_log
         res["DefectNoFullHistory[F4_record_replaced_through_merge]"] = gates(f4_repo) != "RecordRewritten"
     finally:
         protocol._strict_ancestor, protocol.worktree_code_hashes, protocol.code_hashes = saved[0], saved[1], saved[2]
         protocol.FORBIDDEN_HOSTS.clear()
         protocol.FORBIDDEN_HOSTS.update(saved[3])
-        protocol._commits_touching = saved[4]
+        protocol._record_history = saved[4]
+    return res
+
+
+def v3_checks(tmp, ts, pkg, sha):
+    """v3: DEF-HARM-D2-001 (real history), merge carrying the sealed blob, unauthenticated later FAIL ignored,
+    write probe, import guard / verified source loader."""
+    res = {}
+    try:
+        protocol.check_gates(REAL_REPO, "SEAL")
+        res["v3_real_history_seal_passes"] = True
+    except protocol.GateRefusal as e:
+        res["v3_real_history_seal_passes"] = False
+        res["v3_real_history_seal_reason"] = str(e)[:120]
+    r = GateRepo(tmp / "repos" / "v3merge", ts)
+    _git(r.p, "branch", "side")
+    _git(r.p, "checkout", "-q", "side")
+    r.seal()                                               # seal on a side branch ...
+    _git(r.p, "checkout", "-q", "main")
+    (r.p / "unrelated.txt").write_text("x")
+    r.commit("unrelated")
+    subprocess.run(["git", "-C", str(r.p), "merge", "-q", "--no-ff", "--no-edit", "side"], capture_output=True)
+    res["v3_integration_merge_carrying_sealed_blob_passes"] = gates(r, "SEAL") == "PASSED"
+    r = GateRepo(tmp / "repos" / "v3fail", ts); r.seal(); r.audit(1); r.audit(2, verdict="FAIL", allow=False)
+    r.commitment(sha); r.designate()
+    res["v3_unauthenticated_later_FAIL_ignored"] = gates(r) == "PASSED"
+    r = GateRepo(tmp / "repos" / "v3pass", ts); r.seal(); r.audit(1, verdict="FAIL"); r.audit(2, allow=False)
+    r.commitment(sha); r.designate()
+    res["v3_unauthenticated_later_PASS_ignored"] = gates(r) == "AuditNotPass"
+    # write probe: a child that can APPEND to a protected path is refused
+    r = GateRepo(tmp / "repos" / "v3wp", ts).full(sha)
+    kd = tmp / "v3wp_key"
+    kd.mkdir()
+    shutil.copyfile(ts["secrets"] / "hidden_D2.key.hex", kd / "k.hex")
+    wf = tmp / "writable_receipt.jsonl"
+    wf.write_text("")
+    out = tmp / "runs" / "v3wp" / ("run_" + RUN_NONCE)
+    out.parent.mkdir(parents=True)
+    rr = runner.FirewallRun(ts["manifest"], ts["enc"], kd / "k.hex", pkg, sha, out, runner_id=RID, gate_repo=r.p,
+                            gate_ref=REF, certify_kwargs=SMALL, predict_timeout=300, account=ACCT, allowlist=r.al,
+                            gate_pins=r.pins(), verify_loaded=False, delete_key=True, secret_paths=(),
+                            write_probe_paths=(wf,), preflight=False)
+    rr.open()
+    try:
+        rr.predict_all()
+        res["v3_child_that_can_append_receipts_refused"] = False
+    except runner.ChildNotIsolated:
+        res["v3_child_that_can_append_receipts_refused"] = True
+    # import guard + verified source loader
+    from prometheus.cosmos.c3_holdout_D2 import entry
+    try:
+        entry.AuditedImportGuard({}).find_spec("prometheus.cosmos.c3.task")
+        res["v3_import_guard_refuses_unbound"] = False
+    except ImportError:
+        res["v3_import_guard_refuses_unbound"] = True
+    mod = tmp / "v3mod.py"
+    mod.write_bytes(b"X = 1\n")
+    good = entry._VerifiedSourceLoader("v3mod", str(mod), entry.lf_sha(b"X = 1\n"))
+    res["v3_loader_compiles_verified_source"] = good.get_code("v3mod") is not None
+    bad = entry._VerifiedSourceLoader("v3mod", str(mod), "0" * 64)
+    try:
+        bad.get_code("v3mod")
+        res["v3_loader_refuses_changed_source"] = False
+    except ImportError:
+        res["v3_loader_refuses_changed_source"] = True
+    return res
+
+
+AL_LITERAL = 'Path("C:/Users/jcrai/nestor_receipts/holdout_D2/ANCHOR.jsonl")'
+
+
+def _plant(path: Path, marker: Path) -> None:
+    path.write_text("open(%r, 'w').write('ran')\n" % str(marker), encoding="utf-8")
+
+
+def _hostile_env() -> dict:
+    """A plain custodian shell: no C3D2_ENTRY and NO NoDefaultCurrentDirectoryInExePath (some harnesses set it, which
+    would mask the Windows current-directory executable search that F-CWD is about)."""
+    return {k: v for k, v in os.environ.items()
+            if k.upper() not in ("C3D2_ENTRY", "NODEFAULTCURRENTDIRECTORYINEXEPATH")}     # Windows keys are upper-case
+
+
+def _py(code: str, cwd) -> subprocess.CompletedProcess:
+    return subprocess.run([sys.executable, "-c", code], capture_output=True, text=True, cwd=str(cwd), env=_hostile_env())
+
+
+RECEIPTS_LITERAL = "C:/Users/jcrai/nestor_receipts/holdout_D2"
+SECRETS_LITERAL = "C:/Users/jcrai/nestor_secrets/holdout_D2"
+CUSTODIAN_LITERAL = 'CUSTODIAN_ACCOUNT = "jcrai"'
+
+
+def entry_repo(tmp, ts, sha, name="entry", account=ACCT, full=True):
+    """A throwaway repository whose committed code is the audited code, except that the allow-list, receipts and secrets
+    paths point at throwaway locations, the seal pins at the throwaway seal and (v5) the custodian account name is a
+    dummy so the current OS user can be designated as the runner; it has a bare `origin` so entry.py fetches for real."""
+    import re as _re
+    r = GateRepo(tmp / "repos" / name, ts)
+    rec = str(tmp / ("receipts_" + name)).replace("\\", "/")
+    for rel in protocol.AUDITED_FILES:
+        f = r.p / rel
+        t = f.read_text(encoding="utf-8")
+        t2 = t.replace(AL_LITERAL, "Path(%r)" % str(r.al)).replace(RECEIPTS_LITERAL, rec) \
+            .replace(SECRETS_LITERAL, str(ts["secrets"]).replace("\\", "/")) \
+            .replace(CUSTODIAN_LITERAL, 'CUSTODIAN_ACCOUNT = "c3d2-selftest-custodian"')
+        if t2 != t:
+            f.write_text(t2, encoding="utf-8", newline="\n")
+    r.commit("selftest paths")
+    r.seal()
+    pf = r.p / protocol.PKG_REL / "protocol.py"
+    t = pf.read_text(encoding="utf-8")
+    t = _re.sub(r'SEAL_COMMIT = "[0-9a-f]{40}"', 'SEAL_COMMIT = "%s"' % r.seal_commit, t)
+    t = _re.sub(r'SPEC_ID = "[0-9a-f]{64}"', 'SPEC_ID = "%s"' % ts["m"]["spec_id"], t)
+    pf.write_text(t, encoding="utf-8", newline="\n")
+    r.commit("selftest pins")
+    if full:
+        r.audit()
+        r.commitment(sha)
+        r.designate(account=account)
+    bare = tmp / "repos" / (name + "_origin.git")
+    subprocess.run(["git", "init", "-q", "--bare", str(bare)], check=True, capture_output=True)
+    _git(r.p, "remote", "add", "origin", str(bare))
+    _git(r.p, "push", "-q", "origin", "main")
+    return r, bare
+
+
+def run_entry(r, *args, cwd=None, flags=("-I", "-B")):
+    env = _hostile_env()
+    env["COSMOS_BROKER"] = "1"
+    p = subprocess.run([sys.executable] + list(flags) + [str(r.p / protocol.PKG_REL / "entry.py"), *args],
+                       capture_output=True, text=True, env=env, cwd=str(cwd or r.p.parent))
+    return p.returncode, p.stdout, p.stderr
+
+
+def v4_checks(tmp, ts, sha):
+    """v4 (Odysseus v3 re-audit FAIL: P1, P2, P3 + should-fix). Every attack test has a POSITIVE CONTROL showing the
+    planted file / replace ref / fake git DOES act when the defence is absent. None = not applicable on this OS."""
+    from prometheus.cosmos.c3_holdout_D2 import entry, firewall_check
+    import types
+    res = {}
+    res["v4_entry_FIXED_equals_protocol_FIXED_RECORDS"] = entry.FIXED == protocol.FIXED_RECORDS
+    res["v4_allowlist_path_single_value"] = entry.ALLOWLIST == protocol.DEFAULT_ALLOWLIST == allowlist.ALLOWLIST
+    res["v4_entry_PKG_PY_is_the_package"] = entry.PKG_PY == {x.name for x in HERE.glob("*.py")}
+    r, bare = entry_repo(tmp, ts, sha)
+    rc, out, err = run_entry(r, "gates", "DESIGNATION")
+    res["v4_entry_gates_pass_end_to_end"] = rc == 0 and '"gates": "PASSED"' in out
+    if not res["v4_entry_gates_pass_end_to_end"]:
+        res["v4_entry_gates_pass_end_to_end_reason"] = (out + err)[-300:]
+    # P3: the once-only records committed -> entry still runs (v3 deadlocked here)
+    r.put(protocol.KEY_RELEASED_FILE, {"event": "KEY_RELEASED", "spec_id": ts["m"]["spec_id"]})
+    r.put(protocol.REVEALED_FILE, {"event": "REVEALED", "spec_id": ts["m"]["spec_id"]})
+    _git(r.p, "push", "-q", "origin", "main")
+    rc, out, err = run_entry(r, "gates", "DESIGNATION")
+    res["v4_P3_entry_runs_with_once_records_committed"] = rc == 0 and '"gates": "PASSED"' in out
+    # F-ONCE: deleting KEY_RELEASED later does not re-enable a release
+    (r.p / protocol.PROTO_REL / protocol.KEY_RELEASED_FILE).unlink()
+    r.commit("delete key released record")
+    res["v4_ONCE_record_deleted_later_still_counts"] = protocol.once_record_present(r.p, REF, protocol.KEY_RELEASED_FILE)
+    _git(r.p, "push", "-q", "origin", "main")
+    # P1: a module planted in the package directory must not run in stage 1 (and the extra .py is refused)
+    m1 = tmp / "marker_p1"
+    pkgdir = r.p / protocol.PKG_REL
+    _plant(pkgdir / "json.py", m1)
+    rc, out, err = run_entry(r, "gates", "DESIGNATION")
+    res["v4_P1_planted_package_module_not_executed"] = not m1.exists()
+    res["v4_P1_planted_package_py_refused"] = rc != 0 and "unexpected .py" in (out + err)
+    _py("import sys; sys.path.insert(0, %r); import json" % str(pkgdir), tmp)
+    res["v4_P1_control_plant_runs_when_on_path"] = m1.exists()
+    (pkgdir / "json.py").unlink()
+    # P2: repository-root modules must not load in the key-holding process (the custodian's cwd is the repo root)
+    m2 = tmp / "marker_p2"
+    for name in ("argparse.py", "__future__.py"):
+        _plant(r.p / name, m2)
+    rc, out, err = run_entry(r, "gates", "DESIGNATION", cwd=r.p)
+    res["v4_P2_repo_root_modules_not_executed"] = rc == 0 and not m2.exists()
+    _py("import sys; sys.path.insert(0, %r); import argparse" % str(r.p), tmp)
+    res["v4_P2_control_plant_runs_when_on_path"] = m2.exists()
+    fake = types.ModuleType("zz_selftest_fake")
+    fake.__file__ = str(r.p / "argparse.py")
+    sys.modules["zz_selftest_fake"] = fake
+    try:
+        res["v4_P2_loaded_closure_reports_repo_modules"] = "argparse.py" in protocol.loaded_closure(r.p)
+    finally:
+        del sys.modules["zz_selftest_fake"]
+    for name in ("argparse.py", "__future__.py"):
+        (r.p / name).unlink()
+    # F-GOV: an unauthenticated later audit neither governs nor blocks
+    r.audit(2, verdict="FAIL", allow=False)
+    _git(r.p, "push", "-q", "origin", "main")
+    rc, out, err = run_entry(r, "gates", "DESIGNATION")
+    res["v4_GOV_unallowlisted_later_audit_ignored_by_entry"] = rc == 0 and "FIREWALL_AUDIT_2.json" in out
+    # F-GITENV: a local replace ref that swaps the governing audit's blob for a FAIL is ignored
+    rel = protocol.PROTO_REL + "/FIREWALL_AUDIT_1.json"
+    orig = _git(r.p, "rev-parse", "%s:%s" % (REF, rel))
+    forged = json.loads(_git(r.p, "show", "%s:%s" % (REF, rel)))
+    forged["verdict"] = "FAIL"
+    new = subprocess.run(["git", "-C", str(r.p), "hash-object", "-w", "--stdin"], input=json.dumps(forged),
+                         capture_output=True, text=True, check=True).stdout.strip()
+    _git(r.p, "replace", orig, new)
+    res["v4_GITENV_control_replace_ref_active"] = '"FAIL"' in _git(r.p, "show", "refs/remotes/origin/main:" + rel)
+    rc, out, err = run_entry(r, "gates", "DESIGNATION")
+    res["v4_GITENV_replace_ref_ignored"] = rc == 0 and '"gates": "PASSED"' in out
+    _git(r.p, "replace", "-d", orig)
+    # F-CWD (Windows): a git.exe in the custodian's current directory (the repo root) is never executed
+    if os.name == "nt":
+        shutil.copyfile(Path(os.environ.get("SystemRoot", "C:/Windows")) / "System32" / "hostname.exe", r.p / "git.exe")
+        ctl = _py("import subprocess; print(subprocess.run(['git', '--version'], capture_output=True, text=True).stdout)",
+                  r.p)
+        res["v4_CWD_control_cwd_git_exe_is_found"] = not ctl.stdout.startswith("git version")
+        rc, out, err = run_entry(r, "gates", "DESIGNATION", cwd=r.p)
+        res["v4_CWD_planted_git_exe_not_used"] = rc == 0 and '"gates": "PASSED"' in out
+        (r.p / "git.exe").unlink()
+    else:
+        res["v4_CWD_control_cwd_git_exe_is_found"] = res["v4_CWD_planted_git_exe_not_used"] = None
+    # firewall-check through entry (pre-audit binding); a planted key copy is found (positive control)
+    fc_args = ["firewall-check", "--secrets", str(ts["secrets"]), "--git-ref", "refs/remotes/origin/main", "--scan",
+               str(r.p)]
+    rc, out, err = run_entry(r, *fc_args)
+    res["v4_KH_firewall_check_through_entry_clean"] = rc == 0 and '"all_clean": true' in out
+    if not res["v4_KH_firewall_check_through_entry_clean"]:
+        res["v4_KH_firewall_check_through_entry_clean_reason"] = (out + err)[-300:]
+    pos = tmp / "fc_pos"
+    pos.mkdir()
+    (pos / "leak.txt").write_bytes(b"x " + (ts["secrets"] / "hidden_D2.key.hex").read_bytes().strip().upper() + b" y")
+    rc, out, err = run_entry(r, *(fc_args + [str(pos)]))
+    res["v4_KH_firewall_check_finds_planted_key"] = rc == 1 and '"all_clean": false' in out
+    saved = os.environ.pop("C3D2_ENTRY", None)
+    try:
+        res["v4_KH_firewall_check_refuses_without_entry"] = firewall_check.main(fc_args[1:]) == 3
+    finally:
+        if saved is not None:
+            os.environ["C3D2_ENTRY"] = saved
+    # F-FETCH: a failing fetch refuses (no silent stale origin/main)
+    _git(r.p, "remote", "set-url", "origin", str(tmp / "repos" / "no_such_origin.git"))
+    rc, out, err = run_entry(r, "gates", "DESIGNATION")
+    res["v4_FETCH_failed_fetch_refused"] = rc != 0 and "fetch" in (out + err)
+    _git(r.p, "remote", "set-url", "origin", str(bare))
+    # F-DEST, lock, ACL
+    cu = custody.Custody(repo=r.p, ref=REF, secrets_dir=ts["secrets"], log=tmp / "v4_custody.jsonl", host=HOST,
+                         allowlist=r.al, pins=r.pins(), verify_loaded=False)
+    try:
+        cu._dest_ok(Path("\\\\SPECTREX5\\share\\k"))
+        res["v4_DEST_unc_refused"] = False
+    except custody.CustodyRefusal:
+        res["v4_DEST_unc_refused"] = True
+    try:
+        cu._dest_ok(tmp / "local_dest")
+        res["v4_DEST_local_fixed_accepted"] = True
+    except custody.CustodyRefusal:
+        res["v4_DEST_local_fixed_accepted"] = False
+    lk = cu._lock()
+    try:
+        cu._lock()
+        res["v4_ONCE_concurrent_lock_refused"] = False
+    except custody.CustodyRefusal:
+        res["v4_ONCE_concurrent_lock_refused"] = True
+    lk.unlink()
+    f = tmp / "acl_test.hex"
+    f.write_text("00")
+    me = protocol.os_account()                             # v6: the account from the OS (the Linux node sets no USER)
+    try:
+        cu._restrict(f, me)
+        if os.name == "nt":
+            acl = subprocess.run(["icacls", str(f)], capture_output=True, text=True).stdout
+            res["v4_DEST_key_acl_restricted"] = not any(x in acl for x in ("Everyone", "BUILTIN\\Users",
+                                                                            "Authenticated Users"))
+        else:
+            res["v4_DEST_key_acl_restricted"] = (f.stat().st_mode & 0o077) == 0
+    except custody.CustodyRefusal:
+        res["v4_DEST_key_acl_restricted"] = False
+    # F-AST and F-NET
+    for tag, src in (("from_import_alias", "from numpy import fromfile as ff\ndef predict(s,t,seed):\n    return 0\n"),
+                     ("codecs_open", "from codecs import open as o\ndef predict(s,t,seed):\n    return 0\n"),
+                     ("logging", "import logging\ndef predict(s,t,seed):\n    return 0\n"),
+                     ("xmlrpc", "import xmlrpc.client\ndef predict(s,t,seed):\n    return 0\n")):
+        res["v4_AST_flags_" + tag] = bool(runner.audit_source(src, tag + ".py"))
+    res["v4_AST_clean_package_not_flagged"] = not runner.audit_source(DUMMY_PREDICTOR, "predictor.py")
+    net = _py("import os, sys; os.environ['COSMOS_BROKER'] = '1'; sys.path.insert(0, %r)\n"
+              "from prometheus.cosmos.c3_holdout_D2.runner import _disable_network\n"
+              "import socket\ns0 = socket.socket(); s0.close()\n_disable_network()\n"
+              "try:\n    socket.socket(); print('OPEN')\nexcept OSError:\n    print('BLOCKED')\n" % str(REAL_REPO), tmp)
+    res["v4_NET_child_socket_blocked"] = net.stdout.strip() == "BLOCKED"
+    return res
+
+
+def v5_checks(tmp, ts, pkg, sha):
+    """v5 (Odysseus v4 re-audit FAIL: B-1, B-2, S-1..S-6). Positive controls where an attack is demonstrated."""
+    res = {}
+    me = protocol.os_account()
+    # S-3: only python -I -B is accepted
+    r0, _b0 = entry_repo(tmp, ts, sha, name="v5pre", full=False)
+    rc, out, err = run_entry(r0, "gates", "SEAL", flags=())
+    res["v5_S3_plain_python_refused"] = rc != 0 and "python -I -B" in (out + err)
+    # B-2 / S-2: before any audit, the pre-audit tools run only when pinned by the custodian
+    rc, out, err = run_entry(r0, "allowlist", "show")
+    res["v5_B2_allowlist_refused_unpinned"] = rc != 0 and "not pinned" in (out + err)
+    rc, out, err = run_entry(r0, "pin-tools")
+    digest = json.loads(out)["digest"] if rc == 0 else None
+    rc2, out2, err2 = run_entry(r0, "pin-tools", "--confirm", "0" * 64)
+    res["v5_S2_pin_wrong_digest_refused"] = rc2 != 0 and "digest mismatch" in (out2 + err2)
+    rc3, out3, err3 = run_entry(r0, "pin-tools", "--confirm", str(digest))
+    rc, out, err = run_entry(r0, "allowlist", "show")
+    res["v5_B2_allowlist_through_entry_after_pins"] = rc3 == 0 and rc == 0 and '"PREAUDIT_TOOL"' in out \
+        and '"governing": "pre-audit:pinned@' in err
+    saved = os.environ.pop("C3D2_ENTRY", None)
+    try:
+        res["v5_B2_allowlist_refuses_without_entry"] = allowlist.main(["show"]) == 3
+    finally:
+        if saved is not None:
+            os.environ["C3D2_ENTRY"] = saved
+    # S-5: grafts refuse (entry and protocol)
+    gd = Path(_git(r0.p, "rev-parse", "--absolute-git-dir"))
+    (gd / "info").mkdir(exist_ok=True)
+    (gd / "info" / "grafts").write_text("")
+    rc, out, err = run_entry(r0, "allowlist", "show")
+    res["v5_S5_grafts_refused_by_entry"] = rc != 0 and "grafts" in (out + err)
+    try:
+        protocol.check_gates(r0.p, "SEAL", ref=REF, allowlist=False, pins=r0.pins(), host=HOST)
+        res["v5_S5_grafts_refused_by_protocol"] = False
+    except protocol.AmbiguousRef:
+        res["v5_S5_grafts_refused_by_protocol"] = True
+    (gd / "info" / "grafts").unlink()
+    # S-6: a git error is never "no record"
+    try:
+        protocol.once_record_present(r0.p, "refs/heads/no-such-ref", protocol.KEY_RELEASED_FILE)
+        res["v5_S6_once_record_git_error_raises"] = False
+    except protocol.GateRefusal:
+        res["v5_S6_once_record_git_error_raises"] = True
+    # S-2: once an allow-listed PASS audit governs, firewall-check is bound to IT (checked in v4_checks' repo)
+    # S-4: key-holding CLIs refuse any ref other than origin/main
+    saved = os.environ.get("C3D2_ENTRY")
+    os.environ["C3D2_ENTRY"] = "verified"
+    try:
+        res["v5_S4_custody_other_ref_refused"] = custody.main(["reveal", "--run", "x", "--dest", "y", "--ref",
+                                                                "refs/heads/x"]) == 3
+        res["v5_S4_runner_other_ref_refused"] = runner.main(["--package", "x", "--package-sha256", "0" * 64,
+                                                             "--runner-id", RID, "--preflight", "--gate-ref",
+                                                             "refs/heads/x"]) == 3
+    finally:
+        if saved is None:
+            os.environ.pop("C3D2_ENTRY", None)
+        else:
+            os.environ["C3D2_ENTRY"] = saved
+    # S-3 (key hygiene): only a single USER account; a failed release leaves nothing; dest must be fresh
+    res["v5_S3_group_accounts_refused"] = not protocol.is_single_user_account("Everyone") and \
+        not protocol.is_single_user_account("Users" if os.name == "nt" else "no-such-user-c3d2")
+    res["v5_S3_current_user_accepted"] = protocol.is_single_user_account(me)
+    g = GateRepo(tmp / "repos" / "v5rel", ts).full(sha)                 # designated account c3runner: no such user
+    cu = custody.Custody(repo=g.p, ref=REF, secrets_dir=ts["secrets"], log=tmp / "v5_custody.jsonl", host=HOST,
+                         allowlist=g.al, pins=g.pins(), verify_loaded=False, restrict_acl=True,
+                         require_preflight=False)
+    dest = tmp / "v5_rel"
+    try:
+        cu.release_key(RID, dest)
+        res["v5_S5_failed_release_leaves_nothing"] = False
+    except custody.CustodyRefusal:
+        res["v5_S5_failed_release_leaves_nothing"] = not dest.exists() and \
+            not (g.p / protocol.PROTO_REL / protocol.KEY_RELEASED_FILE).exists()
+    ex = tmp / "v5_exists"
+    ex.mkdir()
+    try:
+        cu.release_key(RID, ex)
+        res["v5_S5_existing_dest_refused"] = False
+    except custody.CustodyRefusal:
+        res["v5_S5_existing_dest_refused"] = not any(ex.iterdir())
+    # B-1: icacls by absolute system path; a planted icacls.exe in the cwd is not executed
+    if os.name == "nt":
+        ic = Path(custody.icacls_exe())
+        res["v5_B1_icacls_absolute_system_path"] = ic.is_absolute() and ic.name.lower() == "icacls.exe" and \
+            ic.parent.name.lower() == "system32"
+        plant = tmp / "v5_plant"
+        plant.mkdir()
+        shutil.copyfile(Path(os.environ.get("SystemRoot", "C:/Windows")) / "System32" / "hostname.exe",
+                        plant / "icacls.exe")
+        ctl = subprocess.run([sys.executable, "-c", "import subprocess; r = subprocess.run(['icacls', 'x'], "
+                              "capture_output=True, text=True); print(repr(r.stdout + r.stderr))"],
+                             capture_output=True, text=True, cwd=str(plant), env=_hostile_env())
+        # the real icacls always reports "... processed ..."; the planted (hostname.exe) one prints nothing of the kind
+        res["v5_B1_control_cwd_icacls_is_found"] = ctl.returncode == 0 and "processed" not in ctl.stdout.lower()
+        d = tmp / "v5_acl_dir"
+        d.mkdir()
+        old_cwd, old_env = os.getcwd(), {k: v for k, v in os.environ.items()
+                                         if k.upper() == "NODEFAULTCURRENTDIRECTORYINEXEPATH"}
+        for k in old_env:
+            del os.environ[k]
+        os.chdir(plant)
+        try:
+            cu._restrict(d, me)
+            acl = subprocess.run([str(ic), str(d)], capture_output=True, text=True).stdout
+            res["v5_B1_planted_icacls_not_used_acl_restricted"] = not any(
+                x in acl for x in ("Everyone", "BUILTIN\\Users", "Authenticated Users")) and me.lower() in acl.lower()
+        except custody.CustodyRefusal:
+            res["v5_B1_planted_icacls_not_used_acl_restricted"] = False
+        finally:
+            os.chdir(old_cwd)
+            os.environ.update(old_env)
+    else:
+        res["v5_B1_icacls_absolute_system_path"] = res["v5_B1_control_cwd_icacls_is_found"] = \
+            res["v5_B1_planted_icacls_not_used_acl_restricted"] = None
+    # S-1: the runner THROUGH entry.py -- the spawn child starts under the guard and the (same-account) isolation
+    # refusal comes BEFORE the key is read or the run directory exists
+    rr, _brr = entry_repo(tmp, ts, sha, name="v5run", account=me)
+    kd = tmp / "v5_runkey"
+    kd.mkdir()
+    shutil.copyfile(ts["secrets"] / "hidden_D2.key.hex", kd / "hidden_D2.key.hex")
+    base = ["runner", "--package", str(pkg), "--package-sha256", sha, "--runner-id", RID]
+    rc, out, err = run_entry(rr, *(base + ["--preflight"]))
+    res["v5_S1_preflight_child_starts_under_entry"] = rc == 3 and "ChildNotIsolated" in out and \
+        "PredictorChildFailed" not in out
+    if not res["v5_S1_preflight_child_starts_under_entry"]:
+        res["v5_S1_preflight_child_starts_under_entry_reason"] = (out + err)[-400:]
+    rc, out, err = run_entry(rr, *(base + ["--key", str(kd / "hidden_D2.key.hex")]))
+    run_dir = tmp / "receipts_v5run" / "runs" / ("run_" + RUN_NONCE)
+    res["v5_S1_run_refused_before_key_consumed"] = rc == 3 and "ChildNotIsolated" in out and \
+        (kd / "hidden_D2.key.hex").exists() and not (run_dir / "receipts.jsonl").exists()         and (run_dir / "package").is_dir()          # v7: staged (right path, non-vacuous), receipts = consumed: absent
+    if not res["v5_S1_run_refused_before_key_consumed"]:
+        res["v5_S1_run_refused_before_key_consumed_reason"] = (out + err)[-400:]
+    # in-process: the preflight refuses a readable key BEFORE reading it
+    g2 = GateRepo(tmp / "repos" / "v5pf", ts).full(sha)
+    kd2 = tmp / "v5_pfkey"
+    kd2.mkdir()
+    shutil.copyfile(ts["secrets"] / "hidden_D2.key.hex", kd2 / "k.hex")
+    outd = tmp / "runs" / "v5pf" / ("run_" + RUN_NONCE)
+    fr = runner.FirewallRun(ts["manifest"], ts["enc"], kd2 / "k.hex", pkg, sha, outd, runner_id=RID, gate_repo=g2.p,
+                            gate_ref=REF, certify_kwargs=SMALL, predict_timeout=300, account=ACCT, allowlist=g2.al,
+                            gate_pins=g2.pins(), verify_loaded=False, delete_key=True, secret_paths=(),
+                            write_probe_paths=())
+    try:
+        fr.open()
+        res["v5_S1_inprocess_preflight_refuses_before_key"] = False
+    except runner.ChildNotIsolated:
+        res["v5_S1_inprocess_preflight_refuses_before_key"] = (kd2 / "k.hex").exists() and \
+            not (outd / "receipts.jsonl").exists()
+    return res
+
+
+def v6_checks(tmp, ts, pkg, sha):
+    """v6 (Odysseus v5 BP-1): a refused package consumes nothing; custody releases only after a matching preflight."""
+    import io
+    import zipfile
+    res = {}
+    g = GateRepo(tmp / "repos" / "v6", ts).full(sha)
+    # a FLAGGED package with the committed hash cannot be built (the hash is committed), so use a wrong-hash package and
+    # a flagged package: both must be refused BEFORE the key is read, with the key copy intact and no run directory
+    bad = tmp / "v6_flagged.zip"
+    buf = io.BytesIO()
+    with zipfile.ZipFile(buf, "w") as z:
+        z.writestr("package.json", json.dumps({"format": runner.PACKAGE_FORMAT, "entry": "p.py", "adjudication": {},
+                                               "intervention": {"knob": "p_decay", "to": 1.0}}))
+        z.writestr("p.py", "import socket\ndef predict(s, t, seed):\n    return {}\n")
+    bad.write_bytes(buf.getvalue())
+    bad_sha = sealbox.sha256_file(bad)
+    gb = GateRepo(tmp / "repos" / "v6flag", ts).full(bad_sha)        # Cosmos committed the flagged package's hash
+    # wrong_hash: the committed hash, but a different file on disk; flagged: the committed file, which the AST audit refuses
+    for tag, repo_, zp, zsha in (("wrong_hash", g, bad, sha), ("flagged", gb, bad, bad_sha)):
+        kd = tmp / ("v6_key_" + tag)
+        kd.mkdir()
+        shutil.copyfile(ts["secrets"] / "hidden_D2.key.hex", kd / "k.hex")
+        outd = tmp / "runs" / ("v6_" + tag) / ("run_" + RUN_NONCE)
+        fr = runner.FirewallRun(ts["manifest"], ts["enc"], kd / "k.hex", zp, zsha, outd, runner_id=RID,
+                                gate_repo=repo_.p, gate_ref=REF, certify_kwargs=SMALL, predict_timeout=300,
+                                account=ACCT, allowlist=repo_.al, gate_pins=repo_.pins(), verify_loaded=False,
+                                delete_key=True, secret_paths=(), write_probe_paths=(), preflight=False)
+        try:
+            fr.open()
+            res["v6_BP1_%s_package_refused_before_key" % tag] = False
+        except (protocol.GateRefusal, runner.RunnerRefusal) as e:
+            want = runner.PackageHashMismatch if tag == "wrong_hash" else runner.PackageAuditRefusal
+            res["v6_BP1_%s_package_refused_before_key" % tag] = isinstance(e, want) and (kd / "k.hex").exists()                 and not outd.exists()
+            res["v6_BP1_%s_refusal" % tag + "_reason"] = type(e).__name__
+    # custody requires a passing preflight for THIS designation
+    pdir = tmp / "v6_preflights"
+    pdir.mkdir()
+    cu = custody.Custody(repo=g.p, ref=REF, secrets_dir=ts["secrets"], log=tmp / "v6_custody.jsonl", host=HOST,
+                         allowlist=g.al, pins=g.pins(), verify_loaded=False, restrict_acl=False, preflight_dir=pdir)
+    try:
+        cu.release_key(RID, tmp / "v6_rel_none")
+        res["v6_BP1_release_refused_without_preflight"] = False
+    except protocol.PreflightMissing:
+        res["v6_BP1_release_refused_without_preflight"] = not (tmp / "v6_rel_none").exists()
+    rec = {"format": protocol.PREFLIGHT_FORMAT, "verdict": "PASS", "run_nonce": RUN_NONCE,
+           "spec_id": ts["m"]["spec_id"], "package_sha256": "1" * 64, "runner_id": RID, "account": ACCT}
+    (pdir / ("PREFLIGHT_%s.json" % RUN_NONCE)).write_text(json.dumps(rec))
+    try:
+        cu.release_key(RID, tmp / "v6_rel_wrong")
+        res["v6_BP1_release_refused_mismatched_preflight"] = False
+    except protocol.PreflightMissing:
+        res["v6_BP1_release_refused_mismatched_preflight"] = not (tmp / "v6_rel_wrong").exists()
+    rec["package_sha256"] = sha
+    (pdir / ("PREFLIGHT_%s.json" % RUN_NONCE)).write_text(json.dumps(rec))
+    try:
+        res["v6_BP1_release_after_matching_preflight"] = cu.release_key(RID, tmp / "v6_rel_ok")["event"] == "KEY_RELEASED"
+    except (protocol.GateRefusal, custody.CustodyRefusal):
+        res["v6_BP1_release_after_matching_preflight"] = False
+    # SIDs exist on Windows only; elsewhere account names are case-sensitive, so the check does not apply (v7)
+    res["v6_account_sid_equality"] = protocol.same_account(protocol.os_account(), protocol.os_account().upper()) \
+        if os.name == "nt" else None
+    return res
+
+
+HOSTILE_PIPE_PREDICTOR = """
+def predict(system, task, seed):
+    c = system._HiddenWorldStub__conn
+    c.send_bytes(b"[]")
+    return {"class": "NONE", "intervention": {"class": "NONE"}}
+"""
+
+
+def v7_checks(tmp, ts, pkg, sha):
+    """v7 (Odysseus v6 FAIL): staging and every probe BEFORE the key; no package-initiated silent void; abort is sealed."""
+    import io
+    import zipfile
+    from prometheus.cosmos.c3_holdout_D2.selftest_D2 import make_package
+    res = {}
+
+    def zpkg(path, members):
+        buf = io.BytesIO()
+        with zipfile.ZipFile(buf, "w") as z:
+            z.writestr("package.json", json.dumps({"format": runner.PACKAGE_FORMAT, "entry": "p.py", "adjudication": {},
+                                                   "intervention": {"knob": "p_decay", "to": 1.0}}))
+            z.writestr("p.py", "def predict(s, t, seed):\n    return {}\n")
+            for n in members:
+                z.writestr(n, "x = 1\n")
+        path.write_bytes(buf.getvalue())
+        return sealbox.sha256_file(path)
+    for tag, members in (("case_collision", ["P.py"]), ("reserved_name", ["con.py"]),
+                         ("file_dir_collision", ["q.py", "q.py/r.py"]), ("bad_char", ["a b.py"])):
+        zp = tmp / ("v7_%s.zip" % tag)
+        zsha = zpkg(zp, members)
+        try:
+            runner.load_package(zp, zsha, None)
+            res["v7_1_unstageable_name_refused_%s" % tag] = False
+        except runner.PackageInvalid:
+            res["v7_1_unstageable_name_refused_%s" % tag] = True
+    # staging happens before the key: a blocked staging path refuses with the key intact and no receipts
+    g = GateRepo(tmp / "repos" / "v7", ts).full(sha)
+
+    def fr_for(name, key_present=True, **kw):
+        kd = tmp / ("v7_key_" + name)
+        kd.mkdir()
+        if key_present:
+            shutil.copyfile(ts["secrets"] / "hidden_D2.key.hex", kd / "k.hex")
+        outd = tmp / "runs" / ("v7_" + name) / ("run_" + RUN_NONCE)
+        outd.parent.mkdir(parents=True)
+        base = dict(runner_id=RID, gate_repo=g.p, gate_ref=REF, certify_kwargs=SMALL, predict_timeout=300, account=ACCT,
+                    allowlist=g.al, gate_pins=g.pins(), verify_loaded=False, delete_key=True, secret_paths=(),
+                    write_probe_paths=(), preflight=False)
+        base.update(kw)
+        return runner.FirewallRun(ts["manifest"], ts["enc"], kd / "k.hex", kw.pop("pkg_path", pkg),
+                                  kw.pop("pkg_sha", sha), outd, **{k: v for k, v in base.items()
+                                                                   if k not in ("pkg_path", "pkg_sha")}), kd, outd
+    fr, kd, outd = fr_for("stageblock")
+    outd.mkdir()
+    (outd / "package").write_text("a file where the staging directory must go")
+    try:
+        fr.open()
+        res["v7_1_staging_failure_before_key"] = False
+    except runner.RunnerRefusal:
+        res["v7_1_staging_failure_before_key"] = (kd / "k.hex").exists() and not (outd / "receipts.jsonl").exists()
+    # the receipts STAND-IN is probed before the key (same-account child: it is writable -> refused, nothing consumed)
+    fr, kd, outd = fr_for("standin", key_present=False, preflight=True, preflight_mkfile_dirs=())
+    try:
+        fr.open()
+        res["v7_1_receipts_standin_probed_before_key"] = False
+    except runner.ChildNotIsolated as e:
+        res["v7_1_receipts_standin_probed_before_key"] = "receipts.preflight" in str(e) and \
+            not (outd / "receipts.jsonl").exists()
+    # a package that writes garbage into the leaked pipe: per-world PROTOCOL_ERROR, the run still closes and seals
+    hp = tmp / "v7_hostile.zip"
+    hsha = make_package(hp, HOSTILE_PIPE_PREDICTOR)
+    res["v7_2_private_attribute_flagged"] = any("private attribute" in f for f in
+                                                runner.audit_source(HOSTILE_PIPE_PREDICTOR, "p.py"))
+    gh = GateRepo(tmp / "repos" / "v7h", ts).full(hsha)
+    kdh = tmp / "v7_key_hostile"
+    kdh.mkdir()
+    shutil.copyfile(ts["secrets"] / "hidden_D2.key.hex", kdh / "k.hex")
+    outh = tmp / "runs" / "v7_hostile" / ("run_" + RUN_NONCE)
+    frh = runner.FirewallRun(ts["manifest"], ts["enc"], kdh / "k.hex", hp, hsha, outh, runner_id=RID, gate_repo=gh.p,
+                             gate_ref=REF, certify_kwargs=SMALL, predict_timeout=300, account=ACCT, allowlist=gh.al,
+                             gate_pins=gh.pins(), verify_loaded=False, delete_key=True, secret_paths=(),
+                             write_probe_paths=(), preflight=False, allow_flagged=True)
+    rh = frh.run_all()
+    preds = [r["body"]["status"] for r in frh.receipts.records if r["kind"] == "prediction"]
+    res["v7_2_pipe_garbage_is_per_world_protocol_error_and_run_closes"] = rh.get("status") == "CLOSED" and \
+        bool(preds) and all(x == "PROTOCOL_ERROR" for x in preds)
+    # any exception after the consumption marker -> terminal abort, RESULT ABORTED, and custody can result-seal it
+    fr, kd, outd = fr_for("abort")
+
+    def boom():
+        raise MemoryError("simulated")
+    fr.certify_all = boom
+    ra = fr.run_all()
+    res["v7_2_exception_after_open_is_sealed_abort"] = ra.get("status") == "ABORTED" and \
+        fr.receipts.records[-1]["kind"] == "abort" and json.loads((outd / "RESULT.json").read_text())["status"] == "ABORTED"
+    cu = custody.Custody(repo=g.p, ref=REF, secrets_dir=ts["secrets"], log=tmp / "v7_custody.jsonl", host=HOST,
+                         allowlist=g.al, pins=g.pins(), verify_loaded=False, restrict_acl=False, require_preflight=False)
+    try:
+        rec = cu.result_seal_record(outd, tmp / "v7_RESULT_SEAL.json")
+        res["v7_2_aborted_run_result_sealable"] = rec.get("terminal") == "abort"
+    except (protocol.GateRefusal, custody.CustodyRefusal):
+        res["v7_2_aborted_run_result_sealable"] = False
+    return res
+
+
+PIPE_CLOSER_PREDICTOR = """
+def predict(system, task, seed):
+    system._HiddenWorldStub__conn.send_bytes(b'["done", -1, {}]')
+    system._HiddenWorldStub__conn.close()
+    return {"class": "NONE", "intervention": {"class": "NONE"}}
+"""
+
+
+def v8_checks(tmp, ts, pkg, sha):
+    """v8 (Odysseus v7 V7-1, V7-A, V7-B): atomic consumption marker; read-probed stand-in; closed pipe = per-world."""
+    from prometheus.cosmos.c3_holdout_D2.selftest_D2 import make_package
+    res = {}
+    g = GateRepo(tmp / "repos" / "v8", ts).full(sha)
+
+    def mk(name, zp=pkg, zsha=sha, repo=None, **kw):
+        repo = repo or g
+        kd = tmp / ("v8_key_" + name)
+        kd.mkdir()
+        shutil.copyfile(ts["secrets"] / "hidden_D2.key.hex", kd / "k.hex")
+        outd = tmp / "runs" / ("v8_" + name) / ("run_" + RUN_NONCE)
+        outd.parent.mkdir(parents=True)
+        base = dict(runner_id=RID, gate_repo=repo.p, gate_ref=REF, certify_kwargs=SMALL, predict_timeout=300,
+                    account=ACCT, allowlist=repo.al, gate_pins=repo.pins(), verify_loaded=False, delete_key=True,
+                    secret_paths=(), write_probe_paths=(), preflight=False)
+        base.update(kw)
+        return runner.FirewallRun(ts["manifest"], ts["enc"], kd / "k.hex", zp, zsha, outd, **base), kd, outd
+    # V7-1: a failure while the consumption marker is being written leaves NO receipts and the key intact
+    fr, kd, outd = mk("atomic")
+    fr.prepare()
+    real = runner.Receipts.create_with_open
+
+    def failing(path, genesis, body):
+        raise OSError("simulated failure writing the first record")
+    runner.Receipts.create_with_open = staticmethod(failing)
+    try:
+        try:
+            fr.open()
+            res["v8_V71_marker_write_failure_consumes_nothing"] = False
+        except OSError:
+            res["v8_V71_marker_write_failure_consumes_nothing"] = (kd / "k.hex").exists() and \
+                not (outd / "receipts.jsonl").exists()
+    finally:
+        runner.Receipts.create_with_open = real
+    # ... and a successful open always starts with a verifiable open record
+    fr, kd, outd = mk("atomic_ok")
+    fr.open()
+    ok, recs, _why = runner.verify_receipts(outd / "receipts.jsonl")
+    res["v8_V71_chain_starts_with_open_record"] = ok and len(recs) == 1 and recs[0]["kind"] == "open"
+    fr.abort(RuntimeError("x"))
+    ok, recs, _why = runner.verify_receipts(outd / "receipts.jsonl")
+    res["v8_V71_abort_right_after_open_verifies"] = ok and [r["kind"] for r in recs] == ["open", "abort"]
+    # V7-A: the stand-in is READ-probed before the key (a path readable but not writable must still refuse)
+    fr, kd, outd = mk("standin_read", preflight=True, preflight_mkfile_dirs=())
+    (kd / "k.hex").unlink()
+    try:
+        fr.prepare()
+        res["v8_V7A_standin_read_probed"] = False
+    except runner.ChildNotIsolated as e:
+        res["v8_V7A_standin_read_probed"] = str(e).count("receipts.preflight") >= 2     # read AND append listed
+    # V7-B: a package that closes the pipe mid-run -> that world's PREDICTOR_CRASH / PROTOCOL_ERROR; the run CLOSES
+    hp = tmp / "v8_closer.zip"
+    hsha = make_package(hp, PIPE_CLOSER_PREDICTOR)
+    gh = GateRepo(tmp / "repos" / "v8h", ts).full(hsha)
+    fr, kd, outd = mk("closer", zp=hp, zsha=hsha, repo=gh, allow_flagged=True)
+    rr = fr.run_all()
+    st = [r["body"]["status"] for r in fr.receipts.records if r["kind"] == "prediction"]
+    res["v8_V7B_pipe_close_is_per_world_and_run_closes"] = rr.get("status") == "CLOSED" and bool(st) and \
+        all(x in ("PREDICTOR_CRASH", "PROTOCOL_ERROR") for x in st)
+    # attribution evidence in an abort
+    fr, kd, outd = mk("attr")
+
+    def boom():
+        raise RuntimeError("simulated")
+    fr.certify_all = boom
+    fr.run_all()
+    ab = fr.receipts.records[-1]["body"]
+    res["v8_abort_carries_attribution_evidence"] = all(k in ab for k in ("current_world", "in_predictor_io",
+                                                                          "child_exitcode"))
+    res["v8_V7D_attrgetter_flagged"] = bool(runner.audit_source(
+        "import operator\ndef predict(s, t, seed):\n    return operator.attrgetter('x')(s)\n", "p.py"))
+    return res
+
+
+def v9_checks(tmp, ts, pkg, sha):
+    """v9 (Odysseus v8): the key is proven before the marker; an interrupted write stays sealable; truthful attribution."""
+    res = {}
+    g = GateRepo(tmp / "repos" / "v9", ts).full(sha)
+
+    def mk(name, key_bytes=None, **kw):
+        kd = tmp / ("v9_key_" + name)
+        kd.mkdir()
+        if key_bytes is None:
+            shutil.copyfile(ts["secrets"] / "hidden_D2.key.hex", kd / "k.hex")
+        else:
+            (kd / "k.hex").write_text(key_bytes.hex() + "\n")
+        outd = tmp / "runs" / ("v9_" + name) / ("run_" + RUN_NONCE)
+        outd.parent.mkdir(parents=True)
+        base = dict(runner_id=RID, gate_repo=g.p, gate_ref=REF, certify_kwargs=SMALL, predict_timeout=300,
+                    account=ACCT, allowlist=g.al, gate_pins=g.pins(), verify_loaded=False, delete_key=True,
+                    secret_paths=(), write_probe_paths=(), preflight=False)
+        base.update(kw)
+        return runner.FirewallRun(ts["manifest"], ts["enc"], kd / "k.hex", pkg, sha, outd, **base), kd, outd
+    # item 1: a well-formed WRONG key refuses with nothing consumed (runner) and nothing released (custody)
+    fr, kd, outd = mk("wrongkey", key_bytes=bytes(range(32)))
+    try:
+        fr.open()
+        res["v9_1_wrong_key_refused_before_marker"] = False
+    except runner.HiddenSetMismatch:
+        res["v9_1_wrong_key_refused_before_marker"] = (kd / "k.hex").exists() and not (outd / "receipts.jsonl").exists()
+    wsec = tmp / "v9_wrong_secrets"
+    shutil.copytree(ts["secrets"], wsec)
+    (wsec / "hidden_D2.key.hex").write_text(bytes(range(32)).hex() + "\n")
+    cu = custody.Custody(repo=g.p, ref=REF, secrets_dir=wsec, log=tmp / "v9_custody.jsonl", host=HOST, allowlist=g.al,
+                         pins=g.pins(), verify_loaded=False, restrict_acl=False, require_preflight=False)
+    try:
+        cu.release_key(RID, tmp / "v9_rel_wrong")
+        res["v9_1_custody_test_decrypts_before_release"] = False
+    except custody.CustodyRefusal:
+        res["v9_1_custody_test_decrypts_before_release"] = not (tmp / "v9_rel_wrong").exists()
+    # item 2: an fsync failure while writing a later record -> the torn record is rolled back, the abort seals
+    fr, kd, outd = mk("fsync")
+    real_fsync = runner.os.fsync
+    calls = {"n": 0}
+
+    def flaky(fd):
+        calls["n"] += 1
+        if calls["n"] == 3:
+            raise OSError("simulated fsync failure")
+        return real_fsync(fd)
+    runner.os.fsync = flaky
+    try:
+        ra = fr.run_all()
+    finally:
+        runner.os.fsync = real_fsync
+    ok, recs, _w = runner.verify_receipts(outd / "receipts.jsonl")
+    res["v9_2_interrupted_write_rolled_back_and_sealable"] = ra.get("status") == "ABORTED" and ok and \
+        recs[-1]["kind"] == "abort"
+    try:
+        cu2 = custody.Custody(repo=g.p, ref=REF, secrets_dir=ts["secrets"], log=tmp / "v9_c2.jsonl", host=HOST,
+                              allowlist=g.al, pins=g.pins(), verify_loaded=False, restrict_acl=False,
+                              require_preflight=False)
+        res["v9_2_torn_run_result_sealable"] = cu2.result_seal_record(outd, tmp / "v9_RS.json").get("terminal") == "abort"
+    except (protocol.GateRefusal, custody.CustodyRefusal):
+        res["v9_2_torn_run_result_sealable"] = False
+    # item 3: the real child exit code; a (re)start failure is labelled with the world being started
+    fr, kd, outd = mk("exitcode")
+
+    def boom():
+        raise RuntimeError("simulated")
+    fr.certify_all = boom
+    fr.run_all()
+    res["v9_3_child_exitcode_recorded"] = fr.receipts.records[-1]["body"].get("child_exitcode") is not None
+    fr, kd, outd = mk("restart")
+    fr.prepare()
+    fr.open()
+
+    def refuse_start():
+        raise runner.ChildNotIsolated("simulated restart probe failure")
+    fr._start_worker = refuse_start
+    try:
+        fr.predict_all()
+    except runner.ChildNotIsolated as e:
+        fr.abort(e)
+    ab = fr.receipts.records[-1]["body"]
+    # v10 (Odysseus v9 S-A/A3-1): the FIRST start failed before any world was delivered -> pre-exposure labels
+    res["v10_first_start_failure_labelled_pre_exposure"] = ab.get("current_world") == 0 and         ab.get("in_predictor_io") is False and ab.get("exposed") is False
+    # V8-6: the child must be able to read the staged package, checked before the key
+    fr, kd, outd = mk("pkgread", preflight=True, preflight_mkfile_dirs=())
+    real_stage = fr._stage_package
+
+    def stage_elsewhere():
+        d = real_stage()
+        return dict(d, dir=str(tmp / "v9_no_such_pkg_dir"))
+    fr._stage_package = stage_elsewhere
+    try:
+        fr.prepare()
+        res["v9_V86_unreadable_package_refused_pre_key"] = False
+    except runner.PredictorChildFailed:
+        res["v9_V86_unreadable_package_refused_pre_key"] = (kd / "k.hex").exists() and \
+            not (outd / "receipts.jsonl").exists()
+    return res
+
+
+def v10_checks(tmp, ts, pkg, sha):
+    """v10 (Odysseus v9 replicas): truthful labels after exposure; custodian seal-terminal; exclusive claim; lock freed."""
+    res = {}
+    g = GateRepo(tmp / "repos" / "v10", ts).full(sha)
+
+    def mk(name, **kw):
+        kd = tmp / ("v10_key_" + name)
+        kd.mkdir()
+        shutil.copyfile(ts["secrets"] / "hidden_D2.key.hex", kd / "k.hex")
+        outd = tmp / "runs" / ("v10_" + name) / ("run_" + RUN_NONCE)
+        outd.parent.mkdir(parents=True)
+        base = dict(runner_id=RID, gate_repo=g.p, gate_ref=REF, certify_kwargs=SMALL, predict_timeout=300,
+                    account=ACCT, allowlist=g.al, gate_pins=g.pins(), verify_loaded=False, delete_key=True,
+                    secret_paths=(), write_probe_paths=(), preflight=False)
+        base.update(kw)
+        return runner.FirewallRun(ts["manifest"], ts["enc"], kd / "k.hex", pkg, sha, outd, **base), kd, outd
+    # a restart failure AFTER a world was delivered is labelled post-exposure with the new world
+    fr, kd, outd = mk("restart2")
+    fr.open()
+    fr._predict_one(0, fr.predictor_seed(0))
+    fr._stop_worker(kill=True)
+
+    def refuse_start():
+        raise runner.ChildNotIsolated("simulated restart probe failure")
+    fr._start_worker = refuse_start
+    try:
+        fr._predict_one(1, fr.predictor_seed(1))
+        res["v10_restart_after_exposure_labelled"] = False
+    except runner.ChildNotIsolated as e:
+        fr.abort(e)
+        ab = fr.receipts.records[-1]["body"]
+        res["v10_restart_after_exposure_labelled"] = ab.get("exposed") is True and ab.get("current_world") == 1 and \
+            ab.get("in_predictor_io") is True and ab.get("child_world") == 0 and ab.get("child_exitcode") is not None
+    # seal-terminal (a): a torn tail and no terminal record -> truncated, custodian abort, verifies, custody seals
+    fr, kd, outd = mk("torn")
+    fr.open()
+    fr._release_lock()                                     # the runner is gone (v11: seal-terminal needs its lock)
+    with open(outd / "receipts.jsonl", "ab") as f:
+        f.write(b'{"seq": 1, "kind": "predic')                      # a torn, unterminated write
+    cu = custody.Custody(repo=g.p, ref=REF, secrets_dir=ts["secrets"], log=tmp / "v10_custody.jsonl", host=HOST,
+                         allowlist=g.al, pins=g.pins(), verify_loaded=False, restrict_acl=False, require_preflight=False)
+    st = cu.seal_terminal(outd)
+    ok, recs, _w = runner.verify_receipts(outd / "receipts.jsonl")
+    try:
+        rs = cu.result_seal_record(outd, tmp / "v10_RS_torn.json")
+    except (protocol.GateRefusal, custody.CustodyRefusal):
+        rs = {}
+    res["v10_seal_terminal_torn_unterminated_run"] = st["custodian_abort_added"] and st["bytes_truncated"] > 0 and \
+        ok and recs[-1]["kind"] == "abort" and rs.get("terminal") == "abort"
+    # seal-terminal (b): a CLOSED run whose RESULT.json was lost -> rebuilt byte-identically from the receipts
+    fr, kd, outd = mk("lostresult")
+    r1 = fr.run_all()
+    before = (outd / "RESULT.json").read_bytes()
+    (outd / "RESULT.json").unlink()
+    st = cu.seal_terminal(outd)
+    res["v10_seal_terminal_rebuilds_result"] = r1.get("status") == "CLOSED" and not st["custodian_abort_added"] and \
+        (outd / "RESULT.json").read_bytes() == before
+    # seal-terminal refuses another designation's directory
+    other = tmp / "runs" / "v10_other" / "run_other"
+    other.mkdir(parents=True)
+    try:
+        cu.seal_terminal(other)
+        res["v10_seal_terminal_refuses_other_run_dir"] = False
+    except custody.CustodyRefusal:
+        res["v10_seal_terminal_refuses_other_run_dir"] = True
+    # B-3: an existing claim refuses a second consumption marker
+    fr, kd, outd = mk("claim")
+    fr.prepare()
+    (outd / "receipts.jsonl.claim").write_text("")
+    try:
+        fr.open()
+        res["v10_B3_concurrent_claim_refused"] = False
+    except FileExistsError:
+        res["v10_B3_concurrent_claim_refused"] = (kd / "k.hex").exists() and not (outd / "receipts.jsonl").exists()
+    # a malformed custody key frees the custody lock
+    msec = tmp / "v10_bad_secrets"
+    shutil.copytree(ts["secrets"], msec)
+    (msec / "hidden_D2.key.hex").write_text("zz\n")
+    cm = custody.Custody(repo=g.p, ref=REF, secrets_dir=msec, log=tmp / "v10_lock" / "custody.jsonl", host=HOST,
+                         allowlist=g.al, pins=g.pins(), verify_loaded=False, restrict_acl=False, require_preflight=False)
+    try:
+        cm.release_key(RID, tmp / "v10_rel_bad")
+        res["v10_malformed_key_frees_lock"] = False
+    except Exception:                                                        # noqa: BLE001
+        res["v10_malformed_key_frees_lock"] = not (tmp / "v10_lock" / "custody.lock").exists()
+    return res
+
+
+def v11_checks(tmp, ts, pkg, sha):
+    """v11 (Odysseus v10 / Harmonia J): deliver receipts; bounded sends; seal-terminal lock, binding, newline."""
+    import multiprocessing as _mp
+    import time
+    res = {}
+    g = GateRepo(tmp / "repos" / "v11", ts).full(sha)
+
+    def mk(name, **kw):
+        kd = tmp / ("v11_key_" + name)
+        kd.mkdir()
+        shutil.copyfile(ts["secrets"] / "hidden_D2.key.hex", kd / "k.hex")
+        outd = tmp / "runs" / ("v11_" + name) / ("run_" + RUN_NONCE)
+        outd.parent.mkdir(parents=True)
+        base = dict(runner_id=RID, gate_repo=g.p, gate_ref=REF, certify_kwargs=SMALL, predict_timeout=300,
+                    account=ACCT, allowlist=g.al, gate_pins=g.pins(), verify_loaded=False, delete_key=True,
+                    secret_paths=(), write_probe_paths=(), preflight=False)
+        base.update(kw)
+        return runner.FirewallRun(ts["manifest"], ts["enc"], kd / "k.hex", pkg, sha, outd, **base), kd, outd
+    cu = custody.Custody(repo=g.p, ref=REF, secrets_dir=ts["secrets"], log=tmp / "v11_custody.jsonl", host=HOST,
+                         allowlist=g.al, pins=g.pins(), verify_loaded=False, restrict_acl=False, require_preflight=False)
+    # deliver receipts: one per world, each BEFORE that world's prediction
+    fr, kd, outd = mk("deliver")
+    r = fr.run_all()
+    kinds = [(x["kind"], x["body"].get("i")) for x in fr.receipts.records]
+    ok = r.get("status") == "CLOSED"
+    for i in range(fr.N):
+        ok = ok and ("deliver", i) in kinds and ("prediction", i) in kinds and \
+            kinds.index(("deliver", i)) < kinds.index(("prediction", i))
+    res["v11_deliver_receipt_before_each_world"] = ok
+    # a closed run whose last record lost its newline: seal-terminal KEEPS the verifying close (Addendum J)
+    raw = (outd / "receipts.jsonl").read_bytes()
+    (outd / "receipts.jsonl").write_bytes(raw.rstrip(b"\n"))
+    st = cu.seal_terminal(outd)
+    ok2, recs, _w = runner.verify_receipts(outd / "receipts.jsonl")
+    res["v11_seal_terminal_keeps_close_without_newline"] = st["sealed_terminal"] == "close" and \
+        not st["custodian_abort_added"] and ok2 and recs[-1]["kind"] == "close"
+    # bounded sends: a child that never reads cannot stall the parent
+    a, b = _mp.Pipe(duplex=True)
+    fr2, kd2, outd2 = mk("bounded")
+    fr2._conn, fr2._proc = a, None
+    t0 = time.time()
+    sent = fr2._send_bounded(["x" * (8 << 20)], 1.0)
+    res["v11_send_has_deadline"] = sent is False and time.time() - t0 < 15
+    b.close()
+    # seal-terminal refuses while a runner holds the run lock, and is bound to the designation's open record
+    fr3, kd3, outd3 = mk("live")
+    fr3.open()
+    try:
+        cu.seal_terminal(outd3)
+        res["v11_seal_terminal_refused_while_runner_live"] = False
+    except runner.ChainBroken:                                             # re-raised by custody._refuse
+        res["v11_seal_terminal_refused_while_runner_live"] = not any(
+            x["kind"] == "abort" for x in runner.verify_receipts(outd3 / "receipts.jsonl")[1])
+    fr3._release_lock()
+    try:
+        runner.seal_terminal(outd3, expect={"run_nonce": "other", "spec_id": ts["m"]["spec_id"],
+                                             "package_sha256": sha})
+        res["v11_seal_terminal_bound_to_open_record"] = False
+    except runner.ChainBroken:
+        res["v11_seal_terminal_bound_to_open_record"] = True
+    st3 = cu.seal_terminal(outd3)
+    res["v11_seal_terminal_after_runner_gone"] = st3["custodian_abort_added"] is True
+    return res
+
+
+def v13_checks(tmp, ts, pkg, sha):
+    """v13 (Odysseus v12 V12-1/V12-3/V12-4): the ANCHOR governs. A deleted, edited or force-pushed-away anchored FAIL audit
+    is REFUSED (never lets the earlier PASS govern), in protocol.check_gates and in entry.py."""
+    res = {}
+    a2 = protocol.PROTO_REL + "/FIREWALL_AUDIT_2.json"
+
+    def with_anchored_fail(name):
+        r = GateRepo(tmp / "repos" / name, ts).full(sha)
+        r.audit(2, verdict="FAIL")                                  # anchored (allow=True)
+        return r, _git(r.p, "log", "-1", "--format=%H", REF, "--", a2)
+    # control: the anchored FAIL governs
+    r, c2 = with_anchored_fail("v13ctl")
+    res["v13_control_anchored_fail_governs"] = gates(r) == "AuditNotPass"
+    # deleted
+    (r.p / a2).unlink()
+    r.commit("delete the later FAIL audit")
+    res["v13_deleted_anchored_fail_refused"] = gates(r) == "AnchorMismatch"
+    # edited
+    r, c2 = with_anchored_fail("v13edit")
+    (r.p / a2).write_text((r.p / a2).read_text(encoding="utf-8").replace('"FAIL"', '"PASS"'), encoding="utf-8",
+                          newline="\n")
+    r.commit("edit the later FAIL audit")
+    res["v13_edited_anchored_fail_refused"] = gates(r) == "AnchorMismatch"
+    # force-pushed away (history rewound to before the FAIL audit)
+    r, c2 = with_anchored_fail("v13fp")
+    _git(r.p, "reset", "-q", "--hard", c2 + "^")
+    res["v13_rolled_back_anchored_fail_refused"] = gates(r) == "AnchorMismatch"
+    # defect control: without the anchor-state check the rollback WOULD let the earlier PASS govern
+    saved = protocol.verify_anchor_state
+    protocol.verify_anchor_state = lambda repo, ref_commit, allowlist: 0
+    try:
+        res["v13_defect_control_rollback_passes_without_check"] = gates(r) == "PASSED"
+    finally:
+        protocol.verify_anchor_state = saved
+    # entry.py: the same three cases through a real origin
+    for tag in ("del", "edit", "fp"):
+        e, bare = entry_repo(tmp, ts, sha, name="v13e" + tag)
+        e.audit(2, verdict="FAIL")
+        c2 = _git(e.p, "log", "-1", "--format=%H", REF, "--", a2)
+        _git(e.p, "push", "-q", "origin", "main")
+        if tag == "del":
+            (e.p / a2).unlink()
+            e.commit("delete")
+            _git(e.p, "push", "-q", "origin", "main")
+        elif tag == "edit":
+            (e.p / a2).write_text((e.p / a2).read_text(encoding="utf-8").replace('"FAIL"', '"PASS"'),
+                                  encoding="utf-8", newline="\n")
+            e.commit("edit")
+            _git(e.p, "push", "-q", "origin", "main")
+        else:
+            _git(e.p, "reset", "-q", "--hard", c2 + "^")
+            _git(e.p, "push", "-q", "-f", "origin", "main")
+        rc, out, err = run_entry(e, "gates", "DESIGNATION")
+        res["v13_entry_%s_anchored_fail_refused" % tag] = rc != 0 and "anchored AUDIT record" in (out + err)
+    # V12-3: an anchored KEY_RELEASED record refuses a second release even after git forgets it
+    r = GateRepo(tmp / "repos" / "v13kr", ts).full(sha)
+    r.put(protocol.KEY_RELEASED_FILE, {"event": "KEY_RELEASED", "spec_id": ts["m"]["spec_id"]})
+    r.allow("KEY_RELEASED", protocol.KEY_RELEASED_FILE)
+    res["v13_key_released_anchored"] = protocol.anchored_role(r.al, "KEY_RELEASED")
+    cu = custody.Custody(repo=r.p, ref=REF, secrets_dir=ts["secrets"], log=tmp / "v13_custody.jsonl", host=HOST,
+                         allowlist=r.al, pins=r.pins(), verify_loaded=False, restrict_acl=False, require_preflight=False)
+    try:
+        cu.release_key(RID, tmp / "v13_rel")
+        res["v13_anchored_key_release_refuses_second_release"] = False
+    except (custody.CustodyRefusal, protocol.GateRefusal):
+        res["v13_anchored_key_release_refuses_second_release"] = not (tmp / "v13_rel").exists()
+    # V12-4: allowlist add with the author's expected commit / sha256
+    r = GateRepo(tmp / "repos" / "v13exp", ts)
+    r.seal(); r.audit(allow=False)
+    rel = protocol.PROTO_REL + "/FIREWALL_AUDIT_1.json"
+    c = protocol._added_once(r.p, REF, rel, protocol.AuditMissing)
+    h = protocol.record_sha(subprocess.run(["git", "-C", str(r.p), "show", "%s:%s" % (REF, rel)], capture_output=True,
+                                           check=True).stdout)
+    allowlist.REPO = r.p
+    anc = tmp / "v13_anchor.jsonl"
+    try:
+        for tag, kw in (("wrong_commit", {"expect_commit": "e" * 40, "expect_sha256": h}),
+                        ("wrong_sha", {"expect_commit": c, "expect_sha256": "0" * 64})):
+            try:
+                allowlist.add("AUDIT", "FIREWALL_AUDIT_1.json", REF, path=anc, **kw)
+                res["v13_expect_%s_refused" % tag] = False
+            except SystemExit:
+                res["v13_expect_%s_refused" % tag] = True
+        res["v13_expect_matching_anchored"] = allowlist.add("AUDIT", "FIREWALL_AUDIT_1.json", REF, path=anc,
+                                                            expect_commit=c, expect_sha256=h)["commit"] == c
+    finally:
+        allowlist.REPO = REAL_REPO
+    # concurrent appends are serialised
+    lock = anc.with_name(anc.name + ".lock")
+    lock.write_text("")
+    try:
+        protocol.anchor_append(anc, {"role": "COMMITMENT", "record": "x", "path": "x", "sha256": "1" * 64, "commit": c})
+        res["v13_concurrent_append_refused"] = False
+    except protocol.NotAllowListed:
+        res["v13_concurrent_append_refused"] = True
+    lock.unlink()
     return res
 
 
@@ -484,13 +1582,32 @@ def run() -> dict:
         en = entry_checks()
         al = allowlist_checks(tmp, ts, sha)
         e2e = end_to_end(tmp, ts, pkg, sha)
+        v3 = v3_checks(tmp, ts, pkg, sha)
+        v4 = v4_checks(tmp, ts, sha)
+        v5 = v5_checks(tmp, ts, pkg, sha)
+        v6 = v6_checks(tmp, ts, pkg, sha)
+        v7 = v7_checks(tmp, ts, pkg, sha)
+        v8 = v8_checks(tmp, ts, pkg, sha)
+        v9 = v9_checks(tmp, ts, pkg, sha)
+        v10 = v10_checks(tmp, ts, pkg, sha)
+        v11 = v11_checks(tmp, ts, pkg, sha)
+        v13 = v13_checks(tmp, ts, pkg, sha)
         dcs = defect_controls(tmp, ts, pkg, sha, f4_repo)
+        import gc
+        gc.collect()                                      # v11: close run.lock handles held by finished test runners
     checks = {"gate[%s]" % k: v["ok"] for k, v in gate_cases.items()}
-    for grp in (closure, pk, en, al):
+    for grp in (closure, pk, en, al, {k: v for k, v in v3.items() if not k.endswith("_reason")}):
         checks.update(grp)
+    not_applicable = sorted(k for k, v in {**v4, **v5, **v6, **v7, **v8, **v9, **v10, **v11, **v13}.items()
+                            if v is None)
+    checks.update({k: v for k, v in {**v4, **v5, **v6, **v7, **v8, **v9, **v10, **v11, **v13}.items()
+                   if v is not None and not k.endswith("_reason")})
     checks.update({"e2e[%s]" % k: bool(v) for k, v in e2e.items()})
     res = {"checks": checks, "gate_outcomes": {k: v["got"] for k, v in gate_cases.items()},
            "closure_extras": closure_raw, "defect_controls_must_be_true": dcs,
+           "not_applicable_on_this_os": not_applicable,
+           "reasons": {k: v for k, v in {**v3, **v4, **v5, **v6, **v7, **v8, **v9, **v10, **v11}.items()
+                       if k.endswith("_reason")},
            "hidden_set_or_key_touched": False, "all_checks_true": all(checks.values()),
            "all_defect_controls_true": all(dcs.values())}
     res["selftest_pass"] = bool(res["all_checks_true"] and res["all_defect_controls_true"])

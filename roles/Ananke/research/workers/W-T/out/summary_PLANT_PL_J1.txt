@@ -1,0 +1,24 @@
+PLANT_PL_J1 o4 q0 (frozen)
+  census {'C': 587, 'S': 43}
+  P8 decisive 0.700 [0.642,0.756] n474 cov 0.752 | strict 0.527 [0.473,0.581] n630 | dec-shuf 0.624 [0.563,0.685] n474
+  P8any 0.775 [0.729,0.818] n630 | shuf 0.683 [0.631,0.733] n630 | P8all dec 0.700 [0.642,0.756] n474 cov 0.752
+  xtab {'C>C': 303, 'C>M': 142, 'C>S': 142, 'S>S': 29, 'S>U': 14}
+  VERDICT DOES NOT REACH ['P8 decisive lo99 <= .90', 'P8any strict lo99 <= .80']
+PLANT_PL_J1 o5 q0 (frozen)
+  census {'C': 552, 'S': 139}
+  P8 decisive 0.755 [0.704,0.804] n489 cov 0.708 | strict 0.534 [0.488,0.580] n691 | dec-shuf 0.550 [0.493,0.610] n489
+  P8any 0.826 [0.787,0.863] n691 | shuf 0.615 [0.569,0.663] n691 | P8all dec 0.755 [0.704,0.804] n489 cov 0.708
+  xtab {'C>C': 288, 'C>M': 163, 'C>S': 101, 'S>C': 19, 'S>S': 81, 'S>U': 39}
+  VERDICT DOES NOT REACH ['P8 decisive lo99 <= .90', 'P8any strict lo99 <= .80']
+PLANT_PL_J1 o4 q1 (frozen)
+  census {'C': 615, 'S': 76}
+  P8 decisive 0.943 [0.918,0.965] n652 cov 0.944 | strict 0.890 [0.860,0.920] n691 | dec-shuf 0.943 [0.918,0.965] n652
+  P8any 0.946 [0.923,0.967] n691 | shuf 0.845 [0.811,0.879] n691 | P8all dec 0.943 [0.918,0.965] n652 cov 0.944
+  xtab {'C>C': 615, 'S>C': 37, 'S>U': 39}
+  VERDICT REACHES []
+PLANT_PL_J1 o5 q1 (frozen)
+  census {'C': 513, 'S': 117}
+  P8 decisive 0.406 [0.352,0.458] n616 cov 0.978 | strict 0.397 [0.343,0.448] n630 | dec-shuf 0.292 [0.248,0.338] n616
+  P8any 0.419 [0.368,0.470] n630 | shuf 0.321 [0.275,0.367] n630 | P8all dec 0.406 [0.352,0.458] n616 cov 0.978
+  xtab {'C>C': 147, 'C>S': 366, 'S>S': 103, 'S>U': 14}
+  VERDICT DOES NOT REACH ['P8 decisive lo99 <= .90', 'P8any strict lo99 <= .80']

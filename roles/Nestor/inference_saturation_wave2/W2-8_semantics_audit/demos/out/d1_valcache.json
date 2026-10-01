@@ -1,0 +1,58 @@
+{
+ "env_pop_initial_draw_seed31000000": [
+  [
+   "XOR5A",
+   "FORCED_READ"
+  ],
+  [
+   "XOR5A",
+   "FORCED_READ"
+  ],
+  [
+   "ADD1",
+   "ANSWER_BEFORE_READ"
+  ],
+  [
+   "XOR1",
+   "FORCED_READ"
+  ]
+ ],
+ "D1": {
+  "niche0_spec": {
+   "transform": "ADD37",
+   "read_order": "FORCED_READ",
+   "bridge": "NEUTRAL_BRIDGE",
+   "n_episodes": 8,
+   "budget": 140,
+   "neutral": false,
+   "output_gate": "UNRESTRICTED",
+   "cue_cost": "VM",
+   "constant_kind": "ATOMIC"
+  },
+  "niche1_spec": {
+   "transform": "XOR5A",
+   "read_order": "ANSWER_BEFORE_READ",
+   "bridge": "NEUTRAL_BRIDGE",
+   "n_episodes": 8,
+   "budget": 140,
+   "neutral": false,
+   "output_gate": "UNRESTRICTED",
+   "cue_cost": "VM",
+   "constant_kind": "ATOMIC"
+  },
+  "org_in_niche0_held": 1.0,
+  "org_in_niche1_held_RECORDED": 1.0,
+  "org_in_niche1_held_TRUE_for_its_task": 0.25,
+  "niche0_true": 1.0,
+  "competence_evaluations_for_two_organisms": 1
+ },
+ "D7": {
+  "evaluations_in_post_run_validate": 0
+ },
+ "D6": {
+  "reader_in_ABR_niche_held": 1.0,
+  "probe": 2.0,
+  "run_xtg_cue_index_used": 2,
+  "passes_run_xtg_reader_filter": false
+ }
+}

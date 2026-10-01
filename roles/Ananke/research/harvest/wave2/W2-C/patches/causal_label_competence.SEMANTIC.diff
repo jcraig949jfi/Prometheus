@@ -1,0 +1,22 @@
+--- prometheus/ananke/campaign.py	2026-09-30 18:37:06.528591000 -0400
++++ prometheus/ananke/campaign.py	2026-09-30 21:15:21.700602700 -0400
+@@ -440,11 +440,19 @@
+     return lab
+ 
+ 
++COMPETENCE_MARGIN = 0.10
++
++
+ def causal_label(adj: dict, family: str) -> str:
+     """PREREG s7 CAUSAL_SUPPORT on one adjudication row's controls."""
+     c = adj["result"]["controls"]
+     n = c["normal"]["acc"]
+     ok_perm = 0.40 <= c["env_permutation"]["acc"] <= 0.60
++    # competence precondition (W2-C mutation score): an adjudication whose own normal arm is not competent
++    # (or is anti-correlated) cannot support OR refute causality; without this a corrupted adjudication run
++    # (dead physics, inverted readout) reads as the scientific claim NOT_SUPPORTED.
++    if n < 0.5 + COMPETENCE_MARGIN:
++        return "INVALID_NORMAL"
+ 
+     def ran(k):
+         return c.get(k, {}).get("status") == "RAN"

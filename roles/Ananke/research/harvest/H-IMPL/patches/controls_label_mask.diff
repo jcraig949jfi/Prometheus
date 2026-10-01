@@ -1,0 +1,25 @@
+--- a/prometheus/ananke/engine.py
++++ b/prometheus/ananke/engine.py
+@@ -68,8 +68,21 @@
+     freeze_rule: bool = False
+ 
+     def label(self) -> str:
++        def active(v):
++            # identity/type checks first: `array in (False, ...)` compares
++            # elementwise and raises for a reset_state_mask array
++            # and `0 in (False, ...)` is True, which hid distractor_chan=0
++            if v is None:
++                return False
++            if isinstance(v, bool):
++                return v
++            if isinstance(v, int):
++                return v != -1
++            if isinstance(v, (tuple, list)):
++                return len(v) > 0
++            return True
+         on = [f.name for f in dataclasses.fields(self)
+-              if f.name != "reset_parts" and getattr(self, f.name) not in (False, (), None, -1)]
++              if f.name != "reset_parts" and active(getattr(self, f.name))]
+         if self.reset_state_at and tuple(self.reset_parts) != ("S",):
+             on.append("reset_parts=" + ",".join(self.reset_parts))
+         return "+".join(on) if on else "none"

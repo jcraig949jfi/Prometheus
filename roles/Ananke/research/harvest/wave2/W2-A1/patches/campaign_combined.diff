@@ -1,0 +1,33 @@
+--- a/prometheus/ananke/campaign.py
++++ b/prometheus/ananke/campaign.py
+@@ -87,6 +87,11 @@
+         pass  # all n_sites levels are squares
+     if kw["topology"] == "global":
+         kw["dest_mode"] = "sample"
++        # record the dial that actually runs: callers store `lv` as the row's
++        # `levels`, which dial_effects / analysis_a0 / report read. Leaving the
++        # drawn "all" there mislabelled 951 of 1589 C1 global rows (harvest
++        # H-IMPL H7). cell_id does not hash levels, so ids are unchanged.
++        lv["dest_mode"] = "sample"
+     return Physics(**kw, topo_seed=topo_seed).validate()
+ 
+ 
+@@ -345,7 +350,17 @@
+         rec = World(ph, np.repeat(champ[None], len(seeds), 0), seeds, device=device, schedule=ep.schedule)
+         rec.run(T_half)                                    # recipient has its own history ...
+         if use:
+-            assays.transplant_state(donor, rec)            # ... replaced by the donor's (identical here)
++            try:
++                assays.transplant_state(donor, rec)        # ... replaced by the donor's (identical here)
++            except RuntimeError as e:
++                # donor and recipient share seeds, genome and schedule, so they are
++                # bit-identical at T_half and the no-op guard always fires. Report the
++                # arm as NOT_APPLICABLE instead of failing the whole adjudication cell
++                # (which counts toward PARK). No accuracy is reported for a no-op.
++                if "NOT_APPLICABLE" not in str(e):
++                    raise
++                return {"status": "NOT_APPLICABLE",
++                        "why": "identical-history recipient: transplant changed nothing"}
+         else:
+             for p in ("S", "Kp"):
+                 getattr(rec, p).zero_()

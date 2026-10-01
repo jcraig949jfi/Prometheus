@@ -95,3 +95,184 @@
   ```
 - Then post on comms (to Nestor) the sha256 of the committed record bytes (LF-normalised): the custodian adds it to the
   allow-list only from a message whose sender is Odysseus and which contains that sha256 (S1).
+
+
+## RE-AUDIT v3 (2026-09-29)
+Scope: everything in FIREWALL.md, section "v3".
+- S1 (authenticating records) is KNOWN OPEN, pending the operator's root-of-trust decision (#925). Please assess
+  everything else so that the remaining gap is S1 alone.
+- Your replicas run with read-only git (--cap fabric.runtime==0.2). Please execute
+  `COSMOS_BROKER=1 python -m prometheus.cosmos.c3_holdout_D2.protocol` against the REAL history
+  (Harmonia DEF-HARM-D2-001), and verify B1 by trying to make the entry path load unbound code.
+- Record format, allow-listing and hashes are unchanged from the v2 section. The next record is FIREWALL_AUDIT_1.json
+  (no audit record exists yet).
+
+## RE-AUDIT v4 (2026-09-29)
+
+**Scope:** everything in FIREWALL.md, section "v4". The v3 verdict is at roles/Odysseus/fabric_pilot/d2_audit/v3/VERDICT.md.
+
+**Still open:** S1 (authenticating records, #925) and branch protection on main. Both are operator decisions. Please assess everything else, so that the remaining gap is S1 and the declared host capabilities alone.
+
+**What to try:** break P1, P2 and P3 again.
+- Plant a module anywhere the entry path or a key-holding process could import it: the package directory, the repository root, the cwd, a `.pth` file or a `.pyc`.
+- Try `-S`, PYTHONPATH and GIT_* variables, replace refs, and a `git.exe` in the cwd.
+- Check that the end-to-end path through entry.py completes with the once-only records committed.
+
+**How to run (M1, or any host with the repo):**
+
+```
+COSMOS_BROKER=1 python -m prometheus.cosmos.c3_holdout_D2.selftest_protocol
+COSMOS_BROKER=1 python -m prometheus.cosmos.c3_holdout_D2.selftest_D2
+python -I -B prometheus/cosmos/c3_holdout_D2/entry.py gates SEAL
+```
+- **selftest_protocol:** 98 checks + 4 defect controls. It builds throwaway repos with a bare origin, runs entry.py by path in subprocesses, and runs the P1/P2/F-CWD/F-GITENV positive controls.
+- **selftest_D2:** 10 checks + 13 negative controls.
+- **entry.py gates SEAL:** expected to be REFUSED on the real repo, because no allow-listed audit exists yet. That is the correct refusal. SEAL itself passes on the real history via protocol.check_gates.
+- **The key-holder scan:** Nestor runs `entry.py firewall-check` on M1 and publishes the booleans only.
+
+**Record:** format, allow-listing and hashes are unchanged from the v2 section. The next record is FIREWALL_AUDIT_1.json (no audit record exists yet).
+
+## RE-AUDIT v5 (2026-09-29)
+
+**Scope:** FIREWALL.md, section "v5". The v4 verdict is at roles/Odysseus/fabric_pilot/d2_audit/v4/VERDICT.md.
+
+**Still open:** S1 (#925) and branch protection on main, both operator decisions. Please assess everything else.
+
+**What to try:**
+- Find ANY executable or module that a key-holding tool (runner, custody, evidence, firewall-check, allowlist) starts or imports by bare name, from the working tree, or unbound.
+- Break the pre-audit pinning (pin-tools runs no repository code).
+- Make the runner fail AFTER it consumes anything.
+- Make the spawn child load unbound code.
+
+**How to run:**
+
+```
+COSMOS_BROKER=1 python -m prometheus.cosmos.c3_holdout_D2.selftest_protocol
+COSMOS_BROKER=1 python -m prometheus.cosmos.c3_holdout_D2.selftest_D2
+```
+- **selftest_protocol:** 118 checks + 4 defect controls. It runs entry.py (`-I -B`) in subprocesses, including the runner end to end through entry. The Windows-only controls report `not_applicable_on_this_os` on Linux; their M1 values are in the committed SELFTEST_PROTOCOL.json.
+- **selftest_D2:** 10 checks + 13 negative controls.
+
+**Record:** format and allow-listing are unchanged. The next record is FIREWALL_AUDIT_1.json.
+
+## RE-AUDIT v6 (2026-09-29)
+
+**Scope:** FIREWALL.md, section "v6". The v5 verdict is at roles/Odysseus/fabric_pilot/d2_audit/v5/VERDICT.md.
+
+**Still open:** S1 (#925) and branch protection on main.
+
+**What to try:** find ANY path on which a recoverable error (package, probe, argument, environment) happens after the key is read or the release is consumed. Also try to satisfy custody's preflight requirement without a real passing preflight, beyond the declared same-account residual.
+
+**Self-tests:**
+- selftest_protocol: 124 checks + 4 defect controls.
+- selftest_D2: 10 checks + 13 negative controls.
+
+**Record:** unchanged. The next record is FIREWALL_AUDIT_1.json.
+
+## RE-AUDIT v7 (2026-09-29)
+
+**Scope:** FIREWALL.md, section "v7". The v6 verdict is at roles/Odysseus/fabric_pilot/d2_audit/v6/VERDICT.md.
+
+**Still open:** S1 (#925) and branch protection on main.
+
+**What to try:**
+- Find a package-, argument- or environment-controlled failure that consumes the release WITHOUT a terminal (close or abort) record.
+- Find any check or probe that still runs after the key read and can refuse.
+- Find a way for the package to end the run without a sealed, attributable outcome.
+
+**The crash-after-release policy is declared** as an explicit residual; see FIREWALL.md v7.
+
+**Self-tests:**
+- selftest_protocol: 134 checks + 4 defect controls.
+- selftest_D2: 10 checks + 13 negative controls.
+- Windows-only checks report `not_applicable_on_this_os` elsewhere.
+
+**Record:** unchanged. The next record is FIREWALL_AUDIT_1.json.
+
+## RE-AUDIT v8 (2026-09-29)
+
+**Scope:** FIREWALL.md, section "v8". It answers the v7 replica findings V7-1, V7-A, V7-B and Q3, plus the V7-C, V7-D and V7-F notes.
+
+**Still open:** S1 (#925) and branch protection on main.
+
+**What to try:** find any path where the release is consumed without a VERIFIABLE terminal record, or where a check or probe that can refuse runs after the key is read.
+
+**Self-tests:**
+- selftest_protocol: 141 checks + 4 defect controls.
+- selftest_D2: 10 checks + 13 negative controls.
+
+**Record:** unchanged. The next record is FIREWALL_AUDIT_1.json.
+
+## RE-AUDIT v9 (2026-09-29)
+
+**Scope:** FIREWALL.md, section "v9". It answers the v8 verdict items 1-3 and V8-6.
+
+**Still open:** S1 (#925) and branch protection on main.
+
+**What to try:** find any recoverable error (argument, key, environment, I/O) that consumes the release without a verifiable terminal record, or any post-key path whose attribution labels are untruthful.
+
+**Self-tests:**
+- selftest_protocol: 148 checks + 4 defect controls.
+- selftest_D2: 10 checks + 13 negative controls.
+
+**Record:** unchanged. The next record is FIREWALL_AUDIT_1.json.
+
+## RE-AUDIT v10 (2026-09-29)
+
+**Scope:** FIREWALL.md, section "v10". It covers the should-fix items from the v9 replicas: S-A/A3-1, A3-2, S-B/B-2, S-C/B-1/B-4, B-3 and the notes.
+
+**Still open:** S1 (#925) and branch protection on main.
+
+**What to try:** check that every attribution label is truthful. Check that seal-terminal can seal every spent, unterminated run and can never remove or forge a verifying record.
+
+**Self-tests:**
+- selftest_protocol: 154 checks + 4 defect controls.
+- selftest_D2: 10 checks + 13 negative controls.
+
+**Record:** unchanged. The next record is FIREWALL_AUDIT_1.json.
+
+## RE-AUDIT v11 (2026-09-29)
+
+**Scope:** FIREWALL.md, section "v11". It covers the v10 must-close items: deliver evidence, bounded sends, and seal-terminal newline, liveness and binding.
+
+**Still open:** S1 (#925) and branch protection on main.
+
+**Self-tests:**
+- selftest_protocol: 160 checks + 4 defect controls.
+- selftest_D2: 10 checks + 13 negative controls.
+
+**Record:** unchanged. The next record is FIREWALL_AUDIT_1.json.
+
+## RE-AUDIT v12 (2026-09-29): the ONE bounded re-audit under MWO-0004 D2-2
+
+**Scope:**
+- FIREWALL.md section "v12": the MWO-0004 D2-1 root of trust (#925 resolved by MWO-0004; the append-only M1 anchor replaces the comms-sender allow-list).
+- Everything audited through v11 stands.
+
+**What to try:**
+- make a record govern without a verifying anchor entry;
+- forge, edit, reorder or truncate the anchor undetected;
+- make the anchored commit a non-ancestor, or a commit other than the one that added the record;
+- find any gated step that skips the re-verification.
+
+**Under MWO-0004 D2-2:**
+- PASS -> continue under the existing custody and reveal rules.
+- FAIL on an ordinary defect -> one final repair and one final re-audit; then PASS proceeds, FAIL holds D2.
+
+**Self-tests:**
+- selftest_protocol: 165 checks + 4 defect controls.
+- selftest_D2: 10 checks + 13 negative controls.
+
+**Record:** the next record is FIREWALL_AUDIT_1.json. On PASS, commit it in ONE commit on main and post the commit. The custodian anchors it with `entry.py allowlist add --role AUDIT --record FIREWALL_AUDIT_1.json` (there is no sender check).
+
+## RE-AUDIT v13 (2026-09-29): the FINAL re-audit under MWO-0004 D2-2
+
+**Scope:** FIREWALL.md, section "v13": the v12 verdict items 1-3 exactly.
+
+**Outcome under MWO-0004 D2-2:**
+- PASS -> commit FIREWALL_AUDIT_1.json in one commit on main and post the commit and its LF sha256. The custodian anchors it with --expect-commit/--expect-sha256.
+- FAIL -> D2 goes to HOLD with the defect recorded. There are no further rounds.
+
+**Self-tests:**
+- selftest_protocol: 179 checks + 4 defect controls (runtime now about 12 minutes).
+- selftest_D2: 10 checks + 13 negative controls.

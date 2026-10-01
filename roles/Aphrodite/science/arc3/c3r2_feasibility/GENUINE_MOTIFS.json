@@ -1,0 +1,301 @@
+[
+ {
+  "key": "S29",
+  "schema": "(v - {H})",
+  "genuine": 31,
+  "genuine_usable": 17,
+  "usable": [
+   "((v - {H}) + acc)",
+   "(acc + (v - {H}))",
+   "((v - {H}) + first)",
+   "(first + (v - {H}))",
+   "((v - {H}) + last)",
+   "(last + (v - {H}))",
+   "((v - {H}) + 1)",
+   "(1 + (v - {H}))",
+   "math.gcd(abs((v - {H})), abs(0))",
+   "math.gcd(abs(0), abs((v - {H})))",
+   "((v - {H}) * v)",
+   "(v * (v - {H}))",
+   "(acc - (v - {H}))",
+   "(first - (v - {H}))",
+   "(last - (v - {H}))",
+   "(0 - (v - {H}))",
+   "(1 - (v - {H}))"
+  ]
+ },
+ {
+  "key": "S27",
+  "schema": "(acc * {H})",
+  "genuine": 25,
+  "genuine_usable": 12,
+  "usable": [
+   "(acc + (acc * {H}))",
+   "((acc * {H}) + v)",
+   "(v + (acc * {H}))",
+   "((acc * {H}) + first)",
+   "(first + (acc * {H}))",
+   "((acc * {H}) + last)",
+   "(last + (acc * {H}))",
+   "((acc * {H}) + 1)",
+   "(1 + (acc * {H}))",
+   "(v - (acc * {H}))",
+   "(first - (acc * {H}))",
+   "(1 - (acc * {H}))"
+  ]
+ },
+ {
+  "key": "S11",
+  "schema": "({H} * v)",
+  "genuine": 28,
+  "genuine_usable": 11,
+  "usable": [
+   "(({H} * v) + acc)",
+   "(acc + ({H} * v))",
+   "(({H} * v) + v)",
+   "(v + ({H} * v))",
+   "(first + ({H} * v))",
+   "(({H} * v) + last)",
+   "(last + ({H} * v))",
+   "(acc - ({H} * v))",
+   "(v - ({H} * v))",
+   "(first - ({H} * v))",
+   "(1 - ({H} * v))"
+  ]
+ },
+ {
+  "key": "S08",
+  "schema": "({H} + v)",
+  "genuine": 24,
+  "genuine_usable": 8,
+  "usable": [
+   "math.gcd(abs(({H} + v)), abs(0))",
+   "(({H} + v) * v)",
+   "(({H} + v) * first)",
+   "(acc - ({H} + v))",
+   "(first - ({H} + v))",
+   "(last - ({H} + v))",
+   "(0 - ({H} + v))",
+   "(1 - ({H} + v))"
+  ]
+ },
+ {
+  "key": "G1",
+  "schema": "(acc + {H})",
+  "genuine": 24,
+  "genuine_usable": 7,
+  "usable": [
+   "math.gcd(abs((acc + {H})), abs(0))",
+   "math.gcd(abs(0), abs((acc + {H})))",
+   "(v - (acc + {H}))",
+   "(first - (acc + {H}))",
+   "(last - (acc + {H}))",
+   "(0 - (acc + {H}))",
+   "(1 - (acc + {H}))"
+  ]
+ },
+ {
+  "key": "S16",
+  "schema": "math.gcd(abs(acc), abs({H}))",
+  "genuine": 29,
+  "genuine_usable": 7,
+  "usable": [
+   "(math.gcd(abs(acc), abs({H})) + acc)",
+   "(acc + math.gcd(abs(acc), abs({H})))",
+   "(math.gcd(abs(acc), abs({H})) + v)",
+   "(v + math.gcd(abs(acc), abs({H})))",
+   "(acc - math.gcd(abs(acc), abs({H})))",
+   "(v - math.gcd(abs(acc), abs({H})))",
+   "(1 - math.gcd(abs(acc), abs({H})))"
+  ]
+ },
+ {
+  "key": "S28",
+  "schema": "math.gcd(abs({H}), abs(acc))",
+  "genuine": 29,
+  "genuine_usable": 6,
+  "usable": [
+   "(math.gcd(abs({H}), abs(acc)) + acc)",
+   "(acc + math.gcd(abs({H}), abs(acc)))",
+   "(math.gcd(abs({H}), abs(acc)) + v)",
+   "(v + math.gcd(abs({H}), abs(acc)))",
+   "(acc - math.gcd(abs({H}), abs(acc)))",
+   "(v - math.gcd(abs({H}), abs(acc)))"
+  ]
+ },
+ {
+  "key": "S12",
+  "schema": "math.gcd(abs({H}), abs(v))",
+  "genuine": 29,
+  "genuine_usable": 3,
+  "usable": [
+   "(math.gcd(abs({H}), abs(v)) + acc)",
+   "(acc + math.gcd(abs({H}), abs(v)))",
+   "(acc - math.gcd(abs({H}), abs(v)))"
+  ]
+ },
+ {
+  "key": "S02",
+  "schema": "(v % {H})",
+  "genuine": 30,
+  "genuine_usable": 2,
+  "usable": [
+   "((v % {H}) + acc)",
+   "(acc + (v % {H}))"
+  ]
+ },
+ {
+  "key": "S01",
+  "schema": "math.gcd(abs((acc // {H})), abs(first))",
+  "genuine": 9,
+  "genuine_usable": 0,
+  "usable": []
+ },
+ {
+  "key": "S03",
+  "schema": "(v // {H})",
+  "genuine": 35,
+  "genuine_usable": 0,
+  "usable": []
+ },
+ {
+  "key": "S04",
+  "schema": "(1 + math.gcd(abs({H}), abs(acc)))",
+  "genuine": 7,
+  "genuine_usable": 0,
+  "usable": []
+ },
+ {
+  "key": "S05",
+  "schema": "(v - pow(first, {H}))",
+  "genuine": 3,
+  "genuine_usable": 0,
+  "usable": []
+ },
+ {
+  "key": "S06",
+  "schema": "(acc * math.gcd(abs(0), abs({H})))",
+  "genuine": 2,
+  "genuine_usable": 0,
+  "usable": []
+ },
+ {
+  "key": "S07",
+  "schema": "(pow(0, {H}) + v)",
+  "genuine": 3,
+  "genuine_usable": 0,
+  "usable": []
+ },
+ {
+  "key": "S09",
+  "schema": "(v - (0 - {H}))",
+  "genuine": 0,
+  "genuine_usable": 0,
+  "usable": []
+ },
+ {
+  "key": "S10",
+  "schema": "(acc * math.gcd(abs({H}), abs(v)))",
+  "genuine": 19,
+  "genuine_usable": 0,
+  "usable": []
+ },
+ {
+  "key": "S13",
+  "schema": "(v % (last * {H}))",
+  "genuine": 3,
+  "genuine_usable": 0,
+  "usable": []
+ },
+ {
+  "key": "S14",
+  "schema": "(pow(first, {H}) + v)",
+  "genuine": 3,
+  "genuine_usable": 0,
+  "usable": []
+ },
+ {
+  "key": "S15",
+  "schema": "(1 + math.gcd(abs({H}), abs(v)))",
+  "genuine": 5,
+  "genuine_usable": 0,
+  "usable": []
+ },
+ {
+  "key": "S17",
+  "schema": "(({H} + v) * last)",
+  "genuine": 5,
+  "genuine_usable": 0,
+  "usable": []
+ },
+ {
+  "key": "S18",
+  "schema": "((1 - {H}) + v)",
+  "genuine": 0,
+  "genuine_usable": 0,
+  "usable": []
+ },
+ {
+  "key": "S19",
+  "schema": "math.gcd(abs((last // {H})), abs(v))",
+  "genuine": 5,
+  "genuine_usable": 0,
+  "usable": []
+ },
+ {
+  "key": "S20",
+  "schema": "((1 + {H}) + v)",
+  "genuine": 0,
+  "genuine_usable": 0,
+  "usable": []
+ },
+ {
+  "key": "S21",
+  "schema": "(first - ({H} + v))",
+  "genuine": 0,
+  "genuine_usable": 0,
+  "usable": []
+ },
+ {
+  "key": "S22",
+  "schema": "math.gcd(abs(acc), abs((last * {H})))",
+  "genuine": 8,
+  "genuine_usable": 0,
+  "usable": []
+ },
+ {
+  "key": "S23",
+  "schema": "(v - ({H} + first))",
+  "genuine": 0,
+  "genuine_usable": 0,
+  "usable": []
+ },
+ {
+  "key": "S24",
+  "schema": "math.gcd(abs(acc), abs(math.gcd(abs({H}), abs(acc))))",
+  "genuine": 7,
+  "genuine_usable": 0,
+  "usable": []
+ },
+ {
+  "key": "S25",
+  "schema": "(first + math.gcd(abs({H}), abs(v)))",
+  "genuine": 3,
+  "genuine_usable": 0,
+  "usable": []
+ },
+ {
+  "key": "S26",
+  "schema": "math.gcd(abs(first), abs(math.gcd(abs({H}), abs(v))))",
+  "genuine": 5,
+  "genuine_usable": 0,
+  "usable": []
+ },
+ {
+  "key": "S30",
+  "schema": "pow(first, ({H} * v))",
+  "genuine": 5,
+  "genuine_usable": 0,
+  "usable": []
+ }
+]

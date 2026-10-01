@@ -1,0 +1,239 @@
+{
+ "triplicateId": "HT-8a87057933",
+ "world": "W5",
+ "outcome": "SIGNAL",
+ "outcome_reason": "treatment meets S1,S2,S3; no failure clause holds; controls detected",
+ "statistics": {
+  "arms": {
+   "TREATMENT": {
+    "errors_total": 1249,
+    "unsat_total": 1663,
+    "deleted_total": 4229,
+    "valid_deleted_total": 2648,
+    "valid_deleted_per_unsat": 1.592303066746843,
+    "errors_per_seed": [
+     130,
+     126,
+     118,
+     125,
+     114,
+     132,
+     125,
+     130,
+     123,
+     126
+    ],
+    "mus_size_range": [
+     2,
+     2
+    ],
+    "mus_calls_total": 4229
+   },
+   "CONTROL_REF": {
+    "errors_total": 3876,
+    "unsat_total": 1417,
+    "deleted_total": 16746,
+    "valid_deleted_total": 15376,
+    "valid_deleted_per_unsat": 10.851093860268172,
+    "errors_per_seed": [
+     397,
+     366,
+     352,
+     401,
+     365,
+     374,
+     375,
+     451,
+     375,
+     420
+    ]
+   },
+   "POSITIVE_CONTROL": {
+    "errors_total": 619,
+    "unsat_total": 951,
+    "deleted_total": 1633,
+    "valid_deleted_total": 0,
+    "valid_deleted_per_unsat": 0.0,
+    "errors_per_seed": [
+     61,
+     70,
+     59,
+     69,
+     56,
+     57,
+     55,
+     75,
+     56,
+     61
+    ]
+   },
+   "NULL_TWIN": {
+    "errors_total": 2779,
+    "unsat_total": 1558,
+    "deleted_total": 14639,
+    "valid_deleted_total": 13197,
+    "valid_deleted_per_unsat": 8.470474967907574,
+    "errors_per_seed": [
+     292,
+     263,
+     244,
+     292,
+     304,
+     266,
+     250,
+     279,
+     284,
+     305
+    ]
+   },
+   "CHEAT": {
+    "errors_total": 0,
+    "unsat_total": 1558,
+    "deleted_total": 14639,
+    "valid_deleted_total": 0,
+    "valid_deleted_per_unsat": 0.0,
+    "errors_per_seed": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   }
+  },
+  "treatment_success_values": {
+   "S1": 0.3222394220846233,
+   "S2": 1.0,
+   "S3": 0.1467412490621928
+  },
+  "treatment_success_pass": {
+   "S1": true,
+   "S2": true,
+   "S3": true
+  },
+  "treatment_failure_values": {
+   "F1": 0.3222394220846233,
+   "F2": 0.4494422454120187,
+   "F3": 0.1467412490621928
+  },
+  "treatment_failure_holds": {
+   "F1": false,
+   "F2": false,
+   "F3": false
+  },
+  "positive_control_values": {
+   "S1": 0.15970072239422084,
+   "S2": 1.0,
+   "S3": 0.0
+  },
+  "null_twin_values": {
+   "S1": 0.7169762641898865,
+   "S2": 0.0,
+   "S3": 0.7806102386527727
+  },
+  "cheat_values": {
+   "S1": 0.0,
+   "S2": 1.0,
+   "S3": 0.0
+  }
+ },
+ "criterion_as_applied": {
+  "success": "S1 AND S2 AND S3 with frozen thresholds (S1 <= 0.50, S2 >= 0.80, S3 <= 0.50) via frozen controls.clause_values, X=TREATMENT, ref=CONTROL_REF (controls.run rows)",
+  "failure": "F1 OR F2 OR F3 (S1 statistic >= 0.90; errors(TREATMENT)/errors(NULL_TWIN) >= 1.00; S3 statistic >= 0.90)",
+  "order": "INSTRUMENT_FAIL (repro/faithfulness/controls/floor) > CONFOUNDED > SIGNAL > NULL"
+ },
+ "reproducibility": {
+  "ok": true,
+  "clauses": [
+   {
+    "id": "S1",
+    "frozen": {
+     "attainable": true,
+     "discriminating": true,
+     "positive_value": 0.15970072239422084,
+     "twin_value": 0.7169762641898865
+    },
+    "rerun": {
+     "attainable": true,
+     "discriminating": true,
+     "positive_value": 0.15970072239422084,
+     "twin_value": 0.7169762641898865
+    },
+    "status_same": true,
+    "values_identical": true
+   },
+   {
+    "id": "S2",
+    "frozen": {
+     "attainable": true,
+     "discriminating": true,
+     "positive_value": 1.0,
+     "twin_value": 0.0
+    },
+    "rerun": {
+     "attainable": true,
+     "discriminating": true,
+     "positive_value": 1.0,
+     "twin_value": 0.0
+    },
+    "status_same": true,
+    "values_identical": true
+   },
+   {
+    "id": "S3",
+    "frozen": {
+     "attainable": true,
+     "discriminating": true,
+     "positive_value": 0.0,
+     "twin_value": 0.7806102386527727
+    },
+    "rerun": {
+     "attainable": true,
+     "discriminating": true,
+     "positive_value": 0.0,
+     "twin_value": 0.7806102386527727
+    },
+    "status_same": true,
+    "values_identical": true
+   }
+  ],
+  "cheat_detected_rerun": true,
+  "cheat_detected_frozen": true,
+  "arm_totals_identical": true
+ },
+ "faithfulness_world_run_equals_controls_run": true,
+ "positive_control_detected": true,
+ "cheat_detected": true,
+ "null_twin_meets_success": false,
+ "stupid_explanations_status": [
+  {
+   "text": "the MUS is trivially the conflicting channel, so any per-channel reset-on-mismatch rule would do equally well (SAT adds nothing)",
+   "addressed_by_this_run": false,
+   "how": "Not addressed: no per-channel reset-on-mismatch arm was run (not in the frozen spec). Observed MUS sizes [2, 2]: the core is always a same-channel conflicting pair, so here the MUS is exactly channel-local conflict detection."
+  },
+  {
+   "text": "drop-oldest is a strawman here because a window of 32 over 8 channels means the stale clause is usually young; the advantage is window geometry, not conflict localisation",
+   "addressed_by_this_run": false,
+   "how": "Not addressed: window capacity fixed at 32 by the frozen spec; no window-size sweep was run."
+  },
+  {
+   "text": "the treatment wins only because sensor noise is rare (3%); at higher noise 'oldest in core' deletes valid clauses and the effect vanishes",
+   "addressed_by_this_run": false,
+   "how": "Not addressed: sensor noise fixed at 3% by the frozen spec; no noise sweep was run."
+  },
+  {
+   "text": "errors are dominated by the unavoidable first request after each switch, so any policy lands near the floor and ratios are noise",
+   "addressed_by_this_run": true,
+   "how": "Partly: positive control makes 619 errors vs CONTROL_REF 3876 (floor about 290 = 29 switches x 10 seeds of first-request errors), so errors are not floor-dominated; treatment made 1249."
+  }
+ ],
+ "anomalies": [],
+ "core_minutes": 0.014322916666666666,
+ "attempts": 1,
+ "notes": "Control arms from frozen controls.run; TREATMENT from probe/world.run (verbatim loop copy + core-guided repair: MUS by deletion oldest-first, delete the oldest clause in the MUS, repeat until SAT). Seeds 0..9. See probe/NOTES.md."
+}

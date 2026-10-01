@@ -1,0 +1,23 @@
+{
+ "world": "W6",
+ "triplicateId": "HT-55162c0ac0",
+ "source_rows": "hecate/programs/HT-55162c0ac0/worlds/W6/control_rows.jsonl (arm SUMMARY is the last row)",
+ "clauses": [
+  {"id": "S1", "positive_value": 1.0, "twin_value": 0.019075615242337963, "twin_noleak_value": -0.032775016301408756, "cheat_value": 1.0,
+   "attainable": true, "discriminating": true,
+   "treatment_must_reach": ">= 0.8 (mean over 10 seeds of FTLE-grouping ARI)"},
+  {"id": "S2", "positive_value": 0.9786190952456613, "twin_value": 0.02405499058494337, "twin_noleak_value": -0.05869106984951923, "cheat_value": 0.9786190952456613,
+   "attainable": true, "discriminating": true,
+   "treatment_must_reach": ">= 0.5 (mean over 10 seeds of FTLE ARI minus correlation ARI)"}
+ ],
+ "failure_clauses_on_twin": {"F1": "fires (0.019 < 0.3)", "F2": "fires (0.024 < 0.2)"},
+ "positive_control_diagnostics": {"ari_ftle_min": 1.0, "ari_corr_mean": 0.021380904754338664, "ari_corr_max_single_seed": 0.43027888446215135},
+ "cheat_detected": true,
+ "cheat_definition": "CHEAT rows = positive-control rows with the FTLE partition replaced by the nominal partition; detected = the unchanged evaluator reads every success clause as met on them.",
+ "frozen": true,
+ "control_cpu_core_minutes": 0.05,
+ "revisions": [
+  {"n": 1, "what": "Run 1 used eps_g = 0.10 for the null twin (and planned treatment). The twin synchronised strongly (mean |corr| 0.34 to 0.999 per seed), which would make any treatment failure at that leak a synchrony artefact rather than a reading of M12. Treatment and twin eps_g set to 0.05 (leak total strength half the structured coupling), fixed a priori; no treatment was run. Added NULL_TWIN_NOLEAK (eps_g = 0) so discrimination is shown both at the positive control's leak and at the treatment's leak.", "why": "avoid a world whose likely failure is a trivial synchrony artefact; match the twin to the treatment's nuisance settings"},
+  {"n": 2, "what": "Positive control, cheat and clause thresholds unchanged between runs; positive control values identical (1.0, 0.979).", "why": "record"}
+ ]
+}

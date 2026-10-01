@@ -1,0 +1,282 @@
+[
+ {
+  "body": "(acc - math.gcd(abs(v), abs(last)))",
+  "final": "(acc * acc)",
+  "init": "0",
+  "cell": 0,
+  "PRISTINE": {
+   "charge": 4312690,
+   "coord": "g4_fallback"
+  },
+  "L1": {
+   "charge": 12415,
+   "coord": "derived_0"
+  }
+ },
+ {
+  "body": "(acc - math.gcd(abs(v), abs(last)))",
+  "final": "(acc * acc)",
+  "init": "0",
+  "cell": 1,
+  "PRISTINE": {
+   "charge": 4180979,
+   "coord": "g4_fallback"
+  },
+  "L1": {
+   "charge": 9748,
+   "coord": "derived_0"
+  }
+ },
+ {
+  "body": "(acc + (first % v))",
+  "final": "(acc + last)",
+  "init": "1",
+  "cell": 0,
+  "PRISTINE": {
+   "charge": 9163292,
+   "coord": "g4_fallback"
+  },
+  "L1": {
+   "charge": 2598,
+   "coord": "derived_0"
+  }
+ },
+ {
+  "body": "(acc + (first % v))",
+  "final": "(acc + last)",
+  "init": "1",
+  "cell": 1,
+  "PRISTINE": {
+   "charge": 510503,
+   "coord": "g4_fallback"
+  },
+  "L1": {
+   "charge": 41823,
+   "coord": "derived_0"
+  }
+ },
+ {
+  "body": "(acc - (v % first))",
+  "final": "(acc * 1)",
+  "init": "0",
+  "cell": 0,
+  "PRISTINE": {
+   "charge": 195193,
+   "coord": "g4_fallback"
+  },
+  "L1": {
+   "charge": 16557,
+   "coord": "derived_0"
+  }
+ },
+ {
+  "body": "(acc - (v % first))",
+  "final": "(acc * 1)",
+  "init": "0",
+  "cell": 1,
+  "PRISTINE": {
+   "charge": 1019517,
+   "coord": "g4_fallback"
+  },
+  "L1": {
+   "charge": 5344,
+   "coord": "derived_0"
+  }
+ },
+ {
+  "body": "(acc + (first // v))",
+  "final": "(1 - acc)",
+  "init": "1",
+  "cell": 0,
+  "PRISTINE": {
+   "charge": 538626,
+   "coord": "g4_fallback"
+  },
+  "L1": {
+   "charge": 2891,
+   "coord": "derived_0"
+  }
+ },
+ {
+  "body": "(acc + (first // v))",
+  "final": "(1 - acc)",
+  "init": "1",
+  "cell": 1,
+  "PRISTINE": {
+   "charge": 217086,
+   "coord": "g4_fallback"
+  },
+  "L1": {
+   "charge": 6623,
+   "coord": "derived_0"
+  }
+ },
+ {
+  "body": "(acc - (last - v))",
+  "final": "(acc - first)",
+  "init": "1",
+  "cell": 0,
+  "PRISTINE": {
+   "charge": 262786,
+   "coord": "g4_fallback"
+  },
+  "L1": {
+   "charge": 33992,
+   "coord": "derived_0"
+  }
+ },
+ {
+  "body": "(acc - (last - v))",
+  "final": "(acc - first)",
+  "init": "1",
+  "cell": 1,
+  "PRISTINE": {
+   "charge": 4784630,
+   "coord": "g4_fallback"
+  },
+  "L1": {
+   "charge": 23157,
+   "coord": "derived_0"
+  }
+ },
+ {
+  "body": "(first - (v - acc))",
+  "final": "(acc * first)",
+  "init": "0",
+  "cell": 0,
+  "PRISTINE": {
+   "charge": 10039764,
+   "coord": "g4_fallback"
+  },
+  "L1": {
+   "charge": 27509,
+   "coord": "derived_0"
+  }
+ },
+ {
+  "body": "(first - (v - acc))",
+  "final": "(acc * first)",
+  "init": "0",
+  "cell": 1,
+  "PRISTINE": {
+   "charge": 2565364,
+   "coord": "g4_fallback"
+  },
+  "L1": {
+   "charge": 3504,
+   "coord": "derived_0"
+  }
+ },
+ {
+  "body": "(1 + (v + acc))",
+  "final": "acc",
+  "init": "1",
+  "cell": 0,
+  "PRISTINE": {
+   "charge": 2360592,
+   "coord": "g4_fallback"
+  },
+  "L1": {
+   "charge": 6229,
+   "coord": "derived_0"
+  }
+ },
+ {
+  "body": "(1 + (v + acc))",
+  "final": "acc",
+  "init": "1",
+  "cell": 1,
+  "PRISTINE": {
+   "charge": 158694,
+   "coord": "g4_fallback"
+  },
+  "L1": {
+   "charge": 19658,
+   "coord": "derived_0"
+  }
+ },
+ {
+  "body": "(last - (v - acc))",
+  "final": "(0 + acc)",
+  "init": "0",
+  "cell": 0,
+  "PRISTINE": {
+   "charge": 430454,
+   "coord": "g4_fallback"
+  },
+  "L1": {
+   "charge": 3241,
+   "coord": "derived_0"
+  }
+ },
+ {
+  "body": "(last - (v - acc))",
+  "final": "(0 + acc)",
+  "init": "0",
+  "cell": 1,
+  "PRISTINE": {
+   "charge": 427309,
+   "coord": "g4_fallback"
+  },
+  "L1": {
+   "charge": 17153,
+   "coord": "derived_0"
+  }
+ },
+ {
+  "body": "(v + (acc + last))",
+  "final": "(acc - last)",
+  "init": "1",
+  "cell": 0,
+  "PRISTINE": {
+   "charge": 11889018,
+   "coord": "g4_fallback"
+  },
+  "L1": {
+   "charge": 7345,
+   "coord": "derived_0"
+  }
+ },
+ {
+  "body": "(v + (acc + last))",
+  "final": "(acc - last)",
+  "init": "1",
+  "cell": 1,
+  "PRISTINE": {
+   "charge": 819811,
+   "coord": "g4_fallback"
+  },
+  "L1": {
+   "charge": 15691,
+   "coord": "derived_0"
+  }
+ },
+ {
+  "body": "(acc + math.gcd(abs(v), abs(first)))",
+  "final": "(acc * first)",
+  "init": "1",
+  "cell": 0,
+  "PRISTINE": {
+   "charge": 8789831,
+   "coord": "g4_fallback"
+  },
+  "L1": {
+   "charge": 34515,
+   "coord": "derived_0"
+  }
+ },
+ {
+  "body": "(acc + math.gcd(abs(v), abs(first)))",
+  "final": "(acc * first)",
+  "init": "1",
+  "cell": 1,
+  "PRISTINE": {
+   "charge": 8924432,
+   "coord": "g4_fallback"
+  },
+  "L1": {
+   "charge": 18916,
+   "coord": "derived_0"
+  }
+ }
+]

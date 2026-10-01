@@ -1,0 +1,3649 @@
+{
+ "families": {
+  "qada": {
+   "G1": {
+    "dist": 1,
+    "program": [
+     "fold",
+     "1",
+     "(v - (acc + (last - first)))",
+     "(1 - acc)"
+    ],
+    "schema": "(v - (acc + {H}))"
+   },
+   "OFF_0": {
+    "dist": null
+   },
+   "SHAM_0": {
+    "dist": 0,
+    "program": [
+     "fold",
+     "1",
+     "(v - (acc - (first - last)))",
+     "(1 - acc)"
+    ],
+    "schema": "(v - (acc - {H}))"
+   },
+   "SHAM_1": {
+    "dist": null
+   },
+   "spec": {
+    "Q2_size": 6,
+    "body": "(v - (acc - (first - last)))",
+    "final": "(1 - acc)",
+    "init": "1",
+    "name": "qada",
+    "role": "TRANSFER",
+    "source": "CON:SHAM_0"
+   },
+   "uses": [
+    [
+     "CON/5",
+     "TRANSFER"
+    ]
+   ]
+  },
+  "qaea": {
+   "G1": {
+    "dist": null
+   },
+   "OFF_0": {
+    "dist": null
+   },
+   "SHAM_0": {
+    "dist": null
+   },
+   "SHAM_1": {
+    "dist": 1,
+    "program": [
+     "fold",
+     "1",
+     "math.gcd(abs(first), abs((v + (1 % acc))))",
+     "(acc * last)"
+    ],
+    "schema": "math.gcd(abs(({H} + v)), abs(first))"
+   },
+   "spec": {
+    "Q2_size": 12,
+    "body": "math.gcd(abs(first), abs((v + (1 % acc))))",
+    "final": "(last * acc)",
+    "init": "1",
+    "name": "qaea",
+    "role": "TRANSFER",
+    "source": "CON:SHAM_1"
+   },
+   "uses": [
+    [
+     "CON/0",
+     "TRANSFER"
+    ],
+    [
+     "CON/4",
+     "TRANSFER"
+    ],
+    [
+     "CON/6",
+     "VALIDATE"
+    ]
+   ]
+  },
+  "qala": {
+   "G1": {
+    "dist": 2,
+    "program": [
+     "fold",
+     "0",
+     "(1 - (v * (acc + 1)))",
+     "(acc + last)"
+    ],
+    "schema": "(1 - ((acc + {H}) * v))"
+   },
+   "OFF_0": {
+    "dist": null
+   },
+   "SHAM_0": {
+    "dist": null
+   },
+   "SHAM_1": {
+    "dist": 1,
+    "program": [
+     "fold",
+     "0",
+     "(1 - (v + (acc * v)))",
+     "(acc + last)"
+    ],
+    "schema": "(1 - ({H} + v))"
+   },
+   "spec": {
+    "Q2_size": 4,
+    "body": "(v - (1 + (v * acc)))",
+    "final": "(last - acc)",
+    "init": "0",
+    "name": "qala",
+    "role": "TRANSFER",
+    "source": "NAT"
+   },
+   "uses": [
+    [
+     "CON/4",
+     "TRANSFER"
+    ]
+   ]
+  },
+  "qbaa": {
+   "G1": {
+    "dist": 1,
+    "program": [
+     "fold",
+     "1",
+     "(v + (acc + (v - last)))",
+     "(acc + first)"
+    ],
+    "schema": "((acc + {H}) + v)"
+   },
+   "OFF_0": {
+    "dist": null
+   },
+   "SHAM_0": {
+    "dist": null
+   },
+   "SHAM_1": {
+    "dist": 1,
+    "program": [
+     "fold",
+     "1",
+     "(acc + (v + (v - last)))",
+     "(acc + first)"
+    ],
+    "schema": "(({H} + v) + acc)"
+   },
+   "spec": {
+    "Q2_size": 4,
+    "body": "(v + (acc + (v - last)))",
+    "final": "(acc + first)",
+    "init": "1",
+    "name": "qbaa",
+    "role": "TRANSFER",
+    "source": "CON:G1"
+   },
+   "uses": [
+    [
+     "CON/2",
+     "TRANSFER"
+    ],
+    [
+     "CON/3",
+     "TRANSFER"
+    ],
+    [
+     "CON/7",
+     "TRANSFER"
+    ]
+   ]
+  },
+  "qbca": {
+   "G1": {
+    "dist": null
+   },
+   "OFF_0": {
+    "dist": null
+   },
+   "SHAM_0": {
+    "dist": 0,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc - (acc // first)))",
+     "(acc + 1)"
+    ],
+    "schema": "(v - (acc - {H}))"
+   },
+   "SHAM_1": {
+    "dist": null
+   },
+   "spec": {
+    "Q2_size": 4,
+    "body": "(v - (acc - (acc // first)))",
+    "final": "(acc + 1)",
+    "init": "0",
+    "name": "qbca",
+    "role": "VALIDATE",
+    "source": "CON:SHAM_0"
+   },
+   "uses": [
+    [
+     "CON/5",
+     "VALIDATE"
+    ]
+   ]
+  },
+  "qbda": {
+   "G1": {
+    "dist": 1,
+    "program": [
+     "fold",
+     "1",
+     "(acc - (acc + (acc - v)))",
+     "acc"
+    ],
+    "schema": "(acc - (acc + {H}))"
+   },
+   "OFF_0": {
+    "dist": 0,
+    "program": [
+     "fold",
+     "1",
+     "(1 + (v - (acc + 1)))",
+     "acc"
+    ],
+    "schema": "(1 + (v - {H}))"
+   },
+   "SHAM_0": {
+    "dist": 0,
+    "program": [
+     "fold",
+     "1",
+     "(v - acc)",
+     "acc"
+    ],
+    "schema": "(v - (acc - {H}))"
+   },
+   "SHAM_1": {
+    "dist": 0,
+    "program": [
+     "fold",
+     "1",
+     "(v + (0 - acc))",
+     "acc"
+    ],
+    "schema": "({H} + v)"
+   },
+   "spec": {
+    "Q2_size": 12,
+    "body": "(v - (acc - (1 // last)))",
+    "final": "acc",
+    "init": "1",
+    "name": "qbda",
+    "role": "TRANSFER",
+    "source": "CON:SHAM_0"
+   },
+   "uses": [
+    [
+     "CON/4",
+     "TRANSFER"
+    ]
+   ]
+  },
+  "qbfa": {
+   "G1": {
+    "dist": 0,
+    "program": [
+     "fold",
+     "0",
+     "(acc + (v + first))",
+     "acc"
+    ],
+    "schema": "(acc + {H})"
+   },
+   "OFF_0": {
+    "dist": null
+   },
+   "SHAM_0": {
+    "dist": 1,
+    "program": [
+     "fold",
+     "0",
+     "(0 - (v - (acc - first)))",
+     "math.gcd(abs(acc), abs(acc))"
+    ],
+    "schema": "(0 - (v - (acc - {H})))"
+   },
+   "SHAM_1": {
+    "dist": 0,
+    "program": [
+     "fold",
+     "0",
+     "(v + (acc + first))",
+     "acc"
+    ],
+    "schema": "({H} + v)"
+   },
+   "spec": {
+    "Q2_size": 4,
+    "body": "(first + (v + math.gcd(abs(acc), abs(0))))",
+    "final": "(acc + 0)",
+    "init": "0",
+    "name": "qbfa",
+    "role": "VALIDATE",
+    "source": "CON:SHAM_1"
+   },
+   "uses": [
+    [
+     "CON/5",
+     "VALIDATE"
+    ]
+   ]
+  },
+  "qcaa": {
+   "G1": {
+    "dist": 1,
+    "program": [
+     "fold",
+     "0",
+     "(first * (acc + math.gcd(abs(v), abs(last))))",
+     "(acc + 1)"
+    ],
+    "schema": "((acc + {H}) * first)"
+   },
+   "OFF_0": {
+    "dist": null
+   },
+   "SHAM_0": {
+    "dist": null
+   },
+   "SHAM_1": {
+    "dist": null
+   },
+   "spec": {
+    "Q2_size": 4,
+    "body": "(first * (acc + math.gcd(abs(v), abs(last))))",
+    "final": "(1 + acc)",
+    "init": "0",
+    "name": "qcaa",
+    "role": "TRANSFER",
+    "source": "CON:G1"
+   },
+   "uses": [
+    [
+     "CON/0",
+     "TRANSFER"
+    ]
+   ]
+  },
+  "qcka": {
+   "G1": {
+    "dist": null
+   },
+   "OFF_0": {
+    "dist": 2,
+    "program": [
+     "fold",
+     "0",
+     "(v % math.gcd(abs(acc), abs((v + 1))))",
+     "(0 - acc)"
+    ],
+    "schema": "(v % math.gcd(abs((1 + (v - {H}))), abs(acc)))"
+   },
+   "SHAM_0": {
+    "dist": null
+   },
+   "SHAM_1": {
+    "dist": 2,
+    "program": [
+     "fold",
+     "0",
+     "(v % math.gcd(abs(acc), abs((v + 1))))",
+     "(0 - acc)"
+    ],
+    "schema": "(v % math.gcd(abs(({H} + v)), abs(acc)))"
+   },
+   "spec": {
+    "Q2_size": 6,
+    "body": "(1 - math.gcd(abs(acc), abs((v + 1))))",
+    "final": "acc",
+    "init": "0",
+    "name": "qcka",
+    "role": "TRANSFER",
+    "source": "NAT"
+   },
+   "uses": [
+    [
+     "CON/3",
+     "TRANSFER"
+    ]
+   ]
+  },
+  "qdea": {
+   "G1": {
+    "dist": null
+   },
+   "OFF_0": {
+    "dist": null
+   },
+   "SHAM_0": {
+    "dist": 1,
+    "program": [
+     "fold",
+     "0",
+     "math.gcd(abs(0), abs((v - (acc - first))))",
+     "acc"
+    ],
+    "schema": "math.gcd(abs((v - (acc - {H}))), abs(0))"
+   },
+   "SHAM_1": {
+    "dist": 1,
+    "program": [
+     "fold",
+     "0",
+     "math.gcd(abs(0), abs((v + (first - acc))))",
+     "acc"
+    ],
+    "schema": "math.gcd(abs(({H} + v)), abs(0))"
+   },
+   "spec": {
+    "Q2_size": 4,
+    "body": "math.gcd(abs(0), abs((v + (first - acc))))",
+    "final": "(0 + acc)",
+    "init": "0",
+    "name": "qdea",
+    "role": "TRANSFER",
+    "source": "CON:SHAM_1"
+   },
+   "uses": [
+    [
+     "CON/1",
+     "TRANSFER"
+    ]
+   ]
+  },
+  "qdha": {
+   "G1": {
+    "dist": 1,
+    "program": [
+     "fold",
+     "1",
+     "(v * (acc + (v * first)))",
+     "(acc * last)"
+    ],
+    "schema": "((acc + {H}) * v)"
+   },
+   "OFF_0": {
+    "dist": null
+   },
+   "SHAM_0": {
+    "dist": null
+   },
+   "SHAM_1": {
+    "dist": null
+   },
+   "spec": {
+    "Q2_size": 4,
+    "body": "(v * (acc + (v * first)))",
+    "final": "(acc * last)",
+    "init": "1",
+    "name": "qdha",
+    "role": "VALIDATE",
+    "source": "NAT"
+   },
+   "uses": [
+    [
+     "CON/5",
+     "VALIDATE"
+    ]
+   ]
+  },
+  "qeba": {
+   "G1": {
+    "dist": 1,
+    "program": [
+     "fold",
+     "1",
+     "(v // (acc + math.gcd(abs(v), abs(first))))",
+     "(1 - acc)"
+    ],
+    "schema": "(v // (acc + {H}))"
+   },
+   "OFF_0": {
+    "dist": null
+   },
+   "SHAM_0": {
+    "dist": null
+   },
+   "SHAM_1": {
+    "dist": null
+   },
+   "spec": {
+    "Q2_size": 6,
+    "body": "(v // (acc + math.gcd(abs(v), abs(first))))",
+    "final": "(1 - acc)",
+    "init": "1",
+    "name": "qeba",
+    "role": "TRANSFER",
+    "source": "CON:G1"
+   },
+   "uses": [
+    [
+     "CON/7",
+     "TRANSFER"
+    ]
+   ]
+  },
+  "qefa": {
+   "G1": {
+    "dist": null
+   },
+   "OFF_0": {
+    "dist": null
+   },
+   "SHAM_0": {
+    "dist": null
+   },
+   "SHAM_1": {
+    "dist": 1,
+    "program": [
+     "fold",
+     "1",
+     "(acc * (v + math.gcd(abs(v), abs(last))))",
+     "(1 - acc)"
+    ],
+    "schema": "(({H} + v) * acc)"
+   },
+   "spec": {
+    "Q2_size": 4,
+    "body": "(acc * (v + math.gcd(abs(v), abs(last))))",
+    "final": "(1 - acc)",
+    "init": "1",
+    "name": "qefa",
+    "role": "TRANSFER",
+    "source": "CON:SHAM_1"
+   },
+   "uses": [
+    [
+     "CON/2",
+     "TRANSFER"
+    ]
+   ]
+  },
+  "qeha": {
+   "G1": {
+    "dist": 0,
+    "program": [
+     "fold",
+     "0",
+     "(acc + (last % v))",
+     "(first - acc)"
+    ],
+    "schema": "(acc + {H})"
+   },
+   "OFF_0": {
+    "dist": null
+   },
+   "SHAM_0": {
+    "dist": 2,
+    "program": [
+     "fold",
+     "0",
+     "(acc + (last % v))",
+     "(first - acc)"
+    ],
+    "schema": "((last % (v - (acc - {H}))) + acc)"
+   },
+   "SHAM_1": {
+    "dist": 2,
+    "program": [
+     "fold",
+     "0",
+     "(acc + (last % v))",
+     "(first - acc)"
+    ],
+    "schema": "((last % ({H} + v)) + acc)"
+   },
+   "spec": {
+    "Q2_size": 4,
+    "body": "(acc - (0 + (last % v)))",
+    "final": "(first + acc)",
+    "init": "0",
+    "name": "qeha",
+    "role": "TRANSFER",
+    "source": "NAT"
+   },
+   "uses": [
+    [
+     "CON/6",
+     "TRANSFER"
+    ]
+   ]
+  },
+  "qfda": {
+   "G1": {
+    "dist": 1,
+    "program": [
+     "fold",
+     "1",
+     "(v - (acc + (0 - last)))",
+     "(acc + first)"
+    ],
+    "schema": "(v - (acc + {H}))"
+   },
+   "OFF_0": {
+    "dist": null
+   },
+   "SHAM_0": {
+    "dist": 0,
+    "program": [
+     "fold",
+     "1",
+     "(v - (acc - last))",
+     "(acc + first)"
+    ],
+    "schema": "(v - (acc - {H}))"
+   },
+   "SHAM_1": {
+    "dist": 0,
+    "program": [
+     "fold",
+     "1",
+     "(v + (last - acc))",
+     "(acc + first)"
+    ],
+    "schema": "({H} + v)"
+   },
+   "spec": {
+    "Q2_size": 4,
+    "body": "(v - (acc - math.gcd(abs(last), abs(last))))",
+    "final": "(first + acc)",
+    "init": "1",
+    "name": "qfda",
+    "role": "TRANSFER",
+    "source": "CON:SHAM_0"
+   },
+   "uses": [
+    [
+     "CON/3",
+     "TRANSFER"
+    ]
+   ]
+  },
+  "qffa": {
+   "G1": {
+    "dist": 2,
+    "program": [
+     "fold",
+     "0",
+     "(v + math.gcd(abs(acc), abs((acc + first))))",
+     "acc"
+    ],
+    "schema": "(math.gcd(abs((acc + {H})), abs(acc)) + v)"
+   },
+   "OFF_0": {
+    "dist": null
+   },
+   "SHAM_0": {
+    "dist": null
+   },
+   "SHAM_1": {
+    "dist": 0,
+    "program": [
+     "fold",
+     "0",
+     "(v + math.gcd(abs(acc), abs(first)))",
+     "acc"
+    ],
+    "schema": "({H} + v)"
+   },
+   "spec": {
+    "Q2_size": 8,
+    "body": "math.gcd(abs(0), abs((v + math.gcd(abs(acc), abs(first)))))",
+    "final": "math.gcd(abs(0), abs(acc))",
+    "init": "0",
+    "name": "qffa",
+    "role": "TRANSFER",
+    "source": "CON:SHAM_1"
+   },
+   "uses": [
+    [
+     "CON/5",
+     "TRANSFER"
+    ]
+   ]
+  },
+  "qgaa": {
+   "G1": {
+    "dist": 1,
+    "program": [
+     "fold",
+     "1",
+     "(v - (acc + (0 - first)))",
+     "acc"
+    ],
+    "schema": "(v - (acc + {H}))"
+   },
+   "OFF_0": {
+    "dist": null
+   },
+   "SHAM_0": {
+    "dist": 0,
+    "program": [
+     "fold",
+     "1",
+     "(v - (acc - first))",
+     "acc"
+    ],
+    "schema": "(v - (acc - {H}))"
+   },
+   "SHAM_1": {
+    "dist": 0,
+    "program": [
+     "fold",
+     "1",
+     "(v + (first - acc))",
+     "acc"
+    ],
+    "schema": "({H} + v)"
+   },
+   "spec": {
+    "Q2_size": 8,
+    "body": "(first - (acc + (0 - v)))",
+    "final": "(acc // 1)",
+    "init": "1",
+    "name": "qgaa",
+    "role": "TRANSFER",
+    "source": "CON:G1"
+   },
+   "uses": [
+    [
+     "CON/5",
+     "TRANSFER"
+    ]
+   ]
+  },
+  "qgfa": {
+   "G1": {
+    "dist": 0,
+    "program": [
+     "fold",
+     "1",
+     "(acc + (v + 1))",
+     "(acc * acc)"
+    ],
+    "schema": "(acc + {H})"
+   },
+   "OFF_0": {
+    "dist": 0,
+    "program": [
+     "fold",
+     "1",
+     "(1 + (v - (0 - acc)))",
+     "(acc * acc)"
+    ],
+    "schema": "(1 + (v - {H}))"
+   },
+   "SHAM_0": {
+    "dist": 2,
+    "program": [
+     "fold",
+     "1",
+     "(1 + (acc + v))",
+     "(acc * acc)"
+    ],
+    "schema": "(((v - (acc - {H})) + acc) + 1)"
+   },
+   "SHAM_1": {
+    "dist": 0,
+    "program": [
+     "fold",
+     "1",
+     "(v + (acc + 1))",
+     "(acc * acc)"
+    ],
+    "schema": "({H} + v)"
+   },
+   "spec": {
+    "Q2_size": 4,
+    "body": "(acc + (v + math.gcd(abs(0), abs(1))))",
+    "final": "(acc * acc)",
+    "init": "1",
+    "name": "qgfa",
+    "role": "VALIDATE",
+    "source": "CON:SHAM_1"
+   },
+   "uses": [
+    [
+     "CON/3",
+     "VALIDATE"
+    ],
+    [
+     "CON/5",
+     "TRANSFER"
+    ]
+   ]
+  },
+  "qhaa": {
+   "G1": {
+    "dist": 1,
+    "program": [
+     "fold",
+     "1",
+     "(acc + (acc + (first // v)))",
+     "(acc % last)"
+    ],
+    "schema": "((acc + {H}) + acc)"
+   },
+   "OFF_0": {
+    "dist": null
+   },
+   "SHAM_0": {
+    "dist": null
+   },
+   "SHAM_1": {
+    "dist": null
+   },
+   "spec": {
+    "Q2_size": 4,
+    "body": "(acc + (acc + (first // v)))",
+    "final": "(acc % last)",
+    "init": "1",
+    "name": "qhaa",
+    "role": "TRANSFER",
+    "source": "CON:G1"
+   },
+   "uses": [
+    [
+     "CON/5",
+     "TRANSFER"
+    ]
+   ]
+  },
+  "qhba": {
+   "G1": {
+    "dist": 1,
+    "program": [
+     "fold",
+     "0",
+     "(v * (acc + (1 - v)))",
+     "(acc // first)"
+    ],
+    "schema": "((acc + {H}) * v)"
+   },
+   "OFF_0": {
+    "dist": null
+   },
+   "SHAM_0": {
+    "dist": 2,
+    "program": [
+     "fold",
+     "0",
+     "(v - (v * (v - acc)))",
+     "(acc // first)"
+    ],
+    "schema": "(v - ((v - (acc - {H})) * v))"
+   },
+   "SHAM_1": {
+    "dist": null
+   },
+   "spec": {
+    "Q2_size": 4,
+    "body": "(v * (acc + (1 - v)))",
+    "final": "(acc // first)",
+    "init": "0",
+    "name": "qhba",
+    "role": "VALIDATE",
+    "source": "CON:G1"
+   },
+   "uses": [
+    [
+     "CON/2",
+     "VALIDATE"
+    ]
+   ]
+  },
+  "qhea": {
+   "G1": {
+    "dist": 1,
+    "program": [
+     "fold",
+     "1",
+     "math.gcd(abs(first), abs((acc + v)))",
+     "(acc - last)"
+    ],
+    "schema": "math.gcd(abs((acc + {H})), abs(first))"
+   },
+   "OFF_0": {
+    "dist": null
+   },
+   "SHAM_0": {
+    "dist": 2,
+    "program": [
+     "fold",
+     "1",
+     "math.gcd(abs(first), abs((acc + v)))",
+     "(acc - last)"
+    ],
+    "schema": "math.gcd(abs(((v - (acc - {H})) + acc)), abs(first))"
+   },
+   "SHAM_1": {
+    "dist": 1,
+    "program": [
+     "fold",
+     "1",
+     "math.gcd(abs(first), abs((acc + v)))",
+     "(acc - last)"
+    ],
+    "schema": "math.gcd(abs(({H} + v)), abs(first))"
+   },
+   "spec": {
+    "Q2_size": 12,
+    "body": "math.gcd(abs(first), abs((v + (acc % first))))",
+    "final": "(acc - last)",
+    "init": "1",
+    "name": "qhea",
+    "role": "VALIDATE",
+    "source": "CON:SHAM_1"
+   },
+   "uses": [
+    [
+     "CON/0",
+     "VALIDATE"
+    ]
+   ]
+  },
+  "qhfa": {
+   "G1": {
+    "dist": null
+   },
+   "OFF_0": {
+    "dist": null
+   },
+   "SHAM_0": {
+    "dist": null
+   },
+   "SHAM_1": {
+    "dist": 1,
+    "program": [
+     "fold",
+     "1",
+     "(acc * (v + (last % first)))",
+     "acc"
+    ],
+    "schema": "(({H} + v) * acc)"
+   },
+   "spec": {
+    "Q2_size": 4,
+    "body": "(acc * (v + (last % first)))",
+    "final": "math.gcd(abs(0), abs(acc))",
+    "init": "1",
+    "name": "qhfa",
+    "role": "TRANSFER",
+    "source": "CON:SHAM_1"
+   },
+   "uses": [
+    [
+     "CON/7",
+     "TRANSFER"
+    ]
+   ]
+  },
+  "qhia": {
+   "G1": {
+    "dist": 1,
+    "program": [
+     "fold",
+     "0",
+     "(v // (acc + 1))",
+     "(acc + first)"
+    ],
+    "schema": "(v // (acc + {H}))"
+   },
+   "OFF_0": {
+    "dist": 2,
+    "program": [
+     "fold",
+     "0",
+     "(v // (acc + 1))",
+     "(acc + first)"
+    ],
+    "schema": "(v // ((1 + (v - {H})) + acc))"
+   },
+   "SHAM_0": {
+    "dist": null
+   },
+   "SHAM_1": {
+    "dist": null
+   },
+   "spec": {
+    "Q2_size": 6,
+    "body": "(v // (1 + pow(acc, 1)))",
+    "final": "(first + acc)",
+    "init": "0",
+    "name": "qhia",
+    "role": "TRANSFER",
+    "source": "NAT"
+   },
+   "uses": [
+    [
+     "CON/7",
+     "TRANSFER"
+    ]
+   ]
+  },
+  "qhka": {
+   "G1": {
+    "dist": null
+   },
+   "OFF_0": {
+    "dist": null
+   },
+   "SHAM_0": {
+    "dist": null
+   },
+   "SHAM_1": {
+    "dist": 1,
+    "program": [
+     "fold",
+     "1",
+     "(acc - (v + (v * first)))",
+     "(acc + acc)"
+    ],
+    "schema": "(acc - ({H} + v))"
+   },
+   "spec": {
+    "Q2_size": 4,
+    "body": "(acc - (v + (first * v)))",
+    "final": "(acc + acc)",
+    "init": "1",
+    "name": "qhka",
+    "role": "TRANSFER",
+    "source": "NAT"
+   },
+   "uses": [
+    [
+     "CON/2",
+     "TRANSFER"
+    ]
+   ]
+  },
+  "qiaa": {
+   "G1": {
+    "dist": 1,
+    "program": [
+     "fold",
+     "0",
+     "(v + (acc + (first - last)))",
+     "(acc + 1)"
+    ],
+    "schema": "((acc + {H}) + v)"
+   },
+   "OFF_0": {
+    "dist": null
+   },
+   "SHAM_0": {
+    "dist": 1,
+    "program": [
+     "fold",
+     "0",
+     "(last - (v - (acc - first)))",
+     "(1 - acc)"
+    ],
+    "schema": "(last - (v - (acc - {H})))"
+   },
+   "SHAM_1": {
+    "dist": 1,
+    "program": [
+     "fold",
+     "0",
+     "(acc + (v + (first - last)))",
+     "(acc + 1)"
+    ],
+    "schema": "(({H} + v) + acc)"
+   },
+   "spec": {
+    "Q2_size": 4,
+    "body": "(first + (acc + (v - last)))",
+    "final": "(acc + 0)",
+    "init": "1",
+    "name": "qiaa",
+    "role": "TRANSFER",
+    "source": "CON:G1"
+   },
+   "uses": [
+    [
+     "CON/0",
+     "TRANSFER"
+    ]
+   ]
+  },
+  "qiba": {
+   "G1": {
+    "dist": 1,
+    "program": [
+     "fold",
+     "0",
+     "(first + (acc + (last - v)))",
+     "(acc + 1)"
+    ],
+    "schema": "((acc + {H}) + first)"
+   },
+   "OFF_0": {
+    "dist": null
+   },
+   "SHAM_0": {
+    "dist": 2,
+    "program": [
+     "fold",
+     "0",
+     "(last + (first - (v - acc)))",
+     "(acc + 1)"
+    ],
+    "schema": "((first - (v - (acc - {H}))) + last)"
+   },
+   "SHAM_1": {
+    "dist": null
+   },
+   "spec": {
+    "Q2_size": 4,
+    "body": "(first + (acc + (last - v)))",
+    "final": "(1 * acc)",
+    "init": "1",
+    "name": "qiba",
+    "role": "VALIDATE",
+    "source": "CON:G1"
+   },
+   "uses": [
+    [
+     "CON/3",
+     "VALIDATE"
+    ]
+   ]
+  },
+  "qica": {
+   "G1": {
+    "dist": null
+   },
+   "OFF_0": {
+    "dist": null
+   },
+   "SHAM_0": {
+    "dist": 0,
+    "program": [
+     "fold",
+     "1",
+     "(v - (acc - (acc * v)))",
+     "acc"
+    ],
+    "schema": "(v - (acc - {H}))"
+   },
+   "SHAM_1": {
+    "dist": null
+   },
+   "spec": {
+    "Q2_size": 4,
+    "body": "(v - (acc - (acc * v)))",
+    "final": "(acc // 1)",
+    "init": "1",
+    "name": "qica",
+    "role": "VALIDATE",
+    "source": "CON:SHAM_0"
+   },
+   "uses": [
+    [
+     "CON/0",
+     "VALIDATE"
+    ]
+   ]
+  },
+  "qiha": {
+   "G1": {
+    "dist": 0,
+    "program": [
+     "fold",
+     "1",
+     "(acc + (v - 1))",
+     "(acc - first)"
+    ],
+    "schema": "(acc + {H})"
+   },
+   "OFF_0": {
+    "dist": 2,
+    "program": [
+     "fold",
+     "1",
+     "(v + (acc - 1))",
+     "(acc - first)"
+    ],
+    "schema": "((acc - (1 + (v - {H}))) + v)"
+   },
+   "SHAM_0": {
+    "dist": 2,
+    "program": [
+     "fold",
+     "1",
+     "(acc - (1 - v))",
+     "(acc - first)"
+    ],
+    "schema": "(acc - (1 - (v - (acc - {H}))))"
+   },
+   "SHAM_1": {
+    "dist": 0,
+    "program": [
+     "fold",
+     "1",
+     "(v + (acc - 1))",
+     "(acc - first)"
+    ],
+    "schema": "({H} + v)"
+   },
+   "spec": {
+    "Q2_size": 4,
+    "body": "(v - (1 - (acc + 0)))",
+    "final": "(acc - first)",
+    "init": "1",
+    "name": "qiha",
+    "role": "VALIDATE",
+    "source": "NAT"
+   },
+   "uses": [
+    [
+     "CON/3",
+     "VALIDATE"
+    ]
+   ]
+  },
+  "qjaa": {
+   "G1": {
+    "dist": 1,
+    "program": [
+     "fold",
+     "1",
+     "(v * (acc + first))",
+     "acc"
+    ],
+    "schema": "((acc + {H}) * v)"
+   },
+   "OFF_0": {
+    "dist": null
+   },
+   "SHAM_0": {
+    "dist": null
+   },
+   "SHAM_1": {
+    "dist": null
+   },
+   "spec": {
+    "Q2_size": 4,
+    "body": "(v * (acc + math.gcd(abs(first), abs(0))))",
+    "final": "(acc * 1)",
+    "init": "1",
+    "name": "qjaa",
+    "role": "TRANSFER",
+    "source": "CON:G1"
+   },
+   "uses": [
+    [
+     "CON/4",
+     "TRANSFER"
+    ]
+   ]
+  },
+  "qjca": {
+   "G1": {
+    "dist": 1,
+    "program": [
+     "fold",
+     "1",
+     "(v - (acc + (0 - 1)))",
+     "math.gcd(abs(acc), abs(acc))"
+    ],
+    "schema": "(v - (acc + {H}))"
+   },
+   "OFF_0": {
+    "dist": 0,
+    "program": [
+     "fold",
+     "1",
+     "(1 + (v - acc))",
+     "math.gcd(abs(acc), abs(acc))"
+    ],
+    "schema": "(1 + (v - {H}))"
+   },
+   "SHAM_0": {
+    "dist": 0,
+    "program": [
+     "fold",
+     "1",
+     "(v - (acc - 1))",
+     "math.gcd(abs(acc), abs(acc))"
+    ],
+    "schema": "(v - (acc - {H}))"
+   },
+   "SHAM_1": {
+    "dist": 0,
+    "program": [
+     "fold",
+     "1",
+     "(v + (1 - acc))",
+     "math.gcd(abs(acc), abs(acc))"
+    ],
+    "schema": "({H} + v)"
+   },
+   "spec": {
+    "Q2_size": 8,
+    "body": "(v - (acc - math.gcd(abs(0), abs(1))))",
+    "final": "math.gcd(abs(0), abs(acc))",
+    "init": "1",
+    "name": "qjca",
+    "role": "TRANSFER",
+    "source": "CON:SHAM_0"
+   },
+   "uses": [
+    [
+     "CON/4",
+     "TRANSFER"
+    ]
+   ]
+  },
+  "qkaa": {
+   "G1": {
+    "dist": 1,
+    "program": [
+     "fold",
+     "1",
+     "(1 + (acc + (v % acc)))",
+     "(0 - acc)"
+    ],
+    "schema": "((acc + {H}) + 1)"
+   },
+   "OFF_0": {
+    "dist": null
+   },
+   "SHAM_0": {
+    "dist": null
+   },
+   "SHAM_1": {
+    "dist": null
+   },
+   "spec": {
+    "Q2_size": 4,
+    "body": "(1 + (acc + (v % acc)))",
+    "final": "(0 - acc)",
+    "init": "1",
+    "name": "qkaa",
+    "role": "TRANSFER",
+    "source": "CON:G1"
+   },
+   "uses": [
+    [
+     "CON/3",
+     "TRANSFER"
+    ]
+   ]
+  },
+  "qkba": {
+   "G1": {
+    "dist": 1,
+    "program": [
+     "fold",
+     "0",
+     "(first - (acc + (acc % v)))",
+     "(acc - 1)"
+    ],
+    "schema": "(first - (acc + {H}))"
+   },
+   "OFF_0": {
+    "dist": null
+   },
+   "SHAM_0": {
+    "dist": null
+   },
+   "SHAM_1": {
+    "dist": null
+   },
+   "spec": {
+    "Q2_size": 4,
+    "body": "(first - (acc + (acc % v)))",
+    "final": "(acc - 1)",
+    "init": "0",
+    "name": "qkba",
+    "role": "TRANSFER",
+    "source": "CON:G1"
+   },
+   "uses": [
+    [
+     "CON/6",
+     "TRANSFER"
+    ]
+   ]
+  },
+  "qkea": {
+   "G1": {
+    "dist": 2,
+    "program": [
+     "fold",
+     "1",
+     "(v + (last % acc))",
+     "(acc - last)"
+    ],
+    "schema": "((last % (acc + {H})) + v)"
+   },
+   "OFF_0": {
+    "dist": null
+   },
+   "SHAM_0": {
+    "dist": null
+   },
+   "SHAM_1": {
+    "dist": 0,
+    "program": [
+     "fold",
+     "1",
+     "(v + (last % acc))",
+     "(acc - last)"
+    ],
+    "schema": "({H} + v)"
+   },
+   "spec": {
+    "Q2_size": 6,
+    "body": "math.gcd(abs(0), abs((v + (last % acc))))",
+    "final": "(acc - last)",
+    "init": "1",
+    "name": "qkea",
+    "role": "VALIDATE",
+    "source": "CON:SHAM_1"
+   },
+   "uses": [
+    [
+     "CON/1",
+     "VALIDATE"
+    ],
+    [
+     "CON/6",
+     "TRANSFER"
+    ]
+   ]
+  },
+  "qkfa": {
+   "G1": {
+    "dist": 1,
+    "program": [
+     "fold",
+     "1",
+     "(v * (acc + (v - first)))",
+     "(acc - 1)"
+    ],
+    "schema": "((acc + {H}) * v)"
+   },
+   "OFF_0": {
+    "dist": null
+   },
+   "SHAM_0": {
+    "dist": null
+   },
+   "SHAM_1": {
+    "dist": 1,
+    "program": [
+     "fold",
+     "1",
+     "(v * (v + (acc - first)))",
+     "(acc - 1)"
+    ],
+    "schema": "(({H} + v) * v)"
+   },
+   "spec": {
+    "Q2_size": 4,
+    "body": "(v * (v + (acc - first)))",
+    "final": "(acc - 1)",
+    "init": "1",
+    "name": "qkfa",
+    "role": "VALIDATE",
+    "source": "CON:SHAM_1"
+   },
+   "uses": [
+    [
+     "CON/4",
+     "VALIDATE"
+    ],
+    [
+     "CON/7",
+     "VALIDATE"
+    ]
+   ]
+  },
+  "qkha": {
+   "G1": {
+    "dist": null
+   },
+   "OFF_0": {
+    "dist": null
+   },
+   "SHAM_0": {
+    "dist": null
+   },
+   "SHAM_1": {
+    "dist": null
+   },
+   "spec": {
+    "Q2_size": 4,
+    "body": "(acc + (first % (acc - v)))",
+    "final": "(first - acc)",
+    "init": "1",
+    "name": "qkha",
+    "role": "VALIDATE",
+    "source": "NAT"
+   },
+   "uses": [
+    [
+     "CON/7",
+     "VALIDATE"
+    ]
+   ]
+  },
+  "qlaa": {
+   "G1": {
+    "dist": 1,
+    "program": [
+     "fold",
+     "0",
+     "(last * (acc + (v - first)))",
+     "(acc // last)"
+    ],
+    "schema": "((acc + {H}) * last)"
+   },
+   "OFF_0": {
+    "dist": null
+   },
+   "SHAM_0": {
+    "dist": null
+   },
+   "SHAM_1": {
+    "dist": 1,
+    "program": [
+     "fold",
+     "0",
+     "(last * (v + (acc - first)))",
+     "(acc // last)"
+    ],
+    "schema": "(({H} + v) * last)"
+   },
+   "spec": {
+    "Q2_size": 4,
+    "body": "(last * (acc + (v - first)))",
+    "final": "(acc // last)",
+    "init": "0",
+    "name": "qlaa",
+    "role": "VALIDATE",
+    "source": "CON:G1"
+   },
+   "uses": [
+    [
+     "CON/1",
+     "VALIDATE"
+    ]
+   ]
+  },
+  "qlca": {
+   "G1": {
+    "dist": 1,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc + (0 - 1)))",
+     "math.gcd(abs(acc), abs(acc))"
+    ],
+    "schema": "(v - (acc + {H}))"
+   },
+   "OFF_0": {
+    "dist": 0,
+    "program": [
+     "fold",
+     "0",
+     "(1 + (v - acc))",
+     "math.gcd(abs(acc), abs(acc))"
+    ],
+    "schema": "(1 + (v - {H}))"
+   },
+   "SHAM_0": {
+    "dist": 0,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc - 1))",
+     "math.gcd(abs(acc), abs(acc))"
+    ],
+    "schema": "(v - (acc - {H}))"
+   },
+   "SHAM_1": {
+    "dist": 0,
+    "program": [
+     "fold",
+     "0",
+     "(v + (1 - acc))",
+     "math.gcd(abs(acc), abs(acc))"
+    ],
+    "schema": "({H} + v)"
+   },
+   "spec": {
+    "Q2_size": 6,
+    "body": "(v - (acc - (v // v)))",
+    "final": "math.gcd(abs(0), abs(acc))",
+    "init": "0",
+    "name": "qlca",
+    "role": "TRANSFER",
+    "source": "CON:SHAM_0"
+   },
+   "uses": [
+    [
+     "CON/0",
+     "TRANSFER"
+    ],
+    [
+     "CON/2",
+     "TRANSFER"
+    ]
+   ]
+  },
+  "qlea": {
+   "G1": {
+    "dist": null
+   },
+   "OFF_0": {
+    "dist": null
+   },
+   "SHAM_0": {
+    "dist": null
+   },
+   "SHAM_1": {
+    "dist": 1,
+    "program": [
+     "fold",
+     "1",
+     "(1 + (v + (acc * last)))",
+     "(acc + last)"
+    ],
+    "schema": "(({H} + v) + 1)"
+   },
+   "spec": {
+    "Q2_size": 4,
+    "body": "(1 + (v + (acc * last)))",
+    "final": "(last + acc)",
+    "init": "1",
+    "name": "qlea",
+    "role": "TRANSFER",
+    "source": "CON:SHAM_1"
+   },
+   "uses": [
+    [
+     "CON/3",
+     "TRANSFER"
+    ]
+   ]
+  },
+  "qmda": {
+   "G1": {
+    "dist": null
+   },
+   "OFF_0": {
+    "dist": null
+   },
+   "SHAM_0": {
+    "dist": 0,
+    "program": [
+     "fold",
+     "1",
+     "(v - (acc - (v % first)))",
+     "(acc // last)"
+    ],
+    "schema": "(v - (acc - {H}))"
+   },
+   "SHAM_1": {
+    "dist": null
+   },
+   "spec": {
+    "Q2_size": 24,
+    "body": "(v - (acc - (v % first)))",
+    "final": "(acc // last)",
+    "init": "1",
+    "name": "qmda",
+    "role": "TRANSFER",
+    "source": "CON:SHAM_0"
+   },
+   "uses": [
+    [
+     "CON/6",
+     "TRANSFER"
+    ]
+   ]
+  },
+  "qmea": {
+   "G1": {
+    "dist": null
+   },
+   "OFF_0": {
+    "dist": null
+   },
+   "SHAM_0": {
+    "dist": null
+   },
+   "SHAM_1": {
+    "dist": 1,
+    "program": [
+     "fold",
+     "1",
+     "(1 - (v + math.gcd(abs(acc), abs(last))))",
+     "acc"
+    ],
+    "schema": "(1 - ({H} + v))"
+   },
+   "spec": {
+    "Q2_size": 8,
+    "body": "(1 - (v + math.gcd(abs(acc), abs(last))))",
+    "final": "(acc // 1)",
+    "init": "1",
+    "name": "qmea",
+    "role": "TRANSFER",
+    "source": "CON:SHAM_1"
+   },
+   "uses": [
+    [
+     "CON/1",
+     "TRANSFER"
+    ]
+   ]
+  },
+  "qnea": {
+   "G1": {
+    "dist": 1,
+    "program": [
+     "fold",
+     "0",
+     "(v + (acc + (last - 1)))",
+     "(0 - acc)"
+    ],
+    "schema": "((acc + {H}) + v)"
+   },
+   "OFF_0": {
+    "dist": null
+   },
+   "SHAM_0": {
+    "dist": 1,
+    "program": [
+     "fold",
+     "0",
+     "(1 - (v - (acc - last)))",
+     "acc"
+    ],
+    "schema": "(1 - (v - (acc - {H})))"
+   },
+   "SHAM_1": {
+    "dist": 1,
+    "program": [
+     "fold",
+     "0",
+     "(acc + (v + (last - 1)))",
+     "(0 - acc)"
+    ],
+    "schema": "(({H} + v) + acc)"
+   },
+   "spec": {
+    "Q2_size": 4,
+    "body": "(1 - (v + (last - acc)))",
+    "final": "(1 * acc)",
+    "init": "0",
+    "name": "qnea",
+    "role": "TRANSFER",
+    "source": "CON:SHAM_1"
+   },
+   "uses": [
+    [
+     "CON/2",
+     "TRANSFER"
+    ],
+    [
+     "CON/3",
+     "TRANSFER"
+    ]
+   ]
+  },
+  "qnha": {
+   "G1": {
+    "dist": 1,
+    "program": [
+     "fold",
+     "0",
+     "(v + (acc + (first // v)))",
+     "acc"
+    ],
+    "schema": "((acc + {H}) + v)"
+   },
+   "OFF_0": {
+    "dist": null
+   },
+   "SHAM_0": {
+    "dist": null
+   },
+   "SHAM_1": {
+    "dist": 1,
+    "program": [
+     "fold",
+     "0",
+     "(acc + (v + (first // v)))",
+     "acc"
+    ],
+    "schema": "(({H} + v) + acc)"
+   },
+   "spec": {
+    "Q2_size": 4,
+    "body": "(v + (acc + (first // v)))",
+    "final": "acc",
+    "init": "0",
+    "name": "qnha",
+    "role": "TRANSFER",
+    "source": "NAT"
+   },
+   "uses": [
+    [
+     "CON/5",
+     "TRANSFER"
+    ]
+   ]
+  },
+  "qoda": {
+   "G1": {
+    "dist": 1,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc + (acc - last)))",
+     "acc"
+    ],
+    "schema": "(v - (acc + {H}))"
+   },
+   "OFF_0": {
+    "dist": null
+   },
+   "SHAM_0": {
+    "dist": 0,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc - (last - acc)))",
+     "acc"
+    ],
+    "schema": "(v - (acc - {H}))"
+   },
+   "SHAM_1": {
+    "dist": null
+   },
+   "spec": {
+    "Q2_size": 4,
+    "body": "(v - (acc - (last - acc)))",
+    "final": "(acc + 0)",
+    "init": "0",
+    "name": "qoda",
+    "role": "TRANSFER",
+    "source": "CON:SHAM_0"
+   },
+   "uses": [
+    [
+     "CON/1",
+     "TRANSFER"
+    ]
+   ]
+  },
+  "qpaa": {
+   "G1": {
+    "dist": 0,
+    "program": [
+     "fold",
+     "0",
+     "(acc + (last % v))",
+     "(acc + last)"
+    ],
+    "schema": "(acc + {H})"
+   },
+   "OFF_0": {
+    "dist": null
+   },
+   "SHAM_0": {
+    "dist": 2,
+    "program": [
+     "fold",
+     "0",
+     "(acc + (last % v))",
+     "(acc + last)"
+    ],
+    "schema": "((last % (v - (acc - {H}))) + acc)"
+   },
+   "SHAM_1": {
+    "dist": 2,
+    "program": [
+     "fold",
+     "0",
+     "(acc + (last % v))",
+     "(acc + last)"
+    ],
+    "schema": "((last % ({H} + v)) + acc)"
+   },
+   "spec": {
+    "Q2_size": 4,
+    "body": "(acc + (last % v))",
+    "final": "(acc + last)",
+    "init": "0",
+    "name": "qpaa",
+    "role": "VALIDATE",
+    "source": "CON:G1"
+   },
+   "uses": [
+    [
+     "CON/5",
+     "VALIDATE"
+    ]
+   ]
+  },
+  "qpba": {
+   "G1": {
+    "dist": 1,
+    "program": [
+     "fold",
+     "1",
+     "(v + (acc + (last % first)))",
+     "(0 - acc)"
+    ],
+    "schema": "((acc + {H}) + v)"
+   },
+   "OFF_0": {
+    "dist": null
+   },
+   "SHAM_0": {
+    "dist": null
+   },
+   "SHAM_1": {
+    "dist": 1,
+    "program": [
+     "fold",
+     "1",
+     "(acc + (v + (last % first)))",
+     "(0 - acc)"
+    ],
+    "schema": "(({H} + v) + acc)"
+   },
+   "spec": {
+    "Q2_size": 4,
+    "body": "(v + (acc + (last % first)))",
+    "final": "(0 - acc)",
+    "init": "1",
+    "name": "qpba",
+    "role": "VALIDATE",
+    "source": "CON:G1"
+   },
+   "uses": [
+    [
+     "CON/4",
+     "VALIDATE"
+    ]
+   ]
+  },
+  "qpca": {
+   "G1": {
+    "dist": null
+   },
+   "OFF_0": {
+    "dist": null
+   },
+   "SHAM_0": {
+    "dist": 0,
+    "program": [
+     "fold",
+     "1",
+     "(v - (acc - (acc * first)))",
+     "(acc - last)"
+    ],
+    "schema": "(v - (acc - {H}))"
+   },
+   "SHAM_1": {
+    "dist": null
+   },
+   "spec": {
+    "Q2_size": 4,
+    "body": "(v - (acc - (acc * first)))",
+    "final": "(acc - last)",
+    "init": "1",
+    "name": "qpca",
+    "role": "VALIDATE",
+    "source": "CON:SHAM_0"
+   },
+   "uses": [
+    [
+     "CON/6",
+     "VALIDATE"
+    ],
+    [
+     "CON/7",
+     "VALIDATE"
+    ]
+   ]
+  },
+  "qpda": {
+   "G1": {
+    "dist": null
+   },
+   "OFF_0": {
+    "dist": null
+   },
+   "SHAM_0": {
+    "dist": 1,
+    "program": [
+     "fold",
+     "1",
+     "(last - (v - (acc - first)))",
+     "(acc + 1)"
+    ],
+    "schema": "(last - (v - (acc - {H})))"
+   },
+   "SHAM_1": {
+    "dist": 1,
+    "program": [
+     "fold",
+     "1",
+     "(acc - (v + (first - last)))",
+     "(acc + 1)"
+    ],
+    "schema": "(acc - ({H} + v))"
+   },
+   "spec": {
+    "Q2_size": 4,
+    "body": "(last - (v - (acc - first)))",
+    "final": "(1 + acc)",
+    "init": "1",
+    "name": "qpda",
+    "role": "TRANSFER",
+    "source": "CON:SHAM_0"
+   },
+   "uses": [
+    [
+     "CON/7",
+     "TRANSFER"
+    ]
+   ]
+  },
+  "qpga": {
+   "G1": {
+    "dist": 0,
+    "program": [
+     "fold",
+     "1",
+     "(acc + (v + first))",
+     "(acc - first)"
+    ],
+    "schema": "(acc + {H})"
+   },
+   "OFF_0": {
+    "dist": null
+   },
+   "SHAM_0": {
+    "dist": 2,
+    "program": [
+     "fold",
+     "1",
+     "(first + (acc + v))",
+     "(acc - first)"
+    ],
+    "schema": "(((v - (acc - {H})) + acc) + first)"
+   },
+   "SHAM_1": {
+    "dist": 0,
+    "program": [
+     "fold",
+     "1",
+     "(v + (acc + first))",
+     "(acc - first)"
+    ],
+    "schema": "({H} + v)"
+   },
+   "spec": {
+    "Q2_size": 4,
+    "body": "(v + (acc + math.gcd(abs(first), abs(first))))",
+    "final": "(acc - first)",
+    "init": "1",
+    "name": "qpga",
+    "role": "TRANSFER",
+    "source": "NAT"
+   },
+   "uses": [
+    [
+     "CON/5",
+     "TRANSFER"
+    ]
+   ]
+  },
+  "qqba": {
+   "G1": {
+    "dist": 1,
+    "program": [
+     "fold",
+     "1",
+     "(first + (acc + (acc * v)))",
+     "acc"
+    ],
+    "schema": "((acc + {H}) + first)"
+   },
+   "OFF_0": {
+    "dist": 2,
+    "program": [
+     "fold",
+     "1",
+     "(first + (acc * (v + 1)))",
+     "acc"
+    ],
+    "schema": "(((1 + (v - {H})) * acc) + first)"
+   },
+   "SHAM_0": {
+    "dist": null
+   },
+   "SHAM_1": {
+    "dist": 2,
+    "program": [
+     "fold",
+     "1",
+     "(first + (acc * (v + 1)))",
+     "acc"
+    ],
+    "schema": "((({H} + v) * acc) + first)"
+   },
+   "spec": {
+    "Q2_size": 4,
+    "body": "(first + (acc + (acc * v)))",
+    "final": "(acc // 1)",
+    "init": "1",
+    "name": "qqba",
+    "role": "VALIDATE",
+    "source": "CON:G1"
+   },
+   "uses": [
+    [
+     "CON/0",
+     "VALIDATE"
+    ]
+   ]
+  },
+  "qqda": {
+   "G1": {
+    "dist": null
+   },
+   "OFF_0": {
+    "dist": null
+   },
+   "SHAM_0": {
+    "dist": 0,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc - (v * v)))",
+     "(0 - acc)"
+    ],
+    "schema": "(v - (acc - {H}))"
+   },
+   "SHAM_1": {
+    "dist": null
+   },
+   "spec": {
+    "Q2_size": 4,
+    "body": "(v - (acc - (v * v)))",
+    "final": "(0 - acc)",
+    "init": "0",
+    "name": "qqda",
+    "role": "VALIDATE",
+    "source": "CON:SHAM_0"
+   },
+   "uses": [
+    [
+     "CON/2",
+     "VALIDATE"
+    ],
+    [
+     "CON/3",
+     "VALIDATE"
+    ]
+   ]
+  },
+  "qqea": {
+   "G1": {
+    "dist": 1,
+    "program": [
+     "fold",
+     "1",
+     "(first - (acc + (acc + v)))",
+     "acc"
+    ],
+    "schema": "(first - (acc + {H}))"
+   },
+   "OFF_0": {
+    "dist": null
+   },
+   "SHAM_0": {
+    "dist": null
+   },
+   "SHAM_1": {
+    "dist": 1,
+    "program": [
+     "fold",
+     "1",
+     "(first - (v + (acc + acc)))",
+     "acc"
+    ],
+    "schema": "(first - ({H} + v))"
+   },
+   "spec": {
+    "Q2_size": 4,
+    "body": "(first - (v + (acc + acc)))",
+    "final": "(acc * 1)",
+    "init": "1",
+    "name": "qqea",
+    "role": "TRANSFER",
+    "source": "CON:SHAM_1"
+   },
+   "uses": [
+    [
+     "CON/4",
+     "TRANSFER"
+    ]
+   ]
+  },
+  "qraa": {
+   "G1": {
+    "dist": 1,
+    "program": [
+     "fold",
+     "0",
+     "(first * (acc + (v % first)))",
+     "acc"
+    ],
+    "schema": "((acc + {H}) * first)"
+   },
+   "OFF_0": {
+    "dist": null
+   },
+   "SHAM_0": {
+    "dist": null
+   },
+   "SHAM_1": {
+    "dist": null
+   },
+   "spec": {
+    "Q2_size": 4,
+    "body": "(first * (acc + (v % first)))",
+    "final": "acc",
+    "init": "0",
+    "name": "qraa",
+    "role": "TRANSFER",
+    "source": "CON:G1"
+   },
+   "uses": [
+    [
+     "CON/6",
+     "TRANSFER"
+    ]
+   ]
+  },
+  "qrda": {
+   "G1": {
+    "dist": 1,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc + 1))",
+     "(acc + 1)"
+    ],
+    "schema": "(v - (acc + {H}))"
+   },
+   "OFF_0": {
+    "dist": 0,
+    "program": [
+     "fold",
+     "1",
+     "(1 + (v - acc))",
+     "acc"
+    ],
+    "schema": "(1 + (v - {H}))"
+   },
+   "SHAM_0": {
+    "dist": 0,
+    "program": [
+     "fold",
+     "1",
+     "(v - (acc - 1))",
+     "acc"
+    ],
+    "schema": "(v - (acc - {H}))"
+   },
+   "SHAM_1": {
+    "dist": 0,
+    "program": [
+     "fold",
+     "1",
+     "(v + (1 - acc))",
+     "acc"
+    ],
+    "schema": "({H} + v)"
+   },
+   "spec": {
+    "Q2_size": 8,
+    "body": "(v - (acc - pow(1, v)))",
+    "final": "pow(acc, 1)",
+    "init": "1",
+    "name": "qrda",
+    "role": "VALIDATE",
+    "source": "CON:SHAM_0"
+   },
+   "uses": [
+    [
+     "CON/1",
+     "VALIDATE"
+    ],
+    [
+     "CON/2",
+     "TRANSFER"
+    ],
+    [
+     "CON/5",
+     "TRANSFER"
+    ]
+   ]
+  },
+  "qrga": {
+   "G1": {
+    "dist": 1,
+    "program": [
+     "fold",
+     "1",
+     "(v + (acc + (v * v)))",
+     "(acc + last)"
+    ],
+    "schema": "((acc + {H}) + v)"
+   },
+   "OFF_0": {
+    "dist": 2,
+    "program": [
+     "fold",
+     "1",
+     "(acc + (v * (v + 1)))",
+     "(acc + last)"
+    ],
+    "schema": "(((1 + (v - {H})) * v) + acc)"
+   },
+   "SHAM_0": {
+    "dist": null
+   },
+   "SHAM_1": {
+    "dist": 1,
+    "program": [
+     "fold",
+     "1",
+     "(acc + (v + (v * v)))",
+     "(acc + last)"
+    ],
+    "schema": "(({H} + v) + acc)"
+   },
+   "spec": {
+    "Q2_size": 4,
+    "body": "(acc + (v * (v + 1)))",
+    "final": "(acc + last)",
+    "init": "1",
+    "name": "qrga",
+    "role": "TRANSFER",
+    "source": "NAT"
+   },
+   "uses": [
+    [
+     "CON/2",
+     "TRANSFER"
+    ]
+   ]
+  },
+  "qsaa": {
+   "G1": {
+    "dist": 0,
+    "program": [
+     "fold",
+     "0",
+     "(acc + (first - v))",
+     "(acc // first)"
+    ],
+    "schema": "(acc + {H})"
+   },
+   "OFF_0": {
+    "dist": null
+   },
+   "SHAM_0": {
+    "dist": 1,
+    "program": [
+     "fold",
+     "0",
+     "(first - (v - acc))",
+     "(acc // first)"
+    ],
+    "schema": "(first - (v - (acc - {H})))"
+   },
+   "SHAM_1": {
+    "dist": 1,
+    "program": [
+     "fold",
+     "0",
+     "(acc - (v + (0 - first)))",
+     "(acc // first)"
+    ],
+    "schema": "(acc - ({H} + v))"
+   },
+   "spec": {
+    "Q2_size": 6,
+    "body": "(acc + (first - v))",
+    "final": "(acc // first)",
+    "init": "0",
+    "name": "qsaa",
+    "role": "VALIDATE",
+    "source": "CON:G1"
+   },
+   "uses": [
+    [
+     "CON/6",
+     "VALIDATE"
+    ]
+   ]
+  },
+  "qsba": {
+   "G1": {
+    "dist": 1,
+    "program": [
+     "fold",
+     "1",
+     "(v - (acc + (first - 1)))",
+     "(acc // first)"
+    ],
+    "schema": "(v - (acc + {H}))"
+   },
+   "OFF_0": {
+    "dist": 0,
+    "program": [
+     "fold",
+     "1",
+     "(1 + (v - (acc + first)))",
+     "(acc // first)"
+    ],
+    "schema": "(1 + (v - {H}))"
+   },
+   "SHAM_0": {
+    "dist": 0,
+    "program": [
+     "fold",
+     "1",
+     "(v - (acc - (1 - first)))",
+     "(acc // first)"
+    ],
+    "schema": "(v - (acc - {H}))"
+   },
+   "SHAM_1": {
+    "dist": null
+   },
+   "spec": {
+    "Q2_size": 8,
+    "body": "(v - (acc + (first - 1)))",
+    "final": "(acc // first)",
+    "init": "1",
+    "name": "qsba",
+    "role": "TRANSFER",
+    "source": "CON:G1"
+   },
+   "uses": [
+    [
+     "CON/4",
+     "TRANSFER"
+    ]
+   ]
+  },
+  "qsca": {
+   "G1": {
+    "dist": 1,
+    "program": [
+     "fold",
+     "1",
+     "(v - (acc + (1 - last)))",
+     "acc"
+    ],
+    "schema": "(v - (acc + {H}))"
+   },
+   "OFF_0": {
+    "dist": null
+   },
+   "SHAM_0": {
+    "dist": 0,
+    "program": [
+     "fold",
+     "1",
+     "(v - (acc - (last - 1)))",
+     "acc"
+    ],
+    "schema": "(v - (acc - {H}))"
+   },
+   "SHAM_1": {
+    "dist": null
+   },
+   "spec": {
+    "Q2_size": 8,
+    "body": "(v - (acc - (last - 1)))",
+    "final": "(1 * acc)",
+    "init": "1",
+    "name": "qsca",
+    "role": "TRANSFER",
+    "source": "CON:SHAM_0"
+   },
+   "uses": [
+    [
+     "CON/6",
+     "TRANSFER"
+    ]
+   ]
+  },
+  "qsha": {
+   "G1": {
+    "dist": 2,
+    "program": [
+     "fold",
+     "1",
+     "(1 + (acc * v))",
+     "(acc + 1)"
+    ],
+    "schema": "(((acc + {H}) * v) + 1)"
+   },
+   "OFF_0": {
+    "dist": null
+   },
+   "SHAM_0": {
+    "dist": 2,
+    "program": [
+     "fold",
+     "1",
+     "(1 + (acc * v))",
+     "(acc + 1)"
+    ],
+    "schema": "(((v - (acc - {H})) * acc) + 1)"
+   },
+   "SHAM_1": {
+    "dist": 2,
+    "program": [
+     "fold",
+     "1",
+     "(1 + (acc * v))",
+     "(acc + 1)"
+    ],
+    "schema": "((({H} + v) * acc) + 1)"
+   },
+   "spec": {
+    "Q2_size": 4,
+    "body": "(1 - (v * (0 - acc)))",
+    "final": "(1 + acc)",
+    "init": "1",
+    "name": "qsha",
+    "role": "TRANSFER",
+    "source": "NAT"
+   },
+   "uses": [
+    [
+     "CON/0",
+     "TRANSFER"
+    ]
+   ]
+  },
+  "qtca": {
+   "G1": {
+    "dist": 1,
+    "program": [
+     "fold",
+     "1",
+     "(v - (acc + (last - first)))",
+     "(acc * last)"
+    ],
+    "schema": "(v - (acc + {H}))"
+   },
+   "OFF_0": {
+    "dist": null
+   },
+   "SHAM_0": {
+    "dist": 0,
+    "program": [
+     "fold",
+     "1",
+     "(v - (acc - (first - last)))",
+     "(acc * last)"
+    ],
+    "schema": "(v - (acc - {H}))"
+   },
+   "SHAM_1": {
+    "dist": null
+   },
+   "spec": {
+    "Q2_size": 8,
+    "body": "(v - (acc - (first - last)))",
+    "final": "(last * acc)",
+    "init": "1",
+    "name": "qtca",
+    "role": "TRANSFER",
+    "source": "CON:SHAM_0"
+   },
+   "uses": [
+    [
+     "CON/7",
+     "TRANSFER"
+    ]
+   ]
+  },
+  "qtda": {
+   "G1": {
+    "dist": 1,
+    "program": [
+     "fold",
+     "0",
+     "(v + (acc + math.gcd(abs(acc), abs(v))))",
+     "acc"
+    ],
+    "schema": "((acc + {H}) + v)"
+   },
+   "OFF_0": {
+    "dist": null
+   },
+   "SHAM_0": {
+    "dist": null
+   },
+   "SHAM_1": {
+    "dist": 1,
+    "program": [
+     "fold",
+     "0",
+     "(acc + (v + math.gcd(abs(acc), abs(v))))",
+     "acc"
+    ],
+    "schema": "(({H} + v) + acc)"
+   },
+   "spec": {
+    "Q2_size": 4,
+    "body": "(acc + (v + math.gcd(abs(acc), abs(v))))",
+    "final": "(acc * 1)",
+    "init": "0",
+    "name": "qtda",
+    "role": "TRANSFER",
+    "source": "CON:SHAM_1"
+   },
+   "uses": [
+    [
+     "CON/7",
+     "TRANSFER"
+    ]
+   ]
+  },
+  "qtfa": {
+   "G1": {
+    "dist": 0,
+    "program": [
+     "fold",
+     "0",
+     "(acc + math.gcd(abs(v), abs(last)))",
+     "(acc * last)"
+    ],
+    "schema": "(acc + {H})"
+   },
+   "OFF_0": {
+    "dist": null
+   },
+   "SHAM_0": {
+    "dist": 2,
+    "program": [
+     "fold",
+     "0",
+     "(acc + math.gcd(abs(v), abs(last)))",
+     "(acc * last)"
+    ],
+    "schema": "(math.gcd(abs((v - (acc - {H}))), abs(last)) + acc)"
+   },
+   "SHAM_1": {
+    "dist": 2,
+    "program": [
+     "fold",
+     "0",
+     "(acc + math.gcd(abs(v), abs((v + last))))",
+     "(acc * last)"
+    ],
+    "schema": "(math.gcd(abs(({H} + v)), abs(v)) + acc)"
+   },
+   "spec": {
+    "Q2_size": 4,
+    "body": "(acc + math.gcd(abs(v), abs((0 + last))))",
+    "final": "(acc * last)",
+    "init": "0",
+    "name": "qtfa",
+    "role": "VALIDATE",
+    "source": "NAT"
+   },
+   "uses": [
+    [
+     "CON/4",
+     "VALIDATE"
+    ]
+   ]
+  },
+  "qtga": {
+   "G1": {
+    "dist": 2,
+    "program": [
+     "fold",
+     "0",
+     "(last + (v * (acc + v)))",
+     "(acc * last)"
+    ],
+    "schema": "(((acc + {H}) * v) + last)"
+   },
+   "OFF_0": {
+    "dist": null
+   },
+   "SHAM_0": {
+    "dist": null
+   },
+   "SHAM_1": {
+    "dist": 2,
+    "program": [
+     "fold",
+     "0",
+     "(last + (v * (acc + v)))",
+     "(acc * last)"
+    ],
+    "schema": "((({H} + v) * v) + last)"
+   },
+   "spec": {
+    "Q2_size": 4,
+    "body": "(last + (v * (v + acc)))",
+    "final": "(acc * last)",
+    "init": "0",
+    "name": "qtga",
+    "role": "TRANSFER",
+    "source": "NAT"
+   },
+   "uses": [
+    [
+     "CON/7",
+     "TRANSFER"
+    ]
+   ]
+  },
+  "qtia": {
+   "G1": {
+    "dist": 0,
+    "program": [
+     "fold",
+     "0",
+     "(acc + (v + 1))",
+     "(1 - acc)"
+    ],
+    "schema": "(acc + {H})"
+   },
+   "OFF_0": {
+    "dist": 0,
+    "program": [
+     "fold",
+     "0",
+     "(1 + (v - (0 - acc)))",
+     "(1 - acc)"
+    ],
+    "schema": "(1 + (v - {H}))"
+   },
+   "SHAM_0": {
+    "dist": 1,
+    "program": [
+     "fold",
+     "0",
+     "(0 - (v - (acc - 1)))",
+     "(acc + 1)"
+    ],
+    "schema": "(0 - (v - (acc - {H})))"
+   },
+   "SHAM_1": {
+    "dist": 0,
+    "program": [
+     "fold",
+     "0",
+     "(v + (acc + 1))",
+     "(1 - acc)"
+    ],
+    "schema": "({H} + v)"
+   },
+   "spec": {
+    "Q2_size": 4,
+    "body": "(1 * (acc + (v + 1)))",
+    "final": "(1 - acc)",
+    "init": "0",
+    "name": "qtia",
+    "role": "TRANSFER",
+    "source": "NAT"
+   },
+   "uses": [
+    [
+     "CON/6",
+     "TRANSFER"
+    ]
+   ]
+  },
+  "qtja": {
+   "G1": {
+    "dist": 0,
+    "program": [
+     "fold",
+     "0",
+     "(acc + (v + first))",
+     "(1 - acc)"
+    ],
+    "schema": "(acc + {H})"
+   },
+   "OFF_0": {
+    "dist": null
+   },
+   "SHAM_0": {
+    "dist": 1,
+    "program": [
+     "fold",
+     "0",
+     "(0 - (v - (acc - first)))",
+     "(acc + 1)"
+    ],
+    "schema": "(0 - (v - (acc - {H})))"
+   },
+   "SHAM_1": {
+    "dist": 0,
+    "program": [
+     "fold",
+     "0",
+     "(v + (acc + first))",
+     "(1 - acc)"
+    ],
+    "schema": "({H} + v)"
+   },
+   "spec": {
+    "Q2_size": 4,
+    "body": "(acc - (first + (v * 1)))",
+    "final": "(1 % acc)",
+    "init": "0",
+    "name": "qtja",
+    "role": "TRANSFER",
+    "source": "NAT"
+   },
+   "uses": [
+    [
+     "CON/0",
+     "TRANSFER"
+    ]
+   ]
+  },
+  "quaa": {
+   "G1": {
+    "dist": 0,
+    "program": [
+     "fold",
+     "1",
+     "(acc + (v + 1))",
+     "(acc - last)"
+    ],
+    "schema": "(acc + {H})"
+   },
+   "OFF_0": {
+    "dist": 0,
+    "program": [
+     "fold",
+     "1",
+     "(1 + (v - (0 - acc)))",
+     "(acc - last)"
+    ],
+    "schema": "(1 + (v - {H}))"
+   },
+   "SHAM_0": {
+    "dist": 2,
+    "program": [
+     "fold",
+     "1",
+     "(1 + (acc + v))",
+     "(acc - last)"
+    ],
+    "schema": "(((v - (acc - {H})) + acc) + 1)"
+   },
+   "SHAM_1": {
+    "dist": 0,
+    "program": [
+     "fold",
+     "1",
+     "(v + (acc + 1))",
+     "(acc - last)"
+    ],
+    "schema": "({H} + v)"
+   },
+   "spec": {
+    "Q2_size": 4,
+    "body": "(v + (acc + (v // v)))",
+    "final": "(acc - last)",
+    "init": "1",
+    "name": "quaa",
+    "role": "TRANSFER",
+    "source": "CON:G1"
+   },
+   "uses": [
+    [
+     "CON/1",
+     "TRANSFER"
+    ]
+   ]
+  },
+  "quba": {
+   "G1": {
+    "dist": 1,
+    "program": [
+     "fold",
+     "0",
+     "(v + (acc + (last * last)))",
+     "(acc + last)"
+    ],
+    "schema": "((acc + {H}) + v)"
+   },
+   "OFF_0": {
+    "dist": null
+   },
+   "SHAM_0": {
+    "dist": null
+   },
+   "SHAM_1": {
+    "dist": 1,
+    "program": [
+     "fold",
+     "0",
+     "(acc + (v + (last * last)))",
+     "(acc + last)"
+    ],
+    "schema": "(({H} + v) + acc)"
+   },
+   "spec": {
+    "Q2_size": 4,
+    "body": "(v + (acc + (last * last)))",
+    "final": "(last + acc)",
+    "init": "0",
+    "name": "quba",
+    "role": "TRANSFER",
+    "source": "CON:G1"
+   },
+   "uses": [
+    [
+     "CON/1",
+     "TRANSFER"
+    ]
+   ]
+  },
+  "quca": {
+   "G1": {
+    "dist": null
+   },
+   "OFF_0": {
+    "dist": null
+   },
+   "SHAM_0": {
+    "dist": 0,
+    "program": [
+     "fold",
+     "1",
+     "(v - (acc - (v * last)))",
+     "(acc * acc)"
+    ],
+    "schema": "(v - (acc - {H}))"
+   },
+   "SHAM_1": {
+    "dist": null
+   },
+   "spec": {
+    "Q2_size": 4,
+    "body": "(v - (acc - (v * last)))",
+    "final": "(acc * acc)",
+    "init": "1",
+    "name": "quca",
+    "role": "TRANSFER",
+    "source": "CON:SHAM_0"
+   },
+   "uses": [
+    [
+     "CON/0",
+     "TRANSFER"
+    ]
+   ]
+  },
+  "quha": {
+   "G1": {
+    "dist": 0,
+    "program": [
+     "fold",
+     "0",
+     "(acc + (v * first))",
+     "(1 - acc)"
+    ],
+    "schema": "(acc + {H})"
+   },
+   "OFF_0": {
+    "dist": null
+   },
+   "SHAM_0": {
+    "dist": 2,
+    "program": [
+     "fold",
+     "0",
+     "(acc + (v * first))",
+     "(1 - acc)"
+    ],
+    "schema": "(((v - (acc - {H})) * first) + acc)"
+   },
+   "SHAM_1": {
+    "dist": 1,
+    "program": [
+     "fold",
+     "0",
+     "(first * (v + (acc // first)))",
+     "(1 - acc)"
+    ],
+    "schema": "(({H} + v) * first)"
+   },
+   "spec": {
+    "Q2_size": 4,
+    "body": "(acc - (first * v))",
+    "final": "(1 + acc)",
+    "init": "0",
+    "name": "quha",
+    "role": "TRANSFER",
+    "source": "NAT"
+   },
+   "uses": [
+    [
+     "CON/1",
+     "TRANSFER"
+    ]
+   ]
+  },
+  "qvaa": {
+   "G1": {
+    "dist": 1,
+    "program": [
+     "fold",
+     "1",
+     "(v + (acc + (first + 1)))",
+     "(acc * first)"
+    ],
+    "schema": "((acc + {H}) + v)"
+   },
+   "OFF_0": {
+    "dist": 2,
+    "program": [
+     "fold",
+     "1",
+     "(first + (acc + (v + 1)))",
+     "(acc * first)"
+    ],
+    "schema": "(((1 + (v - {H})) + acc) + first)"
+   },
+   "SHAM_0": {
+    "dist": null
+   },
+   "SHAM_1": {
+    "dist": 1,
+    "program": [
+     "fold",
+     "1",
+     "(acc + (v + (first + 1)))",
+     "(acc * first)"
+    ],
+    "schema": "(({H} + v) + acc)"
+   },
+   "spec": {
+    "Q2_size": 4,
+    "body": "(1 + (acc + (v + first)))",
+    "final": "(acc * first)",
+    "init": "1",
+    "name": "qvaa",
+    "role": "VALIDATE",
+    "source": "CON:G1"
+   },
+   "uses": [
+    [
+     "CON/7",
+     "VALIDATE"
+    ]
+   ]
+  },
+  "qvba": {
+   "G1": {
+    "dist": 0,
+    "program": [
+     "fold",
+     "0",
+     "(acc + (v + 1))",
+     "(acc * acc)"
+    ],
+    "schema": "(acc + {H})"
+   },
+   "OFF_0": {
+    "dist": 0,
+    "program": [
+     "fold",
+     "0",
+     "(1 + (v - (0 - acc)))",
+     "(acc * acc)"
+    ],
+    "schema": "(1 + (v - {H}))"
+   },
+   "SHAM_0": {
+    "dist": 1,
+    "program": [
+     "fold",
+     "0",
+     "(0 - (v - (acc - 1)))",
+     "(acc * acc)"
+    ],
+    "schema": "(0 - (v - (acc - {H})))"
+   },
+   "SHAM_1": {
+    "dist": 0,
+    "program": [
+     "fold",
+     "0",
+     "(v + (acc + 1))",
+     "(acc * acc)"
+    ],
+    "schema": "({H} + v)"
+   },
+   "spec": {
+    "Q2_size": 4,
+    "body": "(v + (acc + (first // first)))",
+    "final": "(acc * acc)",
+    "init": "0",
+    "name": "qvba",
+    "role": "TRANSFER",
+    "source": "CON:G1"
+   },
+   "uses": [
+    [
+     "CON/2",
+     "TRANSFER"
+    ]
+   ]
+  },
+  "qwda": {
+   "G1": {
+    "dist": null
+   },
+   "OFF_0": {
+    "dist": null
+   },
+   "SHAM_0": {
+    "dist": 1,
+    "program": [
+     "fold",
+     "0",
+     "(1 - (v - (acc - first)))",
+     "(acc - last)"
+    ],
+    "schema": "(1 - (v - (acc - {H})))"
+   },
+   "SHAM_1": {
+    "dist": 1,
+    "program": [
+     "fold",
+     "0",
+     "(acc - (v + (first - 1)))",
+     "(acc - last)"
+    ],
+    "schema": "(acc - ({H} + v))"
+   },
+   "spec": {
+    "Q2_size": 4,
+    "body": "(1 - (v + (first - acc)))",
+    "final": "(acc - last)",
+    "init": "0",
+    "name": "qwda",
+    "role": "TRANSFER",
+    "source": "CON:SHAM_1"
+   },
+   "uses": [
+    [
+     "CON/6",
+     "TRANSFER"
+    ]
+   ]
+  },
+  "qwea": {
+   "G1": {
+    "dist": null
+   },
+   "OFF_0": {
+    "dist": null
+   },
+   "SHAM_0": {
+    "dist": 1,
+    "program": [
+     "fold",
+     "0",
+     "(first * (v - (acc - first)))",
+     "(acc + acc)"
+    ],
+    "schema": "((v - (acc - {H})) * first)"
+   },
+   "SHAM_1": {
+    "dist": 1,
+    "program": [
+     "fold",
+     "0",
+     "(first * (v + (first - acc)))",
+     "(acc + acc)"
+    ],
+    "schema": "(({H} + v) * first)"
+   },
+   "spec": {
+    "Q2_size": 4,
+    "body": "(first * (v + (first - acc)))",
+    "final": "(acc + acc)",
+    "init": "0",
+    "name": "qwea",
+    "role": "VALIDATE",
+    "source": "CON:SHAM_1"
+   },
+   "uses": [
+    [
+     "CON/2",
+     "VALIDATE"
+    ]
+   ]
+  },
+  "qwha": {
+   "G1": {
+    "dist": 1,
+    "program": [
+     "fold",
+     "0",
+     "(v + (acc + (acc * last)))",
+     "(0 - acc)"
+    ],
+    "schema": "((acc + {H}) + v)"
+   },
+   "OFF_0": {
+    "dist": null
+   },
+   "SHAM_0": {
+    "dist": 2,
+    "program": [
+     "fold",
+     "0",
+     "(acc - (last * (v - acc)))",
+     "(acc // last)"
+    ],
+    "schema": "(acc - ((v - (acc - {H})) * last))"
+   },
+   "SHAM_1": {
+    "dist": 1,
+    "program": [
+     "fold",
+     "0",
+     "(acc + (v + (acc * last)))",
+     "(0 - acc)"
+    ],
+    "schema": "(({H} + v) + acc)"
+   },
+   "spec": {
+    "Q2_size": 4,
+    "body": "(acc - (v - (last * acc)))",
+    "final": "(0 + acc)",
+    "init": "0",
+    "name": "qwha",
+    "role": "VALIDATE",
+    "source": "NAT"
+   },
+   "uses": [
+    [
+     "CON/0",
+     "VALIDATE"
+    ],
+    [
+     "CON/1",
+     "TRANSFER"
+    ],
+    [
+     "CON/3",
+     "TRANSFER"
+    ],
+    [
+     "CON/4",
+     "TRANSFER"
+    ]
+   ]
+  },
+  "qwia": {
+   "G1": {
+    "dist": 0,
+    "program": [
+     "fold",
+     "1",
+     "(acc + (v - 1))",
+     "(acc * first)"
+    ],
+    "schema": "(acc + {H})"
+   },
+   "OFF_0": {
+    "dist": 2,
+    "program": [
+     "fold",
+     "1",
+     "(v + (acc - 1))",
+     "(acc * first)"
+    ],
+    "schema": "((acc - (1 + (v - {H}))) + v)"
+   },
+   "SHAM_0": {
+    "dist": 2,
+    "program": [
+     "fold",
+     "1",
+     "(acc - (1 - v))",
+     "(acc * first)"
+    ],
+    "schema": "(acc - (1 - (v - (acc - {H}))))"
+   },
+   "SHAM_1": {
+    "dist": 0,
+    "program": [
+     "fold",
+     "1",
+     "(v + (acc - 1))",
+     "(acc * first)"
+    ],
+    "schema": "({H} + v)"
+   },
+   "spec": {
+    "Q2_size": 4,
+    "body": "(v + math.gcd(abs(0), abs((acc - 1))))",
+    "final": "(first * acc)",
+    "init": "1",
+    "name": "qwia",
+    "role": "VALIDATE",
+    "source": "NAT"
+   },
+   "uses": [
+    [
+     "CON/6",
+     "VALIDATE"
+    ]
+   ]
+  },
+  "qxba": {
+   "G1": {
+    "dist": null
+   },
+   "OFF_0": {
+    "dist": null
+   },
+   "SHAM_0": {
+    "dist": 0,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc - (first * last)))",
+     "(acc - last)"
+    ],
+    "schema": "(v - (acc - {H}))"
+   },
+   "SHAM_1": {
+    "dist": null
+   },
+   "spec": {
+    "Q2_size": 6,
+    "body": "(v - (acc - (first * last)))",
+    "final": "(acc - last)",
+    "init": "0",
+    "name": "qxba",
+    "role": "VALIDATE",
+    "source": "CON:SHAM_0"
+   },
+   "uses": [
+    [
+     "CON/4",
+     "VALIDATE"
+    ]
+   ]
+  },
+  "qxca": {
+   "G1": {
+    "dist": null
+   },
+   "OFF_0": {
+    "dist": null
+   },
+   "SHAM_0": {
+    "dist": 1,
+    "program": [
+     "fold",
+     "0",
+     "(first * (v - (acc - last)))",
+     "acc"
+    ],
+    "schema": "((v - (acc - {H})) * first)"
+   },
+   "SHAM_1": {
+    "dist": 1,
+    "program": [
+     "fold",
+     "0",
+     "(first * (v + (last - acc)))",
+     "acc"
+    ],
+    "schema": "(({H} + v) * first)"
+   },
+   "spec": {
+    "Q2_size": 4,
+    "body": "(first * (v - (acc - last)))",
+    "final": "(0 + acc)",
+    "init": "0",
+    "name": "qxca",
+    "role": "TRANSFER",
+    "source": "CON:SHAM_0"
+   },
+   "uses": [
+    [
+     "CON/3",
+     "TRANSFER"
+    ]
+   ]
+  },
+  "qxda": {
+   "G1": {
+    "dist": null
+   },
+   "OFF_0": {
+    "dist": null
+   },
+   "SHAM_0": {
+    "dist": null
+   },
+   "SHAM_1": {
+    "dist": 1,
+    "program": [
+     "fold",
+     "0",
+     "(first * (v + (acc // last)))",
+     "(0 - acc)"
+    ],
+    "schema": "(({H} + v) * first)"
+   },
+   "spec": {
+    "Q2_size": 4,
+    "body": "(first * (v + (acc // last)))",
+    "final": "(0 - acc)",
+    "init": "0",
+    "name": "qxda",
+    "role": "TRANSFER",
+    "source": "CON:SHAM_1"
+   },
+   "uses": [
+    [
+     "CON/0",
+     "TRANSFER"
+    ]
+   ]
+  },
+  "qyba": {
+   "G1": {
+    "dist": 1,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc + (last - v)))",
+     "math.gcd(abs(acc), abs(acc))"
+    ],
+    "schema": "(v - (acc + {H}))"
+   },
+   "OFF_0": {
+    "dist": null
+   },
+   "SHAM_0": {
+    "dist": 0,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc - (v - last)))",
+     "math.gcd(abs(acc), abs(acc))"
+    ],
+    "schema": "(v - (acc - {H}))"
+   },
+   "SHAM_1": {
+    "dist": 1,
+    "program": [
+     "fold",
+     "0",
+     "(last - (v + (acc + v)))",
+     "math.gcd(abs(acc), abs(acc))"
+    ],
+    "schema": "(last - ({H} + v))"
+   },
+   "spec": {
+    "Q2_size": 6,
+    "body": "(v - (acc - (v - last)))",
+    "final": "math.gcd(abs(acc), abs(0))",
+    "init": "0",
+    "name": "qyba",
+    "role": "TRANSFER",
+    "source": "CON:SHAM_0"
+   },
+   "uses": [
+    [
+     "CON/1",
+     "TRANSFER"
+    ]
+   ]
+  },
+  "qyja": {
+   "G1": {
+    "dist": null
+   },
+   "OFF_0": {
+    "dist": null
+   },
+   "SHAM_0": {
+    "dist": null
+   },
+   "SHAM_1": {
+    "dist": null
+   },
+   "spec": {
+    "Q2_size": 4,
+    "body": "(acc + math.gcd(abs(acc), abs((1 - v))))",
+    "final": "math.gcd(abs(acc), abs(acc))",
+    "init": "1",
+    "name": "qyja",
+    "role": "VALIDATE",
+    "source": "NAT"
+   },
+   "uses": [
+    [
+     "CON/1",
+     "VALIDATE"
+    ]
+   ]
+  },
+  "qzha": {
+   "G1": {
+    "dist": 1,
+    "program": [
+     "fold",
+     "1",
+     "(first + (acc + (first % v)))",
+     "(0 - acc)"
+    ],
+    "schema": "((acc + {H}) + first)"
+   },
+   "OFF_0": {
+    "dist": null
+   },
+   "SHAM_0": {
+    "dist": null
+   },
+   "SHAM_1": {
+    "dist": null
+   },
+   "spec": {
+    "Q2_size": 4,
+    "body": "(first + (acc + (first % v)))",
+    "final": "(0 - acc)",
+    "init": "1",
+    "name": "qzha",
+    "role": "VALIDATE",
+    "source": "NAT"
+   },
+   "uses": [
+    [
+     "CON/2",
+     "VALIDATE"
+    ]
+   ]
+  }
+ },
+ "levels": {
+  "G1": {
+   "bodies": [
+    161,
+    6490,
+    15247
+   ],
+   "schemas": [
+    1,
+    63,
+    3773
+   ]
+  },
+  "OFF_0": {
+   "bodies": [
+    161,
+    376,
+    2631
+   ],
+   "schemas": [
+    1,
+    61,
+    3745
+   ]
+  },
+  "SHAM_0": {
+   "bodies": [
+    161,
+    395,
+    3441
+   ],
+   "schemas": [
+    1,
+    61,
+    3745
+   ]
+  },
+  "SHAM_1": {
+   "bodies": [
+    161,
+    6490,
+    15247
+   ],
+   "schemas": [
+    1,
+    63,
+    3773
+   ]
+  }
+ }
+}

@@ -1,0 +1,660 @@
+{
+ "baseline": {
+  "held|relay64": [
+   "G0_DEGENERATE_CONTROL"
+  ],
+  "held|hold64": [
+   "G6_CONTROL_DISTINGUISHABLE"
+  ],
+  "plant|relay64": [
+   "G0_DEGENERATE_CONTROL"
+  ]
+ },
+ "swap_labels|held|relay64": {
+  "guard_alarms": [
+   "G5_CONDITION_PROVENANCE"
+  ],
+  "new": [
+   "G5_CONDITION_PROVENANCE"
+  ],
+  "pipeline_alarms": [
+   "TRAIN_HELD_GAP"
+  ],
+  "verdict": {
+   "SIGNAL": false,
+   "COMM_DEPENDENT": false,
+   "LOCAL_ONLY": false,
+   "REACH_BEYOND_HOP": true
+  }
+ },
+ "swap_labels|held|hold64": {
+  "guard_alarms": [
+   "G12_STATE_LIVE",
+   "G5_CONDITION_PROVENANCE",
+   "G6_CONTROL_DISTINGUISHABLE"
+  ],
+  "new": [
+   "G5_CONDITION_PROVENANCE"
+  ],
+  "pipeline_alarms": [],
+  "verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": false,
+   "LOCAL_ONLY": true,
+   "REACH_BEYOND_HOP": false
+  }
+ },
+ "swap_labels|plant|relay64": {
+  "guard_alarms": [
+   "G5_CONDITION_PROVENANCE"
+  ],
+  "new": [
+   "G5_CONDITION_PROVENANCE"
+  ],
+  "pipeline_alarms": [],
+  "verdict": {
+   "viable": false,
+   "plant": "relay_flood"
+  }
+ },
+ "duplicate_condition|held|relay64": {
+  "guard_alarms": [
+   "G5_CONDITION_PROVENANCE",
+   "G6_CONTROL_DISTINGUISHABLE"
+  ],
+  "new": [
+   "G5_CONDITION_PROVENANCE",
+   "G6_CONTROL_DISTINGUISHABLE"
+  ],
+  "pipeline_alarms": [
+   "COMPETENT_WITHOUT_COMM"
+  ],
+  "verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": false,
+   "LOCAL_ONLY": true,
+   "REACH_BEYOND_HOP": true
+  }
+ },
+ "duplicate_condition|held|hold64": {
+  "guard_alarms": [
+   "G12_STATE_LIVE",
+   "G5_CONDITION_PROVENANCE",
+   "G6_CONTROL_DISTINGUISHABLE"
+  ],
+  "new": [
+   "G5_CONDITION_PROVENANCE"
+  ],
+  "pipeline_alarms": [],
+  "verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": false,
+   "LOCAL_ONLY": true,
+   "REACH_BEYOND_HOP": false
+  }
+ },
+ "duplicate_condition|plant|relay64": {
+  "guard_alarms": [
+   "G5_CONDITION_PROVENANCE",
+   "G6_CONTROL_DISTINGUISHABLE"
+  ],
+  "new": [
+   "G5_CONDITION_PROVENANCE",
+   "G6_CONTROL_DISTINGUISHABLE"
+  ],
+  "pipeline_alarms": [],
+  "verdict": {
+   "viable": true,
+   "plant": "relay_flood"
+  }
+ },
+ "disable_channel|held|relay64": {
+  "guard_alarms": [
+   "G0_DEGENERATE_CONTROL",
+   "G11_TRANSPORT_LIVE",
+   "G6_CONTROL_DISTINGUISHABLE"
+  ],
+  "new": [
+   "G11_TRANSPORT_LIVE",
+   "G6_CONTROL_DISTINGUISHABLE"
+  ],
+  "pipeline_alarms": [],
+  "verdict": {
+   "SIGNAL": false,
+   "COMM_DEPENDENT": false,
+   "LOCAL_ONLY": false,
+   "REACH_BEYOND_HOP": false
+  }
+ },
+ "disable_channel|held|hold64": {
+  "guard_alarms": [
+   "G12_STATE_LIVE",
+   "G6_CONTROL_DISTINGUISHABLE"
+  ],
+  "new": [],
+  "pipeline_alarms": [],
+  "verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": false,
+   "LOCAL_ONLY": true,
+   "REACH_BEYOND_HOP": false
+  }
+ },
+ "disable_channel|plant|relay64": {
+  "guard_alarms": [
+   "G0_DEGENERATE_CONTROL",
+   "G11_TRANSPORT_LIVE",
+   "G6_CONTROL_DISTINGUISHABLE"
+  ],
+  "new": [
+   "G11_TRANSPORT_LIVE",
+   "G6_CONTROL_DISTINGUISHABLE"
+  ],
+  "pipeline_alarms": [],
+  "verdict": {
+   "viable": false,
+   "plant": "relay_flood"
+  }
+ },
+ "control_ignored|held|relay64": {
+  "guard_alarms": [
+   "G5_CONDITION_PROVENANCE",
+   "G6_CONTROL_DISTINGUISHABLE"
+  ],
+  "new": [
+   "G5_CONDITION_PROVENANCE",
+   "G6_CONTROL_DISTINGUISHABLE"
+  ],
+  "pipeline_alarms": [
+   "COMPETENT_WITHOUT_COMM"
+  ],
+  "verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": false,
+   "LOCAL_ONLY": true,
+   "REACH_BEYOND_HOP": true
+  }
+ },
+ "control_ignored|held|hold64": {
+  "guard_alarms": [
+   "G12_STATE_LIVE",
+   "G5_CONDITION_PROVENANCE",
+   "G6_CONTROL_DISTINGUISHABLE"
+  ],
+  "new": [
+   "G5_CONDITION_PROVENANCE"
+  ],
+  "pipeline_alarms": [],
+  "verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": false,
+   "LOCAL_ONLY": true,
+   "REACH_BEYOND_HOP": false
+  }
+ },
+ "control_ignored|plant|relay64": {
+  "guard_alarms": [
+   "G5_CONDITION_PROVENANCE",
+   "G6_CONTROL_DISTINGUISHABLE"
+  ],
+  "new": [
+   "G5_CONDITION_PROVENANCE",
+   "G6_CONTROL_DISTINGUISHABLE"
+  ],
+  "pipeline_alarms": [],
+  "verdict": {
+   "viable": true,
+   "plant": "relay_flood"
+  }
+ },
+ "freeze_state|held|relay64": {
+  "guard_alarms": [
+   "G0_DEGENERATE_CONTROL",
+   "G12_STATE_LIVE"
+  ],
+  "new": [
+   "G12_STATE_LIVE"
+  ],
+  "pipeline_alarms": [],
+  "verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": true,
+   "LOCAL_ONLY": false,
+   "REACH_BEYOND_HOP": true
+  }
+ },
+ "freeze_state|held|hold64": {
+  "guard_alarms": [
+   "G12_STATE_LIVE",
+   "G6_CONTROL_DISTINGUISHABLE"
+  ],
+  "new": [
+   "G12_STATE_LIVE"
+  ],
+  "pipeline_alarms": [],
+  "verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": false,
+   "LOCAL_ONLY": true,
+   "REACH_BEYOND_HOP": false
+  }
+ },
+ "freeze_state|plant|relay64": {
+  "guard_alarms": [
+   "G0_DEGENERATE_CONTROL",
+   "G12_STATE_LIVE"
+  ],
+  "new": [
+   "G12_STATE_LIVE"
+  ],
+  "pipeline_alarms": [],
+  "verdict": {
+   "viable": false,
+   "plant": "relay_flood"
+  }
+ },
+ "randomize_source|held|relay64": {
+  "guard_alarms": [
+   "G0_DEGENERATE_CONTROL"
+  ],
+  "new": [],
+  "pipeline_alarms": [],
+  "verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": true,
+   "LOCAL_ONLY": false,
+   "REACH_BEYOND_HOP": true
+  }
+ },
+ "randomize_source|held|hold64": {
+  "guard_alarms": [
+   "G12_STATE_LIVE",
+   "G6_CONTROL_DISTINGUISHABLE"
+  ],
+  "new": [],
+  "pipeline_alarms": [],
+  "verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": false,
+   "LOCAL_ONLY": true,
+   "REACH_BEYOND_HOP": false
+  }
+ },
+ "randomize_source|plant|relay64": {
+  "guard_alarms": [
+   "G0_DEGENERATE_CONTROL"
+  ],
+  "new": [],
+  "pipeline_alarms": [],
+  "verdict": {
+   "viable": true,
+   "plant": "relay_flood"
+  }
+ },
+ "reverse_edges|held|relay64": {
+  "guard_alarms": [
+   "G0_DEGENERATE_CONTROL",
+   "G2_TOPOLOGY_PROVENANCE"
+  ],
+  "new": [
+   "G2_TOPOLOGY_PROVENANCE"
+  ],
+  "pipeline_alarms": [],
+  "verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": true,
+   "LOCAL_ONLY": false,
+   "REACH_BEYOND_HOP": true
+  }
+ },
+ "reverse_edges|held|hold64": {
+  "guard_alarms": [
+   "G12_STATE_LIVE",
+   "G2_TOPOLOGY_PROVENANCE",
+   "G6_CONTROL_DISTINGUISHABLE"
+  ],
+  "new": [
+   "G2_TOPOLOGY_PROVENANCE"
+  ],
+  "pipeline_alarms": [],
+  "verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": false,
+   "LOCAL_ONLY": true,
+   "REACH_BEYOND_HOP": false
+  }
+ },
+ "reverse_edges|plant|relay64": {
+  "guard_alarms": [
+   "G0_DEGENERATE_CONTROL",
+   "G2_TOPOLOGY_PROVENANCE"
+  ],
+  "new": [
+   "G2_TOPOLOGY_PROVENANCE"
+  ],
+  "pipeline_alarms": [],
+  "verdict": {
+   "viable": true,
+   "plant": "relay_flood"
+  }
+ },
+ "alter_timing|held|relay64": {
+  "guard_alarms": [
+   "G0_DEGENERATE_CONTROL",
+   "G1_PHYSICS_PROVENANCE"
+  ],
+  "new": [
+   "G1_PHYSICS_PROVENANCE"
+  ],
+  "pipeline_alarms": [],
+  "verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": true,
+   "LOCAL_ONLY": false,
+   "REACH_BEYOND_HOP": true
+  }
+ },
+ "alter_timing|held|hold64": {
+  "guard_alarms": [
+   "G12_STATE_LIVE",
+   "G1_PHYSICS_PROVENANCE",
+   "G6_CONTROL_DISTINGUISHABLE"
+  ],
+  "new": [
+   "G1_PHYSICS_PROVENANCE"
+  ],
+  "pipeline_alarms": [],
+  "verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": false,
+   "LOCAL_ONLY": true,
+   "REACH_BEYOND_HOP": false
+  }
+ },
+ "alter_timing|plant|relay64": {
+  "guard_alarms": [
+   "G0_DEGENERATE_CONTROL",
+   "G1_PHYSICS_PROVENANCE"
+  ],
+  "new": [
+   "G1_PHYSICS_PROVENANCE"
+  ],
+  "pipeline_alarms": [],
+  "verdict": {
+   "viable": true,
+   "plant": "relay_flood"
+  }
+ },
+ "sever_search_ruler|held|relay64": {
+  "guard_alarms": [
+   "G0_DEGENERATE_CONTROL",
+   "G6_CONTROL_DISTINGUISHABLE",
+   "G9_GENOME_PROVENANCE"
+  ],
+  "new": [
+   "G6_CONTROL_DISTINGUISHABLE",
+   "G9_GENOME_PROVENANCE"
+  ],
+  "pipeline_alarms": [
+   "TRAIN_HELD_GAP"
+  ],
+  "verdict": {
+   "SIGNAL": false,
+   "COMM_DEPENDENT": false,
+   "LOCAL_ONLY": false,
+   "REACH_BEYOND_HOP": false
+  }
+ },
+ "sever_search_ruler|held|hold64": {
+  "guard_alarms": [
+   "G0_DEGENERATE_CONTROL",
+   "G12_STATE_LIVE",
+   "G6_CONTROL_DISTINGUISHABLE",
+   "G9_GENOME_PROVENANCE"
+  ],
+  "new": [
+   "G0_DEGENERATE_CONTROL",
+   "G9_GENOME_PROVENANCE"
+  ],
+  "pipeline_alarms": [
+   "TRAIN_HELD_GAP"
+  ],
+  "verdict": {
+   "SIGNAL": false,
+   "COMM_DEPENDENT": false,
+   "LOCAL_ONLY": false,
+   "REACH_BEYOND_HOP": false
+  }
+ },
+ "reuse_selection_seeds|held|relay64": {
+  "guard_alarms": [
+   "G0_DEGENERATE_CONTROL",
+   "G8_HELD_DISJOINT"
+  ],
+  "new": [
+   "G8_HELD_DISJOINT"
+  ],
+  "pipeline_alarms": [],
+  "verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": true,
+   "LOCAL_ONLY": false,
+   "REACH_BEYOND_HOP": true
+  }
+ },
+ "reuse_selection_seeds|held|hold64": {
+  "guard_alarms": [
+   "G12_STATE_LIVE",
+   "G6_CONTROL_DISTINGUISHABLE",
+   "G8_HELD_DISJOINT"
+  ],
+  "new": [
+   "G8_HELD_DISJOINT"
+  ],
+  "pipeline_alarms": [],
+  "verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": false,
+   "LOCAL_ONLY": true,
+   "REACH_BEYOND_HOP": false
+  }
+ },
+ "drop_mirror|held|relay64": {
+  "guard_alarms": [
+   "G0_DEGENERATE_CONTROL",
+   "G4_MIRROR_INVARIANT"
+  ],
+  "new": [
+   "G4_MIRROR_INVARIANT"
+  ],
+  "pipeline_alarms": [],
+  "verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": true,
+   "LOCAL_ONLY": false,
+   "REACH_BEYOND_HOP": true
+  }
+ },
+ "drop_mirror|held|hold64": {
+  "guard_alarms": [
+   "G12_STATE_LIVE",
+   "G4_MIRROR_INVARIANT",
+   "G6_CONTROL_DISTINGUISHABLE"
+  ],
+  "new": [
+   "G4_MIRROR_INVARIANT"
+  ],
+  "pipeline_alarms": [],
+  "verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": false,
+   "LOCAL_ONLY": true,
+   "REACH_BEYOND_HOP": false
+  }
+ },
+ "drop_mirror|plant|relay64": {
+  "guard_alarms": [
+   "G0_DEGENERATE_CONTROL",
+   "G4_MIRROR_INVARIANT"
+  ],
+  "new": [
+   "G4_MIRROR_INVARIANT"
+  ],
+  "pipeline_alarms": [],
+  "verdict": {
+   "viable": true,
+   "plant": "relay_flood"
+  }
+ },
+ "permute_seeds|held|relay64": {
+  "guard_alarms": [
+   "G0_DEGENERATE_CONTROL",
+   "G7_CRN_PAIRING"
+  ],
+  "new": [
+   "G7_CRN_PAIRING"
+  ],
+  "pipeline_alarms": [],
+  "verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": true,
+   "LOCAL_ONLY": false,
+   "REACH_BEYOND_HOP": true
+  }
+ },
+ "permute_seeds|held|hold64": {
+  "guard_alarms": [
+   "G12_STATE_LIVE",
+   "G7_CRN_PAIRING"
+  ],
+  "new": [
+   "G7_CRN_PAIRING"
+  ],
+  "pipeline_alarms": [],
+  "verdict": {
+   "SIGNAL": true,
+   "COMM_DEPENDENT": false,
+   "LOCAL_ONLY": true,
+   "REACH_BEYOND_HOP": false
+  }
+ },
+ "permute_seeds|plant|relay64": {
+  "guard_alarms": [
+   "G0_DEGENERATE_CONTROL",
+   "G7_CRN_PAIRING"
+  ],
+  "new": [
+   "G7_CRN_PAIRING"
+  ],
+  "pipeline_alarms": [],
+  "verdict": {
+   "viable": true,
+   "plant": "relay_flood"
+  }
+ },
+ "silent_sensors|held|relay64": {
+  "guard_alarms": [
+   "G0_DEGENERATE_CONTROL",
+   "G3_SENSE_LIVE",
+   "G6_CONTROL_DISTINGUISHABLE"
+  ],
+  "new": [
+   "G3_SENSE_LIVE",
+   "G6_CONTROL_DISTINGUISHABLE"
+  ],
+  "pipeline_alarms": [],
+  "verdict": {
+   "SIGNAL": false,
+   "COMM_DEPENDENT": false,
+   "LOCAL_ONLY": false,
+   "REACH_BEYOND_HOP": false
+  }
+ },
+ "silent_sensors|held|hold64": {
+  "guard_alarms": [
+   "G0_DEGENERATE_CONTROL",
+   "G3_SENSE_LIVE",
+   "G6_CONTROL_DISTINGUISHABLE"
+  ],
+  "new": [
+   "G0_DEGENERATE_CONTROL",
+   "G3_SENSE_LIVE"
+  ],
+  "pipeline_alarms": [],
+  "verdict": {
+   "SIGNAL": false,
+   "COMM_DEPENDENT": false,
+   "LOCAL_ONLY": false,
+   "REACH_BEYOND_HOP": false
+  }
+ },
+ "silent_sensors|plant|relay64": {
+  "guard_alarms": [
+   "G0_DEGENERATE_CONTROL",
+   "G3_SENSE_LIVE",
+   "G6_CONTROL_DISTINGUISHABLE"
+  ],
+  "new": [
+   "G3_SENSE_LIVE",
+   "G6_CONTROL_DISTINGUISHABLE"
+  ],
+  "pipeline_alarms": [],
+  "verdict": {
+   "viable": false,
+   "plant": "relay_flood"
+  }
+ },
+ "invert_sign|held|relay64": {
+  "guard_alarms": [
+   "G0_DEGENERATE_CONTROL",
+   "G10_SCORER_SELFTEST"
+  ],
+  "new": [
+   "G10_SCORER_SELFTEST"
+  ],
+  "pipeline_alarms": [
+   "ANTI_CORRELATED"
+  ],
+  "verdict": {
+   "SIGNAL": false,
+   "COMM_DEPENDENT": false,
+   "LOCAL_ONLY": false,
+   "REACH_BEYOND_HOP": true
+  }
+ },
+ "invert_sign|held|hold64": {
+  "guard_alarms": [
+   "G10_SCORER_SELFTEST",
+   "G12_STATE_LIVE",
+   "G6_CONTROL_DISTINGUISHABLE"
+  ],
+  "new": [
+   "G10_SCORER_SELFTEST"
+  ],
+  "pipeline_alarms": [
+   "ANTI_CORRELATED"
+  ],
+  "verdict": {
+   "SIGNAL": false,
+   "COMM_DEPENDENT": false,
+   "LOCAL_ONLY": false,
+   "REACH_BEYOND_HOP": false
+  }
+ },
+ "invert_sign|plant|relay64": {
+  "guard_alarms": [
+   "G0_DEGENERATE_CONTROL",
+   "G10_SCORER_SELFTEST"
+  ],
+  "new": [
+   "G10_SCORER_SELFTEST"
+  ],
+  "pipeline_alarms": [],
+  "verdict": {
+   "viable": false,
+   "plant": "relay_flood"
+  }
+ },
+ "cpu_s": 143.7,
+ "note_g12": "G12 tightened after a false positive on a 4-world training batch (hold64 baseline); baselines and freeze_state rows re-run with the tightened guard; other rows unaffected by G12 (re-check: no other row listed G12)."
+}

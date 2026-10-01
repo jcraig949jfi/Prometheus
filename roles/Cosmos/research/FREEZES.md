@@ -18,3 +18,11 @@ is not a failure. Example: a local-only commit checked from another machine.
 - supersedes: -
 - review: N/A
 - status: ACTIVE
+
+### F-0001 | C4 gate S0 trivial rules and baselines (preregistered before any C4 law search or S0 number)
+- kind: file
+- target: roles/Cosmos/c4/S0_TRIVIAL_RULES.md
+- sha256: 75125607cff4b40b2ac4676e5e7536787cb1201e9a06b5e268960cb7355fd66c
+- supersedes: -
+- review: PENDING
+- status: ACTIVE

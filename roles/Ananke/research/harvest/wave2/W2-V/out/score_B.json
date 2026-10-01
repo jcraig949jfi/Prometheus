@@ -1,0 +1,157 @@
+{
+ "rows": {
+  "48256f59_sbnor": {
+   "cell": "48256f59",
+   "len": 6,
+   "prog_len": 8,
+   "strict": true,
+   "program": [
+    " 0 ADD   S3 = ADD(S3, SENSE)",
+    " 1 MULQ  EMIT = MULQ(S3, S3)",
+    " 2 MULQ  PAY0 = MULQ(S3, ENERGY)",
+    " 3 MAX   S1 = MAX(S1, IN0_0)",
+    " 4 CONST T2 = 80 << 0",
+    " 5 SUB   S0 = SUB(T2, S1)"
+   ],
+   "normal": {
+    "acc": 0.5911,
+    "lo99": 0.5469,
+    "hi99": 0.6341,
+    "pairs": 32
+   },
+   "mf_s2_zeroed": {
+    "acc": 0.526,
+    "lo99": 0.474,
+    "hi99": 0.5781,
+    "pairs": 32
+   },
+   "stats": {
+    "attempted": 180504,
+    "delivered": 162316,
+    "lost": 18188,
+    "collided": 0,
+    "emitters": 22563,
+    "awake": 1168482,
+    "nonnop": 7010892,
+    "route_writes": 0,
+    "energy_spent": 0
+   }
+  },
+  "1974a9cf_sbnor": {
+   "cell": "1974a9cf",
+   "len": 6,
+   "prog_len": 8,
+   "strict": true,
+   "program": [
+    " 0 ADD   S3 = ADD(S3, SENSE)",
+    " 1 MULQ  EMIT = MULQ(S3, S3)",
+    " 2 MULQ  PAY0 = MULQ(S3, ENERGY)",
+    " 3 MAX   S1 = MAX(S1, IN0_0)",
+    " 4 CONST T2 = 80 << 0",
+    " 5 SUB   S0 = SUB(T2, S1)"
+   ],
+   "normal": {
+    "acc": 0.582,
+    "lo99": 0.5365,
+    "hi99": 0.625,
+    "pairs": 32
+   },
+   "mf_s2_zeroed": {
+    "acc": 0.526,
+    "lo99": 0.4753,
+    "hi99": 0.5768,
+    "pairs": 32
+   },
+   "stats": {
+    "attempted": 180504,
+    "delivered": 162316,
+    "lost": 18188,
+    "collided": 0,
+    "emitters": 22563,
+    "awake": 1168482,
+    "nonnop": 7010892,
+    "route_writes": 0,
+    "energy_spent": 0
+   }
+  },
+  "333d6b2b_sbnor": {
+   "cell": "333d6b2b",
+   "len": 6,
+   "prog_len": 8,
+   "strict": true,
+   "program": [
+    " 0 ADD   S3 = ADD(S3, SENSE)",
+    " 1 MULQ  EMIT = MULQ(S3, S3)",
+    " 2 MULQ  PAY0 = MULQ(S3, ENERGY)",
+    " 3 MAX   S1 = MAX(S1, IN0_0)",
+    " 4 CONST T2 = 80 << 0",
+    " 5 SUB   S0 = SUB(T2, S1)"
+   ],
+   "normal": {
+    "acc": 0.5781,
+    "lo99": 0.5339,
+    "hi99": 0.6224,
+    "pairs": 32
+   },
+   "mf_s2_zeroed": {
+    "acc": 0.5247,
+    "lo99": 0.474,
+    "hi99": 0.5768,
+    "pairs": 32
+   },
+   "stats": {
+    "attempted": 180504,
+    "delivered": 162316,
+    "lost": 18188,
+    "collided": 0,
+    "emitters": 22563,
+    "awake": 1168482,
+    "nonnop": 7010892,
+    "route_writes": 0,
+    "energy_spent": 0
+   }
+  },
+  "48256f59_sb8": {
+   "cell": "48256f59",
+   "len": 8,
+   "prog_len": 8,
+   "strict": true,
+   "program": [
+    " 0 ADD   S3 = ADD(S3, SENSE)",
+    " 1 MULQ  EMIT = MULQ(S3, S3)",
+    " 2 MULQ  PAY0 = MULQ(S3, ENERGY)",
+    " 3 MAX   S1 = MAX(S1, IN0_0)",
+    " 4 SUB   T0 = SUB(ZERO, IN0_0)",
+    " 5 MAX   S2 = MAX(S2, T0)",
+    " 6 MULQ  T1 = MULQ(S1, S2)",
+    " 7 SUB   S0 = SUB(ENERGY, T1)"
+   ],
+   "normal": {
+    "acc": 0.5039,
+    "lo99": 0.5,
+    "hi99": 0.513,
+    "pairs": 32
+   },
+   "mf_s2_zeroed": {
+    "acc": 0.5,
+    "lo99": 0.5,
+    "hi99": 0.5,
+    "pairs": 32
+   },
+   "stats": {
+    "attempted": 180504,
+    "delivered": 162316,
+    "lost": 18188,
+    "collided": 0,
+    "emitters": 22563,
+    "awake": 1168482,
+    "nonnop": 9347856,
+    "route_writes": 0,
+    "energy_spent": 0
+   }
+  }
+ },
+ "ns": "0x57325653",
+ "M": 64,
+ "cpu_s": 57.6
+}
