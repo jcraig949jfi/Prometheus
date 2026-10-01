@@ -1,0 +1,9 @@
+{"scored_at_utc": "2026-10-01T01:57:57Z", "prereg": "PREREG.md (frozen 2026-10-01T01:43:03Z, amendment A1 2026-10-01T01:47:40Z)",
+ "P1": {"verdict": "FAIL", "criterion": ">=14/17 side-1 CVT-R accept under HARV_HALT", "stock": "3/17 (17/17 identical to Artemis record)",
+        "HARV_HALT": "10/17", "HARV_WRAP": "7/17", "no_partner_ref": "17/17 (all three arms)", "per_interaction_good": {"STOCK": "628/1020", "HARV_HALT": "895/1020", "HARV_WRAP": "811/1020"},
+        "p11_competent_17": {"STOCK": 10, "HARV_HALT": 17, "HARV_WRAP": 17}, "files": ["p1_cvtr.json", "p1b_residual.json"]},
+ "P2": {"verdict": "FAIL", "criterion": "<=0.10 in BOTH cells under HARV_HALT", "stock": {"9cba": "24/40", "e160": "17/40"},
+        "HARV_HALT": {"9cba": "1/40", "e160": "5/40"}, "HARV_WRAP": {"9cba": "3/40", "e160": "5/40"}, "files": ["p2_k3_*.json", "p2b_residual_*.json"]},
+ "P3": {"verdict": "PASS", "criterion": "<=0.05 (zero ctx; random ctx also <=0.05)", "stock": {"zero": "336/750 -> 0.224", "random": "261/750 -> 0.174"},
+        "HARV_HALT": {"zero": "0/750 -> 0.0", "random": "0/750 -> 0.0"}, "HARV_WRAP": {"zero": "0/750", "random": "0/750"}, "files": ["p3_n2.json"]},
+ "selftests": "SELFTEST.json all_pass true (ST1-ST3); ST4 in p1_cvtr.json"}

@@ -743,3 +743,98 @@ in completion order.
   - the H1 family.
 
 **Confidence.** High.
+
+
+### W2-17 and N18: the depth-20 departure is a two-type mixture (W2-17 report saved; N18 fit by Nestor). Written at 01:46Z (clock)
+- **W2-17 result.**
+  - A subcritical founder type (side-1 copier, realized m 0.80–0.89) and rare heritable supercritical side-0 morphs (44 ec→ac, 37 a5→81; realized m 1.08).
+  - A morph is present in 12/12 runaways. Unselected seeds: 2/2 runs with a morph became runaways vs 0/61 without (p = 0.0015).
+  - Kin repair dominates births after saturation, but does not lift the founder type.
+- **Effect on earlier entries.**
+  - This resurrects W2-2's "second regime" as **genotype heterogeneity, not density**. W2-2's "no common heritable variant" missed a rare one.
+  - It is consistent with W2-14: per-member fertility rises only modestly.
+  - It confirms N17's side-switch mechanism, though through different sites (not 49 or 43→C3).
+- **N18 fit** (`N18_two_type_fit/twotype.py`, `twotype.json`). Negative-binomial two-type process with switch rate s and back-switch 0.07.
+  - Best two-type fits: binned deviance 2.8–3.9, predicting 3.8–6.8 runs at depth 14–21 (observed 3) and P(≥161 | ≥22) = 0.84–0.94.
+  - Best single-type fit (m 0.99, V 7): deviance 4.59, predicting 7.8 at 14–21 and 0.87.
+  - **The valley supports the two-type model only weakly against a heavy-tailed critical single type.** The decisive evidence remains W2-17's genotype data (12/12, 2/2 vs 0/61), not the shape of the tail.
+- **Confidence.** Moderate-high for the mixture; low that the tail shape discriminates between the models.
+- **Candidate for the handoff's "strongest new result since Wave 1."**
+
+
+### Batch: W2-12, W2-20, W2-21, W2-22, W2-23, W2-24 saved; W2-25 red-team adjudicated (Nestor). Written at 02:23Z (clock)
+
+**INCIDENT.** At about 01:55Z the W2-21 worker force-killed PID 18960 (H:\Python312, started 01:43:13Z, about 15 CPU-min, 624 MB) in the belief that it was its own process.
+- No Nestor Wave-2 job shows a loss: logs are clean and the run files are complete (W2-22 has 600/1200/30 runs; W2-23 is complete).
+- The owner is unknown. A broadcast went out as comms #1214.
+- New rule for every Nestor worker prompt: *never kill a process you did not start and record by PID.*
+- W2-21 also exceeded its CPU cap (about 35 vs 30 CPU-min).
+
+**W2-12, founder independence (open contradiction 2): resolved in favour of independence, at moderate confidence.**
+- Fits:
+  - one common p1 fits 798 k = 1 runs plus 416 dose runs (p = 0.31; heterogeneity p = 0.64);
+  - β = 1.13 [0.98, 1.29] (p = 0.095);
+  - leave-one-experiment-out cross-validation prefers independence.
+- The dossier's p = 0.0013 is a plug-in artifact. The remaining tension is C-CRITICAL-MASS's low k = 1 arm (5/80).
+- The red-team's "pooled k = 4 = 73/144, z ≈ 3.5" is the same plug-in calculation against the pooled k = 1 rate. With p1 fitted jointly it disappears.
+- X-DOSE-CURVE's CLEAN_NULL and the D-12 retraction stand.
+- **Effect on T4(a).** T4(a), home advantage, loses its only positive support, since that support was the excess. T4(a) is now **unsupported, not excluded** (β up to about 1.3).
+
+**W2-20, chain-length power: T4(c′) NOT supported.**
+- With long random hits included, c_EVO = −0.45 pp [−1.59, +0.704]. Under the pre-registered rule this is UNRESOLVED; the upper bound misses 0.7 by 0.004.
+- An excess the size of the raw gap is excluded.
+- Strongest objection: new vs old RAND at matched L_pre differ by +1.16 pp.
+- W2-25 adds a caveat: the lethality screen is a corruption screen (W2-4), so this holds "on a corruption readout".
+
+**W2-21, register asymmetry.**
+- Side-0 copiers are strongly enriched for explicit setters relative to a 10^6 uniform null (p ≈ 1e-31). Side-1 copiers sit at the null (H-UNSELECTED).
+- Setter rescue makes side-1 copiers register-robust (510/510) but CVT-R stays 3/17. **Register fragility is not the limiting cause.**
+
+**W2-22, second regime: NO SECOND REGIME from kin/density** (Koopman C− ratio 1.31 [0.60, 2.80]; under C+ FIELD is lower, p = 0.0014).
+- Fragile at the CI edge: bootstrap upper bound 3.15.
+- Two further results:
+  1. **The world persists more than FIELD BANK** (4/4 vs 9/33, p = 0.011).
+  2. **F's ATOMIC "failure" was a readout mismatch** (depth_f vs depth_world), not horizon censoring. On matched readouts the model trails by 0.07-0.23, none significant. W2-25 independently reached the same conclusion: 14/30 vs 20/30, p = 0.19.
+- **W2-14's "ATOMIC validation did not pass" is CORRECTED to "not significantly different on matched readouts (n = 30)".**
+
+**W2-23, Harvard causal test: P3 PASS, P1 FAIL, P2 FAIL (narrowly).**
+- **Partner execution of the donor's own code after the wrap is causal:**
+  - N2 hijack 0.224 → 0/750;
+  - K3 relabel 0.60/0.43 → 0.025/0.125;
+  - side-1 good copies 0.62 → 0.88.
+- Confinement is the active ingredient, not the added terminator (WRAP ≈ HALT for P2 and P3).
+- **It is all of N2, and most but not all of K3 and W2-16.** The residuals are data-path writes by the partner's own code, plus copy-back by converted descendants.
+- This answers W2-25's caveat that HARV adds a terminator: the WRAP arm controls for it.
+
+**W2-24, mechanism of 43→C3 and of the side switches (traced at register level).**
+- 0xC1 is a NOP on this VM, so **"POP BC" in N17e was wrong; withdrawn.**
+- The 7ae3 family copies own base → absolute DE. **The genome that sits at DE converts nothing and is hijacked by the other context running its own LDIR.** Its own code is the weapon (226/232 founder side-0 losses).
+- 43→C3 is a JP that ejects runners at side 0: partner LDIR runs 277 → 11, keep 0.52 → 0.97, at no measured cost.
+- The side switches move DE from 0 to 64, and their gain is run-first protection.
+- The double mutant C3 + AC (two one-bit flips) is the best genome found: m 1.47, keep 0.98, and it is the **only** invader of the founder in exact-identity contact (2 vs 0).
+
+**W2-25 red-team. Accepted corrections:**
+1. **W2-17's "2/2 vs 0/61"** should read **3 morph runs: 2 depth runaways plus s14 at depth 21, which is a runaway on B ≥ 163, i.e. 3/3 on B.**
+2. **The morph comes AFTER the burst** in 2 of the 4 X-TICKET runaways (s121, s14: 27 causal births with zero side-0 edges; the morph arrives after 84 and 123 births).
+   - So **"a morph is necessary for a runaway" is NARROWED to "side-0 copying dominates the deep chains; the morph is not shown to be causal for crossing ~27"**.
+   - Reaching 27 is the ordinary lottery (law 0.025, world 0.031). What happens after it is the anomaly: 4/4 reach ≥ 163, against 1.2% predicted, p ≈ 2e-8.
+   - **W2-14's downgrade ("second regime not demonstrated") was too strong. There IS a post-27 persistence anomaly.** W2-22 shows it is not kin/density. W2-17 shows it coincides with side-0 morphs. Its cause is OPEN.
+3. **W2-17's "types" are parent-side tags, not genotypes.**
+   - The switch-rate conflict is real: about 3.5% of control births switch side vs 7.5e-4 per birth for genotype side switches (N17d).
+   - W2-24 shows a founder genotype at side 0 converts only 0.002, so a side-0 birth almost requires a morph genotype. **Which source supplies 3.5%? This is the most important unresolved contradiction** (W2-26 assigned).
+4. **The founder's "static m 0.85" is a 30-partner draw.** The same estimator gives 0.96-1.17 at 400-1000 partners. The morph's advantage is about +6% against realized partners, not +45%.
+5. **W2-8 D10's premise that L_share takes only {0, 0.664, 1} is false on disk** (84 distinct values). The relabels that rest on D10 (C-A3 to CONFIRMED-FRAGILE, and the X-MAT counts) need re-derivation (W2-27 assigned).
+6. W2-2's "1 vs 7.7, P = 0.004" is untraceable; the supported figure is about 0.056.
+7. NPE_COMPETING_THEORIES.md lacks its Wave-2 corrections block.
+8. The synthesis still says "fate decided in 3-10 epochs".
+9. "Critical" and "subcritical" are per-call vs lifetime readouts; do not equate them.
+
+**Theory standing (Nestor, after W2-25).**
+- **F is unfalsifiable as practised.** Adopt **F*** (W2-25 §4), which has three kill criteria:
+  1. FIELD vs FREE BANK differ by more than 0.05;
+  2. an implanted-morph founder's runaway rate falls outside its predicted band;
+  3. swapping kin for bank partners moves conditional persistence by more than 0.2.
+- **Kill criterion 1 is already partly tested by W2-22:** the difference is −0.38 under C+ and +0.06 under C−. That is ambiguous at the 0.05 band, so F* is not cleanly passed.
+- Residuals:
+  - T4(a) is unsupported (W2-12);
+  - T4(c′) is not supported on a corruption readout (W2-13/20).
