@@ -354,7 +354,7 @@ type>. Enforcement says HOW: BLOCK (a named component refuses), RULE
 (static check in CI), FLAG, AUDIT, PROSE. Each requirement names its historical motive, the alternative considered, the
 discriminating test and, where it blocks, a counterfeit artifact the enforcement must reject (each becomes a CI
 fixture). After the final review, every SLICE requirement and at least one covering requirement of every failure class
-carries a counterfeit (checker-enforced); 100 of 137 BLOCK requirements carry one, the rest a discriminating test.
+carries a counterfeit (checker-enforced); 101 of 138 BLOCK requirements carry one, the rest a discriminating test.
 For each requirement, "success means" is that its discriminating test passes and its counterfeit is refused; the
 interpretation it supports is falsified by the FALSIFIERS.md row of the same id or, where none exists, by acceptance of
 its counterfeit. Build cost is a band of tokens processed if built in isolation; bands overlap heavily and are for

@@ -83,7 +83,7 @@ type-(b) rediscovery-from-distance bracket; otherwise it is typed UNBRACKETED [A
   sees the gate code, against the requirement-derived fixtures; canary escape when one gate is disabled.
 - **Organism / developmental / world physics.** Not applicable (operates on rows, receipts and fixtures).
 - **Search / pressure.** None.
-- **Measurement stack.** Counterfeit fixture suite derived from the "fake" field of the 100 BLOCK requirements that
+- **Measurement stack.** Counterfeit fixture suite derived from the "fake" field of the 101 BLOCK requirements that
   carry one (every SLICE requirement and at least one covering requirement per failure class), plus REP-08's held-out
   I3 set;
   dependency-demotion tests; canary injector (MEA-17).
