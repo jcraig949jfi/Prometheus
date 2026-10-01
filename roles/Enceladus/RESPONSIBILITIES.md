@@ -18,10 +18,11 @@ existing Prometheus engines should continue.
 Stage I parent freeze: `eeeda08bb45757298b3cb21ee22d816b44388aef`;
 survey/design base: `9a83cec2c`. The freeze SHA is the previously observed
 commit, not a new package-completion SHA. All eight design outputs plus
-the MVP and failure map are complete. Current lane:
-final package validation and authorized commit delivery only, not a science
-campaign. Offline validation passed; the final receipt is process/VALIDATION.md
-in the report package. Repeat checks after final edits before commit.
+the MVP and failure map are complete. Package commit:
+8a5d8ddfd03c5b5d6917510797099971cd3980af, verified on origin/main.
+Current state IDLE, awaiting new operator authority, not a science campaign.
+Offline validation passed on the integrated tree; the final receipt is
+process/VALIDATION.md in the report package.
 Preserve frozen requirements/architecture; label later revisions as deltas.
 RSE is a research target, not a predetermined implementation.
 
@@ -61,8 +62,8 @@ no global inherited-policy, INHERITANCE, or other-role changes. The user's
 explicit "Commit your package and report the commit SHA." authorizes the
 report-package commit and SHA delivery. Worktree:
 `C:/Prometheus-worktrees/enceladus-base-role`; branch:
-`enceladus/phase3-astra-2026-10-01`. RUNNING means final validation and
-commit delivery only; there are no jobs. Scientific status is NOT_VERIFIED.
+`enceladus/phase3-astra-2026-10-01`. Report lane closed after delivery;
+there are no jobs. Scientific status is NOT_VERIFIED.
 
 After delivery, close this report lane and await new operator authority
 before implementation; inherited MWO-0004 is not an endless-run mandate.

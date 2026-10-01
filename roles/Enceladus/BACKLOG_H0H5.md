@@ -1,10 +1,10 @@
 # Enceladus backlog (schema: roles/Archaeon/prompts/2026-09-10_backlog/00_BACKLOG_SCHEMA.md)
 
 Currency: 2026-10-01. ASTRA-6.0 report/validation deliverables, not a science
-campaign. Status: ENCELADUS-01 through ENCELADUS-19 DONE; ENCELADUS-20
-PENDING commit-SHA delivery. Repeat validation after final editorial edits.
-All eight design files plus the MVP and failure map are complete. RUNNING
-covers only final validation and authorized package commit delivery.
+campaign. Status: ENCELADUS-01 through ENCELADUS-20 DONE. Package commit
+8a5d8ddfd03c5b5d6917510797099971cd3980af is verified on origin/main.
+All eight design files plus the MVP and failure map are complete. IDLE;
+implementation remains unstarted pending new operator authority.
 No global inherited-policy or other-role changes are in scope.
 All proposal/validation tasks are documentary; no experiment execution,
 compute purchase, sibling comparison, or outside posting is implied.

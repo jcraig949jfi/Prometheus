@@ -1,8 +1,8 @@
 # Enceladus TODO
 
 Currency: 2026-10-01. ASTRA-6.0 is the declared report identity. Design
-writing is complete; RUNNING covers final validation and authorized commit
-delivery only. No scientific campaign is authorized or running.
+writing, validation and repository delivery are complete. State IDLE;
+no scientific campaign is authorized or running.
 
 ## Adoption package
 
@@ -37,21 +37,25 @@ delivery only. No scientific campaign is authorized or running.
 - [x] Execute package static checks and manifest generation/verification:
       PASS, zero errors. Record incidents and claim limits in VALIDATION.md.
 
-## Final parent actions (BACKLOG 19-20)
+## Completed delivery (BACKLOG 19-20)
 
 - [x] Generate and verify the report-package validation manifest;
       replace its placeholder, not the preserved adoption manifest/history.
-- [ ] Rerun tests/manifest after final editorial edits; check role JSON,
+- [x] Rerun tests/manifest after final editorial edits; check role JSON,
       scope, 20-row backlog, ASCII, and staged whitespace before committing.
-- [ ] Review and stage only the own report and own-role package; execute
+- [x] Review and stage only the own report and own-role package; execute
       the authorized "Commit your package and report the commit SHA."
       Record and deliver the actual new commit SHA. The previously observed
       Stage I freeze eeeda08bb is not a package-completion SHA.
-- [ ] After delivery, close RUNNING and await new operator authority before
+- [x] After repository delivery, close RUNNING and await new operator authority before
       implementation. Keep scientific status NOT_VERIFIED. Resolve host
       custody, measured rates, and staffing for any future implementation;
       do not turn D1-D5 recommendations into an approval checklist or treat
       inherited MWO-0004 as permission to continue indefinitely.
+
+Delivered package SHA: 8a5d8ddfd03c5b5d6917510797099971cd3980af.
+Integration SHA: 21005b696954b1b099d347fecc276d055e5e6646; both verified
+on origin/main. Future work remains unstarted pending new authority.
 
 No monitor owned or fed. Broadcast read deferred for independence, not an
 inbox-empty assertion. No jobs, expensive campaign, spending, or external
