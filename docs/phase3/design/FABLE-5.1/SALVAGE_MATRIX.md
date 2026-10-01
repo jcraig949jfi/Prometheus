@@ -39,13 +39,19 @@ the "Source" line of each row points to the sheet. The classification, the
   imports only numpy and the standard library; the Charon verdict carries
   eligible and fired counts (c1c2_checks.py:66-73); the exit-review positive
   control is planted on F-answer against F0 while its comment says F-null
-  (exit_review_3_attack.py:233-236); the ladder's R6 probe writes the truth
+  (exit_review_3_attack.py:233-238); the ladder's R6 probe writes the truth
   into its payload (reasoning_phase0.py:131); the model-call log is written
   only when an environment variable is set (prometheus_llm/client.py:49-52).
   The rest I did not re-verify. Where two workers looked at the same
   component they agreed on substance and sometimes differed on line counts.
-- All seven workers and I are one model family. In the design's own terms
-  this matrix is independence level I0 to I1. A wrong classification here is
+- After drafting, a read-only reviewer checked every row against the sheet
+  it cites. It found 22 items where a row said more than its sheet: "in the
+  tree" where the worker wrote "in scope"; dossier figures quoted without
+  the worker's "not verified" marker; four miscounts. They are corrected.
+  Where a row now says "in scope" or "among those examined", that is the
+  worker's scope, not the whole repository.
+- All seven workers, the reviewer and I are one model family. In the
+  design's own terms this matrix is independence level I0 to I1. A wrong classification here is
   cheap to fix: every row is re-examined when its slot is actually built.
 - One fault in my brief exposed holdout-named files to worker searches. It
   is reported in salvage_reports/00_SEARCH_RULE_INCIDENT.md.
@@ -111,17 +117,17 @@ group many components, so the counts understate how much is retired.
 | worlds: FAMILIES | new | -- | -- |
 | worlds: DOUBT | extract parts | Ludus solver pattern (W-04), Cosmos hint dial (W-12) | M |
 | worlds: MINED | extract | Hecate sampled systems (W-10) | M |
-| worlds: demand certificates | new | no code anywhere computes the best value of a restricted policy class | -- |
+| worlds: demand certificates | new | no code examined computes the best score of a restricted policy class for a world in which an organism acts | -- |
 | worlds: twins, leak probes | extract | Tyche twins (W-13), Ludus audit (W-04), one-character leak worlds (M-10), toolbox wrappers (W-06) | S to M |
-| substrate: REF | new | no conventional learner and no gradient regime exists in the tree | -- |
+| substrate: REF | new | no conventional learner under an organism protocol in the scopes examined; the tree holds REINFORCE and PPO trainers for mathematical environments (M-15), not examined as learners | -- |
 | substrate: WM | rebuild | layout confirmed by Crius (O-03); conventions from Proteus (O-01); kernel pattern from D-5 (O-04) | L |
-| substrate: PN | rebuild | no network in the tree keeps weights across episodes (O-11) | M to L |
+| substrate: PN | rebuild | a tree-wide search found no network organism that keeps weights across episodes (O-11) | M to L |
 | substrate: open arms | harden one, later | Ananke packet-tensor engine for the message-passing arm (O-09) | L |
 | rulers: class exclusion | new | pieces only, all in floats, none shipped with a world | -- |
 | rulers: interchange, lesion | extract | Ananke lens and its failure modes (C-02), Cosmos gate (C-03), Crius conditions (C-04), Ares cuts (C-05) | M |
 | rulers: material tracing | extract | Archaeon record format and fixtures (C-06); a new tracer per substrate | M each |
 | rulers: search-power curve | new | vocabulary from Ergon and D-5 (S-06); P1's reach.py is the first version | -- |
-| rulers: cost meters | new | nothing records energy; one place records dollars and drops tokens | -- |
+| rulers: cost meters | new | nothing records energy; the job fabric records dollars and drops tokens; one replay tool logs tokens for its own calls (S-12) | -- |
 | search: protocol | extract | reach classes and typed states (S-01), escrow and pairing (S-08), budget ladder (S-06) | M |
 | search: regimes | extract, new | lexicase (S-05); gradient and evolution-strategy arms are new | S each |
 | experiments: P6 negative control | harden | Aphrodite engine as the fixed-procedure learner (O-13) | M |
@@ -139,13 +145,16 @@ Section 4 lists all of them.
 
 Five facts from the workers that matter more than any single row.
 
-1. **Nothing computes what a restricted class can score.** No component
-   computes the best memoryless, k-state, non-adaptive or lookup policy value
-   for a world in which an organism acts. The few bounds that exist are per
-   task, in floats, used only in after-the-fact audits, and one of them is
-   violated in its own environment (a .75 bound against .763 measured). So no
-   old result could have been a class exclusion, and every demand certificate
-   is new work. (03 SURPRISES 10; 05 question B.)
+1. **Nothing computes what a restricted class can score in a world where an
+   organism acts.** No component examined computes the best memoryless,
+   k-state, non-adaptive or lookup policy value in an agent-environment
+   loop. Two enumerated optima exist for narrower cases: the best order-k
+   window predictor on one stream process (prediction only), and the best
+   constant action in one old metric. The other bounds are per task, in
+   floats, used only in after-the-fact audits, and one of them is violated
+   in its own environment (a .75 bound against .763 measured). So no old
+   result could have been a class exclusion, and every demand certificate is
+   new work. (03 SURPRISES 10; 05 question B.)
 2. **Nothing measures search power.** No component measures how often search
    recovers a planted target as a function of distance and budget. The
    nearest designs measure "solved over expressible" at fixed budgets on five
@@ -153,10 +162,11 @@ Five facts from the workers that matter more than any single row.
    inside a genome space that 19,873,536 world-episodes of search did not
    find. Every old null is therefore ambiguous between "cannot" and "was not
    reached". (05 question A; 07 sheet 9.)
-3. **BUILD was never possible in a network.** Across the whole tree no
-   network-like organism keeps weights or topology across episodes. The one
-   candidate resets its plastic weights every episode. The only substrate
-   with harness-owned stores that persist across a lifetime of tasks is the
+3. **BUILD was never possible in a network.** A tree-wide search of Python
+   files found no closed-loop network organism that keeps weights or
+   topology across episodes. The nearest candidate resets its plastic
+   weights every episode. Among the machines examined, the only one with
+   harness-owned stores that persist across a lifetime of tasks is the
    Crius machine. (02 network-plasticity search; 01 sheet 2.)
 4. **Search budgets were limited by implementation, not by hardware.** The
    largest lifetime-scale search on record is about 2e7 evaluations, mostly
@@ -183,7 +193,7 @@ section 9.
 
 ### O-01 [REBUILD] Proteus v0 player machine (proteus/foundry)
 - Does: a pure-Python tape machine. The genome is copied onto a tape of 32-bit words and executed in place; 25 opcodes; the opcode is the word modulo 25, so every word decodes. A genome field decides what persists across a tick. No call, no block store, absolute addressing.
-- Shown correct: 9 replay tests including exact checkpoint and restore; a differential shadow decoder with 0 divergences; replay across 3 runtimes on one machine. Defects: a docstring and the code disagree on an operand slot; the organism id pins bytes, not execution.
+- Shown correct: 9 replay tests including exact checkpoint and restore; a differential shadow decoder with 0 divergences; replay across 3 runtimes on one machine. Defects: a docstring and the code disagree on an operand slot; the organism id pins bytes, not execution (dossier, not checked).
 - Fit: slot WM. Meets ORG-04, ORG-06, ORG-08. Partial ORG-01, ORG-02, ORG-03. Fails COMP-01 (3.75e6 operations per second on one core) and DEV-01.
 - Cost: adapt XL; rebuild L.
 - Coupling: stdlib only; 117 files outside proteus/ import it; a runtime hash over the machine's source makes any edit a new runtime for every consumer.
@@ -204,17 +214,17 @@ section 9.
 ### O-03 [REBUILD] Crius machine, workspace and block store (crius/)
 - Does: an 8-register machine with 53 opcodes. Registers are reset every task. A workspace of 256 cells and a store of organism-written executable blocks (32 blocks of 64 instructions) persist across a 50-task lifetime. The program is fixed for the lifetime. A block is invoked in the caller's registers, to depth 4.
 - Shown correct: replay tests; gate controls shown failing on the wrong organism; 7 designed programs of 19 to 64 instructions. Defects: an invocation log read the wrong register (fixed); a latent hole in totality (appended instructions keep unbounded register fields, and invoking one raises an error nothing catches; untested); block ids come from a counter that never reuses a value, which is a clock; its typed rungs put competence into the instruction set.
-- Fit: the nearest existing thing to WM. It is the only machine in the tree with organism-written executable blocks and harness-owned stores. ORG-03 a, b, c, f, g yes; d and e partial; no rent. Fails ORG-04 at rungs B to D, ORG-05 (a plant of 64 against a cap of 96), COMP-01.
+- Fit: the nearest existing thing to WM. Among the machines examined it is the only one with organism-written executable blocks and harness-owned stores. ORG-03 a, b, c, f, g yes; d and e partial; no rent. Fails ORG-04 at rungs B to D, ORG-05 (a plant of 64 against a cap of 96), COMP-01.
 - Cost: adapt L, and the kernel would be rewritten anyway (tuple, dictionary and failure values do not carry into a compiled integer kernel); rebuild L.
 - Coupling: stdlib; no outside importers; the machine imports its world; its receipts call git.
-- Take: the three-store layout, which is the layout REQUIREMENTS 1.5 asks for and so is confirmed workable; the designed programs as the first WM plants to port; and three lessons as kernel tests: every instruction field decodes by modulus; no identifier counter is visible to the organism; no capability-specific opcode above scaffold level S3.
+- Take: the three-store layout, which is the layout REQUIREMENTS 1.5 asks for and so is confirmed workable; the designed programs as the first WM plants to port; and three lessons as kernel tests: every instruction field decodes by modulus; no identifier counter is visible to the organism; a machine with any capability-specific opcode is labelled scaffold level S3 or higher, never S2.
 - Lines: 6881
 - Source: 01 sheet 2.
 
 ### O-04 [EXTRACT] D-5 register machine: reference plus compiled path (agent_d5_blind/substrate)
 - Does: a pure function from inputs to one register; 8 registers of 16 bits, at most 24 instructions; a Numba fast path beside a reference machine.
 - Shown correct: the fast path is bit-identical to the reference on 2,402 programs by 128 inputs; every claimed solve is re-checked on the reference by assertion; 290 of 290 rows replayed. Defects: the fast path loads 2 inputs where the reference loads up to 8; path strings are Windows-only.
-- Fit: the COMP-01 pattern, and the only compiled path in the old tree pinned to a reference. Not an organism for WM: no memory, no store.
+- Fit: the COMP-01 pattern: a compiled path pinned to a reference machine. Among the program-like machines it is the only one; the tensor-train organisms have another (O-12). Not an organism for WM: no memory, no store.
 - Cost: extract the pattern S; adapt as a WM base XL.
 - Coupling: numpy, numba; imported by Ergon, the evidence wiki and Techne.
 - Take: design: reference implementation, compiled kernel, equivalence test, and re-verification of every claimed result on the reference. The P1 prototype already follows it (wm_mini.py, oracle.py, differential_test.py).
@@ -244,7 +254,7 @@ section 9.
 ### O-07 [HISTORICAL CONTROL] Archaeon byte machine and ecology (archaeon/z80atlas)
 - Does: the opcode is the low 5 bits of a byte, so every byte decodes; four registers zeroed at each execution; a cost per step and a rent per byte, both in floats.
 - Shown correct: 5 positive controls pass; byte-identical replays (dossier). Record: 101,003 runs; all 26 of 26 "spontaneous replication" flags were transplants (dossier).
-- Fit: as O-05. It has the only per-step cost plus per-byte rent in the old tree, which is the idea behind DEV-09, but in floats.
+- Fit: as O-05. Among the machines examined it alone has a per-step cost plus a per-byte rent, which is the idea behind DEV-09, but in floats.
 - Cost: adapt XL; rebuild L.
 - Coupling: the Proteus random generator; three other Archaeon packages.
 - Take: nothing as machinery. The transplant under a "spontaneous" label is a failure fixture (section 5).
@@ -273,7 +283,7 @@ section 9.
 
 ### O-10 [RETIRE] Aether byte-copy lattice, as an organism substrate (Aether/)
 - Does: a synchronous 2-D torus with 5 bytes per site; one acting opcode of 256. No genome, individual, input, output, objective or selection.
-- Shown correct: a differential corpus between oracle and fast implementation; golden vectors; mutants rejected; bit-identical on 4 hosts (19 attempts, all matching). Record (dossier): about 92% of the medium frozen by about 2,500 ticks; one-bit differences stay within about 1 site.
+- Shown correct: a differential corpus between oracle and fast implementation; golden vectors; mutant implementations rejected (for an earlier specimen); bit-identical on 4 hosts (19 attempts, all matching). Record (dossier): about 92% of the medium frozen by about 2,500 ticks; one-bit differences stay within about 1 site.
 - Fit: a lattice arm in name. Fails ORG-01, ORG-02, ORG-09, DEV-01 to DEV-07, COMP-01 and open-arm admission. It cannot even HOLD, since there is no input or readout.
 - Cost: adapt XL (it needs decisions: what an organism is, where input and output go). A lattice substrate designed for organisms is M to L.
 - Coupling: numpy; CuPy on rented pods; a rental key held on one laptop.
@@ -315,7 +325,7 @@ section 9.
 - Does: refuses undeclared persistent attributes on a learner, before a life and during it.
 - Shown correct: tests show smuggled attributes refused at both points.
 - Fit: ORG-02's hidden-store check, as a working precedent.
-- Cost: S either way.
+- Cost: S either way (my estimate; the worker gave none).
 - Coupling: none beyond its package.
 - Take: the check, re-expressed over the stores an organism declares. P1's reset-equivalence test is the behavioural half of the same guarantee.
 - Lines: not reported
@@ -323,7 +333,7 @@ section 9.
 
 ### O-15 [RETIRE] Four families that are not organisms (Ensorain regressors; Tyche lens programs; Theseus rule fields; Hecate plastic media)
 - Does: a tensor-train regressor behind a fixed foraging policy; feed-forward feature programs computed over whole time series for fixed classifiers; rule programs on a 1-D float field with no input or action; Hebbian conductances on a reaction-diffusion medium with no input or output.
-- Shown correct: varies; none has an oracle.
+- Shown correct: varies; none has an independent oracle of the whole system (the regressor's evaluation is checked against a dense tensor).
 - Fit: none of the organism slots. All fail ORG-01, ORG-08 and DEV-01.
 - Cost: as substrates L to XL each; not competitive with rebuilding.
 - Coupling: Tyche imports Hecate's answer key; Theseus imports Tyche.
@@ -335,8 +345,8 @@ section 9.
 
 ### W-01 [EXTRACT] Archaeon event-stream grammar (archaeon/wse/worlds.py) -- RECALL, part of CHAIN
 - Does: each tick the organism reads integer event words (put, ask, compositional asks, distractors, retire); its first output word on an ask tick is scored exactly. K tagged values, identities drawn fresh per episode. Independent dials for items, delay, distractors, interference and value bits. Separate keyed stream families for training, held-out and controls.
-- Shown correct: an independent reference evaluator sharing only the kind codes matches on 20 episodes per survey cell; designed positives score 1.000 and nulls 0.000. Defects: the construction that leaked in one cell is unchanged in the code; some stream cells have no test; chance is stated but no bound is computed.
-- Fit: the best RECALL seed in the tree. Meets WLD-04, most of WLD-01, part of MEAS-04. Fails WLD-02, 03, 05, 06, 07.
+- Shown correct: an independent reference evaluator sharing only the kind codes matches on 20 episodes per survey cell; designed positives score 1.000 and nulls 0.000 on four of the worlds. Defects: the construction that leaked in one cell is unchanged in the code; some stream cells have no test; chance is stated but no bound is computed.
+- Fit: the best RECALL seed in scope. Meets WLD-04, most of WLD-01, part of MEAS-04. Fails WLD-02, 03, 05, 06, 07.
 - Cost: port M (protocol, information bounds with enumeration receipts, twins, commit-reveal families, the leak fixed). Certified CHAIN bounds L. Rebuild RECALL M.
 - Coupling: the Proteus machine; imported by Nestor and Odysseus code.
 - Take: code and tests for the grammar and stream keying, lifted out of the Proteus harness.
@@ -414,7 +424,7 @@ section 9.
 - Source: 03 Herakles.
 
 ### W-09 [HARDEN] Hecate evaluator contract (hecate/programs/_lib/evaluator_contract.py)
-- Does: a specification-driven evaluator that requires five arms (treatment, null twin, positive control, cheat, simple alternative); compares exactly in fractions; lets an instrument failure take precedence over any signal; maps a missing positive control to "specification unattainable"; never raises.
+- Does: a specification-driven evaluator that requires five arms (treatment, null twin, positive control, cheat, simple alternative); compares exactly in fractions; lets an instrument failure take precedence over any signal; maps a positive control that misses in the pilot to "specification unattainable"; never raises.
 - Shown correct: 33 tests. Its own header: draft, not issued, not frozen.
 - Fit: the admission verdict engine for WLD-07 and an exact-arithmetic verdict type (MEAS-07, SCI-02).
 - Cost: S to issue; rebuild S.
@@ -446,7 +456,7 @@ section 9.
 ### W-12 [EXTRACT] Cosmos cue task with a misleading hint, and the threshold locator (prometheus/cosmos/c3/task.py, prometheus/cosmos/locate.py)
 - Does: a cue among V symbols, k distractors, a query, and a hint that reveals the cue with probability h; a locator that fits where behaviour flips along a 33-point cost ladder under common random numbers.
 - Shown correct: used in a gate of six planted systems, each classed as expected on 5 of 5 seeds.
-- Fit: a RECALL micro-world whose memoryless bound is h + (1 - h)/V; and the only threshold locator in the tree (toward MEAS-12, though it is a fixed ladder, not a staircase).
+- Fit: a RECALL micro-world whose memoryless bound is h + (1 - h)/V (inferred from the code, which does not compute it); and the only threshold locator in scope (toward MEAS-12, though it is a fixed ladder, not a staircase).
 - Cost: S.
 - Coupling: numpy.
 - Take: both, as conformance material. The hint dial becomes DOUBT's misleading-evidence dial.
@@ -465,7 +475,7 @@ section 9.
 
 ### W-14 [RETIRE] Worlds with no computed optimum (Ares W family; Vivarium kinds; Archaeon composed worlds; Archaeon reproduction assay)
 - Does: float worlds with present, absent and shuffled modes; fitness evaluators with no perception-action loop; float feature-module worlds; a reproduction assay with lockstep arms.
-- Shown correct: not examined for Ares; tests exist for the others.
+- Shown correct: not examined for Ares or the Vivarium kinds; the composed worlds have no tests; the reproduction assay has 9.
 - Fit: patterns only: three-mode twins; a probe-then-commit shape for DOUBT; twin arms on shared streams with a band frozen before data. All fail WLD-01, 02, 03.
 - Cost: rewriting one as an exact DOUBT world M.
 - Coupling: their own engines.
@@ -484,7 +494,7 @@ section 9.
 - Source: 03 reasoning ladder.
 
 ### W-16 [UNKNOWN] Archaeon hidden-bitstring world with an exact optimum at small sizes
-- Does: per the dossier, a hidden bitstring identified by acting, with an exact dynamic-programming optimum for small lengths.
+- Does: per the dossier, a hidden-bitstring world with an exact dynamic-programming optimum for small lengths.
 - Shown correct: not opened by any worker.
 - Fit: a possible IDENTIFY seed.
 - Cost: unknown.
@@ -521,14 +531,14 @@ section 9.
 - Fit: fails SRCH-01 by construction. The per-operator census is a usable single-edit probe (SRCH-03).
 - Cost: not worth fixing as a regime.
 - Coupling: the Proteus machine.
-- Take: the fixture "a search that cannot take neutral steps reports its target unreachable". The P1 prototype measured the same factor directly: recovery of one missing instruction was 24, 9 or 1 of 24 lineages, depending only on the acceptance rule.
+- Take: the fixture "a search that cannot take neutral steps reports its target unreachable". The P1 prototype measured the same factor directly: recovery of one missing instruction was 24, 9 or 1 of 24 lineages (search seeds on one plant, I1), depending only on the acceptance rule.
 - Lines: 227
 - Source: 07 sheet 2; 05 Proteus.
 
 ### S-04 [EXTRACT] Crius designed partial organisms at graded distance (crius/parts_c2.py) and its neutral-edit null
 - Does: 7 frozen designed partial organisms with an ancestor map, paired selective value and edit distance; a null that re-scores ancestry steps which add no typed operation.
 - Shown correct: gate witnesses before search; sealed qualification streams. Defects of the search around it: ties broken toward shorter programs and a set of already-seen genotypes, both of which suppress neutral drift; a budget frozen at 300 iterations; one founder in the seeded arm.
-- Fit: REACH inputs (SRCH-02): the only designed ladder of partial organisms in the tree. The search loop fails SRCH-01, 04, 06 and COMP-01 (9.68 candidates per second).
+- Fit: REACH inputs (SRCH-02): the only designed ladder of partial organisms in scope. The search loop fails SRCH-01, 04, 06 and COMP-01 (9.68 candidates per second).
 - Cost: copy the designs S to M.
 - Coupling: the Crius machine.
 - Take: the ladder design, re-made for WM: partials with known distance and known selective value. The loop is retired.
@@ -543,12 +553,12 @@ section 9.
 - Coupling: numpy, sklearn; Hecate's systems.
 - Take: lexicase as one declared selection regime; the tracer's question as a standard report in P5.
 - Lines: 5439
-- Source: 07 sheet 4.
+- Source: 07 sheet 4; package size from 02 Tyche (07 counts 4,491 for the search modules).
 
 ### S-06 [EXTRACT] Budget ladder and the expressible / reachable / findable split (agent_d5_blind, ergon/gen3, agent_d4_blind)
 - Does: sorts each task as expressible (a witness exists), reachable (within a bounded number of edits) and findable (solved per budget rung of 1,000, 3,000, 10,000 and 30,000 evaluations, by witness length). Computes the minimum detectable effect in advance. Sends constructed worlds through the exact decision path. Plants an oracle witness as a cheat control. A sibling design measures hit rate on reachable targets by remoteness, with first-passage cost.
 - Shown correct: gate-fire 5 of 5; the planted witness was detected at n 100 and missed at n 30, and the miss was kept; 290 of 290 rows replayed. Limits: the recorded curves are engineering runs at 5 tasks per depth; one analysis script was never committed.
-- Fit: the closest existing design to the search-power instrument (SRCH-02, 03, 04) and a MEAS-08 exemplar. It has the fastest verified loop in the old tree: 231,663 evaluations per second on 8 workers.
+- Fit: the closest existing design to the search-power instrument (SRCH-02, 03, 04) and a MEAS-08 exemplar. Its loop is one of the two fastest verified loops in scope: 231,663 evaluations per second on 8 workers (S-08 records 248,523 on 3).
 - Cost: the method ports; the code is bound to its machine; rebuild for WM M.
 - Coupling: numba.
 - Take: the vocabulary and the ladder. The instrument is new; P1's reach.py is its first version.
@@ -591,12 +601,12 @@ section 9.
 - Fit: SRCH-05 yes; fails SRCH-13. 631 world-episodes per second.
 - Cost: rebuild S.
 - Coupling: torch; its engine.
-- Take: nothing as code. Its record is the clearest reach gap in the tree and is kept as a re-test target (section 6).
+- Take: nothing as code. Its record is the clearest reach gap in the reports I read and is kept as a re-test target (section 6).
 - Lines: 149
 - Source: 07 sheet 9.
 
 ### S-11 [RETIRE] Model-guided generators (Hephaestus forge 1.0; Icarus; Nous; Apollo's model mode)
-- Does: a model writes a tool class from a concept triple; a model patches one file per cycle; a model proposes concept triples and rates its own output; a local model inserts pipeline steps half the time.
+- Does: a model writes a tool class from a concept triple; a model patches one file per cycle; code samples concept triples and a model answers and rates its own answer; a local model inserts pipeline steps half the time.
 - Shown correct: little. 2,861 of 6,661 forge rows are failed calls; one generator returns "novel" 92.3% of the time (dossier); another's payloads carry the label.
 - Fit: none has a model-free arm at an equal certified level. One violates ANTI-10; one fails ANTI-04, ANTI-07 and INF-02. Apollo's mode is the only code with a declared blind share (half) and lineage tags that name model inserts, which is the ANTI-04 shape.
 - Cost: not applicable.
@@ -625,7 +635,7 @@ section 9.
 - Lines: 442
 - Source: 06 Metis; 07 sheet 11.
 
-### S-14 [RETIRE] Curricula and difficulty rules (archaeon/campaign1/sfe05.py and five others)
+### S-14 [RETIRE] Curricula and difficulty rules (archaeon/campaign1/sfe05.py and six others)
 - Does: step a difficulty ladder up or down on population statistics; one rule targets the categories nearest a 50% pass rate per subject.
 - Shown correct: one reported effect, at n 3.
 - Fit: none is an adaptive staircase with a stated resolution (MEAS-12). All but one key on population statistics.
@@ -650,7 +660,7 @@ section 9.
 ### M-02 [EXTRACT] Techne instrument primitives (prometheus_math/battery.py, instrument_contract.py, measurement.py, migration_liveness.py)
 - Does: a probe that reports whether a check can vary at all, reading the syntax tree to see whether it ignores its arguments; a certify step that requires positive, negative, invalid and sensitivity fixtures; a measurement type whose out-of-domain value cannot be read as a number or a truth value.
 - Shown correct: 15, 11 and 12 tests; the probe caught a real always-true check; the contract documents its own hole. Gap: no counts and no error rates.
-- Fit: the core of the QUALIFICATION GATE (MEAS-02) and verdict mechanics (SCI-02). The best detector in the tree for controls that cannot fail (T03). Absent from the Tityos inventory.
+- Fit: the core of the QUALIFICATION GATE (MEAS-02) and verdict mechanics (SCI-02). The best detector among those examined for controls that cannot fail (T03). Absent from the Tityos inventory.
 - Cost: S.
 - Coupling: none outside its package.
 - Take: code and tests, moved into the kernel.
@@ -680,16 +690,16 @@ section 9.
 ### M-05 [EXTRACT] Harmonia audit primitives and adjudicator (roles/Harmonia/qualification/primitives; roles/Harmonia/qualification/campaign1)
 - Does: lists the verdict labels no input can reach; requires a calibration item for each label; runs a frozen rule on baselines that lack the construct; flags thresholds at the scale ceiling; a binomial tail; asks git whether the plan's first commit precedes the results'. A separate adjudicator refuses a verdict supplied from outside, rows that do not match the manifest hash, and analysis code that does not match the preregistered hash.
 - Shown correct: each primitive fires on a real defect of 2026-09-30 and is quiet on a clean twin; the adjudicator's refusals are tested. Defects: an ablation helper forces silence, so "the defect escapes when the check is off" cannot fail; the freeze check ignores git return codes; outputs are booleans.
-- Fit: preregistration and freeze checks (SCI-03 attainability, PROV-06, MEAS-08), and the only fixture in the tree where an outside verdict is refused (MEAS-11).
+- Fit: preregistration and freeze checks (SCI-03 attainability, PROV-06, MEAS-08), and the only fixture the worker found in which an outside verdict is refused (MEAS-11).
 - Cost: S.
 - Coupling: stdlib and git.
-- Take: code, fixtures and clean twins. The same seat's older rule library is not taken (section 5).
+- Take: code, fixtures and clean twins. The same seat's older rule library is not taken (M-13; report 04 list B, items B20 and B21).
 - Lines: 682
 - Source: 04 Harmonia primitives; 04 Harmonia qualification library.
 
 ### M-06 [EXTRACT] Hecate exact shadow evaluator and derived-file reproduction (hecate/alien/shadow_decisions.py)
 - Does: re-decides every preregistered decision in fractions, replays the bootstrap on the same stream, and reports where the float decision diverges; tests regenerate every committed derived file and require equality.
-- Shown correct: found two decisions sitting exactly on a threshold; 0 per-item mismatches.
+- Shown correct: found two places where the float decision diverges from the exact one, one of them a value sitting exactly on its threshold; no decision changed; 0 per-item mismatches.
 - Fit: MEAS-07 (a second evaluator recomputes every decision) and REPR-05.
 - Cost: the method only. The code is bound to one assay (L to reuse, M to rebuild).
 - Coupling: its assay.
@@ -700,7 +710,7 @@ section 9.
 ### M-07 [EXTRACT] Artemis constructed-specimen panel and commit-reveal self-test (roles/Artemis/challenge/p11; roles/Artemis/selftest)
 - Does: 17 specimens written as literal bytes, each with known heritable content (zero-bit painters, copiers, 1-bit and 4-bit carriers, stress cases), run against a certificate and its rivals under preregistered rules applied mechanically; a self-test that committed a hash of its answers before reveal and scored its own forecasts.
 - Shown correct: the panel showed an older certificate passing all 4 zero-bit painters and rejecting 4 genuine replicators, and the alternative sorting all 17 as predicted. Its forecast score was 0.470 against 0.391 for a constant forecast, which is worse than the constant, and it reported that.
-- Fit: the cleanest calibration set in the tree in the sense of REQUIREMENTS 1.3 (positive, negative, impostor, with a confusion table), and a SCI-06 exemplar.
+- Fit: the cleanest calibration set among those examined, in the sense of REQUIREMENTS 1.3 (positive, negative, impostor, with a confusion table), and a SCI-06 exemplar.
 - Cost: port M; rebuild S per world family.
 - Coupling: archived copies of another seat's machine.
 - Take: the layout: literal specimens with known answers, a confusion table, scored forecasts. P1's calibration table is the same object for BUILD.
@@ -763,7 +773,7 @@ section 9.
 - Fit: fixtures for T03, T04, T10, T16, T20, T22. The hook still runs: it printed ADMISSIBLE on the commits of this package.
 - Cost: S each to turn into a fixture.
 - Coupling: their engines.
-- Take: section 5 lists them. None is used as an instrument.
+- Take: as fixtures. Section 5 carries two of them (F-04, F-18); the others are in report 04, list B (B20, B23) and its Techne sheets. None is used as an instrument.
 - Lines: not reported
 - Source: 04 exit-review-3; 04 attacks; 04 Harmonia qualification library; 04 Techne; 04 list B.
 
@@ -790,7 +800,7 @@ section 9.
 ### M-16 [UNKNOWN] ergon/probe/r3_controls.py
 - Does: by its header, a control with measured operating characteristics (false alarm 5%; power 100% at +15 points and 85% at +10 points).
 - Shown correct: not verified by any worker.
-- Fit: if true, the only measured control error rate in the old tree (MEAS-01).
+- Fit: if true, possibly the only measured control error rate in that worker's territory (MEAS-01).
 - Cost: unknown.
 - Coupling: its probe.
 - Take: undecided. Read it before writing the first datasheet.
@@ -831,17 +841,17 @@ section 9.
 
 ### C-04 [EXTRACT] Crius store-content conditions (crius/evaluate.py)
 - Does: runs one lifetime under each of: accumulated store; empty store; reset; scrambled; blocks removed by id; blocks or the whole store transplanted from a fork; code only; and identifiers only, with empty contents.
-- Shown correct: a designed reuse organism scores 46.1 against 20.7 with an empty store; the identifiers-only condition caught organisms using the id counter as a clock (dossier). Weaknesses: one calibration artifact gives every typed candidate the same gain; empty records cost nothing.
-- Fit: the developmental control set of DEV-04, and transplant with a sham (XFER-03, CAUS-01), at store level.
+- Shown correct: a designed reuse organism scores 46.1 against 20.7 with an empty store, and the identifiers-only condition caught organisms using the id counter as a clock (both from the dossier, not checked by the worker). Weaknesses: one calibration artifact gives every typed candidate the same gain; empty records cost nothing.
+- Fit: store-level treatments for forked clones (DEV-05), harness control of stores (ORG-02), and transplant with a sham (XFER-03, CAUS-01).
 - Cost: S to M.
 - Coupling: Crius internals.
-- Take: the list of conditions, as protocol operations on persistent stores. The identifiers-only sham joins the standard set.
+- Take: the list of conditions, as protocol operations on persistent stores. The identifiers-only sham joins the standard shams for store interventions.
 - Lines: 1000
 - Source: 05 Crius; 01 sheet 2.
 
 ### C-05 [EXTRACT] Ares edge- and loop-aware lesions with a matched sham transplant (ares/carriers.py)
 - Does: cuts each class of cross-step carrier separately (self-loops, recurrent edges, strongly connected components, leak, plasticity); transplants a carrier into random hosts against a matched random subcircuit; measures the chance that one mutation creates a carrier.
-- Shown correct: hand-wired carriers classified and told apart; it catches an output-node self-loop that node ablation could not remove. Defects: a float tie artefact; one result first reported as the best of 9.
+- Shown correct: hand-wired carriers classified and told apart; it catches an output-node self-loop that node ablation could not remove. Defects (dossier): a float tie artefact; one result first reported as the best of 9.
 - Fit: CAUS-05 (lesions reach the whole candidate circuit) and CAUS-01, for PN. Fails MEAS-07, ORG-10.
 - Cost: rebuild for PN S to M.
 - Coupling: Ares internals.
@@ -872,7 +882,7 @@ section 9.
 ### C-08 [UNKNOWN] Dependence tracers on a side branch (roles/Bellerophon/e003_2026-09-29/tools; a Nestor shadow tracer)
 - Does: label-carrying twins of a byte machine that track data, address and control dependence, with every run value-checked against the frozen machine.
 - Shown correct: 32,827 births replayed bit for bit; 28 of 28 fixtures. But raw agreement between two tracers failed at 0.974 and was cleared by an amendment adopted after production; the verdict of record is OPEN; the specification and fixture pack exist only on a branch 85 commits ahead of main.
-- Fit: the strongest dependence semantics in the tree (CAUS-06, PROV-09).
+- Fit: the strongest dependence semantics the worker found (CAUS-06, PROV-09).
 - Cost: porting the semantics M, after a decision to merge the specification.
 - Coupling: a host-local harness; a branch that is not main.
 - Take: undecided. It needs a ruling on the branch.
@@ -913,7 +923,7 @@ section 9.
 
 ### I-01 [HARDEN] Agent Fabric v0.2 (fabric/) -- the one queue and the one lease
 - Does: a Postgres job queue. The database enforces one running attempt per task and one unreleased lease per resource. A claim takes the task and its leases in one transaction. Heartbeat fencing. Workers run a repository script at a pinned commit under an environment allow-list. The runtime uploads outputs as hashed blobs.
-- Shown correct: 43 tests; a nine-part pilot with evidence files, including a recorded failure before a fix; a lease race always has exactly one winner. Its owner lists 23 open defects. Workers are Linux-only as written, so no attempt has ever run on M1 or M2.
+- Shown correct: 43 tests; a nine-part pilot with evidence files, including a recorded failure before a fix; a lease race always has exactly one winner. Its owner's defect list has 23 rows (dossier, not checked). Workers are Linux-only as written, so no attempt has ever run on M1 or M2.
 - Fit: COMP-04, INF-01, PROV-05. Partial COMP-02, COMP-05, PROV-07, REPR-06. Fails PROV-01, PROV-03, MEAS-11 and ANTI-01 (one shared database credential), ENRG-01.
 - Cost: M (a Windows worker; CPU and GPU-hour caps; keep the token counts; an append-only trigger). L with the runner's gates. Rebuild L.
 - Coupling: M1 Postgres; credentials through the evidence-wiki connector from a tracked file.
@@ -923,13 +933,13 @@ section 9.
 
 ### I-02 [HARDEN] Toolbox receipt schema and local executor (prometheus/toolbox/receipt.py, backends/local.py)
 - Does: one record per run with required keys; an id from the hash of the canonical body; a chain through the previous id; append-only lines flushed per record; a strict reader that names truncation, edits and chain breaks; engineering and science ledgers kept disjoint; a resume under a different experiment is refused; a wall-time budget is enforced.
-- Shown correct: 231 tests; 92 mutants caught in the committed ledger; cross-platform replay. One past defect: a wrong twin once passed an admission probe that ignored actions (repaired).
+- Shown correct: 231 tests. Mutants caught, as reported and not rerun: 92 of 92 in the committed ledger by one worker's count (03), "85 of 85, later 93" by another's (06). Cross-platform replay reported. One past defect: a wrong twin once passed an admission probe that ignored actions (repaired).
 - Fit: the receipt schema and ledger format: PROV-02, INF-01; partial PROV-01, PROV-04, COMP-02, COMP-05, REPR-01. Fails MEAS-06, ENRG-01, INF-03.
 - Cost: S to M (code commit; a verdict block with ruler hash; energy and token fields; completion gated on validation).
 - Coupling: stdlib; one importer.
 - Take: the schema and the reader, as the one receipt format.
 - Lines: 5962
-- Source: 06 toolbox.
+- Source: 06 toolbox; 03 Bellerophon.
 
 ### I-03 [EXTRACT] Hash chain, prediction window and deployed-build check (SerendipityFoundry/SerendipityFoundryEngine/sfe/events.py, release.py, deploy/verify_deploy.py)
 - Does: every state change appends an event to a per-world hash chain; a prediction counts as prospective only if its sequence number precedes the experiment's commitment; a script checks that the served build equals pinned, normalised file hashes.
@@ -944,7 +954,7 @@ section 9.
 ### I-04 [EXTRACT] Vivarium database invariants (vivarium/migrations)
 - Does: 12 triggers enforce one active row, legal transitions only, frozen terminal rows, an immutable sealed request, append-only events, errata and receipts, and an ordered outbox. The runner sees only id, specification and hash.
 - Shown correct: 590 tests; a canary run with zero human commands. Record: about 85,727 phantom experiments in the engine it drove; 98% of each row's wall time was round-trips to that engine.
-- Fit: PROV-04 enforced in the database, which is the only place in the tree where invariants are more than code; the blinded runner is the MEAS-11 shape.
+- Fit: PROV-04 (append-only records) enforced in the database by triggers, which no other store examined does; the blinded runner is the MEAS-11 shape.
 - Cost: port the triggers M.
 - Coupling: SFE and the evidence service on M2.
 - Take: the triggers, onto the Fabric store. The service is retired (I-10).
@@ -964,7 +974,7 @@ section 9.
 ### I-06 [HARDEN] Database connector and credentials (evidence_wiki/ew/db.py)
 - Does: pooled connections with credentials taken from the environment, then a local file, then a tracked file; applies the identity guard.
 - Shown correct: in daily use by every store. Open defect: credentials in a tracked file, and in three other tracked places.
-- Fit: every store depends on it. ANTI-01 and MEAS-11 need a separate write credential per authority, and none exists: no store in the tree separates write authority at the database.
+- Fit: every store depends on it. ANTI-01 and MEAS-11 need a separate write credential per authority, and none exists: none of the stores examined separates write authority at the database.
 - Cost: S to move credentials out of git. Separating write authority is new work (M).
 - Coupling: every database client.
 - Take: the connector, after rotation, with one credential per authority (generation, reality, interpretation).
@@ -1005,7 +1015,7 @@ section 9.
 - Does: three services (the SFE ledger service, the Vivarium loop, the evidence-wiki service); at least eight queue or lease mechanisms (SFE work items, the Vivarium queue, a Redis queue with leases and CPU tokens, the comms task queue, two agora tables, host-file leases, queue files from an August loop); a row writer that calls git from campaign code; reporting that reads heartbeats; a fleet census.
 - Shown correct: each worked for its owner. Together they are the coordination load Ixion measured.
 - Fit: they fail COMP-04 (one queue, one lease), PROV-08 (no campaign code calls git) and INF-07.
-- Cost: retire S each; the SFE service M, because two ledgers outside the repository must first be preserved with hashes and a custody note. One mechanism is ported before retirement: the kill on a child's CPU time, the only enforced CPU cap in the tree (S).
+- Cost: retire S each; the SFE service M, because two ledgers outside the repository must first be preserved with hashes and a custody note. One mechanism is ported before retirement: the kill on a child's CPU time, the only enforced CPU cap the worker found (S).
 - Coupling: M2 services; Redis on M1; scripts on M4.
 - Take: nothing. Each retirement is an operator act; this row is a recommendation.
 - Lines: not reported
@@ -1032,9 +1042,9 @@ section 9.
 - Source: the crawler packages.
 
 ### I-13 [EXTRACT] Cross-host verification harness (Aether/test; ops/campaigns/C-002/E-007)
-- Does: a differential corpus between an oracle and a fast implementation (hand-worked cases, seeded fixtures, property-based worlds, short trajectories); golden vectors; rejection of mutant implementations; a reduction that ran the same units on 4 hosts under two operating systems and two numpy versions.
+- Does: a differential corpus between an oracle and a fast implementation (hand-worked cases, seeded fixtures, property-based worlds, short trajectories); golden vectors; rejection of mutant implementations (for an earlier specimen); a reduction that ran the same units on 4 hosts under two operating systems and two numpy versions.
 - Shown correct: 133 physics tests; 19 attempts on 4 hosts, all matching.
-- Fit: REPR-01, and COMP-01's reference check: the best worked example in the tree.
+- Fit: REPR-01, and COMP-01's reference check: the best worked example in scope.
 - Cost: S to M.
 - Coupling: its lattice; rented pods.
 - Take: the layout of the corpus and of the cross-host reduction.
@@ -1055,22 +1065,22 @@ section 9.
 
 ## 4. What has to be written new
 
-Nothing in the tree is a starting point for these. In rough order of how much
+Nothing examined is a starting point for these. In rough order of how much
 the design leans on them.
 
 | # | new component | why nothing can be salvaged | requirement |
 |---|---|---|---|
-| 1 | Demand-certificate solvers: the exact best score of each restricted class (no memory; k states; non-adaptive; nothing carried across episodes; lookup of bounded size) for a world in which an organism acts | no code computes any of these; existing bounds are per task, in floats, used after the fact | WLD-02, MEAS-03 |
+| 1 | Demand-certificate solvers: the exact best score of each restricted class (no memory; k states; non-adaptive; nothing carried across episodes; lookup of bounded size) for a world in which an organism acts | no code examined computes any of these in an agent-environment loop; two enumerated optima exist for prediction-only and constant-action cases; other bounds are per task, in floats, used after the fact | WLD-02, MEAS-03 |
 | 2 | The WM kernel: compiled, integer, total, with tagged blocks, call with arguments, rent, and switches | no machine has tags or rent; none meets the throughput requirement; the nearest is Python with non-integer values | ORG-01 to ORG-09, COMP-01 |
 | 3 | The search-power instrument: recovery of planted targets by distance and budget | no component measures it | SRCH-02, SRCH-03 |
 | 4 | The runner's refusals: preregistration is an ancestor; the verdict table is total and reachable; rulers hold current qualification receipts; a baseline ladder exists; budgets are capped | each exists somewhere as a reading rule, nowhere as a gate on starting a run | SCI-03, MEAS-02, MEAS-06, COMP-05 |
 | 5 | Separate write authority for generation, reality and interpretation | every store shares one credential | ANTI-01, MEAS-11 |
 | 6 | Custody of sealed worlds outside the working tree, with an access log | sealed files are tracked and readable; today's incident | PROV-10, WLD-06 |
-| 7 | The REF arm: three conventional learners under the same protocol | no conventional learner and no gradient regime exists in scope | ANTI-08, ORG-07 |
+| 7 | The REF arm: four conventional learners under the same protocol | no conventional learner under an organism protocol in the scopes examined; the tree's REINFORCE and PPO trainers (M-15) were not examined as learners | ANTI-08, ORG-07 |
 | 8 | PN: a fixed-point plastic network whose weights persist across episodes | no network keeps weights across episodes | ORG-07, DEV-01 |
 | 9 | RETAIN and FAMILIES world families | no world holds a hidden mapping across fast-state resets; none has families with meta-structure | WLD-09 |
-| 10 | Adaptive staircase with stated resolution; carrier-noise opt-out test | only threshold rules on population statistics exist; no opt-out test anywhere | MEAS-12, CAUS-07 |
-| 11 | Energy estimate and token counts on every receipt | nothing records energy on any owned host; the one cost record keeps dollars and drops tokens | ENRG-01, INF-03 |
+| 10 | Adaptive staircase with stated resolution; carrier-noise opt-out test | only threshold rules, almost all on population statistics, exist; no opt-out test in any component examined | MEAS-12, CAUS-07 |
+| 11 | Energy estimate and token counts on every receipt | nothing records energy on any owned host; the job fabric keeps dollars and drops tokens; one replay tool logs tokens for its own calls only | ENRG-01, INF-03 |
 | 12 | The claim registry and the four standing tables | no single register of claims with levels exists | SCI-04 |
 | 13 | A measured reference class of mechanism signatures | no signature space exists | ANTI-05 |
 | 14 | A shadow tracer for WM | tracers exist for byte machines only | CAUS-06, PROV-09 |
@@ -1165,10 +1175,14 @@ reports.
 12. Ludus's "25 tests" are scripted assertions; it has no pytest functions (03 SURPRISES 7).
 13. Two cross-host replays of the Bellerophon soup are absent from its dossier (01 SURPRISES 4).
 14. Tyche's "exact" mutual information is a plug-in estimate with a permutation correction; only the table-law order is exact (03 SURPRISES 2).
-15. M1's processor is recorded two ways in the tree. I measured it this session: Ryzen 7 7700X, 8 cores, 16 threads, 31.6 GB (06 SURPRISES 11).
 
 None of these changes a requirement. Item 1 strengthens MEAS-02; item 4
 softens one line of the Ixion account without changing INF-03.
+
+Not a crawler error, but found on the way: M1's processor is recorded two
+ways in the tree (one older file against REQUIREMENTS.md). I measured it
+this session: Ryzen 7 7700X, 8 cores, 16 threads, 31.6 GB (06 SURPRISES
+11).
 
 ----------------------------------------------------------------------
 
@@ -1181,8 +1195,9 @@ RSE_ARCHITECTURE.md section 13 and none rewrites a frozen section.
 1. **WM is a rebuild with a known ancestor.** Crius shows the three-store
    layout works in practice and shows three ways it goes wrong (O-03). WM
    takes the layout and adds the three tests.
-2. **The identifiers-only sham joins the developmental control set** (C-04).
-   An organism can hide competence in an identifier counter.
+2. **The identifiers-only sham joins the standard shams for store
+   interventions** (C-04). An organism can hide competence in an identifier
+   counter.
 3. **Interchange verdicts are reported over a sweep of swap ticks, with the
    declared boundary on the row** (C-03), and every intervention passes a
    control-identity audit before it counts (C-01, C-02).
@@ -1200,10 +1215,11 @@ RSE_ARCHITECTURE.md section 13 and none rewrites a frozen section.
    and the old record gives a reason to doubt it is easy: a fixed-procedure
    learner starting from nothing built no reusable structure in 8 of 8 runs.
    OPEN_QUESTIONS.md carries this.
-8. **One vocabulary for controls.** "Cheat control" means a positive control
-   in one seat, an impostor in another and a channel test in a third (04
-   SURPRISES 12). The kernel uses the five names of REQUIREMENTS 1.3 and
-   nothing else.
+8. **One vocabulary for controls.** "Cheat control" names different things
+   in the old tree: a positive or channel control in one seat (04 SURPRISES
+   12), impostor responders in another (04, Nemesis sheet), a fabricated
+   receipt in a third (04, Charon checks sheet). The kernel uses the five
+   names of REQUIREMENTS 1.3 and nothing else.
 
 ----------------------------------------------------------------------
 

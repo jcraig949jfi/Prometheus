@@ -1,0 +1,12 @@
+# Manifest for salvage_reports
+
+sha256 over LF-normalised bytes (equals the git blob for text files); see comms/manifest.py.
+
+- 00_SEARCH_RULE_INCIDENT.md  sha256:7a847d7d92baa10b1591931b168d0680ccb5ac59be1069ce319cf6d0d76b67c0
+- 01_program_substrates.md  sha256:b422e8cf0475bdf23bcd314c0652643bde4a509162563c39e59146a5d2dc158e
+- 02_other_substrates.md  sha256:5a43fb15ae7abc2edad7056ad59574037b24909b32d2531dd64842993dce0261
+- 03_worlds.md  sha256:38fdfaffc41282e6dcbc6ae13ee95c7144a431a3ad38a4f6b8c5d05621088582
+- 04_qualification_instruments.md  sha256:ac644599ccd72e1f0fcbf81fd8531c5ab94b4b4d2e1160409c6f28a4aaa8b7e9
+- 05_causal_instruments.md  sha256:69e9b2ef1831a8329317effa840b194d4df5eaeef6f3d3fd81442682d7a3d0dc
+- 06_infrastructure.md  sha256:b8a5de1f93358e2be29cb1139dd3304b485e8e5947a3f54843b502b51af96bac
+- 07_search_machinery.md  sha256:c4f8aa85a3ccbf59dc5304312af087f4027ecc3aa5ca5d0aee1d67842081ec6c

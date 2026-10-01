@@ -1,15 +1,23 @@
 # Dionysus TODO
 
-Currency: 2026-10-01T13:28Z (from date -u). Closed items are deleted
+Currency: 2026-10-01T17:17:31Z (from the clock at write time). Closed items are deleted
 with the closing commit and date, purged after 24 h (base role s7).
 
-- [ ] Receive the charter; commit it verbatim with a MANIFEST under
-      prompts/<date>_charter/
-- [ ] Rewrite RESPONSIBILITIES.md around the charter (pre-charter body
-      to superseded/); name overlaps with sibling seats before claiming
-      any gap
-- [ ] File BACKLOG_H0H5.md in the schema (>= 20 rows, first five today's);
-      move WORK_STATE.json out of HOLD
-- [ ] First chartered wake: read base-role RESPONSIBILITIES.md,
-      WORKING_CONTRACT.md, NORTH_STAR.md, MONITORS.md and
-      aporia/doctrine/critical_memories.md in full (not read this pass)
+- [ ] BACKLOG row 03: smuggler and identifiers-only impostors in the
+      prototype, under PREREG_v3.md in its own commit
+- [ ] BACKLOG row 04: RECALL world with its information bound; certify
+      designed holders at their known bits
+- [ ] BACKLOG row 05: search-power curve under three register settings,
+      forecasts registered first
+- [ ] Watch comms for replies to the incident notice (Mnemosyne first)
+- [ ] Correct the package by dated annotation when review findings arrive
+- [ ] Do NOT read other architects' designs until the operator opens the
+      comparison
+- [ ] Post the incident notice after the push and record the comms id in the journal
+
+Closed 2026-10-01 (purge after 24 h):
+- [x] Charter committed verbatim with MANIFEST (04b97a598)
+- [x] Requirements and architecture frozen before salvage (a0e3a4d03)
+- [x] Design package delivered (docs/phase3/design/FABLE-5.1/)
+- [x] RESPONSIBILITIES.md rewritten around the charter; backlog filed
+- [x] Two read-only reviews before the push; findings applied

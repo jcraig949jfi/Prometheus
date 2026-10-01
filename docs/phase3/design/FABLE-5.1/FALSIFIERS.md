@@ -8,6 +8,13 @@ Each entry says what would be observed, what it would mean, and what would
 be done. Thresholds are defaults. A campaign fixes its own in its
 preregistration, before data, and may not move them afterwards.
 
+> Provenance note, 2026-10-01. This file is not part of the freeze commit
+> (a0e3a4d03, 14:50Z). It was first committed 28 minutes later in
+> f98efbc33, the commit that also holds the first salvage worker's report.
+> I wrote it from the frozen requirements and architecture, but git cannot
+> show that it was written before I read that report. Blocks marked
+> "Annotation" are later additions.
+
 Three kinds of outcome are kept apart throughout:
 
 - a hypothesis fails and the design stands (most of these);
@@ -78,6 +85,18 @@ mechanism.**
 - Action: the apparatus stands. The question changes to what limits
   conventional online learners on RECURSE, which is where they would then
   be tested.
+
+> Annotation, 2026-10-01. Added while answering the prompt's Q10.
+>
+> **F-T6. The design is too heavy to run.**
+> - Observation: at month 12 the frontier table has fewer than twelve
+>   certified cells, and more than half of all tokens spent went to
+>   qualification, independent implementation and fixtures.
+> - Meaning: whatever its merits, this design cannot be run with the
+>   resources there are. F-D8 is the same test at day 90, with six cells
+>   and 60%.
+> - Action: keep the kernel, one substrate and the reference arm; drop the
+>   rest; or stop.
 
 ----------------------------------------------------------------------
 

@@ -94,3 +94,11 @@ If v2 fails, the receipt says where, and the prototype is reported as having
 failed twice.
 
 reach.py has not been run and is not changed by this amendment.
+
+> Annotation, 2026-10-01, after the v2 run. One number in the account of the
+> v1 failure above is wrong. For 722 of 2,785 against 0.30 the exact lower
+> tail is 1.09e-6, not "about 1.4e-6" (1.35e-6 is the value for 723). The
+> verdict was INDETERMINATE at 1e-6 either way, and nothing in the amendment
+> depends on the figure. Found by a consistency review that recomputed it;
+> I then recomputed it with rulers.tail_le. The text above is left as it was
+> preregistered.

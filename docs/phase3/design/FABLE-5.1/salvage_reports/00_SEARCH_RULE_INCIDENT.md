@@ -63,7 +63,7 @@ missed case and top-level names (below).
 
 process/pathspec_exclusion_test.sh builds a throwaway repository of 12
 harmless files, 9 of them with "holdout" or "nestor_secrets" in the path in
-various positions and cases, and runs each pattern. git 2.52.0.windows.1.
+various positions and cases, and runs five patterns. git 2.52.0.windows.1.
 
 | pattern | risky paths still returned (of 9) |
 |---|---|
@@ -71,6 +71,7 @@ various positions and cases, and runs each pattern. git 2.52.0.windows.1.
 | my correction: brief plus `':!**/*holdout*'` | 6 |
 | bare: `':!*holdout*' ':!*nestor_secrets*'` | 3 |
 | `':(exclude,icase)*holdout*' ':(exclude,icase)*nestor_secrets*'` | 0 |
+| the brief's shapes with `exclude,icase,glob` magic, directory and file forms | 0 |
 
 Why the brief's pattern fails. Without the `glob` magic word, git treats
 `**` as an ordinary `*`, and `*` matches `/`. So `**/*holdout*/**` means
@@ -119,11 +120,13 @@ owners should know.
 ## What this says about the design
 
 A sealed set kept in the same repository as the search tools is protected
-only by everyone typing the right pattern every time. Four independent
-workers and I all typed the wrong one. REQUIREMENTS.md PROV-10 and WLD-06
-already ask for custody outside the working tree, with an access log. This
-incident is a worked example of why, and it goes into the failure fixtures
-(a search with the old pattern must be caught by the kernel's custody test).
+only by everyone typing the right pattern every time. All seven workers
+used the wrong one, because I gave it to them, and so did I. REQUIREMENTS.md
+WLD-06 and PROV-10 already ask for sealed seeds held by a broker with an
+access log. RSE_ARCHITECTURE.md section 13.2 now adds that sealed material
+leaves the working tree. This incident is a worked example of why, and it
+goes into the failure fixtures (a search with the old pattern must be
+caught by the kernel's custody test).
 
 ## Owed
 

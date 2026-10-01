@@ -80,3 +80,8 @@ discussion. So this overlap is weaker evidence of independence than it looks.
    a dial, an affordance and a certificate, and the claim that the gap in
    the transformer paradigm is the within-lifetime relocations. The
    challenges document frames development well but offers no model of it.
+
+> Annotation, 2026-10-01. The time "14:40Z" in the header was written from
+> memory and is wrong. This file was last written at 14:36:59Z (file time)
+> and was committed in a0e3a4d03 at 14:50:41Z. The order it records (after
+> the snapshot, before the freeze) is shown by the commit, not by that time.

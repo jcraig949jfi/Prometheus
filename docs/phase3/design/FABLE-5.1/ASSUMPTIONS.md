@@ -6,6 +6,13 @@ Terms are defined in REQUIREMENTS.md section 1.
 
 The assumptions are ordered by how much of the design falls with them.
 
+> Provenance note, 2026-10-01. This file is not part of the freeze commit
+> (a0e3a4d03, 14:50Z). It was first committed 28 minutes later in
+> f98efbc33, the commit that also holds the first salvage worker's report.
+> I wrote it from the frozen requirements and architecture, but git cannot
+> show that it was written before I read that report. Blocks marked
+> "Annotation" are later additions.
+
 ## A. Assumptions about the science
 
 **A1. Small-scale relocations are informative about larger systems.**
@@ -36,6 +43,11 @@ mechanism of their own.
 - If wrong: H1 fails, and the choice of BUILD-and-above as the target loses
   its sharpest justification. The apparatus is unaffected.
 - When: by day 60 (P2).
+
+> Annotation, 2026-10-01. H1 has since been split (RSE_ARCHITECTURE.md
+> section 13.5). H1a is true by construction and tests nothing about A3.
+> A3 now stands or falls with H1b: its retention half is read by day 60,
+> its compression half needs RECOMBINE and is read by month 6.
 
 **A4. Emergence has a null model.**
 I assume that "it pays" and "search can reach it" are the two main factors,
@@ -139,8 +151,11 @@ report for v2 campaigns.
 > prototype kernel with a world in the loop ran 1.70 billion organism
 > instructions per second on 12 threads, about a factor of 3 below the toy
 > figure. The prototype machine is far smaller than WM, so C1 stays an
-> assumption; the planning figure for WM is unchanged at 100 million
-> instructions per second. The salvage also showed why old budgets were
+> assumption. Two planning figures are in the package and they differ by a
+> factor of five: C1 above assumes 5 x 10^8 instructions per second (4 x
+> 10^8 lifetimes a day); COMP-01's starting target and every budget in
+> ENGINE_PORTFOLIO.md use 10^8 (8.6 x 10^7 lifetimes a day). Budgets use
+> the lower figure. The salvage also showed why old budgets were
 > small: the largest lifetime-scale search on record is about 2 x 10^7
 > evaluations, mostly in pure Python (salvage report 07, section A).
 
@@ -158,10 +173,11 @@ honestly, because nothing in the program has ever measured token use
 - Mitigation: metering from the first session (INF-03); the day-30 gate
   reviews the measured cost.
 
-> Annotation, 2026-10-01. The salvage found one exception to "nothing has
+> Annotation, 2026-10-01. The salvage found two exceptions to "nothing has
 > ever measured token use": Fabric's model attempts record the model and a
-> dollar cost per attempt, and drop the token counts (salvage report 06,
-> SURPRISES 2). One data point of my own: the seven salvage workers used
+> dollar cost per attempt and drop the token counts (salvage report 06,
+> SURPRISES 2); and one replay tool logs tokens per call for its own calls
+> (report 07, sheet 10a). One data point of my own: the seven salvage workers used
 > 4,174,516 tokens in total as reported by the harness, for more than
 > 143,000 lines of code characterised. That is the only measured inference cost in
 > this package.
@@ -213,8 +229,10 @@ again. Tityos says this about itself. I inherit it.
 > Annotation, 2026-10-01. What "the decisive ones" came to in practice: ten
 > facts, listed in SALVAGE_MATRIX.md section 0, all of which held. That is a
 > spot check of the points the decisions lean on, not a re-verification of
-> seven reports. The workers also found 15 places where the crawler record
-> was wrong (SALVAGE_MATRIX.md section 7); none changed a requirement.
+> seven reports. The workers also found 14 places where the crawler record
+> was wrong (SALVAGE_MATRIX.md section 7); none changed a requirement. A
+> later read-only review of the matrix against the worker reports found 22
+> places where my rows overstated or misquoted a sheet; those are corrected.
 
 **E2. I am not the independence I ask for.**
 I am one model family designing an apparatus to escape one model family's

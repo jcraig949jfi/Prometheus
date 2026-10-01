@@ -530,7 +530,7 @@ SALVAGE_MATRIX.md section 3.
 | worlds | FAMILIES | none | new |
 | worlds | DOUBT | Ludus solver pattern (W-04); Cosmos misleading-hint dial (W-12) | extract parts |
 | worlds | MINED | Hecate sampled finite systems (W-10) | extract |
-| worlds | demand certificates | none: no code computes the best value of a restricted policy class | new |
+| worlds | demand certificates | none: no code examined computes the best score of a restricted policy class for a world in which an organism acts | new |
 | substrates | REF | none | new |
 | substrates | WM | none as code; layout from Crius (O-03), conventions from Proteus (O-01), kernel pattern from D-5 (O-04) | rebuild |
 | substrates | PN | none: no network in the tree keeps weights across episodes (O-11) | rebuild |
@@ -553,10 +553,11 @@ These add to the frozen sections. None removes anything.
 1. To section 6.2 (WM). The Crius machine already has the three-store
    layout. Its defects become three kernel tests for WM: every instruction
    field decodes by modulus; no identifier counter is visible to the
-   organism; no capability-specific opcode exists above scaffold level S3.
-2. To section 4 (kernel) and DEV-04. The developmental control set gains an
-   identifiers-only sham: the store's identifiers kept, its contents
-   emptied.
+   organism; a machine with any capability-specific opcode is labelled
+   scaffold level S3 or higher, never S2.
+2. To section 4 (kernel), XFER-03 and CAUS-01. The standard shams for store
+   interventions gain an identifiers-only sham: the store's identifiers
+   kept, its contents emptied.
 3. To section 4 (rulers) and CAUS-03. An interchange verdict is reported
    over a sweep of swap ticks, with the declared state boundary on the row.
    Every intervention first passes a control-identity audit: it is not a
@@ -600,8 +601,9 @@ about an instrument. Four of them change how the first build is planned.
    from the schedules alone, before any organism runs, and refuses below
    0.99.
 4. The acceptance rule is a first-order factor in reach. Recovery of one
-   missing instruction was 24, 9 or 1 of 24 lineages depending only on the
-   rule, and no rule dominated across distances. Every search-power curve is
+   missing instruction was 24, 9 or 1 of 24 lineages (search seeds on one
+   plant: independence I1) depending only on the rule, and no rule
+   dominated across distances. Every search-power curve is
    therefore measured under at least three acceptance rules, and SRCH-01's
    "declared, varied factor" includes the acceptance rule by name.
 
@@ -656,3 +658,31 @@ Consequences:
   compress, within a lifetime, structure of a kind their training never
   covered, and what it costs conventional machinery that is allowed to write
   weights or an external memory.
+
+### 13.6 Small corrections to the frozen text
+
+Added 2026-10-01, from two read-only consistency reviews of the package.
+The frozen sections are left as written; these say how to read them.
+
+1. Section 2, option B. The count "2 of 146 tested across substrates" is
+   from the Tityos report (its section 2.1), not from Sisyphus. Tityos adds
+   "partially for 23".
+2. Section 2, option C. "FALSIFIERS F2" should read "FALSIFIERS F-T1".
+3. Section 9, frontier table. "The most any v2 world demanded was about one
+   bit of memory" is too strong. The crawlers say it of the worlds they
+   list. One salvage worker found a family of event-stream worlds that
+   demands about K times value_bits bits, by its reading of the code. None
+   of it was certified, which is the point that stands.
+4. Section 10. "Ixion measured the alternative": the rise of coordination
+   to 40% of message traffic is Ixion's estimate by a subject-word
+   heuristic, and the 177 operator prompts are as reported by one seat.
+5. Section 7 and section 11. Inference in P8: no model runs inside a
+   campaign (REQUIREMENTS INF-01). The model arm of P8 proposes candidates
+   in batches between campaigns; each batch is written to a hashed file and
+   a deterministic campaign evaluates it. "Generation" is an eighth typed
+   fork (annotation under INF-02).
+6. Section 8 cites FALSIFIERS.md for thresholds. That file and
+   ASSUMPTIONS.md are not part of the freeze commit a0e3a4d03. They were
+   first committed 28 minutes later, in f98efbc33, the commit that also
+   holds the first worker report. Git cannot show that they were written
+   before I read that report.

@@ -23,10 +23,10 @@ and how fast is a compiled kernel with a world in the loop.
 |---|---|---|
 | Does the compiled kernel match an independently written oracle? | 3,672 comparisons, 0 mismatches; a deliberately wrong oracle is caught | differential_test.py |
 | Did the first run of the gate pass? | **No.** One preregistered verdict came back INDETERMINATE. The design was underpowered in three cells and I had not checked. | RECEIPT_qualify_v1_GATE_FAILED.json, PREREG_v2.md |
-| Did the amended gate pass, on fresh sealed lives, with no threshold moved? | Yes. 23 preregistered verdicts and 8 fire tests all as expected. | RECEIPT_qualify.json |
+| Did the amended gate pass, on fresh sealed lives, with no threshold moved? | Yes. All 26 preregistered verdict cells and 8 fire tests as expected; the power gate covered 23 of the cells. | RECEIPT_qualify.json |
 | Throughput with the world in the loop | 1.70 billion organism instructions per second on 12 threads (1.86 million lives per second) | RECEIPT_qualify.json, section G |
 | Search power against planted targets | depends first on the acceptance rule: 24/24, 9/24 or 1/24 at one missing instruction | RECEIPT_reach.json |
-| Were my forecasts right? | 5 of 6. Brier 0.180 against 0.250 for always saying one half. | RECEIPT_reach.json |
+| Were my forecasts right? | 5 of 6. Brier 0.179 against 0.250 for always saying one half. | RECEIPT_reach.json |
 | What did blind search find from an empty program? | one builder in 24 lineages, with a different mechanism from the designed one | RECEIPT_found_exploratory.json (exploratory) |
 
 ## The world and the organism
@@ -124,7 +124,9 @@ Target: the 8-instruction minimal builder. Knock out d instructions, then let
 blind single-point mutation try to put them back, 200,000 proposals per
 lineage, 24 lineages per cell. A lineage counts only if it is perfect on the
 training block, at least 0.9 on selection lives it never saw, and passes the
-BUILD ruler on sealed lives.
+BUILD ruler on sealed lives. The 24 lineages of a cell share the target and
+the training lives and differ only in search seed, so in the design's terms
+they are independence level I1, not independent founders (I2).
 
     recovered of 24        d=0    d=1    d=2    d=3    d=8 (empty program)
     margin rule            24     24     0      0      0
@@ -152,9 +154,12 @@ them. Five of six forecasts held; the miss is the informative one.
 
 ## What blind search found (exploratory, after the fact)
 
-inspect_found.py replays the cells with recoveries and puts each found
-organism through the same rulers. It was written after the reach receipt
-existed and is not preregistered.
+inspect_found.py replays five of the cells with recoveries (the three
+neutral-rule cells and the two strict-rule cells) and puts each of the 13
+organisms found there through the same rulers. It does not replay the
+margin-rule cell at one missing instruction, whose 24 recoveries are the
+easy case. It was written after the reach receipt existed and is not
+preregistered.
 
 All 13 found organisms pass BUILD on 4,711 sealed probes at 1.000, flip under
 store interchange on 5,566 of 5,566 trials, do not flip under the sham, fall

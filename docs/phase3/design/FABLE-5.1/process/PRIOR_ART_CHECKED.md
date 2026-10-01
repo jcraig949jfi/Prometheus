@@ -99,3 +99,11 @@ only use made of it here.
 
 All searches used the harness web search in standard mode. No query
 returned a paper that contradicted how it is cited here.
+
+> Annotation, 2026-10-01. Two corrections to this file.
+> 1. The time range "about 14:58Z to 15:05Z" in the header was written from
+>    memory. This file was last written at 14:59:45Z (file time), so the
+>    searches had ended by then. It was committed in f98efbc33 at 15:18:19Z.
+> 2. "OPEN_QUESTIONS.md carries a proper prior-art pass as a task": it now
+>    does, under A2, as work owed if doctrine HARD-2 is narrowed. It did not
+>    when this sentence was written.
