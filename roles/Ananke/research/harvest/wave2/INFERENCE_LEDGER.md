@@ -232,3 +232,51 @@ unresolved | next. Workers' ledger blocks are folded in when their reports are d
   label them losable. Agreed, but the report counts them as substantive evidence.
 - Next: a "prediction risk" column for future preregs (route to W2-F as a primitive: attainable outcome
   under the null and the alternative for each prediction); erratum wording for C1_REPORT s1.
+
+### W2-B (deposited wave2/W2-B/REPORT.md): ruler reachability proofs (13 proofs, certifier attain.py)
+Rulers that cannot fail or cannot be reached:
+- zero_comm DEGENERATE (proof P1); COMM_DEPENDENT an alias of SIGNAL; LOCAL_ONLY UNREACHABLE.
+- CAUSAL_SUPPORT reduces to packet_ablation alone; env_permutation DEGENERATE (P5).
+- 8/104 transects have 2 levels and are UNREACHABLE.
+- The size-free test is forced for the tested laws.
+- C1b M/CARRYOVER are exactly .5 for twin-symmetric predictors.
+- The AUDIT3 bar fails a perfect instrument with P >= .14.
+- 24/98 W-Z NO_EFFECT_REL arms are score-identical no-ops.
+
+Rulers that are cheatable:
+- XOR SIGNAL as a parity ruler: every non-parity readout scores <= .75 (P2). The "one-flag" result is
+  NOR over both sensors; XOR_PIVOT (min_j p_j > .5) is SOUND.
+- FLIP SIGNAL: FLIP_CLOCK (teacher once + block clock, 28 lines) scores 1.000 ignoring later teachers;
+  FLIP_FEEDBACK is SOUND. Fitting the cheat in 16 lines is not shown.
+- Legacy REACH_BEYOND_HOP: one-hop emitters fire it even when d <= hop.
+- reach_certificate draft: window aliasing and 1-world value nudges.
+  APPLIED: patch to harvest/H-INST/pte_trace.py (unfrozen harvest draft). Regression test 2/2 pass on
+  the patched module; the H-INST suite 23/23 still passes.
+
+Other:
+- relay_flood never crosses .75 on XOR/MAJ/FLIP in A0 (0/1000 each). maj_sum shows MAJ itself is
+  attainable at X0 (lo99 .771).
+- Disagreement D1 corrects H-PLANT and the principal: "one-flag" = NOR (two-sensor), the general .75
+  ceiling.
+- Follow-ups routed by message: XOR_PIVOT at C1 points -> W2-J; FLIP_FEEDBACK and a <= 16-line clock
+  cheat -> W2-L.
+
+### W2-A1 (deposited wave2/W2-A1/REPORT.md): world executable semantics; causal graph from code
+- F1 [V]: MAJ sensors are placed by out-distance from the actuator (envs.py:212). Packets travel sensor ->
+  actuator, so on directed graphs only 18% of sensors sit at transport distance d, and 2.5% of random
+  worlds are impossible. 2 of the 3 MAJ topology CANDIDATEs are artefacts (random dip .50 -> ~.62 under
+  forward placement); the 3rd is the dest_mode confound.
+- F2: the dest_mode alias changed no B dial selection. Consequences: one transect confound and wrong
+  summary.json descriptions (5/12 D cells).
+- F3: max_loss == zero_comm (12/12 pair vectors). shuffle_dest on global is a routing re-draw, so
+  613162a3's "shuffle .72 > normal .688" is routing variance (the Wave-1 strange observation explained).
+- F4: the twins share NOISE, so the contrast bonus pays linear sub-noise codes the full +.10 at chance.
+- F5: the economy boundary is a budget identity (relay_flood is mute by tick 11).
+- F6: the FLIP state transplant always raises; latent crash.
+- F7: SENSE is not latched while asleep, giving unstated ceilings (MAJ single-sensor .65 at async .5).
+- F8: saturate and routing-write sign asymmetries.
+- F9: cap is inert under collision=none (1761 rows).
+- 78 invariant tests pass, and a mutation check shows they can fail.
+- Patches: P1 (record effective dest_mode) and P2 (FLIP transplant -> NOT_APPLICABLE) are NEUTRAL and
+  touch campaign.py. DEFERRED to one campaign.py batch with W2-A2's two diffs, once the workers that
+  import campaign finish. P3 (MAJ forward placement) is SEMANTIC, for C2 only.
