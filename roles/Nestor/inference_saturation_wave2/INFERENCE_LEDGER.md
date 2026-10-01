@@ -857,3 +857,29 @@ in completion order.
   - Withdraw "X ≈ determined by L_share".
 - **Confidence.** High.
 - **Note for the handoff.** C-A3 stays CONFIRMED-FRAGILE, with corrected numbers. X-MAT stays ENDOGENOUS / ARTIFACT-RISK.
+
+
+### W2-33: splice-on heterogeneity is one outlier block (report saved; Nestor attack). Written at 02:33Z (clock)
+
+**Result.**
+- All five splice-on blocks run identical physics; only the seed base differs. Four fresh-process replays are bit-exact.
+- The heterogeneity sits entirely in C-NORECOMB BASE's upper tail (5/24 at depth ≥ 5). The others pool to 4/182.
+- The blocks are homogeneous at depth ≥ 1 and ≥ 3, and also at ≥ 5 once C-NORECOMB is dropped.
+- C9's 4/16 is selection-inflated.
+
+**Effect on FINDINGS.**
+- C-RUNAWAY is unaffected: 0/222 at depth ≥ 20.
+- **C-NORECOMB's null rests on an outlier BASE block.**
+- The FINDINGS E-10 / dossier A caveat ("C-NORECOMB found no splice effect on depth ≥ 5") is weakened.
+- The dossier A splice effect at depth ≥ 5 strengthens to p = 0.0018 once that block is dropped.
+
+**Nestor attack.**
+- Dropping one block post hoc to strengthen a splice claim is a fork of the same kind as the one W2-12 rejected (the plug-in). So I record it as **"C-NORECOMB's null is uninformative"**, NOT as "the splice effect is now p = 0.0018".
+- The splice effect is established by C-RUNAWAY's own 150-seed arms alone: 4 vs 20 at depth ≥ 5, p = 5e-4.
+- That is the citable figure. Pooled numbers across heterogeneous blocks should not be cited either way.
+
+**Cross-link.** Same lesson as W2-12 and W2-19: **pooling and plug-in baselines across unexchangeable blocks create or erase effects.** This is a handoff candidate for "best reusable infrastructure improvement": a block-stratified exact test as standard.
+
+**Confidence.**
+- High: no harness difference.
+- About 0.7: chance.
