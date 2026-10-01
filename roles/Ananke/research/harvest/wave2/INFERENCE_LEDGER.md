@@ -400,3 +400,39 @@ Other:
 - Fixed in the next commit: path corrected, skip if the data is absent, the 40 KB arrays force-added,
   12/12 pass, commit gated on RC.
 - Module code was unaffected.
+- P-2 UPDATE: decay_shift 1 gives refresh .792/.724/1.000 (no-decay .797/.724/1.000) vs flood .617/.604/.677.
+  The artefact holds at the harshest decay level as well. Recorded as C1_ERRATA E-W13.
+
+### W2-L (deposited wave2/W2-L/REPORT.md): FLIP NULL placement + relay-only control
+- F5 PROOF: copy-class policies (readout = x_k or y_{k-1}, no sign inversion) attain exactly <= .75 on
+  FLIP. Exceeding .75 requires computing m. Changed-cue trials give exactly 1/2 for every copy policy.
+- F4 [V]: RELAY_LATCH (14 lines, inside d9cc's genome space, no mapping inference) scores .688 and passes
+  SIGNAL, COMM_DEPENDENT and FLIP_FEEDBACK. FLIP_FEEDBACK is cheatable in-space (refines W2-B "SOUND"),
+  and it is blind to weak true inference (.63-.66 fail).
+- F3: relay_flood's FLIP edge is a change-gated teacher hold, and the echo HURTS (corrects W2-D F6).
+- FLIP placement (82 evolve rows):
+  - 24 P (light cone);
+  - 3 PLANT-SOLVED in exact genome space (6f82f9c7, 996716ac, 64d33b89), so S or U;
+  - 14 R-CANDIDATE (all decay > 0; only 22-28-line plants found);
+  - 41 UNDECIDED.
+  - "FLIP NULLs search-limited" is supported 3/82, open 55/82, false 24/82.
+- P-FLIP is decay-fragile (0/49 decay > 0 rows), the same pattern as relay_flood (E-W13).
+- Proposed ruler FLIP_CHANGE (changed-cue accuracy lo99 > .55): relays .46/.47, P-FLIP .958.
+- Clock cheat in <= 16 lines at d9cc: NOT SHOWN (~21 lines needed).
+- Queue: W2-S (FLIP_CHANGE on recorded champions; physics removal on the 41 UNDECIDED).
+
+### W2-O (deposited wave2/W2-O/REPORT.md): are C1 NULLs broken experiments?
+- 16/16 sampled NULLs reproduce bit-for-bit (held, final ranking, telemetry). BROKEN 0/16 (95% UB 17%).
+- Actuator reachability: 0 impossible worlds in XOR/FLIP/RELAY; MAJ 0.17%. Immaterial (W2-A1's 2.5% was
+  on A0 plant worlds).
+- Admissibility classes:
+  - CAPPED 4 (light cone);
+  - INERT 4 (readout never written in >= 50/64 worlds; 3 also FLAT, i.e. max_acc never > .5);
+  - ADMISSIBLE for an S/U reading 8 (strict 7).
+  - 49/454 C1 NULLs are FLAT searches.
+- So H6's exposure is attribution (capped/inert/flat mixed into the NULL population), not breakage.
+  Corrects my P-1 v3 emphasis on "possibly broken".
+- G12 false-alarms on zero_comm control arms (2/4 SIGNAL cells). NEUTRAL patch to the proposed guards.
+- Wake loss (SENSE not latched) caps 54 async NULL cells at <= .875: the light cone is optimistic on async.
+- NULL admissibility checklist (A integrity, B feasibility, C interpretation) delivered.
+- Queue: W2-T (checklist over all 454 NULL cells -> population rates).
