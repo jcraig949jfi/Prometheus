@@ -91,6 +91,16 @@ K13 Verdict derivation (AUDIT_M; all 16 verdicts re-derived from the governing
    under CWO-C); 5516's failed Pass-4 replication is a case the table does not
    cover (PARK stands on the failed ALT).
 
+K14 Autopsy Part A was derived before K4 and never re-run (AUDIT_Z3 Z3-1;
+   re-derived by unchanged flow.py into hecate/autopsy/FLOW_postK4.json,
+   FLOW.json kept): mechanisms read validly 38 -> 36, worlds untestable as
+   specified 12 -> 13, NULL 19 -> 18, SPEC_UNATTAINABLE 6 -> 7, PARK 15 ->
+   14 + SPECULATIVE 1. Definition note (Z3-2): "admitted" includes 3
+   NOT_BUILT worlds, contrary to flow.py's own "built" docstring; excluding
+   them, admitted 58 -> 53, probed 37 -> 34, never tested 76% -> 78%. Of
+   the 13 untestable worlds, 6 are build/instrument failures, not
+   specification failures (Z3-3). Wilson bound, joins, Part B: clean.
+
 ## Contested items -- NOT applied (recommendations; would change a frozen decision rule's outcome -> CWO-C s4 escalation class)
 
 C1 HT-ae38c641b1 W5 (round 3): frozen spec says values between F1 and S1
