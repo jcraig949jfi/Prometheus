@@ -165,3 +165,70 @@ unresolved | next. Workers' ledger blocks are folded in when their reports are d
 - Ruler: FLIP SIGNAL needs a relay-only control (relay scores .602 and misses SIGNAL by .001).
 - Queue replenished: W2-L (FLIP uncapped placement + relay-only control) and W2-M (MAJ integration
   plant, INTEGRATION attainability).
+
+### X-1 (from Nestor #1207): W-U build_table.py PASS-by-default
+- Confirmed [V]: pass and robust start True, so a missing FC job reads PASS. The recorded inputs had
+  54/54 jobs with the full grid, so REL3/REL4/swap_rel are unaffected. A latent defect in a frozen
+  worker script; not edited. Replied to Nestor #1207.
+- Lesson routed to W2-F: missing input must read NOT_VERIFIED (memory: check_needs_a_third_outcome).
+
+### P-3 (principal): fitness bonus or variance-seeking? (the open item in W2-A2 F1; partly ANANKE-14)
+- Evidence: C1 evolve curves (per generation: best_fit, best_acc, max_acc, mean_acc, mean_sens_any,
+  max_contrast) for 454 NULL comm-family cells (RELAY/XOR/MAJ/FLIP, held lo99 <= .55);
+  search.py:332 f = acc + .10*max(sens_act, 0) + .02*sens_any; truncation on f.
+- Result [V]:
+  - In the median NULL run, EVERY genome scores acc exactly .5 (max_acc - mean_acc = 0) until
+    generation 5 (IQR 2-12). In 40 runs it stays 0 for all 36 generations.
+  - Population sens_any nevertheless rises: gen0 .0004 -> .0076 by the generation before any accuracy
+    variance appears (rose in 313/364 runs).
+  - In the 40 runs with zero accuracy variance throughout, it rises .0002 -> .008-.058 (RELAY .008,
+    XOR .009, MAJ .058), with max_contrast 0.
+  - With accuracy tied and contrast 0, f differs only by .02*sens_any, so truncation selects on the
+    bonus, deterministically.
+  - In typical NULL runs, sens_any reaches .10-.19 by gen 35, after accuracy variance appears. That
+    later phase is consistent with both bonus and noise-seeking (bonus .02 vs accuracy spread .03 at
+    gen 35).
+- Inference: the w_any bonus INITIATES the sensitivity climb in NULL runs, and is its sole driver while
+  accuracy is flat. Variance-seeking can only take over once accuracy noise exists. W2-A2's objection
+  ("noise-chasing alone would do the same") fails for the flat phase.
+  So MEMORY_WITHOUT_USE / REACH_BEYOND_HOP / persist on NULL champions are, at least in their onset,
+  products of the w_any term specifically.
+- Confidence: high for the flat phase (arithmetic on f with tied accuracy); medium for the late phase.
+- Strongest objection: mean_sens_any can also move under mutation drift with deterministic tie-breaking.
+  But tie-breaking happens on f, which includes the bonus. With nonzero bonus differences there are no
+  ties among sensitive genomes, so drift alone is excluded only where bonus differences exist (they do
+  whenever sens_any differs).
+- Unresolved: the relative share in the late phase; only the w = 0 A/B separates it.
+- Next: route to the handoff as "partially answers ANANKE-14 from existing data". The w = 0 A/B remains
+  the decisive (search) test for the late phase.
+
+### P-4 (principal): were C1's HELD predictions losable as built? (prediction-risk audit)
+- Evidence: PREREG s12 P1-P8; c1_report/summary.json predictions and C_transfer; boundaries_verdicts;
+  findings W2-G, W2-A2, P-1a, P-1b, P-2.
+- Result, per HELD prediction:
+  - P1 (RELAY plant boundary on lat/loss/delta/d) HELD on DELTA: plant .585 -> .983 and .486 -> .641 as
+    delta rises. A relay plant gaining accuracy when the readout comes later is close to a light-cone
+    tautology, so its risk was LOW. The other two SUPPORTED RELAY plant boundaries (decay 1.0 -> .547;
+    economy 1.0 -> .547) are relay_flood-design candidates: flood-on-change vs decay, and flooding
+    costs energy. P-2 tests decay.
+  - P3 (zero XOR SIGNAL) HELD: 43% of XOR searches were light-cone-capped, and no XOR plant existed in
+    C1. Risk was PARTLY REMOVED by construction. Note the one-flag cheat (.763 at X0) cut the other
+    way: P3 was losable by a cheat, and search did not find even that.
+  - P4 (<= 5% A1 COMM_DEPENDENT) HELD: COMM_DEPENDENT == SIGNAL in comm families (zero_comm forced). P4
+    actually measures the A1 SEARCH SUCCESS RATE, not comm dependence. Losable, but MISLABELLED.
+  - P5 (zero cross-family TRANSFER_SUPPORT for comm-family champions) HELD on n = ONE comm-family source
+    (bbef66a1 -> XOR .505, MAJ .549 [lo .512], FLIP .507, HOLD .500). All other cross-family transfers
+    came from HOLD sources, which P5 excludes. MAJ came within .04 of SIGNAL. WEAKLY TESTED.
+  - P7 (HOLD champions size-free) HELD: HOLD's sensor is the actuator, so a local latch is size-free by
+    construction (the prediction's own rationale). Risk was LOW.
+  - The three LOST predictions (P2, P6, P8) were the informative ones.
+- Inference: of 5 HELD predictions, 2 were low-risk by construction (P1, P7), 1 partly forced (P3),
+  1 mislabelled (P4), and 1 tested on n = 1 (P5). C1's "5/8 held" therefore carries much less evidential
+  weight than the count suggests. A prereg should carry a per-prediction RISK statement: an attainable
+  outcome under the alternative, checked before freezing (cf. memory
+  preregistered_rules_need_an_eligibility_count).
+- Confidence: medium-high (P1 and P7 by argument; P3, P4, P5 by counts).
+- Strongest objection: "low risk" predictions are legitimate calibration checks, and the prereg did
+  label them losable. Agreed, but the report counts them as substantive evidence.
+- Next: a "prediction risk" column for future preregs (route to W2-F as a primitive: attainable outcome
+  under the null and the alternative for each prediction); erratum wording for C1_REPORT s1.
