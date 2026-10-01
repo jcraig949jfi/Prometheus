@@ -648,6 +648,11 @@ Q4  Is there an external demonstration of "recursive" improvement in the strict 
     acceleration of the learning-to-learn slope, carried by transplantable machinery, with no outer optimiser
     during the lifetime? None was found. Everything located (VeLO, DGM, AlphaEvolve, MAML, Baldwin) uses an outer
     loop across lifetimes or episodes.
+    [Correction, final review 2026-10-01: this search missed self-referential learners without a separate
+    meta-optimiser -- Schmidhuber 1993 (self-referential weight matrix); Irie, Schlag, Csordas and Schmidhuber 2022
+    (modern SRWM); Kirsch and Schmidhuber 2022 (eliminating meta-optimisation via self-referential meta-learning).
+    Whether they meet the strict sense is open; they are the natural external test cases for DEV-14
+    (REQUIREMENTS.md s3).]
 Q5  Which paper reports the 22-40% human-LLM novelty agreement figures seen in search snippets? Not confirmed.
 Q6  How the Avida associative-learning result (Pontes 2020) was qualified (preconditions, frequency, controls) is
     unverified, because the publisher page returned 403.

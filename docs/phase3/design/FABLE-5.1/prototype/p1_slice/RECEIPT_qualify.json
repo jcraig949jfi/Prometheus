@@ -1,0 +1,816 @@
+{
+ "A": {
+  "builder(0)": {
+   "build": {
+    "R": 4,
+    "alpha": "1/1000000",
+    "delta": "1/20",
+    "eligible": 18854,
+    "fired": 4746,
+    "n_min": 200,
+    "p_bounded": 3.1600362831189605e-49,
+    "p_exclusion": 0.294874952945333,
+    "reason": "within delta of the class bound",
+    "verdict": "FAIL"
+   },
+   "hold": {
+    "R": 4,
+    "alpha": "1/1000000",
+    "delta": "1/20",
+    "eligible": 5829,
+    "fired": 1433,
+    "n_min": 200,
+    "p_bounded": 2.1468877550452823e-20,
+    "p_exclusion": 0.7726302073524567,
+    "reason": "within delta of the class bound",
+    "verdict": "FAIL"
+   },
+   "novel": {
+    "eligible": 19153,
+    "fired": 4816,
+    "verdict": "PASS"
+   },
+   "probe_accuracy": 0.2517237721438422
+  },
+  "builder(2)": {
+   "build": {
+    "R": 4,
+    "alpha": "1/1000000",
+    "certified_bits": 0.7481928495894603,
+    "delta": "1/20",
+    "eligible": 18854,
+    "fired": 8249,
+    "lower_bound": 0.419921875,
+    "n_min": 200,
+    "p_exclusion": 0.0,
+    "verdict": "PASS"
+   },
+   "hold": {
+    "R": 4,
+    "alpha": "1/1000000",
+    "certified_bits": 0.6865005271832184,
+    "delta": "1/20",
+    "eligible": 5829,
+    "fired": 2530,
+    "lower_bound": 0.40234375,
+    "n_min": 200,
+    "p_exclusion": 3.127593508665248e-205,
+    "verdict": "PASS"
+   },
+   "novel": {
+    "eligible": 19153,
+    "fired": 4775,
+    "verdict": "PASS"
+   },
+   "probe_accuracy": 0.4375198896785828
+  },
+  "builder(4)": {
+   "build": {
+    "R": 4,
+    "alpha": "1/1000000",
+    "certified_bits": 1.2784494582204815,
+    "delta": "1/20",
+    "eligible": 18854,
+    "fired": 11768,
+    "lower_bound": 0.6064453125,
+    "n_min": 200,
+    "p_exclusion": 0.0,
+    "verdict": "PASS"
+   },
+   "hold": {
+    "R": 4,
+    "alpha": "1/1000000",
+    "certified_bits": 1.2550285698187296,
+    "delta": "1/20",
+    "eligible": 5829,
+    "fired": 3657,
+    "lower_bound": 0.5966796875,
+    "n_min": 200,
+    "p_exclusion": 0.0,
+    "verdict": "PASS"
+   },
+   "novel": {
+    "eligible": 19153,
+    "fired": 4754,
+    "verdict": "PASS"
+   },
+   "probe_accuracy": 0.6241646334995227
+  },
+  "builder(6)": {
+   "build": {
+    "R": 4,
+    "alpha": "1/1000000",
+    "certified_bits": 1.6777196416410087,
+    "delta": "1/20",
+    "eligible": 18854,
+    "fired": 15355,
+    "lower_bound": 0.7998046875,
+    "n_min": 200,
+    "p_exclusion": 0.0,
+    "verdict": "PASS"
+   },
+   "hold": {
+    "R": 4,
+    "alpha": "1/1000000",
+    "certified_bits": 1.663558104217273,
+    "delta": "1/20",
+    "eligible": 5829,
+    "fired": 4767,
+    "lower_bound": 0.7919921875,
+    "n_min": 200,
+    "p_exclusion": 0.0,
+    "verdict": "PASS"
+   },
+   "novel": {
+    "eligible": 19153,
+    "fired": 4821,
+    "verdict": "PASS"
+   },
+   "probe_accuracy": 0.8144160390368091
+  },
+  "builder(8)": {
+   "build": {
+    "R": 4,
+    "alpha": "1/1000000",
+    "certified_bits": 1.9985904297453287,
+    "delta": "1/20",
+    "eligible": 18854,
+    "fired": 18854,
+    "lower_bound": 0.9990234375,
+    "n_min": 200,
+    "p_exclusion": 0.0,
+    "verdict": "PASS"
+   },
+   "hold": {
+    "R": 4,
+    "alpha": "1/1000000",
+    "certified_bits": 1.9957671508778014,
+    "delta": "1/20",
+    "eligible": 5829,
+    "fired": 5829,
+    "lower_bound": 0.9970703125,
+    "n_min": 200,
+    "p_exclusion": 0.0,
+    "verdict": "PASS"
+   },
+   "novel": {
+    "eligible": 19153,
+    "fired": 4754,
+    "verdict": "PASS"
+   },
+   "probe_accuracy": 1.0
+  },
+  "constant": {
+   "build": {
+    "R": 4,
+    "alpha": "1/1000000",
+    "delta": "1/20",
+    "eligible": 18854,
+    "fired": 4746,
+    "n_min": 200,
+    "p_bounded": 3.1600362831189605e-49,
+    "p_exclusion": 0.294874952945333,
+    "reason": "within delta of the class bound",
+    "verdict": "FAIL"
+   },
+   "hold": {
+    "R": 4,
+    "alpha": "1/1000000",
+    "delta": "1/20",
+    "eligible": 5829,
+    "fired": 1433,
+    "n_min": 200,
+    "p_bounded": 2.1468877550452823e-20,
+    "p_exclusion": 0.7726302073524567,
+    "reason": "within delta of the class bound",
+    "verdict": "FAIL"
+   },
+   "novel": {
+    "eligible": 19153,
+    "fired": 4816,
+    "verdict": "PASS"
+   },
+   "probe_accuracy": 0.2517237721438422
+  },
+  "holder(8)": {
+   "build": {
+    "R": 4,
+    "alpha": "1/1000000",
+    "delta": "1/20",
+    "eligible": 18854,
+    "fired": 4678,
+    "n_min": 200,
+    "p_bounded": 1.0920567322784667e-56,
+    "p_exclusion": 0.7272745539018406,
+    "reason": "within delta of the class bound",
+    "verdict": "FAIL"
+   },
+   "hold": {
+    "R": 4,
+    "alpha": "1/1000000",
+    "certified_bits": 1.9957671508778014,
+    "delta": "1/20",
+    "eligible": 5829,
+    "fired": 5829,
+    "lower_bound": 0.9970703125,
+    "n_min": 200,
+    "p_exclusion": 0.0,
+    "verdict": "PASS"
+   },
+   "novel": {
+    "eligible": 19153,
+    "fired": 4754,
+    "verdict": "PASS"
+   },
+   "probe_accuracy": 0.24811711042749549
+  },
+  "leak_reader": {
+   "build": {
+    "R": 4,
+    "alpha": "1/1000000",
+    "delta": "1/20",
+    "eligible": 18854,
+    "fired": 4667,
+    "n_min": 200,
+    "p_bounded": 5.997167537949185e-58,
+    "p_exclusion": 0.7852250478981248,
+    "reason": "within delta of the class bound",
+    "verdict": "FAIL"
+   },
+   "hold": {
+    "R": 4,
+    "alpha": "1/1000000",
+    "delta": "1/20",
+    "eligible": 5829,
+    "fired": 1452,
+    "n_min": 200,
+    "p_bounded": 3.4665493036628692e-18,
+    "p_exclusion": 0.568076871061605,
+    "reason": "within delta of the class bound",
+    "verdict": "FAIL"
+   },
+   "novel": {
+    "eligible": 19153,
+    "fired": 4738,
+    "verdict": "PASS"
+   },
+   "probe_accuracy": 0.24753367985573352
+  },
+  "lookup": {
+   "build": {
+    "R": 4,
+    "alpha": "1/1000000",
+    "delta": "1/20",
+    "eligible": 18854,
+    "fired": 4766,
+    "n_min": 200,
+    "p_bounded": 3.862054995060389e-47,
+    "p_exclusion": 0.1908106079483026,
+    "reason": "within delta of the class bound",
+    "verdict": "FAIL"
+   },
+   "hold": {
+    "R": 4,
+    "alpha": "1/1000000",
+    "delta": "1/20",
+    "eligible": 5829,
+    "fired": 1488,
+    "n_min": 200,
+    "p_bounded": 2.1633119978514403e-14,
+    "p_exclusion": 0.17998334621948892,
+    "reason": "within delta of the class bound",
+    "verdict": "FAIL"
+   },
+   "novel": {
+    "eligible": 19153,
+    "fired": 4841,
+    "verdict": "PASS"
+   },
+   "probe_accuracy": 0.2527845550015912
+  }
+ },
+ "A_matches": true,
+ "B": {
+  "m=0": {
+   "bound_sound": true,
+   "certified_lower_bound": 0.0,
+   "guess_consistent_with_chance": true,
+   "observed_accuracy_sectionA": 0.2517237721438422,
+   "predicted_accuracy": 0.25,
+   "stored_all_correct": true,
+   "stored_probes": [
+    0,
+    0
+   ],
+   "unstored_probes": [
+    2370,
+    593
+   ]
+  },
+  "m=2": {
+   "bound_sound": true,
+   "certified_lower_bound": 0.419921875,
+   "guess_consistent_with_chance": true,
+   "observed_accuracy_sectionA": 0.4375198896785828,
+   "predicted_accuracy": 0.4375,
+   "stored_all_correct": true,
+   "stored_probes": [
+    591,
+    591
+   ],
+   "unstored_probes": [
+    1779,
+    460
+   ]
+  },
+  "m=4": {
+   "bound_sound": true,
+   "certified_lower_bound": 0.6064453125,
+   "guess_consistent_with_chance": true,
+   "observed_accuracy_sectionA": 0.6241646334995227,
+   "predicted_accuracy": 0.625,
+   "stored_all_correct": true,
+   "stored_probes": [
+    1183,
+    1183
+   ],
+   "unstored_probes": [
+    1187,
+    308
+   ]
+  },
+  "m=6": {
+   "bound_sound": true,
+   "certified_lower_bound": 0.7998046875,
+   "guess_consistent_with_chance": true,
+   "observed_accuracy_sectionA": 0.8144160390368091,
+   "predicted_accuracy": 0.8125,
+   "stored_all_correct": true,
+   "stored_probes": [
+    1777,
+    1777
+   ],
+   "unstored_probes": [
+    593,
+    171
+   ]
+  },
+  "m=8": {
+   "bound_sound": true,
+   "certified_lower_bound": 0.9990234375,
+   "guess_consistent_with_chance": true,
+   "observed_accuracy_sectionA": 1.0,
+   "predicted_accuracy": 1.0,
+   "stored_all_correct": true,
+   "stored_probes": [
+    2370,
+    2370
+   ],
+   "unstored_probes": [
+    0,
+    0
+   ]
+  },
+  "sensitivity": {
+   "chance": 0.25,
+   "eligible": 18854,
+   "false_positive_rate_bound": 1e-06,
+   "minimum_detectable_accuracy_power_0.8": 0.2685546875,
+   "pass_threshold_accuracy": 0.26514267529436725,
+   "pass_threshold_k": 4999
+  }
+ },
+ "B_ok": true,
+ "C": {
+  "interchange": {
+   "builder(8)": {
+    "eligible": 5602,
+    "followed_donor": 5602,
+    "followed_own": 0,
+    "label": "FLIP",
+    "sham": false,
+    "verdict": "PASS"
+   },
+   "builder(8) sham": {
+    "eligible": 5602,
+    "followed_donor": 1475,
+    "followed_own": 1414,
+    "label": "NO-EFFECT",
+    "sham": true,
+    "verdict": "FAIL"
+   },
+   "holder(8)": {
+    "eligible": 5602,
+    "followed_donor": 1465,
+    "followed_own": 1447,
+    "label": "NO-EFFECT",
+    "sham": false,
+    "verdict": "FAIL"
+   }
+  },
+  "lesion": {
+   "builder(8) unused cells": {
+    "cells": [
+     8,
+     9,
+     10,
+     11,
+     12,
+     13,
+     14,
+     15
+    ],
+    "eligible": 7356,
+    "fired": 7356,
+    "verdict": "PASS"
+   },
+   "builder(8) used cells": {
+    "cells": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7
+    ],
+    "eligible": 7356,
+    "fired": 1878,
+    "verdict": "FAIL"
+   }
+  }
+ },
+ "C_ok": true,
+ "D": {
+  "builder(8)": {
+   "eligible": 2400,
+   "fired": 0,
+   "verdict": "PASS"
+  },
+  "holder(8)": {
+   "eligible": 2400,
+   "fired": 0,
+   "verdict": "PASS"
+  }
+ },
+ "D_ok": true,
+ "E": {
+  "eligible": 3200,
+  "fired": 800,
+  "probe": "observation -> answer table",
+  "verdict": "PASS"
+ },
+ "E_ok": true,
+ "F": {
+  "FT1_broken_reset": {
+   "build_ruler_on_holder": "PASS",
+   "fired": true,
+   "note": "the ruler alone says PASS here; only the harness check exposes it",
+   "reset_equivalence": {
+    "eligible": 2400,
+    "fired": 1281,
+    "verdict": "FAIL"
+   }
+  },
+  "FT2_leaky_world": {
+   "fired": true,
+   "leak_probe": {
+    "eligible": 3200,
+    "fired": 3200,
+    "probe": "observation -> answer table",
+    "reason": "LEAK: above chance on never-seen stimuli",
+    "verdict": "FAIL"
+   },
+   "novel_sanity": {
+    "eligible": 19153,
+    "fired": 19153,
+    "reason": "LEAK: above chance on never-seen stimuli",
+    "verdict": "FAIL"
+   }
+  },
+  "FT3_sealed_guard": {
+   "fired": true,
+   "if_bypassed_novel_trials": [
+    8,
+    8
+   ],
+   "note": "bypassing the guard gives 8 of 8 on never-seen stimuli in the training life",
+   "report_on_training_life_refused": true,
+   "search_on_sealed_life_refused": true
+  },
+  "FT4_wrong_null": {
+   "calibration_table_matches": false,
+   "constant_build_verdict_under_wrong_null": "PASS",
+   "fired": true
+  },
+  "FT5_empty_input": {
+   "fired": true,
+   "verdict": "INDETERMINATE"
+  },
+  "FT6_channel": {
+   "fired": true,
+   "records_k_of_4000": [
+    4000,
+    1000,
+    1100
+   ],
+   "verdicts": [
+    "PASS",
+    "FAIL",
+    "INDETERMINATE"
+   ]
+  },
+  "FT7_affordance_off": {
+   "builder8_build_verdict_without_store_writes": "FAIL",
+   "fired": true
+  },
+  "FT8_power_gate_refuses_v1": {
+   "fired": true,
+   "power_at_v1_sample_sizes": {
+    "hold FAIL (n=2879)": 0.8835458979172679,
+    "interchange NO-EFFECT (n=2785)": 0.865245834784292,
+    "lesion FAIL (n=3670)": 0.9778346705937846
+   }
+  }
+ },
+ "F_ok": true,
+ "G": {
+  "instructions": 364800000,
+  "instructions_per_second": 1699467286,
+  "lives": 400000,
+  "lives_per_second": 1863451,
+  "note": "organism instructions only; world stepping and scoring are included in the time",
+  "seconds": 0.215,
+  "threads": 12
+ },
+ "alpha": "1/1000000",
+ "amends": "v1 gate FAILED (C interchange holder: INDETERMINATE); see PREREG_v2.md",
+ "delta": "1/20",
+ "expected": {
+  "A_build": {
+   "builder(0)": "FAIL",
+   "builder(2)": "PASS",
+   "builder(4)": "PASS",
+   "builder(6)": "PASS",
+   "builder(8)": "PASS",
+   "constant": "FAIL",
+   "holder(8)": "FAIL",
+   "leak_reader": "FAIL",
+   "lookup": "FAIL"
+  },
+  "A_hold": {
+   "builder(0)": "FAIL",
+   "builder(2)": "PASS",
+   "builder(4)": "PASS",
+   "builder(6)": "PASS",
+   "builder(8)": "PASS",
+   "constant": "FAIL",
+   "holder(8)": "PASS",
+   "leak_reader": "FAIL",
+   "lookup": "FAIL"
+  },
+  "A_novel": "PASS for every organism",
+  "B_known_answer": "probes with s < m all correct; probes with s >= m consistent with 1/R; certified lower bound never above the true value m/K + (1 - m/K)/R",
+  "C_interchange": {
+   "builder(8)": "FLIP",
+   "builder(8) sham": "NO-EFFECT",
+   "holder(8)": "NO-EFFECT"
+  },
+  "C_lesion": {
+   "builder(8) unused cells": "PASS",
+   "builder(8) used cells": "FAIL"
+  },
+  "D_reset_equivalence": {
+   "builder(8)": "PASS",
+   "holder(8)": "PASS"
+  },
+  "E_leak_probe": "PASS",
+  "F_fire_tests": "all fire"
+ },
+ "gate": "PASS",
+ "host": "SKULLPORT",
+ "n_lives": 2400,
+ "n_pairs": 500,
+ "numba": "0.65.1",
+ "numpy": "2.2.6",
+ "params": {
+  "E": 8,
+  "F": 16,
+  "K": 8,
+  "R": 4,
+  "S": 16,
+  "T": 6,
+  "cap": 64,
+  "seed": 20261001
+ },
+ "power_gate": {
+  "census": {
+   "novel": 19153,
+   "probe": 18854,
+   "repeat": 5829
+  },
+  "interchange_eligible": 5602,
+  "lesion_eligible": 7356,
+  "min_power_required": 0.99,
+  "table": [
+   {
+    "adequate": true,
+    "cell": "A build builder(8)",
+    "designed_true_rate": 1.0,
+    "eligible": 18854,
+    "expected": "PASS",
+    "power": 1.0
+   },
+   {
+    "adequate": true,
+    "cell": "A build builder(6)",
+    "designed_true_rate": 0.8125,
+    "eligible": 18854,
+    "expected": "PASS",
+    "power": 1.0
+   },
+   {
+    "adequate": true,
+    "cell": "A build builder(4)",
+    "designed_true_rate": 0.625,
+    "eligible": 18854,
+    "expected": "PASS",
+    "power": 1.0
+   },
+   {
+    "adequate": true,
+    "cell": "A build builder(2)",
+    "designed_true_rate": 0.4375,
+    "eligible": 18854,
+    "expected": "PASS",
+    "power": 1.0
+   },
+   {
+    "adequate": true,
+    "cell": "A build builder(0)",
+    "designed_true_rate": 0.25,
+    "eligible": 18854,
+    "expected": "FAIL",
+    "power": 1.0
+   },
+   {
+    "adequate": true,
+    "cell": "A build holder(8)",
+    "designed_true_rate": 0.25,
+    "eligible": 18854,
+    "expected": "FAIL",
+    "power": 1.0
+   },
+   {
+    "adequate": true,
+    "cell": "A build constant",
+    "designed_true_rate": 0.25,
+    "eligible": 18854,
+    "expected": "FAIL",
+    "power": 1.0
+   },
+   {
+    "adequate": true,
+    "cell": "A build lookup",
+    "designed_true_rate": 0.25,
+    "eligible": 18854,
+    "expected": "FAIL",
+    "power": 1.0
+   },
+   {
+    "adequate": true,
+    "cell": "A build leak_reader",
+    "designed_true_rate": 0.25,
+    "eligible": 18854,
+    "expected": "FAIL",
+    "power": 1.0
+   },
+   {
+    "adequate": true,
+    "cell": "A hold builder(8)",
+    "designed_true_rate": 1.0,
+    "eligible": 5829,
+    "expected": "PASS",
+    "power": 1.0
+   },
+   {
+    "adequate": true,
+    "cell": "A hold builder(6)",
+    "designed_true_rate": 0.8125,
+    "eligible": 5829,
+    "expected": "PASS",
+    "power": 1.0
+   },
+   {
+    "adequate": true,
+    "cell": "A hold builder(4)",
+    "designed_true_rate": 0.625,
+    "eligible": 5829,
+    "expected": "PASS",
+    "power": 1.0
+   },
+   {
+    "adequate": true,
+    "cell": "A hold builder(2)",
+    "designed_true_rate": 0.4375,
+    "eligible": 5829,
+    "expected": "PASS",
+    "power": 1.0
+   },
+   {
+    "adequate": true,
+    "cell": "A hold builder(0)",
+    "designed_true_rate": 0.25,
+    "eligible": 5829,
+    "expected": "FAIL",
+    "power": 0.9999235009969059
+   },
+   {
+    "adequate": true,
+    "cell": "A hold holder(8)",
+    "designed_true_rate": 1.0,
+    "eligible": 5829,
+    "expected": "PASS",
+    "power": 1.0
+   },
+   {
+    "adequate": true,
+    "cell": "A hold constant",
+    "designed_true_rate": 0.25,
+    "eligible": 5829,
+    "expected": "FAIL",
+    "power": 0.9999235009969059
+   },
+   {
+    "adequate": true,
+    "cell": "A hold lookup",
+    "designed_true_rate": 0.25,
+    "eligible": 5829,
+    "expected": "FAIL",
+    "power": 0.9999235009969059
+   },
+   {
+    "adequate": true,
+    "cell": "A hold leak_reader",
+    "designed_true_rate": 0.25,
+    "eligible": 5829,
+    "expected": "FAIL",
+    "power": 0.9999235009969059
+   },
+   {
+    "adequate": true,
+    "cell": "C interchange builder(8)",
+    "designed_true_rate": 1.0,
+    "eligible": 5602,
+    "expected": "PASS",
+    "power": 1.0
+   },
+   {
+    "adequate": true,
+    "cell": "C interchange holder(8)",
+    "designed_true_rate": 0.25,
+    "eligible": 5602,
+    "expected": "FAIL",
+    "power": 0.9998473564176518
+   },
+   {
+    "adequate": true,
+    "cell": "C interchange builder(8) sham",
+    "designed_true_rate": 0.25,
+    "eligible": 5602,
+    "expected": "FAIL",
+    "power": 0.9998473564176518
+   },
+   {
+    "adequate": true,
+    "cell": "C lesion builder(8) used cells",
+    "designed_true_rate": 0.25,
+    "eligible": 7356,
+    "expected": "FAIL",
+    "power": 0.9999993454733679
+   },
+   {
+    "adequate": true,
+    "cell": "C lesion builder(8) unused cells",
+    "designed_true_rate": 1.0,
+    "eligible": 7356,
+    "expected": "PASS",
+    "power": 1.0
+   }
+  ]
+ },
+ "python": "3.12.10",
+ "source_sha256_lf": {
+  "differential_test.py": "ab4011f4151f0714d707ff47fcd90d56e0cc0630bb206159dd3ef72c9b8617d0",
+  "oracle.py": "6e00e2d0033365f5990f928dcf56c33a91c4932d23711b5a0eebfc2fc904c240",
+  "organisms.py": "305ba50a7826c8b72068d9e6583d194fec73e81187580539fe186d120d9b872e",
+  "qualify.py": "ce8806f931888a2a34826df0a670b1e00d81e1f2e83239b4bbd6494c19f63c32",
+  "rulers.py": "d9876f05b1ea9142e3d43886fb9b86823b5078c012e90b60deb4397e5498f4b4",
+  "wm_mini.py": "12b342d0602bf311359c5dc266e2c4a112af1582b45e8d9a3da75c9893462d8c"
+ },
+ "split": 4,
+ "version": 2,
+ "what": "P1 calibration slice prototype: qualification gate",
+ "written_at_utc": "2026-10-01T15:23:03Z"
+}

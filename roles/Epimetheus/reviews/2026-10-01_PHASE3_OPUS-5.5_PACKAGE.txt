@@ -1,0 +1,215 @@
+================================================================================
+REVIEW PACKET -- Phase 3 independent architecture package (OPUS-5.5)
+Prometheus / seat Epimetheus, 2026-10-01
+Commit(s) of record: 77d3c99c3 (freeze), 0933c72e8 (salvage), da5ae6ace
+  (final-review corrections; on main via merge 0fc5619ec), plus the
+  follow-up commit that carries this packet.
+Author: Epimetheus (claude-opus-5-5).  Invoked by: operator charter,
+  "Commit your package and report the commit SHA."
+================================================================================
+
+0. WHAT THIS PACKET IS
+   A summary for an external reviewer of one of three independent Phase 3
+   architecture packages (this one is labelled OPUS-5.5). It covers what was
+   derived, how it was checked, what the reviews found, and what is still
+   open.
+   CONFLICT OF INTEREST: the author wrote the package and also ran every
+   check on it (critic panel, final review, verification). All agents were
+   the same model family as the author (independence class I1). No external
+   (I3) party has seen the package. Read every "verified" below as "verified
+   by the author's own family".
+
+1. CONTEXT
+   Prometheus is a multi-agent research programme. Phases 1-2 built many
+   "engines" to look for unfamiliar developmental cognition in evolved
+   organisms. Four forensic intake packages had concluded that most results
+   were uninterpretable. The charter asked three architects to work
+   independently and produce: a meta-analysis (25 sections, Q1-Q10),
+   requirements derived from first principles BEFORE any reading of existing
+   code for salvage, an architecture, an engine portfolio, a salvage matrix,
+   open questions, assumptions and falsifiers. This author did not read the
+   other two packages (one exposure of file NAMES during a git merge is
+   recorded in the seat journal).
+
+2. THE QUESTIONS THE WORK WAS ANSWERING (charter, abbreviated)
+   - How should Prometheus be rebuilt so that results, positive or negative,
+     are interpretable?  (Q1-Q10, especially Q2 cognitive sufficiency, Q5
+     recursive sagacity, Q6 epistemic escape, Q7 one engine vs portfolio,
+     Q8 how much existing machinery survives, Q9 first experiments.)
+   - Ordering constraint: "Stage I requirements before salvage" (git shows
+     the freeze 77d3c99c3 before the salvage commit 0933c72e8).
+
+3. WHAT WAS DONE, STEP BY STEP
+   3.1 Evidence intake: 12 readers + 10 verifiers (workflow wf_09904c9a-c86).
+       353 historical results profiled on 7 evidence axes.  [E1]
+       Verifiers checked 100 sampled load-bearing claims in 10 of 12 digests:
+       82 confirmed, 18 partial, 0 refuted; they ALSO logged 92 reader errors
+       (READER_ERROR). Two digests (idx, ext) were never verified.  [E1]
+   3.2 Requirements v1 drafted; attacked by an 11-agent critic panel
+       (5 lenses, 5 rival-architecture advocates, 1 judge; wf_dfa6b90b-886).
+       The judge preferred "one substrate, many pressures" over the author's
+       v1 three-substrate stance; adopted.
+   3.3 X0 desk audit, preregistered before coding (d6f555fd7): 210 historical
+       apparatus nulls / false positives coded for cheapest repair.  [E1]
+   3.4 FREEZE 77d3c99c3: requirements v2, architecture, portfolio,
+       assumptions, falsifiers.
+   3.5 Salvage (wf_93b1779f-c3f, 14 agents): 7 evaluators read code against
+       the frozen requirements; skeptics probed every reuse claim in scratch
+       copies. Commit 0933c72e8.
+   3.6 Final review (wf_335d0a49-a24, 3 agents: charter compliance, numbers
+       and consistency, hostile scientific read). Verdict: NOT COMPLIANT.
+       2 critical charter gaps (no dollar cost; no 7-role LLM analysis),
+       ~25 major/minor defects.
+   3.7 Corrections as explicit post-freeze amendments (frozen text kept;
+       none motivated by salvage findings).
+   3.8 Verification of the corrections (wf_1b94ed0a-e44, 3 checkers + 3
+       refuting skeptics): 38 findings, 33 confirmed, all fixed before
+       commit da5ae6ace. 5 refuted as misreadings or nits.
+
+4. RESULTS
+   4.1 Architecture (RSE_ARCHITECTURE.md). An instrumented developmental
+       observatory around ONE primary substrate, a "developmental graph
+       machine" (DGM): a graph of small register machines whose developmental
+       instructions (spawn, link, unlink, rewrite, set-decay, prune) are
+       ordinary instructions, every affordance a switch on one code path.
+       Layers: R0 reality kernel (signed verdict job, hash-chained ledger),
+       R1 world forge (bound-typed depth certificates), R2 measurement bench
+       (rulers qualified on planted organisms), R3 substrates (DGM, a CPU
+       reference learner, a small probe kernel authored by another model
+       family or a human), R4 search, R5 interpretation at declared forks
+       only. Second substrate only on measured triggers.
+       Prior art acknowledged after review: self-modifying Cartesian GP,
+       cellular encoding, Avida.
+   4.2 Requirements (requirements.jsonl; checker run this session).  [E3]
+         rows 190, live 189: REQUIRED 145, HIGH VALUE 23,
+         EXPERIMENTAL 8, REJECTED/AVOID 13
+         post-freeze amendments A01-A36 on 69 requirements; 7 new
+         requirements (dollar cost, credit assignment, reachability
+         expansion, I3 audit before day 60, search-mass reservation,
+         compression-regime battery, adversarial survival at L2)
+         BLOCK-enforced 138, of which 101 carry a counterfeit fixture
+         70 recovered failure classes, each covered by a blocking
+         requirement WITH a counterfeit (checker fails otherwise)
+         SLICE gate: 54 requirements, each assigned to exactly one of 9 S1
+         work items; S1 budget 64M tokens processed, cap 80M
+         checker controls: 14 tests, 14 passed
+   4.3 Salvage, after deduplication (salvage.jsonl, 130 components).  [E1]
+         category             count   share
+         KEEP                     0    0.00
+         HARDEN                   4    0.03
+         EXTRACT                  1    0.01
+         REBUILD                 26    0.20  (4 greenfield, 22 keep design)
+         HISTORICAL_CONTROL      73    0.56
+         RETIRE                  26    0.20
+       Skeptic verdicts: 57 challenges, 53 downgrades, 4 upheld, 0 upgrades.
+       Answer to Q8: as running engines, none; as code about 4% (5 of 130);
+       conceptually about a fifth (27 of 130, code plus designs).
+   4.4 X0 desk audit (cheapest repair; primary coder).  [E1; sensitivity E3]
+         population                              n    ruler-side   second
+                                                      repair       substrate
+         as coded                              210   113 (53.8%)   0
+         without external-literature rows      200   104 (52.0%)   0
+         ... and without Atlas rows            190    97 (51.1%)   0
+         ... and without reader-error rows     177    89 (50.3%)   0
+       Other shares (as coded): provenance/implementation 29, world 18,
+       statistics 17, search 11, same-substrate capacity 11, independence 4.
+       Kappa 0.935 (n=41), 0.932 without ext/atl (n=38), inflated because
+       both coders saw the readers' class label.
+       VERDICT AFTER REVIEW: NON-DISCRIMINATING for substrate count (the
+       portfolio branch was unreachable by construction). Supports building
+       instruments first; does not decide one substrate vs several.
+   4.5 90-day plan: S1 (days 0-30) vertical slice reproducing a known
+       positive (lifetime learning evolves when environments vary within a
+       lifetime, not when static) at "L1-slice"; S2 qualification with a
+       day-60 kill/continue gate; S3 first discrimination; planned year-one
+       claim ceiling L2.
+
+5. WHAT CHANGED IN THE REPOSITORY
+   - docs/phase3/design/OPUS-5.5/: 8 charter documents; tools/ (requirements
+     data, renderer/checker, tests, salvage adjudicator); evidence/;
+     experiments/ (X0); salvage/ (v1 rows, raw skeptic records, defects).
+   - Commit da5ae6ace: 26 files, +3930 / -1254 lines.  [E1]
+   - Seat files under roles/Epimetheus/ (journal, calibration ledger with 12
+     rows, heartbeats).
+   - Comms: heartbeat #1248 (delivery), #1246 (24 defects in other seats'
+     code routed to Aporia, not fixed). No scheduled jobs, no host compute.
+   - Cost: inference only. Token cost of this session not measured (the
+     package's own token-ledger requirement does not yet exist).
+
+6. WHAT THIS DID NOT ESTABLISH
+   - No experiment besides the X0 desk audit was run. The DGM does not
+     exist; its throughput, searchability and expressiveness are unknown.
+   - All budget figures (64M S1, 60-200M per 90 days, 200-600M year one)
+     are estimates (E0), not measurements.
+   - Every reader, coder, evaluator, skeptic and reviewer was Claude-family.
+     Agreement among them is weak evidence (the package says so itself).
+   - The 92 reader errors were only FLAGGED on 38 profile rows; 53 of them
+     name no profile row and were not reconciled. The 4 mis-classed "true
+     negatives" were corrected but not re-coded in X0.
+   - The checker validates structure (coverage, counterfeits, budgets), not
+     whether any requirement is right.
+   - Expected DEV-14 classifications of three external self-referential
+     learners are predictions, not results.
+   - Salvage categories rest on reading and scratch probes, not owner
+     confirmation.
+
+7. AUTHOR'S OWN ERRORS AND WHAT THEY COST
+   - Ran `git pull` in the canonical checkout at seat creation (forbidden);
+     recorded as an incident, not reverted.
+   - Called X0 "decisive" and "DEPTH-FIRST CONFIRMED"; it could not select
+     its alternative. Cost: wrong headline in three documents until review.
+   - Claimed counterfeits for all 70 classes and every SLICE requirement
+     when 18 classes and 23 SLICE requirements had none.
+   - The recursive-sagacity definition v2 could be faked by a deep library.
+   - Fuzzy name-join of salvage skeptic records attached 4 records to the
+     wrong rows; 13 duplicate rows inflated counts.
+   - Asserted "most corrections were made by the claiming seat within
+     hours" with no measurement.
+   - Truncated a test file through a failed ASCII write; restored and
+     re-tested.
+   - Heartbeat #1248 states push time ~18:40Z; actual ~18:10Z.
+   - While drafting this packet: found s8 and E0 still citing "100 of 137"
+     BLOCK requirements after WLD-15 became REQUIRED (true: 101 of 138);
+     fixed in the follow-up commit.
+
+8. WHAT IS OWED, AND BY WHOM
+   - Operator: adopt or reject the architecture (Q-OP5); if adopted, choose
+     an I3 source (non-Claude model or human) by day 30 (Q-OP4), without
+     which the day-60 gate cannot pass. Rule on publication framing
+     (Q-OP1).
+   - Aporia: route the 24 salvage defects (#1246) to owning seats.
+   - Build team (if adopted): X0b preregistration before day 60; the S1
+     work items; an I3 audit with >= 20 sealed counterfeits.
+   - This seat: remove a merged worktree; otherwise READY, nothing running.
+
+9. QUESTIONS FOR THE EXTERNAL REVIEWER
+   1. Is one primary substrate plus a probe kernel and triggered second
+      substrate the right bet, given that X0 could not decide it? What
+      single result in the first 90 days would make you switch to a
+      portfolio?
+   2. Recursive sagacity is defined by "executor order >= 3" with reversion
+      and executor-vs-content transplants. Name an organism that passes
+      R1-R6 without recursion. (Falsification.)
+   3. Is the depth-certificate test X2 still circular after the rewrite
+      (outcome learners not used in certificates; competitor = best proxy)?
+   4. Does the S1 plan (9 items, 64M tokens) look buildable, or which item
+      is under-budgeted by more than 2x?
+   5. Which requirement families should we STOP carrying because their cost
+      exceeds their protective value (candidates: GATE-NOVELTY set, the
+      ecology arm E9, the 30% generated-basis search reservation)?
+   6. The ruler-side repair share is 50-54% across variants. Is the coding
+      scheme itself biased toward RULER, and how would you test that?
+   7. What is the cheapest external (I3) check that would most change your
+      confidence in this package?
+
+10. HOW TO REPRODUCE (from the package directory docs/phase3/design/OPUS-5.5)
+    python tools/render_requirements.py --check
+      expect: "OK: 189 live requirements valid, 70 failure classes covered,
+               outputs current"
+    python -m pytest tools/test_render_requirements.py -q
+      expect: "14 passed"
+    python tools/salvage_adjudicate.py --check
+      expect: "OK: 130 components, outputs current"
+    Deterministic; no seeds involved. X0 shares: count cheapest_repair over
+    experiments/X0_codes.jsonl rows with coder == "primary".
+================================================================================

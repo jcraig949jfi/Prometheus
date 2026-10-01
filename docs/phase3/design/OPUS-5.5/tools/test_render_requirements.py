@@ -16,7 +16,8 @@ class Fake:
     """A mutable copy of the requirements module's data."""
 
     def __init__(self, rd):
-        for name in ("CATEGORIES", "PRIORITIES", "GATES_FIXED", "ENFORCE", "BUILD", "OP", "TAXONOMY", "COVERAGE", "R"):
+        for name in ("CATEGORIES", "PRIORITIES", "GATES_FIXED", "ENFORCE", "BUILD", "OP", "TAXONOMY", "COVERAGE", "R",
+                     "S1_WORK_ITEMS", "S1_BUDGET_CAP_M"):
             setattr(self, name, copy.deepcopy(getattr(rd, name)))
 
 
@@ -48,7 +49,7 @@ def test_bad_gate_fails():
 
 def test_non_ascii_fails():
     f = real()
-    f.R[0]["text"] = f.R[0]["text"] + " —"
+    f.R[0]["text"] = f.R[0]["text"] + " " + chr(0x2014)
     assert any("non-ASCII" in e for e in rr.validate(f))
 
 
@@ -79,3 +80,39 @@ def test_block_without_test_or_counterfeit_fails():
     r["fake"] = ""
     r["test"] = ""
     assert any("neither counterfeit nor test" in e for e in rr.validate(f))
+
+
+def test_slice_block_without_counterfeit_fails():
+    f = real()
+    r = next(r for r in f.R if r["gate"] == "SLICE" and r["enforce"] == "BLOCK")
+    r["fake"] = ""
+    assert any("SLICE BLOCK requirement without a counterfeit" in e for e in rr.validate(f))
+
+
+def test_class_covered_only_without_counterfeit_fails():
+    f = real()
+    for ref in f.COVERAGE["SD2"]:
+        next(r for r in f.R if r["id"] == ref)["fake"] = ""
+    assert any("SD2" in e and "counterfeit" in e for e in rr.validate(f))
+
+
+def test_live_requirement_without_test_fails():
+    f = real()
+    r = next(r for r in f.R if r["pri"] != "WITHDRAWN")
+    r["test"] = ""
+    assert any("without a discriminating test" in e for e in rr.validate(f))
+
+
+def test_unassigned_slice_requirement_fails():
+    f = real()
+    wid, title, budget, refs = f.S1_WORK_ITEMS[0]
+    dropped = refs[0]
+    f.S1_WORK_ITEMS[0] = (wid, title, budget, refs[1:])
+    assert any(dropped in e and "S1 work items" in e for e in rr.validate(f))
+
+
+def test_s1_budget_over_cap_fails():
+    f = real()
+    wid, title, budget, refs = f.S1_WORK_ITEMS[0]
+    f.S1_WORK_ITEMS[0] = (wid, title, budget + f.S1_BUDGET_CAP_M, refs)
+    assert any("above the" in e and "cap" in e for e in rr.validate(f))

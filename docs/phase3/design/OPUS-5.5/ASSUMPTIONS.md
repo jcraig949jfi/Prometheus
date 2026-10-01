@@ -6,13 +6,20 @@ is false. Grouped by layer. "Check" names the experiment or measurement that tes
 ## A. About the historical record
 
     id   assumption                                            supports                         check / if false
-    A1   The four intake packages plus the twelve reader       the failure taxonomy, the        82/100 load-bearing claims
-         digests characterise the historical apparatus well    binding-constraint ranking       confirmed, 18 partial, 0 refuted;
-         enough to rank its binding constraints                (RSE s1)                         if wrong, the substrate-
-                                                                                                concentration argument weakens
-    A2   The binding constraints were world demand, search     concentrating on one substrate   X0 desk audit; if a second
-         budget, ruler validity and independence -- not        and many certified worlds        substrate is often the cheapest
-         organism expressiveness                                                                repair, adopt an early portfolio
+    A1   The four intake packages plus the twelve reader       the failure taxonomy, the        verifiers covering 10 of the 12
+         digests characterise the historical apparatus well    binding-constraint ranking       digests checked 100 sampled
+         enough to rank its binding constraints                (RSE s1)                         load-bearing claims (82
+                                                                                                confirmed, 18 partial, 0
+                                                                                                refuted) and logged 92 further
+                                                                                                reader errors (verification.
+                                                                                                jsonl, READER_ERROR); idx and
+                                                                                                ext were not verified; if wrong,
+                                                                                                the ranking weakens [A]
+    A2   [A] The binding constraints were, by X0 cheapest      instrument priority (E1, E2     X0 supports the ranking but
+         repair, ruler validity, provenance/implementation,    first) and many certified        cannot decide the substrate
+         world demand and statistics, with search and same-    worlds                           count (non-discriminating);
+         substrate capacity at 5% each and independence 2%                                      X0b, X10b, X1c and X11 test the
+                                                                                                single-primary choice
     A3   Claude-family crawlers, readers and verifiers share   discounting of this package's    a cross-family re-derivation of
          blind spots with the Claude-family program            own reading (stated, not         X0 and of the salvage matrix;
                                                                corrected)                       if it disagrees materially, revise
@@ -64,9 +71,11 @@ is false. Grouped by layer. "Check" names the experiment or measurement that tes
 
 ## D. About worlds and measurement
 
-    D1   Small exactly solvable or exactly bounded POMDP       the depth certificate and the    X2; if certificates do not
-         families can carry genuine cognitive depth            world forge                      predict baseline failure, depth
-                                                                                                is reframed before E4-E6
+    D1   Small exactly solvable or exactly bounded POMDP       the depth certificate and the    X2 [A]; if certificates do not
+         families can carry genuine cognitive depth            world forge                      beat the best proxy in
+                                                                                                predicting held-out learner
+                                                                                                performance, depth is
+                                                                                                reframed before E4-E6
     D2   The certificate components chosen (memory, horizon,   world admission; the definition  WLD-15 open-demand tier and
          composition, hypotheses, value of information, non-   of reasoning                     d_unfam measure what falls
          stationarity, deliberation) do not omit the demand                                     outside; revise components if
@@ -87,14 +96,19 @@ is false. Grouped by layer. "Check" names the experiment or measurement that tes
 
     E1   CPU capacity of roughly 50-90k core-hours per         the compute envelope             measured in receipts; if lower,
          quarter remains available                                                              fewer arms (concentration floor)
-    E2   Year-one build inference of the order of 100-300M     the build plan                   INF-06 build ledger within two
-         tokens processed is affordable                                                         weeks; if not, cut scope to the
-                                                                                                slice plus E1/E2
+    E2   [A] Year-one build inference of roughly 200-600M      the build plan                   INF-06 build ledger within two
+         tokens processed is affordable: the 90-day 60-200M                                     weeks; USD via NRG-03; if not,
+         (RSE s7) plus the second substrate E7 (L-XL band),                                     cut scope to the slice plus
+         the REP-02 reimplementation, F5-F10 generators, the                                    E1/E2 and keep the L2 ceiling
+         write-order tracer and the E8 harness
     E3   The operator can hold routine attention at <= 90      HUM-04; scheduled sessions       weekly digest; if exceeded,
          minutes per week if sessions are scheduled                                             reduce concurrent work items
-    E4   At least one non-Claude model family or human can     REP-04 (I3) at L4 and            if unavailable, L4 claims and
-         be engaged for re-derivation and the probe kernel     externalisation; probe kernel    externalisation are blocked, not
-                                                                                                relaxed
+    E4   At least one non-Claude model family or human can     REP-08 audit before day 60;      [A] if unavailable, the day-60
+         be engaged for the REP-08 audit, the probe kernel     probe kernel (AGR-07); REP-04    gate cannot pass, the probe
+         and re-execution                                      at L4r/L4d; externalisation      kernel cannot be built, and
+                                                                                                L4r/L4d claims and
+                                                                                                externalisation are blocked,
+                                                                                                not relaxed
     E5   The existing fleet's seats can be retasked under      execution of the build plan      if the control regime keeps
          the new authority model without regime churn                                           changing, HUM-02 dwell rule is
                                                                                                 the remedy
@@ -104,9 +118,10 @@ is false. Grouped by layer. "Check" names the experiment or measurement that tes
 
 ## F. About the epistemic-escape question
 
-    F1   Search-generated variation (mutation, recombination,  the model-free arm as the        E8; if the model-free arm finds
-         procedurally generated bases) explores regions an     default                          nothing the LLM arm does not,
-         LLM operator would not                                                                 the anti-gravity rationale weakens
+    F1   Search-generated variation (mutation, recombination,  the operator-model-free arm as   E8; if the operator-model-free
+         procedurally generated bases) explores regions an     the default                      arm finds nothing the LLM arm
+         LLM operator would not                                                                 does not, the anti-gravity
+                                                                                                rationale weakens
     F2   An executable familiarity reference can be built      AGR-12; E8's familiarity         reachability fixture; if the
          whose UNFAMILIAR outcome is reachable                 measurement                      reference can only say FAMILIAR,
                                                                                                 novelty statements are withheld

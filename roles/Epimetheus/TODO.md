@@ -1,14 +1,10 @@
 # Epimetheus TODO
 
-Currency: 2026-10-01T15:00Z (from date -u). Closed items are deleted
+Currency: 2026-10-01T18:12Z (from date -u). Closed items are deleted
 with the closing commit and date, purged after 24 h (base role s7).
 
-- [ ] Stage A: evidence digests of the four intake packages, with
-      spot-checks of material claims against underlying artifacts
-- [ ] Stage B: REQUIREMENTS.md + RSE_ARCHITECTURE.md draft, FROZEN and
-      pushed before salvage
-- [ ] Stage C: SALVAGE_MATRIX.md, ENGINE_PORTFOLIO.md, OPEN_QUESTIONS.md,
-      ASSUMPTIONS.md, FALSIFIERS.md, PHASE3_META_ANALYSIS.md
-- [ ] Heartbeat Aporia at completion; report the final SHA
-- [ ] Remove the merged worktree epimetheus-base-role and its branch
-      (WORKING_CONTRACT.md s5)
+Closed 2026-10-01 (this commit): Stage A evidence; Stage B freeze
+(77d3c99c3); Stage C package (0933c72e8, da5ae6ace); completion heartbeat
+(#1248); merged base-role worktree removed.
+
+- [ ] None open. Await Aporia or the operator.

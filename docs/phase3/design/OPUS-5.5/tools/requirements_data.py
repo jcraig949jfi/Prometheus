@@ -1199,3 +1199,313 @@ COVERAGE = {
     "ID6": ["MEA-09"], "ID7": ["HUM-02"], "ID8": ["CMP-04"], "ID9": ["PRV-09"], "ID10": ["CMP-08"], "ID11": ["PRV-11"],
     "ID12": ["PRV-01"],
 }
+
+
+# =====================================================================================================================
+# POST-FREEZE AMENDMENTS (final review workflow wf_335d0a49-a24, 2026-10-01). The frozen v2 definitions above are kept
+# verbatim; each amendment below records what changed and why. None of these amendments was motivated by salvage
+# findings: they answer charter-compliance, internal-consistency and hostile-scientific-review findings.
+# =====================================================================================================================
+
+GATES_FIXED.append("GATE-NOVELTY")
+_BY = {r["id"]: r for r in R}
+
+
+def amend(aid, rid, reason, **fields):
+    r = _BY[rid]
+    r.setdefault("amendments", []).append("%s: %s" % (aid, reason))
+    r.update(fields)
+
+
+# --- gating: shrink SLICE to what X1a needs (review: SLICE contradicted the 30-day plan) ----------------------------
+amend("A01", "ORG-06", "re-gated to CORE; the slice needs only the lifetime-modification switch (DEV-01)", gate="CORE")
+amend("A02", "ORG-20", "re-gated to CORE; the slice uses only the X1 switches (lifetime modification, internal ticks)",
+      gate="CORE")
+amend("A03", "AGR-08", "re-gated to CORE; X1a's reference arm is part of the slice plan but not a slice gate",
+      gate="CORE")
+amend("A04", "WLD-04", "slice scope: F1 exact dynamic programme; the different-author slow solver is CORE",
+      text=_BY["WLD-04"]["text"] + " In the slice, F1's exact dynamic programme suffices; the different-author slow "
+      "solver is required at CORE.",
+      fake="A qualification-tier family whose 'exact' solver is an unbounded heuristic search: certificate validator "
+      "refuses the exact bound type.")
+amend("A05", "WLD-07", "slice scope: F1 channels only; all families at CORE",
+      text=_BY["WLD-07"]["text"] + " In the slice the audit covers F1; every admitted family is covered at CORE.")
+amend("A06", "MEA-02", "slice scope: authored plants at I1 plus random genomes; procedurally generated class at CORE",
+      text=_BY["MEA-02"]["text"] + " In the slice, authored plants at I1 plus random genomes suffice for the "
+      "acquisition-curve dossier; the procedurally generated class is required at CORE.")
+amend("A07", "MEA-03", "slice ladder for the known-positive replication; FSC-learner rungs at CORE",
+      text=_BY["MEA-03"]["text"] + " For the slice's known-positive replication (X1a) the ladder is constant, best "
+      "fixed policy, best detect-and-dispatch genome and random genome; the acquisition-matched FSC rungs are required "
+      "at CORE.")
+amend("A08", "SCI-02", "L1-slice waiver and L4 split",
+      text=_BY["SCI-02"]["text"] + " An L1-slice verdict (known-positive replications in the vertical slice) waives the "
+      "CAU-10 minimisation and AGR-13 follow-up clauses of L1. L4 is split into L4r (reasoning primitive) and L4d "
+      "(developmental primitive), REQUIREMENTS.md s7.")
+
+# --- nulls, brackets, vocabulary ----------------------------------------------------------------------------------
+amend("A09", "SCI-03", "charter s3 categories kept distinct: provenance type added; phenomenon split; UNBRACKETED added",
+      text=_BY["SCI-03"]["text"] + " Added types: provenance (custody, lineage-label or untracked-input defect); "
+      "UNBRACKETED (no lower bracket exists, SCI-13). 'Phenomenon' is split into hypothesis-refuted (a preregistered "
+      "directional prediction contradicted under a null certificate) and true-negative (absent within certified "
+      "bounds, no directional prediction).")
+amend("A10", "SCI-13", "bracket types defined so novel phenomena can receive a null; otherwise UNBRACKETED",
+      text="No null in a (substrate, search, development, ruler) combination is typed phenomenon-level unless a lower "
+      "bracket exists of one of two types: (a) an evolved or developed positive of the same phenomenon type at the "
+      "ADJACENT easier point of a declared difficulty axis, produced by the identical combination; or (b) a "
+      "rediscovery-from-distance positive: a planted genome of the same phenomenon type placed at operator distance "
+      "k >= d0/2 from the initial distribution and recovered by the identical search, development and ruler in >= 3 "
+      "of N runs. X1 brackets only lifetime-learning phenomena. Without a bracket the null is typed UNBRACKETED. The "
+      "null is reported as a boundary between the last YES and the first NO point.")
+amend("A11", "SCI-08", "regime certificate added as an element for recursive-sagacity nulls",
+      text=_BY["SCI-08"]["text"] + " For recursive-sagacity nulls the regime certificate (PRS-14) is an additional "
+      "element.")
+amend("A12", "SCI-17", "lint list extended to the charter's s24 terms",
+      text=_BY["SCI-17"]["text"] + " The lint list also includes emergence, cognition, sagacity, self-improvement and "
+      "self-monitoring.")
+amend("A13", "PRS-14", "made REQUIRED for any recursive-sagacity null (it is a SCI-08 element)", pri="REQUIRED",
+      enforce="BLOCK", fake="A recursive-sagacity null obtained under a P3 regime with no P3b certificate: refused "
+      "phenomenon typing.")
+
+# --- recursive sagacity: executor-set rule (review: order propagated through library-as-prior) ---------------------
+amend("A14", "DEV-14", "order rule changed to executor sets; R6 executor-vs-content transplant; battery extended",
+      text="Every lifetime write is tagged with its EXECUTOR set: the minimal set of instructions or nodes whose "
+      "execution performed the write (ablating a member changes or prevents the write while operands are held fixed). "
+      "Structures consulted only as operands, templates or proposal priors do not propagate order. A developed "
+      "structure has order k+1 when the highest-order member of its executor set has order k. The instrument supports "
+      "reversion of all structure at or above an order, donor-depth dose-response transplants, and R6 "
+      "executor-versus-content transplants (host A: donor order >= 2 executors with birth content; host B: birth "
+      "executors with donor content). It is qualified on planted organisms that must classify correctly: order 1; "
+      "order 2 (library as proposal prior); order 3 (self-modified builder); a maturation clock; a fixed builder with a "
+      "compositional library of composition depth >= 5 (must classify <= order 2); the gradient meta-learned recurrent "
+      "reference with persistent activations (must classify <= order 2); and a saturation null in which random genomes "
+      "and P1/P2-evolved genomes have < 5% of developed structure tagged order >= 3, otherwise recursion is "
+      "RECURSION_UNTESTABLE in that substrate.",
+      fake="A deep-library organism (fixed builder, composition depth 6) tagged order 3: instrument refused.")
+amend("A15", "DEV-05", "value-only control frozen in the preregistration instead of 'strongest available'",
+      text=_BY["DEV-05"]["text"].replace("the strongest available value-only learner",
+                                         "the value-only learner class and budget named in the experiment's freeze"))
+
+# --- pressures, assays, worlds ------------------------------------------------------------------------------------
+amend("A16", "PRS-01", "genome-budget axis G added; competition and cooperation explicitly deferred to P4/E9",
+      text=_BY["PRS-01"]["text"] + " Axis G: genome budget swept relative to the description length of the minimal "
+      "solution; a developmental program is predicted when the solution exceeds the budget. Competition and "
+      "cooperation are deferred to P4 (E9) because they confound single-organism developmental attribution until the "
+      "instruments are qualified.")
+amend("A17", "PRS-07", "catastrophic shift added as a distinct axis",
+      text=_BY["PRS-07"]["text"] + " Rare, large regime shifts (catastrophic shift) are a separate axis from the change "
+      "rate.")
+amend("A18", "MEA-07", "incidental recurrence vs genuine reuse assay added",
+      text=_BY["MEA-07"]["text"] + " Incidental recurrence (similar canonical cores built separately, convergently or "
+      "by SPAWN copy) is separated from reuse (one core invoked from several contexts) by shared ablation and material "
+      "copy lineage, with both classes planted in MEA-16.")
+amend("A19", "WLD-01", "minimal sufficient policy stated per family; depth-proxy prior art",
+      text=_BY["WLD-01"]["text"] + " Each family also states its minimal sufficient policy in the declared policy "
+      "language with its analytic size (for example identify-then-exploit with log2(#mappings) bits; the causal-state "
+      "count; a k-slot keyed store of k*log2|V| bits). d_think is a logical-depth-style quantity (Bennett 1988); "
+      "excess entropy (Crutchfield and Feldman 2003) is among the proxies the certificate must beat (X2).")
+
+# --- independence and anti-gravity --------------------------------------------------------------------------------
+amend("A20", "REP-04", "I3 re-execution from raw receipts and source, including a code read",
+      text="Analyses supporting L4r/L4d and every externalisation are re-executed by an I3 party (another model "
+      "family or a human) from raw receipts and source, including a code read of the kernel, the ruler(s) and the "
+      "world generator, not only re-derived from frozen rows.")
+amend("A21", "AGR-07", "probe kernel authorship at I3 required", text=_BY["AGR-07"]["text"].replace(
+    "authored at class >= I2, preferably I3", "authored at class I3 (another model family or a human)"))
+amend("A22", "AGR-14", "renamed operator-model-free arm; scope of what it controls stated",
+      title="Operator-model-free reference arm",
+      text=_BY["AGR-14"]["text"] + " This arm removes only the model-operator channel: substrate, primitive basis A0, "
+      "worlds and rulers are model-authored in every arm; only AGR-15/AGR-18 generated bases, the probe kernel and a "
+      "second substrate probe that prior.")
+for _rid in ("AGR-09", "AGR-12", "AGR-15"):
+    amend("A23", _rid, "moved from GATE-L3 to GATE-NOVELTY: required for unfamiliarity claims and externalisation, "
+          "not for mechanism status", gate="GATE-NOVELTY")
+
+# --- counterfeits for SLICE requirements and for failure classes that lacked one -------------------------------------
+_FAKES = {
+    "ORG-07": "A run whose receipt reports structure counts that differ between replays: replay check fails.",
+    "DEV-01": "A 'development off' arm that still executes REWRITE instructions: switch audit fails.",
+    "DEV-06": "A curriculum grader object reachable from organism memory: leak audit fails.",
+    "PRS-04": "A champion chosen by a job that read a sealed key: key-access log refuses the verdict.",
+    "MEA-12": "A verdict row whose decisive field came from a model call: row-class filter ignores it.",
+    "MEA-13": "A generator's self-rating field fed to a ruler: row-class filter ignores it.",
+    "PRV-01": "Two artifacts with LF and CRLF bytes registered under different hashes, or a duplicate id: "
+              "registration refused.",
+    "PRV-03": "A ledger with a prediction row appended after its observation row: chain verifier fails.",
+    "PRV-06": "A dashboard number that differs from a rebuild of the primary store: rebuild-equality check fails.",
+    "PRV-07": "A model-authored row labelled 'computed': the writer process contradicts the label; the row is ignored.",
+    "PRV-08": "A crashed run recorded as zero output: outcome schema refuses the missing failure type.",
+    "PRV-09": "A consumer reading a path its producer never declared: interface registry check fails.",
+    "PRV-10": "An emergence claim whose localised core descends from a plant: ancestry tag refuses the claim.",
+    "PRV-11": "A test secret committed in a tracked file: pre-commit scanner blocks the commit.",
+    "REP-01": "A run whose replay differs at bit level on CPU: replay test fails.",
+    "REP-06": "A reimplementation declared I2 whose sandbox log shows a read of the claimant's rows: classed I1.",
+    "CMP-01": "A fast kernel that diverges from the slow reference on a generated corpus case: differential test fails.",
+    "CMP-02": "A receipt without CPU-seconds or nominal energy: receipt schema refuses it.",
+    "CMP-04": "Two identical-input jobs both executed (idempotency failure): runner refuses the second.",
+    "CMP-05": "A campaign launched whose throughput x budget is below the reachability estimate: launch refused.",
+    "CMP-07": "A second-substrate work item opened before the slice's L1-slice verdict: build plan check refuses it.",
+    "CMP-08": "A standing service killed without producing a typed failure record within an hour: fault test fails.",
+    "INF-01": "A model call from a code path tagged with no declared fork: client refuses the call.",
+    "INF-02": "A coding session whose tokens are absent from the build ledger: reconciliation flags it unattributed.",
+    "INF-03": "A status line whose value is not reproducible from receipts: status generator check fails.",
+    "INF-06": "A work item at 1.6x its token budget still running: stop rule fires.",
+    "NRG-02": "A new work item opened on a resource line already 30% over envelope: blocked.",
+    "HUM-02": "A control-regime change recorded less than the minimum dwell after the previous one: register check "
+              "fails.",
+    "HUM-04": "A week with operator time above 90 minutes and no defect logged: digest flags the breach.",
+    "WLD-09": "A world that supplies a copy operation to organisms in a heredity experiment: helper-ablation check "
+              "fails.",
+    "MEA-15": "A decoder that reads input difficulty as 'own error' with no beat over the raw-input decoder: "
+              "qualification refuses it.",
+    "TRF-06": "A TS claim whose advantage disappears against the capacity-matched naive host: refused.",
+    "AGR-12": "A familiarity reference that scores a sealed generated mechanism FAMILIAR: reachability fixture fails.",
+}
+for _rid, _f in _FAKES.items():
+    if not _BY[_rid]["fake"]:
+        amend("A24", _rid, "counterfeit fixture added (review: SLICE requirements and covered classes lacked one)",
+              fake=_f)
+
+# --- new requirements ------------------------------------------------------------------------------------------------
+req("NRG-03", "REQUIRED", "SLICE", "BLOCK", "Dollar cost per receipt",
+    "A versioned price table in the program constants file holds per-model-id input, output, cache-write and "
+    "cache-read token rates, the rented GPU-hour rate, the electricity tariff per kWh and optional hardware "
+    "amortisation per core-hour. Receipts and the build ledger compute USD = sum(tokens by class x rate) + GPU-hours x "
+    "rate + kWh x tariff (+ amortisation), reconciled monthly against provider invoices to within 10%.",
+    "The charter asks for dollar cost; money is the common unit for trading tokens, compute and energy.",
+    "Ixion s7 (no cost record exists)", "Token counts only.", "Monthly reconciliation against invoices.",
+    "A receipt whose USD field is quoted rather than computed from the price table: receipt schema refuses it.", "S")
+req("DEV-15", "REQUIRED", "CORE", "RULE", "Credit assignment is organism-constructed",
+    "The physics supplies no global error or gradient signal; the world supplies only declared reward or observation. "
+    "Any credit-assignment carrier must be evolved or developed; it is localised by interchange on eligibility-like "
+    "state, and a planted fixed-rule credit assigner is part of the MEA-16 battery. Architectural reorganisation is "
+    "defined as a change of macro-scale organisation (module or strongly-connected-component partition under CAU-08 "
+    "operators) coinciding with a capability change, distinct from local structural writes.",
+    "Credit assignment is one of the charter's developmental distinctions; supplying it in the physics would install "
+    "the mechanism under study.", "", "Backprop-like signals in the physics.",
+    "Static check: no physics module computes an error term from the world's reward.",
+    "A physics release exposing a per-node error signal derived from reward: static check fails.", "S")
+req("DEV-16", "HIGH VALUE", "GATE-L4", "FLAG", "Reachability expansion",
+    "A developmental stage creates a new reachable stage when a family censored (unacquired within the lifetime) in "
+    ">= q of N naive runs has a finite censoring-aware acquisition cost after another family is acquired, and "
+    "retention-boundary reversion of the carrier built for it makes the family censored again; the count of families "
+    "acquirable below budget is reported against age.",
+    "The charter asks how developmental stages create new reachable stages.", "Challenge 4c", "Not measured.",
+    "Planted prerequisite organisms show expansion; reversion removes it.", "", "S")
+req("REP-08", "REQUIRED", "CORE", "BLOCK", "Cross-family audit and sealed counterfeits before the day-60 gate",
+    "Before the day-60 gate, an I3 party (a budgeted non-Claude model through code, or a human) reads and audits the "
+    "verdict job and the acquisition-curve ruler source and authors at least 20 sealed counterfeits that the gate "
+    "authors never see; E0's success criterion is the catch rate on these held-out counterfeits, not on "
+    "requirement-derived fixtures.", "Requirement authors, gate authors and counterfeit authors from one family teach "
+    "to the test.", "T17 T22; hostile review", "Same-family counterfeits only.", "Catch rate on the held-out set.",
+    "An E0 pass reported on requirement-derived fixtures only: day-60 gate refuses it.", "M", "FORK")
+req("AGR-18", "REQUIRED", "CORE", "BLOCK", "Search-mass reservation outside the authored basis",
+    "In every discovery campaign family a preregistered share of search evaluations (default >= 30%) runs under "
+    "procedurally generated primitive bases A1..An and, once certified, at least one open-demand family (WLD-15) "
+    "receives a preregistered share; realised shares are reported in the quarterly yield vector. This is an "
+    "allocation, not evidence of anti-gravity (contrast the rejected AGR-03).",
+    "Without it, discovery search runs only in the authored basis, a familiar computing ontology.",
+    "charter s23; review", "No reservation; L3-only re-search.", "Realised-share report per campaign.",
+    "A discovery campaign launched with 0% generated-basis evaluations: launch refused.", "S")
+req("MEA-19", "REQUIRED", "CORE", "BLOCK", "Compression-regime qualification battery",
+    "Before 'compression' or 'transferable sagacity' is used about a result, the TS ruler must rank four planted "
+    "organisms correctly: stored solutions (saves only on canonicalised seen instances; TS = 0 on structurally novel "
+    "families), patterns (saves environment transitions to identify latent state, not policy feedback), strategies "
+    "(saves policy acquisition within developed families, not on two-sided-certified novel families) and principles "
+    "(saves on certified novel families).", "The charter's 1,000 solutions / 100 patterns / 20 strategies / 5 "
+    "principles comparison must be measurable, not asserted.", "charter s6", "Assert the ordering.",
+    "TS ranks the four planted organisms in order.",
+    "A stored-solutions organism credited with TS > 0 on a certified novel family: ruler refused.", "M")
+req("SCI-19", "REQUIRED", "GATE-L2", "BLOCK", "Adversarial survival at L2",
+    "An L2 claim survives a budgeted explanation attempt by a party at independence class >= I2 given only the frozen "
+    "rows and the preregistration; the attempt's alternative explanations are tested and recorded.",
+    "Maps the charter's 'adversarial survival' stage onto the ladder.", "T22; charter s17", "None.",
+    "Planted false L2 claims are explained away; genuine ones survive.",
+    "An L2 promotion with no recorded explanation attempt: verdict job refuses it.", "S")
+
+COVERAGE["T13"].append("DEV-15")
+COVERAGE["T15"] = ["AGR-12", "AGR-09", "AGR-06"]
+COVERAGE["T17"].append("REP-08")
+
+# --- vocabulary: remove the undefined near-synonym the SCI-17 lint now forbids (final review, A12 follow-up) --------
+amend("A25", "WLD-16", "'self-monitoring' replaced by 'own-reliability tracking' (s3 metacognition predicate)",
+      text=_BY["WLD-16"]["text"].replace("policy without self-monitoring", "policy without own-reliability tracking"),
+      test=_BY["WLD-16"]["test"].replace("Planted self-monitoring organism",
+                                         "Planted own-reliability-tracking organism (metacognition clauses i-iii TRUE)"))
+
+# --- verification pass after the final review (workflow wf_1b94ed0a-e44) ------------------------------------------
+_BY = {r["id"]: r for r in R}  # include the requirements added after the first amendment block
+amend("A26", "WLD-02", "slice scope: F1 admitted on the S1 baseline subset; the FSC learners are required at CORE",
+      text=_BY["WLD-02"]["text"] + " In the slice, F1 is admitted on the S1 baseline subset (constant, best fixed "
+      "policy, best detect-and-dispatch genome, random genome) with exact Delta and rho; the acquisition-matched FSC "
+      "learners are required at CORE.")
+amend("A27", "MEA-02", "slice independence rule stated (computed classes are CORE)",
+      text=_BY["MEA-02"]["text"] + " In the slice, I1 is determined from the logged authorship record (the plant "
+      "author is a different session from the ruler author, with a shared brief and no read access to the ruler "
+      "code); computed classes (REP-06) are required at CORE.")
+amend("A28", "CMP-07", "L1-slice wording in text and test",
+      text=_BY["CMP-07"]["text"].replace("at L1 with its matched negative", "at L1-slice with its matched negative"),
+      test=_BY["CMP-07"]["test"].replace("the slice's L1 row", "the slice's L1-slice verdict"))
+amend("A29", "NRG-02", "USD line added to the envelope",
+      text=_BY["NRG-02"]["text"].replace("GPU-hours (local and rented) and kWh;",
+                                         "GPU-hours (local and rented), kWh and USD computed from the NRG-03 price "
+                                         "table;"))
+amend("A30", "WLD-15", "made REQUIRED and blocking so the AGR-18 open-demand share cannot be avoided",
+      pri="REQUIRED", enforce="BLOCK",
+      fake="An S4 discovery campaign family launched with no certified open-demand family receiving a preregistered "
+      "share: launch refused (AGR-18).")
+amend("A31", "AGR-18", "open-demand share mandatory from S4",
+      text=_BY["AGR-18"]["text"].replace(
+          "and, once certified, at least one open-demand family (WLD-15) receives a preregistered share;",
+          "and, from S4 (month 4), at least one certified open-demand family (WLD-15) receives a preregistered share;"))
+amend("A32", "MEA-01", "'why' corrected: an attainable verdict set is not detectability",
+      why=_BY["MEA-01"]["why"].replace("showed they could output the class they ruled on",
+                                       "had demonstrated detectability (planted positive recovered, matched negative "
+                                       "rejected)"))
+amend("A33", "WLD-01", "X2 test restated against the best proxy",
+      test="Certificates predict the held-out performance of learners not used in any certificate computation better "
+      "than the best proxy (state count, observation entropy rate, excess entropy, optimal-policy description length) "
+      "by a preregistered margin (X2).")
+amend("A34", "DEV-14", "order-2 plant made consistent with the executor rule",
+      text=_BY["DEV-14"]["text"].replace(
+          "order 1; order 2 (library as proposal prior); order 3 (self-modified builder)",
+          "order 1, including a library used only as a proposal prior (consulted structure does not propagate order); "
+          "order 2 (a developed update rule that executes later writes); order 3 (a self-modified builder)"),
+      test="Planted organisms classified correctly, including the deep-library, meta-learned-RNN and saturation-null "
+      "plants.")
+amend("A35", "AGR-07", "trigger keyed to L4r; X0 no longer named as deciding the substrate question",
+      text=_BY["AGR-07"]["text"].replace("a claim reaching L4;", "a claim reaching L4r;"),
+      test="X0b (with a reachable portfolio branch), X10/X10b, X11 and the port-cost receipt decide; X0 is "
+      "non-discriminating for substrate count; triggers logged.")
+GATES_FIXED[GATES_FIXED.index("GATE-L4")] = "GATE-L4r"
+GATES_FIXED.insert(GATES_FIXED.index("GATE-L4r") + 1, "GATE-L4d")
+for _rid, _g in (("DEV-05", "GATE-L4d"), ("DEV-08", "GATE-L4d"), ("DEV-10", "GATE-L4d"), ("DEV-16", "GATE-L4d"),
+                 ("SCI-10", "GATE-L4r"), ("CAU-07", "GATE-L4r"), ("TRF-02", "GATE-L4r"), ("TRF-03", "GATE-L4r"),
+                 ("REP-04", "GATE-L4r")):
+    amend("A36", _rid, "GATE-L4 split into GATE-L4r and GATE-L4d (L4d-only machinery is not a precondition of L4r)",
+          gate=_g)
+
+# --- S1 work items: every SLICE requirement is built by exactly one item; budgets in M tokens processed -----------
+S1_BUDGET_CAP_M = 80  # 40% of the upper 90-day build envelope (RSE_ARCHITECTURE.md s7)
+S1_WORK_ITEMS = [
+    ("W1", "R0 runner: deterministic execution, keyed streams, snapshot/restore, receipts (CPU, energy, tokens, USD), "
+     "one job runner", 10, ["PRV-01", "PRV-04", "REP-01", "REP-07", "CMP-02", "CMP-04", "MEA-09"]),
+    ("W2", "Ledger, signed verdict job, row-class filter, claim ladder to L1-slice, typed nulls, preregistration as "
+     "an earlier commit, ledger-derived multiplicity", 12,
+     ["SCI-01", "SCI-02", "SCI-03", "SCI-04", "SCI-06", "SCI-09", "SCI-15", "PRV-02", "PRV-03", "PRV-07", "PRV-08",
+      "MEA-12"]),
+    ("W3", "DGM kernel v0 (X1 instructions) with slow reference interpreter and differential tests, provenance "
+     "shadow, stable ids, resource accounting, the two X1 lattice switches", 14,
+     ["ORG-01", "ORG-03", "ORG-04", "ORG-07", "ORG-08", "DEV-01", "DEV-04", "CMP-01"]),
+    ("W4", "F1 family: generator, exact Delta/rho and exact dynamic programme, sealed splits, slice leak audit, "
+     "admission on the S1 baseline subset", 6, ["WLD-01", "WLD-02", "WLD-03", "WLD-04", "WLD-07", "DEV-06"]),
+    ("W5", "Acquisition-curve ruler and dossier (authored plants plus random genomes), known-answer statistics "
+     "subset, controls wired to abort, row metadata", 8,
+     ["SCI-05", "MEA-01", "MEA-02", "MEA-05", "MEA-06", "MEA-11", "MEA-13", "MEA-14"]),
+    ("W6", "Evolutionary engine v0 (declared policy, concentration floor, feasibility check), S1 baseline subset, "
+     "developmental control table for X1a", 5, ["PRS-02", "PRS-04", "PRS-13", "CMP-05", "MEA-03", "DEV-02"]),
+    ("W7", "CPU reference learner (evolved plastic recurrent network) for the X1a reference arm", 3, []),
+    ("W8", "Build and token ledger, versioned price table, quarterly envelope, operator digest, inference-fork "
+     "registry, slice-first build-plan check", 4,
+     ["INF-01", "INF-02", "INF-06", "NRG-02", "NRG-03", "HUM-04", "CMP-07"]),
+    ("W9", "Counterfeit fixture suite for the SLICE requirements (CI)", 2, []),
+]
