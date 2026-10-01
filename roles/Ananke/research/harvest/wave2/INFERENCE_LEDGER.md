@@ -103,3 +103,24 @@ unresolved | next. Workers' ledger blocks are folded in when their reports are d
 - Next: if refresh revives the decay rows, then C1's "decay kills RELAY" and P2-style physics-map
   statements are plant artifacts, and DESIGN's plant_viability "physics-dead vs search-failed" needs a
   plant-family qualifier.
+
+### W2-H (deposited wave2/W2-H/REPORT.md): statistical-method review
+- The pair is the right unit. pair_ci (percentile) undercovers at P=32: lower-tail miss .7-1.2% at
+  p <= .8, and 3-9% at high heterogeneous p (nominal .5%). BOOTT is near nominal.
+- 2 SIGNAL calls flip under BOOTT (884a64df, 8ccf6c72) and 3 under t. No prediction flips.
+- BH q=.01 keeps 210/216 SIGNAL calls; Holm .01 keeps 185.
+- H16: the swap_rel floor is on the SE scale and never binds (>= 2.4x margin), which is why H2 == REL3.
+  The INTENDED floor would break FC (1.9% at P32). DO NOT rescale it.
+- The FC model (K iid trials) is misspecified (real K_eff 3.8-56), but REL3/H2 FC stays <= .87% on the
+  real mirror structure.
+- AUDIT3 excess: 12.3 expected vs 22, cluster z ~1.7; 0/227 disagreements at >= 3 SE.
+- The search seed is the true unit for physics-level claims: D replicates drop .857 -> .706.
+- 613162a3 CAUSAL_SUPPORT is fragile (keep .88).
+- C4 S2: a universal law false-fails 21-31% (my interim said ~40%). Carry this into the C4 FINAL as a
+  calibration of finding A4; W2-H read no C4 reviews or data.
+- Process: W2-H exceeded its compute cap (1.0-1.5 core-h vs 0.5) under machine contention. One
+  self-kill of its own shell via a cmdline-matched kill, its own processes only. Recorded.
+- APPLIED (NEUTRAL, a new module that nothing frozen imports): prometheus/ananke/inference.py, with
+  tests/test_inference_w2h.py (6 fail before, 7 pass after).
+- Not applied: b2_seed_key (SEMANTIC, gated default-off). Deferred.
+- Queue replenished: W2-K (C1b and high-p fragility under BOOTT/t; census class keep probabilities).
