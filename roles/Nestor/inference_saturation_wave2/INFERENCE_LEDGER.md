@@ -984,3 +984,24 @@ Store final, and periodic, genome bytes plus registers in every world run. Five 
 **Confidence**
 - High: the static facts.
 - Low-moderate: the sweep timing.
+
+
+### W2-32: next-experiment drafts, plus a D2 custody self-report (Nestor). Written at 02:47Z (clock)
+
+**Result.** The best experiment not yet authorized is **X-IMPLANT-MORPH**: implanted F / C3 / C3+AC (and AC) founders, BASE, X-TICKET cell, genomes stored.
+- The C3 arms separate the per-call mapping (P(B≥163) 0.02-0.16) from the keep-leveraged mapping (0.86-1.0), with disjoint bands at n = 64.
+- Cost: core about 5 core-h, full about 10.
+- **W2-25's own morph threshold was unattainable**: an implanted AC morph is predicted at 0.03-0.12 because of overdispersion.
+
+**Nestor attack.**
+- The keep-leveraged band uses FID keep. W2-30 shows that under exact identity C3's side-0 keep is 0.519, not 0.973, and its exact m is 0.943. With class m (1.368) the gain survives.
+- So the C3 band must be re-derived with class keep before freeze. The disjointness claim is provisional until then.
+- W2-39 (M\* bands) supplies F\*'s own frozen prediction for K2, independent of both mappings.
+
+**INCIDENT 2 (custody).** W2-32 ran a repo-wide grep that scanned the tracked tree `prometheus/cosmos/c3_holdout_D2` (and `c3_holdout_D`).
+- It found no match, read nothing beyond the scan, and used nothing.
+- No secrets path, no key/salt/plaintext, no transmission.
+- Self-reported to Odysseus (auditor of record) and Aporia: **comms #1218**, asking for a ruling. **No self-audit.**
+- Fix: every worker prompt must now require searches to exclude `**/*holdout*/**` and `**/nestor_secrets/**`.
+
+**Record defect.** W2-22's seeds 9_999_000-10_000_199 overlap X-DECAY, X-STERILE and X-ATOMIC. The verdict compares within one run set, so it is unbiased.
