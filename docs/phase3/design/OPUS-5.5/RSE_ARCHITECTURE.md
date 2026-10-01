@@ -1,6 +1,8 @@
 # Phase 3 architecture -- OPUS-5.5 (Epimetheus)
 
-Status: FROZEN with REQUIREMENTS.md v2 before salvage analysis. Currency 2026-10-01.
+Status: FROZEN with REQUIREMENTS.md v2 before salvage analysis (commit 77d3c99c3). Post-freeze amendments from the
+final review are listed in s10 and marked [A] where they change the text; none was motivated by salvage findings.
+Currency 2026-10-01.
 Requirement ids (SCI-, ORG-, ...) refer to REQUIREMENTS.md. Engine ids (E0..E10) refer to ENGINE_PORTFOLIO.md.
 
 ## 0. The decision in one paragraph
@@ -18,22 +20,40 @@ reproduced a developmental result whose answer is already known.
 
 ## 1. Why this shape (and not the alternatives)
 
-The historical record (evidence/, REQUIREMENTS.md s9) says the binding constraints were, in order:
+[A] Ranked by the cheapest repair coded in the X0 desk audit (s9; 210 coded apparatus failures, same-family coders),
+the binding constraints were:
 
-1. **World demand.** Of 171 indexed engines, 15 were designed for hidden-state or compositional demand and 1 realised
-   it; no evolved organism in the index has a verified realised demand above a one-cue latch (evidence/idx.md).
-2. **Search budget and policy.** Plants that solved the task existed in the searched space and were never found
-   (FLIP .978 and XOR .850 against GA 96 x 36; a 47-edit reuse mechanism against (8+24) x 300; parity-3 at 5
-   instructions); greedy tie rejection manufactured a cliff that suppressed 299,991 rows.
-3. **Ruler validity.** 30 of 146 instruments showed they could output the class they ruled on, about 20 of those
-   detect pipeline defects, and 1 measures an organism property (heredity) (evidence/tit-b.md, idx.md).
-4. **Independence.** "N seats agree" meant one substrate, one operator family and one model family agreeing with
-   themselves; no historical convergence passes a four-way independence key (evidence/atl.md).
+    rank  constraint                    share of X0 codes   example from the record
+    1     ruler validity                54% (113)           30 of 146 distinct instruments had demonstrated
+                                                            detectability (53 partial, 57 no); about 20 of those
+                                                            detect pipeline defects and 1 measures an organism
+                                                            property (heredity) (evidence/tit-b.md, idx.md)
+    2     provenance / implementation   14% (29)            silent fallbacks, lineage-label defects, fail-open code
+    3     world demand                  9% (18)             of 171 raw engine records, 15 were designed for >= D5
+                                                            demand and 1 realised it (hand-chosen estimators); no
+                                                            evolved organism exceeds a one-cue latch (D3)
+    4     statistics                    8% (17)             wrong denominators, unit of replication, multiplicity
+    5     search budget and policy      5% (11)             plants that solved the task existed in the searched
+                                                            space and were never found (FLIP .978 and XOR .850
+                                                            against GA 96 x 36; a 47-edit reuse mechanism against
+                                                            (8+24) x 300; parity-3 at 5 instructions); greedy tie
+                                                            rejection suppressed 299,991 rows
+    5     same-substrate capacity       5% (11)             constructive proof or added affordance
+    7     independence                  2% (4)              "N seats agree" meant one substrate, operator family and
+                                                            model family agreeing with themselves (evidence/atl.md)
+    -     second substrate              0%                  (by construction; see s9)
+
+Caveats. The X0 coders were same-family and saw the readers' primary class, and X0 could not select a second substrate
+(s9). The ruler share is 50-54% across sensitivity variants that drop the external-literature, Atlas and reader-error-flagged rows (X0_RESULT.md addendum). Independence ranks low as a cheapest repair because most spurious agreements had a cheaper in-substrate fix, not
+because shared authorship was harmless; lesson 5 of the meta-analysis stands on the convergence record, which X0 did
+not code. The ranking says what to build first (E1, E2), not how many substrates to have.
 
 Organism expressiveness was rarely the binding constraint where it was tested: constructive organisms showed the
-substrates could express more than search found. Every headline quantity the requirements define (the pressure
-ladder, the developmental control set, construction, transfer, recursive sagacity, abstraction, L4) is a contrast
-INSIDE one physics, not across physics.
+substrates could express more than search found. But the record's worlds demanded at most a latch, where almost no
+substrate could be binding, so this does not show that one physics suffices at Phase 3 depths. The requirements define
+the headline quantities (pressure ladder, developmental control set, construction, transfer, recursive sagacity,
+abstraction, L4r/L4d) as within-physics contrasts; whether one physics suffices is tested by X10b, X11 and the
+triggers in s6, not assumed.
 
     candidate                          judge scores (discrim / cost / FN-protection / anti-gravity, 1-10)
     common substrate, many pressures   7 / 6 / 7 / 4      <- adopted, inside the observatory layers, amended
@@ -44,8 +64,9 @@ INSIDE one physics, not across physics.
     ecology-first soup                 2.5 / 3 / 2.5 / 7
 
 Why not one integrated, always-running engine: coupling forces every attribution to be re-staged inside the loop,
-and a loop that "should keep running" steered by unqualified detectors is the Deep Frontier shape (3.72M
-evaluations under rulers with 25% and 0% planted catch). Why not 10-12 engines: that is the fossil record again
+and a loop that "should keep running" steered by unqualified detectors is the Deep Frontier shape (detectors with
+3/12 and 0/12 planted catch on v0 populations steered the first ~416k of 3.72M evaluations before their authority was
+withdrawn). Why not 10-12 engines: that is the fossil record again
 (51-76 engines, 8+ queue systems, 42 null modules, same-family authorship turning breadth into names, budgets split
 until every null was search-limited). Why not program synthesis first: the prompt is an answer channel that cannot
 be fully sealed (Icarus R5), survivors are readable code that invites mechanism-by-reading, and it confounds pressure
@@ -56,8 +77,10 @@ it, and two "dissimilar" substrates that were in fact the two most familiar comp
 family.
 
 What the adopted shape gives up, stated plainly: a real unfamiliar mechanism found in the primary substrate cannot
-be told apart from a substrate artefact until a second, independently authored substrate exists. The year-one claim
-ceiling is therefore L4, unless a trigger fires earlier (s6).
+be told apart from a substrate artefact until a second, independently authored substrate exists. [A] The year-one
+PLANNED claim ceiling is L2. L3 is attempted only if its costed critical path (REP-02 reimplementation, ORG-21 re-run,
+REP-03) fits the measured residual envelope at day 90; L4r/L4d are not planned for year one. A trigger (s6) can bring
+the second substrate forward.
 
 ## 2. Layers
 
@@ -71,7 +94,7 @@ ceiling is therefore L4, unless a trigger fires earlier (s6).
     |    concentration-floor launch gate, isolated LLM-variation operator (E8 only, after month 4).     |
     +--------------------------------------------------------------------------------------------------+
     | R3 SUBSTRATES: primary developmental substrate + physics-ablation lattice + 2 encodings;         |
-    |    familiar reference learner(s); probe kernel (>= I2 author); second substrate on triggers.      |
+    |    familiar reference learner(s); probe kernel (I3 author [A]); second substrate on triggers.     |
     +--------------------------------------------------------------------------------------------------+
     | R2 MEASUREMENT BENCH: qualified ruler library + dossiers; plant library (authored + procedurally |
     |    generated, sealed); baseline ladder; acquisition/retention/savings/transfer assays; matched     |
@@ -110,7 +133,8 @@ reference design; the design is replaceable if the substrate-admission experimen
   instructions are ordinary instructions executed by nodes, the rules of development are themselves state that other
   rules can rewrite: plasticity of plasticity is native (ORG-06), and the write-provenance tracer can assign write
   orders (DEV-14). Bases are authored (A0) or procedurally generated as random bases of the same expressive class
-  (A1, A2, ...), so grammar gravity can be measured (AGR-15).
+  (A1, A2, ...), so grammar gravity can be measured (AGR-15); [A] a preregistered share of discovery search (default
+  >= 30%) runs under generated bases from the start (AGR-18), not only re-search after L3.
 - **Time.** Nodes execute instructions on internal ticks; the world advances when the organism emits an action or a
   tick budget expires. Internal ticks are metered (ORG-05). Worlds may include idle periods (DEV-07).
 - **Genome.** Two encodings of the same physics (ORG-21): direct (initial graph plus programs) and developmental (a
@@ -131,8 +155,42 @@ experiment carries an affordance-necessity proof. Arms differ only in switches a
 
 **Why this design.** It merges graph-rewriting development and code-as-data self-modification into one physics and
 one code path; it supports every minimal affordance; it is instrumentable at instruction, node, motif and subgraph
-scales; capacity proofs can be compiled from small reference programs rather than hand-written (ORG-14); and
-register-machine nodes can be compiled to tens of millions of instructions per second per core.
+scales; and capacity proofs can be compiled from small reference programs rather than hand-written (ORG-14). [A]
+Throughput under the full instrument contract (provenance shadow on, self-modifying code interpreted, which defeats
+most compilation) is unmeasured. X9 measures it in S1; the X1a budget and the concentration floor assume >= 1e6
+instrumented instructions per second per core and are re-planned if the measurement is lower.
+
+**[A] Prior art and how the DGM differs.** The DGM is close to Self-Modifying Cartesian GP (Harding, Miller and
+Banzhaf 2007-2010: duplicate, delete and move operations executed as genome functions, with a known positive: evolved
+even-parity programs that generalise to arbitrary n), to Gruau's cellular encoding (1994: a developmental program that
+grows a network), and to Avida's register-machine organisms. Bryson and Ofria (2013) showed that small instruction-set
+choices change evolutionary accessibility substantially, which is the main reason a single authored basis is a risk.
+The falsifiable difference claimed for the DGM is that developmental instructions run DURING the lifetime under world
+input (not only in a pre-birth growth phase), on a graph whose writes are provenance-traced; if the lifetime
+developmental path adds nothing over pre-birth growth plus parametric plasticity (X5, the lifetime-development switch
+off), the DGM reduces to known designs and should be described that way. SMCGP-style general parity (train on n <= 4,
+test on n = 5..8) is added to X4 as an admission known positive for structural development that generalises beyond
+training sizes.
+
+**[A] Alternatives considered.**
+
+    alternative                        affordance coverage       instrumentability      expected needle      build
+                                                                                       inflation            band
+    DGM (adopted reference)            all minimal + structural  high (stable ids,      unknown; X6 measures  L
+                                       development, rewrite of   shadow per value)
+                                       rewriters
+    linear register VM with code-as-   all minimal; structure    high (flat address     lower (smaller        M
+    data (Proteus/Crius-like)          only via self-rewrite     space)                 space)
+    continuous-time plastic recurrent  plasticity, timescales;   medium (continuous     low for plasticity,   M
+    dynamical substrate                no discrete structure     state, harder          high for discrete
+                                       growth unless added       localisation)          composition
+    graph-rewriting chemistry without  structural development;   medium (rule matches   high (rule-match      L
+    register nodes                     computation only via      are global)            spaces are large)
+                                       rewriting
+
+Distinguishing experiment: X11, a substrate bake-off in S2. The X4 capacity-proof cost and the X6 hit probability
+p_hit(k) for F1 and F4 targets are measured on <= 1.5k-line prototypes of the top two alternatives and on the DGM at
+matched CPU. If an alternative dominates the DGM on both, the day-60 gate opens a replacement review.
 
 **Risks named in advance, each with its experiment.** (a) Unsearchable: the union of affordances inflates needle sizes
 until search finds nothing beyond constructive proofs (X6, kill threshold > 100x inflation versus the minimal lattice
@@ -147,12 +205,13 @@ required before L3.
 plastic recurrent network, or a small recurrent meta-learner trained by gradient in an outer loop. An in-context
 transformer reference is added only where an L2+ claim compares an unfamiliar organism with familiar architectures.
 
-**Probe kernel (AGR-07).** At most about 1.5k lines, authored at independence class I2 or better (preferably another
-model family or a human), with deliberately different conventions (for example relative or content addressing and
+**Probe kernel (AGR-07).** At most about 1.5k lines, authored at independence class I3 (another model family or a
+human; required, not preferred [A]), with deliberately different conventions (for example relative or content addressing and
 noise-initialised state, where the primary uses absolute addressing and zero-initialised registers). It is not a
-portfolio member: it exists to measure substrate variance on X1 and the port cost of one qualified ruler (X10).
+portfolio member: it exists to measure substrate variance on X1, accessibility at depth (X10b) and the port cost of
+one qualified ruler (X10).
 
-**Second full substrate.** Commissioned at the first of: a claim reaching L4; a target class unreachable or
+**Second full substrate.** Commissioned at the first of: a claim reaching L4r; a target class unreachable or
 needle-inflated more than 100x in the primary substrate; the physics-span check blind to planted substrate quirks;
 the probe kernel's X1 transition outside the primary's within-kernel span. It is authored at I2 or better, runs on the
 same anchor families, and is required before any L5 claim or any null generalised beyond the primary substrate. A
@@ -192,8 +251,26 @@ asserted):
     F10  surface-varied recurrence under bijective re-      representation-scrambling transfer         E4, E7
          encodings
 
-The slice uses F1 only. The number of families beyond F1-F4 is set by the recursive-sagacity and transfer power
-simulation (X8), not by a quota.
+[A] F1c (for X1c, S2): random mappings or k-armed tasks with sealed held-out tasks, training task counts 1..256
+(powers of 2) x 3 state budgets; the known-positive geometry for "does learning machinery generalise" (Chalmers 1990;
+Kirsch et al. 2022; Raventos et al. 2023).
+
+[A] Minimal sufficient policy and its analytic size, stated per family (WLD-01 as amended):
+
+    id   minimal sufficient policy                                analytic size
+    F1   identify the drawn mapping, then exploit it                log2(#mappings) bits of lifetime state
+    F2   innate needle policy (no lifetime state)                   0 bits of lifetime state; genome-side needle
+    F3   causal-state tracker of the hidden process                 causal-state count (exact, computed)
+    F4   k-slot keyed store                                         k * log2|V| bits plus key matching
+    F5   library of the generating procedures plus dispatcher       procedure count x description length
+    F6   compositional policy over the task grammar                 d_comp levels in the declared policy language
+    F7   closed-form optimal rule (Nim-like) or k-ply search         rule length, or k-ply search depth
+    F8   per-source reliability estimates plus VOI threshold        sources x precision bits
+    F9   bias-adapting learner whose update rule tracks the shift   depends on P3/P3b schedule; computed per family
+    F10  re-encoding-invariant policy plus decoder                  base policy plus bijection identification
+
+The slice uses F1 only. [A] One boundary everywhere: the number of families beyond F1-F7 is set by the
+recursive-sagacity and transfer power simulation (X8), not by a quota.
 
 ## 5. Measurement bench (R2)
 
@@ -202,7 +279,7 @@ Core rulers, each with a qualification dossier (MEA-01) on authored and procedur
     ruler                         measures                                              requirement
     acquisition curve             censoring-aware vector acquisition cost; yoked replay  MEA-14
     retention                     competence after task removal                          DEV-03
-    specificity / shared ablation carrier necessity across families vs size-matched sham L4, s3 abstraction (1)
+    specificity / shared ablation carrier necessity across families vs size-matched sham L4r, s3 abstraction (1)
     interchange                   which latent variable a carrier holds                  CAU-04, CAU-09
     transplant                    host-distance ladder with sham arms                    CAU-02
     dose                          fraction-of-structure damage curves                    CAU-03
@@ -210,8 +287,13 @@ Core rulers, each with a qualification dossier (MEA-01) on authored and procedur
     minimisation
     deliberation signature        settling-controlled compute-competence curve           MEA-07
     acquisition-matched FSC       generic FSC/PSR learners from the same experience      MEA-07
-    write-order tracer            order of developed structure; reversion; donor-depth    DEV-14
+    write-order tracer            order of developed structure by EXECUTOR set [A];       DEV-14
+                                  reversion; donor-depth and executor-vs-content (R6)
                                   transplant
+    compression-regime battery    ranks stored solutions < patterns < strategies <       MEA-19 [A]
+                                  principles before "compression" is used
+    recurrence vs reuse assay     incidental recurrence vs one core invoked from many    MEA-07 [A]
+                                  contexts (shared ablation + copy lineage)
     decoder                       conditional decodability with selectivity controls     MEA-15
     familiarity reference         FAMILIAR-k against executable reference mechanisms     AGR-12
     null-certificate checker      element-wise thresholds; bracket; SESOI/MDE            SCI-08, SCI-13, SCI-14
@@ -225,24 +307,37 @@ pipeline, first-order Bayes agent, painter, latch).
 ## 6. Staging, gates and triggers
 
     stage                   content                                                       gate to leave
-    S1 vertical slice       R0 minimal; DGM kernel + slow reference interpreter;          X1a reproduced at L1 with matched
-    (days 0-30)             switches needed by X1 only; F1 with exact Delta/rho; one     P0 negative (CMP-07); typed
-                            qualified ruler (acquisition curve); one CPU reference;      diagnosis if it fails within its
-                            baseline ladder; ledger + signed verdict job                 token budget
-    S2 qualification        X1b, X2 (certificates predict baselines), X3 (ruler bake-    KILL/CONTINUE gate at day 60
-    (days 31-60)            off on authored + generated plants), X4 (capacity and        (s7 of ENGINE_PORTFOLIO.md)
-                            developability proofs), X6 (needle inflation), X8 (RS/TS
-                            power simulation), probe kernel commissioned
-    S3 first discrimination X5 (development discriminator on F5/F6), X10 (probe-kernel   decision memo: substrate stays
-    (days 61-90)            variance), F7, canary stream, first preregistered L2        or is replaced; families beyond
-                            attempts                                                     F1-F6 sized by X8
+    S1 vertical slice       R0 minimal; DGM kernel + slow reference interpreter;          X1a reproduced at L1-slice with
+    (days 0-30)             switches needed by X1 only (SLICE-MIN); F1 with exact       matched P0 negative (CMP-07);
+                            Delta/rho; one qualified ruler (acquisition curve); one     typed diagnosis if it fails
+                            CPU reference; baseline subset; ledger + signed verdict      within its token budget
+                            job; X9 kernel bring-up receipt (instrumented throughput)
+    S2 qualification        X1b; X1c (task-count x capacity known positive, F1c); X2    KILL/CONTINUE gate at day 60
+    (days 31-60)            (certificates vs best proxy; F2-F4 and F7 certified for     (ENGINE_PORTFOLIO.md day-60 gate)
+                            it); X3 (ruler bake-off on authored + generated plants);
+                            X4 (capacity and developability proofs incl. general
+                            parity); X6 (needle inflation); X8 (RS/TS power
+                            simulation); X11 (substrate bake-off); second, inde-
+                            pendently authored certificate tool (WLD-17); REP-08 I3
+                            audit of verdict job and ruler, >= 20 sealed counterfeits;
+                            probe kernel commissioned at I3; X0b preregistered
+    S3 first discrimination X5 (development discriminator on F5/F6); X10 (probe-kernel   decision memo: substrate stays
+    (days 61-90)            variance on F1); X10b (accessibility at depth, F3/F4, at    or is replaced; families beyond
+                            matched CPU: DGM full, DGM minimal, probe kernel,           F1-F7 sized by X8; first L2
+                            reference learner); canary stream; first L2                 preregistration frozen, its
+                            preregistration frozen                                      confirmatory run after WLD-17
     S4 programme            E4 constructive development and savings; E5 epistemic        L3 machinery built only when an
-    (months 4-12)           pressure; E6 recursive plasticity (after DEV-14 qualifies);  L2 candidate exists; second
-                            E8 generation-source experiment; E7 when a trigger fires     substrate on triggers
+    (months 4-12)           pressure; E6 recursive plasticity (after DEV-14 qualifies);  L2 candidate exists and the L3
+                            E8 generation-source experiment; E7 when a trigger fires     path fits the residual envelope;
+                                                                                         second substrate on triggers
 
 Triggers for the second full substrate are listed in s3. Triggers for replacing the primary substrate: X1a fails on
-the DGM but passes on the probe kernel or the reference learner; X6 shows > 100x needle inflation for two or more
-target classes; X4 cannot produce developability proofs for keyed binding and procedure reuse within budget.
+the DGM but passes on the reference learner (day 60; the probe-kernel branch is evaluated at the day-90 X10
+decision); X1c reproduces in the reference learner but not in the DGM at matched budget; X6 shows > 100x needle
+inflation for two or more target classes; X4 cannot produce developability proofs for keyed binding and procedure
+reuse within budget; X11 shows an alternative dominating the DGM on capacity-proof cost and p_hit; [A] X10b shows the
+probe kernel or the reference learner reaching an F3/F4 target at >= 10x lower budget than the DGM full lattice
+(opens a replacement review).
 
 ## 7. Inference boundary (R5) and resource model
 
@@ -255,7 +350,8 @@ Inference occurs only at these forks (INF-01), each budgeted in the quarterly en
     cross-family review of frozen designs (I3)          L2+ preregistrations, L4 claims       small, external
     interpretation of minimal cores                     only after L1 and the follow-up       small
                                                         battery
-    prior-art search with measured recall               L3+ claims                           small
+    prior-art search with measured recall               GATE-NOVELTY claims [A]              small
+    I3 external audit (non-Claude model or human)        S2 (REP-08), L4+ re-execution        small, external, budgeted
     LLM-variation operator (isolated)                   E8 only, capped per preregistration   capped, e.g. <= 10M tokens/pilot
 
 Everything else runs without models: execution, scheduling, rulers, triage, follow-up allocation, status, reports.
@@ -271,10 +367,24 @@ Rough 90-day envelope (order of magnitude; INF-02 and INF-06 replace these with 
                                                                  mostly exact or small
     GPU                        0-100 GPU-hours                   only if a transformer reference is preregistered
     energy                     ~50-250 kWh                       nominal watts x wall time
+    USD [A]                    computed, not quoted              NRG-03: sum(tokens by class x per-model rate) +
+                                                                 GPU-h x rate + kWh x tariff, from the versioned price
+                                                                 table; reconciled monthly against invoices (10%)
+    memory [A]                 < 1 GB per worker                 a population of 1,000 DGM organisms at ~160 KB of
+                                                                 state each; never the dominant cost in year one
+    storage [A]                ~1-10 GB per campaign             DEV-03 snapshots (~20 per run x ~160 KB x ~1,000
+                                                                 runs) plus receipts; traces on demand only
     operator attention         <= 90 minutes per week            decisions register + deterministic weekly digest
 
-Dominant cost per engine is given in ENGINE_PORTFOLIO.md. Scientific yield is measured by the ladder (s8), not by
-runs, commits or flags.
+[A] Year-one envelope: roughly 200-600M build tokens processed (the 90-day 60-200M above, plus the second substrate
+E7 at the L-XL band, the REP-02 reimplementation, F5-F10 generators, the write-order tracer and the E8 harness); CPU
+tens of thousands of core-hours; USD from the price table. S1 work items must fit within 40% of the upper 90-day
+envelope (REQUIREMENTS.md s8, SLICE-MIN); the itemised S1 plan -- nine work items, 64M tokens processed against an 80M
+cap, every SLICE requirement assigned to exactly one item -- is a generated, checker-enforced table in REQUIREMENTS.md
+s11.
+
+Dominant cost per engine (including memory and storage) is given in ENGINE_PORTFOLIO.md. Scientific yield is measured
+by the ladder (s8), not by runs, commits or flags.
 
 ## 8. Scientific-yield model
 
@@ -283,7 +393,8 @@ transplantation -> cross-world transfer -> cross-substrate transfer -> mechanist
 reproduction) is kept in substance but restructured as the L0-L6 claim ladder of REQUIREMENTS.md s7, for three
 reasons: replication and baseline survival are not separable stages (L1 and L2 require both); "mechanistic
 compression" is a property of the carrier (abstraction criterion 3) rather than a stage; and nulls need their own
-ladder (apparatus-typed nulls, null certificates, bracketed boundaries), which the charter's ladder lacks.
+ladder (apparatus-typed nulls, null certificates, bracketed boundaries), which the charter's ladder lacks. [A] The
+stage-by-stage mapping (adversarial survival is an L2 clause, SCI-19) is in REQUIREMENTS.md s7.
 
 Yield per quarter is reported as a vector, never a scalar (SCI-12):
 
@@ -293,7 +404,8 @@ Yield per quarter is reported as a vector, never a scalar (SCI-12):
     - certified world families (with WLD-17 cross-check)
     - canary catch rate per failure class and time to catch
     - retractions and demotions caught internally vs externally
-    - cost per item above (tokens, core-hours, kWh, operator minutes)
+    - cost per item above (tokens, USD, core-hours, kWh, operator minutes)
+    - realised search-mass shares under generated bases and open-demand families (AGR-18) [A]
 
 A quarter that produces two qualified rulers, three certified families, one null certificate and zero L2 claims is
 a productive quarter. A quarter that produces 40 L1 anomalies and no L2 is not.
@@ -304,11 +416,43 @@ See experiments/X0_RESULT.md. The preregistered decision rule (p2 = share of his
 was a second substrate; s = share of spurious agreements caused by a shared substrate) selects between depth-first,
 early portfolio and an intermediate schedule. The outcome and the resulting schedule are recorded below at freeze.
 
-X0 OUTCOME: **DEPTH-FIRST CONFIRMED.** Of 210 historical apparatus nulls and false positives, the cheapest repair was
-a second substrate for 0 (p2 = 0.000); a shared substrate caused 1 of 55 spurious agreements (s = 0.018); blind-coder
-kappa on the repair code = 0.935. The cheapest repair was a qualified ruler for 113 (54%), provenance or implementation
-for 29 (14%), world demand for 18 (9%), statistics for 17 (8%), search for 11 and a same-substrate capacity proof for
-11. Consequences for this architecture: (1) the single-primary-substrate plan stands, with the second substrate on
-triggers; (2) the first quarter's build priority is E1 (instrument qualification) and E2 (world forge), because ruler
-repair alone would have rescued over half of the historical record; (3) the probe kernel stays in S2 as planned
-(month 2), because X0 is a same-family desk audit and cannot measure the discovery value of a second substrate.
+X0 OUTCOME as recorded at freeze: "DEPTH-FIRST CONFIRMED". [A] Relabelled by the final review: **X0 OUTCOME:
+NON-DISCRIMINATING for substrate count** (p2 = 0 was expected by construction: added affordances were coded
+same-substrate, SECOND_SUBSTRATE was coded only when nothing else could settle an item, and the 20 surviving anomalies
+were outside the population). Of 210 coded apparatus nulls and false positives, the cheapest repair was a second
+substrate for 0 (p2 = 0.000); a shared substrate caused 1 of 55 spurious agreements (s = 0.018); coder kappa on the
+repair code = 0.935 (inflated: both coders saw the readers' primary class). A ruler-side repair (qualification, planted
+control, baseline ladder or leak audit) was the cheapest way to make 113 of the 210 interpretable (54%; 43 of them
+false positives that would have been caught), provenance or implementation 29 (14%), world demand 18 (9%), statistics
+17 (8%), search 11 and a same-substrate capacity proof 11. Four apparatus nulls were excluded by a classification
+error (X0_RESULT.md addendum); p2 can rise to at most 4/214.
+
+Consequences for this architecture: (1) X0 supports INSTRUMENT PRIORITY: the first quarter's build priority is E1
+(instrument qualification) and E2 (world forge); (2) X0 does not decide the substrate count. The single-primary plan
+rests on build cost and measured triggers and is tested at depth by X10b and X11; (3) X0b, preregistered before day
+60, codes the 20 surviving anomalies and the 17 true negatives on "would a second substrate change the
+interpretation?", with SUBSTRATE_CHANGE (any change to primitives or affordances) as its own code, >= 10 synthetic
+positive-control items that only a physics change settles, coders blind to the readers' classes, and a decision rule
+whose portfolio branch is shown reachable; its conclusion is scoped to the historical demand regime (<= one-cue
+latch).
+
+## 10. Post-freeze amendments (final review, 2026-10-01)
+
+Workflow wf_335d0a49-a24 (charter compliance, internal consistency, hostile scientific read) found defects in the
+frozen text. Changes marked [A] above:
+
+    - s1: binding constraints re-ranked by X0 with caveats; Deep Frontier figures corrected (3/12, 0/12, ~416k of
+      3.72M); "inside one physics" restated as a definitional choice tested by X10b/X11; planned year-one ceiling L2
+    - s3: throughput claim withdrawn pending X9; prior art (SMCGP, cellular encoding, Avida, Bryson and Ofria 2013)
+      with the falsifiable difference; alternatives table and X11 bake-off; general parity added to X4; probe kernel at
+      I3; generated-basis search share from the start (AGR-18)
+    - s4: F1c for X1c; minimal sufficient policy per family; one X8 boundary (beyond F1-F7)
+    - s5: executor-set tracer with R6; compression-regime battery; recurrence-vs-reuse assay
+    - s6: L1-slice gate; X9 in S1; F2-F4 and F7 in S2; X1c, X11, WLD-17 second tool and REP-08 I3 audit in S2; X10b in
+      S3; day-90 L2 preregistration frozen with the confirmatory run after WLD-17; day-60 branch on the reference
+      learner; X1c, X11 and X10b replacement triggers
+    - s7: USD, memory and storage lines; year-one envelope; I3 audit fork; prior-art search at GATE-NOVELTY
+    - s8: USD and search-mass shares in the yield vector; ladder mapping reference
+    - s9: X0 relabelled NON-DISCRIMINATING for substrate count; consequences rewritten; X0b specified
+    - verification pass (wf_1b94ed0a-e44): second-substrate trigger keyed to L4r; X0b added to S2; itemised S1
+      budget pointer; X0 sensitivity range

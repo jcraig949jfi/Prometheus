@@ -19,6 +19,7 @@ unless s9 says I confirmed it. My categorical codes (s4.1) are [INFER] and are j
 1. Scale of the fossil record [IMPL]: 11,779 commits reachable from origin/main between 2026-03-22
    and 2026-10-01 (4,269 first-parent, 1,159 merges); 7,224 of them (61%) in September 2026 alone.
    72 directories under roles/ (59 seats crawled + 6 Phase-3 seats + base-role + 7 legacy/unused).
+   [Final review 2026-10-01: these parts sum to 73, not 72; the off-by-one was not resolved against the crawl.]
    68,880 tracked files; 14,859 .py files; 3.19M Python lines.
 2. Where the code mass went [IMPL counts, INFER families]: ~1.25M Python lines (39%) are
    LLM-forged / scrap reasoning-tool files (agents/hephaestus/{humanreadable,scrap,scrap_staging,

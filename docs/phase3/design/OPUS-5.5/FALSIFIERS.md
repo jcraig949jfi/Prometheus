@@ -15,7 +15,7 @@ experiment that measures them; others are commitments of this package.
     beat retention-frozen and value-only arms on savings or transfer                 posed at this scale; issue null
     in any certified family                                                         certificates and reframe
     Every L1+ carrier found is matched FAMILIAR-k at small k by the   E8, AGR-12    the epistemic-escape premise fails
-    executable reference, and the model-free arm finds nothing the                  for this programme; publish the
+    executable reference, and the operator-model-free arm finds nothing the                  for this programme; publish the
     LLM arm does not                                                                negative and narrow the search
     The cost of reaching a single L2 claim exceeds the year's          receipts      the instrument standard is too
     envelope even with the slice and E1-E3 done                                     expensive for the resources; cut
@@ -26,10 +26,23 @@ experiment that measures them; others are commitments of this package.
 
 ## 2. Architecture (one primary substrate)
 
-    X0 outcome p2 > 0.30 (frozen)                                       X0            adopt an early portfolio (second
-                                                                                    substrate inside the MVP)
+    X0 outcome p2 > 0.30 (frozen) [A: p2 was biased toward 0 by       X0, X0b       adopt an early portfolio (second
+    design and this row could essentially never fire; X0b, with a                   substrate inside the MVP)
+    reachable portfolio branch, replaces it]
+    X10b: probe kernel or reference learner reaches an F3/F4 target    X10b          primary-substrate replacement
+    at >= 10x lower budget than the DGM full lattice [A]                            review
+    X1c: reproduced in the reference learner, not in the DGM at        X1c           substrate trigger; if not
+    matched budget [A]                                                              reproduced in the reference, the
+                                                                                    TS/savings rulers are unqualified
     X6: needle inflation > 100x for >= 2 target classes in the full    X6            minimal-lattice variant or a second
     lattice                                                                         substrate becomes primary
+    X1a fails on the DGM but passes on the reference learner (day 60)  X1a           replace the primary substrate; the
+    [A]                                                                             probe-kernel branch is decided at
+                                                                                    the day-90 X10 memo
+    X4: no developability proofs for keyed binding and procedure       X4            replace the primary substrate
+    reuse within budget [A]
+    X11: an alternative substrate dominates the DGM on capacity-       X11           primary-substrate replacement
+    proof cost and p_hit [A]                                                        review
     X10: the probe kernel's X1a transition lies outside the DGM's      X10           second substrate commissioned; DGM
     within-kernel span                                                              results treated as substrate-local
     X9: bringing the DGM to the instrument contract costs more than    X9            no multi-substrate plan is feasible;
@@ -43,8 +56,10 @@ experiment that measures them; others are commitments of this package.
 
     A core ruler cannot reach sensitivity >= 0.8 at the SESOI on        X3, E1        retire that claim class for year one;
     procedurally generated plants after two redesigns                                no phenomenon-level nulls from it
-    Certificates predict baseline failure no better than state count   X2            reframe cognitive depth before any
-    on fresh instances                                                              reasoning claim
+    [A] Certificates do not beat the best proxy (state count,          X2            reframe cognitive depth before any
+    entropy rate, excess entropy, optimal-policy description length)                reasoning claim
+    by a preregistered margin in predicting held-out performance of
+    learners not used in any certificate computation
     The null-certificate checker cannot admit the predicted genuine    SCI-08        the null standard is unreachable;
     null (no evolved learning under P0 where P1 produces it)                        loosen thresholds by preregistered
                                                                                     amendment, or report all nulls as
@@ -74,8 +89,11 @@ experiment that measures them; others are commitments of this package.
     consecutive items                                                               the build plan is over-scoped
     Operator routine time exceeds 90 minutes per week for four weeks   HUM-04        reduce concurrent work items; the
                                                                                     scheduler is not working
-    No non-Claude family or human is available for I3 tasks             REP-04        L4 claims and externalisation are
-                                                                                    blocked (never relaxed)
+    No non-Claude family or human is available for I3 tasks             REP-08,       [A] the day-60 gate cannot pass
+                                                                        AGR-07,       (REP-08), the probe kernel (X10,
+                                                                        REP-04        X10b) cannot be built, and L4r/L4d
+                                                                                      claims and externalisation are
+                                                                                      blocked (never relaxed)
 
 ## 6. What would NOT falsify the design
 

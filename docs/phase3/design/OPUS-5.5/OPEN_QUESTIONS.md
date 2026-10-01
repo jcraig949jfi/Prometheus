@@ -19,9 +19,10 @@ what can resolve it. Operator decisions are separated and kept to the minimum th
     Q-OP3   The fleet currently runs on model-written heartbeats and  Replace model-written status with derived status
             hand-edited queue ledgers (CWO-2026-09-30C). INF-03        (census-style joins over receipts, git and comms)
             requires derived status.                                   for Phase 3 work; keep comms for blockers.
-    Q-OP4   Access to at least one non-Claude model family or a       Approve a budgeted I3 route (a second vendor
-            human for I3 tasks (re-derivation at L4, the probe         through code, or a human reviewer); without it L4
-            kernel, the second certificate tool).                      claims and externalisation remain blocked.
+    Q-OP4   [A] DAY-30 DECISION. Access to at least one non-Claude    Approve a budgeted I3 route (a second vendor
+            model family or a human for I3 tasks: the REP-08 audit     through code, or a human reviewer) by day 30;
+            and >= 20 sealed counterfeits before day 60, the probe     without it the day-60 gate cannot pass, and L4
+            kernel (AGR-07, I3 required), re-execution at L4.          claims and externalisation remain blocked.
     Q-OP5   Adoption of the architecture (one primary substrate,      Adopt, with the day-60 gate as the first point at
             vertical slice first) as the Phase 3 plan, and which       which the operator re-decides.
             seats are retasked to build it.
@@ -29,8 +30,10 @@ what can resolve it. Operator decisions are separated and kept to the minimum th
 ## B. Scientific questions with a scheduled resolving experiment
 
     id    question                                                     resolves it          stage
-    OQ1   Do bound-typed depth certificates predict which baselines     X2 (E2)              S2
-          fail on fresh instances better than state count?
+    OQ1   [A] Do bound-typed depth certificates predict held-out        X2 (E2)              S2
+          performance of learners not used in any certificate better
+          than the best proxy (state count, entropy rate, excess
+          entropy, optimal-policy description length)?
     OQ2   Is the full-lattice DGM searchable at CPU scale, or does      X6 (E1)              S2
           the union of affordances inflate needle sizes > 100x?
     OQ3   Can developability proofs (genomes in the searched language   X4, X9               S2
@@ -77,7 +80,7 @@ what can resolve it. Operator decisions are separated and kept to the minimum th
     OQ18  Does a cross-family (I3) re-derivation of X0 and of the salvage matrix agree with this package's same-family
           reading? (FALSIFIERS.md s1 commits to revising if it disagrees on more than a third of items.)
     OQ19  How should the existing fleet be reorganised? Fifty-plus seats designed for parallel engines do not fit a
-          single-observatory build; HUM-04 limits concurrent build sessions to three. Retasking is an operator
+          single-observatory build; INF-06 limits concurrent build sessions to three. Retasking is an operator
           decision (Q-OP5).
     OQ20  Is the definition of abstraction too strict? Requiring specificity, surface invariance, compression in two
           languages and transplant/interchange may reject genuine but context-bound abstractions; CONTEXT-BOUND CARRIER
