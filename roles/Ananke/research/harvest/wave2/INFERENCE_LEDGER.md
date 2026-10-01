@@ -533,3 +533,19 @@ W2-U (XOR/FLIP ceilings + A0 normalisation)
   the RELAY PLANT, but P-2 shows it is plant-design, not physics.
 - X-2 (Nestor #1214): Nestor's W2-21 force-killed PID 18960 at ~01:55Z. This most likely ended W2-R's
   tune.py part 1 early (exit 1, no traceback). Coverage reduced, no result wrong; replied #1215-ish.
+
+### W2-AB (deposited): PTE-C2 prereg DRAFT (not frozen, not authorized)
+- Question: H6 at admitted cells (P/R/V excluded by admission) with arms BASE (12 seeds), W0, M32, B4X,
+  PSEED, KSEED, STEP. B certificate for FLIP; XOR only with an XOR_SYM power certificate; replacement
+  packet ablation for zero_comm.
+- Gates: keep = Phi(d/(sqrt2 f)) at f = 1.12 (2.605 SE); BH; specimen clustering.
+- Decisive tier 9-15 GPU-h; needs s7/operator authorization.
+- F2: "multi-hop-only distribution" is not a new test, since each C1 GA trains on one env (P-1 v3 (iii)
+  corrected).
+- APPLIED (NEUTRAL): inference keep_prob/margin_for_keep/replication_gate gain f (default 1 = current).
+  tests/test_keep_prob_f.py: 3 fail before; 17 pass with the inference suites.
+
+### W2-AC (deposited): headline counts at correct units
+- -> C1_ERRATA E-W19. A1 is the right unit (352 distinct physics/seeds).
+- The namespace/family effect cannot touch C1 counts (789/789 unique seeds).
+- W-Z Pb "HELD" holds only at the point estimate (CI [.19, .41]).
