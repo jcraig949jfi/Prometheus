@@ -944,3 +944,19 @@ Together with W2-16 (execution order) and W2-24 (own code as the weapon), this i
 **Nestor note**
 - The F\* tolerances become frozen at this commit, as the block's own decision rule specifies.
 - Any later K-test on fresh seeds can score PASS or KILL. Data that predate this commit can only be called consistent or inconsistent.
+
+
+### W2-34: ruler vs carried-register world; "L = 1.0" is absorbing (report saved; Nestor). Written at 02:37Z (clock)
+
+**Result**
+- **No C-A3 run saved genomes or registers.** That is an instrument gap: every runaway/takeover record stores tag counts or freqs, never bytes. It is the same as C-CORE (N17) and the H1 family (W2-19).
+- **L = 1.0 is absorbing on a closed 256-site tape** (0/11 drops). "Label persists" is NOT evidence of heredity anywhere. This affects N13 and every narrative that cites L staying at 1.0.
+- **Run 52's competence collapse coincides with a material regime change** (MUT share from purging to accumulating). It is probably real, not a ruler artifact, at moderate-low confidence.
+- **The world's own carried-register P-11 depth shows no deep heredity** in 3 of 4 other zero-competent takeovers. 7ae3 0008 (depth 86) is undecidable.
+- **X-A3-SFLINEAGE and X-DD-ESTABLISH are unchanged under reading (b).**
+- **NEW validity defect, X-DD-ESTABLISH:** ESTABLISHED = world depth ≥ 20 in any lineage. The D0 lineage persists in 0/23 of those runs, and 8/23 have no D0 births. → Add to the W2-15 matrix as W (wording) / B+ for the reading "the donor established".
+
+**Instrument lesson (handoff candidate, best reusable infrastructure improvement).**
+Store final, and periodic, genome bytes plus registers in every world run. Five Wave-2 questions were blocked by the lack of bytes: C-CORE 34/49, H1 re-score, run 52, 0008, and W2-17 morph genotypes. This is cheap: 256 × 64 bytes per checkpoint.
+
+**Follow-up.** W2-38 has been assigned the deterministic replay of 52 and 0008 with dumps. These are replays of existing frozen runs, about 16 CPU-min, not new science runs.
