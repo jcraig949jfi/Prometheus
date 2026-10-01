@@ -1231,3 +1231,102 @@ Store final, and periodic, genome bytes plus registers in every world run. Five 
 - O10 conflicts with W2-41: "register-robust" holds universally for intact code. It is narrowed to "carried registers switch the lineage".
 - **This is the handoff's best candidate for a compact theory statement:** L1-L8 plus "conversion and vulnerability are one act".
 - Next: test P2 (order reversal) as W2-52, which is cheap, static, and a frame-only prediction.
+
+
+### W2-48: consolidated FINDINGS appendix draft ready (Nestor). Written at 03:12Z (clock)
+
+**Result.**
+- `APPENDIX_DRAFT.md` covers 43 rows:
+  - 2 flips (C9-H3 → INVALID; X-H3-FLOW → UNINFORMATIVE);
+  - 2 withdrawn clauses;
+  - 11 relabels;
+  - 1 new entry (X-MAT);
+  - 23 wording-only rows;
+  - 5 that stand;
+  - 6 new lessons.
+- **No CONFIRMED verdict flips.**
+- 13 source conflicts were resolved, with the later verified source winning in each.
+- p-values were recomputed. **Two source p-values were one-sided and unlabelled**: C-A3 0.031/0.31, and C-RUNAWAY's 5e-4 (two-sided 9.9e-4).
+
+**Correction to my own record.**
+- "798 + 416 dose runs" (W2-12 entry, batch entry, W2-28 block (B)) should read **798 + 336** (models.json has 1134 rows).
+- The W2-12 REPORT.md text is annotated.
+- NPE_COMPETING_THEORIES block (B) still says 416. It will be fixed in the closing-phase pass.
+
+**Action at closing (08:30Z).**
+- Append the appendix to `roles/Nestor/FINDINGS.md` as a dated "proposed corrections" section. Frozen verdicts are not rewritten.
+- Re-check it first against any reports that land after 03:12Z.
+
+
+### W2-42: partner-ejection "keep" variants form a GENERAL class, and keep separates post-27 success from failure (report saved; Nestor synthesis). Written at 03:13Z (clock)
+
+**Result**
+- **Two morph-free persisters are carried by self-defence:**
+  - s1438 by a JPNC at byte 32 (arose in place at epoch 17; came before the lineage's growth);
+  - s1469 by 43→C3.
+- **s1505 is founder luck.**
+- **The general class.** An absolute jump into the upper half placed before the LDIR at 52 ejects hijackers at side 0.
+  - All 351 STRONG genomes carry such a jump.
+  - There are 25 one-byte variants at 11 sites. C3 is just the only *one-bit* member. 50=CA beats C3 (class m 1.427).
+  - A partial class redirects the hijacker's destination (bytes 0, 1, 18, 21; keep about 0.70).
+- **Across the 55 W2-29 conditioned runs,** successes have higher side-0 keep than failures: 0.894 vs 0.598 (p = 1.2e-4).
+
+**Nestor synthesis: candidate for the STRONGEST NEW RESULT of Wave 2.**
+- **The persistence anomaly's correlate is protection from the partner hijack, not a particular genotype.** The 7ae3 family has two defences against the same mechanism:
+  - (i) **run first:** a side switch, DE = 64 (W2-24, W2-26);
+  - (ii) **eject the runner:** an absolute upper-half jump before 52 (W2-24, W2-42).
+- Both raise side-0 keep, and keep separates post-27 success from failure (p = 1.2e-4).
+- **Everything converges on one causal story.** The hijack is causal for loss under confinement (W2-23, W2-31). The lineages that persist are those that acquired a defence against it. In one line: **post-burst persistence in BASE = evolved defence against partner execution.**
+- **Caveats.**
+  - The evidence is outcome-conditioned plus ordering (the jump came before growth in s1438). There is no intervention yet.
+  - W2-29 found residue (FULL > BANK) as a possible co-factor, OR about 3.8, n.s.
+- **Decisive test.** X-IMPLANT-MORPH (W2-32, W2-39, W2-40) already includes C3 and C3+AC arms. Adding a 32=D2+29=9F arm, or the 50=CA arm, would test the class causally. A paired counterfactual replay of s1438 with byte 32 pinned is a cheaper intervention, but it also needs authorization because it alters a run.
+- **Revisions.**
+  - W2-30's "C3+AC is a local optimum" stays true among one-bit neighbours, but the jump class is wider.
+  - The "strangest observation" candidate is now: **a one-byte change at almost any opcode site from 4 to 50 can install self-defence against being executed by the partner.**
+
+**Housekeeping.** NPE_COMPETING_THEORIES block (B): 416 → 336, fixed per W2-48.
+
+
+### W2-44: side-0 rotated roots and the dual-pass copier CRW_1 (report saved; Nestor synthesis). Written at 03:16Z (clock)
+
+**Result.** Every side-0 root uses "own base → absolute DE ≡ 64". There are three routes:
+- **`ADD A,C` at founder position 43.** c1→81 (CNR_s22). Position 43 is one bit from both C3 (defence) and 81 (switch).
+- **Chained LDIR.** A duplicated `ED B0`: the first pass is an in-place self-copy that leaves DE = 0x40, and the second pass converts (CRW_78, XH2N_s1).
+- **Absolute JP back into its own LDIR (CRW_1).** This is a **dual-pass copier**: one LDIR serves two sides, and the pass is chosen by the side-specific count.
+  - Panel m is 1.87-1.94, the highest found.
+  - The intruder's JP lands on the intruder's own code, so the second pass is unreachable.
+  - In the world it arose from tiling plus a residual foreign JP plus 1 bit.
+
+**Nestor synthesis: the "protection" picture gains a third member.** Every high-m genotype in the 7ae3 family solves the same problem: **convert without exposing your copy loop to a partner running it with its own registers.** Three solutions:
+- (i) **run first:** a side switch;
+- (ii) **eject the runner:** an absolute upper-half JP;
+- (iii) **re-enter your own loop through an absolute address the intruder cannot share:** dual-pass.
+
+Mechanisms (ii) and (iii) both use an absolute JP, aimed at different targets. This sharpens the "strongest new result" candidate (W2-42):
+- **Selection in BASE NPE acts on defences against partner execution.**
+- **The absolute jump on a 7-bit ring is the main defensive primitive.**
+
+**Strangest-observation candidate.** CRW_1's copier needed a JP left behind by the *previous foreign occupant of the slot*. A one-bit change retargeted it, and the leftover became part of the copy machinery.
+
+**Caveats.**
+- The class matters only against founder-frame kin.
+- Under bank contexts CRW1fx scores below AC.
+- All static.
+
+
+### W2-49: early warnings FAIL out of sample, resolving directive item B (report saved; Nestor). Written at 03:16Z (clock)
+
+**Result.**
+- **All unknowns resolved.** The 72 unknown seeds were replayed bit-exactly.
+- **Final verdicts under W2-45's frozen rule:**
+  - EW-1 FAIL (FA 0.047 [0.033, 0.068]);
+  - EW-1b FAIL (FA 0.039);
+  - EW-2 FAIL.
+- **What the observables actually catch.** They catch every runaway (8/8), every intermediate (14/14) and about 2.4% of small lineages. **They measure early growth, not runaway.**
+
+**Directive B closing statement.**
+- **The observables.** Of the in-sample early warnings for BASE 7ae3 runaways, none survives out of sample, and none (EW-N included) discriminates runaway from intermediate.
+- **What survives.** Only **necessity**: EW-4, a first birth by epoch 10, holds 8/8.
+- **Near-misses.** These are ordinary lineages from the same distribution (W2-45: intermediates match the single law at 2.2%).
+- **A different correlate.** The only correlate found that separates post-27 success from failure is **evolved hijack defence (side-0 keep; W2-42, p = 1.2e-4)**. It shows up at genotype level, not as an early demographic signal. W2-53 is testing it out of sample.
