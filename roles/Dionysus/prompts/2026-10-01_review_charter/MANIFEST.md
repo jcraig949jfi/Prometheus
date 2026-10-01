@@ -1,0 +1,9 @@
+# Manifest for 2026-10-01_review_charter
+
+sha256 over LF-normalised bytes (equals the git blob for text files); see comms/manifest.py.
+
+- 00_README.md  sha256:7b5ba4c4d0001c4948a1591fa06d92fe74cca3a6d25bbef7f8fe1d23222f91e0
+- 01_OPERATOR_DIRECTIVE_as_typed.md  sha256:3010aa83ebdb1e8c7594d62dbf194f1b1283b6d33f671ec0bce89123da1ed5e0
+- 02_REVIEW_CHARTER_as_pasted.md  sha256:1105853ef7c4d8adc333b8ab8a58d49a17a05e9be6b1d76606ceca79b7412910
+- 03_RSO_WIND_TUNNEL_DESIGN_v0.1_as_pasted.md  sha256:dbdf94daf56af5c8f2977c5c2bfa0a5f5d718abad66a9522dd45c404ce53e959
+- 04_RACE_CAR_PORTFOLIO_R0-R9_as_pasted.md  sha256:5571079d397cdd031f067646e4192617a0c57f3670c342e2773e55a1c670906f
