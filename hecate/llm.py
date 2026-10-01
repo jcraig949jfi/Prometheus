@@ -7,11 +7,19 @@ CLAUDE.md, hooks or memory), no session persistence, dynamic system-prompt
 sections excluded, and an explicit system prompt. The model id is pinned per
 call and recorded with the prompt's sha256 and the raw output.
 
+Residue that still reaches the model (AUDIT_X, 2026-10-01): an Agent-SDK
+identity line, the account-email reminder, and an environment block (cwd,
+date, OS, model name). Calls made before 2026-10-01 also showed a cwd named
+"hecate_iso_*"; the prefix is now neutral. Only Claude subjects see this
+residue (harness asymmetry vs other model families).
+
 Nothing here retries on an unwelcome answer; a failed call is recorded as a
 failure with its shape (return code, stderr head, elapsed).
 """
 
 from __future__ import annotations
+
+ISO_PREFIX = "iso_"  # must not name a role, project or experiment (AUDIT_X)
 
 import hashlib
 import json
@@ -32,7 +40,7 @@ def call(prompt: str, model: str, system: str, timeout: int = 600) -> dict:
     t0 = time.time()
     rec = {"model": model, "system_sha256": sha256(system),
            "prompt_sha256": sha256(prompt), "flags": FLAGS}
-    with tempfile.TemporaryDirectory(prefix="hecate_iso_") as cwd:
+    with tempfile.TemporaryDirectory(prefix=ISO_PREFIX) as cwd:
         cmd = ["claude", "-p", "--model", model, "--system-prompt", system] + FLAGS
         try:
             p = subprocess.run(cmd, input=prompt, capture_output=True, text=True,
