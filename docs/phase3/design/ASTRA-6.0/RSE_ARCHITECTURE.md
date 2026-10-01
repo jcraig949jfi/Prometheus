@@ -199,3 +199,84 @@ Also open: how to construct minimally informative initial distributions fairly a
 No current-program scientific legitimacy verdict, salvage recommendation, reuse fraction, or historical failure attribution is supplied. Those require evidence unavailable by design in Stage I; later salvage must be requirement-led with costed rebuild alternatives and immutable change records.
 Immediate handoff is three files only: requirements, this v0 architecture, and `process/STAGE_I_FREEZE.md`. The parent must commit the immutable freeze before anyone acting on this analysis reads salvage material; this execution neither stages nor commits it.
 If starting today without existing engines, I would first build the smallest three-track capacity-and-ruler observatory, with exact tiny worlds, deliberately breakable controls, lineage/reset accounting, and an independently implemented checker. It would reveal whether the proposed physics, worlds, and measurements can discriminate development from supplied answers before spending on a large search, while preserving the possibility that an integrated engine, an ordinary meta-learner, or a bounded negative is the correct outcome.
+
+## POST-AUDIT ADDENDUM: ADOPTED POST-AUDIT RECOMMENDATION 2026-10-01
+
+**Adopt a sequential A0-first observatory with an independent scientific checker, not three runtimes by day 30.**
+This appendix is the current report recommendation after audit. It preserves rather than retroactively rewrites the first-principles architecture above.
+The original Stage I snapshot is commit `eeeda08bb45757298b3cb21ee22d816b44388aef` (`eeeda08bb`); its original 201 lines remain the byte-canonical prefix of this file.
+That prefix is 40,311 bytes, SHA-256 `d90d1b5d5ee80d00c0d6dc3c9d6110436588cba62a109a5fa874b94c13fa173d`, excluding the new separator and appendix.
+The frozen [requirements](REQUIREMENTS.md) and original [process record](process/STAGE_I_FREEZE.md) are not edited by this recommendation.
+
+### A. Why the delivery recommendation changes
+
+The [main report](PHASE3_META_ANALYSIS.md), [portfolio](ENGINE_PORTFOLIO.md), [MVP](MVP_90_DAYS.md), [salvage matrix](SALVAGE_MATRIX.md), and [failure map](FAILURE_TO_GATE_MAP.md) support a narrower first implementation.
+Historical failures motivate independently grounded controls, ordinary baselines, complete state/exposure receipts and fail-able admission routes; they do not establish that a new native runtime or ruler has qualified.
+Engineering and independent-checker effort, whole-assay calibration, and human review are binding risks not solved by idle CPU capacity.
+Start with A0 plus W0, breakable seeded controls and an independently authored checker; then one qualified Q2 regime, normally one Q3-or-Q4 discriminator, and a locked Q5 independent contrast.
+B and C retain different locality/addressing/update hypotheses, but enter only when a concrete unresolved physical prediction and qualified capacity path justify their measured cost.
+Six question lanes remain; no lane is a promise of a separate software service or a successful scientific finding.
+
+### B. D1-D5 are adopted, not awaiting another recommendation decision
+
+| Delta | Adopted post-audit recommendation | Relationship to original Stage I | Direct evidence required before operational promotion |
+|---|---|---|---|
+| D1: sequential runtime construction | Build A0 and its independent checker first; keep B/C specified, not three day-30 runtimes | Explicit temporary deferral of R-APR-01 and the original S0 implementation breadth; controls/wrappers do not count as new tracks | Native witness/reset/codec/meter qualification and independent truth inside S0; a later track needs a distinct testable physical alternative |
+| D2: one initial resource regime | Begin Q2 in A at B-low; defer B-high and cross-track interactions | Narrows the initial factorial without asserting deferred contrasts were estimated | Pilot variance/censoring/timing, applicable native whole-assay calibration, frozen analysis/custody and affordable fresh confirmation |
+| D3: stronger ordinary competitors | Explicit constant, reactive/direct-table/FSM, library-order, fixed-meta/plasticity and equal-total-exposure competitors | Sharpens existing baseline duties rather than declaring familiar mechanisms invalid | Executed nonempty comparator cells, equal eligibility/exposure and complete information/lifecycle costs; let a simpler mechanism win |
+| D4: minimal operational integration | Local immutable evidence bundles and one fail-closed verifier before any fleet/database/wiki restoration | Narrows shared operations without relaxing generation/reality/measurement/interpretation separation | Real-route guard-disable/restore and clean twins, denied unauthorized access, consumed verifier receipts and correction propagation |
+| D5: qualification has an explicit allocation | One receipt, one lane/phase/activity owner; separately account calibration, search, ordinary replay and protected audit | Makes the unchanged aggregate CPU ceiling operationally auditable; does not establish throughput | Measured complete-batch forecast, full sample/cell counts, energy and labor ledgers, valid power and no hidden shared-overhead addition |
+
+**No additional operator approval is needed to state or adopt D1-D5 as this report's recommendation.** Earlier companion requests for that decision record proposal-stage status and are superseded at recommendation level by this dated appendix and the main report.
+This is not operational approval: actual spending, host access, staffing, rates/dollar cap, energy boundary, custody, untrusted execution, bounded run authority and holdout release remain genuine gates.
+The original process record's PENDING wording is likewise historical; the cited commit identifies the actual Stage I snapshot without falsifying its original chronology.
+
+### C. Corrected scientific contract and unresolved implementation details
+
+The final MVP and portfolio specify the corrected detailed contract. This appendix summarizes it without presenting a native runtime as implemented; executed documentary and arithmetic checks are recorded separately in process/VALIDATION.md.
+
+- **A0 addressing:** the MVP now specifies byte/record/cursor/link/operand semantics and witness bytes; native implementation and independent traces remain required. Do not infer a free addressing operation, accept a host-language witness in its place, or count a specification as qualified capacity.
+- **Search adequacy:** **8 of 32 persistent search slots** form the competence-neutral bridge arm, accepting equal-competence proposals with fixed probability 1/2 even when cost worsens. This allocation is not an 8/32 recovery threshold. Freeze path-specific finite-budget recovery criteria before calibration; strict-ascent failure diagnoses the operator, not an absent path in the physics.
+- **W3-R:** three cues each have 75% reliability; conditional independence gives majority accuracy **27/32**. Query prices are **1/32** and **1/8**. Under the correlated law **c2=c3**, duplicated evidence does not create an extra independent vote and the optimum is no query at the positive prices. Require an independent rational/native oracle for the entire joint law.
+- **Q4:** the corrected meaningful contrast is **delta*=0.02**, not the Q2/Q3 0.20 planning contrast. Its qualification, noise/effect grid and power are separate; it is likely pilot-only within the existing envelope. A Q4-derived Q5 contrast inherits this endpoint/scale, not the acquisition criterion.
+- **Q5:** budget and execute **18 candidate-specific cells plus 2 paired rescue cells per founder block**. Generic calibration shams cannot substitute for candidate-specific damage/donor controls; paired rescues do not increase independent n.
+- **Detection units:** whole-assay batch-statistic sensitivity cannot adjust a per-founder zero-hit bound. A latent founder-success bound needs an applicable independently qualified founder-level detector or perfect verification, with uncertainty combined explicitly.
+- **Qualification scope:** native curated-mechanism controls qualify only their declared operating regime and coverage. They do not certify detectability of every endogenous mechanism or prove a class-wide limit on development. Keep that applicability question open until independent evidence supports it.
+
+These corrections are design/calculation requirements, not newly observed experiments. Where current historical prose or an uncorrected draft disagrees, no executable manifest may be released until the corrected pre-data contract is reconciled.
+
+### D. Resource ceilings remain planning limits
+
+| Resource | Adopted ceiling and boundary | Missing operational evidence |
+|---|---|---|
+| CPU | **480 core-hours = 372 days 1-90 + 72 conditional Q6 + 36 protected fault/correction audit** | Measured complete-assay throughput, all process-tree/retry costs and a forecast with 25% timing contingency |
+| CPU subaccounting | Days 1-90: 108 qualification + 186 assay/search + 78 ordinary replay = 372; calendar S0/S1/S2 = 72/120/180 | Same receipts viewed by lane/activity/phase, not additive budgets; routine Q5 replication does not consume the protected audit allocation |
+| GPU | **0 GPU allocation and 0 paid-GPU spend** | Any future accelerator requires a separately authorized, equivalent whole-experiment cost/energy case |
+| Energy | **30 kWh** including attributed idle and verification | Meter or conservative host power/time bounds, concurrency attribution and stopping at the conservative endpoint |
+| Inference | Zero routine external calls; **20,000 optional input-plus-output campaign tokens** maximum | A separately approved offline question, permitted evidence, provider cost and usage receipt; not report-authoring token accounting |
+| First-90-day engineering | **320 person-hours cap**, including 64 protected for independent scientific implementation | Staffed authorship and actual work receipts; a later <=24-hour B0-or-C0 spike replaces optional scope, not adds to it |
+| First-90-day scientific review | **21 hours**: 13 scheduled plus 8 initial; at most five unresolved nonurgent packets | A real reviewer/custodian, fail-closed overflow and distinct engineering versus review accounting |
+
+Conditional Q6 can require separately released additional engineering/review; it is not hidden inside the first-90-day labor totals.
+The existing per-job/concurrency/RAM/storage bounds still apply. Money, staffing and energy approvals cannot be inferred from these numbers; **caps are not measurements, availability claims or authorization**.
+If calibration, candidate-specific controls, precision or independence cannot fit, the deliverable becomes methods/qualification-only or a descriptive pilot, not a weakened gate or inflated claim.
+
+### E. What direct evidence would change this recommendation
+
+1. **Stop or revise A0:** independently traced native witness/reset/meter failure after the one bounded S0 repair, or an irreparable address/codec loophole. Report the implementation/capacity limit, not failed emergence, and do not respond with three simultaneous larger runtimes.
+2. **Prefer the ordinary learner:** applicable independent H/P/I and new-family tests exclude meaningful advantage while ordinary competitors dominate full lifecycle costs. Preserve the bounded negative and narrow the program rather than protect a developmental narrative.
+3. **Keep Q4 at pilot/world qualification:** exact headroom exists but a qualified 0.02-regret detector and fresh precision cannot fit. A tiny correct oracle is a valid methods result, not a developmental revision finding.
+4. **Withdraw a mechanism or portability claim:** delivered candidate-specific sham/adapter controls explain the benefit, or a qualified independent contrast excludes it. Unsupported delivery alone blocks portability without erasing warranted native behavior.
+5. **Add a second track or consolidate:** a measured affordable locality/addressing/update contrast can justify B/C; redundant answers with high adapter/qualification cost favor fewer implementations with disclosed coverage loss.
+6. **Stop recursive interpretation:** fresh-U/S resets reveal carried solutions, valid fixed-V controls explain the extra level, or process intervention stays unidentifiable. Retain useful task/meta-learning evidence; no ontological escape from broad meta-learning is required or established.
+7. **Correct the critic:** primary-source/clean-twin evidence refutes a review allegation. Remove the unsupported allegation and its dependent claims while retaining real defects; reviewer consensus cannot override evidence.
+
+The [25-assumption ledger](ASSUMPTIONS.md), [engine and 6-12 month falsifiers](FALSIFIERS.md), and [15 ranked open questions](OPEN_QUESTIONS.md) specify direct evidence, functional owner roles, cost limits and the conditions for these reversals.
+Qualified negative evidence requires applicable capacity/world/search/pressure/ruler/intervention/custody/precision prerequisites; apparatus failure instead limits feasibility and may stop this program without disproving possible cognition.
+No unlimited repair clause protects the thesis. Any restart after the bounded stop requires a genuinely new discriminator and a scoped resource plan, not only more scale or another name.
+
+### F. Publication and validation boundary
+
+The latest user mandate overrides historical restrictions on **publication planning** and explicitly authorizes committing this design package. Repository delivery is distinct from external publication/submission, evidence-wiki write, holdout disclosure or campaign execution; those are not authorized here.
+No research experiment, native benchmark, engine qualification or historical campaign reproduction was executed to write this appendix. Historical source/audit claims retain their original scope and evidence grade.
+File/link/count and byte-prefix checks validate the documentary package only. Subsequent authorized implementation should write/update and run native transition, reset, leakage, cap, exact-oracle, statistical-boundary, candidate-intervention and actual-promotion-route tests before any claim-bearing experiment.

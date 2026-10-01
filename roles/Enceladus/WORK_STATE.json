@@ -3,10 +3,18 @@
   "seat": "Enceladus",
   "mwo_id": "MWO-0004",
   "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
-  "updated_at_utc": "2026-10-01T14:35:00Z",
-  "state": "HOLD",
-  "branch": "enceladus/base-role-adopt-2026-10-01",
-  "head_sha": "(this commit; see git log -1 -- roles/Enceladus/WORK_STATE.json)",
+  "mwo_authority_note": "Historical inherited pointer only; not authority for future implementation or an endless run after report delivery.",
+  "updated_at_utc": "2026-10-01",
+  "update_time_note": "Date-only update; no new UTC clock reading is claimed.",
+  "state": "RUNNING",
+  "state_scope": "Final report-package validation and authorized commit/SHA delivery only; no jobs.",
+  "report_identity": "ASTRA-6.0 (declared report identity, not detected model identity)",
+  "design_status": "COMPLETE: eight mandated design files, MVP, failure map, evidence notes, validation and review packet",
+  "scientific_status": "NOT_VERIFIED",
+  "branch": "enceladus/phase3-astra-2026-10-01",
+  "head_sha": "eeeda08bb45757298b3cb21ee22d816b44388aef",
+  "head_sha_note": "Previously observed HEAD and Stage I freeze; not a newly observed HEAD or final package-completion commit.",
+  "package_commit_sha": null,
   "threads": [],
   "campaigns": [],
   "experiments": [],
@@ -14,10 +22,33 @@
   "running": [],
   "blocked_on": [],
   "next_actions": [
-    "Seat created 2026-10-01, charter PENDING. HOLD because no READY work exists without a charter (base role 2a F), not a block on any seat. When the operator's charter arrives: commit verbatim with MANIFEST under roles/Enceladus/prompts/<date>_charter/, rewrite RESPONSIBILITIES.md, file BACKLOG_H0H5.md, leave HOLD."
+    "Regenerate and verify the manifest after final editorial/allowlist changes; preserve historical adoption receipts.",
+    "Parent: review and stage only the own report and own-role package, create the explicitly authorized report-package commit, record the actual new SHA, and deliver it to the user; never substitute the Stage I freeze SHA.",
+    "After commit/SHA delivery, close RUNNING and await new operator authority before implementation; preserve scientific NOT_VERIFIED.",
+    "Apply the independence guard before generic boot reads, retrieval, or comms: other architect roles/designs, comms events, and sessions remain unread. No jobs, monitor, spending, or external publication is authorized."
   ],
-  "operator_decisions_required": [],
+  "operator_decisions_required": [
+    "Before future implementation, not before report delivery: obtain operator authority and resolve host custody, actual measured rates, and staffing/resources. D1-D5 are report recommendations, not an approval checklist."
+  ],
+  "validation": {
+    "source": "Executed by the parent; docs/phase3/design/ASTRA-6.0/process/VALIDATION.md",
+    "validator_unit_tests": "32 pass, including 2 expected Harmonia-defect cases; exit 0",
+    "exact_arithmetic_tests": "9 pass; exit 0",
+    "focused_role_manifest_tests": "4 pass; exit 0; charter 2 entries, 0 mismatches",
+    "package_static_validation": "PASS, zero errors; final editorial regeneration pending",
+    "validation_manifest": "Generated and verified; regenerate after final edits",
+    "final_parent_receipt": "docs/phase3/design/ASTRA-6.0/process/VALIDATION.md"
+  },
   "latest_reports": [
-    "roles/Enceladus/journal/2026-10-01.md (creation pass)"
+    "roles/Enceladus/prompts/2026-10-01_charter/00_ADOPTION.md (administrative adoption)",
+    "roles/Enceladus/journal/2026-10-01.md (historical receipts and appended finalization update)",
+    "docs/phase3/design/ASTRA-6.0/PHASE3_META_ANALYSIS.md (25 sections, ten closing answers)",
+    "docs/phase3/design/ASTRA-6.0/REQUIREMENTS.md (Stage I freeze eeeda08bb)",
+    "docs/phase3/design/ASTRA-6.0/RSE_ARCHITECTURE.md (Stage I freeze eeeda08bb)",
+    "docs/phase3/design/ASTRA-6.0/ENGINE_PORTFOLIO.md",
+    "docs/phase3/design/ASTRA-6.0/SALVAGE_MATRIX.md (provenance coverage table)",
+    "docs/phase3/design/ASTRA-6.0/OPEN_QUESTIONS.md",
+    "docs/phase3/design/ASTRA-6.0/ASSUMPTIONS.md",
+    "docs/phase3/design/ASTRA-6.0/FALSIFIERS.md"
   ]
 }

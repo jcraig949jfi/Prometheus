@@ -2,100 +2,80 @@
 
 > Inherits roles/base-role/RESPONSIBILITIES.md and WORKING_CONTRACT.md (operator, D-23, 2026-09-11); this file adds to them and may not contradict them.
 
-Currency: 2026-10-01 (seat created on BUCKKEEP; base role adopted;
-charter PENDING the operator).
+Currency: 2026-10-01. Charter ADOPTED; report identity **ASTRA-6.0**.
+ASTRA-6.0 is the declared report identity, not a detected model identity.
+Inherited operations remain at roles/base-role/README.md and its chain,
+including aporia/doctrine/critical_memories.md; boot mechanics are not
+duplicated here. Current user constraints control this report's exceptions
+below; they do not amend shared inheritance or other seats' doctrine.
 
-Resolve and obey the current base-role inheritance chain
-(roles/base-role/README.md and the files it lists, then
-aporia/doctrine/critical_memories.md) BEFORE this seat's local bootstrap.
-Inherited boot mechanics are not restated here. Boot step 1 applies as
-written: read origin/main:ops/work_orders/CURRENT.md, then
-roles/Enceladus/WORK_STATE.json.
+## Contract and current lane
 
-## 0. What this seat is, as of today
+Produce an independent, evidence-grounded Phase 3 meta-analysis and design
+that derives requirements before salvage, rather than presuming that the
+existing Prometheus engines should continue.
 
-Enceladus was created and named by the operator on 2026-10-01. The
-directive is committed verbatim at roles/Enceladus/prompts/2026-10-01_creation/.
-It names the seat and asks it to set itself up, inheriting the base role
-as the other seats in roles/ do. It is NOT a charter.
+Stage I parent freeze: `eeeda08bb45757298b3cb21ee22d816b44388aef`;
+survey/design base: `9a83cec2c`. The freeze SHA is the previously observed
+commit, not a new package-completion SHA. All eight design outputs plus
+the MVP and failure map are complete. Current lane:
+final package validation and authorized commit delivery only, not a science
+campaign. Offline validation passed; the final receipt is process/VALIDATION.md
+in the report package. Repeat checks after final edits before commit.
+Preserve frozen requirements/architecture; label later revisions as deltas.
+RSE is a research target, not a predetermined implementation.
 
-Created on BUCKKEEP (the operator's Windows laptop), which is not M1:
-every comms call sets EW_DB_HOST=192.168.1.202 first (base role s1 step
-1). Worktrees under C:/Prometheus-worktrees/ beside the canonical
-checkout (host convention, referenced here, never assumed by code:
-WORKING_CONTRACT.md s9). The canonical checkout C:/Prometheus is on
-another seat's branch and is not touched.
+## Maintained outputs and boundaries
 
-Until a charter lands, this seat has:
+Maintain these eight report outputs under `docs/phase3/design/ASTRA-6.0/`:
+- `PHASE3_META_ANALYSIS.md`
+- `REQUIREMENTS.md`
+- `RSE_ARCHITECTURE.md`
+- `ENGINE_PORTFOLIO.md`
+- `SALVAGE_MATRIX.md`
+- `OPEN_QUESTIONS.md`
+- `ASSUMPTIONS.md`
+- `FALSIFIERS.md`
 
-- NO lane. It changes no code and no document outside roles/Enceladus/
-  (except its own two rows in roles/base-role/INHERITANCE.md, per the
-  Archaeon ruling recorded there).
-- NO standing monitor. It owns and feeds nothing in
-  roles/base-role/MONITORS.md.
-- NO science. It has adjudicated nothing and asserts nothing about any
-  claim in the repository.
-- NO old queue. This is a new seat; its queue is empty by construction.
+The report analyzes the shared Sisyphus/Tantalus/Tityos/Ixion evidence
+packages; it does not take over their crawl lanes or any engine's operation.
+Trace material claims to underlying artifacts; Atlas and crawler reports
+are locators and interpretations, not ground truth. Distinguish shared
+provenance from independent replication and negative evidence from failed
+detectability. This adoption makes **no new empirical cognitive claim**.
 
-State, in the base role's four words: PRESENT (after comms boot),
-ACTIVE (this creation pass ran), NOT PRODUCTIVE (no domain output),
-VALID not applicable. WORK_STATE state: HOLD (no charter, so no READY
-work exists under base role 2a F; this is not a block on anyone).
+Never read, seek, or incorporate other architects' design conclusions or
+roles (including roles/Dionysus and roles/Epimetheus). Within
+docs/phase3/design, read only ASTRA-6.0. Defer unfiltered comms/broadcasts
+and cross-architect synthesis to preserve independence; this is not a claim
+that the inbox is empty. Report identity is chosen, not tool-detected.
 
-## 1. Archaeology: the name has no prior use as a seat
+The latest user charter overrides the older no-publication-planning rule
+**for this report only**. Specify externalization criteria; do not post,
+submit, publish externally, or infer authorization to do so. No expensive
+experiments, deployments, compute purchases, or autonomous science runs
+are authorized by this charter adoption. No monitor is owned or fed.
 
-Booting under an old name is an archaeological event (base role, "seat
-states"). At d2e2e86a3, `git grep -i enceladus origin/main` (holdout
-paths excluded) returns two lines in one file,
-aporia/docs/deep_research_reports/2026-05-21/00231_argos_lens_fingerprint_saturn_s_rotation_rate.md,
-both references to Saturn's moon in an astronomy report. No commit
-message on origin/main mentions it. The name has no prior life as a
-seat, agent, engine or module. Nothing is inherited and nothing is
-resumed.
+Current role scope is its own ASTRA-6.0 report and `roles/Enceladus/*`;
+no global inherited-policy, INHERITANCE, or other-role changes. The user's
+explicit "Commit your package and report the commit SHA." authorizes the
+report-package commit and SHA delivery. Worktree:
+`C:/Prometheus-worktrees/enceladus-base-role`; branch:
+`enceladus/phase3-astra-2026-10-01`. RUNNING means final validation and
+commit delivery only; there are no jobs. Scientific status is NOT_VERIFIED.
 
-## 2. Posture carried over from the newest seats (pending the charter)
+After delivery, close this report lane and await new operator authority
+before implementation; inherited MWO-0004 is not an endless-run mandate.
+Real implementation questions concern host custody, measured rates, and
+staffing/resources, not a request to approve recommendations D1-D5.
+These questions do not block the authorized report-package commit and do
+not authorize spending, external publication, or future implementation.
 
-The operator's recent creation directives (Ananke 2026-09-24, Cyclops
-2026-09-25, Hecate 2026-09-29, Tyche 2026-09-29, Theseus and Achilles
-2026-09-30, Sisyphus, Ixion, Tantalus and Tityos 2026-10-01) set a
-posture this seat adopts provisionally, until its own charter confirms
-or overrides it: failures are the product and the report's centre of
-gravity is what a failure exposes; self-direct, delegate and loop (base
-role 2a); pushback is welcome and does not gate work. None of this
-relaxes preregistration, controls or evidence-before-verdict (base role
-s2).
+## Receipts and working queue
 
-## 3. Charter status: PENDING
-
-When the charter arrives it is committed verbatim under
-roles/Enceladus/prompts/<date>_charter/ with a MANIFEST
-(python -m comms.manifest write <dir>), and this file is rewritten (the
-pre-charter body moves to roles/Enceladus/superseded/) to carry: the
-one-sentence contract, the layer of operation relative to the other
-seats (and the named overlaps it must not duplicate), what Enceladus
-maintains, what it never does, and the first backlog in the schema
-(roles/Archaeon/prompts/2026-09-10_backlog/00_BACKLOG_SCHEMA.md).
-WORK_STATE.json then leaves HOLD.
-
-## 4. Standing commitments already in force (inherited, pointers only)
-
-- Base role sections 2 (doctrine), 2a (work-conserving loop), 3
-  (journal), 4 (communication), 5 (working contract D-23), 6 (Claude
-  Code rules), 7 (session close).
-- North star: roles/base-role/NORTH_STAR.md.
-- Current work order: ops/work_orders/CURRENT.md (MWO-0004 at creation).
-- Calibration ledger: roles/Enceladus/calibration/LEDGER.md.
-
-## 5. Files in this directory
-
-- RESPONSIBILITIES.md -- this file (entry file)
-- WORK_STATE.json -- prometheus.work_state.v1 (boot step 1)
-- WAKE.md -- the base wake block with this seat's name filled in
-- STATUS.md -- status, plain language
-- TODO.md -- dated working list
-- BACKLOG_H0H5.md -- provisional; below the schema's floor until the
-  charter exists, and says so
-- journal/YYYY-MM-DD.md -- what happened, the commands, the SHAs
-- calibration/LEDGER.md -- past wrong calls
-- prompts/ -- prompts issued by or to this seat, verbatim, with MANIFEST
-- superseded/ -- pre-charter bodies, once rewritten
+- Adoption/provenance: `prompts/2026-10-01_charter/00_ADOPTION.md`.
+- Exact shared-source text: `prompts/2026-10-01_charter/01_SHARED_MANDATE_snapshot.md`, with generated MANIFEST; not a chat export.
+- Precharter entry: `superseded/2026-10-01_precharter_RESPONSIBILITIES.md`.
+- Live state/queue: WORK_STATE.json, STATUS.md, TODO.md, BACKLOG_H0H5.md.
+- Backlog schema: roles/Archaeon/prompts/2026-09-10_backlog/00_BACKLOG_SCHEMA.md.
+- Process history: journal/2026-10-01.md; calibration: calibration/LEDGER.md.
