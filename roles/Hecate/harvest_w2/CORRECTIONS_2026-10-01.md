@@ -113,6 +113,31 @@ K15 Prose claim audit (AUDIT_O: 242 numeric claims, 196 MATCH, 14 STALE, 5
    UNSOURCEABLE: Q14 "ARI 1.0"/"97%" (auditor scratch runs, not committed).
    STATUS.md (live state) rewritten 2026-10-01.
 
+K16 Derived files that do not reproduce from their generators (test
+   hecate/tests/test_derived_reproduce.py, pinned in KNOWN_NONREPRODUCING):
+   gemini RESULTS.json (row SYS-10088 never scored in); HT-55162c0ac0 W3
+   OUTCOME.json, HT-5b0b3ebb8d W4 OUTCOME.json and its pass4
+   PASS4_OUTCOME.json (hand-appended anomalies/notes). Records kept.
+K17 Erratum to K9 (REDTEAM_Y, verified): the committed gemini RESULTS.json
+   still reads NOVELTY_DETECTOR_NOT_VALIDATED (all inputs None); only
+   analyze.py was fixed to say NOT_ELIGIBLE, RESULTS was not re-run.
+K18 HT-55162c0ac0 W6 Pass 4 "R reproduced: false" is wrong in substance
+   (AUDIT_Z1 F1): code required |corr ARI| <= 0.1, so -0.111 (below chance)
+   failed; round-3 S2 holds (1.11 >= 0.5). PARK stands on the failed ALT.
+   Also Z1: 8a87 and 321a ORIG attacks decided by construction (round-2
+   PREREG forbids such attacks); 71b6 ALT eligibility gap 0.02 unreachable
+   (best of 42 variants 0.004). No verdict changes.
+
+REDTEAM_Y on this file (read it with every APPLY recommendation): numbers
+recompute, but the readings lean in Hecate's favour -- favourable fixes
+were applied or recommended APPLY (K1, K4, C1, C5), unfavourable ones
+ANNOTATE-ONLY (C2, H4, strict C6); K4's stated cause is false (the clause
+was unreachable before the KC=1.6 repair) and K4 moved PARK -> SPECULATIVE
+without a ruling; exact arithmetic flips only H3, toward SUPPORTED; C1's
+reading would also flip 9744/W6, K4's 79e9/W1 and 47f4/W1, and C5's
+H4 -> NOT_SUPPORTED. Hecate WITHDRAWS its APPLY recommendations in
+RULING_REQUEST_C1_C8.md and asks that K4 be treated as contested too.
+
 ## Contested items -- NOT applied (recommendations; would change a frozen decision rule's outcome -> CWO-C s4 escalation class)
 
 C1 HT-ae38c641b1 W5 (round 3): frozen spec says values between F1 and S1
