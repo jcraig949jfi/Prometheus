@@ -1,0 +1,1076 @@
+{
+ "genomes": [
+  {
+   "id": "MIN3_pad0",
+   "grp": "MIN3",
+   "cell": "CF",
+   "status": "OK",
+   "wt": {
+    "Z": 0.4925,
+    "R": 0.8825,
+    "C": 0.0025,
+    "Ckept": 0.9925,
+    "P2": 0.7669,
+    "K": 0.53
+   },
+   "n_T": 64,
+   "pass_side": 0,
+   "env": {
+    "zero": 0.5,
+    "reg_B": 0.5,
+    "reg_C": 0.0333,
+    "reg_D": 0.4833,
+    "reg_E": 0.5,
+    "reg_H": 0.5,
+    "reg_L": 0.0167,
+    "reg_A": 0.5,
+    "flags_set": 0.5,
+    "donor_random": 0.0,
+    "partner_random": 0.0,
+    "side0_only": 0.9833,
+    "side1_only": 0.0,
+    "base_conv": 0.5,
+    "base_intact": 0.5167,
+    "slice_150": 0.5,
+    "slice_600": 0.4833,
+    "slice_1200": 0.4167,
+    "tape256": 0.5,
+    "stock_vm": 0.0,
+    "operand_entry_side": 1.0,
+    "zero_side": 0.9833
+   },
+   "counts": {
+    "CONV_NEC": 3,
+    "NEUTRAL": 61
+   },
+   "est_initial": [],
+   "est_confirmed": [],
+   "est_value_robust": [],
+   "est_reassay_other": {},
+   "partial_reassay": {},
+   "conv_nec": [
+    0,
+    1,
+    2
+   ],
+   "copy_pos": 2,
+   "copy_op": "E5",
+   "setter_pos": {
+    "E": 0
+   },
+   "HL_DE_BC": [
+    0,
+    64,
+    0
+   ],
+   "conv_primitive": [
+    2
+   ],
+   "conv_operand_rescued": [
+    0
+   ],
+   "passengers": [
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    38,
+    39,
+    40,
+    41,
+    42,
+    43,
+    44,
+    45,
+    46,
+    47,
+    48,
+    49,
+    50,
+    51,
+    52,
+    53,
+    54,
+    55,
+    56,
+    57,
+    58,
+    59,
+    60,
+    61,
+    62,
+    63
+   ],
+   "idle_not_T": [],
+   "causal_not_T": [],
+   "gains": [],
+   "null_est": 0,
+   "null_est_confirmed": 0,
+   "null_cls": {
+    "NEUTRAL": 12
+   },
+   "null_n": 12,
+   "deletion": [
+    [
+     0,
+     "1e40",
+     "CONV_NEC",
+     [
+      "P2"
+     ]
+    ],
+    [
+     2,
+     "e5",
+     "CONV_NEC",
+     [
+      "K",
+      "P2"
+     ]
+    ]
+   ],
+   "env_default_substituted_instr": [],
+   "deletion_conv_nec_instr": [
+    [
+     0,
+     "1e40"
+    ],
+    [
+     2,
+     "e5"
+    ]
+   ],
+   "deletion_est_only_instr": [],
+   "pad_est_initial": 0,
+   "pad_est_confirmed": 0,
+   "pad_n": 61,
+   "env_regs_supplied": [
+    "C",
+    "L"
+   ],
+   "env_flags_supplied": false,
+   "env_donor_random_ratio": 0.0,
+   "env_partner_random_ratio": 0.0,
+   "side_only": [
+    0
+   ],
+   "base_ratio": 1.0,
+   "base_intact": 0.5167,
+   "phys_stock_ratio": 0.0,
+   "phys_tape256_ratio": 1.0,
+   "phys_slice": {
+    "150": 1.0,
+    "600": 0.967,
+    "1200": 0.833
+   },
+   "operand_entry_ratio": 1.017
+  },
+  {
+   "id": "SF_7ae3_0091a099",
+   "grp": "SF",
+   "cell": "C7",
+   "status": "OK",
+   "wt": {
+    "Z": 0.51,
+    "R": 0.825,
+    "C": 0.5427,
+    "Ckept": 0.8618,
+    "P2": 0.6609,
+    "K": 0.5233
+   },
+   "n_T": 64,
+   "pass_side": 0,
+   "env": {
+    "zero": 0.5,
+    "reg_B": 0.55,
+    "reg_C": 0.5,
+    "reg_D": 0.5,
+    "reg_E": 0.5167,
+    "reg_H": 0.5167,
+    "reg_L": 0.5,
+    "reg_A": 0.4833,
+    "flags_set": 0.5833,
+    "donor_random": 0.5333,
+    "partner_random": 0.5167,
+    "side0_only": 1.0,
+    "side1_only": 0.0167,
+    "base_conv": 0.5333,
+    "base_intact": 0.7833,
+    "slice_150": 0.5,
+    "slice_600": 0.5,
+    "slice_1200": 0.4,
+    "tape256": 0.5,
+    "stock_vm": 0.0,
+    "operand_entry_side": 1.0,
+    "zero_side": 1.0
+   },
+   "counts": {
+    "NEUTRAL": 59,
+    "CONV_NEC": 3,
+    "EST_ONLY": 2
+   },
+   "est_initial": [
+    [
+     27,
+     [
+      "C"
+     ]
+    ],
+    [
+     28,
+     [
+      "C"
+     ]
+    ]
+   ],
+   "est_confirmed": [
+    [
+     28,
+     [
+      "C"
+     ]
+    ]
+   ],
+   "est_value_robust": [
+    28
+   ],
+   "est_reassay_other": {
+    "27": "NEUTRAL"
+   },
+   "partial_reassay": {},
+   "conv_nec": [
+    21,
+    22,
+    32
+   ],
+   "copy_pos": 32,
+   "copy_op": "E5",
+   "setter_pos": {
+    "B": 23,
+    "C": 21,
+    "D": 27,
+    "E": 28,
+    "H": 21,
+    "L": 21
+   },
+   "HL_DE_BC": [
+    0,
+    16448,
+    64
+   ],
+   "conv_primitive": [
+    32
+   ],
+   "conv_operand_rescued": [],
+   "passengers": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    23,
+    24,
+    25,
+    26,
+    29,
+    30,
+    31,
+    33,
+    34,
+    35,
+    36,
+    37,
+    38,
+    39,
+    40,
+    41,
+    42,
+    43,
+    44,
+    45,
+    46,
+    47,
+    48,
+    49,
+    50,
+    51,
+    52,
+    53,
+    54,
+    55,
+    56,
+    57,
+    58,
+    59,
+    60,
+    61,
+    62,
+    63
+   ],
+   "idle_not_T": [],
+   "causal_not_T": [],
+   "gains": [],
+   "null_est": 0,
+   "null_est_confirmed": 0,
+   "null_cls": {
+    "NEUTRAL": 12
+   },
+   "null_n": 12,
+   "deletion": [
+    [
+     1,
+     "91",
+     "NEUTRAL",
+     []
+    ],
+    [
+     2,
+     "a0",
+     "NEUTRAL",
+     []
+    ],
+    [
+     3,
+     "99",
+     "NEUTRAL",
+     []
+    ],
+    [
+     4,
+     "dd",
+     "NEUTRAL",
+     []
+    ],
+    [
+     5,
+     "5d",
+     "NEUTRAL",
+     []
+    ],
+    [
+     6,
+     "eb",
+     "NEUTRAL",
+     []
+    ],
+    [
+     7,
+     "07",
+     "NEUTRAL",
+     []
+    ],
+    [
+     8,
+     "f1",
+     "NEUTRAL",
+     []
+    ],
+    [
+     9,
+     "94",
+     "NEUTRAL",
+     []
+    ],
+    [
+     10,
+     "dc",
+     "NEUTRAL",
+     []
+    ],
+    [
+     11,
+     "f1",
+     "NEUTRAL",
+     []
+    ],
+    [
+     12,
+     "8e",
+     "NEUTRAL",
+     []
+    ],
+    [
+     13,
+     "9f",
+     "NEUTRAL",
+     []
+    ],
+    [
+     14,
+     "0e1d",
+     "NEUTRAL",
+     []
+    ],
+    [
+     16,
+     "f7",
+     "NEUTRAL",
+     []
+    ],
+    [
+     17,
+     "99",
+     "NEUTRAL",
+     []
+    ],
+    [
+     18,
+     "fc",
+     "NEUTRAL",
+     []
+    ],
+    [
+     19,
+     "7b",
+     "NEUTRAL",
+     []
+    ],
+    [
+     20,
+     "0d",
+     "NEUTRAL",
+     []
+    ],
+    [
+     21,
+     "ed32",
+     "CONV_NEC",
+     [
+      "C",
+      "P2"
+     ]
+    ],
+    [
+     23,
+     "44",
+     "NEUTRAL",
+     []
+    ],
+    [
+     24,
+     "3f",
+     "NEUTRAL",
+     []
+    ],
+    [
+     25,
+     "97",
+     "NEUTRAL",
+     []
+    ],
+    [
+     26,
+     "e4",
+     "NEUTRAL",
+     []
+    ],
+    [
+     27,
+     "51",
+     "EST_ONLY",
+     [
+      "C"
+     ]
+    ],
+    [
+     28,
+     "5a",
+     "CONV_PARTIAL",
+     []
+    ],
+    [
+     29,
+     "77",
+     "NEUTRAL",
+     []
+    ],
+    [
+     30,
+     "bb",
+     "NEUTRAL",
+     []
+    ],
+    [
+     31,
+     "b5",
+     "NEUTRAL",
+     []
+    ],
+    [
+     32,
+     "e5",
+     "CONV_NEC",
+     [
+      "C",
+      "K",
+      "P2"
+     ]
+    ],
+    [
+     33,
+     "8a",
+     "NEUTRAL",
+     []
+    ],
+    [
+     34,
+     "03",
+     "NEUTRAL",
+     []
+    ],
+    [
+     35,
+     "da2cc3",
+     "NEUTRAL",
+     []
+    ],
+    [
+     38,
+     "edec",
+     "NEUTRAL",
+     []
+    ],
+    [
+     40,
+     "f3",
+     "NEUTRAL",
+     []
+    ],
+    [
+     41,
+     "67",
+     "NEUTRAL",
+     []
+    ],
+    [
+     42,
+     "ff",
+     "NEUTRAL",
+     []
+    ],
+    [
+     43,
+     "4e",
+     "NEUTRAL",
+     []
+    ],
+    [
+     44,
+     "65",
+     "NEUTRAL",
+     []
+    ],
+    [
+     45,
+     "5a",
+     "NEUTRAL",
+     []
+    ],
+    [
+     46,
+     "4f",
+     "NEUTRAL",
+     []
+    ],
+    [
+     47,
+     "92",
+     "NEUTRAL",
+     []
+    ],
+    [
+     48,
+     "95",
+     "NEUTRAL",
+     []
+    ],
+    [
+     49,
+     "df",
+     "NEUTRAL",
+     []
+    ],
+    [
+     50,
+     "ae",
+     "NEUTRAL",
+     []
+    ],
+    [
+     51,
+     "d677",
+     "NEUTRAL",
+     []
+    ],
+    [
+     53,
+     "eb",
+     "NEUTRAL",
+     []
+    ],
+    [
+     54,
+     "ef",
+     "NEUTRAL",
+     []
+    ],
+    [
+     55,
+     "edcf",
+     "NEUTRAL",
+     []
+    ],
+    [
+     57,
+     "9f",
+     "NEUTRAL",
+     []
+    ],
+    [
+     58,
+     "d8",
+     "NEUTRAL",
+     []
+    ],
+    [
+     59,
+     "4b",
+     "NEUTRAL",
+     []
+    ],
+    [
+     60,
+     "09",
+     "NEUTRAL",
+     []
+    ],
+    [
+     61,
+     "f5",
+     "NEUTRAL",
+     []
+    ],
+    [
+     62,
+     "72",
+     "NEUTRAL",
+     []
+    ],
+    [
+     63,
+     "e2",
+     "NEUTRAL",
+     []
+    ]
+   ],
+   "env_default_substituted_instr": [],
+   "deletion_conv_nec_instr": [
+    [
+     21,
+     "ed32"
+    ],
+    [
+     32,
+     "e5"
+    ]
+   ],
+   "deletion_est_only_instr": [
+    [
+     27,
+     "51",
+     [
+      "C"
+     ]
+    ]
+   ],
+   "for_collapse_n": 3,
+   "for_collapse_in_convnec": 3,
+   "for_collapse_in_est": 0,
+   "convnec_not_for": [],
+   "env_regs_supplied": [],
+   "env_flags_supplied": false,
+   "env_donor_random_ratio": 1.067,
+   "env_partner_random_ratio": 1.033,
+   "side_only": [
+    0
+   ],
+   "base_ratio": 1.067,
+   "base_intact": 0.7833,
+   "phys_stock_ratio": 0.0,
+   "phys_tape256_ratio": 1.0,
+   "phys_slice": {
+    "150": 1.0,
+    "600": 1.0,
+    "1200": 0.8
+   },
+   "operand_entry_ratio": 1.0
+  }
+ ],
+ "groups": {
+  "SF": {
+   "n": 1,
+   "n_status_not_ok": 0,
+   "CONV_NEC": {
+    "median": 3,
+    "q1": 3,
+    "q3": 3,
+    "min": 3,
+    "max": 3,
+    "n": 1
+   },
+   "CONV_PARTIAL": {
+    "median": 0,
+    "q1": 0,
+    "q3": 0,
+    "min": 0,
+    "max": 0,
+    "n": 1
+   },
+   "EST_ONLY": {
+    "median": 2,
+    "q1": 2,
+    "q3": 2,
+    "min": 2,
+    "max": 2,
+    "n": 1
+   },
+   "NEUTRAL": {
+    "median": 59,
+    "q1": 59,
+    "q3": 59,
+    "min": 59,
+    "max": 59,
+    "n": 1
+   },
+   "est_confirmed": {
+    "median": 1,
+    "q1": 1,
+    "q3": 1,
+    "min": 1,
+    "max": 1,
+    "n": 1
+   },
+   "est_confirmed_total": 1,
+   "est_initial_total": 2,
+   "est_value_robust_total": 1,
+   "est_by_readout": {
+    "C": 1
+   },
+   "n_T": {
+    "median": 64,
+    "q1": 64,
+    "q3": 64,
+    "min": 64,
+    "max": 64,
+    "n": 1
+   },
+   "passengers": {
+    "median": 59,
+    "q1": 59,
+    "q3": 59,
+    "min": 59,
+    "max": 59,
+    "n": 1
+   },
+   "null_est": [
+    0,
+    12
+   ],
+   "null_est_confirmed": 0,
+   "null_cls": {
+    "NEUTRAL": 12
+   },
+   "env_regs": {},
+   "genomes_any_env_reg": 0,
+   "side_only": {
+    "[0]": 1
+   },
+   "stock_dead": 1,
+   "tape256_dead": 0,
+   "slice150_dead": 0,
+   "slice1200_dead": 0,
+   "base_ratio": {
+    "median": 1.067,
+    "q1": 1.067,
+    "q3": 1.067,
+    "min": 1.067,
+    "max": 1.067,
+    "n": 1
+   },
+   "base_intact": {
+    "median": 0.7833,
+    "q1": 0.7833,
+    "q3": 0.7833,
+    "min": 0.7833,
+    "max": 0.7833,
+    "n": 1
+   },
+   "conv_primitive": 1,
+   "conv_operand_rescued": 0,
+   "conv_total": 3,
+   "env_default_substituted_instr": 0,
+   "deletion_instr_total": 56,
+   "deletion_conv_nec_instr": {
+    "median": 2,
+    "q1": 2,
+    "q3": 2,
+    "min": 2,
+    "max": 2,
+    "n": 1
+   },
+   "deletion_est_only_instr_total": 1,
+   "wt_C_ge_0.1": 1,
+   "wt": {
+    "Z": {
+     "median": 0.51,
+     "q1": 0.51,
+     "q3": 0.51,
+     "min": 0.51,
+     "max": 0.51,
+     "n": 1
+    },
+    "R": {
+     "median": 0.825,
+     "q1": 0.825,
+     "q3": 0.825,
+     "min": 0.825,
+     "max": 0.825,
+     "n": 1
+    },
+    "K": {
+     "median": 0.5233,
+     "q1": 0.5233,
+     "q3": 0.5233,
+     "min": 0.5233,
+     "max": 0.5233,
+     "n": 1
+    },
+    "C": {
+     "median": 0.5427,
+     "q1": 0.5427,
+     "q3": 0.5427,
+     "min": 0.5427,
+     "max": 0.5427,
+     "n": 1
+    },
+    "P2": {
+     "median": 0.6609,
+     "q1": 0.6609,
+     "q3": 0.6609,
+     "min": 0.6609,
+     "max": 0.6609,
+     "n": 1
+    }
+   }
+  },
+  "MIN3": {
+   "n": 1,
+   "n_status_not_ok": 0,
+   "CONV_NEC": {
+    "median": 3,
+    "q1": 3,
+    "q3": 3,
+    "min": 3,
+    "max": 3,
+    "n": 1
+   },
+   "CONV_PARTIAL": {
+    "median": 0,
+    "q1": 0,
+    "q3": 0,
+    "min": 0,
+    "max": 0,
+    "n": 1
+   },
+   "EST_ONLY": {
+    "median": 0,
+    "q1": 0,
+    "q3": 0,
+    "min": 0,
+    "max": 0,
+    "n": 1
+   },
+   "NEUTRAL": {
+    "median": 61,
+    "q1": 61,
+    "q3": 61,
+    "min": 61,
+    "max": 61,
+    "n": 1
+   },
+   "est_confirmed": {
+    "median": 0,
+    "q1": 0,
+    "q3": 0,
+    "min": 0,
+    "max": 0,
+    "n": 1
+   },
+   "est_confirmed_total": 0,
+   "est_initial_total": 0,
+   "est_value_robust_total": 0,
+   "est_by_readout": {},
+   "n_T": {
+    "median": 64,
+    "q1": 64,
+    "q3": 64,
+    "min": 64,
+    "max": 64,
+    "n": 1
+   },
+   "passengers": {
+    "median": 61,
+    "q1": 61,
+    "q3": 61,
+    "min": 61,
+    "max": 61,
+    "n": 1
+   },
+   "null_est": [
+    0,
+    12
+   ],
+   "null_est_confirmed": 0,
+   "null_cls": {
+    "NEUTRAL": 12
+   },
+   "env_regs": {
+    "C": 1,
+    "L": 1
+   },
+   "genomes_any_env_reg": 1,
+   "side_only": {
+    "[0]": 1
+   },
+   "stock_dead": 1,
+   "tape256_dead": 0,
+   "slice150_dead": 0,
+   "slice1200_dead": 0,
+   "base_ratio": {
+    "median": 1.0,
+    "q1": 1.0,
+    "q3": 1.0,
+    "min": 1.0,
+    "max": 1.0,
+    "n": 1
+   },
+   "base_intact": {
+    "median": 0.5167,
+    "q1": 0.5167,
+    "q3": 0.5167,
+    "min": 0.5167,
+    "max": 0.5167,
+    "n": 1
+   },
+   "conv_primitive": 1,
+   "conv_operand_rescued": 1,
+   "conv_total": 3,
+   "env_default_substituted_instr": 0,
+   "deletion_instr_total": 2,
+   "deletion_conv_nec_instr": {
+    "median": 2,
+    "q1": 2,
+    "q3": 2,
+    "min": 2,
+    "max": 2,
+    "n": 1
+   },
+   "deletion_est_only_instr_total": 0,
+   "wt_C_ge_0.1": 0,
+   "wt": {
+    "Z": {
+     "median": 0.4925,
+     "q1": 0.4925,
+     "q3": 0.4925,
+     "min": 0.4925,
+     "max": 0.4925,
+     "n": 1
+    },
+    "R": {
+     "median": 0.8825,
+     "q1": 0.8825,
+     "q3": 0.8825,
+     "min": 0.8825,
+     "max": 0.8825,
+     "n": 1
+    },
+    "K": {
+     "median": 0.53,
+     "q1": 0.53,
+     "q3": 0.53,
+     "min": 0.53,
+     "max": 0.53,
+     "n": 1
+    },
+    "C": {
+     "median": 0.0025,
+     "q1": 0.0025,
+     "q3": 0.0025,
+     "min": 0.0025,
+     "max": 0.0025,
+     "n": 1
+    },
+    "P2": {
+     "median": 0.7669,
+     "q1": 0.7669,
+     "q3": 0.7669,
+     "min": 0.7669,
+     "max": 0.7669,
+     "n": 1
+    }
+   }
+  }
+ },
+ "SF_vs_SD_est_confirmed_mwu": null,
+ "C_defined": {
+  "SF+E700": 1,
+  "SD": 0
+ }
+}

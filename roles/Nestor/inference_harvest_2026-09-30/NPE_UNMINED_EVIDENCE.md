@@ -51,6 +51,10 @@ discriminate.** [N] VERIFIED-BY-NESTOR (the arithmetic). [RT-corrected] per RT M
   therefore is not obviously its supply.
 - Dossier E rated the operator account a cell-confounded hypothesis.
 - The one-sided p for equal hazards is about 0.02.
+- **Wave-2 N4 (code).** Copy errors flip any copied byte, opcodes included, at rate 0.002 per byte, about 0.3-0.6 flips per
+  execution. The flipped bytes are tagged MKL. In runaway populations copy errors dominate the mutational supply in both
+  cells. The 34-vs-239 world-mutation count is not the relevant supply, so the 8x ≈ 7x agreement is **likely
+  coincidental**. The ffa6 > 7ae3 difference is unexplained.
 - Source: C-A3 checkpoints, cumulative L organism-epochs before the first state-free genome, over the 15 runs where a
   founder lineage that was not state-free reached L ≥ 0.5.
 - ffa6: 7 events over about 975k lineage organism-epochs, roughly 1 per 140k.
