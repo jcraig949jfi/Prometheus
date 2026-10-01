@@ -1,0 +1,7909 @@
+{
+ "RELAY": {
+  "funnel": {
+   "candidates": 200,
+   "stratum_ok": 94,
+   "reach_ok": 94,
+   "ceiling_pass": 43,
+   "plant_scored": 43,
+   "plant_pass(admitted)": 26,
+   "ceiling_only_pass_ignoring_stratum": 116,
+   "design_pass": {
+    "relay_refresh": 24,
+    "relay_bit": 22,
+    "relay_flood": 9
+   },
+   "passes_with_>=2_designs": 24,
+   "above_ceiling_violations": 1,
+   "binding_ceiling_component(all)": {
+    "t2_joint": 80,
+    "lc2k": 120
+   }
+  },
+  "first_failing_clause": {
+   "ceiling": 51,
+   "stratum": 106,
+   "plant": 17,
+   "ADMITTED": 26
+  },
+  "admitted": [
+   {
+    "cid": "RELAY-0010-e89a8022",
+    "ceiling": 0.977,
+    "binding": "lc2k",
+    "q": null,
+    "integration_claimed": null,
+    "hops": [
+     3,
+     3
+    ],
+    "plants": {
+     "relay_flood": {
+      "acc": 0.546,
+      "lo99": 0.492,
+      "pass": false
+     },
+     "relay_refresh": {
+      "acc": 0.767,
+      "lo99": 0.706,
+      "pass": true
+     },
+     "relay_bit": {
+      "acc": 0.738,
+      "lo99": 0.68,
+      "pass": true
+     }
+    },
+    "physics": {
+     "topology": "random",
+     "n_sites": 100,
+     "radius": 3,
+     "k_random": 6,
+     "rewire": 200,
+     "fanout": 4,
+     "dest_mode": "all",
+     "loss": 0.0,
+     "loss_per_hop": 0,
+     "lat_base": 2,
+     "lat_hop": 1,
+     "lat_jitter": 3,
+     "dup": 0.0,
+     "noise": 64,
+     "cap": 4,
+     "collision": "aloha",
+     "decay_shift": 1,
+     "update_mode": "async",
+     "update_period": 2,
+     "update_p": 0.8,
+     "plastic_route": 1,
+     "adapt_shift": 5,
+     "wimm": 0,
+     "mut_site": 0.001,
+     "state_dim": 2,
+     "payload_width": 1,
+     "channels": 1,
+     "prog_len": 16,
+     "rules": 1,
+     "setrule": 0,
+     "topo_seed": 889172250
+    },
+    "env": {
+     "family": "RELAY",
+     "d": 3,
+     "delta": 16,
+     "block": 2,
+     "trials": 12,
+     "cue_len": 2
+    }
+   },
+   {
+    "cid": "RELAY-0013-40d1fec9",
+    "ceiling": 0.974,
+    "binding": "t2_joint",
+    "q": null,
+    "integration_claimed": null,
+    "hops": [
+     3,
+     3
+    ],
+    "plants": {
+     "relay_flood": {
+      "acc": 0.547,
+      "lo99": 0.486,
+      "pass": false
+     },
+     "relay_refresh": {
+      "acc": 0.734,
+      "lo99": 0.658,
+      "pass": true
+     },
+     "relay_bit": {
+      "acc": 0.745,
+      "lo99": 0.668,
+      "pass": true
+     }
+    },
+    "physics": {
+     "topology": "random",
+     "n_sites": 144,
+     "radius": 2,
+     "k_random": 3,
+     "rewire": 200,
+     "fanout": 1,
+     "dest_mode": "all",
+     "loss": 0.0,
+     "loss_per_hop": 0,
+     "lat_base": 2,
+     "lat_hop": 0,
+     "lat_jitter": 0,
+     "dup": 0.0,
+     "noise": 16,
+     "cap": 0,
+     "collision": "saturate",
+     "decay_shift": 1,
+     "update_mode": "async",
+     "update_period": 2,
+     "update_p": 0.8,
+     "plastic_route": 0,
+     "adapt_shift": 2,
+     "wimm": 1,
+     "mut_site": 0.001,
+     "state_dim": 2,
+     "payload_width": 1,
+     "channels": 1,
+     "prog_len": 16,
+     "rules": 1,
+     "setrule": 0,
+     "topo_seed": 1874833140
+    },
+    "env": {
+     "family": "RELAY",
+     "d": 3,
+     "delta": 8,
+     "block": 4,
+     "trials": 12,
+     "cue_len": 2
+    }
+   },
+   {
+    "cid": "RELAY-0019-eabcdf91",
+    "ceiling": 0.969,
+    "binding": "lc2k",
+    "q": null,
+    "integration_claimed": null,
+    "hops": [
+     2,
+     2
+    ],
+    "plants": {
+     "relay_flood": {
+      "acc": 0.542,
+      "lo99": 0.479,
+      "pass": false
+     },
+     "relay_refresh": {
+      "acc": 0.849,
+      "lo99": 0.792,
+      "pass": true
+     },
+     "relay_bit": {
+      "acc": 0.824,
+      "lo99": 0.77,
+      "pass": true
+     }
+    },
+    "physics": {
+     "topology": "torus",
+     "n_sites": 100,
+     "radius": 1,
+     "k_random": 6,
+     "rewire": 50,
+     "fanout": 4,
+     "dest_mode": "all",
+     "loss": 0.3,
+     "loss_per_hop": 1,
+     "lat_base": 1,
+     "lat_hop": 0,
+     "lat_jitter": 0,
+     "dup": 0.0,
+     "noise": 16,
+     "cap": 1,
+     "collision": "none",
+     "decay_shift": 1,
+     "update_mode": "async",
+     "update_period": 1,
+     "update_p": 0.8,
+     "plastic_route": 1,
+     "adapt_shift": 5,
+     "wimm": 0,
+     "mut_site": 0.001,
+     "state_dim": 2,
+     "payload_width": 1,
+     "channels": 1,
+     "prog_len": 16,
+     "rules": 1,
+     "setrule": 0,
+     "topo_seed": 1951083481
+    },
+    "env": {
+     "family": "RELAY",
+     "d": 2,
+     "delta": 8,
+     "block": 2,
+     "trials": 12,
+     "cue_len": 2
+    }
+   },
+   {
+    "cid": "RELAY-0027-8dac4bc0",
+    "ceiling": 0.98,
+    "binding": "t2_joint",
+    "q": null,
+    "integration_claimed": null,
+    "hops": [
+     4,
+     5
+    ],
+    "plants": {
+     "relay_flood": {
+      "acc": 0.564,
+      "lo99": 0.503,
+      "pass": false
+     },
+     "relay_refresh": {
+      "acc": 0.977,
+      "lo99": 0.951,
+      "pass": true
+     },
+     "relay_bit": {
+      "acc": 0.624,
+      "lo99": 0.569,
+      "pass": true
+     }
+    },
+    "physics": {
+     "topology": "random",
+     "n_sites": 144,
+     "radius": 1,
+     "k_random": 6,
+     "rewire": 200,
+     "fanout": 8,
+     "dest_mode": "all",
+     "loss": 0.0,
+     "loss_per_hop": 1,
+     "lat_base": 2,
+     "lat_hop": 0,
+     "lat_jitter": 1,
+     "dup": 0.1,
+     "noise": 16,
+     "cap": 2,
+     "collision": "aloha",
+     "decay_shift": 3,
+     "update_mode": "async",
+     "update_period": 1,
+     "update_p": 0.8,
+     "plastic_route": 1,
+     "adapt_shift": 2,
+     "wimm": 0,
+     "mut_site": 0.01,
+     "state_dim": 2,
+     "payload_width": 1,
+     "channels": 1,
+     "prog_len": 16,
+     "rules": 1,
+     "setrule": 0,
+     "topo_seed": 141981598
+    },
+    "env": {
+     "family": "RELAY",
+     "d": 5,
+     "delta": 16,
+     "block": 4,
+     "trials": 12,
+     "cue_len": 2
+    }
+   },
+   {
+    "cid": "RELAY-0028-4131bc3e",
+    "ceiling": 1.0,
+    "binding": "t2_joint",
+    "q": null,
+    "integration_claimed": null,
+    "hops": [
+     2,
+     2
+    ],
+    "plants": {
+     "relay_flood": {
+      "acc": 0.667,
+      "lo99": 0.582,
+      "pass": true
+     },
+     "relay_refresh": {
+      "acc": 0.667,
+      "lo99": 0.582,
+      "pass": true
+     },
+     "relay_bit": {
+      "acc": 0.669,
+      "lo99": 0.615,
+      "pass": true
+     }
+    },
+    "physics": {
+     "topology": "smallworld",
+     "n_sites": 64,
+     "radius": 2,
+     "k_random": 3,
+     "rewire": 200,
+     "fanout": 1,
+     "dest_mode": "all",
+     "loss": 0.1,
+     "loss_per_hop": 0,
+     "lat_base": 4,
+     "lat_hop": 1,
+     "lat_jitter": 3,
+     "dup": 0.0,
+     "noise": 0,
+     "cap": 2,
+     "collision": "aloha",
+     "decay_shift": 0,
+     "update_mode": "sync",
+     "update_period": 1,
+     "update_p": 0.8,
+     "plastic_route": 0,
+     "adapt_shift": 5,
+     "wimm": 0,
+     "mut_site": 0.001,
+     "state_dim": 2,
+     "payload_width": 1,
+     "channels": 1,
+     "prog_len": 16,
+     "rules": 1,
+     "setrule": 0,
+     "topo_seed": 4123161695
+    },
+    "env": {
+     "family": "RELAY",
+     "d": 2,
+     "delta": 16,
+     "block": 4,
+     "trials": 12,
+     "cue_len": 2
+    }
+   },
+   {
+    "cid": "RELAY-0032-a447e46e",
+    "ceiling": 0.82,
+    "binding": "lc2k",
+    "q": null,
+    "integration_claimed": null,
+    "hops": [
+     3,
+     3
+    ],
+    "plants": {
+     "relay_flood": {
+      "acc": 0.536,
+      "lo99": 0.47,
+      "pass": false
+     },
+     "relay_refresh": {
+      "acc": 0.732,
+      "lo99": 0.678,
+      "pass": true
+     },
+     "relay_bit": {
+      "acc": 0.764,
+      "lo99": 0.72,
+      "pass": true
+     }
+    },
+    "physics": {
+     "topology": "ring",
+     "n_sites": 100,
+     "radius": 2,
+     "k_random": 6,
+     "rewire": 200,
+     "fanout": 4,
+     "dest_mode": "all",
+     "loss": 0.1,
+     "loss_per_hop": 0,
+     "lat_base": 4,
+     "lat_hop": 0,
+     "lat_jitter": 0,
+     "dup": 0.1,
+     "noise": 16,
+     "cap": 4,
+     "collision": "saturate",
+     "decay_shift": 1,
+     "update_mode": "async",
+     "update_period": 1,
+     "update_p": 0.5,
+     "plastic_route": 0,
+     "adapt_shift": 5,
+     "wimm": 1,
+     "mut_site": 0.0,
+     "state_dim": 2,
+     "payload_width": 1,
+     "channels": 1,
+     "prog_len": 16,
+     "rules": 1,
+     "setrule": 0,
+     "topo_seed": 732654433
+    },
+    "env": {
+     "family": "RELAY",
+     "d": 5,
+     "delta": 16,
+     "block": 4,
+     "trials": 12,
+     "cue_len": 2
+    }
+   },
+   {
+    "cid": "RELAY-0034-9bd793f2",
+    "ceiling": 0.98,
+    "binding": "t2_joint",
+    "q": null,
+    "integration_claimed": null,
+    "hops": [
+     2,
+     2
+    ],
+    "plants": {
+     "relay_flood": {
+      "acc": 0.555,
+      "lo99": 0.525,
+      "pass": false
+     },
+     "relay_refresh": {
+      "acc": 0.73,
+      "lo99": 0.664,
+      "pass": true
+     },
+     "relay_bit": {
+      "acc": 0.764,
+      "lo99": 0.697,
+      "pass": true
+     }
+    },
+    "physics": {
+     "topology": "smallworld",
+     "n_sites": 144,
+     "radius": 1,
+     "k_random": 6,
+     "rewire": 200,
+     "fanout": 1,
+     "dest_mode": "all",
+     "loss": 0.3,
+     "loss_per_hop": 0,
+     "lat_base": 2,
+     "lat_hop": 0,
+     "lat_jitter": 1,
+     "dup": 0.0,
+     "noise": 64,
+     "cap": 0,
+     "collision": "none",
+     "decay_shift": 6,
+     "update_mode": "async",
+     "update_period": 1,
+     "update_p": 0.8,
+     "plastic_route": 0,
+     "adapt_shift": 5,
+     "wimm": 0,
+     "mut_site": 0.0,
+     "state_dim": 2,
+     "payload_width": 1,
+     "channels": 1,
+     "prog_len": 16,
+     "rules": 1,
+     "setrule": 0,
+     "topo_seed": 1662528229
+    },
+    "env": {
+     "family": "RELAY",
+     "d": 2,
+     "delta": 16,
+     "block": 2,
+     "trials": 12,
+     "cue_len": 2
+    }
+   },
+   {
+    "cid": "RELAY-0051-f3d5af49",
+    "ceiling": 1.0,
+    "binding": "t2_joint",
+    "q": null,
+    "integration_claimed": null,
+    "hops": [
+     3,
+     3
+    ],
+    "plants": {
+     "relay_flood": {
+      "acc": 0.727,
+      "lo99": 0.641,
+      "pass": true
+     },
+     "relay_refresh": {
+      "acc": 0.727,
+      "lo99": 0.641,
+      "pass": true
+     },
+     "relay_bit": {
+      "acc": 0.625,
+      "lo99": 0.569,
+      "pass": true
+     }
+    },
+    "physics": {
+     "topology": "random",
+     "n_sites": 100,
+     "radius": 2,
+     "k_random": 3,
+     "rewire": 200,
+     "fanout": 2,
+     "dest_mode": "all",
+     "loss": 0.0,
+     "loss_per_hop": 0,
+     "lat_base": 1,
+     "lat_hop": 1,
+     "lat_jitter": 3,
+     "dup": 0.1,
+     "noise": 0,
+     "cap": 0,
+     "collision": "saturate",
+     "decay_shift": 0,
+     "update_mode": "sync",
+     "update_period": 1,
+     "update_p": 0.8,
+     "plastic_route": 1,
+     "adapt_shift": 2,
+     "wimm": 1,
+     "mut_site": 0.01,
+     "state_dim": 2,
+     "payload_width": 1,
+     "channels": 1,
+     "prog_len": 16,
+     "rules": 1,
+     "setrule": 0,
+     "topo_seed": 924000272
+    },
+    "env": {
+     "family": "RELAY",
+     "d": 3,
+     "delta": 16,
+     "block": 2,
+     "trials": 12,
+     "cue_len": 2
+    }
+   },
+   {
+    "cid": "RELAY-0063-ec10ec93",
+    "ceiling": 1.0,
+    "binding": "t2_joint",
+    "q": null,
+    "integration_claimed": null,
+    "hops": [
+     2,
+     2
+    ],
+    "plants": {
+     "relay_flood": {
+      "acc": 0.644,
+      "lo99": 0.602,
+      "pass": true
+     },
+     "relay_refresh": {
+      "acc": 0.568,
+      "lo99": 0.522,
+      "pass": false
+     },
+     "relay_bit": {
+      "acc": 0.551,
+      "lo99": 0.508,
+      "pass": false
+     }
+    },
+    "physics": {
+     "topology": "ring",
+     "n_sites": 64,
+     "radius": 2,
+     "k_random": 3,
+     "rewire": 200,
+     "fanout": 1,
+     "dest_mode": "sample",
+     "loss": 0.0,
+     "loss_per_hop": 0,
+     "lat_base": 2,
+     "lat_hop": 1,
+     "lat_jitter": 0,
+     "dup": 0.0,
+     "noise": 64,
+     "cap": 1,
+     "collision": "aloha",
+     "decay_shift": 1,
+     "update_mode": "sync",
+     "update_period": 1,
+     "update_p": 0.8,
+     "plastic_route": 1,
+     "adapt_shift": 2,
+     "wimm": 0,
+     "mut_site": 0.01,
+     "state_dim": 2,
+     "payload_width": 1,
+     "channels": 1,
+     "prog_len": 16,
+     "rules": 1,
+     "setrule": 0,
+     "topo_seed": 1180564940
+    },
+    "env": {
+     "family": "RELAY",
+     "d": 3,
+     "delta": 16,
+     "block": 2,
+     "trials": 12,
+     "cue_len": 2
+    }
+   },
+   {
+    "cid": "RELAY-0073-87911b8e",
+    "ceiling": 1.0,
+    "binding": "t2_joint",
+    "q": null,
+    "integration_claimed": null,
+    "hops": [
+     3,
+     3
+    ],
+    "plants": {
+     "relay_flood": {
+      "acc": 0.555,
+      "lo99": 0.495,
+      "pass": false
+     },
+     "relay_refresh": {
+      "acc": 0.949,
+      "lo99": 0.893,
+      "pass": true
+     },
+     "relay_bit": {
+      "acc": 0.977,
+      "lo99": 0.949,
+      "pass": true
+     }
+    },
+    "physics": {
+     "topology": "smallworld",
+     "n_sites": 64,
+     "radius": 3,
+     "k_random": 6,
+     "rewire": 200,
+     "fanout": 8,
+     "dest_mode": "sample",
+     "loss": 0.3,
+     "loss_per_hop": 1,
+     "lat_base": 1,
+     "lat_hop": 0,
+     "lat_jitter": 1,
+     "dup": 0.1,
+     "noise": 64,
+     "cap": 4,
+     "collision": "none",
+     "decay_shift": 3,
+     "update_mode": "sync",
+     "update_period": 1,
+     "update_p": 0.5,
+     "plastic_route": 0,
+     "adapt_shift": 5,
+     "wimm": 1,
+     "mut_site": 0.0,
+     "state_dim": 2,
+     "payload_width": 1,
+     "channels": 1,
+     "prog_len": 16,
+     "rules": 1,
+     "setrule": 0,
+     "topo_seed": 1220399339
+    },
+    "env": {
+     "family": "RELAY",
+     "d": 3,
+     "delta": 8,
+     "block": 2,
+     "trials": 12,
+     "cue_len": 2
+    }
+   },
+   {
+    "cid": "RELAY-0078-61d1769a",
+    "ceiling": 1.0,
+    "binding": "t2_joint",
+    "q": null,
+    "integration_claimed": null,
+    "hops": [
+     2,
+     2
+    ],
+    "plants": {
+     "relay_flood": {
+      "acc": 0.805,
+      "lo99": 0.729,
+      "pass": true
+     },
+     "relay_refresh": {
+      "acc": 0.805,
+      "lo99": 0.729,
+      "pass": true
+     },
+     "relay_bit": {
+      "acc": 0.805,
+      "lo99": 0.733,
+      "pass": true
+     }
+    },
+    "physics": {
+     "topology": "random",
+     "n_sites": 64,
+     "radius": 3,
+     "k_random": 6,
+     "rewire": 200,
+     "fanout": 1,
+     "dest_mode": "all",
+     "loss": 0.6,
+     "loss_per_hop": 1,
+     "lat_base": 1,
+     "lat_hop": 1,
+     "lat_jitter": 1,
+     "dup": 0.1,
+     "noise": 64,
+     "cap": 2,
+     "collision": "saturate",
+     "decay_shift": 0,
+     "update_mode": "sync",
+     "update_period": 1,
+     "update_p": 0.8,
+     "plastic_route": 0,
+     "adapt_shift": 2,
+     "wimm": 0,
+     "mut_site": 0.0,
+     "state_dim": 2,
+     "payload_width": 1,
+     "channels": 1,
+     "prog_len": 16,
+     "rules": 1,
+     "setrule": 0,
+     "topo_seed": 666652072
+    },
+    "env": {
+     "family": "RELAY",
+     "d": 2,
+     "delta": 16,
+     "block": 2,
+     "trials": 12,
+     "cue_len": 2
+    }
+   },
+   {
+    "cid": "RELAY-0085-e5dc0ede",
+    "ceiling": 0.88,
+    "binding": "lc2k",
+    "q": null,
+    "integration_claimed": null,
+    "hops": [
+     3,
+     3
+    ],
+    "plants": {
+     "relay_flood": {
+      "acc": 0.508,
+      "lo99": 0.441,
+      "pass": false
+     },
+     "relay_refresh": {
+      "acc": 0.646,
+      "lo99": 0.59,
+      "pass": true
+     },
+     "relay_bit": {
+      "acc": 0.628,
+      "lo99": 0.572,
+      "pass": true
+     }
+    },
+    "physics": {
+     "topology": "torus",
+     "n_sites": 144,
+     "radius": 1,
+     "k_random": 6,
+     "rewire": 200,
+     "fanout": 1,
+     "dest_mode": "all",
+     "loss": 0.3,
+     "loss_per_hop": 1,
+     "lat_base": 1,
+     "lat_hop": 1,
+     "lat_jitter": 1,
+     "dup": 0.0,
+     "noise": 0,
+     "cap": 0,
+     "collision": "saturate",
+     "decay_shift": 3,
+     "update_mode": "sync",
+     "update_period": 1,
+     "update_p": 0.8,
+     "plastic_route": 1,
+     "adapt_shift": 2,
+     "wimm": 1,
+     "mut_site": 0.001,
+     "state_dim": 2,
+     "payload_width": 1,
+     "channels": 1,
+     "prog_len": 16,
+     "rules": 1,
+     "setrule": 0,
+     "topo_seed": 424815083
+    },
+    "env": {
+     "family": "RELAY",
+     "d": 3,
+     "delta": 8,
+     "block": 4,
+     "trials": 12,
+     "cue_len": 2
+    }
+   },
+   {
+    "cid": "RELAY-0089-6e090720",
+    "ceiling": 1.0,
+    "binding": "t2_joint",
+    "q": null,
+    "integration_claimed": null,
+    "hops": [
+     2,
+     2
+    ],
+    "plants": {
+     "relay_flood": {
+      "acc": 0.572,
+      "lo99": 0.544,
+      "pass": false
+     },
+     "relay_refresh": {
+      "acc": 0.733,
+      "lo99": 0.639,
+      "pass": true
+     },
+     "relay_bit": {
+      "acc": 0.762,
+      "lo99": 0.69,
+      "pass": true
+     }
+    },
+    "physics": {
+     "topology": "smallworld",
+     "n_sites": 64,
+     "radius": 1,
+     "k_random": 3,
+     "rewire": 200,
+     "fanout": 8,
+     "dest_mode": "all",
+     "loss": 0.1,
+     "loss_per_hop": 1,
+     "lat_base": 1,
+     "lat_hop": 0,
+     "lat_jitter": 3,
+     "dup": 0.1,
+     "noise": 0,
+     "cap": 1,
+     "collision": "none",
+     "decay_shift": 6,
+     "update_mode": "sync",
+     "update_period": 1,
+     "update_p": 0.8,
+     "plastic_route": 0,
+     "adapt_shift": 2,
+     "wimm": 0,
+     "mut_site": 0.0,
+     "state_dim": 2,
+     "payload_width": 1,
+     "channels": 1,
+     "prog_len": 16,
+     "rules": 1,
+     "setrule": 0,
+     "topo_seed": 3432334153
+    },
+    "env": {
+     "family": "RELAY",
+     "d": 2,
+     "delta": 8,
+     "block": 4,
+     "trials": 12,
+     "cue_len": 2
+    }
+   },
+   {
+    "cid": "RELAY-0090-a1c30a83",
+    "ceiling": 0.862,
+    "binding": "lc2k",
+    "q": null,
+    "integration_claimed": null,
+    "hops": [
+     2,
+     2
+    ],
+    "plants": {
+     "relay_flood": {
+      "acc": 0.613,
+      "lo99": 0.559,
+      "pass": true
+     },
+     "relay_refresh": {
+      "acc": 0.613,
+      "lo99": 0.559,
+      "pass": true
+     },
+     "relay_bit": {
+      "acc": 0.602,
+      "lo99": 0.543,
+      "pass": false
+     }
+    },
+    "physics": {
+     "topology": "ring",
+     "n_sites": 64,
+     "radius": 2,
+     "k_random": 3,
+     "rewire": 50,
+     "fanout": 2,
+     "dest_mode": "all",
+     "loss": 0.6,
+     "loss_per_hop": 0,
+     "lat_base": 2,
+     "lat_hop": 0,
+     "lat_jitter": 1,
+     "dup": 0.1,
+     "noise": 64,
+     "cap": 0,
+     "collision": "saturate",
+     "decay_shift": 0,
+     "update_mode": "async",
+     "update_period": 1,
+     "update_p": 0.8,
+     "plastic_route": 1,
+     "adapt_shift": 2,
+     "wimm": 1,
+     "mut_site": 0.01,
+     "state_dim": 2,
+     "payload_width": 1,
+     "channels": 1,
+     "prog_len": 16,
+     "rules": 1,
+     "setrule": 0,
+     "topo_seed": 767299237
+    },
+    "env": {
+     "family": "RELAY",
+     "d": 3,
+     "delta": 8,
+     "block": 4,
+     "trials": 12,
+     "cue_len": 2
+    }
+   },
+   {
+    "cid": "RELAY-0113-6991dbec",
+    "ceiling": 1.0,
+    "binding": "t2_joint",
+    "q": null,
+    "integration_claimed": null,
+    "hops": [
+     2,
+     2
+    ],
+    "plants": {
+     "relay_flood": {
+      "acc": 0.572,
+      "lo99": 0.553,
+      "pass": true
+     },
+     "relay_refresh": {
+      "acc": 1.0,
+      "lo99": 1.0,
+      "pass": true
+     },
+     "relay_bit": {
+      "acc": 1.0,
+      "lo99": 1.0,
+      "pass": true
+     }
+    },
+    "physics": {
+     "topology": "torus",
+     "n_sites": 144,
+     "radius": 3,
+     "k_random": 6,
+     "rewire": 50,
+     "fanout": 4,
+     "dest_mode": "all",
+     "loss": 0.1,
+     "loss_per_hop": 0,
+     "lat_base": 2,
+     "lat_hop": 1,
+     "lat_jitter": 0,
+     "dup": 0.0,
+     "noise": 16,
+     "cap": 4,
+     "collision": "saturate",
+     "decay_shift": 6,
+     "update_mode": "sync",
+     "update_period": 1,
+     "update_p": 0.8,
+     "plastic_route": 0,
+     "adapt_shift": 5,
+     "wimm": 1,
+     "mut_site": 0.0,
+     "state_dim": 2,
+     "payload_width": 1,
+     "channels": 1,
+     "prog_len": 16,
+     "rules": 1,
+     "setrule": 0,
+     "topo_seed": 2063735677
+    },
+    "env": {
+     "family": "RELAY",
+     "d": 5,
+     "delta": 16,
+     "block": 4,
+     "trials": 12,
+     "cue_len": 2
+    }
+   },
+   {
+    "cid": "RELAY-0126-132f7eae",
+    "ceiling": 1.0,
+    "binding": "t2_joint",
+    "q": null,
+    "integration_claimed": null,
+    "hops": [
+     2,
+     2
+    ],
+    "plants": {
+     "relay_flood": {
+      "acc": 0.544,
+      "lo99": 0.477,
+      "pass": false
+     },
+     "relay_refresh": {
+      "acc": 1.0,
+      "lo99": 1.0,
+      "pass": true
+     },
+     "relay_bit": {
+      "acc": 0.953,
+      "lo99": 0.918,
+      "pass": true
+     }
+    },
+    "physics": {
+     "topology": "torus",
+     "n_sites": 144,
+     "radius": 3,
+     "k_random": 3,
+     "rewire": 50,
+     "fanout": 2,
+     "dest_mode": "all",
+     "loss": 0.1,
+     "loss_per_hop": 1,
+     "lat_base": 1,
+     "lat_hop": 1,
+     "lat_jitter": 1,
+     "dup": 0.1,
+     "noise": 64,
+     "cap": 2,
+     "collision": "saturate",
+     "decay_shift": 1,
+     "update_mode": "sync",
+     "update_period": 2,
+     "update_p": 0.8,
+     "plastic_route": 0,
+     "adapt_shift": 5,
+     "wimm": 0,
+     "mut_site": 0.001,
+     "state_dim": 2,
+     "payload_width": 1,
+     "channels": 1,
+     "prog_len": 16,
+     "rules": 1,
+     "setrule": 0,
+     "topo_seed": 2390191589
+    },
+    "env": {
+     "family": "RELAY",
+     "d": 5,
+     "delta": 16,
+     "block": 2,
+     "trials": 12,
+     "cue_len": 2
+    }
+   },
+   {
+    "cid": "RELAY-0136-bc159452",
+    "ceiling": 0.924,
+    "binding": "lc2k",
+    "q": null,
+    "integration_claimed": null,
+    "hops": [
+     5,
+     5
+    ],
+    "plants": {
+     "relay_flood": {
+      "acc": 0.525,
+      "lo99": 0.465,
+      "pass": false
+     },
+     "relay_refresh": {
+      "acc": 0.862,
+      "lo99": 0.784,
+      "pass": true
+     },
+     "relay_bit": {
+      "acc": 0.883,
+      "lo99": 0.811,
+      "pass": true
+     }
+    },
+    "physics": {
+     "topology": "random",
+     "n_sites": 64,
+     "radius": 2,
+     "k_random": 3,
+     "rewire": 50,
+     "fanout": 2,
+     "dest_mode": "all",
+     "loss": 0.1,
+     "loss_per_hop": 1,
+     "lat_base": 1,
+     "lat_hop": 0,
+     "lat_jitter": 1,
+     "dup": 0.0,
+     "noise": 64,
+     "cap": 4,
+     "collision": "aloha",
+     "decay_shift": 1,
+     "update_mode": "sync",
+     "update_period": 1,
+     "update_p": 0.5,
+     "plastic_route": 0,
+     "adapt_shift": 5,
+     "wimm": 1,
+     "mut_site": 0.0,
+     "state_dim": 2,
+     "payload_width": 1,
+     "channels": 1,
+     "prog_len": 16,
+     "rules": 1,
+     "setrule": 0,
+     "topo_seed": 1709405205
+    },
+    "env": {
+     "family": "RELAY",
+     "d": 5,
+     "delta": 8,
+     "block": 2,
+     "trials": 12,
+     "cue_len": 2
+    }
+   },
+   {
+    "cid": "RELAY-0137-997b2554",
+    "ceiling": 0.98,
+    "binding": "t2_joint",
+    "q": null,
+    "integration_claimed": null,
+    "hops": [
+     2,
+     2
+    ],
+    "plants": {
+     "relay_flood": {
+      "acc": 0.643,
+      "lo99": 0.573,
+      "pass": true
+     },
+     "relay_refresh": {
+      "acc": 0.643,
+      "lo99": 0.573,
+      "pass": true
+     },
+     "relay_bit": {
+      "acc": 0.581,
+      "lo99": 0.52,
+      "pass": false
+     }
+    },
+    "physics": {
+     "topology": "smallworld",
+     "n_sites": 144,
+     "radius": 3,
+     "k_random": 3,
+     "rewire": 50,
+     "fanout": 1,
+     "dest_mode": "all",
+     "loss": 0.6,
+     "loss_per_hop": 0,
+     "lat_base": 1,
+     "lat_hop": 0,
+     "lat_jitter": 0,
+     "dup": 0.1,
+     "noise": 16,
+     "cap": 2,
+     "collision": "aloha",
+     "decay_shift": 0,
+     "update_mode": "async",
+     "update_period": 1,
+     "update_p": 0.8,
+     "plastic_route": 1,
+     "adapt_shift": 2,
+     "wimm": 0,
+     "mut_site": 0.001,
+     "state_dim": 2,
+     "payload_width": 1,
+     "channels": 1,
+     "prog_len": 16,
+     "rules": 1,
+     "setrule": 0,
+     "topo_seed": 3336740378
+    },
+    "env": {
+     "family": "RELAY",
+     "d": 2,
+     "delta": 16,
+     "block": 2,
+     "trials": 12,
+     "cue_len": 2
+    }
+   },
+   {
+    "cid": "RELAY-0138-d11291f8",
+    "ceiling": 0.971,
+    "binding": "lc2k",
+    "q": null,
+    "integration_claimed": null,
+    "hops": [
+     2,
+     2
+    ],
+    "plants": {
+     "relay_flood": {
+      "acc": 0.54,
+      "lo99": 0.488,
+      "pass": false
+     },
+     "relay_refresh": {
+      "acc": 0.701,
+      "lo99": 0.625,
+      "pass": true
+     },
+     "relay_bit": {
+      "acc": 0.655,
+      "lo99": 0.604,
+      "pass": true
+     }
+    },
+    "physics": {
+     "topology": "torus",
+     "n_sites": 100,
+     "radius": 3,
+     "k_random": 3,
+     "rewire": 200,
+     "fanout": 4,
+     "dest_mode": "sample",
+     "loss": 0.0,
+     "loss_per_hop": 1,
+     "lat_base": 1,
+     "lat_hop": 0,
+     "lat_jitter": 0,
+     "dup": 0.0,
+     "noise": 0,
+     "cap": 0,
+     "collision": "aloha",
+     "decay_shift": 3,
+     "update_mode": "async",
+     "update_period": 1,
+     "update_p": 0.8,
+     "plastic_route": 1,
+     "adapt_shift": 2,
+     "wimm": 0,
+     "mut_site": 0.01,
+     "state_dim": 2,
+     "payload_width": 1,
+     "channels": 1,
+     "prog_len": 16,
+     "rules": 1,
+     "setrule": 0,
+     "topo_seed": 4185084442
+    },
+    "env": {
+     "family": "RELAY",
+     "d": 5,
+     "delta": 4,
+     "block": 4,
+     "trials": 12,
+     "cue_len": 2
+    }
+   },
+   {
+    "cid": "RELAY-0139-d49cc3ca",
+    "ceiling": 1.0,
+    "binding": "t2_joint",
+    "q": null,
+    "integration_claimed": null,
+    "hops": [
+     5,
+     5
+    ],
+    "plants": {
+     "relay_flood": {
+      "acc": 0.561,
+      "lo99": 0.503,
+      "pass": false
+     },
+     "relay_refresh": {
+      "acc": 0.842,
+      "lo99": 0.776,
+      "pass": true
+     },
+     "relay_bit": {
+      "acc": 0.641,
+      "lo99": 0.59,
+      "pass": true
+     }
+    },
+    "physics": {
+     "topology": "smallworld",
+     "n_sites": 144,
+     "radius": 1,
+     "k_random": 3,
+     "rewire": 200,
+     "fanout": 4,
+     "dest_mode": "sample",
+     "loss": 0.0,
+     "loss_per_hop": 0,
+     "lat_base": 1,
+     "lat_hop": 0,
+     "lat_jitter": 0,
+     "dup": 0.0,
+     "noise": 16,
+     "cap": 1,
+     "collision": "saturate",
+     "decay_shift": 1,
+     "update_mode": "sync",
+     "update_period": 2,
+     "update_p": 0.5,
+     "plastic_route": 0,
+     "adapt_shift": 2,
+     "wimm": 0,
+     "mut_site": 0.01,
+     "state_dim": 2,
+     "payload_width": 1,
+     "channels": 1,
+     "prog_len": 16,
+     "rules": 1,
+     "setrule": 0,
+     "topo_seed": 3729608138
+    },
+    "env": {
+     "family": "RELAY",
+     "d": 5,
+     "delta": 16,
+     "block": 2,
+     "trials": 12,
+     "cue_len": 2
+    }
+   },
+   {
+    "cid": "RELAY-0149-de81f87d",
+    "ceiling": 0.711,
+    "binding": "lc2k",
+    "q": null,
+    "integration_claimed": null,
+    "hops": [
+     2,
+     2
+    ],
+    "plants": {
+     "relay_flood": {
+      "acc": 0.572,
+      "lo99": 0.513,
+      "pass": false
+     },
+     "relay_refresh": {
+      "acc": 0.665,
+      "lo99": 0.591,
+      "pass": true
+     },
+     "relay_bit": {
+      "acc": 0.615,
+      "lo99": 0.556,
+      "pass": true
+     }
+    },
+    "physics": {
+     "topology": "torus",
+     "n_sites": 144,
+     "radius": 1,
+     "k_random": 3,
+     "rewire": 200,
+     "fanout": 2,
+     "dest_mode": "all",
+     "loss": 0.1,
+     "loss_per_hop": 0,
+     "lat_base": 1,
+     "lat_hop": 1,
+     "lat_jitter": 0,
+     "dup": 0.1,
+     "noise": 16,
+     "cap": 0,
+     "collision": "none",
+     "decay_shift": 1,
+     "update_mode": "sync",
+     "update_period": 2,
+     "update_p": 0.8,
+     "plastic_route": 0,
+     "adapt_shift": 2,
+     "wimm": 0,
+     "mut_site": 0.01,
+     "state_dim": 2,
+     "payload_width": 1,
+     "channels": 1,
+     "prog_len": 16,
+     "rules": 1,
+     "setrule": 0,
+     "topo_seed": 2949366889
+    },
+    "env": {
+     "family": "RELAY",
+     "d": 2,
+     "delta": 4,
+     "block": 2,
+     "trials": 12,
+     "cue_len": 2
+    }
+   },
+   {
+    "cid": "RELAY-0152-c69e0a42",
+    "ceiling": 1.0,
+    "binding": "t2_joint",
+    "q": null,
+    "integration_claimed": null,
+    "hops": [
+     3,
+     3
+    ],
+    "plants": {
+     "relay_flood": {
+      "acc": 0.56,
+      "lo99": 0.497,
+      "pass": false
+     },
+     "relay_refresh": {
+      "acc": 0.992,
+      "lo99": 0.969,
+      "pass": true
+     },
+     "relay_bit": {
+      "acc": 0.772,
+      "lo99": 0.717,
+      "pass": true
+     }
+    },
+    "physics": {
+     "topology": "ring",
+     "n_sites": 100,
+     "radius": 2,
+     "k_random": 6,
+     "rewire": 50,
+     "fanout": 8,
+     "dest_mode": "sample",
+     "loss": 0.0,
+     "loss_per_hop": 0,
+     "lat_base": 1,
+     "lat_hop": 0,
+     "lat_jitter": 1,
+     "dup": 0.0,
+     "noise": 0,
+     "cap": 0,
+     "collision": "aloha",
+     "decay_shift": 1,
+     "update_mode": "sync",
+     "update_period": 1,
+     "update_p": 0.5,
+     "plastic_route": 1,
+     "adapt_shift": 2,
+     "wimm": 0,
+     "mut_site": 0.01,
+     "state_dim": 2,
+     "payload_width": 1,
+     "channels": 1,
+     "prog_len": 16,
+     "rules": 1,
+     "setrule": 0,
+     "topo_seed": 3025314375
+    },
+    "env": {
+     "family": "RELAY",
+     "d": 5,
+     "delta": 16,
+     "block": 4,
+     "trials": 12,
+     "cue_len": 2
+    }
+   },
+   {
+    "cid": "RELAY-0160-42e21e44",
+    "ceiling": 0.74,
+    "binding": "lc2k",
+    "q": null,
+    "integration_claimed": null,
+    "hops": [
+     2,
+     2
+    ],
+    "plants": {
+     "relay_flood": {
+      "acc": 0.514,
+      "lo99": 0.458,
+      "pass": false
+     },
+     "relay_refresh": {
+      "acc": 0.618,
+      "lo99": 0.551,
+      "pass": true
+     },
+     "relay_bit": {
+      "acc": 0.625,
+      "lo99": 0.57,
+      "pass": true
+     }
+    },
+    "physics": {
+     "topology": "torus",
+     "n_sites": 64,
+     "radius": 1,
+     "k_random": 6,
+     "rewire": 200,
+     "fanout": 4,
+     "dest_mode": "all",
+     "loss": 0.1,
+     "loss_per_hop": 0,
+     "lat_base": 2,
+     "lat_hop": 0,
+     "lat_jitter": 0,
+     "dup": 0.1,
+     "noise": 64,
+     "cap": 2,
+     "collision": "aloha",
+     "decay_shift": 1,
+     "update_mode": "async",
+     "update_period": 1,
+     "update_p": 0.8,
+     "plastic_route": 0,
+     "adapt_shift": 2,
+     "wimm": 1,
+     "mut_site": 0.01,
+     "state_dim": 2,
+     "payload_width": 1,
+     "channels": 1,
+     "prog_len": 16,
+     "rules": 1,
+     "setrule": 0,
+     "topo_seed": 3163880793
+    },
+    "env": {
+     "family": "RELAY",
+     "d": 2,
+     "delta": 4,
+     "block": 2,
+     "trials": 12,
+     "cue_len": 2
+    }
+   },
+   {
+    "cid": "RELAY-0167-04dd343c",
+    "ceiling": 0.98,
+    "binding": "t2_joint",
+    "q": null,
+    "integration_claimed": null,
+    "hops": [
+     2,
+     2
+    ],
+    "plants": {
+     "relay_flood": {
+      "acc": 0.993,
+      "lo99": 0.983,
+      "pass": true
+     },
+     "relay_refresh": {
+      "acc": 0.993,
+      "lo99": 0.983,
+      "pass": true
+     },
+     "relay_bit": {
+      "acc": 0.828,
+      "lo99": 0.78,
+      "pass": true
+     }
+    },
+    "physics": {
+     "topology": "torus",
+     "n_sites": 100,
+     "radius": 2,
+     "k_random": 6,
+     "rewire": 50,
+     "fanout": 4,
+     "dest_mode": "all",
+     "loss": 0.1,
+     "loss_per_hop": 0,
+     "lat_base": 2,
+     "lat_hop": 0,
+     "lat_jitter": 1,
+     "dup": 0.1,
+     "noise": 64,
+     "cap": 4,
+     "collision": "saturate",
+     "decay_shift": 0,
+     "update_mode": "async",
+     "update_period": 1,
+     "update_p": 0.8,
+     "plastic_route": 0,
+     "adapt_shift": 5,
+     "wimm": 1,
+     "mut_site": 0.01,
+     "state_dim": 2,
+     "payload_width": 1,
+     "channels": 1,
+     "prog_len": 16,
+     "rules": 1,
+     "setrule": 0,
+     "topo_seed": 2892689561
+    },
+    "env": {
+     "family": "RELAY",
+     "d": 3,
+     "delta": 8,
+     "block": 4,
+     "trials": 12,
+     "cue_len": 2
+    }
+   },
+   {
+    "cid": "RELAY-0168-feccdde6",
+    "ceiling": 0.797,
+    "binding": "lc2k",
+    "q": null,
+    "integration_claimed": null,
+    "hops": [
+     2,
+     2
+    ],
+    "plants": {
+     "relay_flood": {
+      "acc": 0.527,
+      "lo99": 0.474,
+      "pass": false
+     },
+     "relay_refresh": {
+      "acc": 0.677,
+      "lo99": 0.615,
+      "pass": true
+     },
+     "relay_bit": {
+      "acc": 0.681,
+      "lo99": 0.624,
+      "pass": true
+     }
+    },
+    "physics": {
+     "topology": "random",
+     "n_sites": 144,
+     "radius": 3,
+     "k_random": 6,
+     "rewire": 50,
+     "fanout": 2,
+     "dest_mode": "all",
+     "loss": 0.1,
+     "loss_per_hop": 0,
+     "lat_base": 2,
+     "lat_hop": 0,
+     "lat_jitter": 1,
+     "dup": 0.0,
+     "noise": 16,
+     "cap": 2,
+     "collision": "aloha",
+     "decay_shift": 3,
+     "update_mode": "async",
+     "update_period": 1,
+     "update_p": 0.5,
+     "plastic_route": 0,
+     "adapt_shift": 5,
+     "wimm": 1,
+     "mut_site": 0.0,
+     "state_dim": 2,
+     "payload_width": 1,
+     "channels": 1,
+     "prog_len": 16,
+     "rules": 1,
+     "setrule": 0,
+     "topo_seed": 3152893319
+    },
+    "env": {
+     "family": "RELAY",
+     "d": 2,
+     "delta": 8,
+     "block": 4,
+     "trials": 12,
+     "cue_len": 2
+    }
+   },
+   {
+    "cid": "RELAY-0193-f6d78871",
+    "ceiling": 1.0,
+    "binding": "t2_joint",
+    "q": null,
+    "integration_claimed": null,
+    "hops": [
+     2,
+     2
+    ],
+    "plants": {
+     "relay_flood": {
+      "acc": 0.612,
+      "lo99": 0.579,
+      "pass": true
+     },
+     "relay_refresh": {
+      "acc": 0.546,
+      "lo99": 0.508,
+      "pass": false
+     },
+     "relay_bit": {
+      "acc": 0.539,
+      "lo99": 0.503,
+      "pass": false
+     }
+    },
+    "physics": {
+     "topology": "ring",
+     "n_sites": 100,
+     "radius": 2,
+     "k_random": 6,
+     "rewire": 50,
+     "fanout": 1,
+     "dest_mode": "sample",
+     "loss": 0.1,
+     "loss_per_hop": 0,
+     "lat_base": 1,
+     "lat_hop": 0,
+     "lat_jitter": 0,
+     "dup": 0.1,
+     "noise": 0,
+     "cap": 4,
+     "collision": "none",
+     "decay_shift": 3,
+     "update_mode": "sync",
+     "update_period": 2,
+     "update_p": 0.5,
+     "plastic_route": 1,
+     "adapt_shift": 2,
+     "wimm": 1,
+     "mut_site": 0.01,
+     "state_dim": 2,
+     "payload_width": 1,
+     "channels": 1,
+     "prog_len": 16,
+     "rules": 1,
+     "setrule": 0,
+     "topo_seed": 1445513294
+    },
+    "env": {
+     "family": "RELAY",
+     "d": 3,
+     "delta": 16,
+     "block": 4,
+     "trials": 12,
+     "cue_len": 2
+    }
+   }
+  ],
+  "blocking_ceiling_stage": {
+   "n": 200,
+   "pass": 43,
+   "base_rate": 0.215,
+   "ranked": [
+    [
+     "d",
+     {
+      "spread": 0.389,
+      "levels": {
+       "1": "0/57",
+       "2": "21/54",
+       "3": "13/44",
+       "5": "9/45"
+      },
+      "zero_pass_levels": [
+       "1"
+      ]
+     }
+    ],
+    [
+     "topology",
+     {
+      "spread": 0.367,
+      "levels": {
+       "global": "0/36",
+       "random": "11/30",
+       "ring": "6/36",
+       "smallworld": "14/48",
+       "torus": "12/50"
+      },
+      "zero_pass_levels": [
+       "global"
+      ]
+     }
+    ],
+    [
+     "delta",
+     {
+      "spread": 0.254,
+      "levels": {
+       "16": "23/69",
+       "4": "5/63",
+       "8": "15/68"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "lat_jitter",
+     {
+      "spread": 0.222,
+      "levels": {
+       "0": "20/63",
+       "1": "17/74",
+       "3": "6/63"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "decay_shift",
+     {
+      "spread": 0.211,
+      "levels": {
+       "0": "12/43",
+       "1": "18/54",
+       "3": "7/54",
+       "6": "6/49"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "update_p",
+     {
+      "spread": 0.209,
+      "levels": {
+       "0.5": "6/51",
+       "0.8": "16/49"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "radius",
+     {
+      "spread": 0.208,
+      "levels": {
+       "1": "8/26",
+       "2": "7/30",
+       "3": "3/30"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "lat_base",
+     {
+      "spread": 0.203,
+      "levels": {
+       "1": "20/67",
+       "2": "17/70",
+       "4": "6/63"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "fanout",
+     {
+      "spread": 0.189,
+      "levels": {
+       "1": "15/46",
+       "2": "9/55",
+       "4": "12/48",
+       "8": "7/51"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "rewire",
+     {
+      "spread": 0.119,
+      "levels": {
+       "200": "9/26",
+       "50": "5/22"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "loss",
+     {
+      "spread": 0.117,
+      "levels": {
+       "0.0": "10/59",
+       "0.1": "14/50",
+       "0.3": "12/48",
+       "0.6": "7/43"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "loss_per_hop",
+     {
+      "spread": 0.088,
+      "levels": {
+       "0": "19/68",
+       "1": "14/73"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "collision",
+     {
+      "spread": 0.086,
+      "levels": {
+       "aloha": "12/60",
+       "none": "6/38",
+       "saturate": "10/41"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "adapt_shift",
+     {
+      "spread": 0.084,
+      "levels": {
+       "2": "12/46",
+       "5": "9/51"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "dest_mode",
+     {
+      "spread": 0.073,
+      "levels": {
+       "all": "25/84",
+       "sample": "18/80"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "lat_hop",
+     {
+      "spread": 0.068,
+      "levels": {
+       "0": "27/110",
+       "1": "16/90"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "wimm",
+     {
+      "spread": 0.056,
+      "levels": {
+       "0": "23/94",
+       "1": "20/106"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "mut_site",
+     {
+      "spread": 0.05,
+      "levels": {
+       "0.0": "11/57",
+       "0.001": "14/69",
+       "0.01": "18/74"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "cap",
+     {
+      "spread": 0.046,
+      "levels": {
+       "0": "15/61",
+       "1": "7/34",
+       "2": "10/50",
+       "4": "11/55"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "n_sites",
+     {
+      "spread": 0.033,
+      "levels": {
+       "100": "14/61",
+       "144": "17/78",
+       "64": "12/61"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "noise",
+     {
+      "spread": 0.025,
+      "levels": {
+       "0": "15/73",
+       "16": "13/62",
+       "64": "15/65"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "k_random",
+     {
+      "spread": 0.018,
+      "levels": {
+       "3": "5/14",
+       "6": "6/16"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "dup",
+     {
+      "spread": 0.017,
+      "levels": {
+       "0.0": "20/97",
+       "0.1": "23/103"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "update_mode",
+     {
+      "spread": 0.01,
+      "levels": {
+       "async": "22/100",
+       "sync": "21/100"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "update_period",
+     {
+      "spread": 0.007,
+      "levels": {
+       "1": "12/58",
+       "2": "9/42"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "plastic_route",
+     {
+      "spread": 0.003,
+      "levels": {
+       "0": "22/103",
+       "1": "21/97"
+      },
+      "zero_pass_levels": []
+     }
+    ]
+   ]
+  },
+  "blocking_plant_stage": {
+   "n": 43,
+   "pass": 26,
+   "base_rate": 0.605,
+   "ranked": [
+    [
+     "adapt_shift",
+     {
+      "spread": 0.528,
+      "levels": {
+       "2": "9/12",
+       "5": "2/9"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "dest_mode",
+     {
+      "spread": 0.467,
+      "levels": {
+       "all": "20/25",
+       "sample": "6/18"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "loss",
+     {
+      "spread": 0.467,
+      "levels": {
+       "0.0": "8/10",
+       "0.1": "11/14",
+       "0.3": "4/12",
+       "0.6": "3/7"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "d",
+     {
+      "spread": 0.46,
+      "levels": {
+       "2": "9/21",
+       "3": "9/13",
+       "5": "8/9"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "topology",
+     {
+      "spread": 0.405,
+      "levels": {
+       "random": "7/11",
+       "ring": "5/6",
+       "smallworld": "6/14",
+       "torus": "8/12"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "update_period",
+     {
+      "spread": 0.389,
+      "levels": {
+       "1": "10/12",
+       "2": "4/9"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "lat_base",
+     {
+      "spread": 0.367,
+      "levels": {
+       "1": "14/20",
+       "2": "10/17",
+       "4": "2/6"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "radius",
+     {
+      "spread": 0.357,
+      "levels": {
+       "1": "4/8",
+       "2": "6/7"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "decay_shift",
+     {
+      "spread": 0.357,
+      "levels": {
+       "0": "6/12",
+       "1": "11/18",
+       "3": "6/7",
+       "6": "3/6"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "rewire",
+     {
+      "spread": 0.356,
+      "levels": {
+       "200": "5/9",
+       "50": "1/5"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "update_p",
+     {
+      "spread": 0.292,
+      "levels": {
+       "0.5": "2/6",
+       "0.8": "10/16"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "mut_site",
+     {
+      "spread": 0.227,
+      "levels": {
+       "0.0": "8/11",
+       "0.001": "7/14",
+       "0.01": "11/18"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "noise",
+     {
+      "spread": 0.226,
+      "levels": {
+       "0": "7/15",
+       "16": "9/13",
+       "64": "10/15"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "cap",
+     {
+      "spread": 0.167,
+      "levels": {
+       "0": "8/15",
+       "1": "4/7",
+       "2": "7/10",
+       "4": "7/11"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "plastic_route",
+     {
+      "spread": 0.158,
+      "levels": {
+       "0": "15/22",
+       "1": "11/21"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "fanout",
+     {
+      "spread": 0.133,
+      "levels": {
+       "1": "8/15",
+       "2": "6/9",
+       "4": "8/12",
+       "8": "4/7"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "update_mode",
+     {
+      "spread": 0.121,
+      "levels": {
+       "async": "12/22",
+       "sync": "14/21"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "lat_jitter",
+     {
+      "spread": 0.117,
+      "levels": {
+       "0": "11/20",
+       "1": "11/17",
+       "3": "4/6"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "n_sites",
+     {
+      "spread": 0.095,
+      "levels": {
+       "100": "8/14",
+       "144": "10/17",
+       "64": "8/12"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "dup",
+     {
+      "spread": 0.085,
+      "levels": {
+       "0.0": "13/20",
+       "0.1": "13/23"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "loss_per_hop",
+     {
+      "spread": 0.079,
+      "levels": {
+       "0": "11/19",
+       "1": "7/14"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "k_random",
+     {
+      "spread": 0.067,
+      "levels": {
+       "3": "3/5",
+       "6": "4/6"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "lat_hop",
+     {
+      "spread": 0.067,
+      "levels": {
+       "0": "17/27",
+       "1": "9/16"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "collision",
+     {
+      "spread": 0.067,
+      "levels": {
+       "aloha": "8/12",
+       "none": "4/6",
+       "saturate": "6/10"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "wimm",
+     {
+      "spread": 0.009,
+      "levels": {
+       "0": "14/23",
+       "1": "12/20"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "delta",
+     {
+      "spread": 0.009,
+      "levels": {
+       "16": "14/23",
+       "4": "3/5",
+       "8": "9/15"
+      },
+      "zero_pass_levels": []
+     }
+    ]
+   ]
+  },
+  "blocking_overall": {
+   "n": 200,
+   "pass": 26,
+   "base_rate": 0.13,
+   "ranked": [
+    [
+     "topology",
+     {
+      "spread": 0.233,
+      "levels": {
+       "global": "0/36",
+       "random": "7/30",
+       "ring": "5/36",
+       "smallworld": "6/48",
+       "torus": "8/50"
+      },
+      "zero_pass_levels": [
+       "global"
+      ]
+     }
+    ],
+    [
+     "d",
+     {
+      "spread": 0.205,
+      "levels": {
+       "1": "0/57",
+       "2": "9/54",
+       "3": "9/44",
+       "5": "8/45"
+      },
+      "zero_pass_levels": [
+       "1"
+      ]
+     }
+    ],
+    [
+     "lat_base",
+     {
+      "spread": 0.177,
+      "levels": {
+       "1": "14/67",
+       "2": "10/70",
+       "4": "2/63"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "update_p",
+     {
+      "spread": 0.165,
+      "levels": {
+       "0.5": "2/51",
+       "0.8": "10/49"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "dest_mode",
+     {
+      "spread": 0.163,
+      "levels": {
+       "all": "20/84",
+       "sample": "6/80"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "adapt_shift",
+     {
+      "spread": 0.156,
+      "levels": {
+       "2": "9/46",
+       "5": "2/51"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "delta",
+     {
+      "spread": 0.155,
+      "levels": {
+       "16": "14/69",
+       "4": "3/63",
+       "8": "9/68"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "loss",
+     {
+      "spread": 0.15,
+      "levels": {
+       "0.0": "8/59",
+       "0.1": "11/50",
+       "0.3": "4/48",
+       "0.6": "3/43"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "rewire",
+     {
+      "spread": 0.147,
+      "levels": {
+       "200": "5/26",
+       "50": "1/22"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "decay_shift",
+     {
+      "spread": 0.142,
+      "levels": {
+       "0": "6/43",
+       "1": "11/54",
+       "3": "6/54",
+       "6": "3/49"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "lat_jitter",
+     {
+      "spread": 0.111,
+      "levels": {
+       "0": "11/63",
+       "1": "11/74",
+       "3": "4/63"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "radius",
+     {
+      "spread": 0.1,
+      "levels": {
+       "1": "4/26",
+       "2": "6/30",
+       "3": "3/30"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "fanout",
+     {
+      "spread": 0.095,
+      "levels": {
+       "1": "8/46",
+       "2": "6/55",
+       "4": "8/48",
+       "8": "4/51"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "update_period",
+     {
+      "spread": 0.077,
+      "levels": {
+       "1": "10/58",
+       "2": "4/42"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "loss_per_hop",
+     {
+      "spread": 0.066,
+      "levels": {
+       "0": "11/68",
+       "1": "7/73"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "noise",
+     {
+      "spread": 0.058,
+      "levels": {
+       "0": "7/73",
+       "16": "9/62",
+       "64": "10/65"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "lat_hop",
+     {
+      "spread": 0.055,
+      "levels": {
+       "0": "17/110",
+       "1": "9/90"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "mut_site",
+     {
+      "spread": 0.047,
+      "levels": {
+       "0.0": "8/57",
+       "0.001": "7/69",
+       "0.01": "11/74"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "collision",
+     {
+      "spread": 0.041,
+      "levels": {
+       "aloha": "8/60",
+       "none": "4/38",
+       "saturate": "6/41"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "k_random",
+     {
+      "spread": 0.036,
+      "levels": {
+       "3": "3/14",
+       "6": "4/16"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "wimm",
+     {
+      "spread": 0.036,
+      "levels": {
+       "0": "14/94",
+       "1": "12/106"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "plastic_route",
+     {
+      "spread": 0.032,
+      "levels": {
+       "0": "15/103",
+       "1": "11/97"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "cap",
+     {
+      "spread": 0.022,
+      "levels": {
+       "0": "8/61",
+       "1": "4/34",
+       "2": "7/50",
+       "4": "7/55"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "update_mode",
+     {
+      "spread": 0.02,
+      "levels": {
+       "async": "12/100",
+       "sync": "14/100"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "dup",
+     {
+      "spread": 0.008,
+      "levels": {
+       "0.0": "13/97",
+       "0.1": "13/103"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "n_sites",
+     {
+      "spread": 0.003,
+      "levels": {
+       "100": "8/61",
+       "144": "10/78",
+       "64": "8/61"
+      },
+      "zero_pass_levels": []
+     }
+    ]
+   ]
+  }
+ },
+ "FLIP": {
+  "funnel": {
+   "candidates": 200,
+   "stratum_ok": 200,
+   "reach_ok": 200,
+   "ceiling_pass": 54,
+   "plant_scored": 54,
+   "plant_pass(admitted)": 14,
+   "ceiling_only_pass_ignoring_stratum": 54,
+   "design_pass": {
+    "P_FLIP": 7,
+    "FLIP_BIT16": 14
+   },
+   "passes_with_>=2_designs": 7,
+   "above_ceiling_violations": 0,
+   "binding_ceiling_component(all)": {
+    "w2u_block": 115,
+    "lc2k": 85
+   }
+  },
+  "first_failing_clause": {
+   "ADMITTED": 14,
+   "ceiling": 146,
+   "plant": 40
+  },
+  "admitted": [
+   {
+    "cid": "FLIP-0000-adbab9bf",
+    "ceiling": 1.0,
+    "binding": "w2u_block",
+    "q": null,
+    "integration_claimed": null,
+    "hops": [
+     2,
+     2
+    ],
+    "plants": {
+     "P_FLIP": {
+      "acc": 0.92,
+      "lo99": 0.871,
+      "B": 0.906,
+      "B_lo99": 0.852,
+      "teacher_off": 0.508,
+      "pass": true
+     },
+     "FLIP_BIT16": {
+      "acc": 0.918,
+      "lo99": 0.871,
+      "B": 0.902,
+      "B_lo99": 0.849,
+      "teacher_off": 0.506,
+      "pass": true
+     }
+    },
+    "physics": {
+     "topology": "random",
+     "n_sites": 64,
+     "radius": 3,
+     "k_random": 6,
+     "rewire": 200,
+     "fanout": 8,
+     "dest_mode": "sample",
+     "loss": 0.0,
+     "loss_per_hop": 0,
+     "lat_base": 1,
+     "lat_hop": 1,
+     "lat_jitter": 0,
+     "dup": 0.1,
+     "noise": 16,
+     "cap": 2,
+     "collision": "none",
+     "decay_shift": 0,
+     "update_mode": "sync",
+     "update_period": 2,
+     "update_p": 0.8,
+     "plastic_route": 1,
+     "adapt_shift": 5,
+     "wimm": 0,
+     "mut_site": 0.0,
+     "state_dim": 2,
+     "payload_width": 1,
+     "channels": 1,
+     "prog_len": 16,
+     "rules": 1,
+     "setrule": 0,
+     "topo_seed": 827597319
+    },
+    "env": {
+     "family": "FLIP",
+     "d": 2,
+     "delta": 8,
+     "block": 2,
+     "trials": 16,
+     "cue_len": 2
+    }
+   },
+   {
+    "cid": "FLIP-0004-125dfbff",
+    "ceiling": 0.949,
+    "binding": "lc2k",
+    "q": null,
+    "integration_claimed": null,
+    "hops": [
+     3,
+     3
+    ],
+    "plants": {
+     "P_FLIP": {
+      "acc": 0.918,
+      "lo99": 0.848,
+      "B": 0.921,
+      "B_lo99": 0.859,
+      "teacher_off": 0.498,
+      "pass": true
+     },
+     "FLIP_BIT16": {
+      "acc": 0.861,
+      "lo99": 0.787,
+      "B": 0.87,
+      "B_lo99": 0.803,
+      "teacher_off": 0.52,
+      "pass": true
+     }
+    },
+    "physics": {
+     "topology": "smallworld",
+     "n_sites": 64,
+     "radius": 1,
+     "k_random": 6,
+     "rewire": 50,
+     "fanout": 4,
+     "dest_mode": "all",
+     "loss": 0.0,
+     "loss_per_hop": 0,
+     "lat_base": 1,
+     "lat_hop": 1,
+     "lat_jitter": 1,
+     "dup": 0.1,
+     "noise": 64,
+     "cap": 0,
+     "collision": "saturate",
+     "decay_shift": 0,
+     "update_mode": "sync",
+     "update_period": 1,
+     "update_p": 0.8,
+     "plastic_route": 0,
+     "adapt_shift": 2,
+     "wimm": 1,
+     "mut_site": 0.001,
+     "state_dim": 2,
+     "payload_width": 1,
+     "channels": 1,
+     "prog_len": 16,
+     "rules": 1,
+     "setrule": 0,
+     "topo_seed": 1832238660
+    },
+    "env": {
+     "family": "FLIP",
+     "d": 3,
+     "delta": 8,
+     "block": 2,
+     "trials": 16,
+     "cue_len": 2
+    }
+   },
+   {
+    "cid": "FLIP-0014-f6419e8d",
+    "ceiling": 1.0,
+    "binding": "w2u_block",
+    "q": null,
+    "integration_claimed": null,
+    "hops": [
+     2,
+     2
+    ],
+    "plants": {
+     "P_FLIP": {
+      "acc": 0.513,
+      "lo99": 0.451,
+      "B": 0.5,
+      "B_lo99": 0.5,
+      "teacher_off": 0.495,
+      "pass": false
+     },
+     "FLIP_BIT16": {
+      "acc": 0.889,
+      "lo99": 0.818,
+      "B": 0.886,
+      "B_lo99": 0.811,
+      "teacher_off": 0.517,
+      "pass": true
+     }
+    },
+    "physics": {
+     "topology": "torus",
+     "n_sites": 64,
+     "radius": 1,
+     "k_random": 6,
+     "rewire": 50,
+     "fanout": 8,
+     "dest_mode": "all",
+     "loss": 0.0,
+     "loss_per_hop": 0,
+     "lat_base": 2,
+     "lat_hop": 0,
+     "lat_jitter": 3,
+     "dup": 0.1,
+     "noise": 0,
+     "cap": 0,
+     "collision": "none",
+     "decay_shift": 6,
+     "update_mode": "sync",
+     "update_period": 2,
+     "update_p": 0.8,
+     "plastic_route": 1,
+     "adapt_shift": 5,
+     "wimm": 1,
+     "mut_site": 0.001,
+     "state_dim": 2,
+     "payload_width": 1,
+     "channels": 1,
+     "prog_len": 16,
+     "rules": 1,
+     "setrule": 0,
+     "topo_seed": 1812131088
+    },
+    "env": {
+     "family": "FLIP",
+     "d": 2,
+     "delta": 16,
+     "block": 4,
+     "trials": 16,
+     "cue_len": 2
+    }
+   },
+   {
+    "cid": "FLIP-0055-abdb4062",
+    "ceiling": 1.0,
+    "binding": "w2u_block",
+    "q": null,
+    "integration_claimed": null,
+    "hops": [
+     1,
+     1
+    ],
+    "plants": {
+     "P_FLIP": {
+      "acc": 1.0,
+      "lo99": 1.0,
+      "B": 1.0,
+      "B_lo99": 1.0,
+      "teacher_off": 0.5,
+      "pass": true
+     },
+     "FLIP_BIT16": {
+      "acc": 1.0,
+      "lo99": 1.0,
+      "B": 1.0,
+      "B_lo99": 1.0,
+      "teacher_off": 0.5,
+      "pass": true
+     }
+    },
+    "physics": {
+     "topology": "global",
+     "n_sites": 144,
+     "radius": 1,
+     "k_random": 3,
+     "rewire": 50,
+     "fanout": 8,
+     "dest_mode": "sample",
+     "loss": 0.1,
+     "loss_per_hop": 1,
+     "lat_base": 2,
+     "lat_hop": 0,
+     "lat_jitter": 0,
+     "dup": 0.1,
+     "noise": 64,
+     "cap": 2,
+     "collision": "none",
+     "decay_shift": 0,
+     "update_mode": "sync",
+     "update_period": 2,
+     "update_p": 0.8,
+     "plastic_route": 1,
+     "adapt_shift": 5,
+     "wimm": 0,
+     "mut_site": 0.0,
+     "state_dim": 2,
+     "payload_width": 1,
+     "channels": 1,
+     "prog_len": 16,
+     "rules": 1,
+     "setrule": 0,
+     "topo_seed": 973288765
+    },
+    "env": {
+     "family": "FLIP",
+     "d": 5,
+     "delta": 16,
+     "block": 2,
+     "trials": 16,
+     "cue_len": 2
+    }
+   },
+   {
+    "cid": "FLIP-0079-1d56677f",
+    "ceiling": 1.0,
+    "binding": "w2u_block",
+    "q": null,
+    "integration_claimed": null,
+    "hops": [
+     1,
+     1
+    ],
+    "plants": {
+     "P_FLIP": {
+      "acc": 0.469,
+      "lo99": 0.396,
+      "B": 0.5,
+      "B_lo99": 0.5,
+      "teacher_off": 0.514,
+      "pass": false
+     },
+     "FLIP_BIT16": {
+      "acc": 0.823,
+      "lo99": 0.757,
+      "B": 0.823,
+      "B_lo99": 0.758,
+      "teacher_off": 0.516,
+      "pass": true
+     }
+    },
+    "physics": {
+     "topology": "ring",
+     "n_sites": 100,
+     "radius": 3,
+     "k_random": 3,
+     "rewire": 200,
+     "fanout": 4,
+     "dest_mode": "all",
+     "loss": 0.1,
+     "loss_per_hop": 0,
+     "lat_base": 1,
+     "lat_hop": 0,
+     "lat_jitter": 0,
+     "dup": 0.0,
+     "noise": 16,
+     "cap": 0,
+     "collision": "none",
+     "decay_shift": 6,
+     "update_mode": "sync",
+     "update_period": 2,
+     "update_p": 0.8,
+     "plastic_route": 1,
+     "adapt_shift": 5,
+     "wimm": 1,
+     "mut_site": 0.01,
+     "state_dim": 2,
+     "payload_width": 1,
+     "channels": 1,
+     "prog_len": 16,
+     "rules": 1,
+     "setrule": 0,
+     "topo_seed": 436396247
+    },
+    "env": {
+     "family": "FLIP",
+     "d": 2,
+     "delta": 8,
+     "block": 4,
+     "trials": 16,
+     "cue_len": 2
+    }
+   },
+   {
+    "cid": "FLIP-0081-1bc337de",
+    "ceiling": 1.0,
+    "binding": "w2u_block",
+    "q": null,
+    "integration_claimed": null,
+    "hops": [
+     1,
+     1
+    ],
+    "plants": {
+     "P_FLIP": {
+      "acc": 0.535,
+      "lo99": 0.445,
+      "B": 0.5,
+      "B_lo99": 0.5,
+      "teacher_off": 0.494,
+      "pass": false
+     },
+     "FLIP_BIT16": {
+      "acc": 1.0,
+      "lo99": 1.0,
+      "B": 1.0,
+      "B_lo99": 1.0,
+      "teacher_off": 0.5,
+      "pass": true
+     }
+    },
+    "physics": {
+     "topology": "ring",
+     "n_sites": 64,
+     "radius": 3,
+     "k_random": 3,
+     "rewire": 200,
+     "fanout": 2,
+     "dest_mode": "all",
+     "loss": 0.0,
+     "loss_per_hop": 0,
+     "lat_base": 2,
+     "lat_hop": 0,
+     "lat_jitter": 1,
+     "dup": 0.0,
+     "noise": 64,
+     "cap": 4,
+     "collision": "saturate",
+     "decay_shift": 6,
+     "update_mode": "sync",
+     "update_period": 2,
+     "update_p": 0.8,
+     "plastic_route": 0,
+     "adapt_shift": 2,
+     "wimm": 1,
+     "mut_site": 0.0,
+     "state_dim": 2,
+     "payload_width": 1,
+     "channels": 1,
+     "prog_len": 16,
+     "rules": 1,
+     "setrule": 0,
+     "topo_seed": 3468814883
+    },
+    "env": {
+     "family": "FLIP",
+     "d": 3,
+     "delta": 16,
+     "block": 2,
+     "trials": 16,
+     "cue_len": 2
+    }
+   },
+   {
+    "cid": "FLIP-0099-df143630",
+    "ceiling": 1.0,
+    "binding": "w2u_block",
+    "q": null,
+    "integration_claimed": null,
+    "hops": [
+     2,
+     2
+    ],
+    "plants": {
+     "P_FLIP": {
+      "acc": 1.0,
+      "lo99": 1.0,
+      "B": 1.0,
+      "B_lo99": 1.0,
+      "teacher_off": 0.5,
+      "pass": true
+     },
+     "FLIP_BIT16": {
+      "acc": 1.0,
+      "lo99": 1.0,
+      "B": 1.0,
+      "B_lo99": 1.0,
+      "teacher_off": 0.5,
+      "pass": true
+     }
+    },
+    "physics": {
+     "topology": "smallworld",
+     "n_sites": 144,
+     "radius": 3,
+     "k_random": 6,
+     "rewire": 200,
+     "fanout": 4,
+     "dest_mode": "all",
+     "loss": 0.0,
+     "loss_per_hop": 1,
+     "lat_base": 1,
+     "lat_hop": 0,
+     "lat_jitter": 0,
+     "dup": 0.0,
+     "noise": 64,
+     "cap": 1,
+     "collision": "none",
+     "decay_shift": 0,
+     "update_mode": "sync",
+     "update_period": 1,
+     "update_p": 0.8,
+     "plastic_route": 0,
+     "adapt_shift": 5,
+     "wimm": 0,
+     "mut_site": 0.0,
+     "state_dim": 2,
+     "payload_width": 1,
+     "channels": 1,
+     "prog_len": 16,
+     "rules": 1,
+     "setrule": 0,
+     "topo_seed": 773075427
+    },
+    "env": {
+     "family": "FLIP",
+     "d": 2,
+     "delta": 16,
+     "block": 4,
+     "trials": 16,
+     "cue_len": 2
+    }
+   },
+   {
+    "cid": "FLIP-0120-a792243b",
+    "ceiling": 1.0,
+    "binding": "w2u_block",
+    "q": null,
+    "integration_claimed": null,
+    "hops": [
+     3,
+     3
+    ],
+    "plants": {
+     "P_FLIP": {
+      "acc": 0.512,
+      "lo99": 0.488,
+      "B": 0.496,
+      "B_lo99": 0.476,
+      "teacher_off": 0.506,
+      "pass": false
+     },
+     "FLIP_BIT16": {
+      "acc": 1.0,
+      "lo99": 1.0,
+      "B": 1.0,
+      "B_lo99": 1.0,
+      "teacher_off": 0.5,
+      "pass": true
+     }
+    },
+    "physics": {
+     "topology": "torus",
+     "n_sites": 64,
+     "radius": 1,
+     "k_random": 6,
+     "rewire": 50,
+     "fanout": 1,
+     "dest_mode": "all",
+     "loss": 0.0,
+     "loss_per_hop": 0,
+     "lat_base": 1,
+     "lat_hop": 1,
+     "lat_jitter": 1,
+     "dup": 0.1,
+     "noise": 16,
+     "cap": 1,
+     "collision": "none",
+     "decay_shift": 1,
+     "update_mode": "sync",
+     "update_period": 1,
+     "update_p": 0.5,
+     "plastic_route": 0,
+     "adapt_shift": 5,
+     "wimm": 0,
+     "mut_site": 0.0,
+     "state_dim": 2,
+     "payload_width": 1,
+     "channels": 1,
+     "prog_len": 16,
+     "rules": 1,
+     "setrule": 0,
+     "topo_seed": 3149190604
+    },
+    "env": {
+     "family": "FLIP",
+     "d": 3,
+     "delta": 16,
+     "block": 2,
+     "trials": 16,
+     "cue_len": 2
+    }
+   },
+   {
+    "cid": "FLIP-0166-a140df57",
+    "ceiling": 0.966,
+    "binding": "w2u_block",
+    "q": null,
+    "integration_claimed": null,
+    "hops": [
+     1,
+     1
+    ],
+    "plants": {
+     "P_FLIP": {
+      "acc": 0.493,
+      "lo99": 0.48,
+      "B": 0.498,
+      "B_lo99": 0.484,
+      "teacher_off": 0.5,
+      "pass": false
+     },
+     "FLIP_BIT16": {
+      "acc": 0.927,
+      "lo99": 0.876,
+      "B": 0.926,
+      "B_lo99": 0.87,
+      "teacher_off": 0.513,
+      "pass": true
+     }
+    },
+    "physics": {
+     "topology": "ring",
+     "n_sites": 100,
+     "radius": 1,
+     "k_random": 3,
+     "rewire": 200,
+     "fanout": 2,
+     "dest_mode": "all",
+     "loss": 0.0,
+     "loss_per_hop": 0,
+     "lat_base": 2,
+     "lat_hop": 1,
+     "lat_jitter": 1,
+     "dup": 0.1,
+     "noise": 0,
+     "cap": 1,
+     "collision": "none",
+     "decay_shift": 1,
+     "update_mode": "async",
+     "update_period": 1,
+     "update_p": 0.8,
+     "plastic_route": 1,
+     "adapt_shift": 2,
+     "wimm": 0,
+     "mut_site": 0.0,
+     "state_dim": 2,
+     "payload_width": 1,
+     "channels": 1,
+     "prog_len": 16,
+     "rules": 1,
+     "setrule": 0,
+     "topo_seed": 3788979845
+    },
+    "env": {
+     "family": "FLIP",
+     "d": 1,
+     "delta": 8,
+     "block": 4,
+     "trials": 16,
+     "cue_len": 2
+    }
+   },
+   {
+    "cid": "FLIP-0167-b6d3fceb",
+    "ceiling": 0.966,
+    "binding": "w2u_block",
+    "q": null,
+    "integration_claimed": null,
+    "hops": [
+     2,
+     2
+    ],
+    "plants": {
+     "P_FLIP": {
+      "acc": 0.945,
+      "lo99": 0.91,
+      "B": 0.94,
+      "B_lo99": 0.895,
+      "teacher_off": 0.513,
+      "pass": true
+     },
+     "FLIP_BIT16": {
+      "acc": 0.945,
+      "lo99": 0.91,
+      "B": 0.94,
+      "B_lo99": 0.895,
+      "teacher_off": 0.513,
+      "pass": true
+     }
+    },
+    "physics": {
+     "topology": "ring",
+     "n_sites": 100,
+     "radius": 3,
+     "k_random": 6,
+     "rewire": 50,
+     "fanout": 4,
+     "dest_mode": "all",
+     "loss": 0.3,
+     "loss_per_hop": 0,
+     "lat_base": 1,
+     "lat_hop": 0,
+     "lat_jitter": 0,
+     "dup": 0.1,
+     "noise": 16,
+     "cap": 0,
+     "collision": "aloha",
+     "decay_shift": 0,
+     "update_mode": "async",
+     "update_period": 2,
+     "update_p": 0.8,
+     "plastic_route": 0,
+     "adapt_shift": 5,
+     "wimm": 0,
+     "mut_site": 0.0,
+     "state_dim": 2,
+     "payload_width": 1,
+     "channels": 1,
+     "prog_len": 16,
+     "rules": 1,
+     "setrule": 0,
+     "topo_seed": 3491005977
+    },
+    "env": {
+     "family": "FLIP",
+     "d": 5,
+     "delta": 16,
+     "block": 4,
+     "trials": 16,
+     "cue_len": 2
+    }
+   },
+   {
+    "cid": "FLIP-0180-00afe15d",
+    "ceiling": 0.966,
+    "binding": "w2u_block",
+    "q": null,
+    "integration_claimed": null,
+    "hops": [
+     1,
+     1
+    ],
+    "plants": {
+     "P_FLIP": {
+      "acc": 0.499,
+      "lo99": 0.434,
+      "B": 0.5,
+      "B_lo99": 0.475,
+      "teacher_off": 0.499,
+      "pass": false
+     },
+     "FLIP_BIT16": {
+      "acc": 0.94,
+      "lo99": 0.904,
+      "B": 0.936,
+      "B_lo99": 0.892,
+      "teacher_off": 0.51,
+      "pass": true
+     }
+    },
+    "physics": {
+     "topology": "ring",
+     "n_sites": 64,
+     "radius": 1,
+     "k_random": 3,
+     "rewire": 200,
+     "fanout": 8,
+     "dest_mode": "all",
+     "loss": 0.0,
+     "loss_per_hop": 1,
+     "lat_base": 1,
+     "lat_hop": 0,
+     "lat_jitter": 3,
+     "dup": 0.0,
+     "noise": 16,
+     "cap": 4,
+     "collision": "none",
+     "decay_shift": 6,
+     "update_mode": "async",
+     "update_period": 1,
+     "update_p": 0.8,
+     "plastic_route": 1,
+     "adapt_shift": 5,
+     "wimm": 0,
+     "mut_site": 0.001,
+     "state_dim": 2,
+     "payload_width": 1,
+     "channels": 1,
+     "prog_len": 16,
+     "rules": 1,
+     "setrule": 0,
+     "topo_seed": 304422489
+    },
+    "env": {
+     "family": "FLIP",
+     "d": 1,
+     "delta": 8,
+     "block": 4,
+     "trials": 16,
+     "cue_len": 2
+    }
+   },
+   {
+    "cid": "FLIP-0184-0dff2745",
+    "ceiling": 1.0,
+    "binding": "w2u_block",
+    "q": null,
+    "integration_claimed": null,
+    "hops": [
+     1,
+     1
+    ],
+    "plants": {
+     "P_FLIP": {
+      "acc": 1.0,
+      "lo99": 1.0,
+      "B": 1.0,
+      "B_lo99": 1.0,
+      "teacher_off": 0.5,
+      "pass": true
+     },
+     "FLIP_BIT16": {
+      "acc": 0.871,
+      "lo99": 0.795,
+      "B": 0.876,
+      "B_lo99": 0.81,
+      "teacher_off": 0.508,
+      "pass": true
+     }
+    },
+    "physics": {
+     "topology": "ring",
+     "n_sites": 144,
+     "radius": 3,
+     "k_random": 6,
+     "rewire": 200,
+     "fanout": 1,
+     "dest_mode": "all",
+     "loss": 0.0,
+     "loss_per_hop": 0,
+     "lat_base": 2,
+     "lat_hop": 0,
+     "lat_jitter": 1,
+     "dup": 0.0,
+     "noise": 64,
+     "cap": 2,
+     "collision": "none",
+     "decay_shift": 0,
+     "update_mode": "sync",
+     "update_period": 1,
+     "update_p": 0.5,
+     "plastic_route": 1,
+     "adapt_shift": 5,
+     "wimm": 0,
+     "mut_site": 0.001,
+     "state_dim": 2,
+     "payload_width": 1,
+     "channels": 1,
+     "prog_len": 16,
+     "rules": 1,
+     "setrule": 0,
+     "topo_seed": 1780623119
+    },
+    "env": {
+     "family": "FLIP",
+     "d": 1,
+     "delta": 16,
+     "block": 2,
+     "trials": 16,
+     "cue_len": 2
+    }
+   },
+   {
+    "cid": "FLIP-0191-07dd9fdb",
+    "ceiling": 0.942,
+    "binding": "w2u_block",
+    "q": null,
+    "integration_claimed": null,
+    "hops": [
+     1,
+     1
+    ],
+    "plants": {
+     "P_FLIP": {
+      "acc": 0.82,
+      "lo99": 0.76,
+      "B": 0.834,
+      "B_lo99": 0.784,
+      "teacher_off": 0.504,
+      "pass": true
+     },
+     "FLIP_BIT16": {
+      "acc": 0.818,
+      "lo99": 0.768,
+      "B": 0.824,
+      "B_lo99": 0.777,
+      "teacher_off": 0.504,
+      "pass": true
+     }
+    },
+    "physics": {
+     "topology": "global",
+     "n_sites": 64,
+     "radius": 3,
+     "k_random": 3,
+     "rewire": 200,
+     "fanout": 8,
+     "dest_mode": "sample",
+     "loss": 0.6,
+     "loss_per_hop": 0,
+     "lat_base": 2,
+     "lat_hop": 0,
+     "lat_jitter": 0,
+     "dup": 0.1,
+     "noise": 0,
+     "cap": 1,
+     "collision": "aloha",
+     "decay_shift": 0,
+     "update_mode": "async",
+     "update_period": 1,
+     "update_p": 0.8,
+     "plastic_route": 0,
+     "adapt_shift": 5,
+     "wimm": 1,
+     "mut_site": 0.0,
+     "state_dim": 2,
+     "payload_width": 1,
+     "channels": 1,
+     "prog_len": 16,
+     "rules": 1,
+     "setrule": 0,
+     "topo_seed": 3276169969
+    },
+    "env": {
+     "family": "FLIP",
+     "d": 2,
+     "delta": 16,
+     "block": 2,
+     "trials": 16,
+     "cue_len": 2
+    }
+   },
+   {
+    "cid": "FLIP-0199-ab7eb413",
+    "ceiling": 1.0,
+    "binding": "w2u_block",
+    "q": null,
+    "integration_claimed": null,
+    "hops": [
+     2,
+     2
+    ],
+    "plants": {
+     "P_FLIP": {
+      "acc": 0.494,
+      "lo99": 0.475,
+      "B": 0.494,
+      "B_lo99": 0.478,
+      "teacher_off": 0.5,
+      "pass": false
+     },
+     "FLIP_BIT16": {
+      "acc": 0.94,
+      "lo99": 0.889,
+      "B": 0.938,
+      "B_lo99": 0.887,
+      "teacher_off": 0.51,
+      "pass": true
+     }
+    },
+    "physics": {
+     "topology": "torus",
+     "n_sites": 144,
+     "radius": 2,
+     "k_random": 3,
+     "rewire": 200,
+     "fanout": 8,
+     "dest_mode": "sample",
+     "loss": 0.0,
+     "loss_per_hop": 1,
+     "lat_base": 1,
+     "lat_hop": 0,
+     "lat_jitter": 0,
+     "dup": 0.1,
+     "noise": 0,
+     "cap": 4,
+     "collision": "saturate",
+     "decay_shift": 1,
+     "update_mode": "sync",
+     "update_period": 1,
+     "update_p": 0.5,
+     "plastic_route": 0,
+     "adapt_shift": 2,
+     "wimm": 0,
+     "mut_site": 0.001,
+     "state_dim": 2,
+     "payload_width": 1,
+     "channels": 1,
+     "prog_len": 16,
+     "rules": 1,
+     "setrule": 0,
+     "topo_seed": 3531933582
+    },
+    "env": {
+     "family": "FLIP",
+     "d": 3,
+     "delta": 8,
+     "block": 4,
+     "trials": 16,
+     "cue_len": 2
+    }
+   }
+  ],
+  "blocking_ceiling_stage": {
+   "n": 200,
+   "pass": 54,
+   "base_rate": 0.27,
+   "ranked": [
+    [
+     "delta",
+     {
+      "spread": 0.493,
+      "levels": {
+       "16": "34/61",
+       "4": "5/78",
+       "8": "15/61"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "update_p",
+     {
+      "spread": 0.457,
+      "levels": {
+       "0.5": "0/53",
+       "0.8": "21/46"
+      },
+      "zero_pass_levels": [
+       "0.5"
+      ]
+     }
+    ],
+    [
+     "update_period",
+     {
+      "spread": 0.345,
+      "levels": {
+       "1": "21/39",
+       "2": "12/62"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "loss",
+     {
+      "spread": 0.281,
+      "levels": {
+       "0.0": "24/53",
+       "0.1": "12/43",
+       "0.3": "7/40",
+       "0.6": "11/64"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "rewire",
+     {
+      "spread": 0.255,
+      "levels": {
+       "200": "4/23",
+       "50": "9/21"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "lat_base",
+     {
+      "spread": 0.247,
+      "levels": {
+       "1": "25/65",
+       "2": "21/77",
+       "4": "8/58"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "d",
+     {
+      "spread": 0.207,
+      "levels": {
+       "1": "21/51",
+       "2": "13/60",
+       "3": "11/45",
+       "5": "9/44"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "plastic_route",
+     {
+      "spread": 0.2,
+      "levels": {
+       "0": "17/100",
+       "1": "37/100"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "lat_hop",
+     {
+      "spread": 0.193,
+      "levels": {
+       "0": "35/94",
+       "1": "19/106"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "radius",
+     {
+      "spread": 0.171,
+      "levels": {
+       "1": "8/34",
+       "2": "5/24",
+       "3": "11/29"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "lat_jitter",
+     {
+      "spread": 0.163,
+      "levels": {
+       "0": "25/73",
+       "1": "17/60",
+       "3": "12/67"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "mut_site",
+     {
+      "spread": 0.155,
+      "levels": {
+       "0.0": "19/54",
+       "0.001": "13/66",
+       "0.01": "22/80"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "fanout",
+     {
+      "spread": 0.139,
+      "levels": {
+       "1": "13/56",
+       "2": "10/48",
+       "4": "15/50",
+       "8": "16/46"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "loss_per_hop",
+     {
+      "spread": 0.117,
+      "levels": {
+       "0": "19/72",
+       "1": "11/75"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "update_mode",
+     {
+      "spread": 0.115,
+      "levels": {
+       "async": "21/99",
+       "sync": "33/101"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "collision",
+     {
+      "spread": 0.109,
+      "levels": {
+       "aloha": "10/46",
+       "none": "18/62",
+       "saturate": "15/46"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "wimm",
+     {
+      "spread": 0.102,
+      "levels": {
+       "0": "31/96",
+       "1": "23/104"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "cap",
+     {
+      "spread": 0.1,
+      "levels": {
+       "0": "11/46",
+       "1": "15/55",
+       "2": "18/55",
+       "4": "10/44"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "dest_mode",
+     {
+      "spread": 0.096,
+      "levels": {
+       "all": "23/72",
+       "sample": "21/94"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "decay_shift",
+     {
+      "spread": 0.096,
+      "levels": {
+       "0": "15/52",
+       "1": "17/55",
+       "3": "12/46",
+       "6": "10/47"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "topology",
+     {
+      "spread": 0.095,
+      "levels": {
+       "global": "10/34",
+       "random": "7/35",
+       "ring": "14/53",
+       "smallworld": "13/44",
+       "torus": "10/34"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "n_sites",
+     {
+      "spread": 0.071,
+      "levels": {
+       "100": "17/69",
+       "144": "20/63",
+       "64": "17/68"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "k_random",
+     {
+      "spread": 0.046,
+      "levels": {
+       "3": "4/18",
+       "6": "3/17"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "noise",
+     {
+      "spread": 0.022,
+      "levels": {
+       "0": "17/62",
+       "16": "18/70",
+       "64": "19/68"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "dup",
+     {
+      "spread": 0.004,
+      "levels": {
+       "0.0": "26/97",
+       "0.1": "28/103"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "adapt_shift",
+     {
+      "spread": 0.001,
+      "levels": {
+       "2": "17/46",
+       "5": "20/54"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "block",
+     {
+      "spread": 0.001,
+      "levels": {
+       "2": "30/111",
+       "4": "24/89"
+      },
+      "zero_pass_levels": []
+     }
+    ]
+   ]
+  },
+  "blocking_plant_stage": {
+   "n": 54,
+   "pass": 14,
+   "base_rate": 0.259,
+   "ranked": [
+    [
+     "decay_shift",
+     {
+      "spread": 0.467,
+      "levels": {
+       "0": "7/15",
+       "1": "3/17",
+       "3": "0/12",
+       "6": "4/10"
+      },
+      "zero_pass_levels": [
+       "3"
+      ]
+     }
+    ],
+    [
+     "delta",
+     {
+      "spread": 0.4,
+      "levels": {
+       "16": "8/34",
+       "4": "0/5",
+       "8": "6/15"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "mut_site",
+     {
+      "spread": 0.376,
+      "levels": {
+       "0.0": "8/19",
+       "0.001": "5/13",
+       "0.01": "1/22"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "dest_mode",
+     {
+      "spread": 0.34,
+      "levels": {
+       "all": "10/23",
+       "sample": "2/21"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "loss",
+     {
+      "spread": 0.326,
+      "levels": {
+       "0.0": "10/24",
+       "0.1": "2/12",
+       "0.3": "1/7",
+       "0.6": "1/11"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "lat_base",
+     {
+      "spread": 0.32,
+      "levels": {
+       "1": "8/25",
+       "2": "6/21",
+       "4": "0/8"
+      },
+      "zero_pass_levels": [
+       "4"
+      ]
+     }
+    ],
+    [
+     "radius",
+     {
+      "spread": 0.3,
+      "levels": {
+       "1": "4/8",
+       "2": "1/5",
+       "3": "4/11"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "collision",
+     {
+      "spread": 0.289,
+      "levels": {
+       "aloha": "1/10",
+       "none": "7/18",
+       "saturate": "2/15"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "topology",
+     {
+      "spread": 0.286,
+      "levels": {
+       "global": "2/10",
+       "random": "1/7",
+       "ring": "6/14",
+       "smallworld": "2/13",
+       "torus": "3/10"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "d",
+     {
+      "spread": 0.242,
+      "levels": {
+       "1": "3/21",
+       "2": "5/13",
+       "3": "4/11",
+       "5": "2/9"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "adapt_shift",
+     {
+      "spread": 0.241,
+      "levels": {
+       "2": "1/17",
+       "5": "6/20"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "n_sites",
+     {
+      "spread": 0.235,
+      "levels": {
+       "100": "3/17",
+       "144": "4/20",
+       "64": "7/17"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "plastic_route",
+     {
+      "spread": 0.223,
+      "levels": {
+       "0": "7/17",
+       "1": "7/37"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "fanout",
+     {
+      "spread": 0.221,
+      "levels": {
+       "1": "2/13",
+       "2": "2/10",
+       "4": "4/15",
+       "8": "6/16"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "cap",
+     {
+      "spread": 0.197,
+      "levels": {
+       "0": "4/11",
+       "1": "4/15",
+       "2": "3/18",
+       "4": "3/10"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "update_period",
+     {
+      "spread": 0.179,
+      "levels": {
+       "1": "5/21",
+       "2": "5/12"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "rewire",
+     {
+      "spread": 0.139,
+      "levels": {
+       "200": "1/4",
+       "50": "1/9"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "dup",
+     {
+      "spread": 0.129,
+      "levels": {
+       "0.0": "5/26",
+       "0.1": "9/28"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "lat_jitter",
+     {
+      "spread": 0.127,
+      "levels": {
+       "0": "7/25",
+       "1": "5/17",
+       "3": "2/12"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "update_mode",
+     {
+      "spread": 0.113,
+      "levels": {
+       "async": "4/21",
+       "sync": "10/33"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "lat_hop",
+     {
+      "spread": 0.075,
+      "levels": {
+       "0": "10/35",
+       "1": "4/19"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "wimm",
+     {
+      "spread": 0.073,
+      "levels": {
+       "0": "9/31",
+       "1": "5/23"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "loss_per_hop",
+     {
+      "spread": 0.067,
+      "levels": {
+       "0": "3/19",
+       "1": "1/11"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "block",
+     {
+      "spread": 0.058,
+      "levels": {
+       "2": "7/30",
+       "4": "7/24"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "noise",
+     {
+      "spread": 0.042,
+      "levels": {
+       "0": "4/17",
+       "16": "5/18",
+       "64": "5/19"
+      },
+      "zero_pass_levels": []
+     }
+    ]
+   ]
+  },
+  "blocking_overall": {
+   "n": 200,
+   "pass": 14,
+   "base_rate": 0.07,
+   "ranked": [
+    [
+     "loss",
+     {
+      "spread": 0.173,
+      "levels": {
+       "0.0": "10/53",
+       "0.1": "2/43",
+       "0.3": "1/40",
+       "0.6": "1/64"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "mut_site",
+     {
+      "spread": 0.136,
+      "levels": {
+       "0.0": "8/54",
+       "0.001": "5/66",
+       "0.01": "1/80"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "decay_shift",
+     {
+      "spread": 0.135,
+      "levels": {
+       "0": "7/52",
+       "1": "3/55",
+       "3": "0/46",
+       "6": "4/47"
+      },
+      "zero_pass_levels": [
+       "3"
+      ]
+     }
+    ],
+    [
+     "delta",
+     {
+      "spread": 0.131,
+      "levels": {
+       "16": "8/61",
+       "4": "0/78",
+       "8": "6/61"
+      },
+      "zero_pass_levels": [
+       "4"
+      ]
+     }
+    ],
+    [
+     "lat_base",
+     {
+      "spread": 0.123,
+      "levels": {
+       "1": "8/65",
+       "2": "6/77",
+       "4": "0/58"
+      },
+      "zero_pass_levels": [
+       "4"
+      ]
+     }
+    ],
+    [
+     "dest_mode",
+     {
+      "spread": 0.118,
+      "levels": {
+       "all": "10/72",
+       "sample": "2/94"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "radius",
+     {
+      "spread": 0.096,
+      "levels": {
+       "1": "4/34",
+       "2": "1/24",
+       "3": "4/29"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "fanout",
+     {
+      "spread": 0.095,
+      "levels": {
+       "1": "2/56",
+       "2": "2/48",
+       "4": "4/50",
+       "8": "6/46"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "collision",
+     {
+      "spread": 0.091,
+      "levels": {
+       "aloha": "1/46",
+       "none": "7/62",
+       "saturate": "2/46"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "adapt_shift",
+     {
+      "spread": 0.089,
+      "levels": {
+       "2": "1/46",
+       "5": "6/54"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "update_p",
+     {
+      "spread": 0.087,
+      "levels": {
+       "0.5": "0/53",
+       "0.8": "4/46"
+      },
+      "zero_pass_levels": [
+       "0.5"
+      ]
+     }
+    ],
+    [
+     "topology",
+     {
+      "spread": 0.085,
+      "levels": {
+       "global": "2/34",
+       "random": "1/35",
+       "ring": "6/53",
+       "smallworld": "2/44",
+       "torus": "3/34"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "lat_hop",
+     {
+      "spread": 0.069,
+      "levels": {
+       "0": "10/94",
+       "1": "4/106"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "lat_jitter",
+     {
+      "spread": 0.066,
+      "levels": {
+       "0": "7/73",
+       "1": "5/60",
+       "3": "2/67"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "n_sites",
+     {
+      "spread": 0.059,
+      "levels": {
+       "100": "3/69",
+       "144": "4/63",
+       "64": "7/68"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "k_random",
+     {
+      "spread": 0.059,
+      "levels": {
+       "3": "0/18",
+       "6": "1/17"
+      },
+      "zero_pass_levels": [
+       "3"
+      ]
+     }
+    ],
+    [
+     "update_mode",
+     {
+      "spread": 0.059,
+      "levels": {
+       "async": "4/99",
+       "sync": "10/101"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "update_period",
+     {
+      "spread": 0.048,
+      "levels": {
+       "1": "5/39",
+       "2": "5/62"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "wimm",
+     {
+      "spread": 0.046,
+      "levels": {
+       "0": "9/96",
+       "1": "5/104"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "d",
+     {
+      "spread": 0.043,
+      "levels": {
+       "1": "3/51",
+       "2": "5/60",
+       "3": "4/45",
+       "5": "2/44"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "dup",
+     {
+      "spread": 0.036,
+      "levels": {
+       "0.0": "5/97",
+       "0.1": "9/103"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "cap",
+     {
+      "spread": 0.032,
+      "levels": {
+       "0": "4/46",
+       "1": "4/55",
+       "2": "3/55",
+       "4": "3/44"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "loss_per_hop",
+     {
+      "spread": 0.028,
+      "levels": {
+       "0": "3/72",
+       "1": "1/75"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "block",
+     {
+      "spread": 0.016,
+      "levels": {
+       "2": "7/111",
+       "4": "7/89"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "noise",
+     {
+      "spread": 0.009,
+      "levels": {
+       "0": "4/62",
+       "16": "5/70",
+       "64": "5/68"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "rewire",
+     {
+      "spread": 0.004,
+      "levels": {
+       "200": "1/23",
+       "50": "1/21"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "plastic_route",
+     {
+      "spread": 0.0,
+      "levels": {
+       "0": "7/100",
+       "1": "7/100"
+      },
+      "zero_pass_levels": []
+     }
+    ]
+   ]
+  }
+ },
+ "MAJ": {
+  "funnel": {
+   "candidates": 200,
+   "stratum_ok": 200,
+   "reach_ok": 184,
+   "ceiling_pass": 100,
+   "plant_scored": 41,
+   "plant_pass(admitted)": 19,
+   "ceiling_only_pass_ignoring_stratum": 108,
+   "integration_claimed_survivors": 44,
+   "admitted_integration": 5,
+   "hop1_all_survivors": 36,
+   "admitted_hop1_all": 5,
+   "design_pass": {
+    "INT_1": 13,
+    "INT_CO": 9,
+    "INT_2": 15
+   },
+   "passes_with_>=2_designs": 11,
+   "above_ceiling_violations": 0,
+   "binding_ceiling_component(all)": {
+    "lc2k": 130,
+    "t2_joint": 70
+   }
+  },
+  "first_failing_clause": {
+   "ceiling": 84,
+   "plant": 22,
+   "ADMITTED": 19,
+   "reach": 16,
+   "plant_not_scored": 59
+  },
+  "admitted": [
+   {
+    "cid": "MAJ-0005-a4899530",
+    "ceiling": 0.69,
+    "binding": "lc2k",
+    "q": 0.41,
+    "integration_claimed": false,
+    "hops": [
+     1,
+     1
+    ],
+    "plants": {
+     "INT_1": {
+      "acc": 0.693,
+      "lo99": 0.628,
+      "DICT": 0.529,
+      "diff_lo99": 0.094,
+      "pass": true
+     },
+     "INT_2": {
+      "acc": 0.547,
+      "lo99": 0.5,
+      "DICT": 0.53,
+      "diff_lo99": -0.061,
+      "pass": false
+     },
+     "INT_CO": {
+      "acc": 0.702,
+      "lo99": 0.633,
+      "DICT": 0.529,
+      "diff_lo99": 0.086,
+      "pass": true
+     }
+    },
+    "physics": {
+     "topology": "ring",
+     "n_sites": 100,
+     "radius": 3,
+     "k_random": 6,
+     "rewire": 50,
+     "fanout": 8,
+     "dest_mode": "sample",
+     "loss": 0.1,
+     "loss_per_hop": 0,
+     "lat_base": 1,
+     "lat_hop": 1,
+     "lat_jitter": 1,
+     "dup": 0.1,
+     "noise": 0,
+     "cap": 4,
+     "collision": "saturate",
+     "decay_shift": 0,
+     "update_mode": "sync",
+     "update_period": 2,
+     "update_p": 0.8,
+     "plastic_route": 1,
+     "adapt_shift": 2,
+     "wimm": 0,
+     "mut_site": 0.0,
+     "state_dim": 2,
+     "payload_width": 2,
+     "channels": 1,
+     "prog_len": 16,
+     "rules": 1,
+     "setrule": 0,
+     "topo_seed": 1278441831
+    },
+    "env": {
+     "family": "MAJ",
+     "d": 3,
+     "delta": 4,
+     "block": 4,
+     "trials": 12,
+     "cue_len": 2
+    }
+   },
+   {
+    "cid": "MAJ-0007-acf8d1e4",
+    "ceiling": 0.781,
+    "binding": "lc2k",
+    "q": 0.72,
+    "integration_claimed": false,
+    "hops": [
+     1,
+     1
+    ],
+    "plants": {
+     "INT_1": {
+      "acc": 0.714,
+      "lo99": 0.652,
+      "DICT": 0.604,
+      "diff_lo99": 0.042,
+      "pass": true
+     },
+     "INT_2": {
+      "acc": 0.701,
+      "lo99": 0.645,
+      "DICT": 0.607,
+      "diff_lo99": 0.027,
+      "pass": true
+     },
+     "INT_CO": {
+      "acc": 0.706,
+      "lo99": 0.65,
+      "DICT": 0.604,
+      "diff_lo99": 0.033,
+      "pass": true
+     }
+    },
+    "physics": {
+     "topology": "ring",
+     "n_sites": 100,
+     "radius": 3,
+     "k_random": 6,
+     "rewire": 50,
+     "fanout": 1,
+     "dest_mode": "all",
+     "loss": 0.3,
+     "loss_per_hop": 1,
+     "lat_base": 4,
+     "lat_hop": 1,
+     "lat_jitter": 1,
+     "dup": 0.0,
+     "noise": 16,
+     "cap": 2,
+     "collision": "saturate",
+     "decay_shift": 6,
+     "update_mode": "async",
+     "update_period": 1,
+     "update_p": 0.5,
+     "plastic_route": 1,
+     "adapt_shift": 5,
+     "wimm": 0,
+     "mut_site": 0.0,
+     "state_dim": 2,
+     "payload_width": 2,
+     "channels": 1,
+     "prog_len": 16,
+     "rules": 1,
+     "setrule": 0,
+     "topo_seed": 1738339344
+    },
+    "env": {
+     "family": "MAJ",
+     "d": 1,
+     "delta": 16,
+     "block": 2,
+     "trials": 12,
+     "cue_len": 2
+    }
+   },
+   {
+    "cid": "MAJ-0008-aaf160f6",
+    "ceiling": 0.788,
+    "binding": "t2_joint",
+    "q": 0.75,
+    "integration_claimed": false,
+    "hops": [
+     1,
+     2
+    ],
+    "plants": {
+     "INT_1": {
+      "acc": 0.706,
+      "lo99": 0.65,
+      "DICT": 0.65,
+      "diff_lo99": -0.036,
+      "pass": false
+     },
+     "INT_2": {
+      "acc": 0.602,
+      "lo99": 0.555,
+      "DICT": 0.546,
+      "diff_lo99": 0.014,
+      "pass": true
+     },
+     "INT_CO": {
+      "acc": 0.695,
+      "lo99": 0.643,
+      "DICT": 0.65,
+      "diff_lo99": -0.04,
+      "pass": false
+     }
+    },
+    "physics": {
+     "topology": "smallworld",
+     "n_sites": 64,
+     "radius": 1,
+     "k_random": 3,
+     "rewire": 50,
+     "fanout": 4,
+     "dest_mode": "all",
+     "loss": 0.1,
+     "loss_per_hop": 0,
+     "lat_base": 4,
+     "lat_hop": 0,
+     "lat_jitter": 0,
+     "dup": 0.0,
+     "noise": 64,
+     "cap": 2,
+     "collision": "saturate",
+     "decay_shift": 0,
+     "update_mode": "async",
+     "update_period": 1,
+     "update_p": 0.5,
+     "plastic_route": 1,
+     "adapt_shift": 5,
+     "wimm": 0,
+     "mut_site": 0.001,
+     "state_dim": 2,
+     "payload_width": 2,
+     "channels": 1,
+     "prog_len": 16,
+     "rules": 1,
+     "setrule": 0,
+     "topo_seed": 2316870408
+    },
+    "env": {
+     "family": "MAJ",
+     "d": 1,
+     "delta": 16,
+     "block": 2,
+     "trials": 12,
+     "cue_len": 2
+    }
+   },
+   {
+    "cid": "MAJ-0012-1434121c",
+    "ceiling": 0.827,
+    "binding": "t2_joint",
+    "q": 0.959,
+    "integration_claimed": true,
+    "hops": [
+     2,
+     2
+    ],
+    "plants": {
+     "INT_1": {
+      "acc": 0.5,
+      "lo99": 0.5,
+      "DICT": 0.5,
+      "diff_lo99": 0.0,
+      "pass": false
+     },
+     "INT_2": {
+      "acc": 0.781,
+      "lo99": 0.729,
+      "DICT": 0.704,
+      "diff_lo99": 0.021,
+      "pass": true
+     },
+     "INT_CO": {
+      "acc": 0.5,
+      "lo99": 0.5,
+      "DICT": 0.5,
+      "diff_lo99": 0.0,
+      "pass": false
+     }
+    },
+    "physics": {
+     "topology": "smallworld",
+     "n_sites": 64,
+     "radius": 3,
+     "k_random": 3,
+     "rewire": 50,
+     "fanout": 8,
+     "dest_mode": "all",
+     "loss": 0.0,
+     "loss_per_hop": 0,
+     "lat_base": 1,
+     "lat_hop": 1,
+     "lat_jitter": 0,
+     "dup": 0.0,
+     "noise": 0,
+     "cap": 1,
+     "collision": "saturate",
+     "decay_shift": 1,
+     "update_mode": "async",
+     "update_period": 2,
+     "update_p": 0.8,
+     "plastic_route": 0,
+     "adapt_shift": 5,
+     "wimm": 0,
+     "mut_site": 0.001,
+     "state_dim": 2,
+     "payload_width": 2,
+     "channels": 1,
+     "prog_len": 16,
+     "rules": 1,
+     "setrule": 0,
+     "topo_seed": 127090799
+    },
+    "env": {
+     "family": "MAJ",
+     "d": 2,
+     "delta": 8,
+     "block": 4,
+     "trials": 12,
+     "cue_len": 2
+    }
+   },
+   {
+    "cid": "MAJ-0017-72917933",
+    "ceiling": 0.803,
+    "binding": "lc2k",
+    "q": 0.851,
+    "integration_claimed": false,
+    "hops": [
+     1,
+     2
+    ],
+    "plants": {
+     "INT_1": {
+      "acc": 0.733,
+      "lo99": 0.683,
+      "DICT": 0.612,
+      "diff_lo99": 0.072,
+      "pass": true
+     },
+     "INT_2": {
+      "acc": 0.754,
+      "lo99": 0.71,
+      "DICT": 0.65,
+      "diff_lo99": 0.048,
+      "pass": true
+     },
+     "INT_CO": {
+      "acc": 0.712,
+      "lo99": 0.661,
+      "DICT": 0.612,
+      "diff_lo99": 0.055,
+      "pass": true
+     }
+    },
+    "physics": {
+     "topology": "ring",
+     "n_sites": 100,
+     "radius": 2,
+     "k_random": 6,
+     "rewire": 200,
+     "fanout": 2,
+     "dest_mode": "sample",
+     "loss": 0.0,
+     "loss_per_hop": 1,
+     "lat_base": 2,
+     "lat_hop": 1,
+     "lat_jitter": 1,
+     "dup": 0.0,
+     "noise": 16,
+     "cap": 2,
+     "collision": "saturate",
+     "decay_shift": 6,
+     "update_mode": "sync",
+     "update_period": 1,
+     "update_p": 0.8,
+     "plastic_route": 0,
+     "adapt_shift": 2,
+     "wimm": 0,
+     "mut_site": 0.01,
+     "state_dim": 2,
+     "payload_width": 2,
+     "channels": 1,
+     "prog_len": 16,
+     "rules": 1,
+     "setrule": 0,
+     "topo_seed": 1164135809
+    },
+    "env": {
+     "family": "MAJ",
+     "d": 2,
+     "delta": 8,
+     "block": 4,
+     "trials": 12,
+     "cue_len": 2
+    }
+   },
+   {
+    "cid": "MAJ-0032-ad9a454f",
+    "ceiling": 0.736,
+    "binding": "lc2k",
+    "q": 0.468,
+    "integration_claimed": false,
+    "hops": [
+     1,
+     2
+    ],
+    "plants": {
+     "INT_1": {
+      "acc": 0.674,
+      "lo99": 0.615,
+      "DICT": 0.5,
+      "diff_lo99": 0.115,
+      "pass": true
+     },
+     "INT_2": {
+      "acc": 0.679,
+      "lo99": 0.624,
+      "DICT": 0.527,
+      "diff_lo99": 0.081,
+      "pass": true
+     },
+     "INT_CO": {
+      "acc": 0.669,
+      "lo99": 0.607,
+      "DICT": 0.5,
+      "diff_lo99": 0.107,
+      "pass": true
+     }
+    },
+    "physics": {
+     "topology": "ring",
+     "n_sites": 144,
+     "radius": 2,
+     "k_random": 6,
+     "rewire": 200,
+     "fanout": 2,
+     "dest_mode": "all",
+     "loss": 0.3,
+     "loss_per_hop": 0,
+     "lat_base": 4,
+     "lat_hop": 0,
+     "lat_jitter": 3,
+     "dup": 0.0,
+     "noise": 16,
+     "cap": 0,
+     "collision": "aloha",
+     "decay_shift": 1,
+     "update_mode": "sync",
+     "update_period": 2,
+     "update_p": 0.8,
+     "plastic_route": 1,
+     "adapt_shift": 2,
+     "wimm": 1,
+     "mut_site": 0.01,
+     "state_dim": 2,
+     "payload_width": 2,
+     "channels": 1,
+     "prog_len": 16,
+     "rules": 1,
+     "setrule": 0,
+     "topo_seed": 2207156290
+    },
+    "env": {
+     "family": "MAJ",
+     "d": 3,
+     "delta": 8,
+     "block": 4,
+     "trials": 12,
+     "cue_len": 2
+    }
+   },
+   {
+    "cid": "MAJ-0033-cf1e0a14",
+    "ceiling": 0.763,
+    "binding": "lc2k",
+    "q": 0.611,
+    "integration_claimed": false,
+    "hops": [
+     1,
+     2
+    ],
+    "plants": {
+     "INT_1": {
+      "acc": 0.716,
+      "lo99": 0.658,
+      "DICT": 0.646,
+      "diff_lo99": 0.005,
+      "pass": true
+     },
+     "INT_2": {
+      "acc": 0.703,
+      "lo99": 0.65,
+      "DICT": 0.63,
+      "diff_lo99": 0.01,
+      "pass": true
+     },
+     "INT_CO": {
+      "acc": 0.673,
+      "lo99": 0.611,
+      "DICT": 0.646,
+      "diff_lo99": -0.049,
+      "pass": false
+     }
+    },
+    "physics": {
+     "topology": "ring",
+     "n_sites": 100,
+     "radius": 2,
+     "k_random": 3,
+     "rewire": 200,
+     "fanout": 2,
+     "dest_mode": "all",
+     "loss": 0.3,
+     "loss_per_hop": 1,
+     "lat_base": 4,
+     "lat_hop": 1,
+     "lat_jitter": 3,
+     "dup": 0.0,
+     "noise": 0,
+     "cap": 0,
+     "collision": "aloha",
+     "decay_shift": 3,
+     "update_mode": "sync",
+     "update_period": 1,
+     "update_p": 0.5,
+     "plastic_route": 1,
+     "adapt_shift": 2,
+     "wimm": 1,
+     "mut_site": 0.001,
+     "state_dim": 2,
+     "payload_width": 2,
+     "channels": 1,
+     "prog_len": 16,
+     "rules": 1,
+     "setrule": 0,
+     "topo_seed": 3350189607
+    },
+    "env": {
+     "family": "MAJ",
+     "d": 1,
+     "delta": 8,
+     "block": 2,
+     "trials": 12,
+     "cue_len": 2
+    }
+   },
+   {
+    "cid": "MAJ-0038-40b8ef5c",
+    "ceiling": 0.7,
+    "binding": "lc2k",
+    "q": 0.373,
+    "integration_claimed": false,
+    "hops": [
+     2,
+     2
+    ],
+    "plants": {
+     "INT_1": {
+      "acc": 0.5,
+      "lo99": 0.5,
+      "DICT": 0.5,
+      "diff_lo99": 0.0,
+      "pass": false
+     },
+     "INT_2": {
+      "acc": 0.652,
+      "lo99": 0.608,
+      "DICT": 0.549,
+      "diff_lo99": 0.031,
+      "pass": true
+     },
+     "INT_CO": {
+      "acc": 0.5,
+      "lo99": 0.5,
+      "DICT": 0.5,
+      "diff_lo99": 0.0,
+      "pass": false
+     }
+    },
+    "physics": {
+     "topology": "smallworld",
+     "n_sites": 64,
+     "radius": 1,
+     "k_random": 6,
+     "rewire": 50,
+     "fanout": 4,
+     "dest_mode": "sample",
+     "loss": 0.6,
+     "loss_per_hop": 1,
+     "lat_base": 2,
+     "lat_hop": 1,
+     "lat_jitter": 0,
+     "dup": 0.1,
+     "noise": 0,
+     "cap": 0,
+     "collision": "saturate",
+     "decay_shift": 0,
+     "update_mode": "async",
+     "update_period": 1,
+     "update_p": 0.8,
+     "plastic_route": 0,
+     "adapt_shift": 2,
+     "wimm": 1,
+     "mut_site": 0.0,
+     "state_dim": 2,
+     "payload_width": 2,
+     "channels": 1,
+     "prog_len": 16,
+     "rules": 1,
+     "setrule": 0,
+     "topo_seed": 188756205
+    },
+    "env": {
+     "family": "MAJ",
+     "d": 2,
+     "delta": 8,
+     "block": 4,
+     "trials": 12,
+     "cue_len": 2
+    }
+   },
+   {
+    "cid": "MAJ-0042-9ca43008",
+    "ceiling": 0.837,
+    "binding": "t2_joint",
+    "q": 1.0,
+    "integration_claimed": true,
+    "hops": [
+     1,
+     1
+    ],
+    "plants": {
+     "INT_1": {
+      "acc": 0.746,
+      "lo99": 0.685,
+      "DICT": 0.626,
+      "diff_lo99": 0.055,
+      "pass": false
+     },
+     "INT_2": {
+      "acc": 0.812,
+      "lo99": 0.747,
+      "DICT": 0.667,
+      "diff_lo99": 0.074,
+      "pass": true
+     },
+     "INT_CO": {
+      "acc": 0.702,
+      "lo99": 0.66,
+      "DICT": 0.626,
+      "diff_lo99": 0.025,
+      "pass": false
+     }
+    },
+    "physics": {
+     "topology": "torus",
+     "n_sites": 100,
+     "radius": 2,
+     "k_random": 3,
+     "rewire": 200,
+     "fanout": 1,
+     "dest_mode": "all",
+     "loss": 0.3,
+     "loss_per_hop": 0,
+     "lat_base": 4,
+     "lat_hop": 0,
+     "lat_jitter": 3,
+     "dup": 0.1,
+     "noise": 0,
+     "cap": 1,
+     "collision": "saturate",
+     "decay_shift": 3,
+     "update_mode": "sync",
+     "update_period": 2,
+     "update_p": 0.8,
+     "plastic_route": 1,
+     "adapt_shift": 2,
+     "wimm": 0,
+     "mut_site": 0.01,
+     "state_dim": 2,
+     "payload_width": 2,
+     "channels": 1,
+     "prog_len": 16,
+     "rules": 1,
+     "setrule": 0,
+     "topo_seed": 1916751882
+    },
+    "env": {
+     "family": "MAJ",
+     "d": 2,
+     "delta": 16,
+     "block": 2,
+     "trials": 12,
+     "cue_len": 2
+    }
+   },
+   {
+    "cid": "MAJ-0045-4880aec5",
+    "ceiling": 0.75,
+    "binding": "lc2k",
+    "q": 0.568,
+    "integration_claimed": false,
+    "hops": [
+     1,
+     2
+    ],
+    "plants": {
+     "INT_1": {
+      "acc": 0.726,
+      "lo99": 0.661,
+      "DICT": 0.647,
+      "diff_lo99": 0.021,
+      "pass": true
+     },
+     "INT_2": {
+      "acc": 0.717,
+      "lo99": 0.653,
+      "DICT": 0.647,
+      "diff_lo99": 0.01,
+      "pass": true
+     },
+     "INT_CO": {
+      "acc": 0.689,
+      "lo99": 0.626,
+      "DICT": 0.647,
+      "diff_lo99": -0.014,
+      "pass": false
+     }
+    },
+    "physics": {
+     "topology": "smallworld",
+     "n_sites": 144,
+     "radius": 2,
+     "k_random": 6,
+     "rewire": 200,
+     "fanout": 1,
+     "dest_mode": "all",
+     "loss": 0.6,
+     "loss_per_hop": 1,
+     "lat_base": 1,
+     "lat_hop": 1,
+     "lat_jitter": 1,
+     "dup": 0.1,
+     "noise": 0,
+     "cap": 0,
+     "collision": "saturate",
+     "decay_shift": 6,
+     "update_mode": "sync",
+     "update_period": 1,
+     "update_p": 0.5,
+     "plastic_route": 0,
+     "adapt_shift": 5,
+     "wimm": 1,
+     "mut_site": 0.0,
+     "state_dim": 2,
+     "payload_width": 2,
+     "channels": 1,
+     "prog_len": 16,
+     "rules": 1,
+     "setrule": 0,
+     "topo_seed": 3670709114
+    },
+    "env": {
+     "family": "MAJ",
+     "d": 1,
+     "delta": 4,
+     "block": 2,
+     "trials": 12,
+     "cue_len": 2
+    }
+   },
+   {
+    "cid": "MAJ-0046-72b75262",
+    "ceiling": 0.825,
+    "binding": "lc2k",
+    "q": 0.953,
+    "integration_claimed": true,
+    "hops": [
+     1,
+     2
+    ],
+    "plants": {
+     "INT_1": {
+      "acc": 0.776,
+      "lo99": 0.728,
+      "DICT": 0.719,
+      "diff_lo99": 0.008,
+      "pass": true
+     },
+     "INT_2": {
+      "acc": 0.766,
+      "lo99": 0.711,
+      "DICT": 0.719,
+      "diff_lo99": -0.013,
+      "pass": false
+     },
+     "INT_CO": {
+      "acc": 0.691,
+      "lo99": 0.656,
+      "DICT": 0.719,
+      "diff_lo99": -0.082,
+      "pass": false
+     }
+    },
+    "physics": {
+     "topology": "random",
+     "n_sites": 64,
+     "radius": 2,
+     "k_random": 6,
+     "rewire": 200,
+     "fanout": 1,
+     "dest_mode": "all",
+     "loss": 0.3,
+     "loss_per_hop": 0,
+     "lat_base": 1,
+     "lat_hop": 0,
+     "lat_jitter": 1,
+     "dup": 0.1,
+     "noise": 0,
+     "cap": 0,
+     "collision": "saturate",
+     "decay_shift": 0,
+     "update_mode": "async",
+     "update_period": 2,
+     "update_p": 0.8,
+     "plastic_route": 1,
+     "adapt_shift": 5,
+     "wimm": 0,
+     "mut_site": 0.0,
+     "state_dim": 2,
+     "payload_width": 2,
+     "channels": 1,
+     "prog_len": 16,
+     "rules": 1,
+     "setrule": 0,
+     "topo_seed": 2634250815
+    },
+    "env": {
+     "family": "MAJ",
+     "d": 1,
+     "delta": 16,
+     "block": 2,
+     "trials": 12,
+     "cue_len": 2
+    }
+   },
+   {
+    "cid": "MAJ-0048-58f28e8b",
+    "ceiling": 0.744,
+    "binding": "lc2k",
+    "q": 0.521,
+    "integration_claimed": false,
+    "hops": [
+     1,
+     2
+    ],
+    "plants": {
+     "INT_1": {
+      "acc": 0.699,
+      "lo99": 0.632,
+      "DICT": 0.577,
+      "diff_lo99": 0.033,
+      "pass": true
+     },
+     "INT_2": {
+      "acc": 0.691,
+      "lo99": 0.625,
+      "DICT": 0.577,
+      "diff_lo99": 0.03,
+      "pass": true
+     },
+     "INT_CO": {
+      "acc": 0.693,
+      "lo99": 0.633,
+      "DICT": 0.577,
+      "diff_lo99": 0.037,
+      "pass": true
+     }
+    },
+    "physics": {
+     "topology": "smallworld",
+     "n_sites": 64,
+     "radius": 1,
+     "k_random": 3,
+     "rewire": 50,
+     "fanout": 4,
+     "dest_mode": "sample",
+     "loss": 0.6,
+     "loss_per_hop": 0,
+     "lat_base": 4,
+     "lat_hop": 0,
+     "lat_jitter": 3,
+     "dup": 0.0,
+     "noise": 0,
+     "cap": 4,
+     "collision": "none",
+     "decay_shift": 3,
+     "update_mode": "async",
+     "update_period": 1,
+     "update_p": 0.8,
+     "plastic_route": 0,
+     "adapt_shift": 2,
+     "wimm": 0,
+     "mut_site": 0.01,
+     "state_dim": 2,
+     "payload_width": 2,
+     "channels": 1,
+     "prog_len": 16,
+     "rules": 1,
+     "setrule": 0,
+     "topo_seed": 3000929529
+    },
+    "env": {
+     "family": "MAJ",
+     "d": 1,
+     "delta": 8,
+     "block": 2,
+     "trials": 12,
+     "cue_len": 2
+    }
+   },
+   {
+    "cid": "MAJ-0049-c829eee2",
+    "ceiling": 0.744,
+    "binding": "lc2k",
+    "q": 0.542,
+    "integration_claimed": false,
+    "hops": [
+     1,
+     2
+    ],
+    "plants": {
+     "INT_1": {
+      "acc": 0.695,
+      "lo99": 0.635,
+      "DICT": 0.624,
+      "diff_lo99": 0.02,
+      "pass": true
+     },
+     "INT_2": {
+      "acc": 0.632,
+      "lo99": 0.585,
+      "DICT": 0.568,
+      "diff_lo99": 0.012,
+      "pass": true
+     },
+     "INT_CO": {
+      "acc": 0.684,
+      "lo99": 0.626,
+      "DICT": 0.624,
+      "diff_lo99": 0.012,
+      "pass": true
+     }
+    },
+    "physics": {
+     "topology": "torus",
+     "n_sites": 100,
+     "radius": 1,
+     "k_random": 6,
+     "rewire": 50,
+     "fanout": 2,
+     "dest_mode": "all",
+     "loss": 0.6,
+     "loss_per_hop": 0,
+     "lat_base": 1,
+     "lat_hop": 1,
+     "lat_jitter": 0,
+     "dup": 0.0,
+     "noise": 64,
+     "cap": 2,
+     "collision": "none",
+     "decay_shift": 3,
+     "update_mode": "async",
+     "update_period": 1,
+     "update_p": 0.5,
+     "plastic_route": 1,
+     "adapt_shift": 5,
+     "wimm": 1,
+     "mut_site": 0.001,
+     "state_dim": 2,
+     "payload_width": 2,
+     "channels": 1,
+     "prog_len": 16,
+     "rules": 1,
+     "setrule": 0,
+     "topo_seed": 3105479219
+    },
+    "env": {
+     "family": "MAJ",
+     "d": 1,
+     "delta": 8,
+     "block": 2,
+     "trials": 12,
+     "cue_len": 2
+    }
+   },
+   {
+    "cid": "MAJ-0050-bc8ad758",
+    "ceiling": 0.779,
+    "binding": "lc2k",
+    "q": 0.702,
+    "integration_claimed": false,
+    "hops": [
+     1,
+     2
+    ],
+    "plants": {
+     "INT_1": {
+      "acc": 0.633,
+      "lo99": 0.577,
+      "DICT": 0.51,
+      "diff_lo99": 0.064,
+      "pass": true
+     },
+     "INT_2": {
+      "acc": 0.626,
+      "lo99": 0.577,
+      "DICT": 0.547,
+      "diff_lo99": 0.034,
+      "pass": true
+     },
+     "INT_CO": {
+      "acc": 0.634,
+      "lo99": 0.578,
+      "DICT": 0.51,
+      "diff_lo99": 0.068,
+      "pass": true
+     }
+    },
+    "physics": {
+     "topology": "ring",
+     "n_sites": 144,
+     "radius": 2,
+     "k_random": 6,
+     "rewire": 200,
+     "fanout": 2,
+     "dest_mode": "sample",
+     "loss": 0.6,
+     "loss_per_hop": 0,
+     "lat_base": 4,
+     "lat_hop": 0,
+     "lat_jitter": 1,
+     "dup": 0.1,
+     "noise": 64,
+     "cap": 4,
+     "collision": "aloha",
+     "decay_shift": 0,
+     "update_mode": "async",
+     "update_period": 1,
+     "update_p": 0.5,
+     "plastic_route": 1,
+     "adapt_shift": 2,
+     "wimm": 1,
+     "mut_site": 0.0,
+     "state_dim": 2,
+     "payload_width": 2,
+     "channels": 1,
+     "prog_len": 16,
+     "rules": 1,
+     "setrule": 0,
+     "topo_seed": 3420182521
+    },
+    "env": {
+     "family": "MAJ",
+     "d": 1,
+     "delta": 16,
+     "block": 2,
+     "trials": 12,
+     "cue_len": 2
+    }
+   },
+   {
+    "cid": "MAJ-0051-8f676272",
+    "ceiling": 0.817,
+    "binding": "lc2k",
+    "q": 0.919,
+    "integration_claimed": true,
+    "hops": [
+     1,
+     2
+    ],
+    "plants": {
+     "INT_1": {
+      "acc": 0.768,
+      "lo99": 0.715,
+      "DICT": 0.688,
+      "diff_lo99": 0.027,
+      "pass": true
+     },
+     "INT_2": {
+      "acc": 0.583,
+      "lo99": 0.536,
+      "DICT": 0.555,
+      "diff_lo99": -0.02,
+      "pass": false
+     },
+     "INT_CO": {
+      "acc": 0.717,
+      "lo99": 0.655,
+      "DICT": 0.688,
+      "diff_lo99": -0.031,
+      "pass": false
+     }
+    },
+    "physics": {
+     "topology": "ring",
+     "n_sites": 64,
+     "radius": 2,
+     "k_random": 6,
+     "rewire": 200,
+     "fanout": 8,
+     "dest_mode": "sample",
+     "loss": 0.1,
+     "loss_per_hop": 0,
+     "lat_base": 1,
+     "lat_hop": 1,
+     "lat_jitter": 3,
+     "dup": 0.0,
+     "noise": 64,
+     "cap": 1,
+     "collision": "saturate",
+     "decay_shift": 0,
+     "update_mode": "sync",
+     "update_period": 2,
+     "update_p": 0.5,
+     "plastic_route": 0,
+     "adapt_shift": 5,
+     "wimm": 0,
+     "mut_site": 0.01,
+     "state_dim": 2,
+     "payload_width": 2,
+     "channels": 1,
+     "prog_len": 16,
+     "rules": 1,
+     "setrule": 0,
+     "topo_seed": 3264316877
+    },
+    "env": {
+     "family": "MAJ",
+     "d": 1,
+     "delta": 8,
+     "block": 2,
+     "trials": 12,
+     "cue_len": 2
+    }
+   },
+   {
+    "cid": "MAJ-0055-5c6168d2",
+    "ceiling": 0.735,
+    "binding": "lc2k",
+    "q": 0.517,
+    "integration_claimed": false,
+    "hops": [
+     1,
+     3
+    ],
+    "plants": {
+     "INT_1": {
+      "acc": 0.673,
+      "lo99": 0.613,
+      "DICT": 0.589,
+      "diff_lo99": 0.025,
+      "pass": true
+     },
+     "INT_2": {
+      "acc": 0.651,
+      "lo99": 0.599,
+      "DICT": 0.551,
+      "diff_lo99": 0.043,
+      "pass": true
+     },
+     "INT_CO": {
+      "acc": 0.666,
+      "lo99": 0.608,
+      "DICT": 0.589,
+      "diff_lo99": 0.018,
+      "pass": true
+     }
+    },
+    "physics": {
+     "topology": "random",
+     "n_sites": 64,
+     "radius": 3,
+     "k_random": 3,
+     "rewire": 200,
+     "fanout": 8,
+     "dest_mode": "sample",
+     "loss": 0.6,
+     "loss_per_hop": 1,
+     "lat_base": 1,
+     "lat_hop": 1,
+     "lat_jitter": 0,
+     "dup": 0.0,
+     "noise": 64,
+     "cap": 0,
+     "collision": "aloha",
+     "decay_shift": 3,
+     "update_mode": "async",
+     "update_period": 1,
+     "update_p": 0.5,
+     "plastic_route": 0,
+     "adapt_shift": 5,
+     "wimm": 1,
+     "mut_site": 0.0,
+     "state_dim": 2,
+     "payload_width": 2,
+     "channels": 1,
+     "prog_len": 16,
+     "rules": 1,
+     "setrule": 0,
+     "topo_seed": 2287116800
+    },
+    "env": {
+     "family": "MAJ",
+     "d": 1,
+     "delta": 8,
+     "block": 2,
+     "trials": 12,
+     "cue_len": 2
+    }
+   },
+   {
+    "cid": "MAJ-0065-604eeb0e",
+    "ceiling": 0.837,
+    "binding": "t2_joint",
+    "q": 1.0,
+    "integration_claimed": true,
+    "hops": [
+     1,
+     1
+    ],
+    "plants": {
+     "INT_1": {
+      "acc": 0.805,
+      "lo99": 0.758,
+      "DICT": 0.685,
+      "diff_lo99": 0.049,
+      "pass": true
+     },
+     "INT_2": {
+      "acc": 0.682,
+      "lo99": 0.643,
+      "DICT": 0.571,
+      "diff_lo99": 0.06,
+      "pass": false
+     },
+     "INT_CO": {
+      "acc": 0.805,
+      "lo99": 0.758,
+      "DICT": 0.685,
+      "diff_lo99": 0.049,
+      "pass": true
+     }
+    },
+    "physics": {
+     "topology": "torus",
+     "n_sites": 144,
+     "radius": 3,
+     "k_random": 6,
+     "rewire": 50,
+     "fanout": 8,
+     "dest_mode": "all",
+     "loss": 0.0,
+     "loss_per_hop": 1,
+     "lat_base": 4,
+     "lat_hop": 0,
+     "lat_jitter": 0,
+     "dup": 0.0,
+     "noise": 64,
+     "cap": 4,
+     "collision": "saturate",
+     "decay_shift": 1,
+     "update_mode": "sync",
+     "update_period": 1,
+     "update_p": 0.8,
+     "plastic_route": 1,
+     "adapt_shift": 5,
+     "wimm": 0,
+     "mut_site": 0.0,
+     "state_dim": 2,
+     "payload_width": 2,
+     "channels": 1,
+     "prog_len": 16,
+     "rules": 1,
+     "setrule": 0,
+     "topo_seed": 285983737
+    },
+    "env": {
+     "family": "MAJ",
+     "d": 1,
+     "delta": 4,
+     "block": 2,
+     "trials": 12,
+     "cue_len": 2
+    }
+   },
+   {
+    "cid": "MAJ-0071-c5c694c1",
+    "ceiling": 0.73,
+    "binding": "lc2k",
+    "q": 0.433,
+    "integration_claimed": false,
+    "hops": [
+     1,
+     3
+    ],
+    "plants": {
+     "INT_1": {
+      "acc": 0.563,
+      "lo99": 0.536,
+      "DICT": 0.5,
+      "diff_lo99": 0.036,
+      "pass": false
+     },
+     "INT_2": {
+      "acc": 0.602,
+      "lo99": 0.556,
+      "DICT": 0.5,
+      "diff_lo99": 0.056,
+      "pass": true
+     },
+     "INT_CO": {
+      "acc": 0.563,
+      "lo99": 0.536,
+      "DICT": 0.5,
+      "diff_lo99": 0.036,
+      "pass": false
+     }
+    },
+    "physics": {
+     "topology": "ring",
+     "n_sites": 64,
+     "radius": 1,
+     "k_random": 6,
+     "rewire": 200,
+     "fanout": 1,
+     "dest_mode": "sample",
+     "loss": 0.0,
+     "loss_per_hop": 1,
+     "lat_base": 4,
+     "lat_hop": 1,
+     "lat_jitter": 0,
+     "dup": 0.0,
+     "noise": 0,
+     "cap": 0,
+     "collision": "none",
+     "decay_shift": 1,
+     "update_mode": "sync",
+     "update_period": 2,
+     "update_p": 0.8,
+     "plastic_route": 0,
+     "adapt_shift": 2,
+     "wimm": 1,
+     "mut_site": 0.001,
+     "state_dim": 2,
+     "payload_width": 2,
+     "channels": 1,
+     "prog_len": 16,
+     "rules": 1,
+     "setrule": 0,
+     "topo_seed": 2488548417
+    },
+    "env": {
+     "family": "MAJ",
+     "d": 3,
+     "delta": 16,
+     "block": 4,
+     "trials": 12,
+     "cue_len": 2
+    }
+   },
+   {
+    "cid": "MAJ-0075-b7fcb79f",
+    "ceiling": 0.772,
+    "binding": "lc2k",
+    "q": 0.682,
+    "integration_claimed": false,
+    "hops": [
+     1,
+     1
+    ],
+    "plants": {
+     "INT_1": {
+      "acc": 0.565,
+      "lo99": 0.523,
+      "DICT": 0.516,
+      "diff_lo99": 0.002,
+      "pass": false
+     },
+     "INT_2": {
+      "acc": 0.639,
+      "lo99": 0.592,
+      "DICT": 0.537,
+      "diff_lo99": 0.051,
+      "pass": true
+     },
+     "INT_CO": {
+      "acc": 0.565,
+      "lo99": 0.521,
+      "DICT": 0.516,
+      "diff_lo99": -0.0,
+      "pass": false
+     }
+    },
+    "physics": {
+     "topology": "global",
+     "n_sites": 64,
+     "radius": 2,
+     "k_random": 6,
+     "rewire": 200,
+     "fanout": 8,
+     "dest_mode": "sample",
+     "loss": 0.0,
+     "loss_per_hop": 1,
+     "lat_base": 1,
+     "lat_hop": 1,
+     "lat_jitter": 0,
+     "dup": 0.0,
+     "noise": 64,
+     "cap": 0,
+     "collision": "saturate",
+     "decay_shift": 1,
+     "update_mode": "async",
+     "update_period": 1,
+     "update_p": 0.5,
+     "plastic_route": 0,
+     "adapt_shift": 2,
+     "wimm": 0,
+     "mut_site": 0.0,
+     "state_dim": 2,
+     "payload_width": 2,
+     "channels": 1,
+     "prog_len": 16,
+     "rules": 1,
+     "setrule": 0,
+     "topo_seed": 2809717737
+    },
+    "env": {
+     "family": "MAJ",
+     "d": 2,
+     "delta": 8,
+     "block": 2,
+     "trials": 12,
+     "cue_len": 2
+    }
+   }
+  ],
+  "blocking_ceiling_stage": {
+   "n": 200,
+   "pass": 100,
+   "base_rate": 0.5,
+   "ranked": [
+    [
+     "delta",
+     {
+      "spread": 0.656,
+      "levels": {
+       "16": "45/55",
+       "4": "12/74",
+       "8": "43/71"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "topology",
+     {
+      "spread": 0.46,
+      "levels": {
+       "global": "15/44",
+       "random": "9/34",
+       "ring": "29/40",
+       "smallworld": "21/44",
+       "torus": "26/38"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "d",
+     {
+      "spread": 0.36,
+      "levels": {
+       "1": "43/62",
+       "2": "26/55",
+       "3": "17/41",
+       "5": "14/42"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "rewire",
+     {
+      "spread": 0.298,
+      "levels": {
+       "200": "5/17",
+       "50": "16/27"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "k_random",
+     {
+      "spread": 0.264,
+      "levels": {
+       "3": "2/16",
+       "6": "7/18"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "cap",
+     {
+      "spread": 0.215,
+      "levels": {
+       "0": "20/52",
+       "1": "28/58",
+       "2": "25/45",
+       "4": "27/45"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "lat_base",
+     {
+      "spread": 0.208,
+      "levels": {
+       "1": "43/68",
+       "2": "26/59",
+       "4": "31/73"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "radius",
+     {
+      "spread": 0.192,
+      "levels": {
+       "1": "16/26",
+       "2": "21/26",
+       "3": "18/26"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "decay_shift",
+     {
+      "spread": 0.152,
+      "levels": {
+       "0": "24/48",
+       "1": "30/55",
+       "3": "21/52",
+       "6": "25/45"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "fanout",
+     {
+      "spread": 0.142,
+      "levels": {
+       "1": "22/50",
+       "2": "22/47",
+       "4": "24/48",
+       "8": "32/55"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "collision",
+     {
+      "spread": 0.122,
+      "levels": {
+       "aloha": "30/49",
+       "none": "25/48",
+       "saturate": "25/51"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "dup",
+     {
+      "spread": 0.121,
+      "levels": {
+       "0.0": "61/110",
+       "0.1": "39/90"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "n_sites",
+     {
+      "spread": 0.12,
+      "levels": {
+       "100": "32/59",
+       "144": "38/70",
+       "64": "30/71"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "loss",
+     {
+      "spread": 0.116,
+      "levels": {
+       "0.0": "26/51",
+       "0.1": "32/59",
+       "0.3": "19/36",
+       "0.6": "23/54"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "mut_site",
+     {
+      "spread": 0.111,
+      "levels": {
+       "0.0": "36/74",
+       "0.001": "37/66",
+       "0.01": "27/60"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "update_period",
+     {
+      "spread": 0.097,
+      "levels": {
+       "1": "26/45",
+       "2": "25/52"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "noise",
+     {
+      "spread": 0.084,
+      "levels": {
+       "0": "40/75",
+       "16": "31/69",
+       "64": "29/56"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "update_p",
+     {
+      "spread": 0.084,
+      "levels": {
+       "0.5": "25/48",
+       "0.8": "24/55"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "loss_per_hop",
+     {
+      "spread": 0.075,
+      "levels": {
+       "0": "42/79",
+       "1": "32/70"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "wimm",
+     {
+      "spread": 0.06,
+      "levels": {
+       "0": "47/100",
+       "1": "53/100"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "adapt_shift",
+     {
+      "spread": 0.056,
+      "levels": {
+       "2": "23/43",
+       "5": "23/48"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "dest_mode",
+     {
+      "spread": 0.05,
+      "levels": {
+       "all": "45/79",
+       "sample": "40/77"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "update_mode",
+     {
+      "spread": 0.05,
+      "levels": {
+       "async": "49/103",
+       "sync": "51/97"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "lat_jitter",
+     {
+      "spread": 0.035,
+      "levels": {
+       "0": "32/62",
+       "1": "29/57",
+       "3": "39/81"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "lat_hop",
+     {
+      "spread": 0.03,
+      "levels": {
+       "0": "51/99",
+       "1": "49/101"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "plastic_route",
+     {
+      "spread": 0.01,
+      "levels": {
+       "0": "54/109",
+       "1": "46/91"
+      },
+      "zero_pass_levels": []
+     }
+    ]
+   ]
+  },
+  "blocking_plant_stage": {
+   "n": 41,
+   "pass": 19,
+   "base_rate": 0.463,
+   "ranked": [
+    [
+     "d",
+     {
+      "spread": 0.647,
+      "levels": {
+       "1": "11/17",
+       "2": "5/12",
+       "3": "3/7",
+       "5": "0/5"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "collision",
+     {
+      "spread": 0.504,
+      "levels": {
+       "aloha": "1/9",
+       "none": "2/8",
+       "saturate": "8/13"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "topology",
+     {
+      "spread": 0.458,
+      "levels": {
+       "global": "1/6",
+       "random": "2/4",
+       "ring": "8/17",
+       "smallworld": "5/8",
+       "torus": "3/6"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "cap",
+     {
+      "spread": 0.455,
+      "levels": {
+       "0": "8/11",
+       "1": "3/11",
+       "2": "4/7",
+       "4": "4/12"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "lat_jitter",
+     {
+      "spread": 0.393,
+      "levels": {
+       "0": "8/19",
+       "1": "6/8",
+       "3": "5/14"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "loss",
+     {
+      "spread": 0.327,
+      "levels": {
+       "0.0": "5/11",
+       "0.1": "3/11",
+       "0.3": "5/9",
+       "0.6": "6/10"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "fanout",
+     {
+      "spread": 0.325,
+      "levels": {
+       "1": "5/10",
+       "2": "5/8",
+       "4": "3/10",
+       "8": "6/13"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "mut_site",
+     {
+      "spread": 0.31,
+      "levels": {
+       "0.0": "9/14",
+       "0.001": "5/15",
+       "0.01": "5/12"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "lat_base",
+     {
+      "spread": 0.277,
+      "levels": {
+       "1": "8/18",
+       "2": "2/7",
+       "4": "9/16"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "n_sites",
+     {
+      "spread": 0.267,
+      "levels": {
+       "100": "6/14",
+       "144": "4/12",
+       "64": "9/15"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "delta",
+     {
+      "spread": 0.225,
+      "levels": {
+       "16": "6/16",
+       "4": "3/5",
+       "8": "10/20"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "update_period",
+     {
+      "spread": 0.222,
+      "levels": {
+       "1": "4/12",
+       "2": "5/9"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "lat_hop",
+     {
+      "spread": 0.177,
+      "levels": {
+       "0": "7/19",
+       "1": "12/22"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "radius",
+     {
+      "spread": 0.17,
+      "levels": {
+       "1": "2/4",
+       "2": "6/11",
+       "3": "3/8"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "wimm",
+     {
+      "spread": 0.169,
+      "levels": {
+       "0": "11/20",
+       "1": "8/21"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "noise",
+     {
+      "spread": 0.167,
+      "levels": {
+       "0": "9/18",
+       "16": "3/9",
+       "64": "7/14"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "decay_shift",
+     {
+      "spread": 0.167,
+      "levels": {
+       "0": "6/12",
+       "1": "5/10",
+       "3": "5/10",
+       "6": "3/9"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "dest_mode",
+     {
+      "spread": 0.144,
+      "levels": {
+       "all": "10/17",
+       "sample": "8/18"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "plastic_route",
+     {
+      "spread": 0.117,
+      "levels": {
+       "0": "9/22",
+       "1": "10/19"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "dup",
+     {
+      "spread": 0.112,
+      "levels": {
+       "0.0": "13/30",
+       "0.1": "6/11"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "update_p",
+     {
+      "spread": 0.101,
+      "levels": {
+       "0.5": "6/11",
+       "0.8": "4/9"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "update_mode",
+     {
+      "spread": 0.071,
+      "levels": {
+       "async": "10/20",
+       "sync": "9/21"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "adapt_shift",
+     {
+      "spread": 0.056,
+      "levels": {
+       "2": "5/10",
+       "5": "5/9"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "loss_per_hop",
+     {
+      "spread": 0.05,
+      "levels": {
+       "0": "9/20",
+       "1": "5/10"
+      },
+      "zero_pass_levels": []
+     }
+    ]
+   ]
+  },
+  "blocking_overall": {
+   "n": 200,
+   "pass": 19,
+   "base_rate": 0.095,
+   "ranked": [
+    [
+     "topology",
+     {
+      "spread": 0.177,
+      "levels": {
+       "global": "1/44",
+       "random": "2/34",
+       "ring": "8/40",
+       "smallworld": "5/44",
+       "torus": "3/38"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "d",
+     {
+      "spread": 0.177,
+      "levels": {
+       "1": "11/62",
+       "2": "5/55",
+       "3": "3/41",
+       "5": "0/42"
+      },
+      "zero_pass_levels": [
+       "5"
+      ]
+     }
+    ],
+    [
+     "radius",
+     {
+      "spread": 0.154,
+      "levels": {
+       "1": "2/26",
+       "2": "6/26",
+       "3": "3/26"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "collision",
+     {
+      "spread": 0.136,
+      "levels": {
+       "aloha": "1/49",
+       "none": "2/48",
+       "saturate": "8/51"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "cap",
+     {
+      "spread": 0.102,
+      "levels": {
+       "0": "8/52",
+       "1": "3/58",
+       "2": "4/45",
+       "4": "4/45"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "delta",
+     {
+      "spread": 0.1,
+      "levels": {
+       "16": "6/55",
+       "4": "3/74",
+       "8": "10/71"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "rewire",
+     {
+      "spread": 0.089,
+      "levels": {
+       "200": "1/17",
+       "50": "4/27"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "lat_base",
+     {
+      "spread": 0.089,
+      "levels": {
+       "1": "8/68",
+       "2": "2/59",
+       "4": "9/73"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "loss",
+     {
+      "spread": 0.088,
+      "levels": {
+       "0.0": "5/51",
+       "0.1": "3/59",
+       "0.3": "5/36",
+       "0.6": "6/54"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "noise",
+     {
+      "spread": 0.082,
+      "levels": {
+       "0": "9/75",
+       "16": "3/69",
+       "64": "7/56"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "n_sites",
+     {
+      "spread": 0.07,
+      "levels": {
+       "100": "6/59",
+       "144": "4/70",
+       "64": "9/71"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "lat_jitter",
+     {
+      "spread": 0.067,
+      "levels": {
+       "0": "8/62",
+       "1": "6/57",
+       "3": "5/81"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "decay_shift",
+     {
+      "spread": 0.058,
+      "levels": {
+       "0": "6/48",
+       "1": "5/55",
+       "3": "5/52",
+       "6": "3/45"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "dup",
+     {
+      "spread": 0.052,
+      "levels": {
+       "0.0": "13/110",
+       "0.1": "6/90"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "update_p",
+     {
+      "spread": 0.052,
+      "levels": {
+       "0.5": "6/48",
+       "0.8": "4/55"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "lat_hop",
+     {
+      "spread": 0.048,
+      "levels": {
+       "0": "7/99",
+       "1": "12/101"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "fanout",
+     {
+      "spread": 0.047,
+      "levels": {
+       "1": "5/50",
+       "2": "5/47",
+       "4": "3/48",
+       "8": "6/55"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "mut_site",
+     {
+      "spread": 0.046,
+      "levels": {
+       "0.0": "9/74",
+       "0.001": "5/66",
+       "0.01": "5/60"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "loss_per_hop",
+     {
+      "spread": 0.042,
+      "levels": {
+       "0": "9/79",
+       "1": "5/70"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "wimm",
+     {
+      "spread": 0.03,
+      "levels": {
+       "0": "11/100",
+       "1": "8/100"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "plastic_route",
+     {
+      "spread": 0.027,
+      "levels": {
+       "0": "9/109",
+       "1": "10/91"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "dest_mode",
+     {
+      "spread": 0.023,
+      "levels": {
+       "all": "10/79",
+       "sample": "8/77"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "adapt_shift",
+     {
+      "spread": 0.012,
+      "levels": {
+       "2": "5/43",
+       "5": "5/48"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "k_random",
+     {
+      "spread": 0.007,
+      "levels": {
+       "3": "1/16",
+       "6": "1/18"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "update_period",
+     {
+      "spread": 0.007,
+      "levels": {
+       "1": "4/45",
+       "2": "5/52"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "update_mode",
+     {
+      "spread": 0.004,
+      "levels": {
+       "async": "10/103",
+       "sync": "9/97"
+      },
+      "zero_pass_levels": []
+     }
+    ]
+   ]
+  }
+ },
+ "XOR": {
+  "funnel": {
+   "candidates": 81,
+   "stratum_ok": 81,
+   "reach_ok": 81,
+   "ceiling_pass": 7,
+   "plant_scored": 0,
+   "plant_pass(admitted)": 0,
+   "ceiling_only_pass_ignoring_stratum": 7,
+   "design_pass": {},
+   "passes_with_>=2_designs": 0,
+   "above_ceiling_violations": 0,
+   "binding_ceiling_component(all)": {
+    "lc2k": 53,
+    "w2u_joint": 28
+   }
+  },
+  "first_failing_clause": {
+   "plant_not_scored": 7,
+   "ceiling": 74
+  },
+  "admitted": [],
+  "blocking_ceiling_stage": {
+   "n": 81,
+   "pass": 7,
+   "base_rate": 0.086,
+   "ranked": [
+    [
+     "update_period",
+     {
+      "spread": 0.286,
+      "levels": {
+       "1": "4/14",
+       "2": "0/25"
+      },
+      "zero_pass_levels": [
+       "2"
+      ]
+     }
+    ],
+    [
+     "delta",
+     {
+      "spread": 0.241,
+      "levels": {
+       "16": "7/29",
+       "4": "0/29",
+       "8": "0/23"
+      },
+      "zero_pass_levels": [
+       "4",
+       "8"
+      ]
+     }
+    ],
+    [
+     "k_random",
+     {
+      "spread": 0.231,
+      "levels": {
+       "3": "0/9",
+       "6": "3/13"
+      },
+      "zero_pass_levels": [
+       "3"
+      ]
+     }
+    ],
+    [
+     "decay_shift",
+     {
+      "spread": 0.192,
+      "levels": {
+       "0": "0/22",
+       "1": "1/20",
+       "3": "1/13",
+       "6": "5/26"
+      },
+      "zero_pass_levels": [
+       "0"
+      ]
+     }
+    ],
+    [
+     "fanout",
+     {
+      "spread": 0.19,
+      "levels": {
+       "1": "1/22",
+       "2": "0/21",
+       "4": "2/17",
+       "8": "4/21"
+      },
+      "zero_pass_levels": [
+       "2"
+      ]
+     }
+    ],
+    [
+     "radius",
+     {
+      "spread": 0.182,
+      "levels": {
+       "1": "0/15",
+       "2": "0/7",
+       "3": "2/11"
+      },
+      "zero_pass_levels": [
+       "1"
+      ]
+     }
+    ],
+    [
+     "d",
+     {
+      "spread": 0.176,
+      "levels": {
+       "1": "0/26",
+       "2": "3/17",
+       "3": "2/23",
+       "5": "2/15"
+      },
+      "zero_pass_levels": [
+       "1"
+      ]
+     }
+    ],
+    [
+     "loss",
+     {
+      "spread": 0.167,
+      "levels": {
+       "0.0": "5/30",
+       "0.1": "1/16",
+       "0.3": "0/17",
+       "0.6": "1/18"
+      },
+      "zero_pass_levels": [
+       "0.3"
+      ]
+     }
+    ],
+    [
+     "wimm",
+     {
+      "spread": 0.149,
+      "levels": {
+       "0": "7/47",
+       "1": "0/34"
+      },
+      "zero_pass_levels": [
+       "1"
+      ]
+     }
+    ],
+    [
+     "collision",
+     {
+      "spread": 0.148,
+      "levels": {
+       "aloha": "1/26",
+       "none": "4/27",
+       "saturate": "0/11"
+      },
+      "zero_pass_levels": [
+       "saturate"
+      ]
+     }
+    ],
+    [
+     "noise",
+     {
+      "spread": 0.143,
+      "levels": {
+       "0": "5/35",
+       "16": "0/25",
+       "64": "2/21"
+      },
+      "zero_pass_levels": [
+       "16"
+      ]
+     }
+    ],
+    [
+     "topology",
+     {
+      "spread": 0.136,
+      "levels": {
+       "global": "2/16",
+       "random": "3/22",
+       "ring": "0/16",
+       "smallworld": "0/10",
+       "torus": "2/17"
+      },
+      "zero_pass_levels": [
+       "smallworld",
+       "ring"
+      ]
+     }
+    ],
+    [
+     "update_p",
+     {
+      "spread": 0.136,
+      "levels": {
+       "0.5": "0/20",
+       "0.8": "3/22"
+      },
+      "zero_pass_levels": [
+       "0.5"
+      ]
+     }
+    ],
+    [
+     "n_sites",
+     {
+      "spread": 0.133,
+      "levels": {
+       "100": "3/25",
+       "144": "0/26",
+       "64": "4/30"
+      },
+      "zero_pass_levels": [
+       "144"
+      ]
+     }
+    ],
+    [
+     "cap",
+     {
+      "spread": 0.122,
+      "levels": {
+       "0": "2/17",
+       "1": "3/19",
+       "2": "1/28",
+       "4": "1/17"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "dup",
+     {
+      "spread": 0.11,
+      "levels": {
+       "0.0": "2/48",
+       "0.1": "5/33"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "mut_site",
+     {
+      "spread": 0.101,
+      "levels": {
+       "0.0": "1/24",
+       "0.001": "2/29",
+       "0.01": "4/28"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "lat_base",
+     {
+      "spread": 0.095,
+      "levels": {
+       "1": "3/21",
+       "2": "3/39",
+       "4": "1/21"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "adapt_shift",
+     {
+      "spread": 0.067,
+      "levels": {
+       "2": "1/26",
+       "5": "2/19"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "plastic_route",
+     {
+      "spread": 0.044,
+      "levels": {
+       "0": "4/36",
+       "1": "3/45"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "loss_per_hop",
+     {
+      "spread": 0.034,
+      "levels": {
+       "0": "1/16",
+       "1": "1/35"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "lat_jitter",
+     {
+      "spread": 0.031,
+      "levels": {
+       "0": "2/22",
+       "1": "3/30",
+       "3": "2/29"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "update_mode",
+     {
+      "spread": 0.031,
+      "levels": {
+       "async": "3/42",
+       "sync": "4/39"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "dest_mode",
+     {
+      "spread": 0.019,
+      "levels": {
+       "all": "3/35",
+       "sample": "2/30"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "lat_hop",
+     {
+      "spread": 0.017,
+      "levels": {
+       "0": "3/31",
+       "1": "4/50"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "rewire",
+     {
+      "spread": 0.0,
+      "levels": {
+       "200": "0/4",
+       "50": "0/6"
+      },
+      "zero_pass_levels": []
+     }
+    ]
+   ]
+  },
+  "blocking_plant_stage": null,
+  "blocking_overall": {
+   "n": 81,
+   "pass": 0,
+   "base_rate": 0.0,
+   "ranked": [
+    [
+     "topology",
+     {
+      "spread": 0.0,
+      "levels": {
+       "global": "0/16",
+       "random": "0/22",
+       "ring": "0/16",
+       "smallworld": "0/10",
+       "torus": "0/17"
+      },
+      "zero_pass_levels": [
+       "global",
+       "smallworld",
+       "torus",
+       "ring",
+       "random"
+      ]
+     }
+    ],
+    [
+     "n_sites",
+     {
+      "spread": 0.0,
+      "levels": {
+       "100": "0/25",
+       "144": "0/26",
+       "64": "0/30"
+      },
+      "zero_pass_levels": [
+       "64",
+       "144",
+       "100"
+      ]
+     }
+    ],
+    [
+     "radius",
+     {
+      "spread": 0.0,
+      "levels": {
+       "1": "0/15",
+       "2": "0/7",
+       "3": "0/11"
+      },
+      "zero_pass_levels": [
+       "1",
+       "3"
+      ]
+     }
+    ],
+    [
+     "k_random",
+     {
+      "spread": 0.0,
+      "levels": {
+       "3": "0/9",
+       "6": "0/13"
+      },
+      "zero_pass_levels": [
+       "3",
+       "6"
+      ]
+     }
+    ],
+    [
+     "rewire",
+     {
+      "spread": 0.0,
+      "levels": {
+       "200": "0/4",
+       "50": "0/6"
+      },
+      "zero_pass_levels": []
+     }
+    ],
+    [
+     "fanout",
+     {
+      "spread": 0.0,
+      "levels": {
+       "1": "0/22",
+       "2": "0/21",
+       "4": "0/17",
+       "8": "0/21"
+      },
+      "zero_pass_levels": [
+       "8",
+       "2",
+       "4",
+       "1"
+      ]
+     }
+    ],
+    [
+     "dest_mode",
+     {
+      "spread": 0.0,
+      "levels": {
+       "all": "0/35",
+       "sample": "0/30"
+      },
+      "zero_pass_levels": [
+       "all",
+       "sample"
+      ]
+     }
+    ],
+    [
+     "loss",
+     {
+      "spread": 0.0,
+      "levels": {
+       "0.0": "0/30",
+       "0.1": "0/16",
+       "0.3": "0/17",
+       "0.6": "0/18"
+      },
+      "zero_pass_levels": [
+       "0.0",
+       "0.6",
+       "0.3",
+       "0.1"
+      ]
+     }
+    ],
+    [
+     "loss_per_hop",
+     {
+      "spread": 0.0,
+      "levels": {
+       "0": "0/16",
+       "1": "0/35"
+      },
+      "zero_pass_levels": [
+       "1",
+       "0"
+      ]
+     }
+    ],
+    [
+     "lat_base",
+     {
+      "spread": 0.0,
+      "levels": {
+       "1": "0/21",
+       "2": "0/39",
+       "4": "0/21"
+      },
+      "zero_pass_levels": [
+       "1",
+       "2",
+       "4"
+      ]
+     }
+    ],
+    [
+     "lat_hop",
+     {
+      "spread": 0.0,
+      "levels": {
+       "0": "0/31",
+       "1": "0/50"
+      },
+      "zero_pass_levels": [
+       "1",
+       "0"
+      ]
+     }
+    ],
+    [
+     "lat_jitter",
+     {
+      "spread": 0.0,
+      "levels": {
+       "0": "0/22",
+       "1": "0/30",
+       "3": "0/29"
+      },
+      "zero_pass_levels": [
+       "0",
+       "3",
+       "1"
+      ]
+     }
+    ],
+    [
+     "dup",
+     {
+      "spread": 0.0,
+      "levels": {
+       "0.0": "0/48",
+       "0.1": "0/33"
+      },
+      "zero_pass_levels": [
+       "0.1",
+       "0.0"
+      ]
+     }
+    ],
+    [
+     "noise",
+     {
+      "spread": 0.0,
+      "levels": {
+       "0": "0/35",
+       "16": "0/25",
+       "64": "0/21"
+      },
+      "zero_pass_levels": [
+       "0",
+       "64",
+       "16"
+      ]
+     }
+    ],
+    [
+     "cap",
+     {
+      "spread": 0.0,
+      "levels": {
+       "0": "0/17",
+       "1": "0/19",
+       "2": "0/28",
+       "4": "0/17"
+      },
+      "zero_pass_levels": [
+       "2",
+       "4",
+       "0",
+       "1"
+      ]
+     }
+    ],
+    [
+     "collision",
+     {
+      "spread": 0.0,
+      "levels": {
+       "aloha": "0/26",
+       "none": "0/27",
+       "saturate": "0/11"
+      },
+      "zero_pass_levels": [
+       "none",
+       "aloha",
+       "saturate"
+      ]
+     }
+    ],
+    [
+     "decay_shift",
+     {
+      "spread": 0.0,
+      "levels": {
+       "0": "0/22",
+       "1": "0/20",
+       "3": "0/13",
+       "6": "0/26"
+      },
+      "zero_pass_levels": [
+       "6",
+       "3",
+       "1",
+       "0"
+      ]
+     }
+    ],
+    [
+     "update_mode",
+     {
+      "spread": 0.0,
+      "levels": {
+       "async": "0/42",
+       "sync": "0/39"
+      },
+      "zero_pass_levels": [
+       "async",
+       "sync"
+      ]
+     }
+    ],
+    [
+     "update_period",
+     {
+      "spread": 0.0,
+      "levels": {
+       "1": "0/14",
+       "2": "0/25"
+      },
+      "zero_pass_levels": [
+       "1",
+       "2"
+      ]
+     }
+    ],
+    [
+     "update_p",
+     {
+      "spread": 0.0,
+      "levels": {
+       "0.5": "0/20",
+       "0.8": "0/22"
+      },
+      "zero_pass_levels": [
+       "0.8",
+       "0.5"
+      ]
+     }
+    ],
+    [
+     "plastic_route",
+     {
+      "spread": 0.0,
+      "levels": {
+       "0": "0/36",
+       "1": "0/45"
+      },
+      "zero_pass_levels": [
+       "0",
+       "1"
+      ]
+     }
+    ],
+    [
+     "adapt_shift",
+     {
+      "spread": 0.0,
+      "levels": {
+       "2": "0/26",
+       "5": "0/19"
+      },
+      "zero_pass_levels": [
+       "2",
+       "5"
+      ]
+     }
+    ],
+    [
+     "wimm",
+     {
+      "spread": 0.0,
+      "levels": {
+       "0": "0/47",
+       "1": "0/34"
+      },
+      "zero_pass_levels": [
+       "0",
+       "1"
+      ]
+     }
+    ],
+    [
+     "mut_site",
+     {
+      "spread": 0.0,
+      "levels": {
+       "0.0": "0/24",
+       "0.001": "0/29",
+       "0.01": "0/28"
+      },
+      "zero_pass_levels": [
+       "0.01",
+       "0.0",
+       "0.001"
+      ]
+     }
+    ],
+    [
+     "d",
+     {
+      "spread": 0.0,
+      "levels": {
+       "1": "0/26",
+       "2": "0/17",
+       "3": "0/23",
+       "5": "0/15"
+      },
+      "zero_pass_levels": [
+       "5",
+       "3",
+       "1",
+       "2"
+      ]
+     }
+    ],
+    [
+     "delta",
+     {
+      "spread": 0.0,
+      "levels": {
+       "16": "0/29",
+       "4": "0/29",
+       "8": "0/23"
+      },
+      "zero_pass_levels": [
+       "16",
+       "4",
+       "8"
+      ]
+     }
+    ]
+   ]
+  }
+ }
+}
