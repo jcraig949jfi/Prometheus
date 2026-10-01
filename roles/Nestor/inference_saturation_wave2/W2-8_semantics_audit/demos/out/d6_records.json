@@ -1,0 +1,142 @@
+{
+ "D10_ci_event": {
+  "eligible_runs_D0_not_free_with_any_free": 26,
+  "L_share_values_at_endpoint": [
+   0.0,
+   0.6641,
+   1.0
+  ],
+  "free_in_L_clause_equivalent_to_L_share_clause": true,
+  "events_as_coded": 8,
+  "events_if_state_free_present_at_FINAL_checkpoint": 4,
+  "events_if_state_free_is_majority_of_competent_at_final": 3,
+  "event_rows": [
+   {
+    "run": "7ae3_27000023",
+    "last_free_epoch": 2000,
+    "L_share_at_last_free": 1.0,
+    "free": 84,
+    "free_in_L": 84,
+    "final_epoch": 2000,
+    "final_free": 84,
+    "final_competent": 167,
+    "final_L_share": 1.0
+   },
+   {
+    "run": "ffa6_27000012",
+    "last_free_epoch": 1600,
+    "L_share_at_last_free": 0.6641,
+    "free": 1,
+    "free_in_L": 1,
+    "final_epoch": 2000,
+    "final_free": 0,
+    "final_competent": 1,
+    "final_L_share": 0.0312
+   },
+   {
+    "run": "ffa6_27000020",
+    "last_free_epoch": 2000,
+    "L_share_at_last_free": 1.0,
+    "free": 13,
+    "free_in_L": 13,
+    "final_epoch": 2000,
+    "final_free": 13,
+    "final_competent": 63,
+    "final_L_share": 1.0
+   },
+   {
+    "run": "ffa6_27000024",
+    "last_free_epoch": 1900,
+    "L_share_at_last_free": 1.0,
+    "free": 1,
+    "free_in_L": 1,
+    "final_epoch": 2000,
+    "final_free": 0,
+    "final_competent": 87,
+    "final_L_share": 1.0
+   },
+   {
+    "run": "ffa6_27000046",
+    "last_free_epoch": 2000,
+    "L_share_at_last_free": 1.0,
+    "free": 41,
+    "free_in_L": 41,
+    "final_epoch": 2000,
+    "final_free": 41,
+    "final_competent": 69,
+    "final_L_share": 1.0
+   },
+   {
+    "run": "ffa6_27000048",
+    "last_free_epoch": 2000,
+    "L_share_at_last_free": 1.0,
+    "free": 194,
+    "free_in_L": 194,
+    "final_epoch": 2000,
+    "final_free": 194,
+    "final_competent": 204,
+    "final_L_share": 1.0
+   },
+   {
+    "run": "ffa6_27000051",
+    "last_free_epoch": 1200,
+    "L_share_at_last_free": 1.0,
+    "free": 11,
+    "free_in_L": 11,
+    "final_epoch": 2000,
+    "final_free": 0,
+    "final_competent": 178,
+    "final_L_share": 1.0
+   },
+   {
+    "run": "ffa6_27000052",
+    "last_free_epoch": 1600,
+    "L_share_at_last_free": 1.0,
+    "free": 7,
+    "free_in_L": 7,
+    "final_epoch": 2000,
+    "final_free": 0,
+    "final_competent": 0,
+    "final_L_share": 1.0
+   }
+  ]
+ },
+ "D11_fair_truncation": {
+  "first_donor_checkpoints_truncated": 16,
+  "specialist_flag_flipped_by_truncation": [
+   {
+    "run": "ZERO_ffa6_24000000",
+    "recorded_specialist": true,
+    "full_set_specialist": false,
+    "classes": {
+     "Z_ONLY": 143,
+     "K_ONLY": 0,
+     "BOTH_CONST": 1,
+     "ROBUST": 0,
+     "OTHER": 0
+    }
+   }
+  ]
+ },
+ "D12_screen": {
+  "P_competent_per_screen": {
+   "0.1": 0.0,
+   "0.2": 0.0015,
+   "0.3": 0.0364,
+   "0.4": 0.213,
+   "0.5": 0.5513
+  },
+  "note": "stage 1 = any of 4 seeds (either side) passes; stage 2 = >= 10 of 20. Seeds are keyed on the genome's index in the sorted checkpoint list (run_dd.screen tag (..., j, 1)), so each checkpoint re-draws.",
+  "DENSE_COPY_L2_runs_whose_best_competent_rate_is_below_0.6": 8
+ },
+ "D5_anticheat": {
+  "counter_ever_incremented_in_world.py": {
+   "validation_writes": false,
+   "validation_world_ops": false,
+   "nonheritable_state_inherited": false,
+   "births_external": true
+  },
+  "IMMORTAL_cap": "max_age = epochs + 2; age is incremented once per step and there are `epochs` steps, so age <= epochs",
+  "RUNNER_BIRTH": "births_external is incremented only in _external_births, which step() calls only when reproduction == EXTERNAL; EXTERNAL is not in grammar.ENDOGENOUS, so `endogenous and births_external>0` is unsatisfiable"
+ }
+}
