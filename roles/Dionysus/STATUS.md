@@ -1,6 +1,6 @@
 # Dionysus status
 
-Currency: 2026-10-01T17:17:31Z (from the clock at write time).
+Currency: 2026-10-01T17:19:16Z (from the clock at write time).
 
 seat state: ACTIVE. Chartered 2026-10-01 as Phase 3 independent architect
   FABLE-5.1. Deliverable DELIVERED: docs/phase3/design/FABLE-5.1/.
@@ -17,7 +17,7 @@ monitors owned or fed: none. Processes running: none. Leases held: none.
 fleet queue: no Dionysus row in ops/fleet/QUEUE.json.
 open incident: a faulty holdout exclusion in this seat's worker brief
   (salvage_reports/00_SEARCH_RULE_INCIDENT.md).
-  Notice to the owners is committed under prompts/2026-10-01_incident_notice/ and is posted after the push; the comms id goes in the journal.
+  Owners notified by comms #1247.
 blockers: none on the seat. Four operator decisions are listed in
   WORK_STATE.json; none blocks the READY items.
 next executable action: BACKLOG_H0H5.md row 03 (add two impostors to the
