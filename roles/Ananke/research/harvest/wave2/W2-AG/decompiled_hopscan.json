@@ -1,0 +1,238 @@
+{
+ "bbef66a1": {
+  "rules": 1,
+  "setrule": 0,
+  "programs": [
+   [
+    " 1 ADDI  T3 = T2 + -82",
+    " 2 SUB   T0 = SUB(S1, IN0_0)",
+    " 3 WIMM  T2 = WIMM(CHAN, ZERO)",
+    " 4 ADD   S0 = ADD(ENERGY, T0)",
+    " 5 XOR   RVAL = XOR(T3, IN0_1)",
+    " 6 MAX   PAY0 = MAX(T0, S0)",
+    " 7 SETRULE RPORT = SETRULE(ZERO, RPORT)",
+    " 8 XOR   T3 = XOR(IN0_1, ENERGY)",
+    " 9 MAX   EMIT = MAX(RVAL, IN0_1)",
+    "11 SETRULE CHAN = SETRULE(PAY0, CNT0)",
+    "12 GT    S1 = GT(S1, SENSE)",
+    "13 MAX   EMIT = MAX(S1, T1)",
+    "15 SEL   RPORT = (RPORT > 0) ? SENSE : ENERGY"
+   ]
+  ]
+ },
+ "31cd2a8a": {
+  "rules": 1,
+  "setrule": 0,
+  "programs": [
+   [
+    " 0 RAND  CHAN = RAND(T0, IN0_0)",
+    " 1 SUB   PAY1 = SUB(ENERGY, IN0_1)",
+    " 2 WIMM  T0 = WIMM(S0, RVAL)",
+    " 3 WIMM  PAY0 = WIMM(S1, CNT0)",
+    " 4 WIMM  S0 = WIMM(ZERO, IN0_0)",
+    " 5 SEL   RPORT = (RPORT > 0) ? SENSE : CNT0",
+    " 6 MAX   CHAN = MAX(PAY0, T1)",
+    " 7 SEL   EMIT = (EMIT > 0) ? ZERO : S0",
+    " 8 ADDI  S0 = T1 + 12",
+    " 9 MAX   EMIT = MAX(SENSE, S1)",
+    "10 ADDI  RVAL = T0 + -44",
+    "11 CONST RPORT = -71 << 3",
+    "12 SETRULE EMIT = SETRULE(RVAL, SENSE)",
+    "13 ADD   S1 = ADD(RVAL, EMIT)",
+    "14 ADDI  S0 = IN0_1 + -102",
+    "15 XOR   PAY1 = XOR(S1, PAY0)"
+   ]
+  ]
+ },
+ "62a7fff9": {
+  "rules": 1,
+  "setrule": 0,
+  "programs": [
+   [
+    " 0 SHR   PAY0 = S1 >> 13",
+    " 1 XOR   EMIT = XOR(SENSE, T1)",
+    " 2 MAX   PAY1 = MAX(IN0_1, S1)",
+    " 3 ADDI  S0 = IN0_1 + -49",
+    " 4 MOD   PAY0 = MOD(S1, PAY0)",
+    " 5 ADDI  S0 = IN0_1 + -107",
+    " 6 MOV   PAY1 = SENSE",
+    " 8 SEL   RVAL = (RVAL > 0) ? CNT0 : RVAL",
+    " 9 MOD   RVAL = MOD(S1, SENSE)",
+    "10 MAX   RVAL = MAX(S0, RVAL)",
+    "11 ADDI  T2 = PAY0 + -112",
+    "12 CONST T2 = -2 << 6",
+    "13 ADDI  T2 = IN0_1 + -107",
+    "14 WIMM  S1 = WIMM(RVAL, IN0_1)",
+    "15 ADDI  S1 = SENSE + -71"
+   ]
+  ]
+ },
+ "c16d5231": {
+  "rules": 1,
+  "setrule": 0,
+  "programs": [
+   [
+    " 0 MAX   S1 = MAX(SENSE, S0)",
+    " 1 SEL   S0 = (S0 > 0) ? CHAN : S0",
+    " 2 SEL   PAY1 = (PAY1 > 0) ? S1 : CHAN",
+    " 3 WIMM  T1 = WIMM(IN0_0, S0)",
+    " 4 MULQ  S0 = MULQ(T2, RPORT)",
+    " 5 WIMM  S0 = WIMM(EMIT, IN0_1)",
+    " 6 ADD   CHAN = ADD(S0, SENSE)",
+    " 7 MOD   T3 = MOD(ZERO, EMIT)",
+    " 8 ADD   T2 = ADD(T2, S0)",
+    " 9 ADDI  EMIT = IN0_0 + 8",
+    "10 MOD   T1 = MOD(ZERO, RPORT)",
+    "11 MOV   T3 = T1",
+    "12 MOV   PAY0 = SENSE",
+    "13 MOV   CHAN = RVAL",
+    "14 XOR   T2 = XOR(S1, IN0_0)",
+    "15 SUB   S0 = SUB(T2, CNT0)"
+   ]
+  ]
+ },
+ "0a23398f": {
+  "rules": 4,
+  "setrule": 1,
+  "programs": [
+   [
+    " 0 RAND  T1 = RAND(IN0_2, IN3_2)",
+    " 1 SETRULE PAY1 = SETRULE(IN2_1, IN2_0)",
+    " 2 MAX   S3 = MAX(IN3_3, IN1_1)",
+    " 3 ADD   PAY1 = ADD(SENSE, S1)",
+    " 4 MAX   S5 = MAX(IN0_3, EMIT)",
+    " 5 CONST RVAL = -87 << 3",
+    " 8 MOD   PAY3 = MOD(PAY0, IN2_2)",
+    " 9 GT    T0 = GT(IN3_2, PAY3)",
+    "10 MAX   EMIT = MAX(IN0_3, PAY1)",
+    "11 MAX   S5 = MAX(T1, EMIT)",
+    "12 SUB   PAY3 = SUB(IN3_0, RPORT)",
+    "13 CONST EMIT = 17 << 7",
+    "15 ADD   S0 = ADD(IN0_1, T3)"
+   ],
+   [
+    " 2 MAX   T1 = MAX(IN1_0, IN2_1)",
+    " 3 ADD   T1 = ADD(IN2_0, IN1_2)",
+    " 4 RAND  PAY3 = RAND(S7, CNT0)",
+    " 5 ADD   T0 = ADD(T2, T2)",
+    " 6 MULQ  PAY2 = MULQ(S2, EMIT)",
+    " 8 XOR   S2 = XOR(IN2_2, CHAN)",
+    " 9 MULQ  PAY2 = MULQ(IN3_2, IN2_1)",
+    "10 RAND  RPORT = RAND(S5, IN0_3)",
+    "11 WIMM  S4 = WIMM(S1, RVAL)",
+    "12 SETRULE T2 = SETRULE(PAY1, IN0_3)",
+    "13 XOR   PAY3 = XOR(CNT1, IN0_0)",
+    "14 SUB   S1 = SUB(SENSE, IN3_1)",
+    "15 SETRULE T1 = SETRULE(CNT2, IN2_2)"
+   ],
+   [
+    " 0 SEL   PAY3 = (PAY3 > 0) ? CNT3 : IN0_0",
+    " 1 SETRULE CHAN = SETRULE(PAY1, S0)",
+    " 3 RAND  S7 = RAND(IN3_2, CNT1)",
+    " 4 ADD   S3 = ADD(CHAN, IN1_2)",
+    " 6 RAND  EMIT = RAND(IN2_1, T2)",
+    " 7 WIMM  T0 = WIMM(IN0_1, S4)",
+    " 8 SETRULE RVAL = SETRULE(IN1_0, S0)",
+    " 9 GT    S1 = GT(IN3_2, IN3_1)",
+    "10 MOD   PAY2 = MOD(IN2_0, IN3_1)",
+    "11 RAND  S1 = RAND(PAY2, S6)",
+    "12 MOV   T3 = PAY2",
+    "13 XOR   S7 = XOR(SENSE, CNT1)",
+    "14 ADD   S1 = ADD(IN2_2, IN1_2)",
+    "15 MULQ  T0 = MULQ(IN1_1, S0)"
+   ],
+   [
+    " 0 MOV   S3 = IN0_3",
+    " 1 RAND  PAY0 = RAND(T0, IN1_0)",
+    " 2 SHR   S3 = PAY3 >> 8",
+    " 3 MULQ  S1 = MULQ(IN3_0, CHAN)",
+    " 4 SHR   S5 = RPORT >> 11",
+    " 5 SETRULE S2 = SETRULE(IN3_1, CNT0)",
+    " 6 SHR   RPORT = IN3_3 >> 10",
+    " 7 SUB   S0 = SUB(PAY3, PAY0)",
+    " 9 RAND  T2 = RAND(IN1_1, IN2_2)",
+    "10 MOV   S7 = IN3_0",
+    "11 RAND  T0 = RAND(S1, S0)",
+    "12 ADDI  S0 = IN1_3 + -106",
+    "13 MOD   S3 = MOD(CHAN, IN0_3)",
+    "14 MOD   S2 = MOD(S6, CNT3)",
+    "15 RAND  PAY0 = RAND(PAY0, CNT3)"
+   ]
+  ]
+ },
+ "f6b623cd": {
+  "rules": 4,
+  "setrule": 1,
+  "programs": [
+   [
+    " 0 MOD   S0 = MOD(S0, T0)",
+    " 1 SETRULE CHAN = SETRULE(IN1_2, CHAN)",
+    " 2 MAX   T1 = MAX(IN1_3, ENERGY)",
+    " 3 SETRULE RVAL = SETRULE(RPORT, S4)",
+    " 4 SEL   T1 = (T1 > 0) ? SENSE : IN1_3",
+    " 5 MAX   EMIT = MAX(IN2_1, ENERGY)",
+    " 6 MOV   S0 = IN0_3",
+    " 8 RAND  RVAL = RAND(PAY1, IN1_2)",
+    " 9 SUB   S6 = SUB(RVAL, CNT2)",
+    "10 MOV   RPORT = IN1_1",
+    "11 SUB   CHAN = SUB(CNT3, S7)",
+    "12 MOV   PAY3 = T1",
+    "13 MULQ  PAY2 = MULQ(PAY0, EMIT)",
+    "14 ADDI  RVAL = IN3_1 + -26",
+    "15 MAX   EMIT = MAX(IN0_1, ENERGY)"
+   ],
+   [
+    " 0 ADD   T1 = ADD(PAY0, RVAL)",
+    " 1 WIMM  S7 = WIMM(S7, IN1_2)",
+    " 2 SHR   CHAN = S4 >> 0",
+    " 3 MOD   RPORT = MOD(PAY3, S7)",
+    " 4 XOR   PAY0 = XOR(IN2_0, IN1_2)",
+    " 5 WIMM  S5 = WIMM(IN0_3, ZERO)",
+    " 6 MULQ  RPORT = MULQ(PAY2, PAY2)",
+    " 7 SETRULE T2 = SETRULE(S7, IN0_1)",
+    " 8 SETRULE S5 = SETRULE(CNT3, IN2_1)",
+    " 9 MAX   PAY2 = MAX(IN0_2, IN0_0)",
+    "10 GT    S0 = GT(IN1_3, S1)",
+    "11 XOR   T1 = XOR(S6, S0)",
+    "12 MAX   S2 = MAX(SENSE, CNT1)",
+    "13 RAND  T0 = RAND(IN0_3, IN3_3)",
+    "14 CONST PAY1 = 52 << 4",
+    "15 CONST S6 = 14 << 5"
+   ],
+   [
+    " 0 WIMM  S2 = WIMM(S6, IN2_1)",
+    " 1 MAX   S3 = MAX(CNT1, IN3_2)",
+    " 2 MAX   S5 = MAX(IN3_0, S1)",
+    " 3 MOD   S4 = MOD(IN1_3, IN3_3)",
+    " 4 MOD   S3 = MOD(IN0_2, PAY3)",
+    " 5 MOD   S4 = MOD(IN0_1, ZERO)",
+    " 6 MULQ  PAY3 = MULQ(S0, S5)",
+    " 7 MULQ  T3 = MULQ(ENERGY, CNT2)",
+    " 8 WIMM  S4 = WIMM(S6, CNT1)",
+    " 9 GT    PAY0 = GT(IN2_2, IN3_0)",
+    "10 ADD   PAY3 = ADD(IN2_0, PAY2)",
+    "11 XOR   CHAN = XOR(IN2_0, IN1_2)",
+    "12 SETRULE S1 = SETRULE(T3, IN2_2)",
+    "13 SETRULE S4 = SETRULE(IN0_2, T3)",
+    "14 MOD   T1 = MOD(IN2_1, S7)",
+    "15 ADD   CHAN = ADD(RPORT, IN0_2)"
+   ],
+   [
+    " 0 XOR   PAY2 = XOR(CHAN, S7)",
+    " 1 SEL   T2 = (T2 > 0) ? CNT3 : SENSE",
+    " 2 SETRULE S7 = SETRULE(S4, ZERO)",
+    " 4 SETRULE T1 = SETRULE(S2, PAY1)",
+    " 5 CONST S2 = 16 << 3",
+    " 6 SUB   S4 = SUB(ZERO, SENSE)",
+    " 8 GT    RPORT = GT(IN2_1, PAY0)",
+    " 9 RAND  T0 = RAND(IN0_0, PAY1)",
+    "10 MAX   T0 = MAX(PAY1, S2)",
+    "11 MULQ  RVAL = MULQ(IN2_3, IN0_0)",
+    "12 ADD   S0 = ADD(IN1_2, PAY1)",
+    "13 RAND  T0 = RAND(IN0_3, CNT3)",
+    "14 ADD   T1 = ADD(S6, S0)",
+    "15 MOV   PAY3 = S3"
+   ]
+  ]
+ }
+}

@@ -1,0 +1,363 @@
+{
+ "alphabet": [
+  "0640",
+  "06c0",
+  "0600",
+  "0e40",
+  "0ec0",
+  "0e00",
+  "1640",
+  "16c0",
+  "1600",
+  "1e40",
+  "1ec0",
+  "1e00",
+  "2640",
+  "26c0",
+  "2600",
+  "2e40",
+  "2ec0",
+  "2e00",
+  "3e40",
+  "3ec0",
+  "3e00",
+  "014000",
+  "010000",
+  "114000",
+  "110000",
+  "214000",
+  "210000",
+  "14",
+  "24",
+  "15",
+  "25",
+  "1c",
+  "2c",
+  "4b",
+  "43",
+  "4d",
+  "5d",
+  "6b",
+  "7d",
+  "5f",
+  "7e",
+  "12",
+  "23",
+  "13",
+  "76",
+  "c640",
+  "ed32",
+  "e5",
+  "e7",
+  "edb0",
+  "edb8"
+ ],
+ "micro": [
+  "1e40",
+  "1ec0",
+  "2e40",
+  "0e40",
+  "4b",
+  "4d",
+  "43",
+  "14",
+  "24",
+  "ed32",
+  "114000",
+  "210000",
+  "014000",
+  "e5",
+  "e7",
+  "7d",
+  "c640",
+  "5f",
+  "3e40",
+  "76"
+ ],
+ "STOCK": {
+  "min_tokens": 2,
+  "min_bytes": 3,
+  "copiers": {
+   "2": [
+    "1e40e5",
+    "1e40edb0",
+    "1ec0e5",
+    "1ec0e7",
+    "1ec0edb0",
+    "1ec0edb8",
+    "2e40e5",
+    "2e40e7",
+    "2e40edb0",
+    "2e40edb8",
+    "2ec0e5",
+    "2ec0e7",
+    "2ec0edb8",
+    "114000e5",
+    "114000edb0",
+    "114000edb8",
+    "214000e7",
+    "214000edb0",
+    "214000edb8"
+   ]
+  },
+  "n_copiers": {
+   "2": 19
+  },
+  "searched": "1-2 tokens x 51 alphabet",
+  "cpu_s": 17.8
+ },
+ "A_NOBLOCK": {
+  "min_tokens": null,
+  "min_bytes": null,
+  "copiers": {},
+  "n_copiers": {},
+  "searched": "1-2 tokens x 51 alphabet",
+  "cpu_s": 14.1
+ },
+ "B_EXPLEN": {
+  "min_tokens": 3,
+  "min_bytes": 4,
+  "copiers": {
+   "3": [
+    "1e4043e5",
+    "1e40ed32e5",
+    "1ec043e5",
+    "1ec0014000e5",
+    "2e400e40e5",
+    "2e400e40e7",
+    "0e401e40e5",
+    "0e401ec0e5",
+    "0e40ed32e5",
+    "43ed32e5",
+    "24ed32e5",
+    "ed320e40e5",
+    "ed3224e5",
+    "ed32114000e5",
+    "ed32e5ed32",
+    "ed32e55f",
+    "ed32e576",
+    "1140004be7",
+    "11400043e5",
+    "11400043e7",
+    "210000ed32e5",
+    "0140001ec0e5",
+    "014000ed32e5"
+   ]
+  },
+  "n_copiers": {
+   "3": 23
+  },
+  "searched": "1-2 tokens x 51 alphabet + 3 tokens x 20 micro",
+  "cpu_s": 60.8
+ },
+ "C_NOWRAP": {
+  "min_tokens": 2,
+  "min_bytes": 3,
+  "copiers": {
+   "2": [
+    "1e40e5",
+    "1e40edb0",
+    "2e40e5",
+    "2e40edb0",
+    "114000e5",
+    "114000edb0",
+    "214000e5",
+    "214000edb0",
+    "ed32e5",
+    "ed32edb0"
+   ]
+  },
+  "n_copiers": {
+   "2": 10
+  },
+  "searched": "1-2 tokens x 51 alphabet",
+  "cpu_s": 14.3
+ },
+ "C2_RING192": {
+  "min_tokens": 2,
+  "min_bytes": 2,
+  "copiers": {
+   "2": [
+    "1640e5",
+    "1640e7",
+    "1640edb0",
+    "1640edb8",
+    "1e40e5",
+    "1e40edb0",
+    "1e40edb8",
+    "2640e7",
+    "2640edb8",
+    "2e40e7",
+    "2e40edb8",
+    "114000e5",
+    "114000e7",
+    "114000edb0",
+    "114000edb8",
+    "214000e7",
+    "214000edb8",
+    "14e5",
+    "14e7",
+    "14edb0",
+    "24e7",
+    "24edb8"
+   ]
+  },
+  "n_copiers": {
+   "2": 22
+  },
+  "searched": "1-2 tokens x 51 alphabet",
+  "cpu_s": 18.3
+ },
+ "D_HARV_HALT": {
+  "min_tokens": 2,
+  "min_bytes": 3,
+  "copiers": {
+   "2": [
+    "1e40e5",
+    "1e40e7",
+    "1e40edb0",
+    "1e40edb8",
+    "1ec0e5",
+    "1ec0e7",
+    "1ec0edb0",
+    "1ec0edb8",
+    "2e40e5",
+    "2e40e7",
+    "2e40edb0",
+    "2e40edb8",
+    "2ec0e5",
+    "2ec0e7",
+    "2ec0edb0",
+    "2ec0edb8",
+    "114000e5",
+    "114000e7",
+    "114000edb0",
+    "114000edb8",
+    "214000e5",
+    "214000e7",
+    "214000edb0",
+    "214000edb8",
+    "ed32e5",
+    "ed32edb0"
+   ]
+  },
+  "n_copiers": {
+   "2": 26
+  },
+  "searched": "1-2 tokens x 51 alphabet",
+  "cpu_s": 10.7
+ },
+ "E_REGRAND": {
+  "min_tokens": 3,
+  "min_bytes": 5,
+  "copiers": {
+   "3": [
+    "1e40ed32e5",
+    "1e40210000e5",
+    "1ec0210000e5",
+    "ed32114000e5",
+    "114000210000e5",
+    "2100001e40e5",
+    "2100001ec0e5",
+    "210000114000e5"
+   ]
+  },
+  "n_copiers": {
+   "3": 8
+  },
+  "searched": "1-2 tokens x 51 alphabet + 3 tokens x 20 micro",
+  "cpu_s": 64.0
+ },
+ "F_ROTATE": {
+  "min_tokens": null,
+  "min_bytes": null,
+  "copiers": {},
+  "n_copiers": {},
+  "searched": "1-2 tokens x 51 alphabet + 3 tokens x 20 micro",
+  "cpu_s": 64.4
+ },
+ "G_BLOCK_OWN": {
+  "min_tokens": null,
+  "min_bytes": null,
+  "copiers": {},
+  "n_copiers": {},
+  "searched": "1-2 tokens x 51 alphabet",
+  "cpu_s": 15.0
+ },
+ "H_RELADDR": {
+  "min_tokens": 2,
+  "min_bytes": 3,
+  "copiers": {
+   "2": [
+    "1e40e5",
+    "1e40edb0",
+    "1ec0e5",
+    "1ec0edb0",
+    "2e40e7",
+    "2e40edb8",
+    "2ec0e7",
+    "2ec0edb8",
+    "114000e5",
+    "114000edb0",
+    "214000e7",
+    "214000edb8"
+   ]
+  },
+  "n_copiers": {
+   "2": 12
+  },
+  "searched": "1-2 tokens x 51 alphabet",
+  "cpu_s": 17.0
+ },
+ "I_SIDERAND": {
+  "min_tokens": 2,
+  "min_bytes": 3,
+  "copiers": {
+   "2": [
+    "1e40e5",
+    "1e40e7",
+    "1e40edb0",
+    "1e40edb8",
+    "1ec0e5",
+    "1ec0e7",
+    "1ec0edb8",
+    "2e40e5",
+    "2e40e7",
+    "2e40edb0",
+    "2ec0e5",
+    "2ec0e7",
+    "2ec0edb0",
+    "2ec0edb8",
+    "114000e5",
+    "114000e7",
+    "114000edb0",
+    "114000edb8",
+    "214000e5",
+    "214000e7",
+    "214000edb0",
+    "214000edb8"
+   ]
+  },
+  "n_copiers": {
+   "2": 22
+  },
+  "searched": "1-2 tokens x 51 alphabet",
+  "cpu_s": 17.9
+ },
+ "J_SELFCOPY": {
+  "min_tokens": 1,
+  "min_bytes": 1,
+  "copiers": {
+   "1": [
+    "e5",
+    "e7"
+   ]
+  },
+  "n_copiers": {
+   "1": 2
+  },
+  "searched": "1-2 tokens x 51 alphabet",
+  "cpu_s": 0.7
+ },
+ "cpu_total_s": 315.0
+}

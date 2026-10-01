@@ -1,0 +1,1757 @@
+[
+ {
+  "family": "RELAY",
+  "dial": "delta",
+  "base": 1,
+  "track": "evo",
+  "metric": "acc",
+  "between": [
+   0,
+   1
+  ],
+  "label": "PHASE_BOUNDARY_CANDIDATE",
+  "obs_means": [
+   0.592,
+   0.772,
+   0.681
+  ],
+  "obs_jump": 0.18,
+  "se": 0.058,
+  "ka_means_match": true,
+  "levels": [
+   4,
+   8,
+   16
+  ],
+  "ceil": [
+   0.75,
+   1.0,
+   1.0
+  ],
+  "d_ceil": 0.25,
+  "g_local": 0.362,
+  "g_pool": 0.126,
+  "g_used": "local",
+  "pred_step": 0.09,
+  "residual": 0.09,
+  "resid_se": 1.6,
+  "pred_g1": 0.25,
+  "resid_g1": -0.07,
+  "pred_pool": 0.031,
+  "share": 0.5,
+  "class": "PARTIAL",
+  "B2_means": [
+   0.625,
+   0.824,
+   0.651
+  ],
+  "B2_ceil": [
+   0.75,
+   1.0,
+   1.0
+  ],
+  "B2_jump": 0.199,
+  "B2_pred": 0.09,
+  "B2_resid": 0.109
+ },
+ {
+  "family": "HOLD",
+  "dial": "decay_shift",
+  "base": 1,
+  "track": "evo",
+  "metric": "acc",
+  "between": [
+   1,
+   2
+  ],
+  "label": "PHASE_BOUNDARY_CANDIDATE",
+  "obs_means": [
+   0.643,
+   0.609,
+   0.847,
+   0.785
+  ],
+  "obs_jump": 0.239,
+  "se": 0.062,
+  "ka_means_match": true,
+  "levels": [
+   0,
+   1,
+   3,
+   6
+  ],
+  "ceil": [
+   1.0,
+   1.0,
+   1.0,
+   1.0
+  ],
+  "d_ceil": 0.0,
+  "g_local": 0.428,
+  "g_pool": 0.475,
+  "g_used": "local",
+  "pred_step": 0.0,
+  "residual": 0.239,
+  "resid_se": 3.9,
+  "pred_g1": 0.0,
+  "resid_g1": 0.239,
+  "pred_pool": 0.0,
+  "share": 0.0,
+  "class": "GENUINE",
+  "B2_means": [
+   0.695,
+   0.886,
+   0.721,
+   0.802
+  ],
+  "B2_ceil": [
+   1.0,
+   1.0,
+   1.0,
+   1.0
+  ],
+  "B2_jump": -0.164,
+  "B2_pred": 0.0,
+  "B2_resid": -0.164
+ },
+ {
+  "family": "RELAY",
+  "dial": "decay_shift",
+  "base": 0,
+  "track": "phys",
+  "metric": "plant",
+  "between": [
+   0,
+   1
+  ],
+  "label": "PHASE_BOUNDARY_SUPPORTED",
+  "obs_means": [
+   1.0,
+   0.547,
+   0.543,
+   0.568
+  ],
+  "obs_jump": -0.453,
+  "se": 0.014,
+  "ka_means_match": true,
+  "levels": [
+   0,
+   1,
+   3,
+   6
+  ],
+  "ceil": [
+   1.0,
+   1.0,
+   1.0,
+   1.0
+  ],
+  "d_ceil": 0.0,
+  "g_local": 0.111,
+  "g_pool": 0.596,
+  "g_used": "local",
+  "pred_step": 0.0,
+  "residual": -0.453,
+  "resid_se": -32.9,
+  "pred_g1": 0.0,
+  "resid_g1": -0.453,
+  "pred_pool": 0.0,
+  "share": -0.0,
+  "class": "GENUINE",
+  "B2_means": [
+   1.0,
+   0.54,
+   0.523,
+   0.578
+  ],
+  "B2_ceil": [
+   1.0,
+   1.0,
+   1.0,
+   1.0
+  ],
+  "B2_jump": -0.46,
+  "B2_pred": 0.0,
+  "B2_resid": -0.46
+ },
+ {
+  "family": "RELAY",
+  "dial": "delta",
+  "base": 0,
+  "track": "phys",
+  "metric": "plant",
+  "between": [
+   0,
+   1
+  ],
+  "label": "PHASE_BOUNDARY_SUPPORTED",
+  "obs_means": [
+   0.585,
+   0.983,
+   0.991
+  ],
+  "obs_jump": 0.398,
+  "se": 0.024,
+  "ka_means_match": true,
+  "levels": [
+   4,
+   8,
+   16
+  ],
+  "ceil": [
+   1.0,
+   1.0,
+   1.0
+  ],
+  "d_ceil": 0.0,
+  "g_local": 0.983,
+  "g_pool": 0.595,
+  "g_used": "local",
+  "pred_step": 0.0,
+  "residual": 0.398,
+  "resid_se": 16.7,
+  "pred_g1": 0.0,
+  "resid_g1": 0.398,
+  "pred_pool": 0.0,
+  "share": 0.0,
+  "class": "GENUINE",
+  "B2_means": [
+   0.62,
+   0.977,
+   1.0
+  ],
+  "B2_ceil": [
+   1.0,
+   1.0,
+   1.0
+  ],
+  "B2_jump": 0.358,
+  "B2_pred": 0.0,
+  "B2_resid": 0.358
+ },
+ {
+  "family": "RELAY",
+  "dial": "economy",
+  "base": 0,
+  "track": "phys",
+  "metric": "plant",
+  "between": [
+   1,
+   2
+  ],
+  "label": "PHASE_BOUNDARY_SUPPORTED",
+  "obs_means": [
+   1.0,
+   1.0,
+   0.547
+  ],
+  "obs_jump": -0.453,
+  "se": 0.024,
+  "ka_means_match": true,
+  "levels": [
+   "off",
+   "low",
+   "high"
+  ],
+  "ceil": [
+   1.0,
+   1.0,
+   1.0
+  ],
+  "d_ceil": 0.0,
+  "g_local": 1.0,
+  "g_pool": 0.596,
+  "g_used": "local",
+  "pred_step": 0.0,
+  "residual": -0.453,
+  "resid_se": -18.8,
+  "pred_g1": 0.0,
+  "resid_g1": -0.453,
+  "pred_pool": 0.0,
+  "share": -0.0,
+  "class": "GENUINE",
+  "B2_means": [
+   1.0,
+   1.0,
+   0.54
+  ],
+  "B2_ceil": [
+   1.0,
+   1.0,
+   1.0
+  ],
+  "B2_jump": -0.46,
+  "B2_pred": 0.0,
+  "B2_resid": -0.46
+ },
+ {
+  "family": "RELAY",
+  "dial": "decay_shift",
+  "base": 1,
+  "track": "phys",
+  "metric": "plant",
+  "between": [
+   0,
+   1
+  ],
+  "label": "PHASE_BOUNDARY_SUPPORTED",
+  "obs_means": [
+   0.8,
+   0.536,
+   0.535,
+   0.575
+  ],
+  "obs_jump": -0.264,
+  "se": 0.017,
+  "ka_means_match": true,
+  "levels": [
+   0,
+   1,
+   3,
+   6
+  ],
+  "ceil": [
+   1.0,
+   1.0,
+   1.0,
+   1.0
+  ],
+  "d_ceil": 0.0,
+  "g_local": 0.109,
+  "g_pool": 0.603,
+  "g_used": "local",
+  "pred_step": 0.0,
+  "residual": -0.264,
+  "resid_se": -15.7,
+  "pred_g1": 0.0,
+  "resid_g1": -0.264,
+  "pred_pool": 0.0,
+  "share": -0.0,
+  "class": "GENUINE",
+  "B2_means": [
+   0.79,
+   0.528,
+   0.542,
+   0.583
+  ],
+  "B2_ceil": [
+   1.0,
+   1.0,
+   1.0,
+   1.0
+  ],
+  "B2_jump": -0.262,
+  "B2_pred": 0.0,
+  "B2_resid": -0.262
+ },
+ {
+  "family": "RELAY",
+  "dial": "delta",
+  "base": 1,
+  "track": "phys",
+  "metric": "plant",
+  "between": [
+   0,
+   1
+  ],
+  "label": "PHASE_BOUNDARY_SUPPORTED",
+  "obs_means": [
+   0.486,
+   0.641,
+   0.755
+  ],
+  "obs_jump": 0.155,
+  "se": 0.025,
+  "ka_means_match": true,
+  "levels": [
+   4,
+   8,
+   16
+  ],
+  "ceil": [
+   0.5,
+   1.0,
+   1.0
+  ],
+  "d_ceil": 0.5,
+  "g_local": 0.51,
+  "g_pool": 0.6,
+  "g_used": "local",
+  "pred_step": 0.255,
+  "residual": -0.101,
+  "resid_se": -4.0,
+  "pred_g1": 0.5,
+  "resid_g1": -0.345,
+  "pred_pool": 0.3,
+  "share": 1.65,
+  "class": "PARTIAL",
+  "B2_means": [
+   0.497,
+   0.64,
+   0.748
+  ],
+  "B2_ceil": [
+   0.5,
+   1.0,
+   1.0
+  ],
+  "B2_jump": 0.143,
+  "B2_pred": 0.255,
+  "B2_resid": -0.112
+ },
+ {
+  "family": "RELAY",
+  "dial": "economy",
+  "base": 1,
+  "track": "phys",
+  "metric": "plant",
+  "between": [
+   1,
+   2
+  ],
+  "label": "PHASE_BOUNDARY_SUPPORTED",
+  "obs_means": [
+   0.812,
+   0.783,
+   0.568
+  ],
+  "obs_jump": -0.215,
+  "se": 0.025,
+  "ka_means_match": true,
+  "levels": [
+   "off",
+   "low",
+   "high"
+  ],
+  "ceil": [
+   1.0,
+   1.0,
+   1.0
+  ],
+  "d_ceil": 0.0,
+  "g_local": 0.625,
+  "g_pool": 0.603,
+  "g_used": "local",
+  "pred_step": 0.0,
+  "residual": -0.215,
+  "resid_se": -8.6,
+  "pred_g1": 0.0,
+  "resid_g1": -0.215,
+  "pred_pool": 0.0,
+  "share": -0.0,
+  "class": "GENUINE",
+  "B2_means": [
+   0.778,
+   0.741,
+   0.554
+  ],
+  "B2_ceil": [
+   1.0,
+   1.0,
+   1.0
+  ],
+  "B2_jump": -0.187,
+  "B2_pred": 0.0,
+  "B2_resid": -0.187
+ },
+ {
+  "family": "RELAY",
+  "dial": "delta",
+  "base": 1,
+  "track": "evo",
+  "metric": "plant",
+  "between": [
+   0,
+   1
+  ],
+  "label": "PHASE_BOUNDARY_CANDIDATE",
+  "obs_means": [
+   0.559,
+   0.826,
+   0.95
+  ],
+  "obs_jump": 0.267,
+  "se": 0.027,
+  "ka_means_match": true,
+  "levels": [
+   4,
+   8,
+   16
+  ],
+  "ceil": [
+   0.75,
+   1.0,
+   1.0
+  ],
+  "d_ceil": 0.25,
+  "g_local": 0.899,
+  "g_pool": 0.595,
+  "g_used": "local",
+  "pred_step": 0.225,
+  "residual": 0.043,
+  "resid_se": 1.6,
+  "pred_g1": 0.25,
+  "resid_g1": 0.017,
+  "pred_pool": 0.149,
+  "share": 0.84,
+  "class": "IDENTITY",
+  "B2_means": [
+   0.587,
+   0.812,
+   0.984
+  ],
+  "B2_ceil": [
+   0.75,
+   1.0,
+   1.0
+  ],
+  "B2_jump": 0.226,
+  "B2_pred": 0.225,
+  "B2_resid": 0.001
+ },
+ {
+  "family": "MAJ",
+  "dial": "topology",
+  "base": 1,
+  "track": "phys",
+  "metric": "plant",
+  "between": [
+   1,
+   2
+  ],
+  "label": "PHASE_BOUNDARY_CANDIDATE",
+  "obs_means": [
+   0.625,
+   0.611,
+   0.503,
+   0.618,
+   0.493
+  ],
+  "obs_jump": -0.108,
+  "se": 0.024,
+  "ka_means_match": true,
+  "levels": [
+   "torus",
+   "ring",
+   "random",
+   "smallworld",
+   "global"
+  ],
+  "ceil": [
+   0.81,
+   0.742,
+   0.541,
+   0.798,
+   0.837
+  ],
+  "d_ceil": -0.201,
+  "g_local": 0.239,
+  "g_pool": 0.198,
+  "g_used": "local",
+  "pred_step": -0.048,
+  "residual": -0.06,
+  "resid_se": -2.5,
+  "pred_g1": -0.201,
+  "resid_g1": 0.093,
+  "pred_pool": -0.04,
+  "share": 0.44,
+  "class": "PARTIAL",
+  "B2_means": [
+   0.63,
+   0.571,
+   0.52,
+   0.625,
+   0.495
+  ],
+  "B2_ceil": [
+   0.81,
+   0.742,
+   0.545,
+   0.802,
+   0.837
+  ],
+  "B2_jump": -0.051,
+  "B2_pred": -0.047,
+  "B2_resid": -0.004
+ },
+ {
+  "family": "MAJ",
+  "dial": "topology",
+  "base": 1,
+  "track": "phys",
+  "metric": "plant",
+  "between": [
+   2,
+   3
+  ],
+  "label": "PHASE_BOUNDARY_CANDIDATE",
+  "obs_means": [
+   0.625,
+   0.611,
+   0.503,
+   0.618,
+   0.493
+  ],
+  "obs_jump": 0.115,
+  "se": 0.023,
+  "ka_means_match": true,
+  "levels": [
+   "torus",
+   "ring",
+   "random",
+   "smallworld",
+   "global"
+  ],
+  "ceil": [
+   0.81,
+   0.742,
+   0.541,
+   0.798,
+   0.837
+  ],
+  "d_ceil": 0.257,
+  "g_local": 0.235,
+  "g_pool": 0.198,
+  "g_used": "local",
+  "pred_step": 0.06,
+  "residual": 0.055,
+  "resid_se": 2.3,
+  "pred_g1": 0.257,
+  "resid_g1": -0.142,
+  "pred_pool": 0.051,
+  "share": 0.53,
+  "class": "PARTIAL",
+  "B2_means": [
+   0.63,
+   0.571,
+   0.52,
+   0.625,
+   0.495
+  ],
+  "B2_ceil": [
+   0.81,
+   0.742,
+   0.545,
+   0.802,
+   0.837
+  ],
+  "B2_jump": 0.104,
+  "B2_pred": 0.06,
+  "B2_resid": 0.044
+ },
+ {
+  "family": "MAJ",
+  "dial": "topology",
+  "base": 1,
+  "track": "phys",
+  "metric": "plant",
+  "between": [
+   3,
+   4
+  ],
+  "label": "PHASE_BOUNDARY_CANDIDATE",
+  "obs_means": [
+   0.625,
+   0.611,
+   0.503,
+   0.618,
+   0.493
+  ],
+  "obs_jump": -0.125,
+  "se": 0.027,
+  "ka_means_match": true,
+  "levels": [
+   "torus",
+   "ring",
+   "random",
+   "smallworld",
+   "global"
+  ],
+  "ceil": [
+   0.81,
+   0.742,
+   0.541,
+   0.798,
+   0.837
+  ],
+  "d_ceil": 0.039,
+  "g_local": 0.42,
+  "g_pool": 0.202,
+  "g_used": "local",
+  "pred_step": 0.016,
+  "residual": -0.142,
+  "resid_se": -5.2,
+  "pred_g1": 0.039,
+  "resid_g1": -0.164,
+  "pred_pool": 0.008,
+  "share": -0.13,
+  "class": "GENUINE",
+  "B2_means": [
+   0.63,
+   0.571,
+   0.52,
+   0.625,
+   0.495
+  ],
+  "B2_ceil": [
+   0.81,
+   0.742,
+   0.545,
+   0.802,
+   0.837
+  ],
+  "B2_jump": -0.129,
+  "B2_pred": 0.015,
+  "B2_resid": -0.144
+ },
+ {
+  "family": "MAJ",
+  "dial": "economy",
+  "base": 1,
+  "track": "phys",
+  "metric": "plant",
+  "between": [
+   1,
+   2
+  ],
+  "label": "PHASE_BOUNDARY_CANDIDATE",
+  "obs_means": [
+   0.625,
+   0.64,
+   0.531
+  ],
+  "obs_jump": -0.109,
+  "se": 0.014,
+  "ka_means_match": true,
+  "levels": [
+   "off",
+   "low",
+   "high"
+  ],
+  "ceil": [
+   0.81,
+   0.81,
+   0.81
+  ],
+  "d_ceil": 0.0,
+  "g_local": 0.404,
+  "g_pool": 0.198,
+  "g_used": "local",
+  "pred_step": 0.0,
+  "residual": -0.109,
+  "resid_se": -7.7,
+  "pred_g1": 0.0,
+  "resid_g1": -0.109,
+  "pred_pool": 0.0,
+  "share": -0.0,
+  "class": "GENUINE",
+  "B2_means": [
+   0.637,
+   0.617,
+   0.545
+  ],
+  "B2_ceil": [
+   0.81,
+   0.81,
+   0.81
+  ],
+  "B2_jump": -0.072,
+  "B2_pred": 0.0,
+  "B2_resid": -0.072
+ },
+ {
+  "family": "FLIP",
+  "dial": "decay_shift",
+  "base": 0,
+  "track": "phys",
+  "metric": "plant",
+  "between": [
+   0,
+   1
+  ],
+  "label": "PHASE_BOUNDARY_CANDIDATE",
+  "obs_means": [
+   0.659,
+   0.49,
+   0.521,
+   0.508
+  ],
+  "obs_jump": -0.169,
+  "se": 0.026,
+  "ka_means_match": true,
+  "levels": [
+   0,
+   1,
+   3,
+   6
+  ],
+  "ceil": [
+   0.975,
+   0.975,
+   0.975,
+   0.975
+  ],
+  "copy_ceil": [
+   0.721,
+   0.721,
+   0.721,
+   0.721
+  ],
+  "d_ceil": 0.0,
+  "g_local": 0.03,
+  "g_pool": 0.26,
+  "g_used": "local",
+  "pred_step": 0.0,
+  "residual": -0.169,
+  "resid_se": -6.6,
+  "pred_g1": 0.0,
+  "resid_g1": -0.169,
+  "pred_pool": 0.0,
+  "share": -0.0,
+  "class": "GENUINE",
+  "B2_means": [
+   0.654,
+   0.542,
+   0.497,
+   0.503
+  ],
+  "B2_ceil": [
+   0.975,
+   0.975,
+   0.975,
+   0.975
+  ],
+  "B2_jump": -0.112,
+  "B2_pred": 0.0,
+  "B2_resid": -0.112
+ },
+ {
+  "family": "HOLD",
+  "dial": "decay_shift",
+  "base": 0,
+  "track": "phys",
+  "metric": "plant",
+  "between": [
+   0,
+   1
+  ],
+  "label": "PHASE_BOUNDARY_SUPPORTED",
+  "obs_means": [
+   1.0,
+   0.75,
+   1.0,
+   1.0
+  ],
+  "obs_jump": -0.25,
+  "se": 0.0,
+  "ka_means_match": true,
+  "levels": [
+   0,
+   1,
+   3,
+   6
+  ],
+  "ceil": [
+   1.0,
+   1.0,
+   1.0,
+   1.0
+  ],
+  "d_ceil": 0.0,
+  "g_local": 1.0,
+  "g_pool": 0.854,
+  "g_used": "local",
+  "pred_step": 0.0,
+  "residual": -0.25,
+  "resid_se": null,
+  "pred_g1": 0.0,
+  "resid_g1": -0.25,
+  "pred_pool": 0.0,
+  "share": -0.0,
+  "class": "GENUINE",
+  "B2_means": [
+   0.988,
+   0.75,
+   1.0,
+   1.0
+  ],
+  "B2_ceil": [
+   1.0,
+   1.0,
+   1.0,
+   1.0
+  ],
+  "B2_jump": -0.238,
+  "B2_pred": 0.0,
+  "B2_resid": -0.238
+ },
+ {
+  "family": "HOLD",
+  "dial": "decay_shift",
+  "base": 0,
+  "track": "phys",
+  "metric": "plant",
+  "between": [
+   1,
+   2
+  ],
+  "label": "PHASE_BOUNDARY_SUPPORTED",
+  "obs_means": [
+   1.0,
+   0.75,
+   1.0,
+   1.0
+  ],
+  "obs_jump": 0.25,
+  "se": 0.0,
+  "ka_means_match": true,
+  "levels": [
+   0,
+   1,
+   3,
+   6
+  ],
+  "ceil": [
+   1.0,
+   1.0,
+   1.0,
+   1.0
+  ],
+  "d_ceil": 0.0,
+  "g_local": 1.0,
+  "g_pool": 0.854,
+  "g_used": "local",
+  "pred_step": 0.0,
+  "residual": 0.25,
+  "resid_se": null,
+  "pred_g1": 0.0,
+  "resid_g1": 0.25,
+  "pred_pool": 0.0,
+  "share": 0.0,
+  "class": "GENUINE",
+  "B2_means": [
+   0.988,
+   0.75,
+   1.0,
+   1.0
+  ],
+  "B2_ceil": [
+   1.0,
+   1.0,
+   1.0,
+   1.0
+  ],
+  "B2_jump": 0.25,
+  "B2_pred": 0.0,
+  "B2_resid": 0.25
+ },
+ {
+  "family": "HOLD",
+  "dial": "decay_shift",
+  "base": 1,
+  "track": "phys",
+  "metric": "plant",
+  "between": [
+   0,
+   1
+  ],
+  "label": "PHASE_BOUNDARY_SUPPORTED",
+  "obs_means": [
+   1.0,
+   0.75,
+   1.0,
+   1.0
+  ],
+  "obs_jump": -0.25,
+  "se": 0.0,
+  "ka_means_match": true,
+  "levels": [
+   0,
+   1,
+   3,
+   6
+  ],
+  "ceil": [
+   1.0,
+   1.0,
+   1.0,
+   1.0
+  ],
+  "d_ceil": 0.0,
+  "g_local": 1.0,
+  "g_pool": 0.854,
+  "g_used": "local",
+  "pred_step": 0.0,
+  "residual": -0.25,
+  "resid_se": null,
+  "pred_g1": 0.0,
+  "resid_g1": -0.25,
+  "pred_pool": 0.0,
+  "share": -0.0,
+  "class": "GENUINE",
+  "B2_means": [
+   1.0,
+   0.75,
+   1.0,
+   1.0
+  ],
+  "B2_ceil": [
+   1.0,
+   1.0,
+   1.0,
+   1.0
+  ],
+  "B2_jump": -0.25,
+  "B2_pred": 0.0,
+  "B2_resid": -0.25
+ },
+ {
+  "family": "HOLD",
+  "dial": "decay_shift",
+  "base": 1,
+  "track": "phys",
+  "metric": "plant",
+  "between": [
+   1,
+   2
+  ],
+  "label": "PHASE_BOUNDARY_SUPPORTED",
+  "obs_means": [
+   1.0,
+   0.75,
+   1.0,
+   1.0
+  ],
+  "obs_jump": 0.25,
+  "se": 0.0,
+  "ka_means_match": true,
+  "levels": [
+   0,
+   1,
+   3,
+   6
+  ],
+  "ceil": [
+   1.0,
+   1.0,
+   1.0,
+   1.0
+  ],
+  "d_ceil": 0.0,
+  "g_local": 1.0,
+  "g_pool": 0.854,
+  "g_used": "local",
+  "pred_step": 0.0,
+  "residual": 0.25,
+  "resid_se": null,
+  "pred_g1": 0.0,
+  "resid_g1": 0.25,
+  "pred_pool": 0.0,
+  "share": 0.0,
+  "class": "GENUINE",
+  "B2_means": [
+   1.0,
+   0.75,
+   1.0,
+   1.0
+  ],
+  "B2_ceil": [
+   1.0,
+   1.0,
+   1.0,
+   1.0
+  ],
+  "B2_jump": 0.25,
+  "B2_pred": 0.0,
+  "B2_resid": 0.25
+ },
+ {
+  "family": "HOLD",
+  "dial": "gap",
+  "base": 1,
+  "track": "phys",
+  "metric": "plant",
+  "between": [
+   0,
+   1
+  ],
+  "label": "PHASE_BOUNDARY_CANDIDATE",
+  "obs_means": [
+   1.0,
+   0.75,
+   0.75
+  ],
+  "obs_jump": -0.25,
+  "se": 0.0,
+  "ka_means_match": true,
+  "levels": [
+   4,
+   8,
+   16
+  ],
+  "ceil": [
+   1.0,
+   1.0,
+   1.0
+  ],
+  "d_ceil": 0.0,
+  "g_local": 0.5,
+  "g_pool": 0.854,
+  "g_used": "local",
+  "pred_step": 0.0,
+  "residual": -0.25,
+  "resid_se": null,
+  "pred_g1": 0.0,
+  "resid_g1": -0.25,
+  "pred_pool": 0.0,
+  "share": -0.0,
+  "class": "GENUINE",
+  "B2_means": [
+   1.0,
+   0.75,
+   0.75
+  ],
+  "B2_ceil": [
+   1.0,
+   1.0,
+   1.0
+  ],
+  "B2_jump": -0.25,
+  "B2_pred": 0.0,
+  "B2_resid": -0.25
+ },
+ {
+  "family": "HOLD",
+  "dial": "decay_shift",
+  "base": 1,
+  "track": "evo",
+  "metric": "plant",
+  "between": [
+   0,
+   1
+  ],
+  "label": "PHASE_BOUNDARY_CANDIDATE",
+  "obs_means": [
+   1.0,
+   0.75,
+   1.0,
+   1.0
+  ],
+  "obs_jump": -0.25,
+  "se": 0.0,
+  "ka_means_match": true,
+  "levels": [
+   0,
+   1,
+   3,
+   6
+  ],
+  "ceil": [
+   1.0,
+   1.0,
+   1.0,
+   1.0
+  ],
+  "d_ceil": 0.0,
+  "g_local": 1.0,
+  "g_pool": 0.854,
+  "g_used": "local",
+  "pred_step": 0.0,
+  "residual": -0.25,
+  "resid_se": null,
+  "pred_g1": 0.0,
+  "resid_g1": -0.25,
+  "pred_pool": 0.0,
+  "share": -0.0,
+  "class": "GENUINE",
+  "B2_means": [
+   1.0,
+   0.75,
+   1.0,
+   1.0
+  ],
+  "B2_ceil": [
+   1.0,
+   1.0,
+   1.0,
+   1.0
+  ],
+  "B2_jump": -0.25,
+  "B2_pred": 0.0,
+  "B2_resid": -0.25
+ },
+ {
+  "family": "HOLD",
+  "dial": "decay_shift",
+  "base": 1,
+  "track": "evo",
+  "metric": "plant",
+  "between": [
+   1,
+   2
+  ],
+  "label": "PHASE_BOUNDARY_CANDIDATE",
+  "obs_means": [
+   1.0,
+   0.75,
+   1.0,
+   1.0
+  ],
+  "obs_jump": 0.25,
+  "se": 0.0,
+  "ka_means_match": true,
+  "levels": [
+   0,
+   1,
+   3,
+   6
+  ],
+  "ceil": [
+   1.0,
+   1.0,
+   1.0,
+   1.0
+  ],
+  "d_ceil": 0.0,
+  "g_local": 1.0,
+  "g_pool": 0.854,
+  "g_used": "local",
+  "pred_step": 0.0,
+  "residual": 0.25,
+  "resid_se": null,
+  "pred_g1": 0.0,
+  "resid_g1": 0.25,
+  "pred_pool": 0.0,
+  "share": 0.0,
+  "class": "GENUINE",
+  "B2_means": [
+   1.0,
+   0.75,
+   1.0,
+   1.0
+  ],
+  "B2_ceil": [
+   1.0,
+   1.0,
+   1.0,
+   1.0
+  ],
+  "B2_jump": 0.25,
+  "B2_pred": 0.0,
+  "B2_resid": 0.25
+ },
+ {
+  "family": "RELAY",
+  "dial": "prog_len",
+  "base": 0,
+  "track": "phys",
+  "metric": "sens",
+  "between": [
+   1,
+   2
+  ],
+  "label": "PHASE_BOUNDARY_CANDIDATE",
+  "obs_means": [
+   0.141,
+   0.151,
+   0.292
+  ],
+  "obs_jump": 0.141,
+  "se": 0.023,
+  "levels": [
+   8,
+   12,
+   16
+  ],
+  "ceil": [
+   1.0,
+   1.0,
+   1.0
+  ],
+  "d_ceil": 0.0,
+  "class": "NA (program-space metric; ceiling flat)"
+ },
+ {
+  "family": "RELAY",
+  "dial": "topology",
+  "base": 0,
+  "track": "evo",
+  "metric": "sens",
+  "between": [
+   1,
+   2
+  ],
+  "label": "PHASE_BOUNDARY_CANDIDATE",
+  "obs_means": [
+   0.26,
+   0.215,
+   0.326,
+   0.201,
+   0.274
+  ],
+  "obs_jump": 0.111,
+  "se": 0.027,
+  "levels": [
+   "torus",
+   "ring",
+   "random",
+   "smallworld",
+   "global"
+  ],
+  "ceil": [
+   0.98,
+   0.98,
+   0.98,
+   0.98,
+   0.98
+  ],
+  "d_ceil": 0.0,
+  "class": "NA (program-space metric; ceiling flat)"
+ },
+ {
+  "family": "RELAY",
+  "dial": "topology",
+  "base": 0,
+  "track": "evo",
+  "metric": "sens",
+  "between": [
+   2,
+   3
+  ],
+  "label": "PHASE_BOUNDARY_CANDIDATE",
+  "obs_means": [
+   0.26,
+   0.215,
+   0.326,
+   0.201,
+   0.274
+  ],
+  "obs_jump": -0.125,
+  "se": 0.024,
+  "levels": [
+   "torus",
+   "ring",
+   "random",
+   "smallworld",
+   "global"
+  ],
+  "ceil": [
+   0.98,
+   0.98,
+   0.98,
+   0.98,
+   0.98
+  ],
+  "d_ceil": 0.0,
+  "class": "NA (program-space metric; ceiling flat)"
+ },
+ {
+  "family": "XOR",
+  "dial": "rules",
+  "base": 1,
+  "track": "phys",
+  "metric": "sens",
+  "between": [
+   1,
+   2
+  ],
+  "label": "PHASE_BOUNDARY_CANDIDATE",
+  "obs_means": [
+   0.188,
+   0.307,
+   0.521
+  ],
+  "obs_jump": 0.214,
+  "se": 0.035,
+  "levels": [
+   1,
+   2,
+   4
+  ],
+  "ceil": [
+   0.875,
+   0.938,
+   0.938
+  ],
+  "d_ceil": 0.0,
+  "class": "NA (program-space metric; ceiling flat)"
+ },
+ {
+  "family": "MAJ",
+  "dial": "rules",
+  "base": 0,
+  "track": "phys",
+  "metric": "sens",
+  "between": [
+   0,
+   1
+  ],
+  "label": "PHASE_BOUNDARY_CANDIDATE",
+  "obs_means": [
+   0.12,
+   0.312,
+   0.49
+  ],
+  "obs_jump": 0.193,
+  "se": 0.028,
+  "levels": [
+   1,
+   2,
+   4
+  ],
+  "ceil": [
+   0.837,
+   0.837,
+   0.837
+  ],
+  "d_ceil": 0.0,
+  "class": "NA (program-space metric; ceiling flat)"
+ },
+ {
+  "family": "MAJ",
+  "dial": "state_dim",
+  "base": 0,
+  "track": "phys",
+  "metric": "sens",
+  "between": [
+   2,
+   3
+  ],
+  "label": "PHASE_BOUNDARY_CANDIDATE",
+  "obs_means": [
+   0.042,
+   0.109,
+   0.125,
+   0.234
+  ],
+  "obs_jump": 0.109,
+  "se": 0.024,
+  "levels": [
+   1,
+   2,
+   4,
+   8
+  ],
+  "ceil": [
+   0.837,
+   0.837,
+   0.837,
+   0.837
+  ],
+  "d_ceil": 0.0,
+  "class": "NA (program-space metric; ceiling flat)"
+ },
+ {
+  "family": "FLIP",
+  "dial": "rules",
+  "base": 0,
+  "track": "phys",
+  "metric": "sens",
+  "between": [
+   1,
+   2
+  ],
+  "label": "PHASE_BOUNDARY_CANDIDATE",
+  "obs_means": [
+   0.068,
+   0.073,
+   0.193
+  ],
+  "obs_jump": 0.12,
+  "se": 0.017,
+  "levels": [
+   1,
+   2,
+   4
+  ],
+  "ceil": [
+   0.975,
+   0.975,
+   0.975
+  ],
+  "d_ceil": 0.0,
+  "class": "NA (program-space metric; ceiling flat)"
+ },
+ {
+  "family": "FLIP",
+  "dial": "channels",
+  "base": 0,
+  "track": "phys",
+  "metric": "sens",
+  "between": [
+   1,
+   2
+  ],
+  "label": "PHASE_BOUNDARY_CANDIDATE",
+  "obs_means": [
+   0.203,
+   0.167,
+   0.057
+  ],
+  "obs_jump": -0.109,
+  "se": 0.007,
+  "levels": [
+   1,
+   2,
+   4
+  ],
+  "ceil": [
+   0.975,
+   0.975,
+   0.975
+  ],
+  "d_ceil": 0.0,
+  "class": "NA (program-space metric; ceiling flat)"
+ },
+ {
+  "family": "RELAY",
+  "dial": "delta",
+  "base": 0,
+  "track": "evo",
+  "metric": "emit",
+  "between": [
+   1,
+   2
+  ],
+  "label": "PHASE_BOUNDARY_CANDIDATE",
+  "obs_means": [
+   0.455,
+   0.451,
+   0.562
+  ],
+  "obs_jump": 0.111,
+  "se": 0.028,
+  "levels": [
+   4,
+   8,
+   16
+  ],
+  "ceil": [
+   0.948,
+   0.98,
+   0.98
+  ],
+  "d_ceil": 0.0,
+  "class": "NA (program-space metric; ceiling flat)"
+ },
+ {
+  "family": "XOR",
+  "dial": "rules",
+  "base": 1,
+  "track": "phys",
+  "metric": "emit",
+  "between": [
+   1,
+   2
+  ],
+  "label": "PHASE_BOUNDARY_CANDIDATE",
+  "obs_means": [
+   0.214,
+   0.37,
+   0.542
+  ],
+  "obs_jump": 0.172,
+  "se": 0.044,
+  "levels": [
+   1,
+   2,
+   4
+  ],
+  "ceil": [
+   0.875,
+   0.938,
+   0.938
+  ],
+  "d_ceil": 0.0,
+  "class": "NA (program-space metric; ceiling flat)"
+ },
+ {
+  "family": "XOR",
+  "dial": "state_dim",
+  "base": 1,
+  "track": "phys",
+  "metric": "emit",
+  "between": [
+   1,
+   2
+  ],
+  "label": "PHASE_BOUNDARY_CANDIDATE",
+  "obs_means": [
+   0.474,
+   0.448,
+   0.312,
+   0.297
+  ],
+  "obs_jump": -0.135,
+  "se": 0.038,
+  "levels": [
+   1,
+   2,
+   4,
+   8
+  ],
+  "ceil": [
+   0.896,
+   0.927,
+   0.906,
+   0.938
+  ],
+  "d_ceil": -0.021,
+  "class": "NA (program-space metric; ceiling moves)"
+ },
+ {
+  "family": "MAJ",
+  "dial": "rules",
+  "base": 0,
+  "track": "phys",
+  "metric": "emit",
+  "between": [
+   1,
+   2
+  ],
+  "label": "PHASE_BOUNDARY_SUPPORTED",
+  "obs_means": [
+   0.151,
+   0.25,
+   0.443
+  ],
+  "obs_jump": 0.193,
+  "se": 0.049,
+  "levels": [
+   1,
+   2,
+   4
+  ],
+  "ceil": [
+   0.837,
+   0.837,
+   0.837
+  ],
+  "d_ceil": 0.0,
+  "class": "NA (program-space metric; ceiling flat)"
+ },
+ {
+  "family": "MAJ",
+  "dial": "rules",
+  "base": 1,
+  "track": "phys",
+  "metric": "emit",
+  "between": [
+   1,
+   2
+  ],
+  "label": "PHASE_BOUNDARY_CANDIDATE",
+  "obs_means": [
+   0.104,
+   0.161,
+   0.349
+  ],
+  "obs_jump": 0.187,
+  "se": 0.027,
+  "levels": [
+   1,
+   2,
+   4
+  ],
+  "ceil": [
+   0.81,
+   0.81,
+   0.81
+  ],
+  "d_ceil": 0.0,
+  "class": "NA (program-space metric; ceiling flat)"
+ },
+ {
+  "family": "FLIP",
+  "dial": "rules",
+  "base": 0,
+  "track": "phys",
+  "metric": "emit",
+  "between": [
+   1,
+   2
+  ],
+  "label": "PHASE_BOUNDARY_SUPPORTED",
+  "obs_means": [
+   0.276,
+   0.349,
+   0.688
+  ],
+  "obs_jump": 0.339,
+  "se": 0.056,
+  "levels": [
+   1,
+   2,
+   4
+  ],
+  "ceil": [
+   0.975,
+   0.975,
+   0.975
+  ],
+  "d_ceil": 0.0,
+  "class": "NA (program-space metric; ceiling flat)"
+ },
+ {
+  "family": "FLIP",
+  "dial": "rules",
+  "base": 1,
+  "track": "phys",
+  "metric": "emit",
+  "between": [
+   1,
+   2
+  ],
+  "label": "PHASE_BOUNDARY_SUPPORTED",
+  "obs_means": [
+   0.125,
+   0.224,
+   0.37
+  ],
+  "obs_jump": 0.146,
+  "se": 0.04,
+  "levels": [
+   1,
+   2,
+   4
+  ],
+  "ceil": [
+   1.0,
+   1.0,
+   1.0
+  ],
+  "d_ceil": 0.0,
+  "class": "NA (program-space metric; ceiling flat)"
+ },
+ {
+  "family": "HOLD",
+  "dial": "rules",
+  "base": 0,
+  "track": "phys",
+  "metric": "emit",
+  "between": [
+   1,
+   2
+  ],
+  "label": "PHASE_BOUNDARY_CANDIDATE",
+  "obs_means": [
+   0.109,
+   0.151,
+   0.302
+  ],
+  "obs_jump": 0.151,
+  "se": 0.028,
+  "levels": [
+   1,
+   2,
+   4
+  ],
+  "ceil": [
+   1.0,
+   1.0,
+   1.0
+  ],
+  "d_ceil": 0.0,
+  "class": "NA (program-space metric; ceiling flat)"
+ }
+]

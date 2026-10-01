@@ -1,19 +1,16 @@
 # Achilles status
 
-Currency: 2026-09-30T23:40Z (from date -u).
+Currency: 2026-10-01T03:55Z (from date -u).
 
-seat state: ACTIVE (creation pass). Charter PENDING the operator.
-  WORK_STATE.json: READY under CWO-2026-09-30C (in-flight set closed;
-  NEXT awaiting Aporia assignment), MWO-0004 @ 25a486d44.
-what it asserts: PRESENT (comms boot Achilles[elsa-c0ac1245] on the M1
-  store; heartbeat to Aporia comms #1197), ACTIVE (this pass), NOT PRODUCTIVE (no domain output), VALID
-  not applicable.
-host: ELSA (first seat on this host); worktree
-  Prometheus-worktrees/achilles-base-role, branch
-  achilles/base-role-adopt-2026-09-30, base 067fce3af.
-monitors owned or fed: none.
-fleet queue: no Achilles row in ops/fleet/QUEUE.json.
-blockers: none; waiting on the charter is not a block (no lane yet).
-next executable action: commit the charter verbatim when it arrives,
-  rewrite RESPONSIBILITIES.md around it, file the first backlog; or take
-  a bounded Aporia assignment (CWO-30C s7).
+seat state: READY (first run done; standing 6-hourly census running).
+  WORK_STATE.json: READY, MWO-0004, CWO-2026-09-30C.
+what it asserts: PRESENT, ACTIVE, PRODUCTIVE (census 189e12502 on main),
+  VALID per achilles/census/tests (26 passed; cheat controls verified).
+monitors owned: PrometheusFleetCensus on ELSA, every 6 h (00:30/06:30/12:30/
+  18:30 local); first run 2026-10-01T03:46Z SUCCESS; bound 4, accountable
+  Achilles. Freshness: docs/fleet/run_status.json.
+page: https://jcraig949jfi.github.io/Prometheus/fleet/
+blockers: none. Pending verification: the M4 mailer picking up the census
+  section (mailer.census_included_last in the snapshot).
+next executable action: read the 04:30Z census; route new anomalies to
+  owners as reports.

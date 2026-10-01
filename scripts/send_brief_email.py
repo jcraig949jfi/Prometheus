@@ -442,6 +442,45 @@ def build_references_html(brief_md: str) -> str:
     return "\n".join(parts)
 
 
+FLEET_CENSUS_PATH = REPO_ROOT / "docs" / "fleet" / "email_census.json"
+FLEET_CENSUS_URL = PAGES_URL + "fleet/"
+FLEET_CENSUS_STALE_H = 7.0  # the census runs every 6 h (Achilles, PrometheusFleetCensus on ELSA)
+
+
+def build_fleet_census(path: Path = FLEET_CENSUS_PATH, now: datetime = None) -> tuple:
+    """Fleet census section (Achilles; roles/Achilles, charter 2026-09-30) for every status email.
+
+    Reads the block Achilles publishes at docs/fleet/email_census.json (markdown + inline-styled
+    html, rendered from the canonical snapshot docs/fleet/fleet_state.json). Returns
+    (markdown, html, receipt_tag). A missing or stale census is stated loudly in the email, never
+    silently omitted; receipt_tag goes into this mailer's own email_dispatched event so the
+    census can verify on its next run that the email carried it.
+    """
+    import html as _html
+    import json as _json
+    now = now or datetime.now(timezone.utc)
+    try:
+        blk = _json.loads(Path(path).read_text(encoding="utf-8"))
+        gen = datetime.fromisoformat(blk["generated_at_utc"].replace("Z", "+00:00"))
+        md, ht = blk["markdown"], blk["html"]
+    except Exception as e:
+        msg = (f"FLEET CENSUS UNAVAILABLE: {Path(path).name} could not be read ({type(e).__name__}). "
+               f"Check the census run status at {FLEET_CENSUS_URL}")
+        return (f"\n---\n\n## Fleet census (Achilles)\n\n**{msg}**\n",
+                '<h2 style="color:#222">Fleet census (Achilles)</h2>'
+                f'<p style="color:#a02020;font-weight:bold">{_html.escape(msg)}</p>',
+                "census=UNAVAILABLE")
+    age_h = (now - gen).total_seconds() / 3600.0
+    warn_md = warn_html = ""
+    if age_h > FLEET_CENSUS_STALE_H:
+        warn = (f"STALE FLEET CENSUS: generated {blk['generated_at_utc']} ({age_h:.1f}h ago). The 6-hourly census "
+                f"has not succeeded since; see {FLEET_CENSUS_URL} for the last attempted run.")
+        warn_md = f"\n**{warn}**\n"
+        warn_html = f'<p style="color:#a02020;font-weight:bold">{_html.escape(warn)}</p>'
+    return ("\n---\n" + warn_md + "\n" + md + "\n", warn_html + ht,
+            f"census={blk['generated_at_utc']} rows={blk.get('rows')} age_h={age_h:.1f}")
+
+
 def load_env():
     """Load agents/eos/.env into os.environ if present."""
     env_path = REPO_ROOT / "agents" / "eos" / ".env"
@@ -575,9 +614,12 @@ def main():
     dr_html = build_deep_research_html(state)
     refs_md = build_references_md(brief_md)
     refs_html = build_references_html(brief_md)
-    body_md = (tldr_md + "\n" + brief_md + "\n" + mentions_md + "\n"
+    # Fleet census (Achilles): in the body of every status email, not behind a link (operator charter
+    # roles/Achilles/prompts/2026-09-30_charter/). Placed first after the TL;DR.
+    census_md, census_html, census_tag = build_fleet_census()
+    body_md = (tldr_md + "\n" + census_md + "\n" + brief_md + "\n" + mentions_md + "\n"
                + dr_md + "\n" + intel_md + "\n" + refs_md)
-    body_html = (tldr_html + render_html(brief_md) + mentions_html
+    body_html = (tldr_html + census_html + render_html(brief_md) + mentions_html
                  + dr_html + intel_html + refs_html)
 
     now = datetime.now(timezone.utc)
@@ -610,7 +652,7 @@ def main():
         _olog.info("%s (%.1fs)", msg_out, dur)
         emit_event(
             "email_dispatched",
-            summary=f"{msg_out} | {dur:.1f}s",
+            summary=f"{msg_out} | {dur:.1f}s | {census_tag}",
             success=True,
             output_path=str(args.brief.relative_to(REPO_ROOT)) if args.brief.is_absolute() else str(args.brief),
             agent="Pronoia",

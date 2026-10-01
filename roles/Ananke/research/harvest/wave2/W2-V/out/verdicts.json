@@ -1,0 +1,12 @@
+{
+ "worker": "W2-V", "date": "2026-10-01",
+ "4222a5f7": {"verdict": "SEARCH-LIMITED (by construction)", "plant": "sbf.py sbf(100,3), 12/12 lines, row genome unmodified",
+   "fresh_W2VS_64": "acc .850 [lo99 .819]", "must_fail_s2_zeroed": ".500", "c1_own_held_worlds": "acc .832 [.798] vs C1 champion .503 [.474]",
+   "files": ["out/score_A.json", "out/xcheck_4222.json", "out/c1held.json", "out/sbf_ablate_dev.json"]},
+ "48256f59": {"verdict": "REPRESENTATION-LIMITED for XOR parity (strongly argued, not proven)", "sb8_fresh": ".504 [.500]",
+   "one_flag_cheat_6_lines_fresh": ".591 [.547] (misses SIGNAL .55)"},
+ "1974a9cf": {"verdict": "REPRESENTATION-LIMITED for XOR parity (strongly argued, not proven)", "one_flag_cheat_6_lines_fresh": ".582 [.537]"},
+ "333d6b2b": {"verdict": "REPRESENTATION-LIMITED for XOR parity (strongly argued, not proven)", "one_flag_cheat_6_lines_fresh": ".578 [.534]"},
+ "e2fd1e07": {"verdict": "UNRESOLVED (leans representation)", "evidence": "D=1; SBF family even at override D4/L14 tops at .573 DEV; rules x4 + SETRULE + WIMM not enumerated"},
+ "84cf905d": {"verdict": "UNRESOLVED (leans representation)", "evidence": "16-line clocked floods .516 DEV; 18-21-line override diagnostics .51-.61 DEV; no known plant at channels=1 at any length (W2-J's needs channels 2)"}
+}

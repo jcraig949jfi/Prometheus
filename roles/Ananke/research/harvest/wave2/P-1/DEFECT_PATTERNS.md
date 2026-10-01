@@ -152,3 +152,13 @@ ruler and control. It did not certify that the ruler or control COULD discrimina
 instruments (certifier, mutation gate, explib, kind audit) all target that gap: certify the instrument
 against nulls, adversaries and broken experiments BEFORE the freeze. That is the one process change
 these patterns jointly recommend.
+
+## Corrections (W2-X review)
+- Pattern 1: the HOLD distractor item applies to 5/86 cells (94% schedule-robust). Topology is a REFINE
+  (cluster/latency-label dependence; W2-I F3).
+- Pattern 3: the rulers are XOR_SYM and FLIP B lo99 > .75. The reach_certificate patch went to harvest
+  H-INST, not prometheus/ananke.
+- Pattern 5: drop "relay_flood partly solves FLIP" (it is copy-class); P-FLIP is the instance. Add the
+  W2-Y finding: delta boundaries are transport-time identity.
+- Pattern 7: replace W2-A1 F4 (no footprint; W2-R F1) with W2-R F3 one-sided codes. The selector
+  ceiling applies only to unpaired noise.

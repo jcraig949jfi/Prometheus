@@ -11,7 +11,7 @@ from prometheus.ananke import inference
 # W2-K's saved C1b pair arrays (force-added; roles/**/*.npz is gitignored)
 OUT = pathlib.Path(__file__).resolve().parents[3] / "roles/Ananke/research/harvest/wave2/W2-K/out"
 if not (OUT / "pairs_m2spec.npz").exists():
-    pytest.skip("W2-K pair arrays not present", allow_module_level=True)
+    raise FileNotFoundError(f"W2-K pair arrays missing at {OUT} (committed data; a skip would hide NOT_VERIFIED)")
 
 
 def test_api_exists():
@@ -48,8 +48,8 @@ def test_kill_eligibility_guards_low_normal():
 def test_zero_variance_and_strictness():
     x = np.full(32, 0.5)
     r = inference.reading3(x, 0.60, "<=", "hi")
-    assert r["status"] == "TRUE" and r["d_se"] == float("inf")
+    assert r["status"] == "DEGENERATE" and r["raw"] is True       # W2-X: no interval, no certificate
     r = inference.reading3(x, 0.50, ">", "lo")
-    assert r["raw"] is False and r["status"] == "INDETERMINATE" and r["d_se"] == 0.0
+    assert r["raw"] is False and r["status"] == "DEGENERATE"
     with pytest.raises(KeyError):
         inference.reading3(x, 0.5, "=>", "lo")

@@ -105,3 +105,108 @@ C1 labels are NOT changed. Each item names its source report; [P] marks those re
     decay_shift therefore measure the plant's design, not physics.
   - Together with E-W8 (economy = budget identity; delta = light-cone near-tautology), none of C1's three
     SUPPORTED RELAY plant boundaries is a physics phase boundary in the intended sense.
+- E-W14 (MAJOR, NULL attribution; W2-T, W2-P, W2-U): 111/454 = 24% of C1 evolve NULLs (RELAY 17, MAJ 34,
+  XOR 36, FLIP 24) were unwinnable by any program (joint light cone + wake + placement). Only 48-58% are
+  admissible for a search-limitation reading. Only 11% (51, all RELAY) have a plant inside the genome
+  space. C1 NULL counts must not be read as search failures without this split. 0/113 sampled NULLs
+  were broken experiments.
+- E-W15 (MAJ INTEGRATION; W2-M): at the physics of 13/19 MAJ SIGNAL rows, the INTEGRATION ruler
+  (lo99 > .70) is unattainable by ANY program (ceiling .701). 11/19 MAJ SIGNAL champions are matched by
+  a single-sensor transport. INTEGRATION at 4781b0a1 is genuine (a plant matches; single-sensor
+  transport cannot).
+- E-W16 (A0 dial ranking; W2-U): ceiling-normalised, RELAY plant-viability top-3 = decay, economy,
+  topology. "delta"/"d"/"lat_base" effects are 64-79% the light-cone identity. The B-wave delta
+  transect (and P1) was selected by that identity. decay survives normalisation but is plant-design
+  (E-W13).
+- E-W17 (FLIP rulers; W2-L, W2-S): non-inferring "copy" policies attain balanced accuracy B <= .75
+  exactly. FLIP_FEEDBACK and the proposed FLIP_CHANGE are both cheatable (a 14-line relay latch .688; 4
+  recorded anti-copy champions pass FLIP_CHANGE). Certify FLIP inference only with B lo99 > .75. No
+  recorded C1 FLIP reading rests on copy accuracy (all are ~chance).
+- E-W18 (rules>1, setrule=0 cells; W2-Q): 5/8 SIGNAL and 6/7 near-SIGNAL cells are a "rule-mosaic
+  lottery". Only the actuator's random initial rule matters (one rule works, the other is dead), and
+  the best pinned rule is .09-.21 above the reported accuracy. These cells are over-represented among
+  the 512-world census corrections (OR 6.5).
+- E-W19 (headline counts; W2-AC, W2-G):
+  - Pooled all-wave counts (RELAY 50/196, MAJ 19/162, HOLD 97/155) are not rates (effective n 18-60).
+  - The 50 RELAY SIGNAL rows are 6 independent lineages (32 rows from one).
+  - Quote A1 rates instead: RELAY 4/71 (5.6%, 95% CI 2.2-13.6), MAJ 3/70 (4.3%, 1.5-11.9), HOLD 34/70
+    (49%, 37-60), XOR 0/71, FLIP 0/70.
+  - "One hop": A1 one-hop 3/32 vs multi-hop 1/39 (p = .32). Multi-hop is rarer, not shown absent.
+  - P4 holds (8/352, 99% upper 4.9%), but it counts an alias of SIGNAL.
+  - W-O "84% stay CHANCE" is row-weighted; specimen-weighted it is 72% [63, 80].
+  - B2 cross-family boundary agreements share 100% of their seeds and one code cause. They are not
+    independent reproductions.
+- E-W13 SCOPE CORRECTION (W2-W F1, 2026-10-01):
+  - E-W13 holds for the A0 MATCHED counterfactual, i.e. viable decay-0 RELAY physics with decay_shift
+    raised and nothing else changed. There relay_flood's collapse is plant design.
+  - It does NOT transfer to C1's RELAY NULL cells. Over 41 RELAY NULLs with decay > 0 and relay_flood
+    <= .60, the refresh plant reaches SIGNAL level in only 6/41. It equals decay-0 relay_flood within
+    .01 in 35/41, so other dials bind there (async, cap/aloha, loss).
+  - P-1b's "multi-hop rarity tracks plant viability" survives, but via those dials, not decay (refresh
+    revives 1/16).
+- E-W20 (NULL placement, consolidated; W2-W): of 454 C1 evolve NULLs:
+  - 139 (30.6%) are physics-capped by a sound certificate (light cone + exact wake, joint ceiling, LC2,
+    or epidemic bound), plus 17 probable caps;
+  - 62-65 (13.7-14.3%) are eligible for a search-limitation reading (admissible plus a plant inside the
+    row's own genome): RELAY 54, MAJ 5-8, FLIP 3, XOR 0;
+  - 250 are open.
+  - Per-cell table: harvest/wave2/W2-W/null_placement.csv. This supersedes E-W14's 24% / 11% figures,
+    which used narrower certificates and recorded plants only.
+
+## Corrections to the Wave-2 errata (adversarial review W2-X and transect audit W2-Y, 2026-10-01; these supersede wording above)
+- E-W1: the topology result is a REFINE, not a KILL. The D-wave collapse is hop count, not lattice
+  offsets. Residual graph dependence remains: clustering or redundant short paths for 4 laws (MAJ
+  4781b0a1, 8743da7f; RELAY bf82cb29, cd5b6fd6), and per-port latency labels for HOLD 4ab2ba01 (W2-I
+  F3). Retention at matched hops: median .78.
+- E-W2: "2.5% impossible" refers to A0 MAJ plant worlds. On C1 evolve held worlds it is 0.17%, which is
+  immaterial (W2-O/W2-T). Inward placement turns 0/35 MAJ graph champions into SIGNAL (W2-P).
+- E-W3: ">= 36/83 by the deterministic light cone (in expectation); 62/83 by LC2 (W2-J)".
+- E-W6: XOR claims need XOR_SYM (W2-J), not XOR_PIVOT. FLIP claims need B lo99 > .75 (E-W17);
+  FLIP_FEEDBACK is cheatable in-space. The non-parity .75 bound is in expectation; NOR measured .759
+  [.73, .79].
+- E-W9: 613162a3's packet clause REPLICATES (pooled 2.96 SE, keep .98; W2-K). It is not fragile.
+- E-W10: w_any INITIATES the population sensitivity climb and suffices for large persistence. The
+  attribution of the MWU/REACH labels to w_any is NOT shown (bonus-only flat runs: MWU 1/40 vs
+  37/414). First generation with accuracy variance: median ~4 (IQR 2-9).
+- E-W13: "exactly" is replaced by "within one world-pair or exactly". STRENGTHENED by W2-X and W2-Y:
+  refresh flattens the decay transect at BOTH SUPPORTED bases on the actual C1 transect rows (RELAY b0
+  1.0/1.0/1.0/1.0; b1 .80/.82/.78/.81; FLIP b0 no step).
+- E-W14: ".614" is the 50%-power bar, not impossibility. 93/454 have ceiling <= .55. E-W20 supersedes
+  both counts. "Plant-backed 51" counts recorded plants only.
+- E-W21 (C1 phase boundaries; W2-Y, flood ceiling with random routing, KA 9/9): of the 13 SUPPORTED
+  boundaries:
+  - delta x2 = transport-time IDENTITY (the flood ceiling steps .685 -> .999);
+  - RELAY decay x2 = PLANT-DESIGN (refresh is flat);
+  - HOLD decay x4 = non-refreshing-latch artefact [I];
+  - emit-vs-rules x3 = program-space;
+  - economy x2 = energy, OPEN (the only physics candidate).
+  The 3 MAJ topology CANDIDATEs and the evolved RELAY-acc delta CANDIDATE are IDENTITY.
+  "No SUPPORTED boundary is established physics beyond the transport bound."
+  P1 stays HELD as a label; its content is identity plus plant-design.
+  The W2-P/W2-U light cone overstates reach on global/sample topology (random destinations), so
+  construction-capped counts there are undercounts.
+- E-W22 (multi-hop RELAY SIGNALs; W2-AI): both multi-hop RELAY SIGNAL rows (925caa3a48964717 ring d5;
+  882525a9d4a3d073 smallworld d3) FORWARD, but only ONCE PER EPISODE.
+  - Each is a receipt-triggered flood latch: the first positive cue fires an irreversible wave, and
+    later trials score .500.
+  - Accuracy profile 1.00, .70, .59, ... then .50. A latch model predicts 99-99.6% of readouts.
+  - 64/64 held worlds are true multi-hop, and the forwarding is certified by vertex-cut ablation
+    against equal-size controls.
+  - Consequences:
+    - (i) "multi-hop competence absent" is false. It is present as one-shot cascades. Per-trial
+      (resettable) multi-hop relay is NOT shown.
+    - (ii) At 12 trials a one-shot latch clears SIGNAL (ceiling ~.58-.59), so a RELAY SIGNAL near
+      .58-.60 does not certify per-trial competence.
+    - (iii) REACH_BEYOND_HOP (twin at trial 2) is a false negative for latches: beyond_hop is 1.0 at
+      trial 0.
+- E-W23 (XOR representation vs search; W2-V): at 4222a5f7 (L12 D8 P1 C4) a 12-line parity plant
+  fits the row's OWN sampled genome.
+  - It scores .850 [.819] on fresh worlds and .832 [.798] on C1's own held-out worlds, against the
+    champion's .503. Must-fail .500.
+  - It uses sensor broadcast plus channel-tagged one-hop forwarding.
+  - So at least one C1 XOR NULL is SEARCH-LIMITED at its own genome. This corrects W2-J's "no plant
+    fits a row's own genome".
+  - At the three L8/C1 rows (48256f59, 1974a9cf, 333d6b2b) parity is REPRESENTATION-LIMITED (strongly
+    argued: zero-slack line accounting, a scale lemma, and an exhaustive readout enumeration with 0
+    hits plus a positive control). A 6-line NOR cheat reaches lo99 .534-.547, just under SIGNAL.
+  - 84cf905d and e2fd1e07 are unresolved.

@@ -1,0 +1,15 @@
+{
+ "prereg_frozen": "2026-10-01T02:28:33Z",
+ "scored": "2026-10-01T02:30:35Z..02:31:42Z",
+ "control_HALT_reproduces_W2-23": {"cvtr_side1": "10/17", "good": "895/1020", "classes_clean_block_byte": [759, 114, 147], "exact": true},
+ "P1_prime": {"criterion": "side-1 CVT-R >= 15/17 under SO_OP", "observed": "16/17", "verdict": "PASS"},
+ "P1_dprime": {"criterion": "BO_OP bad copies in [11,28] (predicted 19)", "observed_bad": 24, "verdict": "PASS",
+               "secondary_pre_damage": {"predicted": 147, "observed": 173, "reported_not_scored": true}},
+ "D1": {"rule": "no residual iff SO_OP 17/17 and 1020/1020", "observed": "16/17, 1020/1020",
+        "decision": "residual exists (1 genome, b:q1_competent:59, read path; base lineage collapses at g2 in no-partner too)"},
+ "side1_cvtr": {"HALT": 10, "BO_OP": 15, "SO_OP": 16, "BO_BL": 0, "SO_BL": 0, "no_partner_ref": 17},
+ "side1_good": {"HALT": 895, "BO_OP": 996, "SO_OP": 1020, "BO_BL": 0, "SO_BL": 0, "no_partner": 1020},
+ "side0_cvtr": {"HALT": 13, "BO_OP": 0, "SO_OP": 0, "BO_BL": 0, "SO_BL": 0},
+ "decomposition_HALT_bad_125": {"block_only": 85, "block_and_store": 20, "store_only": 20,
+                                "rescued_by_BO_OP": 101, "rescued_only_by_SO_OP": 24}
+}

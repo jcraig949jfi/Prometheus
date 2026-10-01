@@ -161,3 +161,59 @@ v3 statement:
   narrow sense is testable. One fully chained cell exists (FLIP @ d9cc: S, isolated peak, blind selector).
 H6 as a GENERAL claim is replaced by this four-class decomposition. Its falsifiers are per class
 (W2-D section 5)."
+
+## 12. v4 (population numbers; after W2-J, L, M, N, O, P, S, T, U)
+Denominators (W2-T, W2-P/U; the C1 NULL population = 454 evolve cells in RELAY/XOR/MAJ/FLIP):
+- BROKEN: 0/113 under full guarded replay. Breakage is not H6's exposure; attribution is (corrects v3
+  item 1).
+- CONSTRUCTION-CAPPED (joint light cone + wake + placement): 111/454 = 24%. With W2-J's LC2 (fanout,
+  loss, jitter) XOR rises to 62/83 capped.
+- ADMISSIBLE for any search-limitation reading: 48% strict / 58% lenient.
+- PLANT-BACKED (a plant inside the genome space at the cell): 51/454 = 11%, ALL RELAY (W2-T). MAJ
+  one-hop now has plants at 8/15 sampled NULLs (W2-M); XOR has 0 inside the sampled genome (W2-J);
+  FLIP has 3 (W2-L/S).
+Per family:
+- XOR: H6 FALSE at >= 62/83. At the 6 plant-solved rows it is representation-OR-search (no plant fits
+  the sampled genome; W2-V running).
+- FLIP: P at >= 31/82; search possible at 3 (+ <= 9 R-candidates). The FLIP readings themselves need
+  B > .75 to certify inference (W2-S).
+- MAJ: one-hop S-partial (plants beat the champion at 8/19 SIGNAL cells). Multi-hop: 25/56 P, the rest
+  unplaced. INTEGRATION unattainable at 13/19 SIGNAL physics.
+- RELAY: one-hop S-partial (spread .51-.88 against a .97 plant; mis-tuned champions, W2-R). Multi-hop
+  is the categorical wall (W2-I).
+v4 statement:
+"In C1, 'search reachability bounds PTE' is supportable as a measured claim for at most ~11-15% of
+NULLs: plant-backed and admissible. It is FALSE for ~24% (construction-capped, more for XOR under LC2)
+and UNDECIDED for the rest. Where it is testable, the search failure is of three kinds:
+- S-partial climbing (RELAY/MAJ one-hop: champions below reachable plants);
+- the one-hop wall (forwarding never discovered);
+- an isolated FLIP peak (d9cc, n = 1).
+None of these is shown at the family level under W2-D's falsifiers."
+
+## 13. v4 correction (W2-W)
+Consolidated numbers supersede section 12: capped 139/454 (30.6%), eligible 62-65 (13.7-14.3%), open 250.
+P-2's decay artefact holds only for A0 matched counterfactuals; on C1 RELAY NULLs, decay does not bind
+in 35/41 (W2-W F1).
+
+## 14. Corrections from W2-X (adversarial review); these govern over the v2-v4 text above
+- STRUCK (category error): "the task distribution did not reward relaying". Each GA selects on ONE
+  cell's task; the 46 multi-hop searches were fully rewarded for forwarding. Replacement: "the 7 D laws,
+  all evolved on one-hop tasks, do not forward. Whether C1 search can discover forwarding is UNDECIDED:
+  in 30 reachable multi-hop searches there were 2 marginal SIGNALs (925caa3a, a t-flip; 882525a9),
+  mechanism untested."
+- STRUCK: "the one-hop wall is sharp". Only hop levels 1 and 2 were measured, and .500 is the
+  mirror-forced value.
+- STRUCK: "S under a blind selector (M = 8)". Comparisons are paired on shared worlds (W2-R F5), and
+  early generations have zero variance (P-3).
+- DOWNGRADED: FLIP@d9cc "U excluded" becomes "U not observed over 4+2 generations in 2 seeds".
+- DOWNGRADED: "a .60 relay basin where the stepping stones live" becomes "a .60 copy-policy basin
+  (ceiling .75) whose connection to inference is untested".
+- The measured split governs (E-W20): capped 139 (30.6%), eligible ~14%, open 250.
+
+## 15. Update from W2-AI (supersedes the forwarding sentence in section 14)
+"C1 search DID discover forwarding in 2 multi-hop cells, as once-per-episode receipt-triggered flood
+latches at the one-shot ceiling (~.58-.59 at 12 trials). No per-trial (resettable) multi-hop relay is
+shown."
+So the "one-hop wall" is about the 7 one-hop D laws (mute non-sensors, W2-AG SR-01). Search-reachable
+multi-hop exists only as an irreversible cascade. The open question becomes whether search can find
+RESETTABLE forwarding. The selection margin above the latch ceiling is only ~+.08.

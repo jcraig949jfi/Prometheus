@@ -1,0 +1,488 @@
+{
+ "dedup": {
+  "rows": 733,
+  "measurements": 430,
+  "exact_merges": 138,
+  "mirror_merges": 165
+ },
+ "stay_CHANCE": {
+  "rows": {
+   "k": 615,
+   "n": 733,
+   "p": 0.839,
+   "specimens": 87,
+   "rows_per_specimen_median": 5.0,
+   "rows_per_specimen_max": 75,
+   "cluster95": [
+    0.7895,
+    0.883
+   ],
+   "deff_boot": 3.07,
+   "n_eff": 238.9,
+   "specimen_equal_weight": 0.7371,
+   "specimen_equal_weight95": [
+    0.6514,
+    0.8168
+   ],
+   "specimens_all_label": 47,
+   "specimens_none_label": 18
+  },
+  "measurements": {
+   "k": 348,
+   "n": 430,
+   "p": 0.8093,
+   "specimens": 87,
+   "rows_per_specimen_median": 3.0,
+   "rows_per_specimen_max": 47,
+   "cluster95": [
+    0.752,
+    0.8595
+   ],
+   "deff_boot": 2.11,
+   "n_eff": 203.6,
+   "specimen_equal_weight": 0.7191,
+   "specimen_equal_weight95": [
+    0.6316,
+    0.8016
+   ],
+   "specimens_all_label": 49,
+   "specimens_none_label": 19
+  }
+ },
+ "to_FLIP": {
+  "rows": {
+   "k": 90,
+   "n": 733,
+   "p": 0.1228,
+   "specimens": 87,
+   "rows_per_specimen_median": 5.0,
+   "rows_per_specimen_max": 75,
+   "cluster95": [
+    0.0862,
+    0.1696
+   ],
+   "deff_boot": 3.12,
+   "n_eff": 235.1,
+   "specimen_equal_weight": 0.2298,
+   "specimen_equal_weight95": [
+    0.1501,
+    0.3155
+   ],
+   "specimens_all_label": 17,
+   "specimens_none_label": 55
+  },
+  "measurements": {
+   "k": 65,
+   "n": 430,
+   "p": 0.1512,
+   "specimens": 87,
+   "rows_per_specimen_median": 3.0,
+   "rows_per_specimen_max": 47,
+   "cluster95": [
+    0.1106,
+    0.204
+   ],
+   "deff_boot": 1.88,
+   "n_eff": 228.3,
+   "specimen_equal_weight": 0.2417,
+   "specimen_equal_weight95": [
+    0.1625,
+    0.3268
+   ],
+   "specimens_all_label": 17,
+   "specimens_none_label": 56
+  }
+ },
+ "to_NO-EFFECT": {
+  "rows": {
+   "k": 28,
+   "n": 733,
+   "p": 0.0382,
+   "specimens": 87,
+   "rows_per_specimen_median": 5.0,
+   "rows_per_specimen_max": 75,
+   "cluster95": [
+    0.0168,
+    0.0619
+   ],
+   "deff_boot": 2.79,
+   "n_eff": 263.1,
+   "specimen_equal_weight": 0.0331,
+   "specimen_equal_weight95": [
+    0.012,
+    0.0623
+   ],
+   "specimens_all_label": 1,
+   "specimens_none_label": 74
+  },
+  "measurements": {
+   "k": 17,
+   "n": 430,
+   "p": 0.0395,
+   "specimens": 87,
+   "rows_per_specimen_median": 3.0,
+   "rows_per_specimen_max": 47,
+   "cluster95": [
+    0.015,
+    0.0667
+   ],
+   "deff_boot": 2.02,
+   "n_eff": 212.9,
+   "specimen_equal_weight": 0.0392,
+   "specimen_equal_weight95": [
+    0.0105,
+    0.0767
+   ],
+   "specimens_all_label": 2,
+   "specimens_none_label": 77
+  }
+ },
+ "strata_measurements": {
+  "WF": {
+   "k": 109,
+   "n": 163,
+   "p": 0.6687,
+   "specimens": 71,
+   "rows_per_specimen_median": 2.0,
+   "rows_per_specimen_max": 5,
+   "cluster95": [
+    0.5669,
+    0.7633
+   ],
+   "deff_boot": 1.84,
+   "n_eff": 88.7,
+   "specimen_equal_weight": 0.6211,
+   "specimen_equal_weight95": [
+    0.5146,
+    0.723
+   ],
+   "specimens_all_label": 38,
+   "specimens_none_label": 22
+  },
+  "WI": {
+   "k": 237,
+   "n": 265,
+   "p": 0.8943,
+   "specimens": 30,
+   "rows_per_specimen_median": 6.0,
+   "rows_per_specimen_max": 45,
+   "cluster95": [
+    0.8512,
+    0.9435
+   ],
+   "deff_boot": 1.59,
+   "n_eff": 166.5,
+   "specimen_equal_weight": 0.9371,
+   "specimen_equal_weight95": [
+    0.8933,
+    0.9727
+   ],
+   "specimens_all_label": 20,
+   "specimens_none_label": 0
+  },
+  "HOLD": {
+   "k": 25,
+   "n": 53,
+   "p": 0.4717,
+   "specimens": 26,
+   "rows_per_specimen_median": 2.0,
+   "rows_per_specimen_max": 8,
+   "cluster95": [
+    0.2642,
+    0.6515
+   ],
+   "deff_boot": 2.13,
+   "n_eff": 24.9,
+   "specimen_equal_weight": 0.4119,
+   "specimen_equal_weight95": [
+    0.2372,
+    0.5929
+   ],
+   "specimens_all_label": 9,
+   "specimens_none_label": 14
+  },
+  "RELAY": {
+   "k": 273,
+   "n": 313,
+   "p": 0.8722,
+   "specimens": 47,
+   "rows_per_specimen_median": 3.0,
+   "rows_per_specimen_max": 47,
+   "cluster95": [
+    0.8168,
+    0.9289
+   ],
+   "deff_boot": 2.43,
+   "n_eff": 128.9,
+   "specimen_equal_weight": 0.8694,
+   "specimen_equal_weight95": [
+    0.7907,
+    0.9362
+   ],
+   "specimens_all_label": 31,
+   "specimens_none_label": 3
+  },
+  "MAJ": {
+   "k": 50,
+   "n": 64,
+   "p": 0.7812,
+   "specimens": 14,
+   "rows_per_specimen_median": 2.5,
+   "rows_per_specimen_max": 28,
+   "cluster95": [
+    0.6,
+    0.9091
+   ],
+   "deff_boot": 2.08,
+   "n_eff": 30.7,
+   "specimen_equal_weight": 0.7849,
+   "specimen_equal_weight95": [
+    0.5825,
+    0.9515
+   ],
+   "specimens_all_label": 9,
+   "specimens_none_label": 2
+  },
+  "WF|HOLD": {
+   "k": 7,
+   "n": 34,
+   "p": 0.2059,
+   "specimens": 19,
+   "rows_per_specimen_median": 2.0,
+   "rows_per_specimen_max": 3,
+   "cluster95": [
+    0.0312,
+    0.4062
+   ],
+   "deff_boot": 1.95,
+   "n_eff": 17.4,
+   "specimen_equal_weight": 0.1754,
+   "specimen_equal_weight95": [
+    0.0175,
+    0.3509
+   ],
+   "specimens_all_label": 3,
+   "specimens_none_label": 15
+  },
+  "WI|HOLD": {
+   "k": 18,
+   "n": 19,
+   "p": 0.9474,
+   "specimens": 9,
+   "rows_per_specimen_median": 2.0,
+   "rows_per_specimen_max": 7,
+   "cluster95": [
+    0.8966,
+    1.0
+   ],
+   "deff_boot": 0.47,
+   "n_eff": 40.2,
+   "specimen_equal_weight": 0.9841,
+   "specimen_equal_weight95": [
+    0.9524,
+    1.0
+   ],
+   "specimens_all_label": 8,
+   "specimens_none_label": 0
+  }
+ },
+ "specimens_by_family": {
+  "HOLD": 26,
+  "RELAY": 47,
+  "MAJ": 14
+ },
+ "specimens_by_source": {
+  "WF": 71,
+  "WI": 30,
+  "SCT": 2
+ },
+ "specimens_both_sources": 16,
+ "REL2": {
+  "FLIP_REL": {
+   "rows": {
+    "k": 170,
+    "n": 733,
+    "p": 0.2319,
+    "specimens": 87,
+    "rows_per_specimen_median": 5.0,
+    "rows_per_specimen_max": 75,
+    "cluster95": [
+     0.1693,
+     0.3282
+    ],
+    "deff_boot": 6.72,
+    "n_eff": 109.0,
+    "specimen_equal_weight": 0.4707,
+    "specimen_equal_weight95": [
+     0.3765,
+     0.5644
+    ],
+    "specimens_all_label": 32,
+    "specimens_none_label": 30
+   },
+   "measurements": {
+    "k": 117,
+    "n": 430,
+    "p": 0.2721,
+    "specimens": 87,
+    "rows_per_specimen_median": 3.0,
+    "rows_per_specimen_max": 47,
+    "cluster95": [
+     0.2039,
+     0.3708
+    ],
+    "deff_boot": 3.94,
+    "n_eff": 109.1,
+    "specimen_equal_weight": 0.4805,
+    "specimen_equal_weight95": [
+     0.3867,
+     0.5755
+    ],
+    "specimens_all_label": 32,
+    "specimens_none_label": 32
+   }
+  },
+  "NO_EFFECT_REL": {
+   "rows": {
+    "k": 81,
+    "n": 733,
+    "p": 0.1105,
+    "specimens": 87,
+    "rows_per_specimen_median": 5.0,
+    "rows_per_specimen_max": 75,
+    "cluster95": [
+     0.072,
+     0.1461
+    ],
+    "deff_boot": 2.7,
+    "n_eff": 271.2,
+    "specimen_equal_weight": 0.0744,
+    "specimen_equal_weight95": [
+     0.0402,
+     0.1158
+    ],
+    "specimens_all_label": 2,
+    "specimens_none_label": 65
+   },
+   "measurements": {
+    "k": 52,
+    "n": 430,
+    "p": 0.1209,
+    "specimens": 87,
+    "rows_per_specimen_median": 3.0,
+    "rows_per_specimen_max": 47,
+    "cluster95": [
+     0.0778,
+     0.1629
+    ],
+    "deff_boot": 1.9,
+    "n_eff": 226.1,
+    "specimen_equal_weight": 0.0832,
+    "specimen_equal_weight95": [
+     0.0424,
+     0.1313
+    ],
+    "specimens_all_label": 3,
+    "specimens_none_label": 67
+   }
+  },
+  "CHANCE_REL": {
+   "rows": {
+    "k": 376,
+    "n": 733,
+    "p": 0.513,
+    "specimens": 87,
+    "rows_per_specimen_median": 5.0,
+    "rows_per_specimen_max": 75,
+    "cluster95": [
+     0.4423,
+     0.5766
+    ],
+    "deff_boot": 3.4,
+    "n_eff": 215.7,
+    "specimen_equal_weight": 0.372,
+    "specimen_equal_weight95": [
+     0.2887,
+     0.4577
+    ],
+    "specimens_all_label": 16,
+    "specimens_none_label": 41
+   },
+   "measurements": {
+    "k": 201,
+    "n": 430,
+    "p": 0.4674,
+    "specimens": 87,
+    "rows_per_specimen_median": 3.0,
+    "rows_per_specimen_max": 47,
+    "cluster95": [
+     0.3978,
+     0.5324
+    ],
+    "deff_boot": 1.98,
+    "n_eff": 217.3,
+    "specimen_equal_weight": 0.3547,
+    "specimen_equal_weight95": [
+     0.2731,
+     0.4376
+    ],
+    "specimens_all_label": 16,
+    "specimens_none_label": 41
+   }
+  },
+  "INDETERMINATE": {
+   "rows": {
+    "k": 106,
+    "n": 733,
+    "p": 0.1446,
+    "specimens": 87,
+    "rows_per_specimen_median": 5.0,
+    "rows_per_specimen_max": 75,
+    "cluster95": [
+     0.0887,
+     0.1929
+    ],
+    "deff_boot": 4.16,
+    "n_eff": 176.1,
+    "specimen_equal_weight": 0.0829,
+    "specimen_equal_weight95": [
+     0.0455,
+     0.1269
+    ],
+    "specimens_all_label": 1,
+    "specimens_none_label": 66
+   },
+   "measurements": {
+    "k": 60,
+    "n": 430,
+    "p": 0.1395,
+    "specimens": 87,
+    "rows_per_specimen_median": 3.0,
+    "rows_per_specimen_max": 47,
+    "cluster95": [
+     0.0826,
+     0.1925
+    ],
+    "deff_boot": 2.92,
+    "n_eff": 147.5,
+    "specimen_equal_weight": 0.0817,
+    "specimen_equal_weight95": [
+     0.0462,
+     0.1226
+    ],
+    "specimens_all_label": 1,
+    "specimens_none_label": 66
+   }
+  }
+ },
+ "namespace_noise": {
+  "expected_stay_CHANCE_on_fresh_namespace": 350.9,
+  "observed_CHANCE_measurements": 348,
+  "noise_sd_independent": 3.13,
+  "noise_sd_with_family_rho": 3.16,
+  "noise_sd_worst_case_rho": 3.79,
+  "noise_deff_family_rho": 1.021,
+  "noise_deff_worst_case": 1.463,
+  "cluster_boot_sd_of_count": 11.8
+ }
+}

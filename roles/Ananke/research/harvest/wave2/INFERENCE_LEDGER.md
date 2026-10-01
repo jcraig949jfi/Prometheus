@@ -451,3 +451,195 @@ Other:
   earlier trials add zero-mean noise). W2-B P1's "exactly .5 per pair" holds only with no information
   at all.
 - Inward placement is not uniformly easier (12 rows get lower ceilings).
+
+### Batch ~02:25Z: W2-N, M, R, Q, J, S, T, U (all deposited)
+
+W2-N (swap interval inflation; resolves the W2-F vs W2-H contradiction)
+- Namespaces differ only in world seeds. Direct f(DF) = 1.00 [.91, 1.11] (M=512, 124 groups); fresh
+  namespaces give 1.00 [.78, 1.39]. f = 2 is rejected.
+- The AUDIT3 "excess" is fully explained: 22 rows = 10 measurements = 8 specimens, plus plug-in vs
+  two-draw noise, plus first-draw selection (excluded AMBIGUOUS rows hid cert->INDET flips). The
+  estimator explains 0/22, which refutes W2-H's attribution.
+- Gate: keep = Phi(d/(sqrt2 f)) with f = 1 (1.12 robust); 2.33-2.6 SE for 95% keep.
+- The normal run is shared per specimen (r = .993), so the specimen is the cluster unit.
+
+W2-M (MAJ integration plants)
+- Plant family hits Bayes .837 at known answers.
+- One-hop MAJ placed: 18/19 SIGNAL cells and 8/15 sampled one-hop NULLs have a SIGNAL-level plant. The
+  plant beats the champion at 8 SIGNAL cells (S-partial).
+- 11/19 SIGNAL champions are matched by a single-sensor transport, so they do not demonstrate
+  integration.
+- INTEGRATION is UNATTAINABLE (ceiling .701) at the physics of 13/19 SIGNAL rows. It is genuine at
+  4781b0a1, where the plant matches and single-sensor transport cannot.
+- Multi-hop MAJ: 25/56 physics-capped; 0/15 placed.
+- The energy economy binds MAJ programs (c_op per line).
+
+W2-R (bonus-linear codes + timing)
+- W2-A1 F4's noise-cancelling bonus leaves NO footprint on C1 champions (OR 1.54, p = .17). Scope it as
+  a potential bias.
+- The bonus excess actually paid comes from one-sided codes (noise-0 RELAY SIGNAL). SIGNAL champions
+  are linear, not thresholded (the scorer applies sign).
+- Timing: 4/16 comm champions are credibly mis-tuned (+.06-.09), all in the sync-2 delta-8 RELAY
+  family. Paired M=8 selection could see such gains, so the cause is reachability or the stop, not
+  selector blindness.
+
+W2-Q (distractor strobe + lottery prevalence)
+- Distractor-schedule HOLD memory is 5/86 (5.8%; 0 new); 94% is schedule-robust under fair edits.
+  Broad-magnitude collapses come from distractors near cue amplitude (an ill-posed test).
+- Same physics + env gives strobe vs robust champions, so mechanism is decided by search seed (H5
+  fails).
+- Rule-mosaic lottery: 5/8 setrule=0 rules>1 SIGNAL cells and 6/7 near-SIGNAL. Only the actuator's
+  initial rule matters (R^2 .69-.96); best pin is +.09-.21 above normal.
+- W2-E's a1 r0 split used unmirrored seeds (16-38% wrong); corrected .98/.49.
+- Lottery cells are over-represented among census corrections (OR 6.5, p = .019).
+
+W2-J (XOR across all 83 rows)
+- New reach bound LC2 (fanout, loss, async incl. sensor wake, dup, jitter) reduces to lightcone exactly
+  in the deterministic limit.
+- XOR classes: CAPPED-LC1 36 + CAPPED-LC2 26 = 62/83 (75%) physics-capped. H6 is FALSE there.
+- PLANT-SOLVED 6 (4 with a 16-line C1-space plant, 0 within the row's own sampled genome), so these
+  are search OR representation limited. UNDECIDED 15 (8 async, 7 economy).
+- The NOR cheat passes SIGNAL at 5/6 XOR-feasible rows.
+- XOR_PIVOT has false negatives at partial reach. A conditional-symmetry ruler XOR_SYM separated 9/9.
+
+W2-S (FLIP_CHANGE + physics removal)
+- No recorded FLIP reading rests on copy accuracy (only 996716ac > .5, and symmetric).
+- W2-L's FLIP_CHANGE is UNSOUND: 4 anti-copy champions pass it with zero inference. W2-L F5 has a
+  proof error (teacher copy is always wrong on changed cues).
+- The sound certificate is B = mean(same, changed) lo99 > .75; enumeration proves non-inferring
+  policies stay <= .75.
+- 5/14 R-candidates are copy-range.
+- An epidemic bound proves P at 7 global FLIP rows.
+- Revised FLIP placement: P 31 / PLANT-SOLVED 3 / R-cand 9 / PLANT-DESIGN (economy) 9 /
+  P-candidate 11 / UNDECIDED 19.
+
+W2-T (population NULL admissibility, 454 + 58 HOLD)
+- BROKEN 0/113 under full guarded replay (95% UB 3.2%); 0/454 on partial checks.
+- Admissible for any search-limitation reading: 48.2% strict / 57.7% lenient [.53, .62].
+- Plant-backed (checklist item 12): only 51/454 = 11.2%, ALL RELAY.
+- The "TRUNCATED" class (12) is early-latch champions (partial competence), renamed LATCHED-PARTIAL.
+- lcwake exact-wake bound validated (60/60 match, 0/166 SIGNAL violations).
+
+W2-U (XOR/FLIP ceilings + A0 normalisation)
+- Construction-capped NULLs: 111/454 (24.4%; 109-113 robust). Async adds XOR +3, FLIP 0, MAJ +1.
+- 30 FLIP rows are copy-capped.
+- A0 RELAY dial ranking, ceiling-normalised: the top 3 becomes decay / economy / topology. delta falls
+  from rank 2 to 12, d from 6 to 13.
+  - "Enough time budget" is mostly the light-cone identity (79%/75%/64% of the raw spread).
+  - decay, economy and loss survive.
+  - Topology strengthens (global worst once normalised).
+  - So C1's B-wave delta transect was selected by a timing identity.
+- Combined with E-W13 (decay artefact for relay_flood), "decay" survives normalisation as an effect on
+  the RELAY PLANT, but P-2 shows it is plant-design, not physics.
+- X-2 (Nestor #1214): Nestor's W2-21 force-killed PID 18960 at ~01:55Z. This most likely ended W2-R's
+  tune.py part 1 early (exit 1, no traceback). Coverage reduced, no result wrong; replied #1215-ish.
+
+### W2-AB (deposited): PTE-C2 prereg DRAFT (not frozen, not authorized)
+- Question: H6 at admitted cells (P/R/V excluded by admission) with arms BASE (12 seeds), W0, M32, B4X,
+  PSEED, KSEED, STEP. B certificate for FLIP; XOR only with an XOR_SYM power certificate; replacement
+  packet ablation for zero_comm.
+- Gates: keep = Phi(d/(sqrt2 f)) at f = 1.12 (2.605 SE); BH; specimen clustering.
+- Decisive tier 9-15 GPU-h; needs s7/operator authorization.
+- F2: "multi-hop-only distribution" is not a new test, since each C1 GA trains on one env (P-1 v3 (iii)
+  corrected).
+- APPLIED (NEUTRAL): inference keep_prob/margin_for_keep/replication_gate gain f (default 1 = current).
+  tests/test_keep_prob_f.py: 3 fail before; 17 pass with the inference suites.
+
+### W2-AC (deposited): headline counts at correct units
+- -> C1_ERRATA E-W19. A1 is the right unit (352 distinct physics/seeds).
+- The namespace/family effect cannot touch C1 counts (789/789 unique seeds).
+- W-Z Pb "HELD" holds only at the point estimate (CI [.19, .41]).
+
+### W2-W (deposited): consolidated placement of 454 NULLs + 58 HOLD
+- Final classes:
+  - P_PROVEN 134, CONSTRUCTION_PLACEMENT 5 (capped 139 = 30.6%);
+  - P_CANDIDATE 17;
+  - PLANT_SOLVED_IN_SPACE 65, OVERRIDE 7;
+  - R_CANDIDATE 9, PLANT_DESIGN 7;
+  - INERT 56, FLAT 6, LATCHED_PARTIAL 12;
+  - UNDECIDED 136.
+- H6-eligible: 62 strict / 65 lenient (13.7-14.3%), mostly RELAY.
+- 13 contradictions resolved; they are definitional (thresholds .60 vs .614; certificate model terms).
+  Glossary of 9 term clashes.
+- F1 corrects the principal: P-2's decay artefact does not transfer to C1 RELAY NULLs (6/41 rescued).
+  -> E-W13 scoped, E-W20 added.
+- 69 MAJ NULLs were never plant-scored: the largest open block.
+
+### W2-AA (deposited): kind_audit production tool + advisory deposit hook
+- APPLIED (NEUTRAL; research tests 22 passed):
+  - tools/kind_audit.py (stdlib; block scope by default, window scope kept for comparison; exit 1 on
+    HIGH);
+  - deposit.py records prov["kind_audit"] and never blocks; REPORT.md bytes are unchanged (tested);
+  - 15 new tests (13 tool + 2 deposit), which failed/errored before.
+- Parity with W2-I: 5047/5047 citations. The recall gaps for under-8-hex and upper-case ids are empty in
+  practice; .py has 1 true hit.
+- Current HIGH hits in harvest: the 4 known H-PLANT lines (true; verbatim deposits not edited) plus 5
+  meta-quotations (false).
+- Also fixed (comment only): H-PLANT/run_flip_mh.py:12 MH_CELL comment now says TRANSFER.
+
+### W2-X (deposited): adversarial review of the principal, 38 claims
+- Code corrections APPLIED (W2-X regressions: 3 failed before; 58 pass across suites after):
+  - (a) dest_mode_drawn is kept, and transects re-derive physics from the drawn value. This restores
+    future-run semantics that my dc46fd00f fix had changed (C1 unaffected).
+  - (b) reading3 returns DEGENERATE on zero variance, so forced controls are never certified.
+  - test_reading3_w2k now fails rather than skips when its committed data is missing.
+- Overreach corrected: C1_ERRATA correction block (E-W1/2/3/6/9/10/13/14), H6 section 14,
+  DEFECT_PATTERNS corrections.
+- P-2 noise figures are decay-0-conditional; the docstring is fixed.
+- Process provenance: the failing test was committed in dc46fd00f and pushed via merge 96b47d73e.
+
+### W2-Y (deposited): C1 B/B2 boundaries vs ceilings
+- A new flood ceiling (random destinations on global/sample, loss, jitter, dup) equals the light cone
+  in the deterministic limit 9/9. The W2-P/W2-U light cone overstates reach on global/sample.
+- Of 21 accuracy verdicts: IDENTITY 8 (4 delta, 3 MAJ topology, evolved acc); PLANT-DESIGN 10 (3
+  verified by refresh re-score, 7 HOLD inferred); economy 3 OPEN; 1 not reproduced.
+- No SUPPORTED boundary is established physics beyond the transport bound. -> E-W21.
+- W2-U's "global worst once normalised" is not robust (flood ceiling flips it).
+
+### W2-AG (deposited): preservation register (STRANGE_REGISTER.md, 15 entries + archive)
+- SR-01 [V]: the 2-hop collapse is EXACT. 13/14 native 2-hop conditions have lo99 = hi99 = .500 (no
+  stale residue either). Statically, in 4/5 single-rule D laws, non-sensing sites never emit; in
+  c16d5231 they emit presence only.
+  This partly qualifies W2-X's "sharp wall" strike: for the laws tested the cliff is structural (mute
+  non-sensors), not only mirror-forced. Whether C1 search can find forwarding is still undecided
+  (W2-AI running).
+- SR-03 (candidate, pre-stated check): 4781b0a1's vote travels only through reverberation between
+  ADJACENT cued sensors. One adjacent pair scores .573; a non-adjacent pair and a single sensor score
+  exactly .500. This plausibly unifies cluster-bound, DICT = .5 and low pivotality, and contradicts
+  W2-E S6's k=1 threshold story.
+- SR-04: 8/11 M3-physics MAJ champions sit above the single-sensor ceiling .590, near the any-program
+  ceiling .701. They are integrators that the INTEGRATION ruler cannot certify.
+- Top 3 for preservation: SR-01 one-hop wall, SR-02 distractor strobe/parity clock, SR-03
+  reverberation integration.
+- Queue: W2-AJ (emitter census across 69 SIGNAL champions; 4781b0a1 sensor-to-sensor edge cut).
+
+### W2-Z (deposited): economy-feasible plants
+- Engine budget [V]: only emission is energy-gated. Ops are charged per static non-NOP line per awake
+  tick; deficits are forgiven. Gating cannot save energy. The actuator, which never emits, is
+  economy-free. Max sustainable activity p*k + m < 4 at I = 4.
+- An economy-feasible FLIP plant exists in principle (.924, B .934 at clean sync P=2) and starves
+  exactly at k > kmax.
+- FLIP: the 9 "PLANT-DESIGN (economy)" rows become UNDECIDED-ECON (their failures are non-economy;
+  3 lean P).
+- XOR: d01883ed and 4ca24b85 are P-ECONOMY for any program (DP + LC2: .589 / .599). 89a6a9cd is NOT
+  economy-capped (corrects W2-J F8). W2-J totals become CAPPED 64 / UNDECIDED 13.
+- MAJ economy rows: 31/50 PLANT-SOLVED by 3-5-line leaky integrators, 16 with an integration
+  certificate. Champions there are ~.50, so these MAJ NULLs are search-limited relative to a
+  3-5-line plant (pending the W2-AF update to eligibility). 0 P-ECONOMY.
+
+### W2-AI (deposited): do the 2 multi-hop SIGNALs forward?
+- YES, once per episode: receipt-triggered flood latches (accuracy by trial 1.0 -> .50 after ~6
+  trials; latch model fits 99-99.6% of readouts). Certified by a vertex cut against equal-size
+  controls; 64/64 worlds are true multi-hop.
+- REACH_BEYOND_HOP is a false negative for latches (trial-2 twin). One-shot latches clear SIGNAL at 12
+  trials. -> C1_ERRATA E-W22; H6 section 15.
+- Queue: W2-AL (latch prevalence across all RELAY/MAJ SIGNAL rows).
+
+### W2-V (deposited): XOR representation vs search
+- 4222a5f7 is SEARCH-LIMITED: a 12/12-line plant at its own genome scores .850 (C1 held .832 vs
+  champion .503). -> E-W23.
+- The L8/C1 rows are representation-limited for parity (strong argument); the NOR near-miss is
+  lo99 .534-.547.
+- 84cf905d and e2fd1e07 are unresolved.
+- XOR eligibility therefore rises from 0 to 1 cell (4222a5f7), pending admissibility (W2-W listed it as
+  PLANT_SOLVED_OVERRIDE).

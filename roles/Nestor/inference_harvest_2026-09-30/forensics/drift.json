@@ -1,0 +1,3776 @@
+{
+ "n_runs": 51,
+ "summary": {
+  "state_free": {
+   "runs": 40,
+   "late_gt_early": 16,
+   "late_lt_early": 0,
+   "tie": 24,
+   "sign_p": 3.0517578125e-05,
+   "pooled_early": [
+    28,
+    99
+   ],
+   "pooled_late": [
+    77,
+    124
+   ]
+  },
+  "dest_set": {
+   "runs": 40,
+   "late_gt_early": 1,
+   "late_lt_early": 0,
+   "tie": 39,
+   "sign_p": 1.0,
+   "pooled_early": [
+    97,
+    98
+   ],
+   "pooled_late": [
+    123,
+    123
+   ]
+  },
+  "ld_de_nn": {
+   "runs": 40,
+   "late_gt_early": 8,
+   "late_lt_early": 6,
+   "tie": 26,
+   "sign_p": 0.79052734375,
+   "pooled_early": [
+    17,
+    98
+   ],
+   "pooled_late": [
+    29,
+    123
+   ]
+  },
+  "src_set": {
+   "runs": 40,
+   "late_gt_early": 1,
+   "late_lt_early": 1,
+   "tie": 38,
+   "sign_p": 1.0,
+   "pooled_early": [
+    96,
+    98
+   ],
+   "pooled_late": [
+    122,
+    123
+   ]
+  },
+  "count_set": {
+   "runs": 40,
+   "late_gt_early": 4,
+   "late_lt_early": 3,
+   "tie": 33,
+   "sign_p": 1.0,
+   "pooled_early": [
+    88,
+    98
+   ],
+   "pooled_late": [
+    113,
+    123
+   ]
+  },
+  "dest_by_copy": {
+   "runs": 40,
+   "late_gt_early": 3,
+   "late_lt_early": 1,
+   "tie": 36,
+   "sign_p": 0.625,
+   "pooled_early": [
+    3,
+    98
+   ],
+   "pooled_late": [
+    5,
+    123
+   ]
+  }
+ },
+ "runs": [
+  {
+   "cell": "7ae3",
+   "run": "c_dense_copy/DENSE_COPY/17000007",
+   "n": 38,
+   "early": [
+    {
+     "competent": false,
+     "first_epoch": 1600
+    },
+    {
+     "competent": false,
+     "first_epoch": 1600
+    },
+    {
+     "competent": false,
+     "first_epoch": 1600
+    }
+   ],
+   "late": [
+    {
+     "competent": false,
+     "first_epoch": 2000
+    },
+    {
+     "competent": false,
+     "first_epoch": 2000
+    },
+    {
+     "competent": false,
+     "first_epoch": 2000
+    }
+   ]
+  },
+  {
+   "cell": "7ae3",
+   "run": "c_dense_copy/DENSE_COPY/17000009",
+   "n": 890,
+   "early": [
+    {
+     "competent": true,
+     "R1": 1.0,
+     "R2": 1.0,
+     "state_free": true,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 7168,
+     "first_epoch": 1400
+    },
+    {
+     "competent": true,
+     "R1": 1.0,
+     "R2": 0.95,
+     "state_free": true,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 0,
+     "first_epoch": 1400
+    },
+    {
+     "competent": true,
+     "R1": 1.0,
+     "R2": 1.0,
+     "state_free": true,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 51200,
+     "first_epoch": 1400
+    }
+   ],
+   "late": [
+    {
+     "competent": true,
+     "R1": 1.0,
+     "R2": 1.0,
+     "state_free": true,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 28672,
+     "first_epoch": 2000
+    },
+    {
+     "competent": true,
+     "R1": 1.0,
+     "R2": 1.0,
+     "state_free": true,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 29184,
+     "first_epoch": 2000
+    },
+    {
+     "competent": true,
+     "R1": 1.0,
+     "R2": 1.0,
+     "state_free": true,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 28672,
+     "first_epoch": 2000
+    }
+   ]
+  },
+  {
+   "cell": "7ae3",
+   "run": "c_dense_copy/DENSE_COPY/17000021",
+   "n": 45,
+   "early": [
+    {
+     "competent": true,
+     "R1": 0.0,
+     "R2": 0.0,
+     "state_free": false,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 45568,
+     "first_epoch": 200
+    },
+    {
+     "competent": false,
+     "first_epoch": 400
+    },
+    {
+     "competent": false,
+     "first_epoch": 400
+    }
+   ],
+   "late": [
+    {
+     "competent": false,
+     "first_epoch": 1900
+    },
+    {
+     "competent": true,
+     "R1": 0.0,
+     "R2": 0.0,
+     "state_free": false,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 45312,
+     "first_epoch": 2000
+    },
+    {
+     "competent": false,
+     "first_epoch": 2000
+    }
+   ]
+  },
+  {
+   "cell": "7ae3",
+   "run": "c_dense_copy/DENSE_COPY/17000024",
+   "n": 91,
+   "early": [
+    {
+     "competent": true,
+     "R1": 0.0,
+     "R2": 0.0,
+     "state_free": false,
+     "dest_set": false,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 0,
+     "first_epoch": 100
+    },
+    {
+     "competent": true,
+     "R1": 0.0,
+     "R2": 0.0,
+     "state_free": false,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": true,
+     "DE_at_copy": 17694,
+     "first_epoch": 900
+    },
+    {
+     "competent": false,
+     "first_epoch": 900
+    }
+   ],
+   "late": [
+    {
+     "competent": false,
+     "first_epoch": 2000
+    },
+    {
+     "competent": true,
+     "R1": 0.0,
+     "R2": 0.0,
+     "state_free": false,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": true,
+     "DE_at_copy": 51923,
+     "first_epoch": 2000
+    },
+    {
+     "competent": false,
+     "first_epoch": 2000
+    }
+   ]
+  },
+  {
+   "cell": "7ae3",
+   "run": "c_dense_copy/DENSE_COPY/17000028",
+   "n": 1563,
+   "early": [
+    {
+     "competent": true,
+     "R1": 0.0,
+     "R2": 0.0,
+     "state_free": false,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 0,
+     "first_epoch": 100
+    },
+    {
+     "competent": true,
+     "R1": 0.3,
+     "R2": 0.1,
+     "state_free": false,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 64,
+     "first_epoch": 400
+    },
+    {
+     "competent": true,
+     "R1": 0.2,
+     "R2": 0.15,
+     "state_free": false,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 17728,
+     "first_epoch": 400
+    }
+   ],
+   "late": [
+    {
+     "competent": true,
+     "R1": 1.0,
+     "R2": 1.0,
+     "state_free": true,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": true,
+     "DE_at_copy": 16320,
+     "first_epoch": 2000
+    },
+    {
+     "competent": true,
+     "R1": 0.0,
+     "R2": 0.0,
+     "state_free": false,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 64,
+     "first_epoch": 2000
+    },
+    {
+     "competent": true,
+     "R1": 0.0,
+     "R2": 0.0,
+     "state_free": false,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 64,
+     "first_epoch": 2000
+    }
+   ]
+  },
+  {
+   "cell": "7ae3",
+   "run": "c_dense_copy/DENSE_COPY/17000029",
+   "n": 29,
+   "early": [
+    {
+     "competent": true,
+     "R1": 0.0,
+     "R2": 0.0,
+     "state_free": false,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 16448,
+     "first_epoch": 1000
+    },
+    {
+     "competent": false,
+     "first_epoch": 1300
+    },
+    {
+     "competent": false,
+     "first_epoch": 1400
+    }
+   ],
+   "late": [
+    {
+     "competent": false,
+     "first_epoch": 1900
+    },
+    {
+     "competent": false,
+     "first_epoch": 2000
+    },
+    {
+     "competent": true,
+     "R1": 0.25,
+     "R2": 0.2,
+     "state_free": false,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 52481,
+     "first_epoch": 2000
+    }
+   ]
+  },
+  {
+   "cell": "7ae3",
+   "run": "x_dd_dense_copy/DENSE_COPY/16000006",
+   "n": 2903,
+   "early": [
+    {
+     "competent": true,
+     "R1": 0.0,
+     "R2": 0.0,
+     "state_free": false,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": false,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 0,
+     "first_epoch": 400
+    },
+    {
+     "competent": true,
+     "R1": 0.0,
+     "R2": 0.0,
+     "state_free": false,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": false,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 0,
+     "first_epoch": 400
+    },
+    {
+     "competent": true,
+     "R1": 0.0,
+     "R2": 0.0,
+     "state_free": false,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 0,
+     "first_epoch": 400
+    }
+   ],
+   "late": [
+    {
+     "competent": true,
+     "R1": 1.0,
+     "R2": 1.0,
+     "state_free": true,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": true,
+     "DE_at_copy": 60160,
+     "first_epoch": 2000
+    },
+    {
+     "competent": true,
+     "R1": 1.0,
+     "R2": 1.0,
+     "state_free": true,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": true,
+     "DE_at_copy": 59392,
+     "first_epoch": 2000
+    },
+    {
+     "competent": true,
+     "R1": 1.0,
+     "R2": 1.0,
+     "state_free": true,
+     "first_epoch": 2000
+    }
+   ]
+  },
+  {
+   "cell": "7ae3",
+   "run": "x_dd_dense_copy/DENSE_COPY/16000008",
+   "n": 36,
+   "early": [
+    {
+     "competent": true,
+     "R1": 0.0,
+     "R2": 0.0,
+     "state_free": false,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": true,
+     "DE_at_copy": 63,
+     "first_epoch": 300
+    },
+    {
+     "competent": false,
+     "first_epoch": 400
+    },
+    {
+     "competent": false,
+     "first_epoch": 400
+    }
+   ],
+   "late": [
+    {
+     "competent": false,
+     "first_epoch": 1500
+    },
+    {
+     "competent": false,
+     "first_epoch": 1800
+    },
+    {
+     "competent": true,
+     "R1": 0.0,
+     "R2": 0.0,
+     "state_free": false,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": true,
+     "DE_at_copy": 191,
+     "first_epoch": 2000
+    }
+   ]
+  },
+  {
+   "cell": "7ae3",
+   "run": "x_dd_dense_copy/DENSE_COPY/16000010",
+   "n": 70,
+   "early": [
+    {
+     "competent": false,
+     "first_epoch": 800
+    },
+    {
+     "competent": false,
+     "first_epoch": 800
+    },
+    {
+     "competent": true,
+     "R1": 0.05,
+     "R2": 0.15,
+     "state_free": false,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": true,
+     "DE_at_copy": 17088,
+     "first_epoch": 800
+    }
+   ],
+   "late": [
+    {
+     "competent": false,
+     "first_epoch": 1900
+    },
+    {
+     "competent": false,
+     "first_epoch": 2000
+    },
+    {
+     "competent": false,
+     "first_epoch": 2000
+    }
+   ]
+  },
+  {
+   "cell": "7ae3",
+   "run": "x_dd_dense_copy/DENSE_COPY/16000015",
+   "n": 948,
+   "early": [
+    {
+     "competent": true,
+     "R1": 0.0,
+     "R2": 0.0,
+     "state_free": false,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 53759,
+     "first_epoch": 700
+    },
+    {
+     "competent": true,
+     "R1": 0.0,
+     "R2": 0.0,
+     "state_free": false,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 45823,
+     "first_epoch": 700
+    },
+    {
+     "competent": true,
+     "R1": 0.0,
+     "R2": 0.0,
+     "state_free": false,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 62207,
+     "first_epoch": 700
+    }
+   ],
+   "late": [
+    {
+     "competent": true,
+     "R1": 0.0,
+     "R2": 0.0,
+     "state_free": false,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 56319,
+     "first_epoch": 1400
+    },
+    {
+     "competent": true,
+     "R1": 0.0,
+     "R2": 0.0,
+     "state_free": false,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 56319,
+     "first_epoch": 1400
+    },
+    {
+     "competent": true,
+     "R1": 0.0,
+     "R2": 0.0,
+     "state_free": false,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 56319,
+     "first_epoch": 1400
+    }
+   ]
+  },
+  {
+   "cell": "7ae3",
+   "run": "x_dd_dense_copy/DENSE_COPY/16000021",
+   "n": 924,
+   "early": [
+    {
+     "competent": false,
+     "first_epoch": 1400
+    },
+    {
+     "competent": false,
+     "first_epoch": 1400
+    },
+    {
+     "competent": false,
+     "first_epoch": 1400
+    }
+   ],
+   "late": [
+    {
+     "competent": true,
+     "R1": 1.0,
+     "R2": 1.0,
+     "state_free": true,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": false,
+     "dest_by_copy": false,
+     "ld_de_nn": true,
+     "DE_at_copy": 48320,
+     "first_epoch": 2000
+    },
+    {
+     "competent": true,
+     "R1": 1.0,
+     "R2": 1.0,
+     "state_free": true,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": false,
+     "dest_by_copy": false,
+     "ld_de_nn": true,
+     "DE_at_copy": 48320,
+     "first_epoch": 2000
+    },
+    {
+     "competent": true,
+     "R1": 1.0,
+     "R2": 1.0,
+     "state_free": true,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": false,
+     "dest_by_copy": false,
+     "ld_de_nn": true,
+     "DE_at_copy": 48320,
+     "first_epoch": 2000
+    }
+   ]
+  },
+  {
+   "cell": "7ae3",
+   "run": "x_dd_dense_copy/DENSE_COPY/16000026",
+   "n": 1968,
+   "early": [
+    {
+     "competent": true,
+     "R1": 1.0,
+     "R2": 1.0,
+     "state_free": true,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": true,
+     "ld_de_nn": false,
+     "DE_at_copy": 0,
+     "first_epoch": 600
+    },
+    {
+     "competent": true,
+     "R1": 1.0,
+     "R2": 1.0,
+     "state_free": true,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": true,
+     "ld_de_nn": false,
+     "DE_at_copy": 0,
+     "first_epoch": 600
+    },
+    {
+     "competent": true,
+     "R1": 1.0,
+     "R2": 0.95,
+     "state_free": true,
+     "first_epoch": 600
+    }
+   ],
+   "late": [
+    {
+     "competent": true,
+     "R1": 1.0,
+     "R2": 1.0,
+     "state_free": true,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 16448,
+     "first_epoch": 2000
+    },
+    {
+     "competent": true,
+     "R1": 1.0,
+     "R2": 1.0,
+     "state_free": true,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 16448,
+     "first_epoch": 2000
+    },
+    {
+     "competent": true,
+     "R1": 1.0,
+     "R2": 1.0,
+     "state_free": true,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 0,
+     "first_epoch": 2000
+    }
+   ]
+  },
+  {
+   "cell": "7ae3",
+   "run": "x_dd_dense_copy/DENSE_COPY/16000028",
+   "n": 1160,
+   "early": [
+    {
+     "competent": true,
+     "R1": 0.0,
+     "R2": 0.0,
+     "state_free": false,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 65087,
+     "first_epoch": 700
+    },
+    {
+     "competent": true,
+     "R1": 0.0,
+     "R2": 0.0,
+     "state_free": false,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 65343,
+     "first_epoch": 700
+    },
+    {
+     "competent": false,
+     "first_epoch": 800
+    }
+   ],
+   "late": [
+    {
+     "competent": true,
+     "R1": 0.0,
+     "R2": 0.0,
+     "state_free": false,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 192,
+     "first_epoch": 2000
+    },
+    {
+     "competent": true,
+     "R1": 0.0,
+     "R2": 0.0,
+     "state_free": false,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": false,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 16448,
+     "first_epoch": 2000
+    },
+    {
+     "competent": true,
+     "R1": 0.0,
+     "R2": 0.0,
+     "state_free": false,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": false,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 8256,
+     "first_epoch": 2000
+    }
+   ]
+  },
+  {
+   "cell": "7ae3",
+   "run": "x_dd_dense_copy/DENSE_COPY/16000029",
+   "n": 48,
+   "early": [
+    {
+     "competent": true,
+     "R1": 0.0,
+     "R2": 0.0,
+     "state_free": false,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 21857,
+     "first_epoch": 1000
+    },
+    {
+     "competent": true,
+     "R1": 0.0,
+     "R2": 0.0,
+     "state_free": false,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 21857,
+     "first_epoch": 1000
+    },
+    {
+     "competent": true,
+     "R1": 0.0,
+     "R2": 0.0,
+     "state_free": false,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 21857,
+     "first_epoch": 1000
+    }
+   ],
+   "late": [
+    {
+     "competent": true,
+     "R1": 0.0,
+     "R2": 0.0,
+     "state_free": false,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 29956,
+     "first_epoch": 2000
+    },
+    {
+     "competent": true,
+     "R1": 0.0,
+     "R2": 0.0,
+     "state_free": false,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 17802,
+     "first_epoch": 2000
+    },
+    {
+     "competent": true,
+     "R1": 0.0,
+     "R2": 0.0,
+     "state_free": false,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 17802,
+     "first_epoch": 2000
+    }
+   ]
+  },
+  {
+   "cell": "7ae3",
+   "run": "x_dd_dense_copy/DENSE_COPY/16000033",
+   "n": 776,
+   "early": [
+    {
+     "competent": false,
+     "first_epoch": 700
+    },
+    {
+     "competent": false,
+     "first_epoch": 1300
+    },
+    {
+     "competent": false,
+     "first_epoch": 1400
+    }
+   ],
+   "late": [
+    {
+     "competent": true,
+     "R1": 0.95,
+     "R2": 1.0,
+     "state_free": true,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": true,
+     "DE_at_copy": 192,
+     "first_epoch": 2000
+    },
+    {
+     "competent": true,
+     "R1": 1.0,
+     "R2": 1.0,
+     "state_free": true,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": true,
+     "DE_at_copy": 192,
+     "first_epoch": 2000
+    },
+    {
+     "competent": true,
+     "R1": 1.0,
+     "R2": 1.0,
+     "state_free": true,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": true,
+     "DE_at_copy": 192,
+     "first_epoch": 2000
+    }
+   ]
+  },
+  {
+   "cell": "7ae3",
+   "run": "x_dd_dense_copy/DENSE_COPY/16000036",
+   "n": 2322,
+   "early": [
+    {
+     "competent": true,
+     "R1": 0.0,
+     "R2": 0.0,
+     "state_free": false,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": false,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 0,
+     "first_epoch": 100
+    },
+    {
+     "competent": true,
+     "R1": 0.0,
+     "R2": 0.0,
+     "state_free": false,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": false,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 0,
+     "first_epoch": 200
+    },
+    {
+     "competent": false,
+     "first_epoch": 200
+    }
+   ],
+   "late": [
+    {
+     "competent": true,
+     "R1": 0.8,
+     "R2": 0.9,
+     "state_free": true,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": true,
+     "DE_at_copy": 261,
+     "first_epoch": 2000
+    },
+    {
+     "competent": true,
+     "R1": 0.7,
+     "R2": 0.9,
+     "state_free": true,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": true,
+     "DE_at_copy": 8197,
+     "first_epoch": 2000
+    },
+    {
+     "competent": true,
+     "R1": 0.85,
+     "R2": 1.0,
+     "state_free": true,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": true,
+     "DE_at_copy": 6149,
+     "first_epoch": 2000
+    }
+   ]
+  },
+  {
+   "cell": "7ae3",
+   "run": "x_dd_dense_copy/DENSE_COPY/16000042",
+   "n": 1541,
+   "early": [
+    {
+     "competent": false,
+     "first_epoch": 100
+    },
+    {
+     "competent": false,
+     "first_epoch": 100
+    },
+    {
+     "competent": false,
+     "first_epoch": 100
+    }
+   ],
+   "late": [
+    {
+     "competent": true,
+     "R1": 0.0,
+     "R2": 0.0,
+     "state_free": false,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 255,
+     "first_epoch": 2000
+    },
+    {
+     "competent": true,
+     "R1": 0.0,
+     "R2": 0.0,
+     "state_free": false,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 255,
+     "first_epoch": 2000
+    },
+    {
+     "competent": true,
+     "R1": 0.0,
+     "R2": 0.0,
+     "state_free": false,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 255,
+     "first_epoch": 2000
+    }
+   ]
+  },
+  {
+   "cell": "7ae3",
+   "run": "x_dd_dense_copy/DENSE_COPY/16000046",
+   "n": 2233,
+   "early": [
+    {
+     "competent": true,
+     "R1": 1.0,
+     "R2": 0.95,
+     "state_free": true,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 11906,
+     "first_epoch": 200
+    },
+    {
+     "competent": true,
+     "R1": 0.95,
+     "R2": 0.9,
+     "state_free": true,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 3714,
+     "first_epoch": 200
+    },
+    {
+     "competent": true,
+     "R1": 0.8,
+     "R2": 0.9,
+     "state_free": true,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 11906,
+     "first_epoch": 200
+    }
+   ],
+   "late": [
+    {
+     "competent": true,
+     "R1": 0.75,
+     "R2": 0.95,
+     "state_free": true,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 2,
+     "first_epoch": 2000
+    },
+    {
+     "competent": true,
+     "R1": 1.0,
+     "R2": 0.7,
+     "state_free": true,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 2,
+     "first_epoch": 2000
+    },
+    {
+     "competent": true,
+     "R1": 0.75,
+     "R2": 0.8,
+     "state_free": true,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 2,
+     "first_epoch": 2000
+    }
+   ]
+  },
+  {
+   "cell": "ffa6",
+   "run": "c_dense_copy/DENSE_COPY/17000000",
+   "n": 1718,
+   "early": [
+    {
+     "competent": true,
+     "R1": 0.0,
+     "R2": 0.0,
+     "state_free": false,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 65535,
+     "first_epoch": 800
+    },
+    {
+     "competent": true,
+     "R1": 0.0,
+     "R2": 0.0,
+     "state_free": false,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 65535,
+     "first_epoch": 800
+    },
+    {
+     "competent": true,
+     "R1": 0.0,
+     "R2": 0.0,
+     "state_free": false,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 65535,
+     "first_epoch": 800
+    }
+   ],
+   "late": [
+    {
+     "competent": true,
+     "R1": 1.0,
+     "R2": 0.95,
+     "state_free": true,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 39039,
+     "first_epoch": 2000
+    },
+    {
+     "competent": true,
+     "R1": 1.0,
+     "R2": 1.0,
+     "state_free": true,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 54143,
+     "first_epoch": 2000
+    },
+    {
+     "competent": true,
+     "R1": 1.0,
+     "R2": 1.0,
+     "state_free": true,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 65407,
+     "first_epoch": 2000
+    }
+   ]
+  },
+  {
+   "cell": "ffa6",
+   "run": "c_dense_copy/DENSE_COPY/17000001",
+   "n": 1295,
+   "early": [
+    {
+     "competent": true,
+     "R1": 0.0,
+     "R2": 0.0,
+     "state_free": false,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": true,
+     "DE_at_copy": 9280,
+     "first_epoch": 300
+    },
+    {
+     "competent": false,
+     "first_epoch": 1000
+    },
+    {
+     "competent": true,
+     "R1": 0.0,
+     "R2": 0.0,
+     "state_free": false,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 192,
+     "first_epoch": 1100
+    }
+   ],
+   "late": [
+    {
+     "competent": true,
+     "R1": 0.8,
+     "R2": 0.85,
+     "state_free": true,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 192,
+     "first_epoch": 2000
+    },
+    {
+     "competent": true,
+     "R1": 0.0,
+     "R2": 0.0,
+     "state_free": false,
+     "dest_set": true,
+     "src_set": false,
+     "count_set": false,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 192,
+     "first_epoch": 2000
+    },
+    {
+     "competent": true,
+     "R1": 0.75,
+     "R2": 0.85,
+     "state_free": true,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 16320,
+     "first_epoch": 2000
+    }
+   ]
+  },
+  {
+   "cell": "ffa6",
+   "run": "c_dense_copy/DENSE_COPY/17000003",
+   "n": 674,
+   "early": [
+    {
+     "competent": true,
+     "R1": 0.0,
+     "R2": 0.0,
+     "state_free": false,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 255,
+     "first_epoch": 400
+    },
+    {
+     "competent": false,
+     "first_epoch": 500
+    },
+    {
+     "competent": false,
+     "first_epoch": 500
+    }
+   ],
+   "late": [
+    {
+     "competent": true,
+     "R1": 0.95,
+     "R2": 1.0,
+     "state_free": true,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 64,
+     "first_epoch": 2000
+    },
+    {
+     "competent": true,
+     "R1": 1.0,
+     "R2": 1.0,
+     "state_free": true,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 64,
+     "first_epoch": 2000
+    },
+    {
+     "competent": true,
+     "R1": 1.0,
+     "R2": 1.0,
+     "state_free": true,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 64,
+     "first_epoch": 2000
+    }
+   ]
+  },
+  {
+   "cell": "ffa6",
+   "run": "c_dense_copy/DENSE_COPY/17000005",
+   "n": 245,
+   "early": [
+    {
+     "competent": true,
+     "R1": 0.0,
+     "R2": 0.0,
+     "state_free": false,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 64,
+     "first_epoch": 1000
+    },
+    {
+     "competent": true,
+     "R1": 0.0,
+     "R2": 0.0,
+     "state_free": false,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 15871,
+     "first_epoch": 1500
+    },
+    {
+     "competent": false,
+     "first_epoch": 1800
+    }
+   ],
+   "late": [
+    {
+     "competent": true,
+     "R1": 1.0,
+     "R2": 1.0,
+     "state_free": true,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": true,
+     "DE_at_copy": 16065,
+     "first_epoch": 2000
+    },
+    {
+     "competent": true,
+     "R1": 1.0,
+     "R2": 1.0,
+     "state_free": true,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": true,
+     "DE_at_copy": 38081,
+     "first_epoch": 2000
+    },
+    {
+     "competent": true,
+     "R1": 1.0,
+     "R2": 1.0,
+     "state_free": true,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 35777,
+     "first_epoch": 2000
+    }
+   ]
+  },
+  {
+   "cell": "ffa6",
+   "run": "c_dense_copy/DENSE_COPY/17000009",
+   "n": 2591,
+   "early": [
+    {
+     "competent": false,
+     "first_epoch": 200
+    },
+    {
+     "competent": false,
+     "first_epoch": 300
+    },
+    {
+     "competent": false,
+     "first_epoch": 300
+    }
+   ],
+   "late": [
+    {
+     "competent": true,
+     "R1": 0.95,
+     "R2": 1.0,
+     "state_free": true,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 15998,
+     "first_epoch": 2000
+    },
+    {
+     "competent": true,
+     "R1": 1.0,
+     "R2": 1.0,
+     "state_free": true,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 15998,
+     "first_epoch": 2000
+    },
+    {
+     "competent": true,
+     "R1": 1.0,
+     "R2": 0.95,
+     "state_free": true,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 32382,
+     "first_epoch": 2000
+    }
+   ]
+  },
+  {
+   "cell": "ffa6",
+   "run": "c_dense_copy/DENSE_COPY/17000010",
+   "n": 297,
+   "early": [
+    {
+     "competent": true,
+     "R1": 1.0,
+     "R2": 1.0,
+     "state_free": true,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": true,
+     "DE_at_copy": 37568,
+     "first_epoch": 1200
+    },
+    {
+     "competent": true,
+     "R1": 1.0,
+     "R2": 1.0,
+     "state_free": true,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": true,
+     "DE_at_copy": 37568,
+     "first_epoch": 1200
+    },
+    {
+     "competent": true,
+     "R1": 0.0,
+     "R2": 0.0,
+     "state_free": false,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 33346,
+     "first_epoch": 1800
+    }
+   ],
+   "late": [
+    {
+     "competent": true,
+     "R1": 0.95,
+     "R2": 1.0,
+     "state_free": true,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 33346,
+     "first_epoch": 2000
+    },
+    {
+     "competent": true,
+     "R1": 0.95,
+     "R2": 1.0,
+     "state_free": true,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 33346,
+     "first_epoch": 2000
+    },
+    {
+     "competent": true,
+     "R1": 0.9,
+     "R2": 1.0,
+     "state_free": true,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 33346,
+     "first_epoch": 2000
+    }
+   ]
+  },
+  {
+   "cell": "ffa6",
+   "run": "c_dense_copy/DENSE_COPY/17000013",
+   "n": 1672,
+   "early": [
+    {
+     "competent": true,
+     "R1": 0.0,
+     "R2": 0.0,
+     "state_free": false,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 0,
+     "first_epoch": 500
+    },
+    {
+     "competent": true,
+     "R1": 0.0,
+     "R2": 0.0,
+     "state_free": false,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": true,
+     "DE_at_copy": 59904,
+     "first_epoch": 500
+    },
+    {
+     "competent": true,
+     "R1": 0.0,
+     "R2": 0.0,
+     "state_free": false,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": false,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 0,
+     "first_epoch": 500
+    }
+   ],
+   "late": [
+    {
+     "competent": true,
+     "R1": 1.0,
+     "R2": 1.0,
+     "state_free": true,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": true,
+     "DE_at_copy": 41728,
+     "first_epoch": 2000
+    },
+    {
+     "competent": true,
+     "R1": 1.0,
+     "R2": 1.0,
+     "state_free": true,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 49024,
+     "first_epoch": 2000
+    },
+    {
+     "competent": true,
+     "R1": 1.0,
+     "R2": 1.0,
+     "state_free": true,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": true,
+     "DE_at_copy": 41728,
+     "first_epoch": 2000
+    }
+   ]
+  },
+  {
+   "cell": "ffa6",
+   "run": "c_dense_copy/DENSE_COPY/17000015",
+   "n": 1884,
+   "early": [
+    {
+     "competent": true,
+     "R1": 0.0,
+     "R2": 0.05,
+     "state_free": false,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 705,
+     "first_epoch": 600
+    },
+    {
+     "competent": true,
+     "R1": 0.15,
+     "R2": 0.1,
+     "state_free": false,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 65,
+     "first_epoch": 600
+    },
+    {
+     "competent": true,
+     "R1": 1.0,
+     "R2": 1.0,
+     "state_free": true,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 449,
+     "first_epoch": 600
+    }
+   ],
+   "late": [
+    {
+     "competent": true,
+     "R1": 0.95,
+     "R2": 1.0,
+     "state_free": true,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 65,
+     "first_epoch": 2000
+    },
+    {
+     "competent": true,
+     "R1": 1.0,
+     "R2": 1.0,
+     "state_free": true,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": true,
+     "ld_de_nn": false,
+     "DE_at_copy": 17217,
+     "first_epoch": 2000
+    },
+    {
+     "competent": true,
+     "R1": 1.0,
+     "R2": 0.95,
+     "state_free": true,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": true,
+     "ld_de_nn": false,
+     "DE_at_copy": 17217,
+     "first_epoch": 2000
+    }
+   ]
+  },
+  {
+   "cell": "ffa6",
+   "run": "c_dense_copy/DENSE_COPY/17000016",
+   "n": 39,
+   "early": [
+    {
+     "competent": true,
+     "R1": 0.0,
+     "R2": 0.0,
+     "state_free": false,
+     "dest_set": true,
+     "src_set": false,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": true,
+     "DE_at_copy": 45632,
+     "first_epoch": 700
+    },
+    {
+     "competent": true,
+     "R1": 0.0,
+     "R2": 0.0,
+     "state_free": false,
+     "dest_set": true,
+     "src_set": false,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": true,
+     "DE_at_copy": 43584,
+     "first_epoch": 800
+    },
+    {
+     "competent": true,
+     "R1": 0.0,
+     "R2": 0.0,
+     "state_free": false,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 0,
+     "first_epoch": 1100
+    }
+   ],
+   "late": [
+    {
+     "competent": true,
+     "R1": 0.0,
+     "R2": 0.0,
+     "state_free": false,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": false,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 0,
+     "first_epoch": 2000
+    },
+    {
+     "competent": false,
+     "first_epoch": 2000
+    },
+    {
+     "competent": true,
+     "R1": 0.0,
+     "R2": 0.15,
+     "state_free": false,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 0,
+     "first_epoch": 2000
+    }
+   ]
+  },
+  {
+   "cell": "ffa6",
+   "run": "c_dense_copy/DENSE_COPY/17000017",
+   "n": 2531,
+   "early": [
+    {
+     "competent": true,
+     "R1": 0.0,
+     "R2": 0.0,
+     "state_free": false,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 0,
+     "first_epoch": 300
+    },
+    {
+     "competent": true,
+     "R1": 0.0,
+     "R2": 0.0,
+     "state_free": false,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 0,
+     "first_epoch": 300
+    },
+    {
+     "competent": false,
+     "first_epoch": 300
+    }
+   ],
+   "late": [
+    {
+     "competent": true,
+     "R1": 1.0,
+     "R2": 1.0,
+     "state_free": true,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 59455,
+     "first_epoch": 2000
+    },
+    {
+     "competent": true,
+     "R1": 0.95,
+     "R2": 1.0,
+     "state_free": true,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 59455,
+     "first_epoch": 2000
+    },
+    {
+     "competent": true,
+     "R1": 1.0,
+     "R2": 1.0,
+     "state_free": true,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 59455,
+     "first_epoch": 2000
+    }
+   ]
+  },
+  {
+   "cell": "ffa6",
+   "run": "c_dense_copy/DENSE_COPY/17000018",
+   "n": 166,
+   "early": [
+    {
+     "competent": true,
+     "R1": 0.0,
+     "R2": 0.0,
+     "state_free": false,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 36928,
+     "first_epoch": 1700
+    },
+    {
+     "competent": true,
+     "R1": 0.0,
+     "R2": 0.0,
+     "state_free": false,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 36928,
+     "first_epoch": 1700
+    },
+    {
+     "competent": true,
+     "R1": 0.0,
+     "R2": 0.0,
+     "state_free": false,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 10048,
+     "first_epoch": 1700
+    }
+   ],
+   "late": [
+    {
+     "competent": true,
+     "R1": 0.0,
+     "R2": 0.0,
+     "state_free": false,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 54080,
+     "first_epoch": 2000
+    },
+    {
+     "competent": true,
+     "R1": 0.0,
+     "R2": 0.0,
+     "state_free": false,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": true,
+     "DE_at_copy": 8768,
+     "first_epoch": 2000
+    },
+    {
+     "competent": true,
+     "R1": 0.0,
+     "R2": 0.0,
+     "state_free": false,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 16448,
+     "first_epoch": 2000
+    }
+   ]
+  },
+  {
+   "cell": "ffa6",
+   "run": "c_dense_copy/DENSE_COPY/17000023",
+   "n": 369,
+   "early": [
+    {
+     "competent": true,
+     "R1": 0.95,
+     "R2": 1.0,
+     "state_free": true,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": false,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 0,
+     "first_epoch": 1900
+    },
+    {
+     "competent": true,
+     "R1": 1.0,
+     "R2": 1.0,
+     "state_free": true,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": false,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 0,
+     "first_epoch": 1900
+    },
+    {
+     "competent": true,
+     "R1": 0.95,
+     "R2": 0.95,
+     "state_free": true,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": false,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 0,
+     "first_epoch": 1900
+    }
+   ],
+   "late": [
+    {
+     "competent": true,
+     "R1": 1.0,
+     "R2": 1.0,
+     "state_free": true,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": false,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 0,
+     "first_epoch": 2000
+    },
+    {
+     "competent": true,
+     "R1": 1.0,
+     "R2": 1.0,
+     "state_free": true,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": false,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 0,
+     "first_epoch": 2000
+    },
+    {
+     "competent": true,
+     "R1": 1.0,
+     "R2": 1.0,
+     "state_free": true,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": false,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 0,
+     "first_epoch": 2000
+    }
+   ]
+  },
+  {
+   "cell": "ffa6",
+   "run": "c_dense_copy/DENSE_COPY/17000025",
+   "n": 442,
+   "early": [
+    {
+     "competent": true,
+     "R1": 1.0,
+     "R2": 1.0,
+     "state_free": true,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 15424,
+     "first_epoch": 1700
+    },
+    {
+     "competent": true,
+     "R1": 1.0,
+     "R2": 1.0,
+     "state_free": true,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 15424,
+     "first_epoch": 1700
+    },
+    {
+     "competent": true,
+     "R1": 1.0,
+     "R2": 1.0,
+     "state_free": true,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 15424,
+     "first_epoch": 1700
+    }
+   ],
+   "late": [
+    {
+     "competent": true,
+     "R1": 1.0,
+     "R2": 1.0,
+     "state_free": true,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 192,
+     "first_epoch": 2000
+    },
+    {
+     "competent": true,
+     "R1": 1.0,
+     "R2": 1.0,
+     "state_free": true,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": true,
+     "ld_de_nn": false,
+     "DE_at_copy": 16680,
+     "first_epoch": 2000
+    },
+    {
+     "competent": true,
+     "R1": 0.95,
+     "R2": 1.0,
+     "state_free": true,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 192,
+     "first_epoch": 2000
+    }
+   ]
+  },
+  {
+   "cell": "ffa6",
+   "run": "c_dense_copy/DENSE_COPY/17000027",
+   "n": 13,
+   "early": [
+    {
+     "competent": false,
+     "first_epoch": 1000
+    },
+    {
+     "competent": true,
+     "R1": 0.0,
+     "R2": 0.0,
+     "state_free": false,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 192,
+     "first_epoch": 1100
+    },
+    {
+     "competent": true,
+     "R1": 0.0,
+     "R2": 0.0,
+     "state_free": false,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 54720,
+     "first_epoch": 1200
+    }
+   ],
+   "late": [
+    {
+     "competent": false,
+     "first_epoch": 1600
+    },
+    {
+     "competent": false,
+     "first_epoch": 1700
+    },
+    {
+     "competent": false,
+     "first_epoch": 2000
+    }
+   ]
+  },
+  {
+   "cell": "ffa6",
+   "run": "c_dense_copy/DENSE_COPY/17000028",
+   "n": 1998,
+   "early": [
+    {
+     "competent": true,
+     "R1": 0.0,
+     "R2": 0.15,
+     "state_free": false,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": true,
+     "DE_at_copy": 49210,
+     "first_epoch": 100
+    },
+    {
+     "competent": false,
+     "first_epoch": 200
+    },
+    {
+     "competent": false,
+     "first_epoch": 200
+    }
+   ],
+   "late": [
+    {
+     "competent": true,
+     "R1": 0.3,
+     "R2": 0.25,
+     "state_free": false,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": true,
+     "DE_at_copy": 18362,
+     "first_epoch": 2000
+    },
+    {
+     "competent": true,
+     "R1": 0.4,
+     "R2": 0.25,
+     "state_free": false,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": true,
+     "DE_at_copy": 18362,
+     "first_epoch": 2000
+    },
+    {
+     "competent": true,
+     "R1": 0.35,
+     "R2": 0.2,
+     "state_free": false,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": true,
+     "DE_at_copy": 18234,
+     "first_epoch": 2000
+    }
+   ]
+  },
+  {
+   "cell": "ffa6",
+   "run": "c_dense_copy/DENSE_COPY/17000029",
+   "n": 40,
+   "early": [
+    {
+     "competent": false,
+     "first_epoch": 1100
+    },
+    {
+     "competent": true,
+     "R1": 0.0,
+     "R2": 0.0,
+     "state_free": false,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 31,
+     "first_epoch": 1100
+    },
+    {
+     "competent": true,
+     "R1": 0.0,
+     "R2": 0.0,
+     "state_free": false,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 31,
+     "first_epoch": 1100
+    }
+   ],
+   "late": [
+    {
+     "competent": true,
+     "R1": 0.0,
+     "R2": 0.0,
+     "state_free": false,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 31,
+     "first_epoch": 1200
+    },
+    {
+     "competent": false,
+     "first_epoch": 1300
+    },
+    {
+     "competent": true,
+     "R1": 0.0,
+     "R2": 0.0,
+     "state_free": false,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 31,
+     "first_epoch": 1300
+    }
+   ]
+  },
+  {
+   "cell": "ffa6",
+   "run": "x_dd_dense_copy/DENSE_COPY/16000003",
+   "n": 556,
+   "early": [
+    {
+     "competent": true,
+     "R1": 0.0,
+     "R2": 0.0,
+     "state_free": false,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 47545,
+     "first_epoch": 1200
+    },
+    {
+     "competent": true,
+     "R1": 0.0,
+     "R2": 0.0,
+     "state_free": false,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 47545,
+     "first_epoch": 1200
+    },
+    {
+     "competent": false,
+     "first_epoch": 1200
+    }
+   ],
+   "late": [
+    {
+     "competent": false,
+     "first_epoch": 2000
+    },
+    {
+     "competent": true,
+     "R1": 0.55,
+     "R2": 0.4,
+     "state_free": false,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 18361,
+     "first_epoch": 2000
+    },
+    {
+     "competent": true,
+     "R1": 0.4,
+     "R2": 0.55,
+     "state_free": false,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 18617,
+     "first_epoch": 2000
+    }
+   ]
+  },
+  {
+   "cell": "ffa6",
+   "run": "x_dd_dense_copy/DENSE_COPY/16000005",
+   "n": 1876,
+   "early": [
+    {
+     "competent": true,
+     "R1": 0.0,
+     "R2": 0.0,
+     "state_free": false,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": true,
+     "DE_at_copy": 26368,
+     "first_epoch": 500
+    },
+    {
+     "competent": false,
+     "first_epoch": 500
+    },
+    {
+     "competent": false,
+     "first_epoch": 500
+    }
+   ],
+   "late": [
+    {
+     "competent": true,
+     "R1": 1.0,
+     "R2": 1.0,
+     "state_free": true,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": true,
+     "DE_at_copy": 64,
+     "first_epoch": 2000
+    },
+    {
+     "competent": true,
+     "R1": 1.0,
+     "R2": 0.0,
+     "state_free": false,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": true,
+     "DE_at_copy": 64,
+     "first_epoch": 2000
+    },
+    {
+     "competent": true,
+     "R1": 0.8,
+     "R2": 0.9,
+     "state_free": true,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": true,
+     "DE_at_copy": 64,
+     "first_epoch": 2000
+    }
+   ]
+  },
+  {
+   "cell": "ffa6",
+   "run": "x_dd_dense_copy/DENSE_COPY/16000007",
+   "n": 2964,
+   "early": [
+    {
+     "competent": true,
+     "R1": 1.0,
+     "R2": 1.0,
+     "state_free": true,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": true,
+     "DE_at_copy": 38334,
+     "first_epoch": 100
+    },
+    {
+     "competent": true,
+     "R1": 1.0,
+     "R2": 1.0,
+     "state_free": true,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": true,
+     "DE_at_copy": 38335,
+     "first_epoch": 100
+    },
+    {
+     "competent": true,
+     "R1": 1.0,
+     "R2": 1.0,
+     "state_free": true,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": true,
+     "DE_at_copy": 38335,
+     "first_epoch": 100
+    }
+   ],
+   "late": [
+    {
+     "competent": true,
+     "R1": 1.0,
+     "R2": 0.95,
+     "state_free": true,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": true,
+     "DE_at_copy": 32575,
+     "first_epoch": 2000
+    },
+    {
+     "competent": true,
+     "R1": 1.0,
+     "R2": 1.0,
+     "state_free": true,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 63,
+     "first_epoch": 2000
+    },
+    {
+     "competent": true,
+     "R1": 1.0,
+     "R2": 1.0,
+     "state_free": true,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": true,
+     "DE_at_copy": 63,
+     "first_epoch": 2000
+    }
+   ]
+  },
+  {
+   "cell": "ffa6",
+   "run": "x_dd_dense_copy/DENSE_COPY/16000008",
+   "n": 317,
+   "early": [
+    {
+     "competent": true,
+     "R1": 1.0,
+     "R2": 1.0,
+     "state_free": true,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 49152,
+     "first_epoch": 1900
+    },
+    {
+     "competent": true,
+     "R1": 1.0,
+     "R2": 0.95,
+     "state_free": true,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 49152,
+     "first_epoch": 1900
+    },
+    {
+     "competent": true,
+     "R1": 0.95,
+     "R2": 1.0,
+     "state_free": true,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 49152,
+     "first_epoch": 1900
+    }
+   ],
+   "late": [
+    {
+     "competent": true,
+     "R1": 1.0,
+     "R2": 1.0,
+     "state_free": true,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 49152,
+     "first_epoch": 2000
+    },
+    {
+     "competent": true,
+     "R1": 1.0,
+     "R2": 1.0,
+     "state_free": true,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 49152,
+     "first_epoch": 2000
+    },
+    {
+     "competent": true,
+     "R1": 1.0,
+     "R2": 1.0,
+     "state_free": true,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 49152,
+     "first_epoch": 2000
+    }
+   ]
+  },
+  {
+   "cell": "ffa6",
+   "run": "x_dd_dense_copy/DENSE_COPY/16000012",
+   "n": 1642,
+   "early": [
+    {
+     "competent": true,
+     "R1": 0.0,
+     "R2": 0.0,
+     "state_free": false,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 0,
+     "first_epoch": 500
+    },
+    {
+     "competent": true,
+     "R1": 0.0,
+     "R2": 0.0,
+     "state_free": false,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 62976,
+     "first_epoch": 600
+    },
+    {
+     "competent": true,
+     "R1": 1.0,
+     "R2": 1.0,
+     "state_free": true,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 15869,
+     "first_epoch": 700
+    }
+   ],
+   "late": [
+    {
+     "competent": true,
+     "R1": 1.0,
+     "R2": 1.0,
+     "state_free": true,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 253,
+     "first_epoch": 2000
+    },
+    {
+     "competent": true,
+     "R1": 0.95,
+     "R2": 1.0,
+     "state_free": true,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 41469,
+     "first_epoch": 2000
+    },
+    {
+     "competent": true,
+     "R1": 1.0,
+     "R2": 1.0,
+     "state_free": true,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 125,
+     "first_epoch": 2000
+    }
+   ]
+  },
+  {
+   "cell": "ffa6",
+   "run": "x_dd_dense_copy/DENSE_COPY/16000014",
+   "n": 7,
+   "early": [
+    {
+     "competent": false,
+     "first_epoch": 600
+    },
+    {
+     "competent": true,
+     "R1": 0.0,
+     "R2": 0.0,
+     "state_free": false,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": false,
+     "dest_by_copy": false,
+     "ld_de_nn": true,
+     "DE_at_copy": 30785,
+     "first_epoch": 600
+    },
+    {
+     "competent": true,
+     "R1": 0.0,
+     "R2": 0.0,
+     "state_free": false,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": false,
+     "dest_by_copy": false,
+     "ld_de_nn": true,
+     "DE_at_copy": 30785,
+     "first_epoch": 700
+    }
+   ],
+   "late": [
+    {
+     "competent": false,
+     "first_epoch": 1600
+    },
+    {
+     "competent": true,
+     "R1": 0.0,
+     "R2": 0.0,
+     "state_free": false,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 65088,
+     "first_epoch": 1900
+    },
+    {
+     "competent": true,
+     "R1": 0.0,
+     "R2": 0.0,
+     "state_free": false,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 65088,
+     "first_epoch": 2000
+    }
+   ]
+  },
+  {
+   "cell": "ffa6",
+   "run": "x_dd_dense_copy/DENSE_COPY/16000020",
+   "n": 574,
+   "early": [
+    {
+     "competent": false,
+     "first_epoch": 100
+    },
+    {
+     "competent": false,
+     "first_epoch": 200
+    },
+    {
+     "competent": false,
+     "first_epoch": 400
+    }
+   ],
+   "late": [
+    {
+     "competent": true,
+     "R1": 1.0,
+     "R2": 1.0,
+     "state_free": true,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 49087,
+     "first_epoch": 2000
+    },
+    {
+     "competent": true,
+     "R1": 1.0,
+     "R2": 0.95,
+     "state_free": true,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 63,
+     "first_epoch": 2000
+    },
+    {
+     "competent": true,
+     "R1": 1.0,
+     "R2": 0.9,
+     "state_free": true,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 24383,
+     "first_epoch": 2000
+    }
+   ]
+  },
+  {
+   "cell": "ffa6",
+   "run": "x_dd_dense_copy/DENSE_COPY/16000021",
+   "n": 28,
+   "early": [
+    {
+     "competent": false,
+     "first_epoch": 1600
+    },
+    {
+     "competent": false,
+     "first_epoch": 1600
+    },
+    {
+     "competent": false,
+     "first_epoch": 1600
+    }
+   ],
+   "late": [
+    {
+     "competent": false,
+     "first_epoch": 1900
+    },
+    {
+     "competent": false,
+     "first_epoch": 2000
+    },
+    {
+     "competent": false,
+     "first_epoch": 2000
+    }
+   ]
+  },
+  {
+   "cell": "ffa6",
+   "run": "x_dd_dense_copy/DENSE_COPY/16000022",
+   "n": 1061,
+   "early": [
+    {
+     "competent": true,
+     "R1": 0.0,
+     "R2": 0.0,
+     "state_free": false,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 16640,
+     "first_epoch": 100
+    },
+    {
+     "competent": true,
+     "R1": 0.0,
+     "R2": 0.0,
+     "state_free": false,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 16385,
+     "first_epoch": 200
+    },
+    {
+     "competent": true,
+     "R1": 0.0,
+     "R2": 0.0,
+     "state_free": false,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 16385,
+     "first_epoch": 200
+    }
+   ],
+   "late": [
+    {
+     "competent": true,
+     "R1": 0.9,
+     "R2": 0.6,
+     "state_free": true,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 257,
+     "first_epoch": 2000
+    },
+    {
+     "competent": true,
+     "R1": 0.7,
+     "R2": 0.7,
+     "state_free": true,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 257,
+     "first_epoch": 2000
+    },
+    {
+     "competent": true,
+     "R1": 0.75,
+     "R2": 0.9,
+     "state_free": true,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 257,
+     "first_epoch": 2000
+    }
+   ]
+  },
+  {
+   "cell": "ffa6",
+   "run": "x_dd_dense_copy/DENSE_COPY/16000024",
+   "n": 75,
+   "early": [
+    {
+     "competent": false,
+     "first_epoch": 300
+    },
+    {
+     "competent": false,
+     "first_epoch": 1200
+    },
+    {
+     "competent": false,
+     "first_epoch": 1200
+    }
+   ],
+   "late": [
+    {
+     "competent": false,
+     "first_epoch": 2000
+    },
+    {
+     "competent": false,
+     "first_epoch": 2000
+    },
+    {
+     "competent": true,
+     "R1": 0.0,
+     "R2": 0.0,
+     "state_free": false,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 38400,
+     "first_epoch": 2000
+    }
+   ]
+  },
+  {
+   "cell": "ffa6",
+   "run": "x_dd_dense_copy/DENSE_COPY/16000026",
+   "n": 1579,
+   "early": [
+    {
+     "competent": true,
+     "R1": 1.0,
+     "R2": 1.0,
+     "state_free": true,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 16383,
+     "first_epoch": 500
+    },
+    {
+     "competent": true,
+     "R1": 1.0,
+     "R2": 1.0,
+     "state_free": true,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 49151,
+     "first_epoch": 500
+    },
+    {
+     "competent": true,
+     "R1": 1.0,
+     "R2": 1.0,
+     "state_free": true,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 49151,
+     "first_epoch": 500
+    }
+   ],
+   "late": [
+    {
+     "competent": true,
+     "R1": 1.0,
+     "R2": 1.0,
+     "state_free": true,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": true,
+     "DE_at_copy": 16255,
+     "first_epoch": 2000
+    },
+    {
+     "competent": true,
+     "R1": 1.0,
+     "R2": 1.0,
+     "state_free": true,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": true,
+     "ld_de_nn": false,
+     "DE_at_copy": 16360,
+     "first_epoch": 2000
+    },
+    {
+     "competent": true,
+     "R1": 1.0,
+     "R2": 1.0,
+     "state_free": true,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": true,
+     "DE_at_copy": 16255,
+     "first_epoch": 2000
+    }
+   ]
+  },
+  {
+   "cell": "ffa6",
+   "run": "x_dd_dense_copy/DENSE_COPY/16000027",
+   "n": 814,
+   "early": [
+    {
+     "competent": true,
+     "R1": 0.0,
+     "R2": 0.0,
+     "state_free": false,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 6425,
+     "first_epoch": 1400
+    },
+    {
+     "competent": false,
+     "first_epoch": 1400
+    },
+    {
+     "competent": false,
+     "first_epoch": 1400
+    }
+   ],
+   "late": [
+    {
+     "competent": true,
+     "R1": 0.0,
+     "R2": 0.0,
+     "state_free": false,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 35241,
+     "first_epoch": 2000
+    },
+    {
+     "competent": true,
+     "R1": 0.0,
+     "R2": 0.0,
+     "state_free": false,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 35584,
+     "first_epoch": 2000
+    },
+    {
+     "competent": true,
+     "R1": 0.0,
+     "R2": 0.0,
+     "state_free": false,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 35584,
+     "first_epoch": 2000
+    }
+   ]
+  },
+  {
+   "cell": "ffa6",
+   "run": "x_dd_dense_copy/DENSE_COPY/16000030",
+   "n": 1608,
+   "early": [
+    {
+     "competent": true,
+     "R1": 0.0,
+     "R2": 0.0,
+     "state_free": false,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 37888,
+     "first_epoch": 300
+    },
+    {
+     "competent": true,
+     "R1": 0.0,
+     "R2": 0.0,
+     "state_free": false,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 0,
+     "first_epoch": 300
+    },
+    {
+     "competent": true,
+     "R1": 0.0,
+     "R2": 0.0,
+     "state_free": false,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 37888,
+     "first_epoch": 300
+    }
+   ],
+   "late": [
+    {
+     "competent": true,
+     "R1": 0.0,
+     "R2": 0.0,
+     "state_free": false,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 65535,
+     "first_epoch": 2000
+    },
+    {
+     "competent": true,
+     "R1": 0.0,
+     "R2": 0.0,
+     "state_free": false,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 60159,
+     "first_epoch": 2000
+    },
+    {
+     "competent": true,
+     "R1": 1.0,
+     "R2": 1.0,
+     "state_free": true,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 511,
+     "first_epoch": 2000
+    }
+   ]
+  },
+  {
+   "cell": "ffa6",
+   "run": "x_dd_dense_copy/DENSE_COPY/16000032",
+   "n": 2403,
+   "early": [
+    {
+     "competent": false,
+     "first_epoch": 300
+    },
+    {
+     "competent": true,
+     "R1": 0.9,
+     "R2": 0.0,
+     "state_free": false,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 0,
+     "first_epoch": 400
+    },
+    {
+     "competent": true,
+     "R1": 0.0,
+     "R2": 0.0,
+     "state_free": false,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 0,
+     "first_epoch": 400
+    }
+   ],
+   "late": [
+    {
+     "competent": true,
+     "R1": 0.95,
+     "R2": 0.8,
+     "state_free": true,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 65024,
+     "first_epoch": 2000
+    },
+    {
+     "competent": true,
+     "R1": 0.95,
+     "R2": 0.6,
+     "state_free": true,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 14592,
+     "first_epoch": 2000
+    },
+    {
+     "competent": true,
+     "R1": 0.0,
+     "R2": 0.0,
+     "state_free": false,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 0,
+     "first_epoch": 2000
+    }
+   ]
+  },
+  {
+   "cell": "ffa6",
+   "run": "x_dd_dense_copy/DENSE_COPY/16000035",
+   "n": 61,
+   "early": [
+    {
+     "competent": false,
+     "first_epoch": 800
+    },
+    {
+     "competent": false,
+     "first_epoch": 800
+    },
+    {
+     "competent": false,
+     "first_epoch": 800
+    }
+   ],
+   "late": [
+    {
+     "competent": false,
+     "first_epoch": 1600
+    },
+    {
+     "competent": false,
+     "first_epoch": 1700
+    },
+    {
+     "competent": false,
+     "first_epoch": 1900
+    }
+   ]
+  },
+  {
+   "cell": "ffa6",
+   "run": "x_dd_dense_copy/DENSE_COPY/16000044",
+   "n": 388,
+   "early": [
+    {
+     "competent": true,
+     "R1": 0.0,
+     "R2": 0.0,
+     "state_free": false,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": true,
+     "DE_at_copy": 8705,
+     "first_epoch": 600
+    },
+    {
+     "competent": true,
+     "R1": 0.0,
+     "R2": 0.0,
+     "state_free": false,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 1,
+     "first_epoch": 700
+    },
+    {
+     "competent": true,
+     "R1": 0.0,
+     "R2": 0.0,
+     "state_free": false,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": true,
+     "ld_de_nn": false,
+     "DE_at_copy": 256,
+     "first_epoch": 1800
+    }
+   ],
+   "late": [
+    {
+     "competent": true,
+     "R1": 0.0,
+     "R2": 0.0,
+     "state_free": false,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 192,
+     "first_epoch": 2000
+    },
+    {
+     "competent": true,
+     "R1": 0.0,
+     "R2": 0.0,
+     "state_free": false,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": true,
+     "ld_de_nn": false,
+     "DE_at_copy": 356,
+     "first_epoch": 2000
+    },
+    {
+     "competent": true,
+     "R1": 0.0,
+     "R2": 0.0,
+     "state_free": false,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 192,
+     "first_epoch": 2000
+    }
+   ]
+  },
+  {
+   "cell": "ffa6",
+   "run": "x_dd_dense_copy/DENSE_COPY/16000045",
+   "n": 180,
+   "early": [
+    {
+     "competent": true,
+     "R1": 0.0,
+     "R2": 0.0,
+     "state_free": false,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 0,
+     "first_epoch": 1700
+    },
+    {
+     "competent": true,
+     "R1": 0.0,
+     "R2": 0.0,
+     "state_free": false,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 15360,
+     "first_epoch": 1700
+    },
+    {
+     "competent": true,
+     "R1": 0.0,
+     "R2": 0.0,
+     "state_free": false,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 16384,
+     "first_epoch": 1700
+    }
+   ],
+   "late": [
+    {
+     "competent": true,
+     "R1": 0.0,
+     "R2": 0.0,
+     "state_free": false,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 0,
+     "first_epoch": 2000
+    },
+    {
+     "competent": true,
+     "R1": 0.0,
+     "R2": 0.0,
+     "state_free": false,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 256,
+     "first_epoch": 2000
+    },
+    {
+     "competent": true,
+     "R1": 0.0,
+     "R2": 0.0,
+     "state_free": false,
+     "dest_set": true,
+     "src_set": true,
+     "count_set": true,
+     "dest_by_copy": false,
+     "ld_de_nn": false,
+     "DE_at_copy": 65280,
+     "first_epoch": 2000
+    }
+   ]
+  }
+ ],
+ "cpu_s": 60.9
+}

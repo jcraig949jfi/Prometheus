@@ -1,6 +1,6 @@
 """P-2: is C1's decay_shift>0 RELAY 'physics-dead' map a relay_flood artifact?
 relay_refresh = 3 lines that re-normalise S0 to sign(S0)*256 at every awake tick, then relay_flood unchanged.
-Scored with campaign.plant_viability's seeds (H_int(search_seed,0x9147), 32 worlds), eager CPU, prog_len>=16."""
+Scored with the plant_viability seed namespace H_int(search_seed,0x9147); runs used 16 worlds (W2-X), eager CPU, prog_len>=16."""
 import json, os, sys, time, collections
 os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
 sys.path.insert(0, "../../H-PLANT")

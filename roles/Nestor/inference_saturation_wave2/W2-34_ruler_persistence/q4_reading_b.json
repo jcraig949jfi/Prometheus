@@ -1,0 +1,148 @@
+{
+ "SFLINEAGE": {
+  "per_run": [
+   {
+    "run": "7ae3_16000006",
+    "d0_all_not_free": true,
+    "last_free_epoch": 2000,
+    "final_epoch": 2000,
+    "final": [
+     1.0,
+     168,
+     168,
+     168
+    ],
+    "coded": true,
+    "b_final": true,
+    "c_majority_from_first": true,
+    "every_cp_from_first": true
+   },
+   {
+    "run": "7ae3_16000021",
+    "d0_all_not_free": true,
+    "last_free_epoch": 2000,
+    "final_epoch": 2000,
+    "final": [
+     1.0,
+     119,
+     115,
+     115
+    ],
+    "coded": true,
+    "b_final": true,
+    "c_majority_from_first": true,
+    "every_cp_from_first": true
+   },
+   {
+    "run": "ffa6_16000003",
+    "d0_all_not_free": true,
+    "last_free_epoch": 2000,
+    "final_epoch": 2000,
+    "final": [
+     0.0,
+     96,
+     14,
+     0
+    ],
+    "coded": false,
+    "b_final": false,
+    "c_majority_from_first": false,
+    "every_cp_from_first": false
+   },
+   {
+    "run": "ffa6_16000005",
+    "d0_all_not_free": true,
+    "last_free_epoch": 2000,
+    "final_epoch": 2000,
+    "final": [
+     0.0,
+     165,
+     136,
+     0
+    ],
+    "coded": false,
+    "b_final": false,
+    "c_majority_from_first": false,
+    "every_cp_from_first": false
+   },
+   {
+    "run": "ffa6_16000030",
+    "d0_all_not_free": true,
+    "last_free_epoch": 2000,
+    "final_epoch": 2000,
+    "final": [
+     1.0,
+     123,
+     75,
+     75
+    ],
+    "coded": true,
+    "b_final": true,
+    "c_majority_from_first": true,
+    "every_cp_from_first": true
+   }
+  ],
+  "within_counts": {
+   "coded": 3,
+   "b_final": 3,
+   "c_majority_from_first": 3,
+   "every_cp_from_first": 3
+  },
+  "verdict_coded": "SIGNAL",
+  "verdict_b": "SIGNAL"
+ },
+ "DD_ESTABLISH": {
+  "n": 49,
+  "established_coded": 23,
+  "stalled_coded": {
+   "LOST_COMPETENT": 3,
+   "NO_COPY": 20,
+   "INCOMPETENT_COPIES": 2
+  },
+  "top_share_coded": 0.8,
+  "verdict_coded": "SIGNAL",
+  "established_lcm_values": [
+   -1,
+   -1,
+   -1,
+   -1,
+   -1,
+   -1,
+   -1,
+   60,
+   220,
+   220,
+   320,
+   400,
+   420,
+   440,
+   500,
+   540,
+   600,
+   720,
+   740,
+   800,
+   820,
+   900,
+   1240
+  ],
+  "established_with_lineage_births_0": 8,
+  "established_with_competent_member_at_final": 0,
+  "stalled_competent_member_at_final": 1,
+  "reading_b_relabel_established": {
+   "moved_modes": {
+    "LOST_COMPETENT": 12,
+    "INCOMPETENT_COPIES": 3,
+    "NO_COPY": 8
+   },
+   "stalled_modes": {
+    "LOST_COMPETENT": 15,
+    "NO_COPY": 28,
+    "INCOMPETENT_COPIES": 5
+   },
+   "top_share": 0.5833,
+   "verdict": "WEAK_SIGNAL"
+  },
+  "note": "ESTABLISHED is world causal depth >= 20 (any lineage, historical), not D0-lineage persistence; the verdict's modes are 'ever' events; only last_competent_member is a 'last checkpoint with' field and it is not verdict-bearing."
+ }
+}

@@ -1,0 +1,24 @@
+W2-20 pre-registration. Written 2026-10-01T01:25:30Z (date -u), BEFORE any new VM screen or fit.
+
+Sampling scheme (S_late): uniform random 64-byte genomes (Python random, seed 20261020 + 1000*worker), ACCEPTED for the
+exact S3 COMPETENT screen (cell 7ae3, dense) iff the first copy-op site is at position >= 35, where a copy-op site is
+byte E5 or E7, or ED followed by B0/B8 (same set as W2-13's filter). I.e. no copy-op site in [0,35), at least one in [35,64).
+This is rejection sampling from the SAME uniform distribution, conditioned on a static, outcome-blind event.
+Validation: every 20th REJECTED genome (first copy site < 35, or no copy site) is also fully screened; hits there are
+logged but NOT added to the analysis set (they are not from S_late).
+Inclusion: EVERY S_late hit enters RAND, whatever its traced L_pre (no post-hoc selection on L_pre or on outcome).
+Stop: per worker 6 hits or 270 CPU-s, whichever first (6 workers).
+
+Pipeline: identical W2-13 pairs_hits (3 single draws x 64, <=100 pairs, strict = lethal >=2/3 + S3R confirm, null==0)
+and lengths (instrumented dense VM, 5 victim seeds, median L_pre; pre_set from seed 12345). analysis.py and robustness.py
+copied verbatim and run on lengths.json = W2-13 rows + new rows.
+
+Primary estimand: c_EVO in WLS rate = a + b*L_pre + c*EVO (weights null-0 pairs), contrast EVO_SD vs RAND(enlarged),
+95% CI = 4,000-resample genome bootstrap stratified by group (analysis.py, seed 20261013).
+Decision rule (frozen):
+  T4(c') SUPPORTED   if CI lower bound > 0
+  T3 SUFFICIENT      if CI upper bound < +0.7 pp
+  otherwise          UNRESOLVED
+Reported alongside (not decisive): whether CI upper bound < +1.39 pp (raw gap); both-pre pair class rate EVO_SD vs RAND,
+MH OR across pair classes (robustness.py R1); fit restricted to L_pre >= 30; byte-composition check of new hits vs
+EVO_SD/EVO_SF/old RAND/uniform.
