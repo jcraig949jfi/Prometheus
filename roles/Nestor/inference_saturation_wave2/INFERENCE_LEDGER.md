@@ -243,3 +243,16 @@ in completion order.
 - **Next questions.**
   - Re-score C-ZERO restricted to the 2 dual-competent donors: within-donor ZERO vs CONST.
   - Does any other P2/W1 contrast use a screen-selected panel in the same way? X-P2-REGSTATE and BRIDGE use similar panels.
+
+### W2-5: historical error autopsy (worker; report saved by Nestor). Clock 00:50Z
+- **Result.** 58 mistaken interpretations in 20 classes.
+  - RCF (a ruler or guard that cannot fire or cannot refuse) is the most common class and recurred 15 times after its lesson.
+  - Unit mismatch (label/run/event vs content/organism/genome) is the largest family.
+  - Code repairs stopped their class; prose repairs moved it.
+  - 9 checks, 37 tests passing. On real records they re-find C9-D16, the H1R identical pair, and D U1 8/23.
+  - Sweep: live vulnerabilities in the BEE library (`prometheus/z80atlas`), Archaeon, Ananke W-U and cosmos ps1. Owners not yet notified.
+- **Nestor attack/verify.** The x_task_gate Stage-0 defect is **confirmed in code** (CD = 0 by construction in EXTERNAL arms). The oid-provenance defect is downgraded to LOW: under ATOMIC, oid tracks content apart from mutation.
+- **Action.** Filed `campaigns/npe-frontier-2026-09-30/x_task_gate/ERRATA_2026-10-01_DO_NOT_DISPATCH_AS_FROZEN.md`. Aporia notified.
+- **Next questions.**
+  - Can a genome that is both a copier and task-competent be constructed? Decide statically.
+  - Notify the cross-seat owners. A short comms note in the handoff; I do not fix other seats' code.

@@ -8,8 +8,8 @@ panel     the 128 COMPETENT dense genomes of forensics/core_map.json (48 STATE_F
           paired survival of existing NPE solutions.
 random    uniform random 64-byte genomes, the SAME genomes for every variant (common random numbers); competence
           rate vs the 2e-4 baseline. N per variant set by cost.
-minimal   minimal copier: every 1- and 2-token program from a 44-token alphabet, and every 3-token program from a
-          19-token micro-alphabet for variants with no <= 2-token copier, at offset 0; a program counts as a copier
+minimal   minimal copier: every 1- and 2-token program from a 45-token alphabet, and every 3-token program from a
+          20-token micro-alphabet for variants with no <= 2-token copier, at offset 0; a program counts as a copier
           if COMPETENT on 3 of 3 random paddings (plant_rp's rule).
 """
 from __future__ import annotations
@@ -138,13 +138,13 @@ def tokens():
             T.append(bytes((op, nn & 0xFF, nn >> 8)))
     T += [bytes((x,)) for x in (0x14, 0x24, 0x15, 0x25, 0x1C, 0x2C,            # INC/DEC D,H ; INC E,L
                                 0x4B, 0x43, 0x4D, 0x5D, 0x6B, 0x7D, 0x5F,       # LD C,E B,E C,L E,L L,E A,L E,A
-                                0x7E, 0x12, 0x23, 0x13)]                         # bytewise pieces
+                                0x7E, 0x12, 0x23, 0x13, 0x76)]                   # bytewise pieces, HALT
     T += [H("c640"), H("ed32"), H("e5"), H("e7"), H("edb0"), H("edb8")]
     return T
 
 
 MICRO = [H(x) for x in ("1e40", "1ec0", "2e40", "0e40", "4b", "4d", "43", "14", "24", "ed32", "114000",
-                        "210000", "014000", "e5", "e7", "7d", "c640", "5f", "3e40")]
+                        "210000", "014000", "e5", "e7", "7d", "c640", "5f", "3e40", "76")]
 
 
 def minimal():
