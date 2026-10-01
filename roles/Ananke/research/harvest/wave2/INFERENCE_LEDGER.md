@@ -564,3 +564,15 @@ W2-U (XOR/FLIP ceilings + A0 normalisation)
 - F1 corrects the principal: P-2's decay artefact does not transfer to C1 RELAY NULLs (6/41 rescued).
   -> E-W13 scoped, E-W20 added.
 - 69 MAJ NULLs were never plant-scored: the largest open block.
+
+### W2-AA (deposited): kind_audit production tool + advisory deposit hook
+- APPLIED (NEUTRAL; research tests 22 passed):
+  - tools/kind_audit.py (stdlib; block scope by default, window scope kept for comparison; exit 1 on
+    HIGH);
+  - deposit.py records prov["kind_audit"] and never blocks; REPORT.md bytes are unchanged (tested);
+  - 15 new tests (13 tool + 2 deposit), which failed/errored before.
+- Parity with W2-I: 5047/5047 citations. The recall gaps for under-8-hex and upper-case ids are empty in
+  practice; .py has 1 true hit.
+- Current HIGH hits in harvest: the 4 known H-PLANT lines (true; verbatim deposits not edited) plus 5
+  meta-quotations (false).
+- Also fixed (comment only): H-PLANT/run_flip_mh.py:12 MH_CELL comment now says TRANSFER.

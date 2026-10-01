@@ -1,0 +1,625 @@
+diff --git a/roles/Ananke/research/deposit.py b/roles/Ananke/research/deposit.py
+index ab5d49a74..208f920a3 100644
+--- a/roles/Ananke/research/deposit.py
++++ b/roles/Ananke/research/deposit.py
+@@ -20,17 +20,39 @@ preserves provenance, identity and immutability, with principal review:
+            a separate, reviewed commit.
+ If the delimiters are missing, the whole message is deposited and flagged
+ "undelimited".
++
++Advisory kind audit (W2-AA): after REPORT.md is written, tools/kind_audit.py is run on the
++deposited block and its flags (C1 cell ids cited with search-outcome language when the row is
++not kind=evolve) are recorded under "kind_audit" in the provenance JSON. It never blocks a
++deposit and never changes REPORT.md; if it cannot run, "status" is "NOT_VERIFIED" with the error.
+ """
+ from __future__ import annotations
+ 
+ import argparse
+ import datetime
+ import hashlib
++import importlib.util
+ import json
+ import pathlib
+ 
+ HERE = pathlib.Path(__file__).resolve().parent
+ BEGIN, END = "===BEGIN REPORT===", "===END REPORT==="
++KIND_AUDIT = pathlib.Path(__file__).resolve().parent / "tools" / "kind_audit.py"
++
++
++def kind_audit(block: str) -> dict:
++    """Advisory flags for the deposited block. Never raises: a failure is recorded, not hidden."""
++    try:
++        spec = importlib.util.spec_from_file_location("ananke_kind_audit", KIND_AUDIT)
++        ka = importlib.util.module_from_spec(spec)
++        spec.loader.exec_module(ka)
++        idx = ka.load_index()
++        s = ka.summary(ka.audit_text(block, "REPORT.md", idx), idx)
++        for f in s["flags"]:
++            f["line"] += 1  # REPORT.md = one provenance header line + the block
++        return {"status": "ok", **s}
++    except Exception as e:  # noqa: BLE001 -- advisory only; the deposit must not depend on it
++        return {"status": "NOT_VERIFIED", "error": f"{type(e).__name__}: {e}"[:300]}
+ 
+ 
+ def deposit(worker: str, message: str, source: str = "", depositor: str = "Ananke",
+@@ -63,6 +85,7 @@ def deposit(worker: str, message: str, source: str = "", depositor: str = "Anank
+               f"sha256(report)={prov['sha256_report'][:16]}; {mode}; see "
+               f"{target.stem}.provenance.json -->\n")
+     target.write_text(header + block + "\n", encoding="utf-8", newline="\n")
++    prov["kind_audit"] = kind_audit(block)
+     (d / f"{target.stem}.provenance.json").write_text(json.dumps(prov, indent=1) + "\n")
+     return target
+ 
+@@ -83,3 +106,5 @@ if __name__ == "__main__":
+     msg = pathlib.Path(a.message_file).read_text(encoding="utf-8")
+     p = deposit(a.worker, msg, a.source, allow_undelimited=a.allow_undelimited)
+     print(p, "verified" if verify(p) else "HASH MISMATCH")
++    ka = json.loads(p.with_name(p.stem + ".provenance.json").read_text()).get("kind_audit", {})
++    print("kind_audit:", ka.get("status"), ka.get("counts", ka.get("error", "")))
+diff --git a/roles/Ananke/research/tools/kind_audit.py b/roles/Ananke/research/tools/kind_audit.py
+new file mode 100644
+index 000000000..1654f150d
+--- /dev/null
++++ b/roles/Ananke/research/tools/kind_audit.py
+@@ -0,0 +1,376 @@
++"""kind_audit: flag C1 cell ids cited with search-outcome language when the row is not kind=evolve.
++
++Proposed home: roles/Ananke/research/tools/kind_audit.py. Pure stdlib. Productionised from
++W2-I's harvest/wave2/W2-I/kind_audit.py (same severity semantics; recall gaps closed where safe).
++
++What it does
++  A token of 8-16 hex digits, in ANY case, that is not part of a longer alphanumeric run
++  (underscore neighbours are allowed, so "D_f7e62fe3" is seen) is lower-cased and resolved as a
++  PREFIX of exactly one real C1 cell_id (roles/Ananke/pte/c1_rows/cells.jsonl.gz; C1b rows cite
++  C1 cell ids, so this id set covers both). Anything that does not resolve (git shas, hashes,
++  dates, words like DEADBEEF) is ignored, so the case-insensitive match costs no precision.
++  Each resolved citation gets its row kind (evolve / transfer / census / adjudicate) and wave.
++  It is FLAGGED when the row is not an evolve row and its own text block uses search-outcome
++  language. The block is the citation's paragraph or list item (hard-wrapped lines joined), with
++  the item's nested children and the first line of each enclosing parent item, or the whole line
++  when it is a '|' table/ledger row; clipped to +-200 characters. Sibling items, other paragraphs
++  and other rows are out. W2-I used the whole +-200 window, which let "held"/"champion" in a
++  NEIGHBOURING bullet raise HIGH; --scope window restores that, and every record also carries
++  "severity_window" (the W2-I severity), so the narrower default hides nothing from a reviewer.
++  The true-kind exoneration (LOW) still looks at the whole +-200 window.
++
++  Outcome language: search/searched/searches/searching, evolved, champion(s) (any case),
++  NULL (upper case only), held (any case, but NOT "held-out"/"held out", a transfer target).
++
++Severity (a flag is a candidate for hand review, not a verdict)
++  HIGH    outcome language, and the window never names the row's true kind
++  NAMING  an adjudicate (D-wave) row with only "champion"/"evolved" nearby: every D genome is
++          bit-identical to its parent's evolved champion, so this is a naming/provenance hole
++  LOW     outcome language, but the window also names the true kind ("a transfer, not a
++          search NULL"); usually a correction or a careful sentence
++
++Deliberate limits (see W2-AA REPORT)
++  * Ids shorter than 8 hex are NOT matched by default. 7-hex prefixes are unique in C1, but
++    7-hex tokens are also git short shas; --min-len 7 opts in, and then each hit should be read.
++  * Tokens longer than 16 hex (e.g. 40-hex shas) never match, even if their head is a cell id.
++  * Default file types are .md and .txt. .py/.json/.jsonl/.csv/.log can be added with --ext;
++    the files this tool (and W2-I's) writes are excluded so contexts are not double counted.
++
++CLI
++  python kind_audit.py PATH [PATH ...] [--ext .md,.txt] [--min-len 8] [--scope block|window]
++                       [--fail-on HIGH] [--json] [--csv OUT.csv] [--rows cells.jsonl.gz] [--all]
++  PATH may be a file, a directory (recursive) or "-" for stdin.
++  Exit 0: nothing at or above --fail-on. Exit 1: at least one such flag. Exit 2: cannot run
++  (rows file not found, unreadable path).
++
++API
++  audit_text(text, path="<text>", index=None, min_len=8, scope="block") -> list[dict]  (every citation)
++  audit_paths(paths, index=None, exts=(".md", ".txt"), exclude=..., min_len=8, scope="block")
++  flags(records) -> flagged records only;  counts(records) -> {"HIGH": n, "NAMING": n, "LOW": n}
++"""
++from __future__ import annotations
++
++import argparse
++import collections
++import csv
++import fnmatch
++import functools
++import gzip
++import json
++import os
++import pathlib
++import re
++import sys
++
++TOOL_VERSION = "kind_audit/1.0 (W2-AA, from W2-I)"
++ROWS_REL = pathlib.Path("roles/Ananke/pte/c1_rows/cells.jsonl.gz")
++WINDOW = 200
++MAX_HEX = 16
++SEVERITIES = ("HIGH", "NAMING", "LOW")
++DEFAULT_EXT = (".md", ".txt")
++DEFAULT_EXCLUDE = ("*/__pycache__/*", "*/.git/*", "*kind_audit*.csv", "*kind_audit*.json")
++
++OUTCOME_RES = [
++    ("search", re.compile(r"\bsearch(?:ed|es|ing)?\b", re.I)),
++    ("evolved", re.compile(r"\bevolved\b", re.I)),
++    ("champion", re.compile(r"\bchampions?\b", re.I)),
++    ("NULL", re.compile(r"\bNULL\b")),
++    ("held", re.compile(r"\bheld\b(?![- ]out)", re.I)),
++]
++# a line that starts a new text block: bullet, numbered item, heading, table row
++BLOCK_START = re.compile(r"[ \t]*(?:[-*+][ \t]|\d+[.)][ \t]|#|\|)")
++_ITEM = re.compile(r"[ \t]*(?:[-*+][ \t]|\d+[.)][ \t])")  # bullet or numbered item only
++KIND_WORDS = {
++    "transfer": re.compile(r"\btransfer(?:s|red|ring)?\b", re.I),
++    "census": re.compile(r"\bcensus(?:es)?\b|\bA0\b", re.I),
++    "adjudicate": re.compile(r"\badjudicat\w*|\bD-wave control|\bre-?evaluat\w*", re.I),
++    "evolve": re.compile(r"\bevolve\b", re.I),
++}
++
++
++def _id_re(min_len: int) -> re.Pattern:
++    return re.compile(r"(?<![0-9A-Za-z])([0-9A-Fa-f]{%d,%d})(?![0-9A-Za-z])" % (min_len, MAX_HEX))
++
++
++# ----------------------------------------------------------------------------- C1 rows loader
++def find_rows(start: pathlib.Path | None = None) -> pathlib.Path:
++    """$KIND_AUDIT_ROWS, else the first ancestor of this file (then of cwd) holding ROWS_REL."""
++    env = os.environ.get("KIND_AUDIT_ROWS")
++    if env:
++        return pathlib.Path(env)
++    for base in (start, pathlib.Path(__file__).resolve(), pathlib.Path.cwd().resolve()):
++        if base is None:
++            continue
++        for d in (base, *base.parents):
++            if (d / ROWS_REL).is_file():
++                return d / ROWS_REL
++    raise FileNotFoundError(f"C1 rows {ROWS_REL} not found above {__file__} or cwd; set KIND_AUDIT_ROWS")
++
++
++def iter_rows(path: pathlib.Path):
++    """The C1 rows, one dict per cell (same file and parse as harvest/H-PLANT/hp_common.rows())."""
++    with gzip.open(path, "rt", encoding="utf-8") as f:
++        for line in f:
++            if line.strip():
++                yield json.loads(line)
++
++
++@functools.lru_cache(maxsize=4)
++def load_index(rows_path: str | None = None) -> "Index":
++    p = pathlib.Path(rows_path) if rows_path else find_rows()
++    return Index({r["cell_id"].lower(): {"kind": r["kind"], "wave": r["wave"], "family": r["env"]["family"]}
++                  for r in iter_rows(p)}, str(p))
++
++
++class Index:
++    """Prefix lookup: a token resolves only if it is a prefix of EXACTLY one cell id."""
++
++    def __init__(self, cells: dict, source: str = "<memory>"):
++        self.cells, self.source = cells, source
++        self._by6 = collections.defaultdict(list)
++        for cid in cells:
++            self._by6[cid[:6]].append(cid)
++
++    def resolve(self, tok: str):
++        tok = tok.lower()
++        if len(tok) < 6:
++            return None
++        cands = [c for c in self._by6.get(tok[:6], ()) if c.startswith(tok)]
++        return cands[0] if len(cands) == 1 else None
++
++
++# ----------------------------------------------------------------------------- core
++def _severity(kind: str, terms: set, kind_named: bool) -> str:
++    if kind == "evolve" or not terms:
++        return ""
++    if kind_named:
++        return "LOW"
++    if kind == "adjudicate" and terms <= {"champion", "evolved"}:
++        return "NAMING"
++    return "HIGH"
++
++
++def _line_bounds(text: str, i: int) -> tuple[int, int]:
++    """[start, end) of the line containing offset i (end excludes the newline)."""
++    end = text.find("\n", i)
++    return text.rfind("\n", 0, i) + 1, len(text) if end < 0 else end
++
++
++def _indent(line: str) -> int:
++    return len(line) - len(line.lstrip(" \t"))
++
++
++def _is_table(line: str) -> bool:
++    return line.count("|") >= 2
++
++
++def _block(text: str, s: int, e: int, lo: int, hi: int) -> list[tuple[int, int]]:
++    """Spans [start, end) of the citation's own text block, clipped to [lo, hi).
++
++    Table/ledger row (2+ '|'): the whole line (a row is a record about its cell; other columns count).
++    Otherwise: the citation's paragraph or list item, joined across hard-wrapped lines, PLUS the
++    item's nested children (more-indented lines below it) and the first line of each enclosing parent
++    item (less-indented lines above it). Sibling items, other paragraphs and other table rows are out.
++    A blank line, a heading or a table row always ends the block."""
++    ls, le = _line_bounds(text, s)
++    if _is_table(text[ls:le]):
++        return [(max(lo, ls), min(hi, le))]
++    start = ls
++    while start > lo and not BLOCK_START.match(text[start:_line_bounds(text, start)[1]]):
++        ps, pe = _line_bounds(text, start - 1)
++        prev = text[ps:pe]
++        if not prev.strip() or BLOCK_START.match(prev) and not _ITEM.match(prev) or _is_table(prev):
++            break  # blank, heading or table above: this paragraph starts here
++        start = ps
++        if _ITEM.match(prev):
++            break  # we were a hard-wrapped continuation of this item
++    base = _indent(text[start:_line_bounds(text, start)[1]])
++    end = le
++    while end < hi:
++        ns, ne = _line_bounds(text, end + 1)
++        nxt = text[ns:ne]
++        if not nxt.strip() or _is_table(nxt) or (BLOCK_START.match(nxt) and _indent(nxt) <= base):
++            break
++        end = ne
++    spans = [(max(lo, start), min(hi, end))]
++    k, cur = start, base
++    while k > lo and cur > 0:  # enclosing parent items: first less-indented line above, repeatedly
++        ps, pe = _line_bounds(text, k - 1)
++        prev = text[ps:pe]
++        if not prev.strip() or _is_table(prev):
++            break
++        if _indent(prev) < cur:
++            spans.append((max(lo, ps), min(hi, pe)))
++            cur = _indent(prev)
++        k = ps
++    return spans
++
++
++def audit_text(text: str, path: str = "<text>", index: Index | None = None, min_len: int = 8,
++               scope: str = "block") -> list[dict]:
++    """Every resolved C1 citation in text, flagged or not. Line numbers are 1-based in text.
++
++    scope="block" (default): outcome terms count only inside the citation's own block (see _block),
++    within +-WINDOW chars. scope="window": the whole +-WINDOW (W2-I behaviour). Each record carries
++    both "severity" (the chosen scope) and "severity_window" (W2-I), so nothing is lost by the
++    narrower default. The true-kind exoneration (LOW) always looks at the whole +-WINDOW."""
++    if min_len < 6 or min_len > MAX_HEX:
++        raise ValueError(f"min_len must be in 6..{MAX_HEX}")
++    if scope not in ("block", "window"):
++        raise ValueError("scope must be 'block' or 'window'")
++    index = index or load_index()
++    out = []
++    for m in _id_re(min_len).finditer(text):
++        tok = m.group(1)
++        cid = index.resolve(tok)
++        if cid is None:
++            continue
++        meta = index.cells[cid]
++        a, b = max(0, m.start() - WINDOW), min(len(text), m.end() + WINDOW)
++        spans = _block(text, m.start(), m.end(), a, b)
++        block, wide, dmin = set(), set(), None
++        for name, rx in OUTCOME_RES:
++            for t in rx.finditer(text, a, min(len(text), b + 16)):
++                if t.end() > b:
++                    continue
++                wide.add(name)
++                inside = any(lo <= t.start() and t.end() <= hi for lo, hi in spans)
++                if scope == "block" and not inside:
++                    continue
++                block.add(name)
++                d = min(abs(t.start() - m.start()), abs(t.end() - m.end()))
++                dmin = d if dmin is None else min(dmin, d)
++        win = text[a:b]
++        kind_named = bool(KIND_WORDS[meta["kind"]].search(win))
++        sev = _severity(meta["kind"], block, kind_named)
++        out.append({
++            "file": path, "line": text.count("\n", 0, m.start()) + 1, "token": tok, "cell_id": cid,
++            "kind": meta["kind"], "wave": meta["wave"], "family": meta["family"],
++            "flagged": int(bool(sev)), "severity": sev,
++            "severity_window": _severity(meta["kind"], wide, kind_named), "scope": scope,
++            "terms": "|".join(sorted(block)), "terms_outside_block": "|".join(sorted(wide - block)),
++            "nearest_term_chars": "" if dmin is None else dmin, "kind_named_in_window": int(kind_named),
++            "context": " ".join(win.split())[:420],
++        })
++    return out
++
++
++def flags(records: list[dict]) -> list[dict]:
++    order = {s: i for i, s in enumerate(SEVERITIES)}
++    return sorted((r for r in records if r["severity"]),
++                  key=lambda r: (order[r["severity"]], r["file"], r["line"], r["token"]))
++
++
++def counts(records: list[dict]) -> dict:
++    c = collections.Counter(r["severity"] for r in records if r["severity"])
++    return {s: c.get(s, 0) for s in SEVERITIES}
++
++
++def is_binary(p: pathlib.Path) -> bool:
++    with open(p, "rb") as f:
++        return b"\0" in f.read(8192)
++
++
++def iter_files(paths, exts=DEFAULT_EXT, exclude=DEFAULT_EXCLUDE):
++    exts = {e.lower() for e in exts}
++    for p in paths:
++        p = pathlib.Path(p)
++        cands = sorted(q for q in p.rglob("*") if q.is_file()) if p.is_dir() else [p]
++        for q in cands:
++            posix = q.resolve().as_posix()
++            if p.is_dir() and q.suffix.lower() not in exts:
++                continue
++            if any(fnmatch.fnmatch(posix, g) for g in exclude):
++                continue
++            if is_binary(q):
++                continue
++            yield q
++
++
++def _display(p: pathlib.Path) -> str:
++    rp = p.resolve()
++    for d in rp.parents:
++        if (d / ".git").exists():
++            return rp.relative_to(d).as_posix()
++    return rp.as_posix()
++
++
++def audit_paths(paths, index: Index | None = None, exts=DEFAULT_EXT, exclude=DEFAULT_EXCLUDE,
++                min_len: int = 8, scope: str = "block") -> list[dict]:
++    index = index or load_index()
++    recs = []
++    for q in iter_files(paths, exts, exclude):
++        recs += audit_text(q.read_text(encoding="utf-8", errors="replace"), _display(q), index, min_len, scope)
++    return recs
++
++
++def summary(records: list[dict], index: Index | None = None, min_len: int = 8) -> dict:
++    """Compact JSON-safe record of the flags (what deposit.py stores in provenance). "flags" lists every
++    citation flagged under the chosen scope OR under the W2-I window scope (severity may then be "")."""
++    order = {s: i for i, s in enumerate(("HIGH", "NAMING", "LOW", ""))}
++    fl = sorted((r for r in records if r["severity"] or r["severity_window"]),
++                key=lambda r: (order[r["severity"]], order[r["severity_window"]], r["line"], r["token"]))
++    return {"tool": TOOL_VERSION, "rows": index.source if index else None, "min_len": min_len,
++            "scope": records[0]["scope"] if records else None,
++            "citations": len(records), "counts": counts(records),
++            "counts_window_scope": counts([{**r, "severity": r["severity_window"]} for r in records]),
++            "flags": [{k: r[k] for k in ("line", "token", "cell_id", "kind", "wave", "severity",
++                                         "severity_window", "terms", "terms_outside_block")} for r in fl]}
++
++
++# ----------------------------------------------------------------------------- CLI
++def main(argv=None) -> int:
++    ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
++    ap.add_argument("paths", nargs="+", help="files, directories (recursive) or - for stdin")
++    ap.add_argument("--ext", default=",".join(DEFAULT_EXT), help="directory scan suffixes (comma list)")
++    ap.add_argument("--exclude", action="append", default=[], help="extra fnmatch glob on absolute posix path")
++    ap.add_argument("--min-len", type=int, default=8)
++    ap.add_argument("--scope", choices=["block", "window"], default="block")
++    ap.add_argument("--fail-on", choices=[*SEVERITIES, "none"], default="HIGH")
++    ap.add_argument("--rows", default=None, help="C1 cells.jsonl.gz (default: found above this file)")
++    ap.add_argument("--json", action="store_true", help="print flagged records as JSON")
++    ap.add_argument("--csv", default=None, help="write every citation (flagged or not) to this CSV")
++    ap.add_argument("--all", action="store_true", help="print LOW and NAMING too (default HIGH only)")
++    a = ap.parse_args(argv)
++    try:
++        index = load_index(a.rows)
++    except (OSError, ValueError, KeyError) as e:
++        print(f"kind_audit: cannot load C1 rows: {e}", file=sys.stderr)
++        return 2
++    exts = tuple(e if e.startswith(".") else "." + e for e in a.ext.split(",") if e)
++    recs = []
++    try:
++        for p in a.paths:
++            if p == "-":
++                recs += audit_text(sys.stdin.read(), "<stdin>", index, a.min_len, a.scope)
++            elif not pathlib.Path(p).exists():
++                raise FileNotFoundError(p)
++            else:
++                recs += audit_paths([p], index, exts, (*DEFAULT_EXCLUDE, *a.exclude), a.min_len, a.scope)
++    except (OSError, ValueError) as e:
++        print(f"kind_audit: {e}", file=sys.stderr)
++        return 2
++    fl = flags(recs)
++    if a.csv:
++        cols = list(recs[0]) if recs else ["file"]
++        with open(a.csv, "w", newline="", encoding="utf-8") as f:
++            w = csv.DictWriter(f, fieldnames=cols)
++            w.writeheader()
++            w.writerows(sorted(recs, key=lambda r: (-r["flagged"], r["file"], r["line"])))
++    shown = fl if a.all else [r for r in fl if r["severity"] == "HIGH"]
++    if a.json:
++        print(json.dumps({"summary": counts(recs), "citations": len(recs),
++                          "flags": shown}, indent=1))
++    else:
++        for r in shown:
++            print(f"{r['severity']:6} {r['file']}:{r['line']} {r['token']} [{r['kind']}/{r['wave']}] "
++                  f"terms={r['terms']} | {r['context'][:200]}")
++        print(f"kind_audit: {len(recs)} citations, {counts(recs)}", file=sys.stderr)
++    if a.fail_on == "none":
++        return 0
++    worst = SEVERITIES[: SEVERITIES.index(a.fail_on) + 1]
++    return 1 if any(r["severity"] in worst for r in fl) else 0
++
++
++if __name__ == "__main__":
++    sys.exit(main())
+diff --git a/roles/Ananke/research/tests/test_kind_audit_tool.py b/roles/Ananke/research/tests/test_kind_audit_tool.py
+new file mode 100644
+index 000000000..9fc37adf4
+--- /dev/null
++++ b/roles/Ananke/research/tests/test_kind_audit_tool.py
+@@ -0,0 +1,123 @@
++"""Tests for tools/kind_audit.py (W2-AA). Proposed path: roles/Ananke/research/tests/.
++Uses the real C1 id index: fac4aaa2 is the C-wave TRANSFER of bbef66a1 (an evolve row) to RELAY d5;
++ef77ef2e is the transfer of bbef66a1 to FLIP; f7e62fe3 is a D-wave adjudicate row."""
++import importlib.util
++import pathlib
++
++import pytest
++
++HERE = pathlib.Path(__file__).resolve().parent
++TOOL = HERE.parent / "tools" / "kind_audit.py"
++
++
++@pytest.fixture(scope="module")
++def ka():
++    spec = importlib.util.spec_from_file_location("kind_audit_tool", TOOL)
++    mod = importlib.util.module_from_spec(spec)
++    spec.loader.exec_module(mod)  # FileNotFoundError before the patch: the module is absent
++    return mod
++
++
++def cites(ka, text, cell8, **kw):
++    return [r for r in ka.audit_text(text, **kw) if r["cell_id"].startswith(cell8)]
++
++
++def one(ka, text, cell8="fac4aaa2", **kw):
++    recs = cites(ka, text, cell8, **kw)
++    assert len(recs) == 1, recs
++    return recs[0]
++
++
++def test_positive_transfer_cited_as_search_outcome_is_high(ka):
++    r = one(ka, "env of C1 RELAY NULL cell fac4aaa2 (d5 delta16; C1 search held .5).")
++    assert r["kind"] == "transfer" and r["severity"] == "HIGH"
++    assert {"search", "held", "NULL"} <= set(r["terms"].split("|"))
++
++
++def test_negative_same_id_described_as_transfer_is_not_high(ka):
++    r = one(ka, "fac4aaa2 is a C-wave transfer of the frozen bbef66a1 law to RELAY variant d5; it scored .507.")
++    assert r["severity"] == "" and r["flagged"] == 0
++
++
++def test_ids_are_case_insensitive(ka):
++    for tok in ("FAC4AAA2", "Fac4AaA2", "FAC4AAA23A0BDCB2"):
++        r = one(ka, f"C1 RELAY NULL cell {tok}: search held .5.")
++        assert r["token"] == tok and r["cell_id"] == "fac4aaa23a0bdcb2" and r["severity"] == "HIGH"
++
++
++def test_non_c1_hex_is_not_flagged(ka):
++    for text in ("DEADBEEF: search held .5, NULL", "commit 097D0B98E: the search held .5 (NULL)",
++                 "sha 84bc674bfb968792 search NULL held",
++                 # a 40-hex sha whose head IS a cell id is still not a citation
++                 "fac4aaa23a0bdcb2" + "0" * 24 + " search NULL held"):
++        assert ka.audit_text(text) == [], text
++
++
++def test_short_ids_only_on_opt_in(ka):
++    text = "cell fac4aaa: search held .5 NULL"
++    assert ka.audit_text(text) == []
++    assert one(ka, text, min_len=7)["severity"] == "HIGH"
++
++
++def test_underscore_neighbour_and_adjudicate_naming(ka):
++    assert one(ka, "the D_f7e62fe3 champion integrates the cue history.", "f7e62fe3")["severity"] == "NAMING"
++    assert one(ka, "f7e62fe3 is a search NULL.", "f7e62fe3")["severity"] == "HIGH"
++
++
++def test_outcome_words_in_a_neighbouring_bullet_do_not_raise_high(ka):
++    text = ("- N1 [V]: rule-mosaic lottery: the actuator's random rule decides; held >\n  train by +.22.\n"
++            "- N3 [V]: relay_flood scores .633 on FLIP at fac4aaa2 by cue-repeat gating.\n"
++            "7. Objection: model accuracy .65 vs champion .77.\n")
++    r = one(ka, text)
++    assert r["severity"] == "" and r["severity_window"] == "HIGH"   # the W2-I verdict is kept on the record
++    assert one(ka, text, scope="window")["severity"] == "HIGH"   # W2-I behaviour, kept on request
++
++
++def test_nested_children_and_parent_items_are_in_the_block(ka):
++    assert one(ka, "1. **fac4aaa2:**\n   - REPORT L59 says C1 search held .5 here.\n2. next")["severity"] == "HIGH"
++    assert one(ka, "- C1 search NULLs:\n  - fac4aaa2 (.507)\n  - other\n")["severity"] == "HIGH"
++    assert one(ka, "- fac4aaa2 (.507)\n- C1 search NULLs elsewhere\n")["severity"] == ""   # a sibling
++
++
++def test_hard_wrapped_sentence_is_one_block(ka):
++    assert one(ka, "env of the C1 RELAY\ncell fac4aaa2 (d5 delta16; C1\nsearch held .5).")["severity"] == "HIGH"
++    assert one(ka, "Intro.\nThe C1 search held .5 at the RELAY\ncell fac4aaa2 (d5 delta16).")["severity"] == "HIGH"
++    assert one(ka, "- item: C1 search held .5 at the RELAY\n  cell fac4aaa2 (d5 delta16).")["severity"] == "HIGH"
++
++
++def test_table_row_is_one_block_and_rows_do_not_leak(ka):
++    # a row is a record about its cell: an outcome in another column of the SAME row still counts
++    assert one(ka, "| f7e62fe3 | D | search NULL, held .48 |", "f7e62fe3")["severity"] == "HIGH"
++    # ... but the next row's outcome does not
++    assert one(ka, "| f7e62fe3 | D | .51 |\n| 6f82f9c7 | search NULL, held .479 |", "f7e62fe3")["severity"] == ""
++
++
++def test_principal_correction_sentence_is_low_not_high(ka):
++    r = one(ka, "ef77ef2e0a1026c2 is a TRANSFER (RELAY champion bbef66a1 evaluated on FLIP), not a search.",
++            "ef77ef2e")
++    assert r["severity"] == "LOW"
++
++
++def test_principal_review_file_has_no_high(ka):
++    rows = ka.find_rows()
++    review = rows.parents[4] / "roles/Ananke/research/harvest/H-PLANT/PRINCIPAL_REVIEW.md"
++    recs = ka.audit_paths([review])
++    assert recs, "PRINCIPAL_REVIEW.md cites C1 cells"
++    assert ka.counts(recs)["HIGH"] == 0, ka.flags(recs)
++
++
++def test_cli_exit_codes_and_extension_scope(ka, tmp_path, capsys):
++    (tmp_path / "bad.md").write_text("C1 RELAY NULL cell fac4aaa2: search held .5\n", encoding="utf-8")
++    (tmp_path / "ok.md").write_text("fac4aaa2 is a transfer, not a search NULL.\n", encoding="utf-8")
++    (tmp_path / "code.py").write_text("# cell FAC4AAA2: search held .5\n", encoding="utf-8")
++    (tmp_path / "kind_audit.csv").write_text("fac4aaa2,search held .5 NULL\n", encoding="utf-8")
++    assert ka.main([str(tmp_path / "bad.md")]) == 1
++    assert ka.main([str(tmp_path / "ok.md")]) == 0                      # LOW only
++    assert ka.main([str(tmp_path / "ok.md"), "--fail-on", "LOW"]) == 1
++    assert ka.main([str(tmp_path / "ok.md"), "--rows", str(tmp_path / "missing.gz")]) == 2
++    assert ka.main([str(tmp_path / "nope.md")]) == 2
++    recs = ka.audit_paths([tmp_path])                                     # .md/.txt by default
++    assert {r["file"].rsplit("/", 1)[-1] for r in recs} == {"bad.md", "ok.md"}
++    recs = ka.audit_paths([tmp_path], exts=(".md", ".py", ".csv"))        # own outputs excluded
++    assert {r["file"].rsplit("/", 1)[-1] for r in recs} == {"bad.md", "ok.md", "code.py"}
++    capsys.readouterr()
+diff --git a/roles/Ananke/research/tests/test_deposit_kind_audit.py b/roles/Ananke/research/tests/test_deposit_kind_audit.py
+new file mode 100644
+index 000000000..4cb3a6ae6
+--- /dev/null
++++ b/roles/Ananke/research/tests/test_deposit_kind_audit.py
+@@ -0,0 +1,50 @@
++"""deposit.py + kind_audit (W2-AA): flags are recorded in provenance; REPORT.md bytes are unchanged and
++a missing/broken auditor never blocks a deposit. Proposed path: roles/Ananke/research/tests/."""
++import hashlib
++import importlib.util
++import json
++import pathlib
++
++import pytest
++
++HERE = pathlib.Path(__file__).resolve().parent
++spec = importlib.util.spec_from_file_location("deposit_mod_ka", HERE.parent / "deposit.py")
++dep = importlib.util.module_from_spec(spec)
++spec.loader.exec_module(dep)
++
++BLOCK = "W2-X findings\nenv of C1 RELAY NULL cell fac4aaa23a0bdcb2 (C1 search held .5).\nbbef66a1 evolved."
++MSG = f"chat\n===BEGIN REPORT===\n{BLOCK}\n===END REPORT===\ntail"
++
++
++@pytest.fixture
++def tmp_here(tmp_path, monkeypatch):
++    monkeypatch.setattr(dep, "HERE", tmp_path)
++    return tmp_path
++
++
++def prov_of(p):
++    return json.loads(p.with_name(p.stem + ".provenance.json").read_text())
++
++
++def expected_bytes():
++    sha = hashlib.sha256(BLOCK.encode("utf-8")).hexdigest()
++    return (f"<!-- DEPOSITED VERBATIM by Ananke for worker W-KA; sha256(report)={sha[:16]}; delimited; see "
++            f"REPORT.provenance.json -->\n{BLOCK}\n").encode("utf-8")
++
++
++def test_flags_recorded_and_report_bytes_unchanged(tmp_here):
++    p = dep.deposit("W-KA", MSG)
++    assert p.read_bytes() == expected_bytes() and dep.verify(p)
++    ka = prov_of(p)["kind_audit"]                 # KeyError before the patch
++    assert ka["status"] == "ok" and ka["counts"]["HIGH"] == 1 and ka["counts_window_scope"]["HIGH"] == 1
++    (f,) = [f for f in ka["flags"] if f["severity"] == "HIGH"]
++    assert f["cell_id"] == "fac4aaa23a0bdcb2" and f["kind"] == "transfer"
++    assert p.read_text(encoding="utf-8").split("\n")[f["line"] - 1].find(f["token"]) >= 0  # REPORT.md line
++    assert all(x["cell_id"] != "bbef66a1" for x in ka["flags"])
++
++
++def test_missing_auditor_does_not_block_and_bytes_identical(tmp_here, monkeypatch):
++    monkeypatch.setattr(dep, "KIND_AUDIT", tmp_here / "no_such_tool.py")   # AttributeError before the patch
++    p = dep.deposit("W-KA", MSG)
++    assert p.read_bytes() == expected_bytes() and dep.verify(p)
++    assert prov_of(p)["kind_audit"]["status"] == "NOT_VERIFIED"
