@@ -400,3 +400,5 @@ Other:
 - Fixed in the next commit: path corrected, skip if the data is absent, the 40 KB arrays force-added,
   12/12 pass, commit gated on RC.
 - Module code was unaffected.
+- P-2 UPDATE: decay_shift 1 gives refresh .792/.724/1.000 (no-decay .797/.724/1.000) vs flood .617/.604/.677.
+  The artefact holds at the harshest decay level as well. Recorded as C1_ERRATA E-W13.
