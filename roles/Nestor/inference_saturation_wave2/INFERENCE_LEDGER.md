@@ -500,3 +500,21 @@ in completion order.
 - **Next.**
   - W2-19: H1 re-score and D8 vs E-3.
   - FINDINGS correction appendix at closing: dated proposals only; no frozen verdict is rewritten.
+
+
+### W2-13: U1, chain length vs evolved epistasis (report saved; Nestor attack). Written at 01:24Z (clock)
+- **Result.**
+  - Strict synthetic lethality: evolved (EVO_SD) 3.71% vs never-evolved random-hit copiers (33 new, 1.8e-4 of 180k) 2.32%. Raw gap +1.39 pp, p = 0.048.
+  - At matched executed pre-copy chain length (L_pre): c_EVO = +0.27 pp, CI [−0.90, +1.46], p_FL = 0.83. Length-matched 2.08% vs 2.32%; Mantel-Haenszel OR 1.08.
+  - **T3 (chain length) is sufficient. T4(c′) (generic evolved epistasis) is not supported.**
+  - The earlier evolved vs PLANT contrast (3.7% vs 0.45%) was mostly a length confound.
+- **Effect on the theory tournament (W2-6).** T4(c′) was one of the two residuals left after T4 was eliminated. It is now **demoted to "not needed, not excluded"**: the CI upper bound is about the raw gap. **The only residual not yet absorbed into F is R = T4(a), home advantage.**
+- **Nestor attack.**
+  1. Selection on competence acts on random hits too, so "never evolved" means "not shaped by world dynamics beyond the screen". That is the right comparison for T4(c′).
+  2. The consistently positive point estimates plus d > 0 are a pattern, not noise, until power says otherwise. W2-20 is assigned to enlarge the long-chain random stratum, with a pre-stated rule:
+     - SUPPORTED if the CI lower bound is > 0;
+     - SUFFICIENT if the upper bound is < 0.7 pp;
+     - otherwise UNRESOLVED.
+  3. **Reusable prior:** the competent random-hit rate in 7ae3 is 1.8e-4, matching minimal_prior. That is an independent check of the minimal-prior instrument.
+- **Confidence.** Moderate.
+- **Next.** W2-20.
