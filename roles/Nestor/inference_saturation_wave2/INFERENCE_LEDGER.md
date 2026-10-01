@@ -409,3 +409,23 @@ in completion order.
 - **Next questions.**
   - Fold q(N) into W2-2's branching law and predict the runaway fraction and the gap. W2-14 is working on this.
   - Test protection against diverged kin (1, 3, 8 byte differences).
+
+
+### W2-3 (no-vocabulary frames): report saved, plus a collision with N15 resolved (Nestor). Written at 01:07Z (clock)
+- **W2-3 result.** The merged "labelled site field + position-anchored ring operators" frame passed three tests:
+  1. The victim magnet is an integrated per-site hazard: 0.60 / 0.43, within the record bounds; LDIR knockout 0/60. This **independently confirms N1.**
+  2. BASE is *critical* by ring geometry (m ≈ 1.0). The existing depth tail follows 1/d with no free parameter (dAIC 133); with the splice on it turns geometric.
+  3. X-TICKET activity is age-structured (0.69 → 0 by age 8; R0 ≈ 1.04). There is **no Allee (n²) term at n ≤ 40**.
+- **Collision with N15** ("kin pairing protects, so a density-dependent second regime"). Resolved as follows:
+  - W2-3's K5 rejects any density term **at n ≤ 40**.
+  - N15's own numbers predict only a modest boost at q ≤ 0.15 (N ≤ 38). The X-TICKET pre-takeoff range sits there, so the two results do not conflict.
+  - N15's mechanism is real (static), but it can only matter at **larger N**. It is therefore a candidate for W2-3's open puzzle: *why the critical regime ends near depth 20, with 16/19 runs past d = 22 reaching ≥ 161.*
+  - Revised claim: under BASE, early dynamics are critical branching (W2-3); a late density-dependent escape via kin protection (N15) is a hypothesis for the d ≈ 20 departure, not for the early threshold.
+  - **Withdrawn from N15:** the link to "win given ≥ 8 members". W2-3 shows X-TICKET lineage size mostly counts inactive labels.
+- **Reconciling W2-2 and W2-3 on criticality.** W2-2's individual law has m 0.93 (all births), m_c 0.77 (certified). W2-3's corpus mean is m_BASE 1.02/0.99, and 7ae3 sits around 1. Both are "near-critical". The 1/d tail favours critical. W2-2's "100x excess of runaways over the individual law" becomes "the excess beyond critical branching above d ≈ 20". The same open puzzle, stated more precisely.
+- **Corrections from W2-3 for the record:**
+  - C-CORE positions 24/53 are mutable in place (ED second bytes), so "opcode-immune core" is half wrong.
+  - U-W7 is exact only for side-1 writers.
+  - "Erosion brake" should read "one-sided op unmakes its carrier at the other side".
+  - X-TICKET "lineage size" mostly counts inactive labels.
+- **Next question.** N15b at larger N: does kin protection make R0 > 1 once q reaches about 0.1-0.3, and is that the d ≈ 20 departure? W2-14 is building a field process with realized partners and should show it.
