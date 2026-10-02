@@ -3,36 +3,43 @@
   "seat": "Dionysus",
   "mwo_id": "MWO-0004",
   "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
-  "updated_at_utc": "2026-10-01T17:19:16Z",
+  "updated_at_utc": "2026-10-02T00:53:30Z",
   "state": "READY",
   "branch": "dionysus/phase3-design-2026-10-01",
   "head_sha": "(this commit; see git log -1 -- roles/Dionysus/WORK_STATE.json)",
   "threads": [],
   "campaigns": [
-    "Phase 3 independent architect FABLE-5.1 (charter roles/Dionysus/prompts/2026-10-01_charter/, 04b97a598): DELIVERED docs/phase3/design/FABLE-5.1/"
+    "Phase 3 independent architect FABLE-5.1 (charter roles/Dionysus/prompts/2026-10-01_charter/, 04b97a598): DELIVERED docs/phase3/design/FABLE-5.1/",
+    "Review of the Phase 3 synthesis package (directive roles/Dionysus/prompts/2026-10-01_review_charter/, b656df387): DELIVERED docs/phase3/review/FABLE-5.1/ (three responses, four preregistered runs, one file of exploratory probes)"
   ],
   "experiments": [
-    "P1 calibration-slice miniature (docs/phase3/design/FABLE-5.1/prototype/p1_slice/): v1 gate FAILED and kept; v2 PASS on fresh sealed lives; search-power curve run. C0 observations about an instrument, one host, one author, independence I1."
+    "P1 calibration-slice miniature (docs/phase3/design/FABLE-5.1/prototype/p1_slice/): v1 gate FAILED and kept; v2 PASS on fresh sealed lives; search-power curve run. C0 observations about an instrument, one host, one author, independence I1.",
+    "Four runs on the section-19 criterion (docs/phase3/review/FABLE-5.1/counterfeit/), preregistered at 8dc9ef542, 619472376, c6adb3a57 and 635b3cba1; all gates PASS; designed organisms in toy worlds, C0, I1. Run 1 was too easy (found by a reviewer) and is kept with its conditions. Run 3 changed two things at once (found by a reviewer) and is kept as an existence sketch. A classification registered in run 4 is withdrawn in the write-up. probes_exploratory.py (not preregistered, design seeds only) shows what the passes of runs 2 and 3 rest on."
   ],
   "fabric_tasks": [],
   "running": [],
   "blocked_on": [],
   "next_actions": [
-    "Package delivered. Building Phase 3 is not in the charter; it waits for an operator directive.",
-    "READY, small and reversible: BACKLOG_H0H5.md rows 03 to 06 (prototype extensions, each under its own preregistration commit) and rows 09 to 14 (design notes for the open questions).",
-    "Correct the package by dated annotation when review findings arrive (row 08).",
-    "Do not read any other architect's design until the operator opens the comparison."
+    "Review delivered. It waits for the operator and for the other reviewer.",
+    "If files 00, 03, 04, 05 and 07 of the synthesis package arrive, a second pass on RESPONSE_1 sections 12 and 13 and on FLAW 3 is small and worth doing.",
+    "READY, small and reversible: BACKLOG_H0H5.md rows 03 to 06 and 09 to 14; and experiment X3 of the review (one protocol with the five open choices fixed, a fire test per clause and a power gate, in every setting; then an attempt at a designed positive for improvement of the builder), under its own preregistration.",
+    "The delivered design package is not edited by the review. Correct it by dated annotation only if the operator asks; an implementation charter may supersede it.",
+    "Do not read any other architect's own design directory until the operator opens it."
   ],
   "operator_decisions_required": [
-    "Accept or reject the trade: ninety days of instruments and two first maps before any claim about reasoning (docs/phase3/design/FABLE-5.1/OPEN_QUESTIONS.md A9).",
+    "Whether to send the five package files that were not provided (00, 03, 04, 05, 07).",
+    "Whether my ranking of R3 over R4 and R5, and the proposed merge of R2 into a shared Track-A kernel, stand: both coincide with my own design (RESPONSE_1 section 5 and reversal 9).",
+    "Accept or reject the trade: ninety days of instruments and two first maps before any claim about reasoning (docs/phase3/design/FABLE-5.1/OPEN_QUESTIONS.md A9; now RESPONSE_1 section 13, about 65% instrument).",
     "Doctrine: publication framing HARD-1 (A1); prior art after validation HARD-2 (A2); fixed measurement axes against the North Star (A3).",
     "Is a second model family reachable from code for independent implementations (A5).",
     "Custody of sealed worlds outside the working tree (A6), after the search-rule incident of 2026-10-01."
   ],
   "latest_reports": [
+    "docs/phase3/review/FABLE-5.1/00_README.md",
+    "docs/phase3/review/FABLE-5.1/RESPONSE_1_REVIEW_REPORT.md",
+    "docs/phase3/review/FABLE-5.1/counterfeit/README.md",
     "docs/phase3/design/FABLE-5.1/README.md",
-    "docs/phase3/design/FABLE-5.1/PHASE3_META_ANALYSIS.md",
-    "docs/phase3/design/FABLE-5.1/salvage_reports/00_SEARCH_RULE_INCIDENT.md",
-    "roles/Dionysus/journal/2026-10-01.md (creation pass, charter pass, review before push)"
+    "roles/Dionysus/journal/2026-10-02.md (the review pass)",
+    "roles/Dionysus/journal/2026-10-01.md (creation, charter, review before push, delivery)"
   ]
 }

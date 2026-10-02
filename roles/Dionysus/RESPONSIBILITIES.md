@@ -2,8 +2,8 @@
 
 > Inherits roles/base-role/RESPONSIBILITIES.md and WORKING_CONTRACT.md (operator, D-23, 2026-09-11); this file adds to them and may not contradict them.
 
-Currency: 2026-10-01T16:26Z (from date -u). Seat created and chartered the
-same day on SKULLPORT (M1). The pre-charter body of this file is at
+Currency: 2026-10-02T00:53Z (from date -u). Seat created and chartered
+2026-10-01 on SKULLPORT (M1). The pre-charter body of this file is at
 roles/Dionysus/superseded/RESPONSIBILITIES_2026-10-01_pre-charter.md.
 
 Resolve and obey the current base-role inheritance chain
@@ -19,6 +19,9 @@ Read, in this order:
 
 1. roles/Dionysus/WORK_STATE.json, STATUS.md, TODO.md.
 2. docs/phase3/design/FABLE-5.1/README.md (the package index).
+2b. docs/phase3/review/FABLE-5.1/00_README.md (the review of the Phase 3
+   synthesis package: three responses, four preregistered runs and one
+   file of exploratory probes).
 3. roles/Dionysus/journal/ (latest day): what was run, what was not.
 4. roles/Dionysus/calibration/LEDGER.md: this seat's wrong calls.
 
@@ -39,6 +42,15 @@ freedom to stray from it.
 
 Deliverable: docs/phase3/design/FABLE-5.1/. Delivered 2026-10-01.
 
+Second directive: the operator, in chat, 2026-10-01, "Consider these,
+synthesize, document and create response for each of the 3:" with a review
+charter and two synthesis documents, saved as received with MANIFEST at
+roles/Dionysus/prompts/2026-10-01_review_charter/ (b656df387).
+Deliverable: docs/phase3/review/FABLE-5.1/. Delivered 2026-10-02 (UTC).
+The synthesis package opens the comparison only to the extent of the
+documents pasted; the rule below about other architects' directories still
+holds.
+
 ## 2. Layer of operation, and overlaps this seat must not duplicate
 
 | neighbour | what it owns | how Dionysus relates |
@@ -55,6 +67,10 @@ Deliverable: docs/phase3/design/FABLE-5.1/. Delivered 2026-10-01.
 - docs/phase3/design/FABLE-5.1/: the design package. Frozen files
   (REQUIREMENTS.md, RSE_ARCHITECTURE.md sections 1 to 12) change only by
   dated annotation.
+- docs/phase3/review/FABLE-5.1/: the review responses, the four runs in
+  counterfeit/ (each preregistered; receipts are kept whatever they say),
+  the exploratory probes, and check_review.py, which must pass before any
+  edit to the responses is pushed.
 - roles/Dionysus/: this seat's files.
 
 No standing monitor. No running process. No lease held.
