@@ -1,0 +1,188 @@
+{
+ "budgets": [
+  1,
+  2,
+  3,
+  4,
+  5,
+  6,
+  7,
+  8,
+  9,
+  10,
+  11,
+  12,
+  13
+ ],
+ "cases": {
+  "BUILDER AFFINE": {
+   "budgets_that_pass": [
+    4,
+    5,
+    6,
+    7
+   ],
+   "intact_arm_by_budget": {
+    "1": "BAD",
+    "10": "GOOD",
+    "11": "GOOD",
+    "12": "GOOD",
+    "13": "GOOD",
+    "2": "BAD",
+    "3": "BAD",
+    "4": "GOOD",
+    "5": "GOOD",
+    "6": "GOOD",
+    "7": "GOOD",
+    "8": "GOOD",
+    "9": "GOOD"
+   },
+   "naive_arm_by_budget": {
+    "1": "BAD",
+    "10": "GOOD",
+    "11": "GOOD",
+    "12": "GOOD",
+    "13": "GOOD",
+    "2": "BAD",
+    "3": "BAD",
+    "4": "BAD",
+    "5": "BAD",
+    "6": "BAD",
+    "7": "BAD",
+    "8": "GOOD",
+    "9": "GOOD"
+   },
+   "registered_budget": 4,
+   "tasks_to_an_acceptable_U_developed": 4,
+   "tasks_to_an_acceptable_U_naive": 8,
+   "verdict_by_budget": {
+    "1": "FAIL",
+    "10": "FAIL",
+    "11": "FAIL",
+    "12": "FAIL",
+    "13": "FAIL",
+    "2": "FAIL",
+    "3": "FAIL",
+    "4": "PASS",
+    "5": "PASS",
+    "6": "PASS",
+    "7": "PASS",
+    "8": "FAIL",
+    "9": "FAIL"
+   }
+  },
+  "GEARBOX SCALE": {
+   "budgets_that_pass": [
+    1,
+    2
+   ],
+   "intact_arm_by_budget": {
+    "1": "GOOD",
+    "10": "GOOD",
+    "11": "GOOD",
+    "12": "GOOD",
+    "13": "GOOD",
+    "2": "GOOD",
+    "3": "GOOD",
+    "4": "GOOD",
+    "5": "GOOD",
+    "6": "GOOD",
+    "7": "GOOD",
+    "8": "GOOD",
+    "9": "GOOD"
+   },
+   "naive_arm_by_budget": {
+    "1": "BAD",
+    "10": "GOOD",
+    "11": "GOOD",
+    "12": "GOOD",
+    "13": "GOOD",
+    "2": "BAD",
+    "3": "GOOD",
+    "4": "GOOD",
+    "5": "GOOD",
+    "6": "GOOD",
+    "7": "GOOD",
+    "8": "GOOD",
+    "9": "GOOD"
+   },
+   "registered_budget": 1,
+   "tasks_to_an_acceptable_U_developed": 1,
+   "tasks_to_an_acceptable_U_naive": 3,
+   "verdict_by_budget": {
+    "1": "PASS",
+    "10": "FAIL",
+    "11": "FAIL",
+    "12": "FAIL",
+    "13": "FAIL",
+    "2": "PASS",
+    "3": "FAIL",
+    "4": "FAIL",
+    "5": "FAIL",
+    "6": "FAIL",
+    "7": "FAIL",
+    "8": "FAIL",
+    "9": "FAIL"
+   }
+  },
+  "GEARBOX SHIFT": {
+   "budgets_that_pass": [
+    1
+   ],
+   "intact_arm_by_budget": {
+    "1": "GOOD",
+    "10": "GOOD",
+    "11": "GOOD",
+    "12": "GOOD",
+    "13": "GOOD",
+    "2": "GOOD",
+    "3": "GOOD",
+    "4": "GOOD",
+    "5": "GOOD",
+    "6": "GOOD",
+    "7": "GOOD",
+    "8": "GOOD",
+    "9": "GOOD"
+   },
+   "naive_arm_by_budget": {
+    "1": "BAD",
+    "10": "GOOD",
+    "11": "GOOD",
+    "12": "GOOD",
+    "13": "GOOD",
+    "2": "GOOD",
+    "3": "GOOD",
+    "4": "GOOD",
+    "5": "GOOD",
+    "6": "GOOD",
+    "7": "GOOD",
+    "8": "GOOD",
+    "9": "GOOD"
+   },
+   "registered_budget": 1,
+   "tasks_to_an_acceptable_U_developed": 1,
+   "tasks_to_an_acceptable_U_naive": 2,
+   "verdict_by_budget": {
+    "1": "PASS",
+    "10": "FAIL",
+    "11": "FAIL",
+    "12": "FAIL",
+    "13": "FAIL",
+    "2": "FAIL",
+    "3": "FAIL",
+    "4": "FAIL",
+    "5": "FAIL",
+    "6": "FAIL",
+    "7": "FAIL",
+    "8": "FAIL",
+    "9": "FAIL"
+   }
+  }
+ },
+ "gauntlet_sha256_lf": "f49cfb4393fe3366da713f509ff1d1ce48ed9b06ea29e748c219768a9bad563e",
+ "host": "SKULLPORT",
+ "python": "3.12.10",
+ "seed_base": 2026100121,
+ "what": "EXPLORATORY, not preregistered: budget sweep of the first gauntlet on its registered seeds",
+ "written_at_utc": "2026-10-01T22:43:44Z"
+}

@@ -1,0 +1,9 @@
+# Manifest for FABLE-5.1
+
+sha256 over LF-normalised bytes (equals the git blob for text files); see comms/manifest.py.
+
+- 00_README.md  sha256:e0b1025e98fe14332aea9363239584fe0855a4e7e79170a7f9e83b6766add0e0
+- check_review.py  sha256:bb2936598b6736488d89cca91e0b32e008c7c9410df77a3a24af33499097f651
+- RESPONSE_1_REVIEW_REPORT.md  sha256:04526d6f72aa19b5a4c0a025c9f3b2eb628aeb4739fc75033b2e821e349845b2
+- RESPONSE_2_RSO_WIND_TUNNEL_v0.1.md  sha256:7fd839fa5fa0b4292d52ccbfa1a7f27efe9c3cafe1a76e1ff8b67685c0c09e88
+- RESPONSE_3_RACE_CAR_PORTFOLIO_R0-R9.md  sha256:3c634632427c0558b651a8ce5792c0bc4d932c5edf3bb23dcd5dff68218612e3
