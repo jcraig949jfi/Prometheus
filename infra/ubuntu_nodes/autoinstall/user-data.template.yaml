@@ -1,0 +1,75 @@
+#cloud-config
+# Ubuntu Server autoinstall for Prometheus swarm nodes (ubuNNN). Template: no secrets in git.
+# build_cidata.py fills the @@...@@ placeholders from local secret files and writes
+# user-data + meta-data to a FAT32 USB stick labelled CIDATA. See README.md in this folder.
+#
+# Safety: the config is on a SEPARATE stick (not the kernel command line), so the installer still asks
+# "Continue with autoinstall? (yes|no)" once before it erases the disk. Type yes + Enter.
+autoinstall:
+  version: 1
+  locale: en_US.UTF-8
+  keyboard:
+    layout: us
+  timezone: Etc/UTC
+
+  # Wired port and Wi-Fi are both configured, so it works whichever the machine has.
+  # match: interface names differ per laptop (eno1, enp0s31f6, wlp4s0, ...).
+  network:
+    version: 2
+    ethernets:
+      wired:
+        match:
+          name: "en*"
+        dhcp4: true
+        optional: true
+    wifis:
+      wifi:
+        match:
+          name: "wl*"
+        dhcp4: true
+        optional: true
+        access-points:
+          @@WIFI_SSID@@:
+            password: @@WIFI_PASSWORD@@
+
+  # Whole internal disk, LVM, root LV uses ALL the space (no 100 GB default; no lvextend needed later).
+  # No passphrase. Unplug any other USB drives before installing: only the install stick and CIDATA.
+  storage:
+    layout:
+      name: lvm
+      sizing-policy: all
+
+  # Every node starts as ubu-new; Achilles renames it (hostnamectl) after the first SSH login.
+  identity:
+    hostname: ubu-new
+    realname: James Craig
+    username: jcraig
+    password: @@PASSWORD_HASH@@
+
+  ssh:
+    install-server: true
+    allow-pw: true
+    authorized-keys:
+@@AUTHORIZED_KEYS@@
+
+  packages:
+    - git
+    - curl
+    - htop
+    - tmux
+    - iw
+    - gh
+    - jq
+    - wpasupplicant
+    - python3-venv
+    - python3-pip
+
+  updates: all
+  shutdown: reboot
+
+  late-commands:
+    - "echo 'jcraig ALL=(ALL) NOPASSWD:ALL' > /target/etc/sudoers.d/jcraig"
+    - "chmod 440 /target/etc/sudoers.d/jcraig"
+    - "mkdir -p /target/etc/systemd/logind.conf.d"
+    - "printf '[Login]\\nHandleLidSwitch=ignore\\nHandleLidSwitchExternalPower=ignore\\nHandleLidSwitchDocked=ignore\\n' > /target/etc/systemd/logind.conf.d/10-server-lid.conf"
+    - "curtin in-target -- loginctl enable-linger jcraig || true"

@@ -44,15 +44,23 @@ Loose ends from adding ubu003 and the ELSA access. Tick with a date.
 - [ ] Claude Code versions differ (2.1.283 / .286 / .287); they update themselves. Not a problem.
 - [ ] **Bring ubu003 up to the ubu001/002 node setup** if the check shows gaps (RC service, setup-token, etc.).
 - [ ] **Update the "State at time of writing" section** below once ubu003 matches the others.
-- [ ] **Commit the `infra/ubuntu_nodes/` changes** (machine log, runbook, this file). Uncommitted as of 2026-10-02.
-- [ ] **ubu004 = Auusda A146** (14.1", likely Celeron J4125, 8 GB; serial A146USNE20231017101). **Built-in screen broken**
-      (only a 1" strip at the top is readable). Has mini-HDMI, 2x USB-A, microSD; no Ethernet port, so set up Wi-Fi in the
-      installer. The first mini-HDMI adapter seemed bad; **a new one was ordered 2026-10-02**. Once it arrives: log in to
-      Windows → Win+R `displayswitch /external` → Win+R `shutdown /r /o /t 0` → Use a device → USB stick. Fallback if video
-      still fails: blind autoinstall from a second USB stick (also the mass-setup path).
-- [ ] HP Pavilion x360 → **ubu005** (needs a USB Ethernet adapter, or Wi-Fi set up in the installer).
-- [ ] ELSA's own future: reimage as an Ubuntu worker (16 GB DDR3 kit ~$47) or Wake-on-LAN on demand; HP x360 (ubu004) needs a
-      USB Ethernet adapter. See the operator chat 2026-10-01.
+- [x] Commit the `infra/ubuntu_nodes/` changes: done 2026-10-02 (ffa083fad and later commits).
+- [x] **Auusda A146 → stays Windows: `LIZZIE-42`** (operator 2026-10-02). Windows 11 Pro 24H2, activated; 8 GB soldered
+      (Task Manager: "4 of 4 slots", which is how soldered LPDDR4 shows up). Built-in screen broken; used with an HDMI monitor via
+      mini-HDMI. Role: command center / browsing, not a Linux node. See "Other fleet machines" in `ubuntu_server_machines.md`.
+- [ ] **ubu004 = HP Pavilion x360 14m-ba0xx** (i3-7100U, 8 GB, no Ethernet port): **first autoinstall test** (CIDATA stick
+      configures Wi-Fi). In progress 2026-10-02.
+- [ ] **ubu005 = Lenovo ThinkPad P52s** (T580 platform, 2019). The **HDD1 ZIF connector's latch broke** while swapping
+      drives; the connector body is still on the board, but reseating + taping the tray cable (several tries, both
+      orientations) gives **no drive detected** in BIOS or the Ubuntu installer. The main M.2 2280 tray only connects through
+      HDD1, so it's out. USB boot works (F12 boot menu, F1 setup; needed USB HDD moved out of "Excluded from boot order").
+      **Fix: Samsung PM991 256GB M.2 2242 NVMe (MZALQ256HAJD) in the empty WWAN slot**, arriving 2026-10-03 (screw post H21;
+      operator has the M2 screw). Leave the capped WWAN antenna wires alone. Then autoinstall. Parts on hand: Samsung MZVLB256
+      (original, 2280) + Team MP33 1TB (2280), two Lenovo 2.5" NVMe trays.
+- [ ] ELSA's own future: reimage as an Ubuntu worker (16 GB DDR3 kit ~$47) or Wake-on-LAN on demand. Its motherboard video
+      ports are dead by design (the i7-860 has no integrated graphics); use the Radeon HD 5450 card for installing.
+- [ ] **CIDATA stick** (32 GB, label CIDATA) holds the Wi-Fi password in plain text. Keep it at home; rebuild it with
+      `autoinstall/build_cidata.py` if the Wi-Fi or keys change. Secrets live in `C:utoinstall_secrets\` on ELSA.
 
 ## Operator (needs hands at a keyboard or the router; not the phone)
 
@@ -99,7 +107,7 @@ Loose ends from adding ubu003 and the ELSA access. Tick with a date.
 Before the session:
 - [ ] Have the Verbatim USB stick (already written; reusable) and the ISO (`D:\ISOs\`) on hand.
 - [ ] Collect for each machine: make/model, whether it has an Ethernet port, and whether it has Wi-Fi.
-- [ ] Next hostnames: `ubu003`, `ubu004`, ...
+- [ ] Next hostnames: `ubu004` (HP x360), `ubu005` (P52s), `ubu006`, ... (LIZZIE-42 stays Windows, no ubu number)
 
 Per machine (runbook + plan s10), with the lessons from the guinea pigs:
 1. BIOS: boot **USB HDD**; set **Power On with AC Attach** while you're in there.

@@ -125,3 +125,11 @@ Converted 2026-10-02 by Achilles (ELSA) with the operator.
 ELSA's key (`achilles@elsa`) is in `authorized_keys` on **ubu001** and **ubu003** (not yet ubu002). On ubu001 the operator ran
 `curl` at the console to fetch it from ELSA; the attempts before that, typed at ubu001's own console, had only added empty lines,
 which were removed. ubu001's `authorized_keys` now has exactly two keys: `jcraig@M2`, `achilles@elsa`.
+
+## Other fleet machines (not Ubuntu nodes)
+
+| Name | Hardware | OS | Role | Notes |
+|---|---|---|---|---|
+| ELSA | Dell Optiplex 980, i7-860 (4C/8T, no AVX, no integrated graphics), 6 GB DDR3 (3x2 GB, 1 slot free), 240 GB SATA SSD, Radeon HD 5450 | Windows 10 Home | Achilles' seat; builds the autoinstall stick | 192.168.1.163. Candidate Ubuntu conversion later. |
+| LIZZIE-42 | Auusda A146 14.1" (Celeron, 8 GB soldered, SATA SSD) | Windows 11 Pro 24H2 (activated) | Command center, browsing | Built-in screen broken: external monitor on mini-HDMI. Kept as Windows by the operator 2026-10-02. |
+
