@@ -10,6 +10,8 @@ Harmonia[m2-475d761f] with the operator; ubu001 and ubu002 are the guinea pigs.
 | `ubuntu_server_machines.md` | Per-machine log: hardware, IPs, battery health, what was changed |
 | `ubuntu_swarm_node_plan.md` | Node lifecycle N0-N10, auth / session / watchdog design, dated log |
 | `ubuntu_swarm_todo.md` | Open items; cleanup list; checklist for adding the next machines |
+| `provision_node.sh` | One command after the autoinstall: rename, setup script, repo, git identity, GitHub token, reboot, inventory vs ubu001 |
+| `node_inventory.sh` | Read-only per-node inventory (52 key=value lines, no secrets) |
 | `autoinstall/` | Hands-off install: CIDATA stick template + builder (`build_cidata.py`) |
 
 No secrets live here: tokens and passwords stay on the nodes (see the plan s4). This is infrastructure record-keeping and

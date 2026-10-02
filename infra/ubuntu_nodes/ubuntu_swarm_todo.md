@@ -49,7 +49,9 @@ Loose ends from adding ubu003 and the ELSA access. Tick with a date.
       (Task Manager: "4 of 4 slots", which is how soldered LPDDR4 shows up). Built-in screen broken; used with an HDMI monitor via
       mini-HDMI. Role: command center / browsing, not a Linux node. See "Other fleet machines" in `ubuntu_server_machines.md`.
 - [ ] **ubu004 = HP Pavilion x360 14m-ba0xx** (i3-7100U, 8 GB, no Ethernet port): **first autoinstall test** (CIDATA stick
-      configures Wi-Fi). In progress 2026-10-02.
+      configures Wi-Fi). In progress 2026-10-02. Wi-Fi card Intel AC 3168 (`wlp2s0`, iwlwifi). Disk is a **WD5000LPCX
+      500 GB 5400 rpm HDD, painfully slow**: wishlisted a **PNY CS900 250 GB 2.5" SATA SSD** (SSD7CS900-250-RB) to swap in later,
+      then re-run the autoinstall. BIOS: Esc = startup menu, F9 = boot devices, F10 = setup. Check whether it also has an M.2 slot.
 - [ ] **ubu005 = Lenovo ThinkPad P52s** (T580 platform, 2019). The **HDD1 ZIF connector's latch broke** while swapping
       drives; the connector body is still on the board, but reseating + taping the tray cable (several tries, both
       orientations) gives **no drive detected** in BIOS or the Ubuntu installer. The main M.2 2280 tray only connects through

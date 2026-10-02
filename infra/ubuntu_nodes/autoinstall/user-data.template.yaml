@@ -13,7 +13,7 @@ autoinstall:
   timezone: Etc/UTC
 
   # Wired port and Wi-Fi are both configured, so it works whichever the machine has.
-  # match: interface names differ per laptop (eno1, enp0s31f6, wlp4s0, ...).
+  # Wired uses match (interface names differ per laptop: eno1, enp0s31f6, ...); Wi-Fi uses early-commands (below).
   network:
     version: 2
     ethernets:
@@ -23,14 +23,19 @@ autoinstall:
         dhcp4: true
         optional: true
     wifis:
-      wifi:
-        match:
-          name: "wl*"
+      # netplan's networkd backend refuses `match:` for Wi-Fi ("does not support wifi with match rules"),
+      # so early-commands swaps in the real interface name (wlp2s0, wlp4s0, ...) before the network is set up.
+      __WIFI_IFACE__:
         dhcp4: true
         optional: true
         access-points:
           @@WIFI_SSID@@:
             password: @@WIFI_PASSWORD@@
+
+  # Runs first. The installer re-reads /autoinstall.yaml after early-commands, so this edit takes effect.
+  # No Wi-Fi card: the placeholder becomes "wlan-none" (optional, so it's ignored).
+  early-commands:
+    - "IF=$(ls /sys/class/net | grep '^wl' | head -n1); sed -i \"s/__WIFI_IFACE__/${IF:-wlan-none}/\" /autoinstall.yaml"
 
   # Whole internal disk, LVM, root LV uses ALL the space (no 100 GB default; no lvextend needed later).
   # No passphrase. Unplug any other USB drives before installing: only the install stick and CIDATA.
