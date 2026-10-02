@@ -1,0 +1,15 @@
+# Manifest for scripts_final
+
+sha256 over LF-normalised bytes (equals the git blob for text files); see comms/manifest.py.
+
+- attack3.py  sha256:b2f01f7e22825e82f98d432f87a22b0248d8e76876e4e276b8c987c8a7ef629a
+- bigcache.out  sha256:953b9413ba76847fe5e30c86baadb4ad3ca8e5576e59e8cac59ffb8b3948790b
+- bigcache.py  sha256:75b7348999c5f85345e38db9c917aa37db117f36c20adf55cfdfd937ce5e973a
+- closure1.py  sha256:a2f669c15818d7fd5e399578e05364d0daa320d63e2247bac08a11d6d516bd16
+- closure2.py  sha256:337689430e5f853a9ea63a5dbc9f2d006c2f64e4d4d5f93ca9a3c288e434137f
+- exact_class.py  sha256:3074619a380adee84fa6625cc748d116b57cc50151c85746c91f784973bafc8f
+- first_sight.py  sha256:b0dad416435d08b8a95f3e4884f894b3bb61617a71f3a53974dec080dd373841
+- first_sight_result.json  sha256:50b15e7ac5ef6640065a9373420853355991df56571bcd5279dd0eb4d4f32d0e
+- minifire.py  sha256:d6d98ca1ac453d537e8cb9a35e3b21cae326e63f3d4c16576cb2075957a39756
+- run_witness.py  sha256:927fb35fac28593c99216bc5a7a4443323996746c49ea8814340666b6cb577a8
+- witness.py  sha256:64fa40c43298b39372d6fa08a07872216d4211cbab3df01b4ad9f38414d2d9d1

@@ -23,6 +23,18 @@ read, with sha256 of the bytes on disk:
     research_notes/Wind tunnel charter review/
       reviewed_findings.md                      32db1b188e91284d6f7c2ed280b3b0613a07893ae6ee3a48aa4b5fab0852b1b5
 
+The working copy has CRLF line ends, so those hashes are of the bytes as I
+read them. The same five files as git blobs at that commit (LF line ends),
+which is what `git show f4d9e72d9:<path>` returns and what my checker
+verifies:
+
+    README.md                                   323e9bc3ef421a16960a62d4b387be32a95e12f1271ec8336a19fa10e402d71d
+    REVIEW_PACKET_2026-10-01.md                 63df251fb11e43786b22631b4dfe789f5f988d0324aa9aa2788c89fd4fbe65e8
+    VALIDATION.md                               248feb5537325c080476311c65ed4ccd19ebe78ae482b1fe1a9ec42b7ac73702
+    reports/Wind tunnel charter review.md       696a0b6e5cf5209edabc44a6d905e5317c4a38928f3bdf430350e7e8fa4df85b
+    research_notes/Wind tunnel charter review/
+      reviewed_findings.md                      5fe6227d5eff250c9d98a76e1fbc6f986fd982403ae73c35224c7e48d05d50ed
+
 The operator opened this review directory to me by naming it. I read those
 five files and nothing else in that worktree. The other architects' design
 directories stay closed.

@@ -1,0 +1,81 @@
+noticed    FAILED (failures=4)    V01 classify: a score AT the lower critical count is no longer INVERTED
+noticed    FAILED (failures=1)    V02 equivalence: WITHIN needs only one of the two one-sided tests
+noticed    FAILED (failures=1)    V03 calibration test at alpha, not alpha/2 per side
+noticed    FAILED (failures=2)    V04 design rates used at a 90% lower bound, not 99%
+SURVIVES   OK                     V05 G1.cell: a rate given as True/False is accepted
+SURVIVES   OK                     V06 G1.cell: a negative count of tuning evaluations is accepted
+SURVIVES   OK                     V07 G1.receipt: a receipt need not carry the time it ran
+noticed    FAILED (failures=2)    V08 G1.cell: attainability is not computed when two known answers are given as one pair of equal outcomes (the yes-and-no requirement dropped to one)
+SURVIVES   OK                     V09 G4.entry: the preflight is not run
+SURVIVES   OK                     V10 G5: a ruler declared valid nowhere is not blocked
+SURVIVES   OK                     V11 interchange: the state is moved at step 5, not 3
+noticed    FAILED (failures=2)    V12 G3: impostors are judged on the first further block only
+noticed    FAILED (failures=2)    V13 G5: a shared ruler is judged on the first three physics of the panel
+noticed    FAILED (failures=1)    V14 G4.entry: an impostor that beats the bound is INDETERMINATE, not FAIL
+SURVIVES   OK                     V15 G6.observer: only the first seed is checked
+SURVIVES   OK                     V16 G6.reset: only the first seed is checked
+SURVIVES   OK                     V17 G6.restart: only the first seed is checked
+SURVIVES   OK                     V18 G6.reset: the mark left on the environment is not compared
+SURVIVES   OK                     V19 G6.restart: the last cut point is not tried
+SURVIVES   OK                     V20 G8.demand: alpha 1e-6 -> 1e-3
+noticed    FAILED (failures=4)    V21 G8.demand: an UNDECIDED baseline does not stop a PASS
+SURVIVES   OK                     V22 G7.report: a report with missing fields is not blocked
+SURVIVES   OK                     V23 G7.report: a policy with no founders at all is accepted
+SURVIVES   OK                     V24 G7.report: the positive control need only reach 0.5
+SURVIVES   OK                     V25 G7.report: a repair claim needs no repair start
+SURVIVES   OK                     V26 G7.report: the bound is held to the LARGEST founder count among the policies
+SURVIVES   OK                     V27 G7.report: an unknown claim passes
+SURVIVES   OK                     V28 G7.report: an unregistered landscape is not blocked
+SURVIVES   OK                     V29 G9.clauses: a clause true in exactly 12 of 24 somewhere counts as unable to fail
+SURVIVES   OK                     V30 G10.setting: the amortization horizon need not be a count
+SURVIVES   OK                     V31 G10.setting: the effect threshold need not be a number
+SURVIVES   OK                     V32 G10.ruler: a ruler with no known positive is accepted
+SURVIVES   OK                     V33 G10.setting: 'n/a' and 'unknown' count as registered
+SURVIVES   OK                     V34 G9.sham: a sham clause that fails nowhere is not UNQUALIFIED unless it holds in every replicate of every cell
+SURVIVES   OK                     V35 G11: a confirmation from the same generator is refused whatever the claim
+SURVIVES   OK                     V36 G12: a level may be skipped (L3 without L2)
+SURVIVES   OK                     V37 G12: an ORIGIN claim needs no cold start and no class bound
+SURVIVES   OK                     V38 G12: a TRANSFER claim needs no new family
+SURVIVES   OK                     V39 G12: L1 no longer needs the resources facet
+SURVIVES   OK                     V40 G12: L2 no longer needs an attack round
+SURVIVES   OK                     V41 G12: an ECONOMY claim needs no frozen comparators
+SURVIVES   OK                     V42 G11: a boolean counts as a clock reading or a count
+noticed    FAILED (failures=1)    V43 combine: nothing checked is PASS, not BLOCKED
+SURVIVES   OK                     V44 ladder: the certificate's alpha 1e-6 -> 1e-2
+
+44 changes; 10 noticed; 34 SURVIVE; 0 pattern problems
+   - V05 G1.cell: a rate given as True/False is accepted
+   - V06 G1.cell: a negative count of tuning evaluations is accepted
+   - V07 G1.receipt: a receipt need not carry the time it ran
+   - V09 G4.entry: the preflight is not run
+   - V10 G5: a ruler declared valid nowhere is not blocked
+   - V11 interchange: the state is moved at step 5, not 3
+   - V15 G6.observer: only the first seed is checked
+   - V16 G6.reset: only the first seed is checked
+   - V17 G6.restart: only the first seed is checked
+   - V18 G6.reset: the mark left on the environment is not compared
+   - V19 G6.restart: the last cut point is not tried
+   - V20 G8.demand: alpha 1e-6 -> 1e-3
+   - V22 G7.report: a report with missing fields is not blocked
+   - V23 G7.report: a policy with no founders at all is accepted
+   - V24 G7.report: the positive control need only reach 0.5
+   - V25 G7.report: a repair claim needs no repair start
+   - V26 G7.report: the bound is held to the LARGEST founder count among the policies
+   - V27 G7.report: an unknown claim passes
+   - V28 G7.report: an unregistered landscape is not blocked
+   - V29 G9.clauses: a clause true in exactly 12 of 24 somewhere counts as unable to fail
+   - V30 G10.setting: the amortization horizon need not be a count
+   - V31 G10.setting: the effect threshold need not be a number
+   - V32 G10.ruler: a ruler with no known positive is accepted
+   - V33 G10.setting: 'n/a' and 'unknown' count as registered
+   - V34 G9.sham: a sham clause that fails nowhere is not UNQUALIFIED unless it holds in every replicate of every cell
+   - V35 G11: a confirmation from the same generator is refused whatever the claim
+   - V36 G12: a level may be skipped (L3 without L2)
+   - V37 G12: an ORIGIN claim needs no cold start and no class bound
+   - V38 G12: a TRANSFER claim needs no new family
+   - V39 G12: L1 no longer needs the resources facet
+   - V40 G12: L2 no longer needs an attack round
+   - V41 G12: an ECONOMY claim needs no frozen comparators
+   - V42 G11: a boolean counts as a clock reading or a count
+   - V44 ladder: the certificate's alpha 1e-6 -> 1e-2
+RC=0

@@ -1,0 +1,12 @@
+# Manifest for reader
+
+sha256 over LF-normalised bytes (equals the git blob for text files); see comms/manifest.py.
+
+- drv.py  sha256:a837774ea2cd5b6341418e46cb95f4d47cae19bdd9d71d2728f4a8d1f75cf223
+- p04_escapes_a.py  sha256:a7c0c40260c61ba91a80e116d78a55c710952ad7c91fd3f364109801ba6ef23e
+- p05_escapes_b.py  sha256:047b4edc932f92e8ed1c8805e08466e0b0b572bbc78aafb3373689e8b287531f
+- p06_escapes_c.py  sha256:8eb9360e41abdf21fcd15c8ad2200aa869edde5aba4ddafa02be195ce88b6bfd
+- p07_audits.py  sha256:0bc19f1aed7bf15fd7a5a4fac0b00b5cf066bf727be4797d58f08fa51e55ed54
+- p09_mutate.py  sha256:627b382ff7f40f5a65b79cf1d9d3a5ef30a098a0d7412e65bb4834ec068e6f17
+- p10_fire_checker.py  sha256:840291c508658dd4cd98bef90acc7c460a61fe7cd53127decf99334b31ff9a63
+- p11_order4.py  sha256:46bada0a432f5d9af7244eb3a7d4e607fad8c4aa1df90139efd57f8d3cafe358

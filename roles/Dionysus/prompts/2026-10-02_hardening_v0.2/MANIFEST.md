@@ -2,7 +2,7 @@
 
 sha256 over LF-normalised bytes (equals the git blob for text files); see comms/manifest.py.
 
-- 00_README.md  sha256:8e708a732b580c9c246971ad8f2f252a2e15a7bbaf2ea20d49b8a43bb8b1f924
+- 00_README.md  sha256:1fe752ece88e0a5f6707ac98a26ee3b15a21f58df4df3efbc023b0a851fef933
 - 01_OPERATOR_DIRECTIVE_as_typed.md  sha256:dd33a49ff7db725d0d09ac463a3acc253c3890aa58bdfddf87fed32388c3ef72
 - chatgpt56_01_HARDENING_DESIGN_v0.2.md  sha256:bbcf54f443f7802eefe6599ae9d208a195f8b57cbb9ea80f18687a6dc1549ab0
 - chatgpt56_02_TEST_HARNESS_SPEC.md  sha256:939e3747e19a1f7ef420688bd38c157c5ae6acc0d12316da2793b8447fd8c3b4

@@ -1,0 +1,585 @@
+{
+ "broken_cases_written_by_the_reader": 71,
+ "by_section": {
+  "G1.cell": {
+   "broken": 7,
+   "passed": 7
+  },
+  "G1.receipt": {
+   "broken": 2,
+   "passed": 2
+  },
+  "G10.ruler": {
+   "broken": 3,
+   "passed": 3
+  },
+  "G10.setting / G10.contrast": {
+   "broken": 4,
+   "passed": 4
+  },
+  "G11.custody": {
+   "broken": 5,
+   "passed": 5
+  },
+  "G12": {
+   "broken": 4,
+   "passed": 4
+  },
+  "G2.preflight": {
+   "broken": 3,
+   "passed": 1
+  },
+  "G3.exclusion (scope)": {
+   "broken": 2,
+   "passed": 2
+  },
+  "G4.entry": {
+   "broken": 3,
+   "passed": 3
+  },
+  "G5.neutrality": {
+   "broken": 6,
+   "passed": 6
+  },
+  "G6.observer": {
+   "broken": 4,
+   "passed": 4
+  },
+  "G6.reset": {
+   "broken": 1,
+   "passed": 1
+  },
+  "G6.restart": {
+   "broken": 3,
+   "passed": 3
+  },
+  "G7.calibration": {
+   "broken": 10,
+   "passed": 6
+  },
+  "G7.report": {
+   "broken": 8,
+   "passed": 8
+  },
+  "G8.demand": {
+   "broken": 3,
+   "passed": 3
+  },
+  "G9.arms": {
+   "broken": 1,
+   "passed": 1
+  },
+  "G9.clauses": {
+   "broken": 1,
+   "passed": 1
+  },
+  "G9.sham": {
+   "broken": 1,
+   "passed": 1
+  }
+ },
+ "cases": {
+  "broken": {
+   "G1.cell": [
+    {
+     "case": "power declared for one answer only {'positive':1.0}",
+     "verdict": "PASS"
+    },
+    {
+     "case": "power is NaN",
+     "verdict": "PASS"
+    },
+    {
+     "case": "power 99 (percent)",
+     "verdict": "PASS"
+    },
+    {
+     "case": "registered seeds repeated [1000,1000,1000]",
+     "verdict": "PASS"
+    },
+    {
+     "case": "table emits unregistered outcome BANANA at count 21",
+     "verdict": "PASS"
+    },
+    {
+     "case": "exposure = 'unknown' (string)",
+     "verdict": "PASS"
+    },
+    {
+     "case": "measurement alpha 1e-6 but table n=24, power self-declared 1.0 with 16 episodes",
+     "verdict": "PASS"
+    }
+   ],
+   "G1.receipt": [
+    {
+     "case": "receipt ran_at == registered_at + 1 but self-reported hash copied",
+     "verdict": "PASS"
+    },
+    {
+     "case": "receipt seeds duplicate-padded [1000,1001,1002] vs registered dupes",
+     "verdict": "PASS"
+    }
+   ],
+   "G10.ruler": [
+    {
+     "case": "any claim, members 'built', receipts are unrelated files that exist (README.md, MANIFEST.md)",
+     "verdict": "PASS"
+    },
+    {
+     "case": "strong claim: a 'positive' and four members merely flagged built, pointing at existing receipts",
+     "verdict": "PASS"
+    },
+    {
+     "case": "same without the receipts argument (as test_unqualified_and_blocked_are_not_fail calls it)",
+     "verdict": "PASS"
+    }
+   ],
+   "G10.setting / G10.contrast": [
+    {
+     "case": "power registered as 0.2",
+     "verdict": "PASS"
+    },
+    {
+     "case": "power 'not computed', horizon 'n/a'",
+     "verdict": "PASS"
+    },
+    {
+     "case": "every field is the string 'tbd'",
+     "verdict": "PASS"
+    },
+    {
+     "case": "two things change, one of them not in the dictionary",
+     "verdict": "PASS"
+    }
+   ],
+   "G11.custody": [
+    {
+     "case": "same generator renamed",
+     "verdict": "PASS"
+    },
+    {
+     "case": "confirmation with no seeds at all",
+     "verdict": "PASS"
+    },
+    {
+     "case": "acceptance rule and world filter fixed after discovery output (no field for it)",
+     "verdict": "PASS"
+    },
+    {
+     "case": "same custodian holds discovery and confirmation (no field for it)",
+     "verdict": "PASS"
+    },
+    {
+     "case": "selection_data = 'discovery' while tuning_evaluations is negative",
+     "verdict": "PASS"
+    }
+   ],
+   "G12": [
+    {
+     "case": "a structure claim whose exact_null facet is simply asserted PASS",
+     "verdict": "PASS"
+    },
+    {
+     "case": "L3 with reproduced asserted",
+     "verdict": "PASS"
+    },
+    {
+     "case": "render with conditions that are not the registered setting",
+     "verdict": "PASS"
+    },
+    {
+     "case": "render of a claim whose facets all FAILED (still PASS, level L0)",
+     "verdict": "PASS"
+    }
+   ],
+   "G2.preflight": [
+    {
+     "case": "positive declared at 1.0 but n=20 (minimum reachable)",
+     "verdict": "PASS"
+    },
+    {
+     "case": "alpha=0.5 (ruler says yes to half the class) p0=.5",
+     "verdict": "BLOCKED"
+    },
+    {
+     "case": "alpha=0.011",
+     "verdict": "BLOCKED"
+    }
+   ],
+   "G3.exclusion (scope)": [
+    {
+     "case": "always-POSITIVE ruler on a panel with no impostors",
+     "verdict": "PASS"
+    },
+    {
+     "case": "always-POSITIVE ruler on an empty panel",
+     "verdict": "PASS"
+    }
+   ],
+   "G4.entry": [
+    {
+     "case": "impostor = Inverter (retains the bit perfectly, answers complement)",
+     "verdict": "PASS"
+    },
+    {
+     "case": "impostor not matched: PACKET impostor = Constant",
+     "verdict": "PASS"
+    },
+    {
+     "case": "CHEMISTRY admitted on register organisms",
+     "verdict": "PASS"
+    }
+   ],
+   "G5.neutrality": [
+    {
+     "case": "REGISTER_SWAP declared SHARED on three look-alike physics",
+     "verdict": "PASS"
+    },
+    {
+     "case": "REGISTER_SWAP SHARED, three physics that all keep an attribute w",
+     "verdict": "PASS"
+    },
+    {
+     "case": "declared valid nowhere []",
+     "verdict": "PASS"
+    },
+    {
+     "case": "always-NEGATIVE ruler declared valid in []",
+     "verdict": "PASS"
+    },
+    {
+     "case": "interchange ruler, impostor = Inverter",
+     "verdict": "PASS"
+    },
+    {
+     "case": "class exclusion, impostor = Inverter",
+     "verdict": "PASS"
+    }
+   ],
+   "G6.observer": [
+    {
+     "case": "writes the register after the probe (t=7)",
+     "verdict": "PASS"
+    },
+    {
+     "case": "disturbs the world only on unchecked seeds",
+     "verdict": "PASS"
+    },
+    {
+     "case": "bumps the world episode counter",
+     "verdict": "PASS"
+    },
+    {
+     "case": "draws from the world stream after the last distractor",
+     "verdict": "PASS"
+    }
+   ],
+   "G6.reset": [
+    {
+     "case": "state survives reset, expressed only in cued episodes (SneakyRegister)",
+     "verdict": "PASS"
+    }
+   ],
+   "G6.restart": [
+    {
+     "case": "restore that merges with stale state (PacketAppendRestore)",
+     "verdict": "PASS"
+    },
+    {
+     "case": "restore that leaves a stale word in place (RegisterKeepIfSet)",
+     "verdict": "PASS"
+    },
+    {
+     "case": "capture that is wrong only after step 5 (checked at step 3 only)",
+     "verdict": "PASS"
+    }
+   ],
+   "G7.calibration": [
+    {
+     "case": "estimator that ran 90% of the registered budget (NEEDLE/NEUTRAL; hits 33)",
+     "verdict": "PASS"
+    },
+    {
+     "case": "estimator that ran 80% of the registered budget (NEEDLE/NEUTRAL; hits 31)",
+     "verdict": "PASS"
+    },
+    {
+     "case": "estimator that ran 70% of the registered budget (NEEDLE/NEUTRAL; hits 29)",
+     "verdict": "PASS"
+    },
+    {
+     "case": "estimator that ran 60% of the registered budget (NEEDLE/NEUTRAL; hits 27)",
+     "verdict": "FAIL"
+    },
+    {
+     "case": "estimator that ran 50% of the registered budget (NEEDLE/NEUTRAL; hits 24)",
+     "verdict": "FAIL"
+    },
+    {
+     "case": "estimator that ran 40% of the registered budget (NEEDLE/NEUTRAL; hits 21)",
+     "verdict": "FAIL"
+    },
+    {
+     "case": "estimator that adds 2 phantom hits (NEEDLE/NEUTRAL; reported 36 of 48)",
+     "verdict": "PASS"
+    },
+    {
+     "case": "estimator that adds 4 phantom hits (NEEDLE/NEUTRAL; reported 38 of 48)",
+     "verdict": "PASS"
+    },
+    {
+     "case": "estimator that adds 6 phantom hits (NEEDLE/NEUTRAL; reported 40 of 48)",
+     "verdict": "PASS"
+    },
+    {
+     "case": "estimator that adds 8 phantom hits (NEEDLE/NEUTRAL; reported 42 of 48)",
+     "verdict": "FAIL"
+    }
+   ],
+   "G7.report": [
+    {
+     "case": "COLD_DISCOVERY claimed with zero hits",
+     "verdict": "PASS"
+    },
+    {
+     "case": "COLD_DISCOVERY with 480 hits of 48 founders",
+     "verdict": "PASS"
+    },
+    {
+     "case": "a null on the needle from two policies, neither able to cross a neutral step",
+     "verdict": "PASS"
+    },
+    {
+     "case": "label 'the substrate cannot do it'",
+     "verdict": "PASS"
+    },
+    {
+     "case": "label 'no capacity in this physics'",
+     "verdict": "PASS"
+    },
+    {
+     "case": "positive control taken from another policy and landscape (as in the clean case)",
+     "verdict": "PASS"
+    },
+    {
+     "case": "start_law says COLD, the runs were repair (label only)",
+     "verdict": "PASS"
+    },
+    {
+     "case": "founders 'independent' by seed but all the same genome (seeds differ, start identical)",
+     "verdict": "PASS"
+    }
+   ],
+   "G8.demand": [
+    {
+     "case": "the probe carries the COMPLEMENT of the answer",
+     "verdict": "PASS"
+    },
+    {
+     "case": "the probe carries the answer in 40% of episodes",
+     "verdict": "PASS"
+    },
+    {
+     "case": "the cue is the xor of the last two distractors",
+     "verdict": "PASS"
+    }
+   ],
+   "G9.arms": [
+    {
+     "case": "run 3 arms, one replicate of 24 nudged by 1 to 3 tasks",
+     "verdict": "PASS"
+    }
+   ],
+   "G9.clauses": [
+    {
+     "case": "every clause 'can fail' in one catch-all cell where nothing works (no clause-specific fire test)",
+     "verdict": "PASS"
+    }
+   ],
+   "G9.sham": [
+    {
+     "case": "run 3 STRATEGIST idle sham + one cell in which another (harmful) operation is called sham",
+     "verdict": "PASS"
+    }
+   ]
+  },
+  "sound": {
+   "G1.cell": [
+    {
+     "case": "sound: no design runs were made, design_seeds=[]",
+     "verdict": "BLOCKED"
+    },
+    {
+     "case": "sound: zero exposure declared as {}",
+     "verdict": "BLOCKED"
+    }
+   ],
+   "G1.receipt": [
+    {
+     "case": "sound: same clock tick ran_at == registered_at",
+     "verdict": "FAIL"
+    }
+   ],
+   "G10.setting / G10.contrast": [
+    {
+     "case": "same setting worded differently in the two runs",
+     "verdict": "FAIL"
+    }
+   ],
+   "G4.entry": [
+    {
+     "case": "sound positive, 16 seeds (verdict unreachable): FAIL instead of BLOCKED",
+     "verdict": "FAIL"
+    },
+    {
+     "case": "sound positive, 19 seeds",
+     "verdict": "FAIL"
+    }
+   ],
+   "G5.neutrality": [
+    {
+     "case": "CLASS_EXCLUSION SHARED, right on 4 physics, a 5th registered with no organism",
+     "verdict": "UNQUALIFIED"
+    }
+   ],
+   "G7.report": [
+    {
+     "case": "label 'a bound on reach; not a claim that the target is impossible'",
+     "verdict": "FAIL"
+    },
+    {
+     "case": "bound rounded to four places (0.0605)",
+     "verdict": "FAIL"
+    },
+    {
+     "case": "a more cautious bound (99%: 0.0915)",
+     "verdict": "FAIL"
+    }
+   ],
+   "G9.arms": [
+    {
+     "case": "separate computations that both hit a 400-task cap (naive, lesion)",
+     "verdict": "FAIL"
+    }
+   ],
+   "G9.sham": [
+    {
+     "case": "a neutral sham at small counts (3 tasks intact, 4 after the sham)",
+     "verdict": "FAIL"
+    }
+   ]
+  }
+ },
+ "first_version": {
+  "is_the_code_that_wrote_its_receipt": true,
+  "its_own_tests_pass": true,
+  "summary": {
+   "all_as_registered": true,
+   "clean_cases": 34,
+   "gates": 21,
+   "gates_qualified": 21,
+   "known_escapes": 2,
+   "mutant_verdicts": {
+    "BLOCKED": 14,
+    "FAIL": 34,
+    "INDETERMINATE": 1,
+    "UNQUALIFIED": 13
+   },
+   "mutants": 62
+  }
+ },
+ "logic_changes": 25,
+ "logic_changes_not_noticed": 22,
+ "of_which_passed": 65,
+ "of_which_rejected": 12,
+ "python": "3.12.10",
+ "readers_key_world_with_a_second_boundary": {
+  "lives": 3000,
+  "mean_correct_of_16": {
+   "ACQ3 (offset-only solver, drops its table at the epoch boundary)": {
+    "across_epochs": 3.39,
+    "across_families": 15.06,
+    "first_family": 3.33
+   },
+   "ACQ3-KEEP (offset-only solver, never drops its table)": {
+    "across_epochs": 4.1,
+    "across_families": 15.06,
+    "first_family": 3.33
+   },
+   "CACHE (one cached family table + fixed 256-way re-indexer)": {
+    "across_epochs": 13.79,
+    "across_families": 15.06,
+    "first_family": 3.33
+   },
+   "ELIM (carries nothing)": {
+    "across_epochs": 3.39,
+    "across_families": 3.38,
+    "first_family": 3.33
+   }
+  }
+ },
+ "sections_probed": 19,
+ "sections_with_an_escape": 19,
+ "sound_by_section": {
+  "G1.cell": {
+   "rejected": 2,
+   "sound": 2
+  },
+  "G1.receipt": {
+   "rejected": 1,
+   "sound": 1
+  },
+  "G10.setting / G10.contrast": {
+   "rejected": 1,
+   "sound": 1
+  },
+  "G4.entry": {
+   "rejected": 2,
+   "sound": 2
+  },
+  "G5.neutrality": {
+   "rejected": 1,
+   "sound": 1
+  },
+  "G7.report": {
+   "rejected": 3,
+   "sound": 3
+  },
+  "G9.arms": {
+   "rejected": 1,
+   "sound": 1
+  },
+  "G9.sham": {
+   "rejected": 1,
+   "sound": 1
+  }
+ },
+ "sound_cases_written_by_the_reader": 12,
+ "source_sha256_lf": {
+  "first_version/rso_harness/__init__.py": "ec0c26759c79ba6f26e29de01c71663c8baf7b60a7305e53174d996b6e92a2c0",
+  "first_version/rso_harness/audits.py": "6ddf426902851df57237ef884a9144351557c1794196361df1bb22072aadd8b0",
+  "first_version/rso_harness/claims.py": "677c4552abc067428f6a59758fc09237370cd49565103440e5d494647fbfb0a4",
+  "first_version/rso_harness/meta.py": "b09dc4345430bd212604bab760f080afef6d188e70c261118f50b909020b55ef",
+  "first_version/rso_harness/registration.py": "791746b7714b62914e875478c9e4ff3ca3cc94419bd79951d4714cdef8b9325f",
+  "first_version/rso_harness/retain1.py": "025c2f0e6f20bd1a20a63af548db5c62715c52d4e7d2c7be6de5e4f663d570cc",
+  "first_version/rso_harness/rulers.py": "d6be63361e1f2571579903e9e1bd81861c05863148d0368568e8e5545eb77759",
+  "first_version/rso_harness/search.py": "c5fe553ddf5a471f87d0272cd30d2ab1070437db80491173c4e5470f2e10c162",
+  "first_version/rso_harness/stats.py": "f11078b907e791db9d5e8c6d156d2dc1b9e3797c43ce2d7ae3cbeabae60851f0",
+  "first_version/rso_harness/torture.py": "fea628d3e2560b5ecae8695e86779e417840b9c3c414a56b2ef5f0c2e09c9471",
+  "first_version/rso_harness/verdict.py": "bd27165b4b2dc4589b5b84d0661e0518670d2b61790a559fb447f587097a53d2",
+  "first_version/run_harness.py": "cfb00caaa6380f648fe908bf668427175ecc53e909af432461af954c2a9e875b",
+  "first_version/tests/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "first_version/tests/test_harness.py": "9a14ee13ae619e63552f213a45c51049da52f45823a5e754acd3e46e30a34082",
+  "reader/drv.py": "a837774ea2cd5b6341418e46cb95f4d47cae19bdd9d71d2728f4a8d1f75cf223",
+  "reader/p04_escapes_a.py": "a7c0c40260c61ba91a80e116d78a55c710952ad7c91fd3f364109801ba6ef23e",
+  "reader/p05_escapes_b.py": "047b4edc932f92e8ed1c8805e08466e0b0b572bbc78aafb3373689e8b287531f",
+  "reader/p06_escapes_c.py": "8eb9360e41abdf21fcd15c8ad2200aa869edde5aba4ddafa02be195ce88b6bfd",
+  "reader/p07_audits.py": "0bc19f1aed7bf15fd7a5a4fac0b00b5cf066bf727be4797d58f08fa51e55ed54",
+  "reader/p09_mutate.py": "627b382ff7f40f5a65b79cf1d9d3a5ef30a098a0d7412e65bb4834ec068e6f17",
+  "reader/p10_fire_checker.py": "840291c508658dd4cd98bef90acc7c460a61fe7cd53127decf99334b31ff9a63",
+  "reader/p11_order4.py": "46bada0a432f5d9af7244eb3a7d4e607fad8c4aa1df90139efd57f8d3cafe358",
+  "replay_attack.py": "4b3076c40cbb140806d92e6b9559336e9b0b2fbd9d0c1b0597e8cb2b6544d884"
+ },
+ "what": "replay of the adversarial reader's attack on the first version of the reference harness",
+ "written_at_utc": "2026-10-02T08:13:27Z"
+}
