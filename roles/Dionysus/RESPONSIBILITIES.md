@@ -2,7 +2,7 @@
 
 > Inherits roles/base-role/RESPONSIBILITIES.md and WORKING_CONTRACT.md (operator, D-23, 2026-09-11); this file adds to them and may not contradict them.
 
-Currency: 2026-10-02T00:53Z (from date -u). Seat created and chartered
+Currency: 2026-10-02T12:04Z (from date -u). Seat created and chartered
 2026-10-01 on SKULLPORT (M1). The pre-charter body of this file is at
 roles/Dionysus/superseded/RESPONSIBILITIES_2026-10-01_pre-charter.md.
 
@@ -22,6 +22,10 @@ Read, in this order:
 2b. docs/phase3/review/FABLE-5.1/00_README.md (the review of the Phase 3
    synthesis package: three responses, four preregistered runs and one
    file of exploratory probes).
+2c. docs/phase3/hardening/FABLE-5.1/00_README.md (comparison with the
+   ASTRA-6.0 review; my version of the hardening design v0.2 and of its
+   test harness specification; a reference harness that runs; the record
+   of three adversarial reads and a final round).
 3. roles/Dionysus/journal/ (latest day): what was run, what was not.
 4. roles/Dionysus/calibration/LEDGER.md: this seat's wrong calls.
 
@@ -51,6 +55,14 @@ The synthesis package opens the comparison only to the extent of the
 documents pasted; the rule below about other architects' directories still
 holds.
 
+Third directive: the operator, in chat, 2026-10-02, to compare the review
+by Enceladus (ASTRA-6.0) with mine, synthesize, synthesize with a hardening
+package by ChatGPT 5.6, and make my own version of it. Saved as typed with
+the inputs at roles/Dionysus/prompts/2026-10-02_hardening_v0.2/ (47334a5ba).
+Deliverable: docs/phase3/hardening/FABLE-5.1/. Delivered 2026-10-02 (UTC).
+The operator opened ONE directory of another architect seat by naming it
+(that review). Design directories of other architects stay closed.
+
 ## 2. Layer of operation, and overlaps this seat must not duplicate
 
 | neighbour | what it owns | how Dionysus relates |
@@ -71,6 +83,12 @@ holds.
   counterfeit/ (each preregistered; receipts are kept whatever they say),
   the exploratory probes, and check_review.py, which must pass before any
   edit to the responses is pushed.
+- docs/phase3/hardening/FABLE-5.1/: the three hardening documents,
+  check_hardening.py (must pass before any edit is pushed; an edited file
+  must be pinned again on purpose, the fire test re-run and the manifests
+  rewritten), harness/ (its tests must pass and run_harness.py must exit 0
+  after any change; four scripts there, in attack/ and beside the checker
+  rewrite receipts when run).
 - roles/Dionysus/: this seat's files.
 
 No standing monitor. No running process. No lease held.
