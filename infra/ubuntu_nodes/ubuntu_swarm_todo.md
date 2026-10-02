@@ -48,7 +48,7 @@ Loose ends from adding ubu003 and the ELSA access. Tick with a date.
 - [x] **Auusda A146 → stays Windows: `LIZZIE-42`** (operator 2026-10-02). Windows 11 Pro 24H2, activated; 8 GB soldered
       (Task Manager: "4 of 4 slots", which is how soldered LPDDR4 shows up). Built-in screen broken; used with an HDMI monitor via
       mini-HDMI. Role: command center / browsing, not a Linux node. See "Other fleet machines" in `ubuntu_server_machines.md`.
-- [ ] **ubu004 = HP Pavilion x360 14m-ba0xx** (i3-7100U, 8 GB, no Ethernet port): **first autoinstall test** (CIDATA stick
+- [x] **ubu004 = HP Pavilion x360 14m-ba0xx**: online 2026-10-02 at 192.168.1.178 (autoinstall + provision_node.sh). Remaining: token, Claude login, DHCP, SSD. (i3-7100U, 8 GB, no Ethernet port): **first autoinstall test** (CIDATA stick
       configures Wi-Fi). In progress 2026-10-02. Wi-Fi card Intel AC 3168 (`wlp2s0`, iwlwifi). Disk is a **WD5000LPCX
       500 GB 5400 rpm HDD, painfully slow**: wishlisted a **PNY CS900 250 GB 2.5" SATA SSD** (SSD7CS900-250-RB) to swap in later,
       then re-run the autoinstall. BIOS: Esc = startup menu, F9 = boot devices, F10 = setup. Check whether it also has an M.2 slot.
@@ -61,6 +61,10 @@ Loose ends from adding ubu003 and the ELSA access. Tick with a date.
       (original, 2280) + Team MP33 1TB (2280), two Lenovo 2.5" NVMe trays.
 - [ ] ELSA's own future: reimage as an Ubuntu worker (16 GB DDR3 kit ~$47) or Wake-on-LAN on demand. Its motherboard video
       ports are dead by design (the i7-860 has no integrated graphics); use the Radeon HD 5450 card for installing.
+- [ ] **Shared GitHub token** (operator decision 2026-10-02): one fine-grained no-expiry token for all new nodes, saved as
+      `C:utoinstall_secrets	okens\shared.txt` on ELSA (`provision_node.sh` uses it when there's no per-node file).
+      ubu001/002/003 keep their own tokens for now. Optionally move them to the shared token later; then delete the per-node
+      tokens on GitHub. The shared file is a plain-text live token on ELSA: keep it in that folder only.
 - [ ] **CIDATA stick** (32 GB, label CIDATA) holds the Wi-Fi password in plain text. Keep it at home; rebuild it with
       `autoinstall/build_cidata.py` if the Wi-Fi or keys change. Secrets live in `C:utoinstall_secrets\` on ELSA.
 

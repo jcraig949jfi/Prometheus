@@ -8,6 +8,7 @@ Don't record passwords here.
 | 1 | ubu001   | jcraig   | 2026-09-25 | Ubuntu Server 26.04.1 LTS | Samsung MZVLW256 238 GB NVMe | 192.168.1.218 (Wi-Fi) | **Ready**; Claude Code logged in |
 | 2 | ubu002   | jcraig   | 2026-09-25 | Ubuntu Server 26.04.1 LTS | Samsung MZVLW256 238 GB NVMe | 192.168.1.219 (Wi-Fi) | **Ready**; Claude Code logged in |
 | 3 | ubu003   | jcraig   | 2026-10-02 | Ubuntu Server 26.04.1 LTS | LITE-ON LMT-256 238 GB SATA (mSATA) | 192.168.1.220 (wired, eno1) | Setup done; Claude Code installed, **login pending** |
+| 4 | ubu004   | jcraig   | 2026-10-02 | Ubuntu Server 26.04.1 LTS | WD5000LPCX 500 GB 5400 rpm HDD | 192.168.1.178 (Wi-Fi, wlp2s0) | **Provisioned** (first autoinstall + provision_node.sh); GitHub token + Claude login pending |
 
 Fill in the IP after first login (`ip -br a`). SSH: `ssh jcraig@<ip>`.
 
@@ -132,4 +133,19 @@ which were removed. ubu001's `authorized_keys` now has exactly two keys: `jcraig
 |---|---|---|---|---|
 | ELSA | Dell Optiplex 980, i7-860 (4C/8T, no AVX, no integrated graphics), 6 GB DDR3 (3x2 GB, 1 slot free), 240 GB SATA SSD, Radeon HD 5450 | Windows 10 Home | Achilles' seat; builds the autoinstall stick | 192.168.1.163. Candidate Ubuntu conversion later. |
 | LIZZIE-42 | Auusda A146 14.1" (Celeron, 8 GB soldered, SATA SSD) | Windows 11 Pro 24H2 (activated) | Command center, browsing | Built-in screen broken: external monitor on mini-HDMI. Kept as Windows by the operator 2026-10-02. |
+
+## ubu004 (machine #4, HP Pavilion x360 14m-ba0xx)
+
+The **first node built with the autoinstall stick + `provision_node.sh`** (2026-10-02, Achilles on ELSA).
+
+- **Hardware:** i3-7100U (2C/4T), 8 GB, **WD5000LPCX 500 GB 5400 rpm HDD (slow)**; PNY CS900 250 GB SATA SSD wishlisted.
+  Wi-Fi Intel AC 3168 (`wlp2s0`, iwlwifi). No Ethernet port: installed with a USB Ethernet adapter (`enxa0cec801f116`, .221).
+  BIOS: Esc = startup menu, F9 = boot devices, F10 = setup. No battery charge-limit support (BAT0 has no thresholds).
+- **Autoinstall attempts:** #1 crashed at network apply (netplan refuses `match:` for Wi-Fi); #2 failed at `install_iw`
+  (the installer environment has no `wpa_supplicant`, so Wi-Fi was down and there was no network); #3 with the USB Ethernet
+  adapter plugged in: **success**, about 14 min from boot to SSH. It came up on Wi-Fi by itself.
+- **provision_node.sh 192.168.1.178 ubu004:** 4 min (rename, updates, Claude Code 2.1.288, clone, git identity). Inventory
+  matches ubu001 except the expected items (no GitHub token yet, no battery limit). Root LV is 455 GB (full disk, from the
+  autoinstall layout).
+- Still to do: shared GitHub token (`tokens/shared.txt` → re-run step 4 or the whole script), Claude login, DHCP reservation for .178.
 
