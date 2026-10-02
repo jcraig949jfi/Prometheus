@@ -13,7 +13,7 @@ df -h / | tail -1
 step "2 apt update + full-upgrade"
 apt-get update -q
 apt-get -y -q -o Dpkg::Options::=--force-confdef -o Dpkg::Options::=--force-confold full-upgrade
-apt-get -y -q install iw git curl htop tmux
+apt-get -y -q install iw git curl htop tmux gh jq python3-venv python3-pip
 apt-get -y -q autoremove
 
 step "3 lid switch -> ignore"
