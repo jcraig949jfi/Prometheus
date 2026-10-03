@@ -52,7 +52,7 @@
     "cleanup": "REMOVE_WORKTREE",
     "preemption_policy": "REPLAY_FROM_START"
   },
-  "status": "READY",
+  "status": "IMPLEMENTING",
   "history": [
     {
       "status": "PROPOSED",
@@ -65,6 +65,18 @@
       "by": "Achilles",
       "at_utc": "2026-10-03T10:30:00Z",
       "note": "coordinator of C-005"
+    },
+    {
+      "status": "CLAIMED",
+      "by": "PrometheusWorker/ubu002/ubu002-svc",
+      "at_utc": "2026-10-03T10:24:26Z",
+      "note": "generic execution"
+    },
+    {
+      "status": "IMPLEMENTING",
+      "by": "PrometheusWorker/ubu002/ubu002-svc",
+      "at_utc": "2026-10-03T10:24:26Z",
+      "note": "running registered command unchanged"
     }
   ]
 }
