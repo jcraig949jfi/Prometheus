@@ -165,8 +165,8 @@
    "schema": "nyx.atlas/1-provenance",
    "migrated_at": "2026-09-16T17:24Z",
    "migrated_from": "nyx.atlas/0 (record at origin/main ef05d395f)",
-   "provenance_grade_read": "UNKNOWN",
-   "grade_basis": "Techne FOSSIL_PACKET.json PROVENANCE_GRADE where issued, else the record's handoff string mapped (populated per R34; Harmonia may re-grade)",
+   "provenance_grade_read": "RECONSTRUCTION",
+   "grade_basis": "Techne FOSSIL_PACKET.json PROVENANCE_GRADE where issued, else the record's handoff string mapped (populated per R34; Harmonia may re-grade); PSEUDOCODE_PLUS_REFERENCE_IMPL -> RECONSTRUCTION by Techne ruling #1188 (2026-09-30): third-party implementation of a published mechanism; the repository bytes are the implementer's own originals (pinned commit in the record); the mechanism's own canonical text is the paper/standard named in the record's lineage. Fidelity to it is CLAIMS_EQUIVALENCE_TO, to be shown, not a grade",
    "source_object_id": "https://github.com/tarequeh/DES@6ad9df7a543481f9e419df90e4b69cd4cbbe8322",
    "payload_manifest_id": "techne tree_sha256 ca9cb18afc5605e28a56bce37d8340453bacb792f35321f4d139c4d9cee85d7c (6 files)",
    "host_tree_matches_record": true,
@@ -180,7 +180,15 @@
      "refs": 5
     }
    ],
-   "unresolved_refs": []
+   "unresolved_refs": [],
+   "grade_history": [
+    {
+     "was": "UNKNOWN",
+     "basis_was": "Techne FOSSIL_PACKET.json PROVENANCE_GRADE where issued, else the record's handoff string mapped (populated per R34; Harmonia may re-grade)",
+     "changed": "2026-10-03 (applied by Nyx[gandalf-d1f90ae1])",
+     "by": "Techne ruling #1188 (2026-09-30): source type PSEUDOCODE_PLUS_REFERENCE_IMPL"
+    }
+   ]
   }
  },
  "organs": [
