@@ -36,6 +36,7 @@ SPEC = REPO / "techne" / "fossils" / "specimens"
 GRADES = {"ORIGINAL_AUTHORITATIVE_RELEASE": "ORIGINAL_ARTIFACT", "RECONSTRUCTION": "RECONSTRUCTION", "TRANSCRIPTION": "LATER_TRANSCRIPTION"}
 SOURCE_TYPE_GRADES = {"PSEUDOCODE_PLUS_REFERENCE_IMPL": "RECONSTRUCTION", "FAITHFUL_PORT": "RECONSTRUCTION",
                       "LATER_SAME_LINEAGE_RELEASE": "ORIGINAL_ARTIFACT"}   # Techne ruling #1188
+DERIVED_SOURCE_TYPES = ("REGENERATED_FROM_FROZEN_RECIPE",)            # Harmonia rollout-grade ruling (Techne names the value)
 
 
 def techne_hashes(fid: str) -> dict:
@@ -58,6 +59,12 @@ def grade_from_record(rec: dict, fid: str = "") -> str:
         g = json.loads(pk.read_text(encoding="utf-8")).get("PROVENANCE_GRADE")
         if isinstance(g, list) and g and g[0].get("grade"):
             return g[0]["grade"]
+    # Harmonia RULING R19 rollout grade (2026-09-30, c7b9e10f9; Nyx #1074): an artifact regenerated in-house from a frozen recipe
+    # (the 39 asal-rollout-* records; they carry CAPSULE.json) is a DERIVED_RECOVERY_ARTIFACT and never grades higher than its
+    # source body. The source type check covers Techne's new value; the CAPSULE.json check keeps the R19 merge impossible
+    # even while a record still carries ORIGINAL_AUTHORITATIVE_RELEASE.
+    if rec.get("source_type") in DERIVED_SOURCE_TYPES or (fid and (SPEC / fid / "CAPSULE.json").exists()):
+        return "DERIVED_RECOVERY_ARTIFACT"
     s = (rec.get("nyx_handoff") or {}).get("where_it_came_from", "")
     for k, v in GRADES.items():
         if k in s:
@@ -86,6 +93,9 @@ def grade_basis_from_record(rec: dict) -> str:
                 "(unix-history-repo); ruled for odepack-netlib / bsd-tcp-4.2-1983 / compact-4.2bsd-1983 and applied to the other "
                 "archive-mirror records by the same reasoning until TECHNE-89 issues per-record blocks")
     st = rec.get("source_type")
+    if st in DERIVED_SOURCE_TYPES or (rec.get("handoff") == "CAPSULE.json"):
+        return (base + "; DERIVED_RECOVERY_ARTIFACT by Harmonia's R19 rollout ruling (2026-09-30): regenerated in-house from a frozen recipe; "
+                "licenses claims about these rollouts under ASAL as we ran it, not about Chan 2019 or Sakana 2024")
     if st in ("PSEUDOCODE_PLUS_REFERENCE_IMPL", "FAITHFUL_PORT"):
         return (base + "; " + st + " -> RECONSTRUCTION by Techne ruling #1188 (2026-09-30): third-party implementation of a published mechanism; "
                 "the repository bytes are the implementer's own originals (pinned commit in the record); the mechanism's own canonical text is "
