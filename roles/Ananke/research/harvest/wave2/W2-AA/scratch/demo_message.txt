@@ -1,0 +1,95 @@
+===BEGIN REPORT===
+<!-- DEPOSITED VERBATIM by Ananke for worker ../harvest/H-PLANT; sha256(report)=ec755265240414c7; delimited; see REPORT.provenance.json -->
+H-PLANT REPORT (worker H-PLANT for Ananke; frozen plan 01234c0ad, not edited)
+Directory: roles/Ananke/research/harvest/H-PLANT/ (PLAN.md, PLAN_ADDENDUM.md, LOG.md, hp_common.py, hp_plants.py, gate.py, run_xor.py, run_flip_mh.py, lightcone.py, lc_census.py, out/*.json)
+Independence: before writing PLAN.md I read no principal synthesis. A filename grep listed harvest/H-SCI/REPORT.md and INFERENCE_HARVEST_HANDOFF.md, but I did not open them. From a W-I raw output I read 150 characters, only to learn that "d9cc" is a physics digest (d9ccb6a71d986501). No context contamination.
+
+Methods
+- CPU only.
+- Scoring: 256 fresh worlds = 128 mirror pairs, seeds assays.world_seeds(0x48504C54 "HPLT", 256).
+- 99% CI: percentile bootstrap over the 128 pairs (assays.pair_ci, 2000 resamples, seed 0).
+- Design and screen runs used separate DEV worlds (0x48504C44, 32 worlds).
+
+1. KNOWN-ANSWER GATE: PASS (reproduced exactly; out/gate.json)
+- G1a, relay_flood: C1 plant_viability row 29b7e63a5fa4a78b (d9cc, RELAY d3 delta16). Recorded .9609375, reproduced .9609375.
+- G1b, relay_flood: C1b fixture F_DA, normal. Recorded 1.0, reproduced 1.0.
+- G2, echo_hold: C1b fixture F_echo, normal. Recorded 1.0, reproduced 1.0.
+
+2. P-XOR
+Program (16 lines; state_dim 4, payload_width 2, channels 1; Pd = env period):
+ 0 CONST T3 = Pd-1          1 MOD T2 = S3 mod Pd     2 ADDI S3 = S3+1 (global tick clock)
+ 3 GT T2 = (phase>0)        4 MULQ S1 = S1*T2        5 MULQ S2 = S2*T2 (reset flags at trial onset)
+ 6 MAX T0 = max(SENSE,IN0_0) 7 GT T0 = T0>0 (+ evidence)  8 GT T1 = IN0_1>SENSE (- evidence)
+ 9 GT PAY0 = T0>S1          10 GT PAY1 = T1>S2       11 ADD EMIT = PAY0+PAY1 (forward each newly learned flag once)
+12 MAX S1 = max(S1,T0)      13 MAX S2 = max(S2,T1)   14 XOR T3 = S1^S2    15 ADDI S0 = T3-128
+How it works: the plant floods the set of cue signs seen in the current trial (P = "a + cue exists", Q = "a - cue exists"). The readout is - when both flags are set and + otherwise.
+Physics and results:
+- X0, chosen physics (in C1 ranges): torus 64 r3, dest all, loss 0, lat_base 1, lat_hop 0, jitter 0, dup 0, noise 0, cap 0, collision none, decay 0, sync period 1, no economy; env XOR d3 delta8. Accuracy 1.000 [1.000, 1.000].
+- Strict C1-sampled point: the full C1 dial vector, no override, of A0 census row aa2b8d6805a15ec6. That physics is random144 k6, sample fanout 8, loss .3, lat 4, dup .1, cap 4/none, economy low, rules 2, setrule 1, wimm 1, plastic_route 1, state_dim 4, payload 4, prog_len 16; env XOR d2 delta16. Accuracy .663 [.636, .687].
+- Communication-physics point: A0 row 4eeca9f10c514f08, with the genome-space fields overridden in the C1b at_specimen way (prog_len 8->16, state_dim 1->4, and others). This was the top cell of a pre-declared screen over all 18 C1 XOR rows the plant can run on (screen accuracy .841). Accuracy .805 [.784, .826].
+- d9cc, the one XOR point where C1 searched (C1 cells d64656f26736d37c and 1b26026fc846d03d): analytic light-cone bound. With the fastest possible transport and no loss or caps, both cues can reach the actuator by readout in only 14.84% of scored trials. So any program scores at most .574, below .60. The plant was not run there (it needs update_period 1; d9cc has 2).
+Must-fail:
+- Gated, MF-XOR-a: "readout ignoring one sensor", run as sensor s2's cue zeroed. Result .500 [.500,.500] at X0, .4997 [.498,.501] at 4eeca9f1, .500 [.500,.500] at aa2b8d68. PASS everywhere.
+- Diagnostic, MF-XOR-b: Q zeroed in the readout, i.e. "+ iff P". Result .237 at X0, .340 at 4eeca9f1, .412 at aa2b8d68. Far from .5 (see Disagreements, item 4).
+Reading: PHYSICS ALLOWS. lo99 > .60 at X0 and at a C1-sampled full dial vector. The caveat is that aa2b8d68 is an A0 census point where no search ran.
+Implication for H6: XOR is reachable inside C1's physics census, so it is not ruled out by physics in general. But "C1 NULLs are search" is FALSE for d9cc XOR, where physics plus the env's actuator placement cap any program at .574. At C1's other XOR evolve points this test decides nothing. Three of those rows were in the screen and scored .50-.57 at 32 worlds, which is not a reading. In the census (section 6), 17% of XOR evolve rows are capped below .60 by the light cone.
+
+3. P-FLIP
+Program (16 lines; state_dim 2 suffices, so d9cc runs exactly as C1 sampled it):
+ 0 ADD T0 = SENSE+IN0_0      1 CONST T2 = 128      2 SUB T3 = -T2
+ 3 GT PAY0 = T0>128          4 GT T3 = -128>T0     5 SUB PAY0 = PAY0-T3 (v = cue sign*256; the +-128 teacher is excluded)
+ 6 SUB T0 = v-S1             7 MULQ EMIT = T0*v (re-emit only on change)
+ 8 MULQ T1 = S0*S1_old       9 MULQ T2 = v*v       10 SEL T2 = T2>0 ? v : S1    11 MOV S1 = T2
+12 MULQ S0 = T1*S1_new (keeps S0 = m*c)   13 MULQ T3 = SENSE*SENSE   14 SEL T3 = T3>0 ? SENSE : S0   15 MOV S0 = T3 (teacher sets S0 = tau)
+Physics and results:
+- d9cc exactly as C1 sampled it: the physics of C1 FLIP cell 6f82f9c7d51bcef1, where C1's search held .479 (env d3 delta16 block4, 16 trials). Accuracy .978 [.962, .990].
+- d9cc lossless variant (loss 0, jitter 0, cap 0, collision none). Accuracy .997 [.990, 1.000].
+Must-fail:
+- Gated, teacher operand zeroed: .500 [.500,.500] at both physics. PASS.
+- Diagnostic, readout ignores m: .499 [.489,.509] at d9cc and .497 [.491,.500] lossless.
+Reading: PHYSICS ALLOWS, at the exact physics where C1 searched FLIP.
+Implication for H6: supports "search, not physics" for the d9cc FLIP NULLs (cells 6f82f9c7, held .479, and ef77ef2e, held .507). A 16-line program inside C1's own genome space solves FLIP at about .98.
+
+4. P-MULTIHOP
+Program: plants.relay_flood, unchanged.
+ 0 ADD T0 = SENSE+IN0_0   1 GT T2 = T0>0   2 GT T3 = 0>T0   3 SUB T1 = T2-T3
+ 4 MULQ T2 = T1*T1   5 XOR T3 = T1^S0   6 MULQ T3 = T3*T3   7 MULQ EMIT = T2*T3
+ 8 MOV PAY0 = T1   9 SUB T3 = T1-S0   10 MULQ T3 = T3*T2   11 ADD S0 = S0+T3
+Every site that changes its value relays it.
+Physics and results:
+- d9cc exactly as C1 sampled it, env of C1 RELAY NULL cell fac4aaa23a0bdcb2 (d5 delta16; ring distance 5 > radius 3, so at least 2 hops are forced; C1 search held .5). Accuracy .984 [.969, .995].
+- d9cc, d6 (= 2*radius, outside the census env levels). Accuracy .978 [.962, .991].
+- Lossless d9cc, d5. Accuracy .999 [.996, 1.0].
+- Lossless d9cc, d6. Accuracy .999 [.996, 1.0].
+Must-fail (gated), relay disabled (EMIT only at sites with SENSE != 0): .500 [.500,.500] in all four. PASS.
+Reading: PHYSICS ALLOWS.
+Implication for H6: supports "search, not physics" for the d9cc multi-hop RELAY NULL.
+
+5. COMPUTE AND GPU
+- About 1221 CPU core-seconds, roughly 0.34 core-hours of the 2.0 cap. Per-run figures are in LOG.md (process_time across all threads; 2-8 threads; this includes an estimated ~60 s for row-inspection one-liners that were not timed).
+- GPU touch: none. Every engine process ran with CUDA_VISIBLE_DEVICES=-1, hp_common asserts torch.cuda.is_available() is False, and every World used device="cpu".
+- Not airtight: a few exploratory one-liners that read rows and imported prometheus.ananke without the env var, and one probe that printed torch.__version__. None of them made a CUDA call.
+
+6. EXTRA (ADDENDUM A7, analytic, no reading depends on it): light-cone census of C1 evolve rows
+This counts rows where no program could reach .60 because the cue cannot physically reach the actuator in time. It is optimistic for async rows.
+- XOR: 37 of 218 rows (17.0%).
+- FLIP: 24 of 247 (9.7%).
+- RELAY: 22 of 406 (5.4%).
+Sanity check: none of the 55 RELAY rows with held lo99 > .55 falls under the bound, so the bound is never contradicted by observed accuracy.
+
+7. DISAGREEMENTS (all with the frozen plan's premises; I read no principal synthesis)
+(1) The plan says no plant exists for multi-hop RELAY at any physics. relay_flood is already a multi-hop plant: it scores .984 at d9cc d5, and C1's own A0 plant rows reach .97-.99 at multi-hop envs (e.g. torus r1 d2, torus r3 d5). What was missing was a measurement at d9cc, not a plant.
+(2) The plan's one-hop XOR design is not possible under envs.build. The XOR actuator is placed uniformly at distance >= max(1, d//2) from both sensors, so it is not a neighbour of both in every world. I replaced it with a flood plus a tick clock (ADDENDUM A1).
+(3) "C1 NULLs are search, not physics" does not hold for d9cc XOR. The light-cone bound caps it at .574.
+(4) XOR loophole: the mirror negates only x1, so a readout built from a single sign flag keeps the x1*x2 term. Measured: "+ iff P" scores .237 at X0. Its negation, "+ iff no P", is a plain OR-type rule, and since the readout is never zero (no ties) it scores 1 - .237 = .763 there. So C1's SIGNAL rule for XOR (lo99 > .55) can be met without computing XOR. XOR SIGNAL claims should be checked against one-flag readouts.
+(5) Strictness of "a physics point C1 sampled": with genome-space overrides (the C1b A2.2 convention; C1's plant_viability itself reset prog_len) a point is not a full C1 dial vector. I report XOR in both senses; FLIP and MULTIHOP needed no override.
+
+8. ADDENDUM ITEMS (PLAN_ADDENDUM.md, each written before the run it affects)
+- A1: P-XOR is a flood plus a clock, not one-hop; chosen physics X0.
+- A2: XOR C1 point = d9cc light-cone bound, plus a pre-declared screen of the 18 clock-compatible C1 XOR rows with genome-space fields set to the plant's; top-1 scored fresh.
+- A3: MF-XOR (gated) = sensor s2's cue zeroed; the Q-in-readout version is a diagnostic only.
+- A4: multi-hop env is d=5 (C1-sampled); d=6 (= 2*radius, outside the census env levels) run as an extra; P-MULTIHOP = relay_flood unchanged.
+- A5: sources of the gate's recorded values.
+- A6: added a strict, no-override scoring at aa2b8d6805a15ec6. This was written after the top-1 score, so it is a post-screen addition, and it is labelled as such.
+- A7: light-cone census.
+===END REPORT===

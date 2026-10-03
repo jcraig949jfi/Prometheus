@@ -1,0 +1,85 @@
+{
+ "worker": "W-DEMO",
+ "mode": "delimited",
+ "sha256_report": "6b17eb1c9c4b24076532e6d6e26edddde4fec0e980146c613539fbb485a667e5",
+ "sha256_message": "1424d9514f40d4708f3d0d6da30c28b447c95240023fd9cdeff63473063e7d5f",
+ "source": "demo-hplant-report",
+ "depositor": "Ananke",
+ "deposited_at_utc": "2026-10-01T02:49:23+00:00",
+ "file": "REPORT.md",
+ "kind_audit": {
+  "status": "ok",
+  "tool": "kind_audit/1.0 (W2-AA, from W2-I)",
+  "rows": "F:\\Prometheus-worktrees\\ananke-base-role\\roles\\Ananke\\pte\\c1_rows\\cells.jsonl.gz",
+  "min_len": 8,
+  "scope": "block",
+  "citations": 15,
+  "counts": {
+   "HIGH": 3,
+   "NAMING": 0,
+   "LOW": 2
+  },
+  "counts_window_scope": {
+   "HIGH": 3,
+   "NAMING": 0,
+   "LOW": 2
+  },
+  "flags": [
+   {
+    "line": 30,
+    "token": "1b26026fc846d03d",
+    "cell_id": "1b26026fc846d03d",
+    "kind": "transfer",
+    "wave": "C",
+    "severity": "HIGH",
+    "severity_window": "HIGH",
+    "terms": "search",
+    "terms_outside_block": ""
+   },
+   {
+    "line": 51,
+    "token": "ef77ef2e",
+    "cell_id": "ef77ef2e0a1026c2",
+    "kind": "transfer",
+    "wave": "C",
+    "severity": "HIGH",
+    "severity_window": "HIGH",
+    "terms": "held|search",
+    "terms_outside_block": ""
+   },
+   {
+    "line": 60,
+    "token": "fac4aaa23a0bdcb2",
+    "cell_id": "fac4aaa23a0bdcb2",
+    "kind": "transfer",
+    "wave": "C",
+    "severity": "HIGH",
+    "severity_window": "HIGH",
+    "terms": "NULL|held|search",
+    "terms_outside_block": ""
+   },
+   {
+    "line": 33,
+    "token": "aa2b8d68",
+    "cell_id": "aa2b8d6805a15ec6",
+    "kind": "census",
+    "wave": "A0",
+    "severity": "LOW",
+    "severity_window": "LOW",
+    "terms": "search",
+    "terms_outside_block": ""
+   },
+   {
+    "line": 34,
+    "token": "aa2b8d68",
+    "cell_id": "aa2b8d6805a15ec6",
+    "kind": "census",
+    "wave": "A0",
+    "severity": "LOW",
+    "severity_window": "LOW",
+    "terms": "search",
+    "terms_outside_block": ""
+   }
+  ]
+ }
+}

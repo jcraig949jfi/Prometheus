@@ -1,0 +1,118 @@
+{
+ "tag": "m2spec",
+ "status": {
+  "normal": "RAN",
+  "normal_from1": "RAN",
+  "reset_all_nonpacket": "RAN",
+  "reset_w": "RAN",
+  "flush_inflight_iti": "RAN",
+  "flush_inflight": "RAN",
+  "reset_inbox": "RAN"
+ },
+ "repro": {
+  "normal": {
+   "cpu": [
+    0.8828,
+    0.8385,
+    0.9219
+   ],
+   "recorded": [
+    0.8828,
+    0.8385,
+    0.9219
+   ],
+   "match": true
+  },
+  "normal_from1": {
+   "cpu": [
+    0.8878,
+    0.8494,
+    0.9247
+   ],
+   "recorded": [
+    0.8878,
+    0.8494,
+    0.9247
+   ],
+   "match": true
+  },
+  "reset_all_nonpacket": {
+   "cpu": [
+    0.821,
+    0.7747,
+    0.8639
+   ],
+   "recorded": [
+    0.821,
+    0.7747,
+    0.8639
+   ],
+   "match": true
+  },
+  "reset_w": {
+   "cpu": [
+    0.8171,
+    0.7695,
+    0.8587
+   ],
+   "recorded": [
+    0.8171,
+    0.7695,
+    0.8587
+   ],
+   "match": true
+  },
+  "flush_inflight_iti": {
+   "cpu": [
+    0.8878,
+    0.8494,
+    0.9247
+   ],
+   "recorded": [
+    0.8878,
+    0.8494,
+    0.9247
+   ],
+   "match": true
+  },
+  "flush_inflight": {
+   "cpu": [
+    0.4974,
+    0.4896,
+    0.5052
+   ],
+   "recorded": [
+    0.4974,
+    0.4896,
+    0.5052
+   ],
+   "match": true
+  },
+  "reset_inbox": {
+   "cpu": [
+    0.8828,
+    0.8385,
+    0.9219
+   ],
+   "recorded": [
+    0.8828,
+    0.8385,
+    0.9219
+   ],
+   "match": true
+  }
+ },
+ "extra": {
+  "census_C": {
+   "acc": 0.4361979166666667,
+   "lo99": 0.37890625,
+   "hi99": 0.48828125,
+   "perm_p": 0.9980009995002499,
+   "pass": false
+  }
+ },
+ "wall_s": 36.12774658203125,
+ "seeds_ns": "0xc1b0",
+ "device": "cpu",
+ "graph": false
+}

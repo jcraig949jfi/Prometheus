@@ -1,0 +1,16 @@
+PASSED roles/Ananke/research/harvest/H-IMPL/tests/test_controls_label_mask.py::test_legacy_labels_unchanged
+PASSED roles/Ananke/research/harvest/H-IMPL/tests/test_engine_trace_past_schedule.py::test_within_schedule_is_unchanged
+PASSED roles/Ananke/research/harvest/H-IMPL/tests/test_handoff_coverage.py::test_recorded_wm_census_results_unchanged
+PASSED roles/Ananke/research/harvest/H-IMPL/tests/test_wave_d_resume_determinism.py::test_first_attempt_unchanged
+FAILED roles/Ananke/research/harvest/H-IMPL/tests/test_controls_label_mask.py::test_label_with_reset_mask_does_not_raise
+FAILED roles/Ananke/research/harvest/H-IMPL/tests/test_controls_label_mask.py::test_distractor_channel_zero_is_labelled
+FAILED roles/Ananke/research/harvest/H-IMPL/tests/test_engine_trace_past_schedule.py::test_trace_last_row_survives_running_past_schedule
+FAILED roles/Ananke/research/harvest/H-IMPL/tests/test_engine_trace_past_schedule.py::test_census_rows_survive_running_past_schedule
+FAILED roles/Ananke/research/harvest/H-IMPL/tests/test_handoff_coverage.py::test_unmeasured_final_offsets_do_not_pass
+FAILED roles/Ananke/research/harvest/H-IMPL/tests/test_handoff_coverage.py::test_site_run_is_anchored_at_readout_minus_one
+FAILED roles/Ananke/research/harvest/H-IMPL/tests/test_twin_reach_nearest_sensor.py::test_silent_program_has_no_distal_reach[MAJ]
+FAILED roles/Ananke/research/harvest/H-IMPL/tests/test_twin_reach_nearest_sensor.py::test_silent_program_has_no_distal_reach[XOR]
+FAILED roles/Ananke/research/harvest/H-IMPL/tests/test_twin_reach_nearest_sensor.py::test_single_perturbed_sensor_families_agree[RELAY]
+FAILED roles/Ananke/research/harvest/H-IMPL/tests/test_twin_reach_nearest_sensor.py::test_single_perturbed_sensor_families_agree[FLIP]
+FAILED roles/Ananke/research/harvest/H-IMPL/tests/test_wave_d_resume_determinism.py::test_resume_regenerates_identical_d_specs
+11 failed, 4 passed in 4.95s
