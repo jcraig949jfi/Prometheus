@@ -210,7 +210,131 @@ def test_broken_links_are_reported(tmp_path):
     assert any("TH-MISSING not found" in m for m in core.validate_all(ops2 / "campaigns", ops2)["campaign C-900"])
 
 
-def test_links_are_optional_and_campaign_names_thread_not_epic(tmp_path):
+def test_links_are_optional_and_campaign_epic_must_match_its_thread(tmp_path):
     ops = _ops(tmp_path, camp_thread=None)
     assert core.validate_all(ops / "campaigns", ops) == {}
-    assert any("names its thread_id, not an epic" in e for e in core.validate_campaign(dict(CAMP, epic_id="EP-X")))
+    # 2026-10-03 (epics/phase2b): campaigns may carry epic_id; it must equal the thread's epic
+    ops2 = _ops(tmp_path / "b")
+    f = ops2 / "campaigns" / "C-900" / "CAMPAIGN.json"
+    c = json.loads(f.read_text()); c["epic_id"] = "EP-OTHER"; f.write_text(json.dumps(c))
+    errs = core.validate_all(ops2 / "campaigns", ops2)["campaign C-900"]
+    assert any("differs from its thread's epic" in m for m in errs)
+    assert any("unknown epic_id EP-OTHER" in m for m in errs)
+
+
+# ------------------------------------------------------------------------------------------------ epic scope (2026-10-03)
+
+def _two_epics(tmp_path):
+    """EP-X (thread TH-A, campaign C-900) and EP-Y (thread TH-B, campaign C-901); seat Restricted -> EP-X only."""
+    ops = _ops(tmp_path)
+    ep_y = dict(EPIC, epic_id="EP-Y", threads=["TH-B"])
+    (ops / "epics" / "EP-Y").mkdir()
+    (ops / "epics" / "EP-Y" / "EPIC.json").write_text(json.dumps(ep_y))
+    (ops / "threads" / "TH-B.md").write_text("# TH-B\n\nepic: EP-Y\n")
+    camp_y = dict(CAMP, campaign_id="C-901", thread_id="TH-B")
+    d = ops / "campaigns" / "C-901"
+    (d / "tasks" / "T9").mkdir(parents=True)
+    (d / "CAMPAIGN.json").write_text(json.dumps(camp_y))
+    (d / "tasks" / "T9" / "TASK.json").write_text(json.dumps(_task("T9", campaign_id="C-901", owner="Open",
+                                                                    eligible_roles=["Restricted"])))
+    roles = tmp_path / "roles"
+    (roles / "Restricted").mkdir(parents=True)
+    (roles / "Restricted" / "SCOPE.json").write_text(json.dumps({"allowed_epics": ["EP-X"]}))
+    return ops, roles
+
+
+def test_task_epic_resolves_through_campaign_and_thread(tmp_path):
+    ops, _ = _two_epics(tmp_path)
+    camps = core.load_campaigns(ops / "campaigns")
+    assert core.resolve_epic({"campaign_id": "C-901"}, camps, ops) == "EP-Y"
+    assert core.resolve_epic({"campaign_id": "C-900"}, camps, ops) == "EP-X"
+    f = ops / "campaigns" / "C-901" / "tasks" / "T9" / "TASK.json"
+    t = json.loads(f.read_text()); t["epic_id"] = "EP-X"; f.write_text(json.dumps(t))
+    assert any("differs from its resolved epic EP-Y" in m for m in core.validate_all(ops / "campaigns", ops)["task T9"])
+
+
+def test_restricted_seat_cannot_see_or_claim_another_epics_task(tmp_path):
+    ops, roles = _two_epics(tmp_path)
+    assert core.ready_for("Restricted", ops / "campaigns", roles) == []
+    with pytest.raises(ValueError, match="epic scope"):
+        core.transition(ops / "campaigns" / "C-901" / "tasks" / "T9", "CLAIMED", "Restricted[m1-x]",
+                        root=ops / "campaigns", roles=roles)
+    assert not (ops / "campaigns" / "C-901" / "tasks" / "T9" / "LEASE.json").exists()
+
+
+def test_unrestricted_seat_claims_in_its_epic_and_lease_records_epic_and_host(tmp_path):
+    ops, roles = _two_epics(tmp_path)
+    assert [t["task_id"] for t in core.ready_for("Open", ops / "campaigns", roles)] == ["T9"]
+    core.transition(ops / "campaigns" / "C-901" / "tasks" / "T9", "CLAIMED", "Open[ubu004-x]",
+                    root=ops / "campaigns", roles=roles)
+    lease = json.loads((ops / "campaigns" / "C-901" / "tasks" / "T9" / "LEASE.json").read_text())
+    assert lease["epic_id"] == "EP-Y" and lease["host"]
+    row = [r for r in core.report(ops / "campaigns") if r["task_id"] == "T9"][0]
+    assert (row["epic_id"], row["thread_id"], row["campaign_id"], row["status"], row["holder"]) == \
+        ("EP-Y", "TH-B", "C-901", "CLAIMED", "Open[ubu004-x]")
+
+
+def test_restricted_seat_still_claims_inside_its_scope(tmp_path):
+    ops, roles = _two_epics(tmp_path)
+    f = ops / "campaigns" / "C-900" / "tasks" / "T1" / "TASK.json"
+    t = json.loads(f.read_text()); t["eligible_roles"] = ["Restricted"]; f.write_text(json.dumps(t))
+    assert [x["task_id"] for x in core.ready_for("Restricted", ops / "campaigns", roles)] == ["T1"]
+
+
+def test_permanent_epic_has_no_end_date_and_cannot_close():
+    perm = dict(EPIC, permanent=True, end_date=None)
+    assert core.validate_epic(perm) == [] and core.validate_epic(dict(perm, end_date="NONE")) == []
+    assert any("no end date" in e for e in core.validate_epic(dict(perm, end_date="2027-01-01")))
+    assert any("cannot be CLOSED" in e for e in core.validate_epic(dict(perm, status="CLOSED")))
+    assert any("status must be one of" in e for e in core.validate_epic(dict(EPIC, status="DONE")))
+
+
+def test_campaign_closure_does_not_close_thread_or_epic(tmp_path):
+    ops = _ops(tmp_path)
+    f = ops / "campaigns" / "C-900" / "CAMPAIGN.json"
+    c = json.loads(f.read_text()); c["status"] = "CLOSED"; f.write_text(json.dumps(c))
+    assert core.validate_all(ops / "campaigns", ops) == {}
+    assert core.load_epics(ops)["EP-X"][1]["status"] == "ACTIVE"
+    assert core.thread_epic(ops, "TH-A") == "EP-X"
+
+
+def test_template_instantiates_a_valid_campaign(tmp_path):
+    import shutil
+    ops = tmp_path / "ops"
+    shutil.copytree(core.OPS / "epics", ops / "epics")
+    (ops / "threads").mkdir()
+    for th in ("TH-P2B-ENGINE-HARDENING.md", "TH-GLOBAL-EVIDENCE-REFINERY.md", "TH-RSO-BUILD.md"):
+        shutil.copy(core.OPS / "threads" / th, ops / "threads")
+    (ops / "campaigns" / "C-007").mkdir(parents=True)          # the next id must skip existing ones
+    d = core.new_campaign("P2B-ENGINE-REENTRY", "Nestor", "NPE", "Nestor[m1-abc]", root=ops / "campaigns")
+    assert d.name == "C-008"
+    shutil.rmtree(ops / "campaigns" / "C-007")
+    errs = core.validate_all(ops / "campaigns", ops)
+    assert errs == {}, errs
+    tasks = core.load_tasks(ops / "campaigns")
+    assert set(tasks) == {"C-008-A", "C-008-B"} and all(t["status"] == "PROPOSED" for _, t in tasks.values())
+    assert core.resolve_epic(tasks["C-008-A"][1], core.load_campaigns(ops / "campaigns"), ops) == "EP-PHASE2B"
+
+
+# ------------------------------------------------------------------------------------------------ the repository's graph
+
+def test_repository_epics_threads_and_scopes():
+    epics = core.load_epics()
+    assert {"EP-GLOBAL", "EP-PHASE2B", "EP-PHASE3"} <= set(epics)
+    g = epics["EP-GLOBAL"][1]
+    assert g["permanent"] is True and g["end_date"] is None and "TH-GLOBAL-EVIDENCE-REFINERY" in g["threads"]
+    assert core.thread_epic(core.OPS, "TH-GLOBAL-EVIDENCE-REFINERY") == "EP-GLOBAL"
+    assert core.thread_epic(core.OPS, "TH-P2B-ENGINE-HARDENING") == "EP-PHASE2B"
+    assert core.thread_epic(core.OPS, "TH-RSO-BUILD") == "EP-PHASE3"
+    for seat in ("Palamedes", "Pallas", "Argus", "Cadmus", "Eupalamus"):
+        assert core.seat_scope(seat) == ["EP-PHASE3"], seat
+        assert not core.seat_may_claim(seat, "EP-PHASE2B") and core.seat_may_claim(seat, "EP-PHASE3")
+    assert core.seat_scope("Nestor") is None and core.seat_may_claim("Nestor", "EP-PHASE2B")
+
+
+def test_c004_still_valid_and_resolves_under_phase3():
+    camps, tasks = core.load_campaigns(), core.load_tasks()
+    assert camps["C-004"][1]["thread_id"] == "TH-RSO-BUILD" and camps["C-004"][1]["epic_id"] == "EP-PHASE3"
+    assert core.resolve_epic(tasks["C-004-T000"][1], camps, core.OPS) == "EP-PHASE3"
+    if tasks["C-004-T000"][1]["status"] == "READY":
+        assert "C-004-T000" in [t["task_id"] for t in core.ready_for("Palamedes")]

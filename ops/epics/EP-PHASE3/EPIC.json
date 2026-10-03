@@ -7,10 +7,11 @@
   "start_date": "2026-10-03",
   "status": "ACTIVE",
   "constraints": [
-    "Evidence rolls upward; authority does not: a claim stays attached to the cell/experiment where it was earned; the epic's name confers no interpretation on any child (DISTRIBUTED_WORK.md s1a)",
+    "Evidence rolls upward; interpretive authority does not: a claim stays attached to the exact cells/evidence that earned it; no epic or thread name lends its interpretation to a child (roles/base-role/DISTRIBUTED_WORK.md s1a)",
     "Strong recursive sagacity remains DETECTION_UNQUALIFIED (roles/rso-builder-role/RESPONSIBILITIES.md s3)",
     "Internal fleet first; scale out to rented capacity only after gates pass (infra/FLEET_HOSTS.md, scale-out policy)",
-    "Base-role doctrine and current MWO/CWO hard gates apply unchanged"
+    "Base-role doctrine and current MWO/CWO hard gates apply unchanged",
+    "Shared machines: priority classes 2-3 for operator-directed critical-path work and registered experiments (DISTRIBUTED_WORK.md s10)"
   ],
   "exit_conditions": [
     "Not yet set by the operator (recorded 2026-10-03). Until set, threads and campaigns carry their own exits."
@@ -32,8 +33,18 @@
   "operator_decisions": [
     "2026-10-03 Phase 3 go; RSO Builder Cell established (roles/Achilles/prompts/2026-10-03_rso_builder_cell/)",
     "2026-10-03 Epic level adopted; Phase 3 = EP-PHASE3, RSO = TH-RSO-BUILD, C-004 its first campaign (roles/Achilles/prompts/2026-10-03_epic_level/)",
+    "2026-10-03 EP-GLOBAL / EP-PHASE2B / EP-PHASE3 are peers; RSO builder cell restricted to EP-PHASE3 (roles/Achilles/prompts/2026-10-03_epics_phase2b/01_OPERATOR_DIRECTIVE_verbatim.md)",
     "open: C-004 OP-1 caps, OP-2 anchor keeper, OP-3 S1/S3/S4 reviewer"
   ],
   "deferred": [],
-  "authority": "operator, 2026-10-03 (roles/Achilles/prompts/2026-10-03_epic_level/01_OPERATOR_DIRECTIVE_verbatim.md)"
+  "authority": "operator, 2026-10-03 (roles/Achilles/prompts/2026-10-03_epic_level/01_OPERATOR_DIRECTIVE_verbatim.md)",
+  "scope": "RSO construction and developmental-physics science. Encompasses the RSO Builder Cell's work.",
+  "peers": [
+    "EP-GLOBAL",
+    "EP-PHASE2B"
+  ],
+  "exclusions": [
+    "Phase 2-B engine hardening (EP-PHASE2B); the builder cell does not take Phase 2-B work"
+  ],
+  "entry": "ops/threads/TH-RSO-BUILD.md; roles/rso-builder-role/"
 }

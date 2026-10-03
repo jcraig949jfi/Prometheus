@@ -75,7 +75,10 @@ adjudicate its own science (base doctrine: no LLM adjudicates; admission and pro
 ## 4. The first campaign: RSO-METHODS-SLICE-001 (ops/campaigns/C-004/)
 
 Placement (operator, 2026-10-03): Epic EP-PHASE3 (Phase 3) -> Thread TH-RSO-BUILD (the RSO buildout) ->
-Campaign C-004. The directive of 2026-10-03 called this slice the cell's "first epic"; in the work-graph
+Campaign C-004. EPIC SCOPE (operator, 2026-10-03, firm rule): the five builder seats operate ONLY under
+EP-PHASE3 unless the operator changes the rule; each carries roles/<Seat>/SCOPE.json (allowed_epics
+["EP-PHASE3"]), which workgraph enforces at ready and claim. They are not spare capacity for Phase 2-B, and
+Pallas/Fable is not consumed by Phase 2-B because an adversarial task exists there. The directive of 2026-10-03 called this slice the cell's "first epic"; in the work-graph
 hierarchy it is a campaign, and Phase 3 is the epic.
 
 The bounded S1-S5 methods slice, built as written in NEXT_ROUND_PLAN_v0.4 with the closure review's C1-C5
