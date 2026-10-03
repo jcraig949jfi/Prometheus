@@ -53,9 +53,16 @@ records a live security finding from `SUBSTRATE_C_ARCHAEOLOGY.md`
 
 Verified by Mnemosyne 2026-09-08 under the authorised workflow, counts only:
 
-    path cited by the audit ....... not present as cited
-    path actually on disk ......... one directory deeper than cited
-                                    (a doubled `bitfrost-core/` segment)
+    path (CORRECTED, verified 2026-09-10 to resolve on disk):
+      archive/bitfrost-core/bitfrost-core/reports/frontier_model_inventory.md
+    original citation ............. resolved one directory too shallow; the
+                                    doubled `bitfrost-core/` segment was
+                                    missing. Archaeon corrected ASSETS.md s13
+                                    and the citation there now matches the
+                                    path above. A rotation item whose path
+                                    does not resolve reads as stale and gets
+                                    closed by accident, which is why this is
+                                    tracked rather than mentioned.
     tracked by git ................ NO
     gitignored .................... YES
     present on origin/main ........ NO
@@ -71,8 +78,8 @@ full-length keys, so it does not by itself authenticate anything. Rotation
 remains warranted because a prefix plus a vendor identifies which key to
 attack and confirms the key existed; urgency is LOW rather than immediate.
 
-**Correction owed to Archaeon:** the path in ASSETS.md §13 does not resolve as
-written; the file sits one directory deeper. Worth fixing so a future reader
-does not conclude the finding was stale.
+**Path correction: LANDED 2026-09-10.** Archaeon corrected ASSETS.md §13 and
+this tracker now carries the verified resolving path (above). Both sides agree
+and both resolve; nothing further is owed on the citation.
 
 **Not a dependency** of any research item, per the routing order.

@@ -122,7 +122,7 @@ def main(argv: list[str]) -> int:
     if argv:
         wanted = {int(a) for a in argv}
         files = [p for p in sorted(DOSSIERS.glob("*.md"))
-                 if int(p.name[:2]) in wanted]
+                 if int(p.name.split("_")[0]) in wanted]
     else:
         files = sorted(DOSSIERS.glob("*.md"))
 

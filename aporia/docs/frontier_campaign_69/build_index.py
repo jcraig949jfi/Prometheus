@@ -54,7 +54,7 @@ def main() -> int:
     for p in sorted(DOSSIERS.glob("*.md")):
         r = check(p)
         rows.append({
-            "n": int(p.name[:2]),
+            "n": int(p.name.split("_")[0]),
             "field": field_of(p),
             "file": p.name,
             "kb": len(p.read_text(encoding="utf-8")) // 1024,
@@ -70,7 +70,7 @@ def main() -> int:
         t = p.read_text(encoding="utf-8")
         m = VERDICT_RE.search(t)
         refires.append({
-            "n": int(p.name[:3]),
+            "n": int(p.name.split("_")[0]),
             "file": p.name,
             "verdict": m.group(1) if m else "NO VERDICT FOUND",
             "kb": len(t) // 1024,

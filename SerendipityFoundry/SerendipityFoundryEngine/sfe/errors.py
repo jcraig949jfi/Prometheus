@@ -66,6 +66,53 @@ class LedgerIntegrityError(FoundryError):
     http_status = 500
 
 
+class WrongSession(FoundryError):
+    """The presented session key was minted by a DIFFERENT engine instance.
+
+    421 Misdirected Request is the exact HTTP semantic: "the request was
+    directed at a server that is not able to produce a response" and the client
+    should retry against the correct one. It is chosen over 404 deliberately --
+    a 404 says the resource does not exist, which sends an operator hunting for
+    missing data when the truth is that they are talking to the wrong machine.
+    It is chosen over 500 because nothing failed: the engine answered exactly
+    the right question correctly."""
+    code = "WRONG_SESSION"
+    http_status = 421
+
+
+class SessionRequired(FoundryError):
+    """No session key on a route that requires one (STRICT session)."""
+    code = "SESSION_REQUIRED"
+    http_status = 428
+
+
+class SessionMalformed(FoundryError):
+    """The header was present but is not a session key at all."""
+    code = "SESSION_MALFORMED"
+    http_status = 422
+
+
+class SessionUnknown(FoundryError):
+    """Well-formed, names THIS engine, but no such session here. A restore from
+    a different backup, a pruned session, or a forgery."""
+    code = "SESSION_UNKNOWN"
+    http_status = 401
+
+
+class SessionClosed(FoundryError):
+    """The session exists on this engine but its lifecycle is CLOSED."""
+    code = "SESSION_CLOSED"
+    http_status = 409
+
+
+class SessionMismatch(FoundryError):
+    """A VALID session for this engine, presented against a resource that
+    belongs to a different session. Ownership violation -> 403, the same
+    status the engine already uses for cross-client access."""
+    code = "SESSION_MISMATCH"
+    http_status = 403
+
+
 class PredictionOrderingError(FoundryError):
     """An observation tried to claim a prediction that did not precede it."""
     code = "prediction_ordering_error"
