@@ -1,6 +1,6 @@
 # Pallas status
 
-Currency: 2026-10-03T22:40Z (Pallas[harry1-da86cf98]). The 11:10Z first-boot status is superseded by this one.
+Currency: 2026-10-03T22:28Z (clock read; an earlier draft said 22:40Z from estimate) (Pallas[harry1-da86cf98]). The 11:10Z first-boot status is superseded by this one.
 
 seat state: READY (idle after C-004-T005; session closed).
 role: Adversarial Hardening Engineer. RSO Builder Cell (roles/rso-builder-role/).
