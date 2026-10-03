@@ -161,6 +161,21 @@ BOOTSTRAP.md if the seat has one, else STARTUP.md, RESPONSIBILITIES.md, ROLE.md,
 | Enceladus | RESPONSIBILITIES.md |
 | Vivarium | RESPONSIBILITIES.md |
 
+## Shared roles (2026-10-03, operator directive at roles/Achilles/prompts/2026-10-03_rso_builder_cell/)
+
+A directory roles/<name>-role/ is an inherited role LAYER, not a seat: it is never booted, addressed on
+comms or counted by the census. Its entry file is RESPONSIBILITIES.md and carries the base banner. A seat
+that inherits a shared role carries, beside the base banner, a second banner line
+
+    > Inherits roles/<name>-role/RESPONSIBILITIES.md (<directive>); this file adds to it and may not contradict it.
+
+and resolves the chain in order: base-role, then the shared role, then its own entry file. Where they
+disagree, the earlier link wins. archaeon/tests/test_shared_roles.py checks that every declared shared
+role exists and that its seats are registered here.
+
+| shared role | inherits | seats |
+|---|---|---|
+
 ## Who adds a row (ruling 2026-09-11, Archaeon on Nyx #36, Icarus #37, Talos)
 
 A seat adds its OWN two rows on its adoption or charter commit; Archaeon

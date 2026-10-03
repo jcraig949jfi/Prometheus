@@ -139,8 +139,9 @@ def migrate_instances(conn) -> Dict[str, int]:
 
 
 def roster() -> List[str]:
-    """Every seat directory under roles/ except base-role: the addressable set."""
-    return sorted(p.name for p in (REPO / "roles").iterdir() if p.is_dir() and p.name != "base-role")
+    """Every seat directory under roles/ except shared roles (base-role and any other roles/*-role/ layer,
+    roles/base-role/INHERITANCE.md "Shared roles"): the addressable set."""
+    return sorted(p.name for p in (REPO / "roles").iterdir() if p.is_dir() and not p.name.endswith("-role"))
 
 
 def _sha(subject: str, body: str) -> str:
