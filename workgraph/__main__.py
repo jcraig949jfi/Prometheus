@@ -16,6 +16,14 @@
     new-campaign <template> --owner <Seat> --subject <engine or topic> --by <Seat[tag]> [--id C-NNN]
                                   instantiate ops/templates/<template>/ (e.g. P2B-ENGINE-REENTRY); then commit
                                   and push the new campaign directory
+    priority <task_id>            effective priority (epic band, local, override, preemptible)
+    prq validate | render | decide <PRQ-id> <APPROVED|DENIED|EXPIRED|COMPLETED|WITHDRAWN> --note ".." |
+        notify <PRQ-id> <EVENT> | template
+                                  operator priority requests (ops/operator_queue/); `decide` is the operator's act
+    cwo-inputs <epic_id> [--hours 48] [--previous CWO-ID]
+                                  deterministic JSON of the window's moves, receipts, preemptions, escalations,
+                                  priority requests and cross-epic findings (input to the next CWO)
+    worker: python -m workgraph.worker [--dry-run|--once] (roles/generic-worker-role/)
 """
 import argparse
 import json
@@ -42,7 +50,56 @@ def main(argv=None) -> int:
     sub.add_parser("epics")
     nc = sub.add_parser("new-campaign"); nc.add_argument("template"); nc.add_argument("--owner", required=True)
     nc.add_argument("--subject", required=True); nc.add_argument("--by", required=True); nc.add_argument("--id")
+    pp = sub.add_parser("priority"); pp.add_argument("task_id")
+    pq = sub.add_parser("prq"); pq.add_argument("action", choices=["validate", "render", "decide", "notify", "template"])
+    pq.add_argument("args", nargs="*"); pq.add_argument("--note", default="")
+    cw = sub.add_parser("cwo-inputs"); cw.add_argument("epic_id"); cw.add_argument("--hours", type=float, default=48.0)
+    cw.add_argument("--previous", default="")
     a = p.parse_args(argv)
+    from . import priority as P, cwo as CWO
+
+    if a.cmd == "priority":
+        tasks, camps = core.load_tasks(), core.load_campaigns()
+        if a.task_id not in tasks:
+            print("unknown task " + a.task_id, file=sys.stderr); return 2
+        print(json.dumps(P.effective(tasks[a.task_id][1], camps, core.OPS, P.active_overrides()), indent=2))
+        return 0
+
+    if a.cmd == "cwo-inputs":
+        print(json.dumps(CWO.inputs(a.epic_id, a.hours, previous_cwo=a.previous), indent=2))
+        return 0
+
+    if a.cmd == "prq":
+        reqs = P.load_requests()
+        if a.action == "validate":
+            bad = {k: P.validate_request(r) for k, (_, r) in reqs.items() if P.validate_request(r)}
+            for k, v in bad.items():
+                print("{}: {}".format(k, "; ".join(v)))
+            print("{} request(s): {}".format(len(reqs), "OK" if not bad else "{} with errors".format(len(bad))))
+            return 1 if bad else 0
+        if a.action == "render":
+            out = P.QUEUE / "PRIORITY_REQUESTS.md"
+            out.parent.mkdir(parents=True, exist_ok=True)
+            out.write_text(P.render_markdown(), encoding="utf-8", newline="\n")
+            print("wrote " + str(out.relative_to(core.REPO)).replace("\\", "/"))
+            return 0
+        if a.action == "template":
+            print(json.dumps({k: None for k in P.PRQ_REQUIRED}, indent=2))
+            return 0
+        if not a.args or a.args[0] not in reqs:
+            print("unknown request", file=sys.stderr); return 2
+        path, r = reqs[a.args[0]]
+        if a.action == "decide":
+            if len(a.args) < 2:
+                print("decide <PRQ-id> <STATE> --note ..", file=sys.stderr); return 2
+            P.decide(path, a.args[1], a.note)
+            print("recorded {} {}; commit {} and re-render; the committed record is the authority".format(
+                a.args[0], a.args[1], str(path.relative_to(core.REPO)).replace("\\", "/")))
+            return 0
+        if a.action == "notify":
+            ev = a.args[1] if len(a.args) > 1 else "PRIORITY_ELEVATION_REQUESTED"
+            print(P.notify_command(r, ev))
+            return 0
 
     if a.cmd == "report":
         rows = core.report()

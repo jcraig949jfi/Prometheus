@@ -303,8 +303,9 @@ def test_template_instantiates_a_valid_campaign(tmp_path):
     ops = tmp_path / "ops"
     shutil.copytree(core.OPS / "epics", ops / "epics")
     (ops / "threads").mkdir()
-    for th in ("TH-P2B-ENGINE-HARDENING.md", "TH-GLOBAL-EVIDENCE-REFINERY.md", "TH-RSO-BUILD.md"):
-        shutil.copy(core.OPS / "threads" / th, ops / "threads")
+    for _, e in core.load_epics().values():                    # every thread the real epics declare
+        for th in e.get("threads", []):
+            shutil.copy(core.OPS / "threads" / (th + ".md"), ops / "threads")
     (ops / "campaigns" / "C-007").mkdir(parents=True)          # the next id must skip existing ones
     d = core.new_campaign("P2B-ENGINE-REENTRY", "Nestor", "NPE", "Nestor[m1-abc]", root=ops / "campaigns")
     assert d.name == "C-008"

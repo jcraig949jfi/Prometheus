@@ -238,8 +238,10 @@ fabric/README.md s5) and declare a resource ceiling in the packet. A lower-prior
 higher-priority active reservation unless the operator explicitly allows it; prefer natural lease expiry and
 release to preemption machinery. No engine is bound permanently to spare hardware.
 
-Initial priority for scarce shared machine resources (a packet may carry `priority_class` 1-6; it is a
-machine-sharing policy, not a ranking of scientific importance):
+Initial priority for scarce shared machine resources (a machine-sharing policy, not a ranking of scientific
+importance). SUPERSEDED IN MECHANISM 2026-10-03 by the epic priority bands of s13, which implement this order:
+class 1 = SAFETY, 2-3 = the EP-PHASE3 band, GLOBAL work MEDIUM between them, 4-5 = the EP-PHASE2B band, 6 = a low
+local_priority. `priority_class` is still accepted on old packets and ignored for ordering. The original list:
 
     1  safety / infrastructure repair
     2  active operator-directed Phase 3 critical-path work
@@ -257,4 +259,85 @@ operator if none) with subject `XEPIC <FROM-EPIC> -> <TO-EPIC>: <slug>`. Example
 architecture candidate -> Phase 3; Phase 3 qualifies a new reset test -> Phase 2-B engines may adopt it; the
 GLOBAL refinery finds a recurring defect -> both. A finding is not a task and not a reassignment: the
 receiving epic decides whether to create work. Evidence travels; interpretive authority does not.
+
+## 12. Execution ownership and execution mode (operator, 2026-10-03)
+
+Verbatim: roles/Achilles/prompts/2026-10-03_generic_workers/. "Named seats reason. Generic workers execute."
+
+`executor_class` on a packet:
+- NAMED_SEAT (default; every packet without the field): needs scientific or engineering judgment. Claimable
+  only by an eligible named seat (owner_role / eligible_roles, epic scope). A PrometheusWorker cannot claim it.
+- GENERIC_WORKER: fully specified execution. Claimable only by `PrometheusWorker/<host>/<instance>`
+  (roles/generic-worker-role/). No named seat claims it -- not engine seats, not RSO builders, not GLOBAL seats:
+  idle named seats are not generic capacity. `workgraph ready` hides it from seats; `transition CLAIMED`
+  refuses the wrong class either way.
+
+A packet may be GENERIC_WORKER only if it needs no scientific judgment. It then carries an `execution` block
+(validated): source_sha (exact commit), command (argv list, the native entry point), environment, inputs
+(artifact identities), resources (cpu, gpu, ram_gb, disk_gb, caps, hosts), timeout_s, output_dir,
+success_criteria (exit_code, files), cleanup, preemption_policy (REPLAY_FROM_START | NATIVE_CHECKPOINT |
+NOT_PREEMPTIBLE); seeds go in command or environment. NATIVE_CHECKPOINT needs a registered `checkpoint`
+(safe boundaries and the resume command); nothing resumes from undocumented process state. Generic: run a
+registered experiment, replay a seed set, run a test suite or benchmark, a deterministic analysis, a registered
+parameter cell, packaging, metric collection, an unchanged rerun after preemption. Not generic: judging
+meaning, changing an experiment because results look odd, thresholds, comparators, contracts, new assays,
+anomaly interpretation, reopening a null. The owning named seat creates the generic packet, keeps ownership,
+and interprets the result.
+
+`execution_mode`:
+- ATOMIC (default): one worker runs the experiment or execution task intact; no scheduler decomposition.
+- NATIVE_PARALLEL: the engine parallelises itself; the scheduler only allocates resources.
+- SHARDABLE: only with a registered `sharding` block -- shards, unit (statistical/experimental unit),
+  aggregation, restart, merge (validated). Only then may shards be separate packets.
+The scheduler may change placement, not experimental semantics. Decomposition stops at the smallest boundary
+that preserves the engine's native semantics; never refactor an engine to raise fleet utilization.
+
+## 13. Epic priority bands, inheritance and preemption
+
+EPIC.json `priority`: EP-PHASE3 HIGH (300), EP-GLOBAL MEDIUM (200), EP-PHASE2B LOW (100); SAFETY (400) only for
+an EP-GLOBAL packet marked `safety_critical: true`. Priority flows down Epic -> Thread -> Campaign -> Experiment
+-> Task -> Attempt. Effective priority = (band, local_priority 0..99, age): local priority orders work inside a
+band and can never cross it, so a LOW task at local 99 stays below every MEDIUM task. Only an operator-approved,
+unexpired request (s14) raises a band, narrowly (task, experiment, or campaign -- experiment preferred); its
+descendants inherit it; the rest of the seat's work does not. `python -m workgraph priority <task>` shows it.
+
+Preemption: LOW-band work is preemptible and restartable by default; higher bands are not unless the packet
+says so (`preemptible`, or preemption_policy NOT_PREEMPTIBLE). A running attempt yields only to a READY task of
+a STRICTLY higher effective band that fits the machine; the same band never preempts (lease expiry/release
+instead). Yielding writes an attempt receipt with result PREEMPTED_RESOURCE and requeues the SAME packet
+(status READY, lease released, experiment unchanged) -- `workgraph.core.preempt`. PREEMPTED_RESOURCE is not a
+scientific FAIL or NEGATIVE and not an engineering defect; nobody reads a verdict from it; the next CWO says
+"replay unchanged when capacity becomes available". ATOMIC work replays from the start.
+
+## 14. Operator priority requests
+
+A seat may REQUEST elevation; only the operator may GRANT it. One file per request:
+ops/operator_queue/priority/PRQ-<YYYYMMDD>-<Seat>-<n>.json (schema prometheus.operator_queue.priority_request.v1;
+`python -m workgraph prq template` prints the fields): request_id, requester, epic_id, thread_id, campaign_id,
+experiment_id, optional task_id, current_priority, requested_priority, request_type (START_PRIORITY |
+PREEMPTION_PROTECTION | RESOURCE_RESERVATION | DEADLINE | ANOMALY_FOLLOWUP), reason, scientific_value, why_now,
+if_delayed, resources, expected_runtime, restart_cost, preemptible, window, created_at_utc, expires_at_utc
+(required), status, operator_decision, operator_note, decided_at_utc.
+
+Lifecycle: REQUESTED -> APPROVED | DENIED | WITHDRAWN; APPROVED -> COMPLETED | EXPIRED. Every request expires;
+an unapproved or expired request changes nothing. APPROVED/DENIED are recorded by the operator's act
+(`python -m workgraph prq decide <id> APPROVED --note ..`, decided_by "operator") and become effective only when
+that record is committed to main. `prq render` regenerates ops/operator_queue/PRIORITY_REQUESTS.md; the census
+email shows "Operator Priority Requests -- N open" at its top with decisions since the last digest
+(achilles/census/render.py), deterministically from the files.
+
+Git records authority; comms/A2A moves notifications. After the request file is committed, post event
+PRIORITY_ELEVATION_REQUESTED (`python -m workgraph prq notify <id>` prints the comms command: request id, git
+ref, requester, experiment, requested band, short reason); after a decision PRIORITY_ELEVATION_APPROVED /
+_DENIED / _EXPIRED. A message alone never elevates anything.
+
+## 15. CWO inputs and inference economy
+
+`python -m workgraph cwo-inputs <epic> [--hours 48] [--previous <CWO-id>]` assembles, from Git alone, the
+window's task moves, attempt receipts by close category (DONE, SCIENTIFIC_OUTCOME, ENGINEERING_FAIL,
+PREEMPTED_RESOURCE, DEFERRED, SUPERSEDED), replays owed, escalations, unresolved items, open work, priority
+requests and cross-epic findings. Aporia remains the publication seat under its charter; this is input, not a
+CWO. Spend model inference at epistemic forks (unexpected result, ambiguous defect, comparator choice,
+redesign, interpretation, next campaign), not to watch jobs, poll, move files or rerun unchanged commands --
+machinery does that. Phase 2-B's 48-hour cadence: ops/epics/EP-PHASE2B/CADENCE.md.
 

@@ -179,12 +179,14 @@ that inherits a shared role carries, beside the base banner, a second banner lin
 
     > Inherits roles/<name>-role/RESPONSIBILITIES.md (<directive>); this file adds to it and may not contradict it.
 
-and resolves the chain in order: base-role, then the shared role, then its own entry file. Where they
+and resolves the chain in order: base-role, then the shared role, then its own entry file. (generic-worker-role
+has no seats: PrometheusWorker/<host>/<instance> is an execution identity that inherits it directly.) Where they
 disagree, the earlier link wins. archaeon/tests/test_shared_roles.py checks that every declared shared
 role exists and that its seats are registered here.
 
 | shared role | inherits | seats |
 |---|---|---|
+| generic-worker-role | base-role |  |
 | rso-builder-role | base-role | Palamedes, Pallas, Argus, Cadmus, Eupalamus |
 
 ## Who adds a row (ruling 2026-09-11, Archaeon on Nyx #36, Icarus #37, Talos)

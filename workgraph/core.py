@@ -32,8 +32,8 @@ _FORWARD = {
     "PROPOSED": {"READY"},
     "READY": {"CLAIMED"},
     "CLAIMED": {"RED", "IMPLEMENTING", "READY"},          # READY = lease released without work
-    "RED": {"IMPLEMENTING"},
-    "IMPLEMENTING": {"GREEN"},
+    "RED": {"IMPLEMENTING", "READY"},                      # READY = requeued (e.g. PREEMPTED_RESOURCE)
+    "IMPLEMENTING": {"GREEN", "READY"},
     "GREEN": {"LOCAL_REVIEW", "INTEGRATION_READY", "IMPLEMENTING"},
     "LOCAL_REVIEW": {"INTEGRATION_READY", "IMPLEMENTING"},  # IMPLEMENTING = changes requested
     "INTEGRATION_READY": {"INTEGRATED", "IMPLEMENTING"},   # IMPLEMENTING = integration failed
@@ -59,14 +59,40 @@ TASK_REQUIRED = ("schema", "task_id", "campaign_id", "title", "objective", "owne
                  "acceptance", "deliverables", "status", "history")
 TASK_OPTIONAL = ("parent_objective", "eligible_roles", "preferred_model", "minimum_model", "requires_shas",
                  "owns", "reads", "resource_ceiling", "escalation_triggers", "kind", "red_required",
-                 "satisfied_states", "receipt", "notes", "authority", "experiment_id", "epic_id", "priority_class")
+                 "satisfied_states", "receipt", "notes", "authority", "experiment_id", "epic_id", "priority_class",
+                 "executor_class", "execution_mode", "execution", "sharding", "local_priority", "preemptible",
+                 "restartable", "checkpoint", "safety_critical")
+
+# Execution ownership (operator 2026-10-03, DISTRIBUTED_WORK.md s12). Default NAMED_SEAT: an existing packet is
+# never handed to a generic worker unless it says so.
+EXECUTOR_CLASSES = ("NAMED_SEAT", "GENERIC_WORKER")
+WORKER_PREFIX = "PrometheusWorker/"
+EXECUTION_MODES = ("ATOMIC", "NATIVE_PARALLEL", "SHARDABLE")
+GENERIC_EXECUTION_REQUIRED = ("source_sha", "command", "environment", "inputs", "resources", "timeout_s",
+                              "output_dir", "success_criteria", "cleanup", "preemption_policy")
+SHARDING_REQUIRED = ("shards", "unit", "aggregation", "restart", "merge")
+PREEMPTION_POLICIES = ("REPLAY_FROM_START", "NATIVE_CHECKPOINT", "NOT_PREEMPTIBLE")
+
+
+def is_worker(by: str) -> bool:
+    """A PrometheusWorker identity: PrometheusWorker/<host>/<instance>."""
+    parts = str(by).split("/")
+    return str(by).startswith(WORKER_PREFIX) and len(parts) == 3 and all(parts)
+
+
+def executor_class(t: dict) -> str:
+    return t.get("executor_class") or "NAMED_SEAT"
+
 TASK_KINDS = ("software", "science", "document", "review", "operations")
 
 RECEIPT_REQUIRED = ("schema", "task_id", "campaign_id", "attempt_id", "role", "model", "quality_class",
                     "start_sha", "end_sha", "files_changed", "evidence_added", "evidence_executed", "red_observed",
                     "result", "known_escapes", "unresolved", "unblocks", "created_at_utc")
-RECEIPT_OPTIONAL = ("instance", "host", "branch", "worktree_path", "resources", "cleanup", "notes")
-ATTEMPT_TERMINAL = ("DONE_CLEAN", "FAILED_CLEAN", "BLOCKED_CLEAN", "ABORTED_CLEAN", "DIRTY")
+RECEIPT_OPTIONAL = ("instance", "host", "branch", "worktree_path", "resources", "cleanup", "notes", "exit_code",
+                    "outputs", "experiment_id", "effective_priority", "preempted_by")
+# PREEMPTED_RESOURCE: the attempt yielded its machine to higher-priority work. Not a scientific FAIL or NEGATIVE
+# and not an engineering defect; the same registered packet is replayed later (DISTRIBUTED_WORK.md s13).
+ATTEMPT_TERMINAL = ("DONE_CLEAN", "FAILED_CLEAN", "BLOCKED_CLEAN", "ABORTED_CLEAN", "DIRTY", "PREEMPTED_RESOURCE")
 
 ESCALATION_HEADERS = ("TASK_ID", "BLOCKER", "EVIDENCE", "OPTIONS", "RECOMMENDATION", "CAPABILITY_NEEDED")
 
@@ -96,7 +122,7 @@ EPIC_REQUIRED = ("schema", "epic_id", "title", "objective", "start_date", "statu
                  "exit_conditions", "threads")
 EPIC_OPTIONAL = ("north_star", "resource_refs", "operator_decisions", "deferred", "candidate_threads", "notes",
                  "authority", "scope", "exclusions", "permanent", "end_date", "continuation_conditions", "peers",
-                 "entry")
+                 "entry", "priority")
 EPIC_STATUSES = ("ACTIVE", "PAUSED", "CLOSED")
 
 
@@ -130,6 +156,8 @@ def validate_epic(e: dict) -> List[str]:
             err.append("epic {} must be a list".format(k))
     if e.get("status") is not None and e.get("status") not in EPIC_STATUSES:
         err.append("epic status must be one of {}".format(EPIC_STATUSES))
+    if e.get("priority") not in (None, "HIGH", "MEDIUM", "LOW"):
+        err.append("epic priority must be HIGH, MEDIUM or LOW")
     if e.get("permanent") is True:
         if e.get("end_date") not in (None, "NONE"):
             err.append("a permanent epic has no end date (end_date null or NONE)")
@@ -253,6 +281,36 @@ def validate_task(t: dict, campaign: Optional[dict] = None, known_tasks: Optiona
                 e.append("depends on unknown task " + d)
         if t.get("task_id") in t.get("depends_on", []):
             e.append("depends on itself")
+    ec = executor_class(t)
+    if ec not in EXECUTOR_CLASSES:
+        e.append("executor_class must be one of {}".format(EXECUTOR_CLASSES))
+    mode = t.get("execution_mode", "ATOMIC")
+    if mode not in EXECUTION_MODES:
+        e.append("execution_mode must be one of {}".format(EXECUTION_MODES))
+    if mode == "SHARDABLE":
+        sh = t.get("sharding")
+        if not isinstance(sh, dict) or any(k not in sh for k in SHARDING_REQUIRED):
+            e.append("SHARDABLE needs registered sharding {{{}}} (shards, unit, aggregation, restart, merge)".format(
+                ", ".join(SHARDING_REQUIRED)))
+    if ec == "GENERIC_WORKER":
+        ex = t.get("execution")
+        if not isinstance(ex, dict):
+            e.append("a GENERIC_WORKER task needs a complete `execution` block")
+        else:
+            miss = [k for k in GENERIC_EXECUTION_REQUIRED if k not in ex]
+            if miss:
+                e.append("generic execution block missing " + ", ".join(miss))
+            if ex.get("preemption_policy") not in (None,) + PREEMPTION_POLICIES:
+                e.append("preemption_policy must be one of {}".format(PREEMPTION_POLICIES))
+            if ex.get("preemption_policy") == "NATIVE_CHECKPOINT" and not t.get("checkpoint"):
+                e.append("NATIVE_CHECKPOINT needs a registered `checkpoint` (safe boundaries, resume command)")
+            if not isinstance(ex.get("command"), list) or not ex.get("command"):
+                e.append("execution.command must be a non-empty argv list")
+            if isinstance(ex.get("source_sha"), str) and len(ex["source_sha"]) < 7:
+                e.append("execution.source_sha must be an exact commit")
+    lp = t.get("local_priority")
+    if lp is not None and (not isinstance(lp, int) or not 0 <= lp <= 99):
+        e.append("local_priority must be an integer 0..99 (it orders work inside the epic band, never across it)")
     hist = t.get("history", [])
     if isinstance(hist, list):
         prev = None
@@ -264,7 +322,7 @@ def validate_task(t: dict, campaign: Optional[dict] = None, known_tasks: Optiona
             prev = h["status"]
         if hist and prev != st:
             e.append("status {} differs from the last history entry {}".format(st, prev))
-        if t.get("kind", "software") == "software" and t.get("red_required", True):
+        if t.get("kind", "software") == "software" and t.get("red_required", True) and ec == "NAMED_SEAT":
             seen = [h.get("status") for h in hist if isinstance(h, dict)]
             if "GREEN" in seen and "RED" not in seen[:seen.index("GREEN")]:
                 e.append("GREEN reached without a RED (set red_required false, with a reason in notes, if none applies)")
@@ -391,6 +449,8 @@ def ready_for(seat: str, root: Path = CAMPAIGNS, roles: Path = ROLES) -> List[di
     for tid, (d, t) in tasks.items():
         if t.get("status") != "READY":
             continue
+        if executor_class(t) != "NAMED_SEAT":
+            continue                                     # named seats never scavenge generic tasks
         if seat != t.get("owner_role") and seat not in t.get("eligible_roles", []):
             continue
         if not seat_may_claim(seat, resolve_epic(t, camps, ops), roles):
@@ -425,6 +485,13 @@ def transition(task_dir: Path, new: str, by: str, note: str = "", root: Path = C
             raise ValueError("already leased: " + _load(lease).get("holder", "?"))
         camps = load_campaigns(root)
         epic = resolve_epic(t, camps, _ops_for(root))
+        if executor_class(t) == "GENERIC_WORKER" and not is_worker(by):
+            raise ValueError("ownership: {} is a GENERIC_WORKER task; only PrometheusWorker/<host>/<instance> may "
+                             "claim it (named seats never scavenge generic work)".format(t["task_id"]))
+        if executor_class(t) == "NAMED_SEAT" and is_worker(by):
+            raise ValueError("ownership: {} is a NAMED_SEAT task; a PrometheusWorker may not claim it".format(t["task_id"]))
+        if not is_worker(by) and by.split("[")[0] != t.get("owner_role") and by.split("[")[0] not in t.get("eligible_roles", []):
+            raise ValueError("ownership: {} is neither owner_role nor in eligible_roles".format(by.split("[")[0]))
         if not seat_may_claim(by, epic, roles):
             raise ValueError("epic scope: {} may claim only {} (task epic: {})".format(
                 by.split("[")[0], seat_scope(by, roles), epic))
@@ -508,3 +575,31 @@ def new_campaign(template: str, owner: str, subject: str, by: str, root: Path = 
         (dst / "tasks" / t["task_id"]).mkdir()
         _dump(dst / "tasks" / t["task_id"] / "TASK.json", t)
     return dst
+
+
+# --------------------------------------------------------------------------------------------------- preemption
+
+def preempt(task_dir: Path, by: str, attempt_id: str, preempted_by: str = "", note: str = "",
+            start_sha: str = "", end_sha: str = "") -> dict:
+    """Record PREEMPTED_RESOURCE for the running attempt and requeue the SAME packet (status READY, lease
+    released). Nothing about the registered experiment changes; no scientific outcome is written."""
+    task_dir = Path(task_dir)
+    t = _load(task_dir / "TASK.json")
+    if t.get("preemptible") is False or (t.get("execution") or {}).get("preemption_policy") == "NOT_PREEMPTIBLE":
+        raise ValueError("{} is registered as not preemptible".format(t["task_id"]))
+    rec = {"schema": RECEIPT_SCHEMA, "task_id": t["task_id"], "campaign_id": t["campaign_id"], "attempt_id": attempt_id,
+           "role": by, "model": "none (deterministic execution)", "quality_class": t.get("quality_class"),
+           "start_sha": start_sha, "end_sha": end_sha or start_sha, "files_changed": [], "evidence_added": [],
+           "evidence_executed": [], "red_observed": None, "result": "PREEMPTED_RESOURCE", "known_escapes": [],
+           "unresolved": [], "unblocks": [], "created_at_utc": _now(), "experiment_id": t.get("experiment_id"),
+           "preempted_by": preempted_by, "notes": note or "resource preemption; replay unchanged when capacity allows"}
+    (task_dir / "attempts" / attempt_id).mkdir(parents=True, exist_ok=True)
+    _dump(task_dir / "attempts" / attempt_id / "RECEIPT.json", rec)
+    lease = task_dir / "LEASE.json"
+    if lease.exists():
+        lease.unlink()
+    t["status"] = "READY"
+    t["history"].append({"status": "READY", "by": by, "at_utc": _now(),
+                         "note": "PREEMPTED_RESOURCE ({}); requeued unchanged".format(attempt_id)})
+    _dump(task_dir / "TASK.json", t)
+    return rec

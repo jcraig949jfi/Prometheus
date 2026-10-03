@@ -4,6 +4,7 @@ Declared 2026-10-03 (verbatim: roles/Achilles/prompts/2026-10-03_epics_phase2b/0
 EP-PHASE2B and EP-PHASE3, not their parent: phases come and go; these processes outlive them.
 
     Thread TH-GLOBAL-EVIDENCE-REFINERY (ops/threads/TH-GLOBAL-EVIDENCE-REFINERY.md)   permanent
+    Thread TH-GLOBAL-CONTROL-PLANE (ops/threads/TH-GLOBAL-CONTROL-PLANE.md)            permanent
 
 Forever processes, by example: the evidence refinery; fleet observability; coordination infrastructure;
 durable scientific registries; the reusable failure corpus; potentially shared resource brokerage. Only the

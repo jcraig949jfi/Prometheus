@@ -41,8 +41,10 @@ instrumentation is now adequate. Do not wait for RSO integration: the old engine
 5. Tasks for others: you may write packets for yourself, other Phase 2-B seats, and shared support seats
    (Harmonia, Techne, Nyx, Atlas, others whose charters permit the work) as `owner_role` or `eligible_roles`.
    The RSO Builder Cell cannot take them (its SCOPE.json).
-6. Machines: priority class 4 (registered experiments) or 5 (exploratory sweeps) on shared hardware; take idle
-   capacity through leases with ceilings; never preempt a higher-priority active lease (DISTRIBUTED_WORK.md s10).
+6. Machines: Phase 2-B is the LOW band (DISTRIBUTED_WORK.md s13): it takes idle capacity and yields to higher
+   bands. Put deterministic execution in complete GENERIC_WORKER packets (s12; ATOMIC unless your engine
+   registers NATIVE_PARALLEL or SHARDABLE) so PrometheusWorkers run them; a run worth protecting gets a priority
+   request (s14). Cadence: ops/epics/EP-PHASE2B/CADENCE.md (a refreshed CWO about every 48 hours).
 
 ## Candidate engines / seats (likely; canonical owners are in the seats' charters and the forensic mappings)
 Archaeon / SFE; Nestor / NPE; Bellerophon / BEE; Aether / AGE; Ensorain / TensorTrain worlds; Cosmos / CWE;
