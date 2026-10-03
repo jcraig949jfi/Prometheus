@@ -1,0 +1,74 @@
+{
+  "schema": "prometheus.workgraph.task.v1",
+  "task_id": "C-004-T003",
+  "campaign_id": "C-004",
+  "title": "S2 scaffolding: rso/slice001 package skeleton, deterministic CI command, contract.json validator",
+  "objective": "Create the stdlib package skeleton rso/slice001/ with a deterministic test entry point and a validator for contract.json shape, so every S2 packet has a place to put code and one command to run.",
+  "parent_objective": "RSO-METHODS-SLICE-001 (CAMPAIGN.json objective)",
+  "owner_role": "Eupalamus",
+  "quality_class": "Q1",
+  "can_downgrade": false,
+  "escalate_to": "Q2",
+  "depends_on": [],
+  "requires_shas": [
+    "09dc8c38b (closure review)",
+    "3bd02f393 (v0.4 synthesis, merged)"
+  ],
+  "owns": [
+    "rso/__init__.py",
+    "rso/slice001/__init__.py",
+    "rso/slice001/ci.py",
+    "rso/slice001/tests/__init__.py",
+    "rso/slice001/tests/test_ci.py",
+    "rso/slice001/contract/README.md"
+  ],
+  "reads": [
+    "roles/rso-builder-role/",
+    "roles/base-role/DISTRIBUTED_WORK.md"
+  ],
+  "problem": "S2 packets need a package, a test layout and one deterministic command whose output is a run record (counts of tests run/passed/failed/errored, start/end UTC, git SHA, dirty flag, wall and CPU seconds). The command is `python -B -m rso.slice001.ci` and runs unittest discovery over rso/slice001/tests with -B (no bytecode). It also validates rso/slice001/contract/contract.json against a JSON shape check (required top-level keys only: version, frozen, claim, world, reset_model, receipt, render, authority_stages, custody, gates, cases, challenge, caps, files) when the file exists, and reports ABSENT otherwise. No semantics: the checker verifies presence and types, not meaning.",
+  "non_goals": [
+    "No scientific semantics: if a check would need to know what a gate means, escalate (rso-builder-role s5; Eupalamus charter)",
+    "No contract content",
+    "Python >= 3.8 standard library only; no package installation (MWO-0004 R2)"
+  ],
+  "evidence_required": [
+    "a test that fails before the skeleton exists (RED) and passes after (GREEN)",
+    "a test that the CI command reports a deliberately failing test as FAILED with non-zero exit (cheat control: the runner can observe failure)",
+    "a test that a contract.json missing a required key is reported"
+  ],
+  "acceptance": {
+    "command": "python -B -m rso.slice001.ci",
+    "condition": "exit 0 on the skeleton; the cheat-control test proves a failing test yields non-zero exit"
+  },
+  "deliverables": [
+    "rso/slice001/__init__.py",
+    "rso/__init__.py",
+    "rso/slice001/ci.py",
+    "rso/slice001/tests/__init__.py",
+    "rso/slice001/tests/test_ci.py",
+    "rso/slice001/contract/README.md"
+  ],
+  "kind": "software",
+  "status": "READY",
+  "history": [
+    {
+      "status": "PROPOSED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-03T11:04:14Z",
+      "note": "created under C-004-T000 decomposition"
+    },
+    {
+      "status": "READY",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-03T11:04:14Z",
+      "note": "made READY by the coordinator (C-004-T000)"
+    }
+  ],
+  "authority": "operator directive 2026-10-03 s9, s11 (roles/Achilles/prompts/2026-10-03_rso_builder_cell/01_OPERATOR_DIRECTIVE_verbatim.md); decomposed by Palamedes under C-004-T000",
+  "resource_ceiling": {
+    "engineering": "<= 1.5 Q1 seat-hours",
+    "cpu": "< 1 CPU-minute",
+    "note": "Counts toward the slice caps fixed by C-004-OP1 (NEXT_ROUND_PLAN_v0.4 s6 proposal: 30 CPU-minutes total, 0 GPU, 0 cloud, 100 MB new artifacts, 12 top-level validation launches; mutation children count toward CPU). Stop at the first exhausted cap and keep partial results."
+  }
+}

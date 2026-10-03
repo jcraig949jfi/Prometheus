@@ -1,0 +1,44 @@
+{
+  "schema": "prometheus.workgraph.epic.v1",
+  "epic_id": "EP-PHASE2B",
+  "title": "Prometheus Phase 2-B -- Engine Hardening, Re-exploration and Residual Discovery",
+  "objective": "Return to the Phase 2 engines, seats, organisms, worlds and scientific machinery with everything learned from the forensic deep dives: repair what was broken, re-run what deserves re-running, re-test ideas abandoned for procedural rather than scientific reasons, execute experiments that could not previously be interpreted cleanly, and let repaired engines keep searching for phenomena.",
+  "scope": "A parallel experimental program, not a rollback from Phase 3. Phase 1/2 engines and seats keep their native charters; Phase 2-B adds a shared objective and task-routing context.",
+  "north_star": "roles/base-role/NORTH_STAR.md",
+  "start_date": "2026-10-03",
+  "status": "ACTIVE",
+  "priority": "LOW",
+  "constraints": [
+    "Evidence rolls upward; interpretive authority does not: a claim stays attached to the exact cells/evidence that earned it; no epic or thread name lends its interpretation to a child (roles/base-role/DISTRIBUTED_WORK.md s1a)",
+    "No old positive is presumed valid and no old null presumed final; many results are 'worth re-running after apparatus repair'",
+    "The RSO Builder Cell (Palamedes, Pallas, Argus, Cadmus, Eupalamus) may not claim Phase 2-B work (roles/<Seat>/SCOPE.json)",
+    "Shared machines: scheduling priority classes 4-5 by default (DISTRIBUTED_WORK.md s10); use idle capacity through leases, never preempt a higher-priority active lease",
+    "No dependency on Phase 3: do not wait for RSO integration; exchange findings through the cross-epic convention (DISTRIBUTED_WORK.md s11)",
+    "Base-role doctrine and current MWO/CWO hard gates apply unchanged"
+  ],
+  "exit_conditions": [
+    "Not set by the operator. Each engine's re-entry campaign carries its own exit; NO_JUSTIFIED_FURTHER_WORK is a legitimate one."
+  ],
+  "threads": [
+    "TH-P2B-ENGINE-HARDENING"
+  ],
+  "peers": [
+    "EP-GLOBAL",
+    "EP-PHASE3"
+  ],
+  "entry": "ops/threads/TH-P2B-ENGINE-HARDENING.md (how a seat enters Phase 2-B) and ops/templates/P2B-ENGINE-REENTRY/",
+  "resource_refs": [
+    "roles/base-role/DISTRIBUTED_WORK.md s10",
+    "infra/FLEET_HOSTS.md",
+    "fabric/README.md (resource leases)"
+  ],
+  "operator_decisions": [
+    "2026-10-03 Phase 2-B established as a peer epic (roles/Achilles/prompts/2026-10-03_epics_phase2b/01_OPERATOR_DIRECTIVE_verbatim.md)"
+  ],
+  "exclusions": [
+    "Phase 3 RSO construction and its builder cell",
+    "Centrally pre-written per-engine task lists: each engine owner instantiates its own campaign"
+  ],
+  "deferred": [],
+  "authority": "operator, 2026-10-03 (roles/Achilles/prompts/2026-10-03_epics_phase2b/01_OPERATOR_DIRECTIVE_verbatim.md)"
+}

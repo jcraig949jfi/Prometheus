@@ -34,6 +34,9 @@ from techne.fossils import vault
 REPO = ROOT.parent.parent
 SPEC = REPO / "techne" / "fossils" / "specimens"
 GRADES = {"ORIGINAL_AUTHORITATIVE_RELEASE": "ORIGINAL_ARTIFACT", "RECONSTRUCTION": "RECONSTRUCTION", "TRANSCRIPTION": "LATER_TRANSCRIPTION"}
+SOURCE_TYPE_GRADES = {"PSEUDOCODE_PLUS_REFERENCE_IMPL": "RECONSTRUCTION", "FAITHFUL_PORT": "RECONSTRUCTION",
+                      "LATER_SAME_LINEAGE_RELEASE": "ORIGINAL_ARTIFACT"}   # Techne ruling #1188
+DERIVED_SOURCE_TYPES = ("REGENERATED_FROM_FROZEN_RECIPE",)            # Harmonia rollout-grade ruling (Techne names the value)
 
 
 def techne_hashes(fid: str) -> dict:
@@ -56,6 +59,12 @@ def grade_from_record(rec: dict, fid: str = "") -> str:
         g = json.loads(pk.read_text(encoding="utf-8")).get("PROVENANCE_GRADE")
         if isinstance(g, list) and g and g[0].get("grade"):
             return g[0]["grade"]
+    # Harmonia RULING R19 rollout grade (2026-09-30, c7b9e10f9; Nyx #1074): an artifact regenerated in-house from a frozen recipe
+    # (the 39 asal-rollout-* records; they carry CAPSULE.json) is a DERIVED_RECOVERY_ARTIFACT and never grades higher than its
+    # source body. The source type check covers Techne's new value; the CAPSULE.json check keeps the R19 merge impossible
+    # even while a record still carries ORIGINAL_AUTHORITATIVE_RELEASE.
+    if rec.get("source_type") in DERIVED_SOURCE_TYPES or (fid and (SPEC / fid / "CAPSULE.json").exists()):
+        return "DERIVED_RECOVERY_ARTIFACT"
     s = (rec.get("nyx_handoff") or {}).get("where_it_came_from", "")
     for k, v in GRADES.items():
         if k in s:
@@ -67,6 +76,12 @@ def grade_from_record(rec: dict, fid: str = "") -> str:
     # every HISTORICAL_ARCHIVE_MIRROR record by the same reasoning; Techne's per-record PROVENANCE_GRADE (TECHNE-89) wins.
     if rec.get("source_type") == "HISTORICAL_ARCHIVE_MIRROR":
         return "CONTEMPORARY_COPY"
+    # Techne RULING #1188 (2026-09-30, main b05f854a7): grade relative to the HISTORICAL mechanism the record's lineage names.
+    # PSEUDOCODE_PLUS_REFERENCE_IMPL and FAITHFUL_PORT: a later third-party implementation -> RECONSTRUCTION.
+    # LATER_SAME_LINEAGE_RELEASE: the lineage's own code at the pinned release -> ORIGINAL_ARTIFACT OF THAT RELEASE, never the era body
+    # (the basis line carries the qualifier). A per-record PROVENANCE_GRADE block (TECHNE-89) wins above.
+    if rec.get("source_type") in SOURCE_TYPE_GRADES:
+        return SOURCE_TYPE_GRADES[rec["source_type"]]
     return "UNKNOWN"
 
 
@@ -77,6 +92,20 @@ def grade_basis_from_record(rec: dict) -> str:
                 "not a grade); tree-level RECONSTRUCTION caveat where the mirror is a git history assembled after the fact "
                 "(unix-history-repo); ruled for odepack-netlib / bsd-tcp-4.2-1983 / compact-4.2bsd-1983 and applied to the other "
                 "archive-mirror records by the same reasoning until TECHNE-89 issues per-record blocks")
+    st = rec.get("source_type")
+    if st in DERIVED_SOURCE_TYPES or (rec.get("handoff") == "CAPSULE.json"):
+        return (base + "; DERIVED_RECOVERY_ARTIFACT by Harmonia's R19 rollout ruling (2026-09-30): regenerated in-house from a frozen recipe; "
+                "licenses claims about these rollouts under ASAL as we ran it, not about Chan 2019 or Sakana 2024")
+    if st in ("PSEUDOCODE_PLUS_REFERENCE_IMPL", "FAITHFUL_PORT"):
+        return (base + "; " + st + " -> RECONSTRUCTION by Techne ruling #1188 (2026-09-30): third-party implementation of a published mechanism; "
+                "the repository bytes are the implementer's own originals (pinned commit in the record); the mechanism's own canonical text is "
+                "the paper/standard named in the record's lineage. Fidelity to it is CLAIMS_EQUIVALENCE_TO, to be shown, not a grade")
+    if st == "LATER_SAME_LINEAGE_RELEASE":
+        arts = (rec.get("source_origin") or {}).get("artifacts") or [{}]
+        pin = arts[0].get("commit") or arts[0].get("tag") or "the pinned release"
+        return (base + "; LATER_SAME_LINEAGE_RELEASE -> ORIGINAL_ARTIFACT by Techne ruling #1188 (2026-09-30): of release " + str(pin)
+                + "; NOT the era body the lineage describes. A claim dated to the historical era needs the era body or a per-file showing "
+                "that the lines read are unchanged since it")
     return base
 
 

@@ -1,0 +1,741 @@
+{
+ "schema": "nyx.atlas/0",
+ "fossil_id": "minimax-facebookresearch-2023",
+ "techne_record": "techne/fossils/specimens/minimax-facebookresearch-2023/record.json",
+ "whole_system": {
+  "FOSSIL_ID": {
+   "value": "minimax-facebookresearch-2023",
+   "basis": "TECHNE_RECORD"
+  },
+  "CANONICAL_NAME": {
+   "value": "minimax -- minimax: Efficient Baselines for Autocurricula in JAX (Jiang, Minqi and Dennis, Michael and Grefenstette, Edward and Rocktäschel, Tim; Meta Platforms, Inc. and affiliates per copyright headers, pyproject email msj@meta.com; 2023-2024)",
+   "basis": "TECHNE_RECORD"
+  },
+  "VERSION": {
+   "value": "github.com/facebookresearch/minimax main @ d053054c5290a04c1c4cd8b55704d999cad73e30 (committed 2024-08-24; 6 commits since 2023-11-22; 102 tracked files)",
+   "basis": "TECHNE_RECORD"
+  },
+  "ERA": {
+   "value": "2023-2024",
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_SYSTEM": {
+   "value": {
+    "domain": [
+     "unsupervised-environment-design",
+     "curriculum",
+     "reinforcement-learning",
+     "jax"
+    ],
+    "lineage": "README: JAX-based reimplementation of the baselines in facebookresearch/dcd ('previous reference implementations, like those in facebookresearch/dcd'); AMaze 'provides feature-parity with respect to the previous reference implementation of the maze environment in facebookresearch/dcd' and 'exactly reproduces the MiniGrid-based mazes used in previous UED studies'. Introduces Parallel PLR and Parallel ACCEL as new variants. rnn.py is based on OptimizedLSTMCell from google/jax. Roadmap names JaxMARL and Jumanji as planned integrations. (Downstream, per the jaxued tree, JaxUED credits minimax commit 2ae9e04 for ued_scores and maze mutators.) || main loop (reader, from the code): ExperimentRunner.train loops while train_state.n_updates < n_total_updates, each tick calling the selected runner's run() (jitted, optionally shmap-sharded over devices) which for PLRRunner resets a batch of fresh random levels, asks PLRManager.sample whether to replay (uniform draw < replay_prob and buffer fill >= min_fill_ratio) and if so draws levels from the buffer with a distribution mixing rank-based score weights and staleness (ages), optionally merges new+replay+mutated levels for parallel evaluation, dedupes against the buffer, rolls out the students and computes UED scores (e.g. max_mc) to insert/update buffer entries, performs the PPO gradient update (gated by is_replay under Robust PLR), then under ACCEL mutates the replayed levels with the registered mutator and evaluates the children into the buffer, before the outer loop logs stats to csv/wandb and checkpoints."
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_PROBLEM": {
+   "value": "Provide fast, fully-jittable JAX implementations of the key minimax-regret UED baselines (DR, Minimax adversary, PAIRED, Population PAIRED, PLR, Robust PLR, ACCEL) plus two new parallel variants (Parallel PLR, Parallel ACCEL), with multi-device training and a tensorized maze environment (AMaze) reproducing the MiniGrid mazes of prior UED work.",
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVED_HUMAN_CAPABILITY": {
+   "value": {
+    "built_to": "Provide fast, fully-jittable JAX implementations of the key minimax-regret UED baselines (DR, Minimax adversary, PAIRED, Population PAIRED, PLR, Robust PLR, ACCEL) plus two new parallel variants (Parallel PLR, Parallel ACCEL), with multi-device training and a tensorized maze environment (AMaze) reproducing the MiniGrid mazes of prior UED work.",
+    "pressure": "README: 'existing implementations of common baselines require excessive amounts of compute. In some cases, experiments can require more than a week to complete using V100 GPUs. This long turn-around slows the rate of research progress in autocuriculum methods'.",
+    "success_means": "README: wall-time speedups ('over 100x faster than previous reference implementations, like those in facebookresearch/dcd' in timing studies on V100 GPUs and Xeon E5-2698 v4 CPUs), exact reproduction of MiniGrid maze dynamics/reward/observation/action spaces, and student performance on held-out test mazes (test_env_names such as Maze-SixteenRooms, Maze-Labyrinth, Maze-StandardMaze, evaluated every test_interval and by minimax.evaluate)."
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "DOCUMENTED_ENVIRONMENTAL_PRESSURE": {
+   "value": {
+    "pressure": "",
+    "failure_condition": ""
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "LANGUAGE": {
+   "value": [
+    "Python",
+    "Jupyter notebooks (examples/*.ipynb)"
+   ],
+   "basis": "TECHNE_RECORD"
+  },
+  "EXECUTION_MODEL": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "ANCESTRY": {
+   "value": "README: JAX-based reimplementation of the baselines in facebookresearch/dcd ('previous reference implementations, like those in facebookresearch/dcd'); AMaze 'provides feature-parity with respect to the previous reference implementation of the maze environment in facebookresearch/dcd' and 'exactly reproduces the MiniGrid-based mazes used in previous UED studies'. Introduces Parallel PLR and Parallel ACCEL as new variants. rnn.py is based on OptimizedLSTMCell from google/jax. Roadmap names JaxMARL and Jumanji as planned integrations. (Downstream, per the jaxued tree, JaxUED credits minimax commit 2ae9e04 for ued_scores and maze mutators.) || main loop (reader, from the code): ExperimentRunner.train loops while train_state.n_updates < n_total_updates, each tick calling the selected runner's run() (jitted, optionally shmap-sharded over devices) which for PLRRunner resets a batch of fresh random levels, asks PLRManager.sample whether to replay (uniform draw < replay_prob and buffer fill >= min_fill_ratio) and if so draws levels from the buffer with a distribution mixing rank-based score weights and staleness (ages), optionally merges new+replay+mutated levels for parallel evaluation, dedupes against the buffer, rolls out the students and computes UED scores (e.g. max_mc) to insert/update buffer entries, performs the PPO gradient update (gated by is_replay under Robust PLR), then under ACCEL mutates the replayed levels with the registered mutator and evaluates the children into the buffer, before the outer loop logs stats to csv/wandb and checkpoints.",
+   "basis": "TECHNE_RECORD"
+  },
+  "KNOWN_PREDECESSORS": {
+   "value": [
+    "reimplementation_of: dcd-facebookresearch-2022"
+   ],
+   "basis": "NYX_DERIVED"
+  },
+  "KNOWN_SUCCESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_RIVALS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_HISTORICAL_DISPOSITION": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "SOURCE_STATUS": {
+   "value": {
+    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+    "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+    "tree_sha256": "3d1cfe120483bffd3739f7729f5f12fe475308e29fb066a1a3c18f1f91995d83"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "RUN_STATUS": {
+   "value": {
+    "run": "NOT_ATTEMPTED",
+    "test": "NOT_ATTEMPTED",
+    "environment": {
+     "runner": "native",
+     "note": "NOT RUN in this pass (nothing executed from the tree); host class from the reader draft: CPython >=3.10 host with JAX; README timing studies and speedup claims assume NVIDIA GPUs (V100) with CUDA >= 11.8, but CPU execution is not excluded by the declared deps; multi-GPU supported via --n_devices."
+    }
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVABILITY": {
+   "value": {
+    "EXECUTABLE": "unknown",
+    "OBSERVABLE": "unknown",
+    "ORACLE_BACKED": "unknown",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "unknown"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "ORACLE_STATUS": {
+   "value": {
+    "oracle_backed": "unknown",
+    "test_classification": "NOT_ATTEMPTED"
+   },
+   "basis": "NYX_DERIVED"
+  },
+  "INTERVENTION_READINESS": {
+   "value": {
+    "intervention_ready": "unknown",
+    "patch_intervention": "unknown",
+    "runnable": false
+   },
+   "basis": "NYX_DERIVED"
+  }
+ },
+ "cut": {
+  "state": "COARSE",
+  "mode": "ANCESTRY_AWARE",
+  "evidence": [
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:minimax-facebookresearch-2023/upstream/tree/src/minimax/util/rl/plr.py:106-139"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:minimax-facebookresearch-2023/upstream/tree/src/minimax/util/rl/plr.py:265-378"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:minimax-facebookresearch-2023/upstream/tree/src/minimax/util/rl/ued_scores.py:1-218"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:minimax-facebookresearch-2023/upstream/tree/src/minimax/runners/plr_runner.py:40-98, 389-540"
+   }
+  ],
+  "inspected_files": [
+   "src/minimax/util/rl/plr.py 87-378",
+   "src/minimax/util/rl/ued_scores.py 1-218",
+   "runners/plr_runner.py 40-98, 173-335, 389-540",
+   "envs/maze/maze_mutators.py 20-102",
+   "runners/paired_runner.py 554-555"
+  ],
+  "date": "2026-10-03T08:10Z",
+  "note": "the same PLR/ACCEL family as jaxued, with seven UED scores, a parallel new|replay|mutate evaluation, and a tie-inclusive insertion rule [READER-ASSISTED, 2026-10-03: a read-only reader agent (claude-opus-5-5, same family as Nyx) read the files below and returned line-cited notes; Nyx spot-checked 1 of the cited line ranges against the files (all matched) and wrote this cut. Nothing was run, imported or built (no bytecode written into the body). Stage A census 121 stays frozen; this body is cut under the operator's 2026-10-03 directive (item 4) and tracked with the other operator-directed bodies.]",
+  "provenance": {
+   "schema": "nyx.atlas/1-provenance",
+   "migrated_at": "2026-10-03T08:10Z",
+   "migrated_from": "authored under nyx.atlas/1-provenance",
+   "provenance_grade_read": "ORIGINAL_ARTIFACT",
+   "grade_basis": "Techne FOSSIL_PACKET.json PROVENANCE_GRADE where issued, else the record's handoff string mapped (populated per R34; Harmonia may re-grade)",
+   "source_object_id": "https://github.com/facebookresearch/minimax@d053054c5290a04c1c4cd8b55704d999cad73e30",
+   "payload_manifest_id": "techne tree_sha256 3d1cfe120483bffd3739f7729f5f12fe475308e29fb066a1a3c18f1f91995d83 (102 files)",
+   "host_tree_matches_record": null,
+   "host": "GANDALF (hostname), bodies receipt not named",
+   "files_read": [
+    {
+     "path": "upstream/tree/src/minimax/util/rl/plr.py",
+     "payload_hash_read": "a0f7ec2e7ea4f0478460d0599351c873d21d9b0b11830a16073c140e9bab3551",
+     "techne_recorded_hash": "a0f7ec2e7ea4f0478460d0599351c873d21d9b0b11830a16073c140e9bab3551",
+     "match": true,
+     "refs": 4
+    },
+    {
+     "path": "upstream/tree/src/minimax/util/rl/ued_scores.py",
+     "payload_hash_read": "8f42995474403f551bd9cdd57f3d8473da05101b11cf1642a8f2c94ab53840ba",
+     "techne_recorded_hash": "8f42995474403f551bd9cdd57f3d8473da05101b11cf1642a8f2c94ab53840ba",
+     "match": true,
+     "refs": 2
+    },
+    {
+     "path": "upstream/tree/src/minimax/runners/plr_runner.py",
+     "payload_hash_read": "a202f1bd2518d7a45b92e26e541d8265e630f0681838ad48fb7be2fb2e917d2d",
+     "techne_recorded_hash": "a202f1bd2518d7a45b92e26e541d8265e630f0681838ad48fb7be2fb2e917d2d",
+     "match": true,
+     "refs": 2
+    }
+   ],
+   "unresolved_refs": []
+  }
+ },
+ "organs": [
+  {
+   "organ_id": "minimax-facebookresearch-2023::replay_distribution_over_one_over_one_plus_rank_scores_mixed_with_ages",
+   "fossil_ancestry": "minimax-facebookresearch-2023",
+   "human_name": "PLR manager (plr.py 106-139, 158, 211)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "rank mode replaces scores by 1/(1+rank) over the whole buffer, masks by filled, raises to 1/temperature and normalises; staleness is ages*filled normalised (falling back to the score distribution); replay = (1-staleness_coef)*score + staleness_coef*staleness; every draw ages all filled levels by 1 and zeroes the drawn one",
+   "input": "scores, ages",
+   "output": "a replay distribution",
+   "state": "ages",
+   "update": "UNKNOWN",
+   "assumptions": [
+    "UNKNOWN"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [],
+   "fitness_value_in_ancestor": "UNKNOWN",
+   "failure_landscape": "by reading: the 'equal weight to present levels' fallback is dead code (z forced to 1 before the test)",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:minimax-facebookresearch-2023/upstream/tree/src/minimax/util/rl/plr.py:106-139"
+   },
+   "confidence": "HIGH",
+   "portability": "UNKNOWN",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "PLR manager (plr.py 106-139, 158, 211)",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "ARCHIVE",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "SEEDED_RANDOM",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "minimax-facebookresearch-2023::tie_inclusive_insertion_into_the_lowest_replay_weight_slot_with_mutation_lineage",
+   "fossil_ancestry": "minimax-facebookresearch-2023",
+   "human_name": "buffer update (plr.py 265-378, 141-147)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "a new level targets the next empty slot, else argmin(replay_dist), and is inserted iff score >= that slot's score (ties replace; jaxued uses strict <); episodes without a done are masked; mutated children carry n_mutations = parent + 1",
+   "input": "levels and scores",
+   "output": "insertion decisions",
+   "state": "the buffer",
+   "update": "UNKNOWN",
+   "assumptions": [
+    "UNKNOWN"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [],
+   "fitness_value_in_ancestor": "UNKNOWN",
+   "failure_landscape": "by reading (MEDIUM): max_returns is overwritten by the current rollout's max, so the stored value can decrease",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:minimax-facebookresearch-2023/upstream/tree/src/minimax/util/rl/plr.py:265-378"
+   },
+   "confidence": "HIGH",
+   "portability": "UNKNOWN",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "buffer update (plr.py 265-378, 141-147)",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "DECISION",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "minimax-facebookresearch-2023::seven_ued_scores_from_regret_variants_to_value_disagreement",
+   "fossil_ancestry": "minimax-facebookresearch-2023",
+   "human_name": "ued_scores.py 1-218",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "RELATIVE_REGRET = clip(max_return[agent1] - mean_return[agent0], 0); MEAN_RELATIVE_REGRET mean - mean; POPULATION_REGRET max over agents - mean; L1_VALUE_LOSS mean |advantage| (the PLR default); POSITIVE_VALUE_LOSS mean clip(adv, 0); MAX_MC max(max_return) - value; VALUE_DISAGREEMENT std of values; envs without a done get ignore_val",
+   "input": "returns, values, advantages",
+   "output": "a level score",
+   "state": "UNKNOWN",
+   "update": "UNKNOWN",
+   "assumptions": [
+    "UNKNOWN"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [],
+   "fitness_value_in_ancestor": "UNKNOWN",
+   "failure_landscape": "UNKNOWN by run",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:minimax-facebookresearch-2023/upstream/tree/src/minimax/util/rl/ued_scores.py:1-218"
+   },
+   "confidence": "HIGH",
+   "portability": "UNKNOWN",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "ued_scores.py 1-218",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "minimax-facebookresearch-2023::parallel_new_replay_mutate_evaluation_with_gradients_only_from_replay",
+   "fossil_ancestry": "minimax-facebookresearch-2023",
+   "human_name": "plr_runner.py 40-98, 389-540",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "parallel mode forces replay_prob 1.0 and the batch criterion and evaluates new, replayed and mutated levels in one rollout, taking gradients only from the replay slice; robust PLR skips gradients on non-replay steps; easy/hard mutation criteria pick parents by min/max UED score",
+   "input": "UNKNOWN",
+   "output": "UNKNOWN",
+   "state": "UNKNOWN",
+   "update": "UNKNOWN",
+   "assumptions": [
+    "UNKNOWN"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [],
+   "fitness_value_in_ancestor": "UNKNOWN",
+   "failure_landscape": "by reading (MEDIUM): line 327 calls self.student.update; no assignment of self.student was found in runners/",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:minimax-facebookresearch-2023/upstream/tree/src/minimax/runners/plr_runner.py:40-98, 389-540"
+   },
+   "confidence": "MEDIUM",
+   "portability": "UNKNOWN",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "plr_runner.py 40-98, 389-540",
+   "status": "CANDIDATE",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "SEEDED_RANDOM",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  }
+ ],
+ "rejected_cuts": [
+  {
+   "candidate": "the rest of the body: train.py, arguments and configs, dr/eval/xp runners, maze envs, models, PPO, agent_pop",
+   "reason": "OTHER",
+   "evidence": "NOT READ; residue",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "minimax-facebookresearch-2023"
+  },
+  {
+   "candidate": "'minimax-facebookresearch-2023' as one organ",
+   "reason": "NAME_HAS_NO_EXECUTABLE_BOUNDARY",
+   "evidence": "the mechanisms above are separable pieces of code",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "minimax-facebookresearch-2023"
+  }
+ ],
+ "pressures": [
+  {
+   "pressure_id": "minimax-facebookresearch-2023::P.as_jaxued_levels_with_high_value_loss_or_regret_are_kept_and_replayed_and_ties_displace_incumbents",
+   "source_fossil": "minimax-facebookresearch-2023",
+   "source_evidence": "the organs above",
+   "condition": "a 100-level buffer; replay priority from a UED score and age",
+   "resource_or_constraint": "UNKNOWN",
+   "failure_condition": "UNKNOWN",
+   "world_punishes": "solved and episode-less levels",
+   "world_rewards": "high L1 value loss / regret levels; edited descendants that at least tie the weakest slot",
+   "observable_consequence": "UNKNOWN",
+   "vacuity_condition": "UNKNOWN",
+   "trivial_shortcuts": "UNKNOWN",
+   "cheat_control": "UNKNOWN: not designed this pass",
+   "cost_class": "UNKNOWN (nothing ran)",
+   "purpose_separated_from_pressure": "PURPOSE: unsupervised environment design in JAX (Jiang et al. 2023 minimax; DCD reimplementation)",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
+ "composition_edges": [],
+ "ancestry_edges": [
+  {
+   "from": "minimax-facebookresearch-2023",
+   "relation": "reimplementation_of",
+   "to": "dcd-facebookresearch-2022",
+   "note": "reader draft: Meta's JAX reimplementation of the facebookresearch/dcd UED baselines, adding Parallel PLR/ACCEL",
+   "basis": "TECHNE_RECORD"
+  }
+ ],
+ "residue": {
+  "state": "LARGE_RESIDUE",
+  "unexplained": [
+   "not read: train.py, arguments and configs, dr/eval/xp runners, maze envs, models, PPO, agent_pop",
+   "nothing ran",
+   "reader-assisted cut: line ranges spot-checked, not every line re-read by Nyx"
+  ],
+  "note": "batch 17 first pass",
+  "cut_mode": "ANCESTRY_AWARE"
+ }
+}

@@ -30,7 +30,8 @@ MANDATORY = ("journal/2026-01-01.md", "INBOX_SOMEONE_TOPIC_2026-01-01.md", "prom
 
 
 def _roles():
-    return sorted(p for p in (REPO / "roles").iterdir() if p.is_dir() and p.name != "base-role")
+    # seats only: base-role and every other shared role (roles/*-role/, INHERITANCE.md "Shared roles") are layers, not seats
+    return sorted(p for p in (REPO / "roles").iterdir() if p.is_dir() and not p.name.endswith("-role"))
 
 
 def _ignored(path: str) -> bool:
@@ -51,7 +52,7 @@ def test_every_mandatory_artifact_path_is_committable_for_every_seat():
 
 def test_base_role_files_exist_and_are_pure_ascii():
     for name in ("RESPONSIBILITIES.md", "WORKING_CONTRACT.md", "NORTH_STAR.md", "README.md", "INHERITANCE.md",
-                 "WAKE_DIRECTIVE.md"):
+                 "WAKE_DIRECTIVE.md", "DISTRIBUTED_WORK.md"):
         f = BASE / name
         assert f.exists(), name
         raw = f.read_bytes()

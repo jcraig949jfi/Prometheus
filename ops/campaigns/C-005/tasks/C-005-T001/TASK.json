@@ -1,0 +1,106 @@
+{
+  "schema": "prometheus.workgraph.task.v1",
+  "task_id": "C-005-T001",
+  "campaign_id": "C-005",
+  "epic_id": "EP-GLOBAL",
+  "title": "Acceptance: record the executing host (harmless, deterministic)",
+  "objective": "A fleet PrometheusWorker claims this packet, runs the registered command at the pinned SHA, and returns a receipt with out/host.json hashed.",
+  "owner_role": "Achilles",
+  "quality_class": "Q1",
+  "can_downgrade": false,
+  "escalate_to": "Q1",
+  "depends_on": [],
+  "problem": "End-to-end proof of the generic-worker path on real origin/main.",
+  "non_goals": [
+    "no science",
+    "no interpretation"
+  ],
+  "evidence_required": [
+    "attempt receipt DONE_CLEAN with out/host.json"
+  ],
+  "acceptance": {
+    "condition": "receipt DONE_CLEAN; exit 0; host.json present"
+  },
+  "deliverables": [
+    "attempts/<A>/RECEIPT.json"
+  ],
+  "kind": "operations",
+  "executor_class": "GENERIC_WORKER",
+  "execution_mode": "ATOMIC",
+  "execution": {
+    "source_sha": "fa9cd81514025a3ba114abdca5cddf6272040021",
+    "command": [
+      "python3",
+      "-c",
+      "import os,platform,json,time; os.makedirs('out',exist_ok=True); json.dump({'host':platform.node(),'utc':time.strftime('%Y-%m-%dT%H:%M:%SZ',time.gmtime())},open('out/host.json','w'))"
+    ],
+    "environment": {
+      "vars": {}
+    },
+    "inputs": [],
+    "resources": {
+      "cpu": 1
+    },
+    "timeout_s": 900,
+    "output_dir": "out",
+    "success_criteria": {
+      "exit_code": 0,
+      "files": [
+        "host.json"
+      ]
+    },
+    "cleanup": "REMOVE_WORKTREE",
+    "preemption_policy": "REPLAY_FROM_START"
+  },
+  "status": "CLOSED",
+  "history": [
+    {
+      "status": "PROPOSED",
+      "by": "Achilles",
+      "at_utc": "2026-10-03T10:30:00Z",
+      "note": "fleet acceptance"
+    },
+    {
+      "status": "READY",
+      "by": "Achilles",
+      "at_utc": "2026-10-03T10:30:00Z",
+      "note": "coordinator of C-005"
+    },
+    {
+      "status": "CLAIMED",
+      "by": "PrometheusWorker/ubu002/ubu002-svc",
+      "at_utc": "2026-10-03T10:24:26Z",
+      "note": "generic execution"
+    },
+    {
+      "status": "IMPLEMENTING",
+      "by": "PrometheusWorker/ubu002/ubu002-svc",
+      "at_utc": "2026-10-03T10:24:26Z",
+      "note": "running registered command unchanged"
+    },
+    {
+      "status": "GREEN",
+      "by": "PrometheusWorker/ubu002/ubu002-svc",
+      "at_utc": "2026-10-03T10:24:56Z",
+      "note": "execution criteria met"
+    },
+    {
+      "status": "INTEGRATION_READY",
+      "by": "PrometheusWorker/ubu002/ubu002-svc",
+      "at_utc": "2026-10-03T10:24:56Z",
+      "note": "for owner Achilles"
+    },
+    {
+      "status": "INTEGRATED",
+      "by": "Achilles[elsa]",
+      "at_utc": "2026-10-03T10:25:46Z",
+      "note": "receipt checked: DONE_CLEAN on ubu002, host.json hashed; exactly one claim"
+    },
+    {
+      "status": "CLOSED",
+      "by": "Achilles[elsa]",
+      "at_utc": "2026-10-03T10:25:46Z",
+      "note": "fleet acceptance passed"
+    }
+  ]
+}

@@ -1,0 +1,70 @@
+{
+  "schema": "prometheus.workgraph.task.v1",
+  "task_id": "C-004-T017",
+  "campaign_id": "C-004",
+  "title": "S2 semantic mutation support: in-memory source-edit runner with the plan s5 outcome classes",
+  "objective": "Build the instrument S3/S4 will use to apply committed semantic source edits to frozen code in memory and classify each one, without overwriting any source file.",
+  "parent_objective": "RSO-METHODS-SLICE-001 (CAMPAIGN.json objective)",
+  "owner_role": "Argus",
+  "quality_class": "Q2",
+  "can_downgrade": false,
+  "escalate_to": "Q3",
+  "depends_on": [
+    "C-004-T003"
+  ],
+  "requires_shas": [
+    "09dc8c38b (closure review)",
+    "3bd02f393 (v0.4 synthesis, merged)"
+  ],
+  "owns": [
+    "rso/slice001/mutation.py",
+    "rso/slice001/tests/test_mutation.py"
+  ],
+  "reads": [
+    "rso/slice001/contract/CONTRACT.md",
+    "rso/slice001/contract/contract.json",
+    "docs/phase3/synthesis/ENCELADUS-DIONYSUS-v0.4/NEXT_ROUND_PLAN_v0.4.md",
+    "docs/phase3/closure/FABLE-5.1/CLOSURE_REVIEW_v0.4.md",
+    "roles/rso-builder-role/"
+  ],
+  "problem": "Plan s5: distinguish proposed, applicable, duplicate, executed, killed, survived, equivalent, syntax/import error and timeout; errors are not semantic kills; run the unchanged suite first; a survivor needs a behavioural witness; absence of an observed difference is not equivalence (uncertain equivalence is unresolved). Edits are data files committed before execution; the runner reads them, compiles the edited module in memory, runs the frozen suite, and writes a per-edit row with flush.",
+  "non_goals": [
+    "The runner never decides equivalence: it records UNRESOLVED and the reviewer adjudicates",
+    "No attack contents (the reviewer writes those)",
+    "Python >= 3.8 standard library only; no package installation (MWO-0004 R2)"
+  ],
+  "evidence_required": [
+    "RED/fire test: a known killing edit, a known surviving edit, a syntax-error edit and a timeout edit on a toy module, each expected class asserted, failing before implementation",
+    "GREEN: all four classified correctly; no file under rso/slice001 modified (checked by hash before/after)"
+  ],
+  "acceptance": {
+    "command": "python -B -m rso.slice001.ci",
+    "condition": "the four control edits classify as expected; source tree hashes unchanged"
+  },
+  "deliverables": [
+    "rso/slice001/mutation.py",
+    "rso/slice001/tests/test_mutation.py"
+  ],
+  "kind": "software",
+  "status": "READY",
+  "history": [
+    {
+      "status": "PROPOSED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-03T11:04:14Z",
+      "note": "created under C-004-T000 decomposition"
+    },
+    {
+      "status": "READY",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-03T11:04:14Z",
+      "note": "made READY by the coordinator (C-004-T000)"
+    }
+  ],
+  "authority": "operator directive 2026-10-03 s9, s11 (roles/Achilles/prompts/2026-10-03_rso_builder_cell/01_OPERATOR_DIRECTIVE_verbatim.md); decomposed by Palamedes under C-004-T000",
+  "resource_ceiling": {
+    "engineering": "<= 2 Q2 seat-hours",
+    "cpu": "< 2 CPU-minutes",
+    "note": "Counts toward the slice caps fixed by C-004-OP1 (NEXT_ROUND_PLAN_v0.4 s6 proposal: 30 CPU-minutes total, 0 GPU, 0 cloud, 100 MB new artifacts, 12 top-level validation launches; mutation children count toward CPU). Stop at the first exhausted cap and keep partial results."
+  }
+}

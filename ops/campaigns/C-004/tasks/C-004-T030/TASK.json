@@ -1,0 +1,65 @@
+{
+  "schema": "prometheus.workgraph.task.v1",
+  "task_id": "C-004-T030",
+  "campaign_id": "C-004",
+  "title": "S3 first-sight challenge: 5 fresh sound, 5 fresh broken, 10 semantic edits against frozen S2",
+  "objective": "Run the independent first-sight challenge on the frozen S2 implementation: commit the attack set before observing outcomes, execute it, and report the first-sight score with denominators.",
+  "parent_objective": "RSO-METHODS-SLICE-001 (CAMPAIGN.json objective)",
+  "owner_role": "Dionysus",
+  "quality_class": "Q3",
+  "can_downgrade": false,
+  "escalate_to": "operator",
+  "depends_on": [
+    "C-004-T020",
+    "C-004-OP3"
+  ],
+  "requires_shas": [
+    "09dc8c38b (closure review)",
+    "3bd02f393 (v0.4 synthesis, merged)"
+  ],
+  "owns": [
+    "rso/slice001/challenge/S3/"
+  ],
+  "reads": [
+    "rso/slice001/contract/",
+    "rso/slice001/",
+    "docs/phase3/synthesis/ENCELADUS-DIONYSUS-v0.4/NEXT_ROUND_PLAN_v0.4.md",
+    "docs/phase3/closure/FABLE-5.1/CLOSURE_REVIEW_v0.4.md"
+  ],
+  "problem": "Plan s5 and closure F: reviewer reads the contract and frozen implementation, records prior exposure, commits proposed source edits and their intended faults before opening the frozen test bodies; runs the unchanged suite first; five fresh sound cases, five fresh broken cases, ten distinct applicable semantic edits spanning reset/observer, binding and invalidation; classifies with the mutation runner (C-004-T017); supplies a behavioural witness per non-equivalent survivor; retains all attempted attacks and applicability reasons. The result is recorded on each gate as C4 'first-sight challenged'.",
+  "non_goals": [
+    "The reviewer does not modify production implementation (Pallas/rso-builder-role s6.7)",
+    "Known escapes, old attacks and plan examples are not fresh cases"
+  ],
+  "evidence_required": [
+    "attack set commit precedes the execution commit",
+    "score table with denominators; survivors with witnesses"
+  ],
+  "acceptance": {
+    "condition": "attack set committed before outcomes; first-sight score reported with denominators; every survivor has a witness or is UNRESOLVED"
+  },
+  "deliverables": [
+    "rso/slice001/challenge/S3/ (attack set, results, EXPOSURE.md, REPORT.md)"
+  ],
+  "kind": "review",
+  "status": "PROPOSED",
+  "history": [
+    {
+      "status": "PROPOSED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-03T11:04:14Z",
+      "note": "created under C-004-T000 decomposition"
+    }
+  ],
+  "authority": "operator directive 2026-10-03 s9, s11 (roles/Achilles/prompts/2026-10-03_rso_builder_cell/01_OPERATOR_DIRECTIVE_verbatim.md); decomposed by Palamedes under C-004-T000",
+  "eligible_roles": [
+    "Pallas"
+  ],
+  "resource_ceiling": {
+    "engineering": "<= 1.5 reviewer hours of the 3 (OP-1)",
+    "cpu": "< 10 CPU-minutes incl. mutation children",
+    "note": "Counts toward the slice caps fixed by C-004-OP1 (NEXT_ROUND_PLAN_v0.4 s6 proposal: 30 CPU-minutes total, 0 GPU, 0 cloud, 100 MB new artifacts, 12 top-level validation launches; mutation children count toward CPU). Stop at the first exhausted cap and keep partial results."
+  },
+  "notes": "PROPOSED until C-004-T020 integrates and OP-3 names the reviewer; owner_role rewritten then.",
+  "red_required": false
+}

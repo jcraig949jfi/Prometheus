@@ -163,7 +163,7 @@
    "schema": "nyx.atlas/1-provenance",
    "migrated_at": "2026-09-19T09:59Z",
    "migrated_from": "authored under nyx.atlas/1-provenance",
-   "provenance_grade_read": "UNKNOWN",
+   "provenance_grade_read": "ORIGINAL_ARTIFACT",
    "grade_basis": "Techne FOSSIL_PACKET.json PROVENANCE_GRADE where issued, else the record's handoff string mapped (populated per R34; Harmonia may re-grade)",
    "source_object_id": "https://github.com/uber-research/poet@0b40743d414a11e1b96cb0b7869483462724bb1e",
    "payload_manifest_id": "techne tree_sha256 889276ac26c34554991a6b8e9488c7f6f64035c7e19810ca37662bfb7ce4aa37 (23 files)",
@@ -185,7 +185,15 @@
      "refs": 2
     }
    ],
-   "unresolved_refs": []
+   "unresolved_refs": [],
+   "grade_history": [
+    {
+     "was": "UNKNOWN",
+     "basis_was": "Techne FOSSIL_PACKET.json PROVENANCE_GRADE where issued, else the record's handoff string mapped (populated per R34; Harmonia may re-grade)",
+     "changed": "2026-10-03 (applied by Nyx[gandalf-d1f90ae1])",
+     "by": "Techne fc547d2d5 (2026-09-30): nyx_handoff.where_it_came_from filled; the existing string map reads ORIGINAL_ARTIFACT"
+    }
+   ]
   }
  },
  "organs": [

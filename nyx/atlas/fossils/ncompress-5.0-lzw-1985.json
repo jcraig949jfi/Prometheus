@@ -142,8 +142,8 @@
    "schema": "nyx.atlas/1-provenance",
    "migrated_at": "2026-09-18T06:00Z",
    "migrated_from": "authored under nyx.atlas/1-provenance",
-   "provenance_grade_read": "UNKNOWN",
-   "grade_basis": "Techne FOSSIL_PACKET.json PROVENANCE_GRADE where issued, else the record's handoff string mapped (populated per R34; Harmonia may re-grade)",
+   "provenance_grade_read": "ORIGINAL_ARTIFACT",
+   "grade_basis": "Techne FOSSIL_PACKET.json PROVENANCE_GRADE where issued, else the record's handoff string mapped (populated per R34; Harmonia may re-grade); LATER_SAME_LINEAGE_RELEASE -> ORIGINAL_ARTIFACT by Techne ruling #1188 (2026-09-30): of release the pinned release; NOT the era body the lineage describes. A claim dated to the historical era needs the era body or a per-file showing that the lines read are unchanged since it",
    "source_object_id": "https://github.com/vapier/ncompress/archive/refs/tags/v5.0.tar.gz sha256:96ec931d06ab827fccad377839bfb91955274568392ddecf809e443443aead46",
    "payload_manifest_id": "techne tree_sha256 5de18704eb9c8c16a0e8ca28ae333541504bc24968b1fda4a76226185c5948ff (23 files)",
    "host_tree_matches_record": null,
@@ -157,7 +157,15 @@
      "refs": 3
     }
    ],
-   "unresolved_refs": []
+   "unresolved_refs": [],
+   "grade_history": [
+    {
+     "was": "UNKNOWN",
+     "basis_was": "Techne FOSSIL_PACKET.json PROVENANCE_GRADE where issued, else the record's handoff string mapped (populated per R34; Harmonia may re-grade)",
+     "changed": "2026-10-03 (applied by Nyx[gandalf-d1f90ae1])",
+     "by": "Techne ruling #1188 (2026-09-30): source type LATER_SAME_LINEAGE_RELEASE"
+    }
+   ]
   }
  },
  "organs": [

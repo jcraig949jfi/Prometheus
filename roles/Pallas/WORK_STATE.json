@@ -1,0 +1,44 @@
+{
+  "schema": "prometheus.work_state.v1",
+  "seat": "Pallas",
+  "mwo_id": "MWO-0004",
+  "authority": "operator directive 2026-10-03 (roles/Achilles/prompts/2026-10-03_rso_builder_cell/01_OPERATOR_DIRECTIVE_verbatim.md)",
+  "updated_at_utc": "2026-10-03T11:10:19Z",
+  "state": "READY",
+  "branch": "pallas/boot-2026-10-03",
+  "base_sha": "8833b7f71b8e185952c485db2758024ef894085b",
+  "head_sha": null,
+  "worktree_path": "D:/Prometheus-worktrees/pallas-boot-2026-10-03",
+  "model": "claude-fable-5-1",
+  "capability_class": "Q3",
+  "host": "SPECTREX5 (M2; not M1, EW_DB_HOST=192.168.1.202)",
+  "instance": "m2-e7da6bde",
+  "session_start_utc": "UNKNOWN (not recorded; comms boot at 2026-10-03T11:10:19Z)",
+  "current_objective": "RSO Builder Cell member, campaign C-004 (RSO-METHODS-SLICE-001)",
+  "current_step": "first boot done; no READY packet for Pallas (workgraph ready, origin/main 8833b7f71); idle per RESPONSIBILITIES s5",
+  "in_flight": [],
+  "finish_condition": "per claimed packet (DISTRIBUTED_WORK.md)",
+  "next_expected_milestone": "a narrow Q3 attack packet from Palamedes against a frozen surface, or the operator's OP-3 decision naming Pallas on T005/T030/T041",
+  "expected_next_artifact": "first claimed C-004 packet LEASE + attempt receipt",
+  "threads": [
+    "phase3-rso"
+  ],
+  "campaigns": [
+    "C-004"
+  ],
+  "experiments": [],
+  "fabric_tasks": [],
+  "running": [],
+  "blocked_on": [],
+  "next_actions": [
+    "comms sync Pallas; workgraph ready Pallas (repeat after every sync)",
+    "stay idle: no self-assignment, no routine work, no pre-attack of unfrozen code (RESPONSIBILITIES s5)"
+  ],
+  "operator_decisions_required": [],
+  "latest_reports": [
+    "roles/Pallas/journal/2026-10-03.md",
+    "roles/Pallas/comms/HEARTBEAT_2026-10-03T1110Z.md"
+  ],
+  "last_push_sha": null,
+  "last_push_utc": null
+}

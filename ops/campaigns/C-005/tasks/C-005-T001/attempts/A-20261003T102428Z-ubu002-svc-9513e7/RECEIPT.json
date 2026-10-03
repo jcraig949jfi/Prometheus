@@ -1,0 +1,46 @@
+{
+  "schema": "prometheus.workgraph.receipt.v1",
+  "task_id": "C-005-T001",
+  "campaign_id": "C-005",
+  "attempt_id": "A-20261003T102428Z-ubu002-svc-9513e7",
+  "role": "PrometheusWorker/ubu002/ubu002-svc",
+  "model": "none (deterministic execution)",
+  "quality_class": "Q1",
+  "start_sha": "fa9cd81514025a3ba114abdca5cddf6272040021",
+  "end_sha": "fa9cd81514025a3ba114abdca5cddf6272040021",
+  "files_changed": [],
+  "evidence_added": [],
+  "evidence_executed": [
+    "python3 -c import os,platform,json,time; os.makedirs('out',exist_ok=True); json.dump({'host':platform.node(),'utc':time.strftime('%Y-%m-%dT%H:%M:%SZ',time.gmtime())},open('out/host.json','w')) -> exit 0"
+  ],
+  "red_observed": null,
+  "result": "DONE_CLEAN",
+  "known_escapes": [],
+  "unresolved": [],
+  "unblocks": [],
+  "created_at_utc": "2026-10-03T10:24:56Z",
+  "host": "ubu002",
+  "exit_code": 0,
+  "outputs": [
+    {
+      "path": "host.json",
+      "sha256": "3cac219aa058b31e7679f53eaf7d6413215e42f9fc514d4a5444be4547d4652b",
+      "bytes": 49
+    }
+  ],
+  "experiment_id": null,
+  "effective_priority": {
+    "epic_id": "EP-GLOBAL",
+    "base_band": "MEDIUM",
+    "band": "MEDIUM",
+    "value": 200,
+    "local": 0,
+    "created_at_utc": "2026-10-03T10:30:00Z",
+    "override": null,
+    "preemptible": false
+  },
+  "resources": {
+    "wall_s": 15.4
+  },
+  "notes": "execution facts only; interpretation belongs to owner_role Achilles; outputs kept at /home/jcraig/prometheus-worker/results/C-005-T001/A-20261003T102428Z-ubu002-svc-9513e7"
+}

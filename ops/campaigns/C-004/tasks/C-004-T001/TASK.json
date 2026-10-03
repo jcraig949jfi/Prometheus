@@ -1,0 +1,98 @@
+{
+  "schema": "prometheus.workgraph.task.v1",
+  "task_id": "C-004-T001",
+  "campaign_id": "C-004",
+  "title": "S1 draft A: finite world, truth model, reset/restart/observer and the C3 registered reset model",
+  "objective": "Write contract section A: the exact finite world, its truth model enumerated separately from the ruler, reset and restart as separate predicates, the observer model, and the C3 registered finite model with known escapes placed inside or outside it.",
+  "parent_objective": "RSO-METHODS-SLICE-001 (CAMPAIGN.json objective)",
+  "owner_role": "Cadmus",
+  "quality_class": "Q2",
+  "can_downgrade": false,
+  "escalate_to": "Q3",
+  "depends_on": [],
+  "requires_shas": [
+    "09dc8c38b (closure review)",
+    "3bd02f393 (v0.4 synthesis, merged)"
+  ],
+  "owns": [
+    "rso/slice001/contract/drafts/A_world_reset_observer.md"
+  ],
+  "reads": [
+    "docs/phase3/synthesis/ENCELADUS-DIONYSUS-v0.4/NEXT_ROUND_PLAN_v0.4.md",
+    "docs/phase3/synthesis/ENCELADUS-DIONYSUS-v0.4/SYNTHESIS_AND_DECISIONS_v0.4.md",
+    "docs/phase3/closure/FABLE-5.1/CLOSURE_REVIEW_v0.4.md",
+    "roles/rso-builder-role/",
+    "docs/phase3/hardening/FABLE-5.1/",
+    "docs/phase3/reviews/ASTRA-6.0/rso-v0.2/"
+  ],
+  "problem": "NEXT_ROUND_PLAN_v0.4 s3 needs, before S2: the claim (a useful retained bit across a named boundary with an explicitly allowed channel); finite organism state plus a modelled pending-message channel and every schedule/counter/observer state that affects future output; world-side outputs enumerated separately from the ruler, with all legal histories, exogenous inputs, delays, repeated resets and the horizon (a modelled delay longer than the test horizon blocks closure); reset = erase forbidden past while preserving declared allowed state; restart equivalence as a separate predicate. Closure C3: state the delay horizon in episodes and the number of repeated resets the model covers, and list which known escapes of BOTH harnesses fall inside the model (must now be caught) and which fall outside (stay listed); place at least Fable's G6.reset escapes (a carry hidden from the reported state and used two episodes later; a reset that leaks on every third call). For each of T01-T08 and E06 give the case and its independently stated expected fact (plan s4, with C1's T02 wording: calibration gate PASS; retention ruler NEGATIVE, exact 1/2). Each clause needs an attainable true and false case, or a stated coupling (plan s4). Name the concrete implementation files and finite state bounds (plan s3 last paragraph).",
+  "non_goals": [
+    "No implementation code",
+    "No redesign of the RSO and no reopening of the closed design review (CLOSURE_REVIEW_v0.4 G)",
+    "Do not copy code, tests or verdict policies from the Fable or ASTRA harnesses; they are reference and adversarial corpora (SOURCES.md B; NEXT_ROUND_PLAN_v0.4 s1)",
+    "No receipt, evidence-graph, gate-authority or rendering rules (that is draft B, C-004-T002)",
+    "No statistical INDETERMINATE: the slice is deterministic finite enumeration (plan s3 Scope; closure D02)"
+  ],
+  "evidence_required": [
+    "the draft names every state component, the horizon H (episodes) and repeat count R, and gives T01-T08 and E06 each a true case and a false case with expected verdict and reason, or a stated coupling",
+    "a known-escape placement table citing the escape's file and id in docs/phase3/hardening/FABLE-5.1/ and docs/phase3/reviews/ASTRA-6.0/rso-v0.2/ with IN-MODEL or OUT-OF-MODEL and a reason"
+  ],
+  "acceptance": {
+    "condition": "C-004-T004 (Palamedes) accepts the draft into CONTRACT.md without an unresolved question; open questions are escalated, not left in the text"
+  },
+  "deliverables": [
+    "rso/slice001/contract/drafts/A_world_reset_observer.md"
+  ],
+  "kind": "document",
+  "status": "INTEGRATION_READY",
+  "history": [
+    {
+      "status": "PROPOSED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-03T11:04:14Z",
+      "note": "created under C-004-T000 decomposition"
+    },
+    {
+      "status": "READY",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-03T11:04:14Z",
+      "note": "made READY by the coordinator (C-004-T000)"
+    },
+    {
+      "status": "CLAIMED",
+      "by": "Cadmus[m1-a86ec5e4]",
+      "at_utc": "2026-10-03T11:27:51Z",
+      "note": "claimed at first boot; work branch cadmus/boot-2026-10-03 base a46a29824 in F:/Prometheus-worktrees/cadmus-boot"
+    },
+    {
+      "status": "IMPLEMENTING",
+      "by": "Cadmus[m1-a86ec5e4]",
+      "at_utc": "2026-10-03T11:44:24Z",
+      "note": "draft A at a843a384d on cadmus/boot-2026-10-03 (kind document, red_required false)"
+    },
+    {
+      "status": "GREEN",
+      "by": "Cadmus[m1-a86ec5e4]",
+      "at_utc": "2026-10-03T11:44:24Z",
+      "note": "draft A at a843a384d on cadmus/boot-2026-10-03 (kind document, red_required false)"
+    },
+    {
+      "status": "INTEGRATION_READY",
+      "by": "Cadmus[m1-a86ec5e4]",
+      "at_utc": "2026-10-03T11:44:24Z",
+      "note": "draft A at a843a384d on cadmus/boot-2026-10-03 (kind document, red_required false)"
+    }
+  ],
+  "authority": "operator directive 2026-10-03 s9, s11 (roles/Achilles/prompts/2026-10-03_rso_builder_cell/01_OPERATOR_DIRECTIVE_verbatim.md); decomposed by Palamedes under C-004-T000",
+  "escalation_triggers": [
+    "the finite model cannot cover a known escape without a scientific choice the sources do not make",
+    "an attainable true/false case does not exist for a clause and the coupling is unclear"
+  ],
+  "resource_ceiling": {
+    "engineering": "<= 2 Q2 seat-hours",
+    "cpu": "none",
+    "note": "Counts toward the slice caps fixed by C-004-OP1 (NEXT_ROUND_PLAN_v0.4 s6 proposal: 30 CPU-minutes total, 0 GPU, 0 cloud, 100 MB new artifacts, 12 top-level validation launches; mutation children count toward CPU). Stop at the first exhausted cap and keep partial results."
+  },
+  "notes": "kind document: RED/GREEN are the draft's acceptance by T004, not tests. Field decision recorded: the slice lives in a new stdlib package rso/slice001/ (reversible: a rename before S2 freeze costs one commit; revisit if Eupalamus's skeleton or the native witness needs another layout).",
+  "red_required": false
+}

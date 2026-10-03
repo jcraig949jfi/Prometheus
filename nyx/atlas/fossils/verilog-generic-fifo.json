@@ -146,7 +146,7 @@
    "schema": "nyx.atlas/1-provenance",
    "migrated_at": "2026-09-17T23:13Z",
    "migrated_from": "authored under nyx.atlas/1-provenance",
-   "provenance_grade_read": "UNKNOWN",
+   "provenance_grade_read": "ORIGINAL_ARTIFACT",
    "grade_basis": "Techne FOSSIL_PACKET.json PROVENANCE_GRADE where issued, else the record's handoff string mapped (populated per R34; Harmonia may re-grade)",
    "source_object_id": "https://github.com/freecores/generic_fifos@9d38c603aafd8f912ac3ae73a314d33987cd5c90",
    "payload_manifest_id": "techne tree_sha256 71549df2068e4712d08e36abdace415f88bad4cafed1651f5ba217e69dc284a4 (11 files)",
@@ -161,7 +161,15 @@
      "refs": 4
     }
    ],
-   "unresolved_refs": []
+   "unresolved_refs": [],
+   "grade_history": [
+    {
+     "was": "UNKNOWN",
+     "basis_was": "Techne FOSSIL_PACKET.json PROVENANCE_GRADE where issued, else the record's handoff string mapped (populated per R34; Harmonia may re-grade)",
+     "changed": "2026-10-03 (applied by Nyx[gandalf-d1f90ae1])",
+     "by": "Techne fc547d2d5 (2026-09-30): nyx_handoff.where_it_came_from filled; the existing string map reads ORIGINAL_ARTIFACT"
+    }
+   ]
   }
  },
  "organs": [

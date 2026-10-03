@@ -1,0 +1,74 @@
+{
+  "schema": "prometheus.workgraph.task.v1",
+  "task_id": "C-004-T018",
+  "campaign_id": "C-004",
+  "title": "S2 E06 encoding and flattened twins (run and reported; not an exit criterion)",
+  "objective": "Provide a reversible re-encoding and a flattened representation of the finite world and show the same capability verdict, reported without any cross-physics or recursion promotion.",
+  "parent_objective": "RSO-METHODS-SLICE-001 (CAMPAIGN.json objective)",
+  "owner_role": "Cadmus",
+  "quality_class": "Q2",
+  "can_downgrade": false,
+  "escalate_to": "Q3",
+  "depends_on": [
+    "C-004-T010",
+    "C-004-T012"
+  ],
+  "requires_shas": [
+    "09dc8c38b (closure review)",
+    "3bd02f393 (v0.4 synthesis, merged)"
+  ],
+  "owns": [
+    "rso/slice001/encoding.py",
+    "rso/slice001/tests/test_encoding.py"
+  ],
+  "reads": [
+    "rso/slice001/contract/CONTRACT.md",
+    "rso/slice001/contract/contract.json",
+    "docs/phase3/synthesis/ENCELADUS-DIONYSUS-v0.4/NEXT_ROUND_PLAN_v0.4.md",
+    "docs/phase3/closure/FABLE-5.1/CLOSURE_REVIEW_v0.4.md",
+    "roles/rso-builder-role/",
+    "rso/slice001/world.py",
+    "rso/slice001/rulers.py"
+  ],
+  "problem": "Plan s4 E06: same finite behaviour with reversible encoding or flattened representation -> same capability verdict; no cross-physics or recursion promotion. Closure F: E06 is run and reported but is not an exit criterion of this slice (it belongs to the native witness). Two encodings are one physics (closure D08).",
+  "non_goals": [
+    "Not an exit criterion; a failure here is reported, not repaired inside the slice unless the contract says so",
+    "No 'unlike physics' wording anywhere (closure D08)",
+    "Python >= 3.8 standard library only; no package installation (MWO-0004 R2)"
+  ],
+  "evidence_required": [
+    "RED: verdict-equality test fails before the twins exist",
+    "GREEN: identical verdicts; report row says ONE physics"
+  ],
+  "acceptance": {
+    "command": "python -B -m rso.slice001.ci",
+    "condition": "E06 twin verdicts equal; reported as one physics"
+  },
+  "deliverables": [
+    "rso/slice001/encoding.py",
+    "rso/slice001/tests/test_encoding.py"
+  ],
+  "kind": "software",
+  "status": "READY",
+  "history": [
+    {
+      "status": "PROPOSED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-03T11:04:14Z",
+      "note": "created under C-004-T000 decomposition"
+    },
+    {
+      "status": "READY",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-03T11:04:14Z",
+      "note": "made READY by the coordinator (C-004-T000)"
+    }
+  ],
+  "authority": "operator directive 2026-10-03 s9, s11 (roles/Achilles/prompts/2026-10-03_rso_builder_cell/01_OPERATOR_DIRECTIVE_verbatim.md); decomposed by Palamedes under C-004-T000",
+  "resource_ceiling": {
+    "engineering": "<= 1 Q2 seat-hours",
+    "cpu": "< 1 CPU-minute",
+    "note": "Counts toward the slice caps fixed by C-004-OP1 (NEXT_ROUND_PLAN_v0.4 s6 proposal: 30 CPU-minutes total, 0 GPU, 0 cloud, 100 MB new artifacts, 12 top-level validation launches; mutation children count toward CPU). Stop at the first exhausted cap and keep partial results."
+  },
+  "notes": "local_priority low inside the slice: claim after T011-T016 if the same seat holds them."
+}

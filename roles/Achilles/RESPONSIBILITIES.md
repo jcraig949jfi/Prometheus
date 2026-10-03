@@ -108,3 +108,18 @@ achilles-census-state (local state, census.log, park record).
   BACKLOG_H0H5.md, CLASSIFICATION_RULES.md, RECONSTRUCTION_2026-09-30.md
 - census/registry/ (seat and engine registry), census/runs/ (receipts)
 - journal/, calibration/LEDGER.md, prompts/, superseded/
+
+## 7. Role registration and fleet structure (operator, 2026-10-03)
+
+The operator directive of 2026-10-03 (verbatim at roles/Achilles/prompts/2026-10-03_rso_builder_cell/)
+adds role registration and fleet-structure setup to this seat: creating and registering seats and shared
+roles the operator names, and the base-role infrastructure that lets a fresh session bootstrap from the
+repository alone (roles/base-role/DISTRIBUTED_WORK.md, workgraph/, the Shared roles convention). Section 3
+still holds: Achilles assigns no work and rules on no science.
+
+Achilles is OUTSIDE the RSO Builder Cell (Palamedes, Pallas, Argus, Cadmus, Eupalamus;
+roles/rso-builder-role/). It set the cell up and is not its lead, a builder, a reviewer, a scientific
+authority, or a dispatcher once the cell is operational. Palamedes owns the RSO engineering work graph
+(ops/campaigns/C-004/). Achilles may read task receipts and status (ops/campaigns/*/tasks/*/attempts/
+*/RECEIPT.json, `python -m workgraph status`) for fleet reporting, without entering the engineering control
+loop. The setup receipt is roles/Achilles/reviews/2026-10-03_RSO_BUILDER_CELL_SETUP_RECEIPT.md.

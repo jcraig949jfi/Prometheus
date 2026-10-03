@@ -1,0 +1,758 @@
+{
+ "schema": "nyx.atlas/0",
+ "fossil_id": "leniabreeder-faldor-2024",
+ "techne_record": "techne/fossils/specimens/leniabreeder-faldor-2024/record.json",
+ "whole_system": {
+  "FOSSIL_ID": {
+   "value": "leniabreeder-faldor-2024",
+   "basis": "TECHNE_RECORD"
+  },
+  "CANONICAL_NAME": {
+   "value": "Leniabreeder -- Toward Artificial Open-Ended Evolution within Lenia using Quality-Diversity (Faldor, Maxence and Cully, Antoine; institution NOT_FOUND_AT_PIN in README (apptainer/hpc.yaml names host login.hpc.imperial.ac.uk); 2024)",
+   "basis": "TECHNE_RECORD"
+  },
+  "VERSION": {
+   "value": "github.com/maxencefaldor/Leniabreeder main @ 2d7bd133548359782741598b3a4f026d69d792a9 (committed 2025-04-02; 14 commits since 2024-06-13; 120 tracked files)",
+   "basis": "TECHNE_RECORD"
+  },
+  "ERA": {
+   "value": "2024-2025",
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_SYSTEM": {
+   "value": {
+    "domain": [
+     "artificial-life",
+     "quality-diversity",
+     "lenia",
+     "open-endedness",
+     "jax"
+    ],
+    "lineage": "README names Lenia and Quality-Diversity in the title and describes MAP-Elites and AURORA experiments; the tree vendors a modified qdax package (__version__ 0.3.0; qdax/tasks/README.md references the 'QD Benchmarks Workshop at GECCO 2022'); lenia/patterns.py entries are named 'Aquarium (self-replicating)', 'Aquarium (swarm)' etc.; isoline_variation docstring cites 'Iso+Line-DD Variation Operator [1]'. No explicit 'descends from / supersedes' statement in README. || main loop (reader, from the code): Each generation the MixingEmitter samples parent pairs from the repertoire and applies isoline_variation (iso_sigma Gaussian noise + line_sigma interpolation), each child genotype is expressed into a 128x128 Lenia world and stepped 200 times under jax.lax.scan while recording mass/center/velocity/angle stats and a cropped phenotype, fitness and descriptor are computed from the last n_keep steps (fitness set to -inf if the world went empty, hit the border, or spread), and children are added to a CVT MAP-Elites grid (main_me.py) or to an UnstructuredRepertoire that keeps the individuals most distant from fitter neighbours in the VAE latent space, which is retrained on stored phenotypes every generation and used to re-encode the whole archive (main_aurora.py)."
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_PROBLEM": {
+   "value": "Repository for 'Toward Artificial Open-Ended Evolution within Lenia using Quality-Diversity' (ALIFE 2024): run MAP-Elites or AURORA quality-diversity search over Lenia genotypes (kernel parameters + embryo cells) and analyze the resulting repertoires.",
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVED_HUMAN_CAPABILITY": {
+   "value": {
+    "built_to": "Repository for 'Toward Artificial Open-Ended Evolution within Lenia using Quality-Diversity' (ALIFE 2024): run MAP-Elites or AURORA quality-diversity search over Lenia genotypes (kernel parameters + embryo cells) and analyze the resulting repertoires.",
+    "pressure": "NOT_FOUND_AT_PIN (README gives title only; no abstract in the tree)",
+    "success_means": "NOT_FOUND_AT_PIN in README; code logs qd_score, coverage, max_fitness, n_elites (offspring added per generation) and repertoire genotype variance (common.repertoire_variance) to log.csv"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "DOCUMENTED_ENVIRONMENTAL_PRESSURE": {
+   "value": {
+    "pressure": "",
+    "failure_condition": ""
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "LANGUAGE": {
+   "value": [
+    "Python"
+   ],
+   "basis": "TECHNE_RECORD"
+  },
+  "EXECUTION_MODEL": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "ANCESTRY": {
+   "value": "README names Lenia and Quality-Diversity in the title and describes MAP-Elites and AURORA experiments; the tree vendors a modified qdax package (__version__ 0.3.0; qdax/tasks/README.md references the 'QD Benchmarks Workshop at GECCO 2022'); lenia/patterns.py entries are named 'Aquarium (self-replicating)', 'Aquarium (swarm)' etc.; isoline_variation docstring cites 'Iso+Line-DD Variation Operator [1]'. No explicit 'descends from / supersedes' statement in README. || main loop (reader, from the code): Each generation the MixingEmitter samples parent pairs from the repertoire and applies isoline_variation (iso_sigma Gaussian noise + line_sigma interpolation), each child genotype is expressed into a 128x128 Lenia world and stepped 200 times under jax.lax.scan while recording mass/center/velocity/angle stats and a cropped phenotype, fitness and descriptor are computed from the last n_keep steps (fitness set to -inf if the world went empty, hit the border, or spread), and children are added to a CVT MAP-Elites grid (main_me.py) or to an UnstructuredRepertoire that keeps the individuals most distant from fitter neighbours in the VAE latent space, which is retrained on stored phenotypes every generation and used to re-encode the whole archive (main_aurora.py).",
+   "basis": "TECHNE_RECORD"
+  },
+  "KNOWN_PREDECESSORS": {
+   "value": [
+    "derived_from: qdax-airl-2022"
+   ],
+   "basis": "NYX_DERIVED"
+  },
+  "KNOWN_SUCCESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_RIVALS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_HISTORICAL_DISPOSITION": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "SOURCE_STATUS": {
+   "value": {
+    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+    "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+    "tree_sha256": "d739997ae54315eb9715436cce28bb00b031baeffa1c1aa8999795f68e13f6a9"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "RUN_STATUS": {
+   "value": {
+    "run": "NOT_ATTEMPTED",
+    "test": "NOT_ATTEMPTED",
+    "environment": {
+     "runner": "native",
+     "note": "NOT RUN in this pass (nothing executed from the tree); host class from the reader draft: Linux + NVIDIA GPU with CUDA 12 (requirements pin jax[cuda12_pip]; hpc.yaml requests ngpus=1 gpu_type=RTX6000, 4 cpus, 16gb); CPU-only JAX not declared but not excluded by the code"
+    }
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVABILITY": {
+   "value": {
+    "EXECUTABLE": "unknown",
+    "OBSERVABLE": "unknown",
+    "ORACLE_BACKED": "unknown",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "unknown"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "ORACLE_STATUS": {
+   "value": {
+    "oracle_backed": "unknown",
+    "test_classification": "NOT_ATTEMPTED"
+   },
+   "basis": "NYX_DERIVED"
+  },
+  "INTERVENTION_READINESS": {
+   "value": {
+    "intervention_ready": "unknown",
+    "patch_intervention": "unknown",
+    "runnable": false
+   },
+   "basis": "NYX_DERIVED"
+  }
+ },
+ "cut": {
+  "state": "COARSE",
+  "mode": "ANCESTRY_AWARE",
+  "evidence": [
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:leniabreeder-faldor-2024/upstream/tree/main_me.py:51-82"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:leniabreeder-faldor-2024/upstream/tree/qdax/core/containers/mapelites_repertoire.py:285-292"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:leniabreeder-faldor-2024/upstream/tree/qdax/core/emitters/mutation_operators.py:182-239"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:leniabreeder-faldor-2024/upstream/tree/qdax/core/containers/unstructured_repertoire.py:37-128"
+   }
+  ],
+  "inspected_files": [
+   "common.py 9-45",
+   "main_me.py 51-119",
+   "main_aurora.py 78-129, 250-267",
+   "lenia/lenia.py 116-125, 162-184",
+   "qdax/core/containers/mapelites_repertoire.py 103-131, 212-320",
+   "qdax/core/emitters/mutation_operators.py 182-239",
+   "qdax/core/containers/unstructured_repertoire.py 37-128",
+   "qdax/core/aurora.py 52-81, 134-195"
+  ],
+  "date": "2026-10-03T08:10Z",
+  "note": "MAP-Elites (CVT) or AURORA over Lenia genotypes (kernel parameters plus a 32x32 initial pattern), with a viability filter that kills dying, border-touching or spreading creatures [READER-ASSISTED, 2026-10-03: a read-only reader agent (claude-opus-5-5, same family as Nyx) read the files below and returned line-cited notes; Nyx spot-checked 1 of the cited line ranges against the files (all matched) and wrote this cut. Nothing was run, imported or built (no bytecode written into the body). Stage A census 121 stays frozen; this body is cut under the operator's 2026-10-03 directive (item 4) and tracked with the other operator-directed bodies.]",
+  "provenance": {
+   "schema": "nyx.atlas/1-provenance",
+   "migrated_at": "2026-10-03T08:10Z",
+   "migrated_from": "authored under nyx.atlas/1-provenance",
+   "provenance_grade_read": "ORIGINAL_ARTIFACT",
+   "grade_basis": "Techne FOSSIL_PACKET.json PROVENANCE_GRADE where issued, else the record's handoff string mapped (populated per R34; Harmonia may re-grade)",
+   "source_object_id": "https://github.com/maxencefaldor/Leniabreeder@2d7bd133548359782741598b3a4f026d69d792a9",
+   "payload_manifest_id": "techne tree_sha256 d739997ae54315eb9715436cce28bb00b031baeffa1c1aa8999795f68e13f6a9 (120 files)",
+   "host_tree_matches_record": null,
+   "host": "GANDALF (hostname), bodies receipt not named",
+   "files_read": [
+    {
+     "path": "upstream/tree/main_me.py",
+     "payload_hash_read": "97a6e0d535dfc0148f86434ed0434e90a555d244f51502aa49f4bcf42cdf78a0",
+     "techne_recorded_hash": "97a6e0d535dfc0148f86434ed0434e90a555d244f51502aa49f4bcf42cdf78a0",
+     "match": true,
+     "refs": 2
+    },
+    {
+     "path": "upstream/tree/qdax/core/containers/mapelites_repertoire.py",
+     "payload_hash_read": "e7c5b65c558d809e5998a94eb0931f13c3419abd82c86bfa31bf4f099852f585",
+     "techne_recorded_hash": "e7c5b65c558d809e5998a94eb0931f13c3419abd82c86bfa31bf4f099852f585",
+     "match": true,
+     "refs": 2
+    },
+    {
+     "path": "upstream/tree/qdax/core/emitters/mutation_operators.py",
+     "payload_hash_read": "57bc0e6713a1c8c796822f9fd06100679f3dbbeed66d3e8775f6736f56c4bd58",
+     "techne_recorded_hash": "57bc0e6713a1c8c796822f9fd06100679f3dbbeed66d3e8775f6736f56c4bd58",
+     "match": true,
+     "refs": 2
+    },
+    {
+     "path": "upstream/tree/qdax/core/containers/unstructured_repertoire.py",
+     "payload_hash_read": "ab8897eade8672d079fdf0ed6a75a1eb9f7671ed8037107b47d53f92dbd87281",
+     "techne_recorded_hash": "ab8897eade8672d079fdf0ed6a75a1eb9f7671ed8037107b47d53f92dbd87281",
+     "match": true,
+     "refs": 2
+    }
+   ],
+   "unresolved_refs": []
+  }
+ },
+ "organs": [
+  {
+   "organ_id": "leniabreeder-faldor-2024::viability_filter_killing_empty_full_or_spread_patterns_to_minus_infinity",
+   "fossil_ancestry": "leniabreeder-faldor-2024",
+   "human_name": "fitness/descriptor parsing and kill rule (main_me.py 51-82; lenia.py 181-184)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "fitness is set to -inf if at any step a channel is everywhere below 0.1 (empty), the border mass exceeds 0.1 (full), or less than 0.9 of the mass lies in the central window (spread), or if fitness/descriptor is NaN; default fitness is negative angle variance, descriptors are mean mass and mean displacement",
+   "input": "a rollout",
+   "output": "fitness and descriptor",
+   "state": "UNKNOWN",
+   "update": "UNKNOWN",
+   "assumptions": [
+    "UNKNOWN"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [],
+   "fitness_value_in_ancestor": "UNKNOWN",
+   "failure_landscape": "by reading: linear_velocity ignores the metric operator and is the displacement between the last and the n_keep-th frame from the end",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:leniabreeder-faldor-2024/upstream/tree/main_me.py:51-82"
+   },
+   "confidence": "HIGH",
+   "portability": "UNKNOWN",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "fitness/descriptor parsing and kill rule (main_me.py 51-82; lenia.py 181-184)",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "leniabreeder-faldor-2024::cvt_map_elites_insertion_by_nearest_centroid_and_strict_improvement",
+   "fossil_ancestry": "leniabreeder-faldor-2024",
+   "human_name": "MapElitesRepertoire.add (mapelites_repertoire.py 212-320)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "each candidate maps to its nearest CVT centroid; within a batch only the per-cell maximum survives; it replaces the incumbent iff strictly fitter; parents are uniform over occupied cells",
+   "input": "a batch",
+   "output": "an updated repertoire",
+   "state": "1024 cells",
+   "update": "UNKNOWN",
+   "assumptions": [
+    "UNKNOWN"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [],
+   "fitness_value_in_ancestor": "UNKNOWN",
+   "failure_landscape": "by reading: if every initial genotype is killed the repertoire is empty and parent sampling divides 0 by 0",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:leniabreeder-faldor-2024/upstream/tree/qdax/core/containers/mapelites_repertoire.py:285-292"
+   },
+   "confidence": "HIGH",
+   "portability": "UNKNOWN",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "MapElitesRepertoire.add (mapelites_repertoire.py 212-320)",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "ARCHIVE",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "leniabreeder-faldor-2024::isoline_dd_variation_iso_noise_plus_line_noise_along_the_parent_difference",
+   "fossil_ancestry": "leniabreeder-faldor-2024",
+   "human_name": "isoline (mutation_operators.py 182-239)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "x = (x1 + N(0, iso_sigma)) + (x2 - x1) * N(0, line_sigma), one line-noise draw per pair; defaults iso 0.005, line 0.05; the initial population is the seed pattern plus iso noise",
+   "input": "two parents",
+   "output": "a child",
+   "state": "UNKNOWN",
+   "update": "UNKNOWN",
+   "assumptions": [
+    "UNKNOWN"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [],
+   "fitness_value_in_ancestor": "UNKNOWN",
+   "failure_landscape": "UNKNOWN by run",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:leniabreeder-faldor-2024/upstream/tree/qdax/core/emitters/mutation_operators.py:182-239"
+   },
+   "confidence": "HIGH",
+   "portability": "UNKNOWN",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "isoline (mutation_operators.py 182-239)",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "SEEDED_RANDOM",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "leniabreeder-faldor-2024::aurora_unstructured_archive_keeping_individuals_far_from_their_fitter_neighbours_in_a_learned_space",
+   "fossil_ancestry": "leniabreeder-faldor-2024",
+   "human_name": "UnstructuredRepertoire (37-128); aurora.py 52-81",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "archive plus offspring are ranked by the mean descriptor distance to their 3 nearest at-least-as-fit neighbours (+inf if none) and the top 1024 kept; descriptors are the mean VAE latent over the last frames, and after each update the VAE is retrained and every stored individual is re-described",
+   "input": "UNKNOWN",
+   "output": "UNKNOWN",
+   "state": "the archive and the encoder",
+   "update": "UNKNOWN",
+   "assumptions": [
+    "UNKNOWN"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [],
+   "fitness_value_in_ancestor": "UNKNOWN",
+   "failure_landscape": "UNKNOWN by run (the VAE and its training loop not read)",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:leniabreeder-faldor-2024/upstream/tree/qdax/core/containers/unstructured_repertoire.py:37-128"
+   },
+   "confidence": "MEDIUM",
+   "portability": "UNKNOWN",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "UnstructuredRepertoire (37-128); aurora.py 52-81",
+   "status": "CANDIDATE",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "SEEDED_RANDOM",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "SENSITIVE",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  }
+ ],
+ "rejected_cuts": [
+  {
+   "candidate": "the rest of the body: Lenia growth/kernels (lenia.py 1-115), patterns, the VAE, most of main_aurora.py, other qdax emitters, analysis",
+   "reason": "OTHER",
+   "evidence": "NOT READ; residue",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "leniabreeder-faldor-2024"
+  },
+  {
+   "candidate": "'leniabreeder-faldor-2024' as one organ",
+   "reason": "NAME_HAS_NO_EXECUTABLE_BOUNDARY",
+   "evidence": "the mechanisms above are separable pieces of code",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "leniabreeder-faldor-2024"
+  }
+ ],
+ "pressures": [
+  {
+   "pressure_id": "leniabreeder-faldor-2024::P.a_lenia_creature_must_stay_alive_and_bounded_to_score_and_then_compete_only_within_its_behaviour_cell",
+   "source_fossil": "leniabreeder-faldor-2024",
+   "source_evidence": "the organs above",
+   "condition": "a viability filter kills dying or spreading creatures; survivors compete per descriptor cell (or by learned-space isolation)",
+   "resource_or_constraint": "UNKNOWN",
+   "failure_condition": "UNKNOWN",
+   "world_punishes": "dying, border-touching or spreading patterns",
+   "world_rewards": "bounded persistent creatures with low angular variance in empty cells",
+   "observable_consequence": "UNKNOWN",
+   "vacuity_condition": "UNKNOWN",
+   "trivial_shortcuts": "UNKNOWN",
+   "cheat_control": "UNKNOWN: not designed this pass",
+   "cost_class": "UNKNOWN (nothing ran)",
+   "purpose_separated_from_pressure": "PURPOSE: quality-diversity search over Lenia creatures (Faldor and Cully 2024, Leniabreeder)",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
+ "composition_edges": [],
+ "ancestry_edges": [
+  {
+   "from": "leniabreeder-faldor-2024",
+   "relation": "inspired_by",
+   "to": "lenia-chan-2019",
+   "note": "Lenia is the substrate searched (reader draft: JAX Lenia genotypes); the reference Lenia implementation is a separate specimen",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "leniabreeder-faldor-2024",
+   "relation": "derived_from",
+   "to": "qdax-airl-2022",
+   "note": "reader draft: a vendored qdax 0.3.0 provides MAP-Elites and AURORA machinery",
+   "basis": "TECHNE_RECORD"
+  }
+ ],
+ "residue": {
+  "state": "LARGE_RESIDUE",
+  "unexplained": [
+   "not read: Lenia growth/kernels (lenia.py 1-115), patterns, the VAE, most of main_aurora.py, other qdax emitters, analysis",
+   "nothing ran",
+   "reader-assisted cut: line ranges spot-checked, not every line re-read by Nyx"
+  ],
+  "note": "batch 17 first pass",
+  "cut_mode": "ANCESTRY_AWARE"
+ }
+}

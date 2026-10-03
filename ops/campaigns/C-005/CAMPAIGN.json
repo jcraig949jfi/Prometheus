@@ -1,0 +1,27 @@
+{
+  "schema": "prometheus.workgraph.campaign.v1",
+  "campaign_id": "C-005",
+  "thread_id": "TH-GLOBAL-CONTROL-PLANE",
+  "epic_id": "EP-GLOBAL",
+  "status": "CLOSED",
+  "label": "PrometheusWorker fleet acceptance",
+  "title": "PrometheusWorker fleet acceptance on the Linux nodes",
+  "objective": "Prove that a GENERIC_WORKER packet published on main is claimed by exactly one fleet PrometheusWorker through the compare-and-swap push, executed at its pinned SHA, and returned with a receipt.",
+  "coordinator_role": "Achilles",
+  "members": [
+    "Achilles"
+  ],
+  "authority": "operator, 2026-10-03 chat: 'Yes. The linux fleet for generic workers' (roles/Achilles/journal/2026-10-03.md)",
+  "quality_classes": {
+    "Q1": {
+      "description": "mechanical",
+      "rank": 1
+    }
+  },
+  "satisfied_states": [
+    "INTEGRATED",
+    "CLOSED"
+  ],
+  "created_by": "Achilles",
+  "created_at_utc": "2026-10-03T10:30:00Z"
+}

@@ -1,0 +1,732 @@
+{
+ "schema": "nyx.atlas/0",
+ "fossil_id": "stringmol-york-2014",
+ "techne_record": "techne/fossils/specimens/stringmol-york-2014/record.json",
+ "whole_system": {
+  "FOSSIL_ID": {
+   "value": "stringmol-york-2014",
+   "basis": "TECHNE_RECORD"
+  },
+  "CANONICAL_NAME": {
+   "value": "stringmol -- Automata Chemistry (README gives no paper title; technical report file smtr0.2.pdf is in the tree) (Simon Hickinbotham per source headers, with Adam Nellis, Ed Clark, Verena Fischer on some files; README contact sjh436@gmail.com; institution NOT_FOUND_AT_PIN in README (GitHub org uoy-research; src/DEVNOTES.md names the Plazzmid and EvoEvo projects and Susan Stepney); 2009-2015 per headers, repo 2014-2025)",
+   "basis": "TECHNE_RECORD"
+  },
+  "VERSION": {
+   "value": "github.com/uoy-research/stringmol dev @ 15dad84da126a4f887ba945c23a13e89e827f067 (committed 2025-01-17; 137 commits since 2014-09-23; 129 tracked files)",
+   "basis": "TECHNE_RECORD"
+  },
+  "ERA": {
+   "value": "2010-2025",
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_SYSTEM": {
+   "value": {
+    "domain": [
+     "artificial-chemistry",
+     "artificial-life",
+     "self-replication",
+     "string-rewriting"
+    ],
+    "lineage": "README: 'brief instructions to install, compile and run stringmol version 0.2.2' and 'url https://github.com/franticspider/stringmol.git' (a different GitHub owner than the pinned uoy-research repo). src/DEVNOTES.md: 'It begain in the Plazzmid project ... 2 years further work during EvoEvo'; flavours 'Vanilla' (papers before 2016), 'RUTSAC' (with Adam Nellis for the stringmol web app), 'Spatial' (with Paulien Hogeweg for R-P evolution, actively under development), 'FPGA' (Matthew Rowlings/Martin Trezfer, external), 'RStringmol' (external). Trial type 1 'ALife XII' is called 'the grand-daddy stringmol program'. CGI.md describes a web API (bind/step/bucket) from Adam Nellis. Headers on microbial_ga.* credit Verena Fischer. || main loop (reader, from the code): Each timestep (stringPM::TimestepIncrement) drains the 'now' agent list by picking molecules at random, applying decay at decayrate, and -- while energy remains -- either trying to bind an unbound molecule to a random unbound partner with probability from a Smith-Waterman alignment against the substitution matrix (setting one as active executor and one as passive), or executing the active molecule's current opcode on the pair (search, move, copy-with-mutation, increment, toggle, if-label, cleave which releases a product into the population, or terminate), each executed step costing one unit of energy, then moving the molecules to the 'next' list which becomes 'now' for the following step."
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_PROBLEM": {
+   "value": "An 'Automata Chemistry': simulate containers (well-mixed, or spatial grids) of string molecules that bind by sequence alignment and execute each other as micro-programs (copy, cleave, search, move, toggle, if) so that replicase strings reproduce with mutation, and study the resulting species/population dynamics.",
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVED_HUMAN_CAPABILITY": {
+   "value": {
+    "built_to": "An 'Automata Chemistry': simulate containers (well-mixed, or spatial grids) of string molecules that bind by sequence alignment and execute each other as micro-programs (copy, cleave, search, move, toggle, if) so that replicase strings reproduce with mutation, and study the resulting species/population dynamics.",
+    "pressure": "NOT_FOUND_AT_PIN (README gives no motivation statement; src/DEVNOTES.md lists past themes: 'Particle metabolome', 'molecular microprograms', 'Diversity from a monoculture', 'reaction logic', 'Degeneracy enriches', 'conservation of matter', 'maximize adjacent possible', 'extinction in replicase models')",
+    "success_means": "NOT_FOUND_AT_PIN in README as a metric; the code records per-step molecule counts, species lists (SMspp), epochs and ancestry; README 'Issues' section lists repeatability, logging, zero-percent binds and SOFT_SEARCH as open problems"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "DOCUMENTED_ENVIRONMENTAL_PRESSURE": {
+   "value": {
+    "pressure": "",
+    "failure_condition": ""
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "LANGUAGE": {
+   "value": [
+    "C++",
+    "C",
+    "Bash",
+    "R (util/sp_ancestry.R, util/sp_community.R, src/file.R)"
+   ],
+   "basis": "TECHNE_RECORD"
+  },
+  "EXECUTION_MODEL": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "ANCESTRY": {
+   "value": "README: 'brief instructions to install, compile and run stringmol version 0.2.2' and 'url https://github.com/franticspider/stringmol.git' (a different GitHub owner than the pinned uoy-research repo). src/DEVNOTES.md: 'It begain in the Plazzmid project ... 2 years further work during EvoEvo'; flavours 'Vanilla' (papers before 2016), 'RUTSAC' (with Adam Nellis for the stringmol web app), 'Spatial' (with Paulien Hogeweg for R-P evolution, actively under development), 'FPGA' (Matthew Rowlings/Martin Trezfer, external), 'RStringmol' (external). Trial type 1 'ALife XII' is called 'the grand-daddy stringmol program'. CGI.md describes a web API (bind/step/bucket) from Adam Nellis. Headers on microbial_ga.* credit Verena Fischer. || main loop (reader, from the code): Each timestep (stringPM::TimestepIncrement) drains the 'now' agent list by picking molecules at random, applying decay at decayrate, and -- while energy remains -- either trying to bind an unbound molecule to a random unbound partner with probability from a Smith-Waterman alignment against the substitution matrix (setting one as active executor and one as passive), or executing the active molecule's current opcode on the pair (search, move, copy-with-mutation, increment, toggle, if-label, cleave which releases a product into the population, or terminate), each executed step costing one unit of energy, then moving the molecules to the 'next' list which becomes 'now' for the following step.",
+   "basis": "TECHNE_RECORD"
+  },
+  "KNOWN_PREDECESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_SUCCESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_RIVALS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_HISTORICAL_DISPOSITION": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "SOURCE_STATUS": {
+   "value": {
+    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+    "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+    "tree_sha256": "783cd1df03734133c38d69de276f7eb2ea3f656ac07fef85d37c680250907d8b"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "RUN_STATUS": {
+   "value": {
+    "run": "NOT_ATTEMPTED",
+    "test": "NOT_ATTEMPTED",
+    "environment": {
+     "runner": "native",
+     "note": "NOT RUN in this pass (nothing executed from the tree); host class from the reader draft: Linux with gcc/g++ and make (README: 'Stringmol only builds in linux'); any CPU"
+    }
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVABILITY": {
+   "value": {
+    "EXECUTABLE": "unknown",
+    "OBSERVABLE": "unknown",
+    "ORACLE_BACKED": "unknown",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "unknown"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "ORACLE_STATUS": {
+   "value": {
+    "oracle_backed": "unknown",
+    "test_classification": "NOT_ATTEMPTED"
+   },
+   "basis": "NYX_DERIVED"
+  },
+  "INTERVENTION_READINESS": {
+   "value": {
+    "intervention_ready": "unknown",
+    "patch_intervention": "unknown",
+    "runnable": false
+   },
+   "basis": "NYX_DERIVED"
+  }
+ },
+ "cut": {
+  "state": "COARSE",
+  "mode": "ANCESTRY_AWARE",
+  "evidence": [
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:stringmol-york-2014/upstream/tree/src/alignment.cpp:42-49"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:stringmol-york-2014/upstream/tree/src/opcodes.cpp:61-302"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:stringmol-york-2014/upstream/tree/src/opcodes.cpp:1009-1123"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:stringmol-york-2014/upstream/tree/src/stringPM.cpp:358-427"
+   }
+  ],
+  "inspected_files": [
+   "src/stringPM.cpp 358-427, 660-686, 1680-2003",
+   "src/agent.cpp 314-435, 588-612",
+   "src/alignment.cpp 38-123, 214-426",
+   "src/opcodes.cpp 61-302, 451-545, 1009-1152"
+  ],
+  "date": "2026-10-03T08:10Z",
+  "note": "no fitness: strings meet stochastically, bind with a probability set by a Smith-Waterman alignment of one with the other's complement, execute each other's code at an energy cost, cleave products and decay [READER-ASSISTED, 2026-10-03: a read-only reader agent (claude-opus-5-5, same family as Nyx) read the files below and returned line-cited notes; Nyx spot-checked 1 of the cited line ranges against the files (all matched) and wrote this cut. Nothing was run, imported or built (no bytecode written into the body). Stage A census 121 stays frozen; this body is cut under the operator's 2026-10-03 directive (item 4) and tracked with the other operator-directed bodies.]",
+  "provenance": {
+   "schema": "nyx.atlas/1-provenance",
+   "migrated_at": "2026-10-03T08:10Z",
+   "migrated_from": "authored under nyx.atlas/1-provenance",
+   "provenance_grade_read": "ORIGINAL_ARTIFACT",
+   "grade_basis": "Techne FOSSIL_PACKET.json PROVENANCE_GRADE where issued, else the record's handoff string mapped (populated per R34; Harmonia may re-grade)",
+   "source_object_id": "https://github.com/uoy-research/stringmol@15dad84da126a4f887ba945c23a13e89e827f067",
+   "payload_manifest_id": "techne tree_sha256 783cd1df03734133c38d69de276f7eb2ea3f656ac07fef85d37c680250907d8b (129 files)",
+   "host_tree_matches_record": null,
+   "host": "GANDALF (hostname), bodies receipt not named",
+   "files_read": [
+    {
+     "path": "upstream/tree/src/alignment.cpp",
+     "payload_hash_read": "a13016811a204ec6d6d58e39ff05e15b21d2f6fd46bf5fb326379be5cfc2bea2",
+     "techne_recorded_hash": "a13016811a204ec6d6d58e39ff05e15b21d2f6fd46bf5fb326379be5cfc2bea2",
+     "match": true,
+     "refs": 2
+    },
+    {
+     "path": "upstream/tree/src/opcodes.cpp",
+     "payload_hash_read": "c736ab6525720a2ecbb7bad656d2988699e32fb4fb64f7870c22e04042f1d30e",
+     "techne_recorded_hash": "c736ab6525720a2ecbb7bad656d2988699e32fb4fb64f7870c22e04042f1d30e",
+     "match": true,
+     "refs": 4
+    },
+    {
+     "path": "upstream/tree/src/stringPM.cpp",
+     "payload_hash_read": "c0d48b72726630c5f0b4b651941e9ad5513ac52a83aad309b2cfe61fcf5ad26c",
+     "techne_recorded_hash": "c0d48b72726630c5f0b4b651941e9ad5513ac52a83aad309b2cfe61fcf5ad26c",
+     "match": true,
+     "refs": 2
+    }
+   ],
+   "unresolved_refs": []
+  }
+ },
+ "organs": [
+  {
+   "organ_id": "stringmol-york-2014::binding_probability_from_a_capped_smith_waterman_score_of_complementary_strings",
+   "fossil_ancestry": "stringmol-york-2014",
+   "human_name": "encounter and bind (stringPM.cpp 660-686, 1740-1790; alignment.cpp 38-53)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "an unbound string meets a partner with probability 1 - (1 - area ratio)^n; the pair aligns one string's complement against the other; l = the shorter matched span, bind probability 0 if l <= 2 else min(score, l - 1.124) / (l - 1.124) (commented 'BRUTAL HACK'); binding costs one energy unit; the later-matching string becomes the active one",
+   "input": "two strings",
+   "output": "bound or not",
+   "state": "a per-species-pair alignment cache",
+   "update": "UNKNOWN",
+   "assumptions": [
+    "UNKNOWN"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [],
+   "fitness_value_in_ancestor": "UNKNOWN",
+   "failure_landscape": "by reading: the cache list is passed by value, so its head update is lost when the list is empty; a second alignment is computed and discarded",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:stringmol-york-2014/upstream/tree/src/alignment.cpp:42-49"
+   },
+   "confidence": "HIGH",
+   "portability": "UNKNOWN",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "encounter and bind (stringPM.cpp 660-686, 1740-1790; alignment.cpp 38-53)",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "DECISION",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "SEEDED_RANDOM",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "stringmol-york-2014::template_addressed_copy_with_indels_and_adjacent_substitutions_executed_at_unit_energy_cost",
+   "fossil_ancestry": "stringmol-york-2014",
+   "human_name": "execute loop and opcodes (stringPM.cpp 1806-1894; opcodes.cpp 61-302, 451-545)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "opcodes search ($, deterministic best alignment of the complemented template), move, copy (=, with indel probability indelrate and substitution to an adjacent opcode at subrate), increment, toggle, if-label (success probability (score/len)^len), cleave and terminate; every executed op costs one energy unit",
+   "input": "the bound pair",
+   "output": "a modified string, possibly a product",
+   "state": "four pointers",
+   "update": "UNKNOWN",
+   "assumptions": [
+    "UNKNOWN"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [],
+   "fitness_value_in_ancestor": "UNKNOWN",
+   "failure_landscape": "by reading: '}' falls through into default; a deletion advances the instruction pointer instead of the read pointer; a fixed 128-byte memset on a variable buffer",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:stringmol-york-2014/upstream/tree/src/opcodes.cpp:61-302"
+   },
+   "confidence": "HIGH",
+   "portability": "UNKNOWN",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "execute loop and opcodes (stringPM.cpp 1806-1894; opcodes.cpp 61-302, 451-545)",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "SEEDED_RANDOM",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "stringmol-york-2014::cleave_releasing_the_tail_as_a_new_molecule",
+   "fossil_ancestry": "stringmol-york-2014",
+   "human_name": "OpcodeCleave (opcodes.cpp 1009-1123)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "the string from the active flow pointer to the end becomes a new agent and the parent is truncated; zero-length parents are destroyed",
+   "input": "a bound pair",
+   "output": "a product molecule",
+   "state": "UNKNOWN",
+   "update": "UNKNOWN",
+   "assumptions": [
+    "UNKNOWN"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [],
+   "fitness_value_in_ancestor": "UNKNOWN",
+   "failure_landscape": "by reading: the agent counter is never advanced here (pointer incremented instead of count) and the next-list head is passed by value, so a product can be lost when that list is empty",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:stringmol-york-2014/upstream/tree/src/opcodes.cpp:1009-1123"
+   },
+   "confidence": "HIGH",
+   "portability": "UNKNOWN",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "OpcodeCleave (opcodes.cpp 1009-1123)",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "stringmol-york-2014::constant_decay_and_a_finite_energy_budget",
+   "fossil_ancestry": "stringmol-york-2014",
+   "human_name": "decay and energy gate (agent.cpp 588-612; stringPM.cpp 358-427, 1958-1997)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "each selected agent first decays with probability decayrate (default 1/65^2), freeing its partner; no reaction happens without energy; default mutation rates indel 3.06e-8, substitution 1e-5",
+   "input": "UNKNOWN",
+   "output": "UNKNOWN",
+   "state": "energy",
+   "update": "UNKNOWN",
+   "assumptions": [
+    "UNKNOWN"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [],
+   "fitness_value_in_ancestor": "UNKNOWN",
+   "failure_landscape": "UNKNOWN by run",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:stringmol-york-2014/upstream/tree/src/stringPM.cpp:358-427"
+   },
+   "confidence": "HIGH",
+   "portability": "UNKNOWN",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "decay and energy gate (agent.cpp 588-612; stringPM.cpp 358-427, 1958-1997)",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "SEEDED_RANDOM",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "SHARED_RESOURCE",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  }
+ ],
+ "rejected_cuts": [
+  {
+   "candidate": "the rest of the body: spatial variant, setup, main and trial types, comass variants, OpcodeAdjacent, the blosum format",
+   "reason": "OTHER",
+   "evidence": "NOT READ; residue",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "stringmol-york-2014"
+  },
+  {
+   "candidate": "'stringmol-york-2014' as one organ",
+   "reason": "NAME_HAS_NO_EXECUTABLE_BOUNDARY",
+   "evidence": "the mechanisms above are separable pieces of code",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "stringmol-york-2014"
+  }
+ ],
+ "pressures": [
+  {
+   "pressure_id": "stringmol-york-2014::P.a_string_persists_only_by_being_copied_faster_than_it_decays_under_a_finite_energy_supply",
+   "source_fossil": "stringmol-york-2014",
+   "source_evidence": "the organs above",
+   "condition": "constant decay; every executed operation consumes energy; encounters are random",
+   "resource_or_constraint": "UNKNOWN",
+   "failure_condition": "UNKNOWN",
+   "world_punishes": "strings that are not copied",
+   "world_rewards": "strings that bind well and copy themselves accurately",
+   "observable_consequence": "UNKNOWN",
+   "vacuity_condition": "UNKNOWN",
+   "trivial_shortcuts": "UNKNOWN",
+   "cheat_control": "UNKNOWN: not designed this pass",
+   "cost_class": "UNKNOWN (nothing ran)",
+   "purpose_separated_from_pressure": "PURPOSE: artificial chemistry of self-copying strings that bind and execute one another (Hickinbotham et al., Stringmol)",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
+ "composition_edges": [],
+ "ancestry_edges": [],
+ "residue": {
+  "state": "LARGE_RESIDUE",
+  "unexplained": [
+   "not read: spatial variant, setup, main and trial types, comass variants, OpcodeAdjacent, the blosum format",
+   "nothing ran",
+   "reader-assisted cut: line ranges spot-checked, not every line re-read by Nyx"
+  ],
+  "note": "batch 17 first pass",
+  "cut_mode": "ANCESTRY_AWARE"
+ }
+}

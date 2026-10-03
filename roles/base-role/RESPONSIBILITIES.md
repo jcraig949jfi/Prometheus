@@ -12,6 +12,11 @@ roles/Aporia/prompts/2026-09-29_base_role_work_conserving/): section 2a (the
 work-conserving research loop), boot step 9, and dated reconciliation notes in
 the seat-states table, section 2 and section 4. Nothing else changed.
 
+Amended 2026-10-03 (operator directive, verbatim at
+roles/Achilles/prompts/2026-10-03_rso_builder_cell/, section 3): section 2b
+(distributed work graphs, normative text in DISTRIBUTED_WORK.md) and one
+sentence closing boot step 9. Nothing else changed.
+
 ## North star (read first; verbatim in roles/base-role/NORTH_STAR.md)
 
 Prometheus exists to grow, not hand-design, increasingly sagacious
@@ -308,6 +313,8 @@ reads instead of any local memory directory.
    MWO enters your portfolio according to its authority and ordering. If
    no bespoke task was supplied, that means "run the inherited work loop",
    not "wait for the operator".
+   (2026-10-03) Work published as task packets is discovered with
+   `python -m workgraph ready <Seat>` (section 2b).
 
 ## 2. Doctrine every seat carries
 
@@ -472,6 +479,29 @@ items -> select the most North-Star-relevant READY experiment -> if tied,
 sequence the options -> execute -> replenish the READY frontier -> repeat.
 Failures branch the research tree. Choices order the queue. Only genuine
 hard gates stop the affected item.
+
+## 2b. Distributed work graphs (operator, 2026-10-03)
+
+Structured distributed work uses executable work graphs: task packets with
+dependencies, a standard lifecycle, an explicit capability class, a
+structured escalation shape and a durable receipt. The normative text is
+roles/base-role/DISTRIBUTED_WORK.md; `python -m workgraph` is its executable
+form. Four rules from it every seat carries:
+
+- Use the cheapest capability class likely to complete the task correctly;
+  escalate instead of improvising around semantic ambiguity; leave behind a
+  test, fixture, rule, schema, checker or reusable code rather than prose.
+- A blocked item is escalated as TASK_ID / BLOCKER / EVIDENCE / OPTIONS /
+  RECOMMENDATION / CAPABILITY_NEEDED, never as "I am blocked".
+- Builders finish in place inside frozen task boundaries; review happens at
+  named edges, not on every commit; reversible engineering choices are made
+  locally and recorded.
+- Only a coordinator or the operator makes work READY; a seat claims READY
+  work it is eligible for, and the fast-forward push of the claim is the
+  claim.
+
+This is a capability, not a migration: existing queues and science continue
+under their current contracts (ops/README.md).
 
 ## 3. Journal everything
 

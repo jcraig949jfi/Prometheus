@@ -35,6 +35,11 @@ message contained no bespoke assignment.
 
 ----------------------------------------------------------------------
 
+Short form (2026-10-03): "You are <Seat>. Bootstrap from Prometheus." means
+exactly the block above for that seat. A session given only the short form
+finds this file from the repository README ("Starting a seat session") and
+follows it; the seat's own WAKE.md, if present, is this block filled in.
+
 What the wording guarantees: the first three commands a fresh seat can
 literally execute are all conformant (fetch, rev-parse, worktree add), so
 a seat that acts before it reads still cannot mutate the canonical tree.
