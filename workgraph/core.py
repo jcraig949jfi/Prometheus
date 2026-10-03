@@ -4,6 +4,7 @@ The normative text is roles/base-role/DISTRIBUTED_WORK.md; this module is its ex
 """
 import datetime
 import json
+import platform
 from pathlib import Path
 from typing import Dict, List, Optional, Tuple
 
@@ -12,6 +13,8 @@ OPS = REPO / "ops"
 CAMPAIGNS = OPS / "campaigns"
 
 EPIC_SCHEMA = "prometheus.workgraph.epic.v1"
+SCOPE_SCHEMA = "prometheus.workgraph.scope.v1"
+ROLES = REPO / "roles"
 CAMPAIGN_SCHEMA = "prometheus.workgraph.campaign.v1"
 TASK_SCHEMA = "prometheus.workgraph.task.v1"
 LEASE_SCHEMA = "prometheus.workgraph.lease.v1"
@@ -56,7 +59,7 @@ TASK_REQUIRED = ("schema", "task_id", "campaign_id", "title", "objective", "owne
                  "acceptance", "deliverables", "status", "history")
 TASK_OPTIONAL = ("parent_objective", "eligible_roles", "preferred_model", "minimum_model", "requires_shas",
                  "owns", "reads", "resource_ceiling", "escalation_triggers", "kind", "red_required",
-                 "satisfied_states", "receipt", "notes", "authority", "experiment_id")
+                 "satisfied_states", "receipt", "notes", "authority", "experiment_id", "epic_id", "priority_class")
 TASK_KINDS = ("software", "science", "document", "review", "operations")
 
 RECEIPT_REQUIRED = ("schema", "task_id", "campaign_id", "attempt_id", "role", "model", "quality_class",
@@ -92,7 +95,9 @@ def can_transition(old: str, new: str) -> bool:
 EPIC_REQUIRED = ("schema", "epic_id", "title", "objective", "start_date", "status", "constraints",
                  "exit_conditions", "threads")
 EPIC_OPTIONAL = ("north_star", "resource_refs", "operator_decisions", "deferred", "candidate_threads", "notes",
-                 "authority")
+                 "authority", "scope", "exclusions", "permanent", "end_date", "continuation_conditions", "peers",
+                 "entry")
+EPIC_STATUSES = ("ACTIVE", "PAUSED", "CLOSED")
 
 
 def load_epics(ops: Path = OPS) -> Dict[str, Tuple[Path, dict]]:
@@ -123,7 +128,48 @@ def validate_epic(e: dict) -> List[str]:
     for k in ("constraints", "exit_conditions", "threads"):
         if k in e and not isinstance(e[k], list):
             err.append("epic {} must be a list".format(k))
+    if e.get("status") is not None and e.get("status") not in EPIC_STATUSES:
+        err.append("epic status must be one of {}".format(EPIC_STATUSES))
+    if e.get("permanent") is True:
+        if e.get("end_date") not in (None, "NONE"):
+            err.append("a permanent epic has no end date (end_date null or NONE)")
+        if e.get("status") == "CLOSED":
+            err.append("a permanent epic cannot be CLOSED")
     return err
+
+
+def _ops_for(root: Path) -> Optional[Path]:
+    """The ops/ directory that owns a campaigns root (None for a bare test root without epics/threads)."""
+    root = Path(root)
+    if root == CAMPAIGNS:
+        return OPS
+    return root.parent if (root.parent / "epics").is_dir() or (root.parent / "threads").is_dir() else None
+
+
+def resolve_epic(t: dict, camps: Dict[str, Tuple[Path, dict]], ops: Optional[Path]) -> Optional[str]:
+    """A task's epic: inherited through its campaign (campaign epic_id, else the campaign thread's epic).
+    None when the chain is not linked (older work)."""
+    camp = camps.get(t.get("campaign_id"), (None, {}))[1] or {}
+    if camp.get("epic_id"):
+        return camp["epic_id"]
+    if camp.get("thread_id") and ops is not None:
+        return thread_epic(ops, camp["thread_id"]) or None
+    return None
+
+
+def seat_scope(seat: str, roles: Path = ROLES) -> Optional[List[str]]:
+    """allowed_epics from roles/<Seat>/SCOPE.json, or None (unrestricted). `seat` may be 'Seat[instance]'."""
+    f = Path(roles) / seat.split("[")[0] / "SCOPE.json"
+    if not f.exists():
+        return None
+    return list(_load(f).get("allowed_epics", []))
+
+
+def seat_may_claim(seat: str, epic: Optional[str], roles: Path = ROLES) -> bool:
+    """A restricted seat may claim only tasks whose resolved epic is in its scope (unlinked tasks are refused
+    to it); an unrestricted seat is limited only by owner_role / eligible_roles."""
+    scope = seat_scope(seat, roles)
+    return scope is None or (epic is not None and epic in scope)
 
 
 # --------------------------------------------------------------------------------------------------- loading
@@ -152,8 +198,8 @@ def validate_campaign(c: dict) -> List[str]:
     for k in ("schema", "campaign_id", "title", "objective", "coordinator_role", "authority", "quality_classes"):
         if k not in c:
             e.append("campaign missing " + k)
-    if "epic_id" in c:
-        e.append("a campaign names its thread_id, not an epic (the thread names the epic)")
+    if c.get("status") not in (None, "OPEN", "CLOSED", "PAUSED"):
+        e.append("campaign status must be OPEN, PAUSED or CLOSED")
     if c.get("schema") not in (None, CAMPAIGN_SCHEMA):
         e.append("campaign schema must be " + CAMPAIGN_SCHEMA)
     qc = c.get("quality_classes", {})
@@ -266,6 +312,8 @@ def validate_all(root: Path = CAMPAIGNS, ops: Optional[Path] = None) -> Dict[str
             if x:
                 errs["epic " + eid] = x
         for cid, (_, c) in camps.items():
+            if c.get("epic_id") and c["epic_id"] not in epics:
+                errs.setdefault("campaign " + cid, []).append("unknown epic_id " + c["epic_id"])
             th = c.get("thread_id")
             if not th:
                 continue
@@ -277,12 +325,14 @@ def validate_all(root: Path = CAMPAIGNS, ops: Optional[Path] = None) -> Dict[str
                 x.append("thread {} declares unknown epic {}".format(th, te))
             elif te and th not in epics[te][1].get("threads", []):
                 x.append("thread {} is not listed in epic {} threads".format(th, te))
+            if c.get("epic_id") and te and c["epic_id"] != te:
+                x.append("campaign epic_id {} differs from its thread's epic {}".format(c["epic_id"], te))
             if x:
                 errs.setdefault("campaign " + cid, []).extend(x)
     for cid, (_, c) in camps.items():
         x = validate_campaign(c)
         if x:
-            errs["campaign " + cid] = x
+            errs.setdefault("campaign " + cid, []).extend(x)
     for tid, (d, t) in tasks.items():
         camp = camps.get(t.get("campaign_id"), (None, None))[1]
         x = validate_task(t, camp, set(tasks))
@@ -290,6 +340,13 @@ def validate_all(root: Path = CAMPAIGNS, ops: Optional[Path] = None) -> Dict[str
             x.append("campaign {} has no CAMPAIGN.json".format(t.get("campaign_id")))
         if d.name != tid:
             x.append("directory name {} differs from task_id".format(d.name))
+        if t.get("epic_id") is not None:
+            resolved = resolve_epic(t, camps, ops)
+            if resolved != t["epic_id"]:
+                x.append("task epic_id {} differs from its resolved epic {}".format(t["epic_id"], resolved))
+        pc = t.get("priority_class")
+        if pc is not None and pc not in (1, 2, 3, 4, 5, 6):
+            x.append("priority_class must be 1..6 (DISTRIBUTED_WORK.md s10)")
         for rf in sorted(d.glob("attempts/*/RECEIPT.json")):
             x += ["{}: {}".format(rf.parent.name, m) for m in validate_receipt(_load(rf))]
         if x:
@@ -325,14 +382,18 @@ def _satisfied(t: dict, tasks: Dict[str, Tuple[Path, dict]], camps: Dict[str, Tu
     return unmet
 
 
-def ready_for(seat: str, root: Path = CAMPAIGNS) -> List[dict]:
-    """READY tasks this seat may claim: owner_role or eligible_roles names it, dependencies satisfied, no lease."""
+def ready_for(seat: str, root: Path = CAMPAIGNS, roles: Path = ROLES) -> List[dict]:
+    """READY tasks this seat may claim: owner_role or eligible_roles names it, its epic scope allows the
+    task's resolved epic, dependencies satisfied, no lease."""
     camps, tasks = load_campaigns(root), load_tasks(root)
+    ops = _ops_for(root)
     out = []
     for tid, (d, t) in tasks.items():
         if t.get("status") != "READY":
             continue
         if seat != t.get("owner_role") and seat not in t.get("eligible_roles", []):
+            continue
+        if not seat_may_claim(seat, resolve_epic(t, camps, ops), roles):
             continue
         if (d / "LEASE.json").exists() or _satisfied(t, tasks, camps):
             continue
@@ -348,7 +409,8 @@ def blocked_by_dependencies(root: Path = CAMPAIGNS) -> Dict[str, List[str]]:
 
 # --------------------------------------------------------------------------------------------------- mutation
 
-def transition(task_dir: Path, new: str, by: str, note: str = "", root: Path = CAMPAIGNS) -> dict:
+def transition(task_dir: Path, new: str, by: str, note: str = "", root: Path = CAMPAIGNS,
+               roles: Path = ROLES) -> dict:
     """Write a legal status change (and LEASE.json on CLAIMED, its removal on release). The caller commits
     the task directory by explicit paths and pushes fast-forward; a rejected push means somebody else moved
     first: fetch, re-read, and only retry if the transition is still legal."""
@@ -361,16 +423,88 @@ def transition(task_dir: Path, new: str, by: str, note: str = "", root: Path = C
     if new == "CLAIMED":
         if lease.exists():
             raise ValueError("already leased: " + _load(lease).get("holder", "?"))
+        camps = load_campaigns(root)
+        epic = resolve_epic(t, camps, _ops_for(root))
+        if not seat_may_claim(by, epic, roles):
+            raise ValueError("epic scope: {} may claim only {} (task epic: {})".format(
+                by.split("[")[0], seat_scope(by, roles), epic))
         if t.get("depends_on"):
-            camps, tasks = load_campaigns(root), load_tasks(root)
+            tasks = load_tasks(root)
             unmet = _satisfied(t, tasks, camps)
             if unmet:
                 raise ValueError("dependencies not satisfied: " + ", ".join(unmet))
-        _dump(lease, {"schema": LEASE_SCHEMA, "task_id": t["task_id"], "holder": by, "claimed_at_utc": _now(),
-                      "note": note})
+        _dump(lease, {"schema": LEASE_SCHEMA, "task_id": t["task_id"], "holder": by, "host": platform.node(),
+                      "epic_id": epic, "claimed_at_utc": _now(), "note": note})
     if new in ("READY",) + TERMINAL and lease.exists():
         lease.unlink()
     t["status"] = new
     t["history"].append({"status": new, "by": by, "at_utc": _now(), "note": note})
     _dump(task_dir / "TASK.json", t)
     return t
+
+
+# --------------------------------------------------------------------------------------------------- reporting
+
+def report(root: Path = CAMPAIGNS) -> List[dict]:
+    """One row per non-terminal task: epic, thread, campaign, task, state, class, holder, host. For fleet
+    reporting (Achilles census); read-only."""
+    camps, tasks = load_campaigns(root), load_tasks(root)
+    ops = _ops_for(root)
+    rows = []
+    for tid, (d, t) in sorted(tasks.items()):
+        if t.get("status") in TERMINAL:
+            continue
+        camp = camps.get(t.get("campaign_id"), (None, {}))[1] or {}
+        lease = _load(d / "LEASE.json") if (d / "LEASE.json").exists() else {}
+        cap = capability(t, camp)
+        rows.append({"epic_id": resolve_epic(t, camps, ops), "thread_id": camp.get("thread_id"),
+                     "campaign_id": t.get("campaign_id"), "task_id": tid, "title": t.get("title"),
+                     "status": t.get("status"), "owner_role": t.get("owner_role"),
+                     "quality_class": cap["quality_class"], "preferred_model": cap["preferred_model"],
+                     "holder": lease.get("holder"), "host": lease.get("host"),
+                     "claimed_at_utc": lease.get("claimed_at_utc"), "priority_class": t.get("priority_class")})
+    return rows
+
+
+# --------------------------------------------------------------------------------------------------- templates
+
+TEMPLATES = OPS / "templates"
+
+
+def next_campaign_id(root: Path = CAMPAIGNS) -> str:
+    nums = [int(p.name[2:]) for p in Path(root).glob("C-[0-9][0-9][0-9]") if p.name[2:].isdigit()]
+    return "C-{:03d}".format(max(nums, default=0) + 1)
+
+
+def new_campaign(template: str, owner: str, subject: str, by: str, root: Path = CAMPAIGNS,
+                 templates: Path = TEMPLATES, campaign_id: Optional[str] = None) -> Path:
+    """Instantiate ops/templates/<template>/ as a new campaign coordinated by `owner` about `subject`
+    (e.g. an engine). Placeholders: {{CAMPAIGN_ID}} {{OWNER}} {{SUBJECT}} {{DATE}} {{BY}}. Template tasks start
+    PROPOSED: the owner tailors them and makes them READY. The caller commits and pushes the new directory
+    (a rejected push means the id was taken: fetch and instantiate again)."""
+    src = Path(templates) / template
+    if not (src / "CAMPAIGN.template.json").exists():
+        raise ValueError("no template " + template)
+    cid = campaign_id or next_campaign_id(root)
+    dst = Path(root) / cid
+    if dst.exists():
+        raise ValueError(cid + " already exists")
+    subs = {"{{CAMPAIGN_ID}}": cid, "{{OWNER}}": owner, "{{SUBJECT}}": subject, "{{DATE}}": _now()[:10],
+            "{{NOW}}": _now(), "{{BY}}": by}
+
+    def fill(text: str) -> str:
+        for k, v in subs.items():
+            text = text.replace(k, v)
+        return text
+
+    (dst / "tasks").mkdir(parents=True)
+    (dst / "CAMPAIGN.json").write_text(fill((src / "CAMPAIGN.template.json").read_text(encoding="utf-8")),
+                                       encoding="utf-8", newline="\n")
+    if (src / "CAMPAIGN.template.md").exists():
+        (dst / "CAMPAIGN.md").write_text(fill((src / "CAMPAIGN.template.md").read_text(encoding="utf-8")),
+                                         encoding="utf-8", newline="\n")
+    for tf in sorted(src.glob("tasks/*.template.json")):
+        t = json.loads(fill(tf.read_text(encoding="utf-8")))
+        (dst / "tasks" / t["task_id"]).mkdir()
+        _dump(dst / "tasks" / t["task_id"] / "TASK.json", t)
+    return dst

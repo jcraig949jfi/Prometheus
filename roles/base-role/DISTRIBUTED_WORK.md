@@ -42,13 +42,23 @@ Markdown-only campaigns that predate this file are not work graphs and are not c
   resource references, major operator decisions, deferred areas. Nobody claims an epic; it holds no tasks,
   leases, receipts or claims.
 - THREAD: a durable question or capability (ops/threads/<id>.md). It names its epic on an `epic:` line.
-- CAMPAIGN: a bounded attempt to advance a thread. CAMPAIGN.json names its `thread_id`.
+- CAMPAIGN: a bounded attempt to advance a thread, with concrete scope, resources, entrances, exits and
+  receipts. CAMPAIGN.json names its `thread_id` and may carry `epic_id`, which must equal the thread's epic.
+  A campaign closing (status CLOSED) never closes its thread or epic.
+- TASK: inherits its epic through its campaign; a packet may carry `epic_id` redundantly, and it must then
+  equal the resolved one (validate checks it). ATTEMPT: one execution of a task by an agent/model/runtime.
 - EXPERIMENT is optional. A scientific campaign may run Campaign -> Experiment -> Tasks; an engineering
   campaign may run Campaign -> Tasks. Do not manufacture an experiment to fit the tree; a packet may carry
   `experiment_id` when one exists.
 - All links are optional for older work: a campaign without thread_id and a thread without epic stay valid.
+- Epics are PEERS, not a tree of phases (operator, 2026-10-03, verbatim at roles/Achilles/prompts/2026-10-03_epics_phase2b/):
+  EP-GLOBAL (permanent: forever processes such as the evidence refinery, fleet observability, coordination
+  infrastructure, durable registries, the failure corpus), EP-PHASE2B (engine hardening and continued
+  discovery with the Phase 1/2 machinery), EP-PHASE3 (RSO construction and developmental-physics science).
+  A permanent epic has no end date and cannot be CLOSED; later phases are added beside them, never above.
+  `python -m workgraph epics` lists them.
 
-EVIDENCE ROLLS UPWARD; AUTHORITY DOES NOT. An experiment's receipt may support a campaign conclusion,
+EVIDENCE ROLLS UPWARD; INTERPRETIVE AUTHORITY DOES NOT. An experiment's receipt may support a campaign conclusion,
 several campaigns may change a thread's status, several threads may advance an epic. But a parent's name
 or objective never lends its interpretation to a child: a claim stays attached to the cell/experiment
 where it was earned.
@@ -212,3 +222,39 @@ If `ready` shows nothing for you: report READY through the usual heartbeat, run 
 work-conserving loop (RESPONSIBILITIES.md 2a) within your own charter, and check `ready` again after
 every comms sync. Do not create work for yourself in the graph; ask the coordinator with an escalation if
 you believe a task is missing.
+
+## 10. Epic scope, shared machines and scheduling priority (operator, 2026-10-03)
+
+EPIC SCOPE. A seat whose roles/<Seat>/SCOPE.json lists `allowed_epics` may claim only tasks whose resolved
+epic is in that list (tasks with no resolved epic are refused to it). `workgraph ready` hides other tasks and
+`workgraph transition ... CLAIMED` refuses them. A seat without SCOPE.json is limited only by owner_role /
+eligible_roles. Scope is a role property, changed only by the operator.
+
+SHARED MACHINES ARE WORK-CONSERVING, NOT PARTITIONED. Scarce MODEL resources (a seat, a scarce model class)
+belong to their epic and are protected by scope. Physical CPU/GPU, experiment workers and machine-local
+capacity are shared: idle compute may be leased by another epic when doing so does not interrupt a
+higher-priority active lease. Use the existing leases (Fabric resource leases, `<host>:<res>`, with ceilings:
+fabric/README.md s5) and declare a resource ceiling in the packet. A lower-priority campaign never preempts a
+higher-priority active reservation unless the operator explicitly allows it; prefer natural lease expiry and
+release to preemption machinery. No engine is bound permanently to spare hardware.
+
+Initial priority for scarce shared machine resources (a packet may carry `priority_class` 1-6; it is a
+machine-sharing policy, not a ranking of scientific importance):
+
+    1  safety / infrastructure repair
+    2  active operator-directed Phase 3 critical-path work
+    3  active registered Phase 3 experiments
+    4  Phase 2-B registered experiments
+    5  exploratory / background Phase 2-B sweeps
+    6  opportunistic maintenance / backlog work
+
+## 11. Cross-epic findings
+
+One epic may tell another something without moving work. Commit a short note at
+ops/epics/<TO-EPIC>/findings/<YYYY-MM-DD>_<FROM-EPIC>_<slug>.md (what was found, evidence paths, why it may
+matter, sender seat) and post it on comms to the receiving thread's coordinator or campaign owner (or the
+operator if none) with subject `XEPIC <FROM-EPIC> -> <TO-EPIC>: <slug>`. Examples: Phase 2-B finds an
+architecture candidate -> Phase 3; Phase 3 qualifies a new reset test -> Phase 2-B engines may adopt it; the
+GLOBAL refinery finds a recurring defect -> both. A finding is not a task and not a reassignment: the
+receiving epic decides whether to create work. Evidence travels; interpretive authority does not.
+

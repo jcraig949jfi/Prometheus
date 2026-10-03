@@ -2,6 +2,10 @@
 
 epic: EP-PHASE3
 
+Also called TH-P3-RSO-BUILD (operator directive 2026-10-03 s20); the id stays TH-RSO-BUILD (no
+renumbering for aesthetics). Its campaigns carry thread_id TH-RSO-BUILD and epic_id EP-PHASE3; the five
+builder seats are restricted to EP-PHASE3 by roles/<Seat>/SCOPE.json.
+
 Status: OPEN. Type: CAPABILITY. Opened 2026-10-03 by the operator (verbatim:
 roles/Achilles/prompts/2026-10-03_epic_level/). Owner of the engineering work: the RSO Builder Cell
 (roles/rso-builder-role/; coordinator Palamedes). Recorded by Achilles.

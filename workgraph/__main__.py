@@ -11,6 +11,11 @@
     check-escalation <file>       validate an escalation body (TASK_ID / BLOCKER / EVIDENCE / OPTIONS /
                                   RECOMMENDATION / CAPABILITY_NEEDED)
     escalation-template <task_id> print an escalation body to fill in
+    report [--json]               non-terminal tasks with epic / thread / campaign / state / class / holder / host
+    epics                         the epics, their status and threads
+    new-campaign <template> --owner <Seat> --subject <engine or topic> --by <Seat[tag]> [--id C-NNN]
+                                  instantiate ops/templates/<template>/ (e.g. P2B-ENGINE-REENTRY); then commit
+                                  and push the new campaign directory
 """
 import argparse
 import json
@@ -33,7 +38,39 @@ def main(argv=None) -> int:
     cr = sub.add_parser("check-receipt"); cr.add_argument("file")
     ce = sub.add_parser("check-escalation"); ce.add_argument("file")
     et = sub.add_parser("escalation-template"); et.add_argument("task_id")
+    rp = sub.add_parser("report"); rp.add_argument("--json", action="store_true")
+    sub.add_parser("epics")
+    nc = sub.add_parser("new-campaign"); nc.add_argument("template"); nc.add_argument("--owner", required=True)
+    nc.add_argument("--subject", required=True); nc.add_argument("--by", required=True); nc.add_argument("--id")
     a = p.parse_args(argv)
+
+    if a.cmd == "report":
+        rows = core.report()
+        if a.json:
+            print(json.dumps(rows, indent=2))
+        else:
+            for r in rows:
+                print("{epic_id} / {thread_id} / {campaign_id} / {task_id}  {status}  {quality_class}  "
+                      "holder={holder} host={host}".format(**r))
+            print("{} active task(s)".format(len(rows)))
+        return 0
+
+    if a.cmd == "epics":
+        for eid, (_, e) in core.load_epics().items():
+            print("{}  {}{}  threads={}  {}".format(eid, e.get("status"), " PERMANENT" if e.get("permanent") else "",
+                                                  ",".join(e.get("threads", [])), e.get("title")))
+        return 0
+
+    if a.cmd == "new-campaign":
+        try:
+            d = core.new_campaign(a.template, a.owner, a.subject, a.by, campaign_id=a.id)
+        except ValueError as ex:
+            print("REFUSED: {}".format(ex), file=sys.stderr)
+            return 1
+        rel = str(d.relative_to(core.REPO)).replace("\\", "/")
+        print("created {} (tasks PROPOSED; tailor them, make them READY, then git add {} ; commit ; push "
+              "fast-forward to main)".format(rel, rel))
+        return 0
 
     if a.cmd == "validate":
         errs = core.validate_all()
