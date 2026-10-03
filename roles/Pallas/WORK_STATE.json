@@ -3,23 +3,23 @@
   "seat": "Pallas",
   "mwo_id": "MWO-0004",
   "authority": "operator directive 2026-10-03 (roles/Achilles/prompts/2026-10-03_rso_builder_cell/01_OPERATOR_DIRECTIVE_verbatim.md)",
-  "updated_at_utc": "2026-10-03T11:10:19Z",
+  "updated_at_utc": "2026-10-03T22:35:00Z",
   "state": "READY",
-  "branch": "pallas/boot-2026-10-03",
-  "base_sha": "8833b7f71b8e185952c485db2758024ef894085b",
-  "head_sha": null,
-  "worktree_path": "D:/Prometheus-worktrees/pallas-boot-2026-10-03",
+  "branch": "pallas/c004-t005",
+  "base_sha": "4daae3782b43dd016d22e78003c07e7923fa3775",
+  "head_sha": "see last_push_sha",
+  "worktree_path": "C:/Prometheus-worktrees/pallas-c004-t005",
   "model": "claude-fable-5-1",
   "capability_class": "Q3",
-  "host": "SPECTREX5 (M2; not M1, EW_DB_HOST=192.168.1.202)",
-  "instance": "m2-e7da6bde",
-  "session_start_utc": "UNKNOWN (not recorded; comms boot at 2026-10-03T11:10:19Z)",
+  "host": "harry1 (M4; not M1, EW_DB_HOST=192.168.1.202)",
+  "instance": "harry1-da86cf98",
+  "session_start_utc": "UNKNOWN (not recorded; claim commit 95305e7ec at 2026-10-03T22:15:51Z)",
   "current_objective": "RSO Builder Cell member, campaign C-004 (RSO-METHODS-SLICE-001)",
-  "current_step": "first boot done; no READY packet for Pallas (workgraph ready, origin/main 8833b7f71); idle per RESPONSIBILITIES s5",
+  "current_step": "C-004-T005 delivered and INTEGRATION_READY; session closed; idle per RESPONSIBILITIES s5",
   "in_flight": [],
   "finish_condition": "per claimed packet (DISTRIBUTED_WORK.md)",
-  "next_expected_milestone": "a narrow Q3 attack packet from Palamedes against a frozen surface, or the operator's OP-3 decision naming Pallas on T005/T030/T041",
-  "expected_next_artifact": "first claimed C-004 packet LEASE + attempt receipt",
+  "next_expected_milestone": "Palamedes integrates pallas/c004-t005; then C-004-T030 when the coordinator makes it READY",
+  "expected_next_artifact": "none until a READY packet exists",
   "threads": [
     "phase3-rso"
   ],
@@ -32,13 +32,15 @@
   "blocked_on": [],
   "next_actions": [
     "comms sync Pallas; workgraph ready Pallas (repeat after every sync)",
-    "stay idle: no self-assignment, no routine work, no pre-attack of unfrozen code (RESPONSIBILITIES s5)"
+    "do not take T030 or T041 while PROPOSED; no self-assignment"
   ],
   "operator_decisions_required": [],
   "latest_reports": [
     "roles/Pallas/journal/2026-10-03.md",
-    "roles/Pallas/comms/HEARTBEAT_2026-10-03T1110Z.md"
+    "rso/slice001/expected/COMPARISON.md",
+    "ops/campaigns/C-004/escalations/C-004-T005_1.md",
+    "roles/Pallas/comms/T005_INTEGRATION_READY_2026-10-03.md"
   ],
-  "last_push_sha": null,
-  "last_push_utc": null
+  "last_push_sha": "the commit carrying this file on pallas/c004-t005 (table commit 3ea4af125 precedes it)",
+  "last_push_utc": "2026-10-03T22:35:00Z"
 }
