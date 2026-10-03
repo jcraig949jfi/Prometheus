@@ -1,0 +1,161 @@
+{
+ "schema_version": "nyx.prediction_packet/1",
+ "prediction_packet_id": "MECH-POET-PATA-EC-001",
+ "created_at": "2026-10-03",
+ "chopper_identity": "Nyx[gandalf-d1f90ae1] (claude-opus-5-5; M3 GANDALF)",
+ "chopper_version": "nyx.atlas cuts @ this commit; cut nyx/atlas/cuts/poet_enhanced_2020.py",
+ "cut_id": "poet-enhanced-2020",
+ "fossil_raw_id": "poet-enhanced-2020 (uber-research/poet master @ 8669a17e6958f80cd547b2de61c51d4518c833d9)",
+ "payload_manifest_id": "techne tree_sha256 79854087cda8029a39cc74b8c3508adee055684e206449c095a4925e0f46d113 (28 files); es.py imports only stdlib, numpy and the body's own stats.py and logger.py, so the descriptor layer is executable with numpy alone",
+ "provenance_grade_read": "ORIGINAL_ARTIFACT",
+ "boundary": [
+  {
+   "file_path": "poet_distributed/es.py",
+   "file_payload_hash": "abc19bc2d32b377a7825e8ba559c2e22533fbf61baf413ea3c533696942e2979",
+   "line_start": 586,
+   "line_end": 602
+  },
+  {
+   "file_path": "poet_distributed/stats.py",
+   "file_payload_hash": "0bb682acd9fb2d9cb759263104796ceda76cd8d0cdbc1db5eff053481be2ac7e",
+   "line_start": 9,
+   "line_end": 24
+  },
+  {
+   "file_path": "poet_distributed/novelty.py",
+   "file_payload_hash": "4dbb5d8e8dfadf6935461bc790feb6375089789f0e02126f3aa06323cb6d7c1c",
+   "line_start": 18,
+   "line_end": 44
+  }
+ ],
+ "mechanism_claim": {
+  "functional_claim": "Enhanced POET's environment phenotype (PATA-EC) is the centered-rank vector of every current and archived agent's score on the environment, and its novelty is the k-nearest distance between such vectors computed over the same agent set (es.py 586-602; stats.py 9-24; novelty.py 18-44). CLAIM: (a) as pinned the phenotype cannot be computed: the clipping helper takes three arguments and is called with one; (b) the representation erases ties: an environment on which every agent scores the same gets a non-zero rank vector, the SAME vector whatever the common score, so 'impossible for all' and 'trivial for all' are one phenotype; (c) with one agent the phenotype is 0/0; (d) the phenotype is RELATIONAL: holding the environments fixed and changing only the agent basis can reverse which candidate is more novel -- the operator's basis-population ablation, on the descriptor layer",
+  "claimed_inputs": "per-agent scores on each environment; the agent set",
+  "claimed_outputs": "rank vectors; a novelty scalar; the novelty ORDER of candidates",
+  "claimed_internal_dependency": "novelty depends only on the rank vectors, which depend only on the ORDER of agents' scores, never their magnitudes",
+  "known_uncertainty": "(1) the consequence for a full Enhanced POET run is not tested (Box2D, ES and fiber absent): whether the released results used a corrected cap_score is unknown. (2) Row I2's tie order inside argsort may differ between numpy builds; the row is chosen so that it does not depend on WHICH order, only that two constant vectors of equal length rank identically. (3) F-BASIS is constructed by hand to exhibit the reversal; it shows that relational reversal is POSSIBLE in the representation, not how often it occurs in POET runs"
+ },
+ "interventions": [
+  {
+   "intervention_id": "I1-CAP-SCORE-ARITY",
+   "intervention_level": "TESTBENCH",
+   "intervention_operation": "import es.py from a staged copy of the pinned package; call Optimizer.update_pata_ec on a stub self whose evaluate_theta returns 0.5, with archived_optimizers = {} and optimizers = {one stub with a theta}, lower 0.0, upper 1.0",
+   "measured_observable": "indicator that the call raises TypeError naming the missing positional arguments 'lower' and 'upper'",
+   "expected_direction": "UNCHANGED",
+   "expected_magnitude_band": [
+    1,
+    1
+   ],
+   "units": "indicator",
+   "band_basis": "BLIND: derived by reading only; Nyx has executed no line of this body (no import, no copy run). Exact, deterministic, no seed distribution (A2-exempt). A5: every observable is defined on its fixture whatever the outcome (an indicator of an exception or NaN is 0 or 1; distances and norms of finite vectors are finite). Any harness must import from a STAGED COPY outside the vault (bytecode, Techne #1190)",
+   "test_world_scope": "poet-enhanced-2020's own bytes at 8669a17e (es.py, stats.py, novelty.py), numpy only, on a staged copy; no Box2D, no ES, no fiber",
+   "pressure_scope": "the PATA-EC organ and the novelty organ of the poet-enhanced-2020 cut",
+   "prediction_rationale": "es.py 587 defines cap_score(score, lower, upper); 597 and 600 call cap_score(self.evaluate_theta(...)) with one argument; Python raises before any clipping or ranking",
+   "novelty_kind": "structure"
+  },
+  {
+   "intervention_id": "I2-TIES-ERASED",
+   "intervention_level": "TESTBENCH",
+   "intervention_operation": "r_low = compute_centered_ranks(np.full(10, 0.0)); r_high = compute_centered_ranks(np.full(10, 300.0)) (every agent at the lower cap vs every agent at the upper cap); d = novelty.euclidean_distance(r_low, r_high)",
+   "measured_observable": "d",
+   "expected_direction": "UNCHANGED",
+   "expected_magnitude_band": [
+    0.0,
+    0.0
+   ],
+   "units": "rank-vector distance",
+   "band_basis": "BLIND: derived by reading only; Nyx has executed no line of this body (no import, no copy run). Exact, deterministic, no seed distribution (A2-exempt). A5: every observable is defined on its fixture whatever the outcome (an indicator of an exception or NaN is 0 or 1; distances and norms of finite vectors are finite). Any harness must import from a STAGED COPY outside the vault (bytecode, Techne #1190)",
+   "test_world_scope": "poet-enhanced-2020's own bytes at 8669a17e (es.py, stats.py, novelty.py), numpy only, on a staged copy; no Box2D, no ES, no fiber",
+   "pressure_scope": "the PATA-EC organ and the novelty organ of the poet-enhanced-2020 cut",
+   "prediction_rationale": "compute_ranks assigns ranks by argsort, which orders equal values identically for two constant arrays of the same length; the magnitudes never enter. 'Every agent fails' and 'every agent succeeds' are one phenotype",
+   "novelty_kind": "structure"
+  },
+  {
+   "intervention_id": "I3-TIE-VECTOR-NONZERO",
+   "intervention_level": "TESTBENCH",
+   "intervention_operation": "as I2: the L2 norm of r_low (10 agents all scoring the same)",
+   "measured_observable": "||r_low||_2",
+   "expected_direction": "UNCHANGED",
+   "expected_magnitude_band": [
+    1.0091,
+    1.0093
+   ],
+   "units": "norm",
+   "band_basis": "BLIND: derived by reading only; Nyx has executed no line of this body (no import, no copy run). Exact, deterministic, no seed distribution (A2-exempt). A5: every observable is defined on its fixture whatever the outcome (an indicator of an exception or NaN is 0 or 1; distances and norms of finite vectors are finite). Any harness must import from a STAGED COPY outside the vault (bytecode, Techne #1190). Expected value: the entries are a permutation of k/9 - 0.5, k = 0..9, so the norm is sqrt(10*11/(12*9)) = 1.009217 (float32 rounding well inside the band)",
+   "test_world_scope": "poet-enhanced-2020's own bytes at 8669a17e (es.py, stats.py, novelty.py), numpy only, on a staged copy; no Box2D, no ES, no fiber",
+   "pressure_scope": "the PATA-EC organ and the novelty organ of the poet-enhanced-2020 cut",
+   "prediction_rationale": "a fully tied environment is NOT represented as 'no information' (the zero vector) but as a full ordering of the agents, invented by the sort",
+   "novelty_kind": "structure"
+  },
+  {
+   "intervention_id": "I4-SINGLE-AGENT-NAN",
+   "intervention_level": "TESTBENCH",
+   "intervention_operation": "compute_centered_ranks(np.array([0.3]))",
+   "measured_observable": "indicator that the single entry is NaN",
+   "expected_direction": "UNCHANGED",
+   "expected_magnitude_band": [
+    1,
+    1
+   ],
+   "units": "indicator",
+   "band_basis": "BLIND: derived by reading only; Nyx has executed no line of this body (no import, no copy run). Exact, deterministic, no seed distribution (A2-exempt). A5: every observable is defined on its fixture whatever the outcome (an indicator of an exception or NaN is 0 or 1; distances and norms of finite vectors are finite). Any harness must import from a STAGED COPY outside the vault (bytecode, Techne #1190)",
+   "test_world_scope": "poet-enhanced-2020's own bytes at 8669a17e (es.py, stats.py, novelty.py), numpy only, on a staged copy; no Box2D, no ES, no fiber",
+   "pressure_scope": "the PATA-EC organ and the novelty organ of the poet-enhanced-2020 cut",
+   "prediction_rationale": "stats.py 22 divides by x.size - 1 = 0 (0/0 in float32 gives NaN). POET begins with one agent, so the first reproduction's novelty would be NaN for every candidate if PATA-EC were computable",
+   "novelty_kind": "structure"
+  },
+  {
+   "intervention_id": "I5-BASIS-REVERSES-NOVELTY-ORDER",
+   "intervention_level": "TESTBENCH",
+   "intervention_operation": "FIXTURE F-BASIS (all scores distinct, so no tie order is involved): four agents a1..a4; a reference environment E with scores (1, 2, 3, 4) on a1..a4; candidate C1 with (1, 3, 4, 2); candidate C2 with (2, 1, 3, 4). A rank vector is compute_centered_ranks(np.array(scores)); novelty of a candidate is novelty.py's euclidean_distance from its vector to E's (the archive holds E alone, so the k=5 mean is that one distance). FULL basis = a1..a4; REDUCED basis = a1, a2 (the environments are unchanged; only the agent set the phenotype is defined against shrinks). Compute novelty(C1), novelty(C2) under the FULL basis and under the REDUCED basis",
+   "measured_observable": "indicator: novelty(C1) > novelty(C2) under FULL AND novelty(C2) > novelty(C1) under REDUCED",
+   "expected_direction": "UNCHANGED",
+   "expected_magnitude_band": [
+    1,
+    1
+   ],
+   "units": "indicator",
+   "band_basis": "BLIND: derived by reading only; Nyx has executed no line of this body (no import, no copy run). Exact, deterministic, no seed distribution (A2-exempt). A5: every observable is defined on its fixture whatever the outcome (an indicator of an exception or NaN is 0 or 1; distances and norms of finite vectors are finite). Any harness must import from a STAGED COPY outside the vault (bytecode, Techne #1190). Expected by hand: FULL d(C1,E) = sqrt(6)/3 = 0.8165, d(C2,E) = sqrt(2)/3 = 0.4714; REDUCED d(C1,E) = 0, d(C2,E) = sqrt(2) = 1.4142",
+   "test_world_scope": "poet-enhanced-2020's own bytes at 8669a17e (es.py, stats.py, novelty.py), numpy only, on a staged copy; no Box2D, no ES, no fiber",
+   "pressure_scope": "the PATA-EC organ and the novelty organ of the poet-enhanced-2020 cut",
+   "prediction_rationale": "the operator's basis-population ablation (refinery directive 2026-09-18 s2): hold the environment fixed, alter the population against which its phenotype is defined. If the novelty order reverses, the descriptor is relational, not an intrinsic property of the world",
+   "novelty_kind": "consequential"
+  }
+ ],
+ "controls": {
+  "cheat": {
+   "control_id": "C-AGENT-ORDER-INVARIANCE",
+   "construction": "on F-BASIS (FULL), permute the storage order of the four agents identically in every score row and recompute both novelties",
+   "expected_result": "both novelties unchanged to float32 precision (all scores distinct, so the rank vectors permute together and distances are invariant)",
+   "failure_interpretation": "the harness reads agent storage order rather than calling the body's functions on the scores; every other row is measuring the harness"
+  },
+  "positive": {
+   "control_id": "C-POS-REVERSED-RANKING",
+   "construction": "FULL basis: the environment with scores (4, 3, 2, 1) against E",
+   "expected_result": "its distance to E exceeds both candidates' (by hand sqrt(20)/3 = 1.4907)",
+   "failure_interpretation": "the distance does not measure ranking disagreement; the novelty organ is mislocated"
+  },
+  "negative": {
+   "control_id": "C-NEG-IDENTICAL-ROW",
+   "construction": "an environment with exactly E's scores (1, 2, 3, 4) under the FULL basis",
+   "expected_result": "distance 0.0",
+   "failure_interpretation": "the descriptor carries something beyond the score order"
+  }
+ },
+ "cut_kill": {
+  "observation": "any boundary file's bytes do not hash to the value above; compute_centered_ranks or euclidean_distance are not the functions update_pata_ec and compute_novelty_vs_archive use (es.py 602, novelty.py 32-37)",
+  "consequence": "the boundary is mislocated; a new CUT_ID is required; this packet stays immutable"
+ },
+ "indeterminate": {
+  "observation": "the harness cannot import es.py from a staged copy without installing anything beyond numpy; or I5's two novelties under a basis lie within 1e-6 of each other",
+  "consequence": "the affected row returns PREDICTION_INDETERMINATE"
+ },
+ "supersedes": null,
+ "return_protocol": {
+  "to_seat": "Harmonia (m2-475d761f), the POET ruler owner (#1063). Numpy only; runs on any host from a staged copy; does not queue behind the replication",
+  "accountable_seat": "Nyx receives per row CUT_SUPPORTED / PREDICTION_FAILED / PREDICTION_INDETERMINATE / CUT_KILL; a supported I5 registers 'context-defined phenotype' as a transplant candidate for Theophrastus (refinery directive s2); a supported I1 is a record note for Techne (the pinned body cannot compute its own novelty)",
+  "ack_ticks": 1,
+  "disposition_ticks": 3,
+  "required_response_on_challenge": "a mislocated boundary gets a new CUT_ID with supersedes = MECH-POET-PATA-EC-001; a falsified row is recorded in the mechanism ledger beside the claim"
+ }
+}

@@ -201,6 +201,34 @@
    "transplant_history": [],
    "current_disposition": "PROPOSED",
    "instrument_note": "the founding stamp's clock (-1 through update 0, never 0, T+1 for event-founded genotypes; GenotypeArbiter.cc:49, 87) is tested by row I6 of the same packet. It is a property of the record's time base, carried here and NOT registered as a second mechanism."
+  },
+  {
+   "mechanism_id": "MECH-POET-PATA-EC",
+   "registered": "2026-10-03",
+   "source_lineage": "github.com/uber-research/poet @ 8669a17e (Enhanced POET, Wang, Rawal, Lehman, Gao, Clune, Stanley 2020); derived from poet-original-2019. Operator refinery directive 2026-09-18 s2",
+   "minimal_executable_organ": {
+    "cut_id": "poet-enhanced-2020",
+    "organ": "an environment's phenotype is the centered-rank vector of every current and archived agent's score on it; novelty is the mean distance to the k nearest such vectors over the same agent set",
+    "boundary": "poet_distributed/es.py:586-602 (payload sha256 abc19bc2d32b377a7825e8ba559c2e22533fbf61baf413ea3c533696942e2979); stats.py:9-24 (0bb682acd9fb2d9cb759263104796ceda76cd8d0cdbc1db5eff053481be2ac7e); novelty.py:18-44 (4dbb5d8e8dfadf6935461bc790feb6375089789f0e02126f3aa06323cb6d7c1c)",
+    "executable_note": "NOT EXECUTED by the author. The representation layer (stats.py, novelty.py) is numpy-only; es.py imports with numpy and the body's own modules, so a staged copy can run update_pata_ec on stubs. The full algorithm needs Box2D and fiber (absent)."
+   },
+   "proposed_behavior": "the descriptor is RELATIONAL and ORDINAL: it keeps only how an environment orders the agents. It cannot tell an environment every agent fails from one every agent solves (ties become an arbitrary fixed order, not zero), is undefined for one agent, and the novelty ORDER of fixed candidates can reverse when only the agent basis changes. As pinned, the capping helper is called with one of its three arguments, so the vector cannot be computed at all.",
+   "predicted_intervention": "on the body's own functions: TypeError from update_pata_ec; distance 0 between constant-low and constant-high score vectors; tied-vector norm 1.009217 for 10 agents; NaN for one agent; reversal of novelty(C1) vs novelty(C2) between a 4-agent and a 2-agent basis on a fixed hand fixture",
+   "falsifier": "update_pata_ec returns a vector on the stub (the arity defect is misread); or two constant score vectors of equal length rank differently (magnitudes enter); or the I5 novelty order does not reverse (the descriptor is not basis-relative on that fixture). Any of these kills the corresponding part of the reading.",
+   "evidence_packets": [
+    {
+     "packet_id": "MECH-POET-PATA-EC-001",
+     "freeze": "ea2adf88",
+     "ruling": "ISSUED 2026-10-03, awaiting Harmonia verdict",
+     "what_it_established": "NOTHING YET -- frozen BLIND; five exact rows, hand-derived values in the band bases"
+    }
+   ],
+   "counterevidence_packets": [],
+   "observer_dependence": "NOT_APPLICABLE",
+   "observer_dependence_basis": "no learned representation; the descriptor itself is the object, and I5 tests its dependence on the agent basis, not on an observer",
+   "transplant_history": [],
+   "current_disposition": "PROPOSED",
+   "transplant_note": "a supported I5 registers 'context-defined phenotype' as a transplant candidate for Theophrastus (refinery directive s2)"
   }
  ]
 }

@@ -1,0 +1,668 @@
+{
+ "schema": "nyx.atlas/0",
+ "fossil_id": "poet-enhanced-2020",
+ "techne_record": "techne/fossils/specimens/poet-enhanced-2020/record.json",
+ "whole_system": {
+  "FOSSIL_ID": {
+   "value": "poet-enhanced-2020",
+   "basis": "TECHNE_RECORD"
+  },
+  "CANONICAL_NAME": {
+   "value": "Enhanced POET -- Wang, Lehman, Rawal, Zhi, Li, Clune, Stanley (Uber AI, ICML 2020)",
+   "basis": "TECHNE_RECORD"
+  },
+  "VERSION": {
+   "value": "uber-research/poet master @ 8669a17e6958f80cd547b2de61c51d4518c833d9 (last push 2022-03-23)",
+   "basis": "TECHNE_RECORD"
+  },
+  "ERA": {
+   "value": "2019-2020",
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_SYSTEM": {
+   "value": {
+    "domain": [
+     "open-ended-learning",
+     "coevolution",
+     "curriculum",
+     "evolution-strategies",
+     "quality-diversity"
+    ],
+    "lineage": "POET (2019, GECCO) -> Enhanced POET (2020, ICML): paired environment/agent coevolution with minimal-criterion admission, PATA-EC novelty and cross-environment transfer; the reference implementation for both lives in one repository (this = branch master)"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_PROBLEM": {
+   "value": "open-ended coevolution of problems and solvers",
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVED_HUMAN_CAPABILITY": {
+   "value": {
+    "built_to": "invent an unbounded stream of learning challenges and solve them, transferring solutions across challenges",
+    "pressure": "static curricula stall; hand-designed environment distances do not measure meaningful difference",
+    "success_means": "agents solving environments unreachable by direct optimisation; ANNECS (accumulated number of novel environments created and solved) rising"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "DOCUMENTED_ENVIRONMENTAL_PRESSURE": {
+   "value": {
+    "pressure": "RL research where the environment distribution, not the learner, was the bottleneck",
+    "failure_condition": "the population collapses to trivial or impossible environments; transfers never improve a target"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "LANGUAGE": {
+   "value": [
+    "Python"
+   ],
+   "basis": "TECHNE_RECORD"
+  },
+  "EXECUTION_MODEL": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "ANCESTRY": {
+   "value": "POET (2019, GECCO) -> Enhanced POET (2020, ICML): paired environment/agent coevolution with minimal-criterion admission, PATA-EC novelty and cross-environment transfer; the reference implementation for both lives in one repository (this = branch master)",
+   "basis": "TECHNE_RECORD"
+  },
+  "KNOWN_PREDECESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_SUCCESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_RIVALS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_HISTORICAL_DISPOSITION": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "SOURCE_STATUS": {
+   "value": {
+    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+    "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+    "tree_sha256": "79854087cda8029a39cc74b8c3508adee055684e206449c095a4925e0f46d113"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "RUN_STATUS": {
+   "value": {
+    "run": "NOT_ATTEMPTED",
+    "test": "NOT_ATTEMPTED",
+    "environment": {
+     "runner": "docker",
+     "image": "NOT BUILT: needs a gym[box2d] world (SWIG, C++); named, not reconstructed"
+    }
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVABILITY": {
+   "value": {
+    "EXECUTABLE": "unknown",
+    "OBSERVABLE": "unknown",
+    "ORACLE_BACKED": "unknown",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "unknown"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "ORACLE_STATUS": {
+   "value": {
+    "oracle_backed": "unknown",
+    "test_classification": "NOT_ATTEMPTED"
+   },
+   "basis": "NYX_DERIVED"
+  },
+  "INTERVENTION_READINESS": {
+   "value": {
+    "intervention_ready": "unknown",
+    "patch_intervention": "unknown",
+    "runnable": false
+   },
+   "basis": "NYX_DERIVED"
+  }
+ },
+ "cut": {
+  "state": "COARSE",
+  "mode": "ANCESTRY_AWARE",
+  "evidence": [
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:poet-enhanced-2020/upstream/tree/poet_distributed/novelty.py:18-44"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:poet-enhanced-2020/upstream/tree/poet_distributed/stats.py:9-24"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:poet-enhanced-2020/upstream/tree/poet_distributed/es.py:586-602"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:poet-enhanced-2020/upstream/tree/poet_distributed/poet_algo.py:237-241"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:poet-enhanced-2020/upstream/tree/poet_distributed/poet_algo.py:261-280"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:poet-enhanced-2020/upstream/tree/poet_distributed/poet_algo.py:282-336"
+   }
+  ],
+  "inspected_files": [
+   "poet_distributed/novelty.py 1-44",
+   "poet_distributed/stats.py 1-47",
+   "poet_distributed/es.py 16-23, 580-624",
+   "poet_distributed/poet_algo.py 160-361"
+  ],
+  "date": "2026-10-03T17:47Z",
+  "note": "Enhanced POET replaces the original's hand-built 5-number environment descriptor with PATA-EC: an environment is described by HOW THE CURRENT AND ARCHIVED AGENTS RANK ON IT. Its novelty is the mean distance from that rank vector to the k=5 nearest rank vectors of the existing environments, all computed over the same agent set. The descriptor is therefore RELATIONAL: an environment's phenotype is defined by the population it is measured against, and changes when the population changes even if the environment does not -- the property the operator's basis-population ablation targets. Admission keeps the original's two-sided minimal criterion but applies it to the best transferred agent, and counts ANNECS when the archive's agents also pass. As pinned, the PATA-EC capping step calls a 3-argument function with 1 argument (see the docstring).",
+  "provenance": {
+   "schema": "nyx.atlas/1-provenance",
+   "migrated_at": "2026-10-03T17:47Z",
+   "migrated_from": "authored under nyx.atlas/1-provenance",
+   "provenance_grade_read": "ORIGINAL_ARTIFACT",
+   "grade_basis": "Techne FOSSIL_PACKET.json PROVENANCE_GRADE where issued, else the record's handoff string mapped (populated per R34; Harmonia may re-grade)",
+   "source_object_id": "https://github.com/uber-research/poet@8669a17e6958f80cd547b2de61c51d4518c833d9",
+   "payload_manifest_id": "techne tree_sha256 79854087cda8029a39cc74b8c3508adee055684e206449c095a4925e0f46d113 (28 files)",
+   "host_tree_matches_record": null,
+   "host": "GANDALF (hostname), bodies receipt not named",
+   "files_read": [
+    {
+     "path": "upstream/tree/poet_distributed/novelty.py",
+     "payload_hash_read": "4dbb5d8e8dfadf6935461bc790feb6375089789f0e02126f3aa06323cb6d7c1c",
+     "techne_recorded_hash": "4dbb5d8e8dfadf6935461bc790feb6375089789f0e02126f3aa06323cb6d7c1c",
+     "match": true,
+     "refs": 2
+    },
+    {
+     "path": "upstream/tree/poet_distributed/stats.py",
+     "payload_hash_read": "0bb682acd9fb2d9cb759263104796ceda76cd8d0cdbc1db5eff053481be2ac7e",
+     "techne_recorded_hash": "0bb682acd9fb2d9cb759263104796ceda76cd8d0cdbc1db5eff053481be2ac7e",
+     "match": true,
+     "refs": 1
+    },
+    {
+     "path": "upstream/tree/poet_distributed/es.py",
+     "payload_hash_read": "abc19bc2d32b377a7825e8ba559c2e22533fbf61baf413ea3c533696942e2979",
+     "techne_recorded_hash": "abc19bc2d32b377a7825e8ba559c2e22533fbf61baf413ea3c533696942e2979",
+     "match": true,
+     "refs": 2
+    },
+    {
+     "path": "upstream/tree/poet_distributed/poet_algo.py",
+     "payload_hash_read": "7b6fa7c1e2671ce632acd9f8179425fc5d26617f439bd75453a57f62b3c30345",
+     "techne_recorded_hash": "7b6fa7c1e2671ce632acd9f8179425fc5d26617f439bd75453a57f62b3c30345",
+     "match": true,
+     "refs": 4
+    }
+   ],
+   "unresolved_refs": []
+  }
+ },
+ "organs": [
+  {
+   "organ_id": "poet-enhanced-2020::pata_ec_environment_phenotype_as_centered_ranks_of_every_agent_s_capped_score_on_it",
+   "fossil_ancestry": "poet-enhanced-2020",
+   "human_name": "Optimizer.update_pata_ec (es.py 586-602) + compute_ranks / compute_centered_ranks (stats.py 9-24)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "for one environment, every archived and every active agent is evaluated on it; each score is meant to be clipped to [mc_lower, mc_upper]; the vector of scores is replaced by its centered ranks, rank/(n-1) - 0.5 in [-0.5, 0.5], with ranks from argsort. The environment's phenotype is that rank vector over the CURRENT agent set, recomputed for every environment (active, archived and candidate) at each reproduction step (poet_algo.py 295-299)",
+   "input": "an environment; all agents' parameters",
+   "output": "an n-vector of centered ranks",
+   "state": "pata_ec stored on the optimizer",
+   "update": "once per reproduction step, for every environment",
+   "assumptions": [
+    "two environments are similar if they order the agents the same way",
+    "only the ORDER of agents' scores matters, not their magnitude"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "poet-enhanced-2020::novelty_as_mean_distance_to_the_k_nearest_environment_rank_vectors_over_the_same_agent_basis",
+    "poet-enhanced-2020::admission_by_minimal_criterion_on_the_best_transferred_agent_and_annecs_when_the_archive_also_passes"
+   ],
+   "fitness_value_in_ancestor": "a domain-general environment descriptor that needs no hand-chosen features; it measures what an environment demands of agents",
+   "failure_landscape": "by reading: (1) cap_score(score, lower, upper) is called with one argument (597, 600): TypeError, so as pinned the vector cannot be computed; (2) the clipping, had it run, maps every agent below mc_lower to one value, and argsort then ranks those ties in some fixed order, so an environment that every agent fails gets a non-zero rank vector, identical to that of an environment every agent solves; (3) with a single agent, n - 1 = 0 and the centered rank is 0/0; (4) the vector's meaning changes whenever an agent is added or archived",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Wang et al. 2020, 'Enhanced POET' (PATA-EC: Performance of All Transferred Agents - Environment Characterization)",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:poet-enhanced-2020/upstream/tree/poet_distributed/es.py:586-602; vault:poet-enhanced-2020/upstream/tree/poet_distributed/stats.py:9-24"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "update_pata_ec and the two rank functions",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "MATRIX",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "PER_EPISODE",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "SENSITIVE",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "SENSITIVE",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "poet-enhanced-2020::novelty_as_mean_distance_to_the_k_nearest_environment_rank_vectors_over_the_same_agent_basis",
+   "fossil_ancestry": "poet-enhanced-2020",
+   "human_name": "compute_novelty_vs_archive + euclidean_distance (novelty.py 18-44)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "the candidate's PATA-EC is recomputed over the current agent set, its Euclidean distance to the PATA-EC of every archived and active environment is taken (with a ragged-length branch that pads the shorter vector with its last element), and the mean of the k = 5 smallest is the novelty score; candidates that passed the minimal criterion are sorted by it, highest first",
+   "input": "the candidate's and the population's rank vectors",
+   "output": "a scalar novelty",
+   "state": "none",
+   "update": "per candidate",
+   "assumptions": [
+    "k nearest in rank-vector space is a usable novelty measure"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "poet-enhanced-2020::pata_ec_environment_phenotype_as_centered_ranks_of_every_agent_s_capped_score_on_it",
+    "poet-enhanced-2020::admission_by_minimal_criterion_on_the_best_transferred_agent_and_annecs_when_the_archive_also_passes"
+   ],
+   "fitness_value_in_ancestor": "the order in which candidate environments are offered for admission",
+   "failure_landscape": "by reading: argsort()[:k] returns fewer than k when fewer than k environments exist (the regime change Harmonia verified in poet-original's estimator, #1063); because every vector is recomputed on the same basis the ragged branch should be dead in normal operation",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "k-nearest-neighbour novelty (Lehman and Stanley 2011), applied to a relational descriptor",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:poet-enhanced-2020/upstream/tree/poet_distributed/novelty.py:18-44"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "novelty.py, all of it",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "NONE",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "ARCHIVE",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "poet-enhanced-2020::admission_by_minimal_criterion_on_the_best_transferred_agent_and_annecs_when_the_archive_also_passes",
+   "fossil_ancestry": "poet-enhanced-2020",
+   "human_name": "get_child_list + adjust_envs_niches + pass_mc + remove_oldest (poet_algo.py 237-241, 261-336)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "a reproducing environment (its agent has self-evaluated at least repro_threshold) is mutated (CPPN terrain); a child is a candidate if not a duplicate and if the PARENT's agent scores inside [mc_lower, mc_upper] on it; candidates are ordered by PATA-EC novelty; each is then given the BEST of every active agent and its one-step proposal (targeted transfer) and admitted if that best score is inside the band; at most max_admitted per step; ANNECS is incremented when the best ARCHIVED agent also passes the band; over max_num_envs the oldest active environments are archived (FIFO)",
+   "input": "reproducing environments; all agents",
+   "output": "admitted environments; ANNECS count",
+   "state": "registry, archive, ANNECS",
+   "update": "every adjust_interval * steps_before_transfer iterations",
+   "assumptions": [
+    "an environment is worth adding if some current agent finds it neither impossible nor trivial"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "poet-enhanced-2020::novelty_as_mean_distance_to_the_k_nearest_environment_rank_vectors_over_the_same_agent_basis",
+    "poet-enhanced-2020::pata_ec_environment_phenotype_as_centered_ranks_of_every_agent_s_capped_score_on_it"
+   ],
+   "fitness_value_in_ancestor": "a curriculum of stepping-stone environments; ANNECS as the open-endedness measure",
+   "failure_landscape": "by reading: the PATA-EC refresh at 295-299 runs BEFORE the children are scored, so the cap_score defect fires on the first reproduction step that has any candidate parent; the ANNECS increment counts environments solved by the archive's agents within the band, i.e. it rewards environments that are NOT novel to the archive",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "the original POET minimal criterion (Wang et al. 2019) plus Enhanced POET's targeted transfer and ANNECS",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:poet-enhanced-2020/upstream/tree/poet_distributed/poet_algo.py:237-241, 261-336"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "the four poet_algo.py methods",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "DECISION",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "PERSISTENT",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "ARCHIVE",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "SEEDED_RANDOM",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "CONTENDS",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  }
+ ],
+ "rejected_cuts": [
+  {
+   "candidate": "the ES optimiser (es.py 1-579), the transfer machinery beyond evaluate_transfer, the CPPN terrain generator and its mutation, the Box2D bipedal walker, the logger, master.py",
+   "reason": "OTHER",
+   "evidence": "NOT READ; residue",
+   "note": "the directive asked for exactly two mechanisms first",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "poet-enhanced-2020"
+  },
+  {
+   "candidate": "'Enhanced POET' as one organ",
+   "reason": "NAME_HAS_NO_EXECUTABLE_BOUNDARY",
+   "evidence": "descriptor, novelty and admission are separable functions",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "poet-enhanced-2020"
+  }
+ ],
+ "pressures": [
+  {
+   "pressure_id": "poet-enhanced-2020::P.an_environment_is_admitted_for_being_neither_impossible_nor_trivial_for_the_best_current_agent_and_novel_in_how_it_ranks_the_agents",
+   "source_fossil": "poet-enhanced-2020",
+   "source_evidence": "the three organs above",
+   "condition": "environments are proposed by mutation; their novelty is measured by how differently they order the current and archived agents; admission requires the best transferred agent to score inside a band",
+   "resource_or_constraint": "a cap on active environments (oldest archived first)",
+   "failure_condition": "no candidate passes the band; or every candidate orders the agents like an existing environment",
+   "world_punishes": "environments that rank agents like existing ones; impossible or trivial environments",
+   "world_rewards": "environments that re-order the agent population",
+   "observable_consequence": "novelty ordering of fixed candidate environments under two agent bases (the basis-population ablation)",
+   "vacuity_condition": "a single agent (the rank vector is 0/0) or all agents tied on every environment",
+   "trivial_shortcuts": "an environment on which agents tie: clipped ties receive an arbitrary but fixed rank order",
+   "cheat_control": "hold every environment fixed and permute the order in which agents are stored: if novelty changes, the descriptor reads storage order, not behaviour",
+   "cost_class": "cluster-scale for the full algorithm; the representation layer is microseconds",
+   "purpose_separated_from_pressure": "PURPOSE: open-ended co-evolution of environments and agents (Wang et al. 2020)",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
+ "composition_edges": [
+  {
+   "from": "poet-enhanced-2020::pata_ec_environment_phenotype_as_centered_ranks_of_every_agent_s_capped_score_on_it",
+   "to": "poet-enhanced-2020::novelty_as_mean_distance_to_the_k_nearest_environment_rank_vectors_over_the_same_agent_basis",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "novelty is computed on PATA-EC vectors (novelty.py 32-37)",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "poet-enhanced-2020::novelty_as_mean_distance_to_the_k_nearest_environment_rank_vectors_over_the_same_agent_basis",
+   "to": "poet-enhanced-2020::admission_by_minimal_criterion_on_the_best_transferred_agent_and_annecs_when_the_archive_also_passes",
+   "label": "selects",
+   "evidence": "SOURCE_READ",
+   "note": "candidates sorted by novelty before admission (poet_algo.py 278-279)",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "poet-enhanced-2020::admission_by_minimal_criterion_on_the_best_transferred_agent_and_annecs_when_the_archive_also_passes",
+   "to": "poet-enhanced-2020::pata_ec_environment_phenotype_as_centered_ranks_of_every_agent_s_capped_score_on_it",
+   "label": "updates",
+   "evidence": "SOURCE_READ",
+   "note": "admitting or archiving an environment changes the agent basis of every PATA-EC",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
+ "ancestry_edges": [
+  {
+   "from": "poet-enhanced-2020",
+   "relation": "derived_from",
+   "to": "poet-original-2019 (uber-research/poet original_poet @ 0b40743d): the same loop with the hand-built 5-number descriptor replaced by PATA-EC and with targeted transfer and ANNECS added",
+   "note": "from the code read in both bodies",
+   "basis": "SOURCE_READ"
+  }
+ ],
+ "residue": {
+  "state": "LARGE_RESIDUE",
+  "unexplained": [
+   "the ES optimiser and transfer bookkeeping unread",
+   "the CPPN terrain generator unread",
+   "nothing ran (Box2D, fiber absent)",
+   "whether any released run used a corrected cap_score is unknown: the pin's code raises TypeError by reading"
+  ],
+  "note": "NARROW cut, two mechanisms plus the descriptor they share",
+  "cut_mode": "ANCESTRY_AWARE"
+ }
+}

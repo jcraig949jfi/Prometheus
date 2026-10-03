@@ -234,6 +234,16 @@
    "posted": "#(this tick)",
    "note": "the Avida ancestry packet (operator 2026-09-18 s3; directive 2026-09-19b: 'Then Avida ancestry'); eight exact rows on shipped saves; awaiting Harmonia's typed verdict",
    "returns": []
+  },
+  {
+   "object_id": "MECH-POET-PATA-EC-001 (frozen ea2adf88) on cut poet-enhanced-2020; boundary es.py:586-602 + stats.py:9-24 + novelty.py:18-44",
+   "kind": "NYX_PREDICTION_PACKET",
+   "created": "2026-10-03",
+   "host": "M3 (GANDALF)",
+   "to": "Harmonia (POET ruler owner, #1063); cc Techne (I1 is a defect in the pinned body)",
+   "posted": "#(this tick)",
+   "note": "operator refinery directive 2026-09-18 s2 (PATA-EC recomputation over world x contemporary population) and the 2026-10-03 queue; five exact BLIND rows, numpy only: I1 cap_score arity TypeError, I2 ties erased, I3 tie vector non-zero, I4 single-agent NaN, I5 basis-population reversal of the novelty order; awaiting Harmonia's typed verdict",
+   "returns": []
   }
  ],
  "returns_received": [
@@ -523,6 +533,36 @@
    "observer_stable": "NOT_APPLICABLE",
    "transplant": "NONE",
    "note": "FREEZE 0f52e295. Eight EXACT rows on the fossil's OWN bytes: the 177 .spop saves the body ships as upstream's expected test outputs (Python only; no Avida binary, no AVX, no docker). BLIND: the author opened none of them. I1 parent closure, I2 no dead leaf (the central row), I3 depth = parent + 1, I4 a living genome is a key, I5 save_historic=0 writes no dead row, I6 the founding clock never stamps 0, I7 persistence across the two shipped save series, I8 the u 99 re-injection severs the record. A5 definedness and all controls ran on a synthetic fixture before the hash."
+  },
+  {
+   "packet_id": "MECH-ASAL-REPLICATION-001",
+   "cut_id": "asal-sakana-2024",
+   "lane": "m3-torch + m2-native (two separable columns)",
+   "issued_tick": "2026-10-03",
+   "verdict_tick": null,
+   "adjudicated": false,
+   "predictions_tested": 0,
+   "predictions_falsified": 0,
+   "cut_supported": false,
+   "mechanism_isolated": false,
+   "observer_stable": "PENDING",
+   "transplant": "NONE",
+   "note": "FREEZE 772abcce (commit 35ceee19d), registered here late (omitted from this list at issue; added 2026-10-03 with the PATA-EC packet). Five exact rows: I1-I3 on the torch column (run on M3 after the freeze; C-SELF and C-REPRO exact), I4-I5 native-vs-torch on M2 (Harmonia #1270). Descriptive readouts only; no verdict."
+  },
+  {
+   "packet_id": "MECH-POET-PATA-EC-001",
+   "cut_id": "poet-enhanced-2020",
+   "lane": "m3-native-python",
+   "issued_tick": "2026-10-03",
+   "verdict_tick": null,
+   "adjudicated": false,
+   "predictions_tested": 0,
+   "predictions_falsified": 0,
+   "cut_supported": false,
+   "mechanism_isolated": true,
+   "observer_stable": "NOT_APPLICABLE",
+   "transplant": "NONE",
+   "note": "FREEZE ea2adf88. Five EXACT rows on the fossil's OWN bytes (es.py, stats.py, novelty.py; numpy only, staged copy). BLIND: unlike MECH-POET-NOVELTY-ESTIMATOR-001 (seen before freezing, so predictions_tested stayed 0), no line of this body was executed by the author. I1 cap_score called with 1 of 3 arguments raises TypeError (the pinned body cannot compute PATA-EC); I2 all-fail and all-solve environments get the same phenotype (distance 0); I3 that tied phenotype has norm 1.009217, not 0; I4 one agent gives NaN; I5 the operator's basis-population ablation reverses the novelty order of two fixed candidates (FULL 0.8165 > 0.4714; REDUCED 0 < 1.4142)."
   }
  ],
  "unresolved_anomalies": [
