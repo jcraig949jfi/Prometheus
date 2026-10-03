@@ -1,0 +1,112 @@
+================================================================================
+REVIEW PACKET -- Nyx: Enhanced POET cut + blind packet MECH-POET-PATA-EC-001
+Prometheus / Nyx (Chop Shop), 2026-10-03
+Commit(s) of record: 89a5aab2e (cut, packet, FREEZE, ledgers); records commit
+  with this file
+Author: Nyx[gandalf-d1f90ae1], runtime claude-opus-5-5, host M3 GANDALF
+Invoked by: operator, "go ahead with the poet-enhanced-2020 cut"
+================================================================================
+
+0. WHAT THIS PACKET IS
+   One cut of a public code body (Uber's Enhanced POET, 2020) and one frozen
+   prediction packet on its environment descriptor. Nothing was executed.
+   CONFLICT OF INTEREST: the author wrote both the cut and the predictions.
+   The verdicts belong to another seat (Harmonia). Nothing below is a verdict.
+
+1. CONTEXT
+   POET co-evolves environments and agents. The original 2019 version
+   described an environment by 5 hand-chosen numbers. Enhanced POET instead
+   uses PATA-EC: it scores every current and archived agent on the
+   environment and keeps only the RANKS. An environment's novelty is the mean
+   distance to the k=5 nearest rank vectors.
+   The operator asked (09-18) for this descriptor to be cut and tested by a
+   "basis-population ablation": keep the environments fixed, change the agent
+   set, and see whether novelty changes.
+
+2. QUESTION
+   What does the descriptor keep and lose, what does the pinned code actually
+   do, and is novelty a property of the environment or of the population it
+   is measured against?
+
+3. WHAT WAS DONE
+   Read (E0, by eye):
+     novelty.py and stats.py in full; es.py 16-23 and 580-624;
+     poet_algo.py 160-361.
+     All 4 file hashes match the recorded body (sha256, E3).
+   Cut (COARSE), 3 ACCEPTED organs:
+     PATA-EC (es.py 586-602 + stats.py 9-24)
+     k-NN novelty over the same agent basis (novelty.py 18-44)
+     minimal-criterion admission + ANNECS (poet_algo.py 237-241, 261-336)
+   Ancestry: derived_from poet-original-2019.
+   Packet: 5 exact rows and 3 controls, frozen by canonical-bytes sha256
+     ea2adf8879d92518f54db363c3c60aaf8aeb64bca99bf1c5e19f5ea76f788e9a.
+     Expected values were derived by hand, not computed with the body.
+
+4. THE FROZEN ROWS (predictions, not results)
+   row  operation                              predicted
+   I1   update_pata_ec on a stub               TypeError: cap_score takes 3
+                                               args and is called with 1
+                                               (es.py 597, 600)
+   I2   distance between rank vectors of       0.0 (all-fail == all-solve)
+        10 equal low and 10 equal high scores
+   I3   norm of that tied rank vector          [1.0091, 1.0093]; hand value
+                                               sqrt(110/108) = 1.009217
+   I4   centered ranks of a single score       NaN (division by n-1 = 0)
+   I5   fixture: E (1,2,3,4), C1 (1,3,4,2),    FULL basis: 0.8165 > 0.4714
+        C2 (2,1,3,4); novelty of C1 vs C2      REDUCED {a1,a2}: 0 < 1.4142
+                                               i.e. the order REVERSES
+   Controls: cheat = permuting agent storage order changes nothing;
+   positive = reversed ranking at 1.4907; negative = identical row at 0.
+
+5. REPOSITORY CHANGES
+   New: the cut script, a fossil record (atlas 143 -> 144), the packet and
+   its FREEZE, and a mechanism entry MECH-POET-PATA-EC (PROPOSED).
+   Ledger: a packets_issued row, plus one that was MISSING for the 10-03
+   ASAL replication packet.
+   Tests: 59 passed (unchanged count).
+   Handoff: comms #1315 to Harmonia, cc Techne and Aporia.
+
+6. NOT ESTABLISHED
+   - No row has been executed or adjudicated.
+   - I1 is a reading of Python call semantics. If it holds, the pinned code
+     cannot run its own reproduction step. Whether the paper's runs used a
+     corrected version is unknown.
+   - I5 uses a fixture built by hand to show that reversal is POSSIBLE. It
+     says nothing about how often reversal happens in real POET runs.
+   - The ES optimiser, the CPPN terrain generator and the Box2D world were not
+     read. The full algorithm cannot run on M3 (no Box2D, no fiber).
+   - Headline count (mechanisms that survived transplant) is still 0.
+
+7. AUTHOR'S ERRORS
+   7.1 The 10-03 replication packet was never entered in packets_issued.
+       Found while registering this one; fixed in the same commit.
+       Cost: the scoreboard under-counted active packets for about 9 hours.
+   7.2 The first builder run failed: the package was not on the path.
+       No partial file was written.
+
+8. OWED
+   Harmonia: verdicts on #1270 (replication), #1069 (Avida, 3 days, no ACK),
+             #1315 (this packet).
+   Nyx:      Stage D' on each return; escalate #1069 to Aporia if it is
+             still silent at the next tick.
+
+9. QUESTIONS FOR THE REVIEWER
+   1. FALSIFICATION. If I1 does NOT raise (for example, a staged copy
+      somehow binds defaults), does that falsify only I1, or the cut's claim
+      that the pinned body cannot compute PATA-EC?
+   2. I5 is a hand-built existence proof. Is "the order CAN reverse" worth a
+      verdict, or should the row have been a rate over sampled bases?
+   3. I2-I4 are near-arithmetic facts about a rank transform. Are they
+      predictions in the useful sense, or code facts that should be marked
+      EXECUTED_STRUCTURAL_IDENTITY in advance?
+   4. STOP: three packets now wait on one adjudicating seat. Should Nyx stop
+      issuing packets until the queue drains?
+
+10. REPRODUCE
+    python -m nyx.atlas.predictions.schema validate \
+      nyx/atlas/predictions/MECH-POET-PATA-EC-001.json
+      -> valid ... sha256 ea2adf88...
+    The harness (Harmonia's): import es.py, stats.py and novelty.py from a
+    STAGED COPY of the body with PYTHONDONTWRITEBYTECODE=1, using numpy only.
+    Deterministic; no seeds.
+================================================================================
