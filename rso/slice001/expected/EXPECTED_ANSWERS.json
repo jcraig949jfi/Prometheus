@@ -1,0 +1,2536 @@
+{
+ "schema": "rso.slice001.expected_answers.v1",
+ "packet": "C-004-T005",
+ "author": "Pallas[harry1-da86cf98], claude-fable-5-1",
+ "contract": {
+  "version": "1.0.0",
+  "contract_json_sha256": "e98bb0c6c45e51bcf876eca84aa8a7fb4a2b1b380f6733b97997779c93279d85",
+  "frozen_commit": "595916f9c"
+ },
+ "independence": "Derived before reading draft A A6 'expected'/'outcomes', draft B B9 'expected'/'reason codes', B8.2, A8-A10, B11-B13 and any implementation file. See EXPOSURE.md.",
+ "conventions": {
+  "row_fields": "execution/authority/outcome/reason at row level are those of `primary`, the verdict the case exists to exercise",
+  "authority": "QUALIFIED@AUTHOR_TESTED is the expected stage at S2 freeze (B4.3), conditional on G05",
+  "determinacy": {
+   "DETERMINED": "follows from readable contract text",
+   "DETERMINED_UNDER_ASSUMPTION": "the primary outcome follows; a listed assumption carries the rest",
+   "PARTLY_UNDETERMINED": "a field is UNDETERMINED; the gap is named",
+   "UNDETERMINED": "the primary outcome is not determined"
+  },
+  "UNDETERMINED": "never a guess: the contract text available to the independent author does not fix the value",
+  "claims": "eligibility per B7.2 (worst standing); REPORTED marks TWIN lines, which are not exit criteria"
+ },
+ "gaps": {
+  "G01": "BLIND FIXTURE DEFINITIONS. The behavioural definition of every A6 fixture except REG and PKTD (QCARRY, AMNESIAC, FLIP, LAGD, WIPE, PKTD_NOQ, HCOUNT, HEAL, BOOKKEEP, NULL, EVERY3, SLEEPER, SPLIT1, SPLIT2, OVERDELAY, REG-ONEHOT, REG-FLAT, LOSSY) sits in the A6 'expected' column, which R4 forbids the independent author to read. Outcome VALUES below come from the definitions, plan s4, A7 and the polarity in contract.json; first witnesses, boundaries, ticks and statistics that depend on fixture detail are stated as assumptions or left UNDETERMINED. Structural defect: a fixture's definition and its expected answer share one column, so the table cannot be both blind and complete.",
+  "G02": "NO FAIL REASON FORM for P0 BOUNDS, P7 OBSERVER and P8 TWIN_EQ in draft A A5/A3, while B3.4 requires 'FAIL reasons use the draft A forms'. The typed reason for P0.OVERDELAY, T07.HEAL and E06.LOSSY is therefore not determined by the readable contract.",
+  "G03": "CANONICAL ORDER INCOMPLETE. A5 orders (history, boundary, cut point, target) but not the clamp value v of P5 nor the partner of a compared pair in P3/P4. P3 says 'any two histories' (79872 unordered pairs: 2048 + 14336 + 63488) while its eligible count 9600 = 2048 + 3584 + 3968 is (class size - 1) per class, i.e. comparison against one representative. The verdict is the same either way; the eligible count and the first-witness pair are not.",
+  "G04": "RULER ON CLOCKED. The CLOCKED domain (how many histories; whether u inputs still vary) is not stated, nor which class-N policy is the RETENTION subject. With u_j fixed, no pair 'differs only in u_j', so the NEGATIVE condition holds vacuously for every runtime while the clock-following policy also has s = 1 (POSITIVE). P2's three values are not a partition outside the product domain.",
+  "G05": "AUTHORITY WITH THE KEEPER STORE UNSET. B4.3: the consumer reads stages only from records registered with the keeper; R3: the store locator is UNSET at freeze. Whether in-memory fixture anchors count as 'registered' for stage records (authority QUALIFIED@AUTHOR_TESTED) or every authority is UNQUALIFIED NO_STAGE_RECORD until Aporia sets the store is not stated. Every row below assumes the former.",
+  "G06": "STANDING OF A PREREQUISITE WHOSE RECEIPT FAILS G-BIND (present but not bound) is not defined in B7.2: it could keep its own standing (headline UNMET through G-BIND FAIL) or count as absent (BLOCKED).",
+  "G07": "G-INV PER-CLAIM SCOPE. B6.4 evaluates G-INV 'per claim over the nodes reachable from that claim', but a COMPLETED inventory row with no receipt is reachable from no node. Whether RUN_UNREPORTED hits one claim or every claim in the bundle is not determined (E02.MISSING).",
+  "G08": "E02.RELABEL REASON CODE. node_id embeds the subject (B3.1). If the relabel renames node_ids the first failure is IDENTITY_UNKNOWN:<node_id> (or EVIDENCE_MISSING for CL-RET(REG), whose policy-named nodes vanish); if node_ids are kept it is SCOPE_MISMATCH:physics. The readable text does not say which.",
+  "G09": "DANGLING REFERENCE AND UNSPECIFIED PARAMETER FORMATS. B3.1 says trace roles are given in 'B7.3'; no B7.3 exists. So <role> in BYTES_MISMATCH:<role>, <edge> in DEPENDENCY_MISMATCH:<edge> and <field> in OUTCOME_MISMATCH:<field> have no registered spelling.",
+  "G10": "WHAT IS THE ANCHOR WHEN CUSTODY IS NOT EXERCISED. B9 notation: 'in-memory fixture anchors'. When the producer re-hashes the manifest (E01.OUTCOME_EDIT) or re-makes anchors (E03.REANCHOR), whether the consumer still holds the ORIGINAL in-memory anchor (G-BIND FAIL BYTES_MISMATCH) or accepts the producer's (G-BIND PASS, detection left to G-RECOMP / custody) is not stated.",
+  "G11": "CUSTODY WHY LIST. Not stated whether `why` is exhaustive or first-only (E05.FAB_ANCHORS satisfies both ANCHORS_FROM_PRODUCER and KEEPER_ROW_MISSING). B5.1 prose gives the why as 'keeper named; record not registered' while B5.3 and R3 type it KEEPER_ROW_MISSING.",
+  "G12": "AUTHORITY OF A BLOCKED EVALUATION. With BOUNDS FAIL every other predicate is BLOCKED; A5 preconditions (CHANNEL/OBSERVER need RESTART PASS) then reference a RESTART that did not run. Whether authority prints QUALIFIED or UNQUALIFIED PRECONDITION:RESTART on those lines is not stated (standing is BLOCKED either way).",
+  "G13": "TWIN_EQ HAS NO EVIDENCE EDGES to the P0-P7 receipts it compares (B6.2), and TWIN(M, M') lists no G-BIND/G-INV prerequisite. A withdrawal of the RESTART stage therefore does not reach the TWIN line by the letter of B6.5, although P8 consumes RESTART outcomes.",
+  "G14": "CUSTODY IS NOT A THREE-FIELD VERDICT, yet 'custody QUALIFIED' is a prerequisite of CL-CUST. Its standing when UNQUALIFIED is assumed UNQUALIFIED; B7.2 does not say.",
+  "G15": "E05.KEEPER AND E05.FAB_REGISTERED NEED A SET STORE. Under R3 (store UNSET) the only real-store result available is UNQUALIFIED KEEPER_ROW_MISSING; the QUALIFIED answers below are for the logic exercised with fixture keeper rows, or for T020 after amendment v1.0.1."
+ },
+ "rows": [
+  {
+   "id": "T01.REG",
+   "determinacy": "DETERMINED",
+   "execution": "RAN",
+   "authority": "QUALIFIED@AUTHOR_TESTED",
+   "outcome": "POSITIVE",
+   "reason": "s = 1 on the exact domain",
+   "primary": {
+    "predicate": "RETENTION",
+    "scope": "REG on STANDARD",
+    "execution": "RAN",
+    "authority": "QUALIFIED@AUTHOR_TESTED",
+    "outcome": "POSITIVE",
+    "reason": "s = 1 on the exact domain",
+    "statistic": "1/1",
+    "successes": 12288,
+    "trials": 12288,
+    "per_boundary": [
+     {
+      "j": 1,
+      "statistic": "1/1"
+     },
+     {
+      "j": 2,
+      "statistic": "1/1"
+     },
+     {
+      "j": 3,
+      "statistic": "1/1"
+     }
+    ]
+   },
+   "other_verdicts": [
+    {
+     "predicate": "CALIBRATION",
+     "scope": "STANDARD",
+     "execution": "RAN",
+     "authority": "QUALIFIED@AUTHOR_TESTED",
+     "outcome": "PASS",
+     "reason": "max over N = 1/2; u_j balanced 2048/4096 for j = 1, 2, 3",
+     "eligible_count": 98304
+    }
+   ],
+   "claims": [
+    {
+     "claim": "CL-RET(REG)",
+     "eligibility": "ELIGIBLE",
+     "standing": "SATISFIED",
+     "why": "given OBSERVER PASS for its registered observers and the consumer gates"
+    }
+   ],
+   "assumptions": [
+    "stage records count as registered under in-memory fixture anchors (G05)"
+   ],
+   "gaps": [
+    "G05"
+   ],
+   "derivation": "REG is defined in readable text: a := u_e at CUE, reset keeps a, PROBE_A of episode j+1 returns a = u_j. 4096 x 3 = 12288 trials, all correct."
+  },
+  {
+   "id": "T01.PKTD",
+   "determinacy": "DETERMINED",
+   "execution": "RAN",
+   "authority": "QUALIFIED@AUTHOR_TESTED",
+   "outcome": "POSITIVE",
+   "reason": "s = 1 on the exact domain",
+   "primary": {
+    "predicate": "RETENTION",
+    "scope": "PKTD on STANDARD",
+    "execution": "RAN",
+    "authority": "QUALIFIED@AUTHOR_TESTED",
+    "outcome": "POSITIVE",
+    "reason": "s = 1 on the exact domain",
+    "statistic": "1/1",
+    "successes": 12288,
+    "trials": 12288
+   },
+   "other_verdicts": [],
+   "claims": [
+    {
+     "claim": "CL-RET(PKTD)",
+     "eligibility": "ELIGIBLE",
+     "standing": "SATISFIED",
+     "why": null
+    }
+   ],
+   "assumptions": [
+    "stage records count as registered under in-memory fixture anchors (G05)"
+   ],
+   "gaps": [
+    "G05"
+   ],
+   "derivation": "PKTD differs from REG only in how d is set (k = 0 packet, delivered before PROBE_D of the same episode); a is handled as in REG."
+  },
+  {
+   "id": "T01.QCARRY",
+   "determinacy": "DETERMINED_UNDER_ASSUMPTION",
+   "execution": "RAN",
+   "authority": "QUALIFIED@AUTHOR_TESTED",
+   "outcome": "FAIL",
+   "reason": "retained answer does not follow the declared allowed channel at 1",
+   "primary": {
+    "predicate": "CHANNEL",
+    "scope": "QCARRY",
+    "execution": "RAN",
+    "authority": "QUALIFIED@AUTHOR_TESTED",
+    "outcome": "FAIL",
+    "reason": "retained answer does not follow the declared allowed channel at 1",
+    "eligible_count": 24576,
+    "witness_assumed": "history all-zero, boundary 1, v = 1 (y_A = u_1 = 0)"
+   },
+   "other_verdicts": [
+    {
+     "predicate": "RETENTION",
+     "scope": "QCARRY",
+     "execution": "RAN",
+     "authority": "QUALIFIED@AUTHOR_TESTED",
+     "outcome": "POSITIVE",
+     "reason": null,
+     "statistic": "1/1",
+     "successes": 12288,
+     "trials": 12288
+    },
+    {
+     "predicate": "ERASE",
+     "scope": "QCARRY",
+     "execution": "RAN",
+     "authority": "QUALIFIED@AUTHOR_TESTED",
+     "outcome": "PASS",
+     "reason": "only allowed content (u_j) crosses, although through chan"
+    },
+    {
+     "predicate": "PRESERVE",
+     "scope": "QCARRY",
+     "execution": "RAN",
+     "authority": "QUALIFIED@AUTHOR_TESTED",
+     "outcome": "PASS",
+     "reason": null,
+     "applicable_count": 6144,
+     "vacuous": false
+    },
+    {
+     "predicate": "RESTART",
+     "scope": "QCARRY",
+     "execution": "RAN",
+     "authority": "QUALIFIED@AUTHOR_TESTED",
+     "outcome": "PASS",
+     "reason": null
+    }
+   ],
+   "claims": [
+    {
+     "claim": "CL-RET(QCARRY)",
+     "eligibility": "NOT_ELIGIBLE",
+     "standing": "UNMET",
+     "why": "CHANNEL(QCARRY) FAIL"
+    }
+   ],
+   "assumptions": [
+    "fixture behaviour read only from its name, the plan s4 row, A7 and contract.json polarity (G01)",
+    "QCARRY sends u with k >= 1, its reset does not flush that packet, PROBE_A answers from the delivery",
+    "QCARRY capture/restore is complete (RESTART PASS), else CHANNEL would be UNQUALIFIED PRECONDITION:RESTART and the standing UNQUALIFIED",
+    "v is ordered after boundary in the witness order (G03)"
+   ],
+   "gaps": [
+    "G01",
+    "G03"
+   ],
+   "derivation": "R1 and A7 (readable): the right answer carried through the FORBIDDEN channel passes ERASE and answers correctly; clamping a := v after the reset does not move y_A, so P5 FAILs whenever v != u_j (12288 of 24576 clamped runs)."
+  },
+  {
+   "id": "T02.AMNESIAC",
+   "determinacy": "DETERMINED",
+   "execution": "RAN",
+   "authority": "QUALIFIED@AUTHOR_TESTED",
+   "outcome": "NEGATIVE",
+   "reason": "y_A never depends on u_j; exact 1/2",
+   "primary": {
+    "predicate": "RETENTION",
+    "scope": "AMNESIAC on STANDARD",
+    "execution": "RAN",
+    "authority": "QUALIFIED@AUTHOR_TESTED",
+    "outcome": "NEGATIVE",
+    "reason": "y_A never depends on u_j; exact 1/2",
+    "statistic": "1/2",
+    "successes": 6144,
+    "trials": 12288
+   },
+   "other_verdicts": [
+    {
+     "predicate": "CALIBRATION",
+     "scope": "STANDARD",
+     "execution": "RAN",
+     "authority": "QUALIFIED@AUTHOR_TESTED",
+     "outcome": "PASS",
+     "reason": "max over N = 1/2; u_j balanced",
+     "eligible_count": 98304
+    },
+    {
+     "predicate": "PRESERVE",
+     "scope": "AMNESIAC",
+     "execution": "RAN",
+     "authority": "QUALIFIED@AUTHOR_TESTED",
+     "outcome": "PASS",
+     "reason": "vacuous: 0 applicable",
+     "applicable_count": 0,
+     "vacuous": true
+    },
+    {
+     "predicate": "CHANNEL",
+     "scope": "AMNESIAC",
+     "execution": "RAN",
+     "authority": "QUALIFIED@AUTHOR_TESTED",
+     "outcome": "UNDETERMINED",
+     "reason": "depends on whether AMNESIAC answers from `a` (PASS) or from a constant (FAIL); blind (G01)"
+    }
+   ],
+   "claims": [
+    {
+     "claim": "CL-RET(AMNESIAC)",
+     "eligibility": "NOT_ELIGIBLE",
+     "standing": "UNMET",
+     "why": "CALIBRATION gate PASS; RETENTION ruler NEGATIVE (exact 1/2): a correct scientific observation"
+    }
+   ],
+   "assumptions": [
+    "stage records count as registered under in-memory fixture anchors (G05)",
+    "fixture behaviour read only from its name, the plan s4 row, A7 and contract.json polarity (G01)"
+   ],
+   "gaps": [
+    "G01"
+   ],
+   "derivation": "B7.2 and closure C1 (readable) fix this row: a no-carry runtime is inside class N, scores exactly 6144/12288, and the answer is NEGATIVE, never a gate FAIL. PRESERVE vacuous assumes it carries nothing even without the reset."
+  },
+  {
+   "id": "T02.CLOCKED",
+   "determinacy": "PARTLY_UNDETERMINED",
+   "execution": "RAN",
+   "authority": "QUALIFIED@AUTHOR_TESTED",
+   "outcome": "FAIL",
+   "reason": "no-carry class reaches 1/1 > 1/2 at boundary 1",
+   "primary": {
+    "predicate": "CALIBRATION",
+    "scope": "CLOCKED",
+    "execution": "RAN",
+    "authority": "QUALIFIED@AUTHOR_TESTED",
+    "outcome": "FAIL",
+    "reason": "no-carry class reaches 1/1 > 1/2 at boundary 1"
+   },
+   "other_verdicts": [
+    {
+     "predicate": "RETENTION",
+     "scope": "class-N policy on CLOCKED",
+     "execution": "RAN",
+     "authority": "UNQUALIFIED: PRECONDITION:CALIBRATION",
+     "outcome": "UNDETERMINED",
+     "reason": "the clock-following policy has s = 1 (POSITIVE by the letter) while the NEGATIVE condition also holds vacuously (G04); whatever is printed is not evidence on this world"
+    }
+   ],
+   "claims": [
+    {
+     "claim": "CL-CAL(CLOCKED)",
+     "eligibility": "NOT_ELIGIBLE",
+     "standing": "UNMET",
+     "why": "CALIBRATION(CLOCKED) FAIL"
+    }
+   ],
+   "assumptions": [
+    "stage records count as registered under in-memory fixture anchors (G05)",
+    "the policy j -> j mod 2 is in N and matches u_j at every evaluated boundary"
+   ],
+   "gaps": [
+    "G04"
+   ],
+   "derivation": "u_j = j mod 2 is a function of j alone, so one of the 8 class-N policies is always right: the exact maximum over N is 1, not 1/2, and u_j is unbalanced. B4.2 (readable) gives the consequence: RETENTION runs, its outcome is printed, its authority is UNQUALIFIED. The ruler VALUE on this world is the gap."
+  },
+  {
+   "id": "T02.FLIP",
+   "determinacy": "DETERMINED_UNDER_ASSUMPTION",
+   "execution": "RAN",
+   "authority": "QUALIFIED@AUTHOR_TESTED",
+   "outcome": "NOT_SHOWN",
+   "reason": "the answer depends on u_j but s != 1",
+   "primary": {
+    "predicate": "RETENTION",
+    "scope": "FLIP on STANDARD",
+    "execution": "RAN",
+    "authority": "QUALIFIED@AUTHOR_TESTED",
+    "outcome": "NOT_SHOWN",
+    "reason": "the answer depends on u_j but s != 1",
+    "statistic_assumed": "0/1 (0 of 12288) if FLIP answers the complement of a"
+   },
+   "other_verdicts": [
+    {
+     "predicate": "CALIBRATION",
+     "scope": "STANDARD",
+     "execution": "RAN",
+     "authority": "QUALIFIED@AUTHOR_TESTED",
+     "outcome": "PASS",
+     "reason": null
+    }
+   ],
+   "claims": [
+    {
+     "claim": "CL-RET(FLIP)",
+     "eligibility": "NOT_ELIGIBLE",
+     "standing": "UNMET",
+     "why": "RETENTION NOT_SHOWN"
+    }
+   ],
+   "assumptions": [
+    "stage records count as registered under in-memory fixture anchors (G05)",
+    "fixture behaviour read only from its name, the plan s4 row, A7 and contract.json polarity (G01)"
+   ],
+   "gaps": [
+    "G01"
+   ],
+   "derivation": "B4.1 (readable) names T02 FLIP as the ruler's known NOT_SHOWN fire-test case. NOT_SHOWN covers s < 1/2 and s = 1/2 with dependence; the exact statistic depends on the blind fixture."
+  },
+  {
+   "id": "T03.REG",
+   "determinacy": "DETERMINED",
+   "execution": "RAN",
+   "authority": "QUALIFIED@AUTHOR_TESTED",
+   "outcome": "PASS",
+   "reason": "no forbidden influence across boundaries 1-3 within H = 3",
+   "primary": {
+    "predicate": "ERASE",
+    "scope": "REG",
+    "execution": "RAN",
+    "authority": "QUALIFIED@AUTHOR_TESTED",
+    "outcome": "PASS",
+    "reason": "no forbidden influence across boundaries 1-3 within H = 3",
+    "eligible_count": 9600
+   },
+   "other_verdicts": [
+    {
+     "predicate": "PRESERVE",
+     "scope": "REG",
+     "execution": "RAN",
+     "authority": "QUALIFIED@AUTHOR_TESTED",
+     "outcome": "PASS",
+     "reason": "allowed content survives the reset",
+     "eligible_count": 6144,
+     "applicable_count": 6144,
+     "vacuous": false
+    }
+   ],
+   "claims": [],
+   "assumptions": [
+    "stage records count as registered under in-memory fixture anchors (G05)"
+   ],
+   "gaps": [
+    "G03",
+    "G05"
+   ],
+   "derivation": "After REG's reset the whole state is (a = u_j, d = 0, chan empty), so every later output is a function of u_j and later inputs. Without the reset y_A still differs on all 6144 u_j-pairs, and with it too."
+  },
+  {
+   "id": "T04.LAGD",
+   "determinacy": "DETERMINED_UNDER_ASSUMPTION",
+   "execution": "RAN",
+   "authority": "QUALIFIED@AUTHOR_TESTED",
+   "outcome": "FAIL",
+   "reason": "forbidden influence across boundary 1, first visible at <episode, tick>",
+   "primary": {
+    "predicate": "ERASE",
+    "scope": "LAGD",
+    "execution": "RAN",
+    "authority": "QUALIFIED@AUTHOR_TESTED",
+    "outcome": "FAIL",
+    "reason": "forbidden influence across boundary 1, first visible at <episode, tick>",
+    "witness_assumed": "boundary 1; pair (all-zero, f_1 = 1); with delay k = 1 first visible at episode 2, PROBE_A (y_D)"
+   },
+   "other_verdicts": [
+    {
+     "predicate": "RETENTION",
+     "scope": "LAGD",
+     "execution": "RAN",
+     "authority": "QUALIFIED@AUTHOR_TESTED",
+     "outcome": "POSITIVE",
+     "reason": null,
+     "statistic": "1/1"
+    },
+    {
+     "predicate": "PRESERVE",
+     "scope": "LAGD",
+     "execution": "RAN",
+     "authority": "QUALIFIED@AUTHOR_TESTED",
+     "outcome": "PASS",
+     "reason": null
+    },
+    {
+     "predicate": "CHANNEL",
+     "scope": "LAGD",
+     "execution": "RAN",
+     "authority": "QUALIFIED@AUTHOR_TESTED",
+     "outcome": "PASS",
+     "reason": null
+    },
+    {
+     "predicate": "RESTART",
+     "scope": "LAGD",
+     "execution": "RAN",
+     "authority": "QUALIFIED@AUTHOR_TESTED",
+     "outcome": "PASS",
+     "reason": null
+    }
+   ],
+   "claims": [
+    {
+     "claim": "CL-RET(LAGD)",
+     "eligibility": "NOT_ELIGIBLE",
+     "standing": "UNMET",
+     "why": "ERASE(LAGD) FAIL"
+    }
+   ],
+   "assumptions": [
+    "stage records count as registered under in-memory fixture anchors (G05)",
+    "fixture behaviour read only from its name, the plan s4 row, A7 and contract.json polarity (G01)",
+    "LAGD = REG whose f travels as a packet with k >= 1 and whose reset clears d only"
+   ],
+   "gaps": [
+    "G01",
+    "G03"
+   ],
+   "derivation": "Plan T04 / A7: display-only erase, the forbidden packet is delivered after the boundary and changes an output inside the horizon. d reads 0 immediately after the reset; ERASE is behavioural and still FAILs. A5 coupling: RETENTION POSITIVE coexists with ERASE FAIL."
+  },
+  {
+   "id": "T04.REG",
+   "determinacy": "DETERMINED",
+   "execution": "RAN",
+   "authority": "QUALIFIED@AUTHOR_TESTED",
+   "outcome": "PASS",
+   "reason": "no forbidden influence",
+   "primary": {
+    "predicate": "ERASE",
+    "scope": "REG",
+    "execution": "RAN",
+    "authority": "QUALIFIED@AUTHOR_TESTED",
+    "outcome": "PASS",
+    "reason": "no forbidden influence",
+    "eligible_count": 9600
+   },
+   "other_verdicts": [],
+   "claims": [],
+   "assumptions": [
+    "stage records count as registered under in-memory fixture anchors (G05)"
+   ],
+   "gaps": [
+    "G05"
+   ],
+   "derivation": "Same derivation as T03.REG."
+  },
+  {
+   "id": "T05.WIPE",
+   "determinacy": "DETERMINED_UNDER_ASSUMPTION",
+   "execution": "RAN",
+   "authority": "QUALIFIED@AUTHOR_TESTED",
+   "outcome": "FAIL",
+   "reason": "reset at 1 destroys allowed content carried without it",
+   "primary": {
+    "predicate": "PRESERVE",
+    "scope": "WIPE",
+    "execution": "RAN",
+    "authority": "QUALIFIED@AUTHOR_TESTED",
+    "outcome": "FAIL",
+    "reason": "reset at 1 destroys allowed content carried without it",
+    "eligible_count": 6144,
+    "applicable_count": 6144,
+    "vacuous": false,
+    "witness_assumed": "boundary 1; pair (all-zero, u_1 = 1)"
+   },
+   "other_verdicts": [
+    {
+     "predicate": "ERASE",
+     "scope": "WIPE",
+     "execution": "RAN",
+     "authority": "QUALIFIED@AUTHOR_TESTED",
+     "outcome": "PASS",
+     "reason": "an indiscriminate wipe passes ERASE by construction"
+    },
+    {
+     "predicate": "RETENTION",
+     "scope": "WIPE",
+     "execution": "RAN",
+     "authority": "QUALIFIED@AUTHOR_TESTED",
+     "outcome": "NEGATIVE",
+     "reason": null,
+     "statistic": "1/2",
+     "successes": 6144,
+     "trials": 12288
+    },
+    {
+     "predicate": "CHANNEL",
+     "scope": "WIPE",
+     "execution": "RAN",
+     "authority": "QUALIFIED@AUTHOR_TESTED",
+     "outcome": "PASS",
+     "reason": "assumed: PROBE_A still answers from a"
+    }
+   ],
+   "claims": [
+    {
+     "claim": "CL-RET(WIPE)",
+     "eligibility": "NOT_ELIGIBLE",
+     "standing": "UNMET",
+     "why": "PRESERVE FAIL and RETENTION NEGATIVE, both listed"
+    }
+   ],
+   "assumptions": [
+    "stage records count as registered under in-memory fixture anchors (G05)",
+    "fixture behaviour read only from its name, the plan s4 row, A7 and contract.json polarity (G01)",
+    "WIPE = REG whose reset also sets a := 0"
+   ],
+   "gaps": [
+    "G01"
+   ],
+   "derivation": "A5 coupling (readable): the wipe is refused by PRESERVE and by RETENTION NEGATIVE, never rewarded. Without the reset y_A differs on every u_j pair (applicable 6144); with it y_A = 0 on both."
+  },
+  {
+   "id": "T05.REG",
+   "determinacy": "DETERMINED",
+   "execution": "RAN",
+   "authority": "QUALIFIED@AUTHOR_TESTED",
+   "outcome": "PASS",
+   "reason": "allowed content survives the reset",
+   "primary": {
+    "predicate": "PRESERVE",
+    "scope": "REG",
+    "execution": "RAN",
+    "authority": "QUALIFIED@AUTHOR_TESTED",
+    "outcome": "PASS",
+    "reason": "allowed content survives the reset",
+    "eligible_count": 6144,
+    "applicable_count": 6144,
+    "vacuous": false
+   },
+   "other_verdicts": [],
+   "claims": [],
+   "assumptions": [
+    "stage records count as registered under in-memory fixture anchors (G05)"
+   ],
+   "gaps": [
+    "G05"
+   ],
+   "derivation": "Non-vacuous PASS: 6144 applicable pairs."
+  },
+  {
+   "id": "T06.REG",
+   "determinacy": "DETERMINED",
+   "execution": "RAN",
+   "authority": "QUALIFIED@AUTHOR_TESTED",
+   "outcome": "PASS",
+   "reason": "continuations equal the uninterrupted run",
+   "primary": {
+    "predicate": "RESTART",
+    "scope": "REG",
+    "execution": "RAN",
+    "authority": "QUALIFIED@AUTHOR_TESTED",
+    "outcome": "PASS",
+    "reason": "continuations equal the uninterrupted run",
+    "eligible_count": 237568
+   },
+   "other_verdicts": [],
+   "claims": [],
+   "assumptions": [
+    "stage records count as registered under in-memory fixture anchors (G05)"
+   ],
+   "gaps": [
+    "G05"
+   ],
+   "derivation": "REG's whole state is declared (a, d, chan) and captured; 4096 x 29 x 2 = 237568 continuations."
+  },
+  {
+   "id": "T06.PKTD",
+   "determinacy": "DETERMINED",
+   "execution": "RAN",
+   "authority": "QUALIFIED@AUTHOR_TESTED",
+   "outcome": "PASS",
+   "reason": "continuations equal the uninterrupted run",
+   "primary": {
+    "predicate": "RESTART",
+    "scope": "PKTD",
+    "execution": "RAN",
+    "authority": "QUALIFIED@AUTHOR_TESTED",
+    "outcome": "PASS",
+    "reason": "continuations equal the uninterrupted run",
+    "eligible_count": 237568
+   },
+   "other_verdicts": [],
+   "claims": [],
+   "assumptions": [
+    "stage records count as registered under in-memory fixture anchors (G05)"
+   ],
+   "gaps": [
+    "G05"
+   ],
+   "derivation": "The cut after CUE has a k = 0 packet in flight; a complete capture includes chan."
+  },
+  {
+   "id": "T06.PKTD_NOQ",
+   "determinacy": "DETERMINED_UNDER_ASSUMPTION",
+   "execution": "RAN",
+   "authority": "QUALIFIED@AUTHOR_TESTED",
+   "outcome": "FAIL",
+   "reason": "capture/restore loses future-influencing state at <cut>, target <t>",
+   "primary": {
+    "predicate": "RESTART",
+    "scope": "PKTD_NOQ",
+    "execution": "RAN",
+    "authority": "QUALIFIED@AUTHOR_TESTED",
+    "outcome": "FAIL",
+    "reason": "capture/restore loses future-influencing state at <cut>, target <t>",
+    "witness": "UNDETERMINED: a cut after a CUE tick; which history/target is first depends on whether restore empties or keeps the stale queue (G01)"
+   },
+   "other_verdicts": [
+    {
+     "predicate": "CHANNEL",
+     "scope": "PKTD_NOQ",
+     "execution": "RAN",
+     "authority": "UNQUALIFIED: PRECONDITION:RESTART",
+     "outcome": "PASS",
+     "reason": null
+    },
+    {
+     "predicate": "OBSERVER",
+     "scope": "PKTD_NOQ, any observer",
+     "execution": "RAN",
+     "authority": "UNQUALIFIED: PRECONDITION:RESTART",
+     "outcome": "as measured",
+     "reason": null
+    }
+   ],
+   "claims": [
+    {
+     "claim": "CL-RET(PKTD_NOQ)",
+     "eligibility": "NOT_ELIGIBLE",
+     "standing": "UNQUALIFIED",
+     "why": "worst standing: CHANNEL/OBSERVER UNQUALIFIED (PRECONDITION:RESTART) outranks RESTART UNMET; both listed"
+    }
+   ],
+   "assumptions": [
+    "stage records count as registered under in-memory fixture anchors (G05)",
+    "fixture behaviour read only from its name, the plan s4 row, A7 and contract.json polarity (G01)",
+    "PKTD_NOQ = PKTD whose capture omits chan"
+   ],
+   "gaps": [
+    "G01"
+   ],
+   "derivation": "A7: continuation missing a checkpoint bit. The packet in flight between CUE and PROBE_D is lost (or a stale one kept under COMPLEMENT_PREFIX), so y_D differs. By B7.2 the headline standing is UNQUALIFIED, not UNMET."
+  },
+  {
+   "id": "T06.HCOUNT",
+   "determinacy": "DETERMINED_UNDER_ASSUMPTION",
+   "execution": "RAN",
+   "authority": "QUALIFIED@AUTHOR_TESTED",
+   "outcome": "FAIL",
+   "reason": "capture/restore loses future-influencing state at <cut>, target <t>",
+   "primary": {
+    "predicate": "RESTART",
+    "scope": "HCOUNT",
+    "execution": "RAN",
+    "authority": "QUALIFIED@AUTHOR_TESTED",
+    "outcome": "FAIL",
+    "reason": "capture/restore loses future-influencing state at <cut>, target <t>",
+    "witness": "UNDETERMINED (G01)"
+   },
+   "other_verdicts": [
+    {
+     "predicate": "CHANNEL",
+     "scope": "HCOUNT",
+     "execution": "RAN",
+     "authority": "UNQUALIFIED: PRECONDITION:RESTART",
+     "outcome": "as measured",
+     "reason": null
+    },
+    {
+     "predicate": "OBSERVER",
+     "scope": "HCOUNT, any observer",
+     "execution": "RAN",
+     "authority": "UNQUALIFIED: PRECONDITION:RESTART",
+     "outcome": "as measured",
+     "reason": null
+    }
+   ],
+   "claims": [
+    {
+     "claim": "CL-RET(HCOUNT)",
+     "eligibility": "NOT_ELIGIBLE",
+     "standing": "UNQUALIFIED",
+     "why": "CHANNEL/OBSERVER UNQUALIFIED (PRECONDITION:RESTART); RESTART UNMET listed"
+    }
+   ],
+   "assumptions": [
+    "stage records count as registered under in-memory fixture anchors (G05)",
+    "fixture behaviour read only from its name, the plan s4 row, A7 and contract.json polarity (G01)",
+    "HCOUNT keeps an undeclared episode counter that capture omits and that changes outputs from the second episode on"
+   ],
+   "gaps": [
+    "G01"
+   ],
+   "derivation": "A7: cuts after every reset with continuation to the end of the life expose a counter restored to its initial value (FRESH) or left stale (COMPLEMENT_PREFIX)."
+  },
+  {
+   "id": "T06.LAGD",
+   "determinacy": "DETERMINED_UNDER_ASSUMPTION",
+   "execution": "RAN",
+   "authority": "QUALIFIED@AUTHOR_TESTED",
+   "outcome": "PASS",
+   "reason": "a perfect capture carries the forbidden packet faithfully",
+   "primary": {
+    "predicate": "RESTART",
+    "scope": "LAGD",
+    "execution": "RAN",
+    "authority": "QUALIFIED@AUTHOR_TESTED",
+    "outcome": "PASS",
+    "reason": "a perfect capture carries the forbidden packet faithfully",
+    "eligible_count": 237568
+   },
+   "other_verdicts": [
+    {
+     "predicate": "ERASE",
+     "scope": "LAGD",
+     "execution": "RAN",
+     "authority": "QUALIFIED@AUTHOR_TESTED",
+     "outcome": "FAIL",
+     "reason": "forbidden influence across boundary 1, first visible at <episode, tick>"
+    }
+   ],
+   "claims": [
+    {
+     "claim": "CL-RET(LAGD)",
+     "eligibility": "NOT_ELIGIBLE",
+     "standing": "UNMET",
+     "why": "ERASE FAIL; RESTART PASS alone does not establish reset"
+    }
+   ],
+   "assumptions": [
+    "stage records count as registered under in-memory fixture anchors (G05)",
+    "fixture behaviour read only from its name, the plan s4 row, A7 and contract.json polarity (G01)"
+   ],
+   "gaps": [
+    "G01"
+   ],
+   "derivation": "The stated coupling (A5, plan T06): RESTART PASS with ERASE FAIL on the same runtime."
+  },
+  {
+   "id": "T07.HEAL",
+   "determinacy": "DETERMINED_UNDER_ASSUMPTION",
+   "execution": "RAN",
+   "authority": "QUALIFIED@AUTHOR_TESTED",
+   "outcome": "FAIL",
+   "reason": "UNDETERMINED: P7 has no registered FAIL reason form (G02)",
+   "primary": {
+    "predicate": "OBSERVER",
+    "scope": "(REG, HEAL)",
+    "execution": "RAN",
+    "authority": "QUALIFIED@AUTHOR_TESTED",
+    "outcome": "FAIL",
+    "reason": "UNDETERMINED: P7 has no registered FAIL reason form (G02)",
+    "part": "OBS_EQ FAIL; CAPTURE_PURE PASS (REG's capture is pure)",
+    "witness": "UNDETERMINED: whether the first difference is an output or a state captured after the observer action (G01)"
+   },
+   "other_verdicts": [],
+   "claims": [
+    {
+     "claim": "CL-RET(REG) with HEAL registered as used",
+     "eligibility": "NOT_ELIGIBLE",
+     "standing": "UNMET",
+     "why": "OBSERVER(REG, HEAL) FAIL"
+    }
+   ],
+   "assumptions": [
+    "stage records count as registered under in-memory fixture anchors (G05)",
+    "fixture behaviour read only from its name, the plan s4 row, A7 and contract.json polarity (G01)",
+    "HEAL changes a declared ALLOWED/FORBIDDEN component or an output and restores it before the final score"
+   ],
+   "gaps": [
+    "G01",
+    "G02"
+   ],
+   "derivation": "Plan T07 / A7 N9: state is captured after every observer action, so a flip repaired before the next tick is still seen. RESTART(REG) PASS, so the state part has authority."
+  },
+  {
+   "id": "T07.BOOKKEEP",
+   "determinacy": "DETERMINED_UNDER_ASSUMPTION",
+   "execution": "RAN",
+   "authority": "QUALIFIED@AUTHOR_TESTED",
+   "outcome": "PASS",
+   "reason": "outputs and declared non-BOOKKEEPING state identical to the null observer",
+   "primary": {
+    "predicate": "OBSERVER",
+    "scope": "(REG, BOOKKEEP)",
+    "execution": "RAN",
+    "authority": "QUALIFIED@AUTHOR_TESTED",
+    "outcome": "PASS",
+    "reason": "outputs and declared non-BOOKKEEPING state identical to the null observer",
+    "eligible_count": 196608
+   },
+   "other_verdicts": [],
+   "claims": [
+    {
+     "claim": "CL-RET(REG)",
+     "eligibility": "ELIGIBLE",
+     "standing": "SATISFIED",
+     "why": null
+    }
+   ],
+   "assumptions": [
+    "stage records count as registered under in-memory fixture anchors (G05)",
+    "fixture behaviour read only from its name, the plan s4 row, A7 and contract.json polarity (G01)",
+    "BOOKKEEP writes only a declared BOOKKEEPING component (log_n)"
+   ],
+   "gaps": [
+    "G01"
+   ],
+   "derivation": "BOOKKEEPING components are excluded from the state part and the outputs do not change. 4096 x (24 + 24) = 196608."
+  },
+  {
+   "id": "T07.NULL",
+   "determinacy": "DETERMINED",
+   "execution": "RAN",
+   "authority": "QUALIFIED@AUTHOR_TESTED",
+   "outcome": "PASS",
+   "reason": "the null observer equals itself; CAPTURE_PURE holds for REG",
+   "primary": {
+    "predicate": "OBSERVER",
+    "scope": "(REG, NULL)",
+    "execution": "RAN",
+    "authority": "QUALIFIED@AUTHOR_TESTED",
+    "outcome": "PASS",
+    "reason": "the null observer equals itself; CAPTURE_PURE holds for REG",
+    "eligible_count": 196608
+   },
+   "other_verdicts": [],
+   "claims": [
+    {
+     "claim": "CL-RET(REG)",
+     "eligibility": "ELIGIBLE",
+     "standing": "SATISFIED",
+     "why": null
+    }
+   ],
+   "assumptions": [
+    "stage records count as registered under in-memory fixture anchors (G05)"
+   ],
+   "gaps": [
+    "G05"
+   ],
+   "derivation": "OBS_EQ compares against the null observer; CAPTURE_PURE is a property of REG's capture."
+  },
+  {
+   "id": "T08.EVERY3",
+   "determinacy": "DETERMINED_UNDER_ASSUMPTION",
+   "execution": "RAN",
+   "authority": "QUALIFIED@AUTHOR_TESTED",
+   "outcome": "FAIL",
+   "reason": "forbidden influence across boundary 3, first visible at <episode, tick>",
+   "primary": {
+    "predicate": "ERASE",
+    "scope": "EVERY3",
+    "execution": "RAN",
+    "authority": "QUALIFIED@AUTHOR_TESTED",
+    "outcome": "FAIL",
+    "reason": "forbidden influence across boundary 3, first visible at <episode, tick>",
+    "witness_assumed": "boundary 3 (the third reset call); boundaries 1 and 2 clean; pair (all-zero, f_3 = 1); first visible at episode 4, PROBE_A if the leak is an uncleared d"
+   },
+   "other_verdicts": [],
+   "claims": [
+    {
+     "claim": "CL-RET(EVERY3)",
+     "eligibility": "NOT_ELIGIBLE",
+     "standing": "UNMET",
+     "why": "ERASE FAIL"
+    }
+   ],
+   "assumptions": [
+    "stage records count as registered under in-memory fixture anchors (G05)",
+    "fixture behaviour read only from its name, the plan s4 row, A7 and contract.json polarity (G01)",
+    "the leaking call is call 3 (not calls 1 and 4)"
+   ],
+   "gaps": [
+    "G01"
+   ],
+   "derivation": "A7: R = 3 exists so that the third call is evaluated. A check of boundary 1 only would pass this runtime."
+  },
+  {
+   "id": "T08.SLEEPER",
+   "determinacy": "DETERMINED_UNDER_ASSUMPTION",
+   "execution": "RAN",
+   "authority": "QUALIFIED@AUTHOR_TESTED",
+   "outcome": "FAIL",
+   "reason": "forbidden influence across boundary <j>, first visible at <episode, tick>",
+   "primary": {
+    "predicate": "ERASE",
+    "scope": "SLEEPER",
+    "execution": "RAN",
+    "authority": "QUALIFIED@AUTHOR_TESTED",
+    "outcome": "FAIL",
+    "reason": "forbidden influence across boundary <j>, first visible at <episode, tick>",
+    "witness": "UNDETERMINED: boundary 1 with first visibility in episode 3 if the hidden carry is f_e; boundary 2, episode 3 if it is u_e (forbidden at the NEXT boundary) (G01)"
+   },
+   "other_verdicts": [],
+   "claims": [
+    {
+     "claim": "CL-RET(SLEEPER)",
+     "eligibility": "NOT_ELIGIBLE",
+     "standing": "UNMET",
+     "why": "ERASE FAIL"
+    }
+   ],
+   "assumptions": [
+    "stage records count as registered under in-memory fixture anchors (G05)",
+    "fixture behaviour read only from its name, the plan s4 row, A7 and contract.json polarity (G01)"
+   ],
+   "gaps": [
+    "G01"
+   ],
+   "derivation": "A7: lag 2 <= H = 3 and ERASE is behavioural, so undeclared hidden state is covered."
+  },
+  {
+   "id": "T08.SPLIT1",
+   "determinacy": "DETERMINED_UNDER_ASSUMPTION",
+   "execution": "RAN",
+   "authority": "QUALIFIED@AUTHOR_TESTED",
+   "outcome": "FAIL",
+   "reason": "forbidden influence across boundary <j>, first visible at <episode, tick>",
+   "primary": {
+    "predicate": "ERASE",
+    "scope": "SPLIT1",
+    "execution": "RAN",
+    "authority": "QUALIFIED@AUTHOR_TESTED",
+    "outcome": "FAIL",
+    "reason": "forbidden influence across boundary <j>, first visible at <episode, tick>",
+    "witness": "UNDETERMINED (G01)"
+   },
+   "other_verdicts": [],
+   "claims": [
+    {
+     "claim": "CL-RET(SPLIT1)",
+     "eligibility": "NOT_ELIGIBLE",
+     "standing": "UNMET",
+     "why": "ERASE FAIL"
+    }
+   ],
+   "assumptions": [
+    "stage records count as registered under in-memory fixture anchors (G05)",
+    "fixture behaviour read only from its name, the plan s4 row, A7 and contract.json polarity (G01)"
+   ],
+   "gaps": [
+    "G01"
+   ],
+   "derivation": "Plan T08 / A7 'interacting leaks': forbidden content split into shares that separately look clean; the recombined influence reaches an output within the horizon."
+  },
+  {
+   "id": "T08.SPLIT2",
+   "determinacy": "DETERMINED_UNDER_ASSUMPTION",
+   "execution": "RAN",
+   "authority": "QUALIFIED@AUTHOR_TESTED",
+   "outcome": "FAIL",
+   "reason": "forbidden influence across boundary <j>, first visible at <episode, tick>",
+   "primary": {
+    "predicate": "ERASE",
+    "scope": "SPLIT2",
+    "execution": "RAN",
+    "authority": "QUALIFIED@AUTHOR_TESTED",
+    "outcome": "FAIL",
+    "reason": "forbidden influence across boundary <j>, first visible at <episode, tick>",
+    "witness": "UNDETERMINED (G01)"
+   },
+   "other_verdicts": [],
+   "claims": [
+    {
+     "claim": "CL-RET(SPLIT2)",
+     "eligibility": "NOT_ELIGIBLE",
+     "standing": "UNMET",
+     "why": "ERASE FAIL"
+    }
+   ],
+   "assumptions": [
+    "stage records count as registered under in-memory fixture anchors (G05)",
+    "fixture behaviour read only from its name, the plan s4 row, A7 and contract.json polarity (G01)"
+   ],
+   "gaps": [
+    "G01"
+   ],
+   "derivation": "As SPLIT1; how the two fixtures differ is blind."
+  },
+  {
+   "id": "T08.REG",
+   "determinacy": "DETERMINED",
+   "execution": "RAN",
+   "authority": "QUALIFIED@AUTHOR_TESTED",
+   "outcome": "PASS",
+   "reason": "clean at all three evaluated boundaries under repeated calls",
+   "primary": {
+    "predicate": "ERASE",
+    "scope": "REG",
+    "execution": "RAN",
+    "authority": "QUALIFIED@AUTHOR_TESTED",
+    "outcome": "PASS",
+    "reason": "clean at all three evaluated boundaries under repeated calls",
+    "eligible_count": 9600
+   },
+   "other_verdicts": [],
+   "claims": [],
+   "assumptions": [
+    "stage records count as registered under in-memory fixture anchors (G05)"
+   ],
+   "gaps": [
+    "G05"
+   ],
+   "derivation": "Same derivation as T03.REG; REG's reset is identical on every call."
+  },
+  {
+   "id": "P0.OVERDELAY",
+   "determinacy": "DETERMINED_UNDER_ASSUMPTION",
+   "execution": "RAN",
+   "authority": "QUALIFIED@AUTHOR_TESTED",
+   "outcome": "FAIL",
+   "reason": "UNDETERMINED: P0 has no registered FAIL reason form (G02); the fact is a send with k outside {0,1,2,3}",
+   "primary": {
+    "predicate": "BOUNDS",
+    "scope": "OVERDELAY",
+    "execution": "RAN",
+    "authority": "QUALIFIED@AUTHOR_TESTED",
+    "outcome": "FAIL",
+    "reason": "UNDETERMINED: P0 has no registered FAIL reason form (G02); the fact is a send with k outside {0,1,2,3}"
+   },
+   "other_verdicts": [
+    {
+     "predicate": "P1-independent predicates P2-P7",
+     "scope": "OVERDELAY",
+     "execution": "BLOCKED",
+     "authority": "see G12",
+     "outcome": null,
+     "reason": null,
+     "missing": [
+      "runtime inside the registered model"
+     ]
+    }
+   ],
+   "claims": [
+    {
+     "claim": "CL-RET(OVERDELAY)",
+     "eligibility": "NOT_ELIGIBLE",
+     "standing": "BLOCKED",
+     "why": "every other runtime predicate BLOCKED; BOUNDS UNMET listed"
+    }
+   ],
+   "assumptions": [
+    "stage records count as registered under in-memory fixture anchors (G05)",
+    "fixture behaviour read only from its name, the plan s4 row, A7 and contract.json polarity (G01)",
+    "OVERDELAY sends with k >= 4"
+   ],
+   "gaps": [
+    "G01",
+    "G02",
+    "G12"
+   ],
+   "derivation": "A3: BOUNDS FAIL blocks every other predicate for that runtime with missing 'runtime inside the registered model'; outcome null. CALIBRATION(STANDARD) is a world predicate and is not blocked."
+  },
+  {
+   "id": "E06.REG_ONEHOT",
+   "determinacy": "DETERMINED_UNDER_ASSUMPTION",
+   "execution": "RAN",
+   "authority": "QUALIFIED@AUTHOR_TESTED",
+   "outcome": "PASS",
+   "reason": "outcome vector of P0-P7 on the twin equals REG's",
+   "primary": {
+    "predicate": "TWIN_EQ",
+    "scope": "(REG, REG-ONEHOT)",
+    "execution": "RAN",
+    "authority": "QUALIFIED@AUTHOR_TESTED",
+    "outcome": "PASS",
+    "reason": "outcome vector of P0-P7 on the twin equals REG's"
+   },
+   "other_verdicts": [],
+   "claims": [
+    {
+     "claim": "TWIN(REG, REG-ONEHOT)",
+     "eligibility": "REPORTED",
+     "standing": "SATISFIED",
+     "why": "renders '<M'> has the outcome vector of <M> under <encoding id>; one physics'; no promotion; not an exit criterion"
+    }
+   ],
+   "assumptions": [
+    "stage records count as registered under in-memory fixture anchors (G05)",
+    "fixture behaviour read only from its name, the plan s4 row, A7 and contract.json polarity (G01)",
+    "the predicates are applied to the twin through its named encoding"
+   ],
+   "gaps": [
+    "G01"
+   ],
+   "derivation": "A reversible re-encoding of every component preserves behaviour, so each of P0-P7 returns REG's value."
+  },
+  {
+   "id": "E06.REG_FLAT",
+   "determinacy": "DETERMINED_UNDER_ASSUMPTION",
+   "execution": "RAN",
+   "authority": "QUALIFIED@AUTHOR_TESTED",
+   "outcome": "PASS",
+   "reason": "outcome vector of P0-P7 on the twin equals REG's",
+   "primary": {
+    "predicate": "TWIN_EQ",
+    "scope": "(REG, REG-FLAT)",
+    "execution": "RAN",
+    "authority": "QUALIFIED@AUTHOR_TESTED",
+    "outcome": "PASS",
+    "reason": "outcome vector of P0-P7 on the twin equals REG's"
+   },
+   "other_verdicts": [],
+   "claims": [
+    {
+     "claim": "TWIN(REG, REG-FLAT)",
+     "eligibility": "REPORTED",
+     "standing": "SATISFIED",
+     "why": "one physics; no promotion; not an exit criterion"
+    }
+   ],
+   "assumptions": [
+    "stage records count as registered under in-memory fixture anchors (G05)",
+    "fixture behaviour read only from its name, the plan s4 row, A7 and contract.json polarity (G01)"
+   ],
+   "gaps": [
+    "G01"
+   ],
+   "derivation": "A flattened transition table of REG has REG's behaviour."
+  },
+  {
+   "id": "E06.LOSSY",
+   "determinacy": "PARTLY_UNDETERMINED",
+   "execution": "RAN",
+   "authority": "QUALIFIED@AUTHOR_TESTED",
+   "outcome": "FAIL",
+   "reason": "UNDETERMINED: P8 has no registered FAIL reason form (G02)",
+   "primary": {
+    "predicate": "TWIN_EQ",
+    "scope": "(REG, LOSSY)",
+    "execution": "RAN",
+    "authority": "QUALIFIED@AUTHOR_TESTED",
+    "outcome": "FAIL",
+    "reason": "UNDETERMINED: P8 has no registered FAIL reason form (G02)",
+    "witness": "UNDETERMINED: which of P0-P7 differs depends on what the encoding loses (G01)"
+   },
+   "other_verdicts": [],
+   "claims": [
+    {
+     "claim": "TWIN(REG, LOSSY)",
+     "eligibility": "REPORTED",
+     "standing": "UNMET",
+     "why": "not an exit criterion"
+    }
+   ],
+   "assumptions": [
+    "stage records count as registered under in-memory fixture anchors (G05)",
+    "fixture behaviour read only from its name, the plan s4 row, A7 and contract.json polarity (G01)"
+   ],
+   "gaps": [
+    "G01",
+    "G02"
+   ],
+   "derivation": "Polarity false: a non-reversible encoding cannot reproduce REG's outcome vector."
+  },
+  {
+   "id": "E01.G0",
+   "determinacy": "DETERMINED_UNDER_ASSUMPTION",
+   "execution": "RAN",
+   "authority": "QUALIFIED@AUTHOR_TESTED",
+   "outcome": "PASS",
+   "reason": null,
+   "primary": {
+    "predicate": "G-BIND",
+    "scope": "every claim of G0",
+    "execution": "RAN",
+    "authority": "QUALIFIED@AUTHOR_TESTED",
+    "outcome": "PASS",
+    "reason": null
+   },
+   "other_verdicts": [
+    {
+     "predicate": "G-INV",
+     "scope": "per claim",
+     "execution": "RAN",
+     "authority": "QUALIFIED@AUTHOR_TESTED",
+     "outcome": "PASS",
+     "reason": null
+    },
+    {
+     "predicate": "G-RECOMP",
+     "scope": "per CL-RET claim",
+     "execution": "RAN",
+     "authority": "QUALIFIED@AUTHOR_TESTED",
+     "outcome": "PASS",
+     "reason": "recomputed CALIBRATION, RETENTION, ERASE, PRESERVE, CHANNEL equal the receipts"
+    },
+    {
+     "predicate": "custody",
+     "scope": "G0",
+     "execution": "n/a",
+     "authority": "n/a",
+     "outcome": "UNQUALIFIED",
+     "reason": "KEEPER_ROW_MISSING"
+    }
+   ],
+   "claims": [
+    {
+     "claim": "CL-CAL(STANDARD)",
+     "eligibility": "ELIGIBLE",
+     "standing": "SATISFIED",
+     "why": null
+    },
+    {
+     "claim": "CL-RET(REG)",
+     "eligibility": "ELIGIBLE",
+     "standing": "SATISFIED",
+     "why": "11 instruments, lowest stage AUTHOR_TESTED"
+    },
+    {
+     "claim": "CL-RET(PKTD)",
+     "eligibility": "ELIGIBLE",
+     "standing": "SATISFIED",
+     "why": null
+    },
+    {
+     "claim": "CL-RET(LAGD)",
+     "eligibility": "NOT_ELIGIBLE",
+     "standing": "UNMET",
+     "why": "ERASE(LAGD) FAIL; a correctly bound negative, not a binding defect"
+    },
+    {
+     "claim": "CL-CUST(G0)",
+     "eligibility": "NOT_ELIGIBLE",
+     "standing": "UNQUALIFIED",
+     "why": "custody UNQUALIFIED KEEPER_ROW_MISSING (R3; G14)"
+    },
+    {
+     "claim": "TWIN(REG, REG-ONEHOT)",
+     "eligibility": "REPORTED",
+     "standing": "SATISFIED",
+     "why": "TWIN_EQ PASS, reported only; one physics"
+    }
+   ],
+   "assumptions": [
+    "stage records count as registered under in-memory fixture anchors (G05)",
+    "draft A outcomes for REG, PKTD, LAGD as derived in the T rows"
+   ],
+   "gaps": [
+    "G05",
+    "G14"
+   ],
+   "derivation": "Unedited reference bundle: every node present, bound, deps complete, bytes match, inventory terminal. Each claim is decided on its own subgraph; LAGD's ERASE FAIL makes CL-RET(LAGD) UNMET without touching the other claims. Custody is printed UNQUALIFIED and is a prerequisite of CL-CUST only (R2)."
+  },
+  {
+   "id": "E01.OUTCOME_EDIT",
+   "determinacy": "DETERMINED_UNDER_ASSUMPTION",
+   "execution": "RAN",
+   "authority": "QUALIFIED@AUTHOR_TESTED",
+   "outcome": "FAIL",
+   "reason": "OUTCOME_MISMATCH:value",
+   "primary": {
+    "predicate": "G-RECOMP",
+    "scope": "CL-RET(LAGD)",
+    "execution": "RAN",
+    "authority": "QUALIFIED@AUTHOR_TESTED",
+    "outcome": "FAIL",
+    "reason": "OUTCOME_MISMATCH:value",
+    "note": "recomputed ERASE(LAGD) from the intact traces is FAIL; the receipt says PASS (witness also differs)"
+   },
+   "other_verdicts": [
+    {
+     "predicate": "G-BIND",
+     "scope": "CL-RET(LAGD)",
+     "execution": "RAN",
+     "authority": "QUALIFIED@AUTHOR_TESTED",
+     "outcome": "PASS",
+     "reason": "the edit is self-consistent with the producer's re-hashed manifest"
+    },
+    {
+     "predicate": "G-INV",
+     "scope": "CL-RET(LAGD)",
+     "execution": "RAN",
+     "authority": "QUALIFIED@AUTHOR_TESTED",
+     "outcome": "PASS",
+     "reason": null
+    }
+   ],
+   "claims": [
+    {
+     "claim": "CL-CAL(STANDARD)",
+     "eligibility": "ELIGIBLE",
+     "standing": "SATISFIED",
+     "why": null
+    },
+    {
+     "claim": "CL-RET(REG)",
+     "eligibility": "ELIGIBLE",
+     "standing": "SATISFIED",
+     "why": "11 instruments, lowest stage AUTHOR_TESTED"
+    },
+    {
+     "claim": "CL-RET(PKTD)",
+     "eligibility": "ELIGIBLE",
+     "standing": "SATISFIED",
+     "why": null
+    },
+    {
+     "claim": "CL-RET(LAGD)",
+     "eligibility": "NOT_ELIGIBLE",
+     "standing": "UNMET",
+     "why": "G-RECOMP FAIL OUTCOME_MISMATCH:value; never ELIGIBLE"
+    },
+    {
+     "claim": "CL-CUST(G0)",
+     "eligibility": "NOT_ELIGIBLE",
+     "standing": "UNQUALIFIED",
+     "why": "custody UNQUALIFIED KEEPER_ROW_MISSING (R3; G14)"
+    },
+    {
+     "claim": "TWIN(REG, REG-ONEHOT)",
+     "eligibility": "REPORTED",
+     "standing": "SATISFIED",
+     "why": "TWIN_EQ PASS, reported only; one physics"
+    }
+   ],
+   "assumptions": [
+    "stage records count as registered under in-memory fixture anchors (G05)",
+    "the re-hashed manifest IS the anchor in non-custody mode (G10); if the consumer holds the original anchor the first failure is G-BIND FAIL BYTES_MISMATCH instead, and with keeper rows custody ROW_BLOB_MISMATCH"
+   ],
+   "gaps": [
+    "G06",
+    "G09",
+    "G10"
+   ],
+   "derivation": "B10: 'reported outcome changed after the run: IN'. ERASE is in the recompute set, the traces are intact, so recomputation contradicts the rewritten receipt. The other claims' decision records are unchanged."
+  },
+  {
+   "id": "E01.FAB_CONSISTENT",
+   "determinacy": "DETERMINED",
+   "execution": "RAN",
+   "authority": "QUALIFIED@AUTHOR_TESTED",
+   "outcome": "PASS",
+   "reason": null,
+   "primary": {
+    "predicate": "G-BIND",
+    "scope": "CL-RET(REG)",
+    "execution": "RAN",
+    "authority": "QUALIFIED@AUTHOR_TESTED",
+    "outcome": "PASS",
+    "reason": null
+   },
+   "other_verdicts": [
+    {
+     "predicate": "G-INV",
+     "scope": "CL-RET(REG)",
+     "execution": "RAN",
+     "authority": "QUALIFIED@AUTHOR_TESTED",
+     "outcome": "PASS",
+     "reason": null
+    },
+    {
+     "predicate": "G-RECOMP",
+     "scope": "CL-RET(REG)",
+     "execution": "RAN",
+     "authority": "QUALIFIED@AUTHOR_TESTED",
+     "outcome": "PASS",
+     "reason": "fabricated traces recompute identically"
+    },
+    {
+     "predicate": "custody",
+     "scope": "bundle",
+     "execution": "n/a",
+     "authority": "n/a",
+     "outcome": "UNQUALIFIED",
+     "reason": "KEEPER_ROW_MISSING"
+    }
+   ],
+   "claims": [
+    {
+     "claim": "CL-CAL(STANDARD)",
+     "eligibility": "ELIGIBLE",
+     "standing": "SATISFIED",
+     "why": null
+    },
+    {
+     "claim": "CL-RET(REG)",
+     "eligibility": "ELIGIBLE",
+     "standing": "SATISFIED",
+     "why": "NOT DETECTED, by design: the evidence contract passes and asserts nothing about the truth of the observation (B5.4)"
+    },
+    {
+     "claim": "CL-RET(PKTD)",
+     "eligibility": "ELIGIBLE",
+     "standing": "SATISFIED",
+     "why": null
+    },
+    {
+     "claim": "CL-RET(LAGD)",
+     "eligibility": "NOT_ELIGIBLE",
+     "standing": "UNMET",
+     "why": "ERASE(LAGD) FAIL; a correctly bound negative, not a binding defect"
+    },
+    {
+     "claim": "CL-CUST(G0)",
+     "eligibility": "NOT_ELIGIBLE",
+     "standing": "UNQUALIFIED",
+     "why": "custody UNQUALIFIED KEEPER_ROW_MISSING (R3; G14)"
+    },
+    {
+     "claim": "TWIN(REG, REG-ONEHOT)",
+     "eligibility": "REPORTED",
+     "standing": "SATISFIED",
+     "why": "TWIN_EQ PASS, reported only; one physics"
+    }
+   ],
+   "assumptions": [
+    "stage records count as registered under in-memory fixture anchors (G05)"
+   ],
+   "gaps": [
+    "G05"
+   ],
+   "derivation": "Coupling with E05: no predicate detects an internally consistent fabrication made before registration. The required behaviour is that no report words this PASS as truthful execution."
+  },
+  {
+   "id": "E02.MISSING",
+   "determinacy": "DETERMINED_UNDER_ASSUMPTION",
+   "execution": "BLOCKED",
+   "authority": "QUALIFIED@AUTHOR_TESTED",
+   "outcome": null,
+   "reason": "EVIDENCE_MISSING:rcpt:REG:P4:STANDARD",
+   "primary": {
+    "predicate": "G-BIND",
+    "scope": "CL-RET(REG)",
+    "execution": "BLOCKED",
+    "authority": "QUALIFIED@AUTHOR_TESTED",
+    "outcome": null,
+    "reason": "EVIDENCE_MISSING:rcpt:REG:P4:STANDARD",
+    "missing": [
+     "EVIDENCE_MISSING:rcpt:REG:P4:STANDARD"
+    ]
+   },
+   "other_verdicts": [
+    {
+     "predicate": "PRESERVE",
+     "scope": "REG",
+     "execution": "BLOCKED",
+     "authority": "n/a",
+     "outcome": null,
+     "reason": "prerequisite node absent"
+    },
+    {
+     "predicate": "G-INV",
+     "scope": "CL-RET(REG)",
+     "execution": "RAN",
+     "authority": "QUALIFIED@AUTHOR_TESTED",
+     "outcome": "FAIL",
+     "reason": "RUN_UNREPORTED:<run_id of the removed receipt> (if the inventory still lists the run COMPLETED)"
+    }
+   ],
+   "claims": [
+    {
+     "claim": "CL-CAL(STANDARD)",
+     "eligibility": "ELIGIBLE",
+     "standing": "SATISFIED",
+     "why": null
+    },
+    {
+     "claim": "CL-RET(REG)",
+     "eligibility": "NOT_ELIGIBLE",
+     "standing": "BLOCKED",
+     "why": "PRESERVE(REG) absent"
+    },
+    {
+     "claim": "CL-RET(PKTD)",
+     "eligibility": "ELIGIBLE",
+     "standing": "SATISFIED",
+     "why": null
+    },
+    {
+     "claim": "CL-RET(LAGD)",
+     "eligibility": "NOT_ELIGIBLE",
+     "standing": "UNMET",
+     "why": "ERASE(LAGD) FAIL; a correctly bound negative, not a binding defect"
+    },
+    {
+     "claim": "CL-CUST(G0)",
+     "eligibility": "NOT_ELIGIBLE",
+     "standing": "UNQUALIFIED",
+     "why": "custody UNQUALIFIED KEEPER_ROW_MISSING (R3; G14)"
+    },
+    {
+     "claim": "TWIN(REG, REG-ONEHOT)",
+     "eligibility": "REPORTED",
+     "standing": "SATISFIED",
+     "why": "TWIN_EQ PASS, reported only; one physics"
+    }
+   ],
+   "assumptions": [
+    "stage records count as registered under in-memory fixture anchors (G05)",
+    "node_id spelling rcpt:<subject>:<predicate id P4>:<world>",
+    "other claims unchanged under the per-claim reading of G-INV (G07)"
+   ],
+   "gaps": [
+    "G07"
+   ],
+   "derivation": "Plan E02: missing -> BLOCKED, not FAIL. B6.3 first check. The removed receipt's run is still in the terminal inventory, so G-INV also fires on this claim."
+  },
+  {
+   "id": "E02.MALFORMED",
+   "determinacy": "DETERMINED_UNDER_ASSUMPTION",
+   "execution": "RAN",
+   "authority": "QUALIFIED@AUTHOR_TESTED",
+   "outcome": "FAIL",
+   "reason": "SCOPE_MALFORMED:boundary",
+   "primary": {
+    "predicate": "G-BIND",
+    "scope": "CL-RET(REG)",
+    "execution": "RAN",
+    "authority": "QUALIFIED@AUTHOR_TESTED",
+    "outcome": "FAIL",
+    "reason": "SCOPE_MALFORMED:boundary"
+   },
+   "other_verdicts": [],
+   "claims": [
+    {
+     "claim": "CL-CAL(STANDARD)",
+     "eligibility": "ELIGIBLE",
+     "standing": "SATISFIED",
+     "why": null
+    },
+    {
+     "claim": "CL-RET(REG)",
+     "eligibility": "NOT_ELIGIBLE",
+     "standing": "UNMET",
+     "why": "G-BIND FAIL SCOPE_MALFORMED:boundary"
+    },
+    {
+     "claim": "CL-RET(PKTD)",
+     "eligibility": "ELIGIBLE",
+     "standing": "SATISFIED",
+     "why": null
+    },
+    {
+     "claim": "CL-RET(LAGD)",
+     "eligibility": "NOT_ELIGIBLE",
+     "standing": "UNMET",
+     "why": "ERASE(LAGD) FAIL; a correctly bound negative, not a binding defect"
+    },
+    {
+     "claim": "CL-CUST(G0)",
+     "eligibility": "NOT_ELIGIBLE",
+     "standing": "UNQUALIFIED",
+     "why": "custody UNQUALIFIED KEEPER_ROW_MISSING (R3; G14)"
+    },
+    {
+     "claim": "TWIN(REG, REG-ONEHOT)",
+     "eligibility": "REPORTED",
+     "standing": "SATISFIED",
+     "why": "TWIN_EQ PASS, reported only; one physics"
+    }
+   ],
+   "assumptions": [
+    "stage records count as registered under in-memory fixture anchors (G05)",
+    "the unbound ERASE receipt does not turn the headline into BLOCKED (G06)"
+   ],
+   "gaps": [
+    "G06"
+   ],
+   "derivation": "The receipt parses under the closed schema; 'EPISODE_RESET j=1' is not the registered boundary value, and the well-formedness check precedes every manifest comparison. Contradicted scope -> FAIL with reason."
+  },
+  {
+   "id": "E02.RELABEL",
+   "determinacy": "PARTLY_UNDETERMINED",
+   "execution": "RAN",
+   "authority": "QUALIFIED@AUTHOR_TESTED",
+   "outcome": "FAIL",
+   "reason": "UNDETERMINED among SCOPE_MISMATCH:physics | IDENTITY_UNKNOWN:<node_id> (G08)",
+   "primary": {
+    "predicate": "G-BIND",
+    "scope": "the relabelled CL-RET claim",
+    "execution": "RAN",
+    "authority": "QUALIFIED@AUTHOR_TESTED",
+    "outcome": "FAIL",
+    "reason": "UNDETERMINED among SCOPE_MISMATCH:physics | IDENTITY_UNKNOWN:<node_id> (G08)"
+   },
+   "other_verdicts": [],
+   "claims": [
+    {
+     "claim": "CL-RET(REG2)",
+     "eligibility": "NOT_ELIGIBLE",
+     "standing": "UNMET",
+     "why": "G-BIND FAIL against the old complete-node anchors"
+    },
+    {
+     "claim": "CL-CAL(STANDARD)",
+     "eligibility": "UNDETERMINED",
+     "standing": "UNDETERMINED",
+     "why": "CALIBRATION's subject is WORLD; whether 'every node' includes it is blind"
+    }
+   ],
+   "assumptions": [
+    "stage records count as registered under in-memory fixture anchors (G05)"
+   ],
+   "gaps": [
+    "G08"
+   ],
+   "derivation": "Plan E02 / B6.1: complete-node anchors exist so that a whole-graph relabel under old anchors FAILs with a reason; artifact bytes still match, so BYTES_MISMATCH must NOT be the reason. Which typed code fires first is the gap."
+  },
+  {
+   "id": "E02.WRONG_SUBJECT",
+   "determinacy": "DETERMINED_UNDER_ASSUMPTION",
+   "execution": "RAN",
+   "authority": "QUALIFIED@AUTHOR_TESTED",
+   "outcome": "FAIL",
+   "reason": "SCOPE_MISMATCH:physics",
+   "primary": {
+    "predicate": "G-BIND",
+    "scope": "CL-RET(REG)",
+    "execution": "RAN",
+    "authority": "QUALIFIED@AUTHOR_TESTED",
+    "outcome": "FAIL",
+    "reason": "SCOPE_MISMATCH:physics"
+   },
+   "other_verdicts": [],
+   "claims": [
+    {
+     "claim": "CL-CAL(STANDARD)",
+     "eligibility": "ELIGIBLE",
+     "standing": "SATISFIED",
+     "why": null
+    },
+    {
+     "claim": "CL-RET(REG)",
+     "eligibility": "NOT_ELIGIBLE",
+     "standing": "UNMET",
+     "why": "G-BIND FAIL SCOPE_MISMATCH:physics"
+    },
+    {
+     "claim": "CL-RET(PKTD)",
+     "eligibility": "ELIGIBLE",
+     "standing": "SATISFIED",
+     "why": null
+    },
+    {
+     "claim": "CL-RET(LAGD)",
+     "eligibility": "NOT_ELIGIBLE",
+     "standing": "UNMET",
+     "why": "ERASE(LAGD) FAIL; a correctly bound negative, not a binding defect"
+    },
+    {
+     "claim": "CL-CUST(G0)",
+     "eligibility": "NOT_ELIGIBLE",
+     "standing": "UNQUALIFIED",
+     "why": "custody UNQUALIFIED KEEPER_ROW_MISSING (R3; G14)"
+    },
+    {
+     "claim": "TWIN(REG, REG-ONEHOT)",
+     "eligibility": "REPORTED",
+     "standing": "SATISFIED",
+     "why": "TWIN_EQ PASS, reported only; one physics"
+    }
+   ],
+   "assumptions": [
+    "stage records count as registered under in-memory fixture anchors (G05)",
+    "the claim-cell comparison on the substituted receipt is reached before a DEPENDENCY_MISMATCH on the CLAIM node (node order, G08-like)"
+   ],
+   "gaps": [
+    "G06"
+   ],
+   "derivation": "PKTD's RESTART receipt is genuine and bound, but its cell.physics is PKTD while the claim's cell is REG (B6.3 'scope equals the claim's cell where the policy requires'). CL-RET(PKTD) is untouched."
+  },
+  {
+   "id": "E02.G0",
+   "determinacy": "DETERMINED_UNDER_ASSUMPTION",
+   "execution": "RAN",
+   "authority": "QUALIFIED@AUTHOR_TESTED",
+   "outcome": "PASS",
+   "reason": null,
+   "primary": {
+    "predicate": "G-BIND",
+    "scope": "every claim of G0",
+    "execution": "RAN",
+    "authority": "QUALIFIED@AUTHOR_TESTED",
+    "outcome": "PASS",
+    "reason": null
+   },
+   "other_verdicts": [
+    {
+     "predicate": "G-INV",
+     "scope": "per claim",
+     "execution": "RAN",
+     "authority": "QUALIFIED@AUTHOR_TESTED",
+     "outcome": "PASS",
+     "reason": null
+    },
+    {
+     "predicate": "G-RECOMP",
+     "scope": "per CL-RET claim",
+     "execution": "RAN",
+     "authority": "QUALIFIED@AUTHOR_TESTED",
+     "outcome": "PASS",
+     "reason": "recomputed CALIBRATION, RETENTION, ERASE, PRESERVE, CHANNEL equal the receipts"
+    },
+    {
+     "predicate": "custody",
+     "scope": "G0",
+     "execution": "n/a",
+     "authority": "n/a",
+     "outcome": "UNQUALIFIED",
+     "reason": "KEEPER_ROW_MISSING"
+    }
+   ],
+   "claims": [
+    {
+     "claim": "CL-CAL(STANDARD)",
+     "eligibility": "ELIGIBLE",
+     "standing": "SATISFIED",
+     "why": null
+    },
+    {
+     "claim": "CL-RET(REG)",
+     "eligibility": "ELIGIBLE",
+     "standing": "SATISFIED",
+     "why": "11 instruments, lowest stage AUTHOR_TESTED"
+    },
+    {
+     "claim": "CL-RET(PKTD)",
+     "eligibility": "ELIGIBLE",
+     "standing": "SATISFIED",
+     "why": null
+    },
+    {
+     "claim": "CL-RET(LAGD)",
+     "eligibility": "NOT_ELIGIBLE",
+     "standing": "UNMET",
+     "why": "ERASE(LAGD) FAIL; a correctly bound negative, not a binding defect"
+    },
+    {
+     "claim": "CL-CUST(G0)",
+     "eligibility": "NOT_ELIGIBLE",
+     "standing": "UNQUALIFIED",
+     "why": "custody UNQUALIFIED KEEPER_ROW_MISSING (R3; G14)"
+    },
+    {
+     "claim": "TWIN(REG, REG-ONEHOT)",
+     "eligibility": "REPORTED",
+     "standing": "SATISFIED",
+     "why": "TWIN_EQ PASS, reported only; one physics"
+    }
+   ],
+   "assumptions": [
+    "stage records count as registered under in-memory fixture anchors (G05)",
+    "draft A outcomes for REG, PKTD, LAGD as derived in the T rows"
+   ],
+   "gaps": [
+    "G05",
+    "G14"
+   ],
+   "derivation": "Unedited reference bundle: every node present, bound, deps complete, bytes match, inventory terminal. Each claim is decided on its own subgraph; LAGD's ERASE FAIL makes CL-RET(LAGD) UNMET without touching the other claims. Custody is printed UNQUALIFIED and is a prerequisite of CL-CUST only (R2)."
+  },
+  {
+   "id": "E03.STRIP",
+   "determinacy": "DETERMINED",
+   "execution": "RAN",
+   "authority": "QUALIFIED@AUTHOR_TESTED",
+   "outcome": "FAIL",
+   "reason": "DEPENDENCY_MISMATCH:<edge RETENTION(REG, STANDARD) -> CALIBRATION(STANDARD)>",
+   "primary": {
+    "predicate": "G-BIND",
+    "scope": "CL-RET(REG)",
+    "execution": "RAN",
+    "authority": "QUALIFIED@AUTHOR_TESTED",
+    "outcome": "FAIL",
+    "reason": "DEPENDENCY_MISMATCH:<edge RETENTION(REG, STANDARD) -> CALIBRATION(STANDARD)>"
+   },
+   "other_verdicts": [],
+   "claims": [
+    {
+     "claim": "CL-CAL(STANDARD)",
+     "eligibility": "ELIGIBLE",
+     "standing": "SATISFIED",
+     "why": null
+    },
+    {
+     "claim": "CL-RET(REG)",
+     "eligibility": "NOT_ELIGIBLE",
+     "standing": "UNMET",
+     "why": "G-BIND FAIL DEPENDENCY_MISMATCH"
+    },
+    {
+     "claim": "CL-RET(PKTD)",
+     "eligibility": "ELIGIBLE",
+     "standing": "SATISFIED",
+     "why": null
+    },
+    {
+     "claim": "CL-RET(LAGD)",
+     "eligibility": "NOT_ELIGIBLE",
+     "standing": "UNMET",
+     "why": "ERASE(LAGD) FAIL; a correctly bound negative, not a binding defect"
+    },
+    {
+     "claim": "CL-CUST(G0)",
+     "eligibility": "NOT_ELIGIBLE",
+     "standing": "UNQUALIFIED",
+     "why": "custody UNQUALIFIED KEEPER_ROW_MISSING (R3; G14)"
+    },
+    {
+     "claim": "TWIN(REG, REG-ONEHOT)",
+     "eligibility": "REPORTED",
+     "standing": "SATISFIED",
+     "why": "TWIN_EQ PASS, reported only; one physics"
+    }
+   ],
+   "assumptions": [
+    "stage records count as registered under in-memory fixture anchors (G05)"
+   ],
+   "gaps": [
+    "G09"
+   ],
+   "derivation": "Deps differ from the manifest node's deps AND omit a required B6.2 edge; the deps check precedes the bytes check, so the reason is DEPENDENCY_MISMATCH, not BYTES_MISMATCH. The spelling of <edge> is G09."
+  },
+  {
+   "id": "E03.BYTEFLIP",
+   "determinacy": "DETERMINED",
+   "execution": "RAN",
+   "authority": "QUALIFIED@AUTHOR_TESTED",
+   "outcome": "FAIL",
+   "reason": "BYTES_MISMATCH:<role of REG's PROBE_A trace>",
+   "primary": {
+    "predicate": "G-BIND",
+    "scope": "CL-RET(REG)",
+    "execution": "RAN",
+    "authority": "QUALIFIED@AUTHOR_TESTED",
+    "outcome": "FAIL",
+    "reason": "BYTES_MISMATCH:<role of REG's PROBE_A trace>"
+   },
+   "other_verdicts": [],
+   "claims": [
+    {
+     "claim": "CL-CAL(STANDARD)",
+     "eligibility": "ELIGIBLE",
+     "standing": "SATISFIED",
+     "why": null
+    },
+    {
+     "claim": "CL-RET(REG)",
+     "eligibility": "NOT_ELIGIBLE",
+     "standing": "UNMET",
+     "why": "G-BIND FAIL BYTES_MISMATCH"
+    },
+    {
+     "claim": "CL-RET(PKTD)",
+     "eligibility": "ELIGIBLE",
+     "standing": "SATISFIED",
+     "why": null
+    },
+    {
+     "claim": "CL-RET(LAGD)",
+     "eligibility": "NOT_ELIGIBLE",
+     "standing": "UNMET",
+     "why": "ERASE(LAGD) FAIL; a correctly bound negative, not a binding defect"
+    },
+    {
+     "claim": "CL-CUST(G0)",
+     "eligibility": "NOT_ELIGIBLE",
+     "standing": "UNQUALIFIED",
+     "why": "custody UNQUALIFIED KEEPER_ROW_MISSING (R3; G14)"
+    },
+    {
+     "claim": "TWIN(REG, REG-ONEHOT)",
+     "eligibility": "REPORTED",
+     "standing": "SATISFIED",
+     "why": "TWIN_EQ PASS, reported only; one physics"
+    }
+   ],
+   "assumptions": [
+    "stage records count as registered under in-memory fixture anchors (G05)"
+   ],
+   "gaps": [
+    "G09"
+   ],
+   "derivation": "Length equal, sha256 differs from the ArtifactRef. G-BIND hashes bytes; it must not need G-RECOMP to see this."
+  },
+  {
+   "id": "E03.REANCHOR",
+   "determinacy": "PARTLY_UNDETERMINED",
+   "execution": "RAN",
+   "authority": "QUALIFIED@AUTHOR_TESTED",
+   "outcome": "PASS",
+   "reason": "bytes match the producer's re-made anchors",
+   "primary": {
+    "predicate": "G-BIND",
+    "scope": "CL-RET(REG)",
+    "execution": "RAN",
+    "authority": "QUALIFIED@AUTHOR_TESTED",
+    "outcome": "PASS",
+    "reason": "bytes match the producer's re-made anchors"
+   },
+   "other_verdicts": [
+    {
+     "predicate": "custody",
+     "scope": "bundle",
+     "execution": "n/a",
+     "authority": "n/a",
+     "outcome": "UNQUALIFIED",
+     "reason": "ANCHORS_FROM_PRODUCER"
+    },
+    {
+     "predicate": "G-RECOMP",
+     "scope": "CL-RET(REG)",
+     "execution": "RAN",
+     "authority": "QUALIFIED@AUTHOR_TESTED",
+     "outcome": "UNDETERMINED",
+     "reason": "FAIL OUTCOME_MISMATCH if the flipped byte changes a recomputed outcome and the receipts were not rewritten to match; not stated"
+    }
+   ],
+   "claims": [
+    {
+     "claim": "CL-RET(REG)",
+     "eligibility": "UNDETERMINED",
+     "standing": "UNDETERMINED",
+     "why": "follows G-RECOMP"
+    },
+    {
+     "claim": "CL-CUST(bundle)",
+     "eligibility": "NOT_ELIGIBLE",
+     "standing": "UNQUALIFIED",
+     "why": "ANCHORS_FROM_PRODUCER"
+    }
+   ],
+   "assumptions": [
+    "stage records count as registered under in-memory fixture anchors (G05)",
+    "anchors re-made by the producer are accepted by G-BIND in non-custody mode (G10)"
+   ],
+   "gaps": [
+    "G10",
+    "G11"
+   ],
+   "derivation": "Coupling with E05: byte integrity against producer-made anchors establishes nothing; only custody can tell re-made anchors from the registered ones, and it answers UNQUALIFIED."
+  },
+  {
+   "id": "E03.G0",
+   "determinacy": "DETERMINED_UNDER_ASSUMPTION",
+   "execution": "RAN",
+   "authority": "QUALIFIED@AUTHOR_TESTED",
+   "outcome": "PASS",
+   "reason": null,
+   "primary": {
+    "predicate": "G-BIND",
+    "scope": "every claim of G0",
+    "execution": "RAN",
+    "authority": "QUALIFIED@AUTHOR_TESTED",
+    "outcome": "PASS",
+    "reason": null
+   },
+   "other_verdicts": [
+    {
+     "predicate": "G-INV",
+     "scope": "per claim",
+     "execution": "RAN",
+     "authority": "QUALIFIED@AUTHOR_TESTED",
+     "outcome": "PASS",
+     "reason": null
+    },
+    {
+     "predicate": "G-RECOMP",
+     "scope": "per CL-RET claim",
+     "execution": "RAN",
+     "authority": "QUALIFIED@AUTHOR_TESTED",
+     "outcome": "PASS",
+     "reason": "recomputed CALIBRATION, RETENTION, ERASE, PRESERVE, CHANNEL equal the receipts"
+    },
+    {
+     "predicate": "custody",
+     "scope": "G0",
+     "execution": "n/a",
+     "authority": "n/a",
+     "outcome": "UNQUALIFIED",
+     "reason": "KEEPER_ROW_MISSING"
+    }
+   ],
+   "claims": [
+    {
+     "claim": "CL-CAL(STANDARD)",
+     "eligibility": "ELIGIBLE",
+     "standing": "SATISFIED",
+     "why": null
+    },
+    {
+     "claim": "CL-RET(REG)",
+     "eligibility": "ELIGIBLE",
+     "standing": "SATISFIED",
+     "why": "11 instruments, lowest stage AUTHOR_TESTED"
+    },
+    {
+     "claim": "CL-RET(PKTD)",
+     "eligibility": "ELIGIBLE",
+     "standing": "SATISFIED",
+     "why": null
+    },
+    {
+     "claim": "CL-RET(LAGD)",
+     "eligibility": "NOT_ELIGIBLE",
+     "standing": "UNMET",
+     "why": "ERASE(LAGD) FAIL; a correctly bound negative, not a binding defect"
+    },
+    {
+     "claim": "CL-CUST(G0)",
+     "eligibility": "NOT_ELIGIBLE",
+     "standing": "UNQUALIFIED",
+     "why": "custody UNQUALIFIED KEEPER_ROW_MISSING (R3; G14)"
+    },
+    {
+     "claim": "TWIN(REG, REG-ONEHOT)",
+     "eligibility": "REPORTED",
+     "standing": "SATISFIED",
+     "why": "TWIN_EQ PASS, reported only; one physics"
+    }
+   ],
+   "assumptions": [
+    "stage records count as registered under in-memory fixture anchors (G05)",
+    "draft A outcomes for REG, PKTD, LAGD as derived in the T rows"
+   ],
+   "gaps": [
+    "G05",
+    "G14"
+   ],
+   "derivation": "Unedited reference bundle: every node present, bound, deps complete, bytes match, inventory terminal. Each claim is decided on its own subgraph; LAGD's ERASE FAIL makes CL-RET(LAGD) UNMET without touching the other claims. Custody is printed UNQUALIFIED and is a prerequisite of CL-CUST only (R2)."
+  },
+  {
+   "id": "E04.W_RESTART",
+   "determinacy": "DETERMINED",
+   "execution": "RAN",
+   "authority": "UNQUALIFIED: WITHDRAWN:<withdrawal_id>",
+   "outcome": "PASS",
+   "reason": "WITHDRAWN:<withdrawal_id>",
+   "primary": {
+    "predicate": "RESTART",
+    "scope": "REG, PKTD, LAGD",
+    "execution": "RAN",
+    "authority": "UNQUALIFIED: WITHDRAWN:<withdrawal_id>",
+    "outcome": "PASS",
+    "reason": "WITHDRAWN:<withdrawal_id>"
+   },
+   "other_verdicts": [
+    {
+     "predicate": "CHANNEL",
+     "scope": "REG, PKTD, LAGD",
+     "execution": "RAN",
+     "authority": "UNQUALIFIED: WITHDRAWN:<withdrawal_id>",
+     "outcome": "PASS",
+     "reason": null
+    },
+    {
+     "predicate": "OBSERVER",
+     "scope": "every (M, o) in G0",
+     "execution": "RAN",
+     "authority": "UNQUALIFIED: WITHDRAWN:<withdrawal_id>",
+     "outcome": "PASS",
+     "reason": null
+    }
+   ],
+   "claims": [
+    {
+     "claim": "CL-CAL(STANDARD)",
+     "eligibility": "ELIGIBLE",
+     "standing": "SATISFIED",
+     "why": "outside the closure; decision record byte-identical"
+    },
+    {
+     "claim": "CL-RET(REG)",
+     "eligibility": "NOT_ELIGIBLE",
+     "standing": "UNQUALIFIED",
+     "why": "WITHDRAWN:<withdrawal_id>"
+    },
+    {
+     "claim": "CL-RET(PKTD)",
+     "eligibility": "NOT_ELIGIBLE",
+     "standing": "UNQUALIFIED",
+     "why": "WITHDRAWN:<withdrawal_id>"
+    },
+    {
+     "claim": "CL-RET(LAGD)",
+     "eligibility": "NOT_ELIGIBLE",
+     "standing": "UNQUALIFIED",
+     "why": "WITHDRAWN:<withdrawal_id>; was UNMET, now worse"
+    },
+    {
+     "claim": "CL-CUST(G0)",
+     "eligibility": "NOT_ELIGIBLE",
+     "standing": "UNQUALIFIED",
+     "why": "custody UNQUALIFIED KEEPER_ROW_MISSING (R3; G14)"
+    },
+    {
+     "claim": "TWIN(REG, REG-ONEHOT)",
+     "eligibility": "REPORTED",
+     "standing": "SATISFIED",
+     "why": "TWIN_EQ PASS, reported only; one physics"
+    }
+   ],
+   "assumptions": [
+    "stage records count as registered under in-memory fixture anchors (G05)",
+    "the stage record is per instrument version, so one withdrawal reaches RESTART on every runtime"
+   ],
+   "gaps": [
+    "G13"
+   ],
+   "derivation": "Reverse closure over B6.2: STAGE(P6) <- every RESTART receipt <- CHANNEL and OBSERVER receipts <- every CL-RET claim. Outcomes are unchanged; authority is lost. The TWIN line is not reached by the letter (G13)."
+  },
+  {
+   "id": "E04.W_OBS",
+   "determinacy": "DETERMINED",
+   "execution": "RAN",
+   "authority": "UNQUALIFIED: WITHDRAWN:<withdrawal_id>",
+   "outcome": "PASS",
+   "reason": "WITHDRAWN:<withdrawal_id>",
+   "primary": {
+    "predicate": "OBSERVER",
+    "scope": "(REG, BOOKKEEP)",
+    "execution": "RAN",
+    "authority": "UNQUALIFIED: WITHDRAWN:<withdrawal_id>",
+    "outcome": "PASS",
+    "reason": "WITHDRAWN:<withdrawal_id>"
+   },
+   "other_verdicts": [],
+   "claims": [
+    {
+     "claim": "CL-CAL(STANDARD)",
+     "eligibility": "ELIGIBLE",
+     "standing": "SATISFIED",
+     "why": null
+    },
+    {
+     "claim": "CL-RET(REG)",
+     "eligibility": "NOT_ELIGIBLE",
+     "standing": "UNQUALIFIED",
+     "why": "WITHDRAWN:<withdrawal_id>"
+    },
+    {
+     "claim": "CL-RET(PKTD)",
+     "eligibility": "ELIGIBLE",
+     "standing": "SATISFIED",
+     "why": null
+    },
+    {
+     "claim": "CL-RET(LAGD)",
+     "eligibility": "NOT_ELIGIBLE",
+     "standing": "UNMET",
+     "why": "ERASE(LAGD) FAIL; a correctly bound negative, not a binding defect"
+    },
+    {
+     "claim": "CL-CUST(G0)",
+     "eligibility": "NOT_ELIGIBLE",
+     "standing": "UNQUALIFIED",
+     "why": "custody UNQUALIFIED KEEPER_ROW_MISSING (R3; G14)"
+    },
+    {
+     "claim": "TWIN(REG, REG-ONEHOT)",
+     "eligibility": "REPORTED",
+     "standing": "SATISFIED",
+     "why": "TWIN_EQ PASS, reported only; one physics"
+    }
+   ],
+   "assumptions": [
+    "stage records count as registered under in-memory fixture anchors (G05)"
+   ],
+   "gaps": [],
+   "derivation": "Only CL-RET(REG) descends from that receipt. CL-RET(PKTD), CL-RET(LAGD), CL-CAL keep byte-identical records."
+  },
+  {
+   "id": "E04.W_UNRELATED",
+   "determinacy": "DETERMINED",
+   "execution": "RAN",
+   "authority": "UNQUALIFIED: WITHDRAWN:<withdrawal_id>",
+   "outcome": "PASS",
+   "reason": "WITHDRAWN:<withdrawal_id>",
+   "primary": {
+    "predicate": "TWIN_EQ",
+    "scope": "(REG, REG-ONEHOT)",
+    "execution": "RAN",
+    "authority": "UNQUALIFIED: WITHDRAWN:<withdrawal_id>",
+    "outcome": "PASS",
+    "reason": "WITHDRAWN:<withdrawal_id>"
+   },
+   "other_verdicts": [],
+   "claims": [
+    {
+     "claim": "CL-CAL(STANDARD)",
+     "eligibility": "ELIGIBLE",
+     "standing": "SATISFIED",
+     "why": null
+    },
+    {
+     "claim": "CL-RET(REG)",
+     "eligibility": "ELIGIBLE",
+     "standing": "SATISFIED",
+     "why": "11 instruments, lowest stage AUTHOR_TESTED"
+    },
+    {
+     "claim": "CL-RET(PKTD)",
+     "eligibility": "ELIGIBLE",
+     "standing": "SATISFIED",
+     "why": null
+    },
+    {
+     "claim": "CL-RET(LAGD)",
+     "eligibility": "NOT_ELIGIBLE",
+     "standing": "UNMET",
+     "why": "ERASE(LAGD) FAIL; a correctly bound negative, not a binding defect"
+    },
+    {
+     "claim": "CL-CUST(G0)",
+     "eligibility": "NOT_ELIGIBLE",
+     "standing": "UNQUALIFIED",
+     "why": "custody UNQUALIFIED KEEPER_ROW_MISSING (R3; G14)"
+    },
+    {
+     "claim": "TWIN(REG, REG-ONEHOT)",
+     "eligibility": "REPORTED",
+     "standing": "UNQUALIFIED",
+     "why": "WITHDRAWN:<withdrawal_id>"
+    }
+   ],
+   "assumptions": [
+    "stage records count as registered under in-memory fixture anchors (G05)"
+   ],
+   "gaps": [],
+   "derivation": "No B7.1 CL claim is in the closure: CL-CAL, CL-RET(REG), CL-RET(PKTD), CL-RET(LAGD) keep byte-identical decision records. An unrelated withdrawal revokes nothing else."
+  },
+  {
+   "id": "E04.W_UNANCHORED",
+   "determinacy": "DETERMINED",
+   "execution": "RAN",
+   "authority": "QUALIFIED@AUTHOR_TESTED",
+   "outcome": "PASS",
+   "reason": "unverified record <id>: not registered",
+   "primary": {
+    "predicate": "RESTART",
+    "scope": "REG, PKTD, LAGD",
+    "execution": "RAN",
+    "authority": "QUALIFIED@AUTHOR_TESTED",
+    "outcome": "PASS",
+    "reason": "unverified record <id>: not registered"
+   },
+   "other_verdicts": [],
+   "claims": [
+    {
+     "claim": "CL-CAL(STANDARD)",
+     "eligibility": "ELIGIBLE",
+     "standing": "SATISFIED",
+     "why": null
+    },
+    {
+     "claim": "CL-RET(REG)",
+     "eligibility": "ELIGIBLE",
+     "standing": "SATISFIED",
+     "why": "11 instruments, lowest stage AUTHOR_TESTED"
+    },
+    {
+     "claim": "CL-RET(PKTD)",
+     "eligibility": "ELIGIBLE",
+     "standing": "SATISFIED",
+     "why": null
+    },
+    {
+     "claim": "CL-RET(LAGD)",
+     "eligibility": "NOT_ELIGIBLE",
+     "standing": "UNMET",
+     "why": "ERASE(LAGD) FAIL; a correctly bound negative, not a binding defect"
+    },
+    {
+     "claim": "CL-CUST(G0)",
+     "eligibility": "NOT_ELIGIBLE",
+     "standing": "UNQUALIFIED",
+     "why": "custody UNQUALIFIED KEEPER_ROW_MISSING (R3; G14)"
+    },
+    {
+     "claim": "TWIN(REG, REG-ONEHOT)",
+     "eligibility": "REPORTED",
+     "standing": "SATISFIED",
+     "why": "TWIN_EQ PASS, reported only; one physics"
+    }
+   ],
+   "assumptions": [
+    "stage records count as registered under in-memory fixture anchors (G05)"
+   ],
+   "gaps": [
+    "G05"
+   ],
+   "derivation": "B6.5 / FD-B8: a withdrawal not registered with the keeper revokes nothing; eligibility equals G0 and the note 'unverified record <id>: not registered' is listed on every claim it would have affected."
+  },
+  {
+   "id": "E05.FAB_ANCHORS",
+   "determinacy": "DETERMINED_UNDER_ASSUMPTION",
+   "execution": "n/a",
+   "authority": "n/a",
+   "outcome": "UNQUALIFIED",
+   "reason": "ANCHORS_FROM_PRODUCER (and KEEPER_ROW_MISSING if whys are exhaustive, G11)",
+   "primary": {
+    "predicate": "custody",
+    "scope": "bundle",
+    "execution": "n/a",
+    "authority": "n/a",
+    "outcome": "UNQUALIFIED",
+    "reason": "ANCHORS_FROM_PRODUCER (and KEEPER_ROW_MISSING if whys are exhaustive, G11)"
+   },
+   "other_verdicts": [
+    {
+     "predicate": "G-BIND",
+     "scope": "per claim",
+     "execution": "RAN",
+     "authority": "QUALIFIED@AUTHOR_TESTED",
+     "outcome": "PASS",
+     "reason": "internally consistent"
+    },
+    {
+     "predicate": "G-INV",
+     "scope": "per claim",
+     "execution": "RAN",
+     "authority": "QUALIFIED@AUTHOR_TESTED",
+     "outcome": "PASS",
+     "reason": null
+    }
+   ],
+   "claims": [
+    {
+     "claim": "CL-CUST(bundle)",
+     "eligibility": "NOT_ELIGIBLE",
+     "standing": "UNQUALIFIED",
+     "why": "ANCHORS_FROM_PRODUCER"
+    },
+    {
+     "claim": "CL-RET(REG)",
+     "eligibility": "ELIGIBLE",
+     "standing": "SATISFIED",
+     "why": "printed with 'Custody: UNQUALIFIED (...)'; never evidence of truthful execution"
+    }
+   ],
+   "assumptions": [
+    "stage records count as registered under in-memory fixture anchors (G05)"
+   ],
+   "gaps": [
+    "G11",
+    "G14"
+   ],
+   "derivation": "Plan E05: outside authenticated trust; UNQUALIFIED for a custody claim. Anchors handed over in the producer bundle never qualify (B5.3)."
+  },
+  {
+   "id": "E05.LATE_REG",
+   "determinacy": "DETERMINED",
+   "execution": "n/a",
+   "authority": "n/a",
+   "outcome": "UNQUALIFIED",
+   "reason": "REGISTERED_AFTER_CHECK",
+   "primary": {
+    "predicate": "custody",
+    "scope": "bundle",
+    "execution": "n/a",
+    "authority": "n/a",
+    "outcome": "UNQUALIFIED",
+    "reason": "REGISTERED_AFTER_CHECK"
+   },
+   "other_verdicts": [],
+   "claims": [
+    {
+     "claim": "CL-CUST(bundle)",
+     "eligibility": "NOT_ELIGIBLE",
+     "standing": "UNQUALIFIED",
+     "why": "REGISTERED_AFTER_CHECK"
+    }
+   ],
+   "assumptions": [],
+   "gaps": [
+    "G14",
+    "G15"
+   ],
+   "derivation": "Registration must precede the consumer's first check of the bundle (B5.3)."
+  },
+  {
+   "id": "E05.KEEPER",
+   "determinacy": "DETERMINED_UNDER_ASSUMPTION",
+   "execution": "n/a",
+   "authority": "n/a",
+   "outcome": "QUALIFIED",
+   "reason": null,
+   "primary": {
+    "predicate": "custody",
+    "scope": "G0",
+    "execution": "n/a",
+    "authority": "n/a",
+    "outcome": "QUALIFIED",
+    "reason": null
+   },
+   "other_verdicts": [
+    {
+     "predicate": "G-BIND",
+     "scope": "CL-CUST(G0)",
+     "execution": "RAN",
+     "authority": "QUALIFIED@AUTHOR_TESTED",
+     "outcome": "PASS",
+     "reason": null
+    },
+    {
+     "predicate": "G-INV",
+     "scope": "CL-CUST(G0)",
+     "execution": "RAN",
+     "authority": "QUALIFIED@AUTHOR_TESTED",
+     "outcome": "PASS",
+     "reason": null
+    }
+   ],
+   "claims": [
+    {
+     "claim": "CL-CUST(G0)",
+     "eligibility": "ELIGIBLE",
+     "standing": "SATISFIED",
+     "why": "renders 'Custody: QUALIFIED -- bytes registered with <keeper> at <utc>; execution not authenticated.'"
+    }
+   ],
+   "assumptions": [
+    "stage records count as registered under in-memory fixture anchors (G05)",
+    "the consumer itself fetched the rows from a SET store (or fixture keeper rows exercising the logic only)"
+   ],
+   "gaps": [
+    "G15"
+   ],
+   "derivation": "All B5.2 records have rows, blobs match, registration precedes the check. With the store UNSET (R3) the real-store answer is UNQUALIFIED KEEPER_ROW_MISSING instead."
+  },
+  {
+   "id": "E05.FAB_REGISTERED",
+   "determinacy": "DETERMINED_UNDER_ASSUMPTION",
+   "execution": "n/a",
+   "authority": "n/a",
+   "outcome": "QUALIFIED",
+   "reason": null,
+   "primary": {
+    "predicate": "custody",
+    "scope": "bundle",
+    "execution": "n/a",
+    "authority": "n/a",
+    "outcome": "QUALIFIED",
+    "reason": null
+   },
+   "other_verdicts": [
+    {
+     "predicate": "G-BIND",
+     "scope": "per claim",
+     "execution": "RAN",
+     "authority": "QUALIFIED@AUTHOR_TESTED",
+     "outcome": "PASS",
+     "reason": null
+    },
+    {
+     "predicate": "G-INV",
+     "scope": "per claim",
+     "execution": "RAN",
+     "authority": "QUALIFIED@AUTHOR_TESTED",
+     "outcome": "PASS",
+     "reason": null
+    },
+    {
+     "predicate": "G-RECOMP",
+     "scope": "CL-RET(REG)",
+     "execution": "RAN",
+     "authority": "QUALIFIED@AUTHOR_TESTED",
+     "outcome": "PASS",
+     "reason": null
+    }
+   ],
+   "claims": [
+    {
+     "claim": "CL-CUST(bundle)",
+     "eligibility": "ELIGIBLE",
+     "standing": "SATISFIED",
+     "why": "STATED LIMIT: the fabrication is NOT detected"
+    },
+    {
+     "claim": "CL-RET(REG)",
+     "eligibility": "ELIGIBLE",
+     "standing": "SATISFIED",
+     "why": "STATED LIMIT: not detected; the render says 'execution not authenticated'"
+    }
+   ],
+   "assumptions": [
+    "stage records count as registered under in-memory fixture anchors (G05)",
+    "as E05.KEEPER for the store"
+   ],
+   "gaps": [
+    "G15"
+   ],
+   "derivation": "B5.4: custody establishes byte identity since registration, never execution or truth. The expected answer is admission plus the printed limit; an implementation or report that claims detection is wrong."
+  }
+ ]
+}
