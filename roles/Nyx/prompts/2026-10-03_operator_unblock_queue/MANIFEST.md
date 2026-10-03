@@ -3,3 +3,4 @@
 sha256 over LF-normalised bytes (equals the git blob for text files); see comms/manifest.py.
 
 - OPERATOR_DIRECTIVE_verbatim.md  sha256:62b0a1aa1457a61044603623178a1adf5c8d00beebae5e0c253d324e85a9c83f
+- TO_HARMONIA_asal_replication_001_ready.md  sha256:9263348497d20045d3f29de8234697a4ac57cf021b3753103863525ef90c57dc
