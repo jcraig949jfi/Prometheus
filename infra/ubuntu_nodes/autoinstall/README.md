@@ -37,7 +37,10 @@ The stick then holds the Wi-Fi password in plain text. Keep it at home.
 2. Boot from the installer stick (BIOS boot menu: F12 ThinkPad/Dell; or Windows `shutdown /r /o /t 0` → Use a device).
 3. At GRUB just wait (or Enter). The installer finds the config and asks **"Continue with autoinstall? (yes|no)"**. Type
    `yes`, Enter. That is the last chance before the disk is erased.
-4. About 15-25 min later it reboots by itself. Pull both sticks.
+4. About 15-25 min later it POWERS OFF by itself (it no longer reboots: with the sticks still in, a reboot started
+   the installer again and a second `yes` reinstalled -- the Inspiron looped four times). Pull both sticks, then
+   power on: it boots the new system. If you ever see the `Continue with autoinstall?` prompt on a machine that
+   was already installed, answer `no`.
 5. Tell Achilles, or run it yourself from ELSA/M2: `bash ../provision_node.sh <ip> ubuNNN` (rename, setup script, repo,
    git identity, GitHub token from `C:utoinstall_secrets	okens\`, reboot, inventory). About 30 s on an already-set-up node;
    10-15 min on a fresh one (updates).

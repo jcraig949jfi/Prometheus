@@ -74,7 +74,9 @@ autoinstall:
     - wpasupplicant
 
   updates: all
-  shutdown: reboot
+  # poweroff, not reboot (Inspiron 2026-10-03): with the sticks still in, a reboot boots the installer again and a
+  # second 'yes' reinstalls -- it looped four times. Power off; pull the sticks; power on into the new system.
+  shutdown: poweroff
 
   late-commands:
     - "echo 'jcraig ALL=(ALL) NOPASSWD:ALL' > /target/etc/sudoers.d/jcraig"
