@@ -4,13 +4,13 @@
   "mwo_id": "MWO-0004",
   "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
   "mwo_sha256": "925660b2d2be53af2ee4195391e484d9649bbd4ee828cd60432ce2f0903a99df",
-  "work_order": "MWO-0004 (MWO-0001 s10 NYX/TECHNE/THEOPHRASTUS/CRIUS: adoption + existing authorized work only) ; CWO-2026-09-30 does not list Nyx, s5 state fields adopted",
-  "updated_at_utc": "2026-09-30T11:20:00Z",
-  "state": "ACTIVE",
+  "work_order": "MWO-0004 + CWO-2026-09-30C (adopted 2026-10-03, heartbeat #1262)",
+  "updated_at_utc": "2026-10-03T00:00:00Z",
+  "state": "WORKING",
   "state_reason": "ACTIVE on work the operator directives of 2026-09-18, 2026-09-19 and 2026-09-19b authorized. Both gated lines returned on 2026-09-30 (POET ruling #1063; HARM-56 A_OBSERVER_STABLE #1067) after the ownership question #1059. No parked campaign is resurrected.",
   "instance": "gandalf-d1f90ae1 (M3 GANDALF); only live Nyx instance",
   "branch": "nyx/boot-2026-09-17",
-  "head_sha": "cbbe0c373 (pushed); this file rides the next commit",
+  "head_sha": "2af55f966",
   "threads": [
     {
       "id": "UNREGISTERED (no ops/threads file; seat-local alias NYX-MECH-ARCH)",
@@ -43,32 +43,28 @@
   "fabric_tasks": [],
   "running": [],
   "current": "Full-domain ASAL replication packet: a NEW preregistration (executable-domain gate before the first score; positional catalogue index; seeds, observer paths, classification and threshold semantics frozen; determinism on a sampled and an adversarial subset; both observers as separable rows).",
-  "next": "poet-enhanced-2020 cut (PATA-EC, basis-population ablation), unblocked by the POET ruling.",
+  "next": "per Aporia dispatch only (CWO-C s4: no self-promotion)",
   "reserve": [
-    "re-read provenance for poet-original-2019 and verilog-generic-fifo (Techne fc547d2d5 filled their handoff strings)",
-    "apply Techne's grade ruling for three source types when it arrives (#1071; 19 cuts read UNKNOWN)",
-    "own defects NYX-47 (free-text cost_class) and NYX-48 (F:/ paths in five 09-13 scripts)",
-    "re-pose the dropped particles scheme-ordering claim as MECH-PARTICLES-SCHEME-001 with a power statement"
+    "re-grade 19 cuts per Techne R19 ruling #1188; rollout grade per #1194",
+    "re-cut go-explore-uber-2022 (selection weight is a sum; policy_based/ as its own body)",
+    "cut Techne batch 17 (20 donor bodies, #1190)",
+    "poet-enhanced-2020 cut",
+    "NYX-47, NYX-48"
   ],
   "blocked_on": [
     {
-      "item": "Stage D' on MECH-AVIDA-ANCESTRY-RETENTION-001",
-      "dependency": "Harmonia's verdict (posted #1069, 2026-09-30). Escalate on 2026-10-03 if unacknowledged.",
-      "owner": "Harmonia"
+      "item": "verdict on MECH-AVIDA-ANCESTRY-RETENTION-001 (#1069)",
+      "dependency": "Harmonia (HOLD under CWO-B/C); flagged to Aporia for dispatch in #1264",
+      "owner": "Harmonia / Aporia"
     },
     {
       "item": "behavioral cuts of the ASAL low-score region",
-      "dependency": "the full-domain replication frozen AND executed (operator directive 2026-09-19 s5)",
+      "dependency": "the replication frozen AND executed",
       "owner": "Nyx (packet), Harmonia (execution)"
-    },
-    {
-      "item": "host for the replication's native observer column",
-      "dependency": "Harmonia's answer to #1073 (AVX is on M2 only)",
-      "owner": "Harmonia"
     }
   ],
   "resource_status": "M3 GANDALF: system Python 3.11 + numpy only; no AVX, no docker, no WSL2, no C compiler. No lease held; nothing substantial running.",
-  "last_receipt": "e9b0783e5 freeze commit (avida cut, packet 0f52e295, apparatus, 52 tests); cbbe0c373 THEO-REQ-003 reply; Stage D' on #1063 and #1067 in nyx/atlas/gates/; review packet roles/Nyx/reports/REVIEW_PACKET_2026-09-30_boot_avida_ancestry.txt",
+  "last_receipt": "roles/Nyx/ATTACK_reachability_go_explore_2026-10-03.md @ 62024dbba (operator-directed #1261; reply #1263; completion to Aporia #1264)",
   "next_actions": [
     "replication packet: domain-acceptance fixture first",
     "poet-enhanced-2020 cut",
@@ -82,5 +78,12 @@
     "roles/Nyx/reports/THEO_REQ_003_REPLY_2026-09-30.md",
     "roles/Nyx/prompts/2026-09-30_avida_ancestry_packet/"
   ],
-  "comms_cursor": "sync 2026-09-30T11:15Z through #1074; posted #1059, #1069, #1070, #1071, #1073, #1074; received #1062, #1063, #1066, #1067"
+  "comms_cursor": "sync 2026-10-03 through #1265",
+  "model": "claude-opus-5-5",
+  "session_start_utc": "2026-09-30T10:26Z",
+  "current_objective": "full-domain ASAL replication prereg packet (in-flight since 09-30; Harmonia HOLD waiting on it)",
+  "current_step": "not started: domain-acceptance fixture first",
+  "next_expected_milestone": "packet frozen and posted to Harmonia",
+  "expected_next_artifact": "nyx/atlas/predictions/MECH-ASAL-REPLICATION-001.json (+ FREEZE)",
+  "last_push_sha": "2af55f966"
 }
