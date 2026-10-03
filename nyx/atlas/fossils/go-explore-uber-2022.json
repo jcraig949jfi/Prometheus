@@ -147,24 +147,46 @@
    },
    {
     "grade": "SOURCE_READ",
-    "ref": "vault:go-explore-uber-2022/upstream/tree/robustified/goexplore_py/randselectors.py:52-144"
+    "ref": "vault:go-explore-uber-2022/upstream/tree/robustified/goexplore_py/randselectors.py:52-366"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:go-explore-uber-2022/upstream/tree/policy_based/goexplore_py/trajectory_trackers.py:125-246"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:go-explore-uber-2022/upstream/tree/policy_based/goexplore_py/ge_wrappers.py:500-640"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:go-explore-uber-2022/upstream/tree/policy_based/goexplore_py/archives.py:321-360"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:go-explore-uber-2022/upstream/tree/robustified/phase2_atari.sh"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:go-explore-uber-2022/upstream/tree/policy_based/run_policy_based_ge_montezuma.sh"
    }
   ],
   "inspected_files": [
    "goexplore.py 167-255, 353-1021 (run_cycle in full)",
-   "randselectors.py 52-144"
+   "randselectors.py (all; 2026-10-03)",
+   "policy_based trajectory_trackers.py 125-246, ge_wrappers.py 168-225 and 500-640, archives.py 321-360, run_policy_based_ge_montezuma.sh (2026-10-03)",
+   "robustified/phase2_atari.sh and README (2026-10-03)"
   ],
-  "date": "2026-09-17T22:47Z",
+  "date": "2026-10-03T07:57Z",
   "note": "exploration as an archive: states are mapped to coarse cells; each cell remembers the best score, the trajectory length, and a RESTORABLE emulator snapshot; a cycle selects cells by count-based weights, restores each, explores randomly from it, and adds or replaces cells when a trajectory reaches a new cell or the same cell with a better score or a shorter path; the cell representation itself can be re-fitted during the run (dynamic downscaling); robustification (turning the archive's trajectories into a policy) is a separate phase, not in this directory",
   "provenance": {
    "schema": "nyx.atlas/1-provenance",
-   "migrated_at": "2026-09-17T22:47Z",
+   "migrated_at": "2026-10-03T07:57Z",
    "migrated_from": "authored under nyx.atlas/1-provenance",
    "provenance_grade_read": "ORIGINAL_ARTIFACT",
    "grade_basis": "Techne FOSSIL_PACKET.json PROVENANCE_GRADE where issued, else the record's handoff string mapped (populated per R34; Harmonia may re-grade)",
    "source_object_id": "https://github.com/uber-research/go-explore@702fb9c7a9aeecf2872d07ced236c730d5536a8f",
    "payload_manifest_id": "techne tree_sha256 c9c7bdf06aa6fbbda5b2901bd28480ff05213bac99841a917d392223c0b3bd02 (124 files)",
-   "host_tree_matches_record": null,
+   "host_tree_matches_record": true,
    "host": "GANDALF (hostname), bodies receipt nyx/atlas/samples/stageA_bodies_m3_2026-09-17.json",
    "files_read": [
     {
@@ -180,6 +202,41 @@
      "techne_recorded_hash": "dbeeaeeb353130e1080964b216fc467ade3bc161c22b73c86afcf26fc46f3dba",
      "match": true,
      "refs": 2
+    },
+    {
+     "path": "upstream/tree/policy_based/goexplore_py/trajectory_trackers.py",
+     "payload_hash_read": "cf45500664fd80c997fed3ee06c43c295ae2f20d3400c6348d779c1908ea2389",
+     "techne_recorded_hash": "cf45500664fd80c997fed3ee06c43c295ae2f20d3400c6348d779c1908ea2389",
+     "match": true,
+     "refs": 2
+    },
+    {
+     "path": "upstream/tree/policy_based/goexplore_py/ge_wrappers.py",
+     "payload_hash_read": "8200815a4642ab288f560c254052c6cae4776f854c278e159d4fe43f7a187664",
+     "techne_recorded_hash": "8200815a4642ab288f560c254052c6cae4776f854c278e159d4fe43f7a187664",
+     "match": true,
+     "refs": 1
+    },
+    {
+     "path": "upstream/tree/policy_based/goexplore_py/archives.py",
+     "payload_hash_read": "bcae2d7c2b59769af90aa3b1a2aee67d0e30f1b2d2bc5d686c033ccf57349fbe",
+     "techne_recorded_hash": "bcae2d7c2b59769af90aa3b1a2aee67d0e30f1b2d2bc5d686c033ccf57349fbe",
+     "match": true,
+     "refs": 1
+    },
+    {
+     "path": "upstream/tree/robustified/phase2_atari.sh",
+     "payload_hash_read": "a544c0745e7d74ae62e2670119be1bff9d3de3167597bb894a2608f26bb05139",
+     "techne_recorded_hash": "a544c0745e7d74ae62e2670119be1bff9d3de3167597bb894a2608f26bb05139",
+     "match": true,
+     "refs": 2
+    },
+    {
+     "path": "upstream/tree/policy_based/run_policy_based_ge_montezuma.sh",
+     "payload_hash_read": "d870ec4fe4cb5daa5237a8222512d6357fc38d67c17f1923e84c6cefeb19cb2d",
+     "techne_recorded_hash": "d870ec4fe4cb5daa5237a8222512d6357fc38d67c17f1923e84c6cefeb19cb2d",
+     "match": true,
+     "refs": 1
     }
    ],
    "unresolved_refs": []
@@ -206,6 +263,8 @@
    "parent_mechanism": "WHOLE_SYSTEM",
    "child_mechanisms": [],
    "composition_neighbors": [
+    "go-explore-uber-2022::return_by_a_goal_conditioned_policy_that_follows_the_archived_cell_trajectory_as_a_sliding_window_of_sub_goals_with_reward_per_sub_goal_reached",
+    "go-explore-uber-2022::robustification_by_the_backward_algorithm_starting_episodes_on_demonstration_states_moved_back_toward_the_start_with_ppo_and_self_imitation",
     "go-explore-uber-2022::return_then_explore_cycle_that_restores_a_chosen_cell_explores_from_it_and_accepts_a_cell_on_a_new_key_or_a_higher_score_or_a_shorter_path_resetting_the_counters_of_updated_cells",
     "go-explore-uber-2022::cell_selection_by_weights_from_visit_counts_with_cached_per_cell_weights_and_neighbour_invalidation",
     "go-explore-uber-2022::cell_representation_refitted_during_the_run_by_searching_downscale_parameters_that_make_the_cell_count_distribution_match_a_target"
@@ -316,7 +375,7 @@
    "fossil_ancestry": "go-explore-uber-2022",
    "human_name": "randselectors.WeightedSelector (52-144): Weight(weight, power) for seen, chosen, action, room_cells, chosen_since_new; DirWeights; cell_update maintaining all_weights, cell_score, possible_scores and cached_pos_weights; choose_cell(grid, size)",
    "human_interpretation": "UNKNOWN",
-   "mechanism": "each cell's selection weight is a product of terms of the form weight / (count + 1)^power over its counters (seen, chosen, chosen since it last produced a new cell, actions taken from it), optionally with domain terms (neighbouring cells in a direction, level, doors); weights are cached per cell and recomputed only for the cell that changed and for its possible neighbours (by score); a batch of cells is drawn proportionally to weight",
+   "mechanism": "each cell's selection weight is a SUM of count terms weight / (count + 1)^power over its counters (seen, chosen, chosen since it last produced a new cell, actions taken from it) plus a positional term (unexplored neighbours by direction, whether lower or higher score levels exist at the same position; door and grip terms for Fetch), the whole multiplied by a level weight that discounts cells below the highest level reached; the DONE cell weighs 0 (corrected 2026-10-03: the 09-17 text said 'product', docstring C1); weights are cached per cell and recomputed only for the cell that changed and for its possible neighbours (by score); a batch of cells is drawn proportionally to weight",
    "input": "the archive's counters",
    "output": "a batch of cell keys",
    "state": "the weight caches",
@@ -335,7 +394,7 @@
     "go-explore-uber-2022::archive_of_cells_keyed_by_a_coarse_state_representation_each_holding_the_best_score_trajectory_length_restorable_snapshot_and_visit_counts"
    ],
    "fitness_value_in_ancestor": "exploration effort spread over the frontier rather than concentrated where the score is",
-   "failure_landscape": "UNKNOWN by run; by reading: the weights' powers and constants are per-game settings (experiment_settings.py, 1,491 lines)",
+   "failure_landscape": "UNKNOWN by run; by reading: the weights' powers and constants are per-game settings (experiment_settings.py, 1,491 lines); a never-chosen cell has its count terms at their maxima, so new or seeded cells take selection priority; choose_cell carries a TODO that the DONE cell is sometimes drawn and filtered out (361-363)",
    "ablation": "NOT_RUN",
    "decomposability": "UNKNOWN",
    "composability": "UNKNOWN",
@@ -346,14 +405,14 @@
    "intervention_readiness": "UNKNOWN",
    "evidence": {
     "grade": "SOURCE_READ",
-    "ref": "vault:go-explore-uber-2022/upstream/tree/robustified/goexplore_py/randselectors.py:52-144 (the formula lives in get_weight / choose_cell, NOT READ)"
+    "ref": "vault:go-explore-uber-2022/upstream/tree/robustified/goexplore_py/randselectors.py:153-166, 200-278, 336-364 (READ 2026-10-03)"
    },
-   "confidence": "MEDIUM",
+   "confidence": "HIGH",
    "portability": "YES",
    "compatibility": "UNKNOWN",
    "utility": "UNKNOWN",
-   "source_boundary": "WeightedSelector; CANDIDATE because the weight formula was not read",
-   "status": "CANDIDATE",
+   "source_boundary": "WeightedSelector (ACCEPTED 2026-10-03; it was CANDIDATE on 09-17 with a wrong formula, docstring C1)",
+   "status": "ACCEPTED",
    "cut_mode": "ANCESTRY_AWARE",
    "depth": 1,
    "coverage": {
@@ -455,6 +514,7 @@
    "parent_mechanism": "WHOLE_SYSTEM",
    "child_mechanisms": [],
    "composition_neighbors": [
+    "go-explore-uber-2022::return_by_a_goal_conditioned_policy_that_follows_the_archived_cell_trajectory_as_a_sliding_window_of_sub_goals_with_reward_per_sub_goal_reached",
     "go-explore-uber-2022::cell_selection_by_weights_from_visit_counts_with_cached_per_cell_weights_and_neighbour_invalidation",
     "go-explore-uber-2022::archive_of_cells_keyed_by_a_coarse_state_representation_each_holding_the_best_score_trajectory_length_restorable_snapshot_and_visit_counts",
     "go-explore-uber-2022::cell_representation_refitted_during_the_run_by_searching_downscale_parameters_that_make_the_cell_count_distribution_match_a_target"
@@ -683,6 +743,254 @@
      "basis": "READ"
     }
    }
+  },
+  {
+   "organ_id": "go-explore-uber-2022::return_by_a_goal_conditioned_policy_that_follows_the_archived_cell_trajectory_as_a_sliding_window_of_sub_goals_with_reward_per_sub_goal_reached",
+   "fossil_ancestry": "go-explore-uber-2022",
+   "human_name": "policy_based: SparseSoftTrajectoryTracker / SoftTrajectoryTracker / SequentialTrajectoryTracker (trajectory_trackers.py 125-246); the return / explore switch in ge_wrappers.py (500-640); sub-goal failure counts (archives.py 321-360)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "to return to a chosen archive cell the policy is given the cell trajectory that first reached it; a tracker hands it the next sub-goal cell and, in the sparse-soft form the published runs use (window 10), jumps to the furthest of the next 10 cells reached, paying reward 1 per sub-goal; the policy is goal-conditioned (one-hot goal) and trained with PPO plus self-imitation learning; a return that exceeds its step budget ends the episode and counts a failure on that sub-goal (which raises exploration entropy around it); on arrival the agent switches to exploration toward a chosen exploration goal, mixing policy and random actions (random_exp_prob 0.5), with no gradients taken from exploration steps",
+   "input": "the goal cell's archived trajectory; the current cell",
+   "output": "sub-goals and sub-goal rewards; an episode end",
+   "state": "the trajectory index; failure counts per cell",
+   "update": "per step",
+   "assumptions": [
+    "return is learnable as a sequence of short dense-reward hops when the far goal is too sparse to learn directly",
+    "cells are coarse enough that 'reached' tolerates stochastic deviation"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "go-explore-uber-2022::archive_of_cells_keyed_by_a_coarse_state_representation_each_holding_the_best_score_trajectory_length_restorable_snapshot_and_visit_counts",
+    "go-explore-uber-2022::return_then_explore_cycle_that_restores_a_chosen_cell_explores_from_it_and_accepts_a_cell_on_a_new_key_or_a_higher_score_or_a_shorter_path_resetting_the_counters_of_updated_cells"
+   ],
+   "fitness_value_in_ancestor": "replaces 'restore the emulator' so the method runs with sticky actions (the published runs set --sticky_actions)",
+   "failure_landscape": "by reading: the published Montezuma runs use DOMAIN-KNOWLEDGE cells (level, room, keys, x, y), so they do not answer whether a generic cell works",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Ecoffet et al. 2021, 'First return, then explore'",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:go-explore-uber-2022/upstream/tree/policy_based/goexplore_py/trajectory_trackers.py:125-246; vault:go-explore-uber-2022/upstream/tree/policy_based/goexplore_py/ge_wrappers.py:500-640; vault:go-explore-uber-2022/upstream/tree/policy_based/run_policy_based_ge_montezuma.sh"
+   },
+   "confidence": "HIGH",
+   "portability": "UNKNOWN",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "the tracker classes and the returning branch of the wrapper's step (cut 2026-10-03, docstring C3)",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "CLOSED_LOOP",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "ARCHIVE",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "ENVIRONMENT_RANDOM",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "POLICY",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "go-explore-uber-2022::robustification_by_the_backward_algorithm_starting_episodes_on_demonstration_states_moved_back_toward_the_start_with_ppo_and_self_imitation",
+   "fossil_ancestry": "go-explore-uber-2022",
+   "human_name": "robustified/phase2_atari.sh and README (runs uber-research/atari-reset, a fork of openai/atari-reset)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "the archive's best trajectories become demonstrations; training episodes start on a demonstration state (nrstartsteps 160, steps_per_demo 200) and the start point moves back toward the beginning as the policy succeeds; the learner is PPO with a self-imitation term (sil_coef 0.1); sticky actions and no-op starts inject stochasticity",
+   "input": "Phase 1 demonstrations",
+   "output": "a policy that does not need restore",
+   "state": "the per-demonstration start point",
+   "update": "per training batch",
+   "assumptions": [
+    "a reward a few steps away is learnable; moving the start back extends competence along the path"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "go-explore-uber-2022::archive_of_cells_keyed_by_a_coarse_state_representation_each_holding_the_best_score_trajectory_length_restorable_snapshot_and_visit_counts"
+   ],
+   "fitness_value_in_ancestor": "turns the brittle archive path into a policy under noise",
+   "failure_landscape": "UNKNOWN: the algorithm body is NOT in this tree (the README says to clone atari-reset); only its launch flags were read",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Salimans and Chen 2018 (the backward algorithm); the phrase 'Backward-Action Matching' appears nowhere in the body",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:go-explore-uber-2022/upstream/tree/robustified/phase2_atari.sh"
+   },
+   "confidence": "MEDIUM",
+   "portability": "UNKNOWN",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "CANDIDATE: launch script and README only (docstring C2)",
+   "status": "CANDIDATE",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "DECISION",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "ENVIRONMENT_RANDOM",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "POLICY",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "EPISODE",
+     "basis": "READ"
+    }
+   }
   }
  ],
  "rejected_cuts": [
@@ -695,10 +1003,10 @@
    "fossil": "go-explore-uber-2022"
   },
   {
-   "candidate": "the robustification phase (backward algorithm / imitation from the archive's trajectories) and policy_based/ (a learned goal-conditioned return policy)",
+   "candidate": "policy_based/ beyond its return mechanism (its own selector, MPI archive sync, cell representations, Atari wrappers)",
    "reason": "OTHER",
-   "evidence": "NOT in this directory / NOT READ",
-   "note": "policy_based/ is a second body inside the specimen: the mechanism that replaces 'restore' by 'return by policy'; a DEEP pass should cut it separately",
+   "evidence": "NOT READ beyond the cited lines; residue",
+   "note": "09-17 rejected the robustification phase and policy_based/ wholesale as 'NOT in this directory / NOT READ'; on 2026-10-03 the return mechanism and the robustification launch path were read and cut above",
    "cut_mode": "ANCESTRY_AWARE",
    "fossil": "go-explore-uber-2022"
   },
@@ -731,6 +1039,30 @@
   }
  ],
  "composition_edges": [
+  {
+   "from": "go-explore-uber-2022::archive_of_cells_keyed_by_a_coarse_state_representation_each_holding_the_best_score_trajectory_length_restorable_snapshot_and_visit_counts",
+   "to": "go-explore-uber-2022::return_by_a_goal_conditioned_policy_that_follows_the_archived_cell_trajectory_as_a_sliding_window_of_sub_goals_with_reward_per_sub_goal_reached",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "the goal cell's trajectory is the sub-goal sequence",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "go-explore-uber-2022::return_by_a_goal_conditioned_policy_that_follows_the_archived_cell_trajectory_as_a_sliding_window_of_sub_goals_with_reward_per_sub_goal_reached",
+   "to": "go-explore-uber-2022::return_then_explore_cycle_that_restores_a_chosen_cell_explores_from_it_and_accepts_a_cell_on_a_new_key_or_a_higher_score_or_a_shorter_path_resetting_the_counters_of_updated_cells",
+   "label": "restores",
+   "evidence": "SOURCE_READ",
+   "note": "the policy-based replacement for the emulator restore",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "go-explore-uber-2022::archive_of_cells_keyed_by_a_coarse_state_representation_each_holding_the_best_score_trajectory_length_restorable_snapshot_and_visit_counts",
+   "to": "go-explore-uber-2022::robustification_by_the_backward_algorithm_starting_episodes_on_demonstration_states_moved_back_toward_the_start_with_ppo_and_self_imitation",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "best trajectories as demonstrations",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
   {
    "from": "go-explore-uber-2022::cell_selection_by_weights_from_visit_counts_with_cached_per_cell_weights_and_neighbour_invalidation",
    "to": "go-explore-uber-2022::return_then_explore_cycle_that_restores_a_chosen_cell_explores_from_it_and_accepts_a_cell_on_a_new_key_or_a_higher_score_or_a_shorter_path_resetting_the_counters_of_updated_cells",
@@ -784,10 +1116,11 @@
  "residue": {
   "state": "LARGE_RESIDUE",
   "unexplained": [
-   "the selection weight formula and the representation search loop skimmed (two CANDIDATE organs)",
-   "policy_based/ (the second body) unread",
-   "robustification not in the body",
-   "nothing ran (ALE/mujoco absent)"
+   "the representation search loop skimmed (CANDIDATE)",
+   "policy_based/ read only for its return mechanism",
+   "the robustification algorithm is not in the body (atari-reset is a separate repository): CANDIDATE from its launch flags",
+   "nothing ran (ALE/mujoco absent)",
+   "09-17 errors corrected 2026-10-03 (docstring C1-C3)"
   ],
   "note": "the four mechanisms of the exploration phase are located; this is the operator's POET-adjacent family and a natural comparison for the POET cut when that body lands",
   "cut_mode": "ANCESTRY_AWARE"

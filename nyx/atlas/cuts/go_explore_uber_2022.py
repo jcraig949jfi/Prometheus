@@ -4,11 +4,32 @@ M3; position 48 of the 2026-09-17 NOT_CUT order). Read: robustified/goexplore_py
 class WeightedSelector 52-144 (names and the cache; the weight formula NOT read). NOT read: explorers.py (the random / repeat-action
 explorer), the Atari and Fetch environments, the robustification phase (imitation learning; not in this directory), policy_based/
 (the later Go-Explore with a learned return policy). Nothing ran (needs gym/ALE/mujoco, absent on M3).
+
+CORRECTIONS 2026-10-03 (Nyx[gandalf-d1f90ae1]; found while attacking Atlas's reachability proposal,
+roles/Nyx/ATTACK_reachability_go_explore_2026-10-03.md A1.5 / A1.6; operator directive 2026-10-03 queue item 3).
+The 09-17 wording is quoted so the trail survives the re-cut; the 09-17 fossil JSON is in git history at 21f4089c6.
+  C1  selection organ, 09-17: "each cell's selection weight is a product of terms of the form weight / (count + 1)^power". WRONG.
+      randselectors.py 153-166 and 240-278 (now READ in full): a SUM of count terms weight / (count + 1)^power (seen, chosen,
+      chosen_since_new, action) plus a positional / domain term, the whole multiplied by a level weight; defaults seen 0.1,
+      chosen 1.0, action 0.1 at power 0.5, chosen_since_new 1.0 (53-55). The organ is PROMOTED to ACCEPTED.
+  C2  09-17: "the robustification phase (imitation learning; not in this directory)". HALF WRONG: the algorithm is not in the
+      tree, but its launch script and instructions are. robustified/phase2_atari.sh + README run uber-research/atari-reset (a
+      fork of openai/atari-reset: Salimans and Chen's backward algorithm) with PPO and self-imitation learning, sticky actions
+      and no-op starts. Added below as a CANDIDATE organ (the algorithm body is absent).
+  C3  09-17: policy_based/ "NOT read". Its return mechanism is now read (trajectory_trackers.py 125-246, ge_wrappers.py 168-225
+      and 500-640, archives.py 321-360, run_policy_based_ge_montezuma.sh) and cut below as an ACCEPTED organ.
 """
 from nyx.atlas.author import Cut
 
 G = "vault:go-explore-uber-2022/upstream/tree/robustified/goexplore_py/goexplore.py"; RS = "vault:go-explore-uber-2022/upstream/tree/robustified/goexplore_py/randselectors.py"
-c = Cut("go-explore-uber-2022", mode="ANCESTRY_AWARE", inspected=["goexplore.py 167-255, 353-1021 (run_cycle in full)", "randselectors.py 52-144"], evidence=[("SOURCE_READ", G + ":167-255"), ("SOURCE_READ", G + ":861-1011"), ("SOURCE_READ", RS + ":52-144")],
+PB = "vault:go-explore-uber-2022/upstream/tree/policy_based/goexplore_py/"; PH2 = "vault:go-explore-uber-2022/upstream/tree/robustified/phase2_atari.sh"
+PRUN = "vault:go-explore-uber-2022/upstream/tree/policy_based/run_policy_based_ge_montezuma.sh"
+c = Cut("go-explore-uber-2022", mode="ANCESTRY_AWARE",
+        inspected=["goexplore.py 167-255, 353-1021 (run_cycle in full)", "randselectors.py (all; 2026-10-03)",
+                   "policy_based trajectory_trackers.py 125-246, ge_wrappers.py 168-225 and 500-640, archives.py 321-360, run_policy_based_ge_montezuma.sh (2026-10-03)",
+                   "robustified/phase2_atari.sh and README (2026-10-03)"],
+        evidence=[("SOURCE_READ", G + ":167-255"), ("SOURCE_READ", G + ":861-1011"), ("SOURCE_READ", RS + ":52-366"), ("SOURCE_READ", PB + "trajectory_trackers.py:125-246"),
+                  ("SOURCE_READ", PB + "ge_wrappers.py:500-640"), ("SOURCE_READ", PB + "archives.py:321-360"), ("SOURCE_READ", PH2), ("SOURCE_READ", PRUN)],
         note="exploration as an archive: states are mapped to coarse cells; each cell remembers the best score, the trajectory length, and a RESTORABLE emulator snapshot; a cycle selects cells by count-based weights, restores each, explores randomly from it, and adds or replaces cells when a trajectory reaches a new cell or the same cell with a better score or a shorter path; the cell representation itself can be re-fitted during the run (dynamic downscaling); robustification (turning the archive's trajectories into a policy) is a separate phase, not in this directory")
 
 arch = c.organ("archive_of_cells_keyed_by_a_coarse_state_representation_each_holding_the_best_score_trajectory_length_restorable_snapshot_and_visit_counts", human_name="class Cell (167-255): score, seen_times, chosen_times, chosen_since_new, action_times, trajectory_len, restore, traj_last, real_cell, cell_frame; self.grid (a dict keyed by the cell key); Discretizer / GridDimension (82-166) for domain-specific keys", status="ACCEPTED",
@@ -18,10 +39,10 @@ arch = c.organ("archive_of_cells_keyed_by_a_coarse_state_representation_each_hol
     human_prior="Ecoffet et al. 2019/2021; the archive is the paper's central object", evidence_ref=G + ":167-255, 82-166", confidence="HIGH", portability="YES", compatibility="UNKNOWN", utility="UNKNOWN", source_boundary="class Cell and the grid",
     coverage={"input_topology": "STREAM", "output_topology": "SET", "state_amount": "UNBOUNDED", "state_persistence": "PERSISTENT", "memory": "ARCHIVE", "stochasticity": "DETERMINISTIC"})
 
-sel = c.organ("cell_selection_by_weights_from_visit_counts_with_cached_per_cell_weights_and_neighbour_invalidation", human_name="randselectors.WeightedSelector (52-144): Weight(weight, power) for seen, chosen, action, room_cells, chosen_since_new; DirWeights; cell_update maintaining all_weights, cell_score, possible_scores and cached_pos_weights; choose_cell(grid, size)", status="CANDIDATE",
-    mechanism="each cell's selection weight is a product of terms of the form weight / (count + 1)^power over its counters (seen, chosen, chosen since it last produced a new cell, actions taken from it), optionally with domain terms (neighbouring cells in a direction, level, doors); weights are cached per cell and recomputed only for the cell that changed and for its possible neighbours (by score); a batch of cells is drawn proportionally to weight",
+sel = c.organ("cell_selection_by_weights_from_visit_counts_with_cached_per_cell_weights_and_neighbour_invalidation", human_name="randselectors.WeightedSelector (52-144): Weight(weight, power) for seen, chosen, action, room_cells, chosen_since_new; DirWeights; cell_update maintaining all_weights, cell_score, possible_scores and cached_pos_weights; choose_cell(grid, size)", status="ACCEPTED",
+    mechanism="each cell's selection weight is a SUM of count terms weight / (count + 1)^power over its counters (seen, chosen, chosen since it last produced a new cell, actions taken from it) plus a positional term (unexplored neighbours by direction, whether lower or higher score levels exist at the same position; door and grip terms for Fetch), the whole multiplied by a level weight that discounts cells below the highest level reached; the DONE cell weighs 0 (corrected 2026-10-03: the 09-17 text said 'product', docstring C1); weights are cached per cell and recomputed only for the cell that changed and for its possible neighbours (by score); a batch of cells is drawn proportionally to weight",
     input="the archive's counters", output="a batch of cell keys", state="the weight caches", update="per cell change", assumptions=["cells visited or chosen less often are more likely to lead somewhere new (a count-based novelty prior); the caches make selection cheap as the archive grows"],
-    fitness_value_in_ancestor="exploration effort spread over the frontier rather than concentrated where the score is", failure_landscape="UNKNOWN by run; by reading: the weights' powers and constants are per-game settings (experiment_settings.py, 1,491 lines)", evidence_ref=RS + ":52-144 (the formula lives in get_weight / choose_cell, NOT READ)", confidence="MEDIUM", portability="YES", compatibility="UNKNOWN", utility="UNKNOWN", source_boundary="WeightedSelector; CANDIDATE because the weight formula was not read",
+    fitness_value_in_ancestor="exploration effort spread over the frontier rather than concentrated where the score is", failure_landscape="UNKNOWN by run; by reading: the weights' powers and constants are per-game settings (experiment_settings.py, 1,491 lines); a never-chosen cell has its count terms at their maxima, so new or seeded cells take selection priority; choose_cell carries a TODO that the DONE cell is sometimes drawn and filtered out (361-363)", evidence_ref=RS + ":153-166, 200-278, 336-364 (READ 2026-10-03)", confidence="HIGH", portability="YES", compatibility="UNKNOWN", utility="UNKNOWN", source_boundary="WeightedSelector (ACCEPTED 2026-10-03; it was CANDIDATE on 09-17 with a wrong formula, docstring C1)",
     coverage={"input_topology": "SET", "output_topology": "SET", "state_amount": "LINEAR_IN_INPUT", "memory": "SUMMARY_STATISTIC", "stochasticity": "SEEDED_RANDOM", "update_topology": "PRIORITY"})
 
 cyc = c.organ("return_then_explore_cycle_that_restores_a_chosen_cell_explores_from_it_and_accepts_a_cell_on_a_new_key_or_a_higher_score_or_a_shorter_path_resetting_the_counters_of_updated_cells", human_name="run_cycle (861-1011): selector.choose_cell; POOL.map(process_cell) restores and explores; the trajectory walk with seen_cells; should_accept_cell (1012-1020); the update block (restore, score, trajectory_len, traj_last, cell_frame); reset_cell_on_update", status="ACCEPTED",
@@ -38,9 +59,32 @@ dyn = c.organ("cell_representation_refitted_during_the_run_by_searching_downscal
     coverage={"input_topology": "SET", "output_topology": "VECTOR", "state_amount": "CONSTANT", "stochasticity": "SEEDED_RANDOM", "representation_sensitivity": "SENSITIVE"})
 
 c.reject("explorers.py (random actions with a repeat probability), the game environments (Atari via ALE wrappers, Fetch via mujoco), the process pool and pickling helpers, checkpointing, visualisation", reason="OTHER", evidence="NOT READ; residue")
-c.reject("the robustification phase (backward algorithm / imitation from the archive's trajectories) and policy_based/ (a learned goal-conditioned return policy)", reason="OTHER", evidence="NOT in this directory / NOT READ", note="policy_based/ is a second body inside the specimen: the mechanism that replaces 'restore' by 'return by policy'; a DEEP pass should cut it separately")
+ret = c.organ("return_by_a_goal_conditioned_policy_that_follows_the_archived_cell_trajectory_as_a_sliding_window_of_sub_goals_with_reward_per_sub_goal_reached",
+    human_name="policy_based: SparseSoftTrajectoryTracker / SoftTrajectoryTracker / SequentialTrajectoryTracker (trajectory_trackers.py 125-246); the return / explore switch in ge_wrappers.py (500-640); sub-goal failure counts (archives.py 321-360)", status="ACCEPTED",
+    mechanism="to return to a chosen archive cell the policy is given the cell trajectory that first reached it; a tracker hands it the next sub-goal cell and, in the sparse-soft form the published runs use (window 10), jumps to the furthest of the next 10 cells reached, paying reward 1 per sub-goal; the policy is goal-conditioned (one-hot goal) and trained with PPO plus self-imitation learning; a return that exceeds its step budget ends the episode and counts a failure on that sub-goal (which raises exploration entropy around it); on arrival the agent switches to exploration toward a chosen exploration goal, mixing policy and random actions (random_exp_prob 0.5), with no gradients taken from exploration steps",
+    input="the goal cell's archived trajectory; the current cell", output="sub-goals and sub-goal rewards; an episode end", state="the trajectory index; failure counts per cell", update="per step",
+    assumptions=["return is learnable as a sequence of short dense-reward hops when the far goal is too sparse to learn directly", "cells are coarse enough that 'reached' tolerates stochastic deviation"],
+    fitness_value_in_ancestor="replaces 'restore the emulator' so the method runs with sticky actions (the published runs set --sticky_actions)",
+    failure_landscape="by reading: the published Montezuma runs use DOMAIN-KNOWLEDGE cells (level, room, keys, x, y), so they do not answer whether a generic cell works",
+    human_prior="Ecoffet et al. 2021, 'First return, then explore'", evidence_ref=PB + "trajectory_trackers.py:125-246; " + PB + "ge_wrappers.py:500-640; " + PRUN, confidence="HIGH", portability="UNKNOWN", compatibility="UNKNOWN", utility="UNKNOWN",
+    source_boundary="the tracker classes and the returning branch of the wrapper's step (cut 2026-10-03, docstring C3)",
+    coverage={"input_topology": "SEQUENCE", "output_topology": "SEQUENCE", "state_amount": "LINEAR_IN_INPUT", "feedback": "CLOSED_LOOP", "stochasticity": "ENVIRONMENT_RANDOM", "adaptation": "POLICY", "memory": "ARCHIVE"})
+
+rob = c.organ("robustification_by_the_backward_algorithm_starting_episodes_on_demonstration_states_moved_back_toward_the_start_with_ppo_and_self_imitation",
+    human_name="robustified/phase2_atari.sh and README (runs uber-research/atari-reset, a fork of openai/atari-reset)", status="CANDIDATE",
+    mechanism="the archive's best trajectories become demonstrations; training episodes start on a demonstration state (nrstartsteps 160, steps_per_demo 200) and the start point moves back toward the beginning as the policy succeeds; the learner is PPO with a self-imitation term (sil_coef 0.1); sticky actions and no-op starts inject stochasticity",
+    input="Phase 1 demonstrations", output="a policy that does not need restore", state="the per-demonstration start point", update="per training batch",
+    assumptions=["a reward a few steps away is learnable; moving the start back extends competence along the path"], fitness_value_in_ancestor="turns the brittle archive path into a policy under noise",
+    failure_landscape="UNKNOWN: the algorithm body is NOT in this tree (the README says to clone atari-reset); only its launch flags were read",
+    human_prior="Salimans and Chen 2018 (the backward algorithm); the phrase 'Backward-Action Matching' appears nowhere in the body", evidence_ref=PH2, confidence="MEDIUM", portability="UNKNOWN", compatibility="UNKNOWN", utility="UNKNOWN",
+    source_boundary="CANDIDATE: launch script and README only (docstring C2)",
+    coverage={"input_topology": "SEQUENCE", "output_topology": "DECISION", "stochasticity": "ENVIRONMENT_RANDOM", "adaptation": "POLICY", "temporal_horizon": "EPISODE"})
+
+c.reject("policy_based/ beyond its return mechanism (its own selector, MPI archive sync, cell representations, Atari wrappers)", reason="OTHER", evidence="NOT READ beyond the cited lines; residue",
+         note="09-17 rejected the robustification phase and policy_based/ wholesale as 'NOT in this directory / NOT READ'; on 2026-10-03 the return mechanism and the robustification launch path were read and cut above")
 c.reject("'Go-Explore' as one organ", reason="NAME_HAS_NO_EXECUTABLE_BOUNDARY", evidence="archive, selection, cycle and representation refit are separable; the paper's ablations vary them separately")
 
+c.edge(arch, ret, "feeds", note="the goal cell's trajectory is the sub-goal sequence"); c.edge(ret, cyc, "restores", note="the policy-based replacement for the emulator restore"); c.edge(arch, rob, "feeds", note="best trajectories as demonstrations")
 c.edge(sel, cyc, "feeds", note="the batch"); c.edge(cyc, arch, "updates"); c.edge(arch, sel, "feeds", note="counters"); c.edge(dyn, arch, "transforms", note="re-keys"); c.edge(cyc, dyn, "feeds", note="recent frames")
 
 c.pressure("a_sparse_reward_environment_with_deceptive_local_rewards_must_be_explored_to_its_far_states_when_the_organism_can_save_and_restore_the_world_but_the_state_space_is_too_large_to_enumerate",
@@ -51,5 +95,5 @@ c.pressure("a_sparse_reward_environment_with_deceptive_local_rewards_must_be_exp
     cost_class="GPU-scale", source_evidence="goexplore.py run_cycle; randselectors.py; the paper's ablations as cited in the README", purpose="PURPOSE: hard-exploration reinforcement learning (Ecoffet et al. 2019-2021)")
 
 c.ancestry("algorithm_from", "Ecoffet, Huizinga, Lehman, Stanley, Clune 2019 (arXiv) / 2021 (Nature); the archive idea descends from novelty search and MAP-Elites (Lehman & Stanley 2011; Mouret & Clune 2015)", note="from the README and the record")
-c.residue("LARGE_RESIDUE", ["the selection weight formula and the representation search loop skimmed (two CANDIDATE organs)", "policy_based/ (the second body) unread", "robustification not in the body", "nothing ran (ALE/mujoco absent)"], note="the four mechanisms of the exploration phase are located; this is the operator's POET-adjacent family and a natural comparison for the POET cut when that body lands")
+c.residue("LARGE_RESIDUE", ["the representation search loop skimmed (CANDIDATE)", "policy_based/ read only for its return mechanism", "the robustification algorithm is not in the body (atari-reset is a separate repository): CANDIDATE from its launch flags", "nothing ran (ALE/mujoco absent)", "09-17 errors corrected 2026-10-03 (docstring C1-C3)"], note="the four mechanisms of the exploration phase are located; this is the operator's POET-adjacent family and a natural comparison for the POET cut when that body lands")
 c.save(state="COARSE")
