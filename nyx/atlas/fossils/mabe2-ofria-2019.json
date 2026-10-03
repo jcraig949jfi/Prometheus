@@ -1,0 +1,744 @@
+{
+ "schema": "nyx.atlas/0",
+ "fossil_id": "mabe2-ofria-2019",
+ "techne_record": "techne/fossils/specimens/mabe2-ofria-2019/record.json",
+ "whole_system": {
+  "FOSSIL_ID": {
+   "value": "mabe2-ofria-2019",
+   "basis": "TECHNE_RECORD"
+  },
+  "CANONICAL_NAME": {
+   "value": "MABE (Modular Agent-Based Evolver) version 2 -- NOT_FOUND_AT_PIN (README gives no paper title or CITATION file) (Charles Ofria, Cliff Bohm, and Austin Ferguson per LICENSE; Michigan State University per source headers; 2019-2026)",
+   "basis": "TECHNE_RECORD"
+  },
+  "VERSION": {
+   "value": "github.com/mercere99/MABE2 master @ 1fc9eb6d261b2cb4372cfb739f0a498cd7bd22e0 (committed 2026-02-15; 2409 commits since 2019-06-02; 441 tracked files)",
+   "basis": "TECHNE_RECORD"
+  },
+  "ERA": {
+   "value": "2019-2026",
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_SYSTEM": {
+   "value": {
+    "domain": [
+     "evolutionary-computation",
+     "artificial-life",
+     "agent-based",
+     "cpp-framework"
+    ],
+    "lineage": "README: 'Version 2 of the Modular Agent-Based Evolver framework' (https://github.com/Hintzelab/MABE), 're-built from scratch, using the Empirical library' (https://github.com/devosoft/Empirical). source/orgs includes AvidaGPOrg.hpp and VirtualCPUOrg.hpp with an Avida-style instruction set (orgs/instructions/VirtualCPU_Inst_*.hpp); CI.yml lists branches 'avida' and 'avida_merge'. Legacy code kept under source/OLD, source/core/OLD and build/OLD. || main loop (reader, from the code): MABE::Update triggers the script's START event on the first call and then, for each update until the target count or an EXIT(), rescans module signals if needed, fires before_update, increments the update counter, fires on_update, and triggers the script's @UPDATE(ud) block, which in the shipped .mabe settings evaluates the population with an Eval module, writes data files, calls Select modules that Replicate chosen parents (with Organism::Mutate applied on reproduction) into next_pop, and replaces main_pop with next_pop."
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_PROBLEM": {
+   "value": "A software framework 'deigned to easily build and customize software for evolutionary computation or artificial life', with resulting systems 'useful for studying evolutionary dynamics, solving complex problems, comparing evolving systems, or exploring the open-ended power of evolution' (README).",
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVED_HUMAN_CAPABILITY": {
+   "value": {
+    "built_to": "A software framework 'deigned to easily build and customize software for evolutionary computation or artificial life', with resulting systems 'useful for studying evolutionary dynamics, solving complex problems, comparing evolving systems, or exploring the open-ended power of evolution' (README).",
+    "pressure": "README: MABE 2.0 'is being re-built from scratch, using the Empirical library' with the goal 'to allow for more modular control, flexible agents, faster run times and portability to the web' relative to version 1; TODO lists genomes/brains interface, web interface and evaluation-system fixes as open projects.",
+    "success_means": "NOT_FOUND_AT_PIN (README states goals -- modularity, flexibility, speed, web portability -- but no metric; CI success is passing unit and regression tests under tests/, and runs/ hold GPTP2022/GPTP2024 experiment scripts that record fitness CSVs)"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "DOCUMENTED_ENVIRONMENTAL_PRESSURE": {
+   "value": {
+    "pressure": "",
+    "failure_condition": ""
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "LANGUAGE": {
+   "value": [
+    "C++ (C++20 per Makefile-base.mk FLAGS_version := -std=c++20; .hpp header-only framework, .cpp/.cc executables and tests)",
+    "Emplode configuration scripting language (.mabe/.gen/.mbatch files, interpreter in source/Emplode)",
+    "shell (.sh run scripts)",
+    "Python (build/plot.py, runs/GPTP2022/plot.py plotting helpers)"
+   ],
+   "basis": "TECHNE_RECORD"
+  },
+  "EXECUTION_MODEL": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "ANCESTRY": {
+   "value": "README: 'Version 2 of the Modular Agent-Based Evolver framework' (https://github.com/Hintzelab/MABE), 're-built from scratch, using the Empirical library' (https://github.com/devosoft/Empirical). source/orgs includes AvidaGPOrg.hpp and VirtualCPUOrg.hpp with an Avida-style instruction set (orgs/instructions/VirtualCPU_Inst_*.hpp); CI.yml lists branches 'avida' and 'avida_merge'. Legacy code kept under source/OLD, source/core/OLD and build/OLD. || main loop (reader, from the code): MABE::Update triggers the script's START event on the first call and then, for each update until the target count or an EXIT(), rescans module signals if needed, fires before_update, increments the update counter, fires on_update, and triggers the script's @UPDATE(ud) block, which in the shipped .mabe settings evaluates the population with an Eval module, writes data files, calls Select modules that Replicate chosen parents (with Organism::Mutate applied on reproduction) into next_pop, and replaces main_pop with next_pop.",
+   "basis": "TECHNE_RECORD"
+  },
+  "KNOWN_PREDECESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_SUCCESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_RIVALS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_HISTORICAL_DISPOSITION": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "SOURCE_STATUS": {
+   "value": {
+    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+    "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+    "tree_sha256": "d9d6c7eaa3397ba366d5d7cff9eb321766caeff8abd58a84daa11be45435b8ef"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "RUN_STATUS": {
+   "value": {
+    "run": "NOT_ATTEMPTED",
+    "test": "NOT_ATTEMPTED",
+    "environment": {
+     "runner": "native",
+     "note": "NOT RUN in this pass (nothing executed from the tree); host class from the reader draft: Any host with a C++20 toolchain and GNU Make (CI: ubuntu-22.04); CPU only"
+    }
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVABILITY": {
+   "value": {
+    "EXECUTABLE": "unknown",
+    "OBSERVABLE": "unknown",
+    "ORACLE_BACKED": "unknown",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "unknown"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "ORACLE_STATUS": {
+   "value": {
+    "oracle_backed": "unknown",
+    "test_classification": "NOT_ATTEMPTED"
+   },
+   "basis": "NYX_DERIVED"
+  },
+  "INTERVENTION_READINESS": {
+   "value": {
+    "intervention_ready": "unknown",
+    "patch_intervention": "unknown",
+    "runnable": false
+   },
+   "basis": "NYX_DERIVED"
+  }
+ },
+ "cut": {
+  "state": "COARSE",
+  "mode": "ANCESTRY_AWARE",
+  "evidence": [
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:mabe2-ofria-2019/upstream/tree/source/select/SelectTournament.hpp:1-133"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:mabe2-ofria-2019/upstream/tree/source/select/SelectElite.hpp:34-40"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:mabe2-ofria-2019/upstream/tree/source/core/MABE.hpp:768-826"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:mabe2-ofria-2019/upstream/tree/source/select/SelectRoulette.hpp:1-107"
+   }
+  ],
+  "inspected_files": [
+   "source/select/SelectTournament.hpp 1-133",
+   "source/select/SelectElite.hpp 1-106",
+   "source/select/SelectRoulette.hpp 1-107",
+   "source/core/MABE.hpp 648-694, 768-826",
+   "source/core/MABEBase.hpp 127-145",
+   "source/placement/RandomReplacement.hpp 1-94",
+   "source/placement/MaxSizePlacement.hpp 1-103",
+   "source/orgs/BitsOrg.hpp 30-111",
+   "settings/NK.mabe 1-82"
+  ],
+  "date": "2026-10-03T08:10Z",
+  "note": "selection, placement and mutation are separate modules composed by a script; the NK example is elite plus tournament(7) with generational replacement [READER-ASSISTED, 2026-10-03: a read-only reader agent (claude-opus-5-5, same family as Nyx) read the files below and returned line-cited notes; Nyx spot-checked 1 of the cited line ranges against the files (all matched) and wrote this cut. Nothing was run, imported or built (no bytecode written into the body). Stage A census 121 stays frozen; this body is cut under the operator's 2026-10-03 directive (item 4) and tracked with the other operator-directed bodies.]",
+  "provenance": {
+   "schema": "nyx.atlas/1-provenance",
+   "migrated_at": "2026-10-03T08:10Z",
+   "migrated_from": "authored under nyx.atlas/1-provenance",
+   "provenance_grade_read": "ORIGINAL_ARTIFACT",
+   "grade_basis": "Techne FOSSIL_PACKET.json PROVENANCE_GRADE where issued, else the record's handoff string mapped (populated per R34; Harmonia may re-grade)",
+   "source_object_id": "https://github.com/mercere99/MABE2@1fc9eb6d261b2cb4372cfb739f0a498cd7bd22e0",
+   "payload_manifest_id": "techne tree_sha256 d9d6c7eaa3397ba366d5d7cff9eb321766caeff8abd58a84daa11be45435b8ef (2172 files)",
+   "host_tree_matches_record": null,
+   "host": "GANDALF (hostname), bodies receipt not named",
+   "files_read": [
+    {
+     "path": "upstream/tree/source/select/SelectTournament.hpp",
+     "payload_hash_read": "ac0f6e7120e1d59f35a290015d02db491304db973a8825142c39a079aaa8f2a9",
+     "techne_recorded_hash": "ac0f6e7120e1d59f35a290015d02db491304db973a8825142c39a079aaa8f2a9",
+     "match": true,
+     "refs": 2
+    },
+    {
+     "path": "upstream/tree/source/select/SelectElite.hpp",
+     "payload_hash_read": "04ffaf253f786b2bd1795fdc30bed3053cfc9530b4eed0c45a2b7dc5a7c2ca23",
+     "techne_recorded_hash": "04ffaf253f786b2bd1795fdc30bed3053cfc9530b4eed0c45a2b7dc5a7c2ca23",
+     "match": true,
+     "refs": 2
+    },
+    {
+     "path": "upstream/tree/source/core/MABE.hpp",
+     "payload_hash_read": "ecbf8b070d8049c2c24af13d17ff7b1acb8d7f1b8d77c5a533f72abfa1c8664b",
+     "techne_recorded_hash": "ecbf8b070d8049c2c24af13d17ff7b1acb8d7f1b8d77c5a533f72abfa1c8664b",
+     "match": true,
+     "refs": 2
+    },
+    {
+     "path": "upstream/tree/source/select/SelectRoulette.hpp",
+     "payload_hash_read": "f7975e2c39fd817d6d0fa3de891f8bd33d7d94d4118e17983ec322a4907bf189",
+     "techne_recorded_hash": "f7975e2c39fd817d6d0fa3de891f8bd33d7d94d4118e17983ec322a4907bf189",
+     "match": true,
+     "refs": 2
+    }
+   ],
+   "unresolved_refs": []
+  }
+ },
+ "organs": [
+  {
+   "organ_id": "mabe2-ofria-2019::tournament_selection_strict_best_of_t_random_draws",
+   "fossil_ancestry": "mabe2-ofria-2019",
+   "human_name": "SelectTournament (1-133)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "for each birth draw t positions with replacement (default 7), redrawing empty cells, and replicate the strictly best (first drawn wins ties)",
+   "input": "a population",
+   "output": "births",
+   "state": "UNKNOWN",
+   "update": "UNKNOWN",
+   "assumptions": [
+    "UNKNOWN"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [],
+   "fitness_value_in_ancestor": "UNKNOWN",
+   "failure_landscape": "UNKNOWN by run",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:mabe2-ofria-2019/upstream/tree/source/select/SelectTournament.hpp:1-133"
+   },
+   "confidence": "HIGH",
+   "portability": "UNKNOWN",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "SelectTournament (1-133)",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "SEEDED_RANDOM",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "mabe2-ofria-2019::elite_selection_with_a_top_count_that_the_loop_decrements_in_place",
+   "fossil_ancestry": "mabe2-ofria-2019",
+   "human_name": "SelectElite (1-106)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "organisms are walked from the highest fitness, each replicated ceil(births / top_count--) times; top_count is the configured member variable",
+   "input": "a population",
+   "output": "births",
+   "state": "top_count",
+   "update": "UNKNOWN",
+   "assumptions": [
+    "UNKNOWN"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [],
+   "fitness_value_in_ancestor": "UNKNOWN",
+   "failure_landscape": "by reading: the loop decrements the member top_count, so after one call it is 0 and later calls replicate nothing (the NK script calls elite selection every update; whether the config is re-applied each update was not checked)",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:mabe2-ofria-2019/upstream/tree/source/select/SelectElite.hpp:34-40"
+   },
+   "confidence": "HIGH",
+   "portability": "UNKNOWN",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "SelectElite (1-106)",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "mabe2-ofria-2019::birth_placement_modules_append_or_random_replacement_with_generational_swap",
+   "fossil_ancestry": "mabe2-ofria-2019",
+   "human_name": "DoBirth / placement (MABE.hpp 648-694, 768-826; RandomReplacement; MaxSizePlacement)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "offspring are made mutated or cloned and placed by the population's placement module: append by default, random replacement of a position other than the parent's, or append up to a maximum then replace; REPLACE_WITH empties the target first, so the NK script is generational",
+   "input": "offspring",
+   "output": "positions",
+   "state": "UNKNOWN",
+   "update": "UNKNOWN",
+   "assumptions": [
+    "UNKNOWN"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [],
+   "fitness_value_in_ancestor": "UNKNOWN",
+   "failure_landscape": "by reading: random replacement spins forever in a size-1 population holding the parent; max_pop_size has no initialiser",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:mabe2-ofria-2019/upstream/tree/source/core/MABE.hpp:768-826"
+   },
+   "confidence": "HIGH",
+   "portability": "UNKNOWN",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "DoBirth / placement (MABE.hpp 648-694, 768-826; RandomReplacement; MaxSizePlacement)",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "SEEDED_RANDOM",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "mabe2-ofria-2019::roulette_selection_and_binomial_bit_flip_mutation",
+   "fossil_ancestry": "mabe2-ofria-2019",
+   "human_name": "SelectRoulette (1-107); BitsOrg (30-111)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "roulette draws each birth from an index map of fitnesses (select and birth populations must differ); bit organisms toggle Binomial(mut_prob 0.01, N) distinct random bits",
+   "input": "UNKNOWN",
+   "output": "UNKNOWN",
+   "state": "UNKNOWN",
+   "update": "UNKNOWN",
+   "assumptions": [
+    "UNKNOWN"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [],
+   "fitness_value_in_ancestor": "UNKNOWN",
+   "failure_landscape": "by reading: negative or all-zero fitness is not guarded",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:mabe2-ofria-2019/upstream/tree/source/select/SelectRoulette.hpp:1-107"
+   },
+   "confidence": "HIGH",
+   "portability": "UNKNOWN",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "SelectRoulette (1-107); BitsOrg (30-111)",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "SEEDED_RANDOM",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  }
+ ],
+ "rejected_cuts": [
+  {
+   "candidate": "the rest of the body: lexicase and fitness-sharing selectors, schedulers, evaluators, VirtualCPU and AvidaGP organisms, Population.hpp, Emplode, the Empirical submodule",
+   "reason": "OTHER",
+   "evidence": "NOT READ; residue",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "mabe2-ofria-2019"
+  },
+  {
+   "candidate": "'mabe2-ofria-2019' as one organ",
+   "reason": "NAME_HAS_NO_EXECUTABLE_BOUNDARY",
+   "evidence": "the mechanisms above are separable pieces of code",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "mabe2-ofria-2019"
+  }
+ ],
+ "pressures": [
+  {
+   "pressure_id": "mabe2-ofria-2019::P.whatever_the_script_composes_truncation_local_rank_or_fitness_proportional_over_an_evaluator_trait",
+   "source_fossil": "mabe2-ofria-2019",
+   "source_evidence": "the organs above",
+   "condition": "modules are composed per experiment; the NK script uses elite plus tournament(7) with generational replacement",
+   "resource_or_constraint": "UNKNOWN",
+   "failure_condition": "UNKNOWN",
+   "world_punishes": "low trait values",
+   "world_rewards": "high trait values",
+   "observable_consequence": "UNKNOWN",
+   "vacuity_condition": "UNKNOWN",
+   "trivial_shortcuts": "UNKNOWN",
+   "cheat_control": "UNKNOWN: not designed this pass",
+   "cost_class": "UNKNOWN (nothing ran)",
+   "purpose_separated_from_pressure": "PURPOSE: Modular Agent-Based Evolver 2 (Ofria lab), C++20 framework composed by scripts",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
+ "composition_edges": [],
+ "ancestry_edges": [],
+ "residue": {
+  "state": "LARGE_RESIDUE",
+  "unexplained": [
+   "not read: lexicase and fitness-sharing selectors, schedulers, evaluators, VirtualCPU and AvidaGP organisms, Population.hpp, Emplode, the Empirical submodule",
+   "nothing ran",
+   "reader-assisted cut: line ranges spot-checked, not every line re-read by Nyx"
+  ],
+  "note": "batch 17 first pass",
+  "cut_mode": "ANCESTRY_AWARE"
+ }
+}

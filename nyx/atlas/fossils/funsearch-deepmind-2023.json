@@ -1,0 +1,724 @@
+{
+ "schema": "nyx.atlas/0",
+ "fossil_id": "funsearch-deepmind-2023",
+ "techne_record": "techne/fossils/specimens/funsearch-deepmind-2023/record.json",
+ "whole_system": {
+  "FOSSIL_ID": {
+   "value": "funsearch-deepmind-2023",
+   "basis": "TECHNE_RECORD"
+  },
+  "CANONICAL_NAME": {
+   "value": "FunSearch -- Mathematical discoveries from program search with large language models (Romera-Paredes, Bernardino; Barekatain, Mohammadamin; Novikov, Alexander; Balog, Matej; Kumar, M. Pawan; Dupont, Emilien; Ruiz, Francisco J. R.; Ellenberg, Jordan; Wang, Pengming; Fawzi, Omar; Kohli, Pushmeet; Fawzi, Alhussein; DeepMind Technologies Limited; Nature 2023; copyright 2023)",
+   "basis": "TECHNE_RECORD"
+  },
+  "VERSION": {
+   "value": "github.com/google-deepmind/funsearch main @ cc53f274237d7ab05c19df939edbc1f9616a7c19 (committed 2024-02-05; 14 commits since 2022-03-31; 31 tracked files)",
+   "basis": "TECHNE_RECORD"
+  },
+  "ERA": {
+   "value": "2022-2024",
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_SYSTEM": {
+   "value": {
+    "domain": [
+     "llm-guided-search",
+     "program-synthesis",
+     "evolutionary-computation",
+     "mathematics"
+    ],
+    "lineage": "README names only the Nature 2023 paper it accompanies; no predecessor system is named in the tree. cap_set.ipynb says the 1082-cap in n = 9 'matches the previously known best construction'. Notebooks use commented-out '# @funsearch.run' / '# @funsearch.evolve' decorators to mark the skeletons used in the paper's experiments. || main loop (reader, from the code): Sampler.sample loops forever: ProgramsDatabase.get_prompt picks a random island, softmax-samples up to functions_per_prompt clusters by score, renders them as <fn>_v0..<fn>_vk plus an empty <fn>_v(k+1) header; LLM.draw_samples produces samples_per_prompt continuations; each is sent to a random Evaluator.analyse, which splices the body into the template, runs Sandbox.run on every input, and registers the (function, island, scores_per_test) in the database, which clusters by score signature and every reset_period seconds resets the weaker half of islands from survivors' best programs."
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_PROBLEM": {
+   "value": "README: 'This repository accompanies the publication' Romera-Paredes et al., Nature 2023; it publishes the functions and sets FunSearch discovered (cap sets, admissible sets, bin-packing heuristics, cyclic-graph independent sets, corner-free sets) plus 'an implementation of the evolutionary algorithm, code manipulation routines, and a single-threaded implementation of the FunSearch pipeline' intended 'for understanding the details of our method, and for adapting it for use with any available language models, sandboxes, and distributed systems'.",
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVED_HUMAN_CAPABILITY": {
+   "value": {
+    "built_to": "README: 'This repository accompanies the publication' Romera-Paredes et al., Nature 2023; it publishes the functions and sets FunSearch discovered (cap sets, admissible sets, bin-packing heuristics, cyclic-graph independent sets, corner-free sets) plus 'an implementation of the evolutionary algorithm, code manipulation routines, and a single-threaded implementation of the FunSearch pipeline' intended 'for understanding the details of our method, and for adapting it for use with any available language models, sandboxes, and distributed systems'.",
+    "pressure": "NOT_FOUND_AT_PIN as an explicit statement; the README gives no motivation beyond accompanying the paper, and the paper abstract is not in the tree. The notebook text motivates the problems (e.g. cap_set.ipynb: trivial priority gives cap sets 'far from optimal').",
+    "success_means": "The @funsearch.run function returns a numeric score per input (e.g. size of the constructed cap set / admissible set / independent set; bin-packing evaluation suite in bin_packing.ipynb 'to reproduce the results reported in the paper'); the database keeps the best score per island and reduces scores_per_test by _reduce_score. README frames success as the discovered objects (e.g. 512-cap in n = 8, 1082-cap in n = 9 per cap_set.ipynb)."
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "DOCUMENTED_ENVIRONMENTAL_PRESSURE": {
+   "value": {
+    "pressure": "",
+    "failure_condition": ""
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "LANGUAGE": {
+   "value": [
+    "Python",
+    "Jupyter Notebook (4 .ipynb)",
+    "plain-text numerical data (.txt)"
+   ],
+   "basis": "TECHNE_RECORD"
+  },
+  "EXECUTION_MODEL": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "ANCESTRY": {
+   "value": "README names only the Nature 2023 paper it accompanies; no predecessor system is named in the tree. cap_set.ipynb says the 1082-cap in n = 9 'matches the previously known best construction'. Notebooks use commented-out '# @funsearch.run' / '# @funsearch.evolve' decorators to mark the skeletons used in the paper's experiments. || main loop (reader, from the code): Sampler.sample loops forever: ProgramsDatabase.get_prompt picks a random island, softmax-samples up to functions_per_prompt clusters by score, renders them as <fn>_v0..<fn>_vk plus an empty <fn>_v(k+1) header; LLM.draw_samples produces samples_per_prompt continuations; each is sent to a random Evaluator.analyse, which splices the body into the template, runs Sandbox.run on every input, and registers the (function, island, scores_per_test) in the database, which clusters by score signature and every reset_period seconds resets the weaker half of islands from survivors' best programs.",
+   "basis": "TECHNE_RECORD"
+  },
+  "KNOWN_PREDECESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_SUCCESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_RIVALS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_HISTORICAL_DISPOSITION": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "SOURCE_STATUS": {
+   "value": {
+    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+    "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+    "tree_sha256": "fa6f965da80ef93904806fbc7ebe0b6c637534740f5f1a96de0788ade35dd68a"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "RUN_STATUS": {
+   "value": {
+    "run": "NOT_ATTEMPTED",
+    "test": "NOT_ATTEMPTED",
+    "environment": {
+     "runner": "native",
+     "note": "NOT RUN in this pass (nothing executed from the tree); host class from the reader draft: any CPython 3.10+ host with numpy/scipy/absl for the implementation modules and notebooks (notebooks target Google Colab); a real FunSearch run additionally requires an LLM endpoint and a code sandbox that the user must implement"
+    }
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVABILITY": {
+   "value": {
+    "EXECUTABLE": "unknown",
+    "OBSERVABLE": "unknown",
+    "ORACLE_BACKED": "unknown",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "unknown"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "ORACLE_STATUS": {
+   "value": {
+    "oracle_backed": "unknown",
+    "test_classification": "NOT_ATTEMPTED"
+   },
+   "basis": "NYX_DERIVED"
+  },
+  "INTERVENTION_READINESS": {
+   "value": {
+    "intervention_ready": "unknown",
+    "patch_intervention": "unknown",
+    "runnable": false
+   },
+   "basis": "NYX_DERIVED"
+  }
+ },
+ "cut": {
+  "state": "COARSE",
+  "mode": "ANCESTRY_AWARE",
+  "evidence": [
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:funsearch-deepmind-2023/upstream/tree/implementation/programs_database.py:143-145"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:funsearch-deepmind-2023/upstream/tree/implementation/programs_database.py:49-56"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:funsearch-deepmind-2023/upstream/tree/implementation/programs_database.py:292-297"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:funsearch-deepmind-2023/upstream/tree/implementation/evaluator.py:46-155"
+   }
+  ],
+  "inspected_files": [
+   "implementation/programs_database.py 34-297",
+   "implementation/config.py 20-37",
+   "implementation/evaluator.py 46-155",
+   "implementation/sampler.py 31-33"
+  ],
+  "date": "2026-10-03T08:10Z",
+  "note": "programs are clustered by their per-test score signature inside islands; prompts draw clusters by a temperature-annealed softmax and short programs within a cluster; every 4 hours the worse half of the islands is reset. The LLM and the sandbox are stubs (NotImplementedError) [READER-ASSISTED, 2026-10-03: a read-only reader agent (claude-opus-5-5, same family as Nyx) read the files below and returned line-cited notes; Nyx spot-checked 3 of the cited line ranges against the files (all matched) and wrote this cut. Nothing was run, imported or built (no bytecode written into the body). Stage A census 121 stays frozen; this body is cut under the operator's 2026-10-03 directive (item 4) and tracked with the other operator-directed bodies.]",
+  "provenance": {
+   "schema": "nyx.atlas/1-provenance",
+   "migrated_at": "2026-10-03T08:10Z",
+   "migrated_from": "authored under nyx.atlas/1-provenance",
+   "provenance_grade_read": "ORIGINAL_ARTIFACT",
+   "grade_basis": "Techne FOSSIL_PACKET.json PROVENANCE_GRADE where issued, else the record's handoff string mapped (populated per R34; Harmonia may re-grade)",
+   "source_object_id": "https://github.com/google-deepmind/funsearch@cc53f274237d7ab05c19df939edbc1f9616a7c19",
+   "payload_manifest_id": "techne tree_sha256 fa6f965da80ef93904806fbc7ebe0b6c637534740f5f1a96de0788ade35dd68a (31 files)",
+   "host_tree_matches_record": null,
+   "host": "GANDALF (hostname), bodies receipt not named",
+   "files_read": [
+    {
+     "path": "upstream/tree/implementation/programs_database.py",
+     "payload_hash_read": "b2bef312d04861f467f304f65788efe959f0493818976b052c46b4703151affc",
+     "techne_recorded_hash": "b2bef312d04861f467f304f65788efe959f0493818976b052c46b4703151affc",
+     "match": true,
+     "refs": 6
+    },
+    {
+     "path": "upstream/tree/implementation/evaluator.py",
+     "payload_hash_read": "81647818f5f12d9af535959d9042c62ffcb687385ac7d5b2ffbf01a6401542c1",
+     "techne_recorded_hash": "81647818f5f12d9af535959d9042c62ffcb687385ac7d5b2ffbf01a6401542c1",
+     "match": true,
+     "refs": 2
+    }
+   ],
+   "unresolved_refs": []
+  }
+ },
+ "organs": [
+  {
+   "organ_id": "funsearch-deepmind-2023::island_reset_of_the_weaker_half_on_a_wall_clock_period",
+   "fossil_ancestry": "funsearch-deepmind-2023",
+   "human_name": "register_program / reset_islands (programs_database.py 75-167)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "10 islands; a prompt's island is uniform; when more than 4 h of wall time have passed at a registration, islands are sorted by best score (tiny random tie-break) and the lower half are replaced by new islands seeded with the best program of a random survivor",
+   "input": "registrations",
+   "output": "reset islands",
+   "state": "best per island",
+   "update": "UNKNOWN",
+   "assumptions": [
+    "UNKNOWN"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [],
+   "fitness_value_in_ancestor": "UNKNOWN",
+   "failure_landscape": "by reading: resets happen only inside register_program (no registrations, no resets); a program can land on an island reset after its prompt was made",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:funsearch-deepmind-2023/upstream/tree/implementation/programs_database.py:143-145"
+   },
+   "confidence": "HIGH",
+   "portability": "UNKNOWN",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "register_program / reset_islands (programs_database.py 75-167)",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "SEEDED_RANDOM",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNBOUNDED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "funsearch-deepmind-2023::clusters_by_per_test_score_signature_with_the_last_test_key_as_the_score",
+   "fossil_ancestry": "funsearch-deepmind-2023",
+   "human_name": "_get_signature / _reduce_score (programs_database.py 49-56, 191-203)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "a program's signature is the tuple of its per-test scores in sorted key order; its scalar score is the score of the LAST key in insertion order, not an aggregate",
+   "input": "per-test scores",
+   "output": "a cluster and a score",
+   "state": "UNKNOWN",
+   "update": "UNKNOWN",
+   "assumptions": [
+    "UNKNOWN"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [],
+   "fitness_value_in_ancestor": "UNKNOWN",
+   "failure_landscape": "by reading: partial score dicts (failed tests) give a different signature and possibly a different 'last' test",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:funsearch-deepmind-2023/upstream/tree/implementation/programs_database.py:49-56"
+   },
+   "confidence": "HIGH",
+   "portability": "UNKNOWN",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "_get_signature / _reduce_score (programs_database.py 49-56, 191-203)",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "funsearch-deepmind-2023::cluster_choice_by_softmax_with_a_sawtooth_temperature_and_short_program_preference",
+   "fossil_ancestry": "funsearch-deepmind-2023",
+   "human_name": "get_prompt and sample_program (programs_database.py 205-297)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "clusters are drawn with replacement by softmax(score / T), T = 0.1 * (1 - (n mod 30000) / 30000); within a cluster a program is drawn by softmax of minus its length normalised by the maximum (a weak preference for short code); the two chosen are ordered by score in the prompt",
+   "input": "clusters",
+   "output": "prompt programs",
+   "state": "a program count",
+   "update": "UNKNOWN",
+   "assumptions": [
+    "UNKNOWN"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [],
+   "fitness_value_in_ancestor": "UNKNOWN",
+   "failure_landscape": "by reading: with replacement, the same cluster can fill both prompt slots",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:funsearch-deepmind-2023/upstream/tree/implementation/programs_database.py:292-297"
+   },
+   "confidence": "HIGH",
+   "portability": "UNKNOWN",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "get_prompt and sample_program (programs_database.py 205-297)",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "SEEDED_RANDOM",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "funsearch-deepmind-2023::evaluator_trimming_unparsable_output_and_keeping_passing_tests_only",
+   "fossil_ancestry": "funsearch-deepmind-2023",
+   "human_name": "evaluator.py 46-65, 103-155",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "LLM output is trimmed line by line until it parses; a per-test score is kept only if the run succeeded, did not call an ancestor and returned a number; a program registers if at least one test passed",
+   "input": "a sample",
+   "output": "scores per test",
+   "state": "UNKNOWN",
+   "update": "UNKNOWN",
+   "assumptions": [
+    "UNKNOWN"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [],
+   "fitness_value_in_ancestor": "UNKNOWN",
+   "failure_landscape": "by reading: the sandbox raises NotImplementedError as shipped",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:funsearch-deepmind-2023/upstream/tree/implementation/evaluator.py:46-155"
+   },
+   "confidence": "HIGH",
+   "portability": "UNKNOWN",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "evaluator.py 46-65, 103-155",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  }
+ ],
+ "rejected_cuts": [
+  {
+   "candidate": "the rest of the body: funsearch.py, code_manipulation.py beyond the calls, tests, notebooks",
+   "reason": "OTHER",
+   "evidence": "NOT READ; residue",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "funsearch-deepmind-2023"
+  },
+  {
+   "candidate": "'funsearch-deepmind-2023' as one organ",
+   "reason": "NAME_HAS_NO_EXECUTABLE_BOUNDARY",
+   "evidence": "the mechanisms above are separable pieces of code",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "funsearch-deepmind-2023"
+  }
+ ],
+ "pressures": [
+  {
+   "pressure_id": "funsearch-deepmind-2023::P.programs_with_higher_scores_on_the_tests_are_shown_to_the_model_more_often_and_weak_islands_are_periodically_erased",
+   "source_fossil": "funsearch-deepmind-2023",
+   "source_evidence": "the organs above",
+   "condition": "softmax over score clusters at low temperature; half of the islands reset every 4 h",
+   "resource_or_constraint": "UNKNOWN",
+   "failure_condition": "UNKNOWN",
+   "world_punishes": "programs on weak islands",
+   "world_rewards": "high-scoring, shorter programs",
+   "observable_consequence": "UNKNOWN",
+   "vacuity_condition": "UNKNOWN",
+   "trivial_shortcuts": "UNKNOWN",
+   "cheat_control": "UNKNOWN: not designed this pass",
+   "cost_class": "UNKNOWN (nothing ran)",
+   "purpose_separated_from_pressure": "PURPOSE: LLM-guided program search over an island-based program database (Romera-Paredes et al. 2023, FunSearch)",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
+ "composition_edges": [],
+ "ancestry_edges": [],
+ "residue": {
+  "state": "LARGE_RESIDUE",
+  "unexplained": [
+   "not read: funsearch.py, code_manipulation.py beyond the calls, tests, notebooks",
+   "nothing ran",
+   "reader-assisted cut: line ranges spot-checked, not every line re-read by Nyx"
+  ],
+  "note": "batch 17 first pass",
+  "cut_mode": "ANCESTRY_AWARE"
+ }
+}

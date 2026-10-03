@@ -1,0 +1,739 @@
+{
+ "schema": "nyx.atlas/0",
+ "fossil_id": "qdax-airl-2022",
+ "techne_record": "techne/fossils/specimens/qdax-airl-2022/record.json",
+ "whole_system": {
+  "FOSSIL_ID": {
+   "value": "qdax-airl-2022",
+   "basis": "TECHNE_RECORD"
+  },
+  "CANONICAL_NAME": {
+   "value": "QDax -- QDax: Accelerated Quality-Diversity / 'Qdax: A library for quality-diversity and population-based algorithms with hardware acceleration' (Chalumeau, Felix and Lim, Bryan and Boige, Raphael and Allard, Maxime and Grillotti, Luca and Flageat, Manon and Mace, Valentin and Richard, Guillaume and Flajolet, Arthur and Pierrot, Thomas and others; Adaptive & Intelligent Robotics Lab (AIRL), Imperial College London, and InstaDeep; 2022-2025, JMLR 2024)",
+   "basis": "TECHNE_RECORD"
+  },
+  "VERSION": {
+   "value": "github.com/adaptive-intelligent-robotics/QDax main @ 46b8feecae26d79414ce7a1ce731e5cfbeb9837d (committed 2025-10-30; 279 commits since 2022-02-11; 223 tracked files)",
+   "basis": "TECHNE_RECORD"
+  },
+  "ERA": {
+   "value": "2022-2025",
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_SYSTEM": {
+   "value": {
+    "domain": [
+     "quality-diversity",
+     "map-elites",
+     "evolutionary-computation",
+     "jax"
+    ],
+    "lineage": "README lists the algorithms it implements with their source papers (MAP-Elites, CVT MAP-Elites, PGA-ME, CMA-ME, OMG-MEGA, CMA-MEGA, MOME, MEES, ME-PBT, ME-LS, DCRL-ME, QDPG, AURORA, Dominated Novelty Search; baselines DIAYN, DADS, SMERL, NSGA2, SPEA2, PBT). docs/overview.md: 'QDax has similarities to the simple and commonly found ask/tell interface'. Code comments cite 'Covariance Matrix Adaptation for the Rapid Illumination of Descriptor Space by Fontaine et al.' for CMAImprovementEmitter. Two files derived from Flax ('Copyright 2022 The Flax Authors'). 'QDax was developed and is maintained by the Adaptive & Intelligent Robotics Lab (AIRL) and InstaDeep.' The README does not name a predecessor project it supersedes. || main loop (reader, from the code): MAPElites.update asks the emitter to emit a batch of genotypes (MixingEmitter samples parents uniformly from the repertoire and applies crossover/mutation; CMA emitters sample from an internal CMA-ES), scores them with the scoring_function to get fitnesses and descriptors, then tell() adds them to the repertoire (each descriptor mapped to its nearest centroid, only the batch-max per cell kept and only if it beats the current occupant's fitness) and updates the emitter state, returning the new repertoire, emitter state and metrics as pure JAX values suitable for jax.jit / jax.lax.scan."
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_PROBLEM": {
+   "value": "README: 'QDax is a tool to accelerate Quality-Diversity (QD) and neuroevolution algorithms through hardware accelerators and massive parallelization', developed 'as a research framework: it is flexible and easy to extend and build on and can be used for any problem setting'.",
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVED_HUMAN_CAPABILITY": {
+   "value": {
+    "built_to": "README: 'QDax is a tool to accelerate Quality-Diversity (QD) and neuroevolution algorithms through hardware accelerators and massive parallelization', developed 'as a research framework: it is flexible and easy to extend and build on and can be used for any problem setting'.",
+    "pressure": "README: 'QD algorithms usually take days/weeks to run on large CPU clusters. With QDax, QD algorithms can now be run in minutes!'",
+    "success_means": "README does not state an explicit success metric; it advertises wall-clock speed ('run a QD algorithm in minutes') and breadth of supported algorithms; the code's default_qd_metrics (qdax/utils/metrics.py, qd_offset argument) tracks repertoire metrics per iteration."
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "DOCUMENTED_ENVIRONMENTAL_PRESSURE": {
+   "value": {
+    "pressure": "",
+    "failure_condition": ""
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "LANGUAGE": {
+   "value": [
+    "Python"
+   ],
+   "basis": "TECHNE_RECORD"
+  },
+  "EXECUTION_MODEL": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "ANCESTRY": {
+   "value": "README lists the algorithms it implements with their source papers (MAP-Elites, CVT MAP-Elites, PGA-ME, CMA-ME, OMG-MEGA, CMA-MEGA, MOME, MEES, ME-PBT, ME-LS, DCRL-ME, QDPG, AURORA, Dominated Novelty Search; baselines DIAYN, DADS, SMERL, NSGA2, SPEA2, PBT). docs/overview.md: 'QDax has similarities to the simple and commonly found ask/tell interface'. Code comments cite 'Covariance Matrix Adaptation for the Rapid Illumination of Descriptor Space by Fontaine et al.' for CMAImprovementEmitter. Two files derived from Flax ('Copyright 2022 The Flax Authors'). 'QDax was developed and is maintained by the Adaptive & Intelligent Robotics Lab (AIRL) and InstaDeep.' The README does not name a predecessor project it supersedes. || main loop (reader, from the code): MAPElites.update asks the emitter to emit a batch of genotypes (MixingEmitter samples parents uniformly from the repertoire and applies crossover/mutation; CMA emitters sample from an internal CMA-ES), scores them with the scoring_function to get fitnesses and descriptors, then tell() adds them to the repertoire (each descriptor mapped to its nearest centroid, only the batch-max per cell kept and only if it beats the current occupant's fitness) and updates the emitter state, returning the new repertoire, emitter state and metrics as pure JAX values suitable for jax.jit / jax.lax.scan.",
+   "basis": "TECHNE_RECORD"
+  },
+  "KNOWN_PREDECESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_SUCCESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_RIVALS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_HISTORICAL_DISPOSITION": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "SOURCE_STATUS": {
+   "value": {
+    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+    "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+    "tree_sha256": "320a51b69fd5c48c59a3691f004b201d4631ba4d5dda2bc68b0586c856013438"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "RUN_STATUS": {
+   "value": {
+    "run": "NOT_ATTEMPTED",
+    "test": "NOT_ATTEMPTED",
+    "environment": {
+     "runner": "native",
+     "note": "NOT RUN in this pass (nothing executed from the tree); host class from the reader draft: Any CPython >=3.11 host with a working JAX install; Linux + NVIDIA GPU (or TPU) for the accelerated use the README advertises; CPU-only JAX runs the API but slowly"
+    }
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVABILITY": {
+   "value": {
+    "EXECUTABLE": "unknown",
+    "OBSERVABLE": "unknown",
+    "ORACLE_BACKED": "unknown",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "unknown"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "ORACLE_STATUS": {
+   "value": {
+    "oracle_backed": "unknown",
+    "test_classification": "NOT_ATTEMPTED"
+   },
+   "basis": "NYX_DERIVED"
+  },
+  "INTERVENTION_READINESS": {
+   "value": {
+    "intervention_ready": "unknown",
+    "patch_intervention": "unknown",
+    "runnable": false
+   },
+   "basis": "NYX_DERIVED"
+  }
+ },
+ "cut": {
+  "state": "COARSE",
+  "mode": "ANCESTRY_AWARE",
+  "evidence": [
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:qdax-airl-2022/upstream/tree/qdax/core/containers/mapelites_repertoire.py:224-228"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:qdax-airl-2022/upstream/tree/qdax/core/emitters/repertoire_selectors/uniform_selector.py:38-54"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:qdax-airl-2022/upstream/tree/qdax/core/emitters/cma_emitter.py:169-357"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:qdax-airl-2022/upstream/tree/qdax/core/containers/mome_repertoire.py:75-322"
+   }
+  ],
+  "inspected_files": [
+   "qdax/core/containers/mapelites_repertoire.py 55-137, 162-266, 364",
+   "qdax/core/emitters/repertoire_selectors/uniform_selector.py 38-54",
+   "qdax/core/emitters/standard_emitters.py 13-90",
+   "qdax/core/emitters/mutation_operators.py 175-226",
+   "qdax/core/emitters/cma_emitter.py 47-102, 169-357",
+   "qdax/core/containers/mome_repertoire.py 75-322",
+   "qdax/core/map_elites.py 148-195, 271-281"
+  ],
+  "date": "2026-10-03T08:10Z",
+  "note": "the library behind leniabreeder: per-cell elitist repertoires, uniform parent choice, isoline variation, CMA-ME emitters and MOME Pareto cells; no CMA-MAE [READER-ASSISTED, 2026-10-03: a read-only reader agent (claude-opus-5-5, same family as Nyx) read the files below and returned line-cited notes; Nyx spot-checked 1 of the cited line ranges against the files (all matched) and wrote this cut. Nothing was run, imported or built (no bytecode written into the body). Stage A census 121 stays frozen; this body is cut under the operator's 2026-10-03 directive (item 4) and tracked with the other operator-directed bodies.]",
+  "provenance": {
+   "schema": "nyx.atlas/1-provenance",
+   "migrated_at": "2026-10-03T08:10Z",
+   "migrated_from": "authored under nyx.atlas/1-provenance",
+   "provenance_grade_read": "ORIGINAL_ARTIFACT",
+   "grade_basis": "Techne FOSSIL_PACKET.json PROVENANCE_GRADE where issued, else the record's handoff string mapped (populated per R34; Harmonia may re-grade)",
+   "source_object_id": "https://github.com/adaptive-intelligent-robotics/QDax@46b8feecae26d79414ce7a1ce731e5cfbeb9837d",
+   "payload_manifest_id": "techne tree_sha256 320a51b69fd5c48c59a3691f004b201d4631ba4d5dda2bc68b0586c856013438 (223 files)",
+   "host_tree_matches_record": null,
+   "host": "GANDALF (hostname), bodies receipt not named",
+   "files_read": [
+    {
+     "path": "upstream/tree/qdax/core/containers/mapelites_repertoire.py",
+     "payload_hash_read": "bef844179f2e3c1224f3c577a09a44800d5d86b525b46c1703b6fa1fea53937d",
+     "techne_recorded_hash": "bef844179f2e3c1224f3c577a09a44800d5d86b525b46c1703b6fa1fea53937d",
+     "match": true,
+     "refs": 2
+    },
+    {
+     "path": "upstream/tree/qdax/core/emitters/repertoire_selectors/uniform_selector.py",
+     "payload_hash_read": "0d883773eece8f50aee35c8e18d3fb6c5bbc1f4aeefa284ee6c7f2e95c31c275",
+     "techne_recorded_hash": "0d883773eece8f50aee35c8e18d3fb6c5bbc1f4aeefa284ee6c7f2e95c31c275",
+     "match": true,
+     "refs": 2
+    },
+    {
+     "path": "upstream/tree/qdax/core/emitters/cma_emitter.py",
+     "payload_hash_read": "f57fbd2c88fff6685acf9c65d6f2b5cf1d86b5b78c9e3ed788793acddd4e68fd",
+     "techne_recorded_hash": "f57fbd2c88fff6685acf9c65d6f2b5cf1d86b5b78c9e3ed788793acddd4e68fd",
+     "match": true,
+     "refs": 2
+    },
+    {
+     "path": "upstream/tree/qdax/core/containers/mome_repertoire.py",
+     "payload_hash_read": "8b5f38ac860bc9dd144f472882aa4e359f75d01d8cc71108813188979efdc5e8",
+     "techne_recorded_hash": "8b5f38ac860bc9dd144f472882aa4e359f75d01d8cc71108813188979efdc5e8",
+     "match": true,
+     "refs": 2
+    }
+   ],
+   "unresolved_refs": []
+  }
+ },
+ "organs": [
+  {
+   "organ_id": "qdax-airl-2022::grid_or_cvt_repertoire_with_batch_segment_max_and_strict_improvement",
+   "fossil_ancestry": "qdax-airl-2022",
+   "human_name": "add / get_cells_indices (mapelites_repertoire.py 111-137, 173-266)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "descriptors map to the nearest centroid with no clipping; within a batch only the per-cell max survives (segment_max); a candidate replaces the incumbent iff strictly fitter; losers are redirected to an out-of-bounds index; empty cells hold -inf; CVT centroids are k-means++ on uniform samples",
+   "input": "a batch",
+   "output": "an updated repertoire",
+   "state": "genotypes, fitness, descriptors per cell",
+   "update": "UNKNOWN",
+   "assumptions": [
+    "UNKNOWN"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [],
+   "fitness_value_in_ancestor": "UNKNOWN",
+   "failure_landscape": "by reading: equal batch maxima in one cell both scatter to it, so the survivor is decided by JAX scatter semantics",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:qdax-airl-2022/upstream/tree/qdax/core/containers/mapelites_repertoire.py:224-228"
+   },
+   "confidence": "HIGH",
+   "portability": "UNKNOWN",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "add / get_cells_indices (mapelites_repertoire.py 111-137, 173-266)",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "ARCHIVE",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "qdax-airl-2022::parent_selection_uniform_over_occupied_cells",
+   "fossil_ancestry": "qdax-airl-2022",
+   "human_name": "UniformSelector (uniform_selector.py 38-54)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "p = (1 - empty) / sum(1 - empty), where empty means fitness -inf; draws with replacement",
+   "input": "the repertoire",
+   "output": "parents",
+   "state": "UNKNOWN",
+   "update": "UNKNOWN",
+   "assumptions": [
+    "UNKNOWN"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [],
+   "fitness_value_in_ancestor": "UNKNOWN",
+   "failure_landscape": "by reading: an all-empty repertoire gives NaN probabilities; a genuine -inf score is indistinguishable from an empty cell",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:qdax-airl-2022/upstream/tree/qdax/core/emitters/repertoire_selectors/uniform_selector.py:38-54"
+   },
+   "confidence": "HIGH",
+   "portability": "UNKNOWN",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "UniformSelector (uniform_selector.py 38-54)",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "SEEDED_RANDOM",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "qdax-airl-2022::cma_me_emitter_ranking_new_cells_by_fitness_and_others_by_improvement_with_restart",
+   "fossil_ancestry": "qdax-airl-2022",
+   "human_name": "cma_emitter.py 47-102, 169-357",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "improvement = fitness - previous fitness of the cell (+inf for new cells); new cells are offset above all improvers and the batch sorted descending; restart when all improvements are negative after min_count, after max_count, or on a flat distribution, from one uniformly sampled elite; the code says it updates on the whole batch, unlike the paper",
+   "input": "a scored batch",
+   "output": "an updated search distribution",
+   "state": "CMA state",
+   "update": "UNKNOWN",
+   "assumptions": [
+    "UNKNOWN"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [],
+   "fitness_value_in_ancestor": "UNKNOWN",
+   "failure_landscape": "UNKNOWN by run",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:qdax-airl-2022/upstream/tree/qdax/core/emitters/cma_emitter.py:169-357"
+   },
+   "confidence": "HIGH",
+   "portability": "UNKNOWN",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "cma_emitter.py 47-102, 169-357",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "SEEDED_RANDOM",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "PARAMETER",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "qdax-airl-2022::mome_cells_holding_a_capped_pareto_front",
+   "fossil_ancestry": "qdax-airl-2022",
+   "human_name": "MOMERepertoire.add (mome_repertoire.py 75-322)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "candidates are inserted sequentially; each cell's front plus the candidate is re-filtered to its Pareto front and truncated to front_size",
+   "input": "UNKNOWN",
+   "output": "UNKNOWN",
+   "state": "UNKNOWN",
+   "update": "UNKNOWN",
+   "assumptions": [
+    "UNKNOWN"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [],
+   "fitness_value_in_ancestor": "UNKNOWN",
+   "failure_landscape": "by reading: a new non-dominated point that arrives when the front is full is cut off by the truncation; no crowding-based replacement",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:qdax-airl-2022/upstream/tree/qdax/core/containers/mome_repertoire.py:75-322"
+   },
+   "confidence": "MEDIUM",
+   "portability": "UNKNOWN",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "MOMERepertoire.add (mome_repertoire.py 75-322)",
+   "status": "CANDIDATE",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "ARCHIVE",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  }
+ ],
+ "rejected_cuts": [
+  {
+   "candidate": "the rest of the body: PGA-ME emitter, CMAES internals, polynomial operators, MultiEmitter, the CMA pool/opt/mega emitters, DNS repertoire, metrics, pareto_front.py",
+   "reason": "OTHER",
+   "evidence": "NOT READ; residue",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "qdax-airl-2022"
+  },
+  {
+   "candidate": "'qdax-airl-2022' as one organ",
+   "reason": "NAME_HAS_NO_EXECUTABLE_BOUNDARY",
+   "evidence": "the mechanisms above are separable pieces of code",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "qdax-airl-2022"
+  }
+ ],
+ "pressures": [
+  {
+   "pressure_id": "qdax-airl-2022::P.solutions_compete_only_with_the_incumbent_of_their_behaviour_cell_while_parents_are_drawn_uniformly",
+   "source_fossil": "qdax-airl-2022",
+   "source_evidence": "the organs above",
+   "condition": "a fixed tessellation of behaviour space; one elite per cell; flat parent choice",
+   "resource_or_constraint": "UNKNOWN",
+   "failure_condition": "UNKNOWN",
+   "world_punishes": "everything else (discarded)",
+   "world_rewards": "being strictly better than the cell's incumbent, or filling a new cell",
+   "observable_consequence": "UNKNOWN",
+   "vacuity_condition": "UNKNOWN",
+   "trivial_shortcuts": "UNKNOWN",
+   "cheat_control": "UNKNOWN: not designed this pass",
+   "cost_class": "UNKNOWN (nothing ran)",
+   "purpose_separated_from_pressure": "PURPOSE: quality-diversity algorithms in JAX (Lim, Chalumeau, Faldor et al., QDax 0.5.1)",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
+ "composition_edges": [],
+ "ancestry_edges": [],
+ "residue": {
+  "state": "LARGE_RESIDUE",
+  "unexplained": [
+   "not read: PGA-ME emitter, CMAES internals, polynomial operators, MultiEmitter, the CMA pool/opt/mega emitters, DNS repertoire, metrics, pareto_front.py",
+   "nothing ran",
+   "reader-assisted cut: line ranges spot-checked, not every line re-read by Nyx"
+  ],
+  "note": "batch 17 first pass",
+  "cut_mode": "ANCESTRY_AWARE"
+ }
+}

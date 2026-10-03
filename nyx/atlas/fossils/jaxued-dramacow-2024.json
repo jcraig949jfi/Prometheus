@@ -1,0 +1,872 @@
+{
+ "schema": "nyx.atlas/0",
+ "fossil_id": "jaxued-dramacow-2024",
+ "techne_record": "techne/fossils/specimens/jaxued-dramacow-2024/record.json",
+ "whole_system": {
+  "FOSSIL_ID": {
+   "value": "jaxued-dramacow-2024",
+   "basis": "TECHNE_RECORD"
+  },
+  "CANONICAL_NAME": {
+   "value": "JaxUED -- JaxUED: A simple and useable UED library in Jax (Samuel Coward and Michael Beukman and Jakob Foerster; no institution named in README, pyproject author email domain robots.ox.ac.uk; 2024-2025)",
+   "basis": "TECHNE_RECORD"
+  },
+  "VERSION": {
+   "value": "github.com/DramaCow/jaxued main @ 0f8f1284677375b889e4f13a32c9617cd009f8c4 (committed 2025-09-09; 27 commits since 2024-02-25; 52 tracked files)",
+   "basis": "TECHNE_RECORD"
+  },
+  "ERA": {
+   "value": "2024-2025",
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_SYSTEM": {
+   "value": {
+    "domain": [
+     "unsupervised-environment-design",
+     "curriculum",
+     "reinforcement-learning",
+     "jax"
+    ],
+    "lineage": "README: 'similar goals to CleanRL'; inspirations listed under See Also: Minimax (facebookresearch/minimax: 'UED baselines, with support for multi-gpu training, and more parallel versions of PLR/ACCEL'), PureJaxRL, JaxIRL, Mava, JaxMARL, Gymnax, Jumanji, Pgx, Brax, XLand-MiniGrid, Craftax. docs/maze_dr.md: 'It follows the PureJaxRL-style training loop.' docs/maze.md: maze 'based on Minigrid'. Source comments credit minimax for utils.py (ued_scores) and make_level_mutator_minimax. Downstream per README 'Projects using JaxUED': Craftax, ReMiDi. || main loop (reader, from the code): In examples/maze_plr.py, train_step (jax.lax.scan-ned eval_freq times inside train_and_eval_step, itself looped num_updates//eval_freq times in main) draws a replay decision from the LevelSampler (or, with --use_accel, uses the previous update_state to force a mutate step after each replay step) and jax.lax.switch-es into one of on_new_levels (sample random mazes, roll out the PPO-LSTM agent, score trajectories with MaxMC or positive value loss, insert_batch into the buffer, update the policy only if exploratory_grad_updates), on_replay_levels (sample_replay_levels weighted by rank-score and staleness, roll out, update_batch scores, always update the policy) or on_mutate_levels (mutate the last replayed batch with make_level_mutator_minimax, roll out, score and insert the children)."
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_PROBLEM": {
+   "value": "Provide CleanRL-style single-file, understandable JAX reference implementations of common Unsupervised Environment Design methods (DR, PLR, ACCEL, PAIRED) plus a LevelSampler, an UnderspecifiedEnv interface and a Maze environment, for researchers to modify and prototype on.",
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVED_HUMAN_CAPABILITY": {
+   "value": {
+    "built_to": "Provide CleanRL-style single-file, understandable JAX reference implementations of common Unsupervised Environment Design methods (DR, PLR, ACCEL, PAIRED) plus a LevelSampler, an UnderspecifiedEnv interface and a Maze environment, for researchers to modify and prototype on.",
+    "pressure": "README: existing UED code hides implementation details behind abstraction; JaxUED is 'primarily intended for researchers looking to get in the weeds of UED algorithm development' with 'minimal dependency implementations' that 'expose all implementation details' and facilitate 'easy, rapid prototyping of new ideas'.",
+    "success_means": "README states no quantitative criterion; the scripts log solve rates and returns on fixed held-out eval mazes (SixteenRooms, Labyrinth, StandardMaze variants) every eval_freq updates plus level-sampler statistics, and eval mode writes cum_rewards and episode_lengths per level."
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "DOCUMENTED_ENVIRONMENTAL_PRESSURE": {
+   "value": {
+    "pressure": "",
+    "failure_condition": ""
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "LANGUAGE": {
+   "value": [
+    "Python"
+   ],
+   "basis": "TECHNE_RECORD"
+  },
+  "EXECUTION_MODEL": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "ANCESTRY": {
+   "value": "README: 'similar goals to CleanRL'; inspirations listed under See Also: Minimax (facebookresearch/minimax: 'UED baselines, with support for multi-gpu training, and more parallel versions of PLR/ACCEL'), PureJaxRL, JaxIRL, Mava, JaxMARL, Gymnax, Jumanji, Pgx, Brax, XLand-MiniGrid, Craftax. docs/maze_dr.md: 'It follows the PureJaxRL-style training loop.' docs/maze.md: maze 'based on Minigrid'. Source comments credit minimax for utils.py (ued_scores) and make_level_mutator_minimax. Downstream per README 'Projects using JaxUED': Craftax, ReMiDi. || main loop (reader, from the code): In examples/maze_plr.py, train_step (jax.lax.scan-ned eval_freq times inside train_and_eval_step, itself looped num_updates//eval_freq times in main) draws a replay decision from the LevelSampler (or, with --use_accel, uses the previous update_state to force a mutate step after each replay step) and jax.lax.switch-es into one of on_new_levels (sample random mazes, roll out the PPO-LSTM agent, score trajectories with MaxMC or positive value loss, insert_batch into the buffer, update the policy only if exploratory_grad_updates), on_replay_levels (sample_replay_levels weighted by rank-score and staleness, roll out, update_batch scores, always update the policy) or on_mutate_levels (mutate the last replayed batch with make_level_mutator_minimax, roll out, score and insert the children).",
+   "basis": "TECHNE_RECORD"
+  },
+  "KNOWN_PREDECESSORS": {
+   "value": [
+    "reimplementation_of: dcd-facebookresearch-2022"
+   ],
+   "basis": "NYX_DERIVED"
+  },
+  "KNOWN_SUCCESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_RIVALS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_HISTORICAL_DISPOSITION": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "SOURCE_STATUS": {
+   "value": {
+    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+    "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+    "tree_sha256": "569d3ab9ebd323ad7e1ea1316d525f0d9c672acba7f3928ac27e91fc646e6319"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "RUN_STATUS": {
+   "value": {
+    "run": "NOT_ATTEMPTED",
+    "test": "NOT_ATTEMPTED",
+    "environment": {
+     "runner": "native",
+     "note": "NOT RUN in this pass (nothing executed from the tree); host class from the reader draft: Any CPython >=3.9 host with a working JAX install; README targets Linux + NVIDIA CUDA 12 GPU for training, but no hard GPU requirement is declared (core deps are pure-Python wheels)."
+    }
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVABILITY": {
+   "value": {
+    "EXECUTABLE": "unknown",
+    "OBSERVABLE": "unknown",
+    "ORACLE_BACKED": "unknown",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "unknown"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "ORACLE_STATUS": {
+   "value": {
+    "oracle_backed": "unknown",
+    "test_classification": "NOT_ATTEMPTED"
+   },
+   "basis": "NYX_DERIVED"
+  },
+  "INTERVENTION_READINESS": {
+   "value": {
+    "intervention_ready": "unknown",
+    "patch_intervention": "unknown",
+    "runnable": false
+   },
+   "basis": "NYX_DERIVED"
+  }
+ },
+ "cut": {
+  "state": "COARSE",
+  "mode": "ANCESTRY_AWARE",
+  "evidence": [
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:jaxued-dramacow-2024/upstream/tree/src/jaxued/level_sampler.py:108-129, 288-341"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:jaxued-dramacow-2024/upstream/tree/src/jaxued/level_sampler.py:145-178, 375-404"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:jaxued-dramacow-2024/upstream/tree/src/jaxued/utils.py:1-57"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:jaxued-dramacow-2024/upstream/tree/examples/maze_plr.py:515-718"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:jaxued-dramacow-2024/upstream/tree/examples/maze_paired.py:538-590"
+   }
+  ],
+  "inspected_files": [
+   "src/jaxued/level_sampler.py 1-404 (all)",
+   "src/jaxued/utils.py 1-57",
+   "examples/maze_plr.py 389-395, 462, 515-718, 875-891",
+   "examples/maze_paired.py 538-590",
+   "src/jaxued/environments/maze/util.py 126-200"
+  ],
+  "date": "2026-10-03T08:10Z",
+  "note": "a level-replay buffer that keeps the levels on which the agent's value error (or a regret proxy) is high, refreshes stale ones, evicts by a combined score/staleness weight, and (ACCEL) mutates replayed levels to make new candidates; PAIRED trains an adversary on a regret estimate [READER-ASSISTED, 2026-10-03: a read-only reader agent (claude-opus-5-5, same family as Nyx) read the files below and returned line-cited notes; Nyx spot-checked 1 of the cited line ranges against the files (all matched) and wrote this cut. Nothing was run, imported or built (no bytecode written into the body). Stage A census 121 stays frozen; this body is cut under the operator's 2026-10-03 directive (item 4) and tracked with the other operator-directed bodies.]",
+  "provenance": {
+   "schema": "nyx.atlas/1-provenance",
+   "migrated_at": "2026-10-03T08:10Z",
+   "migrated_from": "authored under nyx.atlas/1-provenance",
+   "provenance_grade_read": "ORIGINAL_ARTIFACT",
+   "grade_basis": "Techne FOSSIL_PACKET.json PROVENANCE_GRADE where issued, else the record's handoff string mapped (populated per R34; Harmonia may re-grade)",
+   "source_object_id": "https://github.com/DramaCow/jaxued@0f8f1284677375b889e4f13a32c9617cd009f8c4",
+   "payload_manifest_id": "techne tree_sha256 569d3ab9ebd323ad7e1ea1316d525f0d9c672acba7f3928ac27e91fc646e6319 (52 files)",
+   "host_tree_matches_record": null,
+   "host": "GANDALF (hostname), bodies receipt not named",
+   "files_read": [
+    {
+     "path": "upstream/tree/src/jaxued/level_sampler.py",
+     "payload_hash_read": "090acc54271c55f477a711d11a9ee3262da9123f75a5d33ce6041b3cdcb1e2d2",
+     "techne_recorded_hash": "090acc54271c55f477a711d11a9ee3262da9123f75a5d33ce6041b3cdcb1e2d2",
+     "match": true,
+     "refs": 4
+    },
+    {
+     "path": "upstream/tree/src/jaxued/utils.py",
+     "payload_hash_read": "eae1a68350123c902595055b280048b29fd27e1709263d31f5990d5e44569d03",
+     "techne_recorded_hash": "eae1a68350123c902595055b280048b29fd27e1709263d31f5990d5e44569d03",
+     "match": true,
+     "refs": 2
+    },
+    {
+     "path": "upstream/tree/examples/maze_plr.py",
+     "payload_hash_read": "7e8918c1416f1ec5dbd70d6baa20e2ff4bfb52958c5517d7a6a1214f82cd25a9",
+     "techne_recorded_hash": "7e8918c1416f1ec5dbd70d6baa20e2ff4bfb52958c5517d7a6a1214f82cd25a9",
+     "match": true,
+     "refs": 2
+    },
+    {
+     "path": "upstream/tree/examples/maze_paired.py",
+     "payload_hash_read": "d0f2befc947af01a59fb5ad6acb7d25b5e35d721217c8c673b1ced81f3f868ec",
+     "techne_recorded_hash": "d0f2befc947af01a59fb5ad6acb7d25b5e35d721217c8c673b1ced81f3f868ec",
+     "match": true,
+     "refs": 2
+    }
+   ],
+   "unresolved_refs": []
+  }
+ },
+ "organs": [
+  {
+   "organ_id": "jaxued-dramacow-2024::replay_distribution_mixing_rank_transformed_score_with_staleness",
+   "fossil_ancestry": "jaxued-dramacow-2024",
+   "human_name": "level_weights / sample_replay_level (level_sampler.py 108, 121-129, 288-341)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "replay weights are (1 - staleness_coeff) * w_s + staleness_coeff * w_c, where w_s ranks filled slots by score (1/rank)^(1/temperature) (or a softmax over the top-k) and w_c is normalised staleness episode_count - timestamp; a replay happens iff the buffer is at least minimum_fill_ratio full and uniform < replay_prob (class defaults 0.95 / staleness 0.5 / min fill 1.0; the maze example overrides to 0.8 / 0.3 / 0.5, temperature 0.3)",
+   "input": "scores, timestamps, episode count",
+   "output": "a level index; replay or new",
+   "state": "the buffer",
+   "update": "UNKNOWN",
+   "assumptions": [
+    "UNKNOWN"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [],
+   "fitness_value_in_ancestor": "UNKNOWN",
+   "failure_landscape": "by reading: _insert_new increments episode_count even when nothing is inserted (392), so rejected candidates age every buffered level",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:jaxued-dramacow-2024/upstream/tree/src/jaxued/level_sampler.py:108-129, 288-341"
+   },
+   "confidence": "HIGH",
+   "portability": "UNKNOWN",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "level_weights / sample_replay_level (level_sampler.py 108, 121-129, 288-341)",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "DECISION",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "ARCHIVE",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "SEEDED_RANDOM",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "jaxued-dramacow-2024::insertion_only_when_the_new_level_strictly_beats_the_lowest_combined_weight_slot",
+   "fossil_ancestry": "jaxued-dramacow-2024",
+   "human_name": "_insert_new / _get_next_idx (level_sampler.py 375-404)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "a new level goes to the next free slot, else to the argmin of the COMBINED replay weight (so staleness counts, not score alone), and is written only if that slot's score is strictly lower than the new score; with duplicate_check a matching level is re-scored and re-stamped instead",
+   "input": "a level and its score",
+   "output": "an insertion or not",
+   "state": "the buffer",
+   "update": "UNKNOWN",
+   "assumptions": [
+    "UNKNOWN"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [],
+   "fitness_value_in_ancestor": "UNKNOWN",
+   "failure_landscape": "by reading: unfilled slots hold -inf and an episode-less score is -inf, so a level with no completed episode never enters even an empty buffer",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:jaxued-dramacow-2024/upstream/tree/src/jaxued/level_sampler.py:145-178, 375-404"
+   },
+   "confidence": "HIGH",
+   "portability": "UNKNOWN",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "_insert_new / _get_next_idx (level_sampler.py 375-404)",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "DECISION",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "ARCHIVE",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "jaxued-dramacow-2024::level_score_as_time_averaged_maxmc_regret_proxy_or_positive_value_loss",
+   "fossil_ancestry": "jaxued-dramacow-2024",
+   "human_name": "max_mc / pvl (utils.py 1-57); maze_plr.py 389-395, 604",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "MaxMC (the default) scores a level by the time-averaged per-episode mean of max_return - value; PVL by the time-averaged positive advantage; both return -inf when no episode completed; on replay the stored max_return is max(stored, new)",
+   "input": "rollout returns, values, advantages",
+   "output": "a scalar level score",
+   "state": "max_return per level",
+   "update": "UNKNOWN",
+   "assumptions": [
+    "UNKNOWN"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [],
+   "fitness_value_in_ancestor": "UNKNOWN",
+   "failure_landscape": "by reading: max_val starts at zeros, so the stored max return is floored at 0",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:jaxued-dramacow-2024/upstream/tree/src/jaxued/utils.py:1-57"
+   },
+   "confidence": "HIGH",
+   "portability": "UNKNOWN",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "max_mc / pvl (utils.py 1-57); maze_plr.py 389-395, 604",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "jaxued-dramacow-2024::accel_edit_mutation_of_replayed_levels_without_a_solvability_check",
+   "fossil_ancestry": "jaxued-dramacow-2024",
+   "human_name": "branch controller (maze_plr.py 515-718) and maze mutator (environments/maze/util.py 126-200)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "with ACCEL every replay step is followed by a mutate step on the replayed batch; each of n edits is uniform over {no-op, flip a wall, move the goal}; new and mutated levels update the policy only if exploratory_grad_updates (default False: robust PLR), replay always does",
+   "input": "replayed levels",
+   "output": "mutated candidate levels",
+   "state": "UNKNOWN",
+   "update": "UNKNOWN",
+   "assumptions": [
+    "UNKNOWN"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [],
+   "fitness_value_in_ancestor": "UNKNOWN",
+   "failure_landscape": "by reading: about one third of edits are no-ops and no solvability check exists",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:jaxued-dramacow-2024/upstream/tree/examples/maze_plr.py:515-718"
+   },
+   "confidence": "HIGH",
+   "portability": "UNKNOWN",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "branch controller (maze_plr.py 515-718) and maze mutator (environments/maze/util.py 126-200)",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "MATRIX",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "MATRIX",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "SEEDED_RANDOM",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "jaxued-dramacow-2024::paired_adversary_rewarded_by_antagonist_max_minus_protagonist_mean_return",
+   "fossil_ancestry": "jaxued-dramacow-2024",
+   "human_name": "est_regret (maze_paired.py 538-590)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "est_regret = antagonist max return - protagonist mean return, unclipped, given to the level-writing adversary only as its final-step reward; the adversary trains with PPO",
+   "input": "two agents' returns",
+   "output": "an adversary reward",
+   "state": "UNKNOWN",
+   "update": "UNKNOWN",
+   "assumptions": [
+    "UNKNOWN"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [],
+   "fitness_value_in_ancestor": "UNKNOWN",
+   "failure_landscape": "UNKNOWN by run",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:jaxued-dramacow-2024/upstream/tree/examples/maze_paired.py:538-590"
+   },
+   "confidence": "HIGH",
+   "portability": "UNKNOWN",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "est_regret (maze_paired.py 538-590)",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  }
+ ],
+ "rejected_cuts": [
+  {
+   "candidate": "the rest of the body: maze env, wrappers, craftax and gymnax examples, maze_dr.py, PPO and eval code, the PAIRED adversary network",
+   "reason": "OTHER",
+   "evidence": "NOT READ; residue",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "jaxued-dramacow-2024"
+  },
+  {
+   "candidate": "'jaxued-dramacow-2024' as one organ",
+   "reason": "NAME_HAS_NO_EXECUTABLE_BOUNDARY",
+   "evidence": "the mechanisms above are separable pieces of code",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "jaxued-dramacow-2024"
+  }
+ ],
+ "pressures": [
+  {
+   "pressure_id": "jaxued-dramacow-2024::P.levels_are_kept_and_replayed_where_the_learner_s_value_error_or_regret_proxy_is_high_and_evicted_when_solved_or_stale",
+   "source_fossil": "jaxued-dramacow-2024",
+   "source_evidence": "the organs above",
+   "condition": "a fixed-capacity buffer of environment levels; the learner trains mostly on replayed levels; a level's priority is its value-error or regret score and its staleness",
+   "resource_or_constraint": "UNKNOWN",
+   "failure_condition": "UNKNOWN",
+   "world_punishes": "solved levels (low error) and levels with no completed episode (-inf)",
+   "world_rewards": "levels with high positive value error / regret on completed episodes",
+   "observable_consequence": "UNKNOWN",
+   "vacuity_condition": "UNKNOWN",
+   "trivial_shortcuts": "UNKNOWN",
+   "cheat_control": "UNKNOWN: not designed this pass",
+   "cost_class": "UNKNOWN (nothing ran)",
+   "purpose_separated_from_pressure": "PURPOSE: unsupervised environment design: curricula of levels for RL agents (Jiang et al. PLR; Parker-Holder et al. ACCEL; Dennis et al. PAIRED)",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
+ "composition_edges": [],
+ "ancestry_edges": [
+  {
+   "from": "jaxued-dramacow-2024",
+   "relation": "reimplementation_of",
+   "to": "dcd-facebookresearch-2022",
+   "note": "reader draft: two files credit facebookresearch/minimax as source, which itself reimplements dcd; JaxUED implements the same UED methods (DR, PLR, Robust PLR, ACCEL, PAIRED) as single-file JAX programs",
+   "basis": "TECHNE_RECORD"
+  }
+ ],
+ "residue": {
+  "state": "LARGE_RESIDUE",
+  "unexplained": [
+   "not read: maze env, wrappers, craftax and gymnax examples, maze_dr.py, PPO and eval code, the PAIRED adversary network",
+   "nothing ran",
+   "reader-assisted cut: line ranges spot-checked, not every line re-read by Nyx"
+  ],
+  "note": "batch 17 first pass",
+  "cut_mode": "ANCESTRY_AWARE"
+ }
+}
