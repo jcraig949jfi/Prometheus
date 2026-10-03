@@ -122,7 +122,7 @@ Invoked by: operator, "NYX -- OPERATOR DIRECTIVE, effective immediately"
       until a transplant succeeds?
 
 10. REPRODUCE (Techne's asal107 env on M3)
-    python -B -m nyx.atlas.experiments.asal_replication.replicate --stage domain|fixture|determinism|search|selfcheck
+    python -B -m nyx.atlas.experiments.asal_replication.replicate \n      --stage domain|fixture|determinism|search|selfcheck
     (the search refuses without the FREEZE)
     pytest nyx/tests -> 59 passed
 ================================================================================
