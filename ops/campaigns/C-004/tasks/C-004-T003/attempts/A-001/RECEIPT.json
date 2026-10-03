@@ -1,0 +1,51 @@
+{
+  "schema": "prometheus.workgraph.receipt.v1",
+  "task_id": "C-004-T003",
+  "campaign_id": "C-004",
+  "attempt_id": "A-001",
+  "role": "Eupalamus",
+  "model": "claude-sonnet-5-5",
+  "quality_class": "Q1",
+  "start_sha": "d49d2d29d9106d7343fb3e638ab7746c478acb3a",
+  "end_sha": "4f1023199788b895d7e05ef6ce5e8af59801553f",
+  "files_changed": [
+    "rso/__init__.py",
+    "rso/slice001/__init__.py",
+    "rso/slice001/ci.py",
+    "rso/slice001/tests/__init__.py",
+    "rso/slice001/tests/test_ci.py",
+    "rso/slice001/contract/README.md"
+  ],
+  "evidence_added": [
+    "rso/slice001/tests/test_ci.py: 9 tests (skeleton import, run-record fields, cheat control with a deliberately failing and a raising test -> FAILED and non-zero exit, contract missing key / wrong type / non-object / bad JSON / absent / invalid-contract-fails-command)"
+  ],
+  "evidence_executed": [
+    {
+      "command": "python -B -m unittest discover -s rso/slice001/tests -t . (before ci.py and package __init__ existed)",
+      "result": "Ran 9 tests, FAILED (failures=1, errors=8) -- RED"
+    },
+    {
+      "command": "python -B -m rso.slice001.ci (after implementation)",
+      "result": "exit 0; status PASSED; tests_run 9, passed 9, failed 0, errored 0; contract ABSENT; wall 1.4 s; cpu 0.02 s (in-process)"
+    }
+  ],
+  "red_observed": {
+    "observed": true,
+    "reason": "9 tests run with 1 failure and 8 errors before the skeleton existed (no rso.slice001.ci module)"
+  },
+  "result": "DONE_CLEAN",
+  "known_escapes": [
+    "cpu_s is in-process CPU only; the cheat-control subprocesses are not included (total CPU still well under 1 minute)",
+    "contract types checked are only version (str/int/float, not bool) and frozen (bool); every other required key is checked for presence and non-null only, because the packet fixes no other types. Revisit if T-contract packets want stricter shapes",
+    "tested on Python 3.12 only; written to the 3.8 stdlib subset but not run on 3.8"
+  ],
+  "unresolved": [],
+  "unblocks": [],
+  "created_at_utc": "2026-10-03T22:05:00Z",
+  "instance": "harry1-e609b290",
+  "host": "harry1 (M4)",
+  "branch": "eupalamus-c004-t003",
+  "worktree_path": "C:/Prometheus-worktrees/eupalamus-c004-t003",
+  "resources": {"cpu_s_approx": 2, "gpu": 0, "cloud": 0, "new_artifact_bytes": 12000},
+  "notes": "Work commit 4f1023199 is on origin branch eupalamus-c004-t003 (not on main); Palamedes integrates. No contract content, no semantics."
+}
