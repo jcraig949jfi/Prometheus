@@ -108,6 +108,60 @@ locality, GPU, or independence reasons, and those are stated.
   - **Atlas:** unpark for one re-harvest.
 - **Data defect:** roles/Argus/WORK_STATE.json is invalid JSON (Phase 3 seat; reported, not touched).
 
-## Branch dispositions, merges, archive refs
+## Branch dispositions, merges, archive refs (as of 13:45Z)
 
-Pending: the ledger run, then the seats' receipts.
+Full log: DISPOSITIONS.jsonl. Ledgers: LEDGER_run1_1200Z.json (125 worktrees) and LEDGER_run2.json (28 worktrees).
+
+### Worktrees
+
+- **116 removed:** 109 clean and already contained in main; 7 force-removed after a recorded DISCARD or ARCHIVE.
+- **9 left:**
+  - Canonical F:/Prometheus (awaiting the operator sync decision).
+  - Ananke x3 (receipt pending).
+  - aporia-cwo (Aporia drains last).
+  - cadmus-boot and cadmus-ops (EXCLUDED).
+  - dionysus-base-role (EXEMPT).
+  - mnemosyne-pew (NEEDS_REVIEW: pinned PEW service worktree with dirty restore_verification.json and derived/; held
+    for the Mnemosyne ruling).
+- **Not a worktree:** F:/Prometheus-worktrees/herakles-base-role, a 1.4 GB plain copy of the tree from 09-11.
+  ARCHIVE / NEEDS_REVIEW, left in place.
+
+### Branches
+
+- **Local branches deleted:** 115. Every tip is in origin/main, or under a verified archive tag.
+- **Remote branches deleted:** 19, all with tips in origin/main.
+- **Remote branches kept:** 3 Nestor build branches whose remote tips are not in main (nestor/bld-g, bld-h, bld-q).
+- **Restored:** enceladus/rso-review-2026-10-01, a Phase 3 branch wrongly swept. The script now excludes all Phase 3
+  seats.
+- **Merges made by the drain:** none needed. Every completed branch was already contained in main. Seats merged their
+  own work before their receipts.
+
+### Archive tags on origin (`archive/m1-drain-2026-10-03/...`)
+
+| Tag | Commit | Contents |
+|---|---|---|
+| Archaeon/pass-2026-09-11-1804 | 524a60d01 | S5 RUN2 raw L8/L9 results, gzipped; were untracked on M1 only |
+| Nestor/g2rerun-detached | 8631128c3 | Archaeon 1% sample stage-2 rerun |
+| Nestor/g2sample-detached | b596883a3 | Archaeon 1% sample check |
+| Nestor/r8-main-merge-check | 91d6a6d66 | R8 main-merge candidate; NEEDS_REVIEW |
+| dionysus/dionysus-phase3-design-2026-10-01 | f4ddd1548 | Dionysus's last two drain-journal commits |
+
+### Discards (identity recorded in the log)
+
+- **Nestor s1-forensics and s4v2:** LEASES.jsonl lines and scratch results. Nestor confirms these are already on main.
+- **__pycache__ only:** Alethelia and Kairos.
+- **0-byte .err files:** F:/Prometheus-archaeon.
+- **prom_main_wt2:** an interrupted checkout (51,868 missing files, nothing else).
+
+## Sessions and processes (13:45Z)
+
+- **Stopped:** the claude.exe sessions of Tityos, Ixion, Sisyphus and Tantalus (cmdline verified at kill time). Nestor,
+  Atlas and Hecate exited on their own. Their terminal tabs were left alone.
+- **Still running:**
+  - Aporia;
+  - Ananke (receipt pending; 4 stale polling loops plus a hung git fetch reported to it, #1314);
+  - Cadmus and Dionysus (exempt);
+  - Postgres, FoundryAPI and the Achilles census (machine-global).
+- **Scheduled tasks:** 
+estor_z80atlas disabled by Nestor. All other Nestor/Ananke/Archaeon/Mnemosyne tasks were
+  already Disabled.
