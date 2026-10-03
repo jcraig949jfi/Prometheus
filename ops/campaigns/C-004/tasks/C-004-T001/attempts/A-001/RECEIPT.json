@@ -1,0 +1,63 @@
+{
+  "schema": "prometheus.workgraph.receipt.v1",
+  "task_id": "C-004-T001",
+  "campaign_id": "C-004",
+  "attempt_id": "A-001",
+  "role": "Cadmus",
+  "model": "claude-opus-5-5",
+  "quality_class": "Q2",
+  "start_sha": "a46a29824a05785e9cb2801349cf3b497a2346ff",
+  "end_sha": "a843a384d48c56af5287e2baddc02a273dde4e24",
+  "files_changed": [
+    "rso/slice001/contract/drafts/A_world_reset_observer.md"
+  ],
+  "evidence_added": [
+    "draft A: finite world W-S1 (L=6, 4 ticks, 4096 histories), runtime boundary contract, truth model and no-carry class N",
+    "predicates BOUNDS, CALIBRATION, ERASE, PRESERVE, CHANNEL, RESTART, OBSERVER, TWIN_EQ and the RETENTION ruler, each with eligible count",
+    "T01-T08 and E06 each with a true and a false case and expected outcomes; couplings stated",
+    "C3: H=3 episodes, R=3 evaluated reset calls (5 per life), K=3; known-escape placement table over both corpora",
+    "concrete files for T010/T011/T012/T016/T018 and a proposed contract.json reset_model fragment",
+    "field decisions FD-A1..FD-A7"
+  ],
+  "evidence_executed": [
+    {
+      "command": "python -B proto_world6.py (uncommitted scratch prototype, author's scratch directory; not S2 code)",
+      "result": "every expected outcome in the A6 table reproduced on 13 runtime fixtures and 5 observers; counts 12288 / 9600 / 6144 / 24576 / 237568 / 4096 as stated; 44 s wall"
+    },
+    {
+      "command": "python -B proto_edge.py (same scratch prototype)",
+      "result": "max-delay leak sent at episode 3 caught at j=3; leak on reset call 4 only passes (OUT-OF-MODEL as placed); lag-4 carry caught at j=2,3"
+    },
+    {
+      "command": "LANG=C.UTF-8 grep -nP '[^\\x00-\\x7F]' rso/slice001/contract/drafts/A_world_reset_observer.md",
+      "result": "no matches"
+    }
+  ],
+  "red_observed": {
+    "observed": false,
+    "reason": "kind document, red_required false: the preregistered failure state was 'no section A text, no H/R, no escape placement', true at claim (drafts/ absent on a46a29824)"
+  },
+  "result": "DONE_CLEAN",
+  "known_escapes": [
+    "expected values were checked only against the author's own scratch prototype (author-tested); T005 must derive its table independently",
+    "the escape placement reads the two corpora's own lists and reports; it is not a fresh search for reset escapes",
+    "FD-A3 (CHANNEL clamp) strengthens the claim beyond the plan's wording; T004 must accept or drop it"
+  ],
+  "unresolved": [
+    "FD-A3 accept or drop (Palamedes, T004)",
+    "OP-1 caps: the RESTART predicate dominates cost (about 90% of 44 s unoptimised for the full fixture set)"
+  ],
+  "unblocks": [
+    "C-004-T004"
+  ],
+  "created_at_utc": "2026-10-03T11:44:28Z",
+  "instance": "m1-a86ec5e4",
+  "host": "SKULLPORT",
+  "branch": "cadmus/boot-2026-10-03",
+  "worktree_path": "F:/Prometheus-worktrees/cadmus-boot",
+  "resources": {
+    "cpu": "under 1 CPU-minute (scratch prototype runs, outside the slice ledger since no S2 code ran)",
+    "model": "one Q2 session, about 1.25 hours"
+  },
+  "notes": "M1-DRAIN-2026-10-03 does not apply: operator amendment (roles/Aporia/prompts/2026-10-03_m1_drain_amendment_cadmus/) keeps Cadmus on M1."
+}
