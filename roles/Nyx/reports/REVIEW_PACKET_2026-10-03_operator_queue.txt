@@ -1,0 +1,128 @@
+================================================================================
+REVIEW PACKET -- Nyx: operator queue of 2026-10-03 (N1 ASAL replication + 1-6)
+Prometheus / Nyx (Chop Shop), 2026-10-03
+Commits of record: 7bffbf46b (directive), 35ceee19d (FREEZE), bfb229004
+  (torch column), the re-grade, grade-reader, Go-Explore, batch-17,
+  review and design commits between them, and the records commit with
+  this file
+Author: Nyx[gandalf-d1f90ae1], runtime claude-opus-5-5, host M3 GANDALF
+Invoked by: operator, "NYX -- OPERATOR DIRECTIVE, effective immediately"
+================================================================================
+
+0. WHAT THIS PACKET IS
+   One working block covering the operator's queue: a full-domain
+   replication (frozen, then executed on one of two observer columns),
+   three maintenance items, twenty new cuts, one adversarial review and
+   one experiment design.
+   CONFLICT OF INTEREST: the author wrote the replication packet AND ran
+   its torch column. The verdicts on its rows are Harmonia's; nothing
+   below is a verdict.
+
+1. CONTEXT
+   On 09-18 a search over Lenia parameters showed that the ASAL
+   "open-endedness" score puts some living Lenia forms below a scene-garbage
+   reference. Only 395 of the 1,045 planned draws could run on the old
+   port. On 09-30 the native observer agreed with the reconstructed one
+   (HARM-56: observer-stable), which authorised a new preregistered
+   replication over the full domain.
+
+2. QUESTIONS
+   N1  Does the phenomenon hold on the never-executed part of the domain,
+       and do the two observers agree on it?
+   1-2 Apply two provenance rulings.
+   3   Repair my own known-wrong Go-Explore cut.
+   4   Cut 20 new bodies.
+   5   Attack the surprise-scheduler proposal.
+   6   Design the minimum arms that separate an archive search's three
+       bundled effects.
+
+3. WHAT WAS DONE (E3 = executed this session)
+   N1 pre-freeze gates [E3]:
+     domain:      537 of 548 catalogue members accepted by position;
+                  11 excluded (larger than the world); 0 refused;
+                  300 of 300 fresh draws accepted
+     fixture:     all controls pass; the 09-18 thresholds reproduce to 0.0
+     determinism: 395 of 395 old rollouts byte-identical; an adversarial
+                  set of 161 identical across two processes
+   Freeze 772abcce. Torch column on M3: 1,037 rollouts in 2,400 s [E3].
+   Post-search controls [E3]:
+     C-SELF   1,037 of 1,037 re-scored identically (max |diff| 0.0)
+     C-REPRO  154 of 154 old catalogue scores identical (0.0)
+   Frames went to M2 on an orphan branch.
+   1  21 cuts left provenance UNKNOWN (16 RECONSTRUCTION, 5 ORIGINAL).
+   2  The grade reader maps derived rollout records to
+      DERIVED_RECOVERY_ARTIFACT; tests include a cheat control.
+   3  Go-Explore cut repaired: the selection weight is a SUM, and two
+      organs were added. The 09-17 wording is kept in the docstring.
+   4  20 bodies, 78 organs. Four read-only readers produced notes; I
+      checked 25 of their line citations (all matched) before writing
+      any cut.
+   5  The review was filed (#1268).
+   6  Ladder design plus toy-tested reference code. No real run.
+
+4. RESULTS -- N1 torch column, DESCRIPTIVE (Harmonia adjudicates)
+   stratum   alive    below 0.8167   classes of crossers          min
+   S0_NEW    383/383     4           METRIC 3, GENUINE 1          0.80724
+   NEW_ALL   605         78          METRIC 38, UNCL 39, GEN 1    0.77353
+   S0_OLD    152/154     5           (as on 09-18)                0.80763
+   NEW_ALL has 28 rollouts below the 2-sd line (0.79996).
+   Row I2 (both METRIC and GENUINE crossers on new points) rests on ONE
+   genuine crosser. It is the row nearest its edge.
+
+5. REPOSITORY CHANGES
+   New:
+   - the replication module (executor, preregistration, gate records,
+     rows, readouts, manifest);
+   - the archive-arm module and its tests;
+   - 20 cut scripts and fossil records (atlas 123 -> 143);
+   - two ledger-tooling changes;
+   - one corrected cut.
+   Tests: 52 -> 59 passing.
+   Orphan branch asal-repl-001-frames-transfer (134 MB of frames). It must
+   never be merged.
+
+6. NOT ESTABLISHED
+   - No row of the replication packet has a verdict. The native column
+     has not run.
+   - The 20 cuts are reader-assisted. Only the cited ranges were
+     spot-checked, not every line. Composition edges were deliberately
+     omitted.
+   - The archive ladder has not run on any real world.
+   - The Avida ancestry packet is still unadjudicated (5 days).
+
+7. MY ERRORS IN THIS BLOCK
+   7.1 The batch-17 generator chained "feeds" edges between organs that
+       nobody had read. Caught and removed before the commit.
+   7.2 The first toy control for the archive ladder assumed that new-cell
+       acceptance matters on flat plateaus. It does not: neutral moves
+       already found cells. The design was corrected before any real run.
+   7.3 A heredoc patch failed on quoting, a known trap. It was redone as
+       targeted edits; no file was left half-patched.
+   7.4 The heartbeats Aporia asked for on 09-30 were three days late.
+
+8. OWED
+   Harmonia: the native column plus verdicts on I1-I5 (#1270); the Avida
+             verdict (#1069).
+   Nyx:      Stage D' on each return; then poet-enhanced-2020; the
+             archive ladder needs an operator go, a numba port and a
+             preregistration before any run.
+
+9. QUESTIONS FOR THE REVIEWER
+   1. FALSIFICATION. I2 passes or fails on a single GENUINE crosser. If
+      its class flips under the native observer's d_clip, should I2 read
+      FAILED, or INDETERMINATE because it sits at the edge?
+   2. The author ran the column whose numbers the packet predicts, after
+      freezing it. Is post-freeze execution by the author acceptable when
+      the controls (C-SELF, C-REPRO) are exact, or should execution move
+      to another seat as well?
+   3. Reader-assisted cuts: are 25 spot-checks across 20 bodies enough to
+      license ACCEPTED status? What sampling rate would you require?
+   4. STOP: the atlas grew from 123 to 143 bodies while the headline count
+      (mechanisms that survived transplant) stays 0. Should cutting stop
+      until a transplant succeeds?
+
+10. REPRODUCE (Techne's asal107 env on M3)
+    python -B -m nyx.atlas.experiments.asal_replication.replicate --stage domain|fixture|determinism|search|selfcheck
+    (the search refuses without the FREEZE)
+    pytest nyx/tests -> 59 passed
+================================================================================
