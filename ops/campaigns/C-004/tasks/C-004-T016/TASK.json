@@ -1,0 +1,73 @@
+{
+  "schema": "prometheus.workgraph.task.v1",
+  "task_id": "C-004-T016",
+  "campaign_id": "C-004",
+  "title": "S2 adapter: finite runtime outputs -> producer receipts (the producer/consumer boundary)",
+  "objective": "Implement the small adapter that turns finite-world executions and ruler/gate outcomes into producer receipts, so the consumer sees only receipts and bytes across the boundary.",
+  "parent_objective": "RSO-METHODS-SLICE-001 (CAMPAIGN.json objective)",
+  "owner_role": "Cadmus",
+  "quality_class": "Q2",
+  "can_downgrade": false,
+  "escalate_to": "Q3",
+  "depends_on": [
+    "C-004-T010",
+    "C-004-T013"
+  ],
+  "requires_shas": [
+    "09dc8c38b (closure review)",
+    "3bd02f393 (v0.4 synthesis, merged)"
+  ],
+  "owns": [
+    "rso/slice001/adapter.py",
+    "rso/slice001/tests/test_adapter.py"
+  ],
+  "reads": [
+    "rso/slice001/contract/CONTRACT.md",
+    "rso/slice001/contract/contract.json",
+    "docs/phase3/synthesis/ENCELADUS-DIONYSUS-v0.4/NEXT_ROUND_PLAN_v0.4.md",
+    "docs/phase3/closure/FABLE-5.1/CLOSURE_REVIEW_v0.4.md",
+    "roles/rso-builder-role/",
+    "rso/slice001/world.py",
+    "rso/slice001/receipt.py"
+  ],
+  "problem": "Closure F and plan s2 S2: one finite transition fixture with a producer and consumer receipt boundary and a small adapter. The adapter records code/inputs/outputs identities, execution status and resources (plan s3 Receipt) and never sets authority or outcome fields itself beyond what the ruler/gate returned.",
+  "non_goals": [
+    "No universal runtime adapter (plan s1: no universal runtime)",
+    "Do not copy code, tests or verdict policies from the Fable or ASTRA harnesses; they are reference and adversarial corpora (SOURCES.md B; NEXT_ROUND_PLAN_v0.4 s1)",
+    "Python >= 3.8 standard library only; no package installation (MWO-0004 R2)"
+  ],
+  "evidence_required": [
+    "RED: a round-trip test (world run -> receipt -> checker) fails before the adapter exists",
+    "GREEN: round trip passes; a cheat control shows the consumer refuses a receipt whose recorded outputs differ from the bytes supplied"
+  ],
+  "acceptance": {
+    "command": "python -B -m rso.slice001.ci",
+    "condition": "round-trip and cheat-control tests pass"
+  },
+  "deliverables": [
+    "rso/slice001/adapter.py",
+    "rso/slice001/tests/test_adapter.py"
+  ],
+  "kind": "software",
+  "status": "READY",
+  "history": [
+    {
+      "status": "PROPOSED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-03T11:04:14Z",
+      "note": "created under C-004-T000 decomposition"
+    },
+    {
+      "status": "READY",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-03T11:04:14Z",
+      "note": "made READY by the coordinator (C-004-T000)"
+    }
+  ],
+  "authority": "operator directive 2026-10-03 s9, s11 (roles/Achilles/prompts/2026-10-03_rso_builder_cell/01_OPERATOR_DIRECTIVE_verbatim.md); decomposed by Palamedes under C-004-T000",
+  "resource_ceiling": {
+    "engineering": "<= 1.5 Q2 seat-hours",
+    "cpu": "< 1 CPU-minute",
+    "note": "Counts toward the slice caps fixed by C-004-OP1 (NEXT_ROUND_PLAN_v0.4 s6 proposal: 30 CPU-minutes total, 0 GPU, 0 cloud, 100 MB new artifacts, 12 top-level validation launches; mutation children count toward CPU). Stop at the first exhausted cap and keep partial results."
+  }
+}

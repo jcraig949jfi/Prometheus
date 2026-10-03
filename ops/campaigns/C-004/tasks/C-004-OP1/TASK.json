@@ -1,0 +1,54 @@
+{
+  "schema": "prometheus.workgraph.task.v1",
+  "task_id": "C-004-OP1",
+  "campaign_id": "C-004",
+  "title": "OPERATOR DECISION OP-1: authorize the slice caps",
+  "objective": "The operator authorizes absolute caps for S1-S5 as executed by the five-seat cell, or amends them.",
+  "parent_objective": "RSO-METHODS-SLICE-001 (CAMPAIGN.json objective)",
+  "owner_role": "operator",
+  "quality_class": "Q2",
+  "can_downgrade": false,
+  "escalate_to": "Q3",
+  "depends_on": [],
+  "requires_shas": [
+    "09dc8c38b (closure review)",
+    "3bd02f393 (v0.4 synthesis, merged)"
+  ],
+  "owns": [],
+  "reads": [
+    "docs/phase3/synthesis/ENCELADUS-DIONYSUS-v0.4/NEXT_ROUND_PLAN_v0.4.md",
+    "docs/phase3/closure/FABLE-5.1/CLOSURE_REVIEW_v0.4.md"
+  ],
+  "problem": "NEXT_ROUND_PLAN_v0.4 s6 proposed caps for ONE builder (six Enceladus engineering hours, three Dionysus review hours, 30 CPU-minutes on one local CPU worker, 0 GPU-hours, 0 cloud spend, 100 MB new artifacts, <= 12 top-level validation launches, two working days after acceptance, one repair round). Closure review D09 accepts them; closure review G makes authorizing the caps the operator's condition, and plan s3 puts the approved caps in the S1 contract. The cell replaces the single builder, so the engineering-hour line needs restating. OPTIONS: (1) adopt s6 unchanged and read 'six engineering hours' as the cell's total Q2+Q1 seat-hours (tight; coordination overhead is real); (2) adopt s6 compute/artifact/launch/repair caps unchanged and set cell engineering at 12 Q2 seat-hours + 4 Q1 seat-hours, reviewer 3 hours, elapsed 3 working days after this decision; (3) other figures. RECOMMENDATION: (2). Compute caps are far inside MWO-0004 R2 already; only model time and elapsed time actually bind. Reversible: a later decision may raise or lower them.",
+  "non_goals": [
+    "No work is executed under this packet"
+  ],
+  "evidence_required": [
+    "the operator's ruling recorded verbatim in this packet's history"
+  ],
+  "acceptance": {
+    "condition": "the operator's decision is recorded in history and the packet is CLOSED"
+  },
+  "deliverables": [
+    "the ruling, copied by C-004-T004 into contract.json caps"
+  ],
+  "kind": "operations",
+  "status": "READY",
+  "history": [
+    {
+      "status": "PROPOSED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-03T11:04:14Z",
+      "note": "created under C-004-T000 decomposition"
+    },
+    {
+      "status": "READY",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-03T11:04:14Z",
+      "note": "made READY by the coordinator (C-004-T000)"
+    }
+  ],
+  "authority": "operator directive 2026-10-03 s9, s11 (roles/Achilles/prompts/2026-10-03_rso_builder_cell/01_OPERATOR_DIRECTIVE_verbatim.md); decomposed by Palamedes under C-004-T000",
+  "notes": "OPERATOR DECISION packet. owner_role 'operator': only the operator decides; Palamedes records the ruling verbatim in history and moves the packet to CLOSED so dependents unblock. quality_class is nominal (the campaign declares no operator class); nobody claims this for implementation.",
+  "red_required": false
+}

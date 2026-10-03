@@ -1,0 +1,75 @@
+{
+  "schema": "prometheus.workgraph.task.v1",
+  "task_id": "C-004-T005",
+  "campaign_id": "C-004",
+  "title": "S1 independent expected-answer table derived from the frozen contract",
+  "objective": "Derive, from the frozen S1 contract alone and before seeing any implementation, the expected typed answer and reason for every registered case of T01-T08 and E01-E06.",
+  "parent_objective": "RSO-METHODS-SLICE-001 (CAMPAIGN.json objective)",
+  "owner_role": "Dionysus",
+  "quality_class": "Q3",
+  "can_downgrade": false,
+  "escalate_to": "operator",
+  "depends_on": [
+    "C-004-T004",
+    "C-004-OP3"
+  ],
+  "requires_shas": [
+    "09dc8c38b (closure review)",
+    "3bd02f393 (v0.4 synthesis, merged)"
+  ],
+  "owns": [
+    "rso/slice001/expected/"
+  ],
+  "reads": [
+    "rso/slice001/contract/CONTRACT.md",
+    "rso/slice001/contract/contract.json",
+    "docs/phase3/synthesis/ENCELADUS-DIONYSUS-v0.4/NEXT_ROUND_PLAN_v0.4.md",
+    "docs/phase3/closure/FABLE-5.1/CLOSURE_REVIEW_v0.4.md"
+  ],
+  "problem": "Closure review F: at S1, an independent expected-answer table derived from the contract before the reviewer sees the implementation. Plan s1: exact finite cases with an independently derived expected-answer table; the two existing harnesses are not oracles for each other. The reviewer records its prior exposure (closure 'Exposure' paragraph is the model). Output is machine-readable so C-004-T020 compares implementation verdicts to it mechanically.",
+  "non_goals": [
+    "Do not open rso/slice001/ implementation or test files other than the contract directory before committing the table",
+    "Not a review of the contract's design (closure G: no further design review)"
+  ],
+  "evidence_required": [
+    "the table committed with an exposure statement before any T010-T018 code is read",
+    "every case id in contract.json has exactly one expected row (execution, authority, outcome, reason)"
+  ],
+  "acceptance": {
+    "condition": "the table exists at the deliverable path, covers every contract case id, and its commit precedes the reviewer's first read of implementation files (stated in the exposure record)"
+  },
+  "deliverables": [
+    "rso/slice001/expected/EXPECTED_ANSWERS.json",
+    "rso/slice001/expected/EXPOSURE.md"
+  ],
+  "kind": "review",
+  "status": "READY",
+  "history": [
+    {
+      "status": "PROPOSED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-03T11:04:14Z",
+      "note": "created under C-004-T000 decomposition"
+    },
+    {
+      "status": "READY",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-03T11:04:14Z",
+      "note": "made READY by the coordinator (C-004-T000)"
+    }
+  ],
+  "authority": "operator directive 2026-10-03 s9, s11 (roles/Achilles/prompts/2026-10-03_rso_builder_cell/01_OPERATOR_DIRECTIVE_verbatim.md); decomposed by Palamedes under C-004-T000",
+  "eligible_roles": [
+    "Pallas"
+  ],
+  "escalation_triggers": [
+    "a case's expected answer is not determined by the contract text (contract defect: escalate to Palamedes, do not guess)"
+  ],
+  "resource_ceiling": {
+    "engineering": "<= 1 reviewer hour of the 3 (OP-1)",
+    "cpu": "none",
+    "note": "Counts toward the slice caps fixed by C-004-OP1 (NEXT_ROUND_PLAN_v0.4 s6 proposal: 30 CPU-minutes total, 0 GPU, 0 cloud, 100 MB new artifacts, 12 top-level validation launches; mutation children count toward CPU). Stop at the first exhausted cap and keep partial results."
+  },
+  "notes": "owner_role follows closure review F (Dionysus); Pallas eligible as the fallback the operator may name under C-004-OP3. The coordinator rewrites owner_role once OP-3 is decided.",
+  "red_required": false
+}

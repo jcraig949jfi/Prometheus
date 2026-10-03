@@ -1,0 +1,54 @@
+{
+  "schema": "prometheus.workgraph.task.v1",
+  "task_id": "C-004-OP3",
+  "campaign_id": "C-004",
+  "title": "OPERATOR DECISION OP-3: independent expected-answer author (S1) and first-sight reviewer (S3/S4)",
+  "objective": "The operator confirms who derives the independent expected-answer table at S1 and runs the S3 first-sight challenge and S4 closure set.",
+  "parent_objective": "RSO-METHODS-SLICE-001 (CAMPAIGN.json objective)",
+  "owner_role": "operator",
+  "quality_class": "Q2",
+  "can_downgrade": false,
+  "escalate_to": "Q3",
+  "depends_on": [],
+  "requires_shas": [
+    "09dc8c38b (closure review)",
+    "3bd02f393 (v0.4 synthesis, merged)"
+  ],
+  "owns": [],
+  "reads": [
+    "docs/phase3/closure/FABLE-5.1/CLOSURE_REVIEW_v0.4.md",
+    "docs/phase3/synthesis/ENCELADUS-DIONYSUS-v0.4/NEXT_ROUND_PLAN_v0.4.md"
+  ],
+  "problem": "Closure review F: Dionysus (FABLE-5.1) takes the reviewer role (S1 independent expected-answer table derived from the contract before seeing the implementation; S3 5 sound + 5 broken + 10 semantic edits; S4 2 + 2 + 3), with the caveat that its model budget is the operator's to spend; if it cannot be run, the operator names another reviewer, of another model family where possible. A subagent of a builder does not count. OPTIONS: (1) Dionysus, as the closure review proposes; (2) Pallas (Fable 5.1, a different model family from the Opus builders, writes no production code) with its cell membership recorded as a declared independence caveat; (3) another reviewer. RECOMMENDATION: (1); (2) as the named fallback if Dionysus cannot be run when C-004-T004 freezes. The coordinator rewrites owner_role on C-004-T005/T030/T041 to the named reviewer.",
+  "non_goals": [
+    "No work is executed under this packet"
+  ],
+  "evidence_required": [
+    "the operator's ruling recorded verbatim in this packet's history"
+  ],
+  "acceptance": {
+    "condition": "the operator's decision is recorded in history and the packet is CLOSED"
+  },
+  "deliverables": [
+    "the ruling; owner_role of C-004-T005, C-004-T030, C-004-T041 set accordingly"
+  ],
+  "kind": "operations",
+  "status": "READY",
+  "history": [
+    {
+      "status": "PROPOSED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-03T11:04:14Z",
+      "note": "created under C-004-T000 decomposition"
+    },
+    {
+      "status": "READY",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-03T11:04:14Z",
+      "note": "made READY by the coordinator (C-004-T000)"
+    }
+  ],
+  "authority": "operator directive 2026-10-03 s9, s11 (roles/Achilles/prompts/2026-10-03_rso_builder_cell/01_OPERATOR_DIRECTIVE_verbatim.md); decomposed by Palamedes under C-004-T000",
+  "notes": "OPERATOR DECISION packet. owner_role 'operator': only the operator decides; Palamedes records the ruling verbatim in history and moves the packet to CLOSED so dependents unblock. quality_class is nominal (the campaign declares no operator class); nobody claims this for implementation.",
+  "red_required": false
+}

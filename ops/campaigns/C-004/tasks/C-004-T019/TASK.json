@@ -1,0 +1,73 @@
+{
+  "schema": "prometheus.workgraph.task.v1",
+  "task_id": "C-004-T019",
+  "campaign_id": "C-004",
+  "title": "S2 attempted-run inventory and caps ledger",
+  "objective": "Make every top-level validation launch append a row to a terminal attempted-run inventory and charge CPU seconds, launches and artifact bytes against the contract caps, refusing to start once a cap is exhausted.",
+  "parent_objective": "RSO-METHODS-SLICE-001 (CAMPAIGN.json objective)",
+  "owner_role": "Eupalamus",
+  "quality_class": "Q1",
+  "can_downgrade": false,
+  "escalate_to": "Q2",
+  "depends_on": [
+    "C-004-T003",
+    "C-004-T004"
+  ],
+  "requires_shas": [
+    "09dc8c38b (closure review)",
+    "3bd02f393 (v0.4 synthesis, merged)"
+  ],
+  "owns": [
+    "rso/slice001/ledger.py",
+    "rso/slice001/tests/test_ledger.py",
+    "rso/slice001/ci.py"
+  ],
+  "reads": [
+    "rso/slice001/contract/CONTRACT.md",
+    "rso/slice001/contract/contract.json",
+    "docs/phase3/synthesis/ENCELADUS-DIONYSUS-v0.4/NEXT_ROUND_PLAN_v0.4.md",
+    "docs/phase3/closure/FABLE-5.1/CLOSURE_REVIEW_v0.4.md",
+    "roles/rso-builder-role/",
+    "rso/slice001/ci.py"
+  ],
+  "problem": "Plan s3 Anchors: a terminal attempted-run inventory (every attempt, including failures and retries), with who supplied it and when. Plan s6: charge failures, retries, mutation children, analysis and confirmation attempts; stop at the first exhausted cap; keep partial/censored results. The inventory is append-only JSONL written with per-record flush; the ledger reads the caps from contract.json and only counts (no semantics).",
+  "non_goals": [
+    "Does not decide what counts as a scientific attempt beyond 'every launch of the CI command or the mutation runner'; anything else is escalated",
+    "No anchor custody (OP-2)",
+    "Python >= 3.8 standard library only; no package installation (MWO-0004 R2)"
+  ],
+  "evidence_required": [
+    "RED: a test that the 13th launch under a 12-launch cap is refused fails before implementation",
+    "GREEN: refusal works; a failed launch is still inventoried (cheat control: a crashing run leaves a row)"
+  ],
+  "acceptance": {
+    "command": "python -B -m rso.slice001.ci",
+    "condition": "ledger and inventory tests pass"
+  },
+  "deliverables": [
+    "rso/slice001/ledger.py",
+    "rso/slice001/tests/test_ledger.py"
+  ],
+  "kind": "software",
+  "status": "READY",
+  "history": [
+    {
+      "status": "PROPOSED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-03T11:04:14Z",
+      "note": "created under C-004-T000 decomposition"
+    },
+    {
+      "status": "READY",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-03T11:04:14Z",
+      "note": "made READY by the coordinator (C-004-T000)"
+    }
+  ],
+  "authority": "operator directive 2026-10-03 s9, s11 (roles/Achilles/prompts/2026-10-03_rso_builder_cell/01_OPERATOR_DIRECTIVE_verbatim.md); decomposed by Palamedes under C-004-T000",
+  "resource_ceiling": {
+    "engineering": "<= 1.5 Q1 seat-hours",
+    "cpu": "< 1 CPU-minute",
+    "note": "Counts toward the slice caps fixed by C-004-OP1 (NEXT_ROUND_PLAN_v0.4 s6 proposal: 30 CPU-minutes total, 0 GPU, 0 cloud, 100 MB new artifacts, 12 top-level validation launches; mutation children count toward CPU). Stop at the first exhausted cap and keep partial results."
+  }
+}

@@ -1,0 +1,59 @@
+{
+  "schema": "prometheus.workgraph.task.v1",
+  "task_id": "C-004-T050",
+  "campaign_id": "C-004",
+  "title": "S5 methods-only report, costs, release receipt and the operator's decision packet",
+  "objective": "Write the S5 methods-only report with all three C1 fields per claim, C4 stages, first-sight and post-repair scores with denominators, costs against caps, and the operator's options.",
+  "parent_objective": "RSO-METHODS-SLICE-001 (CAMPAIGN.json objective)",
+  "owner_role": "Palamedes",
+  "quality_class": "Q2",
+  "can_downgrade": false,
+  "escalate_to": "Q3",
+  "depends_on": [
+    "C-004-T041"
+  ],
+  "requires_shas": [
+    "09dc8c38b (closure review)",
+    "3bd02f393 (v0.4 synthesis, merged)"
+  ],
+  "owns": [
+    "rso/slice001/S5_REPORT.md",
+    "ops/campaigns/C-004/tasks/"
+  ],
+  "reads": [
+    "rso/slice001/",
+    "rso/slice001/contract/",
+    "docs/phase3/synthesis/ENCELADUS-DIONYSUS-v0.4/NEXT_ROUND_PLAN_v0.4.md",
+    "docs/phase3/closure/FABLE-5.1/CLOSURE_REVIEW_v0.4.md"
+  ],
+  "problem": "Plan s2 S5: methods-only receipt and costs; the operator chooses: accept narrower scope, authorize one native witness, revise with a new budget, or stop. Report first-sight and post-repair scores separately. The report must be able to recommend stopping (base role s4). Release receipt per rso-builder-role s6.9.",
+  "non_goals": [
+    "No scientific claim beyond the slice; no recursion language; no native-witness work"
+  ],
+  "evidence_required": [
+    "report and release receipt committed; review packet produced (base role s4)"
+  ],
+  "acceptance": {
+    "condition": "report committed; an OPERATOR DECISION packet for S5 created"
+  },
+  "deliverables": [
+    "rso/slice001/S5_REPORT.md",
+    "ops/campaigns/C-004/tasks/C-004-OP5/TASK.json"
+  ],
+  "kind": "document",
+  "status": "PROPOSED",
+  "history": [
+    {
+      "status": "PROPOSED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-03T11:04:14Z",
+      "note": "created under C-004-T000 decomposition"
+    }
+  ],
+  "authority": "operator directive 2026-10-03 s9, s11 (roles/Achilles/prompts/2026-10-03_rso_builder_cell/01_OPERATOR_DIRECTIVE_verbatim.md); decomposed by Palamedes under C-004-T000",
+  "resource_ceiling": {
+    "engineering": "<= 1 Q2 seat-hour",
+    "note": "Counts toward the slice caps fixed by C-004-OP1 (NEXT_ROUND_PLAN_v0.4 s6 proposal: 30 CPU-minutes total, 0 GPU, 0 cloud, 100 MB new artifacts, 12 top-level validation launches; mutation children count toward CPU). Stop at the first exhausted cap and keep partial results."
+  },
+  "red_required": false
+}
