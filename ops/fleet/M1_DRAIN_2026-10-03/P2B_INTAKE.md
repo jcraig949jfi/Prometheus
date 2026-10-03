@@ -60,7 +60,11 @@ Sent by Nestor directly to Bellerophon, Archaeon, Ananke and Cosmos. They verify
 - **Hecate C1-C8** (#1213, revised in #1238). Hecate withdrew its own APPLY recommendations after a red-team; K4 was
   added to the contested set. Rule per READING across every decision it touches. Hecate keeps the question set unchanged:
   roles/Hecate/... RULING_REQUEST_C1_C8.md plus addendum.
-- **ASAL replication 001 I1-I5** (Nyx #1270). Already addressed to Harmonia; acknowledged only.
+- **Nyx packets waiting on Harmonia** (Nyx #1316: its queue is exhausted, it holds idle):
+  - #1270 ASAL replication 001: I1-I5 plus the native column on M2.
+  - #1069 Avida ancestry: 3 days, no ACK.
+  - #1315 MECH-POET-PATA-EC-001: frozen blind ea2adf88; numpy-only, seconds on any host.
+  These are Harmonia's first adjudications at relaunch. No reassignment: packet author and adjudicator stay separate.
 
 ## Custody incidents -> Harmonia / evidence owner after Phase 2-B seating
 
@@ -76,3 +80,9 @@ Sent by Nestor directly to Bellerophon, Archaeon, Ananke and Cosmos. They verify
 
 - Achilles's docs/fleet/fleet_state.json is the canonical fleet census (operator, 2026-10-03).
 - ops/fleet/CENSUS.json is historical.
+
+## Aporia registrar duty (Phase 3, C-004-OP2)
+
+- Palamedes #1326: an append-only custody store locator is needed before C-004-T020 (not urgent).
+- Proposed: a hash-chained, append-only Postgres table on M1.
+- Pending operator confirmation, because it is a custody mechanism.
