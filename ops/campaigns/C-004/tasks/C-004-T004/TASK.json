@@ -79,6 +79,6 @@
     "cpu": "< 1 CPU-minute",
     "note": "Counts toward the slice caps fixed by C-004-OP1 (NEXT_ROUND_PLAN_v0.4 s6 proposal: 30 CPU-minutes total, 0 GPU, 0 cloud, 100 MB new artifacts, 12 top-level validation launches; mutation children count toward CPU). Stop at the first exhausted cap and keep partial results."
   },
-  "notes": "Freeze before S2 tests is the plan's ordering rule (s2 S1: 'Commit before testing the new implementation'). kind document: GREEN is the validated freeze commit.",
+  "notes": "Freeze before S2 tests is the plan's ordering rule (s2 S1: 'Commit before testing the new implementation'). kind document: GREEN is the validated freeze commit. OPERATOR 2026-10-03: caps from C-004-OP1 (APPROVED); custody from C-004-OP2 (operator authority, Aporia registrar); reviewer from C-004-OP3 (Pallas, Dionysus fallback). FD-A3 (Cadmus CHANNEL clamp, draft A) is a PROPOSED clause: it must not block T001 integration and is accepted or dropped here, after drafts B (T002) and T003 are available, with the reason recorded.",
   "red_required": false
 }

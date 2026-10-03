@@ -5,7 +5,7 @@
   "title": "S3 first-sight challenge: 5 fresh sound, 5 fresh broken, 10 semantic edits against frozen S2",
   "objective": "Run the independent first-sight challenge on the frozen S2 implementation: commit the attack set before observing outcomes, execute it, and report the first-sight score with denominators.",
   "parent_objective": "RSO-METHODS-SLICE-001 (CAMPAIGN.json objective)",
-  "owner_role": "Dionysus",
+  "owner_role": "Pallas",
   "quality_class": "Q3",
   "can_downgrade": false,
   "escalate_to": "operator",
@@ -53,13 +53,13 @@
   ],
   "authority": "operator directive 2026-10-03 s9, s11 (roles/Achilles/prompts/2026-10-03_rso_builder_cell/01_OPERATOR_DIRECTIVE_verbatim.md); decomposed by Palamedes under C-004-T000",
   "eligible_roles": [
-    "Pallas"
+    "Dionysus"
   ],
   "resource_ceiling": {
     "engineering": "<= 1.5 reviewer hours of the 3 (OP-1)",
     "cpu": "< 10 CPU-minutes incl. mutation children",
     "note": "Counts toward the slice caps fixed by C-004-OP1 (NEXT_ROUND_PLAN_v0.4 s6 proposal: 30 CPU-minutes total, 0 GPU, 0 cloud, 100 MB new artifacts, 12 top-level validation launches; mutation children count toward CPU). Stop at the first exhausted cap and keep partial results."
   },
-  "notes": "PROPOSED until C-004-T020 integrates and OP-3 names the reviewer; owner_role rewritten then.",
+  "notes": "Reviewer per C-004-OP3 ruling 2026-10-03: Pallas (Fable 5.1) owns; Dionysus is the fallback (eligible). Independence caveat, declared: Pallas is a member of the RSO Builder Cell but writes no production code and is a different model family from the Opus/Sonnet builders. PROPOSED until its inputs exist. Changed by Palamedes[harry1-679179c6] at 2026-10-03T21:48:40Z: owner_role Dionysus -> Pallas, eligible Pallas -> Dionysus.",
   "red_required": false
 }
