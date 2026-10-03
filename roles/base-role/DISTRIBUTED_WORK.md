@@ -123,6 +123,7 @@ residue to prose.
     RECOMMENDATION:    which option, and why
     CAPABILITY_NEEDED: the class or role that can decide (e.g. Q3, the coordinator, the operator)
 
+To propose work that has no packet yet, write `TASK_ID: NEW` and name the file escalations/NEW_<Seat>_<date>_<n>.md.
 `python -m workgraph escalation-template <task>` prints it; `check-escalation <file>` validates it. Commit
 the body under the campaign's escalations/, move the task to ESCALATED (or BLOCKED for a named external
 dependency), and post it on comms to the escalation target with `--task-ref <TASK_ID>`. A reversible
@@ -179,8 +180,11 @@ Receipts are read-only inputs for fleet observability (the census); observers do
     python -m workgraph status [<C-id>]       counts, and READY tasks still waiting on dependencies
 
 Comms carries notification, not state: post a short report with `--task-ref <TASK_ID>` on claim,
-escalation and completion (python -m comms post ...). Executable, portable attempts may run as Fabric
-Tasks with the packet path in params; the packet stays the record. A stale lease (holder gone, no push for
+escalation and completion (`python -m comms post --from <Seat> --to <coordinator> --kind report --subject
+"<TASK_ID> <STATE>" --body-file <f> --task-ref <TASK_ID>`). Executable, portable attempts may run as
+Fabric Tasks (`python -m fabric submit ...`, fabric/README.md s3) with the packet path in the prompt or
+params; the packet stays the record. Fabric's A2A v1.0 gateway (fabric/PROTOCOL.md; stateless, run with
+`python -m fabric gateway --port 8710`) exposes the same Fabric Tasks to A2A clients. A stale lease (holder gone, no push for
 an unreasonable interval) is reported to the coordinator, who releases it with a history note; nobody
 deletes another seat's lease silently.
 

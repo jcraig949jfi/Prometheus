@@ -87,3 +87,36 @@ def test_fresh_session_pointers_exist():
     assert "Starting a seat session" in readme and "roles/base-role/WAKE_DIRECTIVE.md" in readme
     wake = (ROLES / "base-role" / "WAKE_DIRECTIVE.md").read_text(encoding="utf-8")
     assert "You are <Seat>. Bootstrap from Prometheus." in wake
+
+
+# --- the RSO Builder Cell (operator directive 2026-10-03) ---------------------------------------------------
+CELL = ("Palamedes", "Pallas", "Argus", "Cadmus", "Eupalamus")
+
+
+def test_the_rso_builder_cell_is_discoverable_from_the_repository_alone():
+    import json
+    roster = comms_api.roster()
+    table = _shared_table()
+    entries = _entry_rows()
+    assert table.get("rso-builder-role") == sorted(CELL)
+    for seat in CELL:
+        assert seat in roster, seat + " not addressable on comms"
+        assert entries.get(seat) == "RESPONSIBILITIES.md", seat + " has no entry-file row"
+        text = (ROLES / seat / "RESPONSIBILITIES.md").read_text(encoding="utf-8")
+        assert BASE_BANNER in text and "Inherits roles/rso-builder-role/RESPONSIBILITIES.md" in text, seat
+        wake = (ROLES / seat / "WAKE.md").read_text(encoding="utf-8")
+        assert "You're @roles/{} Bootstrap.".format(seat) in wake and "workgraph ready " + seat in wake, seat
+        ws = json.loads((ROLES / seat / "WORK_STATE.json").read_text(encoding="utf-8"))
+        assert ws["seat"] == seat and ws.get("state"), seat
+    assert (ROLES / "rso-builder-role" / "SOURCES.md").exists()
+
+
+def test_the_cell_campaign_names_real_seats_and_one_ready_seed_for_the_coordinator():
+    from workgraph import core
+    camps = core.load_campaigns()
+    _, c = camps["C-004"]
+    assert c["coordinator_role"] == "Palamedes" and set(c["members"]) == set(CELL)
+    assert all((ROLES / m).is_dir() for m in c["members"])
+    assert {"Q1", "Q2", "Q3"} <= set(c["quality_classes"])
+    tasks = core.load_tasks()
+    assert tasks["C-004-T000"][1]["owner_role"] == "Palamedes"

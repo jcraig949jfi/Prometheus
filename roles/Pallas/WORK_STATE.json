@@ -1,0 +1,34 @@
+{
+  "schema": "prometheus.work_state.v1",
+  "seat": "Pallas",
+  "mwo_id": "MWO-0004",
+  "authority": "operator directive 2026-10-03 (roles/Achilles/prompts/2026-10-03_rso_builder_cell/01_OPERATOR_DIRECTIVE_verbatim.md)",
+  "updated_at_utc": "2026-10-03T00:00:00Z",
+  "state": "READY",
+  "branch": null,
+  "head_sha": null,
+  "model": "claude-fable-5-1 (preferred; record the runtime string at boot)",
+  "host": "unassigned (recorded at first boot; the seat is not bound to a machine)",
+  "current_objective": "RSO Builder Cell member, campaign C-004 (RSO-METHODS-SLICE-001)",
+  "current_step": "created by Achilles 2026-10-03; never booted",
+  "in_flight": [],
+  "finish_condition": "per claimed packet (DISTRIBUTED_WORK.md)",
+  "next_expected_milestone": "first boot",
+  "expected_next_artifact": "first claimed C-004 packet",
+  "threads": [
+    "phase3-rso"
+  ],
+  "campaigns": [
+    "C-004"
+  ],
+  "experiments": [],
+  "fabric_tasks": [],
+  "running": [],
+  "blocked_on": [],
+  "next_actions": [
+    "boot (WAKE.md)",
+    "python -m workgraph ready Pallas"
+  ],
+  "operator_decisions_required": [],
+  "latest_reports": []
+}
