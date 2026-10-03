@@ -35,6 +35,9 @@ autoinstall:
   # Runs first. The installer re-reads /autoinstall.yaml after early-commands, so this edit takes effect.
   # No Wi-Fi card: the placeholder becomes "wlan-none" (optional, so it's ignored).
   early-commands:
+    # SAFETY (P52s 2026-10-03): with no internal disk visible, "largest disk" chose the 32 GB CIDATA USB stick and
+    # installed Ubuntu onto it. Refuse unless a non-USB disk of at least 60 GB exists; this runs before storage.
+    - "lsblk -dbno NAME,TRAN,SIZE,TYPE | awk '$4==\"disk\" && $2!=\"usb\" && $3>=60000000000 {ok=1} END {exit !ok}' || { echo 'AUTOINSTALL REFUSED: no internal (non-USB) disk >= 60 GB visible; check the drive / BIOS' > /dev/console; exit 1; }"
     - "IF=$(ls /sys/class/net | grep '^wl' | head -n1); sed -i \"s/__WIFI_IFACE__/${IF:-wlan-none}/\" /autoinstall.yaml"
 
   # Whole internal disk, LVM, root LV uses ALL the space (no 100 GB default; no lvextend needed later).
