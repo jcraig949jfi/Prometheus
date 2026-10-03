@@ -1,0 +1,82 @@
+{
+  "schema": "prometheus.workgraph.receipt.v1",
+  "task_id": "C-004-T005",
+  "campaign_id": "C-004",
+  "attempt_id": "A-001",
+  "role": "Pallas",
+  "model": "claude-fable-5-1",
+  "quality_class": "Q3",
+  "start_sha": "95305e7ec49eec4bcc469c3feb04abe07413557a",
+  "end_sha": "5c9f0bc6684f4d64540331db3eb69e3cb9f01a25",
+  "files_changed": [
+    "rso/slice001/expected/EXPECTED_ANSWERS.json",
+    "rso/slice001/expected/EXPOSURE.md",
+    "rso/slice001/expected/_build_expected.py",
+    "rso/slice001/expected/COMPARISON.md",
+    "ops/campaigns/C-004/escalations/C-004-T005_1.md",
+    "roles/Pallas/journal/2026-10-03.md",
+    "roles/Pallas/STATUS.md",
+    "roles/Pallas/WORK_STATE.json",
+    "roles/Pallas/comms/",
+    "ops/campaigns/C-004/tasks/C-004-T005/"
+  ],
+  "evidence_added": [
+    "EXPECTED_ANSWERS.json: 48 rows, one per contract.json case id (execution, authority, outcome, reason, claim eligibility); committed at 3ea4af125; sha256 over LF bytes 8f5b8631c74fdab16d5ed40fd5b92935c5116861b135cb37d2b4b0984072aec3",
+    "EXPOSURE.md: reading order, what was not read, leaks through readable text, prior exposure; committed with the table at 3ea4af125",
+    "COMPARISON.md: committed at 5c9f0bc66, after the table; 43 of 48 primary values agree, 0 contradict, 5 not scorable; disagreements D1-D7 unresolved",
+    "escalation C-004-T005_1.md: contract gaps G01-G15 in the six-part shape"
+  ],
+  "evidence_executed": [
+    {
+      "command": "python -B rso/slice001/expected/_build_expected.py",
+      "result": "rows 48 gaps 15 bytes 81060; asserts passed: 48 unique ids, equal to contract.json cases in order, every gap id defined"
+    },
+    {
+      "command": "git log --format=%h -- rso/slice001/expected/EXPECTED_ANSWERS.json ; git diff --quiet 3ea4af125 5c9f0bc66 -- rso/slice001/expected/EXPECTED_ANSWERS.json",
+      "result": "one commit (3ea4af125) touches the table; unchanged at 5c9f0bc66, the commit that adds COMPARISON.md"
+    },
+    {
+      "command": "python -m workgraph check-escalation ops/campaigns/C-004/escalations/C-004-T005_1.md",
+      "result": "escalation OK"
+    },
+    {
+      "command": "python -m workgraph validate",
+      "result": "3 epic(s), 2 campaign(s), 25 task(s): OK"
+    }
+  ],
+  "red_observed": {
+    "observed": false,
+    "reason": "kind review, red_required false. Preregistered failure state: no table at rso/slice001/expected/ (true at claim, 95305e7ec)."
+  },
+  "result": "DONE_CLEAN",
+  "known_escapes": [
+    "the blinding order rests on this session's recorded reading order and on git commit order; no mechanism prevented an earlier read",
+    "contract.json prints every case's polarity, and six rows leaked their author-expected value through sections R4 allows (EXPOSURE.md s4); agreement on those rows is not independent",
+    "26 rows rest on a named assumption about a fixture whose definition sat in the blinded column (gap G01)",
+    "same model family (Fable 5.1) as the closure reviewer and the FABLE hardening corpus: correlated judgment",
+    "no row was checked by execution; counts were derived by hand",
+    "a directory listing showed the names __init__.py, ci.py, tests under rso/slice001/; none was opened"
+  ],
+  "unresolved": [
+    "4 rows carry an UNDETERMINED field: T02.CLOCKED (ruler value), E06.LOSSY (reason form), E02.RELABEL (reason code), E03.REANCHOR (G-RECOMP, CL-RET eligibility)",
+    "disagreements D1-D7 and item 2.2 of COMPARISON.md: for C-004-T020 to classify",
+    "escalation C-004-T005_1.md awaits Palamedes (option 2: spelling-only amendment before any S2 outcome)",
+    "EXPECTED_ANSWER_TABLE not yet registered with the keeper (custody.store UNSET, R3)"
+  ],
+  "unblocks": [
+    "C-004-T020"
+  ],
+  "created_at_utc": "2026-10-03T22:45:00Z",
+  "instance": "harry1-da86cf98",
+  "host": "harry1 (M4)",
+  "branch": "pallas/c004-t005",
+  "worktree_path": "C:/Prometheus-worktrees/pallas-c004-t005 (work); C:/Prometheus-worktrees/pallas-ops (state commits, sparse)",
+  "resources": {
+    "cpu": "one generator run, under 1 second",
+    "reviewer_hours": "about 1 of 3 (estimated from commit times, not metered)",
+    "gpu": "0",
+    "new_artifact_bytes": "about 110 KB"
+  },
+  "cleanup": "worktrees pallas-c004-t005 and pallas-ops left in place until integration; branch pallas/c004-t005 to be deleted after it is merged",
+  "notes": "The table was committed and pushed (3ea4af125) before draft A A6 expected/outcomes, draft B B9 expected/reason codes and B8.2 were read. COMPARISON.md and this receipt came after. T030 and T041 were not taken."
+}
