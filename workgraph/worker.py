@@ -319,13 +319,26 @@ def main(argv=None) -> int:
             print("{}  {} band {} local {}  {}".format(t["task_id"], eff["epic_id"], eff["band"], eff["local"], t["title"]))
         return 0
     store = GitStore(repo)
+    try:                                                 # systemctl stop (SIGTERM) behaves like Ctrl-C: a run in
+        import signal                                    # progress is terminated, receipted PREEMPTED_RESOURCE and
+        signal.signal(signal.SIGTERM, signal.default_int_handler)   # requeued; between runs the loop just ends
+    except (ValueError, AttributeError, OSError):
+        pass
     while True:
-        r = run_one(store, ident, base, a.poll)
+        try:
+            r = run_one(store, ident, base, a.poll)
+        except KeyboardInterrupt:
+            return 0
         print(json.dumps({k: v for k, v in r.items() if k != "receipt"}), flush=True)
         if a.once:
             return 0
+        if r["outcome"] == "PREEMPTED_RESOURCE" and str(r.get("receipt", {}).get("preempted_by", "")).startswith("operator stop"):
+            return 0
         if r["outcome"] in ("IDLE", "LOST_RACE", "REFUSED"):
-            time.sleep(a.idle_sleep if r["outcome"] == "IDLE" else 5)
+            try:
+                time.sleep(a.idle_sleep if r["outcome"] == "IDLE" else 5)
+            except KeyboardInterrupt:
+                return 0
 
 
 if __name__ == "__main__":

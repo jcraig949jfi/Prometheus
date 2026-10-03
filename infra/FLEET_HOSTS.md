@@ -28,7 +28,9 @@ laptop-class or old. No Windows host runs a Fabric worker (DEF-ODY-012); Fabric 
 
 ## Linux nodes (5)
 
-All Ubuntu Server 26.04.1, kernel 7.0.0-38, user `jcraig`, Claude Code, `~/Prometheus`. Details: `infra/ubuntu_nodes/ubuntu_server_machines.md`.
+All Ubuntu Server 26.04.1, kernel 7.0.0-38, user `jcraig`, Claude Code, `~/Prometheus`. PrometheusWorker
+(generic execution, roles/generic-worker-role/) runs on ubu001-003; installed but not started on ubu004 (no push
+access yet). Details: infra/ubuntu_nodes/ubuntu_server_machines.md "PrometheusWorkers". Details: `infra/ubuntu_nodes/ubuntu_server_machines.md`.
 
 | Host | Hardware | CPU | RAM | Disk | Net | Role / tags | State (2026-10-02) |
 |---|---|---|---|---|---|---|---|

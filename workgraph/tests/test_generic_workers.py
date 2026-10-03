@@ -303,3 +303,22 @@ def test_case_D_ownership_isolation(tmp_path):
         core.transition(n, "CLAIMED", "PrometheusWorker/testhost/w3", root=ops / "campaigns")
     assert [t["task_id"] for t in core.ready_for("Nestor", ops / "campaigns")] == ["INTERPRET"]
     assert [t[2]["task_id"] for t in Wk.eligible(_store(ops), dict(PROBE))] == ["GEN"]
+
+
+def test_operator_stop_mid_run_requeues_cleanly(tmp_path, monkeypatch):
+    """systemctl stop / Ctrl-C during a run: PREEMPTED_RESOURCE ('operator stop'), lease released, packet READY."""
+    ops = _ops(tmp_path); _campaign(ops, "C-100", "TH-P2B-ENGINE-HARDENING", "EP-PHASE2B", "Nestor")
+    d = _generic(ops, "C-100", "LONG", "Nestor", [sys.executable, "-c", "import time; time.sleep(30)"])
+    calls = {"n": 0}
+    real_sleep = Wk.time.sleep
+
+    def sleep(s):
+        calls["n"] += 1
+        if calls["n"] == 2:
+            raise KeyboardInterrupt
+        real_sleep(0.05)
+    monkeypatch.setattr(Wk.time, "sleep", sleep)
+    r = Wk.run_one(_store(ops), "PrometheusWorker/testhost/w9", tmp_path / "base", poll_s=0.05, now=NOW)
+    t = json.loads((d / "TASK.json").read_text())
+    assert r["outcome"] == "PREEMPTED_RESOURCE" and r["receipt"]["preempted_by"].startswith("operator stop")
+    assert t["status"] == "READY" and not (d / "LEASE.json").exists()
