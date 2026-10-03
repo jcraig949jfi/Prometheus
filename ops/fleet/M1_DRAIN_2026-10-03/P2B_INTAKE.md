@@ -14,7 +14,8 @@ Phase 2-B re-entry campaign. None is an emergency repair.
     finals -> RECONCILIATION_v0.2.md -> operator build decision.
   - If Theseus does not ACK: status `HOLD_REHOME`, reassigned cleanly at Phase 2-B. Do NOT give it to Achilles, and do
     not launch a new science seat for it before the reset.
-  - **Status: PENDING_ACK.**
+  - **Status: ACKED** by Theseus at 11:42Z (#1301), with an independence statement. The C4 chain is live; no
+    HOLD_REHOME.
 
 ## Defect reports
 

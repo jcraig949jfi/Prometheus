@@ -1,8 +1,8 @@
 # Sisyphus status
 
-Currency: 2026-10-01T09:54Z (from date -u).
+Currency: 2026-10-03T11:44Z (from date -u).
 
-seat state: ACTIVE. Charter ADOPTED 2026-10-01 (Phase 3 forensic crawler,
+seat state: DRAINED (M1-DRAIN-2026-10-03, comms #1290). Charter ADOPTED 2026-10-01.
   15 seats). WORK_STATE.json: READY (package delivered), MWO-0004.
 what it asserts: PRODUCTIVE (intake package written); VALID is for the
   Phase 3 designers and reviewers, not this seat.
