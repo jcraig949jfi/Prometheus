@@ -157,10 +157,10 @@ Operator: "Yes. The linux fleet for generic workers" (chat 2026-10-03). Installe
 
 | node | worker | code pinned | push access | service |
 |---|---|---|---|---|
-| ubu001 | PrometheusWorker/ubu001/ubu001-svc | fa9cd8151 | yes (node token) | enabled, active |
-| ubu002 | PrometheusWorker/ubu002/ubu002-svc | fa9cd8151 | yes (node token) | enabled, active |
-| ubu003 | PrometheusWorker/ubu003/ubu003-svc | fa9cd8151 | yes (node token) | enabled, active |
-| ubu004 | (installed) | fa9cd8151 | NO (no GitHub token yet) | installed, not started |
+| ubu001 | PrometheusWorker/ubu001/ubu001-svc | f78d18e26 | yes (node token) | enabled, active |
+| ubu002 | PrometheusWorker/ubu002/ubu002-svc | f78d18e26 | yes (node token) | enabled, active |
+| ubu003 | PrometheusWorker/ubu003/ubu003-svc | f78d18e26 | yes (node token) | enabled, active |
+| ubu004 | (installed) | f78d18e26 | NO (no GitHub token yet) | installed, not started |
 
 Per node: ~/prometheus-worker-code (detached at the pinned SHA; WORKING_CONTRACT s6), ~/prometheus-worker-state
 (detached, re-synced to origin/main by the worker), ~/prometheus-worker (runs/ and results/), systemd user unit
@@ -173,3 +173,5 @@ linger keeps it running without a login). Idle: one sync every 5 minutes, ~23 MB
 - Advance the worker code (after tests pass at the new SHA): re-run the install script with the new SHA; it
   re-pins ~/prometheus-worker-code and restarts the service. Record the advance here.
 - ubu004: enable after its GitHub token exists (shared token, tokens/shared.txt, then re-run with --enable).
+- 2026-10-03 ~10:40Z: worker code advanced fa9cd8151 -> f78d18e26 on all four (clean SIGTERM stop; tests 49 passed
+  at f78d18e26); services restarted between runs on ubu001-003.
