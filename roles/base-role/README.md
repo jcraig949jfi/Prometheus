@@ -20,6 +20,14 @@ seat inherits. Adopted by the operator 2026-09-11.
 - INHERITANCE.md -- the list of roles and the banner each carries.
 - comms/ (repository root) -- the inter-agent inbox, broadcast and task queue every seat syncs before and after each prompt; python -m comms sync <Seat>.
 - MONITORS.md -- the registry of standing loops, watchdogs and shadows: input, freshness source, dormancy threshold, alarm, state.
+- DISTRIBUTED_WORK.md -- (2026-10-03) executable work graphs: task packets, lifecycle, capability
+  classes, inference economy, structured escalation, receipts, low-coordination rules; tool
+  `python -m workgraph` (workgraph/), files under ops/campaigns/<C-id>/.
+
+Shared roles (2026-10-03): a directory roles/<name>-role/ is an inherited role layer, not a seat. A seat
+inherits base-role and may also inherit one shared role; the chain is declared on the seat's entry file
+and listed in INHERITANCE.md "Shared roles". comms roster, the census and the self-tests skip *-role
+directories.
 
 A seat's own documents ADD to these files and may not contradict them.
 Where a seat file predates this directory and disagrees, this directory
@@ -27,4 +35,6 @@ wins and the seat file is annotated, never silently rewritten.
 
 The base role tests its own claims: archaeon/tests/test_base_role.py (mandatory
 artifact paths not ignored; every role stamped; base files pure ASCII; issued
-manifests verify; the harness's linked worktrees pass the canonical guard).
+manifests verify; the harness's linked worktrees pass the canonical guard), and
+archaeon/tests/test_shared_roles.py (shared-role chains resolve; every seat is discoverable) with
+workgraph/tests/ (packet, lifecycle, capability class, receipt and escalation shapes).
