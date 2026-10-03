@@ -94,7 +94,12 @@ def inspect(path, branch_ref, procs):
     return rec
 
 
+EXCLUDED_SEATS = {"Cadmus", "Dionysus"}   # operator 2026-10-03: Cadmus (RSO builder, binding) and Dionysus (exempt for now)
+
+
 def suggest(r):
+    if r["seat"] in EXCLUDED_SEATS:
+        return "EXCLUDED (operator: Phase 3 seat stays on M1; do not touch)"
     if r.get("status_error"):
         return "ARCHIVE/NEEDS_REVIEW (status unreadable)"
     clean = (r["dirty"] == 0 and r["untracked"] == 0)
