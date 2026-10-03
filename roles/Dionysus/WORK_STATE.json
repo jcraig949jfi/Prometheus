@@ -3,7 +3,7 @@
   "seat": "Dionysus",
   "mwo_id": "MWO-0004",
   "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
-  "updated_at_utc": "2026-10-02T12:04:36Z",
+  "updated_at_utc": "2026-10-03T03:59:19Z",
   "state": "READY",
   "branch": "dionysus/phase3-design-2026-10-01",
   "head_sha": "(this commit; see git log -1 -- roles/Dionysus/WORK_STATE.json)",
@@ -11,7 +11,8 @@
   "campaigns": [
     "Phase 3 independent architect FABLE-5.1 (charter roles/Dionysus/prompts/2026-10-01_charter/, 04b97a598): DELIVERED docs/phase3/design/FABLE-5.1/",
     "Review of the Phase 3 synthesis package (directive roles/Dionysus/prompts/2026-10-01_review_charter/, b656df387): DELIVERED docs/phase3/review/FABLE-5.1/ (three responses, four preregistered runs, one file of exploratory probes)",
-    "Comparison with the ASTRA-6.0 review, synthesis with the hardening package v0.2 by ChatGPT 5.6, and my own version of that package (directive roles/Dionysus/prompts/2026-10-02_hardening_v0.2/, 47334a5ba): DELIVERED docs/phase3/hardening/FABLE-5.1/ (three documents, a reference harness that runs, and the record of the adversarial reads that broke its first three versions)"
+    "Comparison with the ASTRA-6.0 review, synthesis with the hardening package v0.2 by ChatGPT 5.6, and my own version of that package (directive roles/Dionysus/prompts/2026-10-02_hardening_v0.2/, 47334a5ba): DELIVERED docs/phase3/hardening/FABLE-5.1/ (three documents, a reference harness that runs, and the record of the adversarial reads that broke its first three versions)",
+    "Closure review of the Enceladus synthesis v0.4 (directive roles/Dionysus/prompts/2026-10-03_closure_review/): DELIVERED docs/phase3/closure/FABLE-5.1/CLOSURE_REVIEW_v0.4.md, ACCEPT_WITH_MINOR_AMENDMENTS"
   ],
   "experiments": [
     "P1 calibration-slice miniature (docs/phase3/design/FABLE-5.1/prototype/p1_slice/): v1 gate FAILED and kept; v2 PASS on fresh sealed lives; search-power curve run. C0 observations about an instrument, one host, one author, independence I1.",
@@ -22,7 +23,8 @@
   "running": [],
   "blocked_on": [],
   "next_actions": [
-    "Hardening package delivered. It waits for the operator, who relays it to the other models.",
+    "Closure review delivered. Enceladus adjudicates D01-D11 and freezes the S1 contract; the operator authorizes caps and names the anchor keeper. Then, if asked: S1 independent expected-answer table (derived from the contract before seeing the implementation), S3 first-sight set (5 sound, 5 broken, 10 semantic edits, committed before outcomes, test bodies unopened), S4 closure set (2+2+3). Three review hours accepted.",
+    "Exposure to record at S3: every current document of both packages and my own code and tests have been read; first sight applies only to the new implementation and its frozen tests.",
     "Smallest next experiment, READY and small: combination on an unseen pair (03_TEST_HARNESS_SPEC_FABLE.md section 8), under its own preregistration, on the model of counterfeit/keys.py. It is simulated, not registered; the spec lists what a registration still needs. It certifies that three separately shown families were combined, not how.",
     "Owed by someone other than me: an attack on the amended harness by an author of another model family, and organisms built to beat the two arms and the custody check of the combination world.",
     "If the hardening package's own harness code arrives (its archive was empty), run it and compare gate by gate.",
@@ -45,15 +47,13 @@
     "Custody of sealed worlds outside the working tree (A6), after the search-rule incident of 2026-10-01."
   ],
   "latest_reports": [
+    "docs/phase3/closure/FABLE-5.1/CLOSURE_REVIEW_v0.4.md",
+    "roles/Dionysus/journal/2026-10-03.md (closure review)",
     "docs/phase3/hardening/FABLE-5.1/00_README.md",
     "docs/phase3/hardening/FABLE-5.1/01_SYNTHESIS_TWO_REVIEWS_AND_HARDENING_v0.2.md",
     "docs/phase3/hardening/FABLE-5.1/harness/RECEIPT_harness_v0.json",
     "docs/phase3/hardening/FABLE-5.1/attack/README.md",
     "roles/Dionysus/journal/2026-10-02.md (the hardening pass)",
-    "docs/phase3/review/FABLE-5.1/00_README.md",
-    "docs/phase3/review/FABLE-5.1/RESPONSE_1_REVIEW_REPORT.md",
-    "docs/phase3/review/FABLE-5.1/counterfeit/README.md",
-    "docs/phase3/design/FABLE-5.1/README.md",
-    "roles/Dionysus/journal/2026-10-02.md (the review pass)"
+    "docs/phase3/review/FABLE-5.1/00_README.md"
   ]
 }
