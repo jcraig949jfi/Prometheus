@@ -149,3 +149,29 @@ The **first node built with the autoinstall stick + `provision_node.sh`** (2026-
   autoinstall layout).
 - Still to do: shared GitHub token (`tokens/shared.txt` → re-run step 4 or the whole script), Claude login, DHCP reservation for .178.
 
+
+## PrometheusWorkers on the Linux nodes (2026-10-03)
+
+Operator: "Yes. The linux fleet for generic workers" (chat 2026-10-03). Installed by Achilles with
+`infra/ubuntu_nodes/install_prometheus_worker.sh <code-sha> --enable` (idempotent; roles/generic-worker-role/).
+
+| node | worker | code pinned | push access | service |
+|---|---|---|---|---|
+| ubu001 | PrometheusWorker/ubu001/ubu001-svc | f78d18e26 | yes (node token) | enabled, active |
+| ubu002 | PrometheusWorker/ubu002/ubu002-svc | f78d18e26 | yes (node token) | enabled, active |
+| ubu003 | PrometheusWorker/ubu003/ubu003-svc | f78d18e26 | yes (node token) | enabled, active |
+| ubu004 | (installed) | f78d18e26 | NO (no GitHub token yet) | installed, not started |
+
+Per node: ~/prometheus-worker-code (detached at the pinned SHA; WORKING_CONTRACT s6), ~/prometheus-worker-state
+(detached, re-synced to origin/main by the worker), ~/prometheus-worker (runs/ and results/), systemd user unit
+~/.config/systemd/user/prometheus-worker.service (Restart=on-failure, Nice=10, PROMETHEUS_WORKER_CAPS=linux;
+linger keeps it running without a login). Idle: one sync every 5 minutes, ~23 MB RSS.
+- Log: `journalctl --user -u prometheus-worker -f` (one JSON line per cycle: IDLE / claim outcome).
+- Stop: `systemctl --user stop prometheus-worker`. SIGTERM is handled like Ctrl-C (from the code SHA that adds
+  it): a run in progress is terminated, receipted PREEMPTED_RESOURCE ("operator stop") and requeued unchanged;
+  between runs the loop simply ends (KillMode=mixed, TimeoutStopSec=300 leave time for that).
+- Advance the worker code (after tests pass at the new SHA): re-run the install script with the new SHA; it
+  re-pins ~/prometheus-worker-code and restarts the service. Record the advance here.
+- ubu004: enable after its GitHub token exists (shared token, tokens/shared.txt, then re-run with --enable).
+- 2026-10-03 ~10:40Z: worker code advanced fa9cd8151 -> f78d18e26 on all four (clean SIGTERM stop; tests 49 passed
+  at f78d18e26); services restarted between runs on ubu001-003.

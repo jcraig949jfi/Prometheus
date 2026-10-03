@@ -6,6 +6,14 @@
 > science, rewrite existing queues, or adopt this operating model on its own initiative. Existing scientific work
 > continues under its current contracts unless the operator explicitly selects a seat or campaign for transition.
 
+> **2026-10-03 (operator directive, roles/Achilles/prompts/2026-10-03_rso_builder_cell/):** the base role now carries
+> executable work graphs ([`roles/base-role/DISTRIBUTED_WORK.md`](../roles/base-role/DISTRIBUTED_WORK.md)) built on this
+> initiative's s4-s5 layout: `ops/campaigns/<C-id>/CAMPAIGN.json` + `tasks/<TASK_ID>/TASK.json` / `LEASE.json` /
+> `attempts/<A-id>/RECEIPT.json`, checked by `python -m workgraph`. It is a capability, not a migration: the transition
+> policy below still holds for existing work. First operator-selected campaign: C-004 (RSO Builder Cell). 2026-10-03: optional Epic level above Thread
+> (`ops/epics/<EP-id>/EPIC.json`; Epic -> Thread -> Campaign -> [Experiment] -> Task -> Attempt); first epic EP-PHASE3. Since 2026-10-03 three peer epics: EP-GLOBAL (permanent), EP-PHASE2B, EP-PHASE3;
+> templates in `ops/templates/` (`python -m workgraph new-campaign`).
+
 This directory holds the **Git-native lab control plane** initiative, a *proposed* future operating model for Prometheus.
 It was captured on 2026-09-27 by Harmonia at the operator's request, as information for the fleet, **not as an instruction to it.**
 

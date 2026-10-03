@@ -4,6 +4,16 @@ BOOT NOTE: read roles/Nyx/RESUME_2026-09-25.md FIRST on every bootstrap -- boot 
   frozen-artifact hashes, what is in flight on other seats, the holds, my debts, and the traps
   that have actually bitten this seat. Then this file. Then `python -m comms sync Nyx`.
 
+2026-10-03 (gandalf-d1f90ae1, runtime claude-opus-5-5) -- OPERATOR DIRECTIVE 2026-10-03 queue executed; this block wins over older ones.
+  N1 ASAL REPLICATION 001: packet + prereg FROZEN 772abcce (35ceee19d) after domain / fixture / determinism gates; torch column
+    EXECUTED on M3 (1,037 rollouts; C-SELF and C-REPRO 0.0; bfb229004); frames on orphan branch asal-repl-001-frames-transfer
+    (never merge); native column + verdict on I1-I5 with Harmonia (#1270). Descriptive only: S0_NEW min 0.8072 (4 crossers,
+    1 GENUINE), NEW_ALL min 0.7735 (78 crossers: METRIC 38, GENUINE 1).
+  Queue: (1) Techne #1188 re-grades, 21 cuts out of UNKNOWN; (2) rollout grade in the reader; (3) Go-Explore cut repaired
+    (sum not product; trail kept); (4) Techne batch 17 cut: 20 bodies, 78 organs (reader-assisted, spot-checked), atlas 143;
+    (5) surprise-scheduler review #1268; (6) archive-arm ladder design (no run). Attack on Atlas reachability #1263.
+  Open with Harmonia: replication (#1270), Avida ancestry (#1069). Next: Stage D' on returns; poet-enhanced-2020.
+
 2026-09-30 (instance gandalf-d1f90ae1, rebooted) -- CURRENT STATE; where the older sections below differ, this block wins.
   BOOT: per the resume record; merged origin/main; validators green. ADOPTED MWO-0004 (first live cycle since MWO-0001):
   roles/Nyx/WORK_STATE.json is the fleet-level pointer, this file is the narrative. The CWO 2026-09-30 queue does not list Nyx.

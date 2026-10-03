@@ -1,6 +1,6 @@
 # Dionysus status
 
-Currency: 2026-10-02T12:04:36Z (from the clock at write time).
+Currency: 2026-10-03T03:59:19Z (from the clock at write time).
 
 seat state: ACTIVE. Chartered 2026-10-01 as Phase 3 independent architect
   FABLE-5.1. Three deliverables DELIVERED: the design package
@@ -26,5 +26,6 @@ open incident: a faulty holdout exclusion in this seat's worker brief
   #1247.
 blockers: none on the seat. The hardening package's own harness code never
   arrived (its archive was empty).
-next executable action: none until the operator replies. READY follow-ups
+next executable action: none until Enceladus freezes the S1 contract
+  and the operator authorizes caps; closure review of v0.4 DELIVERED. READY follow-ups
   are listed in WORK_STATE.json.

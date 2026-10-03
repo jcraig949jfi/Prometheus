@@ -1,0 +1,86 @@
+{
+  "schema": "prometheus.workgraph.task.v1",
+  "task_id": "C-004-T020",
+  "campaign_id": "C-004",
+  "title": "S2 integration and freeze: full T01-T08 / E01-E05 matrix against the independent table; E06 reported",
+  "objective": "Integrate the S2 packets, run the full acceptance matrix against the independent expected-answer table, and freeze the implementation and test bodies for the S3 first-sight challenge.",
+  "parent_objective": "RSO-METHODS-SLICE-001 (CAMPAIGN.json objective)",
+  "owner_role": "Palamedes",
+  "quality_class": "Q2",
+  "can_downgrade": false,
+  "escalate_to": "Q3",
+  "depends_on": [
+    "C-004-T005",
+    "C-004-T010",
+    "C-004-T011",
+    "C-004-T012",
+    "C-004-T013",
+    "C-004-T014",
+    "C-004-T015",
+    "C-004-T016",
+    "C-004-T017",
+    "C-004-T018",
+    "C-004-T019"
+  ],
+  "requires_shas": [
+    "09dc8c38b (closure review)",
+    "3bd02f393 (v0.4 synthesis, merged)"
+  ],
+  "owns": [
+    "rso/slice001/tests/test_matrix.py",
+    "rso/slice001/FREEZE_S2.md",
+    "rso/slice001/MANIFEST.md"
+  ],
+  "reads": [
+    "rso/slice001/contract/CONTRACT.md",
+    "rso/slice001/contract/contract.json",
+    "docs/phase3/synthesis/ENCELADUS-DIONYSUS-v0.4/NEXT_ROUND_PLAN_v0.4.md",
+    "docs/phase3/closure/FABLE-5.1/CLOSURE_REVIEW_v0.4.md",
+    "roles/rso-builder-role/",
+    "rso/slice001/",
+    "rso/slice001/expected/"
+  ],
+  "problem": "Exit of S2: every registered case's (execution, authority, outcome, reason) equals the independent table (C-004-T005); disagreements are classified as implementation defect, contract defect or table defect and escalated, never silently resolved. E06 reported, not gating. Freeze record: the SHA, a sha256 manifest of every implementation and test file, and the run inventory row of the freezing run, so the S3 reviewer can commit edits before opening test bodies (plan s5).",
+  "non_goals": [
+    "No change to contract or expected table to make the matrix pass (rso-builder-role s2.3)",
+    "Not a review of every commit (rso-builder-role s6)"
+  ],
+  "evidence_required": [
+    "a matrix test that compares every case to rso/slice001/expected/EXPECTED_ANSWERS.json",
+    "FREEZE_S2.md with SHA and manifest; the run inventory row"
+  ],
+  "acceptance": {
+    "command": "python -B -m rso.slice001.ci",
+    "condition": "zero mismatches against the independent table, or every mismatch escalated and the packet BLOCKED; freeze manifest verifies"
+  },
+  "deliverables": [
+    "rso/slice001/tests/test_matrix.py",
+    "rso/slice001/FREEZE_S2.md",
+    "rso/slice001/MANIFEST.md"
+  ],
+  "kind": "software",
+  "status": "READY",
+  "history": [
+    {
+      "status": "PROPOSED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-03T11:04:14Z",
+      "note": "created under C-004-T000 decomposition"
+    },
+    {
+      "status": "READY",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-03T11:04:14Z",
+      "note": "made READY by the coordinator (C-004-T000)"
+    }
+  ],
+  "authority": "operator directive 2026-10-03 s9, s11 (roles/Achilles/prompts/2026-10-03_rso_builder_cell/01_OPERATOR_DIRECTIVE_verbatim.md); decomposed by Palamedes under C-004-T000",
+  "escalation_triggers": [
+    "a mismatch whose class (implementation/contract/table) is not determinable"
+  ],
+  "resource_ceiling": {
+    "engineering": "<= 2 Q2 seat-hours",
+    "cpu": "< 3 CPU-minutes, <= 2 launches",
+    "note": "Counts toward the slice caps fixed by C-004-OP1 (NEXT_ROUND_PLAN_v0.4 s6 proposal: 30 CPU-minutes total, 0 GPU, 0 cloud, 100 MB new artifacts, 12 top-level validation launches; mutation children count toward CPU). Stop at the first exhausted cap and keep partial results."
+  }
+}

@@ -1,0 +1,736 @@
+{
+ "schema": "nyx.atlas/0",
+ "fossil_id": "omni-epic-faldor-zhang-2024",
+ "techne_record": "techne/fossils/specimens/omni-epic-faldor-zhang-2024/record.json",
+ "whole_system": {
+  "FOSSIL_ID": {
+   "value": "omni-epic-faldor-zhang-2024",
+   "basis": "TECHNE_RECORD"
+  },
+  "CANONICAL_NAME": {
+   "value": "OMNI-EPIC -- OMNI-EPIC: Open-endedness via Models of human Notions of Interestingness with Environments Programmed in Code (Faldor, Maxence and Zhang, Jenny and Cully, Antoine and Clune, Jeff; NOT_FOUND_AT_PIN (institution not stated in tree); 2024)",
+   "basis": "TECHNE_RECORD"
+  },
+  "VERSION": {
+   "value": "github.com/maxencefaldor/omni-epic main @ af2a3c64f40bc48178c08e1beb76a0aafdd2a167 (committed 2024-12-26; 5 commits since 2024-08-30; 234 tracked files)",
+   "basis": "TECHNE_RECORD"
+  },
+  "ERA": {
+   "value": "2024",
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_SYSTEM": {
+   "value": {
+    "domain": [
+     "open-ended-learning",
+     "llm-task-generation",
+     "environment-generation",
+     "curriculum"
+    ],
+    "lineage": "README names no predecessors explicitly. Tree shows: vendored DreamerV3 (dreamerv3/, embodied/ with atari, crafter, dmc, minecraft, procgen env adapters and a Dockerfile referencing 'python dreamerv3/main.py --configs atari') as the RL learner; PyBullet robots ant/humanoid (MJCF) and r2d2 (URDF); OMNI acronym in the title ('Open-endedness via Models of human Notions of Interestingness'). Branch origin/kinetix ('Env Generation with Jax2D', 'Add few-shot examples envs for kinetix', 'Fix prompt for Kinetix') indicates a later port to the Kinetix/Jax2D environment. || main loop (reader, from the code): main_omni_epic.main iterates config.iterations times: it picks a seeded task description or asks a foundation model for the next task given embedding-similar archived and failed environment codes, asks the FM to write a PyBullet gym Env subclass and repairs it via reflect_error until test_env passes (or gives up after error_max_iterations), asks the FM whether the new environment is interesting relative to its nearest archived neighbours, trains a DreamerV3 agent (warm-started from the most similar archived task's checkpoint), checks success from eval files or a VLM, and appends the env path to the success archive or to one of three failure archives (with one retry via reflect_task when training fails)."
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_PROBLEM": {
+   "value": "README: a system 'that endlessly create[s] learnable and interesting environments, further propelling the development of self-improving AI systems and AI-Generating Algorithms' -- Open-endedness via Models of human Notions of Interestingness with Environments Programmed in Code.",
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVED_HUMAN_CAPABILITY": {
+   "value": {
+    "built_to": "README: a system 'that endlessly create[s] learnable and interesting environments, further propelling the development of self-improving AI systems and AI-Generating Algorithms' -- Open-endedness via Models of human Notions of Interestingness with Environments Programmed in Code.",
+    "pressure": "NOT_FOUND_AT_PIN as an explicit statement (README has no motivation paragraph beyond the one-sentence description); the code and config names imply the pressure: generating tasks that are simultaneously learnable (compilable, trainable by DreamerV3, success-detectable) and interesting (judged by a foundation model against the archive) rather than random or repetitive.",
+    "success_means": "README does not state metrics; per code, per-task success is DreamerV3 training followed by a success detector (get_task_success_from_folder majority vote over eval episodes, or a VLM judging concatenated render frames when success_detector.use_vision), and the archive growth (archive_codepaths vs failedgens/failedint/failedtrain in archive.jsonl); analysis/ has plot_annecs.py, plot_diversity.py, plot_envgen_success.py, plot_percentlearned.py suggesting ANNECS, diversity, env-generation success and percent-learned metrics."
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "DOCUMENTED_ENVIRONMENTAL_PRESSURE": {
+   "value": {
+    "pressure": "",
+    "failure_condition": ""
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "LANGUAGE": {
+   "value": [
+    "Python (156 tracked .py files)",
+    "TypeScript/TSX (game/frontend, Next.js 14.2.2)",
+    "YAML (configs/)",
+    "shell (embodied/scripts)",
+    "Apptainer definition (apptainer/container.def)",
+    "URDF (omni_epic/robots/assets/r2d2.urdf)"
+   ],
+   "basis": "TECHNE_RECORD"
+  },
+  "EXECUTION_MODEL": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "ANCESTRY": {
+   "value": "README names no predecessors explicitly. Tree shows: vendored DreamerV3 (dreamerv3/, embodied/ with atari, crafter, dmc, minecraft, procgen env adapters and a Dockerfile referencing 'python dreamerv3/main.py --configs atari') as the RL learner; PyBullet robots ant/humanoid (MJCF) and r2d2 (URDF); OMNI acronym in the title ('Open-endedness via Models of human Notions of Interestingness'). Branch origin/kinetix ('Env Generation with Jax2D', 'Add few-shot examples envs for kinetix', 'Fix prompt for Kinetix') indicates a later port to the Kinetix/Jax2D environment. || main loop (reader, from the code): main_omni_epic.main iterates config.iterations times: it picks a seeded task description or asks a foundation model for the next task given embedding-similar archived and failed environment codes, asks the FM to write a PyBullet gym Env subclass and repairs it via reflect_error until test_env passes (or gives up after error_max_iterations), asks the FM whether the new environment is interesting relative to its nearest archived neighbours, trains a DreamerV3 agent (warm-started from the most similar archived task's checkpoint), checks success from eval files or a VLM, and appends the env path to the success archive or to one of three failure archives (with one retry via reflect_task when training fails).",
+   "basis": "TECHNE_RECORD"
+  },
+  "KNOWN_PREDECESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_SUCCESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_RIVALS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_HISTORICAL_DISPOSITION": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "SOURCE_STATUS": {
+   "value": {
+    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+    "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+    "tree_sha256": "003ff400ac7bd1d4b4ad4bdad6415ee0b296833714a4c9c3298270915a235848"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "RUN_STATUS": {
+   "value": {
+    "run": "NOT_ATTEMPTED",
+    "test": "NOT_ATTEMPTED",
+    "environment": {
+     "runner": "native",
+     "note": "NOT RUN in this pass (nothing executed from the tree); host class from the reader draft: Linux x86_64 with NVIDIA GPU (CUDA 12) running Apptainer (ubuntu:22.04 container, CPython 3.11), plus internet access and paid API keys for OpenAI (default) or Anthropic/Google foundation models; the frontend additionally needs Node.js"
+    }
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVABILITY": {
+   "value": {
+    "EXECUTABLE": "unknown",
+    "OBSERVABLE": "unknown",
+    "ORACLE_BACKED": "unknown",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "unknown"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "ORACLE_STATUS": {
+   "value": {
+    "oracle_backed": "unknown",
+    "test_classification": "NOT_ATTEMPTED"
+   },
+   "basis": "NYX_DERIVED"
+  },
+  "INTERVENTION_READINESS": {
+   "value": {
+    "intervention_ready": "unknown",
+    "patch_intervention": "unknown",
+    "runnable": false
+   },
+   "basis": "NYX_DERIVED"
+  }
+ },
+ "cut": {
+  "state": "COARSE",
+  "mode": "ANCESTRY_AWARE",
+  "evidence": [
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:omni-epic-faldor-zhang-2024/upstream/tree/main_omni_epic.py:88-308"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:omni-epic-faldor-zhang-2024/upstream/tree/main_omni_epic.py:148-179"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:omni-epic-faldor-zhang-2024/upstream/tree/omni_epic/core/fm.py:454-486"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:omni-epic-faldor-zhang-2024/upstream/tree/run_utils.py:105-112"
+   }
+  ],
+  "inspected_files": [
+   "main_omni_epic.py 1-329",
+   "rag_utils.py 9-25, 146-189",
+   "omni_epic/core/fm.py 199-208, 249-299, 454-486",
+   "omni_epic/core/prompts/query_interestingness.py 1-28",
+   "run_utils.py 93-115",
+   "configs/omni_epic.yaml 1-78"
+  ],
+  "date": "2026-10-03T08:10Z",
+  "note": "an append-only archive of task programs gated by three filters in series: the code runs, an LLM judges it interesting against its nearest archived tasks, and a DreamerV3 agent solves it [READER-ASSISTED, 2026-10-03: a read-only reader agent (claude-opus-5-5, same family as Nyx) read the files below and returned line-cited notes; Nyx spot-checked 1 of the cited line ranges against the files (all matched) and wrote this cut. Nothing was run, imported or built (no bytecode written into the body). Stage A census 121 stays frozen; this body is cut under the operator's 2026-10-03 directive (item 4) and tracked with the other operator-directed bodies.]",
+  "provenance": {
+   "schema": "nyx.atlas/1-provenance",
+   "migrated_at": "2026-10-03T08:10Z",
+   "migrated_from": "authored under nyx.atlas/1-provenance",
+   "provenance_grade_read": "ORIGINAL_ARTIFACT",
+   "grade_basis": "Techne FOSSIL_PACKET.json PROVENANCE_GRADE where issued, else the record's handoff string mapped (populated per R34; Harmonia may re-grade)",
+   "source_object_id": "https://github.com/maxencefaldor/omni-epic@af2a3c64f40bc48178c08e1beb76a0aafdd2a167",
+   "payload_manifest_id": "techne tree_sha256 003ff400ac7bd1d4b4ad4bdad6415ee0b296833714a4c9c3298270915a235848 (234 files)",
+   "host_tree_matches_record": null,
+   "host": "GANDALF (hostname), bodies receipt not named",
+   "files_read": [
+    {
+     "path": "upstream/tree/main_omni_epic.py",
+     "payload_hash_read": "1b77c8dc5046e8571786b43ed7193f26f6ad03fe226ea313e904ac6257ba3212",
+     "techne_recorded_hash": "1b77c8dc5046e8571786b43ed7193f26f6ad03fe226ea313e904ac6257ba3212",
+     "match": true,
+     "refs": 4
+    },
+    {
+     "path": "upstream/tree/omni_epic/core/fm.py",
+     "payload_hash_read": "b36a1eb24330b4f8600915e65fcd35e9058fc9d3d110d187b27245ff7b9186bf",
+     "techne_recorded_hash": "b36a1eb24330b4f8600915e65fcd35e9058fc9d3d110d187b27245ff7b9186bf",
+     "match": true,
+     "refs": 2
+    },
+    {
+     "path": "upstream/tree/run_utils.py",
+     "payload_hash_read": "e93838d112f3c728b82980cb7445107d19cef8b0694ded328013413b24b39081",
+     "techne_recorded_hash": "e93838d112f3c728b82980cb7445107d19cef8b0694ded328013413b24b39081",
+     "match": true,
+     "refs": 2
+    }
+   ],
+   "unresolved_refs": []
+  }
+ },
+ "organs": [
+  {
+   "organ_id": "omni-epic-faldor-zhang-2024::archive_admission_by_compile_then_llm_interestingness_then_agent_success",
+   "fossil_ancestry": "omni-epic-faldor-zhang-2024",
+   "human_name": "outer loop (main_omni_epic.py 88-308)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "a generated task is compiled and repaired (up to 5 reflections), judged interesting by an LLM (skipped while the archive is no larger than the seed set), trained on with DreamerV3 warm-started from the most similar archived task's checkpoint, and appended to the archive only if its success detector passes; failures go to append-only reject lists",
+   "input": "a generated task program",
+   "output": "archive or reject",
+   "state": "four append-only lists",
+   "update": "UNKNOWN",
+   "assumptions": [
+    "UNKNOWN"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [],
+   "fitness_value_in_ancestor": "UNKNOWN",
+   "failure_landscape": "by reading: with training or success detection disabled, task_success is set True, so every interesting task enters",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:omni-epic-faldor-zhang-2024/upstream/tree/main_omni_epic.py:88-308"
+   },
+   "confidence": "HIGH",
+   "portability": "UNKNOWN",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "outer loop (main_omni_epic.py 88-308)",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "DECISION",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "ARCHIVE",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "ENVIRONMENT_RANDOM",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "omni-epic-faldor-zhang-2024::example_selection_by_staleness_counter_then_embedding_nearest_neighbours",
+   "fossil_ancestry": "omni-epic-faldor-zhang-2024",
+   "human_name": "main_omni_epic.py 148-179; rag_utils.py 146-189",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "a chosen task is drawn with probability proportional to a counter that rises by 1 each iteration and is reset to 0 for the tasks used as examples; its nearest archived tasks by cosine distance of code embeddings become the generator's examples, and failed tasks near it are shown as negatives",
+   "input": "the archive, embeddings",
+   "output": "prompt examples",
+   "state": "per-task counters",
+   "update": "UNKNOWN",
+   "assumptions": [
+    "UNKNOWN"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [],
+   "fitness_value_in_ancestor": "UNKNOWN",
+   "failure_landscape": "by reading: the counter array is normalised in place before += 1, so counts are not raw; the chosen task is always its own nearest neighbour",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:omni-epic-faldor-zhang-2024/upstream/tree/main_omni_epic.py:148-179"
+   },
+   "confidence": "HIGH",
+   "portability": "UNKNOWN",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "main_omni_epic.py 148-179; rag_utils.py 146-189",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "SEEDED_RANDOM",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "omni-epic-faldor-zhang-2024::interestingness_as_an_llm_yes_no_against_the_ten_most_similar_archived_tasks",
+   "fossil_ancestry": "omni-epic-faldor-zhang-2024",
+   "human_name": "query_interestingness (fm.py 454-486; prompt file 1-28)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "the model is shown the new task and its 10 most similar archived tasks and asked whether the new one is novel, surprising, fun to watch, not too easy and useful; the answer is parsed as 'yes' in the first word",
+   "input": "two task programs",
+   "output": "a boolean",
+   "state": "UNKNOWN",
+   "update": "UNKNOWN",
+   "assumptions": [
+    "UNKNOWN"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [],
+   "fitness_value_in_ancestor": "UNKNOWN",
+   "failure_landscape": "by reading: the parse-failure retry calls the method without its robot_desc argument (TypeError)",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:omni-epic-faldor-zhang-2024/upstream/tree/omni_epic/core/fm.py:454-486"
+   },
+   "confidence": "HIGH",
+   "portability": "UNKNOWN",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "query_interestingness (fm.py 454-486; prompt file 1-28)",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "DECISION",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "ENVIRONMENT_RANDOM",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "omni-epic-faldor-zhang-2024::success_by_majority_vote_over_logged_step_files",
+   "fossil_ancestry": "omni-epic-faldor-zhang-2024",
+   "human_name": "run_utils.py 93-115",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "a run is successful if any logged step line reads True; the task succeeds if at least half of the success files do",
+   "input": "success files",
+   "output": "a boolean",
+   "state": "UNKNOWN",
+   "update": "UNKNOWN",
+   "assumptions": [
+    "UNKNOWN"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [],
+   "fitness_value_in_ancestor": "UNKNOWN",
+   "failure_landscape": "by reading: with no success files, 0 >= 0 makes the task count as solved",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:omni-epic-faldor-zhang-2024/upstream/tree/run_utils.py:105-112"
+   },
+   "confidence": "HIGH",
+   "portability": "UNKNOWN",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "run_utils.py 93-115",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "DECISION",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  }
+ ],
+ "rejected_cuts": [
+  {
+   "candidate": "the rest of the body: the other prompts, most of fm.py, environments and robots, main_dreamer.py, vendored dreamerv3/embodied, game/, analysis/",
+   "reason": "OTHER",
+   "evidence": "NOT READ; residue",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "omni-epic-faldor-zhang-2024"
+  },
+  {
+   "candidate": "'omni-epic-faldor-zhang-2024' as one organ",
+   "reason": "NAME_HAS_NO_EXECUTABLE_BOUNDARY",
+   "evidence": "the mechanisms above are separable pieces of code",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "omni-epic-faldor-zhang-2024"
+  }
+ ],
+ "pressures": [
+  {
+   "pressure_id": "omni-epic-faldor-zhang-2024::P.a_generated_task_survives_only_if_it_runs_an_llm_finds_it_interesting_against_its_neighbours_and_an_agent_can_learn_it",
+   "source_fossil": "omni-epic-faldor-zhang-2024",
+   "source_evidence": "the organs above",
+   "condition": "an LLM writes environment code; three filters in series decide admission",
+   "resource_or_constraint": "UNKNOWN",
+   "failure_condition": "UNKNOWN",
+   "world_punishes": "crashing, uninteresting or unlearnable tasks",
+   "world_rewards": "runnable, judged-interesting, learnable tasks",
+   "observable_consequence": "UNKNOWN",
+   "vacuity_condition": "UNKNOWN",
+   "trivial_shortcuts": "UNKNOWN",
+   "cheat_control": "UNKNOWN: not designed this pass",
+   "cost_class": "UNKNOWN (nothing ran)",
+   "purpose_separated_from_pressure": "PURPOSE: open-ended generation of learnable, interesting tasks written as code by a foundation model (Faldor, Zhang et al. 2024)",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
+ "composition_edges": [],
+ "ancestry_edges": [],
+ "residue": {
+  "state": "LARGE_RESIDUE",
+  "unexplained": [
+   "not read: the other prompts, most of fm.py, environments and robots, main_dreamer.py, vendored dreamerv3/embodied, game/, analysis/",
+   "nothing ran",
+   "reader-assisted cut: line ranges spot-checked, not every line re-read by Nyx"
+  ],
+  "note": "batch 17 first pass",
+  "cut_mode": "ANCESTRY_AWARE"
+ }
+}

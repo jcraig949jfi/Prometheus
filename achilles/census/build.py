@@ -434,6 +434,16 @@ def assemble_seat(name, kind, reg, files, ws, ws_src, agg, comms_row, ew_row, ag
 
 # ---------------------------------------------------------------- whole fleet
 
+def _operator_queue(root: Path, prev: dict | None) -> dict:
+    """Open operator priority requests and decisions since the previous census, read deterministically from
+    ops/operator_queue/priority/ (workgraph.priority.digest). Never fails the census."""
+    try:
+        from workgraph import priority as P
+        return P.digest(Path(root) / "ops" / "operator_queue", (prev or {}).get("generated_at_utc"))
+    except Exception as ex:  # noqa: BLE001 -- the census must render even if the queue is malformed
+        return {"open": [], "since": None, "decided_since": {}, "error": str(ex)[:200]}
+
+
 def build(root: Path, prev: dict | None, conn, conn_err: str | None, now, run_info: dict, force_deep=False) -> dict:
     git = util.Git(root)
     tips = S.ref_tips(git)
@@ -663,6 +673,7 @@ def build(root: Path, prev: dict | None, conn, conn_err: str | None, now, run_in
         "run": run_info,
         "sources_status": dict(db_status, git="ok", registry=reg_hash, monitors_rows=len(mons)),
         "summary": summary,
+        "operator_queue": _operator_queue(root, prev),
         "mailer": mailer,
         "seats": seats_out,
         "engines": engines_out,

@@ -1,10 +1,14 @@
 # Dionysus TODO
 
-Currency: 2026-10-02T12:04:36Z (from the clock at write time). Closed items are deleted
+Currency: 2026-10-03T03:59:41Z (from the clock at write time). Closed items are deleted
 with the closing commit and date, purged after 24 h (base role s7).
 
-- [ ] Combination on an unseen pair (hardening spec, section 8):
-      preregister, then run. Simulated, not registered
+- [ ] Combination on an unseen pair (hardening spec, section 8): deferred
+      by the v0.4 closure review until after the methods slice and the
+      native witness; preregister before any run
+- [ ] Reviewer role in the v0.4 slice, when Enceladus freezes S1: expected-
+      answer table (S1), first-sight set 5+5+10 (S3), closure set 2+2+3
+      (S4); record exposure; three hours
 - [ ] If the hardening package's harness code arrives: run it, compare
       gate by gate with harness v0
 - [ ] check_review.py of the delivered review fails its form checks in

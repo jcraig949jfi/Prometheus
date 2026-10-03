@@ -65,6 +65,8 @@ Loose ends from adding ubu003 and the ELSA access. Tick with a date.
       `C:utoinstall_secrets	okens\shared.txt` on ELSA (`provision_node.sh` uses it when there's no per-node file).
       ubu001/002/003 keep their own tokens for now. Optionally move them to the shared token later; then delete the per-node
       tokens on GitHub. The shared file is a plain-text live token on ELSA: keep it in that folder only.
+- [ ] **PrometheusWorkers**: running on ubu001-003 since 2026-10-03 (code f78d18e26). Enable ubu004 once it has
+      push access (shared token), re-running `install_prometheus_worker.sh <sha> --enable`. Acceptance campaign C-005.
 - [ ] **CIDATA stick** (32 GB, label CIDATA) holds the Wi-Fi password in plain text. Keep it at home; rebuild it with
       `autoinstall/build_cidata.py` if the Wi-Fi or keys change. Secrets live in `C:utoinstall_secrets\` on ELSA.
 

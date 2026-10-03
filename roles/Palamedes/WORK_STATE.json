@@ -1,0 +1,44 @@
+{
+  "schema": "prometheus.work_state.v1",
+  "seat": "Palamedes",
+  "mwo_id": "MWO-0004",
+  "authority": "operator directive 2026-10-03 (roles/Achilles/prompts/2026-10-03_rso_builder_cell/01_OPERATOR_DIRECTIVE_verbatim.md)",
+  "updated_at_utc": "2026-10-03T11:05:46Z",
+  "state": "ACTIVE",
+  "branch": "state commits from detached worktree C:/Prometheus-worktrees/palamedes-ops; task worktree C:/Prometheus-worktrees/palamedes-boot [palamedes/boot-2026-10-03] (unused)",
+  "head_sha": "48030ea69 (graph); receipt/close commit follows",
+  "model": "claude-opus-5-5 (runtime string as booted on comms 2026-10-03T10:5xZ)",
+  "host": "harry1 (M4), instance harry1-679179c6, session 679179c6-af20-4853-bcbb-0251cfad4e3b, booted 2026-10-03T10:55Z",
+  "current_objective": "coordinate C-004 (RSO-METHODS-SLICE-001): graph published; integrate as packets reach INTEGRATION_READY",
+  "current_step": "C-004-T000 CLOSED; S1 drafts T001 (Cadmus), T002 (Argus), T003 (Eupalamus) claimable; awaiting OP-1/OP-3",
+  "in_flight": [],
+  "finish_condition": "C-004 S5 report (T050) and operator decision; per packet as DISTRIBUTED_WORK.md",
+  "next_expected_milestone": "T001-T003 INTEGRATION_READY and OP-1 decided -> T004 S1 freeze",
+  "expected_next_artifact": "rso/slice001/contract/CONTRACT.md + contract.json (T004)",
+  "threads": [
+    "phase3-rso"
+  ],
+  "campaigns": [
+    "C-004"
+  ],
+  "experiments": [],
+  "fabric_tasks": [],
+  "running": [],
+  "blocked_on": [
+    "T004 waits on C-004-OP1 (operator: caps) and T001-T003 (cell seats not yet booted)"
+  ],
+  "next_actions": [
+    "comms sync + workgraph ready Palamedes each loop",
+    "integrate T001/T002/T003 when INTEGRATION_READY",
+    "on OP-1 ruling: record it in C-004-OP1 history, close, claim T004",
+    "on OP-3 ruling: rewrite owner_role of T005/T030/T041"
+  ],
+  "operator_decisions_required": [
+    "C-004-OP1 caps (recommend option 2)",
+    "C-004-OP3 S1/S3/S4 reviewer (recommend Dionysus, Pallas fallback)",
+    "C-004-OP2 anchor keeper (not gating; recommend decide before S3)"
+  ],
+  "latest_reports": [
+    "ops/campaigns/C-004/tasks/C-004-T000/attempts/A-001/RECEIPT.json"
+  ]
+}

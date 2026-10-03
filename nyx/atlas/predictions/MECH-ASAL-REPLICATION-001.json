@@ -1,0 +1,164 @@
+{
+ "schema_version": "nyx.prediction_packet/1",
+ "prediction_packet_id": "MECH-ASAL-REPLICATION-001",
+ "created_at": "2026-10-03",
+ "chopper_identity": "Nyx[gandalf-d1f90ae1] (claude-opus-5-5; M3 GANDALF)",
+ "chopper_version": "nyx.atlas cuts @ this commit; cut nyx/atlas/cuts/asal_sakana_2024.py; executor nyx/atlas/experiments/asal_replication/replicate.py; preregistration nyx/atlas/experiments/asal_replication/PREREG_ASAL_REPLICATION_001.md",
+ "cut_id": "asal-sakana-2024",
+ "fossil_raw_id": "asal-sakana-2024 (SakanaAI/asal @ 677ba0ea)",
+ "payload_manifest_id": "techne tree_sha256 188a6ada.. (32 files); FOSSIL_WORLD_ID fw2-5886f2b97adbf1a1137b0ebbd98fa81266d8559477288364bbbe14bf3900a4d1 (m3-native-python); adjudicated on Harmonia's asal_ruler, a descendant port (Techne numpy Lenia + torch CLIP ViT-B/32), NOT the fossil's JAX path. REPLICATION: the torch column is the same descendant; the native column is ASAL's own Flax CLIP + asal_metrics from the body (Harmonia, M2)",
+ "provenance_grade_read": "ORIGINAL_ARTIFACT",
+ "boundary": [
+  {
+   "file_path": "asal_metrics.py",
+   "file_payload_hash": "75b7eaa9a751acf7e88c5902621937401ec28ab84199edf11fdb4db0514f5aa4",
+   "line_start": 52,
+   "line_end": 64
+  },
+  {
+   "file_path": "rollout.py",
+   "file_payload_hash": "59c49d430a2e00d20f5c6ecdb5f649402c598747af105522b3e2269b7a1fd693",
+   "line_start": 78,
+   "line_end": 95
+  }
+ ],
+ "mechanism_claim": {
+  "functional_claim": "The claim held at the operator's resolution since 2026-09-19 (CLAIM_CURRENT_RESOLUTION.md): on the executed 395-rollout domain the ASAL scalar (asal_metrics.py:52-64) assigns scores below the scene-garbage reference both to exploitative dynamics and to coherent living Lenia forms; search is not required for crossings; the scalar does not by itself identify the mechanism generating the low score. HARM-56 found it OBSERVER_STABLE (Harmonia #1067). CLAIM OF THIS PACKET: the same phenomenon holds on the part of the legitimate domain that was never executed -- the 383 catalogue lifeforms the 09-18 port refused (fractional rings, kn 3-4, gn 3) and 300 fresh envelope draws -- and the two observers stay numerically identical on all 1,037 rollouts of this replication. The phenomenon was not an artefact of the executable subset or of the reconstructed observer.",
+  "claimed_inputs": "Lenia parameters and initial patterns from the full accepted domain; the 8 sampled frames; two observers on the same frames",
+  "claimed_outputs": "torch and native open-endedness scores per rollout; the frame-based class of each ALIVE rollout",
+  "claimed_internal_dependency": "the score reads only z (the frame embeddings); no internal simulation state enters it (asal_metrics.py:52-64); the frames that reach it are exactly the K=8 sampled by rollout.py:78-95; Harmonia's independent metric agrees with the fossil's to 5.6e-16 (float64), so the boundary is the score of record",
+  "known_uncertainty": "(a) The substrate is Techne's numpy port, not ASAL's JAX Lenia; nothing here speaks for the JAX substrate. (b) The class rule is frame-based and carries thresholds fit on Orbium; GENUINE / METRIC labels are the ruler's, not an independent judgement of 'life'. (c) S2 starts from the 5 lowest ALIVE scores of S0 u S1, which may include S0_OLD entries; S2's points are nonetheless all new. (d) The crossing lines are named conventions (A7), not population boundaries. (e) The author runs the torch column; the native column and every verdict are Harmonia's."
+ },
+ "interventions": [
+  {
+   "intervention_id": "I1-CATALOGUE-NEW-CROSSES",
+   "intervention_level": "ENVIRONMENT",
+   "intervention_operation": "score every accepted catalogue lifeform in S0_NEW with its own params and cells (no search) through the torch column; take the minimum over ALIVE rollouts",
+   "measured_observable": "min ALIVE torch score over S0_NEW; the row reads inside the band iff that minimum is strictly below 0.816686 (the ruler's GARBAGE_MEAN)",
+   "expected_direction": "DECREASE",
+   "expected_magnitude_band": [
+    0.0,
+    0.8167
+   ],
+   "units": "ASAL open-endedness score",
+   "band_basis": "BLIND for the strata named: the author knows the 09-18 results (395 executed: 333 ALIVE, 105 below the mean, of which METRIC_EXPLOIT 49, UNCLASSIFIED 47, GENUINE 9; S0 5 of 152 ALIVE below the mean) and has seen NO score of this replication; the pre-freeze stages scored only the seven fixture arms. Exact (A2-exempt): one number against one named cutoff (rule A7), no seed distribution claimed",
+   "test_world_scope": "NEW strata, never scored by any seat: S0_NEW = the 383 accepted catalogue positions the 09-18 port did not execute (listed by position in DOMAIN.json overlap_0918.new_positions); S1 = 300 fresh draws; S2 = the 200 local steps of this run; NEW_ALL = their union",
+   "pressure_scope": "MECH-ASAL-OE-SCORE (the ASAL scalar's crossing below the scene-garbage reference) and ANOM-ASAL-MANY-TO-ONE",
+   "prediction_rationale": "09-18's I0 failed because 5 of 152 ALIVE executed catalogue forms crossed with no search; if crossing is a property of Lenia under this observer rather than of the subset the old port could run, the 383 multi-ring / multi-kernel catalogue forms contain at least one crosser. If none of 383 does, catalogue crossing was a property of the simple-ring subset",
+   "novelty_kind": "observer"
+  },
+  {
+   "intervention_id": "I2-MANY-TO-ONE-ON-NEW",
+   "intervention_level": "ENVIRONMENT",
+   "intervention_operation": "over NEW_ALL, take the ALIVE rollouts with torch score strictly below 0.816686 and count them by class (asal_ruler.py:96-105, 09-18 thresholds)",
+   "measured_observable": "min(number of METRIC_EXPLOIT crossers, number of GENUINE_DYNAMICAL_NOVELTY crossers) in NEW_ALL",
+   "expected_direction": "UNCHANGED",
+   "expected_magnitude_band": [
+    1,
+    1037
+   ],
+   "units": "count of rollouts",
+   "band_basis": "BLIND for the strata named: the author knows the 09-18 results (395 executed: 333 ALIVE, 105 below the mean, of which METRIC_EXPLOIT 49, UNCLASSIFIED 47, GENUINE 9; S0 5 of 152 ALIVE below the mean) and has seen NO score of this replication; the pre-freeze stages scored only the seven fixture arms. Exact (A2-exempt): one number against one named cutoff (rule A7), no seed distribution claimed",
+   "test_world_scope": "NEW strata, never scored by any seat: S0_NEW = the 383 accepted catalogue positions the 09-18 port did not execute (listed by position in DOMAIN.json overlap_0918.new_positions); S1 = 300 fresh draws; S2 = the 200 local steps of this run; NEW_ALL = their union",
+   "pressure_scope": "MECH-ASAL-OE-SCORE (the ASAL scalar's crossing below the scene-garbage reference) and ANOM-ASAL-MANY-TO-ONE",
+   "prediction_rationale": "the many-to-one compression (ANOM-ASAL-MANY-TO-ONE) is the claim that turbulent exploit texture AND coherent persistent forms share the low-score region; on 09-18 both were present (49 and 9). The row fails if, on new points, the low region holds only one of the two kinds",
+   "novelty_kind": "observer"
+  },
+  {
+   "intervention_id": "I3-DEEP-CROSSING-ON-NEW",
+   "intervention_level": "ENVIRONMENT",
+   "intervention_operation": "the full replication budget (S0 + S1 + S2, 1,037 rollouts, no early stop); take the minimum ALIVE torch score over NEW_ALL",
+   "measured_observable": "min ALIVE torch score over NEW_ALL; inside the band iff strictly below 0.799960 (garbage mean minus 2 sd, the ruler's constants)",
+   "expected_direction": "DECREASE",
+   "expected_magnitude_band": [
+    0.0,
+    0.7999
+   ],
+   "units": "ASAL open-endedness score",
+   "band_basis": "BLIND for the strata named: the author knows the 09-18 results (395 executed: 333 ALIVE, 105 below the mean, of which METRIC_EXPLOIT 49, UNCLASSIFIED 47, GENUINE 9; S0 5 of 152 ALIVE below the mean) and has seen NO score of this replication; the pre-freeze stages scored only the seven fixture arms. Exact (A2-exempt): one number against one named cutoff (rule A7), no seed distribution claimed",
+   "test_world_scope": "NEW strata, never scored by any seat: S0_NEW = the 383 accepted catalogue positions the 09-18 port did not execute (listed by position in DOMAIN.json overlap_0918.new_positions); S1 = 300 fresh draws; S2 = the 200 local steps of this run; NEW_ALL = their union",
+   "pressure_scope": "MECH-ASAL-OE-SCORE (the ASAL scalar's crossing below the scene-garbage reference) and ANOM-ASAL-MANY-TO-ONE",
+   "prediction_rationale": "09-18 reached 0.7665 by local search; the same rule from fresh starts on a larger domain should again reach below the 2-sd line",
+   "novelty_kind": "observer"
+  },
+  {
+   "intervention_id": "I4-OBSERVER-IDENTITY",
+   "intervention_level": "ENVIRONMENT",
+   "intervention_operation": "score the SAME exported uint8 frames of all 1,037 rollouts through the native observer (ASAL's Flax CLIP + asal_metrics, M2) and join to the torch column by key",
+   "measured_observable": "max over all scored rollouts of |score_native - score_torch|",
+   "expected_direction": "UNCHANGED",
+   "expected_magnitude_band": [
+    0.0,
+    1e-05
+   ],
+   "units": "ASAL open-endedness score",
+   "band_basis": "exact identity up to float32 arithmetic; HARM-55 measured 4.77e-7 over 333 (Harmonia #1067), so the band is 20x the observed maximum; BLIND for the new rollouts",
+   "test_world_scope": "all 1,037 rollouts of this replication, frames as exported (manifest sha256 per file)",
+   "pressure_scope": "MECH-ASAL-OE-SCORE (the ASAL scalar's crossing below the scene-garbage reference) and ANOM-ASAL-MANY-TO-ONE",
+   "prediction_rationale": "the two observers are the same network weights through two frameworks; on 333 rollouts they agreed to float rounding. A larger difference on new frames would mean the agreement was a property of the old frames' range",
+   "novelty_kind": "observer"
+  },
+  {
+   "intervention_id": "I5-CROSSING-STATE-STABLE",
+   "intervention_level": "ENVIRONMENT",
+   "intervention_operation": "as I4; for every ALIVE rollout whose torch score is farther than 1e-5 from 0.816686, compare the crossing state under the two observers",
+   "measured_observable": "number of LOST_CROSSING plus GAINED_CROSSING rollouts at 0.816686 among those rollouts",
+   "expected_direction": "UNCHANGED",
+   "expected_magnitude_band": [
+    0,
+    0
+   ],
+   "units": "count of rollouts",
+   "band_basis": "exact; follows from I4 by construction for any rollout outside the 1e-5 margin, stated separately because a crossing flip is the scientific event (operator 09-19 s1) and I4 is a numeric bound",
+   "test_world_scope": "as I4",
+   "pressure_scope": "MECH-ASAL-OE-SCORE (the ASAL scalar's crossing below the scene-garbage reference) and ANOM-ASAL-MANY-TO-ONE",
+   "prediction_rationale": "A_OBSERVER_STABLE on 395; predicted to hold on the full domain",
+   "novelty_kind": "observer"
+  }
+ ],
+ "controls": {
+  "cheat": {
+   "control_id": "C-CHEAT-SCORE + C-CHEAT-ANCHORS",
+   "construction": "torch: GARBAGE seed-0 frames substituted for a rollout's frames must score 0.8303 regardless of params (fixture, run before the freeze). native: the 16 HARM-55 anchors through the torch path on M2 must reproduce MANIFEST_anchors.json (blob 692d4869a9dc) to <= 1e-6 before any native frame score",
+   "expected_result": "0.8303 within 0.002 (PASSED in FIXTURE_CHECK / fixture.json); anchors 16/16 within 1e-6",
+   "failure_interpretation": "the score reads something other than the frames, or the M2 torch path is not the M3 one: no native row is read"
+  },
+  "positive": {
+   "control_id": "C-POS-SEARCH + C-SELF + C-REPRO",
+   "construction": "the free-image search must reach <= 0.8167 (fixture); the exported uint8 frames re-scored by the torch path of harm55_flax_score.py must equal the search's scores to <= 1e-6; every S0_OLD position must equal its 09-18 torch score to <= 1e-6",
+   "expected_result": "all three pass (C-POS-SEARCH PASSED before the freeze; C-SELF and C-REPRO run after the search, before delivery)",
+   "failure_interpretation": "C-POS: the search cannot find low scores where they exist (I3 INDETERMINATE); C-SELF: the delivered frames are not the scored frames (I4/I5 INDETERMINATE, nothing delivered); C-REPRO: the torch column is not the 09-18 column"
+  },
+  "negative": {
+   "control_id": "C-NEG-BLANK + C-STATIC",
+   "construction": "a blank world: 8 identical frames; and the native STATIC anchor",
+   "expected_result": "blank: 0.875 within 1e-3 and NOT_ALIVE (PASSED before the freeze); native STATIC within 1e-5 of 0.875",
+   "failure_interpretation": "the ALIVE filter or the identity path is broken (stop); the native path is not the fossil's metric (I4/I5 INDETERMINATE)"
+  }
+ },
+ "cut_kill": {
+  "observation": "C-METRIC beyond tolerance; the blank world not at 0.875; the executor's bytes (LF) not 66294e74...8f09 at search time; any domain member REFUSED; the threshold file not reproduced",
+  "consequence": "the instrument or the boundary is not what this packet names; a new CUT_ID and packet are required; this packet stays immutable"
+ },
+ "indeterminate": {
+  "observation": "fewer than 20 ALIVE rollouts in S0_NEW u S1; a decisive minimum within 1e-6 of its line (I1, I3); C-SELF or C-REPRO fails (all rows); a native control fails or the native column is not returned (I4, I5)",
+  "consequence": "the affected row returns PREDICTION_INDETERMINATE, never a directed verdict"
+ },
+ "supersedes": null,
+ "replication_of": "MECH-ASAL-LEGIT-SEARCH-001 (FREEZE c6627d26): a NEW preregistration over the extended domain, not a completion of the 1,045 (operator 2026-09-19 s4)",
+ "preregistration": "nyx/atlas/experiments/asal_replication/PREREG_ASAL_REPLICATION_001.md",
+ "pre_freeze_receipts": [
+  "nyx/atlas/experiments/asal_replication/out/DOMAIN.json",
+  "nyx/atlas/experiments/asal_replication/out/FIXTURE_CHECK.json",
+  "nyx/atlas/experiments/asal_replication/out/fixture.json",
+  "nyx/atlas/experiments/asal_replication/out/thresholds.json",
+  "nyx/atlas/experiments/asal_replication/out/DETERMINISM.json"
+ ],
+ "return_protocol": {
+  "to_seat": "Harmonia (m2-475d761f): native column on M2 (frames on an orphan transfer branch, manifest in git) and adjudication of all rows; Nyx runs the torch column on M3 (operator 2026-10-03 N1)",
+  "accountable_seat": "Nyx receives per row CUT_SUPPORTED / PREDICTION_FAILED / PREDICTION_INDETERMINATE / CUT_KILL with the keys behind each verdict. A failed I1 or I2 changes the claim's resolution (Stage D'); I4/I5 failing reopens observer dependence",
+  "ack_ticks": 1,
+  "disposition_ticks": 3,
+  "required_response_on_challenge": "Nyx records the verdicts in MECH-ASAL-OE-SCORE and ANOM-ASAL-MANY-TO-ONE; only after this replication is executed may the behavioral cuts (PLAN_behavioral_cuts_after_replication.md) start"
+ }
+}

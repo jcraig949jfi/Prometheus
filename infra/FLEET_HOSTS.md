@@ -28,7 +28,9 @@ laptop-class or old. No Windows host runs a Fabric worker (DEF-ODY-012); Fabric 
 
 ## Linux nodes (5)
 
-All Ubuntu Server 26.04.1, kernel 7.0.0-38, user `jcraig`, Claude Code, `~/Prometheus`. Details: `infra/ubuntu_nodes/ubuntu_server_machines.md`.
+All Ubuntu Server 26.04.1, kernel 7.0.0-38, user `jcraig`, Claude Code, `~/Prometheus`. PrometheusWorker
+(generic execution, roles/generic-worker-role/) runs on ubu001-003; installed but not started on ubu004 (no push
+access yet). Details: infra/ubuntu_nodes/ubuntu_server_machines.md "PrometheusWorkers". Details: `infra/ubuntu_nodes/ubuntu_server_machines.md`.
 
 | Host | Hardware | CPU | RAM | Disk | Net | Role / tags | State (2026-10-02) |
 |---|---|---|---|---|---|---|---|
@@ -51,3 +53,16 @@ All Ubuntu Server 26.04.1, kernel 7.0.0-38, user `jcraig`, Claude Code, `~/Prome
 - More hosts add **local** capacity only. Model throughput is set by the inference accounts (2x Claude Max, Codex,
   Augment) and their rate limits, so tie node workers to account "lanes".
 - Long jobs on cheap hardware need **checkpointing + leases**: a node will disappear mid-task.
+
+## Scale-out policy (operator, 2026-10-03)
+
+**Internal fleet first, big iron after the gates.** Experiments are proven on the internal fleet (M1/M2 for the heavy
+pilots, ubu nodes for wide light work). Only after they pass their gates do they scale out to rented capacity: cloud CPU
+(AWS C8i/C8a, Azure HB/F, GCP C4/C4D; spot about $0.02/vCPU-hr, e.g. 192 cores for about $8.50/hr) or RunPod for GPUs.
+
+What makes that hand-off cheap:
+- **Same environment local and remote:** a pinned container or lockfile, so a gated pilot runs unchanged on a 384-vCPU VM.
+- **Chunked + checkpointed tasks:** spot VMs and laptops both vanish mid-task; the same design covers both.
+- **A cost estimate in the gate packet:** core-hours measured on the pilot × spot price, before any spend.
+- **Cloud workers join Fabric** as `heavy.cpu` workers through a secure tunnel to M1 (Tailscale/WireGuard; open item in
+  `infra/ubuntu_nodes/ubuntu_swarm_todo.md`), drain the queue, then shut down.
