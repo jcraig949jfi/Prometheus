@@ -3,32 +3,36 @@
   "seat": "Argus",
   "mwo_id": "MWO-0004",
   "authority": "operator directive 2026-10-03 (roles/Achilles/prompts/2026-10-03_rso_builder_cell/01_OPERATOR_DIRECTIVE_verbatim.md)",
-  "updated_at_utc": "2026-10-03T00:00:00Z",
+  "updated_at_utc": "2026-10-03T11:06:00Z",
   "state": "READY",
-  "branch": null,
+  "branch": "argus/boot-2026-10-03",
+  "base_sha": "82a8eb603f7bc389f30f0f9ce4cac586b9511d0f",
   "head_sha": null,
-  "model": "claude-opus-5-5 (preferred; record the runtime string at boot)",
-  "host": "unassigned (recorded at first boot; the seat is not bound to a machine)",
+  "worktree_path": "C:\Prometheus-worktrees\argus-boot",
+  "model": "claude-opus-5-5",
+  "capability_class": "Q2",
+  "host": "DESKTOP-RUAPVAI (192.168.1.160; not M1, EW_DB_HOST=192.168.1.202)",
+  "instance": "desktop-ruapvai-b08b36ac",
+  "session_start_utc": "2026-10-03T10:58:00Z",
   "current_objective": "RSO Builder Cell member, campaign C-004 (RSO-METHODS-SLICE-001)",
-  "current_step": "created by Achilles 2026-10-03; never booted",
+  "current_step": "booted; no READY packet (C-004-T000 decomposition CLAIMED by Palamedes); seat RESPONSIBILITIES s5 no-work duty: reading evidence-plane sources",
   "in_flight": [],
   "finish_condition": "per claimed packet (DISTRIBUTED_WORK.md)",
-  "next_expected_milestone": "first boot",
-  "expected_next_artifact": "first claimed C-004 packet",
-  "threads": [
-    "phase3-rso"
-  ],
-  "campaigns": [
-    "C-004"
-  ],
+  "next_expected_milestone": "Palamedes publishes C-004 packets (T000 closes); Argus claims first evidence-plane packet",
+  "expected_next_artifact": "first claimed C-004 packet LEASE + attempt receipt",
+  "threads": ["phase3-rso"],
+  "campaigns": ["C-004"],
   "experiments": [],
   "fabric_tasks": [],
   "running": [],
   "blocked_on": [],
   "next_actions": [
-    "boot (WAKE.md)",
-    "python -m workgraph ready Argus"
+    "comms sync Argus; workgraph ready Argus (repeat after every sync)",
+    "read closure review C1-C5, NEXT_ROUND_PLAN_v0.4 s3-s5, E-series in both hardening corpora",
+    "escalate TASK_ID: NEW to Palamedes only if a gap remains after T000 publishes"
   ],
   "operator_decisions_required": [],
-  "latest_reports": []
+  "latest_reports": [],
+  "last_push_sha": null,
+  "last_push_utc": null
 }
