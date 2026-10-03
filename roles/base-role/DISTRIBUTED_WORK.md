@@ -33,6 +33,26 @@ Layout (one file per object, so independent claims do not collide):
 
 Markdown-only campaigns that predate this file are not work graphs and are not converted.
 
+## 1a. Where a campaign sits (operator, 2026-10-03)
+
+    Epic -> Thread -> Campaign -> [Experiment] -> Task -> Attempt
+
+- EPIC: the operator-level container for a long-lived strategic program (ops/epics/<EP-id>/EPIC.json and
+  README.md). Thin: objective, start date, status, governing constraints, exit conditions, thread ids,
+  resource references, major operator decisions, deferred areas. Nobody claims an epic; it holds no tasks,
+  leases, receipts or claims.
+- THREAD: a durable question or capability (ops/threads/<id>.md). It names its epic on an `epic:` line.
+- CAMPAIGN: a bounded attempt to advance a thread. CAMPAIGN.json names its `thread_id`.
+- EXPERIMENT is optional. A scientific campaign may run Campaign -> Experiment -> Tasks; an engineering
+  campaign may run Campaign -> Tasks. Do not manufacture an experiment to fit the tree; a packet may carry
+  `experiment_id` when one exists.
+- All links are optional for older work: a campaign without thread_id and a thread without epic stay valid.
+
+EVIDENCE ROLLS UPWARD; AUTHORITY DOES NOT. An experiment's receipt may support a campaign conclusion,
+several campaigns may change a thread's status, several threads may advance an epic. But a parent's name
+or objective never lends its interpretation to a child: a claim stays attached to the cell/experiment
+where it was earned.
+
 ## 2. Task packet fields
 
 Required (schema prometheus.workgraph.task.v1):
@@ -57,7 +77,7 @@ Optional:
     requires_shas (exact commits/blobs it builds on), owns (files/interfaces it may change),
     reads (read-only files/interfaces), resource_ceiling, escalation_triggers, kind
     (software|science|document|review|operations), red_required, satisfied_states, receipt (path),
-    notes, authority (the directive or ruling that authorised it)
+    notes, authority (the directive or ruling that authorised it), experiment_id (when the campaign has one)
 
 A packet may write only what it `owns`; what it `reads` is frozen for it. An unknown field is a validation
 error: say it in `notes` instead of inventing a key.

@@ -72,7 +72,11 @@ bounded developmental improvement; economic advantage in a registered W1 cell.
 The cell builds and repairs machinery. It does not redesign the RSO, reopen the closed design review, or
 adjudicate its own science (base doctrine: no LLM adjudicates; admission and promotion are human acts).
 
-## 4. The first epic: RSO-METHODS-SLICE-001 (campaign ops/campaigns/C-004/)
+## 4. The first campaign: RSO-METHODS-SLICE-001 (ops/campaigns/C-004/)
+
+Placement (operator, 2026-10-03): Epic EP-PHASE3 (Phase 3) -> Thread TH-RSO-BUILD (the RSO buildout) ->
+Campaign C-004. The directive of 2026-10-03 called this slice the cell's "first epic"; in the work-graph
+hierarchy it is a campaign, and Phase 3 is the epic.
 
 The bounded S1-S5 methods slice, built as written in NEXT_ROUND_PLAN_v0.4 with the closure review's C1-C5
 folded into S1 (SOURCES.md has the exact paths):

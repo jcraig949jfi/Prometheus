@@ -1,5 +1,7 @@
 # C-004 -- RSO methods slice S1-S5 (RSO-METHODS-SLICE-001)
 
+Thread TH-RSO-BUILD (ops/threads/TH-RSO-BUILD.md), epic EP-PHASE3 (ops/epics/EP-PHASE3/); added 2026-10-03.
+
 Opened 2026-10-03 as the first operator-selected work-graph campaign (roles/base-role/DISTRIBUTED_WORK.md;
 ops/README.md note of the same day). Authority: the operator directive of 2026-10-03, verbatim at
 roles/Achilles/prompts/2026-10-03_rso_builder_cell/. Coordinator: Palamedes. Members: the RSO Builder Cell
