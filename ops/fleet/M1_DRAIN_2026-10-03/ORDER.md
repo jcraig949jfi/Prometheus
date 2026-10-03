@@ -10,6 +10,9 @@ Every named seat or agent session running on M1, except the exempt sessions belo
 
 - **Live M1 sessions at issue (process table, 11:40Z):** Aporia, Nestor, Ananke, Hecate, Atlas, Dionysus, Sisyphus,
   Tantalus, Tityos, Ixion.
+- **EXCLUDED, BINDING (operator amendment 2026-10-03, roles/Aporia/prompts/2026-10-03_m1_drain_amendment_cadmus/):**
+  Cadmus is an active EP-PHASE3 RSO builder and stays on M1. Do not quiesce it, stop its session, close its processes,
+  remove its worktree(s), alter its leases, include its branch in cleanup, treat its processes as stale, or move it.
 - **EXEMPT (Phase 3 isolation, directive s12):**
   - the RSO builder seats Palamedes, Argus, Cadmus, Eupalamus and Pallas (Cadmus runs on M1);
   - the M1 machine-global services: Postgres 17 (comms, fabric, evidence_wiki), the FoundryAPI scheduled task, and
