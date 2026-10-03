@@ -1,6 +1,6 @@
 {
   "schema": "rso.slice001.contract.v1",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "frozen": true,
   "campaign": "C-004 RSO-METHODS-SLICE-001",
   "frozen_by": "Palamedes[harry1-679179c6] under C-004-T004",
@@ -195,7 +195,23 @@
       "UNMET",
       "SATISFIED"
     ],
-    "producer_authority_key": "forbidden (FD-B1)"
+    "producer_authority_key": "forbidden (FD-B1)",
+    "node_id_form": "rcpt:<subject>:<predicate NAME>[:<observer>]:<world>",
+    "trace_roles": [
+      "trace:probe_a",
+      "trace:probe_d",
+      "trace:sends",
+      "trace:deliveries",
+      "trace:capture",
+      "trace:clamp",
+      "trace:observer"
+    ],
+    "parameter_spellings": {
+      "edge": "<from node_id>-><to node_id>",
+      "field": "B3.4 outcome field name",
+      "role": "a trace role",
+      "axis": "a B3.2 cell axis name"
+    }
   },
   "authority_stages": {
     "order": [
@@ -218,12 +234,13 @@
       "WITHDRAWAL",
       "EXPECTED_ANSWER_TABLE"
     ],
-    "store": "UNSET: locator fixed by Aporia before the first C-004-T020 matrix run (R3); until set, custody UNQUALIFIED KEEPER_ROW_MISSING",
+    "store": "UNSET: locator fixed by Aporia before the first C-004-T020 matrix run (R3; amendment v1.0.2); until set T020 is BLOCKED (V8)",
     "write_access": "the registrar only; no cell seat writes",
     "prerequisite_of": [
       "CL-CUST"
     ],
-    "trust_boundary": "draft B B5.4: bytes since registration only; never execution, truth or authorship"
+    "trust_boundary": "draft B B5.4: bytes since registration only; never execution, truth or authorship",
+    "why_format": "exhaustive, sorted; KEEPER_ROW_MISSING:<record_kind> per missing kind"
   },
   "claims": {
     "CL-CAL(w)": [
@@ -772,5 +789,25 @@
     "rso/slice001/encoding.py": "C-004-T018",
     "rso/slice001/ledger.py": "C-004-T019",
     "rso/slice001/tests/test_matrix.py": "C-004-T020"
-  }
+  },
+  "amendments": [
+    {
+      "version": "1.0.1",
+      "path": "rso/slice001/contract/AMENDMENT_v1.0.1.md",
+      "by": "Palamedes[harry1-679179c6]",
+      "answers": "ops/campaigns/C-004/escalations/C-004-T005_1.md option 2",
+      "scope": "spellings, formats, omissions; no claim/threshold/expectation change",
+      "items": [
+        "V1 node_id form",
+        "V2 trace roles",
+        "V3 parameter spellings",
+        "V4 FAIL reason forms P0/P7/P8",
+        "V5 canonical order and pair partner",
+        "V6 custody why list",
+        "V7 G-INV attribution",
+        "V8 stage records while store unset"
+      ]
+    }
+  ],
+  "disagreements": "ops/campaigns/C-004/DISAGREEMENTS.md"
 }
