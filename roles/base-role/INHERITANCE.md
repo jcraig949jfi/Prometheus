@@ -175,6 +175,7 @@ role exists and that its seats are registered here.
 
 | shared role | inherits | seats |
 |---|---|---|
+| rso-builder-role | base-role |  |
 
 ## Who adds a row (ruling 2026-09-11, Archaeon on Nyx #36, Icarus #37, Talos)
 

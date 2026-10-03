@@ -1,0 +1,69 @@
+{
+  "schema": "prometheus.workgraph.task.v1",
+  "task_id": "C-004-T000",
+  "campaign_id": "C-004",
+  "title": "Decompose RSO-METHODS-SLICE-001 (S1-S5) into the C-004 work graph",
+  "objective": "Turn the S1-S5 slice into self-contained task packets under ops/campaigns/C-004/tasks/, each with owner, capability class, dependencies, owned/read-only files, RED evidence, acceptance and deliverables, so that Argus, Cadmus, Eupalamus and (for narrow attack packets) Pallas can claim work without a briefing.",
+  "parent_objective": "RSO-METHODS-SLICE-001 (CAMPAIGN.json objective)",
+  "owner_role": "Palamedes",
+  "quality_class": "Q2",
+  "can_downgrade": false,
+  "escalate_to": "Q3",
+  "depends_on": [],
+  "requires_shas": [
+    "09dc8c38b (closure review)",
+    "3bd02f393 (v0.4 synthesis, merged)"
+  ],
+  "owns": [
+    "ops/campaigns/C-004/tasks/",
+    "ops/campaigns/C-004/CAMPAIGN.md",
+    "roles/Palamedes/"
+  ],
+  "reads": [
+    "docs/phase3/synthesis/ENCELADUS-DIONYSUS-v0.4/",
+    "docs/phase3/closure/FABLE-5.1/CLOSURE_REVIEW_v0.4.md",
+    "docs/phase3/hardening/FABLE-5.1/",
+    "docs/phase3/reviews/ASTRA-6.0/rso-v0.2/",
+    "roles/rso-builder-role/"
+  ],
+  "problem": "The slice exists as a plan (NEXT_ROUND_PLAN_v0.4) and a closure review with mandatory amendments C1-C5, but not as claimable work. Likely areas (directive s11): frozen contract/schema; finite truth model; producer receipt; consumer/checker; evidence graph; reset model; observer model; authority stage; anchor/custody interface; sound fixtures; broken fixtures; semantic mutation support; reporting; integration tests.",
+  "non_goals": [
+    "No implementation of S1-S5 components in this task (other packets do that)",
+    "No redesign of the RSO and no reopening of the closed design review",
+    "No Q3 packets for routine work; Pallas gets only narrow attack packets on frozen surfaces"
+  ],
+  "evidence_required": [
+    "python -m workgraph validate passes with the new packets",
+    "a coverage table in CAMPAIGN.md mapping every S1 contract item, C1-C5, T01-T08, E01-E06 and S2-S5 deliverable to >= 1 packet"
+  ],
+  "acceptance": {
+    "command": "python -m workgraph validate && python -m workgraph status C-004",
+    "condition": "every S1-S5 deliverable and C1-C5, T01-T08, E01-E05 (E06 reported, not an exit criterion) is covered by a packet with owner, quality_class, dependencies and acceptance; S1 packets are READY; open operator decisions OP-1..OP-3 are represented (escalations or OPERATOR_DECISION packets) where they gate work"
+  },
+  "deliverables": [
+    "ops/campaigns/C-004/tasks/C-004-T0NN/TASK.json packets",
+    "coverage table in ops/campaigns/C-004/CAMPAIGN.md",
+    "attempts/A-001/RECEIPT.json for this task"
+  ],
+  "escalation_triggers": [
+    "an S1 item cannot be specified without a scientific decision the sources do not make",
+    "caps (OP-1) or anchor keeper (OP-2) block every S2 packet"
+  ],
+  "kind": "document",
+  "status": "READY",
+  "history": [
+    {
+      "status": "PROPOSED",
+      "by": "Achilles",
+      "at_utc": "2026-10-03T00:00:00Z",
+      "note": "seed task created at cell setup"
+    },
+    {
+      "status": "READY",
+      "by": "operator",
+      "at_utc": "2026-10-03T00:00:00Z",
+      "note": "authorized by the operator directive 2026-10-03 s11 (Palamedes first epic); recorded by Achilles"
+    }
+  ],
+  "authority": "operator directive 2026-10-03 s11"
+}
