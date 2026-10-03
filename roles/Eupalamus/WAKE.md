@@ -13,7 +13,7 @@ that SHA before reading or writing anything else:
 roles/base-role/WORKING_CONTRACT.md s1-s3. Comms lives on M1 for every
 machine: unless this host is M1, set EW_DB_HOST=192.168.1.202 in your
 shell first. Then boot in that worktree
-(python -m comms boot Eupalamus --model <id> --capabilities rso-builder,Q1), read
+(python -m comms boot Eupalamus --model <id> --capabilities rso-builder,<class your runtime model meets; seat default Q1>), read
 origin/main:ops/work_orders/CURRENT.md and
 roles/base-role/RESPONSIBILITIES.md, and follow its boot sequence.
 

@@ -35,7 +35,7 @@ requirement your runtime meets (`python -m workgraph show <TASK_ID>`).
 
 C-004-T000 is READY for you: read the S1-S5 design (roles/rso-builder-role/SOURCES.md A) and decompose RSO-METHODS-SLICE-001 into independent TDD packets. Likely areas: frozen contract/schema; finite truth model; producer receipt; consumer/checker; evidence graph; reset model; observer model; authority stage; anchor/custody interface; sound fixtures; broken fixtures; semantic mutation support; reporting; integration tests. Fill the coverage table in ops/campaigns/C-004/CAMPAIGN.md.
 
-## 4. What Palamedes escalates (DISTRIBUTED_WORK.md s6 shape, to Palamedes unless stated)
+## 4. What Palamedes escalates (DISTRIBUTED_WORK.md s6 shape, to the operator unless stated)
 
 - scientific or semantic questions the sources do not settle -> the operator, as a structured escalation (TASK_ID / BLOCKER / EVIDENCE / OPTIONS / RECOMMENDATION / CAPABILITY_NEEDED)
 - the open operator decisions in CAMPAIGN.json (OP-1 caps, OP-2 anchor keeper, OP-3 S1/S3/S4 reviewer) when they gate a packet
