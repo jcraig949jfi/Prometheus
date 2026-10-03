@@ -3,9 +3,9 @@
  "seat": "Odysseus",
  "mwo_id": "MWO-0004",
  "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
- "updated_at_utc": "2026-09-30T22:08:11Z",
+ "updated_at_utc": "2026-10-03T13:10:00Z",
  "state": "BLOCKED (promexec, operator); P0 CLOSED",
- "branch": "odysseus/fabric-v0-2026-09-28",
+ "branch": "odysseus/boot-2026-10-03",
  "head_sha": "76c21cb486be1fdbca1095b9c22f4f3e8f57011a",
  "threads": [
   {
@@ -46,7 +46,7 @@
   "D2 firewall audit COMPLETE: FIREWALL_AUDIT_1 PASS (67e05df12), anchored by Nestor (entry_hash e1a2e48b, #1021); gates pass through AUDIT; C-1/C-2 declared"
  ],
  "running": [
-  "node workers on ubu001 from ~/fabric-runtime @9c022347e (fabric-v0.2 + DEF-ODY-015 + DEF-ODY-019 + legacy-lease removal): worker.ubu001.a/.b (claude, script), worker.ubu001.sci (script)"
+  "NONE: Fabric workers worker.ubu001.a/.b/.sci not running since the 2026-10-02 reboot (not restarted; ubu001 now runs Achilles's prometheus-worker.service)"
  ],
  "blocked_on": [
   "operator: promexec round-2 broker install (see blocked)"
@@ -72,7 +72,7 @@
   "roles/Odysseus/fabric_pilot/s2/RESULT.md"
  ],
  "mwo_sha256": "925660b2d2be53af2ee4195391e484d9649bbd4ee828cd60432ce2f0903a99df",
- "comms_cursor": 1181,
+ "comms_cursor": 1290,
  "migration_report": "roles/Odysseus/MIGRATION_REPORT_MWO-0002.json",
  "hard_gates_note": "MWO-0004 R1/R5: only hard gates listed. promexec stays NOT ENABLED (MWO-0004 G4); the round-2 install is listed because it is a privileged host modification (CWO s4), not an enablement",
  "work_order": "MWO-0004 + CWO-2026-09-30C (governing; ops/fleet/CWO_2026-09-30C_FINISH_SURFACE_DISPATCH.md, sha256 edc4792d...7e6c; supersedes the conflicting -30/-30B text)",
@@ -88,12 +88,13 @@
    "source_commit": "9f95f9ea0 (round 2 + Aether source-review N1/N2); broker sha256 3cf32a642febd032608878480bdf29c2b433f6859445072b44f1efcac14b0df3"
   }
  ],
- "resource_status": "no compute or spend held; ubu001 disk 25%; workers .a/.b/.sci on ~/fabric-runtime @9c022347e, idle",
+ "resource_status": "no compute or spend held; Fabric workers down; promexec-run installed sha256 1db20165...25c6 (round 1, not the round-2 pin)",
  "last_receipt": "P0 #1135 closed (Aporia #1181); Windows test skips",
  "in_flight": [
-  "promexec round 2: BLOCKED on the operator install",
-  "standing: ubu001 node workers; Fabric defect ledger; D2 auditor of record on demand",
-  "ops aid: ubu001->ubu002 ssh key waiting for the operator's paste"
+  "promexec round 2: BLOCKED on the operator install (re-verified 2026-10-03)",
+  "standing: Fabric defect ledger; D2 auditor of record on demand",
+  "operator question: restart ubu001 Fabric workers alongside PrometheusWorker?",
+  "ops aid: ubu001->ubu002 ssh key still unpasted (swarm todo l.37 asks whether it is needed)"
  ],
  "current_objective": "promexec round 2 (Fabric broker transition)",
  "current_step": "source done and Aether-reviewed; BLOCKED on the operator's privileged install (commit 9f95f9ea0, pin 3cf32a64...0df3)",
@@ -104,5 +105,5 @@
  "last_push_sha": "14f3f2742",
  "last_push_utc": "2026-09-30T17:56:24Z",
  "model": "claude-opus-5-5 (runtime model id); Claude Code 2.1.283",
- "session_started_utc": "2026-09-25T18:55:52Z (process start; context compacted several times since)"
+ "session_started_utc": "2026-10-03T13:00:00Z (instance ubu001-98e4efaf; fresh boot)"
 }
