@@ -66,17 +66,17 @@
   "unblocks": [
     "C-004-T020"
   ],
-  "created_at_utc": "2026-10-03T22:45:00Z",
+  "created_at_utc": "2026-10-03T22:27:20Z",
   "instance": "harry1-da86cf98",
   "host": "harry1 (M4)",
   "branch": "pallas/c004-t005",
   "worktree_path": "C:/Prometheus-worktrees/pallas-c004-t005 (work); C:/Prometheus-worktrees/pallas-ops (state commits, sparse)",
   "resources": {
     "cpu": "one generator run, under 1 second",
-    "reviewer_hours": "about 1 of 3 (estimated from commit times, not metered)",
+    "reviewer_hours": "about 0.35 of 3: wall time from branch creation 22:13:52Z to INTEGRATION_READY 22:27:20Z plus boot reading before it (session start not recorded)",
     "gpu": "0",
     "new_artifact_bytes": "about 110 KB"
   },
   "cleanup": "worktrees pallas-c004-t005 and pallas-ops left in place until integration; branch pallas/c004-t005 to be deleted after it is merged",
-  "notes": "The table was committed and pushed (3ea4af125) before draft A A6 expected/outcomes, draft B B9 expected/reason codes and B8.2 were read. COMPARISON.md and this receipt came after. T030 and T041 were not taken."
+  "notes": "The table was committed and pushed (3ea4af125) before draft A A6 expected/outcomes, draft B B9 expected/reason codes and B8.2 were read. COMPARISON.md and this receipt came after. T030 and T041 were not taken. CORRECTION 2026-10-03T22:29Z: as first committed at e5477052b this receipt carried created_at_utc 2026-10-03T22:45:00Z and reviewer_hours 'about 1 of 3'; both were estimates written without reading a clock and were wrong. Values above are from commit timestamps. Work-branch head after the correction commit is later than end_sha; end_sha remains the commit that completed the deliverables."
 }
