@@ -37,11 +37,11 @@ def main(argv=None) -> int:
 
     if a.cmd == "validate":
         errs = core.validate_all()
-        n_c, n_t = len(core.load_campaigns()), len(core.load_tasks())
+        n_e, n_c, n_t = len(core.load_epics()), len(core.load_campaigns()), len(core.load_tasks())
         for k, v in errs.items():
             for m in v:
                 print("{}: {}".format(k, m))
-        print("{} campaign(s), {} task(s): {}".format(n_c, n_t, "OK" if not errs else "{} with errors".format(len(errs))))
+        print("{} epic(s), {} campaign(s), {} task(s): {}".format(n_e, n_c, n_t, "OK" if not errs else "{} with errors".format(len(errs))))
         return 1 if errs else 0
 
     if a.cmd == "ready":

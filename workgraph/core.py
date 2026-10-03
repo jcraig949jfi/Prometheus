@@ -8,8 +8,10 @@ from pathlib import Path
 from typing import Dict, List, Optional, Tuple
 
 REPO = Path(__file__).resolve().parents[1]
-CAMPAIGNS = REPO / "ops" / "campaigns"
+OPS = REPO / "ops"
+CAMPAIGNS = OPS / "campaigns"
 
+EPIC_SCHEMA = "prometheus.workgraph.epic.v1"
 CAMPAIGN_SCHEMA = "prometheus.workgraph.campaign.v1"
 TASK_SCHEMA = "prometheus.workgraph.task.v1"
 LEASE_SCHEMA = "prometheus.workgraph.lease.v1"
@@ -54,7 +56,7 @@ TASK_REQUIRED = ("schema", "task_id", "campaign_id", "title", "objective", "owne
                  "acceptance", "deliverables", "status", "history")
 TASK_OPTIONAL = ("parent_objective", "eligible_roles", "preferred_model", "minimum_model", "requires_shas",
                  "owns", "reads", "resource_ceiling", "escalation_triggers", "kind", "red_required",
-                 "satisfied_states", "receipt", "notes", "authority")
+                 "satisfied_states", "receipt", "notes", "authority", "experiment_id")
 TASK_KINDS = ("software", "science", "document", "review", "operations")
 
 RECEIPT_REQUIRED = ("schema", "task_id", "campaign_id", "attempt_id", "role", "model", "quality_class",
@@ -80,6 +82,48 @@ def _dump(path: Path, obj: dict) -> None:
 
 def can_transition(old: str, new: str) -> bool:
     return old in TRANSITIONS and new in TRANSITIONS[old]
+
+
+# --------------------------------------------------------------------------------------------------- epics / threads
+# Epic -> Thread -> Campaign -> [Experiment] -> Task -> Attempt (DISTRIBUTED_WORK.md s1a). Epics and the
+# thread/campaign links are optional: a campaign without thread_id and a Markdown-only thread stay valid.
+# Evidence rolls upward; authority does not -- so an Epic carries no tasks, leases, receipts or claims.
+
+EPIC_REQUIRED = ("schema", "epic_id", "title", "objective", "start_date", "status", "constraints",
+                 "exit_conditions", "threads")
+EPIC_OPTIONAL = ("north_star", "resource_refs", "operator_decisions", "deferred", "candidate_threads", "notes",
+                 "authority")
+
+
+def load_epics(ops: Path = OPS) -> Dict[str, Tuple[Path, dict]]:
+    out = {}
+    for f in sorted((Path(ops) / "epics").glob("*/EPIC.json")):
+        e = _load(f)
+        out[e.get("epic_id", f.parent.name)] = (f.parent, e)
+    return out
+
+
+def thread_epic(ops: Path, thread_id: str) -> Optional[str]:
+    """The epic a thread declares ('epic: EP-..' line in ops/threads/<id>.md), '' if none, None if no thread."""
+    f = Path(ops) / "threads" / (thread_id + ".md")
+    if not f.exists():
+        return None
+    for line in f.read_text(encoding="utf-8").splitlines()[:30]:
+        if line.lower().startswith("epic:"):
+            return line.split(":", 1)[1].strip().split()[0] if line.split(":", 1)[1].strip() else ""
+    return ""
+
+
+def validate_epic(e: dict) -> List[str]:
+    err = ["epic missing " + k for k in EPIC_REQUIRED if k not in e]
+    err += ["epic field {} is not allowed (keep the epic thin: no tasks, leases, receipts or claims)".format(k)
+            for k in e if k not in EPIC_REQUIRED and k not in EPIC_OPTIONAL]
+    if e.get("schema") not in (None, EPIC_SCHEMA):
+        err.append("epic schema must be " + EPIC_SCHEMA)
+    for k in ("constraints", "exit_conditions", "threads"):
+        if k in e and not isinstance(e[k], list):
+            err.append("epic {} must be a list".format(k))
+    return err
 
 
 # --------------------------------------------------------------------------------------------------- loading
@@ -108,6 +152,8 @@ def validate_campaign(c: dict) -> List[str]:
     for k in ("schema", "campaign_id", "title", "objective", "coordinator_role", "authority", "quality_classes"):
         if k not in c:
             e.append("campaign missing " + k)
+    if "epic_id" in c:
+        e.append("a campaign names its thread_id, not an epic (the thread names the epic)")
     if c.get("schema") not in (None, CAMPAIGN_SCHEMA):
         e.append("campaign schema must be " + CAMPAIGN_SCHEMA)
     qc = c.get("quality_classes", {})
@@ -200,10 +246,39 @@ def validate_escalation(text: str) -> List[str]:
             if not any(ln.upper().startswith(h + ":") or ln.upper().startswith("## " + h) for ln in lines)]
 
 
-def validate_all(root: Path = CAMPAIGNS) -> Dict[str, List[str]]:
+def validate_all(root: Path = CAMPAIGNS, ops: Optional[Path] = None) -> Dict[str, List[str]]:
+    """ops: the ops/ directory holding epics/ and threads/ (default: this repository's, when root is too)."""
     camps = load_campaigns(root)
     tasks = load_tasks(root)
     errs: Dict[str, List[str]] = {}
+    if ops is None and Path(root) == CAMPAIGNS:
+        ops = OPS
+    if ops is not None:
+        epics = load_epics(ops)
+        for eid, (_, e) in epics.items():
+            x = validate_epic(e)
+            for th in e.get("threads", []):
+                te = thread_epic(ops, th)
+                if te is None:
+                    x.append("thread {} not found at ops/threads/{}.md".format(th, th))
+                elif te != eid:
+                    x.append("thread {} declares epic {!r}, not {}".format(th, te, eid))
+            if x:
+                errs["epic " + eid] = x
+        for cid, (_, c) in camps.items():
+            th = c.get("thread_id")
+            if not th:
+                continue
+            te = thread_epic(ops, th)
+            x = []
+            if te is None:
+                x.append("thread_id {} not found at ops/threads/{}.md".format(th, th))
+            elif te and te not in epics:
+                x.append("thread {} declares unknown epic {}".format(th, te))
+            elif te and th not in epics[te][1].get("threads", []):
+                x.append("thread {} is not listed in epic {} threads".format(th, te))
+            if x:
+                errs.setdefault("campaign " + cid, []).extend(x)
     for cid, (_, c) in camps.items():
         x = validate_campaign(c)
         if x:

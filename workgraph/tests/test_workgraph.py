@@ -171,3 +171,46 @@ def test_escalation_shape():
 def test_the_repository_work_graphs_validate():
     errs = core.validate_all()
     assert not errs, errs
+
+
+# ------------------------------------------------------------------------------------------------ epics / threads
+
+EPIC = {"schema": core.EPIC_SCHEMA, "epic_id": "EP-X", "title": "t", "objective": "o", "start_date": "2026-10-03",
+        "status": "ACTIVE", "constraints": [], "exit_conditions": [], "threads": ["TH-A"]}
+
+
+def _ops(tmp_path, epic=EPIC, thread_epic="EP-X", camp_thread="TH-A"):
+    ops = tmp_path / "ops"
+    (ops / "epics" / "EP-X").mkdir(parents=True)
+    (ops / "epics" / "EP-X" / "EPIC.json").write_text(json.dumps(epic))
+    (ops / "threads").mkdir()
+    (ops / "threads" / "TH-A.md").write_text("# TH-A\n\nepic: {}\n".format(thread_epic))
+    camp = dict(CAMP, thread_id=camp_thread) if camp_thread else CAMP
+    _write(ops / "campaigns", [_task("T1", experiment_id="E-1")], camp)
+    return ops
+
+
+def test_epic_thread_campaign_chain_validates(tmp_path):
+    ops = _ops(tmp_path)
+    assert core.validate_all(ops / "campaigns", ops) == {}
+
+
+def test_epic_stays_thin():
+    errs = core.validate_epic(dict(EPIC, tasks=["T1"], lease="x"))
+    assert any("tasks is not allowed" in e for e in errs) and any("lease is not allowed" in e for e in errs)
+    assert "epic missing exit_conditions" in core.validate_epic({k: v for k, v in EPIC.items() if k != "exit_conditions"})
+
+
+def test_broken_links_are_reported(tmp_path):
+    ops = _ops(tmp_path, thread_epic="EP-OTHER")
+    errs = core.validate_all(ops / "campaigns", ops)
+    assert any("declares epic 'EP-OTHER'" in m for m in errs["epic EP-X"])
+    assert any("unknown epic EP-OTHER" in m for m in errs["campaign C-900"])
+    ops2 = _ops(tmp_path / "b", camp_thread="TH-MISSING")
+    assert any("TH-MISSING not found" in m for m in core.validate_all(ops2 / "campaigns", ops2)["campaign C-900"])
+
+
+def test_links_are_optional_and_campaign_names_thread_not_epic(tmp_path):
+    ops = _ops(tmp_path, camp_thread=None)
+    assert core.validate_all(ops / "campaigns", ops) == {}
+    assert any("names its thread_id, not an epic" in e for e in core.validate_campaign(dict(CAMP, epic_id="EP-X")))

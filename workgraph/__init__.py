@@ -9,5 +9,5 @@ Standard library only.
 from .core import (  # noqa: F401
     LIFECYCLE, TERMINAL, TRANSITIONS, SATISFIED_DEFAULT, TASK_REQUIRED, RECEIPT_REQUIRED, ESCALATION_HEADERS,
     load_campaigns, load_tasks, validate_campaign, validate_task, validate_receipt, validate_escalation,
-    can_transition, ready_for, transition, capability, validate_all,
+    can_transition, ready_for, transition, capability, validate_all, load_epics, validate_epic,
 )

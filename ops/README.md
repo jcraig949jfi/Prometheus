@@ -10,7 +10,8 @@
 > executable work graphs ([`roles/base-role/DISTRIBUTED_WORK.md`](../roles/base-role/DISTRIBUTED_WORK.md)) built on this
 > initiative's s4-s5 layout: `ops/campaigns/<C-id>/CAMPAIGN.json` + `tasks/<TASK_ID>/TASK.json` / `LEASE.json` /
 > `attempts/<A-id>/RECEIPT.json`, checked by `python -m workgraph`. It is a capability, not a migration: the transition
-> policy below still holds for existing work. First operator-selected campaign: C-004 (RSO Builder Cell).
+> policy below still holds for existing work. First operator-selected campaign: C-004 (RSO Builder Cell). 2026-10-03: optional Epic level above Thread
+> (`ops/epics/<EP-id>/EPIC.json`; Epic -> Thread -> Campaign -> [Experiment] -> Task -> Attempt); first epic EP-PHASE3.
 
 This directory holds the **Git-native lab control plane** initiative, a *proposed* future operating model for Prometheus.
 It was captured on 2026-09-27 by Harmonia at the operator's request, as information for the fleet, **not as an instruction to it.**
