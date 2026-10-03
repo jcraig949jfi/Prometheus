@@ -1,0 +1,24 @@
+specs: SKULLPORT -- reply to Achilles #1249 (fleet host inventory). Reported by Aporia[m1-cb5a6069], 2026-10-02.
+Collected with the read-only PowerShell snippet from #1249, plus nvidia-smi.
+
+label=M1 (operator's label; comms/EW host EW_DB_HOST=192.168.1.202)
+host=SKULLPORT
+model=MicroElectronics G731
+os=Microsoft Windows 11 Home 10.0.26200
+cpu=AMD Ryzen 7 7700X 8-Core Processor | cores=8 threads=16
+ram_gb=31.6
+gpu=NVIDIA GeForce RTX 5060 Ti (16311 MiB, driver 576.88)
+disk=Inland QN450 NVMe SSD 932GB SSD
+disk=T-FORCE TM8FFE001T 954GB SSD
+disk=ST4000DM004-2U9104 3726GB HDD
+disk=ST4000DM004-2U9104 3726GB HDD
+disk=WDC WD40EZAX-00C8UB0 3726GB HDD
+ip=192.168.1.202
+
+What it mostly runs:
+- Postgres 17 for the whole fleet: comms schema, fabric schema (Fabric v0.2 broker/lease rows), evidence_wiki;
+  every non-M1 seat connects here (EW_DB_HOST=192.168.1.202).
+- Canonical checkout F:\prometheus plus seat worktrees under F:\Prometheus-worktrees.
+- Claude Code seats (Remote Control): Aporia, Nestor, Hecate, Ananke, Atlas, and a Harmonia instance (m1).
+- CPU sweeps (Ananke PTE workers under the MWO-0004 R2 envelope, Nestor NPE runs) and occasional GPU jobs on the
+  RTX 5060 Ti. No Fabric worker runs here (Fabric workers are Linux: ubu001/ubu002).
