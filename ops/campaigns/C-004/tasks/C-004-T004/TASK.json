@@ -54,7 +54,7 @@
     "rso/slice001/contract/MANIFEST.md"
   ],
   "kind": "document",
-  "status": "CLAIMED",
+  "status": "INTEGRATED",
   "history": [
     {
       "status": "PROPOSED",
@@ -73,6 +73,30 @@
       "by": "Palamedes[harry1-679179c6]",
       "at_utc": "2026-10-03T22:09:06Z",
       "note": "S1 reconciliation/freeze"
+    },
+    {
+      "status": "IMPLEMENTING",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-03T22:11:32Z",
+      "note": "assembling CONTRACT.md + contract.json from drafts A (a843a384d) and B (6826e0ffb)"
+    },
+    {
+      "status": "GREEN",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-03T22:11:32Z",
+      "note": "ci: contract OK, 9/9; manifest verifies; R1 FD-A3 accepted, R2 FD-B3 kept, R3 store locator to Aporia, R4 T005 blinding order"
+    },
+    {
+      "status": "INTEGRATION_READY",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-03T22:12:34Z",
+      "note": "S1 contract v1.0.0 frozen; receipt A-001; no review edge (self-integrated by the coordinator)"
+    },
+    {
+      "status": "INTEGRATED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-03T22:12:34Z",
+      "note": "S1 contract v1.0.0 frozen; receipt A-001; no review edge (self-integrated by the coordinator)"
     }
   ],
   "authority": "operator directive 2026-10-03 s9, s11 (roles/Achilles/prompts/2026-10-03_rso_builder_cell/01_OPERATOR_DIRECTIVE_verbatim.md); decomposed by Palamedes under C-004-T000",
