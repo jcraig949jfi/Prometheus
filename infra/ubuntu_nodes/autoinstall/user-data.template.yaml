@@ -57,17 +57,15 @@ autoinstall:
     authorized-keys:
 @@AUTHORIZED_KEYS@@
 
+  # Only packages that install from the installer stick itself, so the install never depends on a download
+  # (P52s 2026-10-03: `iw` was not on the stick and failed with apt exit 100 without a network, killing the
+  # install). iw, gh, jq, python3-venv and python3-pip are installed by ubuntu_server_setup.sh afterwards.
   packages:
     - git
     - curl
     - htop
     - tmux
-    - iw
-    - gh
-    - jq
     - wpasupplicant
-    - python3-venv
-    - python3-pip
 
   updates: all
   shutdown: reboot

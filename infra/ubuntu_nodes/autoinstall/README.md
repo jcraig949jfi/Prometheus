@@ -8,7 +8,8 @@ Hands-off install for new swarm nodes (built 2026-10-02 by Achilles on ELSA). It
 - Whole internal disk, LVM, root uses **all** the space, no passphrase
 - User `jcraig` (console password from `pwhash.txt`), hostname `ubu-new` (renamed after first SSH)
 - OpenSSH with the M2 and ELSA keys preinstalled; passwordless sudo; lid switch ignored; linger on
-- Packages: git curl htop tmux iw gh jq wpasupplicant python3-venv python3-pip; all updates applied
+- Packages: only what installs from the stick (git curl htop tmux wpasupplicant); the rest (iw gh jq python3-venv
+  python3-pip) and updates come from ubuntu_server_setup.sh / provision_node.sh after the first boot
 
 ## Make the stick (once)
 
