@@ -1,0 +1,12 @@
+# Manifest for 2026-10-01_salvage_workers
+
+sha256 over LF-normalised bytes (equals the git blob for text files); see comms/manifest.py.
+
+- 00_COMMON.md  sha256:917a877a172f04161c90e2b3e12e5c4861de265c9ffffe820d7dd20a1aaf12c8
+- 01_SCOPE_program_substrates.md  sha256:ba741be02f1332e63d40e66cf44ea5efc48e687def9ed5a346a44f4390beda82
+- 02_SCOPE_other_substrates.md  sha256:b1366b4d45d4a884c152c9c286cc3a26770824da7bf514c178665cf4758ebf04
+- 03_SCOPE_worlds.md  sha256:715f45508d558a893dc7168ae205717eaba32bff94327ff47f12848c99264ab9
+- 04_SCOPE_qualification_instruments.md  sha256:fbc783a0b60e105a19cb4161c13655941e02e44672063c98f6ee5f93e06a165a
+- 05_SCOPE_causal_instruments.md  sha256:ff690441126f040e5e5b8fbb3556c5ad08d2e2ff3f0df85aab7f9ac232ee3f71
+- 06_SCOPE_infrastructure.md  sha256:097aeffe6dc8ff88211874ba249109aa5f18a93078bfc3f50b05f0a1830a41f6
+- 07_SCOPE_search_machinery.md  sha256:eb55fecc58105d7af68129e6bc335b1a39f5e7b66d1c489e37789fa9d7d41faa

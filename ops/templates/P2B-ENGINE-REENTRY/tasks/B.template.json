@@ -1,0 +1,45 @@
+{
+  "schema": "prometheus.workgraph.task.v1",
+  "task_id": "{{CAMPAIGN_ID}}-B",
+  "campaign_id": "{{CAMPAIGN_ID}}",
+  "epic_id": "EP-PHASE2B",
+  "title": "Defect triage for {{SUBJECT}}",
+  "objective": "Classify every applicable finding as CONFIRMED_DEFECT, ALREADY_REPAIRED, NOT_APPLICABLE, NEEDS_DISCRIMINATOR, SCIENTIFIC_LIMITATION or OPEN, with evidence, and propose the C/D/E packets the classification justifies.",
+  "owner_role": "{{OWNER}}",
+  "quality_class": "Q2",
+  "can_downgrade": false,
+  "escalate_to": "Q3",
+  "depends_on": [
+    "{{CAMPAIGN_ID}}-A"
+  ],
+  "owns": [
+    "ops/campaigns/{{CAMPAIGN_ID}}/CAMPAIGN.md",
+    "ops/campaigns/{{CAMPAIGN_ID}}/tasks/"
+  ],
+  "problem": "TAILOR BEFORE READY if needed. CONFIRMED_DEFECT needs a reproduction or a code location; NEEDS_DISCRIMINATOR names the cheapest probe that would decide it.",
+  "non_goals": [
+    "No repair or replay yet; propose them as PROPOSED packets"
+  ],
+  "evidence_required": [
+    "the triage table in CAMPAIGN.md",
+    "PROPOSED packets for each CONFIRMED_DEFECT repair and each replay it affects"
+  ],
+  "acceptance": {
+    "condition": "every finding from A has a class and evidence; repairs/replays proposed or NO_JUSTIFIED_FURTHER_WORK recorded with reasons"
+  },
+  "deliverables": [
+    "triage table",
+    "PROPOSED C/D/E packets"
+  ],
+  "kind": "review",
+  "red_required": false,
+  "status": "PROPOSED",
+  "history": [
+    {
+      "status": "PROPOSED",
+      "by": "{{BY}}",
+      "at_utc": "{{NOW}}",
+      "note": "instantiated from P2B-ENGINE-REENTRY; tailor before READY"
+    }
+  ]
+}

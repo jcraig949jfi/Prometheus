@@ -1,0 +1,36 @@
+{
+  "schema": "prometheus.workgraph.campaign.v1",
+  "campaign_id": "{{CAMPAIGN_ID}}",
+  "thread_id": "TH-P2B-ENGINE-HARDENING",
+  "epic_id": "EP-PHASE2B",
+  "status": "OPEN",
+  "label": "P2B-ENGINE-REENTRY: {{SUBJECT}}",
+  "title": "Phase 2-B re-entry: {{SUBJECT}}",
+  "objective": "Ingest the forensic findings that apply to {{SUBJECT}}, triage them, repair what materially affected interpretation, replay what the repairs affected, and decide what residual science and exploration is justified (possibly NO_JUSTIFIED_FURTHER_WORK).",
+  "coordinator_role": "{{OWNER}}",
+  "members": [
+    "{{OWNER}}"
+  ],
+  "authority": "operator directive 2026-10-03 (roles/Achilles/prompts/2026-10-03_epics_phase2b/01_OPERATOR_DIRECTIVE_verbatim.md, s8, s21); instantiated by {{BY}} on {{DATE}}",
+  "sources": "ops/threads/TH-P2B-ENGINE-HARDENING.md (Forensic sources)",
+  "quality_classes": {
+    "Q1": {
+      "description": "mechanical: reruns of frozen procedures, manifests, fixtures from a settled design",
+      "rank": 1
+    },
+    "Q2": {
+      "description": "substantial: triage judgements, repairs, replay design, residual-science selection",
+      "rank": 2
+    },
+    "Q3": {
+      "description": "scarce deep reasoning / adversarial review of a repair or a surprising replay",
+      "rank": 3
+    }
+  },
+  "satisfied_states": [
+    "INTEGRATED",
+    "CLOSED"
+  ],
+  "created_by": "{{BY}}",
+  "created_at_utc": "{{NOW}}"
+}

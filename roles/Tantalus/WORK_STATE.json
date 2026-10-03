@@ -3,21 +3,22 @@
   "seat": "Tantalus",
   "mwo_id": "MWO-0004",
   "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
-  "updated_at_utc": "2026-10-01T09:21:00Z",
-  "state": "HOLD",
-  "branch": "tantalus/base-role-adopt-2026-10-01",
+  "updated_at_utc": "2026-10-01T10:02:00Z",
+  "state": "READY",
+  "branch": "tantalus/phase3-intake-2026-10-01",
   "head_sha": "(this commit; see git log -1 -- roles/Tantalus/WORK_STATE.json)",
-  "threads": [],
+  "threads": ["PHASE3-INTAKE-TANTALUS"],
   "campaigns": [],
   "experiments": [],
   "fabric_tasks": [],
   "running": [],
   "blocked_on": [],
   "next_actions": [
-    "Seat created 2026-10-01, charter PENDING. HOLD because no READY work exists without a charter (base role 2a F), not a block on any seat. When the operator's charter arrives: commit verbatim with MANIFEST under roles/Tantalus/prompts/<date>_charter/, rewrite RESPONSIBILITIES.md, file BACKLOG_H0H5.md, leave HOLD."
+    "Phase 3 intake package delivered at docs/phase3/intake/tantalus/ (REPORT.md, 15 dossiers, artifact_index.jsonl 528, engine_index.jsonl 46). Merging the four crawler packages is someone else's job (charter: do not edit a shared master index). Follow-ups needing authority Tantalus does not hold are TANTALUS-03..06 in BACKLOG_H0H5.md."
   ],
   "operator_decisions_required": [],
   "latest_reports": [
-    "roles/Tantalus/journal/2026-10-01.md (creation pass)"
+    "docs/phase3/intake/tantalus/REPORT.md",
+    "roles/Tantalus/journal/2026-10-01.md (creation, charter, crawl)"
   ]
 }

@@ -1,0 +1,12 @@
+# Manifest for h2
+
+sha256 over LF-normalised bytes (equals the git blob for text files); see comms/manifest.py.
+
+- q01_qualify.py  sha256:6a8e524163e13972afc581e2560d161bab1201858c1807bbcdccf738f171b662
+- q02_receipts.py  sha256:af8ce8208c54ad82b4d5046faa0cfdc8cb1f79f4bc32e8c251a41e117d74524b
+- q03_receipts.py  sha256:2747c8369fb2fc2036b34fe2205cc32a2a5ee2ce465ad0831e71c318504403ad
+- q04_escapes.py  sha256:9e735d54d381095832092a4926536c25e4bffe7308378754f339b409617311a2
+- q05_port_reader_cases.py  sha256:e143861871813c53a448beb3319b6039b465b8cd588efb59fd32a500ffc7520a
+- q06_my_mutations.py  sha256:9412dba3d83db79d9ea77d1093d7e3e57997e520c83c4ffea1f78e43b57b9421
+- q07_fire_checker.py  sha256:ea4807eac0c80369dac1291b139d9348fd11bca54b0af8b7c8ae5cb0065e5cc8
+- q08_misc.py  sha256:d1ca7a2838c1822352a5bef3f57f28de206f391ad3eeae998193221a06fdce49

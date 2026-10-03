@@ -1,0 +1,80 @@
+{
+  "schema": "prometheus.workgraph.task.v1",
+  "task_id": "C-004-T011",
+  "campaign_id": "C-004",
+  "title": "S2 reset, restart and observer predicates with T03-T08 sound and broken fixtures",
+  "objective": "Implement reset (erase forbidden past, preserve declared allowed state), restart equivalence and relevant-trace observer equivalence as separate predicates over the finite world, with sound and broken fixtures for T03-T08.",
+  "parent_objective": "RSO-METHODS-SLICE-001 (CAMPAIGN.json objective)",
+  "owner_role": "Cadmus",
+  "quality_class": "Q2",
+  "can_downgrade": false,
+  "escalate_to": "Q3",
+  "depends_on": [
+    "C-004-T010"
+  ],
+  "requires_shas": [
+    "09dc8c38b (closure review)",
+    "3bd02f393 (v0.4 synthesis, merged)"
+  ],
+  "owns": [
+    "rso/slice001/reset.py",
+    "rso/slice001/observer.py",
+    "rso/slice001/fixtures/world_cases.py",
+    "rso/slice001/tests/test_reset_observer.py"
+  ],
+  "reads": [
+    "rso/slice001/contract/CONTRACT.md",
+    "rso/slice001/contract/contract.json",
+    "docs/phase3/synthesis/ENCELADUS-DIONYSUS-v0.4/NEXT_ROUND_PLAN_v0.4.md",
+    "docs/phase3/closure/FABLE-5.1/CLOSURE_REVIEW_v0.4.md",
+    "roles/rso-builder-role/",
+    "rso/slice001/world.py"
+  ],
+  "problem": "Plan s4: T03 clean reset PASS + allowed-state preservation PASS; T04 display-only erase with a later-arriving forbidden packet -> reset FAIL even if the immediate buffer looks clean; T05 indiscriminate wipe -> preservation FAIL; T06 complete restart PASS, twin omitting queue/counter state FAIL, neither alone establishes reset; T07 observer alters then heals before score -> relevant-trace FAIL, declared irrelevant bookkeeping twin PASS; T08 repeated-boundary and split-channel leaks within the registered model -> reset FAIL (repeated calls and interacting shares, not one episode). Every C3 IN-MODEL known escape becomes a broken fixture that must now be caught. Verdicts are gate outcomes with reasons in the C1 shape.",
+  "non_goals": [
+    "No receipt/evidence-graph code (Argus)",
+    "Do not copy code, tests or verdict policies from the Fable or ASTRA harnesses; they are reference and adversarial corpora (SOURCES.md B; NEXT_ROUND_PLAN_v0.4 s1)",
+    "Python >= 3.8 standard library only; no package installation (MWO-0004 R2)",
+    "Never weaken a registered case to pass (rso-builder-role s2.3)"
+  ],
+  "evidence_required": [
+    "RED: each T03-T08 broken fixture shown passing a deliberately naive predicate stub (the fire test, s2.4)",
+    "GREEN: every sound fixture accepted and every broken fixture rejected with the contract's reason",
+    "each C3 IN-MODEL escape present as a named fixture"
+  ],
+  "acceptance": {
+    "command": "python -B -m rso.slice001.ci",
+    "condition": "T03-T08 sound accept, broken reject with expected reasons; C3 IN-MODEL escapes caught"
+  },
+  "deliverables": [
+    "rso/slice001/reset.py",
+    "rso/slice001/observer.py",
+    "rso/slice001/fixtures/world_cases.py",
+    "rso/slice001/tests/test_reset_observer.py"
+  ],
+  "kind": "software",
+  "status": "READY",
+  "history": [
+    {
+      "status": "PROPOSED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-03T11:04:14Z",
+      "note": "created under C-004-T000 decomposition"
+    },
+    {
+      "status": "READY",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-03T11:04:14Z",
+      "note": "made READY by the coordinator (C-004-T000)"
+    }
+  ],
+  "authority": "operator directive 2026-10-03 s9, s11 (roles/Achilles/prompts/2026-10-03_rso_builder_cell/01_OPERATOR_DIRECTIVE_verbatim.md); decomposed by Palamedes under C-004-T000",
+  "escalation_triggers": [
+    "an IN-MODEL escape cannot be caught without changing the frozen contract"
+  ],
+  "resource_ceiling": {
+    "engineering": "<= 3 Q2 seat-hours",
+    "cpu": "< 3 CPU-minutes",
+    "note": "Counts toward the slice caps fixed by C-004-OP1 (NEXT_ROUND_PLAN_v0.4 s6 proposal: 30 CPU-minutes total, 0 GPU, 0 cloud, 100 MB new artifacts, 12 top-level validation launches; mutation children count toward CPU). Stop at the first exhausted cap and keep partial results."
+  }
+}

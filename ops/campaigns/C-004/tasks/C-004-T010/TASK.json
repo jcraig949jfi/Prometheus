@@ -1,0 +1,72 @@
+{
+  "schema": "prometheus.workgraph.task.v1",
+  "task_id": "C-004-T010",
+  "campaign_id": "C-004",
+  "title": "S2 finite world: transition fixture, pending-message channel, schedule/counter state, world-side truth",
+  "objective": "Implement the finite transition fixture of contract section A with its organism state, pending-message channel and every future-influencing counter/schedule state, plus the world-side output enumeration kept separate from any ruler.",
+  "parent_objective": "RSO-METHODS-SLICE-001 (CAMPAIGN.json objective)",
+  "owner_role": "Cadmus",
+  "quality_class": "Q2",
+  "can_downgrade": false,
+  "escalate_to": "Q3",
+  "depends_on": [
+    "C-004-T004",
+    "C-004-T003"
+  ],
+  "requires_shas": [
+    "09dc8c38b (closure review)",
+    "3bd02f393 (v0.4 synthesis, merged)"
+  ],
+  "owns": [
+    "rso/slice001/world.py",
+    "rso/slice001/tests/test_world.py"
+  ],
+  "reads": [
+    "rso/slice001/contract/CONTRACT.md",
+    "rso/slice001/contract/contract.json",
+    "docs/phase3/synthesis/ENCELADUS-DIONYSUS-v0.4/NEXT_ROUND_PLAN_v0.4.md",
+    "docs/phase3/closure/FABLE-5.1/CLOSURE_REVIEW_v0.4.md",
+    "roles/rso-builder-role/"
+  ],
+  "problem": "Plan s3 State/Truth and closure F: one finite transition fixture; world-side outputs enumerated separately from the ruler over all legal histories, exogenous inputs, delays and repeated resets up to the registered horizon H and repeat count R (contract.json reset_model). The enumeration is exhaustive over the frozen bounds and reports its eligible count.",
+  "non_goals": [
+    "No ruler, gate, receipt or reset predicate (T011, T012, T013)",
+    "Do not copy code, tests or verdict policies from the Fable or ASTRA harnesses; they are reference and adversarial corpora (SOURCES.md B; NEXT_ROUND_PLAN_v0.4 s1)",
+    "Python >= 3.8 standard library only; no package installation (MWO-0004 R2)",
+    "No native runtime claim: this is the finite toy (plan s3 last paragraph)"
+  ],
+  "evidence_required": [
+    "RED: tests asserting the enumerated history count and the world-side outputs from contract.json fail before the module exists",
+    "GREEN: they pass; a test that a modelled delay > H is reported (blocks closure, plan s3)"
+  ],
+  "acceptance": {
+    "command": "python -B -m rso.slice001.ci",
+    "condition": "all world tests pass; history count equals the contract's stated count"
+  },
+  "deliverables": [
+    "rso/slice001/world.py",
+    "rso/slice001/tests/test_world.py"
+  ],
+  "kind": "software",
+  "status": "READY",
+  "history": [
+    {
+      "status": "PROPOSED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-03T11:04:14Z",
+      "note": "created under C-004-T000 decomposition"
+    },
+    {
+      "status": "READY",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-03T11:04:14Z",
+      "note": "made READY by the coordinator (C-004-T000)"
+    }
+  ],
+  "authority": "operator directive 2026-10-03 s9, s11 (roles/Achilles/prompts/2026-10-03_rso_builder_cell/01_OPERATOR_DIRECTIVE_verbatim.md); decomposed by Palamedes under C-004-T000",
+  "resource_ceiling": {
+    "engineering": "<= 2 Q2 seat-hours",
+    "cpu": "< 2 CPU-minutes",
+    "note": "Counts toward the slice caps fixed by C-004-OP1 (NEXT_ROUND_PLAN_v0.4 s6 proposal: 30 CPU-minutes total, 0 GPU, 0 cloud, 100 MB new artifacts, 12 top-level validation launches; mutation children count toward CPU). Stop at the first exhausted cap and keep partial results."
+  }
+}

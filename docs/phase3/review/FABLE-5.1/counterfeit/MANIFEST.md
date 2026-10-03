@@ -1,0 +1,21 @@
+# Manifest for counterfeit
+
+sha256 over LF-normalised bytes (equals the git blob for text files); see comms/manifest.py.
+
+- gauntlet.py  sha256:f49cfb4393fe3366da713f509ff1d1ce48ed9b06ea29e748c219768a9bad563e
+- gauntlet2.py  sha256:467f8dbb15b9fd8a3f6d36dff848a3410abba35b477b0a7269075482a44f31a6
+- gauntlet3.py  sha256:09eec253d6f0f9bc19b34c3251df6b02f6d841ac9bf60232618f85a7dcaed03a
+- keys.py  sha256:35b8bd9c0ae0fc8d7af61a5c5c68a41bb70ea8bc868149432074c90976574f12
+- PREREG.md  sha256:f67515b70a72be040f9caf04caf3fdeb341ba59c0abbb0c2af419553fd5f2625
+- PREREG_gauntlet2.md  sha256:318944cd4d13ce3b835497ec4446dafcc902cc0a4149090fdaf22441fda90ba4
+- PREREG_gauntlet3.md  sha256:383b4ac23d5097c6fbcdc0ce62f43c2f3ec2062e4284f6da492e8855c19c8928
+- PREREG_keys.md  sha256:96e0ae2dfb86c5d5e5ec83c5b3fe329c360b1a5334283206b0795fffab62fd5f
+- probes_exploratory.py  sha256:fcfc8a141d8f5a3171cb1599242f3280b04d73e24e06d7ae7235f478e0e74a7c
+- README.md  sha256:d79bd906e53c0c0cf8d0e4c2a089442aaafc22395ea9a4929f9008bdd32fa393
+- RECEIPT_gauntlet.json  sha256:e786e7a6fa9121017b9bd930fc18a13d9399a8dcc631abad205b373105e0e34a
+- RECEIPT_gauntlet2.json  sha256:db32fc111cec2de903174d3bf1fe3b06dded29cf5db4e38169ee466141c0558f
+- RECEIPT_gauntlet3.json  sha256:2f9e51c77678cfec370dc5399affae96908dc1b23b5c68e2b3b9e0ca04c1a4db
+- RECEIPT_gauntlet_sweep_exploratory.json  sha256:42c311a5afb1cd8220b1a731833561119f5a21383d60564b19850d06261d83b8
+- RECEIPT_keys.json  sha256:669bc4554df478a1fc2a1f251e952c97301c6c360fd80de7bba06cc961cc3527
+- RECEIPT_probes_exploratory.json  sha256:43a9ebc14b3ec6167338bdbf7858bd65b56f7ac0f41c6fe79c57b4f3418b55a1
+- sweep_gauntlet1_exploratory.py  sha256:e24d2a95cd76307fa1e1e9566d8838ec89a9b04d310029cd263f5532d026b777

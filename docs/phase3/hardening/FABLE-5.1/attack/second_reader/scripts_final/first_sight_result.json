@@ -1,0 +1,272 @@
+[
+ {
+  "change": "S01 stats.upper_bound: the upper end of a design rate at its median, not at 99%",
+  "result": "noticed",
+  "detail": "Ran 103 tests in 13.746s | FAILED (failures=2) | test_attainability_is_computed_from_the_table_at_the_worse_end_of_the_interval, test_bounds_on_a_rate_seen_in_design_runs"
+ },
+ {
+  "change": "S02 stats.is_count: a float counts as a count",
+  "result": "noticed",
+  "detail": "Ran 103 tests in 13.761s | FAILED (failures=1, errors=1) | test_a_design_rate_is_used_at_its_lower_bound, test_a_count_is_a_non_negative_integer_and_not_a_boolean"
+ },
+ {
+  "change": "S03 G2: the negative's probability is taken up to the weak positive's critical count even where that is a yes",
+  "result": "SURVIVES",
+  "detail": "Ran 103 tests in 13.781s | OK | "
+ },
+ {
+  "change": "S04 G2: power computed one count below the critical count",
+  "result": "noticed",
+  "detail": "Ran 103 tests in 13.643s | FAILED (failures=2) | test_a_design_rate_is_used_at_its_lower_bound, test_preflight_floors"
+ },
+ {
+  "change": "S05 equivalence: the upper margin is not tested",
+  "result": "noticed",
+  "detail": "Ran 103 tests in 13.712s | FAILED (failures=2) | test_equivalence_is_not_absence_of_a_difference, test_a_baseline_at_each_edge_of_the_margin"
+ },
+ {
+  "change": "S06 consistent: each side at alpha, not alpha/2",
+  "result": "noticed",
+  "detail": "Ran 103 tests in 13.760s | FAILED (failures=1) | test_calibration_has_a_stated_resolution"
+ },
+ {
+  "change": "S07 G2: more design hits than design runs accepted",
+  "result": "noticed",
+  "detail": "Ran 103 tests in 13.656s | FAILED (failures=1) | test_a_design_rate_is_used_at_its_lower_bound"
+ },
+ {
+  "change": "G01 G1.cell: attainability taken at the lower end of the design interval only",
+  "result": "noticed",
+  "detail": "Ran 103 tests in 13.652s | FAILED (failures=1) | test_attainability_is_computed_from_the_table_at_the_worse_end_of_the_interval"
+ },
+ {
+  "change": "G02 G1.cell: more design hits than design units accepted",
+  "result": "noticed",
+  "detail": "Ran 103 tests in 13.753s | FAILED (failures=1) | test_attainability_is_computed_from_the_table_at_the_worse_end_of_the_interval"
+ },
+ {
+  "change": "G03 G1.cell: the registration clock is not type-checked",
+  "result": "noticed",
+  "detail": "Ran 103 tests in 13.699s | FAILED (failures=1) | test_every_required_field_is_required"
+ },
+ {
+  "change": "G04 G1.cell: an empty list or dict counts as a registered field",
+  "result": "SURVIVES",
+  "detail": "Ran 103 tests in 13.709s | OK | "
+ },
+ {
+  "change": "G05 G1.receipt: a receipt need not list its seeds to be checked",
+  "result": "noticed",
+  "detail": "Ran 103 tests in 13.656s | FAILED (errors=1) | test_a_receipt_needs_each_of_its_three_fields"
+ },
+ {
+  "change": "G06 G1.receipt: line endings are not normalised before hashing",
+  "result": "noticed",
+  "detail": "Ran 103 tests in 13.778s | FAILED (failures=1) | test_line_endings_do_not_change_a_source_hash"
+ },
+ {
+  "change": "V01 G0: UNQUALIFIED outranks BLOCKED",
+  "result": "noticed",
+  "detail": "Ran 103 tests in 13.764s | FAILED (failures=2) | test_every_gate_passes_its_sound_cases_and_rejects_its_mutants, test_combine_reports_the_most_informative_reason"
+ },
+ {
+  "change": "V02 G0: nothing to combine is a PASS",
+  "result": "noticed",
+  "detail": "Ran 103 tests in 13.666s | FAILED (failures=1) | test_combine_reports_the_most_informative_reason"
+ },
+ {
+  "change": "V03 G0: a sixth verdict is accepted",
+  "result": "noticed",
+  "detail": "Ran 103 tests in 13.684s | FAILED (failures=1) | test_five_verdicts_and_no_sixth"
+ },
+ {
+  "change": "U01 G3: the registered threshold at 48 is dropped",
+  "result": "noticed",
+  "detail": "Ran 103 tests in 13.679s | FAILED (failures=1) | test_the_registered_thresholds_are_the_ones_the_arithmetic_gives"
+ },
+ {
+  "change": "U02 interchange: the state is moved at step 5, not step 3",
+  "result": "noticed",
+  "detail": "Ran 103 tests in 13.604s | FAILED (failures=1) | test_the_swap_is_made_after_the_fourth_step"
+ },
+ {
+  "change": "U03 interchange: an undecided count is called NEGATIVE",
+  "result": "SURVIVES",
+  "detail": "Ran 103 tests in 13.860s | OK | "
+ },
+ {
+  "change": "U04 interchange: crossed-inverted with same-follows is called NEGATIVE, not NOT_MOVED",
+  "result": "noticed",
+  "detail": "Ran 103 tests in 13.707s | FAILED (failures=2) | test_register_swap_is_valid_in_one_physics_only, test_the_swap_is_made_after_the_fourth_step"
+ },
+ {
+  "change": "T01 G6.reset: the mark left on the environment is not compared",
+  "result": "SURVIVES",
+  "detail": "Ran 103 tests in 13.667s | OK | "
+ },
+ {
+  "change": "T02 G6.restart: the step right after the cut is not compared",
+  "result": "SURVIVES",
+  "detail": "Ran 103 tests in 13.658s | OK | "
+ },
+ {
+  "change": "T03 G6.restart: no cut after the first step",
+  "result": "SURVIVES",
+  "detail": "Ran 103 tests in 13.785s | OK | "
+ },
+ {
+  "change": "T04 G6.observer: only the first six seeds are run",
+  "result": "SURVIVES",
+  "detail": "Ran 103 tests in 13.661s | OK | "
+ },
+ {
+  "change": "R01 G7.report: founders compared as a set (order and repeats ignored)",
+  "result": "PATTERN_NOT_FOUND(0)",
+  "detail": ""
+ },
+ {
+  "change": "R02 G7.report: fewer hits reported than the search had is accepted",
+  "result": "PATTERN_NOT_FOUND(0)",
+  "detail": ""
+ },
+ {
+  "change": "R03 G7.report: positive control needed at 0.85, not 0.99",
+  "result": "PATTERN_NOT_FOUND(0)",
+  "detail": ""
+ },
+ {
+  "change": "R04 G7.report: a bound up to 0.005 below what the founders warrant is accepted",
+  "result": "noticed",
+  "detail": "Ran 103 tests in 13.335s | FAILED (failures=1) | test_a_bound_may_be_rounded_or_more_cautious_and_never_smaller"
+ },
+ {
+  "change": "R05 G7.calibration: the needle repair cell is dropped from the panel",
+  "result": "noticed",
+  "detail": "Ran 103 tests in 13.781s | FAILED (failures=1) | test_the_calibration_panel"
+ },
+ {
+  "change": "R06 G7.report: one policy that crosses neutral steps is enough for a null",
+  "result": "SURVIVES",
+  "detail": "Ran 103 tests in 13.632s | OK | "
+ },
+ {
+  "change": "A01 G9.arms: with fewer than 22 replicates no two arms are ever one series",
+  "result": "SURVIVES",
+  "detail": "Ran 103 tests in 13.737s | OK | "
+ },
+ {
+  "change": "A02 G9.arms: two arms with one series are tolerated; three are not",
+  "result": "SURVIVES",
+  "detail": "Ran 103 tests in 13.656s | OK | "
+ },
+ {
+  "change": "A03 G9.clauses: run 3 audited at factor 3, not its registered 2",
+  "result": "noticed",
+  "detail": "Ran 103 tests in 13.716s | FAILED (failures=1) | test_run_3_uses_a_factor_of_two_and_its_own_arm_names"
+ },
+ {
+  "change": "A04 G10.setting: placeholders are matched case-sensitively",
+  "result": "noticed",
+  "detail": "Ran 103 tests in 13.793s | FAILED (failures=1) | test_what_counts_as_a_registered_choice"
+ },
+ {
+  "change": "A05 G10.setting: power has no upper limit",
+  "result": "noticed",
+  "detail": "Ran 103 tests in 13.698s | FAILED (failures=1) | test_what_counts_as_a_registered_choice"
+ },
+ {
+  "change": "A06 G10.setting: the horizon need not be a whole number",
+  "result": "noticed",
+  "detail": "Ran 103 tests in 13.674s | FAILED (failures=1) | test_what_counts_as_a_registered_choice"
+ },
+ {
+  "change": "A07 G10.contrast: a field written in one cell only is not a difference",
+  "result": "noticed",
+  "detail": "Ran 103 tests in 13.727s | FAILED (failures=1) | test_a_contrast_changes_its_named_variable_and_nothing_else"
+ },
+ {
+  "change": "A08 G10.ruler: a cell verdict other than PASS or FAIL is read as NEGATIVE",
+  "result": "noticed",
+  "detail": "Ran 103 tests in 13.730s | FAILED (failures=1) | test_a_receipt_is_read_for_its_numbers_and_not_for_a_label"
+ },
+ {
+  "change": "A09 G10.ruler: RULER_NOT_APPLICABLE is no longer a guard",
+  "result": "noticed",
+  "detail": "Ran 103 tests in 13.691s | FAILED (failures=4) | test_every_gate_passes_its_sound_cases_and_rejects_its_mutants, test_a_receipt_is_read_for_its_numbers_and_not_for_a_label, test_no_ruler_tried_for_the_strong_claim_answered_the_kit, test_what_each_ruler_returned_on_the_kit"
+ },
+ {
+  "change": "A10 G10.ruler: a member run here and also elsewhere is reported as not run here",
+  "result": "SURVIVES",
+  "detail": "Ran 103 tests in 13.779s | OK | "
+ },
+ {
+  "change": "C01 G11: the opening clock is not type-checked",
+  "result": "SURVIVES",
+  "detail": "Ran 103 tests in 13.821s | OK | "
+ },
+ {
+  "change": "C02 G11: a side needs no generator hash",
+  "result": "noticed",
+  "detail": "Ran 103 tests in 13.523s | FAILED (failures=1) | test_custody_thresholds"
+ },
+ {
+  "change": "C03 G12.render: the setting hash depends on key order",
+  "result": "SURVIVES",
+  "detail": "Ran 103 tests in 13.676s | OK | "
+ },
+ {
+  "change": "C04 G11: an empty string counts as a custody field",
+  "result": "SURVIVES",
+  "detail": "Ran 103 tests in 13.525s | OK | "
+ },
+ {
+  "change": "L01 ladder: certificate at alpha 0.01, not 1e-6",
+  "result": "noticed",
+  "detail": "Ran 103 tests in 13.717s | FAILED (failures=1) | test_the_exact_bound_and_the_certificate"
+ },
+ {
+  "change": "L02 ladder: the control is ignored when the ninth pair is CARRIED",
+  "result": "noticed",
+  "detail": "Ran 103 tests in 13.877s | FAILED (failures=2) | test_on_the_unseen_pair_a_label_blind_cache_of_recombinations_beats_the_bound_too, test_what_the_two_arms_say_together"
+ },
+ {
+  "change": "L03 ladder: in the control the ninth pair too comes from the other key",
+  "result": "noticed",
+  "detail": "Ran 103 tests in 13.530s | FAILED (failures=2) | test_in_the_control_every_honest_organism_is_at_the_bound, test_on_the_unseen_pair_a_label_blind_cache_of_recombinations_beats_the_bound_too"
+ },
+ {
+  "change": "W01 score: a fresh world for every seed",
+  "result": "noticed",
+  "detail": "Ran 103 tests in 13.717s | FAILED (failures=1) | test_known_escapes_are_still_escapes"
+ },
+ {
+  "change": "W02 world: the final state does not hold the mark",
+  "result": "SURVIVES",
+  "detail": "Ran 103 tests in 13.688s | OK | "
+ },
+ {
+  "change": "W03 world: the trajectory does not hold the value delivered",
+  "result": "noticed",
+  "detail": "Ran 103 tests in 13.559s | FAILED (failures=1) | test_the_trajectory_includes_what_the_world_delivered"
+ },
+ {
+  "change": "M01 GM: a mutant that passes is not an escape",
+  "result": "noticed",
+  "detail": "Ran 103 tests in 13.528s | FAILED (failures=1) | test_a_mutant_that_passes_is_an_escape"
+ },
+ {
+  "change": "M02 GM: a sound case refused as BLOCKED, UNQUALIFIED or INDETERMINATE is no false accusation",
+  "result": "SURVIVES",
+  "detail": "Ran 103 tests in 11.431s | OK | "
+ },
+ {
+  "change": "M03 GM: the missing-field mutant tries the first eight fields only",
+  "result": "SURVIVES",
+  "detail": "Ran 103 tests in 11.824s | OK | "
+ },
+ {
+  "change": "M04 GM: the kind-facet mutant tries the first three kinds only",
+  "result": "SURVIVES",
+  "detail": "Ran 103 tests in 11.526s | OK | "
+ }
+]

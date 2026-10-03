@@ -30,7 +30,7 @@ def ref_tips(git: util.Git) -> dict:
 
 def roles_on_ref(git: util.Git, ref: str) -> list:
     out = git.run("ls-tree", "-d", "--name-only", ref + ":roles", check=False)
-    return [n for n in out.split() if n and n != "base-role"]
+    return [n for n in out.split() if n and not n.endswith("-role")]   # shared roles are layers, not seats
 
 
 def branch_only_roles(git: util.Git, tips: dict, main_roles: set) -> dict:

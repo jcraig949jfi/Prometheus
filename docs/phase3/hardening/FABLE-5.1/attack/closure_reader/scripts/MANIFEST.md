@@ -1,0 +1,12 @@
+# Manifest for scripts
+
+sha256 over LF-normalised bytes (equals the git blob for text files); see comms/manifest.py.
+
+- drv.py  sha256:4c78bfb350d42865627d729d560dea6151087b731088d8a7dacbecc2368d37f3
+- out_p22.txt  sha256:8dc947e9f14adb613666b5cbeeb68f3125dfd75d4cf14c5aae7685726a2ee4ca
+- p20_mutant_reasons.py  sha256:37d5cdc7096209a985e1f1a1e7e2fa7c77b654d73ab7623b540fc76534c4bb88
+- p21_reattack.py  sha256:de02992bb4a467696b6b8365212c4dcd913f03d2be3b21cc4e74d57dc757d73f
+- p22_mutate.py  sha256:d8d9056d378d4cde0f6123fcb22bf24fc5dcdfbe3f23f9403c8c8626f0c0ce8d
+- p23_new_escapes.py  sha256:886057f011ea83aa3ab718688a8d6c1912d165e5f432c5903a56a336f08d6dd3
+- p24_fire_checker.py  sha256:ea3183fee927c40e0330986d16343d0a5dc3be04d9ed755d2166bd776c1f5c65
+- p25_pairs.py  sha256:ada79295cf7f8fc7090a9ca0f73e28d686f55ac0b4829d452f6f9b8467391b09

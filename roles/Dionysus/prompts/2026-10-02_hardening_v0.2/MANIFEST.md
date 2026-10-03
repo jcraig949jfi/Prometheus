@@ -1,0 +1,11 @@
+# Manifest for 2026-10-02_hardening_v0.2
+
+sha256 over LF-normalised bytes (equals the git blob for text files); see comms/manifest.py.
+
+- 00_README.md  sha256:1fe752ece88e0a5f6707ac98a26ee3b15a21f58df4df3efbc023b0a851fef933
+- 01_OPERATOR_DIRECTIVE_as_typed.md  sha256:dd33a49ff7db725d0d09ac463a3acc253c3890aa58bdfddf87fed32388c3ef72
+- chatgpt56_01_HARDENING_DESIGN_v0.2.md  sha256:bbcf54f443f7802eefe6599ae9d208a195f8b57cbb9ea80f18687a6dc1549ab0
+- chatgpt56_02_TEST_HARNESS_SPEC.md  sha256:939e3747e19a1f7ef420688bd38c157c5ae6acc0d12316da2793b8447fd8c3b4
+- chatgpt56_03_ARCHITECTURE_PORTFOLIO_v0.2.md  sha256:a9e2839dcde3670ebdb03b250060e199fcba2d721f7c6693ec7f0618c17bb89d
+- chatgpt56_05_90_DAY_HARDENING_PLAN.md  sha256:ef1ae935221d1f701c6276c253177e41c6b600672b4f12636cd39c167ba37d14
+- chatgpt56_06_NEXT_REVIEW_CHARTER.md  sha256:b296830b4adc21f796c3f7f02afed7215fa0de45a986e3b096f0abd846c1d041

@@ -1,0 +1,69 @@
+{
+  "schema": "prometheus.workgraph.receipt.v1",
+  "task_id": "C-004-T000",
+  "campaign_id": "C-004",
+  "attempt_id": "A-001",
+  "role": "Palamedes",
+  "model": "claude-opus-5-5",
+  "quality_class": "Q2",
+  "start_sha": "82a8eb603f7bc389f30f0f9ce4cac586b9511d0f",
+  "end_sha": "48030ea69",
+  "files_changed": [
+    "ops/campaigns/C-004/CAMPAIGN.md",
+    "ops/campaigns/C-004/tasks/C-004-OP1..OP3/TASK.json",
+    "ops/campaigns/C-004/tasks/C-004-T001..T005,T010..T020,T030,T040,T041,T050/TASK.json",
+    "ops/campaigns/C-004/tasks/C-004-T000/TASK.json"
+  ],
+  "evidence_added": [
+    "23 task packets",
+    "coverage table and work-graph diagram in CAMPAIGN.md",
+    "field decisions (3) recorded in CAMPAIGN.md"
+  ],
+  "evidence_executed": [
+    {
+      "command": "python -m workgraph validate",
+      "result": "3 epic(s), 2 campaign(s), 25 task(s): OK"
+    },
+    {
+      "command": "python -m workgraph status C-004",
+      "result": "PROPOSED 4, READY 19, CLAIMED 1 (T000); S1 T001/T002/T003 claimable now, T004 waits on T001-T003+OP1, T005 waits on T004+OP3"
+    },
+    {
+      "command": "python -m workgraph ready <seat> for Argus/Cadmus/Eupalamus/Pallas/operator",
+      "result": "Argus T002; Cadmus T001; Eupalamus T003; Pallas none; operator OP1-OP3"
+    },
+    {
+      "command": "LANG=C.UTF-8 grep -nP '[^\u0000-\u007f]' CAMPAIGN.md tasks/*/TASK.json",
+      "result": "no matches"
+    }
+  ],
+  "red_observed": {
+    "observed": false,
+    "reason": "kind document: no failing test applies; the preregistered failure state was 'coverage table absent / S1 packets not READY', true at claim (CAMPAIGN.md coverage placeholder, one task in C-004)"
+  },
+  "result": "DONE_CLEAN",
+  "known_escapes": [
+    "the coverage table is a reading of NEXT_ROUND_PLAN_v0.4 s3-s5 and CLOSURE_REVIEW C1-C5/F by one Q2 seat; no independent check of completeness was run",
+    "per-packet engineering ceilings are planning guesses inside a cap OP-1 has not yet fixed"
+  ],
+  "unresolved": [
+    "OP-1 caps (gates T004 and so all of S2)",
+    "OP-3 reviewer identity (gates T005, T030, T041)",
+    "OP-2 anchor keeper (gates nothing; default custody UNQUALIFIED)"
+  ],
+  "unblocks": [
+    "C-004-T001",
+    "C-004-T002",
+    "C-004-T003"
+  ],
+  "created_at_utc": "2026-10-03T11:05:28Z",
+  "instance": "harry1-679179c6",
+  "host": "harry1",
+  "branch": "(detached state worktree)",
+  "worktree_path": "C:/Prometheus-worktrees/palamedes-ops",
+  "resources": {
+    "cpu": "negligible (validation only)",
+    "model": "one Q2 session, about 1 hour"
+  },
+  "notes": "Self-integrated by the coordinator: T000 has no review edge and its owner is the integrator; acceptance command reran green before CLOSED."
+}

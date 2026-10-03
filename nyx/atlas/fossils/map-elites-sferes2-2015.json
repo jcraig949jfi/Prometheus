@@ -1,0 +1,608 @@
+{
+ "schema": "nyx.atlas/0",
+ "fossil_id": "map-elites-sferes2-2015",
+ "techne_record": "techne/fossils/specimens/map-elites-sferes2-2015/record.json",
+ "whole_system": {
+  "FOSSIL_ID": {
+   "value": "map-elites-sferes2-2015",
+   "basis": "TECHNE_RECORD"
+  },
+  "CANONICAL_NAME": {
+   "value": "map_elites (MAP-Elites module for Sferes2) -- Illuminating search spaces by mapping elites (Mouret, J. B., & Clune, J. (2015) per README reference; module authors Jean-Baptiste Mouret and Danesh Tarapore; Inria per author e-mail, copyright headers ISIR / UPMC; 2015-2017)",
+   "basis": "TECHNE_RECORD"
+  },
+  "VERSION": {
+   "value": "github.com/sferes2/map_elites master @ 854eb3a4c4b8da592675f54fbb8667942b6eaf20 (committed 2017-07-25; 33 commits since 2015-05-07; 14 tracked files)",
+   "basis": "TECHNE_RECORD"
+  },
+  "ERA": {
+   "value": "2015-2017",
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_SYSTEM": {
+   "value": {
+    "domain": [
+     "quality-diversity",
+     "map-elites",
+     "evolutionary-computation"
+    ],
+    "lineage": "README: 'MAP-Elites module for Sferes2', reference 'Mouret, J. B., & Clune, J. (2015). Illuminating search spaces by mapping elites'; every licensed header says 'This file is a part of the sferes2 framework.' and the module builds via use='sferes2' with includes '../../' (i.e. lives at sferes2/modules/map_elites). sferes2's README at its own pin says 'we will soon integrate a more flexible version in the master branch of sferes_v2', i.e. this module is the standalone precursor of the later in-tree QD code. || main loop (reader, from the code): Per generation MapElites::epoch() flattens every occupied cell of the boost::multi_array archive into the working population, then Params::pop::size times picks two uniformly random elites, crosses and mutates them into two children, evaluates the whole child batch (in parallel via sferes::eval), and for each child computes its cell from round(desc_i * shape_i) and overwrites the occupant if the cell is empty, the child is fitter by more than epsilon, or it ties and lies closer to the cell centre; sferes2's Ea::run() drives this for nb_gen generations and dumps stats every dump_period."
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_PROBLEM": {
+   "value": "README: 'MAP-Elites module for Sferes2.' implementing an algorithm that 'creates a map of high-performing solutions at each point in a space defined by dimensions of variation that a user gets to choose'.",
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVED_HUMAN_CAPABILITY": {
+   "value": {
+    "built_to": "README: 'MAP-Elites module for Sferes2.' implementing an algorithm that 'creates a map of high-performing solutions at each point in a space defined by dimensions of variation that a user gets to choose'.",
+    "pressure": "README (abstract): 'The goal of search algorithms has traditionally been to return the single highest-performing solution in a search space' whereas a 'holistic view of how high-performing solutions are distributed throughout a search space' is 'more useful'.",
+    "success_means": "README: MAP-Elites '(1) illuminates the relationship between performance and dimensions of interest in solutions, (2) returns a set of high-performing, yet diverse solutions, and (3) improves finding a single, best solution'; in-tree test: BOOST_CHECK(best > -1e-3) on Rastrigin after 1001 generations."
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "DOCUMENTED_ENVIRONMENTAL_PRESSURE": {
+   "value": {
+    "pressure": "",
+    "failure_condition": ""
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "LANGUAGE": {
+   "value": [
+    "C++ (C++11: std::array, auto; header-only module + 2 program sources)",
+    "Python 2 (plot_map.py uses print statements; numpy, matplotlib)",
+    "Python (wscript)"
+   ],
+   "basis": "TECHNE_RECORD"
+  },
+  "EXECUTION_MODEL": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "ANCESTRY": {
+   "value": "README: 'MAP-Elites module for Sferes2', reference 'Mouret, J. B., & Clune, J. (2015). Illuminating search spaces by mapping elites'; every licensed header says 'This file is a part of the sferes2 framework.' and the module builds via use='sferes2' with includes '../../' (i.e. lives at sferes2/modules/map_elites). sferes2's README at its own pin says 'we will soon integrate a more flexible version in the master branch of sferes_v2', i.e. this module is the standalone precursor of the later in-tree QD code. || main loop (reader, from the code): Per generation MapElites::epoch() flattens every occupied cell of the boost::multi_array archive into the working population, then Params::pop::size times picks two uniformly random elites, crosses and mutates them into two children, evaluates the whole child batch (in parallel via sferes::eval), and for each child computes its cell from round(desc_i * shape_i) and overwrites the occupant if the cell is empty, the child is fitter by more than epsilon, or it ties and lies closer to the cell centre; sferes2's Ea::run() drives this for nb_gen generations and dumps stats every dump_period.",
+   "basis": "TECHNE_RECORD"
+  },
+  "KNOWN_PREDECESSORS": {
+   "value": [
+    "algorithm_from: Mouret & Clune 2015 (arXiv:1504.04909)",
+    "derived_from: sferes2-mouret-2014"
+   ],
+   "basis": "NYX_DERIVED"
+  },
+  "KNOWN_SUCCESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_RIVALS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_HISTORICAL_DISPOSITION": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "SOURCE_STATUS": {
+   "value": {
+    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+    "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+    "tree_sha256": "94e1679ab32c92838f77b4e2420c3117c883a791546e387d57384478212a4580"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "RUN_STATUS": {
+   "value": {
+    "run": "NOT_ATTEMPTED",
+    "test": "NOT_ATTEMPTED",
+    "environment": {
+     "runner": "native",
+     "note": "NOT RUN in this pass (nothing executed from the tree); host class from the reader draft: Same as sferes2: Unix-like host (Linux/OSX) with C++11 compiler, Boost, optional TBB; CPU only; must be placed inside a sferes2 checkout as modules/map_elites"
+    }
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVABILITY": {
+   "value": {
+    "EXECUTABLE": "unknown",
+    "OBSERVABLE": "unknown",
+    "ORACLE_BACKED": "unknown",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "unknown"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "ORACLE_STATUS": {
+   "value": {
+    "oracle_backed": "unknown",
+    "test_classification": "NOT_ATTEMPTED"
+   },
+   "basis": "NYX_DERIVED"
+  },
+  "INTERVENTION_READINESS": {
+   "value": {
+    "intervention_ready": "unknown",
+    "patch_intervention": "unknown",
+    "runnable": false
+   },
+   "basis": "NYX_DERIVED"
+  }
+ },
+ "cut": {
+  "state": "COARSE",
+  "mode": "ANCESTRY_AWARE",
+  "evidence": [
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:map-elites-sferes2-2015/upstream/tree/map_elites.hpp:154-161"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:map-elites-sferes2-2015/upstream/tree/map_elites.hpp:150-172"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:map-elites-sferes2-2015/upstream/tree/map_elites.hpp:89-116"
+   }
+  ],
+  "inspected_files": [
+   "map_elites.hpp 77-199",
+   "fit_map.hpp 61-68",
+   "test_map_elites.cpp 73-105"
+  ],
+  "date": "2026-10-03T08:10Z",
+  "note": "the reference MAP-Elites: descriptors rounded into a grid, an epsilon band with a centre-distance tie-break, uniform parents [READER-ASSISTED, 2026-10-03: a read-only reader agent (claude-opus-5-5, same family as Nyx) read the files below and returned line-cited notes; Nyx spot-checked 1 of the cited line ranges against the files (all matched) and wrote this cut. Nothing was run, imported or built (no bytecode written into the body). Stage A census 121 stays frozen; this body is cut under the operator's 2026-10-03 directive (item 4) and tracked with the other operator-directed bodies.]",
+  "provenance": {
+   "schema": "nyx.atlas/1-provenance",
+   "migrated_at": "2026-10-03T08:10Z",
+   "migrated_from": "authored under nyx.atlas/1-provenance",
+   "provenance_grade_read": "ORIGINAL_ARTIFACT",
+   "grade_basis": "Techne FOSSIL_PACKET.json PROVENANCE_GRADE where issued, else the record's handoff string mapped (populated per R34; Harmonia may re-grade)",
+   "source_object_id": "https://github.com/sferes2/map_elites@854eb3a4c4b8da592675f54fbb8667942b6eaf20",
+   "payload_manifest_id": "techne tree_sha256 94e1679ab32c92838f77b4e2420c3117c883a791546e387d57384478212a4580 (14 files)",
+   "host_tree_matches_record": null,
+   "host": "GANDALF (hostname), bodies receipt not named",
+   "files_read": [
+    {
+     "path": "upstream/tree/map_elites.hpp",
+     "payload_hash_read": "35750927ee44d12f2ae9b1b9cc7f418c06811f2d0f31772548d555dd9bf8181b",
+     "techne_recorded_hash": "35750927ee44d12f2ae9b1b9cc7f418c06811f2d0f31772548d555dd9bf8181b",
+     "match": true,
+     "refs": 6
+    }
+   ],
+   "unresolved_refs": []
+  }
+ },
+ "organs": [
+  {
+   "organ_id": "map-elites-sferes2-2015::descriptor_to_cell_by_rounding_against_the_full_grid_size",
+   "fossil_ancestry": "map-elites-sferes2-2015",
+   "human_name": "_add_to_archive binning (map_elites.hpp 154-161, 187-194)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "p = min(1, descriptor), cell = round(p * n) clamped to n - 1",
+   "input": "a descriptor",
+   "output": "a cell index",
+   "state": "UNKNOWN",
+   "update": "UNKNOWN",
+   "assumptions": [
+    "UNKNOWN"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [],
+   "fitness_value_in_ancestor": "UNKNOWN",
+   "failure_landscape": "by reading: rounding against n makes cell 0 half-width and the last cell about 1.5 cells wide; negative descriptors are caught only by an assert",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:map-elites-sferes2-2015/upstream/tree/map_elites.hpp:154-161"
+   },
+   "confidence": "HIGH",
+   "portability": "UNKNOWN",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "_add_to_archive binning (map_elites.hpp 154-161, 187-194)",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "map-elites-sferes2-2015::replacement_by_epsilon_better_or_epsilon_tie_closer_to_the_cell_centre",
+   "fossil_ancestry": "map-elites-sferes2-2015",
+   "human_name": "_add_to_archive (map_elites.hpp 150-172, 175-185)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "a living candidate enters an empty cell, or replaces the elite if better by more than epsilon, or if within epsilon and closer to the cell centre; the parent is stored beside it",
+   "input": "a candidate",
+   "output": "inserted or not",
+   "state": "one elite and its parent per cell",
+   "update": "UNKNOWN",
+   "assumptions": [
+    "UNKNOWN"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [],
+   "fitness_value_in_ancestor": "UNKNOWN",
+   "failure_landscape": "by reading: with epsilon > 0 a slightly worse but more central solution replaces the elite; the centre grid uses n - 1 while binning uses n (the test sets epsilon 0)",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:map-elites-sferes2-2015/upstream/tree/map_elites.hpp:150-172"
+   },
+   "confidence": "HIGH",
+   "portability": "UNKNOWN",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "_add_to_archive (map_elites.hpp 150-172, 175-185)",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "DECISION",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "ARCHIVE",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "map-elites-sferes2-2015::uniform_parent_pairs_over_occupied_cells_two_children_each",
+   "fossil_ancestry": "map-elites-sferes2-2015",
+   "human_name": "epoch (map_elites.hpp 89-116)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "each generation rebuilds the population from occupied cells and, size times, draws two parents uniformly, crosses and mutates them and inserts both children with their parent",
+   "input": "the archive",
+   "output": "2*size offspring",
+   "state": "UNKNOWN",
+   "update": "UNKNOWN",
+   "assumptions": [
+    "UNKNOWN"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [],
+   "fitness_value_in_ancestor": "UNKNOWN",
+   "failure_landscape": "UNKNOWN by run",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:map-elites-sferes2-2015/upstream/tree/map_elites.hpp:89-116"
+   },
+   "confidence": "HIGH",
+   "portability": "UNKNOWN",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "epoch (map_elites.hpp 89-116)",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "SEEDED_RANDOM",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  }
+ ],
+ "rejected_cuts": [
+  {
+   "candidate": "the rest of the body: stat_map*, binary_map, plotting, wscript, the test's fitness body",
+   "reason": "OTHER",
+   "evidence": "NOT READ; residue",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "map-elites-sferes2-2015"
+  },
+  {
+   "candidate": "'map-elites-sferes2-2015' as one organ",
+   "reason": "NAME_HAS_NO_EXECUTABLE_BOUNDARY",
+   "evidence": "the mechanisms above are separable pieces of code",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "map-elites-sferes2-2015"
+  }
+ ],
+ "pressures": [
+  {
+   "pressure_id": "map-elites-sferes2-2015::P.solutions_compete_only_within_their_behaviour_cell_with_no_pressure_on_parent_choice",
+   "source_fossil": "map-elites-sferes2-2015",
+   "source_evidence": "the organs above",
+   "condition": "a 128x128 behaviour grid in the test; one elite per cell",
+   "resource_or_constraint": "UNKNOWN",
+   "failure_condition": "UNKNOWN",
+   "world_punishes": "anything else",
+   "world_rewards": "beating the cell elite by epsilon, or tying it closer to the centre",
+   "observable_consequence": "UNKNOWN",
+   "vacuity_condition": "UNKNOWN",
+   "trivial_shortcuts": "UNKNOWN",
+   "cheat_control": "UNKNOWN: not designed this pass",
+   "cost_class": "UNKNOWN (nothing ran)",
+   "purpose_separated_from_pressure": "PURPOSE: MAP-Elites (Mouret and Clune 2015), the authors' sferes2 module",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
+ "composition_edges": [],
+ "ancestry_edges": [
+  {
+   "from": "map-elites-sferes2-2015",
+   "relation": "algorithm_from",
+   "to": "Mouret & Clune 2015 (arXiv:1504.04909)",
+   "note": "the MAP-Elites paper; this module is the authors' own sferes2 implementation",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "map-elites-sferes2-2015",
+   "relation": "derived_from",
+   "to": "sferes2-mouret-2014",
+   "note": "a sferes2 module: builds only inside sferes2/modules/map_elites via waf use=sferes2 (reader draft)",
+   "basis": "TECHNE_RECORD"
+  }
+ ],
+ "residue": {
+  "state": "LARGE_RESIDUE",
+  "unexplained": [
+   "not read: stat_map*, binary_map, plotting, wscript, the test's fitness body",
+   "nothing ran",
+   "reader-assisted cut: line ranges spot-checked, not every line re-read by Nyx"
+  ],
+  "note": "batch 17 first pass",
+  "cut_mode": "ANCESTRY_AWARE"
+ }
+}

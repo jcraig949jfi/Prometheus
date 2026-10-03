@@ -1,0 +1,851 @@
+{
+ "expected": {
+  "class": {
+   "BUILDER": "CONSTRUCTION_AT_FIXED_DEPTH",
+   "GEARBOX": "SELECTION_AMONG_INHERITED"
+  },
+  "v01_verdict": {
+   "BUILDER": {
+    "AFFINE": "PASS"
+   },
+   "GEARBOX": {
+    "SCALE": "PASS",
+    "SHIFT": "PASS"
+   },
+   "MATURATION": {
+    "SHIFT": "FAIL"
+   },
+   "STATIC": {
+    "SHIFT": "FAIL"
+   }
+  }
+ },
+ "gate": "PASS",
+ "host": "SKULLPORT",
+ "matches_expectation": true,
+ "params": {
+  "BAD_MIN": 6.0,
+  "GOOD_MAX": 3.5,
+  "N_REP": 24,
+  "N_TEST": 50,
+  "P": 17,
+  "REP_QUORUM": 22,
+  "T": 12,
+  "TAU": 4,
+  "seed_base": 2026100121
+ },
+ "python": "3.12.10",
+ "result": {
+  "added_checks": {
+   "BUILDER": {
+    "accepted_but_not_inherited_as_a_unit": [
+     "('MUL', 'ADD')"
+    ],
+    "inherited_units": [
+     "('ADD',)",
+     "('MUL',)",
+     "('NEG',)",
+     "('SQR',)",
+     "('INV',)",
+     "('CUB',)"
+    ],
+    "knockout_of_inherited_compose_operator": {
+     "experienced": {
+      "bad_replicates": 24,
+      "errors_total": 13516,
+      "good_replicates": 0,
+      "label": "BAD",
+      "replicates": 24,
+      "tasks_total": 1200
+     },
+     "naive": {
+      "bad_replicates": 24,
+      "errors_total": 13516,
+      "good_replicates": 0,
+      "label": "BAD",
+      "replicates": 24,
+      "tasks_total": 1200
+     }
+    },
+    "out_of_library_AFFINE_budget_4": {
+     "experienced": {
+      "bad_replicates": 0,
+      "errors_total": 2310,
+      "good_replicates": 24,
+      "label": "GOOD",
+      "replicates": 24,
+      "tasks_total": 1200
+     },
+     "naive": {
+      "bad_replicates": 24,
+      "errors_total": 13486,
+      "good_replicates": 0,
+      "label": "BAD",
+      "replicates": 24,
+      "tasks_total": 1200
+     }
+    },
+    "procedures_ever_accepted": [
+     "('ADD',)",
+     "('CUB',)",
+     "('MUL', 'ADD')",
+     "('MUL',)",
+     "('SQR',)"
+    ]
+   },
+   "GEARBOX": {
+    "accepted_but_not_inherited_as_a_unit": [],
+    "inherited_units": [
+     "TABLE",
+     "('ADD',)",
+     "('MUL',)"
+    ],
+    "knockout_of_inherited_ADD_then_SHIFT": {
+     "experienced": {
+      "bad_replicates": 24,
+      "errors_total": 9733,
+      "good_replicates": 0,
+      "label": "BAD",
+      "replicates": 24,
+      "tasks_total": 1200
+     },
+     "naive": {
+      "bad_replicates": 24,
+      "errors_total": 9733,
+      "good_replicates": 0,
+      "label": "BAD",
+      "replicates": 24,
+      "tasks_total": 1200
+     }
+    },
+    "out_of_library_AFFINE_budget_1": {
+     "experienced": {
+      "bad_replicates": 24,
+      "errors_total": 13532,
+      "good_replicates": 0,
+      "label": "BAD",
+      "replicates": 24,
+      "tasks_total": 1200
+     },
+     "naive": {
+      "bad_replicates": 24,
+      "errors_total": 9754,
+      "good_replicates": 0,
+      "label": "BAD",
+      "replicates": 24,
+      "tasks_total": 1200
+     }
+    },
+    "out_of_library_AFFINE_budget_3": {
+     "experienced": {
+      "bad_replicates": 24,
+      "errors_total": 13500,
+      "good_replicates": 0,
+      "label": "BAD",
+      "replicates": 24,
+      "tasks_total": 1200
+     },
+     "naive": {
+      "bad_replicates": 24,
+      "errors_total": 9611,
+      "good_replicates": 0,
+      "label": "BAD",
+      "replicates": 24,
+      "tasks_total": 1200
+     }
+    },
+    "procedures_ever_accepted": [
+     "('ADD',)",
+     "('MUL',)"
+    ]
+   }
+  },
+  "class": {
+   "BUILDER": "CONSTRUCTION_AT_FIXED_DEPTH",
+   "GEARBOX": "SELECTION_AMONG_INHERITED"
+  },
+  "protocol": {
+   "BUILDER": {
+    "AFFINE": {
+     "U_donor_into_lesioned": {
+      "bad_replicates": 0,
+      "errors_total": 2340,
+      "good_replicates": 24,
+      "label": "GOOD",
+      "replicates": 24,
+      "tasks_total": 1200
+     },
+     "V_donor": {
+      "bad_replicates": 0,
+      "errors_total": 2332,
+      "good_replicates": 24,
+      "label": "GOOD",
+      "replicates": 24,
+      "tasks_total": 1200
+     },
+     "_v_reads_during_construction": 72,
+     "_v_writes_during_development": 48,
+     "intact": {
+      "bad_replicates": 0,
+      "errors_total": 2332,
+      "good_replicates": 24,
+      "label": "GOOD",
+      "replicates": 24,
+      "tasks_total": 1200
+     },
+     "irrelevant_history": {
+      "bad_replicates": 24,
+      "errors_total": 13465,
+      "good_replicates": 0,
+      "label": "BAD",
+      "replicates": 24,
+      "tasks_total": 1200
+     },
+     "lesion_V": {
+      "bad_replicates": 24,
+      "errors_total": 13511,
+      "good_replicates": 0,
+      "label": "BAD",
+      "replicates": 24,
+      "tasks_total": 1200
+     },
+     "lesioned_U_with_intact_V": {
+      "bad_replicates": 24,
+      "errors_total": 13499,
+      "good_replicates": 0,
+      "label": "BAD",
+      "replicates": 24,
+      "tasks_total": 1200
+     },
+     "naive": {
+      "bad_replicates": 24,
+      "errors_total": 13511,
+      "good_replicates": 0,
+      "label": "BAD",
+      "replicates": 24,
+      "tasks_total": 1200
+     },
+     "repeat_D_intact": {
+      "bad_replicates": 0,
+      "errors_total": 2334,
+      "good_replicates": 24,
+      "label": "GOOD",
+      "replicates": 24,
+      "tasks_total": 1200
+     },
+     "repeat_D_lesion": {
+      "bad_replicates": 24,
+      "errors_total": 13527,
+      "good_replicates": 0,
+      "label": "BAD",
+      "replicates": 24,
+      "tasks_total": 1200
+     },
+     "repeat_E_intact": {
+      "bad_replicates": 0,
+      "errors_total": 2334,
+      "good_replicates": 24,
+      "label": "GOOD",
+      "replicates": 24,
+      "tasks_total": 1200
+     },
+     "repeat_E_lesion": {
+      "bad_replicates": 24,
+      "errors_total": 13486,
+      "good_replicates": 0,
+      "label": "BAD",
+      "replicates": 24,
+      "tasks_total": 1200
+     },
+     "rescue": {
+      "bad_replicates": 0,
+      "errors_total": 2332,
+      "good_replicates": 24,
+      "label": "GOOD",
+      "replicates": 24,
+      "tasks_total": 1200
+     },
+     "sham_lesion": {
+      "bad_replicates": 0,
+      "errors_total": 2332,
+      "good_replicates": 24,
+      "label": "GOOD",
+      "replicates": 24,
+      "tasks_total": 1200
+     }
+    }
+   },
+   "GEARBOX": {
+    "SCALE": {
+     "U_donor_into_lesioned": {
+      "bad_replicates": 0,
+      "errors_total": 1200,
+      "good_replicates": 24,
+      "label": "GOOD",
+      "replicates": 24,
+      "tasks_total": 1200
+     },
+     "V_donor": {
+      "bad_replicates": 0,
+      "errors_total": 1200,
+      "good_replicates": 24,
+      "label": "GOOD",
+      "replicates": 24,
+      "tasks_total": 1200
+     },
+     "_v_reads_during_construction": 96,
+     "_v_writes_during_development": 24,
+     "intact": {
+      "bad_replicates": 0,
+      "errors_total": 1200,
+      "good_replicates": 24,
+      "label": "GOOD",
+      "replicates": 24,
+      "tasks_total": 1200
+     },
+     "irrelevant_history": {
+      "bad_replicates": 24,
+      "errors_total": 14311,
+      "good_replicates": 0,
+      "label": "BAD",
+      "replicates": 24,
+      "tasks_total": 1200
+     },
+     "lesion_V": {
+      "bad_replicates": 24,
+      "errors_total": 10393,
+      "good_replicates": 0,
+      "label": "BAD",
+      "replicates": 24,
+      "tasks_total": 1200
+     },
+     "lesioned_U_with_intact_V": {
+      "bad_replicates": 24,
+      "errors_total": 10316,
+      "good_replicates": 0,
+      "label": "BAD",
+      "replicates": 24,
+      "tasks_total": 1200
+     },
+     "naive": {
+      "bad_replicates": 24,
+      "errors_total": 10393,
+      "good_replicates": 0,
+      "label": "BAD",
+      "replicates": 24,
+      "tasks_total": 1200
+     },
+     "repeat_D_intact": {
+      "bad_replicates": 0,
+      "errors_total": 1200,
+      "good_replicates": 24,
+      "label": "GOOD",
+      "replicates": 24,
+      "tasks_total": 1200
+     },
+     "repeat_D_lesion": {
+      "bad_replicates": 24,
+      "errors_total": 10333,
+      "good_replicates": 0,
+      "label": "BAD",
+      "replicates": 24,
+      "tasks_total": 1200
+     },
+     "repeat_E_intact": {
+      "bad_replicates": 0,
+      "errors_total": 1200,
+      "good_replicates": 24,
+      "label": "GOOD",
+      "replicates": 24,
+      "tasks_total": 1200
+     },
+     "repeat_E_lesion": {
+      "bad_replicates": 24,
+      "errors_total": 10410,
+      "good_replicates": 0,
+      "label": "BAD",
+      "replicates": 24,
+      "tasks_total": 1200
+     },
+     "rescue": {
+      "bad_replicates": 0,
+      "errors_total": 1200,
+      "good_replicates": 24,
+      "label": "GOOD",
+      "replicates": 24,
+      "tasks_total": 1200
+     },
+     "sham_lesion": {
+      "bad_replicates": 0,
+      "errors_total": 1200,
+      "good_replicates": 24,
+      "label": "GOOD",
+      "replicates": 24,
+      "tasks_total": 1200
+     }
+    },
+    "SHIFT": {
+     "U_donor_into_lesioned": {
+      "bad_replicates": 0,
+      "errors_total": 1200,
+      "good_replicates": 24,
+      "label": "GOOD",
+      "replicates": 24,
+      "tasks_total": 1200
+     },
+     "V_donor": {
+      "bad_replicates": 0,
+      "errors_total": 1200,
+      "good_replicates": 24,
+      "label": "GOOD",
+      "replicates": 24,
+      "tasks_total": 1200
+     },
+     "_v_reads_during_construction": 96,
+     "_v_writes_during_development": 24,
+     "intact": {
+      "bad_replicates": 0,
+      "errors_total": 1200,
+      "good_replicates": 24,
+      "label": "GOOD",
+      "replicates": 24,
+      "tasks_total": 1200
+     },
+     "irrelevant_history": {
+      "bad_replicates": 24,
+      "errors_total": 13536,
+      "good_replicates": 0,
+      "label": "BAD",
+      "replicates": 24,
+      "tasks_total": 1200
+     },
+     "lesion_V": {
+      "bad_replicates": 24,
+      "errors_total": 9647,
+      "good_replicates": 0,
+      "label": "BAD",
+      "replicates": 24,
+      "tasks_total": 1200
+     },
+     "lesioned_U_with_intact_V": {
+      "bad_replicates": 24,
+      "errors_total": 9606,
+      "good_replicates": 0,
+      "label": "BAD",
+      "replicates": 24,
+      "tasks_total": 1200
+     },
+     "naive": {
+      "bad_replicates": 24,
+      "errors_total": 9647,
+      "good_replicates": 0,
+      "label": "BAD",
+      "replicates": 24,
+      "tasks_total": 1200
+     },
+     "repeat_D_intact": {
+      "bad_replicates": 0,
+      "errors_total": 1200,
+      "good_replicates": 24,
+      "label": "GOOD",
+      "replicates": 24,
+      "tasks_total": 1200
+     },
+     "repeat_D_lesion": {
+      "bad_replicates": 24,
+      "errors_total": 9681,
+      "good_replicates": 0,
+      "label": "BAD",
+      "replicates": 24,
+      "tasks_total": 1200
+     },
+     "repeat_E_intact": {
+      "bad_replicates": 0,
+      "errors_total": 1200,
+      "good_replicates": 24,
+      "label": "GOOD",
+      "replicates": 24,
+      "tasks_total": 1200
+     },
+     "repeat_E_lesion": {
+      "bad_replicates": 24,
+      "errors_total": 9771,
+      "good_replicates": 0,
+      "label": "BAD",
+      "replicates": 24,
+      "tasks_total": 1200
+     },
+     "rescue": {
+      "bad_replicates": 0,
+      "errors_total": 1200,
+      "good_replicates": 24,
+      "label": "GOOD",
+      "replicates": 24,
+      "tasks_total": 1200
+     },
+     "sham_lesion": {
+      "bad_replicates": 0,
+      "errors_total": 1200,
+      "good_replicates": 24,
+      "label": "GOOD",
+      "replicates": 24,
+      "tasks_total": 1200
+     }
+    }
+   },
+   "MATURATION": {
+    "SHIFT": {
+     "U_donor_into_lesioned": {
+      "bad_replicates": 0,
+      "errors_total": 1200,
+      "good_replicates": 24,
+      "label": "GOOD",
+      "replicates": 24,
+      "tasks_total": 1200
+     },
+     "V_donor": {
+      "bad_replicates": 0,
+      "errors_total": 1200,
+      "good_replicates": 24,
+      "label": "GOOD",
+      "replicates": 24,
+      "tasks_total": 1200
+     },
+     "_v_reads_during_construction": 96,
+     "_v_writes_during_development": 24,
+     "intact": {
+      "bad_replicates": 0,
+      "errors_total": 1200,
+      "good_replicates": 24,
+      "label": "GOOD",
+      "replicates": 24,
+      "tasks_total": 1200
+     },
+     "irrelevant_history": {
+      "bad_replicates": 0,
+      "errors_total": 1200,
+      "good_replicates": 24,
+      "label": "GOOD",
+      "replicates": 24,
+      "tasks_total": 1200
+     },
+     "lesion_V": {
+      "bad_replicates": 24,
+      "errors_total": 9681,
+      "good_replicates": 0,
+      "label": "BAD",
+      "replicates": 24,
+      "tasks_total": 1200
+     },
+     "lesioned_U_with_intact_V": {
+      "bad_replicates": 24,
+      "errors_total": 9685,
+      "good_replicates": 0,
+      "label": "BAD",
+      "replicates": 24,
+      "tasks_total": 1200
+     },
+     "naive": {
+      "bad_replicates": 24,
+      "errors_total": 9681,
+      "good_replicates": 0,
+      "label": "BAD",
+      "replicates": 24,
+      "tasks_total": 1200
+     },
+     "repeat_D_intact": {
+      "bad_replicates": 0,
+      "errors_total": 1200,
+      "good_replicates": 24,
+      "label": "GOOD",
+      "replicates": 24,
+      "tasks_total": 1200
+     },
+     "repeat_D_lesion": {
+      "bad_replicates": 24,
+      "errors_total": 9648,
+      "good_replicates": 0,
+      "label": "BAD",
+      "replicates": 24,
+      "tasks_total": 1200
+     },
+     "repeat_E_intact": {
+      "bad_replicates": 0,
+      "errors_total": 1200,
+      "good_replicates": 24,
+      "label": "GOOD",
+      "replicates": 24,
+      "tasks_total": 1200
+     },
+     "repeat_E_lesion": {
+      "bad_replicates": 24,
+      "errors_total": 9714,
+      "good_replicates": 0,
+      "label": "BAD",
+      "replicates": 24,
+      "tasks_total": 1200
+     },
+     "rescue": {
+      "bad_replicates": 0,
+      "errors_total": 1200,
+      "good_replicates": 24,
+      "label": "GOOD",
+      "replicates": 24,
+      "tasks_total": 1200
+     },
+     "sham_lesion": {
+      "bad_replicates": 0,
+      "errors_total": 1200,
+      "good_replicates": 24,
+      "label": "GOOD",
+      "replicates": 24,
+      "tasks_total": 1200
+     }
+    }
+   },
+   "STATIC": {
+    "SHIFT": {
+     "U_donor_into_lesioned": {
+      "bad_replicates": 24,
+      "errors_total": 9723,
+      "good_replicates": 0,
+      "label": "BAD",
+      "replicates": 24,
+      "tasks_total": 1200
+     },
+     "V_donor": {
+      "bad_replicates": 24,
+      "errors_total": 9741,
+      "good_replicates": 0,
+      "label": "BAD",
+      "replicates": 24,
+      "tasks_total": 1200
+     },
+     "_v_reads_during_construction": 96,
+     "_v_writes_during_development": 0,
+     "intact": {
+      "bad_replicates": 24,
+      "errors_total": 9741,
+      "good_replicates": 0,
+      "label": "BAD",
+      "replicates": 24,
+      "tasks_total": 1200
+     },
+     "irrelevant_history": {
+      "bad_replicates": 24,
+      "errors_total": 9741,
+      "good_replicates": 0,
+      "label": "BAD",
+      "replicates": 24,
+      "tasks_total": 1200
+     },
+     "lesion_V": {
+      "bad_replicates": 24,
+      "errors_total": 9741,
+      "good_replicates": 0,
+      "label": "BAD",
+      "replicates": 24,
+      "tasks_total": 1200
+     },
+     "lesioned_U_with_intact_V": {
+      "bad_replicates": 24,
+      "errors_total": 9723,
+      "good_replicates": 0,
+      "label": "BAD",
+      "replicates": 24,
+      "tasks_total": 1200
+     },
+     "naive": {
+      "bad_replicates": 24,
+      "errors_total": 9741,
+      "good_replicates": 0,
+      "label": "BAD",
+      "replicates": 24,
+      "tasks_total": 1200
+     },
+     "repeat_D_intact": {
+      "bad_replicates": 24,
+      "errors_total": 9686,
+      "good_replicates": 0,
+      "label": "BAD",
+      "replicates": 24,
+      "tasks_total": 1200
+     },
+     "repeat_D_lesion": {
+      "bad_replicates": 24,
+      "errors_total": 9686,
+      "good_replicates": 0,
+      "label": "BAD",
+      "replicates": 24,
+      "tasks_total": 1200
+     },
+     "repeat_E_intact": {
+      "bad_replicates": 24,
+      "errors_total": 9691,
+      "good_replicates": 0,
+      "label": "BAD",
+      "replicates": 24,
+      "tasks_total": 1200
+     },
+     "repeat_E_lesion": {
+      "bad_replicates": 24,
+      "errors_total": 9691,
+      "good_replicates": 0,
+      "label": "BAD",
+      "replicates": 24,
+      "tasks_total": 1200
+     },
+     "rescue": {
+      "bad_replicates": 24,
+      "errors_total": 9741,
+      "good_replicates": 0,
+      "label": "BAD",
+      "replicates": 24,
+      "tasks_total": 1200
+     },
+     "sham_lesion": {
+      "bad_replicates": 24,
+      "errors_total": 9741,
+      "good_replicates": 0,
+      "label": "BAD",
+      "replicates": 24,
+      "tasks_total": 1200
+     }
+    }
+   }
+  },
+  "v01_detail": {
+   "BUILDER": {
+    "AFFINE": {
+     "labels": {
+      "U_donor_into_lesioned": "GOOD",
+      "V_donor": "GOOD",
+      "intact": "GOOD",
+      "irrelevant_history": "BAD",
+      "lesion_V": "BAD",
+      "lesioned_U_with_intact_V": "BAD",
+      "naive": "BAD",
+      "repeat_D_intact": "GOOD",
+      "repeat_D_lesion": "BAD",
+      "repeat_E_intact": "GOOD",
+      "repeat_E_lesion": "BAD",
+      "rescue": "GOOD",
+      "sham_lesion": "GOOD"
+     },
+     "nesting": true,
+     "provenance": true,
+     "repeat": true,
+     "savings": true
+    }
+   },
+   "GEARBOX": {
+    "SCALE": {
+     "labels": {
+      "U_donor_into_lesioned": "GOOD",
+      "V_donor": "GOOD",
+      "intact": "GOOD",
+      "irrelevant_history": "BAD",
+      "lesion_V": "BAD",
+      "lesioned_U_with_intact_V": "BAD",
+      "naive": "BAD",
+      "repeat_D_intact": "GOOD",
+      "repeat_D_lesion": "BAD",
+      "repeat_E_intact": "GOOD",
+      "repeat_E_lesion": "BAD",
+      "rescue": "GOOD",
+      "sham_lesion": "GOOD"
+     },
+     "nesting": true,
+     "provenance": true,
+     "repeat": true,
+     "savings": true
+    },
+    "SHIFT": {
+     "labels": {
+      "U_donor_into_lesioned": "GOOD",
+      "V_donor": "GOOD",
+      "intact": "GOOD",
+      "irrelevant_history": "BAD",
+      "lesion_V": "BAD",
+      "lesioned_U_with_intact_V": "BAD",
+      "naive": "BAD",
+      "repeat_D_intact": "GOOD",
+      "repeat_D_lesion": "BAD",
+      "repeat_E_intact": "GOOD",
+      "repeat_E_lesion": "BAD",
+      "rescue": "GOOD",
+      "sham_lesion": "GOOD"
+     },
+     "nesting": true,
+     "provenance": true,
+     "repeat": true,
+     "savings": true
+    }
+   },
+   "MATURATION": {
+    "SHIFT": {
+     "labels": {
+      "U_donor_into_lesioned": "GOOD",
+      "V_donor": "GOOD",
+      "intact": "GOOD",
+      "irrelevant_history": "GOOD",
+      "lesion_V": "BAD",
+      "lesioned_U_with_intact_V": "BAD",
+      "naive": "BAD",
+      "repeat_D_intact": "GOOD",
+      "repeat_D_lesion": "BAD",
+      "repeat_E_intact": "GOOD",
+      "repeat_E_lesion": "BAD",
+      "rescue": "GOOD",
+      "sham_lesion": "GOOD"
+     },
+     "nesting": true,
+     "provenance": false,
+     "repeat": true,
+     "savings": true
+    }
+   },
+   "STATIC": {
+    "SHIFT": {
+     "labels": {
+      "U_donor_into_lesioned": "BAD",
+      "V_donor": "BAD",
+      "intact": "BAD",
+      "irrelevant_history": "BAD",
+      "lesion_V": "BAD",
+      "lesioned_U_with_intact_V": "BAD",
+      "naive": "BAD",
+      "repeat_D_intact": "BAD",
+      "repeat_D_lesion": "BAD",
+      "repeat_E_intact": "BAD",
+      "repeat_E_lesion": "BAD",
+      "rescue": "BAD",
+      "sham_lesion": "BAD"
+     },
+     "nesting": false,
+     "provenance": false,
+     "repeat": false,
+     "savings": false
+    }
+   }
+  },
+  "v01_verdict": {
+   "BUILDER": {
+    "AFFINE": "PASS"
+   },
+   "GEARBOX": {
+    "SCALE": "PASS",
+    "SHIFT": "PASS"
+   },
+   "MATURATION": {
+    "SHIFT": "FAIL"
+   },
+   "STATIC": {
+    "SHIFT": "FAIL"
+   }
+  }
+ },
+ "source_sha256_lf": "f49cfb4393fe3366da713f509ff1d1ce48ed9b06ea29e748c219768a9bad563e",
+ "what": "counterfeit gauntlet for the recursive-sagacity criterion of RSO v0.1 section 19",
+ "written_at_utc": "2026-10-01T21:19:03Z"
+}

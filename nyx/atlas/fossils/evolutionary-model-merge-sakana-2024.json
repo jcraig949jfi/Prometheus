@@ -1,0 +1,333 @@
+{
+ "schema": "nyx.atlas/0",
+ "fossil_id": "evolutionary-model-merge-sakana-2024",
+ "techne_record": "techne/fossils/specimens/evolutionary-model-merge-sakana-2024/record.json",
+ "whole_system": {
+  "FOSSIL_ID": {
+   "value": "evolutionary-model-merge-sakana-2024",
+   "basis": "TECHNE_RECORD"
+  },
+  "CANONICAL_NAME": {
+   "value": "evomerge -- Evolutionary Optimization of Model Merging Recipes (authors: 'Sakana AI' per pyproject.toml; no author names in README/CITATION; Sakana AI; 2024)",
+   "basis": "TECHNE_RECORD"
+  },
+  "VERSION": {
+   "value": "github.com/SakanaAI/evolutionary-model-merge main @ 09aff543dd2ae966b3dfe457b750563ab063eb03 (committed 2024-03-31; 2 commits since 2024-03-21; 41 tracked files)",
+   "basis": "TECHNE_RECORD"
+  },
+  "ERA": {
+   "value": "2024",
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_SYSTEM": {
+   "value": {
+    "domain": [
+     "model-merging",
+     "evolutionary-computation",
+     "foundation-models",
+     "evaluation-harness"
+    ],
+    "lineage": "README: source models for the merges are shisa-gamma-7b-v1, WizardMath-7B-V1.1, GAIR/Abel-7B-002, Arithmo2-Mistral-7B, LLaVA-1.6-Mistral-7B; EvoLLM-JP-v1-10B is built from EvoLLM-JP-v1-7B + shisa-gamma-7b-v1. 'Our math evaluation code builds on the WizardMath repository.' evomerge/utils.py functions 'copied from https://github.com/Stability-AI/generative-models'. Vendored heron/video_blip modules carry HuggingFace/Salesforce headers. Compared against lm-eval-harness jp-stable branch (Stability-AI). || main loop (reader, from the code): evaluate.py loads a config, instantiates one model wrapper, then for each evaluator config instantiates the evaluator, calls evaluator(model) to generate answers over a HuggingFace dataset and score them, and dumps all metrics to a JSON file; there is NO evolutionary search, merging (no CMA-ES, DARE, TIES, SLERP, layer-stacking) or optimisation code anywhere in the tree -- the repo is evaluation-only, and the evolved weights are consumed as pre-built HuggingFace checkpoints."
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_PROBLEM": {
+   "value": "Serve as 'a central hub for SakanaAI's Evolutionary Model Merge series' with 'models and code for reproducing the evaluation presented in our paper' (README).",
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVED_HUMAN_CAPABILITY": {
+   "value": {
+    "built_to": "Serve as 'a central hub for SakanaAI's Evolutionary Model Merge series' with 'models and code for reproducing the evaluation presented in our paper' (README).",
+    "pressure": "NOT_FOUND_AT_PIN (README gives no motivation text or abstract; it only links the arXiv paper and lists benchmark tables)",
+    "success_means": "Benchmark scores of the merged models versus source models: MGSM-JA accuracy and lm-eval-harness (jp-stable) average for LLMs; ROUGE-L on JA-VG-VQA-500 and JA-VLM-Bench-In-the-Wild for VLMs (README tables)."
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "DOCUMENTED_ENVIRONMENTAL_PRESSURE": {
+   "value": {
+    "pressure": "",
+    "failure_condition": ""
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "LANGUAGE": {
+   "value": [
+    "Python"
+   ],
+   "basis": "TECHNE_RECORD"
+  },
+  "EXECUTION_MODEL": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "ANCESTRY": {
+   "value": "README: source models for the merges are shisa-gamma-7b-v1, WizardMath-7B-V1.1, GAIR/Abel-7B-002, Arithmo2-Mistral-7B, LLaVA-1.6-Mistral-7B; EvoLLM-JP-v1-10B is built from EvoLLM-JP-v1-7B + shisa-gamma-7b-v1. 'Our math evaluation code builds on the WizardMath repository.' evomerge/utils.py functions 'copied from https://github.com/Stability-AI/generative-models'. Vendored heron/video_blip modules carry HuggingFace/Salesforce headers. Compared against lm-eval-harness jp-stable branch (Stability-AI). || main loop (reader, from the code): evaluate.py loads a config, instantiates one model wrapper, then for each evaluator config instantiates the evaluator, calls evaluator(model) to generate answers over a HuggingFace dataset and score them, and dumps all metrics to a JSON file; there is NO evolutionary search, merging (no CMA-ES, DARE, TIES, SLERP, layer-stacking) or optimisation code anywhere in the tree -- the repo is evaluation-only, and the evolved weights are consumed as pre-built HuggingFace checkpoints.",
+   "basis": "TECHNE_RECORD"
+  },
+  "KNOWN_PREDECESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_SUCCESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_RIVALS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_HISTORICAL_DISPOSITION": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "SOURCE_STATUS": {
+   "value": {
+    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+    "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+    "tree_sha256": "69d1b447d3c5b931f41b24eaadf7b4fc22363b8be22b79af4d5c1b10e25f0435"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "RUN_STATUS": {
+   "value": {
+    "run": "NOT_ATTEMPTED",
+    "test": "NOT_ATTEMPTED",
+    "environment": {
+     "runner": "native",
+     "note": "NOT RUN in this pass (nothing executed from the tree); host class from the reader draft: Linux + NVIDIA GPU with CUDA 12.x, CPython 3.10, enough VRAM for 7B-10B parameter models in bf16/fp16; network access to huggingface.co"
+    }
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVABILITY": {
+   "value": {
+    "EXECUTABLE": "unknown",
+    "OBSERVABLE": "unknown",
+    "ORACLE_BACKED": "unknown",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "unknown"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "ORACLE_STATUS": {
+   "value": {
+    "oracle_backed": "unknown",
+    "test_classification": "NOT_ATTEMPTED"
+   },
+   "basis": "NYX_DERIVED"
+  },
+  "INTERVENTION_READINESS": {
+   "value": {
+    "intervention_ready": "unknown",
+    "patch_intervention": "unknown",
+    "runnable": false
+   },
+   "basis": "NYX_DERIVED"
+  }
+ },
+ "cut": {
+  "state": "ORGAN0",
+  "mode": "ANCESTRY_AWARE",
+  "evidence": [
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:evolutionary-model-merge-sakana-2024/upstream/tree/evomerge/eval/ja_mgsm.py:10-67"
+   }
+  ],
+  "inspected_files": [
+   "evaluate.py 33-65",
+   "evomerge/utils.py 16-48",
+   "evomerge/models/causallm.py 14-60",
+   "evomerge/eval/ja_mgsm.py 10-67",
+   "evomerge/eval/metrics.py 8-9, 95-101",
+   "README.md 12",
+   "repository-wide grep for merge / evolutionary / CMA terms (no hits beyond the package name)"
+  ],
+  "date": "2026-10-03T08:10Z",
+  "note": "ORGAN0 for the named mechanism: no merging, no evolutionary loop, no fitness-driven selection exists in the tree; what exists is an evaluator of fixed, pre-merged checkpoints. The one organ cut is the scorer [READER-ASSISTED, 2026-10-03: a read-only reader agent (claude-opus-5-5, same family as Nyx) read the files below and returned line-cited notes; Nyx spot-checked 1 of the cited line ranges against the files (all matched) and wrote this cut. Nothing was run, imported or built (no bytecode written into the body). Stage A census 121 stays frozen; this body is cut under the operator's 2026-10-03 directive (item 4) and tracked with the other operator-directed bodies.]",
+  "provenance": {
+   "schema": "nyx.atlas/1-provenance",
+   "migrated_at": "2026-10-03T08:10Z",
+   "migrated_from": "authored under nyx.atlas/1-provenance",
+   "provenance_grade_read": "ORIGINAL_ARTIFACT",
+   "grade_basis": "Techne FOSSIL_PACKET.json PROVENANCE_GRADE where issued, else the record's handoff string mapped (populated per R34; Harmonia may re-grade)",
+   "source_object_id": "https://github.com/SakanaAI/evolutionary-model-merge@09aff543dd2ae966b3dfe457b750563ab063eb03",
+   "payload_manifest_id": "techne tree_sha256 69d1b447d3c5b931f41b24eaadf7b4fc22363b8be22b79af4d5c1b10e25f0435 (41 files)",
+   "host_tree_matches_record": null,
+   "host": "GANDALF (hostname), bodies receipt not named",
+   "files_read": [
+    {
+     "path": "upstream/tree/evomerge/eval/ja_mgsm.py",
+     "payload_hash_read": "689796df574396bde6abcc00cc9b6ba7618077de7329ad0ae284b475938f1f83",
+     "techne_recorded_hash": "689796df574396bde6abcc00cc9b6ba7618077de7329ad0ae284b475938f1f83",
+     "match": true,
+     "refs": 2
+    }
+   ],
+   "unresolved_refs": []
+  }
+ },
+ "organs": [
+  {
+   "organ_id": "evolutionary-model-merge-sakana-2024::mgsm_ja_scoring_by_last_number_regex_with_a_language_gate",
+   "fossil_ancestry": "evolutionary-model-merge-sakana-2024",
+   "human_name": "ja_mgsm.py 10-67; metrics.py 95-101",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "the prediction is the last regex match of a decimal number; acc is exact equality with the answer; acc_ja also requires fastText to classify the output as Japanese with probability above 0.5; decoding is greedy",
+   "input": "model outputs",
+   "output": "accuracy",
+   "state": "UNKNOWN",
+   "update": "UNKNOWN",
+   "assumptions": [
+    "UNKNOWN"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [],
+   "fitness_value_in_ancestor": "UNKNOWN",
+   "failure_landscape": "by reading: the regex cannot span thousands separators ('1,000' becomes 0.0); the comma-stripping line is dead code",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:evolutionary-model-merge-sakana-2024/upstream/tree/evomerge/eval/ja_mgsm.py:10-67"
+   },
+   "confidence": "HIGH",
+   "portability": "UNKNOWN",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "ja_mgsm.py 10-67; metrics.py 95-101",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  }
+ ],
+ "rejected_cuts": [
+  {
+   "candidate": "the rest of the body: VLM evaluators, model wrappers other than causallm, the vendored video_blip, most of the README",
+   "reason": "OTHER",
+   "evidence": "NOT READ; residue",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "evolutionary-model-merge-sakana-2024"
+  },
+  {
+   "candidate": "'evolutionary-model-merge-sakana-2024' as one organ",
+   "reason": "NAME_HAS_NO_EXECUTABLE_BOUNDARY",
+   "evidence": "the mechanisms above are separable pieces of code",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "evolutionary-model-merge-sakana-2024"
+  },
+  {
+   "candidate": "the evolutionary model-merge search (parameter-space and data-flow-space merging, CMA-ES over merge recipes)",
+   "reason": "OTHER",
+   "evidence": "ABSENT from the body: a repository-wide grep finds no merge, evolutionary or CMA code; the README says the repo reproduces the evaluation",
+   "note": "the record already says EVALUATION ONLY; confirmed",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "evolutionary-model-merge-sakana-2024"
+  }
+ ],
+ "pressures": [],
+ "composition_edges": [],
+ "ancestry_edges": [],
+ "residue": {
+  "state": "CUT_INSTRUMENT_INSUFFICIENT",
+  "unexplained": [
+   "not read: VLM evaluators, model wrappers other than causallm, the vendored video_blip, most of the README",
+   "nothing ran",
+   "reader-assisted cut: line ranges spot-checked, not every line re-read by Nyx"
+  ],
+  "note": "batch 17 first pass",
+  "cut_mode": "ANCESTRY_AWARE"
+ }
+}

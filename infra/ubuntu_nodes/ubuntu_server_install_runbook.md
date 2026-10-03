@@ -90,6 +90,15 @@ Git is usually preinstalled on Ubuntu Server; if it isn't, run `sudo apt install
 - 2026-09-25 ubu001 (ThinkPad X1 Carbon, no Ethernet port): came up with **no network** after install. The installer
   wasn't given Wi-Fi details, so the Wi-Fi was never configured. **For laptops without an Ethernet port, set up Wi-Fi on
   the installer's network screen**, or plug in a USB Ethernet dongle before installing.
+- 2026-10-02 ubu003 (Dell Latitude E7240): first reboot showed "Invalid partition table!" (Dell Legacy/UEFI mismatch; see the
+  machine log). **Plug the Ethernet cable in BEFORE installing.** With no cable at install time, the installer writes no config for
+  the wired port and it comes up with IPv6 only. Fix with one-line YAML (no indentation to get wrong):
+  `echo 'network: {version: 2, ethernets: {eno1: {dhcp4: true}}}' | sudo tee /etc/netplan/50-wired.yaml`, then `sudo chmod 600` it
+  and `sudo netplan apply`. The same form works for Wi-Fi:
+  `network: {version: 2, wifis: {wlp4s0: {dhcp4: true, access-points: {"SSID": {password: "PASS"}}}}}`.
+  Wi-Fi names start with lowercase **wl** (never the digit 1); a wrong interface name gives "A dependency job failed".
+  If the Wi-Fi stays DOWN, check `grep . /sys/class/rfkill/*/name /sys/class/rfkill/*/hard`: `hard=1` on `phy0` is a firmware
+  block (ubu003 is stuck like this and runs on Ethernet).
 
 ## 7. Fixing "no network" after install (Wi-Fi via netplan)
 

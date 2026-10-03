@@ -1,0 +1,732 @@
+{
+ "schema": "nyx.atlas/0",
+ "fossil_id": "pyribs-icaros-2020",
+ "techne_record": "techne/fossils/specimens/pyribs-icaros-2020/record.json",
+ "whole_system": {
+  "FOSSIL_ID": {
+   "value": "pyribs-icaros-2020",
+   "basis": "TECHNE_RECORD"
+  },
+  "CANONICAL_NAME": {
+   "value": "pyribs -- 'Pyribs: A Bare-Bones Python Library for Quality Diversity Optimization' (Tjanaka, Bryon and Fontaine, Matthew C and Lee, David H and Zhang, Yulun and Balam, Nivedit Reddy and Dennler, Nathaniel and Garlanka, Sujay S and Klapsis, Nikitas Dimitri and Nikolaidis, Stefanos; ICAROS Lab, University of Southern California; 2020-2026, GECCO 2023 paper)",
+   "basis": "TECHNE_RECORD"
+  },
+  "VERSION": {
+   "value": "github.com/icaros-usc/pyribs master @ 7bd723cf9863d480c8f2fec5ba9aa36f3b68c083 (committed 2026-07-22; 674 commits since 2020-09-11; 362 tracked files)",
+   "basis": "TECHNE_RECORD"
+  },
+  "ERA": {
+   "value": "2020-2026",
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_SYSTEM": {
+   "value": {
+    "domain": [
+     "quality-diversity",
+     "map-elites",
+     "cma-me",
+     "evolutionary-computation"
+    ],
+    "lineage": "README: implements the 'Rapid Illumination of Behavior Space (RIBS)' framework; adopts the ask-tell interface from pycma ('Users of pycma will be familiar with the ask-tell interface (which pyribs adopted)'); 'We thank Amy K. Hoover and Julian Togelius for their contributions deriving the CMA-ME algorithm'; package skeleton from Cookiecutter audreyr/cookiecutter-pypackage. README 'Additional QD Libraries' names peers QDax, qdpy, sferes (not predecessors). Algorithms implemented and their sources are tabulated in docs/supported-algorithms.md (MAP-Elites Mouret 2015; CVT-MAP-Elites Vassiliades 2018; CMA-ME Fontaine 2020; CMA-MEGA/OMG-MEGA Fontaine 2021; CMA-MAE Fontaine 2023; DDS Lee 2024; DMS Tjanaka 2026; BOP-Elites Kent 2024; Novelty Search/NSLC Lehman 2011; QDAIF, QDHF). HISTORY.md tracks releases back through 0.x. || main loop (reader, from the code): The user loop calls Scheduler.ask(), which concatenates each emitter's ask() (GaussianEmitter: random archive elites plus Gaussian noise; EvolutionStrategyEmitter: samples from an internal CMA-ES), the user evaluates objectives and measures, then Scheduler.tell() inserts the batch into the archive (GridArchive.add: measure -> cell index, keep the per-cell argmax objective only if it exceeds the cell's threshold, returning a status/value add_info) and hands each emitter its slice of solutions and add_info so the emitter can rank, adapt its distribution and possibly restart from a sampled elite."
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_PROBLEM": {
+   "value": "README: 'A bare-bones Python library for quality diversity (QD) optimization. Pyribs implements the highly modular Rapid Illumination of Behavior Space (RIBS) framework for QD optimization', and is 'the official implementation of' CMA-ME, CMA-MEGA, CMA-MAE, scalable CMA-MAE and Discount Model Search (DMS).",
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVED_HUMAN_CAPABILITY": {
+   "value": {
+    "built_to": "README: 'A bare-bones Python library for quality diversity (QD) optimization. Pyribs implements the highly modular Rapid Illumination of Behavior Space (RIBS) framework for QD optimization', and is 'the official implementation of' CMA-ME, CMA-MEGA, CMA-MAE, scalable CMA-MAE and Discount Model Search (DMS).",
+    "pressure": "README BibTeX abstract: 'we believe the QD community faces two challenges: developing a framework to represent the field's growing array of algorithms, and implementing that framework in software that supports a range of researchers and practitioners'; README: 'like pycma, pyribs focuses on optimizing fixed-dimensional continuous domains. Focusing on this one commonly-occurring problem allows us to optimize the library for performance as well as ease of use.'",
+    "success_means": "README does not state a numeric metric; it frames success as the three principles 'Simple', 'Flexible', 'Accessible' and the ability to 'compose a large number of QD algorithms' by interchanging archive/emitter/scheduler; the code tracks archive stats (ArchiveStats, QD score via qd_score_offset, ribs/archives/_cqd_score.py) and the examples visualise archive heatmaps."
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "DOCUMENTED_ENVIRONMENTAL_PRESSURE": {
+   "value": {
+    "pressure": "",
+    "failure_condition": ""
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "LANGUAGE": {
+   "value": [
+    "Python"
+   ],
+   "basis": "TECHNE_RECORD"
+  },
+  "EXECUTION_MODEL": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "ANCESTRY": {
+   "value": "README: implements the 'Rapid Illumination of Behavior Space (RIBS)' framework; adopts the ask-tell interface from pycma ('Users of pycma will be familiar with the ask-tell interface (which pyribs adopted)'); 'We thank Amy K. Hoover and Julian Togelius for their contributions deriving the CMA-ME algorithm'; package skeleton from Cookiecutter audreyr/cookiecutter-pypackage. README 'Additional QD Libraries' names peers QDax, qdpy, sferes (not predecessors). Algorithms implemented and their sources are tabulated in docs/supported-algorithms.md (MAP-Elites Mouret 2015; CVT-MAP-Elites Vassiliades 2018; CMA-ME Fontaine 2020; CMA-MEGA/OMG-MEGA Fontaine 2021; CMA-MAE Fontaine 2023; DDS Lee 2024; DMS Tjanaka 2026; BOP-Elites Kent 2024; Novelty Search/NSLC Lehman 2011; QDAIF, QDHF). HISTORY.md tracks releases back through 0.x. || main loop (reader, from the code): The user loop calls Scheduler.ask(), which concatenates each emitter's ask() (GaussianEmitter: random archive elites plus Gaussian noise; EvolutionStrategyEmitter: samples from an internal CMA-ES), the user evaluates objectives and measures, then Scheduler.tell() inserts the batch into the archive (GridArchive.add: measure -> cell index, keep the per-cell argmax objective only if it exceeds the cell's threshold, returning a status/value add_info) and hands each emitter its slice of solutions and add_info so the emitter can rank, adapt its distribution and possibly restart from a sampled elite.",
+   "basis": "TECHNE_RECORD"
+  },
+  "KNOWN_PREDECESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_SUCCESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_RIVALS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_HISTORICAL_DISPOSITION": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "SOURCE_STATUS": {
+   "value": {
+    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+    "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+    "tree_sha256": "9336714f544cd94a38ade7bf678b3cc56a769f057afde20d34a2ac5a2973e63a"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "RUN_STATUS": {
+   "value": {
+    "run": "NOT_ATTEMPTED",
+    "test": "NOT_ATTEMPTED",
+    "environment": {
+     "runner": "native",
+     "note": "NOT RUN in this pass (nothing executed from the tree); host class from the reader draft: Any CPython >=3.10 host (CPU only for the core; README 'Accessible ... for beginners with limited computational resources'); optional NVIDIA CUDA 12 via cupy for the Array API extra; optional torch for CNF/DQD tutorials"
+    }
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVABILITY": {
+   "value": {
+    "EXECUTABLE": "unknown",
+    "OBSERVABLE": "unknown",
+    "ORACLE_BACKED": "unknown",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "unknown"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "ORACLE_STATUS": {
+   "value": {
+    "oracle_backed": "unknown",
+    "test_classification": "NOT_ATTEMPTED"
+   },
+   "basis": "NYX_DERIVED"
+  },
+  "INTERVENTION_READINESS": {
+   "value": {
+    "intervention_ready": "unknown",
+    "patch_intervention": "unknown",
+    "runnable": false
+   },
+   "basis": "NYX_DERIVED"
+  }
+ },
+ "cut": {
+  "state": "COARSE",
+  "mode": "ANCESTRY_AWARE",
+  "evidence": [
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:pyribs-icaros-2020/upstream/tree/ribs/archives/_grid_archive.py:634-638"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:pyribs-icaros-2020/upstream/tree/ribs/archives/_grid_archive.py:509-515"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:pyribs-icaros-2020/upstream/tree/ribs/emitters/_evolution_strategy_emitter.py:183-265"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:pyribs-icaros-2020/upstream/tree/ribs/schedulers/_bandit_scheduler.py:274-280"
+   }
+  ],
+  "inspected_files": [
+   "ribs/archives/_grid_archive.py 105-182, 362-410, 474-714, 770-848, 920-921",
+   "ribs/archives/_utils.py 76-93",
+   "ribs/emitters/_evolution_strategy_emitter.py 82-146, 183-265",
+   "ribs/emitters/rankers.py 136-203",
+   "ribs/emitters/opt/_cma_es.py 239-247, 275-299",
+   "ribs/schedulers/_scheduler.py 180-412",
+   "ribs/schedulers/_bandit_scheduler.py 205-297, 418-419"
+  ],
+  "date": "2026-10-03T08:10Z",
+  "note": "archives whose admission compares against a per-cell THRESHOLD that, with a learning rate below 1 (CMA-MAE), anneals toward the objectives seen, so the elite can be displaced by a worse solution [READER-ASSISTED, 2026-10-03: a read-only reader agent (claude-opus-5-5, same family as Nyx) read the files below and returned line-cited notes; Nyx spot-checked 1 of the cited line ranges against the files (all matched) and wrote this cut. Nothing was run, imported or built (no bytecode written into the body). Stage A census 121 stays frozen; this body is cut under the operator's 2026-10-03 directive (item 4) and tracked with the other operator-directed bodies.]",
+  "provenance": {
+   "schema": "nyx.atlas/1-provenance",
+   "migrated_at": "2026-10-03T08:10Z",
+   "migrated_from": "authored under nyx.atlas/1-provenance",
+   "provenance_grade_read": "ORIGINAL_ARTIFACT",
+   "grade_basis": "Techne FOSSIL_PACKET.json PROVENANCE_GRADE where issued, else the record's handoff string mapped (populated per R34; Harmonia may re-grade)",
+   "source_object_id": "https://github.com/icaros-usc/pyribs@7bd723cf9863d480c8f2fec5ba9aa36f3b68c083",
+   "payload_manifest_id": "techne tree_sha256 9336714f544cd94a38ade7bf678b3cc56a769f057afde20d34a2ac5a2973e63a (362 files)",
+   "host_tree_matches_record": null,
+   "host": "GANDALF (hostname), bodies receipt not named",
+   "files_read": [
+    {
+     "path": "upstream/tree/ribs/archives/_grid_archive.py",
+     "payload_hash_read": "5f87e28395ee302925a2de1764aca55ad538844b38a1188ef4c004e073acb501",
+     "techne_recorded_hash": "5f87e28395ee302925a2de1764aca55ad538844b38a1188ef4c004e073acb501",
+     "match": true,
+     "refs": 4
+    },
+    {
+     "path": "upstream/tree/ribs/emitters/_evolution_strategy_emitter.py",
+     "payload_hash_read": "15fdaf4a0a24b9ead322f2ad8ba697916b84f304c0e4f4ab3ff213b006f2732d",
+     "techne_recorded_hash": "15fdaf4a0a24b9ead322f2ad8ba697916b84f304c0e4f4ab3ff213b006f2732d",
+     "match": true,
+     "refs": 2
+    },
+    {
+     "path": "upstream/tree/ribs/schedulers/_bandit_scheduler.py",
+     "payload_hash_read": "a73e001b0d94a488332ebca27d66ac4287fdc3a4680c58e230a12b821a70e244",
+     "techne_recorded_hash": "a73e001b0d94a488332ebca27d66ac4287fdc3a4680c58e230a12b821a70e244",
+     "match": true,
+     "refs": 2
+    }
+   ],
+   "unresolved_refs": []
+  }
+ },
+ "organs": [
+  {
+   "organ_id": "pyribs-icaros-2020::grid_archive_admission_against_a_per_cell_threshold",
+   "fossil_ancestry": "pyribs-icaros-2020",
+   "human_name": "GridArchive.add / index_of (_grid_archive.py 362-410, 518-714)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "a measure is binned as ((dims*(m - lower) + 1e-6) / interval) clipped; a candidate is admitted iff objective > cell threshold (strict; empty cells take threshold_min, default -inf); status 2 new, 1 improved; within a batch argmax wins (first on ties) and statuses are computed against the pre-batch archive",
+   "input": "a batch",
+   "output": "statuses and an updated archive",
+   "state": "per-cell threshold and elite",
+   "update": "UNKNOWN",
+   "assumptions": [
+    "UNKNOWN"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [],
+   "fitness_value_in_ancestor": "UNKNOWN",
+   "failure_landscape": "UNKNOWN by run",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:pyribs-icaros-2020/upstream/tree/ribs/archives/_grid_archive.py:634-638"
+   },
+   "confidence": "HIGH",
+   "portability": "UNKNOWN",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "GridArchive.add / index_of (_grid_archive.py 362-410, 518-714)",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "ARCHIVE",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "pyribs-icaros-2020::cma_mae_threshold_annealing_toward_the_mean_admitted_objective",
+   "fossil_ancestry": "pyribs-icaros-2020",
+   "human_name": "threshold update (_grid_archive.py 474-516, 770-848)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "batch rule: ratio = (1 - lr)^k, new threshold = ratio*threshold + mean(objectives)*(1 - ratio) over the k admissible candidates of a cell; single rule threshold*(1 - lr) + objective*lr; lr = 1 (default) recovers MAP-Elites",
+   "input": "admitted objectives",
+   "output": "a new threshold",
+   "state": "thresholds",
+   "update": "UNKNOWN",
+   "assumptions": [
+    "UNKNOWN"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [],
+   "fitness_value_in_ancestor": "UNKNOWN",
+   "failure_landscape": "by reading: with lr < 1 a candidate between the threshold and the elite replaces the elite, so the archive's objective sum can fall",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:pyribs-icaros-2020/upstream/tree/ribs/archives/_grid_archive.py:509-515"
+   },
+   "confidence": "HIGH",
+   "portability": "UNKNOWN",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "threshold update (_grid_archive.py 474-516, 770-848)",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "PARAMETER",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "pyribs-icaros-2020::evolution_strategy_emitter_ranking_by_status_then_improvement_with_filter_and_restart",
+   "fossil_ancestry": "pyribs-icaros-2020",
+   "human_name": "EvolutionStrategyEmitter (82-146, 183-265); rankers 136-203; CMA-ES weights 239-247",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "default ranker '2imp' sorts by (status, value) descending; with selection 'filter' only solutions that changed the archive are parents; CMA weights log(n+0.5) - log(i), normalised; restart from one uniformly sampled elite when CMA stops or nothing new was added",
+   "input": "a scored batch",
+   "output": "a new search distribution",
+   "state": "CMA state",
+   "update": "UNKNOWN",
+   "assumptions": [
+    "UNKNOWN"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [],
+   "fitness_value_in_ancestor": "UNKNOWN",
+   "failure_landscape": "by reading: an empty archive makes the restart's sample_elites raise",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:pyribs-icaros-2020/upstream/tree/ribs/emitters/_evolution_strategy_emitter.py:183-265"
+   },
+   "confidence": "HIGH",
+   "portability": "UNKNOWN",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "EvolutionStrategyEmitter (82-146, 183-265); rankers 136-203; CMA-ES weights 239-247",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "SEEDED_RANDOM",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "PARAMETER",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "pyribs-icaros-2020::bandit_scheduler_choosing_emitters_by_a_ucb1_variant",
+   "fossil_ancestry": "pyribs-icaros-2020",
+   "human_name": "BanditScheduler (_bandit_scheduler.py 205-297, 418-419)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "ucb1 = success/selection + zeta*sqrt(log(sum of successes)/selection), zeta 0.05; never-selected emitters get inf; selection counts solutions emitted, success counts non-zero statuses; the plain Scheduler asks every emitter every iteration and does not choose",
+   "input": "emitter statistics",
+   "output": "the active emitters",
+   "state": "counts",
+   "update": "UNKNOWN",
+   "assumptions": [
+    "UNKNOWN"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [],
+   "fitness_value_in_ancestor": "UNKNOWN",
+   "failure_landscape": "by reading: the log uses total SUCCESSES (UCB1 uses total plays); all-zero successes give log(0) and NaN scores",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:pyribs-icaros-2020/upstream/tree/ribs/schedulers/_bandit_scheduler.py:274-280"
+   },
+   "confidence": "HIGH",
+   "portability": "UNKNOWN",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "BanditScheduler (_bandit_scheduler.py 205-297, 418-419)",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  }
+ ],
+ "rejected_cuts": [
+  {
+   "candidate": "the rest of the body: CVT and other archives, ArrayStore, other emitters, CMA-ES internals beyond the weights, other rankers",
+   "reason": "OTHER",
+   "evidence": "NOT READ; residue",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "pyribs-icaros-2020"
+  },
+  {
+   "candidate": "'pyribs-icaros-2020' as one organ",
+   "reason": "NAME_HAS_NO_EXECUTABLE_BOUNDARY",
+   "evidence": "the mechanisms above are separable pieces of code",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "pyribs-icaros-2020"
+  }
+ ],
+ "pressures": [
+  {
+   "pressure_id": "pyribs-icaros-2020::P.a_solution_is_kept_if_it_beats_its_cell_s_threshold_which_may_be_annealed_below_the_elite",
+   "source_fossil": "pyribs-icaros-2020",
+   "source_evidence": "the organs above",
+   "condition": "a behaviour grid; admission against a per-cell threshold; emitters rewarded for archive changes",
+   "resource_or_constraint": "UNKNOWN",
+   "failure_condition": "UNKNOWN",
+   "world_punishes": "solutions below their cell's threshold",
+   "world_rewards": "new cells and improvements over the threshold",
+   "observable_consequence": "UNKNOWN",
+   "vacuity_condition": "UNKNOWN",
+   "trivial_shortcuts": "UNKNOWN",
+   "cheat_control": "UNKNOWN: not designed this pass",
+   "cost_class": "UNKNOWN (nothing ran)",
+   "purpose_separated_from_pressure": "PURPOSE: quality-diversity optimisation library (pyribs; Fontaine and Nikolaidis CMA-ME / CMA-MAE)",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
+ "composition_edges": [],
+ "ancestry_edges": [],
+ "residue": {
+  "state": "LARGE_RESIDUE",
+  "unexplained": [
+   "not read: CVT and other archives, ArrayStore, other emitters, CMA-ES internals beyond the weights, other rankers",
+   "nothing ran",
+   "reader-assisted cut: line ranges spot-checked, not every line re-read by Nyx"
+  ],
+  "note": "batch 17 first pass",
+  "cut_mode": "ANCESTRY_AWARE"
+ }
+}

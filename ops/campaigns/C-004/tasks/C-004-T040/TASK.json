@@ -1,0 +1,57 @@
+{
+  "schema": "prometheus.workgraph.task.v1",
+  "task_id": "C-004-T040",
+  "campaign_id": "C-004",
+  "title": "S4 repair triage: split S3 findings into bounded repair packets for their owners",
+  "objective": "Turn the S3 results into one repair round: a bounded repair packet per claim-critical finding, owned by the seat that owns the code, preserving the original first-sight score.",
+  "parent_objective": "RSO-METHODS-SLICE-001 (CAMPAIGN.json objective)",
+  "owner_role": "Palamedes",
+  "quality_class": "Q2",
+  "can_downgrade": false,
+  "escalate_to": "Q3",
+  "depends_on": [
+    "C-004-T030"
+  ],
+  "requires_shas": [
+    "09dc8c38b (closure review)",
+    "3bd02f393 (v0.4 synthesis, merged)"
+  ],
+  "owns": [
+    "ops/campaigns/C-004/tasks/"
+  ],
+  "reads": [
+    "rso/slice001/challenge/S3/",
+    "rso/slice001/contract/",
+    "docs/phase3/synthesis/ENCELADUS-DIONYSUS-v0.4/NEXT_ROUND_PLAN_v0.4.md"
+  ],
+  "problem": "Plan s2 S4: exactly one repair round; preserve the original score; rerun frozen regressions; unresolved claim-critical cases suspend that claim. Triage classifies each S3 finding: claim-critical defect (repair), contract defect (versioned amendment, escalate to the operator if it changes meaning), out of model (C3 list), equivalent (reviewer adjudication).",
+  "non_goals": [
+    "No second repair round inside this slice",
+    "No change to the S3 record"
+  ],
+  "evidence_required": [
+    "repair packets created with owners and acceptance; the S3 score copied unchanged into the S4 record"
+  ],
+  "acceptance": {
+    "condition": "every S3 finding has a disposition; repair packets READY"
+  },
+  "deliverables": [
+    "ops/campaigns/C-004/tasks/C-004-T04N/ repair packets"
+  ],
+  "kind": "operations",
+  "status": "PROPOSED",
+  "history": [
+    {
+      "status": "PROPOSED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-03T11:04:14Z",
+      "note": "created under C-004-T000 decomposition"
+    }
+  ],
+  "authority": "operator directive 2026-10-03 s9, s11 (roles/Achilles/prompts/2026-10-03_rso_builder_cell/01_OPERATOR_DIRECTIVE_verbatim.md); decomposed by Palamedes under C-004-T000",
+  "resource_ceiling": {
+    "engineering": "<= 1 Q2 seat-hour (repairs charged to their own packets)",
+    "note": "Counts toward the slice caps fixed by C-004-OP1 (NEXT_ROUND_PLAN_v0.4 s6 proposal: 30 CPU-minutes total, 0 GPU, 0 cloud, 100 MB new artifacts, 12 top-level validation launches; mutation children count toward CPU). Stop at the first exhausted cap and keep partial results."
+  },
+  "red_required": false
+}

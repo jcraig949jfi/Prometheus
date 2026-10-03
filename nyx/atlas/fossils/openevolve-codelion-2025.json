@@ -1,0 +1,865 @@
+{
+ "schema": "nyx.atlas/0",
+ "fossil_id": "openevolve-codelion-2025",
+ "techne_record": "techne/fossils/specimens/openevolve-codelion-2025/record.json",
+ "whole_system": {
+  "FOSSIL_ID": {
+   "value": "openevolve-codelion-2025",
+   "basis": "TECHNE_RECORD"
+  },
+  "CANONICAL_NAME": {
+   "value": "OpenEvolve -- OpenEvolve: an open-source evolutionary coding agent (Asankhaya Sharma [GitHub handle codelion]; institution NOT_FOUND_AT_PIN, README badges point at github.com/algorithmicsuperintelligence/openevolve; 2025-2026)",
+   "basis": "TECHNE_RECORD"
+  },
+  "VERSION": {
+   "value": "github.com/codelion/openevolve main @ 4f4b0c4f40906f434d64fe5089aff24e927f7e24 (committed 2026-09-29; 835 commits since 2025-05-15; 502 tracked files)",
+   "basis": "TECHNE_RECORD"
+  },
+  "ERA": {
+   "value": "2025-2026",
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_SYSTEM": {
+   "value": {
+    "domain": [
+     "llm-guided-search",
+     "program-synthesis",
+     "map-elites",
+     "evolutionary-coding"
+    ],
+    "lineage": "pyproject.toml description: 'Open-source implementation of AlphaEvolve'. CLAUDE.md: 'open-source implementation of Google DeepMind's AlphaEvolve system'. The README at this pin does not mention AlphaEvolve, FunSearch or DeepMind by name; it cites an HF blog 'Towards Open Evolutionary Agents'. Evolution operators named in README: MAP-Elites, island model with ring-topology migration, double selection (performance vs inspiration), artifact side-channel; OptiLLM (same author) as optional proxy. || main loop (reader, from the code): ProcessParallelController.run_evolution samples a parent and inspirations from an island (exploration from island / exploitation from archive / random, by exploration_ratio+exploitation_ratio), ships a DB snapshot to a worker that builds a prompt, calls the LLM ensemble, applies SEARCH/REPLACE diffs (or full rewrite) to the parent, evaluates the child, and returns it; the parent process adds the child to the MAP-Elites island database, migrates between islands when due, checkpoints, and repeats until max_iterations, target_score or early stopping."
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_PROBLEM": {
+   "value": "An evolutionary coding agent that uses LLMs (any OpenAI-compatible API, Claude Code CLI or Copilot CLI) to iteratively mutate a program and keep the best variants according to a user-supplied evaluator, using MAP-Elites quality-diversity, islands with migration, LLM ensembles and an artifact feedback side-channel.",
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVED_HUMAN_CAPABILITY": {
+   "value": {
+    "built_to": "An evolutionary coding agent that uses LLMs (any OpenAI-compatible API, Claude Code CLI or Copilot CLI) to iteratively mutate a program and keep the best variants according to a user-supplied evaluator, using MAP-Elites quality-diversity, islands with migration, LLM ensembles and an artifact feedback side-channel.",
+    "pressure": "README frames it against manual optimization: days-to-weeks of human-limited exploration, poor reproducibility, hard multi-objective tradeoffs and no scaling; pyproject describes it as an open-source implementation of AlphaEvolve (CLAUDE.md: Google DeepMind's AlphaEvolve), i.e. no open implementation existed.",
+    "success_means": "README FAQ: primary metric is the evaluator's combined_score (or metric average), plus convergence of best score over time, MAP-Elites grid coverage, iterations to target, robustness across test cases; showcase claims are 2-3x kernel speedups and matching state-of-the-art n=26 circle packing."
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "DOCUMENTED_ENVIRONMENTAL_PRESSURE": {
+   "value": {
+    "pressure": "",
+    "failure_condition": ""
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "LANGUAGE": {
+   "value": [
+    "Python (245 .py files; core package openevolve/)",
+    "YAML configs (70)",
+    "Markdown (30)",
+    "C++ headers (14 .hpp, vendored json in an example)",
+    "JavaScript (8, visualizer static)",
+    "MLIR (8, example)",
+    "Rust (3, example)",
+    "R (example)",
+    "Metal shader (example)"
+   ],
+   "basis": "TECHNE_RECORD"
+  },
+  "EXECUTION_MODEL": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "ANCESTRY": {
+   "value": "pyproject.toml description: 'Open-source implementation of AlphaEvolve'. CLAUDE.md: 'open-source implementation of Google DeepMind's AlphaEvolve system'. The README at this pin does not mention AlphaEvolve, FunSearch or DeepMind by name; it cites an HF blog 'Towards Open Evolutionary Agents'. Evolution operators named in README: MAP-Elites, island model with ring-topology migration, double selection (performance vs inspiration), artifact side-channel; OptiLLM (same author) as optional proxy. || main loop (reader, from the code): ProcessParallelController.run_evolution samples a parent and inspirations from an island (exploration from island / exploitation from archive / random, by exploration_ratio+exploitation_ratio), ships a DB snapshot to a worker that builds a prompt, calls the LLM ensemble, applies SEARCH/REPLACE diffs (or full rewrite) to the parent, evaluates the child, and returns it; the parent process adds the child to the MAP-Elites island database, migrates between islands when due, checkpoints, and repeats until max_iterations, target_score or early stopping.",
+   "basis": "TECHNE_RECORD"
+  },
+  "KNOWN_PREDECESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_SUCCESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_RIVALS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_HISTORICAL_DISPOSITION": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "SOURCE_STATUS": {
+   "value": {
+    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+    "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+    "tree_sha256": "2a7cbaa366bf2a970f17a3765bbbf84ec44cd576a9d3a410a8f7ae63e096212e"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "RUN_STATUS": {
+   "value": {
+    "run": "NOT_ATTEMPTED",
+    "test": "NOT_ATTEMPTED",
+    "environment": {
+     "runner": "native",
+     "note": "NOT RUN in this pass (nothing executed from the tree); host class from the reader draft: Any CPython >=3.10 host with outbound HTTPS to an OpenAI-compatible LLM endpoint (or a local Ollama/vLLM/optillm server); no GPU needed for the framework; uses multiprocessing ProcessPoolExecutor"
+    }
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVABILITY": {
+   "value": {
+    "EXECUTABLE": "unknown",
+    "OBSERVABLE": "unknown",
+    "ORACLE_BACKED": "unknown",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "unknown"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "ORACLE_STATUS": {
+   "value": {
+    "oracle_backed": "unknown",
+    "test_classification": "NOT_ATTEMPTED"
+   },
+   "basis": "NYX_DERIVED"
+  },
+  "INTERVENTION_READINESS": {
+   "value": {
+    "intervention_ready": "unknown",
+    "patch_intervention": "unknown",
+    "runnable": false
+   },
+   "basis": "NYX_DERIVED"
+  }
+ },
+ "cut": {
+  "state": "COARSE",
+  "mode": "ANCESTRY_AWARE",
+  "evidence": [
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:openevolve-codelion-2025/upstream/tree/openevolve/database.py:477-483"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:openevolve-codelion-2025/upstream/tree/openevolve/database.py:977-1097"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:openevolve-codelion-2025/upstream/tree/openevolve/database.py:1442-1460"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:openevolve-codelion-2025/upstream/tree/openevolve/database.py:2020-2131"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:openevolve-codelion-2025/upstream/tree/openevolve/utils/code_utils.py:137-227"
+   }
+  ],
+  "inspected_files": [
+   "openevolve/database.py 157-161, 332-508, 543-602, 977-1097, 1243-1348, 1442-1460, 1631-1645, 1726-1860, 1907-2131, 2293-2500",
+   "openevolve/config.py 329-355",
+   "openevolve/utils/metrics_utils.py 72-118",
+   "openevolve/utils/code_utils.py 137-227, 378-394",
+   "openevolve/process_parallel.py 150-329, 1027-1031",
+   "openevolve/prompt/sampler.py 262-473"
+  ],
+  "date": "2026-10-03T08:10Z",
+  "note": "islands of programs each with a MAP-Elites grid over code length and a cheap diversity heuristic; parents mostly from a 100-slot elite archive; ring migration; the LLM edits by SEARCH/REPLACE diffs [READER-ASSISTED, 2026-10-03: a read-only reader agent (claude-opus-5-5, same family as Nyx) read the files below and returned line-cited notes; Nyx spot-checked 1 of the cited line ranges against the files (all matched) and wrote this cut. Nothing was run, imported or built (no bytecode written into the body). Stage A census 121 stays frozen; this body is cut under the operator's 2026-10-03 directive (item 4) and tracked with the other operator-directed bodies.]",
+  "provenance": {
+   "schema": "nyx.atlas/1-provenance",
+   "migrated_at": "2026-10-03T08:10Z",
+   "migrated_from": "authored under nyx.atlas/1-provenance",
+   "provenance_grade_read": "ORIGINAL_ARTIFACT",
+   "grade_basis": "Techne FOSSIL_PACKET.json PROVENANCE_GRADE where issued, else the record's handoff string mapped (populated per R34; Harmonia may re-grade)",
+   "source_object_id": "https://github.com/codelion/openevolve@4f4b0c4f40906f434d64fe5089aff24e927f7e24",
+   "payload_manifest_id": "techne tree_sha256 2a7cbaa366bf2a970f17a3765bbbf84ec44cd576a9d3a410a8f7ae63e096212e (502 files)",
+   "host_tree_matches_record": null,
+   "host": "GANDALF (hostname), bodies receipt not named",
+   "files_read": [
+    {
+     "path": "upstream/tree/openevolve/database.py",
+     "payload_hash_read": "24d6a78df7d8112da7331109c51cca7f30b87dc48c5c725c0c468d971000f3c8",
+     "techne_recorded_hash": "24d6a78df7d8112da7331109c51cca7f30b87dc48c5c725c0c468d971000f3c8",
+     "match": true,
+     "refs": 8
+    },
+    {
+     "path": "upstream/tree/openevolve/utils/code_utils.py",
+     "payload_hash_read": "d9e208da50f55a564a73901a8f78d46046317a14d16a1f0868a6f80733e26b65",
+     "techne_recorded_hash": "d9e208da50f55a564a73901a8f78d46046317a14d16a1f0868a6f80733e26b65",
+     "match": true,
+     "refs": 2
+    }
+   ],
+   "unresolved_refs": []
+  }
+ },
+ "organs": [
+  {
+   "organ_id": "openevolve-codelion-2025::per_island_map_elites_cell_admission_with_population_cap",
+   "fossil_ancestry": "openevolve-codelion-2025",
+   "human_name": "_add (database.py 332-508); _enforce_population_limit (1907-2000)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "a child joins its parent's island and takes its feature cell if empty or stale or if fitter (combined_score, else the mean of non-feature metrics); it is added to the island set even when it loses the cell; above population_size (1000) the least fit non-cell-owners are evicted first, the best and newest protected",
+   "input": "a child program",
+   "output": "cell and island membership",
+   "state": "islands, cell maps",
+   "update": "UNKNOWN",
+   "assumptions": [
+    "UNKNOWN"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [],
+   "fitness_value_in_ancestor": "UNKNOWN",
+   "failure_landscape": "UNKNOWN by run",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:openevolve-codelion-2025/upstream/tree/openevolve/database.py:477-483"
+   },
+   "confidence": "HIGH",
+   "portability": "UNKNOWN",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "_add (database.py 332-508); _enforce_population_limit (1907-2000)",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "ARCHIVE",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "openevolve-codelion-2025::feature_binning_by_running_min_max_of_code_length_and_a_diversity_heuristic",
+   "fossil_ancestry": "openevolve-codelion-2025",
+   "human_name": "feature coordinates (database.py 977-1097, 2293-2500)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "features default to complexity = len(code) and diversity = mean of a fast heuristic (length, line and character differences) against 20 reference programs, min-max scaled over running statistics into 10 bins",
+   "input": "a program",
+   "output": "a cell key",
+   "state": "running min and max",
+   "update": "UNKNOWN",
+   "assumptions": [
+    "UNKNOWN"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [],
+   "fitness_value_in_ancestor": "UNKNOWN",
+   "failure_landscape": "by reading: bin boundaries drift as the running stats move, so incumbent and challenger are binned under different scales; sampling inspirations updates the stats as a side effect",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:openevolve-codelion-2025/upstream/tree/openevolve/database.py:977-1097"
+   },
+   "confidence": "HIGH",
+   "portability": "UNKNOWN",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "feature coordinates (database.py 977-1097, 2293-2500)",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "SENSITIVE",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "openevolve-codelion-2025::parent_choice_twenty_percent_island_seventy_percent_elite_archive_ten_percent_global",
+   "fossil_ancestry": "openevolve-codelion-2025",
+   "human_name": "_sample_parent / sample_from_island (database.py 1442-1460, 543-602, 1631-1645)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "exploration 0.2 picks uniformly from the island, exploitation 0.7 uniformly from the 100-slot archive, the rest uniformly from all (single process) or fitness-proportionally within the island (parallel path); the archive admits first-come up to 100, then replaces its least fit if the new program is better",
+   "input": "UNKNOWN",
+   "output": "a parent",
+   "state": "the archive",
+   "update": "UNKNOWN",
+   "assumptions": [
+    "UNKNOWN"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [],
+   "fitness_value_in_ancestor": "UNKNOWN",
+   "failure_landscape": "by reading: the first 100 programs fill the archive regardless of fitness",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:openevolve-codelion-2025/upstream/tree/openevolve/database.py:1442-1460"
+   },
+   "confidence": "HIGH",
+   "portability": "UNKNOWN",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "_sample_parent / sample_from_island (database.py 1442-1460, 543-602, 1631-1645)",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "SEEDED_RANDOM",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "openevolve-codelion-2025::ring_migration_of_island_top_ten_percent_every_fifty_generations",
+   "fossil_ancestry": "openevolve-codelion-2025",
+   "human_name": "migrate (database.py 2020-2131)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "when the island generation counter has advanced by migration_interval (50), each island's top 10% are copied to both ring neighbours through the normal admission; migrants are never re-migrated and identical code is skipped",
+   "input": "UNKNOWN",
+   "output": "UNKNOWN",
+   "state": "UNKNOWN",
+   "update": "UNKNOWN",
+   "assumptions": [
+    "UNKNOWN"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [],
+   "fitness_value_in_ancestor": "UNKNOWN",
+   "failure_landscape": "UNKNOWN by run",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:openevolve-codelion-2025/upstream/tree/openevolve/database.py:2020-2131"
+   },
+   "confidence": "HIGH",
+   "portability": "UNKNOWN",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "migrate (database.py 2020-2131)",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "openevolve-codelion-2025::llm_edit_by_search_replace_diff_with_silent_skip_of_unmatched_blocks",
+   "fossil_ancestry": "openevolve-codelion-2025",
+   "human_name": "apply diff (code_utils.py 137-227); worker (process_parallel.py 283-303)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "SEARCH/REPLACE blocks are applied by exact line match, then with trailing whitespace stripped; unmatched blocks are skipped silently; the child is rejected only if nothing applied or the code is unchanged",
+   "input": "an LLM diff",
+   "output": "a child program",
+   "state": "UNKNOWN",
+   "update": "UNKNOWN",
+   "assumptions": [
+    "UNKNOWN"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [],
+   "fitness_value_in_ancestor": "UNKNOWN",
+   "failure_landscape": "UNKNOWN by run",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:openevolve-codelion-2025/upstream/tree/openevolve/utils/code_utils.py:137-227"
+   },
+   "confidence": "HIGH",
+   "portability": "UNKNOWN",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "apply diff (code_utils.py 137-227); worker (process_parallel.py 283-303)",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  }
+ ],
+ "rejected_cuts": [
+  {
+   "candidate": "the rest of the body: LLM novelty judge (off by default), evaluator cascade, controller, LLM ensemble, templates, checkpointing",
+   "reason": "OTHER",
+   "evidence": "NOT READ; residue",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "openevolve-codelion-2025"
+  },
+  {
+   "candidate": "'openevolve-codelion-2025' as one organ",
+   "reason": "NAME_HAS_NO_EXECUTABLE_BOUNDARY",
+   "evidence": "the mechanisms above are separable pieces of code",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "openevolve-codelion-2025"
+  }
+ ],
+ "pressures": [
+  {
+   "pressure_id": "openevolve-codelion-2025::P.mostly_elitist_seventy_percent_of_parents_from_a_fitness_archive_with_diversity_only_through_length_and_text_heuristic_cells",
+   "source_fossil": "openevolve-codelion-2025",
+   "source_evidence": "the organs above",
+   "condition": "per-island grids over code length and a diversity heuristic; elite archive; ring migration",
+   "resource_or_constraint": "UNKNOWN",
+   "failure_condition": "UNKNOWN",
+   "world_punishes": "less fit programs in occupied cells",
+   "world_rewards": "fitter programs",
+   "observable_consequence": "UNKNOWN",
+   "vacuity_condition": "UNKNOWN",
+   "trivial_shortcuts": "UNKNOWN",
+   "cheat_control": "UNKNOWN: not designed this pass",
+   "cost_class": "UNKNOWN (nothing ran)",
+   "purpose_separated_from_pressure": "PURPOSE: open-source reimplementation of AlphaEvolve-style LLM program evolution (OpenEvolve)",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
+ "composition_edges": [],
+ "ancestry_edges": [
+  {
+   "from": "openevolve-codelion-2025",
+   "relation": "inspired_by",
+   "to": "AlphaEvolve (DeepMind 2025, no public source)",
+   "note": "pyproject: an open-source implementation of AlphaEvolve (reader draft)",
+   "basis": "TECHNE_RECORD"
+  }
+ ],
+ "residue": {
+  "state": "LARGE_RESIDUE",
+  "unexplained": [
+   "not read: LLM novelty judge (off by default), evaluator cascade, controller, LLM ensemble, templates, checkpointing",
+   "nothing ran",
+   "reader-assisted cut: line ranges spot-checked, not every line re-read by Nyx"
+  ],
+  "note": "batch 17 first pass",
+  "cut_mode": "ANCESTRY_AWARE"
+ }
+}

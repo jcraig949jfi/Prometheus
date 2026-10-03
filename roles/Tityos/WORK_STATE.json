@@ -3,21 +3,28 @@
   "seat": "Tityos",
   "mwo_id": "MWO-0004",
   "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
-  "updated_at_utc": "2026-10-01T09:23:16Z",
-  "state": "HOLD",
-  "branch": "tityos/base-role-adopt-2026-10-01",
+  "updated_at_utc": "2026-10-01T10:09:57Z",
+  "state": "READY",
+  "branch": "tityos/phase3-intake-2026-10-01",
   "head_sha": "(this commit; see git log -1 -- roles/Tityos/WORK_STATE.json)",
   "threads": [],
-  "campaigns": [],
+  "campaigns": [
+    "Phase 3 forensic intake, signal-vs-hallucination lane (charter roles/Tityos/prompts/2026-10-01_charter/, 36ffe8073): DELIVERED docs/phase3/intake/tityos/"
+  ],
   "experiments": [],
   "fabric_tasks": [],
   "running": [],
   "blocked_on": [],
   "next_actions": [
-    "Seat created 2026-10-01, charter PENDING. HOLD because no READY work exists without a charter (base role 2a F), not a block on any seat. When the operator's charter arrives: commit verbatim with MANIFEST under roles/Tityos/prompts/<date>_charter/, rewrite RESPONSIBILITIES.md, file BACKLOG_H0H5.md, leave HOLD."
+    "Package delivered. Routing the 16 crawl-found defects (REPORT.md s5) to owning seats is an operator / Phase 3 decision; not done by this seat.",
+    "Await the four-crawler merge or a new directive. No science, no monitors owned."
   ],
-  "operator_decisions_required": [],
+  "operator_decisions_required": [
+    "Whether to route REPORT.md s5 crawl-found defects to owners (Harmonia, Techne, Charon, Nemesis, Skopos, Hypatia, Mnemosyne/PEW, Kairos/Agora)."
+  ],
   "latest_reports": [
-    "roles/Tityos/journal/2026-10-01.md (creation pass)"
+    "docs/phase3/intake/tityos/REPORT.md",
+    "docs/phase3/intake/tityos/failure_taxonomy.md",
+    "roles/Tityos/journal/2026-10-01.md (creation + crawl)"
   ]
 }

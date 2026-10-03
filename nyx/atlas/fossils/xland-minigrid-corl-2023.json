@@ -1,0 +1,741 @@
+{
+ "schema": "nyx.atlas/0",
+ "fossil_id": "xland-minigrid-corl-2023",
+ "techne_record": "techne/fossils/specimens/xland-minigrid-corl-2023/record.json",
+ "whole_system": {
+  "FOSSIL_ID": {
+   "value": "xland-minigrid-corl-2023",
+   "basis": "TECHNE_RECORD"
+  },
+  "CANONICAL_NAME": {
+   "value": "XLand-MiniGrid -- XLand-MiniGrid: Scalable Meta-Reinforcement Learning Environments in JAX (Alexander Nikulin, Vladislav Kurenkov, Ilya Zisman, Viacheslav Sinii, Artem Agarkov, Sergey Kolesnikov; NOT_FOUND_AT_PIN (GitHub org 'corl-team'; institution not stated in tree); 2023-2025)",
+   "basis": "TECHNE_RECORD"
+  },
+  "VERSION": {
+   "value": "github.com/corl-team/xland-minigrid main @ 0d306d1414dcb6e451358d94e7d9a91879462ee1 (committed 2025-12-16; 70 commits since 2023-12-01; 70 tracked files)",
+   "basis": "TECHNE_RECORD"
+  },
+  "ERA": {
+   "value": "2023-2025",
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_SYSTEM": {
+   "value": {
+    "domain": [
+     "meta-reinforcement-learning",
+     "procedural-environments",
+     "gridworld",
+     "jax"
+    ],
+    "lineage": "README: 'inspired by the diversity and depth of XLand and the simplicity and minimalism of MiniGrid'; 'comes with example environments ported from the original MiniGrid'; benchmarks 'following the procedure used to train DeepMind AdA agent from the original XLand'; baselines 'in the PureJaxRL style'; API 'combines dm_env and gymnax interfaces' after trying Jumanji; See Also lists Brax, Gymnax, Jumanji, Pgx, JaxMARL, Craftax, Purejaxql. Commented-out README note references XLand-100B dataset (github.com/dunno-lab/xland-minigrid-datasets) 'based on XLand-MiniGrid'. || main loop (reader, from the code): Environment.step applies the agent's action to the grid (take_action), then lax.scan's over the task's encoded production rules (check_rule, lax.switch dispatch per rule) to transform grid/agent, then evaluates the encoded goal (check_goal) to decide termination and a time-discounted reward of 1 - 0.9*step/max_steps, truncating at max_steps; the meta-training loop (train_meta_task.make_train) samples a fresh batch of rulesets from a Benchmark each meta-update and runs recurrent PPO over multi-trial rollouts."
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_PROBLEM": {
+   "value": "README: 'a suite of tools, grid-world environments and benchmarks for meta-reinforcement learning research inspired by the diversity and depth of XLand and the simplicity and minimalism of MiniGrid', 'written in JAX from scratch and designed to be highly scalable, democratizing large-scale experimentation with limited resources' -- 'Ever wanted to reproduce a DeepMind AdA agent? Now you can'.",
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVED_HUMAN_CAPABILITY": {
+   "value": {
+    "built_to": "README: 'a suite of tools, grid-world environments and benchmarks for meta-reinforcement learning research inspired by the diversity and depth of XLand and the simplicity and minimalism of MiniGrid', 'written in JAX from scratch and designed to be highly scalable, democratizing large-scale experimentation with limited resources' -- 'Ever wanted to reproduce a DeepMind AdA agent? Now you can'.",
+    "pressure": "README: 'In the original MiniGrid some environments have dynamic goals, but the dynamics are never changed. To train and evaluate highly adaptive agents, we need to be able to change the dynamics in non-trivial ways'; plus existing JAX env APIs (Jumanji, Gymnax) were 'not suitable for meta learning' or 'not actively supported'.",
+    "success_means": "README: scalability metrics -- 'Easily scales to 2^16 parallel environments and millions of steps per second on a single GPU', PPO baselines 'can achieve 1 trillion environment steps under two days'; agent quality via eval returns (training scripts log eval/returns_mean; README warns 'Do not expect that provided baselines will solve the hardest environments or benchmarks')."
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "DOCUMENTED_ENVIRONMENTAL_PRESSURE": {
+   "value": {
+    "pressure": "",
+    "failure_condition": ""
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "LANGUAGE": {
+   "value": [
+    "Python",
+    "Jupyter Notebook (examples/)",
+    "YAML (configs/)",
+    "shell (scripts/generate_benchmarks.sh)"
+   ],
+   "basis": "TECHNE_RECORD"
+  },
+  "EXECUTION_MODEL": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "ANCESTRY": {
+   "value": "README: 'inspired by the diversity and depth of XLand and the simplicity and minimalism of MiniGrid'; 'comes with example environments ported from the original MiniGrid'; benchmarks 'following the procedure used to train DeepMind AdA agent from the original XLand'; baselines 'in the PureJaxRL style'; API 'combines dm_env and gymnax interfaces' after trying Jumanji; See Also lists Brax, Gymnax, Jumanji, Pgx, JaxMARL, Craftax, Purejaxql. Commented-out README note references XLand-100B dataset (github.com/dunno-lab/xland-minigrid-datasets) 'based on XLand-MiniGrid'. || main loop (reader, from the code): Environment.step applies the agent's action to the grid (take_action), then lax.scan's over the task's encoded production rules (check_rule, lax.switch dispatch per rule) to transform grid/agent, then evaluates the encoded goal (check_goal) to decide termination and a time-discounted reward of 1 - 0.9*step/max_steps, truncating at max_steps; the meta-training loop (train_meta_task.make_train) samples a fresh batch of rulesets from a Benchmark each meta-update and runs recurrent PPO over multi-trial rollouts.",
+   "basis": "TECHNE_RECORD"
+  },
+  "KNOWN_PREDECESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_SUCCESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_RIVALS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_HISTORICAL_DISPOSITION": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "SOURCE_STATUS": {
+   "value": {
+    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+    "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+    "tree_sha256": "6226e0ec157b64a5f8f436ccd361d2376318a0a2c4706257d1d20aaae480d4c6"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "RUN_STATUS": {
+   "value": {
+    "run": "NOT_ATTEMPTED",
+    "test": "NOT_ATTEMPTED",
+    "environment": {
+     "runner": "native",
+     "note": "NOT RUN in this pass (nothing executed from the tree); host class from the reader draft: Any CPython >=3.9 host with JAX (CPU works per README); paper-scale training in README/configs assumes one or more GPUs/TPUs ('millions of steps per second on a single GPU', 'Multi-GPU PPO baselines')"
+    }
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVABILITY": {
+   "value": {
+    "EXECUTABLE": "unknown",
+    "OBSERVABLE": "unknown",
+    "ORACLE_BACKED": "unknown",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "unknown"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "ORACLE_STATUS": {
+   "value": {
+    "oracle_backed": "unknown",
+    "test_classification": "NOT_ATTEMPTED"
+   },
+   "basis": "NYX_DERIVED"
+  },
+  "INTERVENTION_READINESS": {
+   "value": {
+    "intervention_ready": "unknown",
+    "patch_intervention": "unknown",
+    "runnable": false
+   },
+   "basis": "NYX_DERIVED"
+  }
+ },
+ "cut": {
+  "state": "COARSE",
+  "mode": "ANCESTRY_AWARE",
+  "evidence": [
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:xland-minigrid-corl-2023/upstream/tree/scripts/ruleset_generator.py:96-275"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:xland-minigrid-corl-2023/upstream/tree/src/xminigrid/benchmarks.py:30-63"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:xland-minigrid-corl-2023/upstream/tree/src/xminigrid/environment.py:76-79"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:xland-minigrid-corl-2023/upstream/tree/src/xminigrid/core/rules.py:14-139"
+   }
+  ],
+  "inspected_files": [
+   "scripts/ruleset_generator.py 1-310",
+   "src/xminigrid/benchmarks.py 30-63, 113-123",
+   "src/xminigrid/core/rules.py 14-139",
+   "src/xminigrid/core/goals.py 17-94",
+   "src/xminigrid/environment.py 61-90",
+   "src/xminigrid/envs/xland.py 142-198"
+  ],
+  "date": "2026-10-03T08:10Z",
+  "note": "tasks are rulesets sampled OFFLINE by growing a production tree backward from a goal, frozen into benchmarks, and drawn uniformly at training time; there is no adaptive curriculum in the tree [READER-ASSISTED, 2026-10-03: a read-only reader agent (claude-opus-5-5, same family as Nyx) read the files below and returned line-cited notes; Nyx spot-checked 1 of the cited line ranges against the files (all matched) and wrote this cut. Nothing was run, imported or built (no bytecode written into the body). Stage A census 121 stays frozen; this body is cut under the operator's 2026-10-03 directive (item 4) and tracked with the other operator-directed bodies.]",
+  "provenance": {
+   "schema": "nyx.atlas/1-provenance",
+   "migrated_at": "2026-10-03T08:10Z",
+   "migrated_from": "authored under nyx.atlas/1-provenance",
+   "provenance_grade_read": "ORIGINAL_ARTIFACT",
+   "grade_basis": "Techne FOSSIL_PACKET.json PROVENANCE_GRADE where issued, else the record's handoff string mapped (populated per R34; Harmonia may re-grade)",
+   "source_object_id": "https://github.com/corl-team/xland-minigrid@0d306d1414dcb6e451358d94e7d9a91879462ee1",
+   "payload_manifest_id": "techne tree_sha256 6226e0ec157b64a5f8f436ccd361d2376318a0a2c4706257d1d20aaae480d4c6 (70 files)",
+   "host_tree_matches_record": null,
+   "host": "GANDALF (hostname), bodies receipt not named",
+   "files_read": [
+    {
+     "path": "upstream/tree/scripts/ruleset_generator.py",
+     "payload_hash_read": "088deaf75d7763bc4a0ee9497b18559440d6d2ab99264fb6bd97a0d740f2dc32",
+     "techne_recorded_hash": "088deaf75d7763bc4a0ee9497b18559440d6d2ab99264fb6bd97a0d740f2dc32",
+     "match": true,
+     "refs": 2
+    },
+    {
+     "path": "upstream/tree/src/xminigrid/benchmarks.py",
+     "payload_hash_read": "948b6fd37ff03ed4252fcce285a6bc49c493a1c94dc6cbcf7b82aa41c60d2baf",
+     "techne_recorded_hash": "948b6fd37ff03ed4252fcce285a6bc49c493a1c94dc6cbcf7b82aa41c60d2baf",
+     "match": true,
+     "refs": 2
+    },
+    {
+     "path": "upstream/tree/src/xminigrid/environment.py",
+     "payload_hash_read": "95b069fa1742286622999fc3f7a499d03ccf36f09a4ac38f18e3ac40d762b497",
+     "techne_recorded_hash": "95b069fa1742286622999fc3f7a499d03ccf36f09a4ac38f18e3ac40d762b497",
+     "match": true,
+     "refs": 2
+    },
+    {
+     "path": "upstream/tree/src/xminigrid/core/rules.py",
+     "payload_hash_read": "ea3b87918a5f091bacb90e4f52e199e852d53d987c07b73b047805fb617c28c5",
+     "techne_recorded_hash": "ea3b87918a5f091bacb90e4f52e199e852d53d987c07b73b047805fb617c28c5",
+     "match": true,
+     "refs": 2
+    }
+   ],
+   "unresolved_refs": []
+  }
+ },
+ "organs": [
+  {
+   "organ_id": "xland-minigrid-corl-2023::ruleset_sampled_by_growing_a_production_tree_backward_from_a_goal_with_pruning_and_distractors",
+   "fossil_ancestry": "xland-minigrid-corl-2023",
+   "human_name": "ruleset_generator.py 1-310",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "a goal is drawn uniformly over 11 types; each open tile is either pruned (p = prune_prob, default 0.5 when --prune_chain) into an initial tile or given a rule that produces it from tiles not yet used, whose inputs become the next layer; distractor objects and dead-end rules are added; exact-encoding duplicates are rejected",
+   "input": "seed, depth, pruning",
+   "output": "a ruleset",
+   "state": "used tiles",
+   "update": "UNKNOWN",
+   "assumptions": [
+    "UNKNOWN"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [],
+   "fitness_value_in_ancestor": "UNKNOWN",
+   "failure_landscape": "by reading: deep chains without pruning can exhaust the 60-tile pool (random.choice on an empty list); deduplication is on the exact encoding, so reordered rules count as new",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:xland-minigrid-corl-2023/upstream/tree/scripts/ruleset_generator.py:96-275"
+   },
+   "confidence": "HIGH",
+   "portability": "UNKNOWN",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "ruleset_generator.py 1-310",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "TREE",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "SEEDED_RANDOM",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "xland-minigrid-corl-2023::uniform_draw_of_a_pre_generated_ruleset_per_environment_per_meta_step",
+   "fossil_ancestry": "xland-minigrid-corl-2023",
+   "human_name": "benchmarks.py 30-63; train_meta_task.py 155-170",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "sample_ruleset is randint over a fixed benchmark; each environment redraws per meta-step; the code comment invites custom curricula but none exists",
+   "input": "a benchmark",
+   "output": "a ruleset",
+   "state": "UNKNOWN",
+   "update": "UNKNOWN",
+   "assumptions": [
+    "UNKNOWN"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [],
+   "fitness_value_in_ancestor": "UNKNOWN",
+   "failure_landscape": "by reading (MEDIUM): the meta-training script evaluates on the same benchmark object it trains on; a split() exists but is not called there",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:xland-minigrid-corl-2023/upstream/tree/src/xminigrid/benchmarks.py:30-63"
+   },
+   "confidence": "HIGH",
+   "portability": "UNKNOWN",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "benchmarks.py 30-63; train_meta_task.py 155-170",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "SEEDED_RANDOM",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "xland-minigrid-corl-2023::reward_one_minus_point_nine_times_elapsed_fraction_on_reaching_the_hidden_goal",
+   "fossil_ancestry": "xland-minigrid-corl-2023",
+   "human_name": "environment.py 61-90",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "reward = 1.0 - 0.9 * step_num / max_steps when the goal is met, else 0; termination zeroes the discount; truncation at max_steps (default 3 * height * width)",
+   "input": "goal check, step count",
+   "output": "a reward",
+   "state": "UNKNOWN",
+   "update": "UNKNOWN",
+   "assumptions": [
+    "UNKNOWN"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [],
+   "fitness_value_in_ancestor": "UNKNOWN",
+   "failure_landscape": "UNKNOWN by run",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:xland-minigrid-corl-2023/upstream/tree/src/xminigrid/environment.py:76-79"
+   },
+   "confidence": "HIGH",
+   "portability": "UNKNOWN",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "environment.py 61-90",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "xland-minigrid-corl-2023::rules_and_goals_as_switch_dispatched_production_checks_on_specific_actions",
+   "fossil_ancestry": "xland-minigrid-corl-2023",
+   "human_name": "core/rules.py 14-139; core/goals.py 17-94",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "every step each rule encoding is scanned through a 12-way switch (e.g. holding tile T while acting turns it into P; standing near T turns it into P) and the goal through a 15-way switch; the code itself notes that rules fire only on certain actions",
+   "input": "UNKNOWN",
+   "output": "UNKNOWN",
+   "state": "UNKNOWN",
+   "update": "UNKNOWN",
+   "assumptions": [
+    "UNKNOWN"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [],
+   "fitness_value_in_ancestor": "UNKNOWN",
+   "failure_landscape": "UNKNOWN by run (action ids not verified)",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:xland-minigrid-corl-2023/upstream/tree/src/xminigrid/core/rules.py:14-139"
+   },
+   "confidence": "MEDIUM",
+   "portability": "UNKNOWN",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "core/rules.py 14-139; core/goals.py 17-94",
+   "status": "CANDIDATE",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  }
+ ],
+ "rejected_cuts": [
+  {
+   "candidate": "the rest of the body: actions, grid, observation, most rule and goal classes, wrappers, registration, training nets, notebooks",
+   "reason": "OTHER",
+   "evidence": "NOT READ; residue",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "xland-minigrid-corl-2023"
+  },
+  {
+   "candidate": "'xland-minigrid-corl-2023' as one organ",
+   "reason": "NAME_HAS_NO_EXECUTABLE_BOUNDARY",
+   "evidence": "the mechanisms above are separable pieces of code",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "xland-minigrid-corl-2023"
+  }
+ ],
+ "pressures": [
+  {
+   "pressure_id": "xland-minigrid-corl-2023::P.an_agent_must_infer_a_hidden_production_ruleset_within_an_episode_and_reach_its_goal_quickly",
+   "source_fossil": "xland-minigrid-corl-2023",
+   "source_evidence": "the organs above",
+   "condition": "rulesets are fixed in advance and drawn uniformly; within an episode the reward falls linearly with steps",
+   "resource_or_constraint": "UNKNOWN",
+   "failure_condition": "UNKNOWN",
+   "world_punishes": "slow or failed goal reaching",
+   "world_rewards": "fast in-context discovery of the hidden rule chain",
+   "observable_consequence": "UNKNOWN",
+   "vacuity_condition": "UNKNOWN",
+   "trivial_shortcuts": "UNKNOWN",
+   "cheat_control": "UNKNOWN: not designed this pass",
+   "cost_class": "UNKNOWN (nothing ran)",
+   "purpose_separated_from_pressure": "PURPOSE: meta-reinforcement learning benchmark over procedurally sampled gridworld rulesets (Nikulin et al. 2023)",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
+ "composition_edges": [],
+ "ancestry_edges": [],
+ "residue": {
+  "state": "LARGE_RESIDUE",
+  "unexplained": [
+   "not read: actions, grid, observation, most rule and goal classes, wrappers, registration, training nets, notebooks",
+   "nothing ran",
+   "reader-assisted cut: line ranges spot-checked, not every line re-read by Nyx"
+  ],
+  "note": "batch 17 first pass",
+  "cut_mode": "ANCESTRY_AWARE"
+ }
+}

@@ -286,6 +286,32 @@ def _short(s, n):
     return s if len(s) <= n else s[: n - 3] + "..."
 
 
+def operator_queue_block(oq) -> tuple:
+    """(markdown lines, html lines) for 'Operator Priority Requests -- N open'. Deterministic from the snapshot."""
+    if not oq:
+        return [], []
+    rows, dec = oq.get("open") or [], oq.get("decided_since") or {}
+    since = ", ".join("{} {}".format(k, dec.get(k, 0)) for k in ("approved", "denied", "completed", "expired"))
+    hdr = ["Request", "Seat", "Experiment", "Current -> Requested", "Resource / runtime", "Why now", "Expiry"]
+    cells = [[r["request"], r["seat"], r["experiment"], r["change"], r["resource_runtime"], r["why_now"], r["expires"]]
+             for r in rows]
+    md = ["**Operator Priority Requests -- {} open** (since last digest: {}). Canonical: ops/operator_queue/.".format(
+        len(rows), since or "none")]
+    if cells:
+        md += ["| " + " | ".join(hdr) + " |", "|" + "---|" * len(hdr)]
+        md += ["| " + " | ".join(str(c).replace("|", "/") for c in row) + " |" for row in cells]
+    md.append("")
+    h = ['<p style="font-size:14px;margin:6px 0"><b>Operator Priority Requests &mdash; {} open</b> '
+         '<span style="color:#666;font-size:12px">(since last digest: {}; canonical: ops/operator_queue/)</span></p>'.format(
+             len(rows), _esc(since or "none"))]
+    if cells:
+        h.append('<table border="1" cellpadding="3" cellspacing="0" style="border-collapse:collapse;font-size:11px;'
+                 'border-color:#ddd"><tr bgcolor="#fff4e0">' + "".join("<th align=left>{}</th>".format(_esc(x)) for x in hdr)
+                 + "</tr>" + "".join("<tr valign=top>" + "".join("<td>{}</td>".format(_esc(c)) for c in row) + "</tr>"
+                                     for row in cells) + "</table>")
+    return md, h
+
+
 def email_block(snap) -> dict:
     """The census section the existing mailer embeds (docs/fleet/email_census.json)."""
     rows = [r for r in table_rows(snap) if r["kind"] in ("SEAT", "BRANCH_ONLY_SEAT")]
@@ -308,7 +334,8 @@ def email_block(snap) -> dict:
                 "{} ({})".format((r["last_active"] or "never")[:16].replace("T", " "), r["age"]),
                 _short(r["exp"], 70), _short(r["task"], 90), _short(r["engine"], 40), _short(r["commit"], 70)]
 
-    md = ["## Fleet census (Achilles)", "",
+    oq_md, oq_h = operator_queue_block(snap.get("operator_queue"))
+    md = oq_md + ["## Fleet census (Achilles)", "",
           "Generated {} from origin/main {}. Seats {}: {}. Active within 24h: {}. Experiments 24h: {}. Commits 24h: {}.".format(
               snap["generated_at_utc"], (snap.get("base_sha") or "")[:10], s["seats_total"], counts, s["active_24h"],
               s["experiments_24h"], s["commits_24h"]), ""]
@@ -320,7 +347,7 @@ def email_block(snap) -> dict:
         md.append("| " + " | ".join(c.replace("|", "/") for c in cells(r)) + " |")
     md += ["", "Full census, evidence and engine map: " + PAGES_URL]
 
-    h = ['<hr style="border:none;border-top:1px solid #ccc;margin:24px 0">',
+    h = ['<hr style="border:none;border-top:1px solid #ccc;margin:24px 0">'] + oq_h + [
          '<h2 style="color:#222;border-bottom:1px solid #eee;padding-bottom:4px">Fleet census (Achilles)</h2>',
          '<p style="font-size:14px;color:#333">Generated <b>{}</b> from origin/main <code>{}</code>. Seats {}: {}. '
          'Active within 24h: {}. Experiments 24h: {}. Commits 24h: {}.</p>'.format(

@@ -1,0 +1,72 @@
+{
+  "schema": "prometheus.workgraph.task.v1",
+  "task_id": "C-004-T013",
+  "campaign_id": "C-004",
+  "title": "S2 producer receipt: three-field verdict (C1) and authority-stage record (C4)",
+  "objective": "Implement the receipt producer: immutable receipt records carrying the plan s3 receipt fields, the three-field verdict and the gate authority-stage record with its inheritance rule.",
+  "parent_objective": "RSO-METHODS-SLICE-001 (CAMPAIGN.json objective)",
+  "owner_role": "Argus",
+  "quality_class": "Q2",
+  "can_downgrade": false,
+  "escalate_to": "Q3",
+  "depends_on": [
+    "C-004-T004",
+    "C-004-T003"
+  ],
+  "requires_shas": [
+    "09dc8c38b (closure review)",
+    "3bd02f393 (v0.4 synthesis, merged)"
+  ],
+  "owns": [
+    "rso/slice001/receipt.py",
+    "rso/slice001/tests/test_receipt.py"
+  ],
+  "reads": [
+    "rso/slice001/contract/CONTRACT.md",
+    "rso/slice001/contract/contract.json",
+    "docs/phase3/synthesis/ENCELADUS-DIONYSUS-v0.4/NEXT_ROUND_PLAN_v0.4.md",
+    "docs/phase3/closure/FABLE-5.1/CLOSURE_REVIEW_v0.4.md",
+    "roles/rso-builder-role/"
+  ],
+  "problem": "Contract section B. C1: execution {RAN; BLOCKED with what was missing}, authority {QUALIFIED at stage X; UNQUALIFIED with why}, outcome; eligibility = worst of the three; all three always present. C4: author-tested | first-sight challenged (date, cases, edits, denominators, score) | closed after repair; a claim inherits the lowest stage among its gates. At S2 every gate is author-tested.",
+  "non_goals": [
+    "No evidence-graph binding or invalidation (T014)",
+    "No rendering (T015)",
+    "Do not copy code, tests or verdict policies from the Fable or ASTRA harnesses; they are reference and adversarial corpora (SOURCES.md B; NEXT_ROUND_PLAN_v0.4 s1)",
+    "Python >= 3.8 standard library only; no package installation (MWO-0004 R2)"
+  ],
+  "evidence_required": [
+    "RED: tests for missing-field rejection and lowest-stage inheritance fail before implementation",
+    "GREEN: a receipt cannot be constructed without all three fields; inheritance picks the lowest stage; a cheat control: a receipt claiming QUALIFIED with an author-tested gate is refused"
+  ],
+  "acceptance": {
+    "command": "python -B -m rso.slice001.ci",
+    "condition": "receipt tests pass including the cheat control"
+  },
+  "deliverables": [
+    "rso/slice001/receipt.py",
+    "rso/slice001/tests/test_receipt.py"
+  ],
+  "kind": "software",
+  "status": "READY",
+  "history": [
+    {
+      "status": "PROPOSED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-03T11:04:14Z",
+      "note": "created under C-004-T000 decomposition"
+    },
+    {
+      "status": "READY",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-03T11:04:14Z",
+      "note": "made READY by the coordinator (C-004-T000)"
+    }
+  ],
+  "authority": "operator directive 2026-10-03 s9, s11 (roles/Achilles/prompts/2026-10-03_rso_builder_cell/01_OPERATOR_DIRECTIVE_verbatim.md); decomposed by Palamedes under C-004-T000",
+  "resource_ceiling": {
+    "engineering": "<= 2 Q2 seat-hours",
+    "cpu": "< 1 CPU-minute",
+    "note": "Counts toward the slice caps fixed by C-004-OP1 (NEXT_ROUND_PLAN_v0.4 s6 proposal: 30 CPU-minutes total, 0 GPU, 0 cloud, 100 MB new artifacts, 12 top-level validation launches; mutation children count toward CPU). Stop at the first exhausted cap and keep partial results."
+  }
+}

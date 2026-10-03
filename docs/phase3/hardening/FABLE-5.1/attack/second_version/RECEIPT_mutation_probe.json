@@ -1,0 +1,256 @@
+{
+ "changes": 55,
+ "equivalent": {
+  "R14": "both branches return FAIL; only the reason text differs"
+ },
+ "noticed": 54,
+ "pattern_not_found": [],
+ "readers_changes": 25,
+ "readers_changes_survived": [
+  "R14 G10.contrast: cells that do not differ in the named variable pass"
+ ],
+ "readers_changes_that_survived_the_first_version": 22,
+ "results": [
+  {
+   "change": "R01 G6.restart: keep the answer, drop the trajectory and the final state",
+   "result": "noticed"
+  },
+  {
+   "change": "R02 G6.reset: compare answers only",
+   "result": "noticed"
+  },
+  {
+   "change": "R03 G1.cell: attainability floor 0.99 -> 0.90",
+   "result": "noticed"
+  },
+  {
+   "change": "R04 G2.preflight: POWER_FLOOR 0.99 -> 0.50",
+   "result": "noticed"
+  },
+  {
+   "change": "R05 G2.preflight: drop the check on the negative's answer",
+   "result": "noticed"
+  },
+  {
+   "change": "R06 G7.report: drop the positive-control check",
+   "result": "noticed"
+  },
+  {
+   "change": "R07 G7.report: repeated founders accepted",
+   "result": "noticed"
+  },
+  {
+   "change": "R08 G7.calibration: one-sided (only too-low counts are caught)",
+   "result": "noticed"
+  },
+  {
+   "change": "R09 G9.clauses: ignore clauses that can never hold",
+   "result": "noticed"
+  },
+  {
+   "change": "R10 G1.receipt: a run up to 49 ticks before its registration is accepted",
+   "result": "noticed"
+  },
+  {
+   "change": "R11 G12.render: no cell needed",
+   "result": "noticed"
+  },
+  {
+   "change": "R12 G8.demand: only the constant baseline is required",
+   "result": "noticed"
+  },
+  {
+   "change": "R13 G10.ruler: a ruler with no known negative is accepted",
+   "result": "noticed"
+  },
+  {
+   "change": "R14 G10.contrast: cells that do not differ in the named variable pass",
+   "result": "SURVIVES"
+  },
+  {
+   "change": "R15 G1.cell: overlapping rules in a verdict table accepted",
+   "result": "noticed"
+  },
+  {
+   "change": "R16 G1.cell: adapter and independent_unit no longer required",
+   "result": "noticed"
+  },
+  {
+   "change": "R17 G11.custody: the two clock fields no longer required",
+   "result": "noticed"
+  },
+  {
+   "change": "R18 G5.neutrality: declared valid in a physics with no known answer passes",
+   "result": "noticed"
+  },
+  {
+   "change": "R19 rulers: ALPHA 1e-6 -> 0.4",
+   "result": "noticed"
+  },
+  {
+   "change": "R20 world: the mark is not cleared between episodes",
+   "result": "noticed"
+  },
+  {
+   "change": "R21 G9.sham: margin 25% -> 60%",
+   "result": "noticed"
+  },
+  {
+   "change": "R22 G9.arms: arms count as one series only if equal in every replicate",
+   "result": "noticed"
+  },
+  {
+   "change": "R23 G12.promote: L2 no longer needs custody and a second implementation",
+   "result": "noticed"
+  },
+  {
+   "change": "R24 G7.report: any bound is accepted",
+   "result": "noticed"
+  },
+  {
+   "change": "R25 rulers: BOUND 0.5 -> 0.7",
+   "result": "noticed"
+  },
+  {
+   "change": "A26 classify: the inverted outcome removed",
+   "result": "noticed"
+  },
+  {
+   "change": "A27 rulers: weakest registered positive 15/16 -> 0.99",
+   "result": "noticed"
+  },
+  {
+   "change": "A28 rulers: a shared ruler needs two physics, not three",
+   "result": "noticed"
+  },
+  {
+   "change": "A29 G4.entry: the declared physics is not checked",
+   "result": "noticed"
+  },
+  {
+   "change": "A30 G6.observer: the final state is not compared",
+   "result": "noticed"
+  },
+  {
+   "change": "A31 equivalence: a rate below the center is never OUTSIDE",
+   "result": "noticed"
+  },
+  {
+   "change": "A32 G8.demand: margin 0.1 -> 0.3",
+   "result": "noticed"
+  },
+  {
+   "change": "A33 G11.custody: a rule fixed at the tick the data was opened is accepted",
+   "result": "noticed"
+  },
+  {
+   "change": "A34 G11.custody: tuning exactly at budget is refused",
+   "result": "noticed"
+  },
+  {
+   "change": "A35 G12: a facet needs no source",
+   "result": "noticed"
+  },
+  {
+   "change": "A36 G12: a nested claim needs only a retention certificate",
+   "result": "noticed"
+  },
+  {
+   "change": "A37 G7.report: a discovery with nothing found is accepted",
+   "result": "noticed"
+  },
+  {
+   "change": "A38 G7.report: any two policies make a null",
+   "result": "noticed"
+  },
+  {
+   "change": "A39 G9.clauses: isolation is not required",
+   "result": "noticed"
+  },
+  {
+   "change": "A40 G10.setting: any probability counts as power",
+   "result": "noticed"
+  },
+  {
+   "change": "A41 G1.cell: repeated registered seeds accepted",
+   "result": "noticed"
+  },
+  {
+   "change": "A42 G1.receipt: the code on hand is not hashed",
+   "result": "noticed"
+  },
+  {
+   "change": "A43 G6.restart: restore into a runtime that has never run",
+   "result": "noticed"
+  },
+  {
+   "change": "A44 G6.restart: cut at step 3 only",
+   "result": "noticed"
+  },
+  {
+   "change": "A45 G6.reset: only a later episode with no cue is tried",
+   "result": "noticed"
+  },
+  {
+   "change": "A46 ladder: the certificate has no margin",
+   "result": "noticed"
+  },
+  {
+   "change": "A47 classify: the critical count itself does not exclude",
+   "result": "noticed"
+  },
+  {
+   "change": "A48 G9.sham: slack of five tasks",
+   "result": "noticed"
+  },
+  {
+   "change": "A49 G10.ruler: a wrong answer on a kit member is not a failure",
+   "result": "noticed"
+  },
+  {
+   "change": "A50 G10.ruler: unbuilt members are ignored",
+   "result": "noticed"
+  },
+  {
+   "change": "A51 G3: the weak positive is not needed",
+   "result": "noticed"
+  },
+  {
+   "change": "A52 G12.render: the setting need not be the registered one",
+   "result": "noticed"
+  },
+  {
+   "change": "A53 G1.cell: design seeds may be registered for confirmation",
+   "result": "noticed"
+  },
+  {
+   "change": "A54 G5: an undecided answer counts as agreement",
+   "result": "noticed"
+  },
+  {
+   "change": "A55 interchange: the sham pairs are skipped",
+   "result": "noticed"
+  }
+ ],
+ "source_sha256_lf": {
+  "mutation_probe.py": "ccf236f222d4b8d7f863386942c51f1cd542a42ced858fee9d3647c458281c7e",
+  "rso_harness/__init__.py": "ec0c26759c79ba6f26e29de01c71663c8baf7b60a7305e53174d996b6e92a2c0",
+  "rso_harness/audits.py": "7f939ae911c543b24f93a4df9a222b7273c3f78157dc19b35555fb7ed897f18e",
+  "rso_harness/claims.py": "5c02eb61f7772b1ae3900279356e6dcd18d66e820d75f2cb23e1e2107417c052",
+  "rso_harness/ladder.py": "f90d5a3925ffecdd8f4ef00a29820b20e2a1f2a9b16a33e2f10d8c3037cc7547",
+  "rso_harness/meta.py": "093580d5d98ab255b4ec67d1461433270b2228e8bd1eb98e3a75baf6f232fc3c",
+  "rso_harness/registration.py": "c1c20ac73816615539a53213691480adc8da0b2a5234b5380329ee68d8b5fee9",
+  "rso_harness/retain1.py": "3b9ab44575de6656274b8044a2838db6d4e97e5d5e0c0df3fcf30f3d2fe42124",
+  "rso_harness/rulers.py": "af3914cee0d2ce48bf63f460ac84d9b418ac0bcb2cb18299f1ce4dc66e2343de",
+  "rso_harness/search.py": "787f7fe1eda3fc5003329a859b268fd7e32f5e8441600de66f7791c0c0e9686e",
+  "rso_harness/stats.py": "ff0f8b3790d5383a974265ddcf9e4190fe041e901fb462847bd1c8628d81e32b",
+  "rso_harness/torture.py": "27aa9f0df0e996285c1cf37bacd0ff33dc1677c626663f79caa37d734118934d",
+  "rso_harness/verdict.py": "bd27165b4b2dc4589b5b84d0661e0518670d2b61790a559fb447f587097a53d2",
+  "tests/test_harness.py": "7d2568eeda5c0673a322c76f917c171592841a558ff8f9f0cd8cb944763a15eb"
+ },
+ "survived": [
+  "R14 G10.contrast: cells that do not differ in the named variable pass"
+ ],
+ "what": "mutation probe of reference harness v0: one change to gate logic per copy, unit tests run on the copy",
+ "written_at_utc": "2026-10-02T08:24:59Z"
+}

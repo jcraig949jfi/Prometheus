@@ -1,0 +1,40 @@
+SURVIVES   OK                     W01 G3: the impostor blocks may repeat the first block of seeds (only the further blocks are compared)
+SURVIVES   OK                     W02 G5: a physics with no known answer counts toward the three a shared ruler needs
+SURVIVES   OK                     W03 G6.restart: the first step after the cut is not compared
+SURVIVES   OK                     W04 G8: the clock table sees two bits of the clock, not three
+noticed    FAILED (failures=1)    W05 G7.report: a stated bound above 1 is accepted
+noticed    FAILED (failures=3)    W06 G7.calibration: the panel loses its fifth cell (VALLEY, strict, cold)
+noticed    FAILED (failures=1)    W07 G10.setting: placeholders are refused in lower case only
+noticed    FAILED (failures=1)    W08 G10.setting: a power above 1 is accepted
+noticed    FAILED (failures=1)    W09 G10.setting: true and false count as numbers
+noticed    FAILED (failures=1)    W10 G10.contrast: a field written down in one cell only is not compared
+SURVIVES   OK                     W11 G9.arms: two arms with one series are allowed; three are not
+SURVIVES   OK                     W12 G12.render: the setting hash depends on the order the choices were typed in
+SURVIVES   OK                     W13 G2: a bound of exactly 0 or 1 is accepted
+noticed    FAILED (failures=2)    W14 G8: the upper side of the equivalence test is run at alpha, not alpha/2
+noticed    FAILED (failures=2)    W16 interchange: 'carried somewhere that was not moved' is reported as NEGATIVE
+noticed    FAILED (failures=2)    W18 ladder: the control arm is ignored when the two arms are read together
+noticed    FAILED (failures=1)    W19 G12: level() never reports L4
+noticed    FAILED (failures=1)    W20 ladder: the Hoeffding margin with n in place of 2n
+SURVIVES   OK                     W21 G3: an empty panel is not refused
+noticed    FAILED (failures=1)    W22 G10.setting: the wrong-history choice is no longer one of the nine
+SURVIVES   OK                     W23 G7.report: the founders are compared as sets, so a founder may be reported twice
+noticed    FAILED (failures=2)    W24 G11: a discovery and a confirmation may share their panel if their seeds differ
+noticed    FAILED (failures=1)    W26 G9.clauses: a clause is isolated if the others hold in 21 of 24
+SURVIVES   OK                     W28 G4.entry: the impostor is judged on the first 48 seeds
+SURVIVES   OK                     W27 G6.reset: the earlier episode is run on the same seed as the later one
+SURVIVES   OK                     W29 G1.cell: the highest count of a verdict table is not checked
+
+26 changes; 14 noticed; 12 SURVIVE; 0 pattern problems
+   - W01 G3: the impostor blocks may repeat the first block of seeds (only the further blocks are compared)
+   - W02 G5: a physics with no known answer counts toward the three a shared ruler needs
+   - W03 G6.restart: the first step after the cut is not compared
+   - W04 G8: the clock table sees two bits of the clock, not three
+   - W11 G9.arms: two arms with one series are allowed; three are not
+   - W12 G12.render: the setting hash depends on the order the choices were typed in
+   - W13 G2: a bound of exactly 0 or 1 is accepted
+   - W21 G3: an empty panel is not refused
+   - W23 G7.report: the founders are compared as sets, so a founder may be reported twice
+   - W28 G4.entry: the impostor is judged on the first 48 seeds
+   - W27 G6.reset: the earlier episode is run on the same seed as the later one
+   - W29 G1.cell: the highest count of a verdict table is not checked

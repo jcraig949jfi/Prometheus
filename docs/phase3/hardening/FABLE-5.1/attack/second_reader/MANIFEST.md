@@ -1,0 +1,11 @@
+# Manifest for second_reader
+
+sha256 over LF-normalised bytes (equals the git blob for text files); see comms/manifest.py.
+
+- BRIEF.md  sha256:76117b3e249a77d2117615b855c1b17459885dd31a2a5f2057230ca252c7b9c0
+- BRIEF_final.md  sha256:1eee9039cc062b06ee6691c423d89d111de4651e33e14b3248e0b3c1602c8018
+- REPORT.md  sha256:9815925379bc4b17e3dcfa012815b6825df2c50dc656711967fb7161a783dc38
+- REPORT_final.md  sha256:3d7155db0d6014a4e73ab611eb7659b08bc3543cd717f1453dcfbc00e4e1a7d9
+- REPORT_fork_fairness.md  sha256:49f9f6ec1d5163c9af43a33ca891b92a98e260728e5a57a42a08a90856233735
+- REPORT_fork_gates_G1_to_G8.md  sha256:e027c493c9e63a48963470cb989027842bdcc80e0385efedcbd3ec9eee350563
+- REPORT_fork_gates_G9_to_G12.md  sha256:58f0ff4eb49a7f795fc6d9795c0e21848bab667ff51f408995d4d34176f189a4

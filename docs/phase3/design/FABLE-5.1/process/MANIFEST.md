@@ -1,0 +1,14 @@
+# Manifest for process
+
+sha256 over LF-normalised bytes (equals the git blob for text files); see comms/manifest.py.
+
+- 00_SNAPSHOT_BEFORE_CHALLENGES_DOC.md  sha256:02063dc217b8cbf39980ccf04f8261d48db4c8bcd4b8f595844c42ee75940ef7
+- 01_DELTA_AFTER_CHALLENGES_DOC.md  sha256:584b598c8c5a73dda7e3db4021f540bb61469b4aa6daab41614de4f0ff0c1d6b
+- deposit_worker_reports.py  sha256:0a5ec065f16604e8cc9b9753c92fa2710e6da62b5073d72d3965593cf2584ef5
+- pathspec_exclusion_test.sh  sha256:356c8eb4844c5d0654c4dfbaf9273ecb464aa33d402e3f930a66716a4745701d
+- PRIOR_ART_CHECKED.md  sha256:c4617bb80e587c971724074739d439fea5e17cd9975c9d825fb6302483f72485
+- requirements_to_jsonl.py  sha256:749019155d88010d9b8ce8378aa6eb75331cfbb408d0d1ae33e34c297c125223
+- salvage_to_jsonl.py  sha256:be2c0e7d2e33be215e9acead5d8001e87d90ec5b42400858dcabc9f2cf2e2d14
+- test_requirements_checker.py  sha256:47cb5716c673cb5e77eb08704942dcc96143b1e5d7bc089fdacc5459ec3a5736
+- vm_throughput_bench.md  sha256:390df19c9e654a1723a9e9a1d3a0f7129c17b1986c73492151ca4d8770be5a94
+- vm_throughput_bench.py  sha256:d3cc6de9d8614e9513b6986cfdeb43fe2cece2cdcc945e62b772847003f07e74

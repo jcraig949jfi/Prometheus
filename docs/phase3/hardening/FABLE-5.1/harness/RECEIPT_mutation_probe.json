@@ -1,0 +1,1130 @@
+{
+ "changes": 247,
+ "distinct_changes_noticed": 211,
+ "distinct_changes_run": 218,
+ "distinct_changes_surviving": 7,
+ "equivalent": {
+  "C18": "the mark at every step is in the trajectory, and a mark written at the last step is the answer",
+  "C36": "each level's requirement includes every lower level's, so no level can be skipped",
+  "F22": "the value is already held to one of two words, so the two tests are the same test",
+  "F32": "the next branch judges an inverted impostor against NEGATIVE and returns FAIL as well",
+  "H19": "the same change as F22",
+  "R14": "both branches return FAIL; only the reason text differs",
+  "Y03": "a count that excludes the class is never called NEGATIVE either way; the reader proved it and tried 2,730 inputs",
+  "Y21": "the same change as C18"
+ },
+ "gone": [
+  {
+   "change": "C26 G7.report: the bound is held to the largest founder count among the policies",
+   "why": "GONE: the gate now counts the registered founders, and there is one list of them"
+  },
+  {
+   "change": "H36 G10.setting: power may be an integer",
+   "why": "GONE: adopted. The reader was right that a power of 1 is a power; the gate now accepts it"
+  },
+  {
+   "change": "Y31 (A01) G9.arms: with fewer than 22 replicates no two arms are ever one series",
+   "why": "GONE: the audit now refuses any number of replicates other than 24, so the two forms are the same"
+  }
+ ],
+ "how_to_read": "unnoticed_at_first_sight is each reader's own measurement on the version it attacked, copied from its report. noticed_now is taken after tests were written against these same changes: it shows the holes are closed and is not a measure of the tests",
+ "noticed": 236,
+ "pattern_not_found": [],
+ "results": [
+  {
+   "change": "R01 G6.restart: keep the answer, drop the trajectory and the final state",
+   "result": "noticed"
+  },
+  {
+   "change": "R02 G6.reset: compare answers only",
+   "result": "noticed"
+  },
+  {
+   "change": "R03 G1.cell: attainability floor 0.99 -> 0.90",
+   "result": "noticed"
+  },
+  {
+   "change": "R04 G2.preflight: POWER_FLOOR 0.99 -> 0.50",
+   "result": "noticed"
+  },
+  {
+   "change": "R05 G2.preflight: drop the check on alpha",
+   "result": "noticed"
+  },
+  {
+   "change": "R06 G7.report: drop the positive-control check",
+   "result": "noticed"
+  },
+  {
+   "change": "R07 G7.report: the founders reported need not be the founders registered (was: repeated founders accepted)",
+   "result": "noticed"
+  },
+  {
+   "change": "R08 G7.calibration: one-sided (only too-low counts are caught)",
+   "result": "noticed"
+  },
+  {
+   "change": "R09 G9.clauses: ignore clauses that can never hold",
+   "result": "noticed"
+  },
+  {
+   "change": "R10 G1.receipt: a run up to 49 ticks before its registration is accepted",
+   "result": "noticed"
+  },
+  {
+   "change": "R11 G12.render: no cell needed",
+   "result": "noticed"
+  },
+  {
+   "change": "R12 G8.demand: only the constant baseline is required",
+   "result": "noticed"
+  },
+  {
+   "change": "R13 G10.ruler: a ruler with no known negative is accepted",
+   "result": "noticed"
+  },
+  {
+   "change": "R14 G10.contrast: cells that do not differ in the named variable pass",
+   "result": "SURVIVES"
+  },
+  {
+   "change": "R15 G1.cell: overlapping rules in a verdict table accepted",
+   "result": "noticed"
+  },
+  {
+   "change": "R16 G1.cell: adapter and independent_unit no longer required",
+   "result": "noticed"
+  },
+  {
+   "change": "R17 G11.custody: the two clock fields no longer required",
+   "result": "noticed"
+  },
+  {
+   "change": "R18 G5.neutrality: declared valid in a physics with no known answer passes",
+   "result": "noticed"
+  },
+  {
+   "change": "R19 rulers: ALPHA 1e-6 -> 0.4",
+   "result": "noticed"
+  },
+  {
+   "change": "R20 world: the mark is not cleared between episodes",
+   "result": "noticed"
+  },
+  {
+   "change": "R21 G9.sham: margin 25% -> 60%",
+   "result": "noticed"
+  },
+  {
+   "change": "R22 G9.arms: arms count as one series only if equal in every replicate",
+   "result": "noticed"
+  },
+  {
+   "change": "R23 G12.promote: L2 no longer needs custody and a second implementation",
+   "result": "noticed"
+  },
+  {
+   "change": "R24 G7.report: any bound is accepted",
+   "result": "noticed"
+  },
+  {
+   "change": "R25 rulers: BOUND 0.5 -> 0.7",
+   "result": "noticed"
+  },
+  {
+   "change": "A26 classify: the inverted outcome removed",
+   "result": "noticed"
+  },
+  {
+   "change": "A27 rulers: weakest registered positive 15/16 -> 0.99",
+   "result": "noticed"
+  },
+  {
+   "change": "A28 rulers: a shared ruler needs two physics, not three",
+   "result": "noticed"
+  },
+  {
+   "change": "A29 G4.entry: the declared physics is not checked",
+   "result": "noticed"
+  },
+  {
+   "change": "A30 G6.observer: the final state is not compared",
+   "result": "noticed"
+  },
+  {
+   "change": "A31 equivalence: a rate below the center is never OUTSIDE",
+   "result": "noticed"
+  },
+  {
+   "change": "A32 G8.demand: margin 0.1 -> 0.3",
+   "result": "noticed"
+  },
+  {
+   "change": "A33 G11.custody: a rule fixed at the tick the data was opened is accepted",
+   "result": "noticed"
+  },
+  {
+   "change": "A34 G11.custody: tuning exactly at budget is refused",
+   "result": "noticed"
+  },
+  {
+   "change": "A35 G12: a facet needs no source",
+   "result": "noticed"
+  },
+  {
+   "change": "A36 G12: a nested claim needs only a retention certificate",
+   "result": "noticed"
+  },
+  {
+   "change": "A37 G7.report: a discovery with nothing found is accepted",
+   "result": "noticed"
+  },
+  {
+   "change": "A38 G7.report: any two policies make a null",
+   "result": "noticed"
+  },
+  {
+   "change": "A39 G9.clauses: isolation is not required",
+   "result": "noticed"
+  },
+  {
+   "change": "A40 G10.setting: any probability counts as power",
+   "result": "noticed"
+  },
+  {
+   "change": "A41 G1.cell: repeated seeds accepted",
+   "result": "noticed"
+  },
+  {
+   "change": "A42 G1.receipt: the code on hand is not hashed",
+   "result": "noticed"
+  },
+  {
+   "change": "A43 G6.restart: restore into a runtime that has never run",
+   "result": "noticed"
+  },
+  {
+   "change": "A44 G6.restart: cut at step 3 only",
+   "result": "noticed"
+  },
+  {
+   "change": "A45 G6.reset: only a later episode with no cue is tried",
+   "result": "noticed"
+  },
+  {
+   "change": "A46 ladder: the certificate has no margin",
+   "result": "noticed"
+  },
+  {
+   "change": "A47 classify: the critical count itself does not exclude",
+   "result": "noticed"
+  },
+  {
+   "change": "A48 G9.sham: slack of five tasks",
+   "result": "noticed"
+  },
+  {
+   "change": "A49 G10.ruler: a wrong answer on a kit member is not a failure",
+   "result": "noticed"
+  },
+  {
+   "change": "A50 G10.ruler: unbuilt members are ignored",
+   "result": "noticed"
+  },
+  {
+   "change": "A51 G3: the weak positive, the further blocks and the thresholds are not needed",
+   "result": "noticed"
+  },
+  {
+   "change": "A52 G12.render: the setting need not be the registered one",
+   "result": "noticed"
+  },
+  {
+   "change": "A53 G1.cell: design seeds may be registered for confirmation",
+   "result": "noticed"
+  },
+  {
+   "change": "A54 G5: an undecided answer counts as agreement",
+   "result": "noticed"
+  },
+  {
+   "change": "A55 interchange: the pairs with the same cue are skipped",
+   "result": "noticed"
+  },
+  {
+   "change": "C01 classify: a score AT the lower critical count is no longer INVERTED",
+   "result": "noticed"
+  },
+  {
+   "change": "C02 equivalence: WITHIN needs only one of the two one-sided tests",
+   "result": "noticed"
+  },
+  {
+   "change": "C03 calibration test at alpha, not alpha/2 per side",
+   "result": "noticed"
+  },
+  {
+   "change": "C04 design rates used at a 90% lower bound, not 99%",
+   "result": "noticed"
+  },
+  {
+   "change": "C05 G1.cell: design counts need only be integers (was: a rate given as True/False is accepted)",
+   "result": "noticed"
+  },
+  {
+   "change": "C06 G1.cell: a negative count of tuning evaluations is accepted",
+   "result": "noticed"
+  },
+  {
+   "change": "C07 G1.receipt: a receipt need not carry the time it ran",
+   "result": "noticed"
+  },
+  {
+   "change": "C08 G1.cell: one known answer is enough",
+   "result": "noticed"
+  },
+  {
+   "change": "C09 G4.entry: the preflight is not run",
+   "result": "noticed"
+  },
+  {
+   "change": "C10 G5: a ruler declared valid nowhere is not blocked",
+   "result": "noticed"
+  },
+  {
+   "change": "C11 interchange: the state is moved at step 5, not 3",
+   "result": "noticed"
+  },
+  {
+   "change": "C12 G3: impostors are judged on the first further block only",
+   "result": "noticed"
+  },
+  {
+   "change": "C13 G5: a shared ruler is judged on the first three physics of the panel",
+   "result": "noticed"
+  },
+  {
+   "change": "C14 G4.entry: an impostor that beats the bound is INDETERMINATE, not FAIL",
+   "result": "noticed"
+  },
+  {
+   "change": "C15 G6.observer: only the first seed is compared",
+   "result": "noticed"
+  },
+  {
+   "change": "C16 G6.reset: only the first seed is checked",
+   "result": "noticed"
+  },
+  {
+   "change": "C17 G6.restart: only the first seed is checked",
+   "result": "noticed"
+  },
+  {
+   "change": "C18 G6.reset: the mark left on the environment is not compared",
+   "result": "SURVIVES"
+  },
+  {
+   "change": "C19 G6.restart: the last cut point is not tried",
+   "result": "noticed"
+  },
+  {
+   "change": "C20 G8.demand: alpha 1e-6 -> 1e-3",
+   "result": "noticed"
+  },
+  {
+   "change": "C21 G8.demand: an UNDECIDED baseline does not stop a PASS",
+   "result": "noticed"
+  },
+  {
+   "change": "C22 G7.report: a report with missing fields is not blocked",
+   "result": "noticed"
+  },
+  {
+   "change": "C23 G7.report: the same change as R07 in this version (was: a policy with no founders is accepted)",
+   "result": "noticed"
+  },
+  {
+   "change": "C24 G7.report: the positive control need only reach 0.5",
+   "result": "noticed"
+  },
+  {
+   "change": "C25 G7.report: a repair claim needs no repair start",
+   "result": "noticed"
+  },
+  {
+   "change": "C27 G7.report: an unknown claim passes",
+   "result": "noticed"
+  },
+  {
+   "change": "C28 G7.report: an unregistered landscape is not blocked",
+   "result": "noticed"
+  },
+  {
+   "change": "C29 G9.clauses: a clause true in exactly 12 of 24 somewhere counts as unable to fail",
+   "result": "noticed"
+  },
+  {
+   "change": "C30 G10.setting: the amortization horizon need not be a count",
+   "result": "noticed"
+  },
+  {
+   "change": "C31 G10.setting: the effect threshold need not be a number",
+   "result": "noticed"
+  },
+  {
+   "change": "C32 G10.ruler: a ruler with no known positive is accepted",
+   "result": "noticed"
+  },
+  {
+   "change": "C33 G10.setting: 'n/a' and 'unknown' count as registered",
+   "result": "noticed"
+  },
+  {
+   "change": "C34 G9.sham: a sham clause is unable to fail only if it holds in every replicate of every cell",
+   "result": "noticed"
+  },
+  {
+   "change": "C35 G11: a confirmation from the same generator is refused whatever the claim",
+   "result": "noticed"
+  },
+  {
+   "change": "C36 G12: a level may be skipped",
+   "result": "SURVIVES"
+  },
+  {
+   "change": "C37 G12: an ORIGIN claim needs no cold start and no class bound",
+   "result": "noticed"
+  },
+  {
+   "change": "C38 G12: a TRANSFER claim needs no new family",
+   "result": "noticed"
+  },
+  {
+   "change": "C39 G12: L1 no longer needs the resources facet",
+   "result": "noticed"
+  },
+  {
+   "change": "C40 G12: L2 no longer needs an attack round",
+   "result": "noticed"
+  },
+  {
+   "change": "C41 G12: an ECONOMY claim needs no frozen comparators",
+   "result": "noticed"
+  },
+  {
+   "change": "C42 a boolean counts as a clock reading or a count",
+   "result": "noticed"
+  },
+  {
+   "change": "C43 combine: nothing checked is PASS, not BLOCKED",
+   "result": "noticed"
+  },
+  {
+   "change": "C44 ladder: the certificate's alpha 1e-6 -> 1e-2",
+   "result": "noticed"
+  },
+  {
+   "change": "F01 G2: design-run lower bound at 50% confidence, not 99%",
+   "result": "noticed"
+  },
+  {
+   "change": "F02 G7.report: zero-hit bound at 50% confidence, not 95%",
+   "result": "noticed"
+  },
+  {
+   "change": "F03 G8: WITHIN shown at level 0.5",
+   "result": "noticed"
+  },
+  {
+   "change": "F04 G2: design rate used as a point estimate, not a lower bound",
+   "result": "noticed"
+  },
+  {
+   "change": "F05 G1.cell: a table that counts fewer units than seeds registered is accepted",
+   "result": "noticed"
+  },
+  {
+   "change": "F06 G1.cell: the same change as C06 in this version (negative exposure counts accepted)",
+   "result": "noticed"
+  },
+  {
+   "change": "F07 G1.receipt: a run on a subset of the registered seeds is accepted",
+   "result": "noticed"
+  },
+  {
+   "change": "F08 G1.cell: attainability floor 0.99 -> 0.97",
+   "result": "noticed"
+  },
+  {
+   "change": "F09 G6.reset: only one earlier cue is tried",
+   "result": "noticed"
+  },
+  {
+   "change": "F10 G8: equivalence at alpha 1e-3, not 1e-6",
+   "result": "noticed"
+  },
+  {
+   "change": "F11 G9: a conjunct HOLDS at 20 of 24, not 22",
+   "result": "noticed"
+  },
+  {
+   "change": "F12 G9: a conjunct FAILS at 16 of 24, not 12",
+   "result": "noticed"
+  },
+  {
+   "change": "F13 G10.setting: a horizon of zero later families accepted",
+   "result": "noticed"
+  },
+  {
+   "change": "F14 G10.setting: only '' and 'tbd' are placeholders",
+   "result": "noticed"
+  },
+  {
+   "change": "F15 G10.setting: a threshold of zero accepted",
+   "result": "noticed"
+  },
+  {
+   "change": "F16 G9.clauses: 'the others hold' weakened to 'the others do not fail'",
+   "result": "noticed"
+  },
+  {
+   "change": "F17 G10.ruler: a ruler with no known positive is accepted",
+   "result": "noticed"
+  },
+  {
+   "change": "F18 G12: an ORIGIN claim needs no class bound",
+   "result": "noticed"
+  },
+  {
+   "change": "F19 G12: an ECONOMY claim needs no extra facet",
+   "result": "noticed"
+  },
+  {
+   "change": "F20 G12: L3 needs nothing beyond L2",
+   "result": "noticed"
+  },
+  {
+   "change": "F21 G12: L4 needs nothing beyond L3",
+   "result": "noticed"
+  },
+  {
+   "change": "F22 G11: any selection_data other than 'confirmation' accepted",
+   "result": "SURVIVES"
+  },
+  {
+   "change": "F23 G12: a LAW claim needs no registered prediction",
+   "result": "noticed"
+  },
+  {
+   "change": "F24 G7.calibration: level 0.002 -> 0.00002",
+   "result": "noticed"
+  },
+  {
+   "change": "F25 G7.report: a null with one hit is accepted",
+   "result": "noticed"
+  },
+  {
+   "change": "F26 G7.report: a repair claim from a cold start is accepted",
+   "result": "noticed"
+  },
+  {
+   "change": "F27 G0: UNQUALIFIED ranked below INDETERMINATE",
+   "result": "noticed"
+  },
+  {
+   "change": "F28 G3: impostors judged on the first block only",
+   "result": "noticed"
+  },
+  {
+   "change": "F29 G5: a shared ruler is judged on the first known physics only",
+   "result": "noticed"
+  },
+  {
+   "change": "F30 G11: identical panels accepted",
+   "result": "noticed"
+  },
+  {
+   "change": "F31 G12: a claim of unknown kind is treated as EFFECT",
+   "result": "noticed"
+  },
+  {
+   "change": "F32 G4.entry: an inverted impostor is not refused",
+   "result": "SURVIVES"
+  },
+  {
+   "change": "H01 G9.arms: one series only if equal in 23 of 24 (was 22)",
+   "result": "noticed"
+  },
+  {
+   "change": "H02 G9.clauses: GOOD_MAX 3.5 -> 4.5 in the run-2 clauses",
+   "result": "noticed"
+  },
+  {
+   "change": "H03 G9.clauses: slack 2*dev+4 -> 2*dev+8 in the sham and rescue clauses",
+   "result": "noticed"
+  },
+  {
+   "change": "H04 G9.clauses: lesion_hurts 2*lesion >= naive -> 3*lesion >= naive",
+   "result": "noticed"
+  },
+  {
+   "change": "H05 G9.clauses: a clause counts as able to fail if some cell leaves it undecided",
+   "result": "noticed"
+  },
+  {
+   "change": "H06 G9.clauses: a clause counts as able to hold if some cell leaves it undecided",
+   "result": "noticed"
+  },
+  {
+   "change": "H07 G9.clauses: isolation needs the other clauses only not to fail",
+   "result": "noticed"
+  },
+  {
+   "change": "H08 G9.sham: a sham clause counts as able to fail if some cell leaves it undecided",
+   "result": "noticed"
+  },
+  {
+   "change": "H09 G9.sham: neutral in 12 of 24 replicates is enough (was 22)",
+   "result": "noticed"
+  },
+  {
+   "change": "H10 G10.setting: five placeholders no longer refused (n/a, na, none, unknown, ?)",
+   "result": "noticed"
+  },
+  {
+   "change": "H11 G10.setting: a horizon of zero later families accepted",
+   "result": "noticed"
+  },
+  {
+   "change": "H12 G10.setting: the effect threshold is not type-checked",
+   "result": "noticed"
+  },
+  {
+   "change": "H13 G10.contrast: one further difference besides the named variable is allowed",
+   "result": "noticed"
+  },
+  {
+   "change": "H14 G10.ruler: a mixed v0.1 verdict counts as NEGATIVE",
+   "result": "noticed"
+  },
+  {
+   "change": "H15 G10.ruler: a ruler with no known positive is accepted",
+   "result": "noticed"
+  },
+  {
+   "change": "H16 G10.ruler: members run only at another setting are ignored",
+   "result": "noticed"
+  },
+  {
+   "change": "H17 G10.ruler: the two guards of run 4 are ignored (was: a withdrawn label is read as POSITIVE; that label is no longer read)",
+   "result": "noticed"
+  },
+  {
+   "change": "H18 G10.ruler: an unreadable receipt is UNQUALIFIED, not BLOCKED",
+   "result": "noticed"
+  },
+  {
+   "change": "H19 G11.custody: only the literal word confirmation fails the selection check",
+   "result": "SURVIVES"
+  },
+  {
+   "change": "H20 G11.custody: one generator fails whatever the claim says",
+   "result": "noticed"
+  },
+  {
+   "change": "H21 G11.custody: the generator check is dropped",
+   "result": "noticed"
+  },
+  {
+   "change": "H22 G11.custody: the discovery side needs no seeds, panel or generator",
+   "result": "noticed"
+  },
+  {
+   "change": "H23 G11.custody: booleans count as counts",
+   "result": "noticed"
+  },
+  {
+   "change": "H24 G12: L4 needs nothing more than L3",
+   "result": "noticed"
+  },
+  {
+   "change": "H25 G12: L3 needs nothing more than L2",
+   "result": "noticed"
+  },
+  {
+   "change": "H26 G12: an ORIGIN claim needs no cold start and no class bound",
+   "result": "noticed"
+  },
+  {
+   "change": "H27 G12: an ECONOMY claim needs no lifecycle cost and no frozen comparators",
+   "result": "noticed"
+  },
+  {
+   "change": "H28 G12: a LAW claim needs no registered prediction",
+   "result": "noticed"
+  },
+  {
+   "change": "H29 G12: a TRANSFER claim needs no new family",
+   "result": "noticed"
+  },
+  {
+   "change": "H30 G12: a MECHANISM claim needs no intervention",
+   "result": "noticed"
+  },
+  {
+   "change": "H31 G12.render: a claim with no setting hash is rendered",
+   "result": "noticed"
+  },
+  {
+   "change": "H32 G12: an absent facet is UNQUALIFIED, not BLOCKED",
+   "result": "noticed"
+  },
+  {
+   "change": "H33 verdict: INDETERMINATE outranks UNQUALIFIED",
+   "result": "noticed"
+  },
+  {
+   "change": "H34 GM: a mutant rejected with the wrong verdict is not reported",
+   "result": "noticed"
+  },
+  {
+   "change": "H35 G9.sham: a faster sham counts as neutral",
+   "result": "noticed"
+  },
+  {
+   "change": "X01 (W01) G3: the impostor blocks may repeat the first block of seeds (only the further blocks are compared)",
+   "result": "noticed"
+  },
+  {
+   "change": "X02 (W02) G5: a physics with no known answer counts toward the three a shared ruler needs",
+   "result": "noticed"
+  },
+  {
+   "change": "X03 (W03) G6.restart: the first step after the cut is not compared",
+   "result": "noticed"
+  },
+  {
+   "change": "X04 (W04) G8: the clock table sees two bits of the clock, not three",
+   "result": "noticed"
+  },
+  {
+   "change": "X05 (W05) G7.report: a stated bound above 1 is accepted",
+   "result": "noticed"
+  },
+  {
+   "change": "X06 (W06) G7.calibration: the panel loses its fifth cell (VALLEY, strict, cold)",
+   "result": "noticed"
+  },
+  {
+   "change": "X07 (W07) G10.setting: placeholders are refused in lower case only",
+   "result": "noticed"
+  },
+  {
+   "change": "X08 (W08) G10.setting: a power above 1 is accepted",
+   "result": "noticed"
+  },
+  {
+   "change": "X09 (W09) G10.setting: true and false count as numbers",
+   "result": "noticed"
+  },
+  {
+   "change": "X10 (W10) G10.contrast: a field written down in one cell only is not compared",
+   "result": "noticed"
+  },
+  {
+   "change": "X11 (W11) G9.arms: two arms with one series are allowed; three are not",
+   "result": "noticed"
+  },
+  {
+   "change": "X12 (W12) G12.render: the setting hash depends on the order the choices were typed in",
+   "result": "noticed"
+  },
+  {
+   "change": "X13 (W13) G2: a bound of exactly 0 or 1 is accepted",
+   "result": "noticed"
+  },
+  {
+   "change": "X14 (W14) G8: the upper side of the equivalence test is run at alpha, not alpha/2",
+   "result": "noticed"
+  },
+  {
+   "change": "X15 (W16) interchange: 'carried somewhere that was not moved' is reported as NEGATIVE",
+   "result": "noticed"
+  },
+  {
+   "change": "X16 (W18) ladder: the control arm is ignored when the two arms are read together",
+   "result": "noticed"
+  },
+  {
+   "change": "X17 (W19) G12: level() never reports L4",
+   "result": "noticed"
+  },
+  {
+   "change": "X18 (W20) ladder: the Hoeffding margin with n in place of 2n",
+   "result": "noticed"
+  },
+  {
+   "change": "X19 (W21) G3: an empty panel is not refused",
+   "result": "noticed"
+  },
+  {
+   "change": "X20 (W22) G10.setting: the wrong-history choice is no longer one of the nine",
+   "result": "noticed"
+  },
+  {
+   "change": "X21 (W23) G7.report: the founders are compared as sets, so a founder may be reported twice",
+   "result": "noticed"
+  },
+  {
+   "change": "X22 (W24) G11: a discovery and a confirmation may share their panel if their seeds differ",
+   "result": "noticed"
+  },
+  {
+   "change": "X23 (W26) G9.clauses: a clause is isolated if the others hold in 21 of 24",
+   "result": "noticed"
+  },
+  {
+   "change": "X24 (W28) G4.entry: the impostor is judged on the first 48 seeds",
+   "result": "noticed"
+  },
+  {
+   "change": "X25 (W27) G6.reset: the earlier episode is run on the same seed as the later one",
+   "result": "noticed"
+  },
+  {
+   "change": "X26 (W29) G1.cell: the highest count of a verdict table is not checked",
+   "result": "noticed"
+  },
+  {
+   "change": "Y01 (S01) stats.upper_bound: the upper end of a design rate at its median, not at 99%",
+   "result": "noticed"
+  },
+  {
+   "change": "Y02 (S02) stats.is_count: a float counts as a count",
+   "result": "noticed"
+  },
+  {
+   "change": "Y03 (S03) G2: the negative's probability is taken up to the weak positive's critical count even where that is a yes",
+   "result": "SURVIVES"
+  },
+  {
+   "change": "Y04 (S04) G2: power computed one count below the critical count",
+   "result": "noticed"
+  },
+  {
+   "change": "Y05 (S05) equivalence: the upper margin is not tested",
+   "result": "noticed"
+  },
+  {
+   "change": "Y06 (S06) consistent: each side at alpha, not alpha/2",
+   "result": "noticed"
+  },
+  {
+   "change": "Y07 (S07) G2: more design hits than design runs accepted",
+   "result": "noticed"
+  },
+  {
+   "change": "Y08 (G01) G1.cell: attainability taken at the lower end of the design interval only",
+   "result": "noticed"
+  },
+  {
+   "change": "Y09 (G02) G1.cell: more design hits than design units accepted",
+   "result": "noticed"
+  },
+  {
+   "change": "Y10 (G03) G1.cell: the registration clock is not type-checked",
+   "result": "noticed"
+  },
+  {
+   "change": "Y11 (G04) G1.cell: an empty list or dict counts as a registered field",
+   "result": "noticed"
+  },
+  {
+   "change": "Y12 (G05) G1.receipt: a receipt need not list its seeds to be checked",
+   "result": "noticed"
+  },
+  {
+   "change": "Y13 (G06) G1.receipt: line endings are not normalised before hashing",
+   "result": "noticed"
+  },
+  {
+   "change": "Y14 (V01) G0: UNQUALIFIED outranks BLOCKED",
+   "result": "noticed"
+  },
+  {
+   "change": "Y15 (V02) G0: nothing to combine is a PASS",
+   "result": "noticed"
+  },
+  {
+   "change": "Y16 (V03) G0: a sixth verdict is accepted",
+   "result": "noticed"
+  },
+  {
+   "change": "Y17 (U01) G3: the registered threshold at 48 is dropped",
+   "result": "noticed"
+  },
+  {
+   "change": "Y18 (U02) interchange: the state is moved at step 5, not step 3",
+   "result": "noticed"
+  },
+  {
+   "change": "Y19 (U03) interchange: an undecided count is called NEGATIVE",
+   "result": "noticed"
+  },
+  {
+   "change": "Y20 (U04) interchange: crossed-inverted with same-follows is called NEGATIVE, not NOT_MOVED",
+   "result": "noticed"
+  },
+  {
+   "change": "Y21 (T01) G6.reset: the mark left on the environment is not compared",
+   "result": "SURVIVES"
+  },
+  {
+   "change": "Y22 (T02) G6.restart: the step right after the cut is not compared",
+   "result": "noticed"
+  },
+  {
+   "change": "Y23 (T03) G6.restart: no cut after the first step",
+   "result": "noticed"
+  },
+  {
+   "change": "Y24 (T04) G6.observer: only the first six seeds are run",
+   "result": "noticed"
+  },
+  {
+   "change": "Y25 (R01) G7.report: founders compared as a set (order and repeats ignored)",
+   "result": "noticed"
+  },
+  {
+   "change": "Y26 (R02) G7.report: fewer hits reported than the search had is accepted",
+   "result": "noticed"
+  },
+  {
+   "change": "Y27 (R03) G7.report: positive control needed at 0.85, not 0.99",
+   "result": "noticed"
+  },
+  {
+   "change": "Y28 (R04) G7.report: a bound up to 0.005 below what the founders warrant is accepted",
+   "result": "noticed"
+  },
+  {
+   "change": "Y29 (R05) G7.calibration: the needle repair cell is dropped from the panel",
+   "result": "noticed"
+  },
+  {
+   "change": "Y30 (R06) G7.report: one policy that crosses neutral steps is enough for a null",
+   "result": "noticed"
+  },
+  {
+   "change": "Y32 (A02) G9.arms: two arms with one series are tolerated; three are not",
+   "result": "noticed"
+  },
+  {
+   "change": "Y33 (A03) G9.clauses: run 3 audited at factor 3, not its registered 2",
+   "result": "noticed"
+  },
+  {
+   "change": "Y34 (A04) G10.setting: placeholders are matched case-sensitively",
+   "result": "noticed"
+  },
+  {
+   "change": "Y35 (A05) G10.setting: power has no upper limit",
+   "result": "noticed"
+  },
+  {
+   "change": "Y36 (A06) G10.setting: the horizon need not be a whole number",
+   "result": "noticed"
+  },
+  {
+   "change": "Y37 (A07) G10.contrast: a field written in one cell only is not a difference",
+   "result": "noticed"
+  },
+  {
+   "change": "Y38 (A08) G10.ruler: a cell verdict other than PASS or FAIL is read as NEGATIVE",
+   "result": "noticed"
+  },
+  {
+   "change": "Y39 (A09) G10.ruler: RULER_NOT_APPLICABLE is no longer a guard",
+   "result": "noticed"
+  },
+  {
+   "change": "Y40 (A10) G10.ruler: a member run here and also elsewhere is reported as not run here",
+   "result": "noticed"
+  },
+  {
+   "change": "Y41 (C01) G11: the opening clock is not type-checked",
+   "result": "noticed"
+  },
+  {
+   "change": "Y42 (C02) G11: a side needs no generator hash",
+   "result": "noticed"
+  },
+  {
+   "change": "Y43 (C03) G12.render: the setting hash depends on key order",
+   "result": "noticed"
+  },
+  {
+   "change": "Y44 (C04) G11: an empty string counts as a custody field",
+   "result": "noticed"
+  },
+  {
+   "change": "Y45 (L01) ladder: certificate at alpha 0.01, not 1e-6",
+   "result": "noticed"
+  },
+  {
+   "change": "Y46 (L02) ladder: the control is ignored when the ninth pair is CARRIED",
+   "result": "noticed"
+  },
+  {
+   "change": "Y47 (L03) ladder: in the control the ninth pair too comes from the other key",
+   "result": "noticed"
+  },
+  {
+   "change": "Y48 (W01) score: a fresh world for every seed",
+   "result": "noticed"
+  },
+  {
+   "change": "Y49 (W02) world: the final state does not hold the mark",
+   "result": "noticed"
+  },
+  {
+   "change": "Y50 (W03) world: the trajectory does not hold the value delivered",
+   "result": "noticed"
+  },
+  {
+   "change": "Y51 (M01) GM: a mutant that passes is not an escape",
+   "result": "noticed"
+  },
+  {
+   "change": "Y52 (M02) GM: a sound case refused as BLOCKED, UNQUALIFIED or INDETERMINATE is no false accusation",
+   "result": "noticed"
+  },
+  {
+   "change": "Y53 (M03) GM: the missing-field mutant tries the first eight fields only",
+   "result": "noticed"
+  },
+  {
+   "change": "Y54 (M04) GM: the kind-facet mutant tries the first three kinds only",
+   "result": "noticed"
+  }
+ ],
+ "run": 244,
+ "sets": {
+  "A": {
+   "changes": 30,
+   "gone": [],
+   "noticed_now": 30,
+   "run": 30,
+   "survive_now": [],
+   "who": "author"
+  },
+  "C": {
+   "changes": 44,
+   "changes_at_first_sight": 44,
+   "gone": [
+    "C26 G7.report: the bound is held to the largest founder count among the policies"
+   ],
+   "noticed_now": 41,
+   "run": 43,
+   "survive_now": [
+    "C18 G6.reset: the mark left on the environment is not compared",
+    "C36 G12: a level may be skipped"
+   ],
+   "unnoticed_at_first_sight": 34,
+   "who": "closure reader, on the second version"
+  },
+  "F": {
+   "changes": 32,
+   "changes_at_first_sight": 32,
+   "gone": [],
+   "noticed_now": 30,
+   "run": 32,
+   "survive_now": [
+    "F22 G11: any selection_data other than 'confirmation' accepted",
+    "F32 G4.entry: an inverted impostor is not refused"
+   ],
+   "unnoticed_at_first_sight": 20,
+   "who": "second reader, on the second version"
+  },
+  "H": {
+   "changes": 36,
+   "changes_at_first_sight": 36,
+   "gone": [
+    "H36 G10.setting: power may be an integer"
+   ],
+   "noticed_now": 34,
+   "run": 35,
+   "survive_now": [
+    "H19 G11.custody: only the literal word confirmation fails the selection check"
+   ],
+   "unnoticed_at_first_sight": 26,
+   "who": "second reader's fork, on the second version"
+  },
+  "R": {
+   "changes": 25,
+   "changes_at_first_sight": 25,
+   "gone": [],
+   "noticed_now": 24,
+   "run": 25,
+   "survive_now": [
+    "R14 G10.contrast: cells that do not differ in the named variable pass"
+   ],
+   "unnoticed_at_first_sight": 22,
+   "who": "first reader, on the first version"
+  },
+  "X": {
+   "changes": 26,
+   "changes_at_first_sight": 26,
+   "gone": [],
+   "noticed_now": 26,
+   "run": 26,
+   "survive_now": [],
+   "unnoticed_at_first_sight": 12,
+   "who": "closure reader, on the third version"
+  },
+  "Y": {
+   "changes": 54,
+   "changes_at_first_sight": 54,
+   "gone": [
+    "Y31 (A01) G9.arms: with fewer than 22 replicates no two arms are ever one series"
+   ],
+   "noticed_now": 51,
+   "run": 53,
+   "survive_now": [
+    "Y03 (S03) G2: the negative's probability is taken up to the weak positive's critical count even where that is a yes",
+    "Y21 (T01) G6.reset: the mark left on the environment is not compared"
+   ],
+   "unnoticed_at_first_sight": 20,
+   "who": "second reader, on the third version"
+  }
+ },
+ "source_sha256_lf": {
+  "mutation_probe.py": "c4039fa738097f9bf48c748392db81d52452ba186ad08031706b3c5536898734",
+  "mutation_sets_final.py": "9ab7b2769d9f75e285450a47ac8b63d6ffc65d0df80e638f0034f9157111cf5a",
+  "rso_harness/__init__.py": "ec0c26759c79ba6f26e29de01c71663c8baf7b60a7305e53174d996b6e92a2c0",
+  "rso_harness/audits.py": "5279f907ff91d83abe29bca18c81ff6c3815b749f4f34ced89adc40dfa69945e",
+  "rso_harness/claims.py": "88cb388978ed3c282353d6d1b34b7eb2dccb282f6d065d375b4f24a5577a61a9",
+  "rso_harness/ladder.py": "a8d3cfb6f3d884f94a2ab49f22b08c5dd9525a69dce749d9bf00880b4b37c224",
+  "rso_harness/meta.py": "3a27b0365284a414543731a5dd076b6292ccf03140ff9839737a6a783d416d2b",
+  "rso_harness/registration.py": "e8a492093f7c513d273970f31cbe34e6d0d6ad97fb7ae5dc3ec950545abc76b9",
+  "rso_harness/retain1.py": "3e39a37e7f48ac6a61eb95da69f3341db57d6cdfaf9e6990a6f89eec8ed55142",
+  "rso_harness/rulers.py": "2c74b63d7882d2d9f958a6779a91565411d0bdc077c9e67545e3d18d8e31a0a9",
+  "rso_harness/search.py": "f49098af7fe2f49cbc5a206b55d5fbc2e519c30a6c2e1112db8023debaf9b973",
+  "rso_harness/stats.py": "9454a67b1549c0c6366a65d49dc014a074db60b56e1fd0b5ebb853345d6aff2d",
+  "rso_harness/torture.py": "82d05921bd81ee58ba03ded97df4d6d34ef9690fcd2c0d66511761603e38e311",
+  "rso_harness/verdict.py": "bd27165b4b2dc4589b5b84d0661e0518670d2b61790a559fb447f587097a53d2",
+  "tests/test_harness.py": "0e6bcd127dcc409fd3205da25be12a50890bf37c692447fcc67816053f8ee872"
+ },
+ "survived": [
+  "R14 G10.contrast: cells that do not differ in the named variable pass",
+  "C18 G6.reset: the mark left on the environment is not compared",
+  "C36 G12: a level may be skipped",
+  "F22 G11: any selection_data other than 'confirmation' accepted",
+  "F32 G4.entry: an inverted impostor is not refused",
+  "H19 G11.custody: only the literal word confirmation fails the selection check",
+  "Y03 (S03) G2: the negative's probability is taken up to the weak positive's critical count even where that is a yes",
+  "Y21 (T01) G6.reset: the mark left on the environment is not compared"
+ ],
+ "what": "mutation probe of reference harness v0: one change to gate logic per copy, unit tests run on the copy",
+ "written_at_utc": "2026-10-02T11:51:10Z"
+}

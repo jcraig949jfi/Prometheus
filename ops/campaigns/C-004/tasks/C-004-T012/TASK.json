@@ -1,0 +1,71 @@
+{
+  "schema": "prometheus.workgraph.task.v1",
+  "task_id": "C-004-T012",
+  "campaign_id": "C-004",
+  "title": "S2 retention ruler and calibration gate: T01 and T02",
+  "objective": "Implement the retention ruler and its calibration gate so T01 yields ruler POSITIVE and T02 yields calibration gate PASS with ruler NEGATIVE at exact success 1/2 (closure C1).",
+  "parent_objective": "RSO-METHODS-SLICE-001 (CAMPAIGN.json objective)",
+  "owner_role": "Cadmus",
+  "quality_class": "Q2",
+  "can_downgrade": false,
+  "escalate_to": "Q3",
+  "depends_on": [
+    "C-004-T010"
+  ],
+  "requires_shas": [
+    "09dc8c38b (closure review)",
+    "3bd02f393 (v0.4 synthesis, merged)"
+  ],
+  "owns": [
+    "rso/slice001/rulers.py",
+    "rso/slice001/tests/test_rulers.py"
+  ],
+  "reads": [
+    "rso/slice001/contract/CONTRACT.md",
+    "rso/slice001/contract/contract.json",
+    "docs/phase3/synthesis/ENCELADUS-DIONYSUS-v0.4/NEXT_ROUND_PLAN_v0.4.md",
+    "docs/phase3/closure/FABLE-5.1/CLOSURE_REVIEW_v0.4.md",
+    "roles/rso-builder-role/",
+    "rso/slice001/world.py"
+  ],
+  "problem": "Plan s4 T01: lawful bit exposed before the boundary, allowed state retained -> retention PASS on the exact domain. T02 (as amended by closure C1): no carry or correlated side information, uniform bit -> exact success 1/2; calibration gate PASS; retention ruler NEGATIVE. A correct negative observation is a ruler outcome, never a FAIL. Exact rational arithmetic (fractions), no floats.",
+  "non_goals": [
+    "No statistical INDETERMINATE",
+    "Do not copy code, tests or verdict policies from the Fable or ASTRA harnesses; they are reference and adversarial corpora (SOURCES.md B; NEXT_ROUND_PLAN_v0.4 s1)",
+    "Python >= 3.8 standard library only; no package installation (MWO-0004 R2)"
+  ],
+  "evidence_required": [
+    "RED: a test that T02 must not be rendered as FAIL, failing against a stub that collapses NEGATIVE into FAIL",
+    "GREEN: T01 POSITIVE, T02 NEGATIVE with calibration PASS and exact Fraction(1, 2)"
+  ],
+  "acceptance": {
+    "command": "python -B -m rso.slice001.ci",
+    "condition": "T01/T02 outcomes match the contract cases exactly"
+  },
+  "deliverables": [
+    "rso/slice001/rulers.py",
+    "rso/slice001/tests/test_rulers.py"
+  ],
+  "kind": "software",
+  "status": "READY",
+  "history": [
+    {
+      "status": "PROPOSED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-03T11:04:14Z",
+      "note": "created under C-004-T000 decomposition"
+    },
+    {
+      "status": "READY",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-03T11:04:14Z",
+      "note": "made READY by the coordinator (C-004-T000)"
+    }
+  ],
+  "authority": "operator directive 2026-10-03 s9, s11 (roles/Achilles/prompts/2026-10-03_rso_builder_cell/01_OPERATOR_DIRECTIVE_verbatim.md); decomposed by Palamedes under C-004-T000",
+  "resource_ceiling": {
+    "engineering": "<= 1.5 Q2 seat-hours",
+    "cpu": "< 1 CPU-minute",
+    "note": "Counts toward the slice caps fixed by C-004-OP1 (NEXT_ROUND_PLAN_v0.4 s6 proposal: 30 CPU-minutes total, 0 GPU, 0 cloud, 100 MB new artifacts, 12 top-level validation launches; mutation children count toward CPU). Stop at the first exhausted cap and keep partial results."
+  }
+}

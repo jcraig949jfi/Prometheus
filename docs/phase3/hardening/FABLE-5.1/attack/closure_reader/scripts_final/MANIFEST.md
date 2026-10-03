@@ -1,0 +1,12 @@
+# Manifest for scripts_final
+
+sha256 over LF-normalised bytes (equals the git blob for text files); see comms/manifest.py.
+
+- drv.py  sha256:1dfc942e793561199167fe234a0704fe77f37ec5cec7d1f0f4213fad6447f8f2
+- out_fire_run.txt  sha256:4cd19b85c0be32845014018bed4061982578de518f2320e82c58fd80ab9377f1
+- out_p32.txt  sha256:b959f72cd51ad34eddd10931046cde5895398aadb9e743f598d2268100921d08
+- out_plants_chosen.txt  sha256:e27e77779d219784413461d96b1d81b118471946815f96954dff6949691c26d4
+- out_plants_random.txt  sha256:3a77f8dbd238795dc974c2d99c37508b844cd893b76b980516dc4adcc4f65d7d
+- p30_closure.py  sha256:0c61b7805486a9bd81dedec4602cdb789bd48acd4df0845c5529e5128a8a2872
+- p31_plants.py  sha256:08a44026b53bcc4df92378702523c4168e253592936538966523155e2f094cd9
+- p32_fresh_mutations.py  sha256:14cdfea357a9b39e779da086cfa6b565c4ff60390f419594ad300d78aeb4670f

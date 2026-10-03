@@ -1,0 +1,727 @@
+{
+ "schema": "nyx.atlas/0",
+ "fossil_id": "dgm-zhang-hu-2025",
+ "techne_record": "techne/fossils/specimens/dgm-zhang-hu-2025/record.json",
+ "whole_system": {
+  "FOSSIL_ID": {
+   "value": "dgm-zhang-hu-2025",
+   "basis": "TECHNE_RECORD"
+  },
+  "CANONICAL_NAME": {
+   "value": "Darwin Godel Machine (DGM) -- Darwin Godel Machine: Open-Ended Evolution of Self-Improving Agents (Zhang, Jenny and Hu, Shengran and Lu, Cong and Lange, Robert and Clune, Jeff; institution NOT_FOUND_AT_PIN in README text, README badges link sakana.ai/dgm and x.com/SakanaAILabs; 2025)",
+   "basis": "TECHNE_RECORD"
+  },
+  "VERSION": {
+   "value": "github.com/jennyzzt/dgm main @ a565fd2d1dca504ef5104a7cc0f3bdc4ab9b4fd2 (committed 2025-08-13; 5 commits since 2025-05-29; 1650 tracked files)",
+   "basis": "TECHNE_RECORD"
+  },
+  "ERA": {
+   "value": "2025",
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_SYSTEM": {
+   "value": {
+    "domain": [
+     "self-improving-agents",
+     "open-ended-learning",
+     "llm-agents",
+     "archive-search"
+    ],
+    "lineage": "README: evaluation framework implementations 'are based on the SWE-bench and polyglot-benchmark repositories' (swe-bench/SWE-bench, Aider-AI/polyglot-benchmark). Title invokes the Godel Machine; no other predecessor system is named in the tree. The bundled initial/ and initial_polyglot/ directories are the paper's initial agent's benchmark logs and are the root node of every run. || main loop (reader, from the code): For each generation, DGM_outer.main calls choose_selfimproves to sample selfimprove_size parents from the archive (default score_child_prop: sigmoid of accuracy_score times 1/(1+children_count)) each paired with a task entry, runs self_improve for each in a ThreadPoolExecutor (Docker container from the repo, replay parent patch chain, LLM-written problem statement, the coding agent edits its own code, resulting model_patch.diff is evaluated on SWE-bench/Polyglot subsets in Docker), then filter_compiled and update_archive (keep_all by default) add the children to the archive and the state is appended to dgm_metadata.jsonl."
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_PROBLEM": {
+   "value": "README: 'a novel self-improving system that iteratively modifies its own code (thereby also improving its ability to modify its own codebase) and empirically validates each change using coding benchmarks'.",
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVED_HUMAN_CAPABILITY": {
+   "value": {
+    "built_to": "README: 'a novel self-improving system that iteratively modifies its own code (thereby also improving its ability to modify its own codebase) and empirically validates each change using coding benchmarks'.",
+    "pressure": "NOT_FOUND_AT_PIN as an explicit motivation statement; the README only states the goal (open-ended evolution of self-improving coding agents validated empirically on SWE-bench/Polyglot) and includes a safety warning that the system executes untrusted model-generated code; the paper abstract is not in the tree.",
+    "success_means": "From the code: each node's overall_performance.accuracy_score (fraction of SWE-bench Verified or Polyglot instances resolved) recorded in metadata.json; the archive grows when children compile (non-empty patch, enough evaluated instances) and, under keep_better, when score >= initial score minus eval_noise; nodes scoring above a threshold (second-highest archive score, min 0.4) get a fuller evaluation. README itself names no metric beyond 'coding benchmarks'."
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "DOCUMENTED_ENVIRONMENTAL_PRESSURE": {
+   "value": {
+    "pressure": "",
+    "failure_condition": ""
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "LANGUAGE": {
+   "value": [
+    "Python (39 .py files: outer loop, self-improve step, coding agent, harnesses, tools)",
+    "Shell (327 .sh: mostly eval scripts under initial/ and initial_polyglot/)",
+    "Markdown (507, mostly chat/eval logs under initial*/)",
+    "JSON (340, metadata/predictions)",
+    "log (333)",
+    "diff (48 patches)"
+   ],
+   "basis": "TECHNE_RECORD"
+  },
+  "EXECUTION_MODEL": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "ANCESTRY": {
+   "value": "README: evaluation framework implementations 'are based on the SWE-bench and polyglot-benchmark repositories' (swe-bench/SWE-bench, Aider-AI/polyglot-benchmark). Title invokes the Godel Machine; no other predecessor system is named in the tree. The bundled initial/ and initial_polyglot/ directories are the paper's initial agent's benchmark logs and are the root node of every run. || main loop (reader, from the code): For each generation, DGM_outer.main calls choose_selfimproves to sample selfimprove_size parents from the archive (default score_child_prop: sigmoid of accuracy_score times 1/(1+children_count)) each paired with a task entry, runs self_improve for each in a ThreadPoolExecutor (Docker container from the repo, replay parent patch chain, LLM-written problem statement, the coding agent edits its own code, resulting model_patch.diff is evaluated on SWE-bench/Polyglot subsets in Docker), then filter_compiled and update_archive (keep_all by default) add the children to the archive and the state is appended to dgm_metadata.jsonl.",
+   "basis": "TECHNE_RECORD"
+  },
+  "KNOWN_PREDECESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_SUCCESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_RIVALS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_HISTORICAL_DISPOSITION": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "SOURCE_STATUS": {
+   "value": {
+    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+    "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+    "tree_sha256": "cfbb24e2568b866b9ca44f1b84d6698ca73f6792ffa9ff9182121967341c0add"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "RUN_STATUS": {
+   "value": {
+    "run": "NOT_ATTEMPTED",
+    "test": "NOT_ATTEMPTED",
+    "environment": {
+     "runner": "native",
+     "note": "NOT RUN in this pass (nothing executed from the tree); host class from the reader draft: Linux host (README uses sudo/usermod/newgrp, os.system cp -r, /dgm paths) with Docker daemon, CPython 3.x + venv, outbound network to HuggingFace, GitHub, Anthropic/Bedrock and OpenAI, and substantial disk for SWE-bench environment images; long-running (80 generations, 1.5 h timeout per self-improve future, 30 min per agent run)"
+    }
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVABILITY": {
+   "value": {
+    "EXECUTABLE": "unknown",
+    "OBSERVABLE": "unknown",
+    "ORACLE_BACKED": "unknown",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "unknown"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "ORACLE_STATUS": {
+   "value": {
+    "oracle_backed": "unknown",
+    "test_classification": "NOT_ATTEMPTED"
+   },
+   "basis": "NYX_DERIVED"
+  },
+  "INTERVENTION_READINESS": {
+   "value": {
+    "intervention_ready": "unknown",
+    "patch_intervention": "unknown",
+    "runnable": false
+   },
+   "basis": "NYX_DERIVED"
+  }
+ },
+ "cut": {
+  "state": "COARSE",
+  "mode": "ANCESTRY_AWARE",
+  "evidence": [
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:dgm-zhang-hu-2025/upstream/tree/DGM_outer.py:95-104"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:dgm-zhang-hu-2025/upstream/tree/DGM_outer.py:111-150"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:dgm-zhang-hu-2025/upstream/tree/self_improve_step.py:223-420"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:dgm-zhang-hu-2025/upstream/tree/DGM_outer.py:152-190"
+   }
+  ],
+  "inspected_files": [
+   "DGM_outer.py 37-230, 315-322",
+   "self_improve_step.py 223-420",
+   "coding_agent.py 153-201",
+   "utils/evo_utils.py 28-127"
+  ],
+  "date": "2026-10-03T08:10Z",
+  "note": "an open archive of agent versions; parents are drawn by a steep sigmoid of benchmark accuracy discounted by their number of archived children; each child is the parent editing its own repository; nearly every child that compiles is kept [READER-ASSISTED, 2026-10-03: a read-only reader agent (claude-opus-5-5, same family as Nyx) read the files below and returned line-cited notes; Nyx spot-checked 2 of the cited line ranges against the files (all matched) and wrote this cut. Nothing was run, imported or built (no bytecode written into the body). Stage A census 121 stays frozen; this body is cut under the operator's 2026-10-03 directive (item 4) and tracked with the other operator-directed bodies.]",
+  "provenance": {
+   "schema": "nyx.atlas/1-provenance",
+   "migrated_at": "2026-10-03T08:10Z",
+   "migrated_from": "authored under nyx.atlas/1-provenance",
+   "provenance_grade_read": "ORIGINAL_ARTIFACT",
+   "grade_basis": "Techne FOSSIL_PACKET.json PROVENANCE_GRADE where issued, else the record's handoff string mapped (populated per R34; Harmonia may re-grade)",
+   "source_object_id": "https://github.com/jennyzzt/dgm@a565fd2d1dca504ef5104a7cc0f3bdc4ab9b4fd2",
+   "payload_manifest_id": "techne tree_sha256 cfbb24e2568b866b9ca44f1b84d6698ca73f6792ffa9ff9182121967341c0add (1650 files)",
+   "host_tree_matches_record": null,
+   "host": "GANDALF (hostname), bodies receipt not named",
+   "files_read": [
+    {
+     "path": "upstream/tree/DGM_outer.py",
+     "payload_hash_read": "239bc76f0e1b78210b8f7b3757b1082f6ca07db3537d6af50a45bf97709795ed",
+     "techne_recorded_hash": "239bc76f0e1b78210b8f7b3757b1082f6ca07db3537d6af50a45bf97709795ed",
+     "match": true,
+     "refs": 6
+    },
+    {
+     "path": "upstream/tree/self_improve_step.py",
+     "payload_hash_read": "6f2ec364b11e7f6d35391ea66896fa2394cbca3bc59d68cf7352c2a77aa8cca7",
+     "techne_recorded_hash": "6f2ec364b11e7f6d35391ea66896fa2394cbca3bc59d68cf7352c2a77aa8cca7",
+     "match": true,
+     "refs": 2
+    }
+   ],
+   "unresolved_refs": []
+  }
+ },
+ "organs": [
+  {
+   "organ_id": "dgm-zhang-hu-2025::parent_choice_by_sigmoid_of_accuracy_times_one_over_one_plus_children",
+   "fossil_ancestry": "dgm-zhang-hu-2025",
+   "human_name": "choose_selfimproves (DGM_outer.py 50-109)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "default score_child_prop: weight = 1/(1 + exp(-10*(accuracy - 0.5))) * 1/(1 + archived children), normalised; two parents with replacement",
+   "input": "archive metadata",
+   "output": "two parent commits",
+   "state": "children counts",
+   "update": "UNKNOWN",
+   "assumptions": [
+    "UNKNOWN"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [],
+   "fitness_value_in_ancestor": "UNKNOWN",
+   "failure_landscape": "by reading: the 'best' option sorts ascending (picks the worst); the argparse choices list concatenates 'score_child_prop' 'best' into one string, so explicitly passing score_child_prop is rejected (works only as the default)",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:dgm-zhang-hu-2025/upstream/tree/DGM_outer.py:95-104"
+   },
+   "confidence": "HIGH",
+   "portability": "UNKNOWN",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "choose_selfimproves (DGM_outer.py 50-109)",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "SEEDED_RANDOM",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "dgm-zhang-hu-2025::self_improvement_target_chosen_from_failure_modes_or_unresolved_tasks",
+   "fossil_ancestry": "dgm-zhang-hu-2025",
+   "human_name": "DGM_outer.py 111-150",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "if empty patches are at least 10% of tasks, target them with probability 0.25; else stochasticity with 0.25; else context-length errors with 0.25; else a random unresolved task",
+   "input": "parent evaluation",
+   "output": "a target",
+   "state": "UNKNOWN",
+   "update": "UNKNOWN",
+   "assumptions": [
+    "UNKNOWN"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [],
+   "fitness_value_in_ancestor": "UNKNOWN",
+   "failure_landscape": "by reading: an empty unresolved list is compared to 0 (always False) and reaches random.choice([]) (IndexError)",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:dgm-zhang-hu-2025/upstream/tree/DGM_outer.py:111-150"
+   },
+   "confidence": "HIGH",
+   "portability": "UNKNOWN",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "DGM_outer.py 111-150",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "SEEDED_RANDOM",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "dgm-zhang-hu-2025::self_edit_in_a_rebuilt_lineage_container_then_staged_benchmark_evaluation",
+   "fossil_ancestry": "dgm-zhang-hu-2025",
+   "human_name": "self_improve_step.py 223-420; evo_utils.py 28-94",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "the parent's lineage is rebuilt by applying every ancestor's patch; a diagnosis model writes a problem statement; the agent edits its own repository for up to 30 minutes; the patch is evaluated on a small subset, then a medium subset only if at least 40% of the small one resolved; accuracy = resolved / submitted pooled over result files",
+   "input": "a parent",
+   "output": "a child and its accuracy",
+   "state": "UNKNOWN",
+   "update": "UNKNOWN",
+   "assumptions": [
+    "UNKNOWN"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [],
+   "fitness_value_in_ancestor": "UNKNOWN",
+   "failure_landscape": "by reading: the full-evaluation threshold and the big task list are loaded but never used",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:dgm-zhang-hu-2025/upstream/tree/self_improve_step.py:223-420"
+   },
+   "confidence": "HIGH",
+   "portability": "UNKNOWN",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "self_improve_step.py 223-420; evo_utils.py 28-94",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "ENVIRONMENT_RANDOM",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "dgm-zhang-hu-2025::archive_admission_keep_all_that_compile_and_submit",
+   "fossil_ancestry": "dgm-zhang-hu-2025",
+   "human_name": "DGM_outer.py 152-190, 315-322",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "default keep_all appends every child with the required keys, a non-empty patch and at least the small subset submitted; keep_better requires accuracy >= initial - 0.1",
+   "input": "children",
+   "output": "archive",
+   "state": "UNKNOWN",
+   "update": "UNKNOWN",
+   "assumptions": [
+    "UNKNOWN"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [],
+   "fitness_value_in_ancestor": "UNKNOWN",
+   "failure_landscape": "UNKNOWN by run",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:dgm-zhang-hu-2025/upstream/tree/DGM_outer.py:152-190"
+   },
+   "confidence": "HIGH",
+   "portability": "UNKNOWN",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "DGM_outer.py 152-190, 315-322",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "ARCHIVE",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  }
+ ],
+ "rejected_cuts": [
+  {
+   "candidate": "the rest of the body: llm_withtools, tools/, prompts, the SWE-bench and polyglot harnesses, git utils, analysis",
+   "reason": "OTHER",
+   "evidence": "NOT READ; residue",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "dgm-zhang-hu-2025"
+  },
+  {
+   "candidate": "'dgm-zhang-hu-2025' as one organ",
+   "reason": "NAME_HAS_NO_EXECUTABLE_BOUNDARY",
+   "evidence": "the mechanisms above are separable pieces of code",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "dgm-zhang-hu-2025"
+  }
+ ],
+ "pressures": [
+  {
+   "pressure_id": "dgm-zhang-hu-2025::P.an_agent_version_survives_by_compiling_and_is_reproduced_in_proportion_to_a_steep_sigmoid_of_its_benchmark_accuracy_discounted_by_its_offspring",
+   "source_fossil": "dgm-zhang-hu-2025",
+   "source_evidence": "the organs above",
+   "condition": "open archive; parent weight from accuracy and child count",
+   "resource_or_constraint": "UNKNOWN",
+   "failure_condition": "UNKNOWN",
+   "world_punishes": "agents whose patches are empty or do not run",
+   "world_rewards": "higher-accuracy agents with few children",
+   "observable_consequence": "UNKNOWN",
+   "vacuity_condition": "UNKNOWN",
+   "trivial_shortcuts": "UNKNOWN",
+   "cheat_control": "UNKNOWN: not designed this pass",
+   "cost_class": "UNKNOWN (nothing ran)",
+   "purpose_separated_from_pressure": "PURPOSE: Darwin Godel Machine: an archive of self-modifying coding agents (Zhang, Hu et al. 2025)",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
+ "composition_edges": [],
+ "ancestry_edges": [],
+ "residue": {
+  "state": "LARGE_RESIDUE",
+  "unexplained": [
+   "not read: llm_withtools, tools/, prompts, the SWE-bench and polyglot harnesses, git utils, analysis",
+   "nothing ran",
+   "reader-assisted cut: line ranges spot-checked, not every line re-read by Nyx"
+  ],
+  "note": "batch 17 first pass",
+  "cut_mode": "ANCESTRY_AWARE"
+ }
+}

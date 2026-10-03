@@ -1,0 +1,51 @@
+{
+  "schema": "prometheus.workgraph.epic.v1",
+  "epic_id": "EP-GLOBAL",
+  "title": "Prometheus Global Operations",
+  "objective": "Keep the cross-phase processes that should outlive every numbered phase: the evidence refinery, fleet observability, coordination infrastructure, durable scientific registries, the reusable failure corpus, and (potentially) shared resource brokerage.",
+  "scope": "Forever processes. Not a parent of the numbered phase epics: EP-GLOBAL, EP-PHASE2B and EP-PHASE3 are peers.",
+  "north_star": "roles/base-role/NORTH_STAR.md",
+  "start_date": "existing program history (declared as an epic 2026-10-03)",
+  "status": "ACTIVE",
+  "priority": "MEDIUM",
+  "permanent": true,
+  "end_date": null,
+  "constraints": [
+    "Evidence rolls upward; interpretive authority does not: a claim stays attached to the exact cells/evidence that earned it; no epic or thread name lends its interpretation to a child (roles/base-role/DISTRIBUTED_WORK.md s1a)",
+    "Base-role doctrine and current MWO/CWO hard gates apply unchanged",
+    "Processes here serve every epic; they do not take scientific ownership of another epic's claims"
+  ],
+  "exit_conditions": [
+    "None: permanent. Individual campaigns inside its threads close; the epic and its threads persist."
+  ],
+  "continuation_conditions": [
+    "Continues while Prometheus runs."
+  ],
+  "threads": [
+    "TH-GLOBAL-EVIDENCE-REFINERY",
+    "TH-GLOBAL-CONTROL-PLANE"
+  ],
+  "candidate_threads": [
+    "fleet observability (Achilles census)",
+    "durable scientific registries",
+    "reusable failure corpus",
+    "shared resource brokerage"
+  ],
+  "peers": [
+    "EP-PHASE2B",
+    "EP-PHASE3"
+  ],
+  "resource_refs": [
+    "roles/base-role/DISTRIBUTED_WORK.md s10 (resource sharing and priority)",
+    "infra/FLEET_HOSTS.md"
+  ],
+  "operator_decisions": [
+    "2026-10-03 EP-GLOBAL declared permanent; peer of the phase epics (roles/Achilles/prompts/2026-10-03_epics_phase2b/01_OPERATOR_DIRECTIVE_verbatim.md)",
+    "2026-10-03 generic workers, epic priority bands, operator priority queue placed under EP-GLOBAL / TH-GLOBAL-CONTROL-PLANE (roles/Achilles/prompts/2026-10-03_generic_workers/)"
+  ],
+  "exclusions": [
+    "Phase-specific science and engineering (they belong to EP-PHASE2B / EP-PHASE3 and later phases)"
+  ],
+  "deferred": [],
+  "authority": "operator, 2026-10-03 (roles/Achilles/prompts/2026-10-03_epics_phase2b/01_OPERATOR_DIRECTIVE_verbatim.md)"
+}

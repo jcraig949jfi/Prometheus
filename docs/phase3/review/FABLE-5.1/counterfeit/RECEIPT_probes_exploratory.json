@@ -1,0 +1,3377 @@
+{
+ "design_bases_gauntlet2": [
+  37,
+  41,
+  53,
+  67,
+  71,
+  83
+ ],
+ "design_bases_gauntlet3": [
+  43,
+  47,
+  59,
+  61,
+  73,
+  79
+ ],
+ "gauntlet2_sha256_lf": "467f8dbb15b9fd8a3f6d36dff848a3410abba35b477b0a7269075482a44f31a6",
+ "gauntlet3_sha256_lf": "09eec253d6f0f9bc19b34c3251df6b02f6d841ac9bf60232618f85a7dcaed03a",
+ "host": "SKULLPORT",
+ "probes": {
+  "baseline": {
+   "run2_BUILDER_factor4": {
+    "LIFECYCLE": [
+     24,
+     24,
+     24,
+     24,
+     24,
+     24
+    ],
+    "NESTING": [
+     24,
+     24,
+     24,
+     24,
+     24,
+     24
+    ],
+    "PROVENANCE": [
+     24,
+     24,
+     24,
+     24,
+     24,
+     24
+    ],
+    "REPEAT": [
+     24,
+     24,
+     24,
+     24,
+     24,
+     24
+    ],
+    "SAVINGS": [
+     24,
+     24,
+     24,
+     24,
+     24,
+     24
+    ],
+    "U_TRANSFER": [
+     24,
+     24,
+     24,
+     24,
+     24,
+     24
+    ],
+    "verdicts": [
+     "PASS",
+     "PASS",
+     "PASS",
+     "PASS",
+     "PASS",
+     "PASS"
+    ]
+   },
+   "run3_BUILDER_factor2": {
+    "LIFECYCLE": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "NESTING": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "PROVENANCE": [
+     24,
+     24,
+     24,
+     24,
+     24,
+     24
+    ],
+    "REPEAT": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "SAVINGS": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "U_TRANSFER": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "verdicts": [
+     "FAIL",
+     "FAIL",
+     "FAIL",
+     "FAIL",
+     "FAIL",
+     "FAIL"
+    ]
+   },
+   "run3_BUILDER_factor4": {
+    "LIFECYCLE": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "NESTING": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "PROVENANCE": [
+     24,
+     24,
+     24,
+     24,
+     24,
+     24
+    ],
+    "REPEAT": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "SAVINGS": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "U_TRANSFER": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "verdicts": [
+     "FAIL",
+     "FAIL",
+     "FAIL",
+     "FAIL",
+     "FAIL",
+     "FAIL"
+    ]
+   },
+   "run3_STRATEGIST_factor2": {
+    "LIFECYCLE": [
+     24,
+     22,
+     24,
+     23,
+     24,
+     23
+    ],
+    "NESTING": [
+     24,
+     24,
+     24,
+     24,
+     24,
+     24
+    ],
+    "PROVENANCE": [
+     23,
+     24,
+     23,
+     23,
+     22,
+     24
+    ],
+    "REPEAT": [
+     24,
+     22,
+     24,
+     24,
+     24,
+     24
+    ],
+    "SAVINGS": [
+     24,
+     22,
+     24,
+     24,
+     24,
+     24
+    ],
+    "U_TRANSFER": [
+     24,
+     23,
+     24,
+     24,
+     24,
+     24
+    ],
+    "verdicts": [
+     "PASS",
+     "PASS",
+     "PASS",
+     "PASS",
+     "PASS",
+     "PASS"
+    ]
+   },
+   "run3_STRATEGIST_factor4": {
+    "LIFECYCLE": [
+     24,
+     22,
+     24,
+     23,
+     24,
+     23
+    ],
+    "NESTING": [
+     22,
+     24,
+     24,
+     23,
+     23,
+     24
+    ],
+    "PROVENANCE": [
+     23,
+     24,
+     23,
+     23,
+     22,
+     24
+    ],
+    "REPEAT": [
+     24,
+     21,
+     24,
+     23,
+     24,
+     24
+    ],
+    "SAVINGS": [
+     22,
+     22,
+     24,
+     23,
+     23,
+     24
+    ],
+    "U_TRANSFER": [
+     24,
+     23,
+     24,
+     24,
+     24,
+     24
+    ],
+    "verdicts": [
+     "PASS",
+     "INDETERMINATE",
+     "PASS",
+     "PASS",
+     "PASS",
+     "PASS"
+    ]
+   }
+  },
+  "confirm": {
+   "CONFIRM=1": {
+    "LIFECYCLE": [
+     22,
+     22,
+     19,
+     20,
+     23,
+     20
+    ],
+    "NESTING": [
+     10,
+     16,
+     11,
+     10,
+     8,
+     10
+    ],
+    "PROVENANCE": [
+     15,
+     20,
+     17,
+     16,
+     16,
+     18
+    ],
+    "REPEAT": [
+     13,
+     18,
+     12,
+     17,
+     17,
+     16
+    ],
+    "SAVINGS": [
+     18,
+     18,
+     13,
+     16,
+     18,
+     19
+    ],
+    "U_TRANSFER": [
+     19,
+     19,
+     15,
+     15,
+     18,
+     15
+    ],
+    "verdicts": [
+     "FAIL",
+     "INDETERMINATE",
+     "FAIL",
+     "FAIL",
+     "FAIL",
+     "FAIL"
+    ]
+   },
+   "CONFIRM=2": {
+    "LIFECYCLE": [
+     24,
+     24,
+     24,
+     24,
+     24,
+     24
+    ],
+    "NESTING": [
+     22,
+     22,
+     22,
+     24,
+     20,
+     23
+    ],
+    "PROVENANCE": [
+     23,
+     24,
+     22,
+     24,
+     23,
+     23
+    ],
+    "REPEAT": [
+     23,
+     22,
+     22,
+     24,
+     22,
+     22
+    ],
+    "SAVINGS": [
+     22,
+     22,
+     24,
+     24,
+     23,
+     23
+    ],
+    "U_TRANSFER": [
+     22,
+     22,
+     24,
+     23,
+     23,
+     23
+    ],
+    "verdicts": [
+     "PASS",
+     "PASS",
+     "PASS",
+     "PASS",
+     "INDETERMINATE",
+     "PASS"
+    ]
+   },
+   "CONFIRM=3": {
+    "LIFECYCLE": [
+     24,
+     24,
+     24,
+     24,
+     24,
+     24
+    ],
+    "NESTING": [
+     24,
+     24,
+     22,
+     24,
+     23,
+     24
+    ],
+    "PROVENANCE": [
+     24,
+     24,
+     24,
+     24,
+     24,
+     24
+    ],
+    "REPEAT": [
+     24,
+     24,
+     23,
+     24,
+     24,
+     23
+    ],
+    "SAVINGS": [
+     24,
+     24,
+     24,
+     24,
+     24,
+     24
+    ],
+    "U_TRANSFER": [
+     24,
+     24,
+     24,
+     24,
+     24,
+     24
+    ],
+    "verdicts": [
+     "PASS",
+     "PASS",
+     "PASS",
+     "PASS",
+     "PASS",
+     "PASS"
+    ]
+   },
+   "CONFIRM=8": {
+    "LIFECYCLE": [
+     24,
+     24,
+     24,
+     24,
+     24,
+     24
+    ],
+    "NESTING": [
+     24,
+     24,
+     24,
+     24,
+     24,
+     24
+    ],
+    "PROVENANCE": [
+     24,
+     24,
+     24,
+     24,
+     24,
+     24
+    ],
+    "REPEAT": [
+     24,
+     24,
+     24,
+     24,
+     24,
+     24
+    ],
+    "SAVINGS": [
+     24,
+     24,
+     24,
+     24,
+     24,
+     24
+    ],
+    "U_TRANSFER": [
+     24,
+     24,
+     24,
+     24,
+     24,
+     24
+    ],
+    "verdicts": [
+     "PASS",
+     "PASS",
+     "PASS",
+     "PASS",
+     "PASS",
+     "PASS"
+    ]
+   }
+  },
+  "curriculum": {
+   "four_parts_disjoint__BUILDER": {
+    "LIFECYCLE": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "NESTING": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "PROVENANCE": [
+     24,
+     24,
+     24,
+     24,
+     24,
+     24
+    ],
+    "REPEAT": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "SAVINGS": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "U_TRANSFER": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "developed_cost_equals_naive": [
+     3,
+     1,
+     1,
+     2,
+     2,
+     1
+    ],
+    "median_naive_B_and_developed_B": [
+     [
+      307.5,
+      315.0
+     ],
+     [
+      345.5,
+      359.5
+     ],
+     [
+      403.5,
+      408.5
+     ],
+     [
+      303.5,
+      307.0
+     ],
+     [
+      384.5,
+      394.0
+     ],
+     [
+      288.5,
+      299.0
+     ]
+    ],
+    "verdicts": [
+     "FAIL",
+     "FAIL",
+     "FAIL",
+     "FAIL",
+     "FAIL",
+     "FAIL"
+    ]
+   },
+   "four_parts_disjoint__STRATEGIST": {
+    "LIFECYCLE": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "NESTING": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "PROVENANCE": [
+     23,
+     24,
+     23,
+     23,
+     22,
+     24
+    ],
+    "REPEAT": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "SAVINGS": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "U_TRANSFER": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "developed_cost_equals_naive": [
+     24,
+     24,
+     24,
+     24,
+     24,
+     24
+    ],
+    "median_naive_B_and_developed_B": [
+     [
+      356.5,
+      356.5
+     ],
+     [
+      365.5,
+      365.5
+     ],
+     [
+      372.5,
+      372.5
+     ],
+     [
+      353.5,
+      353.5
+     ],
+     [
+      274.0,
+      274.0
+     ],
+     [
+      426.0,
+      426.0
+     ]
+    ],
+    "verdicts": [
+     "FAIL",
+     "FAIL",
+     "FAIL",
+     "FAIL",
+     "FAIL",
+     "FAIL"
+    ]
+   },
+   "four_parts_disjoint_plus_one_composite__BUILDER": {
+    "LIFECYCLE": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "NESTING": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "PROVENANCE": [
+     24,
+     24,
+     24,
+     24,
+     24,
+     24
+    ],
+    "REPEAT": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "SAVINGS": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "U_TRANSFER": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "developed_cost_equals_naive": [
+     3,
+     1,
+     1,
+     1,
+     2,
+     1
+    ],
+    "median_naive_B_and_developed_B": [
+     [
+      307.5,
+      315.0
+     ],
+     [
+      345.5,
+      359.5
+     ],
+     [
+      403.5,
+      408.5
+     ],
+     [
+      303.5,
+      307.0
+     ],
+     [
+      384.5,
+      394.0
+     ],
+     [
+      288.5,
+      299.0
+     ]
+    ],
+    "verdicts": [
+     "FAIL",
+     "FAIL",
+     "FAIL",
+     "FAIL",
+     "FAIL",
+     "FAIL"
+    ]
+   },
+   "four_parts_disjoint_plus_one_composite__STRATEGIST": {
+    "LIFECYCLE": [
+     21,
+     21,
+     23,
+     21,
+     22,
+     23
+    ],
+    "NESTING": [
+     24,
+     24,
+     24,
+     24,
+     24,
+     24
+    ],
+    "PROVENANCE": [
+     23,
+     24,
+     23,
+     23,
+     22,
+     24
+    ],
+    "REPEAT": [
+     24,
+     22,
+     24,
+     24,
+     24,
+     24
+    ],
+    "SAVINGS": [
+     24,
+     22,
+     24,
+     24,
+     24,
+     24
+    ],
+    "U_TRANSFER": [
+     24,
+     23,
+     24,
+     24,
+     24,
+     24
+    ],
+    "developed_cost_equals_naive": [
+     0,
+     1,
+     0,
+     0,
+     0,
+     0
+    ],
+    "median_naive_B_and_developed_B": [
+     [
+      356.5,
+      50.5
+     ],
+     [
+      365.5,
+      42.0
+     ],
+     [
+      372.5,
+      46.0
+     ],
+     [
+      353.5,
+      50.5
+     ],
+     [
+      274.0,
+      37.5
+     ],
+     [
+      426.0,
+      50.0
+     ]
+    ],
+    "verdicts": [
+     "INDETERMINATE",
+     "INDETERMINATE",
+     "PASS",
+     "INDETERMINATE",
+     "PASS",
+     "PASS"
+    ]
+   },
+   "four_parts_of_the_targets__BUILDER": {
+    "LIFECYCLE": [
+     24,
+     24,
+     24,
+     24,
+     24,
+     24
+    ],
+    "NESTING": [
+     24,
+     24,
+     24,
+     24,
+     24,
+     24
+    ],
+    "PROVENANCE": [
+     24,
+     24,
+     24,
+     24,
+     24,
+     24
+    ],
+    "REPEAT": [
+     24,
+     24,
+     24,
+     24,
+     22,
+     24
+    ],
+    "SAVINGS": [
+     24,
+     24,
+     24,
+     24,
+     23,
+     24
+    ],
+    "U_TRANSFER": [
+     24,
+     24,
+     24,
+     24,
+     23,
+     24
+    ],
+    "developed_cost_equals_naive": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "median_naive_B_and_developed_B": [
+     [
+      307.5,
+      20.5
+     ],
+     [
+      345.5,
+      19.0
+     ],
+     [
+      403.5,
+      19.5
+     ],
+     [
+      303.5,
+      19.0
+     ],
+     [
+      384.5,
+      20.0
+     ],
+     [
+      288.5,
+      20.0
+     ]
+    ],
+    "verdicts": [
+     "PASS",
+     "PASS",
+     "PASS",
+     "PASS",
+     "PASS",
+     "PASS"
+    ]
+   },
+   "four_parts_of_the_targets__STRATEGIST": {
+    "LIFECYCLE": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "NESTING": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "PROVENANCE": [
+     23,
+     24,
+     23,
+     23,
+     22,
+     24
+    ],
+    "REPEAT": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "SAVINGS": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "U_TRANSFER": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "developed_cost_equals_naive": [
+     24,
+     24,
+     24,
+     24,
+     24,
+     24
+    ],
+    "median_naive_B_and_developed_B": [
+     [
+      356.5,
+      356.5
+     ],
+     [
+      365.5,
+      365.5
+     ],
+     [
+      372.5,
+      372.5
+     ],
+     [
+      353.5,
+      353.5
+     ],
+     [
+      274.0,
+      274.0
+     ],
+     [
+      426.0,
+      426.0
+     ]
+    ],
+    "verdicts": [
+     "FAIL",
+     "FAIL",
+     "FAIL",
+     "FAIL",
+     "FAIL",
+     "FAIL"
+    ]
+   },
+   "one_composite_disjoint__BUILDER": {
+    "LIFECYCLE": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "NESTING": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "PROVENANCE": [
+     24,
+     24,
+     24,
+     24,
+     24,
+     24
+    ],
+    "REPEAT": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "SAVINGS": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "U_TRANSFER": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "developed_cost_equals_naive": [
+     8,
+     7,
+     5,
+     8,
+     10,
+     3
+    ],
+    "median_naive_B_and_developed_B": [
+     [
+      307.5,
+      307.0
+     ],
+     [
+      345.5,
+      346.5
+     ],
+     [
+      403.5,
+      403.5
+     ],
+     [
+      303.5,
+      303.5
+     ],
+     [
+      384.5,
+      386.5
+     ],
+     [
+      288.5,
+      289.0
+     ]
+    ],
+    "verdicts": [
+     "FAIL",
+     "FAIL",
+     "FAIL",
+     "FAIL",
+     "FAIL",
+     "FAIL"
+    ]
+   },
+   "one_composite_disjoint__STRATEGIST": {
+    "LIFECYCLE": [
+     24,
+     22,
+     24,
+     23,
+     24,
+     23
+    ],
+    "NESTING": [
+     24,
+     24,
+     24,
+     24,
+     24,
+     24
+    ],
+    "PROVENANCE": [
+     23,
+     24,
+     23,
+     23,
+     22,
+     24
+    ],
+    "REPEAT": [
+     24,
+     22,
+     24,
+     24,
+     24,
+     24
+    ],
+    "SAVINGS": [
+     24,
+     22,
+     24,
+     24,
+     24,
+     24
+    ],
+    "U_TRANSFER": [
+     24,
+     23,
+     24,
+     24,
+     24,
+     24
+    ],
+    "developed_cost_equals_naive": [
+     0,
+     1,
+     0,
+     0,
+     0,
+     0
+    ],
+    "median_naive_B_and_developed_B": [
+     [
+      356.5,
+      50.5
+     ],
+     [
+      365.5,
+      42.0
+     ],
+     [
+      372.5,
+      46.0
+     ],
+     [
+      353.5,
+      50.5
+     ],
+     [
+      274.0,
+      37.5
+     ],
+     [
+      426.0,
+      50.0
+     ]
+    ],
+    "verdicts": [
+     "PASS",
+     "PASS",
+     "PASS",
+     "PASS",
+     "PASS",
+     "PASS"
+    ]
+   },
+   "one_composite_of_the_targets_parts__BUILDER": {
+    "LIFECYCLE": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "NESTING": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "PROVENANCE": [
+     24,
+     24,
+     24,
+     24,
+     24,
+     24
+    ],
+    "REPEAT": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "SAVINGS": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "U_TRANSFER": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "developed_cost_equals_naive": [
+     6,
+     7,
+     5,
+     6,
+     11,
+     5
+    ],
+    "median_naive_B_and_developed_B": [
+     [
+      307.5,
+      307.5
+     ],
+     [
+      345.5,
+      346.5
+     ],
+     [
+      403.5,
+      404.0
+     ],
+     [
+      303.5,
+      304.0
+     ],
+     [
+      384.5,
+      385.5
+     ],
+     [
+      288.5,
+      290.0
+     ]
+    ],
+    "verdicts": [
+     "FAIL",
+     "FAIL",
+     "FAIL",
+     "FAIL",
+     "FAIL",
+     "FAIL"
+    ]
+   },
+   "one_composite_of_the_targets_parts__STRATEGIST": {
+    "LIFECYCLE": [
+     24,
+     24,
+     24,
+     24,
+     24,
+     24
+    ],
+    "NESTING": [
+     23,
+     24,
+     24,
+     24,
+     24,
+     24
+    ],
+    "PROVENANCE": [
+     23,
+     24,
+     23,
+     23,
+     22,
+     24
+    ],
+    "REPEAT": [
+     24,
+     24,
+     24,
+     24,
+     24,
+     24
+    ],
+    "SAVINGS": [
+     24,
+     24,
+     24,
+     24,
+     24,
+     24
+    ],
+    "U_TRANSFER": [
+     24,
+     24,
+     24,
+     24,
+     24,
+     24
+    ],
+    "developed_cost_equals_naive": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "median_naive_B_and_developed_B": [
+     [
+      356.5,
+      50.5
+     ],
+     [
+      365.5,
+      41.5
+     ],
+     [
+      372.5,
+      46.0
+     ],
+     [
+      353.5,
+      50.5
+     ],
+     [
+      274.0,
+      37.5
+     ],
+     [
+      426.0,
+      50.0
+     ]
+    ],
+    "verdicts": [
+     "PASS",
+     "PASS",
+     "PASS",
+     "PASS",
+     "PASS",
+     "PASS"
+    ]
+   }
+  },
+  "factor": {
+   "factor=16": {
+    "LIFECYCLE": [
+     24,
+     24,
+     24,
+     24,
+     24,
+     24
+    ],
+    "NESTING": [
+     14,
+     13,
+     15,
+     12,
+     12,
+     15
+    ],
+    "PROVENANCE": [
+     24,
+     24,
+     24,
+     24,
+     24,
+     24
+    ],
+    "REPEAT": [
+     13,
+     5,
+     8,
+     10,
+     10,
+     11
+    ],
+    "SAVINGS": [
+     11,
+     14,
+     17,
+     11,
+     12,
+     11
+    ],
+    "U_TRANSFER": [
+     24,
+     24,
+     24,
+     24,
+     24,
+     24
+    ],
+    "verdicts": [
+     "FAIL",
+     "FAIL",
+     "FAIL",
+     "FAIL",
+     "FAIL",
+     "FAIL"
+    ]
+   },
+   "factor=2": {
+    "LIFECYCLE": [
+     24,
+     24,
+     24,
+     24,
+     24,
+     24
+    ],
+    "NESTING": [
+     24,
+     24,
+     24,
+     24,
+     24,
+     24
+    ],
+    "PROVENANCE": [
+     24,
+     24,
+     24,
+     24,
+     24,
+     24
+    ],
+    "REPEAT": [
+     24,
+     24,
+     24,
+     24,
+     24,
+     24
+    ],
+    "SAVINGS": [
+     24,
+     24,
+     24,
+     24,
+     24,
+     24
+    ],
+    "U_TRANSFER": [
+     24,
+     24,
+     24,
+     24,
+     24,
+     24
+    ],
+    "verdicts": [
+     "PASS",
+     "PASS",
+     "PASS",
+     "PASS",
+     "PASS",
+     "PASS"
+    ]
+   },
+   "factor=4": {
+    "LIFECYCLE": [
+     24,
+     24,
+     24,
+     24,
+     24,
+     24
+    ],
+    "NESTING": [
+     24,
+     24,
+     24,
+     24,
+     24,
+     24
+    ],
+    "PROVENANCE": [
+     24,
+     24,
+     24,
+     24,
+     24,
+     24
+    ],
+    "REPEAT": [
+     24,
+     24,
+     24,
+     24,
+     24,
+     24
+    ],
+    "SAVINGS": [
+     24,
+     24,
+     24,
+     24,
+     24,
+     24
+    ],
+    "U_TRANSFER": [
+     24,
+     24,
+     24,
+     24,
+     24,
+     24
+    ],
+    "verdicts": [
+     "PASS",
+     "PASS",
+     "PASS",
+     "PASS",
+     "PASS",
+     "PASS"
+    ]
+   },
+   "factor=6": {
+    "LIFECYCLE": [
+     24,
+     24,
+     24,
+     24,
+     24,
+     24
+    ],
+    "NESTING": [
+     24,
+     24,
+     24,
+     24,
+     24,
+     24
+    ],
+    "PROVENANCE": [
+     24,
+     24,
+     24,
+     24,
+     24,
+     24
+    ],
+    "REPEAT": [
+     24,
+     24,
+     24,
+     24,
+     24,
+     24
+    ],
+    "SAVINGS": [
+     24,
+     24,
+     24,
+     24,
+     24,
+     24
+    ],
+    "U_TRANSFER": [
+     24,
+     24,
+     24,
+     24,
+     24,
+     24
+    ],
+    "verdicts": [
+     "PASS",
+     "PASS",
+     "PASS",
+     "PASS",
+     "PASS",
+     "PASS"
+    ]
+   },
+   "factor=8": {
+    "LIFECYCLE": [
+     24,
+     24,
+     24,
+     24,
+     24,
+     24
+    ],
+    "NESTING": [
+     23,
+     21,
+     21,
+     22,
+     23,
+     24
+    ],
+    "PROVENANCE": [
+     24,
+     24,
+     24,
+     24,
+     24,
+     24
+    ],
+    "REPEAT": [
+     24,
+     22,
+     20,
+     21,
+     24,
+     24
+    ],
+    "SAVINGS": [
+     21,
+     21,
+     24,
+     21,
+     21,
+     22
+    ],
+    "U_TRANSFER": [
+     24,
+     24,
+     24,
+     24,
+     24,
+     24
+    ],
+    "verdicts": [
+     "INDETERMINATE",
+     "INDETERMINATE",
+     "INDETERMINATE",
+     "INDETERMINATE",
+     "INDETERMINATE",
+     "PASS"
+    ]
+   }
+  },
+  "facts": {
+   "BUILDER_library_after_development_of_144": {
+    "entries=1 depth=[4] pairs=0": 144
+   },
+   "STRATEGIST_index_after_development_of_144": {
+    "decoy": 1,
+    "plain": 1,
+    "useful": 142
+   },
+   "STRATEGIST_index_after_irrelevant_history_of_144": {
+    "plain": 144
+   },
+   "history_families": 288,
+   "history_families_in_the_inherited_pairs_first_list": 288,
+   "targets": 432,
+   "targets_covered_by_a_pair_of_history_parts": 0,
+   "targets_in_the_inherited_pairs_first_list": 432,
+   "templates_of_depth_3_or_less": 147
+  },
+  "families": {
+   "development_families=1": {
+    "LIFECYCLE": [
+     0,
+     0,
+     0,
+     0,
+     1,
+     0
+    ],
+    "NESTING": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "PROVENANCE": [
+     24,
+     24,
+     24,
+     24,
+     24,
+     24
+    ],
+    "REPEAT": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "SAVINGS": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "U_TRANSFER": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "verdicts": [
+     "FAIL",
+     "FAIL",
+     "FAIL",
+     "FAIL",
+     "FAIL",
+     "FAIL"
+    ]
+   },
+   "development_families=2": {
+    "LIFECYCLE": [
+     11,
+     10,
+     10,
+     12,
+     9,
+     10
+    ],
+    "NESTING": [
+     4,
+     5,
+     2,
+     7,
+     6,
+     3
+    ],
+    "PROVENANCE": [
+     24,
+     24,
+     24,
+     24,
+     24,
+     24
+    ],
+    "REPEAT": [
+     1,
+     0,
+     1,
+     0,
+     0,
+     1
+    ],
+    "SAVINGS": [
+     3,
+     3,
+     2,
+     5,
+     6,
+     4
+    ],
+    "U_TRANSFER": [
+     3,
+     3,
+     2,
+     5,
+     6,
+     4
+    ],
+    "verdicts": [
+     "FAIL",
+     "FAIL",
+     "FAIL",
+     "FAIL",
+     "FAIL",
+     "FAIL"
+    ]
+   },
+   "development_families=3": {
+    "LIFECYCLE": [
+     22,
+     20,
+     17,
+     20,
+     18,
+     22
+    ],
+    "NESTING": [
+     12,
+     11,
+     12,
+     15,
+     14,
+     9
+    ],
+    "PROVENANCE": [
+     24,
+     24,
+     24,
+     24,
+     24,
+     24
+    ],
+    "REPEAT": [
+     7,
+     7,
+     8,
+     8,
+     4,
+     5
+    ],
+    "SAVINGS": [
+     14,
+     11,
+     6,
+     12,
+     15,
+     15
+    ],
+    "U_TRANSFER": [
+     14,
+     11,
+     6,
+     12,
+     15,
+     15
+    ],
+    "verdicts": [
+     "FAIL",
+     "FAIL",
+     "FAIL",
+     "FAIL",
+     "FAIL",
+     "FAIL"
+    ]
+   },
+   "development_families=4": {
+    "LIFECYCLE": [
+     24,
+     24,
+     24,
+     24,
+     24,
+     24
+    ],
+    "NESTING": [
+     24,
+     24,
+     24,
+     24,
+     24,
+     24
+    ],
+    "PROVENANCE": [
+     24,
+     24,
+     24,
+     24,
+     24,
+     24
+    ],
+    "REPEAT": [
+     24,
+     24,
+     24,
+     24,
+     24,
+     24
+    ],
+    "SAVINGS": [
+     24,
+     24,
+     24,
+     24,
+     24,
+     24
+    ],
+    "U_TRANSFER": [
+     24,
+     24,
+     24,
+     24,
+     24,
+     24
+    ],
+    "verdicts": [
+     "PASS",
+     "PASS",
+     "PASS",
+     "PASS",
+     "PASS",
+     "PASS"
+    ]
+   }
+  },
+  "k": {
+   "K=16": {
+    "LIFECYCLE": [
+     24,
+     22,
+     24,
+     23,
+     24,
+     23
+    ],
+    "NESTING": [
+     24,
+     24,
+     24,
+     24,
+     24,
+     24
+    ],
+    "PROVENANCE": [
+     21,
+     23,
+     22,
+     23,
+     22,
+     24
+    ],
+    "REPEAT": [
+     24,
+     22,
+     24,
+     24,
+     24,
+     24
+    ],
+    "SAVINGS": [
+     24,
+     22,
+     24,
+     24,
+     24,
+     24
+    ],
+    "U_TRANSFER": [
+     24,
+     23,
+     24,
+     24,
+     24,
+     24
+    ],
+    "verdicts": [
+     "INDETERMINATE",
+     "PASS",
+     "PASS",
+     "PASS",
+     "PASS",
+     "PASS"
+    ]
+   },
+   "K=2": {
+    "LIFECYCLE": [
+     24,
+     22,
+     24,
+     23,
+     24,
+     23
+    ],
+    "NESTING": [
+     24,
+     24,
+     24,
+     24,
+     24,
+     24
+    ],
+    "PROVENANCE": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "REPEAT": [
+     24,
+     22,
+     24,
+     24,
+     24,
+     24
+    ],
+    "SAVINGS": [
+     24,
+     22,
+     24,
+     24,
+     24,
+     24
+    ],
+    "U_TRANSFER": [
+     24,
+     22,
+     24,
+     24,
+     24,
+     24
+    ],
+    "verdicts": [
+     "FAIL",
+     "FAIL",
+     "FAIL",
+     "FAIL",
+     "FAIL",
+     "FAIL"
+    ]
+   },
+   "K=3": {
+    "LIFECYCLE": [
+     24,
+     22,
+     24,
+     23,
+     24,
+     23
+    ],
+    "NESTING": [
+     24,
+     24,
+     24,
+     24,
+     24,
+     24
+    ],
+    "PROVENANCE": [
+     14,
+     13,
+     13,
+     11,
+     11,
+     10
+    ],
+    "REPEAT": [
+     24,
+     22,
+     24,
+     24,
+     24,
+     24
+    ],
+    "SAVINGS": [
+     24,
+     22,
+     24,
+     24,
+     24,
+     24
+    ],
+    "U_TRANSFER": [
+     24,
+     23,
+     24,
+     24,
+     24,
+     24
+    ],
+    "verdicts": [
+     "INDETERMINATE",
+     "INDETERMINATE",
+     "INDETERMINATE",
+     "FAIL",
+     "FAIL",
+     "FAIL"
+    ]
+   },
+   "K=32": {
+    "LIFECYCLE": [
+     24,
+     22,
+     24,
+     23,
+     24,
+     23
+    ],
+    "NESTING": [
+     24,
+     24,
+     24,
+     24,
+     24,
+     24
+    ],
+    "PROVENANCE": [
+     23,
+     24,
+     23,
+     23,
+     22,
+     24
+    ],
+    "REPEAT": [
+     24,
+     22,
+     24,
+     24,
+     24,
+     24
+    ],
+    "SAVINGS": [
+     24,
+     22,
+     24,
+     24,
+     24,
+     24
+    ],
+    "U_TRANSFER": [
+     24,
+     23,
+     24,
+     24,
+     24,
+     24
+    ],
+    "verdicts": [
+     "PASS",
+     "PASS",
+     "PASS",
+     "PASS",
+     "PASS",
+     "PASS"
+    ]
+   },
+   "K=4": {
+    "LIFECYCLE": [
+     24,
+     22,
+     24,
+     23,
+     24,
+     23
+    ],
+    "NESTING": [
+     24,
+     24,
+     24,
+     24,
+     24,
+     24
+    ],
+    "PROVENANCE": [
+     14,
+     17,
+     17,
+     12,
+     15,
+     20
+    ],
+    "REPEAT": [
+     24,
+     22,
+     24,
+     24,
+     24,
+     24
+    ],
+    "SAVINGS": [
+     24,
+     22,
+     24,
+     24,
+     24,
+     24
+    ],
+    "U_TRANSFER": [
+     24,
+     23,
+     24,
+     24,
+     24,
+     24
+    ],
+    "verdicts": [
+     "INDETERMINATE",
+     "INDETERMINATE",
+     "INDETERMINATE",
+     "FAIL",
+     "INDETERMINATE",
+     "INDETERMINATE"
+    ]
+   },
+   "K=64": {
+    "LIFECYCLE": [
+     24,
+     22,
+     24,
+     23,
+     24,
+     23
+    ],
+    "NESTING": [
+     24,
+     24,
+     24,
+     24,
+     24,
+     24
+    ],
+    "PROVENANCE": [
+     24,
+     23,
+     23,
+     23,
+     23,
+     23
+    ],
+    "REPEAT": [
+     24,
+     22,
+     24,
+     24,
+     24,
+     24
+    ],
+    "SAVINGS": [
+     24,
+     22,
+     24,
+     24,
+     24,
+     24
+    ],
+    "U_TRANSFER": [
+     24,
+     23,
+     24,
+     24,
+     24,
+     24
+    ],
+    "verdicts": [
+     "PASS",
+     "PASS",
+     "PASS",
+     "PASS",
+     "PASS",
+     "PASS"
+    ]
+   },
+   "K=8": {
+    "LIFECYCLE": [
+     24,
+     22,
+     24,
+     23,
+     24,
+     23
+    ],
+    "NESTING": [
+     24,
+     24,
+     24,
+     24,
+     24,
+     24
+    ],
+    "PROVENANCE": [
+     21,
+     20,
+     21,
+     22,
+     21,
+     21
+    ],
+    "REPEAT": [
+     24,
+     22,
+     24,
+     24,
+     24,
+     24
+    ],
+    "SAVINGS": [
+     24,
+     22,
+     24,
+     24,
+     24,
+     24
+    ],
+    "U_TRANSFER": [
+     24,
+     23,
+     24,
+     24,
+     24,
+     24
+    ],
+    "verdicts": [
+     "INDETERMINATE",
+     "INDETERMINATE",
+     "INDETERMINATE",
+     "PASS",
+     "INDETERMINATE",
+     "INDETERMINATE"
+    ]
+   }
+  },
+  "memoriser": {
+   "resets_applied": {
+    "LIFECYCLE": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "NESTING": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "PROVENANCE": [
+     24,
+     24,
+     24,
+     24,
+     24,
+     24
+    ],
+    "REPEAT": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "SAVINGS": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "U_TRANSFER": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "verdicts": [
+     "FAIL",
+     "FAIL",
+     "FAIL",
+     "FAIL",
+     "FAIL",
+     "FAIL"
+    ]
+   },
+   "resets_skipped": {
+    "LIFECYCLE": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "NESTING": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "PROVENANCE": [
+     24,
+     24,
+     24,
+     24,
+     24,
+     24
+    ],
+    "REPEAT": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "SAVINGS": [
+     24,
+     24,
+     24,
+     24,
+     24,
+     24
+    ],
+    "U_TRANSFER": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "verdicts": [
+     "FAIL",
+     "FAIL",
+     "FAIL",
+     "FAIL",
+     "FAIL",
+     "FAIL"
+    ]
+   }
+  },
+  "power": {
+   "development_plus_B_cheaper_than_naive_B_of_240": 104,
+   "factor=2": {
+    "block_verdicts": [
+     "PASS",
+     "PASS",
+     "PASS",
+     "PASS",
+     "PASS",
+     "PASS",
+     "PASS",
+     "INDETERMINATE",
+     "PASS",
+     "PASS"
+    ],
+    "holds_of_240": {
+     "LIFECYCLE": 235,
+     "NESTING": 239,
+     "PROVENANCE": 232,
+     "REPEAT": 239,
+     "SAVINGS": 239,
+     "U_TRANSFER": 239
+    }
+   },
+   "factor=4": {
+    "block_verdicts": [
+     "PASS",
+     "PASS",
+     "PASS",
+     "PASS",
+     "INDETERMINATE",
+     "INDETERMINATE",
+     "INDETERMINATE",
+     "INDETERMINATE",
+     "PASS",
+     "PASS"
+    ],
+    "holds_of_240": {
+     "LIFECYCLE": 235,
+     "NESTING": 231,
+     "PROVENANCE": 232,
+     "REPEAT": 226,
+     "SAVINGS": 231,
+     "U_TRANSFER": 239
+    }
+   }
+  },
+  "reading1": {
+   "LIFECYCLE": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "SAVINGS_factor2": [
+    18,
+    18,
+    18,
+    18,
+    19,
+    19
+   ],
+   "SAVINGS_factor4": [
+    3,
+    1,
+    2,
+    0,
+    3,
+    1
+   ],
+   "median_naive_and_developed": [
+    [
+     26.5,
+     9.0
+    ],
+    [
+     24.5,
+     10.0
+    ],
+    [
+     22.5,
+     10.0
+    ],
+    [
+     22.5,
+     9.0
+    ],
+    [
+     26.0,
+     10.0
+    ],
+    [
+     27.5,
+     9.5
+    ]
+   ]
+  },
+  "registered_arithmetic": {
+   "run2_BUILDER": {
+    "lesioned_line_scores_12.0_the_default_for_nothing_built": 24,
+    "max_developed_cost_B_D_E": 27,
+    "min_naive_cost_B_D_E": 166,
+    "sham_cheaper_than_intact": 24
+   },
+   "run2_BUILDER_by_factor": {
+    "factor=10": {
+     "counts": {
+      "LIFECYCLE": 24,
+      "NESTING": 18,
+      "PROVENANCE": 24,
+      "REPEAT": 15,
+      "SAVINGS": 19,
+      "U_TRANSFER": 24
+     },
+     "verdict": "INDETERMINATE"
+    },
+    "factor=16": {
+     "counts": {
+      "LIFECYCLE": 24,
+      "NESTING": 12,
+      "PROVENANCE": 24,
+      "REPEAT": 9,
+      "SAVINGS": 13,
+      "U_TRANSFER": 24
+     },
+     "verdict": "FAIL"
+    },
+    "factor=2": {
+     "counts": {
+      "LIFECYCLE": 24,
+      "NESTING": 24,
+      "PROVENANCE": 24,
+      "REPEAT": 24,
+      "SAVINGS": 24,
+      "U_TRANSFER": 24
+     },
+     "verdict": "PASS"
+    },
+    "factor=4": {
+     "counts": {
+      "LIFECYCLE": 24,
+      "NESTING": 24,
+      "PROVENANCE": 24,
+      "REPEAT": 24,
+      "SAVINGS": 24,
+      "U_TRANSFER": 24
+     },
+     "verdict": "PASS"
+    },
+    "factor=6": {
+     "counts": {
+      "LIFECYCLE": 24,
+      "NESTING": 24,
+      "PROVENANCE": 24,
+      "REPEAT": 24,
+      "SAVINGS": 24,
+      "U_TRANSFER": 24
+     },
+     "verdict": "PASS"
+    },
+    "factor=8": {
+     "counts": {
+      "LIFECYCLE": 24,
+      "NESTING": 23,
+      "PROVENANCE": 24,
+      "REPEAT": 22,
+      "SAVINGS": 22,
+      "U_TRANSFER": 24
+     },
+     "verdict": "PASS"
+    }
+   },
+   "run2_MEMORISER_counts": {
+    "LIFECYCLE": 0,
+    "NESTING": 0,
+    "PROVENANCE": 24,
+    "REPEAT": 0,
+    "SAVINGS": 0,
+    "U_TRANSFER": 0
+   },
+   "run2_clause_true_of_24_by_cell": {
+    "LIFECYCLE": {
+     "BADSHAM": 24,
+     "BUILDER": 24,
+     "HIDDEN": 24,
+     "MATURATION": 24,
+     "MEMORISER": 0,
+     "OFFHISTORY": 24,
+     "SELECTOR": 0,
+     "STATIC": 0,
+     "WASTEFUL": 0
+    },
+    "NESTING.donor_V_helps": {
+     "BADSHAM": 24,
+     "BUILDER": 24,
+     "HIDDEN": 24,
+     "MATURATION": 23,
+     "MEMORISER": 0,
+     "OFFHISTORY": 24,
+     "SELECTOR": 0,
+     "STATIC": 0,
+     "WASTEFUL": 24
+    },
+    "NESTING.lesion_hurts": {
+     "BADSHAM": 24,
+     "BUILDER": 24,
+     "HIDDEN": 0,
+     "MATURATION": 14,
+     "MEMORISER": 24,
+     "OFFHISTORY": 24,
+     "SELECTOR": 24,
+     "STATIC": 24,
+     "WASTEFUL": 24
+    },
+    "NESTING.rescue_restores": {
+     "BADSHAM": 24,
+     "BUILDER": 24,
+     "HIDDEN": 24,
+     "MATURATION": 24,
+     "MEMORISER": 24,
+     "OFFHISTORY": 24,
+     "SELECTOR": 24,
+     "STATIC": 24,
+     "WASTEFUL": 24
+    },
+    "NESTING.sham_harmless": {
+     "BADSHAM": 0,
+     "BUILDER": 24,
+     "HIDDEN": 24,
+     "MATURATION": 24,
+     "MEMORISER": 24,
+     "OFFHISTORY": 24,
+     "SELECTOR": 24,
+     "STATIC": 24,
+     "WASTEFUL": 24
+    },
+    "PROVENANCE.random_library_no_help": {
+     "BADSHAM": 24,
+     "BUILDER": 24,
+     "HIDDEN": 24,
+     "MATURATION": 24,
+     "MEMORISER": 24,
+     "OFFHISTORY": 24,
+     "SELECTOR": 24,
+     "STATIC": 24,
+     "WASTEFUL": 24
+    },
+    "PROVENANCE.wrong_history_no_help": {
+     "BADSHAM": 24,
+     "BUILDER": 24,
+     "HIDDEN": 24,
+     "MATURATION": 0,
+     "MEMORISER": 24,
+     "OFFHISTORY": 24,
+     "SELECTOR": 24,
+     "STATIC": 24,
+     "WASTEFUL": 24
+    },
+    "REPEAT.D": {
+     "BADSHAM": 24,
+     "BUILDER": 24,
+     "HIDDEN": 24,
+     "MATURATION": 23,
+     "MEMORISER": 0,
+     "OFFHISTORY": 2,
+     "SELECTOR": 0,
+     "STATIC": 0,
+     "WASTEFUL": 24
+    },
+    "REPEAT.E": {
+     "BADSHAM": 24,
+     "BUILDER": 24,
+     "HIDDEN": 24,
+     "MATURATION": 20,
+     "MEMORISER": 0,
+     "OFFHISTORY": 3,
+     "SELECTOR": 0,
+     "STATIC": 0,
+     "WASTEFUL": 24
+    },
+    "SAVINGS": {
+     "BADSHAM": 24,
+     "BUILDER": 24,
+     "HIDDEN": 24,
+     "MATURATION": 23,
+     "MEMORISER": 0,
+     "OFFHISTORY": 24,
+     "SELECTOR": 0,
+     "STATIC": 0,
+     "WASTEFUL": 24
+    },
+    "U_TRANSFER.frozen_U_good_on_C": {
+     "BADSHAM": 24,
+     "BUILDER": 24,
+     "HIDDEN": 24,
+     "MATURATION": 24,
+     "MEMORISER": 24,
+     "OFFHISTORY": 24,
+     "SELECTOR": 24,
+     "STATIC": 24,
+     "WASTEFUL": 24
+    },
+    "U_TRANSFER.frozen_U_good_on_narrower_C": {
+     "BADSHAM": 24,
+     "BUILDER": 24,
+     "HIDDEN": 24,
+     "MATURATION": 24,
+     "MEMORISER": 24,
+     "OFFHISTORY": 24,
+     "SELECTOR": 24,
+     "STATIC": 24,
+     "WASTEFUL": 24
+    },
+    "U_TRANSFER.lesioned_line_bad_on_C": {
+     "BADSHAM": 24,
+     "BUILDER": 24,
+     "HIDDEN": 6,
+     "MATURATION": 14,
+     "MEMORISER": 0,
+     "OFFHISTORY": 24,
+     "SELECTOR": 0,
+     "STATIC": 0,
+     "WASTEFUL": 24
+    }
+   },
+   "run2_clauses_never_false_in_any_cell": [
+    "NESTING.rescue_restores",
+    "PROVENANCE.random_library_no_help",
+    "U_TRANSFER.frozen_U_good_on_C",
+    "U_TRANSFER.frozen_U_good_on_narrower_C"
+   ],
+   "run2_clauses_that_fail_in_no_cell": [
+    "NESTING.rescue_restores",
+    "PROVENANCE.random_library_no_help",
+    "U_TRANSFER.frozen_U_good_on_C",
+    "U_TRANSFER.frozen_U_good_on_narrower_C"
+   ],
+   "run2_failing_conjuncts_by_cell": {
+    "BADSHAM": [
+     "NESTING"
+    ],
+    "BUILDER": [],
+    "HIDDEN": [
+     "NESTING",
+     "U_TRANSFER"
+    ],
+    "MATURATION": [
+     "PROVENANCE"
+    ],
+    "MEMORISER": [
+     "LIFECYCLE",
+     "NESTING",
+     "REPEAT",
+     "SAVINGS",
+     "U_TRANSFER"
+    ],
+    "OFFHISTORY": [
+     "REPEAT"
+    ],
+    "SELECTOR": [
+     "LIFECYCLE",
+     "NESTING",
+     "REPEAT",
+     "SAVINGS",
+     "U_TRANSFER"
+    ],
+    "STATIC": [
+     "LIFECYCLE",
+     "NESTING",
+     "REPEAT",
+     "SAVINGS",
+     "U_TRANSFER"
+    ],
+    "WASTEFUL": [
+     "LIFECYCLE"
+    ]
+   },
+   "run3_BUILDER": {
+    "PROVENANCE_false_replicates": [
+     {
+      "naive_B": 163,
+      "random_V_B": 12,
+      "replicate": 10
+     }
+    ],
+    "lesion_equals_naive": 24
+   },
+   "run3_STRATEGIST": {
+    "development_plus_B_cheaper_than_naive_B": 15,
+    "irrelevant_history_equals_naive": 24,
+    "lesion_equals_naive": 24,
+    "median_development": 292.0,
+    "rescue_equals_intact": 24,
+    "sham_equals_intact": 24,
+    "v_donor_equals_intact": 24
+   },
+   "run3_STRATEGIST_by_factor": {
+    "factor=2": {
+     "counts": {
+      "LIFECYCLE": 24,
+      "NESTING": 24,
+      "PROVENANCE": 23,
+      "REPEAT": 24,
+      "SAVINGS": 24,
+      "U_TRANSFER": 24
+     },
+     "verdict": "PASS"
+    },
+    "factor=3": {
+     "counts": {
+      "LIFECYCLE": 24,
+      "NESTING": 24,
+      "PROVENANCE": 23,
+      "REPEAT": 24,
+      "SAVINGS": 24,
+      "U_TRANSFER": 24
+     },
+     "verdict": "PASS"
+    },
+    "factor=4": {
+     "counts": {
+      "LIFECYCLE": 24,
+      "NESTING": 24,
+      "PROVENANCE": 23,
+      "REPEAT": 24,
+      "SAVINGS": 24,
+      "U_TRANSFER": 24
+     },
+     "verdict": "PASS"
+    },
+    "factor=6": {
+     "counts": {
+      "LIFECYCLE": 24,
+      "NESTING": 22,
+      "PROVENANCE": 23,
+      "REPEAT": 21,
+      "SAVINGS": 22,
+      "U_TRANSFER": 24
+     },
+     "verdict": "INDETERMINATE"
+    },
+    "factor=8": {
+     "counts": {
+      "LIFECYCLE": 24,
+      "NESTING": 11,
+      "PROVENANCE": 23,
+      "REPEAT": 13,
+      "SAVINGS": 11,
+      "U_TRANSFER": 24
+     },
+     "verdict": "FAIL"
+    }
+   },
+   "run3_failing_conjuncts_by_cell": {
+    "BUILDER": [
+     "LIFECYCLE",
+     "NESTING",
+     "REPEAT",
+     "SAVINGS",
+     "U_TRANSFER"
+    ],
+    "EAGER": [
+     "PROVENANCE"
+    ],
+    "STATIC": [
+     "LIFECYCLE",
+     "NESTING",
+     "REPEAT",
+     "SAVINGS",
+     "U_TRANSFER"
+    ],
+    "STRATEGIST": []
+   },
+   "world_salt_above_zero_in_registered_replicates": {
+    "replicates": 312,
+    "run2": 0,
+    "run3": 0
+   }
+  },
+  "selection": {
+   "BUILDER_with_the_conditions_off": {
+    "LIFECYCLE": [
+     24,
+     24,
+     24,
+     24,
+     24,
+     24
+    ],
+    "NESTING": [
+     24,
+     24,
+     24,
+     22,
+     24,
+     23
+    ],
+    "PROVENANCE": [
+     22,
+     19,
+     24,
+     22,
+     17,
+     19
+    ],
+    "REPEAT": [
+     24,
+     24,
+     24,
+     24,
+     24,
+     24
+    ],
+    "SAVINGS": [
+     24,
+     24,
+     24,
+     24,
+     24,
+     24
+    ],
+    "U_TRANSFER": [
+     24,
+     24,
+     24,
+     22,
+     24,
+     23
+    ],
+    "verdicts": [
+     "PASS",
+     "INDETERMINATE",
+     "PASS",
+     "PASS",
+     "INDETERMINATE",
+     "INDETERMINATE"
+    ]
+   },
+   "over_2000_design_worlds_base_137": {
+    "first_candidate_B_rejected_second_decomposition": 124,
+    "first_four_other_parts_compose_B": 264,
+    "salt_above_zero": 0,
+    "worlds": 2000
+   },
+   "variant_with_conditions_equals_gauntlet2_setup_on_144_worlds": true
+  },
+  "strategist_variants": {
+   "superseded_list_length": 144,
+   "switch_ranks_only_the_accepted_template": {
+    "LIFECYCLE": [
+     19,
+     15,
+     21,
+     15,
+     20,
+     18
+    ],
+    "NESTING": [
+     18,
+     19,
+     19,
+     14,
+     20,
+     23
+    ],
+    "PROVENANCE": [
+     23,
+     24,
+     23,
+     23,
+     22,
+     24
+    ],
+    "REPEAT": [
+     19,
+     15,
+     21,
+     16,
+     20,
+     19
+    ],
+    "SAVINGS": [
+     19,
+     15,
+     21,
+     16,
+     20,
+     19
+    ],
+    "U_TRANSFER": [
+     21,
+     18,
+     22,
+     18,
+     22,
+     20
+    ],
+    "verdicts": [
+     "INDETERMINATE",
+     "INDETERMINATE",
+     "INDETERMINATE",
+     "INDETERMINATE",
+     "INDETERMINATE",
+     "INDETERMINATE"
+    ]
+   },
+   "three_composite_families__registered_organism": {
+    "LIFECYCLE": [
+     21,
+     23,
+     23,
+     21,
+     23,
+     23
+    ],
+    "NESTING": [
+     24,
+     24,
+     24,
+     24,
+     24,
+     24
+    ],
+    "PROVENANCE": [
+     23,
+     24,
+     23,
+     23,
+     22,
+     24
+    ],
+    "REPEAT": [
+     24,
+     24,
+     24,
+     24,
+     24,
+     24
+    ],
+    "SAVINGS": [
+     24,
+     24,
+     24,
+     24,
+     24,
+     24
+    ],
+    "U_TRANSFER": [
+     24,
+     24,
+     24,
+     24,
+     24,
+     24
+    ],
+    "verdicts": [
+     "INDETERMINATE",
+     "PASS",
+     "PASS",
+     "INDETERMINATE",
+     "PASS",
+     "PASS"
+    ]
+   },
+   "three_composite_families__superseded_list_of_144_pairs": {
+    "LIFECYCLE": [
+     18,
+     23,
+     22,
+     21,
+     22,
+     20
+    ],
+    "NESTING": [
+     24,
+     24,
+     24,
+     24,
+     24,
+     24
+    ],
+    "PROVENANCE": [
+     23,
+     24,
+     23,
+     23,
+     22,
+     24
+    ],
+    "REPEAT": [
+     24,
+     23,
+     24,
+     23,
+     24,
+     24
+    ],
+    "SAVINGS": [
+     24,
+     24,
+     24,
+     24,
+     24,
+     24
+    ],
+    "U_TRANSFER": [
+     24,
+     24,
+     24,
+     24,
+     24,
+     24
+    ],
+    "verdicts": [
+     "INDETERMINATE",
+     "PASS",
+     "PASS",
+     "INDETERMINATE",
+     "PASS",
+     "INDETERMINATE"
+    ]
+   }
+  },
+  "strict_c": {
+   "BUILDER_run2_world": {
+    "kind_of_D_good_of_24": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "kind_of_D_median_errors": [
+     11.03,
+     11.03,
+     11.07,
+     11.17,
+     10.87,
+     11.0
+    ],
+    "kind_of_E_good_of_24": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "kind_of_E_median_errors": [
+     11.15,
+     10.98,
+     10.9,
+     11.1,
+     10.65,
+     11.07
+    ],
+    "same_kind_good_of_24": [
+     24,
+     24,
+     24,
+     24,
+     24,
+     24
+    ],
+    "same_kind_median_errors": [
+     2.03,
+     1.92,
+     2.03,
+     2.03,
+     1.98,
+     2.12
+    ]
+   },
+   "STRATEGIST_run3_world": {
+    "kind_of_D_good_of_24": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "kind_of_D_median_errors": [
+     11.12,
+     10.97,
+     11.07,
+     11.0,
+     11.0,
+     11.08
+    ],
+    "kind_of_E_good_of_24": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "kind_of_E_median_errors": [
+     10.98,
+     11.03,
+     11.03,
+     11.07,
+     11.1,
+     11.08
+    ],
+    "same_kind_good_of_24": [
+     24,
+     24,
+     24,
+     24,
+     24,
+     24
+    ],
+    "same_kind_median_errors": [
+     2.15,
+     2.12,
+     1.93,
+     2.0,
+     1.9,
+     2.22
+    ]
+   }
+  }
+ },
+ "python": "3.12.10",
+ "registered_seed_bases_never_used": [
+  2026100123,
+  2026100124
+ ],
+ "source_sha256_lf": "fcfc8a141d8f5a3171cb1599242f3280b04d73e24e06d7ae7235f478e0e74a7c",
+ "what": "exploratory probes of gauntlet2.py and gauntlet3.py on design seeds; not preregistered; written after the registered runs and after a reviewer's probes",
+ "written_at_utc": "2026-10-02T00:51:45Z"
+}

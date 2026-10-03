@@ -1,0 +1,63 @@
+{
+  "schema": "prometheus.workgraph.task.v1",
+  "task_id": "C-004-T041",
+  "campaign_id": "C-004",
+  "title": "S4 fresh closure challenge: 2 sound, 2 broken, 3 semantic edits against frozen repaired code",
+  "objective": "After the repair round is frozen, commit a fresh closure set before observing outcomes and report the closure score; record C4 'closed after repair' on the gates that pass.",
+  "parent_objective": "RSO-METHODS-SLICE-001 (CAMPAIGN.json objective)",
+  "owner_role": "Dionysus",
+  "quality_class": "Q3",
+  "can_downgrade": false,
+  "escalate_to": "operator",
+  "depends_on": [
+    "C-004-T040"
+  ],
+  "requires_shas": [
+    "09dc8c38b (closure review)",
+    "3bd02f393 (v0.4 synthesis, merged)"
+  ],
+  "owns": [
+    "rso/slice001/challenge/S4/"
+  ],
+  "reads": [
+    "rso/slice001/contract/",
+    "rso/slice001/",
+    "docs/phase3/synthesis/ENCELADUS-DIONYSUS-v0.4/NEXT_ROUND_PLAN_v0.4.md",
+    "docs/phase3/closure/FABLE-5.1/CLOSURE_REVIEW_v0.4.md"
+  ],
+  "problem": "Plan s5 S4: two fresh sound cases, two fresh broken cases, three semantic edits covering touched claim-critical predicates, committed after repaired code/tests are frozen and before outcomes; same caps. Exit: zero unresolved false admissions/rejections in the registered domain; correctly typed reasons; no unresolved applicable survivor on a claim-critical path; insufficient evidence at the cap is incomplete closure, not acceptance.",
+  "non_goals": [
+    "No new design review (closure G)"
+  ],
+  "evidence_required": [
+    "closure set commit precedes its execution",
+    "closure score with denominators"
+  ],
+  "acceptance": {
+    "condition": "closure set committed before outcomes; exit criteria evaluated and recorded"
+  },
+  "deliverables": [
+    "rso/slice001/challenge/S4/"
+  ],
+  "kind": "review",
+  "status": "PROPOSED",
+  "history": [
+    {
+      "status": "PROPOSED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-03T11:04:14Z",
+      "note": "created under C-004-T000 decomposition"
+    }
+  ],
+  "authority": "operator directive 2026-10-03 s9, s11 (roles/Achilles/prompts/2026-10-03_rso_builder_cell/01_OPERATOR_DIRECTIVE_verbatim.md); decomposed by Palamedes under C-004-T000",
+  "eligible_roles": [
+    "Pallas"
+  ],
+  "resource_ceiling": {
+    "engineering": "<= 0.5 reviewer hours of the 3 (OP-1)",
+    "cpu": "< 5 CPU-minutes",
+    "note": "Counts toward the slice caps fixed by C-004-OP1 (NEXT_ROUND_PLAN_v0.4 s6 proposal: 30 CPU-minutes total, 0 GPU, 0 cloud, 100 MB new artifacts, 12 top-level validation launches; mutation children count toward CPU). Stop at the first exhausted cap and keep partial results."
+  },
+  "notes": "PROPOSED; repair packets C-004-T04N are inserted as its dependencies by C-004-T040.",
+  "red_required": false
+}

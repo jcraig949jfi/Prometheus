@@ -1,0 +1,74 @@
+{
+  "schema": "prometheus.workgraph.task.v1",
+  "task_id": "C-004-T015",
+  "campaign_id": "C-004",
+  "title": "S2 consumer/checker and claim renderer: typed gate evaluation, eligibility, C2 render rule",
+  "objective": "Implement the consumer side: evaluate a claim's applicable prerequisites into typed verdicts with reasons, compute eligibility as the worst of the three fields, and render claims only with what they are relative to and the inherited authority stage.",
+  "parent_objective": "RSO-METHODS-SLICE-001 (CAMPAIGN.json objective)",
+  "owner_role": "Argus",
+  "quality_class": "Q2",
+  "can_downgrade": false,
+  "escalate_to": "Q3",
+  "depends_on": [
+    "C-004-T014"
+  ],
+  "requires_shas": [
+    "09dc8c38b (closure review)",
+    "3bd02f393 (v0.4 synthesis, merged)"
+  ],
+  "owns": [
+    "rso/slice001/checker.py",
+    "rso/slice001/render.py",
+    "rso/slice001/tests/test_checker_render.py"
+  ],
+  "reads": [
+    "rso/slice001/contract/CONTRACT.md",
+    "rso/slice001/contract/contract.json",
+    "docs/phase3/synthesis/ENCELADUS-DIONYSUS-v0.4/NEXT_ROUND_PLAN_v0.4.md",
+    "docs/phase3/closure/FABLE-5.1/CLOSURE_REVIEW_v0.4.md",
+    "roles/rso-builder-role/",
+    "rso/slice001/receipt.py",
+    "rso/slice001/evidence.py"
+  ],
+  "problem": "Plan s3 Gate: a claim needs every applicable prerequisite; an unrelated failure must not revoke an independent claim. C2: a claim renders with its comparator set, intervention set, or class and exact bound, and its cell and setting; the words class/any/all/no appear only beside an exact bound; the renderer refuses otherwise. C4: the stage prints with every claim. The report prints all three C1 fields.",
+  "non_goals": [
+    "No new claim types beyond the contract's",
+    "Do not copy code, tests or verdict policies from the Fable or ASTRA harnesses; they are reference and adversarial corpora (SOURCES.md B; NEXT_ROUND_PLAN_v0.4 s1)",
+    "Python >= 3.8 standard library only; no package installation (MWO-0004 R2)"
+  ],
+  "evidence_required": [
+    "RED: a rendering using 'no organism' without an exact bound is produced by a naive renderer stub and the test fails",
+    "GREEN: the renderer refuses it with a reason; an unrelated failure leaves an independent claim eligible; every rendered claim carries its stage"
+  ],
+  "acceptance": {
+    "command": "python -B -m rso.slice001.ci",
+    "condition": "checker and renderer tests pass"
+  },
+  "deliverables": [
+    "rso/slice001/checker.py",
+    "rso/slice001/render.py",
+    "rso/slice001/tests/test_checker_render.py"
+  ],
+  "kind": "software",
+  "status": "READY",
+  "history": [
+    {
+      "status": "PROPOSED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-03T11:04:14Z",
+      "note": "created under C-004-T000 decomposition"
+    },
+    {
+      "status": "READY",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-03T11:04:14Z",
+      "note": "made READY by the coordinator (C-004-T000)"
+    }
+  ],
+  "authority": "operator directive 2026-10-03 s9, s11 (roles/Achilles/prompts/2026-10-03_rso_builder_cell/01_OPERATOR_DIRECTIVE_verbatim.md); decomposed by Palamedes under C-004-T000",
+  "resource_ceiling": {
+    "engineering": "<= 2 Q2 seat-hours",
+    "cpu": "< 1 CPU-minute",
+    "note": "Counts toward the slice caps fixed by C-004-OP1 (NEXT_ROUND_PLAN_v0.4 s6 proposal: 30 CPU-minutes total, 0 GPU, 0 cloud, 100 MB new artifacts, 12 top-level validation launches; mutation children count toward CPU). Stop at the first exhausted cap and keep partial results."
+  }
+}

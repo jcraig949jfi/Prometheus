@@ -1,0 +1,16 @@
+# Manifest for rso_harness
+
+sha256 over LF-normalised bytes (equals the git blob for text files); see comms/manifest.py.
+
+- __init__.py  sha256:ec0c26759c79ba6f26e29de01c71663c8baf7b60a7305e53174d996b6e92a2c0
+- audits.py  sha256:2be7711b52c413d6c6fbd76ffdfc3bff3fe3dac147bb4537aa6f109cb41ad7c2
+- claims.py  sha256:45ef455dc0e7d92c3c5f45cf77eb98c9b56de627ab692f2bfcf59ad2f38662e2
+- ladder.py  sha256:6a3c4f1a969648891be7a7f3bd0ceac6c2fdb86423627ad5c2bc92c353c6987a
+- meta.py  sha256:740732b32bd5c22f7af29305f600278732a57d9eebf9cebfe472518298d6c424
+- registration.py  sha256:a1a6910d098940e4acdcd9f077eb94d4ccbb264ffd81d15298baa66bafd8e3f5
+- retain1.py  sha256:945ffb76abacdf4d8f586c8a2a69b7bd5bd6b2d8e7f24580a0da25cb7b4bc9a5
+- rulers.py  sha256:89f9ad47ac2312aa63b043f83eeb73a70004095e30d72872038c0aecbd8b2d2b
+- search.py  sha256:e7840d25b7fc074194af339bd727e706690a206b51d701ae13fe4a33d63a3989
+- stats.py  sha256:8e4a80adf8c7ea97f751b677ab97a30c1764da40ae15ca81b23055b35f7ce7f7
+- torture.py  sha256:f8cbaa50fa11c160b7babebc0a24be210c4658c57c1126004b5e2ba769658e95
+- verdict.py  sha256:bd27165b4b2dc4589b5b84d0661e0518670d2b61790a559fb447f587097a53d2

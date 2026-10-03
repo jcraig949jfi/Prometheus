@@ -1,0 +1,84 @@
+{
+  "schema": "prometheus.workgraph.task.v1",
+  "task_id": "C-004-T004",
+  "campaign_id": "C-004",
+  "title": "S1 freeze: assemble CONTRACT.md + contract.json and freeze them before any S2 test",
+  "objective": "Assemble drafts A and B into the versioned S1 contract with the approved caps, custody declaration and challenge minimums, validate it, and commit the freeze before any S2 implementation test is written.",
+  "parent_objective": "RSO-METHODS-SLICE-001 (CAMPAIGN.json objective)",
+  "owner_role": "Palamedes",
+  "quality_class": "Q2",
+  "can_downgrade": false,
+  "escalate_to": "Q3",
+  "depends_on": [
+    "C-004-T001",
+    "C-004-T002",
+    "C-004-T003",
+    "C-004-OP1"
+  ],
+  "requires_shas": [
+    "09dc8c38b (closure review)",
+    "3bd02f393 (v0.4 synthesis, merged)"
+  ],
+  "owns": [
+    "rso/slice001/contract/CONTRACT.md",
+    "rso/slice001/contract/contract.json",
+    "rso/slice001/contract/MANIFEST.md",
+    "rso/slice001/contract/drafts/"
+  ],
+  "reads": [
+    "docs/phase3/synthesis/ENCELADUS-DIONYSUS-v0.4/NEXT_ROUND_PLAN_v0.4.md",
+    "docs/phase3/synthesis/ENCELADUS-DIONYSUS-v0.4/SYNTHESIS_AND_DECISIONS_v0.4.md",
+    "docs/phase3/closure/FABLE-5.1/CLOSURE_REVIEW_v0.4.md",
+    "roles/rso-builder-role/",
+    "rso/slice001/contract/drafts/A_world_reset_observer.md",
+    "rso/slice001/contract/drafts/B_evidence_receipt_authority.md"
+  ],
+  "problem": "Plan s2 S1 exit: a versioned claim/reset/interface table, exact domain, expected outcomes, source/exposure record, trust boundary and approved absolute caps, committed before testing the new implementation. Plan s5: S1 freezes the challenge minimum coverage (S3: 5 fresh sound, 5 fresh broken, 10 distinct applicable semantic edits spanning reset/observer, binding and invalidation; S4: 2, 2, 3) and reviewer ownership, not attack contents. Closure C1-C5 written in. Custody: copy C-004-OP2's ruling if decided, else 'keeper NONE; custody UNQUALIFIED'. Caps: copy C-004-OP1's ruling. Reviewer: copy C-004-OP3's ruling if decided, else 'per C-004-OP3, pending'. Freeze = CONTRACT.md and contract.json committed with contract.json frozen: true and a sha256 manifest (python -m comms.manifest write rso/slice001/contract/).",
+  "non_goals": [
+    "No implementation code",
+    "No redesign of the RSO and no reopening of the closed design review (CLOSURE_REVIEW_v0.4 G)",
+    "No change to the contract after freeze except a versioned amendment recorded beside the original (base doctrine: corrections are annotations)"
+  ],
+  "evidence_required": [
+    "`python -B -m rso.slice001.ci` reports contract.json present and shape-valid",
+    "a coverage check: every plan s3 item, C1-C5, T01-T08, E01-E06 appears in contract.json cases or fields",
+    "MANIFEST.md beside the contract verifies (python -m comms.manifest verify rso/slice001/contract/)"
+  ],
+  "acceptance": {
+    "command": "python -B -m rso.slice001.ci && python -m comms.manifest verify rso/slice001/contract/",
+    "condition": "contract.json frozen: true; freeze commit is an ancestor of origin/main before any S2 test file for T010-T018 exists on main"
+  },
+  "deliverables": [
+    "rso/slice001/contract/CONTRACT.md",
+    "rso/slice001/contract/contract.json",
+    "rso/slice001/contract/MANIFEST.md"
+  ],
+  "kind": "document",
+  "status": "READY",
+  "history": [
+    {
+      "status": "PROPOSED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-03T11:04:14Z",
+      "note": "created under C-004-T000 decomposition"
+    },
+    {
+      "status": "READY",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-03T11:04:14Z",
+      "note": "made READY by the coordinator (C-004-T000)"
+    }
+  ],
+  "authority": "operator directive 2026-10-03 s9, s11 (roles/Achilles/prompts/2026-10-03_rso_builder_cell/01_OPERATOR_DIRECTIVE_verbatim.md); decomposed by Palamedes under C-004-T000",
+  "escalation_triggers": [
+    "drafts A and B disagree on a shared field and the sources do not settle it",
+    "OP-1 is not decided (the packet waits; this is its dependency)"
+  ],
+  "resource_ceiling": {
+    "engineering": "<= 1.5 Q2 seat-hours",
+    "cpu": "< 1 CPU-minute",
+    "note": "Counts toward the slice caps fixed by C-004-OP1 (NEXT_ROUND_PLAN_v0.4 s6 proposal: 30 CPU-minutes total, 0 GPU, 0 cloud, 100 MB new artifacts, 12 top-level validation launches; mutation children count toward CPU). Stop at the first exhausted cap and keep partial results."
+  },
+  "notes": "Freeze before S2 tests is the plan's ordering rule (s2 S1: 'Commit before testing the new implementation'). kind document: GREEN is the validated freeze commit.",
+  "red_required": false
+}

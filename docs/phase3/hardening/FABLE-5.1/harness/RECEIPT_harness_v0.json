@@ -1,0 +1,2895 @@
+{
+ "audited_receipts_sha256_lf": {
+  "RECEIPT_gauntlet.json": "e786e7a6fa9121017b9bd930fc18a13d9399a8dcc631abad205b373105e0e34a",
+  "RECEIPT_gauntlet2.json": "db32fc111cec2de903174d3bf1fe3b06dded29cf5db4e38169ee466141c0558f",
+  "RECEIPT_gauntlet3.json": "2f9e51c77678cfec370dc5399affae96908dc1b23b5c68e2b3b9e0ca04c1a4db",
+  "RECEIPT_keys.json": "669bc4554df478a1fc2a1f251e952c97301c6c360fd80de7bba06cc961cc3527"
+ },
+ "audits_of_existing_receipts": {
+  "registered_and_not_built": {
+   "FLATTENED_EQUIVALENT": {
+    "STRONG": "AS_ITS_SOURCE"
+   },
+   "GENUINE_LEARNED_UPDATER": {
+    "STRONG": "POSITIVE"
+   },
+   "HIERARCHICAL_SELECTOR": {
+    "STRONG": "NEGATIVE"
+   },
+   "KEY_CACHE_TWO_BOUNDARIES": {
+    "BITS_TWO_BOUNDARIES": "POSITIVE"
+   },
+   "KEY_ELIMINATOR_TWO_BOUNDARIES": {
+    "BITS_TWO_BOUNDARIES": "NEGATIVE"
+   },
+   "NESTED_COMPILER_CARGO": {
+    "STRONG": "NEGATIVE"
+   },
+   "PAIR_COMPOSER": {
+    "COMBINATION": "POSITIVE"
+   },
+   "PAIR_ELIMINATOR": {
+    "COMBINATION": "NEGATIVE"
+   },
+   "PAIR_HIDER": {
+    "COMBINATION": "NEGATIVE"
+   },
+   "PAIR_REPEAT_WATCHER": {
+    "COMBINATION": "NEGATIVE"
+   },
+   "PAIR_SANDBAGGER": {
+    "COMBINATION": "NEGATIVE"
+   },
+   "PAIR_SCHEMA_CACHE": {
+    "COMBINATION": "POSITIVE"
+   },
+   "PAIR_TABLE_CACHE": {
+    "COMBINATION": "NEGATIVE"
+   },
+   "PAIR_TWO_TABLES": {
+    "COMBINATION": "NEGATIVE"
+   },
+   "WORLD_PARKING": {
+    "STRONG": "NEGATIVE"
+   }
+  },
+  "registered_answers": {
+   "BUILDER_COSTLY_DEVELOPMENT at S19@RUN2": {
+    "STRONG": "NEGATIVE"
+   },
+   "BUILDER_HIDDEN_COPY at S19@RUN2": {
+    "STRONG": "NEGATIVE"
+   },
+   "BUILDER_OFF_ITS_HISTORY at S19@RUN2": {
+    "STRONG": "NEGATIVE"
+   },
+   "BUILDER_UNDER_A_HARMFUL_SHAM at S19@RUN2": {
+    "STRONG": "NEGATIVE"
+   },
+   "KEY_ACQUIRER_12 at BITS@KEYS": {
+    "BITS": "POSITIVE"
+   },
+   "KEY_ACQUIRER_16 at BITS@KEYS": {
+    "BITS": "POSITIVE"
+   },
+   "KEY_ACQUIRER_4 at BITS@KEYS": {
+    "BITS": "POSITIVE"
+   },
+   "KEY_ACQUIRER_8 at BITS@KEYS": {
+    "BITS": "POSITIVE"
+   },
+   "KEY_ELIMINATOR at BITS@KEYS": {
+    "BITS": "NEGATIVE"
+   },
+   "KEY_HARDWIRED at BITS@KEYS": {
+    "BITS": "NEGATIVE"
+   },
+   "KEY_SANDBAGGER at BITS@KEYS": {
+    "BITS": "NEGATIVE"
+   },
+   "KEY_SELECTOR at BITS@KEYS": {
+    "BITS": "NEGATIVE"
+   },
+   "KEY_SELECTOR_ON_ITS_OWN_LIST at BITS@KEYS": {
+    "BITS": "NEGATIVE"
+   },
+   "LIBRARY_FIXED_BUILDER at S19@RUN2": {
+    "STRONG": "NEGATIVE"
+   },
+   "LIBRARY_FIXED_BUILDER at S19@RUN3": {
+    "STRONG": "NEGATIVE"
+   },
+   "LIBRARY_FIXED_BUILDER at V01@RUN1": {
+    "STRONG": "NEGATIVE"
+   },
+   "MATURATION_UNLOCK at S19@RUN2": {
+    "STRONG": "NEGATIVE"
+   },
+   "MATURATION_UNLOCK at V01@RUN1": {
+    "STRONG": "NEGATIVE"
+   },
+   "MEMORIZER at S19@RUN2": {
+    "STRONG": "NEGATIVE"
+   },
+   "NO_DEVELOPMENT at S19@RUN2": {
+    "STRONG": "NEGATIVE"
+   },
+   "NO_DEVELOPMENT at S19@RUN3": {
+    "STRONG": "NEGATIVE"
+   },
+   "NO_DEVELOPMENT at V01@RUN1": {
+    "STRONG": "NEGATIVE"
+   },
+   "PROCEDURE_SELECTOR at S19@RUN2": {
+    "STRONG": "NEGATIVE"
+   },
+   "PROCEDURE_SELECTOR at V01@RUN1": {
+    "STRONG": "NEGATIVE"
+   },
+   "SEARCH_ORDER_SELECTOR at S19@RUN3": {
+    "STRONG": "NEGATIVE"
+   },
+   "SEARCH_ORDER_SELECTOR_EAGER at S19@RUN3": {
+    "STRONG": "NEGATIVE"
+   }
+  },
+  "rulers": {
+   "BITS at BITS@KEYS": {
+    "detail": {
+     "answered": {
+      "NEGATIVE": 5,
+      "POSITIVE": 4
+     }
+    },
+    "gate": "G10.ruler[BITS at BITS@KEYS]",
+    "reason": "",
+    "verdict": "PASS"
+   },
+   "BITS_TWO_BOUNDARIES at BITS@TWO": {
+    "detail": {
+     "answered": {
+      "NEGATIVE": 0,
+      "POSITIVE": 0
+     }
+    },
+    "gate": "G10.ruler[BITS_TWO_BOUNDARIES at BITS@TWO]",
+    "reason": "positive: UNQUALIFIED (no known positive has been answered correctly at this setting); negative: UNQUALIFIED (no known negative has been answered correctly at this setting); unbuilt: UNQUALIFIED (registered and not built: KEY_CACHE_TWO_BOUNDARIES, KEY_ELIMINATOR_TWO_BOUNDARIES)",
+    "verdict": "UNQUALIFIED"
+   },
+   "COMBINATION at BITS@PAIRS": {
+    "detail": {
+     "answered": {
+      "NEGATIVE": 0,
+      "POSITIVE": 0
+     }
+    },
+    "gate": "G10.ruler[COMBINATION at BITS@PAIRS]",
+    "reason": "positive: UNQUALIFIED (no known positive has been answered correctly at this setting); negative: UNQUALIFIED (no known negative has been answered correctly at this setting); unbuilt: UNQUALIFIED (registered and not built: PAIR_COMPOSER, PAIR_ELIMINATOR, PAIR_HIDER, PAIR_REPEAT_WATCHER, PAIR_SANDBAGGER, PAIR_SCHEMA_CACHE, PAIR_TABLE_CACHE, PAIR_TWO_TABLES)",
+    "verdict": "UNQUALIFIED"
+   },
+   "STRONG at S19@RUN2": {
+    "detail": {
+     "answered": {
+      "NEGATIVE": 8,
+      "POSITIVE": 0
+     }
+    },
+    "gate": "G10.ruler[STRONG at S19@RUN2]",
+    "reason": "LIBRARY_FIXED_BUILDER: FAIL (registered NEGATIVE, the ruler returned POSITIVE); positive: UNQUALIFIED (no known positive has been answered correctly at this setting); unbuilt: UNQUALIFIED (registered and not built: FLATTENED_EQUIVALENT, GENUINE_LEARNED_UPDATER, HIERARCHICAL_SELECTOR, NESTED_COMPILER_CARGO, WORLD_PARKING); not run here: UNQUALIFIED (built, and not run at this setting: SEARCH_ORDER_SELECTOR, SEARCH_ORDER_SELECTOR_EAGER)",
+    "verdict": "FAIL"
+   },
+   "STRONG at S19@RUN3": {
+    "detail": {
+     "answered": {
+      "NEGATIVE": 3,
+      "POSITIVE": 0
+     }
+    },
+    "gate": "G10.ruler[STRONG at S19@RUN3]",
+    "reason": "SEARCH_ORDER_SELECTOR: FAIL (registered NEGATIVE, the ruler returned POSITIVE); positive: UNQUALIFIED (no known positive has been answered correctly at this setting); unbuilt: UNQUALIFIED (registered and not built: FLATTENED_EQUIVALENT, GENUINE_LEARNED_UPDATER, HIERARCHICAL_SELECTOR, NESTED_COMPILER_CARGO, WORLD_PARKING); not run here: UNQUALIFIED (built, and not run at this setting: BUILDER_COSTLY_DEVELOPMENT, BUILDER_HIDDEN_COPY, BUILDER_OFF_ITS_HISTORY, BUILDER_UNDER_A_HARMFUL_SHAM, MATURATION_UNLOCK, MEMORIZER, PROCEDURE_SELECTOR)",
+    "verdict": "FAIL"
+   },
+   "STRONG at V01@RUN1": {
+    "detail": {
+     "answered": {
+      "NEGATIVE": 2,
+      "POSITIVE": 0
+     }
+    },
+    "gate": "G10.ruler[STRONG at V01@RUN1]",
+    "reason": "LIBRARY_FIXED_BUILDER: FAIL (registered NEGATIVE, the ruler returned POSITIVE); PROCEDURE_SELECTOR: FAIL (registered NEGATIVE, the ruler returned POSITIVE); positive: UNQUALIFIED (no known positive has been answered correctly at this setting); unbuilt: UNQUALIFIED (registered and not built: FLATTENED_EQUIVALENT, GENUINE_LEARNED_UPDATER, HIERARCHICAL_SELECTOR, NESTED_COMPILER_CARGO, WORLD_PARKING); not run here: UNQUALIFIED (built, and not run at this setting: BUILDER_COSTLY_DEVELOPMENT, BUILDER_HIDDEN_COPY, BUILDER_OFF_ITS_HISTORY, BUILDER_UNDER_A_HARMFUL_SHAM, MEMORIZER, SEARCH_ORDER_SELECTOR, SEARCH_ORDER_SELECTOR_EAGER)",
+    "verdict": "FAIL"
+   }
+  },
+  "run2": {
+   "arms_BUILDER": {
+    "detail": [
+     [
+      "naive_B"
+     ],
+     [
+      "dev_B"
+     ],
+     [
+      "lesion_B"
+     ],
+     [
+      "sham_B"
+     ],
+     [
+      "rescue_B"
+     ],
+     [
+      "v_donor_B"
+     ],
+     [
+      "wrong_history_B"
+     ],
+     [
+      "random_library_B"
+     ]
+    ],
+    "gate": "G9.arms",
+    "reason": "",
+    "verdict": "PASS"
+   },
+   "clauses": {
+    "detail": {
+     "cannot_fail": [
+      "NESTING.rescue_restores",
+      "PROVENANCE.random_store_no_help",
+      "U_TRANSFER.frozen_U_good_on_C",
+      "U_TRANSFER.frozen_U_good_on_narrower_C"
+     ],
+     "cannot_hold": [],
+     "not_isolated": [
+      "NESTING.donor_V_helps",
+      "NESTING.lesion_hurts",
+      "PROVENANCE.wrong_history_no_help",
+      "REPEAT.D",
+      "REPEAT.E",
+      "SAVINGS",
+      "U_TRANSFER.lesioned_line_bad_on_C"
+     ],
+     "table": {
+      "LIFECYCLE": {
+       "BADSHAM": 24,
+       "BUILDER": 24,
+       "HIDDEN": 24,
+       "MATURATION": 24,
+       "MEMORISER": 0,
+       "OFFHISTORY": 24,
+       "SELECTOR": 0,
+       "STATIC": 0,
+       "WASTEFUL": 0
+      },
+      "NESTING.donor_V_helps": {
+       "BADSHAM": 24,
+       "BUILDER": 24,
+       "HIDDEN": 24,
+       "MATURATION": 23,
+       "MEMORISER": 0,
+       "OFFHISTORY": 24,
+       "SELECTOR": 0,
+       "STATIC": 0,
+       "WASTEFUL": 24
+      },
+      "NESTING.lesion_hurts": {
+       "BADSHAM": 24,
+       "BUILDER": 24,
+       "HIDDEN": 0,
+       "MATURATION": 14,
+       "MEMORISER": 24,
+       "OFFHISTORY": 24,
+       "SELECTOR": 24,
+       "STATIC": 24,
+       "WASTEFUL": 24
+      },
+      "NESTING.rescue_restores": {
+       "BADSHAM": 24,
+       "BUILDER": 24,
+       "HIDDEN": 24,
+       "MATURATION": 24,
+       "MEMORISER": 24,
+       "OFFHISTORY": 24,
+       "SELECTOR": 24,
+       "STATIC": 24,
+       "WASTEFUL": 24
+      },
+      "NESTING.sham_harmless": {
+       "BADSHAM": 0,
+       "BUILDER": 24,
+       "HIDDEN": 24,
+       "MATURATION": 24,
+       "MEMORISER": 24,
+       "OFFHISTORY": 24,
+       "SELECTOR": 24,
+       "STATIC": 24,
+       "WASTEFUL": 24
+      },
+      "PROVENANCE.random_store_no_help": {
+       "BADSHAM": 24,
+       "BUILDER": 24,
+       "HIDDEN": 24,
+       "MATURATION": 24,
+       "MEMORISER": 24,
+       "OFFHISTORY": 24,
+       "SELECTOR": 24,
+       "STATIC": 24,
+       "WASTEFUL": 24
+      },
+      "PROVENANCE.wrong_history_no_help": {
+       "BADSHAM": 24,
+       "BUILDER": 24,
+       "HIDDEN": 24,
+       "MATURATION": 0,
+       "MEMORISER": 24,
+       "OFFHISTORY": 24,
+       "SELECTOR": 24,
+       "STATIC": 24,
+       "WASTEFUL": 24
+      },
+      "REPEAT.D": {
+       "BADSHAM": 24,
+       "BUILDER": 24,
+       "HIDDEN": 24,
+       "MATURATION": 23,
+       "MEMORISER": 0,
+       "OFFHISTORY": 2,
+       "SELECTOR": 0,
+       "STATIC": 0,
+       "WASTEFUL": 24
+      },
+      "REPEAT.E": {
+       "BADSHAM": 24,
+       "BUILDER": 24,
+       "HIDDEN": 24,
+       "MATURATION": 20,
+       "MEMORISER": 0,
+       "OFFHISTORY": 3,
+       "SELECTOR": 0,
+       "STATIC": 0,
+       "WASTEFUL": 24
+      },
+      "SAVINGS": {
+       "BADSHAM": 24,
+       "BUILDER": 24,
+       "HIDDEN": 24,
+       "MATURATION": 23,
+       "MEMORISER": 0,
+       "OFFHISTORY": 24,
+       "SELECTOR": 0,
+       "STATIC": 0,
+       "WASTEFUL": 24
+      },
+      "U_TRANSFER.frozen_U_good_on_C": {
+       "BADSHAM": 24,
+       "BUILDER": 24,
+       "HIDDEN": 24,
+       "MATURATION": 24,
+       "MEMORISER": 24,
+       "OFFHISTORY": 24,
+       "SELECTOR": 24,
+       "STATIC": 24,
+       "WASTEFUL": 24
+      },
+      "U_TRANSFER.frozen_U_good_on_narrower_C": {
+       "BADSHAM": 24,
+       "BUILDER": 24,
+       "HIDDEN": 24,
+       "MATURATION": 24,
+       "MEMORISER": 24,
+       "OFFHISTORY": 24,
+       "SELECTOR": 24,
+       "STATIC": 24,
+       "WASTEFUL": 24
+      },
+      "U_TRANSFER.lesioned_line_bad_on_C": {
+       "BADSHAM": 24,
+       "BUILDER": 24,
+       "HIDDEN": 6,
+       "MATURATION": 14,
+       "MEMORISER": 0,
+       "OFFHISTORY": 24,
+       "SELECTOR": 0,
+       "STATIC": 0,
+       "WASTEFUL": 24
+      }
+     }
+    },
+    "gate": "G9.clauses",
+    "reason": "4 of 13 clauses have no fixture that makes them false",
+    "verdict": "UNQUALIFIED"
+   },
+   "setting": {
+    "gate": "G10.setting",
+    "reason": "power not registered; amortization_horizon not registered",
+    "verdict": "BLOCKED"
+   },
+   "sham_BUILDER": {
+    "detail": {
+     "n": 24,
+     "sham_faster": 24,
+     "within_margin": 8
+    },
+    "gate": "G9.sham",
+    "reason": "the sham is within 25% of intact in 8 of 24 replicates (faster in 24): it is not neutral",
+    "verdict": "FAIL"
+   }
+  },
+  "run2_against_run3": {
+   "detail": [
+    "content_reset",
+    "effect_threshold",
+    "family_A",
+    "parts_shared",
+    "sham",
+    "wrong_history"
+   ],
+   "gate": "G10.contrast",
+   "reason": "named after parts_shared; of 10 fields written down 6 differ, also: content_reset, effect_threshold, family_A, sham, wrong_history",
+   "verdict": "FAIL"
+  },
+  "run3": {
+   "arms_STRATEGIST": {
+    "detail": [
+     [
+      "naive_B",
+      "lesion_B",
+      "irrelevant_history_B"
+     ],
+     [
+      "dev_B",
+      "sham_B",
+      "rescue_B",
+      "v_donor_B"
+     ],
+     [
+      "random_V_B"
+     ]
+    ],
+    "gate": "G9.arms",
+    "reason": "8 arms give 3 distinct series: naive_B = lesion_B = irrelevant_history_B; dev_B = sham_B = rescue_B = v_donor_B",
+    "verdict": "FAIL"
+   },
+   "clauses": {
+    "detail": {
+     "cannot_fail": [
+      "NESTING.lesion_hurts",
+      "NESTING.rescue_restores",
+      "NESTING.sham_harmless",
+      "PROVENANCE.random_store_no_help",
+      "U_TRANSFER.frozen_U_good_on_C",
+      "U_TRANSFER.frozen_U_good_on_narrower_C"
+     ],
+     "cannot_hold": [],
+     "not_isolated": [
+      "LIFECYCLE",
+      "NESTING.donor_V_helps",
+      "REPEAT.D",
+      "REPEAT.E",
+      "SAVINGS",
+      "U_TRANSFER.lesioned_line_bad_on_C"
+     ],
+     "table": {
+      "LIFECYCLE": {
+       "BUILDER": 0,
+       "EAGER": 22,
+       "STATIC": 0,
+       "STRATEGIST": 24
+      },
+      "NESTING.donor_V_helps": {
+       "BUILDER": 0,
+       "EAGER": 24,
+       "STATIC": 0,
+       "STRATEGIST": 24
+      },
+      "NESTING.lesion_hurts": {
+       "BUILDER": 24,
+       "EAGER": 24,
+       "STATIC": 24,
+       "STRATEGIST": 24
+      },
+      "NESTING.rescue_restores": {
+       "BUILDER": 24,
+       "EAGER": 24,
+       "STATIC": 24,
+       "STRATEGIST": 24
+      },
+      "NESTING.sham_harmless": {
+       "BUILDER": 24,
+       "EAGER": 24,
+       "STATIC": 24,
+       "STRATEGIST": 24
+      },
+      "PROVENANCE.random_store_no_help": {
+       "BUILDER": 23,
+       "EAGER": 22,
+       "STATIC": 24,
+       "STRATEGIST": 23
+      },
+      "PROVENANCE.wrong_history_no_help": {
+       "BUILDER": 24,
+       "EAGER": 0,
+       "STATIC": 24,
+       "STRATEGIST": 24
+      },
+      "REPEAT.D": {
+       "BUILDER": 0,
+       "EAGER": 24,
+       "STATIC": 0,
+       "STRATEGIST": 24
+      },
+      "REPEAT.E": {
+       "BUILDER": 0,
+       "EAGER": 24,
+       "STATIC": 0,
+       "STRATEGIST": 24
+      },
+      "SAVINGS": {
+       "BUILDER": 0,
+       "EAGER": 24,
+       "STATIC": 0,
+       "STRATEGIST": 24
+      },
+      "U_TRANSFER.frozen_U_good_on_C": {
+       "BUILDER": 24,
+       "EAGER": 24,
+       "STATIC": 24,
+       "STRATEGIST": 24
+      },
+      "U_TRANSFER.frozen_U_good_on_narrower_C": {
+       "BUILDER": 24,
+       "EAGER": 24,
+       "STATIC": 24,
+       "STRATEGIST": 24
+      },
+      "U_TRANSFER.lesioned_line_bad_on_C": {
+       "BUILDER": 0,
+       "EAGER": 24,
+       "STATIC": 0,
+       "STRATEGIST": 24
+      }
+     }
+    },
+    "gate": "G9.clauses",
+    "reason": "6 of 13 clauses have no fixture that makes them false",
+    "verdict": "UNQUALIFIED"
+   },
+   "setting": {
+    "gate": "G10.setting",
+    "reason": "power not registered; amortization_horizon not registered",
+    "verdict": "BLOCKED"
+   },
+   "sham_STRATEGIST": {
+    "gate": "G9.sham",
+    "reason": "no fixture makes the sham clause false: it cannot fail",
+    "verdict": "UNQUALIFIED"
+   }
+  },
+  "what_a_ruler_for_the_package_kit_would_have_to_return": {
+   "FLATTENED_EQUIVALENT": {
+    "reuse": "AS_ITS_SOURCE",
+    "strong": "AS_ITS_SOURCE"
+   },
+   "GENUINE_LEARNED_UPDATER": {
+    "reuse": null,
+    "strong": "POSITIVE"
+   },
+   "HIERARCHICAL_SELECTOR": {
+    "reuse": "NEGATIVE",
+    "strong": "NEGATIVE"
+   },
+   "LIBRARY_FIXED_BUILDER": {
+    "reuse": "POSITIVE",
+    "strong": "NEGATIVE"
+   },
+   "MATURATION_UNLOCK": {
+    "reuse": "NEGATIVE",
+    "strong": "NEGATIVE"
+   },
+   "MEMORIZER": {
+    "reuse": "NEGATIVE",
+    "strong": "NEGATIVE"
+   },
+   "NESTED_COMPILER_CARGO": {
+    "reuse": "NEGATIVE",
+    "strong": "NEGATIVE"
+   },
+   "PROCEDURE_SELECTOR": {
+    "reuse": "NEGATIVE",
+    "strong": "NEGATIVE"
+   },
+   "SEARCH_ORDER_SELECTOR": {
+    "reuse": "NEGATIVE",
+    "strong": "NEGATIVE"
+   },
+   "WORLD_PARKING": {
+    "reuse": "NEGATIVE",
+    "strong": "NEGATIVE"
+   }
+  },
+  "what_each_ruler_returned": {
+   "BUILDER_COSTLY_DEVELOPMENT at S19@RUN2": "NEGATIVE",
+   "BUILDER_HIDDEN_COPY at S19@RUN2": "NEGATIVE",
+   "BUILDER_OFF_ITS_HISTORY at S19@RUN2": "NEGATIVE",
+   "BUILDER_UNDER_A_HARMFUL_SHAM at S19@RUN2": "NEGATIVE",
+   "KEY_ACQUIRER_12 at BITS@KEYS": "POSITIVE",
+   "KEY_ACQUIRER_16 at BITS@KEYS": "POSITIVE",
+   "KEY_ACQUIRER_4 at BITS@KEYS": "POSITIVE",
+   "KEY_ACQUIRER_8 at BITS@KEYS": "POSITIVE",
+   "KEY_ELIMINATOR at BITS@KEYS": "NEGATIVE",
+   "KEY_HARDWIRED at BITS@KEYS": "NEGATIVE",
+   "KEY_SANDBAGGER at BITS@KEYS": "NEGATIVE",
+   "KEY_SELECTOR at BITS@KEYS": "NEGATIVE",
+   "KEY_SELECTOR_ON_ITS_OWN_LIST at BITS@KEYS": "NEGATIVE",
+   "LIBRARY_FIXED_BUILDER at S19@RUN2": "POSITIVE",
+   "LIBRARY_FIXED_BUILDER at S19@RUN3": "NEGATIVE",
+   "LIBRARY_FIXED_BUILDER at V01@RUN1": "POSITIVE",
+   "MATURATION_UNLOCK at S19@RUN2": "NEGATIVE",
+   "MATURATION_UNLOCK at V01@RUN1": "NEGATIVE",
+   "MEMORIZER at S19@RUN2": "NEGATIVE",
+   "NO_DEVELOPMENT at S19@RUN2": "NEGATIVE",
+   "NO_DEVELOPMENT at S19@RUN3": "NEGATIVE",
+   "NO_DEVELOPMENT at V01@RUN1": "NEGATIVE",
+   "PROCEDURE_SELECTOR at S19@RUN2": "NEGATIVE",
+   "PROCEDURE_SELECTOR at V01@RUN1": "POSITIVE",
+   "SEARCH_ORDER_SELECTOR at S19@RUN3": "POSITIVE",
+   "SEARCH_ORDER_SELECTOR_EAGER at S19@RUN3": "NEGATIVE"
+  }
+ },
+ "bound_bracket": {
+  "at_registered_thresholds": [
+   0.49921,
+   0.50079
+  ],
+  "by_organisms": [
+   0.342,
+   0.686
+  ],
+  "impostor_scores": [
+   25,
+   41
+  ],
+  "impostor_series": 4,
+  "positive_scores": [
+   64,
+   64,
+   64,
+   64
+  ],
+  "weak_positive_score": 61
+ },
+ "demand_closure_scores_of_2048": {
+  "CLOCK": 1012,
+  "CONSTANT": 1036,
+  "KEY_READER": 1036,
+  "LAST_DISTRACTOR": 1018,
+  "TABLE_ALL": 1055,
+  "TABLE_CLOCK": 1036,
+  "TABLE_FIRST1": 1057,
+  "TABLE_FIRST2": 1026,
+  "TABLE_FIRST3": 1026,
+  "TABLE_LAST1": 1036,
+  "TABLE_LAST2": 1036,
+  "TABLE_LAST3": 1047,
+  "TABLE_PROBE": 1036,
+  "WORLD_PARKER": 1036
+ },
+ "exploratory_world_one_two_nested_boundaries": {
+  "epochs": 3,
+  "exact_nothing_carried_bound": 3.3807289932289932,
+  "families_per_epoch": 4,
+  "lives": 300,
+  "status": "EXPLORATORY: no registered verdict; written after the first adversarial reader's probe",
+  "survey": {
+   "OFFSET/CACHE": {
+    "across_epochs": {
+     "answer": "CARRIED",
+     "mean": 15.071666666666667,
+     "threshold": 5.808612400245227
+    },
+    "across_families": {
+     "answer": "CARRIED",
+     "mean": 15.06,
+     "threshold": 5.808612400245227
+    },
+    "first_family_mean": 3.4766666666666666
+   },
+   "OFFSET/ELIM": {
+    "across_epochs": {
+     "answer": "NOT_SHOWN",
+     "mean": 3.38,
+     "threshold": 5.808612400245227
+    },
+    "across_families": {
+     "answer": "NOT_SHOWN",
+     "mean": 3.458888888888889,
+     "threshold": 5.808612400245227
+    },
+    "first_family_mean": 3.4766666666666666
+   },
+   "OFFSET/FORGETFUL": {
+    "across_epochs": {
+     "answer": "NOT_SHOWN",
+     "mean": 3.38,
+     "threshold": 5.808612400245227
+    },
+    "across_families": {
+     "answer": "CARRIED",
+     "mean": 15.06,
+     "threshold": 5.808612400245227
+    },
+    "first_family_mean": 3.4766666666666666
+   },
+   "OFFSET/KEEPER": {
+    "across_epochs": {
+     "answer": "CARRIED",
+     "mean": 15.071666666666667,
+     "threshold": 5.808612400245227
+    },
+    "across_families": {
+     "answer": "CARRIED",
+     "mean": 15.06,
+     "threshold": 5.808612400245227
+    },
+    "first_family_mean": 3.4766666666666666
+   },
+   "ROTATION/CACHE": {
+    "across_epochs": {
+     "answer": "CARRIED",
+     "mean": 13.8,
+     "threshold": 5.808612400245227
+    },
+    "across_families": {
+     "answer": "CARRIED",
+     "mean": 15.06,
+     "threshold": 5.808612400245227
+    },
+    "first_family_mean": 3.566666666666667
+   },
+   "ROTATION/ELIM": {
+    "across_epochs": {
+     "answer": "NOT_SHOWN",
+     "mean": 3.415,
+     "threshold": 5.808612400245227
+    },
+    "across_families": {
+     "answer": "NOT_SHOWN",
+     "mean": 3.4833333333333334,
+     "threshold": 5.808612400245227
+    },
+    "first_family_mean": 3.566666666666667
+   },
+   "ROTATION/FORGETFUL": {
+    "across_epochs": {
+     "answer": "NOT_SHOWN",
+     "mean": 3.415,
+     "threshold": 5.808612400245227
+    },
+    "across_families": {
+     "answer": "CARRIED",
+     "mean": 15.06,
+     "threshold": 5.808612400245227
+    },
+    "first_family_mean": 3.566666666666667
+   },
+   "ROTATION/KEEPER": {
+    "across_epochs": {
+     "answer": "NOT_SHOWN",
+     "mean": 4.155,
+     "threshold": 5.808612400245227
+    },
+    "across_families": {
+     "answer": "CARRIED",
+     "mean": 15.06,
+     "threshold": 5.808612400245227
+    },
+    "first_family_mean": 3.566666666666667
+   }
+  }
+ },
+ "exploratory_world_two_unseen_pair": {
+  "control": "the eight families shown come from another key under the same labels; it guards only against a leak that reaches both arms alike",
+  "custody": "every life's key is hashed; a run in which one repeats is answered KEY_REUSED",
+  "exact_nothing_carried_bound": 3.3807289932289932,
+  "lives": 300,
+  "pairs_shown": 8,
+  "status": "EXPLORATORY: no registered verdict. A score above the bound on the ninth pair says that information from at least three separately shown families was combined, and nothing about how",
+  "survey": {
+   "COMPOSER": {
+    "answer": "COMBINED",
+    "arms_alone": "COMBINED",
+    "control": {
+     "answer": "NOT_SHOWN",
+     "mean": 3.486666666666667,
+     "threshold": 5.808612400245227
+    },
+    "keys_fresh": true,
+    "ninth_pair": {
+     "answer": "CARRIED",
+     "mean": 16.0,
+     "threshold": 5.808612400245227
+    }
+   },
+   "ELIM": {
+    "answer": "NOT_SHOWN",
+    "arms_alone": "NOT_SHOWN",
+    "control": {
+     "answer": "NOT_SHOWN",
+     "mean": 3.4766666666666666,
+     "threshold": 5.808612400245227
+    },
+    "keys_fresh": true,
+    "ninth_pair": {
+     "answer": "NOT_SHOWN",
+     "mean": 3.4766666666666666,
+     "threshold": 5.808612400245227
+    }
+   },
+   "HIDER, one key reused in both arms": {
+    "answer": "KEY_REUSED",
+    "arms_alone": "NOT_FROM_THIS_LIFE",
+    "control": {
+     "answer": "CARRIED",
+     "mean": 15.956666666666667,
+     "threshold": 5.808612400245227
+    },
+    "keys_fresh": false,
+    "ninth_pair": {
+     "answer": "CARRIED",
+     "mean": 15.956666666666667,
+     "threshold": 5.808612400245227
+    }
+   },
+   "REPEAT_WATCHER": {
+    "answer": "NOT_SHOWN",
+    "arms_alone": "NOT_SHOWN",
+    "control": {
+     "answer": "NOT_SHOWN",
+     "mean": 3.4766666666666666,
+     "threshold": 5.808612400245227
+    },
+    "keys_fresh": true,
+    "ninth_pair": {
+     "answer": "NOT_SHOWN",
+     "mean": 3.4766666666666666,
+     "threshold": 5.808612400245227
+    }
+   },
+   "REPEAT_WATCHER, the life's key reused and the control's drawn afresh": {
+    "answer": "KEY_REUSED",
+    "arms_alone": "COMBINED",
+    "control": {
+     "answer": "NOT_SHOWN",
+     "mean": 3.4566666666666666,
+     "threshold": 5.808612400245227
+    },
+    "keys_fresh": false,
+    "ninth_pair": {
+     "answer": "CARRIED",
+     "mean": 15.956666666666667,
+     "threshold": 5.808612400245227
+    }
+   },
+   "SANDBAGGER, one key reused in both arms": {
+    "answer": "KEY_REUSED",
+    "arms_alone": "NOT_FROM_THIS_LIFE",
+    "control": {
+     "answer": "CARRIED",
+     "mean": 15.956666666666667,
+     "threshold": 5.808612400245227
+    },
+    "keys_fresh": false,
+    "ninth_pair": {
+     "answer": "CARRIED",
+     "mean": 15.956666666666667,
+     "threshold": 5.808612400245227
+    }
+   },
+   "SCHEMA_CACHE": {
+    "answer": "COMBINED",
+    "arms_alone": "COMBINED",
+    "control": {
+     "answer": "NOT_SHOWN",
+     "mean": 3.4766666666666666,
+     "threshold": 5.808612400245227
+    },
+    "keys_fresh": true,
+    "ninth_pair": {
+     "answer": "CARRIED",
+     "mean": 13.463333333333333,
+     "threshold": 5.808612400245227
+    }
+   },
+   "TABLE_CACHE": {
+    "answer": "NOT_SHOWN",
+    "arms_alone": "NOT_SHOWN",
+    "control": {
+     "answer": "NOT_SHOWN",
+     "mean": 3.4966666666666666,
+     "threshold": 5.808612400245227
+    },
+    "keys_fresh": true,
+    "ninth_pair": {
+     "answer": "NOT_SHOWN",
+     "mean": 3.4266666666666667,
+     "threshold": 5.808612400245227
+    }
+   },
+   "TWO_TABLES": {
+    "answer": "NOT_SHOWN",
+    "arms_alone": "NOT_SHOWN",
+    "control": {
+     "answer": "NOT_SHOWN",
+     "mean": 3.486666666666667,
+     "threshold": 5.808612400245227
+    },
+    "keys_fresh": true,
+    "ninth_pair": {
+     "answer": "NOT_SHOWN",
+     "mean": 3.4466666666666668,
+     "threshold": 5.808612400245227
+    }
+   }
+  }
+ },
+ "fixture_attainability": {
+  "FAILS, design 120 of 480": 0.988837395156783,
+  "FAILS, design 96 of 480": 0.9982160045555944,
+  "HOLDS, design 240 of 240": 0.9896914758944358,
+  "HOLDS, design 466 of 480": 0.871488478687062,
+  "HOLDS, design 480 of 480": 0.998483815047055
+ },
+ "gates": {
+  "G1.cell": {
+   "clean": 2,
+   "escapes": [],
+   "false_alarms": [],
+   "guards": "a run exists only as a complete registered cell whose answers are attainable",
+   "mutant_verdicts": [
+    {
+     "mutant": "a required field is missing (each of the sixteen, in turn)",
+     "reason": "not required after all: ",
+     "verdict": "BLOCKED"
+    },
+    {
+     "mutant": "a required field given as an empty list or dict (each of five, in turn)",
+     "reason": "an empty container was accepted for: ",
+     "verdict": "BLOCKED"
+    },
+    {
+     "mutant": "design runs claimed and no design seed registered",
+     "reason": "fields: BLOCKED (missing, a placeholder, or not a list of integer seeds: design_seeds)",
+     "verdict": "BLOCKED"
+    },
+    {
+     "mutant": "no registered seed at all: an empty tuple",
+     "reason": "fields: BLOCKED (missing, a placeholder, or not a list of integer seeds: registered_seeds)",
+     "verdict": "BLOCKED"
+    },
+    {
+     "mutant": "a design seed written as text beside the same seed as a number",
+     "reason": "fields: BLOCKED (missing, a placeholder, or not a list of integer seeds: design_seeds)",
+     "verdict": "BLOCKED"
+    },
+    {
+     "mutant": "every description a placeholder word",
+     "reason": "fields: BLOCKED (missing, a placeholder, or not a list of integer seeds: adapter, boundary, development, independent_unit, measurement, physics, search, world)",
+     "verdict": "BLOCKED"
+    },
+    {
+     "mutant": "resources given as a word",
+     "reason": "fields: BLOCKED (missing, a placeholder, or not a list of integer seeds: resources)",
+     "verdict": "BLOCKED"
+    },
+    {
+     "mutant": "the table leaves its highest count unmapped",
+     "reason": "G1.verdict_table: FAIL (count 24 maps to 0 outcomes: the table is not total and single-valued)",
+     "verdict": "FAIL"
+    },
+    {
+     "mutant": "exposure given as a word",
+     "reason": "exposure: BLOCKED (exposure must record tuning_evaluations as a count)",
+     "verdict": "BLOCKED"
+    },
+    {
+     "mutant": "a negative count of tuning evaluations",
+     "reason": "exposure: BLOCKED (exposure must record tuning_evaluations as a count)",
+     "verdict": "BLOCKED"
+    },
+    {
+     "mutant": "verdict table leaves counts 13 to 21 unmapped",
+     "reason": "G1.verdict_table: FAIL (count 13 maps to 0 outcomes: the table is not total and single-valued)",
+     "verdict": "FAIL"
+    },
+    {
+     "mutant": "the ruler cannot emit its third outcome",
+     "reason": "G1.verdict_table: FAIL (the ruler cannot emit INDETERMINATE)",
+     "verdict": "FAIL"
+    },
+    {
+     "mutant": "a count mapped to two outcomes",
+     "reason": "G1.verdict_table: FAIL (count 13 maps to 2 outcomes: the table is not total and single-valued)",
+     "verdict": "FAIL"
+    },
+    {
+     "mutant": "the table emits an outcome it does not register",
+     "reason": "G1.verdict_table: FAIL (the table emits an outcome it does not register: MAYBE)",
+     "verdict": "FAIL"
+    },
+    {
+     "mutant": "a design seed is registered for confirmation",
+     "reason": "seeds: FAIL (seeds used in design runs are registered for confirmation: [5000])",
+     "verdict": "FAIL"
+    },
+    {
+     "mutant": "a registered seed is repeated",
+     "reason": "seeds: FAIL (seeds repeat: the units are not independent)",
+     "verdict": "FAIL"
+    },
+    {
+     "mutant": "a design seed is repeated",
+     "reason": "seeds: FAIL (seeds repeat: the units are not independent)",
+     "verdict": "FAIL"
+    },
+    {
+     "mutant": "the table counts 24 units and three seeds are registered",
+     "reason": "units: FAIL (the table counts 24 units and 3 seeds are registered: one seed per independent unit)",
+     "verdict": "FAIL"
+    },
+    {
+     "mutant": "the table counts 24 units and 48 seeds are registered",
+     "reason": "units: FAIL (the table counts 24 units and 48 seeds are registered: one seed per independent unit)",
+     "verdict": "FAIL"
+    },
+    {
+     "mutant": "a positive right in 466 of 480 design units: its answer comes out 87 times in 100",
+     "reason": "G1.attainability: BLOCKED (HOLDS, seen in 466 of 480 design units, comes out with probability 0.871; the floor is 0.99)",
+     "verdict": "BLOCKED"
+    },
+    {
+     "mutant": "a positive perfect in 240 design units: its answer is attainable at 0.9897, under the floor",
+     "reason": "G1.attainability: BLOCKED (HOLDS, seen in 240 of 240 design units, comes out with probability 0.990; the floor is 0.99)",
+     "verdict": "BLOCKED"
+    },
+    {
+     "mutant": "design runs registered for one answer only",
+     "reason": "G1.attainability: BLOCKED (register at least two known answers (a yes and a no), each with its design runs)",
+     "verdict": "BLOCKED"
+    },
+    {
+     "mutant": "a rate declared, with no design runs behind it",
+     "reason": "G1.attainability: BLOCKED (known answer FAILS needs a registered outcome and design runs behind it (design_hits of design_n))",
+     "verdict": "BLOCKED"
+    },
+    {
+     "mutant": "a negative count of design hits",
+     "reason": "G1.attainability: BLOCKED (known answer FAILS needs a registered outcome and design runs behind it (design_hits of design_n))",
+     "verdict": "BLOCKED"
+    },
+    {
+     "mutant": "design counts given as true and false",
+     "reason": "G1.attainability: BLOCKED (known answer FAILS needs a registered outcome and design runs behind it (design_hits of design_n))",
+     "verdict": "BLOCKED"
+    },
+    {
+     "mutant": "a missing field and a shared seed together",
+     "reason": "fields: BLOCKED (missing, a placeholder, or not a list of integer seeds: exposure); seeds: FAIL (seeds used in design runs are registered for confirmation: [5000])",
+     "verdict": "FAIL"
+    }
+   ],
+   "mutants": 26,
+   "status": "PASS",
+   "wrong_kind": []
+  },
+  "G1.receipt": {
+   "clean": 1,
+   "escapes": [],
+   "false_alarms": [],
+   "guards": "a receipt belongs to its registration",
+   "mutant_verdicts": [
+    {
+     "mutant": "receipt from other code",
+     "reason": "code: FAIL (the receipt was produced by code other than the registered code)",
+     "verdict": "FAIL"
+    },
+    {
+     "mutant": "the receipt copies the registered hash and the code on hand is other code",
+     "reason": "code: FAIL (the code on hand is not the registered code)",
+     "verdict": "FAIL"
+    },
+    {
+     "mutant": "receipt on other seeds",
+     "reason": "seeds: FAIL (the receipt's seeds are not the registered seeds, each once)",
+     "verdict": "FAIL"
+    },
+    {
+     "mutant": "one registered seed run twice in place of another",
+     "reason": "seeds: FAIL (the receipt's seeds are not the registered seeds, each once)",
+     "verdict": "FAIL"
+    },
+    {
+     "mutant": "a run on 23 of the 24 registered seeds",
+     "reason": "seeds: FAIL (the receipt's seeds are not the registered seeds, each once)",
+     "verdict": "FAIL"
+    },
+    {
+     "mutant": "run earlier than its registration",
+     "reason": "clock: FAIL (the run is earlier than its registration)",
+     "verdict": "FAIL"
+    },
+    {
+     "mutant": "run at the clock tick of its registration: the order cannot be decided",
+     "reason": "clock: INDETERMINATE (the clock cannot order the run and its registration)",
+     "verdict": "INDETERMINATE"
+    },
+    {
+     "mutant": "receipt without a source hash",
+     "reason": "receipt lacks: source_sha256",
+     "verdict": "BLOCKED"
+    },
+    {
+     "mutant": "receipt without the time it ran",
+     "reason": "receipt lacks: ran_at",
+     "verdict": "BLOCKED"
+    },
+    {
+     "mutant": "clock readings given as text",
+     "reason": "the registration itself does not stand: clock: BLOCKED (registered_at must be a clock reading)",
+     "verdict": "BLOCKED"
+    },
+    {
+     "mutant": "the code is not on hand",
+     "reason": "the code the receipt names is not on hand: its hash cannot be checked",
+     "verdict": "BLOCKED"
+    },
+    {
+     "mutant": "a receipt held against a registration that does not stand",
+     "reason": "the registration itself does not stand: fields: BLOCKED (missing, a placeholder, or not a list of integer seeds: known_answers)",
+     "verdict": "BLOCKED"
+    }
+   ],
+   "mutants": 12,
+   "status": "PASS",
+   "wrong_kind": []
+  },
+  "G10.contrast": {
+   "clean": 1,
+   "escapes": [],
+   "false_alarms": [],
+   "guards": "a contrast named after one variable changes that variable only",
+   "mutant_verdicts": [
+    {
+     "mutant": "run 2 against run 3, named after shared parts",
+     "reason": "named after parts_shared; of 10 fields written down 6 differ, also: content_reset, effect_threshold, family_A, sham, wrong_history",
+     "verdict": "FAIL"
+    },
+    {
+     "mutant": "one further difference besides the named one",
+     "reason": "named after parts_shared; of 10 fields written down 2 differ, also: effect_threshold",
+     "verdict": "FAIL"
+    },
+    {
+     "mutant": "two cells that do not differ in the named variable",
+     "reason": "the two cells do not differ in parts_shared",
+     "verdict": "FAIL"
+    }
+   ],
+   "mutants": 3,
+   "status": "PASS",
+   "wrong_kind": []
+  },
+  "G10.ruler": {
+   "clean": 1,
+   "escapes": [],
+   "false_alarms": [],
+   "guards": "a ruler is used for a claim only after it has answered the kit correctly",
+   "mutant_verdicts": [
+    {
+     "mutant": "the strong claim, run 1: the v0.1 criterion said yes to a selector and to a fixed builder",
+     "reason": "LIBRARY_FIXED_BUILDER: FAIL (registered NEGATIVE, the ruler returned POSITIVE); PROCEDURE_SELECTOR: FAIL (registered NEGATIVE, the ruler returned POSITIVE); positive: UNQUALIFIED (no known positive has been answered correctly at this setting); unbuilt: UNQUALIFIED (registered and not built: FLATTENED_EQUIVALENT, GENUINE_LEARNED_UPDATER, HIERARCHICAL_SELECTOR, NESTED_COMPILER_CARGO, WORLD_PARKING); not run here: UNQUALIFIED (built, and not run at this setting: BUILDER_COSTLY_DEVELOPMENT, BUILDER_HIDDEN_COPY, BUILDER_OFF_ITS_HISTORY, BUILDER_UNDER_A_HARMFUL_SHAM, MEMORIZER, SEARCH_ORDER_SELECTOR, SEARCH_ORDER_SELECTOR_EAGER)",
+     "verdict": "FAIL"
+    },
+    {
+     "mutant": "the strong claim, run 2: the strict steps said yes to a fixed builder",
+     "reason": "LIBRARY_FIXED_BUILDER: FAIL (registered NEGATIVE, the ruler returned POSITIVE); positive: UNQUALIFIED (no known positive has been answered correctly at this setting); unbuilt: UNQUALIFIED (registered and not built: FLATTENED_EQUIVALENT, GENUINE_LEARNED_UPDATER, HIERARCHICAL_SELECTOR, NESTED_COMPILER_CARGO, WORLD_PARKING); not run here: UNQUALIFIED (built, and not run at this setting: SEARCH_ORDER_SELECTOR, SEARCH_ORDER_SELECTOR_EAGER)",
+     "verdict": "FAIL"
+    },
+    {
+     "mutant": "the strong claim, run 3: the steps said yes to a selector over search orders",
+     "reason": "SEARCH_ORDER_SELECTOR: FAIL (registered NEGATIVE, the ruler returned POSITIVE); positive: UNQUALIFIED (no known positive has been answered correctly at this setting); unbuilt: UNQUALIFIED (registered and not built: FLATTENED_EQUIVALENT, GENUINE_LEARNED_UPDATER, HIERARCHICAL_SELECTOR, NESTED_COMPILER_CARGO, WORLD_PARKING); not run here: UNQUALIFIED (built, and not run at this setting: BUILDER_COSTLY_DEVELOPMENT, BUILDER_HIDDEN_COPY, BUILDER_OFF_ITS_HISTORY, BUILDER_UNDER_A_HARMFUL_SHAM, MATURATION_UNLOCK, MEMORIZER, PROCEDURE_SELECTOR)",
+     "verdict": "FAIL"
+    },
+    {
+     "mutant": "bits across two nested boundaries: nothing registered has been built",
+     "reason": "positive: UNQUALIFIED (no known positive has been answered correctly at this setting); negative: UNQUALIFIED (no known negative has been answered correctly at this setting); unbuilt: UNQUALIFIED (registered and not built: KEY_CACHE_TWO_BOUNDARIES, KEY_ELIMINATOR_TWO_BOUNDARIES)",
+     "verdict": "UNQUALIFIED"
+    },
+    {
+     "mutant": "combination on an unseen pair: nothing registered has been built",
+     "reason": "positive: UNQUALIFIED (no known positive has been answered correctly at this setting); negative: UNQUALIFIED (no known negative has been answered correctly at this setting); unbuilt: UNQUALIFIED (registered and not built: PAIR_COMPOSER, PAIR_ELIMINATOR, PAIR_HIDER, PAIR_REPEAT_WATCHER, PAIR_SANDBAGGER, PAIR_SCHEMA_CACHE, PAIR_TABLE_CACHE, PAIR_TWO_TABLES)",
+     "verdict": "UNQUALIFIED"
+    },
+    {
+     "mutant": "a registered answer that the receipt contradicts",
+     "reason": "KEY_ACQUIRER_16: FAIL (registered NEGATIVE, the ruler returned POSITIVE)",
+     "verdict": "FAIL"
+    },
+    {
+     "mutant": "a receipt replaced by an unrelated file that exists",
+     "reason": "KEY_ACQUIRER_4: BLOCKED (no readable verdict for ACQUIRER(4) in README.md); KEY_ACQUIRER_8: BLOCKED (no readable verdict for ACQUIRER(8) in README.md); KEY_ACQUIRER_12: BLOCKED (no readable verdict for ACQUIRER(12) in README.md); KEY_ACQUIRER_16: BLOCKED (no readable verdict for ACQUIRER(16) in README.md); KEY_ELIMINATOR: BLOCKED (no readable verdict for ELIM in README.md); KEY_SELECTOR: BLOCKED (no readable verdict for SELECTOR(64) in README.md); KEY_SELECTOR_ON_ITS_OWN_LIST: BLOCKED (no readable verdict for fire test A: SELECTOR(64), key drawn from its own list in README.md); KEY_HARDWIRED: BLOCKED (no readable verdict for fire test B: HARDWIRED, harness reuses one key in README.md); KEY_SANDBAGGER: BLOCKED (no readable verdict for fire test D: SANDBAGGER, harness reuses one key in README.md); positive: UNQUALIFIED (no known positive has been answered correctly at this setting); negative: UNQUALIFIED (no known negative has been answered correctly at this setting)",
+     "verdict": "BLOCKED"
+    },
+    {
+     "mutant": "a kit with positives and no negative",
+     "reason": "negative: UNQUALIFIED (no known negative has been answered correctly at this setting)",
+     "verdict": "UNQUALIFIED"
+    },
+    {
+     "mutant": "a kit with negatives and no positive",
+     "reason": "positive: UNQUALIFIED (no known positive has been answered correctly at this setting)",
+     "verdict": "UNQUALIFIED"
+    },
+    {
+     "mutant": "a kit answered correctly, with one registered member never built",
+     "reason": "unbuilt: UNQUALIFIED (registered and not built: KEY_HIDER)",
+     "verdict": "UNQUALIFIED"
+    },
+    {
+     "mutant": "a kit answered correctly, with one member run only at another setting",
+     "reason": "not run here: UNQUALIFIED (built, and not run at this setting: KEY_HIDER)",
+     "verdict": "UNQUALIFIED"
+    }
+   ],
+   "mutants": 11,
+   "status": "PASS",
+   "wrong_kind": []
+  },
+  "G10.setting": {
+   "clean": 2,
+   "escapes": [],
+   "false_alarms": [],
+   "guards": "the nine open choices are registered before the run",
+   "mutant_verdicts": [
+    {
+     "mutant": "run 2 as it was registered",
+     "reason": "power not registered; amortization_horizon not registered",
+     "verdict": "BLOCKED"
+    },
+    {
+     "mutant": "run 3 as it was registered",
+     "reason": "power not registered; amortization_horizon not registered",
+     "verdict": "BLOCKED"
+    },
+    {
+     "mutant": "power registered as 0.2",
+     "reason": "power must be a probability of at least 0.99",
+     "verdict": "BLOCKED"
+    },
+    {
+     "mutant": "power registered as a sentence",
+     "reason": "power must be a probability of at least 0.99",
+     "verdict": "BLOCKED"
+    },
+    {
+     "mutant": "a horizon of no later family",
+     "reason": "amortization_horizon must be a count of later families",
+     "verdict": "BLOCKED"
+    },
+    {
+     "mutant": "a horizon registered as a sentence",
+     "reason": "amortization_horizon must be a count of later families",
+     "verdict": "BLOCKED"
+    },
+    {
+     "mutant": "an effect threshold of zero",
+     "reason": "effect_threshold must be a positive number",
+     "verdict": "BLOCKED"
+    },
+    {
+     "mutant": "an effect threshold registered as a word",
+     "reason": "effect_threshold must be a positive number",
+     "verdict": "BLOCKED"
+    },
+    {
+     "mutant": "a choice registered as n/a",
+     "reason": "sham not registered",
+     "verdict": "BLOCKED"
+    },
+    {
+     "mutant": "a choice registered as unknown",
+     "reason": "cost not registered",
+     "verdict": "BLOCKED"
+    },
+    {
+     "mutant": "every field registered as tbd",
+     "reason": "cost not registered; later_families not registered; content_reset not registered; sham not registered; family_A not registered; wrong_history not registered; effect_threshold not registered; power not registered; amortization_horizon not registered",
+     "verdict": "BLOCKED"
+    }
+   ],
+   "mutants": 11,
+   "status": "PASS",
+   "wrong_kind": []
+  },
+  "G11.custody": {
+   "clean": 2,
+   "escapes": [],
+   "false_alarms": [],
+   "guards": "confirmation data is not discovery data, and the rule was fixed first",
+   "mutant_verdicts": [
+    {
+     "mutant": "a required field is missing (each of the ten, in turn)",
+     "reason": "not required after all: ",
+     "verdict": "BLOCKED"
+    },
+    {
+     "mutant": "confirmation seeds reused from discovery",
+     "reason": "seeds: FAIL (confirmation seeds were used in discovery)",
+     "verdict": "FAIL"
+    },
+    {
+     "mutant": "the confirmation panel is the discovery panel",
+     "reason": "panel: FAIL (the confirmation panel is the discovery panel)",
+     "verdict": "FAIL"
+    },
+    {
+     "mutant": "the champion was chosen on confirmation data",
+     "reason": "selection: FAIL (the reported candidate was selected on confirmation data)",
+     "verdict": "FAIL"
+    },
+    {
+     "mutant": "new seeds of one generator presented as a new family",
+     "reason": "family: FAIL (new seeds of one generator are presented as a new family)",
+     "verdict": "FAIL"
+    },
+    {
+     "mutant": "tuning beyond the registered budget",
+     "reason": "tuning: FAIL (tuning used 80 evaluations against a registered budget of 50)",
+     "verdict": "FAIL"
+    },
+    {
+     "mutant": "the acceptance rule fixed after the confirmation data was opened",
+     "reason": "rule: FAIL (the acceptance rule was not fixed before the confirmation data was opened)",
+     "verdict": "FAIL"
+    },
+    {
+     "mutant": "one custodian for both sets",
+     "reason": "custodian: FAIL (one custodian holds both the discovery and the confirmation data)",
+     "verdict": "FAIL"
+    },
+    {
+     "mutant": "a confirmation with no seeds",
+     "reason": "discovery and confirmation each need seeds, a panel hash and a generator hash",
+     "verdict": "BLOCKED"
+    },
+    {
+     "mutant": "a discovery with no seeds",
+     "reason": "discovery and confirmation each need seeds, a panel hash and a generator hash",
+     "verdict": "BLOCKED"
+    },
+    {
+     "mutant": "a negative count of tuning evaluations",
+     "reason": "tuning counts and the two clock readings must be non-negative integers",
+     "verdict": "BLOCKED"
+    },
+    {
+     "mutant": "a count given as true",
+     "reason": "tuning counts and the two clock readings must be non-negative integers",
+     "verdict": "BLOCKED"
+    },
+    {
+     "mutant": "the time the data was opened given as 20.5",
+     "reason": "tuning counts and the two clock readings must be non-negative integers",
+     "verdict": "BLOCKED"
+    },
+    {
+     "mutant": "a custodian with an empty name",
+     "reason": "custody record lacks: discovery_custodian",
+     "verdict": "BLOCKED"
+    },
+    {
+     "mutant": "confirmation seeds written as text",
+     "reason": "seeds must be integers: a seed written as text is another seed to this gate",
+     "verdict": "BLOCKED"
+    },
+    {
+     "mutant": "a claim that is not one of the two registered",
+     "reason": "claim must be one of ('NEW_FAMILY', 'NEW_SEEDS') and selection_data one of ('discovery', 'confirmation')",
+     "verdict": "BLOCKED"
+    },
+    {
+     "mutant": "selection data described in other words",
+     "reason": "claim must be one of ('NEW_FAMILY', 'NEW_SEEDS') and selection_data one of ('discovery', 'confirmation')",
+     "verdict": "BLOCKED"
+    }
+   ],
+   "mutants": 17,
+   "status": "PASS",
+   "wrong_kind": []
+  },
+  "G12.promote": {
+   "clean": 9,
+   "escapes": [],
+   "false_alarms": [],
+   "guards": "a claim stands only on facets that passed, each with a source",
+   "mutant_verdicts": [
+    {
+     "mutant": "a facet of the first level is absent (each of the seven, in turn)",
+     "reason": "not required after all: ",
+     "verdict": "BLOCKED"
+    },
+    {
+     "mutant": "a facet of the second level is absent (each of the four, in turn)",
+     "reason": "not required after all: ",
+     "verdict": "BLOCKED"
+    },
+    {
+     "mutant": "the third level asked with nothing reproduced",
+     "reason": "not required after all: ",
+     "verdict": "BLOCKED"
+    },
+    {
+     "mutant": "the fourth level asked with nothing predicted",
+     "reason": "not required after all: ",
+     "verdict": "BLOCKED"
+    },
+    {
+     "mutant": "a facet of its kind is absent (each kind and facet, in turn)",
+     "reason": "not required after all: ",
+     "verdict": "BLOCKED"
+    },
+    {
+     "mutant": "the demand facet failed",
+     "reason": "demand: FAIL",
+     "verdict": "FAIL"
+    },
+    {
+     "mutant": "the ruler is unqualified in this physics",
+     "reason": "detection: UNQUALIFIED",
+     "verdict": "UNQUALIFIED"
+    },
+    {
+     "mutant": "the evidence was indeterminate",
+     "reason": "independence: INDETERMINATE",
+     "verdict": "INDETERMINATE"
+    },
+    {
+     "mutant": "no exact bound, and the second level is asked",
+     "reason": "exact_null: UNQUALIFIED",
+     "verdict": "UNQUALIFIED"
+    },
+    {
+     "mutant": "a nested claim resting on a retention certificate alone",
+     "reason": "mediation: BLOCKED (absent); cargo_control: BLOCKED (absent); flattened_twin: BLOCKED (absent)",
+     "verdict": "BLOCKED"
+    },
+    {
+     "mutant": "one facet absent and another failed",
+     "reason": "detection: BLOCKED (absent); demand: FAIL",
+     "verdict": "FAIL"
+    },
+    {
+     "mutant": "a facet typed PASS with no source",
+     "reason": "demand: BLOCKED (no source)",
+     "verdict": "BLOCKED"
+    },
+    {
+     "mutant": "a facet whose source is a blank",
+     "reason": "demand: BLOCKED (no source)",
+     "verdict": "BLOCKED"
+    },
+    {
+     "mutant": "a facet with a verdict that is not one of the five",
+     "reason": "demand: BLOCKED (no verdict)",
+     "verdict": "BLOCKED"
+    },
+    {
+     "mutant": "a kind of claim that is not registered",
+     "reason": "the kind of claim is not registered: 'STRUCTURE'",
+     "verdict": "BLOCKED"
+    },
+    {
+     "mutant": "the second level asked with a failed second implementation",
+     "reason": "second_implementation: FAIL",
+     "verdict": "FAIL"
+    }
+   ],
+   "mutants": 16,
+   "status": "PASS",
+   "wrong_kind": []
+  },
+  "G12.render": {
+   "clean": 1,
+   "escapes": [],
+   "false_alarms": [],
+   "guards": "a claim is quoted with its cell, its excluded class and its registered setting or not at all",
+   "mutant_verdicts": [
+    {
+     "mutant": "a claim stripped of its setting",
+     "reason": "a claim without its cell, the class it excludes and its registered setting may not be quoted",
+     "verdict": "BLOCKED"
+    },
+    {
+     "mutant": "a claim with no cell",
+     "reason": "a claim without its cell, the class it excludes and its registered setting may not be quoted",
+     "verdict": "BLOCKED"
+    },
+    {
+     "mutant": "a claim that does not name the class it excludes",
+     "reason": "a claim without its cell, the class it excludes and its registered setting may not be quoted",
+     "verdict": "BLOCKED"
+    },
+    {
+     "mutant": "a class excluded that is one space",
+     "reason": "a claim without its cell, the class it excludes and its registered setting may not be quoted",
+     "verdict": "BLOCKED"
+    },
+    {
+     "mutant": "a cell that is one space",
+     "reason": "a claim without its cell, the class it excludes and its registered setting may not be quoted",
+     "verdict": "BLOCKED"
+    },
+    {
+     "mutant": "a claim with no hash of its registered setting",
+     "reason": "a claim without its cell, the class it excludes and its registered setting may not be quoted",
+     "verdict": "BLOCKED"
+    },
+    {
+     "mutant": "a kind of claim that is not registered",
+     "reason": "the kind of claim is not registered: 'STRUCTURE'",
+     "verdict": "BLOCKED"
+    },
+    {
+     "mutant": "a setting that is not the one registered",
+     "reason": "the setting quoted is not the setting that was registered",
+     "verdict": "FAIL"
+    }
+   ],
+   "mutants": 8,
+   "status": "PASS",
+   "wrong_kind": []
+  },
+  "G2.preflight": {
+   "clean": 1,
+   "escapes": [],
+   "false_alarms": [],
+   "guards": "no run starts unless both answers of the ruler are attainable",
+   "mutant_verdicts": [
+    {
+     "mutant": "16 episodes cannot reach alpha 1e-6",
+     "reason": "with n=16 the ruler cannot say yes at alpha=1e-06: the verdict is unreachable",
+     "verdict": "BLOCKED"
+    },
+    {
+     "mutant": "a positive right in 192 of 256 design runs",
+     "reason": "power 0.029 is below 0.99 (n=64, critical count 51, positive at 0.6815)",
+     "verdict": "BLOCKED"
+    },
+    {
+     "mutant": "alpha 0.05: a class member is called positive too often",
+     "reason": "alpha 0.05 leaves the class member's not-yes below 0.99",
+     "verdict": "BLOCKED"
+    },
+    {
+     "mutant": "a positive seen perfect in 20 design runs, registered at 20 episodes",
+     "reason": "power 0.010 is below 0.99 (n=20, critical count 20, positive at 0.7943)",
+     "verdict": "BLOCKED"
+    },
+    {
+     "mutant": "a rate with no design runs behind it",
+     "reason": "the positive's rate has no design runs behind it",
+     "verdict": "BLOCKED"
+    },
+    {
+     "mutant": "design counts given as true and true",
+     "reason": "the positive's rate has no design runs behind it",
+     "verdict": "BLOCKED"
+    },
+    {
+     "mutant": "a class member that would be called negative 70 times in 100",
+     "reason": "a member of the class is called NEGATIVE with probability 0.695, below 0.99",
+     "verdict": "BLOCKED"
+    },
+    {
+     "mutant": "a rate given as 99",
+     "reason": "n, bound, alpha and the positive's rate must be registered as numbers in range",
+     "verdict": "BLOCKED"
+    },
+    {
+     "mutant": "a bound of 0",
+     "reason": "n, bound, alpha and the positive's rate must be registered as numbers in range",
+     "verdict": "BLOCKED"
+    },
+    {
+     "mutant": "a bound of 1",
+     "reason": "n, bound, alpha and the positive's rate must be registered as numbers in range",
+     "verdict": "BLOCKED"
+    }
+   ],
+   "mutants": 10,
+   "status": "PASS",
+   "wrong_kind": []
+  },
+  "G3.exclusion": {
+   "clean": 1,
+   "escapes": [],
+   "false_alarms": [],
+   "guards": "class exclusion returns the known answers on organisms and at its registered thresholds",
+   "mutant_verdicts": [
+    {
+     "mutant": "a bound of 0.10 where the class reaches 0.5",
+     "reason": "ATTRACTOR impostor, block 0: registered NEGATIVE, returned POSITIVE; ATTRACTOR impostor, block 1: registered NEGATIVE, returned POSITIVE; ATTRACTOR impostor, block 2: registered NEGATIVE, returned POSITIVE; ATTRACTOR impostor, block 3: registered NEGATIVE, returned POSITIVE; ATTRACTOR impostor, block 4: registered NEGATIVE, returned POSITIVE; ATTRACTOR impostor, block 5: registered NEGATIVE, retur",
+     "verdict": "FAIL"
+    },
+    {
+     "mutant": "a bound of 0.25",
+     "reason": "ATTRACTOR impostor, block 5: registered NEGATIVE, returned POSITIVE; ATTRACTOR impostor, block 8: registered NEGATIVE, returned POSITIVE; PACKET impostor, block 4: registered NEGATIVE, returned POSITIVE; PACKET impostor, block 5: registered NEGATIVE, returned POSITIVE; REGISTER impostor, block 5: registered NEGATIVE, returned POSITIVE; REGISTER impostor, block 8: registered NEGATIVE, returned POSI",
+     "verdict": "FAIL"
+    },
+    {
+     "mutant": "a bound of 0.45",
+     "reason": "a score of 13: registered INVERTED, returned NEGATIVE; a score of 50: registered UNDECIDED, returned POSITIVE",
+     "verdict": "FAIL"
+    },
+    {
+     "mutant": "a bound of 0.70",
+     "reason": "ATTRACTOR impostor, block 6: registered NEGATIVE, returned INVERTED; a score of 14: registered NEGATIVE, returned INVERTED; a score of 51: the score is between the two registered answers",
+     "verdict": "FAIL"
+    },
+    {
+     "mutant": "alpha 0.01 in the ruler",
+     "reason": "a score of 14: registered NEGATIVE, returned INVERTED; a score of 47: registered NEGATIVE, returned POSITIVE; a score of 48: registered UNDECIDED, returned POSITIVE; a score of 50: registered UNDECIDED, returned POSITIVE",
+     "verdict": "FAIL"
+    },
+    {
+     "mutant": "alpha 1e-9 in the ruler",
+     "reason": "a score of 13: registered INVERTED, returned NEGATIVE; a score of 47: the score is between the two registered answers; a score of 51: the score is between the two registered answers",
+     "verdict": "FAIL"
+    },
+    {
+     "mutant": "a weakest positive of 0.99 in the ruler",
+     "reason": "a score of 48: registered UNDECIDED, returned NEGATIVE; a score of 50: registered UNDECIDED, returned NEGATIVE",
+     "verdict": "FAIL"
+    },
+    {
+     "mutant": "a ruler that always says yes, on a panel with no impostors",
+     "reason": "the panel lacks a positive or an impostor",
+     "verdict": "UNQUALIFIED"
+    },
+    {
+     "mutant": "a panel with no weak positive",
+     "reason": "no weak positive, no further impostor blocks, or no registered thresholds: the ruler is not pinned",
+     "verdict": "UNQUALIFIED"
+    },
+    {
+     "mutant": "no registered thresholds",
+     "reason": "no weak positive, no further impostor blocks, or no registered thresholds: the ruler is not pinned",
+     "verdict": "UNQUALIFIED"
+    },
+    {
+     "mutant": "no further blocks of seeds for the impostors",
+     "reason": "no weak positive, no further impostor blocks, or no registered thresholds: the ruler is not pinned",
+     "verdict": "UNQUALIFIED"
+    },
+    {
+     "mutant": "an empty panel",
+     "reason": "the panel lacks a positive or an impostor",
+     "verdict": "UNQUALIFIED"
+    },
+    {
+     "mutant": "thresholds on one side only",
+     "reason": "the registered thresholds do not reach a yes, a no and an inverted answer",
+     "verdict": "UNQUALIFIED"
+    },
+    {
+     "mutant": "a further block that repeats the first block of seeds",
+     "reason": "the impostor blocks repeat seeds: they are not further trials",
+     "verdict": "BLOCKED"
+    },
+    {
+     "mutant": "a bound of 0.33, registered together with thresholds computed from it: one impostor block beats it",
+     "reason": "ATTRACTOR impostor, block 8: registered NEGATIVE, returned POSITIVE",
+     "verdict": "FAIL"
+    },
+    {
+     "mutant": "a bound of 0.70, registered together with thresholds computed from it: one impostor block is too low for it",
+     "reason": "ATTRACTOR impostor, block 6: registered NEGATIVE, returned INVERTED",
+     "verdict": "FAIL"
+    },
+    {
+     "mutant": "the same block of seeds used eight times",
+     "reason": "the impostor blocks repeat seeds: they are not further trials",
+     "verdict": "BLOCKED"
+    },
+    {
+     "mutant": "16 episodes",
+     "reason": "ATTRACTOR positive: too few episodes for any answer; ATTRACTOR impostor, block 0: too few episodes for any answer; ATTRACTOR impostor, block 1: too few episodes for any answer; ATTRACTOR impostor, block 2: too few episodes for any answer; ATTRACTOR impostor, block 3: too few episodes for any answer; ATTRACTOR impostor, block 4: too few episodes for any answer; ATTRACTOR impostor, block 5: too few ",
+     "verdict": "BLOCKED"
+    },
+    {
+     "mutant": "a weak positive that scores 49 of 64",
+     "reason": "weak positive: the score is between the two registered answers",
+     "verdict": "INDETERMINATE"
+    }
+   ],
+   "mutants": 19,
+   "status": "PASS",
+   "wrong_kind": []
+  },
+  "G4.entry": {
+   "clean": 4,
+   "escapes": [],
+   "false_alarms": [],
+   "guards": "a physics is read only after it has returned a known answer",
+   "mutant_verdicts": [
+    {
+     "mutant": "a physics with no designed organism",
+     "reason": "no known answer in this physics: a null here cannot be read",
+     "verdict": "UNQUALIFIED"
+    },
+    {
+     "mutant": "a physics with a positive and no impostor",
+     "reason": "no known answer in this physics: a null here cannot be read",
+     "verdict": "UNQUALIFIED"
+    },
+    {
+     "mutant": "a designed positive that does not work",
+     "reason": "positive: FAIL (registered POSITIVE, returned NEGATIVE)",
+     "verdict": "FAIL"
+    },
+    {
+     "mutant": "an impostor that is in fact a positive",
+     "reason": "impostor: FAIL (the impostor beats the exact bound: it is no impostor, or the world leaks)",
+     "verdict": "FAIL"
+    },
+    {
+     "mutant": "an impostor that carries the cue and answers its complement",
+     "reason": "impostor: FAIL (the impostor carries the cue and answers its complement)",
+     "verdict": "FAIL"
+    },
+    {
+     "mutant": "an impostor from another physics",
+     "reason": "label: FAIL (not declared to be of this physics: the impostor)",
+     "verdict": "FAIL"
+    },
+    {
+     "mutant": "stored-word machines entered under another physics",
+     "reason": "label: FAIL (not declared to be of this physics: the positive and the impostor)",
+     "verdict": "FAIL"
+    },
+    {
+     "mutant": "16 episodes",
+     "reason": "with n=16 the ruler cannot say yes at alpha=1e-06: the verdict is unreachable",
+     "verdict": "BLOCKED"
+    },
+    {
+     "mutant": "30 episodes: a yes is reachable and the weakest positive seldom earns it",
+     "reason": "power 0.712 is below 0.99 (n=30, critical count 28, positive at 0.9375)",
+     "verdict": "BLOCKED"
+    },
+    {
+     "mutant": "a positive that scores 49 of 64",
+     "reason": "positive: INDETERMINATE (the score is between the two registered answers)",
+     "verdict": "INDETERMINATE"
+    },
+    {
+     "mutant": "an impostor that scores 50 of 64, and 48 of its first 48",
+     "reason": "impostor: INDETERMINATE (the score is between the two registered answers)",
+     "verdict": "INDETERMINATE"
+    }
+   ],
+   "mutants": 11,
+   "status": "PASS",
+   "wrong_kind": []
+  },
+  "G5.neutrality": {
+   "clean": 5,
+   "escapes": [],
+   "false_alarms": [],
+   "guards": "a ruler is shared only where it has returned the known answers",
+   "mutant_verdicts": [
+    {
+     "mutant": "the register-swap ruler declared shared",
+     "reason": "declared shared; ATTRACTOR positive: FAIL (registered POSITIVE, returned NOT_MOVED); LATTICE positive: FAIL (registered POSITIVE, returned NOT_MOVED); PACKET positive: FAIL (registered POSITIVE, returned NOT_MOVED)",
+     "verdict": "FAIL"
+    },
+    {
+     "mutant": "the register-swap ruler declared valid for packets",
+     "reason": "inside its declared scope; PACKET positive: FAIL (registered POSITIVE, returned NOT_MOVED)",
+     "verdict": "FAIL"
+    },
+    {
+     "mutant": "a shared claim on a panel of two physics",
+     "reason": "a shared ruler needs known answers in 3 unlike physics; the panel has 2",
+     "verdict": "UNQUALIFIED"
+    },
+    {
+     "mutant": "declared valid in a physics with no known answer",
+     "reason": "declared valid in a physics with no known answer: CHEMISTRY",
+     "verdict": "UNQUALIFIED"
+    },
+    {
+     "mutant": "declared valid nowhere",
+     "reason": "a ruler must declare where it is valid",
+     "verdict": "BLOCKED"
+    },
+    {
+     "mutant": "a shared claim on two physics and a third with no known answer",
+     "reason": "a shared ruler needs known answers in 3 unlike physics; the panel has 2",
+     "verdict": "UNQUALIFIED"
+    },
+    {
+     "mutant": "class exclusion on a panel whose stored-word positive scores 49 of 64",
+     "reason": "declared shared; REGISTER positive: INDETERMINATE (the score is between the two registered answers)",
+     "verdict": "INDETERMINATE"
+    },
+    {
+     "mutant": "a ruler that always says no, declared shared",
+     "reason": "declared shared; ATTRACTOR positive: FAIL (registered POSITIVE, returned NEGATIVE); LATTICE positive: FAIL (registered POSITIVE, returned NEGATIVE); PACKET positive: FAIL (registered POSITIVE, returned NEGATIVE); REGISTER positive: FAIL (registered POSITIVE, returned NEGATIVE)",
+     "verdict": "FAIL"
+    },
+    {
+     "mutant": "interchange on a panel whose impostor carries the cue",
+     "reason": "declared shared; REGISTER impostor: FAIL (registered NEGATIVE, returned INVERTED)",
+     "verdict": "FAIL"
+    },
+    {
+     "mutant": "interchange on 8 seeds: 16 pairs cannot reach alpha 1e-6",
+     "reason": "declared shared; ATTRACTOR positive: BLOCKED (too few episodes for any answer); ATTRACTOR impostor: BLOCKED (too few episodes for any answer); LATTICE positive: BLOCKED (too few episodes for any answer); LATTICE impostor: BLOCKED (too few episodes for any answer); PACKET positive: BLOCKED (too few episodes for any answer); PACKET impostor: BLOCKED (too few episodes for any answer); REGISTER positive: BLOCKED (too few episodes for any answer); REGISTER impostor: BLOCKED (too few episodes for any answer)",
+     "verdict": "BLOCKED"
+    },
+    {
+     "mutant": "class exclusion on 16 episodes",
+     "reason": "declared shared; ATTRACTOR positive: BLOCKED (too few episodes for any answer); ATTRACTOR impostor: BLOCKED (too few episodes for any answer); LATTICE positive: BLOCKED (too few episodes for any answer); LATTICE impostor: BLOCKED (too few episodes for any answer); PACKET positive: BLOCKED (too few episodes for any answer); PACKET impostor: BLOCKED (too few episodes for any answer); REGISTER positive: BLOCKED (too few episodes for any answer); REGISTER impostor: BLOCKED (too few episodes for any answer)",
+     "verdict": "BLOCKED"
+    }
+   ],
+   "mutants": 11,
+   "status": "PASS",
+   "wrong_kind": []
+  },
+  "G6.observer": {
+   "clean": 2,
+   "escapes": [],
+   "false_alarms": [],
+   "guards": "observing a run does not change it",
+   "mutant_verdicts": [
+    {
+     "mutant": "an observer that draws from the world's random stream",
+     "reason": "ATTRACTOR positive: the observer changes the run (seed 2000)",
+     "verdict": "FAIL"
+    },
+    {
+     "mutant": "an observer that draws from it after the last distractor",
+     "reason": "ATTRACTOR positive: the observer changes the run (seed 2000)",
+     "verdict": "FAIL"
+    },
+    {
+     "mutant": "an observer that rewrites the organism after it has answered",
+     "reason": "REGISTER positive: the observer changes the run (seed 2000)",
+     "verdict": "FAIL"
+    },
+    {
+     "mutant": "an observer that advances the world's episode counter",
+     "reason": "ATTRACTOR positive: the observer changes the run (seed 2000)",
+     "verdict": "FAIL"
+    },
+    {
+     "mutant": "an observer that writes on the environment",
+     "reason": "ATTRACTOR positive: the observer changes the run (seed 2000)",
+     "verdict": "FAIL"
+    },
+    {
+     "mutant": "an observer that writes on the environment after the last step only",
+     "reason": "ATTRACTOR positive: the observer changes the run (seed 2000)",
+     "verdict": "FAIL"
+    },
+    {
+     "mutant": "an observer whose damage the organism repairs before its next step",
+     "reason": "LATTICE positive: the observer changes the run (seed 2000)",
+     "verdict": "FAIL"
+    },
+    {
+     "mutant": "an observer that disturbs every episode of a world but its first",
+     "reason": "ATTRACTOR positive: the observer changes the run (seed 2001)",
+     "verdict": "FAIL"
+    },
+    {
+     "mutant": "an observer that disturbs from the seventh episode on",
+     "reason": "ATTRACTOR positive: the observer changes the run (seed 2006)",
+     "verdict": "FAIL"
+    },
+    {
+     "mutant": "an observer that disturbs every seed but the first",
+     "reason": "ATTRACTOR positive: the observer changes the run (seed 2001)",
+     "verdict": "FAIL"
+    },
+    {
+     "mutant": "an observer that disturbs only the impostors and the weak positive",
+     "reason": "ATTRACTOR impostor: the observer changes the run (seed 2000)",
+     "verdict": "FAIL"
+    },
+    {
+     "mutant": "no seeds",
+     "reason": "no seeds: nothing was checked",
+     "verdict": "BLOCKED"
+    }
+   ],
+   "mutants": 12,
+   "status": "PASS",
+   "wrong_kind": []
+  },
+  "G6.reset": {
+   "clean": 2,
+   "escapes": [],
+   "false_alarms": [],
+   "guards": "after a reset a runtime behaves as one that never ran",
+   "mutant_verdicts": [
+    {
+     "mutant": "a runtime whose reset keeps its word",
+     "reason": "state survives the reset (seed 2000, earlier cue 0)",
+     "verdict": "FAIL"
+    },
+    {
+     "mutant": "a harness that forgets to reset",
+     "reason": "state survives the reset (seed 2000, earlier cue 0)",
+     "verdict": "FAIL"
+    },
+    {
+     "mutant": "a carry that native() hides and that shows only when a cue arrives",
+     "reason": "state survives the reset (seed 2000, earlier cue 1)",
+     "verdict": "FAIL"
+    },
+    {
+     "mutant": "a carry left by an episode with no cue",
+     "reason": "state survives the reset (seed 2000, earlier cue None)",
+     "verdict": "FAIL"
+    },
+    {
+     "mutant": "a reset that keeps a step counter",
+     "reason": "state survives the reset (seed 2000, earlier cue 0)",
+     "verdict": "FAIL"
+    },
+    {
+     "mutant": "an environment that keeps its mark across episodes",
+     "reason": "state survives the reset (seed 2000, earlier cue 0)",
+     "verdict": "FAIL"
+    },
+    {
+     "mutant": "a reset that is sound on the first seed and leaks afterwards",
+     "reason": "state survives the reset (seed 2001, earlier cue 0)",
+     "verdict": "FAIL"
+    },
+    {
+     "mutant": "a reset that keeps the last distractors, shown only when the next ones differ",
+     "reason": "state survives the reset (seed 2000, earlier cue 0)",
+     "verdict": "FAIL"
+    },
+    {
+     "mutant": "no seeds",
+     "reason": "no seeds: nothing was checked",
+     "verdict": "BLOCKED"
+    }
+   ],
+   "mutants": 9,
+   "status": "PASS",
+   "wrong_kind": []
+  },
+  "G6.restart": {
+   "clean": 1,
+   "escapes": [],
+   "false_alarms": [],
+   "guards": "capture and restore carry the whole state",
+   "mutant_verdicts": [
+    {
+     "mutant": "a capture that omits what only the next step reveals",
+     "reason": "capture and restore do not carry the state (seed 2000, step 2)",
+     "verdict": "FAIL"
+    },
+    {
+     "mutant": "a capture that is wrong straight after the first step only",
+     "reason": "capture and restore do not carry the state (seed 2000, step 0)",
+     "verdict": "FAIL"
+    },
+    {
+     "mutant": "a capture that omits packets in flight",
+     "reason": "capture and restore do not carry the state (seed 2000, step 0)",
+     "verdict": "FAIL"
+    },
+    {
+     "mutant": "a restore that does nothing",
+     "reason": "capture and restore do not carry the state (seed 2000, step 0)",
+     "verdict": "FAIL"
+    },
+    {
+     "mutant": "a restore that adds to what is there",
+     "reason": "capture and restore do not carry the state (seed 2000, step 0)",
+     "verdict": "FAIL"
+    },
+    {
+     "mutant": "a restore that leaves a stale word in place",
+     "reason": "capture and restore do not carry the state (seed 2000, step 0)",
+     "verdict": "FAIL"
+    },
+    {
+     "mutant": "a capture that is wrong late in the gap only",
+     "reason": "capture and restore do not carry the state (seed 2000, step 5)",
+     "verdict": "FAIL"
+    },
+    {
+     "mutant": "a capture that is wrong after the last step only",
+     "reason": "capture and restore do not carry the state (seed 2000, step 7)",
+     "verdict": "FAIL"
+    },
+    {
+     "mutant": "a capture that is sound on the first seed and wrong afterwards",
+     "reason": "capture and restore do not carry the state (seed 2001, step 0)",
+     "verdict": "FAIL"
+    },
+    {
+     "mutant": "no seeds",
+     "reason": "no seeds: nothing was checked",
+     "verdict": "BLOCKED"
+    }
+   ],
+   "mutants": 10,
+   "status": "PASS",
+   "wrong_kind": []
+  },
+  "G7.calibration": {
+   "clean": 1,
+   "escapes": [],
+   "false_alarms": [],
+   "guards": "a reach estimator agrees with exact reach on a panel of five cells",
+   "mutant_verdicts": [
+    {
+     "mutant": "repair runs counted as cold reach",
+     "reason": "256 hits in 256 founders is not compatible with exact reach 0.0000",
+     "verdict": "FAIL"
+    },
+    {
+     "mutant": "an estimator that ran half the registered budget",
+     "reason": "114 hits in 256 founders is not compatible with exact reach 0.7298; 156 hits in 256 founders is not compatible with exact reach 0.7757",
+     "verdict": "FAIL"
+    },
+    {
+     "mutant": "an estimator that reports 40 hits it did not have",
+     "reason": "228 hits in 256 founders is not compatible with exact reach 0.7298; 237 hits in 256 founders is not compatible with exact reach 0.7757; 85 hits in 256 founders is not compatible with exact reach 0.1797; 40 hits in 256 founders is not compatible with exact reach 0.0000",
+     "verdict": "FAIL"
+    },
+    {
+     "mutant": "an estimator that never searches",
+     "reason": "0 hits in 256 founders is not compatible with exact reach 0.7298; 0 hits in 256 founders is not compatible with exact reach 0.7757; 0 hits in 256 founders is not compatible with exact reach 0.1797; 0 hits in 256 founders is not compatible with exact reach 1.0000",
+     "verdict": "FAIL"
+    },
+    {
+     "mutant": "an estimator that always reports a hit",
+     "reason": "256 hits in 256 founders is not compatible with exact reach 0.7298; 256 hits in 256 founders is not compatible with exact reach 0.7757; 256 hits in 256 founders is not compatible with exact reach 0.1797; 256 hits in 256 founders is not compatible with exact reach 0.0000",
+     "verdict": "FAIL"
+    },
+    {
+     "mutant": "no founders",
+     "reason": "no founders: nothing was checked; no founders: nothing was checked; no founders: nothing was checked; no founders: nothing was checked; no founders: nothing was checked",
+     "verdict": "BLOCKED"
+    }
+   ],
+   "mutants": 6,
+   "status": "PASS",
+   "wrong_kind": []
+  },
+  "G7.report": {
+   "clean": 7,
+   "escapes": [],
+   "false_alarms": [],
+   "guards": "a search result is what it says it is, and is the search that was registered",
+   "mutant_verdicts": [
+    {
+     "mutant": "a budget chosen after the search: 2,000 proposals where 400 were registered",
+     "reason": "registration: FAIL (the search reported is not the search registered: budget); NEUTRAL: FAIL (reports 128 hits; the registered search on the registered founders gives 101)",
+     "verdict": "FAIL"
+    },
+    {
+     "mutant": "a policy that was not registered for this cell",
+     "reason": "registration: FAIL (the search reported is not the search registered: policies)",
+     "verdict": "FAIL"
+    },
+    {
+     "mutant": "one registered founder reported twice",
+     "reason": "NEUTRAL: FAIL (the founders reported are not the founders registered, each once)",
+     "verdict": "FAIL"
+    },
+    {
+     "mutant": "fewer hits reported than the search had",
+     "reason": "NEUTRAL: FAIL (reports 96 hits; the registered search on the registered founders gives 101)",
+     "verdict": "FAIL"
+    },
+    {
+     "mutant": "founders registered because the search hit from them: the exact count shows it",
+     "reason": "NEUTRAL: FAIL (128 hits in 128 founders is not compatible with the exact reach 0.7298: the founders were not drawn from the registered law)",
+     "verdict": "FAIL"
+    },
+    {
+     "mutant": "a null from one policy, though it can cross a neutral step",
+     "reason": "claim: BLOCKED (a null needs at least two search policies, one of them able to cross a neutral step)",
+     "verdict": "BLOCKED"
+    },
+    {
+     "mutant": "a null whose bound is 1: it bounds nothing",
+     "reason": "bound: FAIL (the stated bound 1.0 is not a number between what 128 founders warrant (0.0231) and 1)",
+     "verdict": "FAIL"
+    },
+    {
+     "mutant": "a null whose bound is given as true",
+     "reason": "bound: FAIL (the stated bound True is not a number between what 128 founders warrant (0.0231) and 1)",
+     "verdict": "FAIL"
+    },
+    {
+     "mutant": "a registration that names no budget",
+     "reason": "what was registered for this cell is not on hand, or is incomplete",
+     "verdict": "BLOCKED"
+    },
+    {
+     "mutant": "a repair start declared under a cold-discovery claim",
+     "reason": "claim: FAIL (repair from a designed target is reported as cold discovery)",
+     "verdict": "FAIL"
+    },
+    {
+     "mutant": "repair counts reported under a cold start",
+     "reason": "STRICT: FAIL (reports 128 hits; the registered search on the registered founders gives 0)",
+     "verdict": "FAIL"
+    },
+    {
+     "mutant": "a repair claim made from a cold start",
+     "reason": "claim: FAIL (a repair claim needs a repair start)",
+     "verdict": "FAIL"
+    },
+    {
+     "mutant": "a repair start at distance 0",
+     "reason": "claim: FAIL (a repair start at distance 0 is the target itself)",
+     "verdict": "FAIL"
+    },
+    {
+     "mutant": "a discovery claimed with nothing found",
+     "reason": "claim: FAIL (a discovery is claimed and nothing was found)",
+     "verdict": "FAIL"
+    },
+    {
+     "mutant": "more hits reported than the search had",
+     "reason": "NEUTRAL: FAIL (reports 110 hits; the registered search on the registered founders gives 101)",
+     "verdict": "FAIL"
+    },
+    {
+     "mutant": "a null whose scope is the substrate",
+     "reason": "scope: FAIL (a search null is a bound on reach for these policies at this budget; it is not a statement about the substrate)",
+     "verdict": "FAIL"
+    },
+    {
+     "mutant": "a null that states no scope",
+     "reason": "scope: BLOCKED (a null must state its scope)",
+     "verdict": "BLOCKED"
+    },
+    {
+     "mutant": "a null from one policy on a plateau",
+     "reason": "claim: BLOCKED (a null needs at least two search policies, one of them able to cross a neutral step)",
+     "verdict": "BLOCKED"
+    },
+    {
+     "mutant": "a null from two policies, neither able to cross a neutral step",
+     "reason": "claim: BLOCKED (a null needs at least two search policies, one of them able to cross a neutral step)",
+     "verdict": "BLOCKED"
+    },
+    {
+     "mutant": "a null although the second policy reached the target",
+     "reason": "claim: FAIL (a policy did reach the target; the null does not hold); exact: FAIL (the exact reach is above the stated bound: NEUTRAL 0.7298)",
+     "verdict": "FAIL"
+    },
+    {
+     "mutant": "a null with one hit",
+     "reason": "claim: FAIL (a policy did reach the target; the null does not hold); NEUTRAL: UNQUALIFIED (no positive control: at this budget the policy reaches a planted target on a smooth slope with probability 0.088); STRICT: UNQUALIFIED (no positive control: at this budget the policy reaches a planted target on a smooth slope with probability 0.088)",
+     "verdict": "FAIL"
+    },
+    {
+     "mutant": "founders chosen by the report because the search missed from them",
+     "reason": "NEUTRAL: FAIL (the founders reported are not the founders registered, each once); STRICT: FAIL (the founders reported are not the founders registered, each once); exact: FAIL (the exact reach is above the stated bound: NEUTRAL 0.7298)",
+     "verdict": "FAIL"
+    },
+    {
+     "mutant": "a null on founders that are not the registered ones, with no hit on either set",
+     "reason": "NEUTRAL: FAIL (the founders reported are not the founders registered, each once); STRICT: FAIL (the founders reported are not the founders registered, each once)",
+     "verdict": "FAIL"
+    },
+    {
+     "mutant": "founders registered because the search missed from them: the exact count shows it",
+     "reason": "exact: FAIL (the exact reach is above the stated bound: NEUTRAL 0.7298)",
+     "verdict": "FAIL"
+    },
+    {
+     "mutant": "one founder that hit, counted 128 times",
+     "reason": "NEUTRAL: FAIL (the founders reported are not the founders registered, each once)",
+     "verdict": "FAIL"
+    },
+    {
+     "mutant": "a null with no bound attached",
+     "reason": "bound: FAIL (zero hits in 128 founders bounds the hit rate at 0.0231; the report must say so)",
+     "verdict": "FAIL"
+    },
+    {
+     "mutant": "a null with a bound smaller than the founders warrant",
+     "reason": "bound: FAIL (the stated bound 0.001 is not a number between what 128 founders warrant (0.0231) and 1)",
+     "verdict": "FAIL"
+    },
+    {
+     "mutant": "a null at a budget too small for the positive control",
+     "reason": "NEUTRAL: UNQUALIFIED (no positive control: at this budget the policy reaches a planted target on a smooth slope with probability 0.011); STRICT: UNQUALIFIED (no positive control: at this budget the policy reaches a planted target on a smooth slope with probability 0.011)",
+     "verdict": "UNQUALIFIED"
+    },
+    {
+     "mutant": "a null at a budget where the control is reached 81 times in 100",
+     "reason": "NEUTRAL: UNQUALIFIED (no positive control: at this budget the policy reaches a planted target on a smooth slope with probability 0.813); STRICT: UNQUALIFIED (no positive control: at this budget the policy reaches a planted target on a smooth slope with probability 0.813)",
+     "verdict": "UNQUALIFIED"
+    },
+    {
+     "mutant": "a policy that is not registered",
+     "reason": "not registered: STRICT_AGAIN",
+     "verdict": "BLOCKED"
+    },
+    {
+     "mutant": "a landscape that is not registered",
+     "reason": "not registered: NEEDEL",
+     "verdict": "BLOCKED"
+    },
+    {
+     "mutant": "a claim that is not one of the three",
+     "reason": "unknown claim or start law: 'SUBSTRATE_INCAPABLE', ('COLD', 'COLD')",
+     "verdict": "BLOCKED"
+    },
+    {
+     "mutant": "a start law that is not one of the two",
+     "reason": "unknown claim or start law: 'COLD_DISCOVERY', ('WARM', 'WARM')",
+     "verdict": "BLOCKED"
+    },
+    {
+     "mutant": "a report with no budget",
+     "reason": "report lacks: budget",
+     "verdict": "BLOCKED"
+    },
+    {
+     "mutant": "the registered founders repeat",
+     "reason": "the founders registered for this cell are missing, or repeat",
+     "verdict": "BLOCKED"
+    },
+    {
+     "mutant": "the registered founders are not on hand",
+     "reason": "what was registered for this cell is not on hand, or is incomplete",
+     "verdict": "BLOCKED"
+    }
+   ],
+   "mutants": 36,
+   "status": "PASS",
+   "wrong_kind": []
+  },
+  "G8.demand": {
+   "clean": 1,
+   "escapes": [],
+   "false_alarms": [],
+   "guards": "every baseline on the list is shown to sit at the bound",
+   "mutant_verdicts": [
+    {
+     "mutant": "the cue follows a counter the organism can read",
+     "reason": "the cue is available without retention to: CLOCK (2048 of 2048), TABLE_CLOCK (2048 of 2048)",
+     "verdict": "FAIL"
+    },
+    {
+     "mutant": "the cue follows the second bit of that counter",
+     "reason": "the cue is available without retention to: TABLE_CLOCK (2048 of 2048)",
+     "verdict": "FAIL"
+    },
+    {
+     "mutant": "the cue follows the third bit of that counter",
+     "reason": "the cue is available without retention to: TABLE_CLOCK (2048 of 2048)",
+     "verdict": "FAIL"
+    },
+    {
+     "mutant": "the probe carries the answer",
+     "reason": "the cue is available without retention to: KEY_READER (2048 of 2048), TABLE_PROBE (2048 of 2048)",
+     "verdict": "FAIL"
+    },
+    {
+     "mutant": "the probe carries the complement of the answer",
+     "reason": "the cue is available without retention to: KEY_READER (0 of 2048), TABLE_PROBE (2048 of 2048)",
+     "verdict": "FAIL"
+    },
+    {
+     "mutant": "the probe carries the answer in two episodes of five",
+     "reason": "the cue is available without retention to: KEY_READER (1429 of 2048), TABLE_PROBE (1429 of 2048)",
+     "verdict": "FAIL"
+    },
+    {
+     "mutant": "the cue is the xor of the last two distractors",
+     "reason": "the cue is available without retention to: TABLE_ALL (2048 of 2048), TABLE_LAST2 (2048 of 2048), TABLE_LAST3 (2048 of 2048)",
+     "verdict": "FAIL"
+    },
+    {
+     "mutant": "the same, with a gap of 20",
+     "reason": "the cue is available without retention to: TABLE_LAST2 (2048 of 2048), TABLE_LAST3 (2048 of 2048)",
+     "verdict": "FAIL"
+    },
+    {
+     "mutant": "the cue is the parity of all six distractors",
+     "reason": "the cue is available without retention to: TABLE_ALL (2048 of 2048)",
+     "verdict": "FAIL"
+    },
+    {
+     "mutant": "the same, with a gap of 20: the table that could see it cannot be fitted",
+     "reason": "too little data to fit: TABLE_ALL",
+     "verdict": "INDETERMINATE"
+    },
+    {
+     "mutant": "the environment keeps what the organism writes",
+     "reason": "the cue is available without retention to: WORLD_PARKER (2048 of 2048)",
+     "verdict": "FAIL"
+    },
+    {
+     "mutant": "a required baseline was not run (each of the five, in turn)",
+     "reason": "not required after all: ",
+     "verdict": "BLOCKED"
+    },
+    {
+     "mutant": "closure claimed from 64 episodes",
+     "reason": "64 episodes cannot show these within 0.10 of one half: CLOCK, CONSTANT, KEY_READER, LAST_DISTRACTOR, TABLE_ALL, TABLE_CLOCK, TABLE_FIRST1, TABLE_FIRST2, TABLE_FIRST3, TABLE_LAST1, TABLE_LAST2, TABLE_LAST3, TABLE_PROBE, WORLD_PARKER",
+     "verdict": "INDETERMINATE"
+    },
+    {
+     "mutant": "the tables scored on the seeds they were fitted on",
+     "reason": "no seeds, or the fitted tables are scored on seeds they were fitted on",
+     "verdict": "BLOCKED"
+    }
+   ],
+   "mutants": 14,
+   "status": "PASS",
+   "wrong_kind": []
+  },
+  "G9.arms": {
+   "clean": 3,
+   "escapes": [],
+   "false_alarms": [],
+   "guards": "arms registered as separate controls give separate series",
+   "mutant_verdicts": [
+    {
+     "mutant": "two arms with one series, and no exemption registered for them",
+     "reason": "4 arms give 3 distinct series: dev_B = sham_B",
+     "verdict": "FAIL"
+    },
+    {
+     "mutant": "an exemption used for a pair that is not the intact arm and its sham",
+     "reason": "4 arms give 2 distinct series: dev_B = sham_B = lesion_B",
+     "verdict": "FAIL"
+    },
+    {
+     "mutant": "12 replicates where the audit is registered for 24",
+     "reason": "the audit is registered for 24 replicates and got 12",
+     "verdict": "BLOCKED"
+    },
+    {
+     "mutant": "run 3, STRATEGIST: eight arms",
+     "reason": "8 arms give 3 distinct series: naive_B = lesion_B = irrelevant_history_B; dev_B = sham_B = rescue_B = v_donor_B",
+     "verdict": "FAIL"
+    },
+    {
+     "mutant": "the same arms nudged apart in one replicate of 24",
+     "reason": "8 arms give 3 distinct series: naive_B = lesion_B = irrelevant_history_B; dev_B = sham_B = rescue_B = v_donor_B",
+     "verdict": "FAIL"
+    },
+    {
+     "mutant": "the same arms nudged apart in two replicates of 24",
+     "reason": "8 arms give 3 distinct series: naive_B = lesion_B = irrelevant_history_B; dev_B = sham_B = rescue_B = v_donor_B",
+     "verdict": "FAIL"
+    }
+   ],
+   "mutants": 6,
+   "status": "PASS",
+   "wrong_kind": []
+  },
+  "G9.clauses": {
+   "clean": 1,
+   "escapes": [],
+   "false_alarms": [],
+   "guards": "every clause holds somewhere and fails somewhere by itself",
+   "mutant_verdicts": [
+    {
+     "mutant": "run 2: nine cells, thirteen clauses",
+     "reason": "4 of 13 clauses have no fixture that makes them false",
+     "verdict": "UNQUALIFIED"
+    },
+    {
+     "mutant": "run 3: four cells, thirteen clauses",
+     "reason": "6 of 13 clauses have no fixture that makes them false",
+     "verdict": "UNQUALIFIED"
+    },
+    {
+     "mutant": "one catch-all cell in which nothing works",
+     "reason": "3 of 3 clauses fail only where another clause fails too",
+     "verdict": "INDETERMINATE"
+    },
+    {
+     "mutant": "a clause that can never hold",
+     "reason": "0 of 4 clauses have no fixture that makes them false; 1 have none that makes them true",
+     "verdict": "UNQUALIFIED"
+    },
+    {
+     "mutant": "240 replicates per cell, each clause true in 22 of them",
+     "reason": "the audit is registered for 24 replicates per cell; not so in: GOOD, HARMFUL_SHAM, NO_LESION_EFFECT, NO_SAVINGS",
+     "verdict": "BLOCKED"
+    },
+    {
+     "mutant": "12 replicates per cell",
+     "reason": "the audit is registered for 24 replicates per cell; not so in: GOOD, HARMFUL_SHAM, NO_LESION_EFFECT, NO_SAVINGS",
+     "verdict": "BLOCKED"
+    }
+   ],
+   "mutants": 6,
+   "status": "PASS",
+   "wrong_kind": []
+  },
+  "G9.sham": {
+   "clean": 2,
+   "escapes": [],
+   "false_alarms": [],
+   "guards": "a sham can fail and leaves the organism where it was",
+   "mutant_verdicts": [
+    {
+     "mutant": "run 2, BUILDER: the sham removes unused entries",
+     "reason": "the sham is within 25% of intact in 8 of 24 replicates (faster in 24): it is not neutral",
+     "verdict": "FAIL"
+    },
+    {
+     "mutant": "run 3, STRATEGIST: the sham swaps two idle orders",
+     "reason": "no fixture makes the sham clause false: it cannot fail",
+     "verdict": "UNQUALIFIED"
+    },
+    {
+     "mutant": "a sham 40% slower in every replicate",
+     "reason": "the sham is within 25% of intact in 0 of 24 replicates (faster in 0): it is not neutral",
+     "verdict": "FAIL"
+    },
+    {
+     "mutant": "12 replicates where the audit is registered for 24",
+     "reason": "the audit is registered for 24 replicates and got 12",
+     "verdict": "BLOCKED"
+    }
+   ],
+   "mutants": 4,
+   "status": "PASS",
+   "wrong_kind": []
+  }
+ },
+ "host": "SKULLPORT",
+ "known_escapes": [
+  {
+   "fault": "design counts that were typed and never run",
+   "gate": "G1.cell",
+   "verdict": "PASS",
+   "why": "the gate computes each answer's probability from design counts. It cannot see whether the design runs were made."
+  },
+  {
+   "fault": "a receipt whose reported outcome was changed after the run",
+   "gate": "G1.receipt",
+   "verdict": "PASS",
+   "why": "the gate checks that a receipt belongs to its registration. It does not read what the receipt says the run found."
+  },
+  {
+   "fault": "a positive declared perfect in 256 design runs that were never made",
+   "gate": "G2.preflight",
+   "verdict": "PASS",
+   "why": "the same: the counts are a declaration."
+  },
+  {
+   "fault": "a bound of 0.48 where the class reaches 0.5, registered together with thresholds computed from it",
+   "gate": "G3.exclusion",
+   "shown": {
+    "at_registered_thresholds": [
+     0.49921,
+     0.50079
+    ],
+    "by_organisms": [
+     0.342,
+     0.686
+    ],
+    "impostor_scores": [
+     25,
+     41
+    ],
+    "impostor_series": 4,
+    "positive_scores": [
+     64,
+     64,
+     64,
+     64
+    ],
+    "thresholds_at_the_wrong_bound": {
+     "11": "INVERTED",
+     "12": "NEGATIVE",
+     "47": "NEGATIVE",
+     "48": "UNDECIDED",
+     "49": "UNDECIDED",
+     "50": "POSITIVE"
+    },
+    "weak_positive_score": 61
+   },
+   "verdict": "PASS",
+   "why": "the registered thresholds hold the ruler's arithmetic to the registered bound, within 0.001. The organisms hold the registered bound itself only loosely. That the bound is the true one has to be derived, and derived again by a second author."
+  },
+  {
+   "fault": "stored-word machines relabelled as another physics",
+   "gate": "G4.entry",
+   "verdict": "PASS",
+   "why": "the gate reads the physics an organism declares. It cannot read what the organism is."
+  },
+  {
+   "fault": "a positive that is right on the 64 episodes checked and wrong ever after",
+   "gate": "G4.entry",
+   "verdict": "PASS",
+   "why": "the gate sees the episodes it runs."
+  },
+  {
+   "fault": "an impostor that carries the cue in one episode of five",
+   "gate": "G4.entry",
+   "shown": {
+    "it_scores": 40,
+    "of": 64
+   },
+   "verdict": "PASS",
+   "why": "a carrier too weak to exclude the class is called a negative. The ruler has a weakest positive it is registered to detect, and says nothing below it."
+  },
+  {
+   "fault": "the register-swap ruler declared shared on three relabelled stored-word machines",
+   "gate": "G5.neutrality",
+   "verdict": "PASS",
+   "why": "the gate counts physics by name. Whether three physics are unlike is a judgment, registered in advance and attacked by a second author's isomer."
+  },
+  {
+   "fault": "an observer that disturbs the world only on seeds outside those checked",
+   "gate": "G6.observer",
+   "verdict": "PASS",
+   "why": "equivalence is shown on the seeds and the organisms checked and on no others. A run has to be checked on its own seeds, with the organisms the observer will watch."
+  },
+  {
+   "fault": "an observer that writes a field of the organism its reported state omits",
+   "gate": "G6.observer",
+   "verdict": "PASS",
+   "why": "the gate compares what a runtime reports as its state."
+  },
+  {
+   "fault": "a carry that native() hides and that is used two episodes later",
+   "gate": "G6.reset",
+   "verdict": "PASS",
+   "why": "the gate looks one episode ahead and at the state a runtime reports. State hidden from both passes."
+  },
+  {
+   "fault": "a reset that leaks on every third call",
+   "gate": "G6.reset",
+   "verdict": "PASS",
+   "why": "the gate calls reset twice on each runtime."
+  },
+  {
+   "fault": "a count of episodes that capture omits and native() hides, used from the second episode on",
+   "gate": "G6.restart",
+   "verdict": "PASS",
+   "why": "the gate restarts within one episode."
+  },
+  {
+   "fault": "an estimator that ran 95% of the registered budget",
+   "gate": "G7.calibration",
+   "shown": {
+    "exact_at_95_percent": 0.7112767802898243,
+    "exact_at_budget": 0.7297640987899354
+   },
+   "verdict": "PASS",
+   "why": "256 founders resolve an error in reach of a few standard errors and nothing smaller."
+  },
+  {
+   "fault": "an estimator that searches on the five cells of the panel and reports no hit anywhere else",
+   "gate": "G7.calibration",
+   "shown": {
+    "it_reports": 0,
+    "of": 256,
+    "where_exact_reach_is": 1.0
+   },
+   "verdict": "PASS",
+   "why": "an estimator is qualified on the cells it was scored on, and nowhere else."
+  },
+  {
+   "fault": "a null whose prose says the substrate cannot do it, with the scope field right",
+   "gate": "G7.report",
+   "verdict": "PASS",
+   "why": "prose is not read. And outside these toy landscapes there is no exact reach to hold a count against, so founders registered because the search missed from them, or hit, would pass."
+  },
+  {
+   "fault": "the cue follows the fourth bit of a counter the organism can read",
+   "gate": "G8.demand",
+   "shown": {
+    "a_policy_that_reads_that_bit_scores": 64,
+    "of": 64
+   },
+   "verdict": "PASS",
+   "why": "the gate runs a list of baselines and small fitted tables, not the class. Nothing on the list reads that bit."
+  },
+  {
+   "fault": "a world that keeps what is written, with a constant entered under the name of the baseline that would have shown it",
+   "gate": "G8.demand",
+   "verdict": "PASS",
+   "why": "baselines are required by name. What runs under a name is a declaration."
+  },
+  {
+   "fault": "run 3's arms nudged apart in three replicates of 24",
+   "gate": "G9.arms",
+   "verdict": "PASS",
+   "why": "arms are one series if equal in 22 of 24 replicates. Three nudged replicates leave 21."
+  },
+  {
+   "fault": "run 3's three computations reported as eight arms with a constant offset on each",
+   "gate": "G9.arms",
+   "verdict": "PASS",
+   "why": "arms are compared for equality. A constant added to an arm hides that it is another arm."
+  },
+  {
+   "fault": "cells that were typed, not run, so that every clause fails by itself",
+   "gate": "G9.clauses",
+   "verdict": "PASS",
+   "why": "an audit of numbers cannot see where the numbers came from."
+  },
+  {
+   "fault": "run 3's idle sham, with a cell added in which another, harmful operation is called the sham",
+   "gate": "G9.sham",
+   "verdict": "PASS",
+   "why": "an audit of numbers cannot see what an operation was. The fire test of a sham must use that sham."
+  },
+  {
+   "fault": "a power of 0.99 typed onto run 3, with nothing computed",
+   "gate": "G10.setting",
+   "verdict": "PASS",
+   "why": "presence and type are checked, not meaning and not provenance."
+  },
+  {
+   "fault": "two runs that differ in a choice nobody wrote down",
+   "gate": "G10.contrast",
+   "verdict": "PASS",
+   "why": "the gate compares the fields that were written down."
+  },
+  {
+   "fault": "a registry that calls the fixed builder a positive for the strong claim",
+   "gate": "G10.ruler",
+   "verdict": "PASS",
+   "why": "the registered answers are a declaration. Who registers them, and when, is outside the gate."
+  },
+  {
+   "fault": "a ruler qualified for the strong claim from two rows that point at another run's cells",
+   "gate": "G10.ruler",
+   "verdict": "PASS",
+   "why": "the gate reads the cell a row points at. It cannot see whether that cell is the organism named."
+  },
+  {
+   "fault": "an edited copy of the discovery generator presented as a new family",
+   "gate": "G11.custody",
+   "verdict": "PASS",
+   "why": "generators are compared by the hash of their code, and custodians by name. Whether two generators are one family, or two names one person, is a judgment."
+  },
+  {
+   "fault": "a facet typed PASS whose named source was never run",
+   "gate": "G12.promote",
+   "verdict": "PASS",
+   "why": "the gate requires a source and does not open it. A claim about structure entered as an effect passes the same way."
+  },
+  {
+   "fault": "a claim whose setting and its hash were replaced together",
+   "gate": "G12.render",
+   "verdict": "PASS",
+   "why": "the hash is carried by the claim. It should come from the registration."
+  }
+ ],
+ "panel_scores_of_64": {
+  "impostors_on_nine_blocks": {
+   "ATTRACTOR": [
+    31,
+    34,
+    32,
+    31,
+    29,
+    40,
+    25,
+    32,
+    41
+   ],
+   "LATTICE": [
+    33,
+    31,
+    30,
+    30,
+    34,
+    31,
+    32,
+    31,
+    34
+   ],
+   "PACKET": [
+    32,
+    34,
+    31,
+    32,
+    36,
+    35,
+    30,
+    30,
+    32
+   ],
+   "REGISTER": [
+    26,
+    32,
+    30,
+    33,
+    34,
+    38,
+    27,
+    34,
+    36
+   ]
+  },
+  "interchange": {
+   "ATTRACTOR": {
+    "impostor": "NEGATIVE",
+    "positive": "POSITIVE"
+   },
+   "LATTICE": {
+    "impostor": "NEGATIVE",
+    "positive": "POSITIVE"
+   },
+   "PACKET": {
+    "impostor": "NEGATIVE",
+    "positive": "POSITIVE"
+   },
+   "REGISTER": {
+    "impostor": "NEGATIVE",
+    "positive": "POSITIVE"
+   }
+  },
+  "positives": {
+   "ATTRACTOR": 64,
+   "LATTICE": 64,
+   "PACKET": 64,
+   "REGISTER": 64
+  },
+  "register_swap": {
+   "ATTRACTOR": {
+    "impostor": "NEGATIVE",
+    "positive": "NOT_MOVED"
+   },
+   "LATTICE": {
+    "impostor": "NEGATIVE",
+    "positive": "NOT_MOVED"
+   },
+   "PACKET": {
+    "impostor": "NEGATIVE",
+    "positive": "NOT_MOVED"
+   },
+   "REGISTER": {
+    "impostor": "NEGATIVE",
+    "positive": "POSITIVE"
+   }
+  },
+  "weak_positive": 61
+ },
+ "parameters": {
+  "alpha": 1e-06,
+  "calibration_alpha": 0.002,
+  "critical_k": 51,
+  "demand_alpha": 1e-06,
+  "demand_episodes": 2048,
+  "demand_margin": 0.1,
+  "design_confidence": 0.99,
+  "episodes": 64,
+  "exact_bound": 0.5,
+  "founders_for_calibration": 256,
+  "founders_in_a_report": 128,
+  "impostor_blocks": 9,
+  "interchange_critical_k": 92,
+  "interchange_inverted_at_or_below": 36,
+  "interchange_negative_at_or_below": 103,
+  "interchange_pairs": 128,
+  "inverted_at_or_below": 13,
+  "negative_at_or_below": 47,
+  "power_at_weakest_positive": 0.9999663244239879,
+  "power_floor": 0.99,
+  "registered_thresholds": {
+   "13": "INVERTED",
+   "14": "NEGATIVE",
+   "47": "NEGATIVE",
+   "48": "UNDECIDED",
+   "50": "UNDECIDED",
+   "51": "POSITIVE"
+  },
+  "search_budget": 400,
+  "torture_seeds": 12,
+  "weakest_registered_positive": 0.9375,
+  "zero_hit_bound": 0.023132405251746757
+ },
+ "python": "3.12.10",
+ "search": {
+  "ASCENT/NEUTRAL": {
+   "cold_exact": 0.9999999999999964,
+   "cold_hits_of_256": 256,
+   "repair1_exact": 1.0
+  },
+  "ASCENT/STRICT": {
+   "cold_exact": 0.9999999999999964,
+   "cold_hits_of_256": 256,
+   "repair1_exact": 1.0
+  },
+  "NEEDLE/NEUTRAL": {
+   "cold_exact": 0.7297640987899354,
+   "cold_hits_of_256": 188,
+   "repair1_exact": 0.7756582827851617
+  },
+  "NEEDLE/STRICT": {
+   "cold_exact": 0.0,
+   "cold_hits_of_256": 0,
+   "repair1_exact": 1.0
+  },
+  "VALLEY/NEUTRAL": {
+   "cold_exact": 0.0,
+   "cold_hits_of_256": 0,
+   "repair1_exact": 0.1796875
+  },
+  "VALLEY/STRICT": {
+   "cold_exact": 0.0,
+   "cold_hits_of_256": 0,
+   "repair1_exact": 1.0
+  },
+  "needle_neutral_cold_exact_at_24": 0.06238107031237421,
+  "needle_neutral_hits_of_128_by_budget": {
+   "24": 5,
+   "400": 101,
+   "8": 1
+  },
+  "positive_control_by_budget": {
+   "24": 0.8125705277792195,
+   "400": 0.9999999999999964,
+   "46": 0.989572531169463,
+   "47": 0.9908737752070289,
+   "5": 0.010694258052147236
+  }
+ },
+ "source_sha256_lf": {
+  "rso_harness/__init__.py": "ec0c26759c79ba6f26e29de01c71663c8baf7b60a7305e53174d996b6e92a2c0",
+  "rso_harness/audits.py": "5279f907ff91d83abe29bca18c81ff6c3815b749f4f34ced89adc40dfa69945e",
+  "rso_harness/claims.py": "88cb388978ed3c282353d6d1b34b7eb2dccb282f6d065d375b4f24a5577a61a9",
+  "rso_harness/ladder.py": "a8d3cfb6f3d884f94a2ab49f22b08c5dd9525a69dce749d9bf00880b4b37c224",
+  "rso_harness/meta.py": "3a27b0365284a414543731a5dd076b6292ccf03140ff9839737a6a783d416d2b",
+  "rso_harness/registration.py": "e8a492093f7c513d273970f31cbe34e6d0d6ad97fb7ae5dc3ec950545abc76b9",
+  "rso_harness/retain1.py": "3e39a37e7f48ac6a61eb95da69f3341db57d6cdfaf9e6990a6f89eec8ed55142",
+  "rso_harness/rulers.py": "2c74b63d7882d2d9f958a6779a91565411d0bdc077c9e67545e3d18d8e31a0a9",
+  "rso_harness/search.py": "f49098af7fe2f49cbc5a206b55d5fbc2e519c30a6c2e1112db8023debaf9b973",
+  "rso_harness/stats.py": "9454a67b1549c0c6366a65d49dc014a074db60b56e1fd0b5ebb853345d6aff2d",
+  "rso_harness/torture.py": "82d05921bd81ee58ba03ded97df4d6d34ef9690fcd2c0d66511761603e38e311",
+  "rso_harness/verdict.py": "bd27165b4b2dc4589b5b84d0661e0518670d2b61790a559fb447f587097a53d2",
+  "run_harness.py": "2b2c767beb01c782cdf74c5e501b80dfc04c838aaf905ce86593b038682c381a",
+  "tests/test_harness.py": "0e6bcd127dcc409fd3205da25be12a50890bf37c692447fcc67816053f8ee872"
+ },
+ "summary": {
+  "all_as_registered": true,
+  "gates": 21,
+  "gates_passing_their_registered_cases": 21,
+  "gates_with_a_known_escape": 21,
+  "known_escapes": 29,
+  "mutant_verdicts": {
+   "BLOCKED": 99,
+   "FAIL": 125,
+   "INDETERMINATE": 9,
+   "UNQUALIFIED": 25
+  },
+  "mutants": 258,
+  "sound_cases": 50
+ },
+ "what": "reference harness v0 for the Phase 3 hardening design, FABLE-5.1 version: conformance on toy fixtures and audits of four existing receipts; it qualifies no science",
+ "written_at_utc": "2026-10-02T11:34:13Z"
+}

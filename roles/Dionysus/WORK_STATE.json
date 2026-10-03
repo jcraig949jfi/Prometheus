@@ -1,0 +1,59 @@
+{
+  "schema": "prometheus.work_state.v1",
+  "seat": "Dionysus",
+  "mwo_id": "MWO-0004",
+  "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
+  "updated_at_utc": "2026-10-03T03:59:19Z",
+  "state": "READY",
+  "branch": "dionysus/phase3-design-2026-10-01",
+  "head_sha": "(this commit; see git log -1 -- roles/Dionysus/WORK_STATE.json)",
+  "threads": [],
+  "campaigns": [
+    "Phase 3 independent architect FABLE-5.1 (charter roles/Dionysus/prompts/2026-10-01_charter/, 04b97a598): DELIVERED docs/phase3/design/FABLE-5.1/",
+    "Review of the Phase 3 synthesis package (directive roles/Dionysus/prompts/2026-10-01_review_charter/, b656df387): DELIVERED docs/phase3/review/FABLE-5.1/ (three responses, four preregistered runs, one file of exploratory probes)",
+    "Comparison with the ASTRA-6.0 review, synthesis with the hardening package v0.2 by ChatGPT 5.6, and my own version of that package (directive roles/Dionysus/prompts/2026-10-02_hardening_v0.2/, 47334a5ba): DELIVERED docs/phase3/hardening/FABLE-5.1/ (three documents, a reference harness that runs, and the record of the adversarial reads that broke its first three versions)",
+    "Closure review of the Enceladus synthesis v0.4 (directive roles/Dionysus/prompts/2026-10-03_closure_review/): DELIVERED docs/phase3/closure/FABLE-5.1/CLOSURE_REVIEW_v0.4.md, ACCEPT_WITH_MINOR_AMENDMENTS"
+  ],
+  "experiments": [
+    "P1 calibration-slice miniature (docs/phase3/design/FABLE-5.1/prototype/p1_slice/): v1 gate FAILED and kept; v2 PASS on fresh sealed lives; search-power curve run. C0 observations about an instrument, one host, one author, independence I1.",
+    "Four runs on the section-19 criterion (docs/phase3/review/FABLE-5.1/counterfeit/), preregistered at 8dc9ef542, 619472376, c6adb3a57 and 635b3cba1; all gates PASS; designed organisms in toy worlds, C0, I1. Run 1 was too easy (found by a reviewer) and is kept with its conditions. Run 3 changed two things at once (found by a reviewer) and is kept as an existence sketch. A classification registered in run 4 is withdrawn in the write-up. probes_exploratory.py (not preregistered, design seeds only) shows what the passes of runs 2 and 3 rest on.",
+    "Reference harness v0, third version as amended after a final round of reading (docs/phase3/hardening/FABLE-5.1/harness/): 21 gates, 50 sound cases, 258 cases that must not pass, 29 pinned known escapes (at least one per gate; the list is not complete); a conformance skeleton on toy fixtures plus audits of the receipts of runs 1 to 4. It qualifies no science. Each earlier version passed its own cases and then let through faults written by adversarial readers (attack/); at first sight the tests missed 22 of 25, 34 of 44, 20 of 32, 26 of 36, 12 of 26, 20 of 54 one-line changes to the gates. What was changed after the final round was checked by code only; no reader has seen it. Two exploratory simulations of key worlds, no registered verdict. One author, independence I1."
+  ],
+  "fabric_tasks": [],
+  "running": [],
+  "blocked_on": [],
+  "next_actions": [
+    "Closure review delivered. Enceladus adjudicates D01-D11 and freezes the S1 contract; the operator authorizes caps and names the anchor keeper. Then, if asked: S1 independent expected-answer table (derived from the contract before seeing the implementation), S3 first-sight set (5 sound, 5 broken, 10 semantic edits, committed before outcomes, test bodies unopened), S4 closure set (2+2+3). Three review hours accepted.",
+    "Exposure to record at S3: every current document of both packages and my own code and tests have been read; first sight applies only to the new implementation and its frozen tests.",
+    "Smallest next experiment, READY and small: combination on an unseen pair (03_TEST_HARNESS_SPEC_FABLE.md section 8), under its own preregistration, on the model of counterfeit/keys.py. It is simulated, not registered; the spec lists what a registration still needs. It certifies that three separately shown families were combined, not how.",
+    "Owed by someone other than me: an attack on the amended harness by an author of another model family, and organisms built to beat the two arms and the custody check of the combination world.",
+    "If the hardening package's own harness code arrives (its archive was empty), run it and compare gate by gate.",
+    "If files 00, 03, 04, 05 and 07 of the synthesis package arrive, a second pass on RESPONSE_1 sections 12 and 13 and on FLAW 3 is small and worth doing.",
+    "READY, small and reversible, from the earlier passes: BACKLOG_H0H5.md rows 03 to 06 and 09 to 14; and experiment X3 of the review (one protocol with the five open choices fixed, a fire test per clause and a power gate, in every setting; then an attempt at a designed positive for improvement of the builder), under its own preregistration.",
+    "Neither the review nor the design package is edited by later passes. Correct by dated annotation only if the operator asks.",
+    "The operator opened ONE directory of another architect seat (the ASTRA-6.0 review). Every design directory of another architect stays closed until the operator opens it. Searches under docs/phase3 name my own folders only."
+  ],
+  "operator_decisions_required": [
+    "Whether the five files found in Downloads are the meta-analysis meant, and whether its harness code can be sent (the archive held only empty folders; no file 04).",
+    "Which hardening design goes forward: the package's v0.2, mine, or a merge. Mine differs in ten points (02_HARDENING_DESIGN_v0.2_FABLE.md, first section).",
+    "Whether to register and run the combination world (minutes of one processor; needs a preregistration commit).",
+    "Who makes the next attack on the harness. All reads so far were by my own model family, and the changes made after the final round have had no reader.",
+    "Whether I may add a .gitattributes (LF line ends) to the delivered review folder: in a checkout with CRLF line ends, which a fresh Windows checkout gives, its checker fails its form checks. The content of the review is not affected.",
+    "Whether to send the five package files that were not provided (00, 03, 04, 05, 07).",
+    "Whether my ranking of R3 over R4 and R5, and the proposed merge of R2 into a shared Track-A kernel, stand: both coincide with my own design (RESPONSE_1 section 5 and reversal 9).",
+    "Accept or reject the trade: ninety days of instruments and two first maps before any claim about reasoning (docs/phase3/design/FABLE-5.1/OPEN_QUESTIONS.md A9; now RESPONSE_1 section 13, about 65% instrument).",
+    "Doctrine: publication framing HARD-1 (A1); prior art after validation HARD-2 (A2); fixed measurement axes against the North Star (A3).",
+    "Is a second model family reachable from code for independent implementations (A5).",
+    "Custody of sealed worlds outside the working tree (A6), after the search-rule incident of 2026-10-01."
+  ],
+  "latest_reports": [
+    "docs/phase3/closure/FABLE-5.1/CLOSURE_REVIEW_v0.4.md",
+    "roles/Dionysus/journal/2026-10-03.md (closure review)",
+    "docs/phase3/hardening/FABLE-5.1/00_README.md",
+    "docs/phase3/hardening/FABLE-5.1/01_SYNTHESIS_TWO_REVIEWS_AND_HARDENING_v0.2.md",
+    "docs/phase3/hardening/FABLE-5.1/harness/RECEIPT_harness_v0.json",
+    "docs/phase3/hardening/FABLE-5.1/attack/README.md",
+    "roles/Dionysus/journal/2026-10-02.md (the hardening pass)",
+    "docs/phase3/review/FABLE-5.1/00_README.md"
+  ]
+}
