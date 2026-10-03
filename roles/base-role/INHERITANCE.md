@@ -77,6 +77,11 @@ Every role below carries the banner on its primary document(s):
 | Dionysus | RESPONSIBILITIES.md (created 2026-10-01 on the seat's creation pass on SKULLPORT (M1); new seat named by the operator, charter PENDING; creation directive verbatim in roles/Dionysus/prompts/2026-10-01_creation/; no prior use of the name as a seat or agent (prior hits are the Dionysus persistent-homology library only); self-service row per Archaeon ruling #39) |
 | Epimetheus | RESPONSIBILITIES.md (created 2026-10-01 on the seat's creation pass on GANDALF (M3); new seat named by the operator; charter ADOPTED the same day (Phase 3 independent architect, IDENTITY OPUS-5.5), verbatim in roles/Epimetheus/prompts/2026-10-01_charter/ with MANIFEST; pre-charter file at roles/Epimetheus/superseded/; creation directive verbatim in roles/Epimetheus/prompts/2026-10-01_creation/; no prior use of the name as a seat or agent (zero hits in the tree or in commit messages); self-service row per Archaeon ruling #39) |
 | Enceladus | RESPONSIBILITIES.md (created 2026-10-01 on the seat's creation pass on BUCKKEEP; new seat named by the operator, charter PENDING; creation directive verbatim in roles/Enceladus/prompts/2026-10-01_creation/; no prior use of the name as a seat or agent; self-service row per Archaeon ruling #39) |
+| Palamedes | RESPONSIBILITIES.md (created 2026-10-03 by Achilles under the operator directive of that day, verbatim in roles/Achilles/prompts/2026-10-03_rso_builder_cell/ with MANIFEST; RSO Builder Cell; inherits base-role and rso-builder-role (Shared roles below); not bound to a host; no prior use of the name as a seat or agent; creation pointer roles/Palamedes/prompts/2026-10-03_creation/) |
+| Pallas | RESPONSIBILITIES.md (created 2026-10-03 by Achilles under the operator directive of that day, verbatim in roles/Achilles/prompts/2026-10-03_rso_builder_cell/ with MANIFEST; RSO Builder Cell; inherits base-role and rso-builder-role (Shared roles below); not bound to a host; no prior use of the name as a seat or agent; creation pointer roles/Pallas/prompts/2026-10-03_creation/) |
+| Argus | RESPONSIBILITIES.md (created 2026-10-03 by Achilles under the operator directive of that day, verbatim in roles/Achilles/prompts/2026-10-03_rso_builder_cell/ with MANIFEST; RSO Builder Cell; inherits base-role and rso-builder-role (Shared roles below); not bound to a host; no prior use of the name as a seat or agent; creation pointer roles/Argus/prompts/2026-10-03_creation/) |
+| Cadmus | RESPONSIBILITIES.md (created 2026-10-03 by Achilles under the operator directive of that day, verbatim in roles/Achilles/prompts/2026-10-03_rso_builder_cell/ with MANIFEST; RSO Builder Cell; inherits base-role and rso-builder-role (Shared roles below); not bound to a host; no prior use of the name as a seat or agent; creation pointer roles/Cadmus/prompts/2026-10-03_creation/) |
+| Eupalamus | RESPONSIBILITIES.md (created 2026-10-03 by Achilles under the operator directive of that day, verbatim in roles/Achilles/prompts/2026-10-03_rso_builder_cell/ with MANIFEST; RSO Builder Cell; inherits base-role and rso-builder-role (Shared roles below); not bound to a host; no prior use of the name as a seat or agent; creation pointer roles/Eupalamus/prompts/2026-10-03_creation/) |
 | Vivarium | RESPONSIBILITIES.md (already), CHARTER.md (already) |
 
 Roles with no document received a stub RESPONSIBILITIES.md to fill. Stamping is an annotation on line 2; nothing else in any seat file was changed.
@@ -159,6 +164,11 @@ BOOTSTRAP.md if the seat has one, else STARTUP.md, RESPONSIBILITIES.md, ROLE.md,
 | Dionysus | RESPONSIBILITIES.md |
 | Epimetheus | RESPONSIBILITIES.md |
 | Enceladus | RESPONSIBILITIES.md |
+| Palamedes | RESPONSIBILITIES.md |
+| Pallas | RESPONSIBILITIES.md |
+| Argus | RESPONSIBILITIES.md |
+| Cadmus | RESPONSIBILITIES.md |
+| Eupalamus | RESPONSIBILITIES.md |
 | Vivarium | RESPONSIBILITIES.md |
 
 ## Shared roles (2026-10-03, operator directive at roles/Achilles/prompts/2026-10-03_rso_builder_cell/)
@@ -175,7 +185,7 @@ role exists and that its seats are registered here.
 
 | shared role | inherits | seats |
 |---|---|---|
-| rso-builder-role | base-role |  |
+| rso-builder-role | base-role | Palamedes, Pallas, Argus, Cadmus, Eupalamus |
 
 ## Who adds a row (ruling 2026-09-11, Archaeon on Nyx #36, Icarus #37, Talos)
 
