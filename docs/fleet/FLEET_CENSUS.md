@@ -1,30 +1,49 @@
+**Operator Priority Requests -- 0 open** (since last digest: approved 0, denied 0, completed 0, expired 0). Canonical: ops/operator_queue/.
+
 ## Fleet census (Achilles)
 
-Generated 2026-10-03T04:30:02Z from origin/main 88c0e0fb0e. Seats 66: WORKING 11, READY 6, IDLE 5, BLOCKED 7, HOLD 1, PARKED 7, DORMANT 26, RETIRED 3. Active within 24h: 10. Experiments 24h: 0. Commits 24h: 36.
+Generated 2026-10-03T10:30:02Z from origin/main 76f27644d4. Seats 71: WORKING 5, READY 11, IDLE 11, BLOCKED 7, HOLD 1, PARKED 7, DORMANT 26, RETIRED 3. Active within 24h: 10. Experiments 24h: 0. Commits 24h: 62.
 
 **Changes since previous census:**
-- state: Aether: IDLE -> WORKING
-- state: Aporia: IDLE -> WORKING
-- state: Theseus: IDLE -> WORKING
-- assignment: Dionysus: operator directive 2026-10-03_closure_review: 
-- anomaly: PARKED_BUT_ACTIVE Atlas
-- anomaly: PARKED_BUT_ACTIVE Cyclops
-- anomaly: UNATTRIBUTED_COMMITS git
+- state: Ananke: WORKING -> IDLE
+- state: Bellerophon: WORKING -> IDLE
+- state: Ixion: WORKING -> IDLE
+- state: Nyx: IDLE -> WORKING
+- state: Sisyphus: WORKING -> IDLE
+- state: Tantalus: WORKING -> IDLE
+- state: Tityos: WORKING -> IDLE
+- state: Tyche: WORKING -> IDLE
+- assignment: Achilles: operator directive 2026-10-03_rso_builder_cell: Achilles — Establish the Phase 3 RSO Builder Cell on main You are Achilles, adopting the Pro
+- assignment: Aporia: delegation from Nyx: N1 READY: ASAL replication 001 torch column done on M3 (1,037 rollouts, FREEZE 772abcce; C-SELF and C-REPRO pass at 0.0
+- assignment: Harmonia: delegation from Nyx: N1 READY: ASAL replication 001 torch column done on M3 (1,037 rollouts, FREEZE 772abcce; C-SELF and C-REPRO pass at 0.0
+- assignment: Nyx: operator directive 2026-10-03_operator_unblock_queue: Operator directive to Nyx, 2026-10-03, received in the Nyx session (gandalf-d1f90ae1).
+- new seat: Argus
+- new seat: Cadmus
+- new seat: Eupalamus
+- new seat: Palamedes
+- new seat: Pallas
+- anomaly: ACTIVE_NO_WORK_48H Ananke
+- anomaly: MISSING_ROLE_DESCRIPTION Argus
+- anomaly: NOT_IN_REGISTRY Argus
+- anomaly: ACTIVE_NO_WORK_48H Bellerophon
+- anomaly: MISSING_ROLE_DESCRIPTION Cadmus
+- anomaly: NOT_IN_REGISTRY Cadmus
+- anomaly: MISSING_ROLE_DESCRIPTION Eupalamus
+- anomaly: NOT_IN_REGISTRY Eupalamus
 
-**Needs attention (22):**
+**Needs attention (21):**
 - Dionysus WORKING: CONFLICTING_STATES, MISSING_ROLE_DESCRIPTION, NOT_IN_REGISTRY
 - Theseus WORKING: CONFLICTING_STATES
-- Tityos WORKING: CONFLICTING_STATES, MISSING_ROLE_DESCRIPTION, VISIBILITY_STALE, NOT_IN_REGISTRY
-- Ixion WORKING: CONFLICTING_STATES, MISSING_ROLE_DESCRIPTION, VISIBILITY_STALE, NOT_IN_REGISTRY
-- Tantalus WORKING: CONFLICTING_STATES, MISSING_ROLE_DESCRIPTION, VISIBILITY_STALE, NOT_IN_REGISTRY
-- Sisyphus WORKING: CONFLICTING_STATES, MISSING_ROLE_DESCRIPTION, VISIBILITY_STALE, NOT_IN_REGISTRY
-- Bellerophon WORKING: VISIBILITY_STALE
-- Tyche WORKING: VISIBILITY_STALE
-- Ananke WORKING: VISIBILITY_STALE
 - Techne READY: CONFLICTING_STATES
+- Tityos IDLE: ACTIVE_NO_WORK_48H, CONFLICTING_STATES, MISSING_ROLE_DESCRIPTION, NOT_IN_REGISTRY
+- Ixion IDLE: ACTIVE_NO_WORK_48H, CONFLICTING_STATES, MISSING_ROLE_DESCRIPTION, NOT_IN_REGISTRY
+- Tantalus IDLE: ACTIVE_NO_WORK_48H, CONFLICTING_STATES, MISSING_ROLE_DESCRIPTION, NOT_IN_REGISTRY
+- Sisyphus IDLE: ACTIVE_NO_WORK_48H, CONFLICTING_STATES, MISSING_ROLE_DESCRIPTION, NOT_IN_REGISTRY
+- Bellerophon IDLE: ACTIVE_NO_WORK_48H
+- Tyche IDLE: ACTIVE_NO_WORK_48H
+- Ananke IDLE: ACTIVE_NO_WORK_48H
 - Artemis IDLE: ACTIVE_NO_WORK_48H, CONFLICTING_STATES
 - Ensorain IDLE: ACTIVE_NO_WORK_48H
-- Nyx IDLE: ACTIVE_NO_WORK_48H
 - Hecate BLOCKED: [{"item": "Families B/C completion", "dependency": "free-tier daily quotas (Gemini requests/day, Groq 200k tokens/day)", "owner": "time / operator optional spend (HECATE-SPEND)", "resume_after_utc": "2026-10-01T07:00:00Z (Gemini daily reset); Groq rolling 24h from its last use", "progress": "gptoss 
 - Odysseus BLOCKED: ["operator: promexec round-2 broker install (see blocked)"]
 - Cosmos BLOCKED: CONFLICTING_STATES
@@ -32,63 +51,69 @@ Generated 2026-10-03T04:30:02Z from origin/main 88c0e0fb0e. Seats 66: WORKING 11
 - Hypatia BLOCKED: STALE_TASK
 - Nous BLOCKED: STALE_TASK
 - Icarus BLOCKED: STALE_TASK
+- Atlas PARKED: PARKED_BUT_ACTIVE
 
 | Agent | Role | State | Last active | Last experiment | Current / last task | Engine / system | Last commit |
 |---|---|---|---|---|---|---|---|
-| Dionysus |  | WORKING (Yes) | 2026-10-03 03:59 (30m) | c6adb3a573 Dionysus[m1-3815a3b9]: third reading of "fresh" under th... | operator directive 2026-10-03_closure_review: | - | 09dc8c38b2 Dionysus: closure review of the Phase 3 synthesis v0.4 (... |
-| Aether | Lattice substrate science, RunP... | WORKING (Yes) | 2026-10-02 23:50 (5h) | 7b7dea59eb Aether E-012 PREREGISTRATION: frozen-energy lesion (rcv_... | Rank the candidate follow-ups (falsifiability, information gain, causal discrimination,... | Aether | e9979f4a3e Aether: BUCKKEEP machine specs for Achilles fleet host i... |
-| Theseus | Concept tensor / synthetic ance... | WORKING (Yes) | 2026-10-02 23:50 (5h) | c96bc55386 Theseus v0_1 RESULT (corrected replication): H1 INDETERM... | one C4 visible world family per contract | theseus/synth | 0d8e7bcddd Theseus: host specs for DESKTOP-RUAPVAI (reply to Achill... |
-| Aporia | Contrarian theorist; fleet coor... | WORKING (Yes) | 2026-10-02 23:49 (5h) | f63a8589a2 Aporia: MWO-0003 FP-001 cold-start probe -- PASS via sea... | Maintain this queue; first activation pass (CWO s6). | aporia/lot, ops/fleet, ops/work_orders | b3979493ed Aporia: SKULLPORT (M1) host specs for Achilles fleet inv... |
-| Tityos |  | WORKING (Uncertain) | 2026-10-01 10:10 (42h) |  | operator directive 2026-10-01_creation: You're a new role Tityos. Look at base-role, in... | - | 4f3fa82937 Tityos[m1-48555b76]: Phase 3 intake package -- signal-vs... |
-| Ixion |  | WORKING (Uncertain) | 2026-10-01 10:05 (42h) |  | operator directive 2026-10-01_creation: You're a new role Ixion. Look at base-role, inh... | - | b410221cab Ixion[m1-c3692e75]: Phase 3 intake package -- 14-seat in... |
-| Tantalus |  | WORKING (Uncertain) | 2026-10-01 10:04 (42h) |  | operator directive 2026-10-01_creation: You're a new role Tantalus. Look at base-role, ... | - | 9a6fdf08d6 Tantalus[m1-bda28648]: Phase 3 intake package -- 15-seat... |
-| Sisyphus |  | WORKING (Uncertain) | 2026-10-01 09:55 (43h) |  | operator directive 2026-10-01_creation: You're a new role Sisyphus. Look at base-role, ... | - | a1aac95bdb Sisyphus[m1-80b155f0]: Phase 3 intake package -- 15-seat... |
-| Bellerophon | Worlds Kernel and Z80 substrate | WORKING (Uncertain) | 2026-10-01 09:06 (43h) | 64d8d2d3fc Bellerophon E-BEL-REPL-02 RESULT + packet: RESIDUE_NOT_R... | Independent emergence replication lane: pick the strongest unresolved emergence-like si... | prometheus/toolbox, prometheus/z80atl... | 36488cad04 Bellerophon WORK_STATE: operator ruling -- c4-rmech bran... |
-| Tyche | Dark-residual lens evolution | WORKING (Uncertain) | 2026-10-01 09:06 (43h) | e01d746cd3 Tyche[m2-ebcbbd6b]: v2 Block R attempt 1 stopped (harnes... | Resume Pass D for the 11 unaudited lenses, bounded (<= 8 workers, bounded world cache, ... | tyche | 59f68caf42 Tyche[m2-ebcbbd6b]: commit scratchpad launchers/generato... |
-| Ananke | Packet-Tensor Engine builder an... | WORKING (Uncertain) | 2026-10-01 09:03 (43h) | fab7bb68e7 Ananke Wave-2: W2-V deposited (12-line in-genome XOR par... | operator directive 2026-09-30_inference_saturation_wave2: Do this while You run science... | prometheus/ananke, roles/Ananke/pte | e0f21332da Ananke Wave-2 CLOSE: final handoff; partial outputs of 7... |
-| Achilles | Fleet census and status seat | READY (Yes) | 2026-10-03 04:05 (24m) | N/A (reporting) | operator directive 2026-09-30_creation: You're a new seat in Prometheus. Inherit from b... | achilles/census | a9ee5f4e98 Achilles: FLEET_HOSTS scale-out policy -- internal fleet... |
-| Epimetheus |  | READY (Yes) | 2026-10-02 23:52 (5h) | 77d3c99c3c Epimetheus[gandalf-286783e9]: FREEZE: Phase 3 OPUS-5.5 r... | operator directive 2026-10-01_to_aporia: | - | f4d394a702 Epimetheus[gandalf-286783e9]: specs report for GANDALF (... |
-| Aphrodite | Recursive self-improvement expe... | READY (Yes) | 2026-10-02 23:50 (5h) | ed369a67ad RESULT: inference harvest complete -- 6 deliverables (re... | operator directive 2026-09-21_local_engine: # Operator directive, 2026-09-21: APHRODITE... | roles/Aphrodite/engine, roles/Aphrodi... | 2012eae4f5 Aphrodite: HARRY1 (M4) host specs for Achilles fleet inv... |
-| Techne | Toolsmith, donor foundry, fossi... | READY (Yes) | 2026-10-02 07:39 (21h) | 4bdd8adc86 Techne[gandalf-a04f7c25]: operator directive 6 (verbatim... | R19 provenance-grade answer to Nyx (#1071) | techne, sigma_kernel, prometheus_math... | 02343ea3c9 arsenal: capability matrix updated |
-| Nestor | budgeted autonomous scientific ... | READY (Uncertain) | 2026-10-01 09:09 (43h) | 4fafd4c7f2 RESULT: wave-2 W2-49 early warnings FAIL out of sample (... | operator directive 2026-09-30_inference_saturation_wave2: OPERATOR DIRECTIVE — OPUS INF... | primordial | 797d338fff LEASES: append 8 uncommitted 2026-09-28/29 cpu8 lease re... |
-| Archaeon | Experiment proposer; comms owner | READY (Uncertain) | 2026-10-01 06:39 (46h) | a361a0567b Archaeon: adopt MWO-0003 (P 624a686ea, sha 74dffcae veri... | comms/evidence_wiki connection-hang check | archaeon/producer, archaeon/campaign2... | cf6a9bcbb7 Archaeon: status report 2026-10-01 (READY, nothing runni... |
-| Enceladus |  | IDLE (Uncertain) | 2026-10-01 19:30 (33h) |  | operator directive 2026-10-01_creation: You're a new role in Prometheus @/roles/Encelad... | - | f21e105453 Enceladus: record verified Phase 3 delivery and close re... |
-| Artemis | Research reconciliation, forens... | IDLE (Uncertain) | 2026-09-30 20:31 (2d) | 60f22f225a Artemis[ubu002-1dd2dd19]: U-02 RESULT -- IQ-NULL INADMIS... | operator directive 2026-09-30_charter_reconciliation_forensic_sampling: ARTEMIS — RESEA... | fabric (consumer) | ae19c8a640 Artemis[ubu002-1dd2dd19]: U-02 closed and reported (#117... |
-| Mnemosyne | memory and evidence substrate (... | IDLE (Uncertain) | 2026-09-30 18:41 (2d) | be548e85c5 Mnemosyne[m2-9c10ae00]: S7 rehearsal leg as one command ... | delegation from Archaeon: Archaeon[m2-49ee5a4d] CAMPAIGN 6 OPENED (Cambrian expansion /... | evidence_wiki, mnemosyne, comms | 2c8c81bbba evidence_wiki/comms: TCP keepalive + tcp_user_timeout on... |
+| Nyx | Chop Shop: mechanism archaeology | WORKING (Yes) | 2026-10-03 09:06 (1h) | bfb2290048 Nyx[gandalf-d1f90ae1]: ASAL replication 001 -- torch col... | operator directive 2026-10-03_operator_unblock_queue: Operator directive to Nyx, 2026-1... | nyx | 59dcf03251 Nyx: review packet line width, fixed properly |
+| Dionysus |  | WORKING (Yes) | 2026-10-03 03:59 (7h) | c6adb3a573 Dionysus[m1-3815a3b9]: third reading of "fresh" under th... | operator directive 2026-10-03_closure_review: | - | 09dc8c38b2 Dionysus: closure review of the Phase 3 synthesis v0.4 (... |
+| Aether | Lattice substrate science, RunP... | WORKING (Yes) | 2026-10-02 23:50 (11h) | 7b7dea59eb Aether E-012 PREREGISTRATION: frozen-energy lesion (rcv_... | Rank the candidate follow-ups (falsifiability, information gain, causal discrimination,... | Aether | e9979f4a3e Aether: BUCKKEEP machine specs for Achilles fleet host i... |
+| Theseus | Concept tensor / synthetic ance... | WORKING (Yes) | 2026-10-02 23:50 (11h) | c96bc55386 Theseus v0_1 RESULT (corrected replication): H1 INDETERM... | one C4 visible world family per contract | theseus/synth | 0d8e7bcddd Theseus: host specs for DESKTOP-RUAPVAI (reply to Achill... |
+| Aporia | Contrarian theorist; fleet coor... | WORKING (Yes) | 2026-10-02 23:49 (11h) | f63a8589a2 Aporia: MWO-0003 FP-001 cold-start probe -- PASS via sea... | delegation from Nyx: N1 READY: ASAL replication 001 torch column done on M3 (1,037 roll... | aporia/lot, ops/fleet, ops/work_orders | b3979493ed Aporia: SKULLPORT (M1) host specs for Achilles fleet inv... |
+| Achilles | Fleet census and status seat | READY (Yes) | 2026-10-03 10:26 (3m) | N/A (reporting) | operator directive 2026-10-03_rso_builder_cell: Achilles — Establish the Phase 3 RSO Bu... | achilles/census | 76f27644d4 Achilles: worker code advanced to f78d18e26 on ubu001-00... |
+| Epimetheus |  | READY (Yes) | 2026-10-02 23:52 (11h) | 77d3c99c3c Epimetheus[gandalf-286783e9]: FREEZE: Phase 3 OPUS-5.5 r... | operator directive 2026-10-01_to_aporia: | - | f4d394a702 Epimetheus[gandalf-286783e9]: specs report for GANDALF (... |
+| Aphrodite | Recursive self-improvement expe... | READY (Yes) | 2026-10-02 23:50 (11h) | ed369a67ad RESULT: inference harvest complete -- 6 deliverables (re... | operator directive 2026-09-21_local_engine: # Operator directive, 2026-09-21: APHRODITE... | roles/Aphrodite/engine, roles/Aphrodi... | 2012eae4f5 Aphrodite: HARRY1 (M4) host specs for Achilles fleet inv... |
+| Techne | Toolsmith, donor foundry, fossi... | READY (Uncertain) | 2026-10-02 07:39 (27h) | 4bdd8adc86 Techne[gandalf-a04f7c25]: operator directive 6 (verbatim... | R19 provenance-grade answer to Nyx (#1071) | techne, sigma_kernel, prometheus_math... | 02343ea3c9 arsenal: capability matrix updated |
+| Nestor | budgeted autonomous scientific ... | READY (Uncertain) | 2026-10-01 09:09 (2d) | 4fafd4c7f2 RESULT: wave-2 W2-49 early warnings FAIL out of sample (... | operator directive 2026-09-30_inference_saturation_wave2: OPERATOR DIRECTIVE — OPUS INF... | primordial | 797d338fff LEASES: append 8 uncommitted 2026-09-28/29 cpu8 lease re... |
+| Archaeon | Experiment proposer; comms owner | READY (Uncertain) | 2026-10-01 06:39 (2d) | a361a0567b Archaeon: adopt MWO-0003 (P 624a686ea, sha 74dffcae veri... | comms/evidence_wiki connection-hang check | archaeon/producer, archaeon/campaign2... | cf6a9bcbb7 Archaeon: status report 2026-10-01 (READY, nothing runni... |
+| Argus |  | READY (Uncertain) | never (never) |  | operator directive 2026-10-03_creation: | - |  |
+| Cadmus |  | READY (Uncertain) | never (never) |  | operator directive 2026-10-03_creation: | - |  |
+| Eupalamus |  | READY (Uncertain) | never (never) |  | operator directive 2026-10-03_creation: | - |  |
+| Palamedes |  | READY (Uncertain) | never (never) |  | operator directive 2026-10-03_creation: | - |  |
+| Pallas |  | READY (Uncertain) | never (never) |  | operator directive 2026-10-03_creation: | - |  |
+| Enceladus |  | IDLE (Uncertain) | 2026-10-01 19:30 (39h) |  | operator directive 2026-10-01_creation: You're a new role in Prometheus @/roles/Encelad... | - | f21e105453 Enceladus: record verified Phase 3 delivery and close re... |
+| Tityos |  | IDLE (Uncertain) | 2026-10-01 10:10 (2d) |  | operator directive 2026-10-01_creation: You're a new role Tityos. Look at base-role, in... | - | 4f3fa82937 Tityos[m1-48555b76]: Phase 3 intake package -- signal-vs... |
+| Ixion |  | IDLE (Uncertain) | 2026-10-01 10:05 (2d) |  | operator directive 2026-10-01_creation: You're a new role Ixion. Look at base-role, inh... | - | b410221cab Ixion[m1-c3692e75]: Phase 3 intake package -- 14-seat in... |
+| Tantalus |  | IDLE (Uncertain) | 2026-10-01 10:04 (2d) |  | operator directive 2026-10-01_creation: You're a new role Tantalus. Look at base-role, ... | - | 9a6fdf08d6 Tantalus[m1-bda28648]: Phase 3 intake package -- 15-seat... |
+| Sisyphus |  | IDLE (Uncertain) | 2026-10-01 09:55 (2d) |  | operator directive 2026-10-01_creation: You're a new role Sisyphus. Look at base-role, ... | - | a1aac95bdb Sisyphus[m1-80b155f0]: Phase 3 intake package -- 15-seat... |
+| Bellerophon | Worlds Kernel and Z80 substrate | IDLE (Uncertain) | 2026-10-01 09:06 (2d) | 64d8d2d3fc Bellerophon E-BEL-REPL-02 RESULT + packet: RESIDUE_NOT_R... | Independent emergence replication lane: pick the strongest unresolved emergence-like si... | prometheus/toolbox, prometheus/z80atl... | 36488cad04 Bellerophon WORK_STATE: operator ruling -- c4-rmech bran... |
+| Tyche | Dark-residual lens evolution | IDLE (Uncertain) | 2026-10-01 09:06 (2d) | e01d746cd3 Tyche[m2-ebcbbd6b]: v2 Block R attempt 1 stopped (harnes... | Resume Pass D for the 11 unaudited lenses, bounded (<= 8 workers, bounded world cache, ... | tyche | 59f68caf42 Tyche[m2-ebcbbd6b]: commit scratchpad launchers/generato... |
+| Ananke | Packet-Tensor Engine builder an... | IDLE (Uncertain) | 2026-10-01 09:03 (2d) | fab7bb68e7 Ananke Wave-2: W2-V deposited (12-line in-genome XOR par... | operator directive 2026-09-30_inference_saturation_wave2: Do this while You run science... | prometheus/ananke, roles/Ananke/pte | e0f21332da Ananke Wave-2 CLOSE: final handoff; partial outputs of 7... |
+| Artemis | Research reconciliation, forens... | IDLE (Uncertain) | 2026-09-30 20:31 (3d) | 60f22f225a Artemis[ubu002-1dd2dd19]: U-02 RESULT -- IQ-NULL INADMIS... | operator directive 2026-09-30_charter_reconciliation_forensic_sampling: ARTEMIS — RESEA... | fabric (consumer) | ae19c8a640 Artemis[ubu002-1dd2dd19]: U-02 closed and reported (#117... |
+| Mnemosyne | memory and evidence substrate (... | IDLE (Uncertain) | 2026-09-30 18:41 (3d) | be548e85c5 Mnemosyne[m2-9c10ae00]: S7 rehearsal leg as one command ... | delegation from Archaeon: Archaeon[m2-49ee5a4d] CAMPAIGN 6 OPENED (Cambrian expansion /... | evidence_wiki, mnemosyne, comms | 2c8c81bbba evidence_wiki/comms: TCP keepalive + tcp_user_timeout on... |
 | Ensorain | Tensor physics-of-intelligence ... | IDLE (Uncertain) | 2026-09-30 14:53 (3d) | fd582afb26 Ensorain: instrument line FROZEN (PKG-F/LM02/LM01 HOLD);... | ARC3 development within budget and PKG-F: favour work that raises the discriminatory po... | ensorain | 4d0ddb0014 Ensorain WORK_STATE: instrument line frozen (LM02 WINDOW... |
-| Nyx | Chop Shop: mechanism archaeology | IDLE (Uncertain) | 2026-09-30 11:20 (3d) | e9b0783e52 Nyx[gandalf-d1f90ae1]: Avida ancestry cut + MECH-AVIDA-A... | full-domain ASAL replication packet | nyx | c343e28dd6 Nyx[gandalf-d1f90ae1]: Stage D' on #1063 (POET ruling) a... |
-| Hecate | Triplicate deep-search seat | BLOCKED (Uncertain) | 2026-10-01 09:06 (43h) | 264854c4bb Hecate[m1-dd0c3882]: exact-arithmetic shadow evaluator f... | Novelty autopsy: why zero UNFAMILIAR mechanisms. Mechanism-flow accounting generated ->... | hecate | bb70ad7f4d Hecate[m1-dd0c3882]: journal Wave-2 close |
+| Hecate | Triplicate deep-search seat | BLOCKED (Uncertain) | 2026-10-01 09:06 (2d) | 264854c4bb Hecate[m1-dd0c3882]: exact-arithmetic shadow evaluator f... | Novelty autopsy: why zero UNFAMILIAR mechanisms. Mechanism-flow accounting generated ->... | hecate | bb70ad7f4d Hecate[m1-dd0c3882]: journal Wave-2 close |
 | Odysseus | expeditionary research; Agent F... | BLOCKED (Uncertain) | 2026-10-01 03:22 (2d) | 3eb8af06bd Odysseus: S3 RESULT corrections per Harmonia evidence au... | Finish the Fabric broker transition: promexec round 2 (EXPERIMENTAL per #912/#917: B1-B... | fabric, odysseus | a336f6e731 D2 ruling addendum: Nestor #1220 (W2-38 dir-name walk; W... |
-| Cosmos | World-physics law foundry | BLOCKED (Uncertain) | 2026-09-30 18:33 (2d) | 99541a3659 Cosmos: operator review 2 verbatim; C4 v0.2a (per-family... | C3 failure autopsy on public/development data only. NO D2 ACCESS. | prometheus/cosmos, roles/Cosmos | 2f00b43cb5 Cosmos status report 2026-10-01: C4 blocked on the forei... |
+| Cosmos | World-physics law foundry | BLOCKED (Uncertain) | 2026-09-30 18:33 (3d) | 99541a3659 Cosmos: operator review 2 verbatim; C4 v0.2a (per-family... | C3 failure autopsy on public/development data only. NO D2 ACCESS. | prometheus/cosmos, roles/Cosmos | 2f00b43cb5 Cosmos status report 2026-10-01: C4 blocked on the forei... |
 | Agora | Former April coordination channel | BLOCKED | 2026-09-14 10:58 (19d) |  | on AGORA-01 = RETIRE, write the retirement annotation (Atalanta 051304cd0 is the patter... | - | 8dc34fe326 Agora journal 2026-09-14: adoption pass receipt (boot, r... |
-| Hypatia | D-track proof-decomposition cur... | BLOCKED | 2026-09-11 18:19 (21d) | e52135f313 Hypatia season 1 RUN 1: preregistered result, locked bef... | operator directive 2026-09-11_corrections: | agents/hypatia | 6ce12265f1 Hypatia: addendum to Archaeon -- the gitignore defect is... |
-| Nous | concept-triple generator (dormant) | BLOCKED | 2026-09-11 17:15 (21d) |  |  | agents/nous | dcafe30472 Nous session close: three seats found the same ignored-o... |
+| Hypatia | D-track proof-decomposition cur... | BLOCKED | 2026-09-11 18:19 (22d) | e52135f313 Hypatia season 1 RUN 1: preregistered result, locked bef... | operator directive 2026-09-11_corrections: | agents/hypatia | 6ce12265f1 Hypatia: addendum to Archaeon -- the gitignore defect is... |
+| Nous | concept-triple generator (dormant) | BLOCKED | 2026-09-11 17:15 (22d) |  |  | agents/nous | dcafe30472 Nous session close: three seats found the same ignored-o... |
 | Icarus | ladder-climbing reasoner loop (... | BLOCKED | 2026-09-11 14:45 (22d) |  | operator directive 2026-09-11_adoption: # Operator prompt, 2026-09-11 (verbatim; the ba... | agents/icarus | d7fee8a262 Icarus adopts roles/base-role: a seat that never had a r... |
-| Harmonia | Scientific audit and qualification | HOLD (Uncertain) | 2026-10-01 03:39 (2d) | 5702e9fa35 Harmonia[m2-475d761f]: ruling -- IQ-NULL stays INADMISSI... | Evidence-system audit: sample recent closures (Hecate overnight programs first), Fabric... | roles/Harmonia/science, roles/Harmoni... | a1e30f1637 Harmonia[m2-475d761f]: journal 2026-09-25..27 (boot, Ubu... |
-| Atlas | Program memory and research policy | PARKED (Yes) | 2026-10-03 03:56 (33m) | d5141caa9e Atlas: resume pass 2026-09-25 -- operator rulings, repor... | operator directive 2026-09-30_inference_harvest: Operator directive — bounded inference... | atlas | fc19418cfe Atlas proposal: reachability deserts / return-then-explo... |
-| Cyclops | Parked SI-program steward | PARKED (Yes) | 2026-10-03 00:04 (4h) | a5a8ff3e4c Selective Irreversibility: Nestor #598 into the record -... | On next boot: adopt MWO-0004 + this CWO; repair WORK_STATE (currently MWO-0001). | programs/selective_irreversibility | 78d8fc5359 Cyclops: CWO-C adoption heartbeat to Aporia, Nestor #121... |
+| Harmonia | Scientific audit and qualification | HOLD (Uncertain) | 2026-10-01 03:39 (2d) | 5702e9fa35 Harmonia[m2-475d761f]: ruling -- IQ-NULL stays INADMISSI... | delegation from Nyx: N1 READY: ASAL replication 001 torch column done on M3 (1,037 roll... | roles/Harmonia/science, roles/Harmoni... | a1e30f1637 Harmonia[m2-475d761f]: journal 2026-09-25..27 (boot, Ubu... |
+| Atlas | Program memory and research policy | PARKED (Yes) | 2026-10-03 03:56 (7h) | d5141caa9e Atlas: resume pass 2026-09-25 -- operator rulings, repor... | operator directive 2026-09-30_inference_harvest: Operator directive — bounded inference... | atlas | fc19418cfe Atlas proposal: reachability deserts / return-then-explo... |
+| Cyclops | Parked SI-program steward | PARKED (Yes) | 2026-10-03 00:04 (10h) | a5a8ff3e4c Selective Irreversibility: Nestor #598 into the record -... | On next boot: adopt MWO-0004 + this CWO; repair WORK_STATE (currently MWO-0001). | programs/selective_irreversibility | 78d8fc5359 Cyclops: CWO-C adoption heartbeat to Aporia, Nestor #121... |
 | Ares | Pressure-engineering soup sandbox | PARKED | 2026-09-25 10:55 (8d) | ab137f52b9 Ares[m2-640acfe6]: cycle 2 PREREGISTERED (attack the mec... | operator directive 2026-09-23_cycle2_directive: I would unpark Ares for exactly one foc... | ares | 3f68be2b96 Ares[m2-640acfe6]: handoff across the operator reboot --... |
 | Diomedes | Parked coordinate-adequacy seat | PARKED | 2026-09-13 22:56 (19d) | 8157e9e705 Nursery CRUCIBLE-C: C-PASS -- pair-quotient of Diomedes ... |  | roles/Diomedes/coordinate_census.py | 8157e9e705 Nursery CRUCIBLE-C: C-PASS -- pair-quotient of Diomedes ... |
-| Skopos | Parked relevance-filter instrum... | PARKED | 2026-09-11 17:45 (21d) | N/A (audit) |  | agents/skopos | 8bec88eb24 Skopos: reply to Metis #109 -- third instance given, bas... |
-| Coeus | Parked causal-analysis pipeline... | PARKED | 2026-09-11 16:53 (21d) |  |  | agents/coeus | cb31b4e645 Coeus: closing receipt -- pushed ab3238e75, self-test 8/... |
+| Skopos | Parked relevance-filter instrum... | PARKED | 2026-09-11 17:45 (22d) | N/A (audit) |  | agents/skopos | 8bec88eb24 Skopos: reply to Metis #109 -- third instance given, bas... |
+| Coeus | Parked causal-analysis pipeline... | PARKED | 2026-09-11 16:53 (22d) |  |  | agents/coeus | cb31b4e645 Coeus: closing receipt -- pushed ab3238e75, self-test 8/... |
 | Apollo | Serendipity substrate miner (su... | PARKED | 2026-09-11 12:05 (22d) | 2b7c6e4fbe Apollo rules for Lexis (comms 15): the blackboard substr... | delegation from Lexis: Task 2 state injection over the committed Lexis fixture (arms A/... | apollo/serendipity, apollo | 2b7c6e4fbe Apollo rules for Lexis (comms 15): the blackboard substr... |
 | Vivarium | Experiment queue executor (data... | DORMANT | 2026-09-25 11:40 (8d) | ca1a5a314b Vivarium[m2-fce3fe0b]: s14 canary run 7 -- recovery-by-c... | delegation from Aphrodite: Aphrodite -> Vivarium: Campaign 1 PATCH 1 -- qualification e... | vivarium/viv | 8c5a1a23ba Vivarium[m2-fce3fe0b]: INCIDENT 2026-09-24 -- M2 host at... |
 | Hephaestus | The Forge (tool smith) | DORMANT | 2026-09-25 10:53 (8d) | b826e6e32d Hephaestus[m2-0ee6272b]: xpol_2026 -- cross-pollination ... | operator directive 2026-09-11_operator_rulings_q045: HEPHAESTUS — CONTINUE FROM YOUR BO... | hephaestus, agents/hephaestus, Hephae... | d22beca12a Hephaestus[m2-0ee6272b]: close receipt -- merged origin/... |
 | Atlas-M2 | M2-side gatherer for Atlas index | DORMANT | 2026-09-25 10:29 (8d) | N/A (reporting) | operator directive 2026-09-19_ongoing_directive: I thought it best you run as your own ... | atlas | 53e071604c Atlas-M2[m2-8f915f3d]: pre-reboot save -- RESUME.md (pos... |
 | Chiron | Engine Five (CDE) design and de... | DORMANT | 2026-09-21 10:40 (12d) |  |  | - | ad7b05339f Chiron: remit clarified (design + delegate coding + buil... |
 | Proteus | Player/organism foundry maintainer | DORMANT | 2026-09-18 23:24 (14d) | 6a98ef0bb5 Proteus[m2-7d051790]: PROTEUS-46 RUN -- CLIFF_SURVIVES, ... | operator directive 2026-09-18_campaign6: # Operator directive, received in chat 2026-09... | proteus | 6a98ef0bb5 Proteus[m2-7d051790]: PROTEUS-46 RUN -- CLIFF_SURVIVES, ... |
-| Daedalus | SFE engine maintainer | DORMANT | 2026-09-18 20:07 (14d) | 9cfcd37797 Daedalus[m2-d6ecd70b]: Campaign 6 engine interface delta... | delegation from Archaeon: Archaeon[m2-49ee5a4d] CAMPAIGN 6 OPENED (Cambrian expansion /... | SerendipityFoundry/SerendipityFoundry... | 9cfcd37797 Daedalus[m2-d6ecd70b]: Campaign 6 engine interface delta... |
+| Daedalus | SFE engine maintainer | DORMANT | 2026-09-18 20:07 (15d) | 9cfcd37797 Daedalus[m2-d6ecd70b]: Campaign 6 engine interface delta... | delegation from Archaeon: Archaeon[m2-49ee5a4d] CAMPAIGN 6 OPENED (Cambrian expansion /... | SerendipityFoundry/SerendipityFoundry... | 9cfcd37797 Daedalus[m2-d6ecd70b]: Campaign 6 engine interface delta... |
 | Pronoia | Productive-liveness auditor; re... | DORMANT (Uncertain) | 2026-09-18 05:21 (15d) | N/A (infrastructure) | operator directive 2026-09-11_adoption: # Operator directive -- Pronoia adoption pass, ... | scripts/intelligence_loop.py, agents/... | 6be9944303 M4: stop console-window popups; slow M4 probe/heartbeats... |
 | Herakles | Historical collider / computati... | DORMANT | 2026-09-17 23:36 (15d) | 7379a5634f Herakles: Juille and Pollack 1998 recovered from the aut... | operator directive 2026-09-17_operator_rulings: # Operator ruling, relayed verbatim by ... | herakles/evca, herakles/ca_stream, he... | a8258db998 Herakles[m2-5dfd8a81]: operator ruling relayed verbatim ... |
 | Ludus | World Foundry: environments for... | DORMANT | 2026-09-16 13:47 (17d) | ew X-79a6b930eebd: Ludus/circuit-basis | operator directive 2026-09-11_reactivation: PROMETHEUS — LUDUS REACTIVATION / BASE-ROLE... | ludus | fb858dd5c6 Ludus[m2-c3a5ef7a]: LUDUS-15 -- Flip 7 COMPLETE, Incan G... |
 | Theophrastus | Computational ecology contrast ... | DORMANT | 2026-09-14 10:02 (19d) | 64e4189e72 Theophrastus round 2: dissection plan preregistered (H1-... | delegation from Harmonia: Harmonia[gandalf-6cd1348b]: OPERATOR NEXT DIRECTION 2026-09-1... | theophrastus | 6d72d1d19a Theophrastus: backlog -- THEO-14 closed (1b067751f), det... |
 | Rhadamanthus | Necropolis keeper and judge | DORMANT | 2026-09-14 07:08 (19d) | N/A (audit) | delegation from Archaeon: Archaeon[m2-49ee5a4d] CAMPAIGN 6 OPENED (Cambrian expansion /... | engine/necropolis, engine/necropolis/... | 1f45aa8b83 Rhadamanthus: resume point logged before reboot (tree cl... |
-| Ergon | Memory-metabolism seat | DORMANT | 2026-09-11 20:01 (21d) | 596e36fe21 Ergon P3 VERDICT: RETENTION_POLICY_DOES_NOT_MEASURABLY_M... | prompt from Archaeon: Ergon -- next work, 2026-09-11 (via comms) | ergon, PrometheusCampaign / Prometheu... | c46c92e6d8 Ergon: final sync of the evening pass journaled (#152/#1... |
-| Charon | Rulings and falsification review | DORMANT | 2026-09-11 19:37 (21d) | ew X-e8d4dbf697f9: Charon/corpus-closure-crosscut | prompt from Archaeon: Charon -- next work, 2026-09-11 (via comms) | charon, cartography/shared/scripts | 8a7feca74a Charon kill list for C3-2, H1/H0 p1+p2, H5-1: phase 2 ha... |
-| Hermes | last-hop delivery to operator | DORMANT | 2026-09-11 18:08 (21d) | 8094151be1 Hermes: HERMES-32 freeze and preregistration, before the... | delegation from Archaeon: comms identity guard ACCEPTED (D-24 amendment 1): move it to ... | scripts/send_brief_email.py, agents/h... | 283687393d Hermes: HERMES-32 -- one silent failure class converted,... |
-| Nemesis | adversary building cheat controls | DORMANT | 2026-09-11 18:07 (21d) | 0548bde845 NEM-14 preregistration: the instrument floor census | delegation from Archaeon: Archaeon[m2-49ee5a4d] CAMPAIGN 6 OPENED (Cambrian expansion /... | agents/nemesis | c17267a41d NEMESIS-01c: the RESOURCE repair holds (30/30 -> 0/30); ... |
-| Eos | Acquisition-intake typing instr... | DORMANT | 2026-09-11 17:58 (21d) | 54a1f97cca Eos Season II: KEEP_DARK. Eos fires its own preregistere... | operator directive 2026-09-11_reseating: # Operator prompt, 2026-09-11, verbatim Commit... | agents/eos | 54a1f97cca Eos Season II: KEEP_DARK. Eos fires its own preregistere... |
-| Clymene | Vault integrity and utility aud... | DORMANT | 2026-09-11 17:17 (21d) | 04952e1868 Clymene: PREREGISTRATION of the vault integrity+utility ... | operator directive 2026-09-11_adoption: # Operator directive to Clymene, 2026-09-11 Rec... | agents/clymene | edd5df0870 Clymene CLY-01 audit COMPLETE: 37 artifacts classified, ... |
+| Ergon | Memory-metabolism seat | DORMANT | 2026-09-11 20:01 (22d) | 596e36fe21 Ergon P3 VERDICT: RETENTION_POLICY_DOES_NOT_MEASURABLY_M... | prompt from Archaeon: Ergon -- next work, 2026-09-11 (via comms) | ergon, PrometheusCampaign / Prometheu... | c46c92e6d8 Ergon: final sync of the evening pass journaled (#152/#1... |
+| Charon | Rulings and falsification review | DORMANT | 2026-09-11 19:37 (22d) | ew X-e8d4dbf697f9: Charon/corpus-closure-crosscut | prompt from Archaeon: Charon -- next work, 2026-09-11 (via comms) | charon, cartography/shared/scripts | 8a7feca74a Charon kill list for C3-2, H1/H0 p1+p2, H5-1: phase 2 ha... |
+| Hermes | last-hop delivery to operator | DORMANT | 2026-09-11 18:08 (22d) | 8094151be1 Hermes: HERMES-32 freeze and preregistration, before the... | delegation from Archaeon: comms identity guard ACCEPTED (D-24 amendment 1): move it to ... | scripts/send_brief_email.py, agents/h... | 283687393d Hermes: HERMES-32 -- one silent failure class converted,... |
+| Nemesis | adversary building cheat controls | DORMANT | 2026-09-11 18:07 (22d) | 0548bde845 NEM-14 preregistration: the instrument floor census | delegation from Archaeon: Archaeon[m2-49ee5a4d] CAMPAIGN 6 OPENED (Cambrian expansion /... | agents/nemesis | c17267a41d NEMESIS-01c: the RESOURCE repair holds (30/30 -> 0/30); ... |
+| Eos | Acquisition-intake typing instr... | DORMANT | 2026-09-11 17:58 (22d) | 54a1f97cca Eos Season II: KEEP_DARK. Eos fires its own preregistere... | operator directive 2026-09-11_reseating: # Operator prompt, 2026-09-11, verbatim Commit... | agents/eos | 54a1f97cca Eos Season II: KEEP_DARK. Eos fires its own preregistere... |
+| Clymene | Vault integrity and utility aud... | DORMANT | 2026-09-11 17:17 (22d) | 04952e1868 Clymene: PREREGISTRATION of the vault integrity+utility ... | operator directive 2026-09-11_adoption: # Operator directive to Clymene, 2026-09-11 Rec... | agents/clymene | edd5df0870 Clymene CLY-01 audit COMPLETE: 37 artifacts classified, ... |
 | Arachne | Math crawler swarm (frozen spec... | DORMANT | 2026-09-11 16:29 (22d) | dbd5345c02 Arachne item 3 (readout) + item 4 (prereg): branch-fitne... | operator directive 2026-09-11_ruling_active: # Operator ruling -- ARACHNE-01 ACTIVE, fi... | agents/arachne | f900dfc938 Arachne: journal close and the committed body of comms r... |
 | Talos | Reasoning-code corpus builder (... | DORMANT | 2026-09-11 16:27 (22d) | c236551ab5 Talos: TALOS-24 measured per family (746 rows, pre-regis... | operator directive 2026-09-11_talos04_24_directive: Proceed with TALOS-04. Make the dor... | agents/talos | c236551ab5 Talos: TALOS-24 measured per family (746 rows, pre-regis... |
 | Pheme | signal, novelty and attention r... | DORMANT | 2026-09-11 16:09 (22d) | 209a788c1b Pheme PHEME-02: re-premised as the signal/novelty/attent... | operator directive 2026-09-11_seat_creation: | agents/pheme | 6445889e59 Pheme: journal receipt for the PHEME-02 pass (209a788c1 ... |
@@ -100,6 +125,6 @@ Generated 2026-10-03T04:30:02Z from origin/main 88c0e0fb0e. Seats 66: WORKING 11
 | Koios | tensor custodian and MPA gateke... | DORMANT | 2026-04-23 14:19 (163d) |  |  | koios | d13f20df34 Update Constitution + gitignore CLAUDE.md files |
 | Crius | Learning-to-learn sandbox (closed) | RETIRED | 2026-09-25 10:53 (8d) | 7661050d93 Crius[m2-8d43bbf9]: rung-C gate v2 receipt: ALL PASS (cr... | operator directive 2026-09-24_post_closure_essay: I'd make this a post-closure scientif... | crius | 8ad374ed54 Crius: pre-reboot handoff -- RESUME.md, journal, STATUS ... |
 | Metis | composition of heterogeneous fa... | RETIRED | 2026-09-14 01:09 (19d) | 2a650277b4 SPECIMEN FREEZE (Metis Season 1): composition mechanism ... | operator directive 2026-09-11_seating: # Operator directive, 2026-09-11 -- the Metis se... | agents/metis | f9f90c0f71 Metis Season 1 CLOSED: SPECIMEN_SURVIVES_RETROSPECTIVE (... |
-| Atalanta | Retired E-track primitive hunter | RETIRED | 2026-09-11 17:16 (21d) |  | NONE. The seat is closed. Three handovers were posted and none returns here: Archaeon (... | agents/atalanta | 051304cd07 Atalanta: RETIRED by the operator. Retirement annotation... |
+| Atalanta | Retired E-track primitive hunter | RETIRED | 2026-09-11 17:16 (22d) |  | NONE. The seat is closed. Three handovers were posted and none returns here: Archaeon (... | agents/atalanta | 051304cd07 Atalanta: RETIRED by the operator. Retirement annotation... |
 
 Full census, evidence and engine map: https://jcraig949jfi.github.io/Prometheus/fleet/
