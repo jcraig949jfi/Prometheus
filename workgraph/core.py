@@ -593,6 +593,8 @@ def preempt(task_dir: Path, by: str, attempt_id: str, preempted_by: str = "", no
            "evidence_executed": [], "red_observed": None, "result": "PREEMPTED_RESOURCE", "known_escapes": [],
            "unresolved": [], "unblocks": [], "created_at_utc": _now(), "experiment_id": t.get("experiment_id"),
            "preempted_by": preempted_by, "notes": note or "resource preemption; replay unchanged when capacity allows"}
+    if (task_dir / "attempts" / attempt_id / "RECEIPT.json").exists():
+        raise ValueError("attempt {} already has a receipt; receipts are never overwritten".format(attempt_id))
     (task_dir / "attempts" / attempt_id).mkdir(parents=True, exist_ok=True)
     _dump(task_dir / "attempts" / attempt_id / "RECEIPT.json", rec)
     lease = task_dir / "LEASE.json"

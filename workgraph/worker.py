@@ -210,7 +210,8 @@ def run_one(store: FsStore, ident: str, base: Path, poll_s: float = 5.0, now=Non
     if not store.publish([d], "PrometheusWorker: claim {} ({} band {})".format(tid, eff["epic_id"], eff["band"])):
         return {"outcome": "LOST_RACE", "task_id": tid}
     ex = t["execution"]
-    attempt = "A-{}-{}".format(time.strftime("%Y%m%dT%H%M%SZ", time.gmtime()), ident.split("/")[-1])
+    attempt = "A-{}-{}-{}".format(time.strftime("%Y%m%dT%H%M%SZ", time.gmtime()), ident.split("/")[-1],
+                                  uuid.uuid4().hex[:6])        # unique: a replay never overwrites a receipt
     work = Path(base) / "runs" / tid / attempt
     store.checkout(ex["source_sha"], work)
     env = {k: v for k, v in os.environ.items() if k in ("PATH", "SYSTEMROOT", "HOME", "USERPROFILE", "TEMP", "TMP",
@@ -272,7 +273,7 @@ def run_one(store: FsStore, ident: str, base: Path, poll_s: float = 5.0, now=Non
            "resources": {"wall_s": round(time.time() - started, 1)},
            "notes": "execution facts only; interpretation belongs to owner_role {}; outputs kept at {}".format(
                t.get("owner_role"), keep)}
-    (d / "attempts" / attempt).mkdir(parents=True, exist_ok=True)
+    (d / "attempts" / attempt).mkdir(parents=True, exist_ok=False)
     core._dump(d / "attempts" / attempt / "RECEIPT.json", rec)
     if ok:
         core.transition(d, "GREEN", ident, "execution criteria met", root=store.campaigns)

@@ -61,3 +61,11 @@ builders remain EP-PHASE3-only; `priority_class` still accepted, superseded for 
 - Choose where PrometheusWorkers run (none was started); each needs a linked state worktree (role s2).
 - Decide priority requests with `python -m workgraph prq decide <id> APPROVED|DENIED --note ".."`, then commit.
 - Census email section goes live when Achilles advances its pinned census worktree (logged, after tests).
+
+## Incident (recorded, fixed forward)
+6b4196128 was pushed with 1 of 48 workgraph tests failing intermittently: the push loop did not gate on the
+test result (my error). Cause, a real defect: attempt ids were timestamped to the second, so a preempted attempt
+and its replay in the same second shared an id and the replay's receipt overwrote the PREEMPTED_RESOURCE receipt.
+Fix (next commit): attempt ids carry a random suffix; the worker creates the attempt directory exclusively and
+core.preempt refuses to overwrite an existing receipt. 5 consecutive clean runs of workgraph/tests after the fix;
+the push loop now gates on the tests.
