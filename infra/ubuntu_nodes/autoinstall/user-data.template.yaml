@@ -36,16 +36,19 @@ autoinstall:
   # No Wi-Fi card: the placeholder becomes "wlan-none" (optional, so it's ignored).
   early-commands:
     # SAFETY (P52s 2026-10-03): with no internal disk visible, "largest disk" chose the 32 GB CIDATA USB stick and
-    # installed Ubuntu onto it. Refuse unless a non-USB disk of at least 60 GB exists; this runs before storage.
-    - "lsblk -dbno NAME,TRAN,SIZE,TYPE | awk '$4==\"disk\" && $2!=\"usb\" && $3>=60000000000 {ok=1} END {exit !ok}' || { echo 'AUTOINSTALL REFUSED: no internal (non-USB) disk >= 60 GB visible; check the drive / BIOS' > /dev/console; exit 1; }"
+    # installed Ubuntu onto it. Never choose by size again: pick the largest NON-USB disk of at least 60 GB and pin
+    # the install to that exact device (storage.layout.match.path below), or refuse before storage is touched.
+    - "D=$(lsblk -dbno NAME,TRAN,SIZE,TYPE | awk '$4==\"disk\" && $2!=\"usb\" && $3>=60000000000 {print $3, $1}' | sort -n | tail -n1 | cut -d' ' -f2); if [ -z \"$D\" ]; then echo 'AUTOINSTALL REFUSED: no internal (non-USB) disk >= 60 GB visible; check the drive / BIOS' > /dev/console; exit 1; fi; sed -i \"s#__TARGET_DISK__#/dev/$D#\" /autoinstall.yaml; echo \"autoinstall target: /dev/$D\" > /dev/console"
     - "IF=$(ls /sys/class/net | grep '^wl' | head -n1); sed -i \"s/__WIFI_IFACE__/${IF:-wlan-none}/\" /autoinstall.yaml"
 
   # Whole internal disk, LVM, root LV uses ALL the space (no 100 GB default; no lvextend needed later).
-  # No passphrase. Unplug any other USB drives before installing: only the install stick and CIDATA.
+  # No passphrase. The target is pinned to the internal disk by early-commands, so USB drives are never chosen.
   storage:
     layout:
       name: lvm
       sizing-policy: all
+      match:
+        path: __TARGET_DISK__        # filled in by the first early-command: the largest non-USB disk, never a stick
 
   # Every node starts as ubu-new; Achilles renames it (hostnamectl) after the first SSH login.
   identity:

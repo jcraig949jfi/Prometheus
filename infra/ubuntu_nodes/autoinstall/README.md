@@ -5,7 +5,9 @@ Hands-off install for new swarm nodes (built 2026-10-02 by Achilles on ELSA). It
 ## What the stick sets up
 
 - Wired port (`en*`) **and** Wi-Fi (`wl*`) via DHCP, so it works on any of the laptops
-- Whole internal disk, LVM, root uses **all** the space, no passphrase
+- Whole internal disk, LVM, root uses **all** the space, no passphrase. The target is the largest NON-USB disk
+  (>= 60 GB), pinned by path in the first early-command; with no such disk the install REFUSES before touching
+  any disk (P52s 2026-10-03: an invisible internal SSD made it install onto the CIDATA stick)
 - User `jcraig` (console password from `pwhash.txt`), hostname `ubu-new` (renamed after first SSH)
 - OpenSSH with the M2 and ELSA keys preinstalled; passwordless sudo; lid switch ignored; linger on
 - Packages: only what installs from the stick (git curl htop tmux wpasupplicant); the rest (iw gh jq python3-venv
