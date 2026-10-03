@@ -62,13 +62,16 @@ Loose ends from adding ubu003 and the ELSA access. Tick with a date.
 - [ ] ELSA's own future: reimage as an Ubuntu worker (16 GB DDR3 kit ~$47) or Wake-on-LAN on demand. Its motherboard video
       ports are dead by design (the i7-860 has no integrated graphics); use the Radeon HD 5450 card for installing.
 - [x] Done 2026-10-03: token `nodes-shared` created by the operator, saved as tokens/shared.txt, first used on ubu004. **Shared GitHub token** (operator decision 2026-10-02): one fine-grained no-expiry token for all new nodes, saved as
-      `C:utoinstall_secrets	okens\shared.txt` on ELSA (`provision_node.sh` uses it when there's no per-node file).
+      `C:\autoinstall_secrets\tokens\shared.txt` on ELSA (`provision_node.sh` uses it when there's no per-node file).
       ubu001/002/003 keep their own tokens for now. Optionally move them to the shared token later; then delete the per-node
       tokens on GitHub. The shared file is a plain-text live token on ELSA: keep it in that folder only.
-- [x] **PrometheusWorkers**: running on ubu001-004 (ubu004 enabled 2026-10-03 with the shared token; code f78d18e26). Was: enable ubu004 once it has
+- [x] **ubu006 = Dell Inspiron 3647** (desktop, 4 GB): online 2026-10-03 at 192.168.1.225 (wired; Wi-Fi .226). UEFI needed
+      a manual boot entry (`\EFI\ubuntu\shimx64.efi`). Worker enabled. Remaining: Claude login, DHCP, maybe +4 GB DDR3.
+- [x] **PrometheusWorkers**: running on ubu001-004 and ubu006 (ubu004 enabled 2026-10-03 with the shared token; code f78d18e26). Was: enable ubu004 once it has
       push access (shared token), re-running `install_prometheus_worker.sh <sha> --enable`. Acceptance campaign C-005.
 - [ ] **CIDATA stick** (32 GB, label CIDATA) holds the Wi-Fi password in plain text. Keep it at home; rebuild it with
-      `autoinstall/build_cidata.py` if the Wi-Fi or keys change. Secrets live in `C:utoinstall_secrets\` on ELSA.
+      `autoinstall/build_cidata.py` if the Wi-Fi or keys change. Secrets live in `C:\autoinstall_secrets\` on ELSA.
+      Rebuilt 2026-10-03 with `shutdown: poweroff` (no reinstall loop when the sticks are left in).
 
 ## Operator (needs hands at a keyboard or the router; not the phone)
 

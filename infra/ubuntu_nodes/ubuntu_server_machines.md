@@ -9,6 +9,7 @@ Don't record passwords here.
 | 2 | ubu002   | jcraig   | 2026-09-25 | Ubuntu Server 26.04.1 LTS | Samsung MZVLW256 238 GB NVMe | 192.168.1.219 (Wi-Fi) | **Ready**; Claude Code logged in |
 | 3 | ubu003   | jcraig   | 2026-10-02 | Ubuntu Server 26.04.1 LTS | LITE-ON LMT-256 238 GB SATA (mSATA) | 192.168.1.220 (wired, eno1) | Setup done; Claude Code installed, **login pending** |
 | 4 | ubu004   | jcraig   | 2026-10-02 | Ubuntu Server 26.04.1 LTS | WD5000LPCX 500 GB 5400 rpm HDD | 192.168.1.178 (Wi-Fi, wlp2s0) | **Provisioned** (first autoinstall + provision_node.sh); GitHub token + Claude login pending |
+| 6 | ubu006   | jcraig   | 2026-10-03 | Ubuntu Server 26.04.1 LTS | Seagate ST500DM002 500 GB 7200 rpm HDD | 192.168.1.225 (wired, enp2s0); Wi-Fi .226 (wlp3s0) | **Provisioned**, worker active (shared token); Claude login pending |
 
 Fill in the IP after first login (`ip -br a`). SSH: `ssh jcraig@<ip>`.
 
@@ -149,6 +150,17 @@ The **first node built with the autoinstall stick + `provision_node.sh`** (2026-
   autoinstall layout).
 - Still to do: shared GitHub token (`tokens/shared.txt` → re-run step 4 or the whole script), Claude login, DHCP reservation for .178.
 
+## ubu006 (machine #6, Dell Inspiron 3647 small desktop, 2014)
+
+- **Hardware:** Haswell, 4 threads, 4 GB DDR3 (one stick, one free slot: a second 4 GB stick doubles it cheaply),
+  Seagate ST500DM002 500 GB 7200 rpm HDD (root LV 455 GB), Ethernet `enp2s0` + Wi-Fi `wlp3s0`. UEFI. No battery.
+- **Autoinstall:** succeeded, but the old stick config rebooted into the installer with the sticks in, so it
+  reinstalled in a loop (fixed on main by `shutdown: poweroff`, 34e7a9a62; stick rebuilt 2026-10-03). After pulling the
+  sticks the BIOS said **"No bootable device"**: its UEFI boot list had no Ubuntu entry. Fix (operator, F2 setup):
+  Boot -> Add Boot Option "ubuntu" -> `\EFI\ubuntu\shimx64.efi` on the disk's EFI partition. Then it booted.
+- **provision_node.sh 192.168.1.225 ubu006:** 13 min (most of it the repo clone); shared token, push dry-run OK;
+  no reboot needed. Worker installed at f78d18e26 with --enable: active, IDLE.
+- Still to do: Claude login, DHCP reservation for .225, optional second RAM stick.
 
 ## PrometheusWorkers on the Linux nodes (2026-10-03)
 
@@ -161,6 +173,7 @@ Operator: "Yes. The linux fleet for generic workers" (chat 2026-10-03). Installe
 | ubu002 | PrometheusWorker/ubu002/ubu002-svc | f78d18e26 | yes (node token) | enabled, active |
 | ubu003 | PrometheusWorker/ubu003/ubu003-svc | f78d18e26 | yes (node token) | enabled, active |
 | ubu004 | PrometheusWorker/ubu004/ubu004-svc | f78d18e26 | yes (shared token) | enabled, active |
+| ubu006 | PrometheusWorker/ubu006/ubu006-svc | f78d18e26 | yes (shared token) | enabled, active |
 
 Per node: ~/prometheus-worker-code (detached at the pinned SHA; WORKING_CONTRACT s6), ~/prometheus-worker-state
 (detached, re-synced to origin/main by the worker), ~/prometheus-worker (runs/ and results/), systemd user unit
@@ -177,3 +190,4 @@ linger keeps it running without a login). Idle: one sync every 5 minutes, ~23 MB
   at f78d18e26); services restarted between runs on ubu001-003.
 - 2026-10-03: ubu004 got the shared GitHub token (nodes-shared, no expiry, Prometheus only; installed from
   C:/autoinstall_secrets/tokens/shared.txt, never printed, shredded on the node); push dry-run OK; worker enabled.
+- 2026-10-03 ~20:05Z: ubu006 (Inspiron 3647) provisioned with the shared token; worker installed at f78d18e26, enabled, IDLE.

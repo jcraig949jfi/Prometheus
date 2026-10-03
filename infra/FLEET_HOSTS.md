@@ -29,7 +29,7 @@ laptop-class or old. No Windows host runs a Fabric worker (DEF-ODY-012); Fabric 
 ## Linux nodes (5)
 
 All Ubuntu Server 26.04.1, kernel 7.0.0-38, user `jcraig`, Claude Code, `~/Prometheus`. PrometheusWorker
-(generic execution, roles/generic-worker-role/) runs on ubu001-004. Details: infra/ubuntu_nodes/ubuntu_server_machines.md "PrometheusWorkers". Details: `infra/ubuntu_nodes/ubuntu_server_machines.md`.
+(generic execution, roles/generic-worker-role/) runs on ubu001-004 and ubu006. Details: infra/ubuntu_nodes/ubuntu_server_machines.md "PrometheusWorkers". Details: `infra/ubuntu_nodes/ubuntu_server_machines.md`.
 
 | Host | Hardware | CPU | RAM | Disk | Net | Role / tags | State (2026-10-02) |
 |---|---|---|---|---|---|---|---|
@@ -38,6 +38,7 @@ All Ubuntu Server 26.04.1, kernel 7.0.0-38, user `jcraig`, Claude Code, `~/Prome
 | ubu003 | Dell Latitude E7240 | i7-4600U, 2C/4T | 8 GB | 256 GB SATA SSD | Ethernet .220 | `light` | Provisioned; Claude login pending |
 | ubu004 | HP Pavilion x360 14m-ba0xx | i3-7100U, 2C/4T | 8 GB | 500 GB 5400 rpm HDD (slow) | Wi-Fi .178 | `light` | Provisioned; Claude login + token pending; SSD wishlisted |
 | ubu005 | ThinkPad P52s | 8th-gen i5/i7 (TBD), 4C/8T | TBD | PM991 256 GB 2242 (arriving) | Ethernet/Wi-Fi | `light` | Waiting on the SSD (HDD1 connector broken) |
+| ubu006 | Dell Inspiron 3647 (desktop) | Haswell, 4 threads | 4 GB (1 slot free) | 500 GB 7200 rpm HDD | Ethernet .225 (Wi-Fi .226) | `light` | Worker active 2026-10-03; Claude login pending |
 
 ## Candidates
 
