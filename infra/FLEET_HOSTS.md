@@ -10,16 +10,21 @@ Role tags (for routing work, e.g. as Fabric `required_caps`):
 
 ## Windows machines (8)
 
-| Host | Hardware | RAM | GPU | Role / tags | Notes |
-|---|---|---|---|---|---|
-| M1 | TBD (many cores) | TBD | RTX 5060 | `heavy.cpu` `gpu` `db` | Canonical Postgres (192.168.1.202), Fabric store. |
-| M2 | TBD (many cores; runs 13-16 workers) | 32 GB | RTX 5060 | `heavy.cpu` `gpu` `ram.32g` | Main SSH/admin box for the Ubuntu nodes (key `jcraig@M2`). |
-| M3 | TBD | TBD | TBD | TBD | |
-| M4 | TBD (8 cores) | TBD | TBD | `heavy.cpu`? | |
-| ELSA | Dell Optiplex 980, i7-860 4C/8T (no AVX, no iGPU) | 6 GB DDR3 (1 slot free; 16 GB max) | Radeon HD 5450 | `light` | Achilles' seat; builds the autoinstall stick. 192.168.1.163. Ubuntu conversion candidate. |
-| LIZZIE-42 | Auusda A146, Celeron | 8 GB soldered | iGPU | `command` | Windows 11 Pro, clean. Broken built-in screen (external monitor). |
-| TBD | | | | | |
-| TBD | | | | | |
+Specs reported on comms 2026-10-02 (replies to Achilles #1249: #1250-#1255) unless noted.
+
+| Host (label) | Hardware | CPU | RAM | GPU | Disk | IP | Role / tags | Notes |
+|---|---|---|---|---|---|---|---|---|
+| SKULLPORT (M1) | MicroElectronics G731 desktop | Ryzen 7 7700X, 8C/16T | 32 GB | RTX 5060 Ti 16 GB | 2x 1 TB NVMe + 3x 4 TB HDD | .202 | `heavy.cpu` `gpu` `db` | Postgres 17 for the fleet (comms, fabric, evidence_wiki). Seats: Aporia, Nestor, Hecate, Ananke, Atlas. Win 11 Home. |
+| SPECTREX5 (M2) | iBUYPOWER desktop | i7-14700F, 20C/28T | 32 GB | RTX 5060 Ti 16 GB | 1 TB NVMe (C:) + 8 TB SMR HDD (D:) | .191 | `heavy.cpu` `gpu` | Most cores in the fleet. Keep DBs/WAL writers on C:; the SMR D: stalls on fsync-heavy load. SSH/admin box for the ubu nodes. |
+| GANDALF (M3) | OEM desktop | i7-920 (2008), 4C/8T, **no AVX** | 24 GB | GTX 1070 8 GB | 500 GB SATA SSD | .161 | `light` `gpu.small` | Seats only (Epimetheus, Techne, Nyx). No virtualization in firmware. Win 10 Home (out of support). |
+| HARRY1 (M4) | ThinkPad T580 (20LB) laptop | i7-8550U, 4C/8T (15 W) | 32 GB | Quadro P500 (not useful) | 1 TB SSD | .157 | `cpu.light` `ram.32g` | Aphrodite seat + engine pools. Thermally limited: budget ~4 cores. Open memory-leak issue: watch long pools by RSS. |
+| BUCKKEEP | LG gram 15Z90Q laptop | i7-1260P, 12C/16T (4P+8E) | 32 GB | Iris Xe | 1 TB NVMe | .162 | `cpu.light` `ram.32g` | Aether seat. Parallel scaling is poor (8 units = 1.8x); waves of 3. Background shells reaped under memory pressure. |
+| DESKTOP-RUAPVAI | N100 mini PC | Intel N100, 4C/4T | 16 GB | UHD (iGPU) | 1 TB SSD | .160 | `cpu.light` | Theseus seat; small numpy sweeps. No operator label yet. |
+| ELSA | Dell Optiplex 980 | i7-860, 4C/8T (no AVX, no iGPU) | 6 GB DDR3 | Radeon HD 5450 | 240 GB SATA SSD | .163 | `light` | Achilles' seat; builds the autoinstall stick. Ubuntu conversion candidate (16 GB max). |
+| LIZZIE-42 | Auusda A146 laptop | Celeron | 8 GB soldered | iGPU | SATA SSD | | `command` | Windows 11 Pro, clean. Broken built-in screen (external monitor). |
+
+**Heavy compute is really two machines:** M2 (20C/28T) and M1 (8C/16T), each with a 16 GB RTX 5060 Ti. Everything else is
+laptop-class or old. No Windows host runs a Fabric worker (DEF-ODY-012); Fabric workers are Linux (ubu nodes).
 
 ## Linux nodes (5)
 
@@ -41,7 +46,7 @@ All Ubuntu Server 26.04.1, kernel 7.0.0-38, user `jcraig`, Claude Code, `~/Prome
 
 ## Capacity notes
 
-- **M1/M2 do the heavy lifting** (many cores, GPUs, RAM). The small nodes are for **wide, light, parallel** work:
+- **M1/M2 do the heavy lifting** (M2 20C/28T, M1 8C/16T, both RTX 5060 Ti 16 GB). The small nodes are for **wide, light, parallel** work:
   Claude/Codex sessions (mostly waiting on the network), stdlib checks, small search shards, triage.
 - More hosts add **local** capacity only. Model throughput is set by the inference accounts (2x Claude Max, Codex,
   Augment) and their rate limits, so tie node workers to account "lanes".
