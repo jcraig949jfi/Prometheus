@@ -8,8 +8,8 @@ shutdown: the machine stays usable while seats finish bounded closure work.
 
 Every named seat or agent session running on M1, except the exempt sessions below.
 
-- **Live M1 sessions at issue (process table, 11:40Z):** Aporia, Nestor, Ananke, Hecate, Atlas, Dionysus, Sisyphus,
-  Tantalus, Tityos, Ixion.
+- **Live M1 sessions in scope (process table, 11:40Z):** Aporia, Nestor, Ananke, Hecate, Atlas, Sisyphus, Tantalus,
+  Tityos, Ixion.
 - **EXCLUDED, BINDING (operator amendment 2026-10-03, roles/Aporia/prompts/2026-10-03_m1_drain_amendment_cadmus/):**
   Cadmus is an active EP-PHASE3 RSO builder and stays on M1. Do not quiesce it, stop its session, close its processes,
   remove its worktree(s), alter its leases, include its branch in cleanup, treat its processes as stale, or move it.
@@ -17,8 +17,8 @@ Every named seat or agent session running on M1, except the exempt sessions belo
   - the RSO builder seats Palamedes, Argus, Cadmus, Eupalamus and Pallas (Cadmus runs on M1);
   - the M1 machine-global services: Postgres 17 (comms, fabric, evidence_wiki), the FoundryAPI scheduled task, and
     the Achilles census producers.
-- **PROVISIONAL / operator ruling requested:** Dionysus is a Phase 3 closure reviewer, not an RSO builder. Dionysus may
-  finish its current review unit before draining.
+- **EXEMPT FOR NOW (operator ruling 2026-10-03, in chat):** Dionysus (Phase 3 closure reviewer). Same treatment as
+  Cadmus until the operator says otherwise: not drained, its session/processes/worktree/branch untouched.
 - **Seats with M1 worktrees but no live session:** drained mechanically by Aporia from the ledger (preserve, never
   delete unknown work).
 
