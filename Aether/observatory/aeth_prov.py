@@ -72,8 +72,18 @@ class Provenance:
         self.hops = [np.zeros(n0, np.int32)]
         self.n = n0
         self.cur = [np.arange(f * h * w, (f + 1) * h * w, dtype=np.int64).reshape(h, w) for f in range(4)]
-        # fwd: node of the byte each site received last tick (-1 where none).
+        # fwd: node of the byte each site received last tick (-1 where none). A received byte already present when
+        # tracking starts (e.g. after warm-up) gets its own INIT node (field code 9 = "received byte").
         self.rv_node = np.full((h, w), -1, np.int64)
+        if variant == "fwd" and received_value is not None:
+            m = h * w
+            self.op.append(np.zeros(m, np.int8)); self.p1.append(np.full(m, -1, np.int64))
+            self.p2.append(np.full(m, -1, np.int64)); self.tick.append(np.zeros(m, np.int32))
+            self.site.append(np.arange(m, dtype=np.int64)); self.field.append(np.full(m, 9, np.int8))
+            self.value.append(received_value.astype(np.int16).ravel()); self.mask.append(np.zeros(m, np.uint64))
+            self.hops.append(np.zeros(m, np.int32))
+            self.rv_node = np.arange(self.n, self.n + m, dtype=np.int64).reshape(h, w)
+            self.n += m
         self.origins = []                                  # (bit, node)
 
     # ------------------------------------------------------------------ table helpers

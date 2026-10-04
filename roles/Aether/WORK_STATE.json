@@ -4,11 +4,11 @@
   "mwo_id": "MWO-0004",
   "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
   "mwo_sha256": "925660b2d2be53af2ee4195391e484d9649bbd4ee828cd60432ce2f0903a99df",
-  "updated_at_utc": "2026-10-04T11:37:33Z",
+  "updated_at_utc": "2026-10-04T11:46:35Z",
   "state": "ACTIVE",
   "state_reason": "Operator directive 2026-10-04 makes Aether an autonomous Phase 2-B research seat (supersedes 'READY -- awaiting Aporia assignment'). Cycle 1, DEV window 1: value-provenance observatory prov0.",
   "branch": "aether/mwo0001-2026-09-28",
-  "head_sha": "1415341b58548a6e756ec20b178cddd2b1eec8d1",
+  "head_sha": "190a17e33552c222d835619e6a2cb8832d5010ba",
   "head_sha_note": "the latest pushed work commit before this WORK_STATE commit (the file cannot contain its own commit hash)",
   "threads": [
     {
@@ -123,13 +123,13 @@
     "AGE/Builder friction feed"
   ],
   "resource_status": "local CPU only; about 4 CPU-h in the rolling 24 h (R2 cap 48); no GPU, no paid compute",
-  "last_receipt": "ops/campaigns/C-002/E-012/RESULT.md @ 1d2d374e8",
-  "current_objective": "V2-B cycle 1 DEV-1: value-provenance observatory (prov0) + qualification fixtures 1-7 + rich-soup self-check",
-  "current_step": "design committed (Aether/V2B/DEV-1_PLAN.md); implementing the shadow",
-  "last_push_sha": "1415341b5",
-  "last_push_utc": "2026-10-04T11:37:33Z",
+  "last_receipt": "Aether/V2B/DEV-1_PACKET.md + Aether/V2B/TEST-1/PREREGISTRATION.md @ 190a17e33",
+  "current_objective": "V2-B cycle 1: DEV-1 COMPLETE (prov0 built + qualified); TEST-1 frozen",
+  "current_step": "between windows: TEST-1 opens 2026-10-04T15:37Z (4-hour cadence)",
+  "last_push_sha": "190a17e33",
+  "last_push_utc": "2026-10-04T11:46:35Z",
   "model": "claude-opus-5-5[1m]",
-  "next_expected_milestone": "prov0 passes fixtures 1-7 and the zero-mismatch rich-soup self-check",
-  "expected_next_artifact": "Aether/observatory/aeth_prov.py + tests + DEV-1 design/repair packet + frozen TEST-1 prereg",
+  "next_expected_milestone": "TEST-1 verdict: prov0 QUALIFIED / CONTROL_FAILED (fwd P3 positive control) + S1/S2 readings",
+  "expected_next_artifact": "Aether/V2B/TEST-1/RESULT.md + review packet",
   "campaign_state": "Aether/V2B/CAMPAIGN_STATE.json"
 }
