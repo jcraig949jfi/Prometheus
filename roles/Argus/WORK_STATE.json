@@ -3,25 +3,25 @@
   "seat": "Argus",
   "mwo_id": "MWO-0004",
   "authority": "operator directive 2026-10-03 (roles/Achilles/prompts/2026-10-03_rso_builder_cell/01_OPERATOR_DIRECTIVE_verbatim.md)",
-  "updated_at_utc": "2026-10-03T22:12:00Z",
+  "updated_at_utc": "2026-10-04T02:30:00Z",
   "state": "ACTIVE",
-  "branch": "argus/c004-t002",
-  "base_sha": "d49d2d29d9106d7343fb3e638ab7746c478acb3a",
-  "head_sha": "6826e0ffb9d4c4dc9ae256550e89917ff8f8844a",
-  "worktree_path": "C:/Prometheus-worktrees/argus-c004-t002",
+  "branch": "argus/c004-t014",
+  "base_sha": "398db5c43eaff4aa6c198a19df6004532d1dfc81",
+  "head_sha": "c62878b1db1daa72f28e97eedf164bac5eca8c2e",
+  "worktree_path": "C:/Prometheus-worktrees/argus-c004-t014",
   "model": "claude-opus-5-5",
   "capability_class": "Q2",
   "host": "harry1 (M4; not M1, EW_DB_HOST=192.168.1.202)",
-  "instance": "harry1-e7e45be6",
-  "session_start_utc": "2026-10-03T21:50:00Z",
+  "instance": "harry1-91cbacb8",
+  "session_start_utc": "2026-10-04T01:50:00Z",
   "current_objective": "RSO Builder Cell member, campaign C-004 (RSO-METHODS-SLICE-001)",
-  "current_step": "C-004-T002 draft B written (rso/slice001/contract/drafts/B_evidence_receipt_authority.md); INTEGRATION_READY; headless session closes after that (Palamedes launch-note scope)",
+  "current_step": "T013 INTEGRATED (c8e0153cc); T017 INTEGRATED (61ee17059); T014 INTEGRATION_READY (cac84f1ec); headless session closed (launch-note scope)",
   "in_flight": [
-    "C-004-T002 (claim 5ba287b28; INTEGRATION_READY, awaiting Palamedes T004)"
+    "C-004-T014 (INTEGRATION_READY, branch argus/c004-t014 at c62878b1d, awaiting Palamedes)"
   ],
   "finish_condition": "per claimed packet (DISTRIBUTED_WORK.md)",
-  "next_expected_milestone": "Palamedes T004 freezes CONTRACT.md from drafts A and B",
-  "expected_next_artifact": "C-004-T013 producer receipt (after T004 freeze), in a later session",
+  "next_expected_milestone": "Palamedes integrates T014; T015 becomes READY for Argus",
+  "expected_next_artifact": "C-004-T015 checker.py (G-RECOMP, eligibility) and render.py, in a later session",
   "threads": [
     "phase3-rso"
   ],
@@ -34,13 +34,16 @@
   "blocked_on": [],
   "next_actions": [
     "next session: comms sync Argus; workgraph ready Argus",
-    "after T004 freeze: T013 receipt.py, then T014 evidence.py, T015 checker/render; T017 mutation runner (deps T003 only)",
-    "answer any T004 question on draft B (FD-B1..FD-B10)"
+    "T015: needs receipt.make_verdict to accept consumer-gate outcomes (escalated to Palamedes in the T014 note, option 1: add receipt.py to T015 owns)",
+    "clean up merged worktrees/branches argus-c004-t013, argus-c004-t017 once listed by git branch -r --merged origin/main"
   ],
   "operator_decisions_required": [],
   "latest_reports": [
-    "rso/slice001/contract/drafts/B_evidence_receipt_authority.md"
+    "ops/campaigns/C-004/tasks/C-004-T013/attempts/A-001/RECEIPT.json",
+    "ops/campaigns/C-004/tasks/C-004-T017/attempts/A-001/RECEIPT.json",
+    "ops/campaigns/C-004/tasks/C-004-T014/attempts/A-001/RECEIPT.json"
   ],
-  "last_push_sha": "6826e0ffb9d4c4dc9ae256550e89917ff8f8844a",
-  "last_push_utc": "2026-10-03T22:10:00Z"
+  "last_push_sha": "cac84f1ec",
+  "last_push_utc": "2026-10-04T02:25:00Z",
+  "validation_launches_this_session": 3
 }
