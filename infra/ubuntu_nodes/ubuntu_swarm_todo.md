@@ -52,7 +52,7 @@ Loose ends from adding ubu003 and the ELSA access. Tick with a date.
       configures Wi-Fi). In progress 2026-10-02. Wi-Fi card Intel AC 3168 (`wlp2s0`, iwlwifi). Disk is a **WD5000LPCX
       500 GB 5400 rpm HDD, painfully slow**: wishlisted a **PNY CS900 250 GB 2.5" SATA SSD** (SSD7CS900-250-RB) to swap in later,
       then re-run the autoinstall. BIOS: Esc = startup menu, F9 = boot devices, F10 = setup. Check whether it also has an M.2 slot.
-- [ ] **ubu005 = Lenovo ThinkPad P52s** (T580 platform, 2019). The **HDD1 ZIF connector's latch broke** while swapping
+- [x] Done 2026-10-04 (see the P52s line below: USB enclosure). **ubu005 = Lenovo ThinkPad P52s** (T580 platform, 2019). The **HDD1 ZIF connector's latch broke** while swapping
       drives; the connector body is still on the board, but reseating + taping the tray cable (several tries, both
       orientations) gives **no drive detected** in BIOS or the Ubuntu installer. The main M.2 2280 tray only connects through
       HDD1, so it's out. USB boot works (F12 boot menu, F1 setup; needed USB HDD moved out of "Excluded from boot order").
@@ -67,7 +67,7 @@ Loose ends from adding ubu003 and the ELSA access. Tick with a date.
       tokens on GitHub. The shared file is a plain-text live token on ELSA: keep it in that folder only.
 - [x] **ubu006 = Dell Inspiron 3647** (desktop, 4 GB): online 2026-10-03 at 192.168.1.225 (wired; Wi-Fi .226). UEFI needed
       a manual boot entry (`\EFI\ubuntu\shimx64.efi`). Worker enabled. Remaining: Claude login, DHCP, maybe +4 GB DDR3.
-- [x] **PrometheusWorkers**: running on ubu001-004 and ubu006 (ubu004 enabled 2026-10-03 with the shared token; code f78d18e26). Was: enable ubu004 once it has
+- [x] **PrometheusWorkers**: running on ubu001-006 (ubu005 enabled 2026-10-04; ubu004 enabled 2026-10-03 with the shared token; code f78d18e26). Was: enable ubu004 once it has
       push access (shared token), re-running `install_prometheus_worker.sh <sha> --enable`. Acceptance campaign C-005.
 - [ ] **CIDATA stick** (32 GB, label CIDATA) holds the Wi-Fi password in plain text. Keep it at home; rebuild it with
       `autoinstall/build_cidata.py` if the Wi-Fi or keys change. Secrets live in `C:\autoinstall_secrets\` on ELSA.
@@ -75,7 +75,8 @@ Loose ends from adding ubu003 and the ELSA access. Tick with a date.
 - [ ] **CIDATA stick is built with `--allow-usb-target` (2026-10-04, for the P52s USB enclosure).** Right after the
       P52s install: rebuild it WITHOUT the flag (`python infra/ubuntu_nodes/autoinstall/build_cidata.py E:`), so no other
       machine can ever install onto an external disk.
-- [ ] **ubu005 = P52s**: the PM991 in the WWAN slot stops it from powering on (fan roars, no POST; BIOS N27ET56P 1.42,
+- [x] **ubu005 = P52s** ONLINE 2026-10-04 at 192.168.1.222 (i5-8350U, 22 GB), worker enabled. Remaining: Claude login,
+      DHCP, return the PM991. History: the PM991 in the WWAN slot stops it from powering on (fan roars, no POST; BIOS N27ET56P 1.42,
       2025-04-01, already current). Removed. Now runs from the **Team MP33 1 TB in a USB-C NVMe enclosure**. PM991: return it.
 
 ## Operator (needs hands at a keyboard or the router; not the phone)
