@@ -40,7 +40,7 @@
     "test_stages_world.py"
   ],
   "kind": "software",
-  "status": "INTEGRATION_READY",
+  "status": "INTEGRATED",
   "history": [
     {
       "status": "PROPOSED",
@@ -83,6 +83,12 @@
       "by": "Cadmus[m1-a86ec5e4]",
       "at_utc": "2026-10-04T13:31:08Z",
       "note": "branch cadmus/c004-t023a: RED (8 errors), receipt 4d7d1b563, records, merged fb8a00de125b3cadcbd5d511378d7bde72315d15, ci PASSED 279/0 failed"
+    },
+    {
+      "status": "INTEGRATED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-04T13:37:41Z",
+      "note": "merged fb8a00de1; integrator: test_stages_world 8/8; independent recompute of every record's version CodeRefs (sha256+length of committed blobs): 0 mismatches over 7 records; one-line edit of reset.py turns test_versions_are_the_current_sources red (stage bound to version)"
     }
   ],
   "authority": "operator directive 2026-10-03 s9, s11; decomposed by Palamedes from C-004-T020 (AMENDMENT_v1.0.1 V8: the real T020 run reads stages and custody from the live store)",
