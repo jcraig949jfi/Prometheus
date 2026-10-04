@@ -8,6 +8,10 @@ Hands-off install for new swarm nodes (built 2026-10-02 by Achilles on ELSA). It
 - Whole internal disk, LVM, root uses **all** the space, no passphrase. The target is the largest NON-USB disk
   (>= 60 GB), pinned by path in the first early-command; with no such disk the install REFUSES before touching
   any disk (P52s 2026-10-03: an invisible internal SSD made it install onto the CIDATA stick)
+- One-off USB target: `python build_cidata.py E: --allow-usb-target` lets a machine with NO internal disk
+  install onto exactly one external USB disk >= 200 GB that carries no CIDATA/iso9660 filesystem (neither
+  stick qualifies). More than one candidate: REFUSED. Rebuild the stick without the flag right after
+  (P52s 2026-10-04: internal slots unusable, Team MP33 1 TB in a USB-C NVMe enclosure)
 - User `jcraig` (console password from `pwhash.txt`), hostname `ubu-new` (renamed after first SSH)
 - OpenSSH with the M2 and ELSA keys preinstalled; passwordless sudo; lid switch ignored; linger on
 - Packages: only what installs from the stick (git curl htop tmux wpasupplicant); the rest (iw gh jq python3-venv

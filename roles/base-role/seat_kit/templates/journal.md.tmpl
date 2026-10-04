@@ -1,0 +1,23 @@
+# @@SEAT@@ journal @@DATE@@
+
+## Creation pass (instance @@INSTANCE@@; created by roles/base-role/seat_kit/new_seat.py)
+
+- Directive: operator, verbatim at roles/@@SEAT@@/@@CREATION_DIR@@/ (MANIFEST
+  verifies). Host @@HOST@@.
+- Workspace: base @@BASE_SHA@@; branch @@BRANCH@@; worktree
+  @@WORKTREE@@ (SPARSE; see TODO.md). The canonical checkout saw only
+  `git fetch origin` and `git worktree add`; nothing was pulled.
+- Read by the tool, not by the seat: the base-role files it copies from
+  and the inheritance register. NOT read in full by the creation pass:
+  MONITORS.md, DISTRIBUTED_WORK.md, the full MWO body (first reads on the
+  first chartered wake).
+
+### Steps and timings (tool clock)
+
+@@STEPLOG@@
+
+### Not done, on purpose
+
+- No heartbeat to Aporia and no comms post (the seat is HOLD with no
+  lane).
+- No science, compute, Fabric task, delegation or lease.

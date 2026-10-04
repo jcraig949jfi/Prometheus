@@ -1,0 +1,88 @@
+{
+  "schema": "prometheus.workgraph.task.v1",
+  "task_id": "C-006-A",
+  "campaign_id": "C-006",
+  "epic_id": "EP-PHASE2B",
+  "title": "Feedback ingestion: which forensic findings apply to Aphrodite abstraction-compounding engine (V2-B Beta-01)",
+  "objective": "List every forensic finding and historical failure record that names or plausibly affects Aphrodite abstraction-compounding engine (V2-B Beta-01), with its source, and record which ones actually fit the implementation and why.",
+  "owner_role": "Aphrodite",
+  "quality_class": "Q2",
+  "can_downgrade": false,
+  "escalate_to": "Q3",
+  "depends_on": [],
+  "reads": [
+    "docs/phase3/intake/",
+    "docs/phase3/design/ASTRA-6.0/FAILURE_TO_GATE_MAP.md",
+    "aporia/doctrine/critical_memories.md"
+  ],
+  "owns": [
+    "ops/campaigns/C-006/CAMPAIGN.md"
+  ],
+  "problem": "Sources: docs/phase3/intake/tantalus/seats/Aphrodite.md (+ _frag/Aphrodite.*.jsonl), docs/phase3/design/ASTRA-6.0/FAILURE_TO_GATE_MAP.md, ops/threads/TH-021.md, roles/Aphrodite/review/ARC3_MERGE_REVIEW_PACKET.md s5, roles/Aphrodite/harvest_2026-09-30/evidence/findings_A1_defects.md (D55 etc.). Done inside Beta-01 DEV window 1.",
+  "non_goals": [
+    "No repairs in this task",
+    "Do not accept an accusation that does not fit the implementation"
+  ],
+  "evidence_required": [
+    "the 'Sources actually used' section of CAMPAIGN.md, each with path and the finding ids it contributes"
+  ],
+  "acceptance": {
+    "condition": "every applicable source listed with path; each finding marked fits / does not fit, with a one-line reason"
+  },
+  "deliverables": [
+    "CAMPAIGN.md 'Sources actually used'"
+  ],
+  "kind": "review",
+  "red_required": false,
+  "status": "CLOSED",
+  "history": [
+    {
+      "status": "PROPOSED",
+      "by": "Aphrodite[harry1-0f14ab93]",
+      "at_utc": "2026-10-04T11:08:58Z",
+      "note": "instantiated from P2B-ENGINE-REENTRY; tailor before READY"
+    },
+    {
+      "status": "READY",
+      "by": "Aphrodite[harry1-0f14ab93]",
+      "at_utc": "2026-10-04T11:09:17Z",
+      "note": "tailored for Beta-01 DEV-1"
+    },
+    {
+      "status": "CLAIMED",
+      "by": "Aphrodite[harry1-0f14ab93]",
+      "at_utc": "2026-10-04T11:32:27Z",
+      "note": "Beta-01 DEV-1: deliverable ops/campaigns/C-006/TRIAGE_AB.md"
+    },
+    {
+      "status": "IMPLEMENTING",
+      "by": "Aphrodite[harry1-0f14ab93]",
+      "at_utc": "2026-10-04T11:32:27Z",
+      "note": "Beta-01 DEV-1: deliverable ops/campaigns/C-006/TRIAGE_AB.md"
+    },
+    {
+      "status": "GREEN",
+      "by": "Aphrodite[harry1-0f14ab93]",
+      "at_utc": "2026-10-04T11:32:27Z",
+      "note": "Beta-01 DEV-1: deliverable ops/campaigns/C-006/TRIAGE_AB.md"
+    },
+    {
+      "status": "INTEGRATION_READY",
+      "by": "Aphrodite[harry1-0f14ab93]",
+      "at_utc": "2026-10-04T11:32:27Z",
+      "note": "Beta-01 DEV-1: deliverable ops/campaigns/C-006/TRIAGE_AB.md"
+    },
+    {
+      "status": "INTEGRATED",
+      "by": "Aphrodite[harry1-0f14ab93]",
+      "at_utc": "2026-10-04T11:32:27Z",
+      "note": "Beta-01 DEV-1: deliverable ops/campaigns/C-006/TRIAGE_AB.md"
+    },
+    {
+      "status": "CLOSED",
+      "by": "Aphrodite[harry1-0f14ab93]",
+      "at_utc": "2026-10-04T11:32:27Z",
+      "note": "Beta-01 DEV-1: deliverable ops/campaigns/C-006/TRIAGE_AB.md"
+    }
+  ]
+}

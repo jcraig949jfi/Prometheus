@@ -4,17 +4,19 @@ Rewritten 2026-09-29 at MWO-0001 adoption from the branch's actual state. It rep
 appended updates (now superseded/NEXT_SESSION_2026-09-25_plus_updates.md).
 Boot from the repo, not from memory.
 
-## CURRENT NOTE (2026-09-30, bootstrap session 0f14ab93)
-- Adopted MWO-0003 (history), MWO-0004 and CWO-2026-09-30 / -30B / -30C. CWO-C is the governing fleet order. All
-  six blob hashes were verified against ops/work_orders/PUBLICATIONS.md.
-- MWO-0004 G5 accepted the ARC3 close as reported. aphrodite/arc3-2026-09-28 is MERGED TO MAIN (067fce3af).
-  Seat state now lives on main.
-- STATE: READY (CWO-C s1.3). Do NOT self-promote. T51 is authorised within R2 (G5), but it starts only on Aporia
-  dispatch or a direct operator instruction. When it starts: T49 supply screen, then a frozen AMENDMENT, then a
-  Fabric lease.
-- CWO-C makes Aporia the READY-seat dispatcher, by operator authority. This supersedes the 2026-09-26 "ignore
-  Aporia" ruling for dispatch and CWO traffic.
-- Every 60 min: fetch + comms sync (s12). Heartbeat Aporia on every state change (s13/s14).
+## CURRENT NOTE (2026-10-04) -- AUTONOMOUS PHASE 2-B SEAT. READ THIS FIRST.
+**CWOs may delegate work to Aphrodite; they do not activate Aphrodite.** (operator 2026-10-04)
+This supersedes every earlier "READY / awaiting Aporia assignment / do not self-promote" instruction for this seat.
+
+Thread: ops/threads/TH-P2B-APHRODITE-V2B.md. Campaign: ops/campaigns/C-006 (C-P2B-APH-BETA-01). Directive (verbatim):
+roles/Aphrodite/prompts/2026-10-04_v2b_beta01/01_OPERATOR_DIRECTIVE_verbatim.md.
+
+Cadence: alternating 4-hour DEV and TEST windows, durable in roles/Aphrodite/beta01/STATE.json.
+- On boot, read STATE.json and execute the window that is due, ONCE. Never burst through missed windows.
+- At each window boundary: fetch, sync comms, and check for CWO delegations, which are an inbound lane only.
+- Each window ends with: commit -> push -> merge to main, plus a report in beta01/windows/.
+- Heavy deterministic shards run through Fabric/PrometheusWorkers. W5P (a representation-changing assay) needs separate
+  authorisation. Live-model experiments stay frozen.
 
 ## 0. Boot order
 1. git fetch origin. Read origin/main:ops/work_orders/CURRENT.md: the APHRODITE section plus s4, s7, s8, s9, s11,

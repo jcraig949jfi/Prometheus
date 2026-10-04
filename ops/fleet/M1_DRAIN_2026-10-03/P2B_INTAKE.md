@@ -86,3 +86,34 @@ Sent by Nestor directly to Bellerophon, Archaeon, Ananke and Cosmos. They verify
 - Palamedes #1326: an append-only custody store locator is needed before C-004-T020 (not urgent).
 - Proposed: a hash-chained, append-only Postgres table on M1.
 - Pending operator confirmation, because it is a custody mechanism.
+
+## Updates (2026-10-04)
+
+- **Aether (#1389): READY.** E-012 closed as DYNAMIC_COUPLING_REQUIRED (rcv_sfz 6/128, exactly on the boundary; record
+  ops/campaigns/C-002/E-012/RESULT.md @ 1d2d374e8). Promexec round 2 still waits on the operator's install of 3cf32a64.
+  Its Phase 2-B first campaign stays as in the manifest: the 10k-tick rcv_add/rcv_str falsifier plus one alternative
+  energy regime.
+- **Aphrodite (#1395): already running Phase 2-B autonomously** under an operator directive of 2026-10-04
+  (ops/threads/TH-P2B-APHRODITE-V2B.md): C-006 Beta-01, 12 alternating DEV/TEST windows on M4. Per that thread, CWOs
+  may delegate to Aphrodite but do not activate it. Aporia does not dispatch it. Recorded only.
+- **Palamedes (#1361):** custody store v1.0.2 adopted into the C-004 contract.
+- **Aether (#1396): now ACTIVE and autonomous** under the operator's Phase 2-B directive TH-P2B-AETHER-V2B. Recorded
+  only, the same as Aphrodite.
+- **Control-plane defect (Aphrodite #1404, owner Achilles / PrometheusWorker):**
+  - Generic-worker attempts return only output hashes.
+  - The files stay in /home/jcraig/prometheus-worker/results/ on the worker host, and the owning seat has no designed
+    path to fetch them: no upload or results branch, and ssh from M4 fails host-key verification.
+  - This blocks science sharding on the fleet; the first case is Aphrodite T51.
+  - Options listed by Aphrodite: commit outputs <= N MB, add an artifact table on M1 Postgres, or distribute SSH keys.
+  - Sent directly to Achilles; not duplicated by Aporia. LOW, and not blocking Aphrodite.
+- **CLOSED (Archaeon #1408):** the three GLOBAL/MEDIUM control-plane defects now fail closed (f188be013, on main):
+  comms manifest short-binary hashing, comms identity null db, workspace receipt. The #1148 Postgres keepalive fix is
+  also on main (6277c59ab).
+- **Control-plane defect (Aether #1439, owner Odysseus/Fabric; cc Achilles):**
+  - ubu001's Fabric workers (.a, .b, .sci) have shown "online" while dead since 2026-10-02 10:37: last_seen is stale
+    and they claim nothing. This is the stale-instance class DEF-ODY-017. It probably coincides with Achilles moving
+    ubu001-003 to PrometheusWorker on 10-02.
+  - 28 Aether tasks sat unclaimed and were cancelled; Aether fell back to native R3 on BUCKKEEP.
+  - Impact: any seat relying on Fabric python.numpy will hit this.
+  - Needs: restart, or explicit retirement of the Fabric v0.2 workers in favour of PrometheusWorker, plus liveness from
+    last_seen rather than from status. Already sent to Odysseus.

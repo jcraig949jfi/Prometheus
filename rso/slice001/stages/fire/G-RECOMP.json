@@ -1,0 +1,65 @@
+{
+  "all_ok": true,
+  "cases": [
+    {
+      "case_id": "REG real traces, real predicates",
+      "expected_reason": null,
+      "expected_value": "PASS",
+      "observed_reason": null,
+      "observed_value": "PASS",
+      "ok": true,
+      "polarity": "ACCEPT"
+    },
+    {
+      "case_id": "REG RETENTION outcome edited to NEGATIVE",
+      "expected_reason": "OUTCOME_MISMATCH:value",
+      "expected_value": "FAIL",
+      "observed_reason": "OUTCOME_MISMATCH:value",
+      "observed_value": "FAIL",
+      "ok": true,
+      "polarity": "REJECT"
+    },
+    {
+      "case_id": "REG probe_a bytes swapped for AMNESIAC's",
+      "expected_reason": "BYTES_MISMATCH:trace:probe_a",
+      "expected_value": "FAIL",
+      "observed_reason": "BYTES_MISMATCH:trace:probe_a",
+      "observed_value": "FAIL",
+      "ok": true,
+      "polarity": "REJECT"
+    },
+    {
+      "case_id": "REG probe_a bound but outside the layout",
+      "expected_reason": "TRACE_SCHEMA:trace:probe_a",
+      "expected_value": "FAIL",
+      "observed_reason": "TRACE_SCHEMA:trace:probe_a",
+      "observed_value": "FAIL",
+      "ok": true,
+      "polarity": "REJECT"
+    }
+  ],
+  "executed_by": "Argus[desktop-ruapvai-b08b36ac] under C-004-T023B",
+  "instrument": "G-RECOMP",
+  "schema": "rso.slice001.fire_test.v1",
+  "version": [
+    {
+      "commit": "6f57aa7c62f22edc66ea6b35c8c4cbda0b6324ff",
+      "length": 24261,
+      "role": "code:rso/slice001/checker.py",
+      "sha256": "40d9fe95018925f8eb412c7b31a74f648b18f3e8931f337913e697198a966c87"
+    },
+    {
+      "commit": "6f57aa7c62f22edc66ea6b35c8c4cbda0b6324ff",
+      "length": 30721,
+      "role": "code:rso/slice001/evidence.py",
+      "sha256": "06ef526b5e346f1cf749f5c85535e2f90cdaf8bb59c8db775003c7b57d9423a0"
+    },
+    {
+      "commit": "6f57aa7c62f22edc66ea6b35c8c4cbda0b6324ff",
+      "length": 31846,
+      "role": "code:rso/slice001/receipt.py",
+      "sha256": "f0f0d80063d21703b1709c188cad702b189db772bf5ecac404a04c9a56d5725b"
+    }
+  ],
+  "version_hash": "269dfb27c4b550df66e8d0b494f6cffcaeb6665a9cb4f35ac8fdd82f6cb51c6f"
+}

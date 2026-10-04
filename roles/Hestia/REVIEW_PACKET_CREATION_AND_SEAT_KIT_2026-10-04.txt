@@ -1,0 +1,161 @@
+================================================================================
+REVIEW PACKET -- Hestia seat + one-command seat kit -- Prometheus, 2026-10-04
+Commits of record: 2dfba0ec5 (seat), 7d5bef4e9 (state), 635f9a50e (seat_kit);
+  origin/main tip after push 6345679f3.  Author: Hestia seat session
+  (claude-sonnet-5-5, instance gandalf-ac57e46f, host GANDALF/M3).
+Invoked by: operator, "Hestia.  Inherit from base-role but Hestia will be self
+  contained for the most part, attempting a moonshot!  More details after you
+  set up."  Then: "This is taking way too long to set up a new seat.  Can you
+  create a template for other new seats so it can be done in under 60 seconds
+  going forward?"
+================================================================================
+
+0. WHAT THIS PACKET IS
+  A review of (a) the creation of a new seat, Hestia, and (b) a tool built in
+  the same session to create future seats fast. CONFLICT OF INTEREST: the author
+  built both and ran every check below; the one independent review that was
+  started was stopped before it reported (section 6). Grades: E3 = executed
+  this session and quoted from output; E1 = regenerable by the commands in
+  section 10; E0 = the author's prose or estimate.
+
+1. CONTEXT
+  Prometheus is a fleet of ~80 named "seats" (roles/<Name>/), each inheriting
+  roles/base-role (a constitution: worktree per seat, never `git pull`, journal,
+  comms, a HOLD state until the operator gives a charter). A new seat needs
+  about twelve files, two rows in a register, a hash MANIFEST of the operator's
+  verbatim words, a comms boot, and a fast-forward push to a shared main that
+  other seats push to every few minutes. Hestia's was done by hand.
+
+2. THE QUESTIONS
+  Q1 (operator): create Hestia, inherit base-role, mostly self-contained, a
+     moonshot, details to follow.
+  Q2 (operator): make seat creation possible in under 60 seconds.
+
+3. WHAT WAS DONE
+  3.1 Name selection. Five candidates offered (Themis, Hestia, Cassandra,
+      Hypnos, Ariadne). Chiron was drafted and dropped: roles/Chiron exists only
+      on a remote branch (E3). Astraea dropped (Harmonia runner name) (E3).
+  3.2 Archaeology at base 5c290b461, by git grep at that SHA: Hestia occurs in
+      ONE file, harmonia/docs/the_decaphony.md line 76 ("Hestia -- hearth.
+      Lattices."), a label in an April 2026 list, not a seat (E3). No commit
+      message on any ref; roles/Hestia on none of 96 remote refs (E3).
+  3.3 Workspace. Canonical checkout (208 commits behind origin/main, E3) saw
+      only `git fetch` and `git worktree add`. Full worktree: 69,762 files,
+      about 2-3 minutes (E3, not timed to the second).
+  3.4 Seat: 12 files under roles/Hestia/ + 2 lines in INHERITANCE.md (CRLF
+      kept).
+      State HOLD, charter PENDING. comms boot Hestia[gandalf-ac57e46f], light
+      tier, NO capabilities advertised (deliberate). Sync: 0 new, queue 0 (E3).
+      The moonshot was NOT interpreted; the seat file says so.
+  3.5 Checks on the seat: manifest 3 entries 0 mismatches; authored files pure
+      ASCII (only the operator's 2 curly apostrophes, 6 bytes, are not); base
+      self-tests 21 passed 1 skipped (89.15 s, then 73.86 s merged) (E3).
+  3.6 Why it was slow (measured with --durations): ONE test,
+      test_every_mandatory_artifact_path_is_committable_for_every_seat, took
+      65.66 s of 74.29 s (it runs git check-ignore per seat across ~80 seats).
+      Name archaeology costs git grep 6.2 s + ref scan 5.4 s + log 0.4 s (E3).
+  3.7 The kit: roles/base-role/seat_kit/new_seat.py + 8 templates + README +
+      14 controls + a validator cheat control. It runs archaeology in parallel
+      with a SPARSE worktree (roles/base-role, comms, archaeon/tests,
+      aporia/doctrine, ops/work_orders), renders files, writes the verbatim
+      directive + MANIFEST + register rows, validates, runs the self-tests
+      against a pre-seat baseline, commits by explicit path, and with --push
+      does a race-safe fast-forward push.
+
+4. RESULTS
+  Trial (throwaway name Zzzkit, --no-comms, no push), GANDALF, E3:
+    total 24.0 s
+      fetch origin ............ 0.8 s     validate ............. 0.4 s
+      archaeology || worktree . 6.9 s     self-tests with seat . 8.2 s
+      baseline self-tests ..... 6.9 s     manifest 0.1 s, commit 0.3 s
+  First trial FAILED: 6 self-tests fail in a sparse tree because they audit
+    other seats/campaigns (RSO cell, >=5 manifests). Fix: compare against a
+    baseline taken before the seat exists; only NEW failures count. Second
+    trial: 6 failed (same 6), 15 passed, 1 skipped, 0 new (E3).
+  Controls: test_new_seat.py 14 passed 6.98 s -- unraced push lands; origin
+    moved with unrelated change: merged and pushed, competitor work kept;
+    origin moved with CONFLICTING change: nothing pushed, competitor untouched
+    (cheat control); CRLF-safe register insert; name rules; leftover-token
+    refusal (E3). Validator cheat control: good seat clean, 7 injected defects
+    (no banner, non-ASCII, CR, tampered verbatim file, missing register row,
+    bad WORK_STATE, missing file) each caught; 8/8 (E3).
+  Full self-tests on the merged tree before push: 35 passed, 1 skipped, 81.47 s
+    (E3). Piped one-liner from origin/main, dry-run: free name 8.288 s; Hestia
+    (exists) hard-stops, "already exists on 3 ref(s)" (E3).
+
+5. WHAT CHANGED IN THE REPOSITORY (all on origin/main, verified ancestors)
+  roles/Hestia/ (12 files); roles/base-role/INHERITANCE.md (+2 lines);
+  roles/base-role/seat_kit/ (13 files); roles/base-role/README.md (+3 lines,
+  a pointer). One row in the shared comms database (Hestia boot). No scheduled
+  job, no compute, no spend, no change to any other seat's files.
+
+6. WHAT THIS DID NOT ESTABLISH
+  - "Under 60 seconds" is MEASURED only to 24.0 s WITHOUT comms boot and push.
+    Comms boot and a real push were not timed in the tool (the push logic was
+    tested against a scratch bare repo, never a real fake-seat push, because
+    that would publish a fake seat). Total with both is an estimate (E0).
+  - The tool was run once end to end, on Windows/Git Bash only. Not run on a
+    Linux host, nor with a real --push, nor by a second person.
+  - The seat creation was NOT independently reviewed: a three-lens read-only
+    review was launched and stopped at the operator's word before reporting.
+  - Sparse-baseline comparison can hide a seat-caused failure inside one of
+    the six tests that already fail sparse; the validator covers the seat-
+    specific properties but is the author's own check.
+  - The moonshot, what "self contained" excludes, and Hestia's dependency
+    surface are unknown; nothing has been started toward them.
+  - Whether the new seat should heartbeat Aporia is undecided (deferred).
+
+7. AUTHOR'S OWN ERRORS AND WHAT THEY COST
+  - Ran a verification script from the repo root with a default of "."; it
+    walked 69,762 files for >10 minutes and blocked the commit step. My own
+    PID, identified by command line, stopped. Cost: ~10+ minutes.
+  - First ASCII re-check used grep -P under a locale that rejects it; it
+    proved nothing and was redone in Python. First whole-tree Grep sweep
+    silently missed the one Hestia hit (cause not established).
+  - Drafted Chiron as free from `ls roles/` on main; caught before sending.
+  - The tool layer rewrote \uXXXX escapes in text I sent, putting a non-ASCII
+    character into a "pure ASCII" control script; found by check, fixed.
+  - Stated a duration ("about 15 minutes") I had not measured; corrected.
+  - One push attempt was correctly refused by my own guard (origin/main had
+    moved); a merge commit was missing attribution trailers (amended
+    unpushed). Ledger rows: roles/Hestia/calibration/LEDGER.md (3).
+
+8. WHAT IS OWED, AND BY WHOM
+  - Operator: the charter/details for Hestia; whether Hestia heartbeats Aporia
+    and may be dispatched to; whether the kit belongs under base-role (Archaeon
+    owns that lane; this was added on the operator's direct instruction).
+  - Hestia (next wake): commit the charter verbatim with MANIFEST; rewrite
+    RESPONSIBILITIES.md with the dependency surface; file the backlog.
+  - Anyone: time the kit with comms + --push on the next real seat.
+
+9. QUESTIONS FOR THE EXTERNAL REVIEWER
+  1. FALSIFY: what single observation would show the sparse-baseline test
+     comparison is unsafe (a seat passes the kit but would fail the full
+     self-tests)? Is there an inexpensive way to run those six audits?
+  2. FALSIFY: is there a way the race-safe push can publish a broken seat
+     (e.g. a merge that changes a file the validator does not read)?
+  3. Is deferring the heartbeat to Aporia for a HOLD seat consistent with
+     CWO-2026-09-30C s13, or a violation hidden behind a justification?
+  4. Omitting comms capabilities at boot: sound isolation, or a way to make
+     the seat invisible to the delegation view?
+  5. STOP: should this tool exist inside roles/base-role at all, given the base
+     role is a constitution and Archaeon's lane? Should --push be allowed
+     without a second seat's review of the generated files?
+  6. STOP: is the standing "write a review packet after substantial work" worth
+     its cost on a pure-infrastructure change like this one?
+
+10. HOW TO REPRODUCE
+  cd <canonical checkout>; git fetch origin
+  git show origin/main:roles/base-role/seat_kit/new_seat.py | python - Zzzfree \
+      --model claude-sonnet-5-5 --dry-run
+    expect: "DRY RUN: roles/Zzzfree is free on all N remote refs" (~8 s)
+  git show origin/main:roles/base-role/seat_kit/new_seat.py | python - Hestia \
+      --model claude-sonnet-5-5 --dry-run
+    expect: SEAT CREATION STOPPED ... already exists
+  python -m pytest roles/base-role/seat_kit/test_new_seat.py -q   (14 passed)
+  python roles/base-role/seat_kit/controls/validator_cheat_control_2026-10-04.py
+      <worktree>   (expect CONTROL PASSED; needs roles/Hestia present)
+  Determinism: archaeology and validation are deterministic for a given SHA;
+  timings are not (Techne's record of this host: 2008 i7 920, no GPU; the
+  disk was not measured).
+================================================================================

@@ -1,0 +1,106 @@
+{
+  "schema": "aphrodite.beta01.state.v1",
+  "campaign": "C-006",
+  "label": "C-P2B-APH-BETA-01",
+  "thread": "TH-P2B-APHRODITE-V2B",
+  "pairs_planned": 12,
+  "window_hours": 4,
+  "current": {
+    "cycle": 3,
+    "window": "TEST",
+    "index": 3,
+    "opened_utc": "2026-10-04T15:04:45Z",
+    "due_close_utc": "2026-10-04T19:04:45Z",
+    "active_thread": "TH-018",
+    "apparatus_version": "v2b-2",
+    "experiment": "T03 = T52 validation-dose response (R3)",
+    "attempt": 1,
+    "goal": "measure"
+  },
+  "last_disposition": "DEV-3 DONE",
+  "unresolved_defects": [
+    "no receipt check for no-donor-state (S4 cond 8 class)",
+    "ruler v2.1 residual 8/47 + 24.5% chance floor",
+    "T4 v1a silent on queries 1-2",
+    "T01 erratum: pristine_all_censored field (fix in t1 v2)",
+    "A20-A23 P/OFF_0 controls dead on REUSED/CAPABILITY_SAME (recorded; T53 makes them live)"
+  ],
+  "next_intended": {
+    "window": "DEV",
+    "index": 4,
+    "plan": "diagnose T52; midpoint synthesis after TEST-4; plan T51 (natural recurrence) supply screen"
+  },
+  "missed_wake_rule": "run the due window once; never burst",
+  "history": [
+    {
+      "cycle": 1,
+      "window": "DEV",
+      "index": 1,
+      "opened_utc": "2026-10-04T11:10:08Z",
+      "closed_utc": "2026-10-04T11:32:49Z",
+      "active_thread": "TH-021",
+      "apparatus_version": "v2b-1",
+      "disposition": "DONE: v2b apparatus built; conformance GREEN; 12 tests; TB-T4b probe 0/330 A23 flips; T01 spec frozen",
+      "report": "beta01/windows/D01_DEV_REPORT.md",
+      "next_frozen": "beta01/windows/T01_KNOWN_ANSWER_SPEC.md"
+    },
+    {
+      "cycle": 1,
+      "window": "TEST",
+      "index": 1,
+      "opened_utc": "2026-10-04T11:32:49Z",
+      "closed_utc": "2026-10-04T11:43:05Z",
+      "active_thread": "TH-021",
+      "apparatus_version": "v2b-1",
+      "experiment": "T01 known-answer apparatus assay",
+      "attempt": 1,
+      "disposition": "QUALIFIED (10/10 cases expected-class-for-the-right-reason; 0 technical failures); full conformance GREEN",
+      "report": "beta01/windows/T01_REPORT_AND_REVIEW_PACKET.md",
+      "receipts": [
+        "beta01/runs/T01/T01_RESULT.json",
+        "engine/v2b/receipts/CONFORMANCE_V2B_2026-10-04.json"
+      ]
+    },
+    {
+      "cycle": 2,
+      "window": "DEV",
+      "index": 2,
+      "opened_utc": "2026-10-04T11:43:05Z",
+      "closed_utc": "2026-10-04T12:00:58Z",
+      "active_thread": "TH-018/TH-021",
+      "apparatus_version": "v2b-1",
+      "disposition": "DONE: T53 designed+frozen; new finding: A20-A23 P/OFF_0 controls structurally unable to score; smoke exposure contained+disclosed",
+      "report": "beta01/windows/D02_DEV_REPORT.md",
+      "next_frozen": "beta01/windows/T02_T53_SPEC.md"
+    },
+    {
+      "cycle": 2,
+      "window": "TEST",
+      "index": 2,
+      "opened_utc": "2026-10-04T12:00:58Z",
+      "closed_utc": "2026-10-04T14:49:17Z",
+      "active_thread": "TH-018/TH-021",
+      "apparatus_version": "v2b-1",
+      "experiment": "T02 = T53 (v1)",
+      "attempt": 1,
+      "disposition": "TECHNICAL CLEAN; SCIENTIFIC MEASUREMENT_FAILED (PC_ONE control 6/10 < 8: mis-specified known answer -- duplicate SAME pairs + START already solving). New finding: A23 G1 SAME pairs CON1/CON8 are extensional duplicates -> distinct-family G1 REUSED_SAME 5/10 < 6 (correction-only). Continuity 400/400; bridge 49/50.",
+      "report": "beta01/windows/T02_REPORT_AND_REVIEW_PACKET.md",
+      "receipts": [
+        "beta01/runs/T02_T53/T53_RESULT.json",
+        "engine/v2b/receipts/A23_SAME_PAIR_DUPLICATES.json"
+      ]
+    },
+    {
+      "cycle": 3,
+      "window": "DEV",
+      "index": 3,
+      "opened_utc": "2026-10-04T14:49:17Z",
+      "closed_utc": "2026-10-04T15:04:45Z",
+      "active_thread": "TH-021/TH-018",
+      "apparatus_version": "v2b-2",
+      "disposition": "DONE: distinctness screen; repaired controls; t1v2 QUALIFIED (graded + selection); T53 CORRECTION: G1 5/10 distinct-class (<6), shams 8/9/10 -> generic; T52 frozen",
+      "report": "beta01/windows/D03_DEV_REPORT.md",
+      "next_frozen": "beta01/windows/T03_T52_SPEC.md"
+    }
+  ]
+}

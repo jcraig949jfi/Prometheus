@@ -1,0 +1,103 @@
+{
+ "schema": "aphrodite.v2b.historical_constant_gates.v1",
+ "recorded": "2026-10-04 (C-006 DEV-1)",
+ "rule": "Historical files are NOT edited and labels are NOT changed. This record states which asserted constants entered which verdicts. v2b code is lint-gated to contain none (engine/v2b/tests).",
+ "detector": "engine/v2b/gates.py lint_constant_gates (AST) + C-006 TRIAGE_AB.md manual triage",
+ "sites": [
+  {
+   "site": "engine/run_s3s4.py:391",
+   "name": "4_hostile_evaluation",
+   "class": "GENUINE_CONSTANT_GATE",
+   "in_verdict": "S4 ABSTRACTION_TRANSPLANT conjunction",
+   "effect": "duplicate: summarise counts only qualified rows, so structurally enforced",
+   "result_affected": "S4 YES (label unchanged)"
+  },
+  {
+   "site": "engine/run_s3s4.py:420",
+   "name": "8_no_donor_state",
+   "class": "GENUINE_CONSTANT_GATE",
+   "in_verdict": "S4 conjunction",
+   "effect": "UNTESTED membrane assumption; AMENDMENT_14:154 preregistered a receipt check that the code never performs",
+   "result_affected": "S4 YES = 6 live conditions + 1 asserted + 1 duplicate"
+  },
+  {
+   "site": "engine/run_s3s4.py:364",
+   "name": "1_expressive_equivalence",
+   "class": "PRECONDITION_NOT_CONDITION",
+   "effect": "cannot be False: L323-325 SystemExit first",
+   "result_affected": "none"
+  },
+  {
+   "site": "engine/run_s3s4.py:245,317",
+   "name": "POSITIVE_CONTROL == derived treatment (acc + {H})",
+   "class": "NON_DISCRIMINATING_CONTROL",
+   "effect": "the PC also drove S7 family admission: 3 of 5 unseen-body families admitted only via the PC",
+   "result_affected": "S4 YES survives on 2 unseen + 2 related families (correction-only; TRIAGE TB-S4b)"
+  },
+  {
+   "site": "engine/a16.py:489",
+   "name": "donor_adjudication_valid",
+   "class": "ASSERTED_LABEL",
+   "in_verdict": "no (written, never read)",
+   "result_affected": "none (misleading field in A16 JSON)"
+  },
+  {
+   "site": "engine/a17.py:581",
+   "name": "donor_adjudication_valid",
+   "class": "ASSERTED_LABEL",
+   "in_verdict": "no",
+   "result_affected": "none (A17_E1 JSON carries donor_adjudication_valid=true; asserted, not computed)",
+   "note": "not listed in TH-021 before 2026-10-04"
+  },
+  {
+   "site": "engine/a16.py:547",
+   "name": "R5_clean_transplant",
+   "class": "GENUINE_CONSTANT_GATE",
+   "in_verdict": "BOUNDED_RSI conjunction",
+   "result_affected": "none (no YES); would have been a hole in any YES",
+   "note": "new 2026-10-04"
+  },
+  {
+   "site": "engine/a17.py:639",
+   "name": "R5_clean_transplant",
+   "class": "GENUINE_CONSTANT_GATE",
+   "in_verdict": "BOUNDED_RSI conjunction",
+   "result_affected": "none (A17 E1 NO, E2 UNTESTABLE)",
+   "note": "new 2026-10-04"
+  },
+  {
+   "site": "engine/run_g2.py:395",
+   "name": "R5_clean_transplant",
+   "class": "GENUINE_CONSTANT_GATE",
+   "in_verdict": "G2 BOUNDED_RSI conjunction",
+   "result_affected": "none (G2 stopped: catalog)",
+   "note": "new 2026-10-04"
+  },
+  {
+   "site": "engine/a16.py:495,551 / a17.py:587,643",
+   "name": "R1_failure_is_novelty",
+   "class": "LATENT_MISLABEL",
+   "effect": "set True on BOTH R1 failure branches, including 'G1-dependence not shown'",
+   "result_affected": "none: A17 E1 took the 'no SEMANTICALLY_NEW selection' branch (L2_replicate=None), where the label is correct"
+  },
+  {
+   "site": "engine/certify_expressivity.py:61",
+   "name": "g4_subset_of_organ",
+   "class": "ASSERTED_BY_ARGUMENT (low)",
+   "result_affected": "EXPRESSIVITY_CERTIFICATE claim untested in one direction"
+  },
+  {
+   "site": "engine/run_s3s4.py:443",
+   "name": "resumed_from_frozen_S3",
+   "class": "BENIGN_PROVENANCE_FLAG"
+  },
+  {
+   "site": "engine/a2[0-3]_*.py take()/assign ok=False",
+   "class": "FALSE_ALARM (closure flag)"
+  },
+  {
+   "site": "engine/run_slice3.py:132, run_slice4.py:75, run_tier3a.py:54",
+   "class": "FALSE_ALARM (failure-path row defaults)"
+  }
+ ]
+}

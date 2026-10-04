@@ -26,20 +26,27 @@
     "docs/phase3/synthesis/ENCELADUS-DIONYSUS-v0.4/NEXT_ROUND_PLAN_v0.4.md",
     "docs/phase3/closure/FABLE-5.1/CLOSURE_REVIEW_v0.4.md"
   ],
-  "problem": "Plan s5 and closure F: reviewer reads the contract and frozen implementation, records prior exposure, commits proposed source edits and their intended faults before opening the frozen test bodies; runs the unchanged suite first; five fresh sound cases, five fresh broken cases, ten distinct applicable semantic edits spanning reset/observer, binding and invalidation; classifies with the mutation runner (C-004-T017); supplies a behavioural witness per non-equivalent survivor; retains all attempted attacks and applicability reasons. The result is recorded on each gate as C4 'first-sight challenged'.",
+  "problem": "S3 first-sight challenge of the frozen S2 implementation (plan s5; closure F; CONTRACT.md s6). INPUT: rso/slice001/FREEZE_S2.md (written by T020): the freeze SHA, a sha256 manifest of every implementation file and every test file, and the run-inventory row of the freezing run. ORDER, each step its own commit on the reviewer's branch before the next begins: (1) EXPOSURE.md: prior exposure (T005 table, COMPARISON, both drafts, Fable corpora, this session); (2) read CONTRACT.md + amendments and the implementation SOURCE files (not tests); (3) commit the attack set BEFORE opening any test body: 5 fresh sound cases, 5 fresh broken cases (each with the expected typed verdict and reason derived from the contract), and 10 distinct semantic source edits spanning reset/observer, binding and invalidation, each with its intended fault, as data files the mutation runner reads; (4) run the UNCHANGED suite first, then the cases and edits with rso/slice001/mutation.py; (5) classify every edit with the runner's classes (proposed, applicable, duplicate, executed, killed, survived, syntax/import error, timeout); errors are not kills; give a behavioural witness for each non-equivalent survivor; uncertain equivalence is UNRESOLVED; (6) REPORT.md with first-sight score components and denominators, per gate (C4 FIRST_SIGHT_CHALLENGED fields of draft B B4.1). Known escapes, old attacks, plan examples and the T005/COMPARISON cases are not fresh. Every launch (suite runs and each mutation child) is charged to the ledger: ledger.begin(launch_kind=MUTATION_CHILD) for children (T019 receipt; the runner does not charge itself) against the OP-1 caps; stop at the first exhausted cap and keep partial results.",
   "non_goals": [
     "The reviewer does not modify production implementation (Pallas/rso-builder-role s6.7)",
     "Known escapes, old attacks and plan examples are not fresh cases"
   ],
   "evidence_required": [
-    "attack set commit precedes the execution commit",
-    "score table with denominators; survivors with witnesses"
+    "git order: EXPOSURE commit < attack-set commit < first test-body read (stated in EXPOSURE.md) < execution commit",
+    "unchanged-suite run recorded before any edit is executed",
+    "per-edit rows with runner classes; a witness for every non-equivalent survivor; UNRESOLVED where equivalence is uncertain",
+    "REPORT.md: per-gate first-sight components with denominators (sound/broken correct of total; edit class counts; unresolved)",
+    "ledger rows for every launch, including mutation children"
   ],
   "acceptance": {
-    "condition": "attack set committed before outcomes; first-sight score reported with denominators; every survivor has a witness or is UNRESOLVED"
+    "condition": "the ordering evidence holds; every attack recorded with its applicability reason; first-sight score reported with denominators per gate; caps respected; nothing in rso/slice001/ outside challenge/S3/ modified by the reviewer"
   },
   "deliverables": [
-    "rso/slice001/challenge/S3/ (attack set, results, EXPOSURE.md, REPORT.md)"
+    "rso/slice001/challenge/S3/EXPOSURE.md",
+    "rso/slice001/challenge/S3/attack_set/ (cases + edits, committed first)",
+    "rso/slice001/challenge/S3/results.jsonl",
+    "rso/slice001/challenge/S3/REPORT.md",
+    "attempts/A-NNN/RECEIPT.json"
   ],
   "kind": "review",
   "status": "PROPOSED",
@@ -60,6 +67,6 @@
     "cpu": "< 10 CPU-minutes incl. mutation children",
     "note": "Counts toward the slice caps fixed by C-004-OP1 (NEXT_ROUND_PLAN_v0.4 s6 proposal: 30 CPU-minutes total, 0 GPU, 0 cloud, 100 MB new artifacts, 12 top-level validation launches; mutation children count toward CPU). Stop at the first exhausted cap and keep partial results."
   },
-  "notes": "Reviewer per C-004-OP3 ruling 2026-10-03: Pallas (Fable 5.1) owns; Dionysus is the fallback (eligible). Independence caveat, declared: Pallas is a member of the RSO Builder Cell but writes no production code and is a different model family from the Opus/Sonnet builders. PROPOSED until its inputs exist. Changed by Palamedes[harry1-679179c6] at 2026-10-03T21:48:40Z: owner_role Dionysus -> Pallas, eligible Pallas -> Dionysus. COORDINATOR 2026-10-04 (from T019 receipt): mutation.py does not charge the ledger; the S3 run must charge mutation children via ledger.begin(launch_kind=MUTATION_CHILD) or the CPU cap is not enforced on them.",
+  "notes": "Reviewer per C-004-OP3 ruling 2026-10-03: Pallas (Fable 5.1) owns; Dionysus is the fallback (eligible). Independence caveat, declared: Pallas is a member of the RSO Builder Cell but writes no production code and is a different model family from the Opus/Sonnet builders. PROPOSED until its inputs exist. Changed by Palamedes[harry1-679179c6] at 2026-10-03T21:48:40Z: owner_role Dionysus -> Pallas, eligible Pallas -> Dionysus. COORDINATOR 2026-10-04 (from T019 receipt): mutation.py does not charge the ledger; the S3 run must charge mutation children via ledger.begin(launch_kind=MUTATION_CHILD) or the CPU cap is not enforced on them. CONCRETIZED 2026-10-04 by Palamedes (still PROPOSED: READY only when T020 is INTEGRATED and FREEZE_S2.md exists). After REPORT.md, Palamedes writes the FIRST_SIGHT_CHALLENGED stage records from it and has Aporia register them (STAGE_RECORD); the reviewer does not write stage records. Reviewer time counts toward 3 reviewer hours (T005 used about 20 min).",
   "red_required": false
 }

@@ -1,0 +1,101 @@
+{
+  "schema": "prometheus.workgraph.task.v1",
+  "task_id": "C-004-T026",
+  "campaign_id": "C-004",
+  "title": "build_bundle: per-receipt inventory rows (RECEIPT kind) and any subject set (G0 + the T020 case subjects)",
+  "objective": "Generalize s2_bundle.build_g0 to build_bundle(commit, ledger, subjects, observers, twins, ...) with one TOP_LEVEL row plus one RECEIPT row per receipt (V7), keeping build_g0 as the G0 call, so T020 can evaluate CL-RET(M) through the consumer for every case subject.",
+  "parent_objective": "RSO-METHODS-SLICE-001 (CAMPAIGN.json objective)",
+  "owner_role": "Argus",
+  "quality_class": "Q2",
+  "can_downgrade": false,
+  "escalate_to": "Q3",
+  "depends_on": [
+    "C-004-T025"
+  ],
+  "owns": [
+    "rso/slice001/s2_bundle.py",
+    "rso/slice001/tests/test_s2_bundle.py",
+    "rso/slice001/tests/test_evidence.py"
+  ],
+  "reads": [
+    "rso/slice001/ledger.py",
+    "rso/slice001/evidence.py",
+    "ops/campaigns/C-004/escalations/C-004-T024_1_2_RESPONSE.md"
+  ],
+  "problem": "After C-004-T025, implement rows='per_receipt' with launch_kind RECEIPT as the default, so the real G0 inventory attributes every receipt (V7) and E02.MISSING's G-INV half (X06) fires on the real base; remove the expectedFailure markers on the E05 real-base custody tests (they must now pass). ADDED 2026-10-04 (coordinator, before claim): the independent table expects CL-RET(M) for subjects outside G0 -- QCARRY, AMNESIAC, FLIP, WIPE, PKTD_NOQ, HCOUNT, EVERY3, SLEEPER, SPLIT1, SPLIT2, OVERDELAY, REG with observer HEAL registered as used -- and TWIN(REG, REG-FLAT), TWIN(REG, LOSSY). Expose build_bundle(subjects=[...], observers={M: (...)}, twins=[(M, twin), ...]) that builds the same receipt set per subject as G0 (BOUNDS, RETENTION, ERASE, PRESERVE, CHANNEL, RESTART, OBSERVER per registered observer) plus CALIBRATION(STANDARD) once, and the requested TWIN_EQ receipts; a subject whose runtime leaves the model (OVERDELAY) yields BLOCKED receipts (adapter behaviour), not an exception. One build, one launch.",
+  "non_goals": [
+    "No change to evidence/checker semantics"
+  ],
+  "evidence_required": [
+    "test: real G0 inventory has 1 TOP_LEVEL + 25 RECEIPT rows; E02.MISSING on the real base gives G-INV FAIL RUN_UNREPORTED",
+    "the three E05 real-base custody tests pass without expectedFailure",
+    "test: build_bundle over two non-G0 subjects (e.g. WIPE, OVERDELAY) gives consumer decisions CL-RET(WIPE) NOT_ELIGIBLE and CL-RET(OVERDELAY) BLOCKED standing; build_g0 output unchanged byte for byte except inventory rows"
+  ],
+  "acceptance": {
+    "command": "python -B -m unittest rso.slice001.tests.test_s2_bundle rso.slice001.tests.test_evidence",
+    "condition": "green with no expectedFailure; per-receipt attribution tested"
+  },
+  "deliverables": [
+    "s2_bundle.py",
+    "tests"
+  ],
+  "kind": "software",
+  "status": "INTEGRATED",
+  "history": [
+    {
+      "status": "PROPOSED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-04T14:14:41Z",
+      "note": "from escalations C-004-T024_1/_2"
+    },
+    {
+      "status": "READY",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-04T14:14:41Z",
+      "note": "made READY by the coordinator"
+    },
+    {
+      "status": "CLAIMED",
+      "by": "Argus[desktop-ruapvai-b08b36ac]",
+      "at_utc": "2026-10-04T16:26:30Z",
+      "note": "claimed by Argus on DESKTOP-RUAPVAI (claude-opus-5-5, Q2) per #1441/#1442 (widened text); work branch argus/c004-t026"
+    },
+    {
+      "status": "RED",
+      "by": "Argus[desktop-ruapvai-b08b36ac]",
+      "at_utc": "2026-10-04T16:30:05Z",
+      "note": "11 of 27 test_s2_bundle tests fail against T024's s2_bundle (per-receipt rows, build_bundle, OVERDELAY BLOCKED, RUN_UNREPORTED on real G0)"
+    },
+    {
+      "status": "IMPLEMENTING",
+      "by": "Argus[desktop-ruapvai-b08b36ac]",
+      "at_utc": "2026-10-04T16:30:11Z",
+      "note": ""
+    },
+    {
+      "status": "GREEN",
+      "by": "Argus[desktop-ruapvai-b08b36ac]",
+      "at_utc": "2026-10-04T16:34:20Z",
+      "note": "test_s2_bundle 27/27; acceptance 76 OK on merged tree, no expectedFailure"
+    },
+    {
+      "status": "INTEGRATION_READY",
+      "by": "Argus[desktop-ruapvai-b08b36ac]",
+      "at_utc": "2026-10-04T16:34:25Z",
+      "note": "branch argus/c004-t026 at 029dd41b1; build_bundle any subject set, 1 TOP_LEVEL + RECEIPT rows; real G0 E02.MISSING RUN_UNREPORTED; E05 custody tests ordinary; WIPE NOT_ELIGIBLE, OVERDELAY BLOCKED; acceptance 76 OK merged; full ci not run (CPU ceiling); TWIN collision noted"
+    },
+    {
+      "status": "INTEGRATED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-04T16:45:13Z",
+      "note": "merged b838234f1; integrator: full slice suite OK on merged tree (432 s wall); mutation build_g0 default rows=build killed (4 per-receipt tests error); author: E02.MISSING G-INV FAIL RUN_UNREPORTED on the real base, CL-RET(WIPE) NOT_ELIGIBLE, CL-RET(OVERDELAY) BLOCKED. Open: TWIN_EQ node id has no twin segment -> T020 builds one bundle per extra twin"
+    }
+  ],
+  "authority": "operator directive 2026-10-03 s9, s11; escalation responses C-004-T024_1_2_RESPONSE.md",
+  "resource_ceiling": {
+    "engineering": "<= 1 Q2 seat-hour",
+    "cpu": "< 6 CPU-minutes",
+    "note": "counts toward OP-1/OP-4 caps; a full all-subject build is T020's to run, not this packet's"
+  },
+  "notes": "COORDINATOR 2026-10-04: the three E05 real-base expectedFailure markers were already removed by Palamedes at T025 integration (integration glue, else main red); T026 is now only: build_g0 rows='per_receipt' default with launch_kind RECEIPT, 1 TOP_LEVEL + 25 RECEIPT rows, and E02.MISSING G-INV FAIL RUN_UNREPORTED on the real base."
+}

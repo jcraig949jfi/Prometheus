@@ -31,6 +31,30 @@ def load_config() -> dict:
     return cfg
 
 
+# HALF-OPEN CONNECTION GUARD (Aporia #1148; the failure mode that hung the
+# ubu001 Fabric workers, Odysseus #1115 / DEF-ODY-019). Without these a pooled
+# connection whose peer vanished in a network blip is half-open: a query
+# blocks in recv() forever while the process looks alive. TCP keepalive
+# probes an idle socket (30 s idle, 10 s apart, 3 misses -> dead, ~60 s), and
+# tcp_user_timeout bounds unacknowledged sends (60 s). Plain libpq connect
+# params: cross-platform (Windows applies idle/interval via SIO_KEEPALIVE_VALS
+# and uses its own probe count; tcp_user_timeout is ignored where the OS
+# lacks TCP_USER_TIMEOUT) and no socket/fd handling (#1135).
+KEEPALIVE_KWARGS = {
+    "keepalives": 1,
+    "keepalives_idle": 30,
+    "keepalives_interval": 10,
+    "keepalives_count": 3,
+    "tcp_user_timeout": 60000,
+}
+
+
+def _conn_kwargs(cfg) -> dict:
+    return dict(host=cfg["db_host"], dbname=cfg["db_name"],
+                user=cfg["db_user"], password=cfg["db_password"],
+                **KEEPALIVE_KWARGS)
+
+
 _POOL = None
 _POOL_LOCK = __import__("threading").Lock()
 
@@ -61,9 +85,7 @@ def _get_pool():
             if _POOL is None:
                 from psycopg2.pool import ThreadedConnectionPool
                 cfg = load_config()
-                pool = ThreadedConnectionPool(
-                    2, 16, host=cfg["db_host"], dbname=cfg["db_name"],
-                    user=cfg["db_user"], password=cfg["db_password"])
+                pool = ThreadedConnectionPool(2, 16, **_conn_kwargs(cfg))
                 # Once per process: every pooled connection shares host and
                 # dbname, so one identity read answers for the pool.
                 c = pool.getconn()
@@ -123,9 +145,7 @@ def connect():
         if type(e).__name__ == "WrongEnvironment":
             raise
         cfg = load_config()  # pool exhausted/broken: fall back to direct
-        conn = psycopg2.connect(
-            host=cfg["db_host"], dbname=cfg["db_name"],
-            user=cfg["db_user"], password=cfg["db_password"])
+        conn = psycopg2.connect(**_conn_kwargs(cfg))
         _require_environment(conn)  # the fallback is not an unchecked back door
         return conn
 

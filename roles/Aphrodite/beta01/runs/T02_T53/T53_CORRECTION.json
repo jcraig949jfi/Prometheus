@@ -1,0 +1,108 @@
+{
+ "class": "CORRECTION (post-exposure; T02 readouts were seen before the repair)",
+ "PC_ONE_repaired": {
+  "evaluated": 8,
+  "good": 8,
+  "rows": [
+   [
+    1,
+    "EXCLUDED_DUPLICATE_PAIR"
+   ],
+   [
+    2,
+    "GOOD",
+    4,
+    false
+   ],
+   [
+    3,
+    "GOOD",
+    4,
+    false
+   ],
+   [
+    4,
+    "GOOD",
+    4,
+    false
+   ],
+   [
+    5,
+    "GOOD",
+    4,
+    false
+   ],
+   [
+    7,
+    "GOOD",
+    4,
+    false
+   ],
+   [
+    8,
+    "EXCLUDED_DUPLICATE_PAIR"
+   ],
+   [
+    9,
+    "GOOD",
+    4,
+    false
+   ],
+   [
+    10,
+    "GOOD",
+    4,
+    false
+   ],
+   [
+    11,
+    "GOOD",
+    4,
+    false
+   ]
+  ]
+ },
+ "disposition": "MEASURED_CORRECTION",
+ "distinct_class_counts": {
+  "G1|SEL_G1": 5,
+  "G1|SEL_G1_NC": 0,
+  "G1|SEL_P": 0,
+  "G1|SEL_OFF_0": 0,
+  "G1|PC_MOTIF": 6,
+  "G1|NC_OTHER": 0,
+  "SHAM_0|SEL_SHAM_0": 8,
+  "SHAM_0|SEL_P": 0,
+  "SHAM_0|SEL_OFF_0": 0,
+  "SHAM_1|SEL_SHAM_1": 9,
+  "SHAM_1|SEL_P": 0,
+  "SHAM_1|SEL_OFF_0": 0,
+  "SHAM_2|SEL_SHAM_2": 10,
+  "SHAM_2|SEL_P": 0,
+  "SHAM_2|SEL_OFF_0": 0
+ },
+ "threshold_k": 6,
+ "readouts": {
+  "R_SURVIVES": "NO",
+  "G1": 5,
+  "shams": {
+   "SHAM_0": 8,
+   "SHAM_1": 9,
+   "SHAM_2": 10
+  },
+  "R_G1_SPECIFIC": "NO"
+ },
+ "duplicate_classes": {
+  "1|G1": [
+   [
+    "duca",
+    "dvca"
+   ]
+  ],
+  "8|G1": [
+   [
+    "dqva",
+    "drva"
+   ]
+  ]
+ }
+}

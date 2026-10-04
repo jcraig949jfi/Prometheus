@@ -9,6 +9,7 @@ Don't record passwords here.
 | 2 | ubu002   | jcraig   | 2026-09-25 | Ubuntu Server 26.04.1 LTS | Samsung MZVLW256 238 GB NVMe | 192.168.1.219 (Wi-Fi) | **Ready**; Claude Code logged in |
 | 3 | ubu003   | jcraig   | 2026-10-02 | Ubuntu Server 26.04.1 LTS | LITE-ON LMT-256 238 GB SATA (mSATA) | 192.168.1.220 (wired, eno1) | Setup done; Claude Code installed, **login pending** |
 | 4 | ubu004   | jcraig   | 2026-10-02 | Ubuntu Server 26.04.1 LTS | WD5000LPCX 500 GB 5400 rpm HDD | 192.168.1.178 (Wi-Fi, wlp2s0) | **Provisioned** (first autoinstall + provision_node.sh); GitHub token + Claude login pending |
+| 5 | ubu005   | jcraig   | 2026-10-04 | Ubuntu Server 26.04.1 LTS | Team MP33 1 TB NVMe in a USB-C enclosure (external) | 192.168.1.222 (wired, enp0s31f6); Wi-Fi .227 (wlp4s0) | **Provisioned**, worker active (shared token); Claude login pending |
 | 6 | ubu006   | jcraig   | 2026-10-03 | Ubuntu Server 26.04.1 LTS | Seagate ST500DM002 500 GB 7200 rpm HDD | 192.168.1.225 (wired, enp2s0); Wi-Fi .226 (wlp3s0) | **Provisioned**, worker active (shared token); Claude login pending |
 
 Fill in the IP after first login (`ip -br a`). SSH: `ssh jcraig@<ip>`.
@@ -150,6 +151,18 @@ The **first node built with the autoinstall stick + `provision_node.sh`** (2026-
   autoinstall layout).
 - Still to do: shared GitHub token (`tokens/shared.txt` → re-run step 4 or the whole script), Claude login, DHCP reservation for .178.
 
+## ubu005 (machine #5, Lenovo ThinkPad P52s 20LB0010US)
+
+- **Hardware:** i5-8350U (4C/8T), **22 GB RAM** (largest Linux node), battery limits 75/80 work. Ethernet `enp0s31f6`
+  (.222) + Wi-Fi `wlp4s0` (.227). BIOS N27ET56P 1.42 (2025-04-01, current). F1 setup, F12 boot menu.
+- **Disk saga:** the HDD1 ZIF connector latch broke (internal 2.5"/NVMe tray unusable). A Samsung PM991 256 GB 2242 in
+  the WWAN slot stopped the machine from POSTing (fan at full, black screen; fine with it removed): return it.
+  **Runs from a Team MP33 1 TB NVMe in a USB-C enclosure** (shows as `sda`, TRAN usb, model FP6001T). Keep it plugged in.
+- **Autoinstall:** CIDATA built with the one-off `--allow-usb-target` (a60650da0); the guard picked the enclosure;
+  powered off at the end; booted from the enclosure. **provision_node.sh 192.168.1.222 ubu005:** 2 min (the first try
+  was killed by memory pressure on ELSA before it changed anything). Worker at f78d18e26, enabled, IDLE; 47 C idle.
+- Still to do: rebuild CIDATA WITHOUT --allow-usb-target; Claude login; DHCP reservation for .222; return the PM991.
+
 ## ubu006 (machine #6, Dell Inspiron 3647 small desktop, 2014)
 
 - **Hardware:** Haswell, 4 threads, 4 GB DDR3 (one stick, one free slot: a second 4 GB stick doubles it cheaply),
@@ -173,6 +186,7 @@ Operator: "Yes. The linux fleet for generic workers" (chat 2026-10-03). Installe
 | ubu002 | PrometheusWorker/ubu002/ubu002-svc | f78d18e26 | yes (node token) | enabled, active |
 | ubu003 | PrometheusWorker/ubu003/ubu003-svc | f78d18e26 | yes (node token) | enabled, active |
 | ubu004 | PrometheusWorker/ubu004/ubu004-svc | f78d18e26 | yes (shared token) | enabled, active |
+| ubu005 | PrometheusWorker/ubu005/ubu005-svc | f78d18e26 | yes (shared token) | enabled, active |
 | ubu006 | PrometheusWorker/ubu006/ubu006-svc | f78d18e26 | yes (shared token) | enabled, active |
 
 Per node: ~/prometheus-worker-code (detached at the pinned SHA; WORKING_CONTRACT s6), ~/prometheus-worker-state
@@ -190,4 +204,5 @@ linger keeps it running without a login). Idle: one sync every 5 minutes, ~23 MB
   at f78d18e26); services restarted between runs on ubu001-003.
 - 2026-10-03: ubu004 got the shared GitHub token (nodes-shared, no expiry, Prometheus only; installed from
   C:/autoinstall_secrets/tokens/shared.txt, never printed, shredded on the node); push dry-run OK; worker enabled.
+- 2026-10-04 ~14:12Z: ubu005 (P52s, USB-enclosure root) provisioned with the shared token; worker at f78d18e26, enabled, IDLE.
 - 2026-10-03 ~20:05Z: ubu006 (Inspiron 3647) provisioned with the shared token; worker installed at f78d18e26, enabled, IDLE.

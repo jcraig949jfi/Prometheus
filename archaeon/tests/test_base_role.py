@@ -72,6 +72,33 @@ def test_every_role_carries_the_inheritance_banner_on_a_primary_document():
     assert not missing, missing
 
 
+# Prompt folders whose MANIFEST.md does not cover every file beside it, frozen 2026-10-04 when comms.manifest.verify()
+# stopped passing them (Aporia #1283). Before that, a prose manifest with no `- name  sha256:` line verified as
+# (0, []) and an unlisted file was ignored. These are disclosed, not repaired: each belongs to its seat. A NEW gap
+# fails this test; a content mismatch fails it everywhere, listed here or not.
+KNOWN_COVERAGE_GAPS = {
+    "roles/Ananke/prompts/2026-09-30_inference_harvest",
+    "roles/Aphrodite/prompts/2026-09-21_local_engine",
+    "roles/Archaeon/prompts/2026-09-11_rulings_evening",
+    "roles/Archaeon/prompts/2026-09-17_sfe_campaign2",
+    "roles/Archaeon/prompts/2026-09-17_sfe_campaign3",
+    "roles/Archaeon/prompts/2026-09-23_z80atlas_postcampaign",
+    "roles/Bellerophon/prompts/2026-09-19_z80_atlas_campaign",
+    "roles/Bellerophon/prompts/2026-09-23_post_campaign_forensics",
+    "roles/Harmonia/prompts/2026-09-18_asal_review",
+    "roles/Harmonia/prompts/2026-09-18_poet_alife_steering",
+    "roles/Harmonia/prompts/2026-09-18_refinery_directive",
+    "roles/Harmonia/prompts/2026-09-19_asal_pipeline_direction",
+    "roles/Nestor/prompts/2026-09-28_cosmos_c3_successor_seal",
+    "roles/Nestor/prompts/2026-09-28_post_arc3_directive",
+    "roles/Nyx/prompts/2026-09-13_atlas_pass_01",
+    "roles/Odysseus/prompts/2026-09-28_fabric",
+    "roles/Rhadamanthus/prompts/2026-09-11_charter",
+    "roles/Techne/prompts/2026-09-11_accuracy_requirement",
+    "roles/Techne/prompts/2026-09-16_amendment2",
+}
+
+
 def test_issued_manifests_verify_against_their_files():
     """A prompt is what its manifest says it is: sha256 over the committed bytes (LF).
     Every seat's prompt manifests (Apollo, comms #22: the glob once covered Archaeon only)."""
@@ -79,11 +106,17 @@ def test_issued_manifests_verify_against_their_files():
     if str(REPO) not in sys.path:
         sys.path.insert(0, str(REPO))
     from comms import manifest as M
-    checked = 0
+    checked, new_gaps = 0, []
     for manifest in (REPO / "roles").glob("*/prompts/*/MANIFEST.md"):
         n, bad = M.verify(manifest.parent)
-        assert not bad, "{}: {}".format(manifest.parent.relative_to(REPO), bad[:3])
+        rel = manifest.parent.relative_to(REPO).as_posix()
+        content = [b for b in bad if not b.endswith("lists no entries")]
+        assert not content, "{}: {}".format(rel, content[:3])
+        gaps = bad + M.unlisted(manifest.parent)
+        if gaps and rel not in KNOWN_COVERAGE_GAPS:
+            new_gaps.append("{}: {}".format(rel, gaps[:3]))
         checked += n
+    assert not new_gaps, new_gaps
     for manifest in (REPO / "roles" / "Archaeon" / "prompts").glob("*/MANIFEST.md"):
         text = manifest.read_text(encoding="utf-8")
         for m in re.finditer(r"^- (\S+)\s+sha256:([0-9a-f]{64})", text, flags=re.M):

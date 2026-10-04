@@ -46,6 +46,17 @@ The independent table (EXPECTED_ANSWERS.json) is the comparison target for T020;
                                        (S = 2, K = 3). Q stays a valid bound (BOUNDS
                                        CHANNEL_CAPACITY reachable only via restore()); no
                                        verdict changes. Contract wording defect for S5.
+    X17    PASS reason text            the contract registers FAIL reason forms only (draft A    T011 integration
+                                       A5, V4); PASS reasons are free text on both sides, so 6  check
+                                       T03-T08 PASS reasons differ in wording only. Proposed
+                                       class CONTRACT (no PASS form); T020 engine compares PASS
+                                       reasons as NOT_COMPARED.
+    X18    first-witness boundary      T04.LAGD ERASE and T05.WIPE PRESERVE: implementation     T011 integration
+                                       witness at boundary 3, table at boundary 1. A5 orders    check
+                                       witnesses by history first (lexicographic in (u_1, f_1,
+                                       ..., u_6, f_6)), then boundary; the history differing
+                                       only at f_3 sorts first. Proposed class TABLE (Pallas's
+                                       assumption 'pair (all-zero, f_1 = 1)'); values agree.
 
 Independence caveats carried with this register (Pallas EXPOSURE.md s4): agreement on T01.QCARRY,
 T02.AMNESIAC, T02.CLOCKED, T02.FLIP, T05.WIPE, T06.LAGD is not independent; contract.json prints every case's

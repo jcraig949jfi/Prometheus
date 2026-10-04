@@ -355,3 +355,11 @@ lesion is incomplete by construction: later add-writes can still carry a relay's
 trace forward. §5.4's `rcv_add` mechanism is therefore partly supported by
 intervention; a complete lesion needs last-writer provenance
 (`ops/campaigns/C-002/E-011/RESULT.md`).
+
+## AMENDMENT A6 (2026-10-04) — frozen-energy lesion (E-012)
+
+*Appended; preregistered at 7b7dea59e.* `rcv_sfz` (aim frozen at each site's
+end-of-warm-up energy) gives 6/128, against 15/128 for `rcv_str` and 4/128 for
+`rcv`. **Verdict: DYNAMIC_COUPLING_REQUIRED**, exactly on the 6/128 boundary,
+which is stated as such. With E-010 this means `rcv_str`'s effect needs aim
+that keeps tracking changing energy; static correlation does not reproduce it.

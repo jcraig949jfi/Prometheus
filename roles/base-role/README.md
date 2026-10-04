@@ -23,6 +23,11 @@ seat inherits. Adopted by the operator 2026-09-11.
 - DISTRIBUTED_WORK.md -- (2026-10-03) executable work graphs: task packets, lifecycle, capability
   classes, inference economy, structured escalation, receipts, low-coordination rules; tool
   `python -m workgraph` (workgraph/), files under ops/campaigns/<C-id>/.
+- seat_kit/ -- (2026-10-04) one-command seat creation in about a minute: new_seat.py,
+  templates, a validator and controls. A creation pass is generated and checked, not
+  hand-written; it never decides a charter. See seat_kit/README.md. The one-sentence
+  wake ("You're a new seat called <Name>. Use the template in roles/template to set
+  yourself up.") points at roles/template, a FILE (not a seat directory) holding the steps.
 
 Shared roles (2026-10-03): a directory roles/<name>-role/ is an inherited role layer, not a seat. A seat
 inherits base-role and may also inherit one shared role; the chain is declared on the seat's entry file

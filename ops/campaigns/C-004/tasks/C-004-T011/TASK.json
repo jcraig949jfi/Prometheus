@@ -53,7 +53,7 @@
     "rso/slice001/tests/test_reset_observer.py"
   ],
   "kind": "software",
-  "status": "READY",
+  "status": "INTEGRATED",
   "history": [
     {
       "status": "PROPOSED",
@@ -66,6 +66,42 @@
       "by": "Palamedes[harry1-679179c6]",
       "at_utc": "2026-10-03T11:04:14Z",
       "note": "made READY by the coordinator (C-004-T000)"
+    },
+    {
+      "status": "CLAIMED",
+      "by": "Cadmus[m1-a86ec5e4]",
+      "at_utc": "2026-10-04T10:24:27Z",
+      "note": "claimed on #1376; branch cadmus/c004-t011"
+    },
+    {
+      "status": "RED",
+      "by": "Cadmus[m1-a86ec5e4]",
+      "at_utc": "2026-10-04T10:35:57Z",
+      "note": "branch cadmus/c004-t011: RED dcc6fbb8d (ImportError), GREEN 97943aecc, merged 32d9bbd7e, ci PASSED 235/0 failed"
+    },
+    {
+      "status": "IMPLEMENTING",
+      "by": "Cadmus[m1-a86ec5e4]",
+      "at_utc": "2026-10-04T10:35:57Z",
+      "note": "branch cadmus/c004-t011: RED dcc6fbb8d (ImportError), GREEN 97943aecc, merged 32d9bbd7e, ci PASSED 235/0 failed"
+    },
+    {
+      "status": "GREEN",
+      "by": "Cadmus[m1-a86ec5e4]",
+      "at_utc": "2026-10-04T10:35:57Z",
+      "note": "branch cadmus/c004-t011: RED dcc6fbb8d (ImportError), GREEN 97943aecc, merged 32d9bbd7e, ci PASSED 235/0 failed"
+    },
+    {
+      "status": "INTEGRATION_READY",
+      "by": "Cadmus[m1-a86ec5e4]",
+      "at_utc": "2026-10-04T10:35:57Z",
+      "note": "branch cadmus/c004-t011: RED dcc6fbb8d (ImportError), GREEN 97943aecc, merged 32d9bbd7e, ci PASSED 235/0 failed"
+    },
+    {
+      "status": "INTEGRATED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-04T10:42:28Z",
+      "note": "merged 32d9bbd7e; integrator: test_reset_observer green; independent comparison vs EXPECTED_ANSWERS on T03-T08/P0: values 24/24 agree (1 not comparable); primary reasons 8/16 match -- 6 PASS free-text wording (X17), 2 first-witness boundary 3 vs table 1 (X18, contract order favours the implementation); mutation ERASE horizon H->1 killed by test_T08_sleeper_and_splits"
     }
   ],
   "authority": "operator directive 2026-10-03 s9, s11 (roles/Achilles/prompts/2026-10-03_rso_builder_cell/01_OPERATOR_DIRECTIVE_verbatim.md); decomposed by Palamedes under C-004-T000",

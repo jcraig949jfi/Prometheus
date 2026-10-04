@@ -1,0 +1,35 @@
+{
+  "schema": "aether.v2b.campaign_state.v1",
+  "thread": "TH-P2B-AETHER-V2B",
+  "epic": "EP-PHASE2B",
+  "authority": "operator directive 2026-10-04 (roles/Aether/prompts/2026-10-04_v2b_directive/)",
+  "cycle": 1,
+  "window_type": "TEST",
+  "window_index": 1,
+  "window_opened_utc": "2026-10-04T15:40:35Z",
+  "window_due_close_utc": "2026-10-04T19:37:13Z",
+  "active_threads": [
+    "TH-007",
+    "TH-008",
+    "TH-009"
+  ],
+  "physics_version": "aeth03_variants @ 1b4fb4523 (v1 + scouts + rcv family + lesions rcv_sfx/rcv_adr/rcv_sfz)",
+  "observatory_version": "prov0 @ 9770203e6 (qualified: 22/22 fixtures + self-check)",
+  "experiment": "TEST-1 CLOSED",
+  "attempt": 1,
+  "last_disposition": "TEST-1 CLOSED: prov0 QUALIFIED (fwd P3_far 0.125 vs rcv 0.012); S1 rcv_add P5 PARTIAL (2/256); S2 rcv_str far content NO_EFFECT; add-family content transforms in place (P4/P6 ~0.9) but does not travel",
+  "unresolved_defects": [
+    "Fabric ubu001 workers stale since 2026-10-02 (TEST-1 ran via R3 native fallback); reported to Aporia",
+    "prov0 limits: energy not a lineage; composition counts tracked lineages only (dense origins needed)",
+    "rcv_add lesion completion (E-011) now possible with provenance"
+  ],
+  "next_intended_window": "DEV-2 at 2026-10-04T19:37Z",
+  "dev1_plan": "Aether/V2B/DEV-1_PLAN.md",
+  "fabric_tasks": "scratchpad t1/tasks.json (28 units, experiment V2B-TEST-1)",
+  "dev2_candidates": [
+    "prov1: dense origins (P5 = independent ancestries) + energy lineage (review Q2/Q4)",
+    "TH-009: mobile-medium law family (content does not travel in current frozen media -- TEST-1)",
+    "rcv_str steering dose-response curve",
+    "alternative energy regime"
+  ]
+}
