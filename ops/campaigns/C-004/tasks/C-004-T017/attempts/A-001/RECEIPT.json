@@ -1,0 +1,61 @@
+{
+  "schema": "prometheus.workgraph.receipt.v1",
+  "task_id": "C-004-T017",
+  "campaign_id": "C-004",
+  "attempt_id": "A-001",
+  "role": "Argus",
+  "model": "claude-opus-5-5",
+  "quality_class": "Q2",
+  "start_sha": "c8e0153cc4f8f568fa74adb88674279a385b1c75",
+  "end_sha": "cd8deecffe1cad62b0c1adcd33f96c99fdfe76fd",
+  "files_changed": [
+    "rso/slice001/mutation.py",
+    "rso/slice001/tests/test_mutation.py"
+  ],
+  "evidence_added": [
+    "edits file schema rso.slice001.mutation_edits.v1 (closed; edit_id unique; path must hold module; find non-empty; intended_fault required; optional occurrence, witness {expr})",
+    "runner refuses an edits file that is untracked or modified in git (plan s5: edits committed before execution); tests pass require_committed=False for temp-dir fixtures",
+    "unchanged suite first per target module; baseline not passing -> every edit NOT_RUN_BASELINE, nothing executed",
+    "edits applied to source text in memory, compiled in the parent (SYNTAX_ERROR without a child), executed in a child via sys.modules injection; no source file written",
+    "classes: NOT_APPLICABLE, DUPLICATE (duplicate_of), SYNTAX_ERROR, IMPORT_ERROR, TEST_ERROR, TIMEOUT, KILLED, SURVIVED, NOT_RUN_BASELINE, NOT_RUN_CAP; summary keys = draft B B4.1 stage-record edits object",
+    "errors are not kills: syntax, import and test-raised errors count to error, never killed",
+    "survivor equivalence: NOT_EQUIVALENT_WITNESSED only on a witness repr difference; otherwise UNRESOLVED; EQUIVALENT only from reviewer adjudication in summarize(), which refuses EQUIVALENT on a witnessed difference",
+    "rows: new JSONL file (exists -> refused), header, baseline, one row per edit, terminal with count; flush + fsync per row; load_rows checks terminal count",
+    "child-seconds cap: remaining edits NOT_RUN_CAP, partial rows kept (plan s6)"
+  ],
+  "evidence_executed": [
+    {"command": "python -B -m unittest rso.slice001.tests.test_mutation (before mutation.py existed)", "result": "1 error (ImportError): every control-edit assertion fails"},
+    {"command": "python -B -m unittest rso.slice001.tests.test_mutation", "result": "14 run, OK, 5.6 s wall"},
+    {"command": "python -B -m rso.slice001.ci at cd8deecff (validation launch 2 of 12 this session)", "result": "exit 0; PASSED; 58 tests, 0 failed, 0 errored; contract OK; dirty false; parent cpu_s 0.297, wall 6.8 s"}
+  ],
+  "red_observed": {
+    "observed": true,
+    "detail": "ImportError before implementation: the four control-edit class assertions (KILLED, SURVIVED, SYNTAX_ERROR, TIMEOUT) and the tree-hash check could not pass. No naive-stub run was made for this packet."
+  },
+  "result": "DONE_CLEAN",
+  "known_escapes": [
+    "TEST_ERROR (suite ran, no assertion failed, some test raised) is counted as error, not a kill -- conservative reading of 'errors are not semantic kills'; a mutant whose behavioural change surfaces only as an exception is therefore under-counted as a kill",
+    "child CPU is not measured on Windows; the cap charges child WALL seconds (timeouts at timeout_s), an upper bound on CPU",
+    "witness repr comparison: a mutant whose difference does not change repr, or whose witness raises the same message, reads NO_DIFFERENCE_OBSERVED (UNRESOLVED, never equivalent)",
+    "the committed-file check is exercised only on its refusal path (file outside any repo); the accept path is not unit-tested",
+    "module injection covers `import pkg.mod` / `from pkg import mod` after injection; a module imported by the suite under a different name, or reloaded from disk with importlib.reload, would see the original source"
+  ],
+  "unresolved": [
+    "field decisions recorded in notes; none changes a claim, threshold or case expectation"
+  ],
+  "unblocks": [
+    "C-004-T030",
+    "C-004-T041"
+  ],
+  "created_at_utc": "2026-10-04T02:12:00Z",
+  "instance": "harry1-91cbacb8",
+  "host": "harry1",
+  "branch": "argus/c004-t017",
+  "worktree_path": "C:/Prometheus-worktrees/argus-c004-t017",
+  "resources": {
+    "cpu": "about 15 child wall-seconds across two test runs (upper bound on CPU; the timeout control sleeps 3 s each run)",
+    "validation_launches": 1,
+    "model": "one Q2 session, about 0.3 hours"
+  },
+  "notes": "Disagreement register: none of X01-X15 is touched. Field decisions (rso-builder 2.7): FD-T017-1 TEST_ERROR counts to error not killed (reversible: one list; revisit if the S3 reviewer reads plan s5 'errors' as syntax/import only). FD-T017-2 'applicable' counts every edit that applies and changes the source, duplicates included; executed = launched against a compiled mutant (import errors included); invariant applicable = duplicate + syntax_error + executed (revisit if T030 needs applicable net of duplicates). FD-T017-3 a no-op edit is NOT_APPLICABLE. FD-T017-4 a find text occurring more than once without `occurrence` is NOT_APPLICABLE rather than applied at the first match. FD-T017-5 the witness is an expression over the module bound to `m`, evaluated before the suite in both original (baseline child) and mutant children, compared by repr. FD-T017-6 edits are run in file order; DUPLICATE is by (path, sha256 of edited source). FD-T017-7 the edits list in this module counts, not interprets: no attack contents (non-goal)."
+}
