@@ -7,30 +7,28 @@
   "window_hours": 4,
   "current": {
     "cycle": 3,
-    "window": "DEV",
+    "window": "TEST",
     "index": 3,
-    "opened_utc": "2026-10-04T14:49:17Z",
-    "due_close_utc": "2026-10-04T18:49:17Z",
-    "active_thread": "TH-021/TH-018",
-    "apparatus_version": "v2b-1 -> v2b-2",
-    "experiment": null,
-    "attempt": null,
-    "goal": "repair control logic (START-relative, distinct-pair); add extensional-distinctness supply screen; run t1v2 graded+selection qualification; freeze T03"
+    "opened_utc": "2026-10-04T15:04:45Z",
+    "due_close_utc": "2026-10-04T19:04:45Z",
+    "active_thread": "TH-018",
+    "apparatus_version": "v2b-2",
+    "experiment": "T03 = T52 validation-dose response (R3)",
+    "attempt": 1,
+    "goal": "measure"
   },
-  "last_disposition": "TEST-2 MEASUREMENT_FAILED (control mis-specification)",
+  "last_disposition": "DEV-3 DONE",
   "unresolved_defects": [
-    "known-answer battery lacks graded/partial effects and selection (R3) cases",
     "no receipt check for no-donor-state (S4 cond 8 class)",
     "ruler v2.1 residual 8/47 + 24.5% chance floor",
     "T4 v1a silent on queries 1-2",
     "T01 erratum: pristine_all_censored field (fix in t1 v2)",
-    "A20-A23 P/OFF_0 controls dead on REUSED/CAPABILITY_SAME (recorded; T53 makes them live)",
-    "transfer-family extensional duplicates not screened (A23 CON1/CON8)"
+    "A20-A23 P/OFF_0 controls dead on REUSED/CAPABILITY_SAME (recorded; T53 makes them live)"
   ],
   "next_intended": {
-    "window": "TEST",
-    "index": 3,
-    "experiment": "T03 TBD in DEV-3 (T53-v2 corrected and/or fresh confirmation; T52 validation dose)"
+    "window": "DEV",
+    "index": 4,
+    "plan": "diagnose T52; midpoint synthesis after TEST-4; plan T51 (natural recurrence) supply screen"
   },
   "missed_wake_rule": "run the due window once; never burst",
   "history": [
@@ -91,6 +89,18 @@
         "beta01/runs/T02_T53/T53_RESULT.json",
         "engine/v2b/receipts/A23_SAME_PAIR_DUPLICATES.json"
       ]
+    },
+    {
+      "cycle": 3,
+      "window": "DEV",
+      "index": 3,
+      "opened_utc": "2026-10-04T14:49:17Z",
+      "closed_utc": "2026-10-04T15:04:45Z",
+      "active_thread": "TH-021/TH-018",
+      "apparatus_version": "v2b-2",
+      "disposition": "DONE: distinctness screen; repaired controls; t1v2 QUALIFIED (graded + selection); T53 CORRECTION: G1 5/10 distinct-class (<6), shams 8/9/10 -> generic; T52 frozen",
+      "report": "beta01/windows/D03_DEV_REPORT.md",
+      "next_frozen": "beta01/windows/T03_T52_SPEC.md"
     }
   ]
 }

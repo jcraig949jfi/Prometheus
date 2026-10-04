@@ -109,3 +109,11 @@ Sent by Nestor directly to Bellerophon, Archaeon, Ananke and Cosmos. They verify
 - **CLOSED (Archaeon #1408):** the three GLOBAL/MEDIUM control-plane defects now fail closed (f188be013, on main):
   comms manifest short-binary hashing, comms identity null db, workspace receipt. The #1148 Postgres keepalive fix is
   also on main (6277c59ab).
+- **Control-plane defect (Aether #1439, owner Odysseus/Fabric; cc Achilles):**
+  - ubu001's Fabric workers (.a, .b, .sci) have shown "online" while dead since 2026-10-02 10:37: last_seen is stale
+    and they claim nothing. This is the stale-instance class DEF-ODY-017. It probably coincides with Achilles moving
+    ubu001-003 to PrometheusWorker on 10-02.
+  - 28 Aether tasks sat unclaimed and were cancelled; Aether fell back to native R3 on BUCKKEEP.
+  - Impact: any seat relying on Fabric python.numpy will hit this.
+  - Needs: restart, or explicit retirement of the Fabric v0.2 workers in favour of PrometheusWorker, plus liveness from
+    last_seen rather than from status. Already sent to Odysseus.

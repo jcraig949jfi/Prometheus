@@ -1,0 +1,66 @@
+{
+ "QUALIFICATION": "QUALIFIED",
+ "cases": {
+  "GK_1": {
+   "expected": [
+    "toaa"
+   ],
+   "got": [
+    "toaa"
+   ],
+   "pass": true
+  },
+  "GK_2": {
+   "expected": [
+    "toaa",
+    "tcnb"
+   ],
+   "got": [
+    "toaa",
+    "tcnb"
+   ],
+   "pass": true
+  },
+  "GK_3": {
+   "expected": [
+    "toaa",
+    "tcnb",
+    "tvzc"
+   ],
+   "got": [
+    "toaa",
+    "tcnb",
+    "tvzc"
+   ],
+   "pass": true
+  },
+  "GK_LATE": {
+   "expected": "all solved, every charge > N_COV",
+   "solved_cells": 16,
+   "of": 16,
+   "min_charge": 155930,
+   "N_COV": 151920,
+   "pass": true
+  },
+  "SK1": {
+   "expected": "M",
+   "got": "M",
+   "pass": true
+  },
+  "SK2": {
+   "expected": "INHERITED",
+   "got": "INHERITED",
+   "pass": true
+  },
+  "SK3": {
+   "expected": "M or MPRIME, ruler EQUAL",
+   "got": "M",
+   "pass": true
+  },
+  "SK4_recorded": {
+   "got": "M",
+   "pass": true,
+   "gated": false
+  }
+ }
+}

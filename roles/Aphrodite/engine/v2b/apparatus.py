@@ -7,7 +7,7 @@ from pathlib import Path
 
 from paths import ENG, RB1, V2B
 
-APPARATUS_VERSION = "v2b-1"   # keep equal to __init__.APPARATUS_VERSION
+APPARATUS_VERSION = "v2b-2"   # keep equal to __init__.APPARATUS_VERSION
 
 # The frozen engine modules the v2b layer imports (directly or transitively).
 ENGINE_MODULES = [
