@@ -45,7 +45,7 @@
     "tests/test_s2_bundle.py"
   ],
   "kind": "software",
-  "status": "GREEN",
+  "status": "INTEGRATION_READY",
   "history": [
     {
       "status": "PROPOSED",
@@ -82,6 +82,12 @@
       "by": "Argus[desktop-ruapvai-b08b36ac]",
       "at_utc": "2026-10-04T14:08:01Z",
       "note": "test_s2_bundle + test_evidence OK (3 expectedFailure pending escalation T024_2)"
+    },
+    {
+      "status": "INTEGRATION_READY",
+      "by": "Argus[desktop-ruapvai-b08b36ac]",
+      "at_utc": "2026-10-04T14:08:07Z",
+      "note": "branch argus/c004-t024 at 0ddca88c2; real G0 25 receipts consistent under G-BIND/G-INV/G-RECOMP; edits generalized (synthetic byte-identical); ci 308+1 skip x2 merged; open escalations C-004-T024_1 (ledger rows) and C-004-T024_2 (ledger float vs custody); CPU over packet ceiling (~14 vs <3 min), see receipt"
     }
   ],
   "authority": "operator directive 2026-10-03 s9, s11; decomposed by Palamedes from C-004-T020 (AMENDMENT_v1.0.1 V8: the real T020 run reads stages and custody from the live store)",
