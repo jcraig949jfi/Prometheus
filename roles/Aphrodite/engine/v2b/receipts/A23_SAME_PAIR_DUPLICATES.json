@@ -1,0 +1,282 @@
+{
+ "CON/1|G1": {
+  "bodies": [
+   "(v // (acc + pow(1, first)))",
+   "(v // (acc + math.gcd(abs(last), abs(1))))"
+  ],
+  "body_extensionally_interchangeable": true
+ },
+ "CON/1|SHAM_0": {
+  "bodies": [
+   "math.gcd(abs(0), abs((v + (first - acc))))",
+   "math.gcd(abs(0), abs((v + (acc * first))))"
+  ],
+  "body_extensionally_interchangeable": false
+ },
+ "CON/1|SHAM_1": {
+  "bodies": [
+   "(last + (v * (acc + first)))",
+   "(last + (v * (acc + last)))"
+  ],
+  "body_extensionally_interchangeable": false
+ },
+ "CON/1|SHAM_2": {
+  "bodies": [
+   "(1 - math.gcd(abs(acc), abs((acc + v))))",
+   "(1 - math.gcd(abs(acc), abs((v - 1))))"
+  ],
+  "body_extensionally_interchangeable": false
+ },
+ "CON/10|G1": {
+  "bodies": [
+   "(1 - (acc + (acc % v)))",
+   "(1 - (acc + (v % first)))"
+  ],
+  "body_extensionally_interchangeable": false
+ },
+ "CON/10|SHAM_0": {
+  "bodies": [
+   "(acc - (v + (v // acc)))",
+   "(acc - (v + (last - first)))"
+  ],
+  "body_extensionally_interchangeable": false
+ },
+ "CON/10|SHAM_1": {
+  "bodies": [
+   "(first + (v * (acc + first)))",
+   "(first + (v * (acc - first)))"
+  ],
+  "body_extensionally_interchangeable": false
+ },
+ "CON/10|SHAM_2": {
+  "bodies": [
+   "(v // math.gcd(abs(acc), abs((v + v))))",
+   "(v // math.gcd(abs(acc), abs(math.gcd(abs(acc), abs(first)))))"
+  ],
+  "body_extensionally_interchangeable": false
+ },
+ "CON/11|G1": {
+  "bodies": [
+   "math.gcd(abs(0), abs((acc + (v - 1))))",
+   "math.gcd(abs(0), abs((acc + (v + last))))"
+  ],
+  "body_extensionally_interchangeable": false
+ },
+ "CON/11|SHAM_0": {
+  "bodies": [
+   "(last - (v + (acc + 1)))",
+   "(last - (v + (acc - last)))"
+  ],
+  "body_extensionally_interchangeable": false
+ },
+ "CON/11|SHAM_1": {
+  "bodies": [
+   "(acc - (v * (first + 1)))",
+   "(acc - (v * math.gcd(abs(v), abs(last))))"
+  ],
+  "body_extensionally_interchangeable": false
+ },
+ "CON/11|SHAM_2": {
+  "bodies": [
+   "(acc + math.gcd(abs(acc), abs((first // v))))",
+   "(acc + math.gcd(abs(acc), abs((v + first))))"
+  ],
+  "body_extensionally_interchangeable": false
+ },
+ "CON/2|G1": {
+  "bodies": [
+   "(last % (acc + (v + first)))",
+   "(last % (acc + (v - 1)))"
+  ],
+  "body_extensionally_interchangeable": false
+ },
+ "CON/2|SHAM_0": {
+  "bodies": [
+   "(v * (v + (acc - last)))",
+   "(v * (v + (acc // first)))"
+  ],
+  "body_extensionally_interchangeable": false
+ },
+ "CON/2|SHAM_1": {
+  "bodies": [
+   "(v + (v * (acc + first)))",
+   "(v + (v * (acc - first)))"
+  ],
+  "body_extensionally_interchangeable": false
+ },
+ "CON/2|SHAM_2": {
+  "bodies": [
+   "(v + math.gcd(abs(acc), abs((v // acc))))",
+   "(v + math.gcd(abs(acc), abs((v * first))))"
+  ],
+  "body_extensionally_interchangeable": false
+ },
+ "CON/3|G1": {
+  "bodies": [
+   "math.gcd(abs(first), abs((acc + pow(v, first))))",
+   "math.gcd(abs(first), abs((acc + (v % last))))"
+  ],
+  "body_extensionally_interchangeable": false
+ },
+ "CON/3|SHAM_0": {
+  "bodies": [
+   "math.gcd(abs(0), abs((v + (acc * first))))",
+   "math.gcd(abs(0), abs((v + (acc + last))))"
+  ],
+  "body_extensionally_interchangeable": false
+ },
+ "CON/3|SHAM_1": {
+  "bodies": [
+   "(acc - (v * (1 - v)))",
+   "(acc - (v * (first % last)))"
+  ],
+  "body_extensionally_interchangeable": false
+ },
+ "CON/3|SHAM_2": {
+  "bodies": [
+   "(v // math.gcd(abs(acc), abs(pow(last, acc))))",
+   "(v // math.gcd(abs(acc), abs((1 - first))))"
+  ],
+  "body_extensionally_interchangeable": false
+ },
+ "CON/4|G1": {
+  "bodies": [
+   "(0 - (acc + (first // v)))",
+   "(0 - (acc + (last // v)))"
+  ],
+  "body_extensionally_interchangeable": false
+ },
+ "CON/4|SHAM_0": {
+  "bodies": [
+   "(first - (v + (acc + acc)))",
+   "(first - (v + (v - acc)))"
+  ],
+  "body_extensionally_interchangeable": false
+ },
+ "CON/4|SHAM_1": {
+  "bodies": [
+   "(first - (v * (acc - v)))",
+   "(first - (v * (acc + 1)))"
+  ],
+  "body_extensionally_interchangeable": false
+ },
+ "CON/4|SHAM_2": {
+  "bodies": [
+   "(v - math.gcd(abs(acc), abs((last // v))))",
+   "(v - math.gcd(abs(acc), abs((last % first))))"
+  ],
+  "body_extensionally_interchangeable": false
+ },
+ "CON/5|G1": {
+  "bodies": [
+   "(first - (acc + (v + first)))",
+   "(first - (acc + math.gcd(abs(v), abs(v))))"
+  ],
+  "body_extensionally_interchangeable": false
+ },
+ "CON/5|SHAM_0": {
+  "bodies": [
+   "(first - (v + (acc * v)))",
+   "(first - (v + (acc * first)))"
+  ],
+  "body_extensionally_interchangeable": false
+ },
+ "CON/5|SHAM_1": {
+  "bodies": [
+   "(1 + (v * (acc % first)))",
+   "(1 + (v * (acc % last)))"
+  ],
+  "body_extensionally_interchangeable": false
+ },
+ "CON/5|SHAM_2": {
+  "bodies": [
+   "(v * math.gcd(abs(acc), abs((v * last))))",
+   "(v * math.gcd(abs(acc), abs(pow(first, first))))"
+  ],
+  "body_extensionally_interchangeable": false
+ },
+ "CON/7|G1": {
+  "bodies": [
+   "math.gcd(abs(0), abs((acc + (first % v))))",
+   "math.gcd(abs(0), abs((acc + (v - 1))))"
+  ],
+  "body_extensionally_interchangeable": false
+ },
+ "CON/7|SHAM_0": {
+  "bodies": [
+   "(v * (v + (acc + 1)))",
+   "(v * (v + (acc + acc)))"
+  ],
+  "body_extensionally_interchangeable": false
+ },
+ "CON/7|SHAM_1": {
+  "bodies": [
+   "(last + (v * (first - acc)))",
+   "(last + (v * (acc - 1)))"
+  ],
+  "body_extensionally_interchangeable": false
+ },
+ "CON/7|SHAM_2": {
+  "bodies": [
+   "(acc + math.gcd(abs(acc), abs((v + first))))",
+   "(acc + math.gcd(abs(acc), abs((v // first))))"
+  ],
+  "body_extensionally_interchangeable": false
+ },
+ "CON/8|G1": {
+  "bodies": [
+   "(last % (acc + math.gcd(abs(v), abs(0))))",
+   "(last % (acc + math.gcd(abs(v), abs(v))))"
+  ],
+  "body_extensionally_interchangeable": true
+ },
+ "CON/8|SHAM_0": {
+  "bodies": [
+   "(v * (v + (acc % last)))",
+   "(v * (v + (first - acc)))"
+  ],
+  "body_extensionally_interchangeable": false
+ },
+ "CON/8|SHAM_1": {
+  "bodies": [
+   "(last - (v * (acc + v)))",
+   "(last - (v * (1 - acc)))"
+  ],
+  "body_extensionally_interchangeable": false
+ },
+ "CON/8|SHAM_2": {
+  "bodies": [
+   "(v + math.gcd(abs(acc), abs((acc + first))))",
+   "(v + math.gcd(abs(acc), abs(last)))"
+  ],
+  "body_extensionally_interchangeable": false
+ },
+ "CON/9|G1": {
+  "bodies": [
+   "(v - (acc + math.gcd(abs(last), abs(0))))",
+   "(v - (acc + (last % v)))"
+  ],
+  "body_extensionally_interchangeable": false
+ },
+ "CON/9|SHAM_0": {
+  "bodies": [
+   "math.gcd(abs(last), abs((v + (acc - last))))",
+   "math.gcd(abs(last), abs((v + (0 - acc))))"
+  ],
+  "body_extensionally_interchangeable": false
+ },
+ "CON/9|SHAM_1": {
+  "bodies": [
+   "(v + (v * (first - acc)))",
+   "(v + (v * (acc // v)))"
+  ],
+  "body_extensionally_interchangeable": false
+ },
+ "CON/9|SHAM_2": {
+  "bodies": [
+   "(1 - math.gcd(abs(acc), abs((v + 1))))",
+   "(1 - math.gcd(abs(acc), abs((v - last))))"
+  ],
+  "body_extensionally_interchangeable": false
+ }
+}
