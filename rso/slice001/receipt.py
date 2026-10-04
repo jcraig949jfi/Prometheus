@@ -11,6 +11,9 @@ Five objects are kept apart (draft B B1). This module owns three of them:
   VERDICT            the consumer's three-field record per prerequisite (B3.5): execution, authority and
                      outcome are all present; standing is derived from them (B7.2) and never replaces them.
 
+Consumer gates (C-004-T015, escalation C-004-T015_1 option 1): make_verdict accepts G-BIND / G-INV / G-RECOMP
+outcomes as GATE kinds (VERDICT_KINDS); a RULER-kind outcome for a consumer gate is still refused.
+
 Not here: evidence-graph binding and invalidation (T014), the A1-A5 authority computation and rendering
 (T014/T015). verdict_for_receipt() checks only that an asserted QUALIFIED stage does not exceed what a
 supplied stage record for the receipt's exact instrument version says; deciding which records count as
@@ -34,6 +37,9 @@ _ID_BY_NAME = {n: p for p, n in PREDICATE_NAMES}
 _NAME_BY_ID = dict(PREDICATE_NAMES)
 PREDICATE_KINDS = {p: ("RULER" if p == "P2" else "GATE") for p, _ in PREDICATE_NAMES}
 CONSUMER_GATES = ("G-BIND", "G-INV", "G-RECOMP")      # no producer receipt (B3.1); stage records yes
+# Kinds a VERDICT outcome may carry (B6.4: consumer-gate verdicts are prerequisite lines, all GATE kind).
+# Producer receipts still use PREDICATE_KINDS only (validate_receipt refuses any id outside P0..P8). C-004-T015.
+VERDICT_KINDS = dict(PREDICATE_KINDS, **{g: "GATE" for g in CONSUMER_GATES})
 WORLD_VARIANTS = ("STANDARD", "CLOCKED")
 OBSERVER_PREDICATE = "P7"
 
@@ -318,7 +324,7 @@ def _ruler_outcome(v, path, pid):
 def _outcome(v, path, pid):
     if not isinstance(v, dict):
         _fail(path, "object required")
-    kind = PREDICATE_KINDS[pid]
+    kind = VERDICT_KINDS[pid]
     if v.get("kind") != kind:
         _fail(path + ".kind", "predicate %s is a %s" % (pid, kind))
     if kind == "GATE":
@@ -647,7 +653,7 @@ def _verdict_outcome(execution, outcome, required):
     if not isinstance(outcome, dict) or outcome.get("kind") not in ("GATE", "RULER"):
         raise VerdictError("VERDICT_SCHEMA:outcome", "RAN requires a GATE or RULER outcome")
     pid = outcome.get("predicate") if outcome["kind"] == "GATE" else outcome.get("ruler")
-    if PREDICATE_KINDS.get(pid) != outcome["kind"]:
+    if VERDICT_KINDS.get(pid) != outcome["kind"]:
         raise VerdictError("VERDICT_SCHEMA:outcome", "outcome predicate/kind mismatch")
     try:
         _outcome(outcome, "outcome", pid)

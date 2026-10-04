@@ -336,6 +336,45 @@ class TestVerdict(unittest.TestCase):
             R.eligibility([])
 
 
+class TestConsumerGateVerdicts(unittest.TestCase):
+    """C-004-T015 (escalation C-004-T015_1 option 1): G-BIND / G-INV / G-RECOMP verdicts are prerequisite
+    lines (B6.4) of GATE kind; a producer receipt still cannot name a consumer gate."""
+
+    def test_consumer_gate_outcomes_accepted_as_gate(self):
+        ran = {"status": "RAN", "missing": [], "run_id": "consumer"}
+        for g in R.CONSUMER_GATES:
+            v = R.make_verdict("gate:%s:CL-RET(REG)" % g, ran, qualified(), gate_outcome(g), "PASS")
+            self.assertEqual(v["standing"], "SATISFIED")
+            v = R.make_verdict("gate:%s:CL-RET(REG)" % g, ran, qualified(),
+                               gate_outcome(g, "FAIL", witness="rcpt:REG:ERASE:STANDARD",
+                                            reason="OUTCOME_MISMATCH:value"), "PASS")
+            self.assertEqual((v["standing"], v["reasons"]), ("UNMET", ["OUTCOME_MISMATCH:value"]))
+            blk = {"status": "BLOCKED", "missing": ["terminal attempted-run inventory"], "run_id": "consumer"}
+            self.assertEqual(R.make_verdict("gate:%s:x" % g, blk, qualified(), None, "PASS")["standing"],
+                             "BLOCKED")
+
+    def test_ruler_kind_refused_for_consumer_gate(self):
+        ran = {"status": "RAN", "missing": [], "run_id": "consumer"}
+        for g in R.CONSUMER_GATES:
+            bad = ruler_outcome()
+            bad["ruler"] = g
+            with self.assertRaises(R.VerdictError) as cm:
+                R.make_verdict("gate:%s:CL-RET(REG)" % g, ran, qualified(), bad, "POSITIVE")
+            self.assertEqual(cm.exception.code, "VERDICT_SCHEMA:outcome")
+            with self.assertRaises(R.VerdictError):           # a gate value is still a gate's only value
+                R.make_verdict("gate:%s:CL-RET(REG)" % g, ran, qualified(), gate_outcome(g), "POSITIVE")
+
+    def test_producer_receipt_cannot_name_a_consumer_gate(self):
+        d = good_receipt()
+        d["predicate"]["id"] = "G-RECOMP"
+        d["outcome"]["predicate"] = "G-RECOMP"
+        with self.assertRaises(R.ReceiptError) as cm:
+            R.validate_receipt(d)
+        self.assertEqual(cm.exception.code, "RECEIPT_SCHEMA:predicate.id")
+        self.assertEqual(R.VERDICT_KINDS["G-RECOMP"], "GATE")
+        self.assertNotIn("G-RECOMP", R.PREDICATE_KINDS)
+
+
 class TestStage(unittest.TestCase):
     def test_stage_records_validate(self):
         for s in R.STAGE_ORDER:
