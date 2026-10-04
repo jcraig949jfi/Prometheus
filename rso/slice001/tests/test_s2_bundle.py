@@ -57,9 +57,7 @@ def gates(case, claim_id):
 
 
 PASS = ("PASS", None)
-# Escalation C-004-T024_2: the ledger's float cpu_s makes the RUN_INVENTORY custody blob uncomputable on a real
-# inventory, so the keeper-row cases raise on the real base. They are expectedFailure until that is fixed (an
-# unexpected success then turns the suite red, which is the signal to remove the marker).
+# The E05 cases that write keeper rows (they hash the real inventory; fixed by C-004-T025, cpu_us).
 KEEPER_ROW_CASES = ("E05.KEEPER", "E05.LATE_REG", "E05.FAB_REGISTERED")
 
 
@@ -72,7 +70,7 @@ class TestBuild(unittest.TestCase):
         for nid, d in g0().dicts.items():
             rc = R.Receipt.from_dict(d)
             self.assertEqual(rc.node_id, nid)
-            self.assertEqual(d["execution"], {"status": "RAN", "missing": [], "run_id": "g0-test"})
+            self.assertEqual(d["execution"], {"status": "RAN", "missing": [], "run_id": "g0-test/" + nid})
             for out in d["outputs"]:
                 b = g0().traces[nid][out["role"]]
                 self.assertEqual((len(b), EV._sha(b)), (out["length"], out["sha256"]))
@@ -111,17 +109,24 @@ class TestBuild(unittest.TestCase):
                 mine = sorted((c["role"], c["sha256"]) for c in d["predicate"]["code"])
                 self.assertEqual(mine, sorted((c["role"], c["sha256"]) for c in recs[pid]), nid)
 
-    def test_one_charged_top_level_build_row(self):
+    def test_one_launch_and_one_receipt_row_per_receipt(self):
+        # C-004-T026 (escalation C-004-T024_1, option 2): 1 TOP_LEVEL build row + 25 RECEIPT rows (V7).
         inv = g0().inventory
-        self.assertEqual([r["kind"] for r in inv], ["RUN", "TERMINAL"])
-        self.assertEqual((inv[0]["node_id"], inv[0]["launch_kind"], inv[0]["status"]), ("G0", "TOP_LEVEL", "COMPLETED"))
-        self.assertGreater(inv[0]["cpu_us"], 0)                   # C-004-T025: canonical-safe integer microseconds
+        runs, term = inv[:-1], inv[-1]
+        self.assertEqual(term, {"kind": "TERMINAL", "row_count": 26})
+        self.assertEqual([(r["node_id"], r["launch_kind"]) for r in runs if r["launch_kind"] == "TOP_LEVEL"],
+                         [("G0", "TOP_LEVEL")])
+        rec = {r["node_id"]: r for r in runs if r["launch_kind"] == "RECEIPT"}
+        self.assertEqual(sorted(rec), sorted(g0().dicts))
+        for nid, d in g0().dicts.items():
+            self.assertEqual((rec[nid]["run_id"], rec[nid]["status"]), (d["execution"]["run_id"], "COMPLETED"))
+        self.assertTrue(all(isinstance(r["cpu_us"], int) for r in runs))   # C-004-T025: integer microseconds
         self.assertEqual(_G0["usage"]["launches"], 1)
         self.assertTrue(EV.inventory_terminal(inv))
 
-    def test_per_receipt_rows_await_the_escalation(self):
-        with self.assertRaises(NotImplementedError):
-            SB.build_g0("0" * 40, None, rows="per_receipt")
+    def test_unknown_rows_mode_is_refused(self):
+        with self.assertRaises(ValueError):
+            SB.build_g0("0" * 40, _NullLedger(), rows="per_node")
 
 
 class TestConsumerOnRealG0(unittest.TestCase):
@@ -162,10 +167,13 @@ class TestEditsOnRealG0(unittest.TestCase):
         self.assertEqual(gates(F.case_for("E03.BYTEFLIP", base()), "CL-RET(REG)")["G-RECOMP"],
                          ("FAIL", "BYTES_MISMATCH:trace:probe_a"))
 
-    def test_missing_g_inv_with_a_build_row(self):
-        # Escalation C-004-T024_1, option 1: one build row carries no per-node attribution, so the omitted
-        # PRESERVE run is not RUN_UNREPORTED on the real G0 (the synthetic G0's X06 FAIL needs per-node rows).
-        self.assertEqual(gates(F.case_for("E02.MISSING", base()), "CL-RET(REG)")["G-INV"], PASS)
+    def test_missing_g_inv_run_unreported(self):
+        # V7 / X06 on the real G0 (C-004-T026): the omitted PRESERVE receipt's own RECEIPT row is reported
+        # COMPLETED, so G-INV attributes it to CL-RET(REG).
+        run = g0().dicts["rcpt:REG:PRESERVE:STANDARD"]["execution"]["run_id"]
+        self.assertEqual(gates(F.case_for("E02.MISSING", base()), "CL-RET(REG)")["G-INV"],
+                         ("FAIL", "RUN_UNREPORTED:%s" % run))
+        self.assertEqual(gates(F.case_for("E02.MISSING", base()), "CL-RET(PKTD)")["G-INV"], PASS)   # V7
 
     def test_e01_outcome_edit_caught_by_recomputation_on_real_traces(self):
         g = gates(F.case_for("E01.OUTCOME_EDIT", base()), "CL-RET(LAGD)")
@@ -212,6 +220,117 @@ class TestEditsOnRealG0(unittest.TestCase):
         for cid in sorted(set(F.CASES) - set(KEEPER_ROW_CASES)):
             F.case_for(cid, base())
         self.assertEqual(R.canonical_bytes(sorted(base()._dicts.items())), before)
+
+
+class _NullLedger(object):
+    def begin(self, *a, **k):
+        raise AssertionError("no ledger row may be written for a refused build")
+
+
+# --------------------------------------------------------------------------------------------------------
+# build_bundle over subjects outside G0 (C-004-T026): WIPE (sound in the model, fails PRESERVE: T05) and
+# OVERDELAY (leaves the model: K = 3 exceeded).
+
+_B = {}
+
+
+def wipe_overdelay(rows="per_receipt"):
+    if rows not in _B:
+        d = tempfile.mkdtemp(prefix="rso-bundle-")
+        try:
+            led = L.Ledger.from_contract(os.path.join(d, "ledger.jsonl"))
+            _B[rows] = SB.build_bundle(_commit(), led, ["WIPE", "OVERDELAY"], run_id="b-test", rows=rows,
+                                       created_at_utc="2026-10-04T00:00:00Z")
+        finally:
+            shutil.rmtree(d, ignore_errors=True)
+    return _B[rows]
+
+
+def _commit():
+    return subprocess.run(["git", "rev-parse", "HEAD"], cwd=SB.REPO_ROOT, capture_output=True,
+                          text=True).stdout.strip()
+
+
+def committed_stage_records():
+    """The committed T023A/T023B stage records and their fire-receipt blobs, as a registered fixture store."""
+    import glob
+    import json
+    recs, blobs = [], {}
+    for p in sorted(glob.glob(os.path.join(SB.REPO_ROOT, "rso", "slice001", "stages", "*.json"))):
+        with open(p, encoding="utf-8") as f:
+            r = json.load(f)
+        if isinstance(r, dict) and "instrument" in r and "fire_test" in r:
+            recs.append(r)
+            path = r["fire_test"]["receipt"]["path"]
+            with open(os.path.join(SB.REPO_ROOT, *path.split("/")), "rb") as f:
+                blobs[path] = f.read().replace(b"\r\n", b"\n")
+    return recs, blobs
+
+
+def decide(bundle_g, subject, observers=("NULL",)):
+    recs, blobs = committed_stage_records()
+    bundle = EV.Bundle({n: R.Receipt.from_dict(d).canonical_bytes() for n, d in bundle_g.dicts.items()},
+                       bundle_g.traces, bundle_g.inventory, stage_records=recs, blobs=blobs)
+    store = EV.FixtureStore([F.row("STAGE_RECORD", EV.record_blob(r)) for r in recs])
+    anchors = EV.Anchors(bundle_g.manifest, "keeper")
+    some = next(iter(bundle_g.dicts.values()))
+    gate_versions = {r["instrument"]: r["version"] for r in recs if r["instrument"] in C.GATES}
+    consumer = C.Consumer(bundle, anchors, store, EV.Config(some["cell"]["revision"]), gate_versions,
+                          F.FIRST_CHECK)
+    cell = dict(bundle_g.dicts[R.make_node_id(subject, "BOUNDS", "STANDARD")]["cell"])
+    del cell["measurement"]
+    return consumer.decide(EV.make_claim("CL-RET", subject, observers=observers, cell=cell))
+
+
+class TestBuildBundle(unittest.TestCase):
+    def test_subjects_outside_g0_get_the_g0_receipt_set(self):
+        b = wipe_overdelay()
+        want = {"rcpt:WORLD:CALIBRATION:STANDARD"}
+        for m in ("WIPE", "OVERDELAY"):
+            want |= {R.make_node_id(m, n, "STANDARD") for n in SB.SUBJECT_NAMES}
+            want.add(R.make_node_id(m, "OBSERVER", "STANDARD", observer="NULL"))
+        self.assertEqual(sorted(b.dicts), sorted(want))
+
+    def test_overdelay_is_blocked_not_raised(self):
+        b = wipe_overdelay()
+        bounds = b.dicts["rcpt:OVERDELAY:BOUNDS:STANDARD"]
+        self.assertEqual((bounds["execution"]["status"], bounds["outcome"]["value"]), ("RAN", "FAIL"))
+        for nid, d in b.dicts.items():
+            if nid.startswith("rcpt:OVERDELAY:") and nid != "rcpt:OVERDELAY:BOUNDS:STANDARD":
+                self.assertEqual(d["execution"]["status"], "BLOCKED", nid)
+                self.assertEqual(d["execution"]["missing"], ["BOUNDS_VIOLATION:DELAY_RANGE"], nid)
+                self.assertIsNone(d["outcome"], nid)
+
+    def test_wipe_fails_preserve_t05(self):
+        d = wipe_overdelay().dicts["rcpt:WIPE:PRESERVE:STANDARD"]
+        self.assertEqual(d["outcome"]["value"], "FAIL")
+
+    def test_consumer_decisions(self):
+        b = wipe_overdelay()
+        self.assertEqual(decide(b, "WIPE")["eligibility"], "NOT_ELIGIBLE")
+        self.assertEqual(decide(b, "OVERDELAY")["standing"], "BLOCKED")
+
+    def test_one_launch_rows_attribute_every_receipt(self):
+        inv = wipe_overdelay().inventory
+        self.assertEqual(sum(1 for r in inv[:-1] if r["launch_kind"] == "TOP_LEVEL"), 1)
+        self.assertEqual(sorted(r["node_id"] for r in inv[:-1] if r["launch_kind"] == "RECEIPT"),
+                         sorted(wipe_overdelay().dicts))
+
+    def test_rows_mode_changes_only_run_ids_and_inventory(self):
+        a, b = wipe_overdelay("per_receipt"), wipe_overdelay("build")
+        self.assertEqual(sorted(a.dicts), sorted(b.dicts))
+        for nid in a.dicts:
+            x, y = dict(a.dicts[nid]), dict(b.dicts[nid])
+            x["execution"], y["execution"] = dict(x["execution"], run_id=""), dict(y["execution"], run_id="")
+            x["resources"], y["resources"] = None, None              # measured CPU differs run to run
+            self.assertEqual(R.canonical_bytes(x), R.canonical_bytes(y), nid)
+            self.assertEqual(a.traces[nid], b.traces[nid], nid)
+        self.assertEqual(b.dicts["rcpt:WIPE:ERASE:STANDARD"]["execution"]["run_id"], "b-test")
+        self.assertEqual([r["launch_kind"] for r in b.inventory[:-1]], ["TOP_LEVEL"])
+
+    def test_two_twins_for_one_subject_are_refused(self):
+        with self.assertRaises(SB.BuildError):
+            SB.build_bundle("0" * 40, _NullLedger(), ["REG"], twins=[("REG", "REG_FLAT"), ("REG", "LOSSY")])
 
 
 if __name__ == "__main__":
