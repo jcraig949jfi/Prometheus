@@ -57,20 +57,29 @@ def _write(path, data):
         f.write(data)
 
 
-def build(name, commit, ledger, created_at_utc):
+def record_versions():
+    """{predicate NAME: version CodeRefs} from the committed stage records. Receipts MUST carry exactly these as
+    predicate.code: the consumer matches a receipt to its stage record by the exact version list, and
+    s2_bundle.predicate_version orders the same files differently (found in the T020 dry run: every
+    authority NO_STAGE_RECORD)."""
+    recs, _ = stage_records()
+    names = dict(R.PREDICATE_NAMES)
+    return {names[r["instrument"]]: r["version"] for r in recs if r["instrument"] in names}
+
+
+def build(name, commit, ledger, created_at_utc, versions):
+    kw = {"created_at_utc": created_at_utc, "versions": versions}
     if name == "G0":
-        return SB.build_g0(commit, ledger, created_at_utc=created_at_utc)
+        return SB.build_g0(commit, ledger, **kw)
     if name == "EXTRA":
-        return SB.build_bundle(commit, ledger, EXTRA_SUBJECTS, node_id="EXTRA", created_at_utc=created_at_utc)
+        return SB.build_bundle(commit, ledger, EXTRA_SUBJECTS, node_id="EXTRA", **kw)
     if name == "HEAL":
         return SB.build_bundle(commit, ledger, ["REG"], observers={"REG": ("BOOKKEEP", "HEAL", "NULL")},
-                               node_id="HEAL", created_at_utc=created_at_utc)
+                               node_id="HEAL", **kw)
     if name == "FLAT":
-        return SB.build_bundle(commit, ledger, ["REG"], twins=[("REG", "REG_FLAT")], node_id="FLAT",
-                               created_at_utc=created_at_utc)
+        return SB.build_bundle(commit, ledger, ["REG"], twins=[("REG", "REG_FLAT")], node_id="FLAT", **kw)
     if name == "LOSSY":
-        return SB.build_bundle(commit, ledger, ["REG"], twins=[("REG", "LOSSY")], node_id="LOSSY",
-                               created_at_utc=created_at_utc)
+        return SB.build_bundle(commit, ledger, ["REG"], twins=[("REG", "LOSSY")], node_id="LOSSY", **kw)
     raise ValueError(name)
 
 
@@ -102,12 +111,17 @@ def produce(commit, ledger_path, created_at_utc=None):
     led = L.Ledger.from_contract(ledger_path)
     stamp = created_at_utc or time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
     usage = {}
+    versions = record_versions()
+    if len(versions) != 9:
+        raise RuntimeError("expected stage-record versions for P0-P8, got %s" % sorted(versions))
     for name in BUNDLES:
         t0 = time.time()
-        g = build(name, commit, led, stamp)
+        g = build(name, commit, led, stamp, versions)
         save(name, g)
-        usage[name] = {"receipts": len(g.dicts), "wall_s": round(time.time() - t0, 1), "run_id": g.run_id}
-    usage["ledger"] = led.usage()
+        usage[name] = {"receipts": len(g.dicts), "wall_ms": int((time.time() - t0) * 1000), "run_id": g.run_id}
+    u = led.usage()                                     # canonical bytes refuse floats (B2): integer microseconds
+    usage["ledger"] = {"launches": u["launches"], "cpu_us": int(round(u["cpu_s"] * 1e6)),
+                       "artifact_bytes": u["artifact_bytes"]}
     _write(os.path.join(OUT, "PRODUCE.json"), _canon({"commit": commit, "created_at_utc": stamp, "usage": usage}))
     return usage
 
