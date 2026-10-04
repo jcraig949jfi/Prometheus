@@ -1,0 +1,75 @@
+roles/template -- how a new seat sets itself up (about a minute)
+================================================================================
+
+You were told something like: "You're a new seat called <Name>. Use the
+template in roles/template to set yourself up." This file is that template.
+It is a FILE, not a directory, on purpose: the census, the comms roster and
+the self-tests treat every directory under roles/ as a seat.
+
+Do exactly this. Do not hand-write seat files; a tool writes and checks them.
+Do not `git pull` (WORKING_CONTRACT.md s3). The canonical checkout may be
+behind origin/main, so everything below reads from origin/main after a fetch.
+
+0. Know your inputs.
+   <Name>   the seat name the operator gave you, exactly as spelled.
+   <model>  YOUR exact runtime model id, as your own instructions state it.
+            Never guess it. If you cannot tell, ask the operator once.
+   words    everything the operator said that created the seat, verbatim.
+
+1. In the canonical checkout (the repository's main worktree) run:
+       git fetch origin
+   Nothing else is ever run there except the tool below, which only adds a
+   worktree.
+
+2. Save the operator's words, byte for byte, in a temporary file with your
+   file-writing tool (not retyped from memory, not through a shell). Include
+   the sentence that named you and any other words they said about the seat.
+
+3. Check the name is free (about 8 seconds). Read-only; creates nothing:
+       git show origin/main:roles/base-role/seat_kit/new_seat.py | python - <Name> --model <model> --dry-run
+   If it says SEAT CREATION STOPPED ... already exists, STOP: tell the
+   operator the name is taken (a seat that exists only on a branch counts) and
+   suggest another. Do not continue under that name.
+
+4. Create the seat (about 25-40 seconds):
+       git show origin/main:roles/base-role/seat_kit/new_seat.py | python - <Name> --model <model> --directive-file <the file from step 2> --stated "<one thing the operator said about the seat, in their words>" --push
+   Rules for the options:
+     --stated      repeat once per distinct thing the operator said about the
+                   seat (their adjectives, their purpose), quoted exactly.
+                   Leave it out if they said nothing beyond the name.
+     --host-label  add --host-label "<HOST (Mn)>" only if the operator named
+                   the machine, e.g. "M2 (spectrex5)". Otherwise the tool uses
+                   this machine's hostname.
+     --trailer     if your session instructions give commit attribution lines
+                   (Co-Authored-By, Claude-Session), pass each one as its own
+                   --trailer "<line>". Omit if you have none.
+     --push        publishes to origin/main as a fast-forward. The operator's
+                   instruction to create the seat is the authority; omit
+                   --push only if they told you not to publish.
+   Needs: git, Python 3.8+, and psycopg2 for the comms boot. If psycopg2 is
+   missing the seat is still created and the failed boot is recorded as a
+   blocker; tell the operator. Do not install packages machine-wide.
+
+5. The tool prints a receipt (seat, worktree path, branch, commit, comms boot,
+   tests, push). Paste the receipt to the operator. Then STOP and say
+   "Ready for your charter."
+
+6. What you must NOT do, because you have no charter yet:
+   - do not start any work, and do not interpret the operator's adjectives
+     (for example "moonshot" or "self contained"): record them, never decide
+     what they mean;
+   - do not send a heartbeat to Aporia or post to comms unless told to;
+   - do not create directories outside roles/<Name>/;
+   - do not retry a failed run by hand-writing files, and do not edit another
+     seat's files.
+
+If the tool stops with a message, that message names the problem. Report it to
+the operator with the text, and see roles/base-role/seat_kit/README.md
+("Limits"). A failed validation keeps the worktree it names so it can be read.
+
+Afterwards your seat's own wake block is roles/<Name>/WAKE.md. The charter,
+when it arrives, goes in as roles/<Name>/prompts/<date>_charter/ with a
+MANIFEST, and roles/<Name>/RESPONSIBILITIES.md is rewritten around it.
+
+Source of this file: roles/base-role/seat_kit/ (templates, tool, controls).
+Written 2026-10-04 at the operator's request. No base-role rule is changed.

@@ -5,6 +5,14 @@ far too long by hand (a 69,762-file checkout, about twelve hand-written files, a
 a 74-second test run). The pattern it automates is the Epimetheus creation pass
 (f0baa84aa). Additive: it changes no base-role rule; it is a tool and templates.
 
+## The one sentence
+
+The operator can instead say: "You're a new seat called <Name>. Use the template in
+roles/template to set yourself up." roles/template is a FILE (a directory there would be
+counted as a seat by the census, the comms roster and the self-tests, which all enumerate
+directories) holding the steps below for a fresh session to follow. It must be read from
+origin/main after a fetch; a canonical checkout that is behind will not have it on disk.
+
 ## The one command
 
 From the canonical checkout (fetch only; the script never pulls or writes there
