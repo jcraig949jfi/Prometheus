@@ -67,5 +67,9 @@
     "engineering": "<= 1.5 Q2 seat-hours",
     "cpu": "< 1 CPU-minute",
     "note": "Counts toward the slice caps fixed by C-004-OP1 (NEXT_ROUND_PLAN_v0.4 s6 proposal: 30 CPU-minutes total, 0 GPU, 0 cloud, 100 MB new artifacts, 12 top-level validation launches; mutation children count toward CPU). Stop at the first exhausted cap and keep partial results."
-  }
+  },
+  "eligible_roles": [
+    "Argus"
+  ],
+  "notes": "COORDINATOR 2026-10-04 (operator-approved): Argus is eligible alongside owner Cadmus to parallelize the chain after T010 (ruler + calibration over the integrated world.py; parallelizes Cadmus's serial chain); first fast-forward claim wins; the other seat takes a different packet."
 }

@@ -70,5 +70,8 @@
     "cpu": "< 1 CPU-minute",
     "note": "Counts toward the slice caps fixed by C-004-OP1 (NEXT_ROUND_PLAN_v0.4 s6 proposal: 30 CPU-minutes total, 0 GPU, 0 cloud, 100 MB new artifacts, 12 top-level validation launches; mutation children count toward CPU). Stop at the first exhausted cap and keep partial results."
   },
-  "notes": "COORDINATOR 2026-10-04 (interface fixed by C-004-T015): the adapter must emit output traces in exactly the byte layout of rso/slice001/checker.py TRACE_LAYOUT (FD-T015-1) with the witness shapes of FD-T015-2, including the PRESERVE no-reset comparison runs carried inside trace:probe_a as runs SKIP1..SKIP3 and ERASE reading trace:sends; otherwise G-RECOMP FAILs TRACE_SCHEMA / OUTCOME_MISMATCH:witness at T020. Add a round-trip test (world run -> adapter -> checker.g_recomp PASS). If the layout cannot express a world-side fact, escalate to Palamedes; do not edit checker.py (Argus owns it)."
+  "notes": "COORDINATOR 2026-10-04 (interface fixed by C-004-T015): the adapter must emit output traces in exactly the byte layout of rso/slice001/checker.py TRACE_LAYOUT (FD-T015-1) with the witness shapes of FD-T015-2, including the PRESERVE no-reset comparison runs carried inside trace:probe_a as runs SKIP1..SKIP3 and ERASE reading trace:sends; otherwise G-RECOMP FAILs TRACE_SCHEMA / OUTCOME_MISMATCH:witness at T020. Add a round-trip test (world run -> adapter -> checker.g_recomp PASS). If the layout cannot express a world-side fact, escalate to Palamedes; do not edit checker.py (Argus owns it). COORDINATOR 2026-10-04 (operator-approved): Argus is eligible alongside owner Cadmus to parallelize the chain after T010 (adapter meets Argus's own TRACE_LAYOUT (checker.py) at the producer/consumer boundary); first fast-forward claim wins; the other seat takes a different packet.",
+  "eligible_roles": [
+    "Argus"
+  ]
 }
