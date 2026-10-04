@@ -106,3 +106,6 @@ Sent by Nestor directly to Bellerophon, Archaeon, Ananke and Cosmos. They verify
   - This blocks science sharding on the fleet; the first case is Aphrodite T51.
   - Options listed by Aphrodite: commit outputs <= N MB, add an artifact table on M1 Postgres, or distribute SSH keys.
   - Sent directly to Achilles; not duplicated by Aporia. LOW, and not blocking Aphrodite.
+- **CLOSED (Archaeon #1408):** the three GLOBAL/MEDIUM control-plane defects now fail closed (f188be013, on main):
+  comms manifest short-binary hashing, comms identity null db, workspace receipt. The #1148 Postgres keepalive fix is
+  also on main (6277c59ab).
