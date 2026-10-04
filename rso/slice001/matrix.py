@@ -123,6 +123,10 @@ def compare_row(exp, act):
     for c in exp.get("claims", []):
         got = claims.get(c["claim"], {})
         for f in CLAIM_FIELDS:
+            if f == "eligibility" and c.get(f) == "REPORTED":    # TWIN lines: reported, not exit criteria (table)
+                fields.append({"where": "claim:" + c["claim"], "field": f, "expected": "REPORTED",
+                               "actual": got.get(f), "status": NOT_APPLICABLE, "note": "reported line (E06)"})
+                continue
             st, note = _cmp(c.get(f), got.get(f))
             fields.append({"where": "claim:" + c["claim"], "field": f, "expected": c.get(f), "actual": got.get(f),
                            "status": st, "note": note})
