@@ -1,0 +1,79 @@
+{
+  "schema": "prometheus.workgraph.receipt.v1",
+  "task_id": "C-004-T021",
+  "campaign_id": "C-004",
+  "attempt_id": "A-001",
+  "role": "Argus",
+  "model": "claude-opus-5-5",
+  "quality_class": "Q2",
+  "start_sha": "1395272a2fd63b19734c3d183adc2bcb458ba8cc",
+  "end_sha": "21e0d894b6dbd7806606d59a3ed536418066d871",
+  "files_changed": [
+    "rso/slice001/evidence.py",
+    "rso/slice001/tests/test_evidence.py",
+    "rso/slice001/contract/contract.json",
+    "rso/slice001/contract/MANIFEST.md"
+  ],
+  "evidence_added": [
+    "RegistryStore: read-only reader of the live custody registry over the ops.custody.registry API (rows, verify); no write path",
+    "verify then read, once per store object; only the verified prefix (rows 1..n whose last row_hash equals the verified head) is used",
+    "reader exception -> STORE_UNREACHABLE; verify not ok, or read rows disagreeing with the verified head -> ROW_CHAIN_BROKEN; neither is ever a pass",
+    "custody(): a store error gives UNQUALIFIED with that code (plus ANCHORS_FROM_PRODUCER when applicable); Registry counts no stage record from an unreadable store; anchors_from_keeper raises <code>:EVIDENCE_MANIFEST",
+    "registration time compared as a UTC instant, not text (the live registrar writes microseconds and +00:00; text order is wrong within a second)",
+    "store_from_contract: UNSET -> UnsetStore (R3); any other locator -> RegistryStore; a locator other than the v1.0.2 W1 one with no injected reader reads as STORE_UNREACHABLE",
+    "contract.json 1.0.2: custody.store = W1 locator; store_access; row_fields; independence_caveat with the W2 residual; amendments entry; MANIFEST rewritten",
+    "test_unset_store_is_keeper_row_missing now uses a fixture custody dict, not the live contract"
+  ],
+  "evidence_executed": [
+    {
+      "command": "python -B -m unittest rso.slice001.tests.test_evidence (new tests, before the reader)",
+      "result": "49 run: 10 errors + 1 failure = all 11 new non-skipped TestCustodyStoreReader tests fail (RED)"
+    },
+    {
+      "command": "python -B -m rso.slice001.ci (dirty tree, then at 21e0d894b clean)",
+      "result": "171 run, 170 passed, 1 skipped (live smoke) when the ledger flake does not fire; contract OK"
+    },
+    {
+      "command": "python -m comms.manifest verify rso/slice001/contract",
+      "result": "verified 5 entries; 0 mismatches"
+    },
+    {
+      "command": "RSO_CUSTODY_LIVE=1 EW_DB_HOST=192.168.1.202 python -B -m unittest ...test_live_store_smoke (read-only)",
+      "result": "OK; live registry 1 row (EXPECTED_ANSWER_TABLE rso/slice001/expected/EXPECTED_ANSWERS.json, 2026-10-04T07:15:12.920284Z), chain head 0c5764a79bcf10a4 = the head recorded in AMENDMENT_v1.0.2"
+    },
+    {
+      "command": "mutation fire tests on evidence.py (each restored after)",
+      "result": "M1 text compare of registered_at_utc KILLED (1 failure); M2 store error swallowed as empty rows KILLED (4); M3 verify result ignored KILLED (2)"
+    },
+    {
+      "command": "slice001 suite in-process x8, as ci runs it",
+      "result": "4/8 runs: 1 failure, always test_ledger.TestCrashRowsCheat.test_context_measures_cpu (cpu_s 0.0); isolated 4/12; ledger files untouched by T021"
+    }
+  ],
+  "red_observed": {
+    "observed": true,
+    "detail": "11/11 new non-skipped stub-reader tests failed before RegistryStore existed (store_from_contract raised STORE_UNREACHABLE for any locator; contract at 1.0.1)."
+  },
+  "result": "DONE_CLEAN",
+  "known_escapes": [
+    "the live store has 1 row (EXPECTED_ANSWER_TABLE); EVIDENCE_MANIFEST and RUN_INVENTORY rows must be registered by Aporia before T020's first check (amendment V8 consequence), else custody is KEEPER_ROW_MISSING as designed",
+    "the reader uses the comms connection (EW_DB_HOST), not the host in the locator string; the locator is matched as the registered identity only",
+    "a hand-supplied reader object is trusted to be the registry API; only store_from_contract with no reader is the T020 path",
+    "PRE-EXISTING, NOT T021: test_ledger.TestCrashRowsCheat.test_context_measures_cpu is flaky on Windows (time.process_time granularity: a 200k-iteration loop can measure 0.0 s); T019 lane, reported to Eupalamus"
+  ],
+  "unresolved": [],
+  "unblocks": [
+    "C-004-T020"
+  ],
+  "created_at_utc": "2026-10-04T08:45:00Z",
+  "instance": "desktop-ruapvai-b08b36ac",
+  "host": "DESKTOP-RUAPVAI",
+  "branch": "argus/c004-t021",
+  "worktree_path": "C:/Prometheus-worktrees/argus-boot",
+  "resources": {
+    "cpu": "about 4 CPU-minutes (suite runs incl. the flake hunt)",
+    "validation_launches": 0,
+    "model": "one Q2 session, about 0.5 hours"
+  },
+  "notes": "Field decisions (rso-builder 2.7). FD-T021-1 custody on a store error returns UNQUALIFIED with why [code] (+ANCHORS_FROM_PRODUCER): B5.3 has only QUALIFIED/UNQUALIFIED, so W1's 'custody FAIL reason ROW_CHAIN_BROKEN' is spelled as an UNQUALIFIED why; reversible (one return). FD-T021-2 only the verified prefix is used, so a row appended between verify and read is ignored until the next check (conservative: can only give KEEPER_ROW_MISSING, never a pass). FD-T021-3 contract.json gains store_access and row_fields beside store (W1 text) and independence_caveat (the draft B B5.1 sentence T004 did not copy, plus the W2 residual). FD-T021-4 the store is read once per RegistryStore object, so Registry and custody judge the same rows. Revisit at T020 or on an S3 attack."
+}
