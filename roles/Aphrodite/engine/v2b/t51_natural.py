@@ -45,7 +45,7 @@ W8 = paths.ROOT / "science" / "arc3" / "w8_lin_generator"
 OUTDIR = paths.ROOT / "beta01" / "runs" / os.environ.get("V2B_T51_DIR", "T04_T51")
 SEEDS = [int(x) for x in os.environ.get("V2B_T51_SEEDS", "0,1,2,3,4,5,6,7").split(",")]
 PANEL_KEYS = ["G1", "PA", "PB", "PC", "PD"]
-ARMS = PANEL_KEYS + ["P", "G1_NC"]
+ARMS = os.environ.get("V2B_T51_ARMS", ",".join(PANEL_KEYS + ["P", "G1_NC"])).split(",")
 HELD = dict({k: k for k in PANEL_KEYS}, P="P", G1_NC="G1")
 COMPOSE = dict({k: True for k in PANEL_KEYS}, P=True, G1_NC=False)
 CAP = int(os.environ.get("V2B_T51_CAP", 1_000_000))

@@ -6,29 +6,30 @@
   "pairs_planned": 12,
   "window_hours": 4,
   "current": {
-    "cycle": 4,
+    "cycle": 7,
     "window": "TEST",
-    "index": 4,
-    "opened_utc": "2026-10-04T18:28:53Z",
-    "due_close_utc": "2026-10-04T22:28:53Z",
-    "active_thread": "TH-019",
-    "apparatus_version": "v2b-2",
-    "experiment": "T04 = T51 natural-recurrence donor stage",
+    "index": 7,
+    "opened_utc": "2026-10-04T23:31:42Z",
+    "due_close_utc": "2026-10-05T03:31:42Z",
+    "active_thread": "R7",
+    "apparatus_version": "v2b-2 + gtc",
+    "experiment": "T07 = R7E improver rules on endogenous route",
     "attempt": 1,
-    "goal": "measure; then mid-campaign synthesis"
+    "goal": "measure"
   },
-  "last_disposition": "DEV-4 DONE",
+  "last_disposition": "DEV-7 DONE",
   "unresolved_defects": [
     "no receipt check for no-donor-state (S4 cond 8 class)",
     "ruler v2.1 residual 8/47 + 24.5% chance floor",
     "T4 v1a silent on queries 1-2",
     "T01 erratum: pristine_all_censored field (fix in t1 v2)",
-    "A20-A23 P/OFF_0 controls dead on REUSED/CAPABILITY_SAME (recorded; T53 makes them live)"
+    "A20-A23 P/OFF_0 controls dead on REUSED/CAPABILITY_SAME (recorded; T53 makes them live)",
+    "GTC: UNSEEN stratum transfer floor; count endpoint blind to efficiency; overfitter control unverified"
   ],
   "next_intended": {
     "window": "DEV",
-    "index": 5,
-    "plan": "diagnose T51 + MIDPOINT SYNTHESIS (after TEST-4); R7 improver-mutability probe design"
+    "index": 8,
+    "plan": "diagnose R7E; midpoint synthesis 2 due after TEST-8"
   },
   "missed_wake_rule": "run the due window once; never burst",
   "history": [
@@ -129,6 +130,92 @@
       "disposition": "DONE: T51 designed (W8 F0-F7 + v2b endpoints; escrow 30k declared); F1 8/8, F6a 0.661, F6b ~0.24; smoke OK; frozen",
       "report": "beta01/windows/D04_DEV_REPORT.md",
       "next_frozen": "beta01/windows/T04_T51_SPEC.md"
+    },
+    {
+      "cycle": 4,
+      "window": "TEST",
+      "index": 4,
+      "opened_utc": "2026-10-04T18:28:53Z",
+      "closed_utc": "2026-10-04T20:51:16Z",
+      "active_thread": "TH-019",
+      "apparatus_version": "v2b-2",
+      "experiment": "T04 = T51 (v1)",
+      "attempt": 1,
+      "disposition": "MEASURED: NATURAL_DOSE_SLOPE NOT_SHOWN (slope +0.107, p 0.159); G1_SPECIFIC NO; control P reuse 37 > panel. Exploratory: pristine donor derives G1-class endogenously (57/256 vs inherited 70/256); composition adds little.",
+      "report": "beta01/windows/T04_REPORT_AND_REVIEW_PACKET.md",
+      "receipts": [
+        "beta01/runs/T04_T51/T51_RESULT.json",
+        "beta01/runs/T04_T51/T51_EXPLORATORY_VS_PRISTINE.json"
+      ]
+    },
+    {
+      "cycle": 5,
+      "window": "DEV",
+      "index": 5,
+      "opened_utc": "2026-10-04T20:51:16Z",
+      "closed_utc": "2026-10-04T21:12:03Z",
+      "active_thread": "R7 / midpoint",
+      "apparatus_version": "v2b-2 + gtc",
+      "disposition": "DONE: midpoint synthesis 1; donor_g genomes (g0 conformance 3/3); GTC frozen",
+      "report": "beta01/windows/D05_DEV_REPORT.md",
+      "next_frozen": "beta01/windows/T05_GTC_SPEC.md"
+    },
+    {
+      "cycle": 5,
+      "window": "TEST",
+      "index": 5,
+      "opened_utc": "2026-10-04T21:12:03Z",
+      "closed_utc": "2026-10-04T21:44:51Z",
+      "active_thread": "R7 (P2)",
+      "apparatus_version": "v2b-2 + gtc",
+      "experiment": "T05 = GTC (v1)",
+      "attempt": 1,
+      "disposition": "INCONCLUSIVE_INSTRUMENT: g5 overfit not seen (DEV -15, UNSEEN 0); UNSEEN = transfer floor for all libraries; g2/g3/g4 output-inert (same selections 20/20, identical scores)",
+      "report": "beta01/windows/T05_REPORT_AND_REVIEW_PACKET.md",
+      "receipts": [
+        "beta01/runs/T05_GTC/GTC_RESULT.json"
+      ]
+    },
+    {
+      "cycle": 6,
+      "window": "DEV",
+      "index": 6,
+      "opened_utc": "2026-10-04T21:44:51Z",
+      "closed_utc": "2026-10-04T21:49:26Z",
+      "active_thread": "TH-019",
+      "apparatus_version": "v2b-2",
+      "disposition": "DONE: T51-C frozen confirmation (fresh seeds 8-15, F1 8/8, absolute endpoint, H1/H2/H3)",
+      "report": "beta01/windows/D06_DEV_REPORT.md",
+      "next_frozen": "beta01/windows/T06_T51C_SPEC.md"
+    },
+    {
+      "cycle": 6,
+      "window": "TEST",
+      "index": 6,
+      "opened_utc": "2026-10-04T21:49:26Z",
+      "closed_utc": "2026-10-04T23:27:24Z",
+      "active_thread": "TH-019",
+      "apparatus_version": "v2b-2",
+      "experiment": "T06 = T51-C (v1)",
+      "attempt": 1,
+      "disposition": "MEASURED: H1 NO (ratio 0.644 < 0.70), H2 NO (3/7), H3 YES. When derived, 100% of inherited benefit (3/7 seeds); otherwise 0. Endogenous route unreliable from 4 observations.",
+      "report": "beta01/windows/T06_REPORT_AND_REVIEW_PACKET.md",
+      "receipts": [
+        "beta01/runs/T06_T51C/T06_RESULT.json"
+      ]
+    },
+    {
+      "cycle": 7,
+      "window": "DEV",
+      "index": 7,
+      "opened_utc": "2026-10-04T23:27:24Z",
+      "closed_utc": "2026-10-04T23:31:42Z",
+      "active_thread": "R7",
+      "apparatus_version": "v2b-2 + gtc",
+      "disposition": "DONE: failure-mode diagnosis (starvation 3, selection 4 of 15); R7E frozen (g8, g9, ORACLE, NULL; continuity spot 2/2)",
+      "report": "beta01/windows/D07_DEV_REPORT.md",
+      "next_frozen": "beta01/windows/T07_R7E_SPEC.md"
     }
-  ]
+  ],
+  "compute_ledger_note": "rolling 24h ~42 core-h at 23:25Z 2026-10-04 (T53 10.8 from 12:01Z, T52 12.3, T51 9.1, T06 ~6, GTC ~1, misc ~3); T53 rolls off from 12:01Z 2026-10-05"
 }

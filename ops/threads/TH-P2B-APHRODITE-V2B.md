@@ -129,3 +129,11 @@ change survive another generation?**
 
 | 2026-10-04 | TEST-3 (T52) MEASURED: selection recovery 0.11/0.46/0.875 by dose; at dose 0, 89% select the SHOWN other motif. A23 selection = shown-structure recovery. DEV-4 opened (T51 design) |
 | 2026-10-04 | DEV-4: T51 frozen (LIN seeds 0-7, pooled X_S dose slope, escrow 30k declared, D endpoint at 1M, distinct-class reuse). TEST-4 launched |
+
+| 2026-10-04 | TEST-4 (T51) MEASURED: natural composition-dose slope NOT_SHOWN (p 0.16); G1 not specific. Exploratory: a pristine donor derives the G1 class endogenously from natural supply (57 vs inherited 70 of 256 families beyond PRISTINE). DEV-5 opened (midpoint synthesis) |
+| 2026-10-04 | DEV-5: midpoint synthesis 1 (limit = R7). donor_g genome interpreter (g0 conformance 3/3). TEST-5 (GTC R7 probe) launched |
+| 2026-10-04 | TEST-5 (GTC R7) INCONCLUSIVE_INSTRUMENT: the UNSEEN stratum is a transfer floor for every library; the rule genomes g2/g3/g4 leave selections unchanged (20/20). DEV-6 opened |
+| 2026-10-04 | DEV-6: T51-C frozen (fresh LIN seeds 8-15; endogenous base-class derivation confirmation). TEST-6 launched |
+
+| 2026-10-04 | TEST-6 (T51-C) MEASURED: the frozen confirmation is NOT met (ratio 0.644, base class derived in 3/7 seeds). When derived, 100% of the inherited benefit; otherwise 0. DEV-7 opened (R7 v2) |
+| 2026-10-05 | DEV-7: endogenous-route failure modes diagnosed (observation starvation 3/15, selection 4/15). R7E frozen (rule genomes g8/g9 plus ORACLE/NULL controls, no library carried). TEST-7 launched |
