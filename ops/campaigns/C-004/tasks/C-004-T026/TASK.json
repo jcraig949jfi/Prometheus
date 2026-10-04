@@ -40,7 +40,7 @@
     "tests"
   ],
   "kind": "software",
-  "status": "GREEN",
+  "status": "INTEGRATION_READY",
   "history": [
     {
       "status": "PROPOSED",
@@ -77,6 +77,12 @@
       "by": "Argus[desktop-ruapvai-b08b36ac]",
       "at_utc": "2026-10-04T16:34:20Z",
       "note": "test_s2_bundle 27/27; acceptance 76 OK on merged tree, no expectedFailure"
+    },
+    {
+      "status": "INTEGRATION_READY",
+      "by": "Argus[desktop-ruapvai-b08b36ac]",
+      "at_utc": "2026-10-04T16:34:25Z",
+      "note": "branch argus/c004-t026 at 029dd41b1; build_bundle any subject set, 1 TOP_LEVEL + RECEIPT rows; real G0 E02.MISSING RUN_UNREPORTED; E05 custody tests ordinary; WIPE NOT_ELIGIBLE, OVERDELAY BLOCKED; acceptance 76 OK merged; full ci not run (CPU ceiling); TWIN collision noted"
     }
   ],
   "authority": "operator directive 2026-10-03 s9, s11; escalation responses C-004-T024_1_2_RESPONSE.md",
