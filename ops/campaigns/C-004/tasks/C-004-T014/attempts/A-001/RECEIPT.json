@@ -1,0 +1,65 @@
+{
+  "schema": "prometheus.workgraph.receipt.v1",
+  "task_id": "C-004-T014",
+  "campaign_id": "C-004",
+  "attempt_id": "A-001",
+  "role": "Argus",
+  "model": "claude-opus-5-5",
+  "quality_class": "Q2",
+  "start_sha": "398db5c43eaff4aa6c198a19df6004532d1dfc81",
+  "end_sha": "c62878b1db1daa72f28e97eedf164bac5eca8c2e",
+  "files_changed": [
+    "rso/slice001/evidence.py",
+    "rso/slice001/fixtures/evidence_cases.py",
+    "rso/slice001/tests/test_evidence.py",
+    "roles/Argus/comms/2026-10-04_HEARTBEAT_2.md"
+  ],
+  "evidence_added": [
+    "B6.1 complete node (identity, scope, predicate id+version, deps, artifact) from a validated Receipt; canonical sorted manifest (B5.2)",
+    "B6.2 required receipt-to-receipt edges derived from node identity (BOUNDS; CALIBRATION for RETENTION; RESTART for CHANNEL/OBSERVER), never from the producer",
+    "B7.1 claim prerequisite node sets from policy (CL-CAL; CL-RET with CHANNEL per R1; CL-CUST over the anchored manifest; TWIN); unknown claim type refused",
+    "G-BIND (B6.3): reachable nodes in node_id order, first failure, typed reasons EVIDENCE_MISSING (BLOCKED), RECEIPT_SCHEMA, SCOPE_MALFORMED, IDENTITY_UNKNOWN, SCOPE_MISMATCH (anchor, then claim cell), IDENTITY_MISMATCH:predicate, DEPENDENCY_MISMATCH:<from>-><to> (V3), BYTES_MISMATCH:<receipt|trace role>, CODE_NOT_COMMITTED, CYCLE",
+    "G-INV (B6.4, V7): terminal inventory else BLOCKED; RECEIPT_WITHOUT_RUN / RUN_UNREPORTED counted only over the claim's required node set",
+    "invalidation (B6.5): reverse transitive closure over receipt deps, B6.2 edges and receipt->STAGE edges; only registered withdrawals act; unregistered ones listed as 'unverified record <id>: not registered' (FD-B8)",
+    "authority A1-A5 (B4.2): NO_STAGE_RECORD, NO_FIRE_TEST (fire-test blob must bind), WITHDRAWN:<id>, SUSPENDED, PRECONDITION:<CALIBRATION|RESTART>; consumer-gate authority from its own stage record",
+    "custody (B5.3, V6): QUALIFIED iff non-producer anchors and a matching row, registered before the first check, for the manifest, inventory, expected table and every cited stage record; why exhaustive and sorted; contract store UNSET -> KEEPER_ROW_MISSING per kind (R3)",
+    "fixtures: G0 and every B9 bundle edit (all 20 registered E01-E05 ids) plus RELABEL with renamed ids, STRIP with the manifest rebuilt from the stripped node, and G0 without the LAGD branch",
+    "fire test: a hash-only stub admits every E02/E03 broken fixture; G-BIND rejects each with the typed reason"
+  ],
+  "evidence_executed": [
+    {"command": "python -B -m unittest (TestFireStub, TestE02, TestE03) with evidence.g_bind replaced by a hash-only stub", "result": "10 run, 8 failures (every broken E02/E03 fixture admitted); the two G0 true cases pass"},
+    {"command": "python -B -m unittest rso.slice001.tests.test_evidence", "result": "37 run, OK, 3.2 s"},
+    {"command": "python -B -m rso.slice001.ci at c62878b1d (validation launch 3 of 12 this session)", "result": "exit 0; PASSED; 81 tests, 0 failed, 0 errored; contract OK; dirty false; cpu_s 3.266"}
+  ],
+  "red_observed": {
+    "observed": true,
+    "detail": "with g_bind replaced by a stub checking receipt artifact hashes only, 8/10 E02/E03 tests failed: MISSING, MALFORMED, RELABEL, WRONG_SUBJECT, STRIP, BYTEFLIP and REANCHOR were admitted. The stub comparison is kept as a permanent fire test (TestFireStub)."
+  },
+  "result": "DONE_CLEAN",
+  "known_escapes": [
+    "G-RECOMP is not here (B11: checker.py, T015). E01.OUTCOME_EDIT's expected G-RECOMP FAIL OUTCOME_MISMATCH:value and E03.REANCHOR's G-RECOMP line are untested until T015; the evidence-plane parts (G-BIND PASS under the producer's re-hashed manifest, BYTES_MISMATCH:receipt under retained anchors) are tested",
+    "the tests' eligibility composition (receipt.make_verdict per prerequisite plus a G-BIND/G-INV PASS check) is a test helper, not the T015 consumer; consumer-gate lines cannot go through receipt.make_verdict, which accepts P0..P8 outcomes only (see unresolved)",
+    "G-INV consumes an inventory shape fixed here ({kind: RUN, run_id, node_id, status} rows, last {kind: TERMINAL, row_count}); T019 (ledger.py) is not integrated and may differ",
+    "every anchor, keeper row and custody QUALIFIED is an in-memory fixture (V8): logic only, never custody evidence; no real store reader exists (contract store UNSET; a set locator raises STORE_UNREACHABLE until a reader is written)",
+    "authority A4 treats every instrument as claim-critical",
+    "rso/slice001/fixtures/ has no __init__.py (namespace package); T011 owns fixtures/world_cases.py and may add one"
+  ],
+  "unresolved": [
+    "T015 needs receipt.make_verdict to accept consumer-gate outcomes (predicate G-BIND / G-INV / G-RECOMP); receipt.py (T013, integrated) allows P0..P8 only. A one-table change in receipt.py, outside T015's owns list: Palamedes to add receipt.py to T015's owns or open a small packet",
+    "the B11 file table puts authority A1-A5 in receipt.py (T013); it is implemented here in evidence.py because A2 and A3 need the graph and the registry. Behaviour, not file, is binding (R5)"
+  ],
+  "unblocks": [
+    "C-004-T015"
+  ],
+  "created_at_utc": "2026-10-04T02:24:00Z",
+  "instance": "harry1-91cbacb8",
+  "host": "harry1",
+  "branch": "argus/c004-t014",
+  "worktree_path": "C:/Prometheus-worktrees/argus-c004-t014",
+  "resources": {
+    "cpu": "about 10 CPU-seconds (unit tests, RED run, one ci launch)",
+    "validation_launches": 1,
+    "model": "one Q2 session, about 0.4 hours"
+  },
+  "notes": "Disagreement register, which way the code falls (implemented from the contract text, not chosen by preference). X02 not resolved: both readings are fixtures; node ids kept -> SCOPE_MISMATCH:physics at rcpt:REG:BOUNDS:STANDARD; node ids renamed -> IDENTITY_UNKNOWN:rcpt:REG2:BOUNDS:STANDARD. X06: MISSING gives G-BIND BLOCKED EVIDENCE_MISSING:rcpt:REG:PRESERVE:STANDARD and G-INV FAIL RUN_UNREPORTED:run-005 on CL-RET(REG) (V7); the PRESERVE verdict has execution BLOCKED. X07: LAGD's RESTART shares the withdrawn stage record, so CL-RET(LAGD) goes UNMET -> UNQUALIFIED. X08/X13: in W_UNRELATED the TWIN_EQ receipt node is itself withdrawn, so a TWIN(REG) line is WITHDRAWN; no CL claim changes. X10: a G-BIND failure is a FAIL of the G-BIND line (standing UNMET via that line); the prerequisite is not counted absent. X11: G-BIND binds against whatever Anchors the consumer passes; E01-E04 fixtures use consumer-retained anchors, and OUTCOME_EDIT/REANCHOR show both producer and retained anchors. X12: by the letter of B4.2 A5 a BLOCKED (or FAIL) RESTART/CALIBRATION precondition makes CHANNEL/OBSERVER/RETENTION UNQUALIFIED PRECONDITION:<pre>. X14: custody is returned as its B5.3 record, not a three-field verdict. Spelling: Pallas's table writes EVIDENCE_MISSING:rcpt:REG:P4:STANDARD; the code uses V1 (rcpt:REG:PRESERVE:STANDARD). Field decisions (rso-builder 2.7): FD-T014-1 a claim's cell is compared on every axis except measurement, and except physics for the WORLD-side CALIBRATION node. FD-T014-2 a receipt presented under another slot's id with matching scope and predicate fails IDENTITY_MISMATCH:node_id (a reason code not in B6.3; no registered case reaches it; it closes the right-subject wrong-observer slot swap). FD-T014-3 BYTES_MISMATCH:receipt for a receipt whose bytes differ from its anchored node artifact (role receipt). FD-T014-4 anchor sources are keeper (fetched or consumer-retained) or producer; only producer adds ANCHORS_FROM_PRODUCER. FD-T014-5 custody's ROW_BLOB_MISMATCH and REGISTERED_AFTER_CHECK are written bare (V6 fixes only KEEPER_ROW_MISSING:<kind>). FD-T014-6 a STAGE node id is stage:<instrument>:<version hash>; withdrawing it reaches every receipt of that version. Each is reversible (a string or one comparison); revisit at T015/T020 or on an S3 attack."
+}
