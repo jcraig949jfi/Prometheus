@@ -136,3 +136,4 @@ change survive another generation?**
 | 2026-10-04 | DEV-6: T51-C frozen (fresh LIN seeds 8-15; endogenous base-class derivation confirmation). TEST-6 launched |
 
 | 2026-10-04 | TEST-6 (T51-C) MEASURED: the frozen confirmation is NOT met (ratio 0.644, base class derived in 3/7 seeds). When derived, 100% of the inherited benefit; otherwise 0. DEV-7 opened (R7 v2) |
+| 2026-10-05 | DEV-7: endogenous-route failure modes diagnosed (observation starvation 3/15, selection 4/15). R7E frozen (rule genomes g8/g9 plus ORACLE/NULL controls, no library carried). TEST-7 launched |

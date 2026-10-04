@@ -30,7 +30,13 @@ GENOMES = {
     "g3": {"order": "trace_freq"},
     "g4": {"insert": "replace_subsumed"},
     "g5": {"finals": "observed"},
+    # R7E (DEV-7): endogenous-route rules (content-free) + known-answer controls
+    "g8": {"select": "mean_positive"},          # selection eligibility: mean paired saving > 0 (I_0: lower95 > 0)
+    "g9": {"derive_from": "observe+validate"},  # LGG derivation also from VALIDATE-cell hits (more traces)
+    "ORACLE": {"plant": "G1"},                  # positive control: G1 schema entry offered as an extra candidate
+    "NULL": {"plant": "OFF"},                   # negative control: an OFF schema entry offered as an extra candidate
 }
+OFF_SCHEMA = "math.gcd(abs((acc // {H})), abs(first))"   # A22/A23 OFF_0
 
 
 def _top_op(body):
@@ -80,6 +86,22 @@ def _apply(genome, entry, start, observed):
     return [e] + st
 
 
+def _select_mean_positive(cands, start, cells):
+    """a17.select with ONE rule changed: eligible iff mean paired saving > 0 (I_0 requires lower95 > 0)."""
+    libs = {n: FR.KLib(e) for n, e in cands.items()}
+    costs = {n: [c.cost(l)[0] for c in cells] for n, l in libs.items()}
+    table = {}
+    for n in cands:
+        row = FR.paired_summary(costs["INHERITED"], costs[n])
+        row.update({"sha256": libs[n].sha256(), "size": libs[n].size(),
+                    "eligible": n != "INHERITED" and row["mean_paired_saving"] > 0})
+        table[n] = row
+    elig = [n for n in table if table[n]["eligible"]]
+    chosen = (min(elig, key=lambda n: (-table[n]["mean_paired_saving"], table[n]["size"], table[n]["sha256"]))
+              if elig else "INHERITED")
+    return chosen, table, sum(sum(v) for v in costs.values())
+
+
 def donor_g(genome, args):
     """a18.donor with genome hooks. args = (cat, kind, r, fams, specs, panel, compose)."""
     a18.worker_init()
@@ -107,6 +129,15 @@ def donor_g(genome, args):
             meta += esc.spent
             for h in hits[:mh]:
                 observed.append({"family": fam, "program": list(h[0]), "parsed": cell.parsed})
+    if g.get("derive_from") == "observe+validate":
+        for fam in val_f:
+            for c in range(a17.R_OBS):
+                cell = FR.Cell(prov, fam, r * a17.R_OBS + c, size[fam], label="%s-%s-obsv/r%d" % (a18.TAG, cat, r))
+                esc = E.Escrow(a17.ESCROW)
+                hits = FR.search_collect(base, cell.parsed, esc, a17.ESCROW, cell.seed, max_hits=mh)
+                meta += esc.spent
+                for h in hits[:mh]:
+                    observed.append({"family": fam, "program": list(h[0]), "parsed": cell.parsed})
     classes, certs = a17.certified_classes(observed, cov)
     derived = T3D.derive_schemas([c["member_bodies"] for c in classes])
     cells = [FR.Cell(prov, f, r * a17.R_VAL + j, size[f], label="%s-%s-val/r%d" % (a18.TAG, cat, r))
@@ -122,7 +153,14 @@ def donor_g(genome, args):
                 continue
             ent = cands[name][0]
             cands[name] = _apply(genome, ent, start, observed)
-    chosen, table, vcost = a17.select(cands, start, cells)
+    if g.get("plant"):
+        sch = a18.G1 if g["plant"] == "G1" else OFF_SCHEMA
+        cands["SCHEMA_%d" % (len(derived) + len(comp))] = [a17.schema_entry("g2_new", sch)] + start
+        comp = comp + [{"schema": sch, "origin": "PLANTED_" + g["plant"]}]
+    if g.get("select") == "mean_positive":
+        chosen, table, vcost = _select_mean_positive(cands, start, cells)
+    else:
+        chosen, table, vcost = a17.select(cands, start, cells)
     meta += vcost
     allc = derived + comp
     sel = None

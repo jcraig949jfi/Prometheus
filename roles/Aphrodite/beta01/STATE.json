@@ -7,17 +7,17 @@
   "window_hours": 4,
   "current": {
     "cycle": 7,
-    "window": "DEV",
+    "window": "TEST",
     "index": 7,
-    "opened_utc": "2026-10-04T23:27:24Z",
-    "due_close_utc": "2026-10-05T03:27:24Z",
-    "active_thread": "R7 v2 / TH-019",
+    "opened_utc": "2026-10-04T23:31:42Z",
+    "due_close_utc": "2026-10-05T03:31:42Z",
+    "active_thread": "R7",
     "apparatus_version": "v2b-2 + gtc",
-    "experiment": null,
-    "attempt": null,
-    "goal": "R7 v2 design (two-class world, proposal-level genomes g6/g7, transplant with reset, charge endpoint, pre-verified overfitter); pre-freeze screens; respect rolling 48 core-h cap"
+    "experiment": "T07 = R7E improver rules on endogenous route",
+    "attempt": 1,
+    "goal": "measure"
   },
-  "last_disposition": "TEST-6 MEASURED (confirmation not met)",
+  "last_disposition": "DEV-7 DONE",
   "unresolved_defects": [
     "no receipt check for no-donor-state (S4 cond 8 class)",
     "ruler v2.1 residual 8/47 + 24.5% chance floor",
@@ -27,9 +27,9 @@
     "GTC: UNSEEN stratum transfer floor; count endpoint blind to efficiency; overfitter control unverified"
   ],
   "next_intended": {
-    "window": "TEST",
-    "index": 7,
-    "experiment": "R7 v2 (may wait on compute headroom)"
+    "window": "DEV",
+    "index": 8,
+    "plan": "diagnose R7E; midpoint synthesis 2 due after TEST-8"
   },
   "missed_wake_rule": "run the due window once; never burst",
   "history": [
@@ -203,6 +203,18 @@
       "receipts": [
         "beta01/runs/T06_T51C/T06_RESULT.json"
       ]
+    },
+    {
+      "cycle": 7,
+      "window": "DEV",
+      "index": 7,
+      "opened_utc": "2026-10-04T23:27:24Z",
+      "closed_utc": "2026-10-04T23:31:42Z",
+      "active_thread": "R7",
+      "apparatus_version": "v2b-2 + gtc",
+      "disposition": "DONE: failure-mode diagnosis (starvation 3, selection 4 of 15); R7E frozen (g8, g9, ORACLE, NULL; continuity spot 2/2)",
+      "report": "beta01/windows/D07_DEV_REPORT.md",
+      "next_frozen": "beta01/windows/T07_R7E_SPEC.md"
     }
   ],
   "compute_ledger_note": "rolling 24h ~42 core-h at 23:25Z 2026-10-04 (T53 10.8 from 12:01Z, T52 12.3, T51 9.1, T06 ~6, GTC ~1, misc ~3); T53 rolls off from 12:01Z 2026-10-05"
