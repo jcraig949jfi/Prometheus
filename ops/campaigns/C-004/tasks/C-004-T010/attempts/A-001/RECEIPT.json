@@ -1,0 +1,66 @@
+{
+  "schema": "prometheus.workgraph.receipt.v1",
+  "task_id": "C-004-T010",
+  "campaign_id": "C-004",
+  "attempt_id": "A-001",
+  "role": "Cadmus",
+  "model": "claude-opus-5-5",
+  "quality_class": "Q2",
+  "start_sha": "35a1b8bd14a11f85dad645522a944c5a917430aa",
+  "end_sha": "e08c61a46077bd92a76bd680adca2c5dc3162fcc",
+  "files_changed": [
+    "rso/slice001/world.py",
+    "rso/slice001/tests/test_world.py"
+  ],
+  "evidence_added": [
+    "world.py: registered model constants, 29 SCHEDULE_POINTS, domain of 4096 histories in checker canonical order, pending-message channel, Runtime interface (declare/step/reset/capture/restore), run_life with a hook at every schedule point, truth(), class N and exact no-carry success, domain_summary(), BoundsViolation (V4 reason form), closure_blockers()",
+    "test_world.py: 32 tests; constants pinned to contract.json reset_model; history order cross-checked against checker.u_of/f_of (T015); a modelled delay K=4 > H=3 is reported as blocking closure; a 4-episode life is reported as truncating the horizon at boundaries 2 and 3 (FD-A1)"
+  ],
+  "evidence_executed": [
+    {
+      "command": "python -B -m unittest rso.slice001.tests.test_world (before world.py existed, ab4481fa2)",
+      "result": "RED: ImportError: cannot import name 'world' from 'rso.slice001'"
+    },
+    {
+      "command": "python -B -m unittest rso.slice001.tests.test_world (e08c61a46)",
+      "result": "32 tests OK"
+    },
+    {
+      "command": "scratch mutation check: 8 one-line source mutants of world.py, each run against test_world in a temp copy",
+      "result": "8 of 8 killed (author-chosen mutants: author-tested only)"
+    },
+    {
+      "command": "python -B -m rso.slice001.ci (merged tree = branch on origin/main 35a1b8bd1, which had not moved)",
+      "result": "PASSED: 204 run, 203 passed, 1 skipped, 0 failed, 0 errored; contract OK; cpu_s 7.938; wall_s 14.751; dirty false"
+    }
+  ],
+  "red_observed": {
+    "observed": true,
+    "reason": "ImportError before world.py existed (09:45Z), test file committed alone at ab4481fa2"
+  },
+  "result": "DONE_CLEAN",
+  "known_escapes": [
+    "tests and mutants are the author's own; no second author has attacked world.py",
+    "run_life's deliveries() reads the base channel attribute; a runtime keeping its channel elsewhere reports empty deliveries there (outputs are unaffected)",
+    "Q = 8 never binds from send(): with S = 2, K = 3 at most 6 packets are in flight (draft A A2 called Q the reachable maximum; corrected by a test). CHANNEL_CAPACITY is reachable only via restore()."
+  ],
+  "unresolved": [
+    "no shared caps-ledger store exists on main: this attempt's 1 top-level launch and 7.938 CPU-s are recorded here only (Palamedes / T019)"
+  ],
+  "unblocks": [
+    "C-004-T011",
+    "C-004-T012",
+    "C-004-T016",
+    "C-004-T018"
+  ],
+  "created_at_utc": "2026-10-04T09:47:12Z",
+  "instance": "m1-a86ec5e4",
+  "host": "SKULLPORT",
+  "branch": "cadmus/c004-t010",
+  "worktree_path": "F:/Prometheus-worktrees/cadmus-c004-t010",
+  "resources": {
+    "cpu": "1 top-level launch (ci, 7.938 CPU-s); plain unittest runs and 8 scratch mutant runs under 10 CPU-s more",
+    "model": "one Q2 session, about 0.5 hour"
+  },
+  "notes": "X items: X01 -- world.py defines CLOCKED as the same 4096 histories with u_j := j mod 2 at j = 1..3 (the checker's reading); the RETENTION value on CLOCKED is a T012 matter. X05 -- not touched (fixture behaviour, T011/T012); Cadmus will implement AMNESIAC as answering from a. Base Runtime.reset() is a no-op by design: what a reset erases is each runtime's behaviour, judged by T011's predicates."
+}
