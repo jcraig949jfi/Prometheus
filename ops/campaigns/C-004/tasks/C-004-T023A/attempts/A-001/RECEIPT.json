@@ -1,0 +1,74 @@
+{
+  "schema": "prometheus.workgraph.receipt.v1",
+  "task_id": "C-004-T023A",
+  "campaign_id": "C-004",
+  "attempt_id": "A-001",
+  "role": "Cadmus",
+  "model": "claude-opus-5-5",
+  "quality_class": "Q2",
+  "start_sha": "6f57aa7c62f22edc66ea6b35c8c4cbda0b6324ff",
+  "end_sha": "fb8a00de125b3cadcbd5d511378d7bde72315d15",
+  "files_changed": [
+    "rso/slice001/stages/__init__.py",
+    "rso/slice001/stages/fire_world.py",
+    "rso/slice001/stages/FIRE_RECEIPT_world.json",
+    "rso/slice001/stages/P0_BOUNDS.json",
+    "rso/slice001/stages/P3_ERASE.json",
+    "rso/slice001/stages/P4_PRESERVE.json",
+    "rso/slice001/stages/P5_CHANNEL.json",
+    "rso/slice001/stages/P6_RESTART.json",
+    "rso/slice001/stages/P7_OBSERVER.json",
+    "rso/slice001/stages/P8_TWIN_EQ.json",
+    "rso/slice001/tests/test_stages_world.py"
+  ],
+  "evidence_added": [
+    "7 AUTHOR_TESTED StageRecords (B4.1) for P0, P3-P8; version = CodeRefs of each instrument's source files at main 6f57aa7c6 (P8 includes rulers.py, encoding.py, fixtures/world_cases.py); fire_test cites FIRE_RECEIPT_world.json at 4d7d1b563",
+    "fire_world.py: 14 fire cases (one accept, one reject with expected reason per instrument, contract case ids); fire refuses unless every source equals its committed blob; check_record refuses a version or receipt hash that differs from the committed blob (STAGE_VERSION_MISMATCH / STAGE_RECEIPT_MISMATCH)",
+    "test_stages_world.py: 8 tests -- 7 records valid; hashes equal committed blobs and commits are ancestors; versions equal current sources; wrong version hash refused; wrong receipt hash refused; record without a reject case refused; receipt matches records; fire tests reproduce"
+  ],
+  "evidence_executed": [
+    {
+      "command": "python -B -m unittest rso.slice001.tests.test_stages_world (before receipt/records)",
+      "result": "RED: 8 errors, FileNotFoundError (13:27Z)"
+    },
+    {
+      "command": "python -B -m rso.slice001.stages.fire_world fire --commit 6f57aa7c6...",
+      "result": "all_ok true, 14 cases, 20 s wall"
+    },
+    {
+      "command": "python -B -m unittest rso.slice001.tests.test_stages_world",
+      "result": "8 run, 0 failed; 19.8 CPU-s"
+    },
+    {
+      "command": "python -B -m rso.slice001.ci (merged tree: branch + origin/main 29ff00072)",
+      "result": "PASSED: 279 run, 278 passed, 1 skipped, 0 failed; cpu_s 73.328; wall_s 80.48; dirty false"
+    }
+  ],
+  "red_observed": {
+    "observed": true,
+    "reason": "FileNotFoundError on every test before the receipt and records existed; script and tests committed first"
+  },
+  "result": "DONE_CLEAN",
+  "known_escapes": [
+    "fire tests are one accept and one reject case per instrument; AUTHOR_TESTED means exactly that (no second author)",
+    "records are not registered with the custody store (Palamedes requests, Aporia writes); until registered, T020 reads none of them (AMENDMENT V8)",
+    "any later change to a listed source file resets that instrument to AUTHOR_TESTED with a new fire receipt (test_versions_are_the_current_sources goes red)"
+  ],
+  "unresolved": [
+    "registration of the 7 STAGE_RECORD rows by Aporia (Palamedes requests at T020)",
+    "ci now 73.3 CPU-s per launch (this module about 20 CPU-s)"
+  ],
+  "unblocks": [
+    "C-004-T020"
+  ],
+  "created_at_utc": "2026-10-04T13:31:08Z",
+  "instance": "m1-a86ec5e4",
+  "host": "SKULLPORT",
+  "branch": "cadmus/c004-t023a",
+  "worktree_path": "F:/Prometheus-worktrees/cadmus-c004-t023a",
+  "resources": {
+    "cpu": "1 top-level launch (ci, 73.3 CPU-s) + fire run about 20 CPU-s + unit runs about 20 CPU-s",
+    "model": "one Q2 session, about 0.4 hour"
+  },
+  "notes": "Records cite the receipt commit 4d7d1b563 on the branch; merges preserve SHAs, so it is on main once Palamedes integrates. Instrument sources unchanged on main between 6f57aa7c6 and 29ff00072."
+}
