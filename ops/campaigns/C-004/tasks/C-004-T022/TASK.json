@@ -37,7 +37,7 @@
     "rso/slice001/tests/test_ledger.py (and ledger.py only if needed)"
   ],
   "kind": "software",
-  "status": "INTEGRATION_READY",
+  "status": "INTEGRATED",
   "history": [
     {
       "status": "PROPOSED",
@@ -80,6 +80,12 @@
       "by": "Eupalamus[gandalf-ced473bf]",
       "at_utc": "2026-10-04T09:28:51Z",
       "note": "T022 INTEGRATION_READY (work on branch eupalamus-c004-t022 @ 0e7188d28)"
+    },
+    {
+      "status": "INTEGRATED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-04T09:30:37Z",
+      "note": "merged 0e7188d28; integrator on harry1: test_context_measures_cpu 20/20 isolated (was 4/10 failing); mutant cpu_s:=0.0 killed by 4 tests incl. the new fake-clock control; full suite OK (1 skipped live smoke)"
     }
   ],
   "authority": "operator directive 2026-10-03 s9, s11",
