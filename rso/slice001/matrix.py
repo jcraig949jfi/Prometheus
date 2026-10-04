@@ -13,6 +13,9 @@ Rules (each one is a test in tests/test_matrix.py):
   any non-empty text. "UNDETERMINED among A | B" matches either alternative and is reported as such.
 - A registered case with no implementation row is MISSING. MISSING is a failure, never a pass.
 - An implementation row for an unregistered case is EXTRA (reported; it cannot hide a MISSING one).
+- Reasons are compared only for FAIL outcomes: the contract registers FAIL reason forms (draft A A5, V4) and no
+  PASS or ruler reason forms, so those texts are NOT_APPLICABLE (register X17). NOT_APPLICABLE is a rule of the
+  contract and does not downgrade agreement; NOT_COMPARED (the table could not decide) does.
 - Cases whose contract entry has exit_criterion false (E06) are compared and reported but never gate.
 """
 import json
@@ -23,7 +26,7 @@ REPO = Path(__file__).resolve().parents[2]
 EXPECTED = REPO / "rso" / "slice001" / "expected" / "EXPECTED_ANSWERS.json"
 CONTRACT = REPO / "rso" / "slice001" / "contract" / "contract.json"
 
-MATCH, MISMATCH, NOT_COMPARED = "MATCH", "MISMATCH", "NOT_COMPARED"
+MATCH, MISMATCH, NOT_COMPARED, NOT_APPLICABLE = "MATCH", "MISMATCH", "NOT_COMPARED", "NOT_APPLICABLE"
 AGREE, DISAGREE, PARTIAL, MISSING, EXTRA = "AGREE", "DISAGREE", "PARTIAL", "MISSING", "EXTRA"
 VERDICT_FIELDS = ("execution", "authority", "outcome")
 COUNT_FIELDS = ("statistic", "successes", "trials", "eligible_count", "applicable_count")
@@ -94,7 +97,10 @@ def compare_verdict(exp, act, where):
         st, note = _cmp(exp["per_boundary"], act.get("per_boundary"))
         rows.append({"where": where, "field": "per_boundary", "expected": exp["per_boundary"],
                      "actual": act.get("per_boundary"), "status": st, "note": note})
-    st, note = reason_matches(exp.get("reason"), act.get("reason"))
+    if exp.get("outcome") == "FAIL":
+        st, note = reason_matches(exp.get("reason"), act.get("reason"))
+    else:
+        st, note = NOT_APPLICABLE, "no registered reason form for a %s outcome (X17)" % exp.get("outcome")
     rows.append({"where": where, "field": "reason", "expected": exp.get("reason"), "actual": act.get("reason"),
                  "status": st, "note": note})
     return rows

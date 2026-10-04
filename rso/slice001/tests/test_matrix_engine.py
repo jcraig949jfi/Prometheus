@@ -34,14 +34,27 @@ class TestFieldRules(unittest.TestCase):
         self.assertNotEqual(r["status"], M.AGREE)
 
     def test_placeholder_reason_is_a_pattern(self):
-        e = row(reason="forbidden influence across boundary 1, first visible at <episode, tick>")
-        good = row(reason="forbidden influence across boundary 1, first visible at (2, PROBE_A)")
-        bad = row(reason="forbidden influence across boundary 2, first visible at (3, PROBE_A)")
+        e = row(outcome="FAIL", reason="forbidden influence across boundary 1, first visible at <episode, tick>")
+        good = row(outcome="FAIL", reason="forbidden influence across boundary 1, first visible at (2, PROBE_A)")
+        bad = row(outcome="FAIL", reason="forbidden influence across boundary 2, first visible at (3, PROBE_A)")
         self.assertEqual(M.compare_row(e, good)["status"], M.AGREE)
         self.assertEqual(M.compare_row(e, bad)["status"], M.DISAGREE)
 
+    def test_pass_reason_wording_is_not_compared(self):
+        e = row(outcome="PASS", reason="no forbidden influence across boundaries 1-3 within H = 3")
+        a = row(outcome="PASS", reason="no forbidden influence across boundaries 1-3 within the horizon")
+        r = M.compare_row(e, a)
+        f = [x for x in r["fields"] if x["field"] == "reason"][0]
+        self.assertEqual(f["status"], M.NOT_APPLICABLE)
+        self.assertEqual(r["status"], M.AGREE)
+
+    def test_fail_reason_still_compared(self):
+        e = row(outcome="FAIL", reason="forbidden influence across boundary 1, first visible at <episode, tick>")
+        a = row(outcome="FAIL", reason="forbidden influence across boundary 3, first visible at (4, PROBE_A)")
+        self.assertEqual(M.compare_row(e, a)["status"], M.DISAGREE)
+
     def test_undetermined_among_alternatives(self):
-        e = row(reason="UNDETERMINED among SCOPE_MISMATCH:physics | IDENTITY_UNKNOWN:<node_id> (G08)")
+        e = row(outcome="FAIL", reason="UNDETERMINED among SCOPE_MISMATCH:physics | IDENTITY_UNKNOWN:<node_id> (G08)")
         st, note = M.reason_matches(e["primary"]["reason"], "IDENTITY_UNKNOWN:rcpt:REG2:BOUNDS:STANDARD")
         self.assertEqual(st, M.NOT_COMPARED)
         self.assertIn("IDENTITY_UNKNOWN", note)
