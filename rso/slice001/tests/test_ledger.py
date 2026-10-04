@@ -9,7 +9,9 @@ import os
 import subprocess
 import sys
 import tempfile
+import time
 import unittest
+from unittest import mock
 
 from rso.slice001 import evidence as E
 from rso.slice001 import ledger as L
@@ -145,12 +147,24 @@ class TestCrashRowsCheat(Base):
         self.assertEqual((row["run_id"], row["status"]), ("boom", "FAILED"))
 
     def test_context_measures_cpu(self):
+        # process_time() can tick as coarsely as ~15.6 ms on Windows, so a fixed workload can finish inside
+        # one tick and measure exactly 0.0 (C-004-T022). Spin, bounded by wall time, until it advances.
         led = self.ledger()
         with led.run("spin", "n"):
-            x = 0
-            for i in range(200000):
-                x += i
+            t0, deadline = time.process_time(), time.perf_counter() + 5.0
+            while time.process_time() <= t0:
+                if time.perf_counter() > deadline:
+                    self.fail("process_time() did not advance in 5 s of spinning")
         self.assertGreater(led.inventory()[0]["cpu_s"], 0.0)
+
+    def test_context_records_exactly_the_measured_cpu_delta(self):
+        # deterministic cheat control: with a fake clock the recorded value must be the delta, not 0.0
+        led = self.ledger()
+        with mock.patch.object(L.time, "process_time", side_effect=[10.0, 12.5]):
+            with led.run("fake-clock", "n"):
+                pass
+        row = led.inventory()[0]
+        self.assertEqual((row["status"], row["cpu_s"]), ("COMPLETED", 2.5))
 
     def test_hard_killed_process_still_leaves_a_row(self):
         # cheat control: the child dies without running any cleanup; only the START line exists.
