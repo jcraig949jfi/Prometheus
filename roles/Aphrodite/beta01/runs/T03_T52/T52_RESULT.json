@@ -1,0 +1,194 @@
+{
+ "continuity_dose2_G1": {
+  "identical_selection": 10,
+  "n": 10,
+  "rows": [
+   [
+    1,
+    "(v // (acc + {H}))",
+    "(v // (acc + {H}))"
+   ],
+   [
+    2,
+    "((acc + {H}) * v)",
+    "((acc + {H}) * v)"
+   ],
+   [
+    3,
+    "math.gcd(abs(first), abs((acc + {H})))",
+    "math.gcd(abs(first), abs((acc + {H})))"
+   ],
+   [
+    4,
+    "(0 - (acc + {H}))",
+    "(0 - (acc + {H}))"
+   ],
+   [
+    5,
+    "(first - (acc + {H}))",
+    "(first - (acc + {H}))"
+   ],
+   [
+    7,
+    null,
+    null
+   ],
+   [
+    8,
+    "(last % (acc + {H}))",
+    "(last % (acc + {H}))"
+   ],
+   [
+    9,
+    "(v - (acc + {H}))",
+    "(v - (acc + {H}))"
+   ],
+   [
+    10,
+    "(1 - (acc + {H}))",
+    "(1 - (acc + {H}))"
+   ],
+   [
+    11,
+    null,
+    null
+   ]
+  ]
+ },
+ "disposition": "MEASURED",
+ "readouts": {
+  "R_FOLLOWS_SHOWN_STRUCTURE": 0.8918918918918919,
+  "R_ONE_EXAMPLE_SUFFICES": false,
+  "R_RECOVERY_DOSE": [
+   0.10810810810810811,
+   0.46153846153846156,
+   0.875
+  ]
+ },
+ "supply": {
+  "0": 37,
+  "1": 39
+ },
+ "table": {
+  "ALL|0": {
+   "RECOVERED_MOTIF": 4,
+   "RECOVERED_OTHER": 33,
+   "SELECTED_COMPOSITION": 35,
+   "chance_recovery": 10.078,
+   "motif_was_candidate": 14,
+   "n": 37
+  },
+  "ALL|1": {
+   "RECOVERED_MOTIF": 18,
+   "RECOVERED_OTHER": 12,
+   "SELECTED_COMPOSITION": 33,
+   "chance_recovery": 7.012,
+   "motif_was_candidate": 39,
+   "n": 39
+  },
+  "ALL|2": {
+   "RECOVERED_MOTIF": 35,
+   "RECOVERED_OTHER": 4,
+   "SELECTED_COMPOSITION": 37,
+   "chance_recovery": 11.861,
+   "motif_was_candidate": 40,
+   "n": 40
+  },
+  "G1|0": {
+   "RECOVERED_MOTIF": 0,
+   "RECOVERED_OTHER": 9,
+   "SELECTED_COMPOSITION": 10,
+   "chance_recovery": 2.577,
+   "motif_was_candidate": 4,
+   "n": 10
+  },
+  "G1|1": {
+   "RECOVERED_MOTIF": 2,
+   "RECOVERED_OTHER": 2,
+   "SELECTED_COMPOSITION": 8,
+   "chance_recovery": 1.598,
+   "motif_was_candidate": 10,
+   "n": 10
+  },
+  "G1|2": {
+   "RECOVERED_MOTIF": 7,
+   "RECOVERED_OTHER": 0,
+   "SELECTED_COMPOSITION": 8,
+   "chance_recovery": 2.214,
+   "motif_was_candidate": 10,
+   "n": 10
+  },
+  "SHAM_0|0": {
+   "RECOVERED_MOTIF": 2,
+   "RECOVERED_OTHER": 7,
+   "SELECTED_COMPOSITION": 8,
+   "chance_recovery": 0.975,
+   "motif_was_candidate": 5,
+   "n": 10
+  },
+  "SHAM_0|1": {
+   "RECOVERED_MOTIF": 6,
+   "RECOVERED_OTHER": 3,
+   "SELECTED_COMPOSITION": 8,
+   "chance_recovery": 0.721,
+   "motif_was_candidate": 10,
+   "n": 10
+  },
+  "SHAM_0|2": {
+   "RECOVERED_MOTIF": 9,
+   "RECOVERED_OTHER": 2,
+   "SELECTED_COMPOSITION": 10,
+   "chance_recovery": 0.917,
+   "motif_was_candidate": 10,
+   "n": 10
+  },
+  "SHAM_1|0": {
+   "RECOVERED_MOTIF": 2,
+   "RECOVERED_OTHER": 10,
+   "SELECTED_COMPOSITION": 10,
+   "chance_recovery": 2.435,
+   "motif_was_candidate": 3,
+   "n": 10
+  },
+  "SHAM_1|1": {
+   "RECOVERED_MOTIF": 6,
+   "RECOVERED_OTHER": 3,
+   "SELECTED_COMPOSITION": 9,
+   "chance_recovery": 2.127,
+   "motif_was_candidate": 10,
+   "n": 10
+  },
+  "SHAM_1|2": {
+   "RECOVERED_MOTIF": 9,
+   "RECOVERED_OTHER": 2,
+   "SELECTED_COMPOSITION": 9,
+   "chance_recovery": 3.142,
+   "motif_was_candidate": 10,
+   "n": 10
+  },
+  "SHAM_2|0": {
+   "RECOVERED_MOTIF": 0,
+   "RECOVERED_OTHER": 7,
+   "SELECTED_COMPOSITION": 7,
+   "chance_recovery": 4.091,
+   "motif_was_candidate": 2,
+   "n": 7
+  },
+  "SHAM_2|1": {
+   "RECOVERED_MOTIF": 4,
+   "RECOVERED_OTHER": 4,
+   "SELECTED_COMPOSITION": 8,
+   "chance_recovery": 2.567,
+   "motif_was_candidate": 9,
+   "n": 9
+  },
+  "SHAM_2|2": {
+   "RECOVERED_MOTIF": 10,
+   "RECOVERED_OTHER": 0,
+   "SELECTED_COMPOSITION": 10,
+   "chance_recovery": 5.587,
+   "motif_was_candidate": 10,
+   "n": 10
+  }
+ }
+}

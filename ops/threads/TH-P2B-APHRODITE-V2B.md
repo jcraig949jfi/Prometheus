@@ -126,3 +126,5 @@ change survive another generation?**
 
 | 2026-10-04 | TEST-2 (T53) closed MEASUREMENT_FAILED (PC_ONE control mis-specified). NEW: A23's G1 SAME pairs in CON1/CON8 are extensional duplicates, so distinct-family G1 REUSED_SAME = 5/10 < k=6 (correction-only; label unchanged). DEV-3 opened |
 | 2026-10-04 | DEV-3: apparatus v2b-2 (distinctness screen); t1v2 QUALIFIED. T53 CORRECTION (post-exposure): G1 distinct-class capability 5/10 < 6, shams 8/9/10, so the effect is generic. T52 frozen; TEST-3 launched |
+
+| 2026-10-04 | TEST-3 (T52) MEASURED: selection recovery 0.11/0.46/0.875 by dose; at dose 0, 89% select the SHOWN other motif. A23 selection = shown-structure recovery. DEV-4 opened (T51 design) |

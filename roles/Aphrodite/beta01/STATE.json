@@ -6,18 +6,18 @@
   "pairs_planned": 12,
   "window_hours": 4,
   "current": {
-    "cycle": 3,
-    "window": "TEST",
-    "index": 3,
-    "opened_utc": "2026-10-04T15:04:45Z",
-    "due_close_utc": "2026-10-04T19:04:45Z",
-    "active_thread": "TH-018",
+    "cycle": 4,
+    "window": "DEV",
+    "index": 4,
+    "opened_utc": "2026-10-04T18:12:09Z",
+    "due_close_utc": "2026-10-04T22:12:09Z",
+    "active_thread": "TH-019/TH-021",
     "apparatus_version": "v2b-2",
-    "experiment": "T03 = T52 validation-dose response (R3)",
-    "attempt": 1,
-    "goal": "measure"
+    "experiment": null,
+    "attempt": null,
+    "goal": "T51 natural-recurrence design: v2b instruments + W8 F0-F7 + selection escrow choice + pre-freeze screens; freeze TEST-4"
   },
-  "last_disposition": "DEV-3 DONE",
+  "last_disposition": "TEST-3 MEASURED",
   "unresolved_defects": [
     "no receipt check for no-donor-state (S4 cond 8 class)",
     "ruler v2.1 residual 8/47 + 24.5% chance floor",
@@ -26,9 +26,9 @@
     "A20-A23 P/OFF_0 controls dead on REUSED/CAPABILITY_SAME (recorded; T53 makes them live)"
   ],
   "next_intended": {
-    "window": "DEV",
+    "window": "TEST",
     "index": 4,
-    "plan": "diagnose T52; midpoint synthesis after TEST-4; plan T51 (natural recurrence) supply screen"
+    "experiment": "T51 natural recurrence (TH-019); midpoint synthesis after TEST-4"
   },
   "missed_wake_rule": "run the due window once; never burst",
   "history": [
@@ -101,6 +101,22 @@
       "disposition": "DONE: distinctness screen; repaired controls; t1v2 QUALIFIED (graded + selection); T53 CORRECTION: G1 5/10 distinct-class (<6), shams 8/9/10 -> generic; T52 frozen",
       "report": "beta01/windows/D03_DEV_REPORT.md",
       "next_frozen": "beta01/windows/T03_T52_SPEC.md"
+    },
+    {
+      "cycle": 3,
+      "window": "TEST",
+      "index": 3,
+      "opened_utc": "2026-10-04T15:04:45Z",
+      "closed_utc": "2026-10-04T18:12:09Z",
+      "active_thread": "TH-018",
+      "apparatus_version": "v2b-2",
+      "experiment": "T03 = T52 (v1)",
+      "attempt": 1,
+      "disposition": "MEASURED: recovery 0.11/0.46/0.875 at dose 0/1/2; dose 0 selects shown other motif 0.89; one example insufficient. Selection = shown-structure recovery (G1 and shams alike). Continuity 10/10.",
+      "report": "beta01/windows/T03_REPORT_AND_REVIEW_PACKET.md",
+      "receipts": [
+        "beta01/runs/T03_T52/T52_RESULT.json"
+      ]
     }
   ]
 }
