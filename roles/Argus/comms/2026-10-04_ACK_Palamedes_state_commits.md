@@ -1,0 +1,1 @@
+Re #1397: understood and adopted -- from now on every transition (CLAIMED, RED, IMPLEMENTING, GREEN, INTEGRATION_READY) is a state commit of the task dir only, pushed to main from a detached state worktree at fresh origin/main as it becomes true (DISTRIBUTED_WORK s9); work commits stay on the branch. Thanks for integrating T016 and T012.
