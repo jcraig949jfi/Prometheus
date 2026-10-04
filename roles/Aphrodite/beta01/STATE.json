@@ -6,30 +6,31 @@
   "pairs_planned": 12,
   "window_hours": 4,
   "current": {
-    "cycle": 2,
-    "window": "TEST",
-    "index": 2,
-    "opened_utc": "2026-10-04T12:00:58Z",
-    "due_close_utc": "2026-10-04T16:00:58Z",
-    "active_thread": "TH-018/TH-021",
-    "apparatus_version": "v2b-1",
-    "experiment": "T02 = T53 D-stratified v1a re-score of A23 capability",
-    "attempt": 1,
-    "goal": "measure; finish in place if > 4h"
+    "cycle": 3,
+    "window": "DEV",
+    "index": 3,
+    "opened_utc": "2026-10-04T14:49:17Z",
+    "due_close_utc": "2026-10-04T18:49:17Z",
+    "active_thread": "TH-021/TH-018",
+    "apparatus_version": "v2b-1 -> v2b-2",
+    "experiment": null,
+    "attempt": null,
+    "goal": "repair control logic (START-relative, distinct-pair); add extensional-distinctness supply screen; run t1v2 graded+selection qualification; freeze T03"
   },
-  "last_disposition": "DEV-2 DONE",
+  "last_disposition": "TEST-2 MEASUREMENT_FAILED (control mis-specification)",
   "unresolved_defects": [
     "known-answer battery lacks graded/partial effects and selection (R3) cases",
     "no receipt check for no-donor-state (S4 cond 8 class)",
     "ruler v2.1 residual 8/47 + 24.5% chance floor",
     "T4 v1a silent on queries 1-2",
     "T01 erratum: pristine_all_censored field (fix in t1 v2)",
-    "A20-A23 P/OFF_0 controls dead on REUSED/CAPABILITY_SAME (recorded; T53 makes them live)"
+    "A20-A23 P/OFF_0 controls dead on REUSED/CAPABILITY_SAME (recorded; T53 makes them live)",
+    "transfer-family extensional duplicates not screened (A23 CON1/CON8)"
   ],
   "next_intended": {
-    "window": "DEV",
+    "window": "TEST",
     "index": 3,
-    "plan": "diagnose T53; t1 v2 (graded + selection known-answers); T52 design; Fabric pilot"
+    "experiment": "T03 TBD in DEV-3 (T53-v2 corrected and/or fresh confirmation; T52 validation dose)"
   },
   "missed_wake_rule": "run the due window once; never burst",
   "history": [
@@ -73,6 +74,23 @@
       "disposition": "DONE: T53 designed+frozen; new finding: A20-A23 P/OFF_0 controls structurally unable to score; smoke exposure contained+disclosed",
       "report": "beta01/windows/D02_DEV_REPORT.md",
       "next_frozen": "beta01/windows/T02_T53_SPEC.md"
+    },
+    {
+      "cycle": 2,
+      "window": "TEST",
+      "index": 2,
+      "opened_utc": "2026-10-04T12:00:58Z",
+      "closed_utc": "2026-10-04T14:49:17Z",
+      "active_thread": "TH-018/TH-021",
+      "apparatus_version": "v2b-1",
+      "experiment": "T02 = T53 (v1)",
+      "attempt": 1,
+      "disposition": "TECHNICAL CLEAN; SCIENTIFIC MEASUREMENT_FAILED (PC_ONE control 6/10 < 8: mis-specified known answer -- duplicate SAME pairs + START already solving). New finding: A23 G1 SAME pairs CON1/CON8 are extensional duplicates -> distinct-family G1 REUSED_SAME 5/10 < 6 (correction-only). Continuity 400/400; bridge 49/50.",
+      "report": "beta01/windows/T02_REPORT_AND_REVIEW_PACKET.md",
+      "receipts": [
+        "beta01/runs/T02_T53/T53_RESULT.json",
+        "engine/v2b/receipts/A23_SAME_PAIR_DUPLICATES.json"
+      ]
     }
   ]
 }

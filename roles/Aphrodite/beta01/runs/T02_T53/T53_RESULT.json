@@ -1,0 +1,761 @@
+{
+ "D_stratified_G1_SAME_vs_START": {
+  "N_COV": 151920,
+  "by_arm": {
+   "SEL_G1": {
+    "CENSORED": {
+     "arm_censored": 8,
+     "mean_delta": 2.3113,
+     "median_delta": 2.5305,
+     "n": 57,
+     "solves_where_ref_censored": 49,
+     "spurious": 232
+    },
+    "COVERED": {
+     "arm_censored": 0,
+     "mean_delta": 0.0,
+     "median_delta": 0.0,
+     "n": 16,
+     "solves_where_ref_censored": 0,
+     "spurious": 0
+    },
+    "WINDOW": {
+     "arm_censored": 0,
+     "mean_delta": 1.9786,
+     "median_delta": 1.803,
+     "n": 7,
+     "solves_where_ref_censored": 0,
+     "spurious": 0
+    }
+   },
+   "SEL_G1_NC": {
+    "CENSORED": {
+     "arm_censored": 57,
+     "mean_delta": 0.0,
+     "median_delta": 0.0,
+     "n": 57,
+     "solves_where_ref_censored": 0,
+     "spurious": 49
+    },
+    "COVERED": {
+     "arm_censored": 0,
+     "mean_delta": 0.0,
+     "median_delta": 0.0,
+     "n": 16,
+     "solves_where_ref_censored": 0,
+     "spurious": 0
+    },
+    "WINDOW": {
+     "arm_censored": 0,
+     "mean_delta": 0.0,
+     "median_delta": 0.0,
+     "n": 7,
+     "solves_where_ref_censored": 0,
+     "spurious": 0
+    }
+   },
+   "SEL_OFF_0": {
+    "CENSORED": {
+     "arm_censored": 57,
+     "mean_delta": 0.0,
+     "median_delta": 0.0,
+     "n": 57,
+     "solves_where_ref_censored": 0,
+     "spurious": 45
+    },
+    "COVERED": {
+     "arm_censored": 7,
+     "mean_delta": -1.2235,
+     "median_delta": -0.3446,
+     "n": 16,
+     "solves_where_ref_censored": 0,
+     "spurious": 36
+    },
+    "WINDOW": {
+     "arm_censored": 0,
+     "mean_delta": -0.0,
+     "median_delta": 0.0,
+     "n": 7,
+     "solves_where_ref_censored": 0,
+     "spurious": 0
+    }
+   },
+   "SEL_P": {
+    "CENSORED": {
+     "arm_censored": 57,
+     "mean_delta": 0.0,
+     "median_delta": 0.0,
+     "n": 57,
+     "solves_where_ref_censored": 0,
+     "spurious": 45
+    },
+    "COVERED": {
+     "arm_censored": 7,
+     "mean_delta": -1.2155,
+     "median_delta": -0.2805,
+     "n": 16,
+     "solves_where_ref_censored": 0,
+     "spurious": 36
+    },
+    "WINDOW": {
+     "arm_censored": 0,
+     "mean_delta": 0.0117,
+     "median_delta": 0.0085,
+     "n": 7,
+     "solves_where_ref_censored": 0,
+     "spurious": 0
+    }
+   },
+   "START": {
+    "CENSORED": {
+     "arm_censored": 57,
+     "mean_delta": 0.0,
+     "median_delta": 0.0,
+     "n": 57,
+     "solves_where_ref_censored": 0,
+     "spurious": 49
+    },
+    "COVERED": {
+     "arm_censored": 0,
+     "mean_delta": 0.0,
+     "median_delta": 0.0,
+     "n": 16,
+     "solves_where_ref_censored": 0,
+     "spurious": 0
+    },
+    "WINDOW": {
+     "arm_censored": 0,
+     "mean_delta": 0.0,
+     "median_delta": 0.0,
+     "n": 7,
+     "solves_where_ref_censored": 0,
+     "spurious": 0
+    }
+   }
+  },
+  "cap": 10000000,
+  "ref": "START"
+ },
+ "apparatus": "eb21ef8abb86ba08",
+ "apparatus_controls": {
+  "NC_OTHER": {
+   "detail": [
+    [
+     1,
+     true,
+     0,
+     null
+    ],
+    [
+     2,
+     true,
+     0,
+     null
+    ],
+    [
+     3,
+     true,
+     0,
+     null
+    ],
+    [
+     4,
+     true,
+     0,
+     null
+    ],
+    [
+     5,
+     true,
+     0,
+     null
+    ],
+    [
+     7,
+     true,
+     0,
+     null
+    ],
+    [
+     8,
+     true,
+     0,
+     null
+    ],
+    [
+     9,
+     true,
+     0,
+     null
+    ],
+    [
+     10,
+     true,
+     0,
+     null
+    ],
+    [
+     11,
+     true,
+     0,
+     null
+    ]
+   ],
+   "n": 10,
+   "reps_ok": 10
+  },
+  "PC_MOTIF": {
+   "detail": [
+    [
+     1,
+     true,
+     2,
+     null
+    ],
+    [
+     2,
+     true,
+     2,
+     null
+    ],
+    [
+     3,
+     true,
+     2,
+     null
+    ],
+    [
+     4,
+     true,
+     2,
+     null
+    ],
+    [
+     5,
+     true,
+     2,
+     null
+    ],
+    [
+     7,
+     true,
+     0,
+     null
+    ],
+    [
+     8,
+     true,
+     2,
+     null
+    ],
+    [
+     9,
+     true,
+     2,
+     null
+    ],
+    [
+     10,
+     true,
+     2,
+     null
+    ],
+    [
+     11,
+     true,
+     0,
+     null
+    ]
+   ],
+   "n": 10,
+   "reps_ok": 10
+  },
+  "PC_ONE": {
+   "detail": [
+    [
+     1,
+     false,
+     4,
+     4
+    ],
+    [
+     2,
+     true,
+     4,
+     0
+    ],
+    [
+     3,
+     true,
+     4,
+     0
+    ],
+    [
+     4,
+     true,
+     4,
+     0
+    ],
+    [
+     5,
+     true,
+     4,
+     0
+    ],
+    [
+     7,
+     false,
+     4,
+     4
+    ],
+    [
+     8,
+     false,
+     4,
+     4
+    ],
+    [
+     9,
+     true,
+     4,
+     0
+    ],
+    [
+     10,
+     true,
+     4,
+     1
+    ],
+    [
+     11,
+     false,
+     4,
+     4
+    ]
+   ],
+   "n": 10,
+   "reps_ok": 6
+  }
+ },
+ "bridge_A23_CAPABILITY_SAME": {
+  "G1": {
+   "agree": 9,
+   "hist_only": 1,
+   "new_only": 0,
+   "rows": [
+    [
+     1,
+     true,
+     true
+    ],
+    [
+     2,
+     false,
+     false
+    ],
+    [
+     3,
+     true,
+     true
+    ],
+    [
+     4,
+     true,
+     true
+    ],
+    [
+     5,
+     true,
+     true
+    ],
+    [
+     7,
+     false,
+     false
+    ],
+    [
+     8,
+     true,
+     false
+    ],
+    [
+     9,
+     true,
+     true
+    ],
+    [
+     10,
+     true,
+     true
+    ],
+    [
+     11,
+     false,
+     false
+    ]
+   ]
+  },
+  "G1_NC": {
+   "agree": 10,
+   "hist_only": 0,
+   "new_only": 0,
+   "rows": [
+    [
+     1,
+     false,
+     false
+    ],
+    [
+     2,
+     false,
+     false
+    ],
+    [
+     3,
+     false,
+     false
+    ],
+    [
+     4,
+     false,
+     false
+    ],
+    [
+     5,
+     false,
+     false
+    ],
+    [
+     7,
+     false,
+     false
+    ],
+    [
+     8,
+     false,
+     false
+    ],
+    [
+     9,
+     false,
+     false
+    ],
+    [
+     10,
+     false,
+     false
+    ],
+    [
+     11,
+     false,
+     false
+    ]
+   ]
+  },
+  "SHAM_0": {
+   "agree": 10,
+   "hist_only": 0,
+   "new_only": 0,
+   "rows": [
+    [
+     1,
+     false,
+     false
+    ],
+    [
+     2,
+     true,
+     true
+    ],
+    [
+     3,
+     false,
+     false
+    ],
+    [
+     4,
+     true,
+     true
+    ],
+    [
+     5,
+     true,
+     true
+    ],
+    [
+     7,
+     true,
+     true
+    ],
+    [
+     8,
+     true,
+     true
+    ],
+    [
+     9,
+     true,
+     true
+    ],
+    [
+     10,
+     true,
+     true
+    ],
+    [
+     11,
+     true,
+     true
+    ]
+   ]
+  },
+  "SHAM_1": {
+   "agree": 10,
+   "hist_only": 0,
+   "new_only": 0,
+   "rows": [
+    [
+     1,
+     true,
+     true
+    ],
+    [
+     2,
+     true,
+     true
+    ],
+    [
+     3,
+     true,
+     true
+    ],
+    [
+     4,
+     true,
+     true
+    ],
+    [
+     5,
+     true,
+     true
+    ],
+    [
+     7,
+     false,
+     false
+    ],
+    [
+     8,
+     true,
+     true
+    ],
+    [
+     9,
+     true,
+     true
+    ],
+    [
+     10,
+     true,
+     true
+    ],
+    [
+     11,
+     true,
+     true
+    ]
+   ]
+  },
+  "SHAM_2": {
+   "agree": 10,
+   "hist_only": 0,
+   "new_only": 0,
+   "rows": [
+    [
+     1,
+     true,
+     true
+    ],
+    [
+     2,
+     true,
+     true
+    ],
+    [
+     3,
+     true,
+     true
+    ],
+    [
+     4,
+     true,
+     true
+    ],
+    [
+     5,
+     true,
+     true
+    ],
+    [
+     7,
+     true,
+     true
+    ],
+    [
+     8,
+     true,
+     true
+    ],
+    [
+     9,
+     true,
+     true
+    ],
+    [
+     10,
+     true,
+     true
+    ],
+    [
+     11,
+     true,
+     true
+    ]
+   ]
+  }
+ },
+ "cap": 10000000,
+ "continuity_A23_selected_charges": {
+  "comparable_cells": 400,
+  "identical": 400
+ },
+ "counts": {
+  "G1|NC_OTHER": {
+   "CAP_D_OTHER": 0,
+   "CAP_D_SAME": 0,
+   "n": 10
+  },
+  "G1|PC_MOTIF": {
+   "CAP_D_OTHER": 0,
+   "CAP_D_SAME": 7,
+   "n": 10
+  },
+  "G1|PC_ONE": {
+   "CAP_D_OTHER": 0,
+   "CAP_D_SAME": 1,
+   "n": 10
+  },
+  "G1|SEL_G1": {
+   "CAP_D_OTHER": 0,
+   "CAP_D_SAME": 6,
+   "n": 10
+  },
+  "G1|SEL_G1_NC": {
+   "CAP_D_OTHER": 0,
+   "CAP_D_SAME": 0,
+   "n": 10
+  },
+  "G1|SEL_OFF_0": {
+   "CAP_D_OTHER": 0,
+   "CAP_D_SAME": 0,
+   "n": 10
+  },
+  "G1|SEL_P": {
+   "CAP_D_OTHER": 0,
+   "CAP_D_SAME": 0,
+   "n": 10
+  },
+  "SHAM_0|SEL_OFF_0": {
+   "CAP_D_OTHER": 0,
+   "CAP_D_SAME": 0,
+   "n": 10
+  },
+  "SHAM_0|SEL_P": {
+   "CAP_D_OTHER": 0,
+   "CAP_D_SAME": 0,
+   "n": 10
+  },
+  "SHAM_0|SEL_SHAM_0": {
+   "CAP_D_OTHER": 1,
+   "CAP_D_SAME": 8,
+   "n": 10
+  },
+  "SHAM_1|SEL_OFF_0": {
+   "CAP_D_OTHER": 0,
+   "CAP_D_SAME": 0,
+   "n": 10
+  },
+  "SHAM_1|SEL_P": {
+   "CAP_D_OTHER": 0,
+   "CAP_D_SAME": 0,
+   "n": 10
+  },
+  "SHAM_1|SEL_SHAM_1": {
+   "CAP_D_OTHER": 0,
+   "CAP_D_SAME": 9,
+   "n": 10
+  },
+  "SHAM_2|SEL_OFF_0": {
+   "CAP_D_OTHER": 0,
+   "CAP_D_SAME": 0,
+   "n": 10
+  },
+  "SHAM_2|SEL_P": {
+   "CAP_D_OTHER": 0,
+   "CAP_D_SAME": 0,
+   "n": 10
+  },
+  "SHAM_2|SEL_SHAM_2": {
+   "CAP_D_OTHER": 0,
+   "CAP_D_SAME": 10,
+   "n": 10
+  }
+ },
+ "disposition": "MEASUREMENT_FAILED",
+ "generic_cliff_excess_G1_over_shams": -4,
+ "live_control_sign_tests_G1": {
+  "SEL_G1_NC": {
+   "a": 6,
+   "b": 0,
+   "p": 0.01562
+  },
+  "SEL_OFF_0": {
+   "a": 6,
+   "b": 0,
+   "p": 0.01562
+  },
+  "SEL_P": {
+   "a": 6,
+   "b": 0,
+   "p": 0.01562
+  }
+ },
+ "motif_recovery_split": {
+  "COMPOSES_HELD": {
+   "CAP_D_SAME": 0,
+   "n": 2
+  },
+  "NONE": {
+   "CAP_D_SAME": 0,
+   "n": 2
+  },
+  "OTHER": {
+   "CAP_D_SAME": 0,
+   "n": 1
+  },
+  "RECOVERED": {
+   "CAP_D_SAME": 33,
+   "n": 35
+  }
+ },
+ "n_reps": 10,
+ "n_technical": 0,
+ "readouts": {
+  "R_G1_SPECIFIC": "NO",
+  "R_LIVE_CONTROLS_BEATEN": true,
+  "R_RECOVERY_ONLY": true,
+  "R_SURVIVES": "YES"
+ },
+ "technical_failures": [],
+ "threshold_k": 6
+}
