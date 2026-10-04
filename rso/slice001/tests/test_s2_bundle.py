@@ -182,17 +182,17 @@ class TestEditsOnRealG0(unittest.TestCase):
         self.assertEqual(g["G-BIND"], PASS)
         self.assertEqual(g["G-RECOMP"][0], "FAIL")
 
-    @unittest.expectedFailure
+    # expectedFailure removed by Palamedes at C-004-T025 integration: T024_2 fixed (cpu_us)
     def test_e05_fab_anchors_custody(self):
         fab = F.case_for("E05.FAB_ANCHORS", base())
         self.assertIn("ANCHORS_FROM_PRODUCER", EV.custody(fab.bundle, fab.anchors, fab.store, fab.first_check)["why"])
 
-    @unittest.expectedFailure
+    # expectedFailure removed by Palamedes at C-004-T025 integration: T024_2 fixed (cpu_us)
     def test_e05_keeper_row_cases_on_the_real_base(self):
         for cid in KEEPER_ROW_CASES:
             F.case_for(cid, base())
 
-    @unittest.expectedFailure
+    # expectedFailure removed by Palamedes at C-004-T025 integration: T024_2 fixed (cpu_us)
     def test_e05_custody_logic(self):
         k = F.case_for("E05.KEEPER", base())
         self.assertEqual(EV.custody(k.bundle, k.anchors, k.store, k.first_check)["status"], "QUALIFIED")
