@@ -7,17 +7,17 @@
   "window_hours": 4,
   "current": {
     "cycle": 4,
-    "window": "DEV",
+    "window": "TEST",
     "index": 4,
-    "opened_utc": "2026-10-04T18:12:09Z",
-    "due_close_utc": "2026-10-04T22:12:09Z",
-    "active_thread": "TH-019/TH-021",
+    "opened_utc": "2026-10-04T18:28:53Z",
+    "due_close_utc": "2026-10-04T22:28:53Z",
+    "active_thread": "TH-019",
     "apparatus_version": "v2b-2",
-    "experiment": null,
-    "attempt": null,
-    "goal": "T51 natural-recurrence design: v2b instruments + W8 F0-F7 + selection escrow choice + pre-freeze screens; freeze TEST-4"
+    "experiment": "T04 = T51 natural-recurrence donor stage",
+    "attempt": 1,
+    "goal": "measure; then mid-campaign synthesis"
   },
-  "last_disposition": "TEST-3 MEASURED",
+  "last_disposition": "DEV-4 DONE",
   "unresolved_defects": [
     "no receipt check for no-donor-state (S4 cond 8 class)",
     "ruler v2.1 residual 8/47 + 24.5% chance floor",
@@ -26,9 +26,9 @@
     "A20-A23 P/OFF_0 controls dead on REUSED/CAPABILITY_SAME (recorded; T53 makes them live)"
   ],
   "next_intended": {
-    "window": "TEST",
-    "index": 4,
-    "experiment": "T51 natural recurrence (TH-019); midpoint synthesis after TEST-4"
+    "window": "DEV",
+    "index": 5,
+    "plan": "diagnose T51 + MIDPOINT SYNTHESIS (after TEST-4); R7 improver-mutability probe design"
   },
   "missed_wake_rule": "run the due window once; never burst",
   "history": [
@@ -117,6 +117,18 @@
       "receipts": [
         "beta01/runs/T03_T52/T52_RESULT.json"
       ]
+    },
+    {
+      "cycle": 4,
+      "window": "DEV",
+      "index": 4,
+      "opened_utc": "2026-10-04T18:12:09Z",
+      "closed_utc": "2026-10-04T18:28:53Z",
+      "active_thread": "TH-019",
+      "apparatus_version": "v2b-2",
+      "disposition": "DONE: T51 designed (W8 F0-F7 + v2b endpoints; escrow 30k declared); F1 8/8, F6a 0.661, F6b ~0.24; smoke OK; frozen",
+      "report": "beta01/windows/D04_DEV_REPORT.md",
+      "next_frozen": "beta01/windows/T04_T51_SPEC.md"
     }
   ]
 }
