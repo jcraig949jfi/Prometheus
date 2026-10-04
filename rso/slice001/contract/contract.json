@@ -1,6 +1,6 @@
 {
   "schema": "rso.slice001.contract.v1",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "frozen": true,
   "campaign": "C-004 RSO-METHODS-SLICE-001",
   "frozen_by": "Palamedes[harry1-679179c6] under C-004-T004",
@@ -234,8 +234,22 @@
       "WITHDRAWAL",
       "EXPECTED_ANSWER_TABLE"
     ],
-    "store": "UNSET: locator fixed by Aporia before the first C-004-T020 matrix run (R3; amendment v1.0.2); until set T020 is BLOCKED (V8)",
+    "store": "postgresql://192.168.1.202:5432/prometheus_fire#custody.registry",
+    "store_access": "read through the comms connection (EW_DB_HOST=192.168.1.202 off M1): `python -m ops.custody.registry read [--kind K] [--json]`; verify: `python -m ops.custody.registry verify` (exit 0 ok, 1 chain break -> custody ROW_CHAIN_BROKEN, 3 unreachable -> STORE_UNREACHABLE; neither is ever a pass); consumer reader rso/slice001/evidence.py RegistryStore (C-004-T021)",
+    "row_fields": [
+      "row_id",
+      "registered_at_utc",
+      "registrar",
+      "record_kind",
+      "repo_path",
+      "blob_sha256",
+      "commit_sha",
+      "campaign",
+      "prev_hash",
+      "row_hash"
+    ],
     "write_access": "the registrar only; no cell seat writes",
+    "independence_caveat": "the registrar is a fleet seat outside the cell, not a separate organisation; custody qualifies byte identity since registration, nothing more (B5.4). Residual (Aporia, v1.0.2 W2): every seat connects as the same Postgres superuser, which can disable the refusal triggers, so write exclusivity is procedural; tampering is DETECTED (chain recompute plus heads Aporia publishes on comms) rather than prevented. Custody QUALIFIED means 'bytes registered at the recorded time, chain intact at check time', within B5.4, and never more",
     "prerequisite_of": [
       "CL-CUST"
     ],
@@ -806,6 +820,18 @@
         "V6 custody why list",
         "V7 G-INV attribution",
         "V8 stage records while store unset"
+      ]
+    },
+    {
+      "version": "1.0.2",
+      "path": "rso/slice001/contract/AMENDMENT_v1.0.2.md",
+      "by": "Palamedes[harry1-679179c6]",
+      "applied_by": "Argus[desktop-ruapvai-b08b36ac] under C-004-T021",
+      "answers": "Aporia comms #1353 (registrar, C-004-OP2); operator confirmation of the store 2026-10-04",
+      "scope": "custody.store locator and the residual it carries; nothing else changes",
+      "items": [
+        "W1 custody.store locator, read/verify access, ROW_CHAIN_BROKEN and STORE_UNREACHABLE mapping",
+        "W2 independence_caveat residual"
       ]
     }
   ],
