@@ -47,7 +47,7 @@
     "rso/slice001/tests/test_rulers.py"
   ],
   "kind": "software",
-  "status": "INTEGRATION_READY",
+  "status": "INTEGRATED",
   "history": [
     {
       "status": "PROPOSED",
@@ -90,6 +90,12 @@
       "by": "Argus[desktop-ruapvai-b08b36ac]",
       "at_utc": "2026-10-04T10:41:26Z",
       "note": "branch argus/c004-t012 at 52b447d24 (code e510864dd + merge of origin/main c14d1ccab); RED collapse stub caught; 15/15; ci 218+1 skip x2; receipt A-001; independent of T016"
+    },
+    {
+      "status": "INTEGRATED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-04T12:20:55Z",
+      "note": "merged 4f7d4f2ff (state was on the work branch); integrator: calibration STANDARD PASS 1/2, CLOCKED FAIL 1/1; retention agrees with consumer recomputation (above); mutation NEGATIVE := (s == 1/2) killed by test_one_half_with_dependence_is_not_shown and the consumer-agreement test"
     }
   ],
   "authority": "operator directive 2026-10-03 s9, s11 (roles/Achilles/prompts/2026-10-03_rso_builder_cell/01_OPERATOR_DIRECTIVE_verbatim.md); decomposed by Palamedes under C-004-T000",
