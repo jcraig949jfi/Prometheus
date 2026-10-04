@@ -3,12 +3,12 @@
   "seat": "Cadmus",
   "mwo_id": "MWO-0004",
   "authority": "operator directive 2026-10-03 (roles/Achilles/prompts/2026-10-03_rso_builder_cell/01_OPERATOR_DIRECTIVE_verbatim.md); M1 drain exclusion: roles/Aporia/prompts/2026-10-03_m1_drain_amendment_cadmus/",
-  "updated_at_utc": "2026-10-04T09:47:12Z",
+  "updated_at_utc": "2026-10-04T10:36:30Z",
   "state": "READY",
-  "branch": "cadmus/c004-t010",
-  "head_sha": "e08c61a46077bd92a76bd680adca2c5dc3162fcc",
-  "base_sha": "35a1b8bd14a11f85dad645522a944c5a917430aa",
-  "worktree_path": "F:/Prometheus-worktrees/cadmus-c004-t010",
+  "branch": "cadmus/c004-t011",
+  "head_sha": "32d9bbd7ebf3964878c77d6b6166fddc79e9c79d",
+  "base_sha": "938bc10321d5a7d8e8ef88f14c353b1f6ebcb070",
+  "worktree_path": "F:/Prometheus-worktrees/cadmus-c004-t011",
   "state_worktree_path": "F:/Prometheus-worktrees/cadmus-ops (detached at origin/main, state commits only)",
   "model": "claude-opus-5-5",
   "capability_class": "Q2",
@@ -16,11 +16,11 @@
   "instance": "m1-a86ec5e4",
   "session_start_utc": "2026-10-03T11:25:00Z (comms boot record; harness session start UNKNOWN)",
   "current_objective": "RSO Builder Cell member, campaign C-004 (RSO-METHODS-SLICE-001)",
-  "current_step": "C-004-T010 INTEGRATION_READY (world.py at e08c61a46); T001 INTEGRATED; waiting for T010 integration to open T011/T012",
+  "current_step": "C-004-T011 INTEGRATION_READY (merged tree 32d9bbd7e, ci PASSED); T010, T001 INTEGRATED; T012/T016 left to Argus per #1376",
   "in_flight": [],
   "finish_condition": "per claimed packet (DISTRIBUTED_WORK.md)",
-  "next_expected_milestone": "Palamedes integrates T010; then T011 (reset/restart/observer) and T012 (rulers)",
-  "expected_next_artifact": "rso/slice001/reset.py, observer.py, fixtures/world_cases.py (C-004-T011)",
+  "next_expected_milestone": "Palamedes integrates T011; T018 after T012; support T020",
+  "expected_next_artifact": "rso/slice001/encoding.py (C-004-T018) once T012 is integrated",
   "threads": [
     "phase3-rso"
   ],
@@ -36,10 +36,10 @@
     "claim T011/T012 when READY; T016 also needs T013 (Argus); T018 needs T012"
   ],
   "operator_decisions_required": [],
-  "last_push_sha": "e08c61a46 (branch cadmus/c004-t010); T010 state commit to main follows",
-  "last_push_utc": "2026-10-04T09:47Z",
+  "last_push_sha": "32d9bbd7e (branch cadmus/c004-t011); T011 state commit to main follows",
+  "last_push_utc": "2026-10-04T10:36Z",
   "latest_reports": [
-    "ops/campaigns/C-004/tasks/C-004-T010/attempts/A-001/RECEIPT.json",
-    "ops/campaigns/C-004/tasks/C-004-T001/attempts/A-001/RECEIPT.json"
+    "ops/campaigns/C-004/tasks/C-004-T011/attempts/A-001/RECEIPT.json",
+    "ops/campaigns/C-004/tasks/C-004-T010/attempts/A-001/RECEIPT.json"
   ]
 }

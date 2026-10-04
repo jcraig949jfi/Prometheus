@@ -1,0 +1,69 @@
+{
+  "schema": "prometheus.workgraph.receipt.v1",
+  "task_id": "C-004-T011",
+  "campaign_id": "C-004",
+  "attempt_id": "A-001",
+  "role": "Cadmus",
+  "model": "claude-opus-5-5",
+  "quality_class": "Q2",
+  "start_sha": "938bc10321d5a7d8e8ef88f14c353b1f6ebcb070",
+  "end_sha": "32d9bbd7ebf3964878c77d6b6166fddc79e9c79d",
+  "files_changed": [
+    "rso/slice001/reset.py",
+    "rso/slice001/observer.py",
+    "rso/slice001/fixtures/world_cases.py",
+    "rso/slice001/tests/test_reset_observer.py"
+  ],
+  "evidence_added": [
+    "reset.py: run_points (schedule-point runner, pinned equal to world.run_life), BOUNDS (P0), ERASE (P3), PRESERVE (P4), CHANNEL (P5) with clamp_answers rows for trace:clamp, RESTART (P6, FRESH and COMPLEMENT_PREFIX); outcomes in checker.py's gate shape plus execution; a BoundsViolation blocks every predicate",
+    "observer.py: CAPTURE_PURE and OBS_EQ (P7), state trace after every tick, BOOKKEEPING excluded from state only; V4 reason forms",
+    "fixtures/world_cases.py: 21 runtimes, 8 observers; ESCAPES = 21 C3 IN-MODEL rows as named fixtures (20 run here, 1 CALIBRATION row for T012); STATED_LIMITS = 2 OUT-OF-MODEL pins",
+    "tests: 31 tests -- T03-T08 and P0 outcomes with counts and witnesses; fire tests (8 naive stubs, each passing a broken fixture, each shown non-vacuous); every IN-MODEL escape FAILs its predicate; both stated limits PASS; ERASE, PRESERVE, CHANNEL equal checker.recompute_* on the same runs (value, eligible_count, applicable_count, witness)"
+  ],
+  "evidence_executed": [
+    {
+      "command": "python -B -m unittest rso.slice001.tests.test_reset_observer (before reset.py/observer.py existed, dcc6fbb8d)",
+      "result": "RED: ImportError: cannot import name 'observer' from 'rso.slice001' (10:30Z)"
+    },
+    {
+      "command": "test_reset_observer under a timing runner (97943aecc)",
+      "result": "31 run, 0 failed, 0 errored; 24.9 CPU-s"
+    },
+    {
+      "command": "scratch mutation check: 8 one-line mutants of reset.py / observer.py, each against one targeted test",
+      "result": "8 of 8 killed (author-chosen: author-tested only)"
+    },
+    {
+      "command": "python -B -m rso.slice001.ci (merged tree: branch + origin/main 24824a0a6 = 32d9bbd7e)",
+      "result": "PASSED: 235 run, 234 passed, 1 skipped, 0 failed, 0 errored; cpu_s 32.516; wall_s 38.344; dirty false"
+    }
+  ],
+  "red_observed": {
+    "observed": true,
+    "reason": "ImportError before the predicates existed; fixtures and tests committed alone at dcc6fbb8d. Fire tests show each T03-T08 broken fixture passing a naive stub (rso-builder-role s2.4)."
+  },
+  "result": "DONE_CLEAN",
+  "known_escapes": [
+    "author tests and author mutants only; no second author has attacked these predicates (S3 is the first-sight challenge)",
+    "the stated limits of draft A A7 (leak first at reset call 4; capture wrong only after the last tick) pass by construction and are pinned as passing",
+    "CHANNEL and OBS_EQ's state part act through capture/restore; their results are trustworthy only with RESTART PASS (draft A A5 coupling)"
+  ],
+  "unresolved": [
+    "for T020: first witnesses follow the canonical order (history first), so ERASE/PRESERVE witnesses fall at boundary 3 for LAGD (h=64), WIPE (h=128), SLEEPER (h=64), EVERY3; the independent table assumed boundary 1 for LAGD and WIPE",
+    "cost: RESTART is about 2.6-3.5 CPU-s per full run; this test module adds about 25 CPU-s to every ci launch (ci went 7.9 -> 32.5 CPU-s); 12 launches at this size are about 6.5 of the 30 CPU-minutes",
+    "no shared caps-ledger store on main yet (asked in #1374); launches recorded in receipts only"
+  ],
+  "unblocks": [
+    "C-004-T020"
+  ],
+  "created_at_utc": "2026-10-04T10:36:30Z",
+  "instance": "m1-a86ec5e4",
+  "host": "SKULLPORT",
+  "branch": "cadmus/c004-t011",
+  "worktree_path": "F:/Prometheus-worktrees/cadmus-c004-t011",
+  "resources": {
+    "cpu": "1 top-level launch (ci, 32.516 CPU-s); unit runs and timing about 90 CPU-s; 8 mutant children about 9 CPU-s",
+    "model": "one Q2 session, about 0.75 hour"
+  },
+  "notes": "X05: AMNESIAC answers from a (CHANNEL PASS, tested). X09/X15: HCOUNT's first RESTART witness is history 0, cut 4 = (RESET 1), target FRESH. Observers act after each of the 24 ticks only, matching the contract count 196608."
+}
