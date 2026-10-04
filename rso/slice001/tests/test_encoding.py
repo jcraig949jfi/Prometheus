@@ -43,9 +43,10 @@ class TestTwins(unittest.TestCase):
 
     def test_twins_differ_in_representation_but_not_in_behaviour(self):
         reg, one, flat = WC.REG(), EN.REG_ONEHOT(), EN.REG_FLAT()
-        self.assertFalse(hasattr(one, "a") and isinstance(getattr(one, "a", None), int) and one.__dict__.get("a")
-                         is not None and "aa" not in one.__dict__)
-        self.assertIn("aa", one.__dict__)                 # stored as a one-hot pair, not as a bit
+        self.assertFalse(hasattr(one, "a"))               # no bit register: a and d live only as one-hot pairs
+        self.assertFalse(hasattr(one, "d"))
+        self.assertEqual(one.aa, (1, 0))
+        self.assertFalse(hasattr(flat, "a"))              # one state tuple, advanced only by table lookup
         self.assertGreater(len(EN.FLAT_TABLE), 0)
         for h in (0, 1365, 2730, 4095):
             o = W.run_life(WC.REG, h).outputs
