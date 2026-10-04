@@ -6,6 +6,10 @@ template in roles/template to set yourself up." This file is that template.
 It is a FILE, not a directory, on purpose: the census, the comms roster and
 the self-tests treat every directory under roles/ as a seat.
 
+If you cannot see this file on disk, the canonical checkout is behind origin/main
+(it is never pulled). Run `git fetch origin`, then read it with:
+    git show origin/main:roles/template
+
 Do exactly this. Do not hand-write seat files; a tool writes and checks them.
 Do not `git pull` (WORKING_CONTRACT.md s3). The canonical checkout may be
 behind origin/main, so everything below reads from origin/main after a fetch.
@@ -21,9 +25,13 @@ behind origin/main, so everything below reads from origin/main after a fetch.
    Nothing else is ever run there except the tool below, which only adds a
    worktree.
 
-2. Save the operator's words, byte for byte, in a temporary file with your
-   file-writing tool (not retyped from memory, not through a shell). Include
-   the sentence that named you and any other words they said about the seat.
+2. Save the operator's words in a temporary file OUTSIDE the repository (your
+   session's scratchpad or temp directory) with your file-writing tool, not
+   retyped from memory and not through a shell. "Verbatim" means their words
+   exactly, spacing and punctuation unedited: the sentence that named you and
+   anything else they said about the seat. Leave out anything that is not the
+   operator's (test-harness text, your own notes). A trailing newline is fine;
+   the tool adds one if it is missing.
 
 3. Check the name is free (about 8 seconds). Read-only; creates nothing:
        git show origin/main:roles/base-role/seat_kit/new_seat.py | python - <Name> --model <model> --dry-run
@@ -32,20 +40,23 @@ behind origin/main, so everything below reads from origin/main after a fetch.
    suggest another. Do not continue under that name.
 
 4. Create the seat (about 25-40 seconds):
-       git show origin/main:roles/base-role/seat_kit/new_seat.py | python - <Name> --model <model> --directive-file <the file from step 2> --stated "<one thing the operator said about the seat, in their words>" --push
+       git show origin/main:roles/base-role/seat_kit/new_seat.py | python - <Name> --model <model> --directive-file <the file from step 2> [--stated "<one thing the operator said about the seat, in their words>"] [--host-label "<HOST (Mn)>"] [--trailer "<line>"] --push
    Rules for the options:
-     --stated      repeat once per distinct thing the operator said about the
+     --stated      OPTIONAL; repeat once per distinct thing the operator said about the
                    seat (their adjectives, their purpose), quoted exactly.
                    Leave it out if they said nothing beyond the name.
-     --host-label  add --host-label "<HOST (Mn)>" only if the operator named
+     --host-label  OPTIONAL; add --host-label "<HOST (Mn)>" only if the operator named
                    the machine, e.g. "M2 (spectrex5)". Otherwise the tool uses
                    this machine's hostname.
-     --trailer     if your session instructions give commit attribution lines
+     --trailer     OPTIONAL; if your session instructions give commit attribution lines
                    (Co-Authored-By, Claude-Session), pass each one as its own
                    --trailer "<line>". Omit if you have none.
      --push        publishes to origin/main as a fast-forward. The operator's
                    instruction to create the seat is the authority; omit
                    --push only if they told you not to publish.
+   Use whichever of `python`, `python3` or `py -3` runs Python 3.8+ on this
+   machine in place of `python` above. From Git Bash on Windows, quote the
+   --directive-file path (a Windows-style path in quotes is fine).
    Needs: git, Python 3.8+, and psycopg2 for the comms boot. If psycopg2 is
    missing the seat is still created and the failed boot is recorded as a
    blocker; tell the operator. Do not install packages machine-wide.
