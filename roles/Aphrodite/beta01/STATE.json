@@ -7,17 +7,17 @@
   "window_hours": 4,
   "current": {
     "cycle": 5,
-    "window": "DEV",
+    "window": "TEST",
     "index": 5,
-    "opened_utc": "2026-10-04T20:51:16Z",
-    "due_close_utc": "2026-10-05T00:51:16Z",
-    "active_thread": "TH-P2B-APHRODITE-V2B (midpoint) / R7",
-    "apparatus_version": "v2b-2",
-    "experiment": null,
-    "attempt": null,
-    "goal": "MIDPOINT SYNTHESIS (after TEST-4); design + engineer R7 GTC probe (donor_g interpreter, conformance gate, chain runner); freeze TEST-5"
+    "opened_utc": "2026-10-04T21:12:03Z",
+    "due_close_utc": "2026-10-05T01:12:03Z",
+    "active_thread": "R7 (P2)",
+    "apparatus_version": "v2b-2 + gtc",
+    "experiment": "T05 = GTC improver-mutability probe",
+    "attempt": 1,
+    "goal": "measure"
   },
-  "last_disposition": "TEST-4 MEASURED",
+  "last_disposition": "DEV-5 DONE",
   "unresolved_defects": [
     "no receipt check for no-donor-state (S4 cond 8 class)",
     "ruler v2.1 residual 8/47 + 24.5% chance floor",
@@ -26,9 +26,9 @@
     "A20-A23 P/OFF_0 controls dead on REUSED/CAPABILITY_SAME (recorded; T53 makes them live)"
   ],
   "next_intended": {
-    "window": "TEST",
-    "index": 5,
-    "experiment": "R7 improver-mutability probe (GTC) or T51 confirmation"
+    "window": "DEV",
+    "index": 6,
+    "plan": "diagnose GTC; T51 confirmation (fresh seeds) or S4 replication design"
   },
   "missed_wake_rule": "run the due window once; never burst",
   "history": [
@@ -146,6 +146,18 @@
         "beta01/runs/T04_T51/T51_RESULT.json",
         "beta01/runs/T04_T51/T51_EXPLORATORY_VS_PRISTINE.json"
       ]
+    },
+    {
+      "cycle": 5,
+      "window": "DEV",
+      "index": 5,
+      "opened_utc": "2026-10-04T20:51:16Z",
+      "closed_utc": "2026-10-04T21:12:03Z",
+      "active_thread": "R7 / midpoint",
+      "apparatus_version": "v2b-2 + gtc",
+      "disposition": "DONE: midpoint synthesis 1; donor_g genomes (g0 conformance 3/3); GTC frozen",
+      "report": "beta01/windows/D05_DEV_REPORT.md",
+      "next_frozen": "beta01/windows/T05_GTC_SPEC.md"
     }
   ]
 }
