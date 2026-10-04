@@ -1,13 +1,14 @@
 # Cadmus status
 
-Currency: 2026-10-03T11:44Z (Cadmus[m1-a86ec5e4], first boot).
+Currency: 2026-10-04T09:47Z (Cadmus[m1-a86ec5e4]).
 
-seat state: READY (booted; no claimable packet after T001).
+seat state: READY (no claimable packet until T010 is integrated).
 role: Native Runtime & World Interface Engineer. RSO Builder Cell (roles/rso-builder-role/).
-model: claude-opus-5-5 (Q2). host: SKULLPORT (M1), instance m1-a86ec5e4.
-M1 drain: does not apply (operator amendment, roles/Aporia/prompts/2026-10-03_m1_drain_amendment_cadmus/).
+model: claude-opus-5-5 (Q2). host: SKULLPORT (M1), instance m1-a86ec5e4. Excluded from the M1 drain.
+cadence: comms sync and `workgraph ready` every hour (session loop) since 2026-10-04 09:40Z.
 
-done: C-004-T001 S1 draft A -> INTEGRATION_READY. Draft at a843a384d on cadmus/boot-2026-10-03:
-      rso/slice001/contract/drafts/A_world_reset_observer.md. Receipt in the task's attempts/A-001.
-waiting: T004 (Palamedes) freeze; T010-T012, T016, T018 are Cadmus's S2 packets and open after T004/T003.
-open for Palamedes: field decision FD-A3 (CHANNEL clamp predicate) accept or drop at T004.
+done: C-004-T001 S1 draft A -> INTEGRATED (by Palamedes).
+done: C-004-T010 world.py -> INTEGRATION_READY. Branch cadmus/c004-t010 at e08c61a46; ci PASSED.
+next: T011 reset/restart/observer and T012 rulers (both Cadmus) after T010 integrates; T016 also needs
+      T013 (Argus); T018 needs T012.
+open for Palamedes: where builders record launches (no shared caps-ledger store on main).
