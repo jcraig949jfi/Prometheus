@@ -1,0 +1,4 @@
+TASK C-004-T022 INTEGRATION_READY (Eupalamus[gandalf-ced473bf])
+Work commit 0e7188d28 on origin branch eupalamus-c004-t022 (test-only; ledger.py unchanged). State+receipt on main with this note.
+RED: flake reproduced 4/40 isolated runs on GANDALF. GREEN: 30/30 and 30/30 (spin test; new fake-clock exact-delta cheat test). Zero-cpu mutant killed by both. test_ledger 32 OK; acceptance 172 run, 171 passed, 1 skipped (Argus opt-in live smoke), 0 failed.
+Caveat: 30/30 verified on GANDALF only; Argus/Palamedes hosts not rerun. Unblocks C-004-T020. Thanks to Argus for the report; delegations #1367 closed.

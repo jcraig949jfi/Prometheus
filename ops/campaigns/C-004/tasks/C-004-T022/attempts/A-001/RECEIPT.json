@@ -1,0 +1,67 @@
+{
+    "schema":  "prometheus.workgraph.receipt.v1",
+    "task_id":  "C-004-T022",
+    "campaign_id":  "C-004",
+    "attempt_id":  "A-001",
+    "role":  "Eupalamus",
+    "model":  "claude-sonnet-5-5",
+    "quality_class":  "Q1",
+    "start_sha":  "c77b3cf06d4376ea262f02a61a72f829301f70fa",
+    "end_sha":  "0e7188d28a8accb67cf5b571228d49a8f0c3660f",
+    "files_changed":  [
+                          "rso/slice001/tests/test_ledger.py"
+                      ],
+    "evidence_added":  [
+                           "test_context_measures_cpu now spins until process_time() advances (bounded 5 s wall) so the measured delta is nonzero by construction; new test_context_records_exactly_the_measured_cpu_delta uses a fake clock (10.0 -\u003e 12.5) and asserts cpu_s == 2.5 exactly: a deterministic cheat control that the context manager records the measured delta, not 0.0"
+                       ],
+    "evidence_executed":  [
+                              {
+                                  "command":  "repeat_test.py 40 test_context_measures_cpu (isolated processes, unfixed test, GANDALF Windows 10, py3.11.9)",
+                                  "result":  "4 failures out of 40 -- RED (flake reproduced; process_time resolution reported 1e-07 but GetProcessTimes ticks coarsely)"
+                              },
+                              {
+                                  "command":  "same, fixed test x30; fake-clock test x30",
+                                  "result":  "0 failures out of 30; 0 failures out of 30"
+                              },
+                              {
+                                  "command":  "mutant: ledger._Run.__exit__ records cpu_s=0.0 for COMPLETED",
+                                  "result":  "killed by both CPU tests"
+                              },
+                              {
+                                  "command":  "python -B -m unittest rso.slice001.tests.test_ledger",
+                                  "result":  "Ran 32 tests, OK"
+                              },
+                              {
+                                  "command":  "python -B -m rso.slice001.ci (acceptance)",
+                                  "result":  "exit 0; PASSED; tests_run 172, passed 171, failed 0, errored 0, skipped 1 (Argus\u0027s opt-in test_live_store_smoke)"
+                              }
+                          ],
+    "red_observed":  {
+                         "observed":  true,
+                         "reason":  "flake reproduced 4/40 isolated runs before the fix"
+                     },
+    "result":  "DONE_CLEAN",
+    "known_escapes":  [
+                          "30/30 is on GANDALF only; the reports came from DESKTOP-RUAPVAI and harry1, not rerun there",
+                          "the spin test depends on process_time() eventually advancing; a 5 s wall bound fails loudly rather than flaking",
+                          "ledger.py unchanged: charging semantics and caps untouched (non-goal)"
+                      ],
+    "unresolved":  [
+
+                   ],
+    "unblocks":  [
+                     "C-004-T020"
+                 ],
+    "created_at_utc":  "2026-10-04T09:28:50Z",
+    "instance":  "gandalf-ced473bf",
+    "host":  "GANDALF (M3)",
+    "branch":  "eupalamus-c004-t022",
+    "worktree_path":  "C:/prometheus-worktrees/eupalamus-boot-2026-10-03",
+    "resources":  {
+                      "cpu_s_approx":  15,
+                      "gpu":  0,
+                      "cloud":  0,
+                      "new_artifact_bytes":  1500
+                  },
+    "notes":  "Work commit 0e7188d28 is on origin branch eupalamus-c004-t022 (not on main); Palamedes integrates. Test-only change."
+}
