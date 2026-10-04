@@ -61,6 +61,13 @@ Loose ends from adding ubu003 and the ELSA access. Tick with a date.
       (original, 2280) + Team MP33 1TB (2280), two Lenovo 2.5" NVMe trays.
 - [ ] ELSA's own future: reimage as an Ubuntu worker (16 GB DDR3 kit ~$47) or Wake-on-LAN on demand. Its motherboard video
       ports are dead by design (the i7-860 has no integrated graphics); use the Radeon HD 5450 card for installing.
+      **ELSA hardware (read 2026-10-04):** Optiplex 980 SFF, board 0C522T. RAM 3x 2 GB Samsung M378B5673FH0-CH9
+      (DDR3-1333 PC3-10600U) in DIMM1/2/4, DIMM3 empty. **Max 16 GB = 4x 4 GB** DDR3-1333 (or 1600, runs at 1333)
+      240-pin non-ECC UDIMM. **8 GB sticks do NOT work** (i7-860 / Lynnfield: 4 GB per DIMM max). Video: Radeon HD 5450
+      (low-profile, VGA) in the x16 slot, working at 1080p. Boot SSD: 240 GB 2.5" SATA III, SATA mode RAID (leave it:
+      switching to AHCI makes Windows fail to boot). **Physical cleanup:** the SSD sits loose on the cables (mount it:
+      2.5"->3.5" adapter in the HDD bay, or Velcro); the HD 5450 isn't sitting square in its rear slot (reseat with
+      the low-profile bracket and close the retention latch) so the lid can go back on.
 - [x] Done 2026-10-03: token `nodes-shared` created by the operator, saved as tokens/shared.txt, first used on ubu004. **Shared GitHub token** (operator decision 2026-10-02): one fine-grained no-expiry token for all new nodes, saved as
       `C:\autoinstall_secrets\tokens\shared.txt` on ELSA (`provision_node.sh` uses it when there's no per-node file).
       ubu001/002/003 keep their own tokens for now. Optionally move them to the shared token later; then delete the per-node
@@ -76,8 +83,15 @@ Loose ends from adding ubu003 and the ELSA access. Tick with a date.
       P52s (done) and M6500 installs: rebuild it WITHOUT the flag (`python infra/ubuntu_nodes/autoinstall/build_cidata.py E:`), so no other
       machine can ever install onto an external disk.
 - [x] **ubu005 = P52s** ONLINE 2026-10-04 at 192.168.1.222 (i5-8350U, 22 GB), worker enabled. Remaining: Claude login,
-      DHCP, return the PM991. History: the PM991 in the WWAN slot stops it from powering on (fan roars, no POST; BIOS N27ET56P 1.42,
-      2025-04-01, already current). Removed. Now runs from the **Team MP33 1 TB in a USB-C NVMe enclosure**. PM991: return it.
+      DHCP; PM991: see below. Lid closed 2026-10-04: still running (lid ignore works), 49 C. History: the PM991 in the WWAN slot stops it from powering on (fan roars, no POST; BIOS N27ET56P 1.42,
+      2025-04-01, already current). Removed. Now runs from the **Team MP33 1 TB in a USB-C NVMe enclosure**. PM991: keep it
+      if it goes into the M6500's enclosure (below), else return it.
+- [ ] **ubu007 = Dell Precision M6500** (i7 Q720, 16 GB, Win7 Pro; sentimental, keep Windows intact). Plan (operator
+      2026-10-04): **dual boot by enclosure** -- Ubuntu on an SSD in the second USB-C enclosure, BIOS boot order USB
+      Storage above Internal HDD: enclosure in -> Ubuntu, unplugged -> Windows 7. **Remove the Windows drive(s) (two
+      bays) during the install** (the guard prefers internal disks; this also protects them). Needs the CIDATA stick
+      still built with --allow-usb-target and an SSD >= 200 GB. USB 2.0 only: slow disk, fine for CPU work. Legacy
+      BIOS boot. The Win7 system image to M2 is still wanted, but no longer blocks this.
 
 ## Operator (needs hands at a keyboard or the router; not the phone)
 
