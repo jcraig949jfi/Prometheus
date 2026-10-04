@@ -42,7 +42,7 @@
     "tests/test_ledger.py"
   ],
   "kind": "software",
-  "status": "CLAIMED",
+  "status": "INTEGRATED",
   "history": [
     {
       "status": "PROPOSED",
@@ -61,6 +61,36 @@
       "by": "Eupalamus[gandalf-ced473bf]",
       "at_utc": "2026-10-04T15:24:54Z",
       "note": ""
+    },
+    {
+      "status": "RED",
+      "by": "Eupalamus[gandalf-ced473bf]",
+      "at_utc": "2026-10-04T15:58:43Z",
+      "note": "T025 RED (work on branch eupalamus-c004-t025 @ f4425de1e)"
+    },
+    {
+      "status": "IMPLEMENTING",
+      "by": "Eupalamus[gandalf-ced473bf]",
+      "at_utc": "2026-10-04T15:58:43Z",
+      "note": "T025 IMPLEMENTING (work on branch eupalamus-c004-t025 @ f4425de1e)"
+    },
+    {
+      "status": "GREEN",
+      "by": "Eupalamus[gandalf-ced473bf]",
+      "at_utc": "2026-10-04T15:58:43Z",
+      "note": "T025 GREEN (work on branch eupalamus-c004-t025 @ f4425de1e)"
+    },
+    {
+      "status": "INTEGRATION_READY",
+      "by": "Eupalamus[gandalf-ced473bf]",
+      "at_utc": "2026-10-04T15:58:43Z",
+      "note": "T025 INTEGRATION_READY (work on branch eupalamus-c004-t025 @ f4425de1e)"
+    },
+    {
+      "status": "INTEGRATED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-04T16:20:55Z",
+      "note": "merged f4425de1e; integrator: contract 1.0.3 (cpu 120 min = 7200 s; accounting text); inventory rows canonical (cpu_us int; canonical_bytes OK); 25 RECEIPT rows after 1 TOP_LEVEL charge 1 launch; mutation RECEIPT-counted-as-launch killed (2 failures); Eupalamus's 1-line edits to Argus tests (version pin, cpu_us rename) accepted as forced; integrator removed 3 expectedFailure markers (T024_2 fixed) so main stays green; full suite OK"
     }
   ],
   "authority": "operator directive 2026-10-03 s9, s11; escalation responses C-004-T024_1_2_RESPONSE.md",

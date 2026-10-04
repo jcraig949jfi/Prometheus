@@ -15,6 +15,7 @@ from unittest import mock
 
 from rso.slice001 import evidence as E
 from rso.slice001 import ledger as L
+from rso.slice001 import receipt as R
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 REPO = os.path.dirname(os.path.dirname(os.path.dirname(HERE)))
@@ -48,7 +49,7 @@ class TestCaps(Base):
     def test_caps_read_from_the_real_contract(self):
         c = L.Ledger.from_contract(self.path).caps
         self.assertEqual(c.launches, 12)
-        self.assertEqual(c.cpu_s, 30 * 60)
+        self.assertEqual(c.cpu_s, 120 * 60)                      # contract v1.0.3, OP-4 (was 30 * 60)
         self.assertEqual(c.artifact_bytes, 100 * 1000 * 1000)
 
     def test_missing_or_bad_caps_fail_closed(self):
@@ -137,6 +138,137 @@ class TestResourceCaps(Base):
         led.begin("b", "n").finish("COMPLETED", cpu_s=0.0)
 
 
+def _floats(obj, path="$"):
+    """Paths of every float anywhere in a JSON-like value."""
+    if isinstance(obj, float):
+        return [path]
+    if isinstance(obj, dict):
+        return [p for k, v in sorted(obj.items()) for p in _floats(v, "%s.%s" % (path, k))]
+    if isinstance(obj, (list, tuple)):
+        return [p for i, v in enumerate(obj) for p in _floats(v, "%s[%d]" % (path, i))]
+    return []
+
+
+class TestCanonicalSafeInventory(Base):
+    """C-004-T025 / escalation C-004-T024_2: receipt.canonical_bytes refuses floats (draft B B2), so the
+    inventory the custody layer hashes must carry integer microseconds, never a float cpu_s."""
+
+    def doc(self, led):
+        return {"schema": E.INVENTORY_SCHEMA, "rows": led.inventory()}
+
+    def test_inventory_hashes_with_receipt_canonical_bytes(self):
+        led = self.ledger()
+        led.begin("a", "node-a").finish("COMPLETED", cpu_s=52.1734567, artifact_bytes=10)
+        led.begin("b", "node-b").finish("FAILED", cpu_s=0.0000004)
+        led.begin("dead", "node-c")                              # INTERRUPTED: cpu_us None
+        R.canonical_bytes(self.doc(led))                         # raises ReceiptError on any float
+        self.assertEqual(_floats(self.doc(led)), [])
+
+    def test_refused_rows_are_canonical_safe_too(self):
+        led = self.ledger(top_level_validation_launches=1)
+        led.begin("a", "n").finish("COMPLETED", cpu_s=1.25)
+        with self.assertRaises(L.CapExhausted):
+            led.begin("b", "n")
+        R.canonical_bytes(self.doc(led))
+        self.assertEqual([r["status"] for r in led.inventory()[:-1]], ["COMPLETED", "REFUSED"])
+
+    def test_cpu_us_is_the_rounded_integer_microseconds(self):
+        led = self.ledger()
+        for i, s in enumerate((52.17, 0.0, 1.0000004, 1.0000006, 2.5, 0.0000004)):
+            led.begin("r%d" % i, "n").finish("COMPLETED", cpu_s=s)
+        got = [r["cpu_us"] for r in led.inventory()[:-1]]
+        self.assertEqual(got, [52170000, 0, 1000000, 1000001, 2500000, 0])
+        self.assertTrue(all(type(v) is int for v in got))
+
+    def test_no_float_cpu_s_field_in_rows(self):
+        led = self.ledger()
+        led.begin("a", "n").finish("COMPLETED", cpu_s=3.0)
+        self.assertNotIn("cpu_s", led.inventory()[0])
+
+    def test_store_keeps_the_float_and_usage_still_sums_seconds(self):
+        led = self.ledger()
+        led.begin("a", "n").finish("COMPLETED", cpu_s=0.25)
+        led.begin("b", "n").finish("COMPLETED", cpu_s=0.5)
+        self.assertEqual(self.lines()[1]["cpu_s"], 0.25)         # the JSONL store is unchanged
+        self.assertEqual(led.usage()["cpu_s"], 0.75)
+
+    def test_written_inventory_file_is_canonical_safe(self):
+        led = self.ledger()
+        led.begin("a", "n").finish("COMPLETED", cpu_s=7.7)
+        out = os.path.join(self._tmp.name, "inv.jsonl")
+        led.write_inventory(out)
+        with open(out, "r", encoding="utf-8") as f:
+            rows = [json.loads(x) for x in f.read().splitlines()]
+        self.assertEqual(_floats(rows), [])
+
+
+class TestReceiptRowKind(Base):
+    """A RECEIPT row charges CPU and bytes but not a top-level launch; it carries a node_id (V7)."""
+
+    def test_25_receipt_rows_charge_one_launch_and_their_summed_cpu(self):
+        led = self.ledger()
+        led.begin("build", "G0", launch_kind=L.TOP_LEVEL).finish("COMPLETED", cpu_s=1.0)
+        for i in range(25):
+            led.begin("rcpt-%02d" % i, "rcpt:node-%02d" % i, launch_kind=L.RECEIPT).finish(
+                "COMPLETED", cpu_s=2.0, artifact_bytes=100)
+        u = led.usage()
+        self.assertEqual(u["launches"], 1)
+        self.assertEqual(u["cpu_s"], 51.0)
+        self.assertEqual(u["artifact_bytes"], 2500)
+
+    def test_receipt_rows_leave_the_other_eleven_launches_available(self):
+        led = self.ledger()                                      # cap 12
+        led.begin("build", "G0").finish("COMPLETED")
+        for i in range(25):
+            led.begin("rcpt-%02d" % i, "n-%d" % i, launch_kind=L.RECEIPT).finish("COMPLETED")
+        for i in range(11):
+            led.begin("run-%02d" % i, "n").finish("COMPLETED")
+        with self.assertRaises(L.CapExhausted) as cm:
+            led.begin("run-11", "n")
+        self.assertEqual(cm.exception.cap, "top_level_validation_launches")
+
+    def test_receipt_rows_carry_kind_and_node_id_in_the_inventory(self):
+        led = self.ledger()
+        led.begin("build", "G0").finish("COMPLETED")
+        led.begin("r1", "rcpt:REG:BOUNDS:STANDARD", launch_kind=L.RECEIPT).finish("COMPLETED")
+        rows = led.inventory()
+        self.assertEqual([(r["run_id"], r["node_id"], r["launch_kind"]) for r in rows[:-1]],
+                         [("build", "G0", "TOP_LEVEL"), ("r1", "rcpt:REG:BOUNDS:STANDARD", "RECEIPT")])
+        self.assertTrue(E.inventory_terminal(rows))
+
+    def test_receipt_row_is_still_refused_when_cpu_is_exhausted(self):
+        led = self.ledger(cpu_minutes=1)
+        led.begin("a", "n").finish("COMPLETED", cpu_s=60)
+        with self.assertRaises(L.CapExhausted) as cm:
+            led.begin("r", "n", launch_kind=L.RECEIPT)
+        self.assertEqual(cm.exception.cap, "cpu_minutes")
+        self.assertEqual(led.inventory()[-2]["status"], "REFUSED")
+
+    def test_receipt_row_is_refused_when_bytes_are_exhausted(self):
+        led = self.ledger(new_artifact_mb=1)
+        led.begin("a", "n").finish("COMPLETED", artifact_bytes=1000 * 1000)
+        with self.assertRaises(L.CapExhausted) as cm:
+            led.begin("r", "n", launch_kind=L.RECEIPT)
+        self.assertEqual(cm.exception.cap, "new_artifact_mb")
+
+    def test_receipt_row_is_not_blocked_by_an_exhausted_launch_cap(self):
+        led = self.ledger(top_level_validation_launches=1)
+        led.begin("build", "G0").finish("COMPLETED")
+        led.begin("r1", "n", launch_kind=L.RECEIPT).finish("COMPLETED")   # does not raise
+        with self.assertRaises(L.CapExhausted):
+            led.begin("top2", "n")
+
+    def test_an_interrupted_receipt_row_is_not_a_launch(self):
+        led = self.ledger(top_level_validation_launches=1)
+        led.begin("build", "G0").finish("COMPLETED")
+        led.begin("dead", "n", launch_kind=L.RECEIPT)                      # never finished
+        self.assertEqual(led.usage()["launches"], 1)
+
+    def test_unknown_launch_kind_is_still_an_error(self):
+        with self.assertRaises(L.LedgerError):
+            self.ledger().begin("r", "n", launch_kind="SIDECAR")
+
+
 class TestCrashRowsCheat(Base):
     def test_exception_in_context_leaves_a_failed_row_and_propagates(self):
         led = self.ledger()
@@ -155,7 +287,7 @@ class TestCrashRowsCheat(Base):
             while time.process_time() <= t0:
                 if time.perf_counter() > deadline:
                     self.fail("process_time() did not advance in 5 s of spinning")
-        self.assertGreater(led.inventory()[0]["cpu_s"], 0.0)
+        self.assertGreater(led.inventory()[0]["cpu_us"], 0)
 
     def test_context_records_exactly_the_measured_cpu_delta(self):
         # deterministic cheat control: with a fake clock the recorded value must be the delta, not 0.0
@@ -164,7 +296,7 @@ class TestCrashRowsCheat(Base):
             with led.run("fake-clock", "n"):
                 pass
         row = led.inventory()[0]
-        self.assertEqual((row["status"], row["cpu_s"]), ("COMPLETED", 2.5))
+        self.assertEqual((row["status"], row["cpu_us"]), ("COMPLETED", 2500000))
 
     def test_hard_killed_process_still_leaves_a_row(self):
         # cheat control: the child dies without running any cleanup; only the START line exists.
@@ -177,7 +309,7 @@ class TestCrashRowsCheat(Base):
         self.assertEqual(r.returncode, 9, r.stderr)
         row = self.ledger().inventory()[0]
         self.assertEqual((row["run_id"], row["node_id"], row["status"]), ("killed", "node-k", "INTERRUPTED"))
-        self.assertIsNone(row["cpu_s"])                          # unmetered, never zero
+        self.assertIsNone(row["cpu_us"])                         # unmetered, never zero
 
     def test_interrupted_run_still_counts_as_a_launch(self):
         led = self.ledger(top_level_validation_launches=1)
