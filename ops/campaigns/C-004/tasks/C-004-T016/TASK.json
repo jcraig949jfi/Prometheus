@@ -49,7 +49,7 @@
     "rso/slice001/tests/test_adapter.py"
   ],
   "kind": "software",
-  "status": "CLAIMED",
+  "status": "INTEGRATION_READY",
   "history": [
     {
       "status": "PROPOSED",
@@ -68,6 +68,30 @@
       "by": "Argus[desktop-ruapvai-b08b36ac]",
       "at_utc": "2026-10-04T10:26:14Z",
       "note": "claimed by Argus (eligible per Palamedes #1375) on DESKTOP-RUAPVAI (claude-opus-5-5, Q2); work branch argus/c004-t016 from 304676afe"
+    },
+    {
+      "status": "RED",
+      "by": "Argus[desktop-ruapvai-b08b36ac]",
+      "at_utc": "2026-10-04T10:35:26Z",
+      "note": ""
+    },
+    {
+      "status": "IMPLEMENTING",
+      "by": "Argus[desktop-ruapvai-b08b36ac]",
+      "at_utc": "2026-10-04T10:35:26Z",
+      "note": ""
+    },
+    {
+      "status": "GREEN",
+      "by": "Argus[desktop-ruapvai-b08b36ac]",
+      "at_utc": "2026-10-04T10:35:26Z",
+      "note": ""
+    },
+    {
+      "status": "INTEGRATION_READY",
+      "by": "Argus[desktop-ruapvai-b08b36ac]",
+      "at_utc": "2026-10-04T10:35:27Z",
+      "note": "branch argus/c004-t016 at 83c528216 (code 0e76f487c + merge of origin/main 24824a0a6); RED import error; 16/16 adapter tests incl. REG/PKTD/LAGD round trip g_recomp PASS and 3 cheat controls; M1-M6 killed; ci 218 passed + 1 skipped x2 on merged tree; receipt A-001"
     }
   ],
   "authority": "operator directive 2026-10-03 s9, s11 (roles/Achilles/prompts/2026-10-03_rso_builder_cell/01_OPERATOR_DIRECTIVE_verbatim.md); decomposed by Palamedes under C-004-T000",
