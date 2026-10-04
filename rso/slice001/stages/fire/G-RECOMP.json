@@ -1,0 +1,53 @@
+{
+  "all_ok": true,
+  "cases": [
+    {
+      "case_id": "REG real traces, real predicates",
+      "expected_reason": null,
+      "expected_value": "PASS",
+      "observed_reason": null,
+      "observed_value": "PASS",
+      "ok": true,
+      "polarity": "ACCEPT"
+    },
+    {
+      "case_id": "REG RETENTION outcome edited to NEGATIVE",
+      "expected_reason": "OUTCOME_MISMATCH:value",
+      "expected_value": "FAIL",
+      "observed_reason": "OUTCOME_MISMATCH:value",
+      "observed_value": "FAIL",
+      "ok": true,
+      "polarity": "REJECT"
+    },
+    {
+      "case_id": "REG probe_a bytes swapped for AMNESIAC's",
+      "expected_reason": "BYTES_MISMATCH:trace:probe_a",
+      "expected_value": "FAIL",
+      "observed_reason": "BYTES_MISMATCH:trace:probe_a",
+      "observed_value": "FAIL",
+      "ok": true,
+      "polarity": "REJECT"
+    },
+    {
+      "case_id": "REG probe_a bound but outside the layout",
+      "expected_reason": "TRACE_SCHEMA:trace:probe_a",
+      "expected_value": "FAIL",
+      "observed_reason": "TRACE_SCHEMA:trace:probe_a",
+      "observed_value": "FAIL",
+      "ok": true,
+      "polarity": "REJECT"
+    }
+  ],
+  "executed_by": "Argus[desktop-ruapvai-b08b36ac] under C-004-T023B",
+  "instrument": "G-RECOMP",
+  "schema": "rso.slice001.fire_test.v1",
+  "version": [
+    {
+      "commit": "c3a7a760bf821dde544ef11cda3737a297f337cd",
+      "length": 24261,
+      "role": "code:rso/slice001/checker.py",
+      "sha256": "40d9fe95018925f8eb412c7b31a74f648b18f3e8931f337913e697198a966c87"
+    }
+  ],
+  "version_hash": "9cc368afe6b2e3f97c33555a2a0a72640656d6169e4626f0564f498e5fe5ab05"
+}

@@ -1,0 +1,35 @@
+{
+  "all_ok": true,
+  "cases": [
+    {
+      "case_id": "T02.AMNESIAC/world STANDARD",
+      "expected_reason": null,
+      "expected_value": "PASS",
+      "observed_reason": null,
+      "observed_value": "PASS",
+      "ok": true,
+      "polarity": "ACCEPT"
+    },
+    {
+      "case_id": "T02.CLOCKED",
+      "expected_reason": "no-carry class reaches 1/1 > 1/2 at boundary 1",
+      "expected_value": "FAIL",
+      "observed_reason": "no-carry class reaches 1/1 > 1/2 at boundary 1",
+      "observed_value": "FAIL",
+      "ok": true,
+      "polarity": "REJECT"
+    }
+  ],
+  "executed_by": "Argus[desktop-ruapvai-b08b36ac] under C-004-T023B",
+  "instrument": "CALIBRATION",
+  "schema": "rso.slice001.fire_test.v1",
+  "version": [
+    {
+      "commit": "e510864ddaaed5d42dbe81ce485245c149330cdd",
+      "length": 5904,
+      "role": "code:rso/slice001/rulers.py",
+      "sha256": "bbc78fa75bd4896ce9425a460169b985130cecf4a7b365f7766e2b231d217a99"
+    }
+  ],
+  "version_hash": "ea16c6b7b5c38b69cece95b5e51b10dfa8721fc307b25ccd665039f57702a942"
+}

@@ -1,0 +1,44 @@
+{
+  "all_ok": true,
+  "cases": [
+    {
+      "case_id": "E02.G0",
+      "expected_reason": null,
+      "expected_value": "PASS",
+      "observed_reason": null,
+      "observed_value": "PASS",
+      "ok": true,
+      "polarity": "ACCEPT"
+    },
+    {
+      "case_id": "E02.MISSING",
+      "expected_reason": "RUN_UNREPORTED:run-005",
+      "expected_value": "FAIL",
+      "observed_reason": "RUN_UNREPORTED:run-005",
+      "observed_value": "FAIL",
+      "ok": true,
+      "polarity": "REJECT"
+    },
+    {
+      "case_id": "G0 without the REG ERASE run row",
+      "expected_reason": "RECEIPT_WITHOUT_RUN:rcpt:REG:ERASE:STANDARD",
+      "expected_value": "FAIL",
+      "observed_reason": "RECEIPT_WITHOUT_RUN:rcpt:REG:ERASE:STANDARD",
+      "observed_value": "FAIL",
+      "ok": true,
+      "polarity": "REJECT"
+    }
+  ],
+  "executed_by": "Argus[desktop-ruapvai-b08b36ac] under C-004-T023B",
+  "instrument": "G-INV",
+  "schema": "rso.slice001.fire_test.v1",
+  "version": [
+    {
+      "commit": "21e0d894b6dbd7806606d59a3ed536418066d871",
+      "length": 30721,
+      "role": "code:rso/slice001/evidence.py",
+      "sha256": "06ef526b5e346f1cf749f5c85535e2f90cdaf8bb59c8db775003c7b57d9423a0"
+    }
+  ],
+  "version_hash": "f210956aeb740f135c61409b06d01e89eec7191817f088c1abe4036b73896283"
+}
