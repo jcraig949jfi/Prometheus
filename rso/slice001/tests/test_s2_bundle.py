@@ -115,7 +115,7 @@ class TestBuild(unittest.TestCase):
         inv = g0().inventory
         self.assertEqual([r["kind"] for r in inv], ["RUN", "TERMINAL"])
         self.assertEqual((inv[0]["node_id"], inv[0]["launch_kind"], inv[0]["status"]), ("G0", "TOP_LEVEL", "COMPLETED"))
-        self.assertGreater(inv[0]["cpu_s"], 0)
+        self.assertGreater(inv[0]["cpu_us"], 0)                   # C-004-T025: canonical-safe integer microseconds
         self.assertEqual(_G0["usage"]["launches"], 1)
         self.assertTrue(EV.inventory_terminal(inv))
 

@@ -1,6 +1,6 @@
 {
   "schema": "rso.slice001.contract.v1",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "frozen": true,
   "campaign": "C-004 RSO-METHODS-SLICE-001",
   "frozen_by": "Palamedes[harry1-679179c6] under C-004-T004",
@@ -775,7 +775,7 @@
   },
   "caps": {
     "authority": "C-004-OP1 APPROVED 2026-10-03",
-    "cpu_minutes": 30,
+    "cpu_minutes": 120,
     "gpu_hours": 0,
     "cloud_usd": 0,
     "new_artifact_mb": 100,
@@ -785,7 +785,8 @@
     "sonnet_seat_hours": 4,
     "reviewer_hours": 3,
     "working_days": 3,
-    "charging": "failures, retries, mutation children, analysis and confirmation attempts count; stop at the first exhausted cap; keep partial results (plan s6)"
+    "charging": "failures, retries, mutation children, analysis and confirmation attempts count; stop at the first exhausted cap; keep partial results (plan s6)",
+    "accounting": "120 CPU-minutes total; an estimated 40 CPU-minutes of unmetered development and verification (before ledgered launches began) is booked against it, leaving 80 CPU-minutes for ledgered validation launches (T020, S3, S4); every validation launch passes --ledger; mutation children are charged; stop at the first exhausted cap."
   },
   "files": {
     "rso/slice001/world.py": "C-004-T010",
@@ -832,6 +833,18 @@
       "items": [
         "W1 custody.store locator, read/verify access, ROW_CHAIN_BROKEN and STORE_UNREACHABLE mapping",
         "W2 independence_caveat residual"
+      ]
+    },
+    {
+      "version": "1.0.3",
+      "path": "rso/slice001/contract/AMENDMENT_v1.0.3.md",
+      "by": "Palamedes[harry1-679179c6]",
+      "applied_by": "Eupalamus[gandalf-ced473bf] under C-004-T025",
+      "answers": "operator decision C-004-OP4, 2026-10-04 (CPU cap 4x)",
+      "scope": "caps.cpu_minutes and caps.accounting; nothing else changes",
+      "items": [
+        "U1 caps.cpu_minutes 30 -> 120",
+        "U2 caps.accounting text"
       ]
     }
   ],
