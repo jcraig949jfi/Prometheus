@@ -6,29 +6,30 @@
   "pairs_planned": 12,
   "window_hours": 4,
   "current": {
-    "cycle": 5,
-    "window": "TEST",
-    "index": 5,
-    "opened_utc": "2026-10-04T21:12:03Z",
-    "due_close_utc": "2026-10-05T01:12:03Z",
-    "active_thread": "R7 (P2)",
+    "cycle": 6,
+    "window": "DEV",
+    "index": 6,
+    "opened_utc": "2026-10-04T21:44:51Z",
+    "due_close_utc": "2026-10-05T01:44:51Z",
+    "active_thread": "R7 / TH-019",
     "apparatus_version": "v2b-2 + gtc",
-    "experiment": "T05 = GTC improver-mutability probe",
-    "attempt": 1,
-    "goal": "measure"
+    "experiment": null,
+    "attempt": null,
+    "goal": "decide: repaired GTC (charge endpoint, reachable unseen stratum, pre-verified overfitter) vs T51 confirmation; freeze TEST-6"
   },
-  "last_disposition": "DEV-5 DONE",
+  "last_disposition": "TEST-5 INCONCLUSIVE_INSTRUMENT",
   "unresolved_defects": [
     "no receipt check for no-donor-state (S4 cond 8 class)",
     "ruler v2.1 residual 8/47 + 24.5% chance floor",
     "T4 v1a silent on queries 1-2",
     "T01 erratum: pristine_all_censored field (fix in t1 v2)",
-    "A20-A23 P/OFF_0 controls dead on REUSED/CAPABILITY_SAME (recorded; T53 makes them live)"
+    "A20-A23 P/OFF_0 controls dead on REUSED/CAPABILITY_SAME (recorded; T53 makes them live)",
+    "GTC: UNSEEN stratum transfer floor; count endpoint blind to efficiency; overfitter control unverified"
   ],
   "next_intended": {
-    "window": "DEV",
+    "window": "TEST",
     "index": 6,
-    "plan": "diagnose GTC; T51 confirmation (fresh seeds) or S4 replication design"
+    "experiment": "TBD in DEV-6"
   },
   "missed_wake_rule": "run the due window once; never burst",
   "history": [
@@ -158,6 +159,22 @@
       "disposition": "DONE: midpoint synthesis 1; donor_g genomes (g0 conformance 3/3); GTC frozen",
       "report": "beta01/windows/D05_DEV_REPORT.md",
       "next_frozen": "beta01/windows/T05_GTC_SPEC.md"
+    },
+    {
+      "cycle": 5,
+      "window": "TEST",
+      "index": 5,
+      "opened_utc": "2026-10-04T21:12:03Z",
+      "closed_utc": "2026-10-04T21:44:51Z",
+      "active_thread": "R7 (P2)",
+      "apparatus_version": "v2b-2 + gtc",
+      "experiment": "T05 = GTC (v1)",
+      "attempt": 1,
+      "disposition": "INCONCLUSIVE_INSTRUMENT: g5 overfit not seen (DEV -15, UNSEEN 0); UNSEEN = transfer floor for all libraries; g2/g3/g4 output-inert (same selections 20/20, identical scores)",
+      "report": "beta01/windows/T05_REPORT_AND_REVIEW_PACKET.md",
+      "receipts": [
+        "beta01/runs/T05_GTC/GTC_RESULT.json"
+      ]
     }
   ]
 }
