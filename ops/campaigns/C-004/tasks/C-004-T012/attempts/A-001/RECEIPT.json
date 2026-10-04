@@ -1,0 +1,70 @@
+{
+  "schema": "prometheus.workgraph.receipt.v1",
+  "task_id": "C-004-T012",
+  "campaign_id": "C-004",
+  "attempt_id": "A-001",
+  "role": "Argus",
+  "model": "claude-opus-5-5",
+  "quality_class": "Q2",
+  "start_sha": "b26ee891d84c03aa27536a8c838569235c81e2b8",
+  "end_sha": "52b447d24b3e2c8182349f2f606b3be07cd0e1b6",
+  "files_changed": [
+    "rso/slice001/rulers.py",
+    "rso/slice001/tests/test_rulers.py"
+  ],
+  "evidence_added": [
+    "P1 calibration(variant): from the registered domain only (world.ones / no_carry_success), no runtime read; PASS iff max over the 8 no-carry policies equals exactly 1/2 and u_j is balanced at j = 1..3; eligible 8 x 12288 = 98304; FAIL witness {j, policy} (first best policy in lexicographic order, first boundary above 1/2); reason 'no-carry class reaches <s> > 1/2 at boundary <j>'",
+    "P2 retention(answer): 12288 (history, j) trials; POSITIVE iff s = 1; NEGATIVE iff the answer is identical across every pair differing only in u_j (FD-A2), then s = 1/2 exactly; NOT_SHOWN otherwise; RULER kind, never PASS/FAIL (closure C1); per_boundary statistics; exact Fractions",
+    "retention_of_runtime (world.run_life, every reset) and retention_from_runs (RESET run of trace:probe_a in checker TRACE_LAYOUT, the adapter's runs)",
+    "tests: A6 T01 REG/PKTD POSITIVE 1/1, QCARRY POSITIVE (CHANNEL's to catch); T02 AMNESIAC NEGATIVE s = Fraction(1, 2) with standing UNMET (not a software failure); T02 CLOCKED CALIBRATION FAIL witness {j 1, policy [1,0,1]}; T02 FLIP NOT_SHOWN 0/1; s = 1/2 with dependence (XOR) NOT_SHOWN; s = 3/4 NOT_SHOWN; field-equal to checker.recompute (the G-RECOMP comparison) for 5 runtimes and both world variants; agrees with EXPECTED_ANSWERS.json T01.REG, T01.PKTD, T02.AMNESIAC, T02.FLIP, T02.CLOCKED and the CALIBRATION 98304 line"
+  ],
+  "evidence_executed": [
+    {
+      "command": "python -B -m unittest rso.slice001.tests.test_rulers (before rulers.py)",
+      "result": "import error: no ruler (RED)"
+    },
+    {
+      "command": "mutant M0 = the packet's RED stub (NEGATIVE collapsed into a GATE FAIL) in rulers.retention",
+      "result": "KILLED: 2 failures + 2 errors (T02 check refuses FAIL; schema refuses a GATE where P2 is a RULER)"
+    },
+    {
+      "command": "python -B -m unittest rso.slice001.tests.test_rulers",
+      "result": "15 tests OK, about 2.5 s"
+    },
+    {
+      "command": "mutation fire tests M1-M6 on rulers.py (each restored)",
+      "result": "M1 NEGATIVE by s = 1/2 alone KILLED (2); M4 per_boundary over all trials KILLED (2); M5 answer read from the display digit KILLED (2); M6 eligible 12288 KILLED (2); M2 balance clause removed SURVIVED and M3 tie-break reversed SURVIVED: both equivalent on the registered domain (see notes)"
+    },
+    {
+      "command": "python -B -m rso.slice001.ci at 52b447d24 (branch merged with origin/main c14d1ccab), twice",
+      "result": "exit 0 both; PASSED; 219 run, 218 passed, 1 skipped (T021 live smoke), 0 failed; dirty false; cpu_s 20.4 / 20.5"
+    }
+  ],
+  "red_observed": {
+    "observed": true,
+    "detail": "the T02 never-FAIL check fails against the stub that collapses NEGATIVE into FAIL (M0, kept as test_collapse_stub_is_caught); the suite failed before rulers.py existed"
+  },
+  "result": "DONE_CLEAN",
+  "known_escapes": [
+    "M2 (P1 balance clause) is an equivalent mutant: an unbalanced u_j lets a constant no-carry policy beat 1/2 at that boundary, so max over N = 1/2 already implies balance; the clause is kept because A5 P1 states it",
+    "M3 (tie-break among best no-carry policies) is equivalent on the registered domain: STANDARD PASSes with no witness and CLOCKED's best policy is unique; a tie above 1/2 needs a world variant that is not registered",
+    "RETENTION's precondition (CALIBRATION PASS on the same world) is not checked here; it is authority A5 in evidence.authority",
+    "the T02 CLOCKED RETENTION line is computed like any other; that it is not evidence on that world is the consumer's (A5 precondition)"
+  ],
+  "unresolved": [],
+  "unblocks": [
+    "C-004-T018",
+    "C-004-T020"
+  ],
+  "created_at_utc": "2026-10-04T11:45:00Z",
+  "instance": "desktop-ruapvai-b08b36ac",
+  "host": "DESKTOP-RUAPVAI",
+  "branch": "argus/c004-t012",
+  "worktree_path": "C:/Prometheus-worktrees/argus-boot",
+  "resources": {
+    "cpu": "about 2 CPU-minutes (suite and mutant runs)",
+    "validation_launches": 0,
+    "model": "one Q2 session, about 0.5 hours"
+  },
+  "notes": "Independent of T016: the tests build the probe_a run from world lives themselves, so this branch does not need adapter.py. Field decisions (rso-builder 2.7): FD-T012-1 the CALIBRATION FAIL witness is the first best policy in lexicographic (g1, g2, g3) order and the first boundary where it beats 1/2, else the first unbalanced boundary (V5 canonical order); FD-T012-2 RETENTION's reason carries a plain-language note of what each value means and does not mean; G-RECOMP does not compare reasons. Revisit at T020 or on an S3 attack."
+}
