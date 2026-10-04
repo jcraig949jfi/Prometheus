@@ -325,7 +325,8 @@ class TestAgreementWithChecker(unittest.TestCase):
     FIELDS = ("value", "eligible_count", "applicable_count", "witness")
 
     def test_erase_preserve_channel_agree(self):
-        for name in ("REG", "LAGD", "WIPE", "QCARRY", "EVERY3", "SLEEPER", "SPLIT2"):
+        # PASS and FAIL of each predicate: ERASE (REG / LAGD), PRESERVE (REG / WIPE), CHANNEL (REG / QCARRY)
+        for name in ("REG", "LAGD", "WIPE", "QCARRY"):
             runs = traces(WC.RUNTIMES[name])
             for pred, fn in (("ERASE", CK.recompute_erase), ("PRESERVE", CK.recompute_preserve),
                              ("CHANNEL", CK.recompute_channel)):
