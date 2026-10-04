@@ -33,6 +33,8 @@ from rso.slice001.stages import version as V
 
 FIRE_SCHEMA = "rso.slice001.fire_test.v1"
 INSTRUMENTS = ("CALIBRATION", "RETENTION", "G-BIND", "G-INV", "G-RECOMP")
+# The id a stage record names (receipt.validate_stage_record; evidence.authority looks up predicate.id).
+RECORD_ID = {"CALIBRATION": "P1", "RETENTION": "P2", "G-BIND": "G-BIND", "G-INV": "G-INV", "G-RECOMP": "G-RECOMP"}
 STAGES_DIR = os.path.dirname(os.path.abspath(__file__))
 FIRE_DIR = os.path.join(STAGES_DIR, "fire")
 RECORDED_BY = "Argus[desktop-ruapvai-b08b36ac] under C-004-T023B"
@@ -178,9 +180,9 @@ CASES = {"CALIBRATION": _calibration_cases, "RETENTION": _retention_cases, "G-BI
 
 # --------------------------------------------------------------------------------------------------------
 
-def fire_receipt(instrument, rev="HEAD"):
+def fire_receipt(instrument):
     """Run the instrument's fire cases at its current version; a deterministic receipt dict."""
-    version = V.instrument_version(instrument, rev)
+    version = V.instrument_version(instrument)
     rows = []
     for case_id, polarity, want_v, want_r, thunk in CASES[instrument]():
         got_v, got_r = thunk()
@@ -199,7 +201,7 @@ def stage_record(instrument, receipt_bytes, receipt_commit, recorded_at_utc):
     must_accept = [c["case_id"] for c in rec["cases"] if c["polarity"] == "ACCEPT"]
     must_reject = [{"case_id": c["case_id"], "expected_reason": c["expected_reason"] or c["expected_value"]}
                    for c in rec["cases"] if c["polarity"] == "REJECT"]
-    out = {"instrument": instrument, "version": rec["version"], "stage": "AUTHOR_TESTED",
+    out = {"instrument": RECORD_ID[instrument], "version": rec["version"], "stage": "AUTHOR_TESTED",
            "fire_test": {"must_accept": must_accept, "must_reject": must_reject,
                          "receipt": {"path": fire_path(instrument),
                                      "blob_sha256": __import__("hashlib").sha256(receipt_bytes).hexdigest(),
