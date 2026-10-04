@@ -52,7 +52,7 @@
     "rso/slice001/tests/test_checker_render.py"
   ],
   "kind": "software",
-  "status": "INTEGRATION_READY",
+  "status": "INTEGRATED",
   "history": [
     {
       "status": "PROPOSED",
@@ -95,6 +95,12 @@
       "by": "Argus[harry1-cff5ef7f]",
       "at_utc": "2026-10-04T07:33:50Z",
       "note": "work branch argus/c004-t015 @ 500d633b6; receipt attempts/A-001"
+    },
+    {
+      "status": "INTEGRATED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-04T07:37:10Z",
+      "note": "merged 500d633b6; integrator: full slice suite green on merged tree; receipt.py change confined to consumer-gate kinds (escalation T015_1 opt 1); mutation (quantifier lint case-sensitive) killed by test_quantifier_only_beside_exact_bound; RED 21/30 vs naive stubs kept as fire tests. G-RECOMP fixture-level only until T020; TRACE_LAYOUT pushed into T016 notes"
     }
   ],
   "authority": "operator directive 2026-10-03 s9, s11 (roles/Achilles/prompts/2026-10-03_rso_builder_cell/01_OPERATOR_DIRECTIVE_verbatim.md); decomposed by Palamedes under C-004-T000",
