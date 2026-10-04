@@ -1,0 +1,42 @@
+{
+  "schema": "prometheus.work_state.v1",
+  "seat": "Hestia",
+  "mwo_id": "MWO-0004",
+  "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
+  "updated_at_utc": "2026-10-04T12:33:25Z",
+  "state": "HOLD",
+  "instance": "gandalf-ac57e46f (M3/GANDALF)",
+  "branch": "hestia/base-role-adopt-2026-10-04",
+  "base_sha": "5c290b461c714ce39e218843a6a05a64d8e639d2",
+  "head_sha": "(this commit; see git log -1 -- roles/Hestia/WORK_STATE.json)",
+  "model": "claude-sonnet-5-5",
+  "host": "GANDALF (M3)",
+  "work_order": "MWO-0004 (ops/work_orders/CURRENT.md) + CWO-2026-09-30C (ops/fleet/CWO_2026-09-30C_FINISH_SURFACE_DISPATCH.md). Direct operator instruction (chat, 2026-10-04): create Hestia, inherit base-role, mostly self-contained, a moonshot, details to follow (roles/Hestia/prompts/2026-10-04_creation/).",
+  "current_objective": "none (charter PENDING; the operator said more details follow the setup)",
+  "current_step": "creation pass complete; awaiting the operator's details and charter",
+  "in_flight": [],
+  "progress": "creation pass only; no domain work started or implied",
+  "finish_condition": "charter committed verbatim with MANIFEST; RESPONSIBILITIES.md rewritten with its dependency surface; backlog filed",
+  "next_expected_milestone": "charter adoption commit",
+  "expected_next_artifact": "roles/Hestia/prompts/<date>_charter/MANIFEST.md",
+  "threads": [],
+  "campaigns": [],
+  "experiments": [],
+  "fabric_tasks": [],
+  "running": [],
+  "blocked": [],
+  "blocked_on": [],
+  "resource_status": "none held; no Fabric lease, no compute, no worker, no process started; MWO-0004 R2 is the default envelope when work exists",
+  "last_receipt": "roles/Hestia/journal/2026-10-04.md (creation pass)",
+  "last_push_sha": "UNKNOWN (set after the first push)",
+  "last_push_utc": "UNKNOWN",
+  "session_started_utc": "UNKNOWN (not inferred)",
+  "next": "awaiting the operator's details. Not awaiting Aporia dispatch: HOLD with no lane is not READY (CWO-C s1.3), and a new seat charter is the operator's (CWO-C s9).",
+  "next_actions": [
+    "Seat created 2026-10-04, charter PENDING. HOLD because no READY work exists without a charter (base role 2a F), not a block on any seat. When the operator's details arrive: commit them verbatim with MANIFEST under roles/Hestia/prompts/<date>_charter/, rewrite RESPONSIBILITIES.md (pre-charter body to superseded/) including the dependency surface, file BACKLOG_H0H5.md, decide with the operator whether to heartbeat Aporia, leave HOLD."
+  ],
+  "operator_decisions_required": [],
+  "latest_reports": [
+    "roles/Hestia/journal/2026-10-04.md (creation pass)"
+  ]
+}
