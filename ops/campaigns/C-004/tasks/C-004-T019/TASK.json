@@ -69,5 +69,6 @@
     "engineering": "<= 1.5 Q1 seat-hours",
     "cpu": "< 1 CPU-minute",
     "note": "Counts toward the slice caps fixed by C-004-OP1 (NEXT_ROUND_PLAN_v0.4 s6 proposal: 30 CPU-minutes total, 0 GPU, 0 cloud, 100 MB new artifacts, 12 top-level validation launches; mutation children count toward CPU). Stop at the first exhausted cap and keep partial results."
-  }
+  },
+  "notes": "COORDINATOR 2026-10-04 (interface fixed by C-004-T014, rso/slice001/evidence.py G-INV): inventory rows are {kind: RUN, run_id, node_id, status} with a final {kind: TERMINAL, row_count}; node_id per AMENDMENT V7. Write rows in exactly this shape (add fields only if G-INV ignores them), or escalate to Palamedes before diverging."
 }

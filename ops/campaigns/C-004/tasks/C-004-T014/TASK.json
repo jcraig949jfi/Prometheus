@@ -49,7 +49,7 @@
     "rso/slice001/tests/test_evidence.py"
   ],
   "kind": "software",
-  "status": "INTEGRATION_READY",
+  "status": "INTEGRATED",
   "history": [
     {
       "status": "PROPOSED",
@@ -92,6 +92,12 @@
       "by": "Argus[harry1-91cbacb8]",
       "at_utc": "2026-10-04T02:21:37Z",
       "note": "branch argus/c004-t014 at c62878b1d; RED hash-only stub 8/10; 37/37; ci exit 0; receipt A-001"
+    },
+    {
+      "status": "INTEGRATED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-04T02:23:52Z",
+      "note": "merged c62878b1d; integrator: test_evidence 37/37 (+ receipt, mutation suites) on merged tree; mutation check (required B6.2 edges dropped from DEPENDENCY_MISMATCH) killed by test_strip_detected_even_when_manifest_built_from_stripped_node; restored. G-INV inventory shape pushed into T019 notes"
     }
   ],
   "authority": "operator directive 2026-10-03 s9, s11 (roles/Achilles/prompts/2026-10-03_rso_builder_cell/01_OPERATOR_DIRECTIVE_verbatim.md); decomposed by Palamedes under C-004-T000",
