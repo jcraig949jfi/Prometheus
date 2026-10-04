@@ -7,22 +7,22 @@
   "window_type": "DEV",
   "window_index": 1,
   "window_opened_utc": "2026-10-04T11:37:13Z",
-  "window_due_close_utc": null,
+  "window_due_close_utc": "2026-10-04T15:37:13Z",
   "active_threads": [
     "TH-007",
     "TH-008",
     "TH-009"
   ],
   "physics_version": "aeth03_variants @ 1b4fb4523 (v1 + scouts + rcv family + lesions rcv_sfx/rcv_adr/rcv_sfz)",
-  "observatory_version": "twin assay aeth03_propagation @ 1b4fb4523; provenance observatory: NONE (DEV-1 builds prov0)",
-  "experiment": null,
+  "observatory_version": "prov0 @ 9770203e6 (qualified: 22/22 fixtures + self-check)",
+  "experiment": "TEST-1 provenance qualification (Aether/V2B/TEST-1/PREREGISTRATION.md)",
   "attempt": null,
-  "last_disposition": "E-012 CLOSED: DYNAMIC_COUPLING_REQUIRED (boundary, 6/128)",
+  "last_disposition": "DEV-1 complete: prov0 built and qualified; TEST-1 frozen",
   "unresolved_defects": [
-    "content metric blind to transport in rich soup (E-P1 failed) -- DEV-1 target",
     "rcv_add lesion leaks through later ADD writes (E-011) -- needs provenance",
-    "Fabric CLI broken on Windows (#1135) -- not blocking: Aether submits from BUCKKEEP successfully so far; recheck"
+    "Fabric CLI broken on Windows (#1135) -- not blocking: Aether submits from BUCKKEEP successfully so far; recheck",
+    "E-P1 repair pending TEST-1 verdict (prov0 built; DEV pilot shows fwd visible)"
   ],
-  "next_intended_window": "TEST-1: provenance qualification in rich soup (fwd positive control visible; fixtures 1-7) + first P3/P4/P5 rung readings for rcv, rcv_add, rcv_str",
+  "next_intended_window": "TEST-1 (cycle 1) -- opens at the window boundary 2026-10-04T15:37Z",
   "dev1_plan": "Aether/V2B/DEV-1_PLAN.md"
 }
