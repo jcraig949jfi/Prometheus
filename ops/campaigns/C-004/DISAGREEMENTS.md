@@ -41,6 +41,11 @@ The independent table (EXPECTED_ANSWERS.json) is the comparison target for T020;
                                        UNQUALIFIED
     X15    T06.HCOUNT detail           first RESTART witness; CHANNEL outcome masked by          COMPARISON 5
                                        authority (derived after unblinding; not in the table)
+    X16    reset_model Q               draft A A2 calls Q = 8 = S x (K + 1) 'the reachable      T010 receipt
+                                       maximum'; T010 shows at most 6 in flight from send()
+                                       (S = 2, K = 3). Q stays a valid bound (BOUNDS
+                                       CHANNEL_CAPACITY reachable only via restore()); no
+                                       verdict changes. Contract wording defect for S5.
 
 Independence caveats carried with this register (Pallas EXPOSURE.md s4): agreement on T01.QCARRY,
 T02.AMNESIAC, T02.CLOCKED, T02.FLIP, T05.WIPE, T06.LAGD is not independent; contract.json prints every case's

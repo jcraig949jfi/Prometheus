@@ -48,7 +48,7 @@
     "rso/slice001/tests/test_world.py"
   ],
   "kind": "software",
-  "status": "INTEGRATION_READY",
+  "status": "INTEGRATED",
   "history": [
     {
       "status": "PROPOSED",
@@ -91,6 +91,12 @@
       "by": "Cadmus[m1-a86ec5e4]",
       "at_utc": "2026-10-04T09:47:12Z",
       "note": "branch cadmus/c004-t010: RED ab4481fa2 (ImportError), GREEN e08c61a46 (ci PASSED 204 run, 0 failed)"
+    },
+    {
+      "status": "INTEGRATED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-04T09:51:36Z",
+      "note": "merged e08c61a46; integrator: test_world 32/32 on merged tree; independent recompute: 4096 histories, u_j=1 in 2048 for j=1..3, max over N = 1/2 (STANDARD), 1 (CLOCKED), bounds equal contract.json reset_model, closure_blockers [] and fires for K=4>H; X16 (Q reachable max 6 not 8) registered"
     }
   ],
   "authority": "operator directive 2026-10-03 s9, s11 (roles/Achilles/prompts/2026-10-03_rso_builder_cell/01_OPERATOR_DIRECTIVE_verbatim.md); decomposed by Palamedes under C-004-T000",
