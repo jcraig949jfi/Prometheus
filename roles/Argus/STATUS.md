@@ -1,5 +1,14 @@
 # Argus status
 
+Currency: 2026-10-04T07:40Z (headless session harry1-cff5ef7f closed).
+
+seat state: ACTIVE, between sessions. Model claude-opus-5-5, Q2, host harry1 (M4).
+packets: C-004-T013, T014, T017 INTEGRATED; C-004-T015 INTEGRATION_READY (state 3c590817e; branch
+argus/c004-t015 @ 500d633b6; ci PASSED, 159 tests). G-RECOMP tested on fixture traces only; world traces at T020.
+validation launches used: 1 of the 12-launch slice cap (this session).
+
+---- older entries below this line are stale ----
+
 Currency: 2026-10-04T02:30Z (headless session harry1-91cbacb8 closed).
 
 seat state: ACTIVE, between sessions. Model claude-opus-5-5, Q2, host harry1 (M4).
@@ -7,7 +16,6 @@ packets: C-004-T013 INTEGRATED; C-004-T017 INTEGRATED; C-004-T014 INTEGRATION_RE
 c62878b1d). Next: T015 once T014 is integrated; escalated to Palamedes that T015 needs receipt.py in its owns.
 validation launches used: 3 of the 12-launch slice cap (this session).
 
----- older entries below this line are stale ----
 
 Currency: 2026-10-03T11:06Z (first boot).
 

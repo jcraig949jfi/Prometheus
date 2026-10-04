@@ -3,25 +3,25 @@
   "seat": "Argus",
   "mwo_id": "MWO-0004",
   "authority": "operator directive 2026-10-03 (roles/Achilles/prompts/2026-10-03_rso_builder_cell/01_OPERATOR_DIRECTIVE_verbatim.md)",
-  "updated_at_utc": "2026-10-04T02:30:00Z",
+  "updated_at_utc": "2026-10-04T07:40:00Z",
   "state": "ACTIVE",
-  "branch": "argus/c004-t014",
-  "base_sha": "398db5c43eaff4aa6c198a19df6004532d1dfc81",
-  "head_sha": "c62878b1db1daa72f28e97eedf164bac5eca8c2e",
-  "worktree_path": "C:/Prometheus-worktrees/argus-c004-t014",
+  "branch": "argus/c004-t015",
+  "base_sha": "e2742a706e6569fabea0bda6595faeaa55dfc1fb",
+  "head_sha": "500d633b6f5f8d1821963d60e6218573380ccbc3",
+  "worktree_path": "C:/Prometheus-worktrees/argus-c004-t015",
   "model": "claude-opus-5-5",
   "capability_class": "Q2",
   "host": "harry1 (M4; not M1, EW_DB_HOST=192.168.1.202)",
-  "instance": "harry1-91cbacb8",
-  "session_start_utc": "2026-10-04T01:50:00Z",
+  "instance": "harry1-cff5ef7f",
+  "session_start_utc": "2026-10-04T07:10:00Z",
   "current_objective": "RSO Builder Cell member, campaign C-004 (RSO-METHODS-SLICE-001)",
-  "current_step": "T013 INTEGRATED (c8e0153cc); T017 INTEGRATED (61ee17059); T014 INTEGRATION_READY (cac84f1ec); headless session closed (launch-note scope)",
+  "current_step": "T013, T014, T017 INTEGRATED; T015 INTEGRATION_READY (3c590817e, work branch 500d633b6); headless session closed (launch-note scope)",
   "in_flight": [
-    "C-004-T014 (INTEGRATION_READY, branch argus/c004-t014 at c62878b1d, awaiting Palamedes)"
+    "C-004-T015 (INTEGRATION_READY, branch argus/c004-t015 at 500d633b6, awaiting Palamedes)"
   ],
   "finish_condition": "per claimed packet (DISTRIBUTED_WORK.md)",
-  "next_expected_milestone": "Palamedes integrates T014; T015 becomes READY for Argus",
-  "expected_next_artifact": "C-004-T015 checker.py (G-RECOMP, eligibility) and render.py, in a later session",
+  "next_expected_milestone": "Palamedes integrates T015; T016 (Cadmus) emits traces in checker.TRACE_LAYOUT",
+  "expected_next_artifact": "none assigned; T020 integration exercises G-RECOMP on world traces",
   "threads": [
     "phase3-rso"
   ],
@@ -34,16 +34,17 @@
   "blocked_on": [],
   "next_actions": [
     "next session: comms sync Argus; workgraph ready Argus",
-    "T015: needs receipt.make_verdict to accept consumer-gate outcomes (escalated to Palamedes in the T014 note, option 1: add receipt.py to T015 owns)",
-    "clean up merged worktrees/branches argus-c004-t013, argus-c004-t017 once listed by git branch -r --merged origin/main"
+    "if T016 lands with a different trace layout: G-RECOMP FAILs TRACE_SCHEMA; reconcile by packet, not by loosening the parser",
+    "clean up argus-c004-t002/t013/t017 worktrees once `git branch -r --merged origin/main` lists them; t015 after integration"
   ],
   "operator_decisions_required": [],
   "latest_reports": [
     "ops/campaigns/C-004/tasks/C-004-T013/attempts/A-001/RECEIPT.json",
     "ops/campaigns/C-004/tasks/C-004-T017/attempts/A-001/RECEIPT.json",
-    "ops/campaigns/C-004/tasks/C-004-T014/attempts/A-001/RECEIPT.json"
+    "ops/campaigns/C-004/tasks/C-004-T014/attempts/A-001/RECEIPT.json",
+    "ops/campaigns/C-004/tasks/C-004-T015/attempts/A-001/RECEIPT.json"
   ],
-  "last_push_sha": "cac84f1ec",
-  "last_push_utc": "2026-10-04T02:25:00Z",
-  "validation_launches_this_session": 3
+  "last_push_sha": "3c590817e",
+  "last_push_utc": "2026-10-04T07:34:00Z",
+  "validation_launches_this_session": 1
 }
