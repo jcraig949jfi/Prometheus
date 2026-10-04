@@ -4,10 +4,10 @@
   "epic": "EP-PHASE2B",
   "authority": "operator directive 2026-10-04 (roles/Aether/prompts/2026-10-04_v2b_directive/)",
   "cycle": 2,
-  "window_type": "DEV",
+  "window_type": "TEST",
   "window_index": 2,
-  "window_opened_utc": "2026-10-04T19:38:29Z",
-  "window_due_close_utc": "2026-10-04T23:37:13Z",
+  "window_opened_utc": "2026-10-04T23:40:51Z",
+  "window_due_close_utc": "2026-10-05T03:37:13Z",
   "active_threads": [
     "TH-009",
     "TH-008",
@@ -15,15 +15,15 @@
   ],
   "physics_version": "aeth03_variants @ 1b4fb4523 (v1 + scouts + rcv family + lesions rcv_sfx/rcv_adr/rcv_sfz)",
   "observatory_version": "prov0 + aeth_mobility (P1 ruler) @ DEV-2",
-  "experiment": "TEST-2 P1 mobility census (Aether/V2B/TEST-2/PREREGISTRATION.md)",
-  "attempt": null,
-  "last_disposition": "DEV-2 complete: P1 mobility ruler built + qualified (6 fixtures); TEST-2 frozen",
+  "experiment": "TEST-2 CLOSED",
+  "attempt": 1,
+  "last_disposition": "TEST-2 CLOSED: FROZEN_PREMISE_SUPPORTED (all OFF laws FROZEN or COUNTER, 4/4 seeds each; v1 ON CYCLING)",
   "unresolved_defects": [
     "Fabric ubu001 workers stale since 2026-10-02 (TEST-1 ran via R3 native fallback); reported to Aporia",
     "prov0 limits: energy not a lineage; composition counts tracked lineages only (dense origins needed)",
     "rcv_add lesion completion (E-011) now possible with provenance"
   ],
-  "next_intended_window": "TEST-2 at 2026-10-04T23:37Z",
+  "next_intended_window": "DEV-3 at 2026-10-05T03:37Z",
   "dev1_plan": "Aether/V2B/DEV-1_PLAN.md",
   "fabric_tasks": "scratchpad t1/tasks.json (28 units, experiment V2B-TEST-1)",
   "dev2_candidates": [
@@ -32,5 +32,12 @@
     "rcv_str steering dose-response curve",
     "alternative energy regime"
   ],
-  "dev2_limiting_layer": "no P1 ruler: 'frozen medium' is asserted, never measured against the directive's exclusions (injected perturbation, trivial cycling, residue). Build the mobility observatory before searching mobile-medium laws."
+  "dev2_limiting_layer": "no P1 ruler: 'frozen medium' is asserted, never measured against the directive's exclusions (injected perturbation, trivial cycling, residue). Build the mobility observatory before searching mobile-medium laws.",
+  "dev3_candidates": [
+    "TH-009 first mobile-medium law family: declared mechanism class + explicit cheap-shortcut attack; must pass P1 (not FROZEN/COUNTER/CYCLING/noise) under this ruler",
+    "warm-up dependence check (review Q4): does the ON warm-up freeze the media?",
+    "alternative energy regime",
+    "prov1 dense origins / energy lineage",
+    "rcv_str steering dose-response"
+  ]
 }
