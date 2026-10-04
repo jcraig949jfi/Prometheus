@@ -1,0 +1,64 @@
+{
+  "schema": "prometheus.workgraph.task.v1",
+  "task_id": "C-004-T025",
+  "campaign_id": "C-004",
+  "title": "Ledger: canonical-safe CPU in inventory rows (cpu_us) and a non-launch RECEIPT row kind",
+  "objective": "Make ledger.inventory() rows canonical JSON (integer cpu_us, no floats) and add a RECEIPT row kind that charges CPU/bytes but not launches.",
+  "parent_objective": "RSO-METHODS-SLICE-001 (CAMPAIGN.json objective)",
+  "owner_role": "Eupalamus",
+  "quality_class": "Q1",
+  "can_downgrade": false,
+  "escalate_to": "Q2",
+  "depends_on": [
+    "C-004-T024"
+  ],
+  "owns": [
+    "rso/slice001/ledger.py",
+    "rso/slice001/tests/test_ledger.py"
+  ],
+  "reads": [
+    "rso/slice001/receipt.py",
+    "rso/slice001/evidence.py",
+    "ops/campaigns/C-004/escalations/C-004-T024_1_2_RESPONSE.md"
+  ],
+  "problem": "Escalations C-004-T024_1 and _2 (Argus): receipt.canonical_bytes refuses floats (draft B B2), so a real RUN_INVENTORY cannot be hashed for custody; and per-receipt TOP_LEVEL rows would spend 25 of 12 launches. Inventory rows: replace float cpu_s with integer microseconds cpu_us (store may keep its float). New LAUNCH_KIND 'RECEIPT': counted for CPU and bytes, not for launches; rows carry node_id (V7).",
+  "non_goals": [
+    "No change to cap values or to G-INV",
+    "Do not reinterpret what counts toward caps beyond the RECEIPT kind"
+  ],
+  "evidence_required": [
+    "RED: a test that receipt.canonical_bytes(inventory rows) succeeds, failing on the float before the fix",
+    "a test that 25 RECEIPT rows after one TOP_LEVEL row charge 1 launch and their summed CPU",
+    "existing ledger tests still pass (adjusted only where cpu_s became cpu_us)"
+  ],
+  "acceptance": {
+    "command": "python -B -m unittest rso.slice001.tests.test_ledger",
+    "condition": "inventory canonical-safe; RECEIPT kind charged CPU not launches; suite green"
+  },
+  "deliverables": [
+    "rso/slice001/ledger.py",
+    "tests/test_ledger.py"
+  ],
+  "kind": "software",
+  "status": "READY",
+  "history": [
+    {
+      "status": "PROPOSED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-04T14:14:41Z",
+      "note": "from escalations C-004-T024_1/_2"
+    },
+    {
+      "status": "READY",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-04T14:14:41Z",
+      "note": "made READY by the coordinator"
+    }
+  ],
+  "authority": "operator directive 2026-10-03 s9, s11; escalation responses C-004-T024_1_2_RESPONSE.md",
+  "resource_ceiling": {
+    "engineering": "<= 0.5 seat-hour",
+    "cpu": "< 2 CPU-minutes",
+    "note": "counts toward OP-1 caps"
+  }
+}

@@ -74,14 +74,30 @@ def repo_id(path: Optional[Path] = None) -> str:
     return _REPO_ID[key]
 
 
+def _git_status(cwd: Path) -> Optional[str]:
+    """Porcelain status, or None when git did not answer. Unlike _git(), a nonzero exit is not an empty answer."""
+    try:
+        p = subprocess.run(["git", "status", "--porcelain", "--untracked-files=no"], cwd=str(cwd),
+                           capture_output=True, text=True, timeout=30)
+    except Exception:                                   # noqa: BLE001
+        return None
+    return p.stdout.strip() if p.returncode == 0 else None
+
+
 def receipt(path: Optional[Path] = None) -> Dict[str, Any]:
-    """base_sha, branch, worktree_path, dirty, repo_id -- what every receipt carries."""
+    """base_sha, branch, worktree_path, dirty, repo_id -- what every receipt carries.
+
+    dirty is None, not False, when `git status` did not answer (Aporia #1283, 2026-10-04): ARCH-52 closed this
+    hole in assert_not_canonical only, and the receipt still reported a clean tree for a non-repository or a
+    corrupt index. workspace_known is False in that case too."""
     cwd = path or REPO
     sha = _git("rev-parse", "HEAD", cwd=cwd)
     branch = _git("rev-parse", "--abbrev-ref", "HEAD", cwd=cwd)
-    dirty = bool(_git("status", "--porcelain", "--untracked-files=no", cwd=cwd))
+    status = _git_status(Path(cwd))
+    dirty = None if status is None else bool(status)
     return {"base_sha": sha, "branch": branch, "worktree_path": str(Path(cwd).resolve()),
-            "dirty": dirty, "main_worktree": is_main_worktree(cwd), "workspace_known": workspace_known(cwd),
+            "dirty": dirty, "main_worktree": is_main_worktree(cwd),
+            "workspace_known": workspace_known(cwd) and status is not None,
             "repo_id": repo_id(cwd),
             "allow_canonical_override": os.environ.get("ARCHAEON_ALLOW_CANONICAL") == "1"}
 

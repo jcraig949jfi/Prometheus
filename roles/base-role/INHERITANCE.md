@@ -82,6 +82,7 @@ Every role below carries the banner on its primary document(s):
 | Argus | RESPONSIBILITIES.md (created 2026-10-03 by Achilles under the operator directive of that day, verbatim in roles/Achilles/prompts/2026-10-03_rso_builder_cell/ with MANIFEST; RSO Builder Cell; inherits base-role and rso-builder-role (Shared roles below); not bound to a host; no prior use of the name as a seat or agent; creation pointer roles/Argus/prompts/2026-10-03_creation/) |
 | Cadmus | RESPONSIBILITIES.md (created 2026-10-03 by Achilles under the operator directive of that day, verbatim in roles/Achilles/prompts/2026-10-03_rso_builder_cell/ with MANIFEST; RSO Builder Cell; inherits base-role and rso-builder-role (Shared roles below); not bound to a host; no prior use of the name as a seat or agent; creation pointer roles/Cadmus/prompts/2026-10-03_creation/) |
 | Eupalamus | RESPONSIBILITIES.md (created 2026-10-03 by Achilles under the operator directive of that day, verbatim in roles/Achilles/prompts/2026-10-03_rso_builder_cell/ with MANIFEST; RSO Builder Cell; inherits base-role and rso-builder-role (Shared roles below); not bound to a host; no prior use of the name as a seat or agent; creation pointer roles/Eupalamus/prompts/2026-10-03_creation/) |
+| Hestia | RESPONSIBILITIES.md (created 2026-10-04 on the seat's creation pass on GANDALF (M3); new seat named by the operator, charter PENDING (operator: inherits base-role, mostly self-contained, a moonshot, details to follow); creation directive verbatim in roles/Hestia/prompts/2026-10-04_creation/ with MANIFEST; no prior use of the name as a seat or agent (one prior mention, a label in harmonia/docs/the_decaphony.md, recorded and not inherited); self-service row per Archaeon ruling #39) |
 | Vivarium | RESPONSIBILITIES.md (already), CHARTER.md (already) |
 
 Roles with no document received a stub RESPONSIBILITIES.md to fill. Stamping is an annotation on line 2; nothing else in any seat file was changed.
@@ -169,6 +170,7 @@ BOOTSTRAP.md if the seat has one, else STARTUP.md, RESPONSIBILITIES.md, ROLE.md,
 | Argus | RESPONSIBILITIES.md |
 | Cadmus | RESPONSIBILITIES.md |
 | Eupalamus | RESPONSIBILITIES.md |
+| Hestia | RESPONSIBILITIES.md |
 | Vivarium | RESPONSIBILITIES.md |
 
 ## Shared roles (2026-10-03, operator directive at roles/Achilles/prompts/2026-10-03_rso_builder_cell/)

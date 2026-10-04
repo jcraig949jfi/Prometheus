@@ -52,7 +52,7 @@ Loose ends from adding ubu003 and the ELSA access. Tick with a date.
       configures Wi-Fi). In progress 2026-10-02. Wi-Fi card Intel AC 3168 (`wlp2s0`, iwlwifi). Disk is a **WD5000LPCX
       500 GB 5400 rpm HDD, painfully slow**: wishlisted a **PNY CS900 250 GB 2.5" SATA SSD** (SSD7CS900-250-RB) to swap in later,
       then re-run the autoinstall. BIOS: Esc = startup menu, F9 = boot devices, F10 = setup. Check whether it also has an M.2 slot.
-- [ ] **ubu005 = Lenovo ThinkPad P52s** (T580 platform, 2019). The **HDD1 ZIF connector's latch broke** while swapping
+- [x] Done 2026-10-04 (see the P52s line below: USB enclosure). **ubu005 = Lenovo ThinkPad P52s** (T580 platform, 2019). The **HDD1 ZIF connector's latch broke** while swapping
       drives; the connector body is still on the board, but reseating + taping the tray cable (several tries, both
       orientations) gives **no drive detected** in BIOS or the Ubuntu installer. The main M.2 2280 tray only connects through
       HDD1, so it's out. USB boot works (F12 boot menu, F1 setup; needed USB HDD moved out of "Excluded from boot order").
@@ -61,17 +61,37 @@ Loose ends from adding ubu003 and the ELSA access. Tick with a date.
       (original, 2280) + Team MP33 1TB (2280), two Lenovo 2.5" NVMe trays.
 - [ ] ELSA's own future: reimage as an Ubuntu worker (16 GB DDR3 kit ~$47) or Wake-on-LAN on demand. Its motherboard video
       ports are dead by design (the i7-860 has no integrated graphics); use the Radeon HD 5450 card for installing.
+      **ELSA hardware (read 2026-10-04):** Optiplex 980 SFF, board 0C522T. RAM 3x 2 GB Samsung M378B5673FH0-CH9
+      (DDR3-1333 PC3-10600U) in DIMM1/2/4, DIMM3 empty. **Max 16 GB = 4x 4 GB** DDR3-1333 (or 1600, runs at 1333)
+      240-pin non-ECC UDIMM. **8 GB sticks do NOT work** (i7-860 / Lynnfield: 4 GB per DIMM max). Video: Radeon HD 5450
+      (low-profile, VGA) in the x16 slot, working at 1080p. Boot SSD: 240 GB 2.5" SATA III, SATA mode RAID (leave it:
+      switching to AHCI makes Windows fail to boot). **Physical cleanup:** the SSD sits loose on the cables (mount it:
+      2.5"->3.5" adapter in the HDD bay, or Velcro); the HD 5450 isn't sitting square in its rear slot (reseat with
+      the low-profile bracket and close the retention latch) so the lid can go back on.
 - [x] Done 2026-10-03: token `nodes-shared` created by the operator, saved as tokens/shared.txt, first used on ubu004. **Shared GitHub token** (operator decision 2026-10-02): one fine-grained no-expiry token for all new nodes, saved as
       `C:\autoinstall_secrets\tokens\shared.txt` on ELSA (`provision_node.sh` uses it when there's no per-node file).
       ubu001/002/003 keep their own tokens for now. Optionally move them to the shared token later; then delete the per-node
       tokens on GitHub. The shared file is a plain-text live token on ELSA: keep it in that folder only.
 - [x] **ubu006 = Dell Inspiron 3647** (desktop, 4 GB): online 2026-10-03 at 192.168.1.225 (wired; Wi-Fi .226). UEFI needed
       a manual boot entry (`\EFI\ubuntu\shimx64.efi`). Worker enabled. Remaining: Claude login, DHCP, maybe +4 GB DDR3.
-- [x] **PrometheusWorkers**: running on ubu001-004 and ubu006 (ubu004 enabled 2026-10-03 with the shared token; code f78d18e26). Was: enable ubu004 once it has
+- [x] **PrometheusWorkers**: running on ubu001-006 (ubu005 enabled 2026-10-04; ubu004 enabled 2026-10-03 with the shared token; code f78d18e26). Was: enable ubu004 once it has
       push access (shared token), re-running `install_prometheus_worker.sh <sha> --enable`. Acceptance campaign C-005.
 - [ ] **CIDATA stick** (32 GB, label CIDATA) holds the Wi-Fi password in plain text. Keep it at home; rebuild it with
       `autoinstall/build_cidata.py` if the Wi-Fi or keys change. Secrets live in `C:\autoinstall_secrets\` on ELSA.
       Rebuilt 2026-10-03 with `shutdown: poweroff` (no reinstall loop when the sticks are left in).
+- [ ] **CIDATA stick is built with `--allow-usb-target` (2026-10-04, for the P52s/M6500 USB enclosures).** Right after the
+      P52s (done) and M6500 installs: rebuild it WITHOUT the flag (`python infra/ubuntu_nodes/autoinstall/build_cidata.py E:`), so no other
+      machine can ever install onto an external disk.
+- [x] **ubu005 = P52s** ONLINE 2026-10-04 at 192.168.1.222 (i5-8350U, 22 GB), worker enabled. Remaining: Claude login,
+      DHCP; PM991: see below. Lid closed 2026-10-04: still running (lid ignore works), 49 C. History: the PM991 in the WWAN slot stops it from powering on (fan roars, no POST; BIOS N27ET56P 1.42,
+      2025-04-01, already current). Removed. Now runs from the **Team MP33 1 TB in a USB-C NVMe enclosure**. PM991: keep it
+      if it goes into the M6500's enclosure (below), else return it.
+- [ ] **ubu007 = Dell Precision M6500** (i7 Q720, 16 GB, Win7 Pro; sentimental, keep Windows intact). Plan (operator
+      2026-10-04): **dual boot by enclosure** -- Ubuntu on an SSD in the second USB-C enclosure, BIOS boot order USB
+      Storage above Internal HDD: enclosure in -> Ubuntu, unplugged -> Windows 7. **Remove the Windows drive(s) (two
+      bays) during the install** (the guard prefers internal disks; this also protects them). Needs the CIDATA stick
+      still built with --allow-usb-target and an SSD >= 200 GB. USB 2.0 only: slow disk, fine for CPU work. Legacy
+      BIOS boot. The Win7 system image to M2 is still wanted, but no longer blocks this.
 
 ## Operator (needs hands at a keyboard or the router; not the phone)
 

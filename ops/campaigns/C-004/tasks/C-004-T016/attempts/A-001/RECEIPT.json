@@ -1,0 +1,68 @@
+{
+  "schema": "prometheus.workgraph.receipt.v1",
+  "task_id": "C-004-T016",
+  "campaign_id": "C-004",
+  "attempt_id": "A-001",
+  "role": "Argus",
+  "model": "claude-opus-5-5",
+  "quality_class": "Q2",
+  "start_sha": "47036e03e66353cb6656edb657523a09342e45fe",
+  "end_sha": "83c5282169bdfb0864e098436bacb3c2ee4c171c",
+  "files_changed": [
+    "rso/slice001/adapter.py",
+    "rso/slice001/tests/test_adapter.py"
+  ],
+  "evidence_added": [
+    "world_runs: world.run_life over all 4096 histories on a runtime factory: RESET (every reset), SKIP1..SKIP3 (the reset at boundary j alone left out, A5 P4), CLAMP (at the reset hook of boundary j: capture, a := v, restore into a fresh instance; y_A at PROBE_A of j+1, A5 P5)",
+    "traces written through checker.make_trace, so every byte is in checker.TRACE_LAYOUT (FD-T015-1) and validated as written; PRESERVE comparison runs travel as SKIP1..3 inside trace:probe_a; ERASE reads trace:sends",
+    "make_receipt: one validated producer receipt per ruler/gate outcome, outcome verbatim from the callable; records subject/world/producer/predicate CodeRefs, domain and reset-model identities, oracle ref, output ArtifactRefs per trace, dependencies from B6.2 policy, execution, measured resources; cell.measurement = predicate version",
+    "a runtime that leaves the registered model gives execution BLOCKED, missing [BOUNDS_VIOLATION:<bound>], outcome null, no outputs; the ruler is never asked",
+    "file_code_ref: CodeRef over LF-normalised bytes (= git blob for text)",
+    "tests: REG/PKTD/LAGD (draft A A6) on world.Runtime; round trip world -> adapter -> checker.g_recomp PASS with the contract's expected outcomes, including LAGD ERASE FAIL witness {history 64, partner 0, j 3, episode 4, tick PROBE_A}; spot values of every layout role; cheat controls"
+  ],
+  "evidence_executed": [
+    {
+      "command": "python -B -m unittest rso.slice001.tests.test_adapter (before adapter.py)",
+      "result": "1 error: ImportError, the round trip cannot run (RED)"
+    },
+    {
+      "command": "python -B -m unittest rso.slice001.tests.test_adapter",
+      "result": "16 tests OK, about 11 s (3 runtimes x 40,960 world lives)"
+    },
+    {
+      "command": "mutation fire tests on adapter.py (each restored)",
+      "result": "M1 clamp without a := v KILLED (6); M2 SKIP keeps every reset KILLED (1); M3 send slot <k><bit> KILLED (1, after adding an f_1 = 1 spot check: it SURVIVED the first suite); M4 adapter edits the outcome reason KILLED (1); M5 output ref over other bytes KILLED (7); M6 clamp one boundary early KILLED (6)"
+    },
+    {
+      "command": "python -B -m rso.slice001.ci at 83c528216 (branch merged with origin/main 24824a0a6), twice",
+      "result": "exit 0 both; PASSED; 219 run, 218 passed, 1 skipped (T021 live smoke), 0 failed; contract OK; dirty false; cpu_s 29.0 / 28.2"
+    }
+  ],
+  "red_observed": {
+    "observed": true,
+    "detail": "the round-trip suite failed before adapter.py existed (module import error); two test expectations of mine were wrong at first GREEN attempt (PROBE_A precedes CUE; PKTD and REG share probe_a bytes) and were corrected from the world semantics, not from adapter output"
+  },
+  "result": "DONE_CLEAN",
+  "known_escapes": [
+    "only the four layout roles are produced from world runs; trace:deliveries, trace:capture and trace:observer have no checker layout and are passed in by the caller (extra_traces) for RESTART / OBSERVER / TWIN_EQ receipts (T011, T018)",
+    "the round trip uses the contract's expected outcomes as the ruler; the real rulers (T012) and reset predicates (T011) are not integrated, so their agreement with the layout is first exercised at T020",
+    "the clamp restores into a fresh instance through world.Runtime.capture/restore; a runtime with state outside capture() loses it at the clamp (that is the runtime's declaration, A3)",
+    "BLOCKED missing reason spelled BOUNDS_VIOLATION:<bound> (not a contract code; FD-T016-2)",
+    "about 11 s of the suite's wall time is these world runs"
+  ],
+  "unresolved": [],
+  "unblocks": [
+    "C-004-T020"
+  ],
+  "created_at_utc": "2026-10-04T11:10:00Z",
+  "instance": "desktop-ruapvai-b08b36ac",
+  "host": "DESKTOP-RUAPVAI",
+  "branch": "argus/c004-t016",
+  "worktree_path": "C:/Prometheus-worktrees/argus-boot",
+  "resources": {
+    "cpu": "about 3 CPU-minutes (suite and mutant runs)",
+    "validation_launches": 0,
+    "model": "one Q2 session, about 0.7 hours"
+  },
+  "notes": "Field decisions (rso-builder 2.7). FD-T016-1 traces are written with checker.make_trace (the consumer's format writer and validator) so producer and consumer cannot drift; reversible by copying the format. FD-T016-2 a BoundsViolation during the run makes every non-BOUNDS receipt BLOCKED with missing BOUNDS_VIOLATION:<bound>; the P0 BOUNDS outcome itself stays the caller's (world.py docstring). FD-T016-3 dependencies are B6.2's required_deps of the node id (policy), never chosen by the producer. FD-T016-4 expected_answer.row_id is the node id. FD-T016-5 inputs.domain is a fixed description of the enumeration and reset_model_sha256 hashes the registered (L, j, H, K, S, Q). Revisit at T020 or on an S3 attack."
+}

@@ -1,0 +1,100 @@
+{
+  "schema": "prometheus.workgraph.task.v1",
+  "task_id": "C-004-T023A",
+  "campaign_id": "C-004",
+  "title": "AUTHOR_TESTED stage records + fire tests: world-plane instruments (Cadmus)",
+  "objective": "Commit validated AUTHOR_TESTED stage records with executed fire-test receipts for BOUNDS, ERASE, PRESERVE, CHANNEL, RESTART, OBSERVER and TWIN_EQ at their current integrated versions.",
+  "parent_objective": "RSO-METHODS-SLICE-001 (CAMPAIGN.json objective)",
+  "owner_role": "Cadmus",
+  "quality_class": "Q2",
+  "can_downgrade": false,
+  "escalate_to": "Q3",
+  "depends_on": [
+    "C-004-T018"
+  ],
+  "owns": [
+    "rso/slice001/stages/",
+    "rso/slice001/tests/test_stages_world.py"
+  ],
+  "reads": [
+    "rso/slice001/receipt.py",
+    "rso/slice001/contract/",
+    "rso/slice001/fixtures/world_cases.py"
+  ],
+  "problem": "Draft B B4.1/B4.3: every instrument version needs a StageRecord (stage AUTHOR_TESTED at S2) with a fire-test receipt: >= 1 case it must accept and >= 1 it must reject with the expected reason, executed at exactly that version; a ruler's fire test has a known POSITIVE, NEGATIVE and NOT_SHOWN case. AMENDMENT V8: the real T020 run reads stage records only from the live custody store, so each record must be committed on main and then registered by Aporia (record_kind STAGE_RECORD). Write the records in the receipt.py StageRecord form (validate_stage_record must accept them), one file per instrument under rso/slice001/stages/, plus a runnable fire-test script whose output is the fire-test receipt.",
+  "non_goals": [
+    "No change to any predicate source (a source change resets the stage)",
+    "Do not register with the store yourself (Aporia writes; Palamedes requests)"
+  ],
+  "evidence_required": [
+    "fire-test receipts executed at the exact instrument versions (CodeRef sha256 of the committed blobs)",
+    "validate_stage_record accepts every record; a test that a record whose version hash differs from the committed blob is refused"
+  ],
+  "acceptance": {
+    "command": "python -B -m unittest rso.slice001.tests.test_stages_world",
+    "condition": "7 records valid, fire tests reproduce, version hashes equal the committed blobs on main"
+  },
+  "deliverables": [
+    "rso/slice001/stages/<INSTRUMENT>.json x7",
+    "fire-test receipts",
+    "test_stages_world.py"
+  ],
+  "kind": "software",
+  "status": "INTEGRATED",
+  "history": [
+    {
+      "status": "PROPOSED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-04T12:39:02Z",
+      "note": "split out of C-004-T020"
+    },
+    {
+      "status": "READY",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-04T12:39:02Z",
+      "note": "made READY by the coordinator"
+    },
+    {
+      "status": "CLAIMED",
+      "by": "Cadmus[m1-a86ec5e4]",
+      "at_utc": "2026-10-04T13:24:27Z",
+      "note": "claimed on #1405; branch cadmus/c004-t023a"
+    },
+    {
+      "status": "RED",
+      "by": "Cadmus[m1-a86ec5e4]",
+      "at_utc": "2026-10-04T13:31:08Z",
+      "note": "branch cadmus/c004-t023a: RED (8 errors), receipt 4d7d1b563, records, merged fb8a00de125b3cadcbd5d511378d7bde72315d15, ci PASSED 279/0 failed"
+    },
+    {
+      "status": "IMPLEMENTING",
+      "by": "Cadmus[m1-a86ec5e4]",
+      "at_utc": "2026-10-04T13:31:08Z",
+      "note": "branch cadmus/c004-t023a: RED (8 errors), receipt 4d7d1b563, records, merged fb8a00de125b3cadcbd5d511378d7bde72315d15, ci PASSED 279/0 failed"
+    },
+    {
+      "status": "GREEN",
+      "by": "Cadmus[m1-a86ec5e4]",
+      "at_utc": "2026-10-04T13:31:08Z",
+      "note": "branch cadmus/c004-t023a: RED (8 errors), receipt 4d7d1b563, records, merged fb8a00de125b3cadcbd5d511378d7bde72315d15, ci PASSED 279/0 failed"
+    },
+    {
+      "status": "INTEGRATION_READY",
+      "by": "Cadmus[m1-a86ec5e4]",
+      "at_utc": "2026-10-04T13:31:08Z",
+      "note": "branch cadmus/c004-t023a: RED (8 errors), receipt 4d7d1b563, records, merged fb8a00de125b3cadcbd5d511378d7bde72315d15, ci PASSED 279/0 failed"
+    },
+    {
+      "status": "INTEGRATED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-04T13:37:41Z",
+      "note": "merged fb8a00de1; integrator: test_stages_world 8/8; independent recompute of every record's version CodeRefs (sha256+length of committed blobs): 0 mismatches over 7 records; one-line edit of reset.py turns test_versions_are_the_current_sources red (stage bound to version)"
+    }
+  ],
+  "authority": "operator directive 2026-10-03 s9, s11; decomposed by Palamedes from C-004-T020 (AMENDMENT_v1.0.1 V8: the real T020 run reads stages and custody from the live store)",
+  "resource_ceiling": {
+    "engineering": "<= 1 Q2 seat-hour",
+    "cpu": "< 3 CPU-minutes",
+    "note": "counts toward OP-1 caps; stop at the first exhausted cap"
+  }
+}

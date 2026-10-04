@@ -1,0 +1,68 @@
+{
+  "schema": "prometheus.workgraph.receipt.v1",
+  "task_id": "C-004-T023B",
+  "campaign_id": "C-004",
+  "attempt_id": "A-001",
+  "role": "Argus",
+  "model": "claude-opus-5-5",
+  "quality_class": "Q2",
+  "start_sha": "29ff00072909dad779f747095c8ee3345745f312",
+  "end_sha": "4b134542617ed15b89a028be0cd9d7a55bca3648",
+  "files_changed": [
+    "rso/slice001/stages/version.py",
+    "rso/slice001/stages/evidence_plane.py",
+    "rso/slice001/stages/fire/{CALIBRATION,RETENTION,G-BIND,G-INV,G-RECOMP}.json",
+    "rso/slice001/stages/{CALIBRATION,RETENTION,G-BIND,G-INV,G-RECOMP}.json",
+    "rso/slice001/tests/test_stages_evidence.py"
+  ],
+  "evidence_added": [
+    "5 AUTHOR_TESTED StageRecords (instrument P1, P2, G-BIND, G-INV, G-RECOMP), validate_stage_record accepts each",
+    "versions in T023A's convention: one adapter.file_code_ref per slice file the instrument imports and executes (transitively), all at T023A's pin 6f57aa7c6 (rulers+world; evidence+receipt; checker+evidence+receipt); world.py CodeRef byte-identical to T023A's",
+    "deterministic fire tests (stages/evidence_plane.py fire) at exactly those versions; receipts committed at c2088d162 and cited by the records (merge, do not squash, to keep it an ancestor)",
+    "cases: CALIBRATION accept STANDARD PASS, reject CLOCKED 'no-carry class reaches 1/1 > 1/2 at boundary 1'; RETENTION REG POSITIVE 1/1, AMNESIAC NEGATIVE 1/2, FLIP NOT_SHOWN 0/1; G-BIND accept E03.G0, reject E03.BYTEFLIP / E03.STRIP / E02.MALFORMED with their B6.3 reasons; G-INV accept E02.G0, reject E02.MISSING RUN_UNREPORTED and a missing ERASE run row RECEIPT_WITHOUT_RUN; G-RECOMP accept a real REG bundle (world -> adapter, outcomes from rulers.py and reset.py), reject an edited RETENTION value (OUTCOME_MISMATCH:value), swapped probe_a bytes (BYTES_MISMATCH:trace:probe_a), bound bytes outside the layout (TRACE_SCHEMA:trace:probe_a)"
+  ],
+  "evidence_executed": [
+    {
+      "command": "python -B -m unittest rso.slice001.tests.test_stages_evidence (before records)",
+      "result": "8 run, 4 errors: records missing (RED)"
+    },
+    {
+      "command": "python -B -m rso.slice001.stages.evidence_plane fire",
+      "result": "5/5 instruments all_ok"
+    },
+    {
+      "command": "python -B -m unittest rso.slice001.tests.test_stages_evidence",
+      "result": "10 tests OK, about 13 s; incl. byte-for-byte fire reproduction, import-closure coverage, cheat control (broken RETENTION -> all_ok false -> no record), gate_authority QUALIFIED AUTHOR_TESTED and NO_FIRE_TEST without the receipt blob"
+    },
+    {
+      "command": "python -B -m rso.slice001.ci at 4b1345426 (branch merged with origin/main), twice",
+      "result": "exit 0 both; 281 run, 280 passed, 1 skipped; dirty false; cpu_s 138.5 / 139.3 (whole suite)"
+    }
+  ],
+  "red_observed": {
+    "observed": true,
+    "detail": "acceptance test errored on missing records before they were written; first record write refused by validate_stage_record (instrument must be a predicate id), fixed to P1/P2"
+  },
+  "result": "DONE_CLEAN",
+  "known_escapes": [
+    "stage records are committed files only; they count at T020 only after Aporia registers them (STAGE_RECORD rows; V8)",
+    "the fire receipts' must_reject for RETENTION records the expected ruler value NOT_SHOWN as expected_reason (a ruler rejects no input; the B4.1 field is reused)",
+    "an edit to any listed source after 6f57aa7c6 makes instrument_version refuse and the records stale: a new version needs a new record (B4.1); test_version_equals_committed_blob is the alarm",
+    "the whole-suite ci cost is now about 139 CPU-s per run; this packet's own tests about 13 s"
+  ],
+  "unresolved": [],
+  "unblocks": [
+    "C-004-T020"
+  ],
+  "created_at_utc": "2026-10-04T14:10:00Z",
+  "instance": "desktop-ruapvai-b08b36ac",
+  "host": "DESKTOP-RUAPVAI",
+  "branch": "argus/c004-t023b",
+  "worktree_path": "C:/Prometheus-worktrees/argus-boot",
+  "resources": {
+    "cpu": "about 6 CPU-minutes incl. two whole-suite ci runs (packet tests ~1 CPU-minute)",
+    "validation_launches": 0,
+    "model": "one Q2 session, about 0.7 hours"
+  },
+  "notes": "State commits went to main as they happened from the detached state worktree C:/Prometheus-worktrees/argus-ops (DISTRIBUTED_WORK s9; #1397). Field decisions: FD-T023B-1 adopt T023A's version convention and pin (withdraws Argus's single-file proposal #1411/#1412: T023A's is dependency-complete); FD-T023B-2 record file names are the instrument NAMES, the record's instrument field the id; FD-T023B-3 T024 copies predicate.code from these record files."
+}

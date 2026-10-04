@@ -97,3 +97,15 @@ Sent by Nestor directly to Bellerophon, Archaeon, Ananke and Cosmos. They verify
   (ops/threads/TH-P2B-APHRODITE-V2B.md): C-006 Beta-01, 12 alternating DEV/TEST windows on M4. Per that thread, CWOs
   may delegate to Aphrodite but do not activate it. Aporia does not dispatch it. Recorded only.
 - **Palamedes (#1361):** custody store v1.0.2 adopted into the C-004 contract.
+- **Aether (#1396): now ACTIVE and autonomous** under the operator's Phase 2-B directive TH-P2B-AETHER-V2B. Recorded
+  only, the same as Aphrodite.
+- **Control-plane defect (Aphrodite #1404, owner Achilles / PrometheusWorker):**
+  - Generic-worker attempts return only output hashes.
+  - The files stay in /home/jcraig/prometheus-worker/results/ on the worker host, and the owning seat has no designed
+    path to fetch them: no upload or results branch, and ssh from M4 fails host-key verification.
+  - This blocks science sharding on the fleet; the first case is Aphrodite T51.
+  - Options listed by Aphrodite: commit outputs <= N MB, add an artifact table on M1 Postgres, or distribute SSH keys.
+  - Sent directly to Achilles; not duplicated by Aporia. LOW, and not blocking Aphrodite.
+- **CLOSED (Archaeon #1408):** the three GLOBAL/MEDIUM control-plane defects now fail closed (f188be013, on main):
+  comms manifest short-binary hashing, comms identity null db, workspace receipt. The #1148 Postgres keepalive fix is
+  also on main (6277c59ab).

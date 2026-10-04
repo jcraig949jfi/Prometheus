@@ -8,6 +8,10 @@ outcomes taken as given (B9 notation): every gate PASS and RETENTION POSITIVE, e
 Every receipt, trace, anchor, stage record and keeper row here is a synthetic software fixture. A custody
 QUALIFIED computed from these exercises the logic only and is never custody evidence (B5.3, CONTRACT.md s4,
 amendment V8). Nothing here was produced by running a runtime.
+
+C-004-T024: every case is a function of a BASE bundle (class Base): `case(base=None)` applies the B9 edit to
+`base`, and base=None is the synthetic G0 above, unchanged byte for byte. `real_base(g0, ...)` wraps a G0
+built from real executions (s2_bundle.build_g0) so T020 can apply the same edits to it.
 """
 import copy
 import hashlib
@@ -138,7 +142,8 @@ def fire_blob(instrument):
 class Case(object):
     """One bundle with the anchors and store the consumer holds for it."""
 
-    def __init__(self, name, bundle, anchors, store, claims, first_check=FIRST_CHECK, keeper_anchors=None):
+    def __init__(self, name, bundle, anchors, store, claims, first_check=FIRST_CHECK, keeper_anchors=None,
+                 revision=CONTRACT_REV):
         self.name = name
         self.bundle = bundle
         self.anchors = anchors
@@ -146,7 +151,63 @@ class Case(object):
         self.claims = claims
         self.first_check = first_check
         self.keeper_anchors = keeper_anchors
-        self.config = EV.Config(CONTRACT_REV)
+        self.config = EV.Config(revision)
+
+
+class Base(object):
+    """What every B9 edit starts from: receipt dicts by node id, their trace bytes, the run inventory (None:
+    derived from the dicts' run ids), the stage records and blobs the bundle cites, the expected-table ref,
+    the contract revision, and fabricate(node_id, role) -> other bytes for the FAB cases. Never mutated."""
+
+    def __init__(self, dicts, traces, inventory, stage_records, blobs, expected_table, revision, fabricate):
+        self._dicts, self._traces = dicts, traces
+        self._inventory = inventory
+        self.stage_records, self.blobs = stage_records, blobs
+        self.expected_table, self.revision, self.fabricate = expected_table, revision, fabricate
+
+    def dicts(self):
+        return copy.deepcopy(self._dicts)
+
+    def traces(self, dicts=None):
+        keys = self._dicts if dicts is None else dicts
+        return {nid: dict(self._traces[nid]) for nid in keys}
+
+    def inventory(self, dicts=None):
+        if self._inventory is not None:
+            return copy.deepcopy(self._inventory)
+        return _inventory(self._dicts if dicts is None else dicts)
+
+    def stage_rows(self, at=REGISTERED_AT):
+        return [row("STAGE_RECORD", EV.record_blob(s), at) for s in self.stage_records]
+
+
+def synthetic_base():
+    d = g0_dicts()
+    return Base(d, _traces(d), None, stage_records(), blobs(), EXPECTED_TABLE, CONTRACT_REV,
+                lambda nid, role: trace_bytes(nid, role, "FABRICATED"))
+
+
+def real_base(g0, stage_records=(), blobs=None, expected_table=None, fabricate=None):
+    """A Base over a real G0 (s2_bundle.G0). fabricate defaults to: the trace of PKTD's receipt of the same
+    predicate and role -- another runtime's real, internally consistent bytes, as T015's tests fabricate the
+    synthetic G0 (FD-T024-3); where PKTD has no such trace, the node's own bytes reversed."""
+    dicts = {nid: copy.deepcopy(d) for nid, d in g0.dicts.items()}
+    any_d = next(iter(dicts.values()))
+
+    def other(nid, role):
+        subject, name, obs, world = EV.parse_node_id(nid)
+        alt = R.make_node_id("PKTD", name, world, observer=obs) if subject != "PKTD" else None
+        if alt in g0.traces and role in g0.traces[alt]:
+            return g0.traces[alt][role]
+        return g0.traces[nid][role][::-1]
+
+    return Base(dicts, g0.traces, g0.inventory, list(stage_records), dict(blobs or {}),
+                expected_table or any_d["expected_answer"]["table"], any_d["cell"]["revision"],
+                fabricate or other)
+
+
+def _base(base):
+    return synthetic_base() if base is None else base
 
 
 def g0_dicts():
@@ -169,11 +230,24 @@ def g0_dicts():
     return out
 
 
-def claims():
-    c = {"CL-CAL(STANDARD)": EV.make_claim("CL-CAL", cell=claim_cell(EV.WORLD_SUBJECT))}
+def claims(base=None):
+    """The B9 claims. Each claim's cell is its subject's receipt cell without measurement (for CL-CAL, the
+    CALIBRATION node's), read from the base, so a real G0 gets claims in its own registered cell."""
+    if base is None:
+        c = {"CL-CAL(STANDARD)": EV.make_claim("CL-CAL", cell=claim_cell(EV.WORLD_SUBJECT))}
+        cells = {m: claim_cell(m) for m in SUBJECTS}
+    else:
+        d = base._dicts
+
+        def strip_m(nid):
+            x = dict(d[nid]["cell"])
+            del x["measurement"]
+            return x
+        c = {"CL-CAL(STANDARD)": EV.make_claim("CL-CAL", cell=strip_m("rcpt:WORLD:CALIBRATION:STANDARD"))}
+        cells = {m: strip_m(R.make_node_id(m, "BOUNDS", "STANDARD")) for m in SUBJECTS}
     for m in SUBJECTS:
-        c["CL-RET(%s)" % m] = EV.make_claim("CL-RET", m, observers=OBSERVERS[m], cell=claim_cell(m))
-    c["TWIN(REG)"] = EV.make_claim("TWIN", "REG", cell=claim_cell("REG"))
+        c["CL-RET(%s)" % m] = EV.make_claim("CL-RET", m, observers=OBSERVERS[m], cell=cells[m])
+    c["TWIN(REG)"] = EV.make_claim("TWIN", "REG", cell=cells["REG"])
     c["CL-CUST(G0)"] = EV.make_claim("CL-CUST", bundle_id="G0")
     return c
 
@@ -218,12 +292,18 @@ def stage_rows(at=REGISTERED_AT):
     return [row("STAGE_RECORD", EV.record_blob(s), at) for s in stage_records()]
 
 
-def make_bundle(dicts, traces=None, inventory=None, withdrawals=()):
+def make_bundle(dicts, traces=None, inventory=None, withdrawals=(), base=None):
+    if base is None:
+        return EV.Bundle({nid: _bytes(d) for nid, d in dicts.items()},
+                         traces if traces is not None else _traces(dicts),
+                         inventory if inventory is not None else _inventory(dicts),
+                         stage_records=stage_records(), withdrawals=withdrawals, blobs=blobs(),
+                         expected_table=EXPECTED_TABLE)
     return EV.Bundle({nid: _bytes(d) for nid, d in dicts.items()},
-                     traces if traces is not None else _traces(dicts),
-                     inventory if inventory is not None else _inventory(dicts),
-                     stage_records=stage_records(), withdrawals=withdrawals, blobs=blobs(),
-                     expected_table=EXPECTED_TABLE)
+                     traces if traces is not None else base.traces(dicts),
+                     inventory if inventory is not None else base.inventory(dicts),
+                     stage_records=list(base.stage_records), withdrawals=withdrawals, blobs=dict(base.blobs),
+                     expected_table=base.expected_table)
 
 
 def manifest_of(dicts):
@@ -235,130 +315,141 @@ def retained(dicts):
     return EV.Anchors(manifest_of(dicts), "keeper")
 
 
-def keeper_rows(dicts, bundle, at=REGISTERED_AT):
+def keeper_rows(dicts, bundle, at=REGISTERED_AT, base=None):
     m = manifest_of(dicts)
     inv = EV.record_blob({"schema": EV.INVENTORY_SCHEMA, "rows": bundle.inventory})
+    table = EXPECTED_TABLE if base is None else base.expected_table
+    stages = stage_rows(at) if base is None else base.stage_rows(at)
     return ([row("EVIDENCE_MANIFEST", hashlib.sha256(m).hexdigest(), at, "fixtures/G0/MANIFEST.json"),
-             row("RUN_INVENTORY", inv, at), row("EXPECTED_ANSWER_TABLE", EXPECTED_TABLE["blob_sha256"], at)]
-            + stage_rows(at))
+             row("RUN_INVENTORY", inv, at), row("EXPECTED_ANSWER_TABLE", table["blob_sha256"], at)]
+            + stages)
 
 
 # --------------------------------------------------------------------------------------------------------
-# The cases. Each returns a Case; edits are applied to a fresh deep copy of G0.
+# The cases. Each returns a Case; edits are applied to a fresh deep copy of the base (synthetic G0 when
+# base is None). B = the base, D = its dicts, S = a fixture store with the base's stage rows.
 
-def g0():
-    d = g0_dicts()
-    return Case("G0", make_bundle(d), retained(d), EV.FixtureStore(stage_rows()), claims())
-
-
-def g0_without_lagd():
-    d = {k: v for k, v in g0_dicts().items() if EV.parse_node_id(k)[0] != "LAGD"}
-    full = g0_dicts()
-    return Case("G0-LAGD", make_bundle(d), retained(full), EV.FixtureStore(stage_rows()), claims())
+def _ctx(base):
+    b = _base(base)
+    return b, b.dicts(), (None if base is None else b)
 
 
-def outcome_edit():
+def _case(name, bundle, anchors, rows, base, **kw):
+    b = _base(base)
+    return Case(name, bundle, anchors, EV.FixtureStore(rows), claims(None if base is None else b),
+                revision=b.revision, **kw)
+
+
+def g0(base=None):
+    b, d, mb = _ctx(base)
+    return _case("G0", make_bundle(d, base=mb), retained(d), b.stage_rows(), base)
+
+
+def g0_without_lagd(base=None):
+    b, full, mb = _ctx(base)
+    d = {k: v for k, v in b.dicts().items() if EV.parse_node_id(k)[0] != "LAGD"}
+    return _case("G0-LAGD", make_bundle(d, base=mb), retained(full), b.stage_rows(), base)
+
+
+def outcome_edit(base=None):
     """E01: LAGD's ERASE rewritten FAIL -> PASS after the run, witness nulled, node and manifest re-hashed
     by the producer; traces intact. Anchors: the producer's re-made manifest."""
-    d = g0_dicts()
+    b, d, mb = _ctx(base)
     orig = copy.deepcopy(d)
     e = d["rcpt:LAGD:ERASE:STANDARD"]
     e["outcome"].update({"value": "PASS", "witness": None, "reason": "ERASE held"})
-    c = Case("OUTCOME_EDIT", make_bundle(d), EV.anchors_from_producer(manifest_of(d)),
-             EV.FixtureStore(stage_rows()), claims())
-    c.keeper_anchors = retained(orig)
-    return c
+    return _case("OUTCOME_EDIT", make_bundle(d, base=mb), EV.anchors_from_producer(manifest_of(d)),
+                 b.stage_rows(), base, keeper_anchors=retained(orig))
 
 
-def _fabricate_reg(d):
+def _fabricate_reg(d, base=None):
     """Replace REG's output traces by fabricated ones and make the receipts agree (before registration)."""
+    b = _base(base)
+    tr = b.traces(d) if base is not None else _traces(d)
     for nid, rd in d.items():
         if EV.parse_node_id(nid)[0] == "REG":
             for out in rd["outputs"]:
-                b = trace_bytes(nid, out["role"], "FABRICATED")
-                out["sha256"], out["length"] = hashlib.sha256(b).hexdigest(), len(b)
-    tr = _traces(d)
-    for nid in d:
-        if EV.parse_node_id(nid)[0] == "REG":
-            tr[nid] = {role: trace_bytes(nid, role, "FABRICATED") for role in ROLES[EV.parse_node_id(nid)[1]]}
+                x = b.fabricate(nid, out["role"])
+                out["sha256"], out["length"] = hashlib.sha256(x).hexdigest(), len(x)
+                tr[nid][out["role"]] = x
     return tr
 
 
-def fab_consistent():
+def fab_consistent(base=None):
     """E01 coupling: fabricated, internally consistent REG traces, anchored as presented."""
-    d = g0_dicts()
-    tr = _fabricate_reg(d)
-    return Case("FAB_CONSISTENT", make_bundle(d, traces=tr), retained(d), EV.FixtureStore(stage_rows()),
-                claims())
+    b, d, mb = _ctx(base)
+    tr = _fabricate_reg(d, base)
+    return _case("FAB_CONSISTENT", make_bundle(d, traces=tr, base=mb), retained(d), b.stage_rows(), base)
 
 
-def missing():
+def missing(base=None):
     """E02: REG's PRESERVE receipt removed; the inventory still lists its run COMPLETED."""
-    d = g0_dicts()
+    b, d, mb = _ctx(base)
     full = copy.deepcopy(d)
-    b = make_bundle(d)
-    del b.receipts["rcpt:REG:PRESERVE:STANDARD"]
-    del b.traces["rcpt:REG:PRESERVE:STANDARD"]
-    return Case("MISSING", b, retained(full), EV.FixtureStore(stage_rows()), claims())
+    bd = make_bundle(d, base=mb)
+    del bd.receipts["rcpt:REG:PRESERVE:STANDARD"]
+    del bd.traces["rcpt:REG:PRESERVE:STANDARD"]
+    return _case("MISSING", bd, retained(full), b.stage_rows(), base)
 
 
-def malformed():
+def malformed(base=None):
     """E02: REG's ERASE receipt with an unregistered boundary value."""
-    d = g0_dicts()
+    b, d, mb = _ctx(base)
     full = copy.deepcopy(d)
     d["rcpt:REG:ERASE:STANDARD"]["cell"]["boundary"] = "EPISODE_RESET j=1"
-    return Case("MALFORMED", make_bundle(d), retained(full), EV.FixtureStore(stage_rows()), claims())
+    return _case("MALFORMED", make_bundle(d, base=mb), retained(full), b.stage_rows(), base)
 
 
-def relabel(rename_ids=False):
+def relabel(rename_ids=False, base=None):
     """E02: every REG node's physics and subject renamed REG -> REG2; old anchors. node ids are kept unless
     rename_ids (the two readings of X02; neither is chosen here)."""
-    d = g0_dicts()
+    b, d, mb = _ctx(base)
     full = copy.deepcopy(d)
     out = {}
     for nid, rd in d.items():
         if EV.parse_node_id(nid)[0] == "REG":
             rd["subject"]["id"] = "REG2"
-            rd["cell"]["physics"] = "REG2 " + _h("code REG")
+            rd["cell"]["physics"] = "REG2" + rd["cell"]["physics"][len("REG"):]
             if rename_ids:
                 rd["node_id"] = nid.replace("rcpt:REG:", "rcpt:REG2:")
                 rd["dependencies"] = sorted(x.replace("rcpt:REG:", "rcpt:REG2:") for x in rd["dependencies"])
         out[rd["node_id"]] = rd
-    tr = {}
-    for nid, rd in out.items():
-        old = nid.replace("rcpt:REG2:", "rcpt:REG:")
-        tr[nid] = {role: trace_bytes(old, role) for role in ROLES[EV.parse_node_id(nid)[1]]}
-    inv = _inventory(full)
+    old_traces = b.traces(full) if base is not None else _traces(full)
+    tr = {nid: dict(old_traces[nid.replace("rcpt:REG2:", "rcpt:REG:")]) for nid in out}
+    inv = b.inventory(full)
     if rename_ids:
         for r in inv[:-1]:
-            r["node_id"] = r["node_id"].replace("rcpt:REG:", "rcpt:REG2:")
-    cl = claims()
+            if isinstance(r.get("node_id"), str):
+                r["node_id"] = r["node_id"].replace("rcpt:REG:", "rcpt:REG2:")
+    cl = claims(None if base is None else b)
     if rename_ids:
-        c2 = claim_cell("REG")
-        c2["physics"] = "REG2 " + _h("code REG")
+        c2 = dict(cl["CL-RET(REG)"]["cell"])
+        c2["physics"] = "REG2" + c2["physics"][len("REG"):]
         cl["CL-RET(REG2)"] = EV.make_claim("CL-RET", "REG2", observers=OBSERVERS["REG"], cell=c2)
-    return Case("RELABEL_IDS" if rename_ids else "RELABEL", make_bundle(out, traces=tr, inventory=inv),
-                retained(full), EV.FixtureStore(stage_rows()), cl)
+    c = _case("RELABEL_IDS" if rename_ids else "RELABEL", make_bundle(out, traces=tr, inventory=inv, base=mb),
+              retained(full), b.stage_rows(), base)
+    c.claims = cl
+    return c
 
 
-def wrong_subject():
+def wrong_subject(base=None):
     """E02: the RESTART prerequisite slot of CL-RET(REG) holds PKTD's RESTART receipt."""
-    d = g0_dicts()
-    b = make_bundle(d)
-    b.receipts["rcpt:REG:RESTART:STANDARD"] = b.receipts["rcpt:PKTD:RESTART:STANDARD"]
-    b.traces["rcpt:REG:RESTART:STANDARD"] = b.traces["rcpt:PKTD:RESTART:STANDARD"]
-    return Case("WRONG_SUBJECT", b, retained(d), EV.FixtureStore(stage_rows()), claims())
+    b, d, mb = _ctx(base)
+    bd = make_bundle(d, base=mb)
+    bd.receipts["rcpt:REG:RESTART:STANDARD"] = bd.receipts["rcpt:PKTD:RESTART:STANDARD"]
+    bd.traces["rcpt:REG:RESTART:STANDARD"] = bd.traces["rcpt:PKTD:RESTART:STANDARD"]
+    return _case("WRONG_SUBJECT", bd, retained(d), b.stage_rows(), base)
 
 
-def strip(manifest_from_stripped=False):
+def strip(manifest_from_stripped=False, base=None):
     """E03: CALIBRATION removed from REG's RETENTION deps; node re-hashed; manifest unchanged (or, the
     harder variant, rebuilt from the stripped node)."""
-    d = g0_dicts()
+    b, d, mb = _ctx(base)
     full = copy.deepcopy(d)
     r = d["rcpt:REG:RETENTION:STANDARD"]
     r["dependencies"] = [x for x in r["dependencies"] if "CALIBRATION" not in x]
     anchors = retained(d) if manifest_from_stripped else retained(full)
-    return Case("STRIP", make_bundle(d), anchors, EV.FixtureStore(stage_rows()), claims())
+    return _case("STRIP", make_bundle(d, base=mb), anchors, b.stage_rows(), base)
 
 
 def _flip(b):
@@ -367,29 +458,27 @@ def _flip(b):
     return bytes(x)
 
 
-def byteflip():
+def byteflip(base=None):
     """E03: one byte of REG's RETENTION PROBE_A trace changed, length kept."""
-    d = g0_dicts()
-    b = make_bundle(d)
+    b, d, mb = _ctx(base)
+    bd = make_bundle(d, base=mb)
     nid = "rcpt:REG:RETENTION:STANDARD"
-    b.traces[nid]["trace:probe_a"] = _flip(b.traces[nid]["trace:probe_a"])
-    return Case("BYTEFLIP", b, retained(d), EV.FixtureStore(stage_rows()), claims())
+    bd.traces[nid]["trace:probe_a"] = _flip(bd.traces[nid]["trace:probe_a"])
+    return _case("BYTEFLIP", bd, retained(d), b.stage_rows(), base)
 
 
-def reanchor():
+def reanchor(base=None):
     """E03 coupling: BYTEFLIP plus a receipt and manifest re-made by the producer to match the flipped trace."""
-    d = g0_dicts()
+    b, d, mb = _ctx(base)
     full = copy.deepcopy(d)
     nid = "rcpt:REG:RETENTION:STANDARD"
-    tr = _traces(d)
+    tr = b.traces(d) if base is not None else _traces(d)
     tr[nid]["trace:probe_a"] = _flip(tr[nid]["trace:probe_a"])
     for out in d[nid]["outputs"]:
         if out["role"] == "trace:probe_a":
             out["sha256"] = hashlib.sha256(tr[nid]["trace:probe_a"]).hexdigest()
-    c = Case("REANCHOR", make_bundle(d, traces=tr), EV.anchors_from_producer(manifest_of(d)),
-             EV.FixtureStore(stage_rows()), claims())
-    c.keeper_anchors = retained(full)
-    return c
+    return _case("REANCHOR", make_bundle(d, traces=tr, base=mb), EV.anchors_from_producer(manifest_of(d)),
+                 b.stage_rows(), base, keeper_anchors=retained(full))
 
 
 def withdrawal(wid, target):
@@ -397,69 +486,75 @@ def withdrawal(wid, target):
             "at_utc": "2026-10-04T00:30:00Z"}
 
 
-def restart_stage_node():
-    return EV.stage_node_id("P6", EV.predicate_version(predicate_code("RESTART")))
+def restart_stage_node(base=None):
+    if base is None:
+        return EV.stage_node_id("P6", EV.predicate_version(predicate_code("RESTART")))
+    code = base._dicts["rcpt:REG:RESTART:STANDARD"]["predicate"]["code"]
+    return EV.stage_node_id("P6", EV.predicate_version(code))
 
 
-def _withdrawn(name, w, registered=True):
-    d = g0_dicts()
-    rows = stage_rows() + ([row("WITHDRAWAL", EV.record_blob(w))] if registered else [])
-    return Case(name, make_bundle(d, withdrawals=[w]), retained(d), EV.FixtureStore(rows), claims())
+def _withdrawn(name, w, registered=True, base=None):
+    b, d, mb = _ctx(base)
+    rows = b.stage_rows() + ([row("WITHDRAWAL", EV.record_blob(w))] if registered else [])
+    return _case(name, make_bundle(d, withdrawals=[w], base=mb), retained(d), rows, base)
 
 
-def w_restart():
+def w_restart(base=None):
     """E04: anchored withdrawal of the RESTART stage record."""
-    return _withdrawn("W_RESTART", withdrawal("W-RESTART", restart_stage_node()))
+    return _withdrawn("W_RESTART", withdrawal("W-RESTART", restart_stage_node(base)), base=base)
 
 
-def w_obs():
+def w_obs(base=None):
     """E04: anchored withdrawal of the OBSERVER(REG, BOOKKEEP) receipt."""
-    return _withdrawn("W_OBS", withdrawal("W-OBS", "rcpt:REG:OBSERVER:BOOKKEEP:STANDARD"))
+    return _withdrawn("W_OBS", withdrawal("W-OBS", "rcpt:REG:OBSERVER:BOOKKEEP:STANDARD"), base=base)
 
 
-def w_unrelated():
+def w_unrelated(base=None):
     """E04: anchored withdrawal of the TWIN_EQ receipt (no CL claim depends on it)."""
-    return _withdrawn("W_UNRELATED", withdrawal("W-TWIN", "rcpt:REG:TWIN_EQ:STANDARD"))
+    return _withdrawn("W_UNRELATED", withdrawal("W-TWIN", "rcpt:REG:TWIN_EQ:STANDARD"), base=base)
 
 
-def w_unanchored():
+def w_unanchored(base=None):
     """E04: W_RESTART not registered with the keeper."""
-    return _withdrawn("W_UNANCHORED", withdrawal("W-RESTART", restart_stage_node()), registered=False)
+    return _withdrawn("W_UNANCHORED", withdrawal("W-RESTART", restart_stage_node(base)), registered=False,
+                      base=base)
 
 
-def fab_anchors():
+def fab_anchors(base=None):
     """E05: fabricated data with matching fabricated anchors supplied by the producer; no keeper rows."""
-    d = g0_dicts()
-    tr = _fabricate_reg(d)
-    return Case("FAB_ANCHORS", make_bundle(d, traces=tr), EV.anchors_from_producer(manifest_of(d)),
-                EV.FixtureStore(stage_rows()), claims())
+    b, d, mb = _ctx(base)
+    tr = _fabricate_reg(d, base)
+    return _case("FAB_ANCHORS", make_bundle(d, traces=tr, base=mb), EV.anchors_from_producer(manifest_of(d)),
+                 b.stage_rows(), base)
 
 
-def late_reg():
+def late_reg(base=None):
     """E05: keeper rows written after the consumer's first check."""
-    d = g0_dicts()
-    b = make_bundle(d)
-    store = EV.FixtureStore(keeper_rows(d, b, at=LATE))
-    return Case("LATE_REG", b, retained(d), store, claims())
+    b, d, mb = _ctx(base)
+    bd = make_bundle(d, base=mb)
+    return _case("LATE_REG", bd, retained(d), keeper_rows(d, bd, at=LATE, base=mb), base)
 
 
-def _keeper_case(name, d, traces=None):
-    b = make_bundle(d, traces=traces)
-    store = EV.FixtureStore(keeper_rows(d, b))
+def _keeper_case(name, d, traces=None, base=None):
+    mb = base
+    bd = make_bundle(d, traces=traces, base=mb)
+    store = EV.FixtureStore(keeper_rows(d, bd, base=mb))
     blob_map = {"fixtures/G0/MANIFEST.json": manifest_of(d)}
-    return Case(name, b, EV.anchors_from_keeper(store, blob_map), store, claims())
+    c = _case(name, bd, EV.anchors_from_keeper(store, blob_map), [], base)
+    c.store = store
+    return c
 
 
-def keeper():
+def keeper(base=None):
     """E05: G0 with keeper rows for manifest, inventory, stages and expected table, registered before."""
-    return _keeper_case("KEEPER", g0_dicts())
+    return _keeper_case("KEEPER", _base(base).dicts(), base=base)
 
 
-def fab_registered():
+def fab_registered(base=None):
     """E05 stated limit: FAB_CONSISTENT data registered with the keeper."""
-    d = g0_dicts()
-    tr = _fabricate_reg(d)
-    return _keeper_case("FAB_REGISTERED", d, traces=tr)
+    d = _base(base).dicts()
+    tr = _fabricate_reg(d, base)
+    return _keeper_case("FAB_REGISTERED", d, traces=tr, base=base)
 
 
 CASES = {
@@ -472,6 +567,11 @@ CASES = {
     "E05.FAB_ANCHORS": fab_anchors, "E05.LATE_REG": late_reg, "E05.KEEPER": keeper,
     "E05.FAB_REGISTERED": fab_registered,
 }
+
+
+def case_for(case_id, base=None):
+    """The registered case `case_id` (E01-E05) built on `base` (None: the synthetic G0)."""
+    return CASES[case_id](base=base)
 
 
 def describe():
