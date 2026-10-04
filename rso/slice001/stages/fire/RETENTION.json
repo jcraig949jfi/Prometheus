@@ -1,0 +1,50 @@
+{
+  "all_ok": true,
+  "cases": [
+    {
+      "case_id": "T01.REG",
+      "expected_reason": "1/1",
+      "expected_value": "POSITIVE",
+      "observed_reason": "1/1",
+      "observed_value": "POSITIVE",
+      "ok": true,
+      "polarity": "ACCEPT"
+    },
+    {
+      "case_id": "T02.AMNESIAC",
+      "expected_reason": "1/2",
+      "expected_value": "NEGATIVE",
+      "observed_reason": "1/2",
+      "observed_value": "NEGATIVE",
+      "ok": true,
+      "polarity": "ACCEPT"
+    },
+    {
+      "case_id": "T02.FLIP",
+      "expected_reason": "0/1",
+      "expected_value": "NOT_SHOWN",
+      "observed_reason": "0/1",
+      "observed_value": "NOT_SHOWN",
+      "ok": true,
+      "polarity": "REJECT"
+    }
+  ],
+  "executed_by": "Argus[desktop-ruapvai-b08b36ac] under C-004-T023B",
+  "instrument": "RETENTION",
+  "schema": "rso.slice001.fire_test.v1",
+  "version": [
+    {
+      "commit": "6f57aa7c62f22edc66ea6b35c8c4cbda0b6324ff",
+      "length": 5904,
+      "role": "code:rso/slice001/rulers.py",
+      "sha256": "bbc78fa75bd4896ce9425a460169b985130cecf4a7b365f7766e2b231d217a99"
+    },
+    {
+      "commit": "6f57aa7c62f22edc66ea6b35c8c4cbda0b6324ff",
+      "length": 13730,
+      "role": "code:rso/slice001/world.py",
+      "sha256": "0336919b73f9de4005963e6393d98bdf4f7eee24be37902cf246e797c7275d25"
+    }
+  ],
+  "version_hash": "a1cd331b569408f60b45ba6433ddb6fdbb93cf5a6a06e475370e2d6a06043da7"
+}

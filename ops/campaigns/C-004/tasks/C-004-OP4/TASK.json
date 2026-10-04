@@ -1,0 +1,80 @@
+{
+  "schema": "prometheus.workgraph.task.v1",
+  "task_id": "C-004-OP4",
+  "campaign_id": "C-004",
+  "title": "OPERATOR DECISION OP-4: CPU cap",
+  "objective": "The operator decides the slice CPU cap after the 30 CPU-minute OP-1 figure proved infeasible for S3.",
+  "owner_role": "operator",
+  "quality_class": "Q2",
+  "can_downgrade": false,
+  "escalate_to": "operator",
+  "depends_on": [],
+  "problem": "See Palamedes chat 2026-10-04: ledger charged 0, plan s6 strict reading ~30-40 min spent, S3 needs ~40.",
+  "non_goals": [
+    "No work is executed under this packet"
+  ],
+  "evidence_required": [
+    "the ruling recorded verbatim"
+  ],
+  "acceptance": {
+    "condition": "ruling recorded; packet CLOSED"
+  },
+  "deliverables": [
+    "AMENDMENT_v1.0.3.md"
+  ],
+  "kind": "operations",
+  "red_required": false,
+  "status": "CLOSED",
+  "history": [
+    {
+      "status": "PROPOSED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-04T14:52:21Z",
+      "note": "raised to the operator in chat"
+    },
+    {
+      "status": "READY",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-04T14:52:21Z",
+      "note": "recorded"
+    },
+    {
+      "status": "CLAIMED",
+      "by": "operator[recorded by Palamedes harry1-679179c6]",
+      "at_utc": "2026-10-04T14:52:21Z",
+      "note": "OP-4 (operator chat to Palamedes, session 679179c6, 2026-10-04 ~15:00Z): \"You can go past the cap by 4x\". Applied: CPU cap 30 -> 120 CPU-minutes; every other OP-1 cap unchanged (12 launches, $0, 100 MB, one repair, 12 Opus / 4 Sonnet / 3 reviewer seat-hours, 3 working days). Coordinator accounting, conservative under either reading of plan s6: an estimated 40 CPU-minutes of development/verification already spent is booked against the cap, leaving 80 CPU-minutes for ledgered validation launches (T020, S3, S4)."
+    },
+    {
+      "status": "IMPLEMENTING",
+      "by": "operator[recorded by Palamedes harry1-679179c6]",
+      "at_utc": "2026-10-04T14:52:21Z",
+      "note": "ruling recorded"
+    },
+    {
+      "status": "GREEN",
+      "by": "operator[recorded by Palamedes harry1-679179c6]",
+      "at_utc": "2026-10-04T14:52:21Z",
+      "note": "ruling recorded"
+    },
+    {
+      "status": "INTEGRATION_READY",
+      "by": "operator[recorded by Palamedes harry1-679179c6]",
+      "at_utc": "2026-10-04T14:52:21Z",
+      "note": "ruling recorded"
+    },
+    {
+      "status": "INTEGRATED",
+      "by": "operator[recorded by Palamedes harry1-679179c6]",
+      "at_utc": "2026-10-04T14:52:21Z",
+      "note": "ruling recorded"
+    },
+    {
+      "status": "CLOSED",
+      "by": "operator[recorded by Palamedes harry1-679179c6]",
+      "at_utc": "2026-10-04T14:52:21Z",
+      "note": "OP-4 (operator chat to Palamedes, session 679179c6, 2026-10-04 ~15:00Z): \"You can go past the cap by 4x\". Applied: CPU cap 30 -> 120 CPU-minutes; every other OP-1 cap unchanged (12 launches, $0, 100 MB, one repair, 12 Opus / 4 Sonnet / 3 reviewer seat-hours, 3 working days). Coordinator accounting, conservative under either reading of plan s6: an estimated 40 CPU-minutes of development/verification already spent is booked against the cap, leaving 80 CPU-minutes for ledgered validation launches (T020, S3, S4)."
+    }
+  ],
+  "authority": "C-004-OP1 (caps are the operator's)",
+  "notes": "OPERATOR DECISION packet (see C-004-OP1 notes)."
+}

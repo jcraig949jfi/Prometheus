@@ -122,3 +122,7 @@ change survive another generation?**
 | 2026-10-04 | Thread opened by operator directive; C-006 (C-P2B-APH-BETA-01) instantiated; DEV window 1 (bootstrap) begins |
 | 2026-10-04 | DEV-1 closed. The v2b-1 apparatus is built (engine/v2b/); conformance is GREEN; 3 new historical constant gates were recorded; no labels flip; T01 is frozen. TEST-1 opened |
 | 2026-10-04 | TEST-1 (T01 known-answer assay) QUALIFIED: 10/10 cases; full conformance GREEN. DEV-2 opened |
+| 2026-10-04 | DEV-2: T53 frozen. Finding: A20-A23 P/OFF_0 controls could not score by construction, so A23 H1's only live control was G1_NC (label unchanged). TEST-2 (T53) launched |
+
+| 2026-10-04 | TEST-2 (T53) closed MEASUREMENT_FAILED (PC_ONE control mis-specified). NEW: A23's G1 SAME pairs in CON1/CON8 are extensional duplicates, so distinct-family G1 REUSED_SAME = 5/10 < k=6 (correction-only; label unchanged). DEV-3 opened |
+| 2026-10-04 | DEV-3: apparatus v2b-2 (distinctness screen); t1v2 QUALIFIED. T53 CORRECTION (post-exposure): G1 distinct-class capability 5/10 < 6, shams 8/9/10, so the effect is generic. T52 frozen; TEST-3 launched |

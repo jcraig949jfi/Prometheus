@@ -1,6 +1,8 @@
 """Write an Ubuntu autoinstall CIDATA stick from user-data.template.yaml.
 
-Usage (on ELSA or M2):  python build_cidata.py E:
+Usage (on ELSA or M2):  python build_cidata.py E: [--allow-usb-target]
+  --allow-usb-target  ONE-OFF: a machine with no usable internal disk may install onto exactly one external USB
+                      disk >= 200 GB (never a stick). Rebuild without the flag right after that install.
   E: = a FAT32 USB stick whose volume label is CIDATA (format it in Explorer first).
 
 Secrets are read from local files and never printed:
@@ -27,9 +29,12 @@ def volume_label(drive):
 
 
 def main():
-    if len(sys.argv) != 2 or not sys.argv[1].rstrip("\\/").endswith(":"):
-        sys.exit("usage: python build_cidata.py E:")
-    drive = sys.argv[1].rstrip("\\/")
+    args = sys.argv[1:]
+    allow_usb = "--allow-usb-target" in args
+    args = [a for a in args if a != "--allow-usb-target"]
+    if len(args) != 1 or not args[0].rstrip("\\/").endswith(":"):
+        sys.exit("usage: python build_cidata.py E: [--allow-usb-target]")
+    drive = args[0].rstrip("\\/")
     label, fs = volume_label(drive)
     if label != "CIDATA" or not (fs or "").upper().startswith("FAT"):
         sys.exit(f"refusing: {drive} has label={label!r} fs={fs!r}; need a FAT32 stick labelled CIDATA")
@@ -55,6 +60,7 @@ def main():
     t = (t.replace("@@WIFI_SSID@@", json.dumps(ssid))
           .replace("@@WIFI_PASSWORD@@", json.dumps(wpass))
           .replace("@@PASSWORD_HASH@@", json.dumps(pwhash))
+          .replace("@@ALLOW_USB_TARGET@@", "1" if allow_usb else "0")
           .replace("@@AUTHORIZED_KEYS@@", "\n".join(f"      - {json.dumps(k)}" for k in keys)))
     left = re.findall(r"@@[A-Z_]+@@", t)
     if left:
@@ -65,6 +71,8 @@ def main():
     (root / "meta-data").write_text("instance-id: prometheus-autoinstall\n", encoding="utf-8", newline="\n")
     print(f"wrote user-data + meta-data to {drive} (ssid set, password hash set, {len(keys)} SSH keys: "
           + ", ".join(k.split()[-1] for k in keys) + ")")
+    if allow_usb:
+        print("USB TARGET ALLOWED on this stick (one-off). Rebuild WITHOUT --allow-usb-target after this install.")
 
 
 if __name__ == "__main__":

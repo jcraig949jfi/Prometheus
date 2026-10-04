@@ -16,4 +16,4 @@ Modules:
   supply       pre-freeze supply-screen precondition (raises SupplyLimited before any donor runs)
   instruments  one switch for the tribunal and ruler versions (T4 v1 | v1a, ruler v2 | v2.1)
 """
-APPARATUS_VERSION = "v2b-1"
+APPARATUS_VERSION = "v2b-2"

@@ -7,6 +7,19 @@ On bootstrap read, in order:
 3. `roles/Archaeon/TODO.md` (2026-09-25 section: Azure E8s v5, commit-aware admission gate, RunPod probe, PEW gap).
 4. `roles/Archaeon/journal/2026-09-23_m2-db608f52.md` (full session history 09-23 .. 09-25).
 
+## UPDATE 2026-10-04 (M2 boot): #1283 COMPLETE, #1148 ON MAIN -- READY
+Governing: MWO-0004 + CWO-2026-09-30C; Phase 2-B re-entry row for Archaeon in
+ops/fleet/M1_DRAIN_2026-10-03/P2B_REENTRY_MANIFEST.jsonl (Archaeon is on M2, not in the M1 drain scope).
+- Aporia #1283: comms/manifest.py, comms/identity.py, archaeon/workspace.py receipt() now fail closed, failing-first
+  (f188be013). verify() keeps its content-only contract; coverage is manifest.unlisted(). 19 existing prompt-manifest
+  coverage gaps are frozen in archaeon/tests/test_base_role.py KNOWN_COVERAGE_GAPS (disclosed, owners repair).
+- #1148 keepalive cherry-picked to main (6277c59ab). CODE_ON_MAIN, not SERVICE_DEPLOYED (PEW reported down).
+- Report: comms #1408. Worktree D:\Prometheus-worktrees\archaeon-p2b-defects-2026-10-04.
+- Open: E-003 BEE verdict (operator, #1044) is the only hard gate. The workspace-guard copies in ew/viv/herakles/proteus/
+  techne/SFE still carry the receipt fail-open; their owners should adopt. Older delegations #452/#472/#475/#492/#534
+  (Aphrodite Campaign 1) and #260/#485/#489 (Harmonia) are still listed open in `comms tasks Archaeon`; not touched.
+Nothing running.
+
 ## UPDATE 2026-09-28 (session m2-1034e815): ATTRIBUTION v0 COMPLETE -- packet delivered, operator's call
 Directive verbatim: roles/Archaeon/prompts/2026-09-28_attribution_v0/.
 Packet: ops/campaigns/C-001/ATTRIBUTION_V0_2026-09-28/ATTRIBUTION_PACKET.md (all results, reviews, adjudications in that folder).

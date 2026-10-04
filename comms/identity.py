@@ -149,9 +149,19 @@ def check(conn, environment: str, *, registry: Optional[Dict[str, Any]] = None) 
         return {"ok": False, "reason": "IDENTITY_UNREADABLE", "environment": environment,
                 "observed": observed, "expected": expected, "signature": sig}
     fields = ["db_system_id", "db_name"]
-    if expected.get("expected_uuid"):            # additive upgrade path, unused today
-        fields.append("instance_uuid")
-    bad = [f for f in fields if expected.get(f) is not None and observed.get(f) != expected.get(f)]
+    # Fail CLOSED on an entry that cannot discriminate (Aporia #1283, 2026-10-04): a null or missing field used to be
+    # SKIPPED, so {db_system_id: null, db_name: null} matched every database.
+    missing = [f for f in fields if not expected.get(f)]
+    if missing:
+        sig = signature(environment, observed, expected)
+        return {"ok": False, "reason": "MALFORMED_EXPECTATION", "missing": missing, "environment": environment,
+                "observed": observed, "expected": expected, "signature": sig}
+    if expected.get("expected_uuid"):
+        # observe() reads no instance UUID, so a set expected_uuid cannot be checked; it was silently ignored before.
+        sig = signature(environment, observed, expected)
+        return {"ok": False, "reason": "UNVERIFIABLE_EXPECTATION", "environment": environment,
+                "observed": observed, "expected": expected, "signature": sig}
+    bad = [f for f in fields if observed.get(f) != expected.get(f)]
     if bad:
         sig = signature(environment, observed, expected)
         return {"ok": False, "reason": "WRONG_ENVIRONMENT", "mismatched": bad,

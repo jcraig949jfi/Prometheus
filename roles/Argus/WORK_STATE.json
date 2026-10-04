@@ -3,9 +3,9 @@
   "seat": "Argus",
   "mwo_id": "MWO-0004",
   "authority": "operator directive 2026-10-03 (roles/Achilles/prompts/2026-10-03_rso_builder_cell/01_OPERATOR_DIRECTIVE_verbatim.md)",
-  "updated_at_utc": "2026-10-04T11:50:00Z",
+  "updated_at_utc": "2026-10-04T14:10:00Z",
   "state": "READY",
-  "branch": "argus/state-2026-10-04",
+  "branch": "argus/c004-t024",
   "base_sha": "398db5c43eaff4aa6c198a19df6004532d1dfc81",
   "head_sha": "c62878b1db1daa72f28e97eedf164bac5eca8c2e",
   "worktree_path": "C:/Prometheus-worktrees/argus-c004-t014",
@@ -15,11 +15,11 @@
   "instance": "desktop-ruapvai-b08b36ac",
   "session_start_utc": "2026-10-04T01:50:00Z",
   "current_objective": "RSO Builder Cell member, campaign C-004 (RSO-METHODS-SLICE-001)",
-  "current_step": "hourly loop; T021 INTEGRATED; T016 and T012 INTEGRATION_READY awaiting Palamedes; no READY packet",
+  "current_step": "T023B INTEGRATED; T024 INTEGRATION_READY (argus/c004-t024) with escalations C-004-T024_1 and C-004-T024_2 open; no READY packet",
   "in_flight": [],
   "finish_condition": "per claimed packet (DISTRIBUTED_WORK.md)",
-  "next_expected_milestone": "Palamedes integrates T016 and T012",
-  "expected_next_artifact": "next C-004 packet claimed when workgraph ready shows one",
+  "next_expected_milestone": "Palamedes answers C-004-T024_1/_2 and integrates T024",
+  "expected_next_artifact": "next C-004 packet or escalation follow-up",
   "threads": [
     "phase3-rso"
   ],
@@ -32,7 +32,7 @@
   "blocked_on": [],
   "next_actions": [
     "hourly: comms sync Argus; workgraph ready Argus",
-    "answer integration findings on T016/T012"
+    "act on escalation answers for T024_1 (ledger rows) and T024_2 (ledger float)"
   ],
   "operator_decisions_required": [],
   "latest_reports": [
@@ -42,5 +42,6 @@
   ],
   "last_push_sha": "cac84f1ec",
   "last_push_utc": "2026-10-04T02:25:00Z",
-  "validation_launches_this_session": 3
+  "validation_launches_this_session": 3,
+  "state_worktree": "C:\\Prometheus-worktrees\u0007rgus-ops (detached, state commits to main per DISTRIBUTED_WORK s9)"
 }
