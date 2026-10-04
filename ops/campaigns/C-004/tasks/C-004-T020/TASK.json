@@ -69,7 +69,7 @@
     "rso/slice001/MANIFEST.md"
   ],
   "kind": "software",
-  "status": "BLOCKED",
+  "status": "IMPLEMENTING",
   "history": [
     {
       "status": "PROPOSED",
@@ -94,6 +94,18 @@
       "by": "Palamedes[harry1-679179c6]",
       "at_utc": "2026-10-04T12:39:27Z",
       "note": "waiting on C-004-T023A (Cadmus), T023B (Argus), T024 (Argus), split out at claim; driver prep continues on palamedes/c004-t020-prep"
+    },
+    {
+      "status": "RED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-04T17:37:14Z",
+      "note": "RED: at main 54de76e99 there is no S2 driver (rso.slice001.s2_run absent: ImportError) and no matrix run; dry run on palamedes/c004-t020-prep 826d12f88 (throwaway ledger, fixture stage store) gave exit NOT OK with 8 genuine disagreements (X02, X06, X18, X19)"
+    },
+    {
+      "status": "IMPLEMENTING",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-04T17:37:14Z",
+      "note": "real ledgered produce next (5 launches), then registration, consume, classify, freeze"
     }
   ],
   "authority": "operator directive 2026-10-03 s9, s11 (roles/Achilles/prompts/2026-10-03_rso_builder_cell/01_OPERATOR_DIRECTIVE_verbatim.md); decomposed by Palamedes under C-004-T000",
