@@ -72,6 +72,11 @@ Loose ends from adding ubu003 and the ELSA access. Tick with a date.
 - [ ] **CIDATA stick** (32 GB, label CIDATA) holds the Wi-Fi password in plain text. Keep it at home; rebuild it with
       `autoinstall/build_cidata.py` if the Wi-Fi or keys change. Secrets live in `C:\autoinstall_secrets\` on ELSA.
       Rebuilt 2026-10-03 with `shutdown: poweroff` (no reinstall loop when the sticks are left in).
+- [ ] **CIDATA stick is built with `--allow-usb-target` (2026-10-04, for the P52s USB enclosure).** Right after the
+      P52s install: rebuild it WITHOUT the flag (`python infra/ubuntu_nodes/autoinstall/build_cidata.py E:`), so no other
+      machine can ever install onto an external disk.
+- [ ] **ubu005 = P52s**: the PM991 in the WWAN slot stops it from powering on (fan roars, no POST; BIOS N27ET56P 1.42,
+      2025-04-01, already current). Removed. Now runs from the **Team MP33 1 TB in a USB-C NVMe enclosure**. PM991: return it.
 
 ## Operator (needs hands at a keyboard or the router; not the phone)
 
