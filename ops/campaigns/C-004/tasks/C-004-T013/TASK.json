@@ -48,7 +48,7 @@
     "rso/slice001/tests/test_receipt.py"
   ],
   "kind": "software",
-  "status": "CLAIMED",
+  "status": "IMPLEMENTING",
   "history": [
     {
       "status": "PROPOSED",
@@ -67,6 +67,18 @@
       "by": "Argus[harry1-91cbacb8]",
       "at_utc": "2026-10-04T01:57:17Z",
       "note": "S2 session 2; branch argus/c004-t013 from b02c6f66d"
+    },
+    {
+      "status": "RED",
+      "by": "Argus[harry1-91cbacb8]",
+      "at_utc": "2026-10-04T02:00:39Z",
+      "note": "28/35 tests fail vs naive stub (missing-field, lowest-stage, cheat control); ImportError before stub"
+    },
+    {
+      "status": "IMPLEMENTING",
+      "by": "Argus[harry1-91cbacb8]",
+      "at_utc": "2026-10-04T02:00:39Z",
+      "note": ""
     }
   ],
   "authority": "operator directive 2026-10-03 s9, s11 (roles/Achilles/prompts/2026-10-03_rso_builder_cell/01_OPERATOR_DIRECTIVE_verbatim.md); decomposed by Palamedes under C-004-T000",
