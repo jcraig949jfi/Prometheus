@@ -2,7 +2,7 @@
 
 Normative text: rso/slice001/contract/CONTRACT.md v1.0.0 (draft B B4.2, B5, B6, B7.1 incorporated) and
 AMENDMENT_v1.0.1.md (V1 node_id, V3 edge spelling, V6 custody why list, V7 G-INV attribution, V8 fixture
-stores).
+stores) and AMENDMENT_v1.0.2.md (W1 live custody store: read-only reader RegistryStore, C-004-T021).
 
 What this module establishes and what it does not (B5.4, closure D10): binding checks that presented bytes and
 complete nodes equal the anchors the consumer holds. It never establishes that execution happened or that an
@@ -111,7 +111,10 @@ def anchors_from_keeper(store, blobs):
     `blobs` maps repo_path -> bytes (in T020: `git show <commit>:<path>`). Returns Anchors or raises
     EvidenceError when the store has no manifest row or the blob does not match the row.
     """
-    rows = [r for r in store.rows() if r["record_kind"] == "EVIDENCE_MANIFEST"]
+    rows, err = store_rows(store)
+    if err is not None:
+        raise EvidenceError("%s:EVIDENCE_MANIFEST" % err.code)
+    rows = [r for r in rows if r["record_kind"] == "EVIDENCE_MANIFEST"]
     if not rows:
         raise EvidenceError("KEEPER_ROW_MISSING:EVIDENCE_MANIFEST")
     row = rows[-1]
@@ -409,11 +412,107 @@ class UnsetStore(object):
         return []
 
 
-def store_from_contract(custody):
-    """The store the consumer reads, from contract.json `custody`. UNSET -> UnsetStore (R3)."""
+class StoreError(EvidenceError):
+    """The keeper store could not be read as a verified chain. `code` is STORE_UNREACHABLE or ROW_CHAIN_BROKEN;
+    neither is ever a pass (AMENDMENT_v1.0.2 W1)."""
+
+    def __init__(self, code, detail=""):
+        EvidenceError.__init__(self, "%s%s" % (code, (": " + detail) if detail else ""))
+        self.code = code
+
+
+REGISTRY_LOCATOR = "postgresql://192.168.1.202:5432/prometheus_fire#custody.registry"     # v1.0.2 W1
+
+
+def _utc_text(v):
+    """registered_at_utc as text: a datetime becomes UTC ISO with microseconds and Z; text is kept as given."""
+    import datetime
+    if isinstance(v, datetime.datetime):
+        if v.tzinfo is None:
+            raise StoreError("STORE_UNREACHABLE", "naive registered_at_utc")
+        return v.astimezone(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%S.%fZ")
+    return v.strip() if isinstance(v, str) else v
+
+
+def utc_key(text):
+    """A comparable UTC instant for an ISO time ('Z' or an offset). Times compare as times, never as text."""
+    import datetime
+    t = datetime.datetime.fromisoformat(text.strip().replace("Z", "+00:00"))
+    if t.tzinfo is None:
+        raise EvidenceError("time without a zone: %r" % (text,))
+    return t.astimezone(datetime.timezone.utc)
+
+
+class RegistryStore(object):
+    """Read-only reader of the live custody registry (C-004-T021; AMENDMENT_v1.0.2 W1). Never writes.
+
+    `reader` has the ops.custody.registry API: rows() and verify() -> (ok, problems, head, n). Default: that
+    module, reached through the comms connection (EW_DB_HOST off M1). The registry is read once per store
+    object: verify, then read, and only the verified prefix (rows 1..n, whose last row_hash is the verified
+    head) is used. Any reader exception -> STORE_UNREACHABLE; a chain break or a read that disagrees with the
+    verified head -> ROW_CHAIN_BROKEN.
+    """
+
+    def __init__(self, locator, reader=None):
+        self.locator = locator
+        self._reader = reader
+        self._rows = None
+        self._error = None
+        self.chain_head = None
+
+    def _load(self):
+        if self._rows is not None or self._error is not None:
+            return
+        try:
+            reader = self._reader
+            if reader is None:
+                if self.locator != REGISTRY_LOCATOR:
+                    raise StoreError("STORE_UNREACHABLE", "no reader for locator %r" % (self.locator,))
+                from ops.custody import registry as reader
+            ok, problems, head, n = reader.verify()
+            got = reader.rows()
+        except StoreError as e:
+            self._error = e
+            return
+        except Exception as e:                     # store unreachable or schema missing: never a pass
+            self._error = StoreError("STORE_UNREACHABLE", "%s: %s" % (type(e).__name__, str(e)[:200]))
+            return
+        if not ok:
+            self._error = StoreError("ROW_CHAIN_BROKEN", "; ".join(problems)[:300])
+            return
+        rows = []
+        for r in got[:n]:
+            x = {k: (v.strip() if isinstance(v, str) else v) for k, v in r.items()}
+            x["registered_at_utc"] = _utc_text(r["registered_at_utc"])
+            rows.append(x)
+        last = rows[-1]["row_hash"] if rows else "0" * 64
+        if len(rows) != n or last != (head.strip() if isinstance(head, str) else head):
+            self._error = StoreError("ROW_CHAIN_BROKEN", "read rows disagree with the verified head")
+            return
+        self.chain_head = last
+        self._rows = rows
+
+    def rows(self):
+        self._load()
+        if self._error is not None:
+            raise self._error
+        return [dict(r) for r in self._rows]
+
+
+def store_from_contract(custody, reader=None):
+    """The store the consumer reads, from contract.json `custody`. UNSET -> UnsetStore (R3); a locator ->
+    RegistryStore (v1.0.2). An unknown locator reads as STORE_UNREACHABLE, never as an empty store."""
     if not isinstance(custody.get("store"), str) or custody["store"].startswith("UNSET"):
         return UnsetStore()
-    raise EvidenceError("STORE_UNREACHABLE: no reader for locator %r in S2" % custody["store"])
+    return RegistryStore(custody["store"], reader=reader)
+
+
+def store_rows(store):
+    """(rows, None) or ([], StoreError) -- for callers that must not count what they could not read."""
+    try:
+        return store.rows(), None
+    except StoreError as e:
+        return [], e
 
 
 def record_blob(obj):
@@ -421,7 +520,7 @@ def record_blob(obj):
 
 
 def _registered(store, kind, blob):
-    return any(r["record_kind"] == kind and r["blob_sha256"] == blob for r in store.rows())
+    return any(r["record_kind"] == kind and r["blob_sha256"] == blob for r in store_rows(store)[0])
 
 
 def _validate_withdrawal(w):
@@ -587,11 +686,17 @@ def required_records(bundle, anchors):
 def custody(bundle, anchors, store, first_check_utc, keeper=None, registrar=None):
     """Custody of a bundle. QUALIFIED iff the anchors came from the keeper, every required record has a row
     whose blob matches, and every row was registered before the consumer's first check. `why` is exhaustive
-    and sorted (V6). Establishes bytes since registration only (B5.4)."""
+    and sorted (V6); a store that cannot be read as a verified chain gives STORE_UNREACHABLE or
+    ROW_CHAIN_BROKEN (v1.0.2 W1) beside ANCHORS_FROM_PRODUCER, since no row can then be judged. Establishes
+    bytes since registration only (B5.4); with the live store, "registered at the recorded time, chain intact
+    at check time" and never more (W2)."""
     why = set()
     if anchors.source != "keeper":
         why.add("ANCHORS_FROM_PRODUCER")
-    rows = store.rows()
+    rows, err = store_rows(store)
+    if err is not None:                              # unreadable or broken chain: nothing below can be judged
+        why.add(err.code)
+        return {"status": "UNQUALIFIED", "why": sorted(why)}
     used = []
     for kind, blob in required_records(bundle, anchors):
         of_kind = [r for r in rows if r["record_kind"] == kind]
@@ -603,10 +708,10 @@ def custody(bundle, anchors, store, first_check_utc, keeper=None, registrar=None
         else:
             r = match[0]
             used.append(r)
-            if not r["registered_at_utc"] < first_check_utc:
+            if not utc_key(r["registered_at_utc"]) < utc_key(first_check_utc):
                 why.add("REGISTERED_AFTER_CHECK")
     if why:
         return {"status": "UNQUALIFIED", "why": sorted(why)}
     return {"status": "QUALIFIED", "keeper": keeper, "registrar": registrar,
             "rows": sorted(r.get("row_id", "%s:%s" % (r["record_kind"], r["blob_sha256"][:12])) for r in used),
-            "registered_at_utc": max(r["registered_at_utc"] for r in used)}
+            "registered_at_utc": max((r["registered_at_utc"] for r in used), key=utc_key)}

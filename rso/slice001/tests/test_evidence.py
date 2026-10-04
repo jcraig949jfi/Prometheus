@@ -323,18 +323,170 @@ class TestE05(unittest.TestCase):
         self.assertEqual(value(bind(case, "CL-RET(REG)")), ("PASS", None))
 
     def test_unset_store_is_keeper_row_missing(self):
-        import json
-        import os
-        path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "contract",
-                            "contract.json")
-        with open(path, encoding="utf-8") as f:
-            cust = json.load(f)["custody"]
-        store = EV.store_from_contract(cust)
+        # A fixture custody dict, not the live contract (T021): the contract's custody.store is set at v1.0.2.
+        store = EV.store_from_contract({"store": "UNSET: fixture"})
         case = F.keeper()
         c = EV.custody(case.bundle, case.anchors, store, case.first_check)
         self.assertEqual(c["why"], sorted("KEEPER_ROW_MISSING:%s" % k for k in
                                           ("EVIDENCE_MANIFEST", "EXPECTED_ANSWER_TABLE", "RUN_INVENTORY",
                                            "STAGE_RECORD")))
+
+
+LOCATOR = "postgresql://192.168.1.202:5432/prometheus_fire#custody.registry"
+
+
+def live_form(rows, at=None):
+    """Fixture rows in the form ops.custody.registry.rows() returns: integer row_id, timezone-aware ISO time
+    (or a datetime), char padding, prev_hash / row_hash chain fields."""
+    out, prev = [], "0" * 64
+    for i, r in enumerate(rows, 1):
+        x = dict(r)
+        x["row_id"] = i
+        x["registered_at_utc"] = at if at is not None else r["registered_at_utc"].replace("Z", "+00:00")
+        x["blob_sha256"] = r["blob_sha256"] + "  "
+        x["prev_hash"] = prev
+        x["row_hash"] = hashlib.sha256(("%d|%s" % (i, prev)).encode()).hexdigest()
+        prev = x["row_hash"]
+        out.append(x)
+    return out
+
+
+class StubReader(object):
+    """The ops.custody.registry API surface the consumer uses: rows() and verify(). No network."""
+
+    def __init__(self, rows=(), ok=True, unreachable=False):
+        self._rows, self.ok, self.unreachable, self.calls = list(rows), ok, unreachable, []
+
+    def rows(self, kind=None):
+        self.calls.append("rows")
+        if self.unreachable:
+            raise OSError("connection refused (stub)")
+        return [dict(r) for r in self._rows]
+
+    def verify(self):
+        self.calls.append("verify")
+        if self.unreachable:
+            raise OSError("connection refused (stub)")
+        head = self._rows[-1]["row_hash"] if self._rows else "0" * 64
+        return self.ok, ([] if self.ok else ["row 1: row_hash does not match its fields"]), head, len(self._rows)
+
+
+def keeper_store(reader):
+    return EV.store_from_contract({"store": LOCATOR}, reader=reader)
+
+
+class TestCustodyStoreReader(unittest.TestCase):
+    """T021: the read-only reader for the live custody registry (AMENDMENT_v1.0.2 W1), exercised on stubs.
+    Every QUALIFIED here is logic only, never custody evidence (B5.3)."""
+
+    def test_set_locator_with_registered_rows_qualifies(self):
+        case = F.keeper()
+        reader = StubReader(live_form(case.store.rows()))
+        store = keeper_store(reader)
+        c = EV.custody(case.bundle, case.anchors, store, case.first_check, keeper="operator", registrar="Aporia")
+        self.assertEqual(c["status"], "QUALIFIED", c)
+        self.assertTrue(all(isinstance(r, int) for r in c["rows"]), c["rows"])
+        self.assertIn("verify", reader.calls)
+
+    def test_keeper_anchors_from_live_store(self):
+        case = F.keeper()
+        store = keeper_store(StubReader(live_form(case.store.rows())))
+        a = EV.anchors_from_keeper(store, {"fixtures/G0/MANIFEST.json": case.anchors.manifest_bytes})
+        self.assertEqual((a.source, a.blob_sha256), ("keeper", case.anchors.blob_sha256))
+
+    def test_chain_broken_is_never_a_pass(self):
+        case = F.keeper()
+        store = keeper_store(StubReader(live_form(case.store.rows()), ok=False))
+        c = EV.custody(case.bundle, case.anchors, store, case.first_check)
+        self.assertEqual(c, {"status": "UNQUALIFIED", "why": ["ROW_CHAIN_BROKEN"]})
+        with self.assertRaises(EV.EvidenceError) as e:
+            EV.anchors_from_keeper(store, {"fixtures/G0/MANIFEST.json": case.anchors.manifest_bytes})
+        self.assertIn("ROW_CHAIN_BROKEN", str(e.exception))
+
+    def test_unreachable_is_never_a_pass(self):
+        case = F.keeper()
+        store = keeper_store(StubReader(unreachable=True))
+        c = EV.custody(case.bundle, case.anchors, store, case.first_check)
+        self.assertEqual(c, {"status": "UNQUALIFIED", "why": ["STORE_UNREACHABLE"]})
+        with self.assertRaises(EV.EvidenceError) as e:
+            EV.anchors_from_keeper(store, {})
+        self.assertIn("STORE_UNREACHABLE", str(e.exception))
+
+    def test_store_failure_keeps_producer_anchor_why(self):
+        case = F.fab_anchors()
+        c = EV.custody(case.bundle, case.anchors, keeper_store(StubReader(unreachable=True)), case.first_check)
+        self.assertEqual(c["why"], ["ANCHORS_FROM_PRODUCER", "STORE_UNREACHABLE"])
+
+    def test_unreachable_store_registers_no_stage_record(self):
+        # Registry (authority A1) must not raise and must not count a stage record it could not read.
+        case = F.keeper()
+        reg = EV.Registry(case.bundle, keeper_store(StubReader(unreachable=True)))
+        self.assertEqual(reg.stages, [])
+        self.assertTrue(reg.unverified)
+        reg = EV.Registry(case.bundle, keeper_store(StubReader(live_form(case.store.rows()), ok=False)))
+        self.assertEqual(reg.stages, [])
+
+    def test_unknown_locator_is_unreachable(self):
+        case = F.keeper()
+        store = EV.store_from_contract({"store": "s3://elsewhere/registry"})
+        c = EV.custody(case.bundle, case.anchors, store, case.first_check)
+        self.assertEqual(c, {"status": "UNQUALIFIED", "why": ["STORE_UNREACHABLE"]})
+
+    def test_registration_time_compared_as_time_not_text(self):
+        # The live registrar writes microseconds and +00:00; the first check is a Z time. Text order is wrong
+        # at the same second ("...00.5Z" sorts before "...00Z"); time order is what B5.3 means.
+        import datetime
+        case = F.keeper()
+        just_after = live_form(case.store.rows(), at="2026-10-04T01:00:00.500000+00:00")
+        c = EV.custody(case.bundle, case.anchors, keeper_store(StubReader(just_after)), case.first_check)
+        self.assertEqual(c, {"status": "UNQUALIFIED", "why": ["REGISTERED_AFTER_CHECK"]})
+        just_before = live_form(case.store.rows(), at=datetime.datetime(2026, 10, 4, 0, 59, 59, 500000,
+                                                                         tzinfo=datetime.timezone.utc))
+        c = EV.custody(case.bundle, case.anchors, keeper_store(StubReader(just_before)), case.first_check)
+        self.assertEqual(c["status"], "QUALIFIED", c)
+        self.assertEqual(c["registered_at_utc"], "2026-10-04T00:59:59.500000Z")
+
+    def test_rows_beyond_the_verified_chain_are_not_used(self):
+        # Rows appended after verify() are outside the verified prefix and do not count.
+        case = F.keeper()
+        rows = live_form(case.store.rows())
+
+        class Appended(StubReader):
+            def verify(self):
+                ok, p, _h, _n = StubReader.verify(self)
+                return ok, p, self._rows[0]["row_hash"], 1
+
+        c = EV.custody(case.bundle, case.anchors, keeper_store(Appended(rows)), case.first_check)
+        self.assertEqual(c["status"], "UNQUALIFIED")
+        self.assertNotIn("ROW_CHAIN_BROKEN", c["why"])
+
+    def test_rows_read_once_per_store(self):
+        # One consumer check reads the registry once: custody and the registry agree on the same rows.
+        case = F.keeper()
+        reader = StubReader(live_form(case.store.rows()))
+        store = keeper_store(reader)
+        EV.Registry(case.bundle, store)
+        EV.custody(case.bundle, case.anchors, store, case.first_check)
+        self.assertEqual(reader.calls.count("rows"), 1)
+
+    def test_contract_carries_v102_custody(self):
+        import json
+        import os
+        path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "contract",
+                            "contract.json")
+        with open(path, encoding="utf-8") as f:
+            doc = json.load(f)
+        self.assertEqual(doc["version"], "1.0.2")
+        self.assertEqual(doc["custody"]["store"], LOCATOR)
+        self.assertIn("superuser", doc["custody"]["independence_caveat"])
+
+    @unittest.skipUnless(__import__("os").environ.get("RSO_CUSTODY_LIVE") == "1",
+                         "live custody smoke test: set RSO_CUSTODY_LIVE=1 (and EW_DB_HOST off M1)")
+    def test_live_store_smoke(self):
+        store = EV.store_from_contract({"store": LOCATOR})
+        rows = store.rows()
+        self.assertTrue(rows)
+        self.assertIn("EXPECTED_ANSWER_TABLE", [r["record_kind"] for r in rows])
 
 
 class TestAuthorityConditions(unittest.TestCase):
