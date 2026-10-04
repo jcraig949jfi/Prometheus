@@ -134,3 +134,5 @@ change survive another generation?**
 | 2026-10-04 | DEV-5: midpoint synthesis 1 (limit = R7). donor_g genome interpreter (g0 conformance 3/3). TEST-5 (GTC R7 probe) launched |
 | 2026-10-04 | TEST-5 (GTC R7) INCONCLUSIVE_INSTRUMENT: the UNSEEN stratum is a transfer floor for every library; the rule genomes g2/g3/g4 leave selections unchanged (20/20). DEV-6 opened |
 | 2026-10-04 | DEV-6: T51-C frozen (fresh LIN seeds 8-15; endogenous base-class derivation confirmation). TEST-6 launched |
+
+| 2026-10-04 | TEST-6 (T51-C) MEASURED: the frozen confirmation is NOT met (ratio 0.644, base class derived in 3/7 seeds). When derived, 100% of the inherited benefit; otherwise 0. DEV-7 opened (R7 v2) |
