@@ -1,0 +1,62 @@
+{
+  "schema": "prometheus.workgraph.receipt.v1",
+  "task_id": "C-004-T026",
+  "campaign_id": "C-004",
+  "attempt_id": "A-001",
+  "role": "Argus",
+  "model": "claude-opus-5-5",
+  "quality_class": "Q2",
+  "start_sha": "68f7e0e85367d33fa26c8743d0d08c63c6582d13",
+  "end_sha": "b838234f1ad13109daba5b0a9701dd1296171f34",
+  "files_changed": [
+    "rso/slice001/s2_bundle.py",
+    "rso/slice001/tests/test_s2_bundle.py"
+  ],
+  "evidence_added": [
+    "build_bundle(commit, ledger, subjects, observers, twins, rows='per_receipt'): CALIBRATION once; per subject BOUNDS, RETENTION, ERASE, PRESERVE, CHANNEL, RESTART, OBSERVER per registered observer; TWIN_EQ per (M, twin); runtimes by fixture name from world_cases / encoding; non-G0 subjects get the REG identity with subject id and physics renamed",
+    "ledger: one TOP_LEVEL row (the launch) + one RECEIPT row per receipt (T025 launch kind) carrying its node_id (V7); each receipt's execution.run_id is its own row; RECEIPT rows charged their own evaluation CPU, the build row the remainder (no double count); rows='build' keeps the T024 form",
+    "a runtime that leaves the model (OVERDELAY): BOUNDS RAN FAIL, every other receipt BLOCKED missing BOUNDS_VIOLATION:DELAY_RANGE, no outcome, no traces -- never an exception",
+    "build_g0 = build_bundle over REG, PKTD, LAGD with B9 observers and twin REG_ONEHOT, node_id G0",
+    "two twins for one subject refused (TWIN_EQ node ids carry no twin segment and would collide)"
+  ],
+  "evidence_executed": [
+    {
+      "command": "python -B -m unittest rso.slice001.tests.test_s2_bundle with T024's s2_bundle",
+      "result": "27 run: 3 failures + 8 errors (RED)"
+    },
+    {
+      "command": "python -B -m unittest rso.slice001.tests.test_s2_bundle",
+      "result": "27 OK, 84 s: G0 1 TOP_LEVEL + 25 RECEIPT rows; E02.MISSING on the real base G-INV FAIL RUN_UNREPORTED:<its RECEIPT run>, CL-RET(PKTD) G-INV PASS (V7); the 3 E05 real-base custody tests pass as ordinary tests; WIPE+OVERDELAY bundle: OVERDELAY BLOCKED receipts, consumer CL-RET(WIPE) NOT_ELIGIBLE and CL-RET(OVERDELAY) standing BLOCKED with the committed T023A/T023B stage records registered in a fixture store; rows per_receipt vs build differ only in run ids, resources and inventory"
+    },
+    {
+      "command": "python -B -m unittest rso.slice001.tests.test_s2_bundle rso.slice001.tests.test_evidence at b838234f1 (merged with origin/main 7f91488c6)",
+      "result": "76 run, OK (skipped=1), no expectedFailure"
+    }
+  ],
+  "red_observed": {
+    "observed": true,
+    "detail": "11 of 27 failed against T024's s2_bundle; first GREEN attempt refused by build_g0's own check (s2_bundle.py uncommitted) -- committed, then green"
+  },
+  "result": "DONE_CLEAN",
+  "known_escapes": [
+    "TWIN(REG, REG-FLAT) and TWIN(REG, LOSSY) cannot share one bundle: node id rcpt:REG:TWIN_EQ:STANDARD has no twin segment. T020 needs one bundle per twin (one launch each) or a node-id decision (V1) -- raised to Palamedes",
+    "whole-suite ci not run (about 8 CPU-minutes per run vs this packet's < 6 CPU-minute ceiling); the acceptance command ran on the merged tree; no mutation reruns for the same reason",
+    "non-G0 subjects' observers default to ('NULL',); REG with HEAL is a caller argument (observers={'REG': (..., 'HEAL')})",
+    "RESTART, OBSERVER and TWIN_EQ receipts still carry no output traces (no layout; unchanged from T024)"
+  ],
+  "unresolved": [],
+  "unblocks": [
+    "C-004-T020"
+  ],
+  "created_at_utc": "2026-10-04T16:50:00Z",
+  "instance": "desktop-ruapvai-b08b36ac",
+  "host": "DESKTOP-RUAPVAI",
+  "branch": "argus/c004-t026",
+  "worktree_path": "C:/Prometheus-worktrees/argus-boot",
+  "resources": {
+    "cpu": "about 4 CPU-minutes (RED 57 s, GREEN 84 s, merged acceptance 87 s, small checks)",
+    "validation_launches": 0,
+    "model": "one Q2 session, about 0.7 hours"
+  },
+  "notes": "Field decisions: FD-T026-1 RECEIPT rows charged their own evaluation CPU, the TOP_LEVEL row the remainder (shared world runs); FD-T026-2 a BLOCKED receipt's RECEIPT row is COMPLETED (the attempt finished; the receipt says BLOCKED); FD-T026-3 OVERDELAY's BOUNDS is RAN FAIL from reset.bounds (BOUNDS is the predicate that reports leaving the model); FD-T026-4 non-G0 subject identity = REG's with id and physics renamed. State commits went to main as they happened (argus-ops)."
+}
