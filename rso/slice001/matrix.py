@@ -38,14 +38,20 @@ REGISTER = {
     "T02.CLOCKED": ["X01"], "E02.RELABEL": ["X02"], "E03.REANCHOR": ["X03"], "E06.LOSSY": ["X04"],
     "T02.AMNESIAC": ["X05"], "E02.MISSING": ["X06"], "E04.W_RESTART": ["X07"], "E04.W_UNRELATED": ["X08"],
     "T06.PKTD_NOQ": ["X09"], "T06.HCOUNT": ["X09", "X15"],
+    "T04.LAGD": ["X18"], "T05.WIPE": ["X18"], "T06.LAGD": ["X18"],
+    "T08.EVERY3": ["X19"], "T08.SLEEPER": ["X19"], "T08.SPLIT1": ["X19"],
 }
-GENERAL_REGISTER = ("X10", "X11", "X12", "X13", "X14", "X16")
+GENERAL_REGISTER = ("X10", "X11", "X12", "X13", "X14", "X16", "X17")
 
-_PLACEHOLDER = re.compile(r"<[^<>]+>")
+# A placeholder is <...>; its text may contain an arrow "->" (the table writes <edge A -> B>).
+_PLACEHOLDER = re.compile(r"<(?:->|-(?!>)|[^<>-])+>")
+# Values by which the table explicitly declines to predict (its own conventions: "UNDETERMINED", "as measured",
+# "see G<n>" pointing at a named gap). They are never compared.
+_NOT_PREDICTED = re.compile(r"^\s*(UNDETERMINED|as measured|see G\d+)", re.IGNORECASE)
 
 
 def _undetermined(v):
-    return isinstance(v, str) and v.strip().upper().startswith("UNDETERMINED")
+    return isinstance(v, str) and bool(_NOT_PREDICTED.match(v))
 
 
 def reason_matches(expected, actual):
@@ -81,6 +87,9 @@ def _cmp(expected, actual):
         return MISMATCH, "implementation did not report it"
     if _undetermined(actual):
         return MISMATCH, "implementation reports UNDETERMINED where the table determines %r" % (expected,)
+    if isinstance(expected, str) and isinstance(actual, str) and _PLACEHOLDER.search(expected):
+        st, _ = reason_matches(expected, actual)       # a placeholder in a value is a pattern too
+        return st, ("" if st == MATCH else "%r !~ %r" % (actual, expected))
     return (MATCH, "") if expected == actual else (MISMATCH, "%r != %r" % (expected, actual))
 
 

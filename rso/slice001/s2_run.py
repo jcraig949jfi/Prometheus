@@ -260,8 +260,7 @@ def resolve(predicate, scope, decisions, custody, case_subjects):
             continue
         if pred in C.GATES:
             if (sc in ("per claim", "every claim of G0") or (sc == "per CL-RET claim" and cid.startswith("CL-RET("))
-                    or sc == cid or (sc == "the relabelled CL-RET claim" and cid.startswith("CL-RET(")
-                                     and cid[7:-1] not in G0_SUBJECTS)):
+                    or sc == cid or (sc == "the relabelled CL-RET claim" and cid == "CL-RET(REG)")):
                 picked.append(verdict_fields(ln["verdict"]))
             continue
         subj, obs, world = (ln["scope"].split("/") + [None, None])[:3] if ln["scope"].count("/") == 2 else \

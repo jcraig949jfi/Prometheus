@@ -53,6 +53,27 @@ class TestFieldRules(unittest.TestCase):
         a = row(outcome="FAIL", reason="forbidden influence across boundary 3, first visible at (4, PROBE_A)")
         self.assertEqual(M.compare_row(e, a)["status"], M.DISAGREE)
 
+    def test_placeholder_with_arrow(self):
+        st, _ = M.reason_matches("DEPENDENCY_MISMATCH:<edge RETENTION(REG, STANDARD) -> CALIBRATION(STANDARD)>",
+                                 "DEPENDENCY_MISMATCH:rcpt:REG:RETENTION:STANDARD->rcpt:WORLD:CALIBRATION:STANDARD")
+        self.assertEqual(st, M.MATCH)
+        st, _ = M.reason_matches("DEPENDENCY_MISMATCH:<edge A -> B>", "BYTES_MISMATCH:x")
+        self.assertEqual(st, M.MISMATCH)
+
+    def test_placeholder_in_authority(self):
+        e = row(outcome="FAIL", authority="UNQUALIFIED: WITHDRAWN:<withdrawal_id>")
+        good = row(outcome="FAIL", authority="UNQUALIFIED: WITHDRAWN:W-RESTART")
+        bad = row(outcome="FAIL", authority="UNQUALIFIED: PRECONDITION:RESTART")
+        self.assertEqual(M.compare_row(e, good)["status"], M.AGREE)
+        self.assertEqual(M.compare_row(e, bad)["status"], M.DISAGREE)
+
+    def test_not_predicted_values_are_not_compared(self):
+        for v in ("as measured", "see G12", "UNDETERMINED (G04)"):
+            st, _ = M._cmp(v, "PASS")
+            self.assertEqual(st, M.NOT_COMPARED, v)
+        st, _ = M._cmp("n/a", "UNQUALIFIED: X")      # n/a IS a prediction
+        self.assertEqual(st, M.MISMATCH)
+
     def test_undetermined_among_alternatives(self):
         e = row(outcome="FAIL", reason="UNDETERMINED among SCOPE_MISMATCH:physics | IDENTITY_UNKNOWN:<node_id> (G08)")
         st, note = M.reason_matches(e["primary"]["reason"], "IDENTITY_UNKNOWN:rcpt:REG2:BOUNDS:STANDARD")
