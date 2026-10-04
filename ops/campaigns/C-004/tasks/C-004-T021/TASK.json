@@ -48,7 +48,7 @@
     "contract.json v1.0.2 + MANIFEST.md"
   ],
   "kind": "software",
-  "status": "INTEGRATION_READY",
+  "status": "INTEGRATED",
   "history": [
     {
       "status": "PROPOSED",
@@ -91,6 +91,12 @@
       "by": "Argus[desktop-ruapvai-b08b36ac]",
       "at_utc": "2026-10-04T08:39:39Z",
       "note": "branch argus/c004-t021 at 21e0d894b; RED 11/11 stub-reader tests; ci 170/171 (+1 skip live) green apart from pre-existing T019 ledger cpu flake; live smoke OK head 0c5764a7; M1-M3 killed; receipt A-001"
+    },
+    {
+      "status": "INTEGRATED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-04T09:13:43Z",
+      "note": "merged 7bec0a4c9 (state commits were on the work branch); integrator: contract.json 1.0.2 custody block matches AMENDMENT_v1.0.2 W1/W2; manifest verifies; full suite OK (1 skipped); live smoke RSO_CUSTODY_LIVE=1 OK; RED 11/11 before reader. Ledger flake reproduced 4/10 on harry1 -> C-004-T022"
     }
   ],
   "authority": "operator directive 2026-10-03 s9, s11; C-004-OP2; operator confirmation of the store 2026-10-04",

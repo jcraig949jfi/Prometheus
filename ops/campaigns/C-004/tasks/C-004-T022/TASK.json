@@ -1,0 +1,62 @@
+{
+  "schema": "prometheus.workgraph.task.v1",
+  "task_id": "C-004-T022",
+  "campaign_id": "C-004",
+  "title": "Fix flaky ledger CPU test (Windows process_time granularity)",
+  "objective": "Make rso.slice001.tests.test_ledger.TestCrashRowsCheat.test_context_measures_cpu deterministic on Windows without weakening what it checks: a COMPLETED run records a nonzero measured cpu_s.",
+  "parent_objective": "RSO-METHODS-SLICE-001 (CAMPAIGN.json objective)",
+  "owner_role": "Eupalamus",
+  "quality_class": "Q1",
+  "can_downgrade": false,
+  "escalate_to": "Q2",
+  "depends_on": [
+    "C-004-T019"
+  ],
+  "owns": [
+    "rso/slice001/tests/test_ledger.py",
+    "rso/slice001/ledger.py"
+  ],
+  "reads": [
+    "roles/Argus/comms/2026-10-04_DEFECT_Eupalamus_ledger_cpu_flake.md"
+  ],
+  "problem": "Reported by Argus (roles/Argus/comms/2026-10-04_DEFECT_Eupalamus_ledger_cpu_flake.md): AssertionError 0.0 not greater than 0.0 on led.inventory()[0]['cpu_s']; 4/12 isolated runs on DESKTOP-RUAPVAI, reproduced 4/10 by Palamedes on harry1. time.process_time() on Windows ticks at about 15.6 ms and the 200,000-iteration loop can finish inside one tick. It turns the acceptance command red intermittently, which T020 cannot tolerate.",
+  "non_goals": [
+    "Do not weaken the assertion to >= 0.0 alone: the cheat control must still show a nonzero cpu_s is recorded",
+    "No change to ledger charging semantics or caps"
+  ],
+  "evidence_required": [
+    "RED: the flake reproduced (record the failing count out of N runs before the fix)",
+    "GREEN: 30 consecutive isolated runs of the test pass on Windows",
+    "the test still fails if ledger records cpu_s as 0.0 for a COMPLETED run (mutation or cheat control)"
+  ],
+  "acceptance": {
+    "command": "python -B -m unittest rso.slice001.tests.test_ledger",
+    "condition": "30/30 consecutive isolated passes of test_context_measures_cpu; full suite green; the zero-cpu cheat still caught"
+  },
+  "deliverables": [
+    "rso/slice001/tests/test_ledger.py (and ledger.py only if needed)"
+  ],
+  "kind": "software",
+  "status": "READY",
+  "history": [
+    {
+      "status": "PROPOSED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-04T09:13:43Z",
+      "note": "created from Argus defect report found under T021"
+    },
+    {
+      "status": "READY",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-04T09:13:43Z",
+      "note": "made READY by the coordinator"
+    }
+  ],
+  "authority": "operator directive 2026-10-03 s9, s11",
+  "resource_ceiling": {
+    "engineering": "<= 0.5 Q1 seat-hour",
+    "cpu": "< 2 CPU-minutes",
+    "note": "counts toward OP-1 caps"
+  },
+  "notes": "Argus's suggested options: spin until process_time advances (bounded), a larger fixed workload, or assert >= 0.0 plus a separate cheat control for nonzero recording. Field decision is the owner's."
+}
