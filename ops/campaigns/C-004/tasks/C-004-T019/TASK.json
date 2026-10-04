@@ -49,7 +49,7 @@
     "rso/slice001/tests/test_ledger.py"
   ],
   "kind": "software",
-  "status": "CLAIMED",
+  "status": "INTEGRATED",
   "history": [
     {
       "status": "PROPOSED",
@@ -68,6 +68,36 @@
       "by": "Eupalamus[gandalf-ced473bf]",
       "at_utc": "2026-10-04T07:08:41Z",
       "note": ""
+    },
+    {
+      "status": "RED",
+      "by": "Eupalamus[gandalf-ced473bf]",
+      "at_utc": "2026-10-04T07:13:45Z",
+      "note": "T019 RED (work on branch eupalamus-c004-t019 @ b0929b10c)"
+    },
+    {
+      "status": "IMPLEMENTING",
+      "by": "Eupalamus[gandalf-ced473bf]",
+      "at_utc": "2026-10-04T07:13:45Z",
+      "note": "T019 IMPLEMENTING (work on branch eupalamus-c004-t019 @ b0929b10c)"
+    },
+    {
+      "status": "GREEN",
+      "by": "Eupalamus[gandalf-ced473bf]",
+      "at_utc": "2026-10-04T07:13:45Z",
+      "note": "T019 GREEN (work on branch eupalamus-c004-t019 @ b0929b10c)"
+    },
+    {
+      "status": "INTEGRATION_READY",
+      "by": "Eupalamus[gandalf-ced473bf]",
+      "at_utc": "2026-10-04T07:13:45Z",
+      "note": "T019 INTEGRATION_READY (work on branch eupalamus-c004-t019 @ b0929b10c)"
+    },
+    {
+      "status": "INTEGRATED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-04T07:16:28Z",
+      "note": "merged b0929b10c; integrator: test_ledger 31/31 (+ evidence, ci) on merged tree; author ran 10/10 hand mutants killed; integration check: Ledger.inventory() output passes evidence.inventory_terminal (2 COMPLETED rows + TERMINAL row_count 2); opt-in charging carried into T020 notes"
     }
   ],
   "authority": "operator directive 2026-10-03 s9, s11 (roles/Achilles/prompts/2026-10-03_rso_builder_cell/01_OPERATOR_DIRECTIVE_verbatim.md); decomposed by Palamedes under C-004-T000",

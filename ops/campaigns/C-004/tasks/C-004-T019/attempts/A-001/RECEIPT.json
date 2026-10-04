@@ -1,0 +1,60 @@
+{
+  "schema": "prometheus.workgraph.receipt.v1",
+  "task_id": "C-004-T019",
+  "campaign_id": "C-004",
+  "attempt_id": "A-001",
+  "role": "Eupalamus",
+  "model": "claude-sonnet-5-5",
+  "quality_class": "Q1",
+  "start_sha": "b3c1e87a87f10aa420065b39533c1378ba9ec6ad",
+  "end_sha": "b0929b10c4140ce6bbfdda66f955f2607e7136e5",
+  "files_changed": [
+    "rso/slice001/ledger.py",
+    "rso/slice001/tests/test_ledger.py",
+    "rso/slice001/ci.py"
+  ],
+  "evidence_added": [
+    "rso/slice001/tests/test_ledger.py: 31 tests -- caps read from the real contract.json (12 launches, 1800 CPU s, 100e6 bytes) and malformed caps fail closed; the 13th launch under a 12-launch cap is refused and the refusal is itself inventoried; refusals do not consume a launch; mutation children are charged CPU and bytes but not launches; failures and retries are charged; CPU and artifact-byte caps refuse at used >= limit; rows match the G-INV interface (evidence.inventory_terminal, V7 node_id); append-only JSONL flushed before begin() returns; cross-instance state; duplicate run_id; torn last line tolerated and reported, corrupt middle line fails closed; ci.py --ledger integration (row with node_id, failing launch still inventoried, 3rd launch under a 2-cap refused before any test runs, --ledger needs --node-id, no flag writes nothing)",
+    "cheat control: a child process killed with os._exit(9) after begin() leaves an INTERRUPTED row with cpu_s None (unmetered, not zero) that still counts as a launch; an exception inside ledger.run() leaves a FAILED row and propagates"
+  ],
+  "evidence_executed": [
+    {
+      "command": "python -B -m unittest rso.slice001.tests.test_ledger (before ledger.py existed)",
+      "result": "Ran 1 test, FAILED (errors=1: no module rso.slice001.ledger) -- RED"
+    },
+    {
+      "command": "python -B -m unittest rso.slice001.tests.test_ledger (after implementation)",
+      "result": "Ran 31 tests, OK (4.1 s)"
+    },
+    {
+      "command": "hand mutation of ledger.py (10 mutants: each cap comparison >= -> >, launch counting without TOP_LEVEL or without the REFUSED exclusion, duplicate-run check off, INTERRUPTED cpu_s None -> 0.0, context manager always COMPLETED, unmetered rows dropped from CPU sum, torn tail raising); script in the session scratchpad, source restored byte-for-byte",
+      "result": "10 of 10 mutants killed by test_ledger"
+    },
+    {
+      "command": "python -B -m rso.slice001.ci (acceptance, on the tree equal to origin/main plus the three files; main's rso/ unchanged since the base)",
+      "result": "exit 0; status PASSED; tests_run 126, passed 126, failed 0, errored 0"
+    }
+  ],
+  "red_observed": {
+    "observed": true,
+    "reason": "test_ledger.py failed to import (no rso.slice001.ledger) before implementation; the 13th-launch refusal test is in the file that went RED"
+  },
+  "result": "DONE_CLEAN",
+  "known_escapes": [
+    "single writer per store: begin() reads the store and then appends without a lock, so two simultaneous top-level launches against one store could both pass the cap check; the slice launches serially. Revisit if T020 parallelises",
+    "ci.py ledger charging is OPT-IN (--ledger PATH --node-id N); a default store would let every development run of the acceptance command spend the 12-launch cap. T020 and any real validation launch must pass --ledger. Revisit if the coordinator wants an enforced default",
+    "new_artifact_mb is read as 10**6 bytes per MB (the stricter reading); revisit if the keeper names MiB",
+    "an INTERRUPTED run is charged one launch but zero CPU and bytes (unmetered), so a killed run can under-charge CPU; the row says cpu_s null, never zero",
+    "ci.py charges only its own in-process CPU, as T003 recorded; mutation-runner children are charged only when their caller calls ledger.begin(launch_kind=MUTATION_CHILD) -- mutation.py (Argus) was not touched",
+    "tested on Python 3.11 only; written to the 3.8 stdlib subset but not run on 3.8"
+  ],
+  "unresolved": [],
+  "unblocks": [],
+  "created_at_utc": "2026-10-04T05:00:00Z",
+  "instance": "gandalf-ced473bf",
+  "host": "GANDALF (M3)",
+  "branch": "eupalamus-c004-t019",
+  "worktree_path": "C:/prometheus-worktrees/eupalamus-boot-2026-10-03",
+  "resources": {"cpu_s_approx": 20, "gpu": 0, "cloud": 0, "new_artifact_bytes": 30000},
+  "notes": "Work commit b0929b10c is on origin branch eupalamus-c004-t019 (not on main); Palamedes integrates. No contract content, no semantics: the ledger counts and refuses. Sole Eupalamus instance per operator, 2026-10-04."
+}
