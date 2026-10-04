@@ -1,0 +1,165 @@
++============================================================================+
+| REVIEW PACKET -- C-004 RSO-METHODS-SLICE-001: S1 FROZEN, S2 HALF BUILT     |
+| Author: Palamedes (Lead RSO Engineer, coordinator), harry1/M4,             |
+|         claude-opus-5-5, instance harry1-679179c6                          |
+| Date:   2026-10-04                                                         |
+| For:    the operator (HITL) and external reviewers                         |
+| Status: S1 contract v1.0.2 frozen; S2 8 of 13 build packets integrated;    |
+|         no S2 outcome on the full matrix yet; nothing claimed about RSO    |
+| Self-contained: no repository access needed to read this.                  |
++============================================================================+
+
+0. SUMMARY
+-----------
+The cell turned the closed Phase 3 design review into a frozen finite
+contract and has built half of the S2 implementation against it. Every
+integration was re-checked by the integrator on the merged tree and by one
+integrator-chosen source mutation per packet. No scientific result exists:
+the S2 acceptance matrix (T020) has not run. The most useful outputs so far
+are the defects found in the contract and the tooling, listed in 6.
+
+1. WHAT WAS BUILT (and what was committed before measurement)
+--------------------------------------------------------------
+- 23 task packets (C-004-T000), later 27 (T021, T022 added for defects).
+- S1 contract, frozen BEFORE any S2 file existed (verified by tree listing
+  at freeze): CONTRACT.md + contract.json v1.0.0 at 595916f9c, 48 registered
+  cases; amendment v1.0.1 (spellings/formats only) at 3287bff17, also before
+  any S2 file; amendment v1.0.2 (custody store locator) adopted at f52de1eb7
+  and applied with the store reader at T021 (7bec0a4c9).
+- Independent expected-answer table (Pallas, Fable 5.1, T005): 48 rows,
+  committed at 3ea4af125 BEFORE its author read the authors' expected
+  columns; table unchanged afterwards (verified by diff between commits).
+- S2 modules integrated: receipt (T013), evidence graph (T014), checker +
+  renderer (T015), mutation runner (T017), run ledger (T019), custody store
+  reader (T021), ledger test fix (T022), finite world (T010).
+- Custody store (Aporia, registrar): append-only hash-chained Postgres
+  table on M1; 1 row (the expected table) registered.
+
+2. THE CLAIM UNDER CONSTRUCTION AND WHY IT MATTERS
+---------------------------------------------------
+Methods question (plan v0.4 s1): can one small evidence path admit lawful
+retained information, reject a forbidden delayed leak without destroying
+allowed state, and refuse a claim whose receipt provenance was rewritten?
+Finite world W-S1: 6 episodes, 4096 histories, reset evaluated at 3
+boundaries, delay horizon 3, channel delay <= 3. Every receipt carries three
+separate fields: execution, instrument authority, outcome. A correct
+negative (T02: exact 1/2) is a ruler outcome, never a FAIL.
+
+3. DESIGN AS EXECUTED (decisions that could be wrong)
+------------------------------------------------------
+R1  FD-A3 accepted: a CHANNEL clamp predicate is a prerequisite of the
+    retention claim. Without it a runtime carrying the right answer through
+    the FORBIDDEN channel (QCARRY) passes ERASE and would be rendered as
+    "carried by the allowed component". Cost: 24576 clamped runs.
+R2  Custody gates only the custody claim, not retention.
+R4  The independent table is the comparison target; the authors' expected
+    values are a second opinion.
+v1.0.1 resolved 8 spelling/format gaps found by T005 before any code
+    existed. 15 questions about what an answer IS were NOT decided; they are
+    registered (X01-X15, now X16) for T020 to classify against the code.
+Parallelization: Argus made eligible on T012/T016 (operator-approved) to
+    cut a single-seat serial chain.
+
+4. CHECKS, WITH NUMBERS
+-----------------------
+T005 table vs authors (primary value): 43 agree, 0 contradict, 5 unscorable
+  of 48. Six agreements are NOT independent (author answer visible in text
+  the blinded author could read). Polarity is printed in contract.json, so
+  polarity agreement is weak everywhere.
+Per packet (author RED -> integrator rerun -> integrator mutation):
+  T003 skeleton/CI  9/9;   injected failing test -> exit 1
+  T013 receipt     28/35 fail vs stub -> 35/35;  min->max stage: caught
+  T017 mutation    ImportError only -> 14/14;   error-as-kill: caught
+  T014 evidence    hash-only stub admits 8/10 broken -> 37/37;
+                   drop contract-required edges: caught by the exact test
+  T019 ledger      31/31; author 10/10 mutants; inventory feeds G-INV
+  T015 checker     21/30 fail vs stubs -> all green; case-sensitive
+                   quantifier lint: caught
+  T021 store       11/11 fail before reader -> green; live read matches
+  T022 flake       4/10 failing on harry1 before -> 20/20 after;
+                   zero-cpu mutant caught by 4 tests
+  T010 world       32/32; independent recompute: 4096 histories; u_j=1 in
+                   2048 for j=1..3; max over no-carry class 1/2 (STANDARD),
+                   1 (CLOCKED); bounds equal contract; blocker fires at K>H
+Custody: chain verify ok; row 1 blob equals an independent sha256.
+Full slice suite on main: OK (1 live-store test skipped by design).
+
+5. RESULTS
+----------
+None on the claim. All checks above are instrument checks. The authority
+stage of every gate is AUTHOR_TESTED; the S3 first-sight attack has not run.
+
+6. INCIDENTS AND DEFECTS (plainly)
+----------------------------------
+- Canonical checkout moved by `git pull --autostash` before this seat had
+  read the working contract (a960a0e81 -> c4eb1f132). Journaled.
+- Seats idle between operator prompts: graph published 11:06Z, builders saw
+  it hours later; fixed by headless relaunches, then hourly loops.
+- Contract defects found by building it: a cited section "B7.3" does not
+  exist; no FAIL reason forms for 3 predicates; channel capacity Q=8 called
+  "reachable maximum" while 6 is reachable (X16); fixture definitions share
+  a column with the expected answers, so blinding and completeness conflict.
+- Tooling defects: ledger CPU test flaky on Windows clock granularity (fixed,
+  T022); store field could not be set without a reader (T021); mutation
+  children are not charged unless the caller charges them (carried to S3).
+- My own engine loophole (T020 prep, caught before merge): "UNDETERMINED"
+  from the implementation would have compared as nothing and passed.
+- Several state histories write RED/IMPLEMENTING/GREEN in one second after
+  the work; RED evidence is in receipts, not in timing.
+- Custody residual: every seat is the same Postgres superuser; tampering is
+  detected (hash chain), not prevented.
+
+7. WHAT THIS DOES AND DOES NOT ESTABLISH
+----------------------------------------
+Does: a frozen, versioned finite contract; an independent answer key made
+before the code; modules whose tests fail on naive stubs and on at least one
+targeted mutation each.
+Does NOT: any retention, reset or custody claim; any gate qualified beyond
+author-tested; any statement about native runtimes, recursion or a class of
+organisms. All mutations above were chosen by the authors or integrator --
+a same-family check, not independent attack.
+
+8. DECISION / RECOMMENDATION
+----------------------------
+No operator decision is pending now. Next: Cadmus T011 (+ T012/T016 shared
+with Argus) and T018, then T020 matrix run and S2 freeze, then S3 by Pallas.
+Palamedes's lean: continue; the slice is cheap (OP-1 caps) and is finding
+real defects. Stop condition to watch: if T020 shows mismatches whose class
+(implementation/contract/table) cannot be decided within the caps, report
+incomplete closure rather than repair by preference.
+
+9. QUESTIONS FOR THE REVIEWER (written to resist agreement)
+------------------------------------------------------------
+Q1  R1 makes the retention claim depend on a restore-based clamp. Does
+    that test the claim, or a property of this toy that no native runtime
+    will offer? Should CHANNEL be a reported line instead of a prerequisite?
+Q2  43/48 agreement between two tables that share the plan and the printed
+    polarity: is that evidence of a well-specified contract, or of two
+    readers sharing the same blind spots?
+Q3  Every mutation check here was picked by someone who knew the code.
+    What would you require before calling any gate more than author-tested?
+Q4  Is a 48-case finite world large enough that S3 (5 sound, 5 broken, 10
+    edits) can distinguish a sound evidence path from an overfitted one?
+Q5  Is anything here worth continuing if T020 passes cleanly -- i.e. what
+    would the slice tell you that the two prior harnesses did not?
+
+10. ARTIFACTS
+-------------
+Contract   rso/slice001/contract/ (CONTRACT.md, contract.json 1.0.2,
+           AMENDMENT_v1.0.1.md, AMENDMENT_v1.0.2.md, drafts A/B)  595916f9c,
+           3287bff17, f52de1eb7, 7bec0a4c9
+Table      rso/slice001/expected/ (EXPECTED_ANSWERS.json, EXPOSURE.md,
+           COMPARISON.md)  3ea4af125, 5c9f0bc66
+Register   ops/campaigns/C-004/DISAGREEMENTS.md (X01-X16)
+Graph      ops/campaigns/C-004/ (CAMPAIGN.md coverage table, tasks/,
+           escalations/T005_1, T015_1 with responses)
+Code       rso/slice001/{world,receipt,evidence,checker,render,mutation,
+           ledger,ci}.py + tests/
+T020 prep  branch palamedes/c004-t020-prep 726dc1d0e (matrix.py, not on main)
+Custody    ops/custody/ 497b81a4e; head 0c5764a79bcf10a4 after row 1
+
++============================================================================+
+| "Not worth continuing" remains a first-class answer. If the reviewer       |
+| thinks the finite slice cannot discriminate a meaningful wrong answer      |
+| within its caps, say so; the plan says publish the scoped failure and stop.|
++============================================================================+
