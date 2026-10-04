@@ -14,7 +14,9 @@
   ],
   "owns": [
     "rso/slice001/ledger.py",
-    "rso/slice001/tests/test_ledger.py"
+    "rso/slice001/tests/test_ledger.py",
+    "rso/slice001/contract/contract.json",
+    "rso/slice001/contract/MANIFEST.md"
   ],
   "reads": [
     "rso/slice001/receipt.py",
@@ -60,5 +62,6 @@
     "engineering": "<= 0.5 seat-hour",
     "cpu": "< 2 CPU-minutes",
     "note": "counts toward OP-1 caps"
-  }
+  },
+  "notes": "COORDINATOR 2026-10-04: also apply AMENDMENT_v1.0.3 (OP-4) in the same commit: contract.json version 1.0.3, caps.cpu_minutes 120, caps.accounting text from U2, amendments list entry; update test_caps_read_from_the_real_contract to 120 * 60; rewrite contract/MANIFEST.md. contract.json is in owns ONLY for this."
 }
