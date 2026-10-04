@@ -9,13 +9,19 @@ Store: append-only JSONL, one record per line, flushed and fsynced before the ca
     END      {kind, run_id, status, cpu_s, artifact_bytes, end_utc}         written by finish()
     REFUSED  {kind, run_id, node_id, launch_kind, cap, used, limit, at_utc, supplied_by}
 inventory() derives the rows G-INV reads (evidence.inventory_terminal): one {kind: RUN, run_id, node_id,
-status, ...} per run_id, then {kind: TERMINAL, row_count}. A START with no END is INTERRUPTED (cpu_s and
-artifact_bytes None: unmetered, never zero). It still counts as a launch.
+status, launch_kind, cpu_us, artifact_bytes, ...} per run_id, then {kind: TERMINAL, row_count}. The rows are
+canonical JSON (receipt.canonical_bytes refuses floats, draft B B2), so CPU is INTEGER MICROSECONDS cpu_us
+(float seconds x 1e6, rounded; the JSONL store keeps the float seconds). A START with no END is INTERRUPTED
+(cpu_us and artifact_bytes None: unmetered, never zero). It still counts as a launch if it was TOP_LEVEL.
 
-Charging (contract.json `caps`, C-004-OP1): top-level launches (REFUSED rows and MUTATION_CHILD rows do not
-count), CPU seconds and new artifact bytes of every finished attempt including failures, retries and
-mutation children. begin() refuses once any cap is used up (used >= limit), checking launches, then CPU,
-then artifact bytes.
+Launch kinds: TOP_LEVEL (a validation launch: counts toward the launch cap), MUTATION_CHILD and RECEIPT
+(charged CPU and bytes, never counted as launches). RECEIPT is for one row per receipt, with its node_id (V7),
+under one charged TOP_LEVEL build row (C-004-T025).
+
+Charging (contract.json `caps`, C-004-OP1, CPU cap per OP-4 / contract v1.0.3): top-level launches (REFUSED
+rows, MUTATION_CHILD rows and RECEIPT rows do not count), CPU seconds and new artifact bytes of every finished
+attempt including failures, retries and mutation children. begin() refuses once any cap is used up
+(used >= limit), checking launches (TOP_LEVEL only), then CPU, then artifact bytes.
 
 Field decisions (rso-builder-role s2.7):
   - "MB" in new_artifact_mb is 10**6 bytes (smaller, so the stricter reading; revisit if the keeper
@@ -35,7 +41,8 @@ DEFAULT_CONTRACT = os.path.join(PKG_DIR, "contract", "contract.json")
 
 TOP_LEVEL = "TOP_LEVEL"
 MUTATION_CHILD = "MUTATION_CHILD"
-LAUNCH_KINDS = (TOP_LEVEL, MUTATION_CHILD)
+RECEIPT = "RECEIPT"        # one per receipt under a single charged build row: CPU and bytes, not a launch
+LAUNCH_KINDS = (TOP_LEVEL, MUTATION_CHILD, RECEIPT)
 END_STATUSES = ("COMPLETED", "FAILED")
 MB = 1000 * 1000
 
@@ -109,6 +116,13 @@ class _Run(object):
         if not self.attempt._done:
             self.attempt.finish("FAILED" if exc_type else "COMPLETED", cpu_s=time.process_time() - self._c0)
         return False
+
+
+def _canonical_row(row):
+    out = dict(row)
+    s = out.pop("cpu_s")
+    out["cpu_us"] = None if s is None else int(round(s * 1000000))
+    return out
 
 
 class Ledger(object):
@@ -227,7 +241,9 @@ class Ledger(object):
 
     # ---- the inventory G-INV reads ------------------------------------------------------------------
     def inventory(self):
-        rows = list(self._runs(self._read()).values())
+        """RUN rows then TERMINAL, as canonical JSON (receipt.canonical_bytes refuses floats, draft B B2):
+        CPU is integer microseconds `cpu_us` (None when unmetered); the store keeps the float seconds."""
+        rows = [_canonical_row(r) for r in self._runs(self._read()).values()]
         return rows + [{"kind": "TERMINAL", "row_count": len(rows)}]
 
     def write_inventory(self, path):

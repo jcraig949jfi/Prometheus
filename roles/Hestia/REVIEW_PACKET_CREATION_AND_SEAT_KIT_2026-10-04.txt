@@ -159,3 +159,46 @@ Invoked by: operator, "Hestia.  Inherit from base-role but Hestia will be self
   timings are not (Techne's record of this host: 2008 i7 920, no GPU; the
   disk was not measured).
 ================================================================================
+
+ADDENDUM 2026-10-04 (after the field reports): annotation, original unchanged
+================================================================================
+A1. WHAT HAPPENED. Hades (M1, comms #1448) and Themis (M2, #1451) ran the kit
+  via roles/template. Themis was created but its comms boot failed (seat
+  landed with a damaged STATUS.md); Hades's creation stopped at the commit.
+  This shows the runbook was not ready: section 6 had listed comms boot and a
+  real push as not timed, and a second host and a second person as untested,
+  and the runbook was published anyway (ledger row 4).
+A2. DEFECTS (reproduced on M3, E3): (1) evidence_wiki absent from the sparse
+  tree, so comms could not load on any host; (2) a host pre-commit hook on M1
+  runs attacks/preflight.py, whose probes read ergon/probe; both absent,
+  commit failed with Hades's exact message; (3) boot failure left a raw
+  traceback in STATUS.md; (4) failure was found only after files were written
+  and pushed; (5) a new seat could not address other seats (comms roster =
+  directories on disk).
+A3. FIXES (origin/main 715ae6ad9; replies posted as #1452, #1453): cone adds
+  attacks, evidence_wiki, ergon/probe (776 files); read-only comms preflight
+  before anything is written; one-line boot errors + validator rule; post-push
+  roster widening (79 seat dirs, 2.3 s); discard commands on every stop;
+  --skip-hooks for the OPERATOR only. One correction to Themis: the tool did
+  set EW_DB_HOST off M1.
+A4. RESULTS (E3): old cone fails the cone control on both checks, new cone
+  passes; old kit under the stand-in hook fails like Hades, new kit commits,
+  28.6 s total (--no-comms); validator cheat control 9/9; kit tests 16 passed;
+  full self-tests on the merged tree 37 passed 1 skipped 89.50 s; real comms
+  boot from a sparse tree 0.99 s. Seven repo self-tests fail in a sparse tree
+  (was six) and are judged against a pre-seat baseline.
+A5. STILL NOT ESTABLISHED. A creation with comms ON and --push timed end to
+  end by this author (Themis did one on M2; its timing is not in this record).
+  Whether the fixed kit works on M1 with the real Charon hook (reproduced with
+  a stand-in on M3 only). Hades has not re-run. Hades is not booted and a
+  fresh boot does not replay history, so #1453 may never reach him; relay by
+  the operator needed.
+A6. NEW QUESTIONS FOR THE REVIEWER. (a) Is "a stand-in hook through git
+  environment config" a faithful reproduction of the M1 hook, or could the
+  real hook need more than attacks/ + ergon/probe? (b) Should a host-local,
+  untracked hook that can fail every worktree commit on a host be tracked or
+  at least registered in roles/base-role/MONITORS.md? (c) Should a published
+  runbook for a tool that writes shared state require a second-host run first?
+  (d) STOP: is the roster widening worth ~750 checked-out files per new seat,
+  versus fixing comms to read comms.agents?
+================================================================================

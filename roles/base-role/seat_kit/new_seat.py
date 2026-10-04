@@ -37,7 +37,13 @@ BANNER = "Inherits roles/base-role/RESPONSIBILITIES.md and WORKING_CONTRACT.md"
 KIT = "roles/base-role/seat_kit/templates"
 # A cone checkout: everything directly in the root, plus these trees. Enough for the
 # tool, comms, and the base-role self-tests; the seat can `git sparse-checkout disable`.
-CONE = ["roles/base-role", "comms", "archaeon/tests", "aporia/doctrine", "ops/work_orders"]
+# attacks + ergon/probe: a host-local pre-commit hook (Charon preflight, seen on M1) runs
+# `python attacks/preflight.py --probes`, whose probes read ergon/probe. evidence_wiki: comms imports it.
+# Measured: this set is 776 files, a few seconds, and the hook passes 3/3 in it.
+CONE = ["roles/base-role", "comms", "archaeon/tests", "aporia/doctrine", "ops/work_orders",
+        "attacks", "evidence_wiki", "ergon/probe"]
+RECOVERY = {}
+NL = chr(10)
 REVALIDATE_PREFIXES = ("roles/base-role/", "comms/", "archaeon/", ".gitignore", "ops/work_orders/CURRENT.md")
 RESERVED = {"base-role", "generic-worker-role", "rso-builder-role"}
 NAME_RE = re.compile(r"^[A-Za-z][A-Za-z0-9]*(-[A-Za-z0-9]+)*$")
@@ -45,6 +51,26 @@ NAME_RE = re.compile(r"^[A-Za-z][A-Za-z0-9]*(-[A-Za-z0-9]+)*$")
 
 class SeatError(Exception):
     pass
+
+
+def roster_patterns(cone, seat):
+    """Non-cone sparse patterns: what the cone checks out (root files, parent-dir files, the cone dirs) PLUS every
+    seat's top-level *.md, so comms' roster (the directories under roles/) is complete and neighbours' entry
+    files are readable. Applied AFTER the self-tests: a complete roster makes one self-test O(seats), ~65 s."""
+    dirs = list(cone) + ["roles/" + seat]
+    ancestors = sorted({"/".join(d.split("/")[:i]) for d in dirs for i in range(1, len(d.split("/")))})
+    pats = ["/*", "!/*/"]
+    for a in ancestors:
+        pats += ["/%s/*" % a, "!/%s/*/" % a]
+    pats += ["/%s/" % d for d in dirs]
+    pats.append("/roles/*/*.md")
+    return pats
+
+
+def expand_roster(wt, seat):
+    git(wt, "sparse-checkout", "set", "--no-cone", *roster_patterns(CONE, seat), timeout=300)
+    roles = pathlib.Path(wt) / "roles"
+    return len([p for p in roles.iterdir() if p.is_dir() and not p.name.endswith("-role")])
 
 
 def ascii_safe(s):
@@ -226,6 +252,10 @@ def validate(wt, seat, creation_dir):
                 bad.append("CR in %s" % p.relative_to(wt))
             if not verb and any(x > 0x7F for x in b):
                 bad.append("non-ASCII in %s" % p.relative_to(wt))
+    for fname in ("STATUS.md", "WORK_STATE.json"):
+        txt = (sd / fname).read_text(encoding="utf-8")
+        if "Traceback" in txt or 'File "' in txt or "ModuleNotFoundError" in txt:
+            bad.append("traceback fragment inside %s" % fname)
     inh = (wt / "roles/base-role/INHERITANCE.md").read_bytes().replace(b"\r\n", b"\n").decode("ascii")
     if len(re.findall(r"^\| %s \|" % re.escape(seat), inh, re.M)) != 2:
         bad.append("INHERITANCE.md must carry exactly two '| %s |' rows" % seat)
@@ -272,6 +302,8 @@ def main(argv=None):
     ap.add_argument("--trailer", action="append", default=[], help="commit trailer line, e.g. 'Co-Authored-By: ...' (repeatable)")
     ap.add_argument("--worktrees-dir", default=None)
     ap.add_argument("--no-comms", action="store_true")
+    ap.add_argument("--skip-hooks", action="store_true",
+                    help="commit with --no-verify. ONLY if the operator says so: a host hook rejected the seat commit")
     ap.add_argument("--tests", choices=["quick", "none"], default="quick")
     ap.add_argument("--push", action="store_true", help="fast-forward push to origin/main (outward-facing; off by default)")
     ap.add_argument("--dry-run", action="store_true", help="fetch + name archaeology only; nothing is created")
@@ -290,6 +322,9 @@ def main(argv=None):
     host = socket.gethostname().lower()
     instance = "%s-%s" % (host, (os.environ.get("CLAUDE_CODE_SESSION_ID", "")[:8] or "nosession"))
     env = dict(os.environ)
+    # The M1 store (SKULLPORT, 192.168.1.202), per roles/base-role/WAKE_DIRECTIVE.md. comms/environments.json
+    # is keyed by environment and deliberately holds no host; comms' own identity guard (WRONG_ENVIRONMENT)
+    # refuses any other cluster, and the preflight below exercises it before anything is written.
     if "EW_DB_HOST" not in env and host.upper() != "SKULLPORT":
         env["EW_DB_HOST"] = "192.168.1.202"
 
@@ -305,6 +340,8 @@ def main(argv=None):
     wtdir = pathlib.Path(a.worktrees_dir) if a.worktrees_dir else canonical.parent / (canonical.name + "-worktrees")
     wt = wtdir / ("%s-base-role-adopt-%s" % (seat.lower(), date))
     creation_dir = "prompts/%s_creation" % date
+
+    RECOVERY.update({"canonical": canonical, "wt": wt, "branch": branch})
 
     def make_worktree():
         if wt.exists():
@@ -338,6 +375,17 @@ def main(argv=None):
     if a.dry_run:
         print("DRY RUN: roles/%s is free on all %d remote refs at %s.\n%s\n(nothing created)\n" % (seat, arch["refs"], sha[:9], arch_text))
         return 0
+    if not a.no_comms:
+        rc, out, err = S.timed("comms preflight (read-only who)", run, [sys.executable, "-m", "comms", "who", "--minutes", "1"],
+                               cwd=wt, env=env, timeout=120, check=False)
+        if rc != 0:
+            last = [l for l in (err or out).strip().splitlines() if l.strip()]
+            cleanup()
+            raise SeatError("comms preflight failed; NOTHING was created and the worktree was discarded: %s. Usual causes: "
+                            "psycopg2 not installed; EW_DB_HOST set to something other than the M1 store (when it is unset "
+                            "the tool sets 192.168.1.202 off M1); M1 unreachable. Fix it, or re-run with --no-comms to "
+                            "create the seat without a comms boot (its files then record NOT PRESENT)."
+                            % ((last[-1].strip()[:200]) if last else "no output"))
     base_fail = None  # sparse-baseline failures, measured before the seat exists
     if a.tests == "quick":
         base_fail, base_tail = S.timed("baseline self-tests (no seat yet)", self_tests, wt, env)
@@ -393,8 +441,12 @@ def main(argv=None):
             cmd += ["--capabilities", a.capabilities]
         try:
             rc, out, err = S.timed("comms boot", run, cmd, cwd=wt, env=env, timeout=150, check=False)
-            boot_line = (out.strip().splitlines() or [err.strip()[-200:]])[0]
             boot_ok = rc == 0 and out.startswith("booted")
+            if boot_ok:
+                boot_line = out.strip().splitlines()[0]
+            else:
+                last = [l for l in (err or out).strip().splitlines() if l.strip()]
+                boot_line = "comms boot failed: " + (last[-1].strip() if last else "no output")[:200]
             if boot_ok:
                 rc2, out2, _ = S.timed("comms sync", run, [sys.executable, "-m", "comms", "sync", seat], cwd=wt, env=env, timeout=150, check=False)
                 S.note("comms sync", ascii_safe((out2.strip().splitlines() or ["(no output)"])[0])[:110])
@@ -473,14 +525,25 @@ def main(argv=None):
     with tempfile.NamedTemporaryFile("w", suffix=".txt", delete=False, encoding="ascii", errors="replace") as fh:
         fh.write(msg)
     git(wt, "add", "roles/" + seat, "roles/base-role/INHERITANCE.md")
-    S.timed("commit", git, wt, "commit", "-q", "-F", fh.name)
-    os.unlink(fh.name)
+    try:
+        S.timed("commit", git, wt, "commit", "-q", *(["--no-verify"] if a.skip_hooks else []), "-F", fh.name)
+    except SeatError as e:
+        raise SeatError(str(e) + NL + "The commit failed after validation passed; a host git hook (they live in the canonical .git "
+                        "and run in every worktree) is the usual cause. Fix what the hook needs, or - only if the "
+                        "operator says so - re-run with --skip-hooks.")
+    finally:
+        os.unlink(fh.name)
     head = git(wt, "rev-parse", "HEAD")[1].strip()
 
     pushed = "NOT PUSHED (no --push)"
     if a.push:
         pushed = S.timed("push (ff, race-safe)", push_ff, wt, seat, creation_dir, a.trailer, env, base_fail)
-    receipt(seat, S, sha, branch, wt, head, boot_line, test_line, pushed, arch, a)
+    try:
+        n = S.timed("roster expansion (all seats' *.md)", expand_roster, wt, seat)
+        roster_line = "worktree now has all %d seat dirs (comms can address any seat; every seat's top-level *.md readable)" % n
+    except SeatError as e:
+        roster_line = "roster expansion FAILED (%s); comms post to other seats needs `git sparse-checkout disable`" % str(e)[:120]
+    receipt(seat, S, sha, branch, wt, head, boot_line, test_line, pushed, arch, a, roster_line)
     return 0
 
 
@@ -515,7 +578,7 @@ def push_ff(wt, seat, creation_dir, trailers, env, base_fail):
     raise SeatError("origin/main kept moving; gave up after 5 attempts; committed locally, nothing lost")
 
 
-def receipt(seat, S, sha, branch, wt, head, boot_line, test_line, pushed, arch, a):
+def receipt(seat, S, sha, branch, wt, head, boot_line, test_line, pushed, arch, a, roster_line=""):
     L = [
         "=" * 78,
         "SEAT CREATED: %s   (HOLD, charter PENDING)   total %.1fs" % (seat, S.total()),
@@ -523,6 +586,7 @@ def receipt(seat, S, sha, branch, wt, head, boot_line, test_line, pushed, arch, 
         "base_sha   %s" % sha,
         "branch     %s" % branch,
         "worktree   %s   (sparse; `git sparse-checkout disable` for the full tree)" % ascii_safe(wt),
+        "roster     %s" % ascii_safe(roster_line)[:160],
         "commit     %s" % head,
         "archaeology: %d file mention(s), %d commit(s), %d path(s), no role on %d refs" % (
             len(arch["grep"]), len(arch["log"]), len(arch["paths"]), arch["refs"]),
@@ -542,4 +606,10 @@ if __name__ == "__main__":
         sys.exit(main())
     except SeatError as e:
         print("SEAT CREATION STOPPED: %s" % e, file=sys.stderr)
+        r = RECOVERY
+        if r and pathlib.Path(r["wt"]).exists():
+            print(NL + "Kept for inspection: worktree %s, local branch %s. Nothing was pushed unless a PUSHED line printed above."
+                  % (r["wt"], r["branch"]), file=sys.stderr)
+            print("To discard and start over:" + NL + "  git -C %s worktree remove --force %s" % (r["canonical"], r["wt"]) + NL +
+                  "  git -C %s branch -D %s" % (r["canonical"], r["branch"]), file=sys.stderr)
         sys.exit(2)

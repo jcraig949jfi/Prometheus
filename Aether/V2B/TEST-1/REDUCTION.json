@@ -1,0 +1,112 @@
+{
+ "deep": 5,
+ "far": 3,
+ "horizon": "400",
+ "laws": {
+  "add": {
+   "P3_far": 0.00390625,
+   "P4_transformed": 0.9453125,
+   "P5_composed": 0.0,
+   "P6_deep": 0.9453125,
+   "alive": 1.0,
+   "origins": 256,
+   "seeds": [
+    4,
+    5,
+    6,
+    7
+   ]
+  },
+  "fwd": {
+   "P3_far": 0.125,
+   "P4_transformed": 0.0,
+   "P5_composed": 0.0,
+   "P6_deep": 0.14453125,
+   "alive": 0.7578125,
+   "origins": 256,
+   "seeds": [
+    4,
+    5,
+    6,
+    7
+   ]
+  },
+  "rcv": {
+   "P3_far": 0.01171875,
+   "P4_transformed": 0.0,
+   "P5_composed": 0.0,
+   "P6_deep": 0.015625,
+   "alive": 0.81640625,
+   "origins": 256,
+   "seeds": [
+    4,
+    5,
+    6,
+    7
+   ]
+  },
+  "rcv_add": {
+   "P3_far": 0.0234375,
+   "P4_transformed": 0.91796875,
+   "P5_composed": 0.0078125,
+   "P6_deep": 0.8984375,
+   "alive": 1.0,
+   "origins": 256,
+   "seeds": [
+    4,
+    5,
+    6,
+    7
+   ]
+  },
+  "rcv_adr": {
+   "P3_far": 0.01171875,
+   "P4_transformed": 0.5859375,
+   "P5_composed": 0.0,
+   "P6_deep": 0.578125,
+   "alive": 0.88671875,
+   "origins": 256,
+   "seeds": [
+    4,
+    5,
+    6,
+    7
+   ]
+  },
+  "rcv_str": {
+   "P3_far": 0.0078125,
+   "P4_transformed": 0.0,
+   "P5_composed": 0.0,
+   "P6_deep": 0.03125,
+   "alive": 0.8125,
+   "origins": 256,
+   "seeds": [
+    4,
+    5,
+    6,
+    7
+   ]
+  },
+  "v1": {
+   "P3_far": 0.0,
+   "P4_transformed": 0.0,
+   "P5_composed": 0.0,
+   "P6_deep": 0.015625,
+   "alive": 0.92578125,
+   "origins": 256,
+   "seeds": [
+    4,
+    5,
+    6,
+    7
+   ]
+  }
+ },
+ "positive_control": {
+  "fwd_P3_far": 0.125,
+  "rcv_P3_far": 0.01171875,
+  "v1_P3_far": 0.0,
+  "verdict": "QUALIFIED"
+ },
+ "reducer": "aeth_prov_reduce"
+}

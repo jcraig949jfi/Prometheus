@@ -45,8 +45,12 @@ the push a few more; a push that loses a race adds one more fetch and merge.
    is a HARD STOP, which is how a branch-only seat such as Chiron is caught;
    `git grep -w` at the SHA, `git log --all --grep`, root and agents/ paths are
    recorded in the seat file, not inherited) and a SPARSE worktree
-   (roles/base-role, comms, archaeon/tests, aporia/doctrine, ops/work_orders).
-3. Baseline self-tests in the sparse tree before the seat exists.
+   (roles/base-role, comms, archaeon/tests, aporia/doctrine, ops/work_orders, plus attacks,
+   evidence_wiki and ergon/probe: comms imports evidence_wiki, and a host pre-commit hook
+   runs attacks/preflight.py whose probes read ergon/probe; 776 files).
+3. Read-only comms preflight (`comms who`, unless --no-comms): if comms cannot load or
+   reach the M1 store, STOP before anything is written and discard the worktree. Then
+   baseline self-tests in the sparse tree before the seat exists.
 4. Render the templates in seat_kit/templates/, write the directive verbatim,
    write WORK_STATE.json (HOLD, charter PENDING), `python -m comms boot` and
    `sync` (no capabilities advertised unless `--capabilities`), the two
@@ -71,9 +75,9 @@ operator's charter (CWO-C s7-s9, s13); TODO.md in the new seat says so.
 
 - SPARSE worktree. Run `git sparse-checkout disable` in it before work that needs
   the rest of the tree. Some self-tests audit other seats and campaigns and fail
-  in a sparse tree (six of them, measured); the tool compares against a baseline
+  in a sparse tree (seven of them, measured); the tool compares against a baseline
   taken before the seat exists, so a seat is judged on what it adds. A seat that
-  broke one of those six tests in a way the validator does not see would be
+  broke one of those seven tests in a way the validator does not see would be
   hidden by this: run the full self-tests (`python -m pytest
   archaeon/tests/test_base_role.py archaeon/tests/test_shared_roles.py`, about
   75 s on the full tree) after disabling sparse checkout when that matters.
@@ -90,3 +94,50 @@ operator's charter (CWO-C s7-s9, s13); TODO.md in the new seat says so.
   never templated: it comes from the operator's charter.
 
 Run the kit's own controls: `python -m pytest roles/base-role/seat_kit/test_new_seat.py -q`.
+
+## 7. After the push, the roster (added after the first field reports)
+
+After the push the worktree is widened (non-cone sparse patterns) to every seat's top-level
+*.md, about 750 files and 2-3 s, so comms' roster (the directories under roles/) is complete:
+`python -m comms post` to any seat works from the new seat's own worktree, and neighbours'
+entry files are readable. It is done AFTER the tests because a complete roster makes one
+self-test O(seats), about 65 s.
+
+## Field reports and what changed (2026-10-04)
+
+First real uses: Themis on M2 (created, comms boot failed), Hades on M1 (creation stopped).
+Both reports are in the comms queue (#1451, #1448). What they found, and what was done:
+
+- evidence_wiki missing from the sparse tree: comms could not load on any host (the 24 s
+  trial had used --no-comms, so the timed path was not the path the runbook runs). FIXED:
+  added to the cone; a control builds the cone from HEAD and imports what comms imports
+  (test_cone_supports_comms_imports_and_the_host_precommit_hook; with the old cone it fails
+  with ModuleNotFoundError, measured).
+- A host-local pre-commit hook (the Charon preflight, seen on M1; M3 has none) ran
+  `python attacks/preflight.py --probes` in the sparse worktree and failed on a missing
+  attacks/. FIXED: attacks and ergon/probe are in the cone. Reproduced on M3 with an
+  equivalent hook set through git's environment config (canonical .git untouched): the old
+  kit failed with the same message as Hades's; the new kit committed, 28.6 s total.
+  A hook that needs still more fails the commit with the hook's own output and the tool
+  says so; `--skip-hooks` (commit --no-verify) exists for the operator to authorize and is
+  never used by the runbook.
+- Raw traceback text in STATUS.md and the commit message. FIXED: the failure is one line
+  (the last stderr line); the validator now rejects Traceback / File lines / a
+  ModuleNotFoundError inside STATUS.md or WORK_STATE.json (9th validator control).
+- Failure found only after files were written and pushed. FIXED: the comms preflight runs
+  right after the worktree exists, before anything is written; on failure the worktree is
+  discarded and the message names psycopg2, EW_DB_HOST and M1 reachability. (--dry-run
+  still checks the name only; the preflight needs the worktree.)
+- New seat could not address other seats (roster = directories on disk). FIXED by the
+  post-push widening above. Not adopted: making the roster read comms.agents instead (that
+  is comms code, another lane; recommended to its owner).
+- Leftover worktree/branch after a failure with no instructions. FIXED: every stop after the
+  worktree exists prints the exact commands to discard it.
+- EW_DB_HOST: the tool already set 192.168.1.202 off M1 when it was unset and passed it to
+  comms boot (so the wrong-database failure came from a manual retry without the variable,
+  after the import error had already stopped the tool's own boot). comms/environments.json
+  is keyed by environment and deliberately holds no host, so the constant stays, with its
+  source recorded in the code; the preflight now exercises comms' identity guard.
+- Measured: comms boot 0.99 s (existing seat, sparse tree); creation under an active host
+  hook 28.6 s with --no-comms. A real creation with comms ON and --push has now been run by
+  Themis (M2) and attempted by Hades (M1); this author has not timed one end to end.
