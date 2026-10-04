@@ -3,20 +3,18 @@
   "seat": "Palamedes",
   "mwo_id": "MWO-0004",
   "authority": "operator directive 2026-10-03 (roles/Achilles/prompts/2026-10-03_rso_builder_cell/01_OPERATOR_DIRECTIVE_verbatim.md)",
-  "updated_at_utc": "2026-10-03T22:14:20Z",
+  "updated_at_utc": "2026-10-04T10:26:56Z",
   "state": "ACTIVE",
   "branch": "state commits from detached worktree C:/Prometheus-worktrees/palamedes-ops; task worktree C:/Prometheus-worktrees/palamedes-boot [palamedes/boot-2026-10-03] (unused)",
   "head_sha": "4daae3782",
   "model": "claude-opus-5-5 (runtime string as booted on comms 2026-10-03T10:5xZ)",
   "host": "harry1 (M4), instance harry1-679179c6, session 679179c6-af20-4853-bcbb-0251cfad4e3b, booted 2026-10-03T10:55Z",
   "current_objective": "coordinate C-004 (RSO-METHODS-SLICE-001): graph published; integrate as packets reach INTEGRATION_READY",
-  "current_step": "S1 contract FROZEN v1.0.0 (595916f9c); T005 with Pallas (relaunched on harry1); S2 packets claimable",
-  "in_flight": [
-    "Pallas headless session on harry1 for C-004-T005 (log C:/Prometheus-worktrees/palamedes-launch/Pallas_2026-10-03.jsonl)"
-  ],
+  "current_step": "S1 contract v1.0.2; S2 integrated T010 T013 T014 T015 T017 T019 T021 T022; open T011 (Cadmus), T012/T016 (Cadmus or Argus), T018, then T020",
+  "in_flight": [],
   "finish_condition": "C-004 S5 report (T050) and operator decision; per packet as DISTRIBUTED_WORK.md",
-  "next_expected_milestone": "T005 INTEGRATION_READY -> integrate; S2 builds T010/T013/T017/T019",
-  "expected_next_artifact": "rso/slice001/expected/EXPECTED_ANSWERS.json (Pallas)",
+  "next_expected_milestone": "T011/T012/T016 INTEGRATION_READY -> T018 -> T020 matrix run and S2 freeze",
+  "expected_next_artifact": "rso/slice001/FREEZE_S2.md + matrix report (T020)",
   "threads": [
     "phase3-rso"
   ],
@@ -27,16 +25,15 @@
   "fabric_tasks": [],
   "running": [],
   "blocked_on": [
-    "custody store locator from Aporia before T020 (delegation #1326)"
+    "T020 waits on T011, T012, T016, T018; EVIDENCE_MANIFEST and RUN_INVENTORY registration with Aporia at T020"
   ],
   "next_actions": [
-    "integrate T005 when INTEGRATION_READY",
-    "S2 builder sessions: Cadmus T010, Argus T013/T017, Eupalamus T019",
-    "amend contract v1.0.1 with Aporia's store locator"
+    "integrate T011/T012/T016/T018 as they land",
+    "claim T020: merge palamedes/c004-t020-prep, write tests/test_matrix.py driver, run with --ledger, classify X items",
+    "make T030 READY for Pallas after T020"
   ],
   "operator_decisions_required": [],
   "latest_reports": [
-    "ops/campaigns/C-004/tasks/C-004-T004/attempts/A-001/RECEIPT.json",
-    "rso/slice001/contract/CONTRACT.md"
+    "roles/Palamedes/reports/REVIEW_PACKET_2026-10-04_C-004_S1_S2a.txt"
   ]
 }
