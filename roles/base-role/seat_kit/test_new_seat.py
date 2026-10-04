@@ -120,3 +120,38 @@ def test_name_rules(name, ok):
 def test_render_refuses_unfilled_tokens():
     with pytest.raises(new_seat.SeatError):
         new_seat.render("hello @@NOPE@@", {"SEAT": "x"})
+
+
+def test_roster_patterns_keep_cone_parents_and_add_every_seat_doc():
+    pats = new_seat.roster_patterns(new_seat.CONE, "Zed")
+    assert pats[:2] == ["/*", "!/*/"] and pats[-1] == "/roles/*/*.md"
+    assert "/roles/Zed/" in pats and "/roles/base-role/" in pats
+    for parent in ("archaeon", "ergon", "roles", "aporia", "ops"):  # parents of nested cone dirs keep their own files
+        assert "/%s/*" % parent in pats and "!/%s/*/" % parent in pats
+        assert pats.index("/%s/*" % parent) < pats.index("!/%s/*/" % parent)
+    assert not any(chr(92) in x or x.startswith("C:") for x in pats)  # never a path-mangled or backslashed pattern
+
+
+def test_cone_supports_comms_imports_and_the_host_precommit_hook(tmp_path):
+    """Control for Hades's and Themis's field reports (2026-10-04): the creation tree must import what comms imports
+    (evidence_wiki) and satisfy the host pre-commit preflight (attacks/ + ergon/probe), or a creation fails AFTER
+    the files are written. Built from this repository's HEAD, so it also catches future drift in either."""
+    pytest.importorskip("psycopg2")
+    repo = pathlib.Path(sh("git", "rev-parse", "--show-toplevel", cwd=pathlib.Path(__file__).resolve().parent))
+    wt = tmp_path / "wt"
+    try:
+        sh("git", "-C", str(repo), "worktree", "add", "-q", "--no-checkout", "--detach", str(wt), "HEAD")
+    except subprocess.CalledProcessError as e:
+        pytest.skip("cannot add a worktree here: %s" % e)
+    try:
+        sh("git", "sparse-checkout", "set", "--cone", *new_seat.CONE, cwd=wt)
+        sh("git", "checkout", "-f", "HEAD", cwd=wt)
+        r = subprocess.run([sys.executable, "-c", "import comms.api; from evidence_wiki.ew import db"], cwd=wt, capture_output=True)
+        assert r.returncode == 0, r.stderr.decode()[-300:]
+        if (repo / "attacks/preflight.py").exists() and (wt / "attacks/preflight.py").exists():
+            full = subprocess.run([sys.executable, "attacks/preflight.py", "--probes"], cwd=repo, capture_output=True)
+            if full.returncode == 0:  # only meaningful where the preflight passes on a full tree
+                sp = subprocess.run([sys.executable, "attacks/preflight.py", "--probes"], cwd=wt, capture_output=True)
+                assert sp.returncode == 0, sp.stdout.decode()[-400:]
+    finally:
+        subprocess.run(["git", "-C", str(repo), "worktree", "remove", "--force", str(wt)], capture_output=True)

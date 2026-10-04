@@ -211,6 +211,8 @@ def stage_record(instrument, receipt_bytes, receipt_commit, recorded_at_utc):
 
 
 def dump(obj):
+    """Fire receipts only: stage records cite their file hash, so these bytes stay as they are. Stage records
+    are written as receipt.canonical_bytes (C-004-T027)."""
     return (json.dumps(obj, indent=2, sort_keys=True) + "\n").encode("utf-8")
 
 
@@ -231,7 +233,7 @@ def main(argv=None):
         for i in INSTRUMENTS:
             data = V.committed_blob(fire_path(i), commit)
             with open(os.path.join(STAGES_DIR, "%s.json" % i), "wb") as f:
-                f.write(dump(stage_record(i, data, commit, at)))
+                f.write(R.canonical_bytes(stage_record(i, data, commit, at)))   # C-004-T027: file == record_blob
             print("%-12s stage record -> %s" % (i, record_path(i)))
         return 0
     print(__doc__)

@@ -1,0 +1,108 @@
+{
+  "schema": "prometheus.workgraph.task.v1",
+  "task_id": "C-004-T027",
+  "campaign_id": "C-004",
+  "title": "Stage record files in canonical bytes (file blob == record_blob), so registered rows match the consumer's lookup",
+  "objective": "Make every rso/slice001/stages/*.json stage record file exactly receipt.canonical_bytes(record), so its committed blob sha256 equals evidence.record_blob(record), the key the consumer's Registry looks up; regenerate the 12 files.",
+  "parent_objective": "RSO-METHODS-SLICE-001 (CAMPAIGN.json objective)",
+  "owner_role": "Argus",
+  "eligible_roles": [
+    "Cadmus"
+  ],
+  "quality_class": "Q2",
+  "can_downgrade": false,
+  "escalate_to": "Q3",
+  "depends_on": [
+    "C-004-T026"
+  ],
+  "owns": [
+    "rso/slice001/stages/",
+    "rso/slice001/stages/fire_world.py",
+    "rso/slice001/stages/evidence_plane.py",
+    "rso/slice001/tests/test_stages_world.py",
+    "rso/slice001/tests/test_stages_evidence.py"
+  ],
+  "reads": [
+    "rso/slice001/evidence.py",
+    "rso/slice001/receipt.py",
+    "ops/custody/"
+  ],
+  "problem": "Found by Palamedes preparing T020 (2026-10-04): evidence.Registry registers a stage record iff a STAGE_RECORD row has blob_sha256 == record_blob(record) = sha256(canonical_bytes(record)) (evidence.py ~539). Aporia registered rows 2-19 with blob_sha256 = sha256 of the committed FILE bytes (B5.1/B5.2: the row binds repo_path at commit). The 12 files are not canonical (evidence_plane.py writes json.dumps(indent=2, sort_keys=True) + newline; fire_world.py similar), so for all 12: file hash != record_blob, canonical hash not registered. In the real T020 run every authority would be NO_STAGE_RECORD and every claim UNQUALIFIED. Fix at the writers: emit receipt.canonical_bytes(record) exactly (no trailing newline), regenerate the 12 records (record content unchanged: json.loads(new) == json.loads(old)), and add a test that sha256(file) == record_blob(json.loads(file)) for every stage record. Cadmus's world writer is in owns for this packet (cross-lane, coordinator-authorized).",
+  "non_goals": [
+    "No change to record content, versions or fire receipts",
+    "No change to evidence.py lookup semantics",
+    "No registration (Palamedes requests re-registration from Aporia)"
+  ],
+  "evidence_required": [
+    "RED: the new identity test fails on the current 12 files",
+    "GREEN: it passes; json content identical to the old files (asserted)",
+    "stage tests still green"
+  ],
+  "acceptance": {
+    "command": "python -B -m unittest rso.slice001.tests.test_stages_world rso.slice001.tests.test_stages_evidence",
+    "condition": "every stage record file blob equals its record_blob; content unchanged"
+  },
+  "deliverables": [
+    "12 regenerated rso/slice001/stages/*.json",
+    "writer changes",
+    "identity test"
+  ],
+  "kind": "software",
+  "status": "INTEGRATED",
+  "history": [
+    {
+      "status": "PROPOSED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-04T16:50:51Z",
+      "note": "found preparing T020: registry/consumer record-identity mismatch"
+    },
+    {
+      "status": "READY",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-04T16:50:51Z",
+      "note": "made READY by the coordinator"
+    },
+    {
+      "status": "CLAIMED",
+      "by": "Cadmus[m1-a86ec5e4]",
+      "at_utc": "2026-10-04T17:24:44Z",
+      "note": "claimed on #1450 (Cadmus eligible; unclaimed 33 min; blocks T020); branch cadmus/c004-t027"
+    },
+    {
+      "status": "RED",
+      "by": "Cadmus[m1-a86ec5e4]",
+      "at_utc": "2026-10-04T17:30:39Z",
+      "note": "branch cadmus/c004-t027: GREEN 6563debc4, merged 72aff9cae, acceptance 21 OK, ci PASSED 333/0 failed"
+    },
+    {
+      "status": "IMPLEMENTING",
+      "by": "Cadmus[m1-a86ec5e4]",
+      "at_utc": "2026-10-04T17:30:39Z",
+      "note": "branch cadmus/c004-t027: GREEN 6563debc4, merged 72aff9cae, acceptance 21 OK, ci PASSED 333/0 failed"
+    },
+    {
+      "status": "GREEN",
+      "by": "Cadmus[m1-a86ec5e4]",
+      "at_utc": "2026-10-04T17:30:39Z",
+      "note": "branch cadmus/c004-t027: GREEN 6563debc4, merged 72aff9cae, acceptance 21 OK, ci PASSED 333/0 failed"
+    },
+    {
+      "status": "INTEGRATION_READY",
+      "by": "Cadmus[m1-a86ec5e4]",
+      "at_utc": "2026-10-04T17:30:39Z",
+      "note": "branch cadmus/c004-t027: GREEN 6563debc4, merged 72aff9cae, acceptance 21 OK, ci PASSED 333/0 failed"
+    },
+    {
+      "status": "INTEGRATED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-04T17:36:35Z",
+      "note": "merged 72aff9cae; integrator: all 12 stage record files sha256(file) == record_blob(record), parsed content identical to the previous files; stage tests OK"
+    }
+  ],
+  "authority": "operator directive 2026-10-03 s9, s11",
+  "resource_ceiling": {
+    "engineering": "<= 0.5 Q2 seat-hour",
+    "cpu": "< 2 CPU-minutes",
+    "note": "counts toward OP-1/OP-4 caps"
+  }
+}
