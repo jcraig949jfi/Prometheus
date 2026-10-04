@@ -22,7 +22,10 @@
     "C-004-T018",
     "C-004-T019",
     "C-004-T021",
-    "C-004-T022"
+    "C-004-T022",
+    "C-004-T023A",
+    "C-004-T023B",
+    "C-004-T024"
   ],
   "requires_shas": [
     "09dc8c38b (closure review)",
@@ -63,7 +66,7 @@
     "rso/slice001/MANIFEST.md"
   ],
   "kind": "software",
-  "status": "READY",
+  "status": "BLOCKED",
   "history": [
     {
       "status": "PROPOSED",
@@ -76,6 +79,18 @@
       "by": "Palamedes[harry1-679179c6]",
       "at_utc": "2026-10-03T11:04:14Z",
       "note": "made READY by the coordinator (C-004-T000)"
+    },
+    {
+      "status": "CLAIMED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-04T12:37:40Z",
+      "note": "S2 integration: merge palamedes/c004-t020-prep, matrix driver over 48 cases vs EXPECTED_ANSWERS, ledgered run, X-register classification, FREEZE_S2"
+    },
+    {
+      "status": "BLOCKED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-04T12:39:27Z",
+      "note": "waiting on C-004-T023A (Cadmus), T023B (Argus), T024 (Argus), split out at claim; driver prep continues on palamedes/c004-t020-prep"
     }
   ],
   "authority": "operator directive 2026-10-03 s9, s11 (roles/Achilles/prompts/2026-10-03_rso_builder_cell/01_OPERATOR_DIRECTIVE_verbatim.md); decomposed by Palamedes under C-004-T000",
@@ -87,5 +102,5 @@
     "cpu": "< 3 CPU-minutes, <= 2 launches",
     "note": "Counts toward the slice caps fixed by C-004-OP1 (NEXT_ROUND_PLAN_v0.4 s6 proposal: 30 CPU-minutes total, 0 GPU, 0 cloud, 100 MB new artifacts, 12 top-level validation launches; mutation children count toward CPU). Stop at the first exhausted cap and keep partial results."
   },
-  "notes": "COORDINATOR 2026-10-03: compare against rso/slice001/expected/EXPECTED_ANSWERS.json (independent, Pallas) first and the author columns second; classify every item of ops/campaigns/C-004/DISAGREEMENTS.md (X01-X15) as IMPLEMENTATION, CONTRACT or TABLE defect; contract v1.0.1 applies (AMENDMENT_v1.0.1.md); per V8 the real matrix run needs custody.store set by Aporia (amendment v1.0.2) and is BLOCKED until then. COORDINATOR 2026-10-04 (from T019): caps charging on the ci command is OPT-IN; every T020 validation launch must pass `--ledger <inventory path> --node-id <node>` so it counts against the 12-launch cap and appears in the RUN_INVENTORY registered with the keeper. The ledger is single-writer: run T020 launches serially. COORDINATOR 2026-10-04: depends on C-004-T021 (store reader); custody store LIVE per AMENDMENT_v1.0.2; register EVIDENCE_MANIFEST and RUN_INVENTORY with Aporia (path + commit on main) before the consumer's first check. Depends on C-004-T022 (ledger CPU-test flake) so the acceptance command is deterministic. PREP 2026-10-04: comparison engine rso/slice001/matrix.py + tests/test_matrix_engine.py prepared on branch palamedes/c004-t020-prep (726dc1d0e), merged at claim."
+  "notes": "COORDINATOR 2026-10-03: compare against rso/slice001/expected/EXPECTED_ANSWERS.json (independent, Pallas) first and the author columns second; classify every item of ops/campaigns/C-004/DISAGREEMENTS.md (X01-X15) as IMPLEMENTATION, CONTRACT or TABLE defect; contract v1.0.1 applies (AMENDMENT_v1.0.1.md); per V8 the real matrix run needs custody.store set by Aporia (amendment v1.0.2) and is BLOCKED until then. COORDINATOR 2026-10-04 (from T019): caps charging on the ci command is OPT-IN; every T020 validation launch must pass `--ledger <inventory path> --node-id <node>` so it counts against the 12-launch cap and appears in the RUN_INVENTORY registered with the keeper. The ledger is single-writer: run T020 launches serially. COORDINATOR 2026-10-04: depends on C-004-T021 (store reader); custody store LIVE per AMENDMENT_v1.0.2; register EVIDENCE_MANIFEST and RUN_INVENTORY with Aporia (path + commit on main) before the consumer's first check. Depends on C-004-T022 (ledger CPU-test flake) so the acceptance command is deterministic. PREP 2026-10-04: comparison engine rso/slice001/matrix.py + tests/test_matrix_engine.py prepared on branch palamedes/c004-t020-prep (726dc1d0e), merged at claim. DECOMPOSED 2026-10-04 at claim: stage records (T023A Cadmus, T023B Argus) and the real G0 + generalized edits (T024 Argus) are split out; T020 keeps the case driver, Aporia registrations (STAGE_RECORD, EVIDENCE_MANIFEST, RUN_INVENTORY), the ledgered matrix run, X classification and the freeze."
 }

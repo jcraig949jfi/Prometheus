@@ -1,0 +1,59 @@
+{
+  "schema": "prometheus.workgraph.receipt.v1",
+  "task_id": "C-004-T018",
+  "campaign_id": "C-004",
+  "attempt_id": "A-001",
+  "role": "Cadmus",
+  "model": "claude-opus-5-5",
+  "quality_class": "Q2",
+  "start_sha": "547c4f23c59d64879d648a0cda7ce32b7ebfde7a",
+  "end_sha": "c31a2dc0b779e593f89d931deaf0da5f7fd83220",
+  "files_changed": [
+    "rso/slice001/encoding.py",
+    "rso/slice001/tests/test_encoding.py"
+  ],
+  "evidence_added": [
+    "encoding.py: REG_ONEHOT (a, d only as one-hot pairs), REG_FLAT (one state tuple, 224-entry transition table explored from REG, closed under clamping a), LOSSY (false case); outcome_vector (P0-P7 values, P7 with the null observer); twin_eq (P8, V4 reason form, values only); e06_report (physics ONE, exit_criterion false, promotion none)",
+    "test_encoding.py: 6 tests -- REG vector pinned to the registered values; ONEHOT and FLAT TWIN_EQ PASS; LOSSY FAIL on RETENTION (POSITIVE vs NEGATIVE); twins differ in representation but not behaviour; report rows say ONE physics and never 'unlike'"
+  ],
+  "evidence_executed": [
+    {
+      "command": "python -B -m unittest rso.slice001.tests.test_encoding (before encoding.py, 8425cbbbd)",
+      "result": "RED: ImportError, cannot import name 'encoding' (12:26Z)"
+    },
+    {
+      "command": "test_encoding under a timing runner",
+      "result": "6 run, 0 failed; 14.7 CPU-s"
+    },
+    {
+      "command": "python -B -m rso.slice001.ci (merged tree: branch + origin/main 5c290b461)",
+      "result": "PASSED: 271 run, 270 passed, 1 skipped, 0 failed, 0 errored; cpu_s 53.156; wall_s 59.314; dirty false"
+    }
+  ],
+  "red_observed": {
+    "observed": true,
+    "reason": "ImportError before encoding.py existed; tests committed alone at 8425cbbbd. One test was rewritten after RED (a convoluted representation guard replaced by plain attribute checks); recorded in the GREEN commit."
+  },
+  "result": "DONE_CLEAN",
+  "known_escapes": [
+    "E06 is not an exit criterion (closure F); twins of a toy say nothing about native physics",
+    "REG_FLAT's table covers REG's reachable declared states and clamps of a only; restoring any other capture raises KeyError (outside the twin's domain)",
+    "author tests only; no mutant run for this packet (CPU ceiling)"
+  ],
+  "unresolved": [
+    "cost: ci is now 53.2 CPU-s per launch (this module about 15 CPU-s); the packet's 'cpu < 1 CPU-minute' is exceeded once the acceptance ci launch is counted (about 70 CPU-s in all)"
+  ],
+  "unblocks": [
+    "C-004-T020"
+  ],
+  "created_at_utc": "2026-10-04T12:29:07Z",
+  "instance": "m1-a86ec5e4",
+  "host": "SKULLPORT",
+  "branch": "cadmus/c004-t018",
+  "worktree_path": "F:/Prometheus-worktrees/cadmus-c004-t018",
+  "resources": {
+    "cpu": "1 top-level launch (ci, 53.156 CPU-s) + unit runs about 17 CPU-s",
+    "model": "one Q2 session, about 0.4 hour"
+  },
+  "notes": "E06 reported as ONE physics (closure D08). Stage author-tested."
+}

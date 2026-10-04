@@ -1,0 +1,70 @@
+{
+  "schema": "prometheus.workgraph.task.v1",
+  "task_id": "C-004-T024",
+  "campaign_id": "C-004",
+  "title": "Real S2 reference bundle G0 from actual runs, and E01-E05 edits generalized to any base bundle",
+  "objective": "Build the S2 reference bundle from real executions (adapter.make_receipt over the integrated world, predicates, rulers and twins) with a ledger run inventory, and make every E01-E05 bundle edit a function of a base bundle so T020 can apply it to the real G0.",
+  "parent_objective": "RSO-METHODS-SLICE-001 (CAMPAIGN.json objective)",
+  "owner_role": "Argus",
+  "quality_class": "Q2",
+  "can_downgrade": false,
+  "escalate_to": "Q3",
+  "depends_on": [
+    "C-004-T018"
+  ],
+  "owns": [
+    "rso/slice001/s2_bundle.py",
+    "rso/slice001/fixtures/evidence_cases.py",
+    "rso/slice001/tests/test_s2_bundle.py"
+  ],
+  "reads": [
+    "rso/slice001/adapter.py",
+    "rso/slice001/evidence.py",
+    "rso/slice001/checker.py",
+    "rso/slice001/ledger.py",
+    "rso/slice001/contract/",
+    "rso/slice001/expected/"
+  ],
+  "problem": "evidence_cases.g0_dicts() is synthetic: trace bytes are fixture strings and outcomes are the contract's expected values (T014 receipt). The T020 matrix must run the consumer over receipts produced from real runs at a recorded commit. Build s2_bundle.build_g0(commit, ledger) -> (dicts, traces, inventory, manifest) covering draft B B9's G0: CALIBRATION(STANDARD); for REG, PKTD, LAGD: BOUNDS, RETENTION, ERASE, PRESERVE, CHANNEL, RESTART and OBSERVER for the observers B9 names (REG/PKTD: NULL, BOOKKEEP; LAGD: NULL); TWIN_EQ(REG, REG-ONEHOT). Each launch charged to the ledger (launch_kind TOP_LEVEL for the build, or one row per receipt with node_id per V7). Then refactor evidence_cases so each E01-E05 edit takes a base (dicts, traces, inventory) and returns a Case; the existing synthetic tests must keep passing unchanged in outcome.",
+  "non_goals": [
+    "No change to adapter/evidence/checker semantics",
+    "No registration with the store (Palamedes requests it from Aporia at T020)",
+    "Do not write the T020 driver or compare against the expected table (T020)"
+  ],
+  "evidence_required": [
+    "test: build_g0 receipts validate, bind under G-BIND against their own manifest, G-INV PASS on the produced inventory, G-RECOMP PASS",
+    "test: every edit function applied to the real G0 produces the E-case's bundle and the synthetic E01-E05 tests still pass"
+  ],
+  "acceptance": {
+    "command": "python -B -m unittest rso.slice001.tests.test_s2_bundle rso.slice001.tests.test_evidence",
+    "condition": "real G0 consistent under the consumer gates; edits generalized; prior tests green"
+  },
+  "deliverables": [
+    "rso/slice001/s2_bundle.py",
+    "evidence_cases.py refactor",
+    "tests/test_s2_bundle.py"
+  ],
+  "kind": "software",
+  "status": "READY",
+  "history": [
+    {
+      "status": "PROPOSED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-04T12:39:02Z",
+      "note": "split out of C-004-T020"
+    },
+    {
+      "status": "READY",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-04T12:39:02Z",
+      "note": "made READY by the coordinator"
+    }
+  ],
+  "authority": "operator directive 2026-10-03 s9, s11; decomposed by Palamedes from C-004-T020 (AMENDMENT_v1.0.1 V8: the real T020 run reads stages and custody from the live store)",
+  "resource_ceiling": {
+    "engineering": "<= 1 Q2 seat-hour",
+    "cpu": "< 3 CPU-minutes",
+    "note": "counts toward OP-1 caps; stop at the first exhausted cap"
+  },
+  "notes": "Runtime cost: world_runs is about 11 s per runtime; G0 has 3 subjects + twins; keep under the per-packet CPU ceiling."
+}
