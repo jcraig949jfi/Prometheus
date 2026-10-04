@@ -7,17 +7,17 @@
   "window_hours": 4,
   "current": {
     "cycle": 6,
-    "window": "DEV",
+    "window": "TEST",
     "index": 6,
-    "opened_utc": "2026-10-04T21:44:51Z",
-    "due_close_utc": "2026-10-05T01:44:51Z",
-    "active_thread": "R7 / TH-019",
-    "apparatus_version": "v2b-2 + gtc",
-    "experiment": null,
-    "attempt": null,
-    "goal": "decide: repaired GTC (charge endpoint, reachable unseen stratum, pre-verified overfitter) vs T51 confirmation; freeze TEST-6"
+    "opened_utc": "2026-10-04T21:49:26Z",
+    "due_close_utc": "2026-10-05T01:49:26Z",
+    "active_thread": "TH-019",
+    "apparatus_version": "v2b-2",
+    "experiment": "T06 = T51-C confirmation",
+    "attempt": 1,
+    "goal": "measure"
   },
-  "last_disposition": "TEST-5 INCONCLUSIVE_INSTRUMENT",
+  "last_disposition": "DEV-6 DONE",
   "unresolved_defects": [
     "no receipt check for no-donor-state (S4 cond 8 class)",
     "ruler v2.1 residual 8/47 + 24.5% chance floor",
@@ -27,9 +27,9 @@
     "GTC: UNSEEN stratum transfer floor; count endpoint blind to efficiency; overfitter control unverified"
   ],
   "next_intended": {
-    "window": "TEST",
-    "index": 6,
-    "experiment": "TBD in DEV-6"
+    "window": "DEV",
+    "index": 7,
+    "plan": "R7 repair design (multi-class world, proposal-level genome, charge endpoint, verified overfitter)"
   },
   "missed_wake_rule": "run the due window once; never burst",
   "history": [
@@ -175,6 +175,18 @@
       "receipts": [
         "beta01/runs/T05_GTC/GTC_RESULT.json"
       ]
+    },
+    {
+      "cycle": 6,
+      "window": "DEV",
+      "index": 6,
+      "opened_utc": "2026-10-04T21:44:51Z",
+      "closed_utc": "2026-10-04T21:49:26Z",
+      "active_thread": "TH-019",
+      "apparatus_version": "v2b-2",
+      "disposition": "DONE: T51-C frozen confirmation (fresh seeds 8-15, F1 8/8, absolute endpoint, H1/H2/H3)",
+      "report": "beta01/windows/D06_DEV_REPORT.md",
+      "next_frozen": "beta01/windows/T06_T51C_SPEC.md"
     }
   ]
 }
