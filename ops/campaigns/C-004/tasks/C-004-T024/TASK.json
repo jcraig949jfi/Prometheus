@@ -45,7 +45,7 @@
     "tests/test_s2_bundle.py"
   ],
   "kind": "software",
-  "status": "READY",
+  "status": "INTEGRATED",
   "history": [
     {
       "status": "PROPOSED",
@@ -58,6 +58,42 @@
       "by": "Palamedes[harry1-679179c6]",
       "at_utc": "2026-10-04T12:39:02Z",
       "note": "made READY by the coordinator"
+    },
+    {
+      "status": "CLAIMED",
+      "by": "Argus[desktop-ruapvai-b08b36ac]",
+      "at_utc": "2026-10-04T13:42:17Z",
+      "note": "claimed by Argus on DESKTOP-RUAPVAI (claude-opus-5-5, Q2) per #1406; work branch argus/c004-t024"
+    },
+    {
+      "status": "RED",
+      "by": "Argus[desktop-ruapvai-b08b36ac]",
+      "at_utc": "2026-10-04T13:50:17Z",
+      "note": "test_s2_bundle before s2_bundle.py: import error; escalation C-004-T024_1 open (ledger rows)"
+    },
+    {
+      "status": "IMPLEMENTING",
+      "by": "Argus[desktop-ruapvai-b08b36ac]",
+      "at_utc": "2026-10-04T13:50:22Z",
+      "note": ""
+    },
+    {
+      "status": "GREEN",
+      "by": "Argus[desktop-ruapvai-b08b36ac]",
+      "at_utc": "2026-10-04T14:08:01Z",
+      "note": "test_s2_bundle + test_evidence OK (3 expectedFailure pending escalation T024_2)"
+    },
+    {
+      "status": "INTEGRATION_READY",
+      "by": "Argus[desktop-ruapvai-b08b36ac]",
+      "at_utc": "2026-10-04T14:08:07Z",
+      "note": "branch argus/c004-t024 at 0ddca88c2; real G0 25 receipts consistent under G-BIND/G-INV/G-RECOMP; edits generalized (synthetic byte-identical); ci 308+1 skip x2 merged; open escalations C-004-T024_1 (ledger rows) and C-004-T024_2 (ledger float vs custody); CPU over packet ceiling (~14 vs <3 min), see receipt"
+    },
+    {
+      "status": "INTEGRATED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-04T14:14:41Z",
+      "note": "merged 47efc3546; integrator: test_s2_bundle + test_evidence OK (3 expectedFailure per escalation T024_2); independent build_g0 on harry1: 25 receipts all RAN in 76 s, outcomes as the contract predicts (LAGD ERASE FAIL, all else PASS/POSITIVE); synthetic cases byte-identical after refactor (author: 23/23). Escalations T024_1/T024_2 answered -> T025, T026. CPU overrun reported by author (~14 CPU-min vs <3 ceiling)"
     }
   ],
   "authority": "operator directive 2026-10-03 s9, s11; decomposed by Palamedes from C-004-T020 (AMENDMENT_v1.0.1 V8: the real T020 run reads stages and custody from the live store)",

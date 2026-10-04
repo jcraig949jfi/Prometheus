@@ -1,0 +1,82 @@
+{
+  "schema": "prometheus.workgraph.receipt.v1",
+  "task_id": "C-004-T024",
+  "campaign_id": "C-004",
+  "attempt_id": "A-001",
+  "role": "Argus",
+  "model": "claude-opus-5-5",
+  "quality_class": "Q2",
+  "start_sha": "e1074c09f3d71335c2c939d551f0b4f586a9f395",
+  "end_sha": "47efc3546d9dfd0b0e8a9eefff52a3d2906adda1",
+  "files_changed": [
+    "rso/slice001/s2_bundle.py",
+    "rso/slice001/fixtures/evidence_cases.py",
+    "rso/slice001/tests/test_s2_bundle.py"
+  ],
+  "evidence_added": [
+    "s2_bundle.build_g0(commit, ledger): B9 G0 from real executions -- 25 receipts (CALIBRATION; REG/PKTD/LAGD x BOUNDS, RETENTION, ERASE, PRESERVE, CHANNEL, RESTART; OBSERVER REG/PKTD BOOKKEEP+NULL, LAGD NULL; TWIN_EQ(REG, REG-ONEHOT)); world -> adapter traces; outcomes from rulers.py, reset.py, observer.py, encoding.py; node set equal to the synthetic G0",
+    "outcomes: every gate PASS, RETENTION POSITIVE, ERASE(LAGD) FAIL witness {64, 0, 3, 4, PROBE_A}: the contract's A6 values, reproduced from runs",
+    "predicate.code = transitive slice-import closure of each predicate's entry file at the commit (T023A/T023B convention); test checks equality with committed stage records (passed on the tree merged with T023B)",
+    "every named CodeRef (predicate, subject, world, producer adapter.py + s2_bundle.py, contract, expected table) is checked equal to its blob at the commit, so code.dirty is false by construction (FD-T024-4)",
+    "ledger: one TOP_LEVEL attempt node_id G0 charged measured CPU (~52 s) and artifact bytes (~2.5 MB); every receipt's run_id = that attempt (escalation C-004-T024_1 option 1)",
+    "evidence_cases refactor: Base / synthetic_base / real_base / case_for(case_id, base); every E01-E05 edit takes base=None; claims derived from the base's receipt cells; synthetic outputs byte-identical across 23 cases (receipts, traces, inventory, anchors, store rows, claims, revision, withdrawals, keeper anchors)",
+    "on the real G0: G-BIND/G-INV/G-RECOMP PASS for CL-RET(REG, PKTD, LAGD) and CL-CAL; BYTEFLIP BYTES_MISMATCH:trace:probe_a (G-BIND and G-RECOMP); STRIP DEPENDENCY_MISMATCH; MALFORMED SCOPE_MALFORMED:boundary; RELABEL SCOPE_MISMATCH:physics; MISSING BLOCKED EVIDENCE_MISSING; OUTCOME_EDIT G-RECOMP OUTCOME_MISMATCH:value on real traces; FAB_CONSISTENT passes (B5.4 limit); REANCHOR never a G-RECOMP pass; LATE_REG REGISTERED_AFTER_CHECK"
+  ],
+  "evidence_executed": [
+    {
+      "command": "python -B -m unittest rso.slice001.tests.test_s2_bundle (s2_bundle.py absent)",
+      "result": "import error (RED)"
+    },
+    {
+      "command": "first GREEN attempt",
+      "result": "G-BIND FAIL CODE_NOT_COMMITTED on every receipt: code.dirty came from whole-tree git status; redefined as 'named code differs from its blob' (FD-T024-4); custody raised RECEIPT_SCHEMA:float on the real ledger inventory -> escalation C-004-T024_2"
+    },
+    {
+      "command": "byte comparison of every synthetic case, original vs refactored evidence_cases",
+      "result": "23 cases, 0 differences"
+    },
+    {
+      "command": "python -B -m unittest rso.slice001.tests.test_s2_bundle rso.slice001.tests.test_evidence",
+      "result": "OK (skipped=1, expected failures=3); test_s2_bundle ~57 s (one G0 build)"
+    },
+    {
+      "command": "mutants: per-receipt run ids in build_g0; real claims with the synthetic claim cell",
+      "result": "both KILLED (16 errors; 6 failures)"
+    },
+    {
+      "command": "python -B -m rso.slice001.ci at 47efc3546 (merged with origin/main incl. T023B), twice",
+      "result": "exit 0 both; 309 run, 308 passed, 1 skipped; dirty false; cpu_s 239.5 / 242.1 (whole suite)"
+    }
+  ],
+  "red_observed": {
+    "observed": true,
+    "detail": "import error before s2_bundle.py; then the consumer's own G-BIND refused every real receipt (CODE_NOT_COMMITTED) until dirty was defined over the named code"
+  },
+  "result": "DONE_CLEAN",
+  "known_escapes": [
+    "C-004-T024_1 open: one build row means no per-node RUN_UNREPORTED on the real G0 (E02.MISSING G-INV PASS; asserted as such); rows='per_receipt' raises NotImplementedError until answered",
+    "C-004-T024_2 open: ledger cpu_s float makes the RUN_INVENTORY custody blob uncomputable on a real inventory; E05 KEEPER / LATE_REG / FAB_REGISTERED / FAB_ANCHORS custody on the real base are expectedFailure (an unexpected success will turn ci red when fixed)",
+    "RESTART, OBSERVER and TWIN_EQ receipts carry no output traces (no trace layout for capture/observer roles; nothing recomputes them); BOUNDS carries trace:sends",
+    "OBSERVER receipts name the subject's code as observer.code (adapter's choice, T016)",
+    "the whole-suite ci now costs ~240 CPU-s per run; test_s2_bundle builds G0 once (~55 s)",
+    "real_base fabricates REG traces from PKTD's real traces (FD-T024-3); probe_a is byte-identical between REG and PKTD, so that role is not actually changed"
+  ],
+  "unresolved": [
+    "C-004-T024_1",
+    "C-004-T024_2"
+  ],
+  "unblocks": [
+    "C-004-T020"
+  ],
+  "created_at_utc": "2026-10-04T14:20:00Z",
+  "instance": "desktop-ruapvai-b08b36ac",
+  "host": "DESKTOP-RUAPVAI",
+  "branch": "argus/c004-t024",
+  "worktree_path": "C:/Prometheus-worktrees/argus-boot",
+  "resources": {
+    "cpu": "about 14 CPU-minutes (5 G0 builds in tests and mutants, 2 whole-suite ci runs)",
+    "validation_launches": 0,
+    "model": "one Q2 session, about 1 hour"
+  },
+  "notes": "Field decisions: FD-T024-1 rows='build' (escalation T024_1 option 1); FD-T024-2 created_at_utc parameter so a build can be reproduced byte for byte; FD-T024-3 fabrication from PKTD's real traces; FD-T024-4 code.dirty false iff every named CodeRef equals its committed blob (enforced, so a built receipt is clean); FD-T024-5 claim cells read from each subject's BOUNDS receipt (CL-CAL from CALIBRATION). State commits went to main as they happened (argus-ops). CPU note: this packet's ceiling was < 3 CPU-minutes; development and mutation runs used about 14; reported, not hidden."
+}

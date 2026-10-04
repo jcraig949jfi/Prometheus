@@ -1,0 +1,63 @@
+{
+  "schema": "prometheus.workgraph.task.v1",
+  "task_id": "C-004-T026",
+  "campaign_id": "C-004",
+  "title": "build_g0 per-receipt inventory rows (RECEIPT kind); E05 real-base custody tests un-expected-failed",
+  "objective": "Switch s2_bundle.build_g0 to one TOP_LEVEL build row plus one RECEIPT row per receipt, and turn the three E05 real-base expectedFailure tests into ordinary passing tests.",
+  "parent_objective": "RSO-METHODS-SLICE-001 (CAMPAIGN.json objective)",
+  "owner_role": "Argus",
+  "quality_class": "Q2",
+  "can_downgrade": false,
+  "escalate_to": "Q3",
+  "depends_on": [
+    "C-004-T025"
+  ],
+  "owns": [
+    "rso/slice001/s2_bundle.py",
+    "rso/slice001/tests/test_s2_bundle.py",
+    "rso/slice001/tests/test_evidence.py"
+  ],
+  "reads": [
+    "rso/slice001/ledger.py",
+    "rso/slice001/evidence.py",
+    "ops/campaigns/C-004/escalations/C-004-T024_1_2_RESPONSE.md"
+  ],
+  "problem": "After C-004-T025, implement rows='per_receipt' with launch_kind RECEIPT as the default, so the real G0 inventory attributes every receipt (V7) and E02.MISSING's G-INV half (X06) fires on the real base; remove the expectedFailure markers on the E05 real-base custody tests (they must now pass).",
+  "non_goals": [
+    "No change to evidence/checker semantics"
+  ],
+  "evidence_required": [
+    "test: real G0 inventory has 1 TOP_LEVEL + 25 RECEIPT rows; E02.MISSING on the real base gives G-INV FAIL RUN_UNREPORTED",
+    "the three E05 real-base custody tests pass without expectedFailure"
+  ],
+  "acceptance": {
+    "command": "python -B -m unittest rso.slice001.tests.test_s2_bundle rso.slice001.tests.test_evidence",
+    "condition": "green with no expectedFailure; per-receipt attribution tested"
+  },
+  "deliverables": [
+    "s2_bundle.py",
+    "tests"
+  ],
+  "kind": "software",
+  "status": "READY",
+  "history": [
+    {
+      "status": "PROPOSED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-04T14:14:41Z",
+      "note": "from escalations C-004-T024_1/_2"
+    },
+    {
+      "status": "READY",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-04T14:14:41Z",
+      "note": "made READY by the coordinator"
+    }
+  ],
+  "authority": "operator directive 2026-10-03 s9, s11; escalation responses C-004-T024_1_2_RESPONSE.md",
+  "resource_ceiling": {
+    "engineering": "<= 0.5 seat-hour",
+    "cpu": "< 2 CPU-minutes",
+    "note": "counts toward OP-1 caps"
+  }
+}

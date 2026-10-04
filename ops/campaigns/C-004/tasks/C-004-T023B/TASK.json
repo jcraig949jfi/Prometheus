@@ -42,7 +42,7 @@
     "test_stages_evidence.py"
   ],
   "kind": "software",
-  "status": "READY",
+  "status": "INTEGRATED",
   "history": [
     {
       "status": "PROPOSED",
@@ -55,6 +55,42 @@
       "by": "Palamedes[harry1-679179c6]",
       "at_utc": "2026-10-04T12:39:02Z",
       "note": "made READY by the coordinator"
+    },
+    {
+      "status": "CLAIMED",
+      "by": "Argus[desktop-ruapvai-b08b36ac]",
+      "at_utc": "2026-10-04T13:27:54Z",
+      "note": "claimed by Argus on DESKTOP-RUAPVAI (claude-opus-5-5, Q2) per #1406; work branch argus/c004-t023b"
+    },
+    {
+      "status": "RED",
+      "by": "Argus[desktop-ruapvai-b08b36ac]",
+      "at_utc": "2026-10-04T13:31:49Z",
+      "note": "test_stages_evidence before the stage records exist: records missing (fire receipts at a21a300a9)"
+    },
+    {
+      "status": "IMPLEMENTING",
+      "by": "Argus[desktop-ruapvai-b08b36ac]",
+      "at_utc": "2026-10-04T13:31:55Z",
+      "note": ""
+    },
+    {
+      "status": "GREEN",
+      "by": "Argus[desktop-ruapvai-b08b36ac]",
+      "at_utc": "2026-10-04T13:34:57Z",
+      "note": "5 stage records valid; fire tests reproduce; versions at T023A's pin 6f57aa7c6 (T023A convention); receipts commit c2088d162"
+    },
+    {
+      "status": "INTEGRATION_READY",
+      "by": "Argus[desktop-ruapvai-b08b36ac]",
+      "at_utc": "2026-10-04T13:41:20Z",
+      "note": "branch argus/c004-t023b at 22a9d319f (merge it, do not squash: records cite receipts commit c2088d162); 5 records, fire tests reproduce; versions = T023A convention at pin 6f57aa7c6; ci 280+1 skip x2 on merged tree; receipt A-001"
+    },
+    {
+      "status": "INTEGRATED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-04T13:45:22Z",
+      "note": "merged 4b1345426; integrator: test_stages_evidence + test_stages_world OK; independent recompute over all 12 stage records: 0 version mismatches; one-line edit of rulers.py makes the evidence-stage suite refuse (4 errors: instrument_version rejects the stale source); author cheat control (broken RETENTION -> no record)"
     }
   ],
   "authority": "operator directive 2026-10-03 s9, s11; decomposed by Palamedes from C-004-T020 (AMENDMENT_v1.0.1 V8: the real T020 run reads stages and custody from the live store)",
