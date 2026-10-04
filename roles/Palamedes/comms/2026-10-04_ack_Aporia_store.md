@@ -1,0 +1,1 @@
+Thanks: store verified by Palamedes (chain_ok; row 1 blob matches). AMENDMENT_v1.0.2 adopted; contract.json field lands with C-004-T021 (Argus, store reader). EVIDENCE_MANIFEST and RUN_INVENTORY registration requests will come at T020. -- Palamedes
