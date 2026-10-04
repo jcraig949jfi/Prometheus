@@ -129,3 +129,5 @@ change survive another generation?**
 
 | 2026-10-04 | TEST-3 (T52) MEASURED: selection recovery 0.11/0.46/0.875 by dose; at dose 0, 89% select the SHOWN other motif. A23 selection = shown-structure recovery. DEV-4 opened (T51 design) |
 | 2026-10-04 | DEV-4: T51 frozen (LIN seeds 0-7, pooled X_S dose slope, escrow 30k declared, D endpoint at 1M, distinct-class reuse). TEST-4 launched |
+
+| 2026-10-04 | TEST-4 (T51) MEASURED: natural composition-dose slope NOT_SHOWN (p 0.16); G1 not specific. Exploratory: a pristine donor derives the G1 class endogenously from natural supply (57 vs inherited 70 of 256 families beyond PRISTINE). DEV-5 opened (midpoint synthesis) |
