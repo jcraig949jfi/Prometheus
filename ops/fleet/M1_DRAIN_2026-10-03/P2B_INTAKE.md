@@ -86,3 +86,14 @@ Sent by Nestor directly to Bellerophon, Archaeon, Ananke and Cosmos. They verify
 - Palamedes #1326: an append-only custody store locator is needed before C-004-T020 (not urgent).
 - Proposed: a hash-chained, append-only Postgres table on M1.
 - Pending operator confirmation, because it is a custody mechanism.
+
+## Updates (2026-10-04)
+
+- **Aether (#1389): READY.** E-012 closed as DYNAMIC_COUPLING_REQUIRED (rcv_sfz 6/128, exactly on the boundary; record
+  ops/campaigns/C-002/E-012/RESULT.md @ 1d2d374e8). Promexec round 2 still waits on the operator's install of 3cf32a64.
+  Its Phase 2-B first campaign stays as in the manifest: the 10k-tick rcv_add/rcv_str falsifier plus one alternative
+  energy regime.
+- **Aphrodite (#1395): already running Phase 2-B autonomously** under an operator directive of 2026-10-04
+  (ops/threads/TH-P2B-APHRODITE-V2B.md): C-006 Beta-01, 12 alternating DEV/TEST windows on M4. Per that thread, CWOs
+  may delegate to Aphrodite but do not activate it. Aporia does not dispatch it. Recorded only.
+- **Palamedes (#1361):** custody store v1.0.2 adopted into the C-004 contract.
