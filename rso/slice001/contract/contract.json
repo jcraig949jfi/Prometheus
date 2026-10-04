@@ -1,0 +1,813 @@
+{
+  "schema": "rso.slice001.contract.v1",
+  "version": "1.0.1",
+  "frozen": true,
+  "campaign": "C-004 RSO-METHODS-SLICE-001",
+  "frozen_by": "Palamedes[harry1-679179c6] under C-004-T004",
+  "normative_text": {
+    "contract": "rso/slice001/contract/CONTRACT.md",
+    "draft_A": {
+      "path": "rso/slice001/contract/drafts/A_world_reset_observer.md",
+      "blob_sha256": "254cd8c9bf7ef5a637623b9571a11eca2a903baaaa60243d85bbd8b8a897a9c8",
+      "commit": "a843a384d48c56af5287e2baddc02a273dde4e24"
+    },
+    "draft_B": {
+      "path": "rso/slice001/contract/drafts/B_evidence_receipt_authority.md",
+      "blob_sha256": "e1316d742e70b54501b672b8e15f913520799fc1ffb1af88490fee8ffec40174",
+      "commit": "6826e0ffb9d4c4dc9ae256550e89917ff8f8844a"
+    },
+    "precedence": "CONTRACT.md reconciliation R1-R6, then this file, then draft A for world/predicates/ruler, then draft B for the evidence plane"
+  },
+  "claim": {
+    "statement": "A runtime retains a useful bit across a named boundary through an explicitly allowed channel.",
+    "boundary": "EPISODE_CONTENT_RESET at j = 1, 2, 3 (draft A A1)",
+    "useful_bit": "u_j, asked at PROBE_A of episode j+1",
+    "allowed_channel": "component a (draft A A3)",
+    "excludes": [
+      "origin",
+      "mechanism",
+      "economy",
+      "recursion",
+      "any class of organisms",
+      "other worlds",
+      "stochastic settings",
+      "native physics"
+    ],
+    "scope": "deterministic finite enumeration only; no INDETERMINATE in this slice"
+  },
+  "world": {
+    "id": "W-S1",
+    "definition": "draft A A2-A4",
+    "variants": [
+      "STANDARD",
+      "CLOCKED"
+    ],
+    "registered_domain": "STANDARD, 4096 histories",
+    "no_carry_class": "N: functions of j alone (8)",
+    "no_carry_bound": "1/2"
+  },
+  "reset_model": {
+    "episodes_per_life": 6,
+    "reset_calls_per_life": 5,
+    "evaluated_boundaries": [
+      1,
+      2,
+      3
+    ],
+    "repeat_count_R": 3,
+    "delay_horizon_H_episodes": 3,
+    "max_channel_delay_K_episodes": 3,
+    "sends_per_cue_S": 2,
+    "channel_capacity_Q": 8,
+    "ticks": [
+      "DELIVER",
+      "PROBE_A",
+      "CUE",
+      "PROBE_D"
+    ],
+    "inputs_per_episode": {
+      "u": [
+        0,
+        1
+      ],
+      "f": [
+        0,
+        1
+      ]
+    },
+    "histories": 4096,
+    "restart_cut_points": 29,
+    "restore_targets": [
+      "FRESH",
+      "COMPLEMENT_PREFIX"
+    ],
+    "escape_placement": "draft A A7 (reset/restart/observer), draft B B10 (evidence plane)"
+  },
+  "gates": [
+    {
+      "id": "P0",
+      "name": "BOUNDS",
+      "kind": "GATE",
+      "def": "draft A A3"
+    },
+    {
+      "id": "P1",
+      "name": "CALIBRATION",
+      "kind": "GATE",
+      "def": "draft A A5 P1"
+    },
+    {
+      "id": "P2",
+      "name": "RETENTION",
+      "kind": "RULER",
+      "def": "draft A A5 P2",
+      "precondition": "CALIBRATION PASS on the same world"
+    },
+    {
+      "id": "P3",
+      "name": "ERASE",
+      "kind": "GATE",
+      "def": "draft A A5 P3"
+    },
+    {
+      "id": "P4",
+      "name": "PRESERVE",
+      "kind": "GATE",
+      "def": "draft A A5 P4"
+    },
+    {
+      "id": "P5",
+      "name": "CHANNEL",
+      "kind": "GATE",
+      "def": "draft A A5 P5 (FD-A3 ACCEPTED, R1)",
+      "precondition": "RESTART PASS on the same runtime"
+    },
+    {
+      "id": "P6",
+      "name": "RESTART",
+      "kind": "GATE",
+      "def": "draft A A5 P6"
+    },
+    {
+      "id": "P7",
+      "name": "OBSERVER",
+      "kind": "GATE",
+      "def": "draft A A5 P7",
+      "precondition": "RESTART PASS on the same runtime (state part)"
+    },
+    {
+      "id": "P8",
+      "name": "TWIN_EQ",
+      "kind": "GATE",
+      "def": "draft A A5 P8",
+      "exit_criterion": false
+    },
+    {
+      "id": "G-BIND",
+      "kind": "GATE",
+      "side": "consumer",
+      "def": "draft B B6.3"
+    },
+    {
+      "id": "G-INV",
+      "kind": "GATE",
+      "side": "consumer",
+      "def": "draft B B6.4"
+    },
+    {
+      "id": "G-RECOMP",
+      "kind": "GATE",
+      "side": "consumer",
+      "def": "draft B B6.4",
+      "recompute_set": [
+        "CALIBRATION",
+        "RETENTION",
+        "ERASE",
+        "PRESERVE",
+        "CHANNEL"
+      ]
+    }
+  ],
+  "receipt": {
+    "schema": "rso.slice001.receipt.v1",
+    "def": "draft B B2-B3",
+    "verdict_fields": [
+      "execution",
+      "authority",
+      "outcome"
+    ],
+    "execution": [
+      "RAN",
+      "BLOCKED"
+    ],
+    "gate_outcome": [
+      "PASS",
+      "FAIL"
+    ],
+    "ruler_outcome": [
+      "POSITIVE",
+      "NEGATIVE",
+      "NOT_SHOWN"
+    ],
+    "standing_order": [
+      "BLOCKED",
+      "UNQUALIFIED",
+      "UNMET",
+      "SATISFIED"
+    ],
+    "producer_authority_key": "forbidden (FD-B1)",
+    "node_id_form": "rcpt:<subject>:<predicate NAME>[:<observer>]:<world>",
+    "trace_roles": [
+      "trace:probe_a",
+      "trace:probe_d",
+      "trace:sends",
+      "trace:deliveries",
+      "trace:capture",
+      "trace:clamp",
+      "trace:observer"
+    ],
+    "parameter_spellings": {
+      "edge": "<from node_id>-><to node_id>",
+      "field": "B3.4 outcome field name",
+      "role": "a trace role",
+      "axis": "a B3.2 cell axis name"
+    }
+  },
+  "authority_stages": {
+    "order": [
+      "AUTHOR_TESTED",
+      "FIRST_SIGHT_CHALLENGED",
+      "CLOSED_AFTER_REPAIR"
+    ],
+    "def": "draft B B4",
+    "inheritance": "lowest among all prerequisite instruments (FD-B6)",
+    "expected_at_S2_freeze": "AUTHOR_TESTED"
+  },
+  "custody": {
+    "keeper": "operator (James) -- authority, C-004-OP2",
+    "registrar": "Aporia -- registers anchors; outside the producing cell",
+    "form": "append-only out-of-repository store on M1 (SKULLPORT) in the MWO-0004 D2-1 form: one row per registered record = {registered_at_utc, registrar, record_kind, repo_path, blob_sha256, commit_sha}; identifiers and hashes only, no content",
+    "record_kinds": [
+      "EVIDENCE_MANIFEST",
+      "RUN_INVENTORY",
+      "STAGE_RECORD",
+      "WITHDRAWAL",
+      "EXPECTED_ANSWER_TABLE"
+    ],
+    "store": "UNSET: locator fixed by Aporia before the first C-004-T020 matrix run (R3; amendment v1.0.2); until set T020 is BLOCKED (V8)",
+    "write_access": "the registrar only; no cell seat writes",
+    "prerequisite_of": [
+      "CL-CUST"
+    ],
+    "trust_boundary": "draft B B5.4: bytes since registration only; never execution, truth or authorship",
+    "why_format": "exhaustive, sorted; KEEPER_ROW_MISSING:<record_kind> per missing kind"
+  },
+  "claims": {
+    "CL-CAL(w)": [
+      "CALIBRATION(w) PASS",
+      "G-BIND PASS",
+      "G-INV PASS"
+    ],
+    "CL-RET(M)": [
+      "BOUNDS(M) PASS",
+      "CALIBRATION(STANDARD) PASS",
+      "RETENTION(M) POSITIVE",
+      "ERASE(M) PASS",
+      "PRESERVE(M) PASS",
+      "CHANNEL(M) PASS",
+      "RESTART(M) PASS",
+      "OBSERVER(M, o) PASS for every observer o registered as used on M",
+      "G-BIND PASS",
+      "G-INV PASS",
+      "G-RECOMP PASS"
+    ],
+    "CL-CUST(bundle)": [
+      "custody QUALIFIED",
+      "G-BIND PASS",
+      "G-INV PASS"
+    ],
+    "TWIN(M, M')": [
+      "TWIN_EQ(M, M') PASS -- reported only"
+    ],
+    "relative_to": {
+      "CL-CAL": "class N, exact bound 1/2",
+      "CL-RET": "class N, exact bound 1/2",
+      "CL-CUST": "the keeper and its rows",
+      "TWIN": "M, by named encoding"
+    }
+  },
+  "render": {
+    "def": "draft B B8",
+    "quantifiers": [
+      "class",
+      "any",
+      "all",
+      "every",
+      "no",
+      "none",
+      "never",
+      "always"
+    ],
+    "refusals": [
+      "RENDER_QUANTIFIER_UNBOUND",
+      "RENDER_RELATIVE_MISSING",
+      "RENDER_CELL_MISSING",
+      "RENDER_SETTING_MISSING",
+      "RENDER_TWIN_PROMOTION"
+    ]
+  },
+  "cases": [
+    {
+      "id": "T01.REG",
+      "polarity": "true",
+      "fixture": "REG",
+      "world": "STANDARD",
+      "definition": "draft A A6 row T01 REG",
+      "author_expected_ref": "draft A A6 row T01 REG",
+      "exit_criterion": true
+    },
+    {
+      "id": "T01.PKTD",
+      "polarity": "true",
+      "fixture": "PKTD",
+      "world": "STANDARD",
+      "definition": "draft A A6 row T01 PKTD",
+      "author_expected_ref": "draft A A6 row T01 PKTD",
+      "exit_criterion": true
+    },
+    {
+      "id": "T01.QCARRY",
+      "polarity": "false",
+      "fixture": "QCARRY",
+      "world": "STANDARD",
+      "definition": "draft A A6 row T01 QCARRY",
+      "author_expected_ref": "draft A A6 row T01 QCARRY",
+      "exit_criterion": true,
+      "note": "CHANNEL kept (R1): QCARRY must not become CL-RET eligible"
+    },
+    {
+      "id": "T02.AMNESIAC",
+      "polarity": "true",
+      "fixture": "AMNESIAC",
+      "world": "STANDARD",
+      "definition": "draft A A6 row T02 AMNESIAC",
+      "author_expected_ref": "draft A A6 row T02 AMNESIAC",
+      "exit_criterion": true
+    },
+    {
+      "id": "T02.CLOCKED",
+      "polarity": "false",
+      "fixture": "class N policies",
+      "world": "CLOCKED",
+      "definition": "draft A A6 row T02 world CLOCKED",
+      "author_expected_ref": "draft A A6 row T02 world CLOCKED",
+      "exit_criterion": true
+    },
+    {
+      "id": "T02.FLIP",
+      "polarity": "false",
+      "fixture": "FLIP",
+      "world": "STANDARD",
+      "definition": "draft A A6 row T02 FLIP",
+      "author_expected_ref": "draft A A6 row T02 FLIP",
+      "exit_criterion": true
+    },
+    {
+      "id": "T03.REG",
+      "polarity": "true",
+      "fixture": "REG",
+      "world": "STANDARD",
+      "definition": "draft A A6 row T03 REG",
+      "author_expected_ref": "draft A A6 row T03 REG",
+      "exit_criterion": true
+    },
+    {
+      "id": "T04.LAGD",
+      "polarity": "false",
+      "fixture": "LAGD",
+      "world": "STANDARD",
+      "definition": "draft A A6 row T04 LAGD",
+      "author_expected_ref": "draft A A6 row T04 LAGD",
+      "exit_criterion": true
+    },
+    {
+      "id": "T04.REG",
+      "polarity": "true",
+      "fixture": "REG",
+      "world": "STANDARD",
+      "definition": "draft A A6 row T04 REG",
+      "author_expected_ref": "draft A A6 row T04 REG",
+      "exit_criterion": true
+    },
+    {
+      "id": "T05.WIPE",
+      "polarity": "false",
+      "fixture": "WIPE",
+      "world": "STANDARD",
+      "definition": "draft A A6 row T05 WIPE",
+      "author_expected_ref": "draft A A6 row T05 WIPE",
+      "exit_criterion": true
+    },
+    {
+      "id": "T05.REG",
+      "polarity": "true",
+      "fixture": "REG",
+      "world": "STANDARD",
+      "definition": "draft A A6 row T05 REG",
+      "author_expected_ref": "draft A A6 row T05 REG",
+      "exit_criterion": true
+    },
+    {
+      "id": "T06.REG",
+      "polarity": "true",
+      "fixture": "REG",
+      "world": "STANDARD",
+      "definition": "draft A A6 row T06 REG; PKTD",
+      "author_expected_ref": "draft A A6 row T06 REG; PKTD",
+      "exit_criterion": true
+    },
+    {
+      "id": "T06.PKTD",
+      "polarity": "true",
+      "fixture": "PKTD",
+      "world": "STANDARD",
+      "definition": "draft A A6 row T06 REG; PKTD",
+      "author_expected_ref": "draft A A6 row T06 REG; PKTD",
+      "exit_criterion": true
+    },
+    {
+      "id": "T06.PKTD_NOQ",
+      "polarity": "false",
+      "fixture": "PKTD_NOQ",
+      "world": "STANDARD",
+      "definition": "draft A A6 row T06 PKTD_NOQ",
+      "author_expected_ref": "draft A A6 row T06 PKTD_NOQ",
+      "exit_criterion": true
+    },
+    {
+      "id": "T06.HCOUNT",
+      "polarity": "false",
+      "fixture": "HCOUNT",
+      "world": "STANDARD",
+      "definition": "draft A A6 row T06 HCOUNT",
+      "author_expected_ref": "draft A A6 row T06 HCOUNT",
+      "exit_criterion": true
+    },
+    {
+      "id": "T06.LAGD",
+      "polarity": "coupling",
+      "fixture": "LAGD",
+      "world": "STANDARD",
+      "definition": "draft A A6 row T06 LAGD",
+      "author_expected_ref": "draft A A6 row T06 LAGD",
+      "exit_criterion": true
+    },
+    {
+      "id": "T07.HEAL",
+      "polarity": "false",
+      "fixture": "REG + observer HEAL",
+      "world": "STANDARD",
+      "definition": "draft A A6 row T07 REG + HEAL",
+      "author_expected_ref": "draft A A6 row T07 REG + HEAL",
+      "exit_criterion": true
+    },
+    {
+      "id": "T07.BOOKKEEP",
+      "polarity": "true",
+      "fixture": "REG + observer BOOKKEEP",
+      "world": "STANDARD",
+      "definition": "draft A A6 row T07 REG + BOOKKEEP",
+      "author_expected_ref": "draft A A6 row T07 REG + BOOKKEEP",
+      "exit_criterion": true
+    },
+    {
+      "id": "T07.NULL",
+      "polarity": "true",
+      "fixture": "REG + observer NULL",
+      "world": "STANDARD",
+      "definition": "draft A A6 row T07 REG + NULL",
+      "author_expected_ref": "draft A A6 row T07 REG + NULL",
+      "exit_criterion": true
+    },
+    {
+      "id": "T08.EVERY3",
+      "polarity": "false",
+      "fixture": "EVERY3",
+      "world": "STANDARD",
+      "definition": "draft A A6 row T08 EVERY3",
+      "author_expected_ref": "draft A A6 row T08 EVERY3",
+      "exit_criterion": true
+    },
+    {
+      "id": "T08.SLEEPER",
+      "polarity": "false",
+      "fixture": "SLEEPER",
+      "world": "STANDARD",
+      "definition": "draft A A6 row T08 SLEEPER",
+      "author_expected_ref": "draft A A6 row T08 SLEEPER",
+      "exit_criterion": true
+    },
+    {
+      "id": "T08.SPLIT1",
+      "polarity": "false",
+      "fixture": "SPLIT1",
+      "world": "STANDARD",
+      "definition": "draft A A6 row T08 SPLIT1",
+      "author_expected_ref": "draft A A6 row T08 SPLIT1",
+      "exit_criterion": true
+    },
+    {
+      "id": "T08.SPLIT2",
+      "polarity": "false",
+      "fixture": "SPLIT2",
+      "world": "STANDARD",
+      "definition": "draft A A6 row T08 SPLIT2",
+      "author_expected_ref": "draft A A6 row T08 SPLIT2",
+      "exit_criterion": true
+    },
+    {
+      "id": "T08.REG",
+      "polarity": "true",
+      "fixture": "REG",
+      "world": "STANDARD",
+      "definition": "draft A A6 row T08 REG",
+      "author_expected_ref": "draft A A6 row T08 REG",
+      "exit_criterion": true
+    },
+    {
+      "id": "P0.OVERDELAY",
+      "polarity": "false",
+      "fixture": "OVERDELAY",
+      "world": "STANDARD",
+      "definition": "draft A A6 row P0 OVERDELAY",
+      "author_expected_ref": "draft A A6 row P0 OVERDELAY",
+      "exit_criterion": true
+    },
+    {
+      "id": "E06.REG_ONEHOT",
+      "polarity": "true",
+      "fixture": "REG-ONEHOT",
+      "world": "STANDARD",
+      "definition": "draft A A6 row E06 REG-ONEHOT",
+      "author_expected_ref": "draft A A6 row E06 REG-ONEHOT",
+      "exit_criterion": false
+    },
+    {
+      "id": "E06.REG_FLAT",
+      "polarity": "true",
+      "fixture": "REG-FLAT",
+      "world": "STANDARD",
+      "definition": "draft A A6 row E06 REG-FLAT",
+      "author_expected_ref": "draft A A6 row E06 REG-FLAT",
+      "exit_criterion": false
+    },
+    {
+      "id": "E06.LOSSY",
+      "polarity": "false",
+      "fixture": "LOSSY",
+      "world": "STANDARD",
+      "definition": "draft A A6 row E06 LOSSY",
+      "author_expected_ref": "draft A A6 row E06 LOSSY",
+      "exit_criterion": false
+    },
+    {
+      "id": "E01.G0",
+      "polarity": "true",
+      "fixture": "bundle G0 on G0",
+      "world": "STANDARD",
+      "definition": "draft B B9 row E01 G0",
+      "author_expected_ref": "draft B B9 row E01 G0",
+      "exit_criterion": true
+    },
+    {
+      "id": "E01.OUTCOME_EDIT",
+      "polarity": "false",
+      "fixture": "bundle OUTCOME_EDIT on G0",
+      "world": "STANDARD",
+      "definition": "draft B B9 row E01 OUTCOME_EDIT",
+      "author_expected_ref": "draft B B9 row E01 OUTCOME_EDIT",
+      "exit_criterion": true
+    },
+    {
+      "id": "E01.FAB_CONSISTENT",
+      "polarity": "coupling",
+      "fixture": "bundle FAB_CONSISTENT on G0",
+      "world": "STANDARD",
+      "definition": "draft B B9 row E01 FAB_CONSISTENT",
+      "author_expected_ref": "draft B B9 row E01 FAB_CONSISTENT",
+      "exit_criterion": true
+    },
+    {
+      "id": "E02.MISSING",
+      "polarity": "false",
+      "fixture": "bundle MISSING on G0",
+      "world": "STANDARD",
+      "definition": "draft B B9 row E02 MISSING",
+      "author_expected_ref": "draft B B9 row E02 MISSING",
+      "exit_criterion": true
+    },
+    {
+      "id": "E02.MALFORMED",
+      "polarity": "false",
+      "fixture": "bundle MALFORMED on G0",
+      "world": "STANDARD",
+      "definition": "draft B B9 row E02 MALFORMED",
+      "author_expected_ref": "draft B B9 row E02 MALFORMED",
+      "exit_criterion": true
+    },
+    {
+      "id": "E02.RELABEL",
+      "polarity": "false",
+      "fixture": "bundle RELABEL on G0",
+      "world": "STANDARD",
+      "definition": "draft B B9 row E02 RELABEL",
+      "author_expected_ref": "draft B B9 row E02 RELABEL",
+      "exit_criterion": true
+    },
+    {
+      "id": "E02.WRONG_SUBJECT",
+      "polarity": "false",
+      "fixture": "bundle WRONG_SUBJECT on G0",
+      "world": "STANDARD",
+      "definition": "draft B B9 row E02 WRONG_SUBJECT",
+      "author_expected_ref": "draft B B9 row E02 WRONG_SUBJECT",
+      "exit_criterion": true
+    },
+    {
+      "id": "E02.G0",
+      "polarity": "true",
+      "fixture": "bundle G0 on G0",
+      "world": "STANDARD",
+      "definition": "draft B B9 row E02 G0",
+      "author_expected_ref": "draft B B9 row E02 G0",
+      "exit_criterion": true
+    },
+    {
+      "id": "E03.STRIP",
+      "polarity": "false",
+      "fixture": "bundle STRIP on G0",
+      "world": "STANDARD",
+      "definition": "draft B B9 row E03 STRIP",
+      "author_expected_ref": "draft B B9 row E03 STRIP",
+      "exit_criterion": true
+    },
+    {
+      "id": "E03.BYTEFLIP",
+      "polarity": "false",
+      "fixture": "bundle BYTEFLIP on G0",
+      "world": "STANDARD",
+      "definition": "draft B B9 row E03 BYTEFLIP",
+      "author_expected_ref": "draft B B9 row E03 BYTEFLIP",
+      "exit_criterion": true
+    },
+    {
+      "id": "E03.REANCHOR",
+      "polarity": "coupling",
+      "fixture": "bundle REANCHOR on G0",
+      "world": "STANDARD",
+      "definition": "draft B B9 row E03 REANCHOR",
+      "author_expected_ref": "draft B B9 row E03 REANCHOR",
+      "exit_criterion": true
+    },
+    {
+      "id": "E03.G0",
+      "polarity": "true",
+      "fixture": "bundle G0 on G0",
+      "world": "STANDARD",
+      "definition": "draft B B9 row E03 G0",
+      "author_expected_ref": "draft B B9 row E03 G0",
+      "exit_criterion": true
+    },
+    {
+      "id": "E04.W_RESTART",
+      "polarity": "true",
+      "fixture": "bundle W_RESTART on G0",
+      "world": "STANDARD",
+      "definition": "draft B B9 row E04 W_RESTART",
+      "author_expected_ref": "draft B B9 row E04 W_RESTART",
+      "exit_criterion": true
+    },
+    {
+      "id": "E04.W_OBS",
+      "polarity": "true",
+      "fixture": "bundle W_OBS on G0",
+      "world": "STANDARD",
+      "definition": "draft B B9 row E04 W_OBS",
+      "author_expected_ref": "draft B B9 row E04 W_OBS",
+      "exit_criterion": true
+    },
+    {
+      "id": "E04.W_UNRELATED",
+      "polarity": "false",
+      "fixture": "bundle W_UNRELATED on G0",
+      "world": "STANDARD",
+      "definition": "draft B B9 row E04 W_UNRELATED",
+      "author_expected_ref": "draft B B9 row E04 W_UNRELATED",
+      "exit_criterion": true
+    },
+    {
+      "id": "E04.W_UNANCHORED",
+      "polarity": "false",
+      "fixture": "bundle W_UNANCHORED on G0",
+      "world": "STANDARD",
+      "definition": "draft B B9 row E04 W_UNANCHORED",
+      "author_expected_ref": "draft B B9 row E04 W_UNANCHORED",
+      "exit_criterion": true
+    },
+    {
+      "id": "E05.FAB_ANCHORS",
+      "polarity": "false",
+      "fixture": "bundle FAB_ANCHORS on G0",
+      "world": "STANDARD",
+      "definition": "draft B B9 row E05 FAB_ANCHORS",
+      "author_expected_ref": "draft B B9 row E05 FAB_ANCHORS",
+      "exit_criterion": true
+    },
+    {
+      "id": "E05.LATE_REG",
+      "polarity": "false",
+      "fixture": "bundle LATE_REG on G0",
+      "world": "STANDARD",
+      "definition": "draft B B9 row E05 LATE_REG",
+      "author_expected_ref": "draft B B9 row E05 LATE_REG",
+      "exit_criterion": true
+    },
+    {
+      "id": "E05.KEEPER",
+      "polarity": "true",
+      "fixture": "bundle KEEPER on G0",
+      "world": "STANDARD",
+      "definition": "draft B B9 row E05 KEEPER",
+      "author_expected_ref": "draft B B9 row E05 KEEPER",
+      "exit_criterion": true
+    },
+    {
+      "id": "E05.FAB_REGISTERED",
+      "polarity": "stated_limit",
+      "fixture": "bundle FAB_REGISTERED on G0",
+      "world": "STANDARD",
+      "definition": "draft B B9 row E05 FAB_REGISTERED",
+      "author_expected_ref": "draft B B9 row E05 FAB_REGISTERED",
+      "exit_criterion": true
+    }
+  ],
+  "expected_answer_table": {
+    "path": "rso/slice001/expected/EXPECTED_ANSWERS.json",
+    "packet": "C-004-T005",
+    "author": "Pallas (C-004-OP3; Dionysus fallback)",
+    "independence": "R4: the table is committed before its author opens the author_expected columns (draft A A6 'expected'/'outcomes', draft B B9 'expected'/'reason codes', B8.2)"
+  },
+  "challenge": {
+    "S3": {
+      "fresh_sound": 5,
+      "fresh_broken": 5,
+      "semantic_edits": 10,
+      "edit_span": [
+        "reset/observer",
+        "binding",
+        "invalidation"
+      ],
+      "packet": "C-004-T030"
+    },
+    "S4": {
+      "fresh_sound": 2,
+      "fresh_broken": 2,
+      "semantic_edits": 3,
+      "edit_span": "touched claim-critical predicates",
+      "packet": "C-004-T041"
+    },
+    "reviewer": "Pallas (Fable 5.1); fallback Dionysus (C-004-OP3)",
+    "rules": "NEXT_ROUND_PLAN_v0.4 s5 (commit before outcomes; outcome classes; witnesses)"
+  },
+  "caps": {
+    "authority": "C-004-OP1 APPROVED 2026-10-03",
+    "cpu_minutes": 30,
+    "gpu_hours": 0,
+    "cloud_usd": 0,
+    "new_artifact_mb": 100,
+    "top_level_validation_launches": 12,
+    "repair_rounds": 1,
+    "opus_seat_hours": 12,
+    "sonnet_seat_hours": 4,
+    "reviewer_hours": 3,
+    "working_days": 3,
+    "charging": "failures, retries, mutation children, analysis and confirmation attempts count; stop at the first exhausted cap; keep partial results (plan s6)"
+  },
+  "files": {
+    "rso/slice001/world.py": "C-004-T010",
+    "rso/slice001/reset.py": "C-004-T011",
+    "rso/slice001/observer.py": "C-004-T011",
+    "rso/slice001/fixtures/world_cases.py": "C-004-T011",
+    "rso/slice001/rulers.py": "C-004-T012",
+    "rso/slice001/receipt.py": "C-004-T013",
+    "rso/slice001/evidence.py": "C-004-T014",
+    "rso/slice001/fixtures/evidence_cases.py": "C-004-T014",
+    "rso/slice001/checker.py": "C-004-T015",
+    "rso/slice001/render.py": "C-004-T015",
+    "rso/slice001/adapter.py": "C-004-T016",
+    "rso/slice001/mutation.py": "C-004-T017",
+    "rso/slice001/encoding.py": "C-004-T018",
+    "rso/slice001/ledger.py": "C-004-T019",
+    "rso/slice001/tests/test_matrix.py": "C-004-T020"
+  },
+  "amendments": [
+    {
+      "version": "1.0.1",
+      "path": "rso/slice001/contract/AMENDMENT_v1.0.1.md",
+      "by": "Palamedes[harry1-679179c6]",
+      "answers": "ops/campaigns/C-004/escalations/C-004-T005_1.md option 2",
+      "scope": "spellings, formats, omissions; no claim/threshold/expectation change",
+      "items": [
+        "V1 node_id form",
+        "V2 trace roles",
+        "V3 parameter spellings",
+        "V4 FAIL reason forms P0/P7/P8",
+        "V5 canonical order and pair partner",
+        "V6 custody why list",
+        "V7 G-INV attribution",
+        "V8 stage records while store unset"
+      ]
+    }
+  ],
+  "disagreements": "ops/campaigns/C-004/DISAGREEMENTS.md"
+}

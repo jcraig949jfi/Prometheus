@@ -5,7 +5,7 @@
   "title": "S4 fresh closure challenge: 2 sound, 2 broken, 3 semantic edits against frozen repaired code",
   "objective": "After the repair round is frozen, commit a fresh closure set before observing outcomes and report the closure score; record C4 'closed after repair' on the gates that pass.",
   "parent_objective": "RSO-METHODS-SLICE-001 (CAMPAIGN.json objective)",
-  "owner_role": "Dionysus",
+  "owner_role": "Pallas",
   "quality_class": "Q3",
   "can_downgrade": false,
   "escalate_to": "operator",
@@ -51,13 +51,13 @@
   ],
   "authority": "operator directive 2026-10-03 s9, s11 (roles/Achilles/prompts/2026-10-03_rso_builder_cell/01_OPERATOR_DIRECTIVE_verbatim.md); decomposed by Palamedes under C-004-T000",
   "eligible_roles": [
-    "Pallas"
+    "Dionysus"
   ],
   "resource_ceiling": {
     "engineering": "<= 0.5 reviewer hours of the 3 (OP-1)",
     "cpu": "< 5 CPU-minutes",
     "note": "Counts toward the slice caps fixed by C-004-OP1 (NEXT_ROUND_PLAN_v0.4 s6 proposal: 30 CPU-minutes total, 0 GPU, 0 cloud, 100 MB new artifacts, 12 top-level validation launches; mutation children count toward CPU). Stop at the first exhausted cap and keep partial results."
   },
-  "notes": "PROPOSED; repair packets C-004-T04N are inserted as its dependencies by C-004-T040.",
+  "notes": "Reviewer per C-004-OP3 ruling 2026-10-03: Pallas (Fable 5.1) owns; Dionysus is the fallback (eligible). Independence caveat, declared: Pallas is a member of the RSO Builder Cell but writes no production code and is a different model family from the Opus/Sonnet builders. PROPOSED until its inputs exist. Changed by Palamedes[harry1-679179c6] at 2026-10-03T21:48:40Z: owner_role Dionysus -> Pallas, eligible Pallas -> Dionysus.",
   "red_required": false
 }

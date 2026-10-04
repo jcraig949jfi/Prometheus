@@ -33,7 +33,7 @@
     "the ruling, copied into contract.json custody"
   ],
   "kind": "operations",
-  "status": "READY",
+  "status": "CLOSED",
   "history": [
     {
       "status": "PROPOSED",
@@ -46,6 +46,42 @@
       "by": "Palamedes[harry1-679179c6]",
       "at_utc": "2026-10-03T11:04:14Z",
       "note": "made READY by the coordinator (C-004-T000)"
+    },
+    {
+      "status": "CLAIMED",
+      "by": "operator[recorded by Palamedes harry1-679179c6]",
+      "at_utc": "2026-10-03T21:48:40Z",
+      "note": "OP-2 (operator chat instruction to Palamedes, session 679179c6, 2026-10-03 ~18:00Z): operator/James is authority; Aporia is registrar. Coordinator reading, for T004: the anchor keeper is the operator; Aporia (outside the producing cell) registers the evidence-node anchors and the attempted-run inventory; the concrete form is fixed in the S1 contract."
+    },
+    {
+      "status": "IMPLEMENTING",
+      "by": "operator[recorded by Palamedes harry1-679179c6]",
+      "at_utc": "2026-10-03T21:48:40Z",
+      "note": "ruling recorded"
+    },
+    {
+      "status": "GREEN",
+      "by": "operator[recorded by Palamedes harry1-679179c6]",
+      "at_utc": "2026-10-03T21:48:40Z",
+      "note": "ruling recorded"
+    },
+    {
+      "status": "INTEGRATION_READY",
+      "by": "operator[recorded by Palamedes harry1-679179c6]",
+      "at_utc": "2026-10-03T21:48:40Z",
+      "note": "ruling recorded"
+    },
+    {
+      "status": "INTEGRATED",
+      "by": "operator[recorded by Palamedes harry1-679179c6]",
+      "at_utc": "2026-10-03T21:48:40Z",
+      "note": "ruling recorded"
+    },
+    {
+      "status": "CLOSED",
+      "by": "operator[recorded by Palamedes harry1-679179c6]",
+      "at_utc": "2026-10-03T21:48:40Z",
+      "note": "OP-2 (operator chat instruction to Palamedes, session 679179c6, 2026-10-03 ~18:00Z): operator/James is authority; Aporia is registrar. Coordinator reading, for T004: the anchor keeper is the operator; Aporia (outside the producing cell) registers the evidence-node anchors and the attempted-run inventory; the concrete form is fixed in the S1 contract."
     }
   ],
   "authority": "operator directive 2026-10-03 s9, s11 (roles/Achilles/prompts/2026-10-03_rso_builder_cell/01_OPERATOR_DIRECTIVE_verbatim.md); decomposed by Palamedes under C-004-T000",

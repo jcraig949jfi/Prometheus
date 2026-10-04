@@ -50,7 +50,7 @@
     "rso/slice001/contract/README.md"
   ],
   "kind": "software",
-  "status": "READY",
+  "status": "INTEGRATED",
   "history": [
     {
       "status": "PROPOSED",
@@ -63,6 +63,42 @@
       "by": "Palamedes[harry1-679179c6]",
       "at_utc": "2026-10-03T11:04:14Z",
       "note": "made READY by the coordinator (C-004-T000)"
+    },
+    {
+      "status": "CLAIMED",
+      "by": "Eupalamus[harry1-e609b290]",
+      "at_utc": "2026-10-03T21:55:12Z",
+      "note": ""
+    },
+    {
+      "status": "RED",
+      "by": "Eupalamus[harry1-e609b290]",
+      "at_utc": "2026-10-03T21:56:27Z",
+      "note": ""
+    },
+    {
+      "status": "IMPLEMENTING",
+      "by": "Eupalamus[harry1-e609b290]",
+      "at_utc": "2026-10-03T21:56:27Z",
+      "note": ""
+    },
+    {
+      "status": "GREEN",
+      "by": "Eupalamus[harry1-e609b290]",
+      "at_utc": "2026-10-03T21:56:27Z",
+      "note": ""
+    },
+    {
+      "status": "INTEGRATION_READY",
+      "by": "Eupalamus[harry1-e609b290]",
+      "at_utc": "2026-10-03T21:56:28Z",
+      "note": ""
+    },
+    {
+      "status": "INTEGRATED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-03T21:59:01Z",
+      "note": "merged 4f1023199; integrator reran python -B -m rso.slice001.ci on merged tree: exit 0, 9/9; independent cheat control (injected failing test) -> exit 1"
     }
   ],
   "authority": "operator directive 2026-10-03 s9, s11 (roles/Achilles/prompts/2026-10-03_rso_builder_cell/01_OPERATOR_DIRECTIVE_verbatim.md); decomposed by Palamedes under C-004-T000",

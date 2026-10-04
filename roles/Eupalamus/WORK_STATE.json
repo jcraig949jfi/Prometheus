@@ -1,45 +1,56 @@
 {
-  "schema": "prometheus.work_state.v1",
-  "seat": "Eupalamus",
-  "mwo_id": "MWO-0004",
-  "authority": "operator directive 2026-10-03 (roles/Achilles/prompts/2026-10-03_rso_builder_cell/01_OPERATOR_DIRECTIVE_verbatim.md)",
-  "updated_at_utc": "2026-10-03T11:03:00Z",
-  "state": "READY",
-  "branch": "eupalamus/boot-2026-10-03",
-  "head_sha": "82a8eb603f7bc389f30f0f9ce4cac586b9511d0f",
-  "base_sha": "82a8eb603f7bc389f30f0f9ce4cac586b9511d0f",
-  "worktree_path": "C:\\prometheus-worktrees\\eupalamus-boot-2026-10-03",
-  "model": "claude-sonnet-5-5",
-  "capability_class": "Q1",
-  "host": "GANDALF (M3)",
-  "instance": "gandalf-ced473bf",
-  "session_id": "ced473bf-2d19-4e70-bbd0-bef9826ce0e5",
-  "session_start_utc": "2026-10-03T11:02:00Z",
-  "current_objective": "RSO Builder Cell member, campaign C-004 (RSO-METHODS-SLICE-001)",
-  "current_step": "booted 2026-10-03; chain read; comms synced (99 messages); `workgraph ready Eupalamus` = no READY task; seat reported READY: no packet",
-  "in_flight": [],
-  "finish_condition": "per claimed packet (DISTRIBUTED_WORK.md)",
-  "next_expected_milestone": "Palamedes releases first C-004 packet (C-004-T000 decomposition is claimed by Palamedes)",
-  "expected_next_artifact": "first claimed C-004 packet",
-  "last_push_sha": null,
-  "last_push_utc": null,
-  "threads": [
-    "phase3-rso"
-  ],
-  "campaigns": [
-    "C-004"
-  ],
-  "experiments": [],
-  "fabric_tasks": [],
-  "running": [],
-  "blocked_on": [],
-  "next_actions": [
-    "re-check `python -m workgraph ready Eupalamus` after every comms sync",
-    "heartbeat Aporia about every 90 minutes while working",
-    "if mechanical pain is observed, propose a Q1 plumbing packet via ops/campaigns/C-004/escalations/NEW_Eupalamus_<date>_<n>.md (rso-builder-role s8.7); do not build unpacketed code"
-  ],
-  "operator_decisions_required": [],
-  "latest_reports": [
-    "roles/Eupalamus/comms/HEARTBEAT_2026-10-03_boot.md"
-  ]
+    "schema":  "prometheus.work_state.v1",
+    "seat":  "Eupalamus",
+    "mwo_id":  "MWO-0004",
+    "authority":  "operator directive 2026-10-03 (roles/Achilles/prompts/2026-10-03_rso_builder_cell/01_OPERATOR_DIRECTIVE_verbatim.md)",
+    "updated_at_utc":  "2026-10-04T07:14:10Z",
+    "state":  "READY",
+    "branch":  "eupalamus-c004-t019",
+    "head_sha":  "b0929b10c4140ce6bbfdda66f955f2607e7136e5",
+    "base_sha":  "b3c1e87a87f10aa420065b39533c1378ba9ec6ad",
+    "worktree_path":  "C:\\prometheus-worktrees\\eupalamus-boot-2026-10-03",
+    "model":  "claude-sonnet-5-5",
+    "capability_class":  "Q1",
+    "host":  "GANDALF (M3)",
+    "instance":  "gandalf-ced473bf",
+    "session_id":  "ced473bf-2d19-4e70-bbd0-bef9826ce0e5",
+    "sole_instance_note":  "Operator 2026-10-04: there is only one Eupalamus; this instance (gandalf-ced473bf) is it. The earlier instance harry1-e609b290 (C-004-T003) is superseded and offline.",
+    "current_objective":  "RSO Builder Cell member, campaign C-004 (RSO-METHODS-SLICE-001)",
+    "current_step":  "C-004-T019 INTEGRATION_READY (work on branch eupalamus-c004-t019 @ b0929b10c; receipt A-001 on main); awaiting Palamedes integration",
+    "in_flight":  [
+
+                  ],
+    "finish_condition":  "per claimed packet (DISTRIBUTED_WORK.md)",
+    "next_expected_milestone":  "Palamedes integrates C-004-T019",
+    "expected_next_artifact":  "next claimed C-004 packet",
+    "last_push_sha":  "7989b02cc503c61f08d47dca706712be9ce29246",
+    "last_push_utc":  "2026-10-04T07:14:10Z",
+    "threads":  [
+                    "phase3-rso"
+                ],
+    "campaigns":  [
+                      "C-004"
+                  ],
+    "experiments":  [
+
+                    ],
+    "fabric_tasks":  [
+
+                     ],
+    "running":  [
+
+                ],
+    "blocked_on":  [
+
+                   ],
+    "next_actions":  [
+                         "python -m comms sync Eupalamus; python -m workgraph ready Eupalamus after each integration",
+                         "heartbeat Aporia about every 90 minutes while working"
+                     ],
+    "operator_decisions_required":  [
+
+                                    ],
+    "latest_reports":  [
+                           "roles/Eupalamus/comms/2026-10-04_T019_INTEGRATION_READY.md"
+                       ]
 }

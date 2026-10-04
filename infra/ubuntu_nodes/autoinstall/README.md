@@ -5,10 +5,13 @@ Hands-off install for new swarm nodes (built 2026-10-02 by Achilles on ELSA). It
 ## What the stick sets up
 
 - Wired port (`en*`) **and** Wi-Fi (`wl*`) via DHCP, so it works on any of the laptops
-- Whole internal disk, LVM, root uses **all** the space, no passphrase
+- Whole internal disk, LVM, root uses **all** the space, no passphrase. The target is the largest NON-USB disk
+  (>= 60 GB), pinned by path in the first early-command; with no such disk the install REFUSES before touching
+  any disk (P52s 2026-10-03: an invisible internal SSD made it install onto the CIDATA stick)
 - User `jcraig` (console password from `pwhash.txt`), hostname `ubu-new` (renamed after first SSH)
 - OpenSSH with the M2 and ELSA keys preinstalled; passwordless sudo; lid switch ignored; linger on
-- Packages: git curl htop tmux iw gh jq wpasupplicant python3-venv python3-pip; all updates applied
+- Packages: only what installs from the stick (git curl htop tmux wpasupplicant); the rest (iw gh jq python3-venv
+  python3-pip) and updates come from ubuntu_server_setup.sh / provision_node.sh after the first boot
 
 ## Make the stick (once)
 
@@ -34,7 +37,10 @@ The stick then holds the Wi-Fi password in plain text. Keep it at home.
 2. Boot from the installer stick (BIOS boot menu: F12 ThinkPad/Dell; or Windows `shutdown /r /o /t 0` → Use a device).
 3. At GRUB just wait (or Enter). The installer finds the config and asks **"Continue with autoinstall? (yes|no)"**. Type
    `yes`, Enter. That is the last chance before the disk is erased.
-4. About 15-25 min later it reboots by itself. Pull both sticks.
+4. About 15-25 min later it POWERS OFF by itself (it no longer reboots: with the sticks still in, a reboot started
+   the installer again and a second `yes` reinstalled -- the Inspiron looped four times). Pull both sticks, then
+   power on: it boots the new system. If you ever see the `Continue with autoinstall?` prompt on a machine that
+   was already installed, answer `no`.
 5. Tell Achilles, or run it yourself from ELSA/M2: `bash ../provision_node.sh <ip> ubuNNN` (rename, setup script, repo,
    git identity, GitHub token from `C:utoinstall_secrets	okens\`, reboot, inventory). About 30 s on an already-set-up node;
    10-15 min on a fresh one (updates).

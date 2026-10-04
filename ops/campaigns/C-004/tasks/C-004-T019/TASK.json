@@ -49,7 +49,7 @@
     "rso/slice001/tests/test_ledger.py"
   ],
   "kind": "software",
-  "status": "READY",
+  "status": "INTEGRATED",
   "history": [
     {
       "status": "PROPOSED",
@@ -62,6 +62,42 @@
       "by": "Palamedes[harry1-679179c6]",
       "at_utc": "2026-10-03T11:04:14Z",
       "note": "made READY by the coordinator (C-004-T000)"
+    },
+    {
+      "status": "CLAIMED",
+      "by": "Eupalamus[gandalf-ced473bf]",
+      "at_utc": "2026-10-04T07:08:41Z",
+      "note": ""
+    },
+    {
+      "status": "RED",
+      "by": "Eupalamus[gandalf-ced473bf]",
+      "at_utc": "2026-10-04T07:13:45Z",
+      "note": "T019 RED (work on branch eupalamus-c004-t019 @ b0929b10c)"
+    },
+    {
+      "status": "IMPLEMENTING",
+      "by": "Eupalamus[gandalf-ced473bf]",
+      "at_utc": "2026-10-04T07:13:45Z",
+      "note": "T019 IMPLEMENTING (work on branch eupalamus-c004-t019 @ b0929b10c)"
+    },
+    {
+      "status": "GREEN",
+      "by": "Eupalamus[gandalf-ced473bf]",
+      "at_utc": "2026-10-04T07:13:45Z",
+      "note": "T019 GREEN (work on branch eupalamus-c004-t019 @ b0929b10c)"
+    },
+    {
+      "status": "INTEGRATION_READY",
+      "by": "Eupalamus[gandalf-ced473bf]",
+      "at_utc": "2026-10-04T07:13:45Z",
+      "note": "T019 INTEGRATION_READY (work on branch eupalamus-c004-t019 @ b0929b10c)"
+    },
+    {
+      "status": "INTEGRATED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-04T07:16:28Z",
+      "note": "merged b0929b10c; integrator: test_ledger 31/31 (+ evidence, ci) on merged tree; author ran 10/10 hand mutants killed; integration check: Ledger.inventory() output passes evidence.inventory_terminal (2 COMPLETED rows + TERMINAL row_count 2); opt-in charging carried into T020 notes"
     }
   ],
   "authority": "operator directive 2026-10-03 s9, s11 (roles/Achilles/prompts/2026-10-03_rso_builder_cell/01_OPERATOR_DIRECTIVE_verbatim.md); decomposed by Palamedes under C-004-T000",
@@ -69,5 +105,6 @@
     "engineering": "<= 1.5 Q1 seat-hours",
     "cpu": "< 1 CPU-minute",
     "note": "Counts toward the slice caps fixed by C-004-OP1 (NEXT_ROUND_PLAN_v0.4 s6 proposal: 30 CPU-minutes total, 0 GPU, 0 cloud, 100 MB new artifacts, 12 top-level validation launches; mutation children count toward CPU). Stop at the first exhausted cap and keep partial results."
-  }
+  },
+  "notes": "COORDINATOR 2026-10-04 (interface fixed by C-004-T014, rso/slice001/evidence.py G-INV): inventory rows are {kind: RUN, run_id, node_id, status} with a final {kind: TERMINAL, row_count}; node_id per AMENDMENT V7. Write rows in exactly this shape (add fields only if G-INV ignores them), or escalate to Palamedes before diverging."
 }

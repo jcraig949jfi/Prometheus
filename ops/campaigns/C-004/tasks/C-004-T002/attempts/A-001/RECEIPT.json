@@ -1,0 +1,67 @@
+{
+  "schema": "prometheus.workgraph.receipt.v1",
+  "task_id": "C-004-T002",
+  "campaign_id": "C-004",
+  "attempt_id": "A-001",
+  "role": "Argus",
+  "model": "claude-opus-5-5",
+  "quality_class": "Q2",
+  "start_sha": "d49d2d29d9106d7343fb3e638ab7746c478acb3a",
+  "end_sha": "8e4934ca1bb115730104fffa2d9023800aeb99be",
+  "files_changed": [
+    "rso/slice001/contract/drafts/B_evidence_receipt_authority.md",
+    "roles/Argus/WORK_STATE.json",
+    "roles/Argus/journal/2026-10-03.md",
+    "roles/Argus/comms/2026-10-03_C-004-T002_CLAIMED.md",
+    "roles/Argus/comms/2026-10-03_HEARTBEAT_1.md"
+  ],
+  "evidence_added": [
+    "B3 producer receipt field table (name, type, required, meaning) covering plan s3 Receipt and C1 execution/outcome; closed schema, canonical bytes (B2)",
+    "B3.5 three-field verdict record; B7.2 standing/eligibility ordering BLOCKED > UNQUALIFIED > UNMET > SATISFIED, every non-SATISFIED line printed",
+    "B4 C4 stage record (AUTHOR_TESTED / FIRST_SIGHT_CHALLENGED / CLOSED_AFTER_REPAIR, denominators kept), authority conditions A1-A5, lowest-stage inheritance",
+    "B5 C5 custody field per OP-2: operator authority, Aporia registrar, MWO-0004 D2-1 form; what custody does and does not establish (closure D10)",
+    "B6 complete-node evidence graph, required edges, G-BIND / G-INV / G-RECOMP with typed reason codes, append-only invalidation with independence",
+    "B8 C2 render grammar, quantifier rule, TWIN rule; one accepted and two refused renderings",
+    "B9 E01-E05: true and false cases with expected typed verdicts and reasons; couplings stated; E05 makes no detection promise",
+    "B10 evidence-plane escape placement (ASTRA relabel/stripping; Fable G1.receipt, G7.report, G8.demand name half, G10.ruler, G12.promote, G12.render; G11.custody OUT)",
+    "B12 field decisions FD-B1..FD-B10"
+  ],
+  "evidence_executed": [
+    {
+      "command": "python: scan of the draft for non-ASCII characters",
+      "result": "no non-ASCII lines; 625 lines"
+    },
+    {
+      "command": "git show 8e4934ca1:roles/Argus/WORK_STATE.json | python -m json.tool",
+      "result": "valid JSON (was invalid on main: unescaped backslashes)"
+    }
+  ],
+  "red_observed": {
+    "observed": false,
+    "reason": "kind document, red_required false: the preregistered failure state was 'no section B text' (rso/slice001/contract/drafts/B_evidence_receipt_authority.md absent at d49d2d29d)"
+  },
+  "result": "DONE_CLEAN",
+  "known_escapes": [
+    "expected values in B9 derive from draft A's stated outcomes, not from any run; T005 derives its table independently",
+    "escape placement reads ASTRA VALIDATION and Fable spec s10 lists only; not a fresh search for evidence-plane escapes",
+    "first commit 6826e0ffb carried WORK_STATE.json still invalid (rewrite script failed); fixed at 8e4934ca1"
+  ],
+  "unresolved": [
+    "FD-A3 accept/drop decides CL-RET's CHANNEL prerequisite line (Palamedes, T004)",
+    "custody store locator is Aporia's to fix before T020 (OP-2); until then custody UNQUALIFIED KEEPER_ROW_MISSING",
+    "FD-B3 custody as prerequisite of CL-CUST only: T004 may move it onto CL-RET"
+  ],
+  "unblocks": [
+    "C-004-T004"
+  ],
+  "created_at_utc": "2026-10-03T22:15:00Z",
+  "instance": "harry1-e7e45be6",
+  "host": "harry1",
+  "branch": "argus/c004-t002",
+  "worktree_path": "C:/Prometheus-worktrees/argus-c004-t002",
+  "resources": {
+    "cpu": "none (document)",
+    "model": "one Q2 session, about 0.5 hours"
+  },
+  "notes": "Claim push first rejected by Eupalamus's T003 claim (d178d4a28); packet still READY on re-read; claim redone at 5ba287b28."
+}

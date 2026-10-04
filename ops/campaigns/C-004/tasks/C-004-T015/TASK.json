@@ -19,7 +19,9 @@
   "owns": [
     "rso/slice001/checker.py",
     "rso/slice001/render.py",
-    "rso/slice001/tests/test_checker_render.py"
+    "rso/slice001/tests/test_checker_render.py",
+    "rso/slice001/receipt.py",
+    "rso/slice001/tests/test_receipt.py"
   ],
   "reads": [
     "rso/slice001/contract/CONTRACT.md",
@@ -50,7 +52,7 @@
     "rso/slice001/tests/test_checker_render.py"
   ],
   "kind": "software",
-  "status": "READY",
+  "status": "INTEGRATED",
   "history": [
     {
       "status": "PROPOSED",
@@ -63,6 +65,42 @@
       "by": "Palamedes[harry1-679179c6]",
       "at_utc": "2026-10-03T11:04:14Z",
       "note": "made READY by the coordinator (C-004-T000)"
+    },
+    {
+      "status": "CLAIMED",
+      "by": "Argus[harry1-cff5ef7f]",
+      "at_utc": "2026-10-04T07:14:47Z",
+      "note": "S2 session 3; T014 INTEGRATED a6f4ae56a; escalation T015_1 answered option 1; branch argus/c004-t015 from e2742a706"
+    },
+    {
+      "status": "RED",
+      "by": "Argus[harry1-cff5ef7f]",
+      "at_utc": "2026-10-04T07:33:50Z",
+      "note": "work branch argus/c004-t015 @ 500d633b6; receipt attempts/A-001"
+    },
+    {
+      "status": "IMPLEMENTING",
+      "by": "Argus[harry1-cff5ef7f]",
+      "at_utc": "2026-10-04T07:33:50Z",
+      "note": "work branch argus/c004-t015 @ 500d633b6; receipt attempts/A-001"
+    },
+    {
+      "status": "GREEN",
+      "by": "Argus[harry1-cff5ef7f]",
+      "at_utc": "2026-10-04T07:33:50Z",
+      "note": "work branch argus/c004-t015 @ 500d633b6; receipt attempts/A-001"
+    },
+    {
+      "status": "INTEGRATION_READY",
+      "by": "Argus[harry1-cff5ef7f]",
+      "at_utc": "2026-10-04T07:33:50Z",
+      "note": "work branch argus/c004-t015 @ 500d633b6; receipt attempts/A-001"
+    },
+    {
+      "status": "INTEGRATED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-04T07:37:10Z",
+      "note": "merged 500d633b6; integrator: full slice suite green on merged tree; receipt.py change confined to consumer-gate kinds (escalation T015_1 opt 1); mutation (quantifier lint case-sensitive) killed by test_quantifier_only_beside_exact_bound; RED 21/30 vs naive stubs kept as fire tests. G-RECOMP fixture-level only until T020; TRACE_LAYOUT pushed into T016 notes"
     }
   ],
   "authority": "operator directive 2026-10-03 s9, s11 (roles/Achilles/prompts/2026-10-03_rso_builder_cell/01_OPERATOR_DIRECTIVE_verbatim.md); decomposed by Palamedes under C-004-T000",
@@ -70,5 +108,6 @@
     "engineering": "<= 2 Q2 seat-hours",
     "cpu": "< 1 CPU-minute",
     "note": "Counts toward the slice caps fixed by C-004-OP1 (NEXT_ROUND_PLAN_v0.4 s6 proposal: 30 CPU-minutes total, 0 GPU, 0 cloud, 100 MB new artifacts, 12 top-level validation launches; mutation children count toward CPU). Stop at the first exhausted cap and keep partial results."
-  }
+  },
+  "notes": "COORDINATOR 2026-10-04: escalation C-004-T015_1 answered (option 1): receipt.py and test_receipt.py added to owns ONLY to accept G-BIND/G-INV/G-RECOMP as GATE kinds in verdict validation; see escalations/C-004-T015_1_RESPONSE.md."
 }

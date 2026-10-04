@@ -1,0 +1,65 @@
+{
+  "schema": "prometheus.workgraph.receipt.v1",
+  "task_id": "C-004-T013",
+  "campaign_id": "C-004",
+  "attempt_id": "A-001",
+  "role": "Argus",
+  "model": "claude-opus-5-5",
+  "quality_class": "Q2",
+  "start_sha": "b02c6f66da2d6bf3b1da56e48ee66b6d2645384e",
+  "end_sha": "6b6827fc9a292fef45c72e079e78c2f41ec5b0d5",
+  "files_changed": [
+    "rso/slice001/receipt.py",
+    "rso/slice001/tests/test_receipt.py",
+    "roles/Argus/comms/2026-10-04_C-004-T013_CLAIMED.md",
+    "roles/Argus/comms/2026-10-04_HEARTBEAT_1.md"
+  ],
+  "evidence_added": [
+    "producer receipt: closed B3.1 schema, RECEIPT_SCHEMA:<dotted path> on the first problem in field-table order; every missing field refused (20 fields, one at a time)",
+    "FD-B1: a producer receipt carrying any authority key is refused (RECEIPT_SCHEMA:authority) -- cheat control part 1",
+    "B2 canonical bytes: sorted compact UTF-8 JSON; floats, NaN and duplicate keys refused; Receipt is immutable (bytes-only, no setattr, to_dict copies)",
+    "B3.3/B3.4: RAN iff outcome present, BLOCKED needs non-empty missing; gate PASS/FAIL vs ruler POSITIVE/NEGATIVE/NOT_SHOWN kept apart; no INDETERMINATE; witness null iff PASS; vacuous iff applicable_count = 0; ruler statistic exact n/d in lowest terms equal to successes/trials",
+    "V1 node_id carries the predicate NAME matching predicate.id, observer segment iff P7; V2 trace roles only",
+    "B3.5 verdict: node_id + execution + authority + outcome all required (VERDICT_FIELD_MISSING:<f>); standing derived by B7.2; eligibility = worst standing, every non-SATISFIED node listed",
+    "B4.1 stage record validation (fire test needs >=1 accept and >=1 reject; first_sight iff >= FIRST_SIGHT_CHALLENGED; closure iff CLOSED_AFTER_REPAIR carrying first_sight unchanged)",
+    "B4.3 lowest-stage inheritance over gates and rulers (FD-B6); any UNQUALIFIED prerequisite -> claim UNQUALIFIED with node-prefixed reasons",
+    "cheat control part 2: verdict_for_receipt refuses QUALIFIED above the stage record for the receipt's exact instrument version (STAGE_EXCEEDS_RECORD:<claimed>><recorded>) and QUALIFIED with no record (NO_STAGE_RECORD); a record for another version or instrument does not count",
+    "module vocabularies asserted equal to contract.json v1.0.1 (schema, standing order, stage order, trace roles, gate/ruler values, predicate names and kinds)"
+  ],
+  "evidence_executed": [
+    {"command": "python -B -m unittest rso.slice001.tests.test_receipt (before receipt.py existed)", "result": "1 error (ImportError)"},
+    {"command": "python -B -m unittest rso.slice001.tests.test_receipt (naive stub: accepts everything, first stage wins)", "result": "35 run, 28 failures incl. test_every_missing_field_rejected, test_lowest_stage_inheritance, all cheat-control tests"},
+    {"command": "python -B -m unittest rso.slice001.tests.test_receipt (implementation)", "result": "35 run, OK"},
+    {"command": "python -B -m rso.slice001.ci at 6b6827fc9 (validation launch 1 of 12 for this session's work)", "result": "exit 0; PASSED; 44 tests run, 0 failed, 0 errored; contract OK; dirty false; cpu_s 0.062"}
+  ],
+  "red_observed": {
+    "observed": true,
+    "detail": "ImportError first; then against a naive stub 28/35 failed, including missing-field rejection, lowest-stage inheritance and the QUALIFIED-on-author-tested cheat control"
+  },
+  "result": "DONE_CLEAN",
+  "known_escapes": [
+    "the subject and world segments of node_id are checked for form only, not against subject.id / world.variant: cross-field identity is G-BIND's (T014) and choosing a schema error there would pre-empt X02",
+    "code.dirty = true is accepted by the schema; G-BIND fails it CODE_NOT_COMMITTED (T014, FD-B7)",
+    "dependency CONTENTS (required B6.2 edges) are not checked here; only form, sort and uniqueness (DEPENDENCY_MISMATCH is T014)",
+    "cell axes are checked as non-empty strings; registered-value checks (SCOPE_MALFORMED) are T014",
+    "verdict_for_receipt trusts the caller's choice of which stage records are registered (V8 fixture store in S2; the keeper store in T020)"
+  ],
+  "unresolved": [
+    "field decisions recorded in notes; none changes a claim, prerequisite, threshold or case expectation"
+  ],
+  "unblocks": [
+    "C-004-T014",
+    "C-004-T016"
+  ],
+  "created_at_utc": "2026-10-04T02:05:00Z",
+  "instance": "harry1-91cbacb8",
+  "host": "harry1",
+  "branch": "argus/c004-t013",
+  "worktree_path": "C:/Prometheus-worktrees/argus-c004-t013",
+  "resources": {
+    "cpu": "about 2 CPU-seconds (unit tests and one ci launch)",
+    "validation_launches": 1,
+    "model": "one Q2 session, about 0.3 hours"
+  },
+  "notes": "Disagreement register: the module touches none of X01-X15 directly. X10 (G-BIND-failed prerequisite standing) and X12 (CHANNEL/OBSERVER authority when RESTART is BLOCKED) live in T014/T015's authority computation; make_verdict takes authority as given and derives standing exactly by B7.2, so either resolution is expressible. Field decisions (rso-builder 2.7): FD-T013-1 RECEIPT_SCHEMA:<field> uses a dotted path for nested fields (e.g. outcome.witness); reversible (a string); revisit if T014/T015 need top-level names only. FD-T013-2 must_reject items are {case_id, expected_reason} (B4.1 writes {case id, expected reason}); revisit if the stage registrar writes another spelling. FD-T013-3 a ruler's statistic must equal successes/trials (B3.4 lists both; the alternative is undocumented); revisit if a ruler statistic is not a plain success rate. FD-T013-4 recorded_stage takes the highest supplied record for the exact version (records are append-only; a later higher stage supersedes); revisit if a downgrade record kind is introduced. FD-T013-5 the producer-authority check runs before the missing-field check so the cheat control's reason is always RECEIPT_SCHEMA:authority."
+}

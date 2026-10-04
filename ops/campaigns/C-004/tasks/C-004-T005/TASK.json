@@ -5,7 +5,7 @@
   "title": "S1 independent expected-answer table derived from the frozen contract",
   "objective": "Derive, from the frozen S1 contract alone and before seeing any implementation, the expected typed answer and reason for every registered case of T01-T08 and E01-E06.",
   "parent_objective": "RSO-METHODS-SLICE-001 (CAMPAIGN.json objective)",
-  "owner_role": "Dionysus",
+  "owner_role": "Pallas",
   "quality_class": "Q3",
   "can_downgrade": false,
   "escalate_to": "operator",
@@ -43,7 +43,7 @@
     "rso/slice001/expected/EXPOSURE.md"
   ],
   "kind": "review",
-  "status": "READY",
+  "status": "INTEGRATED",
   "history": [
     {
       "status": "PROPOSED",
@@ -56,11 +56,41 @@
       "by": "Palamedes[harry1-679179c6]",
       "at_utc": "2026-10-03T11:04:14Z",
       "note": "made READY by the coordinator (C-004-T000)"
+    },
+    {
+      "status": "CLAIMED",
+      "by": "Pallas[harry1-da86cf98]",
+      "at_utc": "2026-10-03T22:15:44Z",
+      "note": ""
+    },
+    {
+      "status": "IMPLEMENTING",
+      "by": "Pallas[harry1-da86cf98]",
+      "at_utc": "2026-10-03T22:27:14Z",
+      "note": ""
+    },
+    {
+      "status": "GREEN",
+      "by": "Pallas[harry1-da86cf98]",
+      "at_utc": "2026-10-03T22:27:15Z",
+      "note": ""
+    },
+    {
+      "status": "INTEGRATION_READY",
+      "by": "Pallas[harry1-da86cf98]",
+      "at_utc": "2026-10-03T22:27:15Z",
+      "note": ""
+    },
+    {
+      "status": "INTEGRATED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-03T22:29:38Z",
+      "note": "merged 5c9f0bc66; blinding order verified by commit order; table immutable after reveal; 48/48 rows; escalation C-004-T005_1 handled separately"
     }
   ],
   "authority": "operator directive 2026-10-03 s9, s11 (roles/Achilles/prompts/2026-10-03_rso_builder_cell/01_OPERATOR_DIRECTIVE_verbatim.md); decomposed by Palamedes under C-004-T000",
   "eligible_roles": [
-    "Pallas"
+    "Dionysus"
   ],
   "escalation_triggers": [
     "a case's expected answer is not determined by the contract text (contract defect: escalate to Palamedes, do not guess)"
@@ -70,6 +100,6 @@
     "cpu": "none",
     "note": "Counts toward the slice caps fixed by C-004-OP1 (NEXT_ROUND_PLAN_v0.4 s6 proposal: 30 CPU-minutes total, 0 GPU, 0 cloud, 100 MB new artifacts, 12 top-level validation launches; mutation children count toward CPU). Stop at the first exhausted cap and keep partial results."
   },
-  "notes": "owner_role follows closure review F (Dionysus); Pallas eligible as the fallback the operator may name under C-004-OP3. The coordinator rewrites owner_role once OP-3 is decided.",
+  "notes": "Reviewer per C-004-OP3 ruling 2026-10-03: Pallas (Fable 5.1) owns; Dionysus is the fallback (eligible). Independence caveat, declared: Pallas is a member of the RSO Builder Cell but writes no production code and is a different model family from the Opus/Sonnet builders.  Changed by Palamedes[harry1-679179c6] at 2026-10-03T21:48:40Z: owner_role Dionysus -> Pallas, eligible Pallas -> Dionysus.",
   "red_required": false
 }

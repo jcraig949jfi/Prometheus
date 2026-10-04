@@ -1,0 +1,63 @@
+{
+  "schema": "prometheus.workgraph.receipt.v1",
+  "task_id": "C-004-T015",
+  "campaign_id": "C-004",
+  "attempt_id": "A-001",
+  "role": "Argus",
+  "model": "claude-opus-5-5",
+  "quality_class": "Q2",
+  "start_sha": "e2742a706e6569fabea0bda6595faeaa55dfc1fb",
+  "end_sha": "500d633b6f5f8d1821963d60e6218573380ccbc3",
+  "files_changed": [
+    "rso/slice001/checker.py",
+    "rso/slice001/render.py",
+    "rso/slice001/tests/test_checker_render.py",
+    "rso/slice001/receipt.py",
+    "rso/slice001/tests/test_receipt.py",
+    "roles/Argus/comms/2026-10-04_T015_CLAIMED.md",
+    "roles/Argus/comms/2026-10-04_HEARTBEAT_4_cff5ef7f.md"
+  ],
+  "evidence_added": [
+    "G-RECOMP (B6.4): per claim over its required nodes in the recompute set (CALIBRATION, RETENTION, ERASE, PRESERVE, CHANNEL); compares value, counts, statistic, per_boundary and first witness; FAIL OUTCOME_MISMATCH:<field> (V3). Absent receipt -> BLOCKED EVIDENCE_MISSING:<node>; trace bytes that do not bind to the receipt's ref -> FAIL BYTES_MISMATCH:<role>; bound bytes outside the trace format -> FAIL TRACE_SCHEMA:<role>; BLOCKED receipts are not applicable",
+    "recomputation of P1-P5 from traces (draft A A5): canonical witness order history, boundary, clamp v (V5); pair partner = class representative (V5); eligible counts 98304 (8 x 12288) / 12288 trials / 9600 / 6144 / 24576; PRESERVE applicable count and vacuity; RETENTION NEGATIVE = functional independence (FD-A2)",
+    "known answers on fixture traces built from the contract (A6): REG, PKTD, LAGD on all five; LAGD ERASE FAIL first witness h=64, j=3 (episode 4, PROBE_A); WIPE PRESERVE FAIL 6144 of 6144 applicable, witness h=128, j=3, RETENTION NEGATIVE 1/2; QCARRY CHANNEL FAIL witness (0, 1, 1) and ERASE PASS; AMNESIAC NEGATIVE 1/2 and PRESERVE vacuous PASS; FLIP NOT_SHOWN 0; HCOUNT NOT_SHOWN 1/3; CALIBRATION STANDARD PASS, CLOCKED FAIL 1/1 at boundary 1",
+    "consumer decision record (B1, B3.5, B4.3, B7): every B7.1 prerequisite from policy as a three-field verdict (receipt.make_verdict), consumer gates as GATE lines with authority from their own stage records, eligibility worst-of-three, every non-SATISFIED line listed, inherited stage and instrument count, custody, unverified records; canonical JSON so independence is compared byte for byte",
+    "E01-E05 at the consumer: G0 (CL-CAL, CL-RET REG/PKTD ELIGIBLE; LAGD NOT_ELIGIBLE UNMET on ERASE; REG/PKTD/CL-CAL byte-identical without the LAGD branch); OUTCOME_EDIT (G-RECOMP FAIL OUTCOME_MISMATCH:value, LAGD stays UNMET, REG/PKTD/CL-CAL unchanged); FAB_CONSISTENT and FAB_REGISTERED pass every check (stated limit; the render says 'execution not authenticated'); MISSING (BLOCKED); MALFORMED, RELABEL, WRONG_SUBJECT, STRIP, BYTEFLIP (UNMET via G-BIND); REANCHOR; W_RESTART, W_OBS, W_UNRELATED, W_UNANCHORED; KEEPER, FAB_ANCHORS, LATE_REG on CL-CUST",
+    "render (B8): HEADLINE / STAGE / CUSTODY / VERDICT grammar; the B8.2 accepted REG rendering reproduced (author-tested, lowest of 11 instruments); both B8.2 refusals reproduced; quantifier words only inside a class relative clause carrying an exact bound; RELATIVE / CELL / SETTING missing refused; TWIN promotion refused; producer prose never rendered (FAIL lines print typed codes only); a NOT_ELIGIBLE claim keeps its bracket, carries no counts and lists non-SATISFIED lines first; every rendered claim carries its stage and custody lines; '(not recomputed)' and '(vacuous: 0 applicable)' printed",
+    "receipt.py (escalation C-004-T015_1, option 1): VERDICT_KINDS accepts G-BIND / G-INV / G-RECOMP as GATE kinds in verdict validation only; a RULER-kind consumer-gate outcome is refused (VERDICT_SCHEMA:outcome); a producer receipt still cannot name a consumer gate; existing test_receipt.py tests unchanged, one class added"
+  ],
+  "evidence_executed": [
+    {"command": "python -B -m unittest rso.slice001.tests.test_checker_render with checker.g_recomp replaced by an always-PASS stub, Consumer.decide_all by a global verdict (any non-SATISFIED prerequisite anywhere revokes every claim) and render.lint by a no-op", "result": "30 run, 21 failures, including the 'no organism' unbounded rendering accepted (test_unbounded_no_organism_passes_stub_only, test_quantifier_only_beside_exact_bound) and LAGD's failure revoking CL-RET(REG), CL-RET(PKTD) and CL-CAL (test_unrelated_failure_revokes_under_stub_only, test_outcome_edit, test_w_obs, test_g0)"},
+    {"command": "python -B -m unittest rso.slice001.tests.test_receipt against the pre-change receipt.py (git show HEAD:rso/slice001/receipt.py)", "result": "38 run, 2 errors (consumer-gate verdicts refused); green after the change"},
+    {"command": "python -B -m unittest rso.slice001.tests.test_receipt rso.slice001.tests.test_checker_render", "result": "68 run, OK, about 12 s"},
+    {"command": "python -B -m rso.slice001.ci at 500d633b6 (branch with origin/main a391bf21d merged; validation launch 1 of 12 this session; not ledger-charged, the --ledger opt-in is required of T020)", "result": "exit 0; PASSED; 159 tests, 0 failed, 0 errored; contract OK; dirty false; cpu_s 17.422; wall_s 27.316"}
+  ],
+  "red_observed": {
+    "observed": true,
+    "detail": "naive stubs failed 21 of 30 checker/render tests, including both packet RED items: a naive renderer emitted 'no organism' unbounded, and a checker stub let LAGD's unrelated failure revoke CL-RET(REG), CL-RET(PKTD) and CL-CAL. Both stubs are kept as permanent fire tests (TestFireStubs). The new receipt tests errored (2) against the pre-change receipt.py."
+  },
+  "result": "DONE_CLEAN",
+  "known_escapes": [
+    "every G-RECOMP run here is on FIXTURE traces built in the tests from the contract (a minimal composite simulator of A2-A3 and the A6 runtimes), not on world traces: Cadmus's world (T010) and adapter (T016) do not exist yet. E01.OUTCOME_EDIT's G-RECOMP line is closed at fixture level only; end-to-end recomputation on real world traces is exercised only at T020",
+    "the trace byte layout (checker.TRACE_LAYOUT, FD-T015-1) and witness shapes (FD-T015-2) are this packet's reading; V2 fixes roles, not bytes. T016 must emit exactly this layout or G-RECOMP FAILs TRACE_SCHEMA / OUTCOME_MISMATCH:witness at T020. PRESERVE needs no-reset comparison runs, which V2 does not name as a role: they ride inside trace:probe_a as runs SKIP1..SKIP3. ERASE reads trace:sends (CUE outputs), which T014's fixture ROLES omitted",
+    "the B9 bundles are T014's fixtures with recompute-set traces and outcomes patched in by the test (evidence_cases.py is T014's and was not edited); non-recompute receipts (BOUNDS, RESTART, OBSERVER, TWIN_EQ) keep synthetic trace bytes",
+    "a TWIN proposition takes the twin id and encoding from optional claim fields 'twin' / 'encoding'; evidence.make_claim does not carry them, so a TWIN render from today's claims prints 'the twin of M' and 'its registered encoding'",
+    "custody is printed with every claim and belongs to the whole bundle: where the consumer holds producer anchors (OUTCOME_EDIT) it differs on every claim alike; independence there is checked byte for byte on the record without custody, and custody separately (FD-T015-6)",
+    "CPU: the checker/render tests take about 12 s of the 17 s ci run (fixture simulation of 8 runtimes); inside the packet ceiling, noted against the 30 CPU-minute slice cap"
+  ],
+  "unresolved": [],
+  "unblocks": [
+    "C-004-T020"
+  ],
+  "created_at_utc": "2026-10-04T07:36:00Z",
+  "instance": "harry1-cff5ef7f",
+  "host": "harry1",
+  "branch": "argus/c004-t015",
+  "worktree_path": "C:/Prometheus-worktrees/argus-c004-t015",
+  "resources": {
+    "cpu": "about 60 CPU-seconds (RED runs, unit iterations, one ci launch at 17.4 CPU-s)",
+    "validation_launches": 1,
+    "model": "one Q2 session, about 0.5 hours"
+  },
+  "notes": "Disagreement register, which way the code falls (implemented from the text, not chosen). X01: CALIBRATION and RETENTION on CLOCKED use the 4096 enumeration with u_j := j mod 2 at j = 1..3; CALIBRATION FAILs 'no-carry class reaches 1/1 > 1/2 at boundary 1'; RETENTION's authority stays UNQUALIFIED (PRECONDITION:CALIBRATION) either way. X03: G-RECOMP never recomputes from bytes that do not bind to the receipt's ref: BYTEFLIP -> G-RECOMP FAIL BYTES_MISMATCH:trace:probe_a (CL-RET(REG) UNMET, as B9 and the independent table); REANCHOR with T014's byte-0 flip -> FAIL TRACE_SCHEMA:trace:probe_a; REANCHOR flipping a y_A digit -> FAIL OUTCOME_MISMATCH:value; G-BIND PASS against the producer's anchors in both. X06: MISSING puts BLOCKED on the PRESERVE line, on G-BIND (T014) and on G-RECOMP (EVIDENCE_MISSING:rcpt:REG:PRESERVE:STANDARD); G-INV FAIL RUN_UNREPORTED. X07: CL-RET(LAGD) UNQUALIFIED under W_RESTART. X08: W_UNRELATED leaves every CL-* decision byte-identical; TWIN(REG) becomes UNQUALIFIED. X10: a prerequisite whose node fails G-BIND keeps its own standing; the claim is UNMET via the G-BIND line. X14: custody is its B5.3 record; on CL-CUST it is a prerequisite line with standing SATISFIED iff QUALIFIED, else UNQUALIFIED. Field decisions (rso-builder 2.7; each reversible, a constant or one comparison; revisit at T016/T020 or on an S3 attack): FD-T015-1 trace layout (TRACE_LAYOUT; SKIPj runs inside trace:probe_a for PRESERVE; ERASE reads probe_a, probe_d and sends). FD-T015-2 witness shapes ERASE {history, partner, j, episode, tick}, PRESERVE {history, partner, j}, CHANNEL {history, j, v}, CALIBRATION {j, policy}. FD-T015-3 CALIBRATION is recomputed from the consumer's own enumeration of the registered domain for the receipt's world variant; no producer bytes are read. FD-T015-4 applicable_count is compared for PRESERVE only (the one predicate that defines it); reason prose is never compared. FD-T015-5 G-RECOMP typed results: BLOCKED EVIDENCE_MISSING; FAIL RECEIPT_SCHEMA / BYTES_MISMATCH / TRACE_SCHEMA (a new reason code, not in B6.3) / OUTCOME_MISMATCH. FD-T015-6 custody compared separately when the bundle's anchors differ. FD-T015-7 '(not recomputed)' is printed on every producer line outside the recompute set (BOUNDS and TWIN_EQ as well as B6.4's RESTART and OBSERVER) and on recompute-set lines of claims without a G-RECOMP prerequisite (CL-CAL). FD-T015-8 twin-promotion phrase list (second / another physics, independently confirms, replicat*, realis* / realiz*, promot*). FD-T015-9 setting printed as 'reset_model <sha12 of the anchored contract.json revision>' per B8.1. FD-T015-10 the CL-CAL proposition avoids 'no-carry' (a whole-word 'no' outside the relative clause) and says 'the maximum success of N', N being defined in the class clause."
+}

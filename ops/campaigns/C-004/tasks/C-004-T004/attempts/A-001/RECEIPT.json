@@ -1,0 +1,74 @@
+{
+  "schema": "prometheus.workgraph.receipt.v1",
+  "task_id": "C-004-T004",
+  "campaign_id": "C-004",
+  "attempt_id": "A-001",
+  "role": "Palamedes",
+  "model": "claude-opus-5-5",
+  "quality_class": "Q2",
+  "start_sha": "a8cb00f05",
+  "end_sha": "(the freeze commit carrying this receipt; see git log -- rso/slice001/contract/CONTRACT.md)",
+  "files_changed": [
+    "rso/slice001/contract/CONTRACT.md",
+    "rso/slice001/contract/contract.json",
+    "rso/slice001/contract/MANIFEST.md",
+    "rso/slice001/contract/drafts/MANIFEST.md",
+    "ops/campaigns/C-004/tasks/C-004-T004/"
+  ],
+  "evidence_added": [
+    "CONTRACT.md v1.0.0 with coverage table and reconciliation R1-R6",
+    "contract.json frozen: true, 48 registered cases, caps, custody, claims, gates, challenge",
+    "manifests for contract/ and contract/drafts/"
+  ],
+  "evidence_executed": [
+    {
+      "command": "python -B -m rso.slice001.ci",
+      "result": "exit 0; PASSED 9/9; contract state OK, problems []"
+    },
+    {
+      "command": "python -m comms.manifest verify rso/slice001/contract",
+      "result": "verified 3 entries; 0 mismatches"
+    },
+    {
+      "command": "coverage check over contract.json cases",
+      "result": "48 unique ids; families T01-T08 and E01-E06 all present"
+    },
+    {
+      "command": "draft hashes in contract.json vs drafts/MANIFEST.md",
+      "result": "draft_A match, draft_B match"
+    },
+    {
+      "command": "git ls-tree rso/slice001 for S2 files (world/reset/rulers/receipt/evidence/checker/render/adapter/mutation/encoding/ledger)",
+      "result": "none: freeze precedes every S2 test file"
+    }
+  ],
+  "red_observed": {
+    "observed": false,
+    "reason": "kind document, red_required false: preregistered failure state 'contract.json ABSENT' was true at claim (ci reported state ABSENT on 0389dda5f)"
+  },
+  "result": "DONE_CLEAN",
+  "known_escapes": [
+    "drafts incorporated by reference at blob hash, not transcribed: a reader must read three documents",
+    "48-case list transcribed from draft rows by the assembler; an omitted row would be invisible to T005 except through the definitions",
+    "author-expected values are inside the incorporated drafts; R4 blinding relies on the reviewer's recorded reading order"
+  ],
+  "unresolved": [
+    "custody.store locator UNSET: Aporia to fix before the first T020 matrix run (R3)"
+  ],
+  "unblocks": [
+    "C-004-T005",
+    "C-004-T010",
+    "C-004-T013",
+    "C-004-T019"
+  ],
+  "created_at_utc": "2026-10-03T22:12:34Z",
+  "instance": "harry1-679179c6",
+  "host": "harry1",
+  "branch": "(detached state worktree)",
+  "worktree_path": "C:/Prometheus-worktrees/palamedes-ops",
+  "resources": {
+    "cpu": "seconds (validation only; not a slice launch)",
+    "model": "about 0.6 Q2 seat-hours"
+  },
+  "notes": "Reconciliation: R1 FD-A3 CHANNEL accepted (enforces plan s3 'explicitly allowed channel'; QCARRY otherwise eligible); R2 FD-B3 kept; R3 store to Aporia; R4 T005 commits before reading author-expected columns."
+}

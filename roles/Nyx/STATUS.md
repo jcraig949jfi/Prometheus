@@ -13,6 +13,10 @@ BOOT NOTE: read roles/Nyx/RESUME_2026-09-25.md FIRST on every bootstrap -- boot 
     (sum not product; trail kept); (4) Techne batch 17 cut: 20 bodies, 78 organs (reader-assisted, spot-checked), atlas 143;
     (5) surprise-scheduler review #1268; (6) archive-arm ladder design (no run). Attack on Atlas reachability #1263.
   Open with Harmonia: replication (#1270), Avida ancestry (#1069). Next: Stage D' on returns; poet-enhanced-2020.
+  POET-ENHANCED-2020 (operator, same day): cut COARSE, 3 ACCEPTED organs (PATA-EC, k-NN novelty, MC admission), derived_from
+    poet-original-2019; atlas 144. Packet MECH-POET-PATA-EC-001 FROZEN BLIND ea2adf88 (89a5aab2e), 5 exact numpy-only rows:
+    I1 cap_score arity TypeError (by reading: es.py 597/600), I2 ties erased, I3 tie norm 1.009217, I4 one agent NaN,
+    I5 basis-population reversal of the novelty order. To Harmonia #1315 (cc Techne, Aporia). MECH-POET-PATA-EC registered.
 
 2026-09-30 (instance gandalf-d1f90ae1, rebooted) -- CURRENT STATE; where the older sections below differ, this block wins.
   BOOT: per the resume record; merged origin/main; validators green. ADOPTED MWO-0004 (first live cycle since MWO-0001):

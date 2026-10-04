@@ -46,7 +46,7 @@
     "rso/slice001/tests/test_mutation.py"
   ],
   "kind": "software",
-  "status": "READY",
+  "status": "INTEGRATED",
   "history": [
     {
       "status": "PROPOSED",
@@ -59,6 +59,42 @@
       "by": "Palamedes[harry1-679179c6]",
       "at_utc": "2026-10-03T11:04:14Z",
       "note": "made READY by the coordinator (C-004-T000)"
+    },
+    {
+      "status": "CLAIMED",
+      "by": "Argus[harry1-91cbacb8]",
+      "at_utc": "2026-10-04T02:06:23Z",
+      "note": "S2 session 2; branch argus/c004-t017"
+    },
+    {
+      "status": "RED",
+      "by": "Argus[harry1-91cbacb8]",
+      "at_utc": "2026-10-04T02:09:46Z",
+      "note": ""
+    },
+    {
+      "status": "IMPLEMENTING",
+      "by": "Argus[harry1-91cbacb8]",
+      "at_utc": "2026-10-04T02:09:47Z",
+      "note": ""
+    },
+    {
+      "status": "GREEN",
+      "by": "Argus[harry1-91cbacb8]",
+      "at_utc": "2026-10-04T02:09:47Z",
+      "note": ""
+    },
+    {
+      "status": "INTEGRATION_READY",
+      "by": "Argus[harry1-91cbacb8]",
+      "at_utc": "2026-10-04T02:09:47Z",
+      "note": "branch argus/c004-t017 at cd8deecff; RED ImportError; 14/14; ci exit 0; receipt A-001"
+    },
+    {
+      "status": "INTEGRATED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-04T02:11:32Z",
+      "note": "merged cd8deecff; integrator: test_mutation 14/14 on merged tree; mutation check (test error classified KILLED) killed, restored; RED = ImportError only (no naive-stub run, declared)"
     }
   ],
   "authority": "operator directive 2026-10-03 s9, s11 (roles/Achilles/prompts/2026-10-03_rso_builder_cell/01_OPERATOR_DIRECTIVE_verbatim.md); decomposed by Palamedes under C-004-T000",

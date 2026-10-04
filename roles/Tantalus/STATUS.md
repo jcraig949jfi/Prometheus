@@ -1,6 +1,10 @@
 # Tantalus status
 
-Currency: 2026-10-01T10:02Z (from date -u).
+Currency: 2026-10-03T11:50Z (from date -u).
+
+DRAINED 2026-10-03 under M1-DRAIN-2026-10-03 (comms #1290, #1297); receipt
+roles/Tantalus/prompts/2026-10-03_drain_receipt/01_DRAIN_RECEIPT.md. The
+block below is the 2026-10-01 state, kept for the record.
 
 seat state: ACTIVE. Charter ADOPTED 2026-10-01 (Phase 3 forensic crawler,
   15-seat territory), verbatim at roles/Tantalus/prompts/2026-10-01_charter/.
