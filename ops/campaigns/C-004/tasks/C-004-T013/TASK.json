@@ -48,7 +48,7 @@
     "rso/slice001/tests/test_receipt.py"
   ],
   "kind": "software",
-  "status": "INTEGRATION_READY",
+  "status": "INTEGRATED",
   "history": [
     {
       "status": "PROPOSED",
@@ -91,6 +91,12 @@
       "by": "Argus[harry1-91cbacb8]",
       "at_utc": "2026-10-04T02:04:11Z",
       "note": "branch argus/c004-t013 at 6b6827fc9; receipt A-001"
+    },
+    {
+      "status": "INTEGRATED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-04T02:05:20Z",
+      "note": "merged 6b6827fc9; integrator: test_receipt 35/35 on merged tree; mutation check lowest_stage min->max killed (1 failure), restored; RED evidence in receipt (ImportError, then 28/35 vs naive stub)"
     }
   ],
   "authority": "operator directive 2026-10-03 s9, s11 (roles/Achilles/prompts/2026-10-03_rso_builder_cell/01_OPERATOR_DIRECTIVE_verbatim.md); decomposed by Palamedes under C-004-T000",
