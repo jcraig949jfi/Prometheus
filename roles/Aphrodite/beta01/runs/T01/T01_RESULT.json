@@ -1,0 +1,188 @@
+{
+ "QUALIFICATION": "QUALIFIED",
+ "apparatus": "eb21ef8abb86ba08",
+ "capability_summary": {
+  "N_COV": 151920,
+  "by_arm": {
+   "MEMO": {
+    "CENSORED": {
+     "arm_censored": 16,
+     "mean_delta": 0.0,
+     "median_delta": 0.0,
+     "n": 16,
+     "solves_where_ref_censored": 0,
+     "spurious": 0
+    }
+   },
+   "NULL": {
+    "CENSORED": {
+     "arm_censored": 16,
+     "mean_delta": 0.0,
+     "median_delta": 0.0,
+     "n": 16,
+     "solves_where_ref_censored": 0,
+     "spurious": 0
+    }
+   },
+   "PRISTINE": {
+    "CENSORED": {
+     "arm_censored": 16,
+     "mean_delta": 0.0,
+     "median_delta": 0.0,
+     "n": 16,
+     "solves_where_ref_censored": 0,
+     "spurious": 0
+    }
+   },
+   "SHAM_EQ": {
+    "CENSORED": {
+     "arm_censored": 0,
+     "mean_delta": 2.071,
+     "median_delta": 2.0949,
+     "n": 16,
+     "solves_where_ref_censored": 16,
+     "spurious": 0
+    }
+   },
+   "SHAM_X": {
+    "CENSORED": {
+     "arm_censored": 16,
+     "mean_delta": 0.0,
+     "median_delta": 0.0,
+     "n": 16,
+     "solves_where_ref_censored": 0,
+     "spurious": 0
+    }
+   },
+   "SIBLING": {
+    "CENSORED": {
+     "arm_censored": 16,
+     "mean_delta": 0.0,
+     "median_delta": 0.0,
+     "n": 16,
+     "solves_where_ref_censored": 0,
+     "spurious": 0
+    }
+   },
+   "T": {
+    "CENSORED": {
+     "arm_censored": 0,
+     "mean_delta": 2.071,
+     "median_delta": 2.0949,
+     "n": 16,
+     "solves_where_ref_censored": 16,
+     "spurious": 0
+    }
+   }
+  },
+  "cap": 2000000,
+  "ref": "PRISTINE"
+ },
+ "cases": {
+  "K1_PLANTED_ABSTRACTION": {
+   "detail": {
+    "cliff_excess_cells": 16,
+    "families_solved": 4,
+    "of": 4,
+    "pristine_all_censored": false
+   },
+   "expected": "PASS",
+   "got": "PASS",
+   "pass": true,
+   "reason_ok": true
+  },
+  "K1b_KNOCKOUT_SIBLING": {
+   "detail": {
+    "families_solved": 0
+   },
+   "expected": "NO",
+   "got": "NO",
+   "pass": true,
+   "reason_ok": true
+  },
+  "K2_NULL": {
+   "detail": {
+    "families_solved": 0
+   },
+   "expected": "NO",
+   "got": "NO",
+   "pass": true,
+   "reason_ok": true
+  },
+  "K3a_SHAM_EQUAL_EXPRESSIVITY": {
+   "detail": {
+    "families_solved": 0
+   },
+   "expected": "NO",
+   "got": "NO",
+   "pass": true,
+   "reason_ok": true
+  },
+  "K3b_REEXPRESSION_NOT_A_SHAM": {
+   "detail": {
+    "families_solved": 4
+   },
+   "expected": "NOT_A_SHAM",
+   "got": "NOT_A_SHAM",
+   "pass": true,
+   "reason_ok": true
+  },
+  "K4_MEMORISATION_CHEAT": {
+   "detail": {
+    "families_solved": 0
+   },
+   "expected": "NO",
+   "got": "NO",
+   "pass": true,
+   "reason_ok": true
+  },
+  "K5_UNREPRESENTABLE": {
+   "detail": {
+    "body": "(((acc + v) * v) + ((v * v) - first))",
+    "in_W5": false,
+    "in_any_lib": false
+   },
+   "expected": "REPRESENTATION_LIMITED",
+   "got": "REPRESENTATION_LIMITED",
+   "pass": true,
+   "reason_ok": true
+  },
+  "K6_CONSTANT_GATE_DESIGN": {
+   "detail": {},
+   "expected": "INVALID_DESIGN",
+   "got": "INVALID_DESIGN",
+   "pass": true,
+   "reason_ok": true
+  },
+  "K7_SUPPLY_SHORTFALL": {
+   "detail": {
+    "experiment": "K7",
+    "passed": false,
+    "quota": 6,
+    "replicates_fillable": 4,
+    "replicates_planned": 6,
+    "rows_sha256": "1f2b091b3a3d0de8",
+    "unfilled": [
+     4,
+     5
+    ]
+   },
+   "expected": "SUPPLY_LIMITED",
+   "got": "SUPPLY_LIMITED",
+   "pass": true,
+   "reason_ok": true
+  },
+  "K8_TRIBUNAL_VERSION": {
+   "detail": {
+    "v1_solved_cells": 0,
+    "v1_spurious_walked_past": 32,
+    "v1a_solved_cells": 4
+   },
+   "expected": "V1_BLIND_V1A_SOLVES",
+   "got": "V1_BLIND_V1A_SOLVES",
+   "pass": true,
+   "reason_ok": true
+  }
+ },
+ "technical_failures": []
+}
