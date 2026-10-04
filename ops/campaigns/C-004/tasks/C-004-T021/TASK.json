@@ -1,0 +1,73 @@
+{
+  "schema": "prometheus.workgraph.task.v1",
+  "task_id": "C-004-T021",
+  "campaign_id": "C-004",
+  "title": "Custody store reader for evidence.py; decouple the S2 suite from the live custody.store value",
+  "objective": "Give evidence.py a read-only reader for the live custody registry (amendment v1.0.2) so custody can be evaluated at T020, and make the S2 tests independent of the contract's live custody.store value.",
+  "parent_objective": "RSO-METHODS-SLICE-001 (CAMPAIGN.json objective)",
+  "owner_role": "Argus",
+  "quality_class": "Q2",
+  "can_downgrade": false,
+  "escalate_to": "Q3",
+  "depends_on": [
+    "C-004-T014"
+  ],
+  "requires_shas": [
+    "497b81a4e (ops/custody/ registry)"
+  ],
+  "owns": [
+    "rso/slice001/evidence.py",
+    "rso/slice001/tests/test_evidence.py",
+    "rso/slice001/contract/contract.json",
+    "rso/slice001/contract/MANIFEST.md"
+  ],
+  "reads": [
+    "rso/slice001/contract/AMENDMENT_v1.0.2.md",
+    "ops/custody/",
+    "rso/slice001/contract/drafts/B_evidence_receipt_authority.md"
+  ],
+  "problem": "AMENDMENT_v1.0.2.md sets custody.store to postgresql://192.168.1.202:5432/prometheus_fire#custody.registry (Aporia #1353). evidence.py raises STORE_UNREACHABLE for any set locator (declared T014 escape: no reader), and test_unset_store_is_keeper_row_missing reads the live contract value, so applying the field turns the suite red. The real T020 run needs custody read from the store: rows via `python -m ops.custody.registry read --json` semantics (or its Python API), the chain checked via verify (exit 1 -> custody FAIL ROW_CHAIN_BROKEN, exit 3 -> STORE_UNREACHABLE), and B5.3's QUALIFIED conditions evaluated on fetched rows (consumer fetches itself; row registered before the consumer's first check; row blob equals the committed blob).",
+  "non_goals": [
+    "No write path: the reader never writes the registry (Aporia only)",
+    "No change to B5.3 semantics or the why codes (V6 format)",
+    "No network or DB access in unit tests: tests use a stub reader; one optional live smoke test is skipped unless an env var is set"
+  ],
+  "evidence_required": [
+    "RED: a test that a set locator with a stub reader returning registered rows yields custody QUALIFIED, failing before the reader exists",
+    "a test that the chain-broken stub yields FAIL ROW_CHAIN_BROKEN and unreachable yields STORE_UNREACHABLE (never a pass)",
+    "test_unset_store_is_keeper_row_missing rewritten to use a fixture custody dict, not the live contract",
+    "contract.json custody fields updated exactly as AMENDMENT_v1.0.2.md W1/W2 and version 1.0.2, manifest rewritten, full suite green in the same commit"
+  ],
+  "acceptance": {
+    "command": "python -B -m rso.slice001.ci && python -m comms.manifest verify rso/slice001/contract",
+    "condition": "suite green with contract.json at 1.0.2 and custody.store set; stub-reader QUALIFIED/ROW_CHAIN_BROKEN/STORE_UNREACHABLE cases pass"
+  },
+  "deliverables": [
+    "rso/slice001/evidence.py store reader",
+    "rso/slice001/tests/test_evidence.py updates",
+    "contract.json v1.0.2 + MANIFEST.md"
+  ],
+  "kind": "software",
+  "status": "READY",
+  "history": [
+    {
+      "status": "PROPOSED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-04T08:03:50Z",
+      "note": "created: v1.0.2 locator turns the suite red without a reader (found applying the amendment)"
+    },
+    {
+      "status": "READY",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-04T08:03:50Z",
+      "note": "made READY by the coordinator"
+    }
+  ],
+  "authority": "operator directive 2026-10-03 s9, s11; C-004-OP2; operator confirmation of the store 2026-10-04",
+  "resource_ceiling": {
+    "engineering": "<= 1 Q2 seat-hour",
+    "cpu": "< 1 CPU-minute",
+    "note": "counts toward OP-1 caps"
+  },
+  "notes": "contract.json and MANIFEST.md are in owns ONLY to apply AMENDMENT_v1.0.2 W1/W2 verbatim in the same commit as the reader, so main never carries a red suite. Coordinator decision recorded in AMENDMENT_v1.0.2.md STATUS line."
+}

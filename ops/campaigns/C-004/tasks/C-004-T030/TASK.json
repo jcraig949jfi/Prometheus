@@ -60,6 +60,6 @@
     "cpu": "< 10 CPU-minutes incl. mutation children",
     "note": "Counts toward the slice caps fixed by C-004-OP1 (NEXT_ROUND_PLAN_v0.4 s6 proposal: 30 CPU-minutes total, 0 GPU, 0 cloud, 100 MB new artifacts, 12 top-level validation launches; mutation children count toward CPU). Stop at the first exhausted cap and keep partial results."
   },
-  "notes": "Reviewer per C-004-OP3 ruling 2026-10-03: Pallas (Fable 5.1) owns; Dionysus is the fallback (eligible). Independence caveat, declared: Pallas is a member of the RSO Builder Cell but writes no production code and is a different model family from the Opus/Sonnet builders. PROPOSED until its inputs exist. Changed by Palamedes[harry1-679179c6] at 2026-10-03T21:48:40Z: owner_role Dionysus -> Pallas, eligible Pallas -> Dionysus.",
+  "notes": "Reviewer per C-004-OP3 ruling 2026-10-03: Pallas (Fable 5.1) owns; Dionysus is the fallback (eligible). Independence caveat, declared: Pallas is a member of the RSO Builder Cell but writes no production code and is a different model family from the Opus/Sonnet builders. PROPOSED until its inputs exist. Changed by Palamedes[harry1-679179c6] at 2026-10-03T21:48:40Z: owner_role Dionysus -> Pallas, eligible Pallas -> Dionysus. COORDINATOR 2026-10-04 (from T019 receipt): mutation.py does not charge the ledger; the S3 run must charge mutation children via ledger.begin(launch_kind=MUTATION_CHILD) or the CPU cap is not enforced on them.",
   "red_required": false
 }
