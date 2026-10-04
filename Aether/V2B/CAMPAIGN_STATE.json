@@ -4,10 +4,10 @@
   "epic": "EP-PHASE2B",
   "authority": "operator directive 2026-10-04 (roles/Aether/prompts/2026-10-04_v2b_directive/)",
   "cycle": 1,
-  "window_type": "DEV",
+  "window_type": "TEST",
   "window_index": 1,
-  "window_opened_utc": "2026-10-04T11:37:13Z",
-  "window_due_close_utc": "2026-10-04T15:37:13Z",
+  "window_opened_utc": "2026-10-04T15:40:35Z",
+  "window_due_close_utc": "2026-10-04T19:37:13Z",
   "active_threads": [
     "TH-007",
     "TH-008",
@@ -15,14 +15,15 @@
   ],
   "physics_version": "aeth03_variants @ 1b4fb4523 (v1 + scouts + rcv family + lesions rcv_sfx/rcv_adr/rcv_sfz)",
   "observatory_version": "prov0 @ 9770203e6 (qualified: 22/22 fixtures + self-check)",
-  "experiment": "TEST-1 provenance qualification (Aether/V2B/TEST-1/PREREGISTRATION.md)",
-  "attempt": null,
+  "experiment": "TEST-1 (Aether/V2B/TEST-1/PREREGISTRATION.md)",
+  "attempt": 1,
   "last_disposition": "DEV-1 complete: prov0 built and qualified; TEST-1 frozen",
   "unresolved_defects": [
     "rcv_add lesion leaks through later ADD writes (E-011) -- needs provenance",
     "Fabric CLI broken on Windows (#1135) -- not blocking: Aether submits from BUCKKEEP successfully so far; recheck",
     "E-P1 repair pending TEST-1 verdict (prov0 built; DEV pilot shows fwd visible)"
   ],
-  "next_intended_window": "TEST-1 (cycle 1) -- opens at the window boundary 2026-10-04T15:37Z",
-  "dev1_plan": "Aether/V2B/DEV-1_PLAN.md"
+  "next_intended_window": "DEV-2 at 2026-10-04T19:37Z",
+  "dev1_plan": "Aether/V2B/DEV-1_PLAN.md",
+  "fabric_tasks": "scratchpad t1/tasks.json (28 units, experiment V2B-TEST-1)"
 }
