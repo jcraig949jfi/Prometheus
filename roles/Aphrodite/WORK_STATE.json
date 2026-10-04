@@ -4,9 +4,9 @@
   "mwo_id": "MWO-0004",
   "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
   "mwo_sha256": "925660b2d2be53af2ee4195391e484d9649bbd4ee828cd60432ce2f0903a99df",
-  "updated_at_utc": "2026-10-01T06:36:37Z",
-  "state": "READY",
-  "state_reason": "Operator directive (bounded inference harvest, inference-only, cutoff 2026-10-01 05:00 America/New_York) COMPLETED before cutoff; returned to READY per the directive.",
+  "updated_at_utc": "2026-10-04T11:10:08Z",
+  "state": "WORKING",
+  "state_reason": "AUTONOMOUS Phase 2-B research seat (operator directive 2026-10-04, TH-P2B-APHRODITE-V2B). CWOs may delegate work to Aphrodite; they do not activate Aphrodite. This supersedes the earlier 'awaiting Aporia assignment' rule.",
   "branch": "main",
   "head_sha": "067fce3af",
   "head_sha_note": "main after the ARC3 merge, immediately before the commit that adds this file version",
@@ -35,6 +35,11 @@
       "alias": "TH-021",
       "title": "instrument validity (method)",
       "status": "OPEN"
+    },
+    {
+      "id": "TH-P2B-APHRODITE-V2B",
+      "title": "Aphrodite V2-B improvement-process maturation",
+      "status": "ACTIVE"
     }
   ],
   "campaigns": [
@@ -84,7 +89,10 @@
     "seat loop: control-plane sync at least every 60 min (CWO-C s12); heartbeat on state change (s13)",
     "news monitor continues in its narrow weekly scope (monitors/news/)"
   ],
-  "operator_decisions_required": [],
+  "operator_decisions_required": [
+    "W5P representation-changing assay: needs separate authorisation (designable/freezable inside Beta-01)",
+    "live-LLM experiments (E4, Campaign 1): frozen"
+  ],
   "comms_cursor": 1214,
   "latest_reports": [
     "roles/Aphrodite/review/ARC3_MERGE_REVIEW_PACKET.md",
@@ -104,18 +112,15 @@
     ],
     "hash_check": "all six order blobs match PUBLICATIONS.md; 624a686ea and 25a486d44 are ancestors of origin/main"
   },
-  "current_objective": null,
-  "current_step": null,
+  "current_objective": "C-006 = C-P2B-APH-BETA-01 (TH-P2B-APHRODITE-V2B): 12 DEV/TEST pairs",
+  "current_step": "Beta-01 cycle 1 DEV (bootstrap: instrument repairs, freeze TEST-1 known-answer assay)",
   "in_flight": [],
-  "progress": "inference harvest delivered and merged to main",
+  "progress": "Beta-01 opened",
   "blocked": [],
   "resource_status": "none held; no leases, no Fabric tasks, no live-LLM experiments; read-only subagents finished",
-  "finish_condition": null,
-  "next": "awaiting Aporia assignment",
-  "next_planning_only": [
-    "T51 (TH-019 donor stage, ~16 core-h, inside R2): AUTHORISED by MWO-0004 G5 but not started; it needs a pre-freeze supply screen (T49) and a frozen AMENDMENT before any run. It starts on Aporia dispatch or a direct operator instruction, not by self-promotion (CWO-C s4).",
-    "harvest proposals (NOT authorised, planning only): AGENT_SCIENCE E4 (needs live-LLM authority); HML + defect-battery apparatus; gate-reachability lint (BUILDER-EXPERIMENT); LBS pilot (needs operator Council time)"
-  ],
+  "finish_condition": "12 TEST windows + DEV counterparts, then the Beta-01 close synthesis",
+  "next": "per beta01/STATE.json next_intended (autonomous); NOT 'awaiting Aporia'",
+  "next_planning_only": [],
   "next_expected_milestone": "Aporia dispatch",
   "expected_next_artifact": null,
   "last_receipt": "roles/Aphrodite/STATUS_REPORT_2026-10-01.md; harvest merged to main",
@@ -124,10 +129,13 @@
   "session_started_utc": "UNKNOWN (not runtime-reported); comms boot 2026-09-30",
   "decisions_recorded": [
     "TH-020 DSL fork: PARKED (default B), confirmed by MWO-0004 G5",
-    "T51: authorised within R2 by MWO-0004 G5; not a gate"
+    "T51: authorised within R2 by MWO-0004 G5; not a gate",
+    "2026-10-04 operator: Aphrodite autonomous in Phase 2-B; CWOs delegate, do not activate; Beta-01 authorised (Tier 1-2, Fabric for heavy shards, T51 included, W5P version boundary)"
   ],
   "open_defects": [
     "constant-True gate conditions in historical run_s3s4.py / a16.py / a17.py (packet s5, TH-021). Recorded. Not re-labelled: re-labelling would change the meaning of frozen experiments after exposure, which is a hard gate under MWO-0004 Part 4."
   ],
-  "last_heartbeat": "comms #1193 (reply to #1140)"
+  "last_heartbeat": "comms #1193 (reply to #1140)",
+  "governance": "CWOs may delegate work to Aphrodite; they do not activate Aphrodite (operator 2026-10-04). Aporia/CWO = inbound delegation lane, checked at every window boundary.",
+  "beta_state": "roles/Aphrodite/beta01/STATE.json"
 }

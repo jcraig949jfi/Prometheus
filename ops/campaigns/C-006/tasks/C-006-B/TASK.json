@@ -1,0 +1,51 @@
+{
+  "schema": "prometheus.workgraph.task.v1",
+  "task_id": "C-006-B",
+  "campaign_id": "C-006",
+  "epic_id": "EP-PHASE2B",
+  "title": "Defect triage for Aphrodite abstraction-compounding engine (V2-B Beta-01)",
+  "objective": "Classify every applicable finding as CONFIRMED_DEFECT, ALREADY_REPAIRED, NOT_APPLICABLE, NEEDS_DISCRIMINATOR, SCIENTIFIC_LIMITATION or OPEN, with evidence, and propose the C/D/E packets the classification justifies.",
+  "owner_role": "Aphrodite",
+  "quality_class": "Q2",
+  "can_downgrade": false,
+  "escalate_to": "Q3",
+  "depends_on": [
+    "C-006-A"
+  ],
+  "owns": [
+    "ops/campaigns/C-006/CAMPAIGN.md",
+    "ops/campaigns/C-006/tasks/"
+  ],
+  "problem": "Triage feeds the Beta-01 DEV-1 repair list (constant-True gates; S4 positive control == treatment schema; ruler false positives / extensional errors; T4 query-window mismatch; escrow/walk cliff; validation multiplicity; supply-design failures). Packets C/D/E are the Beta-01 windows themselves (beta01/windows/).",
+  "non_goals": [
+    "No repair or replay yet; propose them as PROPOSED packets"
+  ],
+  "evidence_required": [
+    "the triage table in CAMPAIGN.md",
+    "PROPOSED packets for each CONFIRMED_DEFECT repair and each replay it affects"
+  ],
+  "acceptance": {
+    "condition": "every finding from A has a class and evidence; repairs/replays proposed or NO_JUSTIFIED_FURTHER_WORK recorded with reasons"
+  },
+  "deliverables": [
+    "triage table",
+    "PROPOSED C/D/E packets"
+  ],
+  "kind": "review",
+  "red_required": false,
+  "status": "READY",
+  "history": [
+    {
+      "status": "PROPOSED",
+      "by": "Aphrodite[harry1-0f14ab93]",
+      "at_utc": "2026-10-04T11:08:58Z",
+      "note": "instantiated from P2B-ENGINE-REENTRY; tailor before READY"
+    },
+    {
+      "status": "READY",
+      "by": "Aphrodite[harry1-0f14ab93]",
+      "at_utc": "2026-10-04T11:09:17Z",
+      "note": "tailored for Beta-01 DEV-1"
+    }
+  ]
+}

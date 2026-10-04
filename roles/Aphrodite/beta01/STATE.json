@@ -1,0 +1,35 @@
+{
+  "schema": "aphrodite.beta01.state.v1",
+  "campaign": "C-006",
+  "label": "C-P2B-APH-BETA-01",
+  "thread": "TH-P2B-APHRODITE-V2B",
+  "pairs_planned": 12,
+  "window_hours": 4,
+  "current": {
+    "cycle": 1,
+    "window": "DEV",
+    "index": 1,
+    "opened_utc": "2026-10-04T11:10:08Z",
+    "due_close_utc": "2026-10-04T15:10:08Z",
+    "active_thread": "TH-021",
+    "apparatus_version": "v2b-0 (pre-repair baseline = origin/main engine)",
+    "experiment": null,
+    "attempt": null,
+    "goal": "bootstrap DEV: baseline identity + instrument repairs + freeze TEST-1 known-answer assay"
+  },
+  "last_disposition": null,
+  "unresolved_defects": [
+    "constant-True gates (TH-021)",
+    "S4 positive control == treatment schema",
+    "T4 query-window mismatch",
+    "escrow/walk cliff capability endpoint",
+    "ruler extensional errors"
+  ],
+  "next_intended": {
+    "window": "TEST",
+    "index": 1,
+    "experiment": "TEST-1 known-answer apparatus assay"
+  },
+  "missed_wake_rule": "run the due window once; never burst",
+  "history": []
+}
