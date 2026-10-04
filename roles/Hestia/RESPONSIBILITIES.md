@@ -151,8 +151,9 @@ s7-s9); and which heartbeat and comms obligations (CWO-C s13-s14) apply.
   Hestia has no row in ops/fleet/QUEUE.json at creation, and its first
   heartbeat to Aporia is deferred on purpose (TODO.md): Aporia
   dispatches READY seats, and this seat is HOLD with no lane.
-- Calibration ledger: roles/Hestia/calibration/LEDGER.md (two rows at
-  creation, both about how the name was checked).
+- Calibration ledger: roles/Hestia/calibration/LEDGER.md (three rows from
+  the creation pass: two about how the name was checked, one about a
+  verification script run with too wide a scope).
 
 ## 5. Files in this directory
 

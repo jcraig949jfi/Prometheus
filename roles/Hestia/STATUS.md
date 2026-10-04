@@ -19,6 +19,10 @@ operator's stated posture: inherits base-role; "self contained for the most
   part"; "attempting a moonshot"; details to follow. Nothing has been
   started toward the moonshot and none of it is interpreted
   (RESPONSIBILITIES.md s2).
+integration: creation pass pushed to origin/main as a fast-forward, tip
+  e98d5b307 (2dfba0ec5 is the seat commit; both verified ancestors of
+  origin/main at 13:04:59Z). Tests on the merged tree: 21 passed, 1
+  skipped (no Prometheus scheduled tasks on this host).
 blockers: none; waiting on the details is not a block (no lane yet).
 next executable action: commit the operator's details verbatim when they
   arrive, rewrite RESPONSIBILITIES.md around them with the dependency
