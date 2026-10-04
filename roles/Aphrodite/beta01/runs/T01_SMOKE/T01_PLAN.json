@@ -1,0 +1,165 @@
+{
+ "M": "(v * (acc + {H}))",
+ "MEMO_programs": [
+  [
+   "fold",
+   "0",
+   "(v * (acc + acc))",
+   "(acc // 1)"
+  ],
+  [
+   "fold",
+   "0",
+   "(v * (acc + v))",
+   "(acc // 1)"
+  ],
+  [
+   "fold",
+   "0",
+   "(v * (acc + first))",
+   "(acc // 1)"
+  ],
+  [
+   "fold",
+   "0",
+   "(v * (acc + last))",
+   "(acc // 1)"
+  ],
+  [
+   "fold",
+   "0",
+   "(acc * v)",
+   "(acc // 1)"
+  ],
+  [
+   "fold",
+   "0",
+   "(v * (acc + 1))",
+   "(acc // 1)"
+  ],
+  [
+   "fold",
+   "0",
+   "(v * (acc + (acc + acc)))",
+   "(acc // 1)"
+  ],
+  [
+   "fold",
+   "0",
+   "(v * (acc + (acc + v)))",
+   "(acc // 1)"
+  ]
+ ],
+ "NULL": "math.gcd(abs((acc // {H})), abs(first))",
+ "PLAN": "OK",
+ "REPR_probe": {
+  "body": "(((acc + v) * v) + ((v * v) - first))",
+  "in_W5": false,
+  "in_any_lib": false
+ },
+ "SHAM_EQ": "((acc + {H}) * v)",
+ "SHAM_X": "pow(first, (acc + {H}))",
+ "SIBLING": "pow(v, (acc + {H}))",
+ "TRIB_family": {
+  "Q2_size": 12,
+  "body": "(v - (acc - (1 // last)))",
+  "final": "acc",
+  "init": "1",
+  "name": "qbda"
+ },
+ "apparatus": {
+  "apparatus_id": "eb21ef8abb86ba08",
+  "apparatus_version": "v2b-1",
+  "files": {
+   "engine/a17.py": "a09062e24f284cd30aaaeeb554524ea4112966109fcb7087911fed298d0c115d",
+   "engine/a18.py": "ffe6631128acf1c0e8052a046ea9a550555f053ee02a4a20dca02475366faa4c",
+   "engine/a18_c1.py": "9df0d74a29c7551bc2bd29145330c7cfd2309cc58ebe7e3dce75237b0fc0fadd",
+   "engine/accel/fasteval.py": "64d53977c45d88b3b50f99c1e24243a0f97d639563b5440348263578de86546d",
+   "engine/basis_v4.py": "bdc601f2b0fae23bde5d1b9c2e0648d38d7d0400162aa85cfcfdcb001c34a1e4",
+   "engine/engine.py": "93bb1a259bbd90d0bf65b6753327a09bd189dafd9da41478ce072ad7d8a2adbe",
+   "engine/fair.py": "c5c5bac3a1d883c73e199bf1a234717443881a16ec78cb583d8477ca07e57876",
+   "engine/identity.py": "36a2838849ef0748bdea161f64697585751d35176011139797ab1f61b51132aa",
+   "engine/meta_tribunal.py": "c10d1973e52c60c5b8ec7d2aa2e9f709282fedbf48c5413656c1280bfafa0d8b",
+   "engine/tier3d.py": "83710b1539047e4611d4e7fd51a13619e726fc60e7d8e3cbd8d184c9cc9db393",
+   "engine/tribunal_t4.py": "96461b9312c50b92bf1c81f7724c82fcb1d5def8f727f25dba3ff8f26a0ea29b",
+   "engine/v2b/__init__.py": "797411ea703bfdfdb79a3ac0ec82a6edd7359be16d9ddf936e9eb53673ea2172",
+   "engine/v2b/apparatus.py": "5aee9905e2dfc241d407bdd3a785eb0e410deaeff9f6eceb7279e3ef15086206",
+   "engine/v2b/capability.py": "d19e202e5d75b08103c5a25135a1fb4950ca223e47a3d7d3f6852116b5a4b303",
+   "engine/v2b/gates.py": "7741008de2eb58eec0f331273b3e355fdbe808795b7ff94e5946050196697fb3",
+   "engine/v2b/instruments.py": "28a5cb9e9760f5dd5320db3f9e94efcfcad246eb1fe52391af0cb7bb3e797d5f",
+   "engine/v2b/paths.py": "95f468860ec4f0de4c815ff9dfffe30400d2854d3b208900d8a2a1400547aa41",
+   "engine/v2b/ruler_v21.py": "8ecb652adcad5a452ea5eb8908e9289490bfb6657505650cddc2d91401004ff5",
+   "engine/v2b/supply.py": "a5f4ed1b393a966dfa337adef86c4f5ddae18007ee7b8af7a28dc7544c0c4846",
+   "engine/v2b/tribunal_t4_v1a.py": "ed396417f2d843316df7ae9dd372cf26fbd54e7006e44a72f25ca17af724f898",
+   "engine/v2b/walk.py": "c71f66713f24d324e470fef0d9383ba097124923473628bcd245634ed4616b0f",
+   "science/compounding/rb1/ruler_v2.py": "e1ff34536a4945d0404fd1d7deaa97df3a3119679e0bc067c9086f30f59c7498"
+  },
+  "instruments": {
+   "ruler": "v2.1",
+   "tribunal": "v1a"
+  }
+ },
+ "cap": 200000,
+ "cases": {},
+ "cells": 4,
+ "distinctness": {
+  "NULL": "DISTINCT",
+  "SHAM_EQ": "NOT_DISTINCT",
+  "SHAM_X": "DISTINCT",
+  "SIBLING": "DISTINCT"
+ },
+ "families": [
+  {
+   "body": "(v * (acc + (last - 1)))",
+   "final": "(acc // 1)",
+   "init": "0",
+   "name": "toaa",
+   "size": 4
+  }
+ ],
+ "inst_counts": {
+  "M": 161,
+  "NULL": 161,
+  "SHAM_EQ": 161,
+  "SHAM_X": 161,
+  "SIBLING": 161
+ },
+ "motif_screen": [
+  {
+   "body": "(v * (acc + (acc % first)))",
+   "why": "T4_INADMISSIBLE"
+  },
+  {
+   "body": "(v * (acc + math.gcd(abs(v), abs(v))))",
+   "charge": 28076,
+   "why": "PRISTINE_SOLVES"
+  },
+  {
+   "body": "(v * (acc + pow(1, acc)))",
+   "why": "T4_INADMISSIBLE"
+  },
+  {
+   "body": "(v * (acc + pow(last, v)))",
+   "why": "T4_INADMISSIBLE"
+  },
+  {
+   "body": "(v * (acc + 1))",
+   "why": "T4_INADMISSIBLE"
+  },
+  {
+   "body": "(v * (acc + math.gcd(abs(0), abs(0))))",
+   "why": "T4_INADMISSIBLE"
+  },
+  {
+   "body": "(v * (acc + (first // last)))",
+   "why": "T4_INADMISSIBLE"
+  },
+  {
+   "body": "(v * (acc + (last - 1)))",
+   "why": "DEEP_OK"
+  }
+ ],
+ "ruler": "v2.1",
+ "seed": "APHRODITE/V2B/T01/v1",
+ "tribunal": "v1a"
+}

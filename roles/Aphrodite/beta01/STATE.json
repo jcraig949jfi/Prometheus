@@ -7,29 +7,40 @@
   "window_hours": 4,
   "current": {
     "cycle": 1,
-    "window": "DEV",
-    "index": 1,
-    "opened_utc": "2026-10-04T11:10:08Z",
-    "due_close_utc": "2026-10-04T15:10:08Z",
-    "active_thread": "TH-021",
-    "apparatus_version": "v2b-0 (pre-repair baseline = origin/main engine)",
-    "experiment": null,
-    "attempt": null,
-    "goal": "bootstrap DEV: baseline identity + instrument repairs + freeze TEST-1 known-answer assay"
-  },
-  "last_disposition": null,
-  "unresolved_defects": [
-    "constant-True gates (TH-021)",
-    "S4 positive control == treatment schema",
-    "T4 query-window mismatch",
-    "escrow/walk cliff capability endpoint",
-    "ruler extensional errors"
-  ],
-  "next_intended": {
     "window": "TEST",
     "index": 1,
-    "experiment": "TEST-1 known-answer apparatus assay"
+    "opened_utc": "2026-10-04T11:32:49Z",
+    "due_close_utc": "2026-10-04T15:32:49Z",
+    "active_thread": "TH-021",
+    "apparatus_version": "v2b-1",
+    "experiment": "T01 known-answer apparatus assay",
+    "attempt": 1,
+    "goal": "qualify the repaired apparatus (all 10 cases expected-class-for-the-right-reason)"
+  },
+  "last_disposition": "DEV-1 DONE",
+  "unresolved_defects": [
+    "no receipt check for no-donor-state (S4 cond 8 class; TRIAGE R2)",
+    "ruler v2.1 residual errors 8/47 + 24.5% W5 chance floor",
+    "T4 v1a silent on queries 1-2"
+  ],
+  "next_intended": {
+    "window": "DEV",
+    "index": 2,
+    "plan": "diagnose T01; if QUALIFIED -> T53 D-stratified A23 re-score + T52 validation-dose design; else continue repair"
   },
   "missed_wake_rule": "run the due window once; never burst",
-  "history": []
+  "history": [
+    {
+      "cycle": 1,
+      "window": "DEV",
+      "index": 1,
+      "opened_utc": "2026-10-04T11:10:08Z",
+      "closed_utc": "2026-10-04T11:32:49Z",
+      "active_thread": "TH-021",
+      "apparatus_version": "v2b-1",
+      "disposition": "DONE: v2b apparatus built; conformance GREEN; 12 tests; TB-T4b probe 0/330 A23 flips; T01 spec frozen",
+      "report": "beta01/windows/D01_DEV_REPORT.md",
+      "next_frozen": "beta01/windows/T01_KNOWN_ANSWER_SPEC.md"
+    }
+  ]
 }
