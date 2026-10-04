@@ -40,7 +40,7 @@
     "tests"
   ],
   "kind": "software",
-  "status": "INTEGRATION_READY",
+  "status": "INTEGRATED",
   "history": [
     {
       "status": "PROPOSED",
@@ -83,6 +83,12 @@
       "by": "Argus[desktop-ruapvai-b08b36ac]",
       "at_utc": "2026-10-04T16:34:25Z",
       "note": "branch argus/c004-t026 at 029dd41b1; build_bundle any subject set, 1 TOP_LEVEL + RECEIPT rows; real G0 E02.MISSING RUN_UNREPORTED; E05 custody tests ordinary; WIPE NOT_ELIGIBLE, OVERDELAY BLOCKED; acceptance 76 OK merged; full ci not run (CPU ceiling); TWIN collision noted"
+    },
+    {
+      "status": "INTEGRATED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-04T16:45:13Z",
+      "note": "merged b838234f1; integrator: full slice suite OK on merged tree (432 s wall); mutation build_g0 default rows=build killed (4 per-receipt tests error); author: E02.MISSING G-INV FAIL RUN_UNREPORTED on the real base, CL-RET(WIPE) NOT_ELIGIBLE, CL-RET(OVERDELAY) BLOCKED. Open: TWIN_EQ node id has no twin segment -> T020 builds one bundle per extra twin"
     }
   ],
   "authority": "operator directive 2026-10-03 s9, s11; escalation responses C-004-T024_1_2_RESPONSE.md",
