@@ -84,6 +84,7 @@ Every role below carries the banner on its primary document(s):
 | Eupalamus | RESPONSIBILITIES.md (created 2026-10-03 by Achilles under the operator directive of that day, verbatim in roles/Achilles/prompts/2026-10-03_rso_builder_cell/ with MANIFEST; RSO Builder Cell; inherits base-role and rso-builder-role (Shared roles below); not bound to a host; no prior use of the name as a seat or agent; creation pointer roles/Eupalamus/prompts/2026-10-03_creation/) |
 | Hestia | RESPONSIBILITIES.md (created 2026-10-04 on the seat's creation pass on GANDALF (M3); new seat named by the operator, charter PENDING (operator: inherits base-role, mostly self-contained, a moonshot, details to follow); creation directive verbatim in roles/Hestia/prompts/2026-10-04_creation/ with MANIFEST; no prior use of the name as a seat or agent (one prior mention, a label in harmonia/docs/the_decaphony.md, recorded and not inherited); self-service row per Archaeon ruling #39) |
 | Vivarium | RESPONSIBILITIES.md (already), CHARTER.md (already) |
+| Themis | RESPONSIBILITIES.md (created 2026-10-04 on the seat's creation pass on SPECTREX5; new seat named by the operator, charter PENDING; creation directive verbatim in roles/Themis/prompts/2026-10-04_creation/ with MANIFEST; no prior use of the name as a seat or agent (3 file mention(s), 0 commit message(s), 0 path(s); recorded and not inherited, see RESPONSIBILITIES.md s1); self-service row per Archaeon ruling #39) |
 
 Roles with no document received a stub RESPONSIBILITIES.md to fill. Stamping is an annotation on line 2; nothing else in any seat file was changed.
 
@@ -172,6 +173,7 @@ BOOTSTRAP.md if the seat has one, else STARTUP.md, RESPONSIBILITIES.md, ROLE.md,
 | Eupalamus | RESPONSIBILITIES.md |
 | Hestia | RESPONSIBILITIES.md |
 | Vivarium | RESPONSIBILITIES.md |
+| Themis | RESPONSIBILITIES.md |
 
 ## Shared roles (2026-10-03, operator directive at roles/Achilles/prompts/2026-10-03_rso_builder_cell/)
 
