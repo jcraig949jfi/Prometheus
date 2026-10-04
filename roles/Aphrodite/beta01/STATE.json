@@ -7,28 +7,29 @@
   "window_hours": 4,
   "current": {
     "cycle": 2,
-    "window": "DEV",
+    "window": "TEST",
     "index": 2,
-    "opened_utc": "2026-10-04T11:43:05Z",
-    "due_close_utc": "2026-10-04T15:43:05Z",
-    "active_thread": "TH-021/TH-018",
+    "opened_utc": "2026-10-04T12:00:58Z",
+    "due_close_utc": "2026-10-04T16:00:58Z",
+    "active_thread": "TH-018/TH-021",
     "apparatus_version": "v2b-1",
-    "experiment": null,
-    "attempt": null,
-    "goal": "fix T01 report-field defect; add graded known-answer cases (sensitivity) + selection known-answer; design + freeze TEST-2 = T53 D-stratified A23 capability re-score (Fabric shards)"
+    "experiment": "T02 = T53 D-stratified v1a re-score of A23 capability",
+    "attempt": 1,
+    "goal": "measure; finish in place if > 4h"
   },
-  "last_disposition": "TEST-1 QUALIFIED",
+  "last_disposition": "DEV-2 DONE",
   "unresolved_defects": [
-    "T01 detail field pristine_all_censored mixes qbda walks (non-verdict)",
     "known-answer battery lacks graded/partial effects and selection (R3) cases",
     "no receipt check for no-donor-state (S4 cond 8 class)",
     "ruler v2.1 residual 8/47 + 24.5% chance floor",
-    "T4 v1a silent on queries 1-2"
+    "T4 v1a silent on queries 1-2",
+    "T01 erratum: pristine_all_censored field (fix in t1 v2)",
+    "A20-A23 P/OFF_0 controls dead on REUSED/CAPABILITY_SAME (recorded; T53 makes them live)"
   ],
   "next_intended": {
-    "window": "TEST",
-    "index": 2,
-    "experiment": "T53 D-stratified re-score of A23 capability (TH-018/TH-021)"
+    "window": "DEV",
+    "index": 3,
+    "plan": "diagnose T53; t1 v2 (graded + selection known-answers); T52 design; Fabric pilot"
   },
   "missed_wake_rule": "run the due window once; never burst",
   "history": [
@@ -60,6 +61,18 @@
         "beta01/runs/T01/T01_RESULT.json",
         "engine/v2b/receipts/CONFORMANCE_V2B_2026-10-04.json"
       ]
+    },
+    {
+      "cycle": 2,
+      "window": "DEV",
+      "index": 2,
+      "opened_utc": "2026-10-04T11:43:05Z",
+      "closed_utc": "2026-10-04T12:00:58Z",
+      "active_thread": "TH-018/TH-021",
+      "apparatus_version": "v2b-1",
+      "disposition": "DONE: T53 designed+frozen; new finding: A20-A23 P/OFF_0 controls structurally unable to score; smoke exposure contained+disclosed",
+      "report": "beta01/windows/D02_DEV_REPORT.md",
+      "next_frozen": "beta01/windows/T02_T53_SPEC.md"
     }
   ]
 }
