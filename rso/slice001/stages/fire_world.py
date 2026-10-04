@@ -179,6 +179,12 @@ def build_records(receipt_commit, root=ROOT, receipt_path=RECEIPT_PATH, recorded
     return recs
 
 
+def record_bytes(rec):
+    """A stage record file's exact bytes: receipt.canonical_bytes, no trailing newline (C-004-T027), so that
+    sha256(file) == evidence.record_blob(record), the hash a registered STAGE_RECORD row must carry."""
+    return R.canonical_bytes(rec)
+
+
 def record_path(inst):
     return "%s/%s_%s.json" % (STAGES, inst, NAMES[inst])
 
@@ -196,7 +202,7 @@ def main(argv=None):
     recs = build_records(a.receipt_commit)
     for inst, rec in recs.items():
         with open(os.path.join(ROOT, *record_path(inst).split("/")), "wb") as f:
-            f.write(R.canonical_bytes(rec) + b"\n")
+            f.write(record_bytes(rec))
     print(json.dumps({"records": sorted(record_path(i) for i in recs)}))
     return 0
 
