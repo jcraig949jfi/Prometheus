@@ -82,13 +82,35 @@ def main(argv=None):
     ap = argparse.ArgumentParser(prog="python -B -m rso.slice001.ci")
     ap.add_argument("--tests-dir", default=DEFAULT_TESTS)
     ap.add_argument("--contract", default=DEFAULT_CONTRACT)
+    ap.add_argument("--ledger", help="attempted-run inventory store (JSONL); makes this launch a charged, "
+                                     "inventoried TOP_LEVEL attempt (C-004-T019). Off by default so that "
+                                     "development runs never spend the slice caps.")
+    ap.add_argument("--node-id", help="node_id this launch validates (V7); required with --ledger")
+    ap.add_argument("--run-id", help="run_id for the inventory row (default: UTC time and pid)")
     args = ap.parse_args(argv)
+    if args.ledger and not args.node_id:
+        ap.error("--ledger requires --node-id")
     if REPO_ROOT not in sys.path:
         sys.path.insert(0, REPO_ROOT)
     sys.dont_write_bytecode = True
+    attempt = led = None
+    if args.ledger:
+        from rso.slice001 import ledger as ledger_mod
+        run_id = args.run_id or "ci-%s-%d" % (_utc_now(), os.getpid())
+        try:
+            led = ledger_mod.Ledger.from_contract(args.ledger, args.contract)
+            attempt = led.begin(run_id, args.node_id, supplied_by="rso.slice001.ci")
+        except (ledger_mod.CapExhausted, ledger_mod.LedgerError) as e:
+            sys.stderr.write("REFUSED: %s\n" % e)
+            return 2
     start_utc, w0, c0 = _utc_now(), time.perf_counter(), time.process_time()
-    counts = run_tests(args.tests_dir)
-    contract = validate_contract(args.contract)
+    try:
+        counts = run_tests(args.tests_dir)
+        contract = validate_contract(args.contract)
+    except BaseException:
+        if attempt:
+            attempt.finish("FAILED", cpu_s=time.process_time() - c0)
+        raise
     ok = counts["failed"] == 0 and counts["errored"] == 0 and contract["state"] != "INVALID"
     record = dict(counts)
     record.update({
@@ -101,6 +123,10 @@ def main(argv=None):
         "wall_s": round(time.perf_counter() - w0, 3),
         "cpu_s": round(time.process_time() - c0, 3),
     })
+    if attempt:
+        attempt.finish("COMPLETED" if ok else "FAILED", cpu_s=record["cpu_s"])
+        record["ledger"] = {"store": args.ledger, "run_id": run_id, "node_id": args.node_id,
+                            "usage": led.usage()}
     print(json.dumps(record, indent=2, sort_keys=True))
     return 0 if ok else 1
 
