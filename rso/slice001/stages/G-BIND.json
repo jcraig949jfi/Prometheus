@@ -1,0 +1,46 @@
+{
+  "closure": null,
+  "fire_test": {
+    "must_accept": [
+      "E03.G0"
+    ],
+    "must_reject": [
+      {
+        "case_id": "E03.BYTEFLIP",
+        "expected_reason": "BYTES_MISMATCH:trace:probe_a"
+      },
+      {
+        "case_id": "E03.STRIP",
+        "expected_reason": "DEPENDENCY_MISMATCH:rcpt:REG:RETENTION:STANDARD->rcpt:WORLD:CALIBRATION:STANDARD"
+      },
+      {
+        "case_id": "E02.MALFORMED",
+        "expected_reason": "SCOPE_MALFORMED:boundary"
+      }
+    ],
+    "receipt": {
+      "blob_sha256": "714a9e380a863f47855abecbec4c31234687b7d8b275ead8373609d857ff55c2",
+      "commit": "c2088d162cafab26758d9353488f2112edc4a686",
+      "path": "rso/slice001/stages/fire/G-BIND.json"
+    }
+  },
+  "first_sight": null,
+  "instrument": "G-BIND",
+  "recorded_at_utc": "2026-10-04T14:00:00Z",
+  "recorded_by": "Argus[desktop-ruapvai-b08b36ac] under C-004-T023B",
+  "stage": "AUTHOR_TESTED",
+  "version": [
+    {
+      "commit": "6f57aa7c62f22edc66ea6b35c8c4cbda0b6324ff",
+      "length": 30721,
+      "role": "code:rso/slice001/evidence.py",
+      "sha256": "06ef526b5e346f1cf749f5c85535e2f90cdaf8bb59c8db775003c7b57d9423a0"
+    },
+    {
+      "commit": "6f57aa7c62f22edc66ea6b35c8c4cbda0b6324ff",
+      "length": 31846,
+      "role": "code:rso/slice001/receipt.py",
+      "sha256": "f0f0d80063d21703b1709c188cad702b189db772bf5ecac404a04c9a56d5725b"
+    }
+  ]
+}
