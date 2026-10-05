@@ -1,0 +1,72 @@
+{
+  "edits": [
+    {
+      "edit_id": "E05-observer-edge-not-required",
+      "find": "if name in (\"CHANNEL\", \"OBSERVER\"):",
+      "intended_fault": "binding: the B6.2 edge OBSERVER(M, o) -> RESTART(M) is no longer required by policy, so an OBSERVER receipt without it binds and a withdrawal reaching RESTART no longer reaches OBSERVER",
+      "module": "rso.slice001.evidence",
+      "path": "rso/slice001/evidence.py",
+      "replace": "if name in (\"CHANNEL\",):",
+      "witness": {
+        "expr": "__import__(\"importlib\").import_module(\"rso.slice001.challenge.S3.attack_set.witnesses\").e05(m)"
+      }
+    },
+    {
+      "edit_id": "E06-slot-identity-subject-only",
+      "find": "if nid != slot:",
+      "intended_fault": "binding: a prerequisite slot accepts any receipt of the same subject and predicate; the observer segment is not compared, so OBSERVER(M, o1) can be satisfied by the receipt of OBSERVER(M, o2)",
+      "module": "rso.slice001.evidence",
+      "path": "rso/slice001/evidence.py",
+      "replace": "if parse_node_id(nid)[0] != parse_node_id(slot)[0]:",
+      "witness": {
+        "expr": "__import__(\"importlib\").import_module(\"rso.slice001.challenge.S3.attack_set.witnesses\").e06(m)"
+      }
+    },
+    {
+      "edit_id": "E07-recompute-horizon",
+      "find": "HORIZON = 3",
+      "intended_fault": "binding (G-RECOMP): the consumer recomputes ERASE over episodes j+1..j+2 only, so it reports PASS on traces whose only forbidden influence shows at lag 3 and contradicts an honest producer FAIL",
+      "module": "rso.slice001.checker",
+      "path": "rso/slice001/checker.py",
+      "replace": "HORIZON = 2",
+      "witness": {
+        "expr": "__import__(\"importlib\").import_module(\"rso.slice001.challenge.S3.attack_set.witnesses\").e07(m)"
+      }
+    },
+    {
+      "edit_id": "E08-withdrawal-one-level",
+      "find": "todo.extend(sorted(nxt - seen))",
+      "intended_fault": "invalidation: the upstream closure of a node stops after one edge; a withdrawal two or more edges away (RESTART stage record -> RESTART receipt -> CHANNEL / OBSERVER) no longer revokes (B6.5)",
+      "module": "rso.slice001.evidence",
+      "occurrence": 2,
+      "path": "rso/slice001/evidence.py",
+      "replace": "todo.extend(sorted(nxt - seen) if n == node_id else [])",
+      "witness": {
+        "expr": "__import__(\"importlib\").import_module(\"rso.slice001.challenge.S3.attack_set.witnesses\").e08(m)"
+      }
+    },
+    {
+      "edit_id": "E09-gate-stage-withdrawal-ignored",
+      "find": "if w[\"target\"] == node:",
+      "intended_fault": "invalidation: a registered withdrawal of a consumer gate's own stage record (G-BIND, G-INV, G-RECOMP) no longer makes that gate UNQUALIFIED (B4.2 A3, B6.4)",
+      "module": "rso.slice001.evidence",
+      "path": "rso/slice001/evidence.py",
+      "replace": "if False and w[\"target\"] == node:",
+      "witness": {
+        "expr": "__import__(\"importlib\").import_module(\"rso.slice001.challenge.S3.attack_set.witnesses\").e09(m)"
+      }
+    },
+    {
+      "edit_id": "E10-suspension-threshold",
+      "find": "latest[\"unresolved\"] > 0:",
+      "intended_fault": "invalidation: one unresolved case on the latest challenge record no longer suspends a claim-critical instrument (B4.2 A4 requires unresolved = 0)",
+      "module": "rso.slice001.evidence",
+      "path": "rso/slice001/evidence.py",
+      "replace": "latest[\"unresolved\"] > 1:",
+      "witness": {
+        "expr": "__import__(\"importlib\").import_module(\"rso.slice001.challenge.S3.attack_set.witnesses\").e10(m)"
+      }
+    }
+  ],
+  "schema": "rso.slice001.mutation_edits.v1"
+}

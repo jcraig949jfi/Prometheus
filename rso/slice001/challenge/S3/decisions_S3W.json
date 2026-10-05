@@ -1,0 +1,2850 @@
+{
+ "bundle": "S3W",
+ "commit": "99084714ab9c743fb99bc8876f21f64b4b6c6811",
+ "decisions": {
+  "CL-CAL(STANDARD)": {
+   "authority": {
+    "stage": "AUTHOR_TESTED",
+    "status": "QUALIFIED"
+   },
+   "cell": {
+    "cell_id": "W-S1",
+    "revision": "2367e411808fce3a2527c634c755cc00dd037c07e05a0c3ef46a5a48438143d8"
+   },
+   "claim_id": "CL-CAL(STANDARD)",
+   "custody": {
+    "status": "UNQUALIFIED",
+    "why": [
+     "KEEPER_ROW_MISSING:EVIDENCE_MANIFEST",
+     "KEEPER_ROW_MISSING:EXPECTED_ANSWER_TABLE",
+     "KEEPER_ROW_MISSING:RUN_INVENTORY"
+    ]
+   },
+   "eligibility": "ELIGIBLE",
+   "encoding": null,
+   "instruments": 3,
+   "not_satisfied": [],
+   "prerequisites": [
+    {
+     "predicate": "CALIBRATION",
+     "recomputed": false,
+     "required": "PASS",
+     "scope": "WORLD/STANDARD",
+     "verdict": {
+      "authority": {
+       "stage": "AUTHOR_TESTED",
+       "status": "QUALIFIED"
+      },
+      "execution": {
+       "missing": [],
+       "run_id": "S3-CASES-20261005T060627Z-16752/rcpt:WORLD:CALIBRATION:STANDARD",
+       "status": "RAN"
+      },
+      "node_id": "rcpt:WORLD:CALIBRATION:STANDARD",
+      "outcome": {
+       "applicable_count": null,
+       "eligible_count": 98304,
+       "kind": "GATE",
+       "predicate": "P1",
+       "reason": "no-carry maximum equals the registered bound 1/2; u_j balanced at j = 1..3",
+       "vacuous": false,
+       "value": "PASS",
+       "witness": null
+      },
+      "reasons": [
+       "no-carry maximum equals the registered bound 1/2; u_j balanced at j = 1..3"
+      ],
+      "standing": "SATISFIED"
+     }
+    },
+    {
+     "predicate": "G-BIND",
+     "recomputed": false,
+     "required": "PASS",
+     "scope": "CL-CAL(STANDARD)",
+     "verdict": {
+      "authority": {
+       "stage": "AUTHOR_TESTED",
+       "status": "QUALIFIED"
+      },
+      "execution": {
+       "missing": [],
+       "run_id": "consumer",
+       "status": "RAN"
+      },
+      "node_id": "gate:G-BIND:CL-CAL(STANDARD)",
+      "outcome": {
+       "applicable_count": 1,
+       "eligible_count": 1,
+       "kind": "GATE",
+       "predicate": "G-BIND",
+       "reason": "every reachable node binds to the anchors held",
+       "vacuous": false,
+       "value": "PASS",
+       "witness": null
+      },
+      "reasons": [
+       "every reachable node binds to the anchors held"
+      ],
+      "standing": "SATISFIED"
+     }
+    },
+    {
+     "predicate": "G-INV",
+     "recomputed": false,
+     "required": "PASS",
+     "scope": "CL-CAL(STANDARD)",
+     "verdict": {
+      "authority": {
+       "stage": "AUTHOR_TESTED",
+       "status": "QUALIFIED"
+      },
+      "execution": {
+       "missing": [],
+       "run_id": "consumer",
+       "status": "RAN"
+      },
+      "node_id": "gate:G-INV:CL-CAL(STANDARD)",
+      "outcome": {
+       "applicable_count": 1,
+       "eligible_count": 1,
+       "kind": "GATE",
+       "predicate": "G-INV",
+       "reason": "inventory terminal; every run reported",
+       "vacuous": false,
+       "value": "PASS",
+       "witness": null
+      },
+      "reasons": [
+       "inventory terminal; every run reported"
+      ],
+      "standing": "SATISFIED"
+     }
+    }
+   ],
+   "relative": {
+    "bound": "1/2",
+    "class_id": "N",
+    "def": "policies whose answer is a function of j alone",
+    "form": "class",
+    "method": "enumeration of 8 policies over 12288 trials"
+   },
+   "retention": null,
+   "schema": "rso.slice001.decision.v1",
+   "setting": {
+    "id": "reset_model",
+    "sha256": "2367e411808fce3a2527c634c755cc00dd037c07e05a0c3ef46a5a48438143d8"
+   },
+   "standing": "SATISFIED",
+   "subject": null,
+   "twin": null,
+   "type": "CL-CAL",
+   "unverified": [],
+   "world": "STANDARD"
+  },
+  "CL-CUST(S3W)": {
+   "authority": {
+    "stage": "AUTHOR_TESTED",
+    "status": "QUALIFIED"
+   },
+   "cell": {
+    "cell_id": "W-S1",
+    "revision": "2367e411808fce3a2527c634c755cc00dd037c07e05a0c3ef46a5a48438143d8"
+   },
+   "claim_id": "CL-CUST(S3W)",
+   "custody": {
+    "status": "UNQUALIFIED",
+    "why": [
+     "KEEPER_ROW_MISSING:EVIDENCE_MANIFEST",
+     "KEEPER_ROW_MISSING:EXPECTED_ANSWER_TABLE",
+     "KEEPER_ROW_MISSING:RUN_INVENTORY"
+    ]
+   },
+   "eligibility": "NOT_ELIGIBLE",
+   "encoding": null,
+   "instruments": 2,
+   "not_satisfied": [
+    "custody"
+   ],
+   "prerequisites": [
+    {
+     "custody": {
+      "status": "UNQUALIFIED",
+      "why": [
+       "KEEPER_ROW_MISSING:EVIDENCE_MANIFEST",
+       "KEEPER_ROW_MISSING:EXPECTED_ANSWER_TABLE",
+       "KEEPER_ROW_MISSING:RUN_INVENTORY"
+      ]
+     },
+     "predicate": "custody",
+     "recomputed": false,
+     "required": "QUALIFIED",
+     "scope": "CL-CUST(S3W)",
+     "standing": "UNQUALIFIED"
+    },
+    {
+     "predicate": "G-BIND",
+     "recomputed": false,
+     "required": "PASS",
+     "scope": "CL-CUST(S3W)",
+     "verdict": {
+      "authority": {
+       "stage": "AUTHOR_TESTED",
+       "status": "QUALIFIED"
+      },
+      "execution": {
+       "missing": [],
+       "run_id": "consumer",
+       "status": "RAN"
+      },
+      "node_id": "gate:G-BIND:CL-CUST(S3W)",
+      "outcome": {
+       "applicable_count": 45,
+       "eligible_count": 45,
+       "kind": "GATE",
+       "predicate": "G-BIND",
+       "reason": "every reachable node binds to the anchors held",
+       "vacuous": false,
+       "value": "PASS",
+       "witness": null
+      },
+      "reasons": [
+       "every reachable node binds to the anchors held"
+      ],
+      "standing": "SATISFIED"
+     }
+    },
+    {
+     "predicate": "G-INV",
+     "recomputed": false,
+     "required": "PASS",
+     "scope": "CL-CUST(S3W)",
+     "verdict": {
+      "authority": {
+       "stage": "AUTHOR_TESTED",
+       "status": "QUALIFIED"
+      },
+      "execution": {
+       "missing": [],
+       "run_id": "consumer",
+       "status": "RAN"
+      },
+      "node_id": "gate:G-INV:CL-CUST(S3W)",
+      "outcome": {
+       "applicable_count": 45,
+       "eligible_count": 45,
+       "kind": "GATE",
+       "predicate": "G-INV",
+       "reason": "inventory terminal; every run reported",
+       "vacuous": false,
+       "value": "PASS",
+       "witness": null
+      },
+      "reasons": [
+       "inventory terminal; every run reported"
+      ],
+      "standing": "SATISFIED"
+     }
+    }
+   ],
+   "relative": {
+    "form": "comparator",
+    "ids": [
+     "keeper:C-004-OP2"
+    ]
+   },
+   "retention": null,
+   "schema": "rso.slice001.decision.v1",
+   "setting": {
+    "id": "reset_model",
+    "sha256": "2367e411808fce3a2527c634c755cc00dd037c07e05a0c3ef46a5a48438143d8"
+   },
+   "standing": "UNQUALIFIED",
+   "subject": null,
+   "twin": null,
+   "type": "CL-CUST",
+   "unverified": [],
+   "world": "STANDARD"
+  },
+  "CL-RET(REG)": {
+   "authority": {
+    "stage": "AUTHOR_TESTED",
+    "status": "QUALIFIED"
+   },
+   "cell": {
+    "cell_id": "W-S1",
+    "revision": "2367e411808fce3a2527c634c755cc00dd037c07e05a0c3ef46a5a48438143d8"
+   },
+   "claim_id": "CL-RET(REG)",
+   "custody": {
+    "status": "UNQUALIFIED",
+    "why": [
+     "KEEPER_ROW_MISSING:EVIDENCE_MANIFEST",
+     "KEEPER_ROW_MISSING:EXPECTED_ANSWER_TABLE",
+     "KEEPER_ROW_MISSING:RUN_INVENTORY"
+    ]
+   },
+   "eligibility": "ELIGIBLE",
+   "encoding": null,
+   "instruments": 11,
+   "not_satisfied": [],
+   "prerequisites": [
+    {
+     "predicate": "BOUNDS",
+     "recomputed": false,
+     "required": "PASS",
+     "scope": "REG/STANDARD",
+     "verdict": {
+      "authority": {
+       "stage": "AUTHOR_TESTED",
+       "status": "QUALIFIED"
+      },
+      "execution": {
+       "missing": [],
+       "run_id": "S3-CASES-20261005T060627Z-16752/rcpt:REG:BOUNDS:STANDARD",
+       "status": "RAN"
+      },
+      "node_id": "rcpt:REG:BOUNDS:STANDARD",
+      "outcome": {
+       "applicable_count": null,
+       "eligible_count": 4096,
+       "kind": "GATE",
+       "predicate": "P0",
+       "reason": "every life stays inside the registered model",
+       "vacuous": false,
+       "value": "PASS",
+       "witness": null
+      },
+      "reasons": [
+       "every life stays inside the registered model"
+      ],
+      "standing": "SATISFIED"
+     }
+    },
+    {
+     "predicate": "CALIBRATION",
+     "recomputed": true,
+     "required": "PASS",
+     "scope": "WORLD/STANDARD",
+     "verdict": {
+      "authority": {
+       "stage": "AUTHOR_TESTED",
+       "status": "QUALIFIED"
+      },
+      "execution": {
+       "missing": [],
+       "run_id": "S3-CASES-20261005T060627Z-16752/rcpt:WORLD:CALIBRATION:STANDARD",
+       "status": "RAN"
+      },
+      "node_id": "rcpt:WORLD:CALIBRATION:STANDARD",
+      "outcome": {
+       "applicable_count": null,
+       "eligible_count": 98304,
+       "kind": "GATE",
+       "predicate": "P1",
+       "reason": "no-carry maximum equals the registered bound 1/2; u_j balanced at j = 1..3",
+       "vacuous": false,
+       "value": "PASS",
+       "witness": null
+      },
+      "reasons": [
+       "no-carry maximum equals the registered bound 1/2; u_j balanced at j = 1..3"
+      ],
+      "standing": "SATISFIED"
+     }
+    },
+    {
+     "predicate": "RETENTION",
+     "recomputed": true,
+     "required": "POSITIVE",
+     "scope": "REG/STANDARD",
+     "verdict": {
+      "authority": {
+       "stage": "AUTHOR_TESTED",
+       "status": "QUALIFIED"
+      },
+      "execution": {
+       "missing": [],
+       "run_id": "S3-CASES-20261005T060627Z-16752/rcpt:REG:RETENTION:STANDARD",
+       "status": "RAN"
+      },
+      "node_id": "rcpt:REG:RETENTION:STANDARD",
+      "outcome": {
+       "kind": "RULER",
+       "per_boundary": [
+        {
+         "j": 1,
+         "statistic": "1/1"
+        },
+        {
+         "j": 2,
+         "statistic": "1/1"
+        },
+        {
+         "j": 3,
+         "statistic": "1/1"
+        }
+       ],
+       "reason": "RETENTION POSITIVE: s = 1/1 over 12288 trials; the answer is u_j in every trial",
+       "ruler": "P2",
+       "statistic": "1/1",
+       "successes": 12288,
+       "trials": 12288,
+       "value": "POSITIVE"
+      },
+      "reasons": [
+       "RETENTION POSITIVE: s = 1/1 over 12288 trials; the answer is u_j in every trial"
+      ],
+      "standing": "SATISFIED"
+     }
+    },
+    {
+     "predicate": "ERASE",
+     "recomputed": true,
+     "required": "PASS",
+     "scope": "REG/STANDARD",
+     "verdict": {
+      "authority": {
+       "stage": "AUTHOR_TESTED",
+       "status": "QUALIFIED"
+      },
+      "execution": {
+       "missing": [],
+       "run_id": "S3-CASES-20261005T060627Z-16752/rcpt:REG:ERASE:STANDARD",
+       "status": "RAN"
+      },
+      "node_id": "rcpt:REG:ERASE:STANDARD",
+      "outcome": {
+       "applicable_count": null,
+       "eligible_count": 9600,
+       "kind": "GATE",
+       "predicate": "P3",
+       "reason": "no forbidden influence across boundaries 1-3 within the horizon",
+       "vacuous": false,
+       "value": "PASS",
+       "witness": null
+      },
+      "reasons": [
+       "no forbidden influence across boundaries 1-3 within the horizon"
+      ],
+      "standing": "SATISFIED"
+     }
+    },
+    {
+     "predicate": "PRESERVE",
+     "recomputed": true,
+     "required": "PASS",
+     "scope": "REG/STANDARD",
+     "verdict": {
+      "authority": {
+       "stage": "AUTHOR_TESTED",
+       "status": "QUALIFIED"
+      },
+      "execution": {
+       "missing": [],
+       "run_id": "S3-CASES-20261005T060627Z-16752/rcpt:REG:PRESERVE:STANDARD",
+       "status": "RAN"
+      },
+      "node_id": "rcpt:REG:PRESERVE:STANDARD",
+      "outcome": {
+       "applicable_count": 6144,
+       "eligible_count": 6144,
+       "kind": "GATE",
+       "predicate": "P4",
+       "reason": "every difference carried without a reset survives it",
+       "vacuous": false,
+       "value": "PASS",
+       "witness": null
+      },
+      "reasons": [
+       "every difference carried without a reset survives it"
+      ],
+      "standing": "SATISFIED"
+     }
+    },
+    {
+     "predicate": "CHANNEL",
+     "recomputed": true,
+     "required": "PASS",
+     "scope": "REG/STANDARD",
+     "verdict": {
+      "authority": {
+       "stage": "AUTHOR_TESTED",
+       "status": "QUALIFIED"
+      },
+      "execution": {
+       "missing": [],
+       "run_id": "S3-CASES-20261005T060627Z-16752/rcpt:REG:CHANNEL:STANDARD",
+       "status": "RAN"
+      },
+      "node_id": "rcpt:REG:CHANNEL:STANDARD",
+      "outcome": {
+       "applicable_count": null,
+       "eligible_count": 24576,
+       "kind": "GATE",
+       "predicate": "P5",
+       "reason": "retained answer follows the declared allowed channel",
+       "vacuous": false,
+       "value": "PASS",
+       "witness": null
+      },
+      "reasons": [
+       "retained answer follows the declared allowed channel"
+      ],
+      "standing": "SATISFIED"
+     }
+    },
+    {
+     "predicate": "RESTART",
+     "recomputed": false,
+     "required": "PASS",
+     "scope": "REG/STANDARD",
+     "verdict": {
+      "authority": {
+       "stage": "AUTHOR_TESTED",
+       "status": "QUALIFIED"
+      },
+      "execution": {
+       "missing": [],
+       "run_id": "S3-CASES-20261005T060627Z-16752/rcpt:REG:RESTART:STANDARD",
+       "status": "RAN"
+      },
+      "node_id": "rcpt:REG:RESTART:STANDARD",
+      "outcome": {
+       "applicable_count": null,
+       "eligible_count": 237568,
+       "kind": "GATE",
+       "predicate": "P6",
+       "reason": "continuations equal the uninterrupted run",
+       "vacuous": false,
+       "value": "PASS",
+       "witness": null
+      },
+      "reasons": [
+       "continuations equal the uninterrupted run"
+      ],
+      "standing": "SATISFIED"
+     }
+    },
+    {
+     "predicate": "OBSERVER",
+     "recomputed": false,
+     "required": "PASS",
+     "scope": "REG/NULL/STANDARD",
+     "verdict": {
+      "authority": {
+       "stage": "AUTHOR_TESTED",
+       "status": "QUALIFIED"
+      },
+      "execution": {
+       "missing": [],
+       "run_id": "S3-CASES-20261005T060627Z-16752/rcpt:REG:OBSERVER:NULL:STANDARD",
+       "status": "RAN"
+      },
+      "node_id": "rcpt:REG:OBSERVER:NULL:STANDARD",
+      "outcome": {
+       "applicable_count": null,
+       "eligible_count": 196608,
+       "kind": "GATE",
+       "predicate": "P7",
+       "reason": "outputs and declared non-BOOKKEEPING state identical to the null observer",
+       "vacuous": false,
+       "value": "PASS",
+       "witness": null
+      },
+      "reasons": [
+       "outputs and declared non-BOOKKEEPING state identical to the null observer"
+      ],
+      "standing": "SATISFIED"
+     }
+    },
+    {
+     "predicate": "OBSERVER",
+     "recomputed": false,
+     "required": "PASS",
+     "scope": "REG/S3_MIGRATE/STANDARD",
+     "verdict": {
+      "authority": {
+       "stage": "AUTHOR_TESTED",
+       "status": "QUALIFIED"
+      },
+      "execution": {
+       "missing": [],
+       "run_id": "S3-CASES-20261005T060627Z-16752/rcpt:REG:OBSERVER:S3_MIGRATE:STANDARD",
+       "status": "RAN"
+      },
+      "node_id": "rcpt:REG:OBSERVER:S3_MIGRATE:STANDARD",
+      "outcome": {
+       "applicable_count": null,
+       "eligible_count": 196608,
+       "kind": "GATE",
+       "predicate": "P7",
+       "reason": "outputs and declared non-BOOKKEEPING state identical to the null observer",
+       "vacuous": false,
+       "value": "PASS",
+       "witness": null
+      },
+      "reasons": [
+       "outputs and declared non-BOOKKEEPING state identical to the null observer"
+      ],
+      "standing": "SATISFIED"
+     }
+    },
+    {
+     "predicate": "G-BIND",
+     "recomputed": false,
+     "required": "PASS",
+     "scope": "CL-RET(REG)",
+     "verdict": {
+      "authority": {
+       "stage": "AUTHOR_TESTED",
+       "status": "QUALIFIED"
+      },
+      "execution": {
+       "missing": [],
+       "run_id": "consumer",
+       "status": "RAN"
+      },
+      "node_id": "gate:G-BIND:CL-RET(REG)",
+      "outcome": {
+       "applicable_count": 9,
+       "eligible_count": 9,
+       "kind": "GATE",
+       "predicate": "G-BIND",
+       "reason": "every reachable node binds to the anchors held",
+       "vacuous": false,
+       "value": "PASS",
+       "witness": null
+      },
+      "reasons": [
+       "every reachable node binds to the anchors held"
+      ],
+      "standing": "SATISFIED"
+     }
+    },
+    {
+     "predicate": "G-INV",
+     "recomputed": false,
+     "required": "PASS",
+     "scope": "CL-RET(REG)",
+     "verdict": {
+      "authority": {
+       "stage": "AUTHOR_TESTED",
+       "status": "QUALIFIED"
+      },
+      "execution": {
+       "missing": [],
+       "run_id": "consumer",
+       "status": "RAN"
+      },
+      "node_id": "gate:G-INV:CL-RET(REG)",
+      "outcome": {
+       "applicable_count": 9,
+       "eligible_count": 9,
+       "kind": "GATE",
+       "predicate": "G-INV",
+       "reason": "inventory terminal; every run reported",
+       "vacuous": false,
+       "value": "PASS",
+       "witness": null
+      },
+      "reasons": [
+       "inventory terminal; every run reported"
+      ],
+      "standing": "SATISFIED"
+     }
+    },
+    {
+     "predicate": "G-RECOMP",
+     "recomputed": false,
+     "required": "PASS",
+     "scope": "CL-RET(REG)",
+     "verdict": {
+      "authority": {
+       "stage": "AUTHOR_TESTED",
+       "status": "QUALIFIED"
+      },
+      "execution": {
+       "missing": [],
+       "run_id": "consumer",
+       "status": "RAN"
+      },
+      "node_id": "gate:G-RECOMP:CL-RET(REG)",
+      "outcome": {
+       "applicable_count": 5,
+       "eligible_count": 5,
+       "kind": "GATE",
+       "predicate": "G-RECOMP",
+       "reason": "recomputed equal: CHANNEL, ERASE, PRESERVE, RETENTION, CALIBRATION",
+       "vacuous": false,
+       "value": "PASS",
+       "witness": null
+      },
+      "reasons": [
+       "recomputed equal: CHANNEL, ERASE, PRESERVE, RETENTION, CALIBRATION"
+      ],
+      "standing": "SATISFIED"
+     }
+    }
+   ],
+   "relative": {
+    "bound": "1/2",
+    "class_id": "N",
+    "def": "policies whose answer is a function of j alone",
+    "form": "class",
+    "method": "enumeration of 8 policies over 12288 trials"
+   },
+   "retention": {
+    "statistic": "1/1",
+    "successes": 12288,
+    "trials": 12288
+   },
+   "schema": "rso.slice001.decision.v1",
+   "setting": {
+    "id": "reset_model",
+    "sha256": "2367e411808fce3a2527c634c755cc00dd037c07e05a0c3ef46a5a48438143d8"
+   },
+   "standing": "SATISFIED",
+   "subject": "REG",
+   "twin": null,
+   "type": "CL-RET",
+   "unverified": [],
+   "world": "STANDARD"
+  },
+  "CL-RET(S3_BEACON)": {
+   "authority": {
+    "stage": "AUTHOR_TESTED",
+    "status": "QUALIFIED"
+   },
+   "cell": {
+    "cell_id": "W-S1",
+    "revision": "2367e411808fce3a2527c634c755cc00dd037c07e05a0c3ef46a5a48438143d8"
+   },
+   "claim_id": "CL-RET(S3_BEACON)",
+   "custody": {
+    "status": "UNQUALIFIED",
+    "why": [
+     "KEEPER_ROW_MISSING:EVIDENCE_MANIFEST",
+     "KEEPER_ROW_MISSING:EXPECTED_ANSWER_TABLE",
+     "KEEPER_ROW_MISSING:RUN_INVENTORY"
+    ]
+   },
+   "eligibility": "ELIGIBLE",
+   "encoding": null,
+   "instruments": 11,
+   "not_satisfied": [],
+   "prerequisites": [
+    {
+     "predicate": "BOUNDS",
+     "recomputed": false,
+     "required": "PASS",
+     "scope": "S3_BEACON/STANDARD",
+     "verdict": {
+      "authority": {
+       "stage": "AUTHOR_TESTED",
+       "status": "QUALIFIED"
+      },
+      "execution": {
+       "missing": [],
+       "run_id": "S3-CASES-20261005T060627Z-16752/rcpt:S3_BEACON:BOUNDS:STANDARD",
+       "status": "RAN"
+      },
+      "node_id": "rcpt:S3_BEACON:BOUNDS:STANDARD",
+      "outcome": {
+       "applicable_count": null,
+       "eligible_count": 4096,
+       "kind": "GATE",
+       "predicate": "P0",
+       "reason": "every life stays inside the registered model",
+       "vacuous": false,
+       "value": "PASS",
+       "witness": null
+      },
+      "reasons": [
+       "every life stays inside the registered model"
+      ],
+      "standing": "SATISFIED"
+     }
+    },
+    {
+     "predicate": "CALIBRATION",
+     "recomputed": true,
+     "required": "PASS",
+     "scope": "WORLD/STANDARD",
+     "verdict": {
+      "authority": {
+       "stage": "AUTHOR_TESTED",
+       "status": "QUALIFIED"
+      },
+      "execution": {
+       "missing": [],
+       "run_id": "S3-CASES-20261005T060627Z-16752/rcpt:WORLD:CALIBRATION:STANDARD",
+       "status": "RAN"
+      },
+      "node_id": "rcpt:WORLD:CALIBRATION:STANDARD",
+      "outcome": {
+       "applicable_count": null,
+       "eligible_count": 98304,
+       "kind": "GATE",
+       "predicate": "P1",
+       "reason": "no-carry maximum equals the registered bound 1/2; u_j balanced at j = 1..3",
+       "vacuous": false,
+       "value": "PASS",
+       "witness": null
+      },
+      "reasons": [
+       "no-carry maximum equals the registered bound 1/2; u_j balanced at j = 1..3"
+      ],
+      "standing": "SATISFIED"
+     }
+    },
+    {
+     "predicate": "RETENTION",
+     "recomputed": true,
+     "required": "POSITIVE",
+     "scope": "S3_BEACON/STANDARD",
+     "verdict": {
+      "authority": {
+       "stage": "AUTHOR_TESTED",
+       "status": "QUALIFIED"
+      },
+      "execution": {
+       "missing": [],
+       "run_id": "S3-CASES-20261005T060627Z-16752/rcpt:S3_BEACON:RETENTION:STANDARD",
+       "status": "RAN"
+      },
+      "node_id": "rcpt:S3_BEACON:RETENTION:STANDARD",
+      "outcome": {
+       "kind": "RULER",
+       "per_boundary": [
+        {
+         "j": 1,
+         "statistic": "1/1"
+        },
+        {
+         "j": 2,
+         "statistic": "1/1"
+        },
+        {
+         "j": 3,
+         "statistic": "1/1"
+        }
+       ],
+       "reason": "RETENTION POSITIVE: s = 1/1 over 12288 trials; the answer is u_j in every trial",
+       "ruler": "P2",
+       "statistic": "1/1",
+       "successes": 12288,
+       "trials": 12288,
+       "value": "POSITIVE"
+      },
+      "reasons": [
+       "RETENTION POSITIVE: s = 1/1 over 12288 trials; the answer is u_j in every trial"
+      ],
+      "standing": "SATISFIED"
+     }
+    },
+    {
+     "predicate": "ERASE",
+     "recomputed": true,
+     "required": "PASS",
+     "scope": "S3_BEACON/STANDARD",
+     "verdict": {
+      "authority": {
+       "stage": "AUTHOR_TESTED",
+       "status": "QUALIFIED"
+      },
+      "execution": {
+       "missing": [],
+       "run_id": "S3-CASES-20261005T060627Z-16752/rcpt:S3_BEACON:ERASE:STANDARD",
+       "status": "RAN"
+      },
+      "node_id": "rcpt:S3_BEACON:ERASE:STANDARD",
+      "outcome": {
+       "applicable_count": null,
+       "eligible_count": 9600,
+       "kind": "GATE",
+       "predicate": "P3",
+       "reason": "no forbidden influence across boundaries 1-3 within the horizon",
+       "vacuous": false,
+       "value": "PASS",
+       "witness": null
+      },
+      "reasons": [
+       "no forbidden influence across boundaries 1-3 within the horizon"
+      ],
+      "standing": "SATISFIED"
+     }
+    },
+    {
+     "predicate": "PRESERVE",
+     "recomputed": true,
+     "required": "PASS",
+     "scope": "S3_BEACON/STANDARD",
+     "verdict": {
+      "authority": {
+       "stage": "AUTHOR_TESTED",
+       "status": "QUALIFIED"
+      },
+      "execution": {
+       "missing": [],
+       "run_id": "S3-CASES-20261005T060627Z-16752/rcpt:S3_BEACON:PRESERVE:STANDARD",
+       "status": "RAN"
+      },
+      "node_id": "rcpt:S3_BEACON:PRESERVE:STANDARD",
+      "outcome": {
+       "applicable_count": 6144,
+       "eligible_count": 6144,
+       "kind": "GATE",
+       "predicate": "P4",
+       "reason": "every difference carried without a reset survives it",
+       "vacuous": false,
+       "value": "PASS",
+       "witness": null
+      },
+      "reasons": [
+       "every difference carried without a reset survives it"
+      ],
+      "standing": "SATISFIED"
+     }
+    },
+    {
+     "predicate": "CHANNEL",
+     "recomputed": true,
+     "required": "PASS",
+     "scope": "S3_BEACON/STANDARD",
+     "verdict": {
+      "authority": {
+       "stage": "AUTHOR_TESTED",
+       "status": "QUALIFIED"
+      },
+      "execution": {
+       "missing": [],
+       "run_id": "S3-CASES-20261005T060627Z-16752/rcpt:S3_BEACON:CHANNEL:STANDARD",
+       "status": "RAN"
+      },
+      "node_id": "rcpt:S3_BEACON:CHANNEL:STANDARD",
+      "outcome": {
+       "applicable_count": null,
+       "eligible_count": 24576,
+       "kind": "GATE",
+       "predicate": "P5",
+       "reason": "retained answer follows the declared allowed channel",
+       "vacuous": false,
+       "value": "PASS",
+       "witness": null
+      },
+      "reasons": [
+       "retained answer follows the declared allowed channel"
+      ],
+      "standing": "SATISFIED"
+     }
+    },
+    {
+     "predicate": "RESTART",
+     "recomputed": false,
+     "required": "PASS",
+     "scope": "S3_BEACON/STANDARD",
+     "verdict": {
+      "authority": {
+       "stage": "AUTHOR_TESTED",
+       "status": "QUALIFIED"
+      },
+      "execution": {
+       "missing": [],
+       "run_id": "S3-CASES-20261005T060627Z-16752/rcpt:S3_BEACON:RESTART:STANDARD",
+       "status": "RAN"
+      },
+      "node_id": "rcpt:S3_BEACON:RESTART:STANDARD",
+      "outcome": {
+       "applicable_count": null,
+       "eligible_count": 237568,
+       "kind": "GATE",
+       "predicate": "P6",
+       "reason": "continuations equal the uninterrupted run",
+       "vacuous": false,
+       "value": "PASS",
+       "witness": null
+      },
+      "reasons": [
+       "continuations equal the uninterrupted run"
+      ],
+      "standing": "SATISFIED"
+     }
+    },
+    {
+     "predicate": "OBSERVER",
+     "recomputed": false,
+     "required": "PASS",
+     "scope": "S3_BEACON/NULL/STANDARD",
+     "verdict": {
+      "authority": {
+       "stage": "AUTHOR_TESTED",
+       "status": "QUALIFIED"
+      },
+      "execution": {
+       "missing": [],
+       "run_id": "S3-CASES-20261005T060627Z-16752/rcpt:S3_BEACON:OBSERVER:NULL:STANDARD",
+       "status": "RAN"
+      },
+      "node_id": "rcpt:S3_BEACON:OBSERVER:NULL:STANDARD",
+      "outcome": {
+       "applicable_count": null,
+       "eligible_count": 196608,
+       "kind": "GATE",
+       "predicate": "P7",
+       "reason": "outputs and declared non-BOOKKEEPING state identical to the null observer",
+       "vacuous": false,
+       "value": "PASS",
+       "witness": null
+      },
+      "reasons": [
+       "outputs and declared non-BOOKKEEPING state identical to the null observer"
+      ],
+      "standing": "SATISFIED"
+     }
+    },
+    {
+     "predicate": "G-BIND",
+     "recomputed": false,
+     "required": "PASS",
+     "scope": "CL-RET(S3_BEACON)",
+     "verdict": {
+      "authority": {
+       "stage": "AUTHOR_TESTED",
+       "status": "QUALIFIED"
+      },
+      "execution": {
+       "missing": [],
+       "run_id": "consumer",
+       "status": "RAN"
+      },
+      "node_id": "gate:G-BIND:CL-RET(S3_BEACON)",
+      "outcome": {
+       "applicable_count": 8,
+       "eligible_count": 8,
+       "kind": "GATE",
+       "predicate": "G-BIND",
+       "reason": "every reachable node binds to the anchors held",
+       "vacuous": false,
+       "value": "PASS",
+       "witness": null
+      },
+      "reasons": [
+       "every reachable node binds to the anchors held"
+      ],
+      "standing": "SATISFIED"
+     }
+    },
+    {
+     "predicate": "G-INV",
+     "recomputed": false,
+     "required": "PASS",
+     "scope": "CL-RET(S3_BEACON)",
+     "verdict": {
+      "authority": {
+       "stage": "AUTHOR_TESTED",
+       "status": "QUALIFIED"
+      },
+      "execution": {
+       "missing": [],
+       "run_id": "consumer",
+       "status": "RAN"
+      },
+      "node_id": "gate:G-INV:CL-RET(S3_BEACON)",
+      "outcome": {
+       "applicable_count": 8,
+       "eligible_count": 8,
+       "kind": "GATE",
+       "predicate": "G-INV",
+       "reason": "inventory terminal; every run reported",
+       "vacuous": false,
+       "value": "PASS",
+       "witness": null
+      },
+      "reasons": [
+       "inventory terminal; every run reported"
+      ],
+      "standing": "SATISFIED"
+     }
+    },
+    {
+     "predicate": "G-RECOMP",
+     "recomputed": false,
+     "required": "PASS",
+     "scope": "CL-RET(S3_BEACON)",
+     "verdict": {
+      "authority": {
+       "stage": "AUTHOR_TESTED",
+       "status": "QUALIFIED"
+      },
+      "execution": {
+       "missing": [],
+       "run_id": "consumer",
+       "status": "RAN"
+      },
+      "node_id": "gate:G-RECOMP:CL-RET(S3_BEACON)",
+      "outcome": {
+       "applicable_count": 5,
+       "eligible_count": 5,
+       "kind": "GATE",
+       "predicate": "G-RECOMP",
+       "reason": "recomputed equal: CHANNEL, ERASE, PRESERVE, RETENTION, CALIBRATION",
+       "vacuous": false,
+       "value": "PASS",
+       "witness": null
+      },
+      "reasons": [
+       "recomputed equal: CHANNEL, ERASE, PRESERVE, RETENTION, CALIBRATION"
+      ],
+      "standing": "SATISFIED"
+     }
+    }
+   ],
+   "relative": {
+    "bound": "1/2",
+    "class_id": "N",
+    "def": "policies whose answer is a function of j alone",
+    "form": "class",
+    "method": "enumeration of 8 policies over 12288 trials"
+   },
+   "retention": {
+    "statistic": "1/1",
+    "successes": 12288,
+    "trials": 12288
+   },
+   "schema": "rso.slice001.decision.v1",
+   "setting": {
+    "id": "reset_model",
+    "sha256": "2367e411808fce3a2527c634c755cc00dd037c07e05a0c3ef46a5a48438143d8"
+   },
+   "standing": "SATISFIED",
+   "subject": "S3_BEACON",
+   "twin": null,
+   "type": "CL-RET",
+   "unverified": [],
+   "world": "STANDARD"
+  },
+  "CL-RET(S3_INVERT)": {
+   "authority": {
+    "status": "UNQUALIFIED",
+    "why": [
+     "rcpt:S3_INVERT:CHANNEL:STANDARD: PRECONDITION:RESTART",
+     "rcpt:S3_INVERT:OBSERVER:NULL:STANDARD: PRECONDITION:RESTART"
+    ]
+   },
+   "cell": {
+    "cell_id": "W-S1",
+    "revision": "2367e411808fce3a2527c634c755cc00dd037c07e05a0c3ef46a5a48438143d8"
+   },
+   "claim_id": "CL-RET(S3_INVERT)",
+   "custody": {
+    "status": "UNQUALIFIED",
+    "why": [
+     "KEEPER_ROW_MISSING:EVIDENCE_MANIFEST",
+     "KEEPER_ROW_MISSING:EXPECTED_ANSWER_TABLE",
+     "KEEPER_ROW_MISSING:RUN_INVENTORY"
+    ]
+   },
+   "eligibility": "NOT_ELIGIBLE",
+   "encoding": null,
+   "instruments": 11,
+   "not_satisfied": [
+    "gate:G-RECOMP:CL-RET(S3_INVERT)",
+    "rcpt:S3_INVERT:CHANNEL:STANDARD",
+    "rcpt:S3_INVERT:OBSERVER:NULL:STANDARD",
+    "rcpt:S3_INVERT:RESTART:STANDARD"
+   ],
+   "prerequisites": [
+    {
+     "predicate": "BOUNDS",
+     "recomputed": false,
+     "required": "PASS",
+     "scope": "S3_INVERT/STANDARD",
+     "verdict": {
+      "authority": {
+       "stage": "AUTHOR_TESTED",
+       "status": "QUALIFIED"
+      },
+      "execution": {
+       "missing": [],
+       "run_id": "S3-CASES-20261005T060627Z-16752/rcpt:S3_INVERT:BOUNDS:STANDARD",
+       "status": "RAN"
+      },
+      "node_id": "rcpt:S3_INVERT:BOUNDS:STANDARD",
+      "outcome": {
+       "applicable_count": null,
+       "eligible_count": 4096,
+       "kind": "GATE",
+       "predicate": "P0",
+       "reason": "every life stays inside the registered model",
+       "vacuous": false,
+       "value": "PASS",
+       "witness": null
+      },
+      "reasons": [
+       "every life stays inside the registered model"
+      ],
+      "standing": "SATISFIED"
+     }
+    },
+    {
+     "predicate": "CALIBRATION",
+     "recomputed": true,
+     "required": "PASS",
+     "scope": "WORLD/STANDARD",
+     "verdict": {
+      "authority": {
+       "stage": "AUTHOR_TESTED",
+       "status": "QUALIFIED"
+      },
+      "execution": {
+       "missing": [],
+       "run_id": "S3-CASES-20261005T060627Z-16752/rcpt:WORLD:CALIBRATION:STANDARD",
+       "status": "RAN"
+      },
+      "node_id": "rcpt:WORLD:CALIBRATION:STANDARD",
+      "outcome": {
+       "applicable_count": null,
+       "eligible_count": 98304,
+       "kind": "GATE",
+       "predicate": "P1",
+       "reason": "no-carry maximum equals the registered bound 1/2; u_j balanced at j = 1..3",
+       "vacuous": false,
+       "value": "PASS",
+       "witness": null
+      },
+      "reasons": [
+       "no-carry maximum equals the registered bound 1/2; u_j balanced at j = 1..3"
+      ],
+      "standing": "SATISFIED"
+     }
+    },
+    {
+     "predicate": "RETENTION",
+     "recomputed": true,
+     "required": "POSITIVE",
+     "scope": "S3_INVERT/STANDARD",
+     "verdict": {
+      "authority": {
+       "stage": "AUTHOR_TESTED",
+       "status": "QUALIFIED"
+      },
+      "execution": {
+       "missing": [],
+       "run_id": "S3-CASES-20261005T060627Z-16752/rcpt:S3_INVERT:RETENTION:STANDARD",
+       "status": "RAN"
+      },
+      "node_id": "rcpt:S3_INVERT:RETENTION:STANDARD",
+      "outcome": {
+       "kind": "RULER",
+       "per_boundary": [
+        {
+         "j": 1,
+         "statistic": "1/1"
+        },
+        {
+         "j": 2,
+         "statistic": "1/1"
+        },
+        {
+         "j": 3,
+         "statistic": "1/1"
+        }
+       ],
+       "reason": "RETENTION POSITIVE: s = 1/1 over 12288 trials; the answer is u_j in every trial",
+       "ruler": "P2",
+       "statistic": "1/1",
+       "successes": 12288,
+       "trials": 12288,
+       "value": "POSITIVE"
+      },
+      "reasons": [
+       "RETENTION POSITIVE: s = 1/1 over 12288 trials; the answer is u_j in every trial"
+      ],
+      "standing": "SATISFIED"
+     }
+    },
+    {
+     "predicate": "ERASE",
+     "recomputed": true,
+     "required": "PASS",
+     "scope": "S3_INVERT/STANDARD",
+     "verdict": {
+      "authority": {
+       "stage": "AUTHOR_TESTED",
+       "status": "QUALIFIED"
+      },
+      "execution": {
+       "missing": [],
+       "run_id": "S3-CASES-20261005T060627Z-16752/rcpt:S3_INVERT:ERASE:STANDARD",
+       "status": "RAN"
+      },
+      "node_id": "rcpt:S3_INVERT:ERASE:STANDARD",
+      "outcome": {
+       "applicable_count": null,
+       "eligible_count": 9600,
+       "kind": "GATE",
+       "predicate": "P3",
+       "reason": "no forbidden influence across boundaries 1-3 within the horizon",
+       "vacuous": false,
+       "value": "PASS",
+       "witness": null
+      },
+      "reasons": [
+       "no forbidden influence across boundaries 1-3 within the horizon"
+      ],
+      "standing": "SATISFIED"
+     }
+    },
+    {
+     "predicate": "PRESERVE",
+     "recomputed": true,
+     "required": "PASS",
+     "scope": "S3_INVERT/STANDARD",
+     "verdict": {
+      "authority": {
+       "stage": "AUTHOR_TESTED",
+       "status": "QUALIFIED"
+      },
+      "execution": {
+       "missing": [],
+       "run_id": "S3-CASES-20261005T060627Z-16752/rcpt:S3_INVERT:PRESERVE:STANDARD",
+       "status": "RAN"
+      },
+      "node_id": "rcpt:S3_INVERT:PRESERVE:STANDARD",
+      "outcome": {
+       "applicable_count": 6144,
+       "eligible_count": 6144,
+       "kind": "GATE",
+       "predicate": "P4",
+       "reason": "every difference carried without a reset survives it",
+       "vacuous": false,
+       "value": "PASS",
+       "witness": null
+      },
+      "reasons": [
+       "every difference carried without a reset survives it"
+      ],
+      "standing": "SATISFIED"
+     }
+    },
+    {
+     "predicate": "CHANNEL",
+     "recomputed": true,
+     "required": "PASS",
+     "scope": "S3_INVERT/STANDARD",
+     "verdict": {
+      "authority": {
+       "status": "UNQUALIFIED",
+       "why": [
+        "PRECONDITION:RESTART"
+       ]
+      },
+      "execution": {
+       "missing": [],
+       "run_id": "S3-CASES-20261005T060627Z-16752/rcpt:S3_INVERT:CHANNEL:STANDARD",
+       "status": "RAN"
+      },
+      "node_id": "rcpt:S3_INVERT:CHANNEL:STANDARD",
+      "outcome": {
+       "applicable_count": null,
+       "eligible_count": 24576,
+       "kind": "GATE",
+       "predicate": "P5",
+       "reason": "retained answer does not follow the declared allowed channel at 1",
+       "vacuous": false,
+       "value": "FAIL",
+       "witness": {
+        "history": 0,
+        "j": 1,
+        "v": 0
+       }
+      },
+      "reasons": [
+       "PRECONDITION:RESTART"
+      ],
+      "standing": "UNQUALIFIED"
+     }
+    },
+    {
+     "predicate": "RESTART",
+     "recomputed": false,
+     "required": "PASS",
+     "scope": "S3_INVERT/STANDARD",
+     "verdict": {
+      "authority": {
+       "stage": "AUTHOR_TESTED",
+       "status": "QUALIFIED"
+      },
+      "execution": {
+       "missing": [],
+       "run_id": "S3-CASES-20261005T060627Z-16752/rcpt:S3_INVERT:RESTART:STANDARD",
+       "status": "RAN"
+      },
+      "node_id": "rcpt:S3_INVERT:RESTART:STANDARD",
+      "outcome": {
+       "applicable_count": null,
+       "eligible_count": 237568,
+       "kind": "GATE",
+       "predicate": "P6",
+       "reason": "capture/restore loses future-influencing state at (RESET 1), target FRESH",
+       "vacuous": false,
+       "value": "FAIL",
+       "witness": {
+        "cut": 4,
+        "history": 0,
+        "point": [
+         "RESET",
+         1
+        ],
+        "target": "FRESH"
+       }
+      },
+      "reasons": [
+       "capture/restore loses future-influencing state at (RESET 1), target FRESH"
+      ],
+      "standing": "UNMET"
+     }
+    },
+    {
+     "predicate": "OBSERVER",
+     "recomputed": false,
+     "required": "PASS",
+     "scope": "S3_INVERT/NULL/STANDARD",
+     "verdict": {
+      "authority": {
+       "status": "UNQUALIFIED",
+       "why": [
+        "PRECONDITION:RESTART"
+       ]
+      },
+      "execution": {
+       "missing": [],
+       "run_id": "S3-CASES-20261005T060627Z-16752/rcpt:S3_INVERT:OBSERVER:NULL:STANDARD",
+       "status": "RAN"
+      },
+      "node_id": "rcpt:S3_INVERT:OBSERVER:NULL:STANDARD",
+      "outcome": {
+       "applicable_count": null,
+       "eligible_count": 196608,
+       "kind": "GATE",
+       "predicate": "P7",
+       "reason": "outputs and declared non-BOOKKEEPING state identical to the null observer",
+       "vacuous": false,
+       "value": "PASS",
+       "witness": null
+      },
+      "reasons": [
+       "PRECONDITION:RESTART"
+      ],
+      "standing": "UNQUALIFIED"
+     }
+    },
+    {
+     "predicate": "G-BIND",
+     "recomputed": false,
+     "required": "PASS",
+     "scope": "CL-RET(S3_INVERT)",
+     "verdict": {
+      "authority": {
+       "stage": "AUTHOR_TESTED",
+       "status": "QUALIFIED"
+      },
+      "execution": {
+       "missing": [],
+       "run_id": "consumer",
+       "status": "RAN"
+      },
+      "node_id": "gate:G-BIND:CL-RET(S3_INVERT)",
+      "outcome": {
+       "applicable_count": 8,
+       "eligible_count": 8,
+       "kind": "GATE",
+       "predicate": "G-BIND",
+       "reason": "every reachable node binds to the anchors held",
+       "vacuous": false,
+       "value": "PASS",
+       "witness": null
+      },
+      "reasons": [
+       "every reachable node binds to the anchors held"
+      ],
+      "standing": "SATISFIED"
+     }
+    },
+    {
+     "predicate": "G-INV",
+     "recomputed": false,
+     "required": "PASS",
+     "scope": "CL-RET(S3_INVERT)",
+     "verdict": {
+      "authority": {
+       "stage": "AUTHOR_TESTED",
+       "status": "QUALIFIED"
+      },
+      "execution": {
+       "missing": [],
+       "run_id": "consumer",
+       "status": "RAN"
+      },
+      "node_id": "gate:G-INV:CL-RET(S3_INVERT)",
+      "outcome": {
+       "applicable_count": 8,
+       "eligible_count": 8,
+       "kind": "GATE",
+       "predicate": "G-INV",
+       "reason": "inventory terminal; every run reported",
+       "vacuous": false,
+       "value": "PASS",
+       "witness": null
+      },
+      "reasons": [
+       "inventory terminal; every run reported"
+      ],
+      "standing": "SATISFIED"
+     }
+    },
+    {
+     "predicate": "G-RECOMP",
+     "recomputed": false,
+     "required": "PASS",
+     "scope": "CL-RET(S3_INVERT)",
+     "verdict": {
+      "authority": {
+       "stage": "AUTHOR_TESTED",
+       "status": "QUALIFIED"
+      },
+      "execution": {
+       "missing": [],
+       "run_id": "consumer",
+       "status": "RAN"
+      },
+      "node_id": "gate:G-RECOMP:CL-RET(S3_INVERT)",
+      "outcome": {
+       "applicable_count": 1,
+       "eligible_count": 5,
+       "kind": "GATE",
+       "predicate": "G-RECOMP",
+       "reason": "OUTCOME_MISMATCH:value",
+       "vacuous": false,
+       "value": "FAIL",
+       "witness": "rcpt:S3_INVERT:CHANNEL:STANDARD"
+      },
+      "reasons": [
+       "OUTCOME_MISMATCH:value"
+      ],
+      "standing": "UNMET"
+     }
+    }
+   ],
+   "relative": {
+    "bound": "1/2",
+    "class_id": "N",
+    "def": "policies whose answer is a function of j alone",
+    "form": "class",
+    "method": "enumeration of 8 policies over 12288 trials"
+   },
+   "retention": {
+    "statistic": "1/1",
+    "successes": 12288,
+    "trials": 12288
+   },
+   "schema": "rso.slice001.decision.v1",
+   "setting": {
+    "id": "reset_model",
+    "sha256": "2367e411808fce3a2527c634c755cc00dd037c07e05a0c3ef46a5a48438143d8"
+   },
+   "standing": "UNQUALIFIED",
+   "subject": "S3_INVERT",
+   "twin": null,
+   "type": "CL-RET",
+   "unverified": [],
+   "world": "STANDARD"
+  },
+  "CL-RET(S3_LATCH)": {
+   "authority": {
+    "stage": "AUTHOR_TESTED",
+    "status": "QUALIFIED"
+   },
+   "cell": {
+    "cell_id": "W-S1",
+    "revision": "2367e411808fce3a2527c634c755cc00dd037c07e05a0c3ef46a5a48438143d8"
+   },
+   "claim_id": "CL-RET(S3_LATCH)",
+   "custody": {
+    "status": "UNQUALIFIED",
+    "why": [
+     "KEEPER_ROW_MISSING:EVIDENCE_MANIFEST",
+     "KEEPER_ROW_MISSING:EXPECTED_ANSWER_TABLE",
+     "KEEPER_ROW_MISSING:RUN_INVENTORY"
+    ]
+   },
+   "eligibility": "ELIGIBLE",
+   "encoding": null,
+   "instruments": 11,
+   "not_satisfied": [],
+   "prerequisites": [
+    {
+     "predicate": "BOUNDS",
+     "recomputed": false,
+     "required": "PASS",
+     "scope": "S3_LATCH/STANDARD",
+     "verdict": {
+      "authority": {
+       "stage": "AUTHOR_TESTED",
+       "status": "QUALIFIED"
+      },
+      "execution": {
+       "missing": [],
+       "run_id": "S3-CASES-20261005T060627Z-16752/rcpt:S3_LATCH:BOUNDS:STANDARD",
+       "status": "RAN"
+      },
+      "node_id": "rcpt:S3_LATCH:BOUNDS:STANDARD",
+      "outcome": {
+       "applicable_count": null,
+       "eligible_count": 4096,
+       "kind": "GATE",
+       "predicate": "P0",
+       "reason": "every life stays inside the registered model",
+       "vacuous": false,
+       "value": "PASS",
+       "witness": null
+      },
+      "reasons": [
+       "every life stays inside the registered model"
+      ],
+      "standing": "SATISFIED"
+     }
+    },
+    {
+     "predicate": "CALIBRATION",
+     "recomputed": true,
+     "required": "PASS",
+     "scope": "WORLD/STANDARD",
+     "verdict": {
+      "authority": {
+       "stage": "AUTHOR_TESTED",
+       "status": "QUALIFIED"
+      },
+      "execution": {
+       "missing": [],
+       "run_id": "S3-CASES-20261005T060627Z-16752/rcpt:WORLD:CALIBRATION:STANDARD",
+       "status": "RAN"
+      },
+      "node_id": "rcpt:WORLD:CALIBRATION:STANDARD",
+      "outcome": {
+       "applicable_count": null,
+       "eligible_count": 98304,
+       "kind": "GATE",
+       "predicate": "P1",
+       "reason": "no-carry maximum equals the registered bound 1/2; u_j balanced at j = 1..3",
+       "vacuous": false,
+       "value": "PASS",
+       "witness": null
+      },
+      "reasons": [
+       "no-carry maximum equals the registered bound 1/2; u_j balanced at j = 1..3"
+      ],
+      "standing": "SATISFIED"
+     }
+    },
+    {
+     "predicate": "RETENTION",
+     "recomputed": true,
+     "required": "POSITIVE",
+     "scope": "S3_LATCH/STANDARD",
+     "verdict": {
+      "authority": {
+       "stage": "AUTHOR_TESTED",
+       "status": "QUALIFIED"
+      },
+      "execution": {
+       "missing": [],
+       "run_id": "S3-CASES-20261005T060627Z-16752/rcpt:S3_LATCH:RETENTION:STANDARD",
+       "status": "RAN"
+      },
+      "node_id": "rcpt:S3_LATCH:RETENTION:STANDARD",
+      "outcome": {
+       "kind": "RULER",
+       "per_boundary": [
+        {
+         "j": 1,
+         "statistic": "1/1"
+        },
+        {
+         "j": 2,
+         "statistic": "1/1"
+        },
+        {
+         "j": 3,
+         "statistic": "1/1"
+        }
+       ],
+       "reason": "RETENTION POSITIVE: s = 1/1 over 12288 trials; the answer is u_j in every trial",
+       "ruler": "P2",
+       "statistic": "1/1",
+       "successes": 12288,
+       "trials": 12288,
+       "value": "POSITIVE"
+      },
+      "reasons": [
+       "RETENTION POSITIVE: s = 1/1 over 12288 trials; the answer is u_j in every trial"
+      ],
+      "standing": "SATISFIED"
+     }
+    },
+    {
+     "predicate": "ERASE",
+     "recomputed": true,
+     "required": "PASS",
+     "scope": "S3_LATCH/STANDARD",
+     "verdict": {
+      "authority": {
+       "stage": "AUTHOR_TESTED",
+       "status": "QUALIFIED"
+      },
+      "execution": {
+       "missing": [],
+       "run_id": "S3-CASES-20261005T060627Z-16752/rcpt:S3_LATCH:ERASE:STANDARD",
+       "status": "RAN"
+      },
+      "node_id": "rcpt:S3_LATCH:ERASE:STANDARD",
+      "outcome": {
+       "applicable_count": null,
+       "eligible_count": 9600,
+       "kind": "GATE",
+       "predicate": "P3",
+       "reason": "no forbidden influence across boundaries 1-3 within the horizon",
+       "vacuous": false,
+       "value": "PASS",
+       "witness": null
+      },
+      "reasons": [
+       "no forbidden influence across boundaries 1-3 within the horizon"
+      ],
+      "standing": "SATISFIED"
+     }
+    },
+    {
+     "predicate": "PRESERVE",
+     "recomputed": true,
+     "required": "PASS",
+     "scope": "S3_LATCH/STANDARD",
+     "verdict": {
+      "authority": {
+       "stage": "AUTHOR_TESTED",
+       "status": "QUALIFIED"
+      },
+      "execution": {
+       "missing": [],
+       "run_id": "S3-CASES-20261005T060627Z-16752/rcpt:S3_LATCH:PRESERVE:STANDARD",
+       "status": "RAN"
+      },
+      "node_id": "rcpt:S3_LATCH:PRESERVE:STANDARD",
+      "outcome": {
+       "applicable_count": 0,
+       "eligible_count": 6144,
+       "kind": "GATE",
+       "predicate": "P4",
+       "reason": "every difference carried without a reset survives it",
+       "vacuous": true,
+       "value": "PASS",
+       "witness": null
+      },
+      "reasons": [
+       "every difference carried without a reset survives it"
+      ],
+      "standing": "SATISFIED"
+     }
+    },
+    {
+     "predicate": "CHANNEL",
+     "recomputed": true,
+     "required": "PASS",
+     "scope": "S3_LATCH/STANDARD",
+     "verdict": {
+      "authority": {
+       "stage": "AUTHOR_TESTED",
+       "status": "QUALIFIED"
+      },
+      "execution": {
+       "missing": [],
+       "run_id": "S3-CASES-20261005T060627Z-16752/rcpt:S3_LATCH:CHANNEL:STANDARD",
+       "status": "RAN"
+      },
+      "node_id": "rcpt:S3_LATCH:CHANNEL:STANDARD",
+      "outcome": {
+       "applicable_count": null,
+       "eligible_count": 24576,
+       "kind": "GATE",
+       "predicate": "P5",
+       "reason": "retained answer follows the declared allowed channel",
+       "vacuous": false,
+       "value": "PASS",
+       "witness": null
+      },
+      "reasons": [
+       "retained answer follows the declared allowed channel"
+      ],
+      "standing": "SATISFIED"
+     }
+    },
+    {
+     "predicate": "RESTART",
+     "recomputed": false,
+     "required": "PASS",
+     "scope": "S3_LATCH/STANDARD",
+     "verdict": {
+      "authority": {
+       "stage": "AUTHOR_TESTED",
+       "status": "QUALIFIED"
+      },
+      "execution": {
+       "missing": [],
+       "run_id": "S3-CASES-20261005T060627Z-16752/rcpt:S3_LATCH:RESTART:STANDARD",
+       "status": "RAN"
+      },
+      "node_id": "rcpt:S3_LATCH:RESTART:STANDARD",
+      "outcome": {
+       "applicable_count": null,
+       "eligible_count": 237568,
+       "kind": "GATE",
+       "predicate": "P6",
+       "reason": "continuations equal the uninterrupted run",
+       "vacuous": false,
+       "value": "PASS",
+       "witness": null
+      },
+      "reasons": [
+       "continuations equal the uninterrupted run"
+      ],
+      "standing": "SATISFIED"
+     }
+    },
+    {
+     "predicate": "OBSERVER",
+     "recomputed": false,
+     "required": "PASS",
+     "scope": "S3_LATCH/NULL/STANDARD",
+     "verdict": {
+      "authority": {
+       "stage": "AUTHOR_TESTED",
+       "status": "QUALIFIED"
+      },
+      "execution": {
+       "missing": [],
+       "run_id": "S3-CASES-20261005T060627Z-16752/rcpt:S3_LATCH:OBSERVER:NULL:STANDARD",
+       "status": "RAN"
+      },
+      "node_id": "rcpt:S3_LATCH:OBSERVER:NULL:STANDARD",
+      "outcome": {
+       "applicable_count": null,
+       "eligible_count": 196608,
+       "kind": "GATE",
+       "predicate": "P7",
+       "reason": "outputs and declared non-BOOKKEEPING state identical to the null observer",
+       "vacuous": false,
+       "value": "PASS",
+       "witness": null
+      },
+      "reasons": [
+       "outputs and declared non-BOOKKEEPING state identical to the null observer"
+      ],
+      "standing": "SATISFIED"
+     }
+    },
+    {
+     "predicate": "G-BIND",
+     "recomputed": false,
+     "required": "PASS",
+     "scope": "CL-RET(S3_LATCH)",
+     "verdict": {
+      "authority": {
+       "stage": "AUTHOR_TESTED",
+       "status": "QUALIFIED"
+      },
+      "execution": {
+       "missing": [],
+       "run_id": "consumer",
+       "status": "RAN"
+      },
+      "node_id": "gate:G-BIND:CL-RET(S3_LATCH)",
+      "outcome": {
+       "applicable_count": 8,
+       "eligible_count": 8,
+       "kind": "GATE",
+       "predicate": "G-BIND",
+       "reason": "every reachable node binds to the anchors held",
+       "vacuous": false,
+       "value": "PASS",
+       "witness": null
+      },
+      "reasons": [
+       "every reachable node binds to the anchors held"
+      ],
+      "standing": "SATISFIED"
+     }
+    },
+    {
+     "predicate": "G-INV",
+     "recomputed": false,
+     "required": "PASS",
+     "scope": "CL-RET(S3_LATCH)",
+     "verdict": {
+      "authority": {
+       "stage": "AUTHOR_TESTED",
+       "status": "QUALIFIED"
+      },
+      "execution": {
+       "missing": [],
+       "run_id": "consumer",
+       "status": "RAN"
+      },
+      "node_id": "gate:G-INV:CL-RET(S3_LATCH)",
+      "outcome": {
+       "applicable_count": 8,
+       "eligible_count": 8,
+       "kind": "GATE",
+       "predicate": "G-INV",
+       "reason": "inventory terminal; every run reported",
+       "vacuous": false,
+       "value": "PASS",
+       "witness": null
+      },
+      "reasons": [
+       "inventory terminal; every run reported"
+      ],
+      "standing": "SATISFIED"
+     }
+    },
+    {
+     "predicate": "G-RECOMP",
+     "recomputed": false,
+     "required": "PASS",
+     "scope": "CL-RET(S3_LATCH)",
+     "verdict": {
+      "authority": {
+       "stage": "AUTHOR_TESTED",
+       "status": "QUALIFIED"
+      },
+      "execution": {
+       "missing": [],
+       "run_id": "consumer",
+       "status": "RAN"
+      },
+      "node_id": "gate:G-RECOMP:CL-RET(S3_LATCH)",
+      "outcome": {
+       "applicable_count": 5,
+       "eligible_count": 5,
+       "kind": "GATE",
+       "predicate": "G-RECOMP",
+       "reason": "recomputed equal: CHANNEL, ERASE, PRESERVE, RETENTION, CALIBRATION",
+       "vacuous": false,
+       "value": "PASS",
+       "witness": null
+      },
+      "reasons": [
+       "recomputed equal: CHANNEL, ERASE, PRESERVE, RETENTION, CALIBRATION"
+      ],
+      "standing": "SATISFIED"
+     }
+    }
+   ],
+   "relative": {
+    "bound": "1/2",
+    "class_id": "N",
+    "def": "policies whose answer is a function of j alone",
+    "form": "class",
+    "method": "enumeration of 8 policies over 12288 trials"
+   },
+   "retention": {
+    "statistic": "1/1",
+    "successes": 12288,
+    "trials": 12288
+   },
+   "schema": "rso.slice001.decision.v1",
+   "setting": {
+    "id": "reset_model",
+    "sha256": "2367e411808fce3a2527c634c755cc00dd037c07e05a0c3ef46a5a48438143d8"
+   },
+   "standing": "SATISFIED",
+   "subject": "S3_LATCH",
+   "twin": null,
+   "type": "CL-RET",
+   "unverified": [],
+   "world": "STANDARD"
+  },
+  "CL-RET(S3_LOGDEP)": {
+   "authority": {
+    "stage": "AUTHOR_TESTED",
+    "status": "QUALIFIED"
+   },
+   "cell": {
+    "cell_id": "W-S1",
+    "revision": "2367e411808fce3a2527c634c755cc00dd037c07e05a0c3ef46a5a48438143d8"
+   },
+   "claim_id": "CL-RET(S3_LOGDEP)",
+   "custody": {
+    "status": "UNQUALIFIED",
+    "why": [
+     "KEEPER_ROW_MISSING:EVIDENCE_MANIFEST",
+     "KEEPER_ROW_MISSING:EXPECTED_ANSWER_TABLE",
+     "KEEPER_ROW_MISSING:RUN_INVENTORY"
+    ]
+   },
+   "eligibility": "NOT_ELIGIBLE",
+   "encoding": null,
+   "instruments": 11,
+   "not_satisfied": [
+    "rcpt:S3_LOGDEP:OBSERVER:BOOKKEEP:STANDARD"
+   ],
+   "prerequisites": [
+    {
+     "predicate": "BOUNDS",
+     "recomputed": false,
+     "required": "PASS",
+     "scope": "S3_LOGDEP/STANDARD",
+     "verdict": {
+      "authority": {
+       "stage": "AUTHOR_TESTED",
+       "status": "QUALIFIED"
+      },
+      "execution": {
+       "missing": [],
+       "run_id": "S3-CASES-20261005T060627Z-16752/rcpt:S3_LOGDEP:BOUNDS:STANDARD",
+       "status": "RAN"
+      },
+      "node_id": "rcpt:S3_LOGDEP:BOUNDS:STANDARD",
+      "outcome": {
+       "applicable_count": null,
+       "eligible_count": 4096,
+       "kind": "GATE",
+       "predicate": "P0",
+       "reason": "every life stays inside the registered model",
+       "vacuous": false,
+       "value": "PASS",
+       "witness": null
+      },
+      "reasons": [
+       "every life stays inside the registered model"
+      ],
+      "standing": "SATISFIED"
+     }
+    },
+    {
+     "predicate": "CALIBRATION",
+     "recomputed": true,
+     "required": "PASS",
+     "scope": "WORLD/STANDARD",
+     "verdict": {
+      "authority": {
+       "stage": "AUTHOR_TESTED",
+       "status": "QUALIFIED"
+      },
+      "execution": {
+       "missing": [],
+       "run_id": "S3-CASES-20261005T060627Z-16752/rcpt:WORLD:CALIBRATION:STANDARD",
+       "status": "RAN"
+      },
+      "node_id": "rcpt:WORLD:CALIBRATION:STANDARD",
+      "outcome": {
+       "applicable_count": null,
+       "eligible_count": 98304,
+       "kind": "GATE",
+       "predicate": "P1",
+       "reason": "no-carry maximum equals the registered bound 1/2; u_j balanced at j = 1..3",
+       "vacuous": false,
+       "value": "PASS",
+       "witness": null
+      },
+      "reasons": [
+       "no-carry maximum equals the registered bound 1/2; u_j balanced at j = 1..3"
+      ],
+      "standing": "SATISFIED"
+     }
+    },
+    {
+     "predicate": "RETENTION",
+     "recomputed": true,
+     "required": "POSITIVE",
+     "scope": "S3_LOGDEP/STANDARD",
+     "verdict": {
+      "authority": {
+       "stage": "AUTHOR_TESTED",
+       "status": "QUALIFIED"
+      },
+      "execution": {
+       "missing": [],
+       "run_id": "S3-CASES-20261005T060627Z-16752/rcpt:S3_LOGDEP:RETENTION:STANDARD",
+       "status": "RAN"
+      },
+      "node_id": "rcpt:S3_LOGDEP:RETENTION:STANDARD",
+      "outcome": {
+       "kind": "RULER",
+       "per_boundary": [
+        {
+         "j": 1,
+         "statistic": "1/1"
+        },
+        {
+         "j": 2,
+         "statistic": "1/1"
+        },
+        {
+         "j": 3,
+         "statistic": "1/1"
+        }
+       ],
+       "reason": "RETENTION POSITIVE: s = 1/1 over 12288 trials; the answer is u_j in every trial",
+       "ruler": "P2",
+       "statistic": "1/1",
+       "successes": 12288,
+       "trials": 12288,
+       "value": "POSITIVE"
+      },
+      "reasons": [
+       "RETENTION POSITIVE: s = 1/1 over 12288 trials; the answer is u_j in every trial"
+      ],
+      "standing": "SATISFIED"
+     }
+    },
+    {
+     "predicate": "ERASE",
+     "recomputed": true,
+     "required": "PASS",
+     "scope": "S3_LOGDEP/STANDARD",
+     "verdict": {
+      "authority": {
+       "stage": "AUTHOR_TESTED",
+       "status": "QUALIFIED"
+      },
+      "execution": {
+       "missing": [],
+       "run_id": "S3-CASES-20261005T060627Z-16752/rcpt:S3_LOGDEP:ERASE:STANDARD",
+       "status": "RAN"
+      },
+      "node_id": "rcpt:S3_LOGDEP:ERASE:STANDARD",
+      "outcome": {
+       "applicable_count": null,
+       "eligible_count": 9600,
+       "kind": "GATE",
+       "predicate": "P3",
+       "reason": "no forbidden influence across boundaries 1-3 within the horizon",
+       "vacuous": false,
+       "value": "PASS",
+       "witness": null
+      },
+      "reasons": [
+       "no forbidden influence across boundaries 1-3 within the horizon"
+      ],
+      "standing": "SATISFIED"
+     }
+    },
+    {
+     "predicate": "PRESERVE",
+     "recomputed": true,
+     "required": "PASS",
+     "scope": "S3_LOGDEP/STANDARD",
+     "verdict": {
+      "authority": {
+       "stage": "AUTHOR_TESTED",
+       "status": "QUALIFIED"
+      },
+      "execution": {
+       "missing": [],
+       "run_id": "S3-CASES-20261005T060627Z-16752/rcpt:S3_LOGDEP:PRESERVE:STANDARD",
+       "status": "RAN"
+      },
+      "node_id": "rcpt:S3_LOGDEP:PRESERVE:STANDARD",
+      "outcome": {
+       "applicable_count": 6144,
+       "eligible_count": 6144,
+       "kind": "GATE",
+       "predicate": "P4",
+       "reason": "every difference carried without a reset survives it",
+       "vacuous": false,
+       "value": "PASS",
+       "witness": null
+      },
+      "reasons": [
+       "every difference carried without a reset survives it"
+      ],
+      "standing": "SATISFIED"
+     }
+    },
+    {
+     "predicate": "CHANNEL",
+     "recomputed": true,
+     "required": "PASS",
+     "scope": "S3_LOGDEP/STANDARD",
+     "verdict": {
+      "authority": {
+       "stage": "AUTHOR_TESTED",
+       "status": "QUALIFIED"
+      },
+      "execution": {
+       "missing": [],
+       "run_id": "S3-CASES-20261005T060627Z-16752/rcpt:S3_LOGDEP:CHANNEL:STANDARD",
+       "status": "RAN"
+      },
+      "node_id": "rcpt:S3_LOGDEP:CHANNEL:STANDARD",
+      "outcome": {
+       "applicable_count": null,
+       "eligible_count": 24576,
+       "kind": "GATE",
+       "predicate": "P5",
+       "reason": "retained answer follows the declared allowed channel",
+       "vacuous": false,
+       "value": "PASS",
+       "witness": null
+      },
+      "reasons": [
+       "retained answer follows the declared allowed channel"
+      ],
+      "standing": "SATISFIED"
+     }
+    },
+    {
+     "predicate": "RESTART",
+     "recomputed": false,
+     "required": "PASS",
+     "scope": "S3_LOGDEP/STANDARD",
+     "verdict": {
+      "authority": {
+       "stage": "AUTHOR_TESTED",
+       "status": "QUALIFIED"
+      },
+      "execution": {
+       "missing": [],
+       "run_id": "S3-CASES-20261005T060627Z-16752/rcpt:S3_LOGDEP:RESTART:STANDARD",
+       "status": "RAN"
+      },
+      "node_id": "rcpt:S3_LOGDEP:RESTART:STANDARD",
+      "outcome": {
+       "applicable_count": null,
+       "eligible_count": 237568,
+       "kind": "GATE",
+       "predicate": "P6",
+       "reason": "continuations equal the uninterrupted run",
+       "vacuous": false,
+       "value": "PASS",
+       "witness": null
+      },
+      "reasons": [
+       "continuations equal the uninterrupted run"
+      ],
+      "standing": "SATISFIED"
+     }
+    },
+    {
+     "predicate": "OBSERVER",
+     "recomputed": false,
+     "required": "PASS",
+     "scope": "S3_LOGDEP/BOOKKEEP/STANDARD",
+     "verdict": {
+      "authority": {
+       "stage": "AUTHOR_TESTED",
+       "status": "QUALIFIED"
+      },
+      "execution": {
+       "missing": [],
+       "run_id": "S3-CASES-20261005T060627Z-16752/rcpt:S3_LOGDEP:OBSERVER:BOOKKEEP:STANDARD",
+       "status": "RAN"
+      },
+      "node_id": "rcpt:S3_LOGDEP:OBSERVER:BOOKKEEP:STANDARD",
+      "outcome": {
+       "applicable_count": null,
+       "eligible_count": 196608,
+       "kind": "GATE",
+       "predicate": "P7",
+       "reason": "observer BOOKKEEP changes output at (1, PROBE_A)",
+       "vacuous": false,
+       "value": "FAIL",
+       "witness": {
+        "episode": 1,
+        "history": 0,
+        "tick": "PROBE_A",
+        "what": "output"
+       }
+      },
+      "reasons": [
+       "observer BOOKKEEP changes output at (1, PROBE_A)"
+      ],
+      "standing": "UNMET"
+     }
+    },
+    {
+     "predicate": "OBSERVER",
+     "recomputed": false,
+     "required": "PASS",
+     "scope": "S3_LOGDEP/NULL/STANDARD",
+     "verdict": {
+      "authority": {
+       "stage": "AUTHOR_TESTED",
+       "status": "QUALIFIED"
+      },
+      "execution": {
+       "missing": [],
+       "run_id": "S3-CASES-20261005T060627Z-16752/rcpt:S3_LOGDEP:OBSERVER:NULL:STANDARD",
+       "status": "RAN"
+      },
+      "node_id": "rcpt:S3_LOGDEP:OBSERVER:NULL:STANDARD",
+      "outcome": {
+       "applicable_count": null,
+       "eligible_count": 196608,
+       "kind": "GATE",
+       "predicate": "P7",
+       "reason": "outputs and declared non-BOOKKEEPING state identical to the null observer",
+       "vacuous": false,
+       "value": "PASS",
+       "witness": null
+      },
+      "reasons": [
+       "outputs and declared non-BOOKKEEPING state identical to the null observer"
+      ],
+      "standing": "SATISFIED"
+     }
+    },
+    {
+     "predicate": "G-BIND",
+     "recomputed": false,
+     "required": "PASS",
+     "scope": "CL-RET(S3_LOGDEP)",
+     "verdict": {
+      "authority": {
+       "stage": "AUTHOR_TESTED",
+       "status": "QUALIFIED"
+      },
+      "execution": {
+       "missing": [],
+       "run_id": "consumer",
+       "status": "RAN"
+      },
+      "node_id": "gate:G-BIND:CL-RET(S3_LOGDEP)",
+      "outcome": {
+       "applicable_count": 9,
+       "eligible_count": 9,
+       "kind": "GATE",
+       "predicate": "G-BIND",
+       "reason": "every reachable node binds to the anchors held",
+       "vacuous": false,
+       "value": "PASS",
+       "witness": null
+      },
+      "reasons": [
+       "every reachable node binds to the anchors held"
+      ],
+      "standing": "SATISFIED"
+     }
+    },
+    {
+     "predicate": "G-INV",
+     "recomputed": false,
+     "required": "PASS",
+     "scope": "CL-RET(S3_LOGDEP)",
+     "verdict": {
+      "authority": {
+       "stage": "AUTHOR_TESTED",
+       "status": "QUALIFIED"
+      },
+      "execution": {
+       "missing": [],
+       "run_id": "consumer",
+       "status": "RAN"
+      },
+      "node_id": "gate:G-INV:CL-RET(S3_LOGDEP)",
+      "outcome": {
+       "applicable_count": 9,
+       "eligible_count": 9,
+       "kind": "GATE",
+       "predicate": "G-INV",
+       "reason": "inventory terminal; every run reported",
+       "vacuous": false,
+       "value": "PASS",
+       "witness": null
+      },
+      "reasons": [
+       "inventory terminal; every run reported"
+      ],
+      "standing": "SATISFIED"
+     }
+    },
+    {
+     "predicate": "G-RECOMP",
+     "recomputed": false,
+     "required": "PASS",
+     "scope": "CL-RET(S3_LOGDEP)",
+     "verdict": {
+      "authority": {
+       "stage": "AUTHOR_TESTED",
+       "status": "QUALIFIED"
+      },
+      "execution": {
+       "missing": [],
+       "run_id": "consumer",
+       "status": "RAN"
+      },
+      "node_id": "gate:G-RECOMP:CL-RET(S3_LOGDEP)",
+      "outcome": {
+       "applicable_count": 5,
+       "eligible_count": 5,
+       "kind": "GATE",
+       "predicate": "G-RECOMP",
+       "reason": "recomputed equal: CHANNEL, ERASE, PRESERVE, RETENTION, CALIBRATION",
+       "vacuous": false,
+       "value": "PASS",
+       "witness": null
+      },
+      "reasons": [
+       "recomputed equal: CHANNEL, ERASE, PRESERVE, RETENTION, CALIBRATION"
+      ],
+      "standing": "SATISFIED"
+     }
+    }
+   ],
+   "relative": {
+    "bound": "1/2",
+    "class_id": "N",
+    "def": "policies whose answer is a function of j alone",
+    "form": "class",
+    "method": "enumeration of 8 policies over 12288 trials"
+   },
+   "retention": {
+    "statistic": "1/1",
+    "successes": 12288,
+    "trials": 12288
+   },
+   "schema": "rso.slice001.decision.v1",
+   "setting": {
+    "id": "reset_model",
+    "sha256": "2367e411808fce3a2527c634c755cc00dd037c07e05a0c3ef46a5a48438143d8"
+   },
+   "standing": "UNMET",
+   "subject": "S3_LOGDEP",
+   "twin": null,
+   "type": "CL-RET",
+   "unverified": [],
+   "world": "STANDARD"
+  },
+  "CL-RET(S3_SHADOW)": {
+   "authority": {
+    "stage": "AUTHOR_TESTED",
+    "status": "QUALIFIED"
+   },
+   "cell": {
+    "cell_id": "W-S1",
+    "revision": "2367e411808fce3a2527c634c755cc00dd037c07e05a0c3ef46a5a48438143d8"
+   },
+   "claim_id": "CL-RET(S3_SHADOW)",
+   "custody": {
+    "status": "UNQUALIFIED",
+    "why": [
+     "KEEPER_ROW_MISSING:EVIDENCE_MANIFEST",
+     "KEEPER_ROW_MISSING:EXPECTED_ANSWER_TABLE",
+     "KEEPER_ROW_MISSING:RUN_INVENTORY"
+    ]
+   },
+   "eligibility": "NOT_ELIGIBLE",
+   "encoding": null,
+   "instruments": 11,
+   "not_satisfied": [
+    "rcpt:S3_SHADOW:CHANNEL:STANDARD"
+   ],
+   "prerequisites": [
+    {
+     "predicate": "BOUNDS",
+     "recomputed": false,
+     "required": "PASS",
+     "scope": "S3_SHADOW/STANDARD",
+     "verdict": {
+      "authority": {
+       "stage": "AUTHOR_TESTED",
+       "status": "QUALIFIED"
+      },
+      "execution": {
+       "missing": [],
+       "run_id": "S3-CASES-20261005T060627Z-16752/rcpt:S3_SHADOW:BOUNDS:STANDARD",
+       "status": "RAN"
+      },
+      "node_id": "rcpt:S3_SHADOW:BOUNDS:STANDARD",
+      "outcome": {
+       "applicable_count": null,
+       "eligible_count": 4096,
+       "kind": "GATE",
+       "predicate": "P0",
+       "reason": "every life stays inside the registered model",
+       "vacuous": false,
+       "value": "PASS",
+       "witness": null
+      },
+      "reasons": [
+       "every life stays inside the registered model"
+      ],
+      "standing": "SATISFIED"
+     }
+    },
+    {
+     "predicate": "CALIBRATION",
+     "recomputed": true,
+     "required": "PASS",
+     "scope": "WORLD/STANDARD",
+     "verdict": {
+      "authority": {
+       "stage": "AUTHOR_TESTED",
+       "status": "QUALIFIED"
+      },
+      "execution": {
+       "missing": [],
+       "run_id": "S3-CASES-20261005T060627Z-16752/rcpt:WORLD:CALIBRATION:STANDARD",
+       "status": "RAN"
+      },
+      "node_id": "rcpt:WORLD:CALIBRATION:STANDARD",
+      "outcome": {
+       "applicable_count": null,
+       "eligible_count": 98304,
+       "kind": "GATE",
+       "predicate": "P1",
+       "reason": "no-carry maximum equals the registered bound 1/2; u_j balanced at j = 1..3",
+       "vacuous": false,
+       "value": "PASS",
+       "witness": null
+      },
+      "reasons": [
+       "no-carry maximum equals the registered bound 1/2; u_j balanced at j = 1..3"
+      ],
+      "standing": "SATISFIED"
+     }
+    },
+    {
+     "predicate": "RETENTION",
+     "recomputed": true,
+     "required": "POSITIVE",
+     "scope": "S3_SHADOW/STANDARD",
+     "verdict": {
+      "authority": {
+       "stage": "AUTHOR_TESTED",
+       "status": "QUALIFIED"
+      },
+      "execution": {
+       "missing": [],
+       "run_id": "S3-CASES-20261005T060627Z-16752/rcpt:S3_SHADOW:RETENTION:STANDARD",
+       "status": "RAN"
+      },
+      "node_id": "rcpt:S3_SHADOW:RETENTION:STANDARD",
+      "outcome": {
+       "kind": "RULER",
+       "per_boundary": [
+        {
+         "j": 1,
+         "statistic": "1/1"
+        },
+        {
+         "j": 2,
+         "statistic": "1/1"
+        },
+        {
+         "j": 3,
+         "statistic": "1/1"
+        }
+       ],
+       "reason": "RETENTION POSITIVE: s = 1/1 over 12288 trials; the answer is u_j in every trial",
+       "ruler": "P2",
+       "statistic": "1/1",
+       "successes": 12288,
+       "trials": 12288,
+       "value": "POSITIVE"
+      },
+      "reasons": [
+       "RETENTION POSITIVE: s = 1/1 over 12288 trials; the answer is u_j in every trial"
+      ],
+      "standing": "SATISFIED"
+     }
+    },
+    {
+     "predicate": "ERASE",
+     "recomputed": true,
+     "required": "PASS",
+     "scope": "S3_SHADOW/STANDARD",
+     "verdict": {
+      "authority": {
+       "stage": "AUTHOR_TESTED",
+       "status": "QUALIFIED"
+      },
+      "execution": {
+       "missing": [],
+       "run_id": "S3-CASES-20261005T060627Z-16752/rcpt:S3_SHADOW:ERASE:STANDARD",
+       "status": "RAN"
+      },
+      "node_id": "rcpt:S3_SHADOW:ERASE:STANDARD",
+      "outcome": {
+       "applicable_count": null,
+       "eligible_count": 9600,
+       "kind": "GATE",
+       "predicate": "P3",
+       "reason": "no forbidden influence across boundaries 1-3 within the horizon",
+       "vacuous": false,
+       "value": "PASS",
+       "witness": null
+      },
+      "reasons": [
+       "no forbidden influence across boundaries 1-3 within the horizon"
+      ],
+      "standing": "SATISFIED"
+     }
+    },
+    {
+     "predicate": "PRESERVE",
+     "recomputed": true,
+     "required": "PASS",
+     "scope": "S3_SHADOW/STANDARD",
+     "verdict": {
+      "authority": {
+       "stage": "AUTHOR_TESTED",
+       "status": "QUALIFIED"
+      },
+      "execution": {
+       "missing": [],
+       "run_id": "S3-CASES-20261005T060627Z-16752/rcpt:S3_SHADOW:PRESERVE:STANDARD",
+       "status": "RAN"
+      },
+      "node_id": "rcpt:S3_SHADOW:PRESERVE:STANDARD",
+      "outcome": {
+       "applicable_count": 6144,
+       "eligible_count": 6144,
+       "kind": "GATE",
+       "predicate": "P4",
+       "reason": "every difference carried without a reset survives it",
+       "vacuous": false,
+       "value": "PASS",
+       "witness": null
+      },
+      "reasons": [
+       "every difference carried without a reset survives it"
+      ],
+      "standing": "SATISFIED"
+     }
+    },
+    {
+     "predicate": "CHANNEL",
+     "recomputed": true,
+     "required": "PASS",
+     "scope": "S3_SHADOW/STANDARD",
+     "verdict": {
+      "authority": {
+       "stage": "AUTHOR_TESTED",
+       "status": "QUALIFIED"
+      },
+      "execution": {
+       "missing": [],
+       "run_id": "S3-CASES-20261005T060627Z-16752/rcpt:S3_SHADOW:CHANNEL:STANDARD",
+       "status": "RAN"
+      },
+      "node_id": "rcpt:S3_SHADOW:CHANNEL:STANDARD",
+      "outcome": {
+       "applicable_count": null,
+       "eligible_count": 24576,
+       "kind": "GATE",
+       "predicate": "P5",
+       "reason": "retained answer does not follow the declared allowed channel at 1",
+       "vacuous": false,
+       "value": "FAIL",
+       "witness": {
+        "history": 0,
+        "j": 1,
+        "v": 1
+       }
+      },
+      "reasons": [
+       "retained answer does not follow the declared allowed channel at 1"
+      ],
+      "standing": "UNMET"
+     }
+    },
+    {
+     "predicate": "RESTART",
+     "recomputed": false,
+     "required": "PASS",
+     "scope": "S3_SHADOW/STANDARD",
+     "verdict": {
+      "authority": {
+       "stage": "AUTHOR_TESTED",
+       "status": "QUALIFIED"
+      },
+      "execution": {
+       "missing": [],
+       "run_id": "S3-CASES-20261005T060627Z-16752/rcpt:S3_SHADOW:RESTART:STANDARD",
+       "status": "RAN"
+      },
+      "node_id": "rcpt:S3_SHADOW:RESTART:STANDARD",
+      "outcome": {
+       "applicable_count": null,
+       "eligible_count": 237568,
+       "kind": "GATE",
+       "predicate": "P6",
+       "reason": "continuations equal the uninterrupted run",
+       "vacuous": false,
+       "value": "PASS",
+       "witness": null
+      },
+      "reasons": [
+       "continuations equal the uninterrupted run"
+      ],
+      "standing": "SATISFIED"
+     }
+    },
+    {
+     "predicate": "OBSERVER",
+     "recomputed": false,
+     "required": "PASS",
+     "scope": "S3_SHADOW/NULL/STANDARD",
+     "verdict": {
+      "authority": {
+       "stage": "AUTHOR_TESTED",
+       "status": "QUALIFIED"
+      },
+      "execution": {
+       "missing": [],
+       "run_id": "S3-CASES-20261005T060627Z-16752/rcpt:S3_SHADOW:OBSERVER:NULL:STANDARD",
+       "status": "RAN"
+      },
+      "node_id": "rcpt:S3_SHADOW:OBSERVER:NULL:STANDARD",
+      "outcome": {
+       "applicable_count": null,
+       "eligible_count": 196608,
+       "kind": "GATE",
+       "predicate": "P7",
+       "reason": "outputs and declared non-BOOKKEEPING state identical to the null observer",
+       "vacuous": false,
+       "value": "PASS",
+       "witness": null
+      },
+      "reasons": [
+       "outputs and declared non-BOOKKEEPING state identical to the null observer"
+      ],
+      "standing": "SATISFIED"
+     }
+    },
+    {
+     "predicate": "G-BIND",
+     "recomputed": false,
+     "required": "PASS",
+     "scope": "CL-RET(S3_SHADOW)",
+     "verdict": {
+      "authority": {
+       "stage": "AUTHOR_TESTED",
+       "status": "QUALIFIED"
+      },
+      "execution": {
+       "missing": [],
+       "run_id": "consumer",
+       "status": "RAN"
+      },
+      "node_id": "gate:G-BIND:CL-RET(S3_SHADOW)",
+      "outcome": {
+       "applicable_count": 8,
+       "eligible_count": 8,
+       "kind": "GATE",
+       "predicate": "G-BIND",
+       "reason": "every reachable node binds to the anchors held",
+       "vacuous": false,
+       "value": "PASS",
+       "witness": null
+      },
+      "reasons": [
+       "every reachable node binds to the anchors held"
+      ],
+      "standing": "SATISFIED"
+     }
+    },
+    {
+     "predicate": "G-INV",
+     "recomputed": false,
+     "required": "PASS",
+     "scope": "CL-RET(S3_SHADOW)",
+     "verdict": {
+      "authority": {
+       "stage": "AUTHOR_TESTED",
+       "status": "QUALIFIED"
+      },
+      "execution": {
+       "missing": [],
+       "run_id": "consumer",
+       "status": "RAN"
+      },
+      "node_id": "gate:G-INV:CL-RET(S3_SHADOW)",
+      "outcome": {
+       "applicable_count": 8,
+       "eligible_count": 8,
+       "kind": "GATE",
+       "predicate": "G-INV",
+       "reason": "inventory terminal; every run reported",
+       "vacuous": false,
+       "value": "PASS",
+       "witness": null
+      },
+      "reasons": [
+       "inventory terminal; every run reported"
+      ],
+      "standing": "SATISFIED"
+     }
+    },
+    {
+     "predicate": "G-RECOMP",
+     "recomputed": false,
+     "required": "PASS",
+     "scope": "CL-RET(S3_SHADOW)",
+     "verdict": {
+      "authority": {
+       "stage": "AUTHOR_TESTED",
+       "status": "QUALIFIED"
+      },
+      "execution": {
+       "missing": [],
+       "run_id": "consumer",
+       "status": "RAN"
+      },
+      "node_id": "gate:G-RECOMP:CL-RET(S3_SHADOW)",
+      "outcome": {
+       "applicable_count": 5,
+       "eligible_count": 5,
+       "kind": "GATE",
+       "predicate": "G-RECOMP",
+       "reason": "recomputed equal: CHANNEL, ERASE, PRESERVE, RETENTION, CALIBRATION",
+       "vacuous": false,
+       "value": "PASS",
+       "witness": null
+      },
+      "reasons": [
+       "recomputed equal: CHANNEL, ERASE, PRESERVE, RETENTION, CALIBRATION"
+      ],
+      "standing": "SATISFIED"
+     }
+    }
+   ],
+   "relative": {
+    "bound": "1/2",
+    "class_id": "N",
+    "def": "policies whose answer is a function of j alone",
+    "form": "class",
+    "method": "enumeration of 8 policies over 12288 trials"
+   },
+   "retention": {
+    "statistic": "1/1",
+    "successes": 12288,
+    "trials": 12288
+   },
+   "schema": "rso.slice001.decision.v1",
+   "setting": {
+    "id": "reset_model",
+    "sha256": "2367e411808fce3a2527c634c755cc00dd037c07e05a0c3ef46a5a48438143d8"
+   },
+   "standing": "UNMET",
+   "subject": "S3_SHADOW",
+   "twin": null,
+   "type": "CL-RET",
+   "unverified": [],
+   "world": "STANDARD"
+  }
+ },
+ "run_id": "S3-CASES-20261005T060627Z-16752"
+}

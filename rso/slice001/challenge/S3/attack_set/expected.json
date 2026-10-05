@@ -1,0 +1,131 @@
+{
+  "schema": "pallas.c004.t030.expected.v1",
+  "written_by": "Pallas[m2-e7da6bde], before execution and before any S2 test body was opened",
+  "scoring_rule": "A case is CORRECT iff every scored check below holds and no exception is raised while building or deciding it. Checks: claim (eligibility, standing and the exact not_satisfied list), line (the listed fields of one prerequisite line), identical (decision records byte-identical to a reference run), custody (status). Fields under info are recorded and compared in the report but never scored. A sound case that is refused, or refused for a wrong typed reason on any line, is a FALSE REJECTION; a broken case that is admitted, or refused without the expected primary verdict, is a FALSE ADMISSION or MISTYPED REFUSAL.",
+  "line_key": "<predicate NAME>@<subject>[/<observer>]/<world> for receipt lines; <gate>@<claim_id> for consumer gates",
+  "bundles": {
+    "S3W": "one real build (s2_bundle.build_bundle at HEAD, versions from the committed stage records) of subjects S3_LATCH, S3_BEACON, S3_SHADOW, S3_INVERT, S3_LOGDEP, REG; observers NULL, except S3_LOGDEP (BOOKKEEP, NULL) and REG (NULL, S3_MIGRATE); consumed with a fixture store holding the committed stage records (V8: logic only)",
+    "G0_BASELINE": "evidence_cases.g0(real_base(committed rso/slice001/s2/G0)): the control every evidence case is compared with",
+    "KEEPER_CONTROL": "evidence_cases.keeper(real_base(...)): the single-manifest keeper case, control for S3.SOUND.TWO_MANIFESTS"
+  },
+  "controls": [
+    {"id": "CTRL.G0", "bundle": "G0_BASELINE", "checks": [
+      {"type": "claim", "claim": "CL-RET(REG)", "eligibility": "ELIGIBLE", "standing": "SATISFIED", "not_satisfied": []},
+      {"type": "claim", "claim": "CL-RET(PKTD)", "eligibility": "ELIGIBLE", "standing": "SATISFIED", "not_satisfied": []},
+      {"type": "claim", "claim": "CL-RET(LAGD)", "eligibility": "NOT_ELIGIBLE", "standing": "UNMET", "not_satisfied": ["rcpt:LAGD:ERASE:STANDARD"]},
+      {"type": "claim", "claim": "CL-CAL(STANDARD)", "eligibility": "ELIGIBLE", "standing": "SATISFIED", "not_satisfied": []}
+    ]},
+    {"id": "CTRL.KEEPER", "bundle": "KEEPER_CONTROL", "checks": [
+      {"type": "custody", "status": "QUALIFIED"},
+      {"type": "claim", "claim": "CL-CUST(G0)", "eligibility": "ELIGIBLE", "standing": "SATISFIED", "not_satisfied": []},
+      {"type": "claim", "claim": "CL-RET(REG)", "eligibility": "ELIGIBLE", "standing": "SATISFIED", "not_satisfied": []}
+    ]}
+  ],
+  "cases": [
+    {
+      "id": "S3.SOUND.LATCH", "polarity": "sound", "plane": "world", "bundle": "S3W", "gates": ["PRESERVE", "RETENTION", "CHANNEL", "RESTART", "ERASE"],
+      "checks": [
+        {"type": "claim", "claim": "CL-RET(S3_LATCH)", "eligibility": "ELIGIBLE", "standing": "SATISFIED", "not_satisfied": []},
+        {"type": "line", "claim": "CL-RET(S3_LATCH)", "line": "RETENTION@S3_LATCH/STANDARD", "fields": {"execution": "RAN", "authority": "QUALIFIED@AUTHOR_TESTED", "outcome": "POSITIVE", "successes": 12288, "trials": 12288, "statistic": "1/1"}},
+        {"type": "line", "claim": "CL-RET(S3_LATCH)", "line": "PRESERVE@S3_LATCH/STANDARD", "fields": {"execution": "RAN", "outcome": "PASS", "eligible_count": 6144, "applicable_count": 0, "vacuous": true}},
+        {"type": "line", "claim": "CL-RET(S3_LATCH)", "line": "ERASE@S3_LATCH/STANDARD", "fields": {"outcome": "PASS", "eligible_count": 9600}},
+        {"type": "line", "claim": "CL-RET(S3_LATCH)", "line": "CHANNEL@S3_LATCH/STANDARD", "fields": {"outcome": "PASS", "eligible_count": 24576}},
+        {"type": "line", "claim": "CL-RET(S3_LATCH)", "line": "RESTART@S3_LATCH/STANDARD", "fields": {"outcome": "PASS", "eligible_count": 237568}},
+        {"type": "render_contains", "claim": "CL-RET(S3_LATCH)", "text": "(vacuous: 0 applicable)"}
+      ]
+    },
+    {
+      "id": "S3.SOUND.BEACON", "polarity": "sound", "plane": "world", "bundle": "S3W", "gates": ["ERASE", "RESTART", "PRESERVE", "CHANNEL", "RETENTION", "BOUNDS"],
+      "checks": [
+        {"type": "claim", "claim": "CL-RET(S3_BEACON)", "eligibility": "ELIGIBLE", "standing": "SATISFIED", "not_satisfied": []},
+        {"type": "line", "claim": "CL-RET(S3_BEACON)", "line": "ERASE@S3_BEACON/STANDARD", "fields": {"outcome": "PASS", "eligible_count": 9600}},
+        {"type": "line", "claim": "CL-RET(S3_BEACON)", "line": "PRESERVE@S3_BEACON/STANDARD", "fields": {"outcome": "PASS", "eligible_count": 6144, "applicable_count": 6144, "vacuous": false}},
+        {"type": "line", "claim": "CL-RET(S3_BEACON)", "line": "RESTART@S3_BEACON/STANDARD", "fields": {"outcome": "PASS", "eligible_count": 237568}},
+        {"type": "line", "claim": "CL-RET(S3_BEACON)", "line": "BOUNDS@S3_BEACON/STANDARD", "fields": {"outcome": "PASS"}}
+      ]
+    },
+    {
+      "id": "S3.SOUND.MIGRATE", "polarity": "sound", "plane": "world", "bundle": "S3W", "gates": ["OBSERVER"],
+      "checks": [
+        {"type": "claim", "claim": "CL-RET(REG)", "eligibility": "ELIGIBLE", "standing": "SATISFIED", "not_satisfied": []},
+        {"type": "line", "claim": "CL-RET(REG)", "line": "OBSERVER@REG/S3_MIGRATE/STANDARD", "fields": {"execution": "RAN", "authority": "QUALIFIED@AUTHOR_TESTED", "outcome": "PASS", "eligible_count": 196608}}
+      ]
+    },
+    {
+      "id": "S3.SOUND.W_OTHER_VERSION", "polarity": "sound", "plane": "evidence", "bundle": "case", "gates": ["invalidation (B6.5)", "G-BIND", "G-INV", "G-RECOMP"],
+      "checks": [
+        {"type": "identical", "reference": "G0_BASELINE", "claims": "ALL"}
+      ]
+    },
+    {
+      "id": "S3.SOUND.TWO_MANIFESTS", "polarity": "sound", "plane": "evidence", "bundle": "case", "gates": ["custody (B5.3)", "G-BIND"],
+      "checks": [
+        {"type": "custody", "status": "QUALIFIED"},
+        {"type": "identical", "reference": "KEEPER_CONTROL", "claims": "ALL"}
+      ]
+    },
+    {
+      "id": "S3.BROKEN.INVERT", "polarity": "broken", "plane": "world", "bundle": "S3W", "gates": ["RESTART", "G-RECOMP", "CHANNEL"],
+      "primary": "RESTART@S3_INVERT/STANDARD",
+      "checks": [
+        {"type": "claim", "claim": "CL-RET(S3_INVERT)", "eligibility": "NOT_ELIGIBLE", "standing": "UNQUALIFIED", "not_satisfied": ["rcpt:S3_INVERT:CHANNEL:STANDARD", "rcpt:S3_INVERT:OBSERVER:NULL:STANDARD", "rcpt:S3_INVERT:RESTART:STANDARD"]},
+        {"type": "line", "claim": "CL-RET(S3_INVERT)", "line": "RESTART@S3_INVERT/STANDARD", "fields": {"execution": "RAN", "authority": "QUALIFIED@AUTHOR_TESTED", "outcome": "FAIL", "reason": "capture/restore loses future-influencing state at (RESET 1), target FRESH", "witness": {"history": 0, "cut": 4, "point": ["RESET", 1], "target": "FRESH"}, "eligible_count": 237568}},
+        {"type": "line", "claim": "CL-RET(S3_INVERT)", "line": "CHANNEL@S3_INVERT/STANDARD", "fields": {"execution": "RAN", "authority": "UNQUALIFIED: PRECONDITION:RESTART"}, "info": {"outcome": "FAIL", "witness": {"history": 0, "j": 1, "v": 0}, "note": "value under the in-place reading of A5 P5 restore; a runtime with RESTART FAIL gives P5 no authority either way"}},
+        {"type": "line", "claim": "CL-RET(S3_INVERT)", "line": "OBSERVER@S3_INVERT/NULL/STANDARD", "fields": {"execution": "RAN", "authority": "UNQUALIFIED: PRECONDITION:RESTART", "outcome": "PASS"}},
+        {"type": "line", "claim": "CL-RET(S3_INVERT)", "line": "RETENTION@S3_INVERT/STANDARD", "fields": {"outcome": "POSITIVE", "successes": 12288, "trials": 12288}},
+        {"type": "line", "claim": "CL-RET(S3_INVERT)", "line": "PRESERVE@S3_INVERT/STANDARD", "fields": {"outcome": "PASS", "applicable_count": 6144, "vacuous": false}},
+        {"type": "line", "claim": "CL-RET(S3_INVERT)", "line": "G-RECOMP@CL-RET(S3_INVERT)", "fields": {"execution": "RAN", "outcome": "PASS"}},
+        {"type": "line", "claim": "CL-RET(S3_INVERT)", "line": "G-BIND@CL-RET(S3_INVERT)", "fields": {"outcome": "PASS"}}
+      ]
+    },
+    {
+      "id": "S3.BROKEN.SHADOW", "polarity": "broken", "plane": "world", "bundle": "S3W", "gates": ["CHANNEL"],
+      "primary": "CHANNEL@S3_SHADOW/STANDARD",
+      "checks": [
+        {"type": "claim", "claim": "CL-RET(S3_SHADOW)", "eligibility": "NOT_ELIGIBLE", "standing": "UNMET", "not_satisfied": ["rcpt:S3_SHADOW:CHANNEL:STANDARD"]},
+        {"type": "line", "claim": "CL-RET(S3_SHADOW)", "line": "CHANNEL@S3_SHADOW/STANDARD", "fields": {"execution": "RAN", "authority": "QUALIFIED@AUTHOR_TESTED", "outcome": "FAIL", "reason": "retained answer does not follow the declared allowed channel at 1", "witness": {"history": 0, "j": 1, "v": 1}, "eligible_count": 24576}},
+        {"type": "line", "claim": "CL-RET(S3_SHADOW)", "line": "RESTART@S3_SHADOW/STANDARD", "fields": {"outcome": "PASS", "eligible_count": 237568}},
+        {"type": "line", "claim": "CL-RET(S3_SHADOW)", "line": "RETENTION@S3_SHADOW/STANDARD", "fields": {"outcome": "POSITIVE", "successes": 12288, "trials": 12288}},
+        {"type": "line", "claim": "CL-RET(S3_SHADOW)", "line": "G-RECOMP@CL-RET(S3_SHADOW)", "fields": {"outcome": "PASS"}}
+      ]
+    },
+    {
+      "id": "S3.BROKEN.LOGDEP_BOOKKEEP", "polarity": "broken", "plane": "world", "bundle": "S3W", "gates": ["OBSERVER"],
+      "primary": "OBSERVER@S3_LOGDEP/BOOKKEEP/STANDARD",
+      "checks": [
+        {"type": "claim", "claim": "CL-RET(S3_LOGDEP)", "eligibility": "NOT_ELIGIBLE", "standing": "UNMET", "not_satisfied": ["rcpt:S3_LOGDEP:OBSERVER:BOOKKEEP:STANDARD"]},
+        {"type": "line", "claim": "CL-RET(S3_LOGDEP)", "line": "OBSERVER@S3_LOGDEP/BOOKKEEP/STANDARD", "fields": {"execution": "RAN", "authority": "QUALIFIED@AUTHOR_TESTED", "outcome": "FAIL", "reason": "observer BOOKKEEP changes output at (1, PROBE_A)", "witness": {"history": 0, "episode": 1, "tick": "PROBE_A", "what": "output"}, "eligible_count": 196608}},
+        {"type": "line", "claim": "CL-RET(S3_LOGDEP)", "line": "OBSERVER@S3_LOGDEP/NULL/STANDARD", "fields": {"outcome": "PASS"}},
+        {"type": "line", "claim": "CL-RET(S3_LOGDEP)", "line": "RESTART@S3_LOGDEP/STANDARD", "fields": {"outcome": "PASS"}}
+      ]
+    },
+    {
+      "id": "S3.BROKEN.RUN_BORROW", "polarity": "broken", "plane": "evidence", "bundle": "case", "gates": ["G-INV"],
+      "primary": "G-INV@CL-RET(REG)",
+      "checks": [
+        {"type": "claim", "claim": "CL-RET(REG)", "eligibility": "NOT_ELIGIBLE", "standing": "UNMET", "not_satisfied": ["gate:G-INV:CL-RET(REG)"]},
+        {"type": "line", "claim": "CL-RET(REG)", "line": "G-INV@CL-RET(REG)", "fields": {"execution": "RAN", "outcome": "FAIL", "reason": "RECEIPT_WITHOUT_RUN:rcpt:REG:PRESERVE:STANDARD"}},
+        {"type": "identical", "reference": "G0_BASELINE", "claims": ["CL-RET(PKTD)", "CL-RET(LAGD)", "CL-CAL(STANDARD)", "TWIN(REG)"]}
+      ]
+    },
+    {
+      "id": "S3.BROKEN.W_CALIBRATION", "polarity": "broken", "plane": "evidence", "bundle": "case", "gates": ["invalidation (B6.5)", "authority A3"],
+      "primary": "CALIBRATION@WORLD/STANDARD",
+      "checks": [
+        {"type": "claim", "claim": "CL-CAL(STANDARD)", "eligibility": "NOT_ELIGIBLE", "standing": "UNQUALIFIED", "not_satisfied": ["rcpt:WORLD:CALIBRATION:STANDARD"]},
+        {"type": "line", "claim": "CL-CAL(STANDARD)", "line": "CALIBRATION@WORLD/STANDARD", "fields": {"execution": "RAN", "authority": "UNQUALIFIED: WITHDRAWN:W-S3-CAL", "outcome": "PASS"}},
+        {"type": "claim", "claim": "CL-RET(REG)", "eligibility": "NOT_ELIGIBLE", "standing": "UNQUALIFIED", "not_satisfied": ["rcpt:REG:RETENTION:STANDARD", "rcpt:WORLD:CALIBRATION:STANDARD"]},
+        {"type": "line", "claim": "CL-RET(REG)", "line": "RETENTION@REG/STANDARD", "fields": {"execution": "RAN", "authority": "UNQUALIFIED: WITHDRAWN:W-S3-CAL", "outcome": "POSITIVE"}},
+        {"type": "claim", "claim": "CL-RET(PKTD)", "eligibility": "NOT_ELIGIBLE", "standing": "UNQUALIFIED", "not_satisfied": ["rcpt:PKTD:RETENTION:STANDARD", "rcpt:WORLD:CALIBRATION:STANDARD"]},
+        {"type": "claim", "claim": "CL-RET(LAGD)", "eligibility": "NOT_ELIGIBLE", "standing": "UNQUALIFIED", "not_satisfied": ["rcpt:LAGD:ERASE:STANDARD", "rcpt:LAGD:RETENTION:STANDARD", "rcpt:WORLD:CALIBRATION:STANDARD"]},
+        {"type": "line", "claim": "CL-RET(REG)", "line": "ERASE@REG/STANDARD", "fields": {"authority": "QUALIFIED@AUTHOR_TESTED", "outcome": "PASS"}},
+        {"type": "identical", "reference": "G0_BASELINE", "claims": ["TWIN(REG)"]}
+      ]
+    }
+  ],
+  "probes": [
+    {"id": "S3.PROBE.VERSION_DRIFT", "scored": false, "reading": "REG's ERASE receipt names an instrument version with no stage record (predicate.code and cell.measurement changed together, anchored as presented). B4.1: a stage belongs to a VERSION. Expected: ERASE(REG) authority UNQUALIFIED NO_STAGE_RECORD; CL-RET(REG) NOT_ELIGIBLE, standing UNQUALIFIED; G-BIND PASS; CL-RET(PKTD) unchanged."},
+    {"id": "S3.PROBE.MEASUREMENT_LIE", "scored": false, "reading": "REG's ERASE receipt keeps predicate.code but its cell.measurement names another hash, anchored as presented. B3.2 defines measurement as the predicate code hash and B6.3 requires every scope axis well-formed. This reviewer's reading: G-BIND FAIL SCOPE_MALFORMED:measurement. The contract does not spell the check out, so the probe is unscored."},
+    {"id": "S3.PROBE.OBS_TRANSPLANT", "scored": false, "reading": "The OBSERVER(REG, BOOKKEEP) prerequisite slot of CL-RET(REG) holds the OBSERVER(REG, NULL) receipt. A5 P7: an observer is qualified per (runtime, observer) pair. Expected: G-BIND FAIL with a typed identity reason and CL-RET(REG) NOT_ELIGIBLE. B6.3 has no reason code for an observer mismatch, so the reason is unscored."}
+  ]
+}
