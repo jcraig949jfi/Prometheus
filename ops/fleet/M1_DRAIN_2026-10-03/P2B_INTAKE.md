@@ -155,3 +155,9 @@ Sent by Nestor directly to Bellerophon, Archaeon, Ananke and Cosmos. They verify
     KSEED should be conditioned on a broken start; recorded as a prereg defect.
   - Proposed next: broken-start KSEED plus B4X or STEP at the same 8 cells. Needs operator authority. The M1 GPU lease
     should now be released.
+- **Aether ER01 CLOSED (#1630; Aether/V2B/ER01/RESULT.md @ bae71a02b).**
+  - 38/38 units, 9.04 h on M2, technical PASS, deterministic.
+  - Disposition: MOBILE_BUT_TRIVIAL. The frozen medium's extent does not change with energy: late frozen fraction about
+    0.987, and 37.3% of sites are ever changed, in every regime. Energy scales only the flicker rate of the same ~1.2%
+    minority, and those flips revisit recent states.
+  - Proposed next (TH-009, not started): one law change in which a write re-aims the writer. Needs operator authority.
