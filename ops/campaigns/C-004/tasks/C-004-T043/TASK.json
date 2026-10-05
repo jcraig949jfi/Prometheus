@@ -39,7 +39,7 @@
     "receipt naming the S3 case or edit each change answers"
   ],
   "kind": "software",
-  "status": "INTEGRATION_READY",
+  "status": "INTEGRATED",
   "history": [
     {
       "status": "PROPOSED",
@@ -82,6 +82,12 @@
       "by": "Cadmus[m1-a86ec5e4]",
       "at_utc": "2026-10-05T23:30:01Z",
       "note": "branch cadmus/c004-t043: RED under S3 edits E01/E02, GREEN on frozen reset.py; merged 104582feb0014315f2ed1c172d5c48882e92d5ad; acceptance 361 OK"
+    },
+    {
+      "status": "INTEGRATED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-05T23:34:14Z",
+      "note": "merged 104582feb (tests/test_reset_observer.py only); integrator: S3 edits E01-erase-horizon and E02-erase-ignores-sends applied to reset.py each FAIL the new tests (2 failures each), restored; reset.py and fixtures/world_cases.py untouched (no stage reset)"
     }
   ],
   "authority": "operator directive 2026-10-03; OP-5 (repair round reserved for genuine S3 defects)",
