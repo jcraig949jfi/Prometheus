@@ -133,7 +133,7 @@ which were removed. ubu001's `authorized_keys` now has exactly two keys: `jcraig
 
 | Name | Hardware | OS | Role | Notes |
 |---|---|---|---|---|
-| ELSA | Dell Optiplex 980, i7-860 (4C/8T, no AVX, no integrated graphics), 6 GB DDR3 (3x2 GB, 1 slot free), 240 GB SATA SSD, Radeon HD 5450 | Windows 10 Home | Achilles' seat; builds the autoinstall stick | 192.168.1.163. Candidate Ubuntu conversion later. |
+| ELSA | Dell Optiplex 980, i7-860 (4C/8T, no AVX, no integrated graphics), 16 GB DDR3-1333 (4x4 GB, all slots; was 6 GB until 2026-10-05), 240 GB SATA SSD, Radeon HD 5450 | Windows 10 Home | Achilles' seat; builds the autoinstall stick | 192.168.1.163. Candidate Ubuntu conversion later. |
 | LIZZIE-42 | Auusda A146 14.1" (Celeron, 8 GB soldered, SATA SSD) | Windows 11 Pro 24H2 (activated) | Command center, browsing | Built-in screen broken: external monitor on mini-HDMI. Kept as Windows by the operator 2026-10-02. |
 
 ## ubu004 (machine #4, HP Pavilion x360 14m-ba0xx)

@@ -59,10 +59,10 @@ Loose ends from adding ubu003 and the ELSA access. Tick with a date.
       **Fix: Samsung PM991 256GB M.2 2242 NVMe (MZALQ256HAJD) in the empty WWAN slot**, arriving 2026-10-03 (screw post H21;
       operator has the M2 screw). Leave the capped WWAN antenna wires alone. Then autoinstall. Parts on hand: Samsung MZVLB256
       (original, 2280) + Team MP33 1TB (2280), two Lenovo 2.5" NVMe trays.
-- [ ] ELSA's own future: reimage as an Ubuntu worker (16 GB DDR3 kit ~$47) or Wake-on-LAN on demand. Its motherboard video
+- [ ] ELSA's own future: reimage as an Ubuntu worker (16 GB now installed) or Wake-on-LAN on demand. Its motherboard video
       ports are dead by design (the i7-860 has no integrated graphics); use the Radeon HD 5450 card for installing.
-      **ELSA hardware (read 2026-10-04):** Optiplex 980 SFF, board 0C522T. RAM 3x 2 GB Samsung M378B5673FH0-CH9
-      (DDR3-1333 PC3-10600U) in DIMM1/2/4, DIMM3 empty. **Max 16 GB = 4x 4 GB** DDR3-1333 (or 1600, runs at 1333)
+      **ELSA hardware (read 2026-10-04):** Optiplex 980 SFF, board 0C522T. RAM now 16 GB, 4x 4 GB in DIMM1-4 (2026-10-05;
+      was 3x 2 GB Samsung M378B5673FH0-CH9 in DIMM1/2/4). **Max 16 GB = 4x 4 GB** DDR3-1333 (or 1600, runs at 1333)
       240-pin non-ECC UDIMM. **8 GB sticks do NOT work** (i7-860 / Lynnfield: 4 GB per DIMM max). Video: Radeon HD 5450
       (low-profile, VGA) in the x16 slot, working at 1080p. Boot SSD: 240 GB 2.5" SATA III, SATA mode RAID (leave it:
       switching to AHCI makes Windows fail to boot). **Physical cleanup:** the SSD sits loose on the cables (mount it:
@@ -91,9 +91,9 @@ Loose ends from adding ubu003 and the ELSA access. Tick with a date.
 - [x] **ubu006 RAM upgrade** done 2026-10-04 ~20:50Z: now **16 GB = 2x 8 GB DDR3-1600** (DIMM1+DIMM2, mfr 1315, both
       at 1600 MT/s, verified with dmidecode; `free` 15 GiB). The original 4 GB K531R8-HYA stick was removed. Worker came
       back active on its own. Heavy tasks no longer need to avoid ubu006.
-- [ ] **ELSA RAM:** chosen kit = 16 GB (4x4 GB) PC3-10600U DDR3-1333 UDIMM **2Rx8** 1.5 V (Motoeagle). Replace all 3x2 GB.
-      Ordered; arrived 2026-10-05, operator installing it the evening of 2026-10-05 (ELSA powered down for it). After
-      boot: `Get-CimInstance Win32_PhysicalMemory` -> 4 sticks x 4 GB, 1333 MT/s; then restart this seat.
+- [x] **ELSA RAM:** done 2026-10-05, verified 22:57Z. Kit = 16 GB (4x4 GB) PC3-10600U DDR3-1333 UDIMM **2Rx8** 1.5 V
+      (Motoeagle; SPD reads Samsung M378B5273DH0-CK0). All 3x2 GB removed. `Get-CimInstance Win32_PhysicalMemory` ->
+      DIMM 1-4 x 4 GB, 1333 MT/s; Windows sees 16.0 GB (11.3 GB free after boot). Seat restarted; census task intact.
 - [ ] **Toshiba Satellite A665-S6070** (PSAW3U-04301C, ~2010-11, 19 V 4.74 A brick): offered 2026-10-05. Verdict: OK as a
       light worker (`ubu008`), not urgent (the queue is empty). Likely 1st-gen Core i5 2C/4T, no AVX (confirm with
       lscpu); 2 SODIMM slots, 8 GB max. Before use: SATA SSD in place of the HDD, 8 GB RAM, clean the fan and repaste
