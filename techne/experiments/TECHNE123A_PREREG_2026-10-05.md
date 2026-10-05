@@ -111,8 +111,8 @@ COUNTERFACTUAL_TURN / _NOOP / _INTERVENE (each against FWD at the same seed).
   large artifact             trajectories.npz (latents float16 + frames uint8 + actions), kept by the
                              controller outside the repository (<checkout parent>/Prometheus-data/
                              runpod_artifacts) with path + sha256 in the receipt's large_artifacts
-  analysis on M3             techne/experiments/techne123a/analyze.py over result.json (and the npz when
-                             present) -> ANALYSIS_<run_id>.json + a text table; committed beside this file
+  analysis on M3             techne/experiments/techne123a_analyze.py over result.json (and the npz when
+                             present) -> techne/experiments/TECHNE123A_ANALYSIS_<run_id>.json + a text table
   credential                 the record says only: RunPod credential access ESTABLISHED via
                              Techne/Aether coordination; secret not persisted in experiment artifacts.
 

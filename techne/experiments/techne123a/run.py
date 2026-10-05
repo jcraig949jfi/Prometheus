@@ -17,7 +17,7 @@ What it does, in order:
      divergence curves computed here so the science survives even if the large artifact does not
      travel).
 
-Plans (env TECHNE123A_PLAN): flight1 | flight2 | production. See PREREG_TECHNE123A_2026-10-05.md for
+Plans (env TECHNE123A_PLAN): flight1 | flight2 | production. See ../TECHNE123A_PREREG_2026-10-05.md for
 what each arm is for. Nothing here reads the internet except the two weight URLs.
 """
 import hashlib
