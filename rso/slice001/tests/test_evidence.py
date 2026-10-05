@@ -476,7 +476,7 @@ class TestCustodyStoreReader(unittest.TestCase):
                             "contract.json")
         with open(path, encoding="utf-8") as f:
             doc = json.load(f)
-        self.assertEqual(doc["version"], "1.0.3")                 # v1.0.3 (OP-4, C-004-T025) keeps the v1.0.2 custody
+        self.assertEqual(doc["version"], "1.0.4")                 # v1.0.4 (OP-7, C-004-T044) keeps the v1.0.2 custody
         self.assertEqual(doc["custody"]["store"], LOCATOR)
         self.assertIn("superuser", doc["custody"]["independence_caveat"])
 
