@@ -57,7 +57,7 @@ sys.path.insert(0, os.path.join(AETHER, "runpod", "aeth01_canary"))
 from observatory import aeth01_run as R  # noqa: E402
 
 SEMANTICS_ID = "aeth01.v1"
-RUNNER_VERSION = "er01_run.v1"
+RUNNER_VERSION = "er01_run.v2"  # v2: device-side accumulators (one host sync per bin), energy_255_frac
 P32 = 1 << 32
 
 
@@ -199,16 +199,18 @@ def run_unit(backend, regime, pert, seed_index, n, ticks, bin_ticks, late,
         nxt_active = (nxt[0] == K.WRITE_OPCODE) & (nxt[4].astype(xp.int16) >= w)
         rain = K.rho_vec(phys_seed, tick, packed_coords, rn) if rn else None
 
-        cnt = [int(c.sum()) for c in ch]
+        # Device-side counts; converted to host ints once per bin.
+        cnt = [c.sum(dtype=xp.int64) for c in ch]
         acc["f"] = [a + b for a, b in zip(acc["f"], cnt)]
-        acc["tmpl_byte"] += sum(cnt)
-        acc["tmpl_site"] += int(any_ch.sum())
-        acc["active"] += int(active.sum())
-        acc["write"] += int(is_write.sum())
-        acc["starved"] += int((is_write & ~active).sum())
-        acc["rain"] += int(rain.sum()) if rain is not None else 0
-        acc["starve"] += int((active & ~nxt_active & (nxt[0] == K.WRITE_OPCODE)).sum())
-        acc["revive"] += int((~active & is_write & nxt_active).sum())
+        acc["tmpl_byte"] += cnt[0] + cnt[1] + cnt[2] + cnt[3]
+        acc["tmpl_site"] += any_ch.sum(dtype=xp.int64)
+        acc["active"] += active.sum(dtype=xp.int64)
+        acc["write"] += is_write.sum(dtype=xp.int64)
+        acc["starved"] += (is_write & ~active).sum(dtype=xp.int64)
+        if rain is not None:
+            acc["rain"] += rain.sum(dtype=xp.int64)
+        acc["starve"] += (active & ~nxt_active & (nxt[0] == K.WRITE_OPCODE)).sum(dtype=xp.int64)
+        acc["revive"] += (~active & is_write & nxt_active).sum(dtype=xp.int64)
         acc["ticks"] += 1
         ever |= any_ch
 
@@ -244,6 +246,10 @@ def run_unit(backend, regime, pert, seed_index, n, ticks, bin_ticks, late,
             be = xp.bincount(state[4].ravel(), minlength=256)
             hist_e = np.asarray(getattr(be, "get", lambda: be)())
             cum = np.cumsum(hist_e)
+            for key in ("tmpl_site", "tmpl_byte", "active", "write", "starved", "rain",
+                        "starve", "revive"):
+                acc[key] = int(acc[key])
+            acc["f"] = [int(x) for x in acc["f"]]
             k = acc["ticks"] * N
             row = {
                 "tick": tick,
@@ -259,6 +265,7 @@ def run_unit(backend, regime, pert, seed_index, n, ticks, bin_ticks, late,
                 "energy_mean": float((hist_e * np.arange(256)).sum() / N),
                 "energy_median": int(np.searchsorted(cum, (N + 1) // 2)),
                 "energy_zero_frac": float(hist_e[0] / N),
+                "energy_255_frac": float(hist_e[255] / N),
                 "ever_changed": float(int(ever.sum()) / N),
             }
             series.append(row)
@@ -281,6 +288,7 @@ def run_unit(backend, regime, pert, seed_index, n, ticks, bin_ticks, late,
         net64 |= snap64[i] != state[i]
     per = periodic.any(axis=0) & tail_changed
     n_tail_changed = int(tail_changed.sum())
+    late_field = [int(x) for x in late_field]
     late_tot = sum(late_field)
     result = {
         "schema": "aether.er01.unit.v1",
