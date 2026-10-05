@@ -43,7 +43,7 @@ PROV_VERSION = "prov0"
 OP_INIT, OP_COPY, OP_ADD = 0, 1, 2
 OP_MUT = 4                                                # flag bit
 SUPPORTED = ("v1", "add", "hys", "chg", "cnd", "str", "rcv", "m4", "fwd",
-             "rcv_add", "rcv_cnd", "rcv_str", "rcv_sfx", "rcv_adr", "rcv_sfz")
+             "rcv_add", "rcv_cnd", "rcv_str", "rcv_sfx", "rcv_adr", "rcv_sfz") + V.MOB
 ADD_FAMILY = ("add", "rcv_add")
 
 
@@ -127,6 +127,9 @@ class Provenance:
         rv_next = np.full((h, w), -1, np.int64)
         base = self.n
         self._src_relay = [np.zeros((h, w), bool) for _ in range(4)]
+        is_mob = v in V.MOB
+        mob_won = np.zeros((h, w), bool)
+        mob_dnode = np.full((h, w), -1, np.int64)
         for f in range(4):
             best_slot = observer[f][0]
             won = best_slot != 255
@@ -141,6 +144,10 @@ class Provenance:
                     rvn = np.roll(self.rv_node, (-dr, -dc), axis=(0, 1))
                     pay = np.where(rel & (rvn >= 0), rvn, pay)
                 src_node = np.where(m, pay, src_node)
+                if is_mob:
+                    sm = np.roll(m, (dr, dc), axis=(0, 1))
+                    mob_won |= sm
+                    mob_dnode = np.where(sm, np.roll(self.cur[f], (dr, dc), axis=(0, 1)), mob_dnode)
                 if v == "rcv_adr":
                     rel = np.roll(relay, (-dr, -dc), axis=(0, 1))
                     self._src_relay[f] = np.where(m, rel, self._src_relay[f])
@@ -186,6 +193,37 @@ class Provenance:
                 rv = rv_next.ravel()
                 rv[idx] = ids                                # later fields overwrite: payload > arg1 > arg0 > opcode
                 rv_next = rv.reshape(h, w)
+        # mob side effects at the EMITTER (after commits; an incoming winning write to that field takes precedence)
+        if is_mob:
+            for fld, flag in ((3, v[7] == "1"), (1, v[5] == "1")):     # "mob_r?x?e?": x at 7, r at 5
+                if not flag:
+                    continue
+                site = mob_won & (next_cur[fld] == self.cur[fld])
+                idx = np.flatnonzero(site)
+                if idx.size == 0:
+                    continue
+                dn = mob_dnode.ravel()[idx]
+                prev = self.cur[fld].ravel()[idx]
+                if fld == 3:        # exchange: COPY of the displaced value
+                    pred = val[dn].astype(np.int16); ops = np.full(idx.size, OP_COPY, np.int8)
+                    p1, p2 = dn, np.full(idx.size, -1, np.int64)
+                    nm = mask[dn]; nh = np.where(nm != 0, hops[dn] + 1, 0).astype(np.int32)
+                else:               # recoil: ADD of own direction and the displaced value
+                    pred = ((val[prev] + val[dn]) & 0xFF).astype(np.int16); ops = np.full(idx.size, OP_ADD, np.int8)
+                    p1, p2 = dn, prev
+                    nm = mask[dn] | mask[prev]
+                    nh = np.where(nm != 0, np.maximum(np.where(mask[dn] != 0, hops[dn], -1),
+                                                      np.where(mask[prev] != 0, hops[prev], -1)) + 1, 0).astype(np.int32)
+                got = fields_post[fld].astype(np.int16).ravel()[idx]
+                if not np.array_equal(pred, got):
+                    bad = np.flatnonzero(pred != got)[0]
+                    raise ProvenanceMismatch("tick %d mob side effect field %d site %d: shadow %d, physics %d"
+                                             % (tick, fld, int(idx[bad]), int(pred[bad]), int(got[bad])))
+                ids = base + np.arange(idx.size, dtype=np.int64); base += idx.size
+                new_ops.append(ops); new_p1.append(p1); new_p2.append(p2); new_site.append(idx.astype(np.int64))
+                new_field.append(np.full(idx.size, fld, np.int8)); new_val.append(got); new_mask.append(nm)
+                new_hops.append(nh)
+                nc = next_cur[fld].ravel(); nc[idx] = ids; next_cur[fld] = nc.reshape(h, w)
         # untouched template bytes must be unchanged
         for f in range(4):
             unchanged = next_cur[f] == self.cur[f]

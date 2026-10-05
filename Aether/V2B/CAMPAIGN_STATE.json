@@ -3,27 +3,28 @@
   "thread": "TH-P2B-AETHER-V2B",
   "epic": "EP-PHASE2B",
   "authority": "operator directive 2026-10-04 (roles/Aether/prompts/2026-10-04_v2b_directive/)",
-  "cycle": 2,
+  "cycle": 3,
   "window_type": "TEST",
-  "window_index": 2,
-  "window_opened_utc": "2026-10-04T23:40:51Z",
-  "window_due_close_utc": "2026-10-05T03:37:13Z",
+  "window_index": 3,
+  "window_opened_utc": "2026-10-05T07:35:03Z",
+  "window_due_close_utc": "2026-10-05T11:37:13Z",
   "active_threads": [
     "TH-009",
     "TH-008",
     "TH-007"
   ],
-  "physics_version": "aeth03_variants @ 1b4fb4523 (v1 + scouts + rcv family + lesions rcv_sfx/rcv_adr/rcv_sfz)",
+  "physics_version": "aeth03_variants + mob_r?x?e? @ c0284fcae",
   "observatory_version": "prov0 + aeth_mobility (P1 ruler) @ DEV-2",
-  "experiment": "TEST-2 CLOSED",
+  "experiment": "TEST-3 recoil x exchange P1 interaction (Aether/V2B/TEST-3/PREREGISTRATION.md)",
   "attempt": 1,
-  "last_disposition": "TEST-2 CLOSED: FROZEN_PREMISE_SUPPORTED (all OFF laws FROZEN or COUNTER, 4/4 seeds each; v1 ON CYCLING)",
+  "last_disposition": "TEST-3 MECHANISM_SUPPORTED (P1): recoil x exchange INTERACTION_MOBILITY_SUPPORTED; r1x1e0/e1 ENDOGENOUSLY_MOBILE 4/4, exchange-only CYCLING 4/4, recoil-only COUNTER 4/4; Q4 v1 warm-up OFF FROZEN 4/4 (SUPPORTED); energy aim inert; P3 descriptive only (exchange shortcut)",
   "unresolved_defects": [
     "Fabric ubu001 workers stale since 2026-10-02 (TEST-1 ran via R3 native fallback); reported to Aporia",
     "prov0 limits: energy not a lineage; composition counts tracked lineages only (dense origins needed)",
-    "rcv_add lesion completion (E-011) now possible with provenance"
+    "rcv_add lesion completion (E-011) now possible with provenance",
+    "P1 ruler blind to varying-step counters (live on mob_r1x1; TEST-3 limit)"
   ],
-  "next_intended_window": "DEV-3 at 2026-10-05T03:37Z",
+  "next_intended_window": "DEV-4 at 2026-10-05T11:37Z",
   "dev1_plan": "Aether/V2B/DEV-1_PLAN.md",
   "fabric_tasks": "scratchpad t1/tasks.json (28 units, experiment V2B-TEST-1)",
   "dev2_candidates": [
@@ -39,5 +40,15 @@
     "alternative energy regime",
     "prov1 dense origins / energy lineage",
     "rcv_str steering dose-response"
-  ]
+  ],
+  "dev3_limiting_layer": "physics: every current medium is FROZEN (idempotent writes through static wiring) or a COUNTER (add family). Mobility needs writing to change the writer or the wiring, data-dependently. DEV-3: bounded enumeration mob_r?x?e? over 3 binary mechanism switches (recoil, exchange, energy-aim), each with declared mechanism class + shortcut attack; plus warm-up control arm (review Q4).",
+  "dev4_limiting_layer": "the P1 RULER: cannot separate a mobile medium from a varying-step counter (recoil step = displaced byte, varied by exchange) and is blind to causal structure; P3 on exchange media needs a non-shortcut ruler",
+  "dev4_candidates": [
+    "P1 causal-dependence refinement: twin divergence of turnover patterns",
+    "varying-step counter detector",
+    "non-shortcut P3+ ruler for exchange media (beat a turnover-matched exchange-only null)"
+  ],
+  "test3_result": "Aether/V2B/TEST-3/RESULT.md",
+  "host": "SPECTREX5 (M2) from 2026-10-05 handoff; writer Aether[m2-95eba442]",
+  "operator_review_test3": "Aether/V2B/TEST-3/OPERATOR_REVIEW.md (supersedes dev4_candidates; energy aim fixed e=0)"
 }

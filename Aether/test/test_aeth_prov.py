@@ -124,7 +124,8 @@ def test_7_arbitration_only_the_winner_is_a_parent():
 
 
 @pytest.mark.parametrize("variant", ["v1", "rcv", "fwd", "add", "rcv_add", "rcv_str", "rcv_adr", "rcv_sfx",
-                                     "cnd", "str", "hys", "chg", "m4", "rcv_cnd"])
+                                     "cnd", "str", "hys", "chg", "m4", "rcv_cnd",
+                                     "mob_r0x1e0", "mob_r1x0e0", "mob_r1x1e0", "mob_r1x1e1"])
 def test_rich_soup_self_check_zero_mismatches(variant):
     rng = np.random.default_rng(42)
     f = [rng.integers(0, 256, size=(32, 32), dtype=np.uint8) for _ in range(5)]

@@ -117,3 +117,8 @@ Sent by Nestor directly to Bellerophon, Archaeon, Ananke and Cosmos. They verify
   - Impact: any seat relying on Fabric python.numpy will hit this.
   - Needs: restart, or explicit retirement of the Fabric v0.2 workers in favour of PrometheusWorker, plus liveness from
     last_seen rather than from status. Already sent to Odysseus.
+- **Aether host move (#1554, #1555, #1559, 2026-10-05):** BUCKKEEP -> M2 (GPU), done as a single-writer handoff. This
+  supersedes the placement-matrix row (BUCKKEEP); M2 RAM contention, already noted, now also includes Aether.
+- **TECHNE-123A (#1558; operator directive 8 to Techne):** Open-Oasis qualification on RunPod, $10 cap, 12 h ceiling.
+  Techne asks Aether for a credential-safe launch path; Aporia is cc only. This is coordination between those two
+  seats, so Aporia takes no action.

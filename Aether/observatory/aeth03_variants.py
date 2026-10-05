@@ -71,7 +71,15 @@ if _REF not in sys.path:
 import gpu_aeth01 as K                                   # noqa: E402
 
 VARIANTS = ("v1", "add", "hys", "chg", "cnd", "str", "mov", "rcv", "m4",
-            "fwd", "rcv_add", "rcv_cnd", "rcv_str", "rcv_sfx", "rcv_adr", "rcv_sfz")
+            "fwd", "rcv_add", "rcv_cnd", "rcv_str", "rcv_sfx", "rcv_adr", "rcv_sfz") + tuple(
+    "mob_r%dx%de%d" % (r, x, e) for r in (0, 1) for x in (0, 1) for e in (0, 1))
+# V2-B DEV-3 (TH-009) mobile-medium enumeration: three binary mechanism switches on the v1 shared path.
+#   r (recoil):   a winning template write turns its EMITTER's direction by the byte it displaced: arg0 += d.
+#   x (exchange): a winning template write hands the displaced byte back to the EMITTER's payload.
+#   e (energy aim): direction = (arg0 + energy >> 6) % 4, as in str.
+# An incoming winning write to the emitter's own arg0 or payload takes precedence over its side effect.
+# mob_r0x0e0 is v1 and mob_r0x0e1 is str, bit for bit (enumeration corners, tested).
+MOB = tuple("mob_r%dx%de%d" % (r, x, e) for r in (0, 1) for x in (0, 1) for e in (0, 1))
 # Laws that carry rcv's received flag (one bit per site, across ticks).
 RCV_FAMILY = ("rcv", "fwd", "rcv_add", "rcv_cnd", "rcv_str", "rcv_sfx", "rcv_adr", "rcv_sfz")
 # Laws that use cnd's conditional opcode 0x02.
@@ -98,6 +106,7 @@ SEMANTICS_ID = {
     "rcv_sfx": "aeth03.rcv_sfx.lesion0",
     "rcv_adr": "aeth03.rcv_adr.lesion0",
     "rcv_sfz": "aeth03.rcv_sfz.lesion0",
+    **{m: "aeth03.%s.dev3" % m for m in MOB},
     "v1g": "aeth01.v1",
 }
 COND_OPCODE = 0x02
@@ -168,7 +177,7 @@ def step(variant, H, W, seed, tick, write_cost, maintenance_cost,
     if variant in RCV_FAMILY and received is not None:
         is_emitter = is_emitter | received
     active = is_emitter & (~starved)
-    if variant in ("str", "rcv_str") or (variant == "rcv_sfz" and aim_energy is None):
+    if variant in ("str", "rcv_str") or (variant == "rcv_sfz" and aim_energy is None) or             (variant in MOB and variant.endswith("e1")):
         direction = ((arg0.astype(np.int64) + (energy_i >> 6)) % 4).astype(np.uint8)
     elif variant == "rcv_sfz":
         direction = ((arg0.astype(np.int64) + (aim_energy.astype(np.int64) >> 6)) % 4).astype(np.uint8)
@@ -198,6 +207,10 @@ def step(variant, H, W, seed, tick, write_cost, maintenance_cost,
     current = [t.copy() for t in template] + [energy_i.astype(np.int16)]
     winner4_has, winner4_val = None, None
     won_src = np.zeros((H, W), dtype=bool)        # mov: a source's template proposal won
+    is_mob = variant in MOB
+    mob_won = np.zeros((H, W), dtype=bool)        # mob: this emitter's template proposal won
+    mob_disp = np.zeros((H, W), dtype=np.int16)   # mob: the byte it displaced at its target
+    arg0_winner = np.zeros((H, W), dtype=bool)
     received_next = np.zeros((H, W), dtype=bool)  # rcv: site got a winning template write
     received_value_next = np.zeros((H, W), dtype=np.int16)   # fwd
     relay = np.zeros((H, W), dtype=bool)                     # rcv_adr: emitting only because it received
@@ -235,7 +248,7 @@ def step(variant, H, W, seed, tick, write_cost, maintenance_cost,
             best_value = np.where(cond, n_value, best_value)
             if variant == "rcv_adr":
                 best_relay = np.where(cond, np.roll(relay, shift, axis=(0, 1)), best_relay)
-            if variant == "mov" and f != ENERGY:
+            if (variant == "mov" or is_mob) and f != ENERGY:
                 # track the winning slot per target without the observer
                 if slot == 0:
                     win_slot = np.full((H, W), 255, dtype=np.uint8)
@@ -253,6 +266,13 @@ def step(variant, H, W, seed, tick, write_cost, maintenance_cost,
             received_next |= best_has
             if f == K.PAYLOAD:
                 payload_winner = best_has
+            if f == 1:
+                arg0_winner = best_has
+            if is_mob:
+                for slot, (dr, dc, _rd) in enumerate(_SLOTS):
+                    m = np.roll(win_slot == slot, (dr, dc), axis=(0, 1))
+                    mob_won |= m
+                    mob_disp = np.where(m, np.roll(current[f], (dr, dc), axis=(0, 1)), mob_disp)
             if variant == "mov":
                 for slot, (dr, dc, _rd) in enumerate(_SLOTS):
                     # target (r, c) won from the source at (r + dr, c + dc)
@@ -269,6 +289,11 @@ def step(variant, H, W, seed, tick, write_cost, maintenance_cost,
                 received_value_next = np.where(best_has, stored, received_value_next)
 
     next_opcode, next_arg0, next_arg1, next_payload = template
+    if is_mob:
+        if variant[7] == "1":        # x: exchange  ("mob_r?x?e?": index 7)
+            next_payload = np.where(mob_won & ~payload_winner, mob_disp, next_payload)
+        if variant[5] == "1":        # r: recoil    (index 5)
+            next_arg0 = np.where(mob_won & ~arg0_winner, (arg0.astype(np.int16) + mob_disp) & 0xFF, next_arg0)
     if variant == "mov":
         # The winning source's payload moved to its target: clear it,
         # unless the source itself received a winning payload write this

@@ -1,0 +1,62 @@
+{
+  "schema": "prometheus.workgraph.task.v1",
+  "task_id": "C-004-T042",
+  "campaign_id": "C-004",
+  "title": "S4 repair (Argus): F1 adapter clamp, F2 keeper manifest, F3 G-INV run attribution, measurement binding, fire tests E07/E09/E10",
+  "objective": "Repair, inside the single S4 repair round, the items of ops/campaigns/C-004/TRIAGE_S3.md assigned to this owner, with a failing test first for each.",
+  "parent_objective": "RSO-METHODS-SLICE-001 S4",
+  "owner_role": "Argus",
+  "quality_class": "Q2",
+  "can_downgrade": false,
+  "escalate_to": "Q3",
+  "depends_on": [
+    "C-004-T030"
+  ],
+  "owns": [
+    "rso/slice001/adapter.py",
+    "rso/slice001/evidence.py",
+    "rso/slice001/checker.py",
+    "rso/slice001/tests/test_adapter.py",
+    "rso/slice001/tests/test_evidence.py",
+    "rso/slice001/tests/test_checker_render.py"
+  ],
+  "reads": [
+    "ops/campaigns/C-004/TRIAGE_S3.md",
+    "rso/slice001/challenge/S3/",
+    "rso/slice001/contract/"
+  ],
+  "problem": "TRIAGE_S3.md rows F1, F2, F3, MEASUREMENT_LIE, E07, E09, E10.",
+  "non_goals": [
+    "No change to case expectations, the contract, the S2 table or the S3 record (OP-5)",
+    "Nothing outside the triage rows assigned here; this is the only repair round"
+  ],
+  "evidence_required": [
+    "RED then GREEN per row",
+    "S3.BROKEN.RUN_BORROW refused RECEIPT_WITHOUT_RUN; S3.SOUND.TWO_MANIFESTS accepted; S3.BROKEN.INVERT has no G-RECOMP line",
+    "the three survivor edits E07/E09/E10 now killed"
+  ],
+  "acceptance": {
+    "command": "python -B -m unittest discover -s rso/slice001/tests -t .",
+    "condition": "each triage item: RED test first, then GREEN; full suite green; the S3 attack cases for the repaired findings now give the expected verdicts"
+  },
+  "deliverables": [
+    "repairs + tests per TRIAGE_S3.md",
+    "receipt naming the S3 case or edit each change answers"
+  ],
+  "kind": "software",
+  "status": "PROPOSED",
+  "history": [
+    {
+      "status": "PROPOSED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-05T06:45:12Z",
+      "note": "from T040 triage; READY after OP-7 (launch cap for S4)"
+    }
+  ],
+  "authority": "operator directive 2026-10-03; OP-5 (repair round reserved for genuine S3 defects)",
+  "resource_ceiling": {
+    "engineering": "<= 1.5 Q2 seat-hours",
+    "cpu": "development only; no ledgered launch in this packet",
+    "note": "OP-4 caps"
+  }
+}

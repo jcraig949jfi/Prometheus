@@ -1,0 +1,49 @@
+{
+  "edits": [
+    {
+      "edit_id": "E01-erase-horizon",
+      "find": "for e in range(j + 1, j + W.H + 1):",
+      "intended_fault": "reset/observer: ERASE compares episodes j+1..j+2 only; a forbidden influence that first shows at lag exactly H = 3 (the registered delay horizon, draft A A7) is no longer caught",
+      "module": "rso.slice001.reset",
+      "path": "rso/slice001/reset.py",
+      "replace": "for e in range(j + 1, j + W.H):",
+      "witness": {
+        "expr": "__import__(\"importlib\").import_module(\"rso.slice001.challenge.S3.attack_set.witnesses\").e01(m)"
+      }
+    },
+    {
+      "edit_id": "E02-erase-ignores-sends",
+      "find": "zip(names, eps[h][e], eps[r][e]) if x != y]",
+      "intended_fault": "reset/observer: ERASE ignores the CUE output (sends); forbidden content that is re-sent, and shows in no probe within the horizon, crosses the boundary unseen (A5 P3: identical outputs at EVERY tick)",
+      "module": "rso.slice001.reset",
+      "path": "rso/slice001/reset.py",
+      "replace": "zip(names, eps[h][e], eps[r][e]) if x != y and t != \"CUE\"]",
+      "witness": {
+        "expr": "__import__(\"importlib\").import_module(\"rso.slice001.challenge.S3.attack_set.witnesses\").e02(m)"
+      }
+    },
+    {
+      "edit_id": "E03-restart-skips-reset-cuts",
+      "find": "for i in range(N_POINTS):",
+      "intended_fault": "reset/observer: RESTART cuts only at the 24 after-tick points; the 5 after-reset cut points of the registered 29 (A2, A5 P6) are skipped, so a capture that is wrong right after a reset passes",
+      "module": "rso.slice001.reset",
+      "path": "rso/slice001/reset.py",
+      "replace": "for i in [k for k in range(N_POINTS) if POINTS[k][0] == \"TICK\"]:",
+      "witness": {
+        "expr": "__import__(\"importlib\").import_module(\"rso.slice001.challenge.S3.attack_set.witnesses\").e03(m)"
+      }
+    },
+    {
+      "edit_id": "E04-observer-state-allowed-only",
+      "find": "if v[\"class\"] != \"BOOKKEEPING\"]",
+      "intended_fault": "reset/observer: OBS_EQ's state part compares only the ALLOWED component; an observer that disturbs declared FORBIDDEN or SCHEDULE state without changing an output is qualified (A5 P7)",
+      "module": "rso.slice001.observer",
+      "path": "rso/slice001/observer.py",
+      "replace": "if v[\"class\"] == \"ALLOWED\"]",
+      "witness": {
+        "expr": "__import__(\"importlib\").import_module(\"rso.slice001.challenge.S3.attack_set.witnesses\").e04(m)"
+      }
+    }
+  ],
+  "schema": "rso.slice001.mutation_edits.v1"
+}
