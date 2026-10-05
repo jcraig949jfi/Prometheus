@@ -1,0 +1,52 @@
+{
+ "determinism": true,
+ "hash_bad": [],
+ "law_class": {
+  "mob_r0x1e0/warmup-on": "CYCLING",
+  "mob_r0x1e1/warmup-on": "CYCLING",
+  "mob_r1x0e0/warmup-on": "COUNTER",
+  "mob_r1x0e1/warmup-on": "COUNTER",
+  "mob_r1x1e0/warmup-on": "ENDOGENOUSLY_MOBILE",
+  "mob_r1x1e1/warmup-on": "ENDOGENOUSLY_MOBILE",
+  "v1/warmup-off": "FROZEN"
+ },
+ "p3": {
+  "deep": 5,
+  "far": 3,
+  "horizon": "400",
+  "laws": {
+   "mob_r1x1e0": {
+    "P3_far": 0.1328125,
+    "P4_transformed": 0.93359375,
+    "P5_composed": 0.0078125,
+    "P6_deep": 0.9375,
+    "alive": 1.0,
+    "origins": 256,
+    "seeds": [
+     4,
+     5,
+     6,
+     7
+    ]
+   },
+   "mob_r1x1e1": {
+    "P3_far": 0.15625,
+    "P4_transformed": 0.90234375,
+    "P5_composed": 0.0078125,
+    "P6_deep": 0.90625,
+    "alive": 1.0,
+    "origins": 256,
+    "seeds": [
+     4,
+     5,
+     6,
+     7
+    ]
+   }
+  },
+  "positive_control": null,
+  "reducer": "aeth_prov_reduce"
+ },
+ "primary": "INTERACTION_MOBILITY_SUPPORTED -> MECHANISM_SUPPORTED",
+ "q4": "FROZEN"
+}
