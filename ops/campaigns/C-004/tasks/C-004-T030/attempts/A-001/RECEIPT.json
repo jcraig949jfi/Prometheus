@@ -1,0 +1,87 @@
+{
+  "schema": "prometheus.workgraph.receipt.v1",
+  "task_id": "C-004-T030",
+  "campaign_id": "C-004",
+  "attempt_id": "A-001",
+  "role": "Pallas",
+  "model": "claude-fable-5-1",
+  "quality_class": "Q3",
+  "instance": "m2-e7da6bde",
+  "host": "SPECTREX5",
+  "branch": "pallas/c004-t030",
+  "worktree_path": "D:/Prometheus-worktrees/pallas-boot-2026-10-03",
+  "start_sha": "8a8c9feb6dea87262fa0943fe802436332da0d71",
+  "end_sha": "3bff160c9f4b1562f848b3b03c3f6b6193cb3327",
+  "files_changed": [
+    "rso/slice001/challenge/S3/EXPOSURE.md",
+    "rso/slice001/challenge/S3/attack_set/",
+    "rso/slice001/challenge/S3/suite_unchanged.json",
+    "rso/slice001/challenge/S3/results_cases.jsonl",
+    "rso/slice001/challenge/S3/decisions_S3W.json",
+    "rso/slice001/challenge/S3/mutation_rows_A.jsonl",
+    "rso/slice001/challenge/S3/mutation_rows_B.jsonl",
+    "rso/slice001/challenge/S3/mutation_confirm.jsonl",
+    "rso/slice001/challenge/S3/results.jsonl",
+    "rso/slice001/challenge/S3/REPORT.md",
+    "rso/slice001/s2/LEDGER.jsonl (rows appended only, as the packet requires)",
+    "roles/Pallas/journal/2026-10-05.md",
+    "roles/Pallas/comms/T030_CLAIMED_2026-10-05.md",
+    "ops/campaigns/C-004/tasks/C-004-T030/"
+  ],
+  "evidence_added": [
+    "EXPOSURE.md at 9af90c053, before the contract or any source was read",
+    "attack set at 99084714a (2026-10-05T06:02:39Z): 5 fresh sound cases, 5 fresh broken cases, 3 unscored probes, 10 semantic edits with intended faults and witnesses, expected.json answer key, predictions",
+    "case results at 53e65a17e: sound 4 of 5 correct, broken 3 of 5 correct, controls 2 of 2",
+    "mutation rows at 63f130853: proposed 10, applicable 10, executed 10, killed 5, survived 5, equivalent 0, error 0, timeout 0; all 5 survivors SURVIVED the full frozen suite and have a DIFFERS witness",
+    "REPORT.md: per-gate first-sight components with denominators; findings F1 (clamp trace vs CHANNEL outcome), F2 (keeper's last manifest row), F3 (G-INV run attribution); observation O1"
+  ],
+  "evidence_executed": [
+    {
+      "command": "python -B -m rso.slice001.ci --ledger rso/slice001/s2/LEDGER.jsonl --node-id S3-UNCHANGED-SUITE --run-id S3-SUITE-20261005T0603Z",
+      "result": "PASSED: 356 run, 355 passed, 0 failed, 0 errored, 1 skipped; 187.7 CPU-s"
+    },
+    {
+      "command": "python -B rso/slice001/challenge/S3/attack_set/run_cases.py --ledger rso/slice001/s2/LEDGER.jsonl",
+      "result": "exit 0; build S3W 45 receipts; sound 4/5, broken 3/5, controls 2/2"
+    },
+    {
+      "command": "python -B rso/slice001/challenge/S3/attack_set/run_mutation.py --ledger rso/slice001/s2/LEDGER.jsonl",
+      "result": "exit 0; baselines PASSED; A: 2 killed, 2 survived; B: 3 killed, 3 survived; 5 confirmations on 356 tests: 5 SURVIVED"
+    },
+    {
+      "command": "python -B -m rso.slice001.ledger summary rso/slice001/s2/LEDGER.jsonl",
+      "result": "launches 8 of 12, cpu_s 2299.2, artifact_bytes 18399370, exhausted null; S3 rows: 3 TOP_LEVEL, 46 RECEIPT, 19 MUTATION_CHILD, 2027.4 CPU-s"
+    }
+  ],
+  "red_observed": {
+    "observed": false,
+    "reason": "kind review, red_required false. Preregistered failure state: no attack set and no first-sight record under rso/slice001/challenge/S3/ (true at claim, 8a8c9feb6)."
+  },
+  "result": "DONE_CLEAN",
+  "known_escapes": [
+    "the reviewer is a cell member and of the same model family as the closure reviewer, the T005 table and the FABLE corpora (CONTRACT.md s6 caveat)",
+    "that no test body was opened rests on this session's record; nothing mechanical prevented it",
+    "phase 1 of the edits used targeted test modules; only the 5 survivors were run on the full suite, so a targeted KILL was not re-checked (a kill is a kill on any subset)",
+    "mutation children were charged wall seconds, an upper bound on CPU",
+    "S3W receipts name fixtures/world_cases.py as subject code although the fresh fixtures live in challenge/S3/attack_set/cases_world.py; S3W is challenge evidence only",
+    "CALIBRATION, TWIN_EQ, render, ledger and matrix were not attacked",
+    "the expected verdict of S3.BROKEN.RUN_BORROW rests on B3.3 + V7, not on B6.4's sentence alone"
+  ],
+  "unresolved": [
+    "F1: G-RECOMP FAIL OUTCOME_MISMATCH:value on an honest bundle (S3_INVERT); producer outcome and bound trace:clamp use different restore semantics",
+    "F2: anchors_from_keeper takes the last EVIDENCE_MANIFEST row; custody QUALIFIED was printed against another bundle's manifest",
+    "F3: G-INV admits a receipt that borrows another node's run",
+    "applicable, witnessed, non-equivalent survivors on the full suite: E01, E02 (ERASE), E07 (G-RECOMP), E09, E10 (authority / invalidation)",
+    "whether these map to the stage records' `unresolved` field is the registrar's (Palamedes); the reviewer writes no stage record",
+    "the packet's older ceiling '< 10 CPU-minutes' was exceeded (33.8 CPU-minutes); the 2026-10-05 note (about 75 for S3 + S4) was followed; about 41 CPU-minutes and 4 launches remain for S4"
+  ],
+  "unblocks": [
+    "C-004-T040"
+  ],
+  "resources": {
+    "cpu_seconds_ledgered": 2027.4,
+    "top_level_launches": 3,
+    "reviewer_minutes": "about 70 including the report (claim 05:43Z)"
+  },
+  "created_at_utc": "2026-10-05T06:40:56Z"
+}
