@@ -51,7 +51,7 @@
     "receipt naming the S3 case or edit each change answers"
   ],
   "kind": "software",
-  "status": "CLAIMED",
+  "status": "IMPLEMENTING",
   "history": [
     {
       "status": "PROPOSED",
@@ -70,6 +70,18 @@
       "by": "Argus[desktop-ruapvai-b08b36ac]",
       "at_utc": "2026-10-05T23:26:14Z",
       "note": "claimed by Argus on DESKTOP-RUAPVAI (claude-opus-5-5, Q2) per #1637; work branch argus/c004-t042"
+    },
+    {
+      "status": "RED",
+      "by": "Argus[desktop-ruapvai-b08b36ac]",
+      "at_utc": "2026-10-05T23:30:01Z",
+      "note": "RED per row: F1 2/2 fail (clamp trace != reset.clamp_answers on INVERT); F2 3 fail (two manifests); F3 1 fail (RUN_BORROW passes G-INV); MEASUREMENT 1 fail; E07/E09/E10 fire tests pass on current code (their RED is the S3 survivor mutants, to be shown killed)"
+    },
+    {
+      "status": "IMPLEMENTING",
+      "by": "Argus[desktop-ruapvai-b08b36ac]",
+      "at_utc": "2026-10-05T23:30:07Z",
+      "note": ""
     }
   ],
   "authority": "operator directive 2026-10-03; OP-5 (repair round reserved for genuine S3 defects)",
