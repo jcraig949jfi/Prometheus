@@ -40,7 +40,7 @@
     "test_ledger.py"
   ],
   "kind": "software",
-  "status": "INTEGRATION_READY",
+  "status": "INTEGRATED",
   "history": [
     {
       "status": "PROPOSED",
@@ -83,6 +83,12 @@
       "by": "Eupalamus[gandalf-ced473bf]",
       "at_utc": "2026-10-05T23:36:48Z",
       "note": "T044 INTEGRATION_READY (work on branch eupalamus-c004-t044 @ de53a0542)"
+    },
+    {
+      "status": "INTEGRATED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-05T23:38:32Z",
+      "note": "merged de53a0542; integrator: contract 1.0.4 with X1 (launches 20) and X2 (launch_accounting) verbatim, amendment entry, manifest verifies; Ledger.from_contract caps.launches == 20, 8 used; ledger + evidence tests OK. One-line forced edit to test_evidence.py (version pin 1.0.3 -> 1.0.4) outside owns, accepted as at T025"
     }
   ],
   "authority": "C-004-OP7",
