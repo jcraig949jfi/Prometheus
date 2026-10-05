@@ -1,5 +1,15 @@
 # Nestor status -- Cycle-9 campaign (autonomous loop)
 
+## XTG-v2 (operator science order 2026-10-05, prompts/2026-10-05_xtg_v2_science_order/) -- CLOSED
+
+Seat moved to BUCKKEEP (worktree C:/Prometheus-worktrees/nestor-buckkeep-2026-10-05, branch
+nestor/buckkeep-boot-2026-10-05, base 3fa0d77fa). Nothing running; no lease (local CPU receipts only).
+- Freeze ef6d68cee (campaigns/npe-frontier-2026-09-30/x_task_gate_v2/PREREG_V2.md); historical 62d30e443 untouched.
+- Stage 0: **INSTRUMENT_UNREACHABLE (TRANSIENT_ONLY)**. CT_UA CD_TX peaks 0.40-0.54 then 0 by e60-90; final 0/6.
+  Negatives clean (0/6). Stage 1 NOT run. Report: x_task_gate_v2/RESULT.md.
+- Deferred by operator ruling (not blockers): M1-drain receipt + 14 stale queue items; pm-data custody (stays on M1);
+  bld-g/h/q branches; D2 anchoring; key-holder scan.
+
 Currency: 2026-09-26 07:15 EDT. **Budget window CLOSED** (48 wall-h + 55 min reboot extension, ended
 2026-09-26 07:42 EDT). Graph: no open nodes (`python graph.py open` is empty; C9-H4 stays WITHHELD).
 Nothing running. The loop is at rest, not retired. Charter: budgeted autonomous scientific loop
