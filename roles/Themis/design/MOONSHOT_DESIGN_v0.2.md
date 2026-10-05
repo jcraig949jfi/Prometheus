@@ -11,6 +11,9 @@ superseded/). Status: committed design of record; experiments still gated as bel
 
 ## 0. What changed from v0.1 (operator review, all accepted)
 
+> Rev 2026-10-05b: added R-TDD (S5) and S18, a three-layer test-driven development methodology,
+> at operator request. Same-day revision of v0.2 before external review; filename unchanged.
+
 The operator reviewed v0.1 and approved Moonshot as a new Epic with revisions. Themis held the
 final word and accepts all of them; several fix real errors in v0.1, not preferences:
 1. **Two independent hypotheses (H1/H2)** now front the design (S2). Moonshot is an *adversarial
@@ -183,6 +186,13 @@ R-EP. (Shard epoch) The durable work unit MUST be `immutable checkpoint + epoch 
      next checkpoint`, with the output checkpoint and trace **atomically published**; a worker
      dying mid-epoch MUST have no semantic effect (the epoch simply re-runs from its input
      checkpoint).
+R-TDD. (Test-driven, three layers -- full method in S18) Development MUST be test-driven, with
+     the meaning of "test" distinct per layer: (1) engine/code -- tests written first and MUST
+     pass (exact, via determinism); (2) calibration -- the instrument MUST pass its disguised-
+     known controls (RC0, planted memory-user vs reflex, dead-world) before it judges real data;
+     (3) science -- gates are preregistered test-first, but PASS/KILL/UNDERPOWERED are ALL valid
+     and a KILL MUST NOT be "fixed" to pass (that is teaching to the test). A unit is done only
+     when its layer-1/2 tests are green or its layer-3 prereg verdict stands as written.
 
 N1. Determinism = **canonical semantic identity**: one defined canonical trace serialization and
     a reference semantic oracle. CPU integer implementations reproduce it directly; any
@@ -407,5 +417,49 @@ completion cost (named, M2/M4); instrument self-deception (guarded by operationa
 attack); coordination collision with the RSO cell (mitigated by S15 before any forge work);
 ecology degeneracy (guarded by R-AD).
 
+## 18. Development methodology: test-driven, in three layers
+
+TDD is the build discipline -- write the test, pass it, move on -- but "test" means something
+different at each layer, and conflating them would reintroduce the exact failure this design
+exists to prevent. Three layers, inner to outer:
+
+**18.1 Engine / code layer -- strict TDD; tests MUST pass.** Every piece of machinery (the
+organism VM, the world runtime, the shard-epoch checkpoint/replay, the ledger hash-chain, the
+S-meter, the workgraph epoch claim) is built test-first, red -> green -> refactor, and a red
+test is a bug fixed before moving on. Determinism makes these tests **exact**: golden traces
+and trace-hash equality, not tolerances. Core tests: replay (same input checkpoint+spec ->
+identical trace hash), epoch atomicity (kill mid-epoch -> no semantic effect, R-EP),
+oracle-equality (any GPU/accelerated path passes the canonical semantic oracle before
+admission, N1), and property/mutation tests on the ledger and checker (reuse the existing
+falsification battery and the mutation harness -- "tests that test the tests").
+
+**18.2 Calibration layer -- control TDD; the INSTRUMENT must pass before it may judge.** Before
+the ruler scores any real organism it must pass tests written first: RC0 (a hand-written
+planted organism exhibits the mechanism), the detector classifies planted-memory-user vs
+planted-reflex correctly, the dead-world control stays silent, and the disguised-known controls
+are recovered under operational blindness (R11). These are green-gates on the *instrument*: if
+it cannot pass them, it does not run on real data. This is the Gravity-Pilot discipline
+expressed as TDD -- an un-calibrated ruler's "no signal" is meaningless.
+
+**18.3 Science layer -- PREREGISTRATION; test-first, but NOT pass/fail.** Each experiment's
+gates, margins, null family, required reachability level and kill criteria are committed before
+data -- test-first in spirit. But the three outcomes **PASS / KILL / UNDERPOWERED are all
+legitimate, and a KILL is a passing result, not a red test to fix.** You never iterate the
+organism, world, or ruler to make an experiment "go green" -- that is teaching to the test and
+is precisely the Apollo failure (S5). Refinement after a null is a *new* preregistered
+experiment, and whether a null is KILL or merely UNDERPOWERED is decided by reachability (M3),
+not by anyone's wish to continue.
+
+**The ladder and the definition of done.** Code tests green -> instrument controls green ->
+only then does preregistered science run -> the verdict stands as written. "Write test cases,
+pass them, move on" is literal at 18.1-18.2 and deliberately inverted at 18.3, where the test
+may (and often should) "fail" and that failure is the product. CI falls out naturally: engine
+commits run the layer-1 suite; the ruler-calibration harness (one of the two new builds, S7.4)
+is the layer-2 gate; prereg manifests govern layer-3. This three-layer discipline is also part
+of the answer to S14 (why this is an instrument, not a toy): the author is held to green tests
+where correctness is the goal, and barred from greening the tests where honesty is.
+
 ---
-*v0.2 design of record. Economics appendix (S11-APX) maintained separately and versioned.*
+*v0.2 design of record (rev 2026-10-05b: added R-TDD and S18, test-driven development, at
+operator request -- filename unchanged, see S0). Economics appendix (S11-APX) versioned
+separately.*
