@@ -250,7 +250,7 @@ def save_all(out_dir, result, lat_store, px_store, T, torch, np, final):
     result["pairs"] = {}
     for kind, a, b in pairs_for(list(lat_store)):
         result["pairs"]["%s|%s|%s" % (kind, a, b)] = dict(kind=kind, a=a, b=b, **divergence(lat_store[a], lat_store[b], px_store[a], px_store[b]))
-    tmp = os.path.join(out_dir, "trajectories.npz.part")
+    tmp = os.path.join(out_dir, "trajectories.part.npz")      # numpy appends .npz to any other suffix; the rename then fails
     np.savez_compressed(tmp, **{"lat_" + k: v for k, v in lat_store.items()},
                         **{"px_" + k: v for k, v in px_store.items()},
                         **{"act_" + k: actions_for(result["trajectories"][k]["family"], T)[0].numpy() for k in lat_store})
