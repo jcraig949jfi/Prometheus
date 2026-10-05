@@ -7,15 +7,17 @@
   "window_hours": 4,
   "current": {
     "cycle": 11,
-    "window": "DEV",
+    "window": "TEST",
     "index": 11,
-    "opened_utc": "2026-10-05T13:40:00Z",
-    "due_close_utc": "2026-10-05T17:40:00Z",
-    "active_thread": "R2 derivation stability",
+    "opened_utc": "2026-10-05T13:50:00Z",
+    "due_close_utc": "2026-10-05T17:50:00Z",
+    "active_thread": "R3 memorisation in selection",
     "apparatus_version": "v2b-2 + gtc",
-    "goal": "verify non-monotone derivation (re-derive seeds 1, 6, 13 at O4 vs O10; diff candidate sets); freeze T11 accordingly"
+    "experiment": "T11 abstraction-only candidacy (g11)",
+    "attempt": 1,
+    "goal": "run t11_absonly.py run 4 -> score 4 -> report"
   },
-  "last_disposition": "TEST-10 MEASURED (candidacy not positive; starvation rescued)",
+  "last_disposition": "DEV-11 DONE",
   "unresolved_defects": [
     "no receipt check for no-donor-state (S4 cond 8 class)",
     "ruler v2.1 residual 8/47 + 24.5% chance floor",
@@ -23,12 +25,13 @@
     "T01 erratum: pristine_all_censored field (fix in t1 v2)",
     "A20-A23 P/OFF_0 controls dead on REUSED/CAPABILITY_SAME (recorded; T53 makes them live)",
     "GTC: UNSEEN stratum transfer floor; count endpoint blind to efficiency; overfitter control unverified",
-    "validation-draw variance: g0 at breadth 12 is 76 (T08 draw) vs 93 (T09 draw); criterion tests must fix the draw"
+    "validation-draw variance: g0 at breadth 12 is 76 (T08 draw) vs 93 (T09 draw); criterion tests must fix the draw",
+    "r7e._donor drops selection_table/selected name; 'selected_schema None' conflates INHERITED and MEMORISE (T09/T10 errata)"
   ],
   "next_intended": {
-    "window": "TEST",
-    "index": 11,
-    "plan": "T11 from DEV-11 diagnosis (candidate: monotone union-of-nested-observation derivation under g10)"
+    "window": "DEV",
+    "index": 12,
+    "plan": "diagnose T11; T12 = cross-check/sham re-test of strongest positive (midpoint-2 plan), then close synthesis"
   },
   "missed_wake_rule": "run the due window once; never burst",
   "history": [
@@ -317,6 +320,18 @@
         "beta01/runs/T10_OBS/T10_RESULT.json",
         "beta01/runs/T10_OBS/T10_DONORS.jsonl"
       ]
+    },
+    {
+      "cycle": 11,
+      "window": "DEV",
+      "index": 11,
+      "opened_utc": "2026-10-05T13:40:00Z",
+      "closed_utc": "2026-10-05T13:50:00Z",
+      "active_thread": "R3 memorisation in selection",
+      "apparatus_version": "v2b-2 + gtc",
+      "disposition": "DONE: D11 diagnostic refutes non-monotone derivation; MEMORISE wins g10 (T09 7,9,14; T10 6,12,13,14), never transfers. Errata on T09/T10 reports. T11 abstraction-only candidacy (g11) frozen; K1/K2 pass",
+      "report": "beta01/windows/D11_DEV_REPORT.md",
+      "next_frozen": "beta01/windows/T11_ABS_SPEC.md"
     }
   ],
   "compute_ledger_note": "rolling 24h est ~43 core-h at 13:40Z 2026-10-05 (T10 ~1.1; T53 tail rolls off by 14:43Z)"

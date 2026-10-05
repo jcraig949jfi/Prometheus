@@ -79,3 +79,19 @@ derived from the enlarged set. Candidates = union over the nested observation se
 2. Seed 12 now has 3 candidates and selects none, while ORACLE10 (T09) accepts G1 there with gain 2. Are the 3
    candidates wrong-class?
 3. 8 tied seeds: is O10 inert there because their 4 original OBSERVE families already certify the same classes?
+
+## 7. ERRATUM (DEV-11, 2026-10-05; the disposition and frozen readouts are unchanged)
+**The s4 "non-monotone derivation" hypothesis is REFUTED.** The DEV-11 re-derivation
+(D11_DERIVATION_DIAG.json; seeds 1, 6, 12 and 13 at O4 and O10, with selections reproduced 8/8) found:
+- **Derivation is monotone.** Candidates lost from O4 to O10: **none** in all 4 seeds. The O4-selected schema is
+  still derived at O10.
+- **Seeds 6, 12 and 13:** under g10's net-gain score, **MEMORISE wins at O10.**
+  - Its validation G rises with the number of observations: seed 6 27k -> 49k; seed 13 27k -> 66k; seed 12 0 -> 126k
+    (L about 0-2k).
+  - It transfers nothing.
+- **Seed 1:** (acc + {H}) (G 55.7k, L 0) beats (acc - {H}) (G 54.0k, L 9.2k) on validation net gain, yet transfers 5
+  vs 10. This is a validation-to-transfer mismatch between two real abstractions.
+
+**Corrected first broken rung: R3.** The selection score admits a NON-GENERALISING library (memorisation), whose
+validation savings grow with observation and do not transfer. Observation breadth feeds MEMORISE as much as it feeds
+abstraction.

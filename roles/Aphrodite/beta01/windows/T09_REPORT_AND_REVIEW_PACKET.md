@@ -104,3 +104,17 @@ seeds it derives nothing at all, because its 4 OBSERVE families yield 0-3 observ
    This can be computed from the roles files without new compute.
 3. ORACLE10's acceptance in only 5 seeds partly reflects that an endogenous LGG candidate outscores G1 under
    net-gain. Is G1 really "the" base class on natural supply, or one of several equivalent ones?
+
+## 7. ERRATUM (DEV-11, 2026-10-05; the disposition and frozen readouts are unchanged)
+The s3 localisation read `selected_schema = None` as "nothing selected". The DEV-11 diagnostic
+(beta01/runs/T10_OBS/D11_DERIVATION_DIAG.json) and the donor entries show that None covers two libraries:
+- **INHERITED** (`['organ_fold']`): seeds 0 and 12, the true starvation cases;
+- **MEMORISE** (`['memorised', 'organ_fold']`): seeds 7, 9 and 14, under g0, g10 and NULL10. In seed 14, ORACLE10 also
+  chose it over the planted G1.
+
+Corrected classes:
+- **seeds 0 and 12:** starvation;
+- **seeds 7, 9 and 14:** **memorisation outranks every abstraction** under both criteria. It was not "no class",
+  "wrong class" or "validation content".
+
+MEMORISE never transfers (gain 0 in every case). Answer 8 (ORACLE10 5/15) and answer 9 (seed 12) stand.
