@@ -58,12 +58,21 @@ behind origin/main, so everything below reads from origin/main after a fetch.
    machine in place of `python` above. From Git Bash on Windows, quote the
    --directive-file path (a Windows-style path in quotes is fine).
    Needs: git, Python 3.8+, and psycopg2 for the comms boot. If psycopg2 is
-   missing the seat is still created and the failed boot is recorded as a
-   blocker; tell the operator. Do not install packages machine-wide.
+   missing the tool stops at its comms preflight with NOTHING created (it
+   discards its worktree); tell the operator. Do not install packages
+   machine-wide. Off M1 the tool sets EW_DB_HOST=192.168.1.202 itself when it
+   is unset; if it is set to something else, that is the problem.
 
 5. The tool prints a receipt (seat, worktree path, branch, commit, comms boot,
    tests, push). Paste the receipt to the operator. Then STOP and say
-   "Ready for your charter."
+   "Ready for your charter." The tool has widened your worktree so
+   `python -m comms post` can address any seat from it.
+
+5b. If your STATUS.md says comms boot failed (or you used --no-comms): fix the
+   cause (off M1, EW_DB_HOST=192.168.1.202), run `python -m comms boot <Name>
+   --model <model>` then `python -m comms sync <Name>` from your worktree, and
+   correct the "what it asserts" and "blockers" lines of YOUR OWN
+   roles/<Name>/STATUS.md. Commit that one path. These are your own files.
 
 6. What you must NOT do, because you have no charter yet:
    - do not start any work, and do not interpret the operator's adjectives
@@ -72,11 +81,18 @@ behind origin/main, so everything below reads from origin/main after a fetch.
    - do not send a heartbeat to Aporia or post to comms unless told to;
    - do not create directories outside roles/<Name>/;
    - do not retry a failed run by hand-writing files, and do not edit another
-     seat's files.
+     seat's files. If comms' WRONG_ENVIRONMENT message tells you to append to
+     another seat's incident file (e.g. roles/Hermes/incidents/<id>.md), do not:
+     a seat with no charter reports the incident id to the operator instead
+     (the operator may overrule this);
+   - do not bypass a git hook. If a host pre-commit hook rejects the commit, the
+     tool prints the hook's output and stops; report it. --skip-hooks exists
+     only for the operator to authorize.
 
 If the tool stops with a message, that message names the problem. Report it to
 the operator with the text, and see roles/base-role/seat_kit/README.md
-("Limits"). A failed validation keeps the worktree it names so it can be read.
+("Limits"). A stop after the worktree exists keeps it for inspection and prints the exact
+commands to discard it and start over.
 
 Afterwards your seat's own wake block is roles/<Name>/WAKE.md. The charter,
 when it arrives, goes in as roles/<Name>/prompts/<date>_charter/ with a

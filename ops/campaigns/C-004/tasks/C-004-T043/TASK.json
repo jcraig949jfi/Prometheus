@@ -1,0 +1,58 @@
+{
+  "schema": "prometheus.workgraph.task.v1",
+  "task_id": "C-004-T043",
+  "campaign_id": "C-004",
+  "title": "S4 repair (Cadmus): fire fixtures for ERASE at lag exactly H and sends-only leaks (E01, E02)",
+  "objective": "Repair, inside the single S4 repair round, the items of ops/campaigns/C-004/TRIAGE_S3.md assigned to this owner, with a failing test first for each.",
+  "parent_objective": "RSO-METHODS-SLICE-001 S4",
+  "owner_role": "Cadmus",
+  "quality_class": "Q2",
+  "can_downgrade": false,
+  "escalate_to": "Q3",
+  "depends_on": [
+    "C-004-T030"
+  ],
+  "owns": [
+    "rso/slice001/tests/test_reset_observer.py"
+  ],
+  "reads": [
+    "ops/campaigns/C-004/TRIAGE_S3.md",
+    "rso/slice001/challenge/S3/",
+    "rso/slice001/contract/",
+    "rso/slice001/fixtures/world_cases.py"
+  ],
+  "problem": "TRIAGE_S3.md rows E01, E02 (test gaps; no code change expected).",
+  "non_goals": [
+    "No change to case expectations, the contract, the S2 table or the S3 record (OP-5)",
+    "Nothing outside the triage rows assigned here; this is the only repair round"
+  ],
+  "evidence_required": [
+    "RED: the new tests fail under S3 edits E01 / E02 applied",
+    "GREEN on the frozen reset.py"
+  ],
+  "acceptance": {
+    "command": "python -B -m unittest discover -s rso/slice001/tests -t .",
+    "condition": "each triage item: RED test first, then GREEN; full suite green; the S3 attack cases for the repaired findings now give the expected verdicts"
+  },
+  "deliverables": [
+    "repairs + tests per TRIAGE_S3.md",
+    "receipt naming the S3 case or edit each change answers"
+  ],
+  "kind": "software",
+  "status": "PROPOSED",
+  "history": [
+    {
+      "status": "PROPOSED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-05T06:45:12Z",
+      "note": "from T040 triage; READY after OP-7 (launch cap for S4)"
+    }
+  ],
+  "authority": "operator directive 2026-10-03; OP-5 (repair round reserved for genuine S3 defects)",
+  "resource_ceiling": {
+    "engineering": "<= 1.5 Q2 seat-hours",
+    "cpu": "development only; no ledgered launch in this packet",
+    "note": "OP-4 caps"
+  },
+  "notes": "COORDINATOR 2026-10-05 (accepting Cadmus #1537): put the E01/E02 fixtures (LAG3_ONLY, SENDS_ONLY) in rso/slice001/tests/test_reset_observer.py, NOT in fixtures/world_cases.py: that file is pinned in the stage-record versions of P8, so editing it would reset those instruments to a new version (B4.1), forcing fresh fire runs and re-registration for a test-only change. The test file is pinned by no stage record."
+}

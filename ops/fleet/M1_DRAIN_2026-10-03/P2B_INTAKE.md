@@ -117,3 +117,32 @@ Sent by Nestor directly to Bellerophon, Archaeon, Ananke and Cosmos. They verify
   - Impact: any seat relying on Fabric python.numpy will hit this.
   - Needs: restart, or explicit retirement of the Fabric v0.2 workers in favour of PrometheusWorker, plus liveness from
     last_seen rather than from status. Already sent to Odysseus.
+- **Aether host move (#1554, #1555, #1559, 2026-10-05):** BUCKKEEP -> M2 (GPU), done as a single-writer handoff. This
+  supersedes the placement-matrix row (BUCKKEEP); M2 RAM contention, already noted, now also includes Aether.
+- **TECHNE-123A (#1558; operator directive 8 to Techne):** Open-Oasis qualification on RunPod, $10 cap, 12 h ceiling.
+  Techne asks Aether for a credential-safe launch path; Aporia is cc only. This is coordination between those two
+  seats, so Aporia takes no action.
+
+## Phase 2-B launches observed on comms (2026-10-05, operator-directed; recorded, not dispatched by Aporia)
+
+| Seat | Host | Order | State at ~11:40Z |
+|---|---|---|---|
+| Ananke | M1 GPU (Fabric lease skullport:gpu0 lse-659cff0ca264) | operator science order PTE-C2A Search-Limit Localization (34bcebe4b) | prep; freeze <= 14:50Z, then production <= 12 h |
+| Nestor | BUCKKEEP CPU (C:/Prometheus-worktrees/nestor-buckkeep-2026-10-05) | X-TASK-GATE v2 (roles/Nestor/prompts/2026-10-05_xtg_v2_science_order/) | DONE: INSTRUMENT_UNREACHABLE (TRANSIENT_ONLY); Stage 1 not run (7a521dc91) |
+| Aether | M2 (moved from BUCKKEEP) | ER01 | production launched 11:30Z, 38 units, about 9.1 h (prereg 7ce2a58b9) |
+| Techne | M3, flying RunPod A40 | TECHNE-123A, directive 8 ($10 cap) | production in flight; key held on a physical carrier, not in git |
+| Aphrodite | harry1 (M4) | C-006 Beta-01 T09 | frozen; compute hold until 12:45Z |
+
+- **X-TASK-GATE:** the original freeze 62d30e443 stays DO_NOT_DISPATCH_AS_FROZEN and was not executed. v2 superseded
+  it under an operator order, and the v2 result is above.
+- **Nestor's note:** Nestor says the operator ruled that the historical M1-drain and pm-data items do not block this
+  experiment.
+- **Aphrodite C-006 Beta-01 CLOSED (#1606, main 56e5e2bd5).**
+  - T12 replicated on fresh, unexposed seeds: IMPROVER_REPLICATED_POSITIVE (60 vs 20 held-out families, 5/0/3,
+    sign-flip p 0.031 = the attainable minimum, NULL gate 0/8).
+  - The effect is carried by abstraction-only candidacy. The historical improver selects memorisation in 4 of 8 seeds.
+  - First replicated R7, tier 2. Not R8, not RSI.
+  - Close synthesis: a higher-power replication should come before any Tier-4 bridge.
+  - The seat is idle pending operator direction.
+- **Techne:** READY since 12:10Z. The manifest's recommended first campaign, TECHNE-131 (successor scorer plus packet
+  validator hardening), is offered to the operator and awaits a go or no-go.

@@ -57,7 +57,23 @@ The independent table (EXPECTED_ANSWERS.json) is the comparison target for T020;
                                        ..., u_6, f_6)), then boundary; the history differing
                                        only at f_3 sorts first. Proposed class TABLE (Pallas's
                                        assumption 'pair (all-zero, f_1 = 1)'); values agree.
+    X19    T08 CL-RET standing         EVERY3, SLEEPER, SPLIT1: implementation UNQUALIFIED, table  T020 dry run
+                                       UNMET. Their undeclared state fails RESTART, so CHANNEL
+                                       and OBSERVER are UNQUALIFIED PRECONDITION:RESTART (B4.2
+                                       A5) and the worst standing is UNQUALIFIED (B7.2); SPLIT2
+                                       (captured channel state) is UNMET in both. Same logic as
+                                       Pallas's D7 for T06. Proposed class TABLE.
 
 Independence caveats carried with this register (Pallas EXPOSURE.md s4): agreement on T01.QCARRY,
 T02.AMNESIAC, T02.CLOCKED, T02.FLIP, T05.WIPE, T06.LAGD is not independent; contract.json prints every case's
 polarity, so polarity agreement is weak everywhere; 26 rows rest on assumption G01.
+
+## Dispositions (operator OP-5, 2026-10-05)
+
+    X18  TABLE          first-witness boundary (T04.LAGD, T05.WIPE, T06.LAGD)
+    X19  TABLE          T08 CL-RET standing UNQUALIFIED via RESTART precondition
+    X06  TABLE          E02.MISSING G-INV reason commentary; CL-CUST(G0) standing BLOCKED
+    X06  CONTRACT GAP   E02.MISSING authority of an absent receipt (UNQUALIFIED vs n/a): preserved for S5
+    X02  TABLE          E02.RELABEL claim CL-RET(REG2) not registered
+No implementation repair and no contract amendment before S3; corrections and the gap are carried to S5
+(C-004-T050). FREEZE_S2 preserved exactly as committed (c91e39e85).

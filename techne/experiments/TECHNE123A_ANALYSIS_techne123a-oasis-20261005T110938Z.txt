@@ -1,0 +1,63 @@
+TECHNE-123A analysis  run techne123a-oasis-20261005T110938Z  plan production  T 64  device NVIDIA A40
+trajectories 33  frames 2079  s/frame mean 1.096  max 1.384  weights 81.2 s  load 13.2 s
+weights verified against official sha256: {'oasis500m.pt': True, 'vit-l-20.pt': True}
+
+Q1_replay          {"reading": "DETERMINISTIC", "replicate_max_latent_mse": 0.0, "replicate_pairs": ["REPLICATE|FWD_s0|FWD_s0_rep", "REPLICATE|FWD_s1|FWD_s1_rep", "REPLICATE|INTERVENE_s0|INTERVENE_s0_rep"]}
+stochastic_spread  {"n_pairs": 15, "latent_mse_at_last_frame_mean": 0.7133193850517273}
+Q2_TURN            {"reading": "NOT_DETECTED", "fraction_horizons_latent_excluding_zero": 0.667, "fraction_horizons_pixel_excluding_zero": 0.683, "n_cf_pairs": 6, "n_same_pairs": 15, "E_latent_at_last_frame": -0.009789813558260585}
+Q2_NOOP            {"reading": "INDETERMINATE_RULERS_DISAGREE", "fraction_horizons_latent_excluding_zero": 1.0, "fraction_horizons_pixel_excluding_zero": 0.483, "n_cf_pairs": 6, "n_same_pairs": 15, "E_latent_at_last_frame": 0.39883144299189255}
+Q3_persistence     {"reading": "NO_EFFECT", "h_star_last_frame_excluding_zero": null, "P_peak_frames_24_39": 0.01708105206489563, "P_at_last_frame": -0.1992054571708044, "decay_ratio_end_over_peak": -11.662364613957495, "frames_after_intervention_evaluated": 32, "n_cf_pairs": 6, "n_same_pairs": 15, "sign_agreement_pixel": false}
+Q2_BACK            {"reading": "NOT_DETECTED", "fraction_horizons_latent_excluding_zero": 0.0, "fraction_horizons_pixel_excluding_zero": 0.183, "n_cf_pairs": 6, "n_same_pairs": 15, "E_latent_at_last_frame": 0.005345698197682713}
+Q2_TURN_secondary_BACK_baseline {"reading": "CAUSAL", "fraction_horizons_latent_excluding_zero": 1.0, "n_cf_pairs": 6, "n_same_pairs": 15, "E_latent_at_last_frame": 0.2390341291824976}
+stall_count        {"stalled": 10, "of": 33, "stalled_labels": ["NOOP_s0", "NOOP_s2", "NOOP_s3", "NOOP_s4", "NOOP_s5", "TURN_s1", "TURN_s2", "TURN_s3", "TURN_s4", "TURN_s5"]}
+
+E_TURN_latent  (t: point [lo, hi])
+  t=  0  +0.00000  [+0.00000, +0.00000]
+  t=  8  +0.46756  [+0.40188, +0.52969]
+  t= 16  +0.57739  [+0.47576, +0.68265]
+  t= 24  +0.54150  [+0.34867, +0.72865]
+  t= 32  +0.20180  [+0.09465, +0.31370]
+  t= 40  +0.09032  [+0.00129, +0.18487]
+  t= 48  +0.10374  [-0.00388, +0.20984]
+  t= 56  +0.00324  [-0.13960, +0.13979]
+  t= 63  -0.00979  [-0.20001, +0.17866]
+E_NOOP_latent  (t: point [lo, hi])
+  t=  0  +0.00000  [+0.00000, +0.00000]
+  t=  8  +0.11981  [+0.09059, +0.14778]
+  t= 16  +0.15957  [+0.10577, +0.20847]
+  t= 24  +0.21255  [+0.12487, +0.29575]
+  t= 32  +0.23051  [+0.15729, +0.31315]
+  t= 40  +0.28743  [+0.20223, +0.37887]
+  t= 48  +0.37177  [+0.28930, +0.46309]
+  t= 56  +0.38169  [+0.24180, +0.53838]
+  t= 63  +0.39883  [+0.21308, +0.59643]
+E_INTERVENE_latent  (t: point [lo, hi])
+  t=  0  +0.00000  [+0.00000, +0.00000]
+  t=  8  -0.39630  [-0.41759, -0.37507]
+  t= 16  -0.44573  [-0.47625, -0.41667]
+  t= 24  -0.19588  [-0.27988, -0.11293]
+  t= 32  +0.01708  [-0.09666, +0.12966]
+  t= 40  -0.02932  [-0.14710, +0.08676]
+  t= 48  -0.02332  [-0.17559, +0.12302]
+  t= 56  -0.17573  [-0.29795, -0.06284]
+  t= 63  -0.19921  [-0.33779, -0.07236]
+E_BACK_latent  (t: point [lo, hi])
+  t=  0  +0.00000  [+0.00000, +0.00000]
+  t=  8  -0.04760  [-0.08223, -0.01396]
+  t= 16  -0.02864  [-0.10658, +0.03438]
+  t= 24  -0.02419  [-0.13834, +0.07270]
+  t= 32  -0.02153  [-0.09286, +0.05846]
+  t= 40  -0.00166  [-0.08699, +0.09016]
+  t= 48  +0.03914  [-0.03354, +0.11732]
+  t= 56  +0.01099  [-0.10374, +0.13515]
+  t= 63  +0.00535  [-0.17532, +0.20483]
+E_TURN_vs_BACK_latent  (t: point [lo, hi])
+  t=  0  +0.00000  [+0.00000, +0.00000]
+  t=  8  +0.48729  [+0.43218, +0.53919]
+  t= 16  +0.75875  [+0.66953, +0.84439]
+  t= 24  +0.83644  [+0.67161, +0.99599]
+  t= 32  +0.52726  [+0.41226, +0.63458]
+  t= 40  +0.37530  [+0.31707, +0.43210]
+  t= 48  +0.33119  [+0.28327, +0.38153]
+  t= 56  +0.23139  [+0.15040, +0.30907]
+  t= 63  +0.23903  [+0.15244, +0.32340]

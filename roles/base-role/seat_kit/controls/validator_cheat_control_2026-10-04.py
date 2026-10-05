@@ -49,6 +49,9 @@ cases["WORK_STATE wrong"] = new_seat.validate(tmp, SEAT, CDIR)
 fresh(); (tmp / "roles/Hestia/WAKE.md").unlink()
 cases["file missing"] = new_seat.validate(tmp, SEAT, CDIR)
 
+fresh(); p = tmp / "roles/Hestia/STATUS.md"; p.write_bytes(p.read_bytes() + b"blockers: ModuleNotFoundError: No module named evidence_wiki" + bytes([10]))
+cases["traceback fragment in STATUS (Themis D3)"] = new_seat.validate(tmp, SEAT, CDIR)
+
 ok = True
 for name, bad in cases.items():
     good_case = name == "GOOD seat"

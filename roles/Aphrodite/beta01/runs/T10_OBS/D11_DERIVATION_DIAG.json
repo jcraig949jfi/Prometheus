@@ -1,0 +1,648 @@
+[
+ {
+  "seed": 1,
+  "O4": {
+   "seed": 1,
+   "arm": "O4",
+   "derived": [
+    "(acc - {H})",
+    "({H} + v)"
+   ],
+   "n_observed": 8,
+   "classes": 4,
+   "observed_families": [
+    "wlpbaa",
+    "wunbaa",
+    "wxmbaa",
+    "wxobaa"
+   ],
+   "selected": "SCHEMA_0",
+   "selected_schema": "(acc - {H})",
+   "chosen": "SCHEMA_0",
+   "table": {
+    "INHERITED": {
+     "G": 0,
+     "L": 0,
+     "eligible": false,
+     "size": 151920,
+     "head": [
+      null
+     ]
+    },
+    "MEMORISE": {
+     "G": 11465.25,
+     "L": 0,
+     "eligible": true,
+     "size": 156240,
+     "head": [
+      null
+     ]
+    },
+    "SCHEMA_0": {
+     "G": 53971.0,
+     "L": 9225.0,
+     "eligible": true,
+     "size": 209880,
+     "head": [
+      "(acc - {H})"
+     ]
+    },
+    "SCHEMA_1": {
+     "G": 19723.75,
+     "L": 0,
+     "eligible": true,
+     "size": 209880,
+     "head": [
+      "({H} + v)"
+     ]
+    },
+    "SCHEMA_ALL": {
+     "G": 31738.75,
+     "L": 1890.0,
+     "eligible": true,
+     "size": 304920,
+     "head": [
+      null
+     ]
+    }
+   },
+   "reproduces": true
+  },
+  "O10": {
+   "seed": 1,
+   "arm": "O10",
+   "derived": [
+    "(acc * {H})",
+    "(acc + {H})",
+    "(acc - {H})",
+    "({H} * v)",
+    "({H} + v)"
+   ],
+   "n_observed": 16,
+   "classes": 8,
+   "observed_families": [
+    "wkpbaa",
+    "wlpbaa",
+    "worbaa",
+    "wqpbaa",
+    "wunbaa",
+    "wvnbaa",
+    "wxmbaa",
+    "wxobaa",
+    "wznbaa"
+   ],
+   "selected": "SCHEMA_1",
+   "selected_schema": "(acc + {H})",
+   "chosen": "SCHEMA_1",
+   "table": {
+    "INHERITED": {
+     "G": 0,
+     "L": 0,
+     "eligible": false,
+     "size": 151920,
+     "head": [
+      null
+     ]
+    },
+    "MEMORISE": {
+     "G": 11465.25,
+     "L": 0,
+     "eligible": true,
+     "size": 156240,
+     "head": [
+      null
+     ]
+    },
+    "SCHEMA_0": {
+     "G": 0,
+     "L": 17828.75,
+     "eligible": false,
+     "size": 209880,
+     "head": [
+      "(acc * {H})"
+     ]
+    },
+    "SCHEMA_1": {
+     "G": 55728.75,
+     "L": 0,
+     "eligible": true,
+     "size": 209880,
+     "head": [
+      "(acc + {H})"
+     ]
+    },
+    "SCHEMA_2": {
+     "G": 53971.0,
+     "L": 9225.0,
+     "eligible": true,
+     "size": 209880,
+     "head": [
+      "(acc - {H})"
+     ]
+    },
+    "SCHEMA_3": {
+     "G": 0,
+     "L": 17828.75,
+     "eligible": false,
+     "size": 209880,
+     "head": [
+      "({H} * v)"
+     ]
+    },
+    "SCHEMA_4": {
+     "G": 19723.75,
+     "L": 0,
+     "eligible": true,
+     "size": 209880,
+     "head": [
+      "({H} + v)"
+     ]
+    },
+    "SCHEMA_ALL": {
+     "G": 26845.75,
+     "L": 3420.0,
+     "eligible": true,
+     "size": 548640,
+     "head": [
+      null
+     ]
+    }
+   },
+   "reproduces": true
+  },
+  "lost": [],
+  "gained": [
+   "(acc * {H})",
+   "(acc + {H})",
+   "({H} * v)"
+  ],
+  "O4_selected_still_derived_at_O10": true
+ },
+ {
+  "seed": 6,
+  "O4": {
+   "seed": 6,
+   "arm": "O4",
+   "derived": [
+    "(acc + {H})",
+    "({H} + v)"
+   ],
+   "n_observed": 6,
+   "classes": 3,
+   "observed_families": [
+    "wcyiaa",
+    "wlziaa",
+    "wuxiaa"
+   ],
+   "selected": "SCHEMA_0",
+   "selected_schema": "(acc + {H})",
+   "chosen": "SCHEMA_0",
+   "table": {
+    "INHERITED": {
+     "G": 0,
+     "L": 0,
+     "eligible": false,
+     "size": 151920,
+     "head": [
+      null
+     ]
+    },
+    "MEMORISE": {
+     "G": 27200.5,
+     "L": 2160.0,
+     "eligible": true,
+     "size": 154800,
+     "head": [
+      null
+     ]
+    },
+    "SCHEMA_0": {
+     "G": 51248.0,
+     "L": 19800.0,
+     "eligible": true,
+     "size": 209880,
+     "head": [
+      "(acc + {H})"
+     ]
+    },
+    "SCHEMA_1": {
+     "G": 35612.0,
+     "L": 26631.75,
+     "eligible": true,
+     "size": 209880,
+     "head": [
+      "({H} + v)"
+     ]
+    },
+    "SCHEMA_ALL": {
+     "G": 38824.75,
+     "L": 19800.0,
+     "eligible": true,
+     "size": 304200,
+     "head": [
+      null
+     ]
+    }
+   },
+   "reproduces": true
+  },
+  "O10": {
+   "seed": 6,
+   "arm": "O10",
+   "derived": [
+    "(acc + {H})",
+    "(acc - {H})",
+    "({H} + v)"
+   ],
+   "n_observed": 13,
+   "classes": 7,
+   "observed_families": [
+    "wcyiaa",
+    "wlziaa",
+    "wnbjaa",
+    "wtyiaa",
+    "wtziaa",
+    "wuxiaa",
+    "wvxiaa"
+   ],
+   "selected": "MEMORISE",
+   "selected_schema": null,
+   "chosen": "MEMORISE",
+   "table": {
+    "INHERITED": {
+     "G": 0,
+     "L": 0,
+     "eligible": false,
+     "size": 151920,
+     "head": [
+      null
+     ]
+    },
+    "MEMORISE": {
+     "G": 48565.5,
+     "L": 1080.0,
+     "eligible": true,
+     "size": 156240,
+     "head": [
+      null
+     ]
+    },
+    "SCHEMA_0": {
+     "G": 51248.0,
+     "L": 19800.0,
+     "eligible": true,
+     "size": 209880,
+     "head": [
+      "(acc + {H})"
+     ]
+    },
+    "SCHEMA_1": {
+     "G": 54854.5,
+     "L": 19800.0,
+     "eligible": true,
+     "size": 209880,
+     "head": [
+      "(acc - {H})"
+     ]
+    },
+    "SCHEMA_2": {
+     "G": 35612.0,
+     "L": 26631.75,
+     "eligible": true,
+     "size": 209880,
+     "head": [
+      "({H} + v)"
+     ]
+    },
+    "SCHEMA_ALL": {
+     "G": 41635.0,
+     "L": 19800.0,
+     "eligible": true,
+     "size": 397440,
+     "head": [
+      null
+     ]
+    }
+   },
+   "reproduces": true
+  },
+  "lost": [],
+  "gained": [
+   "(acc - {H})"
+  ],
+  "O4_selected_still_derived_at_O10": true
+ },
+ {
+  "seed": 12,
+  "O4": {
+   "seed": 12,
+   "arm": "O4",
+   "derived": [],
+   "n_observed": 1,
+   "classes": 1,
+   "observed_families": [
+    "wotraa"
+   ],
+   "selected": "INHERITED",
+   "selected_schema": null,
+   "chosen": "INHERITED",
+   "table": {
+    "INHERITED": {
+     "G": 0,
+     "L": 0,
+     "eligible": false,
+     "size": 151920,
+     "head": [
+      null
+     ]
+    },
+    "MEMORISE": {
+     "G": 0,
+     "L": 1080.0,
+     "eligible": false,
+     "size": 153360,
+     "head": [
+      null
+     ]
+    }
+   },
+   "reproduces": true
+  },
+  "O10": {
+   "seed": 12,
+   "arm": "O10",
+   "derived": [
+    "(acc + math.gcd(abs({H}), abs(v)))",
+    "(acc + {H})",
+    "({H} + v)"
+   ],
+   "n_observed": 8,
+   "classes": 6,
+   "observed_families": [
+    "wgvraa",
+    "wotraa",
+    "wruraa",
+    "wryraa",
+    "wwxraa",
+    "wzuraa"
+   ],
+   "selected": "MEMORISE",
+   "selected_schema": null,
+   "chosen": "MEMORISE",
+   "table": {
+    "INHERITED": {
+     "G": 0,
+     "L": 0,
+     "eligible": false,
+     "size": 151920,
+     "head": [
+      null
+     ]
+    },
+    "MEMORISE": {
+     "G": 125573.0,
+     "L": 500.75,
+     "eligible": true,
+     "size": 156600,
+     "head": [
+      null
+     ]
+    },
+    "SCHEMA_0": {
+     "G": 0,
+     "L": 12835.0,
+     "eligible": false,
+     "size": 209880,
+     "head": [
+      "(acc + math.gcd(abs({H}), abs(v)))"
+     ]
+    },
+    "SCHEMA_1": {
+     "G": 14780.75,
+     "L": 12835.0,
+     "eligible": true,
+     "size": 209880,
+     "head": [
+      "(acc + {H})"
+     ]
+    },
+    "SCHEMA_2": {
+     "G": 37718.75,
+     "L": 18.75,
+     "eligible": true,
+     "size": 209880,
+     "head": [
+      "({H} + v)"
+     ]
+    },
+    "SCHEMA_ALL": {
+     "G": 13802.75,
+     "L": 7996.75,
+     "eligible": true,
+     "size": 360000,
+     "head": [
+      null
+     ]
+    }
+   },
+   "reproduces": true
+  },
+  "lost": [],
+  "gained": [
+   "(acc + math.gcd(abs({H}), abs(v)))",
+   "(acc + {H})",
+   "({H} + v)"
+  ],
+  "O4_selected_still_derived_at_O10": null
+ },
+ {
+  "seed": 13,
+  "O4": {
+   "seed": 13,
+   "arm": "O4",
+   "derived": [
+    "(v - {H})",
+    "({H} + v)"
+   ],
+   "n_observed": 4,
+   "classes": 4,
+   "observed_families": [
+    "wkktaa",
+    "wwktaa",
+    "wxhtaa",
+    "wzgtaa"
+   ],
+   "selected": "SCHEMA_0",
+   "selected_schema": "(v - {H})",
+   "chosen": "SCHEMA_0",
+   "table": {
+    "INHERITED": {
+     "G": 0,
+     "L": 0,
+     "eligible": false,
+     "size": 151920,
+     "head": [
+      null
+     ]
+    },
+    "MEMORISE": {
+     "G": 27003.25,
+     "L": 5040.0,
+     "eligible": true,
+     "size": 156960,
+     "head": [
+      null
+     ]
+    },
+    "SCHEMA_0": {
+     "G": 52976.25,
+     "L": 11552.75,
+     "eligible": true,
+     "size": 209880,
+     "head": [
+      "(v - {H})"
+     ]
+    },
+    "SCHEMA_1": {
+     "G": 20799.0,
+     "L": 14219.0,
+     "eligible": true,
+     "size": 209880,
+     "head": [
+      "({H} + v)"
+     ]
+    },
+    "SCHEMA_ALL": {
+     "G": 30713.75,
+     "L": 11552.75,
+     "eligible": true,
+     "size": 304560,
+     "head": [
+      null
+     ]
+    }
+   },
+   "reproduces": true
+  },
+  "O10": {
+   "seed": 13,
+   "arm": "O10",
+   "derived": [
+    "(acc * {H})",
+    "(acc + {H})",
+    "(acc - {H})",
+    "(v - {H})",
+    "({H} * v)",
+    "({H} + v)"
+   ],
+   "n_observed": 13,
+   "classes": 9,
+   "observed_families": [
+    "wkktaa",
+    "wnhtaa",
+    "wnitaa",
+    "wnktaa",
+    "wpjtaa",
+    "wwktaa",
+    "wxhtaa",
+    "wyjtaa",
+    "wzgtaa"
+   ],
+   "selected": "MEMORISE",
+   "selected_schema": null,
+   "chosen": "MEMORISE",
+   "table": {
+    "INHERITED": {
+     "G": 0,
+     "L": 0,
+     "eligible": false,
+     "size": 151920,
+     "head": [
+      null
+     ]
+    },
+    "MEMORISE": {
+     "G": 65671.5,
+     "L": 2160.0,
+     "eligible": true,
+     "size": 160560,
+     "head": [
+      null
+     ]
+    },
+    "SCHEMA_0": {
+     "G": 5915.25,
+     "L": 2666.25,
+     "eligible": true,
+     "size": 209880,
+     "head": [
+      "(acc * {H})"
+     ]
+    },
+    "SCHEMA_1": {
+     "G": 14509.25,
+     "L": 14219.0,
+     "eligible": true,
+     "size": 209880,
+     "head": [
+      "(acc + {H})"
+     ]
+    },
+    "SCHEMA_2": {
+     "G": 11539.25,
+     "L": 14219.0,
+     "eligible": false,
+     "size": 209880,
+     "head": [
+      "(acc - {H})"
+     ]
+    },
+    "SCHEMA_3": {
+     "G": 52976.25,
+     "L": 11552.75,
+     "eligible": true,
+     "size": 209880,
+     "head": [
+      "(v - {H})"
+     ]
+    },
+    "SCHEMA_4": {
+     "G": 4012.0,
+     "L": 2960.0,
+     "eligible": true,
+     "size": 209880,
+     "head": [
+      "({H} * v)"
+     ]
+    },
+    "SCHEMA_5": {
+     "G": 20799.0,
+     "L": 14219.0,
+     "eligible": true,
+     "size": 209880,
+     "head": [
+      "({H} + v)"
+     ]
+    },
+    "SCHEMA_ALL": {
+     "G": 17783.0,
+     "L": 0,
+     "eligible": true,
+     "size": 641520,
+     "head": [
+      null
+     ]
+    }
+   },
+   "reproduces": true
+  },
+  "lost": [],
+  "gained": [
+   "(acc * {H})",
+   "(acc + {H})",
+   "(acc - {H})",
+   "({H} * v)"
+  ],
+  "O4_selected_still_derived_at_O10": true
+ }
+]

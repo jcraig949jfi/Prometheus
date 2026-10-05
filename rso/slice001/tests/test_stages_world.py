@@ -7,6 +7,7 @@ sources (about 20 CPU-s: P6 RESTART on REG and the P8 outcome vectors dominate).
 Python >= 3.8, standard library only.
 """
 import copy
+import hashlib
 import json
 import os
 import subprocess
@@ -81,6 +82,42 @@ class TestStageRecords(unittest.TestCase):
         rec["fire_test"]["must_reject"] = []
         with self.assertRaises(R.StageError):
             R.validate_stage_record(rec)
+
+
+STAGE_DIR = os.path.join(FW.ROOT, "rso", "slice001", "stages")
+
+
+def _stage_record_files():
+    """Every stage record file (one per instrument; fire receipts are not stage records)."""
+    return sorted(n for n in os.listdir(STAGE_DIR) if n.endswith(".json") and n != "FIRE_RECEIPT_world.json")
+
+
+class TestCanonicalFiles(unittest.TestCase):
+    """C-004-T027: a registered row binds sha256(file); the consumer looks up record_blob(record). They must agree."""
+
+    def test_every_stage_record_file_is_its_record_blob(self):
+        from rso.slice001 import evidence as EVD
+        names = _stage_record_files()
+        self.assertEqual(len(names), 12)
+        for n in names:
+            with self.subTest(file=n):
+                with open(os.path.join(STAGE_DIR, n), "rb") as f:
+                    raw = f.read()
+                self.assertEqual(hashlib.sha256(raw).hexdigest(), EVD.record_blob(json.loads(raw)))
+
+    def test_content_unchanged_by_the_canonical_rewrite(self):
+        base = subprocess.run(["git", "rev-parse", "e4042c2a2"], cwd=FW.ROOT, stdout=subprocess.PIPE,
+                              stderr=subprocess.DEVNULL, universal_newlines=True, timeout=60).stdout.strip()
+        for n in _stage_record_files():
+            with self.subTest(file=n):
+                old = FW.committed_blob("rso/slice001/stages/" + n, base)
+                self.assertIsNotNone(old)
+                with open(os.path.join(STAGE_DIR, n), "rb") as f:
+                    self.assertEqual(json.loads(f.read()), json.loads(old))
+
+    def test_the_world_writer_emits_canonical_bytes(self):
+        rec = _records()["P3"]
+        self.assertEqual(FW.record_bytes(rec), R.canonical_bytes(rec))
 
 
 class TestFireReceipt(unittest.TestCase):

@@ -49,13 +49,49 @@
     "attempts/A-NNN/RECEIPT.json"
   ],
   "kind": "review",
-  "status": "PROPOSED",
+  "status": "INTEGRATED",
   "history": [
     {
       "status": "PROPOSED",
       "by": "Palamedes[harry1-679179c6]",
       "at_utc": "2026-10-03T11:04:14Z",
       "note": "created under C-004-T000 decomposition"
+    },
+    {
+      "status": "READY",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-05T05:23:03Z",
+      "note": "S2 CLOSED under OP-5; frozen implementation and tests in rso/slice001/FREEZE_S2.md at c91e39e85; Pallas runs the preregistered first-sight challenge without modifying the S2 table or implementation"
+    },
+    {
+      "status": "CLAIMED",
+      "by": "Pallas[m2-e7da6bde]",
+      "at_utc": "2026-10-05T05:43:40Z",
+      "note": ""
+    },
+    {
+      "status": "IMPLEMENTING",
+      "by": "Pallas[m2-e7da6bde]",
+      "at_utc": "2026-10-05T06:40:26Z",
+      "note": ""
+    },
+    {
+      "status": "GREEN",
+      "by": "Pallas[m2-e7da6bde]",
+      "at_utc": "2026-10-05T06:40:26Z",
+      "note": ""
+    },
+    {
+      "status": "INTEGRATION_READY",
+      "by": "Pallas[m2-e7da6bde]",
+      "at_utc": "2026-10-05T06:40:26Z",
+      "note": ""
+    },
+    {
+      "status": "INTEGRATED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-05T06:43:30Z",
+      "note": "merged 3bff160c9; order verified (EXPOSURE < attack set < results; no test body opened; nothing frozen modified); first-sight: sound 4/5, broken 3/5, edits 5 killed / 5 survived (all witnessed non-equivalent); findings F1 F2 F3 + probes -> T040 triage"
     }
   ],
   "authority": "operator directive 2026-10-03 s9, s11 (roles/Achilles/prompts/2026-10-03_rso_builder_cell/01_OPERATOR_DIRECTIVE_verbatim.md); decomposed by Palamedes under C-004-T000",
@@ -67,6 +103,6 @@
     "cpu": "< 10 CPU-minutes incl. mutation children",
     "note": "Counts toward the slice caps fixed by C-004-OP1 (NEXT_ROUND_PLAN_v0.4 s6 proposal: 30 CPU-minutes total, 0 GPU, 0 cloud, 100 MB new artifacts, 12 top-level validation launches; mutation children count toward CPU). Stop at the first exhausted cap and keep partial results."
   },
-  "notes": "Reviewer per C-004-OP3 ruling 2026-10-03: Pallas (Fable 5.1) owns; Dionysus is the fallback (eligible). Independence caveat, declared: Pallas is a member of the RSO Builder Cell but writes no production code and is a different model family from the Opus/Sonnet builders. PROPOSED until its inputs exist. Changed by Palamedes[harry1-679179c6] at 2026-10-03T21:48:40Z: owner_role Dionysus -> Pallas, eligible Pallas -> Dionysus. COORDINATOR 2026-10-04 (from T019 receipt): mutation.py does not charge the ledger; the S3 run must charge mutation children via ledger.begin(launch_kind=MUTATION_CHILD) or the CPU cap is not enforced on them. CONCRETIZED 2026-10-04 by Palamedes (still PROPOSED: READY only when T020 is INTEGRATED and FREEZE_S2.md exists). After REPORT.md, Palamedes writes the FIRST_SIGHT_CHALLENGED stage records from it and has Aporia register them (STAGE_RECORD); the reviewer does not write stage records. Reviewer time counts toward 3 reviewer hours (T005 used about 20 min).",
+  "notes": "Reviewer per C-004-OP3 ruling 2026-10-03: Pallas (Fable 5.1) owns; Dionysus is the fallback (eligible). Independence caveat, declared: Pallas is a member of the RSO Builder Cell but writes no production code and is a different model family from the Opus/Sonnet builders. PROPOSED until its inputs exist. Changed by Palamedes[harry1-679179c6] at 2026-10-03T21:48:40Z: owner_role Dionysus -> Pallas, eligible Pallas -> Dionysus. COORDINATOR 2026-10-04 (from T019 receipt): mutation.py does not charge the ledger; the S3 run must charge mutation children via ledger.begin(launch_kind=MUTATION_CHILD) or the CPU cap is not enforced on them. CONCRETIZED 2026-10-04 by Palamedes (still PROPOSED: READY only when T020 is INTEGRATED and FREEZE_S2.md exists). After REPORT.md, Palamedes writes the FIRST_SIGHT_CHALLENGED stage records from it and has Aporia register them (STAGE_RECORD); the reviewer does not write stage records. Reviewer time counts toward 3 reviewer hours (T005 used about 20 min). 2026-10-05 (S3 READY under OP-5): frozen surface = rso/slice001/FREEZE_S2.md at c91e39e85 (24 implementation files; 17 test files you must NOT open before committing the attack set). Do not modify the S2 table (rso/slice001/expected/) or any implementation/test file (operator OP-5). Caps remaining for S3+S4 (contract v1.0.3, OP-4): 7 top-level launches, about 75 ledgered CPU-minutes; charge every launch and every mutation child to the slice ledger rso/slice001/s2/LEDGER.jsonl (append from your worktree; launch_kind MUTATION_CHILD for children); a full slice suite costs about 7 CPU-minutes, so run targeted tests per edit where the runner allows. Known S2 table corrections (X02, X06, X18, X19) and the X06 contract gap are already recorded (DISAGREEMENTS.md, OP-5); they are not fresh findings.",
   "red_required": false
 }
