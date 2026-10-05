@@ -125,3 +125,31 @@ COUNTERFACTUAL_TURN / _NOOP / _INTERVENE (each against FWD at the same seed).
   billing reconciliation later per Aether's rule).
   Disposition: FLIGHT1_PASS | DEPENDENCY_BLOCKER | MODEL_LOAD_BLOCKER | EVIDENCE_CUSTODY_BLOCKER |
   COST_BLOCKER | MODEL_NOT_RUNNABLE_IN_ENVELOPE.
+
+## 8. Amendment A, 2026-10-05 11:10Z, after Flight 2 and BEFORE the production launch
+
+Flight 1 (run ...104502Z, FLIGHT1_PASS) and Flight 2 (run ...105036Z, FLIGHT_PASS; 8 trajectories at
+T = 64; $0.0915) measured 0.75-1.09 s per frame on an A40. What Flight 2 showed and what changes:
+
+  1. In this prompt the FWD family walks INTO the tree: by frame 48 the FWD and INTERVENE views are a
+     close-up texture (frame strip TECHNE123A_FLIGHT2_strip_t0_16_32_48_63.png) and the frame-to-frame
+     latent change of several trajectories falls below 0.01 by frame 63 (the generation stalls),
+     while NOOP stays sharp and stable through frame 63 (drift from the prompt 0.27 vs 0.98-1.19 for
+     FWD). A "normal" trace that collides with an obstacle is a weak normal arm at long horizons.
+     ADDED: family BACK_s (back = 1 every frame; the scene recedes and stays in view), K = 6, with its
+     own same-action baseline (BACK_si vs BACK_sj) and the pair BACK_s vs TURN_s. The preregistered
+     FWD-based readings of section 1 are UNCHANGED and remain primary; the BACK-based set is a
+     secondary estimate of E(t) and is reported beside it. Production is now 33 trajectories
+     (6 x 5 families + 3 replicates), 2,079 generated frames, projected ~40 min, ~$0.35.
+  2. The different-seed divergence under the SAME action is large and still growing at t = 63
+     (latent MSE 0.91 for the one FWD pair). This is the preregistered null and stays the null; the
+     bootstrap in Flight 2 was degenerate (1 pair). Production has 15 pairs per family.
+  3. ADDED descriptive measurements, computed on M3 from the npz and not gated: per-trajectory drift
+     from the prompt (latent MSE to frame 0), frame-to-frame latent change, and a STALL flag (change
+     below 0.01 for the last 8 frames). These separate "uncontrolled instability" from "collapse to a
+     static texture" in the Q1 reading.
+  4. Module: results are now written after every trajectory, so a run stopped by its runtime ceiling
+     leaves analyzable evidence; the 34 keys the DiT checkpoint does not fill under upstream's
+     strict=False are all rotary_emb.freqs buffers (computed, not learned) -- recorded, harmless.
+  5. Unchanged: prompt, seeds, T = 64, DDIM 10, thresholds, the 75% horizon rule, the Q3 rule, the
+     claim ceiling. Production spec: max_runtime_s 4500, budget guard $1.50, A40 first.

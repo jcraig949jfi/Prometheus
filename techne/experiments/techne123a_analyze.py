@@ -70,7 +70,7 @@ def read(result, npz=None):
         out["curves"]["same_action_diff_seed_latent_mse_max"] = S.max(0).tolist()
         out["readings"]["stochastic_spread"] = {"n_pairs": len(same), "latent_mse_at_last_frame_mean": float(S[:, -1].mean())}
     # Q2 / Q3
-    for fam in ("TURN", "NOOP", "INTERVENE"):
+    for fam in ("TURN", "NOOP", "INTERVENE", "BACK"):
         cf = _curves(result, "COUNTERFACTUAL_" + fam)
         if not cf or not same:
             out["readings"]["Q2_" + fam] = {"reading": "NOT_COMPUTABLE", "n_cf_pairs": len(cf), "n_same_pairs": len(same)}
@@ -106,6 +106,34 @@ def read(result, npz=None):
             out["readings"]["Q2_" + fam] = {"reading": reading, "fraction_horizons_latent_excluding_zero": round(frac, 3),
                                             "fraction_horizons_pixel_excluding_zero": round(pfrac, 3),
                                             "n_cf_pairs": len(cf), "n_same_pairs": len(same), "E_latent_at_last_frame": float(point[-1])}
+    # secondary estimate with the BACK baseline (Amendment A): TURN vs BACK against BACK_si vs BACK_sj
+    same_b = _curves(result, "SAME_ACTION_DIFF_SEED_BACK")
+    cf_b = _curves(result, "COUNTERFACTUAL_TURN_VS_BACK")
+    if same_b and cf_b:
+        point, lo, hi = bootstrap_diff(cf_b, same_b)
+        idx = [t for t in range(4, len(point))]
+        frac = sum(1 for t in idx if lo[t] > 0) / len(idx)
+        out["readings"]["Q2_TURN_secondary_BACK_baseline"] = {"reading": "CAUSAL" if frac >= 0.75 else "NOT_DETECTED",
+                                                              "fraction_horizons_latent_excluding_zero": round(frac, 3), "n_cf_pairs": len(cf_b), "n_same_pairs": len(same_b),
+                                                              "E_latent_at_last_frame": float(point[-1])}
+        out["curves"]["E_TURN_vs_BACK_latent"] = {"point": point.tolist(), "lo": lo.tolist(), "hi": hi.tolist()}
+        S = np.stack(same_b)
+        out["curves"]["same_action_diff_seed_BACK_latent_mse_mean"] = S.mean(0).tolist()
+    # descriptive, from the npz when present: drift from the prompt, frame-to-frame change, stall
+    if npz is not None:
+        desc = {}
+        for k in npz.files:
+            if not k.startswith("lat_"):
+                continue
+            L = npz[k].astype("float32"); T = L.shape[0]
+            drift = [float(np.mean((L[t] - L[0]) ** 2)) for t in range(T)]
+            step = [0.0] + [float(np.mean((L[t] - L[t - 1]) ** 2)) for t in range(1, T)]
+            desc[k[4:]] = {"drift_from_prompt_t8_16_32_48_last": [round(drift[t], 4) for t in (8, 16, 32, 48, T - 1) if t < T],
+                           "step_change_t8_32_last": [round(step[t], 4) for t in (8, 32, T - 1) if t < T],
+                           "stalled_last8": bool(all(x < 0.01 for x in step[-8:]))}
+        out["descriptive"] = desc
+        out["readings"]["stall_count"] = {"stalled": sum(1 for v in desc.values() if v["stalled_last8"]), "of": len(desc),
+                                          "stalled_labels": sorted(k for k, v in desc.items() if v["stalled_last8"])}
     # timing
     tr = result["trajectories"]
     pf = [s for v in tr.values() for s in v["per_frame_s"]]
@@ -130,7 +158,7 @@ def table(a):
     for k, v in a["readings"].items():
         lines.append("%-18s %s" % (k, json.dumps(v)))
     lines.append("")
-    for name in ("E_TURN_latent", "E_NOOP_latent", "E_INTERVENE_latent"):
+    for name in ("E_TURN_latent", "E_NOOP_latent", "E_INTERVENE_latent", "E_BACK_latent", "E_TURN_vs_BACK_latent"):
         c = a["curves"].get(name)
         if not c:
             continue
