@@ -35,7 +35,12 @@ GENOMES = {
     "g9": {"derive_from": "observe+validate"},  # LGG derivation also from VALIDATE-cell hits (more traces)
     "ORACLE": {"plant": "G1"},                  # positive control: G1 schema entry offered as an extra candidate
     "NULL": {"plant": "OFF"},                   # negative control: an OFF schema entry offered as an extra candidate
+    # T09 (DEV-9): subset-benefit selection criterion (content-free) + its planted controls
+    "g10": {"select": "subset"},
+    "ORACLE10": {"plant": "G1", "select": "subset"},
+    "NULL10": {"plant": "OFF", "select": "subset"},
 }
+SUBSET_TAU = 1000          # a material per-family saving (charges)
 OFF_SCHEMA = "math.gcd(abs((acc // {H})), abs(first))"   # A22/A23 OFF_0
 
 
@@ -102,6 +107,32 @@ def _select_mean_positive(cands, start, cells):
     return chosen, table, sum(sum(v) for v in costs.values())
 
 
+def _select_subset(cands, start, cells):
+    """Subset-benefit criterion. Per candidate and per VALIDATE family f, s_f = the mean paired saving over f's cells.
+    G = sum of positive s_f; L = -(sum of negative s_f). Eligible iff some s_f >= SUBSET_TAU AND L <= G. Choose the max
+    (G - L), with ties broken by size and then sha256. I_0 instead requires lower95 > 0 over ALL cells pooled."""
+    from collections import defaultdict
+    libs = {n: FR.KLib(e) for n, e in cands.items()}
+    costs = {n: [c.cost(l)[0] for c in cells] for n, l in libs.items()}
+    fam_of = [c.family if hasattr(c, "family") else getattr(c, "name", str(i)) for i, c in enumerate(cells)]
+    table = {}
+    for n in cands:
+        per = defaultdict(list)
+        for f, a, b in zip(fam_of, costs["INHERITED"], costs[n]):
+            per[f].append(a - b)
+        sf = {f: sum(v) / len(v) for f, v in per.items()}
+        G = sum(x for x in sf.values() if x > 0)
+        L = -sum(x for x in sf.values() if x < 0)
+        row = FR.paired_summary(costs["INHERITED"], costs[n])
+        row.update({"sha256": libs[n].sha256(), "size": libs[n].size(), "G": G, "L": L,
+                    "eligible": n != "INHERITED" and max(sf.values(), default=0) >= SUBSET_TAU and L <= G})
+        table[n] = row
+    elig = [n for n in table if table[n]["eligible"]]
+    chosen = (min(elig, key=lambda n: (-(table[n]["G"] - table[n]["L"]), table[n]["size"], table[n]["sha256"]))
+              if elig else "INHERITED")
+    return chosen, table, sum(sum(v) for v in costs.values())
+
+
 def donor_g(genome, args):
     """a18.donor with genome hooks. args = (cat, kind, r, fams, specs, panel, compose)."""
     a18.worker_init()
@@ -159,6 +190,8 @@ def donor_g(genome, args):
         comp = comp + [{"schema": sch, "origin": "PLANTED_" + g["plant"]}]
     if g.get("select") == "mean_positive":
         chosen, table, vcost = _select_mean_positive(cands, start, cells)
+    elif g.get("select") == "subset":
+        chosen, table, vcost = _select_subset(cands, start, cells)
     else:
         chosen, table, vcost = a17.select(cands, start, cells)
     meta += vcost

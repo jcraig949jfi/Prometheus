@@ -7,17 +7,18 @@
   "window_hours": 4,
   "current": {
     "cycle": 9,
-    "window": "DEV",
+    "window": "TEST",
     "index": 9,
-    "opened_utc": "2026-10-05T01:06:40Z",
-    "due_close_utc": "2026-10-05T05:06:40Z",
-    "active_thread": "midpoint 2 / R7",
+    "opened_utc": "2026-10-05T01:10:42Z",
+    "due_close_utc": "2026-10-05T05:10:42Z",
+    "active_thread": "R7",
     "apparatus_version": "v2b-2 + gtc",
-    "experiment": null,
-    "attempt": null,
-    "goal": "MIDPOINT SYNTHESIS 2; design subset-benefit selection criterion (R7) test; respect rolling compute cap (headroom ~1 core-h until 12:01Z)"
+    "experiment": "T09 subset-benefit selection criterion",
+    "attempt": 1,
+    "goal": "COMPUTE HOLD until ~12:45Z 2026-10-05 (rolling 48 core-h cap), then run; may finish in place",
+    "compute_hold_until_utc": "2026-10-05T12:45:00Z"
   },
-  "last_disposition": "TEST-8 MEASURED",
+  "last_disposition": "DEV-9 DONE",
   "unresolved_defects": [
     "no receipt check for no-donor-state (S4 cond 8 class)",
     "ruler v2.1 residual 8/47 + 24.5% chance floor",
@@ -27,9 +28,9 @@
     "GTC: UNSEEN stratum transfer floor; count endpoint blind to efficiency; overfitter control unverified"
   ],
   "next_intended": {
-    "window": "TEST",
-    "index": 9,
-    "experiment": "subset-benefit selection criterion (R7) -- may start at compute headroom"
+    "window": "DEV",
+    "index": 10,
+    "plan": "diagnose T09; T10 per midpoint-2 plan"
   },
   "missed_wake_rule": "run the due window once; never burst",
   "history": [
@@ -259,6 +260,18 @@
       "receipts": [
         "beta01/runs/T08_VB/T08_RESULT.json"
       ]
+    },
+    {
+      "cycle": 9,
+      "window": "DEV",
+      "index": 9,
+      "opened_utc": "2026-10-05T01:06:40Z",
+      "closed_utc": "2026-10-05T01:10:42Z",
+      "active_thread": "midpoint 2 / R7",
+      "apparatus_version": "v2b-2 + gtc",
+      "disposition": "DONE: midpoint synthesis 2 (limit = R3 selection criterion); g10 subset criterion; T09 frozen (fresh B12)",
+      "report": "beta01/windows/D09_DEV_REPORT.md",
+      "next_frozen": "beta01/windows/T09_SUBSET_SPEC.md"
     }
   ],
   "compute_ledger_note": "rolling 24h ~42 core-h at 23:25Z 2026-10-04 (T53 10.8 from 12:01Z, T52 12.3, T51 9.1, T06 ~6, GTC ~1, misc ~3); T53 rolls off from 12:01Z 2026-10-05"

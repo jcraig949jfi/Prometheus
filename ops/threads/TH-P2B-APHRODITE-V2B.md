@@ -142,3 +142,4 @@ change survive another generation?**
 | 2026-10-05 | DEV-8: T08 validation breadth frozen (VALIDATE 4 to 12 on the endogenous route). TEST-8 launched |
 
 | 2026-10-05 | TEST-8 (validation breadth) MEASURED: breadth 12 HURTS (86 to 76), rescuing 1 of 5 seeds. The R3 limit is the selection criterion (average saving vs subset benefit), not the amount of evidence. DEV-9 opened (midpoint synthesis 2) |
+| 2026-10-05 | DEV-9: midpoint synthesis 2 (the limit is the R3 selection criterion). T09 frozen (subset-benefit criterion g10, fresh breadth-12 validation). TEST-9 opens with a compute hold until about 12:45Z (rolling 48 core-h cap) |
