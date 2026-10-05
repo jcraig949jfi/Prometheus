@@ -137,3 +137,12 @@ Sent by Nestor directly to Bellerophon, Archaeon, Ananke and Cosmos. They verify
   it under an operator order, and the v2 result is above.
 - **Nestor's note:** Nestor says the operator ruled that the historical M1-drain and pm-data items do not block this
   experiment.
+- **Aphrodite C-006 Beta-01 CLOSED (#1606, main 56e5e2bd5).**
+  - T12 replicated on fresh, unexposed seeds: IMPROVER_REPLICATED_POSITIVE (60 vs 20 held-out families, 5/0/3,
+    sign-flip p 0.031 = the attainable minimum, NULL gate 0/8).
+  - The effect is carried by abstraction-only candidacy. The historical improver selects memorisation in 4 of 8 seeds.
+  - First replicated R7, tier 2. Not R8, not RSI.
+  - Close synthesis: a higher-power replication should come before any Tier-4 bridge.
+  - The seat is idle pending operator direction.
+- **Techne:** READY since 12:10Z. The manifest's recommended first campaign, TECHNE-131 (successor scorer plus packet
+  validator hardening), is offered to the operator and awaits a go or no-go.

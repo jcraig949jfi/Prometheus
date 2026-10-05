@@ -6,31 +6,26 @@
   "pairs_planned": 12,
   "window_hours": 4,
   "current": {
-    "cycle": 9,
-    "window": "TEST",
-    "index": 9,
-    "opened_utc": "2026-10-05T01:10:42Z",
-    "due_close_utc": "2026-10-05T05:10:42Z",
-    "active_thread": "R7",
-    "apparatus_version": "v2b-2 + gtc",
-    "experiment": "T09 subset-benefit selection criterion",
-    "attempt": 1,
-    "goal": "READY (operator science order 2026-10-05, prompts/2026-10-05_t09_order): launch at 12:45Z, 4 workers, BLAS threads=1",
-    "compute_hold_until_utc": "2026-10-05T12:45:00Z"
+    "cycle": 12,
+    "window": "CLOSED",
+    "index": 12,
+    "goal": "Beta-01 complete; awaiting operator direction (see close synthesis s4)"
   },
-  "last_disposition": "DEV-9 DONE",
+  "last_disposition": "BETA-01 CLOSED (T12 IMPROVER_REPLICATED_POSITIVE YES, tier 2)",
   "unresolved_defects": [
     "no receipt check for no-donor-state (S4 cond 8 class)",
     "ruler v2.1 residual 8/47 + 24.5% chance floor",
     "T4 v1a silent on queries 1-2",
     "T01 erratum: pristine_all_censored field (fix in t1 v2)",
     "A20-A23 P/OFF_0 controls dead on REUSED/CAPABILITY_SAME (recorded; T53 makes them live)",
-    "GTC: UNSEEN stratum transfer floor; count endpoint blind to efficiency; overfitter control unverified"
+    "GTC: UNSEEN stratum transfer floor; count endpoint blind to efficiency; overfitter control unverified",
+    "validation-draw variance: g0 at breadth 12 is 76 (T08 draw) vs 93 (T09 draw); criterion tests must fix the draw",
+    "r7e._donor drops selection_table/selected name; 'selected_schema None' conflates INHERITED and MEMORISE (T09/T10 errata)",
+    "pre-registration power check missing: sign test over few treatable seeds has attainable min p >= .05 (T11); compute attainable min p before freeze"
   ],
   "next_intended": {
-    "window": "DEV",
-    "index": 10,
-    "plan": "diagnose T09; T10 per midpoint-2 plan"
+    "window": "NONE",
+    "plan": "operator decision: g11 higher-power replication / R8 discriminator design / Tier-4 bridge (needs authorisation)"
   },
   "missed_wake_rule": "run the due window once; never burst",
   "history": [
@@ -272,7 +267,122 @@
       "disposition": "DONE: midpoint synthesis 2 (limit = R3 selection criterion); g10 subset criterion; T09 frozen (fresh B12)",
       "report": "beta01/windows/D09_DEV_REPORT.md",
       "next_frozen": "beta01/windows/T09_SUBSET_SPEC.md"
+    },
+    {
+      "cycle": 9,
+      "window": "TEST",
+      "index": 9,
+      "opened_utc": "2026-10-05T01:10:42Z",
+      "closed_utc": "2026-10-05T13:12:00Z",
+      "active_thread": "R7",
+      "apparatus_version": "v2b-2 + gtc",
+      "experiment": "T09 subset-benefit selection criterion",
+      "attempt": 2,
+      "attempt_note": "attempt 1 launched 12:45Z (after compute hold), host low-memory reaper kill ~12:51Z at 16/60 donors; resumed 12:53Z on operator go; exit 0 13:09Z",
+      "disposition": "MEASURED (Outcome B): NULL gate PASS (OFF selected 0/15; NULL 98 <= 98+2). R7_SUBSET_POSITIVE NO: g0 93, g10 98, better/worse/tied 1/0/14, sign p 0.5. g10 == g0 selection in 14/15 seeds; g10-specific rescue seed 4 only. ORACLE10 accepts G1 5/15. Empty seeds: candidacy 4 (0,7,12 zero derived; 9 wrong class), validation content 1 (14). Revision: the R3 criterion is not the dominant limit on fresh supply (g0 B12 swings 76 vs 93 across draws); first broken rung = candidacy (R2/observation supply).",
+      "report": "beta01/windows/T09_REPORT_AND_REVIEW_PACKET.md",
+      "receipts": [
+        "beta01/runs/T09_SUBSET/T09_RESULT.json",
+        "beta01/runs/T09_SUBSET/T09_DONORS.jsonl"
+      ]
+    },
+    {
+      "cycle": 10,
+      "window": "DEV",
+      "index": 10,
+      "opened_utc": "2026-10-05T13:12:00Z",
+      "closed_utc": "2026-10-05T13:20:00Z",
+      "active_thread": "R2 candidacy",
+      "apparatus_version": "v2b-2 + gtc",
+      "disposition": "DONE: first broken rung = candidacy (R2). T10 OBSERVE breadth 4->10 frozen; supply 15/15; continuity 2/2 exact",
+      "report": "beta01/windows/D10_DEV_REPORT.md",
+      "next_frozen": "beta01/windows/T10_OBS_SPEC.md"
+    },
+    {
+      "cycle": 10,
+      "window": "TEST",
+      "index": 10,
+      "opened_utc": "2026-10-05T13:20:00Z",
+      "closed_utc": "2026-10-05T13:40:00Z",
+      "active_thread": "R2 candidacy",
+      "apparatus_version": "v2b-2 + gtc",
+      "experiment": "T10 OBSERVE breadth (candidacy)",
+      "attempt": 1,
+      "disposition": "MEASURED: gate pass (continuity 2/2, NULL OFF 0/15). CANDIDACY_POSITIVE NO (98 -> 99; 4/3/8; p 0.5). STARVATION_RESCUE YES (seeds 0: 0->11, 7: 0->3; also 9: 0->5). Harms: 6 8->0, 13 7->0, 1 10->5. Derivation non-monotone in observation (hypothesis, verify in DEV-11); first broken rung = R2 derivation stability.",
+      "report": "beta01/windows/T10_REPORT_AND_REVIEW_PACKET.md",
+      "receipts": [
+        "beta01/runs/T10_OBS/T10_RESULT.json",
+        "beta01/runs/T10_OBS/T10_DONORS.jsonl"
+      ]
+    },
+    {
+      "cycle": 11,
+      "window": "DEV",
+      "index": 11,
+      "opened_utc": "2026-10-05T13:40:00Z",
+      "closed_utc": "2026-10-05T13:50:00Z",
+      "active_thread": "R3 memorisation in selection",
+      "apparatus_version": "v2b-2 + gtc",
+      "disposition": "DONE: D11 diagnostic refutes non-monotone derivation; MEMORISE wins g10 (T09 7,9,14; T10 6,12,13,14), never transfers. Errata on T09/T10 reports. T11 abstraction-only candidacy (g11) frozen; K1/K2 pass",
+      "report": "beta01/windows/D11_DEV_REPORT.md",
+      "next_frozen": "beta01/windows/T11_ABS_SPEC.md"
+    },
+    {
+      "cycle": 11,
+      "window": "TEST",
+      "index": 11,
+      "opened_utc": "2026-10-05T13:50:00Z",
+      "closed_utc": "2026-10-05T14:07:00Z",
+      "active_thread": "R3 memorisation in selection",
+      "apparatus_version": "v2b-2 + gtc",
+      "experiment": "T11 abstraction-only candidacy (g11)",
+      "attempt": 1,
+      "disposition": "MEASURED: gate pass (K1/K2; NULL OFF 0/15; MEMORISE 0). ABSTRACTION_ONLY_POSITIVE NO (123 vs 99; 4/0/11; p 0.0625 = attainable minimum with 4 treatable seeds; INVALID_DESIGN power component recorded). IMPROVER_CUMULATIVE NO (123 vs 93; 6/2/7; p 0.14). Mechanism confirmed at selection level; all MEMORISE-won seeds gain; exposed seeds. No R7-positive label issued.",
+      "report": "beta01/windows/T11_REPORT_AND_REVIEW_PACKET.md",
+      "receipts": [
+        "beta01/runs/T11_ABS/T11_RESULT.json",
+        "beta01/runs/T11_ABS/T11_DONORS.jsonl"
+      ]
+    },
+    {
+      "cycle": 12,
+      "window": "DEV",
+      "index": 12,
+      "opened_utc": "2026-10-05T14:07:00Z",
+      "closed_utc": "2026-10-05T14:17:00Z",
+      "active_thread": "replication",
+      "apparatus_version": "v2b-2 + gtc",
+      "disposition": "DONE: first broken rung = evidential (no unexposed, powered replication). T12 fresh-seed replication (W8 LIN 16-23) frozen; sign-flip primary; K1/K2 pass; power limit stated pre-data",
+      "report": "beta01/windows/D12_DEV_REPORT.md",
+      "next_frozen": "beta01/windows/T12_REPL_SPEC.md"
+    },
+    {
+      "cycle": 12,
+      "window": "TEST",
+      "index": 12,
+      "opened_utc": "2026-10-05T14:17:00Z",
+      "closed_utc": "2026-10-05T15:45:00Z",
+      "active_thread": "replication",
+      "apparatus_version": "v2b-2 + gtc",
+      "experiment": "T12 fresh-seed replication (LIN 16-23)",
+      "attempt": 1,
+      "disposition": "MEASURED: supply 8/8; gate pass (K1/K2; NULL OFF 0/8). IMPROVER_REPLICATED_POSITIVE YES: g11 O10 60 vs I_0 20, 5/0/3, sign-flip p 0.031 (= attainable min). Effect carried by MEMORISE exclusion alone (g10 O10 = g0 O4 = 20). First replicated R7, tier 2; not R8/RSI.",
+      "report": "beta01/windows/T12_REPORT_AND_REVIEW_PACKET.md",
+      "receipts": [
+        "beta01/runs/T12_REPL/T12_RESULT.json",
+        "beta01/runs/T12_REPL/T12_DONORS.jsonl",
+        "beta01/runs/T12_T51/T51_ROLES.json"
+      ]
+    },
+    {
+      "cycle": 12,
+      "window": "CLOSE",
+      "index": 12,
+      "opened_utc": "2026-10-05T15:45:00Z",
+      "closed_utc": "2026-10-05T15:55:00Z",
+      "disposition": "Beta-01 CLOSED: close synthesis answers the 7 directive questions; ladder stops at R8 (untested); W5P not yet justified",
+      "report": "beta01/windows/BETA01_CLOSE_SYNTHESIS.md"
     }
   ],
-  "compute_ledger_note": "rolling 24h ~42 core-h at 23:25Z 2026-10-04 (T53 10.8 from 12:01Z, T52 12.3, T51 9.1, T06 ~6, GTC ~1, misc ~3); T53 rolls off from 12:01Z 2026-10-05"
+  "compute_ledger_note": "Beta-01 total ~60 core-h on M4; rolling 24h ~43 at 15:45Z 2026-10-05"
 }
