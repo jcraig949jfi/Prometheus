@@ -1,0 +1,1702 @@
+{
+ "schema": "pte_c2a.plan.v1",
+ "flight": true,
+ "cells": [
+  {
+   "cell_id": "RELAY-0010-e89a8022",
+   "family": "RELAY",
+   "role": "RELAY-mh",
+   "i": 10,
+   "physics": {
+    "topology": "random",
+    "n_sites": 100,
+    "radius": 3,
+    "k_random": 6,
+    "rewire": 200,
+    "state_dim": 2,
+    "payload_width": 1,
+    "channels": 1,
+    "fanout": 4,
+    "dest_mode": "all",
+    "loss": 0.0,
+    "loss_per_hop": 0,
+    "lat_base": 2,
+    "lat_hop": 1,
+    "lat_jitter": 3,
+    "dup": 0.0,
+    "noise": 64,
+    "cap": 4,
+    "collision": "aloha",
+    "decay_shift": 1,
+    "update_mode": "async",
+    "update_period": 2,
+    "update_p": 0.8,
+    "rules": 1,
+    "prog_len": 16,
+    "plastic_route": 1,
+    "adapt_shift": 5,
+    "wimm": 0,
+    "setrule": 0,
+    "mut_site": 0.001,
+    "e_income": 0,
+    "e_max": 1000,
+    "c_emit": 0,
+    "c_op": 0,
+    "c_mem": 0,
+    "topo_seed": 889172250
+   },
+   "env": {
+    "family": "RELAY",
+    "d": 3,
+    "delta": 16,
+    "gap": 16,
+    "cue_len": 2,
+    "amp": 256,
+    "amp_teacher": 128,
+    "amp_dist": 64,
+    "trials": 12,
+    "block": 2,
+    "flip_p": 0.3,
+    "n_maj": 5,
+    "iti": 2,
+    "variant": 0
+   },
+   "plant_name": "relay_refresh",
+   "plant_genome": [
+    [
+     [
+      7,
+      4,
+      0,
+      15,
+      0
+     ],
+     [
+      7,
+      5,
+      15,
+      0,
+      0
+     ],
+     [
+      3,
+      0,
+      4,
+      5,
+      0
+     ],
+     [
+      2,
+      2,
+      13,
+      11,
+      0
+     ],
+     [
+      7,
+      4,
+      2,
+      15,
+      0
+     ],
+     [
+      7,
+      5,
+      15,
+      2,
+      0
+     ],
+     [
+      3,
+      3,
+      4,
+      5,
+      0
+     ],
+     [
+      4,
+      4,
+      3,
+      3,
+      0
+     ],
+     [
+      11,
+      5,
+      3,
+      0,
+      0
+     ],
+     [
+      4,
+      5,
+      5,
+      5,
+      0
+     ],
+     [
+      4,
+      6,
+      4,
+      5,
+      0
+     ],
+     [
+      1,
+      10,
+      3,
+      0,
+      0
+     ],
+     [
+      3,
+      5,
+      3,
+      0,
+      0
+     ],
+     [
+      4,
+      5,
+      5,
+      4,
+      0
+     ],
+     [
+      2,
+      0,
+      0,
+      5,
+      0
+     ],
+     [
+      0,
+      0,
+      0,
+      0,
+      0
+     ]
+    ]
+   ],
+   "cell_key": 937185476,
+   "ceiling": 0.9799985625890811,
+   "binding": "t2_joint",
+   "hops": {
+    "min_hops": 3,
+    "max_hops": 3,
+    "mean_hops": 3.0,
+    "impossible_pairs": 0
+   },
+   "admission": {
+    "plants": {
+     "relay_refresh": {
+      "ruler": {
+       "status": "TRUE",
+       "role": "RELAY-mh",
+       "all": {
+        "mean": 0.7265625,
+        "lo99": 0.6677108758566712,
+        "hi99": 0.7760813481646966,
+        "d_se": 5.796448936075818,
+        "status": "TRUE",
+        "decided": "TRUE"
+       },
+       "late": {
+        "mean": 0.6393229166666666,
+        "lo99": 0.5690501544701346,
+        "hi99": 0.7115553752963444,
+        "d_se": 0.7484847045504373,
+        "status": "INDETERMINATE",
+        "decided": "TRUE"
+       }
+      },
+      "ablate": {
+       "status": "FALSE",
+       "role": "RELAY-mh",
+       "all": {
+        "mean": 0.5,
+        "lo99": 0.5,
+        "hi99": 0.5,
+        "d_se": NaN,
+        "status": "DEGENERATE",
+        "decided": "FALSE"
+       },
+       "late": {
+        "mean": 0.5,
+        "lo99": 0.5,
+        "hi99": 0.5,
+        "d_se": NaN,
+        "status": "DEGENERATE",
+        "decided": "FALSE"
+       }
+      },
+      "ablate_ok": true,
+      "pass": true,
+      "above_ceiling": false,
+      "lines": 15
+     },
+     "relay_flood": {
+      "ruler": {
+       "status": "FALSE",
+       "role": "RELAY-mh",
+       "all": {
+        "mean": 0.5325520833333333,
+        "lo99": 0.48835665117876276,
+        "hi99": 0.572771531266974,
+        "d_se": -3.9349943304718753,
+        "status": "FALSE",
+        "decided": "FALSE"
+       },
+       "late": {
+        "mean": 0.474609375,
+        "lo99": 0.4155672773548451,
+        "hi99": 0.5381574793086836,
+        "d_se": -6.300729863838635,
+        "status": "FALSE",
+        "decided": "FALSE"
+       }
+      },
+      "ablate": {
+       "status": "FALSE",
+       "role": "RELAY-mh",
+       "all": {
+        "mean": 0.5,
+        "lo99": 0.5,
+        "hi99": 0.5,
+        "d_se": NaN,
+        "status": "DEGENERATE",
+        "decided": "FALSE"
+       },
+       "late": {
+        "mean": 0.5,
+        "lo99": 0.5,
+        "hi99": 0.5,
+        "d_se": NaN,
+        "status": "DEGENERATE",
+        "decided": "FALSE"
+       }
+      },
+      "ablate_ok": true,
+      "pass": false,
+      "above_ceiling": false,
+      "lines": 12
+     },
+     "relay_bit": {
+      "ruler": {
+       "status": "TRUE",
+       "role": "RELAY-mh",
+       "all": {
+        "mean": 0.7395833333333333,
+        "lo99": 0.694011436523911,
+        "hi99": 0.778772974703537,
+        "d_se": 8.82824238353049,
+        "status": "TRUE",
+        "decided": "TRUE"
+       },
+       "late": {
+        "mean": 0.6458333333333333,
+        "lo99": 0.5840779572848241,
+        "hi99": 0.69945191540644,
+        "d_se": 1.5248111640356594,
+        "status": "INDETERMINATE",
+        "decided": "TRUE"
+       }
+      },
+      "ablate": {
+       "status": "FALSE",
+       "role": "RELAY-mh",
+       "all": {
+        "mean": 0.5,
+        "lo99": 0.5,
+        "hi99": 0.5,
+        "d_se": NaN,
+        "status": "DEGENERATE",
+        "decided": "FALSE"
+       },
+       "late": {
+        "mean": 0.5,
+        "lo99": 0.5,
+        "hi99": 0.5,
+        "d_se": NaN,
+        "status": "DEGENERATE",
+        "decided": "FALSE"
+       }
+      },
+      "ablate_ok": true,
+      "pass": true,
+      "above_ceiling": false,
+      "lines": 12
+     }
+    },
+    "adversaries": {
+     "null": {
+      "status": "FALSE",
+      "role": "RELAY-mh",
+      "all": {
+       "mean": 0.5,
+       "lo99": 0.5,
+       "hi99": 0.5,
+       "d_se": NaN,
+       "status": "DEGENERATE",
+       "decided": "FALSE"
+      },
+      "late": {
+       "mean": 0.5,
+       "lo99": 0.5,
+       "hi99": 0.5,
+       "d_se": NaN,
+       "status": "DEGENERATE",
+       "decided": "FALSE"
+      }
+     },
+     "onehop": {
+      "status": "FALSE",
+      "role": "RELAY-mh",
+      "all": {
+       "mean": 0.5,
+       "lo99": 0.5,
+       "hi99": 0.5,
+       "d_se": NaN,
+       "status": "DEGENERATE",
+       "decided": "FALSE"
+      },
+      "late": {
+       "mean": 0.5,
+       "lo99": 0.5,
+       "hi99": 0.5,
+       "d_se": NaN,
+       "status": "DEGENERATE",
+       "decided": "FALSE"
+      }
+     },
+     "latch_once": {
+      "status": "FALSE",
+      "role": "RELAY-mh",
+      "all": {
+       "mean": 0.521484375,
+       "lo99": 0.4821109550620879,
+       "hi99": 0.5592880766168551,
+       "d_se": -4.673907217960867,
+       "status": "FALSE",
+       "decided": "FALSE"
+      },
+      "late": {
+       "mean": 0.47005208333333337,
+       "lo99": 0.4083162313852683,
+       "hi99": 0.5317473643234107,
+       "d_se": -6.685939798815788,
+       "status": "FALSE",
+       "decided": "FALSE"
+      }
+     }
+    },
+    "V_scope": {
+     "null": true,
+     "onehop": true,
+     "latch_once": false
+    },
+    "thresholds": {
+     "SIGNAL_all": 0.6676418452691105,
+     "SIGNAL_late": 0.694238777867791
+    }
+   },
+   "arms": {
+    "PSEED": 1,
+    "KSEED-1": 1,
+    "KSEED-2": 0,
+    "KSEED-4": 0,
+    "BASE": 2,
+    "W0": 1,
+    "M32": 1
+   }
+  },
+  {
+   "cell_id": "FLIP-0000-adbab9bf",
+   "family": "FLIP",
+   "role": "FLIP",
+   "i": 0,
+   "physics": {
+    "topology": "random",
+    "n_sites": 64,
+    "radius": 3,
+    "k_random": 6,
+    "rewire": 200,
+    "state_dim": 2,
+    "payload_width": 1,
+    "channels": 1,
+    "fanout": 8,
+    "dest_mode": "sample",
+    "loss": 0.0,
+    "loss_per_hop": 0,
+    "lat_base": 1,
+    "lat_hop": 1,
+    "lat_jitter": 0,
+    "dup": 0.1,
+    "noise": 16,
+    "cap": 2,
+    "collision": "none",
+    "decay_shift": 0,
+    "update_mode": "sync",
+    "update_period": 2,
+    "update_p": 0.8,
+    "rules": 1,
+    "prog_len": 16,
+    "plastic_route": 1,
+    "adapt_shift": 5,
+    "wimm": 0,
+    "setrule": 0,
+    "mut_site": 0.0,
+    "e_income": 0,
+    "e_max": 1000,
+    "c_emit": 0,
+    "c_op": 0,
+    "c_mem": 0,
+    "topo_seed": 827597319
+   },
+   "env": {
+    "family": "FLIP",
+    "d": 2,
+    "delta": 8,
+    "gap": 8,
+    "cue_len": 2,
+    "amp": 256,
+    "amp_teacher": 128,
+    "amp_dist": 64,
+    "trials": 16,
+    "block": 2,
+    "flip_p": 0.3,
+    "n_maj": 5,
+    "iti": 2,
+    "variant": 0
+   },
+   "plant_name": "P_FLIP",
+   "plant_genome": [
+    [
+     [
+      2,
+      2,
+      13,
+      11,
+      0
+     ],
+     [
+      6,
+      4,
+      0,
+      1,
+      64
+     ],
+     [
+      3,
+      5,
+      15,
+      4,
+      0
+     ],
+     [
+      7,
+      10,
+      2,
+      4,
+      0
+     ],
+     [
+      7,
+      5,
+      5,
+      2,
+      0
+     ],
+     [
+      3,
+      10,
+      10,
+      5,
+      0
+     ],
+     [
+      3,
+      2,
+      10,
+      1,
+      0
+     ],
+     [
+      4,
+      6,
+      2,
+      10,
+      0
+     ],
+     [
+      4,
+      3,
+      0,
+      1,
+      0
+     ],
+     [
+      4,
+      4,
+      10,
+      10,
+      0
+     ],
+     [
+      8,
+      4,
+      10,
+      1,
+      0
+     ],
+     [
+      1,
+      1,
+      4,
+      0,
+      0
+     ],
+     [
+      4,
+      0,
+      3,
+      1,
+      0
+     ],
+     [
+      4,
+      5,
+      13,
+      13,
+      0
+     ],
+     [
+      8,
+      5,
+      13,
+      0,
+      0
+     ],
+     [
+      1,
+      0,
+      5,
+      0,
+      0
+     ]
+    ]
+   ],
+   "cell_key": 4170128103,
+   "ceiling": 1.0,
+   "binding": "w2u_block",
+   "hops": {
+    "min_hops": 2,
+    "max_hops": 2,
+    "mean_hops": 2.0,
+    "impossible_pairs": 0
+   },
+   "admission": {
+    "plants": {
+     "P_FLIP": {
+      "ruler": {
+       "status": "TRUE",
+       "role": "FLIP",
+       "all": {
+        "mean": 0.931640625,
+        "lo99": 0.8846040625595464,
+        "hi99": 0.9609493788695129,
+        "d_se": 25.665530118096044,
+        "status": "TRUE",
+        "decided": "TRUE"
+       },
+       "late": {
+        "mean": 0.9296875,
+        "lo99": 0.8549112200265522,
+        "hi99": 0.9718277208698108,
+        "d_se": 15.508407435162136,
+        "status": "TRUE",
+        "decided": "TRUE"
+       },
+       "B": {
+        "mean": 0.9327380952380953,
+        "lo99": 0.8773654708378243,
+        "hi99": 0.9631755037845671,
+        "d_se": 8.986833481246496,
+        "status": "TRUE",
+        "decided": "TRUE",
+        "chg": 0.9146949404761904,
+        "same": 0.95078125
+       }
+      },
+      "ablate": {
+       "status": "FALSE",
+       "role": "FLIP",
+       "all": {
+        "mean": 0.49609375,
+        "lo99": 0.47710554184754234,
+        "hi99": 0.514218582228427,
+        "d_se": -9.918644404944144,
+        "status": "FALSE",
+        "decided": "FALSE"
+       },
+       "late": {
+        "mean": 0.50390625,
+        "lo99": 0.48294968113888986,
+        "hi99": 0.5300858974777124,
+        "d_se": -7.628088903722191,
+        "status": "FALSE",
+        "decided": "FALSE"
+       },
+       "B": {
+        "mean": 0.5121837797619048,
+        "lo99": 0.4777483481928828,
+        "hi99": 0.5504002640797566,
+        "d_se": -20.356116098544202,
+        "status": "FALSE",
+        "decided": "FALSE",
+        "chg": 0.5097098214285714,
+        "same": 0.5146577380952381
+       }
+      },
+      "ablate_ok": true,
+      "pass": true,
+      "above_ceiling": false,
+      "lines": 16
+     },
+     "FLIP_BIT16": {
+      "ruler": {
+       "status": "TRUE",
+       "role": "FLIP",
+       "all": {
+        "mean": 0.931640625,
+        "lo99": 0.8860675495718763,
+        "hi99": 0.9603824096016893,
+        "d_se": 25.925988336797445,
+        "status": "TRUE",
+        "decided": "TRUE"
+       },
+       "late": {
+        "mean": 0.9296875,
+        "lo99": 0.8549112200265522,
+        "hi99": 0.9718277208698108,
+        "d_se": 15.508407435162136,
+        "status": "TRUE",
+        "decided": "TRUE"
+       },
+       "B": {
+        "mean": 0.9327380952380953,
+        "lo99": 0.8773868108559107,
+        "hi99": 0.9626757761086636,
+        "d_se": 9.032009408264196,
+        "status": "TRUE",
+        "decided": "TRUE",
+        "chg": 0.9146949404761904,
+        "same": 0.95078125
+       }
+      },
+      "ablate": {
+       "status": "FALSE",
+       "role": "FLIP",
+       "all": {
+        "mean": 0.498046875,
+        "lo99": 0.47923657029269007,
+        "hi99": 0.5157639241539953,
+        "d_se": -9.789121336647142,
+        "status": "FALSE",
+        "decided": "FALSE"
+       },
+       "late": {
+        "mean": 0.50390625,
+        "lo99": 0.48294968113888986,
+        "hi99": 0.5300858974777124,
+        "d_se": -7.628088903722191,
+        "status": "FALSE",
+        "decided": "FALSE"
+       },
+       "B": {
+        "mean": 0.5141369047619048,
+        "lo99": 0.47920102009992843,
+        "hi99": 0.5503486880539538,
+        "d_se": -20.405168620403025,
+        "status": "FALSE",
+        "decided": "FALSE",
+        "chg": 0.5136160714285714,
+        "same": 0.5146577380952381
+       }
+      },
+      "ablate_ok": true,
+      "pass": true,
+      "above_ceiling": false,
+      "lines": 16
+     }
+    },
+    "adversaries": {
+     "null": {
+      "status": "FALSE",
+      "role": "FLIP",
+      "all": {
+       "mean": 0.5,
+       "lo99": 0.5,
+       "hi99": 0.5,
+       "d_se": NaN,
+       "status": "DEGENERATE",
+       "decided": "FALSE"
+      },
+      "late": {
+       "mean": 0.5,
+       "lo99": 0.5,
+       "hi99": 0.5,
+       "d_se": NaN,
+       "status": "DEGENERATE",
+       "decided": "FALSE"
+      },
+      "B": {
+       "mean": 0.5,
+       "lo99": 0.5,
+       "hi99": 0.5,
+       "d_se": NaN,
+       "status": "DEGENERATE",
+       "decided": "FALSE",
+       "chg": 0.5,
+       "same": 0.5
+      }
+     },
+     "relay_latch_copy": {
+      "status": "FALSE",
+      "role": "FLIP",
+      "all": {
+       "mean": 0.705078125,
+       "lo99": 0.6613283178429721,
+       "hi99": 0.7454455520767762,
+       "d_se": 6.631107064924289,
+       "status": "TRUE",
+       "decided": "TRUE"
+      },
+      "late": {
+       "mean": 0.6953125,
+       "lo99": 0.6409353826846375,
+       "hi99": 0.7534520238853956,
+       "d_se": 4.1525086299227905,
+       "status": "TRUE",
+       "decided": "TRUE"
+      },
+      "B": {
+       "mean": 0.6925967261904762,
+       "lo99": 0.6510635812433998,
+       "hi99": 0.734523909466267,
+       "d_se": -6.137500877453906,
+       "status": "FALSE",
+       "decided": "FALSE",
+       "chg": 0.43065476190476193,
+       "same": 0.9545386904761906
+      }
+     },
+     "latch_once": {
+      "status": "FALSE",
+      "role": "FLIP",
+      "all": {
+       "mean": 0.466796875,
+       "lo99": 0.4085447396690426,
+       "hi99": 0.5329202062907881,
+       "d_se": -6.150747281660134,
+       "status": "FALSE",
+       "decided": "FALSE"
+      },
+      "late": {
+       "mean": 0.48046875,
+       "lo99": 0.3975704501491564,
+       "hi99": 0.575409943435558,
+       "d_se": -4.366688862597312,
+       "status": "FALSE",
+       "decided": "FALSE"
+      },
+      "B": {
+       "mean": 0.46757812499999996,
+       "lo99": 0.3993154350083815,
+       "hi99": 0.5354137799839893,
+       "d_se": -13.695891157363818,
+       "status": "FALSE",
+       "decided": "FALSE",
+       "chg": 0.4593377976190476,
+       "same": 0.47581845238095233
+      }
+     },
+     "anti_copy(analytic)": {
+      "status": "FALSE",
+      "B": {
+       "mean": 0.3074032738095238,
+       "lo99": 0.26547609053373317,
+       "chg": 0.5693452380952382,
+       "same": 0.04546130952380952
+      }
+     }
+    },
+    "V_scope": {
+     "null": true,
+     "relay_latch_copy": true,
+     "latch_once": true,
+     "anti_copy(analytic)": true
+    },
+    "thresholds": {
+     "B": 0.9
+    }
+   },
+   "arms": {
+    "PSEED": 1,
+    "KSEED-1": 1,
+    "KSEED-2": 0,
+    "KSEED-4": 0,
+    "BASE": 2,
+    "W0": 1,
+    "M32": 1
+   }
+  },
+  {
+   "cell_id": "CTRL-RELAY1h-62a7fff921ca3bd8",
+   "family": "RELAY",
+   "role": "RELAY-1h",
+   "i": null,
+   "physics": {
+    "topology": "ring",
+    "n_sites": 144,
+    "radius": 3,
+    "k_random": 6,
+    "rewire": 50,
+    "state_dim": 2,
+    "payload_width": 2,
+    "channels": 1,
+    "fanout": 8,
+    "dest_mode": "sample",
+    "loss": 0.1,
+    "loss_per_hop": 0,
+    "lat_base": 1,
+    "lat_hop": 1,
+    "lat_jitter": 1,
+    "dup": 0.0,
+    "noise": 0,
+    "cap": 2,
+    "collision": "saturate",
+    "decay_shift": 0,
+    "update_mode": "sync",
+    "update_period": 2,
+    "update_p": 0.5,
+    "rules": 1,
+    "prog_len": 16,
+    "plastic_route": 1,
+    "adapt_shift": 5,
+    "wimm": 1,
+    "setrule": 0,
+    "mut_site": 0.0,
+    "e_income": 0,
+    "e_max": 1000,
+    "c_emit": 0,
+    "c_op": 0,
+    "c_mem": 0,
+    "topo_seed": 1939803888
+   },
+   "env": {
+    "family": "RELAY",
+    "d": 3,
+    "delta": 8,
+    "gap": 8,
+    "cue_len": 2,
+    "amp": 256,
+    "amp_teacher": 128,
+    "amp_dist": 64,
+    "trials": 12,
+    "block": 4,
+    "flip_p": 0.3,
+    "n_maj": 5,
+    "iti": 2,
+    "variant": 0
+   },
+   "plant_name": "relay_flood",
+   "plant_genome": [
+    [
+     [
+      2,
+      2,
+      15,
+      12,
+      0
+     ],
+     [
+      7,
+      4,
+      2,
+      17,
+      0
+     ],
+     [
+      7,
+      5,
+      17,
+      2,
+      0
+     ],
+     [
+      3,
+      3,
+      4,
+      5,
+      0
+     ],
+     [
+      4,
+      4,
+      3,
+      3,
+      0
+     ],
+     [
+      11,
+      5,
+      3,
+      0,
+      0
+     ],
+     [
+      4,
+      5,
+      5,
+      5,
+      0
+     ],
+     [
+      4,
+      6,
+      4,
+      5,
+      0
+     ],
+     [
+      1,
+      10,
+      3,
+      0,
+      0
+     ],
+     [
+      3,
+      5,
+      3,
+      0,
+      0
+     ],
+     [
+      4,
+      5,
+      5,
+      4,
+      0
+     ],
+     [
+      2,
+      0,
+      0,
+      5,
+      0
+     ],
+     [
+      0,
+      0,
+      0,
+      0,
+      0
+     ],
+     [
+      0,
+      0,
+      0,
+      0,
+      0
+     ],
+     [
+      0,
+      0,
+      0,
+      0,
+      0
+     ],
+     [
+      0,
+      0,
+      0,
+      0,
+      0
+     ]
+    ]
+   ],
+   "cell_key": 463864743,
+   "c1_history": "C1 d9cc RELAY d3 delta8: 12/12 seeds SIGNAL",
+   "admission": {
+    "plant": {
+     "status": "TRUE",
+     "role": "RELAY-1h",
+     "all": {
+      "mean": 0.8014322916666667,
+      "lo99": 0.7598872074508396,
+      "hi99": 0.8415284532978797,
+      "d_se": 13.771081144543293,
+      "status": "TRUE",
+      "decided": "TRUE"
+     },
+     "late": {
+      "mean": 0.7682291666666666,
+      "lo99": 0.679521886798897,
+      "hi99": 0.8353271155978583,
+      "d_se": 4.657916814410035,
+      "status": "TRUE",
+      "decided": "TRUE"
+     }
+    },
+    "null": {
+     "status": "FALSE",
+     "role": "RELAY-1h",
+     "all": {
+      "mean": 0.5,
+      "lo99": 0.5,
+      "hi99": 0.5,
+      "d_se": NaN,
+      "status": "DEGENERATE",
+      "decided": "FALSE"
+     },
+     "late": {
+      "mean": 0.5,
+      "lo99": 0.5,
+      "hi99": 0.5,
+      "d_se": NaN,
+      "status": "DEGENERATE",
+      "decided": "FALSE"
+     }
+    }
+   },
+   "arms": {
+    "PSEED": 1,
+    "BASE": 2
+   }
+  }
+ ],
+ "jobs": [
+  {
+   "job_id": "RELAY-0010-e89a8022|PSEED|00",
+   "cell_id": "RELAY-0010-e89a8022",
+   "arm": "PSEED",
+   "idx": 0
+  },
+  {
+   "job_id": "RELAY-0010-e89a8022|KSEED-1|00",
+   "cell_id": "RELAY-0010-e89a8022",
+   "arm": "KSEED-1",
+   "idx": 0
+  },
+  {
+   "job_id": "RELAY-0010-e89a8022|BASE|00",
+   "cell_id": "RELAY-0010-e89a8022",
+   "arm": "BASE",
+   "idx": 0
+  },
+  {
+   "job_id": "RELAY-0010-e89a8022|W0|00",
+   "cell_id": "RELAY-0010-e89a8022",
+   "arm": "W0",
+   "idx": 0
+  },
+  {
+   "job_id": "RELAY-0010-e89a8022|M32|00",
+   "cell_id": "RELAY-0010-e89a8022",
+   "arm": "M32",
+   "idx": 0
+  },
+  {
+   "job_id": "FLIP-0000-adbab9bf|PSEED|00",
+   "cell_id": "FLIP-0000-adbab9bf",
+   "arm": "PSEED",
+   "idx": 0
+  },
+  {
+   "job_id": "FLIP-0000-adbab9bf|KSEED-1|00",
+   "cell_id": "FLIP-0000-adbab9bf",
+   "arm": "KSEED-1",
+   "idx": 0
+  },
+  {
+   "job_id": "FLIP-0000-adbab9bf|BASE|00",
+   "cell_id": "FLIP-0000-adbab9bf",
+   "arm": "BASE",
+   "idx": 0
+  },
+  {
+   "job_id": "FLIP-0000-adbab9bf|W0|00",
+   "cell_id": "FLIP-0000-adbab9bf",
+   "arm": "W0",
+   "idx": 0
+  },
+  {
+   "job_id": "FLIP-0000-adbab9bf|M32|00",
+   "cell_id": "FLIP-0000-adbab9bf",
+   "arm": "M32",
+   "idx": 0
+  },
+  {
+   "job_id": "CTRL-RELAY1h-62a7fff921ca3bd8|PSEED|00",
+   "cell_id": "CTRL-RELAY1h-62a7fff921ca3bd8",
+   "arm": "PSEED",
+   "idx": 0
+  },
+  {
+   "job_id": "CTRL-RELAY1h-62a7fff921ca3bd8|BASE|00",
+   "cell_id": "CTRL-RELAY1h-62a7fff921ca3bd8",
+   "arm": "BASE",
+   "idx": 0
+  },
+  {
+   "job_id": "RELAY-0010-e89a8022|BASE|01",
+   "cell_id": "RELAY-0010-e89a8022",
+   "arm": "BASE",
+   "idx": 1
+  },
+  {
+   "job_id": "FLIP-0000-adbab9bf|BASE|01",
+   "cell_id": "FLIP-0000-adbab9bf",
+   "arm": "BASE",
+   "idx": 1
+  },
+  {
+   "job_id": "CTRL-RELAY1h-62a7fff921ca3bd8|BASE|01",
+   "cell_id": "CTRL-RELAY1h-62a7fff921ca3bd8",
+   "arm": "BASE",
+   "idx": 1
+  }
+ ],
+ "rejected": [
+  {
+   "cid": "RELAY-0000-e98d0b5b",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "RELAY-0001-5a884fb9",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0002-68397bdc",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0003-90d7b759",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "RELAY-0004-edba86b1",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0005-d6c488dd",
+   "verdict": "R-NOT-ESTABLISHED"
+  },
+  {
+   "cid": "RELAY-0006-c06e060f",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "RELAY-0007-1b9f0106",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0008-f710db3c",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0009-f6fa7eaa",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "RELAY-0011-6905660d",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "RELAY-0012-4697a30c",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "RELAY-0013-40d1fec9",
+   "verdict": "R-NOT-ESTABLISHED"
+  },
+  {
+   "cid": "RELAY-0014-655ff221",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0015-3ec98650",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "RELAY-0016-c83c96d6",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0017-f9aa9608",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0018-8af826c7",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0020-4aa4f4db",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0021-ae29ea6e",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0022-87fb408c",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "RELAY-0023-2e2734fc",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "RELAY-0024-637f07e6",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "RELAY-0025-46a1a911",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "RELAY-0026-45fbeee0",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0028-4131bc3e",
+   "verdict": "R-NOT-ESTABLISHED"
+  },
+  {
+   "cid": "RELAY-0029-4459059e",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0050-618867b7",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "RELAY-0051-f3d5af49",
+   "verdict": "R-NOT-ESTABLISHED"
+  },
+  {
+   "cid": "RELAY-0052-af6abc38",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0053-52ad17c8",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0054-f78e2eb8",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0055-90268974",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0056-a73be940",
+   "verdict": "R-NOT-ESTABLISHED"
+  },
+  {
+   "cid": "RELAY-0057-eba71f3a",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0058-1ed7e621",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0059-e256c70d",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "RELAY-0060-ca6e1116",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0061-1accc113",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0062-9bc3bab0",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "RELAY-0064-0d04c85b",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "RELAY-0065-d064713e",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0066-125c081f",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "RELAY-0067-186bb8e3",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0068-ed314892",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "RELAY-0069-03489bcf",
+   "verdict": "R-NOT-ESTABLISHED"
+  },
+  {
+   "cid": "RELAY-0070-36abd1b9",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0071-568cd7da",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "RELAY-0072-e37ab522",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "RELAY-0073-87911b8e",
+   "verdict": "R-NOT-ESTABLISHED"
+  },
+  {
+   "cid": "RELAY-0074-6ad3b430",
+   "verdict": "R-NOT-ESTABLISHED"
+  },
+  {
+   "cid": "RELAY-0075-a2b6c54e",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "RELAY-0076-6e456894",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0077-37ab3c65",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0100-53bcca6e",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0101-05c25eb2",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0102-c20be0b5",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0103-65f8b375",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0104-4503ba5c",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "RELAY-0105-51fb267e",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0106-dc071587",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0107-52a7f2b1",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "RELAY-0108-acb06711",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0109-9eb1b174",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "RELAY-0110-5ab0851b",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0111-5c35721b",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0112-e7ee266f",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0114-6b6d9870",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0115-e202e96a",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0116-7597b8bb",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0117-5eb266b5",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0118-5f3ee83a",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0119-512d88af",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0120-8fa33e8d",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0121-84394b76",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0122-abafea0a",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "RELAY-0123-dbe807c0",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "RELAY-0124-fc2dd29c",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0125-5ba28f7b",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0127-fff9837f",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0128-127bc015",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "RELAY-0129-f8a42bcc",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0130-2c825047",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0131-7e815363",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0132-35779474",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0133-e7879555",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0134-86cf2a4d",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0135-13856e67",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0137-997b2554",
+   "verdict": "R-NOT-ESTABLISHED"
+  },
+  {
+   "cid": "RELAY-0150-42436128",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "RELAY-0151-ab3b3467",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0152-c69e0a42",
+   "verdict": "R-NOT-ESTABLISHED"
+  },
+  {
+   "cid": "RELAY-0153-bedf2745",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0154-9feda43d",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "RELAY-0155-afbb9bcb",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0156-1f2f1902",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0157-d747d280",
+   "verdict": "R-NOT-ESTABLISHED"
+  },
+  {
+   "cid": "RELAY-0158-5c9583ae",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "RELAY-0159-86c7c290",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "RELAY-0160-42e21e44",
+   "verdict": "R-NOT-ESTABLISHED"
+  },
+  {
+   "cid": "RELAY-0161-cb172fdb",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0162-b0710ca7",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "RELAY-0163-2147c9c0",
+   "verdict": "R-NOT-ESTABLISHED"
+  },
+  {
+   "cid": "RELAY-0164-f02f6978",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0165-864935bd",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0166-d00a0cd4",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0168-feccdde6",
+   "verdict": "R-NOT-ESTABLISHED"
+  },
+  {
+   "cid": "RELAY-0169-8b5b152f",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0170-90b28390",
+   "verdict": "R-NOT-ESTABLISHED"
+  },
+  {
+   "cid": "RELAY-0171-7257d2a4",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "RELAY-0172-31ce5846",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0173-18d9d7c9",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0174-08debc96",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "RELAY-0175-aa31b3a0",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0176-a3458fa5",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "FLIP-0001-a0946d13",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0002-daf7e66d",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0003-6fe4a3c7",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0050-b86cf038",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0051-ce760fa9",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0052-df193722",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0053-abd1d2cf",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0054-64c7718b",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0100-ea7abd67",
+   "verdict": "P-CAPPED"
+  }
+ ],
+ "disjointness": {
+  "held_n": 768,
+  "train_n": 7008,
+  "admit_n": 256,
+  "held_x_train": 0,
+  "held_x_admit": 0,
+  "train_x_admit": 0
+ },
+ "arms": {
+  "core": {
+   "PSEED": 1,
+   "KSEED-1": 1,
+   "KSEED-2": 0,
+   "KSEED-4": 0,
+   "BASE": 2,
+   "W0": 1,
+   "M32": 1
+  },
+  "control": {
+   "PSEED": 1,
+   "BASE": 2
+  }
+ },
+ "arm_order": [
+  "PSEED",
+  "KSEED-1",
+  "KSEED-2",
+  "KSEED-4",
+  "BASE",
+  "W0",
+  "M32"
+ ]
+}

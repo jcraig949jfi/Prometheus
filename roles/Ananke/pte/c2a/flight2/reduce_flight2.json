@@ -1,0 +1,254 @@
+{
+ "n_rows": 15,
+ "cells": {
+  "RELAY-0010-e89a8022": {
+   "role": "RELAY-mh",
+   "k_BASE": 0,
+   "n_BASE": 2,
+   "BASE_CP95": [
+    0.0,
+    0.6576197760453506
+   ],
+   "PSEED": {
+    "0": "TRUE"
+   },
+   "flags": [],
+   "arms": {
+    "PSEED": {
+     "k": 1,
+     "n": 1,
+     "indeterminate": 0
+    },
+    "KSEED-1": {
+     "k": 0,
+     "n": 1,
+     "indeterminate": 0
+    },
+    "KSEED-2": {
+     "k": 0,
+     "n": 0,
+     "indeterminate": 0
+    },
+    "KSEED-4": {
+     "k": 0,
+     "n": 0,
+     "indeterminate": 0
+    },
+    "BASE": {
+     "k": 0,
+     "n": 2,
+     "indeterminate": 0
+    },
+    "W0": {
+     "k": 0,
+     "n": 1,
+     "indeterminate": 0
+    },
+    "M32": {
+     "k": 0,
+     "n": 1,
+     "indeterminate": 0
+    }
+   },
+   "verdict": "UNRESOLVED",
+   "contrasts": {
+    "W0": {
+     "idx": [
+      0
+     ],
+     "k_arm": 0,
+     "k_base": 0,
+     "n": 1
+    },
+    "M32": {
+     "idx": [
+      0
+     ],
+     "k_arm": 0,
+     "k_base": 0,
+     "n": 1
+    }
+   },
+   "kseed": {
+    "KSEED-1": {
+     "k": 0,
+     "n": 1,
+     "indeterminate": 0
+    },
+    "KSEED-2": {
+     "k": 0,
+     "n": 0,
+     "indeterminate": 0
+    },
+    "KSEED-4": {
+     "k": 0,
+     "n": 0,
+     "indeterminate": 0
+    }
+   }
+  },
+  "FLIP-0000-adbab9bf": {
+   "role": "FLIP",
+   "k_BASE": 0,
+   "n_BASE": 2,
+   "BASE_CP95": [
+    0.0,
+    0.6576197760453506
+   ],
+   "PSEED": {
+    "0": "TRUE"
+   },
+   "flags": [],
+   "arms": {
+    "PSEED": {
+     "k": 1,
+     "n": 1,
+     "indeterminate": 0
+    },
+    "KSEED-1": {
+     "k": 0,
+     "n": 1,
+     "indeterminate": 0
+    },
+    "KSEED-2": {
+     "k": 0,
+     "n": 0,
+     "indeterminate": 0
+    },
+    "KSEED-4": {
+     "k": 0,
+     "n": 0,
+     "indeterminate": 0
+    },
+    "BASE": {
+     "k": 0,
+     "n": 2,
+     "indeterminate": 0
+    },
+    "W0": {
+     "k": 0,
+     "n": 1,
+     "indeterminate": 0
+    },
+    "M32": {
+     "k": 0,
+     "n": 1,
+     "indeterminate": 0
+    }
+   },
+   "verdict": "UNRESOLVED",
+   "contrasts": {
+    "W0": {
+     "idx": [
+      0
+     ],
+     "k_arm": 0,
+     "k_base": 0,
+     "n": 1
+    },
+    "M32": {
+     "idx": [
+      0
+     ],
+     "k_arm": 0,
+     "k_base": 0,
+     "n": 1
+    }
+   },
+   "kseed": {
+    "KSEED-1": {
+     "k": 0,
+     "n": 1,
+     "indeterminate": 0
+    },
+    "KSEED-2": {
+     "k": 0,
+     "n": 0,
+     "indeterminate": 0
+    },
+    "KSEED-4": {
+     "k": 0,
+     "n": 0,
+     "indeterminate": 0
+    }
+   }
+  },
+  "CTRL-RELAY1h-62a7fff921ca3bd8": {
+   "role": "RELAY-1h",
+   "k_BASE": 2,
+   "n_BASE": 2,
+   "BASE_CP95": [
+    0.3423802239546494,
+    1.0
+   ],
+   "PSEED": {
+    "0": "TRUE"
+   },
+   "flags": [],
+   "arms": {
+    "PSEED": {
+     "k": 1,
+     "n": 1,
+     "indeterminate": 0
+    },
+    "BASE": {
+     "k": 2,
+     "n": 2,
+     "indeterminate": 0
+    }
+   },
+   "verdict": "CONTROL_UNDERPOWERED"
+  }
+ },
+ "families": {
+  "RELAY-mh": {
+   "cells": {
+    "RELAY-0010-e89a8022": "UNRESOLVED"
+   },
+   "verdict": "CELL_LEVEL_ONLY",
+   "BASE_pooled": [
+    0,
+    2
+   ],
+   "landscape": null
+  },
+  "FLIP": {
+   "cells": {
+    "FLIP-0000-adbab9bf": "UNRESOLVED"
+   },
+   "verdict": "CELL_LEVEL_ONLY",
+   "BASE_pooled": [
+    0,
+    2
+   ],
+   "landscape": null
+  }
+ },
+ "control": {
+  "role": "RELAY-1h",
+  "k_BASE": 2,
+  "n_BASE": 2,
+  "BASE_CP95": [
+   0.3423802239546494,
+   1.0
+  ],
+  "PSEED": {
+   "0": "TRUE"
+  },
+  "flags": [],
+  "arms": {
+   "PSEED": {
+    "k": 1,
+    "n": 1,
+    "indeterminate": 0
+   },
+   "BASE": {
+    "k": 2,
+    "n": 2,
+    "indeterminate": 0
+   }
+  },
+  "verdict": "CONTROL_UNDERPOWERED"
+ },
+ "stop_flags": []
+}

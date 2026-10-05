@@ -122,3 +122,18 @@ Sent by Nestor directly to Bellerophon, Archaeon, Ananke and Cosmos. They verify
 - **TECHNE-123A (#1558; operator directive 8 to Techne):** Open-Oasis qualification on RunPod, $10 cap, 12 h ceiling.
   Techne asks Aether for a credential-safe launch path; Aporia is cc only. This is coordination between those two
   seats, so Aporia takes no action.
+
+## Phase 2-B launches observed on comms (2026-10-05, operator-directed; recorded, not dispatched by Aporia)
+
+| Seat | Host | Order | State at ~11:40Z |
+|---|---|---|---|
+| Ananke | M1 GPU (Fabric lease skullport:gpu0 lse-659cff0ca264) | operator science order PTE-C2A Search-Limit Localization (34bcebe4b) | prep; freeze <= 14:50Z, then production <= 12 h |
+| Nestor | BUCKKEEP CPU (C:/Prometheus-worktrees/nestor-buckkeep-2026-10-05) | X-TASK-GATE v2 (roles/Nestor/prompts/2026-10-05_xtg_v2_science_order/) | DONE: INSTRUMENT_UNREACHABLE (TRANSIENT_ONLY); Stage 1 not run (7a521dc91) |
+| Aether | M2 (moved from BUCKKEEP) | ER01 | production launched 11:30Z, 38 units, about 9.1 h (prereg 7ce2a58b9) |
+| Techne | M3, flying RunPod A40 | TECHNE-123A, directive 8 ($10 cap) | production in flight; key held on a physical carrier, not in git |
+| Aphrodite | harry1 (M4) | C-006 Beta-01 T09 | frozen; compute hold until 12:45Z |
+
+- **X-TASK-GATE:** the original freeze 62d30e443 stays DO_NOT_DISPATCH_AS_FROZEN and was not executed. v2 superseded
+  it under an operator order, and the v2 result is above.
+- **Nestor's note:** Nestor says the operator ruled that the historical M1-drain and pm-data items do not block this
+  experiment.
