@@ -6,18 +6,16 @@
   "pairs_planned": 12,
   "window_hours": 4,
   "current": {
-    "cycle": 10,
-    "window": "TEST",
-    "index": 10,
-    "opened_utc": "2026-10-05T13:20:00Z",
-    "due_close_utc": "2026-10-05T17:20:00Z",
-    "active_thread": "R2 candidacy",
+    "cycle": 11,
+    "window": "DEV",
+    "index": 11,
+    "opened_utc": "2026-10-05T13:40:00Z",
+    "due_close_utc": "2026-10-05T17:40:00Z",
+    "active_thread": "R2 derivation stability",
     "apparatus_version": "v2b-2 + gtc",
-    "experiment": "T10 OBSERVE breadth (candidacy)",
-    "attempt": 1,
-    "goal": "run t10_observe.py run 4 -> score 4 -> report (4 workers, BLAS threads=1)"
+    "goal": "verify non-monotone derivation (re-derive seeds 1, 6, 13 at O4 vs O10; diff candidate sets); freeze T11 accordingly"
   },
-  "last_disposition": "DEV-10 DONE",
+  "last_disposition": "TEST-10 MEASURED (candidacy not positive; starvation rescued)",
   "unresolved_defects": [
     "no receipt check for no-donor-state (S4 cond 8 class)",
     "ruler v2.1 residual 8/47 + 24.5% chance floor",
@@ -28,9 +26,9 @@
     "validation-draw variance: g0 at breadth 12 is 76 (T08 draw) vs 93 (T09 draw); criterion tests must fix the draw"
   ],
   "next_intended": {
-    "window": "DEV",
+    "window": "TEST",
     "index": 11,
-    "plan": "diagnose T10; T11 from the result"
+    "plan": "T11 from DEV-11 diagnosis (candidate: monotone union-of-nested-observation derivation under g10)"
   },
   "missed_wake_rule": "run the due window once; never burst",
   "history": [
@@ -302,7 +300,24 @@
       "disposition": "DONE: first broken rung = candidacy (R2). T10 OBSERVE breadth 4->10 frozen; supply 15/15; continuity 2/2 exact",
       "report": "beta01/windows/D10_DEV_REPORT.md",
       "next_frozen": "beta01/windows/T10_OBS_SPEC.md"
+    },
+    {
+      "cycle": 10,
+      "window": "TEST",
+      "index": 10,
+      "opened_utc": "2026-10-05T13:20:00Z",
+      "closed_utc": "2026-10-05T13:40:00Z",
+      "active_thread": "R2 candidacy",
+      "apparatus_version": "v2b-2 + gtc",
+      "experiment": "T10 OBSERVE breadth (candidacy)",
+      "attempt": 1,
+      "disposition": "MEASURED: gate pass (continuity 2/2, NULL OFF 0/15). CANDIDACY_POSITIVE NO (98 -> 99; 4/3/8; p 0.5). STARVATION_RESCUE YES (seeds 0: 0->11, 7: 0->3; also 9: 0->5). Harms: 6 8->0, 13 7->0, 1 10->5. Derivation non-monotone in observation (hypothesis, verify in DEV-11); first broken rung = R2 derivation stability.",
+      "report": "beta01/windows/T10_REPORT_AND_REVIEW_PACKET.md",
+      "receipts": [
+        "beta01/runs/T10_OBS/T10_RESULT.json",
+        "beta01/runs/T10_OBS/T10_DONORS.jsonl"
+      ]
     }
   ],
-  "compute_ledger_note": "rolling 24h est ~45 core-h at 13:15Z 2026-10-05 (T53 tail rolls off by 14:43Z -> ~39; T09 ~2 incl. killed attempt)"
+  "compute_ledger_note": "rolling 24h est ~43 core-h at 13:40Z 2026-10-05 (T10 ~1.1; T53 tail rolls off by 14:43Z)"
 }
