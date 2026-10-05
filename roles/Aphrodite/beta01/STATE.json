@@ -7,15 +7,17 @@
   "window_hours": 4,
   "current": {
     "cycle": 12,
-    "window": "DEV",
+    "window": "TEST",
     "index": 12,
-    "opened_utc": "2026-10-05T14:15:00Z",
-    "due_close_utc": "2026-10-05T18:15:00Z",
-    "active_thread": "replication (fresh seeds, powered)",
+    "opened_utc": "2026-10-05T14:17:00Z",
+    "due_close_utc": "2026-10-05T18:17:00Z",
+    "active_thread": "replication",
     "apparatus_version": "v2b-2 + gtc",
-    "goal": "design T12: powered fresh-seed replication of g11 O10 vs g0 O4 / g10 O10; supply + compute feasibility"
+    "experiment": "T12 fresh-seed replication (LIN 16-23)",
+    "attempt": 1,
+    "goal": "t12_replicate.py supply 4 -> run 4 -> score 4 -> report; then Beta-01 close synthesis"
   },
-  "last_disposition": "TEST-11 MEASURED (not positive under frozen rule; underpowered)",
+  "last_disposition": "DEV-12 DONE",
   "unresolved_defects": [
     "no receipt check for no-donor-state (S4 cond 8 class)",
     "ruler v2.1 residual 8/47 + 24.5% chance floor",
@@ -28,9 +30,9 @@
     "pre-registration power check missing: sign test over few treatable seeds has attainable min p >= .05 (T11); compute attainable min p before freeze"
   ],
   "next_intended": {
-    "window": "TEST",
+    "window": "CLOSE",
     "index": 12,
-    "plan": "T12 fresh-seed replication (or SUPPLY_LIMITED), then Beta-01 close synthesis"
+    "plan": "Beta-01 close synthesis (7 directive questions)"
   },
   "missed_wake_rule": "run the due window once; never burst",
   "history": [
@@ -337,7 +339,7 @@
       "window": "TEST",
       "index": 11,
       "opened_utc": "2026-10-05T13:50:00Z",
-      "closed_utc": "2026-10-05T14:15:00Z",
+      "closed_utc": "2026-10-05T14:07:00Z",
       "active_thread": "R3 memorisation in selection",
       "apparatus_version": "v2b-2 + gtc",
       "experiment": "T11 abstraction-only candidacy (g11)",
@@ -348,6 +350,18 @@
         "beta01/runs/T11_ABS/T11_RESULT.json",
         "beta01/runs/T11_ABS/T11_DONORS.jsonl"
       ]
+    },
+    {
+      "cycle": 12,
+      "window": "DEV",
+      "index": 12,
+      "opened_utc": "2026-10-05T14:07:00Z",
+      "closed_utc": "2026-10-05T14:17:00Z",
+      "active_thread": "replication",
+      "apparatus_version": "v2b-2 + gtc",
+      "disposition": "DONE: first broken rung = evidential (no unexposed, powered replication). T12 fresh-seed replication (W8 LIN 16-23) frozen; sign-flip primary; K1/K2 pass; power limit stated pre-data",
+      "report": "beta01/windows/D12_DEV_REPORT.md",
+      "next_frozen": "beta01/windows/T12_REPL_SPEC.md"
     }
   ],
   "compute_ledger_note": "rolling 24h est ~42 core-h at 14:15Z 2026-10-05 (T53 rolled off ~14:43Z; Beta today: T09 ~2, T10 ~1.1, D11 ~0.3, T11 ~1.3)"
