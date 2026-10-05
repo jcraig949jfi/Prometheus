@@ -88,9 +88,19 @@ Loose ends from adding ubu003 and the ELSA access. Tick with a date.
 - [x] **ubu005 enclosure drop 2026-10-04 15:24Z** (cable bumped while a keyboard was unplugged): root went emergency_ro,
       worker crash-looped on git fetch. A remote reboot HANGS ("Failed to execute shutdown binary"); the fix is a hard
       power cycle. Recovered 16:2xZ, no fs errors. Wired .222 is now the primary route. Strain-relieve the enclosure cable.
-- [ ] **ubu006 RAM upgrade** (operator has the stick): 2 DIMM slots, 16 GB max, DIMM1 4 GB DDR3-1600, DIMM2 empty. Desktop
-      DIMM, not SODIMM. Check with `sudo dmidecode -t memory` after.
+- [x] **ubu006 RAM upgrade** done 2026-10-04 ~20:50Z: now **16 GB = 2x 8 GB DDR3-1600** (DIMM1+DIMM2, mfr 1315, both
+      at 1600 MT/s, verified with dmidecode; `free` 15 GiB). The original 4 GB K531R8-HYA stick was removed. Worker came
+      back active on its own. Heavy tasks no longer need to avoid ubu006.
 - [ ] **ELSA RAM:** chosen kit = 16 GB (4x4 GB) PC3-10600U DDR3-1333 UDIMM **2Rx8** 1.5 V (Motoeagle). Replace all 3x2 GB.
+      Ordered; arrived 2026-10-05, operator installing it the evening of 2026-10-05 (ELSA powered down for it). After
+      boot: `Get-CimInstance Win32_PhysicalMemory` -> 4 sticks x 4 GB, 1333 MT/s; then restart this seat.
+- [ ] **Toshiba Satellite A665-S6070** (PSAW3U-04301C, ~2010-11, 19 V 4.74 A brick): offered 2026-10-05. Verdict: OK as a
+      light worker (`ubu008`), not urgent (the queue is empty). Likely 1st-gen Core i5 2C/4T, no AVX (confirm with
+      lscpu); 2 SODIMM slots, 8 GB max. Before use: SATA SSD in place of the HDD, 8 GB RAM, clean the fan and repaste
+      (A665s run hot), remove the battery. Then the normal autoinstall + provision_node.sh.
+- [ ] **SSH by hostname from ELSA fails** (2026-10-04): `ubuNNN` resolves to IPv6 link-local and known_hosts has only
+      IPv4 keys -> "Host key verification failed". Use `jcraig@192.168.1.NNN`, or add a `~/.ssh/config` HostName map.
+      ubu004 answers on both .221 and .178.
 - [ ] **ubu007 = Dell Precision M6500** (i7 Q720, 16 GB, Win7 Pro; sentimental, keep Windows intact). Plan (operator
       2026-10-04): **dual boot by enclosure** -- Ubuntu on an SSD in the second USB-C enclosure, BIOS boot order USB
       Storage above Internal HDD: enclosure in -> Ubuntu, unplugged -> Windows 7. **Remove the Windows drive(s) (two
