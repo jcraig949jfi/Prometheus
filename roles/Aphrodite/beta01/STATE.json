@@ -7,17 +7,17 @@
   "window_hours": 4,
   "current": {
     "cycle": 8,
-    "window": "DEV",
+    "window": "TEST",
     "index": 8,
-    "opened_utc": "2026-10-05T00:37:04Z",
-    "due_close_utc": "2026-10-05T04:37:04Z",
-    "active_thread": "TH-019 / R3",
+    "opened_utc": "2026-10-05T00:38:49Z",
+    "due_close_utc": "2026-10-05T04:38:49Z",
+    "active_thread": "TH-019/R3",
     "apparatus_version": "v2b-2 + gtc",
-    "experiment": null,
-    "attempt": null,
-    "goal": "design validation-breadth test (4 vs 12 VALIDATE) on endogenous route; oracle-library reference; fit compute headroom (~3 core-h until 12:00Z)"
+    "experiment": "T08 validation breadth",
+    "attempt": 1,
+    "goal": "measure; then midpoint synthesis 2"
   },
-  "last_disposition": "TEST-7 MEASUREMENT_FAILED (control mis-specified; strong diagnostic)",
+  "last_disposition": "DEV-8 DONE",
   "unresolved_defects": [
     "no receipt check for no-donor-state (S4 cond 8 class)",
     "ruler v2.1 residual 8/47 + 24.5% chance floor",
@@ -27,9 +27,9 @@
     "GTC: UNSEEN stratum transfer floor; count endpoint blind to efficiency; overfitter control unverified"
   ],
   "next_intended": {
-    "window": "TEST",
-    "index": 8,
-    "experiment": "validation breadth (T08); then midpoint synthesis 2"
+    "window": "DEV",
+    "index": 9,
+    "plan": "MIDPOINT SYNTHESIS 2 + next design (R7 v2 or W5P design freeze) after compute headroom"
   },
   "missed_wake_rule": "run the due window once; never burst",
   "history": [
@@ -231,6 +231,18 @@
       "receipts": [
         "beta01/runs/T07_R7E/R7E_RESULT.json"
       ]
+    },
+    {
+      "cycle": 8,
+      "window": "DEV",
+      "index": 8,
+      "opened_utc": "2026-10-05T00:37:04Z",
+      "closed_utc": "2026-10-05T00:38:49Z",
+      "active_thread": "TH-019/R3",
+      "apparatus_version": "v2b-2 + gtc",
+      "disposition": "DONE: T08 validation-breadth frozen (4 -> 12; 15 seeds; supply 15/15)",
+      "report": "beta01/windows/D08_DEV_REPORT.md",
+      "next_frozen": "beta01/windows/T08_VB_SPEC.md"
     }
   ],
   "compute_ledger_note": "rolling 24h ~42 core-h at 23:25Z 2026-10-04 (T53 10.8 from 12:01Z, T52 12.3, T51 9.1, T06 ~6, GTC ~1, misc ~3); T53 rolls off from 12:01Z 2026-10-05"
