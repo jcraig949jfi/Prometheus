@@ -1,9 +1,15 @@
 # Themis backlog (schema: roles/Archaeon/prompts/2026-09-10_backlog/00_BACKLOG_SCHEMA.md)
 
-Currency: 2026-10-05. Charter adopted (Project Moonshot, prong 3); this replaces the
-provisional pre-charter list. Lanes used: ENGINE (hybrid-engine builds), TOOLS (harness/infra),
-EVIDENCE (experiments/results), LIT (literature). The first five are the ones to start now.
-XL rows name the operator decision they need (NEW: ...), so the operator queue is derivable.
+Currency: 2026-10-05. Charter adopted (Project Moonshot, prong 3); Epic EP-MOONSHOT registered
+and design v0.2 is the design of record. Lanes used: ENGINE, TOOLS, EVIDENCE, LIT. The items
+below are now organized under threads TH-MOON-M1..M6 (see ops/epics/EP-MOONSHOT/ and design s12);
+a thread-aligned rewrite of this list is itself an early item. UPDATE 2026-10-05: the four
+operator decisions formerly blocking THEMIS-02/13/17/18 are RESOLVED (substrate wforge+Proteus;
+instrument-first; neural-as-primitive; cloud-scout-mechanism-only) -- see WORK_STATE and design
+s0; those rows are unblocked. New v0.2 items (RC0/RC1/RC2 certificates, two-mode causal ablation,
+reactive-null family, shard-epoch, anti-degeneracy ecology, operational ruler-blindness, the
+CAS-threshold fabric experiment, the planted-bad producer battery for M1) are folded in at the
+thread-aligned rewrite.
 
 THEMIS-01 | Write the launchpad preregistration (arms SYM vs HYB, gates, margins, seed counts, kill + reachability criteria) | EVIDENCE | alpha | M | none | roles/Themis/prompts/2026-10-05_prereg_launchpad/ committed with MANIFEST
 THEMIS-02 | Decide the substrate (wforge+Proteus vs BEE) with a written comparison on ruler/substrate/diversity/cluster-fit | ENGINE | alpha | S | operator decision (NEW: substrate = wforge+Proteus purpose-built-dormant OR BEE demonstrated-not-purpose-built) | decision note in RESPONSIBILITIES.md + memory
