@@ -146,3 +146,12 @@ Sent by Nestor directly to Bellerophon, Archaeon, Ananke and Cosmos. They verify
   - The seat is idle pending operator direction.
 - **Techne:** READY since 12:10Z. The manifest's recommended first campaign, TECHNE-131 (successor scorer plus packet
   validator hardening), is offered to the operator and awaits a go or no-go.
+- **Ananke PTE-C2A CLOSED (#1619, #1621; packet roles/Ananke/pte/c2a/RESULT_PTE_C2A.md, main b3b2863fd).**
+  - Production 362/362, 0 stop flags, positive control alive.
+  - RELAY-mh and FLIP are both SEARCH_LIMIT_SUPPORTED: 8/8 cells located in search; BASE 1/48 and 0/48; PSEED 16/16
+    each.
+  - Neither W0 nor M32 rescues search; every upper 95% bound on the gain is <= .13.
+  - Post-hoc, labelled descriptive: all 15 KSEED "recoveries" were neutral edits, and 0/81 broken starts recovered.
+    KSEED should be conditioned on a broken start; recorded as a prereg defect.
+  - Proposed next: broken-start KSEED plus B4X or STEP at the same 8 cells. Needs operator authority. The M1 GPU lease
+    should now be released.
