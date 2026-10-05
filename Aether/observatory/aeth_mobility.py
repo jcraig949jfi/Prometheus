@@ -121,11 +121,13 @@ def _site_state(f):
             | (f[2].astype(np.uint64) << np.uint64(16)) | (f[3].astype(np.uint64) << np.uint64(24)))
 
 
-def mobility(variant, n=128, warmup=1500, ticks=400, seed_index=0, arm="off"):
+def mobility(variant, n=128, warmup=1500, ticks=400, seed_index=0, arm="off", warmup_arm="on"):
+    """warmup_arm="off" runs the warm-up WITHOUT injected perturbation (review Q4 control: does the noisy warm-up
+    itself freeze the medium?)."""
     seed, rng_seed = S.SEED0 + seed_index, S.RNG0 + seed_index
     t0 = time.time()
     w = PR.World(variant, S.initial(variant, n, rng_seed))
-    par_on = S.params(seed, S.MUT_ON)
+    par_on = S.params(seed, S.MUT_ON if warmup_arm == "on" else 0)
     for t in range(1, warmup + 1):
         w.step(t, par_on)
     if variant == "rcv_sfz":
@@ -166,7 +168,7 @@ def mobility(variant, n=128, warmup=1500, ticks=400, seed_index=0, arm="off"):
     m = meter.metrics()
     out = {"instrument": "aeth_mobility", "prov_version": P.PROV_VERSION, "variant": variant,
             "semantics_id": V.SEMANTICS_ID[variant], "n": n, "warmup": warmup, "ticks": ticks,
-            "seed_index": seed_index, "arm": arm}
+            "seed_index": seed_index, "arm": arm, "warmup_arm": warmup_arm}
     out.update(m)
     out.update({"p1_class": classify(m),
             "residue_share": float(np.mean(cur < n_init)), "mean_age": float(np.mean(age)),
@@ -180,12 +182,13 @@ def main(argv=None):
     ap.add_argument("--law", required=True)
     ap.add_argument("--seed-index", type=int, required=True)
     ap.add_argument("--arm", choices=("off", "on"), default="off")
+    ap.add_argument("--warmup-arm", choices=("on", "off"), default="on")
     ap.add_argument("--n", type=int, default=128)
     ap.add_argument("--warmup", type=int, default=1500)
     ap.add_argument("--ticks", type=int, default=400)
     ap.add_argument("--out", required=True)
     a = ap.parse_args(argv)
-    res = mobility(a.law, a.n, a.warmup, a.ticks, a.seed_index, a.arm)
+    res = mobility(a.law, a.n, a.warmup, a.ticks, a.seed_index, a.arm, a.warmup_arm)
     body = json.dumps({k: v for k, v in res.items() if k != "wall_seconds"}, sort_keys=True, separators=(",", ":"))
     res["result_sha256"] = hashlib.sha256(body.encode()).hexdigest()
     with open(a.out, "w", encoding="utf-8", newline="\n") as fh:

@@ -522,3 +522,45 @@ def test_world_passes_the_snapshot_to_rcv_sfz():
     for x, y in zip(w.f, ref[:5]):
         assert np.array_equal(x, y)
     assert np.array_equal(w.extra["aim_energy"], snap)    # static: never updated by a step
+
+
+def _multi(variant, f, ticks=6, seed=5):
+    a = [x.copy() for x in f]
+    for t in range(1, ticks + 1):
+        out = V.step(variant, H=a[0].shape[0], W=a[0].shape[1], seed=seed, tick=t, opcode=a[0], arg0=a[1],
+                     arg1=a[2], payload=a[3], energy=a[4], **LIVE)
+        a = list(out[:5])
+    return a
+
+
+@pytest.mark.parametrize("corner,ref", [("mob_r0x0e0", "v1"), ("mob_r0x0e1", "str")])
+def test_mob_enumeration_corners_are_v1_and_str_bit_for_bit(corner, ref):
+    rng = np.random.default_rng(21)
+    f = soup(32, rng)
+    for x, y in zip(_multi(corner, f), _multi(ref, f)):
+        assert np.array_equal(x, y)
+
+
+def test_mob_exchange_hands_the_displaced_byte_back_to_the_emitter():
+    f = blank()
+    f[0][2, 1] = K.WRITE_OPCODE; f[1][2, 1] = K.EAST; f[2][2, 1] = K.PAYLOAD; f[3][2, 1] = 21
+    f[3][2, 2] = 5
+    out = run("mob_r0x1e0", [x.copy() for x in f])
+    assert out[3][2, 2] == 21 and out[3][2, 1] == 5          # values swapped: conserved, moved both ways
+
+
+def test_mob_recoil_turns_the_emitter_by_the_displaced_byte():
+    f = blank()
+    f[0][2, 1] = K.WRITE_OPCODE; f[1][2, 1] = K.EAST; f[2][2, 1] = K.PAYLOAD; f[3][2, 1] = 21
+    f[3][2, 2] = 5
+    out = run("mob_r1x0e0", [x.copy() for x in f])
+    assert out[3][2, 2] == 21 and out[1][2, 1] == (K.EAST + 5) & 0xFF and out[3][2, 1] == 21
+
+
+def test_mob_incoming_write_takes_precedence_over_exchange():
+    f = blank()
+    f[0][2, 1] = K.WRITE_OPCODE; f[1][2, 1] = K.EAST; f[2][2, 1] = K.PAYLOAD; f[3][2, 1] = 21
+    f[3][2, 2] = 5
+    f[0][2, 0] = K.WRITE_OPCODE; f[1][2, 0] = K.EAST; f[2][2, 0] = K.PAYLOAD; f[3][2, 0] = 77   # writes A's payload
+    out = run("mob_r0x1e0", [x.copy() for x in f])
+    assert out[3][2, 1] == 77                                   # incoming 77 wins over the exchanged 5
