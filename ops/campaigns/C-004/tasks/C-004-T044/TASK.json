@@ -1,0 +1,64 @@
+{
+  "schema": "prometheus.workgraph.task.v1",
+  "task_id": "C-004-T044",
+  "campaign_id": "C-004",
+  "title": "Apply contract v1.0.4 (launch cap 20, OP-7) with the pinned ledger test, in one commit",
+  "objective": "Set contract.json caps per AMENDMENT_v1.0.4 (X1, X2) and update test_caps_read_from_the_real_contract in the same commit, so main stays green.",
+  "parent_objective": "RSO-METHODS-SLICE-001 S4",
+  "owner_role": "Eupalamus",
+  "quality_class": "Q1",
+  "can_downgrade": false,
+  "escalate_to": "Q2",
+  "depends_on": [
+    "C-004-OP7"
+  ],
+  "owns": [
+    "rso/slice001/contract/contract.json",
+    "rso/slice001/contract/MANIFEST.md",
+    "rso/slice001/tests/test_ledger.py"
+  ],
+  "reads": [
+    "rso/slice001/contract/AMENDMENT_v1.0.4.md"
+  ],
+  "problem": "AMENDMENT_v1.0.4 (OP-7) raises caps.top_level_validation_launches 12 -> 20 and adds caps.launch_accounting (X2 text verbatim). test_ledger.test_caps_read_from_the_real_contract asserts the live value 12, so the field and the test change together; contract.json version 1.0.4; amendments list entry; MANIFEST rewritten.",
+  "non_goals": [
+    "No other contract field",
+    "No ledger.py change"
+  ],
+  "evidence_required": [
+    "RED: the test asserting 20 fails on the v1.0.3 contract",
+    "GREEN: contract 1.0.4, test passes, manifest verifies",
+    "Ledger.from_contract(...).caps.launches == 20"
+  ],
+  "acceptance": {
+    "command": "python -B -m unittest rso.slice001.tests.test_ledger && python -m comms.manifest verify rso/slice001/contract",
+    "condition": "green; contract 1.0.4 with X1/X2 exactly"
+  },
+  "deliverables": [
+    "contract.json 1.0.4",
+    "MANIFEST.md",
+    "test_ledger.py"
+  ],
+  "kind": "software",
+  "status": "READY",
+  "history": [
+    {
+      "status": "PROPOSED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-05T23:21:41Z",
+      "note": "OP-7"
+    },
+    {
+      "status": "READY",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-05T23:21:41Z",
+      "note": "made READY by the coordinator (OP-7)"
+    }
+  ],
+  "authority": "C-004-OP7",
+  "resource_ceiling": {
+    "engineering": "<= 0.25 Q1 seat-hour",
+    "cpu": "development only",
+    "note": "OP-4 caps"
+  }
+}

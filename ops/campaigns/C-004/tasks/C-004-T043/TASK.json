@@ -39,13 +39,19 @@
     "receipt naming the S3 case or edit each change answers"
   ],
   "kind": "software",
-  "status": "PROPOSED",
+  "status": "READY",
   "history": [
     {
       "status": "PROPOSED",
       "by": "Palamedes[harry1-679179c6]",
       "at_utc": "2026-10-05T06:45:12Z",
       "note": "from T040 triage; READY after OP-7 (launch cap for S4)"
+    },
+    {
+      "status": "READY",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-05T23:21:41Z",
+      "note": "made READY by the coordinator (OP-7)"
     }
   ],
   "authority": "operator directive 2026-10-03; OP-5 (repair round reserved for genuine S3 defects)",
@@ -54,5 +60,5 @@
     "cpu": "development only; no ledgered launch in this packet",
     "note": "OP-4 caps"
   },
-  "notes": "COORDINATOR 2026-10-05 (accepting Cadmus #1537): put the E01/E02 fixtures (LAG3_ONLY, SENDS_ONLY) in rso/slice001/tests/test_reset_observer.py, NOT in fixtures/world_cases.py: that file is pinned in the stage-record versions of P8, so editing it would reset those instruments to a new version (B4.1), forcing fresh fire runs and re-registration for a test-only change. The test file is pinned by no stage record."
+  "notes": "COORDINATOR 2026-10-05 (accepting Cadmus #1537): put the E01/E02 fixtures (LAG3_ONLY, SENDS_ONLY) in rso/slice001/tests/test_reset_observer.py, NOT in fixtures/world_cases.py: that file is pinned in the stage-record versions of P8, so editing it would reset those instruments to a new version (B4.1), forcing fresh fire runs and re-registration for a test-only change. The test file is pinned by no stage record. OP-7 (operator): T043 remains narrowed to tests/test_reset_observer.py; do not modify fixtures/world_cases.py."
 }
