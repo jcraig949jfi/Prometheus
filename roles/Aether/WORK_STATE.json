@@ -4,9 +4,9 @@
   "mwo_id": "MWO-0004",
   "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
   "mwo_sha256": "925660b2d2be53af2ee4195391e484d9649bbd4ee828cd60432ce2f0903a99df",
-  "updated_at_utc": "2026-10-05T07:52Z",
+  "updated_at_utc": "2026-10-05T10:25Z",
   "state": "ACTIVE",
-  "state_reason": "Operator directive 2026-10-04 makes Aether an autonomous Phase 2-B research seat (supersedes 'READY -- awaiting Aporia assignment'). Cycle 1, DEV window 1: value-provenance observatory prov0.",
+  "state_reason": "host moved BUCKKEEP -> SPECTREX5 (M2), writer = Aether[m2-95eba442] from this commit (see roles/Aether/HANDOFF_BUCKKEEP_TO_M2_2026-10-05.md)",
   "branch": "aether/mwo0001-2026-09-28",
   "head_sha": "94b63b515e4c08256a85449e919d9182cef94897",
   "head_sha_note": "the latest pushed work commit before this WORK_STATE commit (the file cannot contain its own commit hash)",
@@ -104,14 +104,7 @@
   ],
   "migration_report": "roles/Aether/MIGRATION_REPORT_MWO-0002.json",
   "fp001_result": "roles/Aether/probes/FP-001_RESULT.json",
-  "leases": [
-    {
-      "id": "lse-2a79f41391ee",
-      "resource": "buckkeep:cpu8",
-      "state": "released",
-      "purpose": "E-009 native fallback"
-    }
-  ],
+  "leases": [],
   "incidents": [
     "Fabric ubu001 workers stale since 2026-10-02 10:37 (no claims); TEST-1 ran via R3 native fallback, lease lse-a03858e1b71d released; reported to Aporia"
   ],
@@ -125,7 +118,7 @@
   "resource_status": "local CPU only; about 4 CPU-h in the rolling 24 h (R2 cap 48); no GPU, no paid compute",
   "last_receipt": "Aether/V2B/DEV-3_PACKET.md + TEST-3/PREREGISTRATION.md @ 94b63b515",
   "current_objective": "V2-B cycle 3 closed: TEST-3 MECHANISM_SUPPORTED at P1 (recoil x exchange mobility)",
-  "current_step": "between windows; DEV-4 opens 2026-10-05T11:37Z (P1 ruler refinement)",
+  "current_step": "handoff to M2; DEV-4 opens 2026-10-05T11:37Z on M2 (design: Aether/V2B/TEST-3/OPERATOR_REVIEW.md)",
   "last_push_sha": "94b63b515",
   "last_push_utc": "2026-10-05T03:46:38Z",
   "model": "claude-opus-5-5[1m]",
