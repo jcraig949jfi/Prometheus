@@ -38,15 +38,18 @@ LIMITATIONS = ("draft A A7: what the registered model does not contain is not te
 # World runs -> trace runs in the checker's layout (FD-T015-1)
 
 def _clamp_hook(make, j, v):
-    """At boundary j (after its reset, if any): capture, set a := v, restore into a fresh instance (A5 P5)."""
+    """At boundary j (after its reset, if any): capture, set a := v, restore into the SAME runtime (A5 P5), as
+    the registered CHANNEL instrument does (reset.clamp_answers). C-004-T042 F1: restoring into a fresh instance
+    here made the bound trace:clamp differ from the trace the CHANNEL outcome is computed from for any runtime
+    whose capture omits state (S3.BROKEN.INVERT), and G-RECOMP then accused an honest producer. `make` is kept
+    for the signature; the clamp no longer builds an instance."""
     def hook(rt, point):
         if point != ("RESET", j):
             return rt
         c = rt.capture()
         c["a"] = v
-        fresh = make()
-        fresh.restore(c)
-        return fresh
+        rt.restore(c)
+        return rt
     return hook
 
 
@@ -57,7 +60,7 @@ def world_runs(make, variant="STANDARD"):
                    per episode y_A then the PROBE_A display.
     trace:probe_d  RESET; y_D per episode.
     trace:sends    RESET; per episode two slots "<bit><k>" or "--".
-    trace:clamp    CLAMP; y_A at PROBE_A of episode j+1 after the clamp at j, for j = 1..3, v = 0, 1.
+    trace:clamp    CLAMP; y_A at PROBE_A of episode j+1 after the clamp at j (same runtime), j = 1..3, v = 0, 1.
     Raises world.BoundsViolation if the runtime leaves the registered model.
     """
     hs = W.histories()
