@@ -7,15 +7,17 @@
   "window_hours": 4,
   "current": {
     "cycle": 10,
-    "window": "DEV",
+    "window": "TEST",
     "index": 10,
     "opened_utc": "2026-10-05T13:20:00Z",
     "due_close_utc": "2026-10-05T17:20:00Z",
     "active_thread": "R2 candidacy",
     "apparatus_version": "v2b-2 + gtc",
-    "goal": "freeze T10: OBSERVE breadth 4 -> 10 under g10 (candidacy discriminator); continuity + NULL gate"
+    "experiment": "T10 OBSERVE breadth (candidacy)",
+    "attempt": 1,
+    "goal": "run t10_observe.py run 4 -> score 4 -> report (4 workers, BLAS threads=1)"
   },
-  "last_disposition": "TEST-9 MEASURED (not positive; gate pass)",
+  "last_disposition": "DEV-10 DONE",
   "unresolved_defects": [
     "no receipt check for no-donor-state (S4 cond 8 class)",
     "ruler v2.1 residual 8/47 + 24.5% chance floor",
@@ -26,9 +28,9 @@
     "validation-draw variance: g0 at breadth 12 is 76 (T08 draw) vs 93 (T09 draw); criterion tests must fix the draw"
   ],
   "next_intended": {
-    "window": "TEST",
-    "index": 10,
-    "plan": "T10 OBSERVE-breadth candidacy discriminator"
+    "window": "DEV",
+    "index": 11,
+    "plan": "diagnose T10; T11 from the result"
   },
   "missed_wake_rule": "run the due window once; never burst",
   "history": [
@@ -276,7 +278,7 @@
       "window": "TEST",
       "index": 9,
       "opened_utc": "2026-10-05T01:10:42Z",
-      "closed_utc": "2026-10-05T13:20:00Z",
+      "closed_utc": "2026-10-05T13:12:00Z",
       "active_thread": "R7",
       "apparatus_version": "v2b-2 + gtc",
       "experiment": "T09 subset-benefit selection criterion",
@@ -288,6 +290,18 @@
         "beta01/runs/T09_SUBSET/T09_RESULT.json",
         "beta01/runs/T09_SUBSET/T09_DONORS.jsonl"
       ]
+    },
+    {
+      "cycle": 10,
+      "window": "DEV",
+      "index": 10,
+      "opened_utc": "2026-10-05T13:12:00Z",
+      "closed_utc": "2026-10-05T13:20:00Z",
+      "active_thread": "R2 candidacy",
+      "apparatus_version": "v2b-2 + gtc",
+      "disposition": "DONE: first broken rung = candidacy (R2). T10 OBSERVE breadth 4->10 frozen; supply 15/15; continuity 2/2 exact",
+      "report": "beta01/windows/D10_DEV_REPORT.md",
+      "next_frozen": "beta01/windows/T10_OBS_SPEC.md"
     }
   ],
   "compute_ledger_note": "rolling 24h est ~45 core-h at 13:15Z 2026-10-05 (T53 tail rolls off by 14:43Z -> ~39; T09 ~2 incl. killed attempt)"
