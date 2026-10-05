@@ -84,4 +84,8 @@ Deviations from this order are recorded in the attack-set commit's ATTACK_SET.md
     first test-body read   after commit 2; the time and the first file opened are appended below
     execution + results    commit 3 onward
 
-First test-body read: NOT YET (to be filled in after the attack-set commit).
+First test-body read: NONE. Appended 2026-10-05T06:45Z, after execution: no file under rso/slice001/tests/ was
+opened in this task, before or after the attack-set commit 99084714a; the suite was only run. After that
+commit this instance read ops/campaigns/C-004/DISAGREEMENTS.md, rso/slice001/s2/CLASSIFICATION.md, the CHANNEL
+and RESTART rows of s2/EXTRA/receipts.json and four grep hits in expected/COMPARISON.md (lines naming HCOUNT),
+to check freshness. The order above held: 9af90c053 < 99084714a < 53e65a17e (first execution results).
