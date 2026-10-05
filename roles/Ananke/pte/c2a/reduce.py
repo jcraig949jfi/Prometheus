@@ -21,7 +21,8 @@ Landscape form (S-LOCATED / S-PARTIAL cells, pooled over the family's such cells
   UNRESOLVED      anything else (an arm neither significant nor bounded below .25 = underpowered)
 Family verdict (4 cells): SEARCH_LIMIT_SUPPORTED >= 3 S-LOCATED; SEARCH_LIMIT_NOT_SUPPORTED >= 3 in
   {SEARCH-SUCCEEDS, U-LOCATED}; else MIXED. Fewer than 4 interpretable cells: CELL_LEVEL_ONLY.
-Positive control: SEARCH_HARNESS_FAILED iff k_BASE(control) <= 2 of 8 or a control PSEED is lost.
+Positive control: SEARCH_HARNESS_FAILED iff a control PSEED is lost or (n_BASE >= 4 and k_BASE/n_BASE <= .25,
+  i.e. <= 2 of 8); n_BASE < 4 -> CONTROL_UNDERPOWERED (no core interpretation).
 """
 import glob
 import json
@@ -91,8 +92,13 @@ def main(plan_p, run_dir, out_p):
                 "arms": {a: {"k": sum(v == "TRUE" for v in d.values()), "n": len(d),
                              "indeterminate": sum(v == "INDETERMINATE" for v in d.values())} for a, d in arms.items()}}
         if c["role"] == "RELAY-1h":
-            failed = kB <= 2 or any(v == "FALSE" for v in ps.values())
-            cell["verdict"] = "SEARCH_HARNESS_FAILED" if failed else "CONTROL_ALIVE"
+            lost = any(v == "FALSE" for v in ps.values())
+            if lost or (nB >= 4 and kB / nB <= 0.25):
+                cell["verdict"] = "SEARCH_HARNESS_FAILED"
+            elif nB < 4:
+                cell["verdict"] = "CONTROL_UNDERPOWERED"
+            else:
+                cell["verdict"] = "CONTROL_ALIVE"
             res["control"] = cell
             res["cells"][cid] = cell
             continue
