@@ -28,7 +28,7 @@ import os
 import statistics as st
 import sys
 
-REDUCER_VERSION = "er01_reduce.v1"
+REDUCER_VERSION = "er01_reduce.v2"  # v2: spatial-confinement attack is paired vs R0; top-decile descriptive only
 
 
 def load(unit_dir):
@@ -128,6 +128,7 @@ def paired(cells, pert="P0"):
         if b is None:
             continue
         r = c["late_turnover"] / b["late_turnover"] if b["late_turnover"] > 0 else float("inf")
+        # (persistence and extent are reported per cell; the extent contrast is paired here)
         out.setdefault(c["regime"], []).append(
             {"seed_index": c["seed_index"], "ratio": r,
              "d_frozen_strict": c["frozen_strict"] - b["frozen_strict"]})
@@ -160,20 +161,24 @@ def decide(cells, pairs, rules):
         info["paired_frac_ratio_ge_min"] = frac_up
         sustained = med("persistence") >= R["persistence_min"]
         info["persistence_median"] = med("persistence")
-        mobile = (frac_up >= R["mobile_seed_frac_min"] and sustained and
-                  med("late_turnover") >= R["mobile_turnover_abs_min"] and
-                  med("frozen_strict") <= R["mobile_frozen_strict_max"])
+        mobile = frac_up >= R["mobile_seed_frac_min"] and sustained
         info["mobile_candidate"] = mobile
         if not mobile:
             info["class"] = "NOT_MOBILE"
             per[reg] = info
             continue
-        # Cheap trivial-mobility attack (order s8), seed medians.
+        # Cheap trivial-mobility attack (order s8), seed medians. Temporal:
+        # deterministic short period, or flicker among recently held states.
+        # Field: one field carries the change. Spatial: the extra turnover is
+        # NOT spread over more of the medium than R0's (paired drop in
+        # frozen_strict smaller than the preregistered extent margin).
+        d_frozen = st.median(p["d_frozen_strict"] for p in pr)
+        info["paired_d_frozen_strict_median"] = d_frozen
         attack = {
             "periodic_le16": med("periodic_le16") >= R["trivial_periodic_min"],
             "low_novelty": med("novel_change_frac") <= R["trivial_novelty_max"],
             "one_field": st.median(max(c["field_share"]) for c in cs) >= R["trivial_field_share_min"],
-            "confined": med("top_decile_share") >= R["trivial_top_decile_min"],
+            "spatially_confined": d_frozen > -R["extent_margin_min"],
         }
         info["attack"] = attack
         info["class"] = "MOBILE_BUT_TRIVIAL" if any(attack.values()) else "MOBILE_NONTRIVIAL"
@@ -197,17 +202,40 @@ def main(argv=None):
     ap.add_argument("--rules", default=None)
     ap.add_argument("--out", default=None)
     a = ap.parse_args(argv)
-    units = load(a.unit_dir)
+    allu = load(a.unit_dir)
+    units = [u for u in allu if not u["_file"].startswith("dup_")]
+    dups = []
+    for d in (u for u in allu if u["_file"].startswith("dup_")):
+        orig = [u for u in units if u["_file"] == d["_file"][4:]]
+        dups.append({"dup": d["_file"], "orig": orig[0]["_file"] if orig else None,
+                     "final_digest_equal": bool(orig) and orig[0]["final_digest"] == d["final_digest"],
+                     "series_equal": bool(orig) and orig[0]["series"] == d["series"]})
     cells = [cell_metrics(u) for u in units]
     hashes = sorted({c["regime_table_hash"] for c in cells})
     res = {"schema": "aether.er01.reduction.v1", "reducer": REDUCER_VERSION,
            "unit_dir": a.unit_dir, "units": len(cells), "regime_table_hashes": hashes,
+           "determinism_duplicates": dups,
            "cells": cells, "summary": summarize(cells), "paired_P0": paired(cells)}
     if a.rules:
         raw = open(a.rules, "rb").read()
         rules = json.loads(raw)
         res["rules_sha256"] = hashlib.sha256(raw).hexdigest()
-        res["decision"] = decide(cells, res["paired_P0"], rules)
+        dec = decide(cells, res["paired_P0"], rules)
+        # Validity gates (prereg s5): continuity of R0 under historical
+        # perturbation, and exact determinism of the duplicate units.
+        cont = [c["frozen_net64"] for c in cells if c["regime"] == "R0" and c["pert"] == "P1"]
+        lo, hi = rules["continuity_net64_range"]
+        gates = {
+            "continuity_R0P1_net64_median": st.median(cont) if cont else None,
+            "continuity_ok": bool(cont) and lo <= st.median(cont) <= hi,
+            "duplicates_ok": bool(dups) and all(d["final_digest_equal"] and d["series_equal"] for d in dups),
+            "single_table_hash": len(hashes) == 1,
+        }
+        dec["gates"] = gates
+        if not all(gates[k] for k in ("continuity_ok", "duplicates_ok", "single_table_hash")):
+            dec["disposition_if_valid"] = dec["disposition"]
+            dec["disposition"] = "MEASUREMENT_FAILED"
+        res["decision"] = dec
     txt = json.dumps(res, indent=1)
     if a.out:
         open(a.out, "w", encoding="utf-8").write(txt)
