@@ -90,7 +90,10 @@ def read(result, npz=None):
                 r = "DECAYING"
             else:
                 r = "NO_EFFECT"
+            peak = float(max(point[24:40])) if T >= 40 else float(max(point[24:T]))
             out["readings"]["Q3_persistence"] = {"reading": r, "h_star_last_frame_excluding_zero": (excl[-1] if excl else None),
+                                                 "P_peak_frames_24_39": peak, "P_at_last_frame": float(point[-1]),
+                                                 "decay_ratio_end_over_peak": (float(point[-1]) / peak if peak > 0 else None),
                                                  "frames_after_intervention_evaluated": len(idx), "n_cf_pairs": len(cf), "n_same_pairs": len(same),
                                                  "sign_agreement_pixel": bool(all((ppoint[t] > 0) == (point[t] > 0) for t in idx)) if idx else None}
         else:
