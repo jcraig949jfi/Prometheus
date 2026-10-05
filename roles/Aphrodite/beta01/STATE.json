@@ -6,31 +6,29 @@
   "pairs_planned": 12,
   "window_hours": 4,
   "current": {
-    "cycle": 9,
-    "window": "TEST",
-    "index": 9,
-    "opened_utc": "2026-10-05T01:10:42Z",
-    "due_close_utc": "2026-10-05T05:10:42Z",
-    "active_thread": "R7",
+    "cycle": 10,
+    "window": "DEV",
+    "index": 10,
+    "opened_utc": "2026-10-05T13:20:00Z",
+    "due_close_utc": "2026-10-05T17:20:00Z",
+    "active_thread": "R2 candidacy",
     "apparatus_version": "v2b-2 + gtc",
-    "experiment": "T09 subset-benefit selection criterion",
-    "attempt": 1,
-    "goal": "READY (operator science order 2026-10-05, prompts/2026-10-05_t09_order): launch at 12:45Z, 4 workers, BLAS threads=1",
-    "compute_hold_until_utc": "2026-10-05T12:45:00Z"
+    "goal": "freeze T10: OBSERVE breadth 4 -> 10 under g10 (candidacy discriminator); continuity + NULL gate"
   },
-  "last_disposition": "DEV-9 DONE",
+  "last_disposition": "TEST-9 MEASURED (not positive; gate pass)",
   "unresolved_defects": [
     "no receipt check for no-donor-state (S4 cond 8 class)",
     "ruler v2.1 residual 8/47 + 24.5% chance floor",
     "T4 v1a silent on queries 1-2",
     "T01 erratum: pristine_all_censored field (fix in t1 v2)",
     "A20-A23 P/OFF_0 controls dead on REUSED/CAPABILITY_SAME (recorded; T53 makes them live)",
-    "GTC: UNSEEN stratum transfer floor; count endpoint blind to efficiency; overfitter control unverified"
+    "GTC: UNSEEN stratum transfer floor; count endpoint blind to efficiency; overfitter control unverified",
+    "validation-draw variance: g0 at breadth 12 is 76 (T08 draw) vs 93 (T09 draw); criterion tests must fix the draw"
   ],
   "next_intended": {
-    "window": "DEV",
+    "window": "TEST",
     "index": 10,
-    "plan": "diagnose T09; T10 per midpoint-2 plan"
+    "plan": "T10 OBSERVE-breadth candidacy discriminator"
   },
   "missed_wake_rule": "run the due window once; never burst",
   "history": [
@@ -272,7 +270,25 @@
       "disposition": "DONE: midpoint synthesis 2 (limit = R3 selection criterion); g10 subset criterion; T09 frozen (fresh B12)",
       "report": "beta01/windows/D09_DEV_REPORT.md",
       "next_frozen": "beta01/windows/T09_SUBSET_SPEC.md"
+    },
+    {
+      "cycle": 9,
+      "window": "TEST",
+      "index": 9,
+      "opened_utc": "2026-10-05T01:10:42Z",
+      "closed_utc": "2026-10-05T13:20:00Z",
+      "active_thread": "R7",
+      "apparatus_version": "v2b-2 + gtc",
+      "experiment": "T09 subset-benefit selection criterion",
+      "attempt": 2,
+      "attempt_note": "attempt 1 launched 12:45Z (after compute hold), host low-memory reaper kill ~12:51Z at 16/60 donors; resumed 12:53Z on operator go; exit 0 13:09Z",
+      "disposition": "MEASURED (Outcome B): NULL gate PASS (OFF selected 0/15; NULL 98 <= 98+2). R7_SUBSET_POSITIVE NO: g0 93, g10 98, better/worse/tied 1/0/14, sign p 0.5. g10 == g0 selection in 14/15 seeds; g10-specific rescue seed 4 only. ORACLE10 accepts G1 5/15. Empty seeds: candidacy 4 (0,7,12 zero derived; 9 wrong class), validation content 1 (14). Revision: the R3 criterion is not the dominant limit on fresh supply (g0 B12 swings 76 vs 93 across draws); first broken rung = candidacy (R2/observation supply).",
+      "report": "beta01/windows/T09_REPORT_AND_REVIEW_PACKET.md",
+      "receipts": [
+        "beta01/runs/T09_SUBSET/T09_RESULT.json",
+        "beta01/runs/T09_SUBSET/T09_DONORS.jsonl"
+      ]
     }
   ],
-  "compute_ledger_note": "rolling 24h ~42 core-h at 23:25Z 2026-10-04 (T53 10.8 from 12:01Z, T52 12.3, T51 9.1, T06 ~6, GTC ~1, misc ~3); T53 rolls off from 12:01Z 2026-10-05"
+  "compute_ledger_note": "rolling 24h est ~45 core-h at 13:15Z 2026-10-05 (T53 tail rolls off by 14:43Z -> ~39; T09 ~2 incl. killed attempt)"
 }

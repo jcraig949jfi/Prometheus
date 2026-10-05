@@ -143,3 +143,5 @@ change survive another generation?**
 
 | 2026-10-05 | TEST-8 (validation breadth) MEASURED: breadth 12 HURTS (86 to 76), rescuing 1 of 5 seeds. The R3 limit is the selection criterion (average saving vs subset benefit), not the amount of evidence. DEV-9 opened (midpoint synthesis 2) |
 | 2026-10-05 | DEV-9: midpoint synthesis 2 (the limit is the R3 selection criterion). T09 frozen (subset-benefit criterion g10, fresh breadth-12 validation). TEST-9 opens with a compute hold until about 12:45Z (rolling 48 core-h cap) |
+
+| 2026-10-05 | TEST-9 (T09 subset criterion g10) MEASURED, NOT positive: NULL gate passed (OFF selected 0/15). g0 93 vs g10 98, better/worse/tied 1/0/14, p 0.5. g10 and g0 select the same schema in 14/15 seeds. The empty seeds are candidacy failures (0, 7 and 12 derive nothing; 9 derives the wrong class) plus validation content (14). Revision of midpoint 2: the R3 criterion is not the dominant limit on fresh supply (g0 at breadth 12 swings 76 vs 93 across draws). First broken rung = candidacy. DEV-10 opened (OBSERVE breadth) |
