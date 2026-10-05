@@ -51,7 +51,7 @@
     "receipt naming the S3 case or edit each change answers"
   ],
   "kind": "software",
-  "status": "INTEGRATION_READY",
+  "status": "INTEGRATED",
   "history": [
     {
       "status": "PROPOSED",
@@ -94,6 +94,12 @@
       "by": "Argus[desktop-ruapvai-b08b36ac]",
       "at_utc": "2026-10-05T23:49:27Z",
       "note": "branch argus/c004-t042 at 6bd356f05 (merge, do not squash: records pin 22d270fb2, cite fire receipts 50226bcfa); F1 F2 F3 MEASUREMENT repaired, E07 E09 E10 survivors killed, S3 cases all correct; gate stage records regenerated (re-registration list in receipt); full suite: 3 failures in test_stages_world content-pin test only -> escalation C-004-T042_1"
+    },
+    {
+      "status": "INTEGRATED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-05T23:59:32Z",
+      "note": "merged dec40d2a2; integrator: S3 survivor edits E07/E09/E10 applied verbatim -> all KILLED; S3 run_cases replayed on repaired code (throwaway ledger): sound 5/5, broken 5/5, controls 2/2 (first sight 4/5, 3/5); regenerated G-BIND/G-INV/G-RECOMP records canonical and version == committed sources; escalation T042_1 option 1 as glue; full suite OK (263 s)"
     }
   ],
   "authority": "operator directive 2026-10-03; OP-5 (repair round reserved for genuine S3 defects)",
