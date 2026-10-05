@@ -1,0 +1,195 @@
+{
+ "schema": "pte_c2a.freeze.v1",
+ "experiment": "PTE-C2A search-limit localization",
+ "authority": "roles/Ananke/prompts/2026-10-05_pte_c2a_directive/ (34bcebe4b)",
+ "code_sha": "3a9b96507c8e24fe9700e3218a73a9f79d30d0e5",
+ "code_files": {
+  "c2a_common.py": "6ab60bb54f2a1be1300ca2aee4e327b2f37e5a9ee3658015aac4350cb0f7f257",
+  "admit.py": "43acfd4246c9168de24afbc79fe90d5f255616d96537f1708bce6d1a276df286",
+  "run.py": "92c0ecb6b283e2b5922741cf9a8b82a925260f96411cf2d5e7c1bea5c4339c41",
+  "make_plan.py": "caa01d23eb2b9dc9573823b9e2b4ffa3f515a2149a964ec1c901344db0d9f47e",
+  "reduce.py": "6ea8780d2f03d77c2e3e0c14174ecde02427790d66f8aaeadd3a28150ece7216",
+  "flight1_gates.py": "359bcdf40987f57e5d321248dfac914959f53c9234c64031582caba66ffc0e3c",
+  "test_c2a.py": "9f4874a5532612591149c76d345faeb926f6518aabb508921b0a59317871e1c7"
+ },
+ "prereg_sha256": "c7881eb9c5eb39580092ec6f563140a0884bbb379d823e5e6dc87637e6b3fea5",
+ "plan_sha256": "c0b1634e861c2ac0d0aa7fed14e4bac7b51ec8b253c67c151c77cb0d3ffd4aa3",
+ "admission_files": {
+  "admission\\FLIP_0.jsonl.gz": "82338e1f8ab40b83dbf266e7d8b4118a973af3707d4adc76dad36714d009d208",
+  "admission\\FLIP_100.jsonl.gz": "7295588ff7343b3f8a0a19523870f49d654103421291294e132f8c51f99748dd",
+  "admission\\FLIP_150.jsonl.gz": "3dc730bfa77968f73712b375c2905d16939f5e19b1ab0920b7657853c089e516",
+  "admission\\FLIP_50.jsonl.gz": "8370132c471040e550915e8c2f7e6bba711e4eddc61b6e75a60ab963ad3c76a5",
+  "admission\\RELAY_0.jsonl.gz": "ddb8fc9aae7ae7bbded8d46d9420e03adb2e0d47ab5de3c711e44a35be3b2754",
+  "admission\\RELAY_100.jsonl.gz": "558eccfdf075e6f1040529e13d552e9c092b72d1fecd9282fc43eac4f1a9d3f4",
+  "admission\\RELAY_150.jsonl.gz": "5d7c813a0ac3fed8d155f2f8a07f9f52e2c0b149b5828d770e3fecae73679a84",
+  "admission\\RELAY_50.jsonl.gz": "5f50a175c307dadb9a10d7b36a36cf8e00f77ede1df29eed5bbeeedc37918fb8"
+ },
+ "cells": [
+  {
+   "cell_id": "RELAY-0010-e89a8022",
+   "role": "RELAY-mh",
+   "plant": "relay_refresh",
+   "cell_key": 4042215165,
+   "arms": {
+    "PSEED": 4,
+    "KSEED-1": 4,
+    "KSEED-2": 4,
+    "KSEED-4": 4,
+    "BASE": 12,
+    "W0": 8,
+    "M32": 8
+   },
+   "ceiling": 0.9799985625890811
+  },
+  {
+   "cell_id": "RELAY-0019-eabcdf91",
+   "role": "RELAY-mh",
+   "plant": "relay_refresh",
+   "cell_key": 569089256,
+   "arms": {
+    "PSEED": 4,
+    "KSEED-1": 4,
+    "KSEED-2": 4,
+    "KSEED-4": 4,
+    "BASE": 12,
+    "W0": 8,
+    "M32": 8
+   },
+   "ceiling": 0.9799903714015473
+  },
+  {
+   "cell_id": "RELAY-0027-8dac4bc0",
+   "role": "RELAY-mh",
+   "plant": "relay_refresh",
+   "cell_key": 3455142763,
+   "arms": {
+    "PSEED": 4,
+    "KSEED-1": 4,
+    "KSEED-2": 4,
+    "KSEED-4": 4,
+    "BASE": 12,
+    "W0": 8,
+    "M32": 8
+   },
+   "ceiling": 0.9799957468546957
+  },
+  {
+   "cell_id": "RELAY-0032-a447e46e",
+   "role": "RELAY-mh",
+   "plant": "relay_refresh",
+   "cell_key": 276095894,
+   "arms": {
+    "PSEED": 4,
+    "KSEED-1": 4,
+    "KSEED-2": 4,
+    "KSEED-4": 4,
+    "BASE": 12,
+    "W0": 8,
+    "M32": 8
+   },
+   "ceiling": 0.8463541666666666
+  },
+  {
+   "cell_id": "FLIP-0000-adbab9bf",
+   "role": "FLIP",
+   "plant": "P_FLIP",
+   "cell_key": 2462281308,
+   "arms": {
+    "PSEED": 4,
+    "KSEED-1": 4,
+    "KSEED-2": 4,
+    "KSEED-4": 4,
+    "BASE": 12,
+    "W0": 8,
+    "M32": 8
+   },
+   "ceiling": 1.0
+  },
+  {
+   "cell_id": "FLIP-0004-125dfbff",
+   "role": "FLIP",
+   "plant": "P_FLIP",
+   "cell_key": 3842375552,
+   "arms": {
+    "PSEED": 4,
+    "KSEED-1": 4,
+    "KSEED-2": 4,
+    "KSEED-4": 4,
+    "BASE": 12,
+    "W0": 8,
+    "M32": 8
+   },
+   "ceiling": 0.9765625
+  },
+  {
+   "cell_id": "FLIP-0099-df143630",
+   "role": "FLIP",
+   "plant": "P_FLIP",
+   "cell_key": 2054352727,
+   "arms": {
+    "PSEED": 4,
+    "KSEED-1": 4,
+    "KSEED-2": 4,
+    "KSEED-4": 4,
+    "BASE": 12,
+    "W0": 8,
+    "M32": 8
+   },
+   "ceiling": 1.0
+  },
+  {
+   "cell_id": "FLIP-0167-b6d3fceb",
+   "role": "FLIP",
+   "plant": "P_FLIP",
+   "cell_key": 2036840121,
+   "arms": {
+    "PSEED": 4,
+    "KSEED-1": 4,
+    "KSEED-2": 4,
+    "KSEED-4": 4,
+    "BASE": 12,
+    "W0": 8,
+    "M32": 8
+   },
+   "ceiling": 0.9663964816851222
+  },
+  {
+   "cell_id": "CTRL-RELAY1h-62a7fff921ca3bd8",
+   "role": "RELAY-1h",
+   "plant": "relay_flood",
+   "cell_key": 1337487313,
+   "arms": {
+    "PSEED": 2,
+    "BASE": 8
+   },
+   "ceiling": null
+  }
+ ],
+ "n_jobs": 362,
+ "disjointness": {
+  "held_n": 13312,
+  "train_n": 121472,
+  "admit_n": 1024,
+  "held_x_train": 0,
+  "held_x_admit": 0,
+  "train_x_admit": 0
+ },
+ "production": {
+  "workers": 3,
+  "device": "cuda (M1 RTX 5060 Ti)",
+  "lease": "Fabric skullport:gpu0 lse-659cff0ca264",
+  "deadline_rule": "each worker --deadline-utc = launch + 11h30m; no job starts after it; hard wall 12 h",
+  "projected_wall_h": {
+   "central": 6.61,
+   "conservative": 8.44
+  },
+  "projection_model": "Flight-2 per-tick costs: standard job 0.62 (0.75) s/tick N<=100, 0.85 (1.1) s/tick N=144; M32 x2.2 (x2.4); 3 workers",
+  "run_dir": "C:/Users/jcrai/ananke_runs/pte-c2a/production/run",
+  "launch": "schtasks one-shot per worker from a worktree pinned at the freeze commit; tasks disabled after /run"
+ },
+ "flights": {
+  "flight1": "flight1/gates.json + admission/",
+  "flight2": "flight2/ (FLIGHT-only seeds)"
+ },
+ "frozen_utc": "2026-10-05T11:48:37.667402+00:00"
+}
