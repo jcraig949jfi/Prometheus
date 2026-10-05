@@ -7,17 +7,11 @@
   "window_hours": 4,
   "current": {
     "cycle": 12,
-    "window": "TEST",
+    "window": "CLOSED",
     "index": 12,
-    "opened_utc": "2026-10-05T14:17:00Z",
-    "due_close_utc": "2026-10-05T18:17:00Z",
-    "active_thread": "replication",
-    "apparatus_version": "v2b-2 + gtc",
-    "experiment": "T12 fresh-seed replication (LIN 16-23)",
-    "attempt": 1,
-    "goal": "t12_replicate.py supply 4 -> run 4 -> score 4 -> report; then Beta-01 close synthesis"
+    "goal": "Beta-01 complete; awaiting operator direction (see close synthesis s4)"
   },
-  "last_disposition": "DEV-12 DONE",
+  "last_disposition": "BETA-01 CLOSED (T12 IMPROVER_REPLICATED_POSITIVE YES, tier 2)",
   "unresolved_defects": [
     "no receipt check for no-donor-state (S4 cond 8 class)",
     "ruler v2.1 residual 8/47 + 24.5% chance floor",
@@ -30,9 +24,8 @@
     "pre-registration power check missing: sign test over few treatable seeds has attainable min p >= .05 (T11); compute attainable min p before freeze"
   ],
   "next_intended": {
-    "window": "CLOSE",
-    "index": 12,
-    "plan": "Beta-01 close synthesis (7 directive questions)"
+    "window": "NONE",
+    "plan": "operator decision: g11 higher-power replication / R8 discriminator design / Tier-4 bridge (needs authorisation)"
   },
   "missed_wake_rule": "run the due window once; never burst",
   "history": [
@@ -362,7 +355,34 @@
       "disposition": "DONE: first broken rung = evidential (no unexposed, powered replication). T12 fresh-seed replication (W8 LIN 16-23) frozen; sign-flip primary; K1/K2 pass; power limit stated pre-data",
       "report": "beta01/windows/D12_DEV_REPORT.md",
       "next_frozen": "beta01/windows/T12_REPL_SPEC.md"
+    },
+    {
+      "cycle": 12,
+      "window": "TEST",
+      "index": 12,
+      "opened_utc": "2026-10-05T14:17:00Z",
+      "closed_utc": "2026-10-05T15:45:00Z",
+      "active_thread": "replication",
+      "apparatus_version": "v2b-2 + gtc",
+      "experiment": "T12 fresh-seed replication (LIN 16-23)",
+      "attempt": 1,
+      "disposition": "MEASURED: supply 8/8; gate pass (K1/K2; NULL OFF 0/8). IMPROVER_REPLICATED_POSITIVE YES: g11 O10 60 vs I_0 20, 5/0/3, sign-flip p 0.031 (= attainable min). Effect carried by MEMORISE exclusion alone (g10 O10 = g0 O4 = 20). First replicated R7, tier 2; not R8/RSI.",
+      "report": "beta01/windows/T12_REPORT_AND_REVIEW_PACKET.md",
+      "receipts": [
+        "beta01/runs/T12_REPL/T12_RESULT.json",
+        "beta01/runs/T12_REPL/T12_DONORS.jsonl",
+        "beta01/runs/T12_T51/T51_ROLES.json"
+      ]
+    },
+    {
+      "cycle": 12,
+      "window": "CLOSE",
+      "index": 12,
+      "opened_utc": "2026-10-05T15:45:00Z",
+      "closed_utc": "2026-10-05T15:55:00Z",
+      "disposition": "Beta-01 CLOSED: close synthesis answers the 7 directive questions; ladder stops at R8 (untested); W5P not yet justified",
+      "report": "beta01/windows/BETA01_CLOSE_SYNTHESIS.md"
     }
   ],
-  "compute_ledger_note": "rolling 24h est ~42 core-h at 14:15Z 2026-10-05 (T53 rolled off ~14:43Z; Beta today: T09 ~2, T10 ~1.1, D11 ~0.3, T11 ~1.3)"
+  "compute_ledger_note": "Beta-01 total ~60 core-h on M4; rolling 24h ~43 at 15:45Z 2026-10-05"
 }
