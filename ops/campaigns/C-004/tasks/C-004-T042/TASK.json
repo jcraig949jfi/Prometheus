@@ -51,7 +51,7 @@
     "receipt naming the S3 case or edit each change answers"
   ],
   "kind": "software",
-  "status": "GREEN",
+  "status": "INTEGRATION_READY",
   "history": [
     {
       "status": "PROPOSED",
@@ -88,6 +88,12 @@
       "by": "Argus[desktop-ruapvai-b08b36ac]",
       "at_utc": "2026-10-05T23:49:20Z",
       "note": "T042-owned tests green (110 + stages); S3 cases 5/5 sound, 5/5 broken, 2/2 controls; full suite 3 failures in Cadmus T027 content-pin test only (escalation C-004-T042_1)"
+    },
+    {
+      "status": "INTEGRATION_READY",
+      "by": "Argus[desktop-ruapvai-b08b36ac]",
+      "at_utc": "2026-10-05T23:49:27Z",
+      "note": "branch argus/c004-t042 at 6bd356f05 (merge, do not squash: records pin 22d270fb2, cite fire receipts 50226bcfa); F1 F2 F3 MEASUREMENT repaired, E07 E09 E10 survivors killed, S3 cases all correct; gate stage records regenerated (re-registration list in receipt); full suite: 3 failures in test_stages_world content-pin test only -> escalation C-004-T042_1"
     }
   ],
   "authority": "operator directive 2026-10-03; OP-5 (repair round reserved for genuine S3 defects)",
