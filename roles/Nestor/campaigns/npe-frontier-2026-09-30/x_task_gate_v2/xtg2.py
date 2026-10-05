@@ -76,7 +76,7 @@ N_PAIRS = 16                      # matched cue-flip pairs per episode set (32 p
 GATE_SEED = 43_777_001            # episode set used by the interaction gate and lineage tracking
 HELD_SEED = 43_777_002            # disjoint held-out set, readout only
 COMP_MIN = 0.75                   # competent iff use score >= COMP_MIN on BOTH sets
-TRAJ_EVERY = 50
+TRAJ_EVERY = 50                   # plus every 10 epochs up to epoch 200 (descriptive; verdicts read final)
 GATE_FLOOR = 0.15                 # p_interact = 0.15 + 0.85 * max(u_a, u_b)  (historical form)
 
 
@@ -175,6 +175,7 @@ ARMS = {
     "TG": dict(stage=1, gate="TG", plant=None),
     "SHUF": dict(stage=1, gate="SHUF", plant=None),
 }
+N_SEEDS = {0: 6, 1: 18}
 SEED0 = {0: 43_000_000, 1: 43_100_000, "flight": 43_900_000}
 
 
@@ -238,7 +239,7 @@ def make_runner(arm, seed, epochs=None):
 
         def step(self):
             super().step()
-            if self.epoch % TRAJ_EVERY == 0 and self.st:
+            if self.st and (self.epoch % TRAJ_EVERY == 0 or (self.epoch <= 200 and self.epoch % 10 == 0)):
                 alive = [o for o in self.orgs if o.alive]
                 n = max(1, len(alive))
                 comp = [o for o in alive if self.cache.competent(self._genome(o))]
@@ -425,6 +426,8 @@ def stage0_verdict(res):
     neg = {a: sum(r["CD"] >= SHARE_MIN for r in by[a]) for a in ("PAIR_READ_NO_USE", "PAIR_COPY_ONLY")}
     neg_cs = {a: sum(r["CS"] >= SHARE_MIN for r in by[a]) for a in ("PAIR_READ_NO_USE", "PAIR_COPY_ONLY")}
     copying = {a: sum(r["p11_born_share"] >= SHARE_MIN for r in v) for a, v in by.items()}
+    peak = sum(r["CD_TX_peak"] >= SHARE_MIN for r in by["PAIR_POS"])          # descriptive only
+    est = sum(r["depth"] >= 20 for r in by["PAIR_POS"])                       # descriptive only
     if pos < 3:
         v = "INSTRUMENT_UNREACHABLE"
     elif any(neg.values()) or any(neg_cs.values()):
@@ -434,7 +437,10 @@ def stage0_verdict(res):
     return {"stage0": v, "pos_runs_CD_TX_ge_0.10": pos, "neg_runs_CD_ge_0.10": neg, "neg_runs_CS_ge_0.10": neg_cs,
             "runs_p11_born_share_ge_0.10": copying,
             "negatives_dynamically_nonvacuous": {a: copying[a] >= 3 for a in neg},
-            "pos_runs_CD_ge_0.10": sum(r["CD"] >= SHARE_MIN for r in by["PAIR_POS"])}
+            "pos_runs_CD_ge_0.10": sum(r["CD"] >= SHARE_MIN for r in by["PAIR_POS"]),
+            "descriptive_pos_runs_CD_TX_peak_ge_0.10": peak, "descriptive_pos_runs_established_depth_ge_20": est,
+            "descriptive_subtype": (None if pos >= 3 else
+                                    "TRANSIENT_ONLY" if peak >= 3 else "NOT_FIRING_AT_PEAK_EITHER")}
 
 
 def stage1_verdict(res):
@@ -538,8 +544,24 @@ if __name__ == "__main__":
     elif cmd == "flight":
         n, ep, w = int(sys.argv[2]), int(sys.argv[3]), int(sys.argv[4])
         arms = sys.argv[5].split(",")
-        f = SEED0["flight"]
+        f = SEED0["flight"] + (int(sys.argv[7]) if len(sys.argv) > 7 else 0)
         pool_run([(a, f + s, ep) for s in range(n) for a in arms], HERE / "flights" / sys.argv[6], w)
+    elif cmd == "run":
+        stage, w = int(sys.argv[2]), int(sys.argv[3])
+        out = HERE / "results" / ("stage%d" % stage)
+        if stage == 1:
+            s0 = json.loads((HERE / "STAGE0.json").read_text())
+            if s0["stage0"] != "PASS":
+                raise SystemExit("Stage 0 = %s: Stage 1 is not run" % s0["stage0"])
+        jobs = [(a, SEED0[stage] + s, None) for a, c in ARMS.items() if c["stage"] == stage
+                for s in range(N_SEEDS[stage])]
+        rows = pool_run(jobs, out, w)
+        assert len(rows) == len(jobs), (len(rows), len(jobs))
+        v = stage0_verdict(rows) if stage == 0 else stage1_verdict(rows)
+        v.update(code_sha=os.environ.get("XTG2_CODE_SHA"), n_runs=len(rows),
+                 wall_s_sum=round(sum(r["wall_s"] for r in rows), 1))
+        (HERE / ("STAGE0.json" if stage == 0 else "VERDICT.json")).write_text(json.dumps(v, indent=1))
+        print(json.dumps(v, indent=1))
     elif cmd == "one":
         print(json.dumps(run_one(sys.argv[2], int(sys.argv[3]), HERE / "scratch",
                                  int(sys.argv[4]) if len(sys.argv) > 4 else None), indent=1))
