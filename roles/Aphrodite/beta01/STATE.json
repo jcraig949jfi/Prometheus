@@ -6,18 +6,16 @@
   "pairs_planned": 12,
   "window_hours": 4,
   "current": {
-    "cycle": 11,
-    "window": "TEST",
-    "index": 11,
-    "opened_utc": "2026-10-05T13:50:00Z",
-    "due_close_utc": "2026-10-05T17:50:00Z",
-    "active_thread": "R3 memorisation in selection",
+    "cycle": 12,
+    "window": "DEV",
+    "index": 12,
+    "opened_utc": "2026-10-05T14:15:00Z",
+    "due_close_utc": "2026-10-05T18:15:00Z",
+    "active_thread": "replication (fresh seeds, powered)",
     "apparatus_version": "v2b-2 + gtc",
-    "experiment": "T11 abstraction-only candidacy (g11)",
-    "attempt": 1,
-    "goal": "run t11_absonly.py run 4 -> score 4 -> report"
+    "goal": "design T12: powered fresh-seed replication of g11 O10 vs g0 O4 / g10 O10; supply + compute feasibility"
   },
-  "last_disposition": "DEV-11 DONE",
+  "last_disposition": "TEST-11 MEASURED (not positive under frozen rule; underpowered)",
   "unresolved_defects": [
     "no receipt check for no-donor-state (S4 cond 8 class)",
     "ruler v2.1 residual 8/47 + 24.5% chance floor",
@@ -26,12 +24,13 @@
     "A20-A23 P/OFF_0 controls dead on REUSED/CAPABILITY_SAME (recorded; T53 makes them live)",
     "GTC: UNSEEN stratum transfer floor; count endpoint blind to efficiency; overfitter control unverified",
     "validation-draw variance: g0 at breadth 12 is 76 (T08 draw) vs 93 (T09 draw); criterion tests must fix the draw",
-    "r7e._donor drops selection_table/selected name; 'selected_schema None' conflates INHERITED and MEMORISE (T09/T10 errata)"
+    "r7e._donor drops selection_table/selected name; 'selected_schema None' conflates INHERITED and MEMORISE (T09/T10 errata)",
+    "pre-registration power check missing: sign test over few treatable seeds has attainable min p >= .05 (T11); compute attainable min p before freeze"
   ],
   "next_intended": {
-    "window": "DEV",
+    "window": "TEST",
     "index": 12,
-    "plan": "diagnose T11; T12 = cross-check/sham re-test of strongest positive (midpoint-2 plan), then close synthesis"
+    "plan": "T12 fresh-seed replication (or SUPPLY_LIMITED), then Beta-01 close synthesis"
   },
   "missed_wake_rule": "run the due window once; never burst",
   "history": [
@@ -332,7 +331,24 @@
       "disposition": "DONE: D11 diagnostic refutes non-monotone derivation; MEMORISE wins g10 (T09 7,9,14; T10 6,12,13,14), never transfers. Errata on T09/T10 reports. T11 abstraction-only candidacy (g11) frozen; K1/K2 pass",
       "report": "beta01/windows/D11_DEV_REPORT.md",
       "next_frozen": "beta01/windows/T11_ABS_SPEC.md"
+    },
+    {
+      "cycle": 11,
+      "window": "TEST",
+      "index": 11,
+      "opened_utc": "2026-10-05T13:50:00Z",
+      "closed_utc": "2026-10-05T14:15:00Z",
+      "active_thread": "R3 memorisation in selection",
+      "apparatus_version": "v2b-2 + gtc",
+      "experiment": "T11 abstraction-only candidacy (g11)",
+      "attempt": 1,
+      "disposition": "MEASURED: gate pass (K1/K2; NULL OFF 0/15; MEMORISE 0). ABSTRACTION_ONLY_POSITIVE NO (123 vs 99; 4/0/11; p 0.0625 = attainable minimum with 4 treatable seeds; INVALID_DESIGN power component recorded). IMPROVER_CUMULATIVE NO (123 vs 93; 6/2/7; p 0.14). Mechanism confirmed at selection level; all MEMORISE-won seeds gain; exposed seeds. No R7-positive label issued.",
+      "report": "beta01/windows/T11_REPORT_AND_REVIEW_PACKET.md",
+      "receipts": [
+        "beta01/runs/T11_ABS/T11_RESULT.json",
+        "beta01/runs/T11_ABS/T11_DONORS.jsonl"
+      ]
     }
   ],
-  "compute_ledger_note": "rolling 24h est ~43 core-h at 13:40Z 2026-10-05 (T10 ~1.1; T53 tail rolls off by 14:43Z)"
+  "compute_ledger_note": "rolling 24h est ~42 core-h at 14:15Z 2026-10-05 (T53 rolled off ~14:43Z; Beta today: T09 ~2, T10 ~1.1, D11 ~0.3, T11 ~1.3)"
 }
