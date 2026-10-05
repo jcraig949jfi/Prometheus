@@ -1,0 +1,80 @@
+{
+  "schema": "prometheus.workgraph.task.v1",
+  "task_id": "C-004-OP5",
+  "campaign_id": "C-004",
+  "title": "OPERATOR DECISION OP-5: S2 mismatch classification (C-004-T020_1)",
+  "objective": "The operator accepts or rejects the coordinator's classification of the 8 S2 matrix disagreements.",
+  "owner_role": "operator",
+  "quality_class": "Q2",
+  "can_downgrade": false,
+  "escalate_to": "operator",
+  "depends_on": [],
+  "problem": "ops/campaigns/C-004/escalations/C-004-T020_1.md",
+  "non_goals": [
+    "No work is executed under this packet"
+  ],
+  "evidence_required": [
+    "the ruling recorded verbatim"
+  ],
+  "acceptance": {
+    "condition": "ruling recorded; CLOSED"
+  },
+  "deliverables": [
+    "ops/campaigns/C-004/escalations/C-004-T020_1_RESPONSE.md"
+  ],
+  "kind": "operations",
+  "red_required": false,
+  "status": "CLOSED",
+  "history": [
+    {
+      "status": "PROPOSED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-05T05:23:02Z",
+      "note": "escalation C-004-T020_1"
+    },
+    {
+      "status": "READY",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-05T05:23:02Z",
+      "note": "recorded"
+    },
+    {
+      "status": "CLAIMED",
+      "by": "operator[recorded by Palamedes harry1-679179c6]",
+      "at_utc": "2026-10-05T05:23:02Z",
+      "note": "OP-5 RULING (operator, chat to Palamedes, 2026-10-05): ACCEPT CLASSIFICATION. Accept the C-004-T020 S2 mismatch classification as written. No implementation repair and no contract amendment before S3. Disposition: X18 TABLE; X19 TABLE; X06 prose/reason and standing differences TABLE; X06 missing-receipt authority (UNQUALIFIED vs n/a) CONTRACT GAP, preserve explicitly for S5 resolution; X02 TABLE. The decisive observation is that the implementation and Pallas's independently prepared table agree on the outcome value for every case; the remaining eight disagreements do not establish an implementation defect. Do not spend the single repair round on these discrepancies. Do not revise the contract after observing S2 outcomes. Preserve FREEZE_S2 exactly as committed and carry the table corrections and contract gap into the final reporting/reconciliation stage. Close T020/S2 under this ruling and make T030 / S3 READY for Pallas. Pallas should receive the frozen implementation and tests and perform the preregistered adversarial review without first modifying the S2 table or implementation. Any genuine defect found in S3 can then compete for the available repair round."
+    },
+    {
+      "status": "IMPLEMENTING",
+      "by": "operator[recorded by Palamedes harry1-679179c6]",
+      "at_utc": "2026-10-05T05:23:02Z",
+      "note": "ruling recorded"
+    },
+    {
+      "status": "GREEN",
+      "by": "operator[recorded by Palamedes harry1-679179c6]",
+      "at_utc": "2026-10-05T05:23:02Z",
+      "note": "ruling recorded"
+    },
+    {
+      "status": "INTEGRATION_READY",
+      "by": "operator[recorded by Palamedes harry1-679179c6]",
+      "at_utc": "2026-10-05T05:23:02Z",
+      "note": "ruling recorded"
+    },
+    {
+      "status": "INTEGRATED",
+      "by": "operator[recorded by Palamedes harry1-679179c6]",
+      "at_utc": "2026-10-05T05:23:02Z",
+      "note": "ruling recorded"
+    },
+    {
+      "status": "CLOSED",
+      "by": "operator[recorded by Palamedes harry1-679179c6]",
+      "at_utc": "2026-10-05T05:23:02Z",
+      "note": "OP-5 RULING (operator, chat to Palamedes, 2026-10-05): ACCEPT CLASSIFICATION. Accept the C-004-T020 S2 mismatch classification as written. No implementation repair and no contract amendment before S3. Disposition: X18 TABLE; X19 TABLE; X06 prose/reason and standing differences TABLE; X06 missing-receipt authority (UNQUALIFIED vs n/a) CONTRACT GAP, preserve explicitly for S5 resolution; X02 TABLE. The decisive observation is that the implementation and Pallas's independently prepared table agree on the outcome value for every case; the remaining eight disagreements do not establish an implementation defect. Do not spend the single repair round on these discrepancies. Do not revise the contract after observing S2 outcomes. Preserve FREEZE_S2 exactly as committed and carry the table corrections and contract gap into the final reporting/reconciliation stage. Close T020/S2 under this ruling and make T030 / S3 READY for Pallas. Pallas should receive the frozen implementation and tests and perform the preregistered adversarial review without first modifying the S2 table or implementation. Any genuine defect found in S3 can then compete for the available repair round."
+    }
+  ],
+  "authority": "C-004-T020 acceptance; CONTRACT.md R4",
+  "notes": "OPERATOR DECISION packet (see C-004-OP1 notes). The S5 decision packet planned as OP5 in T050 becomes OP6."
+}
