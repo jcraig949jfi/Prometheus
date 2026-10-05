@@ -3,7 +3,7 @@
   "version": "1",
   "entrypoint": "run.py",
   "args": [],
-  "description": "TECHNE-123A: Open-Oasis 500M interactive-world qualification (operator directive 8, 2026-10-05). Flight 2 plan: eight 64-frame trajectories (seeds 0,1 x FWD/TURN/INTERVENE + FWD_s0 replicate + NOOP_s0) from the upstream sample prompt; weights hash-verified against the official Etched/oasis-500m LFS sha256; latents + 90x160 frames + divergence curves as artifacts. Flight 1 (plan flight1) passed at run techne123a-oasis-20261005T104502Z.",
+  "description": "TECHNE-123A: Open-Oasis 500M interactive-world qualification (operator directive 8, 2026-10-05). PRODUCTION plan: 6 seeds x {FWD, BACK, TURN, INTERVENE, NOOP} + 3 exact replicates = 33 trajectories x 64 frames from the upstream sample prompt; weights hash-verified against the official Etched/oasis-500m LFS sha256; latents + 90x160 frames + divergence curves as artifacts, saved after every trajectory. Flights 1 and 2 passed (runs ...104502Z, ...105036Z).",
   "dependencies": {
     "pip": [
       "einops==0.8.0",
@@ -22,7 +22,7 @@
     "min_memory_mib": 40000
   },
   "disk_gb": 30,
-  "max_runtime_s": 2700,
+  "max_runtime_s": 4500,
   "canary": "python3 -c \"import torch, einops, timm; assert torch.cuda.is_available(); print(torch.__version__, torch.cuda.get_device_name(0))\"",
   "env_allowlist": [
     "TECHNE123A_PLAN",
@@ -31,7 +31,7 @@
     "TECHNE123A_DDIM"
   ],
   "env": {
-    "TECHNE123A_PLAN": "flight2",
+    "TECHNE123A_PLAN": "production",
     "TECHNE123A_T": "64",
     "TECHNE123A_SEEDS": "6",
     "TECHNE123A_DDIM": "10"
@@ -46,6 +46,6 @@
   },
   "work_units": {
     "name": "generated_frames",
-    "estimate": 504.0
+    "estimate": 2079.0
   }
 }

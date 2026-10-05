@@ -93,6 +93,8 @@ def actions_for(family, T):
         pass
     elif family == "FWD":
         a[1:, IDX["forward"]] = 1.0
+    elif family == "BACK":
+        a[1:, IDX["back"]] = 1.0
     elif family == "TURN":
         a[1:, IDX["cameraX"]] = 0.25            # +5 degrees of yaw per frame under upstream's camera binning
     elif family == "INTERVENE":
@@ -196,7 +198,7 @@ def plan_for(name, T, seeds):
     if name == "production":
         out = []
         for s in range(seeds):
-            for fam in ("FWD", "TURN", "INTERVENE", "NOOP"):
+            for fam in ("FWD", "BACK", "TURN", "INTERVENE", "NOOP"):
                 out.append(("%s_s%d" % (fam, s), fam, s))
         out += [("FWD_s0_rep", "FWD", 0), ("FWD_s1_rep", "FWD", 1), ("INTERVENE_s0_rep", "INTERVENE", 0)]
         return out
@@ -224,12 +226,42 @@ def pairs_for(labels):
     for i in range(len(fwd)):
         for j in range(i + 1, len(fwd)):
             out.append(("SAME_ACTION_DIFF_SEED", fwd[i], fwd[j]))
+    back = sorted(l for l in base if l.startswith("BACK_s"))
+    for i in range(len(back)):
+        for j in range(i + 1, len(back)):
+            out.append(("SAME_ACTION_DIFF_SEED_BACK", back[i], back[j]))
     for l in base:
-        if l.startswith(("TURN_s", "INTERVENE_s", "NOOP_s")):
+        if l.startswith("TURN_s"):
+            seed = l.split("_s")[-1]
+            if "BACK_s%s" % seed in base:
+                out.append(("COUNTERFACTUAL_TURN_VS_BACK", "BACK_s%s" % seed, l))
+    for l in base:
+        if l.startswith(("BACK_s", "TURN_s", "INTERVENE_s", "NOOP_s")):
             seed = l.split("_s")[-1]
             if "FWD_s%s" % seed in base:
                 out.append(("COUNTERFACTUAL_" + l.split("_s")[0], "FWD_s%s" % seed, l))
     return out
+
+
+def save_all(out_dir, result, lat_store, px_store, T, torch, np, final):
+    """Write result.json (with every pair computable so far) and trajectories.npz. Called after every
+    trajectory so that a run stopped by the runtime ceiling still leaves analyzable evidence; the last
+    call marks the result complete."""
+    result["pairs"] = {}
+    for kind, a, b in pairs_for(list(lat_store)):
+        result["pairs"]["%s|%s|%s" % (kind, a, b)] = dict(kind=kind, a=a, b=b, **divergence(lat_store[a], lat_store[b], px_store[a], px_store[b]))
+    tmp = os.path.join(out_dir, "trajectories.part.npz")      # numpy appends .npz to any other suffix; the rename then fails
+    np.savez_compressed(tmp, **{"lat_" + k: v for k, v in lat_store.items()},
+                        **{"px_" + k: v for k, v in px_store.items()},
+                        **{"act_" + k: actions_for(result["trajectories"][k]["family"], T)[0].numpy() for k in lat_store})
+    os.replace(tmp, os.path.join(out_dir, "trajectories.npz"))
+    result["artifact_bytes"] = {"trajectories.npz": os.path.getsize(os.path.join(out_dir, "trajectories.npz"))}
+    result["gpu_mem_peak_mib"] = int(torch.cuda.max_memory_allocated() / 2 ** 20)
+    result["complete"] = bool(final)
+    tmpj = os.path.join(out_dir, "result.json.part")
+    with open(tmpj, "w", encoding="utf-8") as fh:
+        json.dump(result, fh, indent=1)
+    os.replace(tmpj, os.path.join(out_dir, "result.json"))
 
 
 def main():
@@ -318,19 +350,9 @@ def main():
                                          "pixels_sha256": hashlib.sha256(px.tobytes()).hexdigest()}
         telemetry(tel, {"kind": "trajectory_done", "trajectory": label, "units": len(result["trajectories"]) * (T - 1),
                         "gen_s": result["trajectories"][label]["gen_s"]})
+        save_all(out_dir, result, lat_store, px_store, T, torch, np, final=False)     # partial evidence survives a ceiling
     result["timing_s"]["all_trajectories"] = round(time.monotonic() - t_all, 1)
-
-    for kind, a, b in pairs_for(list(lat_store)):
-        result["pairs"]["%s|%s|%s" % (kind, a, b)] = dict(kind=kind, a=a, b=b, **divergence(lat_store[a], lat_store[b], px_store[a], px_store[b]))
-
-    np.savez_compressed(os.path.join(out_dir, "trajectories.npz"),
-                        **{"lat_" + k: v for k, v in lat_store.items()},
-                        **{"px_" + k: v for k, v in px_store.items()},
-                        **{"act_" + k: actions_for(result["trajectories"][k]["family"], T)[0].numpy() for k in lat_store})
-    result["artifact_bytes"] = {"trajectories.npz": os.path.getsize(os.path.join(out_dir, "trajectories.npz"))}
-    result["gpu_mem_peak_mib"] = int(torch.cuda.max_memory_allocated() / 2 ** 20)
-    with open(os.path.join(out_dir, "result.json"), "w", encoding="utf-8") as fh:
-        json.dump(result, fh, indent=1)
+    save_all(out_dir, result, lat_store, px_store, T, torch, np, final=True)
     telemetry(tel, {"kind": "end", "trajectories": len(lat_store), "units": len(lat_store) * (T - 1),
                     "npz_bytes": result["artifact_bytes"]["trajectories.npz"]})
     print("TECHNE123A_DONE plan=%s trajectories=%d device=%s" % (plan_name, len(lat_store), dev_name))
