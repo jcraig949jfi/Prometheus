@@ -140,3 +140,5 @@ change survive another generation?**
 
 | 2026-10-05 | TEST-7 (R7E) MEASUREMENT_FAILED: the oracle candidate was rejected in 5/15 seeds. Diagnostic: on natural supply the binding R3 limit is validation representativeness (the correct abstraction is rejected where VALIDATE does not show it). DEV-8 opened (validation breadth) |
 | 2026-10-05 | DEV-8: T08 validation breadth frozen (VALIDATE 4 to 12 on the endogenous route). TEST-8 launched |
+
+| 2026-10-05 | TEST-8 (validation breadth) MEASURED: breadth 12 HURTS (86 to 76), rescuing 1 of 5 seeds. The R3 limit is the selection criterion (average saving vs subset benefit), not the amount of evidence. DEV-9 opened (midpoint synthesis 2) |
