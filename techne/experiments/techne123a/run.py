@@ -276,7 +276,8 @@ def main():
     model = DiT_models["DiT-S/2"]()
     ckpt = torch.load(os.path.join(weights_dir, "oasis500m.pt"), weights_only=True, map_location="cpu")
     missing, unexpected = model.load_state_dict(ckpt, strict=False)      # upstream generate.py: strict=False for .pt
-    result["weights"]["dit_load"] = {"missing_keys": len(missing), "unexpected_keys": len(unexpected)}
+    result["weights"]["dit_load"] = {"missing_keys": len(missing), "unexpected_keys": len(unexpected),
+                                     "missing_key_names": sorted(missing)[:64], "unexpected_key_names": sorted(unexpected)[:64]}
     model = model.to(device).eval()
     vae = VAE_models["vit-l-20-shallow-encoder"]()
     vae.load_state_dict(torch.load(os.path.join(weights_dir, "vit-l-20.pt"), weights_only=True, map_location="cpu"))
