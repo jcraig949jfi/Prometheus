@@ -1,0 +1,57 @@
+{
+  "schema": "prometheus.workgraph.receipt.v1",
+  "task_id": "C-004-T043",
+  "campaign_id": "C-004",
+  "attempt_id": "A-001",
+  "role": "Cadmus",
+  "model": "claude-opus-5-5",
+  "quality_class": "Q2",
+  "start_sha": "e13172f5af02dc5a1c9ae765fc4a88b5f2a23a05",
+  "end_sha": "104582feb0014315f2ed1c172d5c48882e92d5ad",
+  "files_changed": [
+    "rso/slice001/tests/test_reset_observer.py"
+  ],
+  "evidence_added": [
+    "TRIAGE_S3 E01: fixture LAG3_ONLY (forbidden bit sent once with k=3 at episode 3; first visible at PROBE_A of episode 6 = boundary 3 + H); frozen ERASE FAIL, witness {history 64, partner 0, j 3, (6, PROBE_A)}",
+    "TRIAGE_S3 E02: fixture SENDS_ONLY (re-sends the previous forbidden bit at every CUE, ignores deliveries); frozen ERASE FAIL, witness {history 64, partner 0, j 3, (4, CUE)}",
+    "fire half: with each S3 edit applied to an in-memory copy of reset.py, ERASE PASSes the matching fixture; both fixtures stay inside BOUNDS and PASS PRESERVE",
+    "fixtures defined in the test file, so no instrument source changed and no stage record is reset (agreed #1543)"
+  ],
+  "evidence_executed": [
+    {
+      "command": "S3 edit E01 / E02 applied to reset.py in a temp copy; run the matching new test",
+      "result": "RED: both fail under their edit (23:26Z)"
+    },
+    {
+      "command": "python -B -m unittest rso.slice001.tests.test_reset_observer (frozen reset.py)",
+      "result": "36 run, 0 failed; 25.7 CPU-s (5 new tests about 1 s)"
+    },
+    {
+      "command": "python -B -m unittest discover -s rso/slice001/tests -t . (merged tree: branch + origin/main 7fd25dc52)",
+      "result": "Ran 361 tests, OK (skipped=1); 130 s wall"
+    }
+  ],
+  "red_observed": {
+    "observed": true,
+    "reason": "test-gap repair: RED is the new tests failing with the S3 edits applied (edits E01/E02 from rso/slice001/challenge/S3/attack_set/edits_A.json); no source change, so no test-before-code order applies"
+  },
+  "result": "DONE_CLEAN",
+  "known_escapes": [
+    "kill shown for exactly the two S3 edits; other horizon or sends edits are not enumerated",
+    "author-tested; the S4 closure set (T041) is the next independent check"
+  ],
+  "unresolved": [],
+  "unblocks": [
+    "C-004-T045"
+  ],
+  "created_at_utc": "2026-10-05T23:30:00Z",
+  "instance": "m1-a86ec5e4",
+  "host": "SKULLPORT",
+  "branch": "cadmus/c004-t043",
+  "worktree_path": "F:/Prometheus-worktrees/cadmus-c004-t043",
+  "resources": {
+    "cpu": "development only, no ledgered launch: two RED runs about 2 s, module 25.7 CPU-s, acceptance about 130 s",
+    "model": "one Q2 session, about 0.25 hour"
+  },
+  "notes": "Repair commit c33e446f55d33060d37f16609e64193ebeaae801; merge commit 104582feb0014315f2ed1c172d5c48882e92d5ad."
+}
