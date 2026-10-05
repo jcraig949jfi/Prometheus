@@ -49,7 +49,7 @@
     "attempts/A-NNN/RECEIPT.json"
   ],
   "kind": "review",
-  "status": "INTEGRATION_READY",
+  "status": "INTEGRATED",
   "history": [
     {
       "status": "PROPOSED",
@@ -86,6 +86,12 @@
       "by": "Pallas[m2-e7da6bde]",
       "at_utc": "2026-10-05T06:40:26Z",
       "note": ""
+    },
+    {
+      "status": "INTEGRATED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-05T06:43:30Z",
+      "note": "merged 3bff160c9; order verified (EXPOSURE < attack set < results; no test body opened; nothing frozen modified); first-sight: sound 4/5, broken 3/5, edits 5 killed / 5 survived (all witnessed non-equivalent); findings F1 F2 F3 + probes -> T040 triage"
     }
   ],
   "authority": "operator directive 2026-10-03 s9, s11 (roles/Achilles/prompts/2026-10-03_rso_builder_cell/01_OPERATOR_DIRECTIVE_verbatim.md); decomposed by Palamedes under C-004-T000",
