@@ -1,0 +1,44 @@
+[
+ {
+  "edit": "X1-clamp-before-reset",
+  "killed": true,
+  "summary": [
+   "Ran 135 tests in 81.951s",
+   "FAILED (failures=2, skipped=1)"
+  ],
+  "failing": [
+   "FAIL: test_clamp_trace_equals_the_instruments_clamp_answers (rso.slice001.tests.test_adapter.TestF1ClampSameInstance.test_clamp_trace_equals_the_instruments_clamp_answers)",
+   "FAIL: test_honest_channel_receipt_recomputes_equal (rso.slice001.tests.test_adapter.TestF1ClampSameInstance.test_honest_channel_receipt_recomputes_equal)"
+  ]
+ },
+ {
+  "edit": "X2-custody-cover-inverted",
+  "killed": true,
+  "summary": [
+   "Ran 135 tests in 62.098s",
+   "FAILED (failures=3, errors=3, skipped=1)"
+  ],
+  "failing": [
+   "ERROR: test_gate_authority_qualified_from_these_records (rso.slice001.tests.test_stages_evidence.TestConsumerUse.test_gate_authority_qualified_from_these_records)",
+   "ERROR: test_fire_tests_reproduce (rso.slice001.tests.test_stages_evidence.TestFireTests.test_fire_tests_reproduce)",
+   "ERROR: test_version_equals_committed_blob (rso.slice001.tests.test_stages_evidence.TestRecords.test_version_equals_committed_blob)",
+   "FAIL: test_custody_refuses_anchors_omitting_the_bundles_nodes (rso.slice001.tests.test_evidence.TestF2KeeperManifestOfThisBundle.test_custody_refuses_anchors_omitting_the_bundles_nodes)",
+   "FAIL: test_independent_branch_unaffected (rso.slice001.tests.test_checker_render.TestE01.test_independent_branch_unaffected)",
+   "FAIL: test_missing (rso.slice001.tests.test_checker_render.TestE02E03.test_missing)"
+  ]
+ },
+ {
+  "edit": "X3-ginv-observer-insensitive",
+  "killed": true,
+  "summary": [
+   "Ran 135 tests in 63.918s",
+   "FAILED (failures=1, errors=3, skipped=1)"
+  ],
+  "failing": [
+   "ERROR: test_gate_authority_qualified_from_these_records (rso.slice001.tests.test_stages_evidence.TestConsumerUse.test_gate_authority_qualified_from_these_records)",
+   "ERROR: test_fire_tests_reproduce (rso.slice001.tests.test_stages_evidence.TestFireTests.test_fire_tests_reproduce)",
+   "ERROR: test_version_equals_committed_blob (rso.slice001.tests.test_stages_evidence.TestRecords.test_version_equals_committed_blob)",
+   "FAIL: test_observer_run_borrow_is_receipt_without_run (rso.slice001.tests.test_evidence.TestC2ObserverRunBinding.test_observer_run_borrow_is_receipt_without_run)"
+  ]
+ }
+]
