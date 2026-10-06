@@ -1,0 +1,32 @@
+{
+  "schema": "rso.slice001.mutation_edits.v1",
+  "edits": [
+    {
+      "edit_id": "X1-clamp-before-reset",
+      "path": "rso/slice001/adapter.py",
+      "module": "rso.slice001.adapter",
+      "find": "if point != (\"RESET\", j):",
+      "replace": "if point != (\"TICK\", j, \"PROBE_D\"):",
+      "intended_fault": "CHANNEL (touched by F1): the producer's bound trace:clamp clamps a at the last tick BEFORE the reset at j instead of right after it; for any runtime whose reset rewrites a the trace no longer shows the clamped answer, so it disagrees with the CHANNEL outcome (A5 P5: immediately after the reset)",
+      "witness": {"expr": "__import__(\"importlib\").import_module(\"rso.slice001.challenge.S4.closure_set.witnesses\").x1(m)"}
+    },
+    {
+      "edit_id": "X2-custody-cover-inverted",
+      "path": "rso/slice001/evidence.py",
+      "module": "rso.slice001.evidence",
+      "find": "if not set(bundle.receipts) <= set(anchors.nodes):",
+      "replace": "if not set(bundle.receipts) >= set(anchors.nodes):",
+      "intended_fault": "custody (touched by F2): the guard that refuses an anchored manifest omitting presented nodes is inverted; a manifest that does not cover this bundle's nodes can again qualify custody",
+      "witness": {"expr": "__import__(\"importlib\").import_module(\"rso.slice001.challenge.S4.closure_set.witnesses\").x2(m)"}
+    },
+    {
+      "edit_id": "X3-ginv-observer-insensitive",
+      "path": "rso/slice001/evidence.py",
+      "module": "rso.slice001.evidence",
+      "find": "cited[0].get(\"node_id\") != rc.node_id",
+      "replace": "(cited[0].get(\"node_id\") or \"\").split(\":\")[:3] != rc.node_id.split(\":\")[:3]",
+      "intended_fault": "G-INV (touched by F3): the cited row's node_id is compared on subject and predicate only; a receipt may cite the run of the same predicate under another observer",
+      "witness": {"expr": "__import__(\"importlib\").import_module(\"rso.slice001.challenge.S4.closure_set.witnesses\").x3(m)"}
+    }
+  ]
+}
