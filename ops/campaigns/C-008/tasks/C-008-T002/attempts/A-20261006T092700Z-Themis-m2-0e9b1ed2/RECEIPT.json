@@ -1,0 +1,36 @@
+{
+  "schema": "prometheus.workgraph.receipt.v1",
+  "task_id": "C-008-T002",
+  "campaign_id": "C-008",
+  "attempt_id": "A-20261006T092700Z-Themis-m2-0e9b1ed2",
+  "role": "Themis[m2-0e9b1ed2]",
+  "model": "claude-opus-5-5",
+  "quality_class": "Q2",
+  "start_sha": "0867f8577",
+  "end_sha": "8e69de91e1157db07a363a5f787ca85075351828",
+  "files_changed": [
+    "ops/campaigns/C-008/prereg/D4_PREREG.md",
+    "ops/campaigns/C-008/prereg/MANIFEST.md"
+  ],
+  "evidence_added": [
+    "D4 preregistration: question, rig R1/R2, arms, sweep, metrics M1-M7, bounds B1-B5, tripwire, predictions P1-P5, budget, stop rules, GitHub arm caps and checks G1-G7"
+  ],
+  "evidence_executed": [
+    "python -m comms.manifest verify ops/campaigns/C-008/prereg -> verified 1 entries; 0 mismatches; 0 unlisted",
+    "git show origin/main:ops/campaigns/C-008/prereg/D4_PREREG.md | sha256sum -> 52ea7e47ee00063b60224964ce97564e25eab43cddfed9b81df377312141b568 (equals the MANIFEST)",
+    "freeze commit 8e69de91e verified an ancestor of origin/main before any D4 run"
+  ],
+  "red_observed": null,
+  "result": "DONE_CLEAN",
+  "known_escapes": [],
+  "unresolved": [
+    "R2 (ubu003-006) depends on ssh access from M2, not present at freeze"
+  ],
+  "unblocks": [
+    "C-008-T003",
+    "C-008-T004"
+  ],
+  "created_at_utc": "2026-10-06T09:50:00Z",
+  "host": "SPECTREX5",
+  "notes": "document task (red_required false): the evidence is the freeze preceding all D4 data."
+}
