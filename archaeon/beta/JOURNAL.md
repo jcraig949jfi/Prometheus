@@ -11,7 +11,9 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
 |---|---|---|
 | B01 | W2_K2 ceiling: organism limit or search limit? | ORGANISM NOT THE LIMIT; D failed prediction -> B01b running |
 | B02 | shelf -> summit edit path: valley or neutral plateau? | SILENT PLATEAU (done) |
-| B01b | one edit from summit: rescued? waiting-time model? | 6/12, all by gen 10 (early-or-never); H-EROSION open |
+| B01b | one edit from summit: rescued? waiting-time model? | 6/12, all by gen 10 (early-or-never) |
+| B04 | H-EROSION (drift erases near-solvers)? | KILLED (1/6 eroded; replay exact) |
+| B05 | summits: SLOT2 or GENERAL keyed memory? | instrument ready (controls pass); waits on B03 |
 | B03 | BASE vs HEAVY vs RELOC search at equal compute | running |
 
 ## 2026-10-06/07 EXP-1 (opened 2026-10-06T23:48Z)
@@ -49,5 +51,16 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   splice .070, region_swap .031. The same edits with jump fix-up (archaeon/beta/b03_search_arms.py reloc_child):
   insertion .70, duplication .47, deletion .26 (400-child self-test). Structured code is fragile to growth under
   this grammar for a reason that is about EDIT SEMANTICS, not about the organism or the world.
+- B04 (H-EROSION test): deterministic replay of the 12 B01b cells reproduces every summit generation EXACTLY.
+  H-EROSION KILLED as the general explanation. Of the 6 unrescued cells: 4 started at instruction-Levenshtein
+  distance 2-4 from the solver (a single grammar op -- movement, region_swap, deletion -- is several instruction
+  edits, so "one op away" != "one instruction away": my distance ruler did not measure the grammar's metric);
+  cell 10 kept 4-8 organisms at distance 1 for all 16 tracked generations and still never summited (waiting time,
+  not erosion); only cell 9 eroded (distance-1 count 8 -> 0 at gen 6). Rescued cells 7 and 8 started at distance
+  3-4 and returned in 1-3 generations by reversing the SAME op type (movement undoes movement).
+  -> What survives: summit = rare reversal (r ~ 1e-3 per child) x few near copies; not drift.
+- B05 instrument: hand-written GENERAL control (tag/value table on the tape, linear search) scores 1.000 on K=3/K=4;
+  first version scored 0 because I placed the table inside the 112-word read-only code region (writes silently
+  dropped) -- caught by the control, fixed (table at 160, tape 256). Hand solvers label SLOT2 (K3 .69, K4 .54).
 - Next: B01b (done) tests H-PLATEAU quantitatively; then B03 = search arms at equal compute from fresh gen 0
   (baseline / heavy-tailed mutation count / behaviour-novelty) -- prediction: only structural-move arms lift 0/60.

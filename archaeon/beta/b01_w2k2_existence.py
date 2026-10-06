@@ -47,8 +47,8 @@ def _prog(instrs):
     return [w for ins in instrs for w in (list(ins) + [0, 0, 0])[:4]]
 
 
-def manifest(genome, n_regs=10):
-    return {"schema_version": "proteus.player_manifest.v0", "n_regs": n_regs, "tape_words": 128, "genome": genome,
+def manifest(genome, n_regs=10, tape_words=128):
+    return {"schema_version": "proteus.player_manifest.v0", "n_regs": n_regs, "tape_words": tape_words, "genome": genome,
             "code_writable": False, "persist": "all", "tick_budget": 64, "out_cap": 1}
 
 
