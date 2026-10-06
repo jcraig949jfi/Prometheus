@@ -1,0 +1,81 @@
+{
+  "schema": "prometheus.workgraph.task.v1",
+  "task_id": "C-004-T046",
+  "campaign_id": "C-004",
+  "title": "Second and final repair (Argus): C1 manifest choice by artifact match, C2 G-INV observer binding, B3.3 run attribution (v1.0.5)",
+  "objective": "Under OP6, repair C1 and C2 and implement AMENDMENT_v1.0.5 (B3.3 governs), each with a failing test first; regenerate the stage records this invalidates; apply contract v1.0.5.",
+  "parent_objective": "RSO-METHODS-SLICE-001 S4 (second and final repair, OP6)",
+  "owner_role": "Argus",
+  "quality_class": "Q2",
+  "can_downgrade": false,
+  "escalate_to": "Q3",
+  "depends_on": [
+    "C-004-OP6"
+  ],
+  "owns": [
+    "rso/slice001/evidence.py",
+    "rso/slice001/checker.py",
+    "rso/slice001/tests/test_evidence.py",
+    "rso/slice001/tests/test_checker_render.py",
+    "rso/slice001/stages/G-BIND.json",
+    "rso/slice001/stages/G-INV.json",
+    "rso/slice001/stages/G-RECOMP.json",
+    "rso/slice001/stages/fire/",
+    "rso/slice001/stages/evidence_plane.py",
+    "rso/slice001/tests/test_stages_evidence.py",
+    "rso/slice001/contract/contract.json",
+    "rso/slice001/contract/MANIFEST.md"
+  ],
+  "reads": [
+    "rso/slice001/challenge/S4/REPORT.md",
+    "rso/slice001/contract/",
+    "ops/campaigns/C-004/tasks/C-004-OP6/TASK.json",
+    "rso/slice001/contract/AMENDMENT_v1.0.5.md",
+    "rso/slice001/challenge/S4/closure_set/"
+  ],
+  "problem": "S4 closure (T041) open items, operator OP6: C1 -- the keeper holds two manifests with one node set (S2 G0 and S4 G0); the anchor choice takes the earliest exact node-set match, so a reproduced bundle fails G-BIND while custody reads QUALIFIED on the wrong row. Select the registered manifest whose node artifacts actually match the presented receipts (case S4.SOUND.REPRODUCED must be accepted, custody on the matching row). C2 -- bind G-INV execution evidence to the specific observer of the receipt: a receipt for OBSERVER(M, o1) citing the run of OBSERVER(M, o2) must FAIL RECEIPT_WITHOUT_RUN (case S4.BROKEN.OBS_RUN_BORROW; S4 edit X3 must now be killed). B3.3 (AMENDMENT_v1.0.5 Y1-Y3) -- a receipt citing an earlier window's run of its own node must FAIL RECEIPT_WITHOUT_RUN (probe S4.PROBE.STALE_RUN); earlier rows stay valid provenance. Then: regenerate the AUTHOR_TESTED stage records whose pinned files change (canonical bytes, new fire receipts; list paths + hashes for re-registration); apply contract.json v1.0.5 (version, amendments entry, no other field) together with the test that pins the contract version -- and make that pin robust (e.g. assert the version is listed in amendments) so the next amendment does not break it.",
+  "non_goals": [
+    "This is the second and FINAL repair round (OP6: no third)",
+    "No change to world-plane predicates or the producer",
+    "No change to case expectations other than the operator's v1.0.5 ruling",
+    "The S3/S4 records are not rewritten"
+  ],
+  "evidence_required": [
+    "RED per item (REPRODUCED rejected, OBS_RUN_BORROW admitted under edit X3, STALE_RUN admitted) then GREEN",
+    "S4 closure cases replayed with the reviewer's driver: REPRODUCED accepted; OBS_RUN_BORROW and STALE_RUN refused RECEIPT_WITHOUT_RUN; X3 killed",
+    "regenerated stage records canonical, versions == committed sources",
+    "full slice suite green; contract 1.0.5"
+  ],
+  "acceptance": {
+    "command": "python -B -m unittest discover -s rso/slice001/tests -t .",
+    "condition": "all evidence_required items; suite green"
+  },
+  "deliverables": [
+    "repairs + tests",
+    "regenerated stage records + fire receipts",
+    "contract.json v1.0.5",
+    "receipt listing paths/hashes for registration"
+  ],
+  "kind": "software",
+  "status": "READY",
+  "history": [
+    {
+      "status": "PROPOSED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-06T05:55:30Z",
+      "note": "OP6 (b)"
+    },
+    {
+      "status": "READY",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-06T05:55:30Z",
+      "note": "made READY by the coordinator (OP6)"
+    }
+  ],
+  "authority": "C-004-OP6",
+  "resource_ceiling": {
+    "engineering": "<= 1 Q2 seat-hour",
+    "cpu": "development only (no ledgered launch)",
+    "note": "OP-4/OP-7 caps"
+  }
+}

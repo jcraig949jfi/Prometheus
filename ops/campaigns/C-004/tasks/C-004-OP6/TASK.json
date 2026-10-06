@@ -26,7 +26,7 @@
   ],
   "kind": "operations",
   "red_required": false,
-  "status": "READY",
+  "status": "CLOSED",
   "history": [
     {
       "status": "PROPOSED",
@@ -39,6 +39,42 @@
       "by": "Palamedes[harry1-679179c6]",
       "at_utc": "2026-10-06T01:49:58Z",
       "note": "awaiting the operator"
+    },
+    {
+      "status": "CLAIMED",
+      "by": "operator[recorded by Palamedes harry1-679179c6]",
+      "at_utc": "2026-10-06T05:55:30Z",
+      "note": "OP6 FINAL RULING (operator, chat to Palamedes, 2026-10-06): YES TO BOTH. 1. OP6 = (b), then conditionally (c). Authorize one bounded second and final repair for: C1: select the registered manifest whose node artifacts/receipts actually match the presented bundle. C2: bind G-INV execution evidence to the specific observer represented by the receipt. Then run the small fresh closure re-check within the existing remaining C-004 caps. Only if that re-check closes C1/C2 with no new unresolved claim-critical survivor does the native retained-information witness open, as a separate campaign with its own contract, preregistration, and budget. No third C-004 repair round is authorized. 2. B3.3/B6.4 ruling: B3.3 governs. A receipt must cite the inventory/run evidence that actually launched and produced it. An earlier-window run of the same node does not satisfy a later receipt merely because the ledger is cumulative. Historical rows remain valid provenance, but they cannot substitute for the execution evidence belonging to the receipt being adjudicated. Therefore the S4 STALE_RUN probe should refuse with RECEIPT_WITHOUT_RUN, consistent with the F3 attribution repair. Record this transparently as the post-observation operator amendment required by the contract; do not rewrite the earlier S4 result as though this interpretation had already been frozen. Proceed with the C1/C2 repair packets, the cumulative-ledger amendment, and the fresh Pallas closure check. That is the operator decision."
+    },
+    {
+      "status": "IMPLEMENTING",
+      "by": "operator[recorded by Palamedes harry1-679179c6]",
+      "at_utc": "2026-10-06T05:55:30Z",
+      "note": "ruling recorded"
+    },
+    {
+      "status": "GREEN",
+      "by": "operator[recorded by Palamedes harry1-679179c6]",
+      "at_utc": "2026-10-06T05:55:30Z",
+      "note": "ruling recorded"
+    },
+    {
+      "status": "INTEGRATION_READY",
+      "by": "operator[recorded by Palamedes harry1-679179c6]",
+      "at_utc": "2026-10-06T05:55:30Z",
+      "note": "ruling recorded"
+    },
+    {
+      "status": "INTEGRATED",
+      "by": "operator[recorded by Palamedes harry1-679179c6]",
+      "at_utc": "2026-10-06T05:55:30Z",
+      "note": "ruling recorded"
+    },
+    {
+      "status": "CLOSED",
+      "by": "operator[recorded by Palamedes harry1-679179c6]",
+      "at_utc": "2026-10-06T05:55:30Z",
+      "note": "OP6 FINAL RULING (operator, chat to Palamedes, 2026-10-06): YES TO BOTH. 1. OP6 = (b), then conditionally (c). Authorize one bounded second and final repair for: C1: select the registered manifest whose node artifacts/receipts actually match the presented bundle. C2: bind G-INV execution evidence to the specific observer represented by the receipt. Then run the small fresh closure re-check within the existing remaining C-004 caps. Only if that re-check closes C1/C2 with no new unresolved claim-critical survivor does the native retained-information witness open, as a separate campaign with its own contract, preregistration, and budget. No third C-004 repair round is authorized. 2. B3.3/B6.4 ruling: B3.3 governs. A receipt must cite the inventory/run evidence that actually launched and produced it. An earlier-window run of the same node does not satisfy a later receipt merely because the ledger is cumulative. Historical rows remain valid provenance, but they cannot substitute for the execution evidence belonging to the receipt being adjudicated. Therefore the S4 STALE_RUN probe should refuse with RECEIPT_WITHOUT_RUN, consistent with the F3 attribution repair. Record this transparently as the post-observation operator amendment required by the contract; do not rewrite the earlier S4 result as though this interpretation had already been frozen. Proceed with the C1/C2 repair packets, the cumulative-ledger amendment, and the fresh Pallas closure check. That is the operator decision."
     }
   ],
   "authority": "NEXT_ROUND_PLAN_v0.4 s2 S5 (the operator decides)",
