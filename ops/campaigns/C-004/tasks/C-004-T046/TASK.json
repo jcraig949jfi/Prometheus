@@ -57,7 +57,7 @@
     "receipt listing paths/hashes for registration"
   ],
   "kind": "software",
-  "status": "READY",
+  "status": "RED",
   "history": [
     {
       "status": "PROPOSED",
@@ -70,6 +70,18 @@
       "by": "Palamedes[harry1-679179c6]",
       "at_utc": "2026-10-06T05:55:30Z",
       "note": "made READY by the coordinator (OP6)"
+    },
+    {
+      "status": "CLAIMED",
+      "by": "Argus[harry1-a1598f01]",
+      "at_utc": "2026-10-06T06:04:48Z",
+      "note": "claimed; branch argus/c004-t046 base 2bb323eae; host harry1, claude-opus-5-5 Q2"
+    },
+    {
+      "status": "RED",
+      "by": "Argus[harry1-a1598f01]",
+      "at_utc": "2026-10-06T06:11:39Z",
+      "note": "RED at argus/c004-t046 2ee88c6d5: C1 5 fail, B3.3 2 fail on frozen code; C2 test fails under S4 edit X3"
     }
   ],
   "authority": "C-004-OP6",
