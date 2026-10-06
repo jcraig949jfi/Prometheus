@@ -1,0 +1,61 @@
+{
+  "schema": "prometheus.workgraph.receipt.v1",
+  "task_id": "C-004-T045",
+  "campaign_id": "C-004",
+  "attempt_id": "A-001",
+  "role": "Palamedes",
+  "model": "claude-opus-5-5",
+  "quality_class": "Q2",
+  "start_sha": "b1c91e96f",
+  "end_sha": "8b98c2702",
+  "files_changed": [
+    "rso/slice001/s2_run.py (RSO_S2_OUT)",
+    "rso/slice001/s4/ (5 bundles, PRODUCE.json, MATRIX.json/.txt, REGRESSION.md)",
+    "rso/slice001/s2/LEDGER.jsonl (appended)",
+    "rso/slice001/FREEZE_S4.md"
+  ],
+  "evidence_added": [
+    "S4 regression matrix vs the independent table",
+    "claim-by-claim diff S2 vs S4 across 5 bundles",
+    "FREEZE_S4"
+  ],
+  "evidence_executed": [
+    {
+      "command": "RSO_S2_OUT=rso/slice001/s4 python -B -m rso.slice001.s2_run produce --commit 6463d8b61 --ledger rso/slice001/s2/LEDGER.jsonl",
+      "result": "5 launches (9-13 of 20)"
+    },
+    {
+      "command": "python -m ops.custody.registry verify",
+      "result": "chain_ok, 41 rows, head 216829137ae611ea"
+    },
+    {
+      "command": "RSO_S2_OUT=rso/slice001/s4 python -B -m rso.slice001.s2_run matrix",
+      "result": "AGREE 32, PARTIAL 8, DISAGREE 8: identical to S2 (OP-5 items only)"
+    },
+    {
+      "command": "decisions_real S2 vs S4, all claims, all bundles",
+      "result": "1 difference: EXTRA CL-RET(HCOUNT) G-RECOMP FAIL OUTCOME_MISMATCH:value -> PASS; no G-RECOMP FAIL in S4"
+    }
+  ],
+  "red_observed": {
+    "observed": true,
+    "detail": "S3 findings F1-F3 and survivors E01, E02, E07, E09, E10 on the frozen S2 code (REPORT.md)"
+  },
+  "result": "DONE_CLEAN",
+  "known_escapes": [
+    "post-repair figures are the author/integrator's replay; the S4 closure set (T041) is the independent check",
+    "O-S4-1: cumulative ledger inventory -> RUN_UNREPORTED cites the earliest unreported run"
+  ],
+  "unresolved": [],
+  "unblocks": [
+    "C-004-T041"
+  ],
+  "created_at_utc": "2026-10-06T00:37:48Z",
+  "instance": "harry1-679179c6",
+  "host": "harry1",
+  "branch": "palamedes/c004-t045",
+  "worktree_path": "C:/Prometheus-worktrees/palamedes-c004-t020",
+  "resources": {
+    "ledger": "launches 13 of 20; 2465.6 CPU-s of 4800 ledgered; 31.8 MB of 100 MB"
+  }
+}

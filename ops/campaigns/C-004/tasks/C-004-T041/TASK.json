@@ -41,13 +41,19 @@
     "rso/slice001/challenge/S4/"
   ],
   "kind": "review",
-  "status": "PROPOSED",
+  "status": "READY",
   "history": [
     {
       "status": "PROPOSED",
       "by": "Palamedes[harry1-679179c6]",
       "at_utc": "2026-10-03T11:04:14Z",
       "note": "created under C-004-T000 decomposition"
+    },
+    {
+      "status": "READY",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-06T00:37:48Z",
+      "note": "made READY by the coordinator: repair round frozen (FREEZE_S4), S4 regression clean"
     }
   ],
   "authority": "operator directive 2026-10-03 s9, s11 (roles/Achilles/prompts/2026-10-03_rso_builder_cell/01_OPERATOR_DIRECTIVE_verbatim.md); decomposed by Palamedes under C-004-T000",
@@ -59,6 +65,6 @@
     "cpu": "< 5 CPU-minutes",
     "note": "Counts toward the slice caps fixed by C-004-OP1 (NEXT_ROUND_PLAN_v0.4 s6 proposal: 30 CPU-minutes total, 0 GPU, 0 cloud, 100 MB new artifacts, 12 top-level validation launches; mutation children count toward CPU). Stop at the first exhausted cap and keep partial results."
   },
-  "notes": "Reviewer per C-004-OP3 ruling 2026-10-03: Pallas (Fable 5.1) owns; Dionysus is the fallback (eligible). Independence caveat, declared: Pallas is a member of the RSO Builder Cell but writes no production code and is a different model family from the Opus/Sonnet builders. PROPOSED until its inputs exist. Changed by Palamedes[harry1-679179c6] at 2026-10-03T21:48:40Z: owner_role Dionysus -> Pallas, eligible Pallas -> Dionysus. 2026-10-05: also waits on C-004-T045 (S4 regression rerun and FREEZE_S4); the closure set attacks the frozen repaired code.",
+  "notes": "Reviewer per C-004-OP3 ruling 2026-10-03: Pallas (Fable 5.1) owns; Dionysus is the fallback (eligible). Independence caveat, declared: Pallas is a member of the RSO Builder Cell but writes no production code and is a different model family from the Opus/Sonnet builders. PROPOSED until its inputs exist. Changed by Palamedes[harry1-679179c6] at 2026-10-03T21:48:40Z: owner_role Dionysus -> Pallas, eligible Pallas -> Dionysus. 2026-10-05: also waits on C-004-T045 (S4 regression rerun and FREEZE_S4); the closure set attacks the frozen repaired code. 2026-10-06 (READY): frozen repaired surface = rso/slice001/FREEZE_S4.md at 8b98c2702 (FREEZE_S2.md preserved). Touched by the repair: adapter.py (F1 clamp into the same instance), evidence.py (F2 manifest choice by node identity + custody refuses a manifest omitting the bundle's nodes; F3 G-INV RECEIPT_WITHOUT_RUN when the cited row's node_id differs; measurement bound to the predicate version), checker.py; new tests in test_adapter, test_evidence, test_checker_render, test_reset_observer. S4 regression: rso/slice001/s4/REGRESSION.md. Closure set (plan s5): 2 fresh sound, 2 fresh broken, 3 semantic edits covering the touched claim-critical predicates, committed before outcomes; do not modify the implementation, tests or S2 table. Caps left: 7 launches, about 39 ledgered CPU-minutes; charge every launch and mutation child to rso/slice001/s2/LEDGER.jsonl. Reviewer hours: S3 about 55 min, T005 about 20 min, of 3 h.",
   "red_required": false
 }
