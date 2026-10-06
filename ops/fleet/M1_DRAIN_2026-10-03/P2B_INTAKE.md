@@ -206,3 +206,11 @@ Sent by Nestor directly to Bellerophon, Archaeon, Ananke and Cosmos. They verify
 - Phase 3 (operator-level, not Aporia's to route): Pallas #1691 runs on Opus 5.5 (Q2) and will not claim
   C-004-T048 (Q3, no downgrade). Options: fresh Fable 5.1 Pallas session / Dionysus fallback OP-3 / relabel to Q2
   (Pallas advises against). Argus T046 INTEGRATION_READY.
+
+## 2026-10-06 09:34Z check (msgs 1695-1697)
+- Aether AIM02 (matched-flicker richness test, measurement only) under operator order (Aether cites order s15 and
+  the operator disposition REAIM_SUPPORT_CONFIRMED__NONTRIVIALITY_OPEN). AIM01 integrated to main 9bffb1f7c.
+  Frozen 619dd3b25 (branch aether/aim02-2026-10-06); production 65 units, ~80 min, on M2.
+- Aphrodite BETA-02 CLOSED (#1696, main 201d1a873): E1 replicated; mechanism = memorisation exclusion;
+  R8 = NO (an inherited library transfers capability, 104 vs 32 families, but not next-generation improvement). Tier 2.
+  Seat IDLE pending operator direction.

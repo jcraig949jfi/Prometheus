@@ -1,0 +1,121 @@
+{
+ "chains": {
+  "F000": {
+   "approved_code_sha": "8a34b60b8dc6b7c829552a030877809ef262fec5",
+   "digests_equal_transport_free_replay": true,
+   "epochs": 5,
+   "head_index": 5,
+   "validation_states": [
+    "VALIDATED"
+   ]
+  },
+  "F001": {
+   "approved_code_sha": "8a34b60b8dc6b7c829552a030877809ef262fec5",
+   "digests_equal_transport_free_replay": true,
+   "epochs": 5,
+   "head_index": 5,
+   "validation_states": [
+    "VALIDATED"
+   ]
+  },
+  "F002": {
+   "approved_code_sha": "8a34b60b8dc6b7c829552a030877809ef262fec5",
+   "digests_equal_transport_free_replay": true,
+   "epochs": 5,
+   "head_index": 5,
+   "validation_states": [
+    "VALIDATED"
+   ]
+  },
+  "X000": {
+   "approved_code_sha": "0000000000000000000000000000000000000bad",
+   "digests_equal_transport_free_replay": true,
+   "epochs": 2,
+   "head_index": 0,
+   "validation_states": []
+  }
+ },
+ "hosts": [
+  "ubu002"
+ ],
+ "namespace": "d5",
+ "nodes": {
+  "ubu002": {
+   "approval_ref": "origin/main",
+   "code_sha": "8a34b60b8dc6b7c829552a030877809ef262fec5",
+   "git": "git version 2.53.0",
+   "host": "ubu002",
+   "joined_unix": 1791281523,
+   "layout": "per_chain",
+   "namespace": "d5",
+   "node_id": "ubu002",
+   "platform": "Linux-7.0.0-38-generic-x86_64-with-glibc2.43",
+   "python": "3.14.4",
+   "workers": 2
+  }
+ },
+ "outcomes": {
+  "PUBLISHED": 15,
+  "REFUSED_UNAPPROVED": 2
+ },
+ "refusals": [
+  {
+   "attempt_id": "A-20261006T101216Z-ubu002-w0-adf14fc0",
+   "chain_id": "X000",
+   "code_sha": "8a34b60b8dc6b7c829552a030877809ef262fec5",
+   "flags": [
+    "refused:chain-code-not-approved"
+   ],
+   "host": "ubu002",
+   "outcome": "REFUSED_UNAPPROVED"
+  },
+  {
+   "attempt_id": "A-20261006T101211Z-ubu002-w1-44a8fd06",
+   "chain_id": "X000",
+   "code_sha": "8a34b60b8dc6b7c829552a030877809ef262fec5",
+   "flags": [
+    "refused:chain-code-not-approved"
+   ],
+   "host": "ubu002",
+   "outcome": "REFUSED_UNAPPROVED"
+  }
+ ],
+ "remote": "ssh://jcraig@192.168.1.218/home/jcraig/moonshot-lanec/d5-join.git",
+ "validate_all_replay_every_epoch": {
+  "F": {
+   "chains": 3,
+   "states": {
+    "VALIDATED": 15
+   }
+  },
+  "X": {
+   "chains": 1,
+   "states": {}
+  }
+ },
+ "worker_summaries": [
+  {
+   "attempts": 11,
+   "contention_retries_total": 0,
+   "executions": 10,
+   "git_ops_total": 72,
+   "pending_attempts": 0,
+   "polls": {
+    "COMPLETE": 3
+   },
+   "worker_id": "ubu002-w0"
+  },
+  {
+   "attempts": 6,
+   "contention_retries_total": 0,
+   "executions": 5,
+   "git_ops_total": 63,
+   "pending_attempts": 0,
+   "polls": {
+    "BUSY": 9,
+    "COMPLETE": 3
+   },
+   "worker_id": "ubu002-w1"
+  }
+ ]
+}

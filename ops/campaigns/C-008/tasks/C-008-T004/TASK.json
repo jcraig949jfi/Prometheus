@@ -6,7 +6,7 @@
   "can_downgrade": false,
   "escalate_to": "operator",
   "authority": "operator OP-LC1 2026-10-06 (roles/Themis/prompts/2026-10-06_op_lc1/02_OPERATOR_OP-LC1_verbatim.md)",
-  "status": "READY",
+  "status": "BLOCKED",
   "history": [
     {
       "status": "PROPOSED",
@@ -19,6 +19,12 @@
       "by": "Themis[m2-0e9b1ed2]",
       "at_utc": "2026-10-06T08:42:42Z",
       "note": "READY by operator authority OP-LC1 (roles/Themis/prompts/2026-10-06_op_lc1/); coordinator Themis records it"
+    },
+    {
+      "status": "BLOCKED",
+      "by": "Themis[m2-0e9b1ed2]",
+      "at_utc": "2026-10-06T09:46:45Z",
+      "note": "BLOCKED on the operator: a dedicated private GitHub repository + the deploy key ~/.ssh/moonshot_c008_t004_deploy.pub (SHA256:bPHyvqEQyOASdbCso9+UQLilyFngHXR0efxGyPVE5EQ) with write access, or gh login on M2 (not logged in)."
     }
   ],
   "task_id": "C-008-T004",
@@ -44,7 +50,7 @@
     "condition": "semantic checks reported; caps respected; any stop condition recorded verbatim with the run halted"
   },
   "deliverables": [
-    "ops/campaigns/C-008/results/D4_GITHUB/"
+    "ops/campaigns/C-008/evidence/D4_GITHUB/"
   ],
   "resource_ceiling": "2 concurrent workers; 250 write attempts total (OP-LC1)",
   "red_required": false,
