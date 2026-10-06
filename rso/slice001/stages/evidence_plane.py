@@ -17,6 +17,7 @@ Palamedes requests registration from Aporia at T020).
 Python >= 3.8, standard library only.
 """
 import copy
+import hashlib
 import json
 import os
 import sys
@@ -36,13 +37,18 @@ INSTRUMENTS = ("CALIBRATION", "RETENTION", "G-BIND", "G-INV", "G-RECOMP")
 # The id a stage record names (receipt.validate_stage_record; evidence.authority looks up predicate.id).
 RECORD_ID = {"CALIBRATION": "P1", "RETENTION": "P2", "G-BIND": "G-BIND", "G-INV": "G-INV", "G-RECOMP": "G-RECOMP"}
 # The commit each instrument's version is pinned to (version.py's convention, one commit per version). The rulers
-# keep T023A/T023B's pin; the consumer gates are pinned to the C-004-T042 S4 repair (evidence.py, checker.py
-# changed there), whose stage records were regenerated then (B4.1: a new version needs a new record).
-PIN = {"CALIBRATION": V.PINNED, "RETENTION": V.PINNED,
-       "G-BIND": "22d270fb25da57750c7a6c8009280bbdc86457af", "G-INV": "22d270fb25da57750c7a6c8009280bbdc86457af", "G-RECOMP": "22d270fb25da57750c7a6c8009280bbdc86457af"}
+# keep T023A/T023B's pin; the consumer gates are pinned to the C-004-T046 second repair (evidence.py changed
+# there; before it, the C-004-T042 S4 repair at 22d270fb2), whose stage records were regenerated then (B4.1: a new
+# version needs a new record).
+GATE_PIN = "22d270fb25da57750c7a6c8009280bbdc86457af"
+PIN = {"CALIBRATION": V.PINNED, "RETENTION": V.PINNED, "G-BIND": GATE_PIN, "G-INV": GATE_PIN, "G-RECOMP": GATE_PIN}
 STAGES_DIR = os.path.dirname(os.path.abspath(__file__))
 FIRE_DIR = os.path.join(STAGES_DIR, "fire")
 RECORDED_BY = "Argus[desktop-ruapvai-b08b36ac] under C-004-T023B"
+# Who executed and recorded each instrument's CURRENT fire test and record (the rulers' are unchanged since T023B).
+RECORDED_BY_OF = {"CALIBRATION": RECORDED_BY, "RETENTION": RECORDED_BY,
+                  "G-BIND": "Argus[harry1-a1598f01] under C-004-T046", "G-INV": "Argus[harry1-a1598f01] under C-004-T046",
+                  "G-RECOMP": "Argus[harry1-a1598f01] under C-004-T046"}
 
 
 def fire_path(instrument):
@@ -109,7 +115,9 @@ def _g_bind_cases():
              lambda: _bind("E03.STRIP")),
             ("E02.MALFORMED", "REJECT", "FAIL", "SCOPE_MALFORMED:boundary", lambda: _bind("E02.MALFORMED")),
             ("S3 probe MEASUREMENT_LIE (T042)", "REJECT", "FAIL", "SCOPE_MALFORMED:measurement",
-             lambda: _bind_case(_measurement_lie))]
+             lambda: _bind_case(_measurement_lie)),
+            ("S4.SOUND.REPRODUCED (T046 C1): two keeper manifests, one node set", "ACCEPT", "PASS", None,
+             lambda: _bind_case(_reproduced))]
 
 
 def _bind_case(case_fn, claim_id="CL-RET(REG)"):
@@ -121,6 +129,50 @@ def _measurement_lie():
     d = F.g0_dicts()
     d["rcpt:REG:ERASE:STANDARD"]["cell"]["measurement"] = "f" * 64
     return F.Case("MEASUREMENT_LIE", F.make_bundle(d), F.retained(d), EV.FixtureStore(F.stage_rows()), F.claims())
+
+
+def _reproduced():
+    """S4.SOUND.REPRODUCED (T046 C1): the keeper holds an earlier production's manifest of the same 25 node ids
+    (registered first) and this bundle's; the anchors are the keeper's AnchorChoice, resolved per bundle."""
+    d1, d2 = F.g0_dicts(), F.g0_dicts()
+    for x in d1.values():
+        x["created_at_utc"] = "2026-10-03T21:00:00Z"
+    b2 = F.make_bundle(d2)
+    m1, m2 = F.manifest_of(d1), F.manifest_of(d2)
+    rows = [F.row("EVIDENCE_MANIFEST", hashlib.sha256(m1).hexdigest(), at="2026-10-03T22:00:00Z",
+                  path="fixtures/G0_S2/MANIFEST.json")] + F.keeper_rows(d2, b2)
+    store = EV.FixtureStore(rows)
+    anchors = EV.anchors_from_keeper(store, {"fixtures/G0_S2/MANIFEST.json": m1, "fixtures/G0/MANIFEST.json": m2})
+    return F.Case("REPRODUCED", b2, anchors, store, F.claims())
+
+
+def _obs_run_borrow():
+    """S4.BROKEN.OBS_RUN_BORROW (T046 C2): OBSERVER(REG, BOOKKEEP)'s receipt cites OBSERVER(REG, NULL)'s run;
+    its own run row is absent."""
+    d = F.g0_dicts()
+    victim, donor = "rcpt:REG:OBSERVER:BOOKKEEP:STANDARD", "rcpt:REG:OBSERVER:NULL:STANDARD"
+    old = d[victim]["execution"]["run_id"]
+    d[victim]["execution"]["run_id"] = d[donor]["execution"]["run_id"]
+    inv = [r for r in F._inventory(F.g0_dicts())[:-1] if r["run_id"] != old]
+    inv.append({"kind": "TERMINAL", "row_count": len(inv)})
+    return F.Case("OBS_RUN_BORROW", F.make_bundle(d, inventory=inv), F.retained(d), EV.FixtureStore(F.stage_rows()),
+                  F.claims())
+
+
+def _stale_run():
+    """S4.PROBE.STALE_RUN (T046, AMENDMENT_v1.0.5 Y1): REG's PRESERVE receipt cites an EARLIER window's run of its
+    own node; the cumulative, timed inventory is intact (this window's row of that node present, uncited)."""
+    d = F.g0_dicts()
+    now = ("2026-10-03T23:00:00Z", "2026-10-03T23:00:30Z")
+    early = ("2026-10-03T20:00:00Z", "2026-10-03T20:00:30Z")
+    this = [dict(r, start_utc=now[0], end_utc=now[1]) for r in F._inventory(d)[:-1]]
+    before = [{"kind": "RUN", "run_id": "early/%s" % n, "node_id": n, "status": "COMPLETED", "start_utc": early[0],
+               "end_utc": early[1]} for n in sorted(d)]
+    rows = before + this
+    d["rcpt:REG:PRESERVE:STANDARD"]["execution"]["run_id"] = "early/rcpt:REG:PRESERVE:STANDARD"
+    inv = rows + [{"kind": "TERMINAL", "row_count": len(rows)}]
+    return F.Case("STALE_RUN", F.make_bundle(d, inventory=inv), F.retained(d), EV.FixtureStore(F.stage_rows()),
+                  F.claims())
 
 
 def _run_borrow():
@@ -142,7 +194,11 @@ def _g_inv_cases():
             ("G0 without the REG ERASE run row", "REJECT", "FAIL", "RECEIPT_WITHOUT_RUN:rcpt:REG:ERASE:STANDARD",
              lambda: _inv(_without_erase_run)),
             ("S3.BROKEN.RUN_BORROW (T042 F3)", "REJECT", "FAIL", "RECEIPT_WITHOUT_RUN:rcpt:REG:PRESERVE:STANDARD",
-             lambda: _inv(_run_borrow))]
+             lambda: _inv(_run_borrow)),
+            ("S4.BROKEN.OBS_RUN_BORROW (T046 C2)", "REJECT", "FAIL",
+             "RECEIPT_WITHOUT_RUN:rcpt:REG:OBSERVER:BOOKKEEP:STANDARD", lambda: _inv(_obs_run_borrow)),
+            ("S4.PROBE.STALE_RUN (T046, v1.0.5 Y1)", "REJECT", "FAIL", "RECEIPT_WITHOUT_RUN:rcpt:REG:PRESERVE:STANDARD",
+             lambda: _inv(_stale_run))]
 
 
 # G-RECOMP: a real REG bundle (world -> adapter) whose outcomes come from the real predicates (rulers.py,
@@ -223,7 +279,7 @@ def fire_receipt(instrument):
                      "ok": (got_v, got_r) == (want_v, want_r)})
     return {"schema": FIRE_SCHEMA, "instrument": instrument, "version": version,
             "version_hash": EV.predicate_version(version), "cases": rows, "all_ok": all(r["ok"] for r in rows),
-            "executed_by": RECORDED_BY}
+            "executed_by": RECORDED_BY_OF[instrument]}
 
 
 def stage_record(instrument, receipt_bytes, receipt_commit, recorded_at_utc):
@@ -238,7 +294,8 @@ def stage_record(instrument, receipt_bytes, receipt_commit, recorded_at_utc):
                          "receipt": {"path": fire_path(instrument),
                                      "blob_sha256": __import__("hashlib").sha256(receipt_bytes).hexdigest(),
                                      "commit": receipt_commit}},
-           "first_sight": None, "closure": None, "recorded_by": RECORDED_BY, "recorded_at_utc": recorded_at_utc}
+           "first_sight": None, "closure": None, "recorded_by": RECORDED_BY_OF[instrument],
+           "recorded_at_utc": recorded_at_utc}
     return R.validate_stage_record(out)
 
 
