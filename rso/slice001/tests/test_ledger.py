@@ -57,7 +57,11 @@ class TestCaps(Base):
         path = os.path.join(REPO, "rso", "slice001", "contract", "contract.json")
         with open(path, "r", encoding="utf-8") as f:
             doc = json.load(f)
-        self.assertEqual(doc["version"], "1.0.4")
+        # Amendment-robust (C-004-T046): v1.0.4 is listed and the version is the latest listed amendment; later
+        # amendments that leave the caps alone (v1.0.5: run attribution only) do not break this pin.
+        listed = [a["version"] for a in doc["amendments"]]
+        self.assertIn("1.0.4", listed)
+        self.assertEqual(doc["version"], listed[-1])
         self.assertEqual(doc["caps"]["top_level_validation_launches"], 20)
         self.assertEqual(
             doc["caps"]["launch_accounting"],
@@ -68,8 +72,8 @@ class TestCaps(Base):
             "cumulatively against 20.")
         self.assertEqual(doc["caps"]["cpu_minutes"], 120)         # every other cap unchanged by v1.0.4
         self.assertEqual(doc["caps"]["new_artifact_mb"], 100)
-        self.assertEqual(doc["amendments"][-1]["version"], "1.0.4")
-        self.assertEqual(doc["amendments"][-1]["path"], "rso/slice001/contract/AMENDMENT_v1.0.4.md")
+        v104 = [a for a in doc["amendments"] if a["version"] == "1.0.4"]
+        self.assertEqual([a["path"] for a in v104], ["rso/slice001/contract/AMENDMENT_v1.0.4.md"])
 
     def test_missing_or_bad_caps_fail_closed(self):
         for bad in ({}, {"cpu_minutes": 30}, dict(CAPS, cpu_minutes="x"), dict(CAPS, top_level_validation_launches=-1),

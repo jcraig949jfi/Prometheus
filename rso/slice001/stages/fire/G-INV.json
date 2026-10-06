@@ -36,24 +36,42 @@
       "observed_value": "FAIL",
       "ok": true,
       "polarity": "REJECT"
+    },
+    {
+      "case_id": "S4.BROKEN.OBS_RUN_BORROW (T046 C2)",
+      "expected_reason": "RECEIPT_WITHOUT_RUN:rcpt:REG:OBSERVER:BOOKKEEP:STANDARD",
+      "expected_value": "FAIL",
+      "observed_reason": "RECEIPT_WITHOUT_RUN:rcpt:REG:OBSERVER:BOOKKEEP:STANDARD",
+      "observed_value": "FAIL",
+      "ok": true,
+      "polarity": "REJECT"
+    },
+    {
+      "case_id": "S4.PROBE.STALE_RUN (T046, v1.0.5 Y1)",
+      "expected_reason": "RECEIPT_WITHOUT_RUN:rcpt:REG:PRESERVE:STANDARD",
+      "expected_value": "FAIL",
+      "observed_reason": "RECEIPT_WITHOUT_RUN:rcpt:REG:PRESERVE:STANDARD",
+      "observed_value": "FAIL",
+      "ok": true,
+      "polarity": "REJECT"
     }
   ],
-  "executed_by": "Argus[desktop-ruapvai-b08b36ac] under C-004-T023B",
+  "executed_by": "Argus[harry1-a1598f01] under C-004-T046",
   "instrument": "G-INV",
   "schema": "rso.slice001.fire_test.v1",
   "version": [
     {
-      "commit": "22d270fb25da57750c7a6c8009280bbdc86457af",
-      "length": 33263,
+      "commit": "78f4d1fdcd21d137bddc000195bbfcd87a4da0f4",
+      "length": 35619,
       "role": "code:rso/slice001/evidence.py",
-      "sha256": "47c9051e6d90c73473a66ecaa63f9b2062234198bafe086d4fb85eb88d143e51"
+      "sha256": "fe1fe7670313b94714b39b5c4621aa1f7b40f621e3f46ab7fbfa03ec0025944f"
     },
     {
-      "commit": "22d270fb25da57750c7a6c8009280bbdc86457af",
+      "commit": "78f4d1fdcd21d137bddc000195bbfcd87a4da0f4",
       "length": 31846,
       "role": "code:rso/slice001/receipt.py",
       "sha256": "f0f0d80063d21703b1709c188cad702b189db772bf5ecac404a04c9a56d5725b"
     }
   ],
-  "version_hash": "4524283c96253cda2987c26b3a4b757a189b1f1cad3cecd2dd8b2c0226e3859d"
+  "version_hash": "9ff83b1400bdd3b7ee3932c7ddfe2a99d161559f99bdd222cb1334aa98b9b342"
 }

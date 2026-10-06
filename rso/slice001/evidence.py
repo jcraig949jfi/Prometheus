@@ -2,7 +2,8 @@
 
 Normative text: rso/slice001/contract/CONTRACT.md v1.0.0 (draft B B4.2, B5, B6, B7.1 incorporated) and
 AMENDMENT_v1.0.1.md (V1 node_id, V3 edge spelling, V6 custody why list, V7 G-INV attribution, V8 fixture
-stores) and AMENDMENT_v1.0.2.md (W1 live custody store: read-only reader RegistryStore, C-004-T021).
+stores) and AMENDMENT_v1.0.2.md (W1 live custody store: read-only reader RegistryStore, C-004-T021) and
+AMENDMENT_v1.0.5.md (Y1-Y3: B3.3 governs run attribution under a cumulative inventory, C-004-T046).
 
 What this module establishes and what it does not (B5.4, closure D10): binding checks that presented bytes and
 complete nodes equal the anchors the consumer holds. It never establishes that execution happened or that an
@@ -144,21 +145,39 @@ def anchors_from_keeper(store, blobs):
     return found[0] if len(found) == 1 else AnchorChoice(found)
 
 
+def _artifact_hits(anchors, bundle):
+    """How many presented receipts' complete-node artifacts (sha256, length) equal this candidate's anchored ones."""
+    hits = 0
+    for n in bundle.receipts:
+        rc, _ = bundle.parsed(n)
+        if rc is not None and n in anchors.nodes and node_from_receipt(rc)["artifact"] == anchors.nodes[n]["artifact"]:
+            hits += 1
+    return hits
+
+
 def resolve_anchors(anchors, bundle):
-    """The Anchors of THIS bundle (F2): unchanged unless an AnchorChoice. Then, by identity: the candidate whose
-    node set equals the presented receipts' node ids; else the smallest candidate covering them; else the one
-    sharing most nodes; ties go to the earliest registered (FD-T042-2). Custody separately refuses anchors that
-    omit a presented node, so a wrong choice can never qualify."""
+    """The Anchors of THIS bundle (F2): unchanged unless an AnchorChoice. Then by artifacts first (C-004-T046 C1):
+    a candidate whose node artifacts match EVERY presented receipt is this bundle's manifest (the smallest such,
+    so an exact node set wins). Node ids alone cannot tell two productions of one node set apart (S4
+    S4.SOUND.REPRODUCED: the S2 and S4 G0 manifests). Otherwise by identity: the candidate whose node set equals
+    the presented receipts' node ids; else the smallest candidate covering them; else the one sharing most nodes
+    -- each preferring more matching artifacts; remaining ties go to the earliest registered (FD-T042-2).
+    Custody separately refuses anchors that omit a presented node, so a wrong choice can never qualify."""
     if not isinstance(anchors, AnchorChoice):
         return anchors
     presented = set(bundle.receipts)
-    exact = [a for a in anchors.candidates if set(a.nodes) == presented]
+    cands = anchors.candidates
+    hits = [_artifact_hits(a, bundle) for a in cands]
+    full = [i for i, a in enumerate(cands) if presented <= set(a.nodes) and hits[i] == len(presented)]
+    if full:
+        return cands[min(full, key=lambda i: len(cands[i].nodes))]
+    exact = [i for i, a in enumerate(cands) if set(a.nodes) == presented]
     if exact:
-        return exact[0]
-    cover = [a for a in anchors.candidates if presented <= set(a.nodes)]
+        return cands[max(exact, key=lambda i: hits[i])]
+    cover = [i for i, a in enumerate(cands) if presented <= set(a.nodes)]
     if cover:
-        return min(cover, key=lambda a: len(a.nodes))
-    return max(anchors.candidates, key=lambda a: len(presented & set(a.nodes)))
+        return cands[min(cover, key=lambda i: (len(cands[i].nodes), -hits[i]))]
+    return cands[max(range(len(cands)), key=lambda i: (len(presented & set(cands[i].nodes)), hits[i]))]
 
 
 # --------------------------------------------------------------------------------------------------------
@@ -405,9 +424,24 @@ def inventory_terminal(rows):
     return rows[-1].get("row_count") == len(runs) == len(rows) - 1
 
 
+def _ended_before(row, created_at_utc):
+    """True iff the row records an end and that end is strictly before the receipt was created (v1.0.5 Y1)."""
+    end = row.get("end_utc")
+    if not isinstance(end, str) or not isinstance(created_at_utc, str):
+        return False
+    return utc_key(end) < utc_key(created_at_utc)
+
+
 def g_inv(claim, bundle, anchors):
     """G-INV over the claim's required node set (V7). A presented receipt's run must be exactly one inventory row
-    whose node_id is that receipt's own (B3.3 + V7; C-004-T042 F3, S3.BROKEN.RUN_BORROW)."""
+    that launched and produced THAT receipt (B3.3; C-004-T042 F3, S3.BROKEN.RUN_BORROW):
+      - its node_id is the receipt's FULL node id -- subject, predicate, observer and world (V7; C-004-T046 C2: a
+        receipt for OBSERVER(M, o1) citing the run of OBSERVER(M, o2) is S4.BROKEN.OBS_RUN_BORROW);
+      - it had not ended before the receipt was created (AMENDMENT_v1.0.5 Y1, operator OP6: an earlier window's
+        run of the same node does not satisfy a later receipt -- S4.PROBE.STALE_RUN). Applied when the row
+        records end_utc (the T019 ledger always does); rows without times are judged by node identity alone.
+    Otherwise RECEIPT_WITHOUT_RUN:<node_id>. Earlier-window rows stay valid provenance: only a required node
+    WITHOUT a presented receipt is checked for a COMPLETED row (RUN_UNREPORTED), never for being older (Y2)."""
     anchors = resolve_anchors(anchors, bundle)
     rows = bundle.inventory
     if not inventory_terminal(rows):
@@ -420,9 +454,10 @@ def g_inv(claim, bundle, anchors):
     for n in req:
         rc, _ = bundle.parsed(n)
         if rc is not None:
-            run_id = rc.to_dict()["execution"]["run_id"]
-            cited = by_run.get(run_id, [])
-            if len(cited) != 1 or cited[0].get("node_id") != rc.node_id:
+            d = rc.to_dict()
+            cited = by_run.get(d["execution"]["run_id"], [])
+            if len(cited) != 1 or cited[0].get("node_id") != rc.node_id or \
+                    _ended_before(cited[0], d["created_at_utc"]):
                 return {"execution": _ran(len(req)),
                         "outcome": _gate("G-INV", "FAIL", "RECEIPT_WITHOUT_RUN:%s" % n, n, len(req))}
         else:
