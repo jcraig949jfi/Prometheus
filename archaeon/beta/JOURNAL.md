@@ -11,6 +11,8 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
 |---|---|---|
 | B01 | W2_K2 ceiling: organism limit or search limit? | ORGANISM NOT THE LIMIT; D failed prediction -> B01b running |
 | B02 | shelf -> summit edit path: valley or neutral plateau? | SILENT PLATEAU (done) |
+| B01b | one edit from summit: rescued? waiting-time model? | 6/12, all by gen 10 (early-or-never); H-EROSION open |
+| B03 | BASE vs HEAVY vs RELOC search at equal compute | running |
 
 ## 2026-10-06/07 EXP-1 (opened 2026-10-06T23:48Z)
 
@@ -36,5 +38,16 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   overstate per-edit difficulty; the plateau result itself does not depend on this.
 - SIGNAL WORTH FOLLOWING: the W2_K2 wall is a silent-plateau needle, and even one edit from the summit the GA
   mostly does not return. Hypothesis H-PLATEAU: summit waiting time = reversal rate x plateau-lineage share x N.
-- Next: B01b (running) tests H-PLATEAU quantitatively; then B03 = search arms at equal compute from fresh gen 0
+- B01b: 12 plateau neighbours of the solver (held-out .50-.57, one edit away), one GA cell each: 6/12 re-summit,
+  ALL by generation 10 (gens 1,3,3,5,7,10); none later in 60. Reversal rates 0 - .0134 per child.
+  Spearman(r, summit) = .44 (predicted > .5: PARTIAL, right direction). Early-or-never is the shape worth keeping:
+  H-EROSION -- the plateau lineage takes over fast (random gen 0 scores ~0) and then neutral drift erodes the
+  near-solver structure, closing the reversal window within ~10 generations. Testable: track the plateau
+  population's mean edit distance to the solver per generation.
+- DEV finding while building B03: grammar v0.4's length-changing operators never fix up relative jump offsets.
+  Neutral share on the solver (B01-B by operator): insertion .223, duplication .152, deletion .009, movement .080,
+  splice .070, region_swap .031. The same edits with jump fix-up (archaeon/beta/b03_search_arms.py reloc_child):
+  insertion .70, duplication .47, deletion .26 (400-child self-test). Structured code is fragile to growth under
+  this grammar for a reason that is about EDIT SEMANTICS, not about the organism or the world.
+- Next: B01b (done) tests H-PLATEAU quantitatively; then B03 = search arms at equal compute from fresh gen 0
   (baseline / heavy-tailed mutation count / behaviour-novelty) -- prediction: only structural-move arms lift 0/60.
