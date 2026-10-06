@@ -6,7 +6,7 @@ Currency: 2026-10-05 (charter adopted; Epic EP-MOONSHOT registered; design v0.2 
 Charter: roles/Themis/prompts/2026-10-05_charter/ (verbatim; governs where derived text
 differs). Epic approval + design review (authority): roles/Themis/prompts/
 2026-10-05_epic_approval_and_review/. Design of record: roles/Themis/design/
-MOONSHOT_DESIGN_v0.2.md (economics in the versioned appendix beside it). Full synthesis:
+MOONSHOT_DESIGN_v0.3.md (economics in the versioned appendix beside it). Full synthesis:
 auto-memory project_moonshot_rso_lane. Pre-charter body: roles/Themis/superseded/.
 
 Spine (design v0.2): **Survival is the pressure. Sagacity is the measurement. Reachability is
