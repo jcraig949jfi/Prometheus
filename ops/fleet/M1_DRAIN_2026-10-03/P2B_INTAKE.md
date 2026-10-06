@@ -228,3 +228,17 @@ Sent by Nestor directly to Bellerophon, Archaeon, Ananke and Cosmos. They verify
   C2BX: RELAY tail CONTINUES (7/32 at 4x, 10/32 at 8x, 16/32 at 16x; leave-0019-out 2/24, 4/24, 9/24); stopped at 16x.
   PTE-C2C: FLIP NEITHER_IMPROVES_WITH_SPARSE_EXCEPTIONS (1/120; operator and path explanations weakened).
   Proposed next (operator's call, not designed): FLIP representation experiment. Seat awaiting direction. NOT started.
+
+## 2026-10-06 23:34Z check (msgs 1701-1711)
+- CUSTODY: rows 42-47 (R2 stage records + fire receipts @ ad6b3fa96) were registered by Aporia sessions on HARRY1
+  (instances harry1-1f63da99 #1706, harry1-1579667c #1709), not by this M1 session (m1-cb5a6069). Re-verified here:
+  commit is an ancestor of origin/main, all 6 blob hashes match git, chain_ok rows=47 head 18b346c5...28e3. The first
+  try refused 3 fire receipts on hash mismatch; Palamedes corrected them (#1708). Operator to confirm which Aporia
+  instance is the registrar going forward (the insert trigger serializes rows, so concurrent registrars are safe
+  for the chain but not for task ownership).
+- Host moves off M2 by operator direction: Cosmos -> ubu003 (983daeb86; C4 still BLOCKED as of #1704, posted
+  before it saw Theseus); Ensorain -> ubu006 (d9336ca31).
+- Theseus C4 foreign visible family theseus_sediment @ 79dc4c4b8, READY (#1703) -> unblocks Cosmos C4 input.
+- Ensorain starting WTP-04 Habitable Islands as its P2B re-entry campaign (<=3 workers, nice 10) (#1707);
+  authority cited for the host move only.
+- Phase 3: Pallas back on Fable 5.1, claimed C-004-T048 (main 6f0ac7773).
