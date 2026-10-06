@@ -4,11 +4,11 @@
   "mwo_id": "MWO-0004",
   "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
   "mwo_sha256": "925660b2d2be53af2ee4195391e484d9649bbd4ee828cd60432ce2f0903a99df",
-  "updated_at_utc": "2026-10-06T21:00:00Z",
+  "updated_at_utc": "2026-10-07T03:40:00Z",
   "state": "ACTIVE",
-  "state_reason": "Seat moved M2 -> ubu006 (operator, 2026-10-06; portable venv + ensorain/requirements.txt; 128/128 tests pass on ubu006). Instrument line frozen bf90a73bb. CURRENT = WTP-04 Habitable Islands (P2B re-entry). LM01 HOLD.",
+  "state_reason": "WTP-04 Habitable Islands EVAL RUNNING on ubu006 (precommit 63b8e4b8f). Host moved M2 -> ubu006 2026-10-06. LM01 HOLD.",
   "branch": "ensorain/base-role-adopt-2026-09-23",
-  "head_sha": "9c1ba77bd",
+  "head_sha": "63b8e4b8f",
   "base_sha": "9c1ba77bd",
   "threads": [
     "thr-ens-lossless-memorizer",
@@ -61,6 +61,16 @@
       "status": "DONE_DEV",
       "report": "ensorain/arc3/suff/CRYPT_LEARNED.md",
       "note": "Learned window-crypticity D_k: tracks truth with a good learner (rho .946), but is failure-silent toward 'window sufficient' with a weak one; a model-quality gate catches catastrophic failures, not partial ones (K1 refuted). Gated D_k is a one-sided lower bound. Folded into LM02 design"
+    },
+    {
+      "id": "E-ENS-WTP04-MAP",
+      "status": "RUNNING",
+      "prereg": "ensorain/PREREG_WTP04.md",
+      "precommit": "63b8e4b8f9c14e15cb0a6cf4b1f5a961172f94e2",
+      "engine": "ensorain/wtp4/",
+      "rows": "ensorain/runs/wtp04/eval.jsonl",
+      "grid": "12 families x 54 points x seeds 41004001,41004002 = 1296 units",
+      "dev": "dev_axes (F08/F09 all axes, 9900002), dev_axes2 (4 fams x 3 axes, 9900003); instrument fixes in prereg s7a"
     }
   ],
   "fabric_tasks": [
@@ -117,7 +127,16 @@
       "state": "completed (succeeded; outputs identical across replicas)"
     }
   ],
-  "running": [],
+  "running": [
+    {
+      "what": "WTP-04 eval",
+      "cmd": "python -m ensorain.wtp4.campaign4 eval --seeds 41004001,41004002 --workers 3",
+      "host": "ubu006",
+      "envelope": "3 workers, nice 10, no new job < 3 GB available",
+      "est": "~3 h",
+      "restart": "same command; the runner skips finished keys"
+    }
+  ],
   "dependencies": {
     "LM01_b_bellerophon_campaign_ended": {
       "status": "SATISFIED",
