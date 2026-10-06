@@ -1,0 +1,54 @@
+{
+  "schema": "prometheus.workgraph.receipt.v1",
+  "task_id": "C-004-T041",
+  "campaign_id": "C-004",
+  "attempt_id": "A-001",
+  "role": "Pallas",
+  "model": "claude-fable-5-1",
+  "quality_class": "Q3",
+  "instance": "m2-e7da6bde",
+  "host": "SPECTREX5",
+  "branch": "pallas/c004-t041",
+  "worktree_path": "D:/Prometheus-worktrees/pallas-boot-2026-10-03",
+  "start_sha": "d92546849da6b57d484303cc474945e6637abd6d",
+  "end_sha": "f233c83bf31c4040bec98609575525c6807a0486",
+  "files_changed": [
+    "rso/slice001/challenge/S4/closure_set/",
+    "rso/slice001/challenge/S4/results_cases.jsonl",
+    "rso/slice001/challenge/S4/mutation_rows.jsonl",
+    "rso/slice001/challenge/S4/mutation_confirm.jsonl",
+    "rso/slice001/challenge/S4/results.jsonl",
+    "rso/slice001/challenge/S4/REPORT.md",
+    "rso/slice001/s2/LEDGER.jsonl (rows appended only)",
+    "roles/Pallas/journal/2026-10-06.md",
+    "roles/Pallas/comms/",
+    "ops/campaigns/C-004/tasks/C-004-T041/"
+  ],
+  "evidence_added": [
+    "closure set at be673092d (2026-10-06T01:34:11Z), before any outcome: 2 fresh sound, 2 fresh broken, 1 probe, 3 semantic edits on the touched predicates, answer key, predictions",
+    "closure score: sound 1 of 2 (S4.SOUND.REPRODUCED false rejection), broken 2 of 2, controls 2 of 2; edits proposed 3, applicable 3, executed 3, killed 2, survived 1 (X3, full suite 378 tests, witnessed non-equivalent)",
+    "REPORT.md: exit criteria evaluated: NOT met (one false rejection, one claim-critical applicable survivor) -> incomplete closure, not acceptance; open items C1 (reproduced-manifest anchoring, custody QUALIFIED on the S2 row) and C2 (G-INV observer segment not pinned); probe STALE_RUN admitted (O-S4-1)"
+  ],
+  "evidence_executed": [
+    {"command": "python -B rso/slice001/challenge/S4/closure_set/run_cases.py --ledger rso/slice001/s2/LEDGER.jsonl", "result": "exit 0; sound 1/2, broken 2/2, controls 2/2"},
+    {"command": "python -B rso/slice001/challenge/S4/closure_set/run_mutation.py --ledger rso/slice001/s2/LEDGER.jsonl", "result": "exit 0; baselines PASSED (120 tests); X1 KILLED, X2 KILLED, X3 SURVIVED; full-suite confirmation of X3: SURVIVED (378 tests)"},
+    {"command": "python -B -m rso.slice001.ledger summary rso/slice001/s2/LEDGER.jsonl", "result": "launches 15 of 20, cpu_s 2924.7, artifact_bytes 31780730, exhausted null; S4 rows: 2 TOP_LEVEL, 6 MUTATION_CHILD, 459.1 CPU-s"}
+  ],
+  "red_observed": {"observed": false, "reason": "kind review, red_required false. Preregistered failure state: no closure set under rso/slice001/challenge/S4/ (true at claim, d92546849)."},
+  "result": "DONE_CLEAN",
+  "known_escapes": [
+    "no separate unchanged-suite launch: T045's regression and the runner's baselines stand for it",
+    "evidence-plane only; world predicates not re-challenged by this reviewer (S3 cases replayed clean by the coordinator at T042)",
+    "same-family and cell-membership caveats (CONTRACT.md s6)",
+    "that no test body was opened rests on this session's record"
+  ],
+  "unresolved": [
+    "C1: resolve_anchors picks the earliest exact-node-set manifest; the S4 G0 bundle anchored to the S2 G0 manifest fails G-BIND on five claims while custody reads QUALIFIED on the S2 row (the registry holds both manifests today)",
+    "C2: no test pins G-INV's node-id comparison per observer (edit X3 survives the full suite)",
+    "exit criteria of plan s5 not met: incomplete closure; whether any gate is recorded CLOSED_AFTER_REPAIR, and what follows, is S5's (operator)",
+    "probe STALE_RUN admitted; how a cumulative inventory is read is a contract question (O-S4-1)"
+  ],
+  "unblocks": ["C-004-T050"],
+  "resources": {"cpu_seconds_ledgered": 459.1, "top_level_launches": 2, "reviewer_minutes": "about 30 including the report"},
+  "created_at_utc": "2026-10-06T01:44:24Z"
+}
