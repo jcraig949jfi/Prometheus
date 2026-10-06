@@ -1,5 +1,11 @@
 # Lane C / M4 -- Commodity Fabric: kickoff (start here after reset)
 
+> **Superseded in part, 2026-10-06.** Lane C is running as campaign C-008 under operator approval
+> OP-LC1 (roles/Themis/prompts/2026-10-06_op_lc1/). Its contract is moonshot/epoch/CONTRACT.md:
+> semantic identity is independent of git SHAs; a successful CAS is PUBLISHED (not "accepted");
+> D3 has twelve cases, not seven; D4 bounds are frozen in ops/campaigns/C-008/prereg/ before any
+> baseline. This file is kept as the reset entry point it was.
+
 Owner: Themis. Thread: TH-MOON-M4. Epic: EP-MOONSHOT. Date: 2026-10-06.
 Design of record: roles/Themis/design/MOONSHOT_DESIGN_v0.3.md (R-EP, N1, N3, N4, N7, S7, S12,
 S17). Full program context: operator auto-memory project_moonshot_rso_lane. This doc is the

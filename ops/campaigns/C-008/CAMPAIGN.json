@@ -1,0 +1,40 @@
+{
+  "schema": "prometheus.workgraph.campaign.v1",
+  "campaign_id": "C-008",
+  "thread_id": "TH-MOON-M4",
+  "epic_id": "EP-MOONSHOT",
+  "status": "OPEN",
+  "label": "C-MOON-M4-LANEC-01",
+  "title": "Lane C -- synthetic-epoch commodity fabric (R-EP D1-D5)",
+  "objective": "Establish the R-EP epoch semantics on SYNTHETIC epochs only: a pure epoch unit with a transport-independent SHA-256 semantic identity (D1), CAS publication with explicit PUBLISHED / DUPLICATE / DISAGREEMENT-QUARANTINE / AMBIGUOUS outcomes and validation as a separate state (D2), the twelve-case fault-injection matrix under both single-ref and per-chain-ref layouts (D3, tests first), a preregistered transport study on a disposable local-network bare remote plus one bounded GitHub WAN-semantics arm (D4), and node auto-join without auto-authorization (D5). No organisms, world physics, S-meter or RSO evidence.",
+  "coordinator_role": "Themis",
+  "members": [
+    "Themis"
+  ],
+  "authority": "operator OP-LC1 2026-10-06 (roles/Themis/prompts/2026-10-06_op_lc1/02_OPERATOR_OP-LC1_verbatim.md)",
+  "sources": "moonshot/epoch/CONTRACT.md; roles/Themis/design/MOONSHOT_DESIGN_v0.3.md (R-EP, N1, N3, N4, N5, N7); roles/Themis/design/LANE_C_M4_KICKOFF.md; roles/Themis/design/MOONSHOT_DESIGN_v0.2_ASTRA_REVIEW.md F08",
+  "quality_classes": {
+    "Q1": {
+      "description": "mechanical: fixtures, manifests, reruns of a frozen bench configuration",
+      "rank": 1
+    },
+    "Q2": {
+      "description": "substantial: protocol state machines, fault-injection TDD, transport instrumentation",
+      "rank": 2
+    },
+    "Q3": {
+      "description": "adversarial: attacks on the publication contract, ambiguous-commit and taint semantics",
+      "rank": 3
+    }
+  },
+  "satisfied_states": [
+    "INTEGRATED",
+    "CLOSED"
+  ],
+  "cadence": {
+    "mode": "test-first build, then preregistered transport baseline",
+    "note": "D4 bounds are frozen and committed before any baseline is observed"
+  },
+  "created_by": "Themis[m2-0e9b1ed2]",
+  "created_at_utc": "2026-10-06T08:52:00Z"
+}
