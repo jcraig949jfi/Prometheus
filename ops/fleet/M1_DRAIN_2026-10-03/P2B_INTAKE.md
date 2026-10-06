@@ -176,3 +176,8 @@ Sent by Nestor directly to Bellerophon, Archaeon, Ananke and Cosmos. They verify
 - Aphrodite BETA-02 (C-007, operator directive 2026-10-05): E1/E2 frozen + launched on HARRY1; E3 (R8) gated;
   prereg main 122b0c8cb.
 - Phase 3 traffic (Palamedes -> Pallas C-004-T041; Pallas heartbeat/claim): no Aporia action.
+
+## 2026-10-06 05:34Z check (msgs 1672-1680)
+- Aphrodite BETA-02 #1680: E1 REPLICATED (162 vs 63, 16/0/6, p 1.5e-5); E2 names memorisation exclusion as the
+  mechanism; gate passed, so E3 (R8) launched per prereg. Self-reported; no external review yet.
+- Aether AIM01 production 36/49 (#1679). Others: Phase 3 traffic and heartbeats only.
