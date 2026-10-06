@@ -351,6 +351,26 @@ def live_form(rows, at=None):
     return out
 
 
+def _vkey(v):
+    return tuple(int(x) for x in v.split("."))
+
+
+def assert_contract_at_least(test, doc, version):
+    """Amendment-robust contract version pin (C-004-T046): the contract's version is its LATEST amendment entry,
+    every entry names its AMENDMENT file, versions strictly increase, and the version is at least `version`.
+    A later amendment that appends its entry and bumps the version passes; a rollback or an unlisted bump fails."""
+    import os
+    listed = [a["version"] for a in doc["amendments"]]
+    test.assertEqual(doc["version"], listed[-1])
+    test.assertEqual(listed, sorted(listed, key=_vkey))
+    test.assertEqual(len(set(listed)), len(listed))
+    test.assertGreaterEqual(_vkey(doc["version"]), _vkey(version))
+    root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
+    for a in doc["amendments"]:
+        test.assertEqual(a["path"], "rso/slice001/contract/AMENDMENT_v%s.md" % a["version"])
+        test.assertTrue(os.path.isfile(os.path.join(root, *a["path"].split("/"))), a["path"])
+
+
 class StubReader(object):
     """The ops.custody.registry API surface the consumer uses: rows() and verify(). No network."""
 
@@ -476,7 +496,7 @@ class TestCustodyStoreReader(unittest.TestCase):
                             "contract.json")
         with open(path, encoding="utf-8") as f:
             doc = json.load(f)
-        self.assertEqual(doc["version"], "1.0.4")                 # v1.0.4 (OP-7, C-004-T044) keeps the v1.0.2 custody
+        assert_contract_at_least(self, doc, "1.0.2")               # every later amendment keeps the v1.0.2 custody
         self.assertEqual(doc["custody"]["store"], LOCATOR)
         self.assertIn("superuser", doc["custody"]["independence_caveat"])
 
@@ -847,6 +867,20 @@ class TestB33RunAttribution(unittest.TestCase):
         b = F.make_bundle(d, inventory=rows + [inv[-1]])
         self.assertEqual(value(EV.g_inv(F.claims()["CL-RET(REG)"], b, F.retained(d))),
                          ("FAIL", "RECEIPT_WITHOUT_RUN:%s" % STALE))
+
+    def test_contract_carries_v105(self):
+        # AMENDMENT_v1.0.5 applied by this packet: version and amendments entry only (Y3).
+        import json
+        import os
+        path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "contract",
+                            "contract.json")
+        with open(path, encoding="utf-8") as f:
+            doc = json.load(f)
+        assert_contract_at_least(self, doc, "1.0.5")
+        entry = [a for a in doc["amendments"] if a["version"] == "1.0.5"]
+        self.assertEqual(len(entry), 1)
+        self.assertIn("C-004-OP6", entry[0]["answers"])
+        self.assertIn("run attribution only", entry[0]["scope"])
 
 
 def _challenge(unresolved):
