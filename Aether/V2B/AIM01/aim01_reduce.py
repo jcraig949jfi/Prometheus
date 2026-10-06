@@ -209,6 +209,19 @@ def main(argv=None):
         "single_table_hash_ok": len(hashes) == 1,
         "duplicates_ok": bool(dups) and all(d["equal"] for d in dups),
     }
+    if a.rules:
+        rr = json.loads(open(a.rules, "rb").read())
+        cref = rr.get("continuity_L0_D50")
+        if cref:
+            l0d50 = [c for c in l0 if c["dens"] == "D50"]
+            mt = med(l0d50, "late_turnover_eff")
+            mf = med(l0d50, "frozen_strict_eff")
+            me = med(l0d50, "ever_changed_eff")
+            res["continuity_L0_D50"] = {"late_turnover": mt, "frozen_strict": mf, "ever_changed": me, "ref": cref}
+            gates["L0_continuity_ok"] = bool(l0d50) and (
+                abs(mt / cref["late_turnover"] - 1) <= cref["late_turnover_rel_tol"]
+                and abs(mf - cref["frozen_strict"]) <= cref["abs_tol"]
+                and abs(me - cref["ever_changed"]) <= cref["abs_tol"])
     if a.continuity:
         ref = json.load(open(a.continuity))
         chk = [(c["seed"], c["final_digest"] == ref.get(str(c["seed"]))) for c in l0
