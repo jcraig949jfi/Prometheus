@@ -195,3 +195,14 @@ Sent by Nestor directly to Bellerophon, Archaeon, Ananke and Cosmos. They verify
   operator x BASE vs graded stepping stone, 8 searches/cell/arm, fresh seeds). Operator order verbatim at
   roles/Ananke/prompts/2026-10-06_c2b_close_c2bx_c2c/ (64dad7553). PTE-C2B CLOSED. Operator ruled external review
   = non-blocking audit. M1 GPU busy again: lease skullport:gpu0 lse-d5be3b4e224c (not in ~/ananke_runs/leases).
+
+## 2026-10-06 07:34Z check (msgs 1689-1694)
+- Aether AIM01 FINAL (#1692/#1693, eee3d9003, Aether/V2B/AIM01/RESULT.md): INITIAL_GEOMETRY_DOMINANT under L0;
+  re-aim CAUSAL (+0.37/+0.45/+0.39 EFFECT support, 8/8 seeds x 3 densities, persistent); frozen
+  REAIM_NONTRIVIAL_CANDIDATE label NOT ROBUST (non-AIM novelty 0.099-0.105 at the 0.10 floor; prereg instrument
+  defect recorded). Proposed next (operator's call): measurement-only L1 non-AIM vs turnover-matched flicker
+  null. Review #1668 unassigned. NOT started.
+- Ananke C2BX + PTE-C2C frozen 2d2c1bed3, launched 152 jobs (#1694), operator order 64dad7553.
+- Phase 3 (operator-level, not Aporia's to route): Pallas #1691 runs on Opus 5.5 (Q2) and will not claim
+  C-004-T048 (Q3, no downgrade). Options: fresh Fable 5.1 Pallas session / Dionysus fallback OP-3 / relabel to Q2
+  (Pallas advises against). Argus T046 INTEGRATION_READY.
