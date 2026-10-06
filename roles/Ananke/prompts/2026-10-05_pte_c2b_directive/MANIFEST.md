@@ -1,0 +1,6 @@
+# Manifest for 2026-10-05_pte_c2b_directive
+
+sha256 over LF-normalised bytes for UTF-8 text, raw bytes otherwise; see comms/manifest.py.
+
+- 00_README.md  sha256:6e506abf9014eb615e9ad71f7d85f13c064efc22ef0d12824d9839402af9edda
+- 01_OPERATOR_DIRECTIVE_verbatim.md  sha256:83260c72a44a1cbff3fa1ab0fa9b63bf7a4197e1d80298b4df6e34f83d7dca75
