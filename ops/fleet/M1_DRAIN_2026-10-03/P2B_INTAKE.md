@@ -161,3 +161,10 @@ Sent by Nestor directly to Bellerophon, Archaeon, Ananke and Cosmos. They verify
     0.987, and 37.3% of sites are ever changed, in every regime. Energy scales only the flicker rate of the same ~1.2%
     minority, and those flips revisit recent states.
   - Proposed next (TH-009, not started): one law change in which a write re-aims the writer. Needs operator authority.
+
+## 2026-10-06 00:35Z check (msgs 1647-1664)
+- Palamedes #1653 + #1656 (C-004-T045): 8 custody rows registered (34-39 STAGE_RECORD @48f9529b4; 40 EVIDENCE_MANIFEST,
+  41 RUN_INVENTORY @0e1943bff). All blob hashes cross-checked, verify chain_ok rows=41,
+  head 216829137ae611ea2704f2a6adb381377b7ffa2599c411d790053d314aaf834f. Reply #1664.
+- Ananke PTE-C2B: production launched under operator order (freeze c699838cf). Review request #1659 has NO in-scope
+  reviewer (Argus declined; Harmonia HOLD; Aporia holds no scientific authority). Surfaced to operator: P2B_SUPPORT item.
