@@ -1,0 +1,143 @@
+{
+  "schema": "prometheus.workgraph.receipt.v1",
+  "task_id": "C-004-T046",
+  "campaign_id": "C-004",
+  "attempt_id": "A-001",
+  "role": "Argus",
+  "model": "claude-opus-5-5",
+  "quality_class": "Q2",
+  "start_sha": "2bb323eae30df8363b16ec7416b027046bcc50b4",
+  "end_sha": "01702698daba5b7a7f195f06d5a6bd7d2d7f4cd4",
+  "files_changed": [
+    "rso/slice001/evidence.py",
+    "rso/slice001/stages/evidence_plane.py",
+    "rso/slice001/stages/fire/{G-BIND,G-INV,G-RECOMP}.json",
+    "rso/slice001/stages/{G-BIND,G-INV,G-RECOMP}.json",
+    "rso/slice001/contract/contract.json",
+    "rso/slice001/contract/MANIFEST.md",
+    "rso/slice001/tests/test_evidence.py",
+    "rso/slice001/tests/test_ledger.py",
+    "roles/Argus/{WORK_STATE.json,journal/2026-10-06.md,comms/2026-10-06_*.md}"
+  ],
+  "evidence_added": [
+    "C1 (S4.SOUND.REPRODUCED): evidence.resolve_anchors chooses, among the keeper's AnchorChoice candidates, a manifest whose node artifacts match EVERY presented receipt (smallest such, so an exact node set wins); identity fallbacks keep FD-T042-2 order, each preferring more matching artifacts. Tests: TestC1ReproducedBundle (6): two manifests one node set; resolves to the matching manifest (and the earlier production to its own); G-BIND PASS on every claim; custody QUALIFIED on the matching EVIDENCE_MANIFEST row only; decisions byte-identical to the single-manifest keeper; one edited receipt still anchors to its own manifest and fails BYTES_MISMATCH:receipt",
+    "C2 (S4 edit X3): G-INV binds the cited row to the receipt's FULL node id (subject, predicate, observer, world); the frozen comparison already did, the missing test is added: TestC2ObserverRunBinding (3) incl. BOOKKEEP citing NULL's run -> RECEIPT_WITHOUT_RUN:rcpt:REG:OBSERVER:BOOKKEEP:STANDARD; the X3 find string is kept verbatim so the reviewer's edit still applies",
+    "B3.3 / AMENDMENT_v1.0.5 Y1-Y2: G-INV refuses a receipt whose cited row ended (end_utc) strictly before the receipt was created (created_at_utc) -> RECEIPT_WITHOUT_RUN:<node_id>; earlier-window rows remain provenance (RUN_UNREPORTED only for required nodes without a receipt, unchanged). Tests: TestB33RunAttribution (6) incl. STALE_RUN, cumulative inventory PASS, created_at == row end PASS, created one second after the row ended FAIL, contract carries v1.0.5",
+    "fire cases added: G-BIND ACCEPT S4.SOUND.REPRODUCED (T046 C1); G-INV REJECT S4.BROKEN.OBS_RUN_BORROW (T046 C2) and S4.PROBE.STALE_RUN (T046, v1.0.5 Y1); gate records' recorded_by / executed_by now name this instance (RECORDED_BY_OF; rulers' unchanged)",
+    "stage records regenerated for G-BIND, G-INV, G-RECOMP: version pinned to 78f4d1fdc (evidence.py, receipt.py, checker.py at the repair), fire receipts at 57447751b, records at 434441fda, canonical (sha256(file) == record_blob), CALIBRATION/RETENTION untouched",
+    "contract.json 1.0.4 -> 1.0.5: version and one amendments entry only (Y3); MANIFEST.md contract.json hash updated (comms.manifest verify: 8 ok, 0 unlisted). Version pin made amendment-robust (assert_contract_at_least: version == latest listed amendment, listed versions strictly increasing, each names its AMENDMENT file which exists, version >= floor) in the same commit 6c103159c"
+  ],
+  "evidence_executed": [
+    {
+      "command": "python -B -m unittest discover -s rso/slice001/tests -t . at base 2bb323eae",
+      "result": "378 run, OK (skipped=1)"
+    },
+    {
+      "command": "new T046 tests on the frozen code (2ee88c6d5)",
+      "result": "RED: C1 5 fail (REPRODUCED rejected: BYTES_MISMATCH:receipt, custody on the earlier row), B3.3 2 fail (STALE_RUN admitted); C2 3 pass on frozen code"
+    },
+    {
+      "command": "C2 test under S4 edit X3 (edits.json applied verbatim)",
+      "result": "RED: test_observer_run_borrow_is_receipt_without_run FAIL ('PASS', None) -- OBS_RUN_BORROW admitted under X3"
+    },
+    {
+      "command": "python -B -m unittest rso.slice001.tests.test_evidence rso.slice001.tests.test_checker_render after 78f4d1fdc",
+      "result": "107 run, OK (skipped=1)"
+    },
+    {
+      "command": "python -B -m rso.slice001.stages.evidence_plane fire G-BIND G-INV G-RECOMP",
+      "result": "all OK (G-BIND 6 cases, G-INV 6, G-RECOMP 4)"
+    },
+    {
+      "command": "python -B rso/slice001/challenge/S4/closure_set/run_cases.py --ledger <throwaway copy of s2/LEDGER.jsonl> --out <scratch> at 6c103159c",
+      "result": "controls 2/2, sound 2/2 (REPRODUCED custody QUALIFIED on EVIDENCE_MANIFEST:924f6cc3392e, decisions identical to S4_KEEPER; RETRY_ROW), broken 2/2 (OBS_RUN_BORROW G-INV FAIL RECEIPT_WITHOUT_RUN:rcpt:REG:OBSERVER:BOOKKEEP:STANDARD; VERSION_OF_ANOTHER); probe STALE_RUN: CL-RET(REG) NOT_ELIGIBLE, G-INV FAIL RECEIPT_WITHOUT_RUN:rcpt:REG:PRESERVE:STANDARD. Rows: attempts/A-001/replay_cases.jsonl"
+    },
+    {
+      "command": "S4 edits X1-X3 (edits.json verbatim) each against test_adapter, test_evidence, test_checker_render, test_stages_evidence; reverted after each",
+      "result": "X1 KILLED (2), X2 KILLED (3 semantic + 3 version-pin), X3 KILLED by TestC2ObserverRunBinding.test_observer_run_borrow_is_receipt_without_run (+3 version-pin errors). Rows: attempts/A-001/edits_replay.json"
+    },
+    {
+      "command": "python -B -m unittest discover -s rso/slice001/tests -t . at 6c103159c (no rso/slice001 drift on origin/main a9e59872a)",
+      "result": "393 run, OK (skipped=1)"
+    }
+  ],
+  "red_observed": {
+    "observed": true,
+    "detail": "C1 and B3.3 RED on the frozen code; C2 RED is the S4 edit X3 mutant, now killed"
+  },
+  "result": "DONE_CLEAN",
+  "known_escapes": [
+    "B3.3 operationalisation (FD-T046-1): the row that launched and produced THAT receipt is checked as row.end_utc >= receipt.created_at_utc. Rows without end_utc (the synthetic fixture inventories) are judged by node identity only; the T019 ledger always writes end_utc. A borrowed earlier row that ended AFTER the receipt's created_at (overlapping windows) is not caught by this check -- the producer stamps created_at at launch start, so two launches of one node would have to overlap in time",
+    "C1 choice is by artifact match over the presented receipts (FD-T046-2); with no candidate matching every receipt the identity order of FD-T042-2 still decides, artifact matches breaking ties",
+    "rso/slice001/tests/test_ledger.py is outside this packet's owns; it pinned 1.0.4 as the last amendment and would fail on any amendment, so its pin was made amendment-robust in the same commit as contract v1.0.5",
+    "the S4 mutation driver (run_mutation.py) writes into challenge/S4/ record files, so the edit replay used a scratch harness applying edits.json verbatim; the cases replay used the reviewer's run_cases.py with --out to scratch",
+    "stage records are committed only; Aporia must re-register G-BIND, G-INV, G-RECOMP (STAGE_RECORD) before the closure re-check (T047)"
+  ],
+  "unresolved": [],
+  "unblocks": [
+    "C-004-T047"
+  ],
+  "created_at_utc": "2026-10-06T06:55:00Z",
+  "re_registration": {
+    "stage_records": [
+      {
+        "path": "rso/slice001/stages/G-BIND.json",
+        "sha256": "9437812fb4d87cd8a8e040a21c1653413645ba3cbd2ebc6b788e10de80bad91a",
+        "commit": "434441fdaa24110123f0f0c9ec9772dd07c7114d"
+      },
+      {
+        "path": "rso/slice001/stages/G-INV.json",
+        "sha256": "545734deb23c22a38c68c7c619d39abaa074bad3329ed5865bbcecb3af38250a",
+        "commit": "434441fdaa24110123f0f0c9ec9772dd07c7114d"
+      },
+      {
+        "path": "rso/slice001/stages/G-RECOMP.json",
+        "sha256": "b90c557ebed772063f1d57cee3f85c88e84b98c34e59e55aa8f511235833b727",
+        "commit": "434441fdaa24110123f0f0c9ec9772dd07c7114d"
+      }
+    ],
+    "fire_receipts_cited": [
+      {
+        "path": "rso/slice001/stages/fire/G-BIND.json",
+        "sha256": "ab57152d061b204ff11be95b99841f8abdce1995c5b83891147c9cd7fb763b53",
+        "commit": "57447751bbe40ff965f5ce93124b6f9310adae81"
+      },
+      {
+        "path": "rso/slice001/stages/fire/G-INV.json",
+        "sha256": "f71a555c86cf821656c005edf39e7a121c1f7435f18c4ff21c39c185afdcb268",
+        "commit": "57447751bbe40ff965f5ce93124b6f9310adae81"
+      },
+      {
+        "path": "rso/slice001/stages/fire/G-RECOMP.json",
+        "sha256": "08f5e799a329b632f0cb2a5c71527e56f578ab90c50f9cb0d0c0dd3e53dbb57c",
+        "commit": "57447751bbe40ff965f5ce93124b6f9310adae81"
+      }
+    ],
+    "contract": {
+      "path": "rso/slice001/contract/contract.json",
+      "version": "1.0.5",
+      "sha256": "ae3bbf271df86188af990ea344edb3fd792fd35888f89fd5d0a87e1dcf725d59",
+      "commit": "6c103159cf3950e94c38eaeb00b41941647f5cce"
+    }
+  },
+  "artifacts": [
+    {
+      "path": "ops/campaigns/C-004/tasks/C-004-T046/attempts/A-001/replay_cases.jsonl",
+      "sha256": "8e13b90256864075c4bc64ff304821d0921dad6bfa5661779cf780507b091d52"
+    },
+    {
+      "path": "ops/campaigns/C-004/tasks/C-004-T046/attempts/A-001/edits_replay.json",
+      "sha256": "8c68650aa552419810c6f7e60a1cf08ecb7b0e65666eb206fcdeea3639e19556"
+    }
+  ],
+  "instance": "harry1-a1598f01",
+  "host": "harry1",
+  "branch": "argus/c004-t046",
+  "worktree_path": "C:/Prometheus-worktrees/argus-c004-t046",
+  "resources": {
+    "cpu": "about 25 CPU-minutes, development only (two full-suite runs ~8.5 min each, edit replay ~3.5 min, cases replay, module runs)",
+    "validation_launches": 0,
+    "model": "one Q2 session, about 1 hour"
+  },
+  "notes": "Commits on argus/c004-t046: 2ee88c6d5 RED tests; 78f4d1fdc repairs (= gate PIN); 57447751b fire receipts; 434441fda stage records; 6c103159c contract v1.0.5 + pin; 01702698d seat state. Merge, do not squash: records cite 57447751b and pin 78f4d1fdc. Ledger untouched (the cases replay wrote a throwaway copy). The S3/S4 records, fixtures/world_cases.py and the tables are unchanged."
+}
