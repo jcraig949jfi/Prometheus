@@ -36,7 +36,7 @@ from rso.slice001 import s2_bundle as SB
 from rso.slice001.fixtures import evidence_cases as F
 
 REPO = SB.REPO_ROOT
-OUT = os.path.join(REPO, "rso", "slice001", "s2")
+OUT = os.environ.get("RSO_S2_OUT") or os.path.join(REPO, "rso", "slice001", "s2")   # S4 rerun: rso/slice001/s4
 EXTRA_SUBJECTS = ("QCARRY", "AMNESIAC", "FLIP", "WIPE", "PKTD_NOQ", "HCOUNT", "EVERY3", "SLEEPER", "SPLIT1", "SPLIT2",
                   "OVERDELAY")
 BUNDLES = ("G0", "EXTRA", "HEAL", "FLAT", "LOSSY")

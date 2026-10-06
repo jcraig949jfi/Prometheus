@@ -1,0 +1,152 @@
+{
+ "schema": "pte_c2b.freeze.v1",
+ "experiment": "PTE-C2B search-barrier dissection",
+ "authority": "roles/Ananke/prompts/2026-10-05_pte_c2b_directive/ (204a69374)",
+ "c2a_input_sha": "b3b2863fd",
+ "code_sha": "49baad2912344138eeb2c0951ed5d11e5a69517f",
+ "code_files": {
+  "c2b_common.py": "1ef09a10f9c6226ce417bb83e49a010025f84d44117c752d33f1237db0a96958",
+  "run_c2b.py": "184df5bcbcf405e45e30112a6efd8442c1d1185136b6010366bada7766a2aa24",
+  "make_plan_c2b.py": "0519af006c1282abdc0574ba6a628e67e93760f7d7ea6bea150395a4d2fad0e8",
+  "reduce_c2b.py": "48a8c5c327ce0dd8e6933e629cb53c3ef86e2e9619587cbfcc6acbd33436147e",
+  "test_c2b.py": "49893118138bec11ae0587d5a2f2f6ddd8235b5ba266ac1fbe3e33b51839b604",
+  "flight1_prefix.py": "e937dfc32492d2ade33eecd0df4f6533cbdec1c6e4aba292f01ad2832429ff66",
+  "make_flight2.py": "e283b53f1992a470908dc2288bd6228c28b15bc45f4738bf5edd79c88c9ff491"
+ },
+ "c2a_code_files": {
+  "c2a_common.py": "6ab60bb54f2a1be1300ca2aee4e327b2f37e5a9ee3658015aac4350cb0f7f257",
+  "run.py": "92c0ecb6b283e2b5922741cf9a8b82a925260f96411cf2d5e7c1bea5c4339c41",
+  "reduce.py": "6ea8780d2f03d77c2e3e0c14174ecde02427790d66f8aaeadd3a28150ece7216"
+ },
+ "prereg_sha256": "7cb5fa7082c9a4aec8698b0e70d26a79c999d2f005be395db2166f57b3bb545c",
+ "plan_sha256": "247567580c9845bd6a9f98a7aee2c64ea6aebab4d6efd3cafb756b90cd482486",
+ "qual_files": {
+  "qual\\FLIP-0000-adbab9bf.json.gz": "f0a96b14e3f5409f016294c2808f4318a81a92beddca5f2d2ebd7b5ffd3d057f",
+  "qual\\FLIP-0004-125dfbff.json.gz": "8321e2b370ce09cacefd4ad2bcd1b0d38ff636f37d7ef6c8ffebf8a5b2882e69",
+  "qual\\FLIP-0099-df143630.json.gz": "7a9d5ed11f3a7c3a36f81e566a2dab90059fd73cec8270cca24af22f393a0464",
+  "qual\\FLIP-0167-b6d3fceb.json.gz": "ca3952562fdda1a795d5cef30d4a9493259d23bb06a46b8057caff5cd05ca9ac",
+  "qual\\RELAY-0010-e89a8022.json.gz": "6cc86872bbdbb55be51584a414c1c6876d35b16656646eb7f0579c7c867fe8ea",
+  "qual\\RELAY-0019-eabcdf91.json.gz": "c734e9095ffb8a18ac80c28c55b9c2ac205ba1c7ca5452632cd253f7d54f6cfa",
+  "qual\\RELAY-0027-8dac4bc0.json.gz": "01674d6e163476b1342187157fcf8e652b4b649ce27246874ad15c8ec5a62851",
+  "qual\\RELAY-0032-a447e46e.json.gz": "d113aed9351e3fa6d71540dd3f8d0210ae757930efda3c2e806b787482990114"
+ },
+ "cells": [
+  {
+   "cell_id": "RELAY-0010-e89a8022",
+   "role": "RELAY-mh",
+   "arms": {
+    "BRK1": 8,
+    "B4X": 8,
+    "STEP": 8,
+    "BRK2": 8
+   },
+   "step": "relay_step_sense",
+   "step_rule": "family-wide (qualified at all 4 cells)"
+  },
+  {
+   "cell_id": "RELAY-0019-eabcdf91",
+   "role": "RELAY-mh",
+   "arms": {
+    "BRK1": 8,
+    "B4X": 8,
+    "STEP": 8,
+    "BRK2": 8
+   },
+   "step": "relay_step_sense",
+   "step_rule": "family-wide (qualified at all 4 cells)"
+  },
+  {
+   "cell_id": "RELAY-0027-8dac4bc0",
+   "role": "RELAY-mh",
+   "arms": {
+    "BRK1": 8,
+    "B4X": 8,
+    "STEP": 8,
+    "BRK2": 8
+   },
+   "step": "relay_step_sense",
+   "step_rule": "family-wide (qualified at all 4 cells)"
+  },
+  {
+   "cell_id": "RELAY-0032-a447e46e",
+   "role": "RELAY-mh",
+   "arms": {
+    "BRK1": 8,
+    "B4X": 8,
+    "STEP": 8,
+    "BRK2": 8
+   },
+   "step": "relay_step_sense",
+   "step_rule": "family-wide (qualified at all 4 cells)"
+  },
+  {
+   "cell_id": "FLIP-0000-adbab9bf",
+   "role": "FLIP",
+   "arms": {
+    "BRK1": 8,
+    "B4X": 8,
+    "STEP": 8,
+    "BRK2": 8
+   },
+   "step": "flip_step(RELAY_LATCH)",
+   "step_rule": "per-cell fallback"
+  },
+  {
+   "cell_id": "FLIP-0004-125dfbff",
+   "role": "FLIP",
+   "arms": {
+    "BRK1": 8,
+    "B4X": 8,
+    "STEP": 8,
+    "BRK2": 8
+   },
+   "step": "flip_step(RELAY_LATCH)",
+   "step_rule": "per-cell fallback"
+  },
+  {
+   "cell_id": "FLIP-0099-df143630",
+   "role": "FLIP",
+   "arms": {
+    "BRK1": 8,
+    "B4X": 8,
+    "STEP": 0,
+    "BRK2": 8
+   },
+   "step": null,
+   "step_rule": "per-cell fallback"
+  },
+  {
+   "cell_id": "FLIP-0167-b6d3fceb",
+   "role": "FLIP",
+   "arms": {
+    "BRK1": 8,
+    "B4X": 8,
+    "STEP": 8,
+    "BRK2": 8
+   },
+   "step": "flip_step(RELAY_LATCH)",
+   "step_rule": "per-cell fallback"
+  }
+ ],
+ "n_jobs": 248,
+ "disjointness": {
+  "qual_n": 2048,
+  "prod_n": 460752,
+  "qual_x_prod": 0,
+  "qual_x_c2a_admit": 0,
+  "held_x_train": 0
+ },
+ "production": {
+  "workers": 3,
+  "lease": "Fabric skullport:gpu0 lse-97b773b19075",
+  "deadline_rule": "launch + 11h30m; hard wall 12 h",
+  "projected_wall_h": {
+   "central": 6.58,
+   "conservative": 8.88
+  },
+  "run_dir": "C:/Users/jcrai/ananke_runs/pte-c2b/production/run",
+  "launch": "schtasks one-shot per worker from a worktree pinned at the freeze commit; tasks disabled after /run"
+ },
+ "external_review": "packet posted on comms before launch; status recorded at launch",
+ "frozen_utc": "2026-10-06T00:23:03.273461+00:00"
+}

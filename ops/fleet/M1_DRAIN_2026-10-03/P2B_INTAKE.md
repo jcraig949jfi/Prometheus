@@ -137,3 +137,34 @@ Sent by Nestor directly to Bellerophon, Archaeon, Ananke and Cosmos. They verify
   it under an operator order, and the v2 result is above.
 - **Nestor's note:** Nestor says the operator ruled that the historical M1-drain and pm-data items do not block this
   experiment.
+- **Aphrodite C-006 Beta-01 CLOSED (#1606, main 56e5e2bd5).**
+  - T12 replicated on fresh, unexposed seeds: IMPROVER_REPLICATED_POSITIVE (60 vs 20 held-out families, 5/0/3,
+    sign-flip p 0.031 = the attainable minimum, NULL gate 0/8).
+  - The effect is carried by abstraction-only candidacy. The historical improver selects memorisation in 4 of 8 seeds.
+  - First replicated R7, tier 2. Not R8, not RSI.
+  - Close synthesis: a higher-power replication should come before any Tier-4 bridge.
+  - The seat is idle pending operator direction.
+- **Techne:** READY since 12:10Z. The manifest's recommended first campaign, TECHNE-131 (successor scorer plus packet
+  validator hardening), is offered to the operator and awaits a go or no-go.
+- **Ananke PTE-C2A CLOSED (#1619, #1621; packet roles/Ananke/pte/c2a/RESULT_PTE_C2A.md, main b3b2863fd).**
+  - Production 362/362, 0 stop flags, positive control alive.
+  - RELAY-mh and FLIP are both SEARCH_LIMIT_SUPPORTED: 8/8 cells located in search; BASE 1/48 and 0/48; PSEED 16/16
+    each.
+  - Neither W0 nor M32 rescues search; every upper 95% bound on the gain is <= .13.
+  - Post-hoc, labelled descriptive: all 15 KSEED "recoveries" were neutral edits, and 0/81 broken starts recovered.
+    KSEED should be conditioned on a broken start; recorded as a prereg defect.
+  - Proposed next: broken-start KSEED plus B4X or STEP at the same 8 cells. Needs operator authority. The M1 GPU lease
+    should now be released.
+- **Aether ER01 CLOSED (#1630; Aether/V2B/ER01/RESULT.md @ bae71a02b).**
+  - 38/38 units, 9.04 h on M2, technical PASS, deterministic.
+  - Disposition: MOBILE_BUT_TRIVIAL. The frozen medium's extent does not change with energy: late frozen fraction about
+    0.987, and 37.3% of sites are ever changed, in every regime. Energy scales only the flicker rate of the same ~1.2%
+    minority, and those flips revisit recent states.
+  - Proposed next (TH-009, not started): one law change in which a write re-aims the writer. Needs operator authority.
+
+## 2026-10-06 00:35Z check (msgs 1647-1664)
+- Palamedes #1653 + #1656 (C-004-T045): 8 custody rows registered (34-39 STAGE_RECORD @48f9529b4; 40 EVIDENCE_MANIFEST,
+  41 RUN_INVENTORY @0e1943bff). All blob hashes cross-checked, verify chain_ok rows=41,
+  head 216829137ae611ea2704f2a6adb381377b7ffa2599c411d790053d314aaf834f. Reply #1664.
+- Ananke PTE-C2B: production launched under operator order (freeze c699838cf). Review request #1659 has NO in-scope
+  reviewer (Argus declined; Harmonia HOLD; Aporia holds no scientific authority). Surfaced to operator: P2B_SUPPORT item.

@@ -1,0 +1,80 @@
+{
+  "schema": "prometheus.workgraph.task.v1",
+  "task_id": "C-004-OP7",
+  "campaign_id": "C-004",
+  "title": "OPERATOR DECISION OP-7: launch cap for the S4 repair round",
+  "objective": "The operator decides the launch cap after S3 left 4 of 12 launches for an S4 that needs about 8.",
+  "owner_role": "operator",
+  "quality_class": "Q2",
+  "can_downgrade": false,
+  "escalate_to": "operator",
+  "depends_on": [],
+  "problem": "ops/campaigns/C-004/TRIAGE_S3.md (caps paragraph)",
+  "non_goals": [
+    "No work is executed under this packet"
+  ],
+  "evidence_required": [
+    "the ruling recorded verbatim"
+  ],
+  "acceptance": {
+    "condition": "ruling recorded; CLOSED"
+  },
+  "deliverables": [
+    "rso/slice001/contract/AMENDMENT_v1.0.4.md"
+  ],
+  "kind": "operations",
+  "red_required": false,
+  "status": "CLOSED",
+  "history": [
+    {
+      "status": "PROPOSED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-05T23:21:41Z",
+      "note": "raised in chat"
+    },
+    {
+      "status": "READY",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-05T23:21:41Z",
+      "note": "recorded"
+    },
+    {
+      "status": "CLAIMED",
+      "by": "operator[recorded by Palamedes harry1-679179c6]",
+      "at_utc": "2026-10-05T23:21:41Z",
+      "note": "OP-7 (operator, chat to Palamedes, 2026-10-05): Option 1 approved. Raise the C-004 launch cap from 12 to 20. Proceed with the complete S4 repair/regression plan. Do not shrink the rerun. The additional eight launches are authorized specifically so the repaired CHANNEL behavior can be reverified across the intended regression surface, including HEAL and the twin bundles. Record the cap increase as an explicit post-S3 repair-round amendment and preserve the original 12-launch S2/S3 accounting separately. Make T042 and T043 READY. T043 remains narrowed to tests/test_reset_observer.py; do not modify fixtures/world_cases.py and unnecessarily invalidate TWIN_EQ's stage record. For T042, regenerate and re-register any AUTHOR_TESTED stage records invalidated by the edits to pinned instrument files before relying on those instruments in the repaired run. Also propagate the idle-heartbeat rule to Cadmus, Argus, Eupalamus, and Pallas: continue periodic comms/workgraph checks while idle, but do not commit heartbeat files merely because an hourly poll occurred. Emit heartbeats while actively working at the required cadence and on meaningful state transitions, including entering and leaving idle."
+    },
+    {
+      "status": "IMPLEMENTING",
+      "by": "operator[recorded by Palamedes harry1-679179c6]",
+      "at_utc": "2026-10-05T23:21:41Z",
+      "note": "ruling recorded"
+    },
+    {
+      "status": "GREEN",
+      "by": "operator[recorded by Palamedes harry1-679179c6]",
+      "at_utc": "2026-10-05T23:21:41Z",
+      "note": "ruling recorded"
+    },
+    {
+      "status": "INTEGRATION_READY",
+      "by": "operator[recorded by Palamedes harry1-679179c6]",
+      "at_utc": "2026-10-05T23:21:41Z",
+      "note": "ruling recorded"
+    },
+    {
+      "status": "INTEGRATED",
+      "by": "operator[recorded by Palamedes harry1-679179c6]",
+      "at_utc": "2026-10-05T23:21:41Z",
+      "note": "ruling recorded"
+    },
+    {
+      "status": "CLOSED",
+      "by": "operator[recorded by Palamedes harry1-679179c6]",
+      "at_utc": "2026-10-05T23:21:41Z",
+      "note": "OP-7 (operator, chat to Palamedes, 2026-10-05): Option 1 approved. Raise the C-004 launch cap from 12 to 20. Proceed with the complete S4 repair/regression plan. Do not shrink the rerun. The additional eight launches are authorized specifically so the repaired CHANNEL behavior can be reverified across the intended regression surface, including HEAL and the twin bundles. Record the cap increase as an explicit post-S3 repair-round amendment and preserve the original 12-launch S2/S3 accounting separately. Make T042 and T043 READY. T043 remains narrowed to tests/test_reset_observer.py; do not modify fixtures/world_cases.py and unnecessarily invalidate TWIN_EQ's stage record. For T042, regenerate and re-register any AUTHOR_TESTED stage records invalidated by the edits to pinned instrument files before relying on those instruments in the repaired run. Also propagate the idle-heartbeat rule to Cadmus, Argus, Eupalamus, and Pallas: continue periodic comms/workgraph checks while idle, but do not commit heartbeat files merely because an hourly poll occurred. Emit heartbeats while actively working at the required cadence and on meaningful state transitions, including entering and leaving idle."
+    }
+  ],
+  "authority": "C-004-OP1 (caps are the operator's)",
+  "notes": "OPERATOR DECISION packet (see C-004-OP1 notes). OP6 is reserved for the S5 decision."
+}

@@ -344,5 +344,83 @@ class TestRunner(unittest.TestCase):
                                  W.run_life(WC.RUNTIMES[name], h).outputs)
 
 
+# --------------------------------------------------------------------------------------------------------
+# S4 repair C-004-T043 (TRIAGE_S3.md rows E01, E02; S3 edits rso/slice001/challenge/S3/attack_set/edits_A.json).
+# Fixtures live here, not in fixtures/world_cases.py, so no instrument version changes (P8 pins that file; #1543).
+
+class LAG3_ONLY(WC.REG):
+    """E01: the forbidden bit sent once, at the CUE of episode 3, with k = 3; the reset keeps the channel. It first
+    shows at PROBE_A of episode 6: lag exactly H after boundary 3 (draft A A7), and nowhere earlier."""
+
+    def on_cue(self, u, f):
+        self.a, self.d = u, f
+        if self.ep == 3:
+            self.send(f, 3)
+
+    def reset(self):
+        self.d = 0
+
+
+class SENDS_ONLY(WC.REG):
+    """E02: re-sends the previous episode's forbidden bit (k = 3) at every CUE and ignores deliveries, so the
+    forbidden content shows in no probe, only in the CUE output (A5 P3: identical outputs at EVERY tick)."""
+
+    def __init__(self):
+        WC.REG.__init__(self)
+        self.prev = 0
+
+    def on_cue(self, u, f):
+        self.a, self.d = u, f
+        self.send(self.prev, 3)
+        self.prev = f
+
+    def on_deliver(self, bits):
+        pass
+
+
+def _erase_with_edit(edit_id, make):
+    """reset.erase with one S3 edit applied to an in-memory copy of reset.py (the frozen file is never written)."""
+    import json
+    import os
+    import types
+    edits = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+                         "challenge", "S3", "attack_set", "edits_A.json")
+    with open(edits, "r", encoding="utf-8") as f:
+        doc = json.load(f)
+    edit = next(e for e in (doc["edits"] if isinstance(doc, dict) else doc) if e["edit_id"] == edit_id)
+    with open(RS.__file__, "r", encoding="utf-8") as f:
+        src = f.read()
+    assert src.count(edit["find"]) == 1, edit_id
+    mod = types.ModuleType("rso.slice001.reset_" + edit_id.replace("-", "_"))
+    exec(compile(src.replace(edit["find"], edit["replace"]), RS.__file__, "exec"), mod.__dict__)
+    return mod.erase(make)
+
+
+class TestS4RepairE01E02(unittest.TestCase):
+    def test_E01_lag_exactly_H_is_caught(self):
+        out = RS.erase(LAG3_ONLY)
+        self.assertEqual(out["value"], "FAIL")
+        self.assertEqual(out["witness"], {"history": 64, "partner": 0, "j": 3, "episode": 6, "tick": "PROBE_A"})
+        self.assertEqual(out["reason"], "forbidden influence across boundary 3, first visible at (6, PROBE_A)")
+
+    def test_E02_sends_only_leak_is_caught(self):
+        out = RS.erase(SENDS_ONLY)
+        self.assertEqual(out["value"], "FAIL")
+        self.assertEqual(out["witness"], {"history": 64, "partner": 0, "j": 3, "episode": 4, "tick": "CUE"})
+        self.assertEqual(out["reason"], "forbidden influence across boundary 3, first visible at (4, CUE)")
+
+    def test_E01_fixture_kills_the_S3_horizon_edit(self):
+        # fire half: the edited ERASE (horizon j+1..j+2) lets the lag-H leak through; the frozen one does not
+        self.assertEqual(_erase_with_edit("E01-erase-horizon", LAG3_ONLY)["value"], "PASS")
+
+    def test_E02_fixture_kills_the_S3_sends_edit(self):
+        self.assertEqual(_erase_with_edit("E02-erase-ignores-sends", SENDS_ONLY)["value"], "PASS")
+
+    def test_fixtures_stay_inside_the_registered_model(self):
+        for make in (LAG3_ONLY, SENDS_ONLY):
+            self.assertEqual(RS.bounds(make)["value"], "PASS")
+            self.assertEqual(RS.preserve(make)["value"], "PASS")    # only the erase clause is under test
+
+
 if __name__ == "__main__":
     unittest.main()

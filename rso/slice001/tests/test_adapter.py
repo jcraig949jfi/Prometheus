@@ -282,5 +282,44 @@ class TestCheatControls(unittest.TestCase):
         self.assertEqual(value(g), ("FAIL", "OUTCOME_MISMATCH:value"))
 
 
+class Invert(W.Runtime):
+    """S3_INVERT-like (C-004-T042, F1): the reset complements a and sets a flag the capture omits; the answer
+    un-complements while the flag is set. The clamp is meaningful only on the SAME instance."""
+
+    def __init__(self):
+        W.Runtime.__init__(self)
+        self.flipped = False
+
+    def on_cue(self, u, f):
+        self.a, self.d, self.flipped = u, f, False
+
+    def answer(self):
+        return self.a ^ 1 if self.flipped else self.a
+
+    def reset(self):
+        self.a ^= 1
+        self.flipped = True
+
+
+class TestF1ClampSameInstance(unittest.TestCase):
+    """F1 (S3.BROKEN.INVERT): the bound trace:clamp must be the trace the registered CHANNEL instrument
+    (reset.clamp_answers: capture, a := v, restore into the SAME runtime) computes its outcome from."""
+
+    def test_clamp_trace_equals_the_instruments_clamp_answers(self):
+        from rso.slice001 import reset as RS
+        run = A.world_runs(Invert)["trace:clamp"]["CLAMP"]
+        for h in (0, 1, 64, 1365, 4095):
+            self.assertEqual(run[h * 6:h * 6 + 6], "".join("%d" % y for y in RS.clamp_answers(Invert, h)), h)
+
+    def test_honest_channel_receipt_recomputes_equal(self):
+        from rso.slice001 import reset as RS
+        runs = A.world_runs(Invert)
+        out = {k: v for k, v in RS.channel(Invert).items() if k != "execution"}
+        self.assertEqual(out["value"], "FAIL")                       # the in-place reading: v is not followed
+        rc, tr = A.make_receipt(identity("INVERT"), "CHANNEL", lambda r: out, PRED_CODE, run_id="r", runs=runs)
+        self.assertIsNone(C.first_mismatch("CHANNEL", rc.to_dict()["outcome"],
+                                           C.recompute("CHANNEL", "STANDARD", {k: C.parse_trace(k, b) for k, b in tr.items()})))
+
+
 if __name__ == "__main__":
     unittest.main()
