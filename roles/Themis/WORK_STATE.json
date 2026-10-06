@@ -3,43 +3,58 @@
   "seat": "Themis",
   "mwo_id": "MWO-0004",
   "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
-  "updated_at_utc": "2026-10-06T05:49:02Z",
+  "updated_at_utc": "2026-10-06T10:20:00Z",
   "state": "ACTIVE",
-  "instance": "spectrex5-7151a6d4 (SPECTREX5)",
-  "branch": "themis/base-role-adopt-2026-10-04",
-  "base_sha": "d93d3d8c6d2c35335a26dc58acd68deb28979128",
+  "instance": "m2-0e9b1ed2 (SPECTREX5)",
+  "branch": "themis/lanec-m4-2026-10-06",
+  "base_sha": "3bc5e74fe0eeb7e3f170d917e6d92419c535029e",
   "head_sha": "(this commit; see git log -1 -- roles/Themis/WORK_STATE.json)",
   "model": "claude-opus-5-5",
   "host": "SPECTREX5",
-  "work_order": "MWO-0004 (ops/work_orders/CURRENT.md) + CWO-2026-09-30C. CHARTER: Project Moonshot, prong 3, adopted 2026-10-05 (roles/Themis/prompts/2026-10-05_charter/; operator chat, soup-to-nuts, independent of Phase 2-B and Phase 3 but borrowing from and overlapping with both).",
-  "current_objective": "Project Moonshot prong 3. RESET 2026-10-06: next working session starts LANE C (thread TH-MOON-M4, commodity fabric) per roles/Themis/design/LANE_C_M4_KICKOFF.md -- synthetic-epoch distribution/commit infrastructure (R-EP + CAS + fault matrix + transport metrics), pure layer-1 must-pass TDD, needs no evolutionary substrate. Launchpad/science remain gated (design s16).",
-  "current_step": "Astra (Enceladus) reviewed v0.2; operator accepted all 10 findings (F01-F10) + H3 + typed outcome/execution vocabulary + F07 constitutional air-gap. Design v0.3 is of record (v0.2 superseded). Review+disposition captured verbatim (roles/Themis/prompts/2026-10-06_astra_review/). Status: REVISE BEFORE LAUNCHPAD -- evolutionary science NOT authorized. Three parallel closure lanes set up (A contracts/claim-map, B wforge F09 regression->Daedalus, C M4 synthetic-epoch cluster starts now).",
+  "work_order": "MWO-0004 (ops/work_orders/CURRENT.md) + CWO-2026-09-30C. CHARTER: Project Moonshot, prong 3, adopted 2026-10-05 (roles/Themis/prompts/2026-10-05_charter/; operator chat, soup-to-nuts, independent of Phase 2-B and Phase 3 but borrowing from and overlapping with both). LANE C: operator OP-LC1 2026-10-06 (roles/Themis/prompts/2026-10-06_op_lc1/).",
+  "current_objective": "Lane C / TH-MOON-M4 / campaign C-008 (OP-LC1): R-EP synthetic epochs -- D1/D2 done under the D3 matrix (T001 CLOSED), D4 prereg frozen (T002 CLOSED); D4 baseline (T003), bounded GitHub arm (T004), D5 auto-join (T005) remain.",
+  "current_step": "T001+T002 CLOSED on main (2a86d4db9). D4 tooling built and instrument-tested (integrating). T003 BLOCKED: M2 saturated by Aether AIM02 production (R1 rig puts 6 workers on M2); T004 BLOCKED on operator (GitHub repo + deploy key). Next: T005 (D5 auto-join), which needs no fleet scale.",
   "in_flight": [],
   "progress": "charter adoption complete; no science run yet; no world/detector built yet.",
   "finish_condition": "charter-level: either a sagacity signal that passes pre-written gates AND is scaled per the funnel, or a reachability-certified KILL at the floor; each experiment carries its own prereg.",
-  "next_expected_milestone": "launchpad preregistration committed (THEMIS-01)",
-  "expected_next_artifact": "M4 synthetic-epoch cluster baseline; the wforge F09 regression; the M1 claim-map draft (held for approval)",
+  "next_expected_milestone": "C-008-T005 GREEN (D5 auto-join)",
+  "expected_next_artifact": "moonshot/epoch/join.py + tests; then the D4 LAN report when T003 unblocks",
   "epic": "EP-MOONSHOT (owner; ops/epics/EP-MOONSHOT/)",
-  "threads": ["TH-MOON-M1", "TH-MOON-M2", "TH-MOON-M3", "TH-MOON-M4"],
-  "candidate_threads": ["TH-MOON-M5", "TH-MOON-M6"],
-  "campaigns": [],
+  "threads": [
+    "TH-MOON-M1",
+    "TH-MOON-M2",
+    "TH-MOON-M3",
+    "TH-MOON-M4"
+  ],
+  "candidate_threads": [
+    "TH-MOON-M5",
+    "TH-MOON-M6"
+  ],
+  "campaigns": [
+    "C-008"
+  ],
   "experiments": [],
   "fabric_tasks": [],
   "running": [],
-  "blocked": [],
-  "blocked_on": [],
-  "resource_status": "none held; no Fabric lease, no compute, no worker, no process started.",
-  "last_receipt": "roles/Themis/journal/2026-10-06.md (Astra review incorporated, v0.3)",
+  "blocked": [
+    "C-008-T003",
+    "C-008-T004"
+  ],
+  "blocked_on": [
+    "C-008-T003: M2 free of Aether AIM02 production (frozen rig R1: 6 workers on M2) OR ssh from M2 to ubu003-006 (M2 key authorized only on ubu001/002; host keys absent) -> pure e-waste rig by a prereg amendment BEFORE any data",
+    "C-008-T004: operator creates a private dedicated repository and adds the deploy key ~/.ssh/moonshot_c008_t004_deploy.pub (fingerprint SHA256:bPHyvqEQyOASdbCso9+UQLilyFngHXR0efxGyPVE5EQ) with write access -- or logs in gh on M2"
+  ],
+  "resource_status": "no Fabric lease held; no process running; ubu001/ubu002 hold only shipped test copies under ~/themis-lanec/",
+  "last_receipt": "ops/campaigns/C-008/tasks/C-008-T001/attempts/A-20261006T085200Z-Themis-m2-0e9b1ed2/RECEIPT.json",
   "last_push_sha": "(set on the charter-adoption push)",
   "last_push_utc": "(set on the charter-adoption push)",
   "session_started_utc": "2026-10-04T15:38Z (continuous session through charter adoption 2026-10-05)",
-  "next": "RESET for a fresh session. START HERE: roles/Themis/design/LANE_C_M4_KICKOFF.md (Lane C / M4). It is self-contained -- no external coordination, no evolutionary substrate, no gated items. Lanes A (Palamedes claim-map) and B (Daedalus wforge F09 regression) are separate and not part of the reset start.",
+  "next": "T005 D5 auto-join (hermetic tests + one join on ubu002). Then T003 when its dependency clears; T004 when the operator supplies the repo.",
   "next_actions": [
-    "Open a bounded campaign under TH-MOON-M4 (ops/campaigns/).",
-    "Write the D3 fault-injection matrix as FAILING tests first (duplicate execution, worker death, lease expiry, CAS collision, git remote outage, idempotent replay, heterogeneous-host canonical trace).",
-    "Implement D1 (R-EP synthetic epoch: semantic id, durable blobs before atomic completion manifest) and D2 (CAS one-accepted-successor, idempotent dupes, quarantine) to pass them.",
-    "Preregister the D4 reconsider-transport threshold BEFORE the baseline, then baseline claim latency / push contention / abandoned-epoch rate / ref growth / useful-vs-coordination CPU on ubu001-006.",
-    "D5 node auto-join (N7, no auto-authorization) in parallel."
+    "T005: moonshot/epoch/join.py + tests/test_d5_join.py (code approval = ancestor of the approval ref; clean pinned checkout; node announcement under nodes/ grants nothing; WORKER role only); then one real join on ubu002 against a LAN remote.",
+    "T003: when unblocked, amend the prereg rig BEFORE any data if the worker hosts change, then run the sweep (ops/campaigns/C-008/tools/), report each point vs the frozen bounds.",
+    "T004: when the repo + deploy key exist, verify the ssh -T greeting names the repository (spillover check), then run G1-G7 within 250 write attempts.",
+    "Session close: review packet for C-008 (T001/T002 results, mutation table, open blockers)."
   ],
   "operator_decisions_required": [
     "RESOLVED 2026-10-05: substrate = wforge+Proteus for Launchpad, BEE later as a transplant test.",
@@ -47,10 +62,13 @@
     "RESOLVED 2026-10-05: fusion = neural-as-primitive first; neural-as-mutator auxiliary, outside selection authority.",
     "RESOLVED 2026-10-05: cloud = no extended campaign; scout mechanism authorized to build, fires only after RC2 + local gate, cap fixed at launch.",
     "OPEN (only if a float GPU path is pursued): RSO contract amendment for SEMANTIC/PARTIAL reproducibility, via the RSO cell's versioned process.",
-    "PENDING: operator markup of MOONSHOT_DESIGN_v0.2.md before the design is treated as final."
+    "RESOLVED 2026-10-06 OP-LC1: Lane C approved (C-008); GitHub authorized for one bounded WAN-semantics arm.",
+    "OPEN (T004, not a science gate): create the dedicated private repository + add the deploy key (or log in gh on M2).",
+    "OPEN (T003 rig, not a science gate): ssh from M2 to ubu003-006, or wait for M2 to be free of Aether AIM02."
   ],
   "latest_reports": [
-    "roles/Themis/journal/2026-10-05.md (charter adoption)",
-    "operator auto-memory project_moonshot_rso_lane (full design synthesis)"
+    "roles/Themis/journal/2026-10-06.md (Lane C executed)",
+    "ops/campaigns/C-008/prereg/D4_PREREG.md (frozen 8e69de91e)",
+    "moonshot/epoch/CONTRACT.md (v1.1)"
   ]
 }

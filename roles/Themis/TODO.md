@@ -1,33 +1,25 @@
 # Themis TODO
 
-Currency: 2026-10-05T17:35Z (UTC). Closed items are deleted with the closing
-commit and date, purged after 24 h (base role s7). Full list: BACKLOG_H0H5.md.
+Currency: 2026-10-06T10:20Z (UTC). Closed items are deleted with the closing commit and date, purged after
+24 h (base role s7). Full list: BACKLOG_H0H5.md. Lane C state: ops/campaigns/C-008/.
 
-Charter adopted (Project Moonshot, prong 3). Startable now:
+Lane C (C-008, OP-LC1):
 
-- [ ] THEMIS-01: write the launchpad preregistration (SYM vs HYB arms, gates,
-      margins, seed counts, kill + reachability criteria) under
-      prompts/2026-10-05_prereg_launchpad/ with a MANIFEST
-- [ ] THEMIS-03: DRAFT the coordination message to Palamedes / the RSO cell
-      (offer the launchpad as the first retention candidate; ask whether R1
-      WORLD FORGE is assigned and whether wforge fits; flag the
-      determinism-vs-GPU amendment). Hold for operator approval before sending
-- [ ] THEMIS-12: literature check on evolved integer/quantized nets as
-      organism primitives (Polyworld-style prior art); claim or disclaim novelty
+- [ ] T005 D5 node auto-join without auto-authorization: moonshot/epoch/join.py + tests/test_d5_join.py,
+      then one real join on ubu002 against a LAN remote
+- [ ] T003 D4 LAN baseline -- BLOCKED: M2 saturated by Aether AIM02 (frozen rig R1 = 6 workers on M2), or
+      ssh from M2 to ubu003-006 (then amend the prereg rig BEFORE any data). Tooling ready (moonshot/epoch/bench.py)
+- [ ] T004 D4 GitHub arm -- BLOCKED on the operator: dedicated private repository + deploy key
+      ~/.ssh/moonshot_c008_t004_deploy.pub (or gh login on M2). Then: ssh -T spillover check, G1-G7, <= 250 writes
+- [ ] Review packet for C-008 at session close
+- (closed 2026-10-06, 2a86d4db9) T001 D1+D2 under the D3 matrix; T002 D4 preregistration
 
-Awaiting operator decisions (surface, do not guess):
+Other lanes (not Lane C; unchanged):
 
-- [ ] Substrate: wforge+Proteus (purpose-built, dormant) vs BEE (demonstrated,
-      not purpose-built) -- blocks the world spec and the runner
-- [ ] Strategic fork: instrument-first (current plan) vs re-premise-to-assay
-- [ ] Fusion mode: neural-as-primitive vs -substrate vs -mutator
-- [ ] RunPod budget for Moonshot: raise the $19.93 cap before any cloud burst
+- [ ] Lane A: draft the M1 claim-map message to Palamedes (hold for operator approval before sending)
+- [ ] Lane B: write the wforge F09 red affordability regression and hand it to Daedalus
+- [ ] THEMIS-12: literature check on evolved integer/quantized nets as organism primitives
 
 Housekeeping:
 
-- [ ] First chartered wake: read roles/base-role/MONITORS.md and
-      roles/base-role/DISTRIBUTED_WORK.md in full before owning any loop or
-      claiming any task packet
-- [ ] `git sparse-checkout disable` in this worktree before work that needs the
-      rest of the tree (currently sparse: base-role, comms, evidence_wiki,
-      roles/Hestia, roles/Themis, archaeon tests, ops/work_orders, aporia/doctrine)
+- [ ] First chartered wake still owes a full read of roles/base-role/MONITORS.md (no loop is owned yet)
