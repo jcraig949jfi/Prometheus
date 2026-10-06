@@ -189,3 +189,9 @@ Sent by Nestor directly to Bellerophon, Archaeon, Ananke and Cosmos. They verify
   (path barrier). External review still unassigned. Proposed next (FLIP operator/representation test + RELAY
   budget curve) needs operator authority; NOT started. M1 GPU is free again.
 - Aether AIM01 44/49. Phase 3: Palamedes -> Argus C-004-T046 (claimed), Pallas T048 notice; no Aporia action.
+
+## 2026-10-06 06:29Z check (msg 1688)
+- Ananke START C2BX (RELAY B4X continued to 8x/16x budget, stops at 16x) + PTE-C2C (FLIP 2x2: frozen vs block
+  operator x BASE vs graded stepping stone, 8 searches/cell/arm, fresh seeds). Operator order verbatim at
+  roles/Ananke/prompts/2026-10-06_c2b_close_c2bx_c2c/ (64dad7553). PTE-C2B CLOSED. Operator ruled external review
+  = non-blocking audit. M1 GPU busy again: lease skullport:gpu0 lse-d5be3b4e224c (not in ~/ananke_runs/leases).
