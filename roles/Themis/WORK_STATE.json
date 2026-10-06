@@ -3,7 +3,7 @@
   "seat": "Themis",
   "mwo_id": "MWO-0004",
   "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
-  "updated_at_utc": "2026-10-06T10:20:00Z",
+  "updated_at_utc": "2026-10-06T10:30:00Z",
   "state": "ACTIVE",
   "instance": "m2-0e9b1ed2 (SPECTREX5)",
   "branch": "themis/lanec-m4-2026-10-06",
@@ -12,13 +12,13 @@
   "model": "claude-opus-5-5",
   "host": "SPECTREX5",
   "work_order": "MWO-0004 (ops/work_orders/CURRENT.md) + CWO-2026-09-30C. CHARTER: Project Moonshot, prong 3, adopted 2026-10-05 (roles/Themis/prompts/2026-10-05_charter/; operator chat, soup-to-nuts, independent of Phase 2-B and Phase 3 but borrowing from and overlapping with both). LANE C: operator OP-LC1 2026-10-06 (roles/Themis/prompts/2026-10-06_op_lc1/).",
-  "current_objective": "Lane C / TH-MOON-M4 / campaign C-008 (OP-LC1): R-EP synthetic epochs -- D1/D2 done under the D3 matrix (T001 CLOSED), D4 prereg frozen (T002 CLOSED); D4 baseline (T003), bounded GitHub arm (T004), D5 auto-join (T005) remain.",
-  "current_step": "T001+T002 CLOSED on main (2a86d4db9). D4 tooling built and instrument-tested (integrating). T003 BLOCKED: M2 saturated by Aether AIM02 production (R1 rig puts 6 workers on M2); T004 BLOCKED on operator (GitHub repo + deploy key). Next: T005 (D5 auto-join), which needs no fleet scale.",
+  "current_objective": "Lane C / TH-MOON-M4 / C-008 (OP-LC1): T001 (D1+D2 under D3), T002 (D4 prereg) and T005 (D5 auto-join) CLOSED; T003 (D4 LAN baseline) and T004 (GitHub arm) BLOCKED on concrete dependencies.",
+  "current_step": "Lost-ack hardening of every write path integrated (8a34b60b8) after a real Windows git:// push hang; D5 field join evidence on main (f3b63ed5f); T005 CLOSED (4b77577e0). Review packet next.",
   "in_flight": [],
   "progress": "charter adoption complete; no science run yet; no world/detector built yet.",
   "finish_condition": "charter-level: either a sagacity signal that passes pre-written gates AND is scaled per the funnel, or a reachability-certified KILL at the floor; each experiment carries its own prereg.",
-  "next_expected_milestone": "C-008-T005 GREEN (D5 auto-join)",
-  "expected_next_artifact": "moonshot/epoch/join.py + tests; then the D4 LAN report when T003 unblocks",
+  "next_expected_milestone": "C-008 review packet; then D4 LAN report when T003 unblocks",
+  "expected_next_artifact": "review packet; ops/campaigns/C-008/evidence/D4_LOCAL/ + D4_REPORT.md",
   "epic": "EP-MOONSHOT (owner; ops/epics/EP-MOONSHOT/)",
   "threads": [
     "TH-MOON-M1",
@@ -44,17 +44,17 @@
     "C-008-T003: M2 free of Aether AIM02 production (frozen rig R1: 6 workers on M2) OR ssh from M2 to ubu003-006 (M2 key authorized only on ubu001/002; host keys absent) -> pure e-waste rig by a prereg amendment BEFORE any data",
     "C-008-T004: operator creates a private dedicated repository and adds the deploy key ~/.ssh/moonshot_c008_t004_deploy.pub (fingerprint SHA256:bPHyvqEQyOASdbCso9+UQLilyFngHXR0efxGyPVE5EQ) with write access -- or logs in gh on M2"
   ],
-  "resource_status": "no Fabric lease held; no process running; ubu001/ubu002 hold only shipped test copies under ~/themis-lanec/",
-  "last_receipt": "ops/campaigns/C-008/tasks/C-008-T001/attempts/A-20261006T085200Z-Themis-m2-0e9b1ed2/RECEIPT.json",
+  "resource_status": "no Fabric lease held; no process running; ubu001 keeps ~/moonshot-lanec (1.9 MB disposable repo, git daemon stopped); ubu002 scratch removed",
+  "last_receipt": "ops/campaigns/C-008/tasks/C-008-T005/attempts/A-20261006T095900Z-Themis-m2-0e9b1ed2/RECEIPT.json",
   "last_push_sha": "(set on the charter-adoption push)",
   "last_push_utc": "(set on the charter-adoption push)",
   "session_started_utc": "2026-10-04T15:38Z (continuous session through charter adoption 2026-10-05)",
-  "next": "T005 D5 auto-join (hermetic tests + one join on ubu002). Then T003 when its dependency clears; T004 when the operator supplies the repo.",
+  "next": "Review packet for C-008. Then T003 when its dependency clears (amend the prereg rig BEFORE any data if hosts change; note Windows hosts need ssh:// to a LAN remote); T004 when the operator supplies the repo + deploy key.",
   "next_actions": [
-    "T005: moonshot/epoch/join.py + tests/test_d5_join.py (code approval = ancestor of the approval ref; clean pinned checkout; node announcement under nodes/ grants nothing; WORKER role only); then one real join on ubu002 against a LAN remote.",
-    "T003: when unblocked, amend the prereg rig BEFORE any data if the worker hosts change, then run the sweep (ops/campaigns/C-008/tools/), report each point vs the frozen bounds.",
-    "T004: when the repo + deploy key exist, verify the ssh -T greeting names the repository (spillover check), then run G1-G7 within 250 write attempts.",
-    "Session close: review packet for C-008 (T001/T002 results, mutation table, open blockers)."
+    "Review packet for C-008 (D1-D3, D5, mutation tables, the field finding, open blockers).",
+    "T003: when M2 is free of Aether AIM02 or M2 can reach ubu003-006, start the LAN daemon on ubu001, amend the rig by prereg addendum BEFORE data if needed (Windows workers use ssh://), run the sweep, report vs frozen bounds.",
+    "T004: verify ssh -T with the deploy key greets the repository (spillover check), then G1-G7 within 250 write attempts.",
+    "Lane A / Lane B items remain in TODO (not Lane C)."
   ],
   "operator_decisions_required": [
     "RESOLVED 2026-10-05: substrate = wforge+Proteus for Launchpad, BEE later as a transplant test.",
@@ -67,7 +67,8 @@
     "OPEN (T003 rig, not a science gate): ssh from M2 to ubu003-006, or wait for M2 to be free of Aether AIM02."
   ],
   "latest_reports": [
-    "roles/Themis/journal/2026-10-06.md (Lane C executed)",
+    "roles/Themis/journal/2026-10-06.md (Lane C executed; T005 + field finding)",
+    "ops/campaigns/C-008/evidence/D5_JOIN/README.md (field join, Windows git:// finding)",
     "ops/campaigns/C-008/prereg/D4_PREREG.md (frozen 8e69de91e)",
     "moonshot/epoch/CONTRACT.md (v1.1)"
   ]
