@@ -6,6 +6,7 @@ import unittest
 
 from moonshot.epoch import bench
 from moonshot.epoch import store as S
+from moonshot.epoch import worker as W
 from moonshot.epoch.tests.harness import APPROVED_SHA, Harness
 
 
@@ -43,13 +44,33 @@ class TestBenchInstrument(unittest.TestCase):
         self.assertAlmostEqual(rep["metrics"]["M6_repo_bytes_per_published"], 1000 / rep["published"])
 
     def test_single_ref_contention_is_counted_and_summed(self):
-        h, sums, rep = self._run(S.SINGLE_REF, 2, 4)
+        # Deterministic collision (fixed after ubu002 showed two free-running threads need not collide in 4 s):
+        # alpha pauses after staging C000 while bravo publishes C001 on the same index, as D3 case 4 does.
+        h = Harness(S.SINGLE_REF)
+        self.addCleanup(h.cleanup)
+        bench.make_chains(h.coordinator, "C", 2, iterations=500, checkpoint_bytes=64, epochs=5,
+                          approved_code_sha=APPROVED_SHA)
+        b = h.worker("bravo")
+
+        def bravo_publishes(worker, ctx):
+            b.run_attempt("C001")
+
+        a = h.worker("alpha", faults=W.FaultPlan({"after_stage": bravo_publishes}))
+        ra = a.run_attempt("C000")
+        self.assertGreaterEqual(ra.receipt["contention_retries"], 1)
+        sums = []
+        for w in (a, b):
+            w.flush_receipts()
+            sums.append(bench.summarize(w, t_start=0, attempts=1))
+            w.store.append_receipts(w.worker_id, {sums[-1]["attempt_id"]: sums[-1]})
+        bench.validate_all(h.validator(), "C")
+        rep = bench.report(h.coordinator, "C", wall_s=10, repo_bytes=1000)
         records = h.coordinator.read_receipts()
         expect = sum(max(0, r.get("push_attempts_cas", 0) - 1) for r in records if r.get("kind") != "WORKER_SUMMARY") \
             + sum(s["contention_retries_total"] for s in sums)
         self.assertEqual(rep["retries_counted"], expect)
-        self.assertGreater(rep["retries_counted"], 0)            # two writers on one index must collide
-        self.assertEqual(rep["validated"], rep["published"])
+        self.assertGreaterEqual(rep["retries_counted"], 1)
+        self.assertEqual((rep["published"], rep["validated"]), (2, 2))
 
     def test_abandonment_and_coordination_arithmetic(self):
         h = Harness(S.PER_CHAIN)

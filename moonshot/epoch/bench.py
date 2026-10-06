@@ -93,28 +93,34 @@ def bench_worker(store, worker_id, chains, *, code_sha, approved, spool_dir, lea
     except AuthError as e:
         flags.add("auth_error")
         detail = str(e)[:500]
-    pending = sum(1 for a in w._spooled() if a.state != "TERMINAL")
     try:
         w.flush_receipts()
     except GitError as e:
         flags.add("final_flush_failed")
         detail = detail or str(e)[:500]
-    ops = store.ops.ops
-    summary = {
+    summary = summarize(w, t_start=t_start, attempts=attempts, polls=polls, flags=flags, detail=detail)
+    store.append_receipts(worker_id, {summary["attempt_id"]: summary})
+    return summary
+
+
+def summarize(w, *, t_start, attempts, polls=None, flags=(), detail="") -> dict:
+    """A worker's WORKER_SUMMARY: every git operation its store ran (polls and flushes included), and the
+    attempts still pending in its spool. Call after the last flush; its own append is not counted."""
+    store, ops = w.store, w.store.ops.ops
+    return {
         "schema": "moonshot.epoch.worker_summary.v1", "kind": "WORKER_SUMMARY",
-        "attempt_id": "S-{}-{}".format(worker_id, uuid.uuid4().hex[:8]), "worker_id": worker_id,
-        "host": host_label or platform.node(), "platform": platform.platform(), "python": platform.python_version(),
-        "code_sha": code_sha, "layout": store.layout, "leases": bool(leases), "lease_ttl_s": lease_ttl_s,
-        "started_unix": int(t_start), "ended_unix": int(time.time()), "attempts": attempts, "polls": polls,
-        "executions": w.executions, "pending_attempts": pending, "flags": sorted(flags), "detail": detail,
+        "attempt_id": "S-{}-{}".format(w.worker_id, uuid.uuid4().hex[:8]), "worker_id": w.worker_id,
+        "host": w.host_label or platform.node(), "platform": platform.platform(), "python": platform.python_version(),
+        "code_sha": w.code_sha, "layout": store.layout, "leases": bool(w.leases), "lease_ttl_s": w.lease_ttl_s,
+        "started_unix": int(t_start), "ended_unix": int(time.time()), "attempts": attempts, "polls": dict(polls or {}),
+        "executions": w.executions, "pending_attempts": sum(1 for a in w._spooled() if a.state != "TERMINAL"),
+        "flags": sorted(flags), "detail": detail,
         "git_ops_total": len(ops), "push_attempts_total": store.push_attempts,
         "contention_retries_total": store.contention_retries,
         "coordination_wall_total_s": round(sum(o.wall_s for o in ops), 6),
         "bytes_pushed_total": sum(o.bytes_sent for o in ops), "bytes_fetched_total": sum(o.bytes_received for o in ops),
         "note": "totals exclude this summary's own append push",
     }
-    store.append_receipts(worker_id, {summary["attempt_id"]: summary})
-    return summary
 
 
 def validate_all(store, prefix, replay_every=10) -> dict:
