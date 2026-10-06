@@ -660,6 +660,195 @@ class TestMeasurementBinding(unittest.TestCase):
         self.assertEqual(value(bind(F.g0(), "CL-RET(REG)")), ("PASS", None))
 
 
+# --------------------------------------------------------------------------------------------------------
+# C-004-T046: second and final repair (operator OP6; S4 closure, challenge/S4/REPORT.md s3-s5).
+
+S2_AT = "2026-10-03T22:00:00Z"          # the earlier production's manifest row (before F.REGISTERED_AT)
+
+
+def _earlier_production():
+    """The same 25 node ids produced again: an earlier window's receipts (other created_at, other bytes)."""
+    d = F.g0_dicts()
+    for x in d.values():
+        x["created_at_utc"] = "2026-10-03T21:00:00Z"
+    return d
+
+
+def _reproduced():
+    """S4.SOUND.REPRODUCED in fixture form: the keeper holds the earlier production's manifest (registered first)
+    AND this bundle's; both manifests carry one node set; the consumer presents this bundle."""
+    d1, d2 = _earlier_production(), F.g0_dicts()
+    b2 = F.make_bundle(d2)
+    m1, m2 = F.manifest_of(d1), F.manifest_of(d2)
+    rows = [F.row("EVIDENCE_MANIFEST", hashlib.sha256(m1).hexdigest(), at=S2_AT, path="fixtures/G0_S2/MANIFEST.json")]
+    rows += F.keeper_rows(d2, b2)
+    store = EV.FixtureStore(rows)
+    blobs = {"fixtures/G0_S2/MANIFEST.json": m1, "fixtures/G0/MANIFEST.json": m2}
+    return d1, d2, b2, store, blobs
+
+
+class TestC1ReproducedBundle(unittest.TestCase):
+    """C1 (S4.SOUND.REPRODUCED): with two registered manifests of one node set, the earliest exact node-set match
+    anchored a reproduced bundle -- G-BIND BYTES_MISMATCH:receipt while custody read QUALIFIED on the other row.
+    The bundle's manifest is the one whose node artifacts match the presented receipts."""
+
+    def setUp(self):
+        self.d1, self.d2, self.b2, self.store, self.blobs = _reproduced()
+        self.choice = EV.anchors_from_keeper(self.store, self.blobs)
+
+    def test_two_candidates_with_one_node_set(self):
+        self.assertIsInstance(self.choice, EV.AnchorChoice)
+        self.assertEqual([set(a.nodes) for a in self.choice.candidates][0], set(self.d2))
+        self.assertEqual(len({frozenset(a.nodes) for a in self.choice.candidates}), 1)
+
+    def test_resolves_to_the_manifest_whose_artifacts_match(self):
+        a = EV.resolve_anchors(self.choice, self.b2)
+        self.assertEqual(a.blob_sha256, hashlib.sha256(F.manifest_of(self.d2)).hexdigest())
+        # the earlier production, presented, resolves to its own manifest
+        a1 = EV.resolve_anchors(self.choice, F.make_bundle(self.d1))
+        self.assertEqual(a1.blob_sha256, hashlib.sha256(F.manifest_of(self.d1)).hexdigest())
+
+    def test_reproduced_bundle_binds(self):
+        cfg = EV.Config(F.CONTRACT_REV)
+        for cid, claim in sorted(F.claims().items()):
+            self.assertEqual(value(EV.g_bind(claim, self.b2, self.choice, cfg)), ("PASS", None), cid)
+
+    def test_custody_qualified_on_the_matching_row(self):
+        c = EV.custody(self.b2, self.choice, self.store, F.FIRST_CHECK)
+        self.assertEqual(c["status"], "QUALIFIED", c)
+        m2 = hashlib.sha256(F.manifest_of(self.d2)).hexdigest()
+        self.assertIn("EVIDENCE_MANIFEST:%s" % m2[:12], c["rows"])
+        m1 = hashlib.sha256(F.manifest_of(self.d1)).hexdigest()
+        self.assertNotIn("EVIDENCE_MANIFEST:%s" % m1[:12], c["rows"])
+
+    def test_decisions_identical_to_the_single_manifest_keeper(self):
+        ref = F.keeper()
+        case = F.Case("REPRODUCED", self.b2, self.choice, self.store, F.claims())
+        for cid in ("CL-CAL(STANDARD)", "CL-RET(REG)", "CL-RET(PKTD)", "CL-RET(LAGD)", "TWIN(REG)"):
+            self.assertEqual(dbytes(case, cid), dbytes(ref, cid), cid)
+
+    def test_one_edited_receipt_still_anchors_to_its_own_manifest(self):
+        # A presented receipt that matches no candidate does not move the choice to the other production: the
+        # manifest with the most matching artifacts anchors, and G-BIND reports the edited node itself.
+        d = F.g0_dicts()
+        d["rcpt:REG:ERASE:STANDARD"]["outcome"]["reason"] = "edited after anchoring"
+        b = F.make_bundle(d)
+        a = EV.resolve_anchors(self.choice, b)
+        self.assertEqual(a.blob_sha256, hashlib.sha256(F.manifest_of(self.d2)).hexdigest())
+        self.assertEqual(value(EV.g_bind(F.claims()["CL-RET(REG)"], b, self.choice, EV.Config(F.CONTRACT_REV))),
+                         ("FAIL", "BYTES_MISMATCH:receipt"))
+
+
+def _obs_run_borrow():
+    """S4.BROKEN.OBS_RUN_BORROW in fixture form: OBSERVER(REG, BOOKKEEP)'s receipt cites the run of
+    OBSERVER(REG, NULL) -- same subject and predicate, another observer; its own run row is absent."""
+    case = F.g0()
+    d = F.g0_dicts()
+    victim, donor = "rcpt:REG:OBSERVER:BOOKKEEP:STANDARD", "rcpt:REG:OBSERVER:NULL:STANDARD"
+    old = d[victim]["execution"]["run_id"]
+    d[victim]["execution"]["run_id"] = d[donor]["execution"]["run_id"]
+    inv = [r for r in F._inventory(F.g0_dicts())[:-1] if r["run_id"] != old]
+    inv.append({"kind": "TERMINAL", "row_count": len(inv)})
+    return F.Case("OBS_RUN_BORROW", F.make_bundle(d, inventory=inv), F.retained(d), case.store, F.claims())
+
+
+class TestC2ObserverRunBinding(unittest.TestCase):
+    """C2 (S4 edit X3 survived): G-INV run evidence is bound to the receipt's SPECIFIC observer. A receipt for
+    OBSERVER(M, o1) citing the run of OBSERVER(M, o2) is RECEIPT_WITHOUT_RUN, never a pass."""
+
+    def test_observer_run_borrow_is_receipt_without_run(self):
+        case = _obs_run_borrow()
+        self.assertEqual(value(EV.g_inv(case.claims["CL-RET(REG)"], case.bundle, case.anchors)),
+                         ("FAIL", "RECEIPT_WITHOUT_RUN:rcpt:REG:OBSERVER:BOOKKEEP:STANDARD"))
+
+    def test_the_donor_and_other_claims_untouched(self):
+        case = _obs_run_borrow()
+        for cid in ("CL-RET(PKTD)", "CL-RET(LAGD)", "CL-CAL(STANDARD)", "TWIN(REG)"):
+            self.assertEqual(value(EV.g_inv(case.claims[cid], case.bundle, case.anchors)), ("PASS", None), cid)
+
+    def test_cited_row_of_another_subject_same_observer_fails(self):
+        # the observer segment matches but the subject does not: also not this receipt's run
+        d = F.g0_dicts()
+        victim, donor = "rcpt:REG:OBSERVER:NULL:STANDARD", "rcpt:PKTD:OBSERVER:NULL:STANDARD"
+        old = d[victim]["execution"]["run_id"]
+        d[victim]["execution"]["run_id"] = d[donor]["execution"]["run_id"]
+        inv = [r for r in F._inventory(F.g0_dicts())[:-1] if r["run_id"] != old]
+        inv.append({"kind": "TERMINAL", "row_count": len(inv)})
+        self.assertEqual(value(EV.g_inv(F.claims()["CL-RET(REG)"], F.make_bundle(d, inventory=inv), F.retained(d))),
+                         ("FAIL", "RECEIPT_WITHOUT_RUN:rcpt:REG:OBSERVER:NULL:STANDARD"))
+
+
+# AMENDMENT_v1.0.5 (B3.3 governs; operator OP6 part 2). Timed inventory rows, as the T019 ledger writes them.
+WINDOW = ("2026-10-03T23:00:00Z", "2026-10-03T23:00:30Z")     # the launch that produced F.g0_dicts()
+EARLIER = ("2026-10-03T20:00:00Z", "2026-10-03T20:00:30Z")    # an earlier launch of the same nodes
+STALE = "rcpt:REG:PRESERVE:STANDARD"
+
+
+def _timed(rows, window):
+    return [dict(r, start_utc=window[0], end_utc=window[1]) for r in rows]
+
+
+def _cumulative(d):
+    """Earlier window's rows of every node (run ids early/<node>), then this window's rows; terminal."""
+    this = _timed(F._inventory(d)[:-1], WINDOW)
+    early = _timed([{"kind": "RUN", "run_id": "early/%s" % nid, "node_id": nid, "status": "COMPLETED"}
+                    for nid in sorted(d)], EARLIER)
+    rows = early + this
+    return rows + [{"kind": "TERMINAL", "row_count": len(rows)}]
+
+
+def _stale_run():
+    """S4.PROBE.STALE_RUN in fixture form: REG's PRESERVE receipt cites the EARLIER window's run of its own node;
+    the cumulative inventory is intact (this window's row of that node is present, uncited)."""
+    d = F.g0_dicts()
+    inv = _cumulative(d)
+    d[STALE]["execution"]["run_id"] = "early/%s" % STALE
+    return F.Case("STALE_RUN", F.make_bundle(d, inventory=inv), F.retained(d), EV.FixtureStore(F.stage_rows()),
+                  F.claims())
+
+
+class TestB33RunAttribution(unittest.TestCase):
+    """AMENDMENT_v1.0.5 Y1-Y3: a receipt's run_id must name the row that launched and produced THAT receipt; an
+    earlier window's run of the same node does not satisfy it -> RECEIPT_WITHOUT_RUN:<node_id> (Y1). Earlier rows
+    remain valid provenance: never RUN_UNREPORTED for being older (Y2)."""
+
+    def test_earlier_window_run_is_receipt_without_run(self):
+        case = _stale_run()
+        self.assertEqual(value(EV.g_inv(case.claims["CL-RET(REG)"], case.bundle, case.anchors)),
+                         ("FAIL", "RECEIPT_WITHOUT_RUN:%s" % STALE))
+
+    def test_other_claims_untouched(self):
+        case = _stale_run()
+        for cid in ("CL-RET(PKTD)", "CL-RET(LAGD)", "CL-CAL(STANDARD)", "TWIN(REG)"):
+            self.assertEqual(value(EV.g_inv(case.claims[cid], case.bundle, case.anchors)), ("PASS", None), cid)
+
+    def test_cumulative_inventory_with_earlier_rows_passes(self):
+        # Y2: every receipt cites its own window's row; the earlier rows are provenance, not RUN_UNREPORTED.
+        d = F.g0_dicts()
+        b = F.make_bundle(d, inventory=_cumulative(d))
+        for cid, claim in sorted(F.claims().items()):
+            if cid.startswith("CL-CUST"):
+                continue
+            self.assertEqual(value(EV.g_inv(claim, b, F.retained(d))), ("PASS", None), cid)
+
+    def test_receipt_created_within_its_run_passes(self):
+        # A producer that stamps created_at at completion: created_at == the row's end is its own run.
+        d = F.g0_dicts()
+        for x in d.values():
+            x["created_at_utc"] = WINDOW[1]
+        b = F.make_bundle(d, inventory=_cumulative(d))
+        self.assertEqual(value(EV.g_inv(F.claims()["CL-RET(REG)"], b, F.retained(d))), ("PASS", None))
+
+    def test_receipt_created_after_its_cited_run_ended_fails(self):
+        d = F.g0_dicts()
+        inv = F._inventory(d)
+        rows = _timed(inv[:-1], WINDOW)
+        d[STALE]["created_at_utc"] = "2026-10-03T23:00:31Z"          # one second after the cited row ended
+        b = F.make_bundle(d, inventory=rows + [inv[-1]])
+        self.assertEqual(value(EV.g_inv(F.claims()["CL-RET(REG)"], b, F.retained(d))),
+                         ("FAIL", "RECEIPT_WITHOUT_RUN:%s" % STALE))
+
+
 def _challenge(unresolved):
     return {"date": "2026-10-05", "challenger": {"seat": "Pallas", "model": "claude-fable-5-1"},
             "set_ref": {"path": "rso/slice001/challenge/S3/REPORT.md", "blob_sha256": "a" * 64, "commit": F.COMMIT},
