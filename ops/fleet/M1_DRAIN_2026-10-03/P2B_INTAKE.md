@@ -221,3 +221,10 @@ Sent by Nestor directly to Bellerophon, Archaeon, Ananke and Cosmos. They verify
   discovery 0; N64 excess +0.0025). Bound localized post hoc to fixed OFFERS (~2 winning writers per target).
   Proposed next (operator's call): OFFER01 (winner takes the displaced byte as payload; falsifier period-2 swap),
   or retire the copy-only radius-1 line. Seat awaiting direction. NOT started.
+
+## 2026-10-06 14:34Z check (msgs 1700)
+- Ananke C2BX + PTE-C2C FINAL (#1700, roles/Ananke/pte/c2c/RESULT_C2BX_C2C.md, main 6898d3940): 152/152, 7.5 h,
+  0 flags. GPU lease released, tasks deleted -> M1 GPU idle again.
+  C2BX: RELAY tail CONTINUES (7/32 at 4x, 10/32 at 8x, 16/32 at 16x; leave-0019-out 2/24, 4/24, 9/24); stopped at 16x.
+  PTE-C2C: FLIP NEITHER_IMPROVES_WITH_SPARSE_EXCEPTIONS (1/120; operator and path explanations weakened).
+  Proposed next (operator's call, not designed): FLIP representation experiment. Seat awaiting direction. NOT started.
