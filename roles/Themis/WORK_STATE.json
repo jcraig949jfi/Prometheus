@@ -3,7 +3,7 @@
   "seat": "Themis",
   "mwo_id": "MWO-0004",
   "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
-  "updated_at_utc": "2026-10-06T03:29:41Z",
+  "updated_at_utc": "2026-10-06T05:49:02Z",
   "state": "ACTIVE",
   "instance": "spectrex5-7151a6d4 (SPECTREX5)",
   "branch": "themis/base-role-adopt-2026-10-04",
@@ -12,7 +12,7 @@
   "model": "claude-opus-5-5",
   "host": "SPECTREX5",
   "work_order": "MWO-0004 (ops/work_orders/CURRENT.md) + CWO-2026-09-30C. CHARTER: Project Moonshot, prong 3, adopted 2026-10-05 (roles/Themis/prompts/2026-10-05_charter/; operator chat, soup-to-nuts, independent of Phase 2-B and Phase 3 but borrowing from and overlapping with both).",
-  "current_objective": "Prong 3 of Project Moonshot: the hybrid neuro-symbolic engine. First build = the launchpad (delayed-cue micro-world + offline floor-S detector, planted-organism calibration) on the e-waste CPU cluster.",
+  "current_objective": "Project Moonshot prong 3. RESET 2026-10-06: next working session starts LANE C (thread TH-MOON-M4, commodity fabric) per roles/Themis/design/LANE_C_M4_KICKOFF.md -- synthetic-epoch distribution/commit infrastructure (R-EP + CAS + fault matrix + transport metrics), pure layer-1 must-pass TDD, needs no evolutionary substrate. Launchpad/science remain gated (design s16).",
   "current_step": "Astra (Enceladus) reviewed v0.2; operator accepted all 10 findings (F01-F10) + H3 + typed outcome/execution vocabulary + F07 constitutional air-gap. Design v0.3 is of record (v0.2 superseded). Review+disposition captured verbatim (roles/Themis/prompts/2026-10-06_astra_review/). Status: REVISE BEFORE LAUNCHPAD -- evolutionary science NOT authorized. Three parallel closure lanes set up (A contracts/claim-map, B wforge F09 regression->Daedalus, C M4 synthetic-epoch cluster starts now).",
   "in_flight": [],
   "progress": "charter adoption complete; no science run yet; no world/detector built yet.",
@@ -33,12 +33,13 @@
   "last_push_sha": "(set on the charter-adoption push)",
   "last_push_utc": "(set on the charter-adoption push)",
   "session_started_utc": "2026-10-04T15:38Z (continuous session through charter adoption 2026-10-05)",
-  "next": "v0.3 committed and sent to the operator (and for the Astra side-by-side). Three parallel lanes authorized (design s16); evolutionary science and paid cloud NOT authorized. Lane C (M4 synthetic epochs) needs no trustworthy substrate and starts now. Lanes A/B need coordination (Palamedes claim-map; Daedalus wforge F09). ACTIVE autonomous lane.",
+  "next": "RESET for a fresh session. START HERE: roles/Themis/design/LANE_C_M4_KICKOFF.md (Lane C / M4). It is self-contained -- no external coordination, no evolutionary substrate, no gated items. Lanes A (Palamedes claim-map) and B (Daedalus wforge F09 regression) are separate and not part of the reset start.",
   "next_actions": [
-    "Lane C (M4): stand up synthetic-epoch cluster tests on ubu001-006 -- duplicate execution, worker death, lease expiry, CAS collision, remote outage, idempotent replay, heterogeneous-host canonical traces; baseline the CAS metrics + set the reconsider-transport threshold. Needs no evolutionary substrate.",
-    "Lane B: write the red wforge affordability regression (probe: charge 1/cost 3/charged 0/actions_used 0/register-delta 251 vs zero-action twin) and hand it to Daedalus; do NOT patch wforge.",
-    "Lane A: draft (hold for operator approval) the M1 coordination message to Palamedes -- the native claim-map (R-CLAIMMAP), the H1 attack matrix incl. the EXECUTION_NOT_AUTHENTICATED case, and the determinism-vs-GPU amendment.",
-    "Build the ruler-qualification harness (R-QUAL) and node auto-join (N7, no auto-authorization)."
+    "Open a bounded campaign under TH-MOON-M4 (ops/campaigns/).",
+    "Write the D3 fault-injection matrix as FAILING tests first (duplicate execution, worker death, lease expiry, CAS collision, git remote outage, idempotent replay, heterogeneous-host canonical trace).",
+    "Implement D1 (R-EP synthetic epoch: semantic id, durable blobs before atomic completion manifest) and D2 (CAS one-accepted-successor, idempotent dupes, quarantine) to pass them.",
+    "Preregister the D4 reconsider-transport threshold BEFORE the baseline, then baseline claim latency / push contention / abandoned-epoch rate / ref growth / useful-vs-coordination CPU on ubu001-006.",
+    "D5 node auto-join (N7, no auto-authorization) in parallel."
   ],
   "operator_decisions_required": [
     "RESOLVED 2026-10-05: substrate = wforge+Proteus for Launchpad, BEE later as a transplant test.",
