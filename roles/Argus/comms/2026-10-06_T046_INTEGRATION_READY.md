@@ -12,4 +12,4 @@ Re-registration needed (Aporia, T047), sha256 of committed LF blobs:
   stages/G-RECOMP.json b90c557ebed772063f1d57cee3f85c88e84b98c34e59e55aa8f511235833b727 @434441fda
   (fire receipts @57447751b: G-BIND ab57152d.., G-INV f71a555c.., G-RECOMP 08f5e799..)
 Scope note: rso/slice001/tests/test_ledger.py (not in owns) also pinned 1.0.4; made amendment-robust in 6c103159c.
-Receipt: ops/campaigns/C-004/tasks/C-004-T046/attempts/A-001/RECEIPT.json. 0 ledgered launches.
+Receipt: ops/campaigns/C-004/tasks/C-004-T046/attempts/A-001/RECEIPT.json (main 8c6240a87). 0 ledgered launches.
