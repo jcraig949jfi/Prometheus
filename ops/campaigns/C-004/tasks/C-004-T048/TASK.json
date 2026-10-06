@@ -60,5 +60,6 @@
     "launches": "<= 3 of the 5 remaining",
     "cpu": "about 15 ledgered CPU-minutes",
     "reviewer": "about 30 min of the remaining ~1 h 20 m"
-  }
+  },
+  "notes": "2026-10-06 (unblocked): frozen surface = rso/slice001/FREEZE_R2.md, code ad6b3fa96 (FREEZE_S2 and FREEZE_S4 preserved). Touched by the second repair (T046): evidence.py (C1 manifest choice by artifact match over the presented receipts, FD-T046-2; C2 G-INV run bound to the receipt's observer; B3.3 v1.0.5 earlier-window run refused, operationalised as run.end_utc >= receipt.created_at_utc, FD-T046-1), stages/evidence_plane.py; tests in test_evidence.py, test_ledger.py. Stage records G-BIND/G-INV/G-RECOMP registered rows 42-44, fire receipts rows 45-47 (chain head 18b346c5). R2 regression: rso/slice001/s4/R2/REGRESSION.md (no regression). Caps left: 5 launches (use <= 3), about 31 ledgered CPU-minutes; charge every launch and mutation child to rso/slice001/s2/LEDGER.jsonl. Reviewer time used: about 1 h 40 m of 3 h. Runtime: claude-fable-5-1 required (Q3)."
 }
