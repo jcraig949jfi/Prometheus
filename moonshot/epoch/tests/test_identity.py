@@ -130,7 +130,8 @@ class TestSemanticIdentity(unittest.TestCase):
         r = model.execute(_kat_genesis().obj, 1, KAT_INITIAL)
         self.assertEqual(set(r.manifest), set(model.MANIFEST_KEYS))
         self.assertEqual(r.manifest_bytes, C.canonical_bytes(r.manifest))
-        for key in ("host", "worker", "attempt", "time", "clock", "retry", "commit", "git"):
+        # (test fix after RED: the fragment "time" matched the contract's own "runtime" field)
+        for key in ("host", "worker", "attempt", "timestamp", "unix", "clock", "retry", "commit", "git"):
             self.assertFalse([k for k in r.manifest if key in k], key)
 
     def test_verify_epoch_detects_each_tampered_blob(self):
