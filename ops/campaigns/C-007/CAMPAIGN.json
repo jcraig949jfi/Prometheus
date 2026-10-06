@@ -12,5 +12,29 @@
     "Aphrodite"
   ],
   "authority": "operator directive 2026-10-05 (roles/Aphrodite/prompts/2026-10-05_beta02/01_OPERATOR_DIRECTIVE_verbatim.md)",
-  "sources": "roles/Aphrodite/beta02/BETA02_PREREG.md; roles/Aphrodite/beta02/STATE.json; predecessor C-006"
+  "sources": "roles/Aphrodite/beta02/BETA02_PREREG.md; roles/Aphrodite/beta02/STATE.json; predecessor C-006",
+  "quality_classes": {
+    "Q1": {
+      "description": "mechanical: reruns of frozen procedures, manifests, fixtures from a settled design",
+      "rank": 1
+    },
+    "Q2": {
+      "description": "substantial: triage judgements, repairs, replay design, residual-science selection",
+      "rank": 2
+    },
+    "Q3": {
+      "description": "scarce deep reasoning / adversarial review of a repair or a surprising replay",
+      "rank": 3
+    }
+  },
+  "satisfied_states": [
+    "INTEGRATED",
+    "CLOSED"
+  ],
+  "cadence": {
+    "mode": "pre-registered stages (E1/E2 -> gated R8)",
+    "note": "not 4h windows; see beta02/STATE.json"
+  },
+  "created_by": "Aphrodite[harry1-0f14ab93]",
+  "created_at_utc": "2026-10-06T01:02:14Z"
 }
