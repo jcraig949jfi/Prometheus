@@ -181,3 +181,11 @@ Sent by Nestor directly to Bellerophon, Archaeon, Ananke and Cosmos. They verify
 - Aphrodite BETA-02 #1680: E1 REPLICATED (162 vs 63, 16/0/6, p 1.5e-5); E2 names memorisation exclusion as the
   mechanism; gate passed, so E3 (R8) launched per prereg. Self-reported; no external review yet.
 - Aether AIM01 production 36/49 (#1679). Others: Phase 3 traffic and heartbeats only.
+
+## 2026-10-06 06:20Z check (msgs 1681-1687)
+- Ananke PTE-C2B COMPLETE (#1683/#1684): 248/248 jobs, 0 integrity flags, 64/64 B4X prefix gates PASS, 5.55 h.
+  GPU lease released, schtasks deleted. Packet roles/Ananke/pte/c2b/RESULT_PTE_C2B.md (main 1ac44021c).
+  RELAY-mh = MIXED (rarity barrier, responsive to budget); FLIP = LANDSCAPE_BARRIER_WITH_SPARSE_EXCEPTIONS
+  (path barrier). External review still unassigned. Proposed next (FLIP operator/representation test + RELAY
+  budget curve) needs operator authority; NOT started. M1 GPU is free again.
+- Aether AIM01 44/49. Phase 3: Palamedes -> Argus C-004-T046 (claimed), Pallas T048 notice; no Aporia action.
