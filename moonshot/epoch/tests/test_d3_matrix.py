@@ -243,6 +243,26 @@ class D3Matrix:
         a.run_chain("C1")
         self.assert_matches_reference(g, 2)
 
+    def test_case05_pending_result_publishes_before_any_new_execution(self):
+        # Added after GREEN: mutation M12 (unbounded spool) survived the original case 5, because a global
+        # outage stops head reads too. The rule bites when the remote is BACK and run_attempt is called.
+        g = self.h.chain(epochs=2)
+        runner = CountingRunner()
+
+        def outage(worker, ctx):
+            self.h.take_remote_offline()
+
+        a = self.h.worker("alpha", runner=runner, faults=W.FaultPlan({"after_execute": outage}))
+        r1 = a.run_attempt("C1")
+        self.assertEqual(r1.outcome, O.REMOTE_UNAVAILABLE)
+        self.h.bring_remote_online()
+        a.faults = W.FaultPlan()
+        r2 = a.run_attempt("C1")
+        self.assertEqual((r2.outcome, r2.attempt_id, runner.calls), (O.PUBLISHED, r1.attempt_id, 1))
+        a.run_chain("C1")
+        self.assertEqual(runner.calls, 2)
+        self.assert_matches_reference(g, 2)
+
     def test_case05_outage_while_another_publishes_resolves_duplicate(self):
         g = self.h.chain(epochs=1)
 
