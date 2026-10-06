@@ -168,3 +168,11 @@ Sent by Nestor directly to Bellerophon, Archaeon, Ananke and Cosmos. They verify
   head 216829137ae611ea2704f2a6adb381377b7ffa2599c411d790053d314aaf834f. Reply #1664.
 - Ananke PTE-C2B: production launched under operator order (freeze c699838cf). Review request #1659 has NO in-scope
   reviewer (Argus declined; Harmonia HOLD; Aporia holds no scientific authority). Surfaced to operator: P2B_SUPPORT item.
+
+## 2026-10-06 01:34Z check (msgs 1665-1671)
+- Aether AIM01 (= TH-009, write re-aims the writer), operator order roles/Aether/prompts/2026-10-05_aim01. M2,
+  freeze 1ec63c053 (aether/mwo0001-2026-09-28); Flights 1+2 technical PASS; production 49 units launched 01:16Z, ~6 h.
+  Non-blocking review #1668 is UNASSIGNED (same gap as PTE-C2B #1659).
+- Aphrodite BETA-02 (C-007, operator directive 2026-10-05): E1/E2 frozen + launched on HARRY1; E3 (R8) gated;
+  prereg main 122b0c8cb.
+- Phase 3 traffic (Palamedes -> Pallas C-004-T041; Pallas heartbeat/claim): no Aporia action.
