@@ -16,17 +16,21 @@ Phase 2-B and Phase 3 but taking scientific authority from neither.
       TH-MOON-M5  Open-ended Ecology            world mutation / islands / Red Queen (after Launchpad)
       TH-MOON-M6  Scale Escalation              CPU -> GPU -> scout -> campaign; BEE transplant test
 
-Two independent hypotheses (design doc s2): **H1** -- the RSO can correctly judge an unfamiliar
-producer without relaxing its ruler; **H2** -- survival-only evolution can grow mechanisms that
-depend on retained hidden information and survive null + ablation. Moonshot can succeed as a
-Phase-3 experiment even if every organism dies stupid, and evolving something interesting does
-not validate Phase 3 unless the RSO independently recognizes it.
+THREE independent claims (design v0.3 s2, after the Astra review): **H1** -- the RSO can correctly
+*type* an unfamiliar producer's evidence and its epistemic limits (incl. preserving an
+EXECUTION_NOT_AUTHENTICATED ceiling on consistent fabrications) without relaxing its ruler;
+**H2** -- survival-only evolution can grow mechanisms that depend on retained hidden information
+and survive the null family + the three causal interventions; **H3** -- the integer neural
+primitive improves discovery under fair accounting (H3a) and is actually causally used (H3b).
+Any can resolve while the others do not; none rolls into a single Moonshot verdict. Status:
+REVISE BEFORE LAUNCHPAD (Astra) -- evolutionary science is not yet authorized; the contract
+closures and the M4 cluster experiments start now (design s12, s16).
 
 Evidence rolls upward; interpretive authority does not. In particular, Themis may propose RSO
 amendments but cannot silently relax the ruler: whether evidence satisfies RSO contracts and
 predicates is the RSO cell's call (design doc s15).
 
-Design of record: roles/Themis/design/MOONSHOT_DESIGN_v0.2.md. Economics (versioned, out of the
+Design of record: roles/Themis/design/MOONSHOT_DESIGN_v0.3.md. Economics (versioned, out of the
 scientific contract): roles/Themis/design/MOONSHOT_ECONOMICS_APX_v1_2026-10-05.md.
 
 Peer cross-registration (adding EP-MOONSHOT to the peers lists of EP-GLOBAL / EP-PHASE2B /
