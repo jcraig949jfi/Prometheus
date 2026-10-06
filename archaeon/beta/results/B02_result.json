@@ -1,0 +1,96 @@
+[
+ {
+  "step": "S0 shelf: store last value",
+  "n_instr": 9,
+  "heldout_5": [
+   0.5625,
+   0.5417,
+   0.5104,
+   0.5417,
+   0.5417
+  ],
+  "mean": 0.5396
+ },
+ {
+  "step": "S1 +tag->r6",
+  "n_instr": 10,
+  "heldout_5": [
+   0.5625,
+   0.5417,
+   0.5104,
+   0.5417,
+   0.5417
+  ],
+  "mean": 0.5396,
+  "proposal_rate_from_prev": 0.0
+ },
+ {
+  "step": "S2 ASK reads tag",
+  "n_instr": 11,
+  "heldout_5": [
+   0.5625,
+   0.5417,
+   0.5104,
+   0.5417,
+   0.5417
+  ],
+  "mean": 0.5396,
+  "proposal_rate_from_prev": 0.00025
+ },
+ {
+  "step": "S3 +MOV r9,r7 before store",
+  "n_instr": 12,
+  "heldout_5": [
+   0.5625,
+   0.5417,
+   0.5104,
+   0.5417,
+   0.5417
+  ],
+  "mean": 0.5396,
+  "proposal_rate_from_prev": 0.0
+ },
+ {
+  "step": "S4 +dead OUT r9",
+  "n_instr": 14,
+  "heldout_5": [
+   0.5625,
+   0.5417,
+   0.5104,
+   0.5417,
+   0.5417
+  ],
+  "mean": 0.5396,
+  "proposal_rate_from_prev": 0.0
+ },
+ {
+  "step": "S5 +EQ r3,r4,r6",
+  "n_instr": 15,
+  "heldout_5": [
+   0.5625,
+   0.5417,
+   0.5104,
+   0.5417,
+   0.5417
+  ],
+  "mean": 0.5396,
+  "proposal_rate_from_prev": 0.0
+ },
+ {
+  "step": "S6 +JZ r3,+3 (summit)",
+  "n_instr": 16,
+  "heldout_5": [
+   1.0,
+   1.0,
+   1.0,
+   1.0,
+   1.0
+  ],
+  "mean": 1.0,
+  "proposal_rate_from_prev": 0.0
+ },
+ {
+  "check": "final step equals a full solver",
+  "equals_B01_solver": false
+ }
+]
