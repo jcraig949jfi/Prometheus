@@ -15,6 +15,15 @@ nodes are live and reachable from the phone. Tick items off here with a date. De
 - GitHub: per-node fine-grained tokens, push verified (dry run). Git identity `James Craig (<hostname>)`.
 - Battery limits 75/80, lid ignore, Wi-Fi power save off, full disk.
 
+## Claude login, ubu003-006: done 2026-10-06 (Achilles on ELSA)
+- [x] One `claude setup-token` token (account jcraig949@gmail.com, same as ubu001/002), made by the operator on ELSA.
+      Installed as `~/.config/claude-oauth.env` (mode 600, `export CLAUDE_CODE_OAUTH_TOKEN=...`), sourced from the
+      first line of `~/.bashrc` (so non-interactive `ssh host claude ...` works too) and from `~/.profile`. Copied over
+      SSH stdin, never printed. Verified: `claude auth status` -> oauth_token, and `claude -p` answered on all four.
+      The worker service (workgraph.worker) does not call Claude, so it needs no change.
+      Revoke: delete the file on a node, or revoke the token in claude.ai settings (cuts all four). Expires ~2027-10.
+      New nodes: add the same step to provision_node.sh (open).
+
 ## Cleanup / mop-up list (started 2026-10-02, Achilles on ELSA)
 
 Loose ends from adding ubu003 and the ELSA access. Tick with a date.
