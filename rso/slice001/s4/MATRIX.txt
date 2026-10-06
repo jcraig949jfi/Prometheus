@@ -1,0 +1,24 @@
+S2 matrix vs independent table: 48 registered, 45 gating
+counts: AGREE 32, DISAGREE 8, PARTIAL 8
+extra rows: none
+unresolved gating: E02.MISSING, E02.RELABEL, T04.LAGD, T05.WIPE, T06.LAGD, T08.EVERY3, T08.SLEEPER, T08.SPLIT1
+exit: NOT OK
+  E02.MISSING          DISAGREE register X06
+      other:PRESERVE/REG.authority: expected 'n/a', got 'UNQUALIFIED: EVIDENCE_MISSING:rcpt:REG:PRESERVE:STANDARD'
+      other:G-INV/CL-RET(REG).reason: expected 'RUN_UNREPORTED:<run_id of the removed receipt> (if the inventory still lists the run COMPLETED)', got 'RUN_UNREPORTED:g0-6379cd3a6d46-11724/rcpt:REG:PRESERVE:STANDARD'
+      claim:CL-CUST(G0).standing: expected 'UNQUALIFIED', got 'BLOCKED'
+  E02.RELABEL          DISAGREE register X02
+      claim:CL-RET(REG2).eligibility: expected 'NOT_ELIGIBLE', got None
+      claim:CL-RET(REG2).standing: expected 'UNMET', got None
+  T04.LAGD             DISAGREE register X18
+      primary.reason: expected 'forbidden influence across boundary 1, first visible at <episode, tick>', got 'forbidden influence across boundary 3, first visible at (4, PROBE_A)'
+  T05.WIPE             DISAGREE register X18
+      primary.reason: expected 'reset at 1 destroys allowed content carried without it', got 'reset at 3 destroys allowed content carried without it'
+  T06.LAGD             DISAGREE register X18
+      other:ERASE/LAGD.reason: expected 'forbidden influence across boundary 1, first visible at <episode, tick>', got 'forbidden influence across boundary 3, first visible at (4, PROBE_A)'
+  T08.EVERY3           DISAGREE register X19
+      claim:CL-RET(EVERY3).standing: expected 'UNMET', got 'UNQUALIFIED'
+  T08.SLEEPER          DISAGREE register X19
+      claim:CL-RET(SLEEPER).standing: expected 'UNMET', got 'UNQUALIFIED'
+  T08.SPLIT1           DISAGREE register X19
+      claim:CL-RET(SPLIT1).standing: expected 'UNMET', got 'UNQUALIFIED'

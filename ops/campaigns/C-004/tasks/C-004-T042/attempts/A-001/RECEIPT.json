@@ -1,0 +1,124 @@
+{
+  "schema": "prometheus.workgraph.receipt.v1",
+  "task_id": "C-004-T042",
+  "campaign_id": "C-004",
+  "attempt_id": "A-001",
+  "role": "Argus",
+  "model": "claude-opus-5-5",
+  "quality_class": "Q2",
+  "start_sha": "dc591a5caea61c43361305916c3f5c6306d21ed0",
+  "end_sha": "dec40d2a256d0efcee753e7f3fbdb34e2397dad7",
+  "files_changed": [
+    "rso/slice001/adapter.py",
+    "rso/slice001/evidence.py",
+    "rso/slice001/checker.py",
+    "rso/slice001/tests/test_adapter.py",
+    "rso/slice001/tests/test_evidence.py",
+    "rso/slice001/tests/test_checker_render.py",
+    "rso/slice001/stages/evidence_plane.py",
+    "rso/slice001/stages/fire/{G-BIND,G-INV,G-RECOMP}.json",
+    "rso/slice001/stages/{G-BIND,G-INV,G-RECOMP}.json",
+    "rso/slice001/tests/test_stages_evidence.py"
+  ],
+  "evidence_added": [
+    "F1 (answers S3.BROKEN.INVERT): adapter._clamp_hook clamps into the SAME runtime (reset.clamp_answers); test: an INVERT-like runtime's trace:clamp equals clamp_answers, and an honest CHANNEL FAIL receipt recomputes equal",
+    "F2 (answers S3.SOUND.TWO_MANIFESTS): anchors_from_keeper returns all verified registered manifests (AnchorChoice when several); resolve_anchors picks this bundle's by node identity (exact, else smallest cover, else largest overlap; ties earliest registered) in Consumer, G-BIND, G-INV, G-RECOMP, custody, reachable, upstream, unverified_records; custody adds ROW_BLOB_MISMATCH when the anchored manifest omits a presented node",
+    "F3 (answers S3.BROKEN.RUN_BORROW): G-INV requires the receipt's run row to be exactly one row whose node_id is the receipt's own (B3.3 + V7) -> RECEIPT_WITHOUT_RUN",
+    "probe MEASUREMENT_LIE: G-BIND FAIL SCOPE_MALFORMED:measurement unless cell.measurement == predicate_version(predicate.code) (B3.2)",
+    "E07 (answers S3 survivor E07): test with forbidden influence only at lag exactly H = 3 (f_3 at PROBE_D of episode 6): recompute_erase FAIL witness {64, 0, 3, 6, PROBE_D}, eligible 9600",
+    "E09 (answers S3 survivor E09): withdrawing G-BIND's own stage record makes gate_authority(G-BIND) UNQUALIFIED [WITHDRAWN:W-GBIND]; G-INV unaffected",
+    "E10 (answers S3 survivor E10): a FIRST_SIGHT_CHALLENGED record with unresolved = 1 gives UNQUALIFIED [SUSPENDED]; unresolved = 0 gives QUALIFIED at FIRST_SIGHT_CHALLENGED",
+    "stage records regenerated for G-BIND, G-INV, G-RECOMP at versions pinned to 22d270fb2 (evidence.py, checker.py, receipt.py at the repair); new fire cases MEASUREMENT_LIE (G-BIND) and RUN_BORROW (G-INV); fire receipts at 50226bcfa; records canonical (sha256(file) == record_blob); CALIBRATION / RETENTION records unchanged"
+  ],
+  "evidence_executed": [
+    {
+      "command": "new tests before the repairs",
+      "result": "RED: F1 2 fail, F2 3 fail, F3 1 fail, MEASUREMENT 1 fail; E07/E09/E10 pass on the frozen code (test gaps)"
+    },
+    {
+      "command": "python -B -m unittest rso.slice001.tests.test_evidence rso.slice001.tests.test_checker_render rso.slice001.tests.test_adapter",
+      "result": "110 run, OK (skipped=1)"
+    },
+    {
+      "command": "S3 survivor edits re-applied verbatim (edits_B.json) + the inverse of each repair",
+      "result": "E07 KILLED, E09 KILLED, E10 KILLED; F1, F2 (choice), F2 (custody), F3, MEASUREMENT inverses all KILLED"
+    },
+    {
+      "command": "python -B -m rso.slice001.challenge.S3.attack_set.run_cases (temp ledger, scratch output) at f8fcefe32",
+      "result": "sound 5/5, broken 5/5, controls 2/2 (S3 first sight was 4/5, 3/5): INVERT G-RECOMP PASS 'recomputed equal'; TWO_MANIFESTS custody QUALIFIED and identical to KEEPER_CONTROL; RUN_BORROW G-INV FAIL RECEIPT_WITHOUT_RUN:rcpt:REG:PRESERVE:STANDARD, other claims identical to baseline"
+    },
+    {
+      "command": "python -B -m unittest rso.slice001.tests.test_stages_evidence",
+      "result": "OK"
+    },
+    {
+      "command": "python -B -m unittest discover -s rso/slice001/tests -t . on the tree merged with origin/main e8d531cd8",
+      "result": "377 run, 3 failures, all in test_stages_world.TestCanonicalFiles.test_content_unchanged_by_the_canonical_rewrite (G-BIND, G-INV, G-RECOMP: content pinned to e4042c2a2) -> escalation C-004-T042_1; every other test passes"
+    }
+  ],
+  "red_observed": {
+    "observed": true,
+    "detail": "RED per row as listed; for the three test-gap rows the RED is the S3 survivor mutant, now killed"
+  },
+  "result": "DONE_CLEAN",
+  "known_escapes": [
+    "acceptance 'full suite green' NOT met on the merged tree: 3 failures in Cadmus's T027 content-pin test, which pins the records this packet must regenerate; escalated C-004-T042_1 (option 1: compare only records whose version is unchanged)",
+    "the S3 harness run used a temporary ledger (development, not a ledgered launch); the S4 regression rerun is T045's",
+    "F2's choice among several manifests is by node identity (FD-T042-2); custody's omission check uses the contract's ROW_BLOB_MISMATCH, no new why code (OP-5)",
+    "MEASUREMENT_LIE refused with SCOPE_MALFORMED:measurement (the B6.3 SCOPE_MALFORMED:<axis> family; FD-T042-1)",
+    "stage records are committed only; Aporia must re-register G-BIND, G-INV, G-RECOMP (STAGE_RECORD) before the repaired run"
+  ],
+  "unresolved": [
+    "C-004-T042_1"
+  ],
+  "unblocks": [
+    "C-004-T045"
+  ],
+  "created_at_utc": "2026-10-06T00:00:00Z",
+  "re_registration": {
+    "stage_records": [
+      {
+        "path": "rso/slice001/stages/G-BIND.json",
+        "sha256": "40747043564e352a32dad33120e9cc469e1310360d092672a977e0cb14c21b39",
+        "commit": "f8fcefe32369e817e42b577c0a2c00406dc25249"
+      },
+      {
+        "path": "rso/slice001/stages/G-INV.json",
+        "sha256": "a0d45b5dce492505264e4c179d784cd67d052b4f56521408302a4b13ba79511f",
+        "commit": "f8fcefe32369e817e42b577c0a2c00406dc25249"
+      },
+      {
+        "path": "rso/slice001/stages/G-RECOMP.json",
+        "sha256": "0eac788555c4acee97a687cecbb9fed745f7a89b2ec665c16ae0c8e8ddefddef",
+        "commit": "f8fcefe32369e817e42b577c0a2c00406dc25249"
+      }
+    ],
+    "fire_receipts_cited": [
+      {
+        "path": "rso/slice001/stages/fire/G-BIND.json",
+        "sha256": "3223b60f5a663f084aaa2307b8f73507a16cb0ea406f1e86bf63a962837d0abc",
+        "commit": "50226bcfa0d4bf0542e740cf99b18bf32d0da398"
+      },
+      {
+        "path": "rso/slice001/stages/fire/G-INV.json",
+        "sha256": "33daad95370cadcab3dca32978f1e2308ba76f85fdd9748b3a7b53a15302332b",
+        "commit": "50226bcfa0d4bf0542e740cf99b18bf32d0da398"
+      },
+      {
+        "path": "rso/slice001/stages/fire/G-RECOMP.json",
+        "sha256": "efee1b58fc1e6dd54377abfb4e0a0e26e4399fccab8945d19ee831dd545f19c3",
+        "commit": "50226bcfa0d4bf0542e740cf99b18bf32d0da398"
+      }
+    ]
+  },
+  "instance": "desktop-ruapvai-b08b36ac",
+  "host": "DESKTOP-RUAPVAI",
+  "branch": "argus/c004-t042",
+  "worktree_path": "C:/Prometheus-worktrees/argus-boot",
+  "resources": {
+    "cpu": "about 14 CPU-minutes, development only (two full-suite runs ~5 min each, S3 harness ~1.2 min, mutants, module runs)",
+    "validation_launches": 0,
+    "model": "one Q2 session, about 1.2 hours"
+  },
+  "notes": "Commits: R1 22d270fb2 repairs + tests; R2 50226bcfa fire receipts; R3 f8fcefe32 stage records (merge, do not squash: records cite R2 and pin R1). Field decisions: FD-T042-1 SCOPE_MALFORMED:measurement; FD-T042-2 manifest choice by node identity; FD-T042-3 custody omission as ROW_BLOB_MISMATCH; FD-T042-4 per-instrument PIN in evidence_plane.py (version.py not in owns). State commits went to main as they happened (argus-ops)."
+}

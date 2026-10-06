@@ -4,9 +4,9 @@ Draft B B4.1/B4.3 and rso-builder 2.4: every instrument version carries a stage 
 least one case the instrument must accept and one it must reject with the expected reason, executed at exactly
 that version; a ruler's fire test has a known POSITIVE, NEGATIVE and NOT_SHOWN case.
 
-    python -B -m rso.slice001.stages.evidence_plane fire              # run the fire tests -> stages/fire/<I>.json
-    python -B -m rso.slice001.stages.evidence_plane records <commit>  # stage records citing the fire receipts
-                                                                      # committed at <commit> -> stages/<I>.json
+    python -B -m rso.slice001.stages.evidence_plane fire [I ...]      # run the fire tests -> stages/fire/<I>.json
+    python -B -m rso.slice001.stages.evidence_plane records <commit> <utc> [I ...]
+                                      # stage records citing the fire receipts committed at <commit> -> stages/<I>.json
 
 Fire receipts are deterministic (no clock): the same version reproduces the same bytes, which is how
 tests/test_stages_evidence.py checks "fire tests reproduce". Cases come from the contract (draft A A6 runtimes
@@ -35,6 +35,11 @@ FIRE_SCHEMA = "rso.slice001.fire_test.v1"
 INSTRUMENTS = ("CALIBRATION", "RETENTION", "G-BIND", "G-INV", "G-RECOMP")
 # The id a stage record names (receipt.validate_stage_record; evidence.authority looks up predicate.id).
 RECORD_ID = {"CALIBRATION": "P1", "RETENTION": "P2", "G-BIND": "G-BIND", "G-INV": "G-INV", "G-RECOMP": "G-RECOMP"}
+# The commit each instrument's version is pinned to (version.py's convention, one commit per version). The rulers
+# keep T023A/T023B's pin; the consumer gates are pinned to the C-004-T042 S4 repair (evidence.py, checker.py
+# changed there), whose stage records were regenerated then (B4.1: a new version needs a new record).
+PIN = {"CALIBRATION": V.PINNED, "RETENTION": V.PINNED,
+       "G-BIND": "22d270fb25da57750c7a6c8009280bbdc86457af", "G-INV": "22d270fb25da57750c7a6c8009280bbdc86457af", "G-RECOMP": "22d270fb25da57750c7a6c8009280bbdc86457af"}
 STAGES_DIR = os.path.dirname(os.path.abspath(__file__))
 FIRE_DIR = os.path.join(STAGES_DIR, "fire")
 RECORDED_BY = "Argus[desktop-ruapvai-b08b36ac] under C-004-T023B"
@@ -102,7 +107,32 @@ def _g_bind_cases():
             ("E03.STRIP", "REJECT", "FAIL",
              "DEPENDENCY_MISMATCH:rcpt:REG:RETENTION:STANDARD->rcpt:WORLD:CALIBRATION:STANDARD",
              lambda: _bind("E03.STRIP")),
-            ("E02.MALFORMED", "REJECT", "FAIL", "SCOPE_MALFORMED:boundary", lambda: _bind("E02.MALFORMED"))]
+            ("E02.MALFORMED", "REJECT", "FAIL", "SCOPE_MALFORMED:boundary", lambda: _bind("E02.MALFORMED")),
+            ("S3 probe MEASUREMENT_LIE (T042)", "REJECT", "FAIL", "SCOPE_MALFORMED:measurement",
+             lambda: _bind_case(_measurement_lie))]
+
+
+def _bind_case(case_fn, claim_id="CL-RET(REG)"):
+    case = case_fn()
+    return _gate_vr(EV.g_bind(case.claims[claim_id], case.bundle, case.anchors, case.config))
+
+
+def _measurement_lie():
+    d = F.g0_dicts()
+    d["rcpt:REG:ERASE:STANDARD"]["cell"]["measurement"] = "f" * 64
+    return F.Case("MEASUREMENT_LIE", F.make_bundle(d), F.retained(d), EV.FixtureStore(F.stage_rows()), F.claims())
+
+
+def _run_borrow():
+    """S3.BROKEN.RUN_BORROW (T042 F3): REG's PRESERVE receipt cites ERASE's run; its own run row is absent."""
+    d = F.g0_dicts()
+    victim, donor = "rcpt:REG:PRESERVE:STANDARD", "rcpt:REG:ERASE:STANDARD"
+    old = d[victim]["execution"]["run_id"]
+    d[victim]["execution"]["run_id"] = d[donor]["execution"]["run_id"]
+    inv = [r for r in F._inventory(F.g0_dicts())[:-1] if r["run_id"] != old]
+    inv.append({"kind": "TERMINAL", "row_count": len(inv)})
+    return F.Case("RUN_BORROW", F.make_bundle(d, inventory=inv), F.retained(d), EV.FixtureStore(F.stage_rows()),
+                  F.claims())
 
 
 def _g_inv_cases():
@@ -110,7 +140,9 @@ def _g_inv_cases():
     return [("E02.G0", "ACCEPT", "PASS", None, lambda: _inv(F.CASES["E02.G0"])),
             ("E02.MISSING", "REJECT", "FAIL", "RUN_UNREPORTED:%s" % run, lambda: _inv(F.CASES["E02.MISSING"])),
             ("G0 without the REG ERASE run row", "REJECT", "FAIL", "RECEIPT_WITHOUT_RUN:rcpt:REG:ERASE:STANDARD",
-             lambda: _inv(_without_erase_run))]
+             lambda: _inv(_without_erase_run)),
+            ("S3.BROKEN.RUN_BORROW (T042 F3)", "REJECT", "FAIL", "RECEIPT_WITHOUT_RUN:rcpt:REG:PRESERVE:STANDARD",
+             lambda: _inv(_run_borrow))]
 
 
 # G-RECOMP: a real REG bundle (world -> adapter) whose outcomes come from the real predicates (rulers.py,
@@ -182,7 +214,7 @@ CASES = {"CALIBRATION": _calibration_cases, "RETENTION": _retention_cases, "G-BI
 
 def fire_receipt(instrument):
     """Run the instrument's fire cases at its current version; a deterministic receipt dict."""
-    version = V.instrument_version(instrument)
+    version = V.instrument_version(instrument, PIN[instrument])
     rows = []
     for case_id, polarity, want_v, want_r, thunk in CASES[instrument]():
         got_v, got_r = thunk()
@@ -221,16 +253,16 @@ def main(argv=None):
     if argv[:1] == ["fire"]:
         os.makedirs(FIRE_DIR, exist_ok=True)
         ok = True
-        for i in INSTRUMENTS:
+        for i in (argv[1:] or INSTRUMENTS):
             rec = fire_receipt(i)
             with open(os.path.join(FIRE_DIR, "%s.json" % i), "wb") as f:
                 f.write(dump(rec))
             ok &= rec["all_ok"]
             print("%-12s %s %s" % (i, "OK  " if rec["all_ok"] else "FAIL", rec["version_hash"][:12]))
         return 0 if ok else 1
-    if argv[:1] == ["records"] and len(argv) == 3:
+    if argv[:1] == ["records"] and len(argv) >= 3:
         commit, at = argv[1], argv[2]
-        for i in INSTRUMENTS:
+        for i in (argv[3:] or INSTRUMENTS):
             data = V.committed_blob(fire_path(i), commit)
             with open(os.path.join(STAGES_DIR, "%s.json" % i), "wb") as f:
                 f.write(R.canonical_bytes(stage_record(i, data, commit, at)))   # C-004-T027: file == record_blob

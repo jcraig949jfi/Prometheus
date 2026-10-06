@@ -42,10 +42,10 @@ class TestRecords(unittest.TestCase):
             refs = record(i)["version"]
             self.assertEqual(sorted(r["role"][len("code:"):] for r in refs), sorted(V.SOURCES[i]), i)
             for ref in refs:
-                self.assertEqual(ref["commit"], V.PINNED, i)
+                self.assertEqual(ref["commit"], SE.PIN[i], i)
                 blob = V.committed_blob(ref["role"][len("code:"):], ref["commit"])
                 self.assertEqual((hashlib.sha256(blob).hexdigest(), len(blob)), (ref["sha256"], ref["length"]), i)
-            self.assertEqual(refs, V.instrument_version(i), "%s: source changed since" % i)
+            self.assertEqual(refs, V.instrument_version(i, SE.PIN[i]), "%s: source changed since" % i)
 
     def test_version_covers_every_imported_slice_file(self):
         # T023A's rule: every file the instrument imports and executes is part of its version.
@@ -54,8 +54,9 @@ class TestRecords(unittest.TestCase):
 
     def test_pin_is_on_main_history(self):
         import subprocess
-        r = subprocess.run(["git", "merge-base", "--is-ancestor", V.PINNED, "HEAD"], cwd=V.REPO_ROOT)
-        self.assertEqual(r.returncode, 0)
+        for pin in sorted(set(SE.PIN.values())):
+            r = subprocess.run(["git", "merge-base", "--is-ancestor", pin, "HEAD"], cwd=V.REPO_ROOT)
+            self.assertEqual(r.returncode, 0, pin)
 
     def test_fire_receipt_binds(self):
         for i in SE.INSTRUMENTS:
@@ -115,13 +116,13 @@ class TestConsumerUse(unittest.TestCase):
         bundle = EV.Bundle({}, {}, [], stage_records=recs, blobs=blobs)
         reg = EV.Registry(bundle, store)
         for p, name in (("P1", "CALIBRATION"), ("P2", "RETENTION")):
-            self.assertEqual(EV._stage_for(p, V.instrument_version(name), reg)["stage"], "AUTHOR_TESTED", p)
+            self.assertEqual(EV._stage_for(p, V.instrument_version(name, SE.PIN[name]), reg)["stage"], "AUTHOR_TESTED", p)
         for g in ("G-BIND", "G-INV", "G-RECOMP"):
-            self.assertEqual(EV.gate_authority(g, V.instrument_version(g), reg),
+            self.assertEqual(EV.gate_authority(g, V.instrument_version(g, SE.PIN[g]), reg),
                              {"status": "QUALIFIED", "stage": "AUTHOR_TESTED"}, g)
         # Without the fire receipt bytes A2 does not hold.
         reg = EV.Registry(EV.Bundle({}, {}, [], stage_records=recs, blobs={}), store)
-        self.assertIn("NO_FIRE_TEST", EV.gate_authority("G-BIND", V.instrument_version("G-BIND"), reg)["why"])
+        self.assertIn("NO_FIRE_TEST", EV.gate_authority("G-BIND", V.instrument_version("G-BIND", SE.PIN["G-BIND"]), reg)["why"])
 
 
 if __name__ == "__main__":

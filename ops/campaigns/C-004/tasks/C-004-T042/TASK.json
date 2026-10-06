@@ -18,7 +18,13 @@
     "rso/slice001/checker.py",
     "rso/slice001/tests/test_adapter.py",
     "rso/slice001/tests/test_evidence.py",
-    "rso/slice001/tests/test_checker_render.py"
+    "rso/slice001/tests/test_checker_render.py",
+    "rso/slice001/stages/G-BIND.json",
+    "rso/slice001/stages/G-INV.json",
+    "rso/slice001/stages/G-RECOMP.json",
+    "rso/slice001/stages/fire/",
+    "rso/slice001/stages/evidence_plane.py",
+    "rso/slice001/tests/test_stages_evidence.py"
   ],
   "reads": [
     "ops/campaigns/C-004/TRIAGE_S3.md",
@@ -33,7 +39,8 @@
   "evidence_required": [
     "RED then GREEN per row",
     "S3.BROKEN.RUN_BORROW refused RECEIPT_WITHOUT_RUN; S3.SOUND.TWO_MANIFESTS accepted; S3.BROKEN.INVERT has no G-RECOMP line",
-    "the three survivor edits E07/E09/E10 now killed"
+    "the three survivor edits E07/E09/E10 now killed",
+    "regenerated stage records for G-BIND, G-INV, G-RECOMP at the repaired versions, sha256(file) == record_blob"
   ],
   "acceptance": {
     "command": "python -B -m unittest discover -s rso/slice001/tests -t .",
@@ -44,13 +51,55 @@
     "receipt naming the S3 case or edit each change answers"
   ],
   "kind": "software",
-  "status": "PROPOSED",
+  "status": "INTEGRATED",
   "history": [
     {
       "status": "PROPOSED",
       "by": "Palamedes[harry1-679179c6]",
       "at_utc": "2026-10-05T06:45:12Z",
       "note": "from T040 triage; READY after OP-7 (launch cap for S4)"
+    },
+    {
+      "status": "READY",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-05T23:21:41Z",
+      "note": "made READY by the coordinator (OP-7)"
+    },
+    {
+      "status": "CLAIMED",
+      "by": "Argus[desktop-ruapvai-b08b36ac]",
+      "at_utc": "2026-10-05T23:26:14Z",
+      "note": "claimed by Argus on DESKTOP-RUAPVAI (claude-opus-5-5, Q2) per #1637; work branch argus/c004-t042"
+    },
+    {
+      "status": "RED",
+      "by": "Argus[desktop-ruapvai-b08b36ac]",
+      "at_utc": "2026-10-05T23:30:01Z",
+      "note": "RED per row: F1 2/2 fail (clamp trace != reset.clamp_answers on INVERT); F2 3 fail (two manifests); F3 1 fail (RUN_BORROW passes G-INV); MEASUREMENT 1 fail; E07/E09/E10 fire tests pass on current code (their RED is the S3 survivor mutants, to be shown killed)"
+    },
+    {
+      "status": "IMPLEMENTING",
+      "by": "Argus[desktop-ruapvai-b08b36ac]",
+      "at_utc": "2026-10-05T23:30:07Z",
+      "note": ""
+    },
+    {
+      "status": "GREEN",
+      "by": "Argus[desktop-ruapvai-b08b36ac]",
+      "at_utc": "2026-10-05T23:49:20Z",
+      "note": "T042-owned tests green (110 + stages); S3 cases 5/5 sound, 5/5 broken, 2/2 controls; full suite 3 failures in Cadmus T027 content-pin test only (escalation C-004-T042_1)"
+    },
+    {
+      "status": "INTEGRATION_READY",
+      "by": "Argus[desktop-ruapvai-b08b36ac]",
+      "at_utc": "2026-10-05T23:49:27Z",
+      "note": "branch argus/c004-t042 at 6bd356f05 (merge, do not squash: records pin 22d270fb2, cite fire receipts 50226bcfa); F1 F2 F3 MEASUREMENT repaired, E07 E09 E10 survivors killed, S3 cases all correct; gate stage records regenerated (re-registration list in receipt); full suite: 3 failures in test_stages_world content-pin test only -> escalation C-004-T042_1"
+    },
+    {
+      "status": "INTEGRATED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-05T23:59:32Z",
+      "note": "merged dec40d2a2; integrator: S3 survivor edits E07/E09/E10 applied verbatim -> all KILLED; S3 run_cases replayed on repaired code (throwaway ledger): sound 5/5, broken 5/5, controls 2/2 (first sight 4/5, 3/5); regenerated G-BIND/G-INV/G-RECOMP records canonical and version == committed sources; escalation T042_1 option 1 as glue; full suite OK (263 s)"
     }
   ],
   "authority": "operator directive 2026-10-03; OP-5 (repair round reserved for genuine S3 defects)",
@@ -58,5 +107,6 @@
     "engineering": "<= 1.5 Q2 seat-hours",
     "cpu": "development only; no ledgered launch in this packet",
     "note": "OP-4 caps"
-  }
+  },
+  "notes": "OP-7 (operator): regenerate the AUTHOR_TESTED stage records invalidated by these edits BEFORE the repaired run relies on them -- G-BIND and G-INV pin evidence.py, G-RECOMP pins checker.py and evidence.py (adapter.py is pinned by no record). New fire receipts at the new versions, canonical record files (T027 rule), and list the paths + hashes for re-registration in the receipt; Palamedes requests registration from Aporia."
 }

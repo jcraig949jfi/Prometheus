@@ -1,0 +1,33 @@
+{
+  "schema": "aphrodite.beta02.state.v1",
+  "campaign": "C-007",
+  "label": "C-P2B-APH-BETA-02",
+  "thread": "TH-P2B-APHRODITE-V2B",
+  "authority": "prompts/2026-10-05_beta02/01_OPERATOR_DIRECTIVE_verbatim.md",
+  "prereg": "beta02/BETA02_PREREG.md",
+  "accepted_beta01": {
+    "IMPROVER_CHANGE_REPLICATED_LOCAL": "YES",
+    "EVIDENCE_TIER": 2,
+    "FIRST_ORDER_ONLY": "YES",
+    "R8": "UNTESTED"
+  },
+  "order": [
+    "E1+E2 (LIN 24-47)",
+    "E3 R8 (gated; LIN 48-71)",
+    "E4 design in parallel",
+    "LLM test parked"
+  ],
+  "current": {
+    "stage": "SUPPLY_E",
+    "goal": "foundry LIN 24-47 -> e12 run/score/report",
+    "started_utc": "2026-10-06T01:02:14Z"
+  },
+  "history": [
+    {
+      "stage": "FREEZE",
+      "utc": "2026-10-06T01:02:14Z",
+      "note": "prereg + runner frozen; K0-K5 pass; W8 LIN 24-71 generated (LIN:23 reproduction check pass)"
+    }
+  ],
+  "compute_ledger_note": "rolling 24h ~12 core-h at 01:00Z 2026-10-06 (Beta-01 Oct-5 work rolls off 13:00-15:31Z)"
+}

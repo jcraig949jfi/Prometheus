@@ -3,11 +3,11 @@
   "seat": "Pallas",
   "mwo_id": "MWO-0004",
   "authority": "operator directive 2026-10-03 (roles/Achilles/prompts/2026-10-03_rso_builder_cell/01_OPERATOR_DIRECTIVE_verbatim.md)",
-  "updated_at_utc": "2026-10-05T06:41:32Z",
+  "updated_at_utc": "2026-10-06T01:45:04Z",
   "state": "READY",
-  "branch": "pallas/c004-t030",
-  "base_sha": "8a8c9feb6f",
-  "head_sha": "3bff160c9f4b1562f848b3b03c3f6b6193cb3327",
+  "branch": "pallas/c004-t041",
+  "base_sha": "d92546849",
+  "head_sha": "f233c83bf31c4040bec98609575525c6807a0486",
   "worktree_path": "D:/Prometheus-worktrees/pallas-boot-2026-10-03",
   "model": "claude-fable-5-1",
   "capability_class": "Q3",
@@ -15,10 +15,10 @@
   "instance": "m2-e7da6bde",
   "session_start_utc": "UNKNOWN (comms boot 2026-10-03T11:10:19Z)",
   "current_objective": "RSO Builder Cell member, campaign C-004 (RSO-METHODS-SLICE-001)",
-  "current_step": "C-004-T030 delivered and INTEGRATION_READY (state commit 1fa188321); idle; hourly loop checks comms and workgraph ready",
+  "current_step": "C-004-T041 delivered and INTEGRATION_READY (state commit c28b523a5); idle (OP-7: hourly check, no per-poll heartbeat)",
   "in_flight": [],
   "finish_condition": "per claimed packet (DISTRIBUTED_WORK.md)",
-  "next_expected_milestone": "Palamedes integrates pallas/c004-t030 and triages (T040); C-004-T041 when the coordinator makes it READY",
+  "next_expected_milestone": "Palamedes integrates pallas/c004-t041; S5 (T050) decides on the incomplete closure",
   "expected_next_artifact": "none until a READY packet exists",
   "threads": [
     "phase3-rso"
@@ -31,16 +31,15 @@
   "running": [],
   "blocked_on": [],
   "next_actions": [
-    "comms sync Pallas; workgraph ready Pallas (hourly loop)",
-    "do not take T041 while PROPOSED; no self-assignment"
+    "comms sync Pallas; workgraph ready Pallas (hourly, silent while idle)"
   ],
   "operator_decisions_required": [],
   "latest_reports": [
-    "rso/slice001/challenge/S3/REPORT.md (branch pallas/c004-t030)",
-    "ops/campaigns/C-004/tasks/C-004-T030/attempts/A-001/RECEIPT.json",
-    "roles/Pallas/comms/T030_INTEGRATION_READY_2026-10-05.md",
-    "roles/Pallas/journal/2026-10-05.md (branch pallas/c004-t030)"
+    "rso/slice001/challenge/S4/REPORT.md (branch pallas/c004-t041)",
+    "ops/campaigns/C-004/tasks/C-004-T041/attempts/A-001/RECEIPT.json",
+    "roles/Pallas/comms/T041_INTEGRATION_READY_2026-10-06.md",
+    "rso/slice001/challenge/S3/REPORT.md"
   ],
-  "last_push_sha": "1fa188321 (main, state); 3bff160c9 (branch pallas/c004-t030, work)",
-  "last_push_utc": "2026-10-05T06:41:32Z"
+  "last_push_sha": "c28b523a5 (main, state); f233c83bf (branch pallas/c004-t041, work)",
+  "last_push_utc": "2026-10-06T01:45:04Z"
 }
