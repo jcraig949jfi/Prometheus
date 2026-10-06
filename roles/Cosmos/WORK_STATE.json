@@ -3,7 +3,7 @@
   "seat": "Cosmos",
   "mwo_id": "MWO-0004",
   "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
-  "updated_at_utc": "2026-10-01T06:38:38Z",
+  "updated_at_utc": "2026-10-06T23:00:00Z",
   "state": "BLOCKED",
   "branch": "cosmos/c3-public-2026-09-24",
   "head_sha": "(this commit; git log -1 -- roles/Cosmos/WORK_STATE.json)",
@@ -56,7 +56,7 @@
   ],
   "mwo_sha256": "925660b2d2be53af2ee4195391e484d9649bbd4ee828cd60432ce2f0903a99df",
   "migration_report": "roles/Cosmos/MIGRATION_REPORT_MWO-0002.json",
-  "instance": "m2-44f84976 (M2 SPECTREX5), claude-opus-5-5; booted 2026-09-30T10:25Z",
+  "instance": "ubu003-623ec771 (ubu003, Dell E7240, Ubuntu), claude-opus-5-5; booted 2026-10-06T21:48Z. Previous instance m2-44f84976 (M2) retired; do not restart Cosmos on M2",
   "work_order": "Operator C4 direction review 2 (99541a365) within CWO-2026-09-30C (governing), MWO-0004",
   "current": "C4 review cycle (blocked on the foreign family)",
   "next": "On the foreign-family commit: publish the C3 branch after re-running V1-V5 -> notify the reviewers -> reconcile the reviews (RECONCILIATION_v0.2.md) -> return to the operator for the C4 build decision",
@@ -65,8 +65,8 @@
     "Future-world generators that cannot expose D2",
     "OPEN research threads T-A1..T-I1 (not started without assignment, CWO-B)"
   ],
-  "resource_status": "CPU only on M2 (COSMOS_HOME C:/Users/James/cosmos_runs); no leases, no Fabric tasks, no GPU; spend $0",
-  "last_receipt": "status report roles/Cosmos/reports/STATUS_2026-10-01.md (this commit); interims ded6f5729 / 164df3cdd; I2 closed (#1110 + Nestor #1153)",
+  "resource_status": "CPU only on ubu003 (4 cores, 7 GB); COSMOS_HOME=/home/jcraig/cosmos_runs (default ~/cosmos_runs; 284 files / 19,097,566 bytes copied from M2, counts match); venv ~/venvs/prometheus; no leases, no Fabric tasks, no GPU; spend $0",
+  "last_receipt": "host migration M2 -> ubu003, journal roles/Cosmos/journal/2026-10-06.md (this commit)",
   "open_incidents": [],
   "authorization": {
     "C4 design review": "AUTHORIZED",
@@ -77,9 +77,16 @@
     "D2 access": "NOT AUTHORIZED"
   },
   "model": "claude-opus-5-5",
-  "session_start_utc": "2026-09-30T10:25Z",
+  "session_start_utc": "2026-10-06T21:48Z",
   "current_objective": "C4 v0.2 review cycle -> operator build decision",
-  "current_step": "waiting for the foreign visible family (Theseus, #1139; not started); interim reviews received (5 BLOCKING)",
+  "current_step": "waiting for the foreign visible family (Theseus ACKed 2026-10-03 #1301, awaiting operator go-ahead; not started); interim reviews received (5 BLOCKING)",
   "next_expected_milestone": "foreign family committed on main -> C3 publication (V1-V5) -> final reviews -> RECONCILIATION_v0.2.md",
-  "expected_next_artifact": "C3 publication merge commit + INFO_LEDGER row (after the Theseus commit)"
+  "expected_next_artifact": "C3 publication merge commit + INFO_LEDGER row (after the Theseus commit)",
+  "host_migration": {
+    "date_utc": "2026-10-06",
+    "from": "M2 SPECTREX5 D:/Prometheus-worktrees/cosmos-base-role",
+    "to": "ubu003 /home/jcraig/Prometheus-worktrees/cosmos-base-role",
+    "withheld_branches": "moved by git bundle over scp only (never pushed): cosmos/c3-s1-2026-09-24 e73e5eb26aa3edbc786a1941817bce738b4f58ec, cosmos/c3-autopsy-2026-09-30 197daf5f39cedcb58812425d31330608f39a6be9; bundle sha256 b15ee803131b83deeec6314955fa016fa490ed40f1119fc85ec6e11dc6a46fd8 matched on both hosts; no upstream set; local pre-push hook refuses both unless COSMOS_PUBLISH_C3=1",
+    "fallback": "M2 copies of both branches, cosmos_runs and the bundle left in place (operator 2026-10-06)"
+  }
 }
