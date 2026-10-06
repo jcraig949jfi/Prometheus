@@ -9,9 +9,9 @@ Lane C (C-008, OP-LC1):
       ssh from M2 to ubu003-006 (then amend the prereg rig BEFORE any data). Tooling ready (moonshot/epoch/bench.py)
 - [ ] T004 D4 GitHub arm -- BLOCKED on the operator: dedicated private repository + deploy key
       ~/.ssh/moonshot_c008_t004_deploy.pub (or gh login on M2). Then: ssh -T spillover check, G1-G7, <= 250 writes
-- [ ] Review packet for C-008 at session close
 - (closed 2026-10-06, 2a86d4db9) T001 D1+D2 under the D3 matrix; T002 D4 preregistration
 - (closed 2026-10-06, 4b77577e0) T005 D5 node auto-join; field join evidence f3b63ed5f
+- (closed 2026-10-06, 4c6fac937) C-008 review packet
 
 Other lanes (not Lane C; unchanged):
 
