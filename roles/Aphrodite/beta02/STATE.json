@@ -18,9 +18,8 @@
     "LLM test parked"
   ],
   "current": {
-    "stage": "R8",
-    "goal": "supply R8 (LIN 48-71) -> r8 run/score/report; stop after R8",
-    "started_utc": "2026-10-06T05:20Z"
+    "stage": "CLOSED",
+    "goal": "Beta-02 complete; awaiting operator direction"
   },
   "history": [
     {
@@ -33,7 +32,19 @@
       "utc": "2026-10-06T05:15:30Z",
       "disposition": "MEASURED; gates pass; E1_POSITIVE YES (g11@O10 162 vs I_0@O4 63, 16/0/6, p 1.5e-5, N=22); MEMORISE_EXCLUSION_EFFECT +2.52/seed Holm-reject (12/0/10, p .00049); WIDTH +1.57 not Holm-rejected (p .043); INTERACTION null; G11_ONLY_WORKS_AT_O10 NO; REPLICATION_GATE PASS",
       "report": "beta02/E12_REPORT.md"
+    },
+    {
+      "stage": "R8",
+      "utc": "2026-10-06T09:14:00Z",
+      "disposition": "R8_PASS NO (I_0 machinery: improvement L_g11 10 vs L_I0 39, 0/5/15, p1 1.0; g11 machinery 37 vs 87, 1/10/9). Inherited capability L_g11 104 vs L_I0 32 vs L_P 0 on unseen lineages. Frozen reading: inheritance transfers capability, not improvement (first-order only). Stop (no recursion).",
+      "report": "beta02/R8_REPORT_AND_BETA02_CLOSE.md"
     }
   ],
-  "compute_ledger_note": "rolling 24h ~27 core-h at 05:15Z 2026-10-06; R8 est ~17 -> peak ~44 (<48)"
+  "compute_ledger_note": "Beta-02 ~38 core-h; rolling 24h peak ~44 at 09:14Z 2026-10-06",
+  "final": {
+    "IMPROVER_CHANGE_REPLICATED_LOCAL": "YES (N=22, p 1.5e-5)",
+    "MECHANISM": "MEMORISE exclusion",
+    "R8": "NO",
+    "EVIDENCE_TIER": 2
+  }
 }
