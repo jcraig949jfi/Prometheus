@@ -15,7 +15,7 @@ sha256 of `git cat-file blob ad6b3fa96:<path>`:
 
   rso/slice001/stages/fire/G-BIND.json    stated 4cd1fce90a1c...91cc  actual ab57152d061b204ff11be95b99841f8abdce1995c5b83891147c9cd7fb763b53 (2389 B)
   rso/slice001/stages/fire/G-INV.json     stated 9d954c01e442...4953  actual f71a555c86cf821656c005edf39e7a121c1f7435f18c4ff21c39c185afdcb268 (2503 B)
-  rso/slice001/stages/fire/G-RECOMP.json  stated e26384c1df77...a0d6  actual 08f5e799a329b632f0cb2a5c71527e56f578ab90c50f9cb0d0c0dd3e53dbb57c (2060 B)
+  rso/slice001/stages/fire/G-RECOMP.json  stated e26384c1df77...ca788  actual 08f5e799a329b632f0cb2a5c71527e56f578ab90c50f9cb0d0c0dd3e53dbb57c (2060 B)
 
 Diagnostics, for your resolution (not acted on):
 - The actual blobs were last written by 57447751b (Argus, T046 fire receipts) and are unchanged at ad6b3fa96.
