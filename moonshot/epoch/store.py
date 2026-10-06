@@ -17,8 +17,8 @@ from dataclasses import dataclass
 from typing import Optional
 
 from . import canonical as C
-from .gitio import (ForbiddenRef, ForbiddenRemote, GitError, LocalRepo, MissingRef,  # noqa: F401
-                    RemoteUnavailable)
+from .gitio import (AmbiguousPush, ForbiddenRef, ForbiddenRemote, GitError, LocalRepo,  # noqa: F401
+                    MissingRef, RemoteUnavailable)
 
 PER_CHAIN = "per_chain"
 SINGLE_REF = "single_ref"
@@ -113,6 +113,7 @@ class Store:
         self.ops = self.repo.oplog
         self.push_attempts = 0
         self.contention_retries = 0
+        self.ambiguity_resolutions = 0
         self._tip, self._root, self._slots = None, {}, {}   # SINGLE_REF view
         self._pointers = {}                                   # pointer blob -> commit
         self._memo = {}                                       # commit -> (index, parent, root)
@@ -218,14 +219,30 @@ class Store:
             root.pop(d, None)
         return self.repo.tree(root)
 
-    def cas_slot(self, slot, expected, new, wrap=None) -> CasResult:
+    def cas_slot(self, slot, expected, new, wrap=None, resolve_ambiguity=True) -> CasResult:
         """Move `slot` from `expected` (None = absent) to `new` (None = delete). Applied, or the value that
-        won. AmbiguousPush and RemoteUnavailable propagate: the caller resolves by re-reading."""
+        won. A lost acknowledgement is resolved by re-reading (slot = new: applied; slot = expected: not
+        applied, sent again; anything else: rejected) unless resolve_ambiguity is False, as for the chain
+        CAS, whose AmbiguousPush the worker resolves and attributes itself (CONTRACT s4). Commits are
+        unique per writer, so "slot = new" can only mean this write landed."""
         if self.layout == PER_CHAIN:
-            res = self._push([(new, self.ref(slot), expected or "")], wrap)
-            if res.applied:
-                return CasResult(True, new)
-            return CasResult(False, self.read_slots([slot])[slot])
+            for _ in range(4):
+                try:
+                    res = self._push([(new, self.ref(slot), expected or "")], wrap)
+                except AmbiguousPush:
+                    if not resolve_ambiguity:
+                        raise
+                    self.ambiguity_resolutions += 1
+                    cur = self.read_slots([slot])[slot]
+                    if cur == new:
+                        return CasResult(True, new)
+                    if cur != expected:
+                        return CasResult(False, cur)
+                    continue                                 # it did not apply: send it again
+                if res.applied:
+                    return CasResult(True, new)
+                return CasResult(False, self.read_slots([slot])[slot])
+            raise AmbiguousPush("CAS on {} stayed ambiguous".format(slot))
         retries, refreshed = 0, False
         if self._tip is None:
             self._refresh_index()
@@ -242,7 +259,18 @@ class Store:
             tree = self._index_tree_with(slot, new)
             parents = ([tip] if tip else []) + ([new] if new else [])
             commit = self.repo.commit(tree, parents, "moonshot index: {} -> {}\n".format(slot, new or "(deleted)"))
-            res = self._push([(commit, self.ref("index"), tip or "")], wrap)
+            try:
+                res = self._push([(commit, self.ref("index"), tip or "")], wrap)
+            except AmbiguousPush:
+                if not resolve_ambiguity:
+                    raise
+                self.ambiguity_resolutions += 1
+                self._refresh_index()
+                refreshed = True
+                if self._slots.get(slot) == new:
+                    self.contention_retries += retries
+                    return CasResult(True, new, retries)
+                continue                                     # not applied, or the slot moved: re-checked above
             if res.applied:
                 self._tip, self._root = commit, self.repo.read_tree(tree)
                 if new:
@@ -259,10 +287,22 @@ class Store:
             refreshed = True
 
     def _new_unique_ref(self, ref, commit):
-        res = self._push([(commit, ref, "")])
-        if not res.applied:
-            raise GitError("unique ref already exists: " + ref)
-        return ref
+        """Create a never-contended ref (staging, quarantine, rejected), resolving a lost acknowledgement."""
+        for _ in range(4):
+            try:
+                res = self._push([(commit, ref, "")])
+            except AmbiguousPush:
+                self.ambiguity_resolutions += 1
+                cur = self._read_refs([ref])[ref]
+                if cur == commit:
+                    return ref
+                if cur is not None:
+                    raise GitError("unique ref already exists: " + ref)
+                continue
+            if not res.applied:
+                raise GitError("unique ref already exists: " + ref)
+            return ref
+        raise AmbiguousPush("unique ref push stayed ambiguous: " + ref)
 
     # ------------------------------------------------------------------------------------------- objects
 
@@ -389,7 +429,7 @@ class Store:
 
     def cas_chain(self, chain_id, expected, new, wrap=None) -> CasResult:
         self._require(WORKER)
-        return self.cas_slot("chains/" + chain_id, expected, new, wrap)
+        return self.cas_slot("chains/" + chain_id, expected, new, wrap, resolve_ambiguity=False)
 
     def quarantine(self, chain_id, epoch_index, attempt_id, commit) -> str:
         self._require(WORKER, VALIDATOR)
@@ -420,8 +460,13 @@ class Store:
         for _ in range(4):
             cur = self._read_refs([ref])[ref]
             c = self.json_commit("NODE.json", dict(record, node_id=node_id), cur, "moonshot node {}\n".format(node_id))
-            if self._push([(c, ref, cur or "")]).applied:
-                return ref
+            try:
+                if self._push([(c, ref, cur or "")]).applied:
+                    return ref
+            except AmbiguousPush:
+                self.ambiguity_resolutions += 1
+                if self._read_refs([ref])[ref] == c:
+                    return ref
         raise GitError("could not announce node " + node_id)
 
     def nodes(self) -> dict:
