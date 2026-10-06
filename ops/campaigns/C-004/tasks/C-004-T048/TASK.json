@@ -40,7 +40,7 @@
   ],
   "kind": "review",
   "red_required": false,
-  "status": "CLAIMED",
+  "status": "INTEGRATION_READY",
   "history": [
     {
       "status": "PROPOSED",
@@ -59,6 +59,24 @@
       "by": "Pallas[m2-1500b878]",
       "at_utc": "2026-10-06T23:23:33Z",
       "note": "claimed on claude-fable-5-1 (Q3); FREEZE_R2 ad6b3fa96; set to be committed before any outcome"
+    },
+    {
+      "status": "IMPLEMENTING",
+      "by": "Pallas[m2-1500b878]",
+      "at_utc": "2026-10-06T23:41:16Z",
+      "note": "set c8f702862 before outcomes; launches R2-CASES, R2-MUTATION"
+    },
+    {
+      "status": "GREEN",
+      "by": "Pallas[m2-1500b878]",
+      "at_utc": "2026-10-06T23:41:16Z",
+      "note": "set c8f702862 before outcomes; launches R2-CASES, R2-MUTATION"
+    },
+    {
+      "status": "INTEGRATION_READY",
+      "by": "Pallas[m2-1500b878]",
+      "at_utc": "2026-10-06T23:41:16Z",
+      "note": "rows + REPORT at 75fb5d6ce; receipt attempts/A-001; C1 CLOSED, C2 NOT CLOSED (world axis), B3.3 NOT CLOSED (later-window run admitted); OP6 witness condition not met"
     }
   ],
   "authority": "C-004-OP6",
