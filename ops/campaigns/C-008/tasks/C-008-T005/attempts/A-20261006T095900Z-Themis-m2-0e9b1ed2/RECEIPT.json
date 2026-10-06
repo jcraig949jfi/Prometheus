@@ -1,0 +1,52 @@
+{
+  "schema": "prometheus.workgraph.receipt.v1",
+  "task_id": "C-008-T005",
+  "campaign_id": "C-008",
+  "attempt_id": "A-20261006T095900Z-Themis-m2-0e9b1ed2",
+  "role": "Themis[m2-0e9b1ed2]",
+  "model": "claude-opus-5-5",
+  "quality_class": "Q2",
+  "start_sha": "29836e859",
+  "end_sha": "f3b63ed5f",
+  "files_changed": [
+    "moonshot/epoch/join.py",
+    "moonshot/epoch/store.py",
+    "moonshot/epoch/__main__.py",
+    "moonshot/epoch/tests/test_d5_join.py",
+    "moonshot/epoch/tests/test_ambiguity.py",
+    "ops/campaigns/C-008/evidence/D5_JOIN/README.md",
+    "ops/campaigns/C-008/evidence/D5_JOIN/field_join_ubu002.json",
+    "ops/campaigns/C-008/evidence/D5_JOIN/MANIFEST.md"
+  ],
+  "evidence_added": [
+    "tests/test_d5_join.py (8): join drains approved chains; dirty checkout refused; unapproved node code refused; a joined node refuses a chain naming unapproved code; ancestry oracle incl. unknown objects; join grants no authority (WORKER role, no create/validate/resolve, announcement touches no slot); running code must be the approved checkout; denylisted remote refused before anything",
+    "tests/test_ambiguity.py (8 x 2 layouts): lost acknowledgements on chain creation, leases, staging, receipt flushes, node announcements",
+    "field evidence ops/campaigns/C-008/evidence/D5_JOIN/ (MANIFEST verifies)"
+  ],
+  "evidence_executed": [
+    "RED 43b73bb16: D5 tests 7/7 NotImplementedError: C-008-T005",
+    "D5 mutation table (oracle approves all; dirty accepted; COORDINATOR node store; no running-code binding): 4/4 killed",
+    "full suite at 0fd1038e7: M2 159 OK (349.8 s), ubu002 OK; integrated a4d7bf1c1",
+    "lost-ack hardening: RED (14 errors + 6 failures against the pre-fix store) then GREEN; full suite at 8a34b60b8: M2 167 OK (391.7 s), ubu002 167 OK (64.7 s); integrated 8a34b60b8",
+    "field join: ubu002 from a clean detached worktree at 8a34b60b8 (approved vs origin/main) over git:// to ubu001's LAN daemon, 2026-10-06T10:12:03Z-10:12:17Z: F000-F002 5/5 PUBLISHED each, all VALIDATED by a full replay on M2 (Windows); X000 (nonexistent code) refused x2, nothing executed; nodes/ubu002 announced"
+  ],
+  "red_observed": {
+    "observed": true,
+    "sha": "43b73bb16",
+    "detail": "7/7 NotImplementedError before the implementation"
+  },
+  "result": "DONE_CLEAN",
+  "known_escapes": [
+    "the approval oracle trusts the node's local view of the approval ref; a node that cannot fetch keeps a stale (smaller) approved set -- it can only refuse more, never approve more",
+    "the remote enforces nothing: a credential that can push can write any ref in the namespace; refusal is in the honest client (CONTRACT s6, s8)",
+    "untracked files in the checkout are not checked (nothing imports them)"
+  ],
+  "unresolved": [
+    "Git for Windows pushing over git:// hangs after applying (Windows hosts must use ssh:// or https to a LAN remote) -- an upstream client defect, recorded, not fixed here"
+  ],
+  "unblocks": [],
+  "created_at_utc": "2026-10-06T10:20:00Z",
+  "host": "SPECTREX5",
+  "branch": "themis/lanec-m4-2026-10-06",
+  "worktree_path": "D:\\Prometheus-worktrees\themis-lanec-m4"
+}

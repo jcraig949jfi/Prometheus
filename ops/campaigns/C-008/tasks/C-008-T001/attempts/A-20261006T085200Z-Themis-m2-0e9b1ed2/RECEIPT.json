@@ -1,0 +1,68 @@
+{
+  "schema": "prometheus.workgraph.receipt.v1",
+  "task_id": "C-008-T001",
+  "campaign_id": "C-008",
+  "attempt_id": "A-20261006T085200Z-Themis-m2-0e9b1ed2",
+  "role": "Themis[m2-0e9b1ed2]",
+  "model": "claude-opus-5-5",
+  "quality_class": "Q2",
+  "start_sha": "3bc5e74fe0eeb7e3f170d917e6d92419c535029e",
+  "end_sha": "9acef4de829c229a1f59dbdaa87141de1db929c5",
+  "files_changed": [
+    "moonshot/__init__.py",
+    "moonshot/epoch/__init__.py",
+    "moonshot/epoch/__main__.py",
+    "moonshot/epoch/CONTRACT.md",
+    "moonshot/epoch/canonical.py",
+    "moonshot/epoch/runtime.py",
+    "moonshot/epoch/model.py",
+    "moonshot/epoch/gitio.py",
+    "moonshot/epoch/store.py",
+    "moonshot/epoch/worker.py",
+    "moonshot/epoch/validate.py",
+    "moonshot/epoch/tests/__init__.py",
+    "moonshot/epoch/tests/harness.py",
+    "moonshot/epoch/tests/test_identity.py",
+    "moonshot/epoch/tests/test_d3_matrix.py"
+  ],
+  "evidence_added": [
+    "moonshot/epoch/tests/test_d3_matrix.py: CONTRACT s10 cases 1-12 + structural checks, 33 test methods x 4 variants (PER_CHAIN / SINGLE_REF x leases on / disabled = case 10)",
+    "moonshot/epoch/tests/test_identity.py: 16 tests -- canonical bytes, synthetic.v1 vs an independent hashlib reference, known-answer vectors, CONTRACT formulas, manifest key set, transport independence across layouts, remote denylist",
+    "a mutation kill table (16 planted bugs; script and per-mutant results kept in the session scratchpad, summarized in the GREEN commit c9081b129)"
+  ],
+  "evidence_executed": [
+    "RED at 2154cd9c2 (M2): python -m unittest discover -s moonshot/epoch/tests -t . -> 144 tests, errors=151 (all NotImplementedError: C-008-T001), failures=1, skipped=4",
+    "GREEN candidate dae948bb7 (M2, Windows 11, Python 3.14.4, git 2.53.0) -> 144 OK, skipped=4, 333.6 s",
+    "GREEN candidate dae948bb7 (ubu002, Ubuntu 26.04, Python 3.14.4, git 2.53.0) -> 144 OK, skipped=4, 55.4 s (known-answer vectors identical across Windows and Linux; real process kill on Linux)",
+    "mutation table vs dae948bb7: 14/16 killed; M12 survived (test gap) -> test added in c9081b129 kills it; M14 equivalent (subsumed by work_id) -> final 15/16 killed, 1 equivalent",
+    "merged tree 9acef4de8 (ubu002) -> 148 OK, skipped=4, 56.0 s",
+    "merged tree 9acef4de8 (M2) -> 148 OK, skipped=4, 327.0 s; integrated to main as a fast-forward at 9acef4de8"
+  ],
+  "red_observed": {
+    "observed": true,
+    "sha": "2154cd9c22fb022092d947efea19a67cb87a38e4",
+    "detail": "the complete D3 matrix failing against API stubs before any implementation (OP-LC1: first commit = the matrix as failing tests)"
+  },
+  "result": "DONE_CLEAN",
+  "known_escapes": [
+    "ambiguous pushes are injected at the CAS (acknowledgement lost / lost before apply), not produced by real network faults; D4 (LAN) and T004 (GitHub) exercise real networks",
+    "the remote enforces no roles: any client with write access can write any ref in the namespace; roles and code approval are client-side by design (CONTRACT s6, s8) -- structural refusal on the server is a D5 question",
+    "clock skew is tested at +-3600 s against a 60 s lease; larger skews behave the same (leases grant nothing) but are not separately tested",
+    "staging refs of attempts that crash and never recover stay as garbage refs (meaningless by contract; not garbage-collected)",
+    "SINGLE_REF reads parse every slot pointer on each index refresh: O(slots); D4 measures the cost",
+    "the process-kill test runs once per lease mode (PER_CHAIN only): process death is layout-independent"
+  ],
+  "unresolved": [
+    "M14 is an equivalent mutant: the parent-on-lineage check in classification is subsumed by the work_id comparison; kept as defense in depth"
+  ],
+  "unblocks": [
+    "C-008-T003",
+    "C-008-T004",
+    "C-008-T005"
+  ],
+  "created_at_utc": "2026-10-06T09:45:00Z",
+  "host": "SPECTREX5",
+  "branch": "themis/lanec-m4-2026-10-06",
+  "worktree_path": "D:\\Prometheus-worktrees\\themis-lanec-m4",
+  "notes": "Contract v1 frozen at 1f94e9197 before any test; v1.1 (commit message names the attempt) amended at 0867f8577 before the RED commit, reason in CONTRACT s12. One RED test was corrected after RED (a test defect: the fragment 'time' matched the contract's own field 'runtime'), recorded in dae948bb7."
+}

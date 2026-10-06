@@ -16,6 +16,16 @@ and the contract closures start now.
 > **Survival is the pressure. Sagacity is the measurement.**
 > **Reachability is the prerequisite. The ruler is the adversary.**
 
+**Amendment OP-LC1 (2026-10-06; roles/Themis/prompts/2026-10-06_op_lc1/).** Two contract changes to
+R-EP/N1/N4, executable in moonshot/epoch/CONTRACT.md, which governs where this text differs: (1) the git
+commit SHA is TRANSPORT identity; semantic identity is a transport-independent SHA-256 over canonical
+epoch inputs/spec/runtime and canonical outputs, and git refs/commits only locate those bytes; (2) a
+successful CAS is PUBLISHED, not "accepted" -- a push grants no scientific authority, validation/
+acceptance is a separate state, DUPLICATE / DISAGREEMENT-QUARANTINE / AMBIGUOUS stay explicit,
+contested chains fail closed, and a disagreement found after descendants exist taints that branch
+until deterministic replay resolves it. Read "one accepted successor" below as "one PUBLISHED
+successor". Lane C runs as campaign C-008.
+
 ## 0. What changed from v0.2 (Astra review F01-F10, all accepted)
 
 Astra (Enceladus) reviewed v0.2 and returned ten findings (three BLOCKING, seven HIGH) plus

@@ -1,0 +1,96 @@
+{
+  "schema": "prometheus.workgraph.task.v1",
+  "campaign_id": "C-008",
+  "epic_id": "EP-MOONSHOT",
+  "owner_role": "Themis",
+  "can_downgrade": false,
+  "escalate_to": "operator",
+  "authority": "operator OP-LC1 2026-10-06 (roles/Themis/prompts/2026-10-06_op_lc1/02_OPERATOR_OP-LC1_verbatim.md)",
+  "status": "CLOSED",
+  "history": [
+    {
+      "status": "PROPOSED",
+      "by": "Themis[m2-0e9b1ed2]",
+      "at_utc": "2026-10-06T08:52:00Z",
+      "note": "C-008 opened under OP-LC1"
+    },
+    {
+      "status": "READY",
+      "by": "Themis[m2-0e9b1ed2]",
+      "at_utc": "2026-10-06T08:42:42Z",
+      "note": "READY by operator authority OP-LC1 (roles/Themis/prompts/2026-10-06_op_lc1/); coordinator Themis records it"
+    },
+    {
+      "status": "CLAIMED",
+      "by": "Themis[m2-0e9b1ed2]",
+      "at_utc": "2026-10-06T08:42:43Z",
+      "note": "Themis builds D1+D2 test-first"
+    },
+    {
+      "status": "RED",
+      "by": "Themis[m2-0e9b1ed2]",
+      "at_utc": "2026-10-06T08:57:22Z",
+      "note": "RED observed at 2154cd9c2 (branch themis/lanec-m4-2026-10-06): 144 tests, errors=151 all NotImplementedError: C-008-T001, failures=1 (denylist), skipped=4 by design; contract v1.1 before RED"
+    },
+    {
+      "status": "IMPLEMENTING",
+      "by": "Themis[m2-0e9b1ed2]",
+      "at_utc": "2026-10-06T09:29:18Z",
+      "note": "T001 IMPLEMENTING: RED 2154cd9c2 -> GREEN c9081b129 -> integrated 9acef4de8 (148 OK on M2 and ubu002; mutation 15/16 killed, 1 equivalent)"
+    },
+    {
+      "status": "GREEN",
+      "by": "Themis[m2-0e9b1ed2]",
+      "at_utc": "2026-10-06T09:29:18Z",
+      "note": "T001 GREEN: RED 2154cd9c2 -> GREEN c9081b129 -> integrated 9acef4de8 (148 OK on M2 and ubu002; mutation 15/16 killed, 1 equivalent)"
+    },
+    {
+      "status": "INTEGRATION_READY",
+      "by": "Themis[m2-0e9b1ed2]",
+      "at_utc": "2026-10-06T09:29:19Z",
+      "note": "T001 INTEGRATION_READY: RED 2154cd9c2 -> GREEN c9081b129 -> integrated 9acef4de8 (148 OK on M2 and ubu002; mutation 15/16 killed, 1 equivalent)"
+    },
+    {
+      "status": "INTEGRATED",
+      "by": "Themis[m2-0e9b1ed2]",
+      "at_utc": "2026-10-06T09:29:19Z",
+      "note": "T001 INTEGRATED: RED 2154cd9c2 -> GREEN c9081b129 -> integrated 9acef4de8 (148 OK on M2 and ubu002; mutation 15/16 killed, 1 equivalent)"
+    },
+    {
+      "status": "CLOSED",
+      "by": "Themis[m2-0e9b1ed2]",
+      "at_utc": "2026-10-06T09:29:19Z",
+      "note": "T001 CLOSED: RED 2154cd9c2 -> GREEN c9081b129 -> integrated 9acef4de8 (148 OK on M2 and ubu002; mutation 15/16 killed, 1 equivalent)"
+    }
+  ],
+  "task_id": "C-008-T001",
+  "title": "D1+D2 under the D3 matrix: R-EP epoch unit and CAS publication, test-first",
+  "objective": "moonshot/epoch implements CONTRACT.md: the pure synthetic epoch unit with semantic identity (D1) and slot CAS publication with PUBLISHED / DUPLICATE / DISAGREEMENT-QUARANTINE / AMBIGUOUS / STALE, separate validation, contest/taint/replay resolution, leases as hints (D2); the twelve-case D3 matrix passes under PER_CHAIN and SINGLE_REF.",
+  "quality_class": "Q2",
+  "kind": "software",
+  "depends_on": [],
+  "problem": "R-EP (design v0.3) requires one published successor per parent under worker death, lease expiry, CAS races, remote outage and ambiguous pushes, with git SHAs as transport identity only (OP-LC1). Nothing implements it; workgraph's claim-is-a-push-to-main has no lease expiry, no semantic identity and no disagreement handling.",
+  "non_goals": [
+    "organisms, world physics, S-meter or RSO evidence",
+    "any ref outside refs/moonshot/ or any traffic to the Prometheus repository",
+    "changes to workgraph/ or fabric/",
+    "the D4 baseline (T003) or the GitHub arm (T004)"
+  ],
+  "evidence_required": [
+    "RED: the complete D3 matrix committed failing before the implementation",
+    "GREEN: python -m unittest discover -s moonshot/epoch/tests -t . passes on M2 (Windows) and on at least one ubu node (Linux)"
+  ],
+  "acceptance": {
+    "command": "python -m unittest discover -s moonshot/epoch/tests -t .",
+    "condition": "all tests pass, both layouts, including a real process-kill test; D3 case 7 also run on a second host"
+  },
+  "deliverables": [
+    "moonshot/epoch/ (stdlib-only package)",
+    "moonshot/epoch/tests/ (D3 matrix + identity tests)",
+    "moonshot/epoch/CONTRACT.md"
+  ],
+  "owns": [
+    "moonshot/"
+  ],
+  "red_required": true
+}

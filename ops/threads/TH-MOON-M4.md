@@ -16,9 +16,10 @@ which the transport must be reconsidered (GitHub push rate-limits are a specific
 item). Seven e-waste boxes are the stress rig to find that threshold before 100-1,000 workers.
 
 ## Campaigns
-- (none yet) First work is specified in roles/Themis/design/LANE_C_M4_KICKOFF.md (the reset
-  entry point, 2026-10-06): synthetic epochs only; D1 R-EP epoch unit, D2 CAS one-accepted-
-  successor, D3 seven-case fault-injection matrix (tests first), D4 transport metrics + a
-  preregistered reconsider-transport threshold, D5 node auto-join. Pure layer-1 must-pass TDD;
-  no evolutionary substrate, no science, no external coordination needed. Open a bounded
-  campaign here and begin.
+- C-008 (OPEN 2026-10-06, operator OP-LC1; ops/campaigns/C-008/): Lane C on synthetic epochs --
+  T001 D1+D2 under the twelve-case D3 matrix (test-first), T002 D4 preregistration (bounds frozen
+  before any baseline), T003 D4 local-network baseline (single-ref vs per-chain, disposable LAN
+  bare remote), T004 one bounded GitHub WAN-semantics arm (<=2 workers, <=250 write attempts),
+  T005 D5 node auto-join without auto-authorization. Contract: moonshot/epoch/CONTRACT.md (git SHA
+  = transport identity; successful CAS = PUBLISHED, validation separate). Entry point was
+  roles/Themis/design/LANE_C_M4_KICKOFF.md.

@@ -4,10 +4,10 @@
   "mwo_id": "MWO-0004",
   "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
   "mwo_sha256": "925660b2d2be53af2ee4195391e484d9649bbd4ee828cd60432ce2f0903a99df",
-  "updated_at_utc": "2026-10-05T10:25Z",
+  "updated_at_utc": "2026-10-06T11:10Z",
   "state": "ACTIVE",
-  "state_reason": "host moved BUCKKEEP -> SPECTREX5 (M2), writer = Aether[m2-95eba442] from this commit (see roles/Aether/HANDOFF_BUCKKEEP_TO_M2_2026-10-05.md)",
-  "branch": "aether/mwo0001-2026-09-28",
+  "state_reason": "host moved BUCKKEEP -> SPECTREX5 (M2); writer Aether[m2-95eba442]; ER01 handoff complete (comms #1561), BUCKKEEP quiescent",
+  "branch": "aether/aim02-2026-10-06",
   "head_sha": "94b63b515e4c08256a85449e919d9182cef94897",
   "head_sha_note": "the latest pushed work commit before this WORK_STATE commit (the file cannot contain its own commit hash)",
   "threads": [
@@ -50,6 +50,24 @@
     }
   ],
   "experiments": [
+    {
+      "id": "AIM02",
+      "status": "CLOSED",
+      "verdict": "RICHNESS_WEAK (frozen); substance FLICKER_EQUIVALENT repertoire (REAIM_MOBILE_BUT_TRIVIAL)",
+      "report": "Aether/V2B/AIM02/RESULT.md"
+    },
+    {
+      "id": "AIM01",
+      "status": "CLOSED",
+      "verdict": "REAIM_NONTRIVIAL_CANDIDATE (frozen) / nontriviality not robust (post-hoc); INITIAL_GEOMETRY_DOMINANT",
+      "report": "Aether/V2B/AIM01/RESULT.md"
+    },
+    {
+      "id": "ER01",
+      "status": "CLOSED",
+      "verdict": "MOBILE_BUT_TRIVIAL (extent energy-invariant)",
+      "report": "Aether/V2B/ER01/RESULT.md"
+    },
     {
       "id": "E-012",
       "status": "CLOSED",
@@ -98,9 +116,9 @@
   ],
   "operator_decisions_required": [],
   "latest_reports": [
-    "ops/campaigns/C-002/E-011/RESULT.md",
-    "ops/campaigns/C-002/E-010/RESULT.md",
-    "roles/Aether/reviews/2026-09-30_promexec_round2_source/FINDINGS.md"
+    "Aether/V2B/AIM02/RESULT.md",
+    "Aether/pivot/AETH_AIM02_REVIEW_2026-10-06.md",
+    "Aether/V2B/AIM01/RESULT.md"
   ],
   "migration_report": "roles/Aether/MIGRATION_REPORT_MWO-0002.json",
   "fp001_result": "roles/Aether/probes/FP-001_RESULT.json",
@@ -108,21 +126,21 @@
   "incidents": [
     "Fabric ubu001 workers stale since 2026-10-02 10:37 (no claims); TEST-1 ran via R3 native fallback, lease lse-a03858e1b71d released; reported to Aporia"
   ],
-  "work_order": "TH-P2B-AETHER-V2B (operator directive 2026-10-04; roles/Aether/prompts/2026-10-04_v2b_directive/) -- autonomous; MWO-0004 + CWO-2026-09-30C remain in force for gates and delegated work",
-  "current": "V2-B cycle 1 DEV-1: value-provenance observatory (prov0) + qualification fixtures 1-7 + rich-soup self-check",
-  "next": "TEST-1: provenance qualification in rich soup (fwd visible) + first P3-P6 readings for rcv/rcv_add/rcv_str",
+  "work_order": "AETH-V2B-AIM02 (operator order 2026-10-06; roles/Aether/prompts/2026-10-06_aim02/)",
+  "current": "AIM02 COMPLETE: RICHNESS_WEAK (frozen); repertoire flicker-equivalent -> REAIM_MOBILE_BUT_TRIVIAL; AIM01 = REAIM_SUPPORT_CONFIRMED__NONTRIVIALITY_OPEN now adjudicated (Aether/V2B/AIM02/RESULT.md)",
+  "next": "HITL: OFFER01 (reaim1 + winning writer takes the displaced byte as its payload) or retire the copy-only radius-1 line",
   "reserve": [
     "AETH-01 arbitration finite-run diagnostic",
     "AGE/Builder friction feed"
   ],
-  "resource_status": "local CPU only; about 4 CPU-h in the rolling 24 h (R2 cap 48); no GPU, no paid compute",
-  "last_receipt": "Aether/V2B/DEV-3_PACKET.md + TEST-3/PREREGISTRATION.md @ 94b63b515",
-  "current_objective": "V2-B cycle 3 closed: TEST-3 MECHANISM_SUPPORTED at P1 (recoil x exchange mobility)",
-  "current_step": "handoff to M2; DEV-4 opens 2026-10-05T11:37Z on M2 (design: Aether/V2B/TEST-3/OPERATOR_REVIEW.md)",
+  "resource_status": "M2 RTX 5060 Ti dedicated to Aether today (operator); local only, no paid compute, no RunPod",
+  "last_receipt": "Aether/V2B/AIM02/RESULT.md @ c2bead7b5",
+  "current_objective": "ER01: is the frozen medium a property of aeth01.v1 or of the B-balanced energy economy?",
+  "current_step": "AIM02 closed; awaiting operator ruling (proposed OFFER01)",
   "last_push_sha": "94b63b515",
   "last_push_utc": "2026-10-05T03:46:38Z",
   "model": "claude-opus-5-5[1m]",
-  "next_expected_milestone": "DEV-4 packet + frozen TEST-4",
-  "expected_next_artifact": "Aether/V2B/DEV-4_PACKET.md",
+  "next_expected_milestone": "AIM02 review response",
+  "expected_next_artifact": "operator ruling on AIM02 next step",
   "campaign_state": "Aether/V2B/CAMPAIGN_STATE.json"
 }

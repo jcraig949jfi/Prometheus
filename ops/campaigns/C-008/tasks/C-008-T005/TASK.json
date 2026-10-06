@@ -1,0 +1,95 @@
+{
+  "schema": "prometheus.workgraph.task.v1",
+  "campaign_id": "C-008",
+  "epic_id": "EP-MOONSHOT",
+  "owner_role": "Themis",
+  "can_downgrade": false,
+  "escalate_to": "operator",
+  "authority": "operator OP-LC1 2026-10-06 (roles/Themis/prompts/2026-10-06_op_lc1/02_OPERATOR_OP-LC1_verbatim.md)",
+  "status": "CLOSED",
+  "history": [
+    {
+      "status": "PROPOSED",
+      "by": "Themis[m2-0e9b1ed2]",
+      "at_utc": "2026-10-06T08:52:00Z",
+      "note": "C-008 opened under OP-LC1"
+    },
+    {
+      "status": "READY",
+      "by": "Themis[m2-0e9b1ed2]",
+      "at_utc": "2026-10-06T08:42:43Z",
+      "note": "READY by operator authority OP-LC1 (roles/Themis/prompts/2026-10-06_op_lc1/); coordinator Themis records it"
+    },
+    {
+      "status": "CLAIMED",
+      "by": "Themis[m2-0e9b1ed2]",
+      "at_utc": "2026-10-06T09:46:45Z",
+      "note": "D5 auto-join: hermetic tests first, then one join on ubu002"
+    },
+    {
+      "status": "RED",
+      "by": "Themis[m2-0e9b1ed2]",
+      "at_utc": "2026-10-06T10:14:28Z",
+      "note": "T005 RED: RED 43b73bb16 (7/7 NotImplementedError) -> GREEN 0fd1038e7 -> integrated a4d7bf1c1; lost-ack hardening 8a34b60b8; field join evidence f3b63ed5f"
+    },
+    {
+      "status": "IMPLEMENTING",
+      "by": "Themis[m2-0e9b1ed2]",
+      "at_utc": "2026-10-06T10:14:28Z",
+      "note": "T005 IMPLEMENTING: RED 43b73bb16 (7/7 NotImplementedError) -> GREEN 0fd1038e7 -> integrated a4d7bf1c1; lost-ack hardening 8a34b60b8; field join evidence f3b63ed5f"
+    },
+    {
+      "status": "GREEN",
+      "by": "Themis[m2-0e9b1ed2]",
+      "at_utc": "2026-10-06T10:14:28Z",
+      "note": "T005 GREEN: RED 43b73bb16 (7/7 NotImplementedError) -> GREEN 0fd1038e7 -> integrated a4d7bf1c1; lost-ack hardening 8a34b60b8; field join evidence f3b63ed5f"
+    },
+    {
+      "status": "INTEGRATION_READY",
+      "by": "Themis[m2-0e9b1ed2]",
+      "at_utc": "2026-10-06T10:14:28Z",
+      "note": "T005 INTEGRATION_READY: RED 43b73bb16 (7/7 NotImplementedError) -> GREEN 0fd1038e7 -> integrated a4d7bf1c1; lost-ack hardening 8a34b60b8; field join evidence f3b63ed5f"
+    },
+    {
+      "status": "INTEGRATED",
+      "by": "Themis[m2-0e9b1ed2]",
+      "at_utc": "2026-10-06T10:14:29Z",
+      "note": "T005 INTEGRATED: RED 43b73bb16 (7/7 NotImplementedError) -> GREEN 0fd1038e7 -> integrated a4d7bf1c1; lost-ack hardening 8a34b60b8; field join evidence f3b63ed5f"
+    },
+    {
+      "status": "CLOSED",
+      "by": "Themis[m2-0e9b1ed2]",
+      "at_utc": "2026-10-06T10:14:29Z",
+      "note": "T005 CLOSED: RED 43b73bb16 (7/7 NotImplementedError) -> GREEN 0fd1038e7 -> integrated a4d7bf1c1; lost-ack hardening 8a34b60b8; field join evidence f3b63ed5f"
+    }
+  ],
+  "task_id": "C-008-T005",
+  "title": "D5 node auto-join without auto-authorization (N7)",
+  "objective": "A node with only Python, git and a data-plane credential joins and drains synthetic epochs; joining grants no authority: the node runs only approved code (ancestor of origin/main), creates no chains, and cannot validate or clear contests.",
+  "quality_class": "Q2",
+  "kind": "software",
+  "depends_on": [
+    "C-008-T001"
+  ],
+  "problem": "Today every ubu node is provisioned by hand, and node tokens can push to Prometheus main, so 'a push grants no authority' is convention, not structure.",
+  "non_goals": [
+    "changing the existing PrometheusWorker service or its tokens (EP-GLOBAL's)",
+    "provisioning new hardware"
+  ],
+  "evidence_required": [
+    "a join test (hermetic) and a join on one ubu node",
+    "refusal tests: unapproved code, chain creation, validation writes"
+  ],
+  "acceptance": {
+    "command": "python -m unittest moonshot.epoch.tests.test_d5_join",
+    "condition": "passes; one ubu node joins and drains epochs"
+  },
+  "deliverables": [
+    "moonshot/epoch/join.py",
+    "moonshot/epoch/tests/test_d5_join.py"
+  ],
+  "owns": [
+    "moonshot/"
+  ],
+  "red_required": true
+}
