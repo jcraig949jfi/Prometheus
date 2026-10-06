@@ -4,7 +4,7 @@
   "mwo_id": "MWO-0004",
   "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
   "mwo_sha256": "925660b2d2be53af2ee4195391e484d9649bbd4ee828cd60432ce2f0903a99df",
-  "updated_at_utc": "2026-10-05T20:50Z",
+  "updated_at_utc": "2026-10-06T01:17Z",
   "state": "ACTIVE",
   "state_reason": "host moved BUCKKEEP -> SPECTREX5 (M2); writer Aether[m2-95eba442]; ER01 handoff complete (comms #1561), BUCKKEEP quiescent",
   "branch": "aether/mwo0001-2026-09-28",
@@ -93,7 +93,15 @@
     }
   ],
   "fabric_tasks": [],
-  "running": [],
+  "running": [
+    {
+      "what": "AIM01 production driver (aim01_flight.py production/plan.json production --jobs 4 --wall-cap 39600 --drain)",
+      "host": "SPECTREX5 (M2)",
+      "started_utc": "2026-10-06T01:15:53Z",
+      "bound": "no new unit after 11 h; hard wall 12 h",
+      "accountable_seat": "Aether"
+    }
+  ],
   "blocked_on": [
     "promexec round 2 proper: operator install of broker 3cf32a64 (runbook fabric/promexec/OPERATOR_STEPS_ROUND2.md @ 9f95f9ea0; CWO s4 privileged host change), then Odysseus ACCEPTANCE_RUNS"
   ],
@@ -115,9 +123,9 @@
   "incidents": [
     "Fabric ubu001 workers stale since 2026-10-02 10:37 (no claims); TEST-1 ran via R3 native fallback, lease lse-a03858e1b71d released; reported to Aporia"
   ],
-  "work_order": "AETH-V2B-ER01 (operator order 2026-10-05; roles/Aether/prompts/2026-10-05_er01/) -- supersedes V2-B DEV-4 for today",
-  "current": "ER01 COMPLETE: MOBILE_BUT_TRIVIAL (preregistered); frozen medium energy-invariant in extent (Aether/V2B/ER01/RESULT.md @ bae71a02b)",
-  "next": "HITL call: (a) aim-re-targeting single-law change (TH-009) or (b) initial-family WRITE-density axis; else V2-B DEV-4 per TEST-3 OPERATOR_REVIEW.md",
+  "work_order": "AETH-V2B-AIM01 (operator order 2026-10-05; roles/Aether/prompts/2026-10-05_aim01/)",
+  "current": "AIM01 production RUNNING since 2026-10-06T01:15:53Z: 49 units (512^2 x 30k, L0/L1 x D25/D50/D75 x 8 seeds), prereg frozen 1ec63c053",
+  "next": "reduce with RULES.json, write Aether/V2B/AIM01/RESULT.md + review packet",
   "reserve": [
     "AETH-01 arbitration finite-run diagnostic",
     "AGE/Builder friction feed"
@@ -125,11 +133,11 @@
   "resource_status": "M2 RTX 5060 Ti dedicated to Aether today (operator); local only, no paid compute, no RunPod",
   "last_receipt": "Aether/V2B/ER01/RESULT.md @ bae71a02b",
   "current_objective": "ER01: is the frozen medium a property of aeth01.v1 or of the B-balanced energy economy?",
-  "current_step": "ER01 closed; awaiting operator/reviewer response before the next TH-009 experiment",
+  "current_step": "production; ledger Aether/V2B/AIM01/production/ledger.jsonl; ETA ~07:15Z; cap 12:16Z; hard wall 13:16Z; review #1668 pending (non-blocking)",
   "last_push_sha": "94b63b515",
   "last_push_utc": "2026-10-05T03:46:38Z",
   "model": "claude-opus-5-5[1m]",
-  "next_expected_milestone": "ER01 review response",
-  "expected_next_artifact": "operator ruling on ER01 next step",
+  "next_expected_milestone": "AIM01 production completion (~07:15Z)",
+  "expected_next_artifact": "Aether/V2B/AIM01/RESULT.md",
   "campaign_state": "Aether/V2B/CAMPAIGN_STATE.json"
 }
