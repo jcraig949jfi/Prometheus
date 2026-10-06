@@ -1,14 +1,19 @@
 """python -m moonshot.epoch <command>  (campaign C-008)
 
-    work      run one worker against a dedicated remote until its chains complete or --max-attempts
-              (D3 case 2 kills this process mid-epoch; D4 runs it on the ubu nodes)
+    work           run one worker until its chains complete or --max-attempts (D3 case 2 kills this process)
+    calibrate      synthetic.v1 iterations per second on this host (D4)
+    make-chains    the coordinator creates a run's chains (D4)
+    bench-worker   one timed D4 worker; ends with a WORKER_SUMMARY on the remote
+    validate-all   the validator checks every chain with a prefix (D4)
+    report         the preregistered D4 metrics and bounds, as JSON (D4)
 """
 import argparse
 import json
 import sys
 import time
 
-from .store import LAYOUTS, Store
+from . import bench
+from .store import COORDINATOR, LAYOUTS, VALIDATOR, Store
 from .worker import Outcome, Worker
 
 _DONE = (Outcome.COMPLETE, Outcome.HALTED, Outcome.REFUSED_UNAPPROVED)
@@ -16,8 +21,13 @@ _PROGRESS = (Outcome.PUBLISHED, Outcome.DUPLICATE, Outcome.DISAGREEMENT, Outcome
              Outcome.ABANDONED_RECOVERED)
 
 
+def _store(a, role="worker", actor=None):
+    return Store(a.remote, namespace=a.namespace, layout=a.layout, local_dir=a.local_dir, role=role,
+                 actor=actor or getattr(a, "worker_id", None) or role)
+
+
 def _work(a) -> int:
-    st = Store(a.remote, namespace=a.namespace, layout=a.layout, local_dir=a.local_dir, actor=a.worker_id)
+    st = _store(a)
     w = Worker(st, a.worker_id, code_sha=a.code_sha, approved=set(a.approve or []), spool_dir=a.spool_dir,
                leases=not a.no_leases, lease_ttl_s=a.ttl, host_label=a.host_label)
     try:
@@ -44,15 +54,20 @@ def _work(a) -> int:
     return 0
 
 
+def _common(p):
+    p.add_argument("--remote", required=True)
+    p.add_argument("--namespace", required=True)
+    p.add_argument("--layout", choices=LAYOUTS, required=True)
+    p.add_argument("--local-dir", required=True)
+
+
 def main(argv=None) -> int:
     p = argparse.ArgumentParser(prog="python -m moonshot.epoch", description=__doc__,
                                 formatter_class=argparse.RawDescriptionHelpFormatter)
     sub = p.add_subparsers(dest="cmd", required=True)
+
     w = sub.add_parser("work", help="run one worker")
-    w.add_argument("--remote", required=True)
-    w.add_argument("--namespace", required=True)
-    w.add_argument("--layout", choices=LAYOUTS, required=True)
-    w.add_argument("--local-dir", required=True)
+    _common(w)
     w.add_argument("--spool-dir", required=True)
     w.add_argument("--worker-id", required=True)
     w.add_argument("--code-sha", required=True)
@@ -63,9 +78,89 @@ def main(argv=None) -> int:
     w.add_argument("--ttl", type=int, default=60)
     w.add_argument("--host-label", default=None)
     w.add_argument("--idle-sleep", type=float, default=0.5)
+
+    c = sub.add_parser("calibrate", help="synthetic.v1 iterations per second here")
+    c.add_argument("--seconds", type=float, default=3.0)
+
+    m = sub.add_parser("make-chains", help="the coordinator creates a run's chains")
+    _common(m)
+    m.add_argument("--prefix", required=True)
+    m.add_argument("--count", type=int, required=True)
+    m.add_argument("--iterations", type=int, required=True)
+    m.add_argument("--checkpoint-bytes", type=int, default=4096)
+    m.add_argument("--epochs", type=int, default=100000)
+    m.add_argument("--approved-code-sha", required=True)
+
+    b = sub.add_parser("bench-worker", help="one timed D4 worker")
+    _common(b)
+    b.add_argument("--spool-dir", required=True)
+    b.add_argument("--worker-id", required=True)
+    b.add_argument("--code-sha", required=True)
+    b.add_argument("--approve", action="append")
+    b.add_argument("--prefix", required=True)
+    b.add_argument("--count", type=int, required=True)
+    b.add_argument("--start", type=int, default=0)
+    b.add_argument("--duration-s", type=float, required=True)
+    b.add_argument("--no-leases", action="store_true")
+    b.add_argument("--ttl", type=int, default=60)
+    b.add_argument("--flush-every", type=int, default=10)
+    b.add_argument("--host-label", default=None)
+
+    v = sub.add_parser("validate-all", help="the validator checks every chain with a prefix")
+    _common(v)
+    v.add_argument("--prefix", required=True)
+    v.add_argument("--replay-every", type=int, default=10)
+
+    r = sub.add_parser("report", help="the preregistered D4 metrics and bounds")
+    _common(r)
+    r.add_argument("--prefix", required=True)
+    r.add_argument("--wall-s", type=float, required=True)
+    r.add_argument("--repo-bytes", type=int, default=None)
+    r.add_argument("--refs", type=int, default=None)
+
     a = p.parse_args(argv)
     if a.cmd == "work":
         return _work(a)
+    if a.cmd == "calibrate":
+        print(json.dumps(bench.calibrate(a.seconds)))
+        return 0
+    if a.cmd == "make-chains":
+        st = _store(a, COORDINATOR, "coordinator")
+        try:
+            ids = bench.make_chains(st, a.prefix, a.count, iterations=a.iterations,
+                                    checkpoint_bytes=a.checkpoint_bytes, epochs=a.epochs,
+                                    approved_code_sha=a.approved_code_sha)
+        finally:
+            st.close()
+        print(json.dumps({"chains": ids}))
+        return 0
+    if a.cmd == "bench-worker":
+        st = _store(a)
+        try:
+            chains = ["{}{:03d}".format(a.prefix, i) for i in range(a.count)]
+            s = bench.bench_worker(st, a.worker_id, chains, code_sha=a.code_sha, approved=set(a.approve or []),
+                                   spool_dir=a.spool_dir, leases=not a.no_leases, duration_s=a.duration_s,
+                                   lease_ttl_s=a.ttl, flush_every=a.flush_every, start=a.start,
+                                   host_label=a.host_label)
+        finally:
+            st.close()
+        print(json.dumps(s))
+        return 0
+    if a.cmd == "validate-all":
+        st = _store(a, VALIDATOR, "validator")
+        try:
+            print(json.dumps(bench.validate_all(st, a.prefix, a.replay_every)))
+        finally:
+            st.close()
+        return 0
+    if a.cmd == "report":
+        st = _store(a, "worker", "reporter")
+        try:
+            print(json.dumps(bench.report(st, a.prefix, wall_s=a.wall_s, repo_bytes=a.repo_bytes, refs=a.refs),
+                             indent=1, sort_keys=True))
+        finally:
+            st.close()
+        return 0
     return 2
 
 
