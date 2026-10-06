@@ -1,0 +1,177 @@
+{
+ "n_rows": 8,
+ "n_counted": 8,
+ "flags": [],
+ "families": {
+  "RELAY-mh": {
+   "arms": {
+    "BRK1": {
+     "k": 0,
+     "n": 1,
+     "CP95": [
+      0.0,
+      0.975
+     ],
+     "cells_hit": 0,
+     "verdict": "LOCALLY_FLAT_SUPPORTED",
+     "background_success": 0,
+     "final_success_any": 0
+    },
+    "BRK2": {
+     "k": 1,
+     "n": 1,
+     "CP95": [
+      0.025,
+      1.0
+     ],
+     "cells_hit": 1,
+     "verdict": "SPARSE_REPAIR_PATH",
+     "background_success": 0,
+     "final_success_any": 1
+    },
+    "STEP": {
+     "k": 0,
+     "n": 1,
+     "CP95": [
+      0.0,
+      0.975
+     ],
+     "cells_hit": 0,
+     "verdict": "NO_STEP_RESPONSE",
+     "background_success": 0,
+     "final_success_any": 0
+    },
+    "B4X": {
+     "k": 1,
+     "n": 1,
+     "CP95": [
+      0.025,
+      1.0
+     ],
+     "cells_hit": 1,
+     "verdict": "WEAK_BUDGET_RESPONSE",
+     "background_success": 1,
+     "final_success_any": 1,
+     "first_competent_gen": [
+      144
+     ],
+     "competent_at_36": 0,
+     "persistent_after_first": 1
+    }
+   },
+   "responsive": [],
+   "classification": "LANDSCAPE_BARRIER_WITH_SPARSE_EXCEPTIONS"
+  },
+  "FLIP": {
+   "arms": {
+    "BRK1": {
+     "k": 0,
+     "n": 1,
+     "CP95": [
+      0.0,
+      0.975
+     ],
+     "cells_hit": 0,
+     "verdict": "LOCALLY_FLAT_SUPPORTED",
+     "background_success": 0,
+     "final_success_any": 0
+    },
+    "BRK2": {
+     "k": 0,
+     "n": 1,
+     "CP95": [
+      0.0,
+      0.975
+     ],
+     "cells_hit": 0,
+     "verdict": "LOCALLY_FLAT_SUPPORTED",
+     "background_success": 0,
+     "final_success_any": 0
+    },
+    "STEP": {
+     "k": 0,
+     "n": 1,
+     "CP95": [
+      0.0,
+      0.975
+     ],
+     "cells_hit": 0,
+     "verdict": "NO_STEP_RESPONSE",
+     "background_success": 0,
+     "final_success_any": 0
+    },
+    "B4X": {
+     "k": 0,
+     "n": 1,
+     "CP95": [
+      0.0,
+      0.975
+     ],
+     "cells_hit": 0,
+     "verdict": "NO_BUDGET_RESPONSE",
+     "background_success": 0,
+     "final_success_any": 0,
+     "first_competent_gen": [],
+     "competent_at_36": 0,
+     "persistent_after_first": 0
+    }
+   },
+   "responsive": [],
+   "classification": "LANDSCAPE_BARRIER_STRICT"
+  }
+ },
+ "cells": {
+  "RELAY-0019-eabcdf91": {
+   "BRK1": {
+    "n": 1,
+    "lineage": 0,
+    "background": 0,
+    "new_after_36": 0
+   },
+   "BRK2": {
+    "n": 1,
+    "lineage": 1,
+    "background": 0,
+    "new_after_36": 0
+   },
+   "B4X": {
+    "n": 1,
+    "lineage": 0,
+    "background": 1,
+    "new_after_36": 1
+   },
+   "STEP": {
+    "n": 1,
+    "lineage": 0,
+    "background": 0,
+    "new_after_36": 0
+   }
+  },
+  "FLIP-0000-adbab9bf": {
+   "BRK1": {
+    "n": 1,
+    "lineage": 0,
+    "background": 0,
+    "new_after_36": 0
+   },
+   "BRK2": {
+    "n": 1,
+    "lineage": 0,
+    "background": 0,
+    "new_after_36": 0
+   },
+   "B4X": {
+    "n": 1,
+    "lineage": 0,
+    "background": 0,
+    "new_after_36": 0
+   },
+   "STEP": {
+    "n": 1,
+    "lineage": 0,
+    "background": 0,
+    "new_after_36": 0
+   }
+  }
+ }
+}
