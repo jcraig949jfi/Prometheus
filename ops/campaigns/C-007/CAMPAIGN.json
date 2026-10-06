@@ -3,7 +3,7 @@
   "campaign_id": "C-007",
   "thread_id": "TH-P2B-APHRODITE-V2B",
   "epic_id": "EP-PHASE2B",
-  "status": "OPEN",
+  "status": "CLOSED",
   "label": "C-P2B-APH-BETA-02",
   "title": "Aphrodite Beta-02 -- improver replication -> mechanism split -> R8",
   "objective": "E1: replicate T12 (g11@O10 vs I_0) on 24 fresh LIN seeds; E2: factorial rule x observation-width split; E3: R8 (gated) -- does a g11-produced library make a fresh next-generation improver improve better than an I_0-produced library on unseen supply; E4: endpoint-aligned criterion design only. Tier 2, local engine. LLM test parked; no W5P.",
@@ -36,5 +36,8 @@
     "note": "not 4h windows; see beta02/STATE.json"
   },
   "created_by": "Aphrodite[harry1-0f14ab93]",
-  "created_at_utc": "2026-10-06T01:02:14Z"
+  "created_at_utc": "2026-10-06T01:02:14Z",
+  "closed_utc": "2026-10-06T09:30:00Z",
+  "close_report": "roles/Aphrodite/beta02/R8_REPORT_AND_BETA02_CLOSE.md",
+  "close_summary": "E1 replicated (g11@O10 162 vs I_0 63, 16/0/6, p 1.5e-5, N=22); E2 mechanism = MEMORISE exclusion (works at O4 and O10; criterion alone null; width additive, not Holm-sig); R8 NO: g11 library transfers capability across lineages (104 vs 32) but does not make the next generation improve better (substitutes). Tier 2."
 }
