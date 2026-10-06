@@ -1,0 +1,46 @@
+{
+  "schema": "pallas.c004.t048.expected.v1",
+  "written_by": "Pallas[m2-1500b878], claude-fable-5-1, before execution and before any test body under rso/slice001/tests/ was opened",
+  "frozen_surface": "rso/slice001/FREEZE_R2.md (code ad6b3fa96, contract v1.0.5); 41 hashes verified against ad6b3fa96 and the working tree before this commit",
+  "scoring_rule": "As S3/S4: a case is CORRECT iff every scored check holds and no exception is raised; checks are claim, line, identical, custody. Base for every case: the committed S4 G0 bundle (rso/slice001/s4/G0) with the committed R2 stage records in a fixture store (V8: logic only). Probes are recorded, never scored, and do not enter the CLOSED / NOT CLOSED statement.",
+  "bundles": {
+    "R2_BASELINE": "evidence_cases.g0(real_base(s4/G0)) under the R2 code",
+    "R2_KEEPER": "evidence_cases.keeper(real_base(s4/G0)) under the R2 code: the single-manifest keeper case, control for R2.SOUND.SUPERSET_MANIFEST"
+  },
+  "controls": [
+    {"id": "CTRL.R2G0", "bundle": "R2_BASELINE", "checks": [
+      {"type": "claim", "claim": "CL-RET(REG)", "eligibility": "ELIGIBLE", "standing": "SATISFIED", "not_satisfied": []},
+      {"type": "claim", "claim": "CL-RET(PKTD)", "eligibility": "ELIGIBLE", "standing": "SATISFIED", "not_satisfied": []},
+      {"type": "claim", "claim": "CL-RET(LAGD)", "eligibility": "NOT_ELIGIBLE", "standing": "UNMET", "not_satisfied": ["rcpt:LAGD:ERASE:STANDARD"]}
+    ]},
+    {"id": "CTRL.R2KEEPER", "bundle": "R2_KEEPER", "checks": [
+      {"type": "custody", "status": "QUALIFIED"},
+      {"type": "claim", "claim": "CL-CUST(G0)", "eligibility": "ELIGIBLE", "standing": "SATISFIED", "not_satisfied": []},
+      {"type": "claim", "claim": "CL-RET(REG)", "eligibility": "ELIGIBLE", "standing": "SATISFIED", "not_satisfied": []}
+    ]}
+  ],
+  "cases": [
+    {
+      "id": "R2.SOUND.SUPERSET_MANIFEST", "polarity": "sound", "plane": "evidence", "gates": ["custody (C1: manifest choice by artifact match, smallest covering)", "G-BIND"],
+      "checks": [
+        {"type": "custody", "status": "QUALIFIED"},
+        {"type": "claim", "claim": "CL-CUST(G0)", "eligibility": "ELIGIBLE", "standing": "SATISFIED", "not_satisfied": []},
+        {"type": "identical", "reference": "R2_KEEPER", "claims": "ALL"}
+      ],
+      "note": "The identical-ALL check covers CL-CUST(G0), whose decision embeds the custody row ids (checker._relative): a custody that qualified against the superset manifest row would differ from the keeper control even with status QUALIFIED."
+    },
+    {
+      "id": "R2.BROKEN.LATER_WINDOW_RUN", "polarity": "broken", "plane": "evidence", "gates": ["G-INV (B3.3 run attribution, v1.0.5 Y1)"],
+      "primary": "G-INV@CL-RET(REG)",
+      "checks": [
+        {"type": "claim", "claim": "CL-RET(REG)", "eligibility": "NOT_ELIGIBLE", "standing": "UNMET", "not_satisfied": ["gate:G-INV:CL-RET(REG)"]},
+        {"type": "line", "claim": "CL-RET(REG)", "line": "G-INV@CL-RET(REG)", "fields": {"execution": "RAN", "outcome": "FAIL", "reason": "RECEIPT_WITHOUT_RUN:rcpt:REG:PRESERVE:STANDARD"}},
+        {"type": "identical", "reference": "R2_BASELINE", "claims": ["CL-RET(PKTD)", "CL-RET(LAGD)", "CL-CAL(STANDARD)", "TWIN(REG)"]}
+      ]
+    }
+  ],
+  "probes": [
+    {"id": "R2.PROBE.OVERLAP_RUN", "scored": false, "reading": "FD-T046-1 as the author declared it: a second COMPLETED run of the same node overlapping the S4 launch window is cited instead of the receipt's own row. Under B3.3 it did not produce this receipt (RECEIPT_WITHOUT_RUN); the author states the end_utc >= created_at_utc operationalisation admits it. Recorded, not scored: a declared escape is not a new survivor."},
+    {"id": "R2.PROBE.FAILED_ROW_CITED", "scored": false, "reading": "The receipt cites a FAILED row of its own node inside the S4 window. A run that failed produced no receipt, so under B3.3 the citation is RECEIPT_WITHOUT_RUN; g_inv does not read the cited row's status, so this reviewer expects it admitted. Recorded for the owning engineer; whether it is claim-critical and new is for Palamedes to adjudicate, not this set."}
+  ]
+}
