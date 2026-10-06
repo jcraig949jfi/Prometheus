@@ -1,0 +1,62 @@
+{
+  "schema": "prometheus.workgraph.task.v1",
+  "task_id": "C-004-T047",
+  "campaign_id": "C-004",
+  "title": "Consume-only regression of the S4 bundles on the second repair; FREEZE_R2",
+  "objective": "Re-run the consumer and the matrix over the committed S4 bundles (the producer is unchanged, so no new produce launch) after the regenerated stage records are registered; freeze the repaired code for the closure re-check.",
+  "parent_objective": "RSO-METHODS-SLICE-001 S4 (OP6)",
+  "owner_role": "Palamedes",
+  "quality_class": "Q2",
+  "can_downgrade": false,
+  "escalate_to": "Q3",
+  "depends_on": [
+    "C-004-T046"
+  ],
+  "owns": [
+    "rso/slice001/s4/R2/",
+    "rso/slice001/FREEZE_R2.md"
+  ],
+  "reads": [
+    "rso/slice001/",
+    "rso/slice001/s4/"
+  ],
+  "problem": "After T046: register its regenerated stage records with Aporia; run the matrix over rso/slice001/s4 bundles against the independent table and against the S4 run; record differences; write FREEZE_R2.md. FREEZE_S2 and FREEZE_S4 stay unchanged.",
+  "non_goals": [
+    "No produce launch (producer unchanged)",
+    "No contract change"
+  ],
+  "evidence_required": [
+    "matrix vs table and vs S4 with every difference explained",
+    "FREEZE_R2.md"
+  ],
+  "acceptance": {
+    "condition": "no unexplained difference; FREEZE_R2 written"
+  },
+  "deliverables": [
+    "rso/slice001/s4/R2/",
+    "rso/slice001/FREEZE_R2.md"
+  ],
+  "kind": "software",
+  "red_required": false,
+  "status": "READY",
+  "history": [
+    {
+      "status": "PROPOSED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-06T05:55:30Z",
+      "note": "OP6 (b)"
+    },
+    {
+      "status": "READY",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-06T05:55:30Z",
+      "note": "made READY by the coordinator; waits on T046"
+    }
+  ],
+  "authority": "C-004-OP6",
+  "notes": "red_required false: a rerun of registered regressions; RED is the S4 closure's C1/C2.",
+  "resource_ceiling": {
+    "launches": "0",
+    "note": "consumer runs are not ledgered launches"
+  }
+}

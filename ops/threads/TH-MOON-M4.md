@@ -16,5 +16,9 @@ which the transport must be reconsidered (GitHub push rate-limits are a specific
 item). Seven e-waste boxes are the stress rig to find that threshold before 100-1,000 workers.
 
 ## Campaigns
-- (none yet) First: stand up auto-join + epoch replay on ubu001-006; baseline the CAS metrics
-  under the Launchpad workload; set the reconsider-transport threshold.
+- (none yet) First work is specified in roles/Themis/design/LANE_C_M4_KICKOFF.md (the reset
+  entry point, 2026-10-06): synthetic epochs only; D1 R-EP epoch unit, D2 CAS one-accepted-
+  successor, D3 seven-case fault-injection matrix (tests first), D4 transport metrics + a
+  preregistered reconsider-transport threshold, D5 node auto-join. Pure layer-1 must-pass TDD;
+  no evolutionary substrate, no science, no external coordination needed. Open a bounded
+  campaign here and begin.

@@ -43,7 +43,7 @@
   ],
   "kind": "software",
   "red_required": false,
-  "status": "CLAIMED",
+  "status": "CLOSED",
   "history": [
     {
       "status": "PROPOSED",
@@ -62,6 +62,36 @@
       "by": "Palamedes[harry1-679179c6]",
       "at_utc": "2026-10-06T00:00:21Z",
       "note": "S4 regression rerun (full 5 bundles, OP-7); branch palamedes/c004-t045"
+    },
+    {
+      "status": "IMPLEMENTING",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-06T00:37:48Z",
+      "note": "S4 produce 0e1943bff; registration; consume"
+    },
+    {
+      "status": "GREEN",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-06T00:37:48Z",
+      "note": "S4 matrix identical to S2 vs the table (OP-5 items only); vs S2 one difference: EXTRA CL-RET(HCOUNT) G-RECOMP FAIL -> PASS (F1 fixed)"
+    },
+    {
+      "status": "INTEGRATION_READY",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-06T00:37:48Z",
+      "note": "evidence on main 8b98c2702"
+    },
+    {
+      "status": "INTEGRATED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-06T00:37:48Z",
+      "note": "self-integrated"
+    },
+    {
+      "status": "CLOSED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-06T00:37:48Z",
+      "note": "FREEZE_S4 written; T041 READY"
     }
   ],
   "authority": "C-004-OP7; plan s2 S4",
