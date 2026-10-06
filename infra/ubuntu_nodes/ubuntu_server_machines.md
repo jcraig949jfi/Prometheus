@@ -133,7 +133,7 @@ which were removed. ubu001's `authorized_keys` now has exactly two keys: `jcraig
 
 | Name | Hardware | OS | Role | Notes |
 |---|---|---|---|---|
-| ELSA | Dell Optiplex 980, i7-860 (4C/8T, no AVX, no integrated graphics), 6 GB DDR3 (3x2 GB, 1 slot free), 240 GB SATA SSD, Radeon HD 5450 | Windows 10 Home | Achilles' seat; builds the autoinstall stick | 192.168.1.163. Candidate Ubuntu conversion later. |
+| ELSA | Dell Optiplex 980, i7-860 (4C/8T, no AVX, no integrated graphics), 16 GB DDR3-1333 (4x4 GB, all slots; was 6 GB until 2026-10-05), 240 GB SATA SSD, Radeon HD 5450 | Windows 10 Home | Achilles' seat; builds the autoinstall stick | 192.168.1.163. Candidate Ubuntu conversion later. |
 | LIZZIE-42 | Auusda A146 14.1" (Celeron, 8 GB soldered, SATA SSD) | Windows 11 Pro 24H2 (activated) | Command center, browsing | Built-in screen broken: external monitor on mini-HDMI. Kept as Windows by the operator 2026-10-02. |
 
 ## ubu004 (machine #4, HP Pavilion x360 14m-ba0xx)
@@ -165,7 +165,7 @@ The **first node built with the autoinstall stick + `provision_node.sh`** (2026-
 
 ## ubu006 (machine #6, Dell Inspiron 3647 small desktop, 2014)
 
-- **Hardware:** Haswell, 4 threads, 4 GB DDR3 (one stick, one free slot: a second 4 GB stick doubles it cheaply),
+- **Hardware:** Haswell, 4 threads, **16 GB DDR3-1600 (2x 8 GB, since 2026-10-04; was 1x 4 GB)**,
   Seagate ST500DM002 500 GB 7200 rpm HDD (root LV 455 GB), Ethernet `enp2s0` + Wi-Fi `wlp3s0`. UEFI. No battery.
 - **Autoinstall:** succeeded, but the old stick config rebooted into the installer with the sticks in, so it
   reinstalled in a loop (fixed on main by `shutdown: poweroff`, 34e7a9a62; stick rebuilt 2026-10-03). After pulling the
@@ -173,7 +173,7 @@ The **first node built with the autoinstall stick + `provision_node.sh`** (2026-
   Boot -> Add Boot Option "ubuntu" -> `\EFI\ubuntu\shimx64.efi` on the disk's EFI partition. Then it booted.
 - **provision_node.sh 192.168.1.225 ubu006:** 13 min (most of it the repo clone); shared token, push dry-run OK;
   no reboot needed. Worker installed at f78d18e26 with --enable: active, IDLE.
-- Still to do: Claude login, DHCP reservation for .225, optional second RAM stick.
+- Still to do: Claude login, DHCP reservation for .225.
 
 ## PrometheusWorkers on the Linux nodes (2026-10-03)
 

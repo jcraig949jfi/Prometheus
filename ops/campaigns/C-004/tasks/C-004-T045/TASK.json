@@ -1,0 +1,74 @@
+{
+  "schema": "prometheus.workgraph.task.v1",
+  "task_id": "C-004-T045",
+  "campaign_id": "C-004",
+  "title": "S4 regression rerun: full S2 produce (5 bundles) + matrix on the repaired code; FREEZE_S4",
+  "objective": "Rerun the frozen S2 regressions on the repaired implementation across the full surface (G0, EXTRA, HEAL, FLAT, LOSSY) against the independent table, after the invalidated stage records are regenerated and re-registered; freeze the repaired code for the S4 closure set.",
+  "parent_objective": "RSO-METHODS-SLICE-001 S4",
+  "owner_role": "Palamedes",
+  "quality_class": "Q2",
+  "can_downgrade": false,
+  "escalate_to": "Q3",
+  "depends_on": [
+    "C-004-T042",
+    "C-004-T043",
+    "C-004-T044"
+  ],
+  "owns": [
+    "rso/slice001/s4/",
+    "rso/slice001/FREEZE_S4.md",
+    "rso/slice001/s2_run.py"
+  ],
+  "reads": [
+    "rso/slice001/",
+    "ops/campaigns/C-004/TRIAGE_S3.md",
+    "rso/slice001/s2/"
+  ],
+  "problem": "Plan s2 S4: preserve the original score, rerun frozen regressions. OP-7: the full rerun, not shrunk (CHANNEL repair F1 changes every bundle's clamp trace). Preconditions: T042's regenerated G-BIND, G-INV, G-RECOMP stage records (and any other record whose pinned files changed) registered by Aporia; contract 1.0.4 applied (T044). Output under rso/slice001/s4/; compare against the S2 matrix and the independent table; OP-5 dispositions carried.",
+  "non_goals": [
+    "No case expectation change; no contract amendment beyond OP-7",
+    "S2 evidence under rso/slice001/s2/ is not rewritten"
+  ],
+  "evidence_required": [
+    "5 ledgered launches (launches 9-13)",
+    "matrix vs table and vs the S2 run; the S3 attack cases for F1-F3 re-scored",
+    "FREEZE_S4.md"
+  ],
+  "acceptance": {
+    "condition": "regression matrix recorded with denominators; no new disagreement unclassified; FREEZE_S4 written"
+  },
+  "deliverables": [
+    "rso/slice001/s4/",
+    "rso/slice001/FREEZE_S4.md"
+  ],
+  "kind": "software",
+  "red_required": false,
+  "status": "CLAIMED",
+  "history": [
+    {
+      "status": "PROPOSED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-05T23:21:41Z",
+      "note": "OP-7: full S4 regression plan"
+    },
+    {
+      "status": "READY",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-05T23:21:41Z",
+      "note": "made READY by the coordinator; waits on T042/T043/T044"
+    },
+    {
+      "status": "CLAIMED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-06T00:00:21Z",
+      "note": "S4 regression rerun (full 5 bundles, OP-7); branch palamedes/c004-t045"
+    }
+  ],
+  "authority": "C-004-OP7; plan s2 S4",
+  "notes": "kind software, red_required false: a rerun of registered regressions, its RED is S3's findings.",
+  "resource_ceiling": {
+    "launches": "5",
+    "cpu": "about 5 CPU-minutes ledgered",
+    "note": "OP-4/OP-7 caps"
+  }
+}

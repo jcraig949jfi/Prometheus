@@ -113,7 +113,12 @@ class TestCanonicalFiles(unittest.TestCase):
                 old = FW.committed_blob("rso/slice001/stages/" + n, base)
                 self.assertIsNotNone(old)
                 with open(os.path.join(STAGE_DIR, n), "rb") as f:
-                    self.assertEqual(json.loads(f.read()), json.loads(old))
+                    cur = json.loads(f.read())
+                # C-004-T042_1 (option 1): a record regenerated for a new instrument version (B4.1) is a new record;
+                # the T027 canonical-rewrite guarantee applies to every record whose version is unchanged.
+                if cur.get("version") != json.loads(old).get("version"):
+                    continue
+                self.assertEqual(cur, json.loads(old))
 
     def test_the_world_writer_emits_canonical_bytes(self):
         rec = _records()["P3"]

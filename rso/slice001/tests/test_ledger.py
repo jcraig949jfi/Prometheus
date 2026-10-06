@@ -48,9 +48,28 @@ class Base(unittest.TestCase):
 class TestCaps(Base):
     def test_caps_read_from_the_real_contract(self):
         c = L.Ledger.from_contract(self.path).caps
-        self.assertEqual(c.launches, 12)
+        self.assertEqual(c.launches, 20)                         # contract v1.0.4, OP-7 (was 12)
         self.assertEqual(c.cpu_s, 120 * 60)                      # contract v1.0.3, OP-4 (was 30 * 60)
         self.assertEqual(c.artifact_bytes, 100 * 1000 * 1000)
+
+    def test_contract_v104_launch_cap_amendment_is_exact(self):
+        # AMENDMENT_v1.0.4 X1 (12 -> 20) and X2 (launch_accounting text, verbatim) and the amendments entry.
+        path = os.path.join(REPO, "rso", "slice001", "contract", "contract.json")
+        with open(path, "r", encoding="utf-8") as f:
+            doc = json.load(f)
+        self.assertEqual(doc["version"], "1.0.4")
+        self.assertEqual(doc["caps"]["top_level_validation_launches"], 20)
+        self.assertEqual(
+            doc["caps"]["launch_accounting"],
+            "S2/S3 window under the original cap of 12: 8 launches used (S2 produce 5: G0, EXTRA, HEAL, FLAT, "
+            "LOSSY; S3 3: unchanged suite, cases, mutation driver), closed at the S3 integration (bddb3c71d), 4 "
+            "unused. Post-S3 repair-round window (OP-7): launches 9-20, i.e. 12 more, for the S4 regression rerun "
+            "of all five S2 bundles on the repaired code and the S4 closure set; the ledger counts both windows "
+            "cumulatively against 20.")
+        self.assertEqual(doc["caps"]["cpu_minutes"], 120)         # every other cap unchanged by v1.0.4
+        self.assertEqual(doc["caps"]["new_artifact_mb"], 100)
+        self.assertEqual(doc["amendments"][-1]["version"], "1.0.4")
+        self.assertEqual(doc["amendments"][-1]["path"], "rso/slice001/contract/AMENDMENT_v1.0.4.md")
 
     def test_missing_or_bad_caps_fail_closed(self):
         for bad in ({}, {"cpu_minutes": 30}, dict(CAPS, cpu_minutes="x"), dict(CAPS, top_level_validation_launches=-1),

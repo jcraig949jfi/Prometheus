@@ -1,6 +1,6 @@
 {
   "schema": "rso.slice001.contract.v1",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "frozen": true,
   "campaign": "C-004 RSO-METHODS-SLICE-001",
   "frozen_by": "Palamedes[harry1-679179c6] under C-004-T004",
@@ -779,14 +779,15 @@
     "gpu_hours": 0,
     "cloud_usd": 0,
     "new_artifact_mb": 100,
-    "top_level_validation_launches": 12,
+    "top_level_validation_launches": 20,
     "repair_rounds": 1,
     "opus_seat_hours": 12,
     "sonnet_seat_hours": 4,
     "reviewer_hours": 3,
     "working_days": 3,
     "charging": "failures, retries, mutation children, analysis and confirmation attempts count; stop at the first exhausted cap; keep partial results (plan s6)",
-    "accounting": "120 CPU-minutes total; an estimated 40 CPU-minutes of unmetered development and verification (before ledgered launches began) is booked against it, leaving 80 CPU-minutes for ledgered validation launches (T020, S3, S4); every validation launch passes --ledger; mutation children are charged; stop at the first exhausted cap."
+    "accounting": "120 CPU-minutes total; an estimated 40 CPU-minutes of unmetered development and verification (before ledgered launches began) is booked against it, leaving 80 CPU-minutes for ledgered validation launches (T020, S3, S4); every validation launch passes --ledger; mutation children are charged; stop at the first exhausted cap.",
+    "launch_accounting": "S2/S3 window under the original cap of 12: 8 launches used (S2 produce 5: G0, EXTRA, HEAL, FLAT, LOSSY; S3 3: unchanged suite, cases, mutation driver), closed at the S3 integration (bddb3c71d), 4 unused. Post-S3 repair-round window (OP-7): launches 9-20, i.e. 12 more, for the S4 regression rerun of all five S2 bundles on the repaired code and the S4 closure set; the ledger counts both windows cumulatively against 20."
   },
   "files": {
     "rso/slice001/world.py": "C-004-T010",
@@ -845,6 +846,19 @@
       "items": [
         "U1 caps.cpu_minutes 30 -> 120",
         "U2 caps.accounting text"
+      ]
+    },
+    {
+      "version": "1.0.4",
+      "path": "rso/slice001/contract/AMENDMENT_v1.0.4.md",
+      "by": "Palamedes[harry1-679179c6]",
+      "applied_by": "Eupalamus[gandalf-ced473bf] under C-004-T044",
+      "answers": "operator decision C-004-OP7, 2026-10-05 (launch cap 12 -> 20, post-S3 repair round)",
+      "scope": "caps.top_level_validation_launches and caps.launch_accounting; nothing else changes",
+      "items": [
+        "X1 caps.top_level_validation_launches 12 -> 20",
+        "X2 caps.launch_accounting text",
+        "X3 scope of the eight extra launches"
       ]
     }
   ],

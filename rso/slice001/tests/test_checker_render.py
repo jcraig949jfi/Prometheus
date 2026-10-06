@@ -682,5 +682,28 @@ class TestRender(unittest.TestCase):
         self.assertIn("  custody on CL-CUST(G0): QUALIFIED", text)
 
 
+class TestE07RecomputeHorizon(unittest.TestCase):
+    """E07 survived S3: nothing had forbidden influence at lag exactly H = 3 in the consumer recomputation.
+    Traces: f_3 shows at PROBE_D of episode 6 and nowhere else. Only boundary 3's window (episodes 4..6) sees it,
+    at lag 3; a horizon of 2 would pass."""
+
+    @staticmethod
+    def lag3_runs():
+        pd = "".join("00000%d" % C.f_of(h, 3) for h in range(C.HISTORIES))
+        zeros = "0" * 12 * C.HISTORIES
+        return {"trace:probe_a": {"RESET": zeros, "SKIP1": zeros, "SKIP2": zeros, "SKIP3": zeros},
+                "trace:probe_d": {"RESET": pd},
+                "trace:sends": {"RESET": "--" * 12 * C.HISTORIES}}
+
+    def test_lag_three_influence_fails_erase(self):
+        g = C.recompute_erase(self.lag3_runs())
+        self.assertEqual((g["value"], g["eligible_count"]), ("FAIL", 9600))
+        self.assertEqual(g["witness"], {"history": 64, "partner": 0, "j": 3, "episode": 6, "tick": "PROBE_D"})
+
+    def test_layout_of_the_fire_traces(self):
+        for role, runs in self.lag3_runs().items():
+            C.parse_trace(role, C.make_trace(role, runs))
+
+
 if __name__ == "__main__":
     unittest.main()

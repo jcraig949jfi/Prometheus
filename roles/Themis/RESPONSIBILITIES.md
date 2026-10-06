@@ -2,10 +2,21 @@
 
 > Inherits roles/base-role/RESPONSIBILITIES.md and WORKING_CONTRACT.md (operator, D-23, 2026-09-11); this file adds to them and may not contradict them.
 
-Currency: 2026-10-05 (charter adopted on SPECTREX5). Charter: Project Moonshot,
-roles/Themis/prompts/2026-10-05_charter/ (operator's words verbatim; that file governs where
-any derived text differs). Full design synthesis in the operator's auto-memory
-project_moonshot_rso_lane. Pre-charter body: roles/Themis/superseded/.
+Currency: 2026-10-05 (charter adopted; Epic EP-MOONSHOT registered; design v0.2 of record).
+Charter: roles/Themis/prompts/2026-10-05_charter/ (verbatim; governs where derived text
+differs). Epic approval + design review (authority): roles/Themis/prompts/
+2026-10-05_epic_approval_and_review/. Design of record: roles/Themis/design/
+MOONSHOT_DESIGN_v0.2.md (economics in the versioned appendix beside it). Full synthesis:
+auto-memory project_moonshot_rso_lane. Pre-charter body: roles/Themis/superseded/.
+
+Spine (design v0.2): **Survival is the pressure. Sagacity is the measurement. Reachability is
+the prerequisite. The ruler is the adversary.** Two independent hypotheses: H1 (the RSO can
+judge an independent producer without relaxing its ruler) and H2 (survival-only evolution can
+grow mechanisms that survive null + ablation). Epic threads TH-MOON-M1 (RSO hostile
+integration) / M2 (floor sagacity science) / M3 (reachability RC0/1/2) / M4 (commodity fabric);
+candidates M5 (open-ended ecology) / M6 (scale escalation), opened only on earned evidence. The
+five open operator decisions are RESOLVED (design s0): substrate wforge+Proteus then BEE
+transplant; instrument-first; neural-as-primitive; no extended cloud, scout-mechanism only.
 
 Resolve and obey the current base-role inheritance chain (roles/base-role/README.md and the
 files it lists, then aporia/doctrine/critical_memories.md) BEFORE this seat's local bootstrap.

@@ -105,11 +105,28 @@ def anchors_from_producer(manifest_bytes):
     return Anchors(manifest_bytes, "producer")
 
 
-def anchors_from_keeper(store, blobs):
-    """Anchors the consumer fetched itself: the keeper's EVIDENCE_MANIFEST row, then the blob it names.
+class AnchorChoice(object):
+    """Several registered manifests the consumer fetched and verified; which one anchors a bundle is decided
+    against that bundle (resolve_anchors). C-004-T042 F2: taking the keeper's LAST manifest row anchored G0 to
+    another bundle's manifest (S3.SOUND.TWO_MANIFESTS)."""
 
-    `blobs` maps repo_path -> bytes (in T020: `git show <commit>:<path>`). Returns Anchors or raises
-    EvidenceError when the store has no manifest row or the blob does not match the row.
+    source = "keeper"
+
+    def __init__(self, candidates):
+        self.candidates = list(candidates)
+
+    @property
+    def nodes(self):
+        raise EvidenceError("ANCHORS_UNRESOLVED: resolve_anchors(anchors, bundle) first")
+
+
+def anchors_from_keeper(store, blobs):
+    """Anchors the consumer fetched itself: the keeper's EVIDENCE_MANIFEST rows, then the blobs they name.
+
+    `blobs` maps repo_path -> bytes (in T020: `git show <commit>:<path>`). Every manifest row whose blob is at
+    hand and matches is a candidate, in registration order; one candidate is returned as Anchors, several as an
+    AnchorChoice resolved per bundle. Raises EvidenceError when the store has no manifest row or no row's blob
+    matches.
     """
     rows, err = store_rows(store)
     if err is not None:
@@ -117,11 +134,31 @@ def anchors_from_keeper(store, blobs):
     rows = [r for r in rows if r["record_kind"] == "EVIDENCE_MANIFEST"]
     if not rows:
         raise EvidenceError("KEEPER_ROW_MISSING:EVIDENCE_MANIFEST")
-    row = rows[-1]
-    data = blobs.get(row["repo_path"])
-    if data is None or _sha(data) != row["blob_sha256"]:
+    found = []
+    for row in rows:
+        data = blobs.get(row["repo_path"])
+        if data is not None and _sha(data) == row["blob_sha256"]:
+            found.append(Anchors(data, "keeper"))
+    if not found:
         raise EvidenceError("ROW_BLOB_MISMATCH:EVIDENCE_MANIFEST")
-    return Anchors(data, "keeper")
+    return found[0] if len(found) == 1 else AnchorChoice(found)
+
+
+def resolve_anchors(anchors, bundle):
+    """The Anchors of THIS bundle (F2): unchanged unless an AnchorChoice. Then, by identity: the candidate whose
+    node set equals the presented receipts' node ids; else the smallest candidate covering them; else the one
+    sharing most nodes; ties go to the earliest registered (FD-T042-2). Custody separately refuses anchors that
+    omit a presented node, so a wrong choice can never qualify."""
+    if not isinstance(anchors, AnchorChoice):
+        return anchors
+    presented = set(bundle.receipts)
+    exact = [a for a in anchors.candidates if set(a.nodes) == presented]
+    if exact:
+        return exact[0]
+    cover = [a for a in anchors.candidates if presented <= set(a.nodes)]
+    if cover:
+        return min(cover, key=lambda a: len(a.nodes))
+    return max(anchors.candidates, key=lambda a: len(presented & set(a.nodes)))
 
 
 # --------------------------------------------------------------------------------------------------------
@@ -232,6 +269,7 @@ class Config(object):
 def reachable(claim, bundle, anchors):
     """Node ids reachable from the claim: its required nodes and, transitively, every dependency named by a
     presented receipt, an anchored node or B6.2. Sorted (canonical order)."""
+    anchors = resolve_anchors(anchors, bundle)
     todo = list(required_nodes(claim, anchors))
     seen = set()
     while todo:
@@ -292,6 +330,8 @@ def _check_node(slot, rc, err, claim, bundle, anchors, config):
             return ("FAIL", "SCOPE_MALFORMED:%s" % axis)
     if cell["revision"] != config.contract_revision:
         return ("FAIL", "SCOPE_MALFORMED:revision")
+    if cell["measurement"] != predicate_version(d["predicate"]["code"]):
+        return ("FAIL", "SCOPE_MALFORMED:measurement")         # B3.2; C-004-T042 probe MEASUREMENT_LIE
     nid = d["node_id"]
     anchor = anchors.nodes.get(nid)
     if anchor is None:
@@ -329,6 +369,7 @@ def _check_node(slot, rc, err, claim, bundle, anchors, config):
 
 def g_bind(claim, bundle, anchors, config):
     """G-BIND over every node reachable from the claim, canonical order, first failure reported."""
+    anchors = resolve_anchors(anchors, bundle)
     nodes = reachable(claim, bundle, anchors)
     deps_of = {}
     for n in nodes:
@@ -365,20 +406,23 @@ def inventory_terminal(rows):
 
 
 def g_inv(claim, bundle, anchors):
-    """G-INV over the claim's required node set (V7)."""
+    """G-INV over the claim's required node set (V7). A presented receipt's run must be exactly one inventory row
+    whose node_id is that receipt's own (B3.3 + V7; C-004-T042 F3, S3.BROKEN.RUN_BORROW)."""
+    anchors = resolve_anchors(anchors, bundle)
     rows = bundle.inventory
     if not inventory_terminal(rows):
         return _blocked(["terminal attempted-run inventory"])
     runs = rows[:-1]
     req = required_nodes(claim, anchors)
-    count = {}
+    by_run = {}
     for r in runs:
-        count[r["run_id"]] = count.get(r["run_id"], 0) + 1
+        by_run.setdefault(r["run_id"], []).append(r)
     for n in req:
         rc, _ = bundle.parsed(n)
         if rc is not None:
             run_id = rc.to_dict()["execution"]["run_id"]
-            if count.get(run_id, 0) != 1:
+            cited = by_run.get(run_id, [])
+            if len(cited) != 1 or cited[0].get("node_id") != rc.node_id:
                 return {"execution": _ran(len(req)),
                         "outcome": _gate("G-INV", "FAIL", "RECEIPT_WITHOUT_RUN:%s" % n, n, len(req))}
         else:
@@ -556,6 +600,7 @@ class Registry(object):
 def upstream(node_id, bundle, anchors):
     """Every node the given node depends on, transitively: receipt dependencies (presented and anchored),
     B6.2 edges and the STAGE node of each receipt's predicate version. Includes node_id itself."""
+    anchors = resolve_anchors(anchors, bundle)
     seen, todo = set(), [node_id]
     while todo:
         n = todo.pop()
@@ -589,6 +634,7 @@ def withdrawals_applying(node_id, bundle, anchors, registry):
 
 def unverified_records(claim, bundle, anchors, registry):
     """FD-B8: unregistered records whose target lies in the claim's upstream; listed, never acted on."""
+    anchors = resolve_anchors(anchors, bundle)
     up = set()
     for n in required_nodes(claim, anchors):
         up |= upstream(n, bundle, anchors)
@@ -690,9 +736,12 @@ def custody(bundle, anchors, store, first_check_utc, keeper=None, registrar=None
     ROW_CHAIN_BROKEN (v1.0.2 W1) beside ANCHORS_FROM_PRODUCER, since no row can then be judged. Establishes
     bytes since registration only (B5.4); with the live store, "registered at the recorded time, chain intact
     at check time" and never more (W2)."""
+    anchors = resolve_anchors(anchors, bundle)
     why = set()
     if anchors.source != "keeper":
         why.add("ANCHORS_FROM_PRODUCER")
+    if not set(bundle.receipts) <= set(anchors.nodes):
+        why.add("ROW_BLOB_MISMATCH")       # F2: the anchored manifest is not this bundle's (FD-T042-3)
     rows, err = store_rows(store)
     if err is not None:                              # unreadable or broken chain: nothing below can be judged
         why.add(err.code)

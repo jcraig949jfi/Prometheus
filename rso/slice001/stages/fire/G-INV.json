@@ -27,6 +27,15 @@
       "observed_value": "FAIL",
       "ok": true,
       "polarity": "REJECT"
+    },
+    {
+      "case_id": "S3.BROKEN.RUN_BORROW (T042 F3)",
+      "expected_reason": "RECEIPT_WITHOUT_RUN:rcpt:REG:PRESERVE:STANDARD",
+      "expected_value": "FAIL",
+      "observed_reason": "RECEIPT_WITHOUT_RUN:rcpt:REG:PRESERVE:STANDARD",
+      "observed_value": "FAIL",
+      "ok": true,
+      "polarity": "REJECT"
     }
   ],
   "executed_by": "Argus[desktop-ruapvai-b08b36ac] under C-004-T023B",
@@ -34,17 +43,17 @@
   "schema": "rso.slice001.fire_test.v1",
   "version": [
     {
-      "commit": "6f57aa7c62f22edc66ea6b35c8c4cbda0b6324ff",
-      "length": 30721,
+      "commit": "22d270fb25da57750c7a6c8009280bbdc86457af",
+      "length": 33263,
       "role": "code:rso/slice001/evidence.py",
-      "sha256": "06ef526b5e346f1cf749f5c85535e2f90cdaf8bb59c8db775003c7b57d9423a0"
+      "sha256": "47c9051e6d90c73473a66ecaa63f9b2062234198bafe086d4fb85eb88d143e51"
     },
     {
-      "commit": "6f57aa7c62f22edc66ea6b35c8c4cbda0b6324ff",
+      "commit": "22d270fb25da57750c7a6c8009280bbdc86457af",
       "length": 31846,
       "role": "code:rso/slice001/receipt.py",
       "sha256": "f0f0d80063d21703b1709c188cad702b189db772bf5ecac404a04c9a56d5725b"
     }
   ],
-  "version_hash": "b92d550882e6d467e57d5c9df3c0a645a22e977a94f91c338728b740ac88b5fb"
+  "version_hash": "4524283c96253cda2987c26b3a4b757a189b1f1cad3cecd2dd8b2c0226e3859d"
 }
