@@ -1,0 +1,230 @@
+{
+ "n_rows": 5,
+ "n_counted": 5,
+ "flags": [],
+ "C2BX": {
+  "pooled": {
+   "n": 1,
+   "cum_144": [
+    0,
+    1,
+    [
+     0.0,
+     0.975
+    ]
+   ],
+   "cum_288": [
+    0,
+    0,
+    [
+     0.0,
+     1.0
+    ]
+   ],
+   "cum_576": [
+    0,
+    0,
+    [
+     0.0,
+     1.0
+    ]
+   ],
+   "new_after_144": 0,
+   "new_144_288": 0,
+   "new_288_576": 0,
+   "first_competent_gens": [],
+   "persistent_after_first": 0,
+   "tail": "TAIL_STOPS",
+   "final_status_TRUE_at": {
+    "144": 0,
+    "288": 0,
+    "576": 0
+   }
+  },
+  "leave_0019_out": {
+   "n": 1,
+   "cum_144": [
+    0,
+    1,
+    [
+     0.0,
+     0.975
+    ]
+   ],
+   "cum_288": [
+    0,
+    0,
+    [
+     0.0,
+     1.0
+    ]
+   ],
+   "cum_576": [
+    0,
+    0,
+    [
+     0.0,
+     1.0
+    ]
+   ],
+   "new_after_144": 0,
+   "new_144_288": 0,
+   "new_288_576": 0,
+   "first_competent_gens": [],
+   "persistent_after_first": 0,
+   "tail": "TAIL_STOPS",
+   "final_status_TRUE_at": {
+    "144": 0,
+    "288": 0,
+    "576": 0
+   }
+  },
+  "per_cell": {
+   "RELAY-0010-e89a8022": {
+    "n": 1,
+    "cum_144": [
+     0,
+     1,
+     [
+      0.0,
+      0.975
+     ]
+    ],
+    "cum_288": [
+     0,
+     0,
+     [
+      0.0,
+      1.0
+     ]
+    ],
+    "cum_576": [
+     0,
+     0,
+     [
+      0.0,
+      1.0
+     ]
+    ],
+    "new_after_144": 0,
+    "new_144_288": 0,
+    "new_288_576": 0,
+    "first_competent_gens": [],
+    "persistent_after_first": 0,
+    "tail": "TAIL_STOPS",
+    "final_status_TRUE_at": {
+     "144": 0,
+     "288": 0,
+     "576": 0
+    }
+   }
+  }
+ },
+ "C2C": {
+  "arms": {
+   "OP0_BASE": {
+    "n": 1,
+    "k": 0,
+    "background": null,
+    "per_cell": {
+     "FLIP-0004-125dfbff": [
+      0,
+      1
+     ]
+    },
+    "CP95": [
+     0.0,
+     0.975
+    ]
+   },
+   "OPB_BASE": {
+    "n": 1,
+    "k": 0,
+    "background": null,
+    "per_cell": {
+     "FLIP-0004-125dfbff": [
+      0,
+      1
+     ]
+    },
+    "CP95": [
+     0.0,
+     0.975
+    ]
+   },
+   "OP0_STEP": {
+    "n": 1,
+    "k": 0,
+    "background": 0,
+    "per_cell": {
+     "FLIP-0004-125dfbff": [
+      0,
+      1
+     ]
+    },
+    "CP95": [
+     0.0,
+     0.975
+    ]
+   },
+   "OPB_STEP": {
+    "n": 1,
+    "k": 0,
+    "background": 0,
+    "per_cell": {
+     "FLIP-0004-125dfbff": [
+      0,
+      1
+     ]
+    },
+    "CP95": [
+     0.0,
+     0.975
+    ]
+   }
+  },
+  "contrasts": {
+   "Mb": {
+    "x": "OPB_BASE",
+    "y": "OP0_BASE",
+    "n_pairs": 1,
+    "kx": 0,
+    "ky": 0,
+    "cells_x": 0,
+    "fisher_p_one_sided": 1.0,
+    "material": false
+   },
+   "Mc": {
+    "x": "OP0_STEP",
+    "y": "OP0_BASE",
+    "n_pairs": 1,
+    "kx": 0,
+    "ky": 0,
+    "cells_x": 0,
+    "fisher_p_one_sided": 1.0,
+    "material": false
+   },
+   "Md|b": {
+    "x": "OPB_STEP",
+    "y": "OPB_BASE",
+    "n_pairs": 1,
+    "kx": 0,
+    "ky": 0,
+    "cells_x": 0,
+    "fisher_p_one_sided": 1.0,
+    "material": false
+   },
+   "Md|a": {
+    "x": "OPB_STEP",
+    "y": "OP0_BASE",
+    "n_pairs": 1,
+    "kx": 0,
+    "ky": 0,
+    "cells_x": 0,
+    "fisher_p_one_sided": 1.0,
+    "material": false
+   }
+  },
+  "classification": "NEITHER_IMPROVES"
+ }
+}

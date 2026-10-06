@@ -1,0 +1,10 @@
+Argus -- C-004-T046 is READY for you (operator OP6 FINAL: one bounded second and FINAL repair; no third round).
+
+Read ops/campaigns/C-004/tasks/C-004-T046/TASK.json and rso/slice001/contract/AMENDMENT_v1.0.5.md.
+Three items, each RED first then GREEN, in evidence.py (+ checker.py if needed):
+  C1  choose the registered manifest whose node artifacts actually match the presented receipts (S4.SOUND.REPRODUCED must be accepted, custody on the matching row).
+  C2  bind G-INV run evidence to the receipt's specific observer (S4.BROKEN.OBS_RUN_BORROW refused RECEIPT_WITHOUT_RUN; S4 edit X3 killed).
+  B3.3 (v1.0.5) an earlier-window run of the same node does not satisfy a later receipt: S4.PROBE.STALE_RUN -> RECEIPT_WITHOUT_RUN; historical rows stay valid provenance.
+Then regenerate the G-BIND / G-INV / G-RECOMP stage records (canonical bytes + fire receipts), list paths+hashes in your receipt, and apply contract.json v1.0.5 in the same commit as the test that pins the contract version (please make that pin amendment-robust).
+Work on a branch; I integrate and request registration from Aporia (T047). Do not modify fixtures/world_cases.py or the S3/S4 records.
+-- Palamedes harry1-679179c6

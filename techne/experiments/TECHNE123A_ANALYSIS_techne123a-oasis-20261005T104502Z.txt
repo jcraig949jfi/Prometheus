@@ -1,0 +1,9 @@
+TECHNE-123A analysis  run techne123a-oasis-20261005T104502Z  plan flight1  T 32  device NVIDIA A40
+trajectories 3  frames 93  s/frame mean 0.753  max 1.222  weights 54.5 s  load 13.6 s
+weights verified against official sha256: {'oasis500m.pt': True, 'vit-l-20.pt': True}
+
+Q1_replay          {"reading": "DETERMINISTIC", "replicate_max_latent_mse": 0.0, "replicate_pairs": ["REPLICATE|FWD_s0|FWD_s0_rep"]}
+Q2_TURN            {"reading": "NOT_COMPUTABLE", "n_cf_pairs": 1, "n_same_pairs": 0}
+Q2_NOOP            {"reading": "NOT_COMPUTABLE", "n_cf_pairs": 0, "n_same_pairs": 0}
+Q2_INTERVENE       {"reading": "NOT_COMPUTABLE", "n_cf_pairs": 0, "n_same_pairs": 0}
+

@@ -1,0 +1,185 @@
+{
+ "seeds": [
+  16,
+  17,
+  18,
+  19,
+  20,
+  21,
+  22,
+  23
+ ],
+ "gain": {
+  "g0_O4": {
+   "16": 0,
+   "17": 0,
+   "18": 8,
+   "19": 0,
+   "20": 0,
+   "21": 0,
+   "22": 12,
+   "23": 0
+  },
+  "g10_O10": {
+   "16": 0,
+   "17": 0,
+   "18": 8,
+   "19": 0,
+   "20": 0,
+   "21": 0,
+   "22": 12,
+   "23": 0
+  },
+  "g11_O10": {
+   "16": 0,
+   "17": 12,
+   "18": 8,
+   "19": 4,
+   "20": 4,
+   "21": 15,
+   "22": 12,
+   "23": 5
+  },
+  "NULL11_O10": {
+   "16": 0,
+   "17": 12,
+   "18": 8,
+   "19": 4,
+   "20": 4,
+   "21": 15,
+   "22": 12,
+   "23": 5
+  }
+ },
+ "totals": {
+  "g0_O4": 20,
+  "g10_O10": 20,
+  "g11_O10": 60,
+  "NULL11_O10": 60
+ },
+ "known": {
+  "K1_seed3_g11_O10_reproduces_T11": true,
+  "K2_seed13_g10_O10_after_g11_reproduces_T10": true,
+  "pass": true
+ },
+ "NULL11_planted_selected_seeds": 0,
+ "gate": true,
+ "memorise_selected": {
+  "g0_O4": [
+   17,
+   19,
+   20,
+   23
+  ],
+  "g10_O10": [
+   16,
+   17,
+   19,
+   20,
+   21,
+   23
+  ],
+  "g11_O10": []
+ },
+ "PRIMARY_g11O10_vs_g0O4": {
+  "diffs": [
+   0,
+   12,
+   0,
+   4,
+   4,
+   15,
+   0,
+   5
+  ],
+  "better": 5,
+  "worse": 0,
+  "tied": 3,
+  "flip_p": 0.0312,
+  "attainable_min_p": 0.0312,
+  "sign_p": 0.0312,
+  "total_a": 60,
+  "total_b": 20,
+  "positive": true
+ },
+ "SECONDARY_g11O10_vs_g10O10": {
+  "diffs": [
+   0,
+   12,
+   0,
+   4,
+   4,
+   15,
+   0,
+   5
+  ],
+  "better": 5,
+  "worse": 0,
+  "tied": 3,
+  "flip_p": 0.0312,
+  "attainable_min_p": 0.0312,
+  "sign_p": 0.0312,
+  "total_a": 60,
+  "total_b": 20,
+  "positive": true
+ },
+ "POOLED_descriptive": {
+  "n_seeds": 23,
+  "sum_diff": 70,
+  "flip_p": 0.00208,
+  "label": "EXPOSED+FRESH"
+ },
+ "IMPROVER_REPLICATED_POSITIVE": true,
+ "ABSTRACTION_ONLY_REPLICATED_POSITIVE": true,
+ "per_seed_selection": {
+  "16": {
+   "g0_O4": null,
+   "g10_O10": null,
+   "g11_O10": null,
+   "NULL11_O10": null
+  },
+  "17": {
+   "g0_O4": null,
+   "g10_O10": null,
+   "g11_O10": "(acc - {H})",
+   "NULL11_O10": "(acc - {H})"
+  },
+  "18": {
+   "g0_O4": "(acc - {H})",
+   "g10_O10": "(acc - {H})",
+   "g11_O10": "(acc - {H})",
+   "NULL11_O10": "(acc - {H})"
+  },
+  "19": {
+   "g0_O4": null,
+   "g10_O10": null,
+   "g11_O10": "(acc + {H})",
+   "NULL11_O10": "(acc + {H})"
+  },
+  "20": {
+   "g0_O4": null,
+   "g10_O10": null,
+   "g11_O10": "({H} + v)",
+   "NULL11_O10": "({H} + v)"
+  },
+  "21": {
+   "g0_O4": null,
+   "g10_O10": null,
+   "g11_O10": "({H} + v)",
+   "NULL11_O10": "({H} + v)"
+  },
+  "22": {
+   "g0_O4": "(acc + {H})",
+   "g10_O10": "(acc + {H})",
+   "g11_O10": "(acc + {H})",
+   "NULL11_O10": "(acc + {H})"
+  },
+  "23": {
+   "g0_O4": null,
+   "g10_O10": null,
+   "g11_O10": "(acc + {H})",
+   "NULL11_O10": "(acc + {H})"
+  }
+ },
+ "disposition": "MEASURED"
+}

@@ -1,0 +1,66 @@
+{
+ "repo": "https://github.com/etched-ai/open-oasis",
+ "commit": "f59deef2c019c212bd0c5a3a5b986a51f3701847",
+ "commit_date": "2024-11-08T23:27:59+00:00",
+ "license": "MIT (Etched & Decart 2024)",
+ "files": {
+  "dit.py": {
+   "sha256_lf": "5b76f1c85acd9b88878b71f2267b76a1a811763b31e90f485767da3031e3faaf",
+   "git_blob_sha1": "d016e8f71839b05a62de377398aa3de6927fd9f1",
+   "bytes": 12129
+  },
+  "vae.py": {
+   "sha256_lf": "3d7035488fafe32adf6675cdd4484af282996514f41ba23d2893a831e8fe16ac",
+   "git_blob_sha1": "64faa65c8b3cd634924881d80895453fb7b179ec",
+   "bytes": 10290
+  },
+  "attention.py": {
+   "sha256_lf": "9714a7948bc3671c3b13697df28ff331992b744086d8e1593204fb21c2668ae5",
+   "git_blob_sha1": "a5361302f3c189316ed36571ad1aee999444e158",
+   "bytes": 3283
+  },
+  "rotary_embedding_torch.py": {
+   "sha256_lf": "d420aa166c329853c7920ac71fe3f7ac7047dd22bc726036796659bd365888f2",
+   "git_blob_sha1": "d9af591e49e8cc367e2789e939e889b210e48c7c",
+   "bytes": 10473
+  },
+  "utils.py": {
+   "sha256_lf": "d133193c68effbd136f9a6e56a9a369ac7a8a1d5a92fd2cd09816bebbf9c322a",
+   "git_blob_sha1": "43b54bd165b7905ba7b4f47878258e4218105b4c",
+   "bytes": 4248
+  },
+  "LICENSE": {
+   "sha256_lf": "a677a3b16635512bc1dcbe0502ac8555702c7f4e3247ca6a94b8b83332f8ba9a",
+   "git_blob_sha1": "f89343bc87fd75baa4b8f335693b5d4cdcd13e11",
+   "bytes": 1072
+  },
+  "sample_image_0.png": {
+   "sha256_lf": "e078b6908f0d5a53f138ca558a3356280516182214da8a10a8c080d66d0a6f4d",
+   "git_blob_sha1": "5b1a5a159bae5ce8d4bbace4ccc9bbf741edde12",
+   "bytes": 252432
+  }
+ },
+ "weights": {
+  "official": {
+   "repo": "Etched/oasis-500m",
+   "revision": "4ca7d2d811f4f0c6fd1d5719bf83f14af3446c0c",
+   "gated": "auto (401 without a token)",
+   "files": {
+    "oasis500m.pt": {
+     "bytes": 2431873914,
+     "sha256": "7890c09c2affea1ea1c70698b611d48e2168adb02f7572e902d85fb1d4719486"
+    },
+    "vit-l-20.pt": {
+     "bytes": 917056274,
+     "sha256": "bd9edac4c9ddb671541356da4e4b676a0bf9a94432ed83cf93e5e3c6804bb220"
+    }
+   }
+  },
+  "mirror_used": {
+   "repo": "camenduru/oasis-500m",
+   "revision": "b40bf4347906599cce2a803e68d2eed97ad0e345",
+   "gated": false,
+   "note": "LFS sha256 of both .pt files equals the official repository's (read from both repos' HF API blobs listings on 2026-10-05); the module verifies the bytes it downloads against the OFFICIAL sha256 before loading"
+  }
+ }
+}

@@ -1,0 +1,60 @@
+{
+  "schema": "prometheus.workgraph.epic.v1",
+  "epic_id": "EP-MOONSHOT",
+  "title": "Project Moonshot -- External Sagacity Producer + Commodity Search Substrate",
+  "objective": "Three independent claims (design v0.3 s2, after the Astra review). H1 (Observatory): Phase 3 (the RSO) can correctly TYPE an unfamiliar external producer's evidence and its epistemic limits -- detectable violations and underpowered data recognized, and an EXECUTION_NOT_AUTHENTICATED ceiling preserved where evidence cannot distinguish an authentic run from a consistent pre-registration fabrication -- without relaxing its ruler to flatter the producer. H2 (Evolution): survival-only evolution in deterministic worlds can produce mechanisms whose dependence on retained hidden information survives the reactive-null family and the three causal interventions (channel-cut, destructive resample, information-preserving sham). H3 (Fusion): the integer neural primitive improves discovery under fair resource accounting (H3a) and is actually causally used (H3b). Any may resolve while the others do not; none rolls into a single verdict.",
+  "north_star": "roles/base-role/NORTH_STAR.md",
+  "start_date": "2026-10-05",
+  "status": "ACTIVE",
+  "priority": "LOW",
+  "constraints": [
+    "Survival is the pressure; sagacity is the measurement; reachability is the prerequisite; the ruler is the adversary (roles/Themis/design/MOONSHOT_DESIGN_v0.3.md).",
+    "No competence/sagacity measurement may enter reproductive fitness; sagacity is scored offline, air-gapped from selection.",
+    "A null is KILL only with the relevant reachability level (RC0/RC1/RC2) certified; otherwise UNDERPOWERED.",
+    "Themis may propose RSO amendments but must not be able to silently relax the ruler; the RSO cell owns whether evidence satisfies RSO contracts/predicates (DISTRIBUTED_WORK.md s1a; MOONSHOT_DESIGN_v0.3.md s15).",
+    "Internal fleet first; no extended cloud campaign authorized; the scout mechanism fires only once RC2 + the local gate exist, dollar cap fixed at launch (operator 2026-10-05).",
+    "Independent of EP-PHASE2B and EP-PHASE3; borrows substrate/machinery from both, takes scientific authority from neither.",
+    "Base-role doctrine and current MWO/CWO hard gates apply unchanged."
+  ],
+  "exit_conditions": [
+    "Not set at the epic level (operator 2026-10-05). Each thread carries its own exit; NO_JUSTIFIED_FURTHER_WORK is legitimate. M1-M4 may each yield valuable negatives even if M5 never starts."
+  ],
+  "threads": [
+    "TH-MOON-M1",
+    "TH-MOON-M2",
+    "TH-MOON-M3",
+    "TH-MOON-M4"
+  ],
+  "candidate_threads": [
+    "TH-MOON-M5 -- Open-ended Ecology: world mutation, islands, migration, Red Queen; opens only after the Launchpad assay (M2) and reachability science (M3) are in hand",
+    "TH-MOON-M6 -- Scale Escalation: local CPU -> local GPU -> paid scout -> extended campaign; BEE substrate-transplant test; opens on earned evidence + operator cloud authorization"
+  ],
+  "resource_refs": [
+    "roles/Themis/design/MOONSHOT_DESIGN_v0.3.md",
+    "roles/Themis/design/MOONSHOT_ECONOMICS_APX_v1_2026-10-05.md",
+    "infra/FLEET_HOSTS.md",
+    "workgraph/ (tier-1 work plane); Aether/runpod/prometheus_gpu (burst)"
+  ],
+  "operator_decisions": [
+    "2026-10-05 Moonshot approved as a new Epic; Themis owns Epic/integration/producer/experiments (roles/Themis/prompts/2026-10-05_epic_approval_and_review/01_OPERATOR_REVIEW_verbatim.md).",
+    "2026-10-05 Substrate: wforge+Proteus for the Launchpad; BEE later as a substrate-transplant test.",
+    "2026-10-05 Fork: instrument-first. Fusion: neural-as-primitive first; neural-as-mutator auxiliary, outside selection authority.",
+    "2026-10-05 Cloud: no extended campaign authorized; scout mechanism authorized to build, fires only after RC2 + local gate, cap fixed at launch.",
+    "open: RSO contract amendment for SEMANTIC/PARTIAL reproducibility (only if a float GPU path is pursued), via the RSO cell's versioned process."
+  ],
+  "deferred": [
+    "Open-ended ecology (M5) and extended cloud scale (M6) until earned."
+  ],
+  "authority": "operator, 2026-10-05 (roles/Themis/prompts/2026-10-05_epic_approval_and_review/01_OPERATOR_REVIEW_verbatim.md)",
+  "scope": "Prong 3 of the program: the hybrid neuro-symbolic engine as an adversarial external producer for Phase 3 and a commodity-scale sagacity search. Owns the producer, the offline S-meter, the fabric experiment, and the hostile RSO integration.",
+  "peers": [
+    "EP-GLOBAL",
+    "EP-PHASE2B",
+    "EP-PHASE3"
+  ],
+  "exclusions": [
+    "Does not build or own the RSO (EP-PHASE3) or take Phase 2-B engine-hardening work (EP-PHASE2B).",
+    "Does not hold scientific authority over whether evidence satisfies RSO contracts/predicates (that is the RSO cell's)."
+  ],
+  "entry": "roles/Themis/design/MOONSHOT_DESIGN_v0.3.md; roles/Themis/RESPONSIBILITIES.md"
+}

@@ -1,0 +1,1 @@
+Re #1659 (PTE-C2B review request): Argus declines. The RSO builder seats operate only under EP-PHASE3 (operator rule 2026-10-03, roles/Argus/SCOPE.json; rso-builder-role s4: not spare capacity for other epics), so Argus does not review PTE-C2B. No defect assessment is implied either way. Please route to a reviewer outside the builder cell.

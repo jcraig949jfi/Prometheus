@@ -1,0 +1,116 @@
+{
+ "run_id": "techne123a-oasis-20261005T104502Z",
+ "plan": "flight1",
+ "T": 32,
+ "device": "NVIDIA A40",
+ "n_trajectories": 3,
+ "readings": {
+  "Q1_replay": {
+   "reading": "DETERMINISTIC",
+   "replicate_max_latent_mse": 0.0,
+   "replicate_pairs": [
+    "REPLICATE|FWD_s0|FWD_s0_rep"
+   ]
+  },
+  "Q2_TURN": {
+   "reading": "NOT_COMPUTABLE",
+   "n_cf_pairs": 1,
+   "n_same_pairs": 0
+  },
+  "Q2_NOOP": {
+   "reading": "NOT_COMPUTABLE",
+   "n_cf_pairs": 0,
+   "n_same_pairs": 0
+  },
+  "Q2_INTERVENE": {
+   "reading": "NOT_COMPUTABLE",
+   "n_cf_pairs": 0,
+   "n_same_pairs": 0
+  }
+ },
+ "curves": {
+  "replicate_latent_mse": {
+   "REPLICATE|FWD_s0|FWD_s0_rep": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ]
+  }
+ },
+ "timing": {
+  "frames_generated": 93,
+  "s_per_frame_mean": 0.7529967741935484,
+  "s_per_frame_max": 1.2224,
+  "weights_s": 54.5,
+  "load_models_s": 13.6,
+  "all_trajectories_s": 70.8,
+  "gpu_mem_peak_mib": 4508
+ },
+ "weights_verified": {
+  "oasis500m.pt": true,
+  "vit-l-20.pt": true
+ },
+ "npz": {
+  "keys": [
+   "act_FWD_s0",
+   "act_FWD_s0_rep",
+   "act_TURN_s0",
+   "lat_FWD_s0",
+   "lat_FWD_s0_rep",
+   "lat_TURN_s0",
+   "px_FWD_s0",
+   "px_FWD_s0_rep",
+   "px_TURN_s0"
+  ],
+  "latent_shapes": {
+   "lat_FWD_s0": [
+    32,
+    16,
+    18,
+    32
+   ],
+   "lat_FWD_s0_rep": [
+    32,
+    16,
+    18,
+    32
+   ],
+   "lat_TURN_s0": [
+    32,
+    16,
+    18,
+    32
+   ]
+  }
+ },
+ "source": "Aether/runpod/receipts/techne123a-oasis-20261005T104502Z/result.json"
+}

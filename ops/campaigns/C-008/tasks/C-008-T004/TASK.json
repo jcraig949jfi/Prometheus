@@ -1,0 +1,52 @@
+{
+  "schema": "prometheus.workgraph.task.v1",
+  "campaign_id": "C-008",
+  "epic_id": "EP-MOONSHOT",
+  "owner_role": "Themis",
+  "can_downgrade": false,
+  "escalate_to": "operator",
+  "authority": "operator OP-LC1 2026-10-06 (roles/Themis/prompts/2026-10-06_op_lc1/02_OPERATOR_OP-LC1_verbatim.md)",
+  "status": "READY",
+  "history": [
+    {
+      "status": "PROPOSED",
+      "by": "Themis[m2-0e9b1ed2]",
+      "at_utc": "2026-10-06T08:52:00Z",
+      "note": "C-008 opened under OP-LC1"
+    },
+    {
+      "status": "READY",
+      "by": "Themis[m2-0e9b1ed2]",
+      "at_utc": "2026-10-06T08:42:42Z",
+      "note": "READY by operator authority OP-LC1 (roles/Themis/prompts/2026-10-06_op_lc1/); coordinator Themis records it"
+    }
+  ],
+  "task_id": "C-008-T004",
+  "title": "D4 GitHub WAN-semantics arm (bounded)",
+  "objective": "Validate real-remote semantics (not drive to failure) on a dedicated, disposable Moonshot GitHub repository with repo-scoped credentials: at most 2 concurrent workers and 250 write attempts in total; stop on throttling, authentication spillover, or interference with unrelated Prometheus work.",
+  "quality_class": "Q2",
+  "kind": "science",
+  "depends_on": [
+    "C-008-T001",
+    "C-008-T002"
+  ],
+  "problem": "LAN results do not show GitHub's force-with-lease, custom-ref and latency semantics; OP-LC1 authorizes one bounded arm to check them.",
+  "non_goals": [
+    "any traffic to the Prometheus repository or its ref namespace",
+    "stress or scaling (LAN only)",
+    "more than 2 workers or 250 write attempts"
+  ],
+  "evidence_required": [
+    "a write-attempt ledger proving <=250 attempts",
+    "receipts and the semantic checks (PUBLISHED/DUPLICATE/AMBIGUOUS resolution) on the real remote"
+  ],
+  "acceptance": {
+    "condition": "semantic checks reported; caps respected; any stop condition recorded verbatim with the run halted"
+  },
+  "deliverables": [
+    "ops/campaigns/C-008/results/D4_GITHUB/"
+  ],
+  "resource_ceiling": "2 concurrent workers; 250 write attempts total (OP-LC1)",
+  "red_required": false,
+  "notes": "measurement task; no red state applies."
+}

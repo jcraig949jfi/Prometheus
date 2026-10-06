@@ -1,0 +1,73 @@
+{
+    "schema":  "prometheus.workgraph.receipt.v1",
+    "task_id":  "C-004-T044",
+    "campaign_id":  "C-004",
+    "attempt_id":  "A-001",
+    "role":  "Eupalamus",
+    "model":  "claude-sonnet-5-5",
+    "quality_class":  "Q1",
+    "start_sha":  "173e4ab952f3ab1f83aae16d92c57521b674a8de",
+    "end_sha":  "de53a054271d5e4ff29c326ea0a6b7b3ab84fda8",
+    "files_changed":  [
+                          "rso/slice001/contract/contract.json",
+                          "rso/slice001/contract/MANIFEST.md",
+                          "rso/slice001/tests/test_ledger.py",
+                          "rso/slice001/tests/test_evidence.py"
+                      ],
+    "evidence_added":  [
+                           "contract.json 1.0.4 per AMENDMENT_v1.0.4: caps.top_level_validation_launches 12 -\u003e 20 (X1), caps.launch_accounting added with the X2 text verbatim, amendments entry; exact text edits (17 insertions, 3 deletions); every other cap and field unchanged; MANIFEST.md rewritten and verified (7 entries, 0 mismatches, 0 unlisted)",
+                           "test_ledger.py: test_caps_read_from_the_real_contract now asserts launches 20; new test_contract_v104_launch_cap_amendment_is_exact pins version 1.0.4, the cap, the X2 text exactly, the unchanged cpu_minutes 120 and new_artifact_mb 100, and the amendments entry; Ledger.from_contract(...).caps.launches == 20"
+                       ],
+    "evidence_executed":  [
+                              {
+                                  "command":  "python -B -m unittest rso.slice001.tests.test_ledger (tests edited, contract still 1.0.3)",
+                                  "result":  "Ran 47 tests, FAILED (failures=2: launches 12 != 20; version 1.0.3 != 1.0.4) -- RED"
+                              },
+                              {
+                                  "command":  "same, after contract 1.0.4 and manifest rewrite",
+                                  "result":  "Ran 47 tests, OK"
+                              },
+                              {
+                                  "command":  "python -m comms.manifest verify rso/slice001/contract",
+                                  "result":  "verified 7 entries; 0 mismatches; 0 unlisted"
+                              },
+                              {
+                                  "command":  "python -B -m unittest rso.slice001.tests.test_evidence on the 1.0.4 contract before the pin edit",
+                                  "result":  "FAILED (failures=1): test_contract_carries_v102_custody, \u00271.0.4\u0027 != \u00271.0.3\u0027"
+                              },
+                              {
+                                  "command":  "every slice test module run individually on the committed tree: test_evidence 49 (1 skipped), test_ledger 47, test_ci, test_receipt, test_world, test_s2_run 3, test_matrix_engine 20, test_s2_bundle 27, test_adapter 15, test_rulers 15, test_checker_render 30, test_stages_evidence 10, test_stages_world 11, test_mutation 14, test_encoding 6, test_reset_observer 31",
+                                  "result":  "all 16 modules OK; no failures"
+                              }
+                          ],
+    "red_observed":  {
+                         "observed":  true,
+                         "reason":  "2 of 47 ledger tests failed against the unchanged v1.0.3 contract, including the exact v1.0.4 amendment pin"
+                     },
+    "result":  "DONE_CLEAN",
+    "known_escapes":  [
+                          "CROSS-LANE, one token: test_evidence.py:479 (Argus, T021) pins the live contract version; 1.0.3 -\u003e 1.0.4 so main stays green. This pin will trip on every future amendment; Argus may prefer to loosen it. Revert is one token",
+                          "CPU: the per-module verification of all 16 test modules took about 570 s wall on GANDALF (about 9.5 CPU-minutes, mostly test_s2_bundle 168 s, test_reset_observer 125 s, test_stages_world 104 s), unmetered development. I ran every module rather than a subset because bundle tests read the live contract; I found no failure beyond the known version pin",
+                          "the X2 text is pinned exactly in a test, so a later legitimate rewording of launch_accounting needs a test edit in the same commit",
+                          "no ledger.py change, as the packet requires; the S2/S3 ledger rows are untouched",
+                          "tested on Python 3.11 only, GANDALF Windows"
+                      ],
+    "unresolved":  [
+
+                   ],
+    "unblocks":  [
+
+                 ],
+    "created_at_utc":  "2026-10-05T23:36:47Z",
+    "instance":  "gandalf-ced473bf",
+    "host":  "GANDALF (M3)",
+    "branch":  "eupalamus-c004-t044",
+    "worktree_path":  "C:/prometheus-worktrees/eupalamus-boot-2026-10-03",
+    "resources":  {
+                      "cpu_s_approx":  570,
+                      "gpu":  0,
+                      "cloud":  0,
+                      "new_artifact_bytes":  3500
+                  },
+    "notes":  "Work commit de53a0542 is on origin branch eupalamus-c004-t044 (not on main); Palamedes integrates. Applies AMENDMENT_v1.0.4 (OP-7) as instructed in #1639."
+}

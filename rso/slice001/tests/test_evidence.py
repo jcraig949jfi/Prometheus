@@ -476,7 +476,7 @@ class TestCustodyStoreReader(unittest.TestCase):
                             "contract.json")
         with open(path, encoding="utf-8") as f:
             doc = json.load(f)
-        self.assertEqual(doc["version"], "1.0.3")                 # v1.0.3 (OP-4, C-004-T025) keeps the v1.0.2 custody
+        self.assertEqual(doc["version"], "1.0.4")                 # v1.0.4 (OP-7, C-004-T044) keeps the v1.0.2 custody
         self.assertEqual(doc["custody"]["store"], LOCATOR)
         self.assertIn("superuser", doc["custody"]["independence_caveat"])
 
@@ -570,6 +570,139 @@ class TestBindingDetails(unittest.TestCase):
                          ("FAIL", "RECEIPT_WITHOUT_RUN:rcpt:REG:ERASE:STANDARD"))
         # V7: another claim's G-INV is untouched
         self.assertEqual(value(EV.g_inv(case.claims["CL-RET(PKTD)"], case.bundle, case.anchors)), ("PASS", None))
+
+
+# --------------------------------------------------------------------------------------------------------
+# C-004-T042: S4 repairs of the S3 findings (ops/campaigns/C-004/TRIAGE_S3.md). Each class names its row.
+
+def _two_manifest_store(d, b, other_subject="PKTD", other_at="2026-10-04T00:30:00Z"):
+    """Keeper rows for G0 plus a SECOND bundle's manifest registered later (before the first check)."""
+    rows = F.keeper_rows(d, b)
+    other = F.manifest_of({k: v for k, v in d.items() if EV.parse_node_id(k)[0] == other_subject})
+    rows.append(F.row("EVIDENCE_MANIFEST", hashlib.sha256(other).hexdigest(), at=other_at,
+                      path="fixtures/OTHER/MANIFEST.json"))
+    blobs = {"fixtures/G0/MANIFEST.json": F.manifest_of(d), "fixtures/OTHER/MANIFEST.json": other}
+    return EV.FixtureStore(rows), blobs, other
+
+
+class TestF2KeeperManifestOfThisBundle(unittest.TestCase):
+    """F2 (S3.SOUND.TWO_MANIFESTS): the keeper's LAST manifest row was taken as this bundle's anchors."""
+
+    def setUp(self):
+        self.d = F.g0_dicts()
+        self.b = F.make_bundle(self.d)
+        self.store, self.blobs, self.other = _two_manifest_store(self.d, self.b)
+
+    def test_anchors_resolve_to_the_manifest_covering_the_bundle(self):
+        anchors = EV.resolve_anchors(EV.anchors_from_keeper(self.store, self.blobs), self.b)
+        self.assertEqual(anchors.blob_sha256, hashlib.sha256(F.manifest_of(self.d)).hexdigest())
+        self.assertEqual(anchors.source, "keeper")
+
+    def test_two_manifests_custody_and_binding_as_with_one(self):
+        anchors = EV.anchors_from_keeper(self.store, self.blobs)
+        c = EV.custody(self.b, anchors, self.store, F.FIRST_CHECK)
+        self.assertEqual(c["status"], "QUALIFIED", c)
+        claim = F.claims()["CL-RET(REG)"]
+        self.assertEqual(value(EV.g_bind(claim, self.b, anchors, EV.Config(F.CONTRACT_REV))), ("PASS", None))
+
+    def test_custody_refuses_anchors_omitting_the_bundles_nodes(self):
+        # Anchors that are a registered manifest, but not one holding this bundle's nodes: never QUALIFIED.
+        only_other = EV.Anchors(self.other, "keeper")
+        c = EV.custody(self.b, only_other, self.store, F.FIRST_CHECK)
+        self.assertEqual(c["status"], "UNQUALIFIED")
+        self.assertIn("ROW_BLOB_MISMATCH", c["why"])
+
+    def test_single_manifest_unchanged(self):
+        case = F.keeper()
+        self.assertEqual(EV.custody(case.bundle, case.anchors, case.store, case.first_check)["status"], "QUALIFIED")
+
+
+class TestF3RunAttribution(unittest.TestCase):
+    """F3 (S3.BROKEN.RUN_BORROW): a receipt citing ANOTHER node's run (its own run row absent) must fail G-INV
+    (B3.3: run_id is the inventory row that launched it; V7: that row records the node_id it launched)."""
+
+    def _borrow(self):
+        case = F.g0()
+        d = F.g0_dicts()
+        victim, donor = "rcpt:REG:PRESERVE:STANDARD", "rcpt:REG:ERASE:STANDARD"
+        old = d[victim]["execution"]["run_id"]
+        d[victim]["execution"]["run_id"] = d[donor]["execution"]["run_id"]
+        inv = [r for r in F._inventory(F.g0_dicts())[:-1] if r["run_id"] != old]
+        inv.append({"kind": "TERMINAL", "row_count": len(inv)})
+        return F.Case("RUN_BORROW", F.make_bundle(d, inventory=inv), F.retained(d), case.store, F.claims())
+
+    def test_borrowed_run_is_receipt_without_run(self):
+        case = self._borrow()
+        self.assertEqual(value(EV.g_inv(case.claims["CL-RET(REG)"], case.bundle, case.anchors)),
+                         ("FAIL", "RECEIPT_WITHOUT_RUN:rcpt:REG:PRESERVE:STANDARD"))
+
+    def test_other_claims_untouched(self):
+        case = self._borrow()
+        for cid in ("CL-RET(PKTD)", "CL-RET(LAGD)", "CL-CAL(STANDARD)"):
+            self.assertEqual(value(EV.g_inv(case.claims[cid], case.bundle, case.anchors)), ("PASS", None), cid)
+
+    def test_g0_still_passes(self):
+        case = F.g0()
+        self.assertEqual(value(EV.g_inv(case.claims["CL-RET(REG)"], case.bundle, case.anchors)), ("PASS", None))
+
+
+class TestMeasurementBinding(unittest.TestCase):
+    """Probe MEASUREMENT_LIE: cell.measurement must be the predicate version of predicate.code (B3.2)."""
+
+    def test_measurement_naming_another_version_fails_g_bind(self):
+        d = F.g0_dicts()
+        d["rcpt:REG:ERASE:STANDARD"]["cell"]["measurement"] = "f" * 64
+        case = F.Case("MEASUREMENT_LIE", F.make_bundle(d), F.retained(d), EV.FixtureStore(F.stage_rows()),
+                      F.claims())
+        self.assertEqual(value(bind(case, "CL-RET(REG)")), ("FAIL", "SCOPE_MALFORMED:measurement"))
+
+    def test_true_measurement_binds(self):
+        self.assertEqual(value(bind(F.g0(), "CL-RET(REG)")), ("PASS", None))
+
+
+def _challenge(unresolved):
+    return {"date": "2026-10-05", "challenger": {"seat": "Pallas", "model": "claude-fable-5-1"},
+            "set_ref": {"path": "rso/slice001/challenge/S3/REPORT.md", "blob_sha256": "a" * 64, "commit": F.COMMIT},
+            "sound_cases": {"correct": 4, "total": 5}, "broken_cases": {"correct": 3, "total": 5},
+            "edits": {k: 0 for k in R.EDIT_COUNTS}, "unresolved": unresolved}
+
+
+class TestE09GateWithdrawal(unittest.TestCase):
+    """E09 survived S3: no test withdrew a consumer gate's OWN stage record (B4.2 A3, B6.4)."""
+
+    def test_withdrawing_g_bind_stage_unqualifies_g_bind(self):
+        case = F.g0()
+        node = EV.stage_node_id("G-BIND", EV.predicate_version(F.gate_code("G-BIND")))
+        w = F.withdrawal("W-GBIND", node)
+        store = EV.FixtureStore(F.stage_rows() + [F.row("WITHDRAWAL", EV.record_blob(w))])
+        bundle = F.make_bundle(F.g0_dicts(), withdrawals=[w])
+        reg = EV.Registry(bundle, store)
+        self.assertEqual(EV.gate_authority("G-BIND", F.gate_code("G-BIND"), reg),
+                         {"status": "UNQUALIFIED", "why": ["WITHDRAWN:W-GBIND"]})
+        self.assertEqual(EV.gate_authority("G-INV", F.gate_code("G-INV"), reg)["status"], "QUALIFIED")
+        self.assertEqual(EV.gate_authority("G-BIND", F.gate_code("G-BIND"), registry(case))["status"], "QUALIFIED")
+
+
+class TestE10Suspension(unittest.TestCase):
+    """E10 survived S3: nothing separated unresolved = 0 from unresolved = 1 on the latest challenge (B4.2 A4)."""
+
+    def _authority(self, unresolved):
+        d = F.g0_dicts()
+        recs = []
+        for s in F.stage_records():
+            if s["instrument"] == "P3":
+                s = dict(s, stage="FIRST_SIGHT_CHALLENGED", first_sight=_challenge(unresolved))
+            recs.append(R.validate_stage_record(s))
+        bundle = F.make_bundle(d)
+        bundle.stage_records = recs
+        store = EV.FixtureStore([F.row("STAGE_RECORD", EV.record_blob(s)) for s in recs])
+        return EV.authority("rcpt:REG:ERASE:STANDARD", bundle, F.retained(d), EV.Registry(bundle, store))
+
+    def test_one_unresolved_suspends(self):
+        self.assertEqual(self._authority(1), {"status": "UNQUALIFIED", "why": ["SUSPENDED"]})
+
+    def test_zero_unresolved_qualifies_at_the_challenged_stage(self):
+        self.assertEqual(self._authority(0), {"status": "QUALIFIED", "stage": "FIRST_SIGHT_CHALLENGED"})
 
 
 class TestCaseCoverage(unittest.TestCase):

@@ -1,0 +1,53 @@
+{
+  "schema": "prometheus.workgraph.task.v1",
+  "campaign_id": "C-008",
+  "epic_id": "EP-MOONSHOT",
+  "owner_role": "Themis",
+  "can_downgrade": false,
+  "escalate_to": "operator",
+  "authority": "operator OP-LC1 2026-10-06 (roles/Themis/prompts/2026-10-06_op_lc1/02_OPERATOR_OP-LC1_verbatim.md)",
+  "status": "READY",
+  "history": [
+    {
+      "status": "PROPOSED",
+      "by": "Themis[m2-0e9b1ed2]",
+      "at_utc": "2026-10-06T08:52:00Z",
+      "note": "C-008 opened under OP-LC1"
+    },
+    {
+      "status": "READY",
+      "by": "Themis[m2-0e9b1ed2]",
+      "at_utc": "2026-10-06T08:42:42Z",
+      "note": "READY by operator authority OP-LC1 (roles/Themis/prompts/2026-10-06_op_lc1/); coordinator Themis records it"
+    }
+  ],
+  "task_id": "C-008-T003",
+  "title": "D4 local-network baseline: single-ref vs per-chain on a disposable LAN bare remote",
+  "objective": "Run the preregistered sweep on ubu nodes against a disposable local-network bare remote under both layouts; report every preregistered metric against the frozen bounds and the git-CAS operating envelope.",
+  "quality_class": "Q2",
+  "kind": "science",
+  "depends_on": [
+    "C-008-T001",
+    "C-008-T002"
+  ],
+  "problem": "The operator's standing hypothesis is that git compare-and-swap is an adequate transport at this scale; workgraph's single-ref claim plane is expected to thrash as workers grow. Neither is measured.",
+  "non_goals": [
+    "any GitHub traffic (that is T004)",
+    "tuning bounds after observing data",
+    "native organisms or reproductive populations"
+  ],
+  "evidence_required": [
+    "receipts for every attempt (from the remote's receipts slots)",
+    "a report with each metric vs its frozen bound, per arm and sweep point"
+  ],
+  "acceptance": {
+    "condition": "the preregistered report is produced; each bound is reported PASS/FAIL as preregistered (layer-3 style: a failed bound is a valid result)"
+  },
+  "deliverables": [
+    "ops/campaigns/C-008/results/D4_LOCAL/",
+    "ops/campaigns/C-008/D4_REPORT.md"
+  ],
+  "resource_ceiling": "MWO-0004 R2: <=16 CPU core-hours per item, <=48 per seat per rolling 24 h; local, unpaid; ubu nodes shared with idle PrometheusWorkers",
+  "red_required": false,
+  "notes": "measurement task; no red state applies."
+}

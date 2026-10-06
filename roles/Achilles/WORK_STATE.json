@@ -4,16 +4,16 @@
   "mwo_id": "MWO-0004",
   "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
   "fleet_order": "CWO-2026-09-30C (ops/fleet/CWO_2026-09-30C_FINISH_SURFACE_DISPATCH.md)",
-  "updated_at_utc": "2026-10-01T03:55:00Z",
+  "updated_at_utc": "2026-10-05T23:00:00Z",
   "state": "READY",
   "current_objective": "none in flight; standing duty: the 6-hourly census (PrometheusFleetCensus on ELSA) per the 2026-09-30 charter",
-  "current_step": "first run complete; next scheduled census 2026-10-01T04:30Z; verify the mailer receipt carries census=",
+  "current_step": "ELSA back up with 16 GB verified; standing census resumes at 04:30Z",
   "in_flight": [],
   "finish_condition": "met for the first run (census published 189e12502; task registered; Pages live)",
-  "next_expected_milestone": "first email carrying the census (M4 cycle ~04:15Z), confirmed by the 04:30Z census",
-  "expected_next_artifact": "docs/fleet/fleet_state.json mailer.census_included_last = true",
+  "next_expected_milestone": "next census run 2026-10-06T04:30Z",
+  "expected_next_artifact": "docs/fleet/run_status.json refreshed by the 04:30Z run",
   "model": "claude-opus-5-5",
-  "branch": "achilles/census-2026-09-30",
+  "branch": "achilles/session-2026-10-05",
   "head_sha": "(this commit; see git log -1 -- roles/Achilles/WORK_STATE.json)",
   "threads": [],
   "campaigns": [],
@@ -24,12 +24,12 @@
   ],
   "blocked_on": [],
   "next_actions": [
-    "Run the census every 6 hours (PrometheusFleetCensus on ELSA); read each run's anomalies and route defects found in other lanes to their owners as reports, never as assignments."
+    "Read the 04:30Z census; route anomalies in other lanes to owners as reports, never as assignments.",
+    "Run the census every 6 hours (PrometheusFleetCensus on ELSA)."
   ],
   "operator_decisions_required": [],
   "latest_reports": [
-    "roles/Achilles/journal/2026-09-30.md",
-    "roles/Achilles/RECONSTRUCTION_2026-09-30.md",
+    "roles/Achilles/journal/2026-10-05.md",
     "https://jcraig949jfi.github.io/Prometheus/fleet/"
   ],
   "last_push_sha": "3e570c4b2"

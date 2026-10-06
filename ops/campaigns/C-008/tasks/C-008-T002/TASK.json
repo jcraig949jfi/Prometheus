@@ -1,0 +1,50 @@
+{
+  "schema": "prometheus.workgraph.task.v1",
+  "campaign_id": "C-008",
+  "epic_id": "EP-MOONSHOT",
+  "owner_role": "Themis",
+  "can_downgrade": false,
+  "escalate_to": "operator",
+  "authority": "operator OP-LC1 2026-10-06 (roles/Themis/prompts/2026-10-06_op_lc1/02_OPERATOR_OP-LC1_verbatim.md)",
+  "status": "READY",
+  "history": [
+    {
+      "status": "PROPOSED",
+      "by": "Themis[m2-0e9b1ed2]",
+      "at_utc": "2026-10-06T08:52:00Z",
+      "note": "C-008 opened under OP-LC1"
+    },
+    {
+      "status": "READY",
+      "by": "Themis[m2-0e9b1ed2]",
+      "at_utc": "2026-10-06T08:42:42Z",
+      "note": "READY by operator authority OP-LC1 (roles/Themis/prompts/2026-10-06_op_lc1/); coordinator Themis records it"
+    }
+  ],
+  "task_id": "C-008-T002",
+  "title": "D4 preregistration: metrics, arms, sweep and frozen reconsider-transport bounds",
+  "objective": "Commit, before any baseline is observed, the D4 preregistration: metric definitions, the single-ref vs per-chain arms, the epoch-duration sweep, the frozen bounds (coordination wall fraction, non-duplicate CAS retries, p95 claim latency, abandonment), bytes transferred and repository growth per PUBLISHED and per VALIDATED epoch, the 1 GB/30-day tripwire, budgets, and the GitHub arm's caps and stop rules.",
+  "quality_class": "Q2",
+  "kind": "document",
+  "depends_on": [],
+  "problem": "OP-LC1: freeze the D4 bounds before observing the baseline; a threshold chosen after the data is not a test of the git-CAS hypothesis.",
+  "non_goals": [
+    "running any baseline",
+    "changing bounds after any D4 data exist (a change is a new preregistration with its own manifest)"
+  ],
+  "evidence_required": [
+    "preregistration file + MANIFEST committed and pushed to main, its SHA an ancestor of origin/main, before the first T003/T004 run"
+  ],
+  "acceptance": {
+    "condition": "the prereg commit precedes every D4 run receipt in git history"
+  },
+  "deliverables": [
+    "ops/campaigns/C-008/prereg/D4_PREREG.md",
+    "ops/campaigns/C-008/prereg/MANIFEST.md"
+  ],
+  "owns": [
+    "ops/campaigns/C-008/prereg/"
+  ],
+  "red_required": false,
+  "notes": "document task: RED/GREEN are not software states here; the evidence is the prereg commit preceding all D4 data."
+}

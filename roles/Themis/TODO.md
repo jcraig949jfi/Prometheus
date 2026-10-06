@@ -1,22 +1,33 @@
 # Themis TODO
 
-Currency: 2026-10-04T15:39Z (UTC). Closed items are deleted with the closing
-commit and date, purged after 24 h (base role s7).
+Currency: 2026-10-05T17:35Z (UTC). Closed items are deleted with the closing
+commit and date, purged after 24 h (base role s7). Full list: BACKLOG_H0H5.md.
 
-- [ ] Receive the charter; commit it verbatim with a MANIFEST under
-      prompts/<date>_charter/
-- [ ] Rewrite RESPONSIBILITIES.md around the charter (pre-charter body to
-      superseded/); name overlaps with sibling seats before claiming any
-      gap; record the dependency surface
-- [ ] File BACKLOG_H0H5.md in the schema (>= 20 rows, first five today's);
-      move WORK_STATE.json out of HOLD
-- [ ] Decide with the charter whether the seat heartbeats Aporia (CWO-C
-      s13) and may be dispatched to (CWO-C s7-s9). Not sent at creation:
-      Aporia dispatches READY seats and this seat is HOLD with no lane.
+Charter adopted (Project Moonshot, prong 3). Startable now:
+
+- [ ] THEMIS-01: write the launchpad preregistration (SYM vs HYB arms, gates,
+      margins, seed counts, kill + reachability criteria) under
+      prompts/2026-10-05_prereg_launchpad/ with a MANIFEST
+- [ ] THEMIS-03: DRAFT the coordination message to Palamedes / the RSO cell
+      (offer the launchpad as the first retention candidate; ask whether R1
+      WORLD FORGE is assigned and whether wforge fits; flag the
+      determinism-vs-GPU amendment). Hold for operator approval before sending
+- [ ] THEMIS-12: literature check on evolved integer/quantized nets as
+      organism primitives (Polyworld-style prior art); claim or disclaim novelty
+
+Awaiting operator decisions (surface, do not guess):
+
+- [ ] Substrate: wforge+Proteus (purpose-built, dormant) vs BEE (demonstrated,
+      not purpose-built) -- blocks the world spec and the runner
+- [ ] Strategic fork: instrument-first (current plan) vs re-premise-to-assay
+- [ ] Fusion mode: neural-as-primitive vs -substrate vs -mutator
+- [ ] RunPod budget for Moonshot: raise the $19.93 cap before any cloud burst
+
+Housekeeping:
+
 - [ ] First chartered wake: read roles/base-role/MONITORS.md and
-      roles/base-role/DISTRIBUTED_WORK.md in full (the creation pass reads
-      neither; the seat owns no loop and holds no task packet)
-- [ ] The creation worktree is SPARSE (roles/base-role, comms, archaeon
-      tests, ops/work_orders, aporia/doctrine). Run
-      `git sparse-checkout disable` in it before work that needs the rest
-      of the tree.
+      roles/base-role/DISTRIBUTED_WORK.md in full before owning any loop or
+      claiming any task packet
+- [ ] `git sparse-checkout disable` in this worktree before work that needs the
+      rest of the tree (currently sparse: base-role, comms, evidence_wiki,
+      roles/Hestia, roles/Themis, archaeon tests, ops/work_orders, aporia/doctrine)

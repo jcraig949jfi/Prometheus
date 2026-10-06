@@ -1,0 +1,60 @@
+{
+  "schema": "pallas.c004.t041.expected.v1",
+  "written_by": "Pallas[m2-e7da6bde], before execution and before any S4 test body was opened",
+  "scoring_rule": "As S3 (challenge/S3/attack_set/expected.json): a case is CORRECT iff every scored check holds and no exception is raised; checks are claim, line, identical, custody. Base for every case: the committed S4 G0 bundle (rso/slice001/s4/G0) with the committed stage records in a fixture store (V8: logic only).",
+  "bundles": {
+    "S4_BASELINE": "evidence_cases.g0(real_base(s4/G0))",
+    "S4_KEEPER": "evidence_cases.keeper(real_base(s4/G0)): the single-manifest keeper case, control for S4.SOUND.REPRODUCED"
+  },
+  "controls": [
+    {"id": "CTRL.S4G0", "bundle": "S4_BASELINE", "checks": [
+      {"type": "claim", "claim": "CL-RET(REG)", "eligibility": "ELIGIBLE", "standing": "SATISFIED", "not_satisfied": []},
+      {"type": "claim", "claim": "CL-RET(PKTD)", "eligibility": "ELIGIBLE", "standing": "SATISFIED", "not_satisfied": []},
+      {"type": "claim", "claim": "CL-RET(LAGD)", "eligibility": "NOT_ELIGIBLE", "standing": "UNMET", "not_satisfied": ["rcpt:LAGD:ERASE:STANDARD"]}
+    ]},
+    {"id": "CTRL.S4KEEPER", "bundle": "S4_KEEPER", "checks": [
+      {"type": "custody", "status": "QUALIFIED"},
+      {"type": "claim", "claim": "CL-CUST(G0)", "eligibility": "ELIGIBLE", "standing": "SATISFIED", "not_satisfied": []},
+      {"type": "claim", "claim": "CL-RET(REG)", "eligibility": "ELIGIBLE", "standing": "SATISFIED", "not_satisfied": []}
+    ]}
+  ],
+  "cases": [
+    {
+      "id": "S4.SOUND.REPRODUCED", "polarity": "sound", "plane": "evidence", "gates": ["custody (F2)", "G-BIND (F2)"],
+      "checks": [
+        {"type": "custody", "status": "QUALIFIED"},
+        {"type": "identical", "reference": "S4_KEEPER", "claims": "ALL"}
+      ]
+    },
+    {
+      "id": "S4.SOUND.RETRY_ROW", "polarity": "sound", "plane": "evidence", "gates": ["G-INV (F3)"],
+      "checks": [
+        {"type": "claim", "claim": "CL-RET(REG)", "eligibility": "ELIGIBLE", "standing": "SATISFIED", "not_satisfied": []},
+        {"type": "line", "claim": "CL-RET(REG)", "line": "G-INV@CL-RET(REG)", "fields": {"execution": "RAN", "outcome": "PASS"}},
+        {"type": "identical", "reference": "S4_BASELINE", "claims": "ALL"}
+      ]
+    },
+    {
+      "id": "S4.BROKEN.OBS_RUN_BORROW", "polarity": "broken", "plane": "evidence", "gates": ["G-INV (F3)"],
+      "primary": "G-INV@CL-RET(REG)",
+      "checks": [
+        {"type": "claim", "claim": "CL-RET(REG)", "eligibility": "NOT_ELIGIBLE", "standing": "UNMET", "not_satisfied": ["gate:G-INV:CL-RET(REG)"]},
+        {"type": "line", "claim": "CL-RET(REG)", "line": "G-INV@CL-RET(REG)", "fields": {"execution": "RAN", "outcome": "FAIL", "reason": "RECEIPT_WITHOUT_RUN:rcpt:REG:OBSERVER:BOOKKEEP:STANDARD"}},
+        {"type": "identical", "reference": "S4_BASELINE", "claims": ["CL-RET(PKTD)", "CL-RET(LAGD)", "CL-CAL(STANDARD)", "TWIN(REG)"]}
+      ]
+    },
+    {
+      "id": "S4.BROKEN.VERSION_OF_ANOTHER", "polarity": "broken", "plane": "evidence", "gates": ["G-BIND measurement", "authority A1 (stage per instrument and version)"],
+      "primary": "ERASE@REG/STANDARD",
+      "checks": [
+        {"type": "claim", "claim": "CL-RET(REG)", "eligibility": "NOT_ELIGIBLE", "standing": "UNQUALIFIED", "not_satisfied": ["rcpt:REG:ERASE:STANDARD"]},
+        {"type": "line", "claim": "CL-RET(REG)", "line": "ERASE@REG/STANDARD", "fields": {"execution": "RAN", "authority": "UNQUALIFIED: NO_STAGE_RECORD", "outcome": "PASS"}},
+        {"type": "line", "claim": "CL-RET(REG)", "line": "G-BIND@CL-RET(REG)", "fields": {"outcome": "PASS"}},
+        {"type": "identical", "reference": "S4_BASELINE", "claims": ["CL-RET(PKTD)", "CL-RET(LAGD)", "CL-CAL(STANDARD)", "TWIN(REG)"]}
+      ]
+    }
+  ],
+  "probes": [
+    {"id": "S4.PROBE.STALE_RUN", "scored": false, "reading": "The S4 PRESERVE receipt of REG cites the S2 run of the same node (same node_id, earlier window); the cumulative inventory is intact. Under B3.3 the cited row did not launch this receipt and the S4 row of that node is COMPLETED with no receipt citing it; under the implementation's reading of B6.4 (rows are checked only for nodes without a receipt) it passes. Related to T045 observation O-S4-1: the contract does not say how a cumulative inventory is read. Expected under this reviewer's reading: G-INV FAIL (RUN_UNREPORTED of the S4 row, or RECEIPT_WITHOUT_RUN); recorded, not scored."}
+  ]
+}

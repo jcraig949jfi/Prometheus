@@ -305,6 +305,7 @@ def g_recomp(claim, bundle, anchors):
     outside the trace format -> FAIL TRACE_SCHEMA:<role>; a difference -> FAIL OUTCOME_MISMATCH:<field>.
     A receipt whose execution is BLOCKED has no outcome to recompute; it is not applicable.
     """
+    anchors = EV.resolve_anchors(anchors, bundle)
     nodes = [n for n in EV.required_nodes(claim, anchors) if EV.parse_node_id(n)[1] in RECOMPUTE_SET]
     eligible, applicable, done = len(nodes), 0, []
     for n in nodes:
@@ -385,6 +386,7 @@ class Consumer(object):
 
     def __init__(self, bundle, anchors, store, config, gate_versions, first_check_utc, keeper=None,
                  registrar=None):
+        anchors = EV.resolve_anchors(anchors, bundle)          # C-004-T042 F2
         self.bundle, self.anchors, self.store, self.config = bundle, anchors, store, config
         self.gate_versions = dict(gate_versions)
         self.first_check_utc = first_check_utc

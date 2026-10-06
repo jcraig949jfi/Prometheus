@@ -1,0 +1,7351 @@
+{
+ "schema": "pte_c2a.plan.v1",
+ "flight": false,
+ "cells": [
+  {
+   "cell_id": "RELAY-0010-e89a8022",
+   "family": "RELAY",
+   "role": "RELAY-mh",
+   "i": 10,
+   "physics": {
+    "topology": "random",
+    "n_sites": 100,
+    "radius": 3,
+    "k_random": 6,
+    "rewire": 200,
+    "state_dim": 2,
+    "payload_width": 1,
+    "channels": 1,
+    "fanout": 4,
+    "dest_mode": "all",
+    "loss": 0.0,
+    "loss_per_hop": 0,
+    "lat_base": 2,
+    "lat_hop": 1,
+    "lat_jitter": 3,
+    "dup": 0.0,
+    "noise": 64,
+    "cap": 4,
+    "collision": "aloha",
+    "decay_shift": 1,
+    "update_mode": "async",
+    "update_period": 2,
+    "update_p": 0.8,
+    "rules": 1,
+    "prog_len": 16,
+    "plastic_route": 1,
+    "adapt_shift": 5,
+    "wimm": 0,
+    "setrule": 0,
+    "mut_site": 0.001,
+    "e_income": 0,
+    "e_max": 1000,
+    "c_emit": 0,
+    "c_op": 0,
+    "c_mem": 0,
+    "topo_seed": 889172250
+   },
+   "env": {
+    "family": "RELAY",
+    "d": 3,
+    "delta": 16,
+    "gap": 16,
+    "cue_len": 2,
+    "amp": 256,
+    "amp_teacher": 128,
+    "amp_dist": 64,
+    "trials": 12,
+    "block": 2,
+    "flip_p": 0.3,
+    "n_maj": 5,
+    "iti": 2,
+    "variant": 0
+   },
+   "plant_name": "relay_refresh",
+   "plant_genome": [
+    [
+     [
+      7,
+      4,
+      0,
+      15,
+      0
+     ],
+     [
+      7,
+      5,
+      15,
+      0,
+      0
+     ],
+     [
+      3,
+      0,
+      4,
+      5,
+      0
+     ],
+     [
+      2,
+      2,
+      13,
+      11,
+      0
+     ],
+     [
+      7,
+      4,
+      2,
+      15,
+      0
+     ],
+     [
+      7,
+      5,
+      15,
+      2,
+      0
+     ],
+     [
+      3,
+      3,
+      4,
+      5,
+      0
+     ],
+     [
+      4,
+      4,
+      3,
+      3,
+      0
+     ],
+     [
+      11,
+      5,
+      3,
+      0,
+      0
+     ],
+     [
+      4,
+      5,
+      5,
+      5,
+      0
+     ],
+     [
+      4,
+      6,
+      4,
+      5,
+      0
+     ],
+     [
+      1,
+      10,
+      3,
+      0,
+      0
+     ],
+     [
+      3,
+      5,
+      3,
+      0,
+      0
+     ],
+     [
+      4,
+      5,
+      5,
+      4,
+      0
+     ],
+     [
+      2,
+      0,
+      0,
+      5,
+      0
+     ],
+     [
+      0,
+      0,
+      0,
+      0,
+      0
+     ]
+    ]
+   ],
+   "cell_key": 4042215165,
+   "ceiling": 0.9799985625890811,
+   "binding": "t2_joint",
+   "hops": {
+    "min_hops": 3,
+    "max_hops": 3,
+    "mean_hops": 3.0,
+    "impossible_pairs": 0
+   },
+   "admission": {
+    "plants": {
+     "relay_refresh": {
+      "ruler": {
+       "status": "TRUE",
+       "role": "RELAY-mh",
+       "all": {
+        "mean": 0.7265625,
+        "lo99": 0.6677108758566712,
+        "hi99": 0.7760813481646966,
+        "d_se": 5.796448936075818,
+        "status": "TRUE",
+        "decided": "TRUE"
+       },
+       "late": {
+        "mean": 0.6393229166666666,
+        "lo99": 0.5690501544701346,
+        "hi99": 0.7115553752963444,
+        "d_se": 0.7484847045504373,
+        "status": "INDETERMINATE",
+        "decided": "TRUE"
+       }
+      },
+      "ablate": {
+       "status": "FALSE",
+       "role": "RELAY-mh",
+       "all": {
+        "mean": 0.5,
+        "lo99": 0.5,
+        "hi99": 0.5,
+        "d_se": NaN,
+        "status": "DEGENERATE",
+        "decided": "FALSE"
+       },
+       "late": {
+        "mean": 0.5,
+        "lo99": 0.5,
+        "hi99": 0.5,
+        "d_se": NaN,
+        "status": "DEGENERATE",
+        "decided": "FALSE"
+       }
+      },
+      "ablate_ok": true,
+      "pass": true,
+      "above_ceiling": false,
+      "lines": 15
+     },
+     "relay_flood": {
+      "ruler": {
+       "status": "FALSE",
+       "role": "RELAY-mh",
+       "all": {
+        "mean": 0.5325520833333333,
+        "lo99": 0.48835665117876276,
+        "hi99": 0.572771531266974,
+        "d_se": -3.9349943304718753,
+        "status": "FALSE",
+        "decided": "FALSE"
+       },
+       "late": {
+        "mean": 0.474609375,
+        "lo99": 0.4155672773548451,
+        "hi99": 0.5381574793086836,
+        "d_se": -6.300729863838635,
+        "status": "FALSE",
+        "decided": "FALSE"
+       }
+      },
+      "ablate": {
+       "status": "FALSE",
+       "role": "RELAY-mh",
+       "all": {
+        "mean": 0.5,
+        "lo99": 0.5,
+        "hi99": 0.5,
+        "d_se": NaN,
+        "status": "DEGENERATE",
+        "decided": "FALSE"
+       },
+       "late": {
+        "mean": 0.5,
+        "lo99": 0.5,
+        "hi99": 0.5,
+        "d_se": NaN,
+        "status": "DEGENERATE",
+        "decided": "FALSE"
+       }
+      },
+      "ablate_ok": true,
+      "pass": false,
+      "above_ceiling": false,
+      "lines": 12
+     },
+     "relay_bit": {
+      "ruler": {
+       "status": "TRUE",
+       "role": "RELAY-mh",
+       "all": {
+        "mean": 0.7395833333333333,
+        "lo99": 0.694011436523911,
+        "hi99": 0.778772974703537,
+        "d_se": 8.82824238353049,
+        "status": "TRUE",
+        "decided": "TRUE"
+       },
+       "late": {
+        "mean": 0.6458333333333333,
+        "lo99": 0.5840779572848241,
+        "hi99": 0.69945191540644,
+        "d_se": 1.5248111640356594,
+        "status": "INDETERMINATE",
+        "decided": "TRUE"
+       }
+      },
+      "ablate": {
+       "status": "FALSE",
+       "role": "RELAY-mh",
+       "all": {
+        "mean": 0.5,
+        "lo99": 0.5,
+        "hi99": 0.5,
+        "d_se": NaN,
+        "status": "DEGENERATE",
+        "decided": "FALSE"
+       },
+       "late": {
+        "mean": 0.5,
+        "lo99": 0.5,
+        "hi99": 0.5,
+        "d_se": NaN,
+        "status": "DEGENERATE",
+        "decided": "FALSE"
+       }
+      },
+      "ablate_ok": true,
+      "pass": true,
+      "above_ceiling": false,
+      "lines": 12
+     }
+    },
+    "adversaries": {
+     "null": {
+      "status": "FALSE",
+      "role": "RELAY-mh",
+      "all": {
+       "mean": 0.5,
+       "lo99": 0.5,
+       "hi99": 0.5,
+       "d_se": NaN,
+       "status": "DEGENERATE",
+       "decided": "FALSE"
+      },
+      "late": {
+       "mean": 0.5,
+       "lo99": 0.5,
+       "hi99": 0.5,
+       "d_se": NaN,
+       "status": "DEGENERATE",
+       "decided": "FALSE"
+      }
+     },
+     "onehop": {
+      "status": "FALSE",
+      "role": "RELAY-mh",
+      "all": {
+       "mean": 0.5,
+       "lo99": 0.5,
+       "hi99": 0.5,
+       "d_se": NaN,
+       "status": "DEGENERATE",
+       "decided": "FALSE"
+      },
+      "late": {
+       "mean": 0.5,
+       "lo99": 0.5,
+       "hi99": 0.5,
+       "d_se": NaN,
+       "status": "DEGENERATE",
+       "decided": "FALSE"
+      }
+     },
+     "latch_once": {
+      "status": "FALSE",
+      "role": "RELAY-mh",
+      "all": {
+       "mean": 0.521484375,
+       "lo99": 0.4821109550620879,
+       "hi99": 0.5592880766168551,
+       "d_se": -4.673907217960867,
+       "status": "FALSE",
+       "decided": "FALSE"
+      },
+      "late": {
+       "mean": 0.47005208333333337,
+       "lo99": 0.4083162313852683,
+       "hi99": 0.5317473643234107,
+       "d_se": -6.685939798815788,
+       "status": "FALSE",
+       "decided": "FALSE"
+      }
+     }
+    },
+    "V_scope": {
+     "null": true,
+     "onehop": true,
+     "latch_once": false
+    },
+    "thresholds": {
+     "SIGNAL_all": 0.6676418452691105,
+     "SIGNAL_late": 0.694238777867791
+    }
+   },
+   "arms": {
+    "PSEED": 4,
+    "KSEED-1": 4,
+    "KSEED-2": 4,
+    "KSEED-4": 4,
+    "BASE": 12,
+    "W0": 8,
+    "M32": 8
+   }
+  },
+  {
+   "cell_id": "RELAY-0019-eabcdf91",
+   "family": "RELAY",
+   "role": "RELAY-mh",
+   "i": 19,
+   "physics": {
+    "topology": "torus",
+    "n_sites": 100,
+    "radius": 1,
+    "k_random": 6,
+    "rewire": 50,
+    "state_dim": 2,
+    "payload_width": 1,
+    "channels": 1,
+    "fanout": 4,
+    "dest_mode": "all",
+    "loss": 0.3,
+    "loss_per_hop": 1,
+    "lat_base": 1,
+    "lat_hop": 0,
+    "lat_jitter": 0,
+    "dup": 0.0,
+    "noise": 16,
+    "cap": 1,
+    "collision": "none",
+    "decay_shift": 1,
+    "update_mode": "async",
+    "update_period": 1,
+    "update_p": 0.8,
+    "rules": 1,
+    "prog_len": 16,
+    "plastic_route": 1,
+    "adapt_shift": 5,
+    "wimm": 0,
+    "setrule": 0,
+    "mut_site": 0.001,
+    "e_income": 0,
+    "e_max": 1000,
+    "c_emit": 0,
+    "c_op": 0,
+    "c_mem": 0,
+    "topo_seed": 1951083481
+   },
+   "env": {
+    "family": "RELAY",
+    "d": 2,
+    "delta": 8,
+    "gap": 4,
+    "cue_len": 2,
+    "amp": 256,
+    "amp_teacher": 128,
+    "amp_dist": 64,
+    "trials": 12,
+    "block": 2,
+    "flip_p": 0.3,
+    "n_maj": 5,
+    "iti": 2,
+    "variant": 0
+   },
+   "plant_name": "relay_refresh",
+   "plant_genome": [
+    [
+     [
+      7,
+      4,
+      0,
+      15,
+      0
+     ],
+     [
+      7,
+      5,
+      15,
+      0,
+      0
+     ],
+     [
+      3,
+      0,
+      4,
+      5,
+      0
+     ],
+     [
+      2,
+      2,
+      13,
+      11,
+      0
+     ],
+     [
+      7,
+      4,
+      2,
+      15,
+      0
+     ],
+     [
+      7,
+      5,
+      15,
+      2,
+      0
+     ],
+     [
+      3,
+      3,
+      4,
+      5,
+      0
+     ],
+     [
+      4,
+      4,
+      3,
+      3,
+      0
+     ],
+     [
+      11,
+      5,
+      3,
+      0,
+      0
+     ],
+     [
+      4,
+      5,
+      5,
+      5,
+      0
+     ],
+     [
+      4,
+      6,
+      4,
+      5,
+      0
+     ],
+     [
+      1,
+      10,
+      3,
+      0,
+      0
+     ],
+     [
+      3,
+      5,
+      3,
+      0,
+      0
+     ],
+     [
+      4,
+      5,
+      5,
+      4,
+      0
+     ],
+     [
+      2,
+      0,
+      0,
+      5,
+      0
+     ],
+     [
+      0,
+      0,
+      0,
+      0,
+      0
+     ]
+    ]
+   ],
+   "cell_key": 569089256,
+   "ceiling": 0.9799903714015473,
+   "binding": "t2_joint",
+   "hops": {
+    "min_hops": 2,
+    "max_hops": 2,
+    "mean_hops": 2.0,
+    "impossible_pairs": 0
+   },
+   "admission": {
+    "plants": {
+     "relay_refresh": {
+      "ruler": {
+       "status": "TRUE",
+       "role": "RELAY-mh",
+       "all": {
+        "mean": 0.8365885416666666,
+        "lo99": 0.77280553383312,
+        "hi99": 0.8859122148460324,
+        "d_se": 11.13047670384536,
+        "status": "TRUE",
+        "decided": "TRUE"
+       },
+       "late": {
+        "mean": 0.83203125,
+        "lo99": 0.7566927470341185,
+        "hi99": 0.8919000978957923,
+        "d_se": 8.026850849637029,
+        "status": "TRUE",
+        "decided": "TRUE"
+       }
+      },
+      "ablate": {
+       "status": "FALSE",
+       "role": "RELAY-mh",
+       "all": {
+        "mean": 0.5,
+        "lo99": 0.5,
+        "hi99": 0.5,
+        "d_se": NaN,
+        "status": "DEGENERATE",
+        "decided": "FALSE"
+       },
+       "late": {
+        "mean": 0.5,
+        "lo99": 0.5,
+        "hi99": 0.5,
+        "d_se": NaN,
+        "status": "DEGENERATE",
+        "decided": "FALSE"
+       }
+      },
+      "ablate_ok": true,
+      "pass": true,
+      "above_ceiling": false,
+      "lines": 15
+     },
+     "relay_flood": {
+      "ruler": {
+       "status": "FALSE",
+       "role": "RELAY-mh",
+       "all": {
+        "mean": 0.5572916666666667,
+        "lo99": 0.5062485555624219,
+        "hi99": 0.6055757397912714,
+        "d_se": -2.326978231411785,
+        "status": "INDETERMINATE",
+        "decided": "INDETERMINATE"
+       },
+       "late": {
+        "mean": 0.5234375,
+        "lo99": 0.4497872437638404,
+        "hi99": 0.5892470757853493,
+        "d_se": -3.943529329546549,
+        "status": "FALSE",
+        "decided": "FALSE"
+       }
+      },
+      "ablate": {
+       "status": "FALSE",
+       "role": "RELAY-mh",
+       "all": {
+        "mean": 0.5,
+        "lo99": 0.5,
+        "hi99": 0.5,
+        "d_se": NaN,
+        "status": "DEGENERATE",
+        "decided": "FALSE"
+       },
+       "late": {
+        "mean": 0.5,
+        "lo99": 0.5,
+        "hi99": 0.5,
+        "d_se": NaN,
+        "status": "DEGENERATE",
+        "decided": "FALSE"
+       }
+      },
+      "ablate_ok": true,
+      "pass": false,
+      "above_ceiling": false,
+      "lines": 12
+     },
+     "relay_bit": {
+      "ruler": {
+       "status": "TRUE",
+       "role": "RELAY-mh",
+       "all": {
+        "mean": 0.84375,
+        "lo99": 0.7930396981196532,
+        "hi99": 0.8862776914591259,
+        "d_se": 14.330471814106744,
+        "status": "TRUE",
+        "decided": "TRUE"
+       },
+       "late": {
+        "mean": 0.82421875,
+        "lo99": 0.7321016944848964,
+        "hi99": 0.8817784147239337,
+        "d_se": 6.9185630550151895,
+        "status": "TRUE",
+        "decided": "TRUE"
+       }
+      },
+      "ablate": {
+       "status": "FALSE",
+       "role": "RELAY-mh",
+       "all": {
+        "mean": 0.5,
+        "lo99": 0.5,
+        "hi99": 0.5,
+        "d_se": NaN,
+        "status": "DEGENERATE",
+        "decided": "FALSE"
+       },
+       "late": {
+        "mean": 0.5,
+        "lo99": 0.5,
+        "hi99": 0.5,
+        "d_se": NaN,
+        "status": "DEGENERATE",
+        "decided": "FALSE"
+       }
+      },
+      "ablate_ok": true,
+      "pass": true,
+      "above_ceiling": false,
+      "lines": 12
+     }
+    },
+    "adversaries": {
+     "null": {
+      "status": "FALSE",
+      "role": "RELAY-mh",
+      "all": {
+       "mean": 0.5,
+       "lo99": 0.5,
+       "hi99": 0.5,
+       "d_se": NaN,
+       "status": "DEGENERATE",
+       "decided": "FALSE"
+      },
+      "late": {
+       "mean": 0.5,
+       "lo99": 0.5,
+       "hi99": 0.5,
+       "d_se": NaN,
+       "status": "DEGENERATE",
+       "decided": "FALSE"
+      }
+     },
+     "onehop": {
+      "status": "FALSE",
+      "role": "RELAY-mh",
+      "all": {
+       "mean": 0.5,
+       "lo99": 0.5,
+       "hi99": 0.5,
+       "d_se": NaN,
+       "status": "DEGENERATE",
+       "decided": "FALSE"
+      },
+      "late": {
+       "mean": 0.5,
+       "lo99": 0.5,
+       "hi99": 0.5,
+       "d_se": NaN,
+       "status": "DEGENERATE",
+       "decided": "FALSE"
+      }
+     },
+     "latch_once": {
+      "status": "FALSE",
+      "role": "RELAY-mh",
+      "all": {
+       "mean": 0.5764973958333334,
+       "lo99": 0.5430044506185705,
+       "hi99": 0.6072897071201242,
+       "d_se": -0.5661981703831311,
+       "status": "INDETERMINATE",
+       "decided": "INDETERMINATE"
+      },
+      "late": {
+       "mean": 0.5696614583333333,
+       "lo99": 0.5162436668921133,
+       "hi99": 0.6176726772906765,
+       "d_se": -1.7898143754203633,
+       "status": "INDETERMINATE",
+       "decided": "FALSE"
+      }
+     }
+    },
+    "V_scope": {
+     "null": true,
+     "onehop": true,
+     "latch_once": false
+    },
+    "thresholds": {
+     "SIGNAL_all": 0.6676418452691105,
+     "SIGNAL_late": 0.694238777867791
+    }
+   },
+   "arms": {
+    "PSEED": 4,
+    "KSEED-1": 4,
+    "KSEED-2": 4,
+    "KSEED-4": 4,
+    "BASE": 12,
+    "W0": 8,
+    "M32": 8
+   }
+  },
+  {
+   "cell_id": "RELAY-0027-8dac4bc0",
+   "family": "RELAY",
+   "role": "RELAY-mh",
+   "i": 27,
+   "physics": {
+    "topology": "random",
+    "n_sites": 144,
+    "radius": 1,
+    "k_random": 6,
+    "rewire": 200,
+    "state_dim": 2,
+    "payload_width": 1,
+    "channels": 1,
+    "fanout": 8,
+    "dest_mode": "all",
+    "loss": 0.0,
+    "loss_per_hop": 1,
+    "lat_base": 2,
+    "lat_hop": 0,
+    "lat_jitter": 1,
+    "dup": 0.1,
+    "noise": 16,
+    "cap": 2,
+    "collision": "aloha",
+    "decay_shift": 3,
+    "update_mode": "async",
+    "update_period": 1,
+    "update_p": 0.8,
+    "rules": 1,
+    "prog_len": 16,
+    "plastic_route": 1,
+    "adapt_shift": 2,
+    "wimm": 0,
+    "setrule": 0,
+    "mut_site": 0.01,
+    "e_income": 0,
+    "e_max": 1000,
+    "c_emit": 0,
+    "c_op": 0,
+    "c_mem": 0,
+    "topo_seed": 141981598
+   },
+   "env": {
+    "family": "RELAY",
+    "d": 5,
+    "delta": 16,
+    "gap": 16,
+    "cue_len": 2,
+    "amp": 256,
+    "amp_teacher": 128,
+    "amp_dist": 64,
+    "trials": 12,
+    "block": 4,
+    "flip_p": 0.3,
+    "n_maj": 5,
+    "iti": 2,
+    "variant": 0
+   },
+   "plant_name": "relay_refresh",
+   "plant_genome": [
+    [
+     [
+      7,
+      4,
+      0,
+      15,
+      0
+     ],
+     [
+      7,
+      5,
+      15,
+      0,
+      0
+     ],
+     [
+      3,
+      0,
+      4,
+      5,
+      0
+     ],
+     [
+      2,
+      2,
+      13,
+      11,
+      0
+     ],
+     [
+      7,
+      4,
+      2,
+      15,
+      0
+     ],
+     [
+      7,
+      5,
+      15,
+      2,
+      0
+     ],
+     [
+      3,
+      3,
+      4,
+      5,
+      0
+     ],
+     [
+      4,
+      4,
+      3,
+      3,
+      0
+     ],
+     [
+      11,
+      5,
+      3,
+      0,
+      0
+     ],
+     [
+      4,
+      5,
+      5,
+      5,
+      0
+     ],
+     [
+      4,
+      6,
+      4,
+      5,
+      0
+     ],
+     [
+      1,
+      10,
+      3,
+      0,
+      0
+     ],
+     [
+      3,
+      5,
+      3,
+      0,
+      0
+     ],
+     [
+      4,
+      5,
+      5,
+      4,
+      0
+     ],
+     [
+      2,
+      0,
+      0,
+      5,
+      0
+     ],
+     [
+      0,
+      0,
+      0,
+      0,
+      0
+     ]
+    ]
+   ],
+   "cell_key": 3455142763,
+   "ceiling": 0.9799957468546957,
+   "binding": "w2u_joint",
+   "hops": {
+    "min_hops": 4,
+    "max_hops": 5,
+    "mean_hops": 4.453125,
+    "impossible_pairs": 0
+   },
+   "admission": {
+    "plants": {
+     "relay_refresh": {
+      "ruler": {
+       "status": "TRUE",
+       "role": "RELAY-mh",
+       "all": {
+        "mean": 0.9680989583333333,
+        "lo99": 0.9210222898872372,
+        "hi99": 0.9871215549577151,
+        "d_se": 37.48829759893468,
+        "status": "TRUE",
+        "decided": "TRUE"
+       },
+       "late": {
+        "mean": 0.9505208333333334,
+        "lo99": 0.8571525279287001,
+        "hi99": 0.9828152904267711,
+        "d_se": 18.196112885245373,
+        "status": "TRUE",
+        "decided": "TRUE"
+       }
+      },
+      "ablate": {
+       "status": "FALSE",
+       "role": "RELAY-mh",
+       "all": {
+        "mean": 0.5,
+        "lo99": 0.5,
+        "hi99": 0.5,
+        "d_se": NaN,
+        "status": "DEGENERATE",
+        "decided": "FALSE"
+       },
+       "late": {
+        "mean": 0.5,
+        "lo99": 0.5,
+        "hi99": 0.5,
+        "d_se": NaN,
+        "status": "DEGENERATE",
+        "decided": "FALSE"
+       }
+      },
+      "ablate_ok": true,
+      "pass": true,
+      "above_ceiling": false,
+      "lines": 15
+     },
+     "relay_flood": {
+      "ruler": {
+       "status": "FALSE",
+       "role": "RELAY-mh",
+       "all": {
+        "mean": 0.5550130208333333,
+        "lo99": 0.5051850001836722,
+        "hi99": 0.5974130036413864,
+        "d_se": -2.6794394821271603,
+        "status": "FALSE",
+        "decided": "FALSE"
+       },
+       "late": {
+        "mean": 0.5286458333333333,
+        "lo99": 0.4583093145021212,
+        "hi99": 0.5844418345381243,
+        "d_se": -3.797759757448826,
+        "status": "FALSE",
+        "decided": "FALSE"
+       }
+      },
+      "ablate": {
+       "status": "FALSE",
+       "role": "RELAY-mh",
+       "all": {
+        "mean": 0.5,
+        "lo99": 0.5,
+        "hi99": 0.5,
+        "d_se": NaN,
+        "status": "DEGENERATE",
+        "decided": "FALSE"
+       },
+       "late": {
+        "mean": 0.5,
+        "lo99": 0.5,
+        "hi99": 0.5,
+        "d_se": NaN,
+        "status": "DEGENERATE",
+        "decided": "FALSE"
+       }
+      },
+      "ablate_ok": true,
+      "pass": false,
+      "above_ceiling": false,
+      "lines": 12
+     },
+     "relay_bit": {
+      "ruler": {
+       "status": "FALSE",
+       "role": "RELAY-mh",
+       "all": {
+        "mean": 0.6634114583333334,
+        "lo99": 0.6284818413446946,
+        "hi99": 0.6999612773924694,
+        "d_se": 5.831781087226642,
+        "status": "TRUE",
+        "decided": "TRUE"
+       },
+       "late": {
+        "mean": 0.5572916666666666,
+        "lo99": 0.5082388699950231,
+        "hi99": 0.6066025502317663,
+        "d_se": -2.2292816473321233,
+        "status": "INDETERMINATE",
+        "decided": "FALSE"
+       }
+      },
+      "ablate": {
+       "status": "FALSE",
+       "role": "RELAY-mh",
+       "all": {
+        "mean": 0.5,
+        "lo99": 0.5,
+        "hi99": 0.5,
+        "d_se": NaN,
+        "status": "DEGENERATE",
+        "decided": "FALSE"
+       },
+       "late": {
+        "mean": 0.5,
+        "lo99": 0.5,
+        "hi99": 0.5,
+        "d_se": NaN,
+        "status": "DEGENERATE",
+        "decided": "FALSE"
+       }
+      },
+      "ablate_ok": true,
+      "pass": false,
+      "above_ceiling": false,
+      "lines": 12
+     }
+    },
+    "adversaries": {
+     "null": {
+      "status": "FALSE",
+      "role": "RELAY-mh",
+      "all": {
+       "mean": 0.5,
+       "lo99": 0.5,
+       "hi99": 0.5,
+       "d_se": NaN,
+       "status": "DEGENERATE",
+       "decided": "FALSE"
+      },
+      "late": {
+       "mean": 0.5,
+       "lo99": 0.5,
+       "hi99": 0.5,
+       "d_se": NaN,
+       "status": "DEGENERATE",
+       "decided": "FALSE"
+      }
+     },
+     "onehop": {
+      "status": "FALSE",
+      "role": "RELAY-mh",
+      "all": {
+       "mean": 0.5,
+       "lo99": 0.5,
+       "hi99": 0.5,
+       "d_se": NaN,
+       "status": "DEGENERATE",
+       "decided": "FALSE"
+      },
+      "late": {
+       "mean": 0.5,
+       "lo99": 0.5,
+       "hi99": 0.5,
+       "d_se": NaN,
+       "status": "DEGENERATE",
+       "decided": "FALSE"
+      }
+     },
+     "latch_once": {
+      "status": "TRUE",
+      "role": "RELAY-mh",
+      "all": {
+       "mean": 0.7838541666666667,
+       "lo99": 0.7710283287907942,
+       "hi99": 0.7969663207549529,
+       "d_se": 45.522633861192354,
+       "status": "TRUE",
+       "decided": "TRUE"
+      },
+      "late": {
+       "mean": 0.7688802083333334,
+       "lo99": 0.7508931428012987,
+       "hi99": 0.7886616291812554,
+       "d_se": 28.442713434576373,
+       "status": "TRUE",
+       "decided": "TRUE"
+      }
+     }
+    },
+    "V_scope": {
+     "null": true,
+     "onehop": true,
+     "latch_once": false
+    },
+    "thresholds": {
+     "SIGNAL_all": 0.6676418452691105,
+     "SIGNAL_late": 0.694238777867791
+    }
+   },
+   "arms": {
+    "PSEED": 4,
+    "KSEED-1": 4,
+    "KSEED-2": 4,
+    "KSEED-4": 4,
+    "BASE": 12,
+    "W0": 8,
+    "M32": 8
+   }
+  },
+  {
+   "cell_id": "RELAY-0032-a447e46e",
+   "family": "RELAY",
+   "role": "RELAY-mh",
+   "i": 32,
+   "physics": {
+    "topology": "ring",
+    "n_sites": 100,
+    "radius": 2,
+    "k_random": 6,
+    "rewire": 200,
+    "state_dim": 2,
+    "payload_width": 1,
+    "channels": 1,
+    "fanout": 4,
+    "dest_mode": "all",
+    "loss": 0.1,
+    "loss_per_hop": 0,
+    "lat_base": 4,
+    "lat_hop": 0,
+    "lat_jitter": 0,
+    "dup": 0.1,
+    "noise": 16,
+    "cap": 4,
+    "collision": "saturate",
+    "decay_shift": 1,
+    "update_mode": "async",
+    "update_period": 1,
+    "update_p": 0.5,
+    "rules": 1,
+    "prog_len": 16,
+    "plastic_route": 0,
+    "adapt_shift": 5,
+    "wimm": 1,
+    "setrule": 0,
+    "mut_site": 0.0,
+    "e_income": 0,
+    "e_max": 1000,
+    "c_emit": 0,
+    "c_op": 0,
+    "c_mem": 0,
+    "topo_seed": 732654433
+   },
+   "env": {
+    "family": "RELAY",
+    "d": 5,
+    "delta": 16,
+    "gap": 8,
+    "cue_len": 2,
+    "amp": 256,
+    "amp_teacher": 128,
+    "amp_dist": 64,
+    "trials": 12,
+    "block": 4,
+    "flip_p": 0.3,
+    "n_maj": 5,
+    "iti": 2,
+    "variant": 0
+   },
+   "plant_name": "relay_refresh",
+   "plant_genome": [
+    [
+     [
+      7,
+      4,
+      0,
+      15,
+      0
+     ],
+     [
+      7,
+      5,
+      15,
+      0,
+      0
+     ],
+     [
+      3,
+      0,
+      4,
+      5,
+      0
+     ],
+     [
+      2,
+      2,
+      13,
+      11,
+      0
+     ],
+     [
+      7,
+      4,
+      2,
+      15,
+      0
+     ],
+     [
+      7,
+      5,
+      15,
+      2,
+      0
+     ],
+     [
+      3,
+      3,
+      4,
+      5,
+      0
+     ],
+     [
+      4,
+      4,
+      3,
+      3,
+      0
+     ],
+     [
+      11,
+      5,
+      3,
+      0,
+      0
+     ],
+     [
+      4,
+      5,
+      5,
+      5,
+      0
+     ],
+     [
+      4,
+      6,
+      4,
+      5,
+      0
+     ],
+     [
+      1,
+      10,
+      3,
+      0,
+      0
+     ],
+     [
+      3,
+      5,
+      3,
+      0,
+      0
+     ],
+     [
+      4,
+      5,
+      5,
+      4,
+      0
+     ],
+     [
+      2,
+      0,
+      0,
+      5,
+      0
+     ],
+     [
+      0,
+      0,
+      0,
+      0,
+      0
+     ]
+    ]
+   ],
+   "cell_key": 276095894,
+   "ceiling": 0.8463541666666666,
+   "binding": "lc2k",
+   "hops": {
+    "min_hops": 3,
+    "max_hops": 3,
+    "mean_hops": 3.0,
+    "impossible_pairs": 0
+   },
+   "admission": {
+    "plants": {
+     "relay_refresh": {
+      "ruler": {
+       "status": "TRUE",
+       "role": "RELAY-mh",
+       "all": {
+        "mean": 0.7197265625,
+        "lo99": 0.6746346151750643,
+        "hi99": 0.7550817028270576,
+        "d_se": 7.9108612466472845,
+        "status": "TRUE",
+        "decided": "TRUE"
+       },
+       "late": {
+        "mean": 0.6712239583333334,
+        "lo99": 0.6091589345740643,
+        "hi99": 0.7221556734613407,
+        "d_se": 2.7819462381695286,
+        "status": "TRUE",
+        "decided": "TRUE"
+       }
+      },
+      "ablate": {
+       "status": "FALSE",
+       "role": "RELAY-mh",
+       "all": {
+        "mean": 0.5,
+        "lo99": 0.5,
+        "hi99": 0.5,
+        "d_se": NaN,
+        "status": "DEGENERATE",
+        "decided": "FALSE"
+       },
+       "late": {
+        "mean": 0.5,
+        "lo99": 0.5,
+        "hi99": 0.5,
+        "d_se": NaN,
+        "status": "DEGENERATE",
+        "decided": "FALSE"
+       }
+      },
+      "ablate_ok": true,
+      "pass": true,
+      "above_ceiling": false,
+      "lines": 15
+     },
+     "relay_flood": {
+      "ruler": {
+       "status": "FALSE",
+       "role": "RELAY-mh",
+       "all": {
+        "mean": 0.5185546875,
+        "lo99": 0.47523980175045133,
+        "hi99": 0.5579522425245317,
+        "d_se": -4.718303221794176,
+        "status": "FALSE",
+        "decided": "FALSE"
+       },
+       "late": {
+        "mean": 0.4661458333333333,
+        "lo99": 0.4078153382598415,
+        "hi99": 0.5212878683921333,
+        "d_se": -6.2819777786106945,
+        "status": "FALSE",
+        "decided": "FALSE"
+       }
+      },
+      "ablate": {
+       "status": "FALSE",
+       "role": "RELAY-mh",
+       "all": {
+        "mean": 0.5,
+        "lo99": 0.5,
+        "hi99": 0.5,
+        "d_se": NaN,
+        "status": "DEGENERATE",
+        "decided": "FALSE"
+       },
+       "late": {
+        "mean": 0.5,
+        "lo99": 0.5,
+        "hi99": 0.5,
+        "d_se": NaN,
+        "status": "DEGENERATE",
+        "decided": "FALSE"
+       }
+      },
+      "ablate_ok": true,
+      "pass": false,
+      "above_ceiling": false,
+      "lines": 12
+     },
+     "relay_bit": {
+      "ruler": {
+       "status": "TRUE",
+       "role": "RELAY-mh",
+       "all": {
+        "mean": 0.7565104166666666,
+        "lo99": 0.7226962877860726,
+        "hi99": 0.7918791292509986,
+        "d_se": 12.865871405907358,
+        "status": "TRUE",
+        "decided": "TRUE"
+       },
+       "late": {
+        "mean": 0.7265625,
+        "lo99": 0.6603403489323445,
+        "hi99": 0.7843733651038152,
+        "d_se": 4.8466058967540935,
+        "status": "TRUE",
+        "decided": "TRUE"
+       }
+      },
+      "ablate": {
+       "status": "FALSE",
+       "role": "RELAY-mh",
+       "all": {
+        "mean": 0.5,
+        "lo99": 0.5,
+        "hi99": 0.5,
+        "d_se": NaN,
+        "status": "DEGENERATE",
+        "decided": "FALSE"
+       },
+       "late": {
+        "mean": 0.5,
+        "lo99": 0.5,
+        "hi99": 0.5,
+        "d_se": NaN,
+        "status": "DEGENERATE",
+        "decided": "FALSE"
+       }
+      },
+      "ablate_ok": true,
+      "pass": true,
+      "above_ceiling": false,
+      "lines": 12
+     }
+    },
+    "adversaries": {
+     "null": {
+      "status": "FALSE",
+      "role": "RELAY-mh",
+      "all": {
+       "mean": 0.5,
+       "lo99": 0.5,
+       "hi99": 0.5,
+       "d_se": NaN,
+       "status": "DEGENERATE",
+       "decided": "FALSE"
+      },
+      "late": {
+       "mean": 0.5,
+       "lo99": 0.5,
+       "hi99": 0.5,
+       "d_se": NaN,
+       "status": "DEGENERATE",
+       "decided": "FALSE"
+      }
+     },
+     "onehop": {
+      "status": "FALSE",
+      "role": "RELAY-mh",
+      "all": {
+       "mean": 0.5,
+       "lo99": 0.5,
+       "hi99": 0.5,
+       "d_se": NaN,
+       "status": "DEGENERATE",
+       "decided": "FALSE"
+      },
+      "late": {
+       "mean": 0.5,
+       "lo99": 0.5,
+       "hi99": 0.5,
+       "d_se": NaN,
+       "status": "DEGENERATE",
+       "decided": "FALSE"
+      }
+     },
+     "latch_once": {
+      "status": "FALSE",
+      "role": "RELAY-mh",
+      "all": {
+       "mean": 0.5227864583333333,
+       "lo99": 0.48207838863728214,
+       "hi99": 0.5620325450848345,
+       "d_se": -4.477780155566087,
+       "status": "FALSE",
+       "decided": "FALSE"
+      },
+      "late": {
+       "mean": 0.47395833333333337,
+       "lo99": 0.41977743691066444,
+       "hi99": 0.5248423792408476,
+       "d_se": -6.285070641256691,
+       "status": "FALSE",
+       "decided": "FALSE"
+      }
+     }
+    },
+    "V_scope": {
+     "null": true,
+     "onehop": true,
+     "latch_once": false
+    },
+    "thresholds": {
+     "SIGNAL_all": 0.6676418452691105,
+     "SIGNAL_late": 0.694238777867791
+    }
+   },
+   "arms": {
+    "PSEED": 4,
+    "KSEED-1": 4,
+    "KSEED-2": 4,
+    "KSEED-4": 4,
+    "BASE": 12,
+    "W0": 8,
+    "M32": 8
+   }
+  },
+  {
+   "cell_id": "FLIP-0000-adbab9bf",
+   "family": "FLIP",
+   "role": "FLIP",
+   "i": 0,
+   "physics": {
+    "topology": "random",
+    "n_sites": 64,
+    "radius": 3,
+    "k_random": 6,
+    "rewire": 200,
+    "state_dim": 2,
+    "payload_width": 1,
+    "channels": 1,
+    "fanout": 8,
+    "dest_mode": "sample",
+    "loss": 0.0,
+    "loss_per_hop": 0,
+    "lat_base": 1,
+    "lat_hop": 1,
+    "lat_jitter": 0,
+    "dup": 0.1,
+    "noise": 16,
+    "cap": 2,
+    "collision": "none",
+    "decay_shift": 0,
+    "update_mode": "sync",
+    "update_period": 2,
+    "update_p": 0.8,
+    "rules": 1,
+    "prog_len": 16,
+    "plastic_route": 1,
+    "adapt_shift": 5,
+    "wimm": 0,
+    "setrule": 0,
+    "mut_site": 0.0,
+    "e_income": 0,
+    "e_max": 1000,
+    "c_emit": 0,
+    "c_op": 0,
+    "c_mem": 0,
+    "topo_seed": 827597319
+   },
+   "env": {
+    "family": "FLIP",
+    "d": 2,
+    "delta": 8,
+    "gap": 8,
+    "cue_len": 2,
+    "amp": 256,
+    "amp_teacher": 128,
+    "amp_dist": 64,
+    "trials": 16,
+    "block": 2,
+    "flip_p": 0.3,
+    "n_maj": 5,
+    "iti": 2,
+    "variant": 0
+   },
+   "plant_name": "P_FLIP",
+   "plant_genome": [
+    [
+     [
+      2,
+      2,
+      13,
+      11,
+      0
+     ],
+     [
+      6,
+      4,
+      0,
+      1,
+      64
+     ],
+     [
+      3,
+      5,
+      15,
+      4,
+      0
+     ],
+     [
+      7,
+      10,
+      2,
+      4,
+      0
+     ],
+     [
+      7,
+      5,
+      5,
+      2,
+      0
+     ],
+     [
+      3,
+      10,
+      10,
+      5,
+      0
+     ],
+     [
+      3,
+      2,
+      10,
+      1,
+      0
+     ],
+     [
+      4,
+      6,
+      2,
+      10,
+      0
+     ],
+     [
+      4,
+      3,
+      0,
+      1,
+      0
+     ],
+     [
+      4,
+      4,
+      10,
+      10,
+      0
+     ],
+     [
+      8,
+      4,
+      10,
+      1,
+      0
+     ],
+     [
+      1,
+      1,
+      4,
+      0,
+      0
+     ],
+     [
+      4,
+      0,
+      3,
+      1,
+      0
+     ],
+     [
+      4,
+      5,
+      13,
+      13,
+      0
+     ],
+     [
+      8,
+      5,
+      13,
+      0,
+      0
+     ],
+     [
+      1,
+      0,
+      5,
+      0,
+      0
+     ]
+    ]
+   ],
+   "cell_key": 2462281308,
+   "ceiling": 1.0,
+   "binding": "w2u_block",
+   "hops": {
+    "min_hops": 2,
+    "max_hops": 2,
+    "mean_hops": 2.0,
+    "impossible_pairs": 0
+   },
+   "admission": {
+    "plants": {
+     "P_FLIP": {
+      "ruler": {
+       "status": "TRUE",
+       "role": "FLIP",
+       "all": {
+        "mean": 0.931640625,
+        "lo99": 0.8846040625595464,
+        "hi99": 0.9609493788695129,
+        "d_se": 25.665530118096044,
+        "status": "TRUE",
+        "decided": "TRUE"
+       },
+       "late": {
+        "mean": 0.9296875,
+        "lo99": 0.8549112200265522,
+        "hi99": 0.9718277208698108,
+        "d_se": 15.508407435162136,
+        "status": "TRUE",
+        "decided": "TRUE"
+       },
+       "B": {
+        "mean": 0.9327380952380953,
+        "lo99": 0.8773654708378243,
+        "hi99": 0.9631755037845671,
+        "d_se": 8.986833481246496,
+        "status": "TRUE",
+        "decided": "TRUE",
+        "chg": 0.9146949404761904,
+        "same": 0.95078125
+       }
+      },
+      "ablate": {
+       "status": "FALSE",
+       "role": "FLIP",
+       "all": {
+        "mean": 0.49609375,
+        "lo99": 0.47710554184754234,
+        "hi99": 0.514218582228427,
+        "d_se": -9.918644404944144,
+        "status": "FALSE",
+        "decided": "FALSE"
+       },
+       "late": {
+        "mean": 0.50390625,
+        "lo99": 0.48294968113888986,
+        "hi99": 0.5300858974777124,
+        "d_se": -7.628088903722191,
+        "status": "FALSE",
+        "decided": "FALSE"
+       },
+       "B": {
+        "mean": 0.5121837797619048,
+        "lo99": 0.4777483481928828,
+        "hi99": 0.5504002640797566,
+        "d_se": -20.356116098544202,
+        "status": "FALSE",
+        "decided": "FALSE",
+        "chg": 0.5097098214285714,
+        "same": 0.5146577380952381
+       }
+      },
+      "ablate_ok": true,
+      "pass": true,
+      "above_ceiling": false,
+      "lines": 16
+     },
+     "FLIP_BIT16": {
+      "ruler": {
+       "status": "TRUE",
+       "role": "FLIP",
+       "all": {
+        "mean": 0.931640625,
+        "lo99": 0.8860675495718763,
+        "hi99": 0.9603824096016893,
+        "d_se": 25.925988336797445,
+        "status": "TRUE",
+        "decided": "TRUE"
+       },
+       "late": {
+        "mean": 0.9296875,
+        "lo99": 0.8549112200265522,
+        "hi99": 0.9718277208698108,
+        "d_se": 15.508407435162136,
+        "status": "TRUE",
+        "decided": "TRUE"
+       },
+       "B": {
+        "mean": 0.9327380952380953,
+        "lo99": 0.8773868108559107,
+        "hi99": 0.9626757761086636,
+        "d_se": 9.032009408264196,
+        "status": "TRUE",
+        "decided": "TRUE",
+        "chg": 0.9146949404761904,
+        "same": 0.95078125
+       }
+      },
+      "ablate": {
+       "status": "FALSE",
+       "role": "FLIP",
+       "all": {
+        "mean": 0.498046875,
+        "lo99": 0.47923657029269007,
+        "hi99": 0.5157639241539953,
+        "d_se": -9.789121336647142,
+        "status": "FALSE",
+        "decided": "FALSE"
+       },
+       "late": {
+        "mean": 0.50390625,
+        "lo99": 0.48294968113888986,
+        "hi99": 0.5300858974777124,
+        "d_se": -7.628088903722191,
+        "status": "FALSE",
+        "decided": "FALSE"
+       },
+       "B": {
+        "mean": 0.5141369047619048,
+        "lo99": 0.47920102009992843,
+        "hi99": 0.5503486880539538,
+        "d_se": -20.405168620403025,
+        "status": "FALSE",
+        "decided": "FALSE",
+        "chg": 0.5136160714285714,
+        "same": 0.5146577380952381
+       }
+      },
+      "ablate_ok": true,
+      "pass": true,
+      "above_ceiling": false,
+      "lines": 16
+     }
+    },
+    "adversaries": {
+     "null": {
+      "status": "FALSE",
+      "role": "FLIP",
+      "all": {
+       "mean": 0.5,
+       "lo99": 0.5,
+       "hi99": 0.5,
+       "d_se": NaN,
+       "status": "DEGENERATE",
+       "decided": "FALSE"
+      },
+      "late": {
+       "mean": 0.5,
+       "lo99": 0.5,
+       "hi99": 0.5,
+       "d_se": NaN,
+       "status": "DEGENERATE",
+       "decided": "FALSE"
+      },
+      "B": {
+       "mean": 0.5,
+       "lo99": 0.5,
+       "hi99": 0.5,
+       "d_se": NaN,
+       "status": "DEGENERATE",
+       "decided": "FALSE",
+       "chg": 0.5,
+       "same": 0.5
+      }
+     },
+     "relay_latch_copy": {
+      "status": "FALSE",
+      "role": "FLIP",
+      "all": {
+       "mean": 0.705078125,
+       "lo99": 0.6613283178429721,
+       "hi99": 0.7454455520767762,
+       "d_se": 6.631107064924289,
+       "status": "TRUE",
+       "decided": "TRUE"
+      },
+      "late": {
+       "mean": 0.6953125,
+       "lo99": 0.6409353826846375,
+       "hi99": 0.7534520238853956,
+       "d_se": 4.1525086299227905,
+       "status": "TRUE",
+       "decided": "TRUE"
+      },
+      "B": {
+       "mean": 0.6925967261904762,
+       "lo99": 0.6510635812433998,
+       "hi99": 0.734523909466267,
+       "d_se": -6.137500877453906,
+       "status": "FALSE",
+       "decided": "FALSE",
+       "chg": 0.43065476190476193,
+       "same": 0.9545386904761906
+      }
+     },
+     "latch_once": {
+      "status": "FALSE",
+      "role": "FLIP",
+      "all": {
+       "mean": 0.466796875,
+       "lo99": 0.4085447396690426,
+       "hi99": 0.5329202062907881,
+       "d_se": -6.150747281660134,
+       "status": "FALSE",
+       "decided": "FALSE"
+      },
+      "late": {
+       "mean": 0.48046875,
+       "lo99": 0.3975704501491564,
+       "hi99": 0.575409943435558,
+       "d_se": -4.366688862597312,
+       "status": "FALSE",
+       "decided": "FALSE"
+      },
+      "B": {
+       "mean": 0.46757812499999996,
+       "lo99": 0.3993154350083815,
+       "hi99": 0.5354137799839893,
+       "d_se": -13.695891157363818,
+       "status": "FALSE",
+       "decided": "FALSE",
+       "chg": 0.4593377976190476,
+       "same": 0.47581845238095233
+      }
+     },
+     "anti_copy(analytic)": {
+      "status": "FALSE",
+      "B": {
+       "mean": 0.3074032738095238,
+       "lo99": 0.26547609053373317,
+       "chg": 0.5693452380952382,
+       "same": 0.04546130952380952
+      }
+     }
+    },
+    "V_scope": {
+     "null": true,
+     "relay_latch_copy": true,
+     "latch_once": true,
+     "anti_copy(analytic)": true
+    },
+    "thresholds": {
+     "B": 0.9
+    }
+   },
+   "arms": {
+    "PSEED": 4,
+    "KSEED-1": 4,
+    "KSEED-2": 4,
+    "KSEED-4": 4,
+    "BASE": 12,
+    "W0": 8,
+    "M32": 8
+   }
+  },
+  {
+   "cell_id": "FLIP-0004-125dfbff",
+   "family": "FLIP",
+   "role": "FLIP",
+   "i": 4,
+   "physics": {
+    "topology": "smallworld",
+    "n_sites": 64,
+    "radius": 1,
+    "k_random": 6,
+    "rewire": 50,
+    "state_dim": 2,
+    "payload_width": 1,
+    "channels": 1,
+    "fanout": 4,
+    "dest_mode": "all",
+    "loss": 0.0,
+    "loss_per_hop": 0,
+    "lat_base": 1,
+    "lat_hop": 1,
+    "lat_jitter": 1,
+    "dup": 0.1,
+    "noise": 64,
+    "cap": 0,
+    "collision": "saturate",
+    "decay_shift": 0,
+    "update_mode": "sync",
+    "update_period": 1,
+    "update_p": 0.8,
+    "rules": 1,
+    "prog_len": 16,
+    "plastic_route": 0,
+    "adapt_shift": 2,
+    "wimm": 1,
+    "setrule": 0,
+    "mut_site": 0.001,
+    "e_income": 0,
+    "e_max": 1000,
+    "c_emit": 0,
+    "c_op": 0,
+    "c_mem": 0,
+    "topo_seed": 1832238660
+   },
+   "env": {
+    "family": "FLIP",
+    "d": 3,
+    "delta": 8,
+    "gap": 4,
+    "cue_len": 2,
+    "amp": 256,
+    "amp_teacher": 128,
+    "amp_dist": 64,
+    "trials": 16,
+    "block": 2,
+    "flip_p": 0.3,
+    "n_maj": 5,
+    "iti": 2,
+    "variant": 0
+   },
+   "plant_name": "P_FLIP",
+   "plant_genome": [
+    [
+     [
+      2,
+      2,
+      13,
+      11,
+      0
+     ],
+     [
+      6,
+      4,
+      0,
+      1,
+      64
+     ],
+     [
+      3,
+      5,
+      15,
+      4,
+      0
+     ],
+     [
+      7,
+      10,
+      2,
+      4,
+      0
+     ],
+     [
+      7,
+      5,
+      5,
+      2,
+      0
+     ],
+     [
+      3,
+      10,
+      10,
+      5,
+      0
+     ],
+     [
+      3,
+      2,
+      10,
+      1,
+      0
+     ],
+     [
+      4,
+      6,
+      2,
+      10,
+      0
+     ],
+     [
+      4,
+      3,
+      0,
+      1,
+      0
+     ],
+     [
+      4,
+      4,
+      10,
+      10,
+      0
+     ],
+     [
+      8,
+      4,
+      10,
+      1,
+      0
+     ],
+     [
+      1,
+      1,
+      4,
+      0,
+      0
+     ],
+     [
+      4,
+      0,
+      3,
+      1,
+      0
+     ],
+     [
+      4,
+      5,
+      13,
+      13,
+      0
+     ],
+     [
+      8,
+      5,
+      13,
+      0,
+      0
+     ],
+     [
+      1,
+      0,
+      5,
+      0,
+      0
+     ]
+    ]
+   ],
+   "cell_key": 3842375552,
+   "ceiling": 0.9765625,
+   "binding": "lc2k",
+   "hops": {
+    "min_hops": 3,
+    "max_hops": 3,
+    "mean_hops": 3.0,
+    "impossible_pairs": 0
+   },
+   "admission": {
+    "plants": {
+     "P_FLIP": {
+      "ruler": {
+       "status": "TRUE",
+       "role": "FLIP",
+       "all": {
+        "mean": 0.92919921875,
+        "lo99": 0.8757440530078551,
+        "hi99": 0.9624414740518832,
+        "d_se": 21.181371946494863,
+        "status": "TRUE",
+        "decided": "TRUE"
+       },
+       "late": {
+        "mean": 0.908203125,
+        "lo99": 0.8195554766354859,
+        "hi99": 0.9596089043686525,
+        "d_se": 11.552723969191238,
+        "status": "TRUE",
+        "decided": "TRUE"
+       },
+       "B": {
+        "mean": 0.9250372023809523,
+        "lo99": 0.8601342556111877,
+        "hi99": 0.9656011178182147,
+        "d_se": 6.262541705903988,
+        "status": "TRUE",
+        "decided": "TRUE",
+        "chg": 0.9069754464285714,
+        "same": 0.9430989583333333
+       }
+      },
+      "ablate": {
+       "status": "FALSE",
+       "role": "FLIP",
+       "all": {
+        "mean": 0.501953125,
+        "lo99": 0.48015595895743646,
+        "hi99": 0.53214674956775,
+        "d_se": -7.24461656679357,
+        "status": "FALSE",
+        "decided": "FALSE"
+       },
+       "late": {
+        "mean": 0.513671875,
+        "lo99": 0.4797815464198044,
+        "hi99": 0.5528324278205102,
+        "d_se": -5.245887997040335,
+        "status": "FALSE",
+        "decided": "FALSE"
+       },
+       "B": {
+        "mean": 0.5074311755952381,
+        "lo99": 0.47040927352402384,
+        "hi99": 0.5480859379663137,
+        "d_se": -18.84667481691691,
+        "status": "FALSE",
+        "decided": "FALSE",
+        "chg": 0.48379836309523805,
+        "same": 0.5310639880952381
+       }
+      },
+      "ablate_ok": true,
+      "pass": true,
+      "above_ceiling": false,
+      "lines": 16
+     },
+     "FLIP_BIT16": {
+      "ruler": {
+       "status": "INDETERMINATE",
+       "role": "FLIP",
+       "all": {
+        "mean": 0.8623046875,
+        "lo99": 0.7897821612744519,
+        "hi99": 0.9141146902532026,
+        "d_se": 10.78348320602064,
+        "status": "TRUE",
+        "decided": "TRUE"
+       },
+       "late": {
+        "mean": 0.80859375,
+        "lo99": 0.714641133492329,
+        "hi99": 0.8824889202822128,
+        "d_se": 5.399325767618505,
+        "status": "TRUE",
+        "decided": "TRUE"
+       },
+       "B": {
+        "mean": 0.8617559523809524,
+        "lo99": 0.7817787692405341,
+        "hi99": 0.9161839093249224,
+        "d_se": 1.3567918274425566,
+        "status": "INDETERMINATE",
+        "decided": "INDETERMINATE",
+        "chg": 0.8636346726190476,
+        "same": 0.8598772321428572
+       }
+      },
+      "ablate": {
+       "status": "FALSE",
+       "role": "FLIP",
+       "all": {
+        "mean": 0.51171875,
+        "lo99": 0.4934000765040033,
+        "hi99": 0.5353000078056104,
+        "d_se": -6.986206826498381,
+        "status": "FALSE",
+        "decided": "FALSE"
+       },
+       "late": {
+        "mean": 0.52734375,
+        "lo99": 0.4947577259853554,
+        "hi99": 0.5647735570167444,
+        "d_se": -4.282559634855732,
+        "status": "FALSE",
+        "decided": "FALSE"
+       },
+       "B": {
+        "mean": 0.5109188988095238,
+        "lo99": 0.4767799370491029,
+        "hi99": 0.5455400316811271,
+        "d_se": -21.72688492186978,
+        "status": "FALSE",
+        "decided": "FALSE",
+        "chg": 0.5109374999999999,
+        "same": 0.5109002976190475
+       }
+      },
+      "ablate_ok": true,
+      "pass": false,
+      "above_ceiling": false,
+      "lines": 16
+     }
+    },
+    "adversaries": {
+     "null": {
+      "status": "FALSE",
+      "role": "FLIP",
+      "all": {
+       "mean": 0.5,
+       "lo99": 0.5,
+       "hi99": 0.5,
+       "d_se": NaN,
+       "status": "DEGENERATE",
+       "decided": "FALSE"
+      },
+      "late": {
+       "mean": 0.5,
+       "lo99": 0.5,
+       "hi99": 0.5,
+       "d_se": NaN,
+       "status": "DEGENERATE",
+       "decided": "FALSE"
+      },
+      "B": {
+       "mean": 0.5,
+       "lo99": 0.5,
+       "hi99": 0.5,
+       "d_se": NaN,
+       "status": "DEGENERATE",
+       "decided": "FALSE",
+       "chg": 0.5,
+       "same": 0.5
+      }
+     },
+     "relay_latch_copy": {
+      "status": "FALSE",
+      "role": "FLIP",
+      "all": {
+       "mean": 0.587890625,
+       "lo99": 0.5420251514251648,
+       "hi99": 0.6383327508400578,
+       "d_se": -0.46359795513155977,
+       "status": "INDETERMINATE",
+       "decided": "INDETERMINATE"
+      },
+      "late": {
+       "mean": 0.6015625,
+       "lo99": 0.5458646925231169,
+       "hi99": 0.670057549873524,
+       "d_se": -0.1844184519328946,
+       "status": "INDETERMINATE",
+       "decided": "INDETERMINATE"
+      },
+      "B": {
+       "mean": 0.5864490327380951,
+       "lo99": 0.5372573365147458,
+       "hi99": 0.6356872759398084,
+       "d_se": -11.355208824758382,
+       "status": "FALSE",
+       "decided": "FALSE",
+       "chg": 0.45318080357142854,
+       "same": 0.7197172619047619
+      }
+     },
+     "latch_once": {
+      "status": "FALSE",
+      "role": "FLIP",
+      "all": {
+       "mean": 0.49609375,
+       "lo99": 0.43616830338315293,
+       "hi99": 0.5568627166173908,
+       "d_se": -4.853610056916835,
+       "status": "FALSE",
+       "decided": "FALSE"
+      },
+      "late": {
+       "mean": 0.50390625,
+       "lo99": 0.4101837334919727,
+       "hi99": 0.5952740726291005,
+       "d_se": -4.0474049635806155,
+       "status": "FALSE",
+       "decided": "FALSE"
+      },
+      "B": {
+       "mean": 0.5129278273809523,
+       "lo99": 0.4441931922360892,
+       "hi99": 0.5834816507734353,
+       "d_se": -11.504476873281531,
+       "status": "FALSE",
+       "decided": "FALSE",
+       "chg": 0.5052083333333333,
+       "same": 0.5206473214285714
+      }
+     },
+     "anti_copy(analytic)": {
+      "status": "FALSE",
+      "B": {
+       "mean": 0.41355096726190477,
+       "lo99": 0.36431272406019155,
+       "chg": 0.5468191964285715,
+       "same": 0.2802827380952381
+      }
+     }
+    },
+    "V_scope": {
+     "null": true,
+     "relay_latch_copy": true,
+     "latch_once": true,
+     "anti_copy(analytic)": true
+    },
+    "thresholds": {
+     "B": 0.9
+    }
+   },
+   "arms": {
+    "PSEED": 4,
+    "KSEED-1": 4,
+    "KSEED-2": 4,
+    "KSEED-4": 4,
+    "BASE": 12,
+    "W0": 8,
+    "M32": 8
+   }
+  },
+  {
+   "cell_id": "FLIP-0099-df143630",
+   "family": "FLIP",
+   "role": "FLIP",
+   "i": 99,
+   "physics": {
+    "topology": "smallworld",
+    "n_sites": 144,
+    "radius": 3,
+    "k_random": 6,
+    "rewire": 200,
+    "state_dim": 2,
+    "payload_width": 1,
+    "channels": 1,
+    "fanout": 4,
+    "dest_mode": "all",
+    "loss": 0.0,
+    "loss_per_hop": 1,
+    "lat_base": 1,
+    "lat_hop": 0,
+    "lat_jitter": 0,
+    "dup": 0.0,
+    "noise": 64,
+    "cap": 1,
+    "collision": "none",
+    "decay_shift": 0,
+    "update_mode": "sync",
+    "update_period": 1,
+    "update_p": 0.8,
+    "rules": 1,
+    "prog_len": 16,
+    "plastic_route": 0,
+    "adapt_shift": 5,
+    "wimm": 0,
+    "setrule": 0,
+    "mut_site": 0.0,
+    "e_income": 0,
+    "e_max": 1000,
+    "c_emit": 0,
+    "c_op": 0,
+    "c_mem": 0,
+    "topo_seed": 773075427
+   },
+   "env": {
+    "family": "FLIP",
+    "d": 2,
+    "delta": 16,
+    "gap": 16,
+    "cue_len": 2,
+    "amp": 256,
+    "amp_teacher": 128,
+    "amp_dist": 64,
+    "trials": 16,
+    "block": 4,
+    "flip_p": 0.3,
+    "n_maj": 5,
+    "iti": 2,
+    "variant": 0
+   },
+   "plant_name": "P_FLIP",
+   "plant_genome": [
+    [
+     [
+      2,
+      2,
+      13,
+      11,
+      0
+     ],
+     [
+      6,
+      4,
+      0,
+      1,
+      64
+     ],
+     [
+      3,
+      5,
+      15,
+      4,
+      0
+     ],
+     [
+      7,
+      10,
+      2,
+      4,
+      0
+     ],
+     [
+      7,
+      5,
+      5,
+      2,
+      0
+     ],
+     [
+      3,
+      10,
+      10,
+      5,
+      0
+     ],
+     [
+      3,
+      2,
+      10,
+      1,
+      0
+     ],
+     [
+      4,
+      6,
+      2,
+      10,
+      0
+     ],
+     [
+      4,
+      3,
+      0,
+      1,
+      0
+     ],
+     [
+      4,
+      4,
+      10,
+      10,
+      0
+     ],
+     [
+      8,
+      4,
+      10,
+      1,
+      0
+     ],
+     [
+      1,
+      1,
+      4,
+      0,
+      0
+     ],
+     [
+      4,
+      0,
+      3,
+      1,
+      0
+     ],
+     [
+      4,
+      5,
+      13,
+      13,
+      0
+     ],
+     [
+      8,
+      5,
+      13,
+      0,
+      0
+     ],
+     [
+      1,
+      0,
+      5,
+      0,
+      0
+     ]
+    ]
+   ],
+   "cell_key": 2054352727,
+   "ceiling": 1.0,
+   "binding": "w2u_block",
+   "hops": {
+    "min_hops": 2,
+    "max_hops": 2,
+    "mean_hops": 2.0,
+    "impossible_pairs": 0
+   },
+   "admission": {
+    "plants": {
+     "P_FLIP": {
+      "ruler": {
+       "status": "TRUE",
+       "role": "FLIP",
+       "all": {
+        "mean": 1.0,
+        "lo99": 1.0,
+        "hi99": 1.0,
+        "d_se": NaN,
+        "status": "DEGENERATE",
+        "decided": "TRUE"
+       },
+       "late": {
+        "mean": 1.0,
+        "lo99": 1.0,
+        "hi99": 1.0,
+        "d_se": NaN,
+        "status": "DEGENERATE",
+        "decided": "TRUE"
+       },
+       "B": {
+        "mean": 1.0,
+        "lo99": 1.0,
+        "hi99": 1.0,
+        "d_se": NaN,
+        "status": "DEGENERATE",
+        "decided": "TRUE",
+        "chg": 1.0,
+        "same": 1.0
+       }
+      },
+      "ablate": {
+       "status": "FALSE",
+       "role": "FLIP",
+       "all": {
+        "mean": 0.5,
+        "lo99": 0.5,
+        "hi99": 0.5,
+        "d_se": NaN,
+        "status": "DEGENERATE",
+        "decided": "FALSE"
+       },
+       "late": {
+        "mean": 0.5,
+        "lo99": 0.5,
+        "hi99": 0.5,
+        "d_se": NaN,
+        "status": "DEGENERATE",
+        "decided": "FALSE"
+       },
+       "B": {
+        "mean": 0.4979011656746032,
+        "lo99": 0.47914483974426714,
+        "hi99": 0.5164821122983141,
+        "d_se": -37.348088427755826,
+        "status": "FALSE",
+        "decided": "FALSE",
+        "chg": 0.4924947014790765,
+        "same": 0.5033076298701299
+       }
+      },
+      "ablate_ok": true,
+      "pass": true,
+      "above_ceiling": false,
+      "lines": 16
+     },
+     "FLIP_BIT16": {
+      "ruler": {
+       "status": "TRUE",
+       "role": "FLIP",
+       "all": {
+        "mean": 1.0,
+        "lo99": 1.0,
+        "hi99": 1.0,
+        "d_se": NaN,
+        "status": "DEGENERATE",
+        "decided": "TRUE"
+       },
+       "late": {
+        "mean": 1.0,
+        "lo99": 1.0,
+        "hi99": 1.0,
+        "d_se": NaN,
+        "status": "DEGENERATE",
+        "decided": "TRUE"
+       },
+       "B": {
+        "mean": 1.0,
+        "lo99": 1.0,
+        "hi99": 1.0,
+        "d_se": NaN,
+        "status": "DEGENERATE",
+        "decided": "TRUE",
+        "chg": 1.0,
+        "same": 1.0
+       }
+      },
+      "ablate": {
+       "status": "FALSE",
+       "role": "FLIP",
+       "all": {
+        "mean": 0.5,
+        "lo99": 0.5,
+        "hi99": 0.5,
+        "d_se": NaN,
+        "status": "DEGENERATE",
+        "decided": "FALSE"
+       },
+       "late": {
+        "mean": 0.5,
+        "lo99": 0.5,
+        "hi99": 0.5,
+        "d_se": NaN,
+        "status": "DEGENERATE",
+        "decided": "FALSE"
+       },
+       "B": {
+        "mean": 0.4979011656746032,
+        "lo99": 0.47914483974426714,
+        "hi99": 0.5164821122983141,
+        "d_se": -37.348088427755826,
+        "status": "FALSE",
+        "decided": "FALSE",
+        "chg": 0.4924947014790765,
+        "same": 0.5033076298701299
+       }
+      },
+      "ablate_ok": true,
+      "pass": true,
+      "above_ceiling": false,
+      "lines": 16
+     }
+    },
+    "adversaries": {
+     "null": {
+      "status": "FALSE",
+      "role": "FLIP",
+      "all": {
+       "mean": 0.5,
+       "lo99": 0.5,
+       "hi99": 0.5,
+       "d_se": NaN,
+       "status": "DEGENERATE",
+       "decided": "FALSE"
+      },
+      "late": {
+       "mean": 0.5,
+       "lo99": 0.5,
+       "hi99": 0.5,
+       "d_se": NaN,
+       "status": "DEGENERATE",
+       "decided": "FALSE"
+      },
+      "B": {
+       "mean": 0.5,
+       "lo99": 0.5,
+       "hi99": 0.5,
+       "d_se": NaN,
+       "status": "DEGENERATE",
+       "decided": "FALSE",
+       "chg": 0.5,
+       "same": 0.5
+      }
+     },
+     "relay_latch_copy": {
+      "status": "FALSE",
+      "role": "FLIP",
+      "all": {
+       "mean": 0.7486979166666666,
+       "lo99": 0.7168125781714445,
+       "hi99": 0.7842623009900976,
+       "d_se": 13.042000656002028,
+       "status": "TRUE",
+       "decided": "TRUE"
+      },
+      "late": {
+       "mean": 0.7578125,
+       "lo99": 0.7102611122158655,
+       "hi99": 0.8016892060998404,
+       "d_se": 9.016242807126215,
+       "status": "TRUE",
+       "decided": "TRUE"
+      },
+      "B": {
+       "mean": 0.7433145630411255,
+       "lo99": 0.716367185366662,
+       "hi99": 0.7736147400602732,
+       "d_se": -3.0804401635727308,
+       "status": "FALSE",
+       "decided": "FALSE",
+       "chg": 0.48662912608225106,
+       "same": 1.0
+      }
+     },
+     "latch_once": {
+      "status": "FALSE",
+      "role": "FLIP",
+      "all": {
+       "mean": 0.51171875,
+       "lo99": 0.4645051926025603,
+       "hi99": 0.557937514183632,
+       "d_se": -4.942405427906052,
+       "status": "FALSE",
+       "decided": "FALSE"
+      },
+      "late": {
+       "mean": 0.5104166666666666,
+       "lo99": 0.4408768652106969,
+       "hi99": 0.5849000600667409,
+       "d_se": -4.162669140464701,
+       "status": "FALSE",
+       "decided": "FALSE"
+      },
+      "B": {
+       "mean": 0.5120628720238095,
+       "lo99": 0.4655493968109003,
+       "hi99": 0.5612430855025495,
+       "d_se": -15.694394426074503,
+       "status": "FALSE",
+       "decided": "FALSE",
+       "chg": 0.5331005366161616,
+       "same": 0.49102520743145744
+      }
+     },
+     "anti_copy(analytic)": {
+      "status": "FALSE",
+      "B": {
+       "mean": 0.25668543695887447,
+       "lo99": 0.2263852599397273,
+       "chg": 0.5133708739177489,
+       "same": 0.0
+      }
+     }
+    },
+    "V_scope": {
+     "null": true,
+     "relay_latch_copy": true,
+     "latch_once": true,
+     "anti_copy(analytic)": true
+    },
+    "thresholds": {
+     "B": 0.9
+    }
+   },
+   "arms": {
+    "PSEED": 4,
+    "KSEED-1": 4,
+    "KSEED-2": 4,
+    "KSEED-4": 4,
+    "BASE": 12,
+    "W0": 8,
+    "M32": 8
+   }
+  },
+  {
+   "cell_id": "FLIP-0167-b6d3fceb",
+   "family": "FLIP",
+   "role": "FLIP",
+   "i": 167,
+   "physics": {
+    "topology": "ring",
+    "n_sites": 100,
+    "radius": 3,
+    "k_random": 6,
+    "rewire": 50,
+    "state_dim": 2,
+    "payload_width": 1,
+    "channels": 1,
+    "fanout": 4,
+    "dest_mode": "all",
+    "loss": 0.3,
+    "loss_per_hop": 0,
+    "lat_base": 1,
+    "lat_hop": 0,
+    "lat_jitter": 0,
+    "dup": 0.1,
+    "noise": 16,
+    "cap": 0,
+    "collision": "aloha",
+    "decay_shift": 0,
+    "update_mode": "async",
+    "update_period": 2,
+    "update_p": 0.8,
+    "rules": 1,
+    "prog_len": 16,
+    "plastic_route": 0,
+    "adapt_shift": 5,
+    "wimm": 0,
+    "setrule": 0,
+    "mut_site": 0.0,
+    "e_income": 0,
+    "e_max": 1000,
+    "c_emit": 0,
+    "c_op": 0,
+    "c_mem": 0,
+    "topo_seed": 3491005977
+   },
+   "env": {
+    "family": "FLIP",
+    "d": 5,
+    "delta": 16,
+    "gap": 8,
+    "cue_len": 2,
+    "amp": 256,
+    "amp_teacher": 128,
+    "amp_dist": 64,
+    "trials": 16,
+    "block": 4,
+    "flip_p": 0.3,
+    "n_maj": 5,
+    "iti": 2,
+    "variant": 0
+   },
+   "plant_name": "P_FLIP",
+   "plant_genome": [
+    [
+     [
+      2,
+      2,
+      13,
+      11,
+      0
+     ],
+     [
+      6,
+      4,
+      0,
+      1,
+      64
+     ],
+     [
+      3,
+      5,
+      15,
+      4,
+      0
+     ],
+     [
+      7,
+      10,
+      2,
+      4,
+      0
+     ],
+     [
+      7,
+      5,
+      5,
+      2,
+      0
+     ],
+     [
+      3,
+      10,
+      10,
+      5,
+      0
+     ],
+     [
+      3,
+      2,
+      10,
+      1,
+      0
+     ],
+     [
+      4,
+      6,
+      2,
+      10,
+      0
+     ],
+     [
+      4,
+      3,
+      0,
+      1,
+      0
+     ],
+     [
+      4,
+      4,
+      10,
+      10,
+      0
+     ],
+     [
+      8,
+      4,
+      10,
+      1,
+      0
+     ],
+     [
+      1,
+      1,
+      4,
+      0,
+      0
+     ],
+     [
+      4,
+      0,
+      3,
+      1,
+      0
+     ],
+     [
+      4,
+      5,
+      13,
+      13,
+      0
+     ],
+     [
+      8,
+      5,
+      13,
+      0,
+      0
+     ],
+     [
+      1,
+      0,
+      5,
+      0,
+      0
+     ]
+    ]
+   ],
+   "cell_key": 2036840121,
+   "ceiling": 0.9663964816851222,
+   "binding": "w2u_block",
+   "hops": {
+    "min_hops": 2,
+    "max_hops": 2,
+    "mean_hops": 2.0,
+    "impossible_pairs": 0
+   },
+   "admission": {
+    "plants": {
+     "P_FLIP": {
+      "ruler": {
+       "status": "TRUE",
+       "role": "FLIP",
+       "all": {
+        "mean": 0.9264322916666667,
+        "lo99": 0.8746008167885034,
+        "hi99": 0.9593334754349437,
+        "d_se": 22.404784018003873,
+        "status": "TRUE",
+        "decided": "TRUE"
+       },
+       "late": {
+        "mean": 0.9244791666666667,
+        "lo99": 0.8422926577482847,
+        "hi99": 0.9660086785067309,
+        "d_se": 14.89983236397874,
+        "status": "TRUE",
+        "decided": "TRUE"
+       },
+       "B": {
+        "mean": 0.9255084325396826,
+        "lo99": 0.8687171862252561,
+        "hi99": 0.9595436084311315,
+        "d_se": 7.853976871606941,
+        "status": "TRUE",
+        "decided": "TRUE",
+        "chg": 0.9160342261904761,
+        "same": 0.9349826388888889
+       }
+      },
+      "ablate": {
+       "status": "FALSE",
+       "role": "FLIP",
+       "all": {
+        "mean": 0.49218750000000006,
+        "lo99": 0.4718799590370091,
+        "hi99": 0.5084291542454683,
+        "d_se": -10.971184230155123,
+        "status": "FALSE",
+        "decided": "FALSE"
+       },
+       "late": {
+        "mean": 0.4895833333333333,
+        "lo99": 0.4558346878360983,
+        "hi99": 0.5165943898929866,
+        "d_se": -8.07270184337753,
+        "status": "FALSE",
+        "decided": "FALSE"
+       },
+       "B": {
+        "mean": 0.48846585272366516,
+        "lo99": 0.4638332342594482,
+        "hi99": 0.5097165014374655,
+        "d_se": -33.23128209598502,
+        "status": "FALSE",
+        "decided": "FALSE",
+        "chg": 0.49437962211399705,
+        "same": 0.48255208333333327
+       }
+      },
+      "ablate_ok": true,
+      "pass": true,
+      "above_ceiling": false,
+      "lines": 16
+     },
+     "FLIP_BIT16": {
+      "ruler": {
+       "status": "TRUE",
+       "role": "FLIP",
+       "all": {
+        "mean": 0.9231770833333335,
+        "lo99": 0.8701485043297865,
+        "hi99": 0.9563110248250851,
+        "d_se": 21.853330110002688,
+        "status": "TRUE",
+        "decided": "TRUE"
+       },
+       "late": {
+        "mean": 0.921875,
+        "lo99": 0.841237974793342,
+        "hi99": 0.9635467928748889,
+        "d_se": 14.835698138553866,
+        "status": "TRUE",
+        "decided": "TRUE"
+       },
+       "B": {
+        "mean": 0.920951140873016,
+        "lo99": 0.8629912395941697,
+        "hi99": 0.9555122024296446,
+        "d_se": 7.287994959433458,
+        "status": "TRUE",
+        "decided": "TRUE",
+        "chg": 0.9131696428571429,
+        "same": 0.9287326388888889
+       }
+      },
+      "ablate": {
+       "status": "FALSE",
+       "role": "FLIP",
+       "all": {
+        "mean": 0.4928385416666667,
+        "lo99": 0.4722796217496835,
+        "hi99": 0.5097319878040315,
+        "d_se": -10.674827007847508,
+        "status": "FALSE",
+        "decided": "FALSE"
+       },
+       "late": {
+        "mean": 0.49088541666666663,
+        "lo99": 0.45735597291150887,
+        "hi99": 0.5205168784275649,
+        "d_se": -7.691556838861244,
+        "status": "FALSE",
+        "decided": "FALSE"
+       },
+       "B": {
+        "mean": 0.4881170804022366,
+        "lo99": 0.46373316478228155,
+        "hi99": 0.5097449792095583,
+        "d_se": -33.24195783451263,
+        "status": "FALSE",
+        "decided": "FALSE",
+        "chg": 0.49267761318542563,
+        "same": 0.4835565476190476
+       }
+      },
+      "ablate_ok": true,
+      "pass": true,
+      "above_ceiling": false,
+      "lines": 16
+     }
+    },
+    "adversaries": {
+     "null": {
+      "status": "FALSE",
+      "role": "FLIP",
+      "all": {
+       "mean": 0.5,
+       "lo99": 0.5,
+       "hi99": 0.5,
+       "d_se": NaN,
+       "status": "DEGENERATE",
+       "decided": "FALSE"
+      },
+      "late": {
+       "mean": 0.5,
+       "lo99": 0.5,
+       "hi99": 0.5,
+       "d_se": NaN,
+       "status": "DEGENERATE",
+       "decided": "FALSE"
+      },
+      "B": {
+       "mean": 0.5,
+       "lo99": 0.5,
+       "hi99": 0.5,
+       "d_se": NaN,
+       "status": "DEGENERATE",
+       "decided": "FALSE",
+       "chg": 0.5,
+       "same": 0.5
+      }
+     },
+     "relay_latch_copy": {
+      "status": "FALSE",
+      "role": "FLIP",
+      "all": {
+       "mean": 0.705078125,
+       "lo99": 0.6633294582544461,
+       "hi99": 0.7448238062143476,
+       "d_se": 7.554847775564427,
+       "status": "TRUE",
+       "decided": "TRUE"
+      },
+      "late": {
+       "mean": 0.71484375,
+       "lo99": 0.6587217126015521,
+       "hi99": 0.7745463487529933,
+       "d_se": 4.919234220690014,
+       "status": "TRUE",
+       "decided": "TRUE"
+      },
+      "B": {
+       "mean": 0.7102692663239538,
+       "lo99": 0.6781071233325119,
+       "hi99": 0.7422148578196035,
+       "d_se": -5.911005268753368,
+       "status": "FALSE",
+       "decided": "FALSE",
+       "chg": 0.4596630366161616,
+       "same": 0.960875496031746
+      }
+     },
+     "latch_once": {
+      "status": "FALSE",
+      "role": "FLIP",
+      "all": {
+       "mean": 0.5052083333333333,
+       "lo99": 0.46307430903827124,
+       "hi99": 0.5494099131950216,
+       "d_se": -5.207958497032145,
+       "status": "FALSE",
+       "decided": "FALSE"
+      },
+      "late": {
+       "mean": 0.49739583333333337,
+       "lo99": 0.4309524592485923,
+       "hi99": 0.5637684970735846,
+       "d_se": -4.605545261201294,
+       "status": "FALSE",
+       "decided": "FALSE"
+      },
+      "B": {
+       "mean": 0.5014184816919192,
+       "lo99": 0.45739409745017534,
+       "hi99": 0.5469945265971358,
+       "d_se": -17.26083062802115,
+       "status": "FALSE",
+       "decided": "FALSE",
+       "chg": 0.4861330943362193,
+       "same": 0.5167038690476191
+      }
+     },
+     "anti_copy(analytic)": {
+      "status": "FALSE",
+      "B": {
+       "mean": 0.2897307336760462,
+       "lo99": 0.25778514218039633,
+       "chg": 0.5403369633838384,
+       "same": 0.03912450396825397
+      }
+     }
+    },
+    "V_scope": {
+     "null": true,
+     "relay_latch_copy": true,
+     "latch_once": true,
+     "anti_copy(analytic)": true
+    },
+    "thresholds": {
+     "B": 0.9
+    }
+   },
+   "arms": {
+    "PSEED": 4,
+    "KSEED-1": 4,
+    "KSEED-2": 4,
+    "KSEED-4": 4,
+    "BASE": 12,
+    "W0": 8,
+    "M32": 8
+   }
+  },
+  {
+   "cell_id": "CTRL-RELAY1h-62a7fff921ca3bd8",
+   "family": "RELAY",
+   "role": "RELAY-1h",
+   "i": null,
+   "physics": {
+    "topology": "ring",
+    "n_sites": 144,
+    "radius": 3,
+    "k_random": 6,
+    "rewire": 50,
+    "state_dim": 2,
+    "payload_width": 2,
+    "channels": 1,
+    "fanout": 8,
+    "dest_mode": "sample",
+    "loss": 0.1,
+    "loss_per_hop": 0,
+    "lat_base": 1,
+    "lat_hop": 1,
+    "lat_jitter": 1,
+    "dup": 0.0,
+    "noise": 0,
+    "cap": 2,
+    "collision": "saturate",
+    "decay_shift": 0,
+    "update_mode": "sync",
+    "update_period": 2,
+    "update_p": 0.5,
+    "rules": 1,
+    "prog_len": 16,
+    "plastic_route": 1,
+    "adapt_shift": 5,
+    "wimm": 1,
+    "setrule": 0,
+    "mut_site": 0.0,
+    "e_income": 0,
+    "e_max": 1000,
+    "c_emit": 0,
+    "c_op": 0,
+    "c_mem": 0,
+    "topo_seed": 1939803888
+   },
+   "env": {
+    "family": "RELAY",
+    "d": 3,
+    "delta": 8,
+    "gap": 8,
+    "cue_len": 2,
+    "amp": 256,
+    "amp_teacher": 128,
+    "amp_dist": 64,
+    "trials": 12,
+    "block": 4,
+    "flip_p": 0.3,
+    "n_maj": 5,
+    "iti": 2,
+    "variant": 0
+   },
+   "plant_name": "relay_flood",
+   "plant_genome": [
+    [
+     [
+      2,
+      2,
+      15,
+      12,
+      0
+     ],
+     [
+      7,
+      4,
+      2,
+      17,
+      0
+     ],
+     [
+      7,
+      5,
+      17,
+      2,
+      0
+     ],
+     [
+      3,
+      3,
+      4,
+      5,
+      0
+     ],
+     [
+      4,
+      4,
+      3,
+      3,
+      0
+     ],
+     [
+      11,
+      5,
+      3,
+      0,
+      0
+     ],
+     [
+      4,
+      5,
+      5,
+      5,
+      0
+     ],
+     [
+      4,
+      6,
+      4,
+      5,
+      0
+     ],
+     [
+      1,
+      10,
+      3,
+      0,
+      0
+     ],
+     [
+      3,
+      5,
+      3,
+      0,
+      0
+     ],
+     [
+      4,
+      5,
+      5,
+      4,
+      0
+     ],
+     [
+      2,
+      0,
+      0,
+      5,
+      0
+     ],
+     [
+      0,
+      0,
+      0,
+      0,
+      0
+     ],
+     [
+      0,
+      0,
+      0,
+      0,
+      0
+     ],
+     [
+      0,
+      0,
+      0,
+      0,
+      0
+     ],
+     [
+      0,
+      0,
+      0,
+      0,
+      0
+     ]
+    ]
+   ],
+   "cell_key": 1337487313,
+   "c1_history": "C1 d9cc RELAY d3 delta8: 12/12 seeds SIGNAL",
+   "admission": {
+    "plant": {
+     "status": "TRUE",
+     "role": "RELAY-1h",
+     "all": {
+      "mean": 0.8014322916666667,
+      "lo99": 0.7598872074508396,
+      "hi99": 0.8415284532978797,
+      "d_se": 13.771081144543293,
+      "status": "TRUE",
+      "decided": "TRUE"
+     },
+     "late": {
+      "mean": 0.7682291666666666,
+      "lo99": 0.679521886798897,
+      "hi99": 0.8353271155978583,
+      "d_se": 4.657916814410035,
+      "status": "TRUE",
+      "decided": "TRUE"
+     }
+    },
+    "null": {
+     "status": "FALSE",
+     "role": "RELAY-1h",
+     "all": {
+      "mean": 0.5,
+      "lo99": 0.5,
+      "hi99": 0.5,
+      "d_se": NaN,
+      "status": "DEGENERATE",
+      "decided": "FALSE"
+     },
+     "late": {
+      "mean": 0.5,
+      "lo99": 0.5,
+      "hi99": 0.5,
+      "d_se": NaN,
+      "status": "DEGENERATE",
+      "decided": "FALSE"
+     }
+    }
+   },
+   "arms": {
+    "PSEED": 2,
+    "BASE": 8
+   }
+  }
+ ],
+ "jobs": [
+  {
+   "job_id": "RELAY-0010-e89a8022|PSEED|00",
+   "cell_id": "RELAY-0010-e89a8022",
+   "arm": "PSEED",
+   "idx": 0
+  },
+  {
+   "job_id": "RELAY-0010-e89a8022|KSEED-1|00",
+   "cell_id": "RELAY-0010-e89a8022",
+   "arm": "KSEED-1",
+   "idx": 0
+  },
+  {
+   "job_id": "RELAY-0010-e89a8022|KSEED-2|00",
+   "cell_id": "RELAY-0010-e89a8022",
+   "arm": "KSEED-2",
+   "idx": 0
+  },
+  {
+   "job_id": "RELAY-0010-e89a8022|KSEED-4|00",
+   "cell_id": "RELAY-0010-e89a8022",
+   "arm": "KSEED-4",
+   "idx": 0
+  },
+  {
+   "job_id": "RELAY-0010-e89a8022|BASE|00",
+   "cell_id": "RELAY-0010-e89a8022",
+   "arm": "BASE",
+   "idx": 0
+  },
+  {
+   "job_id": "RELAY-0010-e89a8022|W0|00",
+   "cell_id": "RELAY-0010-e89a8022",
+   "arm": "W0",
+   "idx": 0
+  },
+  {
+   "job_id": "RELAY-0010-e89a8022|M32|00",
+   "cell_id": "RELAY-0010-e89a8022",
+   "arm": "M32",
+   "idx": 0
+  },
+  {
+   "job_id": "FLIP-0000-adbab9bf|PSEED|00",
+   "cell_id": "FLIP-0000-adbab9bf",
+   "arm": "PSEED",
+   "idx": 0
+  },
+  {
+   "job_id": "FLIP-0000-adbab9bf|KSEED-1|00",
+   "cell_id": "FLIP-0000-adbab9bf",
+   "arm": "KSEED-1",
+   "idx": 0
+  },
+  {
+   "job_id": "FLIP-0000-adbab9bf|KSEED-2|00",
+   "cell_id": "FLIP-0000-adbab9bf",
+   "arm": "KSEED-2",
+   "idx": 0
+  },
+  {
+   "job_id": "FLIP-0000-adbab9bf|KSEED-4|00",
+   "cell_id": "FLIP-0000-adbab9bf",
+   "arm": "KSEED-4",
+   "idx": 0
+  },
+  {
+   "job_id": "FLIP-0000-adbab9bf|BASE|00",
+   "cell_id": "FLIP-0000-adbab9bf",
+   "arm": "BASE",
+   "idx": 0
+  },
+  {
+   "job_id": "FLIP-0000-adbab9bf|W0|00",
+   "cell_id": "FLIP-0000-adbab9bf",
+   "arm": "W0",
+   "idx": 0
+  },
+  {
+   "job_id": "FLIP-0000-adbab9bf|M32|00",
+   "cell_id": "FLIP-0000-adbab9bf",
+   "arm": "M32",
+   "idx": 0
+  },
+  {
+   "job_id": "RELAY-0019-eabcdf91|PSEED|00",
+   "cell_id": "RELAY-0019-eabcdf91",
+   "arm": "PSEED",
+   "idx": 0
+  },
+  {
+   "job_id": "RELAY-0019-eabcdf91|KSEED-1|00",
+   "cell_id": "RELAY-0019-eabcdf91",
+   "arm": "KSEED-1",
+   "idx": 0
+  },
+  {
+   "job_id": "RELAY-0019-eabcdf91|KSEED-2|00",
+   "cell_id": "RELAY-0019-eabcdf91",
+   "arm": "KSEED-2",
+   "idx": 0
+  },
+  {
+   "job_id": "RELAY-0019-eabcdf91|KSEED-4|00",
+   "cell_id": "RELAY-0019-eabcdf91",
+   "arm": "KSEED-4",
+   "idx": 0
+  },
+  {
+   "job_id": "RELAY-0019-eabcdf91|BASE|00",
+   "cell_id": "RELAY-0019-eabcdf91",
+   "arm": "BASE",
+   "idx": 0
+  },
+  {
+   "job_id": "RELAY-0019-eabcdf91|W0|00",
+   "cell_id": "RELAY-0019-eabcdf91",
+   "arm": "W0",
+   "idx": 0
+  },
+  {
+   "job_id": "RELAY-0019-eabcdf91|M32|00",
+   "cell_id": "RELAY-0019-eabcdf91",
+   "arm": "M32",
+   "idx": 0
+  },
+  {
+   "job_id": "FLIP-0004-125dfbff|PSEED|00",
+   "cell_id": "FLIP-0004-125dfbff",
+   "arm": "PSEED",
+   "idx": 0
+  },
+  {
+   "job_id": "FLIP-0004-125dfbff|KSEED-1|00",
+   "cell_id": "FLIP-0004-125dfbff",
+   "arm": "KSEED-1",
+   "idx": 0
+  },
+  {
+   "job_id": "FLIP-0004-125dfbff|KSEED-2|00",
+   "cell_id": "FLIP-0004-125dfbff",
+   "arm": "KSEED-2",
+   "idx": 0
+  },
+  {
+   "job_id": "FLIP-0004-125dfbff|KSEED-4|00",
+   "cell_id": "FLIP-0004-125dfbff",
+   "arm": "KSEED-4",
+   "idx": 0
+  },
+  {
+   "job_id": "FLIP-0004-125dfbff|BASE|00",
+   "cell_id": "FLIP-0004-125dfbff",
+   "arm": "BASE",
+   "idx": 0
+  },
+  {
+   "job_id": "FLIP-0004-125dfbff|W0|00",
+   "cell_id": "FLIP-0004-125dfbff",
+   "arm": "W0",
+   "idx": 0
+  },
+  {
+   "job_id": "FLIP-0004-125dfbff|M32|00",
+   "cell_id": "FLIP-0004-125dfbff",
+   "arm": "M32",
+   "idx": 0
+  },
+  {
+   "job_id": "RELAY-0027-8dac4bc0|PSEED|00",
+   "cell_id": "RELAY-0027-8dac4bc0",
+   "arm": "PSEED",
+   "idx": 0
+  },
+  {
+   "job_id": "RELAY-0027-8dac4bc0|KSEED-1|00",
+   "cell_id": "RELAY-0027-8dac4bc0",
+   "arm": "KSEED-1",
+   "idx": 0
+  },
+  {
+   "job_id": "RELAY-0027-8dac4bc0|KSEED-2|00",
+   "cell_id": "RELAY-0027-8dac4bc0",
+   "arm": "KSEED-2",
+   "idx": 0
+  },
+  {
+   "job_id": "RELAY-0027-8dac4bc0|KSEED-4|00",
+   "cell_id": "RELAY-0027-8dac4bc0",
+   "arm": "KSEED-4",
+   "idx": 0
+  },
+  {
+   "job_id": "RELAY-0027-8dac4bc0|BASE|00",
+   "cell_id": "RELAY-0027-8dac4bc0",
+   "arm": "BASE",
+   "idx": 0
+  },
+  {
+   "job_id": "RELAY-0027-8dac4bc0|W0|00",
+   "cell_id": "RELAY-0027-8dac4bc0",
+   "arm": "W0",
+   "idx": 0
+  },
+  {
+   "job_id": "RELAY-0027-8dac4bc0|M32|00",
+   "cell_id": "RELAY-0027-8dac4bc0",
+   "arm": "M32",
+   "idx": 0
+  },
+  {
+   "job_id": "FLIP-0099-df143630|PSEED|00",
+   "cell_id": "FLIP-0099-df143630",
+   "arm": "PSEED",
+   "idx": 0
+  },
+  {
+   "job_id": "FLIP-0099-df143630|KSEED-1|00",
+   "cell_id": "FLIP-0099-df143630",
+   "arm": "KSEED-1",
+   "idx": 0
+  },
+  {
+   "job_id": "FLIP-0099-df143630|KSEED-2|00",
+   "cell_id": "FLIP-0099-df143630",
+   "arm": "KSEED-2",
+   "idx": 0
+  },
+  {
+   "job_id": "FLIP-0099-df143630|KSEED-4|00",
+   "cell_id": "FLIP-0099-df143630",
+   "arm": "KSEED-4",
+   "idx": 0
+  },
+  {
+   "job_id": "FLIP-0099-df143630|BASE|00",
+   "cell_id": "FLIP-0099-df143630",
+   "arm": "BASE",
+   "idx": 0
+  },
+  {
+   "job_id": "FLIP-0099-df143630|W0|00",
+   "cell_id": "FLIP-0099-df143630",
+   "arm": "W0",
+   "idx": 0
+  },
+  {
+   "job_id": "FLIP-0099-df143630|M32|00",
+   "cell_id": "FLIP-0099-df143630",
+   "arm": "M32",
+   "idx": 0
+  },
+  {
+   "job_id": "RELAY-0032-a447e46e|PSEED|00",
+   "cell_id": "RELAY-0032-a447e46e",
+   "arm": "PSEED",
+   "idx": 0
+  },
+  {
+   "job_id": "RELAY-0032-a447e46e|KSEED-1|00",
+   "cell_id": "RELAY-0032-a447e46e",
+   "arm": "KSEED-1",
+   "idx": 0
+  },
+  {
+   "job_id": "RELAY-0032-a447e46e|KSEED-2|00",
+   "cell_id": "RELAY-0032-a447e46e",
+   "arm": "KSEED-2",
+   "idx": 0
+  },
+  {
+   "job_id": "RELAY-0032-a447e46e|KSEED-4|00",
+   "cell_id": "RELAY-0032-a447e46e",
+   "arm": "KSEED-4",
+   "idx": 0
+  },
+  {
+   "job_id": "RELAY-0032-a447e46e|BASE|00",
+   "cell_id": "RELAY-0032-a447e46e",
+   "arm": "BASE",
+   "idx": 0
+  },
+  {
+   "job_id": "RELAY-0032-a447e46e|W0|00",
+   "cell_id": "RELAY-0032-a447e46e",
+   "arm": "W0",
+   "idx": 0
+  },
+  {
+   "job_id": "RELAY-0032-a447e46e|M32|00",
+   "cell_id": "RELAY-0032-a447e46e",
+   "arm": "M32",
+   "idx": 0
+  },
+  {
+   "job_id": "FLIP-0167-b6d3fceb|PSEED|00",
+   "cell_id": "FLIP-0167-b6d3fceb",
+   "arm": "PSEED",
+   "idx": 0
+  },
+  {
+   "job_id": "FLIP-0167-b6d3fceb|KSEED-1|00",
+   "cell_id": "FLIP-0167-b6d3fceb",
+   "arm": "KSEED-1",
+   "idx": 0
+  },
+  {
+   "job_id": "FLIP-0167-b6d3fceb|KSEED-2|00",
+   "cell_id": "FLIP-0167-b6d3fceb",
+   "arm": "KSEED-2",
+   "idx": 0
+  },
+  {
+   "job_id": "FLIP-0167-b6d3fceb|KSEED-4|00",
+   "cell_id": "FLIP-0167-b6d3fceb",
+   "arm": "KSEED-4",
+   "idx": 0
+  },
+  {
+   "job_id": "FLIP-0167-b6d3fceb|BASE|00",
+   "cell_id": "FLIP-0167-b6d3fceb",
+   "arm": "BASE",
+   "idx": 0
+  },
+  {
+   "job_id": "FLIP-0167-b6d3fceb|W0|00",
+   "cell_id": "FLIP-0167-b6d3fceb",
+   "arm": "W0",
+   "idx": 0
+  },
+  {
+   "job_id": "FLIP-0167-b6d3fceb|M32|00",
+   "cell_id": "FLIP-0167-b6d3fceb",
+   "arm": "M32",
+   "idx": 0
+  },
+  {
+   "job_id": "CTRL-RELAY1h-62a7fff921ca3bd8|PSEED|00",
+   "cell_id": "CTRL-RELAY1h-62a7fff921ca3bd8",
+   "arm": "PSEED",
+   "idx": 0
+  },
+  {
+   "job_id": "CTRL-RELAY1h-62a7fff921ca3bd8|BASE|00",
+   "cell_id": "CTRL-RELAY1h-62a7fff921ca3bd8",
+   "arm": "BASE",
+   "idx": 0
+  },
+  {
+   "job_id": "RELAY-0010-e89a8022|PSEED|01",
+   "cell_id": "RELAY-0010-e89a8022",
+   "arm": "PSEED",
+   "idx": 1
+  },
+  {
+   "job_id": "RELAY-0010-e89a8022|KSEED-1|01",
+   "cell_id": "RELAY-0010-e89a8022",
+   "arm": "KSEED-1",
+   "idx": 1
+  },
+  {
+   "job_id": "RELAY-0010-e89a8022|KSEED-2|01",
+   "cell_id": "RELAY-0010-e89a8022",
+   "arm": "KSEED-2",
+   "idx": 1
+  },
+  {
+   "job_id": "RELAY-0010-e89a8022|KSEED-4|01",
+   "cell_id": "RELAY-0010-e89a8022",
+   "arm": "KSEED-4",
+   "idx": 1
+  },
+  {
+   "job_id": "RELAY-0010-e89a8022|BASE|01",
+   "cell_id": "RELAY-0010-e89a8022",
+   "arm": "BASE",
+   "idx": 1
+  },
+  {
+   "job_id": "RELAY-0010-e89a8022|W0|01",
+   "cell_id": "RELAY-0010-e89a8022",
+   "arm": "W0",
+   "idx": 1
+  },
+  {
+   "job_id": "RELAY-0010-e89a8022|M32|01",
+   "cell_id": "RELAY-0010-e89a8022",
+   "arm": "M32",
+   "idx": 1
+  },
+  {
+   "job_id": "FLIP-0000-adbab9bf|PSEED|01",
+   "cell_id": "FLIP-0000-adbab9bf",
+   "arm": "PSEED",
+   "idx": 1
+  },
+  {
+   "job_id": "FLIP-0000-adbab9bf|KSEED-1|01",
+   "cell_id": "FLIP-0000-adbab9bf",
+   "arm": "KSEED-1",
+   "idx": 1
+  },
+  {
+   "job_id": "FLIP-0000-adbab9bf|KSEED-2|01",
+   "cell_id": "FLIP-0000-adbab9bf",
+   "arm": "KSEED-2",
+   "idx": 1
+  },
+  {
+   "job_id": "FLIP-0000-adbab9bf|KSEED-4|01",
+   "cell_id": "FLIP-0000-adbab9bf",
+   "arm": "KSEED-4",
+   "idx": 1
+  },
+  {
+   "job_id": "FLIP-0000-adbab9bf|BASE|01",
+   "cell_id": "FLIP-0000-adbab9bf",
+   "arm": "BASE",
+   "idx": 1
+  },
+  {
+   "job_id": "FLIP-0000-adbab9bf|W0|01",
+   "cell_id": "FLIP-0000-adbab9bf",
+   "arm": "W0",
+   "idx": 1
+  },
+  {
+   "job_id": "FLIP-0000-adbab9bf|M32|01",
+   "cell_id": "FLIP-0000-adbab9bf",
+   "arm": "M32",
+   "idx": 1
+  },
+  {
+   "job_id": "RELAY-0019-eabcdf91|PSEED|01",
+   "cell_id": "RELAY-0019-eabcdf91",
+   "arm": "PSEED",
+   "idx": 1
+  },
+  {
+   "job_id": "RELAY-0019-eabcdf91|KSEED-1|01",
+   "cell_id": "RELAY-0019-eabcdf91",
+   "arm": "KSEED-1",
+   "idx": 1
+  },
+  {
+   "job_id": "RELAY-0019-eabcdf91|KSEED-2|01",
+   "cell_id": "RELAY-0019-eabcdf91",
+   "arm": "KSEED-2",
+   "idx": 1
+  },
+  {
+   "job_id": "RELAY-0019-eabcdf91|KSEED-4|01",
+   "cell_id": "RELAY-0019-eabcdf91",
+   "arm": "KSEED-4",
+   "idx": 1
+  },
+  {
+   "job_id": "RELAY-0019-eabcdf91|BASE|01",
+   "cell_id": "RELAY-0019-eabcdf91",
+   "arm": "BASE",
+   "idx": 1
+  },
+  {
+   "job_id": "RELAY-0019-eabcdf91|W0|01",
+   "cell_id": "RELAY-0019-eabcdf91",
+   "arm": "W0",
+   "idx": 1
+  },
+  {
+   "job_id": "RELAY-0019-eabcdf91|M32|01",
+   "cell_id": "RELAY-0019-eabcdf91",
+   "arm": "M32",
+   "idx": 1
+  },
+  {
+   "job_id": "FLIP-0004-125dfbff|PSEED|01",
+   "cell_id": "FLIP-0004-125dfbff",
+   "arm": "PSEED",
+   "idx": 1
+  },
+  {
+   "job_id": "FLIP-0004-125dfbff|KSEED-1|01",
+   "cell_id": "FLIP-0004-125dfbff",
+   "arm": "KSEED-1",
+   "idx": 1
+  },
+  {
+   "job_id": "FLIP-0004-125dfbff|KSEED-2|01",
+   "cell_id": "FLIP-0004-125dfbff",
+   "arm": "KSEED-2",
+   "idx": 1
+  },
+  {
+   "job_id": "FLIP-0004-125dfbff|KSEED-4|01",
+   "cell_id": "FLIP-0004-125dfbff",
+   "arm": "KSEED-4",
+   "idx": 1
+  },
+  {
+   "job_id": "FLIP-0004-125dfbff|BASE|01",
+   "cell_id": "FLIP-0004-125dfbff",
+   "arm": "BASE",
+   "idx": 1
+  },
+  {
+   "job_id": "FLIP-0004-125dfbff|W0|01",
+   "cell_id": "FLIP-0004-125dfbff",
+   "arm": "W0",
+   "idx": 1
+  },
+  {
+   "job_id": "FLIP-0004-125dfbff|M32|01",
+   "cell_id": "FLIP-0004-125dfbff",
+   "arm": "M32",
+   "idx": 1
+  },
+  {
+   "job_id": "RELAY-0027-8dac4bc0|PSEED|01",
+   "cell_id": "RELAY-0027-8dac4bc0",
+   "arm": "PSEED",
+   "idx": 1
+  },
+  {
+   "job_id": "RELAY-0027-8dac4bc0|KSEED-1|01",
+   "cell_id": "RELAY-0027-8dac4bc0",
+   "arm": "KSEED-1",
+   "idx": 1
+  },
+  {
+   "job_id": "RELAY-0027-8dac4bc0|KSEED-2|01",
+   "cell_id": "RELAY-0027-8dac4bc0",
+   "arm": "KSEED-2",
+   "idx": 1
+  },
+  {
+   "job_id": "RELAY-0027-8dac4bc0|KSEED-4|01",
+   "cell_id": "RELAY-0027-8dac4bc0",
+   "arm": "KSEED-4",
+   "idx": 1
+  },
+  {
+   "job_id": "RELAY-0027-8dac4bc0|BASE|01",
+   "cell_id": "RELAY-0027-8dac4bc0",
+   "arm": "BASE",
+   "idx": 1
+  },
+  {
+   "job_id": "RELAY-0027-8dac4bc0|W0|01",
+   "cell_id": "RELAY-0027-8dac4bc0",
+   "arm": "W0",
+   "idx": 1
+  },
+  {
+   "job_id": "RELAY-0027-8dac4bc0|M32|01",
+   "cell_id": "RELAY-0027-8dac4bc0",
+   "arm": "M32",
+   "idx": 1
+  },
+  {
+   "job_id": "FLIP-0099-df143630|PSEED|01",
+   "cell_id": "FLIP-0099-df143630",
+   "arm": "PSEED",
+   "idx": 1
+  },
+  {
+   "job_id": "FLIP-0099-df143630|KSEED-1|01",
+   "cell_id": "FLIP-0099-df143630",
+   "arm": "KSEED-1",
+   "idx": 1
+  },
+  {
+   "job_id": "FLIP-0099-df143630|KSEED-2|01",
+   "cell_id": "FLIP-0099-df143630",
+   "arm": "KSEED-2",
+   "idx": 1
+  },
+  {
+   "job_id": "FLIP-0099-df143630|KSEED-4|01",
+   "cell_id": "FLIP-0099-df143630",
+   "arm": "KSEED-4",
+   "idx": 1
+  },
+  {
+   "job_id": "FLIP-0099-df143630|BASE|01",
+   "cell_id": "FLIP-0099-df143630",
+   "arm": "BASE",
+   "idx": 1
+  },
+  {
+   "job_id": "FLIP-0099-df143630|W0|01",
+   "cell_id": "FLIP-0099-df143630",
+   "arm": "W0",
+   "idx": 1
+  },
+  {
+   "job_id": "FLIP-0099-df143630|M32|01",
+   "cell_id": "FLIP-0099-df143630",
+   "arm": "M32",
+   "idx": 1
+  },
+  {
+   "job_id": "RELAY-0032-a447e46e|PSEED|01",
+   "cell_id": "RELAY-0032-a447e46e",
+   "arm": "PSEED",
+   "idx": 1
+  },
+  {
+   "job_id": "RELAY-0032-a447e46e|KSEED-1|01",
+   "cell_id": "RELAY-0032-a447e46e",
+   "arm": "KSEED-1",
+   "idx": 1
+  },
+  {
+   "job_id": "RELAY-0032-a447e46e|KSEED-2|01",
+   "cell_id": "RELAY-0032-a447e46e",
+   "arm": "KSEED-2",
+   "idx": 1
+  },
+  {
+   "job_id": "RELAY-0032-a447e46e|KSEED-4|01",
+   "cell_id": "RELAY-0032-a447e46e",
+   "arm": "KSEED-4",
+   "idx": 1
+  },
+  {
+   "job_id": "RELAY-0032-a447e46e|BASE|01",
+   "cell_id": "RELAY-0032-a447e46e",
+   "arm": "BASE",
+   "idx": 1
+  },
+  {
+   "job_id": "RELAY-0032-a447e46e|W0|01",
+   "cell_id": "RELAY-0032-a447e46e",
+   "arm": "W0",
+   "idx": 1
+  },
+  {
+   "job_id": "RELAY-0032-a447e46e|M32|01",
+   "cell_id": "RELAY-0032-a447e46e",
+   "arm": "M32",
+   "idx": 1
+  },
+  {
+   "job_id": "FLIP-0167-b6d3fceb|PSEED|01",
+   "cell_id": "FLIP-0167-b6d3fceb",
+   "arm": "PSEED",
+   "idx": 1
+  },
+  {
+   "job_id": "FLIP-0167-b6d3fceb|KSEED-1|01",
+   "cell_id": "FLIP-0167-b6d3fceb",
+   "arm": "KSEED-1",
+   "idx": 1
+  },
+  {
+   "job_id": "FLIP-0167-b6d3fceb|KSEED-2|01",
+   "cell_id": "FLIP-0167-b6d3fceb",
+   "arm": "KSEED-2",
+   "idx": 1
+  },
+  {
+   "job_id": "FLIP-0167-b6d3fceb|KSEED-4|01",
+   "cell_id": "FLIP-0167-b6d3fceb",
+   "arm": "KSEED-4",
+   "idx": 1
+  },
+  {
+   "job_id": "FLIP-0167-b6d3fceb|BASE|01",
+   "cell_id": "FLIP-0167-b6d3fceb",
+   "arm": "BASE",
+   "idx": 1
+  },
+  {
+   "job_id": "FLIP-0167-b6d3fceb|W0|01",
+   "cell_id": "FLIP-0167-b6d3fceb",
+   "arm": "W0",
+   "idx": 1
+  },
+  {
+   "job_id": "FLIP-0167-b6d3fceb|M32|01",
+   "cell_id": "FLIP-0167-b6d3fceb",
+   "arm": "M32",
+   "idx": 1
+  },
+  {
+   "job_id": "CTRL-RELAY1h-62a7fff921ca3bd8|PSEED|01",
+   "cell_id": "CTRL-RELAY1h-62a7fff921ca3bd8",
+   "arm": "PSEED",
+   "idx": 1
+  },
+  {
+   "job_id": "CTRL-RELAY1h-62a7fff921ca3bd8|BASE|01",
+   "cell_id": "CTRL-RELAY1h-62a7fff921ca3bd8",
+   "arm": "BASE",
+   "idx": 1
+  },
+  {
+   "job_id": "RELAY-0010-e89a8022|PSEED|02",
+   "cell_id": "RELAY-0010-e89a8022",
+   "arm": "PSEED",
+   "idx": 2
+  },
+  {
+   "job_id": "RELAY-0010-e89a8022|KSEED-1|02",
+   "cell_id": "RELAY-0010-e89a8022",
+   "arm": "KSEED-1",
+   "idx": 2
+  },
+  {
+   "job_id": "RELAY-0010-e89a8022|KSEED-2|02",
+   "cell_id": "RELAY-0010-e89a8022",
+   "arm": "KSEED-2",
+   "idx": 2
+  },
+  {
+   "job_id": "RELAY-0010-e89a8022|KSEED-4|02",
+   "cell_id": "RELAY-0010-e89a8022",
+   "arm": "KSEED-4",
+   "idx": 2
+  },
+  {
+   "job_id": "RELAY-0010-e89a8022|BASE|02",
+   "cell_id": "RELAY-0010-e89a8022",
+   "arm": "BASE",
+   "idx": 2
+  },
+  {
+   "job_id": "RELAY-0010-e89a8022|W0|02",
+   "cell_id": "RELAY-0010-e89a8022",
+   "arm": "W0",
+   "idx": 2
+  },
+  {
+   "job_id": "RELAY-0010-e89a8022|M32|02",
+   "cell_id": "RELAY-0010-e89a8022",
+   "arm": "M32",
+   "idx": 2
+  },
+  {
+   "job_id": "FLIP-0000-adbab9bf|PSEED|02",
+   "cell_id": "FLIP-0000-adbab9bf",
+   "arm": "PSEED",
+   "idx": 2
+  },
+  {
+   "job_id": "FLIP-0000-adbab9bf|KSEED-1|02",
+   "cell_id": "FLIP-0000-adbab9bf",
+   "arm": "KSEED-1",
+   "idx": 2
+  },
+  {
+   "job_id": "FLIP-0000-adbab9bf|KSEED-2|02",
+   "cell_id": "FLIP-0000-adbab9bf",
+   "arm": "KSEED-2",
+   "idx": 2
+  },
+  {
+   "job_id": "FLIP-0000-adbab9bf|KSEED-4|02",
+   "cell_id": "FLIP-0000-adbab9bf",
+   "arm": "KSEED-4",
+   "idx": 2
+  },
+  {
+   "job_id": "FLIP-0000-adbab9bf|BASE|02",
+   "cell_id": "FLIP-0000-adbab9bf",
+   "arm": "BASE",
+   "idx": 2
+  },
+  {
+   "job_id": "FLIP-0000-adbab9bf|W0|02",
+   "cell_id": "FLIP-0000-adbab9bf",
+   "arm": "W0",
+   "idx": 2
+  },
+  {
+   "job_id": "FLIP-0000-adbab9bf|M32|02",
+   "cell_id": "FLIP-0000-adbab9bf",
+   "arm": "M32",
+   "idx": 2
+  },
+  {
+   "job_id": "RELAY-0019-eabcdf91|PSEED|02",
+   "cell_id": "RELAY-0019-eabcdf91",
+   "arm": "PSEED",
+   "idx": 2
+  },
+  {
+   "job_id": "RELAY-0019-eabcdf91|KSEED-1|02",
+   "cell_id": "RELAY-0019-eabcdf91",
+   "arm": "KSEED-1",
+   "idx": 2
+  },
+  {
+   "job_id": "RELAY-0019-eabcdf91|KSEED-2|02",
+   "cell_id": "RELAY-0019-eabcdf91",
+   "arm": "KSEED-2",
+   "idx": 2
+  },
+  {
+   "job_id": "RELAY-0019-eabcdf91|KSEED-4|02",
+   "cell_id": "RELAY-0019-eabcdf91",
+   "arm": "KSEED-4",
+   "idx": 2
+  },
+  {
+   "job_id": "RELAY-0019-eabcdf91|BASE|02",
+   "cell_id": "RELAY-0019-eabcdf91",
+   "arm": "BASE",
+   "idx": 2
+  },
+  {
+   "job_id": "RELAY-0019-eabcdf91|W0|02",
+   "cell_id": "RELAY-0019-eabcdf91",
+   "arm": "W0",
+   "idx": 2
+  },
+  {
+   "job_id": "RELAY-0019-eabcdf91|M32|02",
+   "cell_id": "RELAY-0019-eabcdf91",
+   "arm": "M32",
+   "idx": 2
+  },
+  {
+   "job_id": "FLIP-0004-125dfbff|PSEED|02",
+   "cell_id": "FLIP-0004-125dfbff",
+   "arm": "PSEED",
+   "idx": 2
+  },
+  {
+   "job_id": "FLIP-0004-125dfbff|KSEED-1|02",
+   "cell_id": "FLIP-0004-125dfbff",
+   "arm": "KSEED-1",
+   "idx": 2
+  },
+  {
+   "job_id": "FLIP-0004-125dfbff|KSEED-2|02",
+   "cell_id": "FLIP-0004-125dfbff",
+   "arm": "KSEED-2",
+   "idx": 2
+  },
+  {
+   "job_id": "FLIP-0004-125dfbff|KSEED-4|02",
+   "cell_id": "FLIP-0004-125dfbff",
+   "arm": "KSEED-4",
+   "idx": 2
+  },
+  {
+   "job_id": "FLIP-0004-125dfbff|BASE|02",
+   "cell_id": "FLIP-0004-125dfbff",
+   "arm": "BASE",
+   "idx": 2
+  },
+  {
+   "job_id": "FLIP-0004-125dfbff|W0|02",
+   "cell_id": "FLIP-0004-125dfbff",
+   "arm": "W0",
+   "idx": 2
+  },
+  {
+   "job_id": "FLIP-0004-125dfbff|M32|02",
+   "cell_id": "FLIP-0004-125dfbff",
+   "arm": "M32",
+   "idx": 2
+  },
+  {
+   "job_id": "RELAY-0027-8dac4bc0|PSEED|02",
+   "cell_id": "RELAY-0027-8dac4bc0",
+   "arm": "PSEED",
+   "idx": 2
+  },
+  {
+   "job_id": "RELAY-0027-8dac4bc0|KSEED-1|02",
+   "cell_id": "RELAY-0027-8dac4bc0",
+   "arm": "KSEED-1",
+   "idx": 2
+  },
+  {
+   "job_id": "RELAY-0027-8dac4bc0|KSEED-2|02",
+   "cell_id": "RELAY-0027-8dac4bc0",
+   "arm": "KSEED-2",
+   "idx": 2
+  },
+  {
+   "job_id": "RELAY-0027-8dac4bc0|KSEED-4|02",
+   "cell_id": "RELAY-0027-8dac4bc0",
+   "arm": "KSEED-4",
+   "idx": 2
+  },
+  {
+   "job_id": "RELAY-0027-8dac4bc0|BASE|02",
+   "cell_id": "RELAY-0027-8dac4bc0",
+   "arm": "BASE",
+   "idx": 2
+  },
+  {
+   "job_id": "RELAY-0027-8dac4bc0|W0|02",
+   "cell_id": "RELAY-0027-8dac4bc0",
+   "arm": "W0",
+   "idx": 2
+  },
+  {
+   "job_id": "RELAY-0027-8dac4bc0|M32|02",
+   "cell_id": "RELAY-0027-8dac4bc0",
+   "arm": "M32",
+   "idx": 2
+  },
+  {
+   "job_id": "FLIP-0099-df143630|PSEED|02",
+   "cell_id": "FLIP-0099-df143630",
+   "arm": "PSEED",
+   "idx": 2
+  },
+  {
+   "job_id": "FLIP-0099-df143630|KSEED-1|02",
+   "cell_id": "FLIP-0099-df143630",
+   "arm": "KSEED-1",
+   "idx": 2
+  },
+  {
+   "job_id": "FLIP-0099-df143630|KSEED-2|02",
+   "cell_id": "FLIP-0099-df143630",
+   "arm": "KSEED-2",
+   "idx": 2
+  },
+  {
+   "job_id": "FLIP-0099-df143630|KSEED-4|02",
+   "cell_id": "FLIP-0099-df143630",
+   "arm": "KSEED-4",
+   "idx": 2
+  },
+  {
+   "job_id": "FLIP-0099-df143630|BASE|02",
+   "cell_id": "FLIP-0099-df143630",
+   "arm": "BASE",
+   "idx": 2
+  },
+  {
+   "job_id": "FLIP-0099-df143630|W0|02",
+   "cell_id": "FLIP-0099-df143630",
+   "arm": "W0",
+   "idx": 2
+  },
+  {
+   "job_id": "FLIP-0099-df143630|M32|02",
+   "cell_id": "FLIP-0099-df143630",
+   "arm": "M32",
+   "idx": 2
+  },
+  {
+   "job_id": "RELAY-0032-a447e46e|PSEED|02",
+   "cell_id": "RELAY-0032-a447e46e",
+   "arm": "PSEED",
+   "idx": 2
+  },
+  {
+   "job_id": "RELAY-0032-a447e46e|KSEED-1|02",
+   "cell_id": "RELAY-0032-a447e46e",
+   "arm": "KSEED-1",
+   "idx": 2
+  },
+  {
+   "job_id": "RELAY-0032-a447e46e|KSEED-2|02",
+   "cell_id": "RELAY-0032-a447e46e",
+   "arm": "KSEED-2",
+   "idx": 2
+  },
+  {
+   "job_id": "RELAY-0032-a447e46e|KSEED-4|02",
+   "cell_id": "RELAY-0032-a447e46e",
+   "arm": "KSEED-4",
+   "idx": 2
+  },
+  {
+   "job_id": "RELAY-0032-a447e46e|BASE|02",
+   "cell_id": "RELAY-0032-a447e46e",
+   "arm": "BASE",
+   "idx": 2
+  },
+  {
+   "job_id": "RELAY-0032-a447e46e|W0|02",
+   "cell_id": "RELAY-0032-a447e46e",
+   "arm": "W0",
+   "idx": 2
+  },
+  {
+   "job_id": "RELAY-0032-a447e46e|M32|02",
+   "cell_id": "RELAY-0032-a447e46e",
+   "arm": "M32",
+   "idx": 2
+  },
+  {
+   "job_id": "FLIP-0167-b6d3fceb|PSEED|02",
+   "cell_id": "FLIP-0167-b6d3fceb",
+   "arm": "PSEED",
+   "idx": 2
+  },
+  {
+   "job_id": "FLIP-0167-b6d3fceb|KSEED-1|02",
+   "cell_id": "FLIP-0167-b6d3fceb",
+   "arm": "KSEED-1",
+   "idx": 2
+  },
+  {
+   "job_id": "FLIP-0167-b6d3fceb|KSEED-2|02",
+   "cell_id": "FLIP-0167-b6d3fceb",
+   "arm": "KSEED-2",
+   "idx": 2
+  },
+  {
+   "job_id": "FLIP-0167-b6d3fceb|KSEED-4|02",
+   "cell_id": "FLIP-0167-b6d3fceb",
+   "arm": "KSEED-4",
+   "idx": 2
+  },
+  {
+   "job_id": "FLIP-0167-b6d3fceb|BASE|02",
+   "cell_id": "FLIP-0167-b6d3fceb",
+   "arm": "BASE",
+   "idx": 2
+  },
+  {
+   "job_id": "FLIP-0167-b6d3fceb|W0|02",
+   "cell_id": "FLIP-0167-b6d3fceb",
+   "arm": "W0",
+   "idx": 2
+  },
+  {
+   "job_id": "FLIP-0167-b6d3fceb|M32|02",
+   "cell_id": "FLIP-0167-b6d3fceb",
+   "arm": "M32",
+   "idx": 2
+  },
+  {
+   "job_id": "CTRL-RELAY1h-62a7fff921ca3bd8|BASE|02",
+   "cell_id": "CTRL-RELAY1h-62a7fff921ca3bd8",
+   "arm": "BASE",
+   "idx": 2
+  },
+  {
+   "job_id": "RELAY-0010-e89a8022|PSEED|03",
+   "cell_id": "RELAY-0010-e89a8022",
+   "arm": "PSEED",
+   "idx": 3
+  },
+  {
+   "job_id": "RELAY-0010-e89a8022|KSEED-1|03",
+   "cell_id": "RELAY-0010-e89a8022",
+   "arm": "KSEED-1",
+   "idx": 3
+  },
+  {
+   "job_id": "RELAY-0010-e89a8022|KSEED-2|03",
+   "cell_id": "RELAY-0010-e89a8022",
+   "arm": "KSEED-2",
+   "idx": 3
+  },
+  {
+   "job_id": "RELAY-0010-e89a8022|KSEED-4|03",
+   "cell_id": "RELAY-0010-e89a8022",
+   "arm": "KSEED-4",
+   "idx": 3
+  },
+  {
+   "job_id": "RELAY-0010-e89a8022|BASE|03",
+   "cell_id": "RELAY-0010-e89a8022",
+   "arm": "BASE",
+   "idx": 3
+  },
+  {
+   "job_id": "RELAY-0010-e89a8022|W0|03",
+   "cell_id": "RELAY-0010-e89a8022",
+   "arm": "W0",
+   "idx": 3
+  },
+  {
+   "job_id": "RELAY-0010-e89a8022|M32|03",
+   "cell_id": "RELAY-0010-e89a8022",
+   "arm": "M32",
+   "idx": 3
+  },
+  {
+   "job_id": "FLIP-0000-adbab9bf|PSEED|03",
+   "cell_id": "FLIP-0000-adbab9bf",
+   "arm": "PSEED",
+   "idx": 3
+  },
+  {
+   "job_id": "FLIP-0000-adbab9bf|KSEED-1|03",
+   "cell_id": "FLIP-0000-adbab9bf",
+   "arm": "KSEED-1",
+   "idx": 3
+  },
+  {
+   "job_id": "FLIP-0000-adbab9bf|KSEED-2|03",
+   "cell_id": "FLIP-0000-adbab9bf",
+   "arm": "KSEED-2",
+   "idx": 3
+  },
+  {
+   "job_id": "FLIP-0000-adbab9bf|KSEED-4|03",
+   "cell_id": "FLIP-0000-adbab9bf",
+   "arm": "KSEED-4",
+   "idx": 3
+  },
+  {
+   "job_id": "FLIP-0000-adbab9bf|BASE|03",
+   "cell_id": "FLIP-0000-adbab9bf",
+   "arm": "BASE",
+   "idx": 3
+  },
+  {
+   "job_id": "FLIP-0000-adbab9bf|W0|03",
+   "cell_id": "FLIP-0000-adbab9bf",
+   "arm": "W0",
+   "idx": 3
+  },
+  {
+   "job_id": "FLIP-0000-adbab9bf|M32|03",
+   "cell_id": "FLIP-0000-adbab9bf",
+   "arm": "M32",
+   "idx": 3
+  },
+  {
+   "job_id": "RELAY-0019-eabcdf91|PSEED|03",
+   "cell_id": "RELAY-0019-eabcdf91",
+   "arm": "PSEED",
+   "idx": 3
+  },
+  {
+   "job_id": "RELAY-0019-eabcdf91|KSEED-1|03",
+   "cell_id": "RELAY-0019-eabcdf91",
+   "arm": "KSEED-1",
+   "idx": 3
+  },
+  {
+   "job_id": "RELAY-0019-eabcdf91|KSEED-2|03",
+   "cell_id": "RELAY-0019-eabcdf91",
+   "arm": "KSEED-2",
+   "idx": 3
+  },
+  {
+   "job_id": "RELAY-0019-eabcdf91|KSEED-4|03",
+   "cell_id": "RELAY-0019-eabcdf91",
+   "arm": "KSEED-4",
+   "idx": 3
+  },
+  {
+   "job_id": "RELAY-0019-eabcdf91|BASE|03",
+   "cell_id": "RELAY-0019-eabcdf91",
+   "arm": "BASE",
+   "idx": 3
+  },
+  {
+   "job_id": "RELAY-0019-eabcdf91|W0|03",
+   "cell_id": "RELAY-0019-eabcdf91",
+   "arm": "W0",
+   "idx": 3
+  },
+  {
+   "job_id": "RELAY-0019-eabcdf91|M32|03",
+   "cell_id": "RELAY-0019-eabcdf91",
+   "arm": "M32",
+   "idx": 3
+  },
+  {
+   "job_id": "FLIP-0004-125dfbff|PSEED|03",
+   "cell_id": "FLIP-0004-125dfbff",
+   "arm": "PSEED",
+   "idx": 3
+  },
+  {
+   "job_id": "FLIP-0004-125dfbff|KSEED-1|03",
+   "cell_id": "FLIP-0004-125dfbff",
+   "arm": "KSEED-1",
+   "idx": 3
+  },
+  {
+   "job_id": "FLIP-0004-125dfbff|KSEED-2|03",
+   "cell_id": "FLIP-0004-125dfbff",
+   "arm": "KSEED-2",
+   "idx": 3
+  },
+  {
+   "job_id": "FLIP-0004-125dfbff|KSEED-4|03",
+   "cell_id": "FLIP-0004-125dfbff",
+   "arm": "KSEED-4",
+   "idx": 3
+  },
+  {
+   "job_id": "FLIP-0004-125dfbff|BASE|03",
+   "cell_id": "FLIP-0004-125dfbff",
+   "arm": "BASE",
+   "idx": 3
+  },
+  {
+   "job_id": "FLIP-0004-125dfbff|W0|03",
+   "cell_id": "FLIP-0004-125dfbff",
+   "arm": "W0",
+   "idx": 3
+  },
+  {
+   "job_id": "FLIP-0004-125dfbff|M32|03",
+   "cell_id": "FLIP-0004-125dfbff",
+   "arm": "M32",
+   "idx": 3
+  },
+  {
+   "job_id": "RELAY-0027-8dac4bc0|PSEED|03",
+   "cell_id": "RELAY-0027-8dac4bc0",
+   "arm": "PSEED",
+   "idx": 3
+  },
+  {
+   "job_id": "RELAY-0027-8dac4bc0|KSEED-1|03",
+   "cell_id": "RELAY-0027-8dac4bc0",
+   "arm": "KSEED-1",
+   "idx": 3
+  },
+  {
+   "job_id": "RELAY-0027-8dac4bc0|KSEED-2|03",
+   "cell_id": "RELAY-0027-8dac4bc0",
+   "arm": "KSEED-2",
+   "idx": 3
+  },
+  {
+   "job_id": "RELAY-0027-8dac4bc0|KSEED-4|03",
+   "cell_id": "RELAY-0027-8dac4bc0",
+   "arm": "KSEED-4",
+   "idx": 3
+  },
+  {
+   "job_id": "RELAY-0027-8dac4bc0|BASE|03",
+   "cell_id": "RELAY-0027-8dac4bc0",
+   "arm": "BASE",
+   "idx": 3
+  },
+  {
+   "job_id": "RELAY-0027-8dac4bc0|W0|03",
+   "cell_id": "RELAY-0027-8dac4bc0",
+   "arm": "W0",
+   "idx": 3
+  },
+  {
+   "job_id": "RELAY-0027-8dac4bc0|M32|03",
+   "cell_id": "RELAY-0027-8dac4bc0",
+   "arm": "M32",
+   "idx": 3
+  },
+  {
+   "job_id": "FLIP-0099-df143630|PSEED|03",
+   "cell_id": "FLIP-0099-df143630",
+   "arm": "PSEED",
+   "idx": 3
+  },
+  {
+   "job_id": "FLIP-0099-df143630|KSEED-1|03",
+   "cell_id": "FLIP-0099-df143630",
+   "arm": "KSEED-1",
+   "idx": 3
+  },
+  {
+   "job_id": "FLIP-0099-df143630|KSEED-2|03",
+   "cell_id": "FLIP-0099-df143630",
+   "arm": "KSEED-2",
+   "idx": 3
+  },
+  {
+   "job_id": "FLIP-0099-df143630|KSEED-4|03",
+   "cell_id": "FLIP-0099-df143630",
+   "arm": "KSEED-4",
+   "idx": 3
+  },
+  {
+   "job_id": "FLIP-0099-df143630|BASE|03",
+   "cell_id": "FLIP-0099-df143630",
+   "arm": "BASE",
+   "idx": 3
+  },
+  {
+   "job_id": "FLIP-0099-df143630|W0|03",
+   "cell_id": "FLIP-0099-df143630",
+   "arm": "W0",
+   "idx": 3
+  },
+  {
+   "job_id": "FLIP-0099-df143630|M32|03",
+   "cell_id": "FLIP-0099-df143630",
+   "arm": "M32",
+   "idx": 3
+  },
+  {
+   "job_id": "RELAY-0032-a447e46e|PSEED|03",
+   "cell_id": "RELAY-0032-a447e46e",
+   "arm": "PSEED",
+   "idx": 3
+  },
+  {
+   "job_id": "RELAY-0032-a447e46e|KSEED-1|03",
+   "cell_id": "RELAY-0032-a447e46e",
+   "arm": "KSEED-1",
+   "idx": 3
+  },
+  {
+   "job_id": "RELAY-0032-a447e46e|KSEED-2|03",
+   "cell_id": "RELAY-0032-a447e46e",
+   "arm": "KSEED-2",
+   "idx": 3
+  },
+  {
+   "job_id": "RELAY-0032-a447e46e|KSEED-4|03",
+   "cell_id": "RELAY-0032-a447e46e",
+   "arm": "KSEED-4",
+   "idx": 3
+  },
+  {
+   "job_id": "RELAY-0032-a447e46e|BASE|03",
+   "cell_id": "RELAY-0032-a447e46e",
+   "arm": "BASE",
+   "idx": 3
+  },
+  {
+   "job_id": "RELAY-0032-a447e46e|W0|03",
+   "cell_id": "RELAY-0032-a447e46e",
+   "arm": "W0",
+   "idx": 3
+  },
+  {
+   "job_id": "RELAY-0032-a447e46e|M32|03",
+   "cell_id": "RELAY-0032-a447e46e",
+   "arm": "M32",
+   "idx": 3
+  },
+  {
+   "job_id": "FLIP-0167-b6d3fceb|PSEED|03",
+   "cell_id": "FLIP-0167-b6d3fceb",
+   "arm": "PSEED",
+   "idx": 3
+  },
+  {
+   "job_id": "FLIP-0167-b6d3fceb|KSEED-1|03",
+   "cell_id": "FLIP-0167-b6d3fceb",
+   "arm": "KSEED-1",
+   "idx": 3
+  },
+  {
+   "job_id": "FLIP-0167-b6d3fceb|KSEED-2|03",
+   "cell_id": "FLIP-0167-b6d3fceb",
+   "arm": "KSEED-2",
+   "idx": 3
+  },
+  {
+   "job_id": "FLIP-0167-b6d3fceb|KSEED-4|03",
+   "cell_id": "FLIP-0167-b6d3fceb",
+   "arm": "KSEED-4",
+   "idx": 3
+  },
+  {
+   "job_id": "FLIP-0167-b6d3fceb|BASE|03",
+   "cell_id": "FLIP-0167-b6d3fceb",
+   "arm": "BASE",
+   "idx": 3
+  },
+  {
+   "job_id": "FLIP-0167-b6d3fceb|W0|03",
+   "cell_id": "FLIP-0167-b6d3fceb",
+   "arm": "W0",
+   "idx": 3
+  },
+  {
+   "job_id": "FLIP-0167-b6d3fceb|M32|03",
+   "cell_id": "FLIP-0167-b6d3fceb",
+   "arm": "M32",
+   "idx": 3
+  },
+  {
+   "job_id": "CTRL-RELAY1h-62a7fff921ca3bd8|BASE|03",
+   "cell_id": "CTRL-RELAY1h-62a7fff921ca3bd8",
+   "arm": "BASE",
+   "idx": 3
+  },
+  {
+   "job_id": "RELAY-0010-e89a8022|BASE|04",
+   "cell_id": "RELAY-0010-e89a8022",
+   "arm": "BASE",
+   "idx": 4
+  },
+  {
+   "job_id": "RELAY-0010-e89a8022|W0|04",
+   "cell_id": "RELAY-0010-e89a8022",
+   "arm": "W0",
+   "idx": 4
+  },
+  {
+   "job_id": "RELAY-0010-e89a8022|M32|04",
+   "cell_id": "RELAY-0010-e89a8022",
+   "arm": "M32",
+   "idx": 4
+  },
+  {
+   "job_id": "FLIP-0000-adbab9bf|BASE|04",
+   "cell_id": "FLIP-0000-adbab9bf",
+   "arm": "BASE",
+   "idx": 4
+  },
+  {
+   "job_id": "FLIP-0000-adbab9bf|W0|04",
+   "cell_id": "FLIP-0000-adbab9bf",
+   "arm": "W0",
+   "idx": 4
+  },
+  {
+   "job_id": "FLIP-0000-adbab9bf|M32|04",
+   "cell_id": "FLIP-0000-adbab9bf",
+   "arm": "M32",
+   "idx": 4
+  },
+  {
+   "job_id": "RELAY-0019-eabcdf91|BASE|04",
+   "cell_id": "RELAY-0019-eabcdf91",
+   "arm": "BASE",
+   "idx": 4
+  },
+  {
+   "job_id": "RELAY-0019-eabcdf91|W0|04",
+   "cell_id": "RELAY-0019-eabcdf91",
+   "arm": "W0",
+   "idx": 4
+  },
+  {
+   "job_id": "RELAY-0019-eabcdf91|M32|04",
+   "cell_id": "RELAY-0019-eabcdf91",
+   "arm": "M32",
+   "idx": 4
+  },
+  {
+   "job_id": "FLIP-0004-125dfbff|BASE|04",
+   "cell_id": "FLIP-0004-125dfbff",
+   "arm": "BASE",
+   "idx": 4
+  },
+  {
+   "job_id": "FLIP-0004-125dfbff|W0|04",
+   "cell_id": "FLIP-0004-125dfbff",
+   "arm": "W0",
+   "idx": 4
+  },
+  {
+   "job_id": "FLIP-0004-125dfbff|M32|04",
+   "cell_id": "FLIP-0004-125dfbff",
+   "arm": "M32",
+   "idx": 4
+  },
+  {
+   "job_id": "RELAY-0027-8dac4bc0|BASE|04",
+   "cell_id": "RELAY-0027-8dac4bc0",
+   "arm": "BASE",
+   "idx": 4
+  },
+  {
+   "job_id": "RELAY-0027-8dac4bc0|W0|04",
+   "cell_id": "RELAY-0027-8dac4bc0",
+   "arm": "W0",
+   "idx": 4
+  },
+  {
+   "job_id": "RELAY-0027-8dac4bc0|M32|04",
+   "cell_id": "RELAY-0027-8dac4bc0",
+   "arm": "M32",
+   "idx": 4
+  },
+  {
+   "job_id": "FLIP-0099-df143630|BASE|04",
+   "cell_id": "FLIP-0099-df143630",
+   "arm": "BASE",
+   "idx": 4
+  },
+  {
+   "job_id": "FLIP-0099-df143630|W0|04",
+   "cell_id": "FLIP-0099-df143630",
+   "arm": "W0",
+   "idx": 4
+  },
+  {
+   "job_id": "FLIP-0099-df143630|M32|04",
+   "cell_id": "FLIP-0099-df143630",
+   "arm": "M32",
+   "idx": 4
+  },
+  {
+   "job_id": "RELAY-0032-a447e46e|BASE|04",
+   "cell_id": "RELAY-0032-a447e46e",
+   "arm": "BASE",
+   "idx": 4
+  },
+  {
+   "job_id": "RELAY-0032-a447e46e|W0|04",
+   "cell_id": "RELAY-0032-a447e46e",
+   "arm": "W0",
+   "idx": 4
+  },
+  {
+   "job_id": "RELAY-0032-a447e46e|M32|04",
+   "cell_id": "RELAY-0032-a447e46e",
+   "arm": "M32",
+   "idx": 4
+  },
+  {
+   "job_id": "FLIP-0167-b6d3fceb|BASE|04",
+   "cell_id": "FLIP-0167-b6d3fceb",
+   "arm": "BASE",
+   "idx": 4
+  },
+  {
+   "job_id": "FLIP-0167-b6d3fceb|W0|04",
+   "cell_id": "FLIP-0167-b6d3fceb",
+   "arm": "W0",
+   "idx": 4
+  },
+  {
+   "job_id": "FLIP-0167-b6d3fceb|M32|04",
+   "cell_id": "FLIP-0167-b6d3fceb",
+   "arm": "M32",
+   "idx": 4
+  },
+  {
+   "job_id": "CTRL-RELAY1h-62a7fff921ca3bd8|BASE|04",
+   "cell_id": "CTRL-RELAY1h-62a7fff921ca3bd8",
+   "arm": "BASE",
+   "idx": 4
+  },
+  {
+   "job_id": "RELAY-0010-e89a8022|BASE|05",
+   "cell_id": "RELAY-0010-e89a8022",
+   "arm": "BASE",
+   "idx": 5
+  },
+  {
+   "job_id": "RELAY-0010-e89a8022|W0|05",
+   "cell_id": "RELAY-0010-e89a8022",
+   "arm": "W0",
+   "idx": 5
+  },
+  {
+   "job_id": "RELAY-0010-e89a8022|M32|05",
+   "cell_id": "RELAY-0010-e89a8022",
+   "arm": "M32",
+   "idx": 5
+  },
+  {
+   "job_id": "FLIP-0000-adbab9bf|BASE|05",
+   "cell_id": "FLIP-0000-adbab9bf",
+   "arm": "BASE",
+   "idx": 5
+  },
+  {
+   "job_id": "FLIP-0000-adbab9bf|W0|05",
+   "cell_id": "FLIP-0000-adbab9bf",
+   "arm": "W0",
+   "idx": 5
+  },
+  {
+   "job_id": "FLIP-0000-adbab9bf|M32|05",
+   "cell_id": "FLIP-0000-adbab9bf",
+   "arm": "M32",
+   "idx": 5
+  },
+  {
+   "job_id": "RELAY-0019-eabcdf91|BASE|05",
+   "cell_id": "RELAY-0019-eabcdf91",
+   "arm": "BASE",
+   "idx": 5
+  },
+  {
+   "job_id": "RELAY-0019-eabcdf91|W0|05",
+   "cell_id": "RELAY-0019-eabcdf91",
+   "arm": "W0",
+   "idx": 5
+  },
+  {
+   "job_id": "RELAY-0019-eabcdf91|M32|05",
+   "cell_id": "RELAY-0019-eabcdf91",
+   "arm": "M32",
+   "idx": 5
+  },
+  {
+   "job_id": "FLIP-0004-125dfbff|BASE|05",
+   "cell_id": "FLIP-0004-125dfbff",
+   "arm": "BASE",
+   "idx": 5
+  },
+  {
+   "job_id": "FLIP-0004-125dfbff|W0|05",
+   "cell_id": "FLIP-0004-125dfbff",
+   "arm": "W0",
+   "idx": 5
+  },
+  {
+   "job_id": "FLIP-0004-125dfbff|M32|05",
+   "cell_id": "FLIP-0004-125dfbff",
+   "arm": "M32",
+   "idx": 5
+  },
+  {
+   "job_id": "RELAY-0027-8dac4bc0|BASE|05",
+   "cell_id": "RELAY-0027-8dac4bc0",
+   "arm": "BASE",
+   "idx": 5
+  },
+  {
+   "job_id": "RELAY-0027-8dac4bc0|W0|05",
+   "cell_id": "RELAY-0027-8dac4bc0",
+   "arm": "W0",
+   "idx": 5
+  },
+  {
+   "job_id": "RELAY-0027-8dac4bc0|M32|05",
+   "cell_id": "RELAY-0027-8dac4bc0",
+   "arm": "M32",
+   "idx": 5
+  },
+  {
+   "job_id": "FLIP-0099-df143630|BASE|05",
+   "cell_id": "FLIP-0099-df143630",
+   "arm": "BASE",
+   "idx": 5
+  },
+  {
+   "job_id": "FLIP-0099-df143630|W0|05",
+   "cell_id": "FLIP-0099-df143630",
+   "arm": "W0",
+   "idx": 5
+  },
+  {
+   "job_id": "FLIP-0099-df143630|M32|05",
+   "cell_id": "FLIP-0099-df143630",
+   "arm": "M32",
+   "idx": 5
+  },
+  {
+   "job_id": "RELAY-0032-a447e46e|BASE|05",
+   "cell_id": "RELAY-0032-a447e46e",
+   "arm": "BASE",
+   "idx": 5
+  },
+  {
+   "job_id": "RELAY-0032-a447e46e|W0|05",
+   "cell_id": "RELAY-0032-a447e46e",
+   "arm": "W0",
+   "idx": 5
+  },
+  {
+   "job_id": "RELAY-0032-a447e46e|M32|05",
+   "cell_id": "RELAY-0032-a447e46e",
+   "arm": "M32",
+   "idx": 5
+  },
+  {
+   "job_id": "FLIP-0167-b6d3fceb|BASE|05",
+   "cell_id": "FLIP-0167-b6d3fceb",
+   "arm": "BASE",
+   "idx": 5
+  },
+  {
+   "job_id": "FLIP-0167-b6d3fceb|W0|05",
+   "cell_id": "FLIP-0167-b6d3fceb",
+   "arm": "W0",
+   "idx": 5
+  },
+  {
+   "job_id": "FLIP-0167-b6d3fceb|M32|05",
+   "cell_id": "FLIP-0167-b6d3fceb",
+   "arm": "M32",
+   "idx": 5
+  },
+  {
+   "job_id": "CTRL-RELAY1h-62a7fff921ca3bd8|BASE|05",
+   "cell_id": "CTRL-RELAY1h-62a7fff921ca3bd8",
+   "arm": "BASE",
+   "idx": 5
+  },
+  {
+   "job_id": "RELAY-0010-e89a8022|BASE|06",
+   "cell_id": "RELAY-0010-e89a8022",
+   "arm": "BASE",
+   "idx": 6
+  },
+  {
+   "job_id": "RELAY-0010-e89a8022|W0|06",
+   "cell_id": "RELAY-0010-e89a8022",
+   "arm": "W0",
+   "idx": 6
+  },
+  {
+   "job_id": "RELAY-0010-e89a8022|M32|06",
+   "cell_id": "RELAY-0010-e89a8022",
+   "arm": "M32",
+   "idx": 6
+  },
+  {
+   "job_id": "FLIP-0000-adbab9bf|BASE|06",
+   "cell_id": "FLIP-0000-adbab9bf",
+   "arm": "BASE",
+   "idx": 6
+  },
+  {
+   "job_id": "FLIP-0000-adbab9bf|W0|06",
+   "cell_id": "FLIP-0000-adbab9bf",
+   "arm": "W0",
+   "idx": 6
+  },
+  {
+   "job_id": "FLIP-0000-adbab9bf|M32|06",
+   "cell_id": "FLIP-0000-adbab9bf",
+   "arm": "M32",
+   "idx": 6
+  },
+  {
+   "job_id": "RELAY-0019-eabcdf91|BASE|06",
+   "cell_id": "RELAY-0019-eabcdf91",
+   "arm": "BASE",
+   "idx": 6
+  },
+  {
+   "job_id": "RELAY-0019-eabcdf91|W0|06",
+   "cell_id": "RELAY-0019-eabcdf91",
+   "arm": "W0",
+   "idx": 6
+  },
+  {
+   "job_id": "RELAY-0019-eabcdf91|M32|06",
+   "cell_id": "RELAY-0019-eabcdf91",
+   "arm": "M32",
+   "idx": 6
+  },
+  {
+   "job_id": "FLIP-0004-125dfbff|BASE|06",
+   "cell_id": "FLIP-0004-125dfbff",
+   "arm": "BASE",
+   "idx": 6
+  },
+  {
+   "job_id": "FLIP-0004-125dfbff|W0|06",
+   "cell_id": "FLIP-0004-125dfbff",
+   "arm": "W0",
+   "idx": 6
+  },
+  {
+   "job_id": "FLIP-0004-125dfbff|M32|06",
+   "cell_id": "FLIP-0004-125dfbff",
+   "arm": "M32",
+   "idx": 6
+  },
+  {
+   "job_id": "RELAY-0027-8dac4bc0|BASE|06",
+   "cell_id": "RELAY-0027-8dac4bc0",
+   "arm": "BASE",
+   "idx": 6
+  },
+  {
+   "job_id": "RELAY-0027-8dac4bc0|W0|06",
+   "cell_id": "RELAY-0027-8dac4bc0",
+   "arm": "W0",
+   "idx": 6
+  },
+  {
+   "job_id": "RELAY-0027-8dac4bc0|M32|06",
+   "cell_id": "RELAY-0027-8dac4bc0",
+   "arm": "M32",
+   "idx": 6
+  },
+  {
+   "job_id": "FLIP-0099-df143630|BASE|06",
+   "cell_id": "FLIP-0099-df143630",
+   "arm": "BASE",
+   "idx": 6
+  },
+  {
+   "job_id": "FLIP-0099-df143630|W0|06",
+   "cell_id": "FLIP-0099-df143630",
+   "arm": "W0",
+   "idx": 6
+  },
+  {
+   "job_id": "FLIP-0099-df143630|M32|06",
+   "cell_id": "FLIP-0099-df143630",
+   "arm": "M32",
+   "idx": 6
+  },
+  {
+   "job_id": "RELAY-0032-a447e46e|BASE|06",
+   "cell_id": "RELAY-0032-a447e46e",
+   "arm": "BASE",
+   "idx": 6
+  },
+  {
+   "job_id": "RELAY-0032-a447e46e|W0|06",
+   "cell_id": "RELAY-0032-a447e46e",
+   "arm": "W0",
+   "idx": 6
+  },
+  {
+   "job_id": "RELAY-0032-a447e46e|M32|06",
+   "cell_id": "RELAY-0032-a447e46e",
+   "arm": "M32",
+   "idx": 6
+  },
+  {
+   "job_id": "FLIP-0167-b6d3fceb|BASE|06",
+   "cell_id": "FLIP-0167-b6d3fceb",
+   "arm": "BASE",
+   "idx": 6
+  },
+  {
+   "job_id": "FLIP-0167-b6d3fceb|W0|06",
+   "cell_id": "FLIP-0167-b6d3fceb",
+   "arm": "W0",
+   "idx": 6
+  },
+  {
+   "job_id": "FLIP-0167-b6d3fceb|M32|06",
+   "cell_id": "FLIP-0167-b6d3fceb",
+   "arm": "M32",
+   "idx": 6
+  },
+  {
+   "job_id": "CTRL-RELAY1h-62a7fff921ca3bd8|BASE|06",
+   "cell_id": "CTRL-RELAY1h-62a7fff921ca3bd8",
+   "arm": "BASE",
+   "idx": 6
+  },
+  {
+   "job_id": "RELAY-0010-e89a8022|BASE|07",
+   "cell_id": "RELAY-0010-e89a8022",
+   "arm": "BASE",
+   "idx": 7
+  },
+  {
+   "job_id": "RELAY-0010-e89a8022|W0|07",
+   "cell_id": "RELAY-0010-e89a8022",
+   "arm": "W0",
+   "idx": 7
+  },
+  {
+   "job_id": "RELAY-0010-e89a8022|M32|07",
+   "cell_id": "RELAY-0010-e89a8022",
+   "arm": "M32",
+   "idx": 7
+  },
+  {
+   "job_id": "FLIP-0000-adbab9bf|BASE|07",
+   "cell_id": "FLIP-0000-adbab9bf",
+   "arm": "BASE",
+   "idx": 7
+  },
+  {
+   "job_id": "FLIP-0000-adbab9bf|W0|07",
+   "cell_id": "FLIP-0000-adbab9bf",
+   "arm": "W0",
+   "idx": 7
+  },
+  {
+   "job_id": "FLIP-0000-adbab9bf|M32|07",
+   "cell_id": "FLIP-0000-adbab9bf",
+   "arm": "M32",
+   "idx": 7
+  },
+  {
+   "job_id": "RELAY-0019-eabcdf91|BASE|07",
+   "cell_id": "RELAY-0019-eabcdf91",
+   "arm": "BASE",
+   "idx": 7
+  },
+  {
+   "job_id": "RELAY-0019-eabcdf91|W0|07",
+   "cell_id": "RELAY-0019-eabcdf91",
+   "arm": "W0",
+   "idx": 7
+  },
+  {
+   "job_id": "RELAY-0019-eabcdf91|M32|07",
+   "cell_id": "RELAY-0019-eabcdf91",
+   "arm": "M32",
+   "idx": 7
+  },
+  {
+   "job_id": "FLIP-0004-125dfbff|BASE|07",
+   "cell_id": "FLIP-0004-125dfbff",
+   "arm": "BASE",
+   "idx": 7
+  },
+  {
+   "job_id": "FLIP-0004-125dfbff|W0|07",
+   "cell_id": "FLIP-0004-125dfbff",
+   "arm": "W0",
+   "idx": 7
+  },
+  {
+   "job_id": "FLIP-0004-125dfbff|M32|07",
+   "cell_id": "FLIP-0004-125dfbff",
+   "arm": "M32",
+   "idx": 7
+  },
+  {
+   "job_id": "RELAY-0027-8dac4bc0|BASE|07",
+   "cell_id": "RELAY-0027-8dac4bc0",
+   "arm": "BASE",
+   "idx": 7
+  },
+  {
+   "job_id": "RELAY-0027-8dac4bc0|W0|07",
+   "cell_id": "RELAY-0027-8dac4bc0",
+   "arm": "W0",
+   "idx": 7
+  },
+  {
+   "job_id": "RELAY-0027-8dac4bc0|M32|07",
+   "cell_id": "RELAY-0027-8dac4bc0",
+   "arm": "M32",
+   "idx": 7
+  },
+  {
+   "job_id": "FLIP-0099-df143630|BASE|07",
+   "cell_id": "FLIP-0099-df143630",
+   "arm": "BASE",
+   "idx": 7
+  },
+  {
+   "job_id": "FLIP-0099-df143630|W0|07",
+   "cell_id": "FLIP-0099-df143630",
+   "arm": "W0",
+   "idx": 7
+  },
+  {
+   "job_id": "FLIP-0099-df143630|M32|07",
+   "cell_id": "FLIP-0099-df143630",
+   "arm": "M32",
+   "idx": 7
+  },
+  {
+   "job_id": "RELAY-0032-a447e46e|BASE|07",
+   "cell_id": "RELAY-0032-a447e46e",
+   "arm": "BASE",
+   "idx": 7
+  },
+  {
+   "job_id": "RELAY-0032-a447e46e|W0|07",
+   "cell_id": "RELAY-0032-a447e46e",
+   "arm": "W0",
+   "idx": 7
+  },
+  {
+   "job_id": "RELAY-0032-a447e46e|M32|07",
+   "cell_id": "RELAY-0032-a447e46e",
+   "arm": "M32",
+   "idx": 7
+  },
+  {
+   "job_id": "FLIP-0167-b6d3fceb|BASE|07",
+   "cell_id": "FLIP-0167-b6d3fceb",
+   "arm": "BASE",
+   "idx": 7
+  },
+  {
+   "job_id": "FLIP-0167-b6d3fceb|W0|07",
+   "cell_id": "FLIP-0167-b6d3fceb",
+   "arm": "W0",
+   "idx": 7
+  },
+  {
+   "job_id": "FLIP-0167-b6d3fceb|M32|07",
+   "cell_id": "FLIP-0167-b6d3fceb",
+   "arm": "M32",
+   "idx": 7
+  },
+  {
+   "job_id": "CTRL-RELAY1h-62a7fff921ca3bd8|BASE|07",
+   "cell_id": "CTRL-RELAY1h-62a7fff921ca3bd8",
+   "arm": "BASE",
+   "idx": 7
+  },
+  {
+   "job_id": "RELAY-0010-e89a8022|BASE|08",
+   "cell_id": "RELAY-0010-e89a8022",
+   "arm": "BASE",
+   "idx": 8
+  },
+  {
+   "job_id": "FLIP-0000-adbab9bf|BASE|08",
+   "cell_id": "FLIP-0000-adbab9bf",
+   "arm": "BASE",
+   "idx": 8
+  },
+  {
+   "job_id": "RELAY-0019-eabcdf91|BASE|08",
+   "cell_id": "RELAY-0019-eabcdf91",
+   "arm": "BASE",
+   "idx": 8
+  },
+  {
+   "job_id": "FLIP-0004-125dfbff|BASE|08",
+   "cell_id": "FLIP-0004-125dfbff",
+   "arm": "BASE",
+   "idx": 8
+  },
+  {
+   "job_id": "RELAY-0027-8dac4bc0|BASE|08",
+   "cell_id": "RELAY-0027-8dac4bc0",
+   "arm": "BASE",
+   "idx": 8
+  },
+  {
+   "job_id": "FLIP-0099-df143630|BASE|08",
+   "cell_id": "FLIP-0099-df143630",
+   "arm": "BASE",
+   "idx": 8
+  },
+  {
+   "job_id": "RELAY-0032-a447e46e|BASE|08",
+   "cell_id": "RELAY-0032-a447e46e",
+   "arm": "BASE",
+   "idx": 8
+  },
+  {
+   "job_id": "FLIP-0167-b6d3fceb|BASE|08",
+   "cell_id": "FLIP-0167-b6d3fceb",
+   "arm": "BASE",
+   "idx": 8
+  },
+  {
+   "job_id": "RELAY-0010-e89a8022|BASE|09",
+   "cell_id": "RELAY-0010-e89a8022",
+   "arm": "BASE",
+   "idx": 9
+  },
+  {
+   "job_id": "FLIP-0000-adbab9bf|BASE|09",
+   "cell_id": "FLIP-0000-adbab9bf",
+   "arm": "BASE",
+   "idx": 9
+  },
+  {
+   "job_id": "RELAY-0019-eabcdf91|BASE|09",
+   "cell_id": "RELAY-0019-eabcdf91",
+   "arm": "BASE",
+   "idx": 9
+  },
+  {
+   "job_id": "FLIP-0004-125dfbff|BASE|09",
+   "cell_id": "FLIP-0004-125dfbff",
+   "arm": "BASE",
+   "idx": 9
+  },
+  {
+   "job_id": "RELAY-0027-8dac4bc0|BASE|09",
+   "cell_id": "RELAY-0027-8dac4bc0",
+   "arm": "BASE",
+   "idx": 9
+  },
+  {
+   "job_id": "FLIP-0099-df143630|BASE|09",
+   "cell_id": "FLIP-0099-df143630",
+   "arm": "BASE",
+   "idx": 9
+  },
+  {
+   "job_id": "RELAY-0032-a447e46e|BASE|09",
+   "cell_id": "RELAY-0032-a447e46e",
+   "arm": "BASE",
+   "idx": 9
+  },
+  {
+   "job_id": "FLIP-0167-b6d3fceb|BASE|09",
+   "cell_id": "FLIP-0167-b6d3fceb",
+   "arm": "BASE",
+   "idx": 9
+  },
+  {
+   "job_id": "RELAY-0010-e89a8022|BASE|10",
+   "cell_id": "RELAY-0010-e89a8022",
+   "arm": "BASE",
+   "idx": 10
+  },
+  {
+   "job_id": "FLIP-0000-adbab9bf|BASE|10",
+   "cell_id": "FLIP-0000-adbab9bf",
+   "arm": "BASE",
+   "idx": 10
+  },
+  {
+   "job_id": "RELAY-0019-eabcdf91|BASE|10",
+   "cell_id": "RELAY-0019-eabcdf91",
+   "arm": "BASE",
+   "idx": 10
+  },
+  {
+   "job_id": "FLIP-0004-125dfbff|BASE|10",
+   "cell_id": "FLIP-0004-125dfbff",
+   "arm": "BASE",
+   "idx": 10
+  },
+  {
+   "job_id": "RELAY-0027-8dac4bc0|BASE|10",
+   "cell_id": "RELAY-0027-8dac4bc0",
+   "arm": "BASE",
+   "idx": 10
+  },
+  {
+   "job_id": "FLIP-0099-df143630|BASE|10",
+   "cell_id": "FLIP-0099-df143630",
+   "arm": "BASE",
+   "idx": 10
+  },
+  {
+   "job_id": "RELAY-0032-a447e46e|BASE|10",
+   "cell_id": "RELAY-0032-a447e46e",
+   "arm": "BASE",
+   "idx": 10
+  },
+  {
+   "job_id": "FLIP-0167-b6d3fceb|BASE|10",
+   "cell_id": "FLIP-0167-b6d3fceb",
+   "arm": "BASE",
+   "idx": 10
+  },
+  {
+   "job_id": "RELAY-0010-e89a8022|BASE|11",
+   "cell_id": "RELAY-0010-e89a8022",
+   "arm": "BASE",
+   "idx": 11
+  },
+  {
+   "job_id": "FLIP-0000-adbab9bf|BASE|11",
+   "cell_id": "FLIP-0000-adbab9bf",
+   "arm": "BASE",
+   "idx": 11
+  },
+  {
+   "job_id": "RELAY-0019-eabcdf91|BASE|11",
+   "cell_id": "RELAY-0019-eabcdf91",
+   "arm": "BASE",
+   "idx": 11
+  },
+  {
+   "job_id": "FLIP-0004-125dfbff|BASE|11",
+   "cell_id": "FLIP-0004-125dfbff",
+   "arm": "BASE",
+   "idx": 11
+  },
+  {
+   "job_id": "RELAY-0027-8dac4bc0|BASE|11",
+   "cell_id": "RELAY-0027-8dac4bc0",
+   "arm": "BASE",
+   "idx": 11
+  },
+  {
+   "job_id": "FLIP-0099-df143630|BASE|11",
+   "cell_id": "FLIP-0099-df143630",
+   "arm": "BASE",
+   "idx": 11
+  },
+  {
+   "job_id": "RELAY-0032-a447e46e|BASE|11",
+   "cell_id": "RELAY-0032-a447e46e",
+   "arm": "BASE",
+   "idx": 11
+  },
+  {
+   "job_id": "FLIP-0167-b6d3fceb|BASE|11",
+   "cell_id": "FLIP-0167-b6d3fceb",
+   "arm": "BASE",
+   "idx": 11
+  }
+ ],
+ "rejected": [
+  {
+   "cid": "RELAY-0000-e98d0b5b",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "RELAY-0001-5a884fb9",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0002-68397bdc",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0003-90d7b759",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "RELAY-0004-edba86b1",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0005-d6c488dd",
+   "verdict": "R-NOT-ESTABLISHED"
+  },
+  {
+   "cid": "RELAY-0006-c06e060f",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "RELAY-0007-1b9f0106",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0008-f710db3c",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0009-f6fa7eaa",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "RELAY-0011-6905660d",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "RELAY-0012-4697a30c",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "RELAY-0013-40d1fec9",
+   "verdict": "R-NOT-ESTABLISHED"
+  },
+  {
+   "cid": "RELAY-0014-655ff221",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0015-3ec98650",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "RELAY-0016-c83c96d6",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0017-f9aa9608",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0018-8af826c7",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0020-4aa4f4db",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0021-ae29ea6e",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0022-87fb408c",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "RELAY-0023-2e2734fc",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "RELAY-0024-637f07e6",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "RELAY-0025-46a1a911",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "RELAY-0026-45fbeee0",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0028-4131bc3e",
+   "verdict": "R-NOT-ESTABLISHED"
+  },
+  {
+   "cid": "RELAY-0029-4459059e",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0030-5669694b",
+   "verdict": "R-NOT-ESTABLISHED"
+  },
+  {
+   "cid": "RELAY-0031-a63bbc27",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0033-c15c0d23",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0035-ae817828",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0036-0e4108b3",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "RELAY-0037-f6206019",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0038-cceee1a4",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0039-d53b3cb3",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "RELAY-0040-2e1b4f67",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0041-c5473491",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "RELAY-0042-4d30fa8e",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0043-a064fe10",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "RELAY-0044-f7a155fb",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0045-d61fecb7",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0046-8b52dddc",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0047-752e08ab",
+   "verdict": "R-NOT-ESTABLISHED"
+  },
+  {
+   "cid": "RELAY-0048-e6a78695",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "RELAY-0049-46eb7e93",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0050-618867b7",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "RELAY-0051-f3d5af49",
+   "verdict": "R-NOT-ESTABLISHED"
+  },
+  {
+   "cid": "RELAY-0052-af6abc38",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0053-52ad17c8",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0054-f78e2eb8",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0055-90268974",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0056-a73be940",
+   "verdict": "R-NOT-ESTABLISHED"
+  },
+  {
+   "cid": "RELAY-0057-eba71f3a",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0058-1ed7e621",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0059-e256c70d",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "RELAY-0060-ca6e1116",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0061-1accc113",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0062-9bc3bab0",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "RELAY-0064-0d04c85b",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "RELAY-0065-d064713e",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0066-125c081f",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "RELAY-0067-186bb8e3",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0068-ed314892",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "RELAY-0069-03489bcf",
+   "verdict": "R-NOT-ESTABLISHED"
+  },
+  {
+   "cid": "RELAY-0070-36abd1b9",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0071-568cd7da",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "RELAY-0072-e37ab522",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "RELAY-0073-87911b8e",
+   "verdict": "R-NOT-ESTABLISHED"
+  },
+  {
+   "cid": "RELAY-0074-6ad3b430",
+   "verdict": "R-NOT-ESTABLISHED"
+  },
+  {
+   "cid": "RELAY-0075-a2b6c54e",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "RELAY-0076-6e456894",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0077-37ab3c65",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0079-b1113200",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0080-73ad5dc1",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0081-d53420b4",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0082-38b0eb3c",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0083-c667d34d",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "RELAY-0084-abd1147c",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0085-e5dc0ede",
+   "verdict": "R-NOT-ESTABLISHED"
+  },
+  {
+   "cid": "RELAY-0086-1f37e78c",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0087-2a51b9cb",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0088-f8d439f0",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "RELAY-0090-a1c30a83",
+   "verdict": "R-NOT-ESTABLISHED"
+  },
+  {
+   "cid": "RELAY-0091-e0c753a6",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0092-c1855e57",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "RELAY-0093-40411445",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "RELAY-0094-349c6627",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "RELAY-0095-4f7baa3b",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0096-bd76bdb6",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0097-1911f559",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0098-8d22c725",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "RELAY-0099-804ac62a",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "RELAY-0100-53bcca6e",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0101-05c25eb2",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0102-c20be0b5",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0103-65f8b375",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0104-4503ba5c",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "RELAY-0105-51fb267e",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0106-dc071587",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0107-52a7f2b1",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "RELAY-0108-acb06711",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0109-9eb1b174",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "RELAY-0110-5ab0851b",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0111-5c35721b",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0112-e7ee266f",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0114-6b6d9870",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0115-e202e96a",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0116-7597b8bb",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0117-5eb266b5",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0118-5f3ee83a",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0119-512d88af",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0120-8fa33e8d",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0121-84394b76",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0122-abafea0a",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "RELAY-0123-dbe807c0",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "RELAY-0124-fc2dd29c",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0125-5ba28f7b",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0127-fff9837f",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0128-127bc015",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "RELAY-0129-f8a42bcc",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0130-2c825047",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0131-7e815363",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0132-35779474",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0133-e7879555",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0134-86cf2a4d",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0135-13856e67",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0137-997b2554",
+   "verdict": "R-NOT-ESTABLISHED"
+  },
+  {
+   "cid": "RELAY-0140-4908e989",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0141-7f35b434",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0142-c4569760",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "RELAY-0143-099d5410",
+   "verdict": "R-NOT-ESTABLISHED"
+  },
+  {
+   "cid": "RELAY-0144-add3fd94",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "RELAY-0145-7f1c44b7",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0146-a16e01a6",
+   "verdict": "R-NOT-ESTABLISHED"
+  },
+  {
+   "cid": "RELAY-0147-481b9fd7",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0148-5c9f001f",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0150-42436128",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "RELAY-0151-ab3b3467",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0152-c69e0a42",
+   "verdict": "R-NOT-ESTABLISHED"
+  },
+  {
+   "cid": "RELAY-0153-bedf2745",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0154-9feda43d",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "RELAY-0155-afbb9bcb",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0156-1f2f1902",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0157-d747d280",
+   "verdict": "R-NOT-ESTABLISHED"
+  },
+  {
+   "cid": "RELAY-0158-5c9583ae",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "RELAY-0159-86c7c290",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "RELAY-0160-42e21e44",
+   "verdict": "R-NOT-ESTABLISHED"
+  },
+  {
+   "cid": "RELAY-0161-cb172fdb",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0162-b0710ca7",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "RELAY-0163-2147c9c0",
+   "verdict": "R-NOT-ESTABLISHED"
+  },
+  {
+   "cid": "RELAY-0164-f02f6978",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0165-864935bd",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0166-d00a0cd4",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0168-feccdde6",
+   "verdict": "R-NOT-ESTABLISHED"
+  },
+  {
+   "cid": "RELAY-0169-8b5b152f",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0170-90b28390",
+   "verdict": "R-NOT-ESTABLISHED"
+  },
+  {
+   "cid": "RELAY-0171-7257d2a4",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "RELAY-0172-31ce5846",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0173-18d9d7c9",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0174-08debc96",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "RELAY-0175-aa31b3a0",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0176-a3458fa5",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0177-e7e19992",
+   "verdict": "R-NOT-ESTABLISHED"
+  },
+  {
+   "cid": "RELAY-0178-74441818",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0179-f0860b28",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "RELAY-0180-b882258d",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0181-44598156",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0182-8a0eb45f",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0183-3c5e3528",
+   "verdict": "R-NOT-ESTABLISHED"
+  },
+  {
+   "cid": "RELAY-0184-47b4ed64",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0185-82414999",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "RELAY-0186-3ce67803",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0187-cabf9971",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0188-359c0120",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0189-e176bd09",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0190-0a8f456c",
+   "verdict": "R-NOT-ESTABLISHED"
+  },
+  {
+   "cid": "RELAY-0191-dca93df5",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "RELAY-0192-2b79a6ca",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "RELAY-0194-bea9b5dd",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0195-6f6b9a66",
+   "verdict": "R-NOT-ESTABLISHED"
+  },
+  {
+   "cid": "RELAY-0196-e43fcce1",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "RELAY-0197-5a43594f",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "RELAY-0198-8b17f9a4",
+   "verdict": "OUT_OF_STRATUM"
+  },
+  {
+   "cid": "FLIP-0001-a0946d13",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0002-daf7e66d",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0003-6fe4a3c7",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0005-039bf771",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0006-a7f3cd22",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0007-bfc67a65",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0008-14dd048c",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0009-6a0e5882",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0010-24b2c217",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0011-4e5d3c7c",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0012-210e8eb0",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0013-314a31e7",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0014-f6419e8d",
+   "verdict": "R-NOT-ESTABLISHED"
+  },
+  {
+   "cid": "FLIP-0015-1886b040",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0016-e9e1aadc",
+   "verdict": "R-NOT-ESTABLISHED"
+  },
+  {
+   "cid": "FLIP-0017-b7b13eb9",
+   "verdict": "R-NOT-ESTABLISHED"
+  },
+  {
+   "cid": "FLIP-0018-955f545c",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0019-199b02fd",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0020-f2fbb050",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0021-c8b1c704",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0022-9e8015a7",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0023-dbc792f3",
+   "verdict": "R-NOT-ESTABLISHED"
+  },
+  {
+   "cid": "FLIP-0024-99bdc4b5",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0025-cf8ef371",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0026-844f14d7",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0027-e4cee76c",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0028-05bd7d4a",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0029-ddeb5dc6",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0030-5425d9ee",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0031-7c80ee6f",
+   "verdict": "R-NOT-ESTABLISHED"
+  },
+  {
+   "cid": "FLIP-0032-fbecc2ea",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0033-ea900d10",
+   "verdict": "R-NOT-ESTABLISHED"
+  },
+  {
+   "cid": "FLIP-0034-5ceb44f8",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0035-5a27c80a",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0036-ffbf6e23",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0037-c12e7361",
+   "verdict": "R-NOT-ESTABLISHED"
+  },
+  {
+   "cid": "FLIP-0038-4fb98e99",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0039-cd5ca594",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0040-27ac4559",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0041-d2e2d4e9",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0042-b7a08d84",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0043-dd53a107",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0044-027b7d7f",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0045-a93feee0",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0046-95df1aa6",
+   "verdict": "R-NOT-ESTABLISHED"
+  },
+  {
+   "cid": "FLIP-0047-444fe4d2",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0048-bb359742",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0049-97b2c5bc",
+   "verdict": "R-NOT-ESTABLISHED"
+  },
+  {
+   "cid": "FLIP-0050-b86cf038",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0051-ce760fa9",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0052-df193722",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0053-abd1d2cf",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0054-64c7718b",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0055-abdb4062",
+   "verdict": "R-NOT-ESTABLISHED"
+  },
+  {
+   "cid": "FLIP-0056-2e0904fd",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0057-006a9e80",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0058-49268c14",
+   "verdict": "R-NOT-ESTABLISHED"
+  },
+  {
+   "cid": "FLIP-0059-0c543f22",
+   "verdict": "R-NOT-ESTABLISHED"
+  },
+  {
+   "cid": "FLIP-0060-6cd88a82",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0061-37d44abe",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0062-7c8e4026",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0063-29a41dd0",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0064-a321ffa3",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0065-9c29647c",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0066-031b2254",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0067-fe4f8113",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0068-75a0b739",
+   "verdict": "R-NOT-ESTABLISHED"
+  },
+  {
+   "cid": "FLIP-0069-4073559f",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0070-96bcf2b0",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0071-25bb1308",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0072-a012a2b4",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0073-1f48d443",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0074-8b4d491a",
+   "verdict": "R-NOT-ESTABLISHED"
+  },
+  {
+   "cid": "FLIP-0075-d574a7fc",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0076-fb578592",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0077-fc0f20a0",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0078-8e2baf89",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0079-1d56677f",
+   "verdict": "R-NOT-ESTABLISHED"
+  },
+  {
+   "cid": "FLIP-0080-65f74648",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0081-1bc337de",
+   "verdict": "R-NOT-ESTABLISHED"
+  },
+  {
+   "cid": "FLIP-0082-010090c1",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0083-982da937",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0084-734dabd9",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0085-134352c1",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0086-05578181",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0087-bc18b895",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0088-76362b00",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0089-80933cff",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0090-b42f7a3d",
+   "verdict": "R-NOT-ESTABLISHED"
+  },
+  {
+   "cid": "FLIP-0091-bf1903f7",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0092-b7665048",
+   "verdict": "R-NOT-ESTABLISHED"
+  },
+  {
+   "cid": "FLIP-0093-31e12f70",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0094-f8dd3dd3",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0095-7d247d7e",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0096-2a3d788c",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0097-efc05cd4",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0098-879a70f1",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0100-ea7abd67",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0101-392bc82b",
+   "verdict": "R-NOT-ESTABLISHED"
+  },
+  {
+   "cid": "FLIP-0102-3c616b48",
+   "verdict": "R-NOT-ESTABLISHED"
+  },
+  {
+   "cid": "FLIP-0103-570231ea",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0104-3f86f877",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0105-aa2cc6de",
+   "verdict": "R-NOT-ESTABLISHED"
+  },
+  {
+   "cid": "FLIP-0106-40c533c2",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0107-a45e80da",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0108-072a45f9",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0109-f1e4725f",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0110-9508e3ba",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0111-5f42eae5",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0112-994d08df",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0113-ab93412f",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0114-8dfd9581",
+   "verdict": "R-NOT-ESTABLISHED"
+  },
+  {
+   "cid": "FLIP-0115-0a012d2e",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0116-2c1d2234",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0117-3e84eedb",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0118-5adbddd5",
+   "verdict": "R-NOT-ESTABLISHED"
+  },
+  {
+   "cid": "FLIP-0119-fbfd4786",
+   "verdict": "R-NOT-ESTABLISHED"
+  },
+  {
+   "cid": "FLIP-0120-a792243b",
+   "verdict": "R-NOT-ESTABLISHED"
+  },
+  {
+   "cid": "FLIP-0121-e7891152",
+   "verdict": "R-NOT-ESTABLISHED"
+  },
+  {
+   "cid": "FLIP-0122-1e1979fa",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0123-99d9124f",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0124-6a683318",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0125-567ba39c",
+   "verdict": "R-NOT-ESTABLISHED"
+  },
+  {
+   "cid": "FLIP-0126-9ffe768d",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0127-8a4b380d",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0128-1207c08f",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0129-fc576df6",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0130-b75318e3",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0131-9cdbba77",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0132-1b109a56",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0133-1287f1bb",
+   "verdict": "R-NOT-ESTABLISHED"
+  },
+  {
+   "cid": "FLIP-0134-145e45ef",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0135-4fadf90b",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0136-5a7344d2",
+   "verdict": "R-NOT-ESTABLISHED"
+  },
+  {
+   "cid": "FLIP-0137-4f422636",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0138-efa51cfc",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0139-d33c1d28",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0140-08a989af",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0141-e97a2635",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0142-a688076c",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0143-53a51350",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0144-48775b25",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0145-de03f0d3",
+   "verdict": "R-NOT-ESTABLISHED"
+  },
+  {
+   "cid": "FLIP-0146-7664c904",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0147-67f5b68d",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0148-a03fbd76",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0149-09d64d61",
+   "verdict": "R-NOT-ESTABLISHED"
+  },
+  {
+   "cid": "FLIP-0150-427aef99",
+   "verdict": "R-NOT-ESTABLISHED"
+  },
+  {
+   "cid": "FLIP-0151-61b1fcb3",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0152-a7c4b812",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0153-df134da2",
+   "verdict": "R-NOT-ESTABLISHED"
+  },
+  {
+   "cid": "FLIP-0154-c936e4d1",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0155-c1d29f12",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0156-b8491dc0",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0157-192c8294",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0158-519f3523",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0159-5db4b7f6",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0160-c85efeda",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0161-f06d8310",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0162-c2d68264",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0163-1a3ace78",
+   "verdict": "R-NOT-ESTABLISHED"
+  },
+  {
+   "cid": "FLIP-0164-847c06b0",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0165-362f84dc",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0166-a140df57",
+   "verdict": "R-NOT-ESTABLISHED"
+  },
+  {
+   "cid": "FLIP-0168-f5a81ced",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0169-954d35f3",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0170-5901b64e",
+   "verdict": "R-NOT-ESTABLISHED"
+  },
+  {
+   "cid": "FLIP-0171-8065a34b",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0172-d3b36fd8",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0173-1e475c72",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0174-03e20e2a",
+   "verdict": "R-NOT-ESTABLISHED"
+  },
+  {
+   "cid": "FLIP-0175-4c3cbded",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0176-26d4a120",
+   "verdict": "R-NOT-ESTABLISHED"
+  },
+  {
+   "cid": "FLIP-0177-555e5178",
+   "verdict": "R-NOT-ESTABLISHED"
+  },
+  {
+   "cid": "FLIP-0178-9acee75a",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0179-babdeebb",
+   "verdict": "R-NOT-ESTABLISHED"
+  },
+  {
+   "cid": "FLIP-0180-00afe15d",
+   "verdict": "R-NOT-ESTABLISHED"
+  },
+  {
+   "cid": "FLIP-0181-6f28551c",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0182-d1e662c6",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0183-bd2e5f64",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0184-0dff2745",
+   "verdict": "V-FAILED"
+  },
+  {
+   "cid": "FLIP-0185-6147dd40",
+   "verdict": "R-NOT-ESTABLISHED"
+  },
+  {
+   "cid": "FLIP-0186-fbd4a359",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0187-110e2676",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0188-38a09d1d",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0189-9949e172",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0190-b584377d",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0191-07dd9fdb",
+   "verdict": "R-NOT-ESTABLISHED"
+  },
+  {
+   "cid": "FLIP-0192-6babe1d6",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0193-4ea06504",
+   "verdict": "R-NOT-ESTABLISHED"
+  },
+  {
+   "cid": "FLIP-0194-45832742",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0195-4929ecf9",
+   "verdict": "R-NOT-ESTABLISHED"
+  },
+  {
+   "cid": "FLIP-0196-905d2020",
+   "verdict": "R-NOT-ESTABLISHED"
+  },
+  {
+   "cid": "FLIP-0197-a2c041be",
+   "verdict": "R-NOT-ESTABLISHED"
+  },
+  {
+   "cid": "FLIP-0198-a2b1c8f6",
+   "verdict": "P-CAPPED"
+  },
+  {
+   "cid": "FLIP-0199-ab7eb413",
+   "verdict": "R-NOT-ESTABLISHED"
+  }
+ ],
+ "disjointness": {
+  "held_n": 13312,
+  "train_n": 121472,
+  "admit_n": 1024,
+  "held_x_train": 0,
+  "held_x_admit": 0,
+  "train_x_admit": 0
+ },
+ "arms": {
+  "core": {
+   "PSEED": 4,
+   "KSEED-1": 4,
+   "KSEED-2": 4,
+   "KSEED-4": 4,
+   "BASE": 12,
+   "W0": 8,
+   "M32": 8
+  },
+  "control": {
+   "PSEED": 2,
+   "BASE": 8
+  }
+ },
+ "arm_order": [
+  "PSEED",
+  "KSEED-1",
+  "KSEED-2",
+  "KSEED-4",
+  "BASE",
+  "W0",
+  "M32"
+ ]
+}

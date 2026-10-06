@@ -1,0 +1,51 @@
+{
+ "schema": "pte_c2c.freeze.v1",
+ "experiments": [
+  "C2BX RELAY budget extension",
+  "PTE-C2C FLIP operator x path 2x2"
+ ],
+ "authority": "roles/Ananke/prompts/2026-10-06_c2b_close_c2bx_c2c/ (64dad7553)",
+ "c2b_input_sha": "1ac44021c",
+ "code_sha": "3c1988f46e3154e8530b189c88a5c28919c5a1f6",
+ "code_files": {
+  "c2c_common.py": "4bf844e88c1a7870aeba71300c1a193611ccd9841845c636ed88d1f821af02d1",
+  "run_c2c.py": "23375022e3db55b4d83c4c1972bee24b31017bc7fe5642c93099e77bbd58a966",
+  "make_plan_c2c.py": "1445877af091b73649243e52898ace559a5bb61846da62b4f0e39d27971b625c",
+  "reduce_c2c.py": "186388fbc30e70285c93f43844c897dcd763a2ffa443496c3cf689200fb85300",
+  "test_c2c.py": "e54b529a6bf5c57a14b26b8a0eb117e50d1f4ed2c4bd13aeef681e637c62719b",
+  "flight1_c2bx.py": "157cd0db08b9a000b00fb69439e0e0cca3d6653da7dd929039e9d348b4400f05",
+  "make_flight2_c2c.py": "f7b14495303ac41ec4d4f40eab7a5e6a52614e5a8a79b51f56a13ecb102573ca"
+ },
+ "imported_files": {
+  "../c2a/c2a_common.py": "6ab60bb54f2a1be1300ca2aee4e327b2f37e5a9ee3658015aac4350cb0f7f257",
+  "../c2b/c2b_common.py": "1ef09a10f9c6226ce417bb83e49a010025f84d44117c752d33f1237db0a96958"
+ },
+ "prereg_sha256": "5b1f1ec712c6218015f6934d2bf9ee244ad8040ed579061246700a659879370c",
+ "plan_sha256": "358db1c7941384f5bc4fd4bfbb4b957006009d9d436235fac518a4f8943269ad",
+ "stone_files": {
+  "stones\\FLIP-0000-adbab9bf.json.gz": "34db49890d64be4a2709ceea5efe9723cf6fc411f1c3dd19ec05ab263b6c77b7",
+  "stones\\FLIP-0004-125dfbff.json.gz": "d6a9caa812967472db64e379331b45ca03a8221ce084c06c8d96d9159b432947",
+  "stones\\FLIP-0099-df143630.json.gz": "4fb16de4c7d1b24e111877685a5cfcfc41a70d6e04841dbdae6712e3b9bea825",
+  "stones\\FLIP-0167-b6d3fceb.json.gz": "74e9d1f66928491d2021bfae7215d03de0ae01390f6f6894184c28bc0fed6370"
+ },
+ "n_jobs": 152,
+ "disjointness": {
+  "stone_qual_n": 512,
+  "prod_n": 1305408,
+  "qual_x_prod": 0,
+  "held_x_train": 0
+ },
+ "production": {
+  "workers": 3,
+  "lease": "lse-d5be3b4e224c",
+  "deadline_rule": "launch + 11h30m; hard wall 12 h",
+  "projected_wall_h": {
+   "central": 9.15,
+   "conservative": 11.34,
+   "c2b_calibrated_central": 7.7,
+   "c2b_calibrated_conservative": 9.5
+  },
+  "run_dir": "C:/Users/jcrai/ananke_runs/pte-c2c/production/run"
+ },
+ "frozen_utc": "2026-10-06T06:55:12.568595+00:00"
+}

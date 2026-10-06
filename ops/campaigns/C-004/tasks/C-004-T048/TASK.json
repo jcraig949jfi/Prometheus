@@ -1,0 +1,64 @@
+{
+  "schema": "prometheus.workgraph.task.v1",
+  "task_id": "C-004-T048",
+  "campaign_id": "C-004",
+  "title": "Fresh closure re-check on the second repair (Pallas): 1 sound, 1 broken, 1 semantic edit on C1/C2/B3.3 surfaces",
+  "objective": "Commit a fresh closure re-check (1 sound, 1 broken, 1 semantic edit covering the C1/C2/B3.3 repaired predicates) before any outcome, run it against FREEZE_R2, and report whether C1 and C2 close with no new unresolved claim-critical survivor.",
+  "parent_objective": "RSO-METHODS-SLICE-001 S4 (OP6)",
+  "owner_role": "Pallas",
+  "eligible_roles": [
+    "Dionysus"
+  ],
+  "quality_class": "Q3",
+  "can_downgrade": false,
+  "escalate_to": "operator",
+  "depends_on": [
+    "C-004-T047"
+  ],
+  "owns": [
+    "rso/slice001/challenge/R2/"
+  ],
+  "reads": [
+    "rso/slice001/",
+    "rso/slice001/FREEZE_R2.md"
+  ],
+  "problem": "OP6: the re-check decides whether the native retained-information witness may open (only if C1/C2 close with no new unresolved claim-critical survivor). Plan s5 rules: commit the set before outcomes; outcome classes; witnesses; denominators; the S3 and S4 records stay as they are. Fresh means not a replay of S4's cases (they are T046's regressions). Charge every launch and mutation child to rso/slice001/s2/LEDGER.jsonl.",
+  "non_goals": [
+    "Do not modify implementation, tests or tables",
+    "No third repair round exists (OP6)"
+  ],
+  "evidence_required": [
+    "set committed before outcomes",
+    "closure components with denominators",
+    "a clear CLOSED / NOT CLOSED statement for C1 and C2"
+  ],
+  "acceptance": {
+    "condition": "ordering holds; report states CLOSED or NOT CLOSED for C1 and C2 with evidence"
+  },
+  "deliverables": [
+    "rso/slice001/challenge/R2/ (set, results, REPORT.md)"
+  ],
+  "kind": "review",
+  "red_required": false,
+  "status": "READY",
+  "history": [
+    {
+      "status": "PROPOSED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-06T05:55:30Z",
+      "note": "OP6 (b)"
+    },
+    {
+      "status": "READY",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-06T05:55:30Z",
+      "note": "made READY by the coordinator; waits on T047"
+    }
+  ],
+  "authority": "C-004-OP6",
+  "resource_ceiling": {
+    "launches": "<= 3 of the 5 remaining",
+    "cpu": "about 15 ledgered CPU-minutes",
+    "reviewer": "about 30 min of the remaining ~1 h 20 m"
+  }
+}
