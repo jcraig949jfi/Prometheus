@@ -50,10 +50,11 @@ canonical bytes only and is the same on any transport, layout, remote or host:
   outside `refs/moonshot/` and refuses a remote URL on its denylist (the Prometheus origins).
 - An epoch is stored as a commit whose tree is `MANIFEST.json`, `SPEC.json`, `TRACE`, `CHECKPOINT`;
   its parent is the previous epoch's commit (the chain's genesis commit for epoch 1, whose tree is
-  `GENESIS.json`, `CHECKPOINT`). Objects are written with git plumbing (`hash-object --stdin`,
-  `mktree`, `commit-tree`) so no working tree or line-ending conversion touches the bytes, with fixed
-  author, committer, date and message, so honest duplicates usually produce one commit. That is an
-  optimization; identity is s2.
+  `GENESIS.json`, `CHECKPOINT`). Objects are written as git objects directly from the bytes (no working
+  tree, no line-ending conversion). Author, committer and date are fixed; the commit MESSAGE names the
+  attempt, so the chain head's commit SHA attributes a publication to exactly one attempt. The epoch
+  TREE depends only on canonical bytes, so honest duplicates share one tree. Identity is still s2,
+  never a git SHA (v1.1, s12).
 - SLOTS. Every coordination object is a slot whose value is a commit, updated by compare-and-swap:
   `chains/<chain>` (the chain head), `leases/<chain>`, `contest/<chain>`, `validation/<chain>`,
   `receipts/<worker>`. Two layouts, identical semantics:
@@ -185,3 +186,14 @@ The attempt state machine exposes named points for injection: `after_head_read`,
 acknowledgement is lost), `after_cas`, `after_receipt_spool`, `before_lease_release`. A fault is a
 CRASH (the attempt is abandoned with no cleanup, as a process death would leave it) or a CALLBACK
 (used to interleave workers deterministically).
+
+## 12. Versions
+
+- v1 (2026-10-06, main 1f94e9197): frozen before any test.
+- v1.1 (2026-10-06, before the RED commit; no test existed): s3 changed from "fixed message, so honest
+  duplicates usually produce one commit" to "the commit message names the attempt". Found while
+  writing case 8: with byte-identical duplicate commits, git answers an identical push "up to date"
+  (exit 0), and a worker whose acknowledgement is lost cannot tell its own publication from an
+  identical twin's -- either lets two attempts claim PUBLISHED for one epoch, the double count case 8
+  forbids. Naming the attempt in the commit message removes it; the tree (canonical bytes) is still
+  shared and semantic identity (s2) is unchanged.

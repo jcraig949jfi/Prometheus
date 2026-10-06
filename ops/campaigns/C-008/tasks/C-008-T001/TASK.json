@@ -6,7 +6,7 @@
   "can_downgrade": false,
   "escalate_to": "operator",
   "authority": "operator OP-LC1 2026-10-06 (roles/Themis/prompts/2026-10-06_op_lc1/02_OPERATOR_OP-LC1_verbatim.md)",
-  "status": "CLAIMED",
+  "status": "RED",
   "history": [
     {
       "status": "PROPOSED",
@@ -25,6 +25,12 @@
       "by": "Themis[m2-0e9b1ed2]",
       "at_utc": "2026-10-06T08:42:43Z",
       "note": "Themis builds D1+D2 test-first"
+    },
+    {
+      "status": "RED",
+      "by": "Themis[m2-0e9b1ed2]",
+      "at_utc": "2026-10-06T08:57:22Z",
+      "note": "RED observed at 2154cd9c2 (branch themis/lanec-m4-2026-10-06): 144 tests, errors=151 all NotImplementedError: C-008-T001, failures=1 (denylist), skipped=4 by design; contract v1.1 before RED"
     }
   ],
   "task_id": "C-008-T001",
