@@ -118,6 +118,17 @@ class TestD5Join(unittest.TestCase):
         self.assertEqual(before, after)                          # an announcement changes no chain state
         st.close()
 
+    def test_running_code_must_be_the_approved_checkout(self):
+        # Added during implementation: approving --code-dir says nothing if the interpreter imported moonshot
+        # from somewhere else. The CLI path binds them (bind_running_code=True).
+        from moonshot.epoch.tests.harness import REPO_ROOT
+        self.assertFalse(J.running_code_inside(self.code))
+        self.assertTrue(J.running_code_inside(REPO_ROOT))
+        self.chain("J1")
+        with self.assertRaises(J.JoinRefused):
+            self.join(bind_running_code=True)
+        self.assertEqual(self.h.coordinator.nodes(), {})
+
     def test_denylisted_remote_is_refused_before_anything(self):
         with self.assertRaises(S.ForbiddenRemote):
             self.join(remote="https://github.com/jcraig949jfi/Prometheus.git")

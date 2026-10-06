@@ -118,7 +118,36 @@ def main(argv=None) -> int:
     r.add_argument("--repo-bytes", type=int, default=None)
     r.add_argument("--refs", type=int, default=None)
 
+    j = sub.add_parser("join", help="D5: join a namespace from a clean approved checkout and drain its chains")
+    j.add_argument("--remote", required=True)
+    j.add_argument("--namespace", required=True)
+    j.add_argument("--layout", choices=LAYOUTS, required=True)
+    j.add_argument("--code-dir", default=".", help="the clean pinned checkout this process runs from")
+    j.add_argument("--approval-ref", default="origin/main")
+    j.add_argument("--fetch", action="store_true", help="git fetch origin in --code-dir first")
+    j.add_argument("--node-id", default=None)
+    j.add_argument("--workers", type=int, default=1)
+    j.add_argument("--duration-s", type=float, required=True)
+    j.add_argument("--data-dir", required=True)
+    j.add_argument("--no-leases", action="store_true")
+    j.add_argument("--ttl", type=int, default=60)
+    j.add_argument("--host-label", default=None)
+
     a = p.parse_args(argv)
+    if a.cmd == "join":
+        from . import join as J
+        try:
+            out = J.join(a.remote, namespace=a.namespace, layout=a.layout, code_dir=a.code_dir,
+                         approval_ref=a.approval_ref, node_id=a.node_id, workers=a.workers, duration_s=a.duration_s,
+                         data_dir=a.data_dir, leases=not a.no_leases, ttl=a.ttl, host_label=a.host_label,
+                         fetch=a.fetch, bind_running_code=True)
+        except J.JoinRefused as e:
+            print(json.dumps({"refused": str(e)}))
+            return 3
+        print(json.dumps({"node_id": out["node_id"], "code_sha": out["code_sha"], "chains": out["chains"],
+                          "workers": [{k: s[k] for k in ("worker_id", "attempts", "executions", "polls", "flags")}
+                                      for s in out["workers"]]}))
+        return 0
     if a.cmd == "work":
         return _work(a)
     if a.cmd == "calibrate":

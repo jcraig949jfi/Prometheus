@@ -409,6 +409,26 @@ class Store:
                     raise
         return self.cas_slot("chains/" + chain_id, expected_head, to_commit)
 
+    # ------------------------------------------------------------------------------------------- nodes (D5)
+
+    def announce_node(self, node_id, record) -> str:
+        """Liveness only (CONTRACT s3 nodes/<node>): it grants nothing and touches no slot."""
+        self._require(WORKER)
+        if not NAME_RE.match(node_id or ""):
+            raise ValueError("node_id must match " + NAME_RE.pattern)
+        ref = self.ref("nodes", node_id)
+        for _ in range(4):
+            cur = self._read_refs([ref])[ref]
+            c = self.json_commit("NODE.json", dict(record, node_id=node_id), cur, "moonshot node {}\n".format(node_id))
+            if self._push([(c, ref, cur or "")]).applied:
+                return ref
+        raise GitError("could not announce node " + node_id)
+
+    def nodes(self) -> dict:
+        vals = self._read_refs(None, glob=self.ref("nodes/*"))
+        base = len(self.ref("nodes/"))
+        return {r[base:]: self.read_json(v, "NODE.json") for r, v in vals.items() if v}
+
     # ------------------------------------------------------------------------------------------- records
 
     def contest(self, chain_id):
