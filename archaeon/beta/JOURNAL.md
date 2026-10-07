@@ -20,6 +20,7 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
 | B08J | ladder with timing jitter (repaired instrument) | COMPOSITION WALL: 1 value yes, 2 values 0/8 |
 | B13 | queue primitive (PUSH/POPF): does the 2-value wall move? | run 1 INSTRUMENT FAILURE (fixed, fuzzed); rerun queued for budget |
 | B14 | stepping stone: guard organism -> two stored values? | staged; queued for budget |
+| B15 | why does L2 force genuine state? | ANALYSIS: wall = conditional write ROUTING to 2 locations (hypothesis) |
 | B12 | LONG: W2_K2 with N=500, G=3000 -- is it just time? | STOPPED (compute repair); partial 0/6 to g200-2999 |
 | B11 | is the W2_K2 shelf a delay line? | MOSTLY NO: 50/72 genuine memory, 20/72 delay lines |
 | B09 | dispatch wall: READ the cue vs SELECT on it | CLEAN NULL 0/24 |
@@ -143,6 +144,13 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   6,000 gen-0 evaluations incl. tape==genome before every run (passes); per-cell JSONL written as cells finish, a
   crashed cell is a recorded row; default workers 12. Controls unchanged. Lease lse-bda13648061d RELEASED.
   Rerun QUEUED: this seat is over the 48 core-h/24 h envelope until ~2026-10-08 00:00Z (or an operator raise).
+- B15 (analysis, no compute): the tick structures settle "why L2 forces state". A k-tick delay line is k registers
+  shifted UNCONDITIONALLY each tick. L1/L3 need k=1 (one register), L4 needs k=2 (two registers) -- and the GA built
+  exactly that 2-register shift (B08b). L2 is solvable by a 2-tick delay line too, yet 4/5 evolved solvers chose a
+  CONDITIONAL write instead (write-once guard). So two-register state IS reachable when it is unconditional, and one
+  conditional write IS reachable. REFINED WALL (hypothesis, mine): conditional ROUTING of writes to two different
+  locations. Prediction it makes for B13: a queue (write location advances by itself; no routing) dissolves the
+  L4 wall; and a "slot select by counter" world would stay walled. Campaign update 1 committed (2dbbb5c8b).
 - B08J built (ladder with jitter in train AND held-out); controls unchanged under jitter. Launches when cores free.
 - Next: B01b (done) tests H-PLATEAU quantitatively; then B03 = search arms at equal compute from fresh gen 0
   (baseline / heavy-tailed mutation count / behaviour-novelty) -- prediction: only structural-move arms lift 0/60.
