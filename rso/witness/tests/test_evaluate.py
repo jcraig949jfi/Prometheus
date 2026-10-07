@@ -316,10 +316,14 @@ class TestGateFailures(Base):
         self.assertIn("P-ERASE DETECTION_UNQUALIFIED",
                       self._du(self.run_eval(Spec(leak_differs={D4: False, D15: True}))))
 
-    def test_p_chan_unpaired_seeds_fail(self):
+    def test_p_chan_unpaired_seeds_refused(self):
+        # T031 (ADJUDICATION_W1 R2): S-NOPL must run the registered witness list exactly, so an unpaired (reordered)
+        # list is now an unregistered node -> UNQUALIFIED, before the T012 SEEDS_NOT_PAIRED gate is reached.
         res = self.run_eval(Spec(nopl_seeds=list(reversed(witness_seeds()))))
-        self.assertEqual(res["subjects"]["S4"]["P-CHAN"]["witness"]["why"], "SEEDS_NOT_PAIRED")
-        self.assertEqual(self.classes(res)["S4"], "POSITIVE (channel unidentified)")
+        why = " ".join(res["subjects"]["S4"]["why"])
+        self.assertIn("SEEDS_NOT_REGISTERED", why)
+        self.assertIn("P-CHAN", why)
+        self.assertEqual(self.classes(res)["S4"], "UNQUALIFIED")
 
 
 class TestRefusals(Base):
