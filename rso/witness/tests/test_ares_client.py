@@ -23,10 +23,20 @@ def _random_pop(P=6, seed=7):
 
 class TestRunner(unittest.TestCase):
     def test_runner_reproduces_ares_rollout_actions(self):
-        pop = _random_pop()
-        _, traces = AR.rollout(pop, AR.make_world("W15", "present"), SEEDS, record=True)
-        mine = AC.run_episodes(pop, AC.world("W15", "present"), SEEDS)
-        self.assertTrue(np.array_equal(mine["actions"], np.stack(traces["actions"])))
+        # random organisms plus both carriers: an activation carrier's actions depend on W15's interrupts, so a
+        # runner that skipped them would differ (a random population alone did not expose that; author mutant)
+        for pop in (_random_pop(), AC.recur_carrier(), AC.pos_carrier()):
+            _, traces = AR.rollout(pop, AR.make_world("W15", "present"), SEEDS, record=True)
+            mine = AC.run_episodes(pop, AC.world("W15", "present"), SEEDS)
+            self.assertTrue(np.array_equal(mine["actions"], np.stack(traces["actions"])))
+
+    def test_interrupts_reach_the_runtime(self):
+        # internal state, not accuracy: right after an interrupt step the hidden activations are zero
+        zero_after = []
+        out = AC.run_episodes(AC.recur_carrier(), AC.world("W15", "present"), SEEDS[:1],
+                              observer=lambda t, rt: zero_after.append((t, not np.any(rt.v[:, S.OBS_DIM:]))))
+        hits = [z for t, z in zero_after if t in set(out["reset_steps"][0])]
+        self.assertEqual(hits, [True] * 4)
 
     def test_deterministic_under_fixed_seeds(self):
         pop = _random_pop()
@@ -127,7 +137,10 @@ class TestReceiptsAndBinding(unittest.TestCase):
     def test_receipts_are_canonical_float_free_and_deterministic(self):
         again = AC.Launch("launch-test-1", code_commit="0" * 40).produce("S", "P-OBS", self.pop, SEEDS)
         self.assertEqual(again[2], self.produced[0][2])
-        self.assertNotIn(b".", again[2].split(b'"genome_sha256"')[0][-1:])
+        import json
+        from rso.slice001 import receipt as R
+        obj = json.loads(again[2])
+        self.assertEqual(R.canonical_bytes(obj), again[2])               # canonical (refuses floats)
         self.assertEqual(len({p[0] for p in self.produced}), len(AC.ARMS))   # one opaque node id per arm
 
     def test_receipt_records_subject_world_seeds_observer_outputs_oracle(self):
@@ -151,11 +164,12 @@ class TestPredicateCountsOnSyntheticArrays(unittest.TestCase):
         self.assertEqual(total.tolist(), [4, 4])
         self.assertEqual(correct.tolist(), [2 + 2, 0 + 0])
 
-    def test_pre_cue_contingency(self):
-        actions = np.zeros((3, 5, 1), dtype=np.int8)
-        actions[1, 0, 0] = 2; actions[2, 0, 0] = 1
-        table = AC.pre_cue_contingency(actions, np.array([1, 0, 1]), cue_steps=3)
-        self.assertEqual(table, {(1, 2): 1, (0, 1): 1})
+    def test_paired_carryover_diffs(self):
+        # the same probe episode after two different preceding episodes; any difference is carry-over
+        after_a = np.zeros((5, 2), dtype=np.int8)
+        after_b = after_a.copy(); after_b[0, 1] = 2; after_b[3, 1] = 1
+        self.assertEqual(AC.paired_carryover_diffs(after_a, after_a.copy()), 0)
+        self.assertEqual(AC.paired_carryover_diffs(after_a, after_b), 2)
 
     def test_actions_equal(self):
         a = np.ones((2, 3, 1), dtype=np.int8)
