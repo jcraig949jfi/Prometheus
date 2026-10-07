@@ -175,9 +175,12 @@ def claims_of(name, g):
 
 
 def consumer_for(g, store, first_check_utc, recs, blobs, anchors=None, bundle=None):
+    # C-009-T031 R3: the bundle carries the launch its run.json names (g.run_id), so the production path checks it
+    # against the anchored launch exactly as the fixture path does (B1.PROBE.PRODUCTION_RUNJSON: LAUNCH_UNBOUND).
     bundle = bundle or EV.Bundle({n: R.Receipt.from_dict(d).canonical_bytes() for n, d in g.dicts.items()},
                                  g.traces, g.inventory, stage_records=recs, blobs=blobs,
-                                 expected_table=next(iter(g.dicts.values()))["expected_answer"]["table"])
+                                 expected_table=next(iter(g.dicts.values()))["expected_answer"]["table"],
+                                 run_id=g.run_id)
     anchors = anchors or EV.Anchors(g.manifest, "keeper")
     some = next(iter(g.dicts.values()))
     gate_versions = {r["instrument"]: r["version"] for r in recs if r["instrument"] in C.GATES}

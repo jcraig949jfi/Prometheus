@@ -15,6 +15,9 @@ A node execution row binds a receipt iff (BX2):
     its status is COMPLETED; its node_id equals the receipt's node id (exact string);
     its receipt_sha256 equals sha256(receipt canonical bytes).
 No timestamp is consulted (BX4). Rows of other launches are provenance, never evidence (BX5).
+BX5b (CONTRACT.md s7, v1.1.0; C-009-T031): every COMPLETED RECEIPT row of a presented node under the anchored launch
+must be the cited row; a second completed execution the bundle does not present is BIND_SIBLING_UNREPORTED
+(unreported_siblings / sibling_reasons). FAILED, INTERRUPTED and REFUSED attempts stay provenance.
 """
 import hashlib
 
@@ -35,6 +38,7 @@ STATUS = "BIND_STATUS"
 NODE_MISMATCH = "BIND_NODE_MISMATCH"
 DIGEST_MISSING = "BIND_DIGEST_MISSING"
 DIGEST_MISMATCH = "BIND_DIGEST_MISMATCH"
+SIBLING_UNREPORTED = "BIND_SIBLING_UNREPORTED"
 
 
 def receipt_sha256(receipt_bytes):
@@ -85,6 +89,18 @@ def binding_reasons(node_id, run_id, receipt_bytes, rows, launch_run_id):
     elif digest != receipt_sha256(receipt_bytes):
         why.append(DIGEST_MISMATCH)
     return why
+
+
+def unreported_siblings(node_id, run_id, rows, launch_run_id):
+    """BX5b: run ids of the OTHER completed executions of `node_id` under the anchored launch (RECEIPT rows,
+    status COMPLETED, parent = the launch, run_id != the cited run). Node ids are compared as opaque strings."""
+    return [r.get("run_id") for r in own_launch_rows(rows, launch_run_id)
+            if r.get("node_id") == node_id and r.get("status") == COMPLETED and r.get("run_id") != run_id]
+
+
+def sibling_reasons(node_id, run_id, rows, launch_run_id):
+    """BX5b: [SIBLING_UNREPORTED] if the launch completed the node more than once and only `run_id` is presented."""
+    return [SIBLING_UNREPORTED] if unreported_siblings(node_id, run_id, rows, launch_run_id) else []
 
 
 def own_launch_rows(rows, launch_run_id):

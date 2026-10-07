@@ -464,6 +464,9 @@ def g_inv(claim, bundle, anchors):
         R2.BROKEN.LATER_WINDOW_RUN, OVERLAP_RUN, FAILED_ROW_CITED; CC1: fixtures/cc1_cases.py);
       - BX5: a required node WITHOUT a presented receipt is RUN_UNREPORTED iff the anchored launch has a COMPLETED
         row of it; rows of other launches are provenance, never evidence and never errors.
+      - BX5b (CONTRACT.md s7; C-009-T031): a presented receipt whose node the launch ALSO completed in another,
+        unpresented execution is RECEIPT_WITHOUT_RUN:<node_id> with BIND_SIBLING_UNREPORTED (and the sibling run
+        ids) in the witness (B1.BROKEN.SIBLING_UNREPORTED). FAILED / INTERRUPTED / REFUSED attempts are provenance.
     No timestamp is read (BX4: AMENDMENT_v1.0.5's end_utc bound is retired; its meaning is BX1/BX2)."""
     anchors = resolve_anchors(anchors, bundle)
     rows = bundle.inventory
@@ -481,10 +484,17 @@ def g_inv(claim, bundle, anchors):
         if rc is not None:
             run_id = rc.to_dict()["execution"]["run_id"]
             why = BD.binding_reasons(rc.node_id, run_id, rc.canonical_bytes(), runs, anchors.launch_run_id)
+            # FD-T031-1: BX5b is evaluated when the cited row otherwise binds (the B1 shape). A cited row that already
+            # fails is RECEIPT_WITHOUT_RUN either way; its witness keeps the CC1 form (no extra sibling reason).
+            siblings = [] if why else BD.unreported_siblings(rc.node_id, run_id, runs, anchors.launch_run_id)
+            if siblings:
+                why = [BD.SIBLING_UNREPORTED]
             if why:
+                witness = {"node_id": n, "run_id": run_id, "binding": why}
+                if siblings:
+                    witness["siblings"] = siblings
                 return {"execution": _ran(len(req)),
-                        "outcome": _gate("G-INV", "FAIL", "RECEIPT_WITHOUT_RUN:%s" % n,
-                                         {"node_id": n, "run_id": run_id, "binding": why}, len(req))}
+                        "outcome": _gate("G-INV", "FAIL", "RECEIPT_WITHOUT_RUN:%s" % n, witness, len(req))}
         else:
             for r in own:
                 if r.get("node_id") == n and r.get("status") == BD.COMPLETED:
