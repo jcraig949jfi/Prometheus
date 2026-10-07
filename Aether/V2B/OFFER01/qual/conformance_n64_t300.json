@@ -1,0 +1,67 @@
+{
+ "X_vs_TEST3_exchange": [
+  {
+   "seed": 0,
+   "X_equals_mob_r0x1e0": true
+  },
+  {
+   "seed": 1,
+   "X_equals_mob_r0x1e0": true
+  }
+ ],
+ "L1_vs_AIM01": [
+  {
+   "seed": 0,
+   "L1_equals_AIM01_reaim1": true
+  },
+  {
+   "seed": 1,
+   "L1_equals_AIM01_reaim1": true
+  }
+ ],
+ "cpu_gpu": [
+  {
+   "law": "L1",
+   "cpu_equals_gpu": true,
+   "counts_late": {
+    "tmpl_writes": 57956,
+    "deliv_acq": 0,
+    "deliv_acq_nonpay": 0,
+    "tmpl_changes": 69598,
+    "uptake_changes": 0,
+    "uptake_events": 0,
+    "reaim_events": 59901,
+    "dv_changes": 645
+   }
+  },
+  {
+   "law": "X",
+   "cpu_equals_gpu": true,
+   "counts_late": {
+    "tmpl_writes": 86217,
+    "deliv_acq": 86217,
+    "deliv_acq_nonpay": 47807,
+    "tmpl_changes": 148148,
+    "uptake_changes": 73550,
+    "uptake_events": 82827,
+    "reaim_events": 0,
+    "dv_changes": 13784
+   }
+  },
+  {
+   "law": "L2",
+   "cpu_equals_gpu": true,
+   "counts_late": {
+    "tmpl_writes": 50096,
+    "deliv_acq": 50080,
+    "deliv_acq_nonpay": 22098,
+    "tmpl_changes": 148105,
+    "uptake_changes": 47528,
+    "uptake_events": 49316,
+    "reaim_events": 52398,
+    "dv_changes": 8698
+   }
+  }
+ ],
+ "all_ok": true
+}

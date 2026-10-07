@@ -1,0 +1,69 @@
+{
+  "schema": "prometheus.workgraph.receipt.v1",
+  "task_id": "C-009-T016",
+  "campaign_id": "C-009",
+  "attempt_id": "A-001",
+  "role": "Eupalamus",
+  "model": "claude-sonnet-5-5",
+  "quality_class": "Q1",
+  "start_sha": "8897c50fc9630c0877d22c64f27ab9fe23ecfcbf",
+  "end_sha": "d34cf480f01e234b55999f76cdf79d18268c8ca2",
+  "files_changed": [
+    "rso/witness/run_witness.py",
+    "rso/witness/tests/test_run_witness.py"
+  ],
+  "evidence_added": [
+    "rso/witness/run_witness.py: `launch` runs a registered (subject genome file, arm, predicate, seeds) list as ONE ledgered TOP_LEVEL launch against Ledger.from_contract via ares_client; node rows are RECEIPT rows with parent_run_id and receipt_sha256; bundle = receipts/, subjects/, seeds.json, inventory.json, run.json, MANIFEST.json (written last, carries launch_run_id)",
+    "`subject` runs ares.search.run for a registered subject config and records genome.json, its sha256 (equal to ares_client.genome_digest), the run receipt and EVERY episode seed the GA drew (training draws per generation via a pass-through rollout recorder, plus held-out sets); log, held-out and fitness are discarded and not printed",
+    "refusals before any ledger row: unknown arm, empty/non-integer/duplicate seeds, duplicate node, seed below seed_floor, seed in EVAL_SEEDS / balanced_seeds_for / an excluded subject record, non-canonical subject file, S-NOPL seeds differing from S seeds in value or order (T017 requirement: p_chan pairs by position), non-empty output directory",
+    "24 plumbing tests: bundle binds (binding_reasons == [] for every receipt), one TOP_LEVEL row, second run uses a new launch and a repeated id is refused, cheat controls (edited receipt -> BIND_DIGEST_MISMATCH, receipt under the other launch -> BIND_FOREIGN_LAUNCH), seed record complete and generation-0 draw independently replayed, failed node -> FAILED rows and no MANIFEST, cap exhaustion -> REFUSED row and exit 3"
+  ],
+  "evidence_executed": [
+    {
+      "command": "python -B -m unittest rso.witness.tests.test_run_witness (before run_witness.py existed)",
+      "result": "RED: ImportError, 1 error"
+    },
+    {
+      "command": "python -B -m unittest rso.witness.tests.test_run_witness",
+      "result": "24 OK"
+    },
+    {
+      "command": "python -B -m unittest discover -s rso/witness/tests -t .",
+      "result": "75 OK"
+    },
+    {
+      "command": "python -B -m unittest discover -s rso/binding/tests -t .",
+      "result": "13 OK"
+    },
+    {
+      "command": "5 mutants (pairing check off, parent_run_id dropped, receipt_sha256 dropped, rollout wrapper not restored, exclusion off)",
+      "result": "5/5 KILLED"
+    }
+  ],
+  "red_observed": {
+    "observed": true,
+    "detail": "driver module absent: test module failed to import before run_witness.py was written"
+  },
+  "result": "DONE_CLEAN",
+  "known_escapes": [
+    "no registered subject was run and no statistic was computed: the registered subject configs (P=128, G=120) are C-010's first act after the preregistration freezes; subject-run tests use P=4, G=1 random-init GA runs",
+    "the P-ERASE probe set and P-PRES seed set (PREREG_DRAFT OPEN 2) are not driven here: the driver runs any registered (subject, arm, predicate, seeds) list but has no episode-pair/probe construction",
+    "AR.rollout is wrapped by monkeypatch for the duration of a subject run; if ares.search.run is changed to call rollout through another name the recorder would record nothing (the replay test of generation 0 would then fail)",
+    "bundle holds receipts but not the action-trace bytes: ares_client.receipt_dict does not return them (Cadmus's file, not edited)"
+  ],
+  "unresolved": [],
+  "unblocks": [
+    "PREREG_DRAFT OPEN 3 (subject GA seed record for the s3 exclusion); C-010 launches"
+  ],
+  "created_at_utc": "2026-10-07T04:27:31Z",
+  "instance": "harry1-f1642b68",
+  "host": "harry1 (M4)",
+  "branch": "eupalamus/c009-t016",
+  "worktree_path": "C:/Prometheus-worktrees/eupalamus-c009-t016",
+  "resources": {
+    "cpu": "about 2 CPU-minutes (tests, mutants)",
+    "validation_launches": 0,
+    "model": "one Q1 session"
+  },
+  "notes": "No ares/, rso/binding, ares_client.py or ruler.py edit. Field decisions in the run_witness.py docstring (CPU charged to node rows; failed node keeps partial receipts, no MANIFEST; random-suffixed default launch id)."
+}

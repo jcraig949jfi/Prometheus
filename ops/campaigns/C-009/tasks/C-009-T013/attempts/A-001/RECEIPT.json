@@ -7,7 +7,7 @@
   "model": "claude-opus-5-5",
   "quality_class": "Q2",
   "start_sha": "f3b87bd4428f150a8c21f7a72de2d7f2829c3cf6",
-  "end_sha": "8bedaa06c81a6eccdc2593d7c5b1a34ed690ae6d",
+  "end_sha": "a79a0dfb7431b02f6d0ece2dc0c4aaf3fb471025",
   "files_changed": [
     "rso/witness/ares_client.py",
     "rso/witness/tests/__init__.py",
@@ -33,6 +33,10 @@
     {
       "command": "unittest discover rso/witness/tests and rso/binding/tests (merged tree, origin/main 4b778b87f)",
       "result": "20 OK; 13 OK"
+    },
+    {
+      "command": "action-only fidelity reference (Palamedes #1746): ares.search.rollout on a zero-reward world wrapper, fitness asserted all zero; rerun witness suite on merged tree",
+      "result": "20 OK; skipped-interrupt mutant still killed"
     }
   ],
   "red_observed": {
@@ -43,7 +47,8 @@
   "known_escapes": [
     "design refinement for the preregistration: P-ERASE across B2 as paired carry-over (same probe episode after two different preceding episodes), replacing the draft's pre-cue contingency, because Ares sees the cue at its first step",
     "rso/witness has no __init__.py (outside this packet's owns); it imports as a namespace package",
-    "POS carrier wiring is hand-built; whether it carries r is a P-CAL outcome, not checked here"
+    "POS carrier wiring is hand-built; whether it carries r is a P-CAL outcome, not checked here",
+    "DISCLOSED AND REMOVED: the first fidelity test called ares.search.rollout on random organisms and on POS/RECUR, which computes a mean-reward array internally (discarded, never printed, stored or compared). Ruled computed-not-observed by Palamedes (#1746): no contamination, no preregistration change. Replaced by an action-only reference on a zero-reward world wrapper."
   ],
   "unresolved": [],
   "unblocks": [],
@@ -56,5 +61,5 @@
     "cpu": "0 launches; development only, all test runs under 10 s",
     "model": "one Q2 session, about 0.6 hour"
   },
-  "notes": "NO accuracy or retention number was computed on any arm or control; the runner never returns rewards. ares.search.rollout's own fitness return was computed (and discarded, never printed) only inside the fidelity test on random organisms and the two hand-wired carriers."
+  "notes": "NO accuracy or retention number was computed or observed on any arm or control in the final code; the runner never returns rewards; the fidelity reference runs on a zero-reward world."
 }

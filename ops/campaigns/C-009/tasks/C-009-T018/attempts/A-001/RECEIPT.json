@@ -1,0 +1,54 @@
+{
+  "schema": "prometheus.workgraph.receipt.v1",
+  "task_id": "C-009-T018",
+  "campaign_id": "C-009",
+  "attempt_id": "A-001",
+  "role": "Cadmus",
+  "model": "claude-opus-5-5",
+  "quality_class": "Q2",
+  "start_sha": "69540da137de99a32bd7c6fc8919e770d40cf43e",
+  "end_sha": "af1ce2e1c0f70099e3b1bc09817ffdcb2ad42a8a",
+  "files_changed": [
+    "rso/witness/ares_client.py",
+    "rso/witness/tests/test_ares_client.py",
+    "rso/witness/ERASE_PROBES.md"
+  ],
+  "evidence_added": [
+    "ERASE_PROBES.md: P-ERASE = 64 r-balanced triples (pre_a r=0, pre_b r=1, probe), seeds 800000+, exact differing-action count D on fresh runtimes; X PASS iff D=0; QUALIFIED only if X-LEAK D>0, else DETECTION_UNQUALIFIED; P-PRES = 32 (warmup, seed) pairs, seeds 850000+, PASS iff 0 differences; seed hygiene below the 900000 witness floor with an exclude list for subject GA seeds; cost",
+    "ares_client.py: regime_of (world oracle only), erase_probe_set, pres_seed_set, p_erase_count, p_pres_diffs",
+    "tests: 6 new (26 total): set shape, balance, determinism, disjointness, exclusion honoured; hand-wired construction gives D>0 leaky and D=0 correct; zero-plasticity leaky gives D=0 (fire case cannot fire); P-PRES likewise"
+  ],
+  "evidence_executed": [
+    {
+      "command": "python -B -m unittest ...TestEraseProbesAndPresSeeds (before the functions)",
+      "result": "RED: 6 errors, AttributeError (04:26Z)"
+    },
+    {
+      "command": "python -B -m unittest discover -s rso/witness/tests -t . ; rso/binding/tests (merged tree)",
+      "result": "26 OK; 13 OK"
+    }
+  ],
+  "red_observed": {
+    "observed": true,
+    "reason": "new tests committed first and errored on the missing functions"
+  },
+  "result": "DONE_CLEAN",
+  "known_escapes": [
+    "P-ERASE sees carry-over that changes an action within the next episode; leaks that act later or never change an action are outside it",
+    "the final seed lists must be regenerated with the subject GA episode seeds excluded at freeze (driver C-009-T016)"
+  ],
+  "unresolved": [
+    "exclusion of subject GA episode seeds at freeze (T016 records them)"
+  ],
+  "unblocks": [],
+  "created_at_utc": "2026-10-07T04:28:30Z",
+  "instance": "m1-a86ec5e4",
+  "host": "SKULLPORT",
+  "branch": "cadmus/c009-t018",
+  "worktree_path": "F:/Prometheus-worktrees/cadmus-c009-t018",
+  "resources": {
+    "cpu": "0 launches; tests about 4 s",
+    "model": "one Q2 session, about 0.3 hour"
+  },
+  "notes": "Plumbing on a hand-wired construction only; no subject, no registered arm, no accuracy/reward/retention number."
+}
