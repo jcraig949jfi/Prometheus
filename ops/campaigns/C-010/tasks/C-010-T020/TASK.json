@@ -39,7 +39,7 @@
     "rso/witness/LEDGER.jsonl"
   ],
   "kind": "software",
-  "status": "CLAIMED",
+  "status": "CLOSED",
   "history": [
     {
       "status": "PROPOSED",
@@ -58,6 +58,36 @@
       "by": "Palamedes[harry1-679179c6]",
       "at_utc": "2026-10-07T14:27:22Z",
       "note": "Palamedes: PREREGISTRATION s10 order -- subjects, seed lists, registration, witness launches, evaluation, RESULT"
+    },
+    {
+      "status": "IMPLEMENTING",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-07T14:43:27Z",
+      "note": "subjects, seeds, launches, registration rows 62-67, evaluation"
+    },
+    {
+      "status": "GREEN",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-07T14:43:27Z",
+      "note": "RESULT.json + RESULT.md committed"
+    },
+    {
+      "status": "INTEGRATION_READY",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-07T14:43:27Z",
+      "note": "on main"
+    },
+    {
+      "status": "INTEGRATED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-07T14:43:27Z",
+      "note": "self-integrated"
+    },
+    {
+      "status": "CLOSED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-07T14:43:27Z",
+      "note": "S4 NEGATIVE, S15 NEGATIVE; instrument qualified"
     }
   ],
   "authority": "operator directive 2026-10-07 (C-004-OP8) s6: native witness opens automatically when C-009 closes; rso/binding/CLOSURE.md",
