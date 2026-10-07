@@ -30,7 +30,7 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
 | B08K | 0-7 jitter re-score of B08J | L1 7/7, L2 5/5, L3 6/8 genuine; standard now 0-7 |
 | B22 | credit the write half, then withdraw | write learned 2/8, lost on withdrawal; recall 0/16 |
 | B22b | hold store credit at .2 after g150 | recall 0/8; write held but read never found; SUCCESSOR-STORE mechanism |
-| B23 | re-audit Deep Frontier/C6 elites with jitter/constant-twin/disasm | staged (budget window) |
+| B23 | re-audit Deep Frontier/C6 elites with jitter/constant-twin/disasm | WSE runs: 54% of competent = timing exploits (C6-novel5 80%); 102 composed-world runs pending |
 | B17 | forced perception (echo on PUT) opens the 2-value wall? | staged; controls pass |
 | B12 | LONG: W2_K2 with N=500, G=3000 -- is it just time? | STOPPED (compute repair); partial 0/6 to g200-2999 |
 | B11 | is the W2_K2 shelf a delay line? | MOSTLY NO: 50/72 genuine memory, 20/72 delay lines |
@@ -259,6 +259,15 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   (drop early OUT; LD [r6]; OUT after the read) scored 0: the loop fires once per word, so the read must output only
   after the SECOND word of the ASK -- a positional/counter condition. In this organism the read is a positional
   problem, not a missing instruction pair.
+- B23 FRONTIER RE-AUDIT (read-only, off-repo D:/Prometheus-worktrees/archaeon-wse-2026-09-16/archaeon/frontier/runs;
+  final populations, plain vs 0-7 jitter): 131 experiment dirs = 28 wse.WorldSpec, 102 c6.composed.v1 (NOT scored
+  here), 1 without chunks. On the scored runs: 41/76 competent organisms (54%) are TIMING EXPLOITS. By run:
+  C6-novel5.T1 20/25 (80%), C6-volume.T1 12/22, C6-blind.T3 8/23, C6-blind.T4 1/6 -- all on W0 (one stream, fixed
+  timing). C5-flat (W3_K3) populations sit on the K=3 shelf (.36), none competent. Five runs' populations were
+  unscorable by the v0 evaluator (graph manifests). PREDICTION (>= 50%) held, weakly.
+  Reading (Phase 2-B re-read of an old positive): the frontier's C6 detector firings on W0 were computed over
+  populations whose "competence" is mostly delay lines. Next: a C6-native audit of the 102 composed-world runs
+  (constant-twin / shuffled-input controls instead of jitter, since composed worlds have their own dynamics).
 - PIVOT LANE staged (B23, for the budget window): re-audit the Deep Frontier / C6 record with today's instruments.
   Off-repo evidence exists: D:\Prometheus-worktreesrchaeon-wse-2026-09-16rchaeonrontier
 uns (2.3 GB;
