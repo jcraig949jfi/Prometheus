@@ -18,10 +18,12 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
 | B07 | withdrawn positional scaffold -> content-addressed recall? | NULL 0/36 (cue dispatch itself unreachable) |
 | B08 | which primitive is the wall? (ladder) | L4 claim RETRACTED: evolved solvers are delay lines (B08b) |
 | B08J | ladder with timing jitter (repaired instrument) | COMPOSITION WALL: 1 value yes, 2 values 0/8 |
-| B13 | queue primitive (PUSH/POPF): does the 2-value wall move? | run 1 INSTRUMENT FAILURE (fixed, fuzzed); rerun queued for budget |
+| B13 | queue primitive (PUSH/POPF): does the 2-value wall move? | queue arm 0/8 (stock = B08J 0/8): NO |
 | B14 | stepping stone: guard organism -> two stored values? | staged; queued for budget |
 | B15 | why does L2 force genuine state? | ANALYSIS: wall = conditional write ROUTING to 2 locations (hypothesis) |
 | B16 | how do genuine shelves store one value? | 56% LATCH (stop perceiving); 36% continuous perceivers |
+| B14' | L4 seeded from perceiving vs latching shelves | running (2 procs) |
+| B17 | forced perception (echo on PUT) opens the 2-value wall? | staged; controls pass |
 | B12 | LONG: W2_K2 with N=500, G=3000 -- is it just time? | STOPPED (compute repair); partial 0/6 to g200-2999 |
 | B11 | is the W2_K2 shelf a delay line? | MOSTLY NO: 50/72 genuine memory, 20/72 delay lines |
 | B09 | dispatch wall: READ the cue vs SELECT on it | CLEAN NULL 0/24 |
@@ -170,6 +172,12 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   Reading: the GA's majority route to "one stored value" is to STOP PERCEIVING. A latched organism cannot store a
   second value by construction -- so for those, the composition wall is closed from the start.
   B14 re-scoped: seed L4/W2_K2 from PERCEIVING shelves vs LATCHED shelves (predict only perceivers can extend).
+- B13 queue arm FINAL (jittered L4, 8 seeds): 0/8. PREDICTION (>= 5/8) FAILED. The one high cell (1303, .79) is the
+  lag exploit above. KILLED (mine, B15): "the wall is write-location routing" -- removing routing with an
+  auto-advancing store does not open L4. What a queue solver still needs is a 3-way dispatch on tick kind.
+- B17 staged (world lane): ECHO on every PUT tick forces perception, closing the latch route (B16). Controls: slot
+  solver / shelf recall 1.0 / .5729 with echo 0 (they never echo); echo+slot control recall 1.0, echo 1.0 on L4E and
+  L6E. Queued for the budget window.
 - B08J built (ladder with jitter in train AND held-out); controls unchanged under jitter. Launches when cores free.
 - Next: B01b (done) tests H-PLATEAU quantitatively; then B03 = search arms at equal compute from fresh gen 0
   (baseline / heavy-tailed mutation count / behaviour-novelty) -- prediction: only structural-move arms lift 0/60.
