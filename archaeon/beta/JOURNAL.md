@@ -34,6 +34,7 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
 | B23b | composed-world runs: constant + blind twins | 62/102 fail; 40 beat constant |
 | B23c/B24 | attack survivors (echo twins, knockout) | W-artifacts = echo (killed); P-boom = clock-vs-position lap counter |
 | B25/B26 | no-clock composed world: does content sensing evolve? | YES 3/6 sense pools (blind twin collapses); 3/6 open-loop |
+| B27 | generality over 4 more worlds | B-scatter 3/3, C6-unable 1/3; B-pressure/W-artifacts inconclusive (no positive) |
 | B17 | forced perception (echo on PUT) opens the 2-value wall? | staged; controls pass |
 | B12 | LONG: W2_K2 with N=500, G=3000 -- is it just time? | STOPPED (compute repair); partial 0/6 to g200-2999 |
 | B11 | is the W2_K2 shelf a delay line? | MOSTLY NO: 50/72 genuine memory, 20/72 delay lines |
@@ -309,6 +310,14 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   that node (dwelling by reversal; harvest index mismatched to the sensed pool). Seed 2506 (39 instr, persist regs):
   any local pool -> HARVEST IN PLACE without moving (H1/H2); none -> harvest and MOVE (mostly -) => STOP-WHEN-FOOD,
   MOVE-WHEN-EMPTY. Two distinct evolved reactive foraging rules (kinesis-like), both content-driven.
+- B27 GENERALITY (NOCLOCK, G=200, 3 seeds/world): content sensing (blind drop >= .05 and a pool word sensed) in
+  B-scatter 3/3 (.22-.26, pools 0/1), C6-unable 1/3 (.22, pool3; a DELAYED world), B-pressure 0/3, W-artifacts_w50053
+  0/3. PREDICTION (>= 3 of 4 worlds) FAILED (2/4). Positive control per world (hand "harvest first non-empty pool else
+  move", adapted to R): P-boom .27 / C6-unable .15 beat constant; B-scatter .11 = constant (evolution beat my hand
+  policy); B-pressure .03 < constant .06 (delayed harvests land after moving); W-artifacts .03 ~ constant (world barely
+  rewards). So the B-pressure / W-artifacts zeros are INCONCLUSIVE -- no validated positive there -- not
+  "unreachable". Counting P-boom: evolved content sensing in 3 of 5 no-clock worlds tried, wherever a naive content
+  policy pays or the world rewards foraging at all.
 - PIVOT LANE staged (B23, for the budget window): re-audit the Deep Frontier / C6 record with today's instruments.
   Off-repo evidence exists: D:\Prometheus-worktreesrchaeon-wse-2026-09-16rchaeonrontier
 uns (2.3 GB;
