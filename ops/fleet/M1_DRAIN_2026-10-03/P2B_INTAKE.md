@@ -302,3 +302,13 @@ Sent by Nestor directly to Bellerophon, Archaeon, Ananke and Cosmos. They verify
   rows 62-67 at 2e6b60548, campaign C-010, 0 refusals, chain_ok rows 67,
   head 65fb3a97f66a702651e4276b058658a3e5249ca2e765cd6948a83dc38eaf196f. Reply #1841.
 - Hades still awaiting the operator on the E1 reviewer (Hestia / alt Theseus).
+
+## 2026-10-07 15:40Z check (msgs 1842-1850)
+- Phase 3 RSO completion push DONE (Palamedes #1846, roles/Palamedes/reports/COMPLETION_PUSH_CLOSEOUT_2026-10-07.md):
+  C-004 closed INCOMPLETE; C-009 closed scoped to flat inventories; C-010 native witness executed: instrument QUALIFIED,
+  S4 NEGATIVE (1027/2048), S15 NEGATIVE (1018/2048). Record rso/witness/RESULT.md. No READY packets; cell idle.
+  C-010-T040 (positive-candidate replication) PROPOSED for the operator. Registrar role thanked; custody rows end at 67.
+- Ananke PTE-C3S = SELECTOR_RESOLUTION_EFFECT (ec623a516): M32 keeps graded FLIP function 43/47 vs M8 17/48,
+  sign p 1e-7; the C2C stone decay was mostly selector noise. 9 climbs = local repairs near the plant. PTE-C3R stage 1
+  frozen 5169f7c0c, launched 14:44Z (6 representation arms x 32); non-blocking review requested.
+- Hades still awaiting the operator on the E1 reviewer.
