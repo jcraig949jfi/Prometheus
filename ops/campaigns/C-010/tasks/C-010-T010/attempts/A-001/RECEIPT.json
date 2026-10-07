@@ -1,0 +1,57 @@
+{
+  "schema": "prometheus.workgraph.receipt.v1",
+  "task_id": "C-010-T010",
+  "campaign_id": "C-010",
+  "attempt_id": "A-001",
+  "role": "Cadmus",
+  "model": "claude-opus-5-5",
+  "quality_class": "Q2",
+  "start_sha": "d54f911b365dcaf6b03c320108f3f8f2f79b23fd",
+  "end_sha": "076cba01d65faa558df59da0013f976ce248c4f6",
+  "files_changed": [
+    "rso/witness/ares_client.py",
+    "rso/witness/tests/test_ares_client.py"
+  ],
+  "evidence_added": [
+    "node_execution: per-predicate patterns -- episode runs (P-RET, P-CAL, P-CHAN, reported arms) -> trace:actions, oracle:regimes, oracle:reset_steps; P-OBS record vs no-record -> trace:actions_record, trace:actions_norecord + oracle; P-ERASE flat (pre_a, pre_b, probe) triples -> trace:probe_after_a, trace:probe_after_b, oracle:regimes (N x 3); P-PRES flat (warmup, seed) pairs -> trace:pres_warm, trace:pres_fresh, oracle:regimes (N x 2)",
+    "receipt_dict returns (receipt, {sha256: bytes}) -- run_witness.node_artifacts' preferred seam; every artifact listing carries role, sha256, length, dtype, shape (PREREGISTRATION s7); malformed triple/pair seed lists raise",
+    "tests: 8 new (34 in the module): roles per predicate; driver verify_artifacts passes (all named, nothing extra); bytes decode to the run; P-ERASE / P-PRES on the hand-wired leak construction (0 vs >0 differences); malformed lists refused; driver seam takes the tuple; produce still binds"
+  ],
+  "evidence_executed": [
+    {
+      "command": "python -B -m unittest rso.witness.tests.test_ares_client (before node_execution)",
+      "result": "RED: 11 errors, 1 failure (09:27Z)"
+    },
+    {
+      "command": "author mutants (P-ERASE second arm reuses pre_a; P-PRES fresh runs the warm-up; layout not recorded)",
+      "result": "3 of 3 killed"
+    },
+    {
+      "command": "python -B -m unittest discover -s rso/witness/tests -t . && python -B -m unittest discover -s rso/binding/tests -t . (merged tree)",
+      "result": "101 OK; 21 OK"
+    }
+  ],
+  "red_observed": {
+    "observed": true,
+    "reason": "new tests committed first; 12 failed on the old receipt_dict"
+  },
+  "result": "DONE_CLEAN",
+  "known_escapes": [
+    "the driver must pass P-ERASE seeds as flat (pre_a, pre_b, probe) triples and P-PRES seeds as flat (warmup, seed) pairs, from erase_probe_set / pres_seed_set with the GA seeds excluded",
+    "P-OBS equality is not decided here; the recording observer copies state only, and the evaluator compares the two traces"
+  ],
+  "unresolved": [],
+  "unblocks": [
+    "C-010-T013"
+  ],
+  "created_at_utc": "2026-10-07T09:29:15Z",
+  "instance": "m1-a86ec5e4",
+  "host": "SKULLPORT",
+  "branch": "cadmus/c010-t010",
+  "worktree_path": "F:/Prometheus-worktrees/cadmus-c010-t010",
+  "resources": {
+    "cpu": "0 launches; tests about 20 s total",
+    "model": "one Q2 session, about 0.3 hour"
+  },
+  "notes": "Plumbing on random and hand-wired organisms only; no registered subject run, no count/accuracy/outcome on any registered arm."
+}
