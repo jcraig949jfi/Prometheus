@@ -51,3 +51,24 @@ def live_lines(ph, env, genome, seeds, role, device="cpu"):
     pt, _ = C.eval_programs(ph, env, seeds, variants, device=device)
     live = [i for i in range(L) if not np.array_equal(pt[i + 1], pt[0])]
     return live, pt[0]
+
+
+# ------------------------------------------------------------------ library insertion (C4 arm C)
+P_LIB = 0.15
+
+
+def insert_module(g, c, t, d, lib, libtag):
+    """Copy a uniformly chosen library module (its live lines, in order) into a uniformly chosen fully-free (all-NOP)
+    destination run; if none exists, a uniform position (overwrite). Inserted lines get libtag = module index + 1.
+    Content-blind w.r.t. the target task; the library holds only one-stage (RELAY/HOLD) machinery."""
+    c = c.copy(); t = t.copy(); d = d.copy(); libtag = libtag.copy()
+    R_, L, _ = c.shape
+    mi = int(g.integers(len(lib)))
+    mod = np.asarray(lib[mi]["lines"], dtype=np.int64)
+    b = min(len(mod), L)
+    r = int(g.integers(R_))
+    nop = (c[r, :, 0] % 16) == 0
+    free = [p for p in range(0, L - b + 1) if nop[p:p + b].all()]
+    pos = free[int(g.integers(len(free)))] if free else int(g.integers(0, L - b + 1))
+    c[r, pos:pos + b] = mod[:b]; t[r, pos:pos + b] = False; d[r, pos:pos + b] = False; libtag[r, pos:pos + b] = mi + 1
+    return c, t, d, libtag, (mi, pos, bool(free))
