@@ -1,0 +1,72 @@
+{
+  "schema": "prometheus.workgraph.receipt.v1",
+  "task_id": "C-010-T031",
+  "campaign_id": "C-010",
+  "attempt_id": "A-001",
+  "role": "Argus",
+  "model": "claude-opus-5-5",
+  "quality_class": "Q2",
+  "start_sha": "44fa9e839c26a23e603ef3b98a46b6da493192d9",
+  "end_sha": "69e47d4a0170398a2b28c72f150dd20275989627",
+  "files_changed": [
+    "rso/witness/evaluate.py",
+    "rso/witness/tests/test_evaluate.py",
+    "rso/witness/tests/test_ruler.py",
+    "rso/witness/dry_run.py"
+  ],
+  "evidence_added": [
+    "R1: a node id presented by more than one bundle is refused EVIDENCE_DUPLICATE:<node> presented by N bundles (<launches>), independent of argument order; RESULT gains supplied_by {node_id: launch_run_id} for every node used.",
+    "R2: evaluate(..., seed_lists) is required (TypeError without; ValueError unless witness / erase / pres are non-empty integer lists); P-RET, P-CHAN and the NULL / SHUF / POS P-CAL arms must run the witness list exactly, P-OBS a non-empty prefix of it (FD-T031-W1), P-ERASE (S and S-LEAK) the erase list, P-PRES the pres list; a mismatch refuses the node SEEDS_NOT_REGISTERED:<node_id> (<predicate>). A refused P-CAL arm -> P-CAL BLOCKED, and with P-CAL BLOCKED every subject is UNQUALIFIED ('P-CAL BLOCKED: ...'). CLI --seeds is required and reads SEED_LISTS.json ['seeds'].",
+    "R3: P-ERASE triples must have world regimes (pre_a, pre_b) = (0, 1) (recomputed from the seeds by W15, never the receipt) and S / S-LEAK must run identical triples (ERASE_SHAPE); a P-PRES warm-up must draw the regime opposite to its seed's (PRES_SHAPE).",
+    "R4: the node id is rebuilt from the receipt's own subject digest, arm, predicate and world and must equal the manifest's node id (NODE_ID_FIELDS), checked after binding so a tampered receipt still reports BIND first.",
+    "tests: TestW1Repairs (B1 both orders + supplied_by, B2, seed_lists required, every node on its registered list, B3, ERASE_SHAPE on the registered list, PRES_SHAPE, B5, S3 post-LAST-interrupt window, E3 RUN_UNREPORTED with a re-registered manifest, E5 erase-oracle counterfeit) and test_ruler TestCalibrationMargin (1073 PASS; 1074 / 1077 / 1078 FAIL)."
+  ],
+  "evidence_executed": [
+    {
+      "command": "python -B -m unittest rso.witness.tests.test_evaluate rso.witness.tests.test_ruler at RED commit 45b4a2850",
+      "result": "RED: the new W1 repair tests failed on the T012 evaluator (TestCalibrationMargin already passed: E6 is a pin, not a defect)"
+    },
+    {
+      "command": "first GREEN attempt",
+      "result": "2 failures: test_receipt_digest_mismatch (R4 ran before binding and pre-empted BIND_DIGEST_MISMATCH; R4 moved after binding) and test_p_chan_unpaired_seeds_fail (R2 makes a reordered S-NOPL list unregistered -> UNQUALIFIED before SEEDS_NOT_PAIRED; test renamed test_p_chan_unpaired_seeds_refused and changed after RED, disclosed)"
+    },
+    {
+      "command": "python -B -m unittest rso.witness.tests.test_evaluate",
+      "result": "34 OK"
+    },
+    {
+      "command": "reviewer edits W1.E1, W1.E3, W1.E5 (edits_evaluate.json) and W1.E6 (edits_ruler.json) applied verbatim (find count 1 each) against test_evaluate + test_ruler",
+      "result": "4/4 KILLED: E1 by test_r6_s3_decided_after_the_last_interrupt, E3 by test_r6_e3_run_unreported_with_a_reregistered_manifest, E5 by test_r6_e5_erase_oracle_counterfeit, E6 by TestCalibrationMargin.test_boundary"
+    },
+    {
+      "command": "acceptance on the branch merged with origin/main: python -B -m unittest discover -s rso/witness/tests -t . && python -B -m unittest discover -s rso/binding/tests -t .",
+      "result": "witness 146 OK, binding 21 OK"
+    }
+  ],
+  "red_observed": {
+    "observed": true,
+    "detail": "W1 repair tests failed before the evaluator change (commit 45b4a2850)"
+  },
+  "result": "DONE_CLEAN",
+  "known_escapes": [
+    "the kills above are by the in-tree suite, not the reviewer's ledgered run_mutation.py (that run writes the C-010 ledger and belongs to the re-challenge)",
+    "rso/witness/challenge/W1/run_cases.py (reviewer's, not edited) still calls evaluate(registered_seeds=...) and now raises TypeError; the re-challenge needs seed_lists=",
+    "make_configs.py:67 comment still says WITNESS_SEEDS.json is evaluate.py --seeds; the CLI now takes SEED_LISTS.json (a plain list is refused with ValueError). WITNESS_SEEDS.json is now unused by the evaluator",
+    "FD-T031-W1: P-OBS accepted on any non-empty prefix of the witness list (the registered node map runs P-OBS on fewer episodes); Palamedes to confirm or name the exact length"
+  ],
+  "unresolved": [
+    "C-010-T012_1"
+  ],
+  "unblocks": [],
+  "created_at_utc": "2026-10-07T12:50:00Z",
+  "instance": "desktop-ruapvai-b08b36ac",
+  "host": "DESKTOP-RUAPVAI",
+  "branch": "argus/c010-t031",
+  "worktree_path": "C:/Prometheus-worktrees/argus-boot",
+  "resources": {
+    "cpu": "about 10 CPU-minutes, development only (synthetic bundles, real W15 resets, no organism; 4 edit runs of ~75 s; acceptance 100 s)",
+    "validation_launches": 0,
+    "model": "one Q2 session"
+  },
+  "notes": "Out-of-packet glue: rso/witness/dry_run.py call site moved from registered_seeds=WITNESS_SEEDS.json to seed_lists=SEED_LISTS.json['seeds'] (one line), else the T013 dry run raises TypeError. No registered subject, arm or seed list was run or read. State commits went to main as they happened (argus-ops)."
+}
