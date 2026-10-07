@@ -1,0 +1,27 @@
+{
+  "schema": "rso.slice001.mutation_edits.v1",
+  "edits": [
+    {
+      "edit_id": "W1.E2-nopl-mutates-shared-subject",
+      "path": "rso/witness/ares_client.py",
+      "module": "rso.witness.ares_client",
+      "find": "        q = subject.copy()",
+      "replace": "        q = subject",
+      "intended_fault": "ares_client.arm('S-NOPL') zeroes the plasticity rates of the SUBJECT population itself instead of a copy. The driver shares one subject population across a launch's entries in config order (make_configs: S/P-RET, S-NOPL/P-CHAN, S/P-OBS, S/P-ERASE, S-LEAK/P-ERASE, S/P-PRES), so every node after S-NOPL runs plasticity-free: S-LEAK can no longer leak (D = 0 -> P-ERASE DETECTION_UNQUALIFIED for every subject) while S/P-RET, run first, kept its channel; no receipt field records the arm population's plasticity state. The arm tests check the RETURNED population only.",
+      "witness": {
+        "expr": "__import__(\"importlib\").import_module(\"rso.witness.challenge.W1.witnesses\").e2(m)"
+      }
+    },
+    {
+      "edit_id": "W1.E4-interrupt-before-step",
+      "path": "rso/witness/ares_client.py",
+      "module": "rso.witness.ares_client",
+      "find": "            a = rt.step(obs)",
+      "replace": "            (rt.v[:, S.OBS_DIM:].fill(0.0) if t in resets else None); a = rt.step(obs)",
+      "intended_fault": "ares_client.run_episodes ALSO applies W15's activation reset BEFORE the step's action at an interrupt step (ares.search.rollout applies it only after the step). The action at an interrupt step is then computed from zeroed activations: the witness's interrupt semantics drift from the GA's by one step. CONTROL edit: predicted KILLED by the carrier pin (test_runner_reproduces_ares_rollout_actions); included to confirm the pin is load-bearing on the central W15 semantic.",
+      "witness": {
+        "expr": "__import__(\"importlib\").import_module(\"rso.witness.challenge.W1.witnesses\").e4(m)"
+      }
+    }
+  ]
+}

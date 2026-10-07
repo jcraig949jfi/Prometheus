@@ -1,0 +1,78 @@
+..............................................C:\Prometheus-worktrees\pallas-c010-t034\rso\witness\tests\test_evaluate.py:373: ResourceWarning: unclosed file <_io.BufferedReader name='C:\\Users\\jcrai\\AppData\\Local\\Temp\\rso-witness-eval-r0jk90mq\\bundle\\artifacts\\010f3da83819e16ab936600e3f15eb85b272fa68119717a201d72be3fc712304'>
+  data = bytearray(open(os.path.join(d, name), "rb").read())
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+C:\Prometheus-worktrees\pallas-c010-t034\rso\witness\tests\test_evaluate.py:375: ResourceWarning: unclosed file <_io.BufferedWriter name='C:\\Users\\jcrai\\AppData\\Local\\Temp\\rso-witness-eval-r0jk90mq\\bundle\\artifacts\\010f3da83819e16ab936600e3f15eb85b272fa68119717a201d72be3fc712304'>
+  open(os.path.join(d, name), "wb").write(bytes(data))
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+........C:\Prometheus-worktrees\pallas-c010-t034\rso\witness\tests\test_evaluate.py:365: ResourceWarning: unclosed file <_io.BufferedReader name='C:\\Users\\jcrai\\AppData\\Local\\Temp\\rso-witness-eval-89o2uyz2\\bundle\\receipts\\R000.json'>
+  data = open(p, "rb").read()
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+C:\Prometheus-worktrees\pallas-c010-t034\rso\witness\tests\test_evaluate.py:366: ResourceWarning: unclosed file <_io.BufferedWriter name='C:\\Users\\jcrai\\AppData\\Local\\Temp\\rso-witness-eval-89o2uyz2\\bundle\\receipts\\R000.json'>
+  open(p, "wb").write(data.replace(b'"P-RET"', b'"P-REX"'))
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+........usage: python -B -m rso.witness.evaluate [-h] --subjects SUBJECTS
+                                         [SUBJECTS ...] [--primary PRIMARY]
+                                         --seeds SEEDS --first-check
+                                         FIRST_CHECK
+                                         bundles [bundles ...]
+python -B -m rso.witness.evaluate: error: the following arguments are required: --seeds
+..........C:\Prometheus-worktrees\pallas-c010-t034\rso\witness\tests\test_make_configs.py:66: ResourceWarning: unclosed file <_io.TextIOWrapper name='C:\\Users\\jcrai\\AppData\\Local\\Temp\\mkcfg-xh3n7aoq\\configs\\WITNESS_SEEDS.json' mode='r' encoding='cp1252'>
+  self.assertEqual(json.load(open(os.path.join(self.out, "WITNESS_SEEDS.json"))), self.summary["seeds"]["witness"])
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+C:\Prometheus-worktrees\pallas-c010-t034\rso\witness\tests\test_make_configs.py:68: ResourceWarning: unclosed file <_io.BufferedReader name='C:\\Users\\jcrai\\AppData\\Local\\Temp\\mkcfg-xh3n7aoq\\configs\\SEED_LISTS.json'>
+  self.assertEqual(open(os.path.join(self.out, name), "rb").read(), open(os.path.join(out2, name), "rb").read(), name)
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+C:\Prometheus-worktrees\pallas-c010-t034\rso\witness\tests\test_make_configs.py:68: ResourceWarning: unclosed file <_io.BufferedReader name='C:\\Users\\jcrai\\AppData\\Local\\Temp\\mkcfg-xh3n7aoq\\configs2\\SEED_LISTS.json'>
+  self.assertEqual(open(os.path.join(self.out, name), "rb").read(), open(os.path.join(out2, name), "rb").read(), name)
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+C:\Prometheus-worktrees\pallas-c010-t034\rso\witness\tests\test_make_configs.py:68: ResourceWarning: unclosed file <_io.BufferedReader name='C:\\Users\\jcrai\\AppData\\Local\\Temp\\mkcfg-xh3n7aoq\\configs\\WITNESS_SEEDS.json'>
+  self.assertEqual(open(os.path.join(self.out, name), "rb").read(), open(os.path.join(out2, name), "rb").read(), name)
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+C:\Prometheus-worktrees\pallas-c010-t034\rso\witness\tests\test_make_configs.py:68: ResourceWarning: unclosed file <_io.BufferedReader name='C:\\Users\\jcrai\\AppData\\Local\\Temp\\mkcfg-xh3n7aoq\\configs2\\WITNESS_SEEDS.json'>
+  self.assertEqual(open(os.path.join(self.out, name), "rb").read(), open(os.path.join(out2, name), "rb").read(), name)
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+C:\Prometheus-worktrees\pallas-c010-t034\rso\witness\tests\test_make_configs.py:68: ResourceWarning: unclosed file <_io.BufferedReader name='C:\\Users\\jcrai\\AppData\\Local\\Temp\\mkcfg-xh3n7aoq\\configs\\config_CONTROLS.json'>
+  self.assertEqual(open(os.path.join(self.out, name), "rb").read(), open(os.path.join(out2, name), "rb").read(), name)
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+C:\Prometheus-worktrees\pallas-c010-t034\rso\witness\tests\test_make_configs.py:68: ResourceWarning: unclosed file <_io.BufferedReader name='C:\\Users\\jcrai\\AppData\\Local\\Temp\\mkcfg-xh3n7aoq\\configs2\\config_CONTROLS.json'>
+  self.assertEqual(open(os.path.join(self.out, name), "rb").read(), open(os.path.join(out2, name), "rb").read(), name)
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+C:\Prometheus-worktrees\pallas-c010-t034\rso\witness\tests\test_make_configs.py:68: ResourceWarning: unclosed file <_io.BufferedReader name='C:\\Users\\jcrai\\AppData\\Local\\Temp\\mkcfg-xh3n7aoq\\configs\\config_S4.json'>
+  self.assertEqual(open(os.path.join(self.out, name), "rb").read(), open(os.path.join(out2, name), "rb").read(), name)
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+C:\Prometheus-worktrees\pallas-c010-t034\rso\witness\tests\test_make_configs.py:68: ResourceWarning: unclosed file <_io.BufferedReader name='C:\\Users\\jcrai\\AppData\\Local\\Temp\\mkcfg-xh3n7aoq\\configs2\\config_S4.json'>
+  self.assertEqual(open(os.path.join(self.out, name), "rb").read(), open(os.path.join(out2, name), "rb").read(), name)
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+C:\Prometheus-worktrees\pallas-c010-t034\rso\witness\tests\test_make_configs.py:68: ResourceWarning: unclosed file <_io.BufferedReader name='C:\\Users\\jcrai\\AppData\\Local\\Temp\\mkcfg-xh3n7aoq\\configs\\config_S15.json'>
+  self.assertEqual(open(os.path.join(self.out, name), "rb").read(), open(os.path.join(out2, name), "rb").read(), name)
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+C:\Prometheus-worktrees\pallas-c010-t034\rso\witness\tests\test_make_configs.py:68: ResourceWarning: unclosed file <_io.BufferedReader name='C:\\Users\\jcrai\\AppData\\Local\\Temp\\mkcfg-xh3n7aoq\\configs2\\config_S15.json'>
+  self.assertEqual(open(os.path.join(self.out, name), "rb").read(), open(os.path.join(out2, name), "rb").read(), name)
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+.C:\Prometheus-worktrees\pallas-c010-t034\rso\witness\tests\test_make_configs.py:46: ResourceWarning: unclosed file <_io.TextIOWrapper name='C:\\Users\\jcrai\\AppData\\Local\\Temp\\mkcfg-xh3n7aoq\\S4\\subject_record.json' mode='r' encoding='cp1252'>
+  rec = json.load(open(os.path.join(d, "subject_record.json")))
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+C:\Prometheus-worktrees\pallas-c010-t034\rso\witness\tests\test_make_configs.py:46: ResourceWarning: unclosed file <_io.TextIOWrapper name='C:\\Users\\jcrai\\AppData\\Local\\Temp\\mkcfg-xh3n7aoq\\S15\\subject_record.json' mode='r' encoding='cp1252'>
+  rec = json.load(open(os.path.join(d, "subject_record.json")))
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+..C:\Prometheus-worktrees\pallas-c010-t034\rso\witness\tests\test_make_configs.py:57: ResourceWarning: unclosed file <_io.TextIOWrapper name='C:\\Users\\jcrai\\AppData\\Local\\Temp\\mkcfg-xh3n7aoq\\configs\\config_S15.json' mode='r' encoding='cp1252'>
+  cfg = json.load(open(os.path.join(self.out, "config_S15.json")))
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+....C:\Prometheus-worktrees\pallas-c010-t034\rso\witness\tests\test_make_configs.py:85: ResourceWarning: unclosed file <_io.TextIOWrapper name='C:\\Users\\jcrai\\AppData\\Local\\Temp\\pair-sbw8s0ay\\c.json' mode='w' encoding='cp1252'>
+  json.dump({"schema": RW.CONFIG_SCHEMA, "label": "pair", "world": "W15", "entries": [
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+.C:\Prometheus-worktrees\pallas-c010-t034\rso\witness\tests\test_make_configs.py:85: ResourceWarning: unclosed file <_io.TextIOWrapper name='C:\\Users\\jcrai\\AppData\\Local\\Temp\\pair-iv01vdt9\\c.json' mode='w' encoding='cp1252'>
+  json.dump({"schema": RW.CONFIG_SCHEMA, "label": "pair", "world": "W15", "entries": [
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+.............................................cap exhausted: cap exhausted: top_level_validation_launches used 1 of 1
+.witness error: entries[0]: unknown arm 'BOGUS'; registered: S, S-NOPL, S-LEAK, POS, RECUR, NULL, SHUF
+.......................
+----------------------------------------------------------------------
+Ran 149 tests in 99.490s
+
+OK
+.....................
+----------------------------------------------------------------------
+Ran 21 tests in 0.001s
+
+OK

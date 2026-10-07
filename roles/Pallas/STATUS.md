@@ -1,25 +1,26 @@
 # Pallas status
 
-Currency: 2026-10-07T08:50Z (Pallas[m2-1500b878]). Earlier statuses are superseded by this one.
+Currency: 2026-10-07T11:50Z (Pallas[m2-1500b878]). Earlier statuses are superseded by this one.
 
 seat state: READY (idle; hourly poll). This instance refuses Q3 packets on policy.
 role: Adversarial Hardening Engineer. RSO Builder Cell (roles/rso-builder-role/).
 runtime model: claude-opus-5; class Q2 (THIS session fell from Fable 5.1 / Q3 at about 00:47Z).
 host: SPECTREX5 (M2); instance m2-1500b878; worktree Prometheus-worktrees/pallas-boot-2026-10-03,
-  branch pallas/boot-2026-10-06, base ed2f65020.
+  branch pallas/boot-2026-10-06, base 0f6b83a36.
 
-C-004: CLOSED, INCOMPLETE CLOSURE; T048 delivered by this session on Fable 5.1.
-C-009: CLOSED 2026-10-07T08:34Z, SCOPED TO FLAT INVENTORIES (rso/binding/CLOSURE.md). CC1/CC2/CC4 held; CC3
-  left BX5/BX5b survivors (NESTED_SIBLING, E6) that the coordinator verified unreachable on the witness path;
-  the scope is enforced by a deterministic P-FLAT gate carried into C-010. Pallas's T030 and T034 were
-  delivered by the harry1 Fable instances (b97f1fc4 / 2697f39e, then 2b71b1e1 / 2a918949).
-C-010 NATIVE-RET-WITNESS-001 (Ares W15) open; preregistration frozen before any subject run. Pallas packet
-  C-010-T014 (challenge the frozen witness path, synthetic / hand-wired organisms only; Q3, can_downgrade
-  false) is PROPOSED behind T013 (FREEZE_W1). It will need a Fable instance; nothing is blocked today.
-  Standing campaign gate until T020: no registered subject run, no statistic on any registered arm.
-This instance has opened nothing under rso/binding/ or rso/witness/, so first-sight custody for T014 is intact.
+C-004: CLOSED (INCOMPLETE CLOSURE); T048 delivered by this session on Fable 5.1.
+C-009: CLOSED, scoped to flat inventories; T030 and T034 delivered by harry1 Fable instances.
+C-010 NATIVE-RET-WITNESS-001 (Ares W15): in its ONE repair round.
+  T014 (Pallas's challenge of the frozen witness path) was delivered by Fable instance harry1-14289af6 and
+  CLOSED 11:39:45Z: evaluate / ruler / ares_client NOT CLOSED (survivors S-1..S-10); run_witness storage CLOSED
+  within coverage; a NULL-arm question went to the operator and was answered by AMENDMENT_v1.0.1.
+  Repair: T031 Argus and T032 Cadmus READY; T033 Palamedes integrates and writes FREEZE_W2.
+  C-010-T034 (Pallas, Q3, can_downgrade false): short fresh re-check on FREEZE_W2, PROPOSED behind T033.
+  It needs a Fable instance; the standing runtime situation is reported in #1720 and #1786.
+This instance has opened NO file under rso/witness/ (listing only), so first-sight custody for T034 is intact.
 
---- superseded 2026-10-07T08:50Z: previous status below ---
+--- superseded 2026-10-07T11:50Z: previous status below ---
+
 
 
 

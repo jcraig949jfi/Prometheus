@@ -1,0 +1,16 @@
+{
+  "schema": "rso.slice001.mutation_edits.v1",
+  "edits": [
+    {
+      "edit_id": "W1.E6-pcal-margin-two-sided",
+      "path": "rso/witness/ruler.py",
+      "module": "rso.witness.ruler",
+      "find": "        if x > th[\"k_neg\"]:",
+      "replace": "        if x >= th[\"k_pos\"]:",
+      "intended_fault": "ruler.p_cal fails a NULL / SHUF arm only when it is P-RET POSITIVE (>= k_pos = 1078) instead of whenever it is not shown below bound + delta (> k_neg = 1073). A calibration arm with 1074-1077 correct (INDETERMINATE: neither no-carry nor carry shown) then PASSES calibration, against RULER.md s5.1 ('an arm that cannot be shown below the margin FAILS; the gate never passes by default', FD-T014-3). The suite's leaking-null tests use arms far above the margin.",
+      "witness": {
+        "expr": "__import__(\"importlib\").import_module(\"rso.witness.challenge.W1.witnesses\").e6(m)"
+      }
+    }
+  ]
+}

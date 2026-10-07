@@ -14,7 +14,7 @@ What this module provides:
               live plastic W1 from the genome (the delayed-leak construction across native boundary B2)
       POS     a hand-wired plastic carrier (positive control for the ruler)
       RECUR   a hand-wired activation self-loop carrier (channel control: an activation carrier meets W15's interrupts)
-      NULL    the subject with reset_each_step (no persistent state)
+      NULL    the subject with plasticity disabled as in S-NOPL AND reset_each_step (AMENDMENT_v1.0.1)
       SHUF    the subject in W15 "shuffled" mode (cue decoupled from the regime: calibration world)
   - run_episodes: ares.search.rollout's episode loop reproduced step for step (a test pins equal actions), with an
     optional observer called after every step and an injectable runtime so state can persist across episodes;
@@ -106,7 +106,11 @@ def arm(name, subject):
     if name == "RECUR":
         return recur_carrier(subject.cfg), "present", S.Runtime
     if name == "NULL":
-        return _with_cfg(subject, reset_each_step=True), "present", S.Runtime
+        # AMENDMENT_v1.0.1 (W1 B8): plasticity disabled exactly as S-NOPL, on a copy, AND reset_each_step --
+        # no carry by construction (activations zeroed every step, no plastic write)
+        q = _with_cfg(subject, reset_each_step=True)
+        q.R[:] = 0.0
+        return q, "present", S.Runtime
     if name == "SHUF":
         return subject, "shuffled", S.Runtime
     raise ValueError("unknown arm %r; registered: %s" % (name, ", ".join(ARMS)))

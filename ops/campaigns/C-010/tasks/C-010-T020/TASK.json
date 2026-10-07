@@ -10,7 +10,7 @@
   "can_downgrade": false,
   "escalate_to": "Q3",
   "depends_on": [
-    "C-010-T014"
+    "C-010-T034"
   ],
   "owns": [
     "rso/witness/runs/",
@@ -39,13 +39,25 @@
     "rso/witness/LEDGER.jsonl"
   ],
   "kind": "software",
-  "status": "PROPOSED",
+  "status": "CLAIMED",
   "history": [
     {
       "status": "PROPOSED",
       "by": "Palamedes[harry1-679179c6]",
       "at_utc": "2026-10-07T08:34:33Z",
       "note": "C-010 open"
+    },
+    {
+      "status": "READY",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-07T14:27:22Z",
+      "note": "T034 CLOSED"
+    },
+    {
+      "status": "CLAIMED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-07T14:27:22Z",
+      "note": "Palamedes: PREREGISTRATION s10 order -- subjects, seed lists, registration, witness launches, evaluation, RESULT"
     }
   ],
   "authority": "operator directive 2026-10-07 (C-004-OP8) s6: native witness opens automatically when C-009 closes; rso/binding/CLOSURE.md",

@@ -2,7 +2,7 @@
 per subject (C-010-T012; PREREGISTRATION s5-s7).
 
     python -B -m rso.witness.evaluate BUNDLE_DIR [BUNDLE_DIR ...] --subjects S4=<sha256> S15=<sha256>
-        [--primary S4] [--seeds FILE] --first-check UTC   (custody read from the live keeper store)
+        [--primary S4] --seeds SEED_LISTS.json --first-check UTC   (custody read from the live keeper store)
 
 Nothing a producer computed is trusted. From each bundle (run_witness.py layout: MANIFEST.json, inventory.json,
 run.json, receipts/R###.json, artifacts/<sha256>) the evaluator reads only:
@@ -24,6 +24,17 @@ Bundle checks (a failing bundle is REFUSED: every claim resting on it is UNQUALI
   oracle     the reported regimes / interrupt steps equal the world's for the declared seeds and the arm's mode
   custody    manifest and inventory registered with the keeper (EVIDENCE_MANIFEST, RUN_INVENTORY) before the first
              check (CONTRACT s6); keeper store errors are never a pass
+
+C-010-T031 repair round (rso/witness/ADJUDICATION_W1.md):
+  R1  a node id presented by more than one bundle is EVIDENCE_DUPLICATE (refused; no argument-order resolution);
+      the RESULT's supplied_by names the launch of every node used
+  R2  the registered seed lists are REQUIRED (make_configs SEED_LISTS.json "seeds": witness, erase, pres): P-RET,
+      P-CHAN, the P-CAL arms and P-OBS on the witness list exactly (P-OBS: every witness seed, s5);
+      P-ERASE on the erase list (S and S-LEAK alike); P-PRES on the pres list. A mismatch refuses the node
+  R3  P-ERASE triples have world regimes (pre_a, pre_b) = (0, 1) and S / S-LEAK run identical triples; a P-PRES
+      warm-up draws the regime opposite to its seed's (ERASE_PROBES.md); else the node is refused
+  R4  the node id is rebuilt from the receipt's own subject digest, arm, predicate and world and must equal the
+      manifest's (and so the subject the node is filed under)
 
 Registered node map (one node per (subject, arm, predicate); ares_client.node_id over world W15):
   per subject X:  S/P-RET  S-NOPL/P-CHAN  S/P-OBS  S/P-PRES  S/P-ERASE  S-LEAK/P-ERASE
@@ -157,6 +168,14 @@ def _check_oracle(rec, data):
 # --------------------------------------------------------------------------------------------------------
 # Bundle checks
 
+def _rebuilt_node_id(rec):
+    """R4: the node id the receipt's own fields name (subject digest, arm, predicate, world)."""
+    try:
+        return AC.node_id(rec["subject"]["genome_sha256"], rec["arm"], rec["predicate"], rec["world"]["name"])
+    except (KeyError, TypeError):
+        return None
+
+
 def p_flat(runs, launch):
     """The flat-inventory scope of the binding (CLOSURE.md): [] when it holds, else typed reasons."""
     why, seen = [], {}
@@ -232,6 +251,9 @@ def check_bundle(root, store, first_check_utc):
             if why:
                 out["refused"].append("BIND:%s:%s" % (nid, ",".join(why)))
                 continue
+            if _rebuilt_node_id(rec) != nid:                              # R4
+                out["refused"].append("NODE_ID_FIELDS:%s:receipt fields give %s" % (nid, _rebuilt_node_id(rec)))
+                continue
             arts = {}
             for listing in list(rec.get("outputs", [])) + list(rec.get("oracle", [])):
                 arts[listing.get("role")] = decode(root, listing)
@@ -253,20 +275,64 @@ def check_bundle(root, store, first_check_utc):
 # --------------------------------------------------------------------------------------------------------
 # Predicates from bytes
 
-def _node(pool, refused_ids, digest, arm, predicate):
+def _node(pool, refused_ids, digest, arm, predicate, lists):
+    """The registered node, checked against its registered seed list (R2); typed refusal otherwise."""
     nid = AC.node_id(digest, arm, predicate, WORLD)
     if nid in pool:
-        return pool[nid]
+        node = pool[nid]
+        _check_seeds(node, lists)
+        return node
+    if isinstance(refused_ids, dict) and nid in refused_ids:
+        raise Refused(refused_ids[nid])
     raise Refused(("EVIDENCE_REFUSED:%s" if nid in refused_ids else "EVIDENCE_MISSING:%s") % nid)
 
 
-def episodes(node, registered_seeds=None):
-    """[(r, decision)] for a ruler node: one organism, decision = majority action after the last interrupt, r and
+def _check_seeds(node, lists):
+    """R2: the node ran on the registered list for its predicate."""
+    rec = node["receipt"]
+    seeds = [int(s) for s in rec["seeds"]]
+    pred = rec["predicate"]
+    if pred == "P-ERASE":
+        ok = seeds == lists["erase"]
+    elif pred == "P-PRES":
+        ok = seeds == lists["pres"]
+    else:                    # P-RET, P-CHAN, the P-CAL arms and P-OBS ("every witness seed", PREREGISTRATION s5;
+        ok = seeds == lists["witness"]   # FD-T031-W1 prefix reading not taken at integration, C-010-T033)
+    if not ok:
+        raise Refused("SEEDS_NOT_REGISTERED:%s (%s)" % (rec["node_id"], pred))
+
+
+def _check_probe_shape(node):
+    """R3: P-ERASE (pre_a, pre_b) regimes (0, 1) per triple; P-PRES warm-up regime opposite to the seed's. Regimes
+    from the world alone (world_oracle), never the receipt."""
+    rec = node["receipt"]
+    seeds = [int(s) for s in rec["seeds"]]
+    truth = [r for r, _ in world_oracle(seeds, ARM_MODE.get(rec["arm"], "present"))]
+    if rec["predicate"] == "P-ERASE":
+        if len(truth) % 3 or any((truth[i], truth[i + 1]) != (0, 1) for i in range(0, len(truth), 3)):
+            raise Refused("ERASE_SHAPE:%s: a triple's (pre_a, pre_b) regimes are not (0, 1)" % rec["node_id"])
+    elif rec["predicate"] == "P-PRES":
+        if len(truth) % 2 or any(truth[i] == truth[i + 1] for i in range(0, len(truth), 2)):
+            raise Refused("PRES_SHAPE:%s: a warm-up draws the same regime as its seed" % rec["node_id"])
+
+
+def _validate_lists(seed_lists):
+    if not isinstance(seed_lists, dict):
+        raise ValueError("seed_lists must be the SEED_LISTS.json 'seeds' object {witness, erase, pres}")
+    out = {}
+    for k in ("witness", "erase", "pres"):
+        v = seed_lists.get(k)
+        if not isinstance(v, list) or not v or not all(isinstance(x, int) and not isinstance(x, bool) for x in v):
+            raise ValueError("seed_lists[%r] must be a non-empty list of integers" % k)
+        out[k] = list(v)
+    return out
+
+
+def episodes(node):
+    """[(r, decision)] for a ruler node: one organism, decision = majority action after the LAST interrupt, r and
     the interrupt steps recomputed from the world (checked equal to the receipt's oracle in check_bundle)."""
     rec, data = node["receipt"], node["data"]
     seeds = [int(s) for s in rec["seeds"]]
-    if registered_seeds is not None and seeds != list(registered_seeds):
-        raise Refused("SEEDS_NOT_REGISTERED:%s" % rec["node_id"])
     acts = data.get("trace:actions")
     if acts is None or acts.ndim != 3 or acts.shape != (len(seeds), T, 1):
         raise Refused("SHAPE:%s:trace:actions must be (n, %d, 1)" % (rec["node_id"], T))
@@ -291,20 +357,26 @@ def _gate(pid, value, reason, witness=None, **extra):
     return g
 
 
-def _p_cal(pool, refused_ids, primary_digest):
+def _p_cal(pool, refused_ids, primary_digest, lists):
     try:
-        eps = [episodes(_node(pool, refused_ids, primary_digest, arm, "P-CAL")) for arm in ("NULL", "SHUF", "POS")]
+        eps = [episodes(_node(pool, refused_ids, primary_digest, arm, "P-CAL", lists)) for arm in ("NULL", "SHUF", "POS")]
         return RU.p_cal(*eps)
     except (Refused, RU.RulerError) as e:
         return _gate("P-CAL", "BLOCKED", str(e))
 
 
-def evaluate_subject(pool, refused_ids, digest, p_cal, registered_seeds=None):
-    """The subject's gates and outcome class (PREREGISTRATION s6)."""
+def evaluate_subject(pool, refused_ids, digest, p_cal, lists):
+    """The subject's gates and outcome class (PREREGISTRATION s6; s5 UNQUALIFIED for refused evidence)."""
     res = {"digest": digest}
     try:
-        n = {k: _node(pool, refused_ids, digest, *k) for k in SUBJECT_NODES}
-        ret_eps = episodes(n[("S", "P-RET")], registered_seeds)
+        n = {k: _node(pool, refused_ids, digest, k[0], k[1], lists) for k in SUBJECT_NODES}
+        for k in (("S", "P-ERASE"), ("S-LEAK", "P-ERASE"), ("S", "P-PRES")):
+            _check_probe_shape(n[k])                                      # R3
+        if n[("S", "P-ERASE")]["receipt"]["seeds"] != n[("S-LEAK", "P-ERASE")]["receipt"]["seeds"]:
+            raise Refused("ERASE_SHAPE:S and S-LEAK did not run identical triples")
+        if p_cal["value"] == "BLOCKED":
+            raise Refused("P-CAL BLOCKED: %s" % p_cal["reason"])
+        ret_eps = episodes(n[("S", "P-RET")])
         res["P-RET"] = RU.p_ret(ret_eps)
         d_obs = _pair_gate(n[("S", "P-OBS")], ARRAY_ROLES["P-OBS"])
         res["P-OBS"] = _gate("P-OBS", "PASS" if d_obs == 0 else "FAIL", "%d differing actions" % d_obs, differing=d_obs)
@@ -322,7 +394,7 @@ def evaluate_subject(pool, refused_ids, digest, p_cal, registered_seeds=None):
                 res["P-CHAN"] = _gate("P-CHAN", "FAIL", "X-NOPL did not run on X's seeds in X's order",
                                       {"why": "SEEDS_NOT_PAIRED"})
             else:
-                nopl_eps = episodes(nopl, registered_seeds)
+                nopl_eps = episodes(nopl)
                 res["P-CHAN"] = RU.p_chan([(r, dx, dn) for (r, dx), (_r, dn) in zip(ret_eps, nopl_eps)])
     except (Refused, RU.RulerError) as e:
         res.update({"class": "UNQUALIFIED", "why": [str(e)]})
@@ -350,20 +422,38 @@ def evaluate_subject(pool, refused_ids, digest, p_cal, registered_seeds=None):
     return res
 
 
-def evaluate(bundle_roots, store, first_check_utc, subjects, primary, registered_seeds=None):
+def evaluate(bundle_roots, store, first_check_utc, subjects, primary, seed_lists=None):
     """RESULT for the registered subjects ({name: genome sha256}); `primary` names the subject whose digest the
-    shared P-CAL arms carry. Pure: reads bundles and the keeper store, writes nothing."""
+    shared P-CAL arms carry; `seed_lists` is REQUIRED (R2): the SEED_LISTS.json "seeds" object. Pure: reads bundles
+    and the keeper store, writes nothing."""
+    if seed_lists is None:
+        raise TypeError("evaluate: seed_lists is required (make_configs SEED_LISTS.json 'seeds'; ADJUDICATION_W1 R2)")
+    lists = _validate_lists(seed_lists)
     checks = [check_bundle(r, store, first_check_utc) for r in bundle_roots]
-    pool, refused_ids = {}, set()
+    presented = {}
     for c in checks:
-        pool.update(c["nodes"])
-        if c["refused"]:
-            refused_ids.update(c["node_ids"])
-    p_cal = _p_cal(pool, refused_ids, subjects[primary])
+        for nid in set(c["node_ids"]):
+            presented.setdefault(nid, []).append(c["launch_run_id"])
+    refused_ids, pool, supplied = {}, {}, {}
+    for nid, launches in sorted(presented.items(), key=lambda kv: str(kv[0])):
+        if len(launches) > 1:                                             # R1
+            refused_ids[nid] = "EVIDENCE_DUPLICATE:%s presented by %d bundles (%s)" % (
+                nid, len(launches), ", ".join(sorted(str(x) for x in launches)))
+    for c in checks:
+        for nid in set(c["node_ids"]):
+            if nid in refused_ids:
+                continue
+            if c["refused"]:
+                refused_ids[nid] = "EVIDENCE_REFUSED:%s" % nid
+            elif nid in c["nodes"]:
+                pool[nid] = c["nodes"][nid]
+                supplied[nid] = c["launch_run_id"]
+    p_cal = _p_cal(pool, refused_ids, subjects[primary], lists)
     return {"schema": RESULT_SCHEMA, "world": WORLD, "primary": primary, "first_check_utc": first_check_utc,
             "P-CAL": p_cal,
-            "subjects": {name: evaluate_subject(pool, refused_ids, d, p_cal, registered_seeds)
+            "subjects": {name: evaluate_subject(pool, refused_ids, d, p_cal, lists)
                          for name, d in sorted(subjects.items())},
+            "supplied_by": {nid: supplied[nid] for nid in sorted(supplied)},
             "bundles": [{k: c[k] for k in ("bundle", "launch_run_id", "p_flat", "custody", "refused")}
                         for c in checks]}
 
@@ -373,14 +463,13 @@ def main(argv=None):
     ap.add_argument("bundles", nargs="+")
     ap.add_argument("--subjects", nargs="+", required=True, help="NAME=sha256 ...")
     ap.add_argument("--primary", default="S4")
-    ap.add_argument("--seeds", help="JSON file: the registered witness seed list")
+    ap.add_argument("--seeds", required=True, help="make_configs SEED_LISTS.json (its 'seeds': witness, erase, pres)")
     ap.add_argument("--first-check", required=True)
     a = ap.parse_args(argv)
     subjects = dict(s.split("=", 1) for s in a.subjects)
-    seeds = None
-    if a.seeds:
-        with open(a.seeds, "rb") as f:
-            seeds = json.loads(f.read())
+    with open(a.seeds, "rb") as f:
+        doc = json.loads(f.read())
+    seeds = doc.get("seeds", doc) if isinstance(doc, dict) else doc
     store = EV.store_from_contract({"store": EV.REGISTRY_LOCATOR})
     res = evaluate(a.bundles, store, a.first_check, subjects, a.primary, seeds)
     sys.stdout.write(R.canonical_bytes(res).decode("utf-8") + "\n")

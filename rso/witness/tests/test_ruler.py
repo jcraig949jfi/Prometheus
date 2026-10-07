@@ -282,6 +282,19 @@ class TestChannelGate(unittest.TestCase):
             RU.p_chan([(r, dx) for r, dx, dn in ps])
 
 
+class TestCalibrationMargin(unittest.TestCase):
+    """C-010-T031 R6 (W1 edit E6): a NULL / SHUF arm FAILS P-CAL whenever it is not shown below bound + delta
+    (correct > k_neg = 1073), not only when it is POSITIVE (>= 1078). 1074 and 1077 sit in that band."""
+
+    def test_boundary(self):
+        pos = balanced(with_accuracy(0.9), 6)
+        for x, want in ((1073, "PASS"), (1074, "FAIL"), (1077, "FAIL"), (1078, "FAIL")):
+            g = RU.p_cal(exact_count(x, 0), balanced(coin, 5), pos)
+            self.assertEqual(g["value"], want, x)
+            g = RU.p_cal(balanced(coin, 5), exact_count(x, 0), pos)
+            self.assertEqual(g["value"], want, ("SHUF", x))
+
+
 class TestNoWitnessData(unittest.TestCase):
     def test_ruler_reads_no_ares(self):
         path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "ruler.py")

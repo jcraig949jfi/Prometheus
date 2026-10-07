@@ -108,6 +108,36 @@ class TestArmsApplied(unittest.TestCase):
         pop, _, _ = AC.arm("NULL", _random_pop(P=1))
         self.assertTrue(pop.cfg.reset_each_step)
 
+    def test_null_has_no_plastic_write_and_no_carry_by_construction(self):
+        # C-010-T032 / AMENDMENT_v1.0.1 (W1 B8): NULL = plasticity disabled exactly as S-NOPL (on a copy) AND
+        # reset_each_step. State checks on the plastic POS carrier, never accuracy.
+        subject = AC.pos_carrier()
+        null, mode, rt_cls = AC.arm("NULL", subject)
+        nopl, _, _ = AC.arm("S-NOPL", subject)
+        self.assertEqual(mode, "present")
+        self.assertTrue(null.cfg.reset_each_step)
+        self.assertFalse(np.any(null.R))
+        self.assertTrue(np.array_equal(null.R, nopl.R))                # disabled exactly as S-NOPL
+        rt = rt_cls(null)
+        self.assertFalse(rt.plastic)
+        w1_seen = []
+        AC.run_episodes(null, AC.world("W15", "present"), SEEDS, runtime=rt,
+                        observer=lambda t, r: w1_seen.append(np.array_equal(r.W1, null.W1)))
+        self.assertTrue(all(w1_seen))                                  # no plastic write at any step
+
+    def test_arms_never_mutate_the_shared_subject(self):
+        # W1.E2 pin: the driver shares one subject population across a launch's entries in config order, so an
+        # arm that zeroes the subject's own plasticity silently disables it for every later node.
+        subject = AC.pos_carrier()
+        before = {k: getattr(subject, k).copy() for k in ("R", "W1", "W2", "keep", "alive", "op", "bias")}
+        cfg_before = subject.cfg.to_dict()
+        for name in AC.ARMS:
+            AC.arm(name, subject)
+        self.assertTrue(np.any(subject.R))
+        for k, v in before.items():
+            self.assertTrue(np.array_equal(getattr(subject, k), v), k)
+        self.assertEqual(subject.cfg.to_dict(), cfg_before)
+
     def test_shuf_decouples_shown_cue_from_regime(self):
         _, mode, _ = AC.arm("SHUF", _random_pop(P=1))
         out = AC.run_episodes(_random_pop(P=1), AC.world("W15", mode), list(range(200, 240)))

@@ -96,5 +96,18 @@ class TestPairingByPredicate(unittest.TestCase):
                                       ("S", "P-PRES", [903, 904])]))
 
 
+
+class TestPObsFullList(unittest.TestCase):
+    """C-010-T033 integration: P-OBS must run on the FULL registered witness list (PREREGISTRATION s5)."""
+
+    def test_prefix_is_refused_full_list_accepted(self):
+        from rso.witness import evaluate as EVW
+        lists = {"witness": [900001, 900002, 900003], "erase": [], "pres": []}
+        node = lambda seeds: {"receipt": {"seeds": seeds, "predicate": "P-OBS", "node_id": "x"}}
+        EVW._check_seeds(node([900001, 900002, 900003]), lists)
+        with self.assertRaises(EVW.Refused):
+            EVW._check_seeds(node([900001, 900002]), lists)
+
+
 if __name__ == "__main__":
     unittest.main()

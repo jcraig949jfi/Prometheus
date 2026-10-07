@@ -1,0 +1,76 @@
+{
+  "schema": "prometheus.workgraph.receipt.v1",
+  "task_id": "C-010-T034",
+  "campaign_id": "C-010",
+  "attempt_id": "A-001",
+  "role": "Pallas",
+  "model": "claude-fable-5-1",
+  "quality_class": "Q3",
+  "instance": "harry1-dc8e608d (one headless session: exposure, set, the one launch, report, receipt, state commits; no background job at any point)",
+  "host": "harry1",
+  "branch": "pallas/c010-t034",
+  "worktree_path": "C:/Prometheus-worktrees/pallas-c010-t034",
+  "start_sha": "32586420a1e349bcd81d565917edd0a90fdc85f2",
+  "end_sha": "a35b489dfd14beffb6d3c81ce1ce989f46a6e658",
+  "commits": {
+    "claim": "27b3d2f82 (main, 13:39:47Z)",
+    "exposure_first": "e9f14ae21 (13:41:38Z): EXPOSURE.md INITIAL before FREEZE_W2.md was opened; FREEZE_W2 36/36 hashes then verified against the committed blobs at 32586420a",
+    "set_before_outcomes": "19a18b936 (14:02:55Z): cases_w2.py, expected.json, edits.json, witnesses.py, run_w2.py, CHALLENGE_SET.md with predictions, EXPOSURE.md extended",
+    "implementing": "5b4b75247 (main)",
+    "set_repair_pre_outcome": "2933f4477 (14:04:27Z): edits.json find anchored to the first occurrence of the single for-line (occurrence 1) after --check-build showed the two-line find matched 0 times in the CRLF working copy; same edit, same fault; no outcome had been observed",
+    "merge_origin_main": "f9d3866ee (origin/main 5b4b75247: only this seat's two state commits; nothing under rso/ or ares/ changed; FREEZE_W2 36/36 re-verified; data files identical to 2933f4477)",
+    "results": "964db276d: results_w2.jsonl, mutation_rows_w2.jsonl, w2_launch.json, two check_build rows files, acceptance_stdout.txt, REPORT.md, rso/witness/LEDGER.jsonl (3 launches), journal, work state, comms bodies",
+    "correction": "a35b489df: the four comms body names collided with the C-009-T034 bodies of 2026-10-07 and 964db276d overwrote them; restored byte-for-byte from 32586420a, this packet's bodies renamed C010-T034_* / C010-HEARTBEAT_*",
+    "green_and_integration_ready": "the state commit carrying this receipt (main)"
+  },
+  "files_changed": [
+    "rso/witness/challenge/W2/ (new: EXPOSURE.md, CHALLENGE_SET.md, cases_w2.py, expected.json, edits.json, witnesses.py, run_w2.py, check_build_2026-10-07T140259Z.jsonl, check_build_2026-10-07T140429Z.jsonl, results_w2.jsonl, mutation_rows_w2.jsonl, w2_launch.json, acceptance_stdout.txt, REPORT.md)",
+    "rso/witness/LEDGER.jsonl (+6 rows: W2-RECHECK-20261007T140519Z-12684 TOP_LEVEL with 2 MUTATION_CHILD rows; 3 launches total)",
+    "roles/Pallas/{WORK_STATE.json, journal/2026-10-07.md (appended), comms/C010-T034_CLAIMED_2026-10-07.md, comms/C010-HEARTBEAT_2026-10-07_T034_start.md, comms/C010-T034_INTEGRATION_READY_2026-10-07.md, comms/C010-HEARTBEAT_2026-10-07_T034_done.md}",
+    "ops/campaigns/C-010/tasks/C-010-T034/ (state commits on main)"
+  ],
+  "evidence_added": [
+    "W2 set on FREEZE_W2 committed before any outcome (19a18b936; pre-outcome anchor repair 2933f4477): 1 fresh sound, 1 fresh broken + ruler-path control, 1 semantic edit with a behavioural witness; every seed >= 5,000,000; synthetic traces, the hand-wired leak construction, the POS carrier, one random P = 1 population; make_configs and run_witness subject never invoked; none of W1's shapes re-run",
+    "SOUND S1 AS_EXPECTED: the s10 (failed, re-run) pair is evaluable under R1 -- the real driver's SA launch killed 25 s in (2 receipts, 4 artifacts, open ledger rows, no MANIFEST / inventory / run.json), re-run with identical inputs, all four bundle directories presented: the failed directory refused BUNDLE_FILE_MISSING with no launch id and no node id, no EVIDENCE_DUPLICATE anywhere, 3 clean bundles P-FLAT PASS / custody QUALIFIED / nothing refused, 16/16 receipts bind, supplied_by names all 16 nodes (SA's six from the re-run), P-CAL evaluated, both subjects classed (values redacted); R4 ids rebuild on 4 CONTROLS receipts; R5 NULL by construction: R = 0 = S-NOPL's, non-plastic runtime, reset_each_step, W1 unwritten over 4 episodes, shared subject untouched",
+    "BROKEN B1a SURVIVOR: DA's P-OBS / P-PRES / S P-ERASE / S-LEAK P-ERASE receipts declaring the full registered-shape lists with full oracles but ONE-row action arrays are admitted -- P-OBS PASS, P-PRES PASS, P-ERASE PASS qualified (D = 0, leak D = 1); DA POSITIVE. B1b control AS_EXPECTED: the same on S/P-RET is refused SHAPE (episodes pins (len(seeds), 40, 1))",
+    "EDIT E1 SURVIVED on the full acceptance suite (170 tests, baseline PASSED): R1 census counting only clean bundles; witness exactly as predicted -- original XY/YX both UNQUALIFIED with EVIDENCE_DUPLICATE; mutant XY POSITIVE (no duplicate), YX UNQUALIFIED (EVIDENCE_REFUSED): argument-order dependence returns for a (clean, refused) pair",
+    "per surface (REPORT.md s3): R1 NOT CLOSED (coverage; frozen code correct), R2 NOT CLOSED (pair-gate bytes not tied to the declared list), R3 / R4 / R5 CLOSED within coverage; neither survivor makes the registered run UNEVALUABLE or MIS-CLASSIFIED on the frozen driver; not a second repair round",
+    "predictions (CHALLENGE_SET.md / expected.json, before outcomes): 3/3 cases, 1/1 edit, witness values exact"
+  ],
+  "evidence_executed": [
+    {"command": "FREEZE_W2 hash walk: git show HEAD:<path> | sha256 for 36 rows; merge-base --is-ancestor 9dd4e9671; git diff --stat 9dd4e9671 HEAD -- rso/ ares/", "result": "36 equal, 0 mismatch; ancestor; only FREEZE_W2.md and the W2 directory above it (repeated on the merged tree f9d3866ee: 36/36)"},
+    {"command": "python -B rso/witness/challenge/W2/run_w2.py --check-build (14:02:59Z and 14:04:29Z; no evaluator, unledgered)", "result": "B1a / B1b / E1 bundles build; S1 configs load (4, 6, 6 entries; P-OBS 2048 seeds); edit applicable False, then (after 2933f4477) True, find_count 2, occurrence 1"},
+    {"command": "python -B rso/witness/challenge/W2/run_w2.py --phase cases --ledger rso/witness/LEDGER.jsonl --contract rso/witness/contract.json (14:05:19Z-14:08:22Z; launch W2-RECHECK-20261007T140519Z-12684 begun)", "result": "S1 AS_EXPECTED (11/11 checks); B1a SURVIVOR; B1b AS_EXPECTED; 156.6 process CPU-s + 25.0 s killed-child wall; scratch 2,914,569 bytes (deleted); rows results_w2.jsonl"},
+    {"command": "python -B rso/witness/challenge/W2/run_w2.py --phase mutation --finish ... (14:09:03Z-14:12:29Z; 2 MUTATION_CHILD rows; launch finished COMPLETED, 387.2 charged CPU-s composite)", "result": "baseline PASSED 170/170 (101.7 s); W2.E1 SURVIVED 170/0, NOT_EQUIVALENT_WITNESSED (103.9 s); cap not exhausted; rows mutation_rows_w2.jsonl, w2_launch.json"},
+    {"command": "git diff --quiet 2933f4477 HEAD -- cases_w2.py expected.json edits.json witnesses.py (merged tree)", "result": "data files byte-identical to the set (as repaired pre-outcome)"},
+    {"command": "python -B -m unittest discover -s rso/witness/tests -t . && python -B -m unittest discover -s rso/binding/tests -t . (merged tree f9d3866ee; foreground; unledgered)", "result": "Ran 149 tests OK (99.5 s); Ran 21 tests OK -- GREEN"},
+    {"command": "python -m workgraph validate", "result": "OK"}
+  ],
+  "red_observed": {"observed": false, "detail": "review packet, red_required false: the set and its predictions were committed before the first outcome was observed; the expected verdicts are the answer key, not a failing test"},
+  "result": "DONE_CLEAN",
+  "known_escapes": [
+    "S-1 (B1a): evaluate._pair_gate checks a.shape == b.shape only; the P-OBS / P-PRES / P-ERASE evidence bytes are not tied to the declared (registered) list; not producible by the frozen driver; one shape check closes it (RESULT.md known escape)",
+    "S-2 (E1): the R1 presenter census is pinned for two clean bundles only; a (clean, refused) pair is unpinned (frozen code correct; one test closes it)",
+    "no fresh shape against R3's pattern check itself (a (1, 0) triple pattern or an unbalanced probe set would pass R3; the registered generator and the committed SEED_LISTS.json are the tie); no fresh broken shape against R4 or R5",
+    "the reviewer read test_evaluate.py's fixture and TestW1Repairs before choosing E1 (EXPOSURE.md): an informed coverage probe, not first-sight",
+    "one pre-outcome set repair (2933f4477, edit anchor; disclosed); one post-results correction (comms body names; the C-009-T034 bodies restored byte-for-byte)",
+    "minor accounting note, not chased: the temp ledger's node rows sum to 174.7 CPU-s while the parent's process_time over the cases phase was 156.6 s; the campaign ledger was charged the larger composite",
+    "same vendor family as the builders; cell member; no production code touched; reviewer ~45 min wall against the packet's 25"
+  ],
+  "unresolved": [
+    "S-1 pair-gate evidence shape unchecked (behavioural; producer-trust class; RESULT.md known escape)",
+    "S-2 R1 census unpinned for a (clean, refused) pair (test-coverage)"
+  ],
+  "unblocks": [
+    "C-010-T020 (the re-check is done; no second repair round requested)"
+  ],
+  "resources": {
+    "top_level_launches": 1,
+    "packet_ledgered_cpu_s": 387.2,
+    "campaign_ledger_after": {"launches": 3, "cpu_s": 1379.1, "artifact_bytes": 10090877},
+    "unledgered": "hash walks ~5 s; two check-builds ~12 s; pre-set development checks (edit find-count, temp-ledger open-run tolerance, imports) ~10 s; acceptance on the merged tree 99.5 s",
+    "model": "one Q3 headless session, about 45 min (13:36Z-14:25Z; packet ceiling said <= 25 reviewer-minutes)"
+  },
+  "notes": "Exposure record committed before any repaired material was opened (launch note). State commits went to main as they happened (pallas-ops): 27b3d2f82 CLAIMED, 5b4b75247 IMPLEMENTING, then GREEN and INTEGRATION_READY with this receipt. Headless rule applied throughout: no run_in_background; every command foreground with timeout <= 600 s; the one launch was shared by two invocations for that reason. Hard gate: no registered subject configuration run, no registered arm on a registered seed, no accuracy / retention / ruler value of POS / NULL / SHUF / RECUR printed or committed (S1 rows are structure only). TASK.json names Dionysus in eligible_roles; Pallas (owner_role) claimed on workgraph ready.",
+  "created_at_utc": "2026-10-07T14:28:00Z"
+}

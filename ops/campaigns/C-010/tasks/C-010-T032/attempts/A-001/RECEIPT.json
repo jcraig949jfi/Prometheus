@@ -1,0 +1,56 @@
+{
+  "schema": "prometheus.workgraph.receipt.v1",
+  "task_id": "C-010-T032",
+  "campaign_id": "C-010",
+  "attempt_id": "A-001",
+  "role": "Cadmus",
+  "model": "claude-opus-5-5",
+  "quality_class": "Q2",
+  "start_sha": "66eae13756b145970f8fd6201b27da1cf8deab91",
+  "end_sha": "836f96e18438b7256806b2b3035bfcaa9d94293a",
+  "files_changed": [
+    "rso/witness/ares_client.py",
+    "rso/witness/tests/test_ares_client.py"
+  ],
+  "evidence_added": [
+    "R5: arm('NULL') = copy of the subject with reset_each_step AND R zeroed exactly as S-NOPL (AMENDMENT_v1.0.1, W1 B8)",
+    "test_null_has_no_plastic_write_and_no_carry_by_construction: on the POS carrier, NULL has R = 0 equal to S-NOPL's, reset_each_step, runtime non-plastic, and live W1 equal to the genome's at every step of 4 episodes (state checks only)",
+    "test_arms_never_mutate_the_shared_subject: after every arm is built, the shared subject's R, W1, W2, keep, alive, op, bias and cfg are unchanged and R != 0 (W1.E2 pin)"
+  ],
+  "evidence_executed": [
+    {
+      "command": "TestArmsApplied on the old NULL",
+      "result": "RED: NULL test fails (plasticity kept) 12:27Z"
+    },
+    {
+      "command": "W1.E2 applied verbatim (q = subject) in a temp copy, run the new pin",
+      "result": "RED: killed"
+    },
+    {
+      "command": "python -B -m unittest discover -s rso/witness/tests -t . && python -B -m unittest discover -s rso/binding/tests -t . (merged tree)",
+      "result": "135 OK; 21 OK"
+    }
+  ],
+  "red_observed": {
+    "observed": true,
+    "reason": "R5: the new NULL test failed on the old code; E2: the pin fails with Pallas's edit applied verbatim (the code itself was already correct)"
+  },
+  "result": "DONE_CLEAN",
+  "known_escapes": [
+    "E2 was a test gap, not a code defect: the arm code already copied; the pin now makes any future in-place change fail"
+  ],
+  "unresolved": [],
+  "unblocks": [
+    "C-010-T033"
+  ],
+  "created_at_utc": "2026-10-07T12:29:12Z",
+  "instance": "m1-a86ec5e4",
+  "host": "SKULLPORT",
+  "branch": "cadmus/c010-t032",
+  "worktree_path": "F:/Prometheus-worktrees/cadmus-c010-t032",
+  "resources": {
+    "cpu": "0 launches; tests about 45 s",
+    "model": "one Q2 session, about 0.15 hour"
+  },
+  "notes": "Synthetic / hand-wired organisms only; no registered subject, no count/accuracy/outcome on any registered arm."
+}
