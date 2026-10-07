@@ -346,6 +346,11 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   (large values); C6-unable 2703 needs 5 registers (mostly large values). Weak-signal check "do the large registers hold
   the PREVIOUS tick's observation words (temporal-difference sensing)?": 0 matches over 184 / 116 ticks -> KILLED at
   this level; the state is COMPUTED (accumulator / mixing chains), not stored observations.
+- DEV: archaeon/beta/controls.py -- one-call competence audit (constant / BLIND / echo twins, per-word ablation,
+  persist=none for composed worlds; 0-7 wide jitter for WSE worlds) with verdict labels; self-test 4/4 known answers
+  (hand content policy = INPUT_USING + BEATS_CONSTANT + sensed words; clock-sweep elite on NoClock =
+  NOT_ABOVE_CONSTANT; slot solver = GENUINE_STATE; B08 L4 delay-line elite = TIMING_EXPLOIT). Any competence claim from
+  this lane quotes these verdicts.
 - PIVOT LANE staged (B23, for the budget window): re-audit the Deep Frontier / C6 record with today's instruments.
   Off-repo evidence exists: D:\Prometheus-worktreesrchaeon-wse-2026-09-16rchaeonrontier
 uns (2.3 GB;
