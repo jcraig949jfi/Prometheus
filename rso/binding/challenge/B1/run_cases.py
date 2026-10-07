@@ -70,6 +70,26 @@ def decide(case, gate_versions):
     return cons.decide_all(case.claims), cons.custody
 
 
+SYNTHETIC_NOTE = ("synthetic base: G-RECOMP fails on the fixture traces for every CL-RET claim, baseline included "
+                  "(found by the --dry controls check, dry_controls_2026-10-07T034302Z.jsonl), so a claim-level "
+                  "check there measures G-RECOMP, not the binding; recorded, not scored. The r1 base (real "
+                  "executions) is fully scored.")
+
+
+def split_unscored(rows, case_id, kind, results, bname):
+    """On the synthetic base, claim-type checks are written as unscored check rows and removed from scoring."""
+    if bname != "synthetic":
+        return results
+    keep = []
+    for ck, good, actual in results:
+        if ck["type"] == "claim":
+            rows.write({"row": "check", "id": case_id, "kind": kind, "check": ck, "ok": good, "scored": False,
+                        "actual": actual, "note": SYNTHETIC_NOTE})
+        else:
+            keep.append((ck, good, actual))
+    return keep
+
+
 def run_checks(checks, decisions, custody, refs):
     """S3.run_checks plus witness_binding and custody_why_contains."""
     mine, theirs = [], []
@@ -135,6 +155,7 @@ def main(argv=None):
                         "baseline_custody": custs["BASELINE"], "keeper_custody": custs["KEEPER"]})
             for ctrl in expected["controls"]:
                 res = run_checks(ctrl["checks"], refs[ctrl["bundle"]], custs[ctrl["bundle"]], refs)
+                res = split_unscored(rows, "%s@%s" % (ctrl["id"], bname), "control", res, bname)
                 ok = S3.emit_case(rows, dict(ctrl, id="%s@%s" % (ctrl["id"], bname)), "control", res)
                 summary[bname]["controls"][1] += 1
                 summary[bname]["controls"][0] += int(ok)
@@ -146,6 +167,7 @@ def main(argv=None):
                     c = build(base)
                     dec, cust = decide(c, gv)
                     res = run_checks(case["checks"], dec, cust, refs)
+                    res = split_unscored(rows, "%s@%s" % (cid, bname), "case", res, bname)
                     rec = {"row": "case_claims", "id": cid, "base": bname, "custody": cust,
                            "claims": {k: S3.claim_summary(v) for k, v in sorted(dec.items())},
                            "g_inv_lines": {k: v for k, v in S3.lines_of(dec["CL-RET(REG)"]).items()
