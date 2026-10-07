@@ -17,10 +17,10 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
 | B03 | BASE vs HEAVY vs RELOC search at equal compute | CLEAN NULL 0/24 each |
 | B07 | withdrawn positional scaffold -> content-addressed recall? | NULL 0/36 (cue dispatch itself unreachable) |
 | B08 | which primitive is the wall? (ladder) | L4 claim RETRACTED: evolved solvers are delay lines (B08b) |
-| B08J | ladder with timing jitter (repaired instrument) | built; queued |
+| B08J | ladder with timing jitter (repaired instrument) | running (is a 2nd genuine slot reachable?) |
 | B11 | is the W2_K2 shelf a delay line? | MOSTLY NO: 50/72 genuine memory, 20/72 delay lines |
 | B09 | dispatch wall: READ the cue vs SELECT on it | running |
-| B10 | SEL opcode (branch-free mux): does the wall move? | running |
+| B10 | SEL opcode (branch-free mux): does the wall move? | CLEAN NULL 0/32 |
 
 ## 2026-10-06/07 EXP-1 (opened 2026-10-06T23:48Z)
 
@@ -110,6 +110,12 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   KILLED (mine, raised one entry above): "the W2_K2 shelf is a delay line that stores nothing". The shelf is mostly
   real stored state; the B02 silent plateau stands as a real feature. Kept: ~28% of shelf organisms are timing
   exploits, so any shelf-based seeding/import experiment (CMP2/CMP3 shelf arms) mixed two mechanisms unknowingly.
+- B10 CLEAN NULL: 0/8 in each of {sel, stock} x {L5_hint3, L6_w2k2} (G=200). Max train .53-.75 (sel) vs .25-.88
+  (stock). Op-24 instructions in elites: similar counts on both VMs (on stock op 24 is RND) -> no adoption signal.
+  PREDICTION (SEL L5 >= 3/8) FAILED. KILLED: "selection is unreachable because it needs an aimed conditional jump".
+  CHANGED MY MIND: the barrier sits BELOW selection. Every L5/L6 solver needs two values stored as state, and B08's
+  only two-slot solvers were delay lines (B08b). So the candidate wall is now: a SECOND GENUINELY STORED VALUE.
+  B08J (jittered ladder, L4 rung) is the direct test -- launched ~02:00Z, 20 workers, G=300.
 - B08J built (ladder with jitter in train AND held-out); controls unchanged under jitter. Launches when cores free.
 - Next: B01b (done) tests H-PLATEAU quantitatively; then B03 = search arms at equal compute from fresh gen 0
   (baseline / heavy-tailed mutation count / behaviour-novelty) -- prediction: only structural-move arms lift 0/60.
