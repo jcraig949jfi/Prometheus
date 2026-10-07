@@ -38,18 +38,19 @@ INSTRUMENTS = ("CALIBRATION", "RETENTION", "G-BIND", "G-INV", "G-RECOMP")
 # The id a stage record names (receipt.validate_stage_record; evidence.authority looks up predicate.id).
 RECORD_ID = {"CALIBRATION": "P1", "RETENTION": "P2", "G-BIND": "G-BIND", "G-INV": "G-INV", "G-RECOMP": "G-RECOMP"}
 # The commit each instrument's version is pinned to (version.py's convention, one commit per version). The rulers
-# keep T023A/T023B's pin; the consumer gates are pinned to the C-009-T011 implementation commit (evidence.py on
-# rso/binding; before it the C-004-T046 second repair at 78f4d1fdc and the C-004-T042 S4 repair at 22d270fb2),
-# whose stage records were regenerated then (B4.1: a new version needs a new record).
-GATE_PIN = "dc21c5d73005ddced7070247c5a47e6c5c467ce7"
+# keep T023A/T023B's pin; the consumer gates are pinned to the C-009-T031 repair commit (BX5b sibling rule in
+# rso/binding/binding.py and evidence.g_inv; before it C-009-T011 at dc21c5d73, the C-004-T046 second repair at
+# 78f4d1fdc and the C-004-T042 S4 repair at 22d270fb2), whose stage records were regenerated then (B4.1).
+GATE_PIN = "fa280abfb47105dff1415f67b000bcbfe1885df3"
 PIN = {"CALIBRATION": V.PINNED, "RETENTION": V.PINNED, "G-BIND": GATE_PIN, "G-INV": GATE_PIN, "G-RECOMP": GATE_PIN}
 STAGES_DIR = os.path.dirname(os.path.abspath(__file__))
 FIRE_DIR = os.path.join(STAGES_DIR, "fire")
 RECORDED_BY = "Argus[desktop-ruapvai-b08b36ac] under C-004-T023B"
 # Who executed and recorded each instrument's CURRENT fire test and record (the rulers' are unchanged since T023B).
 RECORDED_BY_OF = {"CALIBRATION": RECORDED_BY, "RETENTION": RECORDED_BY,
-                  "G-BIND": "Argus[harry1-20749977] under C-009-T011", "G-INV": "Argus[harry1-20749977] under C-009-T011",
-                  "G-RECOMP": "Argus[harry1-20749977] under C-009-T011"}
+                  "G-BIND": "Argus[desktop-ruapvai-b08b36ac] under C-009-T031",
+                  "G-INV": "Argus[desktop-ruapvai-b08b36ac] under C-009-T031",
+                  "G-RECOMP": "Argus[desktop-ruapvai-b08b36ac] under C-009-T031"}
 
 
 def fire_path(instrument):
@@ -165,6 +166,19 @@ def _g_inv_cases():
         want = reason if bind is None else "%s [%s]" % (reason, ", ".join(bind))
         out.append(("CC1 %s" % cid, "ACCEPT" if value == "PASS" else "REJECT", value, want,
                     (lambda b=build, c=claim: _inv_bind(b, c))))
+    # C-009-T031: the CC3 reviewer's B1 cases (rso/binding/challenge/B1/cases.py, synthetic base). Expected answers
+    # from the reviewer's expected.json, and BX5b's (CONTRACT.md s7) for SIBLING_UNREPORTED.
+    from rso.binding.challenge.B1 import cases as B1C
+    victim = "RECEIPT_WITHOUT_RUN:%s" % B1C.VICTIM
+    for cid, fn, value, want in (
+            ("B1.SOUND.FAILED_RETRY", B1C.sound_failed_retry, "PASS", None),
+            ("B1.SOUND.CHARGED_CHILDREN", B1C.sound_charged_children, "PASS", None),
+            ("B1.BROKEN.SIBLING_UNREPORTED", B1C.broken_sibling_unreported, "FAIL",
+             victim + " [BIND_SIBLING_UNREPORTED]"),
+            ("B1.BROKEN.CHILD_AS_NODE_RUN", B1C.broken_child_as_node_run, "FAIL", victim + " [BIND_NOT_A_NODE_RUN]"),
+            ("B1.BROKEN.LAUNCH_IS_NODE_RUN", B1C.broken_launch_is_node_run, "FAIL", "LAUNCH_UNBOUND [BIND_LAUNCH_MISSING]"),
+            ("B1.BROKEN.LEGACY_ROW", B1C.broken_legacy_row, "FAIL", victim + " [BIND_DIGEST_MISSING]")):
+        out.append((cid, "ACCEPT" if value == "PASS" else "REJECT", value, want, (lambda f=fn: _inv_bind(f))))
     return out
 
 
