@@ -304,6 +304,11 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   RULER LESSON: the constant twin is too weak -- open-loop periodic action patterns beat it (.14-.33 vs .076) without
   sensing anything. The BLIND twin is the primary control for composed worlds from now on (B23b's "40 beat
   constant" includes such open-loop policies; its blind column is the honest one: 49 input-using).
+- B26 mechanism (action by local-pool presence, 32 episodes): seed 2504 (16 instr, persist all): pool1 local ->
+  harvest H2 and MOVE +; pool1 absent -> MOVE - => it reverses direction on detecting pool 1 and so OSCILLATES around
+  that node (dwelling by reversal; harvest index mismatched to the sensed pool). Seed 2506 (39 instr, persist regs):
+  any local pool -> HARVEST IN PLACE without moving (H1/H2); none -> harvest and MOVE (mostly -) => STOP-WHEN-FOOD,
+  MOVE-WHEN-EMPTY. Two distinct evolved reactive foraging rules (kinesis-like), both content-driven.
 - PIVOT LANE staged (B23, for the budget window): re-audit the Deep Frontier / C6 record with today's instruments.
   Off-repo evidence exists: D:\Prometheus-worktreesrchaeon-wse-2026-09-16rchaeonrontier
 uns (2.3 GB;
