@@ -18,6 +18,7 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
 | B07 | withdrawn positional scaffold -> content-addressed recall? | NULL 0/36 (cue dispatch itself unreachable) |
 | B08 | which primitive is the wall? (ladder) | L4 claim RETRACTED: evolved solvers are delay lines (B08b) |
 | B08J | ladder with timing jitter (repaired instrument) | running (is a 2nd genuine slot reachable?) |
+| B12 | LONG: W2_K2 with N=500, G=3000 -- is it just time? | running (hours; progress in results/B12_progress.jsonl) |
 | B11 | is the W2_K2 shelf a delay line? | MOSTLY NO: 50/72 genuine memory, 20/72 delay lines |
 | B09 | dispatch wall: READ the cue vs SELECT on it | CLEAN NULL 0/24 |
 | B10 | SEL opcode (branch-free mux): does the wall move? | CLEAN NULL 0/32 |
