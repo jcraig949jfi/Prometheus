@@ -31,13 +31,24 @@ from archaeon.wse import evolve as EV
 OUT = Path(__file__).resolve().parent / "results"
 
 
+_BASE = {}
+_WCACHE = {}
+
+
+def _base():
+    """P-boom base world, loaded ONCE per process (run 1 re-read the checkpoint for every evaluation -- the hang)."""
+    if "w" not in _BASE:
+        _BASE["w"] = load()[0]
+    return _BASE["w"]
+
+
 def family_world(key):
     """v2 (2026-10-07 ~21:55Z): v1 varied only R / ring size / rates of the P-boom params and the P-boom-SPECIFIC elite
     transferred within it (negative control failed: lift .03-.37). v2 draws a WHOLE world from the C6 procedural
     generator (archaeon.campaign6.worlds.generator.sample_world) and forces only what foraging needs: resources ON,
     locality ON, >= 2 action channels (MOVE is channel 1), delayed OFF. Feature set, K and all ranges vary."""
     from archaeon.campaign6.worlds.generator import sample_world
-    base, _, _ = load()
+    base = _base()
     rng = SplitMix64(seed_from("archaeon.beta.b32.world2", *key))
     rec = sample_world(rng.randbelow(10 ** 9))
     p = copy.deepcopy(rec["params"])
@@ -83,7 +94,10 @@ def cell(job):
     state = {"g": 0}
 
     def ev_fn(m, eps, intervention=None, rng_seed=0, reward_mode="per_ask"):
-        w, s = family_world(("train", job["seed"], state["g"]))
+        k = ("train", job["seed"], state["g"])
+        if k not in _WCACHE:
+            _WCACHE.clear(); _WCACHE[k] = family_world(k)
+        w, s = _WCACHE[k]
         return evaluate_world(m, w, s, 8, rng_seed=7)
 
     EV.evaluate = ev_fn
