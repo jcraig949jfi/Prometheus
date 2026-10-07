@@ -14,6 +14,11 @@ one-slot shelf store-credit ~0.
 PREDICTION (before running): STORE reaches store-credit >= .9 by g 150 in >= 3/4 cells per world; after withdrawal
 recall-solved (>= .90 held-out) in >= 1/4 per world; NONE 0/4. If STORE learns the write but never the read, the
 pair is not just "missing partial credit" -- the read half has its own isolated step.
+
+B22b schedule (2026-10-07 ~11:30Z, after the first STORE cells): the write half IS learned under credit (store-credit
+.91-.99 by g 100-125 in 2/4 STORE cells) but is LOST within 25 generations of withdrawal, before any read appears.
+Arm KEEP: weight .5 for g < 150, then .2 permanently (recall carries .8) -- hold the write while the read is sought.
+PREDICTION (B22b, before running): KEEP recall-solved >= 1/4 per world by G=400; store-credit stays >= .8 after 150.
 """
 from __future__ import annotations
 
@@ -36,6 +41,7 @@ SOLVED = 0.90
 SCAFFOLD_UNTIL = 150
 _STATE = {"store_weight": 0.0}
 _orig_evaluate = EV.evaluate
+ARMS = ("STORE", "NONE")
 
 
 def eps_for(rung, family, index, n):
@@ -84,7 +90,12 @@ def cell(job):
     ho = eps_for(rung, "heldout", seed, 48)
     solved, trace = None, []
     for g in range(G_):
-        _STATE["store_weight"] = 0.5 if (arm == "STORE" and g < SCAFFOLD_UNTIL) else 0.0
+        if arm == "STORE":
+            _STATE["store_weight"] = 0.5 if g < SCAFFOLD_UNTIL else 0.0
+        elif arm == "KEEP":
+            _STATE["store_weight"] = 0.5 if g < SCAFFOLD_UNTIL else 0.2
+        else:
+            _STATE["store_weight"] = 0.0
         row = ev.evaluate_generation(episodes=eps_for(rung, "train", g * 100003 + seed, 16), last=(g == G_ - 1))
         elite = ev.scored[0][1]["manifest"]
         if g % 25 == 0 or g == G_ - 1:
@@ -106,23 +117,25 @@ def cell(job):
 def main(argv):
     OUT.mkdir(exist_ok=True)
     G_ = int(argv[0]) if argv else 300
+    global ARMS
+    ARMS = tuple(argv[2].split(",")) if len(argv) > 2 else ("STORE", "NONE")
     ctl = controls(); print("controls", json.dumps(ctl), flush=True)
     rows = []
     with ProcessPoolExecutor(max_workers=int(argv[1]) if len(argv) > 1 else 2) as ex:
         futs = {ex.submit(cell, {"arm": a, "rung": r, "seed": 2201 + s, "G": G_}): (a, r, s)
-                for s in range(4) for r in ("L4_order", "L6_w2k2") for a in ("STORE", "NONE")}
+                for s in range(4) for r in ("L4_order", "L6_w2k2") for a in ARMS}
         for f in as_completed(futs):
             try:
                 r = f.result()
             except Exception as e:                    # noqa: BLE001
                 a, rr, s = futs[f]; r = {"arm": a, "rung": rr, "seed": 2201 + s, "solved_gen": None, "error": repr(e)[:300]}
             rows.append(r)
-            with open(OUT / "B22_cells.jsonl", "a", encoding="utf-8") as fh:
+            with open(OUT / ("B22_cells.jsonl" if ARMS != ("KEEP",) else "B22b_cells.jsonl"), "a", encoding="utf-8") as fh:
                 fh.write(json.dumps({k: v for k, v in r.items() if k != "elite_manifest"}) + chr(10))
     summ = {"%s/%s" % (a, r): sum(x["arm"] == a and x["rung"] == r and x["solved_gen"] is not None for x in rows)
-            for a in ("STORE", "NONE") for r in ("L4_order", "L6_w2k2")}
+            for a in ARMS for r in ("L4_order", "L6_w2k2")}
     print(json.dumps(summ), flush=True)
-    (OUT / "B22_result.json").write_text(json.dumps({"probe": "B22", "G": G_, "controls": ctl, "summary": summ, "rows": rows}, indent=1), encoding="utf-8")
+    (OUT / ("B22_result.json" if ARMS != ("KEEP",) else "B22b_result.json")).write_text(json.dumps({"probe": "B22", "G": G_, "controls": ctl, "summary": summ, "rows": rows}, indent=1), encoding="utf-8")
     return 0
 
 
