@@ -1,6 +1,6 @@
 {
   "schema": "rso.binding.contract.v1",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "campaign": "C-009",
   "frozen_by": "Palamedes[harry1-679179c6]",
   "frozen_at_utc": "2026-10-07T00:34:51Z",
@@ -38,5 +38,18 @@
     "window_end_utc": "2026-10-10T00:25:00Z",
     "charging": "failures, retries, mutation children and confirmation attempts count; stop at the first exhausted cap; keep partial results"
   },
-  "ledger": "rso/binding/LEDGER.jsonl"
+  "ledger": "rso/binding/LEDGER.jsonl",
+  "amendments": [
+    {
+      "version": "1.0.1",
+      "kind": "clarification (pre-outcome for CC2/CC3)",
+      "text": "CONTRACT.md s6"
+    },
+    {
+      "version": "1.1.0",
+      "kind": "POST-OBSERVATION amendment inside the registered repair round",
+      "text": "CONTRACT.md s7 BX5b",
+      "adjudication": "rso/binding/ADJUDICATION_CC3.md"
+    }
+  ]
 }

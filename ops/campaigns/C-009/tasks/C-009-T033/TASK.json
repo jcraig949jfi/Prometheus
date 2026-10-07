@@ -1,0 +1,59 @@
+{
+  "schema": "prometheus.workgraph.task.v1",
+  "task_id": "C-009-T033",
+  "campaign_id": "C-009",
+  "title": "Repair-round regression (consume-only over R1), registration, FREEZE_B2",
+  "objective": "Integrate T031; register its stage records; consume the committed R1 bundles under the repaired code; matrix and claim diff vs the CC2 run; FREEZE_B2.",
+  "parent_objective": "C-009 repair round (the only one) after CC3",
+  "owner_role": "Palamedes",
+  "quality_class": "Q2",
+  "can_downgrade": false,
+  "escalate_to": "Q3",
+  "depends_on": [
+    "C-009-T031"
+  ],
+  "owns": [
+    "rso/binding/R1/R2CHECK/",
+    "rso/binding/FREEZE_B2.md"
+  ],
+  "reads": [
+    "rso/binding/",
+    "rso/slice001/"
+  ],
+  "problem": "Producer unchanged, so no new produce launch; predicted: no verdict difference vs CC2 (R1/REGRESSION.md) on any claim.",
+  "non_goals": [
+    "No change to world predicates, the expected-answer table or S2 case expectations",
+    "The B1 challenge record is not rewritten",
+    "No further repair round after this one (CC3)"
+  ],
+  "evidence_required": [
+    "prediction committed before the consume",
+    "matrix + claim diff vs CC2",
+    "registry rows",
+    "FREEZE_B2"
+  ],
+  "acceptance": {
+    "command": "python -B -m unittest discover -s rso/slice001/tests -t . && python -B -m unittest discover -s rso/binding/tests -t . && python -B -m unittest discover -s rso/witness/tests -t .",
+    "condition": "all evidence_required items; all three suites green"
+  },
+  "deliverables": [
+    "rso/binding/R1/R2CHECK/",
+    "rso/binding/FREEZE_B2.md"
+  ],
+  "kind": "software",
+  "status": "PROPOSED",
+  "history": [
+    {
+      "status": "PROPOSED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-07T05:18:04Z",
+      "note": "repair round"
+    }
+  ],
+  "authority": "rso/binding/CONTRACT.md s3 CC3 (one repair round + one 1+1+1 re-check); rso/binding/ADJUDICATION_CC3.md",
+  "resource_ceiling": {
+    "launches": "0 (development only) unless stated"
+  },
+  "red_required": false,
+  "notes": "red_required false: integration and regression."
+}

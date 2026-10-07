@@ -76,3 +76,15 @@ report and for the native witness: a claim that relies on G-INV is QUALIFIED onl
 QUALIFIED; a G-INV PASS on an unregistered inventory is a logic result, never qualified evidence. No predicate,
 threshold or expectation changes. The declared escape (T011 receipt) -- a forged row consistent with an
 unregistered inventory binds -- is therefore inside the "not qualified" region, not a qualified admission.
+
+## 7. v1.1.0 amendment -- BX5b (Palamedes, 2026-10-07; POST-OBSERVATION, inside C-009's one registered repair round)
+
+Made after the CC3 challenge (rso/binding/challenge/B1/REPORT.md) observed B1.BROKEN.SIBLING_UNREPORTED admitted;
+recorded as a post-observation amendment. The B1 record stands as observed under v1.0.1. Adjudication:
+rso/binding/ADJUDICATION_CC3.md.
+
+BX5b For every required node WITH a presented receipt, every COMPLETED RECEIPT row of that node under the anchored
+     launch must be the cited row. A second COMPLETED execution of the node under the same launch that the bundle
+     does not present: G-INV FAIL RECEIPT_WITHOUT_RUN:<node_id>, binding reason BIND_SIBLING_UNREPORTED. FAILED,
+     INTERRUPTED and REFUSED attempts remain provenance (a failed retry before the presented run binds). Rows of
+     other launches remain provenance (BX5). No timestamp is read (BX4).

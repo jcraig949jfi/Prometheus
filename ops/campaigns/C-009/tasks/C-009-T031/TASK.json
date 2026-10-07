@@ -1,0 +1,80 @@
+{
+  "schema": "prometheus.workgraph.task.v1",
+  "task_id": "C-009-T031",
+  "campaign_id": "C-009",
+  "title": "Repair round: pin E2/E3/E4 with the B1 fire cases; BX5b sibling rule; consumer_for passes run_id; stage records",
+  "objective": "Implement ADJUDICATION_CC3 R1-R3 and CONTRACT.md s7 BX5b, each RED first, and regenerate the stage records whose pinned files change.",
+  "parent_objective": "C-009 repair round (the only one) after CC3",
+  "owner_role": "Argus",
+  "quality_class": "Q2",
+  "can_downgrade": false,
+  "escalate_to": "Q3",
+  "depends_on": [
+    "C-009-T030"
+  ],
+  "owns": [
+    "rso/binding/binding.py",
+    "rso/binding/tests/test_binding.py",
+    "rso/slice001/evidence.py",
+    "rso/slice001/s2_run.py",
+    "rso/slice001/fixtures/",
+    "rso/slice001/tests/test_evidence.py",
+    "rso/slice001/tests/test_s2_run.py",
+    "rso/slice001/stages/",
+    "rso/slice001/tests/test_stages_evidence.py"
+  ],
+  "reads": [
+    "rso/binding/ADJUDICATION_CC3.md",
+    "rso/binding/CONTRACT.md (s6, s7)",
+    "rso/binding/challenge/B1/ (REPORT.md, cases.py, edits.json, witnesses.py)"
+  ],
+  "problem": "R1: add the reviewer's committed fire cases B1.BROKEN.LAUNCH_IS_NODE_RUN, CHILD_AS_NODE_RUN, LEGACY_ROW (reuse rso/binding/challenge/B1/cases.py) to the slice suite AND module-level equivalents to rso/binding/tests/test_binding.py; apply E2, E3, E4 VERBATIM from edits.json and show each killed (if a verbatim find no longer applies after your change, say so and port it, as in T011). R2: BX5b in rso/binding/binding.py (a function the client calls, opaque node ids) and in evidence.g_inv: B1.BROKEN.SIBLING_UNREPORTED refused RECEIPT_WITHOUT_RUN with BIND_SIBLING_UNREPORTED; B1.SOUND.FAILED_RETRY and CHARGED_CHILDREN still bind identically to their baselines. R3: s2_run.consumer_for passes run_id=g.run_id; B1.PROBE.PRODUCTION_RUNJSON paths agree (LAUNCH_UNBOUND on both). E01-E05 expectations and the S2 table unchanged; CC1 fire cases still green. Regenerate G-INV (and any other) stage record whose pinned files change; list committed-byte sha256 in the receipt.",
+  "non_goals": [
+    "No change to world predicates, the expected-answer table or S2 case expectations",
+    "The B1 challenge record is not rewritten",
+    "No further repair round after this one (CC3)"
+  ],
+  "evidence_required": [
+    "RED per item on FREEZE_B1 code",
+    "E2/E3/E4 killed (verbatim or ported, recorded)",
+    "SIBLING refused; FAILED_RETRY/CHARGED_CHILDREN unchanged",
+    "probe paths agree",
+    "three suites green",
+    "stage records regenerated, hashes listed"
+  ],
+  "acceptance": {
+    "command": "python -B -m unittest discover -s rso/slice001/tests -t . && python -B -m unittest discover -s rso/binding/tests -t . && python -B -m unittest discover -s rso/witness/tests -t .",
+    "condition": "all evidence_required items; all three suites green"
+  },
+  "deliverables": [
+    "rso/binding/binding.py",
+    "rso/binding/tests/test_binding.py",
+    "rso/slice001/evidence.py",
+    "rso/slice001/s2_run.py",
+    "rso/slice001/fixtures/",
+    "rso/slice001/tests/test_evidence.py",
+    "rso/slice001/tests/test_s2_run.py",
+    "rso/slice001/stages/",
+    "rso/slice001/tests/test_stages_evidence.py"
+  ],
+  "kind": "software",
+  "status": "READY",
+  "history": [
+    {
+      "status": "PROPOSED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-07T05:18:04Z",
+      "note": "repair round"
+    },
+    {
+      "status": "READY",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-07T05:18:04Z",
+      "note": "READY (repair round)"
+    }
+  ],
+  "authority": "rso/binding/CONTRACT.md s3 CC3 (one repair round + one 1+1+1 re-check); rso/binding/ADJUDICATION_CC3.md",
+  "resource_ceiling": {
+    "launches": "0 (development only) unless stated"
+  }
+}

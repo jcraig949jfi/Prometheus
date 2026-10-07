@@ -1,0 +1,60 @@
+{
+  "schema": "prometheus.workgraph.task.v1",
+  "task_id": "C-009-T034",
+  "campaign_id": "C-009",
+  "title": "Fresh closure re-check on FREEZE_B2 (1 sound, 1 broken, 1 edit; new shapes)",
+  "objective": "The single re-check CC3 allows: 1 fresh sound, 1 fresh broken, 1 semantic edit on the repaired binding surfaces (BX1, BX2, BX5/BX5b), committed before outcomes; not the B1 shapes or CC1's (they are regressions now). Report CLOSED / NOT CLOSED for BX1, BX2, BX5 and any new survivor with its applicability to the witness path.",
+  "parent_objective": "C-009 repair round (the only one) after CC3",
+  "owner_role": "Pallas",
+  "quality_class": "Q3",
+  "can_downgrade": false,
+  "escalate_to": "operator",
+  "depends_on": [
+    "C-009-T033"
+  ],
+  "owns": [
+    "rso/binding/challenge/B2/"
+  ],
+  "reads": [
+    "rso/binding/",
+    "rso/slice001/",
+    "rso/binding/FREEZE_B2.md"
+  ],
+  "problem": "Charge every launch and mutation child to rso/binding/LEDGER.jsonl (<= 3 launches; 8 of 12 used). Headless rule: never end your turn while work remains.",
+  "non_goals": [
+    "No change to world predicates, the expected-answer table or S2 case expectations",
+    "The B1 challenge record is not rewritten",
+    "No further repair round after this one (CC3)"
+  ],
+  "evidence_required": [
+    "set committed before outcomes",
+    "CLOSED / NOT CLOSED per surface",
+    "survivor applicability"
+  ],
+  "acceptance": {
+    "command": "python -B -m unittest discover -s rso/slice001/tests -t . && python -B -m unittest discover -s rso/binding/tests -t . && python -B -m unittest discover -s rso/witness/tests -t .",
+    "condition": "all evidence_required items; all three suites green"
+  },
+  "deliverables": [
+    "rso/binding/challenge/B2/"
+  ],
+  "kind": "review",
+  "status": "PROPOSED",
+  "history": [
+    {
+      "status": "PROPOSED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-07T05:18:04Z",
+      "note": "repair round"
+    }
+  ],
+  "authority": "rso/binding/CONTRACT.md s3 CC3 (one repair round + one 1+1+1 re-check); rso/binding/ADJUDICATION_CC3.md",
+  "resource_ceiling": {
+    "launches": "<= 3",
+    "reviewer": "<= 45 min"
+  },
+  "red_required": false,
+  "eligible_roles": [
+    "Dionysus"
+  ]
+}
