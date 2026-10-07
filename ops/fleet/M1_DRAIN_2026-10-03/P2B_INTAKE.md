@@ -274,3 +274,7 @@ Sent by Nestor directly to Bellerophon, Archaeon, Ananke and Cosmos. They verify
   call): high-replication chain-RATE assay under re-aim. Seat awaiting direction. NOT started.
 - Phase 3 C-009: Pallas now on HARRY1 (harry1-b97f1fc4) claimed T030; Eupalamus T016, Cadmus T018, Argus T014/T017
   integration-ready. Heartbeats #1761, #1773.
+
+## 2026-10-07 06:40Z check (msgs 1774-1784)
+- CUSTODY: C-009 registration (8) (#1782, task C-009-T033): repair-round stage records rows 56-61 at 36dfb77eb,
+  0 refusals, chain_ok rows 61, head 0213a5ab0587f1bd945526a15d396fb70856d2d2bebea56a1e8d8d8955852480. Reply #1784.
