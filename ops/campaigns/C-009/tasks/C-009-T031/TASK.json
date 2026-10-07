@@ -58,7 +58,7 @@
     "rso/slice001/tests/test_stages_evidence.py"
   ],
   "kind": "software",
-  "status": "CLAIMED",
+  "status": "RED",
   "history": [
     {
       "status": "PROPOSED",
@@ -77,6 +77,12 @@
       "by": "Argus[desktop-ruapvai-b08b36ac]",
       "at_utc": "2026-10-07T05:29:08Z",
       "note": "claimed by Argus[desktop-ruapvai-b08b36ac] (DESKTOP-RUAPVAI, claude-opus-5-5, Q2) per #1776; work branch argus/c009-t031"
+    },
+    {
+      "status": "RED",
+      "by": "Argus[desktop-ruapvai-b08b36ac]",
+      "at_utc": "2026-10-07T05:32:53Z",
+      "note": "RED at 696adeb5f: R1 E2/E3/E4 verbatim SURVIVE test_evidence + binding suites on FREEZE_B1 code; R2 SIBLING admitted + 4 module tests error; R3 consumer_for run_id None"
     }
   ],
   "authority": "rso/binding/CONTRACT.md s3 CC3 (one repair round + one 1+1+1 re-check); rso/binding/ADJUDICATION_CC3.md",
