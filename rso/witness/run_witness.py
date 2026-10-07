@@ -59,6 +59,7 @@ SEEDS_SCHEMA = "rso.witness.seeds.v0"
 SUBJECT_SCHEMA = "rso.witness.subject_record.v0"
 SUPPLIED_BY = "rso.witness.run_witness.launch"
 PAIRED_ARMS = (("S", "S-NOPL"),)
+PAIRED_BASE_PREDICATE = "P-RET"
 MAX_SEED = 2 ** 63 - 1
 
 
@@ -242,13 +243,18 @@ def load_config(config_path, exclude_records=()):
         if nid in seen:
             raise WitnessError("%s: duplicate node %s" % (where, nid))
         seen.add(nid)
-        by_subject_arm[(sub["sha256"], e["arm"])] = seeds
+        by_subject_arm[(sub["sha256"], e["arm"], e["predicate"])] = seeds
         plan.append({"subject": sub, "arm": e["arm"], "predicate": e["predicate"], "seeds": list(seeds),
                      "node_id": nid})
-    for sha, _ in list(by_subject_arm):
+    # RULER.md s5.2: S-NOPL is paired with S's P-RET node -- keyed by predicate, not by arm alone, because S also runs
+    # P-OBS, P-ERASE and P-PRES on other seed lists (C-010-T013 integration fix); without a P-RET entry, with the S
+    # entry of the same predicate.
+    for (sha, a, pred), seeds in list(by_subject_arm.items()):
         for base_arm, paired in PAIRED_ARMS:
-            if (sha, paired) in by_subject_arm and (sha, base_arm) in by_subject_arm \
-                    and by_subject_arm[(sha, paired)] != by_subject_arm[(sha, base_arm)]:
+            if a != paired:
+                continue
+            base = by_subject_arm.get((sha, base_arm, PAIRED_BASE_PREDICATE), by_subject_arm.get((sha, base_arm, pred)))
+            if base is not None and base != seeds:
                 raise WitnessError("%s must run on %s's episode seeds in the same order (RULER.md s5.2): the "
                                    "paired test cannot check seed identity itself" % (paired, base_arm))
     return {"label": label, "world": world_name, "plan": plan, "subjects": list(subjects.values()),

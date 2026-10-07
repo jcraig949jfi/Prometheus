@@ -278,3 +278,11 @@ Sent by Nestor directly to Bellerophon, Archaeon, Ananke and Cosmos. They verify
 ## 2026-10-07 06:40Z check (msgs 1774-1784)
 - CUSTODY: C-009 registration (8) (#1782, task C-009-T033): repair-round stage records rows 56-61 at 36dfb77eb,
   0 refusals, chain_ok rows 61, head 0213a5ab0587f1bd945526a15d396fb70856d2d2bebea56a1e8d8d8955852480. Reply #1784.
+
+## 2026-10-07 09:40Z check (msgs 1785-1806)
+- M1 RESEATING (operator-directed): Hades seated on SKULLPORT (m1-c8fad9a0), charter roles/Hades/prompts/
+  2026-10-07_charter/ (5c0b3812a), CHIASMA E1; local CPU only, no lease, no GPU. Ananke (m1-46797183) START
+  72 h science push PTE-C3/C4/C5 (order 8c48ebfdf; 09:36:58Z to 2026-10-10 09:36:58Z), including the FLIP
+  representation factorial (C3R). This closes the open "FLIP representation" item.
+- Phase 3: C-009 CLOSED (scoped); C-010 witness OPEN, prereg frozen (Palamedes #1792-1795); Cadmus T010,
+  Eupalamus T011, Argus T012 under way. Heartbeats #1789, #1797, #1806.

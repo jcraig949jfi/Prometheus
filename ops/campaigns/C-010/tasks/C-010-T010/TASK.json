@@ -43,7 +43,7 @@
     "rso/witness/tests/test_ares_client.py"
   ],
   "kind": "software",
-  "status": "CLAIMED",
+  "status": "INTEGRATED",
   "history": [
     {
       "status": "PROPOSED",
@@ -62,6 +62,36 @@
       "by": "Cadmus[m1-a86ec5e4]",
       "at_utc": "2026-10-07T09:24:49Z",
       "note": "claimed on #1793; branch cadmus/c010-t010"
+    },
+    {
+      "status": "RED",
+      "by": "Cadmus[m1-a86ec5e4]",
+      "at_utc": "2026-10-07T09:29:17Z",
+      "note": "branch cadmus/c010-t010 076cba01d65faa558df59da0013f976ce248c4f6: node executions with artifact bytes; witness 101 OK, binding 21 OK; no outcome observed"
+    },
+    {
+      "status": "IMPLEMENTING",
+      "by": "Cadmus[m1-a86ec5e4]",
+      "at_utc": "2026-10-07T09:29:17Z",
+      "note": "branch cadmus/c010-t010 076cba01d65faa558df59da0013f976ce248c4f6: node executions with artifact bytes; witness 101 OK, binding 21 OK; no outcome observed"
+    },
+    {
+      "status": "GREEN",
+      "by": "Cadmus[m1-a86ec5e4]",
+      "at_utc": "2026-10-07T09:29:17Z",
+      "note": "branch cadmus/c010-t010 076cba01d65faa558df59da0013f976ce248c4f6: node executions with artifact bytes; witness 101 OK, binding 21 OK; no outcome observed"
+    },
+    {
+      "status": "INTEGRATION_READY",
+      "by": "Cadmus[m1-a86ec5e4]",
+      "at_utc": "2026-10-07T09:29:17Z",
+      "note": "branch cadmus/c010-t010 076cba01d65faa558df59da0013f976ce248c4f6: node executions with artifact bytes; witness 101 OK, binding 21 OK; no outcome observed"
+    },
+    {
+      "status": "INTEGRATED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-07T09:31:40Z",
+      "note": "merged 076cba01d; witness 101 OK; producer/driver seam (rec, {sha256: bytes}) matches T011's node_artifacts; integrator mutation (P-ERASE second condition uses pre_a) killed by test_p_erase_node_on_a_leak_construction"
     }
   ],
   "authority": "operator directive 2026-10-07 (C-004-OP8) s6: native witness opens automatically when C-009 closes; rso/binding/CLOSURE.md",
