@@ -1,0 +1,59 @@
+{
+  "schema": "prometheus.workgraph.task.v1",
+  "task_id": "C-010-T014",
+  "campaign_id": "C-010",
+  "title": "Independent challenge on FREEZE_W1 (witness path) before any witness outcome",
+  "objective": "Attack the frozen witness path (evaluate.py, ruler.py, ares_client node executions, run_witness storage, P-FLAT) with >= 1 sound, 2 broken, 2 semantic edits, committed before outcomes, using synthetic or hand-wired organisms ONLY (e.g. a counterfeit P-RET input, a leak that passes P-ERASE, a stored artifact that does not match its receipt).",
+  "parent_objective": "C-010 NATIVE-RET-WITNESS-001",
+  "owner_role": "Pallas",
+  "quality_class": "Q3",
+  "can_downgrade": false,
+  "escalate_to": "operator",
+  "depends_on": [
+    "C-010-T013"
+  ],
+  "owns": [
+    "rso/witness/challenge/W1/"
+  ],
+  "reads": [
+    "rso/witness/",
+    "rso/witness/FREEZE_W1.md"
+  ],
+  "problem": "Never run a registered subject or arm. <= 2 launches on rso/witness/LEDGER.jsonl. HEADLESS RULE: never use run_in_background; never end your turn while work remains.",
+  "non_goals": [
+    "No subject GA run and no witness episode before FREEZE_W1 and the challenge (PREREGISTRATION s10)",
+    "No accuracy / retention / reward statistic on any registered arm before the witness launches",
+    "No edit of ares/ sources; no change to rso/binding or the slice evidence plane"
+  ],
+  "evidence_required": [
+    "set committed before outcomes",
+    "CLOSED / NOT CLOSED per surface",
+    "survivors with applicability"
+  ],
+  "acceptance": {
+    "command": "python -B -m unittest discover -s rso/witness/tests -t . && python -B -m unittest discover -s rso/binding/tests -t .",
+    "condition": "all evidence_required items; suites green"
+  },
+  "deliverables": [
+    "rso/witness/challenge/W1/"
+  ],
+  "kind": "review",
+  "status": "PROPOSED",
+  "history": [
+    {
+      "status": "PROPOSED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-07T08:34:33Z",
+      "note": "C-010 open"
+    }
+  ],
+  "authority": "operator directive 2026-10-07 (C-004-OP8) s6: native witness opens automatically when C-009 closes; rso/binding/CLOSURE.md",
+  "resource_ceiling": {
+    "launches": "<= 2",
+    "reviewer": "<= 45 min"
+  },
+  "red_required": false,
+  "eligible_roles": [
+    "Dionysus"
+  ]
+}

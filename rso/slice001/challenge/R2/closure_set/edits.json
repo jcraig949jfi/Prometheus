@@ -1,0 +1,14 @@
+{
+  "schema": "rso.slice001.mutation_edits.v1",
+  "edits": [
+    {
+      "edit_id": "Y1-ginv-world-insensitive",
+      "path": "rso/slice001/evidence.py",
+      "module": "rso.slice001.evidence",
+      "find": "cited[0].get(\"node_id\") != rc.node_id",
+      "replace": "(cited[0].get(\"node_id\") or \"\").rsplit(\":\", 1)[0] != rc.node_id.rsplit(\":\", 1)[0]",
+      "intended_fault": "G-INV (C2 surface, touched by T046: the cited row must carry the receipt's FULL node id -- subject, predicate, observer AND world, V7): the comparison drops the trailing world component, so a receipt for a node in world STANDARD may cite the run of the same subject, predicate and observer in another world. S4 edit X3 dropped the observer and was killed by T046's TestC2ObserverRunBinding; this edit asks whether the world axis of the same binding has a test.",
+      "witness": {"expr": "__import__(\"importlib\").import_module(\"rso.slice001.challenge.R2.closure_set.witnesses\").y1(m)"}
+    }
+  ]
+}

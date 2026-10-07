@@ -1,0 +1,102 @@
+{
+  "schema": "prometheus.workgraph.task.v1",
+  "task_id": "C-009-T030",
+  "campaign_id": "C-009",
+  "title": "Independent challenge on FREEZE_B1: binding path (CC3)",
+  "objective": "Attack the frozen binding surface: at least 1 sound, 2 broken, 2 semantic edits on the binding path (rso/binding/binding.py, evidence.g_inv/launch binding, custody of the inventory), committed before outcomes.",
+  "parent_objective": "C-009 RSO-EXEC-BINDING-001",
+  "owner_role": "Pallas",
+  "quality_class": "Q3",
+  "can_downgrade": false,
+  "escalate_to": "operator",
+  "depends_on": [
+    "C-009-T020"
+  ],
+  "owns": [
+    "rso/binding/challenge/B1/"
+  ],
+  "reads": [
+    "rso/binding/",
+    "rso/slice001/",
+    "rso/binding/FREEZE_B1.md"
+  ],
+  "problem": "CC3. Report each surface CLOSED / NOT CLOSED and every survivor, applicable or not to the path the native witness will use. Charge launches and mutation children to rso/binding/LEDGER.jsonl. Fresh: not a replay of the CC1 shapes (those are T011 regressions).",
+  "non_goals": [
+    "No change to world predicates, the expected-answer table or S2 case expectations",
+    "No scheduler, no universal state/cognition schema (CONTRACT.md BX6, s5)",
+    "C-004 records and freezes are not rewritten"
+  ],
+  "evidence_required": [
+    "set committed before outcomes",
+    "closure components with denominators",
+    "CLOSED / NOT CLOSED per surface"
+  ],
+  "acceptance": {
+    "command": "python -B -m unittest discover -s rso/slice001/tests -t . && python -B -m unittest discover -s rso/binding/tests -t .",
+    "condition": "all evidence_required items; both suites green"
+  },
+  "deliverables": [
+    "rso/binding/challenge/B1/ (set, results, REPORT.md)"
+  ],
+  "kind": "review",
+  "status": "CLOSED",
+  "history": [
+    {
+      "status": "PROPOSED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-07T00:34:51Z",
+      "note": "C-009 open"
+    },
+    {
+      "status": "READY",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-07T03:17:26Z",
+      "note": "FREEZE_B1 written (rso/binding/FREEZE_B1.md); CC2/CC4 held; Q3 required (claude-fable-5-1)"
+    },
+    {
+      "status": "CLAIMED",
+      "by": "Pallas[harry1-b97f1fc4]",
+      "at_utc": "2026-10-07T03:31:32Z",
+      "note": "Pallas Q3 claude-fable-5-1 headless harry1 (same-seat relaunch, directive s10); CC3 on FREEZE_B1 (48/48 hashes verified at 5fefee452 and 97606378c); worktree pallas-c009-t030 from 5fefee452"
+    },
+    {
+      "status": "IMPLEMENTING",
+      "by": "Pallas[harry1-2697f39e]",
+      "at_utc": "2026-10-07T04:25:19Z",
+      "note": "resumed by Pallas[harry1-2697f39e] after headless exit of harry1-b97f1fc4 (its turn ended ~03:47Z mid launch 2); same lease, not a new claim. Launch 1 (cases) complete; launch 2 (B1-MUTATION-20261007T034505Z-9944) torn: top-level and child-004 INTERRUPTED on the ledger, partial rows kept censored; mutation driver re-run as launch 3 (the last permitted)"
+    },
+    {
+      "status": "GREEN",
+      "by": "Pallas[harry1-2697f39e]",
+      "at_utc": "2026-10-07T04:57:51Z",
+      "note": "acceptance green on the merged tree c5bb5675f (slice001 OK skipped=1; binding 13 OK); results cd3f239d3 on pallas/c009-t030"
+    },
+    {
+      "status": "INTEGRATION_READY",
+      "by": "Pallas[harry1-2697f39e]",
+      "at_utc": "2026-10-07T04:57:51Z",
+      "note": "REPORT.md + receipt A-001. BX7 CLOSED within coverage; BX1, BX2, BX5 NOT CLOSED: SIBLING_UNREPORTED admitted (applicable-conditional), E2/E3/E4 survive 433 tests (fire cases committed), consumer_for run_id wiring. CC3 letter not met; adjudication to Palamedes/operator"
+    },
+    {
+      "status": "INTEGRATED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-07T05:18:04Z",
+      "note": "merged cd3f239d3 (results, REPORT.md); authoritative: BX7 CLOSED within coverage; BX1, BX2, BX5 NOT CLOSED (SIBLING_UNREPORTED; E2, E3, E4 survive 433 tests); consumer_for run_id gap"
+    },
+    {
+      "status": "CLOSED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-07T05:18:04Z",
+      "note": "adjudicated: CC3 NOT MET -> the one registered repair round (rso/binding/ADJUDICATION_CC3.md): T031, T033, T034"
+    }
+  ],
+  "authority": "operator directive 2026-10-07 (C-004-OP8), roles/Palamedes/prompts/2026-10-07_rso_completion_push/01_OPERATOR_DIRECTIVE_verbatim.md",
+  "resource_ceiling": {
+    "launches": "<= 3",
+    "reviewer": "<= 1 h"
+  },
+  "red_required": false,
+  "eligible_roles": [
+    "Dionysus"
+  ]
+}

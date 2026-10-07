@@ -2,44 +2,47 @@
   "schema": "prometheus.work_state.v1",
   "seat": "Pallas",
   "mwo_id": "MWO-0004",
-  "authority": "operator directive 2026-10-03 (roles/Achilles/prompts/2026-10-03_rso_builder_cell/01_OPERATOR_DIRECTIVE_verbatim.md)",
-  "updated_at_utc": "2026-10-06T01:45:04Z",
-  "state": "READY",
-  "branch": "pallas/c004-t041",
-  "base_sha": "d92546849",
-  "head_sha": "f233c83bf31c4040bec98609575525c6807a0486",
-  "worktree_path": "D:/Prometheus-worktrees/pallas-boot-2026-10-03",
+  "authority": "operator directive 2026-10-03 (roles/Achilles/prompts/2026-10-03_rso_builder_cell/01_OPERATOR_DIRECTIVE_verbatim.md); operator directive 2026-10-07 (C-004-OP8, roles/Palamedes/prompts/2026-10-07_rso_completion_push/01_OPERATOR_DIRECTIVE_verbatim.md) s10 same-seat relaunch; Palamedes launch notes 2026-10-07 07:20Z (roles/Palamedes/prompts/2026-10-07_wake_pallas_c009_t034/WAKE_Pallas.md) and 08:20Z (roles/Palamedes/prompts/2026-10-07_wake_pallas_c009_t034_finish/WAKE_Pallas.md: finish after the headless exit; no run_in_background)",
+  "updated_at_utc": "2026-10-07T08:50:00Z",
+  "state": "CLOSING",
+  "branch": "pallas/c009-t034",
+  "base_sha": "ed2f65020",
+  "head_sha": "the commit carrying this file (branch; merged origin/main 63d4c06c5 at 83bc92338)",
+  "worktree_path": "Prometheus-worktrees/pallas-c009-t034",
   "model": "claude-fable-5-1",
   "capability_class": "Q3",
-  "host": "SPECTREX5 (M2; not M1, EW_DB_HOST=192.168.1.202)",
-  "instance": "m2-e7da6bde",
-  "session_start_utc": "UNKNOWN (comms boot 2026-10-03T11:10:19Z)",
-  "current_objective": "RSO Builder Cell member, campaign C-004 (RSO-METHODS-SLICE-001)",
-  "current_step": "C-004-T041 delivered and INTEGRATION_READY (state commit c28b523a5); idle (OP-7: hourly check, no per-poll heartbeat)",
+  "host": "harry1 (M4; not M1, EW_DB_HOST=192.168.1.202), headless",
+  "instance": "harry1-2a918949 (finished the work of harry1-2b71b1e1 on the same lease; that instance ended its turn with the acceptance run in the background and the headless session exited)",
+  "session_start_utc": "2026-10-07T08:17:00Z (comms boot of the finishing instance; the first instance booted 07:17:00Z)",
+  "current_objective": "RSO Builder Cell. C-004 and C-009 CLOSED. C-010 NATIVE-RET-WITNESS-001 open; Pallas packet C-010-T014 (Q3) PROPOSED behind T013",
+  "current_step": "idle on Opus 5 (Q2). C-009 closed scoped to flat inventories after T034 (delivered by Fable instance harry1-2a918949). C-010-T014 (challenge the frozen witness path, Q3 can_downgrade false) is PROPOSED behind T013 and will need a Fable instance.",
   "in_flight": [],
   "finish_condition": "per claimed packet (DISTRIBUTED_WORK.md)",
-  "next_expected_milestone": "Palamedes integrates pallas/c004-t041; S5 (T050) decides on the incomplete closure",
-  "expected_next_artifact": "none until a READY packet exists",
+  "next_expected_milestone": "T010/T011/T012 integrate -> T013 (Palamedes: integrate, dry run, FREEZE_W1) -> C-010-T014 READY for a Fable Pallas instance",
+  "expected_next_artifact": "none from this session (packet-only; closes after T034)",
   "threads": [
     "phase3-rso"
   ],
   "campaigns": [
-    "C-004"
+    "C-004",
+    "C-009",
+    "C-010"
   ],
   "experiments": [],
   "fabric_tasks": [],
   "running": [],
   "blocked_on": [],
   "next_actions": [
-    "comms sync Pallas; workgraph ready Pallas (hourly, silent while idle)"
+    "hourly: git fetch; MERGE origin/main by SHA; comms sync Pallas; workgraph ready Pallas",
+    "do NOT claim C-010-T014 or any Q3 packet on Opus 5 (ready does not enforce capability; the agent does)",
+    "observe the C-010 gate: no registered subject run, no statistic on any registered arm, until T020"
   ],
   "operator_decisions_required": [],
   "latest_reports": [
-    "rso/slice001/challenge/S4/REPORT.md (branch pallas/c004-t041)",
-    "ops/campaigns/C-004/tasks/C-004-T041/attempts/A-001/RECEIPT.json",
-    "roles/Pallas/comms/T041_INTEGRATION_READY_2026-10-06.md",
-    "rso/slice001/challenge/S3/REPORT.md"
+    "roles/Pallas/journal/2026-10-06.md",
+    "roles/Pallas/comms/T034_RUNTIME_NOTICE_2026-10-07.md",
+    "roles/Pallas/comms/POLL_ORDER_OBSERVATION_2026-10-07.md"
   ],
-  "last_push_sha": "c28b523a5 (main, state); f233c83bf (branch pallas/c004-t041, work)",
-  "last_push_utc": "2026-10-06T01:45:04Z"
+  "last_push_sha": "the commit carrying this file (branch pallas/c009-t034); state commits on main: 13d7c344c (claim), 63d4c06c5 (IMPLEMENTING), then GREEN and INTEGRATION_READY with receipt A-001",
+  "last_push_utc": "2026-10-07T08:50:00Z"
 }

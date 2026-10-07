@@ -1,0 +1,650 @@
+{
+ "schema": "aether.prop01.reduction.v1",
+ "reducer": "prop01_reduce.v1",
+ "rules_sha256": "29eb8e2bbdfd3ee461068fc4c56d988a740a4c53862a22981bfae3b277822b9f",
+ "candidate": "L2",
+ "comparators": [
+  "X",
+  "L1"
+ ],
+ "per_law": {
+  "L1": [
+   {
+    "seed": 0,
+    "max_gen": 1,
+    "ever_sites": 2,
+    "ever_radius": 1,
+    "peak_concurrent": 0,
+    "unknown_sites": 0,
+    "extinct_tick": 16,
+    "reentry": 0,
+    "struct_ge2": 0,
+    "by_gen": {
+     "1": 1
+    },
+    "type_counts": {
+     "STRUCT": 0,
+     "CARRY": 1,
+     "RULE": 0
+    },
+    "multiplies": false,
+    "clamp": null,
+    "class": "LOCAL_ONLY"
+   },
+   {
+    "seed": 1,
+    "max_gen": 2,
+    "ever_sites": 8,
+    "ever_radius": 2,
+    "peak_concurrent": 8,
+    "unknown_sites": 0,
+    "extinct_tick": null,
+    "reentry": 0,
+    "struct_ge2": 0,
+    "by_gen": {
+     "1": 4,
+     "2": 3
+    },
+    "type_counts": {
+     "STRUCT": 0,
+     "CARRY": 7,
+     "RULE": 0
+    },
+    "multiplies": true,
+    "clamp": {
+     "B": 117680,
+     "descendants": 3,
+     "cut_desc_frac": 0.0,
+     "cut_ctrl_frac": 0.5,
+     "pass": true
+    },
+    "class": "MULTIGENERATION"
+   },
+   {
+    "seed": 2,
+    "max_gen": 1,
+    "ever_sites": 5,
+    "ever_radius": 1,
+    "peak_concurrent": 5,
+    "unknown_sites": 0,
+    "extinct_tick": null,
+    "reentry": 0,
+    "struct_ge2": 0,
+    "by_gen": {
+     "1": 4
+    },
+    "type_counts": {
+     "STRUCT": 0,
+     "CARRY": 4,
+     "RULE": 0
+    },
+    "multiplies": true,
+    "clamp": null,
+    "class": "LOCAL_ONLY"
+   },
+   {
+    "seed": 3,
+    "max_gen": 1,
+    "ever_sites": 5,
+    "ever_radius": 1,
+    "peak_concurrent": 5,
+    "unknown_sites": 0,
+    "extinct_tick": null,
+    "reentry": 0,
+    "struct_ge2": 0,
+    "by_gen": {
+     "1": 4
+    },
+    "type_counts": {
+     "STRUCT": 0,
+     "CARRY": 4,
+     "RULE": 0
+    },
+    "multiplies": true,
+    "clamp": null,
+    "class": "LOCAL_ONLY"
+   },
+   {
+    "seed": 4,
+    "max_gen": 3,
+    "ever_sites": 14,
+    "ever_radius": 3,
+    "peak_concurrent": 12,
+    "unknown_sites": 4,
+    "extinct_tick": null,
+    "reentry": 1372,
+    "struct_ge2": 3,
+    "by_gen": {
+     "-1": 4,
+     "1": 4,
+     "2": 3,
+     "3": 2
+    },
+    "type_counts": {
+     "STRUCT": 5,
+     "CARRY": 5,
+     "RULE": 3
+    },
+    "multiplies": true,
+    "clamp": {
+     "B": 197953,
+     "descendants": 5,
+     "cut_desc_frac": 0.0,
+     "cut_ctrl_frac": 0.5,
+     "pass": true
+    },
+    "class": "MULTIGENERATION"
+   },
+   {
+    "seed": 5,
+    "max_gen": 0,
+    "ever_sites": 1,
+    "ever_radius": 0,
+    "peak_concurrent": 1,
+    "unknown_sites": 0,
+    "extinct_tick": null,
+    "reentry": 0,
+    "struct_ge2": 0,
+    "by_gen": {},
+    "type_counts": {
+     "STRUCT": 0,
+     "CARRY": 0,
+     "RULE": 0
+    },
+    "multiplies": false,
+    "clamp": null,
+    "class": "LOCAL_ONLY"
+   },
+   {
+    "seed": 6,
+    "max_gen": 4,
+    "ever_sites": 14,
+    "ever_radius": 6,
+    "peak_concurrent": 11,
+    "unknown_sites": 5,
+    "extinct_tick": null,
+    "reentry": 578,
+    "struct_ge2": 3,
+    "by_gen": {
+     "-1": 5,
+     "1": 4,
+     "2": 2,
+     "3": 1,
+     "4": 1
+    },
+    "type_counts": {
+     "STRUCT": 4,
+     "CARRY": 4,
+     "RULE": 5
+    },
+    "multiplies": true,
+    "clamp": {
+     "B": 220024,
+     "descendants": 4,
+     "cut_desc_frac": 0.0,
+     "cut_ctrl_frac": 0.4444444444444444,
+     "pass": true
+    },
+    "class": "MULTIGENERATION"
+   },
+   {
+    "seed": 7,
+    "max_gen": 1,
+    "ever_sites": 5,
+    "ever_radius": 1,
+    "peak_concurrent": 5,
+    "unknown_sites": 0,
+    "extinct_tick": null,
+    "reentry": 0,
+    "struct_ge2": 0,
+    "by_gen": {
+     "1": 4
+    },
+    "type_counts": {
+     "STRUCT": 0,
+     "CARRY": 4,
+     "RULE": 0
+    },
+    "multiplies": true,
+    "clamp": null,
+    "class": "LOCAL_ONLY"
+   }
+  ],
+  "L2": [
+   {
+    "seed": 0,
+    "max_gen": 1,
+    "ever_sites": 5,
+    "ever_radius": 1,
+    "peak_concurrent": 1,
+    "unknown_sites": 0,
+    "extinct_tick": null,
+    "reentry": 557,
+    "struct_ge2": 0,
+    "by_gen": {
+     "1": 4
+    },
+    "type_counts": {
+     "STRUCT": 0,
+     "CARRY": 4,
+     "RULE": 0
+    },
+    "multiplies": false,
+    "clamp": null,
+    "class": "LOCAL_ONLY"
+   },
+   {
+    "seed": 1,
+    "max_gen": 3,
+    "ever_sites": 8,
+    "ever_radius": 2,
+    "peak_concurrent": 1,
+    "unknown_sites": 0,
+    "extinct_tick": null,
+    "reentry": 686,
+    "struct_ge2": 0,
+    "by_gen": {
+     "1": 3,
+     "2": 1,
+     "3": 3
+    },
+    "type_counts": {
+     "STRUCT": 0,
+     "CARRY": 6,
+     "RULE": 1
+    },
+    "multiplies": false,
+    "clamp": null,
+    "class": "DIRECT_TRANSPORT"
+   },
+   {
+    "seed": 2,
+    "max_gen": 1,
+    "ever_sites": 5,
+    "ever_radius": 1,
+    "peak_concurrent": 1,
+    "unknown_sites": 0,
+    "extinct_tick": null,
+    "reentry": 592,
+    "struct_ge2": 0,
+    "by_gen": {
+     "1": 4
+    },
+    "type_counts": {
+     "STRUCT": 0,
+     "CARRY": 4,
+     "RULE": 0
+    },
+    "multiplies": false,
+    "clamp": null,
+    "class": "LOCAL_ONLY"
+   },
+   {
+    "seed": 3,
+    "max_gen": 1,
+    "ever_sites": 5,
+    "ever_radius": 1,
+    "peak_concurrent": 1,
+    "unknown_sites": 0,
+    "extinct_tick": null,
+    "reentry": 571,
+    "struct_ge2": 0,
+    "by_gen": {
+     "1": 4
+    },
+    "type_counts": {
+     "STRUCT": 0,
+     "CARRY": 4,
+     "RULE": 0
+    },
+    "multiplies": false,
+    "clamp": null,
+    "class": "LOCAL_ONLY"
+   },
+   {
+    "seed": 4,
+    "max_gen": 3,
+    "ever_sites": 14,
+    "ever_radius": 3,
+    "peak_concurrent": 14,
+    "unknown_sites": 0,
+    "extinct_tick": null,
+    "reentry": 150,
+    "struct_ge2": 4,
+    "by_gen": {
+     "1": 4,
+     "2": 4,
+     "3": 5
+    },
+    "type_counts": {
+     "STRUCT": 4,
+     "CARRY": 8,
+     "RULE": 1
+    },
+    "multiplies": true,
+    "clamp": {
+     "B": 197551,
+     "descendants": 5,
+     "cut_desc_frac": 0.0,
+     "cut_ctrl_frac": 1.0,
+     "pass": true
+    },
+    "class": "MULTIGENERATION"
+   },
+   {
+    "seed": 5,
+    "max_gen": 1,
+    "ever_sites": 5,
+    "ever_radius": 1,
+    "peak_concurrent": 1,
+    "unknown_sites": 0,
+    "extinct_tick": null,
+    "reentry": 555,
+    "struct_ge2": 0,
+    "by_gen": {
+     "1": 4
+    },
+    "type_counts": {
+     "STRUCT": 0,
+     "CARRY": 4,
+     "RULE": 0
+    },
+    "multiplies": false,
+    "clamp": null,
+    "class": "LOCAL_ONLY"
+   },
+   {
+    "seed": 6,
+    "max_gen": 1,
+    "ever_sites": 5,
+    "ever_radius": 1,
+    "peak_concurrent": 1,
+    "unknown_sites": 0,
+    "extinct_tick": null,
+    "reentry": 605,
+    "struct_ge2": 0,
+    "by_gen": {
+     "1": 4
+    },
+    "type_counts": {
+     "STRUCT": 0,
+     "CARRY": 4,
+     "RULE": 0
+    },
+    "multiplies": false,
+    "clamp": null,
+    "class": "LOCAL_ONLY"
+   },
+   {
+    "seed": 7,
+    "max_gen": 4,
+    "ever_sites": 5,
+    "ever_radius": 2,
+    "peak_concurrent": 0,
+    "unknown_sites": 0,
+    "extinct_tick": 15,
+    "reentry": 2,
+    "struct_ge2": 0,
+    "by_gen": {
+     "1": 1,
+     "2": 1,
+     "3": 1,
+     "4": 1
+    },
+    "type_counts": {
+     "STRUCT": 0,
+     "CARRY": 3,
+     "RULE": 1
+    },
+    "multiplies": false,
+    "clamp": null,
+    "class": "DIRECT_TRANSPORT"
+   }
+  ],
+  "X": [
+   {
+    "seed": 0,
+    "max_gen": 2,
+    "ever_sites": 3,
+    "ever_radius": 1,
+    "peak_concurrent": 1,
+    "unknown_sites": 0,
+    "extinct_tick": null,
+    "reentry": 1523,
+    "struct_ge2": 0,
+    "by_gen": {
+     "1": 1,
+     "2": 1
+    },
+    "type_counts": {
+     "STRUCT": 0,
+     "CARRY": 1,
+     "RULE": 1
+    },
+    "multiplies": false,
+    "clamp": null,
+    "class": "DIRECT_TRANSPORT"
+   },
+   {
+    "seed": 1,
+    "max_gen": 1,
+    "ever_sites": 2,
+    "ever_radius": 1,
+    "peak_concurrent": 1,
+    "unknown_sites": 0,
+    "extinct_tick": null,
+    "reentry": 1547,
+    "struct_ge2": 0,
+    "by_gen": {
+     "1": 1
+    },
+    "type_counts": {
+     "STRUCT": 0,
+     "CARRY": 1,
+     "RULE": 0
+    },
+    "multiplies": false,
+    "clamp": null,
+    "class": "LOCAL_ONLY"
+   },
+   {
+    "seed": 2,
+    "max_gen": 2,
+    "ever_sites": 3,
+    "ever_radius": 1,
+    "peak_concurrent": 3,
+    "unknown_sites": 0,
+    "extinct_tick": null,
+    "reentry": 813,
+    "struct_ge2": 1,
+    "by_gen": {
+     "1": 1,
+     "2": 1
+    },
+    "type_counts": {
+     "STRUCT": 1,
+     "CARRY": 1,
+     "RULE": 0
+    },
+    "multiplies": true,
+    "clamp": {
+     "B": 235357,
+     "descendants": 1,
+     "cut_desc_frac": 0.0,
+     "cut_ctrl_frac": 0.0,
+     "pass": true
+    },
+    "class": "MULTIGENERATION"
+   },
+   {
+    "seed": 3,
+    "max_gen": 2,
+    "ever_sites": 3,
+    "ever_radius": 2,
+    "peak_concurrent": 3,
+    "unknown_sites": 0,
+    "extinct_tick": null,
+    "reentry": 6,
+    "struct_ge2": 0,
+    "by_gen": {
+     "1": 1,
+     "2": 1
+    },
+    "type_counts": {
+     "STRUCT": 0,
+     "CARRY": 2,
+     "RULE": 0
+    },
+    "multiplies": true,
+    "clamp": {
+     "B": 129064,
+     "descendants": 1,
+     "cut_desc_frac": 0.0,
+     "cut_ctrl_frac": 0.0,
+     "pass": true
+    },
+    "class": "MULTIGENERATION"
+   },
+   {
+    "seed": 4,
+    "max_gen": 1,
+    "ever_sites": 2,
+    "ever_radius": 1,
+    "peak_concurrent": 1,
+    "unknown_sites": 0,
+    "extinct_tick": null,
+    "reentry": 1381,
+    "struct_ge2": 0,
+    "by_gen": {
+     "1": 1
+    },
+    "type_counts": {
+     "STRUCT": 0,
+     "CARRY": 1,
+     "RULE": 0
+    },
+    "multiplies": false,
+    "clamp": null,
+    "class": "LOCAL_ONLY"
+   },
+   {
+    "seed": 5,
+    "max_gen": 1,
+    "ever_sites": 2,
+    "ever_radius": 1,
+    "peak_concurrent": 1,
+    "unknown_sites": 0,
+    "extinct_tick": null,
+    "reentry": 1626,
+    "struct_ge2": 0,
+    "by_gen": {
+     "1": 1
+    },
+    "type_counts": {
+     "STRUCT": 0,
+     "CARRY": 1,
+     "RULE": 0
+    },
+    "multiplies": false,
+    "clamp": null,
+    "class": "LOCAL_ONLY"
+   },
+   {
+    "seed": 6,
+    "max_gen": 2,
+    "ever_sites": 3,
+    "ever_radius": 2,
+    "peak_concurrent": 3,
+    "unknown_sites": 0,
+    "extinct_tick": null,
+    "reentry": 1680,
+    "struct_ge2": 1,
+    "by_gen": {
+     "1": 1,
+     "2": 1
+    },
+    "type_counts": {
+     "STRUCT": 1,
+     "CARRY": 1,
+     "RULE": 0
+    },
+    "multiplies": true,
+    "clamp": {
+     "B": 220088,
+     "descendants": 1,
+     "cut_desc_frac": 0.0,
+     "cut_ctrl_frac": 0.0,
+     "pass": true
+    },
+    "class": "MULTIGENERATION"
+   },
+   {
+    "seed": 7,
+    "max_gen": 2,
+    "ever_sites": 3,
+    "ever_radius": 1,
+    "peak_concurrent": 1,
+    "unknown_sites": 0,
+    "extinct_tick": null,
+    "reentry": 1940,
+    "struct_ge2": 0,
+    "by_gen": {
+     "1": 1,
+     "2": 1
+    },
+    "type_counts": {
+     "STRUCT": 0,
+     "CARRY": 1,
+     "RULE": 1
+    },
+    "multiplies": false,
+    "clamp": null,
+    "class": "DIRECT_TRANSPORT"
+   }
+  ]
+ },
+ "summary": {
+  "L1": {
+   "seeds": 8,
+   "classes": {
+    "LOCAL_ONLY": 5,
+    "MULTIGENERATION": 3
+   },
+   "median_ever_sites": 5.0,
+   "median_max_gen": 1.0,
+   "median_radius": 1.0,
+   "median_peak": 5.0,
+   "median_struct_ge2": 0.0,
+   "unknown_total": 9
+  },
+  "L2": {
+   "seeds": 8,
+   "classes": {
+    "DIRECT_TRANSPORT": 2,
+    "LOCAL_ONLY": 5,
+    "MULTIGENERATION": 1
+   },
+   "median_ever_sites": 5.0,
+   "median_max_gen": 1.0,
+   "median_radius": 1.0,
+   "median_peak": 1.0,
+   "median_struct_ge2": 0.0,
+   "unknown_total": 0
+  },
+  "X": {
+   "seeds": 8,
+   "classes": {
+    "DIRECT_TRANSPORT": 2,
+    "LOCAL_ONLY": 3,
+    "MULTIGENERATION": 3
+   },
+   "median_ever_sites": 3.0,
+   "median_max_gen": 2.0,
+   "median_radius": 1.0,
+   "median_peak": 1.0,
+   "median_struct_ge2": 0.0,
+   "unknown_total": 0
+  }
+ },
+ "disposition": "MULTIGENERATION_WEAK"
+}

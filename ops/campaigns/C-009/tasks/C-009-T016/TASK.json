@@ -1,0 +1,99 @@
+{
+  "schema": "prometheus.workgraph.task.v1",
+  "task_id": "C-009-T016",
+  "campaign_id": "C-009",
+  "title": "Witness launch driver: ledgered top-level launches per arm set, bundles bound via rso.binding, seed bookkeeping",
+  "objective": "rso/witness/run_witness.py: a CLI that runs a registered list of (subject genome file, arm, seed list) as ONE ledgered top-level launch per bundle against a given ledger + contract (Ledger.from_contract), using rso/witness/ares_client.py; writes the bundle (receipts, inventory with parent_run_id + receipt_sha256, MANIFEST.json with launch_run_id, run.json); a subcommand that runs ares.search.run for a registered subject config and records the champion genome bytes, its sha256, the run receipt and EVERY episode seed the GA drew (for PREREG_DRAFT s3 exclusion), without printing or storing fitness beyond what ares.search.run itself returns into the file.",
+  "parent_objective": "native witness preparation (opens as its own campaign only if C-009 closes)",
+  "owner_role": "Eupalamus",
+  "quality_class": "Q1",
+  "can_downgrade": false,
+  "escalate_to": "Q2",
+  "depends_on": [
+    "C-009-T013"
+  ],
+  "owns": [
+    "rso/witness/run_witness.py",
+    "rso/witness/tests/test_run_witness.py"
+  ],
+  "reads": [
+    "rso/witness/PREREG_DRAFT.md",
+    "rso/witness/ares_client.py (branch cadmus/c009-t013)",
+    "rso/slice001/ledger.py",
+    "rso/binding/binding.py"
+  ],
+  "problem": "Plumbing tests only, in a temp dir, with a tiny registered config (e.g. P=4, G=1) on a RANDOM population and 2-4 seeds: the bundle binds (binding_reasons == [] for every receipt), the launch is one TOP_LEVEL row, a second run does not reuse the first launch, the seed record is complete. Do not compute or print any accuracy/retention statistic; do not run the registered subject configs (P=128, G=120): that is C-010's first act after the preregistration freezes.",
+  "non_goals": [
+    "No subject evolution; no witness predicate on Ares output; no accuracy/retention/reward number for any arm or control",
+    "No edit of ares/ sources",
+    "No change to rso/binding or the slice evidence plane (BX6)"
+  ],
+  "evidence_required": [
+    "RED first (driver absent)",
+    "plumbing tests green",
+    "statement: no registered subject run, no statistic computed"
+  ],
+  "acceptance": {
+    "condition": "all evidence_required items; no outcome observed"
+  },
+  "deliverables": [
+    "rso/witness/run_witness.py",
+    "rso/witness/tests/test_run_witness.py"
+  ],
+  "kind": "software",
+  "status": "INTEGRATED",
+  "history": [
+    {
+      "status": "PROPOSED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-07T03:23:35Z",
+      "note": "witness preparation"
+    },
+    {
+      "status": "READY",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-07T03:23:35Z",
+      "note": "READY (preparation)"
+    },
+    {
+      "status": "CLAIMED",
+      "by": "Eupalamus[harry1-f1642b68]",
+      "at_utc": "2026-10-07T04:21:50Z",
+      "note": "claimed; worktree eupalamus-c009-t016"
+    },
+    {
+      "status": "RED",
+      "by": "Eupalamus[harry1-f1642b68]",
+      "at_utc": "2026-10-07T04:27:57Z",
+      "note": "driver absent: test module ImportError (RED observed before run_witness.py)"
+    },
+    {
+      "status": "IMPLEMENTING",
+      "by": "Eupalamus[harry1-f1642b68]",
+      "at_utc": "2026-10-07T04:27:57Z",
+      "note": "implementing"
+    },
+    {
+      "status": "GREEN",
+      "by": "Eupalamus[harry1-f1642b68]",
+      "at_utc": "2026-10-07T04:27:57Z",
+      "note": "24 plumbing tests, witness suite 75 OK, binding 13 OK, 5/5 mutants killed"
+    },
+    {
+      "status": "INTEGRATION_READY",
+      "by": "Eupalamus[harry1-f1642b68]",
+      "at_utc": "2026-10-07T04:27:57Z",
+      "note": "branch eupalamus/c009-t016 @ 31733f237; receipt A-001; no registered subject run, no statistic computed"
+    },
+    {
+      "status": "INTEGRATED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-07T05:18:04Z",
+      "note": "merged 31733f237; witness 81 OK; integrator mutation (EVAL_SEEDS exclusion dropped) killed by test_seed_floor_and_ares_eval_seeds_refused"
+    }
+  ],
+  "authority": "operator directive 2026-10-07 (C-004-OP8) s6, s11 (preparation allowed; no outcomes before preregistration)",
+  "resource_ceiling": {
+    "launches": "0 (development only)"
+  }
+}

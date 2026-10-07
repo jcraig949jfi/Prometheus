@@ -57,7 +57,11 @@ class TestCaps(Base):
         path = os.path.join(REPO, "rso", "slice001", "contract", "contract.json")
         with open(path, "r", encoding="utf-8") as f:
             doc = json.load(f)
-        self.assertEqual(doc["version"], "1.0.4")
+        # Amendment-robust (C-004-T046): v1.0.4 is listed and the version is the latest listed amendment; later
+        # amendments that leave the caps alone (v1.0.5: run attribution only) do not break this pin.
+        listed = [a["version"] for a in doc["amendments"]]
+        self.assertIn("1.0.4", listed)
+        self.assertEqual(doc["version"], listed[-1])
         self.assertEqual(doc["caps"]["top_level_validation_launches"], 20)
         self.assertEqual(
             doc["caps"]["launch_accounting"],
@@ -68,8 +72,8 @@ class TestCaps(Base):
             "cumulatively against 20.")
         self.assertEqual(doc["caps"]["cpu_minutes"], 120)         # every other cap unchanged by v1.0.4
         self.assertEqual(doc["caps"]["new_artifact_mb"], 100)
-        self.assertEqual(doc["amendments"][-1]["version"], "1.0.4")
-        self.assertEqual(doc["amendments"][-1]["path"], "rso/slice001/contract/AMENDMENT_v1.0.4.md")
+        v104 = [a for a in doc["amendments"] if a["version"] == "1.0.4"]
+        self.assertEqual([a["path"] for a in v104], ["rso/slice001/contract/AMENDMENT_v1.0.4.md"])
 
     def test_missing_or_bad_caps_fail_closed(self):
         for bad in ({}, {"cpu_minutes": 30}, dict(CAPS, cpu_minutes="x"), dict(CAPS, top_level_validation_launches=-1),
@@ -368,6 +372,47 @@ class TestInventoryShape(Base):
         with open(out, "r", encoding="utf-8") as f:
             rows = [json.loads(x) for x in f.read().splitlines()]
         self.assertEqual(rows, led.inventory())
+
+
+class TestBindingFields(Base):
+    """C-009-T010 (rso/binding/CONTRACT.md BX2/BX3): parent_run_id at begin, receipt_sha256 at finish."""
+
+    def test_rows_expose_parent_and_digest(self):
+        led = self.ledger()
+        led.begin("L", "BUNDLE").finish("COMPLETED")
+        led.begin("L/n", "n", L.RECEIPT, parent_run_id="L").finish("COMPLETED", receipt_sha256="ab" * 32)
+        rows = {r["run_id"]: r for r in led.inventory()[:-1]}
+        self.assertEqual((rows["L/n"]["parent_run_id"], rows["L/n"]["receipt_sha256"]), ("L", "ab" * 32))
+        self.assertNotIn("parent_run_id", rows["L"])
+        self.assertNotIn("receipt_sha256", rows["L"])
+
+    def test_old_ledger_without_the_fields_parses_as_unbound(self):
+        with open(self.path, "w", encoding="utf-8", newline="\n") as f:
+            f.write(json.dumps({"kind": "START", "run_id": "o", "node_id": "n", "launch_kind": "RECEIPT",
+                                "start_utc": "2026-10-01T00:00:00Z", "supplied_by": "x"}) + "\n")
+            f.write(json.dumps({"kind": "END", "run_id": "o", "status": "COMPLETED", "cpu_s": 0.5,
+                                "artifact_bytes": 3, "end_utc": "2026-10-01T00:00:01Z"}) + "\n")
+        row = self.ledger().inventory()[0]
+        self.assertEqual((row["status"], row["cpu_us"]), ("COMPLETED", 500000))
+        self.assertNotIn("parent_run_id", row)
+        self.assertNotIn("receipt_sha256", row)
+
+    def test_refused_receipt_row_keeps_its_parent(self):
+        led = self.ledger(cpu_minutes=0)
+        with self.assertRaises(L.CapExhausted):
+            led.begin("L/n", "n", L.RECEIPT, parent_run_id="L")
+        self.assertEqual(led.inventory()[0]["parent_run_id"], "L")
+
+    def test_digest_must_be_a_hex_sha256(self):
+        led = self.ledger()
+        att = led.begin("L/n", "n", L.RECEIPT, parent_run_id="L")
+        for bad in ("", "xyz", "AB" * 32, 5):
+            with self.assertRaises(L.LedgerError):
+                att.finish("COMPLETED", receipt_sha256=bad)
+
+    def test_binding_contract_caps(self):
+        led = L.Ledger.from_contract(self.path, os.path.join(REPO, "rso", "binding", "contract.json"))
+        self.assertEqual((led.caps.launches, led.caps.cpu_s, led.caps.artifact_bytes), (12, 90 * 60, 150 * 10**6))
 
 
 class TestAppendOnlyStore(Base):

@@ -95,3 +95,10 @@ Field decisions (rso-builder-role s2.7), recorded here:
 - The contract is drafted in two parallel sections by the owning engineers and assembled by Palamedes, rather than
   written by one seat (uncertainty: merge friction; reversible: T004 may rewrite either draft; revisit if T004
   finds the drafts disagree on a shared field).
+
+## Disposition (2026-10-07, Palamedes) -- CLOSED: INCOMPLETE CLOSURE
+
+T048 (R2 re-check, Pallas Q3) is authoritative (operator directive 2026-10-07, C-004-OP8): C1 CLOSED; C2 NOT
+CLOSED (world axis, edit Y1); B3.3 NOT CLOSED (later-window run admitted; FAILED row accepted). OP6's native-witness
+condition is not met; no third repair round (OP6). Record: rso/slice001/S5_FINAL_DISPOSITION.md. Earlier freezes
+and first-sight results preserved unchanged. Successor: C-009 (RSO-EXEC-BINDING-001), not a repair round of C-004.

@@ -1,0 +1,74 @@
+{
+  "schema": "prometheus.workgraph.receipt.v1",
+  "task_id": "C-009-T030",
+  "campaign_id": "C-009",
+  "attempt_id": "A-001",
+  "role": "Pallas",
+  "model": "claude-fable-5-1",
+  "quality_class": "Q3",
+  "instance": "harry1-2697f39e (resumed the lease of harry1-b97f1fc4, which wrote the set, ran launches 1-2 and ended its turn mid launch 2)",
+  "host": "harry1",
+  "branch": "pallas/c009-t030",
+  "worktree_path": "C:/Prometheus-worktrees/pallas-c009-t030",
+  "start_sha": "5fefee452e77ec45e1dc8b37345b600004520fc7",
+  "end_sha": "cd3f239d33c29c53569e9093f98f852427b4b63c",
+  "commits": {
+    "claim": "4aaa10bbb (main, 03:31:32Z)",
+    "set_before_outcomes": "1b9c19ba9 (03:42:34Z): cases.py, expected.json, edits.json, witnesses.py, run_cases.py, run_mutation.py, CHALLENGE_SET.md with predictions, EXPOSURE.md",
+    "driver_repair": "9f58a0cef (03:44:10Z; synthetic-base claim checks unscored; no data file touched)",
+    "resume_state": "3ed43a232 (main, IMPLEMENTING with the resume note)",
+    "merge_origin_main": "c5bb5675f (origin/main 94f95e2d1; nothing under rso/binding or rso/slice001 changed upstream)",
+    "results": "cd3f239d3 (rows, ledger rows, REPORT.md, journal, work state, comms bodies)"
+  },
+  "files_changed": [
+    "rso/binding/challenge/B1/ (new: set, drivers, results_cases.jsonl, dry_controls_2026-10-07T034302Z.jsonl, mutation_rows.jsonl, mutation_rows_launch2_interrupted.jsonl, mutation_confirm.jsonl, mutation_stdout.txt, diag_keeper.py + output, diag_e1_binding_suite.py + output, REPORT.md)",
+    "rso/binding/LEDGER.jsonl (appended: B1-CASES-20261007T034433Z-5432; B1-MUTATION-20261007T034505Z-9944, torn: top-level and child-004 START without END; B1-MUTATION-20261007T042220Z-7224 with 10 children)",
+    "roles/Pallas/{WORK_STATE.json,journal/2026-10-07.md,comms/HEARTBEAT_2026-10-07_T030_resume.md,comms/T030_INTEGRATION_READY_2026-10-07.md,comms/HEARTBEAT_2026-10-07_T030_done.md}",
+    "ops/campaigns/C-009/tasks/C-009-T030/ (state commits on main)"
+  ],
+  "evidence_added": [
+    "CC3 set on FREEZE_B1 committed before any outcome: 3 sound, 6 broken, 1 probe, 5 semantic edits with behavioural witnesses; FREEZE_B1 48/48 hashes verified at 5fefee452, 97606378c and the working tree before the set, and again at 04:20Z before launch 3",
+    "cases, r1 base (committed C-009 fresh produce, producer-bound, scored): sound 2/3, broken 5/6, controls 2/2; synthetic base the same pattern on the scored checks (claim-type checks unscored there: G-RECOMP fails on the fixture traces, baseline included)",
+    "B1.BROKEN.SIBLING_UNREPORTED ADMITTED on both bases: a second COMPLETED execution of a required node under the anchored launch, carrying the digest of an unpresented FAIL receipt, is invisible to G-INV (BX2 binds the cited row; BX5 reads only nodes without a presented receipt); applicable-conditional (a runtime with per-attempt run ids); not reachable through rso/witness/ares_client.py Launch as drafted (run_id = launch/node; a repeat is BIND_AMBIGUOUS_ROW)",
+    "B1.SOUND.FAILED_RETRY_KEEPER scored INCORRECT under the committed rule on the identical-to-control check; diag_keeper_output.txt shows the only differing field in all six decisions is the embedded custody row RUN_INVENTORY:ab3f391f9220 -> 77bea84b1f6c (a different registered blob by construction): a correct acceptance, a reviewer check-design error, scored as written",
+    "edits: 5 proposed / 5 executed / 2 killed / 3 survived / 0 equivalent. E1 and E5 KILLED by the slice suite (the binding unit suite passes under both: diag_e1_binding_suite_output.txt). E2 (launch row need not be TOP_LEVEL), E3 (MUTATION_CHILD row stands for a node run), E4 (digest-less cited row binds) SURVIVED the targeted suite (199 tests) and the full frozen suite (433 tests, 0 failures each); witness DIFFERS for all three",
+    "probe B1.PROBE.PRODUCTION_RUNJSON (unscored): s2_run.consumer_for builds EV.Bundle without run_id, so the production path reports G-INV PASS where the fixture path (run_id passed) reports LAUNCH_UNBOUND; paths_agree false (T011 receipt notes (1))",
+    "per surface (REPORT.md s3): BX7 CLOSED within coverage; BX1 NOT CLOSED (E2); BX2 NOT CLOSED (E3, E4); BX5 NOT CLOSED (SIBLING_UNREPORTED); producer side unchallenged (controls only); the registered CC3 condition is not met on the letter: 4 survivors + 1 wiring gap for adjudication",
+    "predictions (CHALLENGE_SET.md, before outcomes): 9/9 cases on polarity with the predicted BIND_* reasons, 5/5 edits; one check-design error"
+  ],
+  "evidence_executed": [
+    {"command": "python -B rso/binding/challenge/B1/run_cases.py --dry (controls only, unledgered, 03:43:02Z; rows dry_controls_2026-10-07T034302Z.jsonl)", "result": "r1 controls 2/2; synthetic controls fail their claim checks on G-RECOMP (fixture traces), baseline included -> driver repair 9f58a0cef"},
+    {"command": "launch 1: python -B rso/binding/challenge/B1/run_cases.py --ledger rso/binding/LEDGER.jsonl --contract rso/binding/contract.json (B1-CASES-20261007T034433Z-5432, 8.4 CPU-s)", "result": "r1: sound 2/3, broken 5/6, controls 2/2; synthetic: same on scored checks; probe recorded; rows results_cases.jsonl (125 rows)"},
+    {"command": "launch 2: run_mutation.py (B1-MUTATION-20261007T034505Z-9944) by harry1-b97f1fc4", "result": "TORN at ~03:47Z (headless session ended its turn): baselines PASSED (199 each), E1 KILLED (3 failures), child-004 (E2) and the top-level row INTERRUPTED on the ledger (uncharged); rows kept censored as mutation_rows_launch2_interrupted.jsonl; nothing from it scored"},
+    {"command": "launch 3: python -B rso/binding/challenge/B1/run_mutation.py --ledger rso/binding/LEDGER.jsonl --contract rso/binding/contract.json (B1-MUTATION-20261007T042220Z-7224, 04:22:20Z-04:42:16Z, 10 children, 1195.9 CPU-s; polled from foreground until-loops)", "result": "baselines PASSED 199/199; E1 KILLED (3 failures), E5 KILLED (5); E2, E3, E4 SURVIVED targeted (199, 0 failures) and FULL (433, 0 failures; 276.3 / 275.1 / 271.8 s), NOT_EQUIVALENT_WITNESSED; cap not exhausted; rows mutation_rows.jsonl, mutation_confirm.jsonl"},
+    {"command": "python -B rso/binding/challenge/B1/diag_keeper.py; python -B rso/binding/challenge/B1/diag_e1_binding_suite.py (unledgered diagnostics on already-observed outcomes, disclosed in REPORT.md s2 and s8)", "result": "keeper: only $.custody.rows[2] differs in every claim; E1/E5: binding suite 13/13 pass under both mutants, kills come from test_evidence (2 / 4 failures) and test_stages_evidence (1 / 1)"},
+    {"command": "python -B -m unittest discover -s rso/slice001/tests -t . && python -B -m unittest discover -s rso/binding/tests -t . (merged tree c5bb5675f = branch + origin/main 94f95e2d1; unledgered; 04:45Z-04:49Z)", "result": "slice001 OK (skipped=1); binding 13 OK"},
+    {"command": "git diff --quiet 1b9c19ba9 HEAD -- cases.py expected.json edits.json witnesses.py; FREEZE_B1 hash walk against the LF-normalised working tree", "result": "data files byte-identical to the set commit; 48 equal, 0 mismatch"},
+    {"command": "python -m workgraph validate; python -m workgraph check-receipt (this commit)", "result": "OK"}
+  ],
+  "red_observed": {"observed": false, "detail": "review packet, red_required false: the set and its predictions were committed (1b9c19ba9) before the first outcome was observed; the expected verdicts are the answer key, not a failing test"},
+  "result": "DONE_CLEAN",
+  "known_escapes": [
+    "the set is consumer-only: the producer side of the frozen surface (ledger.py, s2_bundle.py) is covered by the controls (producer-bound r1 rows bind) and by T020's CC2 regression, not by any case or edit here",
+    "no edit was placed on evidence.custody; BX7 is CLOSED only within one sound case and one broken custody check",
+    "synthetic-base claim-type checks are unscored (G-RECOMP fails on the fixture traces for every CL-RET claim, baseline included); the line, witness, identical and custody checks there are scored and match r1",
+    "the INTERRUPTED child of launch 2 (E2) ran for an unknown wall time before the session died; the ledger reads START-without-END as INTERRUPTED with cpu_s None and that is what is reported (no END row fabricated)",
+    "the resumed instance read rso/witness/ares_client.py (class Launch) and PREREG_DRAFT.md s6-s9 after all outcomes were on disk, to state applicability; it is no longer first-sight for a future witness-path challenge (C-010 s8): a fresh instance should take that packet",
+    "same vendor family as the builders; cell member; no production code touched"
+  ],
+  "unresolved": [
+    "B1.BROKEN.SIBLING_UNREPORTED (BX5; behavioural; applicable-conditional): whether BX5 should require that every COMPLETED row of a presented required node under the anchored launch be the cited one (FAILED retries stay sound)",
+    "E2-launch-kind-any (BX1), E3-child-as-node-run (BX2), E4-legacy-row-accepted (BX2): witnessed survivors of the full frozen suite; the committed fire cases LAUNCH_IS_NODE_RUN, CHILD_AS_NODE_RUN, LEGACY_ROW pin them without a production change",
+    "s2_run.consumer_for passes no run_id (probe; wiring, owning engineer)"
+  ],
+  "unblocks": [],
+  "resources": {
+    "top_level_launches": 3,
+    "packet_ledgered_cpu_s": 1347.5,
+    "campaign_ledger_after": {"launches": 8, "cpu_s": 1518.2, "artifact_bytes": 13381360},
+    "unledgered": "dry check 1.4 s; diagnostics about 75 s; acceptance on the merged tree about 4.5 min",
+    "model": "two Q3 headless sessions, about 1.0 h total"
+  },
+  "notes": "Torn launch disposition (the resumed instance's call, REPORT.md s1): launch 2 kept as censored evidence, the mutation driver re-run whole as launch 3 (the packet's third and last). State commits went to main as they happened (pallas-ops): 4aaa10bbb CLAIMED, 3ed43a232 IMPLEMENTING (resume note), then GREEN and INTEGRATION_READY with this receipt. Headless rule applied: no turn ended with a run in flight.",
+  "created_at_utc": "2026-10-07T05:02:00Z"
+}

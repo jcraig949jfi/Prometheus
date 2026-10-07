@@ -9,9 +9,11 @@ Currency: 2026-09-30 (v0.2). Governing texts, newest first:
 Live state of record: roles/Cosmos/WORK_STATE.json. This file says how to resume; it does not track progress.
 
 ## 0. Boot (inherited mechanics, pointers only)
-Base role s1 (roles/base-role/RESPONSIBILITIES.md): refuse the canonical checkout; work in the M2 worktree
-D:/Prometheus-worktrees/cosmos-base-role; `python -m comms boot Cosmos --model <id>` with
-EW_DB_HOST=192.168.1.202; `python -m comms sync Cosmos`; then this file, WORK_STATE.json, STATUS.md.
+Base role s1 (roles/base-role/RESPONSIBILITIES.md): refuse the canonical checkout. HOST: ubu003 since 2026-10-06
+(moved from M2; do not restart Cosmos on M2). Worktree /home/jcraig/Prometheus-worktrees/cosmos-base-role; python is
+~/venvs/prometheus/bin/python (system python3 lacks psycopg2); `EW_DB_HOST=192.168.1.202 <python> -m comms boot Cosmos
+--model <id>`, then `... -m comms sync Cosmos`; then this file, WORK_STATE.json, STATUS.md. COSMOS_HOME defaults to
+~/cosmos_runs (= /home/jcraig/cosmos_runs, copied from M2 C:/Users/James/cosmos_runs).
 The worktree is normally on the PUBLIC branch `cosmos/c3-public-2026-09-24`. Fast-forward it from
 origin/main (never `git pull`). `python -m prometheus.cosmos.research_check` must PASS before any
 research-workspace commit. Under CWO-B a finished item is reported to Aporia (completion message, s11);
@@ -37,7 +39,8 @@ the seat does not self-promote beyond what the operator has authorized.
 
 ## 2. The withheld material (READ THIS)
 The C3 law, coordinates, visible substrates, results, substitution attacks, Session 1 review packet and
-operator notes exist ONLY on LOCAL branches in the M2 worktree store:
+operator notes exist ONLY on LOCAL branches, now in the ubu003 store (moved 2026-10-06 by git bundle over scp, never pushed;
+M2 keeps a fallback copy). A local pre-push hook refuses both unless COSMOS_PUBLISH_C3=1:
 - `cosmos/c3-s1-2026-09-24` (head e73e5eb26; early head 0ecafed1 hash-committed in c3/INFO_LEDGER.md and
   FREEZES F-0000). Preserve EXACTLY: no new commits.
 - `cosmos/c3-autopsy-2026-09-30` (branched from e73e5eb26): the WITHHELD technical autopsy. Local only.

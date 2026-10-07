@@ -1,0 +1,49 @@
+{
+  "edits": [
+    {
+      "edit_id": "X3-ginv-observer-insensitive",
+      "find": "cited[0].get(\"node_id\") != rc.node_id",
+      "intended_fault": "G-INV (touched by F3): the cited row's node_id is compared on subject and predicate only; a receipt may cite the run of the same predicate under another observer",
+      "module": "rso.slice001.evidence",
+      "path": "rso/slice001/evidence.py",
+      "replace": "(cited[0].get(\"node_id\") or \"\").split(\":\")[:3] != rc.node_id.split(\":\")[:3]",
+      "witness": {
+        "expr": "__import__(\"importlib\").import_module(\"rso.slice001.challenge.S4.closure_set.witnesses\").x3(m)"
+      }
+    },
+    {
+      "edit_id": "Y1-ginv-world-insensitive",
+      "find": "cited[0].get(\"node_id\") != rc.node_id",
+      "intended_fault": "G-INV (C2 surface, touched by T046: the cited row must carry the receipt's FULL node id -- subject, predicate, observer AND world, V7): the comparison drops the trailing world component, so a receipt for a node in world STANDARD may cite the run of the same subject, predicate and observer in another world. S4 edit X3 dropped the observer and was killed by T046's TestC2ObserverRunBinding; this edit asks whether the world axis of the same binding has a test.",
+      "module": "rso.slice001.evidence",
+      "path": "rso/slice001/evidence.py",
+      "replace": "(cited[0].get(\"node_id\") or \"\").rsplit(\":\", 1)[0] != rc.node_id.rsplit(\":\", 1)[0]",
+      "witness": {
+        "expr": "__import__(\"importlib\").import_module(\"rso.slice001.challenge.R2.closure_set.witnesses\").y1(m)"
+      }
+    },
+    {
+      "edit_id": "X3P-binding-observer-insensitive",
+      "find": "if row.get(\"node_id\") != node_id:",
+      "intended_fault": "X3 (S4) ported to where C-009 moved the node comparison (binding.py BX2, exact node id): the cited row's node_id is compared on subject and predicate only, so a receipt may cite the run of the same predicate under another observer. Same replace expression as X3, applied to binding.py's line.",
+      "module": "rso.binding.binding",
+      "path": "rso/binding/binding.py",
+      "replace": "if (row.get(\"node_id\") or \"\").split(\":\")[:3] != node_id.split(\":\")[:3]:",
+      "witness": {
+        "expr": "__import__(\"importlib\").import_module(\"rso.slice001.fixtures.cc1_cases\").g_inv_of(__import__(\"importlib\").import_module(\"rso.slice001.fixtures.cc1_cases\").x3_observer_strict(), \"CL-RET(REG)\")"
+      }
+    },
+    {
+      "edit_id": "Y1P-binding-world-insensitive",
+      "find": "if row.get(\"node_id\") != node_id:",
+      "intended_fault": "Y1 (R2) ported to binding.py BX2's node comparison: the trailing world component is dropped, so a receipt in world STANDARD may cite the run of the same subject, predicate and observer in another world. Same replace expression as Y1.",
+      "module": "rso.binding.binding",
+      "path": "rso/binding/binding.py",
+      "replace": "if (row.get(\"node_id\") or \"\").rsplit(\":\", 1)[0] != node_id.rsplit(\":\", 1)[0]:",
+      "witness": {
+        "expr": "__import__(\"importlib\").import_module(\"rso.slice001.fixtures.cc1_cases\").g_inv_of(__import__(\"importlib\").import_module(\"rso.slice001.fixtures.cc1_cases\").y1_world(), \"CL-RET(REG)\")"
+      }
+    }
+  ],
+  "schema": "rso.slice001.mutation_edits.v1"
+}

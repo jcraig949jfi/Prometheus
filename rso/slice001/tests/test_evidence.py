@@ -351,6 +351,26 @@ def live_form(rows, at=None):
     return out
 
 
+def _vkey(v):
+    return tuple(int(x) for x in v.split("."))
+
+
+def assert_contract_at_least(test, doc, version):
+    """Amendment-robust contract version pin (C-004-T046): the contract's version is its LATEST amendment entry,
+    every entry names its AMENDMENT file, versions strictly increase, and the version is at least `version`.
+    A later amendment that appends its entry and bumps the version passes; a rollback or an unlisted bump fails."""
+    import os
+    listed = [a["version"] for a in doc["amendments"]]
+    test.assertEqual(doc["version"], listed[-1])
+    test.assertEqual(listed, sorted(listed, key=_vkey))
+    test.assertEqual(len(set(listed)), len(listed))
+    test.assertGreaterEqual(_vkey(doc["version"]), _vkey(version))
+    root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
+    for a in doc["amendments"]:
+        test.assertEqual(a["path"], "rso/slice001/contract/AMENDMENT_v%s.md" % a["version"])
+        test.assertTrue(os.path.isfile(os.path.join(root, *a["path"].split("/"))), a["path"])
+
+
 class StubReader(object):
     """The ops.custody.registry API surface the consumer uses: rows() and verify(). No network."""
 
@@ -476,7 +496,7 @@ class TestCustodyStoreReader(unittest.TestCase):
                             "contract.json")
         with open(path, encoding="utf-8") as f:
             doc = json.load(f)
-        self.assertEqual(doc["version"], "1.0.4")                 # v1.0.4 (OP-7, C-004-T044) keeps the v1.0.2 custody
+        assert_contract_at_least(self, doc, "1.0.2")               # every later amendment keeps the v1.0.2 custody
         self.assertEqual(doc["custody"]["store"], LOCATOR)
         self.assertIn("superuser", doc["custody"]["independence_caveat"])
 
@@ -660,6 +680,352 @@ class TestMeasurementBinding(unittest.TestCase):
         self.assertEqual(value(bind(F.g0(), "CL-RET(REG)")), ("PASS", None))
 
 
+# --------------------------------------------------------------------------------------------------------
+# C-004-T046: second and final repair (operator OP6; S4 closure, challenge/S4/REPORT.md s3-s5).
+
+S2_AT = "2026-10-03T22:00:00Z"          # the earlier production's manifest row (before F.REGISTERED_AT)
+
+
+def _earlier_production():
+    """The same 25 node ids produced again: an earlier window's receipts (other created_at, other bytes)."""
+    d = F.g0_dicts()
+    for x in d.values():
+        x["created_at_utc"] = "2026-10-03T21:00:00Z"
+    return d
+
+
+def _reproduced():
+    """S4.SOUND.REPRODUCED in fixture form: the keeper holds the earlier production's manifest (registered first)
+    AND this bundle's; both manifests carry one node set; the consumer presents this bundle."""
+    d1, d2 = _earlier_production(), F.g0_dicts()
+    b2 = F.make_bundle(d2)
+    m1, m2 = F.manifest_of(d1), F.manifest_of(d2)
+    rows = [F.row("EVIDENCE_MANIFEST", hashlib.sha256(m1).hexdigest(), at=S2_AT, path="fixtures/G0_S2/MANIFEST.json")]
+    rows += F.keeper_rows(d2, b2)
+    store = EV.FixtureStore(rows)
+    blobs = {"fixtures/G0_S2/MANIFEST.json": m1, "fixtures/G0/MANIFEST.json": m2}
+    return d1, d2, b2, store, blobs
+
+
+class TestC1ReproducedBundle(unittest.TestCase):
+    """C1 (S4.SOUND.REPRODUCED): with two registered manifests of one node set, the earliest exact node-set match
+    anchored a reproduced bundle -- G-BIND BYTES_MISMATCH:receipt while custody read QUALIFIED on the other row.
+    The bundle's manifest is the one whose node artifacts match the presented receipts."""
+
+    def setUp(self):
+        self.d1, self.d2, self.b2, self.store, self.blobs = _reproduced()
+        self.choice = EV.anchors_from_keeper(self.store, self.blobs)
+
+    def test_two_candidates_with_one_node_set(self):
+        self.assertIsInstance(self.choice, EV.AnchorChoice)
+        self.assertEqual([set(a.nodes) for a in self.choice.candidates][0], set(self.d2))
+        self.assertEqual(len({frozenset(a.nodes) for a in self.choice.candidates}), 1)
+
+    def test_resolves_to_the_manifest_whose_artifacts_match(self):
+        a = EV.resolve_anchors(self.choice, self.b2)
+        self.assertEqual(a.blob_sha256, hashlib.sha256(F.manifest_of(self.d2)).hexdigest())
+        # the earlier production, presented, resolves to its own manifest
+        a1 = EV.resolve_anchors(self.choice, F.make_bundle(self.d1))
+        self.assertEqual(a1.blob_sha256, hashlib.sha256(F.manifest_of(self.d1)).hexdigest())
+
+    def test_reproduced_bundle_binds(self):
+        cfg = EV.Config(F.CONTRACT_REV)
+        for cid, claim in sorted(F.claims().items()):
+            self.assertEqual(value(EV.g_bind(claim, self.b2, self.choice, cfg)), ("PASS", None), cid)
+
+    def test_custody_qualified_on_the_matching_row(self):
+        c = EV.custody(self.b2, self.choice, self.store, F.FIRST_CHECK)
+        self.assertEqual(c["status"], "QUALIFIED", c)
+        m2 = hashlib.sha256(F.manifest_of(self.d2)).hexdigest()
+        self.assertIn("EVIDENCE_MANIFEST:%s" % m2[:12], c["rows"])
+        m1 = hashlib.sha256(F.manifest_of(self.d1)).hexdigest()
+        self.assertNotIn("EVIDENCE_MANIFEST:%s" % m1[:12], c["rows"])
+
+    def test_decisions_identical_to_the_single_manifest_keeper(self):
+        ref = F.keeper()
+        case = F.Case("REPRODUCED", self.b2, self.choice, self.store, F.claims())
+        for cid in ("CL-CAL(STANDARD)", "CL-RET(REG)", "CL-RET(PKTD)", "CL-RET(LAGD)", "TWIN(REG)"):
+            self.assertEqual(dbytes(case, cid), dbytes(ref, cid), cid)
+
+    def test_one_edited_receipt_still_anchors_to_its_own_manifest(self):
+        # A presented receipt that matches no candidate does not move the choice to the other production: the
+        # manifest with the most matching artifacts anchors, and G-BIND reports the edited node itself.
+        d = F.g0_dicts()
+        d["rcpt:REG:ERASE:STANDARD"]["outcome"]["reason"] = "edited after anchoring"
+        b = F.make_bundle(d)
+        a = EV.resolve_anchors(self.choice, b)
+        self.assertEqual(a.blob_sha256, hashlib.sha256(F.manifest_of(self.d2)).hexdigest())
+        self.assertEqual(value(EV.g_bind(F.claims()["CL-RET(REG)"], b, self.choice, EV.Config(F.CONTRACT_REV))),
+                         ("FAIL", "BYTES_MISMATCH:receipt"))
+
+
+def _obs_run_borrow():
+    """S4.BROKEN.OBS_RUN_BORROW in fixture form: OBSERVER(REG, BOOKKEEP)'s receipt cites the run of
+    OBSERVER(REG, NULL) -- same subject and predicate, another observer; its own run row is absent."""
+    case = F.g0()
+    d = F.g0_dicts()
+    victim, donor = "rcpt:REG:OBSERVER:BOOKKEEP:STANDARD", "rcpt:REG:OBSERVER:NULL:STANDARD"
+    old = d[victim]["execution"]["run_id"]
+    d[victim]["execution"]["run_id"] = d[donor]["execution"]["run_id"]
+    inv = [r for r in F._inventory(F.g0_dicts())[:-1] if r["run_id"] != old]
+    inv.append({"kind": "TERMINAL", "row_count": len(inv)})
+    return F.Case("OBS_RUN_BORROW", F.make_bundle(d, inventory=inv), F.retained(d), case.store, F.claims())
+
+
+class TestC2ObserverRunBinding(unittest.TestCase):
+    """C2 (S4 edit X3 survived): G-INV run evidence is bound to the receipt's SPECIFIC observer. A receipt for
+    OBSERVER(M, o1) citing the run of OBSERVER(M, o2) is RECEIPT_WITHOUT_RUN, never a pass."""
+
+    def test_observer_run_borrow_is_receipt_without_run(self):
+        case = _obs_run_borrow()
+        self.assertEqual(value(EV.g_inv(case.claims["CL-RET(REG)"], case.bundle, case.anchors)),
+                         ("FAIL", "RECEIPT_WITHOUT_RUN:rcpt:REG:OBSERVER:BOOKKEEP:STANDARD"))
+
+    def test_the_donor_and_other_claims_untouched(self):
+        case = _obs_run_borrow()
+        for cid in ("CL-RET(PKTD)", "CL-RET(LAGD)", "CL-CAL(STANDARD)", "TWIN(REG)"):
+            self.assertEqual(value(EV.g_inv(case.claims[cid], case.bundle, case.anchors)), ("PASS", None), cid)
+
+    def test_cited_row_of_another_subject_same_observer_fails(self):
+        # the observer segment matches but the subject does not: also not this receipt's run
+        d = F.g0_dicts()
+        victim, donor = "rcpt:REG:OBSERVER:NULL:STANDARD", "rcpt:PKTD:OBSERVER:NULL:STANDARD"
+        old = d[victim]["execution"]["run_id"]
+        d[victim]["execution"]["run_id"] = d[donor]["execution"]["run_id"]
+        inv = [r for r in F._inventory(F.g0_dicts())[:-1] if r["run_id"] != old]
+        inv.append({"kind": "TERMINAL", "row_count": len(inv)})
+        self.assertEqual(value(EV.g_inv(F.claims()["CL-RET(REG)"], F.make_bundle(d, inventory=inv), F.retained(d))),
+                         ("FAIL", "RECEIPT_WITHOUT_RUN:rcpt:REG:OBSERVER:NULL:STANDARD"))
+
+
+# AMENDMENT_v1.0.5 (B3.3 governs; operator OP6 part 2). Timed inventory rows, as the T019 ledger writes them.
+WINDOW = ("2026-10-03T23:00:00Z", "2026-10-03T23:00:30Z")     # the launch that produced F.g0_dicts()
+EARLIER = ("2026-10-03T20:00:00Z", "2026-10-03T20:00:30Z")    # an earlier launch of the same nodes
+STALE = "rcpt:REG:PRESERVE:STANDARD"
+
+
+def _timed(rows, window):
+    return [dict(r, start_utc=window[0], end_utc=window[1]) for r in rows]
+
+
+def _cumulative(d):
+    """Earlier window's rows of every node (run ids early/<node>), then this window's rows; terminal."""
+    this = _timed(F._inventory(d)[:-1], WINDOW)
+    early = _timed([{"kind": "RUN", "run_id": "early/%s" % nid, "node_id": nid, "status": "COMPLETED"}
+                    for nid in sorted(d)], EARLIER)
+    rows = early + this
+    return rows + [{"kind": "TERMINAL", "row_count": len(rows)}]
+
+
+def _stale_run():
+    """S4.PROBE.STALE_RUN in fixture form: REG's PRESERVE receipt cites the EARLIER window's run of its own node;
+    the cumulative inventory is intact (this window's row of that node is present, uncited)."""
+    d = F.g0_dicts()
+    inv = _cumulative(d)
+    d[STALE]["execution"]["run_id"] = "early/%s" % STALE
+    return F.Case("STALE_RUN", F.make_bundle(d, inventory=inv), F.retained(d), EV.FixtureStore(F.stage_rows()),
+                  F.claims())
+
+
+class TestB33RunAttribution(unittest.TestCase):
+    """AMENDMENT_v1.0.5 Y1-Y3: a receipt's run_id must name the row that launched and produced THAT receipt; an
+    earlier window's run of the same node does not satisfy it -> RECEIPT_WITHOUT_RUN:<node_id> (Y1). Earlier rows
+    remain valid provenance: never RUN_UNREPORTED for being older (Y2)."""
+
+    def test_earlier_window_run_is_receipt_without_run(self):
+        case = _stale_run()
+        self.assertEqual(value(EV.g_inv(case.claims["CL-RET(REG)"], case.bundle, case.anchors)),
+                         ("FAIL", "RECEIPT_WITHOUT_RUN:%s" % STALE))
+
+    def test_other_claims_untouched(self):
+        case = _stale_run()
+        for cid in ("CL-RET(PKTD)", "CL-RET(LAGD)", "CL-CAL(STANDARD)", "TWIN(REG)"):
+            self.assertEqual(value(EV.g_inv(case.claims[cid], case.bundle, case.anchors)), ("PASS", None), cid)
+
+    def test_cumulative_inventory_with_earlier_rows_passes(self):
+        # Y2: every receipt cites its own window's row; the earlier rows are provenance, not RUN_UNREPORTED.
+        d = F.g0_dicts()
+        b = F.make_bundle(d, inventory=_cumulative(d))
+        for cid, claim in sorted(F.claims().items()):
+            if cid.startswith("CL-CUST"):
+                continue
+            self.assertEqual(value(EV.g_inv(claim, b, F.retained(d))), ("PASS", None), cid)
+
+    def test_receipt_created_within_its_run_passes(self):
+        # A producer that stamps created_at at completion: created_at == the row's end is its own run.
+        d = F.g0_dicts()
+        for x in d.values():
+            x["created_at_utc"] = WINDOW[1]
+        b = F.make_bundle(d, inventory=_cumulative(d))
+        self.assertEqual(value(EV.g_inv(F.claims()["CL-RET(REG)"], b, F.retained(d))), ("PASS", None))
+
+    def test_bx4_no_timestamp_decides_attribution(self):
+        # C-009 BX4 retires v1.0.5's end_utc >= created_at operationalisation (it admitted a LATER window's run,
+        # R2.BROKEN.LATER_WINDOW_RUN). A receipt created after its own bound row ended still binds; the row's
+        # launch, status, node and digest decide (TestCC1Binding), never a time.
+        d = F.g0_dicts()
+        d[STALE]["created_at_utc"] = "2026-10-03T23:00:31Z"          # one second after the cited row ended
+        inv = F._inventory(d)
+        b = F.make_bundle(d, inventory=_timed(inv[:-1], WINDOW) + [inv[-1]])
+        self.assertEqual(value(EV.g_inv(F.claims()["CL-RET(REG)"], b, F.retained(d))), ("PASS", None))
+        self.assertFalse(hasattr(EV, "_ended_before"))
+
+    def test_contract_carries_v105(self):
+        # AMENDMENT_v1.0.5 applied by this packet: version and amendments entry only (Y3).
+        import json
+        import os
+        path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "contract",
+                            "contract.json")
+        with open(path, encoding="utf-8") as f:
+            doc = json.load(f)
+        assert_contract_at_least(self, doc, "1.0.5")
+        entry = [a for a in doc["amendments"] if a["version"] == "1.0.5"]
+        self.assertEqual(len(entry), 1)
+        self.assertIn("C-004-OP6", entry[0]["answers"])
+        self.assertIn("run attribution only", entry[0]["scope"])
+
+
+# --------------------------------------------------------------------------------------------------------
+# C-009-T011: G-INV on rso.binding (rso/binding/CONTRACT.md BX1, BX2, BX4, BX5, BX7; closure CC1).
+
+class TestCC1Binding(unittest.TestCase):
+    """CC1: every C-004 survivor shape and the two new shapes, end to end on G-INV (fixtures/cc1_cases.py). The
+    expected answers are the C-009 ones; FREEZE_R2 admitted every R2 shape, ARTIFACT_SWAP and
+    LAUNCH_SUBSTITUTION (attempts/A-001/cc1_red_freeze_r2.jsonl). The slice spelling is kept as the reason and the
+    BIND_* reasons are recorded beside it, in the witness."""
+
+    def _check(self, base):
+        from rso.slice001.fixtures import cc1_cases as CC
+        for cid, build, claim, want in CC.CASES:
+            case = build(base)
+            self.assertEqual(CC.g_inv_of(case, claim), want, cid)
+            # A node-level shape touches no other claim (V7); an unbound launch is the whole bundle's (BX1).
+            other_want = ("FAIL", "LAUNCH_UNBOUND") if want[1] == "LAUNCH_UNBOUND" else ("PASS", None)
+            for other in ("CL-RET(PKTD)", "CL-RET(LAGD)", "CL-CAL(STANDARD)"):
+                self.assertEqual(value(EV.g_inv(case.claims[other], case.bundle, case.anchors)), other_want,
+                                 (cid, other))
+
+    def test_synthetic_base(self):
+        self._check(None)
+
+    def test_committed_s4_bundle_in_the_bound_form(self):
+        from rso.slice001.fixtures import cc1_cases as CC
+        self._check(CC.s4_base())
+
+    def test_witness_names_node_run_and_binding(self):
+        from rso.slice001.fixtures import cc1_cases as CC
+        case = CC.artifact_swap()
+        o = EV.g_inv(case.claims["CL-RET(REG)"], case.bundle, case.anchors)["outcome"]
+        run = case.bundle.parsed(CC.PRESERVE)[0].to_dict()["execution"]["run_id"]
+        self.assertEqual(o["witness"], {"node_id": CC.PRESERVE, "run_id": run, "binding": ["BIND_DIGEST_MISMATCH"]})
+
+    def test_strict_cases_leave_one_dimension_wrong(self):
+        # Each BX2 check alone: killing an edit that weakens one check needs a case failing on that check only.
+        from rso.slice001.fixtures import cc1_cases as CC
+        singles = {cid: want[2] for cid, _b, _c, want in CC.CASES if want[2] is not None and len(want[2]) == 1}
+        self.assertEqual(sorted(sum(singles.values(), [])),
+                         ["BIND_DIGEST_MISMATCH", "BIND_FOREIGN_LAUNCH", "BIND_NODE_MISMATCH", "BIND_NODE_MISMATCH",
+                          "BIND_STATUS:FAILED"])
+
+
+class TestBX1Launch(unittest.TestCase):
+    """BX1: the launch comes from the ANCHORED manifest; the inventory holds it as one TOP_LEVEL row, COMPLETED;
+    a bundle whose run.json names another launch is LAUNCH_UNBOUND."""
+
+    def _g_inv(self, case):
+        from rso.slice001.fixtures import cc1_cases as CC
+        return CC.g_inv_of(case, "CL-RET(REG)")
+
+    def test_anchors_carry_the_launch(self):
+        self.assertEqual(F.g0().anchors.launch_run_id, F.LAUNCH)
+        self.assertEqual(EV.Anchors(EV.build_manifest([]), "keeper").launch_run_id, None)
+        m = EV.build_manifest([R.Receipt.from_dict(d) for d in F.g0_dicts().values()], launch_run_id=F.LAUNCH)
+        self.assertEqual(m, F.manifest_of(F.g0_dicts()))
+
+    def test_manifest_without_launch_is_unbound(self):
+        case = F.g0()
+        case.anchors = EV.Anchors(EV.build_manifest(R.Receipt.from_dict(d) for d in F.g0_dicts().values()), "keeper")
+        self.assertEqual(self._g_inv(case), ("FAIL", "LAUNCH_UNBOUND", ["BIND_LAUNCH_UNANCHORED"]))
+
+    def test_launch_row_missing_or_not_completed(self):
+        case = F.g0()
+        runs = [r for r in case.bundle.inventory[:-1] if r.get("launch_kind") != "TOP_LEVEL"]
+        case.bundle.inventory = runs + [{"kind": "TERMINAL", "row_count": len(runs)}]
+        self.assertEqual(self._g_inv(case), ("FAIL", "LAUNCH_UNBOUND", ["BIND_LAUNCH_MISSING"]))
+        case = F.g0()
+        case.bundle.inventory[0] = dict(case.bundle.inventory[0], status="INTERRUPTED")
+        self.assertEqual(self._g_inv(case), ("FAIL", "LAUNCH_UNBOUND", ["BIND_LAUNCH_NOT_COMPLETED:INTERRUPTED"]))
+
+    def test_run_json_naming_another_launch(self):
+        case = F.g0()
+        case.bundle.run_id = "another-launch"
+        g = EV.g_inv(case.claims["CL-RET(REG)"], case.bundle, case.anchors)["outcome"]
+        self.assertEqual((g["value"], g["reason"]), ("FAIL", "LAUNCH_UNBOUND"))
+        self.assertEqual(g["witness"], {"anchored": F.LAUNCH, "presented": "another-launch", "binding": []})
+
+    def test_bundle_without_run_json_reads_the_anchored_launch(self):
+        # A bundle that presents no run.json claims no launch; the anchored one is read (s2_run passes none yet).
+        case = F.g0()
+        case.bundle.run_id = None
+        self.assertEqual(self._g_inv(case), ("PASS", None, None))
+        self.assertIsNone(EV.Bundle({}, {}, []).run_id)
+
+    def test_producer_anchors_name_their_launch_too(self):
+        # E05.FAB_ANCHORS: producer anchors bind (G-INV PASS); custody refuses them separately.
+        case = F.fab_anchors()
+        self.assertEqual(self._g_inv(case), ("PASS", None, None))
+
+
+class TestBX5OwnLaunch(unittest.TestCase):
+    """BX5: rows of other launches are provenance, never evidence and never errors."""
+
+    def test_run_unreported_reads_the_anchored_launch_only(self):
+        from rso.slice001.fixtures import cc1_cases as CC
+        case = CC.foreign_unreported()
+        self.assertEqual(value(EV.g_inv(case.claims["CL-RET(REG)"], case.bundle, case.anchors)), ("PASS", None))
+        run = F.g0_dicts()["rcpt:REG:PRESERVE:STANDARD"]["execution"]["run_id"]
+        self.assertEqual(value(EV.g_inv(F.missing().claims["CL-RET(REG)"], F.missing().bundle, F.missing().anchors)),
+                         ("FAIL", "RUN_UNREPORTED:%s" % run))
+
+    def test_failed_own_row_of_an_absent_receipt_is_not_unreported(self):
+        case = F.missing()
+        run = F.g0_dicts()["rcpt:REG:PRESERVE:STANDARD"]["execution"]["run_id"]
+        case.bundle.inventory = [dict(r, status="FAILED") if r.get("run_id") == run else r
+                                 for r in case.bundle.inventory]
+        self.assertEqual(value(EV.g_inv(case.claims["CL-RET(REG)"], case.bundle, case.anchors)), ("PASS", None))
+
+
+class TestBX7InventoryCustody(unittest.TestCase):
+    """BX7: custody (the qualification CL-CUST relies on with G-INV) holds only if the registered inventory is
+    the inventory of the anchored manifest's launch, and the bundle's run.json does not name another."""
+
+    def test_keeper_case_qualified(self):
+        case = F.keeper()
+        self.assertEqual(EV.custody(case.bundle, case.anchors, case.store, case.first_check)["status"], "QUALIFIED")
+
+    def test_registered_inventory_of_another_launch(self):
+        d = F.g0_dicts()
+        bd = F.make_bundle(d)
+        runs = [dict(r, run_id="other-launch") if r.get("launch_kind") == "TOP_LEVEL" else r
+                for r in bd.inventory[:-1]]
+        bd.inventory = runs + [bd.inventory[-1]]
+        store = EV.FixtureStore(F.keeper_rows(d, bd))          # the inventory IS registered, as presented
+        c = EV.custody(bd, F.retained(d), store, F.FIRST_CHECK)
+        self.assertEqual(c, {"status": "UNQUALIFIED", "why": ["INVENTORY_UNBOUND:BIND_LAUNCH_MISSING"]})
+
+    def test_run_json_naming_another_launch(self):
+        case = F.keeper()
+        case.bundle.run_id = "another-launch"
+        c = EV.custody(case.bundle, case.anchors, case.store, case.first_check)
+        self.assertEqual(c, {"status": "UNQUALIFIED", "why": ["LAUNCH_UNBOUND"]})
+
+    def test_manifest_without_launch(self):
+        case = F.keeper()
+        case.anchors = EV.Anchors(EV.build_manifest(R.Receipt.from_dict(d) for d in F.g0_dicts().values()), "keeper")
+        self.assertIn("INVENTORY_UNBOUND:BIND_LAUNCH_UNANCHORED",
+                      EV.custody(case.bundle, case.anchors, case.store, case.first_check)["why"])
+
+
 def _challenge(unresolved):
     return {"date": "2026-10-05", "challenger": {"seat": "Pallas", "model": "claude-fable-5-1"},
             "set_ref": {"path": "rso/slice001/challenge/S3/REPORT.md", "blob_sha256": "a" * 64, "commit": F.COMMIT},
@@ -717,6 +1083,108 @@ class TestCaseCoverage(unittest.TestCase):
         self.assertEqual(ids, sorted(F.CASES))
         for cid in ids:
             F.CASES[cid]()
+
+
+# --------------------------------------------------------------------------------------------------------
+# C-009-T031: the one repair round after the CC3 challenge (rso/binding/ADJUDICATION_CC3.md R1-R3; CONTRACT.md s7
+# BX5b). Cases are the reviewer's committed B1 cases (rso/binding/challenge/B1/cases.py), on both bases the
+# challenge used: the synthetic G0 and the committed C-009 fresh produce rso/binding/R1/G0. Expected verdicts and
+# BIND_* witnesses are read from the reviewer's expected.json, not restated here.
+
+def _b1_expected():
+    import json
+    import os
+    p = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))), "binding",
+                     "challenge", "B1", "expected.json")
+    with open(p, encoding="utf-8") as f:
+        return {c["id"]: c for c in json.load(f)["cases"]}
+
+
+def r1_g0():
+    """The committed C-009 fresh produce rso/binding/R1/G0 (real executions, producer-bound), as the B1 harness loads it."""
+    import base64
+    import json
+    import os
+    from rso.slice001 import s2_bundle as SB
+    d = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))), "binding", "R1",
+                     "G0")
+
+    def j(f):
+        with open(os.path.join(d, f), "rb") as fh:
+            return json.loads(fh.read())
+    tr = {nid: {role: base64.b64decode(s) for role, s in t.items()} for nid, t in j("traces.json")["traces"].items()}
+    with open(os.path.join(d, "MANIFEST.json"), "rb") as fh:
+        manifest = fh.read()
+    return SB.G0(j("receipts.json")["receipts"], tr, j("inventory.json")["rows"], manifest, j("run.json")["run_id"])
+
+
+def _bases():
+    return (("synthetic", None), ("r1", F.real_base(r1_g0())))
+
+
+def _g_inv(case, claim="CL-RET(REG)"):
+    return EV.g_inv(case.claims[claim], case.bundle, case.anchors)["outcome"]
+
+
+def _want(cid):
+    """(reason or None, witness BIND list or None) from the reviewer's expected.json for CL-RET(REG)'s G-INV line."""
+    reason, binding = None, None
+    for ch in _b1_expected()[cid]["checks"]:
+        if ch.get("type") == "line" and ch.get("line") == "G-INV@CL-RET(REG)":
+            reason = ch["fields"].get("reason")
+        if ch.get("type") == "witness_binding":
+            binding = ch["binding"]
+    return reason, binding
+
+
+class TestB1Pins(unittest.TestCase):
+    """R1: the reviewer's fire cases for E2 (launch row kind), E3 (MUTATION_CHILD as node run) and E4 (a cited row
+    whose only failing dimension is a missing digest) are now in the slice suite; E2-E4 applied verbatim are killed."""
+
+    def _check(self, cid, build):
+        from rso.binding.challenge.B1 import cases as B1C
+        reason, binding = _want(cid)
+        for bname, base in _bases():
+            case = getattr(B1C, build)(base)
+            o = _g_inv(case)
+            self.assertEqual(o["value"], "FAIL", (cid, bname))
+            if reason is not None:
+                self.assertEqual(o["reason"], reason, (cid, bname))
+            self.assertEqual(o["witness"]["binding"], binding, (cid, bname))
+
+    def test_e2_launch_is_node_run(self):
+        self._check("B1.BROKEN.LAUNCH_IS_NODE_RUN", "broken_launch_is_node_run")
+
+    def test_e3_child_as_node_run(self):
+        self._check("B1.BROKEN.CHILD_AS_NODE_RUN", "broken_child_as_node_run")
+
+    def test_e4_legacy_row(self):
+        self._check("B1.BROKEN.LEGACY_ROW", "broken_legacy_row")
+
+
+class TestBX5bSibling(unittest.TestCase):
+    """R2 (CONTRACT.md s7 BX5b): every COMPLETED RECEIPT row of a presented node under the anchored launch must be the
+    cited row. FAILED / INTERRUPTED / REFUSED attempts and other launches stay provenance."""
+
+    def test_sibling_unreported_is_refused(self):
+        from rso.binding.challenge.B1 import cases as B1C
+        for bname, base in _bases():
+            case = B1C.broken_sibling_unreported(base)
+            o = _g_inv(case)
+            self.assertEqual((o["value"], o["reason"]), ("FAIL", "RECEIPT_WITHOUT_RUN:%s" % B1C.VICTIM), bname)
+            self.assertEqual(o["witness"]["binding"], ["BIND_SIBLING_UNREPORTED"], bname)
+            self.assertEqual(o["witness"]["siblings"], [case.hidden["run_id"]], bname)
+            for other in ("CL-RET(PKTD)", "CL-RET(LAGD)", "CL-CAL(STANDARD)"):
+                self.assertEqual(_g_inv(case, other)["value"], "PASS", (bname, other))
+
+    def test_failed_retry_and_charged_children_bind_as_their_baselines(self):
+        from rso.binding.challenge.B1 import cases as B1C
+        for bname, base in _bases():
+            baseline = F.g0(base)
+            for build in (B1C.sound_failed_retry, B1C.sound_charged_children):
+                case = build(base)
+                for claim in ("CL-RET(REG)", "CL-RET(PKTD)", "CL-RET(LAGD)", "CL-CAL(STANDARD)"):
+                    self.assertEqual(_g_inv(case, claim), _g_inv(baseline, claim), (bname, build.__name__, claim))
 
 
 if __name__ == "__main__":

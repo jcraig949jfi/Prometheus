@@ -1,0 +1,1485 @@
+{
+ "name": "dev_axes2",
+ "n_rows": 60,
+ "families": [
+  "F03",
+  "F07",
+  "F08",
+  "F09"
+ ],
+ "liveness": {
+  "memory_ratio": {
+   "live": 0,
+   "n": 0,
+   "noop": 0,
+   "inert": false
+  },
+  "change_timescale": {
+   "live": 0,
+   "n": 0,
+   "noop": 0,
+   "inert": false
+  },
+  "information_cost": {
+   "live": 12,
+   "n": 12,
+   "noop": 4,
+   "inert": false
+  },
+  "observation_noise": {
+   "live": 0,
+   "n": 0,
+   "noop": 0,
+   "inert": false
+  },
+  "irreversibility": {
+   "live": 14,
+   "n": 14,
+   "noop": 2,
+   "inert": false
+  },
+  "credit_delay": {
+   "live": 0,
+   "n": 0,
+   "noop": 0,
+   "inert": false
+  },
+  "topology": {
+   "live": 24,
+   "n": 24,
+   "noop": 0,
+   "inert": false
+  },
+  "compute_cost": {
+   "live": 0,
+   "n": 0,
+   "noop": 0,
+   "inert": false
+  },
+  "forgetting": {
+   "live": 0,
+   "n": 0,
+   "noop": 0,
+   "inert": false
+  },
+  "active_sensing": {
+   "live": 0,
+   "n": 0,
+   "noop": 0,
+   "inert": false
+  },
+  "recurrence_lifetime": {
+   "live": 0,
+   "n": 0,
+   "noop": 0,
+   "inert": false
+  }
+ },
+ "cells": {
+  "F03|information_cost|x0.1": {
+   "label": "STRUCT_PAYS",
+   "seeds": [
+    "STRUCT_PAYS"
+   ],
+   "winners": [
+    "lowrank"
+   ],
+   "winner": "lowrank",
+   "winner_class": "struct",
+   "H": [
+    0.6125335266358076
+   ],
+   "secs": 26.7
+  },
+  "F03|information_cost|x1": {
+   "label": "STRUCT_PAYS",
+   "seeds": [
+    "STRUCT_PAYS"
+   ],
+   "winners": [
+    "lowrank"
+   ],
+   "winner": "lowrank",
+   "winner_class": "struct",
+   "H": [
+    0.6113969339333908
+   ],
+   "secs": 17.4
+  },
+  "F03|information_cost|x10": {
+   "label": "STRUCT_PAYS",
+   "seeds": [
+    "STRUCT_PAYS"
+   ],
+   "winners": [
+    "lowrank"
+   ],
+   "winner": "lowrank",
+   "winner_class": "struct",
+   "H": [
+    0.5996547738003388
+   ],
+   "secs": 14.0
+  },
+  "F03|information_cost|x100": {
+   "label": "STRUCT_PAYS",
+   "seeds": [
+    "STRUCT_PAYS"
+   ],
+   "winners": [
+    "lowrank"
+   ],
+   "winner": "lowrank",
+   "winner_class": "struct",
+   "H": [
+    0.4266329040506299
+   ],
+   "secs": 26.9
+  },
+  "F03|irreversibility|door=0.0": {
+   "label": "STRUCT_PAYS",
+   "seeds": [
+    "STRUCT_PAYS"
+   ],
+   "winners": [
+    "lowrank"
+   ],
+   "winner": "lowrank",
+   "winner_class": "struct",
+   "H": [
+    0.41144864994743924
+   ],
+   "secs": 19.1
+  },
+  "F03|irreversibility|door=0.1": {
+   "label": "STRUCT_PAYS",
+   "seeds": [
+    "STRUCT_PAYS"
+   ],
+   "winners": [
+    "lowrank"
+   ],
+   "winner": "lowrank",
+   "winner_class": "struct",
+   "H": [
+    0.5913986882402129
+   ],
+   "secs": 22.1
+  },
+  "F03|irreversibility|door=0.3": {
+   "label": "STRUCT_PAYS",
+   "seeds": [
+    "STRUCT_PAYS"
+   ],
+   "winners": [
+    "lowrank"
+   ],
+   "winner": "lowrank",
+   "winner_class": "struct",
+   "H": [
+    0.5626334082384105
+   ],
+   "secs": 13.5
+  },
+  "F03|irreversibility|door=0.6": {
+   "label": "STRUCT_PAYS",
+   "seeds": [
+    "STRUCT_PAYS"
+   ],
+   "winners": [
+    "lowrank"
+   ],
+   "winner": "lowrank",
+   "winner_class": "struct",
+   "H": [
+    0.5257242369785196
+   ],
+   "secs": 28.0
+  },
+  "F03|native|native": {
+   "label": "STRUCT_PAYS",
+   "seeds": [
+    "STRUCT_PAYS"
+   ],
+   "winners": [
+    "lowrank"
+   ],
+   "winner": "lowrank",
+   "winner_class": "struct",
+   "H": [
+    0.6113969339333908
+   ],
+   "secs": 22.1
+  },
+  "F03|topology|erdos": {
+   "label": "DEAD",
+   "seeds": [
+    "DEAD"
+   ],
+   "winners": [
+    "constant"
+   ],
+   "winner": "constant",
+   "winner_class": "cheap",
+   "H": [
+    0.013438495324965756
+   ],
+   "secs": 9.9
+  },
+  "F03|topology|ring": {
+   "label": "INFO_VALUELESS",
+   "seeds": [
+    "INFO_VALUELESS"
+   ],
+   "winners": [
+    null
+   ],
+   "winner": null,
+   "winner_class": null,
+   "H": [
+    null
+   ],
+   "secs": 2.7
+  },
+  "F03|topology|scale_free": {
+   "label": "DEAD",
+   "seeds": [
+    "DEAD"
+   ],
+   "winners": [
+    "constant"
+   ],
+   "winner": "constant",
+   "winner_class": "cheap",
+   "H": [
+    -0.0471782073719029
+   ],
+   "secs": 24.8
+  },
+  "F03|topology|small_world": {
+   "label": "TRAPPED",
+   "seeds": [
+    "TRAPPED"
+   ],
+   "winners": [
+    null
+   ],
+   "winner": null,
+   "winner_class": null,
+   "H": [
+    null
+   ],
+   "secs": 8.2
+  },
+  "F03|topology|tensor_index": {
+   "label": "STRUCT_PAYS",
+   "seeds": [
+    "STRUCT_PAYS"
+   ],
+   "winners": [
+    "lowrank"
+   ],
+   "winner": "lowrank",
+   "winner_class": "struct",
+   "H": [
+    0.4764418745916227
+   ],
+   "secs": 27.3
+  },
+  "F03|topology|tree": {
+   "label": "TRAPPED",
+   "seeds": [
+    "TRAPPED"
+   ],
+   "winners": [
+    null
+   ],
+   "winner": null,
+   "winner_class": null,
+   "H": [
+    null
+   ],
+   "secs": 3.2
+  },
+  "F07|information_cost|x0.1": {
+   "label": "CHEAP_PAYS",
+   "seeds": [
+    "CHEAP_PAYS"
+   ],
+   "winners": [
+    "additive"
+   ],
+   "winner": "additive",
+   "winner_class": "cheap",
+   "H": [
+    0.8872670259408382
+   ],
+   "secs": 40.5
+  },
+  "F07|information_cost|x1": {
+   "label": "CHEAP_PAYS",
+   "seeds": [
+    "CHEAP_PAYS"
+   ],
+   "winners": [
+    "additive"
+   ],
+   "winner": "additive",
+   "winner_class": "cheap",
+   "H": [
+    0.8865525307158719
+   ],
+   "secs": 61.3
+  },
+  "F07|information_cost|x10": {
+   "label": "CHEAP_PAYS",
+   "seeds": [
+    "CHEAP_PAYS"
+   ],
+   "winners": [
+    "additive"
+   ],
+   "winner": "additive",
+   "winner_class": "cheap",
+   "H": [
+    0.8788832733361914
+   ],
+   "secs": 31.2
+  },
+  "F07|information_cost|x100": {
+   "label": "CHEAP_PAYS",
+   "seeds": [
+    "CHEAP_PAYS"
+   ],
+   "winners": [
+    "additive"
+   ],
+   "winner": "additive",
+   "winner_class": "cheap",
+   "H": [
+    0.6331362524691881
+   ],
+   "secs": 60.4
+  },
+  "F07|irreversibility|door=0.0": {
+   "label": "CHEAP_PAYS",
+   "seeds": [
+    "CHEAP_PAYS"
+   ],
+   "winners": [
+    "additive"
+   ],
+   "winner": "additive",
+   "winner_class": "cheap",
+   "H": [
+    0.8865525307158719
+   ],
+   "secs": 47.3
+  },
+  "F07|irreversibility|door=0.1": {
+   "label": "CHEAP_PAYS",
+   "seeds": [
+    "CHEAP_PAYS"
+   ],
+   "winners": [
+    "additive"
+   ],
+   "winner": "additive",
+   "winner_class": "cheap",
+   "H": [
+    0.82272074775731
+   ],
+   "secs": 31.8
+  },
+  "F07|irreversibility|door=0.3": {
+   "label": "CHEAP_PAYS",
+   "seeds": [
+    "CHEAP_PAYS"
+   ],
+   "winners": [
+    "additive"
+   ],
+   "winner": "additive",
+   "winner_class": "cheap",
+   "H": [
+    0.7119001776769716
+   ],
+   "secs": 60.1
+  },
+  "F07|irreversibility|door=0.6": {
+   "label": "CHEAP_PAYS",
+   "seeds": [
+    "CHEAP_PAYS"
+   ],
+   "winners": [
+    "additive"
+   ],
+   "winner": "additive",
+   "winner_class": "cheap",
+   "H": [
+    0.830037992998342
+   ],
+   "secs": 42.0
+  },
+  "F07|native|native": {
+   "label": "CHEAP_PAYS",
+   "seeds": [
+    "CHEAP_PAYS"
+   ],
+   "winners": [
+    "additive"
+   ],
+   "winner": "additive",
+   "winner_class": "cheap",
+   "H": [
+    0.8865525307158719
+   ],
+   "secs": 40.5
+  },
+  "F07|topology|erdos": {
+   "label": "CHEAP_PAYS",
+   "seeds": [
+    "CHEAP_PAYS"
+   ],
+   "winners": [
+    "additive"
+   ],
+   "winner": "additive",
+   "winner_class": "cheap",
+   "H": [
+    0.8472604887583428
+   ],
+   "secs": 22.1
+  },
+  "F07|topology|ring": {
+   "label": "CHEAP_PAYS",
+   "seeds": [
+    "CHEAP_PAYS"
+   ],
+   "winners": [
+    "additive"
+   ],
+   "winner": "additive",
+   "winner_class": "cheap",
+   "H": [
+    0.7759390458064964
+   ],
+   "secs": 28.9
+  },
+  "F07|topology|scale_free": {
+   "label": "CHEAP_PAYS",
+   "seeds": [
+    "CHEAP_PAYS"
+   ],
+   "winners": [
+    "additive"
+   ],
+   "winner": "additive",
+   "winner_class": "cheap",
+   "H": [
+    0.7966244939220631
+   ],
+   "secs": 55.5
+  },
+  "F07|topology|small_world": {
+   "label": "CHEAP_PAYS",
+   "seeds": [
+    "CHEAP_PAYS"
+   ],
+   "winners": [
+    "additive"
+   ],
+   "winner": "additive",
+   "winner_class": "cheap",
+   "H": [
+    0.7587442372414963
+   ],
+   "secs": 44.7
+  },
+  "F07|topology|tensor_index": {
+   "label": "CHEAP_PAYS",
+   "seeds": [
+    "CHEAP_PAYS"
+   ],
+   "winners": [
+    "additive"
+   ],
+   "winner": "additive",
+   "winner_class": "cheap",
+   "H": [
+    0.8914990682846866
+   ],
+   "secs": 39.5
+  },
+  "F07|topology|tree": {
+   "label": "TRAPPED",
+   "seeds": [
+    "TRAPPED"
+   ],
+   "winners": [
+    null
+   ],
+   "winner": null,
+   "winner_class": null,
+   "H": [
+    null
+   ],
+   "secs": 33.6
+  },
+  "F08|information_cost|x0.1": {
+   "label": "STRUCT_PAYS",
+   "seeds": [
+    "STRUCT_PAYS"
+   ],
+   "winners": [
+    "tt"
+   ],
+   "winner": "tt",
+   "winner_class": "struct",
+   "H": [
+    0.9350010208961245
+   ],
+   "secs": 21.9
+  },
+  "F08|information_cost|x1": {
+   "label": "STRUCT_PAYS",
+   "seeds": [
+    "STRUCT_PAYS"
+   ],
+   "winners": [
+    "tt"
+   ],
+   "winner": "tt",
+   "winner_class": "struct",
+   "H": [
+    0.9297979315370016
+   ],
+   "secs": 43.7
+  },
+  "F08|information_cost|x10": {
+   "label": "STRUCT_PAYS",
+   "seeds": [
+    "STRUCT_PAYS"
+   ],
+   "winners": [
+    "tt"
+   ],
+   "winner": "tt",
+   "winner_class": "struct",
+   "H": [
+    0.6481313470210666
+   ],
+   "secs": 51.2
+  },
+  "F08|information_cost|x100": {
+   "label": "INFO_VALUELESS",
+   "seeds": [
+    "INFO_VALUELESS"
+   ],
+   "winners": [
+    null
+   ],
+   "winner": null,
+   "winner_class": null,
+   "H": [
+    null
+   ],
+   "secs": 23.5
+  },
+  "F08|irreversibility|door=0.0": {
+   "label": "STRUCT_PAYS",
+   "seeds": [
+    "STRUCT_PAYS"
+   ],
+   "winners": [
+    "tt"
+   ],
+   "winner": "tt",
+   "winner_class": "struct",
+   "H": [
+    0.9297979315370016
+   ],
+   "secs": 22.4
+  },
+  "F08|irreversibility|door=0.1": {
+   "label": "TRAPPED",
+   "seeds": [
+    "TRAPPED"
+   ],
+   "winners": [
+    null
+   ],
+   "winner": null,
+   "winner_class": null,
+   "H": [
+    null
+   ],
+   "secs": 16.9
+  },
+  "F08|irreversibility|door=0.3": {
+   "label": "TRAPPED",
+   "seeds": [
+    "TRAPPED"
+   ],
+   "winners": [
+    null
+   ],
+   "winner": null,
+   "winner_class": null,
+   "H": [
+    null
+   ],
+   "secs": 4.5
+  },
+  "F08|irreversibility|door=0.6": {
+   "label": "TRAPPED",
+   "seeds": [
+    "TRAPPED"
+   ],
+   "winners": [
+    null
+   ],
+   "winner": null,
+   "winner_class": null,
+   "H": [
+    null
+   ],
+   "secs": 2.3
+  },
+  "F08|native|native": {
+   "label": "STRUCT_PAYS",
+   "seeds": [
+    "STRUCT_PAYS"
+   ],
+   "winners": [
+    "tt"
+   ],
+   "winner": "tt",
+   "winner_class": "struct",
+   "H": [
+    0.9297979315370016
+   ],
+   "secs": 38.3
+  },
+  "F08|topology|erdos": {
+   "label": "TRAPPED",
+   "seeds": [
+    "TRAPPED"
+   ],
+   "winners": [
+    null
+   ],
+   "winner": null,
+   "winner_class": null,
+   "H": [
+    null
+   ],
+   "secs": 1.0
+  },
+  "F08|topology|ring": {
+   "label": "TRAPPED",
+   "seeds": [
+    "TRAPPED"
+   ],
+   "winners": [
+    null
+   ],
+   "winner": null,
+   "winner_class": null,
+   "H": [
+    null
+   ],
+   "secs": 0.1
+  },
+  "F08|topology|scale_free": {
+   "label": "TRAPPED",
+   "seeds": [
+    "TRAPPED"
+   ],
+   "winners": [
+    null
+   ],
+   "winner": null,
+   "winner_class": null,
+   "H": [
+    null
+   ],
+   "secs": 0.2
+  },
+  "F08|topology|small_world": {
+   "label": "TRAPPED",
+   "seeds": [
+    "TRAPPED"
+   ],
+   "winners": [
+    null
+   ],
+   "winner": null,
+   "winner_class": null,
+   "H": [
+    null
+   ],
+   "secs": 3.3
+  },
+  "F08|topology|tensor_index": {
+   "label": "STRUCT_PAYS",
+   "seeds": [
+    "STRUCT_PAYS"
+   ],
+   "winners": [
+    "tt"
+   ],
+   "winner": "tt",
+   "winner_class": "struct",
+   "H": [
+    0.9396411426093136
+   ],
+   "secs": 26.1
+  },
+  "F08|topology|tree": {
+   "label": "TRAPPED",
+   "seeds": [
+    "TRAPPED"
+   ],
+   "winners": [
+    null
+   ],
+   "winner": null,
+   "winner_class": null,
+   "H": [
+    null
+   ],
+   "secs": 1.7
+  },
+  "F09|information_cost|x0.1": {
+   "label": "STRUCT_PAYS",
+   "seeds": [
+    "STRUCT_PAYS"
+   ],
+   "winners": [
+    "tt"
+   ],
+   "winner": "tt",
+   "winner_class": "struct",
+   "H": [
+    0.5370792522897847
+   ],
+   "secs": 18.8
+  },
+  "F09|information_cost|x1": {
+   "label": "STRUCT_PAYS",
+   "seeds": [
+    "STRUCT_PAYS"
+   ],
+   "winners": [
+    "tt"
+   ],
+   "winner": "tt",
+   "winner_class": "struct",
+   "H": [
+    0.4459513603662609
+   ],
+   "secs": 38.9
+  },
+  "F09|information_cost|x10": {
+   "label": "INFO_VALUELESS",
+   "seeds": [
+    "INFO_VALUELESS"
+   ],
+   "winners": [
+    null
+   ],
+   "winner": null,
+   "winner_class": null,
+   "H": [
+    null
+   ],
+   "secs": 18.7
+  },
+  "F09|information_cost|x100": {
+   "label": "INFO_VALUELESS",
+   "seeds": [
+    "INFO_VALUELESS"
+   ],
+   "winners": [
+    null
+   ],
+   "winner": null,
+   "winner_class": null,
+   "H": [
+    null
+   ],
+   "secs": 19.1
+  },
+  "F09|irreversibility|door=0.0": {
+   "label": "STRUCT_PAYS",
+   "seeds": [
+    "STRUCT_PAYS"
+   ],
+   "winners": [
+    "tt"
+   ],
+   "winner": "tt",
+   "winner_class": "struct",
+   "H": [
+    0.9347948858124508
+   ],
+   "secs": 38.5
+  },
+  "F09|irreversibility|door=0.1": {
+   "label": "STRUCT_PAYS",
+   "seeds": [
+    "STRUCT_PAYS"
+   ],
+   "winners": [
+    "tt"
+   ],
+   "winner": "tt",
+   "winner_class": "struct",
+   "H": [
+    0.3802904179852758
+   ],
+   "secs": 39.0
+  },
+  "F09|irreversibility|door=0.3": {
+   "label": "STRUCT_PAYS",
+   "seeds": [
+    "STRUCT_PAYS"
+   ],
+   "winners": [
+    "tt"
+   ],
+   "winner": "tt",
+   "winner_class": "struct",
+   "H": [
+    0.451886270775155
+   ],
+   "secs": 18.6
+  },
+  "F09|irreversibility|door=0.6": {
+   "label": "STRUCT_PAYS",
+   "seeds": [
+    "STRUCT_PAYS"
+   ],
+   "winners": [
+    "tt"
+   ],
+   "winner": "tt",
+   "winner_class": "struct",
+   "H": [
+    0.2358628566572934
+   ],
+   "secs": 20.6
+  },
+  "F09|native|native": {
+   "label": "STRUCT_PAYS",
+   "seeds": [
+    "STRUCT_PAYS"
+   ],
+   "winners": [
+    "tt"
+   ],
+   "winner": "tt",
+   "winner_class": "struct",
+   "H": [
+    0.4459513603662609
+   ],
+   "secs": 38.6
+  },
+  "F09|topology|erdos": {
+   "label": "TRAPPED",
+   "seeds": [
+    "TRAPPED"
+   ],
+   "winners": [
+    null
+   ],
+   "winner": null,
+   "winner_class": null,
+   "H": [
+    null
+   ],
+   "secs": 1.7
+  },
+  "F09|topology|ring": {
+   "label": "TRAPPED",
+   "seeds": [
+    "TRAPPED"
+   ],
+   "winners": [
+    null
+   ],
+   "winner": null,
+   "winner_class": null,
+   "H": [
+    null
+   ],
+   "secs": 1.7
+  },
+  "F09|topology|scale_free": {
+   "label": "TRAPPED",
+   "seeds": [
+    "TRAPPED"
+   ],
+   "winners": [
+    null
+   ],
+   "winner": null,
+   "winner_class": null,
+   "H": [
+    null
+   ],
+   "secs": 6.9
+  },
+  "F09|topology|small_world": {
+   "label": "TRAPPED",
+   "seeds": [
+    "TRAPPED"
+   ],
+   "winners": [
+    null
+   ],
+   "winner": null,
+   "winner_class": null,
+   "H": [
+    null
+   ],
+   "secs": 5.9
+  },
+  "F09|topology|tensor_index": {
+   "label": "STRUCT_PAYS",
+   "seeds": [
+    "STRUCT_PAYS"
+   ],
+   "winners": [
+    "tt"
+   ],
+   "winner": "tt",
+   "winner_class": "struct",
+   "H": [
+    0.37106238053385765
+   ],
+   "secs": 25.4
+  },
+  "F09|topology|tree": {
+   "label": "TRAPPED",
+   "seeds": [
+    "TRAPPED"
+   ],
+   "winners": [
+    null
+   ],
+   "winner": null,
+   "winner_class": null,
+   "H": [
+    null
+   ],
+   "secs": 0.6
+  }
+ },
+ "maps": {
+  "F03": {
+   "native": "STRUCT_PAYS",
+   "memory_ratio": [],
+   "change_timescale": [],
+   "information_cost": [
+    [
+     "x0.1",
+     "STRUCT_PAYS"
+    ],
+    [
+     "x1",
+     "STRUCT_PAYS"
+    ],
+    [
+     "x10",
+     "STRUCT_PAYS"
+    ],
+    [
+     "x100",
+     "STRUCT_PAYS"
+    ]
+   ],
+   "observation_noise": [],
+   "irreversibility": [
+    [
+     "door=0.0",
+     "STRUCT_PAYS"
+    ],
+    [
+     "door=0.1",
+     "STRUCT_PAYS"
+    ],
+    [
+     "door=0.3",
+     "STRUCT_PAYS"
+    ],
+    [
+     "door=0.6",
+     "STRUCT_PAYS"
+    ]
+   ],
+   "credit_delay": [],
+   "topology": [
+    [
+     "tensor_index",
+     "STRUCT_PAYS"
+    ],
+    [
+     "ring",
+     "INFO_VALUELESS"
+    ],
+    [
+     "small_world",
+     "TRAPPED"
+    ],
+    [
+     "erdos",
+     "DEAD"
+    ],
+    [
+     "tree",
+     "TRAPPED"
+    ],
+    [
+     "scale_free",
+     "DEAD"
+    ]
+   ],
+   "compute_cost": [],
+   "forgetting": [],
+   "active_sensing": [],
+   "recurrence_lifetime": []
+  },
+  "F07": {
+   "native": "CHEAP_PAYS",
+   "memory_ratio": [],
+   "change_timescale": [],
+   "information_cost": [
+    [
+     "x0.1",
+     "CHEAP_PAYS"
+    ],
+    [
+     "x1",
+     "CHEAP_PAYS"
+    ],
+    [
+     "x10",
+     "CHEAP_PAYS"
+    ],
+    [
+     "x100",
+     "CHEAP_PAYS"
+    ]
+   ],
+   "observation_noise": [],
+   "irreversibility": [
+    [
+     "door=0.0",
+     "CHEAP_PAYS"
+    ],
+    [
+     "door=0.1",
+     "CHEAP_PAYS"
+    ],
+    [
+     "door=0.3",
+     "CHEAP_PAYS"
+    ],
+    [
+     "door=0.6",
+     "CHEAP_PAYS"
+    ]
+   ],
+   "credit_delay": [],
+   "topology": [
+    [
+     "tensor_index",
+     "CHEAP_PAYS"
+    ],
+    [
+     "ring",
+     "CHEAP_PAYS"
+    ],
+    [
+     "small_world",
+     "CHEAP_PAYS"
+    ],
+    [
+     "erdos",
+     "CHEAP_PAYS"
+    ],
+    [
+     "tree",
+     "TRAPPED"
+    ],
+    [
+     "scale_free",
+     "CHEAP_PAYS"
+    ]
+   ],
+   "compute_cost": [],
+   "forgetting": [],
+   "active_sensing": [],
+   "recurrence_lifetime": []
+  },
+  "F08": {
+   "native": "STRUCT_PAYS",
+   "memory_ratio": [],
+   "change_timescale": [],
+   "information_cost": [
+    [
+     "x0.1",
+     "STRUCT_PAYS"
+    ],
+    [
+     "x1",
+     "STRUCT_PAYS"
+    ],
+    [
+     "x10",
+     "STRUCT_PAYS"
+    ],
+    [
+     "x100",
+     "INFO_VALUELESS"
+    ]
+   ],
+   "observation_noise": [],
+   "irreversibility": [
+    [
+     "door=0.0",
+     "STRUCT_PAYS"
+    ],
+    [
+     "door=0.1",
+     "TRAPPED"
+    ],
+    [
+     "door=0.3",
+     "TRAPPED"
+    ],
+    [
+     "door=0.6",
+     "TRAPPED"
+    ]
+   ],
+   "credit_delay": [],
+   "topology": [
+    [
+     "tensor_index",
+     "STRUCT_PAYS"
+    ],
+    [
+     "ring",
+     "TRAPPED"
+    ],
+    [
+     "small_world",
+     "TRAPPED"
+    ],
+    [
+     "erdos",
+     "TRAPPED"
+    ],
+    [
+     "tree",
+     "TRAPPED"
+    ],
+    [
+     "scale_free",
+     "TRAPPED"
+    ]
+   ],
+   "compute_cost": [],
+   "forgetting": [],
+   "active_sensing": [],
+   "recurrence_lifetime": []
+  },
+  "F09": {
+   "native": "STRUCT_PAYS",
+   "memory_ratio": [],
+   "change_timescale": [],
+   "information_cost": [
+    [
+     "x0.1",
+     "STRUCT_PAYS"
+    ],
+    [
+     "x1",
+     "STRUCT_PAYS"
+    ],
+    [
+     "x10",
+     "INFO_VALUELESS"
+    ],
+    [
+     "x100",
+     "INFO_VALUELESS"
+    ]
+   ],
+   "observation_noise": [],
+   "irreversibility": [
+    [
+     "door=0.0",
+     "STRUCT_PAYS"
+    ],
+    [
+     "door=0.1",
+     "STRUCT_PAYS"
+    ],
+    [
+     "door=0.3",
+     "STRUCT_PAYS"
+    ],
+    [
+     "door=0.6",
+     "STRUCT_PAYS"
+    ]
+   ],
+   "credit_delay": [],
+   "topology": [
+    [
+     "tensor_index",
+     "STRUCT_PAYS"
+    ],
+    [
+     "ring",
+     "TRAPPED"
+    ],
+    [
+     "small_world",
+     "TRAPPED"
+    ],
+    [
+     "erdos",
+     "TRAPPED"
+    ],
+    [
+     "tree",
+     "TRAPPED"
+    ],
+    [
+     "scale_free",
+     "TRAPPED"
+    ]
+   ],
+   "compute_cost": [],
+   "forgetting": [],
+   "active_sensing": [],
+   "recurrence_lifetime": []
+  }
+ },
+ "boundaries": [
+  {
+   "fid": "F08",
+   "axis": "information_cost",
+   "between": [
+    "x10",
+    "x100"
+   ],
+   "labels": [
+    "STRUCT_PAYS",
+    "INFO_VALUELESS"
+   ],
+   "direction": "dies"
+  },
+  {
+   "fid": "F08",
+   "axis": "irreversibility",
+   "between": [
+    "door=0.0",
+    "door=0.1"
+   ],
+   "labels": [
+    "STRUCT_PAYS",
+    "TRAPPED"
+   ],
+   "direction": "dies"
+  },
+  {
+   "fid": "F09",
+   "axis": "information_cost",
+   "between": [
+    "x1",
+    "x10"
+   ],
+   "labels": [
+    "STRUCT_PAYS",
+    "INFO_VALUELESS"
+   ],
+   "direction": "dies"
+  }
+ ],
+ "label_counts": {
+  "STRUCT_PAYS": 21,
+  "INFO_VALUELESS": 4,
+  "TRAPPED": 16,
+  "DEAD": 2,
+  "CHEAP_PAYS": 13
+ },
+ "split_frac": 0.0,
+ "verdict": {
+  "rule": "ISLANDS_MAPPED",
+  "families_with_pays": [
+   "F03",
+   "F07",
+   "F08",
+   "F09"
+  ],
+  "families_with_boundary": [
+   "F08",
+   "F09"
+  ]
+ },
+ "axis_table": {
+  "information_cost": [
+   {
+    "level": "x0.1",
+    "n": 4,
+    "pays": 4,
+    "struct": 3,
+    "dead": 0,
+    "trapped": 0,
+    "info_valueless": 0,
+    "split": 0
+   },
+   {
+    "level": "x1",
+    "n": 4,
+    "pays": 4,
+    "struct": 3,
+    "dead": 0,
+    "trapped": 0,
+    "info_valueless": 0,
+    "split": 0
+   },
+   {
+    "level": "x10",
+    "n": 4,
+    "pays": 3,
+    "struct": 2,
+    "dead": 0,
+    "trapped": 0,
+    "info_valueless": 1,
+    "split": 0
+   },
+   {
+    "level": "x100",
+    "n": 4,
+    "pays": 2,
+    "struct": 1,
+    "dead": 0,
+    "trapped": 0,
+    "info_valueless": 2,
+    "split": 0
+   }
+  ],
+  "irreversibility": [
+   {
+    "level": "door=0.0",
+    "n": 4,
+    "pays": 4,
+    "struct": 3,
+    "dead": 0,
+    "trapped": 0,
+    "info_valueless": 0,
+    "split": 0
+   },
+   {
+    "level": "door=0.1",
+    "n": 4,
+    "pays": 3,
+    "struct": 2,
+    "dead": 0,
+    "trapped": 1,
+    "info_valueless": 0,
+    "split": 0
+   },
+   {
+    "level": "door=0.3",
+    "n": 4,
+    "pays": 3,
+    "struct": 2,
+    "dead": 0,
+    "trapped": 1,
+    "info_valueless": 0,
+    "split": 0
+   },
+   {
+    "level": "door=0.6",
+    "n": 4,
+    "pays": 3,
+    "struct": 2,
+    "dead": 0,
+    "trapped": 1,
+    "info_valueless": 0,
+    "split": 0
+   }
+  ],
+  "topology": [
+   {
+    "level": "tensor_index",
+    "n": 4,
+    "pays": 4,
+    "struct": 3,
+    "dead": 0,
+    "trapped": 0,
+    "info_valueless": 0,
+    "split": 0
+   },
+   {
+    "level": "ring",
+    "n": 4,
+    "pays": 1,
+    "struct": 0,
+    "dead": 0,
+    "trapped": 2,
+    "info_valueless": 1,
+    "split": 0
+   },
+   {
+    "level": "small_world",
+    "n": 4,
+    "pays": 1,
+    "struct": 0,
+    "dead": 0,
+    "trapped": 3,
+    "info_valueless": 0,
+    "split": 0
+   },
+   {
+    "level": "erdos",
+    "n": 4,
+    "pays": 1,
+    "struct": 0,
+    "dead": 1,
+    "trapped": 2,
+    "info_valueless": 0,
+    "split": 0
+   },
+   {
+    "level": "tree",
+    "n": 4,
+    "pays": 0,
+    "struct": 0,
+    "dead": 0,
+    "trapped": 4,
+    "info_valueless": 0,
+    "split": 0
+   },
+   {
+    "level": "scale_free",
+    "n": 4,
+    "pays": 1,
+    "struct": 0,
+    "dead": 1,
+    "trapped": 2,
+    "info_valueless": 0,
+    "split": 0
+   }
+  ]
+ },
+ "carrier_class_changes": []
+}

@@ -1,0 +1,102 @@
+{
+  "schema": "prometheus.workgraph.task.v1",
+  "task_id": "C-009-T034",
+  "campaign_id": "C-009",
+  "title": "Fresh closure re-check on FREEZE_B2 (1 sound, 1 broken, 1 edit; new shapes)",
+  "objective": "The single re-check CC3 allows: 1 fresh sound, 1 fresh broken, 1 semantic edit on the repaired binding surfaces (BX1, BX2, BX5/BX5b), committed before outcomes; not the B1 shapes or CC1's (they are regressions now). Report CLOSED / NOT CLOSED for BX1, BX2, BX5 and any new survivor with its applicability to the witness path.",
+  "parent_objective": "C-009 repair round (the only one) after CC3",
+  "owner_role": "Pallas",
+  "quality_class": "Q3",
+  "can_downgrade": false,
+  "escalate_to": "operator",
+  "depends_on": [
+    "C-009-T033"
+  ],
+  "owns": [
+    "rso/binding/challenge/B2/"
+  ],
+  "reads": [
+    "rso/binding/",
+    "rso/slice001/",
+    "rso/binding/FREEZE_B2.md"
+  ],
+  "problem": "Charge every launch and mutation child to rso/binding/LEDGER.jsonl (<= 3 launches; 8 of 12 used). Headless rule: never end your turn while work remains.",
+  "non_goals": [
+    "No change to world predicates, the expected-answer table or S2 case expectations",
+    "The B1 challenge record is not rewritten",
+    "No further repair round after this one (CC3)"
+  ],
+  "evidence_required": [
+    "set committed before outcomes",
+    "CLOSED / NOT CLOSED per surface",
+    "survivor applicability"
+  ],
+  "acceptance": {
+    "command": "python -B -m unittest discover -s rso/slice001/tests -t . && python -B -m unittest discover -s rso/binding/tests -t . && python -B -m unittest discover -s rso/witness/tests -t .",
+    "condition": "all evidence_required items; all three suites green"
+  },
+  "deliverables": [
+    "rso/binding/challenge/B2/"
+  ],
+  "kind": "review",
+  "status": "CLOSED",
+  "history": [
+    {
+      "status": "PROPOSED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-07T05:18:04Z",
+      "note": "repair round"
+    },
+    {
+      "status": "READY",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-07T06:41:45Z",
+      "note": "FREEZE_B2 (rso/binding/FREEZE_B2.md); Q3 claude-fable-5-1 required"
+    },
+    {
+      "status": "CLAIMED",
+      "by": "Pallas[harry1-2b71b1e1]",
+      "at_utc": "2026-10-07T07:28:25Z",
+      "note": "Fable 5.1 (Q3) headless relaunch on harry1; set to follow on branch pallas/c009-t034 from 0ad2d1a6f"
+    },
+    {
+      "status": "IMPLEMENTING",
+      "by": "Pallas[harry1-2b71b1e1]",
+      "at_utc": "2026-10-07T07:36:34Z",
+      "note": "set committed before outcomes: a9ef80a07 on pallas/c009-t034 (exposure 6b02d25a0); launches to follow"
+    },
+    {
+      "status": "GREEN",
+      "by": "Pallas[harry1-2a918949]",
+      "at_utc": "2026-10-07T08:28:21Z",
+      "note": "resumed by Pallas[harry1-2a918949] to finish after headless exit of harry1-2b71b1e1 (same lease, no new claim); results d5add5518 on pallas/c009-t034; acceptance re-run in the foreground on the merged tree 83bc92338: 528 run, 0 failures (slice001 426 skipped=1 / binding 21 / witness 81)"
+    },
+    {
+      "status": "INTEGRATION_READY",
+      "by": "Pallas[harry1-2a918949]",
+      "at_utc": "2026-10-07T08:28:22Z",
+      "note": "receipt A-001; REPORT.md rso/binding/challenge/B2/REPORT.md: BX1, BX2 CLOSED within coverage; BX5/BX5b NOT CLOSED (NESTED_SIBLING admitted both bases; E6 survived 528 tests); neither reachable through the committed witness path; CC3 adjudication is Palamedes's / the operator's"
+    },
+    {
+      "status": "INTEGRATED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-07T08:34:33Z",
+      "note": "merged d5add5518; BX1, BX2 CLOSED within coverage; BX5/BX5b NOT CLOSED (NESTED_SIBLING, E6); both verified unreachable on the witness path by the coordinator"
+    },
+    {
+      "status": "CLOSED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-07T08:34:33Z",
+      "note": "C-009 closed scoped to flat inventories (rso/binding/CLOSURE.md); P-FLAT gate carried into C-010"
+    }
+  ],
+  "authority": "rso/binding/CONTRACT.md s3 CC3 (one repair round + one 1+1+1 re-check); rso/binding/ADJUDICATION_CC3.md",
+  "resource_ceiling": {
+    "launches": "<= 3",
+    "reviewer": "<= 45 min"
+  },
+  "red_required": false,
+  "eligible_roles": [
+    "Dionysus"
+  ]
+}

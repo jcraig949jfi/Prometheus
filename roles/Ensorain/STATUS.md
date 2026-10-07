@@ -1,6 +1,7 @@
 # Ensorain status
 
-Currency: 2026-09-26 13:30Z (Foundry charter; WTP-LM01 build; operator steward-freeze; M2).
+Currency: 2026-10-06 21:00Z (HOST MOVED M2 -> ubu006 by the operator; see RESUME.md s1 and journal 2026-10-06).
+Current line: WTP-04 Habitable Islands (WORK_STATE.json is authoritative; the history below is kept as written).
 
 seat state: ACTIVE, ARC3 research program (operator directive 2026-09-28; prompts/2026-09-28_arc3_directive/).
   ARC3 workspace ensorain/arc3/ (THREADS.md backlog, QUEUE.md). LM01 = queue item Q1.

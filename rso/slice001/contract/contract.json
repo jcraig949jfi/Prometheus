@@ -1,6 +1,6 @@
 {
   "schema": "rso.slice001.contract.v1",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "frozen": true,
   "campaign": "C-004 RSO-METHODS-SLICE-001",
   "frozen_by": "Palamedes[harry1-679179c6] under C-004-T004",
@@ -859,6 +859,19 @@
         "X1 caps.top_level_validation_launches 12 -> 20",
         "X2 caps.launch_accounting text",
         "X3 scope of the eight extra launches"
+      ]
+    },
+    {
+      "version": "1.0.5",
+      "path": "rso/slice001/contract/AMENDMENT_v1.0.5.md",
+      "by": "Palamedes[harry1-679179c6]",
+      "applied_by": "Argus[harry1-a1598f01] under C-004-T046",
+      "answers": "operator decision C-004-OP6 part 2, 2026-10-06 (B3.3 governs; a POST-OBSERVATION amendment: the S4 closure record, which admitted S4.PROBE.STALE_RUN under v1.0.4, is not rewritten)",
+      "scope": "run attribution only (G-INV under a cumulative inventory); no other predicate, threshold or case expectation changes",
+      "items": [
+        "Y1 a receipt's execution.run_id must name the row that launched and produced THAT receipt; an earlier window's run of the same node -> G-INV FAIL RECEIPT_WITHOUT_RUN:<node_id>",
+        "Y2 earlier-window rows remain valid provenance (not RUN_UNREPORTED merely for being older)",
+        "Y3 scope: run attribution only"
       ]
     }
   ],

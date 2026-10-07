@@ -1,0 +1,66 @@
+{
+  "schema": "prometheus.workgraph.receipt.v1",
+  "task_id": "C-009-T017",
+  "campaign_id": "C-009",
+  "attempt_id": "A-001",
+  "role": "Argus",
+  "model": "claude-opus-5-5",
+  "quality_class": "Q2",
+  "start_sha": "495349d9cdcb098f9104df953b1407ba36886e99",
+  "end_sha": "bcf2dca3333a724b0f2afe6770ae17b85d08309c",
+  "files_changed": [
+    "rso/witness/ruler.py",
+    "rso/witness/RULER.md",
+    "rso/witness/tests/test_ruler.py"
+  ],
+  "evidence_added": [
+    "P-CHAN replaces the draft difference rule: X and X-NOPL on the SAME 2048 episode seeds; PASS iff X-NOPL P-RET NEGATIVE AND b >= mcnemar_threshold(b + c) (exact one-sided McNemar, alpha 1/100); applies only when X is P-RET POSITIVE",
+    "size: <= alpha exactly, conditional on b + c, under equal accuracy; synthetic 800-run check 0.0125 (both 0.50) / 0.0150 (both 0.53)",
+    "power (synthetic, X-NOPL 0.50): 0.83 at X 0.55, 0.98 at X >= 0.58; partial retention under ablation is refused: PASS 0.64 / 0.16 / 0.02 for X-NOPL at 0.52 / 0.535 / 0.55 with X at 0.70",
+    "draft rule (X-NOPL NEGATIVE or INDETERMINATE AND X correct - X-NOPL correct >= 54) measured on synthetic data: size 0.045 = 4.5 x alpha under equal accuracy (both 0.50 or both 0.53), and it counts an INDETERMINATE ablation as vanished",
+    "RULER.md s5.2 written (s5 is now 'Gates': 5.1 P-CAL, 5.2 P-CHAN); driver requirement for C-009-T016: X-NOPL runs on X's seeds in the same order"
+  ],
+  "evidence_executed": [
+    {
+      "command": "python -B -m unittest rso.witness.tests.test_ruler (new tests, before p_chan existed) at f144a0ec2",
+      "result": "29 run, 8 errors (RED)"
+    },
+    {
+      "command": "python -B -m unittest rso.witness.tests.test_ruler",
+      "result": "31 OK"
+    },
+    {
+      "command": "6 P-CHAN mutants (draft INDETERMINATE accepted, threshold -1, c ignored, precondition dropped, m = 0 passes, McNemar skipped)",
+      "result": "first pass 4 KILLED, 2 SURVIVED (random partial-retention seed landed POSITIVE; no exact-boundary test) -> deterministic tests added -> 6/6 KILLED"
+    },
+    {
+      "command": "rso/witness and rso/binding test discovery on the tree merged with origin/main (bcf2dca33)",
+      "result": "OK / OK"
+    }
+  ],
+  "red_observed": {
+    "observed": true,
+    "detail": "8 P-CHAN tests errored before mcnemar_threshold / p_chan existed (commit f144a0ec2)"
+  },
+  "result": "DONE_CLEAN",
+  "known_escapes": [
+    "no Ares output read; all numbers from synthetic paired Bernoulli models (independent arms given r); real X / X-NOPL decisions on shared seeds may be positively correlated, which only lowers b + c and makes the exact test conservative",
+    "pairs are formed by position: the driver (C-009-T016) must run X-NOPL on X's seeds in the same order; p_chan cannot check seed identity (it sees r only)",
+    "FD-T017-2 is stricter than PREREG_DRAFT s5 (INDETERMINATE no longer counts as vanished); Palamedes / Cadmus to adopt in the frozen preregistration"
+  ],
+  "unresolved": [],
+  "unblocks": [
+    "witness preregistration freeze (PREREG_DRAFT OPEN 1)"
+  ],
+  "created_at_utc": "2026-10-07T04:00:00Z",
+  "instance": "desktop-ruapvai-b08b36ac",
+  "host": "DESKTOP-RUAPVAI",
+  "branch": "argus/c009-t017",
+  "worktree_path": "C:/Prometheus-worktrees/argus-boot",
+  "resources": {
+    "cpu": "about 3 CPU-minutes (synthetic simulations, tests, mutants)",
+    "validation_launches": 0,
+    "model": "one Q2 session, about 0.5 hours"
+  },
+  "notes": "Field decisions FD-T017-1 (paired McNemar replaces the difference of totals) and FD-T017-2 (vanishes = X-NOPL NEGATIVE) in RULER.md s5.2. State commits went to main as they happened (argus-ops)."
+}

@@ -28,7 +28,7 @@ HISTORICAL_NAME_RES = (
     re.compile(r"(?i)test_aeth01_terminology_audit"),
     # Frozen, preregistered experiment records (code, rules, evidence and results are
     # preserved byte-for-byte by order; "cell" there means a factorial design cell).
-    re.compile(r"(?i)V2B[/\\](ER01|AIM01)[/\\]"),
+    re.compile(r"(?i)V2B[/\\](ER01|AIM01|OFFER01|PROP01|ROUTE01)[/\\]"),
     # Aether review packets (same status as REVIEW_PACKET* above).
     re.compile(r"(?i)pivot[/\\]AETH_[A-Z0-9]+_REVIEW_"),
 )

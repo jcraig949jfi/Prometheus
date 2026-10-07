@@ -106,9 +106,10 @@ def load(name):
     return SB.G0(j("receipts.json")["receipts"], tr, j("inventory.json")["rows"], manifest, j("run.json")["run_id"])
 
 
-def produce(commit, ledger_path, created_at_utc=None):
-    """Five ledgered builds at `commit`. Refuses on a dirty named-code tree (build_bundle's own check)."""
-    led = L.Ledger.from_contract(ledger_path)
+def produce(commit, ledger_path, created_at_utc=None, contract=L.DEFAULT_CONTRACT):
+    """Five ledgered builds at `commit`, charged against `contract`'s caps (C-009: rso/binding/contract.json with
+    rso/binding/LEDGER.jsonl). Refuses on a dirty named-code tree (build_bundle's own check)."""
+    led = L.Ledger.from_contract(ledger_path, contract)
     stamp = created_at_utc or time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
     usage = {}
     versions = record_versions()
@@ -174,9 +175,12 @@ def claims_of(name, g):
 
 
 def consumer_for(g, store, first_check_utc, recs, blobs, anchors=None, bundle=None):
+    # C-009-T031 R3: the bundle carries the launch its run.json names (g.run_id), so the production path checks it
+    # against the anchored launch exactly as the fixture path does (B1.PROBE.PRODUCTION_RUNJSON: LAUNCH_UNBOUND).
     bundle = bundle or EV.Bundle({n: R.Receipt.from_dict(d).canonical_bytes() for n, d in g.dicts.items()},
                                  g.traces, g.inventory, stage_records=recs, blobs=blobs,
-                                 expected_table=next(iter(g.dicts.values()))["expected_answer"]["table"])
+                                 expected_table=next(iter(g.dicts.values()))["expected_answer"]["table"],
+                                 run_id=g.run_id)
     anchors = anchors or EV.Anchors(g.manifest, "keeper")
     some = next(iter(g.dicts.values()))
     gate_versions = {r["instrument"]: r["version"] for r in recs if r["instrument"] in C.GATES}
@@ -387,11 +391,12 @@ def main(argv=None):
     p = sub.add_parser("produce")
     p.add_argument("--commit", required=True)
     p.add_argument("--ledger", required=True)
-    m = sub.add_parser("matrix")
+    p.add_argument("--contract", default=L.DEFAULT_CONTRACT)
+    m =sub.add_parser("matrix")
     m.add_argument("--first-check")
     a = ap.parse_args(argv)
     if a.cmd == "produce":
-        print(json.dumps(produce(a.commit, a.ledger), sort_keys=True))
+        print(json.dumps(produce(a.commit, a.ledger, contract=a.contract), sort_keys=True))
     else:
         rep, _ = run_matrix(a.first_check)
         print(M.render(rep))

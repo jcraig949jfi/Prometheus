@@ -1,0 +1,101 @@
+{
+  "schema": "prometheus.workgraph.task.v1",
+  "task_id": "C-009-T012",
+  "campaign_id": "C-009",
+  "title": "Native runtime candidates for the first native retained-information witness (preparation; no outcomes)",
+  "objective": "Identify the smallest REAL native runtime in this repository (not the slice001 finite toy, not a rename of it) that natively retains information across a named boundary, and design its witness to the point of preregistration.",
+  "parent_objective": "C-009 RSO-EXEC-BINDING-001",
+  "owner_role": "Cadmus",
+  "quality_class": "Q2",
+  "can_downgrade": false,
+  "escalate_to": "Q3",
+  "depends_on": [],
+  "owns": [
+    "rso/witness/CANDIDATES.md",
+    "rso/witness/DESIGN_DRAFT.md"
+  ],
+  "reads": [
+    "docs/phase3/synthesis/ENCELADUS-DIONYSUS-v0.4/NEXT_ROUND_PLAN_v0.4.md (s3, s7)",
+    "rso/binding/CONTRACT.md",
+    "rso/slice001/contract/CONTRACT.md"
+  ],
+  "problem": "Plan s7.1: one actual native retained-information witness, clean allowed-state twin, delayed-leak reset and separate world-side oracle; native scheduling/readout/observer contracts actually exercised. Survey at least 3 candidates among runtimes that exist and run here (organisms, engines, agents in this repo); for each: what it retains natively, the named boundary, the allowed channel, how a delayed-leak reset and a clean allowed-state twin are constructed, the world-side oracle kept separate from the ruler, what the adapter must emit (canonical receipt bytes + ledger rows via rso.binding only, BX6), estimated CPU and wall cost, and the risk it collapses into the toy. Recommend one with reasons and a fallback. DESIGN_DRAFT: claims, positive and negative controls, predicates, expected outcome classes (positive / negative / detection-unqualified), budget. Preparation only: you may import/build/smoke a candidate to check it runs, but do NOT compute any witness predicate or look at retention outcomes before preregistration (directive s11).",
+  "non_goals": [
+    "No change to world predicates, the expected-answer table or S2 case expectations",
+    "No scheduler, no universal state/cognition schema (CONTRACT.md BX6, s5)",
+    "C-004 records and freezes are not rewritten"
+  ],
+  "evidence_required": [
+    "CANDIDATES.md with >= 3 real candidates and a recommendation",
+    "DESIGN_DRAFT.md sufficient for a preregistration",
+    "a statement of what was run (smoke only) and what was not"
+  ],
+  "acceptance": {
+    "command": "python -B -m unittest discover -s rso/slice001/tests -t . && python -B -m unittest discover -s rso/binding/tests -t .",
+    "condition": "all evidence_required items; both suites green"
+  },
+  "deliverables": [
+    "rso/witness/CANDIDATES.md",
+    "rso/witness/DESIGN_DRAFT.md",
+    "receipt"
+  ],
+  "kind": "document",
+  "status": "CLOSED",
+  "history": [
+    {
+      "status": "PROPOSED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-07T00:34:51Z",
+      "note": "C-009 open"
+    },
+    {
+      "status": "READY",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-07T00:34:51Z",
+      "note": "made READY at campaign open"
+    },
+    {
+      "status": "CLAIMED",
+      "by": "Cadmus[m1-a86ec5e4]",
+      "at_utc": "2026-10-07T00:40:38Z",
+      "note": "claimed on #1716; branch cadmus/c009-t012; preparation only"
+    },
+    {
+      "status": "IMPLEMENTING",
+      "by": "Cadmus[m1-a86ec5e4]",
+      "at_utc": "2026-10-07T00:52:01Z",
+      "note": "branch cadmus/c009-t012 f877fdc866d55c889e881b39eff94ad8ceed32b4: CANDIDATES.md + DESIGN_DRAFT.md; both suites green; preparation only"
+    },
+    {
+      "status": "GREEN",
+      "by": "Cadmus[m1-a86ec5e4]",
+      "at_utc": "2026-10-07T00:52:02Z",
+      "note": "branch cadmus/c009-t012 f877fdc866d55c889e881b39eff94ad8ceed32b4: CANDIDATES.md + DESIGN_DRAFT.md; both suites green; preparation only"
+    },
+    {
+      "status": "INTEGRATION_READY",
+      "by": "Cadmus[m1-a86ec5e4]",
+      "at_utc": "2026-10-07T00:52:02Z",
+      "note": "branch cadmus/c009-t012 f877fdc866d55c889e881b39eff94ad8ceed32b4: CANDIDATES.md + DESIGN_DRAFT.md; both suites green; preparation only"
+    },
+    {
+      "status": "INTEGRATED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-07T01:32:25Z",
+      "note": "merged cadmus/c009-t012 (docs only); selection recorded rso/witness/SELECTION.md: Ares W15, fallback Ensorain"
+    },
+    {
+      "status": "CLOSED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-07T01:32:25Z",
+      "note": "selection made; prep packets T013 (Cadmus adapter), T014 (Argus stochastic ruler)"
+    }
+  ],
+  "authority": "operator directive 2026-10-07 (C-004-OP8), roles/Palamedes/prompts/2026-10-07_rso_completion_push/01_OPERATOR_DIRECTIVE_verbatim.md",
+  "resource_ceiling": {
+    "launches": "0 (development only) unless stated",
+    "note": "C-009 caps rso/binding/contract.json"
+  },
+  "red_required": false,
+  "notes": "red_required false: a design/survey document."
+}

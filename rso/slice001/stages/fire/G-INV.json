@@ -21,39 +21,225 @@
     },
     {
       "case_id": "G0 without the REG ERASE run row",
-      "expected_reason": "RECEIPT_WITHOUT_RUN:rcpt:REG:ERASE:STANDARD",
+      "expected_reason": "RECEIPT_WITHOUT_RUN:rcpt:REG:ERASE:STANDARD [BIND_NO_ROW]",
       "expected_value": "FAIL",
-      "observed_reason": "RECEIPT_WITHOUT_RUN:rcpt:REG:ERASE:STANDARD",
+      "observed_reason": "RECEIPT_WITHOUT_RUN:rcpt:REG:ERASE:STANDARD [BIND_NO_ROW]",
       "observed_value": "FAIL",
       "ok": true,
       "polarity": "REJECT"
     },
     {
-      "case_id": "S3.BROKEN.RUN_BORROW (T042 F3)",
-      "expected_reason": "RECEIPT_WITHOUT_RUN:rcpt:REG:PRESERVE:STANDARD",
+      "case_id": "CC1 SOUND.G0",
+      "expected_reason": null,
+      "expected_value": "PASS",
+      "observed_reason": null,
+      "observed_value": "PASS",
+      "ok": true,
+      "polarity": "ACCEPT"
+    },
+    {
+      "case_id": "CC1 SOUND.CUMULATIVE",
+      "expected_reason": null,
+      "expected_value": "PASS",
+      "observed_reason": null,
+      "observed_value": "PASS",
+      "ok": true,
+      "polarity": "ACCEPT"
+    },
+    {
+      "case_id": "CC1 SOUND.BX5.FOREIGN_UNREPORTED",
+      "expected_reason": null,
+      "expected_value": "PASS",
+      "observed_reason": null,
+      "observed_value": "PASS",
+      "ok": true,
+      "polarity": "ACCEPT"
+    },
+    {
+      "case_id": "CC1 S3.BROKEN.RUN_BORROW",
+      "expected_reason": "RECEIPT_WITHOUT_RUN:rcpt:REG:PRESERVE:STANDARD [BIND_NODE_MISMATCH, BIND_DIGEST_MISMATCH]",
       "expected_value": "FAIL",
-      "observed_reason": "RECEIPT_WITHOUT_RUN:rcpt:REG:PRESERVE:STANDARD",
+      "observed_reason": "RECEIPT_WITHOUT_RUN:rcpt:REG:PRESERVE:STANDARD [BIND_NODE_MISMATCH, BIND_DIGEST_MISMATCH]",
+      "observed_value": "FAIL",
+      "ok": true,
+      "polarity": "REJECT"
+    },
+    {
+      "case_id": "CC1 S4.BROKEN.OBS_RUN_BORROW",
+      "expected_reason": "RECEIPT_WITHOUT_RUN:rcpt:REG:OBSERVER:BOOKKEEP:STANDARD [BIND_NODE_MISMATCH, BIND_DIGEST_MISMATCH]",
+      "expected_value": "FAIL",
+      "observed_reason": "RECEIPT_WITHOUT_RUN:rcpt:REG:OBSERVER:BOOKKEEP:STANDARD [BIND_NODE_MISMATCH, BIND_DIGEST_MISMATCH]",
+      "observed_value": "FAIL",
+      "ok": true,
+      "polarity": "REJECT"
+    },
+    {
+      "case_id": "CC1 S4.EDIT.X3.OBSERVER_STRICT",
+      "expected_reason": "RECEIPT_WITHOUT_RUN:rcpt:REG:OBSERVER:BOOKKEEP:STANDARD [BIND_NODE_MISMATCH]",
+      "expected_value": "FAIL",
+      "observed_reason": "RECEIPT_WITHOUT_RUN:rcpt:REG:OBSERVER:BOOKKEEP:STANDARD [BIND_NODE_MISMATCH]",
+      "observed_value": "FAIL",
+      "ok": true,
+      "polarity": "REJECT"
+    },
+    {
+      "case_id": "CC1 S4.PROBE.STALE_RUN",
+      "expected_reason": "RECEIPT_WITHOUT_RUN:rcpt:REG:PRESERVE:STANDARD [BIND_FOREIGN_LAUNCH, BIND_DIGEST_MISSING]",
+      "expected_value": "FAIL",
+      "observed_reason": "RECEIPT_WITHOUT_RUN:rcpt:REG:PRESERVE:STANDARD [BIND_FOREIGN_LAUNCH, BIND_DIGEST_MISSING]",
+      "observed_value": "FAIL",
+      "ok": true,
+      "polarity": "REJECT"
+    },
+    {
+      "case_id": "CC1 R2.EDIT.Y1.WORLD",
+      "expected_reason": "RECEIPT_WITHOUT_RUN:rcpt:REG:PRESERVE:STANDARD [BIND_NODE_MISMATCH]",
+      "expected_value": "FAIL",
+      "observed_reason": "RECEIPT_WITHOUT_RUN:rcpt:REG:PRESERVE:STANDARD [BIND_NODE_MISMATCH]",
+      "observed_value": "FAIL",
+      "ok": true,
+      "polarity": "REJECT"
+    },
+    {
+      "case_id": "CC1 R2.BROKEN.LATER_WINDOW_RUN",
+      "expected_reason": "RECEIPT_WITHOUT_RUN:rcpt:REG:PRESERVE:STANDARD [BIND_FOREIGN_LAUNCH, BIND_DIGEST_MISSING]",
+      "expected_value": "FAIL",
+      "observed_reason": "RECEIPT_WITHOUT_RUN:rcpt:REG:PRESERVE:STANDARD [BIND_FOREIGN_LAUNCH, BIND_DIGEST_MISSING]",
+      "observed_value": "FAIL",
+      "ok": true,
+      "polarity": "REJECT"
+    },
+    {
+      "case_id": "CC1 R2.BROKEN.LATER_WINDOW_STRICT",
+      "expected_reason": "RECEIPT_WITHOUT_RUN:rcpt:REG:PRESERVE:STANDARD [BIND_FOREIGN_LAUNCH]",
+      "expected_value": "FAIL",
+      "observed_reason": "RECEIPT_WITHOUT_RUN:rcpt:REG:PRESERVE:STANDARD [BIND_FOREIGN_LAUNCH]",
+      "observed_value": "FAIL",
+      "ok": true,
+      "polarity": "REJECT"
+    },
+    {
+      "case_id": "CC1 R2.PROBE.OVERLAP_RUN",
+      "expected_reason": "RECEIPT_WITHOUT_RUN:rcpt:REG:PRESERVE:STANDARD [BIND_FOREIGN_LAUNCH, BIND_DIGEST_MISSING]",
+      "expected_value": "FAIL",
+      "observed_reason": "RECEIPT_WITHOUT_RUN:rcpt:REG:PRESERVE:STANDARD [BIND_FOREIGN_LAUNCH, BIND_DIGEST_MISSING]",
+      "observed_value": "FAIL",
+      "ok": true,
+      "polarity": "REJECT"
+    },
+    {
+      "case_id": "CC1 R2.PROBE.FAILED_ROW_CITED",
+      "expected_reason": "RECEIPT_WITHOUT_RUN:rcpt:REG:PRESERVE:STANDARD [BIND_FOREIGN_LAUNCH, BIND_STATUS:FAILED, BIND_DIGEST_MISSING]",
+      "expected_value": "FAIL",
+      "observed_reason": "RECEIPT_WITHOUT_RUN:rcpt:REG:PRESERVE:STANDARD [BIND_FOREIGN_LAUNCH, BIND_STATUS:FAILED, BIND_DIGEST_MISSING]",
+      "observed_value": "FAIL",
+      "ok": true,
+      "polarity": "REJECT"
+    },
+    {
+      "case_id": "CC1 R2.PROBE.FAILED_ROW_STRICT",
+      "expected_reason": "RECEIPT_WITHOUT_RUN:rcpt:REG:PRESERVE:STANDARD [BIND_STATUS:FAILED]",
+      "expected_value": "FAIL",
+      "observed_reason": "RECEIPT_WITHOUT_RUN:rcpt:REG:PRESERVE:STANDARD [BIND_STATUS:FAILED]",
+      "observed_value": "FAIL",
+      "ok": true,
+      "polarity": "REJECT"
+    },
+    {
+      "case_id": "CC1 NEW.ARTIFACT_SWAP",
+      "expected_reason": "RECEIPT_WITHOUT_RUN:rcpt:REG:PRESERVE:STANDARD [BIND_DIGEST_MISMATCH]",
+      "expected_value": "FAIL",
+      "observed_reason": "RECEIPT_WITHOUT_RUN:rcpt:REG:PRESERVE:STANDARD [BIND_DIGEST_MISMATCH]",
+      "observed_value": "FAIL",
+      "ok": true,
+      "polarity": "REJECT"
+    },
+    {
+      "case_id": "CC1 NEW.LAUNCH_SUBSTITUTION",
+      "expected_reason": "LAUNCH_UNBOUND []",
+      "expected_value": "FAIL",
+      "observed_reason": "LAUNCH_UNBOUND []",
+      "observed_value": "FAIL",
+      "ok": true,
+      "polarity": "REJECT"
+    },
+    {
+      "case_id": "B1.SOUND.FAILED_RETRY",
+      "expected_reason": null,
+      "expected_value": "PASS",
+      "observed_reason": null,
+      "observed_value": "PASS",
+      "ok": true,
+      "polarity": "ACCEPT"
+    },
+    {
+      "case_id": "B1.SOUND.CHARGED_CHILDREN",
+      "expected_reason": null,
+      "expected_value": "PASS",
+      "observed_reason": null,
+      "observed_value": "PASS",
+      "ok": true,
+      "polarity": "ACCEPT"
+    },
+    {
+      "case_id": "B1.BROKEN.SIBLING_UNREPORTED",
+      "expected_reason": "RECEIPT_WITHOUT_RUN:rcpt:REG:PRESERVE:STANDARD [BIND_SIBLING_UNREPORTED]",
+      "expected_value": "FAIL",
+      "observed_reason": "RECEIPT_WITHOUT_RUN:rcpt:REG:PRESERVE:STANDARD [BIND_SIBLING_UNREPORTED]",
+      "observed_value": "FAIL",
+      "ok": true,
+      "polarity": "REJECT"
+    },
+    {
+      "case_id": "B1.BROKEN.CHILD_AS_NODE_RUN",
+      "expected_reason": "RECEIPT_WITHOUT_RUN:rcpt:REG:PRESERVE:STANDARD [BIND_NOT_A_NODE_RUN]",
+      "expected_value": "FAIL",
+      "observed_reason": "RECEIPT_WITHOUT_RUN:rcpt:REG:PRESERVE:STANDARD [BIND_NOT_A_NODE_RUN]",
+      "observed_value": "FAIL",
+      "ok": true,
+      "polarity": "REJECT"
+    },
+    {
+      "case_id": "B1.BROKEN.LAUNCH_IS_NODE_RUN",
+      "expected_reason": "LAUNCH_UNBOUND [BIND_LAUNCH_MISSING]",
+      "expected_value": "FAIL",
+      "observed_reason": "LAUNCH_UNBOUND [BIND_LAUNCH_MISSING]",
+      "observed_value": "FAIL",
+      "ok": true,
+      "polarity": "REJECT"
+    },
+    {
+      "case_id": "B1.BROKEN.LEGACY_ROW",
+      "expected_reason": "RECEIPT_WITHOUT_RUN:rcpt:REG:PRESERVE:STANDARD [BIND_DIGEST_MISSING]",
+      "expected_value": "FAIL",
+      "observed_reason": "RECEIPT_WITHOUT_RUN:rcpt:REG:PRESERVE:STANDARD [BIND_DIGEST_MISSING]",
       "observed_value": "FAIL",
       "ok": true,
       "polarity": "REJECT"
     }
   ],
-  "executed_by": "Argus[desktop-ruapvai-b08b36ac] under C-004-T023B",
+  "executed_by": "Argus[desktop-ruapvai-b08b36ac] under C-009-T031",
   "instrument": "G-INV",
   "schema": "rso.slice001.fire_test.v1",
   "version": [
     {
-      "commit": "22d270fb25da57750c7a6c8009280bbdc86457af",
-      "length": 33263,
-      "role": "code:rso/slice001/evidence.py",
-      "sha256": "47c9051e6d90c73473a66ecaa63f9b2062234198bafe086d4fb85eb88d143e51"
+      "commit": "fa280abfb47105dff1415f67b000bcbfe1885df3",
+      "length": 5306,
+      "role": "code:rso/binding/binding.py",
+      "sha256": "a5a7af0477253b4ff91b1f4ac639c9ba1229891c6633719f54dc0301e593923a"
     },
     {
-      "commit": "22d270fb25da57750c7a6c8009280bbdc86457af",
+      "commit": "fa280abfb47105dff1415f67b000bcbfe1885df3",
+      "length": 38969,
+      "role": "code:rso/slice001/evidence.py",
+      "sha256": "bd4e7bbf338bf30e1b4a2fa5bf68ed2b76db93a669a05d27a63584c6faeb2866"
+    },
+    {
+      "commit": "fa280abfb47105dff1415f67b000bcbfe1885df3",
       "length": 31846,
       "role": "code:rso/slice001/receipt.py",
       "sha256": "f0f0d80063d21703b1709c188cad702b189db772bf5ecac404a04c9a56d5725b"
     }
   ],
-  "version_hash": "4524283c96253cda2987c26b3a4b757a189b1f1cad3cecd2dd8b2c0226e3859d"
+  "version_hash": "3b3271b1266963d320049de4bb69f3e8071c3e3bb852d15108ba81048e0b29a7"
 }

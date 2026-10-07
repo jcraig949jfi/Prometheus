@@ -1,0 +1,58 @@
+{
+  "schema": "prometheus.workgraph.receipt.v1",
+  "task_id": "C-009-T012",
+  "campaign_id": "C-009",
+  "attempt_id": "A-001",
+  "role": "Cadmus",
+  "model": "claude-opus-5-5",
+  "quality_class": "Q2",
+  "start_sha": "5e2639d3e133cbe02a6a57233ee045621b883fbc",
+  "end_sha": "f877fdc866d55c889e881b39eff94ad8ceed32b4",
+  "files_changed": [
+    "rso/witness/CANDIDATES.md",
+    "rso/witness/DESIGN_DRAFT.md"
+  ],
+  "evidence_added": [
+    "CANDIDATES.md: 6 real runtimes surveyed (Ares, Ensorain, Z80 Atlas, toolbox kernel, campaign-6 worlds, Herakles CA stream) with entry points, native boundaries, allowed/forbidden channels, leak-reset and twin constructions, oracles, cost and toy-collapse risk; recommendation Ares W15, fallback Ensorain; reversibility note for Palamedes",
+    "DESIGN_DRAFT.md: claim (relative), boundaries B1 (W15 interrupt) and B2 (episode reset) from the runtime's own code, frozen-subject rule with disjoint seeds, arms S / S-NOPL / S-LEAK / POS / RECUR / NULL / SHUF, predicates P-CAL P-RET P-CHAN P-ERASE P-PRES P-OBS, outcome classes positive / negative / detection-unqualified, rso.binding adapter (BX6), budget, open questions"
+  ],
+  "evidence_executed": [
+    {
+      "command": "python -B -m pytest -q -x ares/tests; archaeon/tests/test_z80atlas_provenance.py; ensorain/e1/tests (smoke)",
+      "result": "19 passed; 33 passed 1 skipped; 17 passed"
+    },
+    {
+      "command": "one Ares W15 rollout, random 64-organism population, 16 episodes (smoke)",
+      "result": "fitness array shape (64,) and 0.08 CPU-s only; values not inspected"
+    },
+    {
+      "command": "python -B -m unittest discover -s rso/slice001/tests -t . && python -B -m unittest discover -s rso/binding/tests -t . (merged tree)",
+      "result": "both OK (slice001 skipped=1)"
+    }
+  ],
+  "red_observed": {
+    "observed": false,
+    "reason": "red_required false: design/survey document"
+  },
+  "result": "DONE_CLEAN",
+  "known_escapes": [
+    "survey breadth: agents/, roles/, crius/, ludus/, apollo/, arcanum/, ignis got a grep pass only",
+    "costs other than the Ares smoke are estimates",
+    "the stochastic ruler (P-RET) needs Argus's sign-off on statistic and INDETERMINATE band before preregistration"
+  ],
+  "unresolved": [
+    "Palamedes selects the runtime (directive s6)",
+    "DESIGN_DRAFT open questions 1-3"
+  ],
+  "unblocks": [],
+  "created_at_utc": "2026-10-07T00:51:59Z",
+  "instance": "m1-a86ec5e4",
+  "host": "SKULLPORT",
+  "branch": "cadmus/c009-t012",
+  "worktree_path": "F:/Prometheus-worktrees/cadmus-c009-t012",
+  "resources": {
+    "cpu": "0 launches; smoke tests about 41 s; acceptance about 132 s",
+    "model": "one Q2 session, about 0.5 hour (survey delegated to one read-only search agent, then verified)"
+  },
+  "notes": "No witness predicate computed and no retention outcome inspected (directive s11)."
+}
