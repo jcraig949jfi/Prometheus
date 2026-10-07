@@ -16,7 +16,9 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
 | B05 | summits: SLOT2 or GENERAL keyed memory? | instrument ready (controls pass); waits on B03 |
 | B03 | BASE vs HEAVY vs RELOC search at equal compute | CLEAN NULL 0/24 each |
 | B07 | withdrawn positional scaffold -> content-addressed recall? | NULL 0/36 (cue dispatch itself unreachable) |
-| B08 | which primitive is the wall? (ladder) | DATA-DEPENDENT SELECTION (L4 4/8, L5 0/8) |
+| B08 | which primitive is the wall? (ladder) | L4 claim RETRACTED: evolved solvers are delay lines (B08b) |
+| B08J | ladder with timing jitter (repaired instrument) | built; queued |
+| B11 | are historical CMP shelf elites delay lines? | queued |
 | B09 | dispatch wall: READ the cue vs SELECT on it | running |
 | B10 | SEL opcode (branch-free mux): does the wall move? | running |
 
@@ -93,5 +95,16 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   built from proteus/foundry/vm.py's own source with ONLY the op-24 branch replaced (assert count == 1). Controls:
   branch programs score identically on both VMs (L5 1.0/L6 .5729 dispatcher; solver 1.0/1.0); SEL programs
   1.0 on the SEL VM and 0.0 on stock. Launched {stock, sel} x {L5_hint3, L6_w2k2} x 8 seeds, G=200.
+- NEW INSTRUMENT archaeon/beta/disasm.py: disassembler + execution trace (tracing copy of the stock VM, one added
+  line). Evolved L4 solvers read as DELAY LINES (seed 807: OUT r8; MOV r8,r7; IN r7 -- answer = input 2 ticks ago).
+- B08b (timing-jitter check, 0-3 NOISE ticks before each ask): evolved solvers collapse -- L1 7/7 -> .27, L3 8/8 ->
+  .27-.38, L4 4/4 -> .19; L2 4/5 SURVIVE (.83-.94) = genuine write-once state; hand slot solver 1.0 everywhere.
+  RETRACTION (mine, B08 entry above): "the second slot is reachable (L4 4/8)" is WITHDRAWN -- what was reached is a
+  timing shortcut. B08 numbers stand as measured; their meaning was "is there a delay-line solution".
+  CHANGED MY MIND, program-level: the GA's default solution is to exploit fixed episode timing; it builds stored
+  state only when timing cannot answer (L2). Likely re-read of CMP1-3: the W2_K2 "shelf" (.5, "remembers one value")
+  may be a delay line that stores NOTHING, which would make the shelf->summit plateau a non-path by construction.
+  To verify on the historical shelf elites (C2-SFE-05 archives) -- queued as B11.
+- B08J built (ladder with jitter in train AND held-out); controls unchanged under jitter. Launches when cores free.
 - Next: B01b (done) tests H-PLATEAU quantitatively; then B03 = search arms at equal compute from fresh gen 0
   (baseline / heavy-tailed mutation count / behaviour-novelty) -- prediction: only structural-move arms lift 0/60.
