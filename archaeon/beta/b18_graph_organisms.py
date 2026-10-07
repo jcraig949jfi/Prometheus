@@ -71,14 +71,41 @@ def graph_evaluate(manifest, episodes, intervention=None, rng_seed=0, reward_mod
             "intervention": None, "interventions_applied": 0, "asks": asks, "correct": correct}
 
 
+def _shares_tolerant(scored):
+    out = {}
+    for _, org, _ in scored:
+        k = org["manifest"].get("persist", "graph")
+        out[k] = out.get(k, 0) + 1
+    n = max(1, len(scored))
+    return {k: round(v / n, 4) for k, v in out.items()}
+
+
 def install():
     EV.evaluate = graph_evaluate
+    EV._shares = _shares_tolerant
     B.eps_for = jittered
+
+
+def wse_indexed_graph():
+    """WSE-format positive control (one channel, ticks [kind, tag, value...]): state[tag] = value on PUT,
+    out state[tag] on ASK. Built from proteus/graph/witness.py's keyed design, rewired for the WSE grammar."""
+    from proteus.graph.affordances import KIND_OF as K
+    from proteus.graph.vm import SCHEMA, canonicalize
+    n = lambda kind, *p: {"kind": K[kind], "params": list(p), "persist": False}   # noqa: E731
+    nodes = [n("CONST", 0), n("IN"), n("IN"), n("CONST", 1), n("EQ"), n("ROUTE"), n("IN"), n("ST"), n("HALT"),
+             n("LD"), n("OUT"), n("HALT")]
+    data = [[0, 1, 0], [0, 2, 0], [1, 4, 0], [3, 4, 1], [4, 5, 0], [0, 6, 0], [2, 7, 0], [6, 7, 1], [2, 9, 0],
+            [9, 10, 0], [0, 10, 1]]
+    control = [[0, 0, 1], [1, 0, 2], [2, 0, 3], [3, 0, 4], [4, 0, 5], [5, 0, 6], [5, 1, 9], [6, 0, 7], [7, 0, 8],
+               [9, 0, 10], [10, 0, 11]]
+    return canonicalize({"schema_version": SCHEMA, "nodes": nodes, "data_edges": data, "control_edges": control,
+                         "entry": 0, "state_words": 1024, "tick_budget": 32, "out_cap": 1, "call_depth_max": 0,
+                         "persist_state": True})
 
 
 def controls():
     install()
-    orgs = {"witness_keyed": W.keyed_memory_manifest(), "witness_one_value": W.one_value_manifest(),
+    orgs = {"wse_indexed_graph": wse_indexed_graph(), "witness_keyed": W.keyed_memory_manifest(), "witness_one_value": W.one_value_manifest(),
             "witness_echo": W.echo_manifest(), "witness_inert": W.inert_manifest()}
     return {k: {r: round(graph_evaluate(m, B.eps_for(r, "heldout", 7, 48), rng_seed=7)["reward"], 4) for r in RUNGS}
             for k, m in orgs.items()}
