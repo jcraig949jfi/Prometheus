@@ -16,6 +16,8 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
 | B05 | summits: SLOT2 or GENERAL keyed memory? | instrument ready (controls pass); waits on B03 |
 | B03 | BASE vs HEAVY vs RELOC search at equal compute | CLEAN NULL 0/24 each |
 | B07 | withdrawn positional scaffold -> content-addressed recall? | running (36 cells, G=400) |
+| B08 | which primitive is the wall? (ladder) | DATA-DEPENDENT SELECTION (L4 4/8, L5 0/8) |
+| B09 | dispatch wall: READ the cue vs SELECT on it | running |
 
 ## 2026-10-06/07 EXP-1 (opened 2026-10-06T23:48Z)
 
@@ -73,5 +75,15 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
 - Pivot (world, not search): B07 environmental SCAFFOLD -- a positional hint word on every ASK, withdrawn over
   generations 100-300. Controls pass: hand hint-dispatcher 1.000/.812/.531 at p=1/.5/0 (plain .573); tag solver
   1.000 everywhere. Launched 3 arms x 12 seeds x G=400 (SCAFFOLD / BASE random third word / ALWAYS).
+- B07 partial (~01:00Z): even ALWAYS (permanent exact hint) never reached train >= .90 -> the wall precedes
+  content addressing. Pivoted to locating it.
+- B08 PRIMITIVE LADDER (same W2_K2 inputs, demand changed; CMP3 search, G=200, 8 seeds; controls pass):
+  L1 one value 7/8 | L3 last (shelf) 8/8 | L2 write-once guard 5/8 | L4 TWO SLOTS, fixed ask order 4/8 (gens
+  105-129) | L5 two slots + exact positional cue 0/8 | L6 W2_K2 0/8.
+  PREDICTION FAILED on L4 (I said <= 1/8): the SECOND SLOT IS REACHABLE. CHANGED MY MIND: the wall is between L4
+  and L5 = answering from one of two stored values according to a DATA cue (fixed order needs no selection).
+  STRONGEST SIGNAL SO FAR: in this VM+GA, data-dependent selection is the unreachable primitive, while storage,
+  guards and a two-slot queue are reachable.
+- B09 launched: READ vs SELECT (cue as 3rd word / 2nd word / folded into the kind code). Controls diagonal.
 - Next: B01b (done) tests H-PLATEAU quantitatively; then B03 = search arms at equal compute from fresh gen 0
   (baseline / heavy-tailed mutation count / behaviour-novelty) -- prediction: only structural-move arms lift 0/60.
