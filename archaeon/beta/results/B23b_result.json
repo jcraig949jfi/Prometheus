@@ -1,0 +1,1850 @@
+{
+ "probe": "B23b",
+ "summary": {
+  "runs": 102,
+  "scored": 102,
+  "beats_constant": 40,
+  "input_using": 49,
+  "both": 40
+ },
+ "rows": [
+  {
+   "exp": "B-pressure.T1",
+   "family": "B-pressure",
+   "features": [
+    "resources",
+    "objects",
+    "delayed",
+    "hidden",
+    "hazards",
+    "history",
+    "coupling",
+    "channels"
+   ],
+   "K": 4,
+   "elite": 0.0,
+   "constant": 0.0,
+   "blind": 0.0,
+   "beats_constant": false,
+   "input_using": false
+  },
+  {
+   "exp": "B-pressure.T2",
+   "family": "B-pressure",
+   "features": [
+    "resources",
+    "locality",
+    "objects",
+    "delayed",
+    "hidden",
+    "hazards",
+    "regime",
+    "channels"
+   ],
+   "K": 3,
+   "elite": 0.0786,
+   "constant": 0.0641,
+   "blind": 0.0453,
+   "beats_constant": false,
+   "input_using": false
+  },
+  {
+   "exp": "B-pressure.T3",
+   "family": "B-pressure",
+   "features": [
+    "objects",
+    "delayed",
+    "hidden",
+    "hazards",
+    "history",
+    "coupling",
+    "regime",
+    "channels"
+   ],
+   "K": 4,
+   "elite": 0.0497,
+   "constant": 0.0497,
+   "blind": 0.0497,
+   "beats_constant": false,
+   "input_using": false
+  },
+  {
+   "exp": "B-scatter.T000.d_audit",
+   "family": "B-scatter",
+   "features": [
+    "objects",
+    "hidden",
+    "channels"
+   ],
+   "K": 4,
+   "elite": 0.713,
+   "constant": 0.713,
+   "blind": 0.713,
+   "beats_constant": false,
+   "input_using": false
+  },
+  {
+   "exp": "B-scatter.T000.d_audit_2b4cbc221db3",
+   "family": "B-scatter",
+   "features": [
+    "objects",
+    "hidden",
+    "channels"
+   ],
+   "K": 4,
+   "elite": 0.713,
+   "constant": 0.713,
+   "blind": 0.713,
+   "beats_constant": false,
+   "input_using": false
+  },
+  {
+   "exp": "B-scatter.T000.d_audit_d5bcded2cfc6",
+   "family": "B-scatter",
+   "features": [
+    "objects",
+    "hidden",
+    "channels"
+   ],
+   "K": 4,
+   "elite": 0.713,
+   "constant": 0.713,
+   "blind": 0.713,
+   "beats_constant": false,
+   "input_using": false
+  },
+  {
+   "exp": "B-scatter.T000.d_horizon",
+   "family": "B-scatter",
+   "features": [
+    "resources",
+    "locality",
+    "objects",
+    "hidden",
+    "hazards",
+    "history",
+    "coupling",
+    "regime",
+    "channels"
+   ],
+   "K": 2,
+   "elite": 0.2001,
+   "constant": 0.1147,
+   "blind": 0.0354,
+   "beats_constant": true,
+   "input_using": true
+  },
+  {
+   "exp": "B-scatter.T000.d_horizon_2b4cbc221db3",
+   "family": "B-scatter",
+   "features": [
+    "resources",
+    "locality",
+    "objects",
+    "hidden",
+    "hazards",
+    "history",
+    "coupling",
+    "regime",
+    "channels"
+   ],
+   "K": 2,
+   "elite": 0.1433,
+   "constant": 0.1147,
+   "blind": 0.0354,
+   "beats_constant": false,
+   "input_using": true
+  },
+  {
+   "exp": "B-scatter.T000.d_horizon_d5bcded2cfc6",
+   "family": "B-scatter",
+   "features": [
+    "resources",
+    "locality",
+    "objects",
+    "hidden",
+    "hazards",
+    "history",
+    "coupling",
+    "regime",
+    "channels"
+   ],
+   "K": 2,
+   "elite": 0.1576,
+   "constant": 0.1147,
+   "blind": 0.0233,
+   "beats_constant": false,
+   "input_using": true
+  },
+  {
+   "exp": "B-scatter.T000.d_seed",
+   "family": "B-scatter",
+   "features": [
+    "resources",
+    "locality",
+    "objects",
+    "hazards",
+    "history",
+    "coupling",
+    "channels"
+   ],
+   "K": 4,
+   "elite": 0.0816,
+   "constant": 0.064,
+   "blind": 0.0816,
+   "beats_constant": false,
+   "input_using": false
+  },
+  {
+   "exp": "B-scatter.T000.d_seed_2b4cbc221db3",
+   "family": "B-scatter",
+   "features": [
+    "resources",
+    "locality",
+    "objects",
+    "hazards",
+    "history",
+    "coupling",
+    "channels"
+   ],
+   "K": 4,
+   "elite": 0.1753,
+   "constant": 0.064,
+   "blind": 0.0462,
+   "beats_constant": true,
+   "input_using": true
+  },
+  {
+   "exp": "B-scatter.T000.d_seed_5ae12446517f",
+   "family": "B-scatter",
+   "features": [
+    "resources",
+    "locality",
+    "objects",
+    "hazards",
+    "history",
+    "coupling",
+    "channels"
+   ],
+   "K": 4,
+   "elite": 0.1542,
+   "constant": 0.064,
+   "blind": 0.0,
+   "beats_constant": true,
+   "input_using": true
+  },
+  {
+   "exp": "B-scatter.T000.d_seed_d5bcded2cfc6",
+   "family": "B-scatter",
+   "features": [
+    "resources",
+    "locality",
+    "objects",
+    "hazards",
+    "history",
+    "coupling",
+    "channels"
+   ],
+   "K": 4,
+   "elite": 0.1404,
+   "constant": 0.064,
+   "blind": 0.0367,
+   "beats_constant": true,
+   "input_using": true
+  },
+  {
+   "exp": "B-scatter.T000.d_seed_d5bcded2cfc6_d5bcded2cfc6",
+   "family": "B-scatter",
+   "features": [
+    "resources",
+    "locality",
+    "objects",
+    "hazards",
+    "history",
+    "coupling",
+    "channels"
+   ],
+   "K": 4,
+   "elite": 0.1463,
+   "constant": 0.064,
+   "blind": 0.049,
+   "beats_constant": true,
+   "input_using": true
+  },
+  {
+   "exp": "B-scatter.T000.d_seed_d5bcded2cfc6_d5bcded2cfc6_d5bcded2cfc6",
+   "family": "B-scatter",
+   "features": [
+    "resources",
+    "locality",
+    "objects",
+    "hazards",
+    "history",
+    "coupling",
+    "channels"
+   ],
+   "K": 4,
+   "elite": 0.0773,
+   "constant": 0.064,
+   "blind": 0.0,
+   "beats_constant": false,
+   "input_using": true
+  },
+  {
+   "exp": "B-scatter.T000.d_seed_d5bcded2cfc6_d5bcded2cfc6_d5bcded2cfc6_d5bcded2cfc6",
+   "family": "B-scatter",
+   "features": [
+    "resources",
+    "locality",
+    "objects",
+    "hazards",
+    "history",
+    "coupling",
+    "channels"
+   ],
+   "K": 4,
+   "elite": 0.1506,
+   "constant": 0.064,
+   "blind": 0.0425,
+   "beats_constant": true,
+   "input_using": true
+  },
+  {
+   "exp": "B-scatter.T000.d_seed_d5bcded2cfc6_d5bcded2cfc6_d5bcded2cfc6_d5bcded2cfc6_d5bcded2cfc6",
+   "family": "B-scatter",
+   "features": [
+    "resources",
+    "locality",
+    "objects",
+    "hazards",
+    "history",
+    "coupling",
+    "channels"
+   ],
+   "K": 4,
+   "elite": 0.1327,
+   "constant": 0.064,
+   "blind": 0.044,
+   "beats_constant": true,
+   "input_using": true
+  },
+  {
+   "exp": "B-scatter.T000.d_seed_d5bcded2cfc6_d5bcded2cfc6_d5bcded2cfc6_d5bcded2cfc6_d5bcded2cfc6_d5bcded2cfc6",
+   "family": "B-scatter",
+   "features": [
+    "resources",
+    "locality",
+    "objects",
+    "hazards",
+    "history",
+    "coupling",
+    "channels"
+   ],
+   "K": 4,
+   "elite": 0.064,
+   "constant": 0.064,
+   "blind": 0.064,
+   "beats_constant": false,
+   "input_using": false
+  },
+  {
+   "exp": "B-scatter.T000.d_seed_d5bcded2cfc6_d5bcded2cfc6_d5bcded2cfc6_d5bcded2cfc6_d5bcded2cfc6_d5bcded2cfc6_d5bcded2cfc6",
+   "family": "B-scatter",
+   "features": [
+    "resources",
+    "locality",
+    "objects",
+    "hazards",
+    "history",
+    "coupling",
+    "channels"
+   ],
+   "K": 4,
+   "elite": 0.1228,
+   "constant": 0.064,
+   "blind": 0.0237,
+   "beats_constant": true,
+   "input_using": true
+  },
+  {
+   "exp": "B-scatter.T000.d_seed_d5bcded2cfc6_d5bcded2cfc6_d5bcded2cfc6_d5bcded2cfc6_d5bcded2cfc6_d5bcded2cfc6_d5bcded2cfc6_d5bcded2cfc6",
+   "family": "B-scatter",
+   "features": [
+    "resources",
+    "locality",
+    "objects",
+    "hazards",
+    "history",
+    "coupling",
+    "channels"
+   ],
+   "K": 4,
+   "elite": 0.087,
+   "constant": 0.064,
+   "blind": 0.0375,
+   "beats_constant": false,
+   "input_using": false
+  },
+  {
+   "exp": "B-scatter.T000.d_seed_d5bcded2cfc6_d5bcded2cfc6_d5bcded2cfc6_d5bcded2cfc6_d5bcded2cfc6_d5bcded2cfc6_d5bcded2cfc6_d5bcded2cfc6_d5bcded2cfc6",
+   "family": "B-scatter",
+   "features": [
+    "resources",
+    "locality",
+    "objects",
+    "hazards",
+    "history",
+    "coupling",
+    "channels"
+   ],
+   "K": 4,
+   "elite": 0.0827,
+   "constant": 0.064,
+   "blind": 0.0,
+   "beats_constant": false,
+   "input_using": true
+  },
+  {
+   "exp": "B-scatter.T000.d_seed_d5bcded2cfc6_d5bcded2cfc6_d5bcded2cfc6_d5bcded2cfc6_d5bcded2cfc6_d5bcded2cfc6_d5bcded2cfc6_d5bcded2cfc6_d5bcded2cfc6_d5bcded2cfc6",
+   "family": "B-scatter",
+   "features": [
+    "resources",
+    "locality",
+    "objects",
+    "hazards",
+    "history",
+    "coupling",
+    "channels"
+   ],
+   "K": 4,
+   "elite": 0.1498,
+   "constant": 0.064,
+   "blind": 0.064,
+   "beats_constant": true,
+   "input_using": true
+  },
+  {
+   "exp": "B-scatter.T000.d_seed_d5bcded2cfc6_d5bcded2cfc6_d5bcded2cfc6_d5bcded2cfc6_d5bcded2cfc6_d5bcded2cfc6_d5bcded2cfc6_d5bcded2cfc6_d5bcded2cfc6_d5bcded2cfc6_d5bcded2cfc6",
+   "family": "B-scatter",
+   "features": [
+    "resources",
+    "locality",
+    "objects",
+    "hazards",
+    "history",
+    "coupling",
+    "channels"
+   ],
+   "K": 4,
+   "elite": 0.0454,
+   "constant": 0.064,
+   "blind": 0.0454,
+   "beats_constant": false,
+   "input_using": false
+  },
+  {
+   "exp": "B-scatter.T000.d_seed_d5bcded2cfc6_d5bcded2cfc6_d5bcded2cfc6_d5bcded2cfc6_d5bcded2cfc6_d5bcded2cfc6_d5bcded2cfc6_d5bcded2cfc6_d5bcded2cfc6_d5bcded2cfc6_d5bcded2cfc6_d5bcded2cfc6",
+   "family": "B-scatter",
+   "features": [
+    "resources",
+    "locality",
+    "objects",
+    "hazards",
+    "history",
+    "coupling",
+    "channels"
+   ],
+   "K": 4,
+   "elite": 0.1067,
+   "constant": 0.064,
+   "blind": 0.064,
+   "beats_constant": false,
+   "input_using": false
+  },
+  {
+   "exp": "B-scatter.T000.d_unknown",
+   "family": "B-scatter",
+   "features": [
+    "resources",
+    "locality",
+    "objects",
+    "hazards",
+    "history",
+    "coupling",
+    "channels"
+   ],
+   "K": 4,
+   "elite": 0.1701,
+   "constant": 0.064,
+   "blind": 0.0037,
+   "beats_constant": true,
+   "input_using": true
+  },
+  {
+   "exp": "B-scatter.T000.d_unknown_2b4cbc221db3",
+   "family": "B-scatter",
+   "features": [
+    "resources",
+    "locality",
+    "objects",
+    "hazards",
+    "history",
+    "coupling",
+    "channels"
+   ],
+   "K": 4,
+   "elite": 0.1477,
+   "constant": 0.064,
+   "blind": 0.064,
+   "beats_constant": true,
+   "input_using": true
+  },
+  {
+   "exp": "B-scatter.T000.d_unknown_d5bcded2cfc6",
+   "family": "B-scatter",
+   "features": [
+    "resources",
+    "locality",
+    "objects",
+    "hazards",
+    "history",
+    "coupling",
+    "channels"
+   ],
+   "K": 4,
+   "elite": 0.0616,
+   "constant": 0.064,
+   "blind": 0.0616,
+   "beats_constant": false,
+   "input_using": false
+  },
+  {
+   "exp": "B-scatter.T000.d_view",
+   "family": "B-scatter",
+   "features": [
+    "objects",
+    "hidden",
+    "channels"
+   ],
+   "K": 4,
+   "elite": 0.713,
+   "constant": 0.713,
+   "blind": 0.713,
+   "beats_constant": false,
+   "input_using": false
+  },
+  {
+   "exp": "B-scatter.T000.d_view_2b4cbc221db3",
+   "family": "B-scatter",
+   "features": [
+    "objects",
+    "hidden",
+    "channels"
+   ],
+   "K": 4,
+   "elite": 0.713,
+   "constant": 0.713,
+   "blind": 0.713,
+   "beats_constant": false,
+   "input_using": false
+  },
+  {
+   "exp": "B-scatter.T000.d_view_d5bcded2cfc6",
+   "family": "B-scatter",
+   "features": [
+    "objects",
+    "hidden",
+    "channels"
+   ],
+   "K": 4,
+   "elite": 0.713,
+   "constant": 0.713,
+   "blind": 0.713,
+   "beats_constant": false,
+   "input_using": false
+  },
+  {
+   "exp": "B-scatter.T000.rerun",
+   "family": "B-scatter",
+   "features": [
+    "objects",
+    "hidden",
+    "channels"
+   ],
+   "K": 4,
+   "elite": 0.713,
+   "constant": 0.713,
+   "blind": 0.713,
+   "beats_constant": false,
+   "input_using": false
+  },
+  {
+   "exp": "B-scatter.T000.rerun_2b4cbc221db3",
+   "family": "B-scatter",
+   "features": [
+    "objects",
+    "hidden",
+    "channels"
+   ],
+   "K": 4,
+   "elite": 0.713,
+   "constant": 0.713,
+   "blind": 0.713,
+   "beats_constant": false,
+   "input_using": false
+  },
+  {
+   "exp": "B-scatter.T000.rerun_d5bcded2cfc6",
+   "family": "B-scatter",
+   "features": [
+    "objects",
+    "hidden",
+    "channels"
+   ],
+   "K": 4,
+   "elite": 0.713,
+   "constant": 0.713,
+   "blind": 0.713,
+   "beats_constant": false,
+   "input_using": false
+  },
+  {
+   "exp": "B-scatter.T001",
+   "family": "B-scatter",
+   "features": [
+    "resources",
+    "locality",
+    "objects",
+    "delayed",
+    "hidden",
+    "hazards",
+    "history",
+    "coupling",
+    "regime",
+    "channels"
+   ],
+   "K": 2,
+   "elite": 0.0241,
+   "constant": 0.0147,
+   "blind": 0.0017,
+   "beats_constant": false,
+   "input_using": false
+  },
+  {
+   "exp": "B-scatter.T002",
+   "family": "B-scatter",
+   "features": [
+    "hidden",
+    "hazards",
+    "history",
+    "coupling",
+    "regime",
+    "channels"
+   ],
+   "K": 2,
+   "elite": 0.0,
+   "constant": 0.0,
+   "blind": 0.0,
+   "beats_constant": false,
+   "input_using": false
+  },
+  {
+   "exp": "B-scatter.T003",
+   "family": "B-scatter",
+   "features": [
+    "resources",
+    "locality",
+    "objects",
+    "delayed",
+    "hazards",
+    "history",
+    "coupling",
+    "regime",
+    "channels"
+   ],
+   "K": 2,
+   "elite": 0.0675,
+   "constant": 0.0675,
+   "blind": 0.0675,
+   "beats_constant": false,
+   "input_using": false
+  },
+  {
+   "exp": "B-worldgen.T1",
+   "family": "B-worldgen",
+   "features": [
+    "objects",
+    "regime"
+   ],
+   "K": 1,
+   "elite": 0.0,
+   "constant": 0.0,
+   "blind": 0.0,
+   "beats_constant": false,
+   "input_using": false
+  },
+  {
+   "exp": "B-worldgen.T2",
+   "family": "B-worldgen",
+   "features": [
+    "resources",
+    "locality",
+    "objects",
+    "delayed",
+    "hidden",
+    "hazards",
+    "history",
+    "regime"
+   ],
+   "K": 1,
+   "elite": 0.0193,
+   "constant": 0.0118,
+   "blind": 0.0105,
+   "beats_constant": false,
+   "input_using": false
+  },
+  {
+   "exp": "B-worldgen.T3",
+   "family": "B-worldgen",
+   "features": [
+    "objects",
+    "delayed",
+    "hidden",
+    "hazards",
+    "history",
+    "coupling",
+    "regime",
+    "channels"
+   ],
+   "K": 4,
+   "elite": 0.7277,
+   "constant": 0.7277,
+   "blind": 0.7277,
+   "beats_constant": false,
+   "input_using": false
+  },
+  {
+   "exp": "B-worldgen.T4",
+   "family": "B-worldgen",
+   "features": [
+    "resources",
+    "objects",
+    "delayed",
+    "hidden",
+    "hazards",
+    "history",
+    "coupling",
+    "regime"
+   ],
+   "K": 1,
+   "elite": 0.5217,
+   "constant": 0.2083,
+   "blind": 0.1963,
+   "beats_constant": true,
+   "input_using": true
+  },
+  {
+   "exp": "C4-cliff.T2",
+   "family": "C4-cliff",
+   "features": [
+    "locality",
+    "delayed",
+    "regime"
+   ],
+   "K": 1,
+   "elite": 0.0,
+   "constant": 0.0,
+   "blind": 0.0,
+   "beats_constant": false,
+   "input_using": false
+  },
+  {
+   "exp": "C4-cliff.T3",
+   "family": "C4-cliff",
+   "features": [
+    "objects",
+    "delayed",
+    "coupling",
+    "regime",
+    "channels"
+   ],
+   "K": 3,
+   "elite": 0.0,
+   "constant": 0.0,
+   "blind": 0.0,
+   "beats_constant": false,
+   "input_using": false
+  },
+  {
+   "exp": "C4-exapt.T1",
+   "family": "C4-exapt",
+   "features": [
+    "hidden",
+    "history",
+    "coupling",
+    "regime",
+    "channels"
+   ],
+   "K": 2,
+   "elite": 0.0,
+   "constant": 0.0,
+   "blind": 0.0,
+   "beats_constant": false,
+   "input_using": false
+  },
+  {
+   "exp": "C4-exapt.T1_1f041cd53666",
+   "family": "C4-exapt",
+   "features": [
+    "objects",
+    "hidden",
+    "history",
+    "coupling",
+    "regime",
+    "channels"
+   ],
+   "K": 4,
+   "elite": 0.766,
+   "constant": 0.766,
+   "blind": 0.766,
+   "beats_constant": false,
+   "input_using": false
+  },
+  {
+   "exp": "C4-exapt.T1_2b4cbc221db3",
+   "family": "C4-exapt",
+   "features": [
+    "hidden",
+    "history",
+    "coupling",
+    "regime",
+    "channels"
+   ],
+   "K": 2,
+   "elite": 0.0,
+   "constant": 0.0,
+   "blind": 0.0,
+   "beats_constant": false,
+   "input_using": false
+  },
+  {
+   "exp": "C4-exapt.T1_5ae12446517f",
+   "family": "C4-exapt",
+   "features": [
+    "hidden",
+    "history",
+    "coupling",
+    "regime",
+    "channels"
+   ],
+   "K": 2,
+   "elite": 0.0,
+   "constant": 0.0,
+   "blind": 0.0,
+   "beats_constant": false,
+   "input_using": false
+  },
+  {
+   "exp": "C4-exapt.T1_7c739d2809b7",
+   "family": "C4-exapt",
+   "features": [
+    "history",
+    "coupling",
+    "regime",
+    "channels"
+   ],
+   "K": 2,
+   "elite": 0.0,
+   "constant": 0.0,
+   "blind": 0.0,
+   "beats_constant": false,
+   "input_using": false
+  },
+  {
+   "exp": "C4-exapt.T1_d5bcded2cfc6",
+   "family": "C4-exapt",
+   "features": [
+    "hidden",
+    "history",
+    "coupling",
+    "regime",
+    "channels"
+   ],
+   "K": 2,
+   "elite": 0.0,
+   "constant": 0.0,
+   "blind": 0.0,
+   "beats_constant": false,
+   "input_using": false
+  },
+  {
+   "exp": "C6-blind.T2",
+   "family": "C6-blind",
+   "features": [
+    "objects",
+    "history"
+   ],
+   "K": 1,
+   "elite": 0.0,
+   "constant": 0.0,
+   "blind": 0.0,
+   "beats_constant": false,
+   "input_using": false
+  },
+  {
+   "exp": "C6-unable.T1",
+   "family": "C6-unable",
+   "features": [
+    "hidden",
+    "hazards",
+    "history",
+    "coupling",
+    "channels"
+   ],
+   "K": 3,
+   "elite": 0.0,
+   "constant": 0.0,
+   "blind": 0.0,
+   "beats_constant": false,
+   "input_using": false
+  },
+  {
+   "exp": "C6-unable.T2",
+   "family": "C6-unable",
+   "features": [
+    "objects",
+    "history",
+    "regime"
+   ],
+   "K": 1,
+   "elite": 0.0,
+   "constant": 0.0,
+   "blind": 0.0,
+   "beats_constant": false,
+   "input_using": false
+  },
+  {
+   "exp": "C6-unable.T3",
+   "family": "C6-unable",
+   "features": [
+    "resources",
+    "locality",
+    "objects",
+    "delayed",
+    "hazards",
+    "history",
+    "channels"
+   ],
+   "K": 3,
+   "elite": 0.0885,
+   "constant": 0.0532,
+   "blind": 0.0615,
+   "beats_constant": false,
+   "input_using": false
+  },
+  {
+   "exp": "C6-volume.T2",
+   "family": "C6-volume",
+   "features": [],
+   "K": 1,
+   "elite": 0.0,
+   "constant": 0.0,
+   "blind": 0.0,
+   "beats_constant": false,
+   "input_using": false
+  },
+  {
+   "exp": "B-scatter.T000",
+   "family": "LIN-2d4fd1c7",
+   "features": [
+    "objects",
+    "hidden",
+    "channels"
+   ],
+   "K": 4,
+   "elite": 0.713,
+   "constant": 0.713,
+   "blind": 0.713,
+   "beats_constant": false,
+   "input_using": false
+  },
+  {
+   "exp": "P-boom_A_baseline_s1",
+   "family": "P-boom",
+   "features": [
+    "resources",
+    "locality",
+    "objects",
+    "hazards",
+    "history",
+    "coupling",
+    "channels"
+   ],
+   "K": 4,
+   "elite": 0.1025,
+   "constant": 0.0898,
+   "blind": 0.0,
+   "beats_constant": false,
+   "input_using": true
+  },
+  {
+   "exp": "P-boom_A_baseline_s2",
+   "family": "P-boom",
+   "features": [
+    "resources",
+    "locality",
+    "objects",
+    "hazards",
+    "history",
+    "coupling",
+    "channels"
+   ],
+   "K": 4,
+   "elite": 0.2469,
+   "constant": 0.0503,
+   "blind": 0.0475,
+   "beats_constant": true,
+   "input_using": true
+  },
+  {
+   "exp": "P-boom_A_baseline_s3",
+   "family": "P-boom",
+   "features": [
+    "resources",
+    "locality",
+    "objects",
+    "hazards",
+    "history",
+    "coupling",
+    "channels"
+   ],
+   "K": 4,
+   "elite": 0.32,
+   "constant": 0.076,
+   "blind": 0.0,
+   "beats_constant": true,
+   "input_using": true
+  },
+  {
+   "exp": "P-boom_B_shuffle_s1",
+   "family": "P-boom",
+   "features": [
+    "resources",
+    "locality",
+    "objects",
+    "hazards",
+    "history",
+    "coupling",
+    "channels"
+   ],
+   "K": 4,
+   "elite": 0.1061,
+   "constant": 0.0898,
+   "blind": 0.1061,
+   "beats_constant": false,
+   "input_using": false
+  },
+  {
+   "exp": "P-boom_B_shuffle_s2",
+   "family": "P-boom",
+   "features": [
+    "resources",
+    "locality",
+    "objects",
+    "hazards",
+    "history",
+    "coupling",
+    "channels"
+   ],
+   "K": 4,
+   "elite": 0.1592,
+   "constant": 0.0503,
+   "blind": 0.0438,
+   "beats_constant": true,
+   "input_using": true
+  },
+  {
+   "exp": "P-boom_B_shuffle_s3",
+   "family": "P-boom",
+   "features": [
+    "resources",
+    "locality",
+    "objects",
+    "hazards",
+    "history",
+    "coupling",
+    "channels"
+   ],
+   "K": 4,
+   "elite": 0.3573,
+   "constant": 0.076,
+   "blind": 0.0,
+   "beats_constant": true,
+   "input_using": true
+  },
+  {
+   "exp": "P-boom_C_no_coupling",
+   "family": "P-boom",
+   "features": [
+    "resources",
+    "locality",
+    "objects",
+    "hazards",
+    "history",
+    "channels"
+   ],
+   "K": 4,
+   "elite": 0.2081,
+   "constant": 0.0916,
+   "blind": 0.0841,
+   "beats_constant": true,
+   "input_using": true
+  },
+  {
+   "exp": "P-boom_D_persist_shared",
+   "family": "P-boom",
+   "features": [
+    "resources",
+    "locality",
+    "objects",
+    "hazards",
+    "history",
+    "coupling",
+    "channels"
+   ],
+   "K": 4,
+   "elite": 0.2225,
+   "constant": 0.0898,
+   "blind": 0.0,
+   "beats_constant": true,
+   "input_using": true
+  },
+  {
+   "exp": "P-boom_E_N128",
+   "family": "P-boom",
+   "features": [
+    "resources",
+    "locality",
+    "objects",
+    "hazards",
+    "history",
+    "coupling",
+    "channels"
+   ],
+   "K": 4,
+   "elite": 0.2297,
+   "constant": 0.0898,
+   "blind": 0.0929,
+   "beats_constant": true,
+   "input_using": true
+  },
+  {
+   "exp": "P-boom_E_N8",
+   "family": "P-boom",
+   "features": [
+    "resources",
+    "locality",
+    "objects",
+    "hazards",
+    "history",
+    "coupling",
+    "channels"
+   ],
+   "K": 4,
+   "elite": 0.0809,
+   "constant": 0.0898,
+   "blind": 0.0,
+   "beats_constant": false,
+   "input_using": true
+  },
+  {
+   "exp": "P-boom_F_popcapture_s1",
+   "family": "P-boom",
+   "features": [
+    "resources",
+    "locality",
+    "objects",
+    "hazards",
+    "history",
+    "coupling",
+    "channels"
+   ],
+   "K": 4,
+   "elite": 0.2461,
+   "constant": 0.0898,
+   "blind": 0.0898,
+   "beats_constant": true,
+   "input_using": true
+  },
+  {
+   "exp": "P-boom_K_A_baseline_s1",
+   "family": "P-boom",
+   "features": [
+    "resources",
+    "locality",
+    "objects",
+    "hazards",
+    "history",
+    "coupling",
+    "channels"
+   ],
+   "K": 4,
+   "elite": 0.0809,
+   "constant": 0.0898,
+   "blind": 0.0239,
+   "beats_constant": false,
+   "input_using": true
+  },
+  {
+   "exp": "P-boom_K_A_baseline_s2",
+   "family": "P-boom",
+   "features": [
+    "resources",
+    "locality",
+    "objects",
+    "hazards",
+    "history",
+    "coupling",
+    "channels"
+   ],
+   "K": 4,
+   "elite": 0.0527,
+   "constant": 0.0503,
+   "blind": 0.0527,
+   "beats_constant": false,
+   "input_using": false
+  },
+  {
+   "exp": "P-boom_K_A_baseline_s3",
+   "family": "P-boom",
+   "features": [
+    "resources",
+    "locality",
+    "objects",
+    "hazards",
+    "history",
+    "coupling",
+    "channels"
+   ],
+   "K": 4,
+   "elite": 0.2372,
+   "constant": 0.076,
+   "blind": 0.076,
+   "beats_constant": true,
+   "input_using": true
+  },
+  {
+   "exp": "P-boom_K_B_shuffle_s1",
+   "family": "P-boom",
+   "features": [
+    "resources",
+    "locality",
+    "objects",
+    "hazards",
+    "history",
+    "coupling",
+    "channels"
+   ],
+   "K": 4,
+   "elite": 0.269,
+   "constant": 0.0898,
+   "blind": 0.0,
+   "beats_constant": true,
+   "input_using": true
+  },
+  {
+   "exp": "P-boom_K_B_shuffle_s2",
+   "family": "P-boom",
+   "features": [
+    "resources",
+    "locality",
+    "objects",
+    "hazards",
+    "history",
+    "coupling",
+    "channels"
+   ],
+   "K": 4,
+   "elite": 0.0906,
+   "constant": 0.0503,
+   "blind": 0.0265,
+   "beats_constant": false,
+   "input_using": true
+  },
+  {
+   "exp": "P-boom_K_B_shuffle_s3",
+   "family": "P-boom",
+   "features": [
+    "resources",
+    "locality",
+    "objects",
+    "hazards",
+    "history",
+    "coupling",
+    "channels"
+   ],
+   "K": 4,
+   "elite": 0.2308,
+   "constant": 0.076,
+   "blind": 0.0489,
+   "beats_constant": true,
+   "input_using": true
+  },
+  {
+   "exp": "P-boom_K_C_no_coupling_s1",
+   "family": "P-boom",
+   "features": [
+    "resources",
+    "locality",
+    "objects",
+    "hazards",
+    "history",
+    "channels"
+   ],
+   "K": 4,
+   "elite": 0.1672,
+   "constant": 0.0916,
+   "blind": 0.0,
+   "beats_constant": true,
+   "input_using": true
+  },
+  {
+   "exp": "P-boom_K_C_no_coupling_s2",
+   "family": "P-boom",
+   "features": [
+    "resources",
+    "locality",
+    "objects",
+    "hazards",
+    "history",
+    "channels"
+   ],
+   "K": 4,
+   "elite": 0.1759,
+   "constant": 0.0628,
+   "blind": 0.0,
+   "beats_constant": true,
+   "input_using": true
+  },
+  {
+   "exp": "P-boom_K_C_no_coupling_s3",
+   "family": "P-boom",
+   "features": [
+    "resources",
+    "locality",
+    "objects",
+    "hazards",
+    "history",
+    "channels"
+   ],
+   "K": 4,
+   "elite": 0.081,
+   "constant": 0.059,
+   "blind": 0.0583,
+   "beats_constant": false,
+   "input_using": false
+  },
+  {
+   "exp": "P-boom_K_D_persist_s1",
+   "family": "P-boom",
+   "features": [
+    "resources",
+    "locality",
+    "objects",
+    "hazards",
+    "history",
+    "coupling",
+    "channels"
+   ],
+   "K": 4,
+   "elite": 0.3025,
+   "constant": 0.0898,
+   "blind": 0.0,
+   "beats_constant": true,
+   "input_using": true
+  },
+  {
+   "exp": "P-boom_K_D_persist_s2",
+   "family": "P-boom",
+   "features": [
+    "resources",
+    "locality",
+    "objects",
+    "hazards",
+    "history",
+    "coupling",
+    "channels"
+   ],
+   "K": 4,
+   "elite": 0.1762,
+   "constant": 0.0503,
+   "blind": 0.0475,
+   "beats_constant": true,
+   "input_using": true
+  },
+  {
+   "exp": "P-boom_K_D_persist_s3",
+   "family": "P-boom",
+   "features": [
+    "resources",
+    "locality",
+    "objects",
+    "hazards",
+    "history",
+    "coupling",
+    "channels"
+   ],
+   "K": 4,
+   "elite": 0.321,
+   "constant": 0.076,
+   "blind": 0.0684,
+   "beats_constant": true,
+   "input_using": true
+  },
+  {
+   "exp": "P-boom_K_F_popcapture_s1",
+   "family": "P-boom",
+   "features": [
+    "resources",
+    "locality",
+    "objects",
+    "hazards",
+    "history",
+    "coupling",
+    "channels"
+   ],
+   "K": 4,
+   "elite": 0.0809,
+   "constant": 0.0898,
+   "blind": 0.0239,
+   "beats_constant": false,
+   "input_using": true
+  },
+  {
+   "exp": "W-artifacts_w50047_persist",
+   "family": "W-artifacts",
+   "features": [
+    "resources",
+    "objects",
+    "history",
+    "coupling"
+   ],
+   "K": 1,
+   "elite": 1.0,
+   "constant": 0.4351,
+   "blind": 0.4351,
+   "beats_constant": true,
+   "input_using": true
+  },
+  {
+   "exp": "W-artifacts_w50047_reset",
+   "family": "W-artifacts",
+   "features": [
+    "resources",
+    "objects",
+    "history",
+    "coupling"
+   ],
+   "K": 1,
+   "elite": 1.0,
+   "constant": 0.4351,
+   "blind": 0.4351,
+   "beats_constant": true,
+   "input_using": true
+  },
+  {
+   "exp": "W-artifacts_w50053_persist",
+   "family": "W-artifacts",
+   "features": [
+    "resources",
+    "locality",
+    "objects",
+    "hazards",
+    "coupling"
+   ],
+   "K": 1,
+   "elite": 0.0457,
+   "constant": 0.0265,
+   "blind": 0.0457,
+   "beats_constant": false,
+   "input_using": false
+  },
+  {
+   "exp": "W-artifacts_w50053_reset",
+   "family": "W-artifacts",
+   "features": [
+    "resources",
+    "locality",
+    "objects",
+    "hazards",
+    "coupling"
+   ],
+   "K": 1,
+   "elite": 0.0472,
+   "constant": 0.0265,
+   "blind": 0.0242,
+   "beats_constant": false,
+   "input_using": false
+  },
+  {
+   "exp": "W-artifacts_w50057_persist",
+   "family": "W-artifacts",
+   "features": [
+    "resources",
+    "objects",
+    "hidden",
+    "hazards",
+    "coupling",
+    "channels"
+   ],
+   "K": 4,
+   "elite": 0.4473,
+   "constant": 0.1725,
+   "blind": 0.1652,
+   "beats_constant": true,
+   "input_using": true
+  },
+  {
+   "exp": "W-artifacts_w50057_reset",
+   "family": "W-artifacts",
+   "features": [
+    "resources",
+    "objects",
+    "hidden",
+    "hazards",
+    "coupling",
+    "channels"
+   ],
+   "K": 4,
+   "elite": 0.4473,
+   "constant": 0.1725,
+   "blind": 0.1652,
+   "beats_constant": true,
+   "input_using": true
+  },
+  {
+   "exp": "W-artifacts_w50059_persist",
+   "family": "W-artifacts",
+   "features": [
+    "resources",
+    "locality",
+    "objects",
+    "hidden",
+    "history",
+    "coupling",
+    "channels"
+   ],
+   "K": 4,
+   "elite": 0.0998,
+   "constant": 0.0958,
+   "blind": 0.0958,
+   "beats_constant": false,
+   "input_using": false
+  },
+  {
+   "exp": "W-artifacts_w50059_reset",
+   "family": "W-artifacts",
+   "features": [
+    "resources",
+    "locality",
+    "objects",
+    "hidden",
+    "history",
+    "coupling",
+    "channels"
+   ],
+   "K": 4,
+   "elite": 0.0958,
+   "constant": 0.0958,
+   "blind": 0.0958,
+   "beats_constant": false,
+   "input_using": false
+  },
+  {
+   "exp": "W-artifacts_w50063_persist",
+   "family": "W-artifacts",
+   "features": [
+    "resources",
+    "objects",
+    "delayed",
+    "hidden",
+    "history",
+    "coupling",
+    "regime",
+    "channels"
+   ],
+   "K": 3,
+   "elite": 0.4526,
+   "constant": 0.2807,
+   "blind": 0.2529,
+   "beats_constant": true,
+   "input_using": true
+  },
+  {
+   "exp": "W-artifacts_w50063_reset",
+   "family": "W-artifacts",
+   "features": [
+    "resources",
+    "objects",
+    "delayed",
+    "hidden",
+    "history",
+    "coupling",
+    "regime",
+    "channels"
+   ],
+   "K": 3,
+   "elite": 0.4512,
+   "constant": 0.2807,
+   "blind": 0.0668,
+   "beats_constant": true,
+   "input_using": true
+  },
+  {
+   "exp": "W-artifacts_w50135_persist",
+   "family": "W-artifacts",
+   "features": [
+    "resources",
+    "objects",
+    "delayed",
+    "coupling"
+   ],
+   "K": 1,
+   "elite": 1.0,
+   "constant": 0.4921,
+   "blind": 0.49,
+   "beats_constant": true,
+   "input_using": true
+  },
+  {
+   "exp": "W-artifacts_w50135_reset",
+   "family": "W-artifacts",
+   "features": [
+    "resources",
+    "objects",
+    "delayed",
+    "coupling"
+   ],
+   "K": 1,
+   "elite": 1.0,
+   "constant": 0.4921,
+   "blind": 0.49,
+   "beats_constant": true,
+   "input_using": true
+  },
+  {
+   "exp": "W-artifacts_w50138_persist",
+   "family": "W-artifacts",
+   "features": [
+    "resources",
+    "objects",
+    "hidden",
+    "coupling",
+    "channels"
+   ],
+   "K": 4,
+   "elite": 0.2603,
+   "constant": 0.2603,
+   "blind": 0.2603,
+   "beats_constant": false,
+   "input_using": false
+  },
+  {
+   "exp": "W-artifacts_w50138_reset",
+   "family": "W-artifacts",
+   "features": [
+    "resources",
+    "objects",
+    "hidden",
+    "coupling",
+    "channels"
+   ],
+   "K": 4,
+   "elite": 0.2603,
+   "constant": 0.2603,
+   "blind": 0.2603,
+   "beats_constant": false,
+   "input_using": false
+  },
+  {
+   "exp": "W-artifacts_w50139_persist",
+   "family": "W-artifacts",
+   "features": [
+    "resources",
+    "locality",
+    "objects",
+    "delayed",
+    "hazards",
+    "coupling"
+   ],
+   "K": 1,
+   "elite": 0.0,
+   "constant": 0.0,
+   "blind": 0.0,
+   "beats_constant": false,
+   "input_using": false
+  },
+  {
+   "exp": "W-artifacts_w50139_reset",
+   "family": "W-artifacts",
+   "features": [
+    "resources",
+    "locality",
+    "objects",
+    "delayed",
+    "hazards",
+    "coupling"
+   ],
+   "K": 1,
+   "elite": 0.0,
+   "constant": 0.0,
+   "blind": 0.0,
+   "beats_constant": false,
+   "input_using": false
+  },
+  {
+   "exp": "W-artifacts_w50142_persist",
+   "family": "W-artifacts",
+   "features": [
+    "resources",
+    "objects",
+    "delayed",
+    "history",
+    "coupling",
+    "regime",
+    "channels"
+   ],
+   "K": 4,
+   "elite": 1.0,
+   "constant": 0.49,
+   "blind": 0.4858,
+   "beats_constant": true,
+   "input_using": true
+  },
+  {
+   "exp": "W-artifacts_w50142_reset",
+   "family": "W-artifacts",
+   "features": [
+    "resources",
+    "objects",
+    "delayed",
+    "history",
+    "coupling",
+    "regime",
+    "channels"
+   ],
+   "K": 4,
+   "elite": 1.0,
+   "constant": 0.49,
+   "blind": 0.4858,
+   "beats_constant": true,
+   "input_using": true
+  },
+  {
+   "exp": "W-artifacts_w50143_persist",
+   "family": "W-artifacts",
+   "features": [
+    "resources",
+    "locality",
+    "objects",
+    "delayed",
+    "hidden",
+    "hazards",
+    "coupling",
+    "regime"
+   ],
+   "K": 1,
+   "elite": 0.0079,
+   "constant": 0.0093,
+   "blind": 0.0,
+   "beats_constant": false,
+   "input_using": false
+  },
+  {
+   "exp": "W-artifacts_w50143_reset",
+   "family": "W-artifacts",
+   "features": [
+    "resources",
+    "locality",
+    "objects",
+    "delayed",
+    "hidden",
+    "hazards",
+    "coupling",
+    "regime"
+   ],
+   "K": 1,
+   "elite": 0.0079,
+   "constant": 0.0093,
+   "blind": 0.0,
+   "beats_constant": false,
+   "input_using": false
+  },
+  {
+   "exp": "W-artifacts_w50148_persist",
+   "family": "W-artifacts",
+   "features": [
+    "resources",
+    "objects",
+    "coupling",
+    "regime"
+   ],
+   "K": 1,
+   "elite": 0.1621,
+   "constant": 0.1621,
+   "blind": 0.1621,
+   "beats_constant": false,
+   "input_using": false
+  },
+  {
+   "exp": "W-artifacts_w50148_reset",
+   "family": "W-artifacts",
+   "features": [
+    "resources",
+    "objects",
+    "coupling",
+    "regime"
+   ],
+   "K": 1,
+   "elite": 0.1621,
+   "constant": 0.1621,
+   "blind": 0.1621,
+   "beats_constant": false,
+   "input_using": false
+  },
+  {
+   "exp": "W-artifacts_w50176_persist",
+   "family": "W-artifacts",
+   "features": [
+    "resources",
+    "objects",
+    "hidden",
+    "history",
+    "coupling"
+   ],
+   "K": 1,
+   "elite": 0.1681,
+   "constant": 0.0574,
+   "blind": 0.0574,
+   "beats_constant": true,
+   "input_using": true
+  },
+  {
+   "exp": "W-artifacts_w50176_reset",
+   "family": "W-artifacts",
+   "features": [
+    "resources",
+    "objects",
+    "hidden",
+    "history",
+    "coupling"
+   ],
+   "K": 1,
+   "elite": 0.1681,
+   "constant": 0.0574,
+   "blind": 0.0574,
+   "beats_constant": true,
+   "input_using": true
+  }
+ ]
+}

@@ -30,7 +30,8 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
 | B08K | 0-7 jitter re-score of B08J | L1 7/7, L2 5/5, L3 6/8 genuine; standard now 0-7 |
 | B22 | credit the write half, then withdraw | write learned 2/8, lost on withdrawal; recall 0/16 |
 | B22b | hold store credit at .2 after g150 | recall 0/8; write held but read never found; SUCCESSOR-STORE mechanism |
-| B23 | re-audit Deep Frontier/C6 elites with jitter/constant-twin/disasm | WSE runs: 54% of competent = timing exploits (C6-novel5 80%); 102 composed-world runs pending |
+| B23 | re-audit Deep Frontier/C6 elites with jitter/constant-twin/disasm | WSE runs: 54% of competent = timing exploits (C6-novel5 80%) |
+| B23b | composed-world runs: constant + blind twins | 62/102 fail; 40 beat constant (W-artifacts 1.000 vs .44-.49) -> attack |
 | B17 | forced perception (echo on PUT) opens the 2-value wall? | staged; controls pass |
 | B12 | LONG: W2_K2 with N=500, G=3000 -- is it just time? | STOPPED (compute repair); partial 0/6 to g200-2999 |
 | B11 | is the W2_K2 shelf a delay line? | MOSTLY NO: 50/72 genuine memory, 20/72 delay lines |
@@ -268,6 +269,12 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   Reading (Phase 2-B re-read of an old positive): the frontier's C6 detector firings on W0 were computed over
   populations whose "competence" is mostly delay lines. Next: a C6-native audit of the 102 composed-world runs
   (constant-twin / shuffled-input controls instead of jitter, since composed worlds have their own dynamics).
+- B23b C6-NATIVE AUDIT (102 composed-world frontier runs; best final organism vs CONSTANT twin and BLIND twin,
+  evaluate_world E=8): 62/102 elites do NOT beat the best constant program by .05 (PREDICTION >= 50% held);
+  40 beat it, 49 use their inputs. STRONG SIGNAL to attack: W-artifacts w50047/w50135/w50142 elites score 1.000 vs
+  constant .44-.49 and blind .44-.49 (persist and reset variants identical); B-worldgen.T4 .52 vs .21/.20; P-boom
+  lines .20-.36 vs constant .05-.09, blind ~0. These are the first input-using competences that survive a control in
+  this campaign. Next: attack them -- echo twins (is the world solved by echoing an input word?), disassembly.
 - PIVOT LANE staged (B23, for the budget window): re-audit the Deep Frontier / C6 record with today's instruments.
   Off-repo evidence exists: D:\Prometheus-worktreesrchaeon-wse-2026-09-16rchaeonrontier
 uns (2.3 GB;
