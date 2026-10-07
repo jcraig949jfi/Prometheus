@@ -1,0 +1,214 @@
++============================================================================+
+| REVIEW PACKET -- HESTIA AUDIT 1: 25 EXPLORATORY ENGINES                    |
+| Author: Hestia[buckkeep-8cd68af4] (claude-opus-5-5), host BUCKKEEP         |
+| Date: 2026-10-07   For: operator (HITL) + external reviewers               |
+| Status: AUDIT COMPLETE (read-only); no engine run; all kills are DESIGNED  |
+| Self-contained: no repo access needed; paths given for verification only   |
++============================================================================+
+
+-----
+0. SUMMARY
+
+Mandate (operator, 2026-10-06, verbatim in roles/Hestia/prompts/
+2026-10-06_charter/): a ruthless architectural audit of every exploratory
+engine. Where is each trivial, where does it hit hard mathematical walls
+(combinatorial explosion, reachability, substrate), and is there a seed
+worth scaling?
+
+Verdict: no engine contains a reasoning circuit, and almost none claims
+one. Of 25 engines: 0 VIABLE_SEED, 24 SALVAGE_COMPONENT, 1
+INSUFFICIENT_EVIDENCE (Moonshot: no organism code exists), 0 whole-engine
+DEAD_END. Split honestly, 7 have a live substrate lead with a designed,
+unrun, decisive test, and 18 are dead ends as substrates whose value is
+an instrument.
+
+The one finding that matters: the program has hit THE SAME WALL at least
+seven times in seven substrates without naming it.
+
+    Ananke PTE   FLIP (bit-conditioned map)   0/290 searches
+    z80atlas     INC -> COND_ONE              0/960 runs
+    SFE/Proteus  W2_K2 (hold two values)      0/395 runs; 0/18,266 edits
+    Crius        reuse mechanism              0/475,728 candidates
+    Tyche        order-3 interaction          0 solves (v0-v2)
+    Primordial   cue reader under read cost   0 ("no reader evolves")
+    Aether       input combination            <= 2/256 for every law
+
+Every engine finds 1-part mechanisms (a latch, a relay, one instruction,
+one held value). None finds a 2-part mechanism whose parts are each worth
+nothing alone. Call it the COMPOSITION WALL.
+
+-----
+1. WHAT WAS DONE (and what was frozen first)
+
+- 2026-10-06, commit 3fed30ac9 (on main): charter verbatim + AUDIT_PLAN.md,
+  which froze the population (25 engines in 8 groups, from the Achilles
+  census of 134 engines; exclusions named), the rubric and the verdict
+  vocabulary BEFORE any dossier existed.
+- 8 parallel read-only workers wrote 22 dossiers (7,001 lines). Every
+  mechanism claim is cited file:line; every number is tiered OBSERVED
+  (rows on main), CLAIMED (prose / off-repo) or DESIGNED (not run).
+- Hestia spot-checked the key citations of every dossier a sub-worker
+  wrote. All checked lines held. Found: one path ambiguity, one blurred
+  summary number (the dossier text was correct).
+- Synthesis: REPORT.md (927 lines), with per-engine Discovery Approach /
+  Brick Walls / Seed Viability / Evolutionary Roadmap.
+
+-----
+2. THE CROSS-CUTTING WALLS (failure shapes)
+
+W1 COMPOSITION WALL. A k-part mechanism with individually neutral parts is
+   a needle of about p^k per trial. Measured shapes: Crius parts alone
+   -0.001/-0.002/-0.057, two parts +1.14 at 26 edits (~1e-52 unguided,
+   ~1e6 explored). z80atlas COND_ONE ~1e-18 per copy vs ~1.2e10
+   executions. Ananke's only FLIP program uses 16/16 lines, in a space of
+   2^375 vs 5.5e4 evaluations per search. Tyche order-3: 128^-3 = 4.8e-7
+   vs ~0.012 expected hits.
+   Theory (LITERATURE FROM MEMORY, NOT VERIFIED THIS PASS): Valiant 2009 /
+   Feldman 2008, evolvability == correlational statistical query
+   learning; parity-like targets are not CSQ-learnable. XOR, FLIP, COND
+   and order-3 are parity-like. Caveat: their model has no recombination
+   or population structure, so this is a strong prior, not a proof.
+   Escapes: (a) structured partial credit / stepping stones, (b)
+   modularity, i.e. duplicating and promoting a solved unit, (c) lifetime
+   plasticity.
+W2 WORLD-DEMAND DEFICIT. Cosmos: 721 worlds collapse to 8 classes, and 1
+   register is optimal. Ensorain: 0 hidden-state families, 179/181 worlds
+   with delay 0. Ludus: 2-step lookahead >= 96.2% of optimal in 22/22.
+   Primordial: a do-nothing policy scores 107.75 > the best brain 98.76;
+   1/74 cells has headroom. Selection cannot find what the world does not
+   pay for.
+W3 PROMOTION GAP. Aphrodite R8: inheriting the learned library cut the
+   next generation's learning from 56 families to 10 (it substitutes, not
+   enables). Ares transplant recovers 0.019 of function (edges rewired at
+   random). Nyx: 1/485 organs is a composition operator. Forge: 0/10
+   cross-tier imports.
+W4 SCALAR CREDIT. Crius: one number per 50-task lifetime; a new part
+   scores +0.0004..+0.0011, inside noise. SFE exact-match pays an echo
+   1/K for free.
+W5 INSTRUMENTS OUTPACE PHYSICS. Cosmos custody:physics code 5.5:1. SFE
+   95-193 s of round-trips per 0.1 s of science. The instruments are real
+   value, though: they caught >= 3 false positives in Aether, the forge
+   decoy, and the D-5 cache.
+W6 EVIDENCE OFF REPO. D-3 results gitignored; z80atlas/ares/crius big rows
+   M2-only; the E-003 BEE verdict on a branch.
+
+-----
+3. PER-ENGINE VERDICTS (one line each; detail in REPORT.md Part 3)
+
+  LIVE LEAD (substrate test designed, unrun):
+  Aether        copy-only lattice, 98.7% frozen; lead = recoil x exchange
+                law; TEST-4 decode/reset assay
+  Ananke PTE    GA over 16-line programs; FLIP 0/290; test block-dup +
+                mapping bit + seeded relay module
+  Moonshot      0 organism code; primitive undefined; H3 needs ~435
+                pops/arm; test plastic vs fixed vs symbolic, 64 pops each
+  Ares          17-node graph, 1-bit latch ceiling; parity k=1..3 + reuse
+  Crius         0/475,728; env does calibration + simulation for it;
+                ROUGH vs SMOOTH (trace -> primitive) on RELAY
+  Aphrodite     one-hole template in a fixed fold; R8 NO; rerun R8 with
+                typed promotion + MDL acceptance
+  Tyche         GP lenses; order-3 0; best circuit DETECTOR in the fleet;
+                parity-k ladder, then the 122 real residuals (0 runs yet)
+
+  DEAD END AS SUBSTRATE (instrument survives):
+  Primordial    tensor brain = fixed WFA; real copiers 2 of 1,031 claims
+  Odysseus      no plasticity, no input, no task; keep exact replay
+  sigma_kernel  provenance ledger; DEFECT: capability double-spend race
+  Cosmos        miner never beats the definition rung (0/10); keep C3 cert
+  Ensorain      menu of 490 regressors loses to batch fit 9/9
+  Ludus         no organism; exact-DP bench; Nim admitted as "deep"
+  z80atlas      Tierra re-run; replication needs LDIR + 80% no-ops
+  SFE ecology   3.7M evals -> one register + early halt
+  Nyx           549 organs = reading notes; 0 transferred
+  incubation    selection from a designer menu; D-VM never built
+  alien_circ.   compression read off the full oracle table
+  D-series      D-5 "learning" = warm-start cache (shuffle keeps 100%)
+  Theseus       loses to random programs on 2 of 3 rulers
+  herakles/evca no search code exists; 30 yrs of field: 0.769 -> ~0.86
+  forge lineage constant "pick index 1" 75/186 beats best tool 74/186
+
+-----
+4. INCIDENTS / DEFECTS FOUND (routed to owners, not fixed by Hestia)
+
+D1 sigma_kernel: PROMOTE checks the capability (sigma_kernel.py:833),
+   rolls back (:837), then does an unconditional UPDATE consumed=1 (:899,
+   also :995, :1261, :1449). Under Postgres, two processes can spend one
+   capability. The extension modules use the safe AND consumed=0. CONFIRMED
+   BY READING ONLY; no race test run. -> Techne.
+D2 ares sweep_c2/gates.txt still says uncorrected "GATE C OPEN".
+D3 agent_d3_blind/results/ untracked; D-3 gates are prose-only.
+D4 forge "frozen" pass threshold lowered 0.50 -> 0.40 after it rejected
+   all tools.
+D5 census label "C1-e synchronisation" for herakles/evca is wrong.
+D6 Moonshot wforge unpaid-write defect visible at world.py:216-224.
+
+-----
+5. WHAT THIS ESTABLISHES AND WHAT IT DOES NOT
+
+Establishes: on main, as of 3fed30ac9, no engine has produced a certified
+2-part mechanism from a random start, and the shapes of the 0s are
+consistent with an exponential composition barrier.
+Does NOT establish: that the barrier is insurmountable (no escape has been
+tried cleanly; that is the point of section 6); that any instrument is
+correct beyond its own planted controls; any number tagged CLAIMED. No
+engine was run by Hestia.
+
+-----
+6. RECOMMENDATION (the operator's call; Hestia's lean)
+
+STOP: new substrates of the current shape (flat genome, point mutation,
+scalar fitness, no promotion operator); new world grammars without an MDL
+/ value-of-information gate; custody growth ahead of R1; Moonshot cluster
+spend before its CPU pilot exists.
+
+DO: one shared COMPOSITION LADDER with exact oracles:
+  R0 latch, R1 hold-two (W2_K2), R2 FLIP/XOR, R3 parity-3, R4 reuse a unit.
+Test the three escapes, each where it is already closest:
+  (a) stepping stones: z80atlas COND_ONE, Ares parity-k
+  (b) duplicate + PROMOTE a unit: Ananke FLIP, Crius SMOOTH, Aphrodite R8
+  (c) plasticity: Moonshot plastic arm, Odysseus three-factor
+Readout: highest rung at >= 5/32 seeds at 4x budget, certified by one
+consolidated ruler package (Cosmos C3, Tyche, Crius reuse, Aphrodite R8,
+Ananke swap, Aether twin-worlds), never by fitness.
+Decision rule, frozen before running: (b) works -> scale the PROMOTION
+OPERATOR (typed graph rewriting / combinators + MDL), not any substrate.
+Only (c) works -> evolve learners, not circuits. Only (a) -> it is designed
+curricula; say so. Nothing reaches R2 -> "grow, not design" does not reach
+compositional reasoning at this scale; pivot to designed-primitive library
+learning and keep the soups as phenomenon generators.
+If only one run: the Ananke FLIP representation test (cheapest decisive
+test of (b), cleanest baseline 0/290). In parallel: Theseus planted-
+structure test (< 1 CPU-hour).
+
+-----
+7. QUESTIONS FOR THE REVIEWER (written to resist agreement)
+
+1. Is W1 one wall or seven unrelated failures? Find an engine whose 0 is
+   better explained by a bug, budget or bad task than by composition.
+2. Is the CSQ / evolvability analogy wrong for population-based search
+   with recombination? If recombination can assemble neutral parts, which
+   engine should already have shown it?
+3. 24 of 25 SALVAGE_COMPONENT: is the rubric too lenient? Which "dead end
+   as substrate" engine should be a whole-engine DEAD_END, and which LIVE
+   LEAD is really dead?
+4. Is "promote a solved unit to a typed primitive" just DreamCoder, i.e.
+   a designed abstraction mechanism smuggled into "grow, not design"? If
+   so, does the north star survive a positive result?
+5. The auditor is the same model family as the engine authors. What blind
+   spot would a same-family audit share with them?
+6. Should the program stop all substrate work until the ladder exists?
+
+-----
+8. ARTIFACTS
+
+roles/Hestia/prompts/2026-10-06_charter/          charter + MANIFEST
+roles/Hestia/audit/2026-10-06/AUDIT_PLAN.md        frozen 3fed30ac9
+roles/Hestia/audit/2026-10-06/REPORT.md            the Audit & Roadmap Report
+roles/Hestia/audit/2026-10-06/dossiers/*.md        22 dossiers, cited
+roles/Hestia/audit/2026-10-06/REVIEW_PACKET_AUDIT1_2026-10-07.txt  this file
+Commit: see git log -1 -- roles/Hestia/audit/2026-10-06/REPORT.md
+
++============================================================================+
+| END. "Not worth continuing" is a first-class answer, for any engine, for   |
+| this audit, and for the program's current substrate strategy.             |
++============================================================================+

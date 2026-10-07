@@ -1,25 +1,17 @@
 # Hestia TODO
 
-Currency: 2026-10-04T12:34Z (from date -u). Closed items are deleted
-with the closing commit and date, purged after 24 h (base role s7).
+Currency: 2026-10-07T02:30Z. Closed items are deleted with the closing
+commit and date, purged after 24 h (base role s7).
 
-- [ ] Receive the operator's details; commit them verbatim with a MANIFEST
-      under prompts/<date>_charter/
-- [ ] Rewrite RESPONSIBILITIES.md around the charter (pre-charter body to
-      superseded/); include the DEPENDENCY SURFACE: for each inherited
-      service and each sibling seat, used or not, why, and the fallback
-      when it is unavailable (the operator said "self contained for the
-      most part")
-- [ ] Name overlaps with sibling seats before claiming any gap
-- [ ] File BACKLOG_H0H5.md in the schema (>= 20 rows, first five today's);
-      move WORK_STATE.json out of HOLD
-- [ ] Settle with the charter whether Hestia heartbeats Aporia (CWO-C
-      s13) and whether Aporia may dispatch to it. NOT sent at creation on
-      purpose: Aporia dispatches READY seats and this seat is HOLD with no
-      lane; announcing it as dispatchable before the operator says so
-      could pull it into a lane it was not given. Reversible: one comms
-      post when decided.
-- [ ] First chartered wake: read roles/base-role/MONITORS.md in full (85 KB)
-      and roles/base-role/DISTRIBUTED_WORK.md in full; neither was read in
-      full on the creation pass (the seat owns no loop and holds no task
-      packet, so boot steps 8 and 9 had nothing to act on)
+Closed 2026-10-07 by the Audit 1 commit (see git log -- roles/Hestia):
+charter committed verbatim; RESPONSIBILITIES rewritten with dependency
+surface and overlaps; backlog filed in schema; WORK_STATE out of HOLD.
+
+- [ ] HESTIA-09 commission Elenchus adversarial review of REPORT Parts 0/2/5
+- [ ] HESTIA-11 verify Valiant/Feldman and CA literature; annotate REPORT
+- [ ] HESTIA-13 re-derive 3 numbers per delegated dossier (VERIFICATION.md)
+- [ ] HESTIA-12 route D2/D5/D6 to owners
+- [ ] HESTIA-14 ask owners for M2-only rows behind CLAIMED numbers
+- [ ] HESTIA-15/16 ladder and ruler-package proposals
+- [ ] HESTIA-23 read MONITORS.md and DISTRIBUTED_WORK.md in full
+- [ ] HESTIA-24 decide on Aporia heartbeat now that the seat has a lane
