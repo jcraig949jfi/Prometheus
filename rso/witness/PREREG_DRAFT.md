@@ -55,15 +55,17 @@ runs drew (recorded by the driver); the excluded set and the final list are comm
   P-CAL   GATE (RULER.md): NULL and SHUF each correct <= k_neg = 1073 of 2048, AND POS P-RET POSITIVE. FAIL makes
           every P-RET outcome of the campaign UNQUALIFIED.
   P-OBS   GATE: rollout record=True vs record=False give identical actions on every witness seed, per subject.
-  P-ERASE GATE pair on B2, paired carry-over (Cadmus T013): the same probe episode run after two different
-          preceding episodes (r = 0 vs r = 1); exact count of differing actions over the registered probe set.
-          X: 0 differing actions expected (PASS); X-LEAK: > 0 expected (it is the fire case). If X-LEAK shows 0
-          differences, the erase gate is DETECTION_UNQUALIFIED for X (the leak could not be exhibited).
-  P-PRES  GATE: X after reset vs a fresh instance of the same genome: identical actions on a fixed seed set.
+  P-ERASE GATE pair on B2, paired carry-over (ERASE_PROBES.md s1, C-009-T018): 64 triples (pre_a r=0, pre_b r=1,
+          probe) from seed 800000 upward; per arm, fresh runtimes run [pre_a, probe] and [pre_b, probe]; D = total
+          differing probe actions (exact). X: PASS iff D = 0. X-LEAK is the fire member: P-ERASE for X is QUALIFIED
+          only if X-LEAK has D > 0; otherwise DETECTION_UNQUALIFIED for X.
+  P-PRES  GATE (ERASE_PROBES.md s2): 32 (warmup, seed) pairs from seed 850000 upward; [warmup, seed] with the
+          correct reset vs [seed] on a fresh instance; PASS iff 0 differing actions.
   P-RET   RULER (RULER.md s3-s4): n 2048, bound 1/2, delta 1/20, alpha 1/100, k_pos 1078, k_neg 1073;
           NOT_SHOWN / POSITIVE / NEGATIVE / INDETERMINATE by that precedence. Decided once per subject.
-  P-CHAN  GATE, only if X is P-RET POSITIVE: X-NOPL P-RET is NEGATIVE or INDETERMINATE AND X correct - X-NOPL
-          correct >= k_pos - 1024 (OPEN: Argus to confirm or replace this difference rule before freeze).
+  P-CHAN  GATE, only if X is P-RET POSITIVE (RULER.md s5.2, C-009-T017): X-NOPL on the SAME 2048 seeds, paired;
+          PASS iff X-NOPL is P-RET NEGATIVE AND b >= mcnemar_threshold(b + c) (exact one-sided McNemar, alpha 1/100;
+          b = X correct & X-NOPL not, c = the reverse). FAIL reasons NOPL_NOT_NEGATIVE | NO_PAIRED_ADVANTAGE.
 
 ## 6. Outcome classes per subject (registered)
 
@@ -90,7 +92,10 @@ a leak that passes P-ERASE), committed before outcomes; one repair round; then t
 
 top-level launches 10; CPU 60 minutes; artifacts 200 MB; GPU 0; $0; repair rounds 1; reviewer hours 1.5.
 
-## OPEN before freeze
-  1. P-CHAN difference rule (Argus).
-  2. Exact probe set and count for P-ERASE (Cadmus), and the P-PRES seed set.
-  3. Driver (C-009-T016, Eupalamus) must record the subject GA episode seeds for the exclusion in s3.
+## OPEN before freeze -- resolved 2026-10-07 (preparation, no outcomes)
+  1. P-CHAN rule: RULER.md s5.2 (Argus, C-009-T017; the draft difference rule had size 0.045 and was replaced).
+  2. P-ERASE probe set and P-PRES seeds: ERASE_PROBES.md (Cadmus, C-009-T018); seeds in [800000, 900000).
+  3. Seed bookkeeping: rso/witness/run_witness.py `subject` records every GA episode seed (Eupalamus, C-009-T016);
+     at freeze the recorded seeds are passed as exclusions to all three generators and the final lists committed.
+Remaining at freeze: run the two registered subject GA runs FIRST (C-010's first launches), commit genome digests and
+seed records, then generate and commit the witness, P-ERASE and P-PRES seed lists, then the preregistration hash.
