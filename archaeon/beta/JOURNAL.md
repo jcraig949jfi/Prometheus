@@ -28,7 +28,7 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
 | B20 | indexed solver neighbourhood | ISOLATED PEAK (shelf-level .0015) |
 | B21 | operand-locality mutation | 0/7 so far; .82 cell = lag-window exploit |
 | B08K | 0-7 jitter re-score of B08J | L1 7/7, L2 5/5, L3 6/8 genuine; standard now 0-7 |
-| B22 | credit the write half, then withdraw | WRITE LEARNED (2/4 so far, .91-.99) then LOST on withdrawal |
+| B22 | credit the write half, then withdraw | write learned 2/8, lost on withdrawal; recall 0/16 |
 | B22b | hold store credit at .2 after g150 | running |
 | B17 | forced perception (echo on PUT) opens the 2-value wall? | staged; controls pass |
 | B12 | LONG: W2_K2 with N=500, G=3000 -- is it just time? | STOPPED (compute repair); partial 0/6 to g200-2999 |
@@ -242,6 +242,10 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   any matching read appears. CHANGED MY MIND: the isolated peak is not one obstacle but two -- the write is
   reachable with credit; holding it long enough for the read is the obstacle. B22b launched: KEEP arm holds store
   credit at .2 after g150 (G=400, 8 cells, 2 procs).
+- B22 FINAL: recall solved 0/4 in every arm (STORE/NONE x L4/L6). Write half learned (max store-credit >= .9) in
+  2/8 STORE cells (L6 2201 .99, L4 2203 .91); the other 6 STORE cells never exceed .11. Both learners lost the write
+  after withdrawal. PREDICTION (store >= .9 in >= 3/4 per world; recall >= 1/4) FAILED on both counts. Weak but
+  real: under credit the write is reachable in ~1/4 of runs within 150 generations.
 - B08J built (ladder with jitter in train AND held-out); controls unchanged under jitter. Launches when cores free.
 - Next: B01b (done) tests H-PLATEAU quantitatively; then B03 = search arms at equal compute from fresh gen 0
   (baseline / heavy-tailed mutation count / behaviour-novelty) -- prediction: only structural-move arms lift 0/60.
