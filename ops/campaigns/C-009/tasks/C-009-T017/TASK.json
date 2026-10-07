@@ -1,0 +1,63 @@
+{
+  "schema": "prometheus.workgraph.task.v1",
+  "task_id": "C-009-T017",
+  "campaign_id": "C-009",
+  "title": "P-CHAN rule for the witness preregistration (PREREG_DRAFT OPEN 1)",
+  "objective": "Confirm or replace the draft P-CHAN rule (X-NOPL NEGATIVE or INDETERMINATE AND correct difference >= k_pos - 1024) with a registered two-sample rule that has stated size under the null of equal accuracy; implement in rso/witness/ruler.py with synthetic tests; write the rule into RULER.md s5.",
+  "parent_objective": "native witness preparation (opens as its own campaign only if C-009 closes)",
+  "owner_role": "Argus",
+  "quality_class": "Q2",
+  "can_downgrade": false,
+  "escalate_to": "Q3",
+  "depends_on": [
+    "C-009-T014"
+  ],
+  "owns": [
+    "rso/witness/ruler.py",
+    "rso/witness/RULER.md",
+    "rso/witness/tests/test_ruler.py"
+  ],
+  "reads": [
+    "rso/witness/PREREG_DRAFT.md",
+    "rso/witness/RULER.md"
+  ],
+  "problem": "Synthetic data only; no Ares output.",
+  "non_goals": [
+    "No subject evolution; no witness predicate on Ares output; no accuracy/retention/reward number for any arm or control",
+    "No edit of ares/ sources",
+    "No change to rso/binding or the slice evidence plane (BX6)"
+  ],
+  "evidence_required": [
+    "rule with size/power on synthetic data",
+    "tests green",
+    "RED first for the new function"
+  ],
+  "acceptance": {
+    "condition": "all evidence_required items; no outcome observed"
+  },
+  "deliverables": [
+    "rso/witness/ruler.py",
+    "rso/witness/RULER.md",
+    "rso/witness/tests/test_ruler.py"
+  ],
+  "kind": "software",
+  "status": "READY",
+  "history": [
+    {
+      "status": "PROPOSED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-07T03:23:35Z",
+      "note": "witness preparation"
+    },
+    {
+      "status": "READY",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-07T03:23:35Z",
+      "note": "READY (preparation)"
+    }
+  ],
+  "authority": "operator directive 2026-10-07 (C-004-OP8) s6, s11 (preparation allowed; no outcomes before preregistration)",
+  "resource_ceiling": {
+    "launches": "0 (development only)"
+  }
+}
