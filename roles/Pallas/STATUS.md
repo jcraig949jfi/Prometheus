@@ -1,19 +1,22 @@
 # Pallas status
 
-Currency: 2026-10-06T23:43Z (Pallas[m2-1500b878]). Earlier statuses are superseded by this one.
+Currency: 2026-10-07T00:50Z (Pallas[m2-1500b878]). Earlier statuses are superseded by this one.
 
-seat state: READY (idle after C-004-T048; hourly check, silent while idle per OP-7).
+seat state: READY (idle; hourly poll, silent while idle).
 role: Adversarial Hardening Engineer. RSO Builder Cell (roles/rso-builder-role/).
-runtime model: claude-fable-5-1; class Q3 (scarce). host: SPECTREX5 (M2); instance m2-1500b878.
-worktree: Prometheus-worktrees/pallas-boot-2026-10-03, branch pallas/boot-2026-10-06 (ff'd to main at each step).
+runtime model: claude-opus-5; class Q2. The seat's preference is claude-fable-5-1 (Q3): this SESSION's runtime
+  changed mid-session at about 00:47Z and the boot was re-recorded with rso-builder,Q2. C-004-T048 earlier in
+  this session was delivered on Fable 5.1 (Q3); that record stands.
+host: SPECTREX5 (M2); instance m2-1500b878. worktree Prometheus-worktrees/pallas-boot-2026-10-03,
+  branch pallas/boot-2026-10-06, base 5e2639d3e.
 
-C-004-T048: INTEGRATION_READY (receipt A-001). Set c8f702862 before outcomes; rows + REPORT 75fb5d6ce.
-  Score: sound 1/1, broken 0/1 (LATER_WINDOW_RUN admitted), controls 2/2, probes 2 admitted, edit Y1 survived 393.
-  C1 CLOSED; C2 NOT CLOSED (world axis of the G-INV binding unpinned); B3.3 NOT CLOSED (one-sided time bound).
-  OP6 condition for the native witness NOT met by these figures; disposition is the operator's.
-Ledger: 17 of 20 launches, 3187.2 s ledgered CPU. Report: rso/slice001/challenge/R2/REPORT.md.
+C-004: CLOSED by Palamedes as INCOMPLETE CLOSURE (rso/slice001/S5_FINAL_DISPOSITION.md); T048 integrated.
+C-009 RSO-EXEC-BINDING-001 open (72-hour operator completion push to 2026-10-10T00:25Z).
+  Pallas packet C-009-T030 (Q3, can_downgrade false): PROPOSED behind T020. This session will NOT claim it;
+  it needs a Fable session or the Dionysus fallback (roles/Pallas/comms/T030_RUNTIME_NOTICE_2026-10-07.md).
 
---- superseded 2026-10-06T23:43Z: previous status below ---
+--- superseded 2026-10-07T00:50Z: previous status below ---
+
 
 
 Currency: 2026-10-06T01:45:04Z (Pallas[m2-e7da6bde]). Earlier statuses are superseded by this one.
