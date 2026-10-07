@@ -26,7 +26,7 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
 | B18 | graph organisms on the ladder (first world run) | NULL + WORSE: L1 1/4, rest 0/4 (control 1.000) |
 | B19 | gen-0 config (tape 4096 + persist tape) as hidden gate? | NO: BIG 0/4 |
 | B20 | indexed solver neighbourhood | ISOLATED PEAK (shelf-level .0015) |
-| B21 | operand-locality mutation | 0/7 so far; .82 cell = lag-window exploit |
+| B21 | operand-locality mutation | NULL 0/8 (.82 cell = lag-window exploit) |
 | B08K | 0-7 jitter re-score of B08J | L1 7/7, L2 5/5, L3 6/8 genuine; standard now 0-7 |
 | B22 | credit the write half, then withdraw | write learned 2/8, lost on withdrawal; recall 0/16 |
 | B22b | hold store credit at .2 after g150 | running |
@@ -227,7 +227,7 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   7/8, L3 8/8): they do not even reach the one-value shelf. Consistent with PROTEUS-46 CLIFF_SURVIVES. KILLED for
   now: "the wall is a property of flat, positional programs" -- the graph architecture does not open it and makes the
   climb harder. Open DEV question (not pursued): why graph gen 0 rarely produces output-bearing paths.
-- B21 (operand-locality mutation, light): 7/8 cells 0 solved (1 pending). WEAK SIGNAL L4 seed 2102 held-out .82
+- B21 (operand-locality mutation, light): FINAL 0/8 (L4 0/4, L6 0/4); prediction (>= 1/4) FAILED. WEAK SIGNAL L4 seed 2102 held-out .82
   (highest stock-VM L4; B08J max .65). Deterministic replay reproduces .8229 exactly. Instrumented: per-lag profile
   1.0 whenever the first ask comes within 0-2 extra ticks, .55 for every k1 >= 3 -> a LAG-WINDOW TIMING EXPLOIT
   (58 instr, XOR-mixing chain, no tag-addressed store). Not memory.
