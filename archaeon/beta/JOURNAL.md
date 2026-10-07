@@ -18,7 +18,8 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
 | B07 | withdrawn positional scaffold -> content-addressed recall? | NULL 0/36 (cue dispatch itself unreachable) |
 | B08 | which primitive is the wall? (ladder) | L4 claim RETRACTED: evolved solvers are delay lines (B08b) |
 | B08J | ladder with timing jitter (repaired instrument) | COMPOSITION WALL: 1 value yes, 2 values 0/8 |
-| B13 | queue primitive (PUSH/POPF): does the 2-value wall move? | running |
+| B13 | queue primitive (PUSH/POPF): does the 2-value wall move? | run 1 INSTRUMENT FAILURE (fixed, fuzzed); rerun queued for budget |
+| B14 | stepping stone: guard organism -> two stored values? | staged; queued for budget |
 | B12 | LONG: W2_K2 with N=500, G=3000 -- is it just time? | STOPPED (compute repair); partial 0/6 to g200-2999 |
 | B11 | is the W2_K2 shelf a delay line? | MOSTLY NO: 50/72 genuine memory, 20/72 delay lines |
 | B09 | dispatch wall: READ the cue vs SELECT on it | CLEAN NULL 0/24 |
@@ -136,6 +137,12 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   (seed 1203 ran to G=3000): 0/6 summits. Elites: 4/6 genuine one-slot memory (held-out .53-.54 = jitter), 2/6 delay
   lines (seed 1202 g2000: .53 -> .20 jitter; seed 1203 g2999: .52 -> .16). Genomes grew to 26-177 instructions.
   Prediction (0/6) held where measured. 10x the generations and 2.5x the population do not cross the wall.
+- B13 run 1 INSTRUMENT FAILURE (mine): queue VM indexed past the tape when the genome sits within 2 words of the tape
+  end (n - glen - 2 <= 0) -> IndexError in one cell; the harness raised on the first failed future and ALL 32 cells'
+  results were lost (~80 min x 20 procs). Repairs: PUSH no-op / POPF reads 0 without a queue region; fuzz() runs
+  6,000 gen-0 evaluations incl. tape==genome before every run (passes); per-cell JSONL written as cells finish, a
+  crashed cell is a recorded row; default workers 12. Controls unchanged. Lease lse-bda13648061d RELEASED.
+  Rerun QUEUED: this seat is over the 48 core-h/24 h envelope until ~2026-10-08 00:00Z (or an operator raise).
 - B08J built (ladder with jitter in train AND held-out); controls unchanged under jitter. Launches when cores free.
 - Next: B01b (done) tests H-PLATEAU quantitatively; then B03 = search arms at equal compute from fresh gen 0
   (baseline / heavy-tailed mutation count / behaviour-novelty) -- prediction: only structural-move arms lift 0/60.

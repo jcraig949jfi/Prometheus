@@ -38,11 +38,14 @@ from archaeon.wse import evolve as EV
 
 OUT = Path(__file__).resolve().parent / "results"
 OLD24 = "            elif op == 24:\n                regs[a] = rng.next_u32()\n                rnd_draws += 1\n"
-NEW24 = ("            elif op == 24:\n                _h = tape[n - 1]\n                tape[glen + _h % (n - glen - 2)] = regs[a]\n"
-         "                tape[n - 1] = (_h + 1) & MASK32\n")
+# No queue region (genome within 2 words of the tape end): PUSH is a no-op, POPF reads 0. Run 1 (2026-10-07) crashed
+# there with IndexError and lost all 32 cells; fuzz() now exercises that case before every run.
+NEW24 = ("            elif op == 24:\n                if n - glen - 2 > 0:\n                    _h = tape[n - 1]\n"
+         "                    tape[glen + _h % (n - glen - 2)] = regs[a]\n                    tape[n - 1] = (_h + 1) & MASK32\n")
 OLD2 = "            elif op == 2:\n                status = \"yield\"\n                ip = nip\n                break\n"
-NEW2 = ("            elif op == 2:\n                _t = tape[n - 2]\n                regs[a] = tape[glen + _t % (n - glen - 2)]\n"
-        "                tape[n - 2] = (_t + 1) & MASK32\n")
+NEW2 = ("            elif op == 2:\n                if n - glen - 2 > 0:\n                    _t = tape[n - 2]\n"
+        "                    regs[a] = tape[glen + _t % (n - glen - 2)]\n                    tape[n - 2] = (_t + 1) & MASK32\n"
+        "                else:\n                    regs[a] = 0\n")
 
 
 def build_queue_vm():
@@ -90,15 +93,44 @@ def cell(job):
     return r
 
 
+def fuzz(n_cells=15):
+    """Every gen-0 organism, and the same organism with its tape shrunk to the genome (the run-1 crash case), must
+    run on the queue VM without raising."""
+    from archaeon.beta.b01_w2k2_existence import CAMPAIGN_SEED, FOUNDRY_C2
+    from archaeon.wse.evolve import gen0
+    use_vm("queue")
+    eps = jittered("L4_order", "heldout", 7, 2)
+    k = 0
+    for cs in range(n_cells):
+        for o in gen0(CAMPAIGN_SEED, 90000 + cs, 200, FOUNDRY_C2):
+            m = dict(o["manifest"])
+            EV.evaluate(m, eps, rng_seed=7)
+            full = dict(m); full["genome"] = list(m["genome"]) + [0] * max(0, 16 - len(m["genome"]))
+            full["tape_words"] = len(full["genome"])            # genome fills the tape: no queue region
+            EV.evaluate(full, eps, rng_seed=7)
+            k += 2
+    use_vm("stock")
+    return k
+
+
 def main(argv):
     OUT.mkdir(exist_ok=True)
     G_ = int(argv[0]) if argv else 300
+    print("fuzz ok", fuzz(), flush=True)
     ctl = controls(); print("controls", json.dumps(ctl), flush=True)
     jobs = [{"vm": v, "world": w, "seed": s, "G": G_} for s in range(1301, 1309) for v in ("queue", "stock") for w in WORLDS]
     rows = []
-    with ProcessPoolExecutor(max_workers=int(argv[1]) if len(argv) > 1 else 20) as ex:
-        for f in as_completed([ex.submit(cell, j) for j in jobs]):
-            r = f.result(); rows.append(r)
+    with ProcessPoolExecutor(max_workers=int(argv[1]) if len(argv) > 1 else 12) as ex:
+        futs = {ex.submit(cell, j): j for j in jobs}
+        for f in as_completed(futs):
+            try:
+                r = f.result()
+            except Exception as e:                    # noqa: BLE001 -- a crashed cell is a recorded failure, not a lost run
+                j = futs[f]
+                r = {"vm": j["vm"], "rung": j["world"], "seed": j["seed"], "solved_gen": None, "error": repr(e)[:300]}
+            rows.append(r)
+            with open(OUT / "B13_cells.jsonl", "a", encoding="utf-8") as fh:
+                fh.write(json.dumps({k: v for k, v in r.items() if k != "elite_manifest"}) + "\n")
             print(json.dumps({k: r.get(k) for k in ("vm", "rung", "seed", "solved_gen", "final_heldout", "max_train", "elite_push", "elite_popf", "wall_s")}), flush=True)
     summ = {"%s/%s" % (v, w): {"solved": sum(r["vm"] == v and r["rung"] == w and r["solved_gen"] is not None for r in rows),
                                 "gens": sorted(r["solved_gen"] for r in rows if r["vm"] == v and r["rung"] == w and r["solved_gen"] is not None)}
