@@ -53,3 +53,15 @@ def test_sub_component_swap(hold):
     ph, env, g, seeds = hold
     r0 = S.carrier_swap(ph, g, env, seeds, [("S", 0)], trials=[3, 6, 9], offset=env.cue_len + 2)
     assert r0["verdict"] == "FLIP"       # hold_latch keeps the bit in S0
+
+
+def test_flip_plant_swaps_use_scored_trials_only():
+    import json
+    import c3r_common as R
+    P = json.load(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "c2c", "PLAN_C2C.json")))
+    c = [x for x in P["cells"] if x["cell_id"].startswith("FLIP-0000")][0]          # block 2: even trials unscored
+    ph = R.rep_physics(C.Physics.from_dict(c["physics"]).validate(), "R4"); env = envs.EnvSpec(**c["env"])
+    seeds = assays.world_seeds(C.H_int(0x5A2, 9), 64)
+    r = S.carrier_swap(ph, R.rep_plant(ph), env, seeds, [("S", 2)], trials=list(range(4, 12)), offset=4)
+    assert r["trials"] == [5, 7, 9, 11] and r["normal_mean"] > 0.8
+    assert r["verdict"] == "EMPTY_SWAP"                    # P_FLIP never writes S2 at R4

@@ -9,6 +9,7 @@ Fixes the four MATERIAL findings of the 2026-10-07 independent review (research/
   M3 competence: a verdict requires a competent specimen on the targeted trials (normal pair accuracy mean > .60 and
      studentized lo99 > .55); otherwise INCOMPETENT.
   M4 point-estimate calls: verdicts use studentized (BOOTT) 99% intervals of the relative TRANSFER statistic.
+Only scored trials enter (unscored FLIP block starts are dropped).
 TRANSFER per pair = (normal - swapped) / (2*normal - 1), computed on the pooled targeted trials, i.e. the fraction of
 the decision that moved with the swapped component (1 = complete transfer, 0 = none). Verdict:
   FLIP       transfer lo99 > .80
@@ -81,6 +82,10 @@ def carrier_swap(ph, genome, env, seeds, comps, trials, offset, device="cpu"):
     assert 0 <= offset < ro_off, f"swap offset {offset} outside [0, {ro_off}) (M2: must precede the readout)"
     normal_runs, swap_runs, applied = [], [], []
     tr_n = lens.run(ph, genome, env, seeds, device=device)
+    # only SCORED trials enter the verdict (FLIP block-start trials are unscored: the mapping is unknowable there;
+    # found 2026-10-07 by the candidate-assay known-answer test at FLIP-0000, block 2)
+    trials = [k for k in trials if bool(tr_n.ep.scored[:, k].all())]
+    assert trials, "no scored trial among the requested trials"
     for k in trials:
         tick = k * Pd + offset
         cnt = {}
