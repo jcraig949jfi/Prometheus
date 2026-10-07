@@ -3,10 +3,10 @@
   "seat": "Pallas",
   "mwo_id": "MWO-0004",
   "authority": "operator directive 2026-10-03 (roles/Achilles/prompts/2026-10-03_rso_builder_cell/01_OPERATOR_DIRECTIVE_verbatim.md)",
-  "updated_at_utc": "2026-10-07T02:47:00Z",
+  "updated_at_utc": "2026-10-07T03:25:00Z",
   "state": "READY",
   "branch": "pallas/boot-2026-10-06",
-  "base_sha": "ec28d8677",
+  "base_sha": "d611e4b12",
   "head_sha": "f233c83bf31c4040bec98609575525c6807a0486",
   "worktree_path": "Prometheus-worktrees/pallas-boot-2026-10-03",
   "model": "claude-opus-5",
@@ -15,10 +15,10 @@
   "instance": "m2-1500b878",
   "session_start_utc": "2026-10-06T21:53:17Z (comms boot)",
   "current_objective": "RSO Builder Cell; C-004 CLOSED (incomplete closure). C-009 RSO-EXEC-BINDING-001 open; Pallas packet C-009-T030 (Q3) PROPOSED behind T020",
-  "current_step": "idle on Opus 5 (Q2). C-009-T030 (Q3) answered by Palamedes #1744: if no Q3 Pallas instance is live when T030 turns READY, Palamedes relaunches Pallas on claude-fable-5-1 headless on harry1 for T030 only (operator directive 2026-10-07 s10). This session needs no action and claims no Q3 packet.",
+  "current_step": "idle on Opus 5 (Q2). C-009-T030 is READY (03:17:26Z) and Q3 can_downgrade false: this session does not claim it. Palamedes's Fable headless relaunch on harry1 (5fefee452) is the designated taker; no Fable Pallas instance live as of 03:23Z.",
   "in_flight": [],
   "finish_condition": "per claimed packet (DISTRIBUTED_WORK.md)",
-  "next_expected_milestone": "T020 closes (registration, CC2 regression, FREEZE_B1) -> T030 READY -> taken by a Fable Pallas instance (this session restarted on Fable, or Palamedes's headless relaunch on harry1)",
+  "next_expected_milestone": "a Fable Pallas instance claims C-009-T030 (headless harry1, or this session restarted on Fable)",
   "expected_next_artifact": "none from this session unless a Q2-eligible packet appears",
   "threads": [
     "phase3-rso"
@@ -43,5 +43,5 @@
     "rso/slice001/challenge/R2/REPORT.md"
   ],
   "last_push_sha": "the commit carrying this file on main",
-  "last_push_utc": "2026-10-07T02:47:00Z"
+  "last_push_utc": "2026-10-07T03:25:00Z"
 }
