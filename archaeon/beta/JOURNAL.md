@@ -17,7 +17,8 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
 | B03 | BASE vs HEAVY vs RELOC search at equal compute | CLEAN NULL 0/24 each |
 | B07 | withdrawn positional scaffold -> content-addressed recall? | NULL 0/36 (cue dispatch itself unreachable) |
 | B08 | which primitive is the wall? (ladder) | L4 claim RETRACTED: evolved solvers are delay lines (B08b) |
-| B08J | ladder with timing jitter (repaired instrument) | running (is a 2nd genuine slot reachable?) |
+| B08J | ladder with timing jitter (repaired instrument) | COMPOSITION WALL: 1 value yes, 2 values 0/8 |
+| B13 | queue primitive (PUSH/POPF): does the 2-value wall move? | running |
 | B12 | LONG: W2_K2 with N=500, G=3000 -- is it just time? | running (hours; progress in results/B12_progress.jsonl) |
 | B11 | is the W2_K2 shelf a delay line? | MOSTLY NO: 50/72 genuine memory, 20/72 delay lines |
 | B09 | dispatch wall: READ the cue vs SELECT on it | CLEAN NULL 0/24 |
@@ -120,6 +121,14 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
 - B09 CLEAN NULL: 0/8 for the cue as 3rd word, 2nd word, or folded into the kind code (G=200). Max train .59-.94
   (hint3), .22-.63 (hint2: two seeds collapse to .22 -- the cue takes the word position the shelf reads its tag
   from), .59-.81 (kind). Neither READ nor SELECT is the specific barrier: consistent with B10, the wall is below.
+- B08J FINAL (jittered ladder, G=300, 8 seeds): L1 7/8, L3 8/8, L2 5/8, L4 0/8 (max held-out .65), L5 0/8, L6 0/8.
+  STRONGEST CURRENT FINDING: with timing shortcuts removed, ONE genuinely stored value and a write-once guard are
+  reachable; TWO stored values are not -- even in fixed ask order. The pieces (guard: L2; overwrite-store: L3) are
+  each reachable; their composition ("store here unless full, else there") is not. Call it the COMPOSITION WALL.
+- B13 (organism lane): queue VM -- PUSH (op 24, was RND) / POPF (op 2, was YIELD) on a tape-resident FIFO, head/tail
+  in the last two tape words; two branches replaced in the stock VM source (asserted). Control bug caught and fixed:
+  my first queue program popped on NOISE ticks (0.32); with a kind==2 check it scores L4 1.000 / L6 .5625 on the
+  queue VM and ~0 on stock; slot solver 1.0/1.0 on both. Launched {queue, stock} x {L4, L6} jittered, 8 seeds, G=300.
 - B08J built (ladder with jitter in train AND held-out); controls unchanged under jitter. Launches when cores free.
 - Next: B01b (done) tests H-PLATEAU quantitatively; then B03 = search arms at equal compute from fresh gen 0
   (baseline / heavy-tailed mutation count / behaviour-novelty) -- prediction: only structural-move arms lift 0/60.
