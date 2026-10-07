@@ -36,6 +36,7 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
 | B25/B26 | no-clock composed world: does content sensing evolve? | YES 3/6 sense pools (blind twin collapses); 3/6 open-loop |
 | B27 | generality over 4 more worlds | B-scatter 3/3, C6-unable 1/3; B-pressure/W-artifacts inconclusive (no positive) |
 | B28 | do foragers transfer across worlds? | NO: home +.23, off-home -.02; world-specific mappings |
+| B29 | leave-one-world-out training: invariant sensing? | staged; generalist control passes on 2/3 worlds; launch ~00:00Z |
 | B17 | forced perception (echo on PUT) opens the 2-value wall? | staged; controls pass |
 | B12 | LONG: W2_K2 with N=500, G=3000 -- is it just time? | STOPPED (compute repair); partial 0/6 to g200-2999 |
 | B11 | is the W2_K2 shelf a delay line? | MOSTLY NO: 50/72 genuine memory, 20/72 delay lines |
@@ -325,6 +326,11 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   mappings (which word index is sensed, which pool index / move direction is emitted), not a general foraging
   primitive. Next lever if pursued: train across a DISTRIBUTION of worlds (randomised pool order / layout per
   episode) so that only layout-invariant sensing pays -- the abstraction question in this substrate.
+- B29 staged (abstraction: leave-one-world-out training over the 3 NOCLOCK worlds). Positive control = one fixed
+  hand generalist (reads 5 words, harvests the first non-empty by position, else moves): lift P-boom +.191,
+  C6-unable +.092, B-scatter -.005 -> held-out verdicts interpretable for P-boom and C6-unable only; B-scatter held-out
+  reported separately (no validated positive). Launch at the budget window (~2026-10-08 00:00Z) under lease
+  spectrex5:cpu12, 12 procs, 4 seeds x 3 held-out worlds, G=200 (~2 core-h).
 - PIVOT LANE staged (B23, for the budget window): re-audit the Deep Frontier / C6 record with today's instruments.
   Off-repo evidence exists: D:\Prometheus-worktreesrchaeon-wse-2026-09-16rchaeonrontier
 uns (2.3 GB;
