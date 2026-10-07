@@ -49,7 +49,7 @@
     "rso/witness/tests/test_ruler.py"
   ],
   "kind": "software",
-  "status": "CLAIMED",
+  "status": "RED",
   "history": [
     {
       "status": "PROPOSED",
@@ -68,6 +68,12 @@
       "by": "Argus[desktop-ruapvai-b08b36ac]",
       "at_utc": "2026-10-07T12:29:12Z",
       "note": "claimed by Argus[desktop-ruapvai-b08b36ac] (DESKTOP-RUAPVAI, claude-opus-5-5, Q2) per #1822; work branch argus/c010-t031"
+    },
+    {
+      "status": "RED",
+      "by": "Argus[desktop-ruapvai-b08b36ac]",
+      "at_utc": "2026-10-07T12:33:17Z",
+      "note": "RED at 45b4a2850: evaluator tests need seed_lists (R2) and the R1/R3/R4 refusals; W1 B1/B2/B3/B5 builders and S3 pin wired in; E6 margin pin passes on current ruler (test gap: its RED is the W1 survivor)"
     }
   ],
   "authority": "PREREGISTRATION s8 (one repair round); rso/witness/ADJUDICATION_W1.md; AMENDMENT_v1.0.1.md",
