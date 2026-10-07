@@ -41,7 +41,7 @@ RECORD_ID = {"CALIBRATION": "P1", "RETENTION": "P2", "G-BIND": "G-BIND", "G-INV"
 # keep T023A/T023B's pin; the consumer gates are pinned to the C-009-T011 implementation commit (evidence.py on
 # rso/binding; before it the C-004-T046 second repair at 78f4d1fdc and the C-004-T042 S4 repair at 22d270fb2),
 # whose stage records were regenerated then (B4.1: a new version needs a new record).
-GATE_PIN = "78f4d1fdcd21d137bddc000195bbfcd87a4da0f4"
+GATE_PIN = "dc21c5d73005ddced7070247c5a47e6c5c467ce7"
 PIN = {"CALIBRATION": V.PINNED, "RETENTION": V.PINNED, "G-BIND": GATE_PIN, "G-INV": GATE_PIN, "G-RECOMP": GATE_PIN}
 STAGES_DIR = os.path.dirname(os.path.abspath(__file__))
 FIRE_DIR = os.path.join(STAGES_DIR, "fire")
