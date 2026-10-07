@@ -151,6 +151,14 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   conditional write IS reachable. REFINED WALL (hypothesis, mine): conditional ROUTING of writes to two different
   locations. Prediction it makes for B13: a queue (write location advances by itself; no routing) dissolves the
   L4 wall; and a "slot select by counter" world would stay walled. Campaign update 1 committed (2dbbb5c8b).
+- B13 queue arm (light rule: <= 2 procs, stock arm = B08J L4 0/8): seeds 1301-1303, 1305, 1306 -> 0/5 solved so
+  far. WEAK SIGNAL: seed 1303 train .94 / held-out .79 (above any stock L4: B08J max .65), elite 5 PUSH / 1 POPF.
+  Instrumented before naming (disasm with the queue patch, executed code only): a 32-instruction STRAIGHT-LINE
+  program, every instruction executed every tick, no branch taken; pushes every tick (NOISE included) and pops on a
+  cadence. Per-lag profile (k1, k2 NOISE ticks before ask 1, 2): 1.0 on 10/16 combinations, .55 on 5, .12 at (3,3).
+  -> a LAG-STRUCTURED TIMING EXPLOIT: the queue supplies a menu of lags covering most of the 0-3 jitter range.
+  Not keyed memory; not a summit. RULER LESSON: 0-3 jitter is beatable by queue-shaped lags; memory claims on any
+  queue-capable VM need jitter >= 0-7 or a per-lag profile. disasm.executed() now takes a VM patch.
 - B08J built (ladder with jitter in train AND held-out); controls unchanged under jitter. Launches when cores free.
 - Next: B01b (done) tests H-PLATEAU quantitatively; then B03 = search arms at equal compute from fresh gen 0
   (baseline / heavy-tailed mutation count / behaviour-novelty) -- prediction: only structural-move arms lift 0/60.

@@ -52,10 +52,13 @@ def disasm(m, only=None):
     return "\n".join(lines)
 
 
-def _tracer():
+def _tracer(patch=None):
+    """patch: optional callable(src) -> src applied before the trace hook (variant VMs, e.g. b13 queue VM)."""
     import inspect, types
     import proteus.foundry.vm as stockvm
     src = inspect.getsource(stockvm)
+    if patch is not None:
+        src = patch(src)
     hook = "        while ops < cap:\n"
     assert src.count(hook) == 1
     src = src.replace(hook, hook + "            _TRACE.append(ip)\n")
@@ -66,9 +69,9 @@ def _tracer():
     return mod
 
 
-def executed(m, episodes):
+def executed(m, episodes, patch=None):
     """Instruction-index execution counts over the episodes, from a tracing copy of the stock VM (one added line)."""
-    T = _tracer()
+    T = _tracer(patch)
     p = T.Player(m)
     for ei, ep in enumerate(episodes):
         st = p.fresh_state()
