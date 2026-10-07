@@ -3,10 +3,10 @@
   "seat": "Pallas",
   "mwo_id": "MWO-0004",
   "authority": "operator directive 2026-10-03 (roles/Achilles/prompts/2026-10-03_rso_builder_cell/01_OPERATOR_DIRECTIVE_verbatim.md)",
-  "updated_at_utc": "2026-10-07T03:25:00Z",
+  "updated_at_utc": "2026-10-07T03:52:00Z",
   "state": "READY",
   "branch": "pallas/boot-2026-10-06",
-  "base_sha": "d611e4b12",
+  "base_sha": "91b5d6b7d",
   "head_sha": "f233c83bf31c4040bec98609575525c6807a0486",
   "worktree_path": "Prometheus-worktrees/pallas-boot-2026-10-03",
   "model": "claude-opus-5",
@@ -15,10 +15,10 @@
   "instance": "m2-1500b878",
   "session_start_utc": "2026-10-06T21:53:17Z (comms boot)",
   "current_objective": "RSO Builder Cell; C-004 CLOSED (incomplete closure). C-009 RSO-EXEC-BINDING-001 open; Pallas packet C-009-T030 (Q3) PROPOSED behind T020",
-  "current_step": "idle on Opus 5 (Q2). C-009-T030 is READY (03:17:26Z) and Q3 can_downgrade false: this session does not claim it. Palamedes's Fable headless relaunch on harry1 (5fefee452) is the designated taker; no Fable Pallas instance live as of 03:23Z.",
+  "current_step": "idle on Opus 5 (Q2). C-009-T030 CLAIMED 03:31:32Z by Pallas[harry1-b97f1fc4] (Fable, headless harry1); handoff complete, this instance has no part in it. Hourly poll continues.",
   "in_flight": [],
   "finish_condition": "per claimed packet (DISTRIBUTED_WORK.md)",
-  "next_expected_milestone": "a Fable Pallas instance claims C-009-T030 (headless harry1, or this session restarted on Fable)",
+  "next_expected_milestone": "harry1-b97f1fc4 delivers C-009-T030 (CC3 challenge on FREEZE_B1); nothing expected from this instance",
   "expected_next_artifact": "none from this session unless a Q2-eligible packet appears",
   "threads": [
     "phase3-rso"
@@ -32,16 +32,16 @@
   "running": [],
   "blocked_on": [],
   "next_actions": [
-    "hourly: comms sync Pallas; workgraph ready Pallas",
-    "claim only a packet this runtime meets (Q2); do not claim C-009-T030 on Opus 5",
+    "hourly: git fetch; MERGE origin/main by SHA; comms sync Pallas; workgraph ready Pallas (ready reads the local tree, so merge first)",
+    "claim only a packet this runtime meets (Q2); never race another Pallas instance",
     "no self-assignment"
   ],
   "operator_decisions_required": [],
   "latest_reports": [
+    "roles/Pallas/comms/POLL_ORDER_OBSERVATION_2026-10-07.md",
     "roles/Pallas/comms/T030_RUNTIME_NOTICE_2026-10-07.md",
-    "roles/Pallas/journal/2026-10-06.md",
-    "rso/slice001/challenge/R2/REPORT.md"
+    "roles/Pallas/journal/2026-10-06.md"
   ],
   "last_push_sha": "the commit carrying this file on main",
-  "last_push_utc": "2026-10-07T03:25:00Z"
+  "last_push_utc": "2026-10-07T03:52:00Z"
 }
