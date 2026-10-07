@@ -37,6 +37,7 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
 | B27 | generality over 4 more worlds | B-scatter 3/3, C6-unable 1/3; B-pressure/W-artifacts inconclusive (no positive) |
 | B28 | do foragers transfer across worlds? | NO: home +.23, off-home -.02; world-specific mappings |
 | B29 | leave-one-world-out training: invariant sensing? | NULL: train lift yes, held-out blind (0/3 worlds); invariant rule exists but unfound |
+| B32 | fresh random world each generation -> invariant sensing? | v2 staged; discriminating held-out set built; launch at budget window |
 | B30 | do foragers carry state across ticks? | YES: 6/7 content sensors use state; blind ones in rewarding worlds 5/5 |
 | B31 | what do they remember? | 2504: 1-register direction memory; others computed state (not past observations) |
 | B17 | forced perception (echo on PUT) opens the 2-value wall? | staged; controls pass |
@@ -360,6 +361,14 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   conjunction of two world-specific mappings), not the layout-invariant rule "harvest the non-empty pool by position".
   The invariant rule exists (hand control) and is not found -- the abstraction analogue of the keyed-memory result:
   a short general solution, unreached by search, while specific solutions are.
+- B32 staged (abstraction by WORLD DISTRIBUTION: a fresh world every generation). v1 family (P-boom params with
+  R / ring / rates varied) FAILED its negative control -- the P-boom-specific elite 2506 transferred within it
+  (lift .03-.37), so v1 could not separate invariant from specific sensing. v2 draws whole worlds from the C6
+  procedural generator (resources + locality forced on, >= 2 channels, delayed off). Held-out set = worlds where the
+  controls DISCRIMINATE (hand generalist lift >= .05 AND P-boom elite lift <= .02): 3 found in 80 scanned (generalist
+  +.08/+.22/+.06, P-boom elite +.004/+.002/-.012); scan raised to 200. Launch under lease at the budget window.
+  Program-level pattern now visible across both lines (keyed memory; foraging abstraction): search reaches SPECIFIC
+  solutions while a SHORT GENERAL solution exists and is not reached.
 - PIVOT LANE staged (B23, for the budget window): re-audit the Deep Frontier / C6 record with today's instruments.
   Off-repo evidence exists: D:\Prometheus-worktreesrchaeon-wse-2026-09-16rchaeonrontier
 uns (2.3 GB;
