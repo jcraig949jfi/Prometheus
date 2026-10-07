@@ -37,6 +37,7 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
 | B27 | generality over 4 more worlds | B-scatter 3/3, C6-unable 1/3; B-pressure/W-artifacts inconclusive (no positive) |
 | B28 | do foragers transfer across worlds? | NO: home +.23, off-home -.02; world-specific mappings |
 | B29 | leave-one-world-out training: invariant sensing? | staged; generalist control passes on 2/3 worlds; launch ~00:00Z |
+| B30 | do foragers carry state across ticks? | YES: 6/7 content sensors use state; blind ones in rewarding worlds 5/5 |
 | B17 | forced perception (echo on PUT) opens the 2-value wall? | staged; controls pass |
 | B12 | LONG: W2_K2 with N=500, G=3000 -- is it just time? | STOPPED (compute repair); partial 0/6 to g200-2999 |
 | B11 | is the W2_K2 shelf a delay line? | MOSTLY NO: 50/72 genuine memory, 20/72 delay lines |
@@ -331,6 +332,13 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   C6-unable +.092, B-scatter -.005 -> held-out verdicts interpretable for P-boom and C6-unable only; B-scatter held-out
   reported separately (no validated positive). Launch at the budget window (~2026-10-08 00:00Z) under lease
   spectrex5:cpu12, 12 procs, 4 seeds x 3 held-out worlds, G=200 (~2 core-h).
+- B30 PERSISTENCE ABLATION (force persist=none; drop >= .05 = carries state across ticks): CONTENT sensors 6/7 use
+  state (P-boom 2504 .40 -> .00, 2505 .42 -> .03, 2506 .48 -> .07; C6-unable 2703 .22 -> .05; B-scatter 2702/2703
+  drop .08-.11); only B-scatter 2701 is purely reactive (.26 -> .24). BLIND open-loop elites 5/11 (all 5 in the worlds
+  where blind policies score: P-boom 3/3, C6-unable 2/2). PREDICTION "content sensors mostly reactive" FAILED: the
+  evolved foragers COMBINE sensing with carried state (dwell-by-reversal needs a remembered direction). Caveat:
+  persist=none breaks ANY state (counters, direction, values), so WHAT is remembered is not yet measured -- next light
+  probe: per-register persistence ablation on the content sensors.
 - PIVOT LANE staged (B23, for the budget window): re-audit the Deep Frontier / C6 record with today's instruments.
   Off-repo evidence exists: D:\Prometheus-worktreesrchaeon-wse-2026-09-16rchaeonrontier
 uns (2.3 GB;
