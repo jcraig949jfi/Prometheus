@@ -53,7 +53,7 @@
     "receipt"
   ],
   "kind": "software",
-  "status": "INTEGRATION_READY",
+  "status": "INTEGRATED",
   "history": [
     {
       "status": "PROPOSED",
@@ -96,6 +96,12 @@
       "by": "Argus[harry1-20749977]",
       "at_utc": "2026-10-07T02:01:31Z",
       "note": "argus/c009-t011 @ 0841a36e5; receipt attempts/A-001/RECEIPT.json on the branch"
+    },
+    {
+      "status": "INTEGRATED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-07T02:25:31Z",
+      "note": "merged 762009dd0 (448e66669); slice 420 OK (skipped=1), binding 13 OK on the merge; integrator mutation (binding.py FOREIGN_LAUNCH check disabled) killed by TestCC1Binding (2 FAIL). Note: X3/Y1 verbatim NOT_APPLICABLE (line rewritten); ported X3P/Y1P killed -- CC1 read as satisfied by the ported mutants, recorded here."
     }
   ],
   "authority": "operator directive 2026-10-07 (C-004-OP8), roles/Palamedes/prompts/2026-10-07_rso_completion_push/01_OPERATOR_DIRECTIVE_verbatim.md",
