@@ -31,7 +31,8 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
 | B22 | credit the write half, then withdraw | write learned 2/8, lost on withdrawal; recall 0/16 |
 | B22b | hold store credit at .2 after g150 | recall 0/8; write held but read never found; SUCCESSOR-STORE mechanism |
 | B23 | re-audit Deep Frontier/C6 elites with jitter/constant-twin/disasm | WSE runs: 54% of competent = timing exploits (C6-novel5 80%) |
-| B23b | composed-world runs: constant + blind twins | 62/102 fail; 40 beat constant (W-artifacts 1.000 vs .44-.49) -> attack |
+| B23b | composed-world runs: constant + blind twins | 62/102 fail; 40 beat constant |
+| B23c/B24 | attack survivors (echo twins, knockout) | W-artifacts = echo (killed); P-boom = clock-vs-position lap counter |
 | B17 | forced perception (echo on PUT) opens the 2-value wall? | staged; controls pass |
 | B12 | LONG: W2_K2 with N=500, G=3000 -- is it just time? | STOPPED (compute repair); partial 0/6 to g200-2999 |
 | B11 | is the W2_K2 shelf a delay line? | MOSTLY NO: 50/72 genuine memory, 20/72 delay lines |
@@ -275,6 +276,19 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   constant .44-.49 and blind .44-.49 (persist and reset variants identical); B-worldgen.T4 .52 vs .21/.20; P-boom
   lines .20-.36 vs constant .05-.09, blind ~0. These are the first input-using competences that survive a control in
   this campaign. Next: attack them -- echo twins (is the world solved by echoing an input word?), disassembly.
+- B23c ATTACK on the B23b survivors (echo twins: read word j of an input channel, write it on every output):
+  W-artifacts w50047/w50135/w50142 (1.000) are matched EXACTLY by echoing input word 0 -> KILLED (pass-through
+  worlds). B-worldgen.T4 .52 vs best echo .50 -> nearly killed. P-boom_B_shuffle_s3 .36 and P-boom_K_D_persist_s3 .32
+  vs best echo .13, constant .05-.09, blind ~0 -> SURVIVE.
+- B24 instrumented the P-boom survivor before naming it: per-instruction knockout -> 6 of 32 instructions are
+  load-bearing (IN; NOT; EQ r4,r2,r6; JNZ r4; two OUTs whose channel is a computed register; drops .22-.32). Action
+  by observation: obs words 0,1 are TICK and POSITION (runtime.observe). Rule: if tick == pos -> act on channels 0+1
+  (harvest + move), else channel 0 only (harvest). From pos 0, moving every tick keeps pos == tick until the ring
+  wraps at 12 -> SWEEP the ring once harvesting each node, then PARK and harvest. It never reads resource, object or
+  hazard words. Named: a CLOCK-vs-POSITION LAP COUNTER (open-loop sweep keyed to the world's tick word). Genuine
+  input-conditioned control, but the input is the clock; not resource sensing.
+  Program-level reading: of 130 frontier experiments, NO organism's competence survives as perception of the world's
+  CONTENT -- W0 competence is 54% delay lines, composed-world competence is constant/echo/clock policies.
 - PIVOT LANE staged (B23, for the budget window): re-audit the Deep Frontier / C6 record with today's instruments.
   Off-repo evidence exists: D:\Prometheus-worktreesrchaeon-wse-2026-09-16rchaeonrontier
 uns (2.3 GB;
