@@ -334,6 +334,16 @@ class TestRefusals(Base):
             return rows + [dict(rows[1], run_id=rows[1]["run_id"] + "#2")]
         self._refused(self.run_eval(rows_edit=dup), "P-FLAT")
 
+    def test_p_flat_other_launch_rows_are_refused_as_frozen(self):
+        # PREREGISTRATION s5 as frozen: EVERY RECEIPT row's parent is the anchored launch. An inventory that also
+        # holds another launch's rows (ledger.inventory() over a shared store) is refused. Escalation C-010-T012_1
+        # asks the coordinator whether T020 uses one ledger store per launch or the rule is read per launch.
+        def other_launch(rows):
+            return rows + [{"kind": "RUN", "run_id": "w-other", "launch_kind": "TOP_LEVEL", "node_id": "WITNESS:o",
+                            "status": "COMPLETED"},
+                           dict(rows[1], run_id="w-other/x", parent_run_id="w-other", node_id="x")]
+        self._refused(self.run_eval(rows_edit=other_launch), "P-FLAT:NESTED_OR_FOREIGN_PARENT:w-other/x")
+
     def test_receipt_digest_mismatch(self):
         def edit(root):
             p = os.path.join(root, "receipts", "R000.json")
