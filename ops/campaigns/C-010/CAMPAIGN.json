@@ -1,11 +1,11 @@
 {
   "schema": "prometheus.workgraph.campaign.v1",
-  "campaign_id": "C-009",
+  "campaign_id": "C-010",
   "thread_id": "TH-RSO-BUILD",
   "epic_id": "EP-PHASE3",
-  "label": "RSO-EXEC-BINDING-001",
-  "title": "First-class execution binding for the RSO evidence plane (successor to C-004)",
-  "objective": "Remove the structural evidence-plane defects C-004 demonstrated (run attribution, world/observer substitution, run status, launch identity) by a thin execution binding, sufficiently to support one native retained-information witness. Closure: rso/binding/CONTRACT.md s3 CC1-CC4.",
+  "label": "NATIVE-RET-WITNESS-001",
+  "title": "First native retained-information witness (Ares, W15) on the C-009 binding",
+  "objective": "Execute one native retained-information witness on Ares W15 under the frozen preregistration and reduce it to a bounded result per subject (POSITIVE / NEGATIVE / DETECTION_UNQUALIFIED), with costs, known escapes and the next question committed.",
   "coordinator_role": "Palamedes",
   "members": [
     "Palamedes",
@@ -14,8 +14,12 @@
     "Cadmus",
     "Eupalamus"
   ],
-  "authority": "operator directive 2026-10-07 (C-004-OP8), roles/Palamedes/prompts/2026-10-07_rso_completion_push/01_OPERATOR_DIRECTIVE_verbatim.md",
-  "sources": "roles/rso-builder-role/SOURCES.md; rso/slice001/S5_FINAL_DISPOSITION.md; rso/slice001/challenge/R2/REPORT.md",
+  "authority": "operator directive 2026-10-07 (C-004-OP8) s6: native witness opens automatically when C-009 closes; rso/binding/CLOSURE.md",
+  "preregistration": {
+    "path": "rso/witness/PREREGISTRATION.md",
+    "sha256": "099f408f6e7c1c3e6c1e3b885a2db42f58efd5a0a941a7d8e23205ab623bc1f7",
+    "frozen_at_utc": "2026-10-07T08:34:33Z"
+  },
   "quality_classes": {
     "Q1": {
       "description": "low-ambiguity / mechanical: CI wiring, manifests, schemas following a settled design, repetitive fixtures, generated docs, deterministic wrappers, simple adapters, mechanical refactors under strong tests",
@@ -40,17 +44,9 @@
     "INTEGRATED",
     "CLOSED"
   ],
-  "contract": "rso/binding/CONTRACT.md (v1.0.0); caps rso/binding/contract.json",
+  "contract": "rso/witness/PREREGISTRATION.md; caps rso/witness/contract.json",
   "window_end_utc": "2026-10-10T00:25:00Z",
-  "predecessor": "C-004 (INCOMPLETE CLOSURE)",
+  "predecessor": "C-009 (CLOSED, scoped to flat inventories)",
   "created_by": "Palamedes[harry1-679179c6]",
-  "created_at_utc": "2026-10-07T00:34:51Z",
-  "disposition": {
-    "status": "CLOSED",
-    "result": "CLOSED, SCOPED TO FLAT INVENTORIES",
-    "closed_at_utc": "2026-10-07T08:34:33Z",
-    "by": "Palamedes[harry1-679179c6]",
-    "record": "rso/binding/CLOSURE.md",
-    "successor": "C-010"
-  }
+  "created_at_utc": "2026-10-07T08:34:33Z"
 }

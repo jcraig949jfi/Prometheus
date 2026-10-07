@@ -1,0 +1,65 @@
+{
+  "schema": "prometheus.workgraph.task.v1",
+  "task_id": "C-010-T010",
+  "campaign_id": "C-010",
+  "title": "Predicate-specific node executions with stored artifacts (P-RET/P-CAL/P-CHAN, P-OBS, P-ERASE, P-PRES)",
+  "objective": "Extend rso/witness/ares_client.py so every node the preregistration names (s4, s5) is executed by its own pattern and returns the BYTES of every artifact the interface (PREREGISTRATION s7) names, with role, dtype and shape in the receipt: episode runs over seeds (P-RET, P-CAL, P-CHAN, RECUR); record vs no-record (P-OBS); the probe pairs (P-ERASE); warm vs fresh (P-PRES).",
+  "parent_objective": "C-010 NATIVE-RET-WITNESS-001",
+  "owner_role": "Cadmus",
+  "quality_class": "Q2",
+  "can_downgrade": false,
+  "escalate_to": "Q3",
+  "depends_on": [],
+  "owns": [
+    "rso/witness/ares_client.py",
+    "rso/witness/tests/test_ares_client.py"
+  ],
+  "reads": [
+    "rso/witness/PREREGISTRATION.md",
+    "rso/witness/RULER.md",
+    "rso/witness/ERASE_PROBES.md",
+    "rso/binding/CONTRACT.md",
+    "rso/binding/CLOSURE.md",
+    "rso/witness/run_witness.py"
+  ],
+  "problem": "The evaluator (C-010-T012, Argus) recomputes everything from these bytes; the driver (C-010-T011, Eupalamus) stores them. Plumbing tests on random / hand-wired organisms only; no count, accuracy or outcome on any registered arm.",
+  "non_goals": [
+    "No subject GA run and no witness episode before FREEZE_W1 and the challenge (PREREGISTRATION s10)",
+    "No accuracy / retention / reward statistic on any registered arm before the witness launches",
+    "No edit of ares/ sources; no change to rso/binding or the slice evidence plane"
+  ],
+  "evidence_required": [
+    "RED first",
+    "each node pattern returns its artifact bytes with layout",
+    "tests green",
+    "no outcome observed"
+  ],
+  "acceptance": {
+    "command": "python -B -m unittest discover -s rso/witness/tests -t . && python -B -m unittest discover -s rso/binding/tests -t .",
+    "condition": "all evidence_required items; suites green"
+  },
+  "deliverables": [
+    "rso/witness/ares_client.py",
+    "rso/witness/tests/test_ares_client.py"
+  ],
+  "kind": "software",
+  "status": "READY",
+  "history": [
+    {
+      "status": "PROPOSED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-07T08:34:33Z",
+      "note": "C-010 open"
+    },
+    {
+      "status": "READY",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-07T08:34:33Z",
+      "note": "READY at C-010 open"
+    }
+  ],
+  "authority": "operator directive 2026-10-07 (C-004-OP8) s6: native witness opens automatically when C-009 closes; rso/binding/CLOSURE.md",
+  "resource_ceiling": {
+    "launches": "0 (development only) unless stated"
+  }
+}

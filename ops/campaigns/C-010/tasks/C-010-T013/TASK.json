@@ -1,0 +1,56 @@
+{
+  "schema": "prometheus.workgraph.task.v1",
+  "task_id": "C-010-T013",
+  "campaign_id": "C-010",
+  "title": "Integrate T010-T012; end-to-end dry run on a random population; FREEZE_W1",
+  "objective": "Integrate, run one end-to-end dry run (random population, tiny n, temp ledger, never the registered subjects), freeze the witness machinery.",
+  "parent_objective": "C-010 NATIVE-RET-WITNESS-001",
+  "owner_role": "Palamedes",
+  "quality_class": "Q2",
+  "can_downgrade": false,
+  "escalate_to": "Q3",
+  "depends_on": [
+    "C-010-T010",
+    "C-010-T011",
+    "C-010-T012"
+  ],
+  "owns": [
+    "rso/witness/FREEZE_W1.md"
+  ],
+  "reads": [
+    "rso/witness/"
+  ],
+  "problem": "Dry run checks plumbing only; its numbers are not reported.",
+  "non_goals": [
+    "No subject GA run and no witness episode before FREEZE_W1 and the challenge (PREREGISTRATION s10)",
+    "No accuracy / retention / reward statistic on any registered arm before the witness launches",
+    "No edit of ares/ sources; no change to rso/binding or the slice evidence plane"
+  ],
+  "evidence_required": [
+    "dry run binds and evaluates end to end",
+    "FREEZE_W1"
+  ],
+  "acceptance": {
+    "command": "python -B -m unittest discover -s rso/witness/tests -t . && python -B -m unittest discover -s rso/binding/tests -t .",
+    "condition": "all evidence_required items; suites green"
+  },
+  "deliverables": [
+    "rso/witness/FREEZE_W1.md"
+  ],
+  "kind": "software",
+  "status": "PROPOSED",
+  "history": [
+    {
+      "status": "PROPOSED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-07T08:34:33Z",
+      "note": "C-010 open"
+    }
+  ],
+  "authority": "operator directive 2026-10-07 (C-004-OP8) s6: native witness opens automatically when C-009 closes; rso/binding/CLOSURE.md",
+  "resource_ceiling": {
+    "launches": "0 (development only) unless stated"
+  },
+  "red_required": false,
+  "notes": "red_required false: integration."
+}

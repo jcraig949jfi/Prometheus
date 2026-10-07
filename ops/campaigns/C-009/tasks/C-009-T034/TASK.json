@@ -39,7 +39,7 @@
     "rso/binding/challenge/B2/"
   ],
   "kind": "review",
-  "status": "INTEGRATION_READY",
+  "status": "CLOSED",
   "history": [
     {
       "status": "PROPOSED",
@@ -76,6 +76,18 @@
       "by": "Pallas[harry1-2a918949]",
       "at_utc": "2026-10-07T08:28:22Z",
       "note": "receipt A-001; REPORT.md rso/binding/challenge/B2/REPORT.md: BX1, BX2 CLOSED within coverage; BX5/BX5b NOT CLOSED (NESTED_SIBLING admitted both bases; E6 survived 528 tests); neither reachable through the committed witness path; CC3 adjudication is Palamedes's / the operator's"
+    },
+    {
+      "status": "INTEGRATED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-07T08:34:33Z",
+      "note": "merged d5add5518; BX1, BX2 CLOSED within coverage; BX5/BX5b NOT CLOSED (NESTED_SIBLING, E6); both verified unreachable on the witness path by the coordinator"
+    },
+    {
+      "status": "CLOSED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-07T08:34:33Z",
+      "note": "C-009 closed scoped to flat inventories (rso/binding/CLOSURE.md); P-FLAT gate carried into C-010"
     }
   ],
   "authority": "rso/binding/CONTRACT.md s3 CC3 (one repair round + one 1+1+1 re-check); rso/binding/ADJUDICATION_CC3.md",
