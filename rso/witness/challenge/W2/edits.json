@@ -1,0 +1,17 @@
+{
+  "schema": "rso.slice001.mutation_edits.v1",
+  "edits": [
+    {
+      "edit_id": "W2.E1-r1-presenters-only-from-clean-bundles",
+      "path": "rso/witness/evaluate.py",
+      "module": "rso.witness.evaluate",
+      "find": "        for nid in set(c[\"node_ids\"]):",
+      "replace": "        for nid in set(c[\"nodes\"]):",
+      "occurrence": 1,
+      "intended_fault": "R1 (ADJUDICATION_W1; evaluate.evaluate) counts as presenters only the bundles that passed every bundle check (c['nodes'] is empty for a refused bundle), instead of every bundle that presents the node id (c['node_ids']). A node presented by one clean bundle and one REFUSED bundle is then no longer EVIDENCE_DUPLICATE; the second loop resolves it by argument order: clean bundle first -> the node is pooled and evaluated, refused bundle first -> EVIDENCE_REFUSED and UNQUALIFIED. The registered rule is 'no argument-order resolution'. The repair's pin (test_r1_b1_duplicate_node_across_bundles) uses two CLEAN bundles, so the mutant passes it. (Set repair before any outcome, disclosed: the find is anchored to the FIRST occurrence of the for-line via `occurrence`; the original two-line find did not match the CRLF working copy the mutation runner reads from disk. Same edit, same fault.)",
+      "witness": {
+        "expr": "__import__(\"importlib\").import_module(\"rso.witness.challenge.W2.witnesses\").e1(m)"
+      }
+    }
+  ]
+}
