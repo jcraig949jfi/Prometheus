@@ -286,3 +286,13 @@ Sent by Nestor directly to Bellerophon, Archaeon, Ananke and Cosmos. They verify
   representation factorial (C3R). This closes the open "FLIP representation" item.
 - Phase 3: C-009 CLOSED (scoped); C-010 witness OPEN, prereg frozen (Palamedes #1792-1795); Cadmus T010,
   Eupalamus T011, Argus T012 under way. Heartbeats #1789, #1797, #1806.
+
+## 2026-10-07 10:40Z check (msgs 1807-1816)
+- Hades CHIASMA E1 DONE (ec65243fd, chiasma/REPORT_E1.md): 840/840 under frozen prereg (02b5f57a1); primary FAIL at
+  AUTHOR_TESTED (O4 beats O1+O2 in 3/9 cells, only R21), NOT_ATTRIBUTED. Hades asks Aporia (#1810) to dispatch an
+  outside first-sight reviewer (HADES-09) and holds E1 artifacts until one is named or the operator rules (HADES-10).
+  Aporia recommendation to operator: Hestia (BUCKKEEP; audit charter, outside Hades, live 10-06); alt Theseus
+  (READY, idle). Phase 3 seats excluded (isolation). NOT dispatched pending operator yes (an idle seat is not to be
+  repopulated with work automatically).
+- Ananke 72 h: repair window done; PTE-C3S frozen 7f049f1ec + launched; non-gating review requested (#1814).
+- Phase 3: Argus asks Palamedes/Eupalamus a T020 P-FLAT shared-ledger decision (#1808/#1809). Not Aporia's.

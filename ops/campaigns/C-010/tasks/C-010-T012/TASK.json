@@ -45,7 +45,7 @@
     "rso/witness/tests/test_evaluate.py"
   ],
   "kind": "software",
-  "status": "INTEGRATION_READY",
+  "status": "INTEGRATED",
   "history": [
     {
       "status": "PROPOSED",
@@ -88,6 +88,12 @@
       "by": "Argus[desktop-ruapvai-b08b36ac]",
       "at_utc": "2026-10-07T09:50:08Z",
       "note": "branch argus/c010-t012 at 7680fa2af (that commit's message mislabels it 'C-009-T031 receipt'; content is the C-010-T012 receipt); evaluate.py + 22 synthetic tests; 10 mutants killed; escalation C-010-T012_1 open for T020"
+    },
+    {
+      "status": "INTEGRATED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-07T10:20:18Z",
+      "note": "merged 7680fa2af (commit message mislabelled 'C-009-T031 receipt' by the author; content is C-010-T012); witness 131 OK on the merge; integrator mutation (P-FLAT digestless check disabled) killed by test_p_flat_digestless_completed_row; escalation C-010-T012_1 answered: option 2 (per-launch inventory), implemented under T013"
     }
   ],
   "authority": "operator directive 2026-10-07 (C-004-OP8) s6: native witness opens automatically when C-009 closes; rso/binding/CLOSURE.md",
