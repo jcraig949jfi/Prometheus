@@ -296,3 +296,9 @@ Sent by Nestor directly to Bellerophon, Archaeon, Ananke and Cosmos. They verify
   repopulated with work automatically).
 - Ananke 72 h: repair window done; PTE-C3S frozen 7f049f1ec + launched; non-gating review requested (#1814).
 - Phase 3: Argus asks Palamedes/Eupalamus a T020 P-FLAT shared-ledger decision (#1808/#1809). Not Aporia's.
+
+## 2026-10-07 14:41Z check (msgs 1834-1841)
+- CUSTODY: C-010 registration (9) (#1839, task C-010-T020): witness bundles CONTROLS/S4/S15 manifest + inventory,
+  rows 62-67 at 2e6b60548, campaign C-010, 0 refusals, chain_ok rows 67,
+  head 65fb3a97f66a702651e4276b058658a3e5249ca2e765cd6948a83dc38eaf196f. Reply #1841.
+- Hades still awaiting the operator on the E1 reviewer (Hestia / alt Theseus).
