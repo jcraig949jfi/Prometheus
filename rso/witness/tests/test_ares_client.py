@@ -160,13 +160,115 @@ class TestReceiptsAndBinding(unittest.TestCase):
         self.assertEqual(len({p[0] for p in self.produced}), len(AC.ARMS))   # one opaque node id per arm
 
     def test_receipt_records_subject_world_seeds_observer_outputs_oracle(self):
-        rec = AC.receipt_dict(self.launch, "S", "P-OBS", self.pop, SEEDS)
+        rec, arts = AC.receipt_dict(self.launch, "S", "P-RET", self.pop, SEEDS)
         for k in ("node_id", "subject", "arm", "predicate", "world", "seeds", "observer", "outputs", "oracle",
                   "execution", "code"):
             self.assertIn(k, rec)
         self.assertEqual(rec["subject"]["genome_sha256"], AC.genome_digest(self.pop))
         self.assertEqual([o["role"] for o in rec["outputs"]], ["trace:actions"])
         self.assertEqual([o["role"] for o in rec["oracle"]], ["oracle:regimes", "oracle:reset_steps"])
+
+
+# --------------------------------------------------------------------------------------------------------
+# C-010-T010: predicate-specific node executions returning artifact BYTES with layout (PREREGISTRATION s7).
+# Plumbing on random / hand-wired organisms only; no count, accuracy or outcome on any registered arm.
+
+def _decode(rec, arts, role):
+    a = next(x for x in rec["outputs"] + rec["oracle"] if x["role"] == role)
+    data = arts[a["sha256"]]
+    if a["dtype"] == "json":
+        return json.loads(data)
+    return np.frombuffer(data, dtype=a["dtype"]).reshape(a["shape"])
+
+
+import json  # noqa: E402  (used by _decode)
+
+
+class TestNodeExecutionsWithArtifacts(unittest.TestCase):
+    def setUp(self):
+        self.launch = AC.Launch("launch-c010-test", code_commit="0" * 40)
+        self.pop = _random_pop(P=1)
+
+    def _check_listing(self, rec, arts):
+        from rso.witness import run_witness as RW
+        listed = RW.verify_artifacts(rec, arts)                      # the driver's own check: all named, nothing extra
+        self.assertEqual(len(listed), len(rec["outputs"]) + len(rec["oracle"]))
+        for a in rec["outputs"] + rec["oracle"]:
+            self.assertIn("dtype", a)
+            self.assertIn("shape", a)
+
+    def test_roles_per_predicate_match_the_preregistration(self):
+        roles = {"P-RET": (["trace:actions"], ["oracle:regimes", "oracle:reset_steps"]),
+                 "P-CAL": (["trace:actions"], ["oracle:regimes", "oracle:reset_steps"]),
+                 "P-CHAN": (["trace:actions"], ["oracle:regimes", "oracle:reset_steps"]),
+                 "P-OBS": (["trace:actions_record", "trace:actions_norecord"], ["oracle:regimes", "oracle:reset_steps"]),
+                 "P-ERASE": (["trace:probe_after_a", "trace:probe_after_b"], ["oracle:regimes"]),
+                 "P-PRES": (["trace:pres_warm", "trace:pres_fresh"], ["oracle:regimes"])}
+        seeds = {"P-ERASE": [s for t in AC.erase_probe_set()[:4] for s in t],
+                 "P-PRES": [s for p in AC.pres_seed_set()[:4] for s in p]}
+        for pred, (outs, orc) in roles.items():
+            with self.subTest(predicate=pred):
+                rec, arts = AC.receipt_dict(self.launch, "S", pred, self.pop, seeds.get(pred, SEEDS))
+                self.assertEqual([o["role"] for o in rec["outputs"]], outs)
+                self.assertEqual([o["role"] for o in rec["oracle"]], orc)
+                self._check_listing(rec, arts)
+
+    def test_episode_node_bytes_decode_to_the_run(self):
+        rec, arts = AC.receipt_dict(self.launch, "S", "P-RET", self.pop, SEEDS)
+        out = AC.run_episodes(self.pop, AC.world("W15", "present"), SEEDS)
+        self.assertTrue(np.array_equal(_decode(rec, arts, "trace:actions"), out["actions"]))
+        self.assertTrue(np.array_equal(_decode(rec, arts, "oracle:regimes"), out["regimes"]))
+        self.assertEqual(_decode(rec, arts, "oracle:reset_steps"), out["reset_steps"])
+        self.assertEqual(list(_decode(rec, arts, "trace:actions").shape), [len(SEEDS), 40, 1])
+
+    def test_p_obs_node_runs_with_and_without_the_observer(self):
+        rec, arts = AC.receipt_dict(self.launch, "POS", "P-OBS", self.pop, SEEDS)
+        a, b = _decode(rec, arts, "trace:actions_record"), _decode(rec, arts, "trace:actions_norecord")
+        self.assertEqual(a.shape, b.shape)
+        self.assertEqual(rec["observer"], AC.OBSERVER_ID)
+
+    def test_p_erase_node_on_a_leak_construction(self):
+        from rso.witness.tests.test_ares_client import _leak_construction
+        probes = AC.erase_probe_set()[:8]
+        flat = [s for t in probes for s in t]
+        sub = _leak_construction()
+        rec_s, arts_s = AC.receipt_dict(self.launch, "S", "P-ERASE", sub, flat)
+        rec_l, arts_l = AC.receipt_dict(self.launch, "S-LEAK", "P-ERASE", sub, flat)
+        for rec, arts in ((rec_s, arts_s), (rec_l, arts_l)):
+            self.assertEqual(list(_decode(rec, arts, "trace:probe_after_a").shape), [8, 40, 1])
+            self.assertEqual(list(_decode(rec, arts, "oracle:regimes").shape), [8, 3])
+        self.assertEqual(AC.paired_carryover_diffs(_decode(rec_s, arts_s, "trace:probe_after_a"),
+                                                   _decode(rec_s, arts_s, "trace:probe_after_b")), 0)
+        self.assertGreater(AC.paired_carryover_diffs(_decode(rec_l, arts_l, "trace:probe_after_a"),
+                                                     _decode(rec_l, arts_l, "trace:probe_after_b")), 0)
+        self.assertEqual(_decode(rec_s, arts_s, "oracle:regimes")[:, :2].tolist(), [[0, 1]] * 8)
+
+    def test_p_pres_node_on_a_leak_construction(self):
+        from rso.witness.tests.test_ares_client import _leak_construction
+        flat = [s for p in AC.pres_seed_set()[:8] for s in p]
+        sub = _leak_construction()
+        rec_s, arts_s = AC.receipt_dict(self.launch, "S", "P-PRES", sub, flat)
+        rec_l, arts_l = AC.receipt_dict(self.launch, "S-LEAK", "P-PRES", sub, flat)
+        self.assertEqual(AC.paired_carryover_diffs(_decode(rec_s, arts_s, "trace:pres_warm"),
+                                                   _decode(rec_s, arts_s, "trace:pres_fresh")), 0)
+        self.assertGreater(AC.paired_carryover_diffs(_decode(rec_l, arts_l, "trace:pres_warm"),
+                                                     _decode(rec_l, arts_l, "trace:pres_fresh")), 0)
+
+    def test_malformed_probe_lists_are_refused(self):
+        with self.assertRaises(ValueError):
+            AC.receipt_dict(self.launch, "S", "P-ERASE", self.pop, [800000, 800003])      # not triples
+        with self.assertRaises(ValueError):
+            AC.receipt_dict(self.launch, "S", "P-PRES", self.pop, [850001])               # not pairs
+
+    def test_driver_seam_takes_the_tuple(self):
+        from rso.witness import run_witness as RW
+        rec, arts = RW.node_artifacts(AC.receipt_dict, self.launch, "S", "P-RET", self.pop, SEEDS)
+        self.assertEqual(len(RW.verify_artifacts(rec, arts)), 3)
+
+    def test_produce_still_binds(self):
+        node_id, run_id, data = self.launch.produce("S", "P-ERASE", self.pop,
+                                                    [s for t in AC.erase_probe_set()[:2] for s in t])
+        self.assertEqual(B.binding_reasons(node_id, run_id, data, self.launch.rows(), "launch-c010-test"), [])
 
 
 class TestPredicateCountsOnSyntheticArrays(unittest.TestCase):
