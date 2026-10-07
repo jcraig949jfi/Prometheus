@@ -33,6 +33,7 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
 | B23 | re-audit Deep Frontier/C6 elites with jitter/constant-twin/disasm | WSE runs: 54% of competent = timing exploits (C6-novel5 80%) |
 | B23b | composed-world runs: constant + blind twins | 62/102 fail; 40 beat constant |
 | B23c/B24 | attack survivors (echo twins, knockout) | W-artifacts = echo (killed); P-boom = clock-vs-position lap counter |
+| B25/B26 | no-clock composed world: does content sensing evolve? | YES 3/6 sense pools (blind twin collapses); 3/6 open-loop |
 | B17 | forced perception (echo on PUT) opens the 2-value wall? | staged; controls pass |
 | B12 | LONG: W2_K2 with N=500, G=3000 -- is it just time? | STOPPED (compute repair); partial 0/6 to g200-2999 |
 | B11 | is the W2_K2 shelf a delay line? | MOSTLY NO: 50/72 genuine memory, 20/72 delay lines |
@@ -289,6 +290,20 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   input-conditioned control, but the input is the clock; not resource sensing.
   Program-level reading: of 130 frontier experiments, NO organism's competence survives as perception of the world's
   CONTENT -- W0 competence is 54% delay lines, composed-world competence is constant/echo/clock policies.
+- B25 WORLD REDESIGN (NoClock wrapper drops tick/pos from the composed-world observation; P-boom_K_D world; controls:
+  hand content policy .267 on NOCLOCK, constant .076, echo .000; the evolved clock-sweep elite collapses .32 -> .05).
+  Evolution (CMP3 search, E=8, G=200, 6 seeds/arm, ~1 s/gen): NOCLOCK elites .18/.31/.33/.40/.42/.48 (5/6 above the
+  hand content policy); CLOCK .27-.46.
+- B26 WORD ABLATION (attack before naming; zero one observation word at a time + blind twin):
+  NOCLOCK 3/6 SENSE POOL CONTENT (2504 pool1 drop .33; 2505 pool0/1/2 .07-.14; 2506 pool1 .39 + pool2 .08; blind twin
+  collapses to .07-.09). 3/6 are BLIND open-loop policies (blind == elite: .33, .29, .14). CLOCK: 4/6 sense
+  (tick/pos mixed with pool1; 2505 senses the HAZARD flag, drop .09), 2/6 blind. PREDICTION (>= 3/6 NOCLOCK sense a
+  pool word) HELD.
+  STRONGEST POSITIVE OF THE CAMPAIGN: the first evolved CONTENT SENSING that survives controls -- obtained by
+  REMOVING the clock word from the world, not by changing search or organism.
+  RULER LESSON: the constant twin is too weak -- open-loop periodic action patterns beat it (.14-.33 vs .076) without
+  sensing anything. The BLIND twin is the primary control for composed worlds from now on (B23b's "40 beat
+  constant" includes such open-loop policies; its blind column is the honest one: 49 input-using).
 - PIVOT LANE staged (B23, for the budget window): re-audit the Deep Frontier / C6 record with today's instruments.
   Off-repo evidence exists: D:\Prometheus-worktreesrchaeon-wse-2026-09-16rchaeonrontier
 uns (2.3 GB;
