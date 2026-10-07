@@ -49,7 +49,7 @@
     "receipt"
   ],
   "kind": "software",
-  "status": "INTEGRATION_READY",
+  "status": "INTEGRATED",
   "history": [
     {
       "status": "PROPOSED",
@@ -92,6 +92,12 @@
       "by": "Eupalamus[harry1-f79a0694]",
       "at_utc": "2026-10-07T00:50:10Z",
       "note": ""
+    },
+    {
+      "status": "INTEGRATED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-07T01:30:52Z",
+      "note": "merged 2d2c41304 (477178eb1); slice suite 404 OK (skipped=1), rso/binding 13 OK; integrator mutation (s2_bundle no longer passes receipt_sha256 to finish) killed by test_s2_bundle binding tests (1 FAIL, 1 ERROR) -- covers the bundle-level RED the author could not run on old code"
     }
   ],
   "authority": "operator directive 2026-10-07 (C-004-OP8), roles/Palamedes/prompts/2026-10-07_rso_completion_push/01_OPERATOR_DIRECTIVE_verbatim.md",
