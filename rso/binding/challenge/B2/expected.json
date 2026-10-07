@@ -1,0 +1,47 @@
+{
+  "schema": "pallas.c009.t034.expected.v1",
+  "written_by": "Pallas[harry1-2b71b1e1], claude-fable-5-1, before execution; no test body under rso/slice001/tests/ or rso/witness/tests/ opened (rso/binding/tests/test_binding.py was read: EXPOSURE.md)",
+  "frozen_surface": "rso/binding/FREEZE_B2.md (code 1b69dd04a; rso/binding v1.1.0 with s6 v1.0.1 and s7 BX5b); 48 hashes verified against 0ad2d1a6f, 1b69dd04a and the LF-normalised working tree before this commit",
+  "scoring_rule": "As B1 (and S3/S4/R2): a case is CORRECT iff every scored check holds and no exception is raised; check types claim, line, identical, custody (S3 run_checks) plus witness_binding (the G-INV witness's BIND_* list) and custody_why_contains. A SOUND case is correct when accepted; a BROKEN case is correct when rejected -- an accepted broken case is a survivor. Every case runs on two bases: 'synthetic' (fixtures.evidence_cases synthetic G0) and 'r1' (the committed C-009 fresh produce rso/binding/R1/G0, real executions, producer-bound). On the synthetic base the claim-type checks are recorded unscored (B1 finding: G-RECOMP fails on the fixture traces for every CL-RET claim, baseline included); the line, witness_binding, identical and custody checks there are scored. The r1 base is fully scored.",
+  "bundles": {
+    "BASELINE": "evidence_cases.g0(base) under the frozen code (fixture store: stage rows only; custody UNQUALIFIED by KEEPER_ROW_MISSING on both bases)",
+    "KEEPER": "evidence_cases.keeper(base): registered manifest, inventory, table and stage records; custody QUALIFIED. Control only in this set (no keeper case)"
+  },
+  "controls": [
+    {"id": "CTRL.G0", "bundle": "BASELINE", "checks": [
+      {"type": "claim", "claim": "CL-RET(REG)", "eligibility": "ELIGIBLE", "standing": "SATISFIED", "not_satisfied": []},
+      {"type": "claim", "claim": "CL-RET(PKTD)", "eligibility": "ELIGIBLE", "standing": "SATISFIED", "not_satisfied": []},
+      {"type": "claim", "claim": "CL-RET(LAGD)", "eligibility": "NOT_ELIGIBLE", "standing": "UNMET", "not_satisfied": ["rcpt:LAGD:ERASE:STANDARD"]},
+      {"type": "line", "claim": "CL-RET(REG)", "line": "G-INV@CL-RET(REG)", "fields": {"execution": "RAN", "outcome": "PASS"}}
+    ]},
+    {"id": "CTRL.KEEPER", "bundle": "KEEPER", "checks": [
+      {"type": "custody", "status": "QUALIFIED"},
+      {"type": "claim", "claim": "CL-CUST(G0)", "eligibility": "ELIGIBLE", "standing": "SATISFIED", "not_satisfied": []},
+      {"type": "claim", "claim": "CL-RET(REG)", "eligibility": "ELIGIBLE", "standing": "SATISFIED", "not_satisfied": []}
+    ]}
+  ],
+  "cases": [
+    {
+      "id": "B2.SOUND.FAILED_RERUN_DIGEST", "polarity": "sound", "plane": "binding",
+      "gates": ["G-INV (BX5b: a FAILED re-execution of a presented node, after the cited row, with a digest, is provenance; BX4: no order read)"],
+      "checks": [
+        {"type": "claim", "claim": "CL-RET(REG)", "eligibility": "ELIGIBLE", "standing": "SATISFIED", "not_satisfied": []},
+        {"type": "line", "claim": "CL-RET(REG)", "line": "G-INV@CL-RET(REG)", "fields": {"execution": "RAN", "outcome": "PASS"}},
+        {"type": "identical", "reference": "BASELINE", "claims": "ALL"}
+      ]
+    },
+    {
+      "id": "B2.BROKEN.NESTED_SIBLING", "polarity": "broken", "plane": "binding",
+      "gates": ["G-INV (BX5b: a second COMPLETED execution of a required node under the anchored launch, not presented; here parented to the presented execution's row, depth 2)"],
+      "primary": "G-INV@CL-RET(REG)",
+      "checks": [
+        {"type": "claim", "claim": "CL-RET(REG)", "eligibility": "NOT_ELIGIBLE", "standing": "UNMET", "not_satisfied": ["gate:G-INV:CL-RET(REG)"]},
+        {"type": "line", "claim": "CL-RET(REG)", "line": "G-INV@CL-RET(REG)", "fields": {"execution": "RAN", "outcome": "FAIL", "reason": "RECEIPT_WITHOUT_RUN:rcpt:REG:PRESERVE:STANDARD"}},
+        {"type": "witness_binding", "claim": "CL-RET(REG)", "line": "G-INV@CL-RET(REG)", "binding": ["BIND_SIBLING_UNREPORTED"]},
+        {"type": "identical", "reference": "BASELINE", "claims": ["CL-RET(PKTD)", "CL-RET(LAGD)", "CL-CAL(STANDARD)", "TWIN(REG)"]}
+      ],
+      "note": "The checks state what a qualifying consumer should do. binding.own_launch_rows reads parent_run_id == the launch (BX2's definition of a node execution row), so the reviewer predicts the frozen code ADMITS this shape; if the checks fail the case is an ADMITTED survivor for adjudication (CONTRACT s7 'under the anchored launch': transitive, or parent == launch?), not a scoring error."
+    }
+  ],
+  "probes": []
+}

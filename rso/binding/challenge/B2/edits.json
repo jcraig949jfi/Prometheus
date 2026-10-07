@@ -1,0 +1,14 @@
+{
+  "schema": "rso.slice001.mutation_edits.v1",
+  "edits": [
+    {
+      "edit_id": "E6-digestless-sibling-ignored",
+      "path": "rso/binding/binding.py",
+      "module": "rso.binding.binding",
+      "find": "if r.get(\"node_id\") == node_id and r.get(\"status\") == COMPLETED and r.get(\"run_id\") != run_id]",
+      "replace": "if r.get(\"node_id\") == node_id and r.get(\"status\") == COMPLETED and r.get(\"run_id\") != run_id\n            and r.get(\"receipt_sha256\")]",
+      "intended_fault": "BX5b (binding.unreported_siblings): a second COMPLETED RECEIPT row of a presented node under the anchored launch counts as an unreported sibling only when it records a receipt_sha256. A launch may then run a required node twice, record the unfavourable completion as a COMPLETED row WITHOUT a digest (a legacy / partial / digest-less row: the row shape of B1 LEGACY_ROW and E4, now as the hidden sibling rather than as the cited row), present the favourable attempt, and qualify. The natural refactor 'only digest-bearing rows are real executions' introduces it. The binding unit suite's sibling cases all carry digests; whether the slice suite pins a digest-less sibling is the first-sight question.",
+      "witness": {"expr": "__import__(\"importlib\").import_module(\"rso.binding.challenge.B2.witnesses\").e6(m)"}
+    }
+  ]
+}

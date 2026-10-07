@@ -1,0 +1,60 @@
+{
+ "b2_cpu_used_s": 391.9,
+ "confirm": [
+  {
+   "detail": null,
+   "edit_id": "E6-digestless-sibling-ignored",
+   "errors": 0,
+   "failures": 0,
+   "row": "confirm",
+   "skipped": 1,
+   "status": "SURVIVED",
+   "tests_run": 528,
+   "wall_seconds": 295.238,
+   "witness": {
+    "__import__(\"importlib\").import_module(\"rso.binding.challenge.B2.witnesses\").e6(m)": "([], [], [])"
+   }
+  }
+ ],
+ "ledger_usage": {
+  "artifact_bytes": 13381360,
+  "cpu_s": 1910.154431899893,
+  "launches": 10
+ },
+ "run_id": "B2-MUTATION-20261007T073714Z-10300",
+ "targeted": {
+  "baseline": "PASSED",
+  "suite": [
+   "rso.binding.tests.test_binding",
+   "rso.slice001.tests.test_evidence",
+   "rso.slice001.tests.test_checker_render",
+   "rso.slice001.tests.test_stages_evidence",
+   "rso.slice001.tests.test_ledger",
+   "rso.slice001.tests.test_s2_run"
+  ],
+  "summary": {
+   "applicable": 1,
+   "cap_exhausted": false,
+   "duplicate": 0,
+   "equivalent": 0,
+   "error": 0,
+   "error_detail": {
+    "IMPORT_ERROR": 0,
+    "SYNTAX_ERROR": 0,
+    "TEST_ERROR": 0
+   },
+   "executed": 1,
+   "killed": 0,
+   "not_applicable": 0,
+   "not_run": {
+    "baseline": 0,
+    "cap": 0
+   },
+   "proposed": 1,
+   "survived": 1,
+   "timeout": 0,
+   "unresolved_survivors": 0
+  }
+ }
+}
+exit 0
