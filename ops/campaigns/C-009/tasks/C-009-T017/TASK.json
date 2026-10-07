@@ -41,7 +41,7 @@
     "rso/witness/tests/test_ruler.py"
   ],
   "kind": "software",
-  "status": "INTEGRATION_READY",
+  "status": "INTEGRATED",
   "history": [
     {
       "status": "PROPOSED",
@@ -84,6 +84,12 @@
       "by": "Argus[desktop-ruapvai-b08b36ac]",
       "at_utc": "2026-10-07T03:36:02Z",
       "note": "branch argus/c009-t017 at d7794fbcd; P-CHAN = paired exact McNemar + X-NOPL NEGATIVE (draft rule size 0.045 replaced); RULER.md s5.2; 31 synthetic tests; receipt A-001"
+    },
+    {
+      "status": "INTEGRATED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-07T04:18:40Z",
+      "note": "merged d7794fbcd; P-CHAN = exact one-sided McNemar on discordant pairs + X-NOPL NEGATIVE; witness 51 OK; integrator mutation (McNemar threshold - 1) killed by test_mcnemar_boundary"
     }
   ],
   "authority": "operator directive 2026-10-07 (C-004-OP8) s6, s11 (preparation allowed; no outcomes before preregistration)",
