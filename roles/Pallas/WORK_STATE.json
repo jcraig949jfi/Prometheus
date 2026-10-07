@@ -3,10 +3,10 @@
   "seat": "Pallas",
   "mwo_id": "MWO-0004",
   "authority": "operator directive 2026-10-03 (roles/Achilles/prompts/2026-10-03_rso_builder_cell/01_OPERATOR_DIRECTIVE_verbatim.md); operator directive 2026-10-07 (C-004-OP8, roles/Palamedes/prompts/2026-10-07_rso_completion_push/01_OPERATOR_DIRECTIVE_verbatim.md) s6 (native witness opens when C-009 closes) and s10 (same-seat relaunch); Palamedes launch note 2026-10-07 10:40Z (roles/Palamedes/prompts/2026-10-07_wake_pallas_c010_t014/WAKE_Pallas.md: C-010-T014, headless, no run_in_background)",
-  "updated_at_utc": "2026-10-07T11:40:00Z",
+  "updated_at_utc": "2026-10-07T11:50:00Z",
   "state": "CLOSING",
   "branch": "pallas/c010-t014",
-  "base_sha": "17b03160d",
+  "base_sha": "0f6b83a36",
   "head_sha": "the commit carrying this file (branch; merged origin/main 0206a3bf5 at 3434117cf)",
   "worktree_path": "C:/Prometheus-worktrees/pallas-c010-t014",
   "model": "claude-fable-5-1",
@@ -14,11 +14,11 @@
   "host": "harry1 (M4; not M1, EW_DB_HOST=192.168.1.202), headless",
   "instance": "harry1-14289af6",
   "session_start_utc": "2026-10-07T10:44:00Z (comms boot)",
-  "current_objective": "RSO Builder Cell. C-004 and C-009 CLOSED. C-010 NATIVE-RET-WITNESS-001: C-010-T014 (Q3 challenge on FREEZE_W1 before any witness outcome) DONE -> INTEGRATION_READY",
-  "current_step": "C-010-T014 delivered: set 931be915f committed before outcomes; 2 ledgered launches (W1-CASES 142.8 CPU-s; W1-MUTATION 9 children 643.4 s); 11 cases + 6 edits, every prediction held; REPORT.md rso/witness/challenge/W1/REPORT.md. Surfaces: evaluate.py NOT CLOSED (B1 duplicate node across bundles, B2 P-CAL seeds unverified, B5 node-id/field disagreement; E1/E3/E5 survive); ruler.py NOT CLOSED on E6 (one-sided P-CAL margin unpinned 1074-1077); ares_client NOT CLOSED on E2 (S-NOPL copy) with B8 semantic finding (NULL arm is a no-op on a plastic carrier); run_witness storage CLOSED within coverage (S1 + 4/4 tampers refused); B4 declared escape confirmed, not reachable under S.Runtime. One repair round (s8) belongs to the owners.",
+  "current_objective": "RSO Builder Cell. C-004, C-009 CLOSED. C-010 NATIVE-RET-WITNESS-001 in its one repair round; Pallas packet C-010-T034 (Q3) PROPOSED behind T033",
+  "current_step": "idle on Opus 5 (Q2). C-010-T014 was delivered by Fable instance harry1-14289af6 and CLOSED 11:39:45Z (evaluate/ruler/ares_client NOT CLOSED, survivors S-1..S-10; run_witness storage CLOSED within coverage), opening the repair round. C-010-T034 (short fresh re-check on FREEZE_W2) is Pallas's next packet and needs a Fable instance.",
   "in_flight": [],
   "finish_condition": "per claimed packet (DISTRIBUTED_WORK.md)",
-  "next_expected_milestone": "Palamedes integrates T014; owners' one repair round (Argus evaluate.py, Cadmus ares_client) then T020 (subject GA runs) -> seed lists -> witness launches",
+  "next_expected_milestone": "T031 (Argus) + T032 (Cadmus) repair -> T033 (Palamedes: integrate, dry run, FREEZE_W2) -> C-010-T034 READY for a Fable Pallas instance -> T020 subjects and RESULT",
   "expected_next_artifact": "none from this session (packet-only)",
   "threads": [
     "phase3-rso"
@@ -34,10 +34,9 @@
   "blocked_on": [],
   "next_actions": [
     "hourly: git fetch; MERGE origin/main by SHA; comms sync Pallas; workgraph ready Pallas",
-    "do NOT claim a Q3 packet on a weaker model (ready does not enforce capability; the agent does)",
-    "observe the C-010 gate: no registered subject run, no statistic on any registered arm, until T020; this packet printed none",
-    "HEADLESS: never run_in_background; foreground with timeout <= 600 s; split long runs (W1 split the mutation launch across three invocations sharing one ledger launch); the turn ends only when nothing is running",
-    "if a fresh witness-path challenge is wanted after the repair round it needs another Fable instance; this instance read every witness module and two witness test files"
+    "do NOT claim C-010-T034 or any Q3 packet on Opus 5",
+    "keep first-sight custody for T034: do not open rso/witness/ (W1 report, ADJUDICATION_W1, AMENDMENT_v1.0.1, FREEZE_W1/W2)",
+    "observe the campaign gate: no registered subject run, no statistic on any registered arm, until T020"
   ],
   "operator_decisions_required": [
     "C-010 P-CAL NULL arm (W1.B8): ares_client.arm('NULL') = subject with reset_each_step zeroes activations only; plastic W1 still writes and the POS carrier's actions are identical under NULL and S (0 of 8 x 40 differ). As registered the arm removes the activation channel, not the plastic one; for a subject retaining through plastic W1 the NULL arm retains too and P-CAL FAILS (campaign DETECTION_UNQUALIFIED). Whether to amend the arm construction before any outcome (PREREGISTRATION s10: a recorded pre-outcome amendment; s4 already reads 'reset_each_step / random population') is the operator's, through Palamedes"
@@ -48,5 +47,5 @@
     "roles/Pallas/comms/T014_INTEGRATION_READY_2026-10-07.md"
   ],
   "last_push_sha": "the commit carrying this file (branch pallas/c010-t014); state commits on main: 2ff41b5d9 (claim), 34b89538e (IMPLEMENTING), then GREEN and INTEGRATION_READY with receipt A-001",
-  "last_push_utc": "2026-10-07T11:40:00Z"
+  "last_push_utc": "2026-10-07T11:50:00Z"
 }
