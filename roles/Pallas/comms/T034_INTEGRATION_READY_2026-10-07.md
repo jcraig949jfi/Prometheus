@@ -1,34 +1,37 @@
-C-009-T034 INTEGRATION_READY -- Pallas[harry1-2b71b1e1] (harry1, claude-fable-5-1, Q3, headless), finished by
-Pallas[harry1-2a918949] (same model, host, lease; resumed after the headless exit per your 08:20Z launch note)
+C-010-T034 INTEGRATION_READY -- Pallas[harry1-dc8e608d]
 
-Read first: rso/binding/challenge/B2/REPORT.md (on branch pallas/c009-t034, pushed; merged origin/main 63d4c06c5 at
-83bc92338). Receipt: ops/campaigns/C-009/tasks/C-009-T034/attempts/A-001/RECEIPT.json (state commit on main, with the
-INTEGRATION_READY transition).
+PACKET     short fresh re-check on FREEZE_W2 (R1-R5): 1 sound, 1 broken (+ ruler-path control), 1 semantic edit;
+           synthetic / hand-wired only; set committed before outcomes (19a18b936; pre-outcome edit-anchor repair
+           2933f4477, disclosed); ONE ledger launch W2-RECHECK-20261007T140519Z-12684 (COMPLETED)
+BRANCH     pallas/c010-t034 (merged origin/main 5b4b75247 at f9d3866ee); acceptance 149 + 21 OK on the merged tree;
+           FREEZE_W2 36/36 re-verified; results commit = the branch head carrying this note
+REPORT     rso/witness/challenge/W2/REPORT.md (+ CHALLENGE_SET.md, EXPOSURE.md, results_w2.jsonl,
+           mutation_rows_w2.jsonl, w2_launch.json, check_build_*.jsonl, acceptance_stdout.txt)
 
-Order held: exposure 6b02d25a0 < claim 13d7c344c < set a9ef80a07 (07:35:46Z) < IMPLEMENTING 63d4c06c5 < check-build 07:36:07Z
-(no consumer call) < launch 1 07:36:56Z < launch 2 07:37:14Z-07:43:44Z. Data files byte-identical to the set commit.
-FREEZE_B2 48/48 verified three ways before the set and again on the merged tree. No turn ended with a LAUNCH in flight; the
-first instance did end its turn with the unledgered acceptance run in the background and the session exited with it. 2 of 3
-launches used (10 of 12 on the campaign; 1910.2 of 5400 CPU-s). Acceptance on the merged tree 83bc92338, RE-RUN IN THE
-FOREGROUND by the second instance (08:19Z-08:24Z; the partial acceptance_stdout.txt replaced): slice001 426 OK (skipped=1),
-binding 21 OK, witness 81 OK; 528 run, 0 failures. origin/main at the resume (2c292d3c4) changed nothing under rso/.
+VERDICT PER REPAIRED SURFACE
+  R1 duplicate refusal / supplied_by   NOT CLOSED (coverage): S1 sound AS_EXPECTED -- the s10 (failed, re-run) pair is
+                                       evaluable, no over-refusal, supplied_by complete; E1 SURVIVES: the presenter
+                                       census is pinned for two CLEAN bundles only. Frozen code correct.
+  R2 registered lists required         NOT CLOSED: B1a SURVIVOR -- the list binds the receipt's seeds FIELD; on P-OBS /
+                                       P-PRES / P-ERASE the action BYTES are not tied to it (_pair_gate checks
+                                       a.shape == b.shape only; arrays of ONE episode pass under a 2048-seed
+                                       declaration). B1b control: the ruler path IS tied (SHAPE refusal).
+  R3 probe regime patterns             CLOSED within coverage (S1 accepts registered-shape lists; no fresh shape).
+  R4 node id rebuilt from fields       CLOSED within coverage (16 real driver receipts rebuild and bind).
+  R5 NULL per AMENDMENT_v1.0.1         CLOSED within coverage (R = 0 = S-NOPL's, non-plastic, reset_each_step, W1
+                                       unwritten, subject untouched; NULL node binds and evaluates through the driver).
 
-Score: sound 1/1 (FAILED_RERUN_DIGEST accepted, identical to baseline, both bases); broken 0/1 (NESTED_SIBLING ADMITTED, both
-bases); controls 2/2 x 2; edit E6 SURVIVED targeted (218) and full (528 incl. rso/witness/tests), witness differs. Predictions
-3/3.
+SURVIVORS -> UNEVALUABLE / MIS-CLASSIFIED?
+  S-1 (B1a) pair-gate evidence not tied to the declared list: NEITHER on the frozen driver (node_execution writes one
+      row per seed group); needs a producer that runs fewer episodes than it declares (B5/B6 trust class). Known
+      escape for RESULT.md; cheapest closure one shape check in _pair_gate.
+  S-2 (E1) R1 census unpinned for a (clean, refused) pair: NEITHER on the frozen code (EVIDENCE_DUPLICATE both
+      orders); reachable only with a refused bundle beside a clean one. One pinning test closes it.
+  Not a second repair round; nothing here blocks T020.
 
-Per surface (REPORT s3): BX1 CLOSED within coverage; BX2 CLOSED within coverage (B1's E2-E4 pinned by T031; T033 regression
-held; no fresh BX1/BX2 shape tried -- stated). BX5/BX5b NOT CLOSED, two survivors:
-  (a) NESTED_SIBLING, behavioural: a second COMPLETED RECEIPT row of a presented required node, digest of an unpresented FAIL
-      receipt, parented to the presented execution's OWN row (depth 2) rather than the launch, is invisible to BX5b
-      (own_launch_rows keeps parent == launch). Contract-vocabulary gap: CONTRACT s7 "under the anchored launch" vs BX2's
-      parent == launch. NOT reachable through rso/witness/run_witness.py as committed: every node row is parented to the
-      launch and the ledger refuses a repeated run_id; reachable only by an adapter that passes a node's run id as
-      parent_run_id (ledger.begin accepts any string).
-  (b) E6 digest-less sibling ignored, test-coverage: BX5b never reads a sibling's digest and no frozen test builds a
-      COMPLETED sibling without one; the witness path always records the digest on a COMPLETED row.
-Adjudication question, stated and not decided: if "applicable" means the committed witness path, CC3 is met (both recorded,
-not repaired, per CONTRACT s3); if it means any BX6 adapter, (a) is an applicable survivor. The repair for (a), if wanted
-later, is one line (walk parent_run_id up to the launch) or one contract sentence (a row whose parent is not a launch is
-malformed provenance); neither is asked for here. REPORT s5 also records the witness path's honest hole (an unfavourable
-launch dropped for a new one; BX5 by design) for the preregistration's author.
+PREDICTIONS  3/3 cases, 1/1 edit (witness values exact), fixed before outcomes.
+RESOURCES    1 launch (387.2 charged CPU-s composite); C-010 ledger after: 3 launches, 1379.1 CPU-s of 3600, 10.09 MB
+             of 200 MB. Reviewer ~40 min wall vs 25 (bootstrap + reading the repaired evaluator in full).
+HEADLESS     no run_in_background; every command foreground <= 600 s; the launch shared by two invocations.
+NEXT         coordinator integrates pallas/c010-t034 -> INTEGRATED -> CLOSED; T020 may proceed; Pallas idle (READY,
+             no packet) after this note.
