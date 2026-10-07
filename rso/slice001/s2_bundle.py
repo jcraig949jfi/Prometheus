@@ -22,6 +22,11 @@ predicate.code of each receipt is its instrument VERSION in the stage-record con
 adapter.file_code_ref per slice file the predicate imports, transitively, at one commit); a caller may pass
 `versions` read from the committed stage records so receipts and records cannot drift.
 
+Binding (C-009-T010, rso/binding/CONTRACT.md BX1-BX3): each RECEIPT row names the build row as parent_run_id and, once
+its receipt exists, records receipt_sha256 = sha256 of the receipt's canonical bytes (the receipt carries run_id,
+never the digest, so there is no circularity); the manifest names the launch as launch_run_id. rows="build" writes
+the build row only, so no node execution row exists to bind.
+
 Nothing here registers with the custody store (V8: Palamedes requests registration from Aporia at T020), and
 nothing compares against the expected-answer table (T020).
 
@@ -34,6 +39,7 @@ import re
 import subprocess
 import time
 
+from rso.binding import binding as BD
 from rso.slice001 import adapter as A
 from rso.slice001 import encoding as EN
 from rso.slice001 import evidence as EV
@@ -187,7 +193,7 @@ class _Rows(object):
             self.bytes += sum(len(b) for b in tr.values())
             return rc, tr
         rid = "%s/%s" % (self.run_id, node_id)
-        att = self.ledger.begin(rid, node_id, L.RECEIPT, supplied_by=SUPPLIER)
+        att = self.ledger.begin(rid, node_id, L.RECEIPT, supplied_by=SUPPLIER, parent_run_id=self.run_id)
         c0 = time.process_time()
         try:
             rc, tr = make_one(rid)
@@ -195,7 +201,7 @@ class _Rows(object):
             att.finish("FAILED", cpu_s=time.process_time() - c0)
             raise
         cpu, n = time.process_time() - c0, sum(len(b) for b in tr.values())
-        att.finish("COMPLETED", cpu_s=cpu, artifact_bytes=n)
+        att.finish("COMPLETED", cpu_s=cpu, artifact_bytes=n, receipt_sha256=BD.receipt_sha256(rc.canonical_bytes()))
         self.charged += cpu
         return rc, tr
 
@@ -297,8 +303,16 @@ def build_bundle(commit, ledger, subjects, observers=None, twins=(), run_id=None
         ok = True
     finally:
         led.close(ok)
-    manifest = EV.build_manifest(R.Receipt.from_dict(d) for d in dicts.values())
+    manifest = _manifest([R.Receipt.from_dict(d) for d in dicts.values()], run_id)
     return G0(dicts, traces, ledger.inventory(), manifest, run_id)
+
+
+def _manifest(receipts, launch_run_id):
+    """EV.build_manifest bytes plus launch_run_id (BX1): the keeper-registered manifest names the one launch that
+    produced the bundle. The consumer reads schema and nodes only, so the extra key leaves node anchoring alone."""
+    doc = R.loads_canonical(EV.build_manifest(receipts))
+    doc["launch_run_id"] = launch_run_id
+    return R.canonical_bytes(doc)
 
 
 def _subject_identity(ids, m):

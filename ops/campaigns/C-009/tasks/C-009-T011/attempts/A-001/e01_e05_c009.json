@@ -1,0 +1,8719 @@
+{
+ "E01.FAB_CONSISTENT": {
+  "CL-CAL(STANDARD)": {
+   "eligibility": "ELIGIBLE",
+   "lines": [
+    [
+     "CALIBRATION",
+     "WORLD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "CALIBRATION held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "G-BIND",
+     "CL-CAL(STANDARD)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "every reachable node binds to the anchors held",
+     "SATISFIED"
+    ],
+    [
+     "G-INV",
+     "CL-CAL(STANDARD)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "inventory terminal; every run reported",
+     "SATISFIED"
+    ]
+   ],
+   "not_satisfied": [],
+   "standing": "SATISFIED"
+  },
+  "CL-CUST(G0)": {
+   "eligibility": "NOT_ELIGIBLE",
+   "lines": [
+    [
+     "custody",
+     "CL-CUST(G0)",
+     "UNQUALIFIED"
+    ],
+    [
+     "G-BIND",
+     "CL-CUST(G0)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "every reachable node binds to the anchors held",
+     "SATISFIED"
+    ],
+    [
+     "G-INV",
+     "CL-CUST(G0)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "inventory terminal; every run reported",
+     "SATISFIED"
+    ]
+   ],
+   "not_satisfied": [
+    "custody"
+   ],
+   "standing": "UNQUALIFIED"
+  },
+  "CL-RET(LAGD)": {
+   "eligibility": "NOT_ELIGIBLE",
+   "lines": [
+    [
+     "BOUNDS",
+     "LAGD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "BOUNDS held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "CALIBRATION",
+     "WORLD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "CALIBRATION held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "RETENTION",
+     "LAGD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "POSITIVE",
+     "RETENTION above exact bound 1/2 (draft A T01 expected)",
+     "SATISFIED"
+    ],
+    [
+     "ERASE",
+     "LAGD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "FAIL",
+     "ERASE FAIL at j = 1 (draft A T04 expected)",
+     "UNMET"
+    ],
+    [
+     "PRESERVE",
+     "LAGD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "PRESERVE held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "CHANNEL",
+     "LAGD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "CHANNEL held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "RESTART",
+     "LAGD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "RESTART held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "OBSERVER",
+     "LAGD/NULL/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "OBSERVER held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "G-BIND",
+     "CL-RET(LAGD)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "every reachable node binds to the anchors held",
+     "SATISFIED"
+    ],
+    [
+     "G-INV",
+     "CL-RET(LAGD)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "inventory terminal; every run reported",
+     "SATISFIED"
+    ],
+    [
+     "G-RECOMP",
+     "CL-RET(LAGD)",
+     "RAN",
+     "QUALIFIED",
+     "FAIL",
+     "TRACE_SCHEMA:trace:clamp",
+     "UNMET"
+    ]
+   ],
+   "not_satisfied": [
+    "gate:G-RECOMP:CL-RET(LAGD)",
+    "rcpt:LAGD:ERASE:STANDARD"
+   ],
+   "standing": "UNMET"
+  },
+  "CL-RET(PKTD)": {
+   "eligibility": "NOT_ELIGIBLE",
+   "lines": [
+    [
+     "BOUNDS",
+     "PKTD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "BOUNDS held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "CALIBRATION",
+     "WORLD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "CALIBRATION held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "RETENTION",
+     "PKTD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "POSITIVE",
+     "RETENTION above exact bound 1/2 (draft A T01 expected)",
+     "SATISFIED"
+    ],
+    [
+     "ERASE",
+     "PKTD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "ERASE held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "PRESERVE",
+     "PKTD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "PRESERVE held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "CHANNEL",
+     "PKTD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "CHANNEL held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "RESTART",
+     "PKTD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "RESTART held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "OBSERVER",
+     "PKTD/BOOKKEEP/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "OBSERVER held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "OBSERVER",
+     "PKTD/NULL/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "OBSERVER held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "G-BIND",
+     "CL-RET(PKTD)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "every reachable node binds to the anchors held",
+     "SATISFIED"
+    ],
+    [
+     "G-INV",
+     "CL-RET(PKTD)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "inventory terminal; every run reported",
+     "SATISFIED"
+    ],
+    [
+     "G-RECOMP",
+     "CL-RET(PKTD)",
+     "RAN",
+     "QUALIFIED",
+     "FAIL",
+     "TRACE_SCHEMA:trace:clamp",
+     "UNMET"
+    ]
+   ],
+   "not_satisfied": [
+    "gate:G-RECOMP:CL-RET(PKTD)"
+   ],
+   "standing": "UNMET"
+  },
+  "CL-RET(REG)": {
+   "eligibility": "NOT_ELIGIBLE",
+   "lines": [
+    [
+     "BOUNDS",
+     "REG/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "BOUNDS held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "CALIBRATION",
+     "WORLD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "CALIBRATION held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "RETENTION",
+     "REG/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "POSITIVE",
+     "RETENTION above exact bound 1/2 (draft A T01 expected)",
+     "SATISFIED"
+    ],
+    [
+     "ERASE",
+     "REG/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "ERASE held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "PRESERVE",
+     "REG/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "PRESERVE held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "CHANNEL",
+     "REG/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "CHANNEL held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "RESTART",
+     "REG/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "RESTART held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "OBSERVER",
+     "REG/BOOKKEEP/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "OBSERVER held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "OBSERVER",
+     "REG/NULL/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "OBSERVER held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "G-BIND",
+     "CL-RET(REG)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "every reachable node binds to the anchors held",
+     "SATISFIED"
+    ],
+    [
+     "G-INV",
+     "CL-RET(REG)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "inventory terminal; every run reported",
+     "SATISFIED"
+    ],
+    [
+     "G-RECOMP",
+     "CL-RET(REG)",
+     "RAN",
+     "QUALIFIED",
+     "FAIL",
+     "TRACE_SCHEMA:trace:clamp",
+     "UNMET"
+    ]
+   ],
+   "not_satisfied": [
+    "gate:G-RECOMP:CL-RET(REG)"
+   ],
+   "standing": "UNMET"
+  },
+  "TWIN(REG)": {
+   "eligibility": "ELIGIBLE",
+   "lines": [
+    [
+     "TWIN_EQ",
+     "REG/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "TWIN_EQ held (draft A expected)",
+     "SATISFIED"
+    ]
+   ],
+   "not_satisfied": [],
+   "standing": "SATISFIED"
+  },
+  "custody": [
+   "UNQUALIFIED",
+   [
+    "KEEPER_ROW_MISSING:EVIDENCE_MANIFEST",
+    "KEEPER_ROW_MISSING:EXPECTED_ANSWER_TABLE",
+    "KEEPER_ROW_MISSING:RUN_INVENTORY"
+   ]
+  ]
+ },
+ "E01.G0": {
+  "CL-CAL(STANDARD)": {
+   "eligibility": "ELIGIBLE",
+   "lines": [
+    [
+     "CALIBRATION",
+     "WORLD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "CALIBRATION held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "G-BIND",
+     "CL-CAL(STANDARD)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "every reachable node binds to the anchors held",
+     "SATISFIED"
+    ],
+    [
+     "G-INV",
+     "CL-CAL(STANDARD)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "inventory terminal; every run reported",
+     "SATISFIED"
+    ]
+   ],
+   "not_satisfied": [],
+   "standing": "SATISFIED"
+  },
+  "CL-CUST(G0)": {
+   "eligibility": "NOT_ELIGIBLE",
+   "lines": [
+    [
+     "custody",
+     "CL-CUST(G0)",
+     "UNQUALIFIED"
+    ],
+    [
+     "G-BIND",
+     "CL-CUST(G0)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "every reachable node binds to the anchors held",
+     "SATISFIED"
+    ],
+    [
+     "G-INV",
+     "CL-CUST(G0)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "inventory terminal; every run reported",
+     "SATISFIED"
+    ]
+   ],
+   "not_satisfied": [
+    "custody"
+   ],
+   "standing": "UNQUALIFIED"
+  },
+  "CL-RET(LAGD)": {
+   "eligibility": "NOT_ELIGIBLE",
+   "lines": [
+    [
+     "BOUNDS",
+     "LAGD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "BOUNDS held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "CALIBRATION",
+     "WORLD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "CALIBRATION held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "RETENTION",
+     "LAGD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "POSITIVE",
+     "RETENTION above exact bound 1/2 (draft A T01 expected)",
+     "SATISFIED"
+    ],
+    [
+     "ERASE",
+     "LAGD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "FAIL",
+     "ERASE FAIL at j = 1 (draft A T04 expected)",
+     "UNMET"
+    ],
+    [
+     "PRESERVE",
+     "LAGD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "PRESERVE held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "CHANNEL",
+     "LAGD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "CHANNEL held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "RESTART",
+     "LAGD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "RESTART held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "OBSERVER",
+     "LAGD/NULL/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "OBSERVER held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "G-BIND",
+     "CL-RET(LAGD)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "every reachable node binds to the anchors held",
+     "SATISFIED"
+    ],
+    [
+     "G-INV",
+     "CL-RET(LAGD)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "inventory terminal; every run reported",
+     "SATISFIED"
+    ],
+    [
+     "G-RECOMP",
+     "CL-RET(LAGD)",
+     "RAN",
+     "QUALIFIED",
+     "FAIL",
+     "TRACE_SCHEMA:trace:clamp",
+     "UNMET"
+    ]
+   ],
+   "not_satisfied": [
+    "gate:G-RECOMP:CL-RET(LAGD)",
+    "rcpt:LAGD:ERASE:STANDARD"
+   ],
+   "standing": "UNMET"
+  },
+  "CL-RET(PKTD)": {
+   "eligibility": "NOT_ELIGIBLE",
+   "lines": [
+    [
+     "BOUNDS",
+     "PKTD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "BOUNDS held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "CALIBRATION",
+     "WORLD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "CALIBRATION held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "RETENTION",
+     "PKTD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "POSITIVE",
+     "RETENTION above exact bound 1/2 (draft A T01 expected)",
+     "SATISFIED"
+    ],
+    [
+     "ERASE",
+     "PKTD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "ERASE held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "PRESERVE",
+     "PKTD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "PRESERVE held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "CHANNEL",
+     "PKTD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "CHANNEL held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "RESTART",
+     "PKTD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "RESTART held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "OBSERVER",
+     "PKTD/BOOKKEEP/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "OBSERVER held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "OBSERVER",
+     "PKTD/NULL/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "OBSERVER held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "G-BIND",
+     "CL-RET(PKTD)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "every reachable node binds to the anchors held",
+     "SATISFIED"
+    ],
+    [
+     "G-INV",
+     "CL-RET(PKTD)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "inventory terminal; every run reported",
+     "SATISFIED"
+    ],
+    [
+     "G-RECOMP",
+     "CL-RET(PKTD)",
+     "RAN",
+     "QUALIFIED",
+     "FAIL",
+     "TRACE_SCHEMA:trace:clamp",
+     "UNMET"
+    ]
+   ],
+   "not_satisfied": [
+    "gate:G-RECOMP:CL-RET(PKTD)"
+   ],
+   "standing": "UNMET"
+  },
+  "CL-RET(REG)": {
+   "eligibility": "NOT_ELIGIBLE",
+   "lines": [
+    [
+     "BOUNDS",
+     "REG/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "BOUNDS held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "CALIBRATION",
+     "WORLD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "CALIBRATION held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "RETENTION",
+     "REG/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "POSITIVE",
+     "RETENTION above exact bound 1/2 (draft A T01 expected)",
+     "SATISFIED"
+    ],
+    [
+     "ERASE",
+     "REG/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "ERASE held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "PRESERVE",
+     "REG/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "PRESERVE held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "CHANNEL",
+     "REG/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "CHANNEL held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "RESTART",
+     "REG/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "RESTART held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "OBSERVER",
+     "REG/BOOKKEEP/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "OBSERVER held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "OBSERVER",
+     "REG/NULL/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "OBSERVER held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "G-BIND",
+     "CL-RET(REG)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "every reachable node binds to the anchors held",
+     "SATISFIED"
+    ],
+    [
+     "G-INV",
+     "CL-RET(REG)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "inventory terminal; every run reported",
+     "SATISFIED"
+    ],
+    [
+     "G-RECOMP",
+     "CL-RET(REG)",
+     "RAN",
+     "QUALIFIED",
+     "FAIL",
+     "TRACE_SCHEMA:trace:clamp",
+     "UNMET"
+    ]
+   ],
+   "not_satisfied": [
+    "gate:G-RECOMP:CL-RET(REG)"
+   ],
+   "standing": "UNMET"
+  },
+  "TWIN(REG)": {
+   "eligibility": "ELIGIBLE",
+   "lines": [
+    [
+     "TWIN_EQ",
+     "REG/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "TWIN_EQ held (draft A expected)",
+     "SATISFIED"
+    ]
+   ],
+   "not_satisfied": [],
+   "standing": "SATISFIED"
+  },
+  "custody": [
+   "UNQUALIFIED",
+   [
+    "KEEPER_ROW_MISSING:EVIDENCE_MANIFEST",
+    "KEEPER_ROW_MISSING:EXPECTED_ANSWER_TABLE",
+    "KEEPER_ROW_MISSING:RUN_INVENTORY"
+   ]
+  ]
+ },
+ "E01.OUTCOME_EDIT": {
+  "CL-CAL(STANDARD)": {
+   "eligibility": "ELIGIBLE",
+   "lines": [
+    [
+     "CALIBRATION",
+     "WORLD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "CALIBRATION held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "G-BIND",
+     "CL-CAL(STANDARD)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "every reachable node binds to the anchors held",
+     "SATISFIED"
+    ],
+    [
+     "G-INV",
+     "CL-CAL(STANDARD)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "inventory terminal; every run reported",
+     "SATISFIED"
+    ]
+   ],
+   "not_satisfied": [],
+   "standing": "SATISFIED"
+  },
+  "CL-CUST(G0)": {
+   "eligibility": "NOT_ELIGIBLE",
+   "lines": [
+    [
+     "custody",
+     "CL-CUST(G0)",
+     "UNQUALIFIED"
+    ],
+    [
+     "G-BIND",
+     "CL-CUST(G0)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "every reachable node binds to the anchors held",
+     "SATISFIED"
+    ],
+    [
+     "G-INV",
+     "CL-CUST(G0)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "inventory terminal; every run reported",
+     "SATISFIED"
+    ]
+   ],
+   "not_satisfied": [
+    "custody"
+   ],
+   "standing": "UNQUALIFIED"
+  },
+  "CL-RET(LAGD)": {
+   "eligibility": "NOT_ELIGIBLE",
+   "lines": [
+    [
+     "BOUNDS",
+     "LAGD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "BOUNDS held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "CALIBRATION",
+     "WORLD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "CALIBRATION held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "RETENTION",
+     "LAGD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "POSITIVE",
+     "RETENTION above exact bound 1/2 (draft A T01 expected)",
+     "SATISFIED"
+    ],
+    [
+     "ERASE",
+     "LAGD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "ERASE held",
+     "SATISFIED"
+    ],
+    [
+     "PRESERVE",
+     "LAGD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "PRESERVE held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "CHANNEL",
+     "LAGD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "CHANNEL held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "RESTART",
+     "LAGD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "RESTART held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "OBSERVER",
+     "LAGD/NULL/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "OBSERVER held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "G-BIND",
+     "CL-RET(LAGD)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "every reachable node binds to the anchors held",
+     "SATISFIED"
+    ],
+    [
+     "G-INV",
+     "CL-RET(LAGD)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "inventory terminal; every run reported",
+     "SATISFIED"
+    ],
+    [
+     "G-RECOMP",
+     "CL-RET(LAGD)",
+     "RAN",
+     "QUALIFIED",
+     "FAIL",
+     "TRACE_SCHEMA:trace:clamp",
+     "UNMET"
+    ]
+   ],
+   "not_satisfied": [
+    "gate:G-RECOMP:CL-RET(LAGD)"
+   ],
+   "standing": "UNMET"
+  },
+  "CL-RET(PKTD)": {
+   "eligibility": "NOT_ELIGIBLE",
+   "lines": [
+    [
+     "BOUNDS",
+     "PKTD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "BOUNDS held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "CALIBRATION",
+     "WORLD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "CALIBRATION held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "RETENTION",
+     "PKTD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "POSITIVE",
+     "RETENTION above exact bound 1/2 (draft A T01 expected)",
+     "SATISFIED"
+    ],
+    [
+     "ERASE",
+     "PKTD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "ERASE held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "PRESERVE",
+     "PKTD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "PRESERVE held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "CHANNEL",
+     "PKTD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "CHANNEL held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "RESTART",
+     "PKTD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "RESTART held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "OBSERVER",
+     "PKTD/BOOKKEEP/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "OBSERVER held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "OBSERVER",
+     "PKTD/NULL/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "OBSERVER held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "G-BIND",
+     "CL-RET(PKTD)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "every reachable node binds to the anchors held",
+     "SATISFIED"
+    ],
+    [
+     "G-INV",
+     "CL-RET(PKTD)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "inventory terminal; every run reported",
+     "SATISFIED"
+    ],
+    [
+     "G-RECOMP",
+     "CL-RET(PKTD)",
+     "RAN",
+     "QUALIFIED",
+     "FAIL",
+     "TRACE_SCHEMA:trace:clamp",
+     "UNMET"
+    ]
+   ],
+   "not_satisfied": [
+    "gate:G-RECOMP:CL-RET(PKTD)"
+   ],
+   "standing": "UNMET"
+  },
+  "CL-RET(REG)": {
+   "eligibility": "NOT_ELIGIBLE",
+   "lines": [
+    [
+     "BOUNDS",
+     "REG/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "BOUNDS held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "CALIBRATION",
+     "WORLD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "CALIBRATION held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "RETENTION",
+     "REG/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "POSITIVE",
+     "RETENTION above exact bound 1/2 (draft A T01 expected)",
+     "SATISFIED"
+    ],
+    [
+     "ERASE",
+     "REG/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "ERASE held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "PRESERVE",
+     "REG/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "PRESERVE held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "CHANNEL",
+     "REG/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "CHANNEL held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "RESTART",
+     "REG/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "RESTART held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "OBSERVER",
+     "REG/BOOKKEEP/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "OBSERVER held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "OBSERVER",
+     "REG/NULL/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "OBSERVER held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "G-BIND",
+     "CL-RET(REG)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "every reachable node binds to the anchors held",
+     "SATISFIED"
+    ],
+    [
+     "G-INV",
+     "CL-RET(REG)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "inventory terminal; every run reported",
+     "SATISFIED"
+    ],
+    [
+     "G-RECOMP",
+     "CL-RET(REG)",
+     "RAN",
+     "QUALIFIED",
+     "FAIL",
+     "TRACE_SCHEMA:trace:clamp",
+     "UNMET"
+    ]
+   ],
+   "not_satisfied": [
+    "gate:G-RECOMP:CL-RET(REG)"
+   ],
+   "standing": "UNMET"
+  },
+  "TWIN(REG)": {
+   "eligibility": "ELIGIBLE",
+   "lines": [
+    [
+     "TWIN_EQ",
+     "REG/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "TWIN_EQ held (draft A expected)",
+     "SATISFIED"
+    ]
+   ],
+   "not_satisfied": [],
+   "standing": "SATISFIED"
+  },
+  "custody": [
+   "UNQUALIFIED",
+   [
+    "ANCHORS_FROM_PRODUCER",
+    "KEEPER_ROW_MISSING:EVIDENCE_MANIFEST",
+    "KEEPER_ROW_MISSING:EXPECTED_ANSWER_TABLE",
+    "KEEPER_ROW_MISSING:RUN_INVENTORY"
+   ]
+  ]
+ },
+ "E02.G0": {
+  "CL-CAL(STANDARD)": {
+   "eligibility": "ELIGIBLE",
+   "lines": [
+    [
+     "CALIBRATION",
+     "WORLD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "CALIBRATION held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "G-BIND",
+     "CL-CAL(STANDARD)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "every reachable node binds to the anchors held",
+     "SATISFIED"
+    ],
+    [
+     "G-INV",
+     "CL-CAL(STANDARD)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "inventory terminal; every run reported",
+     "SATISFIED"
+    ]
+   ],
+   "not_satisfied": [],
+   "standing": "SATISFIED"
+  },
+  "CL-CUST(G0)": {
+   "eligibility": "NOT_ELIGIBLE",
+   "lines": [
+    [
+     "custody",
+     "CL-CUST(G0)",
+     "UNQUALIFIED"
+    ],
+    [
+     "G-BIND",
+     "CL-CUST(G0)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "every reachable node binds to the anchors held",
+     "SATISFIED"
+    ],
+    [
+     "G-INV",
+     "CL-CUST(G0)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "inventory terminal; every run reported",
+     "SATISFIED"
+    ]
+   ],
+   "not_satisfied": [
+    "custody"
+   ],
+   "standing": "UNQUALIFIED"
+  },
+  "CL-RET(LAGD)": {
+   "eligibility": "NOT_ELIGIBLE",
+   "lines": [
+    [
+     "BOUNDS",
+     "LAGD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "BOUNDS held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "CALIBRATION",
+     "WORLD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "CALIBRATION held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "RETENTION",
+     "LAGD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "POSITIVE",
+     "RETENTION above exact bound 1/2 (draft A T01 expected)",
+     "SATISFIED"
+    ],
+    [
+     "ERASE",
+     "LAGD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "FAIL",
+     "ERASE FAIL at j = 1 (draft A T04 expected)",
+     "UNMET"
+    ],
+    [
+     "PRESERVE",
+     "LAGD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "PRESERVE held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "CHANNEL",
+     "LAGD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "CHANNEL held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "RESTART",
+     "LAGD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "RESTART held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "OBSERVER",
+     "LAGD/NULL/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "OBSERVER held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "G-BIND",
+     "CL-RET(LAGD)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "every reachable node binds to the anchors held",
+     "SATISFIED"
+    ],
+    [
+     "G-INV",
+     "CL-RET(LAGD)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "inventory terminal; every run reported",
+     "SATISFIED"
+    ],
+    [
+     "G-RECOMP",
+     "CL-RET(LAGD)",
+     "RAN",
+     "QUALIFIED",
+     "FAIL",
+     "TRACE_SCHEMA:trace:clamp",
+     "UNMET"
+    ]
+   ],
+   "not_satisfied": [
+    "gate:G-RECOMP:CL-RET(LAGD)",
+    "rcpt:LAGD:ERASE:STANDARD"
+   ],
+   "standing": "UNMET"
+  },
+  "CL-RET(PKTD)": {
+   "eligibility": "NOT_ELIGIBLE",
+   "lines": [
+    [
+     "BOUNDS",
+     "PKTD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "BOUNDS held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "CALIBRATION",
+     "WORLD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "CALIBRATION held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "RETENTION",
+     "PKTD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "POSITIVE",
+     "RETENTION above exact bound 1/2 (draft A T01 expected)",
+     "SATISFIED"
+    ],
+    [
+     "ERASE",
+     "PKTD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "ERASE held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "PRESERVE",
+     "PKTD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "PRESERVE held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "CHANNEL",
+     "PKTD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "CHANNEL held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "RESTART",
+     "PKTD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "RESTART held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "OBSERVER",
+     "PKTD/BOOKKEEP/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "OBSERVER held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "OBSERVER",
+     "PKTD/NULL/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "OBSERVER held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "G-BIND",
+     "CL-RET(PKTD)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "every reachable node binds to the anchors held",
+     "SATISFIED"
+    ],
+    [
+     "G-INV",
+     "CL-RET(PKTD)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "inventory terminal; every run reported",
+     "SATISFIED"
+    ],
+    [
+     "G-RECOMP",
+     "CL-RET(PKTD)",
+     "RAN",
+     "QUALIFIED",
+     "FAIL",
+     "TRACE_SCHEMA:trace:clamp",
+     "UNMET"
+    ]
+   ],
+   "not_satisfied": [
+    "gate:G-RECOMP:CL-RET(PKTD)"
+   ],
+   "standing": "UNMET"
+  },
+  "CL-RET(REG)": {
+   "eligibility": "NOT_ELIGIBLE",
+   "lines": [
+    [
+     "BOUNDS",
+     "REG/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "BOUNDS held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "CALIBRATION",
+     "WORLD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "CALIBRATION held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "RETENTION",
+     "REG/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "POSITIVE",
+     "RETENTION above exact bound 1/2 (draft A T01 expected)",
+     "SATISFIED"
+    ],
+    [
+     "ERASE",
+     "REG/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "ERASE held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "PRESERVE",
+     "REG/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "PRESERVE held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "CHANNEL",
+     "REG/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "CHANNEL held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "RESTART",
+     "REG/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "RESTART held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "OBSERVER",
+     "REG/BOOKKEEP/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "OBSERVER held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "OBSERVER",
+     "REG/NULL/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "OBSERVER held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "G-BIND",
+     "CL-RET(REG)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "every reachable node binds to the anchors held",
+     "SATISFIED"
+    ],
+    [
+     "G-INV",
+     "CL-RET(REG)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "inventory terminal; every run reported",
+     "SATISFIED"
+    ],
+    [
+     "G-RECOMP",
+     "CL-RET(REG)",
+     "RAN",
+     "QUALIFIED",
+     "FAIL",
+     "TRACE_SCHEMA:trace:clamp",
+     "UNMET"
+    ]
+   ],
+   "not_satisfied": [
+    "gate:G-RECOMP:CL-RET(REG)"
+   ],
+   "standing": "UNMET"
+  },
+  "TWIN(REG)": {
+   "eligibility": "ELIGIBLE",
+   "lines": [
+    [
+     "TWIN_EQ",
+     "REG/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "TWIN_EQ held (draft A expected)",
+     "SATISFIED"
+    ]
+   ],
+   "not_satisfied": [],
+   "standing": "SATISFIED"
+  },
+  "custody": [
+   "UNQUALIFIED",
+   [
+    "KEEPER_ROW_MISSING:EVIDENCE_MANIFEST",
+    "KEEPER_ROW_MISSING:EXPECTED_ANSWER_TABLE",
+    "KEEPER_ROW_MISSING:RUN_INVENTORY"
+   ]
+  ]
+ },
+ "E02.MALFORMED": {
+  "CL-CAL(STANDARD)": {
+   "eligibility": "ELIGIBLE",
+   "lines": [
+    [
+     "CALIBRATION",
+     "WORLD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "CALIBRATION held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "G-BIND",
+     "CL-CAL(STANDARD)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "every reachable node binds to the anchors held",
+     "SATISFIED"
+    ],
+    [
+     "G-INV",
+     "CL-CAL(STANDARD)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "inventory terminal; every run reported",
+     "SATISFIED"
+    ]
+   ],
+   "not_satisfied": [],
+   "standing": "SATISFIED"
+  },
+  "CL-CUST(G0)": {
+   "eligibility": "NOT_ELIGIBLE",
+   "lines": [
+    [
+     "custody",
+     "CL-CUST(G0)",
+     "UNQUALIFIED"
+    ],
+    [
+     "G-BIND",
+     "CL-CUST(G0)",
+     "RAN",
+     "QUALIFIED",
+     "FAIL",
+     "SCOPE_MALFORMED:boundary",
+     "UNMET"
+    ],
+    [
+     "G-INV",
+     "CL-CUST(G0)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "inventory terminal; every run reported",
+     "SATISFIED"
+    ]
+   ],
+   "not_satisfied": [
+    "custody",
+    "gate:G-BIND:CL-CUST(G0)"
+   ],
+   "standing": "UNQUALIFIED"
+  },
+  "CL-RET(LAGD)": {
+   "eligibility": "NOT_ELIGIBLE",
+   "lines": [
+    [
+     "BOUNDS",
+     "LAGD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "BOUNDS held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "CALIBRATION",
+     "WORLD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "CALIBRATION held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "RETENTION",
+     "LAGD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "POSITIVE",
+     "RETENTION above exact bound 1/2 (draft A T01 expected)",
+     "SATISFIED"
+    ],
+    [
+     "ERASE",
+     "LAGD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "FAIL",
+     "ERASE FAIL at j = 1 (draft A T04 expected)",
+     "UNMET"
+    ],
+    [
+     "PRESERVE",
+     "LAGD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "PRESERVE held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "CHANNEL",
+     "LAGD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "CHANNEL held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "RESTART",
+     "LAGD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "RESTART held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "OBSERVER",
+     "LAGD/NULL/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "OBSERVER held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "G-BIND",
+     "CL-RET(LAGD)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "every reachable node binds to the anchors held",
+     "SATISFIED"
+    ],
+    [
+     "G-INV",
+     "CL-RET(LAGD)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "inventory terminal; every run reported",
+     "SATISFIED"
+    ],
+    [
+     "G-RECOMP",
+     "CL-RET(LAGD)",
+     "RAN",
+     "QUALIFIED",
+     "FAIL",
+     "TRACE_SCHEMA:trace:clamp",
+     "UNMET"
+    ]
+   ],
+   "not_satisfied": [
+    "gate:G-RECOMP:CL-RET(LAGD)",
+    "rcpt:LAGD:ERASE:STANDARD"
+   ],
+   "standing": "UNMET"
+  },
+  "CL-RET(PKTD)": {
+   "eligibility": "NOT_ELIGIBLE",
+   "lines": [
+    [
+     "BOUNDS",
+     "PKTD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "BOUNDS held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "CALIBRATION",
+     "WORLD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "CALIBRATION held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "RETENTION",
+     "PKTD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "POSITIVE",
+     "RETENTION above exact bound 1/2 (draft A T01 expected)",
+     "SATISFIED"
+    ],
+    [
+     "ERASE",
+     "PKTD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "ERASE held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "PRESERVE",
+     "PKTD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "PRESERVE held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "CHANNEL",
+     "PKTD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "CHANNEL held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "RESTART",
+     "PKTD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "RESTART held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "OBSERVER",
+     "PKTD/BOOKKEEP/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "OBSERVER held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "OBSERVER",
+     "PKTD/NULL/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "OBSERVER held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "G-BIND",
+     "CL-RET(PKTD)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "every reachable node binds to the anchors held",
+     "SATISFIED"
+    ],
+    [
+     "G-INV",
+     "CL-RET(PKTD)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "inventory terminal; every run reported",
+     "SATISFIED"
+    ],
+    [
+     "G-RECOMP",
+     "CL-RET(PKTD)",
+     "RAN",
+     "QUALIFIED",
+     "FAIL",
+     "TRACE_SCHEMA:trace:clamp",
+     "UNMET"
+    ]
+   ],
+   "not_satisfied": [
+    "gate:G-RECOMP:CL-RET(PKTD)"
+   ],
+   "standing": "UNMET"
+  },
+  "CL-RET(REG)": {
+   "eligibility": "NOT_ELIGIBLE",
+   "lines": [
+    [
+     "BOUNDS",
+     "REG/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "BOUNDS held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "CALIBRATION",
+     "WORLD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "CALIBRATION held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "RETENTION",
+     "REG/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "POSITIVE",
+     "RETENTION above exact bound 1/2 (draft A T01 expected)",
+     "SATISFIED"
+    ],
+    [
+     "ERASE",
+     "REG/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "ERASE held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "PRESERVE",
+     "REG/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "PRESERVE held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "CHANNEL",
+     "REG/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "CHANNEL held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "RESTART",
+     "REG/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "RESTART held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "OBSERVER",
+     "REG/BOOKKEEP/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "OBSERVER held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "OBSERVER",
+     "REG/NULL/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "OBSERVER held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "G-BIND",
+     "CL-RET(REG)",
+     "RAN",
+     "QUALIFIED",
+     "FAIL",
+     "SCOPE_MALFORMED:boundary",
+     "UNMET"
+    ],
+    [
+     "G-INV",
+     "CL-RET(REG)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "inventory terminal; every run reported",
+     "SATISFIED"
+    ],
+    [
+     "G-RECOMP",
+     "CL-RET(REG)",
+     "RAN",
+     "QUALIFIED",
+     "FAIL",
+     "TRACE_SCHEMA:trace:clamp",
+     "UNMET"
+    ]
+   ],
+   "not_satisfied": [
+    "gate:G-BIND:CL-RET(REG)",
+    "gate:G-RECOMP:CL-RET(REG)"
+   ],
+   "standing": "UNMET"
+  },
+  "TWIN(REG)": {
+   "eligibility": "ELIGIBLE",
+   "lines": [
+    [
+     "TWIN_EQ",
+     "REG/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "TWIN_EQ held (draft A expected)",
+     "SATISFIED"
+    ]
+   ],
+   "not_satisfied": [],
+   "standing": "SATISFIED"
+  },
+  "custody": [
+   "UNQUALIFIED",
+   [
+    "KEEPER_ROW_MISSING:EVIDENCE_MANIFEST",
+    "KEEPER_ROW_MISSING:EXPECTED_ANSWER_TABLE",
+    "KEEPER_ROW_MISSING:RUN_INVENTORY"
+   ]
+  ]
+ },
+ "E02.MISSING": {
+  "CL-CAL(STANDARD)": {
+   "eligibility": "ELIGIBLE",
+   "lines": [
+    [
+     "CALIBRATION",
+     "WORLD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "CALIBRATION held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "G-BIND",
+     "CL-CAL(STANDARD)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "every reachable node binds to the anchors held",
+     "SATISFIED"
+    ],
+    [
+     "G-INV",
+     "CL-CAL(STANDARD)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "inventory terminal; every run reported",
+     "SATISFIED"
+    ]
+   ],
+   "not_satisfied": [],
+   "standing": "SATISFIED"
+  },
+  "CL-CUST(G0)": {
+   "eligibility": "NOT_ELIGIBLE",
+   "lines": [
+    [
+     "custody",
+     "CL-CUST(G0)",
+     "UNQUALIFIED"
+    ],
+    [
+     "G-BIND",
+     "CL-CUST(G0)",
+     "BLOCKED",
+     "QUALIFIED",
+     null,
+     null,
+     "BLOCKED"
+    ],
+    [
+     "G-INV",
+     "CL-CUST(G0)",
+     "RAN",
+     "QUALIFIED",
+     "FAIL",
+     "RUN_UNREPORTED:run-005",
+     "UNMET"
+    ]
+   ],
+   "not_satisfied": [
+    "custody",
+    "gate:G-BIND:CL-CUST(G0)",
+    "gate:G-INV:CL-CUST(G0)"
+   ],
+   "standing": "BLOCKED"
+  },
+  "CL-RET(LAGD)": {
+   "eligibility": "NOT_ELIGIBLE",
+   "lines": [
+    [
+     "BOUNDS",
+     "LAGD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "BOUNDS held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "CALIBRATION",
+     "WORLD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "CALIBRATION held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "RETENTION",
+     "LAGD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "POSITIVE",
+     "RETENTION above exact bound 1/2 (draft A T01 expected)",
+     "SATISFIED"
+    ],
+    [
+     "ERASE",
+     "LAGD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "FAIL",
+     "ERASE FAIL at j = 1 (draft A T04 expected)",
+     "UNMET"
+    ],
+    [
+     "PRESERVE",
+     "LAGD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "PRESERVE held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "CHANNEL",
+     "LAGD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "CHANNEL held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "RESTART",
+     "LAGD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "RESTART held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "OBSERVER",
+     "LAGD/NULL/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "OBSERVER held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "G-BIND",
+     "CL-RET(LAGD)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "every reachable node binds to the anchors held",
+     "SATISFIED"
+    ],
+    [
+     "G-INV",
+     "CL-RET(LAGD)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "inventory terminal; every run reported",
+     "SATISFIED"
+    ],
+    [
+     "G-RECOMP",
+     "CL-RET(LAGD)",
+     "RAN",
+     "QUALIFIED",
+     "FAIL",
+     "TRACE_SCHEMA:trace:clamp",
+     "UNMET"
+    ]
+   ],
+   "not_satisfied": [
+    "gate:G-RECOMP:CL-RET(LAGD)",
+    "rcpt:LAGD:ERASE:STANDARD"
+   ],
+   "standing": "UNMET"
+  },
+  "CL-RET(PKTD)": {
+   "eligibility": "NOT_ELIGIBLE",
+   "lines": [
+    [
+     "BOUNDS",
+     "PKTD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "BOUNDS held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "CALIBRATION",
+     "WORLD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "CALIBRATION held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "RETENTION",
+     "PKTD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "POSITIVE",
+     "RETENTION above exact bound 1/2 (draft A T01 expected)",
+     "SATISFIED"
+    ],
+    [
+     "ERASE",
+     "PKTD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "ERASE held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "PRESERVE",
+     "PKTD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "PRESERVE held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "CHANNEL",
+     "PKTD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "CHANNEL held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "RESTART",
+     "PKTD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "RESTART held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "OBSERVER",
+     "PKTD/BOOKKEEP/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "OBSERVER held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "OBSERVER",
+     "PKTD/NULL/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "OBSERVER held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "G-BIND",
+     "CL-RET(PKTD)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "every reachable node binds to the anchors held",
+     "SATISFIED"
+    ],
+    [
+     "G-INV",
+     "CL-RET(PKTD)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "inventory terminal; every run reported",
+     "SATISFIED"
+    ],
+    [
+     "G-RECOMP",
+     "CL-RET(PKTD)",
+     "RAN",
+     "QUALIFIED",
+     "FAIL",
+     "TRACE_SCHEMA:trace:clamp",
+     "UNMET"
+    ]
+   ],
+   "not_satisfied": [
+    "gate:G-RECOMP:CL-RET(PKTD)"
+   ],
+   "standing": "UNMET"
+  },
+  "CL-RET(REG)": {
+   "eligibility": "NOT_ELIGIBLE",
+   "lines": [
+    [
+     "BOUNDS",
+     "REG/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "BOUNDS held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "CALIBRATION",
+     "WORLD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "CALIBRATION held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "RETENTION",
+     "REG/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "POSITIVE",
+     "RETENTION above exact bound 1/2 (draft A T01 expected)",
+     "SATISFIED"
+    ],
+    [
+     "ERASE",
+     "REG/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "ERASE held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "PRESERVE",
+     "REG/STANDARD",
+     "BLOCKED",
+     "UNQUALIFIED",
+     null,
+     null,
+     "BLOCKED"
+    ],
+    [
+     "CHANNEL",
+     "REG/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "CHANNEL held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "RESTART",
+     "REG/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "RESTART held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "OBSERVER",
+     "REG/BOOKKEEP/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "OBSERVER held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "OBSERVER",
+     "REG/NULL/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "OBSERVER held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "G-BIND",
+     "CL-RET(REG)",
+     "BLOCKED",
+     "QUALIFIED",
+     null,
+     null,
+     "BLOCKED"
+    ],
+    [
+     "G-INV",
+     "CL-RET(REG)",
+     "RAN",
+     "QUALIFIED",
+     "FAIL",
+     "RUN_UNREPORTED:run-005",
+     "UNMET"
+    ],
+    [
+     "G-RECOMP",
+     "CL-RET(REG)",
+     "BLOCKED",
+     "QUALIFIED",
+     null,
+     null,
+     "BLOCKED"
+    ]
+   ],
+   "not_satisfied": [
+    "gate:G-BIND:CL-RET(REG)",
+    "gate:G-INV:CL-RET(REG)",
+    "gate:G-RECOMP:CL-RET(REG)",
+    "rcpt:REG:PRESERVE:STANDARD"
+   ],
+   "standing": "BLOCKED"
+  },
+  "TWIN(REG)": {
+   "eligibility": "ELIGIBLE",
+   "lines": [
+    [
+     "TWIN_EQ",
+     "REG/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "TWIN_EQ held (draft A expected)",
+     "SATISFIED"
+    ]
+   ],
+   "not_satisfied": [],
+   "standing": "SATISFIED"
+  },
+  "custody": [
+   "UNQUALIFIED",
+   [
+    "KEEPER_ROW_MISSING:EVIDENCE_MANIFEST",
+    "KEEPER_ROW_MISSING:EXPECTED_ANSWER_TABLE",
+    "KEEPER_ROW_MISSING:RUN_INVENTORY"
+   ]
+  ]
+ },
+ "E02.RELABEL": {
+  "CL-CAL(STANDARD)": {
+   "eligibility": "ELIGIBLE",
+   "lines": [
+    [
+     "CALIBRATION",
+     "WORLD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "CALIBRATION held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "G-BIND",
+     "CL-CAL(STANDARD)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "every reachable node binds to the anchors held",
+     "SATISFIED"
+    ],
+    [
+     "G-INV",
+     "CL-CAL(STANDARD)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "inventory terminal; every run reported",
+     "SATISFIED"
+    ]
+   ],
+   "not_satisfied": [],
+   "standing": "SATISFIED"
+  },
+  "CL-CUST(G0)": {
+   "eligibility": "NOT_ELIGIBLE",
+   "lines": [
+    [
+     "custody",
+     "CL-CUST(G0)",
+     "UNQUALIFIED"
+    ],
+    [
+     "G-BIND",
+     "CL-CUST(G0)",
+     "RAN",
+     "QUALIFIED",
+     "FAIL",
+     "SCOPE_MISMATCH:physics",
+     "UNMET"
+    ],
+    [
+     "G-INV",
+     "CL-CUST(G0)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "inventory terminal; every run reported",
+     "SATISFIED"
+    ]
+   ],
+   "not_satisfied": [
+    "custody",
+    "gate:G-BIND:CL-CUST(G0)"
+   ],
+   "standing": "UNQUALIFIED"
+  },
+  "CL-RET(LAGD)": {
+   "eligibility": "NOT_ELIGIBLE",
+   "lines": [
+    [
+     "BOUNDS",
+     "LAGD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "BOUNDS held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "CALIBRATION",
+     "WORLD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "CALIBRATION held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "RETENTION",
+     "LAGD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "POSITIVE",
+     "RETENTION above exact bound 1/2 (draft A T01 expected)",
+     "SATISFIED"
+    ],
+    [
+     "ERASE",
+     "LAGD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "FAIL",
+     "ERASE FAIL at j = 1 (draft A T04 expected)",
+     "UNMET"
+    ],
+    [
+     "PRESERVE",
+     "LAGD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "PRESERVE held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "CHANNEL",
+     "LAGD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "CHANNEL held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "RESTART",
+     "LAGD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "RESTART held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "OBSERVER",
+     "LAGD/NULL/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "OBSERVER held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "G-BIND",
+     "CL-RET(LAGD)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "every reachable node binds to the anchors held",
+     "SATISFIED"
+    ],
+    [
+     "G-INV",
+     "CL-RET(LAGD)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "inventory terminal; every run reported",
+     "SATISFIED"
+    ],
+    [
+     "G-RECOMP",
+     "CL-RET(LAGD)",
+     "RAN",
+     "QUALIFIED",
+     "FAIL",
+     "TRACE_SCHEMA:trace:clamp",
+     "UNMET"
+    ]
+   ],
+   "not_satisfied": [
+    "gate:G-RECOMP:CL-RET(LAGD)",
+    "rcpt:LAGD:ERASE:STANDARD"
+   ],
+   "standing": "UNMET"
+  },
+  "CL-RET(PKTD)": {
+   "eligibility": "NOT_ELIGIBLE",
+   "lines": [
+    [
+     "BOUNDS",
+     "PKTD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "BOUNDS held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "CALIBRATION",
+     "WORLD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "CALIBRATION held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "RETENTION",
+     "PKTD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "POSITIVE",
+     "RETENTION above exact bound 1/2 (draft A T01 expected)",
+     "SATISFIED"
+    ],
+    [
+     "ERASE",
+     "PKTD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "ERASE held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "PRESERVE",
+     "PKTD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "PRESERVE held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "CHANNEL",
+     "PKTD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "CHANNEL held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "RESTART",
+     "PKTD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "RESTART held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "OBSERVER",
+     "PKTD/BOOKKEEP/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "OBSERVER held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "OBSERVER",
+     "PKTD/NULL/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "OBSERVER held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "G-BIND",
+     "CL-RET(PKTD)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "every reachable node binds to the anchors held",
+     "SATISFIED"
+    ],
+    [
+     "G-INV",
+     "CL-RET(PKTD)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "inventory terminal; every run reported",
+     "SATISFIED"
+    ],
+    [
+     "G-RECOMP",
+     "CL-RET(PKTD)",
+     "RAN",
+     "QUALIFIED",
+     "FAIL",
+     "TRACE_SCHEMA:trace:clamp",
+     "UNMET"
+    ]
+   ],
+   "not_satisfied": [
+    "gate:G-RECOMP:CL-RET(PKTD)"
+   ],
+   "standing": "UNMET"
+  },
+  "CL-RET(REG)": {
+   "eligibility": "NOT_ELIGIBLE",
+   "lines": [
+    [
+     "BOUNDS",
+     "REG/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "BOUNDS held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "CALIBRATION",
+     "WORLD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "CALIBRATION held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "RETENTION",
+     "REG/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "POSITIVE",
+     "RETENTION above exact bound 1/2 (draft A T01 expected)",
+     "SATISFIED"
+    ],
+    [
+     "ERASE",
+     "REG/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "ERASE held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "PRESERVE",
+     "REG/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "PRESERVE held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "CHANNEL",
+     "REG/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "CHANNEL held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "RESTART",
+     "REG/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "RESTART held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "OBSERVER",
+     "REG/BOOKKEEP/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "OBSERVER held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "OBSERVER",
+     "REG/NULL/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "OBSERVER held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "G-BIND",
+     "CL-RET(REG)",
+     "RAN",
+     "QUALIFIED",
+     "FAIL",
+     "SCOPE_MISMATCH:physics",
+     "UNMET"
+    ],
+    [
+     "G-INV",
+     "CL-RET(REG)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "inventory terminal; every run reported",
+     "SATISFIED"
+    ],
+    [
+     "G-RECOMP",
+     "CL-RET(REG)",
+     "RAN",
+     "QUALIFIED",
+     "FAIL",
+     "TRACE_SCHEMA:trace:clamp",
+     "UNMET"
+    ]
+   ],
+   "not_satisfied": [
+    "gate:G-BIND:CL-RET(REG)",
+    "gate:G-RECOMP:CL-RET(REG)"
+   ],
+   "standing": "UNMET"
+  },
+  "TWIN(REG)": {
+   "eligibility": "ELIGIBLE",
+   "lines": [
+    [
+     "TWIN_EQ",
+     "REG/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "TWIN_EQ held (draft A expected)",
+     "SATISFIED"
+    ]
+   ],
+   "not_satisfied": [],
+   "standing": "SATISFIED"
+  },
+  "custody": [
+   "UNQUALIFIED",
+   [
+    "KEEPER_ROW_MISSING:EVIDENCE_MANIFEST",
+    "KEEPER_ROW_MISSING:EXPECTED_ANSWER_TABLE",
+    "KEEPER_ROW_MISSING:RUN_INVENTORY"
+   ]
+  ]
+ },
+ "E02.WRONG_SUBJECT": {
+  "CL-CAL(STANDARD)": {
+   "eligibility": "ELIGIBLE",
+   "lines": [
+    [
+     "CALIBRATION",
+     "WORLD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "CALIBRATION held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "G-BIND",
+     "CL-CAL(STANDARD)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "every reachable node binds to the anchors held",
+     "SATISFIED"
+    ],
+    [
+     "G-INV",
+     "CL-CAL(STANDARD)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "inventory terminal; every run reported",
+     "SATISFIED"
+    ]
+   ],
+   "not_satisfied": [],
+   "standing": "SATISFIED"
+  },
+  "CL-CUST(G0)": {
+   "eligibility": "NOT_ELIGIBLE",
+   "lines": [
+    [
+     "custody",
+     "CL-CUST(G0)",
+     "UNQUALIFIED"
+    ],
+    [
+     "G-BIND",
+     "CL-CUST(G0)",
+     "RAN",
+     "QUALIFIED",
+     "FAIL",
+     "IDENTITY_MISMATCH:node_id",
+     "UNMET"
+    ],
+    [
+     "G-INV",
+     "CL-CUST(G0)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "inventory terminal; every run reported",
+     "SATISFIED"
+    ]
+   ],
+   "not_satisfied": [
+    "custody",
+    "gate:G-BIND:CL-CUST(G0)"
+   ],
+   "standing": "UNQUALIFIED"
+  },
+  "CL-RET(LAGD)": {
+   "eligibility": "NOT_ELIGIBLE",
+   "lines": [
+    [
+     "BOUNDS",
+     "LAGD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "BOUNDS held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "CALIBRATION",
+     "WORLD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "CALIBRATION held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "RETENTION",
+     "LAGD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "POSITIVE",
+     "RETENTION above exact bound 1/2 (draft A T01 expected)",
+     "SATISFIED"
+    ],
+    [
+     "ERASE",
+     "LAGD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "FAIL",
+     "ERASE FAIL at j = 1 (draft A T04 expected)",
+     "UNMET"
+    ],
+    [
+     "PRESERVE",
+     "LAGD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "PRESERVE held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "CHANNEL",
+     "LAGD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "CHANNEL held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "RESTART",
+     "LAGD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "RESTART held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "OBSERVER",
+     "LAGD/NULL/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "OBSERVER held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "G-BIND",
+     "CL-RET(LAGD)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "every reachable node binds to the anchors held",
+     "SATISFIED"
+    ],
+    [
+     "G-INV",
+     "CL-RET(LAGD)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "inventory terminal; every run reported",
+     "SATISFIED"
+    ],
+    [
+     "G-RECOMP",
+     "CL-RET(LAGD)",
+     "RAN",
+     "QUALIFIED",
+     "FAIL",
+     "TRACE_SCHEMA:trace:clamp",
+     "UNMET"
+    ]
+   ],
+   "not_satisfied": [
+    "gate:G-RECOMP:CL-RET(LAGD)",
+    "rcpt:LAGD:ERASE:STANDARD"
+   ],
+   "standing": "UNMET"
+  },
+  "CL-RET(PKTD)": {
+   "eligibility": "NOT_ELIGIBLE",
+   "lines": [
+    [
+     "BOUNDS",
+     "PKTD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "BOUNDS held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "CALIBRATION",
+     "WORLD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "CALIBRATION held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "RETENTION",
+     "PKTD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "POSITIVE",
+     "RETENTION above exact bound 1/2 (draft A T01 expected)",
+     "SATISFIED"
+    ],
+    [
+     "ERASE",
+     "PKTD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "ERASE held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "PRESERVE",
+     "PKTD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "PRESERVE held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "CHANNEL",
+     "PKTD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "CHANNEL held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "RESTART",
+     "PKTD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "RESTART held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "OBSERVER",
+     "PKTD/BOOKKEEP/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "OBSERVER held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "OBSERVER",
+     "PKTD/NULL/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "OBSERVER held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "G-BIND",
+     "CL-RET(PKTD)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "every reachable node binds to the anchors held",
+     "SATISFIED"
+    ],
+    [
+     "G-INV",
+     "CL-RET(PKTD)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "inventory terminal; every run reported",
+     "SATISFIED"
+    ],
+    [
+     "G-RECOMP",
+     "CL-RET(PKTD)",
+     "RAN",
+     "QUALIFIED",
+     "FAIL",
+     "TRACE_SCHEMA:trace:clamp",
+     "UNMET"
+    ]
+   ],
+   "not_satisfied": [
+    "gate:G-RECOMP:CL-RET(PKTD)"
+   ],
+   "standing": "UNMET"
+  },
+  "CL-RET(REG)": {
+   "eligibility": "NOT_ELIGIBLE",
+   "lines": [
+    [
+     "BOUNDS",
+     "REG/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "BOUNDS held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "CALIBRATION",
+     "WORLD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "CALIBRATION held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "RETENTION",
+     "REG/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "POSITIVE",
+     "RETENTION above exact bound 1/2 (draft A T01 expected)",
+     "SATISFIED"
+    ],
+    [
+     "ERASE",
+     "REG/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "ERASE held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "PRESERVE",
+     "REG/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "PRESERVE held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "CHANNEL",
+     "REG/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "CHANNEL held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "RESTART",
+     "REG/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "RESTART held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "OBSERVER",
+     "REG/BOOKKEEP/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "OBSERVER held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "OBSERVER",
+     "REG/NULL/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "OBSERVER held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "G-BIND",
+     "CL-RET(REG)",
+     "RAN",
+     "QUALIFIED",
+     "FAIL",
+     "SCOPE_MISMATCH:physics",
+     "UNMET"
+    ],
+    [
+     "G-INV",
+     "CL-RET(REG)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "inventory terminal; every run reported",
+     "SATISFIED"
+    ],
+    [
+     "G-RECOMP",
+     "CL-RET(REG)",
+     "RAN",
+     "QUALIFIED",
+     "FAIL",
+     "TRACE_SCHEMA:trace:clamp",
+     "UNMET"
+    ]
+   ],
+   "not_satisfied": [
+    "gate:G-BIND:CL-RET(REG)",
+    "gate:G-RECOMP:CL-RET(REG)"
+   ],
+   "standing": "UNMET"
+  },
+  "TWIN(REG)": {
+   "eligibility": "ELIGIBLE",
+   "lines": [
+    [
+     "TWIN_EQ",
+     "REG/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "TWIN_EQ held (draft A expected)",
+     "SATISFIED"
+    ]
+   ],
+   "not_satisfied": [],
+   "standing": "SATISFIED"
+  },
+  "custody": [
+   "UNQUALIFIED",
+   [
+    "KEEPER_ROW_MISSING:EVIDENCE_MANIFEST",
+    "KEEPER_ROW_MISSING:EXPECTED_ANSWER_TABLE",
+    "KEEPER_ROW_MISSING:RUN_INVENTORY"
+   ]
+  ]
+ },
+ "E03.BYTEFLIP": {
+  "CL-CAL(STANDARD)": {
+   "eligibility": "ELIGIBLE",
+   "lines": [
+    [
+     "CALIBRATION",
+     "WORLD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "CALIBRATION held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "G-BIND",
+     "CL-CAL(STANDARD)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "every reachable node binds to the anchors held",
+     "SATISFIED"
+    ],
+    [
+     "G-INV",
+     "CL-CAL(STANDARD)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "inventory terminal; every run reported",
+     "SATISFIED"
+    ]
+   ],
+   "not_satisfied": [],
+   "standing": "SATISFIED"
+  },
+  "CL-CUST(G0)": {
+   "eligibility": "NOT_ELIGIBLE",
+   "lines": [
+    [
+     "custody",
+     "CL-CUST(G0)",
+     "UNQUALIFIED"
+    ],
+    [
+     "G-BIND",
+     "CL-CUST(G0)",
+     "RAN",
+     "QUALIFIED",
+     "FAIL",
+     "BYTES_MISMATCH:trace:probe_a",
+     "UNMET"
+    ],
+    [
+     "G-INV",
+     "CL-CUST(G0)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "inventory terminal; every run reported",
+     "SATISFIED"
+    ]
+   ],
+   "not_satisfied": [
+    "custody",
+    "gate:G-BIND:CL-CUST(G0)"
+   ],
+   "standing": "UNQUALIFIED"
+  },
+  "CL-RET(LAGD)": {
+   "eligibility": "NOT_ELIGIBLE",
+   "lines": [
+    [
+     "BOUNDS",
+     "LAGD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "BOUNDS held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "CALIBRATION",
+     "WORLD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "CALIBRATION held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "RETENTION",
+     "LAGD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "POSITIVE",
+     "RETENTION above exact bound 1/2 (draft A T01 expected)",
+     "SATISFIED"
+    ],
+    [
+     "ERASE",
+     "LAGD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "FAIL",
+     "ERASE FAIL at j = 1 (draft A T04 expected)",
+     "UNMET"
+    ],
+    [
+     "PRESERVE",
+     "LAGD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "PRESERVE held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "CHANNEL",
+     "LAGD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "CHANNEL held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "RESTART",
+     "LAGD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "RESTART held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "OBSERVER",
+     "LAGD/NULL/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "OBSERVER held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "G-BIND",
+     "CL-RET(LAGD)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "every reachable node binds to the anchors held",
+     "SATISFIED"
+    ],
+    [
+     "G-INV",
+     "CL-RET(LAGD)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "inventory terminal; every run reported",
+     "SATISFIED"
+    ],
+    [
+     "G-RECOMP",
+     "CL-RET(LAGD)",
+     "RAN",
+     "QUALIFIED",
+     "FAIL",
+     "TRACE_SCHEMA:trace:clamp",
+     "UNMET"
+    ]
+   ],
+   "not_satisfied": [
+    "gate:G-RECOMP:CL-RET(LAGD)",
+    "rcpt:LAGD:ERASE:STANDARD"
+   ],
+   "standing": "UNMET"
+  },
+  "CL-RET(PKTD)": {
+   "eligibility": "NOT_ELIGIBLE",
+   "lines": [
+    [
+     "BOUNDS",
+     "PKTD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "BOUNDS held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "CALIBRATION",
+     "WORLD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "CALIBRATION held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "RETENTION",
+     "PKTD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "POSITIVE",
+     "RETENTION above exact bound 1/2 (draft A T01 expected)",
+     "SATISFIED"
+    ],
+    [
+     "ERASE",
+     "PKTD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "ERASE held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "PRESERVE",
+     "PKTD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "PRESERVE held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "CHANNEL",
+     "PKTD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "CHANNEL held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "RESTART",
+     "PKTD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "RESTART held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "OBSERVER",
+     "PKTD/BOOKKEEP/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "OBSERVER held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "OBSERVER",
+     "PKTD/NULL/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "OBSERVER held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "G-BIND",
+     "CL-RET(PKTD)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "every reachable node binds to the anchors held",
+     "SATISFIED"
+    ],
+    [
+     "G-INV",
+     "CL-RET(PKTD)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "inventory terminal; every run reported",
+     "SATISFIED"
+    ],
+    [
+     "G-RECOMP",
+     "CL-RET(PKTD)",
+     "RAN",
+     "QUALIFIED",
+     "FAIL",
+     "TRACE_SCHEMA:trace:clamp",
+     "UNMET"
+    ]
+   ],
+   "not_satisfied": [
+    "gate:G-RECOMP:CL-RET(PKTD)"
+   ],
+   "standing": "UNMET"
+  },
+  "CL-RET(REG)": {
+   "eligibility": "NOT_ELIGIBLE",
+   "lines": [
+    [
+     "BOUNDS",
+     "REG/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "BOUNDS held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "CALIBRATION",
+     "WORLD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "CALIBRATION held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "RETENTION",
+     "REG/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "POSITIVE",
+     "RETENTION above exact bound 1/2 (draft A T01 expected)",
+     "SATISFIED"
+    ],
+    [
+     "ERASE",
+     "REG/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "ERASE held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "PRESERVE",
+     "REG/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "PRESERVE held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "CHANNEL",
+     "REG/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "CHANNEL held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "RESTART",
+     "REG/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "RESTART held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "OBSERVER",
+     "REG/BOOKKEEP/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "OBSERVER held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "OBSERVER",
+     "REG/NULL/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "OBSERVER held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "G-BIND",
+     "CL-RET(REG)",
+     "RAN",
+     "QUALIFIED",
+     "FAIL",
+     "BYTES_MISMATCH:trace:probe_a",
+     "UNMET"
+    ],
+    [
+     "G-INV",
+     "CL-RET(REG)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "inventory terminal; every run reported",
+     "SATISFIED"
+    ],
+    [
+     "G-RECOMP",
+     "CL-RET(REG)",
+     "RAN",
+     "QUALIFIED",
+     "FAIL",
+     "TRACE_SCHEMA:trace:clamp",
+     "UNMET"
+    ]
+   ],
+   "not_satisfied": [
+    "gate:G-BIND:CL-RET(REG)",
+    "gate:G-RECOMP:CL-RET(REG)"
+   ],
+   "standing": "UNMET"
+  },
+  "TWIN(REG)": {
+   "eligibility": "ELIGIBLE",
+   "lines": [
+    [
+     "TWIN_EQ",
+     "REG/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "TWIN_EQ held (draft A expected)",
+     "SATISFIED"
+    ]
+   ],
+   "not_satisfied": [],
+   "standing": "SATISFIED"
+  },
+  "custody": [
+   "UNQUALIFIED",
+   [
+    "KEEPER_ROW_MISSING:EVIDENCE_MANIFEST",
+    "KEEPER_ROW_MISSING:EXPECTED_ANSWER_TABLE",
+    "KEEPER_ROW_MISSING:RUN_INVENTORY"
+   ]
+  ]
+ },
+ "E03.G0": {
+  "CL-CAL(STANDARD)": {
+   "eligibility": "ELIGIBLE",
+   "lines": [
+    [
+     "CALIBRATION",
+     "WORLD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "CALIBRATION held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "G-BIND",
+     "CL-CAL(STANDARD)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "every reachable node binds to the anchors held",
+     "SATISFIED"
+    ],
+    [
+     "G-INV",
+     "CL-CAL(STANDARD)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "inventory terminal; every run reported",
+     "SATISFIED"
+    ]
+   ],
+   "not_satisfied": [],
+   "standing": "SATISFIED"
+  },
+  "CL-CUST(G0)": {
+   "eligibility": "NOT_ELIGIBLE",
+   "lines": [
+    [
+     "custody",
+     "CL-CUST(G0)",
+     "UNQUALIFIED"
+    ],
+    [
+     "G-BIND",
+     "CL-CUST(G0)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "every reachable node binds to the anchors held",
+     "SATISFIED"
+    ],
+    [
+     "G-INV",
+     "CL-CUST(G0)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "inventory terminal; every run reported",
+     "SATISFIED"
+    ]
+   ],
+   "not_satisfied": [
+    "custody"
+   ],
+   "standing": "UNQUALIFIED"
+  },
+  "CL-RET(LAGD)": {
+   "eligibility": "NOT_ELIGIBLE",
+   "lines": [
+    [
+     "BOUNDS",
+     "LAGD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "BOUNDS held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "CALIBRATION",
+     "WORLD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "CALIBRATION held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "RETENTION",
+     "LAGD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "POSITIVE",
+     "RETENTION above exact bound 1/2 (draft A T01 expected)",
+     "SATISFIED"
+    ],
+    [
+     "ERASE",
+     "LAGD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "FAIL",
+     "ERASE FAIL at j = 1 (draft A T04 expected)",
+     "UNMET"
+    ],
+    [
+     "PRESERVE",
+     "LAGD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "PRESERVE held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "CHANNEL",
+     "LAGD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "CHANNEL held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "RESTART",
+     "LAGD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "RESTART held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "OBSERVER",
+     "LAGD/NULL/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "OBSERVER held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "G-BIND",
+     "CL-RET(LAGD)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "every reachable node binds to the anchors held",
+     "SATISFIED"
+    ],
+    [
+     "G-INV",
+     "CL-RET(LAGD)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "inventory terminal; every run reported",
+     "SATISFIED"
+    ],
+    [
+     "G-RECOMP",
+     "CL-RET(LAGD)",
+     "RAN",
+     "QUALIFIED",
+     "FAIL",
+     "TRACE_SCHEMA:trace:clamp",
+     "UNMET"
+    ]
+   ],
+   "not_satisfied": [
+    "gate:G-RECOMP:CL-RET(LAGD)",
+    "rcpt:LAGD:ERASE:STANDARD"
+   ],
+   "standing": "UNMET"
+  },
+  "CL-RET(PKTD)": {
+   "eligibility": "NOT_ELIGIBLE",
+   "lines": [
+    [
+     "BOUNDS",
+     "PKTD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "BOUNDS held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "CALIBRATION",
+     "WORLD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "CALIBRATION held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "RETENTION",
+     "PKTD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "POSITIVE",
+     "RETENTION above exact bound 1/2 (draft A T01 expected)",
+     "SATISFIED"
+    ],
+    [
+     "ERASE",
+     "PKTD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "ERASE held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "PRESERVE",
+     "PKTD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "PRESERVE held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "CHANNEL",
+     "PKTD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "CHANNEL held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "RESTART",
+     "PKTD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "RESTART held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "OBSERVER",
+     "PKTD/BOOKKEEP/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "OBSERVER held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "OBSERVER",
+     "PKTD/NULL/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "OBSERVER held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "G-BIND",
+     "CL-RET(PKTD)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "every reachable node binds to the anchors held",
+     "SATISFIED"
+    ],
+    [
+     "G-INV",
+     "CL-RET(PKTD)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "inventory terminal; every run reported",
+     "SATISFIED"
+    ],
+    [
+     "G-RECOMP",
+     "CL-RET(PKTD)",
+     "RAN",
+     "QUALIFIED",
+     "FAIL",
+     "TRACE_SCHEMA:trace:clamp",
+     "UNMET"
+    ]
+   ],
+   "not_satisfied": [
+    "gate:G-RECOMP:CL-RET(PKTD)"
+   ],
+   "standing": "UNMET"
+  },
+  "CL-RET(REG)": {
+   "eligibility": "NOT_ELIGIBLE",
+   "lines": [
+    [
+     "BOUNDS",
+     "REG/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "BOUNDS held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "CALIBRATION",
+     "WORLD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "CALIBRATION held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "RETENTION",
+     "REG/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "POSITIVE",
+     "RETENTION above exact bound 1/2 (draft A T01 expected)",
+     "SATISFIED"
+    ],
+    [
+     "ERASE",
+     "REG/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "ERASE held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "PRESERVE",
+     "REG/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "PRESERVE held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "CHANNEL",
+     "REG/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "CHANNEL held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "RESTART",
+     "REG/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "RESTART held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "OBSERVER",
+     "REG/BOOKKEEP/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "OBSERVER held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "OBSERVER",
+     "REG/NULL/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "OBSERVER held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "G-BIND",
+     "CL-RET(REG)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "every reachable node binds to the anchors held",
+     "SATISFIED"
+    ],
+    [
+     "G-INV",
+     "CL-RET(REG)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "inventory terminal; every run reported",
+     "SATISFIED"
+    ],
+    [
+     "G-RECOMP",
+     "CL-RET(REG)",
+     "RAN",
+     "QUALIFIED",
+     "FAIL",
+     "TRACE_SCHEMA:trace:clamp",
+     "UNMET"
+    ]
+   ],
+   "not_satisfied": [
+    "gate:G-RECOMP:CL-RET(REG)"
+   ],
+   "standing": "UNMET"
+  },
+  "TWIN(REG)": {
+   "eligibility": "ELIGIBLE",
+   "lines": [
+    [
+     "TWIN_EQ",
+     "REG/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "TWIN_EQ held (draft A expected)",
+     "SATISFIED"
+    ]
+   ],
+   "not_satisfied": [],
+   "standing": "SATISFIED"
+  },
+  "custody": [
+   "UNQUALIFIED",
+   [
+    "KEEPER_ROW_MISSING:EVIDENCE_MANIFEST",
+    "KEEPER_ROW_MISSING:EXPECTED_ANSWER_TABLE",
+    "KEEPER_ROW_MISSING:RUN_INVENTORY"
+   ]
+  ]
+ },
+ "E03.REANCHOR": {
+  "CL-CAL(STANDARD)": {
+   "eligibility": "ELIGIBLE",
+   "lines": [
+    [
+     "CALIBRATION",
+     "WORLD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "CALIBRATION held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "G-BIND",
+     "CL-CAL(STANDARD)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "every reachable node binds to the anchors held",
+     "SATISFIED"
+    ],
+    [
+     "G-INV",
+     "CL-CAL(STANDARD)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "inventory terminal; every run reported",
+     "SATISFIED"
+    ]
+   ],
+   "not_satisfied": [],
+   "standing": "SATISFIED"
+  },
+  "CL-CUST(G0)": {
+   "eligibility": "NOT_ELIGIBLE",
+   "lines": [
+    [
+     "custody",
+     "CL-CUST(G0)",
+     "UNQUALIFIED"
+    ],
+    [
+     "G-BIND",
+     "CL-CUST(G0)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "every reachable node binds to the anchors held",
+     "SATISFIED"
+    ],
+    [
+     "G-INV",
+     "CL-CUST(G0)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "inventory terminal; every run reported",
+     "SATISFIED"
+    ]
+   ],
+   "not_satisfied": [
+    "custody"
+   ],
+   "standing": "UNQUALIFIED"
+  },
+  "CL-RET(LAGD)": {
+   "eligibility": "NOT_ELIGIBLE",
+   "lines": [
+    [
+     "BOUNDS",
+     "LAGD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "BOUNDS held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "CALIBRATION",
+     "WORLD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "CALIBRATION held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "RETENTION",
+     "LAGD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "POSITIVE",
+     "RETENTION above exact bound 1/2 (draft A T01 expected)",
+     "SATISFIED"
+    ],
+    [
+     "ERASE",
+     "LAGD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "FAIL",
+     "ERASE FAIL at j = 1 (draft A T04 expected)",
+     "UNMET"
+    ],
+    [
+     "PRESERVE",
+     "LAGD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "PRESERVE held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "CHANNEL",
+     "LAGD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "CHANNEL held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "RESTART",
+     "LAGD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "RESTART held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "OBSERVER",
+     "LAGD/NULL/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "OBSERVER held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "G-BIND",
+     "CL-RET(LAGD)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "every reachable node binds to the anchors held",
+     "SATISFIED"
+    ],
+    [
+     "G-INV",
+     "CL-RET(LAGD)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "inventory terminal; every run reported",
+     "SATISFIED"
+    ],
+    [
+     "G-RECOMP",
+     "CL-RET(LAGD)",
+     "RAN",
+     "QUALIFIED",
+     "FAIL",
+     "TRACE_SCHEMA:trace:clamp",
+     "UNMET"
+    ]
+   ],
+   "not_satisfied": [
+    "gate:G-RECOMP:CL-RET(LAGD)",
+    "rcpt:LAGD:ERASE:STANDARD"
+   ],
+   "standing": "UNMET"
+  },
+  "CL-RET(PKTD)": {
+   "eligibility": "NOT_ELIGIBLE",
+   "lines": [
+    [
+     "BOUNDS",
+     "PKTD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "BOUNDS held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "CALIBRATION",
+     "WORLD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "CALIBRATION held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "RETENTION",
+     "PKTD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "POSITIVE",
+     "RETENTION above exact bound 1/2 (draft A T01 expected)",
+     "SATISFIED"
+    ],
+    [
+     "ERASE",
+     "PKTD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "ERASE held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "PRESERVE",
+     "PKTD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "PRESERVE held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "CHANNEL",
+     "PKTD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "CHANNEL held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "RESTART",
+     "PKTD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "RESTART held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "OBSERVER",
+     "PKTD/BOOKKEEP/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "OBSERVER held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "OBSERVER",
+     "PKTD/NULL/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "OBSERVER held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "G-BIND",
+     "CL-RET(PKTD)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "every reachable node binds to the anchors held",
+     "SATISFIED"
+    ],
+    [
+     "G-INV",
+     "CL-RET(PKTD)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "inventory terminal; every run reported",
+     "SATISFIED"
+    ],
+    [
+     "G-RECOMP",
+     "CL-RET(PKTD)",
+     "RAN",
+     "QUALIFIED",
+     "FAIL",
+     "TRACE_SCHEMA:trace:clamp",
+     "UNMET"
+    ]
+   ],
+   "not_satisfied": [
+    "gate:G-RECOMP:CL-RET(PKTD)"
+   ],
+   "standing": "UNMET"
+  },
+  "CL-RET(REG)": {
+   "eligibility": "NOT_ELIGIBLE",
+   "lines": [
+    [
+     "BOUNDS",
+     "REG/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "BOUNDS held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "CALIBRATION",
+     "WORLD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "CALIBRATION held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "RETENTION",
+     "REG/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "POSITIVE",
+     "RETENTION above exact bound 1/2 (draft A T01 expected)",
+     "SATISFIED"
+    ],
+    [
+     "ERASE",
+     "REG/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "ERASE held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "PRESERVE",
+     "REG/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "PRESERVE held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "CHANNEL",
+     "REG/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "CHANNEL held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "RESTART",
+     "REG/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "RESTART held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "OBSERVER",
+     "REG/BOOKKEEP/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "OBSERVER held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "OBSERVER",
+     "REG/NULL/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "OBSERVER held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "G-BIND",
+     "CL-RET(REG)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "every reachable node binds to the anchors held",
+     "SATISFIED"
+    ],
+    [
+     "G-INV",
+     "CL-RET(REG)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "inventory terminal; every run reported",
+     "SATISFIED"
+    ],
+    [
+     "G-RECOMP",
+     "CL-RET(REG)",
+     "RAN",
+     "QUALIFIED",
+     "FAIL",
+     "TRACE_SCHEMA:trace:clamp",
+     "UNMET"
+    ]
+   ],
+   "not_satisfied": [
+    "gate:G-RECOMP:CL-RET(REG)"
+   ],
+   "standing": "UNMET"
+  },
+  "TWIN(REG)": {
+   "eligibility": "ELIGIBLE",
+   "lines": [
+    [
+     "TWIN_EQ",
+     "REG/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "TWIN_EQ held (draft A expected)",
+     "SATISFIED"
+    ]
+   ],
+   "not_satisfied": [],
+   "standing": "SATISFIED"
+  },
+  "custody": [
+   "UNQUALIFIED",
+   [
+    "ANCHORS_FROM_PRODUCER",
+    "KEEPER_ROW_MISSING:EVIDENCE_MANIFEST",
+    "KEEPER_ROW_MISSING:EXPECTED_ANSWER_TABLE",
+    "KEEPER_ROW_MISSING:RUN_INVENTORY"
+   ]
+  ]
+ },
+ "E03.STRIP": {
+  "CL-CAL(STANDARD)": {
+   "eligibility": "ELIGIBLE",
+   "lines": [
+    [
+     "CALIBRATION",
+     "WORLD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "CALIBRATION held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "G-BIND",
+     "CL-CAL(STANDARD)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "every reachable node binds to the anchors held",
+     "SATISFIED"
+    ],
+    [
+     "G-INV",
+     "CL-CAL(STANDARD)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "inventory terminal; every run reported",
+     "SATISFIED"
+    ]
+   ],
+   "not_satisfied": [],
+   "standing": "SATISFIED"
+  },
+  "CL-CUST(G0)": {
+   "eligibility": "NOT_ELIGIBLE",
+   "lines": [
+    [
+     "custody",
+     "CL-CUST(G0)",
+     "UNQUALIFIED"
+    ],
+    [
+     "G-BIND",
+     "CL-CUST(G0)",
+     "RAN",
+     "QUALIFIED",
+     "FAIL",
+     "DEPENDENCY_MISMATCH:rcpt:REG:RETENTION:STANDARD->rcpt:WORLD:CALIBRATION:STANDARD",
+     "UNMET"
+    ],
+    [
+     "G-INV",
+     "CL-CUST(G0)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "inventory terminal; every run reported",
+     "SATISFIED"
+    ]
+   ],
+   "not_satisfied": [
+    "custody",
+    "gate:G-BIND:CL-CUST(G0)"
+   ],
+   "standing": "UNQUALIFIED"
+  },
+  "CL-RET(LAGD)": {
+   "eligibility": "NOT_ELIGIBLE",
+   "lines": [
+    [
+     "BOUNDS",
+     "LAGD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "BOUNDS held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "CALIBRATION",
+     "WORLD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "CALIBRATION held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "RETENTION",
+     "LAGD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "POSITIVE",
+     "RETENTION above exact bound 1/2 (draft A T01 expected)",
+     "SATISFIED"
+    ],
+    [
+     "ERASE",
+     "LAGD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "FAIL",
+     "ERASE FAIL at j = 1 (draft A T04 expected)",
+     "UNMET"
+    ],
+    [
+     "PRESERVE",
+     "LAGD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "PRESERVE held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "CHANNEL",
+     "LAGD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "CHANNEL held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "RESTART",
+     "LAGD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "RESTART held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "OBSERVER",
+     "LAGD/NULL/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "OBSERVER held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "G-BIND",
+     "CL-RET(LAGD)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "every reachable node binds to the anchors held",
+     "SATISFIED"
+    ],
+    [
+     "G-INV",
+     "CL-RET(LAGD)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "inventory terminal; every run reported",
+     "SATISFIED"
+    ],
+    [
+     "G-RECOMP",
+     "CL-RET(LAGD)",
+     "RAN",
+     "QUALIFIED",
+     "FAIL",
+     "TRACE_SCHEMA:trace:clamp",
+     "UNMET"
+    ]
+   ],
+   "not_satisfied": [
+    "gate:G-RECOMP:CL-RET(LAGD)",
+    "rcpt:LAGD:ERASE:STANDARD"
+   ],
+   "standing": "UNMET"
+  },
+  "CL-RET(PKTD)": {
+   "eligibility": "NOT_ELIGIBLE",
+   "lines": [
+    [
+     "BOUNDS",
+     "PKTD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "BOUNDS held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "CALIBRATION",
+     "WORLD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "CALIBRATION held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "RETENTION",
+     "PKTD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "POSITIVE",
+     "RETENTION above exact bound 1/2 (draft A T01 expected)",
+     "SATISFIED"
+    ],
+    [
+     "ERASE",
+     "PKTD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "ERASE held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "PRESERVE",
+     "PKTD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "PRESERVE held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "CHANNEL",
+     "PKTD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "CHANNEL held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "RESTART",
+     "PKTD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "RESTART held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "OBSERVER",
+     "PKTD/BOOKKEEP/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "OBSERVER held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "OBSERVER",
+     "PKTD/NULL/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "OBSERVER held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "G-BIND",
+     "CL-RET(PKTD)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "every reachable node binds to the anchors held",
+     "SATISFIED"
+    ],
+    [
+     "G-INV",
+     "CL-RET(PKTD)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "inventory terminal; every run reported",
+     "SATISFIED"
+    ],
+    [
+     "G-RECOMP",
+     "CL-RET(PKTD)",
+     "RAN",
+     "QUALIFIED",
+     "FAIL",
+     "TRACE_SCHEMA:trace:clamp",
+     "UNMET"
+    ]
+   ],
+   "not_satisfied": [
+    "gate:G-RECOMP:CL-RET(PKTD)"
+   ],
+   "standing": "UNMET"
+  },
+  "CL-RET(REG)": {
+   "eligibility": "NOT_ELIGIBLE",
+   "lines": [
+    [
+     "BOUNDS",
+     "REG/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "BOUNDS held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "CALIBRATION",
+     "WORLD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "CALIBRATION held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "RETENTION",
+     "REG/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "POSITIVE",
+     "RETENTION above exact bound 1/2 (draft A T01 expected)",
+     "SATISFIED"
+    ],
+    [
+     "ERASE",
+     "REG/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "ERASE held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "PRESERVE",
+     "REG/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "PRESERVE held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "CHANNEL",
+     "REG/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "CHANNEL held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "RESTART",
+     "REG/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "RESTART held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "OBSERVER",
+     "REG/BOOKKEEP/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "OBSERVER held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "OBSERVER",
+     "REG/NULL/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "OBSERVER held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "G-BIND",
+     "CL-RET(REG)",
+     "RAN",
+     "QUALIFIED",
+     "FAIL",
+     "DEPENDENCY_MISMATCH:rcpt:REG:RETENTION:STANDARD->rcpt:WORLD:CALIBRATION:STANDARD",
+     "UNMET"
+    ],
+    [
+     "G-INV",
+     "CL-RET(REG)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "inventory terminal; every run reported",
+     "SATISFIED"
+    ],
+    [
+     "G-RECOMP",
+     "CL-RET(REG)",
+     "RAN",
+     "QUALIFIED",
+     "FAIL",
+     "TRACE_SCHEMA:trace:clamp",
+     "UNMET"
+    ]
+   ],
+   "not_satisfied": [
+    "gate:G-BIND:CL-RET(REG)",
+    "gate:G-RECOMP:CL-RET(REG)"
+   ],
+   "standing": "UNMET"
+  },
+  "TWIN(REG)": {
+   "eligibility": "ELIGIBLE",
+   "lines": [
+    [
+     "TWIN_EQ",
+     "REG/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "TWIN_EQ held (draft A expected)",
+     "SATISFIED"
+    ]
+   ],
+   "not_satisfied": [],
+   "standing": "SATISFIED"
+  },
+  "custody": [
+   "UNQUALIFIED",
+   [
+    "KEEPER_ROW_MISSING:EVIDENCE_MANIFEST",
+    "KEEPER_ROW_MISSING:EXPECTED_ANSWER_TABLE",
+    "KEEPER_ROW_MISSING:RUN_INVENTORY"
+   ]
+  ]
+ },
+ "E04.W_OBS": {
+  "CL-CAL(STANDARD)": {
+   "eligibility": "ELIGIBLE",
+   "lines": [
+    [
+     "CALIBRATION",
+     "WORLD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "CALIBRATION held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "G-BIND",
+     "CL-CAL(STANDARD)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "every reachable node binds to the anchors held",
+     "SATISFIED"
+    ],
+    [
+     "G-INV",
+     "CL-CAL(STANDARD)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "inventory terminal; every run reported",
+     "SATISFIED"
+    ]
+   ],
+   "not_satisfied": [],
+   "standing": "SATISFIED"
+  },
+  "CL-CUST(G0)": {
+   "eligibility": "NOT_ELIGIBLE",
+   "lines": [
+    [
+     "custody",
+     "CL-CUST(G0)",
+     "UNQUALIFIED"
+    ],
+    [
+     "G-BIND",
+     "CL-CUST(G0)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "every reachable node binds to the anchors held",
+     "SATISFIED"
+    ],
+    [
+     "G-INV",
+     "CL-CUST(G0)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "inventory terminal; every run reported",
+     "SATISFIED"
+    ]
+   ],
+   "not_satisfied": [
+    "custody"
+   ],
+   "standing": "UNQUALIFIED"
+  },
+  "CL-RET(LAGD)": {
+   "eligibility": "NOT_ELIGIBLE",
+   "lines": [
+    [
+     "BOUNDS",
+     "LAGD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "BOUNDS held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "CALIBRATION",
+     "WORLD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "CALIBRATION held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "RETENTION",
+     "LAGD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "POSITIVE",
+     "RETENTION above exact bound 1/2 (draft A T01 expected)",
+     "SATISFIED"
+    ],
+    [
+     "ERASE",
+     "LAGD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "FAIL",
+     "ERASE FAIL at j = 1 (draft A T04 expected)",
+     "UNMET"
+    ],
+    [
+     "PRESERVE",
+     "LAGD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "PRESERVE held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "CHANNEL",
+     "LAGD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "CHANNEL held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "RESTART",
+     "LAGD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "RESTART held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "OBSERVER",
+     "LAGD/NULL/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "OBSERVER held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "G-BIND",
+     "CL-RET(LAGD)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "every reachable node binds to the anchors held",
+     "SATISFIED"
+    ],
+    [
+     "G-INV",
+     "CL-RET(LAGD)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "inventory terminal; every run reported",
+     "SATISFIED"
+    ],
+    [
+     "G-RECOMP",
+     "CL-RET(LAGD)",
+     "RAN",
+     "QUALIFIED",
+     "FAIL",
+     "TRACE_SCHEMA:trace:clamp",
+     "UNMET"
+    ]
+   ],
+   "not_satisfied": [
+    "gate:G-RECOMP:CL-RET(LAGD)",
+    "rcpt:LAGD:ERASE:STANDARD"
+   ],
+   "standing": "UNMET"
+  },
+  "CL-RET(PKTD)": {
+   "eligibility": "NOT_ELIGIBLE",
+   "lines": [
+    [
+     "BOUNDS",
+     "PKTD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "BOUNDS held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "CALIBRATION",
+     "WORLD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "CALIBRATION held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "RETENTION",
+     "PKTD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "POSITIVE",
+     "RETENTION above exact bound 1/2 (draft A T01 expected)",
+     "SATISFIED"
+    ],
+    [
+     "ERASE",
+     "PKTD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "ERASE held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "PRESERVE",
+     "PKTD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "PRESERVE held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "CHANNEL",
+     "PKTD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "CHANNEL held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "RESTART",
+     "PKTD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "RESTART held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "OBSERVER",
+     "PKTD/BOOKKEEP/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "OBSERVER held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "OBSERVER",
+     "PKTD/NULL/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "OBSERVER held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "G-BIND",
+     "CL-RET(PKTD)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "every reachable node binds to the anchors held",
+     "SATISFIED"
+    ],
+    [
+     "G-INV",
+     "CL-RET(PKTD)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "inventory terminal; every run reported",
+     "SATISFIED"
+    ],
+    [
+     "G-RECOMP",
+     "CL-RET(PKTD)",
+     "RAN",
+     "QUALIFIED",
+     "FAIL",
+     "TRACE_SCHEMA:trace:clamp",
+     "UNMET"
+    ]
+   ],
+   "not_satisfied": [
+    "gate:G-RECOMP:CL-RET(PKTD)"
+   ],
+   "standing": "UNMET"
+  },
+  "CL-RET(REG)": {
+   "eligibility": "NOT_ELIGIBLE",
+   "lines": [
+    [
+     "BOUNDS",
+     "REG/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "BOUNDS held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "CALIBRATION",
+     "WORLD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "CALIBRATION held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "RETENTION",
+     "REG/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "POSITIVE",
+     "RETENTION above exact bound 1/2 (draft A T01 expected)",
+     "SATISFIED"
+    ],
+    [
+     "ERASE",
+     "REG/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "ERASE held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "PRESERVE",
+     "REG/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "PRESERVE held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "CHANNEL",
+     "REG/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "CHANNEL held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "RESTART",
+     "REG/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "RESTART held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "OBSERVER",
+     "REG/BOOKKEEP/STANDARD",
+     "RAN",
+     "UNQUALIFIED",
+     "PASS",
+     "OBSERVER held (draft A expected)",
+     "UNQUALIFIED"
+    ],
+    [
+     "OBSERVER",
+     "REG/NULL/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "OBSERVER held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "G-BIND",
+     "CL-RET(REG)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "every reachable node binds to the anchors held",
+     "SATISFIED"
+    ],
+    [
+     "G-INV",
+     "CL-RET(REG)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "inventory terminal; every run reported",
+     "SATISFIED"
+    ],
+    [
+     "G-RECOMP",
+     "CL-RET(REG)",
+     "RAN",
+     "QUALIFIED",
+     "FAIL",
+     "TRACE_SCHEMA:trace:clamp",
+     "UNMET"
+    ]
+   ],
+   "not_satisfied": [
+    "gate:G-RECOMP:CL-RET(REG)",
+    "rcpt:REG:OBSERVER:BOOKKEEP:STANDARD"
+   ],
+   "standing": "UNQUALIFIED"
+  },
+  "TWIN(REG)": {
+   "eligibility": "ELIGIBLE",
+   "lines": [
+    [
+     "TWIN_EQ",
+     "REG/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "TWIN_EQ held (draft A expected)",
+     "SATISFIED"
+    ]
+   ],
+   "not_satisfied": [],
+   "standing": "SATISFIED"
+  },
+  "custody": [
+   "UNQUALIFIED",
+   [
+    "KEEPER_ROW_MISSING:EVIDENCE_MANIFEST",
+    "KEEPER_ROW_MISSING:EXPECTED_ANSWER_TABLE",
+    "KEEPER_ROW_MISSING:RUN_INVENTORY"
+   ]
+  ]
+ },
+ "E04.W_RESTART": {
+  "CL-CAL(STANDARD)": {
+   "eligibility": "ELIGIBLE",
+   "lines": [
+    [
+     "CALIBRATION",
+     "WORLD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "CALIBRATION held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "G-BIND",
+     "CL-CAL(STANDARD)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "every reachable node binds to the anchors held",
+     "SATISFIED"
+    ],
+    [
+     "G-INV",
+     "CL-CAL(STANDARD)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "inventory terminal; every run reported",
+     "SATISFIED"
+    ]
+   ],
+   "not_satisfied": [],
+   "standing": "SATISFIED"
+  },
+  "CL-CUST(G0)": {
+   "eligibility": "NOT_ELIGIBLE",
+   "lines": [
+    [
+     "custody",
+     "CL-CUST(G0)",
+     "UNQUALIFIED"
+    ],
+    [
+     "G-BIND",
+     "CL-CUST(G0)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "every reachable node binds to the anchors held",
+     "SATISFIED"
+    ],
+    [
+     "G-INV",
+     "CL-CUST(G0)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "inventory terminal; every run reported",
+     "SATISFIED"
+    ]
+   ],
+   "not_satisfied": [
+    "custody"
+   ],
+   "standing": "UNQUALIFIED"
+  },
+  "CL-RET(LAGD)": {
+   "eligibility": "NOT_ELIGIBLE",
+   "lines": [
+    [
+     "BOUNDS",
+     "LAGD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "BOUNDS held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "CALIBRATION",
+     "WORLD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "CALIBRATION held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "RETENTION",
+     "LAGD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "POSITIVE",
+     "RETENTION above exact bound 1/2 (draft A T01 expected)",
+     "SATISFIED"
+    ],
+    [
+     "ERASE",
+     "LAGD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "FAIL",
+     "ERASE FAIL at j = 1 (draft A T04 expected)",
+     "UNMET"
+    ],
+    [
+     "PRESERVE",
+     "LAGD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "PRESERVE held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "CHANNEL",
+     "LAGD/STANDARD",
+     "RAN",
+     "UNQUALIFIED",
+     "PASS",
+     "CHANNEL held (draft A expected)",
+     "UNQUALIFIED"
+    ],
+    [
+     "RESTART",
+     "LAGD/STANDARD",
+     "RAN",
+     "UNQUALIFIED",
+     "PASS",
+     "RESTART held (draft A expected)",
+     "UNQUALIFIED"
+    ],
+    [
+     "OBSERVER",
+     "LAGD/NULL/STANDARD",
+     "RAN",
+     "UNQUALIFIED",
+     "PASS",
+     "OBSERVER held (draft A expected)",
+     "UNQUALIFIED"
+    ],
+    [
+     "G-BIND",
+     "CL-RET(LAGD)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "every reachable node binds to the anchors held",
+     "SATISFIED"
+    ],
+    [
+     "G-INV",
+     "CL-RET(LAGD)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "inventory terminal; every run reported",
+     "SATISFIED"
+    ],
+    [
+     "G-RECOMP",
+     "CL-RET(LAGD)",
+     "RAN",
+     "QUALIFIED",
+     "FAIL",
+     "TRACE_SCHEMA:trace:clamp",
+     "UNMET"
+    ]
+   ],
+   "not_satisfied": [
+    "gate:G-RECOMP:CL-RET(LAGD)",
+    "rcpt:LAGD:CHANNEL:STANDARD",
+    "rcpt:LAGD:ERASE:STANDARD",
+    "rcpt:LAGD:OBSERVER:NULL:STANDARD",
+    "rcpt:LAGD:RESTART:STANDARD"
+   ],
+   "standing": "UNQUALIFIED"
+  },
+  "CL-RET(PKTD)": {
+   "eligibility": "NOT_ELIGIBLE",
+   "lines": [
+    [
+     "BOUNDS",
+     "PKTD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "BOUNDS held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "CALIBRATION",
+     "WORLD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "CALIBRATION held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "RETENTION",
+     "PKTD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "POSITIVE",
+     "RETENTION above exact bound 1/2 (draft A T01 expected)",
+     "SATISFIED"
+    ],
+    [
+     "ERASE",
+     "PKTD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "ERASE held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "PRESERVE",
+     "PKTD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "PRESERVE held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "CHANNEL",
+     "PKTD/STANDARD",
+     "RAN",
+     "UNQUALIFIED",
+     "PASS",
+     "CHANNEL held (draft A expected)",
+     "UNQUALIFIED"
+    ],
+    [
+     "RESTART",
+     "PKTD/STANDARD",
+     "RAN",
+     "UNQUALIFIED",
+     "PASS",
+     "RESTART held (draft A expected)",
+     "UNQUALIFIED"
+    ],
+    [
+     "OBSERVER",
+     "PKTD/BOOKKEEP/STANDARD",
+     "RAN",
+     "UNQUALIFIED",
+     "PASS",
+     "OBSERVER held (draft A expected)",
+     "UNQUALIFIED"
+    ],
+    [
+     "OBSERVER",
+     "PKTD/NULL/STANDARD",
+     "RAN",
+     "UNQUALIFIED",
+     "PASS",
+     "OBSERVER held (draft A expected)",
+     "UNQUALIFIED"
+    ],
+    [
+     "G-BIND",
+     "CL-RET(PKTD)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "every reachable node binds to the anchors held",
+     "SATISFIED"
+    ],
+    [
+     "G-INV",
+     "CL-RET(PKTD)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "inventory terminal; every run reported",
+     "SATISFIED"
+    ],
+    [
+     "G-RECOMP",
+     "CL-RET(PKTD)",
+     "RAN",
+     "QUALIFIED",
+     "FAIL",
+     "TRACE_SCHEMA:trace:clamp",
+     "UNMET"
+    ]
+   ],
+   "not_satisfied": [
+    "gate:G-RECOMP:CL-RET(PKTD)",
+    "rcpt:PKTD:CHANNEL:STANDARD",
+    "rcpt:PKTD:OBSERVER:BOOKKEEP:STANDARD",
+    "rcpt:PKTD:OBSERVER:NULL:STANDARD",
+    "rcpt:PKTD:RESTART:STANDARD"
+   ],
+   "standing": "UNQUALIFIED"
+  },
+  "CL-RET(REG)": {
+   "eligibility": "NOT_ELIGIBLE",
+   "lines": [
+    [
+     "BOUNDS",
+     "REG/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "BOUNDS held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "CALIBRATION",
+     "WORLD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "CALIBRATION held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "RETENTION",
+     "REG/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "POSITIVE",
+     "RETENTION above exact bound 1/2 (draft A T01 expected)",
+     "SATISFIED"
+    ],
+    [
+     "ERASE",
+     "REG/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "ERASE held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "PRESERVE",
+     "REG/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "PRESERVE held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "CHANNEL",
+     "REG/STANDARD",
+     "RAN",
+     "UNQUALIFIED",
+     "PASS",
+     "CHANNEL held (draft A expected)",
+     "UNQUALIFIED"
+    ],
+    [
+     "RESTART",
+     "REG/STANDARD",
+     "RAN",
+     "UNQUALIFIED",
+     "PASS",
+     "RESTART held (draft A expected)",
+     "UNQUALIFIED"
+    ],
+    [
+     "OBSERVER",
+     "REG/BOOKKEEP/STANDARD",
+     "RAN",
+     "UNQUALIFIED",
+     "PASS",
+     "OBSERVER held (draft A expected)",
+     "UNQUALIFIED"
+    ],
+    [
+     "OBSERVER",
+     "REG/NULL/STANDARD",
+     "RAN",
+     "UNQUALIFIED",
+     "PASS",
+     "OBSERVER held (draft A expected)",
+     "UNQUALIFIED"
+    ],
+    [
+     "G-BIND",
+     "CL-RET(REG)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "every reachable node binds to the anchors held",
+     "SATISFIED"
+    ],
+    [
+     "G-INV",
+     "CL-RET(REG)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "inventory terminal; every run reported",
+     "SATISFIED"
+    ],
+    [
+     "G-RECOMP",
+     "CL-RET(REG)",
+     "RAN",
+     "QUALIFIED",
+     "FAIL",
+     "TRACE_SCHEMA:trace:clamp",
+     "UNMET"
+    ]
+   ],
+   "not_satisfied": [
+    "gate:G-RECOMP:CL-RET(REG)",
+    "rcpt:REG:CHANNEL:STANDARD",
+    "rcpt:REG:OBSERVER:BOOKKEEP:STANDARD",
+    "rcpt:REG:OBSERVER:NULL:STANDARD",
+    "rcpt:REG:RESTART:STANDARD"
+   ],
+   "standing": "UNQUALIFIED"
+  },
+  "TWIN(REG)": {
+   "eligibility": "ELIGIBLE",
+   "lines": [
+    [
+     "TWIN_EQ",
+     "REG/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "TWIN_EQ held (draft A expected)",
+     "SATISFIED"
+    ]
+   ],
+   "not_satisfied": [],
+   "standing": "SATISFIED"
+  },
+  "custody": [
+   "UNQUALIFIED",
+   [
+    "KEEPER_ROW_MISSING:EVIDENCE_MANIFEST",
+    "KEEPER_ROW_MISSING:EXPECTED_ANSWER_TABLE",
+    "KEEPER_ROW_MISSING:RUN_INVENTORY"
+   ]
+  ]
+ },
+ "E04.W_UNANCHORED": {
+  "CL-CAL(STANDARD)": {
+   "eligibility": "ELIGIBLE",
+   "lines": [
+    [
+     "CALIBRATION",
+     "WORLD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "CALIBRATION held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "G-BIND",
+     "CL-CAL(STANDARD)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "every reachable node binds to the anchors held",
+     "SATISFIED"
+    ],
+    [
+     "G-INV",
+     "CL-CAL(STANDARD)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "inventory terminal; every run reported",
+     "SATISFIED"
+    ]
+   ],
+   "not_satisfied": [],
+   "standing": "SATISFIED"
+  },
+  "CL-CUST(G0)": {
+   "eligibility": "NOT_ELIGIBLE",
+   "lines": [
+    [
+     "custody",
+     "CL-CUST(G0)",
+     "UNQUALIFIED"
+    ],
+    [
+     "G-BIND",
+     "CL-CUST(G0)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "every reachable node binds to the anchors held",
+     "SATISFIED"
+    ],
+    [
+     "G-INV",
+     "CL-CUST(G0)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "inventory terminal; every run reported",
+     "SATISFIED"
+    ]
+   ],
+   "not_satisfied": [
+    "custody"
+   ],
+   "standing": "UNQUALIFIED"
+  },
+  "CL-RET(LAGD)": {
+   "eligibility": "NOT_ELIGIBLE",
+   "lines": [
+    [
+     "BOUNDS",
+     "LAGD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "BOUNDS held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "CALIBRATION",
+     "WORLD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "CALIBRATION held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "RETENTION",
+     "LAGD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "POSITIVE",
+     "RETENTION above exact bound 1/2 (draft A T01 expected)",
+     "SATISFIED"
+    ],
+    [
+     "ERASE",
+     "LAGD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "FAIL",
+     "ERASE FAIL at j = 1 (draft A T04 expected)",
+     "UNMET"
+    ],
+    [
+     "PRESERVE",
+     "LAGD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "PRESERVE held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "CHANNEL",
+     "LAGD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "CHANNEL held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "RESTART",
+     "LAGD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "RESTART held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "OBSERVER",
+     "LAGD/NULL/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "OBSERVER held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "G-BIND",
+     "CL-RET(LAGD)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "every reachable node binds to the anchors held",
+     "SATISFIED"
+    ],
+    [
+     "G-INV",
+     "CL-RET(LAGD)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "inventory terminal; every run reported",
+     "SATISFIED"
+    ],
+    [
+     "G-RECOMP",
+     "CL-RET(LAGD)",
+     "RAN",
+     "QUALIFIED",
+     "FAIL",
+     "TRACE_SCHEMA:trace:clamp",
+     "UNMET"
+    ]
+   ],
+   "not_satisfied": [
+    "gate:G-RECOMP:CL-RET(LAGD)",
+    "rcpt:LAGD:ERASE:STANDARD"
+   ],
+   "standing": "UNMET"
+  },
+  "CL-RET(PKTD)": {
+   "eligibility": "NOT_ELIGIBLE",
+   "lines": [
+    [
+     "BOUNDS",
+     "PKTD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "BOUNDS held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "CALIBRATION",
+     "WORLD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "CALIBRATION held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "RETENTION",
+     "PKTD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "POSITIVE",
+     "RETENTION above exact bound 1/2 (draft A T01 expected)",
+     "SATISFIED"
+    ],
+    [
+     "ERASE",
+     "PKTD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "ERASE held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "PRESERVE",
+     "PKTD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "PRESERVE held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "CHANNEL",
+     "PKTD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "CHANNEL held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "RESTART",
+     "PKTD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "RESTART held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "OBSERVER",
+     "PKTD/BOOKKEEP/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "OBSERVER held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "OBSERVER",
+     "PKTD/NULL/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "OBSERVER held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "G-BIND",
+     "CL-RET(PKTD)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "every reachable node binds to the anchors held",
+     "SATISFIED"
+    ],
+    [
+     "G-INV",
+     "CL-RET(PKTD)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "inventory terminal; every run reported",
+     "SATISFIED"
+    ],
+    [
+     "G-RECOMP",
+     "CL-RET(PKTD)",
+     "RAN",
+     "QUALIFIED",
+     "FAIL",
+     "TRACE_SCHEMA:trace:clamp",
+     "UNMET"
+    ]
+   ],
+   "not_satisfied": [
+    "gate:G-RECOMP:CL-RET(PKTD)"
+   ],
+   "standing": "UNMET"
+  },
+  "CL-RET(REG)": {
+   "eligibility": "NOT_ELIGIBLE",
+   "lines": [
+    [
+     "BOUNDS",
+     "REG/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "BOUNDS held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "CALIBRATION",
+     "WORLD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "CALIBRATION held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "RETENTION",
+     "REG/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "POSITIVE",
+     "RETENTION above exact bound 1/2 (draft A T01 expected)",
+     "SATISFIED"
+    ],
+    [
+     "ERASE",
+     "REG/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "ERASE held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "PRESERVE",
+     "REG/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "PRESERVE held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "CHANNEL",
+     "REG/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "CHANNEL held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "RESTART",
+     "REG/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "RESTART held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "OBSERVER",
+     "REG/BOOKKEEP/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "OBSERVER held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "OBSERVER",
+     "REG/NULL/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "OBSERVER held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "G-BIND",
+     "CL-RET(REG)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "every reachable node binds to the anchors held",
+     "SATISFIED"
+    ],
+    [
+     "G-INV",
+     "CL-RET(REG)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "inventory terminal; every run reported",
+     "SATISFIED"
+    ],
+    [
+     "G-RECOMP",
+     "CL-RET(REG)",
+     "RAN",
+     "QUALIFIED",
+     "FAIL",
+     "TRACE_SCHEMA:trace:clamp",
+     "UNMET"
+    ]
+   ],
+   "not_satisfied": [
+    "gate:G-RECOMP:CL-RET(REG)"
+   ],
+   "standing": "UNMET"
+  },
+  "TWIN(REG)": {
+   "eligibility": "ELIGIBLE",
+   "lines": [
+    [
+     "TWIN_EQ",
+     "REG/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "TWIN_EQ held (draft A expected)",
+     "SATISFIED"
+    ]
+   ],
+   "not_satisfied": [],
+   "standing": "SATISFIED"
+  },
+  "custody": [
+   "UNQUALIFIED",
+   [
+    "KEEPER_ROW_MISSING:EVIDENCE_MANIFEST",
+    "KEEPER_ROW_MISSING:EXPECTED_ANSWER_TABLE",
+    "KEEPER_ROW_MISSING:RUN_INVENTORY"
+   ]
+  ]
+ },
+ "E04.W_UNRELATED": {
+  "CL-CAL(STANDARD)": {
+   "eligibility": "ELIGIBLE",
+   "lines": [
+    [
+     "CALIBRATION",
+     "WORLD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "CALIBRATION held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "G-BIND",
+     "CL-CAL(STANDARD)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "every reachable node binds to the anchors held",
+     "SATISFIED"
+    ],
+    [
+     "G-INV",
+     "CL-CAL(STANDARD)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "inventory terminal; every run reported",
+     "SATISFIED"
+    ]
+   ],
+   "not_satisfied": [],
+   "standing": "SATISFIED"
+  },
+  "CL-CUST(G0)": {
+   "eligibility": "NOT_ELIGIBLE",
+   "lines": [
+    [
+     "custody",
+     "CL-CUST(G0)",
+     "UNQUALIFIED"
+    ],
+    [
+     "G-BIND",
+     "CL-CUST(G0)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "every reachable node binds to the anchors held",
+     "SATISFIED"
+    ],
+    [
+     "G-INV",
+     "CL-CUST(G0)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "inventory terminal; every run reported",
+     "SATISFIED"
+    ]
+   ],
+   "not_satisfied": [
+    "custody"
+   ],
+   "standing": "UNQUALIFIED"
+  },
+  "CL-RET(LAGD)": {
+   "eligibility": "NOT_ELIGIBLE",
+   "lines": [
+    [
+     "BOUNDS",
+     "LAGD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "BOUNDS held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "CALIBRATION",
+     "WORLD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "CALIBRATION held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "RETENTION",
+     "LAGD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "POSITIVE",
+     "RETENTION above exact bound 1/2 (draft A T01 expected)",
+     "SATISFIED"
+    ],
+    [
+     "ERASE",
+     "LAGD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "FAIL",
+     "ERASE FAIL at j = 1 (draft A T04 expected)",
+     "UNMET"
+    ],
+    [
+     "PRESERVE",
+     "LAGD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "PRESERVE held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "CHANNEL",
+     "LAGD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "CHANNEL held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "RESTART",
+     "LAGD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "RESTART held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "OBSERVER",
+     "LAGD/NULL/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "OBSERVER held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "G-BIND",
+     "CL-RET(LAGD)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "every reachable node binds to the anchors held",
+     "SATISFIED"
+    ],
+    [
+     "G-INV",
+     "CL-RET(LAGD)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "inventory terminal; every run reported",
+     "SATISFIED"
+    ],
+    [
+     "G-RECOMP",
+     "CL-RET(LAGD)",
+     "RAN",
+     "QUALIFIED",
+     "FAIL",
+     "TRACE_SCHEMA:trace:clamp",
+     "UNMET"
+    ]
+   ],
+   "not_satisfied": [
+    "gate:G-RECOMP:CL-RET(LAGD)",
+    "rcpt:LAGD:ERASE:STANDARD"
+   ],
+   "standing": "UNMET"
+  },
+  "CL-RET(PKTD)": {
+   "eligibility": "NOT_ELIGIBLE",
+   "lines": [
+    [
+     "BOUNDS",
+     "PKTD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "BOUNDS held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "CALIBRATION",
+     "WORLD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "CALIBRATION held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "RETENTION",
+     "PKTD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "POSITIVE",
+     "RETENTION above exact bound 1/2 (draft A T01 expected)",
+     "SATISFIED"
+    ],
+    [
+     "ERASE",
+     "PKTD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "ERASE held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "PRESERVE",
+     "PKTD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "PRESERVE held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "CHANNEL",
+     "PKTD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "CHANNEL held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "RESTART",
+     "PKTD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "RESTART held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "OBSERVER",
+     "PKTD/BOOKKEEP/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "OBSERVER held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "OBSERVER",
+     "PKTD/NULL/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "OBSERVER held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "G-BIND",
+     "CL-RET(PKTD)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "every reachable node binds to the anchors held",
+     "SATISFIED"
+    ],
+    [
+     "G-INV",
+     "CL-RET(PKTD)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "inventory terminal; every run reported",
+     "SATISFIED"
+    ],
+    [
+     "G-RECOMP",
+     "CL-RET(PKTD)",
+     "RAN",
+     "QUALIFIED",
+     "FAIL",
+     "TRACE_SCHEMA:trace:clamp",
+     "UNMET"
+    ]
+   ],
+   "not_satisfied": [
+    "gate:G-RECOMP:CL-RET(PKTD)"
+   ],
+   "standing": "UNMET"
+  },
+  "CL-RET(REG)": {
+   "eligibility": "NOT_ELIGIBLE",
+   "lines": [
+    [
+     "BOUNDS",
+     "REG/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "BOUNDS held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "CALIBRATION",
+     "WORLD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "CALIBRATION held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "RETENTION",
+     "REG/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "POSITIVE",
+     "RETENTION above exact bound 1/2 (draft A T01 expected)",
+     "SATISFIED"
+    ],
+    [
+     "ERASE",
+     "REG/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "ERASE held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "PRESERVE",
+     "REG/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "PRESERVE held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "CHANNEL",
+     "REG/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "CHANNEL held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "RESTART",
+     "REG/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "RESTART held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "OBSERVER",
+     "REG/BOOKKEEP/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "OBSERVER held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "OBSERVER",
+     "REG/NULL/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "OBSERVER held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "G-BIND",
+     "CL-RET(REG)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "every reachable node binds to the anchors held",
+     "SATISFIED"
+    ],
+    [
+     "G-INV",
+     "CL-RET(REG)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "inventory terminal; every run reported",
+     "SATISFIED"
+    ],
+    [
+     "G-RECOMP",
+     "CL-RET(REG)",
+     "RAN",
+     "QUALIFIED",
+     "FAIL",
+     "TRACE_SCHEMA:trace:clamp",
+     "UNMET"
+    ]
+   ],
+   "not_satisfied": [
+    "gate:G-RECOMP:CL-RET(REG)"
+   ],
+   "standing": "UNMET"
+  },
+  "TWIN(REG)": {
+   "eligibility": "NOT_ELIGIBLE",
+   "lines": [
+    [
+     "TWIN_EQ",
+     "REG/STANDARD",
+     "RAN",
+     "UNQUALIFIED",
+     "PASS",
+     "TWIN_EQ held (draft A expected)",
+     "UNQUALIFIED"
+    ]
+   ],
+   "not_satisfied": [
+    "rcpt:REG:TWIN_EQ:STANDARD"
+   ],
+   "standing": "UNQUALIFIED"
+  },
+  "custody": [
+   "UNQUALIFIED",
+   [
+    "KEEPER_ROW_MISSING:EVIDENCE_MANIFEST",
+    "KEEPER_ROW_MISSING:EXPECTED_ANSWER_TABLE",
+    "KEEPER_ROW_MISSING:RUN_INVENTORY"
+   ]
+  ]
+ },
+ "E05.FAB_ANCHORS": {
+  "CL-CAL(STANDARD)": {
+   "eligibility": "ELIGIBLE",
+   "lines": [
+    [
+     "CALIBRATION",
+     "WORLD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "CALIBRATION held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "G-BIND",
+     "CL-CAL(STANDARD)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "every reachable node binds to the anchors held",
+     "SATISFIED"
+    ],
+    [
+     "G-INV",
+     "CL-CAL(STANDARD)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "inventory terminal; every run reported",
+     "SATISFIED"
+    ]
+   ],
+   "not_satisfied": [],
+   "standing": "SATISFIED"
+  },
+  "CL-CUST(G0)": {
+   "eligibility": "NOT_ELIGIBLE",
+   "lines": [
+    [
+     "custody",
+     "CL-CUST(G0)",
+     "UNQUALIFIED"
+    ],
+    [
+     "G-BIND",
+     "CL-CUST(G0)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "every reachable node binds to the anchors held",
+     "SATISFIED"
+    ],
+    [
+     "G-INV",
+     "CL-CUST(G0)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "inventory terminal; every run reported",
+     "SATISFIED"
+    ]
+   ],
+   "not_satisfied": [
+    "custody"
+   ],
+   "standing": "UNQUALIFIED"
+  },
+  "CL-RET(LAGD)": {
+   "eligibility": "NOT_ELIGIBLE",
+   "lines": [
+    [
+     "BOUNDS",
+     "LAGD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "BOUNDS held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "CALIBRATION",
+     "WORLD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "CALIBRATION held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "RETENTION",
+     "LAGD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "POSITIVE",
+     "RETENTION above exact bound 1/2 (draft A T01 expected)",
+     "SATISFIED"
+    ],
+    [
+     "ERASE",
+     "LAGD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "FAIL",
+     "ERASE FAIL at j = 1 (draft A T04 expected)",
+     "UNMET"
+    ],
+    [
+     "PRESERVE",
+     "LAGD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "PRESERVE held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "CHANNEL",
+     "LAGD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "CHANNEL held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "RESTART",
+     "LAGD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "RESTART held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "OBSERVER",
+     "LAGD/NULL/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "OBSERVER held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "G-BIND",
+     "CL-RET(LAGD)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "every reachable node binds to the anchors held",
+     "SATISFIED"
+    ],
+    [
+     "G-INV",
+     "CL-RET(LAGD)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "inventory terminal; every run reported",
+     "SATISFIED"
+    ],
+    [
+     "G-RECOMP",
+     "CL-RET(LAGD)",
+     "RAN",
+     "QUALIFIED",
+     "FAIL",
+     "TRACE_SCHEMA:trace:clamp",
+     "UNMET"
+    ]
+   ],
+   "not_satisfied": [
+    "gate:G-RECOMP:CL-RET(LAGD)",
+    "rcpt:LAGD:ERASE:STANDARD"
+   ],
+   "standing": "UNMET"
+  },
+  "CL-RET(PKTD)": {
+   "eligibility": "NOT_ELIGIBLE",
+   "lines": [
+    [
+     "BOUNDS",
+     "PKTD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "BOUNDS held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "CALIBRATION",
+     "WORLD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "CALIBRATION held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "RETENTION",
+     "PKTD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "POSITIVE",
+     "RETENTION above exact bound 1/2 (draft A T01 expected)",
+     "SATISFIED"
+    ],
+    [
+     "ERASE",
+     "PKTD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "ERASE held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "PRESERVE",
+     "PKTD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "PRESERVE held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "CHANNEL",
+     "PKTD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "CHANNEL held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "RESTART",
+     "PKTD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "RESTART held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "OBSERVER",
+     "PKTD/BOOKKEEP/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "OBSERVER held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "OBSERVER",
+     "PKTD/NULL/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "OBSERVER held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "G-BIND",
+     "CL-RET(PKTD)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "every reachable node binds to the anchors held",
+     "SATISFIED"
+    ],
+    [
+     "G-INV",
+     "CL-RET(PKTD)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "inventory terminal; every run reported",
+     "SATISFIED"
+    ],
+    [
+     "G-RECOMP",
+     "CL-RET(PKTD)",
+     "RAN",
+     "QUALIFIED",
+     "FAIL",
+     "TRACE_SCHEMA:trace:clamp",
+     "UNMET"
+    ]
+   ],
+   "not_satisfied": [
+    "gate:G-RECOMP:CL-RET(PKTD)"
+   ],
+   "standing": "UNMET"
+  },
+  "CL-RET(REG)": {
+   "eligibility": "NOT_ELIGIBLE",
+   "lines": [
+    [
+     "BOUNDS",
+     "REG/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "BOUNDS held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "CALIBRATION",
+     "WORLD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "CALIBRATION held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "RETENTION",
+     "REG/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "POSITIVE",
+     "RETENTION above exact bound 1/2 (draft A T01 expected)",
+     "SATISFIED"
+    ],
+    [
+     "ERASE",
+     "REG/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "ERASE held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "PRESERVE",
+     "REG/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "PRESERVE held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "CHANNEL",
+     "REG/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "CHANNEL held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "RESTART",
+     "REG/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "RESTART held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "OBSERVER",
+     "REG/BOOKKEEP/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "OBSERVER held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "OBSERVER",
+     "REG/NULL/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "OBSERVER held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "G-BIND",
+     "CL-RET(REG)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "every reachable node binds to the anchors held",
+     "SATISFIED"
+    ],
+    [
+     "G-INV",
+     "CL-RET(REG)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "inventory terminal; every run reported",
+     "SATISFIED"
+    ],
+    [
+     "G-RECOMP",
+     "CL-RET(REG)",
+     "RAN",
+     "QUALIFIED",
+     "FAIL",
+     "TRACE_SCHEMA:trace:clamp",
+     "UNMET"
+    ]
+   ],
+   "not_satisfied": [
+    "gate:G-RECOMP:CL-RET(REG)"
+   ],
+   "standing": "UNMET"
+  },
+  "TWIN(REG)": {
+   "eligibility": "ELIGIBLE",
+   "lines": [
+    [
+     "TWIN_EQ",
+     "REG/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "TWIN_EQ held (draft A expected)",
+     "SATISFIED"
+    ]
+   ],
+   "not_satisfied": [],
+   "standing": "SATISFIED"
+  },
+  "custody": [
+   "UNQUALIFIED",
+   [
+    "ANCHORS_FROM_PRODUCER",
+    "KEEPER_ROW_MISSING:EVIDENCE_MANIFEST",
+    "KEEPER_ROW_MISSING:EXPECTED_ANSWER_TABLE",
+    "KEEPER_ROW_MISSING:RUN_INVENTORY"
+   ]
+  ]
+ },
+ "E05.FAB_REGISTERED": {
+  "CL-CAL(STANDARD)": {
+   "eligibility": "ELIGIBLE",
+   "lines": [
+    [
+     "CALIBRATION",
+     "WORLD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "CALIBRATION held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "G-BIND",
+     "CL-CAL(STANDARD)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "every reachable node binds to the anchors held",
+     "SATISFIED"
+    ],
+    [
+     "G-INV",
+     "CL-CAL(STANDARD)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "inventory terminal; every run reported",
+     "SATISFIED"
+    ]
+   ],
+   "not_satisfied": [],
+   "standing": "SATISFIED"
+  },
+  "CL-CUST(G0)": {
+   "eligibility": "ELIGIBLE",
+   "lines": [
+    [
+     "custody",
+     "CL-CUST(G0)",
+     "SATISFIED"
+    ],
+    [
+     "G-BIND",
+     "CL-CUST(G0)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "every reachable node binds to the anchors held",
+     "SATISFIED"
+    ],
+    [
+     "G-INV",
+     "CL-CUST(G0)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "inventory terminal; every run reported",
+     "SATISFIED"
+    ]
+   ],
+   "not_satisfied": [],
+   "standing": "SATISFIED"
+  },
+  "CL-RET(LAGD)": {
+   "eligibility": "NOT_ELIGIBLE",
+   "lines": [
+    [
+     "BOUNDS",
+     "LAGD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "BOUNDS held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "CALIBRATION",
+     "WORLD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "CALIBRATION held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "RETENTION",
+     "LAGD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "POSITIVE",
+     "RETENTION above exact bound 1/2 (draft A T01 expected)",
+     "SATISFIED"
+    ],
+    [
+     "ERASE",
+     "LAGD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "FAIL",
+     "ERASE FAIL at j = 1 (draft A T04 expected)",
+     "UNMET"
+    ],
+    [
+     "PRESERVE",
+     "LAGD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "PRESERVE held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "CHANNEL",
+     "LAGD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "CHANNEL held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "RESTART",
+     "LAGD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "RESTART held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "OBSERVER",
+     "LAGD/NULL/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "OBSERVER held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "G-BIND",
+     "CL-RET(LAGD)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "every reachable node binds to the anchors held",
+     "SATISFIED"
+    ],
+    [
+     "G-INV",
+     "CL-RET(LAGD)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "inventory terminal; every run reported",
+     "SATISFIED"
+    ],
+    [
+     "G-RECOMP",
+     "CL-RET(LAGD)",
+     "RAN",
+     "QUALIFIED",
+     "FAIL",
+     "TRACE_SCHEMA:trace:clamp",
+     "UNMET"
+    ]
+   ],
+   "not_satisfied": [
+    "gate:G-RECOMP:CL-RET(LAGD)",
+    "rcpt:LAGD:ERASE:STANDARD"
+   ],
+   "standing": "UNMET"
+  },
+  "CL-RET(PKTD)": {
+   "eligibility": "NOT_ELIGIBLE",
+   "lines": [
+    [
+     "BOUNDS",
+     "PKTD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "BOUNDS held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "CALIBRATION",
+     "WORLD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "CALIBRATION held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "RETENTION",
+     "PKTD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "POSITIVE",
+     "RETENTION above exact bound 1/2 (draft A T01 expected)",
+     "SATISFIED"
+    ],
+    [
+     "ERASE",
+     "PKTD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "ERASE held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "PRESERVE",
+     "PKTD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "PRESERVE held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "CHANNEL",
+     "PKTD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "CHANNEL held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "RESTART",
+     "PKTD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "RESTART held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "OBSERVER",
+     "PKTD/BOOKKEEP/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "OBSERVER held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "OBSERVER",
+     "PKTD/NULL/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "OBSERVER held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "G-BIND",
+     "CL-RET(PKTD)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "every reachable node binds to the anchors held",
+     "SATISFIED"
+    ],
+    [
+     "G-INV",
+     "CL-RET(PKTD)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "inventory terminal; every run reported",
+     "SATISFIED"
+    ],
+    [
+     "G-RECOMP",
+     "CL-RET(PKTD)",
+     "RAN",
+     "QUALIFIED",
+     "FAIL",
+     "TRACE_SCHEMA:trace:clamp",
+     "UNMET"
+    ]
+   ],
+   "not_satisfied": [
+    "gate:G-RECOMP:CL-RET(PKTD)"
+   ],
+   "standing": "UNMET"
+  },
+  "CL-RET(REG)": {
+   "eligibility": "NOT_ELIGIBLE",
+   "lines": [
+    [
+     "BOUNDS",
+     "REG/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "BOUNDS held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "CALIBRATION",
+     "WORLD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "CALIBRATION held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "RETENTION",
+     "REG/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "POSITIVE",
+     "RETENTION above exact bound 1/2 (draft A T01 expected)",
+     "SATISFIED"
+    ],
+    [
+     "ERASE",
+     "REG/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "ERASE held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "PRESERVE",
+     "REG/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "PRESERVE held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "CHANNEL",
+     "REG/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "CHANNEL held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "RESTART",
+     "REG/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "RESTART held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "OBSERVER",
+     "REG/BOOKKEEP/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "OBSERVER held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "OBSERVER",
+     "REG/NULL/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "OBSERVER held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "G-BIND",
+     "CL-RET(REG)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "every reachable node binds to the anchors held",
+     "SATISFIED"
+    ],
+    [
+     "G-INV",
+     "CL-RET(REG)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "inventory terminal; every run reported",
+     "SATISFIED"
+    ],
+    [
+     "G-RECOMP",
+     "CL-RET(REG)",
+     "RAN",
+     "QUALIFIED",
+     "FAIL",
+     "TRACE_SCHEMA:trace:clamp",
+     "UNMET"
+    ]
+   ],
+   "not_satisfied": [
+    "gate:G-RECOMP:CL-RET(REG)"
+   ],
+   "standing": "UNMET"
+  },
+  "TWIN(REG)": {
+   "eligibility": "ELIGIBLE",
+   "lines": [
+    [
+     "TWIN_EQ",
+     "REG/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "TWIN_EQ held (draft A expected)",
+     "SATISFIED"
+    ]
+   ],
+   "not_satisfied": [],
+   "standing": "SATISFIED"
+  },
+  "custody": [
+   "QUALIFIED",
+   null
+  ]
+ },
+ "E05.KEEPER": {
+  "CL-CAL(STANDARD)": {
+   "eligibility": "ELIGIBLE",
+   "lines": [
+    [
+     "CALIBRATION",
+     "WORLD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "CALIBRATION held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "G-BIND",
+     "CL-CAL(STANDARD)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "every reachable node binds to the anchors held",
+     "SATISFIED"
+    ],
+    [
+     "G-INV",
+     "CL-CAL(STANDARD)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "inventory terminal; every run reported",
+     "SATISFIED"
+    ]
+   ],
+   "not_satisfied": [],
+   "standing": "SATISFIED"
+  },
+  "CL-CUST(G0)": {
+   "eligibility": "ELIGIBLE",
+   "lines": [
+    [
+     "custody",
+     "CL-CUST(G0)",
+     "SATISFIED"
+    ],
+    [
+     "G-BIND",
+     "CL-CUST(G0)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "every reachable node binds to the anchors held",
+     "SATISFIED"
+    ],
+    [
+     "G-INV",
+     "CL-CUST(G0)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "inventory terminal; every run reported",
+     "SATISFIED"
+    ]
+   ],
+   "not_satisfied": [],
+   "standing": "SATISFIED"
+  },
+  "CL-RET(LAGD)": {
+   "eligibility": "NOT_ELIGIBLE",
+   "lines": [
+    [
+     "BOUNDS",
+     "LAGD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "BOUNDS held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "CALIBRATION",
+     "WORLD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "CALIBRATION held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "RETENTION",
+     "LAGD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "POSITIVE",
+     "RETENTION above exact bound 1/2 (draft A T01 expected)",
+     "SATISFIED"
+    ],
+    [
+     "ERASE",
+     "LAGD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "FAIL",
+     "ERASE FAIL at j = 1 (draft A T04 expected)",
+     "UNMET"
+    ],
+    [
+     "PRESERVE",
+     "LAGD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "PRESERVE held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "CHANNEL",
+     "LAGD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "CHANNEL held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "RESTART",
+     "LAGD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "RESTART held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "OBSERVER",
+     "LAGD/NULL/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "OBSERVER held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "G-BIND",
+     "CL-RET(LAGD)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "every reachable node binds to the anchors held",
+     "SATISFIED"
+    ],
+    [
+     "G-INV",
+     "CL-RET(LAGD)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "inventory terminal; every run reported",
+     "SATISFIED"
+    ],
+    [
+     "G-RECOMP",
+     "CL-RET(LAGD)",
+     "RAN",
+     "QUALIFIED",
+     "FAIL",
+     "TRACE_SCHEMA:trace:clamp",
+     "UNMET"
+    ]
+   ],
+   "not_satisfied": [
+    "gate:G-RECOMP:CL-RET(LAGD)",
+    "rcpt:LAGD:ERASE:STANDARD"
+   ],
+   "standing": "UNMET"
+  },
+  "CL-RET(PKTD)": {
+   "eligibility": "NOT_ELIGIBLE",
+   "lines": [
+    [
+     "BOUNDS",
+     "PKTD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "BOUNDS held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "CALIBRATION",
+     "WORLD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "CALIBRATION held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "RETENTION",
+     "PKTD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "POSITIVE",
+     "RETENTION above exact bound 1/2 (draft A T01 expected)",
+     "SATISFIED"
+    ],
+    [
+     "ERASE",
+     "PKTD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "ERASE held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "PRESERVE",
+     "PKTD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "PRESERVE held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "CHANNEL",
+     "PKTD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "CHANNEL held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "RESTART",
+     "PKTD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "RESTART held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "OBSERVER",
+     "PKTD/BOOKKEEP/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "OBSERVER held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "OBSERVER",
+     "PKTD/NULL/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "OBSERVER held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "G-BIND",
+     "CL-RET(PKTD)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "every reachable node binds to the anchors held",
+     "SATISFIED"
+    ],
+    [
+     "G-INV",
+     "CL-RET(PKTD)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "inventory terminal; every run reported",
+     "SATISFIED"
+    ],
+    [
+     "G-RECOMP",
+     "CL-RET(PKTD)",
+     "RAN",
+     "QUALIFIED",
+     "FAIL",
+     "TRACE_SCHEMA:trace:clamp",
+     "UNMET"
+    ]
+   ],
+   "not_satisfied": [
+    "gate:G-RECOMP:CL-RET(PKTD)"
+   ],
+   "standing": "UNMET"
+  },
+  "CL-RET(REG)": {
+   "eligibility": "NOT_ELIGIBLE",
+   "lines": [
+    [
+     "BOUNDS",
+     "REG/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "BOUNDS held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "CALIBRATION",
+     "WORLD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "CALIBRATION held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "RETENTION",
+     "REG/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "POSITIVE",
+     "RETENTION above exact bound 1/2 (draft A T01 expected)",
+     "SATISFIED"
+    ],
+    [
+     "ERASE",
+     "REG/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "ERASE held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "PRESERVE",
+     "REG/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "PRESERVE held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "CHANNEL",
+     "REG/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "CHANNEL held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "RESTART",
+     "REG/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "RESTART held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "OBSERVER",
+     "REG/BOOKKEEP/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "OBSERVER held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "OBSERVER",
+     "REG/NULL/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "OBSERVER held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "G-BIND",
+     "CL-RET(REG)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "every reachable node binds to the anchors held",
+     "SATISFIED"
+    ],
+    [
+     "G-INV",
+     "CL-RET(REG)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "inventory terminal; every run reported",
+     "SATISFIED"
+    ],
+    [
+     "G-RECOMP",
+     "CL-RET(REG)",
+     "RAN",
+     "QUALIFIED",
+     "FAIL",
+     "TRACE_SCHEMA:trace:clamp",
+     "UNMET"
+    ]
+   ],
+   "not_satisfied": [
+    "gate:G-RECOMP:CL-RET(REG)"
+   ],
+   "standing": "UNMET"
+  },
+  "TWIN(REG)": {
+   "eligibility": "ELIGIBLE",
+   "lines": [
+    [
+     "TWIN_EQ",
+     "REG/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "TWIN_EQ held (draft A expected)",
+     "SATISFIED"
+    ]
+   ],
+   "not_satisfied": [],
+   "standing": "SATISFIED"
+  },
+  "custody": [
+   "QUALIFIED",
+   null
+  ]
+ },
+ "E05.LATE_REG": {
+  "CL-CAL(STANDARD)": {
+   "eligibility": "ELIGIBLE",
+   "lines": [
+    [
+     "CALIBRATION",
+     "WORLD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "CALIBRATION held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "G-BIND",
+     "CL-CAL(STANDARD)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "every reachable node binds to the anchors held",
+     "SATISFIED"
+    ],
+    [
+     "G-INV",
+     "CL-CAL(STANDARD)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "inventory terminal; every run reported",
+     "SATISFIED"
+    ]
+   ],
+   "not_satisfied": [],
+   "standing": "SATISFIED"
+  },
+  "CL-CUST(G0)": {
+   "eligibility": "NOT_ELIGIBLE",
+   "lines": [
+    [
+     "custody",
+     "CL-CUST(G0)",
+     "UNQUALIFIED"
+    ],
+    [
+     "G-BIND",
+     "CL-CUST(G0)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "every reachable node binds to the anchors held",
+     "SATISFIED"
+    ],
+    [
+     "G-INV",
+     "CL-CUST(G0)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "inventory terminal; every run reported",
+     "SATISFIED"
+    ]
+   ],
+   "not_satisfied": [
+    "custody"
+   ],
+   "standing": "UNQUALIFIED"
+  },
+  "CL-RET(LAGD)": {
+   "eligibility": "NOT_ELIGIBLE",
+   "lines": [
+    [
+     "BOUNDS",
+     "LAGD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "BOUNDS held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "CALIBRATION",
+     "WORLD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "CALIBRATION held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "RETENTION",
+     "LAGD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "POSITIVE",
+     "RETENTION above exact bound 1/2 (draft A T01 expected)",
+     "SATISFIED"
+    ],
+    [
+     "ERASE",
+     "LAGD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "FAIL",
+     "ERASE FAIL at j = 1 (draft A T04 expected)",
+     "UNMET"
+    ],
+    [
+     "PRESERVE",
+     "LAGD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "PRESERVE held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "CHANNEL",
+     "LAGD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "CHANNEL held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "RESTART",
+     "LAGD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "RESTART held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "OBSERVER",
+     "LAGD/NULL/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "OBSERVER held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "G-BIND",
+     "CL-RET(LAGD)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "every reachable node binds to the anchors held",
+     "SATISFIED"
+    ],
+    [
+     "G-INV",
+     "CL-RET(LAGD)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "inventory terminal; every run reported",
+     "SATISFIED"
+    ],
+    [
+     "G-RECOMP",
+     "CL-RET(LAGD)",
+     "RAN",
+     "QUALIFIED",
+     "FAIL",
+     "TRACE_SCHEMA:trace:clamp",
+     "UNMET"
+    ]
+   ],
+   "not_satisfied": [
+    "gate:G-RECOMP:CL-RET(LAGD)",
+    "rcpt:LAGD:ERASE:STANDARD"
+   ],
+   "standing": "UNMET"
+  },
+  "CL-RET(PKTD)": {
+   "eligibility": "NOT_ELIGIBLE",
+   "lines": [
+    [
+     "BOUNDS",
+     "PKTD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "BOUNDS held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "CALIBRATION",
+     "WORLD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "CALIBRATION held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "RETENTION",
+     "PKTD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "POSITIVE",
+     "RETENTION above exact bound 1/2 (draft A T01 expected)",
+     "SATISFIED"
+    ],
+    [
+     "ERASE",
+     "PKTD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "ERASE held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "PRESERVE",
+     "PKTD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "PRESERVE held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "CHANNEL",
+     "PKTD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "CHANNEL held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "RESTART",
+     "PKTD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "RESTART held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "OBSERVER",
+     "PKTD/BOOKKEEP/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "OBSERVER held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "OBSERVER",
+     "PKTD/NULL/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "OBSERVER held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "G-BIND",
+     "CL-RET(PKTD)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "every reachable node binds to the anchors held",
+     "SATISFIED"
+    ],
+    [
+     "G-INV",
+     "CL-RET(PKTD)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "inventory terminal; every run reported",
+     "SATISFIED"
+    ],
+    [
+     "G-RECOMP",
+     "CL-RET(PKTD)",
+     "RAN",
+     "QUALIFIED",
+     "FAIL",
+     "TRACE_SCHEMA:trace:clamp",
+     "UNMET"
+    ]
+   ],
+   "not_satisfied": [
+    "gate:G-RECOMP:CL-RET(PKTD)"
+   ],
+   "standing": "UNMET"
+  },
+  "CL-RET(REG)": {
+   "eligibility": "NOT_ELIGIBLE",
+   "lines": [
+    [
+     "BOUNDS",
+     "REG/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "BOUNDS held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "CALIBRATION",
+     "WORLD/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "CALIBRATION held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "RETENTION",
+     "REG/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "POSITIVE",
+     "RETENTION above exact bound 1/2 (draft A T01 expected)",
+     "SATISFIED"
+    ],
+    [
+     "ERASE",
+     "REG/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "ERASE held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "PRESERVE",
+     "REG/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "PRESERVE held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "CHANNEL",
+     "REG/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "CHANNEL held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "RESTART",
+     "REG/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "RESTART held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "OBSERVER",
+     "REG/BOOKKEEP/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "OBSERVER held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "OBSERVER",
+     "REG/NULL/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "OBSERVER held (draft A expected)",
+     "SATISFIED"
+    ],
+    [
+     "G-BIND",
+     "CL-RET(REG)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "every reachable node binds to the anchors held",
+     "SATISFIED"
+    ],
+    [
+     "G-INV",
+     "CL-RET(REG)",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "inventory terminal; every run reported",
+     "SATISFIED"
+    ],
+    [
+     "G-RECOMP",
+     "CL-RET(REG)",
+     "RAN",
+     "QUALIFIED",
+     "FAIL",
+     "TRACE_SCHEMA:trace:clamp",
+     "UNMET"
+    ]
+   ],
+   "not_satisfied": [
+    "gate:G-RECOMP:CL-RET(REG)"
+   ],
+   "standing": "UNMET"
+  },
+  "TWIN(REG)": {
+   "eligibility": "ELIGIBLE",
+   "lines": [
+    [
+     "TWIN_EQ",
+     "REG/STANDARD",
+     "RAN",
+     "QUALIFIED",
+     "PASS",
+     "TWIN_EQ held (draft A expected)",
+     "SATISFIED"
+    ]
+   ],
+   "not_satisfied": [],
+   "standing": "SATISFIED"
+  },
+  "custody": [
+   "UNQUALIFIED",
+   [
+    "REGISTERED_AFTER_CHECK"
+   ]
+  ]
+ }
+}

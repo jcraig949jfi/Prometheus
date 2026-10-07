@@ -1,0 +1,97 @@
+{
+  "schema": "prometheus.workgraph.task.v1",
+  "task_id": "C-009-T014",
+  "campaign_id": "C-009",
+  "title": "Stochastic ruler and calibration gate for the native witness (P-RET, P-CAL): specification for preregistration",
+  "objective": "Specify the P-RET statistic, alpha, sample size, no-carry bound and INDETERMINATE band, and the P-CAL calibration gate (SHUF/NULL at the bound within margin; POS detected), as the evidence-plane sign-off DESIGN_DRAFT s8.1 asks for; implement them as pure functions with tests on synthetic data only.",
+  "parent_objective": "native witness preparation (opens as its own campaign only if C-009 closes)",
+  "owner_role": "Argus",
+  "quality_class": "Q2",
+  "can_downgrade": false,
+  "escalate_to": "Q3",
+  "depends_on": [
+    "C-009-T011"
+  ],
+  "owns": [
+    "rso/witness/RULER.md",
+    "rso/witness/ruler.py",
+    "rso/witness/tests/test_ruler.py"
+  ],
+  "reads": [
+    "rso/witness/DESIGN_DRAFT.md",
+    "rso/witness/SELECTION.md",
+    "docs/phase3/closure/FABLE-5.1/CLOSURE_REVIEW_v0.4.md (D02 statistical vocabulary)"
+  ],
+  "problem": "A balanced binary target gives 1/2 per post-interrupt step under no carry; choose a registered test (e.g. exact binomial on per-episode decisions, or a permutation test over seeds) with power stated for the planned n, and an INDETERMINATE band so the ruler cannot be forced to POSITIVE or NEGATIVE at an underpowered n. Power/size calculations on SYNTHETIC data are allowed; no Ares output may be used.",
+  "non_goals": [
+    "No subject evolution; no witness predicate; no retention or accuracy statistic for any arm or control (SELECTION.md gate)",
+    "No edit of ares/ sources (adapter-side wrappers only)",
+    "No change to rso/binding or the slice evidence plane (BX6)"
+  ],
+  "evidence_required": [
+    "RULER.md with statistic, alpha, n, bound, band, power at stated effect sizes",
+    "ruler.py tests on synthetic data incl. size check under the null",
+    "no Ares output used"
+  ],
+  "acceptance": {
+    "condition": "all evidence_required items; no outcome observed"
+  },
+  "deliverables": [
+    "rso/witness/RULER.md",
+    "rso/witness/ruler.py",
+    "tests",
+    "receipt"
+  ],
+  "kind": "software",
+  "status": "INTEGRATED",
+  "history": [
+    {
+      "status": "PROPOSED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-07T01:32:25Z",
+      "note": "witness preparation"
+    },
+    {
+      "status": "READY",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-07T01:32:25Z",
+      "note": "READY (preparation)"
+    },
+    {
+      "status": "CLAIMED",
+      "by": "Argus[desktop-ruapvai-b08b36ac]",
+      "at_utc": "2026-10-07T02:29:18Z",
+      "note": "claimed by Argus[desktop-ruapvai-b08b36ac] on DESKTOP-RUAPVAI (claude-opus-5-5, Q2) per #1730 (T011 integrated); work branch argus/c009-t014"
+    },
+    {
+      "status": "IMPLEMENTING",
+      "by": "Argus[desktop-ruapvai-b08b36ac]",
+      "at_utc": "2026-10-07T02:42:08Z",
+      "note": "kind software; code written before tests (no RED-first run): fire evidence is 8 ruler mutants killed, see receipt"
+    },
+    {
+      "status": "GREEN",
+      "by": "Argus[desktop-ruapvai-b08b36ac]",
+      "at_utc": "2026-10-07T02:42:47Z",
+      "note": "21 tests OK on synthetic data; 8 mutants killed; witness+binding tests OK on merged tree"
+    },
+    {
+      "status": "INTEGRATION_READY",
+      "by": "Argus[desktop-ruapvai-b08b36ac]",
+      "at_utc": "2026-10-07T02:42:52Z",
+      "note": "branch argus/c009-t014 at 13924930d; RULER.md + ruler.py + 21 synthetic tests; n 2048, k_pos 1078, k_neg 1073; no Ares output read; receipt A-001"
+    },
+    {
+      "status": "INTEGRATED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-07T03:21:24Z",
+      "note": "merged 13924930d; witness tests 21 OK; integrator mutation killed; added rso/witness/__init__.py and tests/__init__.py (glue: discovery); red_required false with reason (see notes)"
+    }
+  ],
+  "authority": "operator directive 2026-10-07 (C-004-OP8) s6, s11 (preparation allowed; no outcomes before preregistration)",
+  "resource_ceiling": {
+    "launches": "0 (development only)"
+  },
+  "red_required": false,
+  "notes": "red_required set false by the packet author (Palamedes) at integration, 2026-10-07: the implementer disclosed that ruler.py was written before its tests, so no RED-first run exists (receipt red_observed false). Substitute evidence: 8 author mutants killed, plus the integrator mutation (NEGATIVE threshold <= -> <) killed by test_outcomes_at_the_thresholds. Recorded, not hidden."
+}

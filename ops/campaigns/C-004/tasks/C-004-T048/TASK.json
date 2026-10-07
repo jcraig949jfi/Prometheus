@@ -40,7 +40,7 @@
   ],
   "kind": "review",
   "red_required": false,
-  "status": "INTEGRATION_READY",
+  "status": "CLOSED",
   "history": [
     {
       "status": "PROPOSED",
@@ -77,6 +77,18 @@
       "by": "Pallas[m2-1500b878]",
       "at_utc": "2026-10-06T23:41:16Z",
       "note": "rows + REPORT at 75fb5d6ce; receipt attempts/A-001; C1 CLOSED, C2 NOT CLOSED (world axis), B3.3 NOT CLOSED (later-window run admitted); OP6 witness condition not met"
+    },
+    {
+      "status": "INTEGRATED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-07T00:30:18Z",
+      "note": "on main (75fb5d6ce, receipt A-001); result authoritative per operator directive 2026-10-07 s1: C1 CLOSED, C2 NOT CLOSED, B3.3 NOT CLOSED"
+    },
+    {
+      "status": "CLOSED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-07T00:30:18Z",
+      "note": "C-004 closed INCOMPLETE CLOSURE (rso/slice001/S5_FINAL_DISPOSITION.md)"
     }
   ],
   "authority": "C-004-OP6",

@@ -242,3 +242,27 @@ Sent by Nestor directly to Bellerophon, Archaeon, Ananke and Cosmos. They verify
 - Ensorain starting WTP-04 Habitable Islands as its P2B re-entry campaign (<=3 workers, nice 10) (#1707);
   authority cited for the host move only.
 - Phase 3: Pallas back on Fable 5.1, claimed C-004-T048 (main 6f0ac7773).
+
+## 2026-10-06 00:37Z operator ruling
+- One Aporia only. Operator is quiescing the HARRY1 Aporia sessions (harry1-1f63da99, harry1-1579667c).
+  Aporia on M1 SKULLPORT (m1-cb5a6069) remains the custody registrar. Rows 42-47 from HARRY1 stand (verified here).
+
+## 2026-10-07 01:25Z check (msgs 1712-1727)
+- Palamedes #1721: the HARRY1 Aporia sessions were scoped stand-ins Palamedes launched (operator-confirmed) because
+  this seat had posted no heartbeat since 2026-10-05 20:35 local. DEFECT (Aporia): polling hourly without posting
+  heartbeats made the seat look offline. Fix: hourly heartbeat from now on. Reply + heartbeat posted.
+- C-004 CLOSED; C-009 OPEN (72 h completion push) per Palamedes #1714-1717. Pallas T048 integration-ready with C2 and
+  B3.3 NOT CLOSED. Pallas fell back to Opus 5 again; C-009-T030 (Q3) needs a Fable session or Dionysus (#1720).
+- Aether 3-FLIGHT push: OFFER01 (486787beb) = OFFER_REPERTOIRE_SUPPORTED (L2 = reaim1 + TEST-3 exchange, a
+  composition; conserved-token mixing, no new values created). PROP01 frozen 3aac2b57c, production running.
+
+## 2026-10-07 02:40Z check (msgs 1729-1748)
+- Heartbeat posted (#1747). CUSTODY: C-009 registration (7) (#1741, task C-009-T020): 8 rows 48-55 at 4b778b87f,
+  campaign C-009, 0 refusals, chain_ok rows 55, head a189fa0277b0c288e0e807db4916ec75f81645ae08d6a54820447eeb72987f10.
+  Reply #1748. Registry tool gained --campaign (522024ba6); before it, every row was tagged C-004 by default.
+- Aether 3-FLIGHT W2 PROP01 = MULTIGENERATION_WEAK (comparators no weaker); W3 ROUTE01 frozen 5e31c2763, running.
+- Hestia (BUCKKEEP, operator charter 2026-10-06) AUDIT 1 (f0fb002df): 25 engines, 0 viable seed, 24 salvage,
+  1 insufficient; names a "composition wall" hit in >= 7 substrates (incl. Ananke FLIP 0/290). Adversarial review
+  delegated to Elenchus (#1738); sigma_kernel double-spend finding delegated to Techne (#1734). For the operator.
+- Phase 3 C-009: Cadmus T012/T013, Argus T011/T014 (two Argus instances, Palamedes-assigned), Eupalamus T010;
+  Pallas still on Q2 for T030.

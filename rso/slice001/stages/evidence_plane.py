@@ -28,6 +28,7 @@ from rso.slice001 import evidence as EV
 from rso.slice001 import receipt as R
 from rso.slice001 import reset as RS
 from rso.slice001 import rulers as P
+from rso.slice001.fixtures import cc1_cases as CC
 from rso.slice001.fixtures import evidence_cases as F
 from rso.slice001.fixtures import world_cases as WC
 from rso.slice001.stages import version as V
@@ -37,18 +38,18 @@ INSTRUMENTS = ("CALIBRATION", "RETENTION", "G-BIND", "G-INV", "G-RECOMP")
 # The id a stage record names (receipt.validate_stage_record; evidence.authority looks up predicate.id).
 RECORD_ID = {"CALIBRATION": "P1", "RETENTION": "P2", "G-BIND": "G-BIND", "G-INV": "G-INV", "G-RECOMP": "G-RECOMP"}
 # The commit each instrument's version is pinned to (version.py's convention, one commit per version). The rulers
-# keep T023A/T023B's pin; the consumer gates are pinned to the C-004-T046 second repair (evidence.py changed
-# there; before it, the C-004-T042 S4 repair at 22d270fb2), whose stage records were regenerated then (B4.1: a new
-# version needs a new record).
-GATE_PIN = "78f4d1fdcd21d137bddc000195bbfcd87a4da0f4"
+# keep T023A/T023B's pin; the consumer gates are pinned to the C-009-T011 implementation commit (evidence.py on
+# rso/binding; before it the C-004-T046 second repair at 78f4d1fdc and the C-004-T042 S4 repair at 22d270fb2),
+# whose stage records were regenerated then (B4.1: a new version needs a new record).
+GATE_PIN = "dc21c5d73005ddced7070247c5a47e6c5c467ce7"
 PIN = {"CALIBRATION": V.PINNED, "RETENTION": V.PINNED, "G-BIND": GATE_PIN, "G-INV": GATE_PIN, "G-RECOMP": GATE_PIN}
 STAGES_DIR = os.path.dirname(os.path.abspath(__file__))
 FIRE_DIR = os.path.join(STAGES_DIR, "fire")
 RECORDED_BY = "Argus[desktop-ruapvai-b08b36ac] under C-004-T023B"
 # Who executed and recorded each instrument's CURRENT fire test and record (the rulers' are unchanged since T023B).
 RECORDED_BY_OF = {"CALIBRATION": RECORDED_BY, "RETENTION": RECORDED_BY,
-                  "G-BIND": "Argus[harry1-a1598f01] under C-004-T046", "G-INV": "Argus[harry1-a1598f01] under C-004-T046",
-                  "G-RECOMP": "Argus[harry1-a1598f01] under C-004-T046"}
+                  "G-BIND": "Argus[harry1-20749977] under C-009-T011", "G-INV": "Argus[harry1-20749977] under C-009-T011",
+                  "G-RECOMP": "Argus[harry1-20749977] under C-009-T011"}
 
 
 def fire_path(instrument):
@@ -146,59 +147,25 @@ def _reproduced():
     return F.Case("REPRODUCED", b2, anchors, store, F.claims())
 
 
-def _obs_run_borrow():
-    """S4.BROKEN.OBS_RUN_BORROW (T046 C2): OBSERVER(REG, BOOKKEEP)'s receipt cites OBSERVER(REG, NULL)'s run;
-    its own run row is absent."""
-    d = F.g0_dicts()
-    victim, donor = "rcpt:REG:OBSERVER:BOOKKEEP:STANDARD", "rcpt:REG:OBSERVER:NULL:STANDARD"
-    old = d[victim]["execution"]["run_id"]
-    d[victim]["execution"]["run_id"] = d[donor]["execution"]["run_id"]
-    inv = [r for r in F._inventory(F.g0_dicts())[:-1] if r["run_id"] != old]
-    inv.append({"kind": "TERMINAL", "row_count": len(inv)})
-    return F.Case("OBS_RUN_BORROW", F.make_bundle(d, inventory=inv), F.retained(d), EV.FixtureStore(F.stage_rows()),
-                  F.claims())
-
-
-def _stale_run():
-    """S4.PROBE.STALE_RUN (T046, AMENDMENT_v1.0.5 Y1): REG's PRESERVE receipt cites an EARLIER window's run of its
-    own node; the cumulative, timed inventory is intact (this window's row of that node present, uncited)."""
-    d = F.g0_dicts()
-    now = ("2026-10-03T23:00:00Z", "2026-10-03T23:00:30Z")
-    early = ("2026-10-03T20:00:00Z", "2026-10-03T20:00:30Z")
-    this = [dict(r, start_utc=now[0], end_utc=now[1]) for r in F._inventory(d)[:-1]]
-    before = [{"kind": "RUN", "run_id": "early/%s" % n, "node_id": n, "status": "COMPLETED", "start_utc": early[0],
-               "end_utc": early[1]} for n in sorted(d)]
-    rows = before + this
-    d["rcpt:REG:PRESERVE:STANDARD"]["execution"]["run_id"] = "early/rcpt:REG:PRESERVE:STANDARD"
-    inv = rows + [{"kind": "TERMINAL", "row_count": len(rows)}]
-    return F.Case("STALE_RUN", F.make_bundle(d, inventory=inv), F.retained(d), EV.FixtureStore(F.stage_rows()),
-                  F.claims())
-
-
-def _run_borrow():
-    """S3.BROKEN.RUN_BORROW (T042 F3): REG's PRESERVE receipt cites ERASE's run; its own run row is absent."""
-    d = F.g0_dicts()
-    victim, donor = "rcpt:REG:PRESERVE:STANDARD", "rcpt:REG:ERASE:STANDARD"
-    old = d[victim]["execution"]["run_id"]
-    d[victim]["execution"]["run_id"] = d[donor]["execution"]["run_id"]
-    inv = [r for r in F._inventory(F.g0_dicts())[:-1] if r["run_id"] != old]
-    inv.append({"kind": "TERMINAL", "row_count": len(inv)})
-    return F.Case("RUN_BORROW", F.make_bundle(d, inventory=inv), F.retained(d), EV.FixtureStore(F.stage_rows()),
-                  F.claims())
+def _inv_bind(case_fn, claim_id="CL-RET(REG)"):
+    """G-INV (value, reason) with the BIND_* reasons beside the slice spelling: "<reason> [BIND_..., ...]"."""
+    value, reason, bind = CC.g_inv_of(case_fn(), claim_id)
+    return value, (reason if bind is None else "%s [%s]" % (reason, ", ".join(bind)))
 
 
 def _g_inv_cases():
+    """E02 and the C-009 CC1 set (fixtures/cc1_cases.py, synthetic base; C-009-T011). Each CC1 case's expected
+    answer is cc1_cases' C-009 answer, stated there, never read back from the instrument."""
     run = F.g0_dicts()["rcpt:REG:PRESERVE:STANDARD"]["execution"]["run_id"]
-    return [("E02.G0", "ACCEPT", "PASS", None, lambda: _inv(F.CASES["E02.G0"])),
-            ("E02.MISSING", "REJECT", "FAIL", "RUN_UNREPORTED:%s" % run, lambda: _inv(F.CASES["E02.MISSING"])),
-            ("G0 without the REG ERASE run row", "REJECT", "FAIL", "RECEIPT_WITHOUT_RUN:rcpt:REG:ERASE:STANDARD",
-             lambda: _inv(_without_erase_run)),
-            ("S3.BROKEN.RUN_BORROW (T042 F3)", "REJECT", "FAIL", "RECEIPT_WITHOUT_RUN:rcpt:REG:PRESERVE:STANDARD",
-             lambda: _inv(_run_borrow)),
-            ("S4.BROKEN.OBS_RUN_BORROW (T046 C2)", "REJECT", "FAIL",
-             "RECEIPT_WITHOUT_RUN:rcpt:REG:OBSERVER:BOOKKEEP:STANDARD", lambda: _inv(_obs_run_borrow)),
-            ("S4.PROBE.STALE_RUN (T046, v1.0.5 Y1)", "REJECT", "FAIL", "RECEIPT_WITHOUT_RUN:rcpt:REG:PRESERVE:STANDARD",
-             lambda: _inv(_stale_run))]
+    out = [("E02.G0", "ACCEPT", "PASS", None, lambda: _inv(F.CASES["E02.G0"])),
+           ("E02.MISSING", "REJECT", "FAIL", "RUN_UNREPORTED:%s" % run, lambda: _inv(F.CASES["E02.MISSING"])),
+           ("G0 without the REG ERASE run row", "REJECT", "FAIL",
+            "RECEIPT_WITHOUT_RUN:rcpt:REG:ERASE:STANDARD [BIND_NO_ROW]", lambda: _inv_bind(_without_erase_run))]
+    for cid, build, claim, (value, reason, bind) in CC.CASES:
+        want = reason if bind is None else "%s [%s]" % (reason, ", ".join(bind))
+        out.append(("CC1 %s" % cid, "ACCEPT" if value == "PASS" else "REJECT", value, want,
+                    (lambda b=build, c=claim: _inv_bind(b, c))))
+    return out
 
 
 # G-RECOMP: a real REG bundle (world -> adapter) whose outcomes come from the real predicates (rulers.py,

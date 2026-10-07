@@ -1,0 +1,166 @@
+....F.....EEFF.F.F.FFF.............F.FF....s................................................
+======================================================================
+ERROR: test_anchors_carry_the_launch (rso.slice001.tests.test_evidence.TestBX1Launch.test_anchors_carry_the_launch)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Prometheus-worktrees\argus-c009-t011\rso\slice001\tests\test_evidence.py", line 938, in test_anchors_carry_the_launch
+    self.assertEqual(F.g0().anchors.launch_run_id, F.LAUNCH)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'Anchors' object has no attribute 'launch_run_id'
+
+======================================================================
+ERROR: test_bundle_without_run_json_reads_the_anchored_launch (rso.slice001.tests.test_evidence.TestBX1Launch.test_bundle_without_run_json_reads_the_anchored_launch)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Prometheus-worktrees\argus-c009-t011\rso\slice001\tests\test_evidence.py", line 969, in test_bundle_without_run_json_reads_the_anchored_launch
+    self.assertIsNone(EV.Bundle({}, {}, []).run_id)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'Bundle' object has no attribute 'run_id'
+
+======================================================================
+FAIL: test_bx4_no_timestamp_decides_attribution (rso.slice001.tests.test_evidence.TestB33RunAttribution.test_bx4_no_timestamp_decides_attribution)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Prometheus-worktrees\argus-c009-t011\rso\slice001\tests\test_evidence.py", line 870, in test_bx4_no_timestamp_decides_attribution
+    self.assertEqual(value(EV.g_inv(F.claims()["CL-RET(REG)"], b, F.retained(d))), ("PASS", None))
+AssertionError: Tuples differ: ('FAIL', 'RECEIPT_WITHOUT_RUN:rcpt:REG:PRESERVE:STANDARD') != ('PASS', None)
+
+First differing element 0:
+'FAIL'
+'PASS'
+
+- ('FAIL', 'RECEIPT_WITHOUT_RUN:rcpt:REG:PRESERVE:STANDARD')
++ ('PASS', None)
+
+======================================================================
+FAIL: test_launch_row_missing_or_not_completed (rso.slice001.tests.test_evidence.TestBX1Launch.test_launch_row_missing_or_not_completed)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Prometheus-worktrees\argus-c009-t011\rso\slice001\tests\test_evidence.py", line 952, in test_launch_row_missing_or_not_completed
+    self.assertEqual(self._g_inv(case), ("FAIL", "LAUNCH_UNBOUND", ["BIND_LAUNCH_MISSING"]))
+AssertionError: Tuples differ: ('PASS', None, None) != ('FAIL', 'LAUNCH_UNBOUND', ['BIND_LAUNCH_MISSING'])
+
+First differing element 0:
+'PASS'
+'FAIL'
+
+- ('PASS', None, None)
++ ('FAIL', 'LAUNCH_UNBOUND', ['BIND_LAUNCH_MISSING'])
+
+======================================================================
+FAIL: test_manifest_without_launch_is_unbound (rso.slice001.tests.test_evidence.TestBX1Launch.test_manifest_without_launch_is_unbound)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Prometheus-worktrees\argus-c009-t011\rso\slice001\tests\test_evidence.py", line 946, in test_manifest_without_launch_is_unbound
+    self.assertEqual(self._g_inv(case), ("FAIL", "LAUNCH_UNBOUND", ["BIND_LAUNCH_UNANCHORED"]))
+AssertionError: Tuples differ: ('PASS', None, None) != ('FAIL', 'LAUNCH_UNBOUND', ['BIND_LAUNCH_UNANCHORED'])
+
+First differing element 0:
+'PASS'
+'FAIL'
+
+- ('PASS', None, None)
++ ('FAIL', 'LAUNCH_UNBOUND', ['BIND_LAUNCH_UNANCHORED'])
+
+======================================================================
+FAIL: test_run_json_naming_another_launch (rso.slice001.tests.test_evidence.TestBX1Launch.test_run_json_naming_another_launch)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Prometheus-worktrees\argus-c009-t011\rso\slice001\tests\test_evidence.py", line 961, in test_run_json_naming_another_launch
+    self.assertEqual((g["value"], g["reason"]), ("FAIL", "LAUNCH_UNBOUND"))
+AssertionError: Tuples differ: ('PASS', 'inventory terminal; every run reported') != ('FAIL', 'LAUNCH_UNBOUND')
+
+First differing element 0:
+'PASS'
+'FAIL'
+
+- ('PASS', 'inventory terminal; every run reported')
++ ('FAIL', 'LAUNCH_UNBOUND')
+
+======================================================================
+FAIL: test_run_unreported_reads_the_anchored_launch_only (rso.slice001.tests.test_evidence.TestBX5OwnLaunch.test_run_unreported_reads_the_anchored_launch_only)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Prometheus-worktrees\argus-c009-t011\rso\slice001\tests\test_evidence.py", line 983, in test_run_unreported_reads_the_anchored_launch_only
+    self.assertEqual(value(EV.g_inv(case.claims["CL-RET(REG)"], case.bundle, case.anchors)), ("PASS", None))
+AssertionError: Tuples differ: ('FAIL', 'RUN_UNREPORTED:early/rcpt:REG:PRESERVE:STANDARD') != ('PASS', None)
+
+First differing element 0:
+'FAIL'
+'PASS'
+
+- ('FAIL', 'RUN_UNREPORTED:early/rcpt:REG:PRESERVE:STANDARD')
++ ('PASS', None)
+
+======================================================================
+FAIL: test_manifest_without_launch (rso.slice001.tests.test_evidence.TestBX7InventoryCustody.test_manifest_without_launch)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Prometheus-worktrees\argus-c009-t011\rso\slice001\tests\test_evidence.py", line 1023, in test_manifest_without_launch
+    self.assertIn("INVENTORY_UNBOUND:BIND_LAUNCH_UNANCHORED",
+AssertionError: 'INVENTORY_UNBOUND:BIND_LAUNCH_UNANCHORED' not found in ['ROW_BLOB_MISMATCH']
+
+======================================================================
+FAIL: test_registered_inventory_of_another_launch (rso.slice001.tests.test_evidence.TestBX7InventoryCustody.test_registered_inventory_of_another_launch)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Prometheus-worktrees\argus-c009-t011\rso\slice001\tests\test_evidence.py", line 1012, in test_registered_inventory_of_another_launch
+    self.assertEqual(c, {"status": "UNQUALIFIED", "why": ["INVENTORY_UNBOUND:BIND_LAUNCH_MISSING"]})
+AssertionError: {'status': 'QUALIFIED', 'keeper': None, 'registrar': [505 chars]00Z'} != {'status': 'UNQUALIFIED', 'why': ['INVENTORY_UNBOUND:[17 chars]NG']}
+Diff is 824 characters long. Set self.maxDiff to None to see it.
+
+======================================================================
+FAIL: test_run_json_naming_another_launch (rso.slice001.tests.test_evidence.TestBX7InventoryCustody.test_run_json_naming_another_launch)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Prometheus-worktrees\argus-c009-t011\rso\slice001\tests\test_evidence.py", line 1018, in test_run_json_naming_another_launch
+    self.assertEqual(c, {"status": "UNQUALIFIED", "why": ["LAUNCH_UNBOUND"]})
+AssertionError: {'status': 'QUALIFIED', 'keeper': None, 'registrar': [505 chars]00Z'} != {'status': 'UNQUALIFIED', 'why': ['LAUNCH_UNBOUND']}
+Diff is 801 characters long. Set self.maxDiff to None to see it.
+
+======================================================================
+FAIL: test_committed_s4_bundle_in_the_bound_form (rso.slice001.tests.test_evidence.TestCC1Binding.test_committed_s4_bundle_in_the_bound_form)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Prometheus-worktrees\argus-c009-t011\rso\slice001\tests\test_evidence.py", line 911, in test_committed_s4_bundle_in_the_bound_form
+    self._check(CC.s4_base())
+  File "C:\Prometheus-worktrees\argus-c009-t011\rso\slice001\tests\test_evidence.py", line 901, in _check
+    self.assertEqual(CC.g_inv_of(case, claim), want, cid)
+AssertionError: Tuples differ: ('FAIL', 'RUN_UNREPORTED:early/rcpt:REG:PRESERVE:STANDARD', None) != ('PASS', None, None)
+
+First differing element 0:
+'FAIL'
+'PASS'
+
+- ('FAIL', 'RUN_UNREPORTED:early/rcpt:REG:PRESERVE:STANDARD', None)
++ ('PASS', None, None) : SOUND.BX5.FOREIGN_UNREPORTED
+
+======================================================================
+FAIL: test_synthetic_base (rso.slice001.tests.test_evidence.TestCC1Binding.test_synthetic_base)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Prometheus-worktrees\argus-c009-t011\rso\slice001\tests\test_evidence.py", line 907, in test_synthetic_base
+    self._check(None)
+  File "C:\Prometheus-worktrees\argus-c009-t011\rso\slice001\tests\test_evidence.py", line 901, in _check
+    self.assertEqual(CC.g_inv_of(case, claim), want, cid)
+AssertionError: Tuples differ: ('FAIL', 'RUN_UNREPORTED:early/rcpt:REG:PRESERVE:STANDARD', None) != ('PASS', None, None)
+
+First differing element 0:
+'FAIL'
+'PASS'
+
+- ('FAIL', 'RUN_UNREPORTED:early/rcpt:REG:PRESERVE:STANDARD', None)
++ ('PASS', None, None) : SOUND.BX5.FOREIGN_UNREPORTED
+
+======================================================================
+FAIL: test_witness_names_node_run_and_binding (rso.slice001.tests.test_evidence.TestCC1Binding.test_witness_names_node_run_and_binding)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Prometheus-worktrees\argus-c009-t011\rso\slice001\tests\test_evidence.py", line 918, in test_witness_names_node_run_and_binding
+    self.assertEqual(o["witness"], {"node_id": CC.PRESERVE, "run_id": run, "binding": ["BIND_DIGEST_MISMATCH"]})
+AssertionError: None != {'node_id': 'rcpt:REG:PRESERVE:STANDARD',[53 chars]CH']}
+
+----------------------------------------------------------------------
+Ran 92 tests in 8.361s
+
+FAILED (failures=11, errors=2, skipped=1)

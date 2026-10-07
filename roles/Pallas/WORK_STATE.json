@@ -3,43 +3,45 @@
   "seat": "Pallas",
   "mwo_id": "MWO-0004",
   "authority": "operator directive 2026-10-03 (roles/Achilles/prompts/2026-10-03_rso_builder_cell/01_OPERATOR_DIRECTIVE_verbatim.md)",
-  "updated_at_utc": "2026-10-06T23:42:47Z",
+  "updated_at_utc": "2026-10-07T03:52:00Z",
   "state": "READY",
   "branch": "pallas/boot-2026-10-06",
-  "base_sha": "25bbfad48f8c20701aeea82e025c75cb419686e5",
+  "base_sha": "91b5d6b7d",
   "head_sha": "f233c83bf31c4040bec98609575525c6807a0486",
   "worktree_path": "Prometheus-worktrees/pallas-boot-2026-10-03",
-  "model": "claude-fable-5-1",
-  "capability_class": "Q3",
+  "model": "claude-opus-5",
+  "capability_class": "Q2",
   "host": "SPECTREX5 (M2; not M1, EW_DB_HOST=192.168.1.202)",
   "instance": "m2-1500b878",
   "session_start_utc": "2026-10-06T21:53:17Z (comms boot)",
-  "current_objective": "RSO Builder Cell member, campaign C-004 (RSO-METHODS-SLICE-001)",
-  "current_step": "C-004-T048 delivered and INTEGRATION_READY (rows+report 75fb5d6ce, receipt A-001); idle per RESPONSIBILITIES s5 / OP-7",
+  "current_objective": "RSO Builder Cell; C-004 CLOSED (incomplete closure). C-009 RSO-EXEC-BINDING-001 open; Pallas packet C-009-T030 (Q3) PROPOSED behind T020",
+  "current_step": "idle on Opus 5 (Q2). C-009-T030 CLAIMED 03:31:32Z by Pallas[harry1-b97f1fc4] (Fable, headless harry1); handoff complete, this instance has no part in it. Hourly poll continues.",
   "in_flight": [],
   "finish_condition": "per claimed packet (DISTRIBUTED_WORK.md)",
-  "next_expected_milestone": "Palamedes records T048 INTEGRATED; operator disposition under OP6 (no third repair round)",
-  "expected_next_artifact": "none until a READY packet exists",
+  "next_expected_milestone": "harry1-b97f1fc4 delivers C-009-T030 (CC3 challenge on FREEZE_B1); nothing expected from this instance",
+  "expected_next_artifact": "none from this session unless a Q2-eligible packet appears",
   "threads": [
     "phase3-rso"
   ],
   "campaigns": [
-    "C-004"
+    "C-004",
+    "C-009"
   ],
   "experiments": [],
   "fabric_tasks": [],
   "running": [],
   "blocked_on": [],
   "next_actions": [
-    "hourly: comms sync Pallas; workgraph ready Pallas",
+    "hourly: git fetch; MERGE origin/main by SHA; comms sync Pallas; workgraph ready Pallas (ready reads the local tree, so merge first)",
+    "claim only a packet this runtime meets (Q2); never race another Pallas instance",
     "no self-assignment"
   ],
   "operator_decisions_required": [],
   "latest_reports": [
-    "rso/slice001/challenge/R2/REPORT.md",
-    "roles/Pallas/comms/T048_INTEGRATION_READY_2026-10-06.md",
+    "roles/Pallas/comms/POLL_ORDER_OBSERVATION_2026-10-07.md",
+    "roles/Pallas/comms/T030_RUNTIME_NOTICE_2026-10-07.md",
     "roles/Pallas/journal/2026-10-06.md"
   ],
   "last_push_sha": "the commit carrying this file on main",
-  "last_push_utc": "2026-10-06T23:42:47Z"
+  "last_push_utc": "2026-10-07T03:52:00Z"
 }
