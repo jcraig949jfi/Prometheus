@@ -4,7 +4,7 @@ Store: M1 Postgres (prometheus_fire) table custody.registry, reached through the
 
   python -m ops.custody.registry read [--kind KIND] [--json]
   python -m ops.custody.registry verify            # recompute the hash chain; exit 1 on any break
-  python -m ops.custody.registry register --kind KIND --path REPO_PATH --commit SHA --registrar Aporia
+  python -m ops.custody.registry register --kind KIND --path REPO_PATH --commit SHA --registrar Aporia [--campaign C-009]
         # registrar only. Refuses unless the commit is an ancestor of origin/main and the blob at that commit
         # exists; the blob sha256 is computed here from `git show <commit>:<path>` bytes, never supplied.
 
@@ -16,6 +16,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import re
 import subprocess
 import sys
 
@@ -67,9 +68,12 @@ def _git(*a):
     return subprocess.run(["git", *a], capture_output=True)
 
 
-def register(kind, path, commit, registrar):
+def register(kind, path, commit, registrar, campaign="C-004"):
     if registrar != "Aporia":
         print("REFUSED: only the registrar (Aporia) registers", file=sys.stderr)
+        return 2
+    if not re.fullmatch(r"C-\d{3}", campaign or ""):
+        print("REFUSED: campaign must look like C-NNN", file=sys.stderr)
         return 2
     if kind not in KINDS:
         print("REFUSED: unknown record_kind %s" % kind, file=sys.stderr)
@@ -90,15 +94,15 @@ def register(kind, path, commit, registrar):
         return 1
     c = _conn()
     cur = c.cursor()
-    cur.execute("insert into custody.registry (registrar, record_kind, repo_path, blob_sha256, commit_sha, prev_hash, "
-                "row_hash) values (%s,%s,%s,%s,%s,%s,%s) returning row_id, registered_at_utc, row_hash",
-                (registrar, kind, path, sha, full, ZERO, ZERO))
+    cur.execute("insert into custody.registry (registrar, record_kind, repo_path, blob_sha256, commit_sha, campaign, "
+                "prev_hash, row_hash) values (%s,%s,%s,%s,%s,%s,%s,%s) returning row_id, registered_at_utc, row_hash",
+                (registrar, kind, path, sha, full, campaign, ZERO, ZERO))
     rid, ts, rh = cur.fetchone()
     c.commit()
     c.close()
     ok, problems, head, n = verify()
     print(json.dumps({"row_id": rid, "registered_at_utc": ts.isoformat(), "record_kind": kind, "repo_path": path,
-                      "blob_sha256": sha, "commit_sha": full, "row_hash": rh.strip(), "chain_ok": ok,
+                      "blob_sha256": sha, "commit_sha": full, "campaign": campaign, "row_hash": rh.strip(), "chain_ok": ok,
                       "chain_head": head, "rows": n}))
     return 0 if ok else 1
 
@@ -111,6 +115,7 @@ def main(argv=None):
     g = sub.add_parser("register")
     g.add_argument("--kind", required=True); g.add_argument("--path", required=True)
     g.add_argument("--commit", required=True); g.add_argument("--registrar", required=True)
+    g.add_argument("--campaign", default="C-004")
     a = ap.parse_args(argv)
     try:
         if a.cmd == "read":
@@ -119,13 +124,13 @@ def main(argv=None):
                 x["registered_at_utc"] = x["registered_at_utc"].isoformat()
                 x = {k: (v.strip() if isinstance(v, str) else v) for k, v in x.items()}
                 print(json.dumps(x, sort_keys=True) if a.json else
-                      "%(row_id)s %(registered_at_utc)s %(record_kind)s %(repo_path)s blob=%(blob_sha256)s commit=%(commit_sha)s" % x)
+                      "%(row_id)s %(registered_at_utc)s %(campaign)s %(record_kind)s %(repo_path)s blob=%(blob_sha256)s commit=%(commit_sha)s" % x)
             return 0
         if a.cmd == "verify":
             ok, problems, head, n = verify()
             print(json.dumps({"chain_ok": ok, "rows": n, "chain_head": head, "problems": problems}))
             return 0 if ok else 1
-        return register(a.kind, a.path, a.commit, a.registrar)
+        return register(a.kind, a.path, a.commit, a.registrar, a.campaign)
     except Exception as e:  # store unreachable or schema missing: never report a pass
         print(json.dumps({"status": "STORE_UNREACHABLE", "error": str(e)[:300]}))
         return 3
