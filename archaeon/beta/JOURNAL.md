@@ -22,7 +22,8 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
 | B14 | stepping stone: guard organism -> two stored values? | staged; queued for budget |
 | B15 | why does L2 force genuine state? | ANALYSIS: wall = conditional write ROUTING to 2 locations (hypothesis) |
 | B16 | how do genuine shelves store one value? | 56% LATCH (stop perceiving); 36% continuous perceivers |
-| B14' | L4 seeded from perceiving vs latching shelves | running (2 procs) |
+| B14' | L4 seeded from perceiving vs latching shelves | NULL 0/5 + 0/5 |
+| B18 | is the wall a property of MONOLITHIC programs? (modular organisms) | design (read proteus graph organism first) |
 | B17 | forced perception (echo on PUT) opens the 2-value wall? | staged; controls pass |
 | B12 | LONG: W2_K2 with N=500, G=3000 -- is it just time? | STOPPED (compute repair); partial 0/6 to g200-2999 |
 | B11 | is the W2_K2 shelf a delay line? | MOSTLY NO: 50/72 genuine memory, 20/72 delay lines |
@@ -178,6 +179,19 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
 - B17 staged (world lane): ECHO on every PUT tick forces perception, closing the latch route (B16). Controls: slot
   solver / shelf recall 1.0 / .5729 with echo 0 (they never echo); echo+slot control recall 1.0, echo 1.0 on L4E and
   L6E. Queued for the budget window.
+- B14' (L4 jittered, seeded from W2_K2 shelves): FROM_PERCEIVER 0/5 (final .53-.61), FROM_LATCH 0/5 (.50-.56).
+  PREDICTION (perceiver > latch) FAILED. KILLED: "latching is the binding cause". Latching is real (B16) but organisms
+  that keep perceiving do not extend to a second value either. B17 (forced perception) is DEMOTED: B14' already
+  shows perception alone does not open the wall; keep it only as a cheap confirmation if budget is idle.
+- PIVOT DECISION (2026-10-07 ~06:30Z). The composition wall is robust to: organism (B01), plateau shape (B02), drift
+  (B04), edit semantics/count (B03), time+population (B12 partial), scaffold (B07), cue format (B09), branch-free
+  selection (B10), queue memory (B13), seeding from guards/stores/perceivers/latches (B14'). Every reachable
+  mechanism is a SINGLE module: one latch, one store, one guard, one shift chain. The untested lever the directive
+  names is ARCHITECTURE: organisms built from separately evolvable modules whose outputs are combined (Proteus has
+  a graph organism with callable modules, PROTEUS-43/47). Next branch B18: is the wall a property of monolithic
+  programs? Two-module organisms (each module a Proteus program with its own registers, same input; the organism's
+  answer = module selected by a tiny third program, or by ask count) on jittered L4 and W2_K2.
+  First step (light, now): read proteus graph_organism to see whether it already provides this before building one.
 - B08J built (ladder with jitter in train AND held-out); controls unchanged under jitter. Launches when cores free.
 - Next: B01b (done) tests H-PLATEAU quantitatively; then B03 = search arms at equal compute from fresh gen 0
   (baseline / heavy-tailed mutation count / behaviour-novelty) -- prediction: only structural-move arms lift 0/60.
