@@ -1,0 +1,65 @@
+{
+  "schema": "prometheus.workgraph.task.v1",
+  "task_id": "C-009-T014",
+  "campaign_id": "C-009",
+  "title": "Stochastic ruler and calibration gate for the native witness (P-RET, P-CAL): specification for preregistration",
+  "objective": "Specify the P-RET statistic, alpha, sample size, no-carry bound and INDETERMINATE band, and the P-CAL calibration gate (SHUF/NULL at the bound within margin; POS detected), as the evidence-plane sign-off DESIGN_DRAFT s8.1 asks for; implement them as pure functions with tests on synthetic data only.",
+  "parent_objective": "native witness preparation (opens as its own campaign only if C-009 closes)",
+  "owner_role": "Argus",
+  "quality_class": "Q2",
+  "can_downgrade": false,
+  "escalate_to": "Q3",
+  "depends_on": [
+    "C-009-T011"
+  ],
+  "owns": [
+    "rso/witness/RULER.md",
+    "rso/witness/ruler.py",
+    "rso/witness/tests/test_ruler.py"
+  ],
+  "reads": [
+    "rso/witness/DESIGN_DRAFT.md",
+    "rso/witness/SELECTION.md",
+    "docs/phase3/closure/FABLE-5.1/CLOSURE_REVIEW_v0.4.md (D02 statistical vocabulary)"
+  ],
+  "problem": "A balanced binary target gives 1/2 per post-interrupt step under no carry; choose a registered test (e.g. exact binomial on per-episode decisions, or a permutation test over seeds) with power stated for the planned n, and an INDETERMINATE band so the ruler cannot be forced to POSITIVE or NEGATIVE at an underpowered n. Power/size calculations on SYNTHETIC data are allowed; no Ares output may be used.",
+  "non_goals": [
+    "No subject evolution; no witness predicate; no retention or accuracy statistic for any arm or control (SELECTION.md gate)",
+    "No edit of ares/ sources (adapter-side wrappers only)",
+    "No change to rso/binding or the slice evidence plane (BX6)"
+  ],
+  "evidence_required": [
+    "RULER.md with statistic, alpha, n, bound, band, power at stated effect sizes",
+    "ruler.py tests on synthetic data incl. size check under the null",
+    "no Ares output used"
+  ],
+  "acceptance": {
+    "condition": "all evidence_required items; no outcome observed"
+  },
+  "deliverables": [
+    "rso/witness/RULER.md",
+    "rso/witness/ruler.py",
+    "tests",
+    "receipt"
+  ],
+  "kind": "software",
+  "status": "READY",
+  "history": [
+    {
+      "status": "PROPOSED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-07T01:32:25Z",
+      "note": "witness preparation"
+    },
+    {
+      "status": "READY",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-07T01:32:25Z",
+      "note": "READY (preparation)"
+    }
+  ],
+  "authority": "operator directive 2026-10-07 (C-004-OP8) s6, s11 (preparation allowed; no outcomes before preregistration)",
+  "resource_ceiling": {
+    "launches": "0 (development only)"
+  }
+}
