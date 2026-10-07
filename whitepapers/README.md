@@ -12,6 +12,7 @@ Technical writeups of Prometheus findings and architectures. These are **working
 | [`spectral_tail_rank_discrimination.md`](spectral_tail_rank_discrimination.md) | Rank Discrimination in L-Function Zero Geometry | Charon | Outline / WIP |
 | [`descriptor_collapse_audit.md`](descriptor_collapse_audit.md) | When MAP-Elites Axes Collapse: A Calibration-First Audit of Descriptor Independence in Tensor-Train Approximation Landscapes | Zoo | Working draft (v3.4); companion review questions at [`descriptor_collapse_audit_review_questions.md`](descriptor_collapse_audit_review_questions.md) |
 | [`structure_hunter.md`](structure_hunter.md) | Structure Hunter — Automated Discovery of Coordinate Transformations in Empirical Mathematics under Algebraic-Lineage and MDL-Calibration Constraints | Zoo / Harmonia | Working draft (v2; absorbed two review rounds + Tink 1 + Tink 2 Tier B empirical validation) |
+| [`openai_math_release_2026-10-06/`](openai_math_release_2026-10-06/README.md) | The OpenAI mathematics release (2026-10-06) and what it means for the founding-era failure-landscape null: external-source review, ELI5, proposed positive control OAI-POS-01 | Odysseus (external source: openai/math @ adc7f124) | Working paper (2026-10-07); test proposed, not run |
 
 ## Notes
 
