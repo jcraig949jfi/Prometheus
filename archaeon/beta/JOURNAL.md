@@ -36,7 +36,7 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
 | B25/B26 | no-clock composed world: does content sensing evolve? | YES 3/6 sense pools (blind twin collapses); 3/6 open-loop |
 | B27 | generality over 4 more worlds | B-scatter 3/3, C6-unable 1/3; B-pressure/W-artifacts inconclusive (no positive) |
 | B28 | do foragers transfer across worlds? | NO: home +.23, off-home -.02; world-specific mappings |
-| B29 | leave-one-world-out training: invariant sensing? | staged; generalist control passes on 2/3 worlds; launch ~00:00Z |
+| B29 | leave-one-world-out training: invariant sensing? | NULL: train lift yes, held-out blind (0/3 worlds); invariant rule exists but unfound |
 | B30 | do foragers carry state across ticks? | YES: 6/7 content sensors use state; blind ones in rewarding worlds 5/5 |
 | B31 | what do they remember? | 2504: 1-register direction memory; others computed state (not past observations) |
 | B17 | forced perception (echo on PUT) opens the 2-value wall? | staged; controls pass |
@@ -351,6 +351,15 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   (hand content policy = INPUT_USING + BEATS_CONSTANT + sensed words; clock-sweep elite on NoClock =
   NOT_ABOVE_CONSTANT; slot solver = GENUINE_STATE; B08 L4 delay-line elite = TIMING_EXPLOIT). Any competence claim from
   this lane quotes these verdicts.
+- B29 LEAVE-ONE-WORLD-OUT (train on mean of 2 NOCLOCK worlds, test on the 3rd; 4 seeds x 3; G=200; 2 procs):
+  training lift on BOTH training worlds is achieved (up to +.37 P-boom, +.15 C6-unable, +.14 B-scatter), but the
+  held-out world shows nothing: mean held-out lift B-scatter +.002, P-boom -.046, C6-unable -.023; max held-out
+  (reward - blind) .024 -> held-out behaviour is BLIND. PREDICTION (>= .05 above B28's -.022 in >= 2/3 held-out worlds,
+  blind collapses) FAILED cleanly, including on P-boom and C6-unable where the hand generalist DOES transfer (+.19,
+  +.09). Reading: multi-world selection finds a program that maps each TRAINING world's specific layout (a
+  conjunction of two world-specific mappings), not the layout-invariant rule "harvest the non-empty pool by position".
+  The invariant rule exists (hand control) and is not found -- the abstraction analogue of the keyed-memory result:
+  a short general solution, unreached by search, while specific solutions are.
 - PIVOT LANE staged (B23, for the budget window): re-audit the Deep Frontier / C6 record with today's instruments.
   Off-repo evidence exists: D:\Prometheus-worktreesrchaeon-wse-2026-09-16rchaeonrontier
 uns (2.3 GB;
