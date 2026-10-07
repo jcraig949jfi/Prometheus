@@ -1,0 +1,82 @@
+{
+  "schema": "prometheus.workgraph.task.v1",
+  "task_id": "C-004-OP8",
+  "campaign_id": "C-004",
+  "title": "OPERATOR DIRECTIVE OP8 (RSO completion push, 72 h): disposition C-004 from T048; open the successor campaign",
+  "objective": "Record the operator directive of 2026-10-07 for C-004: close C-004 as the scoped result it earned (no third repair round) and carry its mechanisms into a successor campaign.",
+  "owner_role": "operator",
+  "quality_class": "Q2",
+  "can_downgrade": false,
+  "escalate_to": "operator",
+  "depends_on": [
+    "C-004-T048"
+  ],
+  "problem": "Verbatim: roles/Palamedes/prompts/2026-10-07_rso_completion_push/01_OPERATOR_DIRECTIVE_verbatim.md (received 2026-10-07T00:25Z; window to 2026-10-10T00:25Z).",
+  "non_goals": [
+    "No third C-004 repair round"
+  ],
+  "evidence_required": [
+    "the directive recorded verbatim"
+  ],
+  "acceptance": {
+    "condition": "recorded; CLOSED"
+  },
+  "deliverables": [
+    "the directive"
+  ],
+  "kind": "operations",
+  "red_required": false,
+  "status": "CLOSED",
+  "history": [
+    {
+      "status": "PROPOSED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-07T00:30:18Z",
+      "note": "directive received in chat 2026-10-07T00:25Z"
+    },
+    {
+      "status": "READY",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-07T00:30:18Z",
+      "note": "recorded"
+    },
+    {
+      "status": "CLAIMED",
+      "by": "operator[recorded by Palamedes harry1-679179c6]",
+      "at_utc": "2026-10-07T00:30:18Z",
+      "note": "s1: T048 authoritative; INCOMPLETE CLOSURE; no third round. s3: open successor under TH-RSO-BUILD / EP-PHASE3"
+    },
+    {
+      "status": "IMPLEMENTING",
+      "by": "operator[recorded by Palamedes harry1-679179c6]",
+      "at_utc": "2026-10-07T00:30:18Z",
+      "note": "recorded"
+    },
+    {
+      "status": "GREEN",
+      "by": "operator[recorded by Palamedes harry1-679179c6]",
+      "at_utc": "2026-10-07T00:30:18Z",
+      "note": "recorded"
+    },
+    {
+      "status": "INTEGRATION_READY",
+      "by": "operator[recorded by Palamedes harry1-679179c6]",
+      "at_utc": "2026-10-07T00:30:18Z",
+      "note": "recorded"
+    },
+    {
+      "status": "INTEGRATED",
+      "by": "operator[recorded by Palamedes harry1-679179c6]",
+      "at_utc": "2026-10-07T00:30:18Z",
+      "note": "recorded"
+    },
+    {
+      "status": "CLOSED",
+      "by": "operator[recorded by Palamedes harry1-679179c6]",
+      "at_utc": "2026-10-07T00:30:18Z",
+      "note": "C-004 closed; successor C-009"
+    }
+  ],
+  "authority": "operator directive 2026-10-07",
+  "notes": "OPERATOR DECISION packet (see C-004-OP1 notes)."
+}

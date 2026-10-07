@@ -1,0 +1,60 @@
+{
+  "schema": "prometheus.workgraph.task.v1",
+  "task_id": "C-009-T030",
+  "campaign_id": "C-009",
+  "title": "Independent challenge on FREEZE_B1: binding path (CC3)",
+  "objective": "Attack the frozen binding surface: at least 1 sound, 2 broken, 2 semantic edits on the binding path (rso/binding/binding.py, evidence.g_inv/launch binding, custody of the inventory), committed before outcomes.",
+  "parent_objective": "C-009 RSO-EXEC-BINDING-001",
+  "owner_role": "Pallas",
+  "quality_class": "Q3",
+  "can_downgrade": false,
+  "escalate_to": "operator",
+  "depends_on": [
+    "C-009-T020"
+  ],
+  "owns": [
+    "rso/binding/challenge/B1/"
+  ],
+  "reads": [
+    "rso/binding/",
+    "rso/slice001/",
+    "rso/binding/FREEZE_B1.md"
+  ],
+  "problem": "CC3. Report each surface CLOSED / NOT CLOSED and every survivor, applicable or not to the path the native witness will use. Charge launches and mutation children to rso/binding/LEDGER.jsonl. Fresh: not a replay of the CC1 shapes (those are T011 regressions).",
+  "non_goals": [
+    "No change to world predicates, the expected-answer table or S2 case expectations",
+    "No scheduler, no universal state/cognition schema (CONTRACT.md BX6, s5)",
+    "C-004 records and freezes are not rewritten"
+  ],
+  "evidence_required": [
+    "set committed before outcomes",
+    "closure components with denominators",
+    "CLOSED / NOT CLOSED per surface"
+  ],
+  "acceptance": {
+    "command": "python -B -m unittest discover -s rso/slice001/tests -t . && python -B -m unittest discover -s rso/binding/tests -t .",
+    "condition": "all evidence_required items; both suites green"
+  },
+  "deliverables": [
+    "rso/binding/challenge/B1/ (set, results, REPORT.md)"
+  ],
+  "kind": "review",
+  "status": "PROPOSED",
+  "history": [
+    {
+      "status": "PROPOSED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-07T00:34:51Z",
+      "note": "C-009 open"
+    }
+  ],
+  "authority": "operator directive 2026-10-07 (C-004-OP8), roles/Palamedes/prompts/2026-10-07_rso_completion_push/01_OPERATOR_DIRECTIVE_verbatim.md",
+  "resource_ceiling": {
+    "launches": "<= 3",
+    "reviewer": "<= 1 h"
+  },
+  "red_required": false,
+  "eligible_roles": [
+    "Dionysus"
+  ]
+}

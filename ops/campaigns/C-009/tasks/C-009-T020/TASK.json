@@ -1,0 +1,63 @@
+{
+  "schema": "prometheus.workgraph.task.v1",
+  "task_id": "C-009-T020",
+  "campaign_id": "C-009",
+  "title": "Integrate T010+T011; predicted-difference note; fresh produce under the binding (CC2); registration (CC4); FREEZE_B1",
+  "objective": "Integrate producer and consumer; write the predicted differences before any run; produce the five slice bundles on the C-009 ledger; register manifests, inventories and stage records; matrix and claim diff vs S4; freeze the binding surface.",
+  "parent_objective": "C-009 RSO-EXEC-BINDING-001",
+  "owner_role": "Palamedes",
+  "quality_class": "Q2",
+  "can_downgrade": false,
+  "escalate_to": "Q3",
+  "depends_on": [
+    "C-009-T010",
+    "C-009-T011"
+  ],
+  "owns": [
+    "rso/binding/R1/",
+    "rso/binding/FREEZE_B1.md",
+    "rso/binding/LEDGER.jsonl",
+    "rso/binding/PREDICTIONS_CC2.md"
+  ],
+  "reads": [
+    "rso/slice001/",
+    "rso/binding/"
+  ],
+  "problem": "CC2 and CC4. Up to 5 launches of 12.",
+  "non_goals": [
+    "No change to world predicates, the expected-answer table or S2 case expectations",
+    "No scheduler, no universal state/cognition schema (CONTRACT.md BX6, s5)",
+    "C-004 records and freezes are not rewritten"
+  ],
+  "evidence_required": [
+    "predictions committed before produce",
+    "matrix + claim diff with every difference explained",
+    "registry rows + chain head",
+    "FREEZE_B1"
+  ],
+  "acceptance": {
+    "command": "python -B -m unittest discover -s rso/slice001/tests -t . && python -B -m unittest discover -s rso/binding/tests -t .",
+    "condition": "all evidence_required items; both suites green"
+  },
+  "deliverables": [
+    "rso/binding/R1/",
+    "rso/binding/FREEZE_B1.md"
+  ],
+  "kind": "software",
+  "status": "PROPOSED",
+  "history": [
+    {
+      "status": "PROPOSED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-07T00:34:51Z",
+      "note": "C-009 open"
+    }
+  ],
+  "authority": "operator directive 2026-10-07 (C-004-OP8), roles/Palamedes/prompts/2026-10-07_rso_completion_push/01_OPERATOR_DIRECTIVE_verbatim.md",
+  "resource_ceiling": {
+    "launches": "0 (development only) unless stated",
+    "note": "C-009 caps rso/binding/contract.json"
+  },
+  "red_required": false,
+  "notes": "red_required false: integration and regression; RED is T010/T011's."
+}

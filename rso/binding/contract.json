@@ -1,0 +1,42 @@
+{
+  "schema": "rso.binding.contract.v1",
+  "version": "1.0.0",
+  "campaign": "C-009",
+  "frozen_by": "Palamedes[harry1-679179c6]",
+  "frozen_at_utc": "2026-10-07T00:34:51Z",
+  "normative_text": "rso/binding/CONTRACT.md",
+  "reference": "rso/binding/binding.py",
+  "row_fields": {
+    "node_execution": [
+      "kind",
+      "run_id",
+      "parent_run_id",
+      "launch_kind",
+      "node_id",
+      "status",
+      "receipt_sha256"
+    ],
+    "launch": [
+      "kind",
+      "run_id",
+      "launch_kind",
+      "status"
+    ],
+    "manifest": [
+      "launch_run_id"
+    ]
+  },
+  "caps": {
+    "authority": "operator directive 2026-10-07 (C-004-OP8), roles/Palamedes/prompts/2026-10-07_rso_completion_push/01_OPERATOR_DIRECTIVE_verbatim.md",
+    "top_level_validation_launches": 12,
+    "cpu_minutes": 90,
+    "new_artifact_mb": 150,
+    "gpu_hours": 0,
+    "cloud_usd": 0,
+    "repair_rounds": 1,
+    "reviewer_hours": 2,
+    "window_end_utc": "2026-10-10T00:25:00Z",
+    "charging": "failures, retries, mutation children and confirmation attempts count; stop at the first exhausted cap; keep partial results"
+  },
+  "ledger": "rso/binding/LEDGER.jsonl"
+}

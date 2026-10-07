@@ -34,5 +34,23 @@ class TestNoSeeding(unittest.TestCase):
         self.assertEqual(M.compare_row(e, a)["status"], M.AGREE)
 
 
+class TestProduceContract(unittest.TestCase):
+    def test_contract_option_reaches_produce_and_defaults_to_the_slice_contract(self):
+        from unittest import mock
+        with mock.patch.object(S, "produce", return_value={}) as p:
+            S.main(["produce", "--commit", "c", "--ledger", "l.jsonl", "--contract", "k.json"])
+            p.assert_called_once_with("c", "l.jsonl", contract="k.json")
+        with mock.patch.object(S, "produce", return_value={}) as p:
+            S.main(["produce", "--commit", "c", "--ledger", "l.jsonl"])
+            p.assert_called_once_with("c", "l.jsonl", contract=S.L.DEFAULT_CONTRACT)
+
+    def test_produce_charges_the_ledger_under_the_given_contract(self):
+        from unittest import mock
+        with mock.patch.object(S.L.Ledger, "from_contract", side_effect=RuntimeError("stop")) as fc:
+            with self.assertRaises(RuntimeError):
+                S.produce("c", "l.jsonl", contract="k.json")
+            fc.assert_called_once_with("l.jsonl", "k.json")
+
+
 if __name__ == "__main__":
     unittest.main()

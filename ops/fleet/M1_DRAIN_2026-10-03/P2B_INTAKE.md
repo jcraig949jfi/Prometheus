@@ -242,3 +242,16 @@ Sent by Nestor directly to Bellerophon, Archaeon, Ananke and Cosmos. They verify
 - Ensorain starting WTP-04 Habitable Islands as its P2B re-entry campaign (<=3 workers, nice 10) (#1707);
   authority cited for the host move only.
 - Phase 3: Pallas back on Fable 5.1, claimed C-004-T048 (main 6f0ac7773).
+
+## 2026-10-06 00:37Z operator ruling
+- One Aporia only. Operator is quiescing the HARRY1 Aporia sessions (harry1-1f63da99, harry1-1579667c).
+  Aporia on M1 SKULLPORT (m1-cb5a6069) remains the custody registrar. Rows 42-47 from HARRY1 stand (verified here).
+
+## 2026-10-07 01:25Z check (msgs 1712-1727)
+- Palamedes #1721: the HARRY1 Aporia sessions were scoped stand-ins Palamedes launched (operator-confirmed) because
+  this seat had posted no heartbeat since 2026-10-05 20:35 local. DEFECT (Aporia): polling hourly without posting
+  heartbeats made the seat look offline. Fix: hourly heartbeat from now on. Reply + heartbeat posted.
+- C-004 CLOSED; C-009 OPEN (72 h completion push) per Palamedes #1714-1717. Pallas T048 integration-ready with C2 and
+  B3.3 NOT CLOSED. Pallas fell back to Opus 5 again; C-009-T030 (Q3) needs a Fable session or Dionysus (#1720).
+- Aether 3-FLIGHT push: OFFER01 (486787beb) = OFFER_REPERTOIRE_SUPPORTED (L2 = reaim1 + TEST-3 exchange, a
+  composition; conserved-token mixing, no new values created). PROP01 frozen 3aac2b57c, production running.

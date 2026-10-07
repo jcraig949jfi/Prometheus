@@ -1,0 +1,63 @@
+{
+  "schema": "prometheus.workgraph.task.v1",
+  "task_id": "C-009-T013",
+  "campaign_id": "C-009",
+  "title": "Ares witness adapter (client of rso.binding): arms, observer, receipts, binding rows -- plumbing only",
+  "objective": "Build rso/witness/ares_client.py: the seven arm wrappers of DESIGN_DRAFT s4 (S, S-NOPL, S-LEAK, POS, RECUR, NULL, SHUF) without editing ares/, an episode runner over registered seeds with rollout(record=True) as the observer, canonical receipt bytes per predicate node (subject = genome bytes digest, world variant + code refs, seeds, observer id, action traces and oracle values as artifacts) and one ledger row per node execution (parent_run_id, receipt_sha256 via rso.binding), so that binding.binding_reasons() binds every produced receipt.",
+  "parent_objective": "native witness preparation (opens as its own campaign only if C-009 closes)",
+  "owner_role": "Cadmus",
+  "quality_class": "Q2",
+  "can_downgrade": false,
+  "escalate_to": "Q3",
+  "depends_on": [],
+  "owns": [
+    "rso/witness/ares_client.py",
+    "rso/witness/tests/"
+  ],
+  "reads": [
+    "rso/witness/SELECTION.md",
+    "rso/witness/DESIGN_DRAFT.md",
+    "rso/witness/CANDIDATES.md",
+    "rso/binding/CONTRACT.md",
+    "rso/binding/binding.py",
+    "ares/"
+  ],
+  "problem": "Plumbing tests only, on random or hand-wired organisms: determinism under fixed seeds; each wrapper demonstrably applied (e.g. S-LEAK leaves live W1 unrestored, S-NOPL has no plastic update, SHUF decouples cue from r) checked on internal state, not on accuracy; record=True vs record=False give identical actions (P-OBS plumbing); every produced receipt binds (binding_reasons == []) and a tampered receipt does not. Predicate functions (P-CAL, P-RET, P-CHAN, P-ERASE, P-PRES) may be written as code with unit tests on SYNTHETIC action arrays, but must not be evaluated on any Ares arm output. Opaque node ids (BX6).",
+  "non_goals": [
+    "No subject evolution; no witness predicate; no retention or accuracy statistic for any arm or control (SELECTION.md gate)",
+    "No edit of ares/ sources (adapter-side wrappers only)",
+    "No change to rso/binding or the slice evidence plane (BX6)"
+  ],
+  "evidence_required": [
+    "RED: binding test of a produced receipt fails before the adapter exists",
+    "plumbing tests green",
+    "a statement that no accuracy/retention number was computed on any arm"
+  ],
+  "acceptance": {
+    "condition": "all evidence_required items; no outcome observed"
+  },
+  "deliverables": [
+    "code + tests on branch cadmus/c009-t013",
+    "receipt"
+  ],
+  "kind": "software",
+  "status": "READY",
+  "history": [
+    {
+      "status": "PROPOSED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-07T01:32:25Z",
+      "note": "witness preparation"
+    },
+    {
+      "status": "READY",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-07T01:32:25Z",
+      "note": "READY (preparation)"
+    }
+  ],
+  "authority": "operator directive 2026-10-07 (C-004-OP8) s6, s11 (preparation allowed; no outcomes before preregistration)",
+  "resource_ceiling": {
+    "launches": "0 (development only)"
+  }
+}
