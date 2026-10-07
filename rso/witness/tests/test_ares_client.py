@@ -194,5 +194,68 @@ class TestPredicateCountsOnSyntheticArrays(unittest.TestCase):
         self.assertFalse(AC.actions_equal(a, b))
 
 
+# --------------------------------------------------------------------------------------------------------
+# C-009-T018: P-ERASE probe set and P-PRES seed set. Plumbing on a hand-wired CONSTRUCTION only (not the subject,
+# not a registered arm): it must register a difference when leaky and 0 when not. No accuracy statistic.
+
+def _leak_construction():
+    """Hand-wired test organism (not POS): h reads the cue (ch1) and the noise channel (ch0); a plastic edge from
+    the constant channel (ch5) into h with rate 0.3; outputs read h with opposite signs."""
+    cfg = S.Config()
+    pop = S.Population(cfg, 1)
+    n, h = cfg.n, S.OBS_DIM
+    pop.alive[0, h] = True
+    pop.op[0, h] = S.OPS.index("ADD")
+    pop.W1[0, h, 1] = 1.0
+    pop.W1[0, h, 0] = 0.5
+    pop.R[0, h, 5] = 0.3
+    pop.op[0, n - 2] = S.OPS.index("ADD"); pop.W1[0, n - 2, h] = -1.0
+    pop.op[0, n - 1] = S.OPS.index("ADD"); pop.W1[0, n - 1, h] = 1.0
+    return pop
+
+
+class TestEraseProbesAndPresSeeds(unittest.TestCase):
+    def test_probe_set_shape_balance_and_determinism(self):
+        probes = AC.erase_probe_set()
+        self.assertEqual(len(probes), AC.ERASE_N_PROBES)
+        self.assertEqual(probes, AC.erase_probe_set())
+        regime = AC.regime_of
+        self.assertTrue(all(regime(a) == 0 and regime(b) == 1 for a, b, _ in probes))
+        self.assertEqual(sorted(regime(p) for _, _, p in probes), [0] * 32 + [1] * 32)
+        seeds = [s for t in probes for s in t]
+        self.assertEqual(len(seeds), len(set(seeds)))                  # no seed reused within the set
+
+    def test_seed_sets_are_disjoint_from_registered_ranges(self):
+        used = set(s for t in AC.erase_probe_set() for s in t) | set(s for p in AC.pres_seed_set() for s in p)
+        self.assertFalse(used & set(AR.EVAL_SEEDS))
+        self.assertTrue(all(AC.ERASE_START <= s < AC.WITNESS_SEED_FLOOR for s in used))
+        self.assertTrue(all(s >= 25_000 for s in used))                 # above balanced_seeds_for's scan range
+
+    def test_exclusion_list_is_honoured(self):
+        first = AC.erase_probe_set()
+        banned = {first[0][0], first[3][2]}
+        again = AC.erase_probe_set(exclude=banned)
+        self.assertFalse(banned & set(s for t in again for s in t))
+        self.assertEqual(len(again), AC.ERASE_N_PROBES)
+
+    def test_erase_probe_registers_a_leak_and_zero_without_one(self):
+        pop, probes = _leak_construction(), AC.erase_probe_set()
+        self.assertEqual(AC.p_erase_count(pop, S.Runtime, probes), 0)
+        self.assertGreater(AC.p_erase_count(pop, AC.LeakyResetRuntime, probes), 0)
+
+    def test_erase_probe_is_zero_for_a_runtime_with_no_plasticity_even_when_leaky(self):
+        pop = _leak_construction()
+        pop.R[:] = 0.0                                                  # nothing to leak: the fire case cannot fire
+        self.assertEqual(AC.p_erase_count(pop, AC.LeakyResetRuntime, AC.erase_probe_set()), 0)
+
+    def test_pres_seed_set_and_diffs(self):
+        pairs = AC.pres_seed_set()
+        self.assertEqual(len(pairs), AC.PRES_N_SEEDS)
+        self.assertEqual(pairs, AC.pres_seed_set())
+        pop = _leak_construction()
+        self.assertEqual(AC.p_pres_diffs(pop, S.Runtime, pairs), 0)
+        self.assertGreater(AC.p_pres_diffs(pop, AC.LeakyResetRuntime, pairs), 0)
+
+
 if __name__ == "__main__":
     unittest.main()
