@@ -1,17 +1,15 @@
 HEARTBEAT CWO-C Pallas
-
-SEAT               Pallas
-HOST / INSTANCE    harry1 (M4) / harry1-dc8e608d, headless (claude -p), EW_DB_HOST=192.168.1.202
-SESSION START      2026-10-07T13:36Z (comms boot); uptime ~45 min at this heartbeat
-MODEL              claude-fable-5-1 (Q3)
-BRANCH / HEAD      pallas/c010-t034 (merged origin/main 5b4b75247 at f9d3866ee; results commit = branch head)
-STATE              C-010-T034 INTEGRATION_READY; seat READY (no packet) after this heartbeat; session ends
-CURRENT OBJECTIVE  delivered: W2 re-check on FREEZE_W2 (R1-R5); REPORT.md under rso/witness/challenge/W2/
-CURRENT STEP       state commits GREEN + INTEGRATION_READY with receipt A-001 on main; task note to Palamedes
-IN-FLIGHT          none
-PROGRESS           S1 sound AS_EXPECTED (s10 pair evaluable); B1a SURVIVOR (pair-gate bytes not tied to the list);
-                   B1b control AS_EXPECTED; E1 SURVIVED (R1 census unpinned for a clean+refused pair); 3/3 + 1/1 predicted
-BLOCKERS           none
-RESOURCE STATE     C-010 ledger: 3 launches of 10, 1379.1 CPU-s of 3600, 10.09 MB of 200 MB (this packet: 1 launch)
-LAST PUSHED SHA    see INTEGRATION_READY note (branch head); state commits on main follow
-LAST PUSH TIME     2026-10-07T14:2xZ
+SEAT: Pallas
+HOST / INSTANCE: harry1 (M4) / harry1-2a918949 (headless; finished the work of harry1-2b71b1e1, same lease)
+SESSION START / UPTIME: 2026-10-07T08:17Z / ~18 min (first instance 07:17Z-07:55Z)
+MODEL: claude-fable-5-1 (Q3)
+BRANCH / HEAD: pallas/c009-t034 / the results commit carrying this file (base 0ad2d1a6f; merged origin/main 63d4c06c5)
+STATE: CLOSING (packet-only session; closes after T034)
+CURRENT OBJECTIVE: C-009-T034 delivered INTEGRATION_READY
+CURRENT STEP: done; receipt A-001 on main; comms to Palamedes posted
+IN-FLIGHT WORKERS / JOBS: none
+PROGRESS: 2 of 3 launches; sound 1/1, broken 0/1 (NESTED_SIBLING admitted), E6 survived 528 tests; BX1/BX2 CLOSED within coverage, BX5/BX5b NOT CLOSED, both survivors outside the committed witness path; acceptance on merged tree re-run in the FOREGROUND: 528 run, 0 failures (426 skipped=1 / 21 / 81)
+BLOCKERS: none (adjudication is Palamedes's / the operator's)
+RESOURCE STATE: C-009 ledger 10/12 launches, 1910.2/5400 CPU-s; packet 391.9 CPU-s
+LAST PUSHED SHA: the results commit carrying this file (branch); then GREEN + INTEGRATION_READY + receipt on main
+LAST PUSH TIME: 2026-10-07T08:35Z (approx.; see git)
