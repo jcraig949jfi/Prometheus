@@ -28,6 +28,8 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
 | B20 | indexed solver neighbourhood | ISOLATED PEAK (shelf-level .0015) |
 | B21 | operand-locality mutation | 0/7 so far; .82 cell = lag-window exploit |
 | B08K | 0-7 jitter re-score of B08J | L1 7/7, L2 5/5, L3 6/8 genuine; standard now 0-7 |
+| B22 | credit the write half, then withdraw | WRITE LEARNED (2/4 so far, .91-.99) then LOST on withdrawal |
+| B22b | hold store credit at .2 after g150 | running |
 | B17 | forced perception (echo on PUT) opens the 2-value wall? | staged; controls pass |
 | B12 | LONG: W2_K2 with N=500, G=3000 -- is it just time? | STOPPED (compute repair); partial 0/6 to g200-2999 |
 | B11 | is the W2_K2 shelf a delay line? | MOSTLY NO: 50/72 genuine memory, 20/72 delay lines |
@@ -233,6 +235,13 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   L1 7/7 genuine, L2 5/5 genuine, L3 6/8 (two at .86 = partial lag exploits). Hand slot + indexed solvers .97-1.0.
   B08J's single-value claims STAND (L3 revised 8 -> 6); L4 0/8 unaffected. STANDARD FROM NOW: memory claims use
   0-7 jitter (archaeon/beta/b08k_wide_jitter_rescore.py wide()).
+- B22 STORE-CREDIT SCAFFOLD (partial, 9/16 cells): STRONG SIGNAL -- the tag-addressed WRITE half is learnable once it
+  earns credit: STORE L6 2201 store-credit .08 (g50) -> .48 (g75) -> .99 (g100-150); STORE L4 2203 .91 at g125.
+  2/4 STORE cells so far. During the scaffold the population TRADES AWAY recall (perfect storers at chance recall).
+  After withdrawal (g >= 150) the write is LOST within 25 generations and the population returns to the shelf before
+  any matching read appears. CHANGED MY MIND: the isolated peak is not one obstacle but two -- the write is
+  reachable with credit; holding it long enough for the read is the obstacle. B22b launched: KEEP arm holds store
+  credit at .2 after g150 (G=400, 8 cells, 2 procs).
 - B08J built (ladder with jitter in train AND held-out); controls unchanged under jitter. Launches when cores free.
 - Next: B01b (done) tests H-PLATEAU quantitatively; then B03 = search arms at equal compute from fresh gen 0
   (baseline / heavy-tailed mutation count / behaviour-novelty) -- prediction: only structural-move arms lift 0/60.
