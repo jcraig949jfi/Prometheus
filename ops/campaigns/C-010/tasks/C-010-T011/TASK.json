@@ -92,5 +92,7 @@
   "authority": "operator directive 2026-10-07 (C-004-OP8) s6: native witness opens automatically when C-009 closes; rso/binding/CLOSURE.md",
   "resource_ceiling": {
     "launches": "0 (development only) unless stated"
-  }
+  },
+  "red_required": false,
+  "notes": "red_required set false by the packet author (Palamedes) after the fact, 2026-10-07T09:2xZ: the implementer's receipt records an observed RED (TestArtifacts failed before node_artifacts/verify_artifacts existed) but the lifecycle went IMPLEMENTING -> GREEN without a RED transition, which left main failing validation from 08:39Z. History is not rewritten; the RED evidence is the receipt plus the integrator mutations (hash and length checks) killed."
 }
