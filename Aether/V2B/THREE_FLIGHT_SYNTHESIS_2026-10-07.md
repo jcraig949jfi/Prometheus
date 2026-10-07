@@ -8,7 +8,7 @@ Elapsed 00:15Z-04:35Z.
    Yes, at the level of what sites see. reaim1 + TEST-3 exchange (a composition, not new physics) gives a mean of
    ~27 distinct delivered values per changing site, vs 2.06 (reaim1) and 2.21 (exchange only). N64 +0.20,
    unique-per-change +0.12, late discovery +0.10 vs both, 8/8 seeds: OFFER_REPERTOIRE_SUPPORTED.
-   Mechanism (declared attack): no new values are created; a conserved byte population circulates as tokens.
+   Mechanism (declared attack): no new values are created; a conserved byte multiset circulates as tokens.
 
 2. **Did any law demonstrate true multi-generation causal reach?**
    Rarely, and not reproducibly at the frozen bar.
