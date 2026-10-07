@@ -139,23 +139,30 @@ def _ret_node(digest, arm, predicate, decide, seeds, mode="present"):
 
 
 def _pair_node(digest, arm, predicate, roles, n, differs):
+    """P-PRES (k = 2: warmup, seed) or P-ERASE (k = 3: pre_a, pre_b, probe) on seeds from 800000 / 850000, with the
+    world's regimes per seed group as its oracle."""
+    k = 3 if predicate == "P-ERASE" else 2
+    seeds = list(range(800000 if k == 3 else 850000, (800000 if k == 3 else 850000) + n * k))
     a = np.ones((n, T), dtype=np.int8)
     b = a.copy()
     if differs:
         b[n // 2, T - 1] = 2
+    regs, _ = oracle(seeds)
     outs = [_array(roles[0], a), _array(roles[1], b)]
-    orc = [_array("oracle:regimes", np.zeros((n, 2), dtype=np.int8))]
-    return _receipt(digest, arm, predicate, list(range(800000, 800000 + n * 2)), "present", outs, orc), outs + orc
+    orc = [_array("oracle:regimes", np.array(regs, dtype=np.int8).reshape(n, k))]
+    return _receipt(digest, arm, predicate, seeds, "present", outs, orc), outs + orc
 
 
 def _obs_node(digest, differs):
+    seeds = [900000, 900001, 900002, 900003]
     a = np.ones((4, T, 1), dtype=np.int8)
     b = a.copy()
     if differs:
         b[1, 3, 0] = 2
+    regs, steps = oracle(seeds)
     outs = [_array("trace:actions_record", a), _array("trace:actions_norecord", b)]
-    orc = [_array("oracle:regimes", np.zeros(4, dtype=np.int8)), _json("oracle:reset_steps", [[5]] * 4)]
-    return _receipt(digest, "S", "P-OBS", [900000, 900001, 900002, 900003], "present", outs, orc), outs + orc
+    orc = [_array("oracle:regimes", np.array(regs, dtype=np.int8)), _json("oracle:reset_steps", steps)]
+    return _receipt(digest, "S", "P-OBS", seeds, "present", outs, orc), outs + orc
 
 
 def plan(spec):
@@ -276,8 +283,9 @@ class TestClasses(Base):
 
 class TestGateFailures(Base):
     def _du(self, res, subject="S4"):
+        """The subject is DETECTION_UNQUALIFIED; returns its reasons joined, for substring checks."""
         self.assertEqual(res["subjects"][subject]["class"], "DETECTION_UNQUALIFIED")
-        return res["subjects"][subject]["why"]
+        return " | ".join(res["subjects"][subject]["why"])
 
     def test_p_cal_fail_unqualifies_every_subject(self):
         res = self.run_eval(Spec(null=policy(0.6, 4)))
