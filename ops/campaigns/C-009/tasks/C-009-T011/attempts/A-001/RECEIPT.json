@@ -1,0 +1,104 @@
+{
+  "schema": "prometheus.workgraph.receipt.v1",
+  "task_id": "C-009-T011",
+  "campaign_id": "C-009",
+  "attempt_id": "A-001",
+  "role": "Argus",
+  "model": "claude-opus-5-5",
+  "quality_class": "Q2",
+  "instance": "harry1-20749977",
+  "host": "harry1",
+  "branch": "argus/c009-t011",
+  "worktree_path": "C:/Prometheus-worktrees/argus-c009-t011",
+  "start_sha": "81e89ba1bae23e7baa98383bfe65bb244e2e8b7e",
+  "end_sha": "see the commit that adds this receipt (branch argus/c009-t011 head); merged origin/main 14e698700 at 17ba2a2c0, tests re-run there",
+  "commits": {
+    "merge_T010_producer": "83fccc290 (eupalamus/c009-t010 2d2c41304, explicit; T010 later integrated on main at 0c169c991, same content)",
+    "red": "70aab654c",
+    "implementation_and_gate_pin": "dc21c5d73005ddced7070247c5a47e6c5c467ce7",
+    "fire_receipts": "776f9dd6f0f56bdac7cb5bd78711646117778856",
+    "stage_records": "d60954deab0cdfc155f0ba98095eb3b591110ce1",
+    "mutation_edits_committed_before_execution": "7ee194480",
+    "green_evidence": "c0054d908",
+    "merge_origin_main": "17ba2a2c013ed1a774a69b23ee65d3b00ed266ba"
+  },
+  "files_changed": [
+    "rso/slice001/evidence.py",
+    "rso/slice001/fixtures/evidence_cases.py",
+    "rso/slice001/fixtures/cc1_cases.py (new)",
+    "rso/slice001/tests/test_evidence.py",
+    "rso/slice001/stages/evidence_plane.py",
+    "rso/slice001/stages/version.py",
+    "rso/slice001/stages/fire/{G-BIND,G-INV,G-RECOMP}.json",
+    "rso/slice001/stages/{G-BIND,G-INV,G-RECOMP}.json",
+    "ops/campaigns/C-009/tasks/C-009-T011/attempts/A-001/*",
+    "roles/Argus/{WORK_STATE.json,journal/2026-10-07.md,comms/2026-10-07_*.md}"
+  ],
+  "stage_records_regenerated": {
+    "note": "sha256 of COMMITTED bytes (git show <commit>:<path> | sha256sum); records are canonical (receipt.canonical_bytes(record) == file bytes; record_blob == file sha256). Version: rso/binding/binding.py + rso/slice001/evidence.py + rso/slice001/receipt.py (+ checker.py for G-RECOMP) at dc21c5d73. CALIBRATION and RETENTION untouched (sources unchanged). Not registered with the keeper: registration is T020.",
+    "rows": [
+      {"path": "rso/slice001/stages/fire/G-BIND.json", "commit": "776f9dd6f", "sha256": "8e4cdb69367560a30a341fc258f7698fbbc969aaa8a1f0d07d18655d6d767638"},
+      {"path": "rso/slice001/stages/fire/G-INV.json", "commit": "776f9dd6f", "sha256": "7dc1165ae6dbf4b63a59262d054f9f127ba03cea4ce50e8ca4fbdf6ee5e71951"},
+      {"path": "rso/slice001/stages/fire/G-RECOMP.json", "commit": "776f9dd6f", "sha256": "01ddd9de9a469b7082060b905362692434ac95c5265c313d476890ac9fb42011"},
+      {"path": "rso/slice001/stages/G-BIND.json", "commit": "d60954dea", "sha256": "4614b9bc0c8d4a098ad8aac5a91b456ee6aeba895fd8ff3df86604005d29970e", "version_hash": "05b31098b019"},
+      {"path": "rso/slice001/stages/G-INV.json", "commit": "d60954dea", "sha256": "9b1b3030254567aec0e5005f1cc06b0962a33a44dfd2506f4b749c09660bdb66", "version_hash": "05b31098b019"},
+      {"path": "rso/slice001/stages/G-RECOMP.json", "commit": "d60954dea", "sha256": "a33862417c7e3eb6fd49bf2adde8b2115a1d0c94bd1da9cf9bc67c70c6d1c8a6", "version_hash": "acfde3f62ee3"}
+    ]
+  },
+  "evidence_added": [
+    "BX1: Anchors.launch_run_id read from the anchored manifest (build_manifest(..., launch_run_id) writes the key s2_bundle already writes); Bundle.run_id = the bundle's run.json (None: presents none). evidence.launch_unbound: the inventory must hold the anchored launch as exactly one TOP_LEVEL row COMPLETED (binding.launch_reasons) and run.json must not name another launch -> G-INV FAIL LAUNCH_UNBOUND, witness {anchored, presented, binding}",
+    "BX2: G-INV cites rso.binding.binding.binding_reasons(rc.node_id, run_id, rc.canonical_bytes(), rows, anchored launch) for every presented required receipt; slice spelling kept: RECEIPT_WITHOUT_RUN:<node_id>, the BIND_* reasons beside it in the witness {node_id, run_id, binding}",
+    "BX4: AMENDMENT_v1.0.5's end_utc >= created_at bound removed (_ended_before deleted); no timestamp is read. test_receipt_created_after_its_cited_run_ended_fails replaced by test_bx4_no_timestamp_decides_attribution (now PASS: a bound row decides, not a time)",
+    "BX5: RUN_UNREPORTED reads binding.own_launch_rows(anchored launch) only; another launch's COMPLETED row of an absent receipt's node is provenance (SOUND.BX5.FOREIGN_UNREPORTED; FREEZE_R2 raised RUN_UNREPORTED on it)",
+    "BX7: custody adds INVENTORY_UNBOUND:<BIND_* reason> when the (registered) inventory does not hold the anchored manifest's launch as one TOP_LEVEL row COMPLETED, and LAUNCH_UNBOUND when run.json names another launch (TestBX7InventoryCustody, 4)",
+    "fixtures/evidence_cases.py: inventories open with the launch's TOP_LEVEL row and every receipt row carries parent_run_id and receipt_sha256; manifests name launch_run_id; bundles carry run_id; bind_legacy(g0) gives the committed pre-C-009 bundles (s2/G0, s4/G0) the bound form as a FIXTURE for CC1 (never custody evidence). Fixture code calls no C-009 consumer API, so the same cases run on FREEZE_R2",
+    "fixtures/cc1_cases.py: the CC1 set (15 cases x 2 bases: synthetic G0 and the committed S4 G0 bound by fixture) reusing the reviewers' committed builders (S4 closure_set broken_obs_run_borrow, probe_stale_run; R2 closure_set broken_later_window_run, probe_overlap_run, probe_failed_row_cited) plus 5 STRICT variants that leave exactly one BX2 dimension wrong (X3 observer, Y1 world, FAILED status, LATER launch parent, ARTIFACT_SWAP digest), 3 sound controls, and a driver writing JSONL rows",
+    "stages: G-INV fire cases = E02.G0, E02.MISSING, no-row case, and all 15 CC1 cases with BIND_* reasons in the expected reason; gate versions now include rso/binding/binding.py (version.slice_imports follows rso.binding imports)",
+    "tests: TestCC1Binding (4), TestBX1Launch (6), TestBX5OwnLaunch (2), TestBX7InventoryCustody (4)"
+  ],
+  "evidence_executed": [
+    {"command": "python -B -m rso.slice001.fixtures.cc1_cases --label FREEZE_R2 --out attempts/A-001/cc1_red_freeze_r2.jsonl (consumer code byte-identical to ad6b3fa96: evidence.py fe1fe767, checker.py 6c3d2124, receipt.py f0f0d800 LF sha256, recorded in the header row)",
+     "result": "RED. 30 rows; 4 match the C-009 answer (the SOUND controls G0 and CUMULATIVE on both bases). ADMITTED by FREEZE_R2 on the s4 base: R2.BROKEN.LATER_WINDOW_RUN, LATER_WINDOW_STRICT, R2.PROBE.OVERLAP_RUN, R2.PROBE.FAILED_ROW_CITED, FAILED_ROW_STRICT, NEW.ARTIFACT_SWAP, NEW.LAUNCH_SUBSTITUTION (7); on the synthetic base the same 7 plus S4.PROBE.STALE_RUN (untimed rows). Rejected by FREEZE_R2 (fixed in C-004-T042/T046, so not admitted there): S3.BROKEN.RUN_BORROW, S4.BROKEN.OBS_RUN_BORROW, X3_OBSERVER_STRICT, Y1_WORLD, and STALE_RUN on the timed s4 base. FREEZE_R2 false rejection: SOUND.BX5.FOREIGN_UNREPORTED (RUN_UNREPORTED on another launch's row)"},
+    {"command": "python -B -m unittest rso.slice001.tests.test_evidence on the FREEZE_R2 consumer with the RED tests (70aab654c)",
+     "result": "92 run, 11 failures, 2 errors (attempts/A-001/red_test_evidence.txt)"},
+    {"command": "python -B -m rso.slice001.fixtures.cc1_cases --label C009 --out attempts/A-001/cc1_green_c009.jsonl (at c0054d908^, records d60954dea)",
+     "result": "GREEN. 30/30 rows equal the C-009 answer, 0 errors. s4 base end to end (checker.Consumer with the regenerated gate records): sound controls ELIGIBLE/SATISFIED, every broken shape NOT_ELIGIBLE/UNMET on CL-RET(REG); every other claim byte-identical to the base G0 except CL-CUST(G0) (its G-INV covers every node) and, for LAUNCH_SUBSTITUTION, every claim (bundle-level LAUNCH_UNBOUND; the custody object embedded in each decision gains LAUNCH_UNBOUND)"},
+    {"command": "mutation: attempts/A-001/run_mutation.py (rso.slice001.mutation.run, edits committed at 7ee194480 before execution; targeted suite test_evidence, test_checker_render, test_stages_evidence, test_ledger as R2; development run, unledgered)",
+     "result": "baseline PASSED; proposed 4 | applicable 2 | executed 2 | killed 2 | survived 0. X3 and Y1 VERBATIM: NOT_APPLICABLE -- their find text `cited[0].get(\"node_id\") != rc.node_id` no longer exists in evidence.py (the node comparison moved to rso/binding/binding.py BX2). X3P and Y1P (the same replace expressions applied to binding.py's `if row.get(\"node_id\") != node_id:`): KILLED, 186 run, 3 failures each, 34.0 s / 34.3 s wall. Rows: attempts/A-001/mutation_rows.jsonl"},
+    {"command": "E01-E05 verdict fields (attempts/A-001/e_cases_dump.py: every case x every claim: eligibility, standing, not_satisfied, each line's predicate/scope/execution/authority/value/reason/standing, custody status+why) on FREEZE_R2 code+fixtures (git archive ad6b3fa96) vs C-009 code+fixtures",
+     "result": "byte-identical (both 5190059ac9c63d82...; 20 cases). Expected answers unchanged; EXPECTED_ANSWERS.json not touched"},
+    {"command": "python -B -m rso.slice001.stages.evidence_plane fire G-BIND G-INV G-RECOMP; records 776f9dd6f 2026-10-07T01:44:02Z G-BIND G-INV G-RECOMP",
+     "result": "all OK (G-BIND 6 cases, G-INV 18, G-RECOMP 4); test_stages_evidence 10 OK"},
+    {"command": "python -B -m unittest discover -s rso/slice001/tests -t . && python -B -m unittest discover -s rso/binding/tests -t . (on the branch, then on the merged tree 17ba2a2c0 = branch + origin/main 14e698700)",
+     "result": "slice001 420 run OK (skipped=1) both times; binding 13 run OK both times (attempts/A-001/green_*.txt, merged_*.txt). T010's real-build consumer tests (test_s2_bundle TestConsumerOnRealG0: G-INV PASS on every claim of a real T010 build; E02.MISSING RUN_UNREPORTED on the real base) pass under the C-009 consumer"},
+    {"command": "python -m workgraph validate", "result": "OK"}
+  ],
+  "red_observed": {
+    "observed": true,
+    "detail": "13 new tests RED on the FREEZE_R2 consumer; CC1 rows: 7 shapes admitted by FREEZE_R2 on the real S4 bundle (8 on the synthetic), all rejected on C-009 code"
+  },
+  "result": "DONE_CLEAN",
+  "choices_recorded": [
+    "VERBATIM X3/Y1 are NOT_APPLICABLE by construction: the line they edit is gone (BX6: the exact node comparison lives in rso/binding). Keeping a redundant copy of the line in evidence.py would make the verbatim edits EQUIVALENT mutants (survivors no test can kill), so the faults were ported, same replace expression, to the line that now carries them, and killed. Reversible; revisit if the coordinator reads 'verbatim' as requiring the old find text to remain applicable",
+    "BX7 is enforced in custody (CL-CUST's qualification) and NOT as a G-INV gate-authority condition for CL-RET/CL-CAL: the latter would make every E01-E05 case on a stage-rows-only fixture store UNQUALIFIED, changing the expected answers (a non-goal). Revisit trigger: an operator reading that BX7 binds CL-RET qualification too",
+    "LAUNCH_UNBOUND is reported once, bundle-level, before any node (every G-INV claim of the bundle fails with it); a manifest naming no launch reads LAUNCH_UNBOUND [BIND_LAUNCH_UNANCHORED]",
+    "A bundle with no run.json (Bundle.run_id None) claims no launch; the anchored one is read. s2_run.consumer_for (not this packet's file) does not pass run_id yet",
+    "Fixture inventories derived for EDITED dicts record the digests of the receipts as presented (the B9 edit is the producer's, made before its inventory) so E01-E05 keep their answers; the post-run edit against the inventory written at the run is ARTIFACT_SWAP",
+    "The committed pre-C-009 bundles are given the bound form by fixtures.bind_legacy (parent from the <launch>/<node> run-id rule, digests from the presented receipts) for CC1 only; never custody evidence, superseded by T020's fresh produce",
+    "Mutation runs were development runs, not charged to rso/binding/LEDGER.jsonl (2 children, 68.3 s wall, plus a 1-child baseline); no TOP_LEVEL launch used"
+  ],
+  "known_escapes": [
+    "BX7's 'cannot be forged consistently' holds only for a REGISTERED inventory: on the fixture store (stage rows only) an attacker who writes a row with the anchored parent and the presented receipt's digest binds any receipt -- custody stays UNQUALIFIED there (KEEPER_ROW_MISSING), as in every S3/S4/R2 broken case",
+    "A second COMPLETED row of the SAME node under the SAME anchored launch with the presented receipt's digest binds (a retry inside one launch that produced identical bytes); not separated, by design of BX2 (no timestamps)",
+    "Pre-C-009 bundles (rso/slice001/s2/*, s4/*) as committed fail G-INV LAUNCH_UNBOUND [BIND_LAUNCH_UNANCHORED] under the new consumer (their manifests name no launch); no test reads them; CC2 uses a fresh produce",
+    "The R2 reviewer's LATER_WINDOW/OVERLAP/FAILED builders append rows without binding fields, so they fail on several dimensions at once; the STRICT variants are what pin each check alone"
+  ],
+  "unresolved": [],
+  "unblocks": ["C-009-T020"],
+  "notes": [
+    "For T020 (Palamedes; predicted, in writing, before CC2): (1) s2_run.consumer_for builds EV.Bundle without run_id -- pass run_id=g.run_id so LAUNCH_SUBSTITUTION is checked on real bundles; (2) on a fresh produce every sound G-INV verdict is PASS with witness null, so decisions should equal S4's claim by claim except custody rows (manifest blob ids change with launch_run_id and new receipts) and any field derived from new run ids/digests; (3) Aporia must register the three regenerated gate STAGE_RECORDs (hashes above) before the CC2 first check (CC4)",
+    "C-004 records and freezes not rewritten; world predicates, EXPECTED_ANSWERS.json and S2 case expectations untouched; ledger.py, s2_bundle.py, s2_run.py not edited"
+  ],
+  "resources": {"top_level_launches": 0, "ledgered_cpu_s": 0, "dev_mutation_wall_s": 68.3, "full_suite_runs": 3},
+  "created_at_utc": "2026-10-07T02:05:00Z"
+}

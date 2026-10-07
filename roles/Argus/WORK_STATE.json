@@ -3,28 +3,28 @@
   "seat": "Argus",
   "mwo_id": "MWO-0004",
   "authority": "operator directive 2026-10-03 (roles/Achilles/prompts/2026-10-03_rso_builder_cell/01_OPERATOR_DIRECTIVE_verbatim.md)",
-  "updated_at_utc": "2026-10-06T06:45:00Z",
+  "updated_at_utc": "2026-10-07T02:10:00Z",
   "state": "INTEGRATION_READY",
-  "branch": "argus/c004-t046",
-  "base_sha": "2bb323eae30df8363b16ec7416b027046bcc50b4",
-  "head_sha": "6c103159cf3950e94c38eaeb00b41941647f5cce",
-  "worktree_path": "C:/Prometheus-worktrees/argus-c004-t046",
+  "branch": "argus/c009-t011",
+  "base_sha": "81e89ba1bae23e7baa98383bfe65bb244e2e8b7e",
+  "head_sha": "see branch argus/c009-t011 head (receipt commit)",
+  "worktree_path": "C:/Prometheus-worktrees/argus-c009-t011",
   "model": "claude-opus-5-5",
   "capability_class": "Q2",
   "host": "harry1",
-  "instance": "harry1-a1598f01",
-  "session_start_utc": "2026-10-06T05:58:00Z",
-  "current_objective": "RSO Builder Cell member, campaign C-004 (RSO-METHODS-SLICE-001)",
-  "current_step": "C-004-T046 INTEGRATION_READY (argus/c004-t046); awaiting Palamedes integration and Aporia re-registration (T047)",
+  "instance": "harry1-20749977",
+  "session_start_utc": "2026-10-07T01:15:00Z",
+  "current_objective": "RSO Builder Cell member, campaign C-009 (RSO-EXEC-BINDING-001)",
+  "current_step": "C-009-T011 INTEGRATION_READY (argus/c009-t011); awaiting Palamedes integration (T020)",
   "in_flight": [],
   "finish_condition": "per claimed packet (DISTRIBUTED_WORK.md)",
-  "next_expected_milestone": "Palamedes integrates T046; Aporia registers the three stage records; Pallas closure re-check (T048)",
-  "expected_next_artifact": "none from this seat unless an escalation on T046 arrives",
+  "next_expected_milestone": "Palamedes integrates T011 and runs T020 (fresh produce, registration, FREEZE_B1); C-009-T014 becomes READY",
+  "expected_next_artifact": "none from this seat unless a T011 question arrives; then C-009-T014 when READY",
   "threads": [
     "phase3-rso"
   ],
   "campaigns": [
-    "C-004"
+    "C-009"
   ],
   "experiments": [],
   "fabric_tasks": [],
@@ -32,11 +32,12 @@
   "blocked_on": [],
   "next_actions": [
     "comms sync Argus; workgraph ready Argus",
-    "answer any T046 integration question from Palamedes"
+    "answer any T011 integration question from Palamedes",
+    "take C-009-T014 when READY (whichever Argus instance is live)"
   ],
   "operator_decisions_required": [],
   "latest_reports": [
-    "ops/campaigns/C-004/tasks/C-004-T046/attempts/A-001/RECEIPT.json"
+    "ops/campaigns/C-009/tasks/C-009-T011/attempts/A-001/RECEIPT.json"
   ],
   "last_push_sha": "cac84f1ec",
   "last_push_utc": "2026-10-04T02:25:00Z",
