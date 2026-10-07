@@ -70,7 +70,9 @@ Why n = 2048 and not 640 (computed, not chosen by taste): at n = 640 the same ru
 INDETERMINATE 0.41 for a no-carry subject, and a calibrated no-carry P-CAL arm would fail calibration most of the
 time. n = 2048 is the smallest power of two giving NEGATIVE >= 0.95 at the bound and P-CAL arm pass >= 0.95.
 
-## 5. P-CAL calibration gate
+## 5. Gates
+
+### 5.1 P-CAL calibration gate
 
 PASS iff all three hold, else FAIL naming the first failing arm:
   NULL  (no-carry organism, W15)          correct <= 1073   (shown not to beat the bound by delta)
@@ -80,6 +82,32 @@ The margin is ONE-SIDED (FD-T014-3): 1/2 is an upper bound for no-carry subjects
 can sit below it without breaking it, and only exceeding it would mean the bound is wrong for this world.
 P(a no-carry arm passes) = 0.9857 at p = 1/2; = 0.0095 at p = 11/20. P-CAL FAIL makes every P-RET outcome
 UNQUALIFIED (DESIGN_DRAFT s4). The gate never passes by default: an arm that cannot be shown below the margin FAILS.
+
+### 5.2 P-CHAN channel gate (C-009-T017; PREREG_DRAFT OPEN 1)
+
+Evaluated only when X is P-RET POSITIVE. X-NOPL runs on the SAME 2048 episode seeds as X (paired: same r, same
+world draw per pair). With b = pairs where X is correct and X-NOPL is not, c = the reverse:
+
+    PASS iff  X-NOPL is P-RET NEGATIVE                                  (the advantage VANISHES under the ablation)
+         and  b >= mcnemar_threshold(b + c)                             (exact one-sided McNemar, alpha 1/100)
+    mcnemar_threshold(m) = smallest b with P(B >= b | B ~ Binomial(m, 1/2)) <= alpha  (exact integers)
+    FAIL reasons: NOPL_NOT_NEGATIVE (X-NOPL INDETERMINATE, POSITIVE or NOT_SHOWN) | NO_PAIRED_ADVANTAGE
+
+Size. Under H0 of equal accuracy the discordant outcomes are exchangeable, so given b + c, b ~ Binomial(b + c, 1/2)
+and the McNemar part passes with probability <= alpha conditionally, hence unconditionally. Synthetic check (800
+paired runs, both arms at 0.50 / both at 0.53): pass rate 0.0125 / 0.0150, within Monte Carlo error of alpha.
+
+Power (synthetic, X-NOPL at 1/2, 400 runs each): P(PASS | X POSITIVE) = 0.83 at X 0.55, 0.98 at X >= 0.58 (the
+ceiling is P(X-NOPL NEGATIVE) = 0.977). Partial retention after the ablation is not "vanishes": with X at 0.70,
+P(PASS) = 0.64 / 0.16 / 0.02 for X-NOPL at 0.52 / 0.535 / 0.55.
+
+Why the draft rule is replaced (FD-T017-1). PREREG_DRAFT s5 proposed "X-NOPL NEGATIVE or INDETERMINATE AND X correct
+- X-NOPL correct >= k_pos - 1024 = 54". Its size under equal accuracy is not stated, and on synthetic data it is
+0.045 (both arms at 0.50 or 0.53; 800 runs): 4.5 x alpha. It treats two arms run on the same seeds as independent
+samples and lets an INDETERMINATE ablation count as "vanished". FD-T017-2: "vanishes" requires X-NOPL NEGATIVE, the
+registered claim's own word (DESIGN_DRAFT s1); INDETERMINATE leaves P-CHAN FAIL, and the class becomes POSITIVE
+(channel unidentified), never a W1 claim. Requirement on the driver (C-009-T016): run X-NOPL on X's episode seeds,
+in the same order, so pairs are formed by position.
 
 ## 6. What this does not establish
 

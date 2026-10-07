@@ -245,6 +245,31 @@ class TestChannelGate(unittest.TestCase):
         g = RU.p_chan(eps)
         self.assertEqual((g["value"], g["witness"]["why"]), ("FAIL", "NO_PAIRED_ADVANTAGE"))
 
+    @staticmethod
+    def built(x_correct, nopl_correct, nopl_first):
+        """Deterministic pairs: X correct on episodes [0, x_correct); X-NOPL correct on [nopl_first, nopl_first +
+        nopl_correct); everything else answered wrong."""
+        eps = []
+        for i in range(N):
+            r = i % 2
+            dx = r + 1 if i < x_correct else 2 - r
+            dn = r + 1 if nopl_first <= i < nopl_first + nopl_correct else 2 - r
+            eps.append((r, dx, dn))
+        return eps
+
+    def test_indeterminate_ablation_is_not_vanished(self):
+        # FD-T017-2: X-NOPL with 1075 correct is INDETERMINATE (1073 < 1075 < 1078); the draft rule accepted it.
+        g = RU.p_chan(self.built(1400, 1075, 0))
+        self.assertEqual((g["nopl"], g["value"], g["witness"]["why"]), ("INDETERMINATE", "FAIL", "NOPL_NOT_NEGATIVE"))
+
+    def test_mcnemar_boundary(self):
+        # c = 0: 6 discordant wins give P = 1/64 > alpha (FAIL); 7 give 1/128 <= alpha (PASS).
+        self.assertEqual(RU.mcnemar_threshold(6), 7)
+        g6 = RU.p_chan(self.built(1078, 1072, 0))
+        self.assertEqual((g6["discordant"], g6["value"]), ({"b": 6, "c": 0, "needed": 7}, "FAIL"))
+        g7 = RU.p_chan(self.built(1079, 1072, 0))
+        self.assertEqual((g7["discordant"], g7["value"]), ({"b": 7, "c": 0, "needed": 7}, "PASS"))
+
     def test_applies_only_when_x_is_positive(self):
         with self.assertRaises(RU.RulerError):
             RU.p_chan(paired(0.5, 0.5, 4))
