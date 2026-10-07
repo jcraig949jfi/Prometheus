@@ -58,7 +58,7 @@ def run(root):
         print("binding", os.path.basename(b), "nodes", len(man["nodes"]), "unbound", bad)
     subjects = {"S4": json.load(open(os.path.join(s4, "subject_record.json")))["genome_sha256"],
                 "S15": json.load(open(os.path.join(s15, "subject_record.json")))["genome_sha256"]}
-    res = EVW.evaluate(bundles, store, first, subjects, "S4", registered_seeds=json.load(open(os.path.join(cfgdir, "WITNESS_SEEDS.json"))))
+    res = EVW.evaluate(bundles, store, first, subjects, "S4", seed_lists=json.load(open(os.path.join(cfgdir, "SEED_LISTS.json")))["seeds"])
     shape = {}
     for k, v in res.items():
         if isinstance(v, dict):
