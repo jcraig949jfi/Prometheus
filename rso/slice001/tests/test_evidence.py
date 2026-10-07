@@ -859,14 +859,16 @@ class TestB33RunAttribution(unittest.TestCase):
         b = F.make_bundle(d, inventory=_cumulative(d))
         self.assertEqual(value(EV.g_inv(F.claims()["CL-RET(REG)"], b, F.retained(d))), ("PASS", None))
 
-    def test_receipt_created_after_its_cited_run_ended_fails(self):
+    def test_bx4_no_timestamp_decides_attribution(self):
+        # C-009 BX4 retires v1.0.5's end_utc >= created_at operationalisation (it admitted a LATER window's run,
+        # R2.BROKEN.LATER_WINDOW_RUN). A receipt created after its own bound row ended still binds; the row's
+        # launch, status, node and digest decide (TestCC1Binding), never a time.
         d = F.g0_dicts()
-        inv = F._inventory(d)
-        rows = _timed(inv[:-1], WINDOW)
         d[STALE]["created_at_utc"] = "2026-10-03T23:00:31Z"          # one second after the cited row ended
-        b = F.make_bundle(d, inventory=rows + [inv[-1]])
-        self.assertEqual(value(EV.g_inv(F.claims()["CL-RET(REG)"], b, F.retained(d))),
-                         ("FAIL", "RECEIPT_WITHOUT_RUN:%s" % STALE))
+        inv = F._inventory(d)
+        b = F.make_bundle(d, inventory=_timed(inv[:-1], WINDOW) + [inv[-1]])
+        self.assertEqual(value(EV.g_inv(F.claims()["CL-RET(REG)"], b, F.retained(d))), ("PASS", None))
+        self.assertFalse(hasattr(EV, "_ended_before"))
 
     def test_contract_carries_v105(self):
         # AMENDMENT_v1.0.5 applied by this packet: version and amendments entry only (Y3).
@@ -881,6 +883,145 @@ class TestB33RunAttribution(unittest.TestCase):
         self.assertEqual(len(entry), 1)
         self.assertIn("C-004-OP6", entry[0]["answers"])
         self.assertIn("run attribution only", entry[0]["scope"])
+
+
+# --------------------------------------------------------------------------------------------------------
+# C-009-T011: G-INV on rso.binding (rso/binding/CONTRACT.md BX1, BX2, BX4, BX5, BX7; closure CC1).
+
+class TestCC1Binding(unittest.TestCase):
+    """CC1: every C-004 survivor shape and the two new shapes, end to end on G-INV (fixtures/cc1_cases.py). The
+    expected answers are the C-009 ones; FREEZE_R2 admitted every R2 shape, ARTIFACT_SWAP and
+    LAUNCH_SUBSTITUTION (attempts/A-001/cc1_red_freeze_r2.jsonl). The slice spelling is kept as the reason and the
+    BIND_* reasons are recorded beside it, in the witness."""
+
+    def _check(self, base):
+        from rso.slice001.fixtures import cc1_cases as CC
+        for cid, build, claim, want in CC.CASES:
+            case = build(base)
+            self.assertEqual(CC.g_inv_of(case, claim), want, cid)
+            for other in ("CL-RET(PKTD)", "CL-RET(LAGD)", "CL-CAL(STANDARD)"):
+                self.assertEqual(value(EV.g_inv(case.claims[other], case.bundle, case.anchors)), ("PASS", None),
+                                 (cid, other))
+
+    def test_synthetic_base(self):
+        self._check(None)
+
+    def test_committed_s4_bundle_in_the_bound_form(self):
+        from rso.slice001.fixtures import cc1_cases as CC
+        self._check(CC.s4_base())
+
+    def test_witness_names_node_run_and_binding(self):
+        from rso.slice001.fixtures import cc1_cases as CC
+        case = CC.artifact_swap()
+        o = EV.g_inv(case.claims["CL-RET(REG)"], case.bundle, case.anchors)["outcome"]
+        run = case.bundle.parsed(CC.PRESERVE)[0].to_dict()["execution"]["run_id"]
+        self.assertEqual(o["witness"], {"node_id": CC.PRESERVE, "run_id": run, "binding": ["BIND_DIGEST_MISMATCH"]})
+
+    def test_strict_cases_leave_one_dimension_wrong(self):
+        # Each BX2 check alone: killing an edit that weakens one check needs a case failing on that check only.
+        from rso.slice001.fixtures import cc1_cases as CC
+        singles = {cid: want[2] for cid, _b, _c, want in CC.CASES if want[2] is not None and len(want[2]) == 1}
+        self.assertEqual(sorted(sum(singles.values(), [])),
+                         ["BIND_DIGEST_MISMATCH", "BIND_FOREIGN_LAUNCH", "BIND_NODE_MISMATCH", "BIND_NODE_MISMATCH",
+                          "BIND_STATUS:FAILED"])
+
+
+class TestBX1Launch(unittest.TestCase):
+    """BX1: the launch comes from the ANCHORED manifest; the inventory holds it as one TOP_LEVEL row, COMPLETED;
+    a bundle whose run.json names another launch is LAUNCH_UNBOUND."""
+
+    def _g_inv(self, case):
+        from rso.slice001.fixtures import cc1_cases as CC
+        return CC.g_inv_of(case, "CL-RET(REG)")
+
+    def test_anchors_carry_the_launch(self):
+        self.assertEqual(F.g0().anchors.launch_run_id, F.LAUNCH)
+        self.assertEqual(EV.Anchors(EV.build_manifest([]), "keeper").launch_run_id, None)
+        m = EV.build_manifest([R.Receipt.from_dict(d) for d in F.g0_dicts().values()], launch_run_id=F.LAUNCH)
+        self.assertEqual(m, F.manifest_of(F.g0_dicts()))
+
+    def test_manifest_without_launch_is_unbound(self):
+        case = F.g0()
+        case.anchors = EV.Anchors(EV.build_manifest(R.Receipt.from_dict(d) for d in F.g0_dicts().values()), "keeper")
+        self.assertEqual(self._g_inv(case), ("FAIL", "LAUNCH_UNBOUND", ["BIND_LAUNCH_UNANCHORED"]))
+
+    def test_launch_row_missing_or_not_completed(self):
+        case = F.g0()
+        runs = [r for r in case.bundle.inventory[:-1] if r.get("launch_kind") != "TOP_LEVEL"]
+        case.bundle.inventory = runs + [{"kind": "TERMINAL", "row_count": len(runs)}]
+        self.assertEqual(self._g_inv(case), ("FAIL", "LAUNCH_UNBOUND", ["BIND_LAUNCH_MISSING"]))
+        case = F.g0()
+        case.bundle.inventory[0] = dict(case.bundle.inventory[0], status="INTERRUPTED")
+        self.assertEqual(self._g_inv(case), ("FAIL", "LAUNCH_UNBOUND", ["BIND_LAUNCH_NOT_COMPLETED:INTERRUPTED"]))
+
+    def test_run_json_naming_another_launch(self):
+        case = F.g0()
+        case.bundle.run_id = "another-launch"
+        g = EV.g_inv(case.claims["CL-RET(REG)"], case.bundle, case.anchors)["outcome"]
+        self.assertEqual((g["value"], g["reason"]), ("FAIL", "LAUNCH_UNBOUND"))
+        self.assertEqual(g["witness"], {"anchored": F.LAUNCH, "presented": "another-launch", "binding": []})
+
+    def test_bundle_without_run_json_reads_the_anchored_launch(self):
+        # A bundle that presents no run.json claims no launch; the anchored one is read (s2_run passes none yet).
+        case = F.g0()
+        case.bundle.run_id = None
+        self.assertEqual(self._g_inv(case), ("PASS", None, None))
+        self.assertIsNone(EV.Bundle({}, {}, []).run_id)
+
+    def test_producer_anchors_name_their_launch_too(self):
+        # E05.FAB_ANCHORS: producer anchors bind (G-INV PASS); custody refuses them separately.
+        case = F.fab_anchors()
+        self.assertEqual(self._g_inv(case), ("PASS", None, None))
+
+
+class TestBX5OwnLaunch(unittest.TestCase):
+    """BX5: rows of other launches are provenance, never evidence and never errors."""
+
+    def test_run_unreported_reads_the_anchored_launch_only(self):
+        from rso.slice001.fixtures import cc1_cases as CC
+        case = CC.foreign_unreported()
+        self.assertEqual(value(EV.g_inv(case.claims["CL-RET(REG)"], case.bundle, case.anchors)), ("PASS", None))
+        run = F.g0_dicts()["rcpt:REG:PRESERVE:STANDARD"]["execution"]["run_id"]
+        self.assertEqual(value(EV.g_inv(F.missing().claims["CL-RET(REG)"], F.missing().bundle, F.missing().anchors)),
+                         ("FAIL", "RUN_UNREPORTED:%s" % run))
+
+    def test_failed_own_row_of_an_absent_receipt_is_not_unreported(self):
+        case = F.missing()
+        run = F.g0_dicts()["rcpt:REG:PRESERVE:STANDARD"]["execution"]["run_id"]
+        case.bundle.inventory = [dict(r, status="FAILED") if r.get("run_id") == run else r
+                                 for r in case.bundle.inventory]
+        self.assertEqual(value(EV.g_inv(case.claims["CL-RET(REG)"], case.bundle, case.anchors)), ("PASS", None))
+
+
+class TestBX7InventoryCustody(unittest.TestCase):
+    """BX7: custody (the qualification CL-CUST relies on with G-INV) holds only if the registered inventory is
+    the inventory of the anchored manifest's launch, and the bundle's run.json does not name another."""
+
+    def test_keeper_case_qualified(self):
+        case = F.keeper()
+        self.assertEqual(EV.custody(case.bundle, case.anchors, case.store, case.first_check)["status"], "QUALIFIED")
+
+    def test_registered_inventory_of_another_launch(self):
+        d = F.g0_dicts()
+        bd = F.make_bundle(d)
+        runs = [dict(r, run_id="other-launch") if r.get("launch_kind") == "TOP_LEVEL" else r
+                for r in bd.inventory[:-1]]
+        bd.inventory = runs + [bd.inventory[-1]]
+        store = EV.FixtureStore(F.keeper_rows(d, bd))          # the inventory IS registered, as presented
+        c = EV.custody(bd, F.retained(d), store, F.FIRST_CHECK)
+        self.assertEqual(c, {"status": "UNQUALIFIED", "why": ["INVENTORY_UNBOUND:BIND_LAUNCH_MISSING"]})
+
+    def test_run_json_naming_another_launch(self):
+        case = F.keeper()
+        case.bundle.run_id = "another-launch"
+        c = EV.custody(case.bundle, case.anchors, case.store, case.first_check)
+        self.assertEqual(c, {"status": "UNQUALIFIED", "why": ["LAUNCH_UNBOUND"]})
+
+    def test_manifest_without_launch(self):
+        case = F.keeper()
+        case.anchors = EV.Anchors(EV.build_manifest(R.Receipt.from_dict(d) for d in F.g0_dicts().values()), "keeper")
+        self.assertIn("INVENTORY_UNBOUND:BIND_LAUNCH_UNANCHORED",
+                      EV.custody(case.bundle, case.anchors, case.store, case.first_check)["why"])
 
 
 def _challenge(unresolved):

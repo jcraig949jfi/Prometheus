@@ -12,7 +12,18 @@ amendment V8). Nothing here was produced by running a runtime.
 C-004-T024: every case is a function of a BASE bundle (class Base): `case(base=None)` applies the B9 edit to
 `base`, and base=None is the synthetic G0 above, unchanged byte for byte. `real_base(g0, ...)` wraps a G0
 built from real executions (s2_bundle.build_g0) so T020 can apply the same edits to it.
+
+C-009-T011 (rso/binding/CONTRACT.md BX1-BX3): inventories and manifests carry the binding fields the producer
+writes (C-009-T010; rso/binding/contract.json row_fields). An inventory opens with the TOP_LEVEL row of the
+launch that produced the bundle; every receipt row names it as parent_run_id and records receipt_sha256, the
+sha256 of the receipt's canonical bytes; the manifest names the launch as launch_run_id; the bundle's run.json
+(Bundle.run_id) names it too. An inventory derived for edited dicts records the digests of the receipts as
+presented: a B9 edit is the producer's own, made before it wrote its inventory, so E01-E05 keep their expected
+answers. A receipt edited AFTER its run, against the inventory written at the run, is ARTIFACT_SWAP
+(fixtures/cc1_cases.py). Fixture code calls no C-009 consumer API, so the same cases run unchanged on the
+FREEZE_R2 code (CC1 RED).
 """
+import collections
 import copy
 import hashlib
 import json
@@ -21,6 +32,7 @@ from rso.slice001 import evidence as EV
 from rso.slice001 import receipt as R
 
 COMMIT = "c004" + "0" * 36
+LAUNCH = "fixture-launch-G0"        # the TOP_LEVEL launch of the synthetic G0 (its run ids carry no <launch>/)
 CONTRACT_REV = hashlib.sha256(b"fixture: rso/slice001/contract/contract.json v1.0.1").hexdigest()
 REGISTERED_AT = "2026-10-04T00:00:00Z"
 FIRST_CHECK = "2026-10-04T01:00:00Z"
@@ -159,9 +171,11 @@ class Base(object):
     derived from the dicts' run ids), the stage records and blobs the bundle cites, the expected-table ref,
     the contract revision, and fabricate(node_id, role) -> other bytes for the FAB cases. Never mutated."""
 
-    def __init__(self, dicts, traces, inventory, stage_records, blobs, expected_table, revision, fabricate):
+    def __init__(self, dicts, traces, inventory, stage_records, blobs, expected_table, revision, fabricate,
+                 launch=None):
         self._dicts, self._traces = dicts, traces
         self._inventory = inventory
+        self.launch = launch or launch_of(dicts)
         self.stage_records, self.blobs = stage_records, blobs
         self.expected_table, self.revision, self.fabricate = expected_table, revision, fabricate
 
@@ -173,9 +187,11 @@ class Base(object):
         return {nid: dict(self._traces[nid]) for nid in keys}
 
     def inventory(self, dicts=None):
-        if self._inventory is not None:
-            return copy.deepcopy(self._inventory)
-        return _inventory(self._dicts if dicts is None else dicts)
+        """The base's rows (a real base's as produced; the synthetic base's derived from its own dicts), the
+        receipt rows of its launch recording the digests of `dicts` -- the receipts as presented, where a
+        presented receipt still cites its row (see the module note)."""
+        rows = copy.deepcopy(self._inventory) if self._inventory is not None else _inventory(self._dicts)
+        return _redigest(rows, self._dicts if dicts is None else dicts, self.launch)
 
     def stage_rows(self, at=REGISTERED_AT):
         return [row("STAGE_RECORD", EV.record_blob(s), at) for s in self.stage_records]
@@ -203,7 +219,27 @@ def real_base(g0, stage_records=(), blobs=None, expected_table=None, fabricate=N
 
     return Base(dicts, g0.traces, g0.inventory, list(stage_records), dict(blobs or {}),
                 expected_table or any_d["expected_answer"]["table"], any_d["cell"]["revision"],
-                fabricate or other)
+                fabricate or other, launch=g0.run_id)
+
+
+def bind_legacy(g0):
+    """A G0 produced before C-009 (s2/G0, s4/G0: rows without binding fields, manifest without launch_run_id) in
+    the bound form. FIXTURE, not a production: every RECEIPT row named <launch>/<node> whose <launch> is a
+    TOP_LEVEL row of the inventory gets parent_run_id = <launch> (s2_bundle's naming rule); the receipt digests
+    of the bundle's own launch come from Base.inventory; the manifest gains launch_run_id = run.json's run_id.
+    A stand-in for CC1 until T020's fresh produce writes these fields itself."""
+    tops = {r["run_id"] for r in g0.inventory if r.get("kind") == "RUN" and r.get("launch_kind") == "TOP_LEVEL"}
+    rows = []
+    for r in g0.inventory:
+        r = dict(r)
+        if r.get("kind") == "RUN" and r.get("launch_kind") == "RECEIPT" and "parent_run_id" not in r:
+            parent = r["run_id"].split("/", 1)[0]
+            if parent in tops:
+                r["parent_run_id"] = parent
+        rows.append(r)
+    doc = R.loads_canonical(g0.manifest)
+    doc.setdefault("launch_run_id", g0.run_id)
+    return type(g0)(g0.dicts, g0.traces, rows, R.canonical_bytes(doc), g0.run_id)
 
 
 def _base(base):
@@ -261,10 +297,46 @@ def _traces(dicts, tag=""):
             for nid in dicts}
 
 
-def _inventory(dicts):
-    rows = [{"kind": "RUN", "run_id": d["execution"]["run_id"], "node_id": nid, "status": "COMPLETED"}
-            for nid, d in sorted(dicts.items(), key=lambda kv: kv[1]["execution"]["run_id"])]
+def receipt_digest(d):
+    """receipt_sha256 of a receipt dict: sha256 of its canonical bytes (rso.binding.binding.receipt_sha256)."""
+    return hashlib.sha256(_bytes(d)).hexdigest()
+
+
+def launch_of(dicts):
+    """The launch a bundle's receipts ran under: the <launch> of their run ids <launch>/<node> (s2_bundle's
+    spelling), by majority, so one edited receipt citing a foreign row does not move it (ties: the smallest);
+    LAUNCH when no run id carries one (the synthetic G0)."""
+    n = collections.Counter(d["execution"]["run_id"].split("/", 1)[0] for d in dicts.values()
+                            if "/" in d["execution"]["run_id"])
+    if not n:
+        return LAUNCH
+    top = max(n.values())
+    return sorted(k for k, v in n.items() if v == top)[0]
+
+
+def launch_row(launch, node_id="G0"):
+    return {"kind": "RUN", "run_id": launch, "node_id": node_id, "launch_kind": "TOP_LEVEL", "status": "COMPLETED"}
+
+
+def _inventory(dicts, launch=None):
+    """The launch's TOP_LEVEL row, then one bound RECEIPT row per receipt (sorted by run id); terminal."""
+    launch = launch or launch_of(dicts)
+    rows = [launch_row(launch)]
+    rows += [{"kind": "RUN", "run_id": d["execution"]["run_id"], "node_id": nid, "status": "COMPLETED",
+              "launch_kind": "RECEIPT", "parent_run_id": launch, "receipt_sha256": receipt_digest(d)}
+             for nid, d in sorted(dicts.items(), key=lambda kv: kv[1]["execution"]["run_id"])]
     return rows + [{"kind": "TERMINAL", "row_count": len(rows)}]
+
+
+def _redigest(rows, dicts, launch):
+    """Each RECEIPT row of `launch` whose run id the presented receipt of its node cites records that receipt's
+    digest; every other row is left as it is."""
+    for r in rows:
+        if r.get("kind") == "RUN" and r.get("launch_kind") == "RECEIPT" and r.get("parent_run_id") == launch:
+            d = dicts.get(r.get("node_id"))
+            if d is not None and d["execution"]["run_id"] == r["run_id"]:
+                r["receipt_sha256"] = receipt_digest(d)
+    return rows
 
 
 def stage_records():
@@ -292,22 +364,30 @@ def stage_rows(at=REGISTERED_AT):
     return [row("STAGE_RECORD", EV.record_blob(s), at) for s in stage_records()]
 
 
-def make_bundle(dicts, traces=None, inventory=None, withdrawals=(), base=None):
+def make_bundle(dicts, traces=None, inventory=None, withdrawals=(), base=None, run_id=None):
+    """The bundle; run_id is its run.json (default: the launch of its receipts), set as an attribute so the
+    FREEZE_R2 Bundle, which reads no run.json, takes the same call."""
     if base is None:
-        return EV.Bundle({nid: _bytes(d) for nid, d in dicts.items()},
-                         traces if traces is not None else _traces(dicts),
-                         inventory if inventory is not None else _inventory(dicts),
-                         stage_records=stage_records(), withdrawals=withdrawals, blobs=blobs(),
-                         expected_table=EXPECTED_TABLE)
-    return EV.Bundle({nid: _bytes(d) for nid, d in dicts.items()},
-                     traces if traces is not None else base.traces(dicts),
-                     inventory if inventory is not None else base.inventory(dicts),
-                     stage_records=list(base.stage_records), withdrawals=withdrawals, blobs=dict(base.blobs),
-                     expected_table=base.expected_table)
+        b = EV.Bundle({nid: _bytes(d) for nid, d in dicts.items()},
+                      traces if traces is not None else _traces(dicts),
+                      inventory if inventory is not None else _inventory(dicts),
+                      stage_records=stage_records(), withdrawals=withdrawals, blobs=blobs(),
+                      expected_table=EXPECTED_TABLE)
+    else:
+        b = EV.Bundle({nid: _bytes(d) for nid, d in dicts.items()},
+                      traces if traces is not None else base.traces(dicts),
+                      inventory if inventory is not None else base.inventory(dicts),
+                      stage_records=list(base.stage_records), withdrawals=withdrawals, blobs=dict(base.blobs),
+                      expected_table=base.expected_table)
+    b.run_id = run_id or (launch_of(dicts) if base is None else base.launch)
+    return b
 
 
-def manifest_of(dicts):
-    return EV.build_manifest(R.Receipt.from_dict(d) for d in dicts.values())
+def manifest_of(dicts, launch=None):
+    """Manifest bytes (evidence.build_manifest) naming the launch (BX1): `launch`, else the receipts' launch."""
+    doc = R.loads_canonical(EV.build_manifest(R.Receipt.from_dict(d) for d in dicts.values()))
+    doc["launch_run_id"] = launch or launch_of(dicts)
+    return R.canonical_bytes(doc)
 
 
 def retained(dicts):
@@ -421,6 +501,7 @@ def relabel(rename_ids=False, base=None):
         for r in inv[:-1]:
             if isinstance(r.get("node_id"), str):
                 r["node_id"] = r["node_id"].replace("rcpt:REG:", "rcpt:REG2:")
+    _redigest(inv, out, b.launch)               # the producer's inventory records the receipts it presents
     cl = claims(None if base is None else b)
     if rename_ids:
         c2 = dict(cl["CL-RET(REG)"]["cell"])
