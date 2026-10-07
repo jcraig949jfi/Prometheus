@@ -1,0 +1,93 @@
+{
+  "schema": "prometheus.workgraph.task.v1",
+  "task_id": "C-009-T015",
+  "campaign_id": "C-009",
+  "title": "Native witness preregistration draft (exposure, two subjects, gates, outcome classes, budget)",
+  "objective": "Draft the witness preregistration from SELECTION, DESIGN_DRAFT, RULER and the T013 refinement, with an exposure section.",
+  "parent_objective": "native witness preparation (opens as its own campaign only if C-009 closes)",
+  "owner_role": "Palamedes",
+  "quality_class": "Q2",
+  "can_downgrade": false,
+  "escalate_to": "Q3",
+  "depends_on": [],
+  "owns": [
+    "rso/witness/PREREG_DRAFT.md"
+  ],
+  "reads": [
+    "rso/witness/"
+  ],
+  "problem": "Preparation for C-010; freezes only if C-009 closes.",
+  "non_goals": [
+    "No subject evolution; no witness predicate on Ares output; no accuracy/retention/reward number for any arm or control",
+    "No edit of ares/ sources",
+    "No change to rso/binding or the slice evidence plane (BX6)"
+  ],
+  "evidence_required": [
+    "PREREG_DRAFT.md committed",
+    "OPEN items listed and packeted"
+  ],
+  "acceptance": {
+    "condition": "all evidence_required items; no outcome observed"
+  },
+  "deliverables": [
+    "rso/witness/PREREG_DRAFT.md"
+  ],
+  "kind": "document",
+  "status": "CLOSED",
+  "history": [
+    {
+      "status": "PROPOSED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-07T03:23:35Z",
+      "note": "witness preparation"
+    },
+    {
+      "status": "READY",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-07T03:23:35Z",
+      "note": "open"
+    },
+    {
+      "status": "CLAIMED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-07T03:23:35Z",
+      "note": "Palamedes"
+    },
+    {
+      "status": "IMPLEMENTING",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-07T03:23:35Z",
+      "note": "draft"
+    },
+    {
+      "status": "GREEN",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-07T03:23:35Z",
+      "note": "draft written"
+    },
+    {
+      "status": "INTEGRATION_READY",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-07T03:23:35Z",
+      "note": "on main"
+    },
+    {
+      "status": "INTEGRATED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-07T03:23:35Z",
+      "note": "self-integrated"
+    },
+    {
+      "status": "CLOSED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-07T03:23:35Z",
+      "note": "OPEN items -> T016, T017, T018"
+    }
+  ],
+  "authority": "operator directive 2026-10-07 (C-004-OP8) s6, s11 (preparation allowed; no outcomes before preregistration)",
+  "resource_ceiling": {
+    "launches": "0 (development only)"
+  },
+  "red_required": false,
+  "notes": "red_required false: a document. Decision 3 of SELECTION.md (one subject) reversed before preregistration because of prior-result exposure (PREREG_DRAFT s0)."
+}
