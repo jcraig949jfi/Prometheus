@@ -23,6 +23,7 @@ from rso.slice001 import receipt as R
 from rso.witness import ares_client as AC
 from rso.witness import evaluate as WE
 from rso.witness import ruler as RU
+from rso.witness.challenge.W1 import cases as C
 
 D4, D15 = "4" * 64, "f" * 64          # synthetic subject genome digests (S4 primary, S15 secondary)
 LAUNCH = "w-test-launch"
@@ -139,10 +140,12 @@ def _ret_node(digest, arm, predicate, decide, seeds, mode="present"):
 
 
 def _pair_node(digest, arm, predicate, roles, n, differs):
-    """P-PRES (k = 2: warmup, seed) or P-ERASE (k = 3: pre_a, pre_b, probe) on seeds from 800000 / 850000, with the
-    world's regimes per seed group as its oracle."""
+    """P-PRES (k = 2: warmup, seed) or P-ERASE (k = 3: pre_a, pre_b, probe) on the registered SHAPE (W1 cases'
+    generators, non-registered ranges), with the world's regimes per seed group as its oracle."""
     k = 3 if predicate == "P-ERASE" else 2
-    seeds = list(range(800000 if k == 3 else 850000, (800000 if k == 3 else 850000) + n * k))
+    groups = C.erase_like() if k == 3 else C.pres_like()
+    assert len(groups) == n
+    seeds = C.flat(groups)
     a = np.ones((n, T), dtype=np.int8)
     b = a.copy()
     if differs:
@@ -154,7 +157,7 @@ def _pair_node(digest, arm, predicate, roles, n, differs):
 
 
 def _obs_node(digest, differs):
-    seeds = [900000, 900001, 900002, 900003]
+    seeds = witness_seeds()[:4]
     a = np.ones((4, T, 1), dtype=np.int8)
     b = a.copy()
     if differs:
@@ -173,11 +176,12 @@ def plan(spec):
         nodes.append(_ret_node(d, "S", "P-RET", spec.ret[d], seeds))
         nodes.append(_ret_node(d, "S-NOPL", "P-CHAN", spec.nopl[d], spec.nopl_seeds or seeds))
         nodes.append(_obs_node(d, spec.obs_differs[d]))
-        nodes.append(_pair_node(d, "S", "P-PRES", ("trace:pres_warm", "trace:pres_fresh"), 32, spec.pres_differs[d]))
-        nodes.append(_pair_node(d, "S", "P-ERASE", ("trace:probe_after_a", "trace:probe_after_b"), 64,
+        nodes.append(_pair_node(d, "S", "P-PRES", ("trace:pres_warm", "trace:pres_fresh"), len(C.pres_like()),
+                                spec.pres_differs[d]))
+        nodes.append(_pair_node(d, "S", "P-ERASE", ("trace:probe_after_a", "trace:probe_after_b"), len(C.erase_like()),
                                 spec.erase_differs[d]))
-        nodes.append(_pair_node(d, "S-LEAK", "P-ERASE", ("trace:probe_after_a", "trace:probe_after_b"), 64,
-                                spec.leak_differs[d]))
+        nodes.append(_pair_node(d, "S-LEAK", "P-ERASE", ("trace:probe_after_a", "trace:probe_after_b"),
+                                len(C.erase_like()), spec.leak_differs[d]))
     nodes.append(_ret_node(D4, "NULL", "P-CAL", spec.null, seeds))
     nodes.append(_ret_node(D4, "SHUF", "P-CAL", spec.shuf, seeds, mode="shuffled"))
     nodes.append(_ret_node(D4, "POS", "P-CAL", spec.pos, seeds))
@@ -235,6 +239,11 @@ def keeper(man, inv, at=REGISTERED_AT, skip=()):
 SUBJECTS = {"S4": D4, "S15": D15}
 
 
+def seed_lists(witness=None):
+    """The registered seed lists the evaluator requires (make_configs SEED_LISTS.json "seeds"), test stand-ins."""
+    return {"witness": witness or witness_seeds(), "erase": C.flat(C.erase_like()), "pres": C.flat(C.pres_like())}
+
+
 class Base(unittest.TestCase):
     def setUp(self):
         self.tmp = tempfile.mkdtemp(prefix="rso-witness-eval-")
@@ -249,6 +258,7 @@ class Base(unittest.TestCase):
         if after_write:
             after_write(root)
         store = store if store is not None else keeper(man, inv)
+        kw.setdefault("seed_lists", seed_lists())
         return WE.evaluate([root], store, FIRST_CHECK, SUBJECTS, primary="S4", **kw)
 
     def classes(self, res):
@@ -306,10 +316,14 @@ class TestGateFailures(Base):
         self.assertIn("P-ERASE DETECTION_UNQUALIFIED",
                       self._du(self.run_eval(Spec(leak_differs={D4: False, D15: True}))))
 
-    def test_p_chan_unpaired_seeds_fail(self):
+    def test_p_chan_unpaired_seeds_refused(self):
+        # T031 (ADJUDICATION_W1 R2): S-NOPL must run the registered witness list exactly, so an unpaired (reordered)
+        # list is now an unregistered node -> UNQUALIFIED, before the T012 SEEDS_NOT_PAIRED gate is reached.
         res = self.run_eval(Spec(nopl_seeds=list(reversed(witness_seeds()))))
-        self.assertEqual(res["subjects"]["S4"]["P-CHAN"]["witness"]["why"], "SEEDS_NOT_PAIRED")
-        self.assertEqual(self.classes(res)["S4"], "POSITIVE (channel unidentified)")
+        why = " ".join(res["subjects"]["S4"]["why"])
+        self.assertIn("SEEDS_NOT_REGISTERED", why)
+        self.assertIn("P-CHAN", why)
+        self.assertEqual(self.classes(res)["S4"], "UNQUALIFIED")
 
 
 class TestRefusals(Base):
@@ -377,10 +391,11 @@ class TestRefusals(Base):
             return keeper(man, inv, skip=("RUN_INVENTORY",))
         root = os.path.join(self.tmp, "b")
         man, inv = write_bundle(root, plan(Spec()))
-        res = WE.evaluate([root], no_inventory(man, inv), FIRST_CHECK, SUBJECTS, primary="S4")
+        res = WE.evaluate([root], no_inventory(man, inv), FIRST_CHECK, SUBJECTS, primary="S4", seed_lists=seed_lists())
         self.assertEqual(self.classes(res), {"S4": "UNQUALIFIED", "S15": "UNQUALIFIED"})
         self.assertIn("KEEPER_ROW_MISSING:RUN_INVENTORY", res["bundles"][0]["custody"]["why"])
-        res = WE.evaluate([root], keeper(man, inv, at=LATE), FIRST_CHECK, SUBJECTS, primary="S4")
+        res = WE.evaluate([root], keeper(man, inv, at=LATE), FIRST_CHECK, SUBJECTS, primary="S4",
+                          seed_lists=seed_lists())
         self.assertIn("REGISTERED_AFTER_CHECK", res["bundles"][0]["custody"]["why"])
 
     def test_missing_node_is_evidence_missing(self):
@@ -402,7 +417,7 @@ class TestTrustNothing(Base):
         self.assertEqual(self.classes(self.run_eval(nodes=nodes))["S15"], "NEGATIVE")
 
     def test_registered_seed_list_is_enforced(self):
-        res = self.run_eval(registered_seeds=list(reversed(witness_seeds())))
+        res = self.run_eval(seed_lists=seed_lists(list(reversed(witness_seeds()))))
         self.assertEqual(self.classes(res), {"S4": "UNQUALIFIED", "S15": "UNQUALIFIED"})
         self.assertTrue(any("SEEDS_NOT_REGISTERED" in w for w in res["subjects"]["S4"]["why"]))
 
@@ -417,6 +432,156 @@ class TestTrustNothing(Base):
         res = self.run_eval(nodes=nodes)
         self.assertEqual(self.classes(res)["S4"], "UNQUALIFIED")
         self.assertTrue(any("SHAPE" in w for w in res["subjects"]["S4"]["why"]))
+
+
+# --------------------------------------------------------------------------------------------------------
+# C-010-T031: the one repair round after the W1 challenge (rso/witness/ADJUDICATION_W1.md R1-R4, R6 pins). The
+# broken / sound shapes are the reviewer's committed builders (rso/witness/challenge/W1/cases.py); expected
+# verdicts are the reviewer's expected.json.
+
+W1_LISTS = None
+
+
+def w1_lists():
+    global W1_LISTS
+    if W1_LISTS is None:
+        W1_LISTS = {"witness": C.witness_like(), "erase": C.flat(C.erase_like()), "pres": C.flat(C.pres_like())}
+    return W1_LISTS
+
+
+def w1_eval(roots, store, subjects=None):
+    return WE.evaluate(roots, store, C.FIRST_CHECK, subjects or C.SUBJECTS, "S4", seed_lists=w1_lists())
+
+
+class TestW1Repairs(Base):
+    def _dir(self, name):
+        d = os.path.join(self.tmp, name)
+        os.makedirs(d)
+        return d
+
+    def test_r1_b1_duplicate_node_across_bundles(self):
+        b = C.build_b1(self._dir("b1"))
+        xy = w1_eval([b["X"], b["Y"]], b["store"])
+        yx = w1_eval([b["Y"], b["X"]], b["store"])
+        self.assertEqual(xy["subjects"]["S4"]["class"], "UNQUALIFIED")
+        self.assertTrue(any("EVIDENCE_DUPLICATE" in w for w in xy["subjects"]["S4"]["why"]), xy["subjects"]["S4"]["why"])
+        self.assertEqual(xy["subjects"], yx["subjects"])                      # order-independent
+        self.assertEqual(xy["P-CAL"], yx["P-CAL"])
+
+    def test_r1_result_names_the_launch_of_each_node(self):
+        res = self.run_eval()
+        sup = res["supplied_by"]
+        self.assertEqual(set(sup.values()), {LAUNCH})
+        self.assertIn(AC.node_id(D4, "S", "P-RET", "W15"), sup)
+
+    def test_r2_b2_p_cal_on_an_unregistered_list(self):
+        b = C.build_b2(self._dir("b2"))
+        res = w1_eval(b["roots"], b["store"])
+        self.assertEqual(res["P-CAL"]["value"], "BLOCKED")
+        self.assertIn("SEEDS_NOT_REGISTERED", res["P-CAL"]["reason"])
+        self.assertEqual({k: v["class"] for k, v in res["subjects"].items()}, {"S4": "UNQUALIFIED", "S15": "UNQUALIFIED"})
+
+    def test_r2_seed_lists_are_required(self):
+        root = os.path.join(self.tmp, "b")
+        man, inv = write_bundle(root, plan(Spec()))
+        with self.assertRaises(TypeError):
+            WE.evaluate([root], keeper(man, inv), FIRST_CHECK, SUBJECTS, primary="S4")
+        with self.assertRaises(ValueError):
+            WE.evaluate([root], keeper(man, inv), FIRST_CHECK, SUBJECTS, primary="S4", seed_lists={"witness": []})
+        with self.assertRaises(SystemExit):
+            WE.main([root, "--subjects", "S4=" + D4, "--first-check", FIRST_CHECK])
+
+    def test_r2_every_node_on_its_registered_list(self):
+        lists = seed_lists()
+        lists["erase"] = list(reversed(lists["erase"]))
+        res = self.run_eval(seed_lists=lists)
+        for name in ("S4", "S15"):
+            self.assertEqual(res["subjects"][name]["class"], "UNQUALIFIED")
+            self.assertTrue(any("SEEDS_NOT_REGISTERED" in w and "P-ERASE" in w for w in res["subjects"][name]["why"]))
+
+    def test_r3_b3_same_regime_triples(self):
+        b = C.build_b3(self._dir("b3"))
+        res = w1_eval(b["roots"], b["store"])
+        self.assertEqual(res["subjects"]["S4"]["class"], "UNQUALIFIED")
+        self.assertTrue(any("ERASE_SHAPE" in w or "SEEDS_NOT_REGISTERED" in w for w in res["subjects"]["S4"]["why"]))
+
+    def test_r3_erase_shape_on_the_registered_list(self):
+        # Even when the registered list itself is malformed (pre_b r = 0), the shape check refuses (R3 is not R2).
+        same = C.erase_like(C.ERASE_SAME_START, same_regime=True)
+        nodes = plan(Spec())
+        for i, (rec, arts) in enumerate(nodes):
+            if rec["predicate"] == "P-ERASE":
+                n = len(same)
+                a = np.ones((n, T), dtype=np.int8)
+                b = a.copy()
+                if rec["arm"] == "S-LEAK":
+                    b[0, 0] = 2
+                regs, _ = oracle(C.flat(same))
+                outs = [_array("trace:probe_after_a", a), _array("trace:probe_after_b", b)]
+                orc = [_array("oracle:regimes", np.array(regs, dtype=np.int8).reshape(n, 3))]
+                nodes[i] = (_receipt(rec["subject"]["genome_sha256"], rec["arm"], "P-ERASE", C.flat(same), "present",
+                                     outs, orc), outs + orc)
+        lists = seed_lists()
+        lists["erase"] = C.flat(same)
+        res = self.run_eval(nodes=nodes, seed_lists=lists)
+        self.assertTrue(any("ERASE_SHAPE" in w for w in res["subjects"]["S4"]["why"]), res["subjects"]["S4"]["why"])
+
+    def test_r3_pres_warmup_must_be_opposite(self):
+        groups = C.pres_like()
+        bad = [(g[1], g[1] + 0) for g in groups[:1]] + groups[1:]           # first pair: warm-up = the seed itself
+        nodes = plan(Spec())
+        for i, (rec, arts) in enumerate(nodes):
+            if rec["predicate"] == "P-PRES":
+                n = len(bad)
+                a = np.ones((n, T), dtype=np.int8)
+                regs, _ = oracle(C.flat(bad))
+                outs = [_array("trace:pres_warm", a), _array("trace:pres_fresh", a.copy())]
+                orc = [_array("oracle:regimes", np.array(regs, dtype=np.int8).reshape(n, 2))]
+                nodes[i] = (_receipt(rec["subject"]["genome_sha256"], "S", "P-PRES", C.flat(bad), "present", outs, orc),
+                            outs + orc)
+        lists = seed_lists()
+        lists["pres"] = C.flat(bad)
+        res = self.run_eval(nodes=nodes, seed_lists=lists)
+        self.assertTrue(any("PRES_SHAPE" in w for w in res["subjects"]["S4"]["why"]), res["subjects"]["S4"]["why"])
+
+    def test_r4_b5_node_id_fields_disagree(self):
+        b = C.build_b5(self._dir("b5"))
+        res = w1_eval(b["roots"], b["store"])
+        self.assertEqual(res["subjects"]["S4"]["class"], "UNQUALIFIED")
+        self.assertTrue(any("NODE_ID_FIELDS" in w for w in res["bundles"][0]["refused"]), res["bundles"][0]["refused"])
+
+    def test_r6_s3_decided_after_the_last_interrupt(self):
+        # W1.S3 (sound): correct answers only in (first interrupt, last interrupt], abstain after the last: NEGATIVE.
+        b = C.build_s3(self._dir("s3"))
+        res = w1_eval(b["roots"], b["store"])
+        s4 = res["subjects"]["S4"]
+        self.assertEqual((s4["P-RET"]["value"], s4["P-RET"]["successes"], s4["P-RET"]["wrong"], s4["class"]),
+                         ("NEGATIVE", 0, 0, "NEGATIVE"))
+
+    def test_r6_e3_run_unreported_with_a_reregistered_manifest(self):
+        root = os.path.join(self.tmp, "b")
+        man, inv = write_bundle(root, plan(Spec()))
+        doc = json.loads(man.decode("utf-8"))
+        dropped = doc["nodes"].pop(0)
+        man2 = R.canonical_bytes(doc)
+        with open(os.path.join(root, "MANIFEST.json"), "wb") as f:
+            f.write(man2)
+        res = WE.evaluate([root], keeper(man2, inv), FIRST_CHECK, SUBJECTS, primary="S4", seed_lists=seed_lists())
+        self.assertTrue(any(w.startswith("RUN_UNREPORTED:") and dropped["node_id"] in w
+                            for w in res["bundles"][0]["refused"]), res["bundles"][0]["refused"])
+
+    def test_r6_e5_erase_oracle_counterfeit(self):
+        nodes = plan(Spec())
+        i = next(k for k, (rec, _a) in enumerate(nodes) if rec["predicate"] == "P-ERASE" and rec["arm"] == "S")
+        rec, arts = nodes[i]
+        regs = np.frombuffer(arts[2][1], dtype=np.int8).reshape(-1, 3).copy()
+        regs[:, 1] = 0                                                       # claims pre_b drew r = 0
+        new = _array("oracle:regimes", regs)
+        rec = copy.deepcopy(rec)
+        rec["oracle"][0] = new[0]
+        nodes[i] = (rec, [arts[0], arts[1], new])
+        res = self.run_eval(nodes=nodes)
+        self.assertTrue(any("ORACLE_MISMATCH" in w for w in res["bundles"][0]["refused"]), res["bundles"][0]["refused"])
 
 
 if __name__ == "__main__":
