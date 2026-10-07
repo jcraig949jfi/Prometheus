@@ -205,6 +205,10 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
 - B18 (graph organism) PAUSED: the Proteus graph witness uses a two-channel probe and scores 0 on every WSE rung,
   so there is no graph positive control in the WSE format yet; Evolution._shares also needs a graph-tolerant
   replacement. A null without a positive control would be uninterpretable.
+- B20 (light): 2,000 single-op children of the 11-instruction indexed solver (jittered W2_K2): neutral .350,
+  below .45 .649, shelf-level .0015 (slot solver B01-B: neutral .335, shelf .077). Prediction (neutral lower) FAILED;
+  the informative number is the SHELF share: the indexed solver is an ISOLATED PEAK -- breaking its write/read pair
+  sends it to ~0, not to the one-value shelf, so there is no partial-credit path into it from below.
 - B08J built (ladder with jitter in train AND held-out); controls unchanged under jitter. Launches when cores free.
 - Next: B01b (done) tests H-PLATEAU quantitatively; then B03 = search arms at equal compute from fresh gen 0
   (baseline / heavy-tailed mutation count / behaviour-novelty) -- prediction: only structural-move arms lift 0/60.
