@@ -1,0 +1,3433 @@
+{
+ "probe": "B18",
+ "G": 300,
+ "controls": {
+  "wse_indexed_graph": {
+   "L1_one": 1.0,
+   "L3_last": 1.0,
+   "L2_first": 1.0,
+   "L4_order": 1.0,
+   "L6_w2k2": 1.0
+  },
+  "witness_keyed": {
+   "L1_one": 0.0,
+   "L3_last": 0.0,
+   "L2_first": 0.0,
+   "L4_order": 0.0,
+   "L6_w2k2": 0.0
+  },
+  "witness_one_value": {
+   "L1_one": 0.0,
+   "L3_last": 0.0,
+   "L2_first": 0.0,
+   "L4_order": 0.0,
+   "L6_w2k2": 0.0
+  },
+  "witness_echo": {
+   "L1_one": 0.0625,
+   "L3_last": 0.125,
+   "L2_first": 0.125,
+   "L4_order": 0.125,
+   "L6_w2k2": 0.125
+  },
+  "witness_inert": {
+   "L1_one": 0.0,
+   "L3_last": 0.0,
+   "L2_first": 0.0,
+   "L4_order": 0.0,
+   "L6_w2k2": 0.0
+  }
+ },
+ "summary": {
+  "L1_one": 1,
+  "L3_last": 0,
+  "L2_first": 0,
+  "L4_order": 0,
+  "L6_w2k2": 0
+ },
+ "rows": [
+  {
+   "rung": "L3_last",
+   "seed": 1801,
+   "N": 200,
+   "solved_gen": null,
+   "max_train": 0.25,
+   "final_heldout": 0.0833,
+   "elite_nodes": 4,
+   "elite_manifest": {
+    "schema_version": "proteus.graph_manifest.v1",
+    "nodes": [
+     {
+      "kind": 23,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 11,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 15,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 24,
+      "params": [],
+      "persist": true
+     }
+    ],
+    "data_edges": [
+     [
+      2,
+      1,
+      0
+     ]
+    ],
+    "control_edges": [
+     [
+      1,
+      0,
+      2
+     ]
+    ],
+    "entry": 0,
+    "state_words": 16,
+    "tick_budget": 128,
+    "out_cap": 3,
+    "call_depth_max": 7,
+    "persist_state": true
+   },
+   "wall_s": 96.2
+  },
+  {
+   "rung": "L1_one",
+   "seed": 1801,
+   "N": 200,
+   "solved_gen": null,
+   "max_train": 0.25,
+   "final_heldout": 0.0,
+   "elite_nodes": 3,
+   "elite_manifest": {
+    "schema_version": "proteus.graph_manifest.v1",
+    "nodes": [
+     {
+      "kind": 23,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 5,
+      "params": [],
+      "persist": true
+     },
+     {
+      "kind": 10,
+      "params": [],
+      "persist": false
+     }
+    ],
+    "data_edges": [
+     [
+      0,
+      0,
+      0
+     ],
+     [
+      0,
+      1,
+      0
+     ]
+    ],
+    "control_edges": [
+     [
+      0,
+      0,
+      2
+     ],
+     [
+      1,
+      0,
+      0
+     ]
+    ],
+    "entry": 0,
+    "state_words": 256,
+    "tick_budget": 64,
+    "out_cap": 4,
+    "call_depth_max": 2,
+    "persist_state": true
+   },
+   "wall_s": 121.7
+  },
+  {
+   "rung": "L4_order",
+   "seed": 1801,
+   "N": 200,
+   "solved_gen": null,
+   "max_train": 0.1875,
+   "final_heldout": 0.0729,
+   "elite_nodes": 22,
+   "elite_manifest": {
+    "schema_version": "proteus.graph_manifest.v1",
+    "nodes": [
+     {
+      "kind": 23,
+      "params": [],
+      "persist": true
+     },
+     {
+      "kind": 16,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 1,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 24,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 21,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 23,
+      "params": [],
+      "persist": true
+     },
+     {
+      "kind": 15,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 16,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 23,
+      "params": [],
+      "persist": true
+     },
+     {
+      "kind": 6,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 14,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 0,
+      "params": [],
+      "persist": true
+     },
+     {
+      "kind": 18,
+      "params": [],
+      "persist": true
+     },
+     {
+      "kind": 21,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 23,
+      "params": [],
+      "persist": true
+     },
+     {
+      "kind": 15,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 24,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 0,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 10,
+      "params": [],
+      "persist": true
+     },
+     {
+      "kind": 19,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 18,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 0,
+      "params": [],
+      "persist": false
+     }
+    ],
+    "data_edges": [
+     [
+      0,
+      7,
+      0
+     ],
+     [
+      1,
+      1,
+      1
+     ],
+     [
+      12,
+      12,
+      0
+     ]
+    ],
+    "control_edges": [
+     [
+      0,
+      0,
+      11
+     ],
+     [
+      9,
+      0,
+      2
+     ],
+     [
+      11,
+      0,
+      12
+     ]
+    ],
+    "entry": 0,
+    "state_words": 8,
+    "tick_budget": 64,
+    "out_cap": 4,
+    "call_depth_max": 1,
+    "persist_state": true
+   },
+   "wall_s": 82.1
+  },
+  {
+   "rung": "L2_first",
+   "seed": 1801,
+   "N": 200,
+   "solved_gen": null,
+   "max_train": 0.5,
+   "final_heldout": 0.0625,
+   "elite_nodes": 12,
+   "elite_manifest": {
+    "schema_version": "proteus.graph_manifest.v1",
+    "nodes": [
+     {
+      "kind": 23,
+      "params": [],
+      "persist": true
+     },
+     {
+      "kind": 21,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 4,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 4,
+      "params": [],
+      "persist": true
+     },
+     {
+      "kind": 19,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 4,
+      "params": [],
+      "persist": true
+     },
+     {
+      "kind": 23,
+      "params": [],
+      "persist": true
+     },
+     {
+      "kind": 4,
+      "params": [],
+      "persist": true
+     },
+     {
+      "kind": 19,
+      "params": [],
+      "persist": true
+     },
+     {
+      "kind": 4,
+      "params": [],
+      "persist": true
+     },
+     {
+      "kind": 12,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 24,
+      "params": [],
+      "persist": false
+     }
+    ],
+    "data_edges": [
+     [
+      9,
+      0,
+      0
+     ]
+    ],
+    "control_edges": [
+     [
+      0,
+      0,
+      2
+     ],
+     [
+      2,
+      0,
+      11
+     ],
+     [
+      4,
+      0,
+      0
+     ]
+    ],
+    "entry": 0,
+    "state_words": 8,
+    "tick_budget": 256,
+    "out_cap": 17,
+    "call_depth_max": 8,
+    "persist_state": true
+   },
+   "wall_s": 112.2
+  },
+  {
+   "rung": "L1_one",
+   "seed": 1802,
+   "N": 200,
+   "solved_gen": null,
+   "max_train": 0.25,
+   "final_heldout": 0.0417,
+   "elite_nodes": 22,
+   "elite_manifest": {
+    "schema_version": "proteus.graph_manifest.v1",
+    "nodes": [
+     {
+      "kind": 14,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 23,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 0,
+      "params": [],
+      "persist": true
+     },
+     {
+      "kind": 8,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 22,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 3,
+      "params": [
+       697994858
+      ],
+      "persist": false
+     },
+     {
+      "kind": 24,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 12,
+      "params": [],
+      "persist": true
+     },
+     {
+      "kind": 0,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 0,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 21,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 16,
+      "params": [],
+      "persist": true
+     },
+     {
+      "kind": 16,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 9,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 0,
+      "params": [],
+      "persist": true
+     },
+     {
+      "kind": 0,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 21,
+      "params": [],
+      "persist": true
+     },
+     {
+      "kind": 21,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 16,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 19,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 0,
+      "params": [],
+      "persist": true
+     },
+     {
+      "kind": 8,
+      "params": [],
+      "persist": false
+     }
+    ],
+    "data_edges": [
+     [
+      8,
+      4,
+      0
+     ],
+     [
+      10,
+      1,
+      0
+     ]
+    ],
+    "control_edges": [
+     [
+      1,
+      0,
+      10
+     ],
+     [
+      4,
+      0,
+      17
+     ],
+     [
+      10,
+      0,
+      21
+     ],
+     [
+      13,
+      0,
+      14
+     ],
+     [
+      14,
+      0,
+      7
+     ],
+     [
+      17,
+      0,
+      7
+     ],
+     [
+      18,
+      0,
+      19
+     ],
+     [
+      19,
+      0,
+      7
+     ],
+     [
+      19,
+      1,
+      5
+     ],
+     [
+      20,
+      0,
+      4
+     ]
+    ],
+    "entry": 1,
+    "state_words": 4,
+    "tick_budget": 32,
+    "out_cap": 7,
+    "call_depth_max": 8,
+    "persist_state": true
+   },
+   "wall_s": 73.6
+  },
+  {
+   "rung": "L6_w2k2",
+   "seed": 1801,
+   "N": 200,
+   "solved_gen": null,
+   "max_train": 0.1875,
+   "final_heldout": 0.0729,
+   "elite_nodes": 19,
+   "elite_manifest": {
+    "schema_version": "proteus.graph_manifest.v1",
+    "nodes": [
+     {
+      "kind": 23,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 4,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 17,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 24,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 1,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 21,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 13,
+      "params": [],
+      "persist": true
+     },
+     {
+      "kind": 3,
+      "params": [
+       2089067641
+      ],
+      "persist": false
+     },
+     {
+      "kind": 7,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 23,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 15,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 7,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 13,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 22,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 6,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 10,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 4,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 0,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 18,
+      "params": [],
+      "persist": false
+     }
+    ],
+    "data_edges": [
+     [
+      4,
+      12,
+      0
+     ],
+     [
+      5,
+      5,
+      0
+     ],
+     [
+      5,
+      11,
+      0
+     ],
+     [
+      6,
+      2,
+      0
+     ],
+     [
+      6,
+      10,
+      1
+     ],
+     [
+      6,
+      15,
+      0
+     ],
+     [
+      11,
+      14,
+      0
+     ],
+     [
+      12,
+      0,
+      0
+     ],
+     [
+      12,
+      1,
+      0
+     ],
+     [
+      12,
+      18,
+      0
+     ],
+     [
+      16,
+      2,
+      1
+     ],
+     [
+      17,
+      6,
+      0
+     ],
+     [
+      18,
+      9,
+      1
+     ],
+     [
+      18,
+      14,
+      1
+     ]
+    ],
+    "control_edges": [
+     [
+      1,
+      0,
+      15
+     ],
+     [
+      3,
+      0,
+      11
+     ],
+     [
+      5,
+      0,
+      3
+     ],
+     [
+      8,
+      0,
+      7
+     ],
+     [
+      10,
+      0,
+      14
+     ],
+     [
+      11,
+      0,
+      11
+     ],
+     [
+      13,
+      0,
+      18
+     ],
+     [
+      15,
+      0,
+      9
+     ],
+     [
+      16,
+      0,
+      7
+     ],
+     [
+      18,
+      0,
+      18
+     ]
+    ],
+    "entry": 0,
+    "state_words": 64,
+    "tick_budget": 16,
+    "out_cap": 4,
+    "call_depth_max": 2,
+    "persist_state": false
+   },
+   "wall_s": 133.8
+  },
+  {
+   "rung": "L3_last",
+   "seed": 1802,
+   "N": 200,
+   "solved_gen": null,
+   "max_train": 0.25,
+   "final_heldout": 0.1042,
+   "elite_nodes": 16,
+   "elite_manifest": {
+    "schema_version": "proteus.graph_manifest.v1",
+    "nodes": [
+     {
+      "kind": 16,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 23,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 10,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 9,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 24,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 16,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 12,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 11,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 8,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 10,
+      "params": [],
+      "persist": true
+     },
+     {
+      "kind": 0,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 22,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 17,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 23,
+      "params": [],
+      "persist": true
+     },
+     {
+      "kind": 2,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 5,
+      "params": [],
+      "persist": false
+     }
+    ],
+    "data_edges": [
+     [
+      6,
+      5,
+      0
+     ],
+     [
+      7,
+      3,
+      0
+     ],
+     [
+      14,
+      15,
+      0
+     ],
+     [
+      15,
+      11,
+      0
+     ]
+    ],
+    "control_edges": [
+     [
+      1,
+      0,
+      13
+     ],
+     [
+      3,
+      0,
+      13
+     ],
+     [
+      6,
+      0,
+      4
+     ]
+    ],
+    "entry": 13,
+    "state_words": 4,
+    "tick_budget": 16,
+    "out_cap": 4,
+    "call_depth_max": 8,
+    "persist_state": false
+   },
+   "wall_s": 61.3
+  },
+  {
+   "rung": "L2_first",
+   "seed": 1802,
+   "N": 200,
+   "solved_gen": null,
+   "max_train": 0.3125,
+   "final_heldout": 0.0625,
+   "elite_nodes": 16,
+   "elite_manifest": {
+    "schema_version": "proteus.graph_manifest.v1",
+    "nodes": [
+     {
+      "kind": 16,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 23,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 10,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 9,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 24,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 16,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 12,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 11,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 8,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 10,
+      "params": [],
+      "persist": true
+     },
+     {
+      "kind": 0,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 22,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 17,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 23,
+      "params": [],
+      "persist": true
+     },
+     {
+      "kind": 2,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 5,
+      "params": [],
+      "persist": false
+     }
+    ],
+    "data_edges": [
+     [
+      6,
+      5,
+      0
+     ],
+     [
+      7,
+      3,
+      0
+     ],
+     [
+      14,
+      15,
+      0
+     ],
+     [
+      15,
+      11,
+      0
+     ]
+    ],
+    "control_edges": [
+     [
+      1,
+      0,
+      13
+     ],
+     [
+      3,
+      0,
+      13
+     ],
+     [
+      6,
+      0,
+      4
+     ]
+    ],
+    "entry": 13,
+    "state_words": 4,
+    "tick_budget": 16,
+    "out_cap": 4,
+    "call_depth_max": 8,
+    "persist_state": false
+   },
+   "wall_s": 61.4
+  },
+  {
+   "rung": "L4_order",
+   "seed": 1802,
+   "N": 200,
+   "solved_gen": null,
+   "max_train": 0.2188,
+   "final_heldout": 0.0833,
+   "elite_nodes": 49,
+   "elite_manifest": {
+    "schema_version": "proteus.graph_manifest.v1",
+    "nodes": [
+     {
+      "kind": 17,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 18,
+      "params": [],
+      "persist": true
+     },
+     {
+      "kind": 6,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 23,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 3,
+      "params": [
+       2104957147
+      ],
+      "persist": false
+     },
+     {
+      "kind": 5,
+      "params": [],
+      "persist": true
+     },
+     {
+      "kind": 20,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 15,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 10,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 21,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 17,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 15,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 17,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 18,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 23,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 23,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 13,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 14,
+      "params": [],
+      "persist": true
+     },
+     {
+      "kind": 10,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 5,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 9,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 13,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 23,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 5,
+      "params": [],
+      "persist": true
+     },
+     {
+      "kind": 10,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 23,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 23,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 23,
+      "params": [],
+      "persist": true
+     },
+     {
+      "kind": 8,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 23,
+      "params": [],
+      "persist": true
+     },
+     {
+      "kind": 12,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 22,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 18,
+      "params": [],
+      "persist": true
+     },
+     {
+      "kind": 12,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 21,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 18,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 23,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 24,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 14,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 8,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 12,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 21,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 5,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 23,
+      "params": [],
+      "persist": true
+     },
+     {
+      "kind": 10,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 24,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 10,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 18,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 8,
+      "params": [],
+      "persist": false
+     }
+    ],
+    "data_edges": [
+     [
+      1,
+      10,
+      1
+     ],
+     [
+      22,
+      16,
+      0
+     ],
+     [
+      30,
+      33,
+      0
+     ],
+     [
+      36,
+      30,
+      1
+     ]
+    ],
+    "control_edges": [
+     [
+      3,
+      0,
+      15
+     ],
+     [
+      7,
+      0,
+      3
+     ],
+     [
+      8,
+      0,
+      18
+     ],
+     [
+      9,
+      0,
+      40
+     ],
+     [
+      14,
+      0,
+      15
+     ],
+     [
+      20,
+      0,
+      33
+     ],
+     [
+      36,
+      0,
+      2
+     ],
+     [
+      37,
+      0,
+      18
+     ]
+    ],
+    "entry": 14,
+    "state_words": 256,
+    "tick_budget": 128,
+    "out_cap": 2,
+    "call_depth_max": 6,
+    "persist_state": false
+   },
+   "wall_s": 68.0
+  },
+  {
+   "rung": "L6_w2k2",
+   "seed": 1802,
+   "N": 200,
+   "solved_gen": null,
+   "max_train": 0.2188,
+   "final_heldout": 0.0833,
+   "elite_nodes": 10,
+   "elite_manifest": {
+    "schema_version": "proteus.graph_manifest.v1",
+    "nodes": [
+     {
+      "kind": 16,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 10,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 16,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 11,
+      "params": [],
+      "persist": true
+     },
+     {
+      "kind": 22,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 17,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 23,
+      "params": [],
+      "persist": true
+     },
+     {
+      "kind": 2,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 15,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 15,
+      "params": [],
+      "persist": true
+     }
+    ],
+    "data_edges": [
+     [
+      8,
+      2,
+      1
+     ]
+    ],
+    "control_edges": [
+     [
+      2,
+      0,
+      1
+     ],
+     [
+      8,
+      0,
+      0
+     ]
+    ],
+    "entry": 6,
+    "state_words": 4,
+    "tick_budget": 8,
+    "out_cap": 4,
+    "call_depth_max": 8,
+    "persist_state": false
+   },
+   "wall_s": 77.2
+  },
+  {
+   "rung": "L1_one",
+   "seed": 1803,
+   "N": 200,
+   "solved_gen": null,
+   "max_train": 0.25,
+   "final_heldout": 0.0417,
+   "elite_nodes": 18,
+   "elite_manifest": {
+    "schema_version": "proteus.graph_manifest.v1",
+    "nodes": [
+     {
+      "kind": 16,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 1,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 17,
+      "params": [],
+      "persist": true
+     },
+     {
+      "kind": 14,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 21,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 22,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 13,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 2,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 2,
+      "params": [],
+      "persist": true
+     },
+     {
+      "kind": 6,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 2,
+      "params": [],
+      "persist": true
+     },
+     {
+      "kind": 4,
+      "params": [],
+      "persist": true
+     },
+     {
+      "kind": 23,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 16,
+      "params": [],
+      "persist": true
+     },
+     {
+      "kind": 1,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 21,
+      "params": [],
+      "persist": true
+     },
+     {
+      "kind": 22,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 21,
+      "params": [],
+      "persist": true
+     }
+    ],
+    "data_edges": [
+     [
+      0,
+      0,
+      1
+     ],
+     [
+      1,
+      15,
+      0
+     ],
+     [
+      3,
+      2,
+      0
+     ],
+     [
+      3,
+      3,
+      1
+     ],
+     [
+      3,
+      5,
+      0
+     ],
+     [
+      3,
+      6,
+      0
+     ],
+     [
+      3,
+      11,
+      0
+     ],
+     [
+      4,
+      3,
+      0
+     ],
+     [
+      4,
+      13,
+      0
+     ],
+     [
+      5,
+      2,
+      1
+     ],
+     [
+      5,
+      4,
+      0
+     ],
+     [
+      10,
+      16,
+      0
+     ],
+     [
+      12,
+      9,
+      0
+     ],
+     [
+      12,
+      12,
+      0
+     ],
+     [
+      14,
+      9,
+      1
+     ],
+     [
+      14,
+      12,
+      1
+     ],
+     [
+      16,
+      0,
+      0
+     ]
+    ],
+    "control_edges": [
+     [
+      0,
+      0,
+      6
+     ],
+     [
+      3,
+      0,
+      10
+     ],
+     [
+      4,
+      0,
+      2
+     ],
+     [
+      5,
+      0,
+      14
+     ],
+     [
+      6,
+      0,
+      12
+     ],
+     [
+      7,
+      0,
+      2
+     ],
+     [
+      8,
+      0,
+      13
+     ],
+     [
+      9,
+      0,
+      1
+     ],
+     [
+      10,
+      0,
+      1
+     ],
+     [
+      11,
+      0,
+      9
+     ],
+     [
+      12,
+      0,
+      6
+     ],
+     [
+      13,
+      0,
+      7
+     ],
+     [
+      16,
+      0,
+      14
+     ]
+    ],
+    "entry": 0,
+    "state_words": 4,
+    "tick_budget": 64,
+    "out_cap": 16,
+    "call_depth_max": 2,
+    "persist_state": true
+   },
+   "wall_s": 142.9
+  },
+  {
+   "rung": "L2_first",
+   "seed": 1803,
+   "N": 200,
+   "solved_gen": null,
+   "max_train": 0.25,
+   "final_heldout": 0.0625,
+   "elite_nodes": 11,
+   "elite_manifest": {
+    "schema_version": "proteus.graph_manifest.v1",
+    "nodes": [
+     {
+      "kind": 2,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 6,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 4,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 24,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 23,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 4,
+      "params": [],
+      "persist": true
+     },
+     {
+      "kind": 6,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 23,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 4,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 17,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 19,
+      "params": [],
+      "persist": false
+     }
+    ],
+    "data_edges": [
+     [
+      0,
+      1,
+      0
+     ],
+     [
+      2,
+      4,
+      0
+     ],
+     [
+      4,
+      1,
+      1
+     ],
+     [
+      8,
+      7,
+      0
+     ]
+    ],
+    "control_edges": [
+     [
+      4,
+      0,
+      2
+     ],
+     [
+      5,
+      0,
+      4
+     ],
+     [
+      7,
+      0,
+      8
+     ],
+     [
+      9,
+      0,
+      5
+     ]
+    ],
+    "entry": 9,
+    "state_words": 4,
+    "tick_budget": 16,
+    "out_cap": 5,
+    "call_depth_max": 0,
+    "persist_state": false
+   },
+   "wall_s": 52.7
+  },
+  {
+   "rung": "L3_last",
+   "seed": 1803,
+   "N": 200,
+   "solved_gen": null,
+   "max_train": 0.3125,
+   "final_heldout": 0.0833,
+   "elite_nodes": 9,
+   "elite_manifest": {
+    "schema_version": "proteus.graph_manifest.v1",
+    "nodes": [
+     {
+      "kind": 0,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 7,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 23,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 12,
+      "params": [],
+      "persist": true
+     },
+     {
+      "kind": 6,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 13,
+      "params": [],
+      "persist": true
+     },
+     {
+      "kind": 10,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 13,
+      "params": [],
+      "persist": true
+     },
+     {
+      "kind": 23,
+      "params": [],
+      "persist": false
+     }
+    ],
+    "data_edges": [
+     [
+      0,
+      1,
+      0
+     ],
+     [
+      0,
+      3,
+      1
+     ],
+     [
+      0,
+      5,
+      0
+     ],
+     [
+      1,
+      4,
+      0
+     ],
+     [
+      1,
+      6,
+      0
+     ],
+     [
+      3,
+      2,
+      1
+     ],
+     [
+      3,
+      4,
+      1
+     ],
+     [
+      4,
+      2,
+      0
+     ],
+     [
+      6,
+      3,
+      0
+     ]
+    ],
+    "control_edges": [
+     [
+      0,
+      0,
+      2
+     ],
+     [
+      1,
+      0,
+      6
+     ],
+     [
+      2,
+      0,
+      2
+     ],
+     [
+      3,
+      0,
+      5
+     ],
+     [
+      4,
+      0,
+      3
+     ],
+     [
+      5,
+      0,
+      2
+     ],
+     [
+      7,
+      0,
+      8
+     ],
+     [
+      8,
+      0,
+      8
+     ]
+    ],
+    "entry": 0,
+    "state_words": 64,
+    "tick_budget": 16,
+    "out_cap": 4,
+    "call_depth_max": 0,
+    "persist_state": false
+   },
+   "wall_s": 214.8
+  },
+  {
+   "rung": "L6_w2k2",
+   "seed": 1803,
+   "N": 200,
+   "solved_gen": null,
+   "max_train": 0.2188,
+   "final_heldout": 0.0729,
+   "elite_nodes": 11,
+   "elite_manifest": {
+    "schema_version": "proteus.graph_manifest.v1",
+    "nodes": [
+     {
+      "kind": 22,
+      "params": [],
+      "persist": true
+     },
+     {
+      "kind": 6,
+      "params": [],
+      "persist": true
+     },
+     {
+      "kind": 19,
+      "params": [],
+      "persist": true
+     },
+     {
+      "kind": 19,
+      "params": [],
+      "persist": true
+     },
+     {
+      "kind": 23,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 22,
+      "params": [],
+      "persist": true
+     },
+     {
+      "kind": 13,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 18,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 11,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 24,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 16,
+      "params": [],
+      "persist": false
+     }
+    ],
+    "data_edges": [
+     [
+      2,
+      10,
+      0
+     ],
+     [
+      4,
+      1,
+      1
+     ]
+    ],
+    "control_edges": [
+     [
+      2,
+      0,
+      10
+     ],
+     [
+      3,
+      0,
+      4
+     ],
+     [
+      4,
+      0,
+      1
+     ],
+     [
+      5,
+      0,
+      6
+     ],
+     [
+      7,
+      1,
+      6
+     ],
+     [
+      10,
+      0,
+      7
+     ]
+    ],
+    "entry": 4,
+    "state_words": 64,
+    "tick_budget": 1024,
+    "out_cap": 16,
+    "call_depth_max": 2,
+    "persist_state": false
+   },
+   "wall_s": 243.8
+  },
+  {
+   "rung": "L1_one",
+   "seed": 1804,
+   "N": 200,
+   "solved_gen": 215,
+   "max_train": 1.0,
+   "final_heldout": 1.0,
+   "elite_nodes": 55,
+   "elite_manifest": {
+    "schema_version": "proteus.graph_manifest.v1",
+    "nodes": [
+     {
+      "kind": 0,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 19,
+      "params": [],
+      "persist": true
+     },
+     {
+      "kind": 21,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 8,
+      "params": [],
+      "persist": true
+     },
+     {
+      "kind": 21,
+      "params": [],
+      "persist": true
+     },
+     {
+      "kind": 17,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 6,
+      "params": [],
+      "persist": true
+     },
+     {
+      "kind": 23,
+      "params": [],
+      "persist": true
+     },
+     {
+      "kind": 19,
+      "params": [],
+      "persist": true
+     },
+     {
+      "kind": 5,
+      "params": [],
+      "persist": true
+     },
+     {
+      "kind": 24,
+      "params": [],
+      "persist": true
+     },
+     {
+      "kind": 4,
+      "params": [],
+      "persist": true
+     },
+     {
+      "kind": 21,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 13,
+      "params": [],
+      "persist": true
+     },
+     {
+      "kind": 10,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 16,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 12,
+      "params": [],
+      "persist": true
+     },
+     {
+      "kind": 13,
+      "params": [],
+      "persist": true
+     },
+     {
+      "kind": 21,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 21,
+      "params": [],
+      "persist": true
+     },
+     {
+      "kind": 21,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 1,
+      "params": [],
+      "persist": true
+     },
+     {
+      "kind": 3,
+      "params": [
+       2020301384
+      ],
+      "persist": false
+     },
+     {
+      "kind": 23,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 21,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 13,
+      "params": [],
+      "persist": true
+     },
+     {
+      "kind": 16,
+      "params": [],
+      "persist": true
+     },
+     {
+      "kind": 14,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 21,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 13,
+      "params": [],
+      "persist": true
+     },
+     {
+      "kind": 24,
+      "params": [],
+      "persist": true
+     },
+     {
+      "kind": 21,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 14,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 21,
+      "params": [],
+      "persist": true
+     },
+     {
+      "kind": 0,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 21,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 21,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 2,
+      "params": [],
+      "persist": true
+     },
+     {
+      "kind": 13,
+      "params": [],
+      "persist": true
+     },
+     {
+      "kind": 24,
+      "params": [],
+      "persist": true
+     },
+     {
+      "kind": 21,
+      "params": [],
+      "persist": true
+     },
+     {
+      "kind": 21,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 7,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 24,
+      "params": [],
+      "persist": true
+     },
+     {
+      "kind": 21,
+      "params": [],
+      "persist": true
+     },
+     {
+      "kind": 6,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 21,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 0,
+      "params": [],
+      "persist": true
+     },
+     {
+      "kind": 4,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 23,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 21,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 23,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 23,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 21,
+      "params": [],
+      "persist": true
+     },
+     {
+      "kind": 23,
+      "params": [],
+      "persist": true
+     }
+    ],
+    "data_edges": [
+     [
+      2,
+      7,
+      0
+     ],
+     [
+      2,
+      49,
+      0
+     ],
+     [
+      6,
+      4,
+      0
+     ],
+     [
+      6,
+      36,
+      0
+     ],
+     [
+      12,
+      13,
+      0
+     ],
+     [
+      16,
+      31,
+      0
+     ],
+     [
+      21,
+      5,
+      1
+     ],
+     [
+      24,
+      16,
+      0
+     ],
+     [
+      28,
+      6,
+      1
+     ],
+     [
+      30,
+      27,
+      1
+     ],
+     [
+      41,
+      38,
+      0
+     ],
+     [
+      42,
+      17,
+      0
+     ]
+    ],
+    "control_edges": [
+     [
+      1,
+      0,
+      10
+     ],
+     [
+      2,
+      0,
+      36
+     ],
+     [
+      4,
+      0,
+      2
+     ],
+     [
+      6,
+      0,
+      1
+     ],
+     [
+      7,
+      0,
+      12
+     ],
+     [
+      8,
+      0,
+      2
+     ],
+     [
+      8,
+      1,
+      46
+     ],
+     [
+      10,
+      0,
+      4
+     ],
+     [
+      12,
+      0,
+      1
+     ],
+     [
+      13,
+      0,
+      14
+     ],
+     [
+      15,
+      0,
+      1
+     ],
+     [
+      16,
+      0,
+      8
+     ],
+     [
+      20,
+      0,
+      39
+     ],
+     [
+      22,
+      0,
+      29
+     ],
+     [
+      24,
+      0,
+      0
+     ],
+     [
+      26,
+      0,
+      27
+     ],
+     [
+      27,
+      0,
+      22
+     ],
+     [
+      30,
+      0,
+      31
+     ],
+     [
+      31,
+      0,
+      32
+     ],
+     [
+      32,
+      0,
+      39
+     ],
+     [
+      33,
+      0,
+      40
+     ],
+     [
+      34,
+      0,
+      4
+     ],
+     [
+      35,
+      0,
+      28
+     ],
+     [
+      36,
+      0,
+      37
+     ],
+     [
+      37,
+      0,
+      43
+     ],
+     [
+      38,
+      0,
+      35
+     ],
+     [
+      40,
+      0,
+      41
+     ],
+     [
+      41,
+      0,
+      23
+     ],
+     [
+      43,
+      0,
+      44
+     ],
+     [
+      44,
+      0,
+      45
+     ],
+     [
+      45,
+      0,
+      48
+     ],
+     [
+      46,
+      0,
+      47
+     ],
+     [
+      48,
+      0,
+      49
+     ],
+     [
+      49,
+      0,
+      48
+     ]
+    ],
+    "entry": 7,
+    "state_words": 128,
+    "tick_budget": 128,
+    "out_cap": 15,
+    "call_depth_max": 1,
+    "persist_state": false
+   },
+   "wall_s": 73.1
+  },
+  {
+   "rung": "L3_last",
+   "seed": 1804,
+   "N": 200,
+   "solved_gen": null,
+   "max_train": 0.25,
+   "final_heldout": 0.0625,
+   "elite_nodes": 23,
+   "elite_manifest": {
+    "schema_version": "proteus.graph_manifest.v1",
+    "nodes": [
+     {
+      "kind": 23,
+      "params": [],
+      "persist": true
+     },
+     {
+      "kind": 6,
+      "params": [],
+      "persist": true
+     },
+     {
+      "kind": 1,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 16,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 12,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 23,
+      "params": [],
+      "persist": true
+     },
+     {
+      "kind": 3,
+      "params": [
+       3959442728
+      ],
+      "persist": false
+     },
+     {
+      "kind": 20,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 3,
+      "params": [
+       3959442729
+      ],
+      "persist": false
+     },
+     {
+      "kind": 19,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 21,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 22,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 13,
+      "params": [],
+      "persist": true
+     },
+     {
+      "kind": 21,
+      "params": [],
+      "persist": true
+     },
+     {
+      "kind": 16,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 23,
+      "params": [],
+      "persist": true
+     },
+     {
+      "kind": 3,
+      "params": [
+       3959442721
+      ],
+      "persist": false
+     },
+     {
+      "kind": 21,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 21,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 22,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 16,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 23,
+      "params": [],
+      "persist": true
+     },
+     {
+      "kind": 1,
+      "params": [],
+      "persist": false
+     }
+    ],
+    "data_edges": [
+     [
+      0,
+      3,
+      1
+     ],
+     [
+      0,
+      13,
+      0
+     ],
+     [
+      10,
+      0,
+      0
+     ],
+     [
+      13,
+      5,
+      1
+     ],
+     [
+      17,
+      11,
+      0
+     ],
+     [
+      17,
+      15,
+      0
+     ],
+     [
+      20,
+      0,
+      1
+     ],
+     [
+      20,
+      3,
+      0
+     ]
+    ],
+    "control_edges": [
+     [
+      0,
+      0,
+      8
+     ],
+     [
+      1,
+      0,
+      6
+     ],
+     [
+      8,
+      0,
+      10
+     ],
+     [
+      10,
+      0,
+      11
+     ],
+     [
+      11,
+      0,
+      14
+     ],
+     [
+      12,
+      0,
+      13
+     ],
+     [
+      14,
+      0,
+      15
+     ],
+     [
+      15,
+      0,
+      16
+     ],
+     [
+      16,
+      0,
+      17
+     ],
+     [
+      17,
+      0,
+      18
+     ],
+     [
+      18,
+      0,
+      19
+     ],
+     [
+      19,
+      0,
+      20
+     ],
+     [
+      20,
+      0,
+      21
+     ]
+    ],
+    "entry": 0,
+    "state_words": 32,
+    "tick_budget": 64,
+    "out_cap": 1,
+    "call_depth_max": 1,
+    "persist_state": false
+   },
+   "wall_s": 51.8
+  },
+  {
+   "rung": "L2_first",
+   "seed": 1804,
+   "N": 200,
+   "solved_gen": null,
+   "max_train": 0.25,
+   "final_heldout": 0.0833,
+   "elite_nodes": 2,
+   "elite_manifest": {
+    "schema_version": "proteus.graph_manifest.v1",
+    "nodes": [
+     {
+      "kind": 23,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 11,
+      "params": [],
+      "persist": false
+     }
+    ],
+    "data_edges": [],
+    "control_edges": [],
+    "entry": 0,
+    "state_words": 256,
+    "tick_budget": 1024,
+    "out_cap": 16,
+    "call_depth_max": 0,
+    "persist_state": false
+   },
+   "wall_s": 105.2
+  },
+  {
+   "rung": "L4_order",
+   "seed": 1803,
+   "N": 200,
+   "solved_gen": null,
+   "max_train": 0.2188,
+   "final_heldout": 0.0729,
+   "elite_nodes": 22,
+   "elite_manifest": {
+    "schema_version": "proteus.graph_manifest.v1",
+    "nodes": [
+     {
+      "kind": 5,
+      "params": [],
+      "persist": true
+     },
+     {
+      "kind": 23,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 4,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 6,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 1,
+      "params": [],
+      "persist": true
+     },
+     {
+      "kind": 22,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 21,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 19,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 2,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 6,
+      "params": [],
+      "persist": true
+     },
+     {
+      "kind": 24,
+      "params": [],
+      "persist": true
+     },
+     {
+      "kind": 22,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 21,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 10,
+      "params": [],
+      "persist": true
+     },
+     {
+      "kind": 22,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 22,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 1,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 5,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 20,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 1,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 18,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 1,
+      "params": [],
+      "persist": false
+     }
+    ],
+    "data_edges": [
+     [
+      2,
+      3,
+      1
+     ],
+     [
+      2,
+      13,
+      1
+     ],
+     [
+      11,
+      5,
+      0
+     ],
+     [
+      18,
+      0,
+      0
+     ]
+    ],
+    "control_edges": [
+     [
+      1,
+      0,
+      9
+     ],
+     [
+      2,
+      0,
+      1
+     ],
+     [
+      3,
+      0,
+      0
+     ],
+     [
+      6,
+      0,
+      0
+     ],
+     [
+      7,
+      1,
+      5
+     ],
+     [
+      8,
+      0,
+      5
+     ],
+     [
+      9,
+      0,
+      18
+     ],
+     [
+      11,
+      0,
+      7
+     ],
+     [
+      12,
+      0,
+      4
+     ],
+     [
+      14,
+      0,
+      19
+     ],
+     [
+      20,
+      1,
+      13
+     ]
+    ],
+    "entry": 2,
+    "state_words": 16,
+    "tick_budget": 256,
+    "out_cap": 4,
+    "call_depth_max": 2,
+    "persist_state": true
+   },
+   "wall_s": 573.4
+  },
+  {
+   "rung": "L4_order",
+   "seed": 1804,
+   "N": 200,
+   "solved_gen": null,
+   "max_train": 0.1875,
+   "final_heldout": 0.0521,
+   "elite_nodes": 5,
+   "elite_manifest": {
+    "schema_version": "proteus.graph_manifest.v1",
+    "nodes": [
+     {
+      "kind": 24,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 22,
+      "params": [],
+      "persist": true
+     },
+     {
+      "kind": 3,
+      "params": [
+       1650898474
+      ],
+      "persist": false
+     },
+     {
+      "kind": 23,
+      "params": [],
+      "persist": true
+     },
+     {
+      "kind": 0,
+      "params": [],
+      "persist": false
+     }
+    ],
+    "data_edges": [],
+    "control_edges": [
+     [
+      2,
+      0,
+      4
+     ],
+     [
+      4,
+      0,
+      3
+     ]
+    ],
+    "entry": 3,
+    "state_words": 64,
+    "tick_budget": 64,
+    "out_cap": 1,
+    "call_depth_max": 2,
+    "persist_state": false
+   },
+   "wall_s": 141.7
+  },
+  {
+   "rung": "L6_w2k2",
+   "seed": 1804,
+   "N": 200,
+   "solved_gen": null,
+   "max_train": 0.1875,
+   "final_heldout": 0.0521,
+   "elite_nodes": 11,
+   "elite_manifest": {
+    "schema_version": "proteus.graph_manifest.v1",
+    "nodes": [
+     {
+      "kind": 20,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 1,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 23,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 5,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 20,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 14,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 12,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 5,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 23,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 18,
+      "params": [],
+      "persist": false
+     },
+     {
+      "kind": 6,
+      "params": [],
+      "persist": false
+     }
+    ],
+    "data_edges": [
+     [
+      3,
+      3,
+      0
+     ],
+     [
+      7,
+      6,
+      0
+     ],
+     [
+      7,
+      7,
+      0
+     ]
+    ],
+    "control_edges": [
+     [
+      2,
+      0,
+      3
+     ],
+     [
+      3,
+      0,
+      4
+     ],
+     [
+      6,
+      0,
+      7
+     ]
+    ],
+    "entry": 2,
+    "state_words": 256,
+    "tick_budget": 1024,
+    "out_cap": 1,
+    "call_depth_max": 0,
+    "persist_state": false
+   },
+   "wall_s": 185.8
+  }
+ ]
+}

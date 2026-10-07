@@ -23,7 +23,7 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
 | B15 | why does L2 force genuine state? | ANALYSIS: wall = conditional write ROUTING to 2 locations (hypothesis) |
 | B16 | how do genuine shelves store one value? | 56% LATCH (stop perceiving); 36% continuous perceivers |
 | B14' | L4 seeded from perceiving vs latching shelves | NULL 0/5 + 0/5 |
-| B18 | graph organisms on the ladder (first world run) | PAUSED: needs a WSE-format graph positive control |
+| B18 | graph organisms on the ladder (first world run) | NULL + WORSE: L1 1/4, rest 0/4 (control 1.000) |
 | B19 | gen-0 config (tape 4096 + persist tape) as hidden gate? | NO: BIG 0/4 |
 | B20 | indexed solver neighbourhood | ISOLATED PEAK (shelf-level .0015) |
 | B17 | forced perception (echo on PUT) opens the 2-value wall? | staged; controls pass |
@@ -216,6 +216,13 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   register-based one-value memory and away from the persistence the indexed solver needs.
   Working explanation now: the indexed solver is an ISOLATED PEAK (B20) behind a coupled write/read pair; nothing
   in the search finds it from the shelf or from scratch at these budgets.
+- B18 FIRST WORLD RUN OF THE PROTEUS GRAPH ORGANISM (jittered ladder, graph_grammar.v1 via handover, G=300, 4 seeds,
+  ~0.8 core-h). Positive control (12-node WSE indexed store, mine) 1.000 on every rung. Evolved: L1 1/4 (gen 215,
+  55 nodes), L3 0/4, L2 0/4, L4 0/4, L6 0/4; most cells never leave chance (train .19-.31, held-out ~.06).
+  PREDICTION (L1/L3 >= 2/4 each) FAILED. Graph organisms under this search are much WORSE than flat v0 (B08J: L1
+  7/8, L3 8/8): they do not even reach the one-value shelf. Consistent with PROTEUS-46 CLIFF_SURVIVES. KILLED for
+  now: "the wall is a property of flat, positional programs" -- the graph architecture does not open it and makes the
+  climb harder. Open DEV question (not pursued): why graph gen 0 rarely produces output-bearing paths.
 - B08J built (ladder with jitter in train AND held-out); controls unchanged under jitter. Launches when cores free.
 - Next: B01b (done) tests H-PLATEAU quantitatively; then B03 = search arms at equal compute from fresh gen 0
   (baseline / heavy-tailed mutation count / behaviour-novelty) -- prediction: only structural-move arms lift 0/60.
