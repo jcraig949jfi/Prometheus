@@ -38,6 +38,7 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
 | B28 | do foragers transfer across worlds? | NO: home +.23, off-home -.02; world-specific mappings |
 | B29 | leave-one-world-out training: invariant sensing? | staged; generalist control passes on 2/3 worlds; launch ~00:00Z |
 | B30 | do foragers carry state across ticks? | YES: 6/7 content sensors use state; blind ones in rewarding worlds 5/5 |
+| B31 | what do they remember? | 2504: 1-register direction memory; others computed state (not past observations) |
 | B17 | forced perception (echo on PUT) opens the 2-value wall? | staged; controls pass |
 | B12 | LONG: W2_K2 with N=500, G=3000 -- is it just time? | STOPPED (compute repair); partial 0/6 to g200-2999 |
 | B11 | is the W2_K2 shelf a delay line? | MOSTLY NO: 50/72 genuine memory, 20/72 delay lines |
@@ -339,6 +340,12 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   evolved foragers COMBINE sensing with carried state (dwell-by-reversal needs a remembered direction). Caveat:
   persist=none breaks ANY state (counters, direction, values), so WHAT is remembered is not yet measured -- next light
   probe: per-register persistence ablation on the content sensors.
+- B31 PER-REGISTER FORGETTING (zero one register at every tick boundary): P-boom 2504 (dwell-by-reversal) carries
+  state in ONE register, r2, whose value tracks the last move direction (4 after MOVE+, 5 / >=8 after MOVE-) -> a
+  one-register DIRECTION MEMORY, exactly what reversal-dwelling needs. P-boom 2506 needs r1 (a 0/1 flag) plus r4-r6
+  (large values); C6-unable 2703 needs 5 registers (mostly large values). Weak-signal check "do the large registers hold
+  the PREVIOUS tick's observation words (temporal-difference sensing)?": 0 matches over 184 / 116 ticks -> KILLED at
+  this level; the state is COMPUTED (accumulator / mixing chains), not stored observations.
 - PIVOT LANE staged (B23, for the budget window): re-audit the Deep Frontier / C6 record with today's instruments.
   Off-repo evidence exists: D:\Prometheus-worktreesrchaeon-wse-2026-09-16rchaeonrontier
 uns (2.3 GB;
