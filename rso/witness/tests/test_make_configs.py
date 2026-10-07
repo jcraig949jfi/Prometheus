@@ -63,7 +63,8 @@ class TestMakeConfigs(unittest.TestCase):
     def test_deterministic(self):
         out2 = os.path.join(self.tmp, "configs2")
         MC.build(self.s4, self.s15, out2)
-        for name in ("SEED_LISTS.json", "config_CONTROLS.json", "config_S4.json", "config_S15.json"):
+        self.assertEqual(json.load(open(os.path.join(self.out, "WITNESS_SEEDS.json"))), self.summary["seeds"]["witness"])
+        for name in ("SEED_LISTS.json", "WITNESS_SEEDS.json", "config_CONTROLS.json", "config_S4.json", "config_S15.json"):
             self.assertEqual(open(os.path.join(self.out, name), "rb").read(), open(os.path.join(out2, name), "rb").read(), name)
 
 
