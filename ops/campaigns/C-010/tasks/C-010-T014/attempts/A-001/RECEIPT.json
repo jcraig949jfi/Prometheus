@@ -1,0 +1,79 @@
+{
+  "schema": "prometheus.workgraph.receipt.v1",
+  "task_id": "C-010-T014",
+  "campaign_id": "C-010",
+  "attempt_id": "A-001",
+  "role": "Pallas",
+  "model": "claude-fable-5-1",
+  "quality_class": "Q3",
+  "instance": "harry1-14289af6 (one headless session: exposure, set, both launches, report, receipt, state commits; no background job at any point)",
+  "host": "harry1",
+  "branch": "pallas/c010-t014",
+  "worktree_path": "C:/Prometheus-worktrees/pallas-c010-t014",
+  "start_sha": "17b03160d26d4411248196931176e89a9900ea49",
+  "end_sha": "3ac205dd607fc62eb6c016daafb41c07186ff2d3",
+  "commits": {
+    "claim": "2ff41b5d9 (main, ~10:45Z)",
+    "exposure_first": "9b10d0b4d (10:53:56Z): EXPOSURE.md before any fixture; FREEZE_W1 33/33 hashes verified against committed blobs",
+    "set_before_outcomes": "931be915f (11:06:58Z): cases.py, expected.json, edits.json, witnesses.py, run_cases.py, run_mutation.py, CHALLENGE_SET.md with predictions",
+    "implementing": "34b89538e (main)",
+    "driver_repair": "e624104e4 (11:11:14Z): mutation launch split per module across three foreground invocations sharing one ledger launch (headless 600 s rule); edits_<module>.json byte-identical subsets; check-build rows; data files untouched",
+    "merge_origin_main": "3434117cf (origin/main 0206a3bf5; nothing under rso/ or ares/ changed upstream; FREEZE_W1 33/33 re-verified)",
+    "results": "3ac205dd6: results_cases.jsonl, mutation_rows_{evaluate,ares_client,ruler}.jsonl, mutation_launch.json, rso/witness/LEDGER.jsonl (2 launches), REPORT.md, acceptance_stdout.txt, journal, work state, comms bodies (pushed on the branch)",
+    "green_and_integration_ready": "the state commit carrying this receipt (main)"
+  },
+  "files_changed": [
+    "rso/witness/challenge/W1/ (new: EXPOSURE.md, CHALLENGE_SET.md, cases.py, expected.json, edits.json, edits_evaluate.json, edits_ares_client.json, edits_ruler.json, witnesses.py, run_cases.py, run_mutation.py, check_build_2026-10-07T110909Z.jsonl, results_cases.jsonl, mutation_rows_evaluate.jsonl, mutation_rows_ares_client.jsonl, mutation_rows_ruler.jsonl, mutation_launch.json, acceptance_stdout.txt, REPORT.md)",
+    "rso/witness/LEDGER.jsonl (new: W1-CASES-20261007T111116Z-2100; W1-MUTATION-20261007T111422Z-16848 with 9 MUTATION_CHILD rows)",
+    "roles/Pallas/{WORK_STATE.json,journal/2026-10-07.md,comms/T014_INTEGRATION_READY_2026-10-07.md,comms/HEARTBEAT_2026-10-07_T014_done.md}",
+    "ops/campaigns/C-010/tasks/C-010-T014/ (state commits on main)"
+  ],
+  "evidence_added": [
+    "W1 set on FREEZE_W1 committed before any outcome (931be915f): 3 sound, 8 broken shapes, 6 semantic edits each with a behavioural witness; every seed >= 5,000,000; synthetic traces, hand-wired constructions, one random P = 1 population; make_configs and run_witness subject never invoked",
+    "SOUND: S1 the real driver at n = 2048 (3 launches, 16 receipts) accepted end to end (binding, P-FLAT, custody, every gate evaluated; values redacted); S2 pre-interrupt-only and S3 mid-window traces read P-RET NEGATIVE 0/0 as registered",
+    "BROKEN survivors: B1 the same node presented by two completed registered bundles is not refused and the class follows argument order; B2 P-CAL arms on an unregistered 2048 list are evaluated (only P-RET/P-CHAN seeds are checked; --seeds optional); B3 a hand-wired leaky runtime passes P-ERASE (D = 0, leak D = 2560, qualified) on same-regime probe triples with X-LEAK on registered-shape triples; B5 a receipt whose arm and subject digest disagree with its node id is accepted; B8 (semantic) the NULL arm is a no-op on the plastic POS carrier (0 of 320 actions differ from arm S; W1 written under reset_each_step)",
+    "BROKEN refused: B7 four tampers on real driver output (artifact swap, receipt-file swap, inventory digest edit, re-registered edit) each refused with the predicted reason",
+    "Declared escape / limit confirmed: B4 two-back delay-line leak reads 0 on P-ERASE and P-PRES and carries (640); not reachable under S.Runtime (reset restores W1, zeroes v); B6 a counterfeit trace for a real bundled genome is admitted (no replay registered)",
+    "EDITS on the full acceptance suite (154 tests per child): E1 window on first interrupt, E2 S-NOPL mutates the shared subject, E3 RUN_UNREPORTED dropped, E5 P-ERASE/P-PRES oracle unchecked, E6 one-sided P-CAL margin -> SURVIVED, witnesses differ; E4 interrupt before the step (control) -> KILLED by test_runner_reproduces_ares_rollout_actions",
+    "per surface (REPORT.md s3): evaluate.py NOT CLOSED; ruler.py NOT CLOSED (E6 only); ares_client node executions NOT CLOSED (E2; B3 evaluator-side; B8 semantic); run_witness storage / inventory CLOSED within coverage; make_configs read only",
+    "predictions (CHALLENGE_SET.md, before outcomes): 11/11 cases, 6/6 edits"
+  ],
+  "evidence_executed": [
+    {"command": "python -B rso/witness/challenge/W1/run_cases.py --ledger /tmp/unused.jsonl --check-build (11:09:09Z; builds synthetic bundles and S1 configs, verifies B3 premises, no evaluator; unledgered; rows check_build_2026-10-07T110909Z.jsonl)", "result": "7 bundles built; B3 premise D_same_regime 0, D_registered_shape 2560; S1 configs load (4, 6, 6 entries)"},
+    {"command": "launch 1: python -B rso/witness/challenge/W1/run_cases.py --ledger rso/witness/LEDGER.jsonl --contract rso/witness/contract.json (W1-CASES-20261007T111116Z-2100, 11:11:16Z-11:13:43Z, 142.8 CPU-s, 7,176,308 scratch bytes)", "result": "S1/S2/S3 AS_EXPECTED; B7 4/4 refused; B1/B2/B3/B5/B8 SURVIVOR; B4/B6 as declared; rows results_cases.jsonl"},
+    {"command": "launch 2: python -B rso/witness/challenge/W1/run_mutation.py ... --edits edits_evaluate.json | edits_ares_client.json | edits_ruler.json --finish (W1-MUTATION-20261007T111422Z-16848, 11:14:22Z-11:26Z, three foreground invocations, 9 children, 643.4 charged wall-s)", "result": "baselines PASSED 154/154 x3; E1 E2 E3 E5 E6 SURVIVED (NOT_EQUIVALENT_WITNESSED), E4 KILLED (154/1); cap not exhausted; rows mutation_rows_*.jsonl, mutation_launch.json"},
+    {"command": "diagnostics (unledgered, disclosed): E4 under the edit on test_ares_client alone; E2 under the edit through receipt_dict on the leak construction (node ids only)", "result": "E4 killed by TestRunner.test_runner_reproduces_ares_rollout_actions; E2 changes the subject digest after S-NOPL (f186cfac -> 8cd1d44d) so later node ids mismatch the plan: refused at evaluation, fail-closed"},
+    {"command": "git diff --quiet 931be915f HEAD -- cases.py expected.json edits.json witnesses.py; FREEZE_W1 hash walk on the merged tree 3434117cf", "result": "data files byte-identical to the set commit; 33 equal, 0 mismatch"},
+    {"command": "python -B -m unittest discover -s rso/witness/tests -t . && python -B -m unittest discover -s rso/binding/tests -t . (merged tree 3434117cf; foreground; unledgered)", "result": "Ran 133 tests OK (69.6 s); Ran 21 tests OK -- GREEN"},
+    {"command": "python -m workgraph validate", "result": "OK"}
+  ],
+  "red_observed": {"observed": false, "detail": "review packet, red_required false: the set and its predictions were committed (931be915f) before the first outcome was observed; the expected verdicts are the answer key, not a failing test"},
+  "result": "DONE_CLEAN",
+  "known_escapes": [
+    "no fresh shape against load_config's seed refusals or make_configs' exclusion arithmetic (frozen T016 / T013 tests stand for them)",
+    "B4 and B8 are construction demonstrations, not evaluator cases; B5 and B6 need a producer that lies consistently (their value is the missing cheap checks)",
+    "the reviewer read test_evaluate.py and test_ares_client.py before choosing the edits (EXPOSURE.md): E1 / E3 / E5 are informed coverage probes, not first-sight",
+    "no CLAIMED comms note was posted (the claim push was the claim); the INTEGRATION_READY note is the task note",
+    "same vendor family as the builders; cell member; no production code touched"
+  ],
+  "unresolved": [
+    "B1 duplicate node across bundles (evaluate.evaluate; behavioural; bears on the registered run via the s10 re-run rule)",
+    "B2 P-CAL / P-OBS / P-ERASE / P-PRES seed lists unverified by the evaluator; --seeds optional (behavioural; bears on the registered run)",
+    "B3 probe-triple shape and X / X-LEAK probe-set identity unchecked (behavioural; config-conditional)",
+    "B5 node id vs receipt fields unchecked (behavioural; producer-forgery class)",
+    "B8 NULL arm semantics (operator question through Palamedes: amend before any outcome under PREREGISTRATION s10, or read P-CAL's NULL conjunct narrowly)",
+    "E1, E2, E3, E5, E6 witnessed survivors of the 154-test acceptance suite (test-coverage class; E2 fail-closed on the frozen path)"
+  ],
+  "unblocks": [
+    "C-010 repair round (PREREGISTRATION s8: one round; owners Argus evaluate.py / ruler.py, Cadmus ares_client.py) and the operator's NULL-arm decision, then C-010-T020"
+  ],
+  "resources": {
+    "top_level_launches": 2,
+    "packet_ledgered_cpu_s": 786.2,
+    "campaign_ledger_after": {"launches": 2, "cpu_s": 786.2, "artifact_bytes": 7176308},
+    "unledgered": "check-build 13 s; diagnostics ~17 s; acceptance on the merged tree 70 s",
+    "model": "one Q3 headless session, about 60 min (10:44Z-11:45Z; packet ceiling said <= 45)"
+  },
+  "notes": "Exposure record committed before the set (launch note). State commits went to main as they happened (pallas-ops): 2ff41b5d9 CLAIMED, 34b89538e IMPLEMENTING, then GREEN and INTEGRATION_READY with this receipt. Headless rule applied throughout: no run_in_background; every command foreground with timeout <= 600 s; the mutation launch was split across three invocations sharing one ledger launch for that reason (driver repair e624104e4, data files untouched). Hard gate: no registered subject configuration run, no registered arm on a registered seed, no accuracy / retention / ruler value of POS / NULL / SHUF / RECUR printed or committed (S1 rows are structure only).",
+  "created_at_utc": "2026-10-07T11:46:00Z"
+}

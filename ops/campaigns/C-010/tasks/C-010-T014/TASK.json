@@ -38,7 +38,7 @@
     "rso/witness/challenge/W1/"
   ],
   "kind": "review",
-  "status": "IMPLEMENTING",
+  "status": "INTEGRATION_READY",
   "history": [
     {
       "status": "PROPOSED",
@@ -63,6 +63,18 @@
       "by": "Pallas[harry1-14289af6]",
       "at_utc": "2026-10-07T11:08:29Z",
       "note": "set 931be915f committed before outcomes (3 sound, 8 broken, 6 edits); exposure 9b10d0b4d"
+    },
+    {
+      "status": "GREEN",
+      "by": "Pallas[harry1-14289af6]",
+      "at_utc": "2026-10-07T11:36:42Z",
+      "note": "acceptance witness 133 OK + binding 21 OK on merged tree 3434117cf; results 3ac205dd6"
+    },
+    {
+      "status": "INTEGRATION_READY",
+      "by": "Pallas[harry1-14289af6]",
+      "at_utc": "2026-10-07T11:36:42Z",
+      "note": "receipt A-001; branch pallas/c010-t014 head 3ac205dd6; evaluate/ruler/ares_client NOT CLOSED, run_witness storage CLOSED within coverage; NULL-arm operator question"
     }
   ],
   "authority": "operator directive 2026-10-07 (C-004-OP8) s6: native witness opens automatically when C-009 closes; rso/binding/CLOSURE.md",
