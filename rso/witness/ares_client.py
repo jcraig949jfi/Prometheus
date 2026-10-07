@@ -248,3 +248,75 @@ def paired_carryover_diffs(actions_after_a, actions_after_b):
 def actions_equal(a, b):
     """P-OBS plumbing: identical action traces with and without the observer."""
     return bool(np.array_equal(np.asarray(a), np.asarray(b)))
+
+
+# --------------------------------------------------------------------------------------------------------
+# C-009-T018: P-ERASE probe set and P-PRES seed set (rso/witness/ERASE_PROBES.md). Deterministic seed scans below
+# the witness seed floor (PREREG_DRAFT s3: witness seeds >= 900000) and above balanced_seeds_for's scan range.
+
+ERASE_START = 800_000
+ERASE_N_PROBES = 64            # 32 probes with r = 0, 32 with r = 1
+PRES_START = 850_000
+PRES_N_SEEDS = 32              # 16 with r = 0, 16 with r = 1, each with its own warm-up episode
+WITNESS_SEED_FLOOR = 900_000
+
+
+def regime_of(seed, name=WORLD, mode="present"):
+    """The world-side regime r an episode seed draws (oracle only; no organism is run)."""
+    w = world(name, mode)
+    w.reset(np.random.default_rng(seed), 1)
+    return int(w.r)
+
+
+def _scan(start, stop, wanted, exclude):
+    """Seeds from `start` upward, skipping `exclude`, taken in order as each requested regime slot opens.
+    `wanted` is a list of regimes; returns one seed per entry, in that order."""
+    out, s, pending = [], start, list(wanted)
+    by_r = {0: [], 1: []}
+    while pending:
+        if s >= stop:
+            raise ValueError("seed range exhausted before the set was complete")
+        if s not in exclude:
+            by_r[regime_of(s)].append(s)
+            while pending and by_r[pending[0]]:
+                out.append(by_r[pending.pop(0)].pop(0))
+        s += 1
+    return out
+
+
+def erase_probe_set(n=ERASE_N_PROBES, start=ERASE_START, exclude=()):
+    """[(pre_a, pre_b, probe)]: pre_a draws r = 0, pre_b draws r = 1, probe alternates r = 0 / r = 1. Each seed is
+    used once. P-ERASE runs [pre_a, probe] and [pre_b, probe] on fresh runtimes and compares the probe episode."""
+    wanted = []
+    for i in range(n):
+        wanted += [0, 1, i % 2]
+    seeds = _scan(start, PRES_START, wanted, set(exclude))
+    return [tuple(seeds[3 * i:3 * i + 3]) for i in range(n)]
+
+
+def pres_seed_set(n=PRES_N_SEEDS, start=PRES_START, exclude=()):
+    """[(warmup, seed)]: P-PRES runs [warmup, seed] on one runtime and [seed] on a fresh instance of the same genome;
+    the seed episode's actions must be identical. Seeds alternate r = 0 / r = 1; warm-ups take the opposite r."""
+    wanted = []
+    for i in range(n):
+        wanted += [1 - i % 2, i % 2]
+    seeds = _scan(start, WITNESS_SEED_FLOOR, wanted, set(exclude))
+    return [tuple(seeds[2 * i:2 * i + 2]) for i in range(n)]
+
+
+def _probe_actions(pop, rt_cls, seq, mode="present"):
+    rt = rt_cls(pop)
+    return run_episodes(pop, world(WORLD, mode), seq, runtime=rt)["actions"][-1]
+
+
+def p_erase_count(pop, rt_cls, probes, mode="present"):
+    """Total differing (step, organism) actions in the probe episode between its two preceding conditions, summed
+    over the probe set. A count, not a decision; ERASE_PROBES.md registers the gate on it."""
+    return sum(paired_carryover_diffs(_probe_actions(pop, rt_cls, [a, p], mode), _probe_actions(pop, rt_cls, [b, p], mode))
+               for a, b, p in probes)
+
+
+def p_pres_diffs(pop, rt_cls, pairs, mode="present"):
+    """Total differing actions on each seed episode between 'after a warm-up and a reset' and 'fresh instance'."""
+    return sum(paired_carryover_diffs(_probe_actions(pop, rt_cls, [w, s], mode), _probe_actions(pop, rt_cls, [s], mode))
+               for w, s in pairs)
