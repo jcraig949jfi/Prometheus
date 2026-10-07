@@ -18,7 +18,7 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
 | B07 | withdrawn positional scaffold -> content-addressed recall? | NULL 0/36 (cue dispatch itself unreachable) |
 | B08 | which primitive is the wall? (ladder) | L4 claim RETRACTED: evolved solvers are delay lines (B08b) |
 | B08J | ladder with timing jitter (repaired instrument) | built; queued |
-| B11 | are historical CMP shelf elites delay lines? | queued |
+| B11 | is the W2_K2 shelf a delay line? | MOSTLY NO: 50/72 genuine memory, 20/72 delay lines |
 | B09 | dispatch wall: READ the cue vs SELECT on it | running |
 | B10 | SEL opcode (branch-free mux): does the wall move? | running |
 
@@ -105,6 +105,11 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   state only when timing cannot answer (L2). Likely re-read of CMP1-3: the W2_K2 "shelf" (.5, "remembers one value")
   may be a delay line that stores NOTHING, which would make the shelf->summit plateau a non-path by construction.
   To verify on the historical shelf elites (C2-SFE-05 archives) -- queued as B11.
+- B11 (72 B03 final elites = the current W2_K2 shelf, plain vs jitter): BIMODAL -- 50/72 robust genuine one-slot
+  memory (jitter .55-.57), 20/72 delay lines (-> .05-.18), 2 partial. PREDICTION (>= 90% delay lines) FAILED.
+  KILLED (mine, raised one entry above): "the W2_K2 shelf is a delay line that stores nothing". The shelf is mostly
+  real stored state; the B02 silent plateau stands as a real feature. Kept: ~28% of shelf organisms are timing
+  exploits, so any shelf-based seeding/import experiment (CMP2/CMP3 shelf arms) mixed two mechanisms unknowingly.
 - B08J built (ladder with jitter in train AND held-out); controls unchanged under jitter. Launches when cores free.
 - Next: B01b (done) tests H-PLATEAU quantitatively; then B03 = search arms at equal compute from fresh gen 0
   (baseline / heavy-tailed mutation count / behaviour-novelty) -- prediction: only structural-move arms lift 0/60.
