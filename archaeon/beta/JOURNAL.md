@@ -30,6 +30,7 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
 | B08K | 0-7 jitter re-score of B08J | L1 7/7, L2 5/5, L3 6/8 genuine; standard now 0-7 |
 | B22 | credit the write half, then withdraw | write learned 2/8, lost on withdrawal; recall 0/16 |
 | B22b | hold store credit at .2 after g150 | running |
+| B23 | re-audit Deep Frontier/C6 elites with jitter/constant-twin/disasm | staged (budget window) |
 | B17 | forced perception (echo on PUT) opens the 2-value wall? | staged; controls pass |
 | B12 | LONG: W2_K2 with N=500, G=3000 -- is it just time? | STOPPED (compute repair); partial 0/6 to g200-2999 |
 | B11 | is the W2_K2 shelf a delay line? | MOSTLY NO: 50/72 genuine memory, 20/72 delay lines |
@@ -246,6 +247,11 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   2/8 STORE cells (L6 2201 .99, L4 2203 .91); the other 6 STORE cells never exceed .11. Both learners lost the write
   after withdrawal. PREDICTION (store >= .9 in >= 3/4 per world; recall >= 1/4) FAILED on both counts. Weak but
   real: under credit the write is reachable in ~1/4 of runs within 150 generations.
+- PIVOT LANE staged (B23, for the budget window): re-audit the Deep Frontier / C6 record with today's instruments.
+  Off-repo evidence exists: D:\Prometheus-worktreesrchaeon-wse-2026-09-16rchaeonrontieruns (2.3 GB;
+  16 pursuits incl. C6-blind/-novel5/-unable/-volume, C4-cliff, C5-flat, P-boom, W-artifacts). Question: do the
+  frontier's elites and detector firings survive the timing-jitter ruler, constant twins and executed-code
+  disassembly? (Phase 2-B posture: no old positive presumed valid.) Read-only on that worktree.
 - B08J built (ladder with jitter in train AND held-out); controls unchanged under jitter. Launches when cores free.
 - Next: B01b (done) tests H-PLATEAU quantitatively; then B03 = search arms at equal compute from fresh gen 0
   (baseline / heavy-tailed mutation count / behaviour-novelty) -- prediction: only structural-move arms lift 0/60.
