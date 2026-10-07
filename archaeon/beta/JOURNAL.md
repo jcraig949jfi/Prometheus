@@ -29,7 +29,7 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
 | B21 | operand-locality mutation | NULL 0/8 (.82 cell = lag-window exploit) |
 | B08K | 0-7 jitter re-score of B08J | L1 7/7, L2 5/5, L3 6/8 genuine; standard now 0-7 |
 | B22 | credit the write half, then withdraw | write learned 2/8, lost on withdrawal; recall 0/16 |
-| B22b | hold store credit at .2 after g150 | running |
+| B22b | hold store credit at .2 after g150 | recall 0/8; write held but read never found; SUCCESSOR-STORE mechanism |
 | B23 | re-audit Deep Frontier/C6 elites with jitter/constant-twin/disasm | staged (budget window) |
 | B17 | forced perception (echo on PUT) opens the 2-value wall? | staged; controls pass |
 | B12 | LONG: W2_K2 with N=500, G=3000 -- is it just time? | STOPPED (compute repair); partial 0/6 to g200-2999 |
@@ -247,8 +247,21 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   2/8 STORE cells (L6 2201 .99, L4 2203 .91); the other 6 STORE cells never exceed .11. Both learners lost the write
   after withdrawal. PREDICTION (store >= .9 in >= 3/4 per world; recall >= 1/4) FAILED on both counts. Weak but
   real: under credit the write is reachable in ~1/4 of runs within 150 generations.
+- B22b FINAL (KEEP: store credit .5 until g150, then .2 permanently; G=400): recall 0/8. Write learned in 2/8
+  (L6 2201 held at 1.000 through g399; L4 2203 reached .99 then drifted back to the shelf). PREDICTION (recall >= 1/4
+  per world) FAILED. KILLED: "holding the write lets the read be found" -- 250 generations with a perfect write in
+  place produced no read. The read half is its own isolated step.
+- NEW MECHANISM (B22b L6 2201 elite, disassembled): a 6-instruction SUCCESSOR-STORE loop -- IN r0; ST [r6], r0;
+  r6 := r0; JMP into the tape's data region (executes stored memory as code; 16 distinct instruction indices run).
+  Rule: store every input word at the address named by the PREVIOUS word, i.e. tape[w_i] := w_{i+1}. On PUT
+  [1, tag, v] that writes tape[tag] = v as a side effect of one generic rule -- an associative successor memory, not
+  a PUT-specific path. Its OUT runs at tick start before any input (always 0), hence recall at chance. My hand graft
+  (drop early OUT; LD [r6]; OUT after the read) scored 0: the loop fires once per word, so the read must output only
+  after the SECOND word of the ASK -- a positional/counter condition. In this organism the read is a positional
+  problem, not a missing instruction pair.
 - PIVOT LANE staged (B23, for the budget window): re-audit the Deep Frontier / C6 record with today's instruments.
-  Off-repo evidence exists: D:\Prometheus-worktreesrchaeon-wse-2026-09-16rchaeonrontieruns (2.3 GB;
+  Off-repo evidence exists: D:\Prometheus-worktreesrchaeon-wse-2026-09-16rchaeonrontier
+uns (2.3 GB;
   16 pursuits incl. C6-blind/-novel5/-unable/-volume, C4-cliff, C5-flat, P-boom, W-artifacts). Question: do the
   frontier's elites and detector firings survive the timing-jitter ruler, constant twins and executed-code
   disassembly? (Phase 2-B posture: no old positive presumed valid.) Read-only on that worktree.
