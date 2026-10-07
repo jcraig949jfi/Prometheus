@@ -210,7 +210,7 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   below .45 .649, shelf-level .0015 (slot solver B01-B: neutral .335, shelf .077). Prediction (neutral lower) FAILED;
   the informative number is the SHELF share: the indexed solver is an ISOLATED PEAK -- breaking its write/read pair
   sends it to ~0, not to the one-value shelf, so there is no partial-credit path into it from below.
-- B19 (jittered W2_K2, G=300, light): BIG (gen-0 tape 4096, persist tape/all) 0/4; C2 0/3 (1 pending). PREDICTION
+- B19 (jittered W2_K2, G=300, light): BIG (gen-0 tape 4096, persist tape/all) 0/4; C2 0/4. PREDICTION
   (BIG >= 1/4) FAILED. KILLED: "gen-0 configuration is the hidden gate". Side observation: every BIG cell started
   with tape/all persistence and 3/4 elites drifted to regs or none -- selection moves the population toward
   register-based one-value memory and away from the persistence the indexed solver needs.
