@@ -21,6 +21,7 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
 | B13 | queue primitive (PUSH/POPF): does the 2-value wall move? | run 1 INSTRUMENT FAILURE (fixed, fuzzed); rerun queued for budget |
 | B14 | stepping stone: guard organism -> two stored values? | staged; queued for budget |
 | B15 | why does L2 force genuine state? | ANALYSIS: wall = conditional write ROUTING to 2 locations (hypothesis) |
+| B16 | how do genuine shelves store one value? | 56% LATCH (stop perceiving); 36% continuous perceivers |
 | B12 | LONG: W2_K2 with N=500, G=3000 -- is it just time? | STOPPED (compute repair); partial 0/6 to g200-2999 |
 | B11 | is the W2_K2 shelf a delay line? | MOSTLY NO: 50/72 genuine memory, 20/72 delay lines |
 | B09 | dispatch wall: READ the cue vs SELECT on it | CLEAN NULL 0/24 |
@@ -159,6 +160,16 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   -> a LAG-STRUCTURED TIMING EXPLOIT: the queue supplies a menu of lags covering most of the 0-3 jitter range.
   Not keyed memory; not a summit. RULER LESSON: 0-3 jitter is beatable by queue-shaped lags; memory claims on any
   queue-capable VM need jitter >= 0-7 or a per-lag profile. disasm.executed() now takes a VM patch.
+- B13 queue arm 0/7 so far (1304 pending). Reason I now see (mine): a queue solver still needs a three-way dispatch on
+  tick KIND (push on PUT, pop on ASK, neither on NOISE); the queue removes write-location routing, not dispatch.
+- B16 NEW MECHANISM CLASS -- MEMORY BY SENSORY SHUTDOWN. Disassembly of genuine (jitter-robust) shelf organisms:
+  B03_BASE_302 reads input on tick 0 only, then loops emitting the first value forever; _301 sits in a 2-instruction
+  busy loop. Measured over all 50 genuine shelf organisms (share of later ticks executing any IN): 19 strict latches
+  (0%), 9 near-latches (8%), 4 intermittent (33-40%), 18 continuous perceivers (100%); delay lines and the hand shelf
+  perceive 100%. Prediction (>= 70% latches) FAILED at the strict cut (38%; 56% incl. near-latch).
+  Reading: the GA's majority route to "one stored value" is to STOP PERCEIVING. A latched organism cannot store a
+  second value by construction -- so for those, the composition wall is closed from the start.
+  B14 re-scoped: seed L4/W2_K2 from PERCEIVING shelves vs LATCHED shelves (predict only perceivers can extend).
 - B08J built (ladder with jitter in train AND held-out); controls unchanged under jitter. Launches when cores free.
 - Next: B01b (done) tests H-PLATEAU quantitatively; then B03 = search arms at equal compute from fresh gen 0
   (baseline / heavy-tailed mutation count / behaviour-novelty) -- prediction: only structural-move arms lift 0/60.
