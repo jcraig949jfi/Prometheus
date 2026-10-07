@@ -1,0 +1,121 @@
+{
+  "schema": "prometheus.workgraph.receipt.v1",
+  "task_id": "C-009-T031",
+  "campaign_id": "C-009",
+  "attempt_id": "A-001",
+  "role": "Argus",
+  "model": "claude-opus-5-5",
+  "quality_class": "Q2",
+  "start_sha": "3d65ab2c1ce6cb536aa12a02914d02e049c39fa2",
+  "end_sha": "c726452cac0644ef109348352752158b9c867a35",
+  "files_changed": [
+    "rso/binding/binding.py",
+    "rso/binding/tests/test_binding.py",
+    "rso/slice001/evidence.py",
+    "rso/slice001/s2_run.py",
+    "rso/slice001/tests/test_evidence.py",
+    "rso/slice001/tests/test_s2_run.py",
+    "rso/slice001/stages/evidence_plane.py",
+    "rso/slice001/stages/fire/{G-BIND,G-INV,G-RECOMP}.json",
+    "rso/slice001/stages/{G-BIND,G-INV,G-RECOMP}.json"
+  ],
+  "evidence_added": [
+    "R1: the reviewer's committed fire cases B1.BROKEN.LAUNCH_IS_NODE_RUN, CHILD_AS_NODE_RUN, LEGACY_ROW (rso/binding/challenge/B1/cases.py, expected verdicts read from its expected.json) in the slice suite on both bases (synthetic G0, committed rso/binding/R1/G0); module-level equivalents in rso/binding/tests/test_binding.py (B1Pins)",
+    "R2: BX5b -- binding.unreported_siblings / sibling_reasons (opaque node ids) and evidence.g_inv: a presented receipt whose cited row binds while the anchored launch also completed the node unpresented -> RECEIPT_WITHOUT_RUN:<node_id> with BIND_SIBLING_UNREPORTED and the sibling run ids; FAILED / INTERRUPTED / REFUSED attempts, MUTATION_CHILD rows and other launches stay provenance",
+    "R3: s2_run.consumer_for builds the bundle with run_id = g.run_id; B1.PROBE.PRODUCTION_RUNJSON: production and fixture paths both LAUNCH_UNBOUND, decisions equal",
+    "stage records G-BIND, G-INV, G-RECOMP regenerated at versions pinned to the repair commit; the G-INV fire test gains the six B1 cases (2 accept, 4 reject); records canonical"
+  ],
+  "evidence_executed": [
+    {
+      "command": "E2, E3, E4 applied VERBATIM from rso/binding/challenge/B1/edits.json on FREEZE_B1 code, before any new test (test_evidence + rso/binding suite)",
+      "result": "all three SURVIVED (RED for the R1 test gaps); E4's find occurs 4 times, occurrence 1 is g_inv's as the edit states"
+    },
+    {
+      "command": "new tests at RED commit 696adeb5f",
+      "result": "R2: 4 module tests error (no sibling_reasons), SIBLING_UNREPORTED admitted end to end; R3: consumer_for passes run_id None; R1 pins pass (test gaps)"
+    },
+    {
+      "command": "first GREEN attempt",
+      "result": "CC1 S4.PROBE.STALE_RUN witness gained BIND_SIBLING_UNREPORTED beside its own reasons (the launch's own row of the node is an uncited sibling) -> FD-T031-1: BX5b evaluated when the cited row otherwise binds; CC1 witnesses unchanged, verdicts unchanged"
+    },
+    {
+      "command": "E2, E3, E4 VERBATIM after the repair",
+      "result": "E2 KILLED (evidence + binding), E3 KILLED (evidence + binding), E4 KILLED (evidence; binding suite OK as E4 lives in evidence.py)"
+    },
+    {
+      "command": "inverse mutants of R2 (siblings never checked; FAILED sibling counted; siblings across launches) and R3 (run_id dropped)",
+      "result": "4/4 KILLED"
+    },
+    {
+      "command": "python -B -m rso.slice001.stages.evidence_plane fire G-BIND G-INV G-RECOMP",
+      "result": "all cases ok (G-BIND 6, G-INV 24, G-RECOMP 4)"
+    },
+    {
+      "command": "acceptance: discover rso/slice001/tests, rso/binding/tests, rso/witness/tests on the tree merged with origin/main (c726452ca)",
+      "result": "slice OK (skipped=1, the opt-in live custody smoke), binding OK, witness OK; ~5.6 min wall"
+    }
+  ],
+  "red_observed": {
+    "observed": true,
+    "detail": "R1: E2/E3/E4 verbatim survived both suites on FREEZE_B1 code; R2/R3: tests failed at 696adeb5f"
+  },
+  "result": "DONE_CLEAN",
+  "known_escapes": [
+    "FD-T031-1: BX5b is evaluated only when the cited row otherwise binds; a cited row that already fails (e.g. CC1 STALE_RUN, foreign launch) is RECEIPT_WITHOUT_RUN with its own reasons and no sibling reason -- the verdict is the same; CONTRACT.md s7's 'every COMPLETED row must be the cited row' is enforced as a binding reason only where it changes the verdict",
+    "stage records are committed only; Aporia must re-register G-BIND, G-INV, G-RECOMP before FREEZE_B2 (list below)",
+    "the consume-only regression over rso/binding/R1 and FREEZE_B2 are Palamedes's (ADJUDICATION_CC3); the fresh re-check is Pallas's"
+  ],
+  "unresolved": [],
+  "unblocks": [
+    "FREEZE_B2",
+    "C-009 CC3 re-check"
+  ],
+  "created_at_utc": "2026-10-07T06:30:00Z",
+  "re_registration": {
+    "stage_records": [
+      {
+        "path": "rso/slice001/stages/G-BIND.json",
+        "sha256": "01d166ecbff138ffdb161093079f12e78e44bf46006eadd2f389d9a36373704a",
+        "commit": "13149ab984d69f9359b5cf886d2b83fb59b441c0"
+      },
+      {
+        "path": "rso/slice001/stages/G-INV.json",
+        "sha256": "f0b26f85923fc1f936138e623d042bc00f6836b7d89714a1a9093555928abe56",
+        "commit": "13149ab984d69f9359b5cf886d2b83fb59b441c0"
+      },
+      {
+        "path": "rso/slice001/stages/G-RECOMP.json",
+        "sha256": "83968dd2831cb527c58d47018b8cf8e661b7aca034423539fb708ec922fb8ab4",
+        "commit": "13149ab984d69f9359b5cf886d2b83fb59b441c0"
+      }
+    ],
+    "fire_receipts_cited": [
+      {
+        "path": "rso/slice001/stages/fire/G-BIND.json",
+        "sha256": "09250d9ad81645e9fec38d390a7d3e0d5c8cc63be92376430b65156e3466b384",
+        "commit": "ea2a855a4e7eba9e1b12ef0bf87f6b410348f98b"
+      },
+      {
+        "path": "rso/slice001/stages/fire/G-INV.json",
+        "sha256": "94eee3b45d68bb93bba564ce3b53715e00f145ff267482390953e74a6f4389c5",
+        "commit": "ea2a855a4e7eba9e1b12ef0bf87f6b410348f98b"
+      },
+      {
+        "path": "rso/slice001/stages/fire/G-RECOMP.json",
+        "sha256": "205f02f65f51fe5a5d66587be624ae6bea8f07772fe5e6898ea65785a3089b73",
+        "commit": "ea2a855a4e7eba9e1b12ef0bf87f6b410348f98b"
+      }
+    ],
+    "version_pin": "fa280abfb47105dff1415f67b000bcbfe1885df3"
+  },
+  "instance": "desktop-ruapvai-b08b36ac",
+  "host": "DESKTOP-RUAPVAI",
+  "branch": "argus/c009-t031",
+  "worktree_path": "C:/Prometheus-worktrees/argus-boot",
+  "resources": {
+    "cpu": "about 10 CPU-minutes, development only (one full slice suite ~5.6 min, targeted suites, mutants, fire tests)",
+    "validation_launches": 0,
+    "model": "one Q2 session, about 1 hour"
+  },
+  "notes": "Commits: RED 696adeb5f; repairs (version pin) fa280abfb; fire receipts ea2a855a4; records 13149ab98. Merge, do not squash: records pin and cite these. State commits went to main as they happened (argus-ops)."
+}
