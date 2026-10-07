@@ -374,6 +374,47 @@ class TestInventoryShape(Base):
         self.assertEqual(rows, led.inventory())
 
 
+class TestBindingFields(Base):
+    """C-009-T010 (rso/binding/CONTRACT.md BX2/BX3): parent_run_id at begin, receipt_sha256 at finish."""
+
+    def test_rows_expose_parent_and_digest(self):
+        led = self.ledger()
+        led.begin("L", "BUNDLE").finish("COMPLETED")
+        led.begin("L/n", "n", L.RECEIPT, parent_run_id="L").finish("COMPLETED", receipt_sha256="ab" * 32)
+        rows = {r["run_id"]: r for r in led.inventory()[:-1]}
+        self.assertEqual((rows["L/n"]["parent_run_id"], rows["L/n"]["receipt_sha256"]), ("L", "ab" * 32))
+        self.assertNotIn("parent_run_id", rows["L"])
+        self.assertNotIn("receipt_sha256", rows["L"])
+
+    def test_old_ledger_without_the_fields_parses_as_unbound(self):
+        with open(self.path, "w", encoding="utf-8", newline="\n") as f:
+            f.write(json.dumps({"kind": "START", "run_id": "o", "node_id": "n", "launch_kind": "RECEIPT",
+                                "start_utc": "2026-10-01T00:00:00Z", "supplied_by": "x"}) + "\n")
+            f.write(json.dumps({"kind": "END", "run_id": "o", "status": "COMPLETED", "cpu_s": 0.5,
+                                "artifact_bytes": 3, "end_utc": "2026-10-01T00:00:01Z"}) + "\n")
+        row = self.ledger().inventory()[0]
+        self.assertEqual((row["status"], row["cpu_us"]), ("COMPLETED", 500000))
+        self.assertNotIn("parent_run_id", row)
+        self.assertNotIn("receipt_sha256", row)
+
+    def test_refused_receipt_row_keeps_its_parent(self):
+        led = self.ledger(cpu_minutes=0)
+        with self.assertRaises(L.CapExhausted):
+            led.begin("L/n", "n", L.RECEIPT, parent_run_id="L")
+        self.assertEqual(led.inventory()[0]["parent_run_id"], "L")
+
+    def test_digest_must_be_a_hex_sha256(self):
+        led = self.ledger()
+        att = led.begin("L/n", "n", L.RECEIPT, parent_run_id="L")
+        for bad in ("", "xyz", "AB" * 32, 5):
+            with self.assertRaises(L.LedgerError):
+                att.finish("COMPLETED", receipt_sha256=bad)
+
+    def test_binding_contract_caps(self):
+        led = L.Ledger.from_contract(self.path, os.path.join(REPO, "rso", "binding", "contract.json"))
+        self.assertEqual((led.caps.launches, led.caps.cpu_s, led.caps.artifact_bytes), (12, 90 * 60, 150 * 10**6))
+
+
 class TestAppendOnlyStore(Base):
     def test_every_record_is_flushed_before_begin_returns(self):
         led = self.ledger()

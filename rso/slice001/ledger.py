@@ -5,14 +5,20 @@ whether it completes, fails, is refused by a cap, or dies without reporting. The
 REFUSES: it decides nothing about what an attempt means scientifically (plan s3 Anchors, s6 caps).
 
 Store: append-only JSONL, one record per line, flushed and fsynced before the call returns.
-    START    {kind, run_id, node_id, launch_kind, start_utc, supplied_by}   written by begin()
-    END      {kind, run_id, status, cpu_s, artifact_bytes, end_utc}         written by finish()
-    REFUSED  {kind, run_id, node_id, launch_kind, cap, used, limit, at_utc, supplied_by}
+    START    {kind, run_id, node_id, launch_kind, start_utc, supplied_by[, parent_run_id]}   by begin()
+    END      {kind, run_id, status, cpu_s, artifact_bytes, end_utc[, receipt_sha256]}        by finish()
+    REFUSED  {kind, run_id, node_id, launch_kind, cap, used, limit, at_utc, supplied_by[, parent_run_id]}
 inventory() derives the rows G-INV reads (evidence.inventory_terminal): one {kind: RUN, run_id, node_id,
 status, launch_kind, cpu_us, artifact_bytes, ...} per run_id, then {kind: TERMINAL, row_count}. The rows are
 canonical JSON (receipt.canonical_bytes refuses floats, draft B B2), so CPU is INTEGER MICROSECONDS cpu_us
 (float seconds x 1e6, rounded; the JSONL store keeps the float seconds). A START with no END is INTERRUPTED
 (cpu_us and artifact_bytes None: unmetered, never zero). It still counts as a launch if it was TOP_LEVEL.
+
+Binding (C-009-T010, rso/binding/CONTRACT.md BX2/BX3): a node execution row may record parent_run_id (the
+TOP_LEVEL launch it ran under; given to begin()) and receipt_sha256 (hex sha256 of the receipt's canonical bytes,
+rso.binding.binding.receipt_sha256; given to finish() once the receipt exists). Both are optional and appear in
+inventory() only when recorded, so a ledger written before C-009 parses unchanged and its rows read as unbound.
+The ledger stores and exposes them; whether they bind is rso.binding's question.
 
 Launch kinds: TOP_LEVEL (a validation launch: counts toward the launch cap), MUTATION_CHILD and RECEIPT
 (charged CPU and bytes, never counted as launches). RECEIPT is for one row per receipt, with its node_id (V7),
@@ -33,6 +39,7 @@ import argparse
 import datetime
 import json
 import os
+import re
 import sys
 import time
 
@@ -45,6 +52,7 @@ RECEIPT = "RECEIPT"        # one per receipt under a single charged build row: C
 LAUNCH_KINDS = (TOP_LEVEL, MUTATION_CHILD, RECEIPT)
 END_STATUSES = ("COMPLETED", "FAILED")
 MB = 1000 * 1000
+_SHA256 = re.compile(r"^[0-9a-f]{64}$")
 
 
 class LedgerError(Exception):
@@ -89,14 +97,18 @@ class Attempt(object):
     def __init__(self, ledger, run_id):
         self._ledger, self.run_id, self._done = ledger, run_id, False
 
-    def finish(self, status, cpu_s=0.0, artifact_bytes=0):
+    def finish(self, status, cpu_s=0.0, artifact_bytes=0, receipt_sha256=None):
         if self._done:
             raise LedgerError("attempt %s already finished" % self.run_id)
         if status not in END_STATUSES:
             raise LedgerError("status must be one of %s, got %r" % (END_STATUSES, status))
-        self._ledger._append({"kind": "END", "run_id": self.run_id, "status": status,
-                              "cpu_s": float(cpu_s), "artifact_bytes": int(artifact_bytes),
-                              "end_utc": _utc_now()})
+        if receipt_sha256 is not None and not (isinstance(receipt_sha256, str) and _SHA256.match(receipt_sha256)):
+            raise LedgerError("receipt_sha256 must be 64 lowercase hex digits, got %r" % (receipt_sha256,))
+        rec = {"kind": "END", "run_id": self.run_id, "status": status,
+               "cpu_s": float(cpu_s), "artifact_bytes": int(artifact_bytes), "end_utc": _utc_now()}
+        if receipt_sha256 is not None:
+            rec["receipt_sha256"] = receipt_sha256
+        self._ledger._append(rec)
         self._done = True
 
 
@@ -184,6 +196,8 @@ class Ledger(object):
                     raise LedgerError("duplicate run_id in store: %s" % rid)
                 row = {"kind": "RUN", "run_id": rid, "node_id": r.get("node_id"),
                        "launch_kind": r.get("launch_kind"), "supplied_by": r.get("supplied_by")}
+                if r.get("parent_run_id") is not None:
+                    row["parent_run_id"] = r["parent_run_id"]
                 if k == "START":
                     row.update({"status": "INTERRUPTED", "cpu_s": None, "artifact_bytes": None,
                                 "start_utc": r.get("start_utc"), "end_utc": None})
@@ -197,6 +211,8 @@ class Ledger(object):
                     raise LedgerError("END without an open START: %s" % rid)
                 runs[rid].update({"status": r["status"], "cpu_s": r["cpu_s"],
                                   "artifact_bytes": r["artifact_bytes"], "end_utc": r.get("end_utc")})
+                if r.get("receipt_sha256") is not None:
+                    runs[rid]["receipt_sha256"] = r["receipt_sha256"]
             else:
                 raise LedgerError("unknown record kind %r" % k)
         return runs
@@ -219,21 +235,24 @@ class Ledger(object):
         return None
 
     # ---- attempts ----------------------------------------------------------------------------------
-    def begin(self, run_id, node_id, launch_kind=TOP_LEVEL, supplied_by=None):
+    def begin(self, run_id, node_id, launch_kind=TOP_LEVEL, supplied_by=None, parent_run_id=None):
         if launch_kind not in LAUNCH_KINDS:
             raise LedgerError("launch_kind must be one of %s" % (LAUNCH_KINDS,))
         if not isinstance(run_id, str) or not run_id or not isinstance(node_id, str) or not node_id:
             raise LedgerError("run_id and node_id are required non-empty strings")
         if run_id in self._runs(self._read()):
             raise LedgerError("run_id already inventoried: %s" % run_id)
+        if parent_run_id is not None and (not isinstance(parent_run_id, str) or not parent_run_id):
+            raise LedgerError("parent_run_id must be a non-empty string when given")
+        parent = {} if parent_run_id is None else {"parent_run_id": parent_run_id}
         hit = self.exhausted(launch_kind)
         if hit:
-            self._append({"kind": "REFUSED", "run_id": run_id, "node_id": node_id,
-                          "launch_kind": launch_kind, "cap": hit[0], "used": hit[1], "limit": hit[2],
-                          "at_utc": _utc_now(), "supplied_by": supplied_by})
+            self._append(dict({"kind": "REFUSED", "run_id": run_id, "node_id": node_id,
+                               "launch_kind": launch_kind, "cap": hit[0], "used": hit[1], "limit": hit[2],
+                               "at_utc": _utc_now(), "supplied_by": supplied_by}, **parent))
             raise CapExhausted(*hit)
-        self._append({"kind": "START", "run_id": run_id, "node_id": node_id, "launch_kind": launch_kind,
-                      "start_utc": _utc_now(), "supplied_by": supplied_by})
+        self._append(dict({"kind": "START", "run_id": run_id, "node_id": node_id, "launch_kind": launch_kind,
+                           "start_utc": _utc_now(), "supplied_by": supplied_by}, **parent))
         return Attempt(self, run_id)
 
     def run(self, run_id, node_id, launch_kind=TOP_LEVEL, supplied_by=None):
