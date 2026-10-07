@@ -170,11 +170,85 @@ def node_id(subject_digest, arm_name, predicate, world_name):
     return "ares:%s:%s:%s:%s" % (subject_digest[:16], arm_name, predicate, world_name)
 
 
-def receipt_dict(launch, arm_name, predicate, subject, seeds):
+def _array_artifact(role, arr):
+    """(listing, bytes) for a numpy array; dtype and shape recorded so the evaluator can decode the bytes."""
+    arr = np.ascontiguousarray(arr)
+    data = arr.tobytes()
+    a = _artifact(role, data)
+    a["dtype"] = str(arr.dtype)
+    a["shape"] = [int(x) for x in arr.shape]
+    return a, data
+
+
+def _json_artifact(role, obj):
+    data = json.dumps(obj).encode("ascii")
+    a = _artifact(role, data)
+    a["dtype"] = "json"
+    a["shape"] = [len(obj)]
+    return a, data
+
+
+def _groups(seeds, k, predicate):
+    seeds = [int(s) for s in seeds]
+    if not seeds or len(seeds) % k:
+        raise ValueError("%s expects a flat list of %d-tuples of seeds, got %d seed(s)" % (predicate, k, len(seeds)))
+    return [tuple(seeds[i:i + k]) for i in range(0, len(seeds), k)]
+
+
+def _recording_observer(store):
+    def observe(t, rt):
+        store.append((t, rt.v.copy(), rt.W1.copy()))
+    return observe
+
+
+def node_execution(launch, arm_name, predicate, subject, seeds):
+    """Run one node by its predicate's pattern (PREREGISTRATION s4, s5, s7). Returns (arm population, mode, outputs,
+    oracle), outputs and oracle as [(listing, bytes)]. Patterns:
+      P-OBS    the episode run twice on fresh runtimes, with a recording observer and without one
+      P-ERASE  seeds = flat (pre_a, pre_b, probe) triples; [pre_a, probe] and [pre_b, probe] on fresh runtimes;
+               the probe episode's actions per triple (ERASE_PROBES.md s1)
+      P-PRES   seeds = flat (warmup, seed) pairs; [warmup, seed] on one runtime vs [seed] on a fresh instance
+      other    (P-RET, P-CAL, P-CHAN, and any reported arm) one episode run over the seeds
+    No count, accuracy or decision is computed here: the evaluator recomputes from the bytes."""
     pop, mode, rt_cls = arm(arm_name, subject)
-    out = run_episodes(pop, world(launch.world_name, mode), seeds, runtime_cls=rt_cls)
+    wn = launch.world_name
+    if predicate == "P-OBS":
+        recorded = []
+        rec_run = run_episodes(pop, world(wn, mode), seeds, runtime_cls=rt_cls, observer=_recording_observer(recorded))
+        plain = run_episodes(pop, world(wn, mode), seeds, runtime_cls=rt_cls)
+        outputs = [_array_artifact("trace:actions_record", rec_run["actions"]),
+                   _array_artifact("trace:actions_norecord", plain["actions"])]
+        oracle = [_array_artifact("oracle:regimes", plain["regimes"]),
+                  _json_artifact("oracle:reset_steps", plain["reset_steps"])]
+    elif predicate == "P-ERASE":
+        triples = _groups(seeds, 3, predicate)
+        after_a = np.stack([_probe_actions(pop, rt_cls, [a, p], mode, wn) for a, b, p in triples])
+        after_b = np.stack([_probe_actions(pop, rt_cls, [b, p], mode, wn) for a, b, p in triples])
+        regs = np.array([[regime_of(s, wn, mode) for s in t] for t in triples], dtype=np.int8)
+        outputs = [_array_artifact("trace:probe_after_a", after_a), _array_artifact("trace:probe_after_b", after_b)]
+        oracle = [_array_artifact("oracle:regimes", regs)]
+    elif predicate == "P-PRES":
+        pairs = _groups(seeds, 2, predicate)
+        warm = np.stack([_probe_actions(pop, rt_cls, [w, s], mode, wn) for w, s in pairs])
+        fresh = np.stack([_probe_actions(pop, rt_cls, [s], mode, wn) for w, s in pairs])
+        regs = np.array([[regime_of(x, wn, mode) for x in pr] for pr in pairs], dtype=np.int8)
+        outputs = [_array_artifact("trace:pres_warm", warm), _array_artifact("trace:pres_fresh", fresh)]
+        oracle = [_array_artifact("oracle:regimes", regs)]
+    else:
+        out = run_episodes(pop, world(wn, mode), seeds, runtime_cls=rt_cls)
+        outputs = [_array_artifact("trace:actions", out["actions"])]
+        oracle = [_array_artifact("oracle:regimes", out["regimes"]),
+                  _json_artifact("oracle:reset_steps", out["reset_steps"])]
+    return pop, mode, outputs, oracle
+
+
+def receipt_dict(launch, arm_name, predicate, subject, seeds):
+    """(receipt dict, {sha256: bytes}) for one node: the driver's preferred producer seam (run_witness
+    node_artifacts). Every byte string the evaluator reads is named in outputs / oracle with role, sha256, length,
+    dtype and shape (PREREGISTRATION s7)."""
+    pop, mode, outputs, oracle = node_execution(launch, arm_name, predicate, subject, seeds)
     sd = genome_digest(subject)
-    return {
+    rec = {
         "schema": SCHEMA,
         "node_id": node_id(sd, arm_name, predicate, launch.world_name),
         "subject": {"runtime": "ares", "genome_sha256": sd, "arm_genome_sha256": genome_digest(pop)},
@@ -183,12 +257,15 @@ def receipt_dict(launch, arm_name, predicate, subject, seeds):
         "world": {"name": launch.world_name, "mode": mode},
         "seeds": [int(s) for s in seeds],
         "observer": OBSERVER_ID,
-        "outputs": [_artifact("trace:actions", out["actions"].tobytes())],
-        "oracle": [_artifact("oracle:regimes", out["regimes"].tobytes()),
-                   _artifact("oracle:reset_steps", json.dumps(out["reset_steps"]).encode("ascii"))],
+        "outputs": [a for a, _ in outputs],
+        "oracle": [a for a, _ in oracle],
         "execution": {"status": B.COMPLETED},
         "code": [SA.file_code_ref(p, launch.code_commit, launch.root) for p in CODE_PATHS],
     }
+    arts = {}
+    for a, data in outputs + oracle:
+        arts[a["sha256"]] = data
+    return rec, arts
 
 
 def receipt_bytes(rec):
@@ -208,7 +285,7 @@ class Launch:
 
     def produce(self, arm_name, predicate, subject, seeds):
         """Run one node, build its receipt, record its row. Returns (node_id, run_id, receipt canonical bytes)."""
-        rec = receipt_dict(self, arm_name, predicate, subject, seeds)
+        rec, _arts = receipt_dict(self, arm_name, predicate, subject, seeds)
         data = receipt_bytes(rec)
         run_id = "%s/%s" % (self.launch_run_id, rec["node_id"])
         self._rows.append({"kind": B.RUN, "run_id": run_id, "parent_run_id": self.launch_run_id,
@@ -304,9 +381,9 @@ def pres_seed_set(n=PRES_N_SEEDS, start=PRES_START, exclude=()):
     return [tuple(seeds[2 * i:2 * i + 2]) for i in range(n)]
 
 
-def _probe_actions(pop, rt_cls, seq, mode="present"):
+def _probe_actions(pop, rt_cls, seq, mode="present", world_name=WORLD):
     rt = rt_cls(pop)
-    return run_episodes(pop, world(WORLD, mode), seq, runtime=rt)["actions"][-1]
+    return run_episodes(pop, world(world_name, mode), seq, runtime=rt)["actions"][-1]
 
 
 def p_erase_count(pop, rt_cls, probes, mode="present"):
