@@ -1,0 +1,51 @@
+{
+  "schema": "rso.slice001.mutation_edits.v1",
+  "edits": [
+    {
+      "edit_id": "E1-parent-default",
+      "path": "rso/binding/binding.py",
+      "module": "rso.binding.binding",
+      "find": "if launch_run_id and row.get(\"parent_run_id\") != launch_run_id:",
+      "replace": "if launch_run_id and row.get(\"parent_run_id\", launch_run_id) != launch_run_id:",
+      "intended_fault": "BX2 parent: a cited row that records NO parent_run_id is treated as a row of the anchored launch (missing parent defaults to own). A pre-binding row, or a native client that omits the field, then binds any receipt whose digest it carries. The binding suite's foreign-launch case sets parent_run_id explicitly, so only a row WITHOUT the field tells the original from the mutant.",
+      "witness": {"expr": "__import__(\"importlib\").import_module(\"rso.binding.challenge.B1.witnesses\").e1(m)"}
+    },
+    {
+      "edit_id": "E2-launch-kind-any",
+      "path": "rso/binding/binding.py",
+      "module": "rso.binding.binding",
+      "find": "if len(top) != 1 or top[0].get(\"launch_kind\") != TOP_LEVEL:",
+      "replace": "if len(top) != 1:",
+      "intended_fault": "BX1 launch: the anchored launch no longer has to be a TOP_LEVEL row; any single row carrying the manifest's launch_run_id (a RECEIPT row, a MUTATION_CHILD) stands as the launch. A bundle may then anchor to one of its own node executions, or to a mutation child, as 'the launch that produced it'.",
+      "witness": {"expr": "__import__(\"importlib\").import_module(\"rso.binding.challenge.B1.witnesses\").e2(m)"}
+    },
+    {
+      "edit_id": "E3-child-as-node-run",
+      "path": "rso/binding/binding.py",
+      "module": "rso.binding.binding",
+      "find": "if row.get(\"launch_kind\") != RECEIPT:",
+      "replace": "if row.get(\"launch_kind\") not in (RECEIPT, \"MUTATION_CHILD\"):",
+      "intended_fault": "BX2 kind: a cited row of launch_kind MUTATION_CHILD (a test run under a mutant, charged to the same ledger) may stand for the node execution that produced a receipt. The binding suite pins only TOP_LEVEL cited as a node run.",
+      "witness": {"expr": "__import__(\"importlib\").import_module(\"rso.binding.challenge.B1.witnesses\").e3(m)"}
+    },
+    {
+      "edit_id": "E4-legacy-row-accepted",
+      "path": "rso/slice001/evidence.py",
+      "module": "rso.slice001.evidence",
+      "find": "if why:",
+      "occurrence": 1,
+      "replace": "if why and why != [BD.DIGEST_MISSING]:",
+      "intended_fault": "evidence.g_inv (the slice's reading of BX2): a cited row whose ONLY failing dimension is a missing receipt_sha256 is accepted as binding (backward compatibility with digest-less rows). ARTIFACT_SWAP and every receipt-edit-after-the-run become undetectable for such rows. binding.binding_reasons still reports BIND_DIGEST_MISSING; the client ignores it. The first 'if why:' in evidence.py is g_inv's (line 484 of the frozen file).",
+      "witness": {"expr": "__import__(\"importlib\").import_module(\"rso.binding.challenge.B1.witnesses\").e4(m)"}
+    },
+    {
+      "edit_id": "E5-runjson-trusted",
+      "path": "rso/slice001/evidence.py",
+      "module": "rso.slice001.evidence",
+      "find": "launch = anchors.launch_run_id",
+      "replace": "launch = getattr(bundle, \"run_id\", None) or anchors.launch_run_id",
+      "intended_fault": "evidence.launch_unbound (BX1): when the bundle's run.json names a launch, THAT launch is used for the BX1 check and for the launch G-INV binds rows to, instead of the keeper-anchored manifest's. The bundle then chooses its own launch; a consistent substitute launch (its own TOP_LEVEL row, every node row re-parented to it) qualifies against a manifest that names another.",
+      "witness": {"expr": "__import__(\"importlib\").import_module(\"rso.binding.challenge.B1.witnesses\").e5(m)"}
+    }
+  ]
+}

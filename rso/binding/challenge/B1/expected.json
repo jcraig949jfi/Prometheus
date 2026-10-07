@@ -1,0 +1,115 @@
+{
+  "schema": "pallas.c009.t030.expected.v1",
+  "written_by": "Pallas[harry1-b97f1fc4], claude-fable-5-1, before execution; no test body under rso/slice001/tests/ opened (rso/binding/tests/test_binding.py was read: EXPOSURE.md)",
+  "frozen_surface": "rso/binding/FREEZE_B1.md (code 97606378c; v1.0.0 + v1.0.1 clarification); 48 hashes verified against 5fefee452, 97606378c and the LF-normalised working tree before this commit",
+  "scoring_rule": "As S3/S4/R2: a case is CORRECT iff every scored check holds and no exception is raised; check types claim, line, identical, custody (S3 run_checks) plus witness_binding (the G-INV witness's BIND_* list) and custody_why_contains. A SOUND case is correct when accepted; a BROKEN case is correct when rejected -- an accepted broken case is a survivor. Every case runs on two bases: 'synthetic' (fixtures.evidence_cases synthetic G0) and 'r1' (the committed C-009 fresh produce rso/binding/R1/G0, real executions, 26-row inventory, producer-bound). Probes are recorded, never scored, and do not enter CLOSED / NOT CLOSED.",
+  "bundles": {
+    "BASELINE": "evidence_cases.g0(base) under the frozen code (fixture store: stage rows only; custody UNQUALIFIED by KEEPER_ROW_MISSING on both bases)",
+    "KEEPER": "evidence_cases.keeper(base): manifest, inventory, table and stage records registered in a fixture store, anchors from the keeper; custody QUALIFIED. Control for FAILED_RETRY_KEEPER"
+  },
+  "controls": [
+    {"id": "CTRL.G0", "bundle": "BASELINE", "checks": [
+      {"type": "claim", "claim": "CL-RET(REG)", "eligibility": "ELIGIBLE", "standing": "SATISFIED", "not_satisfied": []},
+      {"type": "claim", "claim": "CL-RET(PKTD)", "eligibility": "ELIGIBLE", "standing": "SATISFIED", "not_satisfied": []},
+      {"type": "claim", "claim": "CL-RET(LAGD)", "eligibility": "NOT_ELIGIBLE", "standing": "UNMET", "not_satisfied": ["rcpt:LAGD:ERASE:STANDARD"]},
+      {"type": "line", "claim": "CL-RET(REG)", "line": "G-INV@CL-RET(REG)", "fields": {"execution": "RAN", "outcome": "PASS"}}
+    ]},
+    {"id": "CTRL.KEEPER", "bundle": "KEEPER", "checks": [
+      {"type": "custody", "status": "QUALIFIED"},
+      {"type": "claim", "claim": "CL-CUST(G0)", "eligibility": "ELIGIBLE", "standing": "SATISFIED", "not_satisfied": []},
+      {"type": "claim", "claim": "CL-RET(REG)", "eligibility": "ELIGIBLE", "standing": "SATISFIED", "not_satisfied": []}
+    ]}
+  ],
+  "cases": [
+    {
+      "id": "B1.SOUND.FAILED_RETRY", "polarity": "sound", "plane": "binding", "gates": ["G-INV (BX2 cited-row binding beside a FAILED sibling attempt; BX5 own-launch rows)"],
+      "checks": [
+        {"type": "claim", "claim": "CL-RET(REG)", "eligibility": "ELIGIBLE", "standing": "SATISFIED", "not_satisfied": []},
+        {"type": "line", "claim": "CL-RET(REG)", "line": "G-INV@CL-RET(REG)", "fields": {"execution": "RAN", "outcome": "PASS"}},
+        {"type": "identical", "reference": "BASELINE", "claims": "ALL"}
+      ]
+    },
+    {
+      "id": "B1.SOUND.FAILED_RETRY_KEEPER", "polarity": "sound", "plane": "binding", "gates": ["custody (BX7: a registered inventory holding a FAILED first attempt qualifies)", "G-INV"],
+      "checks": [
+        {"type": "custody", "status": "QUALIFIED"},
+        {"type": "claim", "claim": "CL-CUST(G0)", "eligibility": "ELIGIBLE", "standing": "SATISFIED", "not_satisfied": []},
+        {"type": "claim", "claim": "CL-RET(REG)", "eligibility": "ELIGIBLE", "standing": "SATISFIED", "not_satisfied": []},
+        {"type": "identical", "reference": "KEEPER", "claims": ["CL-RET(REG)", "CL-RET(PKTD)", "CL-RET(LAGD)", "CL-CAL(STANDARD)", "TWIN(REG)"]}
+      ],
+      "note": "CL-CUST(G0) is not in the identical list: its decision embeds the custody row ids and the RUN_INVENTORY blob differs from the control's by construction."
+    },
+    {
+      "id": "B1.SOUND.CHARGED_CHILDREN", "polarity": "sound", "plane": "binding", "gates": ["G-INV (BX5: MUTATION_CHILD rows under the launch and a REFUSED attempt are provenance)", "inventory_terminal"],
+      "checks": [
+        {"type": "claim", "claim": "CL-RET(REG)", "eligibility": "ELIGIBLE", "standing": "SATISFIED", "not_satisfied": []},
+        {"type": "line", "claim": "CL-RET(REG)", "line": "G-INV@CL-RET(REG)", "fields": {"execution": "RAN", "outcome": "PASS"}},
+        {"type": "identical", "reference": "BASELINE", "claims": "ALL"}
+      ]
+    },
+    {
+      "id": "B1.BROKEN.SIBLING_UNREPORTED", "polarity": "broken", "plane": "binding", "gates": ["G-INV (BX2/BX5: a second COMPLETED execution of a required node under the anchored launch, not presented)"],
+      "primary": "G-INV@CL-RET(REG)",
+      "checks": [
+        {"type": "claim", "claim": "CL-RET(REG)", "eligibility": "NOT_ELIGIBLE", "standing": "UNMET", "not_satisfied": ["gate:G-INV:CL-RET(REG)"]},
+        {"type": "line", "claim": "CL-RET(REG)", "line": "G-INV@CL-RET(REG)", "fields": {"execution": "RAN", "outcome": "FAIL"}},
+        {"type": "identical", "reference": "BASELINE", "claims": ["CL-RET(PKTD)", "CL-RET(LAGD)", "CL-CAL(STANDARD)", "TWIN(REG)"]}
+      ],
+      "note": "The contract's letter (BX2: the cited row binds; BX5: RUN_UNREPORTED is 'a required node without a presented receipt') admits this shape. The checks state what a qualifying consumer should do; if they fail the case is an ADMITTED survivor for adjudication, not a scoring error."
+    },
+    {
+      "id": "B1.BROKEN.NESTED_PARENT", "polarity": "broken", "plane": "binding", "gates": ["G-INV (BX2 parent_run_id == the anchored launch, not a node of it)"],
+      "primary": "G-INV@CL-RET(REG)",
+      "checks": [
+        {"type": "claim", "claim": "CL-RET(REG)", "eligibility": "NOT_ELIGIBLE", "standing": "UNMET", "not_satisfied": ["gate:G-INV:CL-RET(REG)"]},
+        {"type": "line", "claim": "CL-RET(REG)", "line": "G-INV@CL-RET(REG)", "fields": {"execution": "RAN", "outcome": "FAIL", "reason": "RECEIPT_WITHOUT_RUN:rcpt:REG:PRESERVE:STANDARD"}},
+        {"type": "witness_binding", "claim": "CL-RET(REG)", "line": "G-INV@CL-RET(REG)", "binding": ["BIND_FOREIGN_LAUNCH"]},
+        {"type": "identical", "reference": "BASELINE", "claims": ["CL-RET(PKTD)", "CL-RET(LAGD)", "CL-CAL(STANDARD)", "TWIN(REG)"]}
+      ]
+    },
+    {
+      "id": "B1.BROKEN.CHILD_AS_NODE_RUN", "polarity": "broken", "plane": "binding", "gates": ["G-INV (BX2 launch_kind RECEIPT exactly)"],
+      "primary": "G-INV@CL-RET(REG)",
+      "checks": [
+        {"type": "claim", "claim": "CL-RET(REG)", "eligibility": "NOT_ELIGIBLE", "standing": "UNMET", "not_satisfied": ["gate:G-INV:CL-RET(REG)"]},
+        {"type": "line", "claim": "CL-RET(REG)", "line": "G-INV@CL-RET(REG)", "fields": {"execution": "RAN", "outcome": "FAIL", "reason": "RECEIPT_WITHOUT_RUN:rcpt:REG:PRESERVE:STANDARD"}},
+        {"type": "witness_binding", "claim": "CL-RET(REG)", "line": "G-INV@CL-RET(REG)", "binding": ["BIND_NOT_A_NODE_RUN"]},
+        {"type": "identical", "reference": "BASELINE", "claims": ["CL-RET(PKTD)", "CL-RET(LAGD)", "CL-CAL(STANDARD)", "TWIN(REG)"]}
+      ]
+    },
+    {
+      "id": "B1.BROKEN.LAUNCH_IS_NODE_RUN", "polarity": "broken", "plane": "binding", "gates": ["G-INV / launch_unbound (BX1: the launch is exactly one TOP_LEVEL row)", "custody (BX7 INVENTORY_UNBOUND)"],
+      "primary": "G-INV@CL-RET(REG)",
+      "checks": [
+        {"type": "claim", "claim": "CL-RET(REG)", "eligibility": "NOT_ELIGIBLE", "standing": "UNMET", "not_satisfied": ["gate:G-INV:CL-RET(REG)"]},
+        {"type": "line", "claim": "CL-RET(REG)", "line": "G-INV@CL-RET(REG)", "fields": {"execution": "RAN", "outcome": "FAIL", "reason": "LAUNCH_UNBOUND"}},
+        {"type": "witness_binding", "claim": "CL-RET(REG)", "line": "G-INV@CL-RET(REG)", "binding": ["BIND_LAUNCH_MISSING"]},
+        {"type": "custody_why_contains", "text": "INVENTORY_UNBOUND:BIND_LAUNCH_MISSING"}
+      ],
+      "note": "Bundle-level failure: every G-INV line of the bundle fails LAUNCH_UNBOUND, so no identical-to-baseline check applies."
+    },
+    {
+      "id": "B1.BROKEN.LEGACY_ROW", "polarity": "broken", "plane": "binding", "gates": ["G-INV (BX2/BX3 receipt_sha256 required)"],
+      "primary": "G-INV@CL-RET(REG)",
+      "checks": [
+        {"type": "claim", "claim": "CL-RET(REG)", "eligibility": "NOT_ELIGIBLE", "standing": "UNMET", "not_satisfied": ["gate:G-INV:CL-RET(REG)"]},
+        {"type": "line", "claim": "CL-RET(REG)", "line": "G-INV@CL-RET(REG)", "fields": {"execution": "RAN", "outcome": "FAIL", "reason": "RECEIPT_WITHOUT_RUN:rcpt:REG:PRESERVE:STANDARD"}},
+        {"type": "witness_binding", "claim": "CL-RET(REG)", "line": "G-INV@CL-RET(REG)", "binding": ["BIND_DIGEST_MISSING"]},
+        {"type": "identical", "reference": "BASELINE", "claims": ["CL-RET(PKTD)", "CL-RET(LAGD)", "CL-CAL(STANDARD)", "TWIN(REG)"]}
+      ]
+    },
+    {
+      "id": "B1.BROKEN.UNPARENTED_ROW", "polarity": "broken", "plane": "binding", "gates": ["G-INV (BX2 parent_run_id required and equal to the anchored launch)"],
+      "primary": "G-INV@CL-RET(REG)",
+      "checks": [
+        {"type": "claim", "claim": "CL-RET(REG)", "eligibility": "NOT_ELIGIBLE", "standing": "UNMET", "not_satisfied": ["gate:G-INV:CL-RET(REG)"]},
+        {"type": "line", "claim": "CL-RET(REG)", "line": "G-INV@CL-RET(REG)", "fields": {"execution": "RAN", "outcome": "FAIL", "reason": "RECEIPT_WITHOUT_RUN:rcpt:REG:PRESERVE:STANDARD"}},
+        {"type": "witness_binding", "claim": "CL-RET(REG)", "line": "G-INV@CL-RET(REG)", "binding": ["BIND_FOREIGN_LAUNCH"]},
+        {"type": "identical", "reference": "BASELINE", "claims": ["CL-RET(PKTD)", "CL-RET(LAGD)", "CL-CAL(STANDARD)", "TWIN(REG)"]}
+      ]
+    }
+  ],
+  "probes": [
+    {"id": "B1.PROBE.PRODUCTION_RUNJSON", "scored": false, "base": "r1", "reading": "CC1's LAUNCH_SUBSTITUTION shape (not fresh; T011's regression) consumed through s2_run.consumer_for, the path s2_run.decisions_real and the CC2 matrix use. consumer_for builds EV.Bundle without run_id (T011 receipt, notes (1), asked T020 to pass run_id=g.run_id; the frozen s2_run.py does not), so the reviewer expects the production path to report G-INV PASS where the fixture path (run_id passed) reports LAUNCH_UNBOUND. Measures wiring, not the binding; recorded for the owning engineer and the coordinator. Not claim-critical in itself: run.json is bundle-supplied and never authoritative (BX1), so nothing is borrowed; a self-inconsistent bundle merely goes unflagged on that path."}
+  ]
+}
