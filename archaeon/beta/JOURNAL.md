@@ -19,7 +19,7 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
 | B08 | which primitive is the wall? (ladder) | L4 claim RETRACTED: evolved solvers are delay lines (B08b) |
 | B08J | ladder with timing jitter (repaired instrument) | running (is a 2nd genuine slot reachable?) |
 | B11 | is the W2_K2 shelf a delay line? | MOSTLY NO: 50/72 genuine memory, 20/72 delay lines |
-| B09 | dispatch wall: READ the cue vs SELECT on it | running |
+| B09 | dispatch wall: READ the cue vs SELECT on it | CLEAN NULL 0/24 |
 | B10 | SEL opcode (branch-free mux): does the wall move? | CLEAN NULL 0/32 |
 
 ## 2026-10-06/07 EXP-1 (opened 2026-10-06T23:48Z)
@@ -116,6 +116,9 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   CHANGED MY MIND: the barrier sits BELOW selection. Every L5/L6 solver needs two values stored as state, and B08's
   only two-slot solvers were delay lines (B08b). So the candidate wall is now: a SECOND GENUINELY STORED VALUE.
   B08J (jittered ladder, L4 rung) is the direct test -- launched ~02:00Z, 20 workers, G=300.
+- B09 CLEAN NULL: 0/8 for the cue as 3rd word, 2nd word, or folded into the kind code (G=200). Max train .59-.94
+  (hint3), .22-.63 (hint2: two seeds collapse to .22 -- the cue takes the word position the shelf reads its tag
+  from), .59-.81 (kind). Neither READ nor SELECT is the specific barrier: consistent with B10, the wall is below.
 - B08J built (ladder with jitter in train AND held-out); controls unchanged under jitter. Launches when cores free.
 - Next: B01b (done) tests H-PLATEAU quantitatively; then B03 = search arms at equal compute from fresh gen 0
   (baseline / heavy-tailed mutation count / behaviour-novelty) -- prediction: only structural-move arms lift 0/60.
