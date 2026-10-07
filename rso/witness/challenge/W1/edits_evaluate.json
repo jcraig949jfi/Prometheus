@@ -1,0 +1,38 @@
+{
+  "schema": "rso.slice001.mutation_edits.v1",
+  "edits": [
+    {
+      "edit_id": "W1.E1-window-on-first-interrupt",
+      "path": "rso/witness/evaluate.py",
+      "module": "rso.witness.evaluate",
+      "find": "        last = max(steps) if steps else -1",
+      "replace": "        last = min(steps) if steps else -1",
+      "intended_fault": "evaluate.episodes windows the episode decision on the FIRST interrupt instead of the LAST (RULER.md s1, PREREGISTRATION s1: 'answers r after the last interrupt'). Steps between interrupts, where a plastic carrier has re-derived its answer but three more activation resets are still to come, enter the majority; an organism that answers only before its last reset reads as retaining. The witness suite's synthetic traces answer only after the last interrupt and abstain before it, so the window boundary is unpinned there.",
+      "witness": {
+        "expr": "__import__(\"importlib\").import_module(\"rso.witness.challenge.W1.witnesses\").e1(m)"
+      }
+    },
+    {
+      "edit_id": "W1.E3-run-unreported-dropped",
+      "path": "rso/witness/evaluate.py",
+      "module": "rso.witness.evaluate",
+      "find": "            if r.get(\"status\") == B.COMPLETED and r.get(\"node_id\") not in presented:",
+      "replace": "            if False and r.get(\"status\") == B.COMPLETED and r.get(\"node_id\") not in presented:",
+      "intended_fault": "evaluate.check_bundle no longer refuses a bundle whose own launch COMPLETED a node the manifest does not present (BX5 RUN_UNREPORTED). A launch may run an extra node (RECUR, or a second arm) and drop its receipt from the manifest; the inventory says it ran, the evaluator no longer asks. The witness suite has no test that removes a manifest entry while keeping its row.",
+      "witness": {
+        "expr": "__import__(\"importlib\").import_module(\"rso.witness.challenge.W1.witnesses\").e3(m)"
+      }
+    },
+    {
+      "edit_id": "W1.E5-erase-pres-oracle-unchecked",
+      "path": "rso/witness/evaluate.py",
+      "module": "rso.witness.evaluate",
+      "find": "        k = 3 if rec[\"predicate\"] == \"P-ERASE\" else 2",
+      "replace": "        k = 3 if rec[\"predicate\"] == \"P-ERASE\" else 2; return",
+      "intended_fault": "evaluate._check_oracle stops comparing a P-ERASE / P-PRES node's reported regimes with the world's for its declared seeds. The probe set's registered shape (pre_a r = 0, pre_b r = 1; warm-up the opposite regime) then cannot be audited from the bundle at all: the one oracle artifact those nodes carry is decorative. The suite's oracle-counterfeit test flips a P-RET node only.",
+      "witness": {
+        "expr": "__import__(\"importlib\").import_module(\"rso.witness.challenge.W1.witnesses\").e5(m)"
+      }
+    }
+  ]
+}
