@@ -38,7 +38,7 @@
     "rso/witness/challenge/W2/"
   ],
   "kind": "review",
-  "status": "IMPLEMENTING",
+  "status": "INTEGRATION_READY",
   "history": [
     {
       "status": "PROPOSED",
@@ -63,6 +63,18 @@
       "by": "Pallas[harry1-dc8e608d]",
       "at_utc": "2026-10-07T14:03:13Z",
       "note": "set committed on pallas/c010-t034 before any outcome; single ledger launch W2-RECHECK next"
+    },
+    {
+      "status": "GREEN",
+      "by": "Pallas[harry1-dc8e608d]",
+      "at_utc": "2026-10-07T14:24:06Z",
+      "note": "branch pallas/c010-t034 at a35b489df (merged origin/main 5b4b75247): S1 sound AS_EXPECTED, B1a SURVIVOR, B1b AS_EXPECTED, E1 SURVIVED; witness 149 OK, binding 21 OK; receipt A-001"
+    },
+    {
+      "status": "INTEGRATION_READY",
+      "by": "Pallas[harry1-dc8e608d]",
+      "at_utc": "2026-10-07T14:24:06Z",
+      "note": "R1, R2 NOT CLOSED (coverage / one missing shape check; neither survivor unevaluable nor mis-classified on the frozen driver); R3, R4, R5 CLOSED within coverage; not a second repair round; REPORT rso/witness/challenge/W2/REPORT.md"
     }
   ],
   "authority": "PREREGISTRATION s8 (one repair round); rso/witness/ADJUDICATION_W1.md; AMENDMENT_v1.0.1.md",
