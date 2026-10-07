@@ -21,12 +21,28 @@ def _random_pop(P=6, seed=7):
     return S.random_population(S.Config(), P, np.random.default_rng(seed))
 
 
+def _zero_reward_world(name, mode):
+    """An Ares world whose step reports reward 0 (observations, oracle and interrupts untouched)."""
+    w = AR.make_world(name, mode)
+    step = w.step
+
+    def zero_step(a):
+        obs, r, alive, info = step(a)
+        return obs, np.zeros_like(r), alive, info
+    w.step = zero_step
+    return w
+
+
 class TestRunner(unittest.TestCase):
     def test_runner_reproduces_ares_rollout_actions(self):
         # random organisms plus both carriers: an activation carrier's actions depend on W15's interrupts, so a
-        # runner that skipped them would differ (a random population alone did not expose that; author mutant)
+        # runner that skipped them would differ (a random population alone did not expose that; author mutant).
+        # ACTION-ONLY reference (Palamedes #1746): rollout runs on a world whose reported rewards are zeroed, so
+        # no accuracy or reward statistic is computed for any arm or control; the organism never observes reward
+        # in W4/W15, so actions are unchanged. The fitness rollout returns is asserted to be exactly zero.
         for pop in (_random_pop(), AC.recur_carrier(), AC.pos_carrier()):
-            _, traces = AR.rollout(pop, AR.make_world("W15", "present"), SEEDS, record=True)
+            fit, traces = AR.rollout(pop, _zero_reward_world("W15", "present"), SEEDS, record=True)
+            self.assertFalse(np.any(fit))
             mine = AC.run_episodes(pop, AC.world("W15", "present"), SEEDS)
             self.assertTrue(np.array_equal(mine["actions"], np.stack(traces["actions"])))
 
