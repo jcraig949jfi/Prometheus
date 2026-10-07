@@ -86,5 +86,49 @@ class Provenance(unittest.TestCase):
             X.receipt_sha256("text")
 
 
+class Siblings(unittest.TestCase):
+    """C-009-T031 R2, CONTRACT.md s7 BX5b at the module level (opaque node ids)."""
+
+    def _sibling(self, **over):
+        r = rows()
+        s = dict(r[1], run_id=RID + "#2", receipt_sha256=X.receipt_sha256(b"another receipt"))
+        s.update(over)
+        r.insert(2, s)
+        return r
+
+    def test_second_completed_execution_is_unreported(self):
+        self.assertEqual(X.sibling_reasons(NODE, RID, self._sibling(), L), [X.SIBLING_UNREPORTED])
+        self.assertEqual(X.unreported_siblings(NODE, RID, self._sibling(), L), [RID + "#2"])
+
+    def test_sound_row_has_no_sibling(self):
+        self.assertEqual(X.sibling_reasons(NODE, RID, rows(), L), [])
+
+    def test_failed_interrupted_refused_attempts_are_provenance(self):
+        for status in ("FAILED", "INTERRUPTED", "REFUSED"):
+            self.assertEqual(X.sibling_reasons(NODE, RID, self._sibling(status=status), L), [], status)
+
+    def test_other_launch_and_other_node_are_not_siblings(self):
+        self.assertEqual(X.sibling_reasons(NODE, RID, self._sibling(parent_run_id="launch-B"), L), [])
+        self.assertEqual(X.sibling_reasons(NODE, RID, self._sibling(node_id="rcpt:other"), L), [])
+        self.assertEqual(X.sibling_reasons(NODE, RID, self._sibling(launch_kind="MUTATION_CHILD"), L), [])
+
+
+class B1Pins(unittest.TestCase):
+    """C-009-T031 R1 at the module level: the B1 shapes E2 / E3 survived (no module test pinned them)."""
+
+    def test_e2_launch_row_must_be_top_level(self):
+        r = rows()
+        r[0]["launch_kind"] = "RECEIPT"                     # the 'launch' is a node execution row
+        self.assertEqual(X.launch_reasons(r, L), [X.LAUNCH_MISSING])
+        self.assertIn(X.LAUNCH_MISSING, X.binding_reasons(NODE, RID, RECEIPT, r, L))
+
+    def test_e3_mutation_child_is_not_a_node_run(self):
+        self.assertEqual(X.binding_reasons(NODE, RID, RECEIPT, rows(launch_kind="MUTATION_CHILD"), L),
+                         [X.NOT_A_NODE_RUN])
+
+    def test_e4_missing_digest_alone(self):
+        self.assertEqual(X.binding_reasons(NODE, RID, RECEIPT, rows(receipt_sha256=None), L), [X.DIGEST_MISSING])
+
+
 if __name__ == "__main__":
     unittest.main()

@@ -1085,5 +1085,107 @@ class TestCaseCoverage(unittest.TestCase):
             F.CASES[cid]()
 
 
+# --------------------------------------------------------------------------------------------------------
+# C-009-T031: the one repair round after the CC3 challenge (rso/binding/ADJUDICATION_CC3.md R1-R3; CONTRACT.md s7
+# BX5b). Cases are the reviewer's committed B1 cases (rso/binding/challenge/B1/cases.py), on both bases the
+# challenge used: the synthetic G0 and the committed C-009 fresh produce rso/binding/R1/G0. Expected verdicts and
+# BIND_* witnesses are read from the reviewer's expected.json, not restated here.
+
+def _b1_expected():
+    import json
+    import os
+    p = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))), "binding",
+                     "challenge", "B1", "expected.json")
+    with open(p, encoding="utf-8") as f:
+        return {c["id"]: c for c in json.load(f)["cases"]}
+
+
+def r1_g0():
+    """The committed C-009 fresh produce rso/binding/R1/G0 (real executions, producer-bound), as the B1 harness loads it."""
+    import base64
+    import json
+    import os
+    from rso.slice001 import s2_bundle as SB
+    d = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))), "binding", "R1",
+                     "G0")
+
+    def j(f):
+        with open(os.path.join(d, f), "rb") as fh:
+            return json.loads(fh.read())
+    tr = {nid: {role: base64.b64decode(s) for role, s in t.items()} for nid, t in j("traces.json")["traces"].items()}
+    with open(os.path.join(d, "MANIFEST.json"), "rb") as fh:
+        manifest = fh.read()
+    return SB.G0(j("receipts.json")["receipts"], tr, j("inventory.json")["rows"], manifest, j("run.json")["run_id"])
+
+
+def _bases():
+    return (("synthetic", None), ("r1", F.real_base(r1_g0())))
+
+
+def _g_inv(case, claim="CL-RET(REG)"):
+    return EV.g_inv(case.claims[claim], case.bundle, case.anchors)["outcome"]
+
+
+def _want(cid):
+    """(reason or None, witness BIND list or None) from the reviewer's expected.json for CL-RET(REG)'s G-INV line."""
+    reason, binding = None, None
+    for ch in _b1_expected()[cid]["checks"]:
+        if ch.get("type") == "line" and ch.get("line") == "G-INV@CL-RET(REG)":
+            reason = ch["fields"].get("reason")
+        if ch.get("type") == "witness_binding":
+            binding = ch["binding"]
+    return reason, binding
+
+
+class TestB1Pins(unittest.TestCase):
+    """R1: the reviewer's fire cases for E2 (launch row kind), E3 (MUTATION_CHILD as node run) and E4 (a cited row
+    whose only failing dimension is a missing digest) are now in the slice suite; E2-E4 applied verbatim are killed."""
+
+    def _check(self, cid, build):
+        from rso.binding.challenge.B1 import cases as B1C
+        reason, binding = _want(cid)
+        for bname, base in _bases():
+            case = getattr(B1C, build)(base)
+            o = _g_inv(case)
+            self.assertEqual(o["value"], "FAIL", (cid, bname))
+            if reason is not None:
+                self.assertEqual(o["reason"], reason, (cid, bname))
+            self.assertEqual(o["witness"]["binding"], binding, (cid, bname))
+
+    def test_e2_launch_is_node_run(self):
+        self._check("B1.BROKEN.LAUNCH_IS_NODE_RUN", "broken_launch_is_node_run")
+
+    def test_e3_child_as_node_run(self):
+        self._check("B1.BROKEN.CHILD_AS_NODE_RUN", "broken_child_as_node_run")
+
+    def test_e4_legacy_row(self):
+        self._check("B1.BROKEN.LEGACY_ROW", "broken_legacy_row")
+
+
+class TestBX5bSibling(unittest.TestCase):
+    """R2 (CONTRACT.md s7 BX5b): every COMPLETED RECEIPT row of a presented node under the anchored launch must be the
+    cited row. FAILED / INTERRUPTED / REFUSED attempts and other launches stay provenance."""
+
+    def test_sibling_unreported_is_refused(self):
+        from rso.binding.challenge.B1 import cases as B1C
+        for bname, base in _bases():
+            case = B1C.broken_sibling_unreported(base)
+            o = _g_inv(case)
+            self.assertEqual((o["value"], o["reason"]), ("FAIL", "RECEIPT_WITHOUT_RUN:%s" % B1C.VICTIM), bname)
+            self.assertEqual(o["witness"]["binding"], ["BIND_SIBLING_UNREPORTED"], bname)
+            self.assertEqual(o["witness"]["siblings"], [case.hidden["run_id"]], bname)
+            for other in ("CL-RET(PKTD)", "CL-RET(LAGD)", "CL-CAL(STANDARD)"):
+                self.assertEqual(_g_inv(case, other)["value"], "PASS", (bname, other))
+
+    def test_failed_retry_and_charged_children_bind_as_their_baselines(self):
+        from rso.binding.challenge.B1 import cases as B1C
+        for bname, base in _bases():
+            baseline = F.g0(base)
+            for build in (B1C.sound_failed_retry, B1C.sound_charged_children):
+                case = build(base)
+                for claim in ("CL-RET(REG)", "CL-RET(PKTD)", "CL-RET(LAGD)", "CL-CAL(STANDARD)"):
+                    self.assertEqual(_g_inv(case, claim), _g_inv(baseline, claim), (bname, build.__name__, claim))
+
+
 if __name__ == "__main__":
     unittest.main()
