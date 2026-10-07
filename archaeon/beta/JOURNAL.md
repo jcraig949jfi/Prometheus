@@ -23,7 +23,8 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
 | B15 | why does L2 force genuine state? | ANALYSIS: wall = conditional write ROUTING to 2 locations (hypothesis) |
 | B16 | how do genuine shelves store one value? | 56% LATCH (stop perceiving); 36% continuous perceivers |
 | B14' | L4 seeded from perceiving vs latching shelves | NULL 0/5 + 0/5 |
-| B18 | is the wall a property of MONOLITHIC programs? (modular organisms) | design (read proteus graph organism first) |
+| B18 | graph organisms on the ladder (first world run) | PAUSED: needs a WSE-format graph positive control |
+| B19 | gen-0 config (tape 4096 + persist tape) as hidden gate? | running (light) |
 | B17 | forced perception (echo on PUT) opens the 2-value wall? | staged; controls pass |
 | B12 | LONG: W2_K2 with N=500, G=3000 -- is it just time? | STOPPED (compute repair); partial 0/6 to g200-2999 |
 | B11 | is the W2_K2 shelf a delay line? | MOSTLY NO: 50/72 genuine memory, 20/72 delay lines |
@@ -192,6 +193,18 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   programs? Two-module organisms (each module a Proteus program with its own registers, same input; the organism's
   answer = module selected by a tiny third program, or by ask count) on jittered L4 and W2_K2.
   First step (light, now): read proteus graph_organism to see whether it already provides this before building one.
+- CORRECTION (mine, 2026-10-07 ~07:00Z). Reading Proteus's graph keyed-memory witness (state[key] = value) led to a
+  hand-written 11-instruction v0 program: IN kind; IN tag; PUT -> IN v; ST [tag], v | ASK -> LD [tag]; OUT. Held-out:
+  jittered L4 1.000, jittered W2_K2 1.000, K3 1.000, K4 .995, K6 1.000 (tape 4096, persist tape); tape 256 gives
+  .73-.92 (tags fall in the read-only code region). So GENERAL keyed memory needs NO loop, NO slots, NO composition.
+  WITHDRAWN: (a) B05's premise that GENERAL requires a table-plus-loop; (b) the name "composition wall" as the
+  explanation (the GA also misses a short NON-composed solver). What every unreached solver shares is a COUPLED
+  WRITE/READ PAIR whose halves are each silent (ST[tag] without LD[tag] scores nothing, and vice versa) -- B02's
+  silent plateau, now with ~3 edits instead of ~5. Hidden-gate candidate: gen 0 (FOUNDRY_C2) draws tape_words
+  16..256 and persist uniformly; the indexed solver wants 4096 + tape persistence. -> B19 (light, 2 procs) launched.
+- B18 (graph organism) PAUSED: the Proteus graph witness uses a two-channel probe and scores 0 on every WSE rung,
+  so there is no graph positive control in the WSE format yet; Evolution._shares also needs a graph-tolerant
+  replacement. A null without a positive control would be uninterpretable.
 - B08J built (ladder with jitter in train AND held-out); controls unchanged under jitter. Launches when cores free.
 - Next: B01b (done) tests H-PLATEAU quantitatively; then B03 = search arms at equal compute from fresh gen 0
   (baseline / heavy-tailed mutation count / behaviour-novelty) -- prediction: only structural-move arms lift 0/60.
