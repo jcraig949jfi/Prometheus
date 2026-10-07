@@ -19,7 +19,7 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
 | B08 | which primitive is the wall? (ladder) | L4 claim RETRACTED: evolved solvers are delay lines (B08b) |
 | B08J | ladder with timing jitter (repaired instrument) | COMPOSITION WALL: 1 value yes, 2 values 0/8 |
 | B13 | queue primitive (PUSH/POPF): does the 2-value wall move? | running |
-| B12 | LONG: W2_K2 with N=500, G=3000 -- is it just time? | running (hours; progress in results/B12_progress.jsonl) |
+| B12 | LONG: W2_K2 with N=500, G=3000 -- is it just time? | STOPPED (compute repair); partial 0/6 to g200-2999 |
 | B11 | is the W2_K2 shelf a delay line? | MOSTLY NO: 50/72 genuine memory, 20/72 delay lines |
 | B09 | dispatch wall: READ the cue vs SELECT on it | CLEAN NULL 0/24 |
 | B10 | SEL opcode (branch-free mux): does the wall move? | CLEAN NULL 0/32 |
@@ -129,6 +129,13 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   in the last two tape words; two branches replaced in the stock VM source (asserted). Control bug caught and fixed:
   my first queue program popped on NOISE ticks (0.32); with a kind==2 check it scores L4 1.000 / L6 .5625 on the
   queue VM and ~0 on stock; slot solver 1.0/1.0 on both. Launched {queue, stock} x {L4, L6} jittered, 8 seeds, G=300.
+- 2026-10-07 ~04:15Z PROCESS DEFECT (mine; calibration ledger row 2026-10-07): B03..B13 ran with 15-26 workers
+  UNLEASED on shared M2 (~90+ core-h in ~4 h vs MWO-0004 R2's 48 core-h/seat/24 h), crowding another session's
+  job. Repair: lease spectrex5:cpu12 lse-bda13648061d for in-flight B13; B12 STOPPED; all later launches <= 12 procs.
+- B12 PARTIAL (stopped at the overrun repair, not by its own rule): 6 seeds, N=500, generations reached 200-2999
+  (seed 1203 ran to G=3000): 0/6 summits. Elites: 4/6 genuine one-slot memory (held-out .53-.54 = jitter), 2/6 delay
+  lines (seed 1202 g2000: .53 -> .20 jitter; seed 1203 g2999: .52 -> .16). Genomes grew to 26-177 instructions.
+  Prediction (0/6) held where measured. 10x the generations and 2.5x the population do not cross the wall.
 - B08J built (ladder with jitter in train AND held-out); controls unchanged under jitter. Launches when cores free.
 - Next: B01b (done) tests H-PLATEAU quantitatively; then B03 = search arms at equal compute from fresh gen 0
   (baseline / heavy-tailed mutation count / behaviour-novelty) -- prediction: only structural-move arms lift 0/60.

@@ -20,6 +20,16 @@ were recorded elsewhere before this file existed are listed under
                                                                                 canonical tree -- held only because the operator's template still
                                                                                 carries the old wording. Same failure class as Atalanta L-09 and
                                                                                 Hypatia #90.
+    2026-10-07  M2 boot       ran the Phase 2-B Beta assays B03..B13 on M2        Directive 2026-10-06 says heavy shared compute uses the Fabric lease  archaeon/beta/JOURNAL.md
+                (P2B SFE)     with 15-26 worker processes from ~00:00Z to         authority; MWO-0004 R2 sets <= 16 core-h per item and <= 48 per seat  (2026-10-07 04:1xZ entry)
+                              04:1xZ WITHOUT a Fabric lease, beside other          per 24 h. Rough count ~90+ core-h in ~4 h, unleased, on the shared
+                              seats' work                                          host (another session's 4-proc job started 03:58Z and was being
+                                                                                   crowded; my B13 workers were CPU-starved). Noticed only when B13
+                                                                                   ran slow. Repair: lease spectrex5:cpu12 lse-bda13648061d taken for
+                                                                                   the in-flight B13 (20 procs, over the 12 convention, disclosed in the
+                                                                                   lease purpose); B12 long run STOPPED (partial result kept); every
+                                                                                   later Beta launch <= 12 procs under that lease, and the 48 core-h/24 h
+                                                                                   envelope is now the binding budget for the rest of this window.
 
 ## Prior rows, by pointer (before this file existed)
 
