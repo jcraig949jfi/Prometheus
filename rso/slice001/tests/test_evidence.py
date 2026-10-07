@@ -899,8 +899,10 @@ class TestCC1Binding(unittest.TestCase):
         for cid, build, claim, want in CC.CASES:
             case = build(base)
             self.assertEqual(CC.g_inv_of(case, claim), want, cid)
+            # A node-level shape touches no other claim (V7); an unbound launch is the whole bundle's (BX1).
+            other_want = ("FAIL", "LAUNCH_UNBOUND") if want[1] == "LAUNCH_UNBOUND" else ("PASS", None)
             for other in ("CL-RET(PKTD)", "CL-RET(LAGD)", "CL-CAL(STANDARD)"):
-                self.assertEqual(value(EV.g_inv(case.claims[other], case.bundle, case.anchors)), ("PASS", None),
+                self.assertEqual(value(EV.g_inv(case.claims[other], case.bundle, case.anchors)), other_want,
                                  (cid, other))
 
     def test_synthetic_base(self):

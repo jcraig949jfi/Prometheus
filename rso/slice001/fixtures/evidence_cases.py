@@ -305,9 +305,9 @@ def receipt_digest(d):
 def launch_of(dicts):
     """The launch a bundle's receipts ran under: the <launch> of their run ids <launch>/<node> (s2_bundle's
     spelling), by majority, so one edited receipt citing a foreign row does not move it (ties: the smallest);
-    LAUNCH when no run id carries one (the synthetic G0)."""
-    n = collections.Counter(d["execution"]["run_id"].split("/", 1)[0] for d in dicts.values()
-                            if "/" in d["execution"]["run_id"])
+    a run id without one counts for LAUNCH (the synthetic G0)."""
+    n = collections.Counter(d["execution"]["run_id"].split("/", 1)[0] if "/" in d["execution"]["run_id"]
+                            else LAUNCH for d in dicts.values())
     if not n:
         return LAUNCH
     top = max(n.values())

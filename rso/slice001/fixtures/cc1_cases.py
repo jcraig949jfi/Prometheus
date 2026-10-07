@@ -174,6 +174,8 @@ def artifact_swap(base=None):
     tr = b.traces(d)
     for out in d[PRESERVE]["outputs"]:
         x = b.fabricate(PRESERVE, out["role"])
+        if x == tr[PRESERVE][out["role"]]:            # another runtime's identical bytes would swap nothing
+            x = x[::-1] + b"\n"
         out["sha256"], out["length"] = hashlib.sha256(x).hexdigest(), len(x)
         tr[PRESERVE][out["role"]] = x
     return _case("ARTIFACT_SWAP", d, inv, base, traces=tr)
@@ -250,7 +252,7 @@ CASES = [
     ("R2.PROBE.FAILED_ROW_STRICT", failed_row_strict, "CL-RET(REG)",
      ("FAIL", RWR % PRESERVE, ["BIND_STATUS:FAILED"])),
     ("NEW.ARTIFACT_SWAP", artifact_swap, "CL-RET(REG)", ("FAIL", RWR % PRESERVE, ["BIND_DIGEST_MISMATCH"])),
-    ("NEW.LAUNCH_SUBSTITUTION", launch_substitution, "CL-RET(REG)", ("FAIL", "LAUNCH_UNBOUND", None)),
+    ("NEW.LAUNCH_SUBSTITUTION", launch_substitution, "CL-RET(REG)", ("FAIL", "LAUNCH_UNBOUND", [])),
 ]
 BY_ID = {c[0]: c for c in CASES}
 
