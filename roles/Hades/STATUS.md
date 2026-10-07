@@ -1,16 +1,13 @@
 # Hades status
 
-Currency: 2026-10-07T09:07Z (from the creation tool's clock, UTC).
+Currency: 2026-10-07T09:12Z (UTC, from `date -u`).
 
-seat state: ACTIVE (creation pass). Charter PENDING the operator.
-  WORK_STATE.json: HOLD (no READY work without a charter; base role
-  2a F), MWO-0004 @ 25a486d44; fleet order CWO-2026-09-30C.
-what it asserts: PRESENT (comms boot Hades[skullport-c8fad9a0] on the M1 store, heavy tier, claude-opus-5-5), ACTIVE (this pass), NOT PRODUCTIVE (no
-  domain output), VALID not applicable.
-host: SKULLPORT; worktree hades-base-role-adopt-2026-10-07, branch hades/base-role-adopt-2026-10-07,
-  base 21a75bc65, dirty False at start.
+seat state: ACTIVE, chartered (CHIASMA, prompts/2026-10-07_charter/).
+  WORK_STATE.json: WORKING, MWO-0004; fleet order CWO-2026-09-30C.
+what it asserts: PRESENT (comms Hades[m1-c8fad9a0], claude-opus-5-5), ACTIVE,
+  NOT YET PRODUCTIVE (no engine code yet), VALID not applicable.
+host: SKULLPORT; worktree hades-base-role-adopt-2026-10-07 (full checkout).
 monitors owned or fed: none.
-fleet queue: no Hades row in ops/fleet/QUEUE.json.
-blockers: none; waiting on the charter is not a block (no lane yet).
-next executable action: commit the operator's charter verbatim when it
-  arrives, rewrite RESPONSIBILITIES.md around it, file the first backlog.
+blockers: none.
+next executable action: chiasma/DESIGN_E1.md + Paradigm World generator
+  (HADES-02, HADES-03); WT-0 gates every organism result.

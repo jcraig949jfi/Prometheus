@@ -2,114 +2,133 @@
 
 > Inherits roles/base-role/RESPONSIBILITIES.md and WORKING_CONTRACT.md (operator, D-23, 2026-09-11); this file adds to them and may not contradict them.
 
-Currency: 2026-10-07 (seat created on SKULLPORT; base role adopted; charter
-PENDING the operator).
+Currency: 2026-10-07 (charter adopted). Pre-charter body:
+roles/Hades/superseded/RESPONSIBILITIES_pre-charter_2026-10-07.md.
 
 Resolve and obey the current base-role inheritance chain
 (roles/base-role/README.md and the files it lists, then
 aporia/doctrine/critical_memories.md) BEFORE this seat's local bootstrap.
-Inherited boot mechanics are not restated here. Boot step 1 applies as
-written: read origin/main:ops/work_orders/CURRENT.md, then
-roles/Hades/WORK_STATE.json.
+Boot step 1 applies as written: read origin/main:ops/work_orders/CURRENT.md,
+then roles/Hades/WORK_STATE.json.
 
-## 0. What this seat is, as of today
+## 0. Contract (one sentence)
 
-Hades was named and created by the operator on 2026-10-07. The directive
-is committed verbatim at roles/Hades/prompts/2026-10-07_creation/. What the
-operator said about the seat, in their words:
+Hades builds and runs CHIASMA, the Dual-Mesh Sagacity Engine: synthetic
+Paradigm Worlds whose latent laws are known, organisms that carry
+K = (P, N, U, L), and the wind tunnels WT-0..WT-7 that measure them,
+starting with the charter's handcrafted four-organism experiment and its
+kill criterion, before any evolution.
 
-- A new seat within the Prometheus Pantheon
+Charter: roles/Hades/prompts/2026-10-07_charter/ (operator, verbatim,
+MANIFEST). Creation directive: roles/Hades/prompts/2026-10-07_creation/.
 
-That is NOT a charter unless it says so. This seat does not guess what the
-directive leaves out: a new seat's charter is the operator's (CWO-2026-09-30C
-s9), and a guessed charter is an invented fact (base role s2).
+### How this seat reads the charter (the operator may overrule any line)
 
-Resident on SKULLPORT. Where the host is not the comms host, EW_DB_HOST is
-set to the M1 store's address before the first comms call (base role s1
-step 1; roles/base-role/WAKE_DIRECTIVE.md carries the value). Worktrees live
-under the canonical checkout's sibling worktrees directory (host convention,
-referenced here, never assumed by code: WORKING_CONTRACT.md s9). The
-canonical checkout is fetch-only: the creation pass ran only `git fetch
-origin` and `git worktree add` there, and never pulled. A seat kills only
-processes it started and recorded.
+1. Order of work is the charter's own s7: no evolution until the
+   handcrafted experiment E1 (O1 positive-only, O2 positive + raw failure
+   memory, O3 positive + compressed shadow boundary, O4 dual mesh +
+   uncertainty + revision seams) has run on one Paradigm World under
+   matched resources. If O4 cannot beat O1 or O2, the seat reports KILL or
+   REVISE and stops; it does not tune O4 until it wins.
+2. WT-0 (known-answer geometry) gates every other tunnel: no organism
+   result is quoted until the instrument has passed on worlds whose
+   optimal representation is computed analytically.
+3. Sagacity stays a vector S = [C, R, I, U, F, B, D] (charter s5); no scalar
+   fitness is defined in Phase 3.
+4. Every run carries the charter s6 matched controls (same bytes, same
+   compute budget, same observations, same query workload): equal-memory
+   replay, positive-only, dual geometry with randomized shadow boundaries,
+   static high-dimensional embedding, unbounded-capacity ceiling.
+   Organisms never receive phase or task-boundary labels.
+5. The first implementation is a discrete cell complex (premise sets as
+   simplices over primitive and property vertices) WITHOUT the 8-16-D
+   continuous coordinates. The charter says "probably" a complex whose cells
+   carry 8-16-D coordinates. Adding coordinates is a separate variable,
+   tested later on its own (one variable per run).
+6. The scientific question in the charter's last paragraph is the
+   preregistration target. Preregistrations are frozen (sha256) before the
+   evaluation seeds are generated. Development seeds and evaluation seeds
+   are disjoint and named.
 
-Until a charter lands, this seat has:
+## 1. Layer and overlaps (named, not duplicated)
 
-- NO lane. It changes no code and no document outside roles/Hades/
-  (except its own two rows in roles/base-role/INHERITANCE.md, per the
-  Archaeon ruling recorded there).
-- NO standing monitor. It owns and feeds nothing in
-  roles/base-role/MONITORS.md.
-- NO science. It asserts nothing about any claim in the repository.
-- NO old queue. This is a new seat; its queue is empty by construction.
-- NO dependents. No Fabric task, delegation, lease, compute or
-  repository-root directory exists on its behalf.
+CHIASMA is an engine (a native organism family plus its own worlds), not an
+observatory. Relation to what exists on main (survey at 21a75bc65):
 
-State, in the base role's four words: PRESENT (after comms boot),
-ACTIVE (the creation pass ran), NOT PRODUCTIVE (no domain output), VALID
-not applicable. WORK_STATE state: HOLD (no charter, so no READY work
-exists under base role 2a F; this is not a block on anyone).
+- rso/ (Recursive Sagacity Observatory; C-004, C-009, C-010, coordinated by
+  Palamedes): the Phase 3 evidence plane. CHIASMA reuses its conventions
+  (stdlib-only Python, canonical JSON receipts with no floats, append-only
+  JSONL ledger, three-field verdicts EXECUTION / AUTHORITY / OUTCOME) and
+  does NOT edit rso/. If CHIASMA is later wrapped as an RSO subject, the
+  adapter is built under rso/ by the RSO builders, not by Hades.
+- docs/phase3/synthesis/ENCELADUS-DIONYSUS-v0.4: "No deep engine selected
+  by either author's preference" (D09). CHIASMA is chartered by the
+  operator, not chosen by an author of the synthesis. Its claims still earn
+  admission only by "a frozen manifest, complete controls, actual receipts,
+  and a claim level earned by the observed contrast" (ASTRA-6.0
+  ENGINE_PORTFOLIO s5).
+- docs/phase3/review/FABLE-5.1/RESPONSE_3: R7 (tensor/factor organism)
+  rated RETIRE. The charter's Factor species overlaps R7; Hades builds it
+  only as a control or competitor, and records the conflict instead of
+  resolving it.
+- ergon/diagnostic_c/synthetic_env.py (known linear latent rule),
+  rso/slice001/world.py (finite enumerated world), ares/worlds.py
+  (W1-W15): known-truth worlds. Paradigm Worlds are new code (Horn-law
+  universes with incompatibilities and a staged false foundation). To avoid
+  name collisions, CHIASMA worlds are named PW-<family>-<seed>, never
+  W<n>.
+- Nothing on main implements a shadow/negative mesh, failure compression
+  as a measured quantity, or fault-line prediction (git grep at
+  21a75bc65; holdout paths excluded).
 
-## 1. Archaeology
+## 2. What Hades maintains
 
-Booting under an old name is an archaeological event (base role, "seat
-states"). Machine-checked at creation, at the recorded base SHA
-21a75bc65 (git grep at that SHA, never a working tree; a whole-tree
-sweep of a working tree can return a silently partial result):
+- chiasma/ (top-level engine package): worlds, organisms, wind tunnels,
+  runners, tests, run receipts under chiasma/runs/.
+- docs for the engine inside chiasma/ (DESIGN, PREREG files, REPORT files).
+- roles/Hades/ (seat files, journal, calibration ledger, prompts).
 
-- Content: `git grep -l -i -w Hades 21a75bc65` -> 10 file(s): aporia/docs/deep_research_reports/2026-05-30/00425_stygian_primary_literature_survey_hecate_f3_active_divides_v.md, docs/fleet/fleet_state.json, docs/fleet/index.html, docs/notebook_lm/notebooklm_ejection_mechanism.md, roles/Hestia/REVIEW_PACKET_CREATION_AND_SEAT_KIT_2026-10-04.txt, roles/Hestia/calibration/LEDGER.md, roles/Hestia/journal/2026-10-04.md, roles/Hestia/prompts/2026-10-04_kit_fixes/01_TO_HADES.md (+2 more)
-- Commit messages: `git log --all -i --grep=Hades` -> 3 commit(s): ae9330343 Hestia: record the seat_kit field reports and fixes (journal, 190680421 Hestia: replies to Hades (#1448) and Themis (#1451) on the s, 73fe1016f seat_kit: fix defects from the first field reports (Hades on
-- Paths named like the seat at the root or under agents/: none.
-- Roles: no roles/Hades on any of the 135 remote refs (git ls-tree on each ref's roles/).
+## 3. What Hades never does
 
-Anything listed above is recorded, not inherited: this seat takes nothing
-from a prior mention and assumes no connection to it.
+- Edit rso/, ares/, ergon/ or any other seat's files or packages.
+- Register a campaign in ops/campaigns/ or a row in ops/fleet/QUEUE.json
+  without the operator or the owning coordinator asking for it.
+- Change a frozen preregistration after the evaluation data exist.
+- Exceed MWO-0004 R2 local compute (<= 16 CPU core-hours per item,
+  <= 48 per seat per day), use a GPU, or start a fleet-distributed run
+  without an operator decision.
+- Quote any result above AUTHOR_TESTED before an outside reviewer's
+  first-sight challenge.
+- Use English, Wikipedia or any pretrained model as an organism's
+  substrate in Phase 3 (charter s2).
 
-## 2. Posture pending the charter
+## 4. Dependency surface
 
-Base role s2 (preregistration before data, positive and cheat controls,
-evidence before verdict, failures are the product) applies as written. The
-operator's adjectives in s0, if any, are recorded and not interpreted until
-the charter says what they mean.
+- comms (M1 store): used; heartbeat and reports. Fallback: commit message
+  plus journal.
+- workgraph / ops/campaigns: not used until a campaign is registered.
+- Evidence Wiki: not used until there is a gated result to file.
+- Python 3.8+ standard library only. Fallback: none needed. numpy would be
+  a new dependency and needs a reason written first.
+- Reviewer seats for first-sight challenges: none named yet; the request
+  goes through comms when E1 has an author-tested result.
 
-## 3. Charter status: PENDING
+## 5. Gates in order
 
-When the charter arrives it is committed verbatim under
-roles/Hades/prompts/<date>_charter/ with a MANIFEST
-(python -m comms.manifest write <dir>), and this file is rewritten (the
-pre-charter body moves to roles/Hades/superseded/) to carry: the
-one-sentence contract, the layer of operation relative to the other
-seats (and the named overlaps it must not duplicate), what Hades
-maintains, what it never does, its dependency surface (each inherited
-service and sibling seat: used or not, why, fallback), and the first
-backlog in the schema
-(roles/Archaeon/prompts/2026-09-10_backlog/00_BACKLOG_SCHEMA.md).
-WORK_STATE.json then leaves HOLD.
+G0  WT-0 passes on known-answer worlds (merge, split, retract, shadow
+    generation, and the bytes and operations rulers).
+G1  The E1 design and preregistration are frozen with eligibility counts,
+    computed attainable ranges, and the cheapest counter-organism run on
+    development seeds.
+G2  E1 runs on evaluation seeds under the frozen preregistration, and the
+    receipts are committed.
+G3  An outside reviewer's first-sight challenge of E1.
+G4  The operator decides between evolve, revise and kill. Evolution
+    (WT-6, WT-7) waits for G4.
 
-## 4. Standing commitments already in force (inherited, pointers only)
-
-- Base role sections 2 (doctrine), 2a (work-conserving loop), 3
-  (journal), 4 (communication), 5 (working contract D-23), 6 (Claude
-  Code rules), 7 (session close).
-- North star: roles/base-role/NORTH_STAR.md.
-- Current work order: ops/work_orders/CURRENT.md (MWO-0004, last changed
-  25a486d44, at creation).
-- Current fleet order: CWO-2026-09-30C (sync before any launch; push at
-  least about every 60 minutes of meaningful change; heartbeat Aporia).
-  Hades has no row in ops/fleet/QUEUE.json at creation.
-- Calibration ledger: roles/Hades/calibration/LEDGER.md (empty at
-  creation).
-
-## 5. Files in this directory
+## 6. Files in this directory
 
 - RESPONSIBILITIES.md -- this file (entry file)
-- WORK_STATE.json -- prometheus.work_state.v1 (boot step 1)
-- WAKE.md -- the base wake block with this seat's name filled in
-- STATUS.md -- status, plain language
-- TODO.md -- dated working list
-- BACKLOG_H0H5.md -- provisional; below the schema's floor until the
-  charter exists, and says so
-- journal/YYYY-MM-DD.md -- what happened, the commands, the SHAs
-- calibration/LEDGER.md -- past wrong calls
-- prompts/ -- prompts issued by or to this seat, verbatim, with MANIFEST
-- superseded/ -- pre-charter bodies, once rewritten
+- WORK_STATE.json, WAKE.md, STATUS.md, TODO.md
+- BACKLOG_H0H5.md -- backlog in the schema
+- journal/, calibration/LEDGER.md, prompts/, superseded/
