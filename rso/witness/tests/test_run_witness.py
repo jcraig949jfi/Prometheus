@@ -297,6 +297,159 @@ class TestSubject(Base):
             RW.launch(cfg, self.ledger(), os.path.join(self.d, "bx"), code_commit=COMMIT)
 
 
+class TestArtifacts(Base):
+    """C-010-T011: every receipt artifact is stored as artifacts/<sha256>, verified against the receipt, and listed."""
+
+    def _launch(self, entries=(("S", [101, 102]), ("NULL", [101, 102])), **kw):
+        cfg = _write_config(self.d, self.subject, list(entries))
+        return self.launch(cfg, **kw)
+
+    def _seam(self, mutate):
+        """Install the (rec, {sha256: bytes}) seam over the current receipt_dict, with mutate(rec, arts) applied."""
+        orig = AC.receipt_dict
+
+        def seamed(launch, arm_name, predicate, subject, seeds):
+            rec, arts = RW.node_artifacts(orig, launch, arm_name, predicate, subject, seeds)
+            rec, arts = mutate(rec, dict(arts))
+            return rec, arts
+        AC.receipt_dict = seamed
+        return orig
+
+    def test_every_artifact_is_stored_content_addressed_and_verified(self):
+        out, _ = self._launch()
+        man, _, _ = _bundle(out)
+        stored = sorted(os.listdir(os.path.join(out, "artifacts")))
+        self.assertTrue(stored)
+        for n in man["nodes"]:
+            rec = json.loads(_read(os.path.join(out, n["receipt_file"])))
+            expect = [(a["role"], a["sha256"], a["length"]) for a in rec["outputs"] + rec["oracle"]]
+            got = [(a["role"], a["sha256"], a["length"]) for a in n["artifacts"]]
+            self.assertEqual(got, expect)
+            self.assertEqual(sorted(a["role"] for a in n["artifacts"]),
+                             ["oracle:regimes", "oracle:reset_steps", "trace:actions"])
+            for a in n["artifacts"]:
+                self.assertEqual(a["file"], "artifacts/" + a["sha256"])
+                data = _read(os.path.join(out, a["file"]))
+                self.assertEqual(len(data), a["length"])
+                self.assertEqual(RW.sha256_hex(data), a["sha256"])
+                self.assertIn(a["sha256"], stored)
+        # nothing is stored that no receipt names
+        named = set(a["sha256"] for n in man["nodes"] for a in n["artifacts"])
+        self.assertEqual(set(stored), named)
+
+    def test_stored_bytes_are_the_actions_the_ruler_will_recount(self):
+        out, _ = self._launch([("S", [101, 102])])
+        man, _, _ = _bundle(out)
+        n = man["nodes"][0]
+        by_role = dict((a["role"], a) for a in n["artifacts"])
+        w = AC.world("W15", "present")
+        pop = S.Population.from_genomes([json.loads(_read(self.subject).decode("utf-8"))])
+        res = AC.run_episodes(pop, w, [101, 102])
+        self.assertEqual(_read(os.path.join(out, by_role["trace:actions"]["file"])), res["actions"].tobytes())
+        self.assertEqual(_read(os.path.join(out, by_role["oracle:regimes"]["file"])), res["regimes"].tobytes())
+
+    def test_receipt_and_binding_rows_unchanged_and_flat(self):
+        out, res = self._launch()
+        man, rows, run = _bundle(out)
+        self.assertEqual(B.launch_reasons(rows, man["launch_run_id"]), [])
+        own = B.own_launch_rows(rows, man["launch_run_id"])
+        self.assertEqual(len(own), len(man["nodes"]))
+        for r in own:
+            self.assertEqual(r["parent_run_id"], man["launch_run_id"])
+            self.assertEqual(r["status"], "COMPLETED")
+            self.assertTrue(r["receipt_sha256"])
+        for n in man["nodes"]:
+            data = _read(os.path.join(out, n["receipt_file"]))
+            self.assertEqual(B.binding_reasons(n["node_id"], n["run_id"], data, rows, man["launch_run_id"]), [])
+        # P-FLAT: no node row is the child of another node row
+        ids = set(r["run_id"] for r in own)
+        self.assertFalse([r for r in own if r["parent_run_id"] in ids])
+
+    def test_tuple_seam_is_honoured(self):
+        orig = self._seam(lambda rec, arts: (rec, arts))
+        try:
+            out, _ = self._launch([("S", [101, 102])])
+        finally:
+            AC.receipt_dict = orig
+        man, _, _ = _bundle(out)
+        self.assertEqual(len(man["nodes"][0]["artifacts"]), 3)
+
+    def _refused_with(self, mutate, text):
+        orig = self._seam(mutate)
+        try:
+            with self.assertRaises(RW.WitnessError) as cm:
+                self._launch([("S", [101, 102])])
+        finally:
+            AC.receipt_dict = orig
+        self.assertIn(text, str(cm.exception))
+        out = os.path.join(self.d, "b1")
+        self.assertFalse(os.path.exists(os.path.join(out, "MANIFEST.json")))
+        self.assertEqual(self.tops()[0]["status"], "FAILED")
+        self.assertEqual([r["status"] for r in self.ledger().inventory() if r.get("launch_kind") == B.RECEIPT],
+                         ["FAILED"])
+        self.assertFalse(os.path.isdir(os.path.join(out, "artifacts")) and os.listdir(os.path.join(out, "artifacts")))
+
+    def test_flipped_byte_is_refused(self):
+        def flip(rec, arts):
+            k = sorted(arts)[0]
+            b = bytearray(arts[k])
+            b[0] ^= 1
+            arts[k] = bytes(b)
+            return rec, arts
+        self._refused_with(flip, "sha256")
+
+    def test_wrong_length_is_refused(self):
+        def lie(rec, arts):
+            rec["outputs"][0]["length"] += 1
+            return rec, arts
+        self._refused_with(lie, "length")
+
+    def test_missing_artifact_bytes_are_refused(self):
+        def drop(rec, arts):
+            arts.pop(rec["outputs"][0]["sha256"])
+            return rec, arts
+        self._refused_with(drop, "missing")
+
+    def test_unreferenced_artifact_bytes_are_refused(self):
+        def extra(rec, arts):
+            arts[RW.sha256_hex(b"stray")] = b"stray"
+            return rec, arts
+        self._refused_with(extra, "not named")
+
+    def test_artifact_stored_under_the_wrong_name_is_refused(self):
+        def rename(rec, arts):
+            k = sorted(arts)[0]
+            arts["0" * 64] = arts.pop(k)
+            return rec, arts
+        self._refused_with(rename, "missing")
+
+    def test_artifact_dir_never_overwritten_with_different_bytes(self):
+        out = os.path.join(self.d, "bx")
+        os.makedirs(os.path.join(out, "artifacts"))
+        with open(os.path.join(out, "artifacts", "x"), "wb") as f:
+            f.write(b"x")
+        cfg = _write_config(self.d, self.subject, [("S", [101, 102])])
+        with self.assertRaises(RW.WitnessError):
+            RW.launch(cfg, self.ledger(), out, code_commit=COMMIT)
+
+    def test_shared_bytes_across_nodes_are_stored_once(self):
+        # S and S-NOPL on identical seeds with a subject that has no pl difference may produce identical bytes;
+        # whatever the arms produce, one file per distinct sha256 and every listed file exists
+        out, _ = self._launch([("S", [101, 102]), ("NULL", [101, 102])])
+        man, _, _ = _bundle(out)
+        files = [a["file"] for n in man["nodes"] for a in n["artifacts"]]
+        self.assertEqual(len(set(files)), len(os.listdir(os.path.join(out, "artifacts"))))
+
+    def test_no_statistic_in_cli_output(self):
+        cfg = _write_config(self.d, self.subject, [("S", [101, 102])])
+        buf = io.StringIO()
+        with contextlib.redirect_stdout(buf):
+            rc = RW.main(["launch", cfg, "--ledger", self.ledger_path, "--contract", self.contract,
+                          "--out", os.path.join(self.d, "bc"), "--code-commit", COMMIT])
+        self.assertEqual(rc, 0)
+        self.assertEqual(sorted(json.loads(buf.getvalue())), ["bundle", "launch_run_id", "nodes", "status"])
+
+
 class TestCli(Base):
     def run_main(self, argv):
         buf = io.StringIO()

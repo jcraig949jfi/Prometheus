@@ -8,7 +8,10 @@ Two subcommands (python -B -m rso.witness.run_witness ...):
       execution row (RECEIPT, parent_run_id = the launch, receipt_sha256 recorded when its receipt exists, BX2/BX3).
       Bundle DIR: receipts/R###.json (the canonical receipt bytes), subjects/<sha16>.json, seeds.json,
       inventory.json ({"schema", "rows"}, ledger.inventory()), run.json ({"run_id"}), MANIFEST.json LAST (its
-      presence means the launch completed; it carries launch_run_id).
+      presence means the launch completed; it carries launch_run_id), artifacts/<sha256> (every byte string each
+      receipt names in outputs / oracle, verified against the receipt's sha256 and length before it is written,
+      stored once per distinct sha256, and listed per node in MANIFEST nodes[].artifacts as {role, sha256, length,
+      file}; the evaluator recomputes from these bytes, PREREGISTRATION s7). Producer seam: node_artifacts().
   subject --world W --mode M --P n --G n --eps n --seed n --out DIR [--cfg-json '{...}']
       Runs ares.search.run for a registered subject configuration and writes genome.json (the champion genome as
       canonical bytes), subject_record.json (its sha256, the run receipt, EVERY episode seed the GA drew: the
@@ -253,6 +256,65 @@ def load_config(config_path, exclude_records=()):
 
 
 # --------------------------------------------------------------------------------------------------------
+# Artifacts (PREREGISTRATION s7): every byte string the evaluator reads is stored as artifacts/<sha256>
+
+def node_artifacts(receipt_fn, handle, arm_name, predicate, subject, seeds):
+    """The seam to the producer. Returns (receipt dict, {sha256: bytes}).
+
+    Preferred form (C-010-T010): receipt_fn returns that tuple itself. Until it does, receipt_fn returns the
+    receipt dict alone and the bytes are re-derived here by re-running the same deterministic node through
+    ares_client (arm, run_episodes) in the shape receipt_dict emits (trace:actions, oracle:regimes,
+    oracle:reset_steps); verify_artifacts then checks them against the receipt either way, so a re-derivation
+    that disagrees with the receipt is refused, never trusted."""
+    got = receipt_fn(handle, arm_name, predicate, subject, seeds)
+    if isinstance(got, tuple):
+        rec, arts = got
+        return rec, dict(arts)
+    pop, mode, rt_cls = AC.arm(arm_name, subject)
+    out = AC.run_episodes(pop, AC.world(handle.world_name, mode), seeds, runtime_cls=rt_cls)
+    arts = {}
+    for data in (out["actions"].tobytes(), out["regimes"].tobytes(), json.dumps(out["reset_steps"]).encode("ascii")):
+        arts[sha256_hex(data)] = data
+    return got, arts
+
+
+def verify_artifacts(rec, arts):
+    """Check the bytes against the receipt's own listing: all named bytes present, sha256 and length agree, and
+    nothing unnamed. Returns the manifest entries in receipt order (outputs, then oracle)."""
+    entries = []
+    for key in ("outputs", "oracle"):
+        for a in rec.get(key) or []:
+            entries.append(a)
+    named = set()
+    listed = []
+    for a in entries:
+        sha, role, length = a.get("sha256"), a.get("role"), a.get("length")
+        if sha not in arts:
+            raise WitnessError("artifact %s (%s) is missing: no bytes supplied for its sha256" % (role, sha))
+        data = arts[sha]
+        if sha256_hex(data) != sha:
+            raise WitnessError("artifact %s: bytes do not hash to the receipt's sha256 %s" % (role, sha))
+        if len(data) != length:
+            raise WitnessError("artifact %s (%s): length %d != receipt length %r" % (role, sha, len(data), length))
+        named.add(sha)
+        listed.append({"role": role, "sha256": sha, "length": length, "file": "artifacts/" + sha})
+    extra = sorted(set(arts) - named)
+    if extra:
+        raise WitnessError("bytes supplied that the receipt does not name (not named): %s" % ", ".join(extra))
+    return listed
+
+
+def _store_artifacts(out_dir, listed, arts):
+    for a in listed:
+        path = os.path.join(out_dir, a["file"])
+        if os.path.exists(path):
+            if _read_bytes(path) != arts[a["sha256"]]:
+                raise WitnessError("%s already holds different bytes; never overwritten" % a["file"])
+            continue
+        _write(path, arts[a["sha256"]])
+
+
+# --------------------------------------------------------------------------------------------------------
 # Launch
 
 def _default_launch_id(config_bytes):
@@ -284,9 +346,11 @@ def launch(config_path, ledger, out_dir, code_commit=None, launch_run_id=None, e
                                parent_run_id=launch_run_id)
             c0 = time.process_time()
             try:
-                rec = AC.receipt_dict(handle, item["arm"], item["predicate"], item["subject"]["pop"],
-                                      item["seeds"])
+                rec, arts = node_artifacts(AC.receipt_dict, handle, item["arm"], item["predicate"],
+                                           item["subject"]["pop"], item["seeds"])
+                listed = verify_artifacts(rec, arts)
                 data = AC.receipt_bytes(rec)
+                _store_artifacts(out_dir, listed, arts)
             except Exception:
                 att.finish("FAILED", cpu_s=time.process_time() - c0)
                 raise
@@ -297,7 +361,8 @@ def launch(config_path, ledger, out_dir, code_commit=None, launch_run_id=None, e
             nodes.append({"node_id": item["node_id"], "run_id": run_id, "arm": item["arm"],
                           "predicate": item["predicate"], "subject_sha256": item["subject"]["sha256"],
                           "receipt_file": fname,
-                          "artifact": {"role": "receipt", "sha256": B.receipt_sha256(data), "length": len(data)}})
+                          "artifact": {"role": "receipt", "sha256": B.receipt_sha256(data), "length": len(data)},
+                          "artifacts": listed})
             s = per_subject.setdefault(item["subject"]["sha256"], {"arms": {}, "union": set()})
             s["arms"][item["arm"]] = list(item["seeds"])
             s["union"].update(item["seeds"])
