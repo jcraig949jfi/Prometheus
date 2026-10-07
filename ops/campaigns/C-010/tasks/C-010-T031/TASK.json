@@ -49,7 +49,7 @@
     "rso/witness/tests/test_ruler.py"
   ],
   "kind": "software",
-  "status": "INTEGRATION_READY",
+  "status": "INTEGRATED",
   "history": [
     {
       "status": "PROPOSED",
@@ -92,6 +92,12 @@
       "by": "Argus[desktop-ruapvai-b08b36ac]",
       "at_utc": "2026-10-07T12:48:16Z",
       "note": "branch argus/c010-t031 at 69e47d4a0 (merged with origin/main); see receipt known_escapes: run_cases.py registered_seeds call, make_configs comment, FD-T031-W1 P-OBS prefix"
+    },
+    {
+      "status": "INTEGRATED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-07T13:33:30Z",
+      "note": "merged 69e47d4a0; integrator: FD-T031-W1 prefix reading NOT taken (P-OBS on every witness seed, s5; fixture + S3 test adjusted, E1 still killed); integrator mutation (R1 duplicate refusal disabled) killed by test_r1_b1_duplicate_node_across_bundles"
     }
   ],
   "authority": "PREREGISTRATION s8 (one repair round); rso/witness/ADJUDICATION_W1.md; AMENDMENT_v1.0.1.md",

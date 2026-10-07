@@ -17,6 +17,7 @@ import unittest
 
 import numpy as np
 
+from rso.witness import ruler as RUL
 from rso.binding import binding as B
 from rso.slice001 import evidence as EV
 from rso.slice001 import receipt as R
@@ -157,8 +158,8 @@ def _pair_node(digest, arm, predicate, roles, n, differs):
 
 
 def _obs_node(digest, differs):
-    seeds = witness_seeds()[:4]
-    a = np.ones((4, T, 1), dtype=np.int8)
+    seeds = witness_seeds()          # P-OBS on EVERY witness seed (PREREGISTRATION s5; C-010-T033 integration)
+    a = np.ones((len(seeds), T, 1), dtype=np.int8)
     b = a.copy()
     if differs:
         b[1, 3, 0] = 2
@@ -552,11 +553,18 @@ class TestW1Repairs(Base):
 
     def test_r6_s3_decided_after_the_last_interrupt(self):
         # W1.S3 (sound): correct answers only in (first interrupt, last interrupt], abstain after the last: NEGATIVE.
+        # Integration (C-010-T033): P-OBS must run on EVERY witness seed, and the reviewer's frozen S3 builder runs it on
+        # a prefix, so the full evaluation refuses the bundle before P-RET; the window rule E1 lives in episodes(), so
+        # it is pinned here on the bundle's S/P-RET node directly.
         b = C.build_s3(self._dir("s3"))
-        res = w1_eval(b["roots"], b["store"])
-        s4 = res["subjects"]["S4"]
-        self.assertEqual((s4["P-RET"]["value"], s4["P-RET"]["successes"], s4["P-RET"]["wrong"], s4["class"]),
-                         ("NEGATIVE", 0, 0, "NEGATIVE"))
+        nodes = {}
+        for r in b["roots"]:
+            nodes.update(WE.check_bundle(r, b["store"], C.FIRST_CHECK)["nodes"])
+        ret = [n for nid, n in nodes.items() if n["receipt"]["arm"] == "S" and n["receipt"]["predicate"] == "P-RET"
+               and n["receipt"]["subject"]["genome_sha256"] == C.SUBJECTS["S4"]]
+        self.assertEqual(len(ret), 1)
+        out = RUL.p_ret(WE.episodes(ret[0]))
+        self.assertEqual((out["value"], out["successes"], out["wrong"]), ("NEGATIVE", 0, 0))
 
     def test_r6_e3_run_unreported_with_a_reregistered_manifest(self):
         root = os.path.join(self.tmp, "b")

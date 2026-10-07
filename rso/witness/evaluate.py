@@ -29,7 +29,7 @@ C-010-T031 repair round (rso/witness/ADJUDICATION_W1.md):
   R1  a node id presented by more than one bundle is EVIDENCE_DUPLICATE (refused; no argument-order resolution);
       the RESULT's supplied_by names the launch of every node used
   R2  the registered seed lists are REQUIRED (make_configs SEED_LISTS.json "seeds": witness, erase, pres): P-RET,
-      P-CHAN and the P-CAL arms on the witness list exactly; P-OBS on a non-empty prefix of it (FD-T031-W1);
+      P-CHAN, the P-CAL arms and P-OBS on the witness list exactly (P-OBS: every witness seed, s5);
       P-ERASE on the erase list (S and S-LEAK alike); P-PRES on the pres list. A mismatch refuses the node
   R3  P-ERASE triples have world regimes (pre_a, pre_b) = (0, 1) and S / S-LEAK run identical triples; a P-PRES
       warm-up draws the regime opposite to its seed's (ERASE_PROBES.md); else the node is refused
@@ -292,14 +292,12 @@ def _check_seeds(node, lists):
     rec = node["receipt"]
     seeds = [int(s) for s in rec["seeds"]]
     pred = rec["predicate"]
-    if pred == "P-OBS":
-        ok = 0 < len(seeds) <= len(lists["witness"]) and seeds == lists["witness"][:len(seeds)]
-    elif pred == "P-ERASE":
+    if pred == "P-ERASE":
         ok = seeds == lists["erase"]
     elif pred == "P-PRES":
         ok = seeds == lists["pres"]
-    else:                                                   # P-RET, P-CHAN, P-CAL arms
-        ok = seeds == lists["witness"]
+    else:                    # P-RET, P-CHAN, the P-CAL arms and P-OBS ("every witness seed", PREREGISTRATION s5;
+        ok = seeds == lists["witness"]   # FD-T031-W1 prefix reading not taken at integration, C-010-T033)
     if not ok:
         raise Refused("SEEDS_NOT_REGISTERED:%s (%s)" % (rec["node_id"], pred))
 

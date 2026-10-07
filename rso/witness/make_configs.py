@@ -64,7 +64,7 @@ def build(s4_dir, s15_dir, out_dir):
                "witness_r1": sum(AC.regime_of(s) for s in seeds["witness"]), "erase_triples": len(seeds["erase"]) // 3,
                "pres_pairs": len(seeds["pres"]) // 2, "excluded_count": len(ex), "configs": files, "seeds": seeds}
     RW._write(os.path.join(out_dir, "SEED_LISTS.json"), _canon(summary))
-    RW._write(os.path.join(out_dir, "WITNESS_SEEDS.json"), _canon(seeds["witness"]))   # evaluate.py --seeds (a plain list)
+    RW._write(os.path.join(out_dir, "WITNESS_SEEDS.json"), _canon(seeds["witness"]))   # the plain witness list (informational; evaluate.py --seeds takes SEED_LISTS.json)
     return summary
 
 
