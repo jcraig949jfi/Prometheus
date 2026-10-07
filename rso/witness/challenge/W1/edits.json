@@ -1,0 +1,71 @@
+{
+  "schema": "rso.slice001.mutation_edits.v1",
+  "edits": [
+    {
+      "edit_id": "W1.E1-window-on-first-interrupt",
+      "path": "rso/witness/evaluate.py",
+      "module": "rso.witness.evaluate",
+      "find": "        last = max(steps) if steps else -1",
+      "replace": "        last = min(steps) if steps else -1",
+      "intended_fault": "evaluate.episodes windows the episode decision on the FIRST interrupt instead of the LAST (RULER.md s1, PREREGISTRATION s1: 'answers r after the last interrupt'). Steps between interrupts, where a plastic carrier has re-derived its answer but three more activation resets are still to come, enter the majority; an organism that answers only before its last reset reads as retaining. The witness suite's synthetic traces answer only after the last interrupt and abstain before it, so the window boundary is unpinned there.",
+      "witness": {
+        "expr": "__import__(\"importlib\").import_module(\"rso.witness.challenge.W1.witnesses\").e1(m)"
+      }
+    },
+    {
+      "edit_id": "W1.E2-nopl-mutates-shared-subject",
+      "path": "rso/witness/ares_client.py",
+      "module": "rso.witness.ares_client",
+      "find": "        q = subject.copy()",
+      "replace": "        q = subject",
+      "intended_fault": "ares_client.arm('S-NOPL') zeroes the plasticity rates of the SUBJECT population itself instead of a copy. The driver shares one subject population across a launch's entries in config order (make_configs: S/P-RET, S-NOPL/P-CHAN, S/P-OBS, S/P-ERASE, S-LEAK/P-ERASE, S/P-PRES), so every node after S-NOPL runs plasticity-free: S-LEAK can no longer leak (D = 0 -> P-ERASE DETECTION_UNQUALIFIED for every subject) while S/P-RET, run first, kept its channel; no receipt field records the arm population's plasticity state. The arm tests check the RETURNED population only.",
+      "witness": {
+        "expr": "__import__(\"importlib\").import_module(\"rso.witness.challenge.W1.witnesses\").e2(m)"
+      }
+    },
+    {
+      "edit_id": "W1.E3-run-unreported-dropped",
+      "path": "rso/witness/evaluate.py",
+      "module": "rso.witness.evaluate",
+      "find": "            if r.get(\"status\") == B.COMPLETED and r.get(\"node_id\") not in presented:",
+      "replace": "            if False and r.get(\"status\") == B.COMPLETED and r.get(\"node_id\") not in presented:",
+      "intended_fault": "evaluate.check_bundle no longer refuses a bundle whose own launch COMPLETED a node the manifest does not present (BX5 RUN_UNREPORTED). A launch may run an extra node (RECUR, or a second arm) and drop its receipt from the manifest; the inventory says it ran, the evaluator no longer asks. The witness suite has no test that removes a manifest entry while keeping its row.",
+      "witness": {
+        "expr": "__import__(\"importlib\").import_module(\"rso.witness.challenge.W1.witnesses\").e3(m)"
+      }
+    },
+    {
+      "edit_id": "W1.E4-interrupt-before-step",
+      "path": "rso/witness/ares_client.py",
+      "module": "rso.witness.ares_client",
+      "find": "            a = rt.step(obs)",
+      "replace": "            (rt.v[:, S.OBS_DIM:].fill(0.0) if t in resets else None); a = rt.step(obs)",
+      "intended_fault": "ares_client.run_episodes ALSO applies W15's activation reset BEFORE the step's action at an interrupt step (ares.search.rollout applies it only after the step). The action at an interrupt step is then computed from zeroed activations: the witness's interrupt semantics drift from the GA's by one step. CONTROL edit: predicted KILLED by the carrier pin (test_runner_reproduces_ares_rollout_actions); included to confirm the pin is load-bearing on the central W15 semantic.",
+      "witness": {
+        "expr": "__import__(\"importlib\").import_module(\"rso.witness.challenge.W1.witnesses\").e4(m)"
+      }
+    },
+    {
+      "edit_id": "W1.E5-erase-pres-oracle-unchecked",
+      "path": "rso/witness/evaluate.py",
+      "module": "rso.witness.evaluate",
+      "find": "        k = 3 if rec[\"predicate\"] == \"P-ERASE\" else 2",
+      "replace": "        k = 3 if rec[\"predicate\"] == \"P-ERASE\" else 2; return",
+      "intended_fault": "evaluate._check_oracle stops comparing a P-ERASE / P-PRES node's reported regimes with the world's for its declared seeds. The probe set's registered shape (pre_a r = 0, pre_b r = 1; warm-up the opposite regime) then cannot be audited from the bundle at all: the one oracle artifact those nodes carry is decorative. The suite's oracle-counterfeit test flips a P-RET node only.",
+      "witness": {
+        "expr": "__import__(\"importlib\").import_module(\"rso.witness.challenge.W1.witnesses\").e5(m)"
+      }
+    },
+    {
+      "edit_id": "W1.E6-pcal-margin-two-sided",
+      "path": "rso/witness/ruler.py",
+      "module": "rso.witness.ruler",
+      "find": "        if x > th[\"k_neg\"]:",
+      "replace": "        if x >= th[\"k_pos\"]:",
+      "intended_fault": "ruler.p_cal fails a NULL / SHUF arm only when it is P-RET POSITIVE (>= k_pos = 1078) instead of whenever it is not shown below bound + delta (> k_neg = 1073). A calibration arm with 1074-1077 correct (INDETERMINATE: neither no-carry nor carry shown) then PASSES calibration, against RULER.md s5.1 ('an arm that cannot be shown below the margin FAILS; the gate never passes by default', FD-T014-3). The suite's leaking-null tests use arms far above the margin.",
+      "witness": {
+        "expr": "__import__(\"importlib\").import_module(\"rso.witness.challenge.W1.witnesses\").e6(m)"
+      }
+    }
+  ]
+}
