@@ -58,7 +58,7 @@
     "rso/slice001/tests/test_stages_evidence.py"
   ],
   "kind": "software",
-  "status": "GREEN",
+  "status": "INTEGRATION_READY",
   "history": [
     {
       "status": "PROPOSED",
@@ -95,6 +95,12 @@
       "by": "Argus[desktop-ruapvai-b08b36ac]",
       "at_utc": "2026-10-07T05:43:45Z",
       "note": "three suites green on merged tree; E2/E3/E4 verbatim killed; SIBLING refused; FAILED_RETRY/CHARGED_CHILDREN unchanged; probe paths agree"
+    },
+    {
+      "status": "INTEGRATION_READY",
+      "by": "Argus[desktop-ruapvai-b08b36ac]",
+      "at_utc": "2026-10-07T05:43:50Z",
+      "note": "branch argus/c009-t031 at 243ffe325 (merge, do not squash); R1 E2/E3/E4 killed; R2 BX5b SIBLING refused; R3 consumer_for run_id; G-BIND/G-INV/G-RECOMP records regenerated (re-registration list in receipt); three suites green"
     }
   ],
   "authority": "rso/binding/CONTRACT.md s3 CC3 (one repair round + one 1+1+1 re-check); rso/binding/ADJUDICATION_CC3.md",
