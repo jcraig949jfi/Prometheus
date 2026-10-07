@@ -195,6 +195,54 @@ def p_cal(null_episodes, shuf_episodes, pos_episodes, n=N_EPISODES, alpha=ALPHA,
 
 
 # --------------------------------------------------------------------------------------------------------
+# P-CHAN (gate; C-009-T017): does the advantage vanish when the allowed channel (plastic W1) is ablated?
+
+@lru_cache(maxsize=None)
+def mcnemar_threshold(m, alpha=ALPHA):
+    """Smallest b with P(B >= b | B ~ Binomial(m, 1/2)) <= alpha: the one-sided exact McNemar threshold for m
+    discordant pairs. m = 0 gives 1 (no discordant pair can never pass)."""
+    alpha = Fraction(alpha)
+    return next(b for b in range(m + 2) if b > m or _ge_ok(m, b, BOUND, alpha))
+
+
+def p_chan(pairs, n=N_EPISODES, alpha=ALPHA, delta=DELTA, bound=BOUND):
+    """Channel gate on PAIRED episodes: pairs = [(r, decision of X, decision of X-NOPL)], X and X-NOPL run on the
+    SAME episode seeds (so the same r and world per pair). Applies only when X is P-RET POSITIVE (PREREG_DRAFT s5);
+    otherwise RulerError -- the gate is not evaluated.
+
+    PASS iff (1) X-NOPL is P-RET NEGATIVE (the advantage VANISHES under the ablation: accuracy shown below bound +
+    delta; INDETERMINATE or POSITIVE is not enough) AND (2) the exact one-sided McNemar test on the discordant pairs
+    favours X: b >= mcnemar_threshold(b + c) with b = X correct & X-NOPL not correct, c = the reverse. Under H0 of
+    equal accuracy (exchangeable discordant outcomes) part (2) passes with probability <= alpha, conditionally on
+    b + c and therefore unconditionally. Replaces the draft difference-of-totals rule (RULER.md s5, FD-T017-1).
+    """
+    ps = list(pairs)
+    if any(len(t) != 3 for t in ps):
+        raise RulerError("P-CHAN needs paired episodes (r, decision X, decision X-NOPL)")
+    x = p_ret([(r, dx) for r, dx, _ in ps], n, alpha, delta, bound)
+    if x["value"] != "POSITIVE":
+        raise RulerError("P-CHAN applies only when X is P-RET POSITIVE (X is %s)" % x["value"])
+    nopl = p_ret([(r, dn) for r, _, dn in ps], n, alpha, delta, bound)
+    b = sum(1 for r, dx, dn in ps if correct(dx, r) and not correct(dn, r))
+    c = sum(1 for r, dx, dn in ps if correct(dn, r) and not correct(dx, r))
+    need = mcnemar_threshold(b + c, alpha)
+    witness = None
+    if nopl["value"] != "NEGATIVE":
+        witness = {"why": "NOPL_NOT_NEGATIVE", "nopl": nopl["value"], "nopl_correct": nopl["successes"]}
+        reason = "advantage not shown to vanish: X-NOPL is %s (%d/%d correct)" % (nopl["value"], nopl["successes"], n)
+    elif b < need:
+        witness = {"why": "NO_PAIRED_ADVANTAGE", "b": b, "c": c, "needed": need}
+        reason = "paired advantage not significant: X wins %d, X-NOPL wins %d of %d discordant pairs (need %d)" % (
+            b, c, b + c, need)
+    else:
+        reason = "X-NOPL NEGATIVE and X wins %d of %d discordant pairs (>= %d)" % (b, b + c, need)
+    return {"kind": "GATE", "predicate": "P-CHAN", "value": "FAIL" if witness else "PASS", "reason": reason,
+            "witness": witness, "eligible_count": n, "applicable_count": b + c, "vacuous": b + c == 0,
+            "x_correct": x["successes"], "nopl": nopl["value"], "nopl_correct": nopl["successes"],
+            "discordant": {"b": b, "c": c, "needed": need}}
+
+
+# --------------------------------------------------------------------------------------------------------
 # Operating characteristics (synthetic, exact)
 
 def outcome_probabilities(p, n=N_EPISODES, alpha=ALPHA, delta=DELTA, bound=BOUND):

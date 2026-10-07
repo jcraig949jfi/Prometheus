@@ -179,6 +179,109 @@ class TestCalibrationGate(unittest.TestCase):
         self.assertIn("positive control not detected", g["reason"])
 
 
+# --------------------------------------------------------------------------------------------------------
+# P-CHAN (C-009-T017): paired exact McNemar on the SAME episode seeds for X and X-NOPL, plus X-NOPL NEGATIVE.
+
+def paired(p_x, p_nopl, seed=0, abstain_x=0.0):
+    """N balanced paired episodes (r, decision of X, decision of X-NOPL); the two arms answer independently."""
+    rng = random.Random(seed)
+    rs = [0] * HALF + [1] * HALF
+    rng.shuffle(rs)
+    out = []
+    for r in rs:
+        dx = RU.NO_ANSWER if rng.random() < abstain_x else (r + 1 if rng.random() < p_x else 2 - r)
+        dn = r + 1 if rng.random() < p_nopl else 2 - r
+        out.append((r, dx, dn))
+    return out
+
+
+class TestChannelThreshold(unittest.TestCase):
+    def test_mcnemar_threshold_is_exact(self):
+        for m in (0, 1, 10, 57, 400):
+            b = RU.mcnemar_threshold(m)
+            self.assertLessEqual(RU.tail_ge(m, b, Fraction(1, 2)), RU.ALPHA, m)
+            if b > 0:
+                self.assertGreater(RU.tail_ge(m, b - 1, Fraction(1, 2)), RU.ALPHA, m)
+        self.assertEqual(RU.mcnemar_threshold(0), 1)          # no discordant pairs: never a pass
+
+    def test_size_under_equal_accuracy(self):
+        # H0: X and X-NOPL equally accurate (both 0.5, independent): the McNemar part passes at most alpha.
+        reps, hits = 600, 0
+        for i in range(reps):
+            ps = paired(0.5, 0.5, seed=7000 + i)
+            b = sum(1 for r, dx, dn in ps if dx == r + 1 and dn != r + 1)
+            c = sum(1 for r, dx, dn in ps if dx != r + 1 and dn == r + 1)
+            hits += b >= RU.mcnemar_threshold(b + c)
+        a = float(RU.ALPHA)
+        self.assertLessEqual(hits / reps, a + 3 * (a * (1 - a) / reps) ** 0.5)
+
+
+class TestChannelGate(unittest.TestCase):
+    def test_plastic_carrier_passes(self):
+        g = RU.p_chan(paired(0.65, 0.5, 1))
+        self.assertEqual((g["kind"], g["predicate"], g["value"], g["witness"]), ("GATE", "P-CHAN", "PASS", None))
+
+    def test_ablation_that_keeps_retention_fails(self):
+        g = RU.p_chan(paired(0.65, 0.65, 2))
+        self.assertEqual((g["value"], g["witness"]["why"]), ("FAIL", "NOPL_NOT_NEGATIVE"))
+
+    def test_partial_retention_after_ablation_fails(self):
+        # X-NOPL in the delta zone (INDETERMINATE or POSITIVE, never NEGATIVE): "vanishes" is not shown.
+        g = RU.p_chan(paired(0.75, 0.535, 3))
+        self.assertEqual(g["value"], "FAIL")
+        self.assertEqual(g["witness"]["why"], "NOPL_NOT_NEGATIVE")
+
+    def test_no_paired_advantage_fails(self):
+        # X barely POSITIVE (1078 correct), X-NOPL NEGATIVE (1073 correct), but the discordant pairs split 30 : 25,
+        # far from significant: the paired test, not the difference of totals, decides.
+        th = RU.thresholds()
+        eps = []
+        for i in range(N):
+            r = i % 2
+            dx = r + 1 if i < th["k_pos"] else 2 - r
+            dn = r + 1 if 30 <= i < th["k_pos"] + 25 else 2 - r
+            eps.append((r, dx, dn))
+        self.assertEqual(sum(dn == r + 1 for r, dx, dn in eps), 1073)
+        g = RU.p_chan(eps)
+        self.assertEqual((g["value"], g["witness"]["why"]), ("FAIL", "NO_PAIRED_ADVANTAGE"))
+
+    @staticmethod
+    def built(x_correct, nopl_correct, nopl_first):
+        """Deterministic pairs: X correct on episodes [0, x_correct); X-NOPL correct on [nopl_first, nopl_first +
+        nopl_correct); everything else answered wrong."""
+        eps = []
+        for i in range(N):
+            r = i % 2
+            dx = r + 1 if i < x_correct else 2 - r
+            dn = r + 1 if nopl_first <= i < nopl_first + nopl_correct else 2 - r
+            eps.append((r, dx, dn))
+        return eps
+
+    def test_indeterminate_ablation_is_not_vanished(self):
+        # FD-T017-2: X-NOPL with 1075 correct is INDETERMINATE (1073 < 1075 < 1078); the draft rule accepted it.
+        g = RU.p_chan(self.built(1400, 1075, 0))
+        self.assertEqual((g["nopl"], g["value"], g["witness"]["why"]), ("INDETERMINATE", "FAIL", "NOPL_NOT_NEGATIVE"))
+
+    def test_mcnemar_boundary(self):
+        # c = 0: 6 discordant wins give P = 1/64 > alpha (FAIL); 7 give 1/128 <= alpha (PASS).
+        self.assertEqual(RU.mcnemar_threshold(6), 7)
+        g6 = RU.p_chan(self.built(1078, 1072, 0))
+        self.assertEqual((g6["discordant"], g6["value"]), ({"b": 6, "c": 0, "needed": 7}, "FAIL"))
+        g7 = RU.p_chan(self.built(1079, 1072, 0))
+        self.assertEqual((g7["discordant"], g7["value"]), ({"b": 7, "c": 0, "needed": 7}, "PASS"))
+
+    def test_applies_only_when_x_is_positive(self):
+        with self.assertRaises(RU.RulerError):
+            RU.p_chan(paired(0.5, 0.5, 4))
+
+    def test_pairing_is_enforced(self):
+        ps = paired(0.65, 0.5, 5)
+        with self.assertRaises(RU.RulerError):
+            RU.p_chan(ps[:-2])
+        with self.assertRaises(RU.RulerError):
+            RU.p_chan([(r, dx) for r, dx, dn in ps])
+
+
 class TestNoWitnessData(unittest.TestCase):
     def test_ruler_reads_no_ares(self):
         path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "ruler.py")
