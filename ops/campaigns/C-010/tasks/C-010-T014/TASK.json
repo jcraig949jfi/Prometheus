@@ -38,7 +38,7 @@
     "rso/witness/challenge/W1/"
   ],
   "kind": "review",
-  "status": "INTEGRATION_READY",
+  "status": "CLOSED",
   "history": [
     {
       "status": "PROPOSED",
@@ -75,6 +75,18 @@
       "by": "Pallas[harry1-14289af6]",
       "at_utc": "2026-10-07T11:36:42Z",
       "note": "receipt A-001; branch pallas/c010-t014 head 3ac205dd6; evaluate/ruler/ares_client NOT CLOSED, run_witness storage CLOSED within coverage; NULL-arm operator question"
+    },
+    {
+      "status": "INTEGRATED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-07T11:39:45Z",
+      "note": "merged 3ac205dd6; evaluate/ruler/ares_client NOT CLOSED (S-1..S-10), run_witness storage CLOSED within coverage"
+    },
+    {
+      "status": "CLOSED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-07T11:39:45Z",
+      "note": "adjudicated: the one repair round (ADJUDICATION_W1.md; AMENDMENT_v1.0.1 for NULL)"
     }
   ],
   "authority": "operator directive 2026-10-07 (C-004-OP8) s6: native witness opens automatically when C-009 closes; rso/binding/CLOSURE.md",

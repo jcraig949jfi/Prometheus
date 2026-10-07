@@ -1,0 +1,65 @@
+{
+  "schema": "prometheus.workgraph.task.v1",
+  "task_id": "C-010-T032",
+  "campaign_id": "C-010",
+  "title": "Repair round (client): R5 NULL arm per AMENDMENT_v1.0.1; pin S-NOPL works on a copy (E2)",
+  "objective": "Implement AMENDMENT_v1.0.1 (NULL = plasticity disabled exactly as S-NOPL + reset_each_step) and pin E2, each RED first.",
+  "parent_objective": "C-010 repair round (the only one) after W1",
+  "owner_role": "Cadmus",
+  "quality_class": "Q2",
+  "can_downgrade": false,
+  "escalate_to": "Q3",
+  "depends_on": [
+    "C-010-T014"
+  ],
+  "owns": [
+    "rso/witness/ares_client.py",
+    "rso/witness/tests/test_ares_client.py"
+  ],
+  "reads": [
+    "rso/witness/ADJUDICATION_W1.md",
+    "rso/witness/AMENDMENT_v1.0.1.md",
+    "rso/witness/challenge/W1/ (REPORT.md, cases.py, edits.json, witnesses.py)",
+    "rso/witness/PREREGISTRATION.md"
+  ],
+  "problem": "RED: on the hand-wired POS carrier, NULL(POS) and S(POS) act identically (W1 B8); after the change NULL(POS) has no plastic write and no activation carry (check internal state, not accuracy). E2 verbatim must be killed by a test that a subject with R != 0 keeps it after arm('S-NOPL'). No accuracy statistic; no registered subject.",
+  "non_goals": [
+    "No registered subject run, no witness episode, no statistic on any registered arm",
+    "No change to PREREGISTRATION.md (amendments beside it only)",
+    "No edit of ares/ sources"
+  ],
+  "evidence_required": [
+    "RED per item",
+    "NULL has no plastic write and no carry by construction (state checks)",
+    "E2 killed",
+    "suites green"
+  ],
+  "acceptance": {
+    "command": "python -B -m unittest discover -s rso/witness/tests -t . && python -B -m unittest discover -s rso/binding/tests -t .",
+    "condition": "all evidence_required items; suites green"
+  },
+  "deliverables": [
+    "rso/witness/ares_client.py",
+    "rso/witness/tests/test_ares_client.py"
+  ],
+  "kind": "software",
+  "status": "READY",
+  "history": [
+    {
+      "status": "PROPOSED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-07T11:39:45Z",
+      "note": "repair round"
+    },
+    {
+      "status": "READY",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-07T11:39:45Z",
+      "note": "READY (repair round)"
+    }
+  ],
+  "authority": "PREREGISTRATION s8 (one repair round); rso/witness/ADJUDICATION_W1.md; AMENDMENT_v1.0.1.md",
+  "resource_ceiling": {
+    "launches": "0 (development only) unless stated"
+  }
+}

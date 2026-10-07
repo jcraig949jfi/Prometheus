@@ -1,0 +1,71 @@
+{
+  "schema": "prometheus.workgraph.task.v1",
+  "task_id": "C-010-T031",
+  "campaign_id": "C-010",
+  "title": "Repair round (evaluator): R1 duplicate nodes, R2 all seed lists required, R3 P-ERASE/P-PRES regime patterns, R4 node-id rebuild, pins E1/E3/E5/E6",
+  "objective": "Implement ADJUDICATION_W1 R1-R4 and the evaluator/ruler pins of R6, each RED first with the reviewer's committed cases and edits.",
+  "parent_objective": "C-010 repair round (the only one) after W1",
+  "owner_role": "Argus",
+  "quality_class": "Q2",
+  "can_downgrade": false,
+  "escalate_to": "Q3",
+  "depends_on": [
+    "C-010-T014"
+  ],
+  "owns": [
+    "rso/witness/evaluate.py",
+    "rso/witness/ruler.py",
+    "rso/witness/tests/test_evaluate.py",
+    "rso/witness/tests/test_ruler.py"
+  ],
+  "reads": [
+    "rso/witness/ADJUDICATION_W1.md",
+    "rso/witness/AMENDMENT_v1.0.1.md",
+    "rso/witness/challenge/W1/ (REPORT.md, cases.py, edits.json, witnesses.py)",
+    "rso/witness/PREREGISTRATION.md",
+    "rso/witness/make_configs.py (SEED_LISTS.json format)"
+  ],
+  "problem": "Use the reviewer's committed W1 cases B1, B2, B3, B5, S3 and edits E1, E3, E5, E6 (verbatim; show each killed). --seeds becomes required and reads make_configs' SEED_LISTS.json ({'seeds': {'witness', 'erase', 'pres'}}). Synthetic bundles only. HEADLESS RULE if headless: no run_in_background.",
+  "non_goals": [
+    "No registered subject run, no witness episode, no statistic on any registered arm",
+    "No change to PREREGISTRATION.md (amendments beside it only)",
+    "No edit of ares/ sources"
+  ],
+  "evidence_required": [
+    "RED per item",
+    "B1/B2/B3/B5 refused with typed reasons; S3 decided on the post-LAST-interrupt window",
+    "E1/E3/E5/E6 killed",
+    "suites green",
+    "no registered output read"
+  ],
+  "acceptance": {
+    "command": "python -B -m unittest discover -s rso/witness/tests -t . && python -B -m unittest discover -s rso/binding/tests -t .",
+    "condition": "all evidence_required items; suites green"
+  },
+  "deliverables": [
+    "rso/witness/evaluate.py",
+    "rso/witness/ruler.py",
+    "rso/witness/tests/test_evaluate.py",
+    "rso/witness/tests/test_ruler.py"
+  ],
+  "kind": "software",
+  "status": "READY",
+  "history": [
+    {
+      "status": "PROPOSED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-07T11:39:45Z",
+      "note": "repair round"
+    },
+    {
+      "status": "READY",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-07T11:39:45Z",
+      "note": "READY (repair round)"
+    }
+  ],
+  "authority": "PREREGISTRATION s8 (one repair round); rso/witness/ADJUDICATION_W1.md; AMENDMENT_v1.0.1.md",
+  "resource_ceiling": {
+    "launches": "0 (development only) unless stated"
+  }
+}

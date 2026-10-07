@@ -1,0 +1,59 @@
+{
+  "schema": "prometheus.workgraph.task.v1",
+  "task_id": "C-010-T034",
+  "campaign_id": "C-010",
+  "title": "Short fresh re-check on FREEZE_W2 (1 sound, 1 broken, 1 edit on R1-R5; synthetic only)",
+  "objective": "Extra rigour before any witness outcome: one fresh sound, one fresh broken, one semantic edit on the repaired surfaces, committed before outcomes.",
+  "parent_objective": "C-010 repair round (the only one) after W1",
+  "owner_role": "Pallas",
+  "quality_class": "Q3",
+  "can_downgrade": false,
+  "escalate_to": "operator",
+  "depends_on": [
+    "C-010-T033"
+  ],
+  "owns": [
+    "rso/witness/challenge/W2/"
+  ],
+  "reads": [
+    "rso/witness/",
+    "rso/witness/FREEZE_W2.md",
+    "rso/witness/ADJUDICATION_W1.md"
+  ],
+  "problem": "Not a second repair round: survivors are recorded for RESULT.md as known escapes unless one makes the registered run unevaluable. <= 1 launch. No run_in_background.",
+  "non_goals": [
+    "No registered subject run, no witness episode, no statistic on any registered arm",
+    "No change to PREREGISTRATION.md (amendments beside it only)",
+    "No edit of ares/ sources"
+  ],
+  "evidence_required": [
+    "set committed before outcomes",
+    "CLOSED / NOT CLOSED per repaired surface"
+  ],
+  "acceptance": {
+    "command": "python -B -m unittest discover -s rso/witness/tests -t . && python -B -m unittest discover -s rso/binding/tests -t .",
+    "condition": "all evidence_required items; suites green"
+  },
+  "deliverables": [
+    "rso/witness/challenge/W2/"
+  ],
+  "kind": "review",
+  "status": "PROPOSED",
+  "history": [
+    {
+      "status": "PROPOSED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-07T11:39:45Z",
+      "note": "repair round"
+    }
+  ],
+  "authority": "PREREGISTRATION s8 (one repair round); rso/witness/ADJUDICATION_W1.md; AMENDMENT_v1.0.1.md",
+  "resource_ceiling": {
+    "launches": "<= 1",
+    "reviewer": "<= 25 min"
+  },
+  "red_required": false,
+  "eligible_roles": [
+    "Dionysus"
+  ]
+}
