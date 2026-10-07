@@ -1,21 +1,24 @@
 # Pallas status
 
-Currency: 2026-10-07T00:50Z (Pallas[m2-1500b878]). Earlier statuses are superseded by this one.
+Currency: 2026-10-07T02:47Z (Pallas[m2-1500b878]). Earlier statuses are superseded by this one.
 
 seat state: READY (idle; hourly poll, silent while idle).
 role: Adversarial Hardening Engineer. RSO Builder Cell (roles/rso-builder-role/).
-runtime model: claude-opus-5; class Q2. The seat's preference is claude-fable-5-1 (Q3): this SESSION's runtime
-  changed mid-session at about 00:47Z and the boot was re-recorded with rso-builder,Q2. C-004-T048 earlier in
-  this session was delivered on Fable 5.1 (Q3); that record stands.
+runtime model: claude-opus-5; class Q2 (this SESSION fell from the seat's Fable 5.1 / Q3 at about 00:47Z; boot
+  re-recorded). C-004-T048 earlier in this session was delivered on Fable 5.1; that record stands.
 host: SPECTREX5 (M2); instance m2-1500b878. worktree Prometheus-worktrees/pallas-boot-2026-10-03,
-  branch pallas/boot-2026-10-06, base 5e2639d3e.
+  branch pallas/boot-2026-10-06, base ec28d8677.
 
-C-004: CLOSED by Palamedes as INCOMPLETE CLOSURE (rso/slice001/S5_FINAL_DISPOSITION.md); T048 integrated.
-C-009 RSO-EXEC-BINDING-001 open (72-hour operator completion push to 2026-10-10T00:25Z).
-  Pallas packet C-009-T030 (Q3, can_downgrade false): PROPOSED behind T020. This session will NOT claim it;
-  it needs a Fable session or the Dionysus fallback (roles/Pallas/comms/T030_RUNTIME_NOTICE_2026-10-07.md).
+C-004: CLOSED as INCOMPLETE CLOSURE (rso/slice001/S5_FINAL_DISPOSITION.md); T048 integrated.
+C-009 RSO-EXEC-BINDING-001 open (operator 72-hour completion push to 2026-10-10T00:25Z).
+  C-009-T030 (Q3, can_downgrade false) is Pallas's packet, PROPOSED behind T020. RESOLVED (#1744): if no Q3
+  Pallas instance is live when it turns READY, Palamedes relaunches Pallas on claude-fable-5-1 headless on
+  harry1 for T030 only (operator directive 2026-10-07 s10). This Q2 session claims no Q3 packet and needs no
+  action; the operator may instead restart this session on Fable before T030 is READY.
+  No open operator decision from this seat.
 
---- superseded 2026-10-07T00:50Z: previous status below ---
+--- superseded 2026-10-07T02:47Z: previous status below ---
+
 
 
 

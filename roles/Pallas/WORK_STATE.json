@@ -3,10 +3,10 @@
   "seat": "Pallas",
   "mwo_id": "MWO-0004",
   "authority": "operator directive 2026-10-03 (roles/Achilles/prompts/2026-10-03_rso_builder_cell/01_OPERATOR_DIRECTIVE_verbatim.md)",
-  "updated_at_utc": "2026-10-07T00:50:00Z",
+  "updated_at_utc": "2026-10-07T02:47:00Z",
   "state": "READY",
   "branch": "pallas/boot-2026-10-06",
-  "base_sha": "5e2639d3e",
+  "base_sha": "ec28d8677",
   "head_sha": "f233c83bf31c4040bec98609575525c6807a0486",
   "worktree_path": "Prometheus-worktrees/pallas-boot-2026-10-03",
   "model": "claude-opus-5",
@@ -15,10 +15,10 @@
   "instance": "m2-1500b878",
   "session_start_utc": "2026-10-06T21:53:17Z (comms boot)",
   "current_objective": "RSO Builder Cell; C-004 CLOSED (incomplete closure). C-009 RSO-EXEC-BINDING-001 open; Pallas packet C-009-T030 (Q3) PROPOSED behind T020",
-  "current_step": "idle. Session runtime changed Fable 5.1 -> Opus 5 (Q3 -> Q2) at ~00:47Z; boot re-recorded with rso-builder,Q2; T030 is Q3 can_downgrade false so this session will NOT claim it",
+  "current_step": "idle on Opus 5 (Q2). C-009-T030 (Q3) answered by Palamedes #1744: if no Q3 Pallas instance is live when T030 turns READY, Palamedes relaunches Pallas on claude-fable-5-1 headless on harry1 for T030 only (operator directive 2026-10-07 s10). This session needs no action and claims no Q3 packet.",
   "in_flight": [],
   "finish_condition": "per claimed packet (DISTRIBUTED_WORK.md)",
-  "next_expected_milestone": "Palamedes integrates T010/T011 -> T020 -> FREEZE_B1 -> T030 READY, taken by a FABLE session or the Dionysus fallback",
+  "next_expected_milestone": "T020 closes (registration, CC2 regression, FREEZE_B1) -> T030 READY -> taken by a Fable Pallas instance (this session restarted on Fable, or Palamedes's headless relaunch on harry1)",
   "expected_next_artifact": "none from this session unless a Q2-eligible packet appears",
   "threads": [
     "phase3-rso"
@@ -36,14 +36,12 @@
     "claim only a packet this runtime meets (Q2); do not claim C-009-T030 on Opus 5",
     "no self-assignment"
   ],
-  "operator_decisions_required": [
-    "C-009-T030 reviewer runtime: fresh Fable Pallas session (recommended), Dionysus fallback, or relabel T030 to Q2 (not recommended) -- roles/Pallas/comms/T030_RUNTIME_NOTICE_2026-10-07.md"
-  ],
+  "operator_decisions_required": [],
   "latest_reports": [
     "roles/Pallas/comms/T030_RUNTIME_NOTICE_2026-10-07.md",
-    "rso/slice001/challenge/R2/REPORT.md",
-    "roles/Pallas/journal/2026-10-06.md"
+    "roles/Pallas/journal/2026-10-06.md",
+    "rso/slice001/challenge/R2/REPORT.md"
   ],
   "last_push_sha": "the commit carrying this file on main",
-  "last_push_utc": "2026-10-07T00:50:00Z"
+  "last_push_utc": "2026-10-07T02:47:00Z"
 }
