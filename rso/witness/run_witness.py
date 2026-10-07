@@ -7,7 +7,7 @@ Two subcommands (python -B -m rso.witness.run_witness ...):
       bundle against Ledger.from_contract(STORE, C), through rso/witness/ares_client.py. Each entry is one node
       execution row (RECEIPT, parent_run_id = the launch, receipt_sha256 recorded when its receipt exists, BX2/BX3).
       Bundle DIR: receipts/R###.json (the canonical receipt bytes), subjects/<sha16>.json, seeds.json,
-      inventory.json ({"schema", "rows"}, ledger.inventory()), run.json ({"run_id"}), MANIFEST.json LAST (its
+      inventory.json ({"schema", "rows"}, launch_inventory(ledger.inventory(), launch)), run.json ({"run_id"}), MANIFEST.json LAST (its
       presence means the launch completed; it carries launch_run_id), artifacts/<sha256> (every byte string each
       receipt names in outputs / oracle, verified against the receipt's sha256 and length before it is written,
       stored once per distinct sha256, and listed per node in MANIFEST nodes[].artifacts as {role, sha256, length,
@@ -335,6 +335,16 @@ def _default_commit():
     return c
 
 
+
+def launch_inventory(rows, launch_run_id):
+    """The bundle's own attempted-run inventory: the launch's TOP_LEVEL row and every row whose parent is the
+    launch, then a TERMINAL row counting them. The ledger store stays cumulative; other launches' rows are provenance
+    in the store and never enter this bundle (C-010-T012_1, option 2: P-FLAT is checked on exactly the launch)."""
+    own = [r for r in rows if r.get("kind") == "RUN"
+           and (r.get("run_id") == launch_run_id or r.get("parent_run_id") == launch_run_id)]
+    return own + [{"kind": "TERMINAL", "row_count": len(own)}]
+
+
 def launch(config_path, ledger, out_dir, code_commit=None, launch_run_id=None, exclude_records=(),
            supplied_by=SUPPLIED_BY):
     """One ledgered TOP_LEVEL launch -> one bundle. Returns the summary dict (ids and counts only)."""
@@ -374,7 +384,7 @@ def launch(config_path, ledger, out_dir, code_commit=None, launch_run_id=None, e
             s["union"].update(item["seeds"])
     except Exception as e:
         top.finish("FAILED")
-        _write(os.path.join(out_dir, "inventory.json"), _canon({"schema": INVENTORY_SCHEMA, "rows": ledger.inventory()}))
+        _write(os.path.join(out_dir, "inventory.json"), _canon({"schema": INVENTORY_SCHEMA, "rows": launch_inventory(ledger.inventory(), launch_run_id)}))
         if isinstance(e, L.CapExhausted):
             raise
         raise WitnessError("launch %s FAILED at node %d (%s): %s: %s; no MANIFEST written" % (
@@ -388,7 +398,7 @@ def launch(config_path, ledger, out_dir, code_commit=None, launch_run_id=None, e
     _write(os.path.join(out_dir, "seeds.json"), _canon({
         "schema": SEEDS_SCHEMA, "launch_run_id": launch_run_id,
         "subjects": {k: {"arms": v["arms"], "union": sorted(v["union"])} for k, v in per_subject.items()}}))
-    _write(os.path.join(out_dir, "inventory.json"), _canon({"schema": INVENTORY_SCHEMA, "rows": ledger.inventory()}))
+    _write(os.path.join(out_dir, "inventory.json"), _canon({"schema": INVENTORY_SCHEMA, "rows": launch_inventory(ledger.inventory(), launch_run_id)}))
     _write(os.path.join(out_dir, "run.json"), _canon({"run_id": launch_run_id}))
     _write(os.path.join(out_dir, "MANIFEST.json"), _canon({
         "schema": MANIFEST_SCHEMA, "launch_run_id": launch_run_id, "label": loaded["label"],
