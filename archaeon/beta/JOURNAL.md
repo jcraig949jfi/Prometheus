@@ -24,7 +24,8 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
 | B16 | how do genuine shelves store one value? | 56% LATCH (stop perceiving); 36% continuous perceivers |
 | B14' | L4 seeded from perceiving vs latching shelves | NULL 0/5 + 0/5 |
 | B18 | graph organisms on the ladder (first world run) | PAUSED: needs a WSE-format graph positive control |
-| B19 | gen-0 config (tape 4096 + persist tape) as hidden gate? | running (light) |
+| B19 | gen-0 config (tape 4096 + persist tape) as hidden gate? | NO: BIG 0/4 |
+| B20 | indexed solver neighbourhood | ISOLATED PEAK (shelf-level .0015) |
 | B17 | forced perception (echo on PUT) opens the 2-value wall? | staged; controls pass |
 | B12 | LONG: W2_K2 with N=500, G=3000 -- is it just time? | STOPPED (compute repair); partial 0/6 to g200-2999 |
 | B11 | is the W2_K2 shelf a delay line? | MOSTLY NO: 50/72 genuine memory, 20/72 delay lines |
@@ -209,6 +210,12 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   below .45 .649, shelf-level .0015 (slot solver B01-B: neutral .335, shelf .077). Prediction (neutral lower) FAILED;
   the informative number is the SHELF share: the indexed solver is an ISOLATED PEAK -- breaking its write/read pair
   sends it to ~0, not to the one-value shelf, so there is no partial-credit path into it from below.
+- B19 (jittered W2_K2, G=300, light): BIG (gen-0 tape 4096, persist tape/all) 0/4; C2 0/3 (1 pending). PREDICTION
+  (BIG >= 1/4) FAILED. KILLED: "gen-0 configuration is the hidden gate". Side observation: every BIG cell started
+  with tape/all persistence and 3/4 elites drifted to regs or none -- selection moves the population toward
+  register-based one-value memory and away from the persistence the indexed solver needs.
+  Working explanation now: the indexed solver is an ISOLATED PEAK (B20) behind a coupled write/read pair; nothing
+  in the search finds it from the shelf or from scratch at these budgets.
 - B08J built (ladder with jitter in train AND held-out); controls unchanged under jitter. Launches when cores free.
 - Next: B01b (done) tests H-PLATEAU quantitatively; then B03 = search arms at equal compute from fresh gen 0
   (baseline / heavy-tailed mutation count / behaviour-novelty) -- prediction: only structural-move arms lift 0/60.
