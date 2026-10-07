@@ -112,6 +112,13 @@ class Siblings(unittest.TestCase):
         self.assertEqual(X.sibling_reasons(NODE, RID, self._sibling(node_id="rcpt:other"), L), [])
         self.assertEqual(X.sibling_reasons(NODE, RID, self._sibling(launch_kind="MUTATION_CHILD"), L), [])
 
+    def test_same_node_in_another_world_or_observer_is_not_a_sibling(self):
+        # integrator mutation at C-009-T031 integration (Palamedes): a world- or observer-insensitive node compare
+        # (Y1's shape moved onto BX5b) survived the suites; node ids are compared whole, as opaque strings
+        for other in ("rcpt:REG:PRESERVE:TWINWORLD", "rcpt:REG:PRESERVE:o2:STANDARD", "rcpt:REG:PRESERVE",
+                      NODE + "2", NODE + ":x"):
+            self.assertEqual(X.sibling_reasons(NODE, RID, self._sibling(node_id=other), L), [], other)
+
 
 class B1Pins(unittest.TestCase):
     """C-009-T031 R1 at the module level: the B1 shapes E2 / E3 survived (no module test pinned them)."""
