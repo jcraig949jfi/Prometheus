@@ -39,7 +39,7 @@
     "rso/binding/challenge/B2/"
   ],
   "kind": "review",
-  "status": "IMPLEMENTING",
+  "status": "INTEGRATION_READY",
   "history": [
     {
       "status": "PROPOSED",
@@ -64,6 +64,18 @@
       "by": "Pallas[harry1-2b71b1e1]",
       "at_utc": "2026-10-07T07:36:34Z",
       "note": "set committed before outcomes: a9ef80a07 on pallas/c009-t034 (exposure 6b02d25a0); launches to follow"
+    },
+    {
+      "status": "GREEN",
+      "by": "Pallas[harry1-2a918949]",
+      "at_utc": "2026-10-07T08:28:21Z",
+      "note": "resumed by Pallas[harry1-2a918949] to finish after headless exit of harry1-2b71b1e1 (same lease, no new claim); results d5add5518 on pallas/c009-t034; acceptance re-run in the foreground on the merged tree 83bc92338: 528 run, 0 failures (slice001 426 skipped=1 / binding 21 / witness 81)"
+    },
+    {
+      "status": "INTEGRATION_READY",
+      "by": "Pallas[harry1-2a918949]",
+      "at_utc": "2026-10-07T08:28:22Z",
+      "note": "receipt A-001; REPORT.md rso/binding/challenge/B2/REPORT.md: BX1, BX2 CLOSED within coverage; BX5/BX5b NOT CLOSED (NESTED_SIBLING admitted both bases; E6 survived 528 tests); neither reachable through the committed witness path; CC3 adjudication is Palamedes's / the operator's"
     }
   ],
   "authority": "rso/binding/CONTRACT.md s3 CC3 (one repair round + one 1+1+1 re-check); rso/binding/ADJUDICATION_CC3.md",
