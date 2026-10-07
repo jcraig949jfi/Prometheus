@@ -14,7 +14,8 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
 | B01b | one edit from summit: rescued? waiting-time model? | 6/12, all by gen 10 (early-or-never) |
 | B04 | H-EROSION (drift erases near-solvers)? | KILLED (1/6 eroded; replay exact) |
 | B05 | summits: SLOT2 or GENERAL keyed memory? | instrument ready (controls pass); waits on B03 |
-| B03 | BASE vs HEAVY vs RELOC search at equal compute | running |
+| B03 | BASE vs HEAVY vs RELOC search at equal compute | CLEAN NULL 0/24 each |
+| B07 | withdrawn positional scaffold -> content-addressed recall? | running (36 cells, G=400) |
 
 ## 2026-10-06/07 EXP-1 (opened 2026-10-06T23:48Z)
 
@@ -62,5 +63,15 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
 - B05 instrument: hand-written GENERAL control (tag/value table on the tape, linear search) scores 1.000 on K=3/K=4;
   first version scored 0 because I placed the table inside the 112-word read-only code region (writes silently
   dropped) -- caught by the control, fixed (table at 160, tape 256). Hand solvers label SLOT2 (K3 .69, K4 .54).
+- B03 CLEAN NULL: 0/24 summits in EACH arm (BASE, HEAVY heavy-tailed edit count, RELOC jump fix-up), N=200,
+  G=300, fresh CMP3 gen 0. Predictions BASE<=1, HEAVY<=3 held; RELOC>=3 FAILED. -> jump fix-up is NOT the binding
+  constraint; neither is edit count. KILLED: "W2_K2 is limited by variation semantics".
+  Side hypothesis (raised mid-run, mine) that the arms never left generation 0 -- KILLED by b03_readout.py: 0/72
+  final elites are in gen 0; train best .098 at gen 0 -> ~.69 max; last improvement median gen 134-189. Matching
+  held-out values across arms are the coarse grid of 96 asks, not identity.
+  Instrument note: max TRAIN best ~.69 vs held-out ~.52 -> E=16 selection rewards episode luck (+.17).
+- Pivot (world, not search): B07 environmental SCAFFOLD -- a positional hint word on every ASK, withdrawn over
+  generations 100-300. Controls pass: hand hint-dispatcher 1.000/.812/.531 at p=1/.5/0 (plain .573); tag solver
+  1.000 everywhere. Launched 3 arms x 12 seeds x G=400 (SCAFFOLD / BASE random third word / ALWAYS).
 - Next: B01b (done) tests H-PLATEAU quantitatively; then B03 = search arms at equal compute from fresh gen 0
   (baseline / heavy-tailed mutation count / behaviour-novelty) -- prediction: only structural-move arms lift 0/60.
