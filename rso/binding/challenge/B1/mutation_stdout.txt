@@ -1,0 +1,74 @@
+{
+ "b1_cpu_used_s": 1347.5,
+ "confirm": [
+  {
+   "detail": null,
+   "edit_id": "E2-launch-kind-any",
+   "errors": 0,
+   "failures": 0,
+   "row": "confirm",
+   "status": "SURVIVED",
+   "tests_run": 433,
+   "wall_seconds": 276.251
+  },
+  {
+   "detail": null,
+   "edit_id": "E3-child-as-node-run",
+   "errors": 0,
+   "failures": 0,
+   "row": "confirm",
+   "status": "SURVIVED",
+   "tests_run": 433,
+   "wall_seconds": 275.093
+  },
+  {
+   "detail": null,
+   "edit_id": "E4-legacy-row-accepted",
+   "errors": 0,
+   "failures": 0,
+   "row": "confirm",
+   "status": "SURVIVED",
+   "tests_run": 433,
+   "wall_seconds": 271.815
+  }
+ ],
+ "ledger_usage": {
+  "artifact_bytes": 13381360,
+  "cpu_s": 1518.2061416999204,
+  "launches": 8
+ },
+ "run_id": "B1-MUTATION-20261007T042220Z-7224",
+ "targeted": {
+  "baseline": "PASSED",
+  "suite": [
+   "rso.binding.tests.test_binding",
+   "rso.slice001.tests.test_evidence",
+   "rso.slice001.tests.test_checker_render",
+   "rso.slice001.tests.test_stages_evidence",
+   "rso.slice001.tests.test_ledger"
+  ],
+  "summary": {
+   "applicable": 5,
+   "cap_exhausted": false,
+   "duplicate": 0,
+   "equivalent": 0,
+   "error": 0,
+   "error_detail": {
+    "IMPORT_ERROR": 0,
+    "SYNTAX_ERROR": 0,
+    "TEST_ERROR": 0
+   },
+   "executed": 5,
+   "killed": 2,
+   "not_applicable": 0,
+   "not_run": {
+    "baseline": 0,
+    "cap": 0
+   },
+   "proposed": 5,
+   "survived": 3,
+   "timeout": 0,
+   "unresolved_survivors": 0
+  }
+ }
+}

@@ -1,0 +1,28 @@
+CL-CAL(STANDARD)   identical_full=False identical_without_custody_line=False
+CL-CUST(G0)        identical_full=False identical_without_custody_line=False
+CL-RET(LAGD)       identical_full=False identical_without_custody_line=False
+CL-RET(PKTD)       identical_full=False identical_without_custody_line=False
+CL-RET(REG)        identical_full=False identical_without_custody_line=False
+TWIN(REG)          identical_full=False identical_without_custody_line=False
+control custody rows: ['EVIDENCE_MANIFEST:9e051040c5e9', 'EXPECTED_ANSWER_TABLE:8f5b8631c74f', 'RUN_INVENTORY:ab3f391f9220', 'STAGE_RECORD:1aa5bbbcfe65', 'STAGE_RECORD:41d83fc854c4', 'STAGE_RECORD:4614b9bc0c8d', 'STAGE_RECORD:4e341c9e8453', 'STAGE_RECORD:6562f3cefa70', 'STAGE_RECORD:76671e3a729c', 'STAGE_RECORD:8accbc998742', 'STAGE_RECORD:8cd983e420e5', 'STAGE_RECORD:9b1b30302545', 'STAGE_RECORD:9c00819a615e', 'STAGE_RECORD:a33862417c7e', 'STAGE_RECORD:ead26c56945a']
+case    custody rows: ['EVIDENCE_MANIFEST:9e051040c5e9', 'EXPECTED_ANSWER_TABLE:8f5b8631c74f', 'RUN_INVENTORY:77bea84b1f6c', 'STAGE_RECORD:1aa5bbbcfe65', 'STAGE_RECORD:41d83fc854c4', 'STAGE_RECORD:4614b9bc0c8d', 'STAGE_RECORD:4e341c9e8453', 'STAGE_RECORD:6562f3cefa70', 'STAGE_RECORD:76671e3a729c', 'STAGE_RECORD:8accbc998742', 'STAGE_RECORD:8cd983e420e5', 'STAGE_RECORD:9b1b30302545', 'STAGE_RECORD:9c00819a615e', 'STAGE_RECORD:a33862417c7e', 'STAGE_RECORD:ead26c56945a']
+
+--- field-level diff, CL-CAL(STANDARD) ---
+$.custody.rows[2] : "RUN_INVENTORY:ab3f391f9220" -> "RUN_INVENTORY:77bea84b1f6c"
+
+--- field-level diff, CL-CUST(G0) ---
+$.custody.rows[2] : "RUN_INVENTORY:ab3f391f9220" -> "RUN_INVENTORY:77bea84b1f6c"
+$.prerequisites[0].custody.rows[2] : "RUN_INVENTORY:ab3f391f9220" -> "RUN_INVENTORY:77bea84b1f6c"
+$.relative.ids[3] : "RUN_INVENTORY:ab3f391f9220" -> "RUN_INVENTORY:77bea84b1f6c"
+
+--- field-level diff, CL-RET(LAGD) ---
+$.custody.rows[2] : "RUN_INVENTORY:ab3f391f9220" -> "RUN_INVENTORY:77bea84b1f6c"
+
+--- field-level diff, CL-RET(PKTD) ---
+$.custody.rows[2] : "RUN_INVENTORY:ab3f391f9220" -> "RUN_INVENTORY:77bea84b1f6c"
+
+--- field-level diff, CL-RET(REG) ---
+$.custody.rows[2] : "RUN_INVENTORY:ab3f391f9220" -> "RUN_INVENTORY:77bea84b1f6c"
+
+--- field-level diff, TWIN(REG) ---
+$.custody.rows[2] : "RUN_INVENTORY:ab3f391f9220" -> "RUN_INVENTORY:77bea84b1f6c"
