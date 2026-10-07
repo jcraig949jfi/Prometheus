@@ -1,0 +1,76 @@
+{
+  "schema": "prometheus.workgraph.task.v1",
+  "task_id": "C-009-T011",
+  "campaign_id": "C-009",
+  "title": "Consumer: G-INV and launch binding on rso.binding (BX1, BX2, BX5, BX7); C-004 survivor shapes as fire cases",
+  "objective": "Rebuild G-INV run attribution on rso.binding: launch from the anchored manifest (BX1, LAUNCH_UNBOUND), node execution binding (BX2), own-launch RUN_UNREPORTED (BX5), inventory custody for qualification (BX7); retire the end_utc heuristic (BX4). Pin CC1 end to end.",
+  "parent_objective": "C-009 RSO-EXEC-BINDING-001",
+  "owner_role": "Argus",
+  "quality_class": "Q2",
+  "can_downgrade": false,
+  "escalate_to": "Q3",
+  "depends_on": [
+    "C-009-T001"
+  ],
+  "owns": [
+    "rso/slice001/evidence.py",
+    "rso/slice001/checker.py",
+    "rso/slice001/fixtures/evidence_cases.py",
+    "rso/slice001/tests/test_evidence.py",
+    "rso/slice001/tests/test_checker_render.py",
+    "rso/slice001/stages/",
+    "rso/slice001/tests/test_stages_evidence.py"
+  ],
+  "reads": [
+    "rso/binding/CONTRACT.md",
+    "rso/binding/binding.py",
+    "rso/binding/contract.json",
+    "rso/slice001/challenge/R2/REPORT.md",
+    "rso/slice001/S5_FINAL_DISPOSITION.md",
+    "rso/slice001/challenge/S3/",
+    "rso/slice001/challenge/S4/",
+    "rso/slice001/challenge/R2/closure_set/"
+  ],
+  "problem": "CC1: fire cases for S3.BROKEN.RUN_BORROW, S4.BROKEN.OBS_RUN_BORROW (+ edit X3), S4.PROBE.STALE_RUN, R2 edit Y1 (world), R2.BROKEN.LATER_WINDOW_RUN, R2 OVERLAP_RUN, R2 FAILED_ROW_CITED, ARTIFACT_SWAP, LAUNCH_SUBSTITUTION. Reuse the reviewers' committed drivers/cases (challenge/*/closure_set) to show RED on FREEZE_R2 code (ad6b3fa96) where it admits; GREEN on yours; X3 and Y1 applied verbatim must be killed. Keep the slice spelling RECEIPT_WITHOUT_RUN:<node_id>; record BIND_* reasons beside it. Fixture inventories (fixtures/evidence_cases.py) gain the binding fields so E01-E05 keep their expected answers. Producer side is T010 (Eupalamus), in parallel: build against contract.json row_fields; do not edit ledger.py or s2_bundle.py. Regenerate the stage records whose pinned files change (canonical bytes, fire receipts) and list paths + committed-byte sha256 (git show <commit>:<path> | sha256sum) in the receipt. Development runs only.",
+  "non_goals": [
+    "No change to world predicates, the expected-answer table or S2 case expectations",
+    "No scheduler, no universal state/cognition schema (CONTRACT.md BX6, s5)",
+    "C-004 records and freezes are not rewritten"
+  ],
+  "evidence_required": [
+    "RED per CC1 shape on FREEZE_R2 code where it admits (rows), GREEN on yours",
+    "X3 and Y1 killed (mutant runs recorded)",
+    "E01-E05 expectations unchanged",
+    "suites green",
+    "stage records regenerated, hashes of committed bytes listed"
+  ],
+  "acceptance": {
+    "command": "python -B -m unittest discover -s rso/slice001/tests -t . && python -B -m unittest discover -s rso/binding/tests -t .",
+    "condition": "all evidence_required items; both suites green"
+  },
+  "deliverables": [
+    "code + tests on branch argus/c009-t011",
+    "receipt"
+  ],
+  "kind": "software",
+  "status": "READY",
+  "history": [
+    {
+      "status": "PROPOSED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-07T00:34:51Z",
+      "note": "C-009 open"
+    },
+    {
+      "status": "READY",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-07T00:34:51Z",
+      "note": "made READY at campaign open"
+    }
+  ],
+  "authority": "operator directive 2026-10-07 (C-004-OP8), roles/Palamedes/prompts/2026-10-07_rso_completion_push/01_OPERATOR_DIRECTIVE_verbatim.md",
+  "resource_ceiling": {
+    "launches": "0 (development only) unless stated",
+    "note": "C-009 caps rso/binding/contract.json"
+  }
+}

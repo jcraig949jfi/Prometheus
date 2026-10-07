@@ -1,0 +1,99 @@
+{
+  "schema": "prometheus.workgraph.task.v1",
+  "task_id": "C-009-T001",
+  "campaign_id": "C-009",
+  "title": "C-009 contract v1.0.0 and the reference binding module (rso/binding)",
+  "objective": "Freeze the binding contract (BX1-BX7, closure CC1-CC4, caps) and a runtime-agnostic reference module with unit tests, as the shared interface for T010/T011.",
+  "parent_objective": "C-009 RSO-EXEC-BINDING-001",
+  "owner_role": "Palamedes",
+  "quality_class": "Q2",
+  "can_downgrade": false,
+  "escalate_to": "Q3",
+  "depends_on": [],
+  "owns": [
+    "rso/binding/"
+  ],
+  "reads": [
+    "rso/slice001/challenge/R2/REPORT.md",
+    "rso/slice001/S5_FINAL_DISPOSITION.md"
+  ],
+  "problem": "Interface first so producer (T010) and consumer (T011) build in parallel against one spec.",
+  "non_goals": [
+    "No change to world predicates, the expected-answer table or S2 case expectations",
+    "No scheduler, no universal state/cognition schema (CONTRACT.md BX6, s5)",
+    "C-004 records and freezes are not rewritten"
+  ],
+  "evidence_required": [
+    "13 module tests green",
+    "contract and caps committed before any C-009 launch"
+  ],
+  "acceptance": {
+    "command": "python -B -m unittest discover -s rso/slice001/tests -t . && python -B -m unittest discover -s rso/binding/tests -t .",
+    "condition": "all evidence_required items; both suites green"
+  },
+  "deliverables": [
+    "rso/binding/CONTRACT.md",
+    "rso/binding/contract.json",
+    "rso/binding/binding.py",
+    "rso/binding/tests/test_binding.py"
+  ],
+  "kind": "software",
+  "status": "CLOSED",
+  "history": [
+    {
+      "status": "PROPOSED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-07T00:34:51Z",
+      "note": "C-009 open"
+    },
+    {
+      "status": "READY",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-07T00:34:51Z",
+      "note": "open"
+    },
+    {
+      "status": "CLAIMED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-07T00:34:51Z",
+      "note": "Palamedes"
+    },
+    {
+      "status": "IMPLEMENTING",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-07T00:34:51Z",
+      "note": "contract + module"
+    },
+    {
+      "status": "GREEN",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-07T00:34:51Z",
+      "note": "rso/binding tests 13 OK"
+    },
+    {
+      "status": "INTEGRATION_READY",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-07T00:34:51Z",
+      "note": "on main"
+    },
+    {
+      "status": "INTEGRATED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-07T00:34:51Z",
+      "note": "self-integrated"
+    },
+    {
+      "status": "CLOSED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-07T00:34:51Z",
+      "note": "interface frozen at v1.0.0"
+    }
+  ],
+  "authority": "operator directive 2026-10-07 (C-004-OP8), roles/Palamedes/prompts/2026-10-07_rso_completion_push/01_OPERATOR_DIRECTIVE_verbatim.md",
+  "resource_ceiling": {
+    "launches": "0 (development only) unless stated",
+    "note": "C-009 caps rso/binding/contract.json"
+  },
+  "red_required": false,
+  "notes": "red_required false: an interface/spec packet; the RED states are C-004 survivors, pinned at module level in test_binding.py."
+}

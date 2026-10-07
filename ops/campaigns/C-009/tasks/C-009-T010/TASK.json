@@ -1,0 +1,72 @@
+{
+  "schema": "prometheus.workgraph.task.v1",
+  "task_id": "C-009-T010",
+  "campaign_id": "C-009",
+  "title": "Producer/ledger plumbing: node execution rows carry parent_run_id + receipt_sha256; manifest names launch_run_id; C-009 ledger and caps",
+  "objective": "Make every produced bundle carry the BX1/BX2 binding: RECEIPT ledger rows record parent_run_id (the TOP_LEVEL build row) and receipt_sha256 (rso.binding.binding.receipt_sha256 of the receipt canonical bytes) at finish; the bundle MANIFEST.json records launch_run_id; inventory() exposes both fields; s2_run produce can charge rso/binding/LEDGER.jsonl under rso/binding/contract.json caps.",
+  "parent_objective": "C-009 RSO-EXEC-BINDING-001",
+  "owner_role": "Eupalamus",
+  "quality_class": "Q1",
+  "can_downgrade": false,
+  "escalate_to": "Q2",
+  "depends_on": [
+    "C-009-T001"
+  ],
+  "owns": [
+    "rso/slice001/ledger.py",
+    "rso/slice001/s2_bundle.py",
+    "rso/slice001/s2_run.py",
+    "rso/slice001/tests/test_ledger.py",
+    "rso/slice001/tests/test_s2_bundle.py",
+    "rso/slice001/tests/test_s2_run.py"
+  ],
+  "reads": [
+    "rso/binding/CONTRACT.md",
+    "rso/binding/binding.py",
+    "rso/binding/contract.json",
+    "rso/slice001/challenge/R2/REPORT.md",
+    "rso/slice001/S5_FINAL_DISPOSITION.md",
+    "rso/slice001/ledger.py",
+    "rso/slice001/s2_bundle.py"
+  ],
+  "problem": "Settled design (CONTRACT.md s2 BX1-BX3, contract.json row_fields): field names parent_run_id, receipt_sha256 on node execution rows; launch_run_id in the manifest. Order: the receipt is built before its row finishes, so the row digest is computed from the final receipt bytes (no circularity: the receipt carries run_id, never the digest). s2_run produce: add a --contract option (default the slice contract) so a C-009 produce charges rso/binding/LEDGER.jsonl against rso/binding/contract.json. Keep existing row fields; old ledgers still parse (rows without the new fields are unbound). Do not touch evidence.py (T011, Argus). Development runs only (no ledgered launch): build bundles into a temp dir in tests.",
+  "non_goals": [
+    "No change to world predicates, the expected-answer table or S2 case expectations",
+    "No scheduler, no universal state/cognition schema (CONTRACT.md BX6, s5)",
+    "C-004 records and freezes are not rewritten"
+  ],
+  "evidence_required": [
+    "RED: a test that a freshly built bundle's RECEIPT rows carry parent_run_id == the build row and receipt_sha256 == sha256(receipt bytes), and the manifest launch_run_id, fails on the current code",
+    "GREEN after the change; old-ledger parse test",
+    "slice suite and rso/binding suite green"
+  ],
+  "acceptance": {
+    "command": "python -B -m unittest discover -s rso/slice001/tests -t . && python -B -m unittest discover -s rso/binding/tests -t .",
+    "condition": "all evidence_required items; both suites green"
+  },
+  "deliverables": [
+    "code + tests on branch eupalamus/c009-t010",
+    "receipt"
+  ],
+  "kind": "software",
+  "status": "READY",
+  "history": [
+    {
+      "status": "PROPOSED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-07T00:34:51Z",
+      "note": "C-009 open"
+    },
+    {
+      "status": "READY",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-07T00:34:51Z",
+      "note": "made READY at campaign open"
+    }
+  ],
+  "authority": "operator directive 2026-10-07 (C-004-OP8), roles/Palamedes/prompts/2026-10-07_rso_completion_push/01_OPERATOR_DIRECTIVE_verbatim.md",
+  "resource_ceiling": {
+    "launches": "0 (development only) unless stated",
+    "note": "C-009 caps rso/binding/contract.json"
+  }
+}
