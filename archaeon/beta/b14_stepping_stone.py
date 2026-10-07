@@ -85,8 +85,7 @@ def main(argv):
         for f in as_completed([ex.submit(cell, x) for x in jobs]):
             r = f.result(); rows.append(r)
             with open(OUT / "B14_cells.jsonl", "a", encoding="utf-8") as fh:
-                fh.write(json.dumps({k: v for k, v in r.items() if k != "elite_manifest"}) + "
-")
+                fh.write(json.dumps({k: v for k, v in r.items() if k != "elite_manifest"}) + chr(10))
             print(json.dumps({k: r[k] for k in ("arm", "seed", "seed_organism_L4", "solved_gen", "final_heldout", "max_train")}), flush=True)
     summ = {a: {"n": sum(r["arm"] == a for r in rows), "solved": sum(r["arm"] == a and r["solved_gen"] is not None for r in rows)}
             for a in ("FROM_PERCEIVER", "FROM_LATCH", "FROM_GUARD", "FROM_STORE", "FRESH")}
