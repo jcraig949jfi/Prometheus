@@ -38,7 +38,7 @@
     "rso/witness/challenge/W2/"
   ],
   "kind": "review",
-  "status": "INTEGRATION_READY",
+  "status": "CLOSED",
   "history": [
     {
       "status": "PROPOSED",
@@ -75,6 +75,18 @@
       "by": "Pallas[harry1-dc8e608d]",
       "at_utc": "2026-10-07T14:24:06Z",
       "note": "R1, R2 NOT CLOSED (coverage / one missing shape check; neither survivor unevaluable nor mis-classified on the frozen driver); R3, R4, R5 CLOSED within coverage; not a second repair round; REPORT rso/witness/challenge/W2/REPORT.md"
+    },
+    {
+      "status": "INTEGRATED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-07T14:27:22Z",
+      "note": "merged a35b489df; R3/R4/R5 CLOSED within coverage; R1, R2 NOT CLOSED: S-1 pair-gate bytes not tied to the declared list (producer-trust class; not reachable on the frozen driver), S-2 R1 census pin (test coverage; code correct)"
+    },
+    {
+      "status": "CLOSED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-07T14:27:22Z",
+      "note": "not a second repair round (PREREGISTRATION s8): both recorded as known escapes; T020 adds an independent pair-array shape audit beside the result (no gate change)"
     }
   ],
   "authority": "PREREGISTRATION s8 (one repair round); rso/witness/ADJUDICATION_W1.md; AMENDMENT_v1.0.1.md",
