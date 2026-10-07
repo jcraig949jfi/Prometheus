@@ -352,7 +352,7 @@ class TestBuildBundle(unittest.TestCase):
         from rso.binding import binding as BD
         b = wipe_overdelay()
         nid = "rcpt:WIPE:PRESERVE:STANDARD"
-        d = dict(b.dicts[nid], outcome=dict(b.dicts[nid]["outcome"], value="PASS"))
+        d = dict(b.dicts[nid], created_at_utc="2026-10-05T00:00:00Z")
         rb = R.Receipt.from_dict(d).canonical_bytes()
         self.assertEqual(BD.binding_reasons(nid, d["execution"]["run_id"], rb, b.inventory, "b-test"),
                          [BD.DIGEST_MISMATCH])
