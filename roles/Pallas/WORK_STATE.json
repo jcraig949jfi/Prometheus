@@ -3,10 +3,10 @@
   "seat": "Pallas",
   "mwo_id": "MWO-0004",
   "authority": "operator directive 2026-10-03 (roles/Achilles/prompts/2026-10-03_rso_builder_cell/01_OPERATOR_DIRECTIVE_verbatim.md); operator directive 2026-10-07 (C-004-OP8, roles/Palamedes/prompts/2026-10-07_rso_completion_push/01_OPERATOR_DIRECTIVE_verbatim.md) s10 same-seat relaunch; Palamedes launch note 2026-10-07 04:20Z (resume of T030)",
-  "updated_at_utc": "2026-10-07T05:00:00Z",
+  "updated_at_utc": "2026-10-07T06:58:00Z",
   "state": "CLOSING",
   "branch": "pallas/c009-t030",
-  "base_sha": "5fefee452e77ec45e1dc8b37345b600004520fc7",
+  "base_sha": "fef1549c7",
   "head_sha": "the commit carrying this file (branch; merged origin/main 94f95e2d1 at c5bb5675f)",
   "worktree_path": "Prometheus-worktrees/pallas-c009-t030",
   "model": "claude-fable-5-1",
@@ -15,10 +15,10 @@
   "instance": "harry1-2697f39e",
   "session_start_utc": "2026-10-07T04:19:00Z (comms boot; resumed the lease of harry1-b97f1fc4, which ended its turn mid launch 2 at ~03:47Z)",
   "current_objective": "RSO Builder Cell; C-009 RSO-EXEC-BINDING-001. C-009-T030 (CC3 independent challenge on FREEZE_B1) DELIVERED: set committed before outcomes (1b9c19ba9), launches 1 and 3 on rso/binding/LEDGER.jsonl (launch 2 torn, kept censored), rso/binding/challenge/B1/REPORT.md, receipt A-001, INTEGRATION_READY. Packet-only session (launch note): closes after T030.",
-  "current_step": "T030 delivered; session closing. Verdict (REPORT.md s3): BX7 CLOSED within coverage; BX1 NOT CLOSED (E2 survives 433 tests), BX2 NOT CLOSED (E3, E4 survive), BX5 NOT CLOSED (SIBLING_UNREPORTED admitted on both bases; applicable-conditional, not reachable through the witness client as drafted); producer side unchallenged; probe: s2_run.consumer_for passes no run_id. CC3's letter not met; one repair round (1+1+1) would be fire cases + a BX5 rule + the run_id wiring.",
+  "current_step": "idle on Opus 5 (Q2). C-009-T034 (Q3, can_downgrade false, the final CC3 re-check on FREEZE_B2) is READY and UNCLAIMED; this instance refused it on policy (rso-builder-role s5/s8) and reported to Palamedes. No Q3 Pallas instance is live.",
   "in_flight": [],
   "finish_condition": "per claimed packet (DISTRIBUTED_WORK.md)",
-  "next_expected_milestone": "Palamedes integrates T030 and adjudicates the survivors (CC3: one repair round + one fresh re-check allowed); a Q3 Pallas instance is relaunched for the re-check packet if one is created",
+  "next_expected_milestone": "a Fable 5.1 Pallas instance (headless harry1 relaunch, or this session restarted on Fable) or Dionysus claims C-009-T034; its result decides whether C-009 closes and the native witness opens",
   "expected_next_artifact": "none from this session (packet-only; closes after T030)",
   "threads": [
     "phase3-rso"
@@ -32,19 +32,16 @@
   "running": [],
   "blocked_on": [],
   "next_actions": [
-    "(next Pallas session) hourly: git fetch; merge origin/main by SHA; comms sync Pallas; workgraph ready Pallas",
-    "claim only a packet the runtime meets (Q3 here); no self-assignment",
-    "if a CC3 re-check packet appears: fresh set again, committed before outcomes; never replay the B1 shapes (they become the repair's regressions)",
-    "headless sessions: never end the turn while a run is in flight; poll background jobs from foreground until-loops"
+    "hourly: git fetch; MERGE origin/main by SHA; comms sync Pallas; workgraph ready Pallas",
+    "do NOT claim C-009-T034 or any Q3 packet on Opus 5 -- ready does not enforce capability, the agent does",
+    "leave #1785 queued for the Fable instance"
   ],
   "operator_decisions_required": [],
   "latest_reports": [
-    "rso/binding/challenge/B1/REPORT.md",
-    "ops/campaigns/C-009/tasks/C-009-T030/attempts/A-001/RECEIPT.json",
-    "roles/Pallas/journal/2026-10-07.md",
-    "roles/Pallas/comms/T030_INTEGRATION_READY_2026-10-07.md",
-    "rso/slice001/challenge/R2/REPORT.md"
+    "roles/Pallas/comms/T034_RUNTIME_NOTICE_2026-10-07.md",
+    "roles/Pallas/comms/POLL_ORDER_OBSERVATION_2026-10-07.md",
+    "roles/Pallas/journal/2026-10-06.md"
   ],
   "last_push_sha": "the commit carrying this file (branch pallas/c009-t030); state commits on main: 4aaa10bbb (claim), 3ed43a232 (IMPLEMENTING)",
-  "last_push_utc": "2026-10-07T05:00:00Z"
+  "last_push_utc": "2026-10-07T06:58:00Z"
 }

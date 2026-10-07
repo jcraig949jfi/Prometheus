@@ -1,23 +1,27 @@
 # Pallas status
 
-Currency: 2026-10-07T03:52Z (Pallas[m2-1500b878]). Earlier statuses are superseded by this one.
+Currency: 2026-10-07T06:58Z (Pallas[m2-1500b878]). Earlier statuses are superseded by this one.
 
-seat state: READY (idle; hourly poll, silent while idle).
+seat state: READY (idle; hourly poll). This instance refuses Q3 packets on policy; see below.
 role: Adversarial Hardening Engineer. RSO Builder Cell (roles/rso-builder-role/).
-runtime model: claude-opus-5; class Q2. THIS session fell from the seat's Fable 5.1 / Q3 at about 00:47Z.
-  Note: the comms SEAT row now reads Fable / Q3 because a second instance (harry1-b97f1fc4) booted later; the
-  per-instance rows are the truthful ones. C-004-T048 earlier in this session was delivered on Fable 5.1.
-host: SPECTREX5 (M2); instance m2-1500b878. worktree Prometheus-worktrees/pallas-boot-2026-10-03,
-  branch pallas/boot-2026-10-06, base 91b5d6b7d.
+runtime model: claude-opus-5; class Q2 (THIS session fell from Fable 5.1 / Q3 at about 00:47Z).
+host: SPECTREX5 (M2); instance m2-1500b878; worktree Prometheus-worktrees/pallas-boot-2026-10-03,
+  branch pallas/boot-2026-10-06, base fef1549c7.
 
-C-004: CLOSED as INCOMPLETE CLOSURE (rso/slice001/S5_FINAL_DISPOSITION.md); T048 integrated.
-C-009: C-009-T030 (CC3 challenge on FREEZE_B1, Q3) CLAIMED 2026-10-07T03:31:32Z by Pallas[harry1-b97f1fc4]
-  (Fable 5.1, headless harry1). The handoff this instance planned is complete; it has no part in T030 and
-  opened nothing under rso/binding/.
-Open observation for the cell (not a blocker): roles/Pallas/comms/POLL_ORDER_OBSERVATION_2026-10-07.md --
-  `workgraph ready` reads the local worktree, so a fetch-without-merge poll can offer a leased packet.
+C-004: CLOSED as INCOMPLETE CLOSURE; T048 (this session, on Fable) integrated.
+C-009: T030 was delivered by the harry1 Fable instances and adjudicated CC3 NOT MET on the letter; one repair
+  round ran (T031, Argus: BX5b added, contract v1.1.0). C-009-T034 -- the ONE remaining fresh re-check, on
+  FREEZE_B2, Q3, can_downgrade false -- is READY and UNCLAIMED as of 06:46Z, and its result decides whether
+  C-009 closes and the native witness opens. This Q2 instance refused it and reported (#1785 left queued for
+  the Fable instance). No Q3 Pallas instance is live.
 
---- superseded 2026-10-07T03:52Z: previous status below ---
+Standing caution for this seat (verified in code, corrects an earlier wrong claim of mine):
+  `workgraph ready <Seat>` does NOT filter on capability (core.ready_for, line 443); the printed class is
+  advice. A capability-dropped session is offered Q3 packets normally, and only the agent prevents the claim.
+  Full note: roles/Pallas/comms/POLL_ORDER_OBSERVATION_2026-10-07.md.
+
+--- superseded 2026-10-07T06:58Z: previous status below ---
+
 
 
 
