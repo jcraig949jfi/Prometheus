@@ -66,3 +66,13 @@ cloud $0; repair rounds 1; reviewer hours 2; window: by 2026-10-10T00:25Z at the
 
 No scheduler, no universal state or cognition schema, no change to world predicates, the expected-answer table, or
 the S2 case expectations; C-004 records and freezes are not rewritten.
+
+## 6. v1.0.1 clarification (Palamedes, 2026-10-07, before any CC2/CC3 outcome; CC1 evidence already in)
+
+BX7 as implemented (C-009-T011): the inventory/launch binding is a condition of bundle CUSTODY (INVENTORY_UNBOUND,
+LAUNCH_UNBOUND in custody's why; KEEPER_ROW_MISSING:RUN_INVENTORY when unregistered). The slice keeps custody as its
+own claim row (CL-CUST), so the S2 table and case expectations are unchanged (s5 non-goal). Reading of BX7 for every
+report and for the native witness: a claim that relies on G-INV is QUALIFIED only together with its bundle's custody
+QUALIFIED; a G-INV PASS on an unregistered inventory is a logic result, never qualified evidence. No predicate,
+threshold or expectation changes. The declared escape (T011 receipt) -- a forged row consistent with an
+unregistered inventory binds -- is therefore inside the "not qualified" region, not a qualified admission.
