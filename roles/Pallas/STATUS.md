@@ -1,25 +1,28 @@
 # Pallas status
 
-Currency: 2026-10-07T11:50Z (Pallas[m2-1500b878]). Earlier statuses are superseded by this one.
+Currency: 2026-10-07T14:50Z (Pallas[m2-1500b878]). Earlier statuses are superseded by this one.
 
-seat state: READY (idle; hourly poll). This instance refuses Q3 packets on policy.
+seat state: READY (idle; no READY packet exists for this seat). Hourly poll continues while this session lives.
 role: Adversarial Hardening Engineer. RSO Builder Cell (roles/rso-builder-role/).
-runtime model: claude-opus-5; class Q2 (THIS session fell from Fable 5.1 / Q3 at about 00:47Z).
+runtime model: claude-opus-5; class Q2 (THIS session fell from Fable 5.1 / Q3 at about 00:47Z on 10-07).
 host: SPECTREX5 (M2); instance m2-1500b878; worktree Prometheus-worktrees/pallas-boot-2026-10-03,
-  branch pallas/boot-2026-10-06, base 0f6b83a36.
+  branch pallas/boot-2026-10-06, base 8b46e44a5.
 
-C-004: CLOSED (INCOMPLETE CLOSURE); T048 delivered by this session on Fable 5.1.
-C-009: CLOSED, scoped to flat inventories; T030 and T034 delivered by harry1 Fable instances.
-C-010 NATIVE-RET-WITNESS-001 (Ares W15): in its ONE repair round.
-  T014 (Pallas's challenge of the frozen witness path) was delivered by Fable instance harry1-14289af6 and
-  CLOSED 11:39:45Z: evaluate / ruler / ares_client NOT CLOSED (survivors S-1..S-10); run_witness storage CLOSED
-  within coverage; a NULL-arm question went to the operator and was answered by AMENDMENT_v1.0.1.
-  Repair: T031 Argus and T032 Cadmus READY; T033 Palamedes integrates and writes FREEZE_W2.
-  C-010-T034 (Pallas, Q3, can_downgrade false): short fresh re-check on FREEZE_W2, PROPOSED behind T033.
-  It needs a Fable instance; the standing runtime situation is reported in #1720 and #1786.
-This instance has opened NO file under rso/witness/ (listing only), so first-sight custody for T034 is intact.
+The operator's 72-hour completion push ENDED at about 14.3 h of 72 (Palamedes #1845, 2026-10-07T14:43Z):
+  C-004  CLOSED, INCOMPLETE CLOSURE.
+  C-009  CLOSED, scoped to flat inventories (P-FLAT gate carries the scope).
+  C-010  EXECUTED: the first native retained-information witness (Ares W15). As reported by the coordinator --
+         instrument QUALIFIED (P-CAL PASS: NULL 867, SHUF 987 of 2048; POS 2048/2048; P-OBS/P-PRES/P-ERASE PASS
+         with the leak member firing); S4 NEGATIVE (1027/2048); S15 NEGATIVE (1018/2048). Record
+         rso/witness/RESULT.md. These are the coordinator's figures; this seat has not opened the record.
+Pallas delivered four challenge packets across the push, all on Fable instances of this seat: C-004-T048 (this
+  session), C-009-T030, C-009-T034, C-010-T014. This Opus 5 instance claimed none of the Q3 packets and refused
+  three of them on policy.
+Open item that could wake this seat: C-010-T040 (positive-candidate replication) is PROPOSED FOR THE OPERATOR,
+  not READY. Any Pallas challenge under it would be Q3 and need a Fable instance.
 
---- superseded 2026-10-07T11:50Z: previous status below ---
+--- superseded 2026-10-07T14:50Z: previous status below ---
+
 
 
 
