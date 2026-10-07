@@ -15,9 +15,10 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
 | B04 | H-EROSION (drift erases near-solvers)? | KILLED (1/6 eroded; replay exact) |
 | B05 | summits: SLOT2 or GENERAL keyed memory? | instrument ready (controls pass); waits on B03 |
 | B03 | BASE vs HEAVY vs RELOC search at equal compute | CLEAN NULL 0/24 each |
-| B07 | withdrawn positional scaffold -> content-addressed recall? | running (36 cells, G=400) |
+| B07 | withdrawn positional scaffold -> content-addressed recall? | NULL 0/36 (cue dispatch itself unreachable) |
 | B08 | which primitive is the wall? (ladder) | DATA-DEPENDENT SELECTION (L4 4/8, L5 0/8) |
 | B09 | dispatch wall: READ the cue vs SELECT on it | running |
+| B10 | SEL opcode (branch-free mux): does the wall move? | running |
 
 ## 2026-10-06/07 EXP-1 (opened 2026-10-06T23:48Z)
 
@@ -85,5 +86,12 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   STRONGEST SIGNAL SO FAR: in this VM+GA, data-dependent selection is the unreachable primitive, while storage,
   guards and a two-slot queue are reachable.
 - B09 launched: READ vs SELECT (cue as 3rd word / 2nd word / folded into the kind code). Controls diagonal.
+- B07 FINAL: 0/36 reach train >= .90 in ANY arm (SCAFFOLD, BASE, ALWAYS; G=400). Max train .53-.88. Independent
+  replication of B08 L5 0/8. KILLED for this VM: "a withdrawn positional scaffold makes recall reachable" -- the
+  scaffold's own task (cue dispatch) is the unreachable step, so there is nothing to withdraw from.
+- DEV -> B10 (organism change): SEL opcode (op 24, was RND): regs[a] = regs[a] ? regs[b] : regs[c]. Variant VM
+  built from proteus/foundry/vm.py's own source with ONLY the op-24 branch replaced (assert count == 1). Controls:
+  branch programs score identically on both VMs (L5 1.0/L6 .5729 dispatcher; solver 1.0/1.0); SEL programs
+  1.0 on the SEL VM and 0.0 on stock. Launched {stock, sel} x {L5_hint3, L6_w2k2} x 8 seeds, G=200.
 - Next: B01b (done) tests H-PLATEAU quantitatively; then B03 = search arms at equal compute from fresh gen 0
   (baseline / heavy-tailed mutation count / behaviour-novelty) -- prediction: only structural-move arms lift 0/60.
