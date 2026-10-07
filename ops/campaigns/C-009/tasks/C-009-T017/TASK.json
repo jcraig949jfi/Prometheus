@@ -41,7 +41,7 @@
     "rso/witness/tests/test_ruler.py"
   ],
   "kind": "software",
-  "status": "CLAIMED",
+  "status": "RED",
   "history": [
     {
       "status": "PROPOSED",
@@ -60,6 +60,12 @@
       "by": "Argus[desktop-ruapvai-b08b36ac]",
       "at_utc": "2026-10-07T03:29:06Z",
       "note": "claimed by Argus[desktop-ruapvai-b08b36ac] (DESKTOP-RUAPVAI, claude-opus-5-5, Q2) per #1752; work branch argus/c009-t017"
+    },
+    {
+      "status": "RED",
+      "by": "Argus[desktop-ruapvai-b08b36ac]",
+      "at_utc": "2026-10-07T03:30:46Z",
+      "note": "8 P-CHAN tests fail before p_chan / mcnemar_threshold exist (red commit f144a0ec2)"
     }
   ],
   "authority": "operator directive 2026-10-07 (C-004-OP8) s6, s11 (preparation allowed; no outcomes before preregistration)",
