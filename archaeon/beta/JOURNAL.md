@@ -46,6 +46,7 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
 | B43/B44/B45 | evidence-integration world: does memory of cues evolve? | NO (B45, E=64x4): elites latch first hint, none beats reactive; B44's 7/8 RETRACTED (small shared sample) |
 | B47 | latch punished (switching latent): does conditional update evolve? | NO: 0/8 above reactive; latch-like memory persists |
 | B48 | same on the SEL VM (straight-line conditional update) | 0/8 by criterion; 1 seed shows a real filter+re-track profile -> replication |
+| B49 | stock vs SEL head-to-head, 12 seeds each | running (lease) |
 | B30 | do foragers carry state across ticks? | YES: 6/7 content sensors use state; blind ones in rewarding worlds 5/5 |
 | B31 | what do they remember? | 2504: 1-register direction memory; others computed state (not past observations) |
 | B17 | forced perception (echo on PUT) opens the 2-value wall? | staged; controls pass |
@@ -519,6 +520,9 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   it FILTERS before the switch (.61 > reactive .56) AND RE-TRACKS after it (.55 vs latch .20): a genuine, weaker
   update-on-condition memory -- the first in the campaign. B47 (stock VM) produced none. Not yet a finding (1 seed):
   next = head-to-head replication, stock vs SEL VM, 12 seeds each, same world, recovery profile per elite.
+- B49 launched ~11:45Z: stock vs SEL VM, 12 seeds each, switching-evidence world, recovery-profile classification
+  (UPDATE = filters pre-switch >= reactive + .03 AND re-tracks post-late >= .45). 24 cells, 12 procs, lease
+  lse-351b2b706e7d (4 h TTL), est ~8 core-h (tally then ~35 of 48). PREDICTION: SEL >= 2/12 UPDATE, stock <= 1/12.
 - BUDGET WINDOW 2026-10-08 ~00:07Z. B29 already done (not relaunched). Lease lse-fe37dd77fe7a (spectrex5:cpu12,
   3 h) for B32 replication: 12 seeds (3211-3222), 10 procs, + B32's last cell on 2 procs = 12. CORE-HOUR TALLY
   (rolling 24 h from 00:07Z): 0 at launch; est. +3-4 for the replication.
