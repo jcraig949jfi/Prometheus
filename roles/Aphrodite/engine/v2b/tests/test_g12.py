@@ -234,3 +234,34 @@ def test_reset_and_continuity_in_one_worker():
     for r, tag in zip(out[1:], ("g10_O4", "g0_O4", "g11_O4")):
         ref = _e12(s, tag)
         assert all(r[k] == ref[k] for k in KEYS), (tag, [k for k in KEYS if r[k] != ref[k]])
+
+
+@pytest.mark.slow
+def test_fast_prefix_equals_full_walks_on_real_cells():
+    """walk_table with FAST_PREFIX == full first_qualified walks (exposed seed 26 VALIDATE families, cap 100k)."""
+    import a17
+    import a18
+    import b02
+    import fair as FR
+    b02.T.init_worker()
+    P = b02.rj(b02.SUP / "PLAN_E.json")
+    fams = [f for f in P["plan"]["26"]["O10"] if f["role"] == "VALIDATE"][:3]
+    specs = {f["name"]: (f["body"], f["final"], f["init"]) for f in fams}
+    prov = a17.Prov(specs)
+    cells = [FR.Cell(prov, f["name"], 26 * 4 + j, f["Q2_size"], label="%s-LIN26-val/r26" % a18.TAG)
+             for f in fams for j in range(2)]
+    start = FR.pristine().entries
+    cands = {"INHERITED": start}
+    for k, s in enumerate(["(acc + {H})", "({H} + v)", "({H} * v)", g12.gtc.OFF_SCHEMA]):
+        cands["S%d" % k] = [a17.schema_entry("g2_new", s)] + start
+    cands["M"] = [{"name": "m", "inits": ["0"], "bodies": ["(acc + v)"], "finals": ["acc"]}] + start
+    out = {}
+    for fast in (True, False):
+        g12.FAST_PREFIX = fast
+        out[fast], _ = g12.walk_table(cands, cells, prov, g12.SEL_CAP, start)
+    g12.FAST_PREFIX = True
+    for n in cands:
+        for a, b in zip(out[True][n], out[False][n]):
+            assert a["censored"] == b["censored"], n
+            if not a["censored"]:
+                assert (a["charge"], a["program"]) == (b["charge"], b["program"]), n
