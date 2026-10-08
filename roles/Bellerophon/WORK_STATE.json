@@ -4,9 +4,9 @@
   "mwo_id": "MWO-0004",
   "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
   "mwo_sha256": "925660b2d2be53af2ee4195391e484d9649bbd4ee828cd60432ce2f0903a99df",
-  "updated_at_utc": "2026-10-06T23:30:00Z",
+  "updated_at_utc": "2026-10-08T15:32:50Z",
   "state": "WORKING",
-  "state_reason": "DEF-BEL-008..010 fixed on branch bellerophon/def-bel-008-010-2026-10-06 (d36012f0b); C4 R-MECH final still gated on Cosmos (foreign family + C3 publication)",
+  "state_reason": "BEL-48H-2026-10-08 autonomous 48 h campaign (operator directive, prompts/2026-10-08_bel48h/); ends 2026-10-10T05:14Z",
   "branch": "bellerophon/def-bel-008-010-2026-10-06",
   "base_sha": "5548ed819a57186baaf1684b31950f08fd2a8a38",
   "head_sha": "d36012f0b1a5f749a3f316ef04b5a092dff58d8d",
@@ -34,6 +34,26 @@
       "id": "C-001",
       "owner": "Archaeon",
       "role": "BEE leg executor (E-003)"
+    },
+    {
+      "id": "BEL-48H-2026-10-08",
+      "status": "RUNNING",
+      "dir": "roles/Bellerophon/bel48h_2026-10-08/",
+      "host": "ubu005",
+      "raw": "~/bel48h_runs (host-local)",
+      "done": [
+        "reviews A+B of DEF-BEL-008/009/010 (A fixed, B limits disclosed), merged to main 2c6072c9d",
+        "W1 v2 corrected baseline",
+        "W2 heredity",
+        "W3a/W3b reachability",
+        "W4 computation x reproduction",
+        "W5 block 1"
+      ],
+      "running": [
+        "W6 block 1 confirmation (1,300 distinct-seed runs)",
+        "W5 block 2 (E5c)",
+        "W5 block 3 (E5d, queued)"
+      ]
     }
   ],
   "experiments": [
@@ -272,7 +292,7 @@
   "blinding": "released: E-BEL-REPL-01 sealed and reported before X-MAT was read",
   "current_objective": "R-MECH (mechanistic/adversarial) review of Cosmos C4 DESIGN v0.2; final report = DESIGN REVIEW + IMPLEMENTATION-DIVERSITY REVIEW; verdict PROCEED_TO_F-0002 / REVISE / NOT_WORTH_BUILDING",
   "current_step": "Phase 1 INTERIM committed 164df3cdd (branch bellerophon/c4-rmech-2026-09-30) and posted to Cosmos #1158: F1/F2 BLOCKING, F3-F5 REPAIR, F6 NOTE (executed on a continuous planted family). Waiting on the Phase-2 gate (Cosmos: foreign family committed + C3 code published).",
-  "next_expected_milestone": "Cosmos Phase-2 post -> PART B (I1-I5) + final verdict",
+  "next_expected_milestone": "W6 block 1 confirmation analysis (~18:30Z 2026-10-08); final report 2026-10-10T05:14Z",
   "expected_next_artifact": "roles/Cosmos/c4/reviews/R-MECH_Bellerophon_<date>.md (final)",
   "final_gate": "FINAL verdict only after Cosmos posts (a) committed foreign family and (b) published C3 substrate code",
   "last_push_sha": "164df3cdd",
