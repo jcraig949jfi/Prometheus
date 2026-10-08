@@ -459,6 +459,45 @@ def test_meter_exact():
     assert bad == 0
 
 
+def test_o1_entry_and_walk():
+    """O1: empty registry -> no entry; the O1 walk (walk.iter_hits over the O1 entry only, capped at its size) gives
+    the same hits and charges as fair.search_collect over the same entry with the same cap (no fallback reached)."""
+    _w5()
+    import a17
+    import fair as FR
+    from w5p import donor as D
+    ok_empty = D.o1_entry({}, FR.pristine().entries) is None
+    reg = {}
+    for sch in ("(acc - {H})", "(v + (acc % {H}))", "math.gcd(abs(acc), abs({H}))"):
+        W.register(reg, W.Promoted.from_schema(sch, reg, W.sha(sch), "test"))
+    start = [D.schema_entry("s", "(acc - {H})", {})] + FR.pristine().entries
+    e = D.o1_entry(reg, start)
+    size = len(e["inits"]) * len(e["bodies"]) * len(e["finals"])
+    rng = random.Random("W5P/TEST/O1/v1")
+    finals = [f for f in G.FINAL_SPACE if "acc" in f]
+    mm = hits = 0
+    for k in range(24):
+        body = rng.choice(e["bodies"]) if k % 2 else rng.choice(G.BODY_SPACE)
+        prov = a17.Prov({"o1fam": (body, rng.choice(finals), rng.choice(G.H1_SPACE))})
+        cell = FR.Cell(prov, "o1fam", k, rng.choice([4, 6]), label="W5P-O1")
+        cap = rng.choice([5000, 30000, size + 1000])
+        oh, osp, _lib = D.o1_walk(e, cell, cap, 1)
+        old = G.run_program
+        G.run_program = REF_RUN
+        try:
+            esc = E.Escrow(min(cap, size))
+            ref = FR.search_collect(FR.KLib([e]), cell.parsed, esc, min(cap, size), cell.seed, max_hits=1)
+        finally:
+            G.run_program = old
+        same = ([(tuple(h[0]), h[2]) for h in oh] == [(tuple(h[0]), h[2]) for h in ref]) and osp == esc.spent
+        mm += not same
+        hits += bool(oh)
+    RESULTS["O1_ENTRY_WALK"] = {"empty_registry_no_entry": ok_empty, "entry_bodies": len(e["bodies"]),
+                                "entry_schemas": len(e["o1_schemas"]), "walks": 24, "hits": hits, "mismatches": mm,
+                                "PASS": ok_empty and mm == 0 and hits > 0}
+    assert ok_empty and mm == 0 and hits > 0
+
+
 # ---------------------------------------------------------------- donor level (slow)
 def _t12():
     R = ENG.parent / "beta01" / "runs"
@@ -558,7 +597,8 @@ def test_slow_donor_level():
 
 FAST = [test_parse_normalise_continuity, test_promotion_semantics, test_serialization_roundtrip,
         test_transplant_fresh_process, test_dependency_depth_bookkeeping, test_fold_recognition_sound,
-        test_instantiate_and_derive_continuity, test_conformance_fast_paths, test_meter_exact]
+        test_instantiate_and_derive_continuity, test_conformance_fast_paths, test_meter_exact,
+        test_o1_entry_and_walk]
 
 
 def main():

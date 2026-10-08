@@ -224,9 +224,50 @@ def candidates_from(derived, start, classes, reg, form_map=None) -> Dict:
     return cands
 
 
+# ================================================================ O1: observation of promoted applications (opt-in)
+def o1_entry(reg, start, form_map=None) -> Optional[Dict]:
+    """O1 observation entry (Beta-03 O1 repair; OFF by default). Bodies = the W5P instantiations (promote.instantiate:
+    the same filler set and depth/shape rule as every W5P candidate entry) of Q[{H} := P({H})] for every ORDERED pair
+    (Q, P) of promoted primitives in the registry (Q == P included), Q then P in id order; bodies already in a START
+    entry are dropped (the ordinary observation walk already covers them). inits H1, finals FINAL_SPACE (as
+    a17.schema_entry). The contexts are the arm's OWN promoted schemas -- the only one-hole contexts the arm has; no
+    other context, motif or truth enters. Empty registry -> None (no walk, no charge)."""
+    _a17, _a18, _gtc, _E, _FR, G, _T3D = _mods()
+    if not reg:
+        return None
+    have = {b for e in start for b in e.get("bodies", [])}
+    bodies, schemas = [], []
+    for q in sorted(reg):
+        for p in sorted(reg):
+            sch = reg[q].schema.replace(W.HOLE, "%s(%s)" % (p, W.HOLE))
+            schemas.append(sch)
+            bodies += [b for b in W.instantiate(sch, reg, form_map) if b not in have]
+    bodies = list(dict.fromkeys(bodies))
+    if not bodies:
+        return None
+    return {"name": "o1_observe", "inits": list(G.H1_SPACE), "bodies": bodies, "finals": list(G.FINAL_SPACE),
+            "o1_schemas": schemas}
+
+
+def o1_walk(entry, cell, escrow: int, max_hits: int):
+    """Walk ONLY the O1 entry (no fallback) in keyed order with the standard charge rule (walk.iter_hits ==
+    a18.fast_cost == fair.search_collect order and charges); own escrow per cell = the donor's escrow.
+    Returns (hits, charges_spent, lib)."""
+    _a17, _a18, _gtc, _E, FR, _G, _T3D = _mods()
+    import walk
+    lib = FR.KLib([entry])
+    cap = min(escrow, len(entry["inits"]) * len(entry["bodies"]) * len(entry["finals"]))
+    hits = []
+    for ch, prog in walk.iter_hits(lib, cell, cap):
+        hits.append((prog, entry["name"], ch))
+        if len(hits) >= max_hits:
+            return hits, ch, lib
+    return hits, cap, lib
+
+
 # ================================================================ the donor
 def donor_w5p(genome: str, args, *, select=None, exclude=(), promote: bool = True, extra_promoted=None,
-              meter: bool = True) -> Dict:
+              meter: bool = True, o1: bool = False) -> Dict:
     """gtc.donor_g(genome, args) with W5P promotion.
 
     args     = (cat, kind, r, fams, specs, panel, compose[, start_override]) exactly as donor_g.
@@ -235,6 +276,9 @@ def donor_w5p(genome: str, args, *, select=None, exclude=(), promote: bool = Tru
     promote  = False disables P1 (empty registry) -> donor_g's output exactly.
     extra_promoted = serialized promoted records to add to the registry (verified) -- e.g. a lineage carried
                out-of-band. Default None.
+    o1       = O1 repair (default False): after each ordinary observation walk, a SECOND walk per observation cell over
+               the O1 entry only (o1_entry), same escrow, same max hits; its hits join the observations. Billed on
+               both ledgers (phase "observe_o1") and in meta_charges. OFF -> this function's output is unchanged.
     """
     a17, a18, gtc, E, FR, G, T3D = _mods()
     a18.worker_init()
@@ -266,6 +310,8 @@ def donor_w5p(genome: str, args, *, select=None, exclude=(), promote: bool = Tru
                         form_map.setdefault(b, f[-1])
     met = Meter(form_map, reg) if meter else None
     base, cov = FR.KLib(start), a17.coverage(start)
+    o1e = o1_entry(reg, start, form_map) if o1 else None
+    o1_rec = {"hits": [], "charges": 0, "walks": 0}
     size = {f["name"]: f["qualified_dev_size"] for f in fams}
     obs_f = [f["name"] for f in fams if f["role"] == "OBSERVE"]
     val_f = [f["name"] for f in fams if f["role"] == "VALIDATE"]
@@ -281,6 +327,16 @@ def donor_w5p(genome: str, args, *, select=None, exclude=(), promote: bool = Tru
                 met.add("observe", base, cell.seed, esc.spent)
             for h in hits[:mh]:
                 observed.append({"family": fam, "program": list(h[0]), "parsed": cell.parsed})
+            if o1e is not None:
+                oh, osp, olib = o1_walk(o1e, cell, a17.ESCROW, mh)
+                meta += osp
+                o1_rec["charges"] += osp
+                o1_rec["walks"] += 1
+                if met:
+                    met.add("observe_o1", olib, cell.seed, osp)
+                for h in oh[:mh]:
+                    observed.append({"family": fam, "program": list(h[0]), "parsed": cell.parsed})
+                    o1_rec["hits"].append({"family": fam, "program": list(h[0]), "charge": h[2]})
     if g.get("derive_from") == "observe+validate":
         for fam in val_f:
             for c in range(a17.R_OBS):
@@ -292,6 +348,16 @@ def donor_w5p(genome: str, args, *, select=None, exclude=(), promote: bool = Tru
                     met.add("observe", base, cell.seed, esc.spent)
                 for h in hits[:mh]:
                     observed.append({"family": fam, "program": list(h[0]), "parsed": cell.parsed})
+                if o1e is not None:
+                    oh, osp, olib = o1_walk(o1e, cell, a17.ESCROW, mh)
+                    meta += osp
+                    o1_rec["charges"] += osp
+                    o1_rec["walks"] += 1
+                    if met:
+                        met.add("observe_o1", olib, cell.seed, osp)
+                    for h in oh[:mh]:
+                        observed.append({"family": fam, "program": list(h[0]), "parsed": cell.parsed})
+                        o1_rec["hits"].append({"family": fam, "program": list(h[0]), "charge": h[2]})
     classes, certs = a17.certified_classes(observed, cov)
     # ---- P2 + P3 recognise and derive
     derived = W.derive_schemas([c["member_bodies"] for c in classes], reg)
@@ -365,4 +431,11 @@ def donor_w5p(genome: str, args, *, select=None, exclude=(), promote: bool = Tru
         "n_bodies_with_promoted_form": len(form_map),
         "cost": met.summary() if met else None,
     }
+    if o1:
+        res["w5p"]["o1"] = {"enabled": True, "entry_bodies": len(o1e["bodies"]) if o1e else 0,
+                            "entry_candidates": (len(o1e["inits"]) * len(o1e["bodies"]) * len(o1e["finals"]))
+                            if o1e else 0,
+                            "entry_schemas": len(o1e["o1_schemas"]) if o1e else 0,
+                            "walks": o1_rec["walks"], "charges": o1_rec["charges"], "n_hits": len(o1_rec["hits"]),
+                            "hits": o1_rec["hits"]}
     return res
