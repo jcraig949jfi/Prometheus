@@ -1,0 +1,135 @@
+{
+ "probe": "B33",
+ "A1_unfiltered": {
+  "B32_3201": 0.0558,
+  "B32_3203": 0.1039,
+  "B32_3202": 0.0953,
+  "B32_3204": 0.095,
+  "hand_generalist": 0.0641,
+  "pboom_specific_2506": 0.0823
+ },
+ "A2_named": {
+  "B32_3201": {
+   "P-boom": -0.0271,
+   "B-scatter": 0.0789,
+   "C6-unable": 0.0218
+  },
+  "B32_3203": {
+   "P-boom": -0.0012,
+   "B-scatter": 0.0855,
+   "C6-unable": -0.012
+  },
+  "B32_3202": {
+   "P-boom": -0.0634,
+   "B-scatter": 0.0964,
+   "C6-unable": -0.0178
+  },
+  "B32_3204": {
+   "P-boom": -0.0615,
+   "B-scatter": 0.0696,
+   "C6-unable": -0.0287
+  },
+  "hand_generalist": {
+   "P-boom": 0.1912,
+   "B-scatter": -0.0046,
+   "C6-unable": 0.0924
+  },
+  "pboom_specific_2506": {
+   "P-boom": 0.4041,
+   "B-scatter": 0.0209,
+   "C6-unable": -0.0532
+  }
+ },
+ "A3_verdicts": {
+  "B32_3201": [
+   [
+    "BEATS_CONSTANT",
+    "INPUT_USING",
+    "ECHO_EXPLAINS",
+    "REACTIVE"
+   ],
+   [
+    "BEATS_CONSTANT",
+    "INPUT_USING",
+    "BEATS_ECHO",
+    "REACTIVE"
+   ],
+   [
+    "BEATS_CONSTANT",
+    "INPUT_USING",
+    "BEATS_ECHO",
+    "REACTIVE"
+   ]
+  ],
+  "B32_3203": [
+   [
+    "BEATS_CONSTANT",
+    "INPUT_USING",
+    "ECHO_EXPLAINS",
+    "REACTIVE"
+   ],
+   [
+    "BEATS_CONSTANT",
+    "INPUT_USING",
+    "BEATS_ECHO",
+    "REACTIVE"
+   ],
+   [
+    "BEATS_CONSTANT",
+    "INPUT_USING",
+    "ECHO_EXPLAINS",
+    "REACTIVE"
+   ]
+  ],
+  "B32_3202": [
+   [
+    "BEATS_CONSTANT",
+    "INPUT_USING",
+    "ECHO_EXPLAINS",
+    "REACTIVE"
+   ],
+   [
+    "BEATS_CONSTANT",
+    "INPUT_USING",
+    "BEATS_ECHO",
+    "REACTIVE"
+   ],
+   [
+    "BEATS_CONSTANT",
+    "INPUT_USING",
+    "BEATS_ECHO",
+    "REACTIVE"
+   ]
+  ],
+  "B32_3204": [
+   [
+    "BEATS_CONSTANT",
+    "INPUT_USING",
+    "BEATS_ECHO",
+    "CARRIES_STATE"
+   ],
+   [
+    "BEATS_CONSTANT",
+    "INPUT_USING",
+    "BEATS_ECHO",
+    "CARRIES_STATE"
+   ],
+   [
+    "NOT_ABOVE_CONSTANT",
+    "INPUT_USING",
+    "ECHO_EXPLAINS",
+    "REACTIVE"
+   ]
+  ]
+ },
+ "A4_identity": {
+  "distinct_genomes": 4,
+  "n": 4,
+  "sizes": {
+   "B32_3201": 54,
+   "B32_3203": 42,
+   "B32_3202": 51,
+   "B32_3204": 59
+  }
+ }
+}

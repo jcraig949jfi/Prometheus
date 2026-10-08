@@ -37,7 +37,7 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
 | B27 | generality over 4 more worlds | B-scatter 3/3, C6-unable 1/3; B-pressure/W-artifacts inconclusive (no positive) |
 | B28 | do foragers transfer across worlds? | NO: home +.23, off-home -.02; world-specific mappings |
 | B29 | leave-one-world-out training: invariant sensing? | NULL: train lift yes, held-out blind (0/3 worlds); invariant rule exists but unfound |
-| B32 | fresh random world each generation -> invariant sensing? | POSITIVE 3/3 so far (held-out lift .07-.13, blind collapse); replication (12 seeds) running; B33 attack staged |
+| B32 | fresh random world each generation -> invariant sensing? | WEAK_POSITIVE after B33 (unfiltered margin over specific elite +.01-.02; partly echo); replication running |
 | B30 | do foragers carry state across ticks? | YES: 6/7 content sensors use state; blind ones in rewarding worlds 5/5 |
 | B31 | what do they remember? | 2504: 1-register direction memory; others computed state (not past observations) |
 | B17 | forced perception (echo on PUT) opens the 2-value wall? | staged; controls pass |
@@ -376,6 +376,16 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   (B25-B28) and paired worlds (B29) gave only specific mappings. Not yet believed: B33 attacks staged (unfiltered
   worlds, named worlds, controls audit, program identity). Run 1 of B32 hung ~40 min (my bug: the base checkpoint was
   re-read on every evaluation) -- fixed (load once, cache per generation).
+- B32 FINAL (4/4): held-out mean lift .071 / .130 / .121 / .115 on the FILTERED held-out set.
+- B33 ATTACK -> B32 DOWNGRADED to WEAK_POSITIVE. A1 (40 UNFILTERED family worlds): B32 elites .056-.104 vs hand
+  generalist .064 vs P-boom-SPECIFIC elite .082 -> margin over the specific elite only +.01-.02 (PREDICTION >= +.03
+  FAILED); most of B32's held-out advantage came from the held-out FILTER (worlds chosen where the specific elite
+  fails). A2 named worlds: positive only on B-scatter (.07-.10), <= 0 on P-boom and C6-unable (FAILED). A3 controls:
+  INPUT_USING on every world tested, but ECHO_EXPLAINS on 6/12 world tests (part pass-through); mostly REACTIVE.
+  A4: 4 distinct programs (no convergence on one rule). Reading: world-distribution training yields input-using
+  reactive foragers that transfer WITHIN the generator family about as well as a specific forager does, partly by
+  echo; not the invariant rule. Instrument lesson (mine): a held-out set selected by "where the negative control
+  fails" inflates the contrast -- always report the unfiltered set beside it.
 - BUDGET WINDOW 2026-10-08 ~00:07Z. B29 already done (not relaunched). Lease lse-fe37dd77fe7a (spectrex5:cpu12,
   3 h) for B32 replication: 12 seeds (3211-3222), 10 procs, + B32's last cell on 2 procs = 12. CORE-HOUR TALLY
   (rolling 24 h from 00:07Z): 0 at launch; est. +3-4 for the replication.
