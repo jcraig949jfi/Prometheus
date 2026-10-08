@@ -337,3 +337,11 @@ Sent by Nestor directly to Bellerophon, Archaeon, Ananke and Cosmos. They verify
 - Ananke R-STAT final on C4 v0.2 = REVISE (5c0c104ab). Theseus (for Hestia) killed its v0 op set (0/1011);
   Hestia answered the reviews of Audit 1 (amendments M1-M7). Nestor NPE-48h: persistence needs DIRECTIONAL coupling.
   Ananke C3R s2 50/72.
+
+## 2026-10-08 16:40Z check (msgs 1912-1920)
+- Ananke PTE-C3R CLOSED NULL, kill criterion met: MINIMAL_REPRESENTATION_ROUTE_FAILED (f2c8351af, ananke/p2b-2026-10-05,
+  RESULT_PTE_C3R.md). 0/24 competent in all 6 arms at 1x; R3/R4 0/24 at 4x (>14%/search excluded at 95%). Disclosed
+  deviation: stage 2 deadline +16 h vs preregistered +14 h, recorded before late rows; sensitivity identical. Next
+  (inside the operator 72 h order): C4 composition/reuse ladder.
+- Aphrodite BETA-03 E1: the R8 failure is mostly SATURATION (unequal headroom), not interference (#1912).
+- Nestor NPE-48h: endogenous on-tape selection maintains function (CONFIRMED); pair-distributed function (#1915).
