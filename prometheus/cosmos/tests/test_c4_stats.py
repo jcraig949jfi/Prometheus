@@ -116,3 +116,9 @@ def test_a9_exclusion_bounds_bracket():
 def test_newcombe_contains_truth():
     lo, hi = S.newcombe_diff(30, 100, 20, 100)
     assert lo < 0.10 < hi and lo > -0.05
+
+
+def test_one_family_carrying_fails_s0a():
+    from prometheus.cosmos.c4 import calib_s2 as C2
+    rng = np.random.default_rng(8)
+    assert C2.s0a_power_realistic(240, 10, rng, uplift=.10, carried=True, nflip=500, nboot=200) <= 0.1
