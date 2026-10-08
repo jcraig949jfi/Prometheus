@@ -23,6 +23,7 @@ from prometheus.cosmos.c3.task import Task
 from prometheus.cosmos.c4 import firewall as FW
 from prometheus.cosmos.c4.baselines import t3_down
 from prometheus.cosmos.c4.cert_b import b_use
+from prometheus.cosmos.c4.families.cosmos_phase import world as PH
 from prometheus.cosmos.c4.families.theseus_sediment import world as SED
 from prometheus.cosmos.c4.sysid_local import LocalProbe, coordinates
 from prometheus.cosmos.hashing import h
@@ -37,6 +38,7 @@ P_C3 = {
     "stig": {"delta": (0.02, 0.6), "D": (0.0, 0.3), "v": [0, 1, 2], "j": (0.0, 0.3)},
 }
 FAMILIES = ("rnn", "graph", "stig", "sediment")
+FAMILIES5 = FAMILIES + ("phase",)          # + cosmos_phase (R-STAT B1), from EXP-03 on
 # CHALLENGE proposals Q (EXP-02; prereg roles/Cosmos/c4/prereg/EXP-02_CHALLENGE_DISCOVERY.md). Written from the
 # DECLARED physical meaning of each knob: up-weight noise, instability, transport and export; label-blind in code.
 # Caveat (R-STAT A8): the author has seen EXP-01 (sediment 30/30 FUNCTIONAL under P), so Q is not author-blind.
@@ -62,6 +64,8 @@ def sample_world(fam: str, seed: int, proposal: str = "P") -> dict:
         return {"family": fam, "knobs": kn, "k": int(KS[rng.integers(len(KS))]), "proposal": "Q"}
     if fam == "sediment":
         kn = SED.sample_natural(rng)
+    elif fam == "phase":
+        kn = PH.sample_natural(rng)
     else:
         kn = {}
         for f, spec in P_C3[fam].items():
@@ -81,6 +85,8 @@ def build(fam: str, kn: dict, k: int):
         return Stig(t, kn["delta"], kn["D"], kn["v"], kn["j"]), t
     if fam == "sediment":
         return SED.build_world(**kn), t
+    if fam == "phase":
+        return PH.build_world(**kn), t
     raise ValueError(fam)
 
 

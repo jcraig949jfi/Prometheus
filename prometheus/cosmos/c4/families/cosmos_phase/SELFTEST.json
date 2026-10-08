@@ -1,0 +1,31 @@
+{
+ "selftest": {
+  "replay_identical": true,
+  "interchange_round_trip": true,
+  "noise_is_only_randomness": true,
+  "history_free_control_k2": true,
+  "history_free_control_k4": true,
+  "history_free_control_k8": true,
+  "history_free_control_declared": true,
+  "any_symbol_accepted": true
+ },
+ "all_pass": true,
+ "provenance": {
+  "python": "3.14.4",
+  "numpy": "2.5.3",
+  "machine": "ubu003",
+  "source_sha256_lf": "05421f0d25dfa2261ce71e9d6156cc71b6b9bce84d741f4cb3080609f05f86c3",
+  "defaults": {
+   "N": 24,
+   "K": 0.5,
+   "dw": 0.2,
+   "sigma": 0.1,
+   "kappa": 1.5,
+   "frac": 0.3,
+   "R": 6,
+   "reset": 0.0,
+   "wseed": 0
+  }
+ },
+ "command": "python -m prometheus.cosmos.c4.families.cosmos_phase.world"
+}

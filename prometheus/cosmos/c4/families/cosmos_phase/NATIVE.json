@@ -1,0 +1,28 @@
+{
+  "family": "cosmos_phase",
+  "author": "Cosmos (seat that also designs C4; authored 2026-10-08 AFTER seeing candidate L-0003), ubu003",
+  "module": "prometheus/cosmos/c4/families/cosmos_phase/world.py",
+  "builder": "build_world(**knobs)",
+  "natural_sampler": "sample_natural(rng)",
+  "task_support": {"V": ">= 2 (any)", "k": [2, 4, 8], "symbols": "any integer; kicked subset = fixed pseudo-random fraction per symbol"},
+  "parameters": {
+    "N": {"units": "oscillators", "meaning": "population size", "range": [8, 64], "type": "int"},
+    "K": {"units": "rad per step at full coherence", "meaning": "mean-field coupling pulling each phase toward the population rhythm", "range": [0.0, 3.0], "type": "float"},
+    "dw": {"units": "rad per step", "meaning": "spread (SD) of natural frequencies: dephasing", "range": [0.0, 1.0], "type": "float"},
+    "sigma": {"units": "rad per step", "meaning": "phase-noise SD (diffusion)", "range": [0.0, 1.5], "type": "float"},
+    "kappa": {"units": "rad", "meaning": "phase kick an observed symbol gives its subset", "range": [0.0, 3.1416], "type": "float"},
+    "frac": {"units": "fraction", "meaning": "share of oscillators a symbol kicks", "range": [0.05, 0.5], "type": "float"},
+    "R": {"units": "oscillators", "meaning": "how many oscillators the policy can see (readout bottleneck)", "range": [2, 64], "type": "int"},
+    "reset": {"units": "probability per oscillator per step", "meaning": "chance a phase is redrawn uniformly (catastrophic forgetting)", "range": [0.0, 1.0], "type": "float"},
+    "wseed": {"units": "seed", "meaning": "quenched draw of natural frequencies and symbol subsets (sampled per world, R-STAT B3)", "range": [0, 2147483647], "type": "int"}
+  },
+  "native_measurements": {},
+  "natural_distribution": {"N": [16, 24, 32], "K": [0.0, 2.0], "dw": [0.0, 0.5], "sigma": [0.02, 0.6], "kappa": [0.5, 2.5],
+                           "frac": [0.15, 0.4], "R": [4, 6, 8], "reset": [0.0, 0.1], "wseed": "uniform integer",
+                           "note": "lists of 3 are lattices; pairs are uniform real intervals"},
+  "history_free_control": {"reset": 1.0, "meaning": "every phase is redrawn each step before the kick, so the state after a step depends only on the current symbol and noise"},
+  "state": {"th": "(E, N) phases in [0, 2pi)"},
+  "readout_features": "cos/sin of the first R phases",
+  "full_state": "cos/sin of all N phases (the whole causal state; the circle embedded without a seam)",
+  "randomness": "noise(n, rng) -> {n: phase noise, u: reset draws, v: new phases}"
+}
