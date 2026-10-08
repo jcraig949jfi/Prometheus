@@ -260,6 +260,32 @@ declare("C-ARCH-COMPETE",
                                   extra_plants=[CT_W if s % 2 == 0 else "CT_UA"])) for s in SEEDS_CAC])
 
 
+# X-DISTRIB-GAME (EXPLORE, parent X-ONTAPE): does the pair-distributed form (INV: JRZ +66 into the partner's OUT;
+#   u = 0, tape_self = 1.0; mined from X-ONTAPE seed 44900007) have a SELECTIVE edge under ONTAPE, or does it drift?
+#   (The counter-copy hypothesis was killed by inv_race.py: the first mover always wins, INV gains no race advantage.)
+#   Frequency-dependence vs a NEUTRAL MARKER (MARK = CT_UA with byte 60 ^ 0x10; u = 1, tape_self = 1).
+#   Arms (ONTAPE, CONST 0.15, 2000 epochs, 6 seeds 45_500_000 + s, paired across arms):
+#     INV_RARE   plant CT_UA + extra [CT_UA]*191 + [INV]*8      NEU_RARE   same with MARK in place of INV
+#     INV_COMMON plant INV + extra [INV]*191 + [CT_UA]*8        NEU_COMMON plant MARK + extra [MARK]*191 + [CT_UA]*8
+#   Readout: final focal-family share among organisms assignable to {CT_UA, focal} (MARK: byte 60; INV: majority of its
+#   10 diagnostic bytes), and the per-snapshot trajectory from dom_series.
+#   Classification: SIGNAL (INV favoured) if INV_RARE final share > NEU_RARE's in >= 5/6 paired seeds AND INV_COMMON >
+#   NEU_COMMON in >= 5/6; SIGNAL (INV disfavoured) for the mirror; WEAK_SIGNAL if only one frequency shows it;
+#   CLEAN_NULL (neutral) otherwise.
+INV = bytes.fromhex("ed327dee405fe5db0047dbf94fdb085779fe02380e78a9477afe00782842c625d30089fdd3007679a4b8c83f4c1927451"
+                    "31f0cc26dae628982c8cea80d767f86")
+MARK = bytes.fromhex("ed327dee405fe5db0047db004fdb005779fe02380e78a9477afe00782802c625d3007678d3007679a4b8c83f4c602745"
+                     "135fecc26dae628982c868a01d767f86")
+SEEDS_G = [45_500_000 + s for s in range(6)]
+declare("X-DISTRIB-GAME",
+        jobs=[(arm, s, dict(gate="CONST", p_const=0.15, order="ONTAPE", plant=pl, extra_plants=ex))
+              for s in SEEDS_G for arm, pl, ex in (
+                  ("INV_RARE", "CT_UA", ["CT_UA"] * 191 + [INV] * 8),
+                  ("NEU_RARE", "CT_UA", ["CT_UA"] * 191 + [MARK] * 8),
+                  ("INV_COMMON", INV, [INV] * 191 + ["CT_UA"] * 8),
+                  ("NEU_COMMON", MARK, [MARK] * 191 + ["CT_UA"] * 8))])
+
+
 if __name__ == "__main__":
     name = sys.argv[1]
     w = int(sys.argv[2]) if len(sys.argv) > 2 else 4
