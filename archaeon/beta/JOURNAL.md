@@ -43,7 +43,7 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
 | B39 | what rule do the transferable foragers implement? | 6/8 = the INVARIANT rule (harvest index = position of non-empty pool .77-.92; move when empty) |
 | B40 | keyed memory under a K-distribution + wide jitter | NULL 0/8 general (4 one-value shelf, 4 floor) -- distribution lever does not cross an isolated peak |
 | B41/B42 | lethal hazards in training -> named-world transfer? | NULL; P-boom obstacle = rare food departures (8%) -> wander -> deaths 7/16 vs 1/16 |
-| B43/B44 | evidence-integration world: does memory of cues evolve? | world validated (reactive .75 < sticky .90); B44 running |
+| B43/B44/B45 | evidence-integration world: does memory of cues evolve? | NO (B45, E=64x4): elites latch first hint, none beats reactive; B44's 7/8 RETRACTED (small shared sample) |
 | B30 | do foragers carry state across ticks? | YES: 6/7 content sensors use state; blind ones in rewarding worlds 5/5 |
 | B31 | what do they remember? | 2504: 1-register direction memory; others computed state (not past observations) |
 | B17 | forced perception (echo on PUT) opens the 2-value wall? | staged; controls pass |
@@ -476,6 +476,19 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   constant .656 < REACTIVE .754 < STICKY (one remembered hint) .900 < oracle 1.0.
 - B44 launched ~09:05Z: evolution on the v2 evidence world (R=4, noise .6), 8 seeds, G=300, lease lse-94774b07ab82.
   PREDICTION: >= 3/8 elites beat REACTIVE by >= .05 AND lose >= .05 under persist=none (evolved evidence integration).
+- B44 FIRST READOUT (E=8 episodes, ONE held-out world seed, shared by all elites): 7/8 "beat REACTIVE and use memory".
+  RETRACTED (mine) by B45. Rule analysis: the best elites LATCH THE FIRST HINT and never look again (4402 committed
+  value == first hint in 100% of 64 episodes; 0 output switches) -- the B16 latch again. Hint accuracy is flat (~.54
+  at every tick, 400 episodes), so in expectation a first-hint latch scores the SAME as reactive following.
+- B45 RE-SCORE (E=64 x 4 world seeds): REACTIVE .755, STICKY .841, B44 elites .654-.759 -- NONE beats REACTIVE by
+  .05; persist=none moves some elites UP to .755 (their memory hurts). PREDICTION (>= 3/8 evolved evidence
+  integration) FAILED: 0/8. The B44 headline was shared-small-sample luck (lucky first hints in the 8 held-out
+  episodes flattered every latcher at once). Evidence integration is NOT reached even though a one-step filter worth
+  +.09 exists -- consistent with the campaign's memory results (latching is the reachable memory primitive; a
+  conditional update of stored state is not).
+  INSTRUMENT RULE (new standard): held-out scores use >= 64 episodes across >= 4 world seeds, never one shared small
+  sample. Earlier composed-world claims were made on large effects (blind collapse .40 -> .07) or many worlds with
+  paired tests (B34/B36, 40 worlds) and stand; any E=8 single-seed number in this journal is provisional.
 - BUDGET WINDOW 2026-10-08 ~00:07Z. B29 already done (not relaunched). Lease lse-fe37dd77fe7a (spectrex5:cpu12,
   3 h) for B32 replication: 12 seeds (3211-3222), 10 procs, + B32's last cell on 2 procs = 12. CORE-HOUR TALLY
   (rolling 24 h from 00:07Z): 0 at launch; est. +3-4 for the replication.
