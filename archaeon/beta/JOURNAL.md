@@ -49,6 +49,7 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
 | B49 | stock vs SEL head-to-head, 12 seeds each | NULL: UPDATE 1/12 vs 1/12; instruction-set explanation KILLED |
 | B50 | lexicase vs tournament on two stored values | NULL 0/8 vs 0/8; selection explanation KILLED |
 | B51 | coupled write/read pair mutation | PAIR 0/8 (bloat; killed); BASE 1/8 L4 SOLVED (.971, large tape, self-written code) -> memory-law correction |
+| B52 | self-modifying code: the route? (writable vs locked) | running (lease) |
 | B30 | do foragers carry state across ticks? | YES: 6/7 content sensors use state; blind ones in rewarding worlds 5/5 |
 | B31 | what do they remember? | 2504: 1-register direction memory; others computed state (not past observations) |
 | B17 | forced perception (echo on PUT) opens the 2-value wall? | staged; controls pass |
@@ -572,6 +573,10 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   gen 0 drew it 50/50, but no test asked for it).
   Next window: replicate (L4, FOUNDRY_BIG, 8 seeds; code_writable forced True vs False) and check whether
   self-modifying solvers are the route to update-on-condition generally (evidence world, W2_K2).
+- B52 launched ~16:40Z: WRITABLE (gen 0 all code-writable) vs LOCKED (evaluation forces code_writable=False),
+  jittered-wide L4, FOUNDRY_BIG, 8 seeds each, held-out 64 x 4. Lease lse-26e2575b7a8e, est ~3 core-h (window tally
+  then ~44 of 48 -- the last heavy run of this window). PREDICTION: WRITABLE >= 2/8 and each solver loses >= .5 when
+  locked; LOCKED 0/8.
 - BUDGET WINDOW 2026-10-08 ~00:07Z. B29 already done (not relaunched). Lease lse-fe37dd77fe7a (spectrex5:cpu12,
   3 h) for B32 replication: 12 seeds (3211-3222), 10 procs, + B32's last cell on 2 procs = 12. CORE-HOUR TALLY
   (rolling 24 h from 00:07Z): 0 at launch; est. +3-4 for the replication.
