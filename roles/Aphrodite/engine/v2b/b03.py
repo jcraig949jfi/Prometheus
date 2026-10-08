@@ -105,14 +105,66 @@ def e1_starts(w=4):
                                                        32 * len(L["pairs"]), rec["sha256"][:16]))
 
 
+def _donor_full(a):
+    """b02._donor + the selection table and derived schemas (red-team E1-6). Same computation; extra receipts only."""
+    import gtc
+    rec = []
+    orig = gtc.T3D.derive_schemas
+
+    def spy(x):
+        out = orig(x)
+        rec.append([str(s.get("schema") if isinstance(s, dict) else s) for s in out])
+        return out
+    gtc.T3D.derive_schemas = spy
+    tabs = []
+    od = gtc.donor_g
+
+    def spy_donor(genome, args):
+        r = od(genome, args)
+        tabs.append(r.get("selection_table"))
+        return r
+    gtc.donor_g = spy_donor
+    try:
+        row = b02._donor(a)
+    finally:
+        gtc.T3D.derive_schemas, gtc.donor_g = orig, od
+    row["derived_schemas"] = rec[0] if rec else []
+    row["selection_table"] = tabs[0] if tabs else None
+    return row
+
+
+def _pool_full(jobs, out, w, label):
+    from concurrent.futures import ProcessPoolExecutor
+    done = {(x["tag"], x["seed"]) for x in R.rdl(out)}
+    jobs = [j for j in jobs if (j[0], j[3]) not in done]
+    log("%s donor jobs %d" % (label, len(jobs)))
+    with open(out, "a", encoding="utf-8") as fh, ProcessPoolExecutor(max_workers=w, initializer=R.T.init_worker) as ex:
+        for r in ex.map(_donor_full, jobs):
+            fh.write(json.dumps(r, sort_keys=True, default=str) + "\n")
+            fh.flush()
+            log("seed %d %-10s sel=%s via=%s" % (r["seed"], r["tag"], r["selected_schema"], r["selected"]))
+
+
+def _ledger(note):
+    import time
+    p = ROOT / "beta03" / "LEDGER.json"
+    L = rj(p)
+    L["entries"].append({"utc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()), "window": "E1", "kind": "HASH",
+                         "note": note})
+    wj(p, L)
+
+
 def e1_recip(w=4):
     L = _libs_checked()
     assert (E1D / "E1_COMMON_RESIDUAL.json").exists(), "common residual must be frozen before recipients"
     PB = rj(b02.SUP / "PLAN_B.json")
+    C = rj(E1D / "E1_COMMON_RESIDUAL.json")
+    _ledger("E1 pre-recipient hashes: libraries file %s; common residual %s (red-team E1-8)"
+            % (sha(L)[:16], C["sha256"][:16]))
     r, wd = MACH
     jobs = [("%s|%s_%s" % (lb, r, wd), r, wd, n, PB["plan"][str(n)][wd], PB["panel"], L["libraries"][str(d)][lb])
             for d, n in L["pairs"] for lb in LIBS]
-    b02._pool_donors(jobs, E1D / "E1_RECIP.jsonl", w, "E1-recip")
+    _pool_full(jobs, E1D / "E1_RECIP.jsonl", w, "E1-recip")
 
 
 def e1_score(w=4):
@@ -133,12 +185,40 @@ def e1_score(w=4):
 
 
 def composes_on(inherited, selected):
-    """True iff selected == inherited[H := x] for some x that itself contains the hole {H} (a strict extension)."""
-    if not inherited or not selected or "{H}" not in inherited:
+    """True iff `selected` strictly extends `inherited`: (a) substitution, selected == inherited[H := x] with x containing
+    the hole and x != {H}; or (b) wrapping, inherited occurs as a proper sub-term of selected (the a18.compositions
+    form op(inherited, atom)). Red-team E1-1."""
+    if not inherited or not selected or "{H}" not in inherited or selected == inherited:
         return False
     pat = re.escape(inherited).replace(re.escape("{H}"), "(.+)")
     m = re.fullmatch(pat, selected)
-    return bool(m) and "{H}" in m.group(1) and m.group(1) != "{H}"
+    if m and "{H}" in m.group(1) and m.group(1) != "{H}":
+        return True
+    return inherited in selected
+
+
+def templates(entries):
+    out = []
+    for e in entries or []:
+        if e.get("schema"):
+            out.append(e["schema"])
+        out.extend(e.get("schemas") or [])
+    return out
+
+
+def extends(inh_entries, sel_entries):
+    """Every (inherited template, NEW selected template) pair with a strict extension relation."""
+    ti = templates(inh_entries)
+    return [(i, s) for i in ti for s in templates(sel_entries) if s not in ti and composes_on(i, s)]
+
+
+def acq_common_from(idx, W, common, tags, seeds):
+    """Reducer core (used by e1_report and known answer K2): per tag, per seed, number of common-residual families the
+    tag's library reaches in >= 1 cell."""
+    reach = defaultdict(bool)
+    for e in idx:
+        reach[(e["genome"], e["seed"], e["family"])] |= _ok(W.get((e["lib"], e["family"], e["cell"])))
+    return {t: {n: sum(reach[(t, n, f)] for f in common[str(n)]) for n in seeds} for t in tags}
 
 
 def e1_report():
@@ -165,7 +245,7 @@ def e1_report():
     fams = defaultdict(set)
     for e in idx:
         fams[e["seed"]].add(e["family"])
-    acq_common = {t: {n: sum(reach[(t, n, f)] for f in C["common_residual"][str(n)]) for n in seeds} for t in tags}
+    acq_common = acq_common_from(idx, W, C["common_residual"], tags, seeds)
     own = b02._gains(idx, W, lambda e: e.get("start", e["genome"]), tags, seeds)       # Beta-02 own-start measure
     inh = b02._gains([dict(e) for e in idx], W, lambda e: "START|L_P", starts, seeds)  # inherited capability vs pristine
     end = {t: {n: sum(reach[(t, n, f)] or reach[("START|" + t.split("|")[0], n, f)] for f in fams[n]) for n in seeds}
@@ -182,36 +262,55 @@ def e1_report():
     # compositional extensions of the inherited schema by L_g11 recipients
     comp = []
     for d, n in pairs:
-        inh_schema = (L["libraries"][str(d)]["L_g11"][0].get("schema") if L["libraries"][str(d)]["L_g11"] else None)
-        sel = D[(n, "L_g11|g11_O10")]["selected_schema"]
-        if composes_on(inh_schema, sel):
-            comp.append({"pair": [d, n], "inherited": inh_schema, "selected": sel,
-                         "acq_common": acq_common["L_g11|g11_O10"][n]})
+        ex = extends(L["libraries"][str(d)]["L_g11"], D[(n, "L_g11|g11_O10")]["selected_entries"])
+        if ex:
+            comp.append({"pair": [d, n], "extensions": ex, "acq_common": acq_common["L_g11|g11_O10"][n]})
     c = lambda a, b, M: [M[a][n] - M[b][n] for n in seeds]  # noqa: E731
     I1 = b02.flip_test(c("L_g11|g11_O10", "L_P|g11_O10", acq_common))       # interference (two-sided)
     S1 = b02.flip_test(c("L_g11|g11_O10", "L_P|g11_O10", own))              # own-start deficit (one-sided, < 0)
     EN = b02.flip_test(c("L_g11|g11_O10", "L_P|g11_O10", acq_common))       # enabling (one-sided, > 0)
     S1_p_neg = b02.flip_test([-x for x in S1["diffs"]])["p_one_sided"]
     share = 1.0 if I1["sum"] >= 0 or S1["sum"] >= 0 else 1 - (I1["sum"] / S1["sum"])
-    pc_fams = sum(acq_common["L_g11|g11_O10"].values())
-    pc_pairs = sum(1 for n in seeds if acq_common["L_g11|g11_O10"][n] > 0)
+    # PC on the OPPORTUNITY SET (red-team E1-2): the best arm must acquire >= 5 common families across >= 3 pairs
+    pc_arm = max(tags, key=lambda t: sum(acq_common[t].values()))
+    pc_fams = sum(acq_common[pc_arm].values())
+    pc_pairs = sum(1 for n in seeds if acq_common[pc_arm][n] > 0)
     pc = pc_fams >= PC_MIN_FAMILIES and pc_pairs >= PC_MIN_PAIRS
+    after_inh = {t: {"families": sum(acq_common[t].values()), "pairs": sum(1 for n in seeds if acq_common[t][n] > 0)}
+                 for t in tags if not t.startswith("L_P")}
+    endP = b02.flip_test(c("L_P|g11_O10", "L_g11|g11_O10", end))      # end-state: is L_P better? (one-sided)
     common_slots = sum(len(C["common_residual"][str(n)]) for n in seeds)
     best_frac = max(sum(acq_common[t].values()) for t in tags) / common_slots if common_slots else 0.0
     supply_ok = len(pairs) >= MIN_PAIRS
+    ceiling_cond4 = ("UNTESTED_NO_EXTENSION_DETECTED" if not comp else
+                     ("NO_EXTENDING_RECIPIENT_ACQUIRED" if not any(x["acq_common"] > 0 for x in comp)
+                      else "AN_EXTENDING_RECIPIENT_ACQUIRED"))
     labels = {
         "INTERFERENCE_SUPPORTED": pc and I1["p_two_sided"] < 0.05 and I1["sum"] < 0,
-        "SATURATION_SUPPORTED": S1_p_neg < 0.05 and S1["sum"] < 0 and share >= 0.5,
-        "REPRESENTATION_CEILING_SUPPORTED": pc and not (EN["p_one_sided"] < 0.05 and EN["sum"] > 0)
-        and best_frac < 0.25 and not any(x["acq_common"] > 0 for x in comp)}
+        "SATURATION_SUPPORTED": pc and S1_p_neg < 0.05 and S1["sum"] < 0 and share >= 0.5
+        and not (endP["p_one_sided"] < 0.05 and endP["sum"] > 0),
+        "REPRESENTATION_CEILING_CONSISTENT": pc and not (EN["p_one_sided"] < 0.05 and EN["sum"] > 0)
+        and best_frac < 0.25 and ceiling_cond4 == "NO_EXTENDING_RECIPIENT_ACQUIRED"}
     if not any(labels.values()):
         labels["INCONCLUSIVE"] = True
     holm = b02.holm([I1["p_two_sided"], S1_p_neg])
     disp = ("SUPPLY_LIMITED" if not supply_ok else ("MEASURED" if known["pass"] and pc
                                                      else ("INCONCLUSIVE_NO_POSITIVE_CONTROL" if known["pass"]
                                                            else "MEASUREMENT_FAILED")))
+    if disp != "MEASURED":                       # red-team E1-3: labels only when MEASURED
+        labels = {"NOT_EMITTED": disp}
     tot = lambda M: {k: sum(v.values()) for k, v in M.items()}  # noqa: E731
-    res = {"pairs": pairs, "n_pairs": len(pairs), "common_residual_slots": common_slots,
+    res = {"pairs": pairs, "amendment": "A1 (pre-data, red-team REDTEAM_E1_E2_PREFREEZE.md)",
+           "positive_control_arm": pc_arm, "learnable_after_inheritance_descriptive": after_inh,
+           "end_state_L_P_gt_L_g11": endP, "ceiling_condition_4": ceiling_cond4,
+           "interference_attainable_min_p_two_sided": round(min(1.0, 2 * I1["attainable_min_p"]), 6),
+           "interference_nonzero_pairs_k": I1["nonzero"],
+           "caveats": ["composition-of-inherited (a18.compositions) is OFF for transplanted recipients (held=[]): "
+                       "H3 is tested in E3/E5, not here (red-team E1-4)",
+                       "ceiling thresholds (25%, PC 5/3) were set after the W01 diagnostic (red-team E1-4)",
+                       "share compares cell-level own-start with family-level common measures (E1-9)",
+                       "427 identical programs occur in both seed blocks: part of inherited capability may be "
+                       "memorised overlap (E1-10)"], "n_pairs": len(pairs), "common_residual_slots": common_slots,
            "positive_control": {"families": pc_fams, "pairs": pc_pairs, "pass": pc},
            "A_inherited_capability_vs_pristine": tot(inh), "B_common_residual_slots_per_pair":
                {n: len(C["common_residual"][str(n)]) for n in seeds},
@@ -252,12 +351,29 @@ def stage_known():
     res["K1_reproduces_Beta02_E12_seed25"] = all(all(o[k] == E12[(25, o["tag"])][k] for k in keys) for o in out)
     # K2: the common-residual + acquisition reducer reproduces the W01 diagnostic on frozen Beta-02 R8 data
     diag = rj(B03 / "W01_R8_COMMON_RESIDUAL_DIAG.json")
-    res["K2_W01_diag_present_and_totals"] = diag["summary"]["common_residual_slots"] == 301
+    R8D = ROOT / "beta02" / "runs" / "R8"
+    rr = rj(R8D / "R8_RESULT.json")
+    sd = [n for _d, n in rr["pairs"]]
+    W8_ = {(x["lib"], x["family"], x["cell"]): x["result"] for x in R.rdl(R8D / "R8_WALKS.jsonl")}
+    tg = ["L_g11|g11_O10", "L_I0|g11_O10", "L_P|g11_O10"]
+    got = acq_common_from(rj(R8D / "R8_INDEX.json")["index"], W8_,
+                          {str(k): v for k, v in diag["common_residual"].items()}, tg, sd)
+    res["K2_reducer_reproduces_W01_on_R8"] = all(sum(got[t].values()) == diag["summary"]["acq_on_common_totals"][t]
+                                                 for t in tg)
     # K3: composes_on unit cases
     res["K3_composes_on"] = (composes_on("(acc + {H})", "(acc + ({H} * v))") and
                              not composes_on("(acc + {H})", "(acc + {H})") and
                              not composes_on("(acc + {H})", "(acc - {H})") and
-                             composes_on("({H} + v)", "((acc * {H}) + v)"))
+                             composes_on("({H} + v)", "((acc * {H}) + v)") and
+                             composes_on("(acc + {H})", "((acc + {H}) + v)"))
+    RL = rj(R8D / "R8_LIBRARIES.json")["libraries"]
+    RD = {(x["seed"], x["tag"]): x for x in R.rdl(R8D / "R8_DONORS.jsonl")}
+    res["K3_detects_R8_pairs_66_and_57"] = all(
+        bool(extends(RL[str(d)]["L_g11"], RD[(n, "L_g11|g11_O10")]["selected_entries"])) for d, n in ((42, 66), (33, 57)))
+    with ProcessPoolExecutor(max_workers=1, initializer=R.T.init_worker) as ex:
+        full = list(ex.map(_donor_full, [jobs[0]]))[0]
+    res["K1b_donor_full_equals_b02_donor"] = (all(full[k] == E12[(25, "g11_O10")][k] for k in keys)
+                                              and full["selection_table"] is not None)
     res["pass"] = all(v for v in res.values())
     wj(B03 / "KNOWN.json", res)
     log("known %s" % res)
