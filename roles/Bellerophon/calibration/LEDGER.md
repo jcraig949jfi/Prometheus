@@ -32,3 +32,9 @@ date | call made | what was true | corrected by | changed practice
   shell clock only.
 - Pilot of 3 runs (H2) led to a wrong W2-P3 prediction (random background supplies LDIR); 99 runs showed B supplies it in
   64/99. Three-run pilots are calibration, not evidence.
+- W4-P5's frozen analysis tested tag kinds 'n'/'c' in lower case; comp.py/heredity.tag_origin emit upper case. The rule
+  could never pass; reported as written (FALSIFIED) and corrected (19/20). Rule: every frozen analysis gets a smoke run
+  whose synthetic data EXERCISES each predicate's true branch, not only its plumbing.
+- W5-P1 predicted that target material (complementation repair) makes function MORE persistent at HIGH mutation; the
+  sign reversed (zero fill 10 vs preserve 4 discordant pairs). The repair channel was real (W5-P2) but its net effect
+  depends on the mutation regime.
