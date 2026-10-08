@@ -45,6 +45,7 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
 | B41/B42 | lethal hazards in training -> named-world transfer? | NULL; P-boom obstacle = rare food departures (8%) -> wander -> deaths 7/16 vs 1/16 |
 | B43/B44/B45 | evidence-integration world: does memory of cues evolve? | NO (B45, E=64x4): elites latch first hint, none beats reactive; B44's 7/8 RETRACTED (small shared sample) |
 | B47 | latch punished (switching latent): does conditional update evolve? | NO: 0/8 above reactive; latch-like memory persists |
+| B48 | same on the SEL VM (straight-line conditional update) | 0/8 by criterion; 1 seed shows a real filter+re-track profile -> replication |
 | B30 | do foragers carry state across ticks? | YES: 6/7 content sensors use state; blind ones in rewarding worlds 5/5 |
 | B31 | what do they remember? | 2504: 1-register direction memory; others computed state (not past observations) |
 | B17 | forced perception (echo on PUT) opens the 2-value wall? | staged; controls pass |
@@ -511,6 +512,13 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   settles between latch and reactive. Across B08J/B22b/B40/B45/B47 the campaign's memory law reads: in this VM+GA,
   WRITE-ONCE (latch / guard) state is reachable; UPDATE-ON-CONDITION state is not, whether the update is a second slot,
   a keyed read, or an evidence filter. CORE-HOUR TALLY since 00:07Z: ~24.
+- B48 RESULT (switching evidence on the SEL VM; 8 seeds; lease released ~11:35Z): 0/8 meet the +.025 criterion
+  (prediction held by the letter); controls SEL_STICKY .791, REACTIVE .755. WEAK SIGNAL: seed 4807 .777 (+.022), 2 SEL
+  instructions, persist=none .560. Switch-recovery profile (2 world keys x 64 episodes; accuracy = output == latent):
+  SEL_STICKY pre .70 / post-early .39 / post-late .73; REACTIVE .56/.55/.57; LATCH .52/.20/.20; 4807 .61/.42/.55 ->
+  it FILTERS before the switch (.61 > reactive .56) AND RE-TRACKS after it (.55 vs latch .20): a genuine, weaker
+  update-on-condition memory -- the first in the campaign. B47 (stock VM) produced none. Not yet a finding (1 seed):
+  next = head-to-head replication, stock vs SEL VM, 12 seeds each, same world, recovery profile per elite.
 - BUDGET WINDOW 2026-10-08 ~00:07Z. B29 already done (not relaunched). Lease lse-fe37dd77fe7a (spectrex5:cpu12,
   3 h) for B32 replication: 12 seeds (3211-3222), 10 procs, + B32's last cell on 2 procs = 12. CORE-HOUR TALLY
   (rolling 24 h from 00:07Z): 0 at launch; est. +3-4 for the replication.
