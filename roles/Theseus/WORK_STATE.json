@@ -3,7 +3,7 @@
   "seat": "Theseus",
   "mwo_id": "MWO-0004",
   "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
-  "updated_at_utc": "2026-10-08T06:30:00Z",
+  "updated_at_utc": "2026-10-08T09:40:00Z",
   "state": "ACTIVE",
   "branch": "theseus/loop48-2026-10-08",
   "head_sha": "(this commit; see git log -1 -- roles/Theseus/WORK_STATE.json)",
@@ -52,13 +52,51 @@
     },
     {
       "id": "theseus23b_composition",
-      "status": "RUNNING",
-      "prereg": "roles/Theseus/prereg/2026-10-08_composition/PREREG.md"
+      "status": "DONE",
+      "prereg": "roles/Theseus/prereg/2026-10-08_composition/PREREG.md",
+      "verdict": "INDETERMINATE (detector later shown blind; reading withdrawn)"
+    },
+    {
+      "id": "theseus24_h1_large_A",
+      "status": "DONE",
+      "verdict": "H1 FAIL n=175",
+      "report": "theseus/runs/h1_large_A_2026-10-08/VERDICT.md"
+    },
+    {
+      "id": "theseus28_law_ablation",
+      "status": "DONE",
+      "verdict": "NO-EROSION-TO-EXPLAIN",
+      "report": "theseus/runs/v0_1_nolaw_2026-10-08/VERDICT.md"
+    },
+    {
+      "id": "theseus27_structure_selection",
+      "status": "DONE",
+      "verdict": "VOID",
+      "report": "theseus/runs/v0_1_selr5_2026-10-08/VERDICT.md"
+    },
+    {
+      "id": "theseus27b_structure_selection",
+      "status": "DONE",
+      "verdict": "NO-HELP",
+      "report": "theseus/runs/v0_1_selbr5_2026-10-08/VERDICT.md"
+    },
+    {
+      "id": "theseus30a_comp_control",
+      "status": "DONE",
+      "verdict": "DETECTOR BLIND (23b detector)",
+      "report": "theseus/runs/comp_control_2026-10-08/VERDICT.md"
+    },
+    {
+      "id": "theseus30b_composition_v2",
+      "status": "DONE",
+      "verdict": "gate passes; WALL-AT-v0_1 (whole-genome)",
+      "report": "theseus/runs/composition_v2_2026-10-08/VERDICT.md"
     }
   ],
   "fabric_tasks": [],
   "running": [
-    "THESEUS-23b composition wall (prereg 279db6bdc)"
+    "THESEUS-30c in-context composition (prereg a2e1a5ac1)",
+    "THESEUS-31a task census (prereg 1a2ad3157, chained after 30c)"
   ],
   "blocked_on": [
     {
@@ -68,11 +106,11 @@
     }
   ],
   "next_actions": [
-    "THESEUS-23b verdict",
-    "THESEUS-28 law-free ablation (READY)",
-    "THESEUS-27 R5-quality ecology (READY after 23b)",
-    "THESEUS-24 larger LLM arm",
-    "THESEUS-29 stronger structure ruler"
+    "THESEUS-30c verdict",
+    "THESEUS-31a verdict",
+    "THESEUS-30d conditional-ops composition ecology",
+    "THESEUS-31b task-selected ecology",
+    "THESEUS-32 G0 compiler collapse"
   ],
   "operator_decisions_required": [],
   "latest_reports": [
