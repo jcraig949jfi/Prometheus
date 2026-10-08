@@ -73,3 +73,12 @@ competence at budget 256 but not at 512. Retrospective (post-hoc, labelled) on t
 10, OTHER_SHARED 7 (shared byte kills competence at both budgets, e.g. w4_00606: knocking out the LD T opcode exposes its
 operand 0x40 = IN_A as an instruction -- a knockout frame-shift effect, not dual use), SEPARATED 3. The 'shared bytes'
 detector of s2 therefore mixes a genuine coupling (budget) with a ruler artifact (operand exposure). CL-11 corrected.
+
+## CONFIRMATION on fresh seeds (W6 block 3, prereg s12; 600 runs, 0 voids, 1.46 h)
+
+K1 (ECHO K40 ON, 300 distinct seeds): 41 competent dominant machines (13.7%, consistent with W4's 20/150). E-P1 shared
+critical bytes 35/41 [71.6, 93.1] HOLDS; E-P2 BUDGET_COUPLED 17/41 [27.8, 56.6] HOLDS (OTHER_SHARED 18, SEPARATED 6);
+OUT executed from the child copy 1/41 (the retracted reading stays retracted). K2 (REP + BAD INC K16 ON, 300 distinct
+seeds): 15 repaired machines; SINGLE_LINEAGE_BAD 8, OTHER 6, SINGLE_LINEAGE_REP 1 (task code re-invented inside the clean
+copier), CROSS_LINEAGE 0; E-P3 HOLDS. CL-09 frequency reproduces (15/300); CL-10 in-place route REPRODUCED; CL-11 budget
+coupling prevalence REPRODUCED (17/41 fresh vs 10/20 post-hoc).
