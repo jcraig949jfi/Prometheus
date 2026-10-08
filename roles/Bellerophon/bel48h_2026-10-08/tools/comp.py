@@ -87,3 +87,23 @@ class CompWorld(HeredityWorld):
             out["dominant"] = self.comp_anatomy(dom, self._synced(o.id, dom))
             out["dominant"]["count"] = sum(1 for x in both if bytes(x.tape) == dom)
         return out
+
+
+def founder_census(w) -> dict:
+    """BEL-48H W5 block 3 (competition): for every living FUNC organism, the founder mechanisms of its FUNC-critical bytes
+    (tags); counts per frozenset of mechanisms, plus how many of those are also competent. Measurement only."""
+    out = Counter(); comp_out = Counter()
+    for o in w.cells:
+        if o is None:
+            continue
+        t = bytes(o.tape)
+        if not w.func(t):
+            continue
+        tg = w._synced(o.id, t)
+        crit = w.critical(t)
+        ms = sorted({w.tag_origin(tg[p])[2] for p in crit if tg[p] >= 0})
+        key = "+".join(ms) if ms else "novel_only"
+        out[key] += 1
+        if w.is_comp(t):
+            comp_out[key] += 1
+    return {"func_by_founder": dict(out), "comp_func_by_founder": dict(comp_out)}

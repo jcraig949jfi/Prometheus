@@ -272,3 +272,19 @@ C1 (origin pathway, from W3a discovery; 400 runs each PARTIAL / PAIR / COPY, WEL
 C2 (distributed persistence, W2 s2.D post-hoc there; 100 fresh A-fragment worlds):
 - C2-P1: FUNC alive at the end in >= 95% of runs AND the first assembly event's TRB lineage alive at the end in < 50%
   of runs with an event AND function alive with NO assembly event's TRB lineage alive in >= 20% of runs.
+
+## 10. WINDOW 5 block 3 -- entangled vs separated architecture (frozen 2026-10-08T15:31:32Z, before any run)
+
+Motivation: W4 found 16/20 evolved ECHO machines ENTANGLED (competence- and copy-critical bytes shared; answer produced
+through the child copy) and one SEPARATED form. Question: does selection favour entanglement, and does it depend on
+payment for the computation? Plan tools/plan_w5b3.py: 192 runs, sha256
+94e7bbd0de22185ea3113de6ddb01a35ed70a52ae731a66cbe56082e0571b7c4; E = w4_00735, S = w4_00963 (both FUNC and competent,
+verified); physics v3 ECHO K40, PAIRED init, 300 ticks; coupling ON/OFF x mutation MED/HIGH x slot order ES/SE; 24
+seeds per level shared by the four arms. Census (comp.founder_census): every living FUNC organism is attributed to E or
+S by the founder mechanisms of its FUNC-critical bytes (mixed / neither excluded). E_share per seed = mean over the two
+slot orders of E/(E+S). Analysis tools/analyze_w5b3.py (committed with this section; smoke-tested).
+- W5-P6: under ON + HIGH, E_share > 0.5 in more seeds than < 0.5: one-sided sign test p < 0.05 (entanglement favoured
+  where mutation threatens the separated computation and the computation is paid).
+- W5-P7: pooled over both levels, E_share(ON) > E_share(OFF) within seed in more seeds than the reverse: one-sided sign
+  test p < 0.05 (the advantage depends on payment).
+Exploratory; specimens are single representatives of each architecture (generality limit).

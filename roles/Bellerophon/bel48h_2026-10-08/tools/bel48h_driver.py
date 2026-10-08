@@ -127,6 +127,12 @@ def _run_one(spec):
                 for e in w.h_events:
                     f.write(json.dumps(e, separators=(",", ":")) + "\n")
             out["events_written"] = len(w.h_events)
+    elif kind == "compete":
+        from comp import CompWorld, founder_census
+        cfg = _cfg(spec)
+        w = CompWorld(cfg, spec["seed"]); s = w.run()
+        out["summary"] = _keep(s); out["comp"] = w.comp_summary(); out["census"] = founder_census(w)
+        out["end_hash"] = end_state_hash(w)
     elif kind == "comp":
         from comp import CompWorld
         cfg = _cfg(spec)
