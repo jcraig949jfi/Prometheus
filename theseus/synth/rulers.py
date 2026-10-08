@@ -184,8 +184,8 @@ class Archive:
     def occupancy(self):
         return {g: len(self.first[g]) for g in GRIDS}
 
-    def elite_ids(self):
-        return {e for g in GRIDS for (e, _) in self.elites[g].values()}
+    def elite_ids(self, grids=GRIDS):
+        return {e for g in grids for (e, _) in self.elites[g].values()}
 
 
 def save_cal(cal, path):

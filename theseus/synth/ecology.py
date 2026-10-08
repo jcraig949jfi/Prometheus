@@ -119,12 +119,13 @@ def choose_coalition(reg, tensor, field, active, lane, k, rng, lenses=(), need_l
     return None, None
 
 
-def fossilize(reg, active, vitality, protected, gen, born_gen):
-    if len(active) <= POP_CAP:
+def fossilize(reg, active, vitality, protected, gen, born_gen, cap=None):
+    cap = POP_CAP if cap is None else cap
+    if len(active) <= cap:
         return []
     cand = [i for i in active if i not in protected and gen - born_gen.get(i, 0) >= 2]
     cand.sort(key=lambda i: (vitality.get(i, 0.0), i))
-    out = cand[: len(active) - POP_CAP]
+    out = cand[: len(active) - cap]
     for i in out:
         active.discard(i)
         reg[i]["state"] = "FOSSIL"
