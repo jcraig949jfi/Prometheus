@@ -162,3 +162,70 @@ def test_010_scan_records_the_rule_only_off_default():
     assert v1["base_replicates"] is True and wr["base_replicates"] is False
     dc = geometry.damage_cliff(ONE_BYTE, cfg, Task("INC"), 3, trials=4, rep_rule="written")
     assert dc["rep_rule"] == "written" and dc["base_replicates"] is False
+
+
+# ---- review A (BEL-48H, 2026-10-08): multi-hop material origin, validation, the zero-sweep hole ----------------------------
+def _counts(code, partner=None, repro="ENDOGENOUS_COPY", layout="SHARED"):
+    cfg = Config(reproduction=repro, cells=16, ticks=5, physics="v2", glineage_rule="PROVENANCE", layout=layout)
+    w = World(cfg, 9); w.cells = [None] * 16
+    t = bytearray(64); t[:len(code)] = code
+    a = w._spawn(0, t, None, "init")
+    b = w._spawn(1, bytearray(partner if partner is not None else bytes(range(100, 164))), None, "init")
+    mem, tr = w._execute(a, b.tape, [1])
+    return w._provenance_counts(tr, b), tr
+
+
+def test_reviewA_window_staged_self_copy_is_writer_material():
+    S, T, C, X = vm.LD_S_n, vm.LD_T_n, vm.LD_C_n, vm.LDIR
+    code = bytes([S, 0, T, 64, C, 64, X, S, 64, T, 64, C, 64, X, vm.HALT])     # self -> window, then window -> window
+    assert _counts(code)[0] == (64, 0)                                          # was (0, 64) = 'capture' (review A p1)
+
+
+def test_reviewA_scratch_staged_copy_is_writer_material():
+    S, T, C, X = vm.LD_S_n, vm.LD_T_n, vm.LD_C_n, vm.LDIR
+    code = bytes([S, 0, T, 0x80, C, 64, X, S, 0x80, T, 64, C, 64, X, vm.HALT])  # self -> scratch -> window
+    assert _counts(code)[0] == (64, 0)                                          # was (0, 0) = 'constructed'
+
+
+def test_reviewA_register_move_copy_is_writer_material():
+    # LD S,0 ; LD T,64 ; LD B,64 ; loop: LD A,(S) ; LD (T),A ; INC S ; INC T ; DJNZ loop ; HALT
+    # 5 instructions per byte: 40 bytes fit the 256-step budget; the 24 unwritten bytes stay the target's
+    code = bytes([vm.LD_S_n, 0, vm.LD_T_n, 64, vm.LD_B_n, 40, vm.LD_A_pS, vm.LD_pT_A, vm.INC_S, vm.INC_T, vm.DJNZ_d, 0xFA, vm.HALT])
+    (nw, nt), tr = _counts(code, repro="ENDOGENOUS_PARTIAL")
+    assert (nw, nt) == (40, 24)
+    assert all(o == off for off, o in tr.win_origin.items())                    # each byte from its own position
+
+
+def test_reviewA_computed_bytes_are_constructed_and_target_shift_is_target():
+    code = bytes([vm.LD_T_n, 64, vm.LD_B_n, 64, vm.INC_A, vm.LD_pT_A, vm.INC_T, vm.DJNZ_d, 0xFB, vm.HALT])   # writes 1,2,3,...
+    assert _counts(code)[0] == (0, 0)
+    code2 = bytes([vm.LD_S_n, 65, vm.LD_T_n, 64, vm.LD_C_n, 63, vm.LDIR, vm.HALT])                       # partner shifted by one
+    assert _counts(code2)[0] == (0, 64)                                         # 63 moved target bytes + 1 unwritten
+
+
+def test_reviewA_separated_layout_carries_origin_across_halves():
+    S, T, C, X = vm.LD_S_n, vm.LD_T_n, vm.LD_C_n, vm.LDIR
+    first = bytes([S, 0, T, 0x80, C, 64, X, vm.HALT])                          # half 1: self -> scratch
+    code = bytearray(64); code[:len(first)] = first
+    code[32:32 + 8] = bytes([S, 0x80, T, 64, C, 64, X, vm.HALT])               # half 2: scratch -> window
+    (nw, nt), tr = _counts(bytes(code), layout="SEPARATED")
+    assert nw == 64 and nt == 0
+
+
+def test_reviewA_switch_values_are_validated():
+    import pytest
+    for kw in ({"glineage_rule": "PROVENENCE"}, {"init_draws": "paired"}):
+        with pytest.raises(ValueError):
+            World(Config(**kw), 1)
+    import random
+    with pytest.raises(ValueError):
+        geometry._eval(ONE_BYTE, Config(), Task("INC"), random.Random(1), rep_rule="writen")
+
+
+def test_reviewA_zero_sweep_is_not_a_replicator_under_written():
+    import random
+    sweep = bytes([vm.LD_S_n, 0x80, vm.LD_T_n, 64, vm.LDIR, vm.HALT])          # copies scratch zeros over the window
+    for layout in ("SHARED", "SEPARATED"):
+        cfg = Config(reproduction="ENDOGENOUS_COPY", layout=layout)
+        assert geometry._eval(sweep, cfg, Task("INC"), random.Random(1))["replicates"] is True              # v1 hole
+        assert geometry._eval(sweep, cfg, Task("INC"), random.Random(1), rep_rule="written")["replicates"] is False

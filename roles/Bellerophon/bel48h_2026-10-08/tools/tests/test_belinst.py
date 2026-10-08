@@ -53,3 +53,18 @@ def test_driver_finish_equals_run_and_lockstep_controls():
     assert r2["init_rng_equal"] and r2["pop_div_tick"] == 1
     r3 = D._run_one({"id": "z", "kind": "lockstep", "seed": 5, "cfg": dict(d, init_tapes=[rep]), "cfg_b": dict(d)})
     assert not r3["init_rng_equal"]
+
+
+def test_heredity_hook_is_physics_invariant():
+    from heredity import HeredityWorld
+    for repro in ("ENDOGENOUS_PARTIAL", "ENDOGENOUS_COPY", "PAIR_EXECUTION"):
+        cfg = Config(**dict(BASE, reproduction=repro, spatial="WELL_MIXED", ticks=150))
+        a = World(cfg, 13); a.run(); b = HeredityWorld(cfg, 13); b.run(); b.heredity_summary()
+        assert end_state_hash(a) == end_state_hash(b), repro
+
+
+def test_func_rejects_zero_sweep_and_accepts_staged_and_register_copiers():
+    f = Func(Config(**BASE))
+    assert not f(bytes([vm.LD_S_n, 0x80, vm.LD_T_n, 64, vm.LDIR, vm.HALT]))                      # sweeps scratch zeros
+    S, T, C, X = vm.LD_S_n, vm.LD_T_n, vm.LD_C_n, vm.LDIR
+    assert f(bytes([S, 0, T, 0x80, C, 64, X, S, 0x80, T, 64, C, 64, X, vm.HALT]))                # self -> scratch -> window

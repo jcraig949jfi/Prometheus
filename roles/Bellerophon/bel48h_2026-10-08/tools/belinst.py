@@ -6,8 +6,8 @@ DualWorld(World) records, for EVERY endogenous birth, both lineage rulers side b
 plus a per-byte provenance vector of the child (W writer-copied, T target material, C constructed by a non-copy
 write, X copied from outside [0,2L), E empty/fresh memory), the historical self-copy classifier evaluated under each
 label, and an INDEPENDENT functional test of the child (FUNC: executed alone in an empty world, does the child itself
-lay down an own-code copy of itself -- >= 0.9 L window bytes copied from its own tape by its own code, and the
-written bytes match it at >= 0.9 L). FUNC does not use either lineage ruler and does not use the DEF-BEL-010 rule.
+lay down an own-code copy of itself -- >= 0.9 L window bytes whose material origin (multi-hop, vm Trace.win_origin) is the
+child's own byte at the same position, written by its own code). FUNC does not use either lineage ruler and does not use the DEF-BEL-010 rule.
 
 Parallel genetic-lineage trees are kept for both rulers (root id + generation depth), independent of which rule the
 World itself was configured with, so the two rulers are compared without sampling noise.
@@ -61,10 +61,10 @@ class Func:
             mem[vm.IN_BASE + k] = v
         tr = vm.execute(mem, L, 0, cfg.budget, list(PANEL_INPUT), allow_copyall=cfg.allow_copyall,
                         strict_budget=cfg.physics != "v1", trace_pcs=True, **cfg.chem)
-        own = [off for off, (src, pc, op) in tr.win_prov.items() if op in vm.COPY_OPS and src is not None and src < L and pc < L]
-        written = [off for off in tr.win_prov]
-        fid_w = sum(1 for off in written if mem[L + off] == tape[off]) / L
-        ok = len(own) >= 0.9 * L and fid_w >= 0.9
+        # own = window bytes carrying the tape's OWN byte from the SAME position (multi-hop material origin, any move),
+        # laid down by the tape's own code. Equality with the tape is implied by the origin; no zero-filler can count.
+        own = [off for off, o in tr.win_origin.items() if o == off and tr.win_prov[off][1] < L]
+        ok = len(own) >= 0.9 * L
         sig = None
         if ok:
             ops = Counter(op for (src, pc, op) in tr.win_prov.values())
@@ -101,19 +101,18 @@ class DualWorld(World):
         if not self._dual_ready:
             return super()._register_offspring(j, child, parent, mechanism, fidelity, tr, replaced)
         cfg = self.cfg; L = self.L
-        prov = tr.win_prov
+        orig = tr.win_origin                                   # multi-hop material origin (review A repair, 2026-10-08)
         has_target_bytes = replaced is not None and cfg.target_fill != "zero"
         vec = []
         for off in range(L):
-            p = prov.get(off)
-            if p is None:
+            if off not in orig:
                 vec.append("T" if has_target_bytes else "E")
                 continue
-            src, _pc, op = p
-            if op in vm.COPY_OPS and src is not None:
-                vec.append("W" if src < L else (("T" if replaced is not None else "E") if src < 2 * L else "X"))
-            else:
+            o = orig[off]
+            if o is None:
                 vec.append("C")
+            else:
+                vec.append("W" if o < L else (("T" if replaced is not None else "E") if o < 2 * L else "X"))
         n = Counter(vec)
         nW, nT = n["W"], n["T"]
         # historical resemblance label (exactly the World's RESEMBLANCE rule)

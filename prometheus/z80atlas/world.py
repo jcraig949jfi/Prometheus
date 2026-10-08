@@ -89,11 +89,13 @@ class Config:
     # the historical behaviour and are omitted from to_dict(), so every historical config dict, plan hash and replay is unchanged.
     glineage_rule: str = "RESEMBLANCE"  # RESEMBLANCE = historical: a birth's GENETIC source is whichever tape (writer or overwritten
                                         # target) the child resembles more -- a content test, not a descent label (DEF-BEL-008).
-                                        # PROVENANCE = by the recorded write provenance of each child byte: an unwritten byte is
-                                        # the target's; a byte moved by a copy op from [0,L) is the writer's, from [L,2L) the
-                                        # target's; any other write is constructed (no material). Source = target iff its byte
-                                        # count is strictly larger (ties -> writer, as RESEMBLANCE). One hop: a writer byte that
-                                        # its own code copied in from the partner earlier in the same execution counts as writer.
+                                        # PROVENANCE = by the MATERIAL ORIGIN of each child byte (vm Trace.win_origin, tracked
+                                        # through every copy-op and register-A move of the execution, multi-hop, 2026-10-08):
+                                        # an unwritten byte is the target's; a written byte whose pre-execution origin lies in
+                                        # [0,L) is the writer's, in [L,2L) the target's; constructed or outside-sourced bytes
+                                        # count for neither. Source = target iff its byte count is strictly larger (ties ->
+                                        # writer, as RESEMBLANCE). Material ancestry, not functional parentage (see the BEL-48H
+                                        # review record). 'captures' counts different things under the two rules.
     init_draws: str = "HISTORICAL"      # HISTORICAL = a transplanted or seeded slot takes 0 world-RNG draws and a random slot L, so
                                         # same-seed worlds that differ in their transplant/seed layout desynchronise the world
                                         # RNG from init on (not CRN-paired, DEF-BEL-009). PAIRED = every filled slot draws its L
@@ -164,6 +166,10 @@ class World:
             raise ValueError("register-world axis: SHARED layout only")      # review tsk-c26c09590d3b fix 2 (was assert)
         if cfg.reg_zero_p and (cfg.reg_world != "CARRIED" or not 0.0 < cfg.reg_zero_p < 1.0):
             raise ValueError("reg_zero_p needs reg_world CARRIED and 0 < p < 1")
+        if cfg.glineage_rule not in ("RESEMBLANCE", "PROVENANCE"):
+            raise ValueError("unknown glineage_rule %r" % cfg.glineage_rule)       # a typo must not run silently as historical
+        if cfg.init_draws not in ("HISTORICAL", "PAIRED"):
+            raise ValueError("unknown init_draws %r" % cfg.init_draws)
         self._pre_regs = None
         self.reg_rng = random.Random("reg_world|%d" % seed) if (cfg.reg_world == "RANDOM" or cfg.reg_zero_p) else None
         self.L = cfg.L
@@ -394,9 +400,12 @@ class World:
             mem[vm.IN_BASE + k] = v
         if cfg.layout == "SEPARATED":
             tr1 = vm.execute(mem, L, 0, cfg.budget // 2, inputs, region=(0, L // 2), allow_copyall=cfg.allow_copyall, strict_budget=sb, **cfg.chem)
-            tr2 = vm.execute(mem, L, L // 2, cfg.budget // 2, inputs, region=(L // 2, L), allow_copyall=cfg.allow_copyall, strict_budget=sb, **cfg.chem)
+            tr2 = vm.execute(mem, L, L // 2, cfg.budget // 2, inputs, region=(L // 2, L), allow_copyall=cfg.allow_copyall, strict_budget=sb,
+                             origin=tr1.origin, **cfg.chem)
             tr = tr1
             tr.win_prov.update(tr2.win_prov)                                  # measurement only (later writes win)
+            tr.origin = tr2.origin                                            # tr2 started from tr1's map: it is the final one
+            tr.win_origin = {off: tr2.origin.get(L + off, L + off) for off in tr.win_prov}
             tr.steps += tr2.steps; tr.outputs = tr1.outputs + tr2.outputs
             tr.reads_in += tr2.reads_in; tr.self_writes += tr2.self_writes; tr.neighbour_writes += tr2.neighbour_writes
             tr.copy_events += tr2.copy_events; tr.io_writes += tr2.io_writes; tr.io_corrupt += tr2.io_corrupt; tr.neighbour_reads += tr2.neighbour_reads
@@ -573,7 +582,7 @@ class World:
         self._register_offspring(j, child, o, physics, fid, tr, replaced=target)
 
     def _register_offspring(self, j: int, child: bytearray, parent: Org, mechanism: str, fidelity: float, tr, replaced: Optional[Org]) -> None:
-        # the WRITER is the causal parent; the GENETIC source is whichever tape the child's bytes resemble more --
+        # the WRITER is the causal parent; under RESEMBLANCE the GENETIC source is whichever tape the child's bytes resemble more --
         # the writer's, or the target's own previous contents (a writer can rewrite its partner as a shifted copy of
         # itself: "code capture", the byte-soup ambiguity made explicit rather than hidden)
         material = "writer"; glin = parent.glineage
@@ -644,24 +653,23 @@ class World:
                                       "seeded": parent.glineage in self.seed_lineages or (glin in self.seed_lineages)}
 
     def _provenance_counts(self, tr, replaced: Optional[Org]) -> Tuple[int, int]:
-        """glineage_rule PROVENANCE (DEF-BEL-008): (writer bytes, target bytes) of the child, from the recorded provenance of
-        the LAST write to each window byte, never from what the child resembles. Unwritten bytes are the target's (none
-        when the cell was empty or under target_fill zero); a copy-op byte is the writer's from [0,L), the target's from
-        [L,2L) (none if the cell was empty); every other write is constructed and counts for neither."""
-        L = self.L; prov = tr.win_prov
+        """glineage_rule PROVENANCE (DEF-BEL-008): (writer bytes, target bytes) of the child by MATERIAL ORIGIN, never by
+        what the child resembles. Unwritten bytes are the target's (none when the cell was empty or under target_fill
+        zero). A written byte counts by its pre-execution origin address (Trace.win_origin, multi-hop): [0,L) writer,
+        [L,2L) target (none if the cell was empty); constructed (None) or outside [0,2L) counts for neither."""
+        L = self.L; orig = tr.win_origin
         has_target = replaced is not None and self.cfg.target_fill != "zero"
         n_w = n_t = 0
         for off in range(L):
-            p = prov.get(off)
-            if p is None:
+            if off not in orig:
                 n_t += has_target
                 continue
-            src, _pc, op = p
-            if op not in vm.COPY_OPS or src is None:
+            o = orig[off]
+            if o is None:
                 continue
-            if src < L:
+            if o < L:
                 n_w += 1
-            elif src < 2 * L:
+            elif o < 2 * L:
                 n_t += replaced is not None
         return n_w, n_t
 

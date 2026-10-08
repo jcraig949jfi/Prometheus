@@ -112,6 +112,21 @@ def _run_one(spec):
                 for r in w.rows:
                     f.write(json.dumps(r, separators=(",", ":")) + "\n")
             out["rows"] = len(w.rows)
+    elif kind in ("heredity", "reach"):
+        from heredity import HeredityWorld
+        from reach import ReachWorld
+        cfg = _cfg(spec)
+        w = (ReachWorld if kind == "reach" else HeredityWorld)(cfg, spec["seed"]); s = w.run()
+        out["summary"] = _keep(s); out["dual"] = w.dual_summary(); out["heredity"] = w.heredity_summary()
+        if kind == "reach":
+            out["reach"] = w.reach_summary()
+        out["end_hash"] = end_state_hash(w)
+        if w.h_events:
+            rd = pathlib.Path(spec["workdir"]) / "events"; rd.mkdir(parents=True, exist_ok=True)
+            with gzip.open(rd / (spec["id"] + ".jsonl.gz"), "wt", encoding="utf-8") as f:
+                for e in w.h_events:
+                    f.write(json.dumps(e, separators=(",", ":")) + "\n")
+            out["events_written"] = len(w.h_events)
     elif kind == "plain":
         cfg = _cfg(spec)
         w = World(cfg, spec["seed"]); s = w.run()

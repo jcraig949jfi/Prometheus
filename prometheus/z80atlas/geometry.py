@@ -27,12 +27,16 @@ NEXT_TASK = {"ECHO": "INC", "INC": "COND_ONE", "COND_ONE": "COND_MULTI", "CONST"
 #             a short tape is zero-padded, so untouched zero bytes count as copied; with need = 1 (ENDOGENOUS_PARTIAL) a single
 #             written byte can score `replicates` (and with need = L//2 the unwritten half can carry the rest). Kept as the
 #             default so every historical geometry.json reproduces.
-#   "written" only positions WRITTEN in this execution that equal the tape count; an unwritten position is a mismatch.
+#   "written" a position counts only if it was WRITTEN in this execution with material whose pre-execution origin is the
+#             SAME tape position (vm Trace.win_origin, multi-hop) and equals the tape; an unwritten position, a byte
+#             constructed in place, or a copy of other memory (e.g. a sweep of scratch zeros over the window -- review A,
+#             2026-10-08) is a mismatch.
 REP_RULES = ("v1", "written")
 
 
 def _eval(tape: bytes, cfg: Config, task: Task, rng: random.Random, n_inputs: int = 3, rep_rule: str = "v1") -> Dict:
-    assert rep_rule in REP_RULES, rep_rule
+    if rep_rule not in REP_RULES:
+        raise ValueError("unknown rep_rule %r" % rep_rule)
     L = cfg.L; scores = []; rep = 0
     tape = bytes(tape[:L]) + bytes(max(0, L - len(tape)))   # a short witness is zero-padded: slice-assigning fewer bytes would SHRINK the memory
     for _ in range(n_inputs):
@@ -42,19 +46,21 @@ def _eval(tape: bytes, cfg: Config, task: Task, rng: random.Random, n_inputs: in
             mem[vm.IN_BASE + k] = v
         if cfg.layout == "SEPARATED":
             tr = vm.execute(mem, L, 0, cfg.budget // 2, inputs, region=(0, L // 2), allow_copyall=cfg.allow_copyall)
-            tr2 = vm.execute(mem, L, L // 2, cfg.budget // 2, inputs, region=(L // 2, L), allow_copyall=cfg.allow_copyall)
+            tr2 = vm.execute(mem, L, L // 2, cfg.budget // 2, inputs, region=(L // 2, L), allow_copyall=cfg.allow_copyall, origin=tr.origin)
             outs = tr.outputs + tr2.outputs; fi = tr.first_in_step if tr.first_in_step is not None else tr2.first_in_step
             fo = tr.first_out_step if tr.first_out_step is not None else tr2.first_out_step
             written = {a for a in list(tr.writes) + list(tr2.writes) if L <= a < 2 * L}
+            origin = tr2.origin
         else:
             tr = vm.execute(mem, L, 0, cfg.budget, inputs, allow_copyall=cfg.allow_copyall)
             outs = tr.outputs; fi = tr.first_in_step; fo = tr.first_out_step
             written = {a for a in tr.writes if L <= a < 2 * L}
+            origin = tr.origin
         need = {"ENDOGENOUS_COPY": L, "ENDOGENOUS_PARTIAL": 1, "OVERWRITE": L // 2, "CONSTRUCTIVE": L // 2, "PAIR_EXECUTION": L // 2}.get(cfg.reproduction, L // 2)
         if len(written) >= need:
             child = bytes(mem[L:2 * L])
             if rep_rule == "written":
-                fid = sum(1 for a in written if child[a - L] == tape[a - L]) / L
+                fid = sum(1 for a in written if origin.get(a, a) == a - L and child[a - L] == tape[a - L]) / L
             else:
                 fid = 1.0 - sum(1 for x, y in zip(child, tape[:L]) if x != y) / L
             if fid >= 0.9:
