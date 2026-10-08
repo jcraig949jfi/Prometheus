@@ -143,3 +143,6 @@ Predictions (confirmatory):
 - W2-P6 (H2 B and none): FUNC appears in <= 5/100 runs of each.
 Descriptive: FUNC-birth class mix per cell; distinct origin events and founders among critical bytes of the dominant
 FUNC tape at the end; relocated founder bytes; novel kinds (n/c/x) among critical bytes.
+
+ERRATUM (2026-10-08T05:55Z): amendment 1 and s4 say "~06:00Z"; the freeze commit 7133438e5 is the authority, and the
+chain was launched at 05:52:58Z (execution ledger). No content changed.
