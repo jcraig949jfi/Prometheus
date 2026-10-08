@@ -76,3 +76,24 @@ Discovery set (seen in W2). FUNC is single-generation (Review B); TRB-chaining a
 history kept per carrier is capped at 40 snapshots. A 'u' byte keeps the founder/novel tag of the moved byte; uptake of
 a byte that was itself moved twice inside the partner is attributed to its last move (multi-hop within an execution,
 one record per byte across executions).
+
+## 6. Addendum -- W3b (EXPLORATORY; planner 3f5125ec7, chosen after reading W2)
+
+Replay of the 75 W2-H2 runs that reached FUNC in the COPY_AB (60), B (6) and none (8) arms (+1 B with no event):
+75/75 byte-identical end states, 0 voids, 3,645 s active. Raw ~/bel48h_runs/w3b; receipts/W3B_ANALYSIS.json.
+
+Why COPY/AB reached FUNC in 61/100 although ENDOGENOUS_COPY abolishes complementation (W2-P5): founder attribution of
+the critical bytes of each COPY_AB origin (founder id -> slot -> transplant index) gives A-fragment bytes in 60/60
+origins and B bytes in 0/60; 36/60 origins are built from A's bytes ALONE with no new mutation (19 add one mutation,
+4 a self-construction). Causes: BORN_ASSEMBLY 23, MUTATION 29, SELF_MOVE 7, SELF_CONSTRUCT 1.
+
+Direct test of the fragment's neighbourhood (one-off computation, scratch, 2026-10-08 ~09:45-10:05Z):
+  single-byte SUBSTITUTIONS that make A FUNC:          0 / 16,320   (B: 0 / 16,320)
+  single SEGMENT MOVES (copy a <= 16-byte segment of the tape to another offset) that make A FUNC: 8 / 50,512
+  (all move A's stored 08 40 data block to the front); B: 0 / 50,512; 30 random 64-byte tapes: 0 / 1,515,360.
+EPISTEMIC FAULT-LINE (CAUSALLY_CONFIRMED for this specimen): substitution distance said A was > 1 step from a
+replicator; under the physics' own operator (copying segments with offsets) it is 1 step. Mutational-neighbourhood
+rulers built on byte substitution (geometry.scan / scan_paired, the historical G4 beneficial-neighbourhood analysis)
+cannot see the rearrangement neighbourhood that copy-based physics explores; reachability claims made with them are
+lower bounds. B/none origins (14 runs): mutation 12 (incl. 4 incremental), uptake 1, self-move 2 -- the same picture as
+the random worlds of W3a, at a lower rate.
