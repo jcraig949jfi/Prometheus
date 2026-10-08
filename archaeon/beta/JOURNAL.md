@@ -48,7 +48,7 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
 | B48 | same on the SEL VM (straight-line conditional update) | 0/8 by criterion; 1 seed shows a real filter+re-track profile -> replication |
 | B49 | stock vs SEL head-to-head, 12 seeds each | NULL: UPDATE 1/12 vs 1/12; instruction-set explanation KILLED |
 | B50 | lexicase vs tournament on two stored values | NULL 0/8 vs 0/8; selection explanation KILLED |
-| B51 | coupled write/read pair mutation | NULL 0/8 vs 0/8; operator bloats genomes; mutation explanation KILLED |
+| B51 | coupled write/read pair mutation | PAIR 0/8 (bloat; killed); BASE 1/8 L4 SOLVED (.971, large tape, self-written code) -> memory-law correction |
 | B30 | do foragers carry state across ticks? | YES: 6/7 content sensors use state; blind ones in rewarding worlds 5/5 |
 | B31 | what do they remember? | 2504: 1-register direction memory; others computed state (not past observations) |
 | B17 | forced perception (echo on PUT) opens the 2-value wall? | staged; controls pass |
@@ -547,7 +547,7 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   rA from used registers, jumps fixed up; p=.25) vs BASE, jittered-wide L4 and L6, FOUNDRY_BIG gen 0, 4 seeds each,
   G=300, held-out 64 x 4. Controls: indexed solver .99 both rungs; operator fires on 26% of children. Lease
   lse-a1ae6607350e, est ~3 core-h (tally then ~41 of 48). PREDICTION: PAIR >= 1/4 on L6 or L4; BASE 0/4.
-- B51 RESULT (coupled write/read pair mutation; lease released ~16:05Z): solved PAIR 0/8, BASE 0/8 ({"PAIR/L4_order": 0, "PAIR/L6_w2k2": 0, "BASE/L4_order": 1, "BASE/L6_w2k2": 0}). The operator
+- B51 RESULT (coupled write/read pair mutation; lease released ~16:05Z): solved PAIR 0/8, BASE 1/8 [CORRECTED: I first wrote BASE 0/8] ({"PAIR/L4_order": 0, "PAIR/L6_w2k2": 0, "BASE/L4_order": 1, "BASE/L6_w2k2": 0}). The operator
   BACKFIRES: PAIR elites carry 51 ST instructions on average (bloat of silent memory traffic) and reach the one-value
   shelf in 2/8 cells vs BASE 4/8. PREDICTION (PAIR >= 1/4 on a rung) FAILED. KILLED: "the wall is the improbability of
   creating the coupled pair" -- handing search the pair in one step does not produce a USED pair; the pair must also be
@@ -555,6 +555,14 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   placement mostly adds silent cost. The memory law holds across VM, world, incentive, selection and MUTATION.
   Remaining lever: REPRESENTATION (e.g. organisms whose memory is addressed by input content by construction).
   CORE-HOUR TALLY since 00:07Z: ~41 of 48 -- heavy runs stop for this window.
+- B51 COUNTEREXAMPLE (BASE L4 seed 5101, found at gen 211; FOUNDRY_BIG gen 0): jittered-wide L4 held-out .971 at
+  64 x 4 -> two GENUINELY stored values in fixed ask order under 0-7 jitter. Not keyed: W2_K2 .54, K3 .25, K4 .18, K6
+  .11. Mechanism (to study): a 28-instruction genome with 509 DISTINCT instruction indices executed -- it jumps out of
+  the genome into its 2048-word tape and executes it, and writes the tape with ST [r9], r1 where r9 is an INPUT word
+  (self-written data executed as code). B08J (FOUNDRY_C2, tapes 16-256) had L4 0/8.
+  CORRECTION to the memory law (mine): "a second genuinely stored value is never reached" is FALSE as stated -- with a
+  large tape it was reached in 1/4 BASE runs. Keyed (W2_K2/K>=3) and update-on-condition memory remain unreached.
+  Next window: replicate L4 with FOUNDRY_BIG vs FOUNDRY_C2 (8 seeds each) and dissect the self-written-code mechanism.
 - BUDGET WINDOW 2026-10-08 ~00:07Z. B29 already done (not relaunched). Lease lse-fe37dd77fe7a (spectrex5:cpu12,
   3 h) for B32 replication: 12 seeds (3211-3222), 10 procs, + B32's last cell on 2 procs = 12. CORE-HOUR TALLY
   (rolling 24 h from 00:07Z): 0 at launch; est. +3-4 for the replication.
