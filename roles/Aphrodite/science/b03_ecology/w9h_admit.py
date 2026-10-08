@@ -10,7 +10,7 @@ Admission (per family; `foundry`):
   A5 entropy independence               dev-cell and transfer-cell example sets come from distinct seed labels and
                                         share no prompt (checked, not assumed)
   A6 learning opportunity (post-hoc, from generator truth only):
-        L1  its mechanism has >= 3 T4-qualified level-1 families in the seed
+        L1  its mechanism has >= 2 T4-qualified level-1 families in the seed (the LGG minimum)
         L2  inner and outer mechanisms each have >= 2 T4-qualified level-1 families, and the composition has >= 2
             T4-qualified level-2 families in the seed
         all p_PRISTINE <= 0.75 (the A19 window ceiling)
@@ -245,7 +245,7 @@ def admit(rows, truths):
                 why = "ENTROPY"
             elif r.get("p_PRISTINE", 0) > WINDOW:
                 why = "WINDOW"
-            elif meta["level"] == "L1" and nq[meta["src"]] < 3:
+            elif meta["level"] == "L1" and nq[meta["src"]] < 2:
                 why = "L1_RECURRENCE"
             elif meta["level"] == "L2":
                 c = comp[meta["src"]]

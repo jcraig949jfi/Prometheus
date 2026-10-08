@@ -57,6 +57,8 @@ CONFIG = {
     "comp_screen": {"min_accumulating_share": 0.2, "min_distinct_vecs": 8, "max_identity_share": 0.5,
                     "min_feasible_of_24": 3},
     "max_proposals": 20000,
+    "init_final_retries": 4,
+    "family_screen": {"nonconstant_filler": True, "not_organ_equivalent": True},   # L1/L2 only (L0 mirrors W8)                             # (init, final) redraws per body before rejecting it
     "init_space": "H1_SPACE", "final_space": "FINAL_SPACE containing acc",
 }
 COMM = ("add", "mul", "gcd")
@@ -243,7 +245,7 @@ def screen_schema(schema, scr, need_w5=0):
     ok = (rec["acc_share"] >= scr["min_accumulating_share"] and rec["distinct_vecs"] >= scr["min_distinct_vecs"]
           and ident <= scr["max_identity_share"] and (not need_w5 or w5 >= need_w5))
     if ok:
-        rec["feasible_of_24"] = feasible(schema)
+        rec["feasible_of_24"] = feasible(schema, stop_at=scr["min_feasible_of_24"])
         ok = rec["feasible_of_24"] >= scr["min_feasible_of_24"]
     return ok, rec
 
@@ -251,9 +253,12 @@ def screen_schema(schema, scr, need_w5=0):
 _FEAS = None
 
 
-def feasible(schema):
+FEAS_FINALS = ["acc", "(acc + last)", "(acc * first)", "(first - acc)"]
+
+
+def feasible(schema, stop_at=99):
     """How many of 24 fixed LEVEL1 fillers give a family-admissible body (accumulating + T4 task-side profile
-    admissible with init 0 and final acc). Task-side only; no search is run."""
+    admissible for SOME init in H1 and final in FEAS_FINALS). Task-side only; no search is run."""
     import ruler_v2 as R
     import tribunal_t4 as T4
     global _FEAS
@@ -262,8 +267,11 @@ def feasible(schema):
     n = 0
     for f in _FEAS:
         b = fill(schema, f)
-        if R.accumulating(b) and T4.family_profile(("fold", "0", b, "acc"))["admissible"]:
+        if R.accumulating(b) and any(T4.family_profile(("fold", i, b, fi))["admissible"]
+                                     for i in G.H1_SPACE for fi in FEAS_FINALS):
             n += 1
+            if n >= stop_at:
+                break
     return n
 
 
@@ -335,6 +343,19 @@ def canon(body):
     return (b, True) if b is not None else (body, False)
 
 
+_ORGAN = None
+
+
+def organ_vecs():
+    """GRID behaviour vectors of every PRISTINE organ body (H2: depth-2 over {acc, v}). An L1/L2 body equal to one
+    of these is shallow: PRISTINE walks the whole organ entry within 152k candidates."""
+    import ruler_v2 as R
+    global _ORGAN
+    if _ORGAN is None:
+        _ORGAN = {R.vec(b) for b in G.H2_SPACE}
+    return _ORGAN
+
+
 def supply(seed, quota=None):
     """One world seed -> (W8-shaped supply, sealed truth). The stream: at every proposal a level is drawn with weight
     = its remaining quota; within a level the SOURCE (mechanism / composition) is drawn uniformly among the
@@ -358,7 +379,8 @@ def supply(seed, quota=None):
         left["L2"] = 0
     fams, meta, seen_b, seen_bid, used_fill = [], {}, set(), set(), {}
     st = {"proposals": 0, "by_level": {k: {"proposals": 0, "rej_dup": 0, "rej_accum": 0, "rej_t4profile": 0,
-                                           "rej_l1_not_w5": 0, "rej_l0_not_w5": 0, "admitted": 0} for k in levels}}
+                                           "rej_l1_not_w5": 0, "rej_l0_not_w5": 0, "rej_const_filler": 0,
+                                           "rej_organ_equiv": 0, "admitted": 0} for k in levels}}
     while sum(left.values()) > 0 and st["proposals"] < CONFIG["max_proposals"]:
         lv = rng.choices(levels, weights=[left[k] for k in levels])[0]
         rec = {"level": lv}
@@ -383,6 +405,9 @@ def supply(seed, quota=None):
             if e in used_fill.setdefault(src["id"], set()):
                 s_l["rej_dup"] += 1
                 continue
+            if len(set(R.vec(e))) == 1:          # constant filler (e.g. gcd(first, 1)) collapses the mechanism
+                s_l["rej_const_filler"] += 1
+                continue
             b, inw5 = canon(fill(src["schema"], e))
             if lv == "L1" and not inw5:          # level-1 families must be representable by the base engine
                 s_l["rej_l1_not_w5"] += 1
@@ -394,7 +419,13 @@ def supply(seed, quota=None):
         if not R.accumulating(b):
             s_l["rej_accum"] += 1
             continue
-        p = ("fold", rng.choice(G.H1_SPACE), b, rng.choice(finals))
+        if lv != "L0" and R.vec(b) in organ_vecs():
+            s_l["rej_organ_equiv"] += 1
+            continue
+        for _r in range(CONFIG["init_final_retries"]):
+            p = ("fold", rng.choice(G.H1_SPACE), b, rng.choice(finals))
+            if T4.family_profile(p)["admissible"]:
+                break
         if not T4.family_profile(p)["admissible"]:
             s_l["rej_t4profile"] += 1
             continue
