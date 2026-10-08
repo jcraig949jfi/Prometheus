@@ -7,7 +7,9 @@ Task envs at the cell's physics: RELAY1H = RELAY with d = 1; HOLD = HOLD (gap 8,
 the cell's FLIP env fields; FLIP = the cell's env. Rulers: FLIP -> the frozen B ruler; all others -> RELAY-mh role
 (SIGNAL on all trials + late-half liveness).
 OPDL = OPD plus, with probability P_LIB = .15 per offspring (before duplication), insertion of a uniformly chosen
-FROZEN library module (plan["library"]) into free capacity. Inserted lines carry a library tag (module id + 1).
+FROZEN library module (plan["library"]) into free capacity, INSTANTIATED with a uniformly random permutation of the
+state registers (c4_common.rename_state) so separately evolved modules can coexist. Inserted lines carry a library tag
+(module id + 1); module_integrity compares slots against the module's renamed-or-not lines.
 Seeds: search_seed = H(C4_NS, task id, cell_key, idx): every arm of one task shares the gen-0 population (same rep
 spec) and training worlds; arms differ only in the operator.
 Per finished search, for the champion (C2 FINAL rule at the last generation), on held worlds:
@@ -89,7 +91,7 @@ def evolve(ph, env, sseed, sp, device, rep, op, lib):
                 a = np.where(m[..., None], a, pop[ib]); ta = np.where(m, ta, tags[ib])
                 da = np.where(m, da, dup[ib]); la = np.where(m, la, lt[ib])
             if op == "OPDL" and g.random() < K.P_LIB:
-                a, ta, da, la, _ = K.insert_module(g, a, ta, da, lib, la)
+                a, ta, da, la, _ = K.insert_module(g, a, ta, da, lib, la, ph=ph)
             if op in ("OPD", "OPDL") and g.random() < R.P_DUP:
                 a2, ta2, da2, info = R.duplicate(g, a, ta, da)
                 r_, b_, s_, pos, _ = info
@@ -140,7 +142,9 @@ def run_job(job, cell, plan, device):
         for mid in row["lib_modules"]:
             mod = np.asarray(lib[mid - 1]["lines"])
             pos = np.flatnonzero(lt[0] == mid)
-            mods[mid] = {"n": int(pos.size), "unmodified": int(sum(any((champ[0, p] == ml).all() for ml in mod) for p in pos))}
+            variants = [K.rename_state(mod, ph, pm) for pm in __import__("itertools").permutations(range(ph.state_dim))]
+            mods[mid] = {"n": int(pos.size), "unmodified": int(sum(any((champ[0, p] == ml).all() for v in variants for ml in v)
+                                                                    for p in pos))}
         row["module_integrity"] = mods
     trainw = set()
     for gen in range(sp.gens):

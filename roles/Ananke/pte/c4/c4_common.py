@@ -55,20 +55,42 @@ def live_lines(ph, env, genome, seeds, role, device="cpu"):
 
 # ------------------------------------------------------------------ library insertion (C4 arm C)
 P_LIB = 0.15
+B_IS_REGISTER = {2, 3, 4, 7, 8, 9, 11, 12, 15}        # ops whose field 3 is a register operand (CONST/SHR: a shift)
 
 
-def insert_module(g, c, t, d, lib, libtag):
+def rename_state(lines, ph, perm):
+    """Module INSTANTIATION with register renaming: every reference to a state register S_i (dst field mod NW,
+    a field mod NR, and b field mod NR where field 3 is a register operand) is mapped to S_perm[i]; the raw byte keeps
+    its high part so only the reduced index changes. Temps, I/O and shift fields are untouched."""
+    D, NW, NR = ph.state_dim, ph.n_write(), ph.n_read()
+    x = np.array(lines, dtype=np.int64, copy=True)
+    for row in x:
+        op = int(row[0]) % 16
+        for f, mod in ((1, NW), (2, NR)) + (((3, NR),) if op in B_IS_REGISTER else ()):
+            v = int(row[f]) % mod
+            if v < D:
+                row[f] = int(row[f]) - v + int(perm[v])
+    return x
+
+
+def insert_module(g, c, t, d, lib, libtag, ph=None):
     """Copy a uniformly chosen library module (its live lines, in order) into a uniformly chosen fully-free (all-NOP)
-    destination run; if none exists, a uniform position (overwrite). Inserted lines get libtag = module index + 1.
-    Content-blind w.r.t. the target task; the library holds only one-stage (RELAY/HOLD) machinery."""
+    destination run; if none exists, a uniform position (overwrite). If ph is given, the module is instantiated with a
+    uniformly random permutation of the state registers (rename_state), so independently evolved modules can occupy
+    different state registers. Inserted lines get libtag = module index + 1. Content-blind w.r.t. the target task;
+    the library holds only one-stage (RELAY/HOLD) machinery."""
     c = c.copy(); t = t.copy(); d = d.copy(); libtag = libtag.copy()
     R_, L, _ = c.shape
     mi = int(g.integers(len(lib)))
     mod = np.asarray(lib[mi]["lines"], dtype=np.int64)
+    perm = None
+    if ph is not None:
+        perm = g.permutation(ph.state_dim)
+        mod = rename_state(mod, ph, perm)
     b = min(len(mod), L)
     r = int(g.integers(R_))
     nop = (c[r, :, 0] % 16) == 0
     free = [p for p in range(0, L - b + 1) if nop[p:p + b].all()]
     pos = free[int(g.integers(len(free)))] if free else int(g.integers(0, L - b + 1))
     c[r, pos:pos + b] = mod[:b]; t[r, pos:pos + b] = False; d[r, pos:pos + b] = False; libtag[r, pos:pos + b] = mi + 1
-    return c, t, d, libtag, (mi, pos, bool(free))
+    return c, t, d, libtag, (mi, pos, bool(free), None if perm is None else perm.tolist())
