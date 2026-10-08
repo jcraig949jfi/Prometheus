@@ -37,10 +37,29 @@ P_C3 = {
     "stig": {"delta": (0.02, 0.6), "D": (0.0, 0.3), "v": [0, 1, 2], "j": (0.0, 0.3)},
 }
 FAMILIES = ("rnn", "graph", "stig", "sediment")
+# CHALLENGE proposals Q (EXP-02; prereg roles/Cosmos/c4/prereg/EXP-02_CHALLENGE_DISCOVERY.md). Written from the
+# DECLARED physical meaning of each knob: up-weight noise, instability, transport and export; label-blind in code.
+# Caveat (R-STAT A8): the author has seen EXP-01 (sediment 30/30 FUNCTIONAL under P), so Q is not author-blind.
+Q = {
+    "rnn": {"rho": (0.8, 1.2), "a": (0.2, 1.0), "sigma": (0.3, 1.5)},
+    "graph": {"K": [2, 3, 4, 6], "b": (-1.0, 0.5), "p": (0.03, 0.2)},
+    "stig": {"delta": (0.2, 0.8), "D": (0.1, 0.4), "v": [1, 2, 3], "j": (0.1, 0.5)},
+    "sediment": {"n_cells": [8, 16, 24, 32], "groove": [1, 3, 5, 7], "load": (0.1, 10.0), "drift": [1, 2, 3, 4],
+                 "flush": (0.3, 0.95), "settle": (0.0, 0.4), "scour": (0.1, 0.7), "creep": (0.1, 0.7)},
+}
 
 
-def sample_world(fam: str, seed: int) -> dict:
+def sample_world(fam: str, seed: int, proposal: str = "P") -> dict:
     rng = np.random.default_rng(seed)
+    if proposal == "Q":
+        kn = {}
+        for f, spec in Q[fam].items():
+            kn[f] = int(spec[rng.integers(len(spec))]) if isinstance(spec, list) else float(rng.uniform(*spec))
+        if fam == "sediment":
+            kn["groove"] = min(kn["groove"], kn["n_cells"] - 1)
+        if fam in ("rnn", "graph"):
+            kn["wseed"] = int(rng.integers(1, 2 ** 31))
+        return {"family": fam, "knobs": kn, "k": int(KS[rng.integers(len(KS))]), "proposal": "Q"}
     if fam == "sediment":
         kn = SED.sample_natural(rng)
     else:
@@ -78,22 +97,22 @@ def run_world(job: dict) -> dict:
             "sec": round(time.time() - t0, 1)}
 
 
-def jobs(n_per_family: int, batch: int = 0, split: str = "DISCOVERY"):
+def jobs(n_per_family: int, batch: int = 0, split: str = "DISCOVERY", proposal: str = "P"):
     out = []
     for fi, fam in enumerate(FAMILIES):
         for i in range(n_per_family):
-            j = sample_world(fam, FW.split_seed(split, batch, fi * 100000 + i))
+            j = sample_world(fam, FW.split_seed(split, batch, fi * 100000 + i), proposal)
             j.update({"split": split, "batch": batch, "i": i})
             out.append(j)
     return out
 
 
-def main(out: str, n: int, workers: int = 3, batch: int = 0, split: str = "DISCOVERY"):
+def main(out: str, n: int, workers: int = 3, batch: int = 0, split: str = "DISCOVERY", proposal: str = "P"):
     p = Path(out)
     done = set()
     if p.exists():
         done = {(r["family"], r["i"]) for r in map(json.loads, p.read_text().splitlines()) if r}
-    todo = [j for j in jobs(n, batch, split) if (j["family"], j["i"]) not in done]
+    todo = [j for j in jobs(n, batch, split, proposal) if (j["family"], j["i"]) not in done]
     ctx = get_context("spawn")
     with ctx.Pool(workers, maxtasksperchild=4) as pool, open(p, "a") as fh:
         for r in pool.imap_unordered(run_world, todo):
@@ -104,4 +123,4 @@ def main(out: str, n: int, workers: int = 3, batch: int = 0, split: str = "DISCO
 if __name__ == "__main__":
     a = sys.argv
     main(a[1], int(a[2]), int(a[3]) if len(a) > 3 else 3, int(a[4]) if len(a) > 4 else 0,
-         a[5] if len(a) > 5 else "DISCOVERY")
+         a[5] if len(a) > 5 else "DISCOVERY", a[6] if len(a) > 6 else "P")

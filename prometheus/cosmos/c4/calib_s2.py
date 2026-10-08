@@ -120,7 +120,7 @@ if __name__ == "__main__":
     main(int(sys.argv[1]) if len(sys.argv) > 1 else 200)
 
 
-def s0a_power_realistic(n, nsim, rng, uplift=0.10, fam_sd=0.75, nflip=2000, nboot=400, cheat=False):
+def s0a_power_realistic(n, nsim, rng, uplift=0.10, fam_sd=0.75, nflip=2000, nboot=400, cheat=False, carried=False):
     """A3: per-family accuracy logit-normal around the level giving a mean within-family BA of .5 + uplift,
     per-family base rates that differ, and errors concentrated near the boundary (a latent margin m ~ N(0,1);
     error probability doubles for |m| < .5). The baseline (T3-DOWN in the REGISTERED stratum) predicts 1."""
@@ -132,11 +132,17 @@ def s0a_power_realistic(n, nsim, rng, uplift=0.10, fam_sd=0.75, nflip=2000, nboo
         y = (rng.random(n) < base[fam]).astype(int)
         if cheat:
             c = (base[fam] >= .5).astype(int)
+        elif carried:   # one family carries everything: accuracy .5 + 5*uplift there, .5 elsewhere
+            acc_f = np.full(NFAM, .5)
+            acc_f[0] = min(.99, .5 + NFAM * uplift)
+            c = np.where(rng.random(n) < acc_f[fam], y, 1 - y)
         else:
             acc_f = 1 / (1 + np.exp(-(lvl + fam_sd * rng.standard_normal(NFAM))))
             m = rng.standard_normal(n)
             perr = (1 - acc_f[fam]) * np.where(np.abs(m) < .5, 2.0, 1.0)
-            perr = perr * (1 - acc_f[fam]) / np.mean(perr)          # keep the mean error at 1 - acc
+            for f in range(NFAM):                                    # keep each family's mean error at 1 - acc_f
+                mf = fam == f
+                perr[mf] = perr[mf] * (1 - acc_f[f]) / np.mean(perr[mf])
             c = np.where(rng.random(n) < np.clip(perr, 0, 1), 1 - y, y)
         ok += S.s0a_verdict(y, c, np.ones(n, int), fam, rng, nflip=nflip, nboot=nboot)["pass"]
     return ok / nsim

@@ -29,8 +29,11 @@ from typing import Dict
 import numpy as np
 
 DELTA_A = 0.10          # minimum mean within-family uplift (unchanged value; new statistic)
-FAMILY_FLOOR = 0.0      # per-family uplift must exceed this in all but at most ONE family ...
-FAMILY_WORST = -0.05    # ... and no family may fall below this
+FAMILY_FLOOR = 0.0      # v0.3a: no family's uplift may be SIGNIFICANTLY below this (Holm, one-sided) ...
+CARRY_FRAC = 0.5        # ... and U without the best family must stay >= CARRY_FRAC * DELTA_A
+# v0.3 used "uplift > 0 in all but one family and >= -.05 in every family" on point estimates. Calibration
+# (A3 realistic power, 2026-10-08) showed it fails 65% of true uplift-.20 laws at n = 400 when only 19% have a
+# truly negative family: per-family sampling noise, not heterogeneity. Replaced by tests.
 ALPHA = 0.05
 ALPHA_S2 = 0.05
 
@@ -115,14 +118,25 @@ def s0a_verdict(y, cand, base, fam, rng, nflip=10000, nboot=2000) -> Dict:
     per = np.array(list(wf["per_family"].values()))
     p = stratified_signflip_p(y, cand, base, fam, rng, nflip)
     lb = float(np.nanpercentile(cluster_boot(y, cand, base, fam, rng, nboot), 2.5))
+    fam_arr = np.asarray(fam)
+    neg_p = {}
+    for f in wf["per_family"]:
+        m = fam_arr == f
+        # one-sided p for "uplift_f < FAMILY_FLOOR": flip test of the negated contribution within the family
+        neg_p[f] = stratified_signflip_p(np.asarray(y)[m], np.asarray(base)[m], np.asarray(cand)[m],
+                                         fam_arr[m], rng, max(1000, nflip // 5))
+    sig_neg = [f for f, r in holm(neg_p, ALPHA).items() if r]
+    u_wo_best = float(np.mean(np.sort(per)[:-1])) if len(per) >= 2 else float("nan")
     checks = {
         "a_uplift": bool(wf["U"] >= DELTA_A),
         "b_signflip": bool(p < ALPHA),
         "c_boot_lb": bool(lb > 0),
-        "d_family_floor": bool(len(per) >= 2 and np.sum(per <= FAMILY_FLOOR) <= 1 and per.min() >= FAMILY_WORST),
+        "d_no_family_sig_negative": bool(len(per) >= 2 and not sig_neg),
+        "e_not_carried": bool(u_wo_best >= CARRY_FRAC * DELTA_A),
     }
     return {"pass": all(checks.values()), "checks": checks, "U": wf["U"], "p": p, "boot_lb": lb,
             "per_family": wf["per_family"], "families_dropped": wf["families_dropped"],
+            "families_sig_negative": sig_neg, "U_without_best_family": u_wo_best,
             "family_level_p": family_level_signflip_p(y, cand, base, fam)}
 
 
