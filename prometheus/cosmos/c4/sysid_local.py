@@ -19,7 +19,12 @@ The probe uses its own RNG namespace (G2) and imports numpy only (G1).
 
 Coordinates (all in whitened stationary units, hence invariant to invertible re-encodings of either view, G5):
   rho    one-step contraction: |d full| after one step / |d full| before, for a small random state kick
-         (same input, same noise)
+         (same input, same noise); median ratio
+  lam    SPECTRAL contraction: spectral radius of the one-step response matrix J, fitted by ridge regression of
+         d full(after) on d full(before) over RESAMPLE perturbations (each state element replaced, with prob
+         Q_RESAMPLE, by the same element of another stationary episode). Works for float and integer state
+         alike; for Boolean networks it is the Derrida damage-spreading slope's matrix version. lam governs
+         the slowest local mode, which rho (a median over all directions) does not
   eta    noise injection: |d full|^2 after one step for twins differing only in their noise draw
   gamma  input injection: |d full|^2 after one step for twins differing only in their input symbol (uniform over
          the probe alphabet; never the task cue, never at a task time)
@@ -34,6 +39,8 @@ import numpy as np
 
 BURN = 64           # burn-in steps for stationary states (frozen)
 KICK = 1e-2         # kick scale in whitened units (frozen)
+Q_RESAMPLE = 0.05   # per-element resample probability for the lam perturbation (frozen)
+N_JAC = 2048        # perturbed states for the lam regression (frozen)
 N_STAT = 512        # stationary states per coordinate (frozen)
 SEED_NS = 0x5C05_10CA
 
@@ -107,6 +114,18 @@ class LocalProbe:
                 out[k] = v.copy()
         return _Tagged(out, t.gen)
 
+    def resample(self, t: _Tagged, q: float) -> _Tagged:
+        """Replace each state element, with probability q, by the same element of a random other episode."""
+        if t.gen >= 1:
+            raise HorizonError("LOCALITY: perturbations only on stationary states")
+        out = {}
+        for k, v in t.st.items():
+            n = v.shape[0]
+            donor = v[self._rng.integers(0, n, n)]
+            m = self._rng.random(v.shape) < q
+            out[k] = np.where(m, donor, v)
+        return _Tagged(out, t.gen)
+
     @staticmethod
     def copy(t: _Tagged) -> _Tagged:
         return _Tagged({k: v.copy() for k, v in t.st.items()}, t.gen)
@@ -152,4 +171,25 @@ def coordinates(probe: LocalProbe, n: int = N_STAT) -> Dict[str, float]:
     b2 = probe.step1(s0, obs2, nz)
     dg = np.sum((wf(probe.full(b2)) - wf(probe.full(a))) ** 2, 1)
     gamma = float(np.mean(dg[diff]) / (2 * dims)) if diff.any() else float("nan")
-    return {"rho": rho, "eta": eta, "gamma": gamma, "vis": vis}
+    return {"rho": rho, "eta": eta, "gamma": gamma, "vis": vis, "lam": spectral_contraction(probe)}
+
+
+def spectral_contraction(probe: LocalProbe, n: int = N_JAC, q: float = Q_RESAMPLE) -> float:
+    s0 = probe.stationary(n)
+    F0 = probe.full(s0)
+    mf, Wf = _whitener(F0)
+    if Wf.shape[1] == 0:
+        return float("nan")
+    sp = probe.resample(s0, q)
+    X = (probe.full(sp) - F0) @ Wf
+    obs, nz = probe.symbols(n), probe.noise(n)
+    a = probe.step1(s0, obs, nz)
+    b = probe.step1(sp, obs, nz)
+    Y = (probe.full(b) - probe.full(a)) @ Wf
+    act = np.abs(X).sum(1) > 0
+    X, Y = X[act], Y[act]
+    if len(X) < 8:
+        return float("nan")
+    D = X.shape[1]
+    J = np.linalg.solve(X.T @ X + 1e-3 * len(X) * np.eye(D), X.T @ Y).T
+    return float(np.max(np.abs(np.linalg.eigvals(J))))
