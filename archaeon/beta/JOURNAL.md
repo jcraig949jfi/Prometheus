@@ -39,6 +39,7 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
 | B29 | leave-one-world-out training: invariant sensing? | NULL: train lift yes, held-out blind (0/3 worlds); invariant rule exists but unfound |
 | B32 | fresh random world each generation -> invariant sensing? | SUPPORTED_WITHIN_FAMILY: B34 paired +.048, 33/39 worlds, p<1e-5 (vs best specific: small); partly echo |
 | B35/B36 | echo-free world distribution; compare on echo-free worlds | YES: paired +.050 (23/5, p=.0009); specific .002; not pass-through |
+| B37 | wider distribution (delayed allowed) -> named-world transfer? | running (8 seeds, lease) |
 | B30 | do foragers carry state across ticks? | YES: 6/7 content sensors use state; blind ones in rewarding worlds 5/5 |
 | B31 | what do they remember? | 2504: 1-register direction memory; others computed state (not past observations) |
 | B17 | forced perception (echo on PUT) opens the 2-value wall? | staged; controls pass |
@@ -411,6 +412,11 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   cannot help, and echo-free training strengthens it. B32/B35 = SUPPORTED_WITHIN_FAMILY (caveats kept: within the
   generator family only; no named-world transfer; ~2/16 seeds fail). CORE-HOUR TALLY since 00:07Z: ~8 (B35 ~3 +
   decider/audits ~0.5 on top of ~4.5).
+- B37 launched ~03:35Z (transfer BEYOND the family): echo-free world distribution with DELAYED actions allowed in the
+  training draws (B32/B35 forced delayed off). 8 seeds (3701-3708), 8 procs, lease lse-cc09f8e0e4d1. Readout: lift on the
+  3 named NOCLOCK worlds (never in any training distribution) vs B35 echo-free elites, plus the B36 echo-free-world
+  comparison. PREDICTION: B37 elites reach lift >= .03 on >= 1 named world where B35 elites are <= 0 (named-world
+  transfer appears once the distribution covers delayed actions); B36-style family transfer stays >= +.03.
 - BUDGET WINDOW 2026-10-08 ~00:07Z. B29 already done (not relaunched). Lease lse-fe37dd77fe7a (spectrex5:cpu12,
   3 h) for B32 replication: 12 seeds (3211-3222), 10 procs, + B32's last cell on 2 procs = 12. CORE-HOUR TALLY
   (rolling 24 h from 00:07Z): 0 at launch; est. +3-4 for the replication.
