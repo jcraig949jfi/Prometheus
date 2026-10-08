@@ -42,6 +42,7 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
 | B37/B38 | wider distribution (delayed allowed) -> named-world transfer? | NO: named transfer ~0; family transfer collapses (+.009, p=.18) -- delayed worlds dilute |
 | B39 | what rule do the transferable foragers implement? | 6/8 = the INVARIANT rule (harvest index = position of non-empty pool .77-.92; move when empty) |
 | B40 | keyed memory under a K-distribution + wide jitter | NULL 0/8 general (4 one-value shelf, 4 floor) -- distribution lever does not cross an isolated peak |
+| B41/B42 | lethal hazards in training -> named-world transfer? | NULL; P-boom obstacle = rare food departures (8%) -> wander -> deaths 7/16 vs 1/16 |
 | B30 | do foragers carry state across ticks? | YES: 6/7 content sensors use state; blind ones in rewarding worlds 5/5 |
 | B31 | what do they remember? | 2504: 1-register direction memory; others computed state (not past observations) |
 | B17 | forced perception (echo on PUT) opens the 2-value wall? | staged; controls pass |
@@ -456,6 +457,17 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   most family worlds and lethal in a hazardous one. Next lever (B41): force lethal hazards in the training
   distribution so that moving while harvesting carries a cost. PREDICTION: B41 elites move <= half as often while
   food is present and reach P-boom lift >= .05 in >= 3/8 seeds.
+- B41 RESULT (lethal hazards forced in the echo-free training distribution; 8 seeds; lease released ~08:05Z): named
+  P-boom lift -.036 (0/8 >= .03), B-scatter +.044 (5/8), C6-unable -.009 (2/8). Move-while-food on P-boom B41 .129 vs
+  B35 .140; deaths/episode .336 vs .375. PREDICTION (move-while-food <= half; P-boom >= .05 in >= 3/8) FAILED.
+- B42 PER-TICK TRACE on P-boom (corrects B41a's magnitude): hand generalist on food 91% of ticks, empty 9%, moves 9%,
+  on-hazard 1.9%, deaths 1/16 -- in P-boom a harvested pool depletes but regenerates and never reaches 0, so the
+  generalist PARKS on the first food node for the rest of the episode. B35 3504/3501: on food 74%, empty 26%, moves 32%,
+  on-hazard 6.5%, deaths 7/16: they LEAVE food on ~8% of food ticks and each departure starts a long wander through
+  empty and hazard nodes (3502 never moves: 69% empty, stuck). B41a's mechanism ("moving while harvesting") is right
+  in KIND, wrong in MAGNITUDE (a rare departure with a large downstream cost). Training under lethal hazards did not
+  remove it. NAMED-WORLD TRANSFER PARKED with this as the mapped obstacle: within-family transfer is established
+  (B36/B39); crossing to P-boom needs a forager that never leaves a regenerating food node. CORE-HOUR TALLY: ~19.
 - BUDGET WINDOW 2026-10-08 ~00:07Z. B29 already done (not relaunched). Lease lse-fe37dd77fe7a (spectrex5:cpu12,
   3 h) for B32 replication: 12 seeds (3211-3222), 10 procs, + B32's last cell on 2 procs = 12. CORE-HOUR TALLY
   (rolling 24 h from 00:07Z): 0 at launch; est. +3-4 for the replication.
