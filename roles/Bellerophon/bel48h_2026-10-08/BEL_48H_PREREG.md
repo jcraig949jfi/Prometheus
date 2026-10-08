@@ -344,3 +344,7 @@ Endpoint: a first FUNC event within 100 ticks. Analysis tools/analyze_n1.py (com
 - N-P2: the mutation sensitivity is larger for NEEDLE than MOVE_RICH: bootstrap (over precursors) 95% CI of
   [NEEDLE diff - MOVE_RICH diff] lies above 0.
 - N-P3: at VLOW, MOVE_RICH completions are mostly non-mutational (UPTAKE + SELF_MOVE + BORN_ASSEMBLY > MUTATION).
+
+DISCLOSURE (2026-10-08T21:54:31Z): the N1 analysis smoke run (8 runs, pilot seeds 77,995,000+, 20 ticks, 2 precursors per class,
+excluded) printed per-class rates before the real runs: NEEDLE VLOW 0.0 / HIGH 0.5, MOVE_RICH 1.0 / 1.0 -- the predicted
+direction, at n far too small to inform the frozen thresholds above, which were written before the smoke run.
