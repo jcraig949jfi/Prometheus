@@ -36,3 +36,22 @@ L-0002, T2a, T3-DOWN, under A labels and under B labels; A/B agreement per famil
 - If sediment (the foreign family) alone fails while the C3 families pass, the result is recorded as
   FAMILY-BOUND (C3-authored worlds only), not as support.
 Any surviving candidate is frozen (firewall.Vault.freeze) BEFORE a CONFIRMATION batch is generated.
+
+## ADDENDUM 1 (2026-10-08, written while EXP-01 was running and BEFORE any EXP-01 label or coordinate was
+## examined; only row counts and timings had been seen) -- candidate C4-L-0003
+
+Motivation (from the literature and a planted case, not from EXP-01 data): L-0001 summarizes contraction by the
+spectral radius alone. For non-normal dynamics that is wrong: a shift register has spectral radius 0 and perfect
+memory for its length (Ganguli, Huh & Sompolinsky 2008, "Memory traces in dynamical systems", PNAS; White, Lee &
+Sompolinsky 2004). Transport-like families (sediment drift, stigmergic fields) are non-normal.
+
+C4-L-0003 (one fitted value, theta): from the LOCAL one-step description (sysid_local.local_lgss: J, B, Q, C; all
+from at most one controlled step, G7), compose the linear-Gaussian discriminability of the cue at the readout
+after the query:
+    d2 = mean over cue pairs of  dl' Sr^-1 dl,  dl = C J^(k+1) (B_c - B_c'),
+    Sr = C [ sum_{i=0..k+1} J^i Q J^i' + sum_{i=1..k} J^i S_B J^i' ] C',  S_B = cov of distractor injections
+    predict FUNCTIONAL iff log d2 > theta   (theta: LOFO, max BA on training families)
+The local description is recomputed for each EXP-01 world from its stored spec (no new labels, no new seeds for
+the certificates). L-0003 is scored with the SAME kill rule as L-0001 (vs T2a) and is compared with L-0001.
+If BOTH survive, the one with the higher mean within-family BA is the single candidate frozen for confirmation;
+the other is recorded, not discarded.

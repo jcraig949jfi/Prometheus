@@ -193,3 +193,59 @@ def spectral_contraction(probe: LocalProbe, n: int = N_JAC, q: float = Q_RESAMPL
     D = X.shape[1]
     J = np.linalg.solve(X.T @ X + 1e-3 * len(X) * np.eye(D), X.T @ Y).T
     return float(np.max(np.abs(np.linalg.eigvals(J))))
+
+
+def local_lgss(probe: LocalProbe, n: int = N_JAC, q: float = Q_RESAMPLE, ridge: float = 1e-3) -> Dict[str, np.ndarray]:
+    """The full LOCAL linear-Gaussian description, all from one controlled step (G7), in whitened units:
+      J  (D, D)       one-step response to resample perturbations (regressed)
+      B  (n_in, D)    one-step input injection per symbol, centred over symbols (same states, same noise)
+      Q  (D, D)       one-step noise injection covariance (noise twins, halved)
+      C  (Dr, D)      zero-step readout map (regressed d readout on d full)
+    A law may compose these into a k-step prediction; nothing here observed more than one step."""
+    s0 = probe.stationary(n)
+    F0, R0 = probe.full(s0), probe.readout(s0)
+    mf, Wf = _whitener(F0)
+    mr, Wr = _whitener(R0)
+    D = Wf.shape[1]
+    sp = probe.resample(s0, q)
+    X = (probe.full(sp) - F0) @ Wf
+    Xr = (probe.readout(sp) - R0) @ Wr
+    obs, nz = probe.symbols(n), probe.noise(n)
+    a = probe.step1(s0, obs, nz)
+    b = probe.step1(sp, obs, nz)
+    Y = (probe.full(b) - probe.full(a)) @ Wf
+    act = np.abs(X).sum(1) > 0
+    G = X[act].T @ X[act] + ridge * act.sum() * np.eye(D)
+    J = np.linalg.solve(G, X[act].T @ Y[act]).T
+    C = np.linalg.solve(G, X[act].T @ Xr[act]).T
+    a2 = probe.step1(s0, obs, probe.noise(n))
+    Dn = (probe.full(a2) - probe.full(a)) @ Wf
+    Q = (Dn.T @ Dn) / (2 * n)
+    Bm = []
+    for o in range(probe._n_in):
+        so = probe.step1(s0, np.full(n, o), nz)
+        Bm.append(((probe.full(so) - mf) @ Wf).mean(0))
+    Bm = np.array(Bm)
+    return {"J": J, "B": Bm - Bm.mean(0), "Q": Q, "C": C}
+
+
+def lgss_discriminability(L: Dict[str, np.ndarray], V: int, k: int, ridge: float = 1e-6) -> float:
+    """C4-L-0003 score: mean pairwise Mahalanobis discriminability (d^2) of the cue at the readout after the query,
+    composing the one-step description: cue injected at step 0, k distractor steps, one identical query step."""
+    J, B, Q, C = L["J"], L["B"], L["Q"], L["C"]
+    D = J.shape[0]
+    Jp = [np.eye(D)]
+    for _ in range(k + 1):
+        Jp.append(J @ Jp[-1])
+    dist = B[V:2 * V]
+    SB = np.cov(dist.T) if len(dist) > 1 else np.zeros((D, D))
+    Sx = sum(Jp[i] @ Q @ Jp[i].T for i in range(k + 2)) + sum(Jp[i] @ SB @ Jp[i].T for i in range(1, k + 1))
+    Sr = C @ Sx @ C.T
+    Sr = Sr + ridge * max(np.trace(Sr) / max(len(Sr), 1), 1e-12) * np.eye(len(Sr))
+    Si = np.linalg.pinv(Sr)
+    d2 = []
+    for c1 in range(V):
+        for c2 in range(c1 + 1, V):
+            dl = C @ Jp[k + 1] @ (B[c1] - B[c2])
+            d2.append(float(dl @ Si @ dl))
+    return float(np.mean(d2))
