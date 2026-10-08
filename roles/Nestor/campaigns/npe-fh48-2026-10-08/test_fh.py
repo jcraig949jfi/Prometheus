@@ -51,6 +51,18 @@ def test_dir1_order():
     assert any(ua > ub for ua, ub in seen)
 
 
+def test_veto1():
+    r = fh.make_runner(SEED, dict(epochs=3, order="VETO"))
+    seen = []
+    orig = r._pair_interact
+    def spy(i, a_, b_):
+        seen.append((r.cache.u(r._genome(a_)), r.cache.u(r._genome(b_))))
+        return orig(i, a_, b_)
+    r._pair_interact = spy
+    r.run()
+    assert seen and all(ua >= ub for ua, ub in seen) and getattr(r, "n_veto", 0) > 0
+
+
 def test_ms1_scales():
     r = fh.make_runner(SEED, dict(epochs=2, mut_scale=0.5, copy_scale=3.0))
     assert abs(r.mut_rate - 0.001) < 1e-12 and abs(r.copy_mut - 0.006) < 1e-12

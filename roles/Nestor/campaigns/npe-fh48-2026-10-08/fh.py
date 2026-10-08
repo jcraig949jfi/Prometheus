@@ -8,6 +8,7 @@ ADD37, pop 256, tier M) with these declared coordinates, each defaulting to XTG-
             SHUF   same formula, u read from two OTHER random live organisms (rate-matched, competence-blind)
             CONST  p = p_const for every pair (competence-blind)
   order     RANDOM side assignment (world default: shuffled list, alive[i] runs first = side 0)
+            VETO   order stays random; a pair whose side 0 is LESS competent than side 1 is skipped (prob q_dir)
             DIR    after the gate, the pair is ordered so the higher-u organism is side 0 (runs first) with
                    probability q_dir; ties keep the random order. Interaction COUNT is unchanged by order.
   mut_scale multiplies the world's mutation rate (ATOMIC write-back + post-interaction mutation)
@@ -165,6 +166,12 @@ def make_runner(seed, cfg=None):
                     ua, ub = self._u(a_), self._u(b_)
                     if ub > ua and dir_rng.random() < cfg["q_dir"]:
                         a_, b_ = b_, a_
+                elif cfg["order"] == "VETO":
+                    # defensive asymmetry: order stays random; a pair whose first mover is LESS competent than the
+                    # second is skipped with probability q_dir (the competent half cannot be overwritten by it)
+                    if self._u(a_) < self._u(b_) and dir_rng.random() < cfg["q_dir"]:
+                        self.n_veto = getattr(self, "n_veto", 0) + 1
+                        continue
                 elif cfg["order"] != "RANDOM":
                     raise ValueError(cfg["order"])
                 self._pair_interact(i, a_, b_)

@@ -139,6 +139,20 @@ declare("X-DIR-LONG",
               for s in SEEDS_L for k in (1, 4)])
 
 
+# X-VETO (EXPLORE, orthogonal falsifier, parent C-DIR-MAINTAIN): is COPY PRIORITY specifically required, or does any
+#   competence-coupled asymmetry of heredity maintain function? VETO = random order, but a pair whose first mover is
+#   less competent than the second is skipped (defensive: competence protects from being overwritten; it never grants
+#   the first move). CONST 0.15, 2000 epochs, CT_UA, 12 seeds 44_700_000 + s; arms VETO015, RND015, DIR015 (reference).
+#   Negatives are omitted by construction (u = 0 for CT_U / COPY_ONLY lineages -> VETO never fires; identical to RND).
+#   Classification: SIGNAL (any asymmetry suffices) if VETO maintains (final CS >= 0.10) in >= 75% of established runs
+#   and RND in <= 1; WEAK_SIGNAL if VETO's median last-CS>0 epoch >= 2x RND's without maintenance; CLEAN_NULL otherwise
+#   (copy priority specifically required).
+SEEDS_V = [44_700_000 + s for s in range(12)]
+declare("X-VETO",
+        jobs=[(arm, s, dict(gate="CONST", p_const=0.15, order=o)) for s in SEEDS_V
+              for arm, o in (("VETO015", "VETO"), ("RND015", "RANDOM"), ("DIR015", "DIR"))])
+
+
 if __name__ == "__main__":
     name = sys.argv[1]
     w = int(sys.argv[2]) if len(sys.argv) > 2 else 4
