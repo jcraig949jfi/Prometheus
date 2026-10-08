@@ -92,3 +92,20 @@ def test_rotation_equivalent_physics_same_coordinates():
     a = L.coordinates(_probe(Reservoir(TASK, .8, .3)))
     b = L.coordinates(_probe(RotReservoir(TASK, .8, .3)))
     assert b["rho"] == pytest.approx(a["rho"], rel=0.02)
+
+
+def test_lgss_orders_planted_memory():
+    """Composition from one-step physics ranks: noiseless delay line >> leaky reservoir >> memoryless."""
+    from prometheus.cosmos.c3.calib import DelayLine, NoMemory
+    t = Task(4, 4)
+    d = {}
+    for name, s in (("delay", DelayLine(t)), ("res", Reservoir(t, .9, .3)), ("none", NoMemory(t))):
+        d[name] = L.lgss_discriminability(L.local_lgss(L.LocalProbe(s, t.n_symbols, seed=1)), 4, 4)
+    assert d["delay"] > 100 * d["res"] > 0 and d["none"] < 1e-6
+
+
+def test_lgss_decreases_with_delay_for_leaky_channel():
+    t = Task(4, 2)
+    Lr = L.local_lgss(L.LocalProbe(Reservoir(t, .8, .3), t.n_symbols, seed=1))
+    ds = [L.lgss_discriminability(Lr, 4, k) for k in (2, 4, 8)]
+    assert ds[0] > ds[1] > ds[2]
