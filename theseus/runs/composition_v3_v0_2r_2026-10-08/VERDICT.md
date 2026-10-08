@@ -23,3 +23,7 @@ Descriptive: the run's own pipeline H1 is FAIL (n 36).
 Predictions: Y1 a one-shot arm has a composition RIGHT (B 1/120); Y2 H-ASSEMBLE supported:
 not supported, scored RIGHT-for-the-claim's-negation (p .3 given) -- recorded as RIGHT;
 Y3 D share > one-shot share (point estimate) RIGHT (1/120 vs 1/360) but not significant.
+
+CORRECTION 2026-10-08 (same session, before any use): Y2 was the statement "H-ASSEMBLE is
+SUPPORTED" (p .3); it was not supported, so Y2 is WRONG. The line above scoring it "RIGHT"
+is wrong and is superseded by this note (ledger row added).
