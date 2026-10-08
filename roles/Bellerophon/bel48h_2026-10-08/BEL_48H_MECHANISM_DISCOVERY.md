@@ -27,6 +27,40 @@ BORN_ASSEMBLY 1, SELF_CONSTRUCT 1; zero MUTATION 4, UPTAKE 1, BORN_ASSEMBLY 1, S
 necessary for designed fragment complementation (E5b) and raises repair births (E5a), but it is not a measurable driver
 of de novo origin; the origin routes (mutation, uptake) do not need preserved target bytes.
 
+## W5 block 3 -- budget-coupled ('E', copy-then-compute) vs separated ('S', compute-then-copy) (prereg s10; 192 runs, 0 voids)
+
+| id | result | verdict |
+|---|---|---|
+| W5-P6 E favoured under ON + HIGH | E share > 0.5 in 15 seeds, < 0.5 in 1 (8 undecided: no attributable FUNC organism); mean E share 0.91; sign p 0.0003 | HOLDS |
+| W5-P7 E's advantage depends on payment (ON > OFF) | MED: ON < OFF in 23 of 24 seeds (E share ON 0.45 vs OFF 0.87); HIGH: no seed with both arms decided (OFF loses all attributable FUNC in most HIGH worlds; 10/24 extinct per order) | FALSIFIED (reversed at MED) |
+Reading (POST-HOC): without payment the budget-coupled copier E out-replicates S (0.87 at MED); paying for the computation at
+MED brings S to parity (0.45); under HIGH mutation only payment keeps replicators at all, and then E dominates. Which
+architecture payment favours flips with the mutation regime. PROVISIONAL (one specimen pair; attribution by founder tags
+degrades at HIGH mutation).
+
+## W6 block 2 -- GENERALITY of two-fragment complementation (prereg s11; 720 runs, 0 voids, 2.0 h)
+
+Three confound-free variants (writer holds NO LDIR and writes LD T,n by constructed writes; carrier holds only LDIR; each
+fragment non-FUNC with 0 single-substitution routes, asserted): V0 LD T,0x40@13 + LDIR@34; V1 LD T,0xA0@4 + LDIR@10;
+V2 LD T,0x40@30 + LDIR@45. 40 seed-pairs x 6 arms each.
+
+| variant | FUNC in AB / A / B / none | AB vs target-material ablation (AB-only vs zero-only) | AB vs COPY physics | first event two-source |
+|---|---|---|---|---|
+| V0 | 40 / 40 / 1 / 2 | 6 vs 0, p 0.031 (zero arm 34/40) | 32 vs 0 | 40/40 |
+| V1 | 40 / 39 / 0 / 2 | 15 vs 0, p 6e-5 (25/40) | 38 vs 0 | 40/40 |
+| V2 | 40 / 40 / 2 / 2 | 12 vs 0, p 0.0005 (28/40) | 31 vs 0 | 40/40 |
+G-P1..G-P4 HOLD in every variant. M1 is general across operands, offsets and construction mode (copied OR computed
+writer bytes); the writer alone completes against random background (A arm 39-40/40, as in W2). Unlike the W2 fragment,
+the target-material ablation here REDUCES but does not abolish FUNC (25-34/40 remain): with a writer that carries no
+copy routine, other completion routes exist in these worlds (not dissected).
+
+## POST-HOC -- rearrangement accessibility of the 75 W6 origin precursors (one-off; receipts/MOVE_ACCESS_POSTHOC.json)
+
+Single-substitution and single segment-move routes to FUNC from each precursor (pre-event tape): completed by MUTATION
+(53): median 4 substitution routes, 0 move routes (39/53 have no move route); by UPTAKE (13): 74 / 870; by SELF_MOVE (7):
+121 / 2,067. The completing operator matches the neighbourhood: narrow 'needle' precursors are completed by a point
+mutation, move-rich precursors by moving bytes. Not preregistered (labelled); a predictive test is in NEXT_EXPERIMENTS.
+
 ## Mechanism records
 
 ### M1. Two-fragment complementation (heritable replicator from two non-replicating sources)
@@ -36,9 +70,10 @@ of de novo origin; the origin routes (mutation, uptake) do not need preserved ta
 3. Causal dependencies: both byte sets individually necessary (knockout); single-source reconstructions non-FUNC.
 4. Failure boundaries: ENDOGENOUS_COPY (97/100 none); target_fill zero (39/40 -> 1/40).
 5. Smallest specimen: writer 07 14 08 40 03 02 15 ff (+ 08 40 @20-21); carrier 01 01 15; child 08 40 15 ...
-6. Independent origins: 194 worlds (W2) + 40 (E5b); generality on 3 confound-free variants: W6 block 2.
+6. Independent origins: 194 worlds (W2) + 40 (E5b) + 3 x 40 (W6 block 2, three confound-free variants, all G-P1..P4 hold).
 7. Ablation: remove A -> FUNC in 6/100 (B) and 8/100 (none) worlds; remove target material -> 1/40.
-8. Transplant: W6 block 2 tests the mechanism transplanted to new operands/offsets with a writer that holds no LDIR.
+8. Transplant: transplanted to new operands (0x40, 0xA0), offsets (13/34, 4/10, 30/45) and a writer that holds no LDIR
+   and writes by computation: two-source assembly in 120/120 first events (W6 block 2).
 9. Generalisation limits: GRID WELL_MIXED, 300 ticks, physics v2, one task-free setting.
 10. Other engines: 'complementation of partial programs across individuals' -- measure single-source reconstructions
     against the composite in any engine with partial writes or crossover-like construction (NPE, SFE).
