@@ -36,3 +36,11 @@ C4-L-0004 (new id; L-0003's score, a new claim): "B-usability (linear actor) is 
 LOCAL-FMC units, with a COMMON boundary across families; transition sharpness may differ by family."
 It was shaped by multiple looks at discovery data and must be frozen in the vault, then scored once on fresh
 CONFIRMATION worlds. Until then: hypothesis only.
+
+## B5 family-identification test (R-STAT final, B5) on the same discovery data (EXPLORATORY)
+1-NN leave-one-out family ID (chance .25): LOCAL coordinate vector (lam, eta, gamma, vis) .908 -- vis alone .863
+(readout = full state in rnn and sediment, so vis = 1 there by construction); lam .53, eta .57, gamma .65.
+The COMPOSED L-0003 score log d2: .425 (with k: .396).
+=> the raw LOCAL coordinates are a family fingerprint and may enter a law only through within-family statistics
+(B5 rule); the composed scalar carries far less family identity, but not none. A frozen family-ID bound for the law
+input is required before F-0002.
