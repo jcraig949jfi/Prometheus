@@ -328,3 +328,29 @@ replay, `mine_ontape7.py`).
 **Children:**
 - C-ONTAPE-MAINTAIN (CONFIRM, both rulers).
 - X-ONTAPE-LONG: does the distributed form spread?
+
+## F9. X-VETO: SIGNAL. Any competence-coupled asymmetry of copy DIRECTION suffices; offense (DIR) and defense (VETO) are equivalent (EXPLORE, 36 runs)
+
+**Maintenance** (CONST 0.15, 2000 epochs, CT_UA):
+
+| arm | maintained (established runs) | final CS |
+|---|---|---|
+| VETO015 (random order; a pair whose first mover is less competent is skipped) | 12/12 | 0.82-0.89 |
+| DIR015 | 12/12 | 0.90-0.95 |
+| RND015 | 0/11 | -- |
+
+**Ledger (VETO vs DIR):**
+
+| quantity | VETO | DIR |
+|---|---|---|
+| competent-over-non-competent : reverse | 41,620 : 699 | 50,704 : 829 |
+| loss shares (in-place / copy error / copy mutation / overwrite) | 0.42 / 0.30 / 0.26 / 0.018 | the same |
+| hazard per competent interaction | 0.058 | 0.059 |
+
+**Reading:**
+- Removing the LOSING direction of exchange (defense) is mechanistically equivalent to granting the WINNING direction
+  (offense).
+- VETO's slightly lower equilibrium comes from the interactions it forgoes.
+- **Unifying principle (EXPLORE level; DIR confirmed, VETO not yet):** function is maintained iff competence biases
+  the DIRECTION of the copy exchange. Interaction-rate coupling fails because it is direction-symmetric (F2).
+- This holds whether the bias is imposed by an offline ruler (DIR / VETO) or earned on the tape (ONTAPE, F8).
