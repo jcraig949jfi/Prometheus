@@ -16,6 +16,7 @@ ADD37, pop 256, tier M) with these declared coordinates, each defaulting to XTG-
                    probability q_dir; ties keep the random order. Interaction COUNT is unchanged by order.
   mut_scale multiplies the world's mutation rate (ATOMIC write-back + post-interaction mutation)
   copy_scale multiplies the block-copy error rate (LDIR per-byte bit flip, z8 copy_mut_rate)
+  cell      run_dd.CELLS key (default ffa6, XTG-v2's); 7ae3 = Z8_64 representation, WELL_MIXED (scope test)
   plant     one planted genome at slot i = 0 (world implant), or None
   extra_plants  further planted genomes, written over organisms 1..k before the first interaction
 
@@ -60,14 +61,14 @@ from xtg2 import COMP_MIN, GATE_SEED, HELD_SEED, UseCache, PLANTS  # noqa: E402,
 
 L = 64
 TRAJ_EARLY, TRAJ_EVERY = 10, 50          # snapshot every 10 epochs to epoch 300, then every 50
-DEFAULT = dict(ontape_alpha=0.3, extra_plants=None, gate="TG", order="RANDOM", q_dir=1.0, p_const=0.15, gate_floor=0.15, mut_scale=1.0, copy_scale=1.0,
+DEFAULT = dict(cell=xtg2.CELL, ontape_alpha=0.3, extra_plants=None, gate="TG", order="RANDOM", q_dir=1.0, p_const=0.15, gate_floor=0.15, mut_scale=1.0, copy_scale=1.0,
                plant="CT_UA", n_plants=1, epochs=None, ledger=True)
 
 
 def make_runner(seed, cfg=None):
     cfg = dict(DEFAULT, **(cfg or {}))
     world, run_dd, run_ds = xtg2._import_world()
-    a = run_ds.cells()[run_dd.CELLS[xtg2.CELL]]
+    a = run_ds.cells()[run_dd.CELLS[cfg["cell"]]]
     cell = dict(a["cell"], atlas_axis="NONE", environment="STATIC", reproduction="PAIR_EXECUTION",
                 pressure="TASK_GATED_INTERACTION")
     plant = cfg["plant"]

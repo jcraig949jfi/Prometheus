@@ -193,6 +193,22 @@ declare("X-ONTAPE",
            for arm, pl in (("NEG_CTU_ONTAPE", "CT_U"), ("NEG_COPY_ONTAPE", "COPY_ONLY"))])
 
 
+# X-DIR-7AE3 (EXPLORE, scope/generalization, parent C-DIR-MAINTAIN): does the direction-vs-rate result hold in another
+#   world? The 7ae3 cell: same task (FORCED_READ ADD37), same ops (SELF, BLOCK copy, dense VM, ATOMIC runner), but
+#   Z8_64 representation (unslotted; OPERAND mutation hits real operand bytes only, so opcodes are never mutated by the
+#   world operator; copy errors still hit any byte) and WELL_MIXED structure. STATIC env, CONST 0.15, 2000 epochs,
+#   CT_UA; DIR015 vs RND015, 12 seeds 45_000_000 + s; negatives under DIR: CT_U, COPY_ONLY, 6 seeds.
+#   Classification: SIGNAL (generalizes) by X-DIR-QUAL's rule; CLEAN_NULL if DIR does not maintain; INVALID if
+#   CT_UA does not establish in >= 4/12 under either order (instrument unreachable in this cell) or a negative ends
+#   with CS >= 0.10.
+SEEDS_7 = [45_000_000 + s for s in range(12)]
+declare("X-DIR-7AE3",
+        jobs=[(arm, s, dict(cell="7ae3", gate="CONST", p_const=0.15, order=o)) for s in SEEDS_7
+              for arm, o in (("DIR015_7AE3", "DIR"), ("RND015_7AE3", "RANDOM"))]
+        + [(arm, s, dict(cell="7ae3", gate="CONST", p_const=0.15, order="DIR", plant=pl)) for s in SEEDS_7[:6]
+           for arm, pl in (("NEG_CTU_7AE3", "CT_U"), ("NEG_COPY_7AE3", "COPY_ONLY"))])
+
+
 if __name__ == "__main__":
     name = sys.argv[1]
     w = int(sys.argv[2]) if len(sys.argv) > 2 else 4
