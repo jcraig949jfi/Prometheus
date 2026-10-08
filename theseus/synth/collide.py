@@ -108,8 +108,11 @@ def _mark(rule, cid, how):
     return rule
 
 
-def collide(parents, tensor, cid, extra_seed=0, operators=None):
-    """parents: ordered list of entity dicts. Returns (genome, record)."""
+def collide(parents, tensor, cid, extra_seed=0, operators=None, law=True):
+    """parents: ordered list of entity dicts. Returns (genome, record).
+
+    law=False (THESEUS-28 ablation): the k-ary interaction law is generated (so every RNG
+    draw is identical to law=True) but NOT inserted into the child."""
     k = len(parents)
     rng = np.random.default_rng(_seed("collide", cid, [p["id"] for p in parents], extra_seed))
     genomes = []
@@ -209,6 +212,9 @@ def collide(parents, tensor, cid, extra_seed=0, operators=None):
 
     rules = flat[:]
     pos = int(rng.integers(len(rules) + 1))
+    if not law:
+        laws = []
+        law_record["ablated"] = True
     rules[pos:pos] = laws
     rules += extra
     if len(rules) > sb.MAXRULES:
