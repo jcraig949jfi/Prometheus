@@ -85,6 +85,22 @@ class Config:
     reg_zero_p: float = 0.0             # CARRIED only: before each execution the entry registers are reset to zero with this
                                         # probability (NPE's SCHEDULE text: "ZERO applied with probability p, else CARRIED"),
                                         # drawn from the per-run register RNG; 0.0 = plain CARRIED; omitted from to_dict() at 0.0
+    # defect repairs (2026-10-06, DEF-BEL-008/009 from Nestor #1207; roles/Bellerophon/WORK_STATE.json). Opt-in: the defaults are
+    # the historical behaviour and are omitted from to_dict(), so every historical config dict, plan hash and replay is unchanged.
+    glineage_rule: str = "RESEMBLANCE"  # RESEMBLANCE = historical: a birth's GENETIC source is whichever tape (writer or overwritten
+                                        # target) the child resembles more -- a content test, not a descent label (DEF-BEL-008).
+                                        # PROVENANCE = by the MATERIAL ORIGIN of each child byte (vm Trace.win_origin, tracked
+                                        # through every copy-op and register-A move of the execution, multi-hop, 2026-10-08):
+                                        # an unwritten byte is the target's; a written byte whose pre-execution origin lies in
+                                        # [0,L) is the writer's, in [L,2L) the target's; constructed or outside-sourced bytes
+                                        # count for neither. Source = target iff its byte count is strictly larger (ties ->
+                                        # writer, as RESEMBLANCE). Material ancestry, not functional parentage (see the BEL-48H
+                                        # review record). 'captures' counts different things under the two rules.
+    init_draws: str = "HISTORICAL"      # HISTORICAL = a transplanted or seeded slot takes 0 world-RNG draws and a random slot L, so
+                                        # same-seed worlds that differ in their transplant/seed layout desynchronise the world
+                                        # RNG from init on (not CRN-paired, DEF-BEL-009). PAIRED = every filled slot draws its L
+                                        # random bytes first and a transplant/seed then replaces them: the world RNG is identical
+                                        # after init whatever the layout.
 
     @property
     def L(self) -> int:
@@ -112,7 +128,8 @@ class Config:
 
     def to_dict(self) -> dict:
         return {k: getattr(self, k) for k in self.__dataclass_fields__
-                if not ((k == "reg_world" and self.reg_world == "ZERO") or (k == "reg_zero_p" and self.reg_zero_p == 0.0))}
+                if not ((k == "reg_world" and self.reg_world == "ZERO") or (k == "reg_zero_p" and self.reg_zero_p == 0.0)
+                        or (k == "glineage_rule" and self.glineage_rule == "RESEMBLANCE") or (k == "init_draws" and self.init_draws == "HISTORICAL"))}
 
 
 @dataclass
@@ -149,6 +166,10 @@ class World:
             raise ValueError("register-world axis: SHARED layout only")      # review tsk-c26c09590d3b fix 2 (was assert)
         if cfg.reg_zero_p and (cfg.reg_world != "CARRIED" or not 0.0 < cfg.reg_zero_p < 1.0):
             raise ValueError("reg_zero_p needs reg_world CARRIED and 0 < p < 1")
+        if cfg.glineage_rule not in ("RESEMBLANCE", "PROVENANCE"):
+            raise ValueError("unknown glineage_rule %r" % cfg.glineage_rule)       # a typo must not run silently as historical
+        if cfg.init_draws not in ("HISTORICAL", "PAIRED"):
+            raise ValueError("unknown init_draws %r" % cfg.init_draws)
         self._pre_regs = None
         self.reg_rng = random.Random("reg_world|%d" % seed) if (cfg.reg_world == "RANDOM" or cfg.reg_zero_p) else None
         self.L = cfg.L
@@ -259,7 +280,9 @@ class World:
             mk = vm.hybrid if cfg.physics == "v1" else vm.hybrid_relocated        # v2 (H1): the task code's jumps are relocated
             seed_tape = mk(rep, self._witness_for(self._seed_task()))
         transplant = [bytearray(bytes.fromhex(h))[:self.L] for h in cfg.init_tapes] if cfg.init_tapes else []
+        paired = cfg.init_draws == "PAIRED"
         for k, i in enumerate(fill):
+            bg = self._random_tape() if paired else None                   # DEF-BEL-009: every slot consumes the same L draws
             if transplant and k < max(1, len(fill) // 4):                 # a transplanted minority (a quarter) into a random majority
                 t = bytearray(self.L); src = transplant[k % len(transplant)]; t[:len(src)] = src
                 self._spawn(i, t, None, "transplant")
@@ -267,7 +290,7 @@ class World:
                 t = bytearray(self.L); t[:len(seed_tape)] = seed_tape
                 self._spawn(i, t, None, "seed")
             else:
-                self._spawn(i, self._random_tape(), None, "init")
+                self._spawn(i, bg if paired else self._random_tape(), None, "init")
 
     def _seed_task(self) -> Task:
         """v1: niche 0's task (ECHO in a RESERVOIR world, a different rung under PER_NICHE -- forensics C4);
@@ -377,9 +400,12 @@ class World:
             mem[vm.IN_BASE + k] = v
         if cfg.layout == "SEPARATED":
             tr1 = vm.execute(mem, L, 0, cfg.budget // 2, inputs, region=(0, L // 2), allow_copyall=cfg.allow_copyall, strict_budget=sb, **cfg.chem)
-            tr2 = vm.execute(mem, L, L // 2, cfg.budget // 2, inputs, region=(L // 2, L), allow_copyall=cfg.allow_copyall, strict_budget=sb, **cfg.chem)
+            tr2 = vm.execute(mem, L, L // 2, cfg.budget // 2, inputs, region=(L // 2, L), allow_copyall=cfg.allow_copyall, strict_budget=sb,
+                             origin=tr1.origin, **cfg.chem)
             tr = tr1
             tr.win_prov.update(tr2.win_prov)                                  # measurement only (later writes win)
+            tr.origin = tr2.origin                                            # tr2 started from tr1's map: it is the final one
+            tr.win_origin = {off: tr2.origin.get(L + off, L + off) for off in tr.win_prov}
             tr.steps += tr2.steps; tr.outputs = tr1.outputs + tr2.outputs
             tr.reads_in += tr2.reads_in; tr.self_writes += tr2.self_writes; tr.neighbour_writes += tr2.neighbour_writes
             tr.copy_events += tr2.copy_events; tr.io_writes += tr2.io_writes; tr.io_corrupt += tr2.io_corrupt; tr.neighbour_reads += tr2.neighbour_reads
@@ -556,11 +582,20 @@ class World:
         self._register_offspring(j, child, o, physics, fid, tr, replaced=target)
 
     def _register_offspring(self, j: int, child: bytearray, parent: Org, mechanism: str, fidelity: float, tr, replaced: Optional[Org]) -> None:
-        # the WRITER is the causal parent; the GENETIC source is whichever tape the child's bytes resemble more --
+        # the WRITER is the causal parent; under RESEMBLANCE the GENETIC source is whichever tape the child's bytes resemble more --
         # the writer's, or the target's own previous contents (a writer can rewrite its partner as a shifted copy of
         # itself: "code capture", the byte-soup ambiguity made explicit rather than hidden)
         material = "writer"; glin = parent.glineage
-        if replaced is not None:
+        if self.cfg.glineage_rule == "PROVENANCE":
+            n_w, n_t = self._provenance_counts(tr, replaced)
+            if n_w == 0 and n_t == 0:
+                material = "constructed"                   # no moved material at all: the writer built it (label stays the writer's)
+            if replaced is not None and n_t > n_w:
+                L = self.L
+                material = "target"; glin = replaced.glineage
+                self.captures += 1
+                fidelity = 1.0 - sum(1 for x, y in zip(child, replaced.tape) if x != y) / L
+        elif replaced is not None:
             L = self.L
             fid_target = 1.0 - sum(1 for x, y in zip(child, replaced.tape) if x != y) / L
             if fid_target > fidelity:
@@ -577,7 +612,7 @@ class World:
         c = self._spawn(j, child, parent.id, mechanism, lineage=parent.lineage, glineage=glin)     # fresh energy, no registers: nothing non-heritable travels
         if self.cfg.reg_world == "CARRIED" and replaced is not None:
             c.regs = replaced.regs                         # the overwritten occupant's registers stay in the cell (NPE CARRIED text)
-        if self.cfg.physics == "v1" or material == "writer":            # v2 (C8): a capture birth credits no writer
+        if self.cfg.physics == "v1" or material != "target":            # v2 (C8): a capture birth credits no writer
             parent.replications += 1; parent.last_repro_tick = self.tick
             parent.fidelity_last = fidelity
             parent.repro_span = tr.pc_max + 1
@@ -616,6 +651,27 @@ class World:
             self.first_replication = {"tick": self.tick, "id": parent.id, "lineage": parent.lineage, "tape": bytes(parent.tape).hex(),
                                       "mechanism": mechanism, "fidelity": fidelity, "span": tr.pc_max + 1, "genealogy": self._ancestry(parent.id),
                                       "seeded": parent.glineage in self.seed_lineages or (glin in self.seed_lineages)}
+
+    def _provenance_counts(self, tr, replaced: Optional[Org]) -> Tuple[int, int]:
+        """glineage_rule PROVENANCE (DEF-BEL-008): (writer bytes, target bytes) of the child by MATERIAL ORIGIN, never by
+        what the child resembles. Unwritten bytes are the target's (none when the cell was empty or under target_fill
+        zero). A written byte counts by its pre-execution origin address (Trace.win_origin, multi-hop): [0,L) writer,
+        [L,2L) target (none if the cell was empty); constructed (None) or outside [0,2L) counts for neither."""
+        L = self.L; orig = tr.win_origin
+        has_target = replaced is not None and self.cfg.target_fill != "zero"
+        n_w = n_t = 0
+        for off in range(L):
+            if off not in orig:
+                n_t += has_target
+                continue
+            o = orig[off]
+            if o is None:
+                continue
+            if o < L:
+                n_w += 1
+            elif o < 2 * L:
+                n_t += replaced is not None
+        return n_w, n_t
 
     def _is_self_copy(self, child: bytearray, parent: Org, material: str, tr) -> Tuple[bool, float]:
         """SELF_REPLICATION: the child's bytes came from the writer's OWN tape, moved by a copy instruction the writer's
