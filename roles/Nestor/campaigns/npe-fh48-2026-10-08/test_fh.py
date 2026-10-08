@@ -63,6 +63,24 @@ def test_veto1():
     assert seen and all(ua >= ub for ua, ub in seen) and getattr(r, "n_veto", 0) > 0
 
 
+def test_xp1_extra_plants():
+    import exp
+    ctw = exp.CT_W
+    r = fh.make_runner(SEED, dict(epochs=1, extra_plants=[ctw]))
+    r.run()
+    gs = [r._genome(o) for o in r.orgs]
+    assert gs[0][:7] == fh.PLANTS["CT_UA"][:7]
+    assert r.roots and sum(1 for k in r.roots if k["kind"] == "INIT") == 2
+
+
+def test_js1_bytes_plant_row_serializes():
+    """DEF-FH-2 regression: run_one with a bytes plant and bytes extra plant must write its row."""
+    import tempfile, json, exp
+    d = tempfile.mkdtemp()
+    rec = fh.run_one("T", "JS", SEED, dict(epochs=2, plant=exp.ct_ua_add(0x24), extra_plants=[exp.CT_W]), d)
+    assert json.loads(open(d + "/JS_%d.json" % SEED).read())["cfg"]["plant"]["hex"] == exp.ct_ua_add(0x24).hex()
+
+
 def test_ms1_scales():
     r = fh.make_runner(SEED, dict(epochs=2, mut_scale=0.5, copy_scale=3.0))
     assert abs(r.mut_rate - 0.001) < 1e-12 and abs(r.copy_mut - 0.006) < 1e-12

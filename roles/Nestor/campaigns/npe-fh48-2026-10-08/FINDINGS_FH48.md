@@ -187,3 +187,18 @@ LD at 7-15; XOR, branch and ADD 37 at 21-31.
 | selection on function | PRESENT only under directional coupling |
 | architectural integration | not observed; neutral rewiring of vestigial code seen (F4) |
 | endogenous re-discovery | testing |
+
+## Defects (continued)
+
+**DEF-FH-2 (instrument; it crashed a whole experiment):** `summarize` stored the run cfg verbatim. A plant given as
+raw bytes, as X-REDISCOVER's variants are, made the row write fail with a TypeError, so every X-REDISCOVER job
+failed. No row was written and no result was lost; the orphan detail files were deleted.
+- Repaired: `_jsonable` writes bytes as {"hex": ...}.
+- Regression: JS-1. The production TypeError is the failing case.
+- X-REDISCOVER is re-queued unchanged.
+
+**Queue tooling:**
+- `runqueue.py` was first named `queue.py`, which shadowed the stdlib `queue` that multiprocessing imports. It failed
+  at once, with no runs.
+- Its `--after` wait line had a broken string literal; the process died before waiting.
+- Both were caught before any run and fixed.

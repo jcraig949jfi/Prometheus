@@ -14,6 +14,7 @@ ADD37, pop 256, tier M) with these declared coordinates, each defaulting to XTG-
   mut_scale multiplies the world's mutation rate (ATOMIC write-back + post-interaction mutation)
   copy_scale multiplies the block-copy error rate (LDIR per-byte bit flip, z8 copy_mut_rate)
   plant     one planted genome at slot i = 0 (world implant), or None
+  extra_plants  further planted genomes, written over organisms 1..k before the first interaction
 
 LEDGER (exact, per interaction, per half; uses the pre-interaction genomes and the world's own mutate calls):
   competent half (u_gate >= 0.75 before the interaction):
@@ -56,7 +57,7 @@ from xtg2 import COMP_MIN, GATE_SEED, HELD_SEED, UseCache, PLANTS  # noqa: E402,
 
 L = 64
 TRAJ_EARLY, TRAJ_EVERY = 10, 50          # snapshot every 10 epochs to epoch 300, then every 50
-DEFAULT = dict(gate="TG", order="RANDOM", q_dir=1.0, p_const=0.15, gate_floor=0.15, mut_scale=1.0, copy_scale=1.0,
+DEFAULT = dict(extra_plants=None, gate="TG", order="RANDOM", q_dir=1.0, p_const=0.15, gate_floor=0.15, mut_scale=1.0, copy_scale=1.0,
                plant="CT_UA", n_plants=1, epochs=None, ledger=True)
 
 
@@ -125,6 +126,14 @@ def make_runner(seed, cfg=None):
             return len(self.roots) - 1
 
         def _init_state(self):
+            extra = cfg.get("extra_plants") or []
+            if extra:                               # organisms 1..k get the extra plants (organism 0 = world implant)
+                alive0 = [o for o in self.orgs if o.alive]
+                for o, gx in zip(alive0[1:1 + len(extra)], extra):
+                    gx = PLANTS[gx] if isinstance(gx, str) else bytes(gx)
+                    self.mem[o.slot:o.slot + self.slot_size] = bytes(self.slot_size)
+                    self.mem[o.slot:o.slot + len(gx)] = gx
+                    o.length = len(gx)
             for o in self.orgs:
                 if o.alive and o not in self.st:
                     c = self._c(self._genome(o))
@@ -350,12 +359,23 @@ def summarize(r, out):
         "pairs": r.n_pairs, "interactions": r.n_inter, "interaction_rate": round(r.n_inter / max(1, r.n_pairs), 4),
         "ledger": r.led, "tx": r.tx, "side": r.side, "exposure": r.exposure,
         "n_mut_on_comp": r.n_mut_on_comp, "roots": _count(x["kind"] for x in r.roots),
-        "traj": t, "cfg": {k: v for k, v in r.cfg.items()},
+        "traj": t, "cfg": _jsonable(r.cfg),
     }
     detail = {"pos_loss": r.pos_loss, "pos_mut_on_comp": r.pos_mut_on_comp, "loss_examples": r.loss_examples,
               "ledger_series": r.ledger_series, "dom_series": r.dom_series, "competent_genomes_final": gen,
               "organisms": [{k: v for k, v in x.items() if k != "g" or x["comp"]} for x in rows]}
     return rec, detail
+
+
+def _jsonable(x):
+    """cfg -> JSON (DEF-FH-2: a plant given as bytes crashed the row write and failed the whole experiment)."""
+    if isinstance(x, (bytes, bytearray)):
+        return {"hex": bytes(x).hex()}
+    if isinstance(x, dict):
+        return {k: _jsonable(v) for k, v in x.items()}
+    if isinstance(x, (list, tuple)):
+        return [_jsonable(v) for v in x]
+    return x
 
 
 def _count(it):

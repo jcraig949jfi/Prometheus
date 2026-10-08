@@ -67,6 +67,10 @@ declare("X-DIR-QUAL",
            for arm, pl in (("NEG_CTU_DIR015", "CT_U"), ("NEG_COPY_DIR015", "COPY_ONLY"))])
 
 
+CT_W = bytes.fromhex("ED327DEE405FE5DB0047DB00A847DB00FE00280678C625D3007678D3007679A4B8C83F4C602745135FECC26DAE628982C868A00D"
+                     "767F86F5E75EB8C61DE6C7F9")      # W2-10 CT_W: copier + tasks.witness(FORCED_READ ADD37)
+
+
 # --------------------------------------------------------------------------- 3. after X-DIR-QUAL
 def ct_ua_add(v):
     """CT_UA with its ADD-37 operand (byte 31) replaced: a copier whose task routine is one constant away from use."""
@@ -151,6 +155,23 @@ SEEDS_V = [44_700_000 + s for s in range(12)]
 declare("X-VETO",
         jobs=[(arm, s, dict(gate="CONST", p_const=0.15, order=o)) for s in SEEDS_V
               for arm, o in (("VETO015", "VETO"), ("RND015", "RANDOM"), ("DIR015", "DIR"))])
+
+
+# X-ARCH-COMPETE (EXPLORE, parent C-DIR-MAINTAIN, F4): does selection on function also select the more ROBUST
+#   implementation? Two fully competent architectures planted together under DIR: CT_UA (routine 32 bytes, single-byte
+#   robustness 0.69) and CT_W (routine 24 bytes, robustness 0.75, copy keeps task 1.0). Both have u = 1, so DIR ties
+#   them (random order between them); only their mutational leak differs. Plant slot is alternated by seed parity
+#   (even: CT_UA at i = 0, CT_W at i = 1; odd: swapped). CONST 0.15, DIR, 2000 epochs, k in {1, 4}, 12 seeds
+#   44_800_000 + s. Readout: final competent genomes assigned to the nearer construct (Hamming); CT_W-family share.
+#   Classification: SIGNAL if the CT_W family holds > 0.5 of the final competent organisms in >= 75% of runs with final
+#   competence at k = 4 AND in a majority at k = 1; WEAK_SIGNAL if only at k = 4; CLEAN_NULL if neither (no selection
+#   among architectures beyond drift).
+SEEDS_AC = [44_800_000 + s for s in range(12)]
+declare("X-ARCH-COMPETE",
+        jobs=[("AC_K%02d" % k, s, dict(gate="CONST", p_const=0.15, order="DIR", mut_scale=k, copy_scale=k,
+                                       plant=("CT_UA" if s % 2 == 0 else CT_W),
+                                       extra_plants=[CT_W if s % 2 == 0 else "CT_UA"]))
+              for s in SEEDS_AC for k in (1, 4)])
 
 
 if __name__ == "__main__":
