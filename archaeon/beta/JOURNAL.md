@@ -586,6 +586,15 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   runs, B48/B49/B51) and, where it appears and pays, it used self-modifying code (B51) -- not reached at a usable rate
   by any VM, world, incentive, selection or mutation lever tried.
   CORE-HOUR TALLY since 00:07Z: ~44 of 48. No more heavy runs this window.
+- PLAN FOR THE NEXT WINDOW (opens ~2026-10-09 00:07Z; lease spectrex5:cpu12, <= 12 procs, <= 48 core-h):
+  1. REPRESENTATION lever for the memory law (the one lever not yet tried): a KV-store organism (two opcodes replacing
+     RND/YIELD: STK r_key, r_val writes a hidden dict; LDK r_dst, r_key reads it). Question: is keyed memory reached
+     when the representation makes "store by key / read by key" single instructions? Controls first (hand KV solver
+     on W2_K2 / K3-K8; slot solver; delay line), 8 seeds W2_K2-wide, held-out 64 x 4. PREDICTION: >= 3/8 (if not even
+     this, the wall is in WIRING the right registers to the right control path, not in the memory primitive).
+  2. Self-modifying route RATE: 16 writable large-tape seeds on L4 at G=600 (B51/B52 suggest ~1/12-1/16 at G=300).
+  3. P-boom transfer: family with regenerating food + dense lethal hazards so that PARKING pays (B42 obstacle).
+  Each with the B45 held-out standard, blind / echo twins where relevant, and the controls.py audit before any claim.
 - BUDGET WINDOW 2026-10-08 ~00:07Z. B29 already done (not relaunched). Lease lse-fe37dd77fe7a (spectrex5:cpu12,
   3 h) for B32 replication: 12 seeds (3211-3222), 10 procs, + B32's last cell on 2 procs = 12. CORE-HOUR TALLY
   (rolling 24 h from 00:07Z): 0 at launch; est. +3-4 for the replication.
