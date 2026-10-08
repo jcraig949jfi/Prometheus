@@ -38,6 +38,10 @@ import random  # noqa: E402
 import time  # noqa: E402
 
 import paths  # noqa: E402,F401
+# b02 FIRST: its import chain (r7e -> t51_natural) sets A18_TAG = "T51" before a18 is imported, and a18.TAG enters
+# every OBSERVE/VALIDATE cell label. Importing a17/gtc before b02 silently freezes TAG = "V2B" and changes every cell
+# (found in development: seed 26 O4 observed 4 programs instead of Beta-02's 7). donor12 asserts the tag.
+import b02  # noqa: E402,F401
 import a17  # noqa: E402
 import gtc  # noqa: E402
 import walk  # noqa: E402
@@ -189,8 +193,15 @@ def root_split(schema):
     return None
 
 
-def near_miss(derived, seed):
-    """derived: T3D.derive_schemas output (dicts with schema, n_pairs). Returns (schema, source) or (None, reason)."""
+def near_miss(derived, seed, cells=None):
+    """derived: T3D.derive_schemas output (dicts with schema, n_pairs). Returns (schema, meta) or (None, reason).
+    Source: the best-SUPPORTED derived schema (max LGG n_pairs, ties to the schema text; an observation statistic,
+    not an outcome). Perturbation: its root operator replaced by another engine primitive. Valid alternatives
+    instantiate >= 2 in-space bodies and are not literally or extensionally (ruler v2.1) equal to any derived schema.
+    ATTRACTIVENESS (weak validation): among valid alternatives, take the one with a dev-consistent program on the most
+    VALIDATE cells (a18.hits_any_cell per cell: the cheap first-hit evidence I_0's charge saving rewards); ties go to
+    a seeded rng order (NEAR_TAG % seed). No tribunal outcome and no transfer outcome is read."""
+    import a18
     import engine as E
     if not derived:
         return None, "no_derived_schema"
@@ -203,14 +214,20 @@ def near_miss(derived, seed):
     rng = random.Random(I._seed(NEAR_TAG % seed))
     rng.shuffle(alts)
     known = [d["schema"] for d in derived]
+    valid = []
     for n in alts:
         w = E.PRIMITIVES[n][1].format(a, b)
-        if len(T3D.instantiate(w)) < 2 or w in known:
+        if len(T3D.instantiate(w)) < 2 or w in known or w in valid:
             continue
         if any(INS.equal_extensional(w, k) for k in known):
             continue
-        return w, src
-    return None, "no_valid_perturbation"
+        valid.append(w)
+    if not valid:
+        return None, "no_valid_perturbation"
+    att = {w: (sum(1 for c in cells if a18.hits_any_cell(w, [c])) if cells else 0) for w in valid}
+    best = max(valid, key=lambda w: (att[w], -valid.index(w)))
+    return best, {"source": src, "dev_consistent_cells": att[best], "n_cells": len(cells or []),
+                  "alternatives": {w: att[w] for w in valid}}
 
 
 def memo_plant(classes):
@@ -236,27 +253,82 @@ def _cells_used(cells):
     return out
 
 
-def walk_table(cands, cells, prov, cap=SEL_CAP):
-    """name -> list of per-cell first_qualified results (same order as cells). Identical libraries walk once."""
+FAST_PREFIX = True        # exact prefix decomposition (see compose_prefix); False = full walk of every candidate
+
+
+def compose_prefix(rp, n_prefix, ri, cap=SEL_CAP, max_spur=MAX_SPURIOUS):
+    """EXACT first_qualified result of the library prefix + START from (rp = walk of KLib(prefix) to
+    min(cap, n_prefix), n_prefix = KLib(prefix).size(), ri = walk of KLib(START) to cap).
+    iter_hits walks entries in order and charges exactly size() for a full prefix, and keyed orders depend only on
+    (items, cell seed); so after the prefix the walk is START's walk shifted by n_prefix, with the spurious count
+    carried over. Checked against full walks on real cells in the slow test."""
+    if not rp["censored"]:
+        return rp
+    if rp.get("stopped") == "max_spurious":
+        return dict(rp, charge=cap, composed=True)
+    sp = rp["spurious_before"]
+    if n_prefix >= cap:
+        return {"charge": cap, "program": None, "spurious_before": sp, "censored": True}
+    rem = cap - n_prefix
+    # START-part events within `rem`: a qualified hit at ri.charge (if <= rem) after ri.spurious_before spurious;
+    # a spurious stop happens if sp + (spurious before that point) reaches max_spur.
+    if not ri["censored"] and ri["charge"] <= rem and sp + ri["spurious_before"] < max_spur:
+        return {"charge": n_prefix + ri["charge"], "program": ri["program"],
+                "spurious_before": sp + ri["spurious_before"], "censored": False, "composed": True}
+    # otherwise no qualified program at <= cap (START has none within rem, or the carried spurious budget runs out
+    # first). The censored charge is recorded as cap; every consumer treats a censored walk as cap.
+    return {"charge": cap, "program": None, "spurious_before": None, "censored": True, "composed": True}
+
+
+def walk_table(cands, cells, prov, cap=SEL_CAP, start=None):
+    """name -> list of per-cell first_qualified results (same order as cells). Identical libraries walk once.
+    With FAST_PREFIX and a candidate of the form prefix + START, only the prefix is walked (exact; compose_prefix)."""
     import meta_tribunal as M
     import tribunal_t4 as T4v1
     saved = (M._P, T4v1._P)
     try:
         quals = {}
-        cache, out, n_walks = {}, {}, 0
-        for name, ents in cands.items():
+        cache, out, n_walks, charges = {}, {}, 0, 0
+
+        def q(c):
+            if c.family not in quals:
+                quals[c.family] = INS.qualifier(prov, c.family, *TRIBUNAL)
+            a17.M.use_provider(prov)
+            return quals[c.family]
+
+        def full(lib):
+            nonlocal n_walks, charges
+            res = []
+            for c in cells:
+                r = walk.first_qualified(lib, c, cap, q(c), MAX_SPURIOUS)
+                res.append(r)
+                n_walks += 1
+                charges += r["charge"]
+            return res
+        order = sorted(cands, key=lambda n: n != REF)            # INHERITED first
+        for name in order:
+            ents = cands[name]
             lib = FR.KLib(ents)
             key = hashlib.sha256(lib.content()).hexdigest()
-            if key not in cache:
+            if key in cache:
+                out[name] = cache[key]
+                continue
+            ns = len(start or [])
+            if (FAST_PREFIX and name != REF and start and len(ents) > ns and ents[len(ents) - ns:] == start
+                    and REF in out):
+                pre = FR.KLib(ents[:len(ents) - ns])
+                npre = pre.size()
                 res = []
-                for c in cells:
-                    if c.family not in quals:
-                        quals[c.family] = INS.qualifier(prov, c.family, *TRIBUNAL)
-                    a17.M.use_provider(prov)
-                    res.append(walk.first_qualified(lib, c, cap, quals[c.family], MAX_SPURIOUS))
+                for c, ri in zip(cells, out[REF]):
+                    rp = walk.first_qualified(pre, c, min(cap, npre), q(c), MAX_SPURIOUS)
                     n_walks += 1
+                    charges += rp["charge"]
+                    res.append(compose_prefix(rp, npre, ri, cap))
                 cache[key] = res
+            else:
+                cache[key] = full(lib)
             out[name] = cache[key]
+        walk_table.last_charges = charges
         return out, n_walks
     finally:
         M._P, T4v1._P = saved
@@ -320,14 +392,14 @@ def install(seed, prov, arm="g12", plants=True):
             if mp:
                 cands["PLANT_MEMO"] = mp + start
             info["memo_plant_programs"] = len(mp)
-            nm, src = near_miss(ctx["derived"] or [], seed)
+            nm, meta = near_miss(ctx["derived"] or [], seed, cells)
             if nm:
                 cands["PLANT_NEAR"] = [a17.schema_entry("g2_new", nm)] + start
-            info["near_miss"] = {"schema": nm, "source_or_reason": src}
+            info["near_miss"] = {"schema": nm, "meta": meta}
         used = _cells_used(cells)
         fs = folds([c.family for c in used], seed)
         sha_of = {n: FR.KLib(e).sha256() for n, e in cands.items()}
-        W, nw = walk_table(cands, used, prov)
+        W, nw = walk_table(cands, used, prov, SEL_CAP, start)
         t1 = time.perf_counter()
         table = table_from_walks(W, cands, start, used, fs, sha_of, SEL_CAP, prov)
         arms = {a: arm_choice(table, a) for a in ARMS}
@@ -340,7 +412,9 @@ def install(seed, prov, arm="g12", plants=True):
         LAST.update({"folds": fs, "table": table, "arms": arms, "info": info, "i0": i0, "n_walks": nw,
                      "n_cells": len(used), "walk_seconds": round(t1 - t0, 1),
                      "i0_seconds": round(time.perf_counter() - t2, 1), "cands": cands,
-                     "walks": {n: [[r["charge"], bool(r["censored"]), r.get("stopped")] for r in W[n]] for n in W},
+                     "walks": {n: [[r["charge"] if not r["censored"] else SEL_CAP, bool(r["censored"]), r.get("stopped")]
+                               for r in W[n]] for n in W}, "walk_charges": walk_table.last_charges,
+                     "programs": {n: [r["program"] for r in W[n]] for n in W},
                      "cell_ids": [[c.family, c.r] for c in used]})
         vcost = sum(r[0] for v in LAST["walks"].values() for r in v)
         return arms[arm], table, vcost
@@ -362,6 +436,8 @@ def donor12(a):
     import b02
     tag, mode, width, s, fams, panel, start = a
     b02.T.init_worker()
+    import a18
+    assert a18.TAG == "T51", "g12: a18.TAG is %r (import-order bug); Beta-02 donors used 'T51'" % a18.TAG
     import a18_c1
     a17.R_VAL = a18_c1.R_VAL_C1
     b02._set_rule("g0")                     # neutralise any b02 patch (no-op when none is installed)
@@ -382,8 +458,8 @@ def donor12(a):
     if mode != "off":
         L = LAST
         row["g12"] = {
-            "params": params(), "folds": L["folds"], "n_cells": L["n_cells"], "n_walks": L["n_walks"],
-            "walk_seconds": L["walk_seconds"], "i0_seconds": L["i0_seconds"], "info": L["info"],
+            "params": params(), "programs": L["programs"], "folds": L["folds"], "n_cells": L["n_cells"], "n_walks": L["n_walks"],
+            "walk_seconds": L["walk_seconds"], "walk_charges": L["walk_charges"], "i0_seconds": L["i0_seconds"], "info": L["info"],
             "table": {k: {x: v[x] for x in ("reach_by_fold", "reach_min", "reach_total", "DL", "S", "saving",
                                             "eligible", "all_reached_qualified", "reached_families", "sha256",
                                             "qualified_cells")} for k, v in L["table"].items()},
@@ -408,7 +484,7 @@ def run_job(j):
 def params():
     return {"LAMBDA": LAMBDA, "FOLD_TAG": FOLD_TAG, "NEAR_TAG": NEAR_TAG, "N_FOLDS": N_FOLDS, "SEL_CAP": SEL_CAP,
             "CELLS_PER_FAMILY": CELLS_PER_FAMILY, "TRIBUNAL": list(TRIBUNAL), "MAX_SPURIOUS": MAX_SPURIOUS,
-            "FALLBACK": FALLBACK, "TIE_BREAK": TIE_BREAK, "DL": "entry_dl (generators + non-default inits/finals)"}
+            "FALLBACK": FALLBACK, "FAST_PREFIX": FAST_PREFIX, "TIE_BREAK": TIE_BREAK, "DL": "entry_dl (generators + non-default inits/finals)"}
 
 
 # ------------------------------------------------------------------ post-hoc re-scoring of a recorded job (no walks)
