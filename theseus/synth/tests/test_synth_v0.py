@@ -117,3 +117,23 @@ def test_lens_is_never_a_deep_lane_parent():
              "parentIds": [], "metadata": {}})
     assert not en.eligible(reg, "L-x", "DEEP")
     assert not en.eligible(reg, "L-x", "VERY_DEEP")
+
+
+def test_composition_detector_fires_on_synthetic_synergy(monkeypatch):
+    """Detector logic with a fake fingerprint: parts alone = empty, together = far."""
+    from theseus.synth import composition as cp
+
+    def fake_fp(g):
+        ops = tuple(r["op"] for r in g["rules"])
+        if ops == ("decay", "mirror"):
+            return np.full(bt.FP_DIM, 10.0)
+        return np.zeros(bt.FP_DIM)
+
+    monkeypatch.setattr(cp, "_fp", fake_fp)
+    monkeypatch.setattr(cp, "_d", lambda a, b: float(np.linalg.norm(np.asarray(a) - np.asarray(b))))
+    g = {"C": 1, "topo": {"kind": "ring", "seed": 0}, "bc": "periodic", "init": {"kind": "random", "amp": 1.0},
+         "rules": [{"op": "decay", "src": [], "dst": 0, "p": [0.1]}, {"op": "mirror", "src": [], "dst": 0, "p": [0.5]}]}
+    r = cp._job((g, 1.0, 4.0))
+    assert r["composition"] and r["composition_splits"] == [1]
+    g2 = dict(g, rules=g["rules"][::-1])
+    assert not cp._job((g2, 1.0, 4.0))["composition"]

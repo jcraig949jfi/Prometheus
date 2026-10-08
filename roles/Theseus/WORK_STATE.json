@@ -3,9 +3,9 @@
   "seat": "Theseus",
   "mwo_id": "MWO-0004",
   "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
-  "updated_at_utc": "2026-10-06T23:10:00Z",
-  "state": "READY",
-  "branch": "theseus/c4-foreign-family-2026-10-06",
+  "updated_at_utc": "2026-10-08T06:30:00Z",
+  "state": "ACTIVE",
+  "branch": "theseus/loop48-2026-10-08",
   "head_sha": "(this commit; see git log -1 -- roles/Theseus/WORK_STATE.json)",
   "threads": [
     {
@@ -38,10 +38,28 @@
       "id": "c4_foreign_family",
       "status": "DONE",
       "artifact": "prometheus/cosmos/c4/families/theseus_sediment/"
+    },
+    {
+      "id": "theseus25_repro",
+      "status": "DONE",
+      "verdict": "PASS",
+      "report": "theseus/runs/repro_check_2026-10-08/RESULT.md"
+    },
+    {
+      "id": "theseus23a_ruler_check",
+      "status": "DONE",
+      "report": "theseus/runs/ruler_check_2026-10-08/VERDICT.md"
+    },
+    {
+      "id": "theseus23b_composition",
+      "status": "RUNNING",
+      "prereg": "roles/Theseus/prereg/2026-10-08_composition/PREREG.md"
     }
   ],
   "fabric_tasks": [],
-  "running": [],
+  "running": [
+    "THESEUS-23b composition wall (prereg 279db6bdc)"
+  ],
   "blocked_on": [
     {
       "item": "THESEUS-06",
@@ -50,7 +68,11 @@
     }
   ],
   "next_actions": [
-    "awaiting Aporia (no self-promotion); proposed THESEUS-23 ruler discrimination"
+    "THESEUS-23b verdict",
+    "THESEUS-28 law-free ablation (READY)",
+    "THESEUS-27 R5-quality ecology (READY after 23b)",
+    "THESEUS-24 larger LLM arm",
+    "THESEUS-29 stronger structure ruler"
   ],
   "operator_decisions_required": [],
   "latest_reports": [
@@ -58,5 +80,5 @@
     "theseus/reports/v0_2026-09-30.md",
     "theseus/reports/v0_1_2026-09-30.md"
   ],
-  "work_order": "C4 foreign visible-family author (Aporia #1139/#1282) DONE; completion sent to Aporia; awaiting assignment"
+  "work_order": "Operator in chat 2026-10-06/08: self-directed 48h loop (supersedes CWO-B READY hold for Theseus); MWO-0004 R1/R2 apply"
 }

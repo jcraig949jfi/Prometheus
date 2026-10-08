@@ -1,0 +1,30 @@
+{
+  "schema": "cosmos.campaign_state.v1",
+  "campaign": "48H_2026-10-08",
+  "directive": "roles/Cosmos/prompts/2026-10-08_operator_48h_campaign/DIRECTIVE_VERBATIM.md",
+  "owner_instance": "ubu003-623ec771",
+  "lease": "COSMOS_HOME/LEASE.json via python -m prometheus.cosmos.lease (ttl 7200 s, renewed each round)",
+  "start_utc": "2026-10-08T05:26Z",
+  "hard_stop_utc": "2026-10-10T05:26Z",
+  "window": "W1 (h0-4) DEVELOP/REPAIR",
+  "current_experiment": "EXP-01 LOCAL SYSID discovery batch 0 (30 worlds x 4 families); checkpoint COSMOS_HOME/c4_exp01/discovery_b0.jsonl; resumable (python -m prometheus.cosmos.c4.exp01 <same args> skips done rows)",
+  "hypothesis": "H-LOCAL (prereg roles/Cosmos/c4/prereg/EXP-01_LOCAL_DISCOVERY.md on cosmos/c4-v03): FUNCTIONAL predicted by composing one-step physics; law C4-L-0001 frozen",
+  "last_completed_test": "suite 112/112 (merged tree); c4-v03 new tests 40/40",
+  "last_receipt": "hour-1 status (STATUS_LOG.md)",
+  "next_action": "when EXP-01 completes: python -m prometheus.cosmos.c4.exp01_analyse <jsonl> A and B; apply the preregistered kill rule; record verdict",
+  "active_pids": {
+    "exp01": 123565,
+    "power_v03": "see COSMOS_HOME/c4_power_v03.log"
+  },
+  "incidents": [
+    "Cert A seed-unstable on XOR planted (instrument finding)",
+    "R-MECH harness not bit-reproducible (tuple hash seeds)"
+  ],
+  "resources": "ubu003 4 cores / 7 GB, no GPU, spend $0",
+  "c3_publication": "DONE d75fb45ef",
+  "branches": {
+    "main": "records",
+    "cosmos/c4-v03": "C4 repairs (merge after final reviews)"
+  },
+  "c4_branch_head": "cosmos/c4-v03 (DESIGN_C4_v03.md, stats/firewall/sysid_local/cert_b/planted/exp01)"
+}

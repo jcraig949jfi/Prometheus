@@ -62,6 +62,7 @@ CONFIG = {
     "battery": {"T": bt.T, "N": bt.N, "n_interventions": bt.N_INT, "fp_dim": bt.FP_DIM},
     "known_library_per_family": kn.LIB_PER_FAMILY,
     "compute_guard_wall_s_ecology": 4 * 3600,
+    "law": True,
 }
 
 _CAL = None
@@ -184,9 +185,14 @@ def main(argv=None):
     ap.add_argument("--workers", type=int, default=4)
     ap.add_argument("--gens", type=int, default=CONFIG["gens"])
     ap.add_argument("--smoke", action="store_true")
+    ap.add_argument("--no-law", action="store_true", help="THESEUS-28: collisions without the generated k-ary law")
+    ap.add_argument("--ecology-only", action="store_true", help="stop after phase 2; export ecology rows only")
     a = ap.parse_args(argv)
     cfg = copy.deepcopy(CONFIG)
     cfg["gens"] = a.gens
+    if a.no_law:
+        cfg["law"] = False
+    cfg["ecology_only"] = bool(a.ecology_only)
     if a.smoke:
         cfg.update(gens=min(a.gens, 7), per_cell=1, n_oneshot_per_arity=12, n_random=12, n_weird=6, n_neutral=6,
                    n_hidden_known=4, reproduce_top={k: 2 for k in cfg["reproduce_top"]}, lens_marginal_sample=6)
@@ -281,7 +287,7 @@ def main(argv=None):
                             continue
                         cidn += 1
                         cid = f"c{cidn:06d}"
-                        g, rec = co.collide([reg[p] for p in pids], tensor, cid)
+                        g, rec = co.collide([reg[p] for p in pids], tensor, cid, law=cfg["law"])
                         rec.update({"lane": lane, "gen": gen, "modes": modes})
                         jobs.append((cid, pids, g, rec))
             res = pool.map(_eval_job, [(g, cal.desc_scales.tolist(), cal.tau_rep, fp_sd, True) for (_, _, g, _) in jobs])
@@ -365,6 +371,9 @@ def main(argv=None):
                   flush=True)
     compute["ecology"] = eco_cpu
     clock.mark("2_ecology", eco_cpu)
+    if cfg["ecology_only"]:
+        export_ecology_only(root, rdir, tag, reg, evals, collisions, pop_hist, n_g0, cfg, clock, compute)
+        return
 
     # ------------------------------------------------------------------ 3
     g0_viable = [e["id"] for e in reg.values() if e["origin"] == "human" and evals[e["id"]]["viable"]]
@@ -379,7 +388,7 @@ def main(argv=None):
             seen.add(tuple(pids))
             cidn += 1
             cid = f"o{cidn:06d}"
-            g, rec = co.collide([reg[p] for p in pids], tensor, cid)
+            g, rec = co.collide([reg[p] for p in pids], tensor, cid, law=cfg["law"])
             rows.append((f"{arm}{cid[1:]}", g, {"parents": pids, "collision": rec}))
         arms[arm] = rows
     llm_path = f"{root}/controls/llm_arm_v0/GENOMES.jsonl"
@@ -594,6 +603,33 @@ def main(argv=None):
         f.write(an.render(out, tag))
     clock.mark("5_analysis_and_export", 0.0)
     print(json.dumps(out.get("verdicts", {}), indent=1))
+
+
+def r5_midband(fp):
+    r = np.asarray(fp)[bt.N_DESC:]
+    return float(((r > 0.05) & (r < 0.9)).mean())
+
+
+def export_ecology_only(root, rdir, tag, reg, evals, collisions, pop_hist, n_g0, cfg, clock, compute):
+    """Ecology-only export (THESEUS-28/27): entities, fingerprints, collisions, population
+    history, and the R5-by-generation table the ablation preregistrations read."""
+    ents = []
+    for e in reg.values():
+        x = {k: e.get(k) for k in ("id", "generation", "origin", "kind", "parentIds", "state", "lane", "born_step")}
+        x["executableRepresentation"] = e["executableRepresentation"]
+        x["genealogy"] = reg.genealogy(e["id"], n_g0)
+        x["viable"] = evals.get(e["id"], {}).get("viable")
+        ents.append(x)
+    jl(f"{root}/entities/{tag}.jsonl", ents)
+    jl(f"{root}/fingerprints/{tag}.jsonl", [{"id": i, "fp": evals[i]["fp"]} for i in evals])
+    jl(f"{root}/collisions/{tag}.jsonl", collisions)
+    jl(f"{rdir}/POPULATION_HISTORY.jsonl", pop_hist)
+    rows = [{"id": c["child"], "lane": c["lane"], "arity": c["arity"], "gen_step": c["gen"],
+             "generation": reg[c["child"]]["generation"], "r5": r5_midband(evals[c["child"]]["fp"])}
+            for c in collisions if evals[c["child"]]["viable"]]
+    jl(f"{rdir}/R5_ROWS.jsonl", rows)
+    jdump(f"{rdir}/SUMMARY.json", {"config": cfg, "n_viable_children": len(rows), "compute": clock.rows,
+                                   "worker_cpu_s": compute})
 
 
 def weird_genome(rng):

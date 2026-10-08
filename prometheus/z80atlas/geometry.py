@@ -22,7 +22,21 @@ from prometheus.z80atlas.world import Config
 NEXT_TASK = {"ECHO": "INC", "INC": "COND_ONE", "COND_ONE": "COND_MULTI", "CONST": "ECHO", "SUM2": None, "COND_MULTI": None}
 
 
-def _eval(tape: bytes, cfg: Config, task: Task, rng: random.Random, n_inputs: int = 3) -> Dict:
+# rep_rule (2026-10-06, DEF-BEL-010 from Nestor #1207): how `replicates` scores fidelity.
+#   "v1"      historical: the child window is compared with the tape at ALL L positions. The window starts as zero memory and
+#             a short tape is zero-padded, so untouched zero bytes count as copied; with need = 1 (ENDOGENOUS_PARTIAL) a single
+#             written byte can score `replicates` (and with need = L//2 the unwritten half can carry the rest). Kept as the
+#             default so every historical geometry.json reproduces.
+#   "written" a position counts only if it was WRITTEN in this execution with material whose pre-execution origin is the
+#             SAME tape position (vm Trace.win_origin, multi-hop) and equals the tape; an unwritten position, a byte
+#             constructed in place, or a copy of other memory (e.g. a sweep of scratch zeros over the window -- review A,
+#             2026-10-08) is a mismatch.
+REP_RULES = ("v1", "written")
+
+
+def _eval(tape: bytes, cfg: Config, task: Task, rng: random.Random, n_inputs: int = 3, rep_rule: str = "v1") -> Dict:
+    if rep_rule not in REP_RULES:
+        raise ValueError("unknown rep_rule %r" % rep_rule)
     L = cfg.L; scores = []; rep = 0
     tape = bytes(tape[:L]) + bytes(max(0, L - len(tape)))   # a short witness is zero-padded: slice-assigning fewer bytes would SHRINK the memory
     for _ in range(n_inputs):
@@ -32,18 +46,23 @@ def _eval(tape: bytes, cfg: Config, task: Task, rng: random.Random, n_inputs: in
             mem[vm.IN_BASE + k] = v
         if cfg.layout == "SEPARATED":
             tr = vm.execute(mem, L, 0, cfg.budget // 2, inputs, region=(0, L // 2), allow_copyall=cfg.allow_copyall)
-            tr2 = vm.execute(mem, L, L // 2, cfg.budget // 2, inputs, region=(L // 2, L), allow_copyall=cfg.allow_copyall)
+            tr2 = vm.execute(mem, L, L // 2, cfg.budget // 2, inputs, region=(L // 2, L), allow_copyall=cfg.allow_copyall, origin=tr.origin)
             outs = tr.outputs + tr2.outputs; fi = tr.first_in_step if tr.first_in_step is not None else tr2.first_in_step
             fo = tr.first_out_step if tr.first_out_step is not None else tr2.first_out_step
             written = {a for a in list(tr.writes) + list(tr2.writes) if L <= a < 2 * L}
+            origin = tr2.origin
         else:
             tr = vm.execute(mem, L, 0, cfg.budget, inputs, allow_copyall=cfg.allow_copyall)
             outs = tr.outputs; fi = tr.first_in_step; fo = tr.first_out_step
             written = {a for a in tr.writes if L <= a < 2 * L}
+            origin = tr.origin
         need = {"ENDOGENOUS_COPY": L, "ENDOGENOUS_PARTIAL": 1, "OVERWRITE": L // 2, "CONSTRUCTIVE": L // 2, "PAIR_EXECUTION": L // 2}.get(cfg.reproduction, L // 2)
         if len(written) >= need:
             child = bytes(mem[L:2 * L])
-            fid = 1.0 - sum(1 for x, y in zip(child, tape[:L]) if x != y) / L
+            if rep_rule == "written":
+                fid = sum(1 for a in written if origin.get(a, a) == a - L and child[a - L] == tape[a - L]) / L
+            else:
+                fid = 1.0 - sum(1 for x, y in zip(child, tape[:L]) if x != y) / L
             if fid >= 0.9:
                 rep += 1
         scores.append(task_score(task, outs, task.expected(inputs), "ATOMIC" if cfg.scoring == "NEUTRAL" else cfg.scoring, cfg.read_gate, fo, fi))
@@ -54,16 +73,16 @@ def _pad(tape: bytes, L: int) -> bytes:
     return bytes(tape[:L]) + bytes(max(0, L - len(tape)))
 
 
-def scan(tape: bytes, cfg: Config, task: Task, seed: int, n: int = 48) -> Dict:
+def scan(tape: bytes, cfg: Config, task: Task, seed: int, n: int = 48, rep_rule: str = "v1") -> Dict:
     rng = random.Random(seed)
     L = cfg.L; tape = _pad(tape, L)
-    base = _eval(tape, cfg, task, rng)
+    base = _eval(tape, cfg, task, rng, rep_rule=rep_rule)
     nxt = Task(NEXT_TASK[task.kind], k=task.k) if NEXT_TASK.get(task.kind) else None
-    base_next = _eval(tape, cfg, nxt, rng)["score"] if nxt else None
+    base_next = _eval(tape, cfg, nxt, rng, rep_rule=rep_rule)["score"] if nxt else None
     better = same = worse = lethal = 0; moat = 0
     for _ in range(n):
         t = bytearray(tape[:L]); p = rng.randrange(L); t[p] = (t[p] + rng.randrange(1, 256)) & 0xFF
-        e = _eval(bytes(t), cfg, task, rng)
+        e = _eval(bytes(t), cfg, task, rng, rep_rule=rep_rule)
         if base["replicates"] and not e["replicates"]:
             lethal += 1
         if e["score"] > base["score"] + 1e-9:
@@ -73,30 +92,36 @@ def scan(tape: bytes, cfg: Config, task: Task, seed: int, n: int = 48) -> Dict:
         else:
             worse += 1
         if nxt is not None:
-            en = _eval(bytes(t), cfg, nxt, rng)["score"]
+            en = _eval(bytes(t), cfg, nxt, rng, rep_rule=rep_rule)["score"]
             if en > (base_next or 0.0) + 1e-9:
                 moat += 1
-    return {"n": n, "base_score": round(base["score"], 3), "base_replicates": base["replicates"],
+    out = {"n": n, "base_score": round(base["score"], 3), "base_replicates": base["replicates"],
             "beneficial_density": round(better / n, 3), "neutral_fraction": round(same / n, 3), "deleterious_fraction": round(worse / n, 3),
             "replication_lethal_fraction": round(lethal / n, 3) if base["replicates"] else None,
             "next_task": nxt.kind if nxt else None, "base_next_score": None if base_next is None else round(base_next, 3),
             "moat_density": round(moat / n, 3) if nxt else None}
+    if rep_rule != "v1":
+        out["rep_rule"] = rep_rule                     # recorded only off the default, so historical outputs are unchanged
+    return out
 
 
-def damage_cliff(tape: bytes, cfg: Config, task: Task, seed: int, trials: int = 12) -> Dict:
+def damage_cliff(tape: bytes, cfg: Config, task: Task, seed: int, trials: int = 12, rep_rule: str = "v1") -> Dict:
     rng = random.Random(seed); L = cfg.L; tape = _pad(tape, L)
     out = {}
-    base = _eval(tape, cfg, task, rng)
+    base = _eval(tape, cfg, task, rng, rep_rule=rep_rule)
     for k in (1, 2, 4, 8, 16):
         rep = solve = 0
         for _ in range(trials):
             t = bytearray(tape[:L])
             for p in rng.sample(range(L), min(k, L)):
                 t[p] = rng.randrange(256)
-            e = _eval(bytes(t), cfg, task, rng)
+            e = _eval(bytes(t), cfg, task, rng, rep_rule=rep_rule)
             rep += e["replicates"]; solve += e["score"] >= 0.999
         out["k%d" % k] = {"replicates": round(rep / trials, 3), "solves": round(solve / trials, 3)}
-    return {"base_replicates": base["replicates"], "base_solves": base["score"] >= 0.999, "cliff": out}
+    res = {"base_replicates": base["replicates"], "base_solves": base["score"] >= 0.999, "cliff": out}
+    if rep_rule != "v1":
+        res["rep_rule"] = rep_rule
+    return res
 
 
 # ---- paired geometry (added 2026-09-23, forensics C6/M9) -----------------------------------------------------------------
