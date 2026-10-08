@@ -44,6 +44,7 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
 | B40 | keyed memory under a K-distribution + wide jitter | NULL 0/8 general (4 one-value shelf, 4 floor) -- distribution lever does not cross an isolated peak |
 | B41/B42 | lethal hazards in training -> named-world transfer? | NULL; P-boom obstacle = rare food departures (8%) -> wander -> deaths 7/16 vs 1/16 |
 | B43/B44/B45 | evidence-integration world: does memory of cues evolve? | NO (B45, E=64x4): elites latch first hint, none beats reactive; B44's 7/8 RETRACTED (small shared sample) |
+| B47 | latch punished (switching latent): does conditional update evolve? | NO: 0/8 above reactive; latch-like memory persists |
 | B30 | do foragers carry state across ticks? | YES: 6/7 content sensors use state; blind ones in rewarding worlds 5/5 |
 | B31 | what do they remember? | 2504: 1-register direction memory; others computed state (not past observations) |
 | B17 | forced perception (echo on PUT) opens the 2-value wall? | staged; controls pass |
@@ -503,6 +504,13 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   .6/.7/.8 x switch 8/12/16): a one-step STICKY filter gains at most +.042 over REACTIVE (noise .6, switch 16), latch
   .653 < reactive .744 there. Criterion lowered to +.025 (SE ~.012 at E=64x4). 8 seeds, G=300, lease lse-45fbcd210c07;
   scored on 4 NEW world keys x 64 episodes. PREDICTION: 0/8 elites beat REACTIVE by >= .025 with a persist drop.
+- B47 RESULT (switching latent; 8 seeds; scored E=64 x 4 new world keys; lease released ~10:55Z): every elite is BELOW
+  REACTIVE (.717-.753 vs .761); STICKY .795, LATCH .671. 7/8 lose reward under persist=none (.55-.67) -> they DO use
+  memory, but latch-like memory that the switch punishes. PREDICTION (0/8 beat reactive by >= .025) HELD.
+  Reading: with the latch made costly, evolution still does not reach a conditional update (sticky's +.034 here) -- it
+  settles between latch and reactive. Across B08J/B22b/B40/B45/B47 the campaign's memory law reads: in this VM+GA,
+  WRITE-ONCE (latch / guard) state is reachable; UPDATE-ON-CONDITION state is not, whether the update is a second slot,
+  a keyed read, or an evidence filter. CORE-HOUR TALLY since 00:07Z: ~24.
 - BUDGET WINDOW 2026-10-08 ~00:07Z. B29 already done (not relaunched). Lease lse-fe37dd77fe7a (spectrex5:cpu12,
   3 h) for B32 replication: 12 seeds (3211-3222), 10 procs, + B32's last cell on 2 procs = 12. CORE-HOUR TALLY
   (rolling 24 h from 00:07Z): 0 at launch; est. +3-4 for the replication.
