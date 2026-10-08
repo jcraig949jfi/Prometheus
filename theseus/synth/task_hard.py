@@ -62,9 +62,25 @@ def main(argv=None):
     rng = np.random.default_rng(20261008)
     jobs = tc.controls(rng) + tc.load_arms(rng, 100)  # identical construction to 31a
     t0 = time.time()
+    # Amendment 1 (checkpointing only, no scientific change): results are appended to
+    # PART1.jsonl / PART2.jsonl as they complete, and a restart skips ids already done.
+    p1 = f"{out}/PART1.jsonl"
+    done1 = {}
+    if os.path.exists(p1):
+        for l in open(p1, encoding="utf-8"):
+            x = json.loads(l)
+            done1[x["id"]] = x
+    todo = [(grp, i, g) for grp, i, g in jobs if i not in done1]
     with Pool(a.workers) as pool:
-        res = pool.map(_j2, [g for _, _, g in jobs])
-        rows = [{"group": grp, "id": i, "genome": g, **x} for (grp, i, g), x in zip(jobs, res)]
+        with open(p1, "a", encoding="utf-8") as f1:
+            for (grp, i, g), x in zip(todo, pool.imap(_j2, [g for _, _, g in todo])):
+                rec = {"group": grp, "id": i, **x}
+                f1.write(json.dumps(rec, separators=(",", ":")) + chr(10))
+                f1.flush()
+                done1[i] = rec
+        res = [done1[i] for _, i, _ in jobs]
+        rows = [{"group": grp, "id": i, "genome": g, **{k: v for k, v in done1[i].items() if k not in ("group", "id")}}
+                for (grp, i, g) in jobs]
         krng = np.random.default_rng(7)
         ko_rows = []
         for grp in tc.ARMS:
@@ -72,11 +88,23 @@ def main(argv=None):
             idx = sorted(krng.choice(len(cand), size=min(KO_PER_ARM, len(cand)), replace=False)) if cand else []
             ko_rows += [cand[i] for i in idx]
         # knockout baseline = J at seed 0 (same seed as the knockouts)
-        ko_res = pool.map(_ko, [(r["genome"], r["J_seeds"][0]) for r in ko_rows])
+        p2 = f"{out}/PART2.jsonl"
+        done2 = {}
+        if os.path.exists(p2):
+            for l in open(p2, encoding="utf-8"):
+                x = json.loads(l)
+                done2[x["id"]] = x
+        todo2 = [r for r in ko_rows if r["id"] not in done2]
+        with open(p2, "a", encoding="utf-8") as f2:
+            for r, x in zip(todo2, pool.imap(_ko, [(r["genome"], r["J_seeds"][0]) for r in todo2])):
+                f2.write(json.dumps({"id": r["id"], **x}, separators=(",", ":")) + chr(10))
+                f2.flush()
+                done2[r["id"]] = x
+        ko_res = [{k: v for k, v in done2[r["id"]].items() if k != "id"} for r in ko_rows]
     for r, x in zip(ko_rows, ko_res):
         r["knockout"] = x
     summ = {"V": V, "k": K, "chance": 1.0 / V, "wall_s": round(time.time() - t0, 1),
-            "cpu_s": round(sum(x["cpu_s"] for x in res) + sum(x["cpu_s"] for x in ko_res), 1), "groups": {}}
+            "cpu_s": round(sum(x.get("cpu_s", 0) for x in res) + sum(x.get("cpu_s", 0) for x in ko_res), 1), "groups": {}}
     for grp in sorted({r["group"] for r in rows}):
         J = np.array([r["J_hard"] for r in rows if r["group"] == grp])
         ks = [r["knockout"]["carrier_size"] for r in ko_rows if r["group"] == grp]
