@@ -47,7 +47,7 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
 | B47 | latch punished (switching latent): does conditional update evolve? | NO: 0/8 above reactive; latch-like memory persists |
 | B48 | same on the SEL VM (straight-line conditional update) | 0/8 by criterion; 1 seed shows a real filter+re-track profile -> replication |
 | B49 | stock vs SEL head-to-head, 12 seeds each | NULL: UPDATE 1/12 vs 1/12; instruction-set explanation KILLED |
-| B50 | lexicase vs tournament on two stored values | running (lease) |
+| B50 | lexicase vs tournament on two stored values | NULL 0/8 vs 0/8; selection explanation KILLED |
 | B30 | do foragers carry state across ticks? | YES: 6/7 content sensors use state; blind ones in rewarding worlds 5/5 |
 | B31 | what do they remember? | 2504: 1-register direction memory; others computed state (not past observations) |
 | B17 | forced perception (echo on PUT) opens the 2-value wall? | staged; controls pass |
@@ -534,6 +534,14 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
 - B50 launched ~13:10Z (search lever for the memory law): LEXICASE vs TOURNAMENT selection, one shared GA loop,
   jittered-wide L4 (two genuinely stored values), 8 seeds each, G=300, held-out 64 x 4 (slot-solver control 1.000).
   Lease lse-b8e3becc7b88, 12 procs, est ~3 core-h (tally then ~38 of 48). PREDICTION: LEXICASE >= 2/8, TOURNAMENT 0/8.
+- B50 RESULT (lexicase vs tournament, jittered-wide L4, 8 seeds each, held-out 64 x 4; lease released ~14:00Z):
+  LEXICASE 0/8, TOURNAMENT 0/8. Both arms split identically: 5/8 reach the one-value shelf (held-out .535), the rest
+  stay on the floor (.06-.08); max train .22-.72 in both. PREDICTION (LEXICASE >= 2/8) FAILED. KILLED: "the update wall
+  is selection pressure on partial solutions" -- keeping case specialists does not help, consistent with B20/B22: there
+  are no case-specialists that solve the second-value asks to keep (the read half is silent until the write exists).
+  The memory law now holds across VM (B49), world (B40/B45/B47), incentive (B22/B22b) and SELECTION (B50). Remaining
+  levers are MUTATION (operators that insert coupled write/read pairs) and REPRESENTATION -- design work, not compute.
+  CORE-HOUR TALLY since 00:07Z: ~38 of 48. Heavy runs paused for the rest of this window.
 - BUDGET WINDOW 2026-10-08 ~00:07Z. B29 already done (not relaunched). Lease lse-fe37dd77fe7a (spectrex5:cpu12,
   3 h) for B32 replication: 12 seeds (3211-3222), 10 procs, + B32's last cell on 2 procs = 12. CORE-HOUR TALLY
   (rolling 24 h from 00:07Z): 0 at launch; est. +3-4 for the replication.
