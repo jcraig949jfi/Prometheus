@@ -97,3 +97,24 @@ rulers built on byte substitution (geometry.scan / scan_paired, the historical G
 cannot see the rearrangement neighbourhood that copy-based physics explores; reachability claims made with them are
 lower bounds. B/none origins (14 runs): mutation 12 (incl. 4 incremental), uptake 1, self-move 2 -- the same picture as
 the random worlds of W3a, at a lower rate.
+
+## 7. CONFIRMATION on unseen independent populations (W6 block 1, prereg s9, frozen da6ddcd29)
+
+1,200 fresh RANDOM WELL_MIXED runs, ONE distinct seed per run (amendment 2), PARTIAL / PAIR / COPY 400 each; 1,300 runs
+in the block with C2; 0 voids; 3.90 h active (6 workers, 14:17 -> 18:11:57Z). 85 independent origins (PARTIAL 36,
+PAIR 37, COPY 12). Classification unchanged from W3a (analyze_w3.classify). Receipt receipts/W6B1_ANALYSIS.json.
+
+| id | prediction (from W3a discovery) | result | verdict |
+|---|---|---|---|
+| C1-P1 | completing event is a MUTATION in >= 50% | 53/85 [51.7, 71.9] | HOLDS |
+| C1-P2 | one necessary changed byte in >= 50% of in-place origins | 54/75 [61.0, 80.9] | HOLDS |
+| C1-P3 | cryptic precursor (copies 0 own bytes) in >= 60% | 60/85 [60.2, 79.2] | HOLDS |
+| C1-P4 | >= 1 reversion-confirmed UPTAKE origin | 13/85 uptake origins, all 13 with individually necessary taken-up bytes | HOLDS |
+| C1-P5 | ASSISTED in >= 50% | 56/85 [55.3, 75.1] | HOLDS |
+| C1-P6 | LDIR critical in >= 95% | as written (reach summary's lazily detected tape): 77/85 FALSIFIED; corrected to the origin event's own tape: LDIR critical 83/85, the other 2 carry REDUNDANT LDIRs (removing all of them kills FUNC; single knockout cannot see redundancy); LDIR writes the window in 85/85 | FALSIFIED as written (field mismatch, recorded); HOLDS as corrected |
+
+Causes on fresh populations: MUTATION 53, UPTAKE 13, BORN_ASSEMBLY 10, SELF_MOVE 7, SELF_CONSTRUCT 2. Pathways:
+SINGLE_STEP_FROM_NOTHING 43, ASSEMBLY 23, INCREMENTAL 13, ATOMIC 6.
+Classification upgrade: CL-06 (single-step activation of a copy-assembled cryptic precursor) PROVISIONAL -> REPRODUCED on
+85 independent populations; CL-07 (uptake as a route to the first replicator) PROVISIONAL -> REPRODUCED (13/85 = 15%,
+each reversion-confirmed). New limit: knockout criticality misses REDUNDANT elements (2/85 machines carry two LDIRs).

@@ -86,3 +86,9 @@ minimum write.
 9. Generalisation limits: single fragment pair, one task-free world type, 300 ticks, GRID WELL_MIXED.
 10. Other engines: 'complementation of partial programs across individuals' is a direct test any engine with partial
     writes / crossover-like construction can run (NPE, SFE): measure single-source reconstructions vs the composite.
+
+## 5. CONFIRMATION of distributed persistence (W6 block 1 lane C2, prereg s9)
+
+100 fresh A-fragment worlds (distinct seeds): FUNC alive at the end in 98/100; the FIRST assembly event's TRB lineage
+alive in 36/100; function alive with NO assembly event's TRB lineage alive in 42/100. C2-P1 HOLDS. W2 s2.D (function
+persists without lineage continuity: re-made and re-captured, not handed down one line) PROVISIONAL -> REPRODUCED.
