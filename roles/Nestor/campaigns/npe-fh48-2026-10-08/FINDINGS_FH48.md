@@ -354,3 +354,30 @@ replay, `mine_ontape7.py`).
 - **Unifying principle (EXPLORE level; DIR confirmed, VETO not yet):** function is maintained iff competence biases
   the DIRECTION of the copy exchange. Interaction-rate coupling fails because it is direction-symmetric (F2).
 - This holds whether the bias is imposed by an offline ruler (DIR / VETO) or earned on the tape (ONTAPE, F8).
+
+## F10. X-ARCH-COMPETE: SIGNAL. Selection on function also selects the more ROBUST implementation (EXPLORE, 24 runs)
+
+**Setup:** CT_UA (routine 32 bytes, single-byte robustness 0.69; its copies keep the task 0.90 of the time) and CT_W
+(routine 24 bytes, robustness 0.75, copies keep the task 1.0), planted together under DIR. Both have u = 1, so DIR
+ties them; only their mutational leak differs. The plant slot alternates by seed.
+
+**CT_W-family share of final competent organisms:**
+
+| k | runs where CT_W holds the majority | median CT_W share | final competence |
+|---|---|---|---|
+| 1 | 11/12 | 1.0 | 12/12 maintained |
+| 4 | 12/12 | 1.0 in every run | 12/12 maintained |
+
+- Under k = 4, CT_UA alone maintained in only 4/6 runs (F6).
+- There is no slot effect: CT_W wins from either planting slot.
+
+**Reading:**
+- Once function is under directional selection, competition between functional architectures is decided by
+  mutational robustness (leak).
+- The selection is stronger at higher mutation, as declared.
+- This is architecture-level selection by SUBSTITUTION between existing forms. Whether compression or robustness can
+  arise DE NOVO within a lineage is X-DIR-LONG's question.
+- **Caveat:** CT_W differs from CT_UA in more than robustness. It lacks the read-order detector and has a shorter
+  routine, so "robustness" here means a smaller destructive mutational target, not a separately measured property.
+
+**Child:** C-ARCH-COMPETE (fresh seeds, frozen).

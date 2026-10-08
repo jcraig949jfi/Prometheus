@@ -249,6 +249,17 @@ declare("X-ONTAPE-LONG",
               for s in SEEDS_OL])
 
 
+# C-ARCH-COMPETE (CONFIRM, parent X-ARCH-COMPETE): FRESH seeds 45_400_000 + s, frozen at this block's commit. CT_UA +
+#   CT_W planted together under DIR (q 1), CONST 0.15, 2000 epochs, slot alternated by seed parity, k = 4 only,
+#   10 seeds. Rule: CONFIRMED iff the CT_W family holds > 0.5 of final competent organisms in >= 8 of the runs that end
+#   with competence (and at least 6 runs end with competence). Reducer: ac_analyze.py logic (nearer construct by Hamming).
+SEEDS_CAC = [45_400_000 + s for s in range(10)]
+declare("C-ARCH-COMPETE",
+        jobs=[("CAC_K04", s, dict(gate="CONST", p_const=0.15, order="DIR", mut_scale=4, copy_scale=4,
+                                  plant=("CT_UA" if s % 2 == 0 else CT_W),
+                                  extra_plants=[CT_W if s % 2 == 0 else "CT_UA"])) for s in SEEDS_CAC])
+
+
 if __name__ == "__main__":
     name = sys.argv[1]
     w = int(sys.argv[2]) if len(sys.argv) > 2 else 4
