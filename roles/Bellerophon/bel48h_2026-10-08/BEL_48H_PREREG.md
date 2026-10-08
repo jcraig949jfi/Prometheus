@@ -247,3 +247,28 @@ pre-tape is NOT FUNC (heredity classes ASSEMBLY + CAPTURE + CONSTRUCT) per run.
   one-sided p < 0.05 per level.
 - W5-P3: E5b, causal assembly in >= 90% of preserve runs and <= 5% of zero runs.
 Exploratory block: findings are PROVISIONAL until confirmed on fresh seeds in W6.
+
+## 8. WINDOW 5 block 2 -- reachability consequence of target material (frozen 2026-10-08T12:09:20Z, before any run)
+
+Plan tools/plan_w5b2.py: 400 runs (200 seed-pairs, arms paired by seed = same initial population), sha256
+84c0ceda246e08474e64f8560265aa8707450d68bcb242bc531891ffa873f5a8; RANDOM init, ENDOGENOUS_PARTIAL, WELL_MIXED, 500 ticks;
+target_fill preserve vs zero; OriginWorld. Analysis tools/analyze_w5b2.py (committed with this section).
+- W5-P4: a first FUNC event occurs more often under preserve than zero: exact McNemar on seed-pairs, p < 0.05 with
+  preserve-only > zero-only. (Reasoning: chimeric births complete cryptic precursors; uptake is unaffected by
+  target_fill because the partner is in the window either way.) Causes and pathways per arm are descriptive.
+
+## 9. WINDOW 6 block 1 -- confirmation on unseen independent populations (frozen 2026-10-08T12:09:20Z, before any run)
+
+Plan tools/plan_w6.py: 1,300 runs, one DISTINCT seed per run, sha256
+c1c9c39550f4091f344b36f9e668c20ad5b3aa453bad5360466d1cfadfc5e7fa. Analysis tools/analyze_w6.py (committed with this
+section; classification = analyze_w3.classify, unchanged). Unit = run = independent population.
+C1 (origin pathway, from W3a discovery; 400 runs each PARTIAL / PAIR / COPY, WELL_MIXED):
+- C1-P1: completing event is a MUTATION in >= 50% of origins.
+- C1-P2: among in-place origins, exactly one necessary changed byte in >= 50%.
+- C1-P3: the pre-event tape copies 0 own bytes (cryptic precursor) in >= 60% of origins.
+- C1-P4: >= 1 UPTAKE origin whose taken-up bytes are individually necessary (steps >= 1).
+- C1-P5: ASSISTED (copy-born carrier, >= half its critical bytes inherited at birth) in >= 50%.
+- C1-P6: LDIR critical in >= 95%.
+C2 (distributed persistence, W2 s2.D post-hoc there; 100 fresh A-fragment worlds):
+- C2-P1: FUNC alive at the end in >= 95% of runs AND the first assembly event's TRB lineage alive at the end in < 50%
+  of runs with an event AND function alive with NO assembly event's TRB lineage alive in >= 20% of runs.
