@@ -603,6 +603,13 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   IMPLICITLY (LDK r_a: r_a = kv[inputs[0][1]]) -- a 2-link chain (LDK; OUT) -- and a 1-link variant (OUTK: output
   kv[word1] directly). PREDICTION: reach rate rises sharply as the chain shortens (1-link >= 6/8, 2-link >= 3/8, 3-link
   <= 1/8).
+- B55 PREVIEW (chain-length wiring test, 2 seeds per variant, G=300; controls: each variant's solution 1.000 at K2/K6):
+  L1 (OUTK, no register coupling): 2/2 keyed, found at generation 0 (random founders already contain it).
+  L2 (LDK2 rY; OUT rY, one coupling): 2/2 keyed, generations 0 and 9.
+  L3 (IN tag -> rX; LDK rY, rX; OUT rY): 0/2 (B54 preview).
+  STRONG SUPPORT for the WIRING WALL: keyed recall goes from immediate to unreached when the read chain grows from 2 to
+  3 links; the third link couples instruction ORDER (the tag must be the 2nd word read this tick) with REGISTER NAMING
+  (land in the register LDK names). Full B55 (8 seeds x 3 variants) queued for the window after B53.
 - PLAN FOR THE NEXT WINDOW (opens ~2026-10-09 00:07Z; lease spectrex5:cpu12, <= 12 procs, <= 48 core-h):
   1. REPRESENTATION lever for the memory law (the one lever not yet tried): a KV-store organism (two opcodes replacing
      RND/YIELD: STK r_key, r_val writes a hidden dict; LDK r_dst, r_key reads it). Question: is keyed memory reached
