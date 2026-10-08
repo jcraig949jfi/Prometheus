@@ -34,8 +34,16 @@ def _w5p_run(job):
     sys.path.insert(0, str(b03.ROOT / "engine"))
     from w5p import harness
     from w5p import donor as WD
+    from w5p import promote as WP
     keep = {}
     orig = WD.donor_w5p
+    od = WP.derive_schemas
+
+    def spy_derive(*a, **k):                   # amendment A2: record the FULL derived list (receipts only)
+        out = od(*a, **k)
+        keep["derived_schemas"] = [str(d.get("schema") if isinstance(d, dict) else d) for d in out]
+        return out
+    WP.derive_schemas = spy_derive
 
     def spy(*a, **k):
         r = orig(*a, **k)
@@ -49,7 +57,9 @@ def _w5p_run(job):
     finally:
         WD.donor_w5p = orig
         harness.D.donor_w5p = orig
+        WP.derive_schemas = od
     row["selection_table"] = keep.get("selection_table")
+    row["derived_schemas"] = keep.get("derived_schemas")
     return row
 
 
@@ -309,7 +319,8 @@ def known():
            "K5b_promote_off_equals_R8_seed49": all(b[k] == R8[(49, "L_g11|g11_O10")][k] for k in keys),
            "K5c_promote_on_wellformed": bool(c["w5p"]["promotion_enabled"] and c["w5p"]["promoted_in_ids"]
                                              and c["w5p"]["cost"]),
-           "K5d_selection_table_recorded": all(x.get("selection_table") for x in (a, b, c))}
+           "K5d_selection_table_recorded": all(x.get("selection_table") for x in (a, b, c)),
+           "K5e_derived_schemas_recorded": all(isinstance(x.get("derived_schemas"), list) for x in (a, b, c))}
     res["pass"] = all(res.values())
     res["k5c_summary"] = {"selected": c["selected_schema"], "dag_depth": c["w5p"]["dag_depth"],
                           "derived_with_promoted": c["w5p"]["n_derived_with_promoted"]}

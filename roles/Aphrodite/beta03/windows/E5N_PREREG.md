@@ -168,3 +168,15 @@ Supersedes s5/s6 where they conflict. Known answers K5a-K5d re-run: PASS.
    - The execution-size ledgers cover the donor phase only.
    - Larger depth-2 entries delay the fallback walk, which biases arm D toward NO.
 8. **No-op gate (E5N-8): no change.** Caveat: P1 effectively compares promotable L_g11 with pristine-ordinary.
+
+## AMENDMENT A2 (pre-data; receipts only; no E5 outcome exists)
+- **b03_e5._w5p_run** also records the FULL derived-schema list (`derived_schemas`), using a per-job spy on
+  w5p.promote.derive_schemas. The computation is unchanged. This makes E6's SELECTION diagnosis exact rather than
+  bounded. Known answers K5a-K5e PASS.
+- **The E6 runner is frozen** (engine/v2b/b03_e6.py, built by the representation lead @466b3457f and cherry-picked;
+  its known answers K6a-K6j PASS, beta03/runs/E6/E6_KNOWN.json).
+  - It implements s6 and A1 item 6 mechanically.
+  - Pairs without a sham count as "no drop" under (b), which works against YES.
+  - Re-walks are limited to common-residual families.
+  - (d) LIN 120-127 is about 6-7 core-h (an extrapolated estimate). It runs only on YES_PENDING_E6, and only within
+    the cap. If it cannot finish by the hard stop, CLOSE_RULE row 2 applies.

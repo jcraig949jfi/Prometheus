@@ -157,7 +157,7 @@
   },
   "cloud_spend_usd": 0.0,
   "subagents": {
-    "REPRESENTATION": "O1 repair qualified -> O1_FAILS 0/3 (@61d55a914, not merged)",
+    "REPRESENTATION": "E6 runner delivered @466b3457f (cherry-picked; K6a-j PASS)",
     "SELECTOR": "DELIVERED aphrodite/b03-g12 @6c03a218f (16/16 PASS); merged; E2 frozen",
     "ECOLOGY": "pilot done @64d51f5cb: oracle control FAILS under W5P D1 observation; E5-H not frozen; O1 repair under test",
     "RED_TEAM": "pre-freeze review of E1/E2 done (2 BLOCKER + 7 MAJOR); all amended pre-data (A1); W11 review pending"
@@ -191,8 +191,13 @@
       "spec": "beta03/windows/E5N_PREREG.md",
       "freeze": "beta03/FREEZE_E5N.json",
       "amendments": [
-        "A1"
+        "A1",
+        "A2"
       ]
+    },
+    "E6": {
+      "runner": "engine/v2b/b03_e6.py",
+      "freeze": "beta03/FREEZE_E5N.json (A2)"
     }
   },
   "dispositions": {
@@ -208,5 +213,15 @@
       "read": false
     },
     "review": "beta03/reviews/REDTEAM_MIGRATION_DECISION.md"
-  }
+  },
+  "design_obligations_W11": [
+    "Migration draft revision per REDTEAM_MIGRATION_DECISION: M4 narrow 'substrate property' claim (selection broke under g11; g12 may reject alias; candidacy rests on 1 clean exposed seed)",
+    "M6 add outcome-free M0 probe: witness description length (nats) vs search budget before M1 freeze (gen-1 observation starvation)",
+    "M7 rebudget M0-M3 (~85-95 core-h incl. foundry); index-identity compat check on a sample; >=20 W9-H' seeds",
+    "M8 add frozen W5 comparator arm (W5P+O1+g12+alias-fix) to M1 Q2 for falsifiability",
+    "M9 restate MDL-vs-memorise claim (reach guard does the work)",
+    "m1 O1 CPU 1.13 core-h per its report",
+    "m2 conditional g12 arm in M2",
+    "m3 planted-corpus rewrite known-answer"
+  ]
 }
