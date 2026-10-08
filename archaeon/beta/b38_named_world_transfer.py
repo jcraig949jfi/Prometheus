@@ -20,7 +20,7 @@ NAMED = {"P-boom": "P-boom_K_D_persist_s3", "B-scatter": "B-scatter.T000.d_horiz
 
 def main():
     worlds = {k: (NoClock(load_world(v)[0]), load_world(v)[1]) for k, v in NAMED.items()}
-    groups = {"B35_echofree": "B32echofree_result.json", "B37_wide": "B32echofree_wide_result.json"}
+    groups = {"B35_echofree": "B32echofree_result.json", "B37_wide": "B32echofree_wide_result.json", "B41_hazard": "B32echofree_hazard_result.json"}
     out = {}
     for g, f in groups.items():
         rows = [r for r in json.loads((OUT / f).read_text(encoding="utf-8"))["rows"] if "elite_manifest" in r]
