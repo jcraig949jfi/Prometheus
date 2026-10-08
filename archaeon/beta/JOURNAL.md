@@ -586,6 +586,12 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   runs, B48/B49/B51) and, where it appears and pays, it used self-modifying code (B51) -- not reached at a usable rate
   by any VM, world, incentive, selection or mutation lever tried.
   CORE-HOUR TALLY since 00:07Z: ~44 of 48. No more heavy runs this window.
+- B53 STAGED + PREVIEW: KV-store VM (STK/LDK replace RND/YIELD; hidden per-episode dict). Controls exact: hand KV solver
+  1.000 at K2-K8 on the KV VM (~.04 on stock); slot solver unchanged on the KV VM (K2 1.0 -> K8 .31). Light preview
+  (2 KV seeds, G=300): 0/2 keyed -- both on the one-value shelf (K2 .535, K6 .218), STK used 0 times, LDK 0-1 times:
+  the memory organ is NOT ADOPTED even when store/read-by-key are single instructions. Leaning toward "the wall is
+  WIRING (route the tag/value registers into the organ on the right tick kinds), not the primitive". Full B53 (16
+  cells, KV vs stock) launches at the window (one-shot trigger 00:11Z).
 - PLAN FOR THE NEXT WINDOW (opens ~2026-10-09 00:07Z; lease spectrex5:cpu12, <= 12 procs, <= 48 core-h):
   1. REPRESENTATION lever for the memory law (the one lever not yet tried): a KV-store organism (two opcodes replacing
      RND/YIELD: STK r_key, r_val writes a hidden dict; LDK r_dst, r_key reads it). Question: is keyed memory reached
