@@ -63,3 +63,22 @@ After supply A completes:
 2. after supply B: `e1 freeze` -> `e1 starts` (common residual frozen) -> `e1 recip` -> `e1 score` -> `e1 report`.
 
 Ledger checks come before each stage. E1 is expected to span W02-W03; the shards are checkpointed and resumable.
+
+## 5. Close (09:07Z)
+- **All three leads delivered within W01:**
+  - **W5P:** branch aphrodite/b03-w5p @1e169a577, 11/11 tests PASS.
+  - **g12:** @6c03a218f, 16/16 PASS. Merged.
+  - **W9-H ecology:** @dbde4556f. Pilot: 44 certified depth-two families (30 strict), at the 1M cap only.
+- **E2 (g12) was pre-registered and frozen early.** That is W03's DEV work, advanced. Known answer K4 PASS.
+- **Red-team pre-freeze review of E1/E2:** 2 BLOCKER and 7 MAJOR findings. All were handled by **amendment A1, before
+  any data.**
+  - Known answers K1, K1b, K2, K3 (+ Beta-02 pairs 66/57) and K4 PASS.
+  - Freezes re-recorded (3145b0926).
+- **Process defect, fixed:** campaign-id collision. Themis's C-008 was overwritten for about 2 minutes and restored
+  byte-identical; Beta-03 is C-011.
+- **Supply:**
+  - Block A foundry done at 08:32Z (roles 24/24).
+  - Block B is running (800/3456 at 09:06Z; ETA about 10:50Z).
+- **Compute:** about 15 core-h used since activation (foundry, plus known answers and lead smokes at <= 2 workers).
+- **Carried forward to the W05 / W07 / W09 freezes:** W5P decisions D1-D5; W9-H decisions D1-D5 (the 30k-escrow
+  blindness and the OBSERVE pool are the critical ones).
