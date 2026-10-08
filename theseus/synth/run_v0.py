@@ -199,6 +199,7 @@ def main(argv=None):
     ap.add_argument("--elite-protect-k", type=int, default=None)
     ap.add_argument("--seed-select", type=float, default=0.0)
     ap.add_argument("--cond-ops", action="store_true", help="THESEUS-30d: random rules may draw conditional ops")
+    ap.add_argument("--g0-readers", action="store_true", help="THESEUS-30e: G0 compiled with split writer/reader concepts")
     a = ap.parse_args(argv)
     cfg = copy.deepcopy(CONFIG)
     cfg["gens"] = a.gens
@@ -213,6 +214,7 @@ def main(argv=None):
     cfg["elite_protect_k"] = a.elite_protect_k
     cfg["seed_select"] = a.seed_select
     cfg["cond_ops"] = bool(a.cond_ops)
+    cfg["g0_readers"] = bool(a.g0_readers)
     sb.COND_ENABLED = cfg["cond_ops"]
     if a.smoke:
         cfg.update(gens=min(a.gens, 7), per_cell=1, n_oneshot_per_arity=12, n_random=12, n_weird=6, n_neutral=6,
@@ -234,7 +236,7 @@ def main(argv=None):
     compute = {}
 
     # ------------------------------------------------------------------ 0
-    corpus = cg.compile_corpus()
+    corpus = cg.compile_corpus(readers=cfg.get("g0_readers", False))
     os.makedirs(f"{root}/corpus/g0", exist_ok=True)
     jl(f"{root}/corpus/g0/{tag}.jsonl", corpus)
     g0_genomes = [c["genome"] for c in corpus]
