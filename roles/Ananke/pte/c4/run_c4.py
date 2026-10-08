@@ -114,7 +114,7 @@ def run_job(job, cell, plan, device):
     env = task_env(cell, task)
     sseed = search_seed(cell["cell_key"], task, idx)
     sp = SearchSpec(**dict(BASE_SPEC, gens=job.get("gens", 36), **plan["selector"]))
-    lib = plan.get("library") or []
+    lib = job.get("library") or plan.get("library") or []          # per-job library: s8 arm D (own-cell D-LIB)
     t0 = time.time()
     e = evolve(ph, env, sseed, sp, device, rep, op, lib)
     champ = e["pop"][e["ci"]]; lt = e["lib"][e["ci"]]; dp = e["dup"][e["ci"]]
@@ -126,7 +126,8 @@ def run_job(job, cell, plan, device):
         abl = champ.copy(); abl[lt > 0] = 0; progs.append(abl)
     pt, ep = C.eval_programs(ph, env, hs, progs, device=device)
     comp = C.competence(role, pt[0], ep)
-    row = {"kind": "c4_search", "job_id": job["job_id"], "cell_id": cell["cell_id"], "task": task, "rep": rep, "op": op,
+    row = {"kind": "c4_search", "job_id": job["job_id"], "cell_id": cell["cell_id"], "task": task, "arm": job.get("arm"),
+           "rep": rep, "op": op,
            "idx": idx, "search_seed": sseed, "search": sp.to_dict(), "competence": C.slim(comp),
            "success": comp["status"] == "TRUE", "champion": champ.tolist(),
            "lib_lines": int((lt > 0).sum()), "lib_modules": sorted(set(int(x) for x in lt[lt > 0])),

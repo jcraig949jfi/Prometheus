@@ -1,6 +1,6 @@
 # PTE-C4 preregistration: composition and reuse ladder
 
-Status: DRAFT until FREEZE_C4_L.json (library stage) and FREEZE_C4_T.json (target stage) are committed. Each freeze
+Status: library stage FROZEN by FREEZE_C4_L.json (the commit adding it); target stage DRAFT until FREEZE_C4_T.json is committed. Each freeze
 comes before its stage's production rows. The rules below are fixed at the library-stage freeze. The target-stage
 freeze adds only the frozen library and its hashes.
 
@@ -34,6 +34,8 @@ unit?
 REP = whichever of R3 and R4 has more competent FLIP searches at 4x in C3R; a tie goes to R4.
 
 - Arm A uses R5 (capacity and persistent register, no duplication). It shares REP's genome spec when REP is R4.
+- **Outcome (C3R, f2c8351af):** R3 0/24 and R4 0/24 at 4x, a tie, so **REP = R4**. Arms A (R5) and B/C (R4) share
+  one genome spec, so all three arms of a task share the gen-0 population and training worlds.
 - Selector: the C3S decision (M32 iff SELECTOR_RESOLUTION_EFFECT).
 
 ## 4. Library stage (L)
@@ -110,7 +112,34 @@ with 8 un-seeded controls. This is reported descriptively.
   - Can search then combine the TWO designed halves? If yes, the representation can express the composition and the
     one-stage modules evolved by search are the gap (REPRESENTABLE_BUT_UNSEARCHABLE with an evolved-module gap). If
     no, composition is not reachable even from correct parts (REPRESENTATION_STILL_INADEQUATE for search).
-- If C3R and C4 are both clean NULLs, the C5 slot runs the terminal composition assay (order s10).
+- **s8 diagnostic, made concrete (fixed at the L freeze, before any C4 data):**
+  - **Library.** D-LIB has two modules:
+    - the CONTEXT half of gate_plant: the lines that latch the actuator-sensed context into a persistent register;
+    - the CUE half: the lines that relay the cue and form the product.
+    - They are cut from c4_common.gate_plant by line ablation on 32 fresh worlds, each half kept in program order.
+  - **Known answers, checked before any D search:**
+    - the two halves re-assembled (in plant order, identity renaming) reproduce the plant's competence;
+    - each half alone is not competent.
+  - **Arm D:** R4 with OPDL, using D-LIB in place of the evolved library. GATE at the 4 cells, idx 0..7, 36 generations,
+    C4 seeds (the same gen-0 populations as arms A/B/C).
+  - **Verdict:**
+
+    | competent D searches | verdict |
+    |---|---|
+    | >= 4, across >= 2 cells | REPRESENTABLE_BUT_UNSEARCHABLE (search can combine correct parts; the evolved one-stage modules are the gap) |
+    | <= 1 | REPRESENTATION_STILL_INADEQUATE for search (composition is not reached even from the correct parts) |
+    | otherwise | INCONCLUSIVE_SPARSE |
+
+  - Its code (the D-LIB builder) is frozen in FREEZE_C4_D.json before its production.
+- If C3R and C4 are both clean NULLs, the C5 slot runs the terminal composition assay (order s10). Its kill rule is
+  preregistered before that run.
+
+## 7b. Production
+
+- Workers: 3 on the M1 GPU under the Fabric lease. Each stage has a deadline written into FREEZE_C4_<stage>.json as
+  launch + H hours, and the launcher takes the deadline from that file (C3R lesson: the stage-2 launch used + 16 h
+  where the prereg said + 14 h).
+- Order puts the highest idx last, so a wall censors whole rounds of every arm equally.
 
 ## 8. Threats
 

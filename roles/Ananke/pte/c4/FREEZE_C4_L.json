@@ -1,0 +1,32 @@
+{
+ "schema": "pte_c4.freeze.L.v1",
+ "authority": "roles/Ananke/prompts/2026-10-07_72h_c3_c4_c5/ (8c48ebfdf)",
+ "code_files": {
+  "c4_common.py": "69739a38d9c84aea934a1f577c7c213c302170c4161c61b5f13f9fa46cef3e21",
+  "run_c4.py": "a6a4d7e853853d8f5256a22ac46888debbf17b56ddfc4558c8ba0a95fbd7649e",
+  "make_plan_c4.py": "ef80533fd5a9675b47804c48c63d1f94130567d31a9ee0dd71e006ea434edec2",
+  "build_library.py": "6c333cfaee921b6c3677e4e2fe349699f76a49617b1a9ba0d93a87915b464b98",
+  "build_dlib.py": "f70ef11fc098fdd886e117d88efa766bd4d5ec50e19580ea45d554212e47525b",
+  "reduce_c4.py": "54300dc7f7b73889ff2c2ade4c1215f5fa42671d91cb2c0c9beabaa4ffaf66b0",
+  "c4_admission.py": "09065f3f13555cdc055c99800c4e25c3e1f543d546ff7f96aaf7daa85bafd21a",
+  "test_c4.py": "f2ccb5299f3adf24f3a22f98662480dc6b935c357bb53f9672e743bd34891b86",
+  "../c3/c3r_common.py": "4ed88b20b97064e4aabcb1832c8951c6f73f0b4ebe4e4e2c8b336af97184337e",
+  "../c3/swap_v2.py": "333373fe5b1c7cef6ba04de26ba5833fe0feac5746501dbe4ff2e0959ac92d35",
+  "../../../../prometheus/ananke/envs.py": "56e0921bad285932ea645f184404da5f25f2f1b2bcc610d0bc30fde8ee479a6a"
+ },
+ "prereg_sha256": "34456deb100ce1c8a3e3964f9d0dcebce861f5a8d5a7c650a64af2737ae05562",
+ "plan_L_sha256": "b7f8b8d0de7c9d97cbd0061a5d78b6a1594050091b6c132e65582d802fe5c2b8",
+ "admission_sha256": "d433468b55117306469cfa952f3fec5c3b1ae476c22c48c3cbd231baed7bb4ef",
+ "rep": "R4 (C3R tie rule; f2c8351af)",
+ "selector": "M32 (C3S)",
+ "n_jobs_L": 64,
+ "tests": "test_c4.py 5 passed (CPU); test_c3r 6 passed",
+ "flight": "c4_flight/: RELAY1H + HOLD at FLIP-0000 idx 8 (non-production): 109 s and 135 s on GPU; HOLD TRUE, RELAY1H FALSE; DLIB_check.json: D-LIB known answers PASS at all 4 cells",
+ "production": {
+  "workers": 3,
+  "lease": "lse-7d61e3584398",
+  "deadline_min": 120,
+  "projected_wall_min": 50
+ },
+ "frozen_utc": "2026-10-08T16:03:14.740199+00:00"
+}
