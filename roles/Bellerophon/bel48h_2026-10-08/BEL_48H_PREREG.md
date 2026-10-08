@@ -209,3 +209,6 @@ Discovery predictions (from the grounding round's G6 reading "short ramp ending 
 - W3-P3: replay identity 27/27 (a failure is INSTRUMENT_FAILURE and voids W3a).
 - W3-P4: LDIR is among the critical bytes in 27/27 (dependence on LDIR); NOP-slide dependence (FUNC lost when zero
   bytes become HALT) in >= 50%.
+
+ERRATUM (2026-10-08T08:03:47Z): s6 says "W3a frozen 2026-10-08T08:15Z"; the freeze is commit 4995e8b45, W3a launched 2026-10-08T08:03:32Z.
+Timestamps in this file are from now on taken from the shell clock, never written by hand.
