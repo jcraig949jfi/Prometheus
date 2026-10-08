@@ -395,3 +395,41 @@ ties them; only their mutational leak differs. The plant slot alternates by seed
 - X-DIR-LONG is re-queued unchanged.
 - X-ONTAPE-LONG (6000) had not started; it will run with the fix.
 - No completed 2000-epoch experiment is affected: their declared horizon equals the cap.
+
+## C2. C-ONTAPE-MAINTAIN: CONFIRMED (CONFIRM lane; fresh seeds 45_200_000+; protocol frozen at 9bfe58eab; primary ruler TCS)
+
+| arm | function maintained (final TCS >= 0.10, established runs) | final TCS | final offline CS |
+|---|---|---|---|
+| ONTAPE | 12/12 | 0.70-0.81 | 0.66-0.86 |
+| ONTAPE_RND | 0/12 | -- | -- |
+| CT_U under ONTAPE | 0/6 on both rulers | -- | -- |
+| COPY_ONLY under ONTAPE | 0/6 on both rulers | -- | -- |
+
+- **Pair-distributed (tape-only) genomes recur:** present at the end in 8/12 ONTAPE runs, at 0.4-7.8% of the
+  population. They are not a one-run curiosity.
+- **PROMOTED mechanism:** copy priority EARNED from the organism's own in-context answers (no offline scorer in the
+  loop) maintains a transmitted function on the pair tape.
+
+## ATLAS PACKET A2 (cross-pollination)
+
+| field | value |
+|---|---|
+| barrier before | persistence required an external ruler deciding copy direction (A1) |
+| intervention | the world feeds task inputs to the pair-tape execution in which copying happens; copy priority is an EWMA of the organism's own on-tape answers (no offline scorer) |
+| barrier after | persistence and selection on function hold ENDOGENOUSLY (confirmed 12/12 vs 0/12) |
+| new phenomenon | in-context selection lets function become PAIR-DISTRIBUTED. A genome can answer by jumping into its partner's code (byte-29 JRZ +66 -> the partner's OUT). It is competent on the tape and incompetent alone. Offline and in-context function diverge, so rulers must match where selection acts. |
+| primitive / mechanism | (1) direction-biased copy exchange (offense DIR = defense VETO, F9); (2) robust architectures out-compete fragile ones under function selection (F10); (3) shared-tape execution makes the partner's code part of one's phenotype |
+| generalizes? | 7ae3 scope test queued; direction-vs-rate should transfer to any pairwise-race replicator |
+| open neighbors | does the distributed form spread over long horizons (X-ONTAPE-LONG, running)? is it cooperative or parasitic (frequency dependence)? does any genome-level compression arise de novo (X-DIR-LONG)? |
+
+**Barrier map (updated):**
+
+| transition | status |
+|---|---|
+| copy-capable material | PRESENT (planted); de novo blocked (F5) |
+| causal heredity | PRESENT |
+| functional transmission | PRESENT (0.90-0.92 per generation) |
+| functional persistence | PRESENT under direction coupling (external C1, endogenous C2) |
+| selection on function | PRESENT; also selects robust architectures (F10) |
+| architectural integration | FIRST SIGNS: pair-distributed function (F8, C2); neutral rewiring of vestigial code (F4) |
+| endogenous re-discovery | 1-step only, supply-limited (F7) |

@@ -1,0 +1,54 @@
+{
+ "verdict": "CONFIRMED",
+ "ONTAPE_established": 12,
+ "ONTAPE_TCS_maintained": 12,
+ "ONTAPE_RND_established": 12,
+ "ONTAPE_RND_TCS_maintained": 0,
+ "negatives_failing": {
+  "NEG_CTU_ONTAPE": 0,
+  "NEG_COPY_ONTAPE": 0
+ },
+ "ONTAPE_final_TCS": [
+  0.703,
+  0.707,
+  0.711,
+  0.73,
+  0.738,
+  0.746,
+  0.769,
+  0.785,
+  0.785,
+  0.793,
+  0.797,
+  0.812
+ ],
+ "ONTAPE_final_CS_offline": [
+  0.664,
+  0.707,
+  0.711,
+  0.773,
+  0.773,
+  0.785,
+  0.785,
+  0.789,
+  0.805,
+  0.816,
+  0.816,
+  0.856
+ ],
+ "ONTAPE_tape_only_final": [
+  0.0,
+  0.0,
+  0.0,
+  0.0,
+  0.004,
+  0.012,
+  0.012,
+  0.016,
+  0.016,
+  0.019,
+  0.043,
+  0.078
+ ],
+ "rule": "ONTAPE TCS>=0.10 in >=75% established; ONTAPE_RND <=1; no negative with TCS or CS >=0.10"
+}
