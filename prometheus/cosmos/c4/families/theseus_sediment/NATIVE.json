@@ -1,0 +1,31 @@
+{
+  "family": "theseus_sediment",
+  "author": "Theseus (non-Cosmos), DESKTOP-RUAPVAI, 2026-10-06",
+  "module": "prometheus/cosmos/c4/families/theseus_sediment/world.py",
+  "builder": "build_world(**knobs)",
+  "natural_sampler": "sample_natural(rng)",
+  "task_support": {"V": ">= 2 (any)", "k": [2, 4, 8], "symbols": "any integer accepted; site = symbol*groove mod n_cells"},
+  "parameters": {
+    "n_cells": {"units": "cells", "meaning": "length of the periodic channel (number of sediment sites)", "range": [8, 64], "type": "int"},
+    "groove":  {"units": "cells per symbol index", "meaning": "spacing between the injection sites of consecutive symbols; must be < n_cells", "range": [1, 63], "type": "int"},
+    "load":    {"units": "sediment units", "meaning": "amount of sediment one observed symbol drops into the flow", "range": [0.1, 10.0], "type": "float"},
+    "drift":   {"units": "cells per step", "meaning": "flow speed: how far the suspended load moves downstream each step", "range": [0, 4], "type": "int"},
+    "flush":   {"units": "fraction per step", "meaning": "share of the suspended load exported out of the channel each step", "range": [0.0, 1.0], "type": "float"},
+    "settle":  {"units": "probability per cell per step", "meaning": "chance that a cell's entire suspended clump drops onto the bed", "range": [0.0, 1.0], "type": "float"},
+    "scour":   {"units": "probability per cell per step", "meaning": "chance that a cell's entire bed is lifted back into the flow", "range": [0.0, 1.0], "type": "float"},
+    "creep":   {"units": "fraction per step", "meaning": "share of each bed cell that slides one cell downstream (deterministic)", "range": [0.0, 1.0], "type": "float"}
+  },
+  "native_measurements": {
+    "transport_work": {"units": "sediment units per step per episode", "meaning": "half the total absolute change of bed plus suspended load in one step: how much sediment moved between compartments or cells"}
+  },
+  "natural_distribution": {
+    "n_cells": [16, 24, 32], "groove": [3, 5, 7], "load": [1.0], "drift": [0, 1, 2],
+    "flush": [0.0, 0.6], "settle": [0.05, 0.95], "scour": [0.0, 0.3], "creep": [0.0, 0.3],
+    "note": "lists are lattices (uniform over members); pairs are uniform real intervals"
+  },
+  "history_free_control": {"settle": 0.0, "flush": 1.0, "meaning": "nothing ever settles and the flow is fully exported every step, so state after a step depends only on the current symbol"},
+  "state": {"susp": "(E, n_cells) suspended sediment", "bed": "(E, n_cells) bed sediment"},
+  "readout_features": "concat(bed, susp)",
+  "full_state": "concat(susp, bed) -- the whole causal state",
+  "randomness": "noise(n, rng) -> {u_settle, u_scour}: (n, n_cells) uniforms; step() is deterministic given them"
+}

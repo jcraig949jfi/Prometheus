@@ -41,7 +41,8 @@ All Ubuntu Server 26.04.1, kernel 7.0.0-38, user `jcraig`, Claude Code, `~/Prome
 | Dell Inspiron 3647 | ubu006 | Dell Inspiron 3647 (small desktop) | i3-4130, 2C/4T | 16 GB (2x 8 GB, 2026-10-04) | 500 GB 7200 rpm HDD | Ethernet .225 (Wi-Fi .226) | `light` | Worker active 2026-10-03; Claude login pending |
 
 Verified over SSH 2026-10-06 (dmidecode/lscpu). Claude Code 2.1.288-289 on all six, all on jcraig949@gmail.com: ubu001/002 by interactive login;
-ubu003-006 by one shared `claude setup-token` OAuth token (2026-10-06, ~1 yr), verified with `claude -p` on each. Stickers: label + hostname + IP
+ubu003-006 by one shared `claude setup-token` OAuth token (2026-10-06, ~1 yr), verified with `claude -p` on each.
+Seats 2026-10-06: Bellerophon@ubu005, Cosmos@ubu003, Ensorain@ubu006 (tmux + Remote Control); see ubuntu_swarm_todo.md. Stickers: label + hostname + IP
 (the two X1 Carbons are identical).
 
 ## Candidates

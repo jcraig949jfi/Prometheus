@@ -2,44 +2,46 @@
   "schema": "prometheus.work_state.v1",
   "seat": "Pallas",
   "mwo_id": "MWO-0004",
-  "authority": "operator directive 2026-10-03 (roles/Achilles/prompts/2026-10-03_rso_builder_cell/01_OPERATOR_DIRECTIVE_verbatim.md)",
-  "updated_at_utc": "2026-10-06T01:45:04Z",
+  "authority": "operator directive 2026-10-03 (roles/Achilles/prompts/2026-10-03_rso_builder_cell/01_OPERATOR_DIRECTIVE_verbatim.md); operator directive 2026-10-07 (C-004-OP8, roles/Palamedes/prompts/2026-10-07_rso_completion_push/01_OPERATOR_DIRECTIVE_verbatim.md) s6 and s10 (same-seat relaunch); Palamedes launch note 2026-10-07 13:40Z (roles/Palamedes/prompts/2026-10-07_wake_pallas_c010_t034/WAKE_Pallas.md: C-010-T034, headless, no run_in_background)",
+  "updated_at_utc": "2026-10-07T14:50:00Z",
   "state": "READY",
-  "branch": "pallas/c004-t041",
-  "base_sha": "d92546849",
-  "head_sha": "f233c83bf31c4040bec98609575525c6807a0486",
-  "worktree_path": "D:/Prometheus-worktrees/pallas-boot-2026-10-03",
+  "branch": "pallas/c010-t034",
+  "base_sha": "8b46e44a5",
+  "head_sha": "the commit carrying this file (branch; merged origin/main 5b4b75247 at f9d3866ee)",
+  "worktree_path": "C:/Prometheus-worktrees/pallas-c010-t034",
   "model": "claude-fable-5-1",
   "capability_class": "Q3",
-  "host": "SPECTREX5 (M2; not M1, EW_DB_HOST=192.168.1.202)",
-  "instance": "m2-e7da6bde",
-  "session_start_utc": "UNKNOWN (comms boot 2026-10-03T11:10:19Z)",
-  "current_objective": "RSO Builder Cell member, campaign C-004 (RSO-METHODS-SLICE-001)",
-  "current_step": "C-004-T041 delivered and INTEGRATION_READY (state commit c28b523a5); idle (OP-7: hourly check, no per-poll heartbeat)",
+  "host": "harry1 (M4; not M1, EW_DB_HOST=192.168.1.202), headless",
+  "instance": "harry1-dc8e608d",
+  "session_start_utc": "2026-10-07T13:36:00Z (comms boot)",
+  "current_objective": "RSO Builder Cell: all three campaigns of the completion push are closed (C-004 incomplete, C-009 scoped, C-010 witness executed). No READY packet exists for this seat.",
+  "current_step": "idle on Opus 5 (Q2). Completion push DONE at about 14.3 h of 72 (#1845). C-010 witness: instrument QUALIFIED, S4 and S15 both NEGATIVE (Palamedes's figures, not this instance's measurement).",
   "in_flight": [],
   "finish_condition": "per claimed packet (DISTRIBUTED_WORK.md)",
-  "next_expected_milestone": "Palamedes integrates pallas/c004-t041; S5 (T050) decides on the incomplete closure",
-  "expected_next_artifact": "none until a READY packet exists",
+  "next_expected_milestone": "none. C-010-T040 (positive-candidate replication) is PROPOSED FOR THE OPERATOR, not READY; if the operator opens it, the Pallas challenge that follows would be Q3 and need a Fable instance.",
+  "expected_next_artifact": "none",
   "threads": [
     "phase3-rso"
   ],
   "campaigns": [
-    "C-004"
+    "C-004",
+    "C-009",
+    "C-010"
   ],
   "experiments": [],
   "fabric_tasks": [],
   "running": [],
   "blocked_on": [],
   "next_actions": [
-    "comms sync Pallas; workgraph ready Pallas (hourly, silent while idle)"
+    "hourly: git fetch; MERGE origin/main by SHA; comms sync Pallas; workgraph ready Pallas",
+    "no self-assignment; claim only a packet this runtime meets (Q2)"
   ],
   "operator_decisions_required": [],
   "latest_reports": [
-    "rso/slice001/challenge/S4/REPORT.md (branch pallas/c004-t041)",
-    "ops/campaigns/C-004/tasks/C-004-T041/attempts/A-001/RECEIPT.json",
-    "roles/Pallas/comms/T041_INTEGRATION_READY_2026-10-06.md",
-    "rso/slice001/challenge/S3/REPORT.md"
+    "roles/Pallas/journal/2026-10-06.md",
+    "rso/slice001/challenge/R2/REPORT.md",
+    "roles/Pallas/comms/POLL_ORDER_OBSERVATION_2026-10-07.md"
   ],
-  "last_push_sha": "c28b523a5 (main, state); f233c83bf (branch pallas/c004-t041, work)",
-  "last_push_utc": "2026-10-06T01:45:04Z"
+  "last_push_sha": "the commit carrying this file (branch pallas/c010-t034); state commits on main: 27b3d2f82 (claim), 5b4b75247 (IMPLEMENTING), then GREEN and INTEGRATION_READY with receipt A-001",
+  "last_push_utc": "2026-10-07T14:50:00Z"
 }

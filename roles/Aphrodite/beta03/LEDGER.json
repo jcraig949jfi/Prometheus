@@ -1,0 +1,29 @@
+{
+  "schema": "aphrodite.beta03.ledger.v1",
+  "entries": [
+    {
+      "utc": "2026-10-08T05:05Z",
+      "window": "W01",
+      "kind": "ACTIVATE",
+      "note": "Beta-03 activated; directive saved verbatim; starting SHA recorded"
+    },
+    {
+      "utc": "2026-10-08T05:10Z",
+      "window": "W01",
+      "kind": "SUPPLY",
+      "note": "W8 LIN 72-119 generated (W8_SUPPLIES_B03.json); foundry A+B launched (outcome-free)"
+    },
+    {
+      "utc": "2026-10-08T05:20Z",
+      "window": "W01",
+      "kind": "DIAG",
+      "note": "R8 autopsy on frozen Beta-02: ~93%/72% of deficit is unequal headroom; residual -7/-13 n.s.; 88% of common residual unacquired by any arm"
+    },
+    {
+      "utc": "2026-10-08T05:25:48Z",
+      "window": "W01",
+      "kind": "FREEZE",
+      "note": "E1 prereg + b03.py frozen; K1-K3 pass"
+    }
+  ]
+}

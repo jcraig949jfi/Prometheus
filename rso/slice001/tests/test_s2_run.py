@@ -34,5 +34,42 @@ class TestNoSeeding(unittest.TestCase):
         self.assertEqual(M.compare_row(e, a)["status"], M.AGREE)
 
 
+class TestProduceContract(unittest.TestCase):
+    def test_contract_option_reaches_produce_and_defaults_to_the_slice_contract(self):
+        from unittest import mock
+        with mock.patch.object(S, "produce", return_value={}) as p:
+            S.main(["produce", "--commit", "c", "--ledger", "l.jsonl", "--contract", "k.json"])
+            p.assert_called_once_with("c", "l.jsonl", contract="k.json")
+        with mock.patch.object(S, "produce", return_value={}) as p:
+            S.main(["produce", "--commit", "c", "--ledger", "l.jsonl"])
+            p.assert_called_once_with("c", "l.jsonl", contract=S.L.DEFAULT_CONTRACT)
+
+    def test_produce_charges_the_ledger_under_the_given_contract(self):
+        from unittest import mock
+        with mock.patch.object(S.L.Ledger, "from_contract", side_effect=RuntimeError("stop")) as fc:
+            with self.assertRaises(RuntimeError):
+                S.produce("c", "l.jsonl", contract="k.json")
+            fc.assert_called_once_with("l.jsonl", "k.json")
+
+
+class TestProductionRunJson(unittest.TestCase):
+    """C-009-T031 R3 (B1.PROBE.PRODUCTION_RUNJSON): s2_run.consumer_for passes run_id = g.run_id, so the production
+    consume path and the fixture path agree on a run.json that names another launch (LAUNCH_UNBOUND on both)."""
+
+    def test_paths_agree(self):
+        from rso.binding.challenge.B1 import cases as B1C
+        from rso.slice001 import s2_run as SR
+        from rso.slice001.fixtures import evidence_cases as F
+        from rso.slice001.tests.test_evidence import r1_g0
+        recs, blobs = SR.stage_records()
+        dec_a, _cust_a, rid_a, dec_b, _cust_b = B1C.probe_production_runjson(r1_g0(), recs, blobs, F.FIRST_CHECK)
+        self.assertEqual(rid_a, B1C.SUBSTITUTE)
+        for claim in ("CL-RET(REG)", "CL-CAL(STANDARD)"):
+            line = [ln for ln in dec_a[claim]["prerequisites"] if ln.get("predicate") == "G-INV"]
+            self.assertTrue(line, claim)
+            self.assertEqual(line[0]["verdict"]["outcome"]["reason"], "LAUNCH_UNBOUND", claim)
+            self.assertEqual(dec_a[claim], dec_b[claim], claim)
+
+
 if __name__ == "__main__":
     unittest.main()

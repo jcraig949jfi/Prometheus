@@ -1,0 +1,80 @@
+{
+ "schema": "prometheus.workgraph.receipt.v1",
+ "task_id": "C-004-T048",
+ "campaign_id": "C-004",
+ "attempt_id": "A-001",
+ "role": "Pallas",
+ "model": "claude-fable-5-1",
+ "quality_class": "Q3",
+ "instance": "m2-1500b878",
+ "host": "SPECTREX5",
+ "branch": "pallas/boot-2026-10-06",
+ "worktree_path": "D:/Prometheus-worktrees/pallas-boot-2026-10-03",
+ "start_sha": "6f0ac7773c72b593bdd7d241585cdffa24603358",
+ "end_sha": "75fb5d6ce9412849176d8ba533ccf4634381206e",
+ "files_changed": [
+  "rso/slice001/challenge/R2/closure_set/ (cases.py, expected.json, edits.json, witnesses.py, run_cases.py, run_mutation.py, CLOSURE_SET.md, EXPOSURE.md)",
+  "rso/slice001/challenge/R2/results_cases.jsonl",
+  "rso/slice001/challenge/R2/mutation_rows.jsonl",
+  "rso/slice001/challenge/R2/mutation_confirm.jsonl",
+  "rso/slice001/challenge/R2/results.jsonl",
+  "rso/slice001/challenge/R2/REPORT.md",
+  "rso/slice001/s2/LEDGER.jsonl (10 rows appended only)",
+  "roles/Pallas/journal/2026-10-06.md",
+  "roles/Pallas/comms/",
+  "roles/Pallas/STATUS.md",
+  "roles/Pallas/WORK_STATE.json",
+  "ops/campaigns/C-004/tasks/C-004-T048/"
+ ],
+ "evidence_added": [
+  "re-check set at c8f702862 (2026-10-06T23:32:45Z, on main) before any outcome: 1 fresh sound (C1), 1 fresh broken (B3.3), 1 semantic edit (C2), 2 unscored probes, answer key, predictions, exposure note; FREEZE_R2's 41 hashes verified",
+  "score: sound 1 of 1 (SUPERSET_MANIFEST: custody on the S4 row, decisions identical to the keeper control); broken 0 of 1 (LATER_WINDOW_RUN admitted: G-INV PASS, CL-RET(REG) SATISFIED); controls 2 of 2; probes OVERLAP_RUN (declared FD-T046-1) and FAILED_ROW_CITED both admitted; edit Y1 (G-INV world-insensitive) survived the targeted suite (165) and the full suite (393), witnessed non-equivalent",
+  "REPORT.md: C1 CLOSED within this re-check; C2 NOT CLOSED (observer axis pinned per the T046 receipt; world axis of the same full-node-id binding unpinned, Y1); B3.3 NOT CLOSED (end_utc >= created_at_utc is one-sided: refuses earlier windows, admits later windows and failed rows; wider than the declared overlap escape); OP6's condition for the native witness NOT met by these figures",
+  "design fact recorded: in the real S4 bundle every receipt's created_at_utc precedes its own run's start_utc, so only the bundle's TOP_LEVEL launch window (present in the inventory, not consulted) can bound attribution"
+ ],
+ "evidence_executed": [
+  {
+   "command": "python -B rso/slice001/challenge/R2/closure_set/run_cases.py --ledger rso/slice001/s2/LEDGER.jsonl",
+   "result": "exit 0; controls 2/2, sound 1/1, broken 0/1; probes 2 recorded (both G-INV PASS); run R2-CASES-20261006T233303Z-2496, 1.1 CPU-s"
+  },
+  {
+   "command": "python -B rso/slice001/challenge/R2/closure_set/run_mutation.py --ledger rso/slice001/s2/LEDGER.jsonl",
+   "result": "exit 0; baseline PASSED 165 tests (22.3 s); Y1 SURVIVED targeted (165, 0 failures, 22.9 s) and full suite (393, 0 failures, 216.1 s); witness DIFFERS; run R2-MUTATION-20261006T233338Z-21956"
+  },
+  {
+   "command": "ledger.Ledger.from_contract('rso/slice001/s2/LEDGER.jsonl').usage()",
+   "result": "launches 17 of 20, cpu_s 3187.2, artifact_bytes 31780730; R2 rows: 2 TOP_LEVEL, 3 MUTATION_CHILD, 262.5 CPU-s"
+  },
+  {
+   "command": "sha256 of the 41 FREEZE_R2 paths at ad6b3fa96 and at HEAD vs FREEZE_R2.md",
+   "result": "41 checked, 0 mismatches"
+  }
+ ],
+ "red_observed": {
+  "observed": false,
+  "reason": "kind review, red_required false. Preregistered failure state: no re-check set under rso/slice001/challenge/R2/ (true at claim, 6f0ac7773)."
+ },
+ "result": "DONE_CLEAN",
+ "known_escapes": [
+  "no separate unchanged-suite launch: T047's consume-only regression and the runner's baseline stand for it; the full suite ran once as the survivor's confirmation child",
+  "evidence-plane only; world predicates not re-challenged",
+  "the C2 observer axis (X3 killed by TestC2ObserverRunBinding) is taken from the T046 receipt and was not re-run here",
+  "same-family and cell-membership caveats (CONTRACT.md s6); that no test body was opened rests on this session's record (EXPOSURE.md)",
+  "mutation_rows.jsonl records the working-tree (CRLF) sha256 of evidence.py (e87bf184...); LF-normalised it equals FREEZE_R2's fe1fe767...",
+  "third permitted launch not used"
+ ],
+ "unresolved": [
+  "B3.3: a receipt citing a later window's COMPLETED run of its own node is admitted (scored broken case); the declared FD-T046-1 overlap and an undeclared FAILED-row citation are admitted too (probes); whether these are NEW claim-critical survivors under OP6 is the adjudicator's reading of AMENDMENT_v1.0.5 Y1",
+  "C2: no test pins the world component of G-INV's node-id binding (Y1 survives 393 tests); reach today is nil (all 232 real rows are world STANDARD)",
+  "no third repair round exists (OP6): disposition of the above is the operator's"
+ ],
+ "unblocks": [
+  "C-004 S5/OP6 follow-up (operator)"
+ ],
+ "resources": {
+  "cpu_seconds_ledgered": 262.5,
+  "top_level_launches": 2,
+  "reviewer_minutes": "about 30 including the report"
+ },
+ "created_at_utc": "2026-10-06T23:43:00Z"
+}

@@ -1,0 +1,163 @@
+{
+  "schema": "aphrodite.beta03.state.v1",
+  "campaign": "C-011",
+  "label": "C-P2B-APH-BETA-03",
+  "thread": "TH-P2B-APHRODITE-V2B",
+  "authority": "prompts/2026-10-08_beta03/01_OPERATOR_DIRECTIVE_verbatim.md",
+  "activation_utc": "2026-10-08T05:05Z",
+  "hard_stop_utc": "2026-10-10T05:05Z",
+  "final_reserve_from_utc": "2026-10-10T04:20Z",
+  "starting_sha": {
+    "origin_main": "3d85e1df418e1fc84bd1433b96ed2300937fb5ec",
+    "seat_branch_before_merge": "201d1a873f61431952adac5eeb7376962da3b589"
+  },
+  "accepted_findings": {
+    "FIRST_ORDER_IMPROVER_CHANGE": "REPLICATED",
+    "MEMORISE_EXCLUSION_EFFECT": "POSITIVE",
+    "OBSERVATION_WIDTH_EFFECT": "NOT CONFIRMED AFTER HOLM",
+    "G11_ONLY_WORKS_AT_O10": "NO",
+    "R8_HEREDITARY_IMPROVER_EFFECT": "NO",
+    "RECURSIVE_SELF_IMPROVEMENT": "NOT ESTABLISHED",
+    "EVIDENCE_TIER": 2
+  },
+  "windows": [
+    {
+      "id": "W01",
+      "kind": "DEV",
+      "title": "R8 FAILURE AUTOPSY",
+      "start_utc": "2026-10-08T05:05Z",
+      "end_utc": "2026-10-08T09:05Z",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "W02",
+      "kind": "EXP",
+      "title": "SATURATION / INTERFERENCE DISCRIMINATOR (E1)",
+      "start_utc": "2026-10-08T09:05Z",
+      "end_utc": "2026-10-08T13:05Z",
+      "status": "PENDING"
+    },
+    {
+      "id": "W03",
+      "kind": "DEV",
+      "title": "G12 ENDPOINT-ALIGNED SELECTOR",
+      "start_utc": "2026-10-08T13:05Z",
+      "end_utc": "2026-10-08T17:05Z",
+      "status": "PENDING"
+    },
+    {
+      "id": "W04",
+      "kind": "EXP",
+      "title": "G12 FRESH-SEED CONFIRMATION (E2)",
+      "start_utc": "2026-10-08T17:05Z",
+      "end_utc": "2026-10-08T21:05Z",
+      "status": "PENDING"
+    },
+    {
+      "id": "W05",
+      "kind": "DEV",
+      "title": "W5P REPRESENTATION PROMOTION (E3)",
+      "start_utc": "2026-10-08T21:05Z",
+      "end_utc": "2026-10-09T01:05Z",
+      "status": "PENDING"
+    },
+    {
+      "id": "W06",
+      "kind": "EXP",
+      "title": "PROMOTION REACHABILITY AND CONFORMANCE",
+      "start_utc": "2026-10-09T01:05Z",
+      "end_utc": "2026-10-09T05:05Z",
+      "status": "PENDING"
+    },
+    {
+      "id": "W07",
+      "kind": "DEV",
+      "title": "SECOND-LEVEL WORLD / ECOLOGY DESIGN (E4)",
+      "start_utc": "2026-10-09T05:05Z",
+      "end_utc": "2026-10-09T09:05Z",
+      "status": "PENDING"
+    },
+    {
+      "id": "W08",
+      "kind": "EXP",
+      "title": "SECOND-LEVEL DISCOVERY PILOT",
+      "start_utc": "2026-10-09T09:05Z",
+      "end_utc": "2026-10-09T13:05Z",
+      "status": "PENDING"
+    },
+    {
+      "id": "W09",
+      "kind": "DEV",
+      "title": "R8 REPRESENTATION-CONTROLLED RETEST (E5 design)",
+      "start_utc": "2026-10-09T13:05Z",
+      "end_utc": "2026-10-09T17:05Z",
+      "status": "PENDING"
+    },
+    {
+      "id": "W10",
+      "kind": "EXP",
+      "title": "R8 PROMOTION ASSAY (E5)",
+      "start_utc": "2026-10-09T17:05Z",
+      "end_utc": "2026-10-09T21:05Z",
+      "status": "PENDING"
+    },
+    {
+      "id": "W11",
+      "kind": "DEV",
+      "title": "FORENSIC REVIEW / REPAIR OR ABLATION",
+      "start_utc": "2026-10-09T21:05Z",
+      "end_utc": "2026-10-10T01:05Z",
+      "status": "PENDING"
+    },
+    {
+      "id": "W12",
+      "kind": "EXP",
+      "title": "INDEPENDENT CONFIRMATION OR DECISIVE NULL (E6)",
+      "start_utc": "2026-10-10T01:05Z",
+      "end_utc": "2026-10-10T05:05Z",
+      "status": "PENDING"
+    }
+  ],
+  "active_window": "W01",
+  "supply": {
+    "file": "science/arc3/w8_lin_generator/W8_SUPPLIES_B03.json",
+    "blocks": {
+      "A": "LIN 72-95 (E1 donors, E2/g12 confirmation)",
+      "B": "LIN 96-119 (E1 recipients)"
+    }
+  },
+  "jobs": [
+    {
+      "id": "SUPPLY_A_B",
+      "cmd": "b03.py supply A; supply B",
+      "log": "beta03/runs/SUPPLY_run.log",
+      "started_utc": "2026-10-08T05:10:34Z",
+      "status": "RUNNING",
+      "outcome_free": true
+    }
+  ],
+  "next_permissible_action": "W02: after supply A -> b03.py e1 donors; after supply B -> e1 freeze, starts, recip, score, report",
+  "compute": {
+    "cap": "48 core-h / rolling 24h (M4)",
+    "ledger": []
+  },
+  "cloud_spend_usd": 0.0,
+  "subagents": {
+    "REPRESENTATION": "branch aphrodite/b03-w5p (running)",
+    "SELECTOR": "branch aphrodite/b03-g12 (running)",
+    "ECOLOGY": "branch aphrodite/b03-eco (running)",
+    "RED_TEAM": "scheduled W11 + freeze reviews"
+  },
+  "known_defects": [
+    "r7e._donor drops selection_table (B01)",
+    "NULL junk gates never competitive (B02 E12 s6.3) -> E2 adds NEAR-MISS trap"
+  ],
+  "expected_final_disposition": "open",
+  "frozen_specs": {
+    "E1": {
+      "spec": "beta03/windows/E1_PREREG.md",
+      "freeze": "beta03/FREEZE_E1.json",
+      "b03_sha": "4408324c2211c23a46ee308761ad28d5dafe6c36c40961362126f0a1a4884225"
+    }
+  }
+}

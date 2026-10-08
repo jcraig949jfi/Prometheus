@@ -2,7 +2,10 @@
 
 Normative text: rso/slice001/contract/CONTRACT.md v1.0.0 (draft B B4.2, B5, B6, B7.1 incorporated) and
 AMENDMENT_v1.0.1.md (V1 node_id, V3 edge spelling, V6 custody why list, V7 G-INV attribution, V8 fixture
-stores) and AMENDMENT_v1.0.2.md (W1 live custody store: read-only reader RegistryStore, C-004-T021).
+stores) and AMENDMENT_v1.0.2.md (W1 live custody store: read-only reader RegistryStore, C-004-T021) and
+AMENDMENT_v1.0.5.md (Y1-Y3: B3.3 governs run attribution under a cumulative inventory, C-004-T046).
+C-009-T011: G-INV run attribution and inventory custody rest on the execution binding (rso/binding/CONTRACT.md
+BX1, BX2, BX4, BX5, BX7; rso/binding/binding.py); v1.0.5's end_utc operationalisation is retired (BX4).
 
 What this module establishes and what it does not (B5.4, closure D10): binding checks that presented bytes and
 complete nodes equal the anchors the consumer holds. It never establishes that execution happened or that an
@@ -16,6 +19,7 @@ Python >= 3.8, standard library only.
 """
 import hashlib
 
+from rso.binding import binding as BD
 from rso.slice001 import receipt as R
 
 MANIFEST_SCHEMA = "rso.slice001.manifest.v1"
@@ -76,17 +80,22 @@ def node_hash(node):
     return R.sha256_hex(node)
 
 
-def build_manifest(receipts):
-    """Manifest bytes over the complete nodes of the given Receipts, sorted by node_id (B5.2)."""
+def build_manifest(receipts, launch_run_id=None):
+    """Manifest bytes over the complete nodes of the given Receipts, sorted by node_id (B5.2), naming the launch
+    that produced them when given (C-009 BX1: launch_run_id; s2_bundle writes the same key)."""
     nodes = sorted((node_from_receipt(rc) for rc in receipts), key=lambda n: n["node_id"])
     ids = [n["node_id"] for n in nodes]
     if len(set(ids)) != len(ids):
         raise EvidenceError("duplicate node ids in manifest")
-    return R.canonical_bytes({"schema": MANIFEST_SCHEMA, "nodes": nodes})
+    doc = {"schema": MANIFEST_SCHEMA, "nodes": nodes}
+    if launch_run_id is not None:
+        doc["launch_run_id"] = launch_run_id
+    return R.canonical_bytes(doc)
 
 
 class Anchors(object):
-    """Complete-node anchors the consumer holds, and where they came from ("keeper" or "producer")."""
+    """Complete-node anchors the consumer holds, and where they came from ("keeper" or "producer").
+    launch_run_id: the launch the manifest names (BX1), None when it names none."""
 
     def __init__(self, manifest_bytes, source):
         if source not in ("keeper", "producer"):
@@ -98,6 +107,8 @@ class Anchors(object):
         self.manifest_bytes = manifest_bytes
         self.blob_sha256 = _sha(manifest_bytes)
         self.nodes = {n["node_id"]: n for n in doc["nodes"]}
+        launch = doc.get("launch_run_id")
+        self.launch_run_id = launch if isinstance(launch, str) and launch else None
 
 
 def anchors_from_producer(manifest_bytes):
@@ -144,21 +155,39 @@ def anchors_from_keeper(store, blobs):
     return found[0] if len(found) == 1 else AnchorChoice(found)
 
 
+def _artifact_hits(anchors, bundle):
+    """How many presented receipts' complete-node artifacts (sha256, length) equal this candidate's anchored ones."""
+    hits = 0
+    for n in bundle.receipts:
+        rc, _ = bundle.parsed(n)
+        if rc is not None and n in anchors.nodes and node_from_receipt(rc)["artifact"] == anchors.nodes[n]["artifact"]:
+            hits += 1
+    return hits
+
+
 def resolve_anchors(anchors, bundle):
-    """The Anchors of THIS bundle (F2): unchanged unless an AnchorChoice. Then, by identity: the candidate whose
-    node set equals the presented receipts' node ids; else the smallest candidate covering them; else the one
-    sharing most nodes; ties go to the earliest registered (FD-T042-2). Custody separately refuses anchors that
-    omit a presented node, so a wrong choice can never qualify."""
+    """The Anchors of THIS bundle (F2): unchanged unless an AnchorChoice. Then by artifacts first (C-004-T046 C1):
+    a candidate whose node artifacts match EVERY presented receipt is this bundle's manifest (the smallest such,
+    so an exact node set wins). Node ids alone cannot tell two productions of one node set apart (S4
+    S4.SOUND.REPRODUCED: the S2 and S4 G0 manifests). Otherwise by identity: the candidate whose node set equals
+    the presented receipts' node ids; else the smallest candidate covering them; else the one sharing most nodes
+    -- each preferring more matching artifacts; remaining ties go to the earliest registered (FD-T042-2).
+    Custody separately refuses anchors that omit a presented node, so a wrong choice can never qualify."""
     if not isinstance(anchors, AnchorChoice):
         return anchors
     presented = set(bundle.receipts)
-    exact = [a for a in anchors.candidates if set(a.nodes) == presented]
+    cands = anchors.candidates
+    hits = [_artifact_hits(a, bundle) for a in cands]
+    full = [i for i, a in enumerate(cands) if presented <= set(a.nodes) and hits[i] == len(presented)]
+    if full:
+        return cands[min(full, key=lambda i: len(cands[i].nodes))]
+    exact = [i for i, a in enumerate(cands) if set(a.nodes) == presented]
     if exact:
-        return exact[0]
-    cover = [a for a in anchors.candidates if presented <= set(a.nodes)]
+        return cands[max(exact, key=lambda i: hits[i])]
+    cover = [i for i, a in enumerate(cands) if presented <= set(a.nodes)]
     if cover:
-        return min(cover, key=lambda a: len(a.nodes))
-    return max(anchors.candidates, key=lambda a: len(presented & set(a.nodes)))
+        return cands[min(cover, key=lambda i: (len(cands[i].nodes), -hits[i]))]
+    return cands[max(range(len(cands)), key=lambda i: (len(presented & set(cands[i].nodes)), hits[i]))]
 
 
 # --------------------------------------------------------------------------------------------------------
@@ -219,10 +248,12 @@ def required_nodes(claim, anchors=None):
 
 class Bundle(object):
     """What a producer presents: receipt bytes per node id, trace bytes per (node id, role), the run
-    inventory, and the stage/withdrawal records and blobs it cites. Nothing here is trusted."""
+    inventory, and the stage/withdrawal records and blobs it cites; run_id is the launch its run.json names
+    (None: it presents none). Nothing here is trusted."""
 
     def __init__(self, receipts, traces, inventory, stage_records=(), withdrawals=(), blobs=None,
-                 expected_table=None):
+                 expected_table=None, run_id=None):
+        self.run_id = run_id
         self.receipts = dict(receipts)              # node_id -> bytes
         self.traces = {k: dict(v) for k, v in traces.items()}   # node_id -> {role: bytes}
         self.inventory = list(inventory)            # rows (see g_inv)
@@ -394,9 +425,13 @@ def g_bind(claim, bundle, anchors, config):
 
 
 # --------------------------------------------------------------------------------------------------------
-# G-INV (B6.4, V7). Inventory rows consumed from C-004-T019 (interface fixed here until T019 lands):
-#   {"kind": "RUN", "run_id": str, "node_id": str, "status": "COMPLETED" | <any other terminal status>}
+# G-INV (B6.4, V7) on the execution binding (C-009 rso/binding/CONTRACT.md). Inventory rows (C-004-T019 ledger,
+# binding fields C-009-T010; rso/binding/contract.json row_fields):
+#   launch          {"kind": "RUN", "run_id", "launch_kind": "TOP_LEVEL", "status", ...}
+#   node execution  {"kind": "RUN", "run_id", "parent_run_id", "launch_kind": "RECEIPT", "node_id", "status",
+#                    "receipt_sha256", ...}
 #   last row {"kind": "TERMINAL", "row_count": <number of RUN rows>}
+# Times may be present; none is read (BX4).
 
 def inventory_terminal(rows):
     if not rows or rows[-1].get("kind") != "TERMINAL":
@@ -405,29 +440,64 @@ def inventory_terminal(rows):
     return rows[-1].get("row_count") == len(runs) == len(rows) - 1
 
 
+def launch_unbound(bundle, anchors):
+    """BX1: None when the bundle is bound to the anchored launch, else the G-INV witness of LAUNCH_UNBOUND. The
+    launch is the one the ANCHORED manifest names, never the bundle's: a run.json naming another launch, or an
+    inventory without that launch as exactly one TOP_LEVEL row COMPLETED, is unbound."""
+    launch = anchors.launch_run_id
+    why = BD.launch_reasons(bundle.inventory, launch)
+    presented = getattr(bundle, "run_id", None)
+    if why or (presented is not None and presented != launch):
+        return {"anchored": launch, "presented": presented, "binding": why}
+    return None
+
+
 def g_inv(claim, bundle, anchors):
-    """G-INV over the claim's required node set (V7). A presented receipt's run must be exactly one inventory row
-    whose node_id is that receipt's own (B3.3 + V7; C-004-T042 F3, S3.BROKEN.RUN_BORROW)."""
+    """G-INV over the claim's required node set (V7). Every run is attributed through the execution binding
+    (rso.binding.binding; CONTRACT.md BX1, BX2, BX5):
+      - BX1: the bundle is bound to the launch its anchored manifest names (launch_unbound), else LAUNCH_UNBOUND;
+      - BX2: a presented receipt's cited run is exactly one row, a RECEIPT row of that launch, COMPLETED, of the
+        receipt's exact node id, recording sha256 of the receipt's canonical bytes -- one digest binding every
+        dimension the receipt records (subject, predicate, observer, world, outputs, claimed status). Otherwise
+        RECEIPT_WITHOUT_RUN:<node_id> (the slice spelling), every failing BIND_* reason in the witness beside it
+        (C-004 shapes: S3.BROKEN.RUN_BORROW, S4.BROKEN.OBS_RUN_BORROW, S4.PROBE.STALE_RUN, R2 Y1,
+        R2.BROKEN.LATER_WINDOW_RUN, OVERLAP_RUN, FAILED_ROW_CITED; CC1: fixtures/cc1_cases.py);
+      - BX5: a required node WITHOUT a presented receipt is RUN_UNREPORTED iff the anchored launch has a COMPLETED
+        row of it; rows of other launches are provenance, never evidence and never errors.
+      - BX5b (CONTRACT.md s7; C-009-T031): a presented receipt whose node the launch ALSO completed in another,
+        unpresented execution is RECEIPT_WITHOUT_RUN:<node_id> with BIND_SIBLING_UNREPORTED (and the sibling run
+        ids) in the witness (B1.BROKEN.SIBLING_UNREPORTED). FAILED / INTERRUPTED / REFUSED attempts are provenance.
+    No timestamp is read (BX4: AMENDMENT_v1.0.5's end_utc bound is retired; its meaning is BX1/BX2)."""
     anchors = resolve_anchors(anchors, bundle)
     rows = bundle.inventory
     if not inventory_terminal(rows):
         return _blocked(["terminal attempted-run inventory"])
     runs = rows[:-1]
     req = required_nodes(claim, anchors)
-    by_run = {}
-    for r in runs:
-        by_run.setdefault(r["run_id"], []).append(r)
+    unbound = launch_unbound(bundle, anchors)
+    if unbound is not None:
+        return {"execution": _ran(len(req)),
+                "outcome": _gate("G-INV", "FAIL", "LAUNCH_UNBOUND", unbound, len(req))}
+    own = BD.own_launch_rows(runs, anchors.launch_run_id)
     for n in req:
         rc, _ = bundle.parsed(n)
         if rc is not None:
             run_id = rc.to_dict()["execution"]["run_id"]
-            cited = by_run.get(run_id, [])
-            if len(cited) != 1 or cited[0].get("node_id") != rc.node_id:
+            why = BD.binding_reasons(rc.node_id, run_id, rc.canonical_bytes(), runs, anchors.launch_run_id)
+            # FD-T031-1: BX5b is evaluated when the cited row otherwise binds (the B1 shape). A cited row that already
+            # fails is RECEIPT_WITHOUT_RUN either way; its witness keeps the CC1 form (no extra sibling reason).
+            siblings = [] if why else BD.unreported_siblings(rc.node_id, run_id, runs, anchors.launch_run_id)
+            if siblings:
+                why = [BD.SIBLING_UNREPORTED]
+            if why:
+                witness = {"node_id": n, "run_id": run_id, "binding": why}
+                if siblings:
+                    witness["siblings"] = siblings
                 return {"execution": _ran(len(req)),
-                        "outcome": _gate("G-INV", "FAIL", "RECEIPT_WITHOUT_RUN:%s" % n, n, len(req))}
+                        "outcome": _gate("G-INV", "FAIL", "RECEIPT_WITHOUT_RUN:%s" % n, witness, len(req))}
         else:
-            for r in runs:
-                if r["node_id"] == n and r["status"] == "COMPLETED":
+            for r in own:
+                if r.get("node_id") == n and r.get("status") == BD.COMPLETED:
                     return {"execution": _ran(len(req)),
                             "outcome": _gate("G-INV", "FAIL", "RUN_UNREPORTED:%s" % r["run_id"], n, len(req))}
     return {"execution": _ran(len(req)),
@@ -735,13 +805,22 @@ def custody(bundle, anchors, store, first_check_utc, keeper=None, registrar=None
     and sorted (V6); a store that cannot be read as a verified chain gives STORE_UNREACHABLE or
     ROW_CHAIN_BROKEN (v1.0.2 W1) beside ANCHORS_FROM_PRODUCER, since no row can then be judged. Establishes
     bytes since registration only (B5.4); with the live store, "registered at the recorded time, chain intact
-    at check time" and never more (W2)."""
+    at check time" and never more (W2).
+    C-009 BX7: the inventory G-INV reads qualifies only as the inventory of the anchored manifest's launch -- it
+    holds that launch as one TOP_LEVEL row COMPLETED (else INVENTORY_UNBOUND:<BIND_* reason>) and the bundle's
+    run.json names no other launch (else LAUNCH_UNBOUND); with RUN_INVENTORY registered, its rows cannot then be
+    forged consistently after registration."""
     anchors = resolve_anchors(anchors, bundle)
     why = set()
     if anchors.source != "keeper":
         why.add("ANCHORS_FROM_PRODUCER")
     if not set(bundle.receipts) <= set(anchors.nodes):
         why.add("ROW_BLOB_MISMATCH")       # F2: the anchored manifest is not this bundle's (FD-T042-3)
+    for reason in BD.launch_reasons(bundle.inventory, anchors.launch_run_id):
+        why.add("INVENTORY_UNBOUND:%s" % reason)
+    presented = getattr(bundle, "run_id", None)
+    if presented is not None and presented != anchors.launch_run_id:
+        why.add("LAUNCH_UNBOUND")
     rows, err = store_rows(store)
     if err is not None:                              # unreadable or broken chain: nothing below can be judged
         why.add(err.code)

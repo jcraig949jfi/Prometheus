@@ -1,0 +1,30 @@
+{
+ "selftest": {
+  "replay_identical": true,
+  "interchange_round_trip": true,
+  "noise_is_only_randomness": true,
+  "history_free_control_k2": true,
+  "history_free_control_k4": true,
+  "history_free_control_k8": true,
+  "history_free_control_declared": true,
+  "any_symbol_accepted": true
+ },
+ "all_pass": true,
+ "provenance": {
+  "python": "3.11.9",
+  "numpy": "2.4.3",
+  "machine": "DESKTOP-RUAPVAI",
+  "source_sha256_lf": "41772ab5c98cf91e2122c2d0bc3e5f0306e696fc062b2a7c3f4f53bbc291e414",
+  "defaults": {
+   "n_cells": 24,
+   "groove": 5,
+   "load": 1.0,
+   "drift": 1,
+   "flush": 0.2,
+   "settle": 0.5,
+   "scour": 0.05,
+   "creep": 0.05
+  }
+ },
+ "command": "python -m prometheus.cosmos.c4.families.theseus_sediment.world"
+}

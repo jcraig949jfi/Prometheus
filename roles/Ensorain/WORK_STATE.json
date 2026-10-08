@@ -4,12 +4,12 @@
   "mwo_id": "MWO-0004",
   "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
   "mwo_sha256": "925660b2d2be53af2ee4195391e484d9649bbd4ee828cd60432ce2f0903a99df",
-  "updated_at_utc": "2026-09-30T13:30:00Z",
+  "updated_at_utc": "2026-10-07T14:20:00Z",
   "state": "ACTIVE",
-  "state_reason": "Instrument loop closed and frozen (PKG-F strict gate of record; HIER labeled arm; LM02 WINDOW_NOT_SUPPORTED). CURRENT = WTP-04 Habitable Islands. LM01 HOLD.",
+  "state_reason": "WTP-04 map stage CLOSED: ISLANDS_MAPPED (ensorain/RESULTS_WTP04_MAP.md). Habitability is a family property; the carrier class is a family constant along single axes. Next per results s5 (operator choice of 2D revival probe vs narrow THEN with N6). LM01 HOLD.",
   "branch": "ensorain/base-role-adopt-2026-09-23",
-  "head_sha": "bf90a73bb",
-  "base_sha": "bd48fac9b5d51262e84b76d0ca16b8d9054eb5f1",
+  "head_sha": "63b8e4b8f",
+  "base_sha": "9c1ba77bd",
   "threads": [
     "thr-ens-lossless-memorizer",
     "thr-ens-locus-of-compression",
@@ -61,6 +61,18 @@
       "status": "DONE_DEV",
       "report": "ensorain/arc3/suff/CRYPT_LEARNED.md",
       "note": "Learned window-crypticity D_k: tracks truth with a good learner (rho .946), but is failure-silent toward 'window sufficient' with a weak one; a model-quality gate catches catastrophic failures, not partial ones (K1 refuted). Gated D_k is a one-sided lower bound. Folded into LM02 design"
+    },
+    {
+      "id": "E-ENS-WTP04-MAP",
+      "status": "CLOSED: ISLANDS_MAPPED",
+      "prereg": "ensorain/PREREG_WTP04.md",
+      "precommit": "63b8e4b8f9c14e15cb0a6cf4b1f5a961172f94e2",
+      "engine": "ensorain/wtp4/",
+      "rows": "ensorain/runs/wtp04/eval.jsonl",
+      "grid": "12 families x 54 points x seeds 41004001,41004002 = 1296 units",
+      "dev": "dev_axes (F08/F09 all axes, 9900002), dev_axes2 (4 fams x 3 axes, 9900003); instrument fixes in prereg s7a",
+      "report": "ensorain/RESULTS_WTP04_MAP.md",
+      "note": "1296 units, 10.3 h. 6/12 families pay at native and pay in 55-72% of perturbed cells; 4 dead families stay dead (0-1/53). Universal kills: noise sd>=1, drift p12, info x100, compute x1000, band .003, paid sensing. Robust: credit delay, forgetting. Carrier class change replicated in 2/132 family-axis pairs. P1 refuted (lifetime non-monotone), P5 refuted (struct wins 66% of paying cells, concentrated in completion families), P2/P3/P6 hit, P4 letter-hit/mechanism refuted."
     }
   ],
   "fabric_tasks": [
@@ -138,6 +150,8 @@
   "next_actions": "WTP-04 Habitable Islands (promoted from NEXT; instrument line frozen bf90a73bb): identify the genuinely independent WTP-03 founding families; perturb each family's physics outward (memory/environment ratio, change timescale, information cost, observation quality, irreversibility, credit delay, topology, compute, forgetting, active sensing, recurrence); map where learning becomes possible and where it dies. Cheap competitors first. Preregister before any campaign.",
   "operator_decisions_required": [],
   "latest_reports": [
+    "ensorain/RESULTS_WTP04_MAP.md",
+    "ensorain/PREREG_WTP04.md",
     "ensorain/arc3/reviews/PKGF_CRYPT_REVIEW_2026-09-29.md (review packet: PKG-F v2-v5b + learned crypticity)",
     "roles/Ensorain/probes/FP-001_RESULT.json",
     "ensorain/arc3/reviews/T25_CSSR_REVIEW_2026-09-29.md (review packet)",
@@ -167,19 +181,28 @@
     "operator_direction": "roles/Ensorain/prompts/2026-09-30_operator_direction/ (supersedes the CWO Ensorain section where they differ)",
     "operator_ruling_hier": "roles/Ensorain/prompts/2026-09-30_pkgf_pop_lm02_ruling/"
   },
-  "current": "WTP-04 Habitable Islands (promoted from NEXT; instrument line frozen bf90a73bb): identify the genuinely independent WTP-03 founding families; perturb each family's physics outward (memory/environment ratio, change timescale, information cost, observation quality, irreversibility, credit delay, topology, compute, forgetting, active sensing, recurrence); map where learning becomes possible and where it dies. Cheap competitors first. Preregister before any campaign.",
+  "current": "WTP-04 follow-up (results s5): (a) 2-axis revival probe on dead families F01/F06/F11; (b) narrow substrate collision with N6 at the replicated edges of structured islands F03/F04/F08/F09. Preregister first.",
   "next": "Substrate collision inside habitable regions (TT, CP, low-rank, DCT/spectral, sparse, graph memory, dense, symbolic/programmatic, cheap nulls): where does the preferred carrier of competence change? Lanes: paid substrate transformation; non-tensor-native worlds.",
   "reserve": [
     "Radically new world grammars not naturally TT/CP/matrix (dynamic graph laws, causal hidden state, programs, rewriting, temporal rules, recursive, topology-dependent)"
   ],
   "resource_status": {
-    "host": "SPECTREX5 (M2)",
-    "compute": "CPU dev envelope (<=8 workers, BELOW_NORMAL, stop at <6 GB free RAM); no campaign",
+    "host": "ubu006 (Linux, 4 cores, 15 GB RAM; moved from M2 SPECTREX5 2026-10-06)",
+    "python": "~/.venvs/ensorain (Python 3.14.4, numpy 2.3.5, scipy 1.16.3; ensorain/requirements.txt)",
+    "compute": "CPU dev envelope on ubu006: <=3 workers, nice 10, stop at <3 GB available RAM; no campaign",
     "gpu": "none",
-    "spend": "none"
+    "spend": "none",
+    "portability": "results are bitwise platform-bound; ubu006 runs get a fresh dev baseline and are never compared bit-for-bit with M2 rows"
   },
   "last_receipt": {
-    "commit": "bf90a73bb",
-    "what": "LM02 assay closed (WINDOW_NOT_SUPPORTED; HIER needs representativeness); instrument line frozen (ensorain/arc3/INSTRUMENT_LINE_FREEZE_2026-09-30.md)"
+    "commit": "(this commit)",
+    "what": "WTP-04 map stage closed: ISLANDS_MAPPED"
+  },
+  "host_move": {
+    "date": "2026-10-06",
+    "from": "M2 SPECTREX5 D:/Prometheus-worktrees/ensorain-base-role",
+    "to": "ubu006 ~/Prometheus-worktrees/ensorain-base-role",
+    "m2_check": "operator ran on M2 2026-10-06: branch clean, nothing unpushed (origin/<branch>..HEAD empty), ignored files only __pycache__; stashes belong to other seats (left alone). M2 worktree retired, not deleted.",
+    "smoke": "pytest ensorain: 128 passed on ubu006"
   }
 }

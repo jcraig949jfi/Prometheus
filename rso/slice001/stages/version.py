@@ -23,7 +23,9 @@ REPO_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.p
 PINNED = "6f57aa7c62f22edc66ea6b35c8c4cbda0b6324ff"
 
 _RULERS = ["rso/slice001/rulers.py", "rso/slice001/world.py"]
-_EVIDENCE = ["rso/slice001/evidence.py", "rso/slice001/receipt.py"]
+# C-009-T011: evidence.py executes rso/binding/binding.py (G-INV, custody), so it is part of every version that
+# includes evidence.py; an edit to the binding is a new version of the gates that run it.
+_EVIDENCE = ["rso/binding/binding.py", "rso/slice001/evidence.py", "rso/slice001/receipt.py"]
 SOURCES = {"CALIBRATION": _RULERS, "RETENTION": _RULERS, "G-BIND": _EVIDENCE, "G-INV": _EVIDENCE,
            "G-RECOMP": ["rso/slice001/checker.py"] + _EVIDENCE}
 ENTRY = {"CALIBRATION": "rso/slice001/rulers.py", "RETENTION": "rso/slice001/rulers.py",
@@ -58,14 +60,15 @@ def instrument_version(instrument, commit=PINNED, root=REPO_ROOT):
     return out
 
 
-_IMPORT = re.compile(r"^\s*from rso\.slice001(?:\.(\w+))? import (\w+)", re.M)
+_IMPORT = re.compile(r"^\s*from rso\.(slice001|binding)(?:\.(\w+))? import (\w+)", re.M)
 
 
 def slice_imports(path, root=REPO_ROOT, seen=None):
-    """Every rso/slice001 module file `path` imports, transitively (top-level and function-level imports)."""
+    """Every rso/slice001 and rso/binding module file `path` imports, transitively (top-level and function-level
+    imports)."""
     seen = set() if seen is None else seen
-    for pkg, name in _IMPORT.findall(lf_bytes(path, root).decode("utf-8")):
-        dep = "rso/slice001/%s%s.py" % (pkg + "/" if pkg else "", name)
+    for top, pkg, name in _IMPORT.findall(lf_bytes(path, root).decode("utf-8")):
+        dep = "rso/%s/%s%s.py" % (top, pkg + "/" if pkg else "", name)
         if dep not in seen and os.path.isfile(os.path.join(root, *dep.split("/"))):
             seen.add(dep)
             slice_imports(dep, root, seen)

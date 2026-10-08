@@ -1,0 +1,72 @@
+{
+  "schema": "prometheus.workgraph.receipt.v1",
+  "task_id": "C-009-T034",
+  "campaign_id": "C-009",
+  "attempt_id": "A-001",
+  "role": "Pallas",
+  "model": "claude-fable-5-1",
+  "quality_class": "Q3",
+  "instance": "harry1-2b71b1e1 (wrote the exposure record and the set, ran both launches to completion, wrote REPORT.md and the drafts of this receipt and the comms bodies; ended its turn with the acceptance run in the background and the headless session exited); finished by harry1-2a918949 (same lease, same model and host: acceptance re-run in the foreground, report/receipt completed, results commit, state commits)",
+  "host": "harry1",
+  "branch": "pallas/c009-t034",
+  "worktree_path": "C:/Prometheus-worktrees/pallas-c009-t034",
+  "start_sha": "0ad2d1a6f880500caadfcc31689a18573fea9978",
+  "end_sha": "d5add5518af9401a1066fc5f662f28df9564a7ba",
+  "commits": {
+    "exposure_first": "6b02d25a0 (07:27:58Z): EXPOSURE.md before the set",
+    "claim": "13d7c344c (main, ~07:30Z)",
+    "set_before_outcomes": "a9ef80a07 (07:35:46Z): cases.py, expected.json, edits.json, witnesses.py, run_cases.py, run_mutation.py, CHALLENGE_SET.md with predictions",
+    "implementing": "63d4c06c5 (main)",
+    "merge_origin_main": "83bc92338 (origin/main 63d4c06c5; only this packet's own state commits were upstream; nothing under rso/ changed)",
+    "results": "d5add5518 (08:3xZ, by harry1-2a918949; rows, ledger rows, REPORT.md, acceptance_stdout.txt, journal, work state, comms bodies; pushed on the branch)",
+    "resume_and_green": "the state commit carrying this receipt: GREEN with the resume note (the lifecycle refuses IMPLEMENTING -> IMPLEMENTING, as it refused CLAIMED -> CLAIMED at T030) then INTEGRATION_READY"
+  },
+  "files_changed": [
+    "rso/binding/challenge/B2/ (new: EXPOSURE.md, CHALLENGE_SET.md, cases.py, expected.json, edits.json, witnesses.py, run_cases.py, run_mutation.py, check_build_2026-10-07T073607Z.jsonl, results_cases.jsonl, mutation_rows.jsonl, mutation_confirm.jsonl, mutation_stdout.txt, acceptance_stdout.txt, REPORT.md)",
+    "rso/binding/LEDGER.jsonl (appended: B2-CASES-20261007T073656Z-6888; B2-MUTATION-20261007T073714Z-10300 with 3 children)",
+    "roles/Pallas/{WORK_STATE.json,journal/2026-10-07.md,comms/T034_CLAIMED_2026-10-07.md,comms/HEARTBEAT_2026-10-07_T034_start.md,comms/T034_INTEGRATION_READY_2026-10-07.md,comms/HEARTBEAT_2026-10-07_T034_done.md}",
+    "ops/campaigns/C-009/tasks/C-009-T034/ (state commits on main)"
+  ],
+  "evidence_added": [
+    "CC3 re-check set on FREEZE_B2 committed before any outcome (a9ef80a07): 1 sound, 1 broken, 1 semantic edit with a behavioural witness; FREEZE_B2 48/48 hashes verified at 0ad2d1a6f, at 1b69dd04a and on the LF-normalised working tree before the set, and again on the merged tree before the results commit",
+    "B2.SOUND.FAILED_RERUN_DIGEST ACCEPTED on both bases, every decision byte-identical to the baseline: a FAILED re-execution after the cited row, carrying a digest, is provenance (BX5b status filter; BX4 order-blind)",
+    "B2.BROKEN.NESTED_SIBLING ADMITTED on both bases: a second COMPLETED RECEIPT row of a presented required node, digest of an unpresented FAIL receipt, parent_run_id = the presented execution's own row (depth 2), is invisible to BX5b (own_launch_rows keeps parent == launch only); contract-vocabulary gap on CONTRACT s7 'under the anchored launch'; NOT reachable through rso/witness/run_witness.py as committed (parent always the launch; ledger refuses a repeated run_id)",
+    "E6-digestless-sibling-ignored SURVIVED the targeted suite (218 tests) and the full frozen suite (528 tests incl. rso/witness/tests; 0 failures), witness DIFFERS: BX5b does not read a sibling's digest and no frozen test builds a digest-less COMPLETED sibling (test-coverage class)",
+    "per surface (REPORT.md s3): BX1 CLOSED within coverage; BX2 CLOSED within coverage; BX5/BX5b NOT CLOSED (NESTED_SIBLING behavioural + E6 test-coverage); producer side unchallenged (controls 2/2 x 2 bases); both survivors outside the committed witness path, both readings of 'applicable' stated for the adjudicator",
+    "predictions (CHALLENGE_SET.md, before outcomes): 2/2 cases, 1/1 edit"
+  ],
+  "evidence_executed": [
+    {"command": "python -B rso/binding/challenge/B2/run_cases.py --check-build (07:36:07Z; constructs the cases, no consumer call, unledgered; rows check_build_2026-10-07T073607Z.jsonl)", "result": "both cases build on both bases: 28 rows, terminal consistent, 25 receipts"},
+    {"command": "launch 1: python -B rso/binding/challenge/B2/run_cases.py --ledger rso/binding/LEDGER.jsonl --contract rso/binding/contract.json (B2-CASES-20261007T073656Z-6888, 2.9 CPU-s)", "result": "r1: sound 1/1, broken 0/1 (ADMITTED), controls 2/2; synthetic: same on scored checks (claim checks unscored as in B1); rows results_cases.jsonl"},
+    {"command": "launch 2: python -B rso/binding/challenge/B2/run_mutation.py --ledger rso/binding/LEDGER.jsonl --contract rso/binding/contract.json (B2-MUTATION-20261007T073714Z-10300, 07:37:14Z-07:43:44Z, 3 children, 389.0 CPU-s; run in the background, watched from the foreground)", "result": "baseline PASSED 218/218; E6 SURVIVED targeted 218/0 (51.5 s) and FULL 528/0, 1 skipped (295.2 s); witness DIFFERS; NOT_EQUIVALENT_WITNESSED; cap not exhausted; rows mutation_rows.jsonl, mutation_confirm.jsonl"},
+    {"command": "git diff --quiet a9ef80a07 HEAD -- cases.py expected.json edits.json witnesses.py; FREEZE_B2 hash walk on the merged worktree", "result": "data files byte-identical to the set commit; 48 equal, 0 mismatch"},
+    {"command": "python -B -m unittest discover -s rso/slice001/tests -t . && python -B -m unittest discover -s rso/binding/tests -t . && python -B -m unittest discover -s rso/witness/tests -t . (merged tree 83bc92338; unledgered; first started in the background by harry1-2b71b1e1 and torn when its session exited; RE-RUN IN THE FOREGROUND by harry1-2a918949, one suite per process in order, 08:19:22Z-08:24:34Z; the partial acceptance_stdout.txt replaced by the full output; origin/main 2c292d3c4 at the resume changed nothing under rso/)", "result": "slice001: Ran 426 tests, OK (skipped=1), 263.5 s; binding: Ran 21 tests, OK; witness: Ran 81 tests, OK, 23.1 s; 528 run, 0 failures, exit 0 each -- GREEN"},
+    {"command": "python -m workgraph validate; python -m workgraph check-receipt (this file)", "result": "OK"}
+  ],
+  "red_observed": {"observed": false, "detail": "review packet, red_required false: the set and its predictions were committed (a9ef80a07) before the first outcome was observed; the expected verdicts are the answer key, not a failing test"},
+  "result": "DONE_CLEAN",
+  "known_escapes": [
+    "the set is consumer-only: the producer side of the frozen surface (ledger.py, s2_bundle.py) is covered by the controls and by T033's consume-only regression, not by any case or edit here",
+    "no fresh BX1 or BX2 shape was tried (the packet allows one broken case, spent on BX5b); BX1/BX2 are CLOSED only within B1's and CC1's coverage plus the identical-to-baseline binding of the cited row in this set's two cases",
+    "E6 has no end-to-end fire case in this set (its witness is module level); the fire case would be B1.BROKEN.SIBLING_UNREPORTED with the sibling's receipt_sha256 removed",
+    "synthetic-base claim-type checks are unscored (G-RECOMP on the fixture traces, B1's finding); the line, witness and identical checks there are scored and match r1",
+    "this instance read rso/witness/ares_client.py (class Launch) and run_witness.py BEFORE the set, as the packet's applicability question requires; it is not first-sight for a future witness-path challenge",
+    "same vendor family as the builders; cell member; no production code touched"
+  ],
+  "unresolved": [
+    "B2.BROKEN.NESTED_SIBLING (BX5b; behavioural; applicable-conditional to a nesting adapter, not to the committed witness path): whether CONTRACT s7 'under the anchored launch' is transitive (then a one-line walk up parent_run_id, a second repair round CC3 forbids) or parent == launch (then a contract sentence that a row whose parent is not a launch is malformed provenance)",
+    "E6-digestless-sibling-ignored (BX5b; witnessed survivor of 528 frozen tests; test-coverage class): a digest-less COMPLETED sibling is unpinned"
+  ],
+  "unblocks": [
+    "C-009 closure decision (CC3 adjudication by Palamedes / the operator)"
+  ],
+  "resources": {
+    "top_level_launches": 2,
+    "packet_ledgered_cpu_s": 391.9,
+    "campaign_ledger_after": {"launches": 10, "cpu_s": 1910.2, "artifact_bytes": 13381360},
+    "unledgered": "check-build about 2 s; acceptance on the merged tree: first attempt torn with the session (about 4 min wasted), foreground re-run 5.2 min",
+    "model": "two Q3 headless sessions, about 0.9 h total (07:17Z-07:55Z; 08:17Z-08:40Z)"
+  },
+  "notes": "Exposure record committed before the set (launch note). State commits went to main as they happened (pallas-ops): 13d7c344c CLAIMED, 63d4c06c5 IMPLEMENTING, then GREEN and INTEGRATION_READY with this receipt. Headless rule applied to the launches: both were watched from the foreground and no turn ended with a LAUNCH in flight; it was NOT applied to the unledgered acceptance run, which the first instance started in the background before ending its turn -- the session exited and the run died (partial acceptance_stdout.txt, replaced). The finishing instance re-ran it in the foreground under Palamedes's 08:20Z launch note (no run_in_background at all). The third permitted launch was not used. No set, row or outcome was changed by the finishing instance.",
+  "created_at_utc": "2026-10-07T08:40:00Z"
+}

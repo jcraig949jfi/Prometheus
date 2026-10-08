@@ -1,0 +1,72 @@
+{
+  "schema": "prometheus.workgraph.receipt.v1",
+  "task_id": "C-010-T012",
+  "campaign_id": "C-010",
+  "attempt_id": "A-001",
+  "role": "Argus",
+  "model": "claude-opus-5-5",
+  "quality_class": "Q2",
+  "start_sha": "47a2895be12f0a94979cb810822ea3d0317e3178",
+  "end_sha": "95131dbac0b416f5643d4be5c43f1d47d04eda70",
+  "files_changed": [
+    "rso/witness/evaluate.py",
+    "rso/witness/tests/test_evaluate.py"
+  ],
+  "evidence_added": [
+    "evaluate.py bundle checks: P-FLAT (s5, literal), launch (BX1, run.json equals the manifest launch), per-node binding (BX2) and unreported COMPLETED rows (BX5), artifact re-hash and dtype/shape decode, the world's oracle (r, interrupt steps) recomputed from the declared seeds and the arm's mode by W15 alone and compared, custody (EVIDENCE_MANIFEST and RUN_INVENTORY rows, blob = sha256 of the committed file bytes, registered before the first check; store errors never pass). A failing bundle is refused and every node it presents is EVIDENCE_REFUSED.",
+    "predicates from bytes: episode decisions via ruler.episode_decision with the last interrupt from the world; P-RET, P-CAL, P-CHAN through ruler.py; P-OBS, P-PRES, P-ERASE as exact differing-action counts; P-ERASE qualified only when the leak member's D > 0; P-CHAN requires S-NOPL seeds identical to S's in order (else FAIL SEEDS_NOT_PAIRED).",
+    "classes: PREREGISTRATION s6 (POSITIVE, POSITIVE (channel unidentified), NEGATIVE, DETECTION_UNQUALIFIED) plus s5's UNQUALIFIED for refused or missing evidence, an unregistered seed list, or a P-RET node that is not one organism of shape (n, 40, 1).",
+    "registered node map (one node per subject/arm/predicate via ares_client.node_id over W15; shared P-CAL arms on the primary subject's digest) stated in the module docstring for T013 / T020.",
+    "canonical RESULT record (receipt.canonical_bytes, no floats) and a CLI reading the live keeper store."
+  ],
+  "evidence_executed": [
+    {
+      "command": "python -B -m unittest rso.witness.tests.test_evaluate at RED commit 86e229027",
+      "result": "import error (no evaluate.py): RED. Correction: the RED state note said 25 tests; the file had 21 (22 with the later P-FLAT pin)."
+    },
+    {
+      "command": "first GREEN attempt",
+      "result": "11 failures: my synthetic P-OBS / P-PRES / P-ERASE fixtures reported placeholder regimes and the oracle check refused every bundle (correct behaviour; fixtures fixed to the world's oracle); then 5 failures from a test helper using assertIn on a list (fixed)"
+    },
+    {
+      "command": "python -B -m unittest rso.witness.tests.test_evaluate",
+      "result": "22 OK (~40 s): every s6 class; P-CAL, P-OBS, P-PRES, P-ERASE (subject and leak), P-CHAN pairing FAIL paths; P-FLAT nested / digestless / duplicate / other-launch; receipt digest, artifact and oracle tampering; custody missing row and late registration; missing node; producer claims ignored; registered seeds; population > 1"
+    },
+    {
+      "command": "10 evaluator mutants (oracle, artifact hash, P-FLAT digest rule, custody, leak member, P-CHAN pairing, binding, NOT_SHOWN mapping, registered seeds, organism count)",
+      "result": "10/10 KILLED"
+    },
+    {
+      "command": "acceptance: discover rso/witness/tests and rso/binding/tests on the tree merged with origin/main (T010 and T011 integrated)",
+      "result": "witness 131 OK, binding OK"
+    }
+  ],
+  "red_observed": {
+    "observed": true,
+    "detail": "test_evaluate failed to import before evaluate.py existed (commit 86e229027)"
+  },
+  "result": "DONE_CLEAN",
+  "known_escapes": [
+    "escalation C-010-T012_1: run_witness writes ledger.inventory() (every row of the store); with one shared ledger store across witness launches, P-FLAT as frozen refuses every bundle after the first; options there (fresh store per launch, or a per-launch inventory)",
+    "no end-to-end run on a driver-produced bundle (T013's dry run); the reading of receipts, listings, manifest and inventory follows T010 / T011 as integrated, checked by reading their code",
+    "a node-level binding failure refuses the whole bundle (conservative; FD-T012-2)",
+    "custody blob = sha256 of the committed MANIFEST.json / inventory.json bytes (FD-T012-3)"
+  ],
+  "unresolved": [
+    "C-010-T012_1"
+  ],
+  "unblocks": [
+    "C-010-T013"
+  ],
+  "created_at_utc": "2026-10-07T10:20:00Z",
+  "instance": "desktop-ruapvai-b08b36ac",
+  "host": "DESKTOP-RUAPVAI",
+  "branch": "argus/c010-t012",
+  "worktree_path": "C:/Prometheus-worktrees/argus-boot",
+  "resources": {
+    "cpu": "about 14 CPU-minutes, development only (synthetic bundles with real W15 resets, no organism; mutants)",
+    "validation_launches": 0,
+    "model": "one Q2 session, about 1 hour"
+  },
+  "notes": "Field decisions: FD-T012-1 registered node map (docstring); FD-T012-2 any binding failure refuses the bundle; FD-T012-3 custody blobs of the committed files; FD-T012-4 refused or missing evidence is UNQUALIFIED (s5), distinct from s6's DETECTION_UNQUALIFIED. No registered subject, arm or seed list was run or read. State commits went to main as they happened (argus-ops)."
+}

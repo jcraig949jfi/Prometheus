@@ -2,16 +2,24 @@
 
 A fresh session pointed at roles/Ensorain needs nothing else. Do this, in order.
 
-1. Worktree: `D:\Prometheus-worktrees\ensorain-base-role`, branch `ensorain/base-role-adopt-2026-09-23`.
+1. Host and worktree. Home host since 2026-10-06: ubu006 (Linux, 4 cores, 15 GB; moved from M2 by the operator).
+   - Worktree `~/Prometheus-worktrees/ensorain-base-role`, branch `ensorain/base-role-adopt-2026-09-23`. If it is
+     missing: `git worktree add -B ensorain/base-role-adopt-2026-09-23 ~/Prometheus-worktrees/ensorain-base-role origin/main`.
+   - Python: `~/.venvs/ensorain/bin/python` (venv with system site packages; `pip install -r ensorain/requirements.txt`).
+     Any host works the same way: venv + requirements + `EW_DB_HOST=192.168.1.202`. Smoke test: `pytest -q ensorain`.
+   - Results are bitwise platform-bound. A new host needs a fresh dev baseline; never compare its rows bit-for-bit
+     with another host's.
+   - Envelope on ubu006: <= 3 workers, nice 10, stop at < 3 GB available RAM.
    - Never `git pull`. Fetch only; fast-forward only when work needs new code.
-   - On M2, set `EW_DB_HOST=192.168.1.202` for comms and Fabric.
+   - The old M2 worktree (D:\Prometheus-worktrees\ensorain-base-role) was verified clean on 2026-10-06 (nothing
+     unpushed; only __pycache__ ignored). It is retired, not deleted.
 2. `git fetch origin`. Read `origin/main:ops/work_orders/CURRENT.md`.
    - Verify it with `git show origin/main:<archive path> | sha256sum` against `ops/work_orders/PUBLICATIONS.md`. Never
      hash the CRLF working file.
    - Compare its MWO ID with `roles/Ensorain/WORK_STATE.json` `mwo_id`.
    - If it is new: read the whole order (its ENSORAIN items and any census or seat instruction), adopt it, and update
      WORK_STATE.
-3. `python -m comms boot Ensorain --model <model id>` once per session, then `python -m comms sync Ensorain` at every
+3. `EW_DB_HOST=192.168.1.202 ~/.venvs/ensorain/bin/python -m comms boot Ensorain --model <model id>` once per session, then `... -m comms sync Ensorain` at every
    loop point.
    - Act only on messages addressed to Ensorain or on real dependencies/conflicts.
    - No idle broadcasts, no ACKs. Git is the durable record.

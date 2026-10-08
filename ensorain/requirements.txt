@@ -1,0 +1,9 @@
+# Ensorain runtime (host-portable). Pinned to the ubu006 environment of 2026-10-06
+# (Python 3.14.4). Install: python3 -m venv ~/.venvs/ensorain && ~/.venvs/ensorain/bin/pip install -r ensorain/requirements.txt
+# Results are bitwise platform-bound: a new host or version set needs a fresh dev baseline, not a comparison to M2 rows.
+numpy==2.3.5
+scipy==1.16.3
+psutil==7.1.0
+pytest==9.0.2
+# comms / fabric / evidence wiki (set EW_DB_HOST=192.168.1.202)
+psycopg2-binary==2.9.13

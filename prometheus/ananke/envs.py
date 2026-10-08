@@ -33,6 +33,9 @@ from . import topology
 
 FAMILIES = ("RELAY", "XOR", "MAJ", "FLIP", "HOLD")
 FAMILY_ID = {f: i + 1 for i, f in enumerate(FAMILIES)}
+# GATE (gated relay, C4 2026-10-07) is registered OUTSIDE FAMILIES so that every C1 campaign definition that
+# iterates FAMILIES is unchanged; its env-stream id is 6.
+FAMILY_ID["GATE"] = 6
 
 
 @dataclasses.dataclass(frozen=True)
@@ -55,7 +58,7 @@ class EnvSpec:
     def period(self) -> int:
         if self.family == "HOLD":
             return self.cue_len + self.gap + 1 + self.iti
-        if self.family == "FLIP":
+        if self.family in ("FLIP", "GATE"):
             return self.delta + 1 + self.cue_len + self.iti
         return self.delta + 1 + self.iti
 
@@ -139,7 +142,7 @@ def build(ph: Physics, env: EnvSpec, world_seeds) -> Episode:
     tr = env.trials
     assert tr % 2 == 0
     fam = env.family
-    K = {"RELAY": 1, "XOR": 2, "MAJ": env.n_maj, "FLIP": 2, "HOLD": 1}[fam]
+    K = {"RELAY": 1, "XOR": 2, "MAJ": env.n_maj, "FLIP": 2, "HOLD": 1, "GATE": 2}[fam]
     sidx = np.zeros((B, K), dtype=np.int64)
     sval = np.zeros((T, B, K), dtype=np.int32)
     ridx = np.zeros((B, 1), dtype=np.int64)
@@ -188,6 +191,28 @@ def build(ph: Physics, env: EnvSpec, world_seeds) -> Episode:
                     t1 = t0 + env.delta + 1
                     sval[t1:t1 + env.cue_len, b, 1] = sg * env.amp_teacher * yy[k]
             y[b] = sg * yy
+        elif fam == "GATE":
+            # GATED RELAY (C4 rung between RELAY/HOLD and FLIP): a context sign c, drawn i.i.d. per block, is sensed
+            # at the actuator itself at the onset of the block's first trial (amplitude amp_teacher, distinguishable
+            # from the cue); the cue x arrives at a sensor d away every trial (amplitude amp); target y = c * x.
+            # Mirror twins negate the CUE only, so the target is negated and every policy that ignores either input
+            # (or both) scores exactly 0.5. All trials are scored (the context is given before the first cue).
+            s = int(g.integers(N))
+            a = _pick_at(g, M[s], env.d)
+            sidx[b, 0] = s
+            sidx[b, 1] = a
+            ridx[b, 0] = a
+            assert tr % env.block == 0
+            x = _coin(g, tr)
+            cblk = _coin(g, tr // env.block)
+            cc = np.repeat(cblk, env.block)
+            for k in range(tr):
+                t0 = k * Pd
+                sval[t0:t0 + env.cue_len, b, 0] = sg * env.amp * x[k]
+                if k % env.block == 0:
+                    sval[t0:t0 + env.cue_len, b, 1] = env.amp_teacher * cc[k]
+                ro_tick[b, k] = t0 + env.delta
+            y[b] = sg * cc * x
         elif fam == "XOR":
             s1 = int(g.integers(N))
             s2 = _pick_at(g, M[s1], env.d)

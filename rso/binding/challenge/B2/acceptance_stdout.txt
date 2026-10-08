@@ -1,0 +1,34 @@
+# C-009-T034 acceptance on the merged tree, re-run in the FOREGROUND by Pallas[harry1-2a918949] (resumed after the headless exit of harry1-2b71b1e1)
+# This file REPLACES the partial acceptance_stdout.txt the first instance left (its background run died with the session after the slice001 dots).
+# tree: HEAD 83bc92338bfb3dd1071e5afe2fbec998b36ab86e (branch pallas/c009-t034 = a9ef80a07 merged origin/main 63d4c06c5); origin/main at fetch 2c292d3c4 -- no change under rso/ since 63d4c06c5 (git diff --stat 63d4c06c5 2c292d3c4 -- rso/ is empty)
+# command: python -B -m unittest discover -s rso/slice001/tests -t . && python -B -m unittest discover -s rso/binding/tests -t . && python -B -m unittest discover -s rso/witness/tests -t .
+# each suite run as its own foreground process in order; unledgered (acceptance, not a launch)
+
+## suite 1: rso/slice001/tests  start 2026-10-07T08:19:22Z
+................................................................................................................s.........................................................................................................................................................................................................................................................................................................................
+----------------------------------------------------------------------
+Ran 426 tests in 263.476s
+
+OK (skipped=1)
+{}
+{}
+## suite 1 exit code 0  end 2026-10-07T08:23:46Z
+
+## suite 2: rso/binding/tests  start 2026-10-07T08:23:57Z
+.....................
+----------------------------------------------------------------------
+Ran 21 tests in 0.001s
+
+OK
+## suite 2 exit code 0  end 2026-10-07T08:23:57Z
+
+## suite 3: rso/witness/tests  start 2026-10-07T08:24:10Z
+.........................................................cap exhausted: cap exhausted: top_level_validation_launches used 1 of 1
+.witness error: entries[0]: unknown arm 'BOGUS'; registered: S, S-NOPL, S-LEAK, POS, RECUR, NULL, SHUF
+.......................
+----------------------------------------------------------------------
+Ran 81 tests in 23.053s
+
+OK
+## suite 3 exit code 0  end 2026-10-07T08:24:34Z
+## ALL THREE SUITES GREEN (exit 0 each)

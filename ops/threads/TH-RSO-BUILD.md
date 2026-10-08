@@ -15,7 +15,9 @@ Build and qualify the observatory: evidence plane, runtime adapters, qualificati
 thin federation of native runtimes under common scientific evidence contracts.
 
 ## Campaigns (a thread is durable; a campaign is a bounded attempt to advance it)
-- C-004 -- RSO-METHODS-SLICE-001, the bounded S1-S5 methods slice (ops/campaigns/C-004/). OPEN.
+- C-004 -- RSO-METHODS-SLICE-001, the bounded S1-S5 methods slice (ops/campaigns/C-004/). CLOSED 2026-10-07: INCOMPLETE CLOSURE (rso/slice001/S5_FINAL_DISPOSITION.md).
+- C-009 -- RSO-EXEC-BINDING-001, first-class execution binding, successor to C-004 (ops/campaigns/C-009/; rso/binding/). CLOSED 2026-10-07, scoped to flat inventories (rso/binding/CLOSURE.md).
+- C-010 -- NATIVE-RET-WITNESS-001, first native retained-information witness (Ares W15) (ops/campaigns/C-010/; rso/witness/). CLOSED 2026-10-07: instrument qualified; S4 NEGATIVE, S15 NEGATIVE (rso/witness/RESULT.md). Next: C-010-T040 PROPOSED.
 Likely successors, each its own campaign when authorized: native witness; second-physics qualification;
 W1 support; async support; architecture throughput; production qualification.
 

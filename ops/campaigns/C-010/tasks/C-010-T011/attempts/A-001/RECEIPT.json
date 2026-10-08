@@ -1,0 +1,60 @@
+{
+  "schema": "prometheus.workgraph.receipt.v1",
+  "task_id": "C-010-T011",
+  "campaign_id": "C-010",
+  "attempt_id": "A-001",
+  "role": "Eupalamus",
+  "model": "claude-sonnet-5-5",
+  "quality_class": "Q1",
+  "start_sha": "f4c23efe6",
+  "end_sha": "42c7c88371ca055601edeeaac18cff1b54ae5aab",
+  "files_changed": [
+    "rso/witness/run_witness.py",
+    "rso/witness/tests/test_run_witness.py"
+  ],
+  "evidence_added": [
+    "run_witness.launch: for every node, verify_artifacts checks the supplied bytes against the receipt's outputs+oracle listing (present, sha256, length, nothing unnamed) BEFORE anything is written, then stores each as artifacts/<sha256> (once per distinct sha, never overwritten with different bytes) and lists {role, sha256, length, file} in MANIFEST nodes[].artifacts; receipt, binding rows (flat, parent=launch, digest on COMPLETED) unchanged",
+    "a verification failure marks the node and launch FAILED, writes no MANIFEST and stores no artifact for that node",
+    "12 new plumbing tests (TestArtifacts) on a random population, tiny config, temp dir"
+  ],
+  "evidence_executed": [
+    {
+      "command": "python -B -m unittest rso.witness.tests.test_run_witness.TestArtifacts (before implementation)",
+      "result": "RED: 5 failures, 4 errors (node_artifacts absent)"
+    },
+    {
+      "command": "python -B -m unittest discover -s rso/witness/tests -t .",
+      "result": "93 OK"
+    },
+    {
+      "command": "python -B -m unittest discover -s rso/binding/tests -t .",
+      "result": "21 OK"
+    }
+  ],
+  "red_observed": {
+    "observed": true,
+    "detail": "TestArtifacts failed before node_artifacts/verify_artifacts existed"
+  },
+  "result": "DONE_CLEAN",
+  "known_escapes": [
+    "SEAM ASSUMED: AC.receipt_dict may return (rec, {sha256: bytes}) (T010's form, honoured by node_artifacts); with the CURRENT dict-only receipt_dict the driver re-derives the bytes by re-running the node through AC.arm/AC.run_episodes (doubles node CPU; verified against the receipt either way). Once T010 lands the fallback is dead code and can be removed; if T010 chooses a different return shape, only node_artifacts changes",
+    "only the current roles (trace:actions, oracle:regimes, oracle:reset_steps) were exercised; P-OBS/P-ERASE/P-PRES roles flow through unchanged because verification walks whatever outputs/oracle the receipt lists",
+    "no mutation testing was run this attempt",
+    "no registered subject run, no witness episode and no statistic computed"
+  ],
+  "unresolved": [],
+  "unblocks": [
+    "C-010-T013 integration"
+  ],
+  "created_at_utc": "2026-10-07T08:50:00Z",
+  "instance": "harry1-d0e200cd",
+  "host": "harry1 (M4)",
+  "branch": "eupalamus/c010-t011",
+  "worktree_path": "C:/Prometheus-worktrees/eupalamus-c010-t011",
+  "resources": {
+    "cpu": "about 1 CPU-minute (tests)",
+    "validation_launches": 0,
+    "model": "one Q1 session"
+  },
+  "notes": "No edit of ares_client.py, ruler.py, evaluate.py, ares/ or rso/binding."
+}

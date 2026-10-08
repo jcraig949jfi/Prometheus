@@ -1,0 +1,64 @@
+{
+  "schema": "prometheus.workgraph.receipt.v1",
+  "task_id": "C-009-T014",
+  "campaign_id": "C-009",
+  "attempt_id": "A-001",
+  "role": "Argus",
+  "model": "claude-opus-5-5",
+  "quality_class": "Q2",
+  "start_sha": "7a4120538c043208f30cd93ca441c4753e4b3182",
+  "end_sha": "f510f325bcad41e9c9c7e3435ff1fa65a1007596",
+  "files_changed": [
+    "rso/witness/RULER.md",
+    "rso/witness/ruler.py",
+    "rso/witness/tests/test_ruler.py"
+  ],
+  "evidence_added": [
+    "RULER.md: statistic (episode = unit; majority action after the last interrupt), alpha 1/100, n 2048 per arm (balanced r), bound 1/2, delta 1/20, integer thresholds k_pos 1078 / k_neg 1073, INDETERMINATE band, exact size and power table, P-CAL rule, field decisions",
+    "P-RET: NOT_SHOWN (wrong >= 1078) / POSITIVE (correct >= 1078) / NEGATIVE (correct <= 1073) / INDETERMINATE; a RULER, never PASS/FAIL (C1)",
+    "P-CAL: PASS iff NULL and SHUF correct <= 1073 and POS POSITIVE; FAIL names the first failing arm; never passes by default",
+    "operating characteristics (exact): P(POSITIVE | p = 1/2) = 0.0090 <= alpha; P(NEGATIVE | 1/2) = 0.9766; P(POSITIVE | 11/20) = 0.9850; P(NEGATIVE | 11/20) = 0.0095 <= alpha; P-CAL arm pass at 1/2 = 0.9857",
+    "design finding before freeze: n = 640 is underpowered (NEGATIVE 0.57, INDETERMINATE 0.41 under no carry; P-CAL arm mostly fails) -> n = 2048",
+    "design finding before freeze: counting abstention as incorrect would let an abstaining no-carry subject read NOT_SHOWN; NOT_SHOWN is decided on wrong answers (FD-T014-2)"
+  ],
+  "evidence_executed": [
+    {
+      "command": "python -B -m unittest rso.witness.tests.test_ruler",
+      "result": "21 tests OK, ~5 s; synthetic data only; Monte Carlo size of false POSITIVE / NOT_SHOWN within alpha + 3 MC s.e. for a fair-coin and an abstaining-coin no-carry subject (600 reps each)"
+    },
+    {
+      "command": "8 ruler mutants (abstention trap, threshold -1, NEGATIVE without equivalence, abstain as correct, whole-episode decision, P-CAL ignores POS, balance not enforced, alpha 1/20)",
+      "result": "8/8 KILLED"
+    },
+    {
+      "command": "rso.witness + rso.binding tests on the tree merged with origin/main (f510f325b)",
+      "result": "OK / OK"
+    }
+  ],
+  "red_observed": {
+    "observed": false,
+    "detail": "ruler.py was written before test_ruler.py, so no RED-first run exists; fire evidence is the 8 killed mutants"
+  },
+  "result": "DONE_CLEAN",
+  "known_escapes": [
+    "no Ares output read and no witness statistic computed (SELECTION.md gate); every number is from the synthetic binomial model",
+    "independence of episodes is assumed by the binomial model; it rests on the runtime's B2 reset and is checked by P-PRES / P-OBS, not by the ruler",
+    "P-CAL margin is one-sided (FD-T014-3), a reading of DESIGN_DRAFT s4 'within the registered margin'; Cadmus / Palamedes may prefer two-sided at preregistration (then n must rise again)",
+    "rso/witness and rso/witness/tests have no __init__.py (namespace packages; outside owns); python -m unittest rso.witness.tests.test_ruler works"
+  ],
+  "unresolved": [],
+  "unblocks": [
+    "witness preregistration (DESIGN_DRAFT s8.1)"
+  ],
+  "created_at_utc": "2026-10-07T02:45:00Z",
+  "instance": "desktop-ruapvai-b08b36ac",
+  "host": "DESKTOP-RUAPVAI",
+  "branch": "argus/c009-t014",
+  "worktree_path": "C:/Prometheus-worktrees/argus-boot",
+  "resources": {
+    "cpu": "about 8 CPU-minutes (one slow exact-Fraction run before the integer rewrite, tests, mutants)",
+    "validation_launches": 0,
+    "model": "one Q2 session, about 0.3 hours"
+  },
+  "notes": "Field decisions FD-T014-1..4 in RULER.md s7. State commits went to main as they happened (argus-ops)."
+}

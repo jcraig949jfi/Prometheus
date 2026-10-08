@@ -1,0 +1,58 @@
+{
+  "schema": "prometheus.workgraph.receipt.v1",
+  "task_id": "C-004-T047",
+  "campaign_id": "C-004",
+  "attempt_id": "A-001",
+  "role": "Palamedes",
+  "model": "claude-opus-5-5",
+  "quality_class": "Q2",
+  "start_sha": "ad6b3fa96",
+  "end_sha": "(the commit carrying this receipt)",
+  "files_changed": [
+    "rso/slice001/s4/R2/ (MATRIX.json, MATRIX.txt, REGRESSION.md)",
+    "rso/slice001/FREEZE_R2.md"
+  ],
+  "evidence_added": [
+    "R2 matrix vs the independent table",
+    "claim-by-claim diff of decisions, frozen S4 code vs R2 code, same store and first check",
+    "FREEZE_R2"
+  ],
+  "evidence_executed": [
+    {
+      "command": "python -B -m unittest discover -s rso/slice001/tests -t . on the T046 merge",
+      "result": "393 run, OK (skipped=1)"
+    },
+    {
+      "command": "python -m ops.custody.registry verify",
+      "result": "chain_ok, 47 rows, head 18b346c5a62d1759f04434b254c912a0165bae3259306878ef0f958d6a8328e3"
+    },
+    {
+      "command": "decisions_real over rso/slice001/s4 bundles at first check 2026-10-06T23:04:07Z, code 8b98c2702 vs ad6b3fa96",
+      "result": "30 claims, 0 differences in outcome/eligibility/standing/execution/authority; 7 custody-citation differences (rows 34-36 -> 42-44)"
+    },
+    {
+      "command": "s2_run.run_matrix(out=rso/slice001/s4/R2/MATRIX)",
+      "result": "AGREE 32, PARTIAL 8, DISAGREE 8; report identical to s4/MATRIX.json"
+    }
+  ],
+  "red_observed": {
+    "observed": false,
+    "reason": "regression rerun; RED is the S4 closure's C1/C2 and T046's tests"
+  },
+  "result": "DONE_CLEAN",
+  "known_escapes": [
+    "the registered bundles do not exercise C1, C2 or B3.3; T048 is the independent check",
+    "T046 FD-T046-1: overlapping launches of one node are not separated by the B3.3 check (run.end_utc >= receipt.created_at_utc)",
+    "process: registration request (5) stated working-tree CRLF hashes for the fire receipts; refused by the registrar, corrected in (6)"
+  ],
+  "unresolved": [],
+  "unblocks": [
+    "C-004-T048"
+  ],
+  "created_at_utc": "2026-10-06T23:07:13Z",
+  "instance": "harry1-679179c6",
+  "host": "harry1",
+  "resources": {
+    "ledger": "launches 15 of 20 (unchanged; consume-only)"
+  }
+}

@@ -1,0 +1,99 @@
+{
+  "schema": "prometheus.workgraph.task.v1",
+  "task_id": "C-010-T020",
+  "campaign_id": "C-010",
+  "title": "Execute the witness: subjects, seed lists, registration, witness launches, evaluation, RESULT",
+  "objective": "PREREGISTRATION s10 order, after T014: two subject GA runs, seed lists, registration with Aporia, witness launches, evaluate, RESULT.md.",
+  "parent_objective": "C-010 NATIVE-RET-WITNESS-001",
+  "owner_role": "Palamedes",
+  "quality_class": "Q2",
+  "can_downgrade": false,
+  "escalate_to": "Q3",
+  "depends_on": [
+    "C-010-T034"
+  ],
+  "owns": [
+    "rso/witness/runs/",
+    "rso/witness/RESULT.md",
+    "rso/witness/LEDGER.jsonl"
+  ],
+  "reads": [
+    "rso/witness/"
+  ],
+  "problem": "Every step committed before the next; no repetition to change a class.",
+  "non_goals": [
+    "No subject GA run and no witness episode before FREEZE_W1 and the challenge (PREREGISTRATION s10)",
+    "No accuracy / retention / reward statistic on any registered arm before the witness launches",
+    "No edit of ares/ sources; no change to rso/binding or the slice evidence plane"
+  ],
+  "evidence_required": [
+    "RESULT.md with per-subject class, costs, known escapes, next question"
+  ],
+  "acceptance": {
+    "command": "python -B -m unittest discover -s rso/witness/tests -t . && python -B -m unittest discover -s rso/binding/tests -t .",
+    "condition": "all evidence_required items; suites green"
+  },
+  "deliverables": [
+    "rso/witness/runs/",
+    "rso/witness/RESULT.md",
+    "rso/witness/LEDGER.jsonl"
+  ],
+  "kind": "software",
+  "status": "CLOSED",
+  "history": [
+    {
+      "status": "PROPOSED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-07T08:34:33Z",
+      "note": "C-010 open"
+    },
+    {
+      "status": "READY",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-07T14:27:22Z",
+      "note": "T034 CLOSED"
+    },
+    {
+      "status": "CLAIMED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-07T14:27:22Z",
+      "note": "Palamedes: PREREGISTRATION s10 order -- subjects, seed lists, registration, witness launches, evaluation, RESULT"
+    },
+    {
+      "status": "IMPLEMENTING",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-07T14:43:27Z",
+      "note": "subjects, seeds, launches, registration rows 62-67, evaluation"
+    },
+    {
+      "status": "GREEN",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-07T14:43:27Z",
+      "note": "RESULT.json + RESULT.md committed"
+    },
+    {
+      "status": "INTEGRATION_READY",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-07T14:43:27Z",
+      "note": "on main"
+    },
+    {
+      "status": "INTEGRATED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-07T14:43:27Z",
+      "note": "self-integrated"
+    },
+    {
+      "status": "CLOSED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-07T14:43:27Z",
+      "note": "S4 NEGATIVE, S15 NEGATIVE; instrument qualified"
+    }
+  ],
+  "authority": "operator directive 2026-10-07 (C-004-OP8) s6: native witness opens automatically when C-009 closes; rso/binding/CLOSURE.md",
+  "resource_ceiling": {
+    "launches": "0 (development only) unless stated"
+  },
+  "red_required": false,
+  "notes": "red_required false: execution of a preregistered experiment."
+}

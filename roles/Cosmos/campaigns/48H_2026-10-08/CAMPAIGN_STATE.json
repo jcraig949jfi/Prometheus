@@ -1,0 +1,26 @@
+{
+  "schema": "cosmos.campaign_state.v1",
+  "campaign": "48H_2026-10-08",
+  "directive": "roles/Cosmos/prompts/2026-10-08_operator_48h_campaign/DIRECTIVE_VERBATIM.md",
+  "owner_instance": "ubu003-623ec771",
+  "lease": "COSMOS_HOME/LEASE.json via python -m prometheus.cosmos.lease (ttl 7200 s, renewed each round)",
+  "start_utc": "2026-10-08T05:26Z",
+  "hard_stop_utc": "2026-10-10T05:26Z",
+  "window": "W1 (h0-4) DEVELOP/REPAIR",
+  "current_experiment": "LOCAL SYSID on real visible families (next)",
+  "hypothesis": "H-LOCAL: usability at delay k is predicted by composing one-step physics (rho, eta, gamma, vis) -- exploratory",
+  "last_completed_test": "suite 112/112 (merged tree); c4-v03 new tests 40/40",
+  "last_receipt": "hour-1 status (STATUS_LOG.md)",
+  "next_action": "write C4 DESIGN v0.3 on cosmos/c4-v03; run LOCAL coordinates on theseus_sediment + C3 substrates",
+  "active_pids": [],
+  "incidents": [
+    "Cert A seed-unstable on XOR planted (instrument finding)",
+    "R-MECH harness not bit-reproducible (tuple hash seeds)"
+  ],
+  "resources": "ubu003 4 cores / 7 GB, no GPU, spend $0",
+  "c3_publication": "DONE d75fb45ef",
+  "branches": {
+    "main": "records",
+    "cosmos/c4-v03": "C4 repairs (merge after final reviews)"
+  }
+}

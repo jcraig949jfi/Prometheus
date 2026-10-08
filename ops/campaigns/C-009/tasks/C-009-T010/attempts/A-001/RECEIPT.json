@@ -1,0 +1,61 @@
+{
+  "schema": "prometheus.workgraph.receipt.v1",
+  "task_id": "C-009-T010",
+  "campaign_id": "C-009",
+  "attempt_id": "A-001",
+  "role": "Eupalamus",
+  "model": "claude-sonnet-5-5",
+  "quality_class": "Q1",
+  "start_sha": "cbd9603d27706bfa5c789d5370f354b761bb501a",
+  "end_sha": "2d2c41304ffd377ad6d719217d005ff067627dee",
+  "files_changed": [
+    "rso/slice001/ledger.py",
+    "rso/slice001/s2_bundle.py",
+    "rso/slice001/s2_run.py",
+    "rso/slice001/tests/test_ledger.py",
+    "rso/slice001/tests/test_s2_bundle.py",
+    "rso/slice001/tests/test_s2_run.py"
+  ],
+  "evidence_added": [
+    "test_ledger.TestBindingFields (5): parent_run_id/receipt_sha256 exposed on rows, absent on the build row; old ledger without the fields parses as unbound; refused RECEIPT row keeps parent; digest must be 64 lowercase hex; rso/binding/contract.json caps load as 12 launches / 90 CPU-min / 150 MB",
+    "test_s2_bundle.TestBuildBundle (4 new): every RECEIPT row has parent_run_id == build run_id and receipt_sha256 == sha256(Receipt canonical bytes) and binding.binding_reasons == [] for every receipt; CHEAT CONTROL: a receipt edited after its run yields exactly [BIND_DIGEST_MISMATCH]; manifest launch_run_id in both rows modes and Anchors still parses it; rows=build writes no digest",
+    "test_s2_run.TestProduceContract (2): --contract reaches produce, default is the slice contract; produce builds its Ledger from the given contract"
+  ],
+  "evidence_executed": [
+    {
+      "command": "python -B -m unittest rso.slice001.tests.test_ledger.TestBindingFields rso.slice001.tests.test_s2_run (before implementation)",
+      "result": "Ran 10, FAILED (errors=5): Ledger.begin() got an unexpected keyword argument parent_run_id; produce() got an unexpected keyword argument contract -- RED (ledger and s2_run). The s2_bundle tests were written in the same RED step but not executed against the old code: build_bundle refuses code that differs from its blob at HEAD, so they could only be run after committing."
+    },
+    {
+      "command": "python -B -m unittest discover -s rso/slice001/tests -t . (at 2d2c41304)",
+      "result": "Ran 404 tests in 273.5 s, OK (skipped=1)"
+    },
+    {
+      "command": "python -B -m unittest discover -s rso/binding/tests -t . (at 2d2c41304)",
+      "result": "Ran 13 tests, OK"
+    }
+  ],
+  "red_observed": {
+    "observed": true,
+    "reason": "ledger and s2_run tests errored on the pre-change code (5 errors of 10). The bundle-level RED named in the packet (receipt rows carry parent_run_id and receipt_sha256, manifest carries launch_run_id) was not executed on old code, see evidence_executed; it follows from the old code having no such fields."
+  },
+  "result": "DONE_CLEAN",
+  "known_escapes": [
+    "Choices (reversible, recorded): the two fields are omitted from inventory rows when not recorded rather than emitted as null, so old ledgers and old inventories keep byte-identical canonical rows and read as unbound; parent_run_id is given to Ledger.begin() (known at START) and receipt_sha256 to Attempt.finish(); the manifest gains launch_run_id by re-canonicalising evidence.build_manifest output in s2_bundle._manifest (evidence.py untouched, T011); Anchors reads schema and nodes only so the extra key is inert there; rows='build' writes no node execution rows and therefore no digests.",
+    "s2_bundle.py is producer code named by every receipt and is pinned in the stage records: this change alters its blob, so CC4 (stage records regenerated for instruments whose pinned files change) applies and was not done here (outside this packet).",
+    "Existing committed bundles under rso/slice001/s2 and s4 were not regenerated; no ledgered launch was made (development runs and temp-dir builds only).",
+    "binding.py is imported by s2_bundle (receipt_sha256 only); the BX2 check against a bundle's rows is not wired into evidence.py here (T011)."
+  ],
+  "unresolved": [],
+  "unblocks": [
+    "C-009-T011 (Argus) can read parent_run_id, receipt_sha256 and manifest launch_run_id from produced bundles",
+    "C-009 CC2 produce under rso/binding/LEDGER.jsonl via s2_run produce --contract rso/binding/contract.json"
+  ],
+  "created_at_utc": "2026-10-07T01:30:00Z",
+  "instance": "harry1-f79a0694",
+  "host": "harry1 (M4)",
+  "branch": "eupalamus/c009-t010",
+  "worktree_path": "C:/Prometheus-worktrees/eupalamus-c009-t010",
+  "resources": {"cpu_s_approx": 330, "gpu": 0, "cloud": 0, "new_artifact_bytes": 0},
+  "notes": "Work commits on origin branch eupalamus/c009-t010 (head 2d2c41304, not on main); Palamedes integrates."
+}

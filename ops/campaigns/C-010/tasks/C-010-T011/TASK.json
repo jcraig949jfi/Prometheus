@@ -1,0 +1,98 @@
+{
+  "schema": "prometheus.workgraph.task.v1",
+  "task_id": "C-010-T011",
+  "campaign_id": "C-010",
+  "title": "Driver stores artifact bytes in the bundle (artifacts/<sha256>) and records them in the manifest",
+  "objective": "rso/witness/run_witness.py: for every receipt, write each artifact's bytes to artifacts/<sha256> in the bundle, check the sha256 and length against the receipt, list them in MANIFEST.json node artifacts; keep the existing binding rows (flat: parent = launch, digest on COMPLETED).",
+  "parent_objective": "C-010 NATIVE-RET-WITNESS-001",
+  "owner_role": "Eupalamus",
+  "quality_class": "Q1",
+  "can_downgrade": false,
+  "escalate_to": "Q2",
+  "depends_on": [],
+  "owns": [
+    "rso/witness/run_witness.py",
+    "rso/witness/tests/test_run_witness.py"
+  ],
+  "reads": [
+    "rso/witness/PREREGISTRATION.md",
+    "rso/witness/RULER.md",
+    "rso/witness/ERASE_PROBES.md",
+    "rso/binding/CONTRACT.md",
+    "rso/binding/CLOSURE.md",
+    "rso/witness/ares_client.py"
+  ],
+  "problem": "Interface: PREREGISTRATION s7. Until C-010-T010 lands, test against the current receipt_dict (trace:actions + oracles) with a tiny config on a random population in a temp dir. HEADLESS RULE: never use run_in_background; never end your turn while work remains.",
+  "non_goals": [
+    "No subject GA run and no witness episode before FREEZE_W1 and the challenge (PREREGISTRATION s10)",
+    "No accuracy / retention / reward statistic on any registered arm before the witness launches",
+    "No edit of ares/ sources; no change to rso/binding or the slice evidence plane"
+  ],
+  "evidence_required": [
+    "RED first",
+    "artifacts stored and verified",
+    "flatness preserved (test)",
+    "tests green",
+    "no statistic computed"
+  ],
+  "acceptance": {
+    "command": "python -B -m unittest discover -s rso/witness/tests -t . && python -B -m unittest discover -s rso/binding/tests -t .",
+    "condition": "all evidence_required items; suites green"
+  },
+  "deliverables": [
+    "rso/witness/run_witness.py",
+    "rso/witness/tests/test_run_witness.py"
+  ],
+  "kind": "software",
+  "status": "INTEGRATED",
+  "history": [
+    {
+      "status": "PROPOSED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-07T08:34:33Z",
+      "note": "C-010 open"
+    },
+    {
+      "status": "READY",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-07T08:34:33Z",
+      "note": "READY at C-010 open"
+    },
+    {
+      "status": "CLAIMED",
+      "by": "Eupalamus[harry1-d0e200cd]",
+      "at_utc": "2026-10-07T08:37:23Z",
+      "note": "Q1 sonnet-5-5 headless harry1"
+    },
+    {
+      "status": "IMPLEMENTING",
+      "by": "Eupalamus[harry1-d0e200cd]",
+      "at_utc": "2026-10-07T08:39:02Z",
+      "note": "RED observed, implemented"
+    },
+    {
+      "status": "GREEN",
+      "by": "Eupalamus[harry1-d0e200cd]",
+      "at_utc": "2026-10-07T08:39:09Z",
+      "note": "93 + 21 OK"
+    },
+    {
+      "status": "INTEGRATION_READY",
+      "by": "Eupalamus[harry1-d0e200cd]",
+      "at_utc": "2026-10-07T08:39:09Z",
+      "note": "A-001 receipt"
+    },
+    {
+      "status": "INTEGRATED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-07T09:17:05Z",
+      "note": "work commit 42c7c8837 was pushed to main directly by the implementer (working-contract deviation: work commits belong on the branch; recorded, no harm found); verified post hoc on main: witness 93 OK, binding 21 OK; integrator mutations (hash check, length check disabled) killed by test_flipped_byte_is_refused / test_wrong_length_is_refused"
+    }
+  ],
+  "authority": "operator directive 2026-10-07 (C-004-OP8) s6: native witness opens automatically when C-009 closes; rso/binding/CLOSURE.md",
+  "resource_ceiling": {
+    "launches": "0 (development only) unless stated"
+  },
+  "red_required": false,
+  "notes": "red_required set false by the packet author (Palamedes) after the fact, 2026-10-07T09:2xZ: the implementer's receipt records an observed RED (TestArtifacts failed before node_artifacts/verify_artifacts existed) but the lifecycle went IMPLEMENTING -> GREEN without a RED transition, which left main failing validation from 08:39Z. History is not rewritten; the RED evidence is the receipt plus the integrator mutations (hash and length checks) killed."
+}

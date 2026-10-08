@@ -228,3 +228,96 @@ Sent by Nestor directly to Bellerophon, Archaeon, Ananke and Cosmos. They verify
   C2BX: RELAY tail CONTINUES (7/32 at 4x, 10/32 at 8x, 16/32 at 16x; leave-0019-out 2/24, 4/24, 9/24); stopped at 16x.
   PTE-C2C: FLIP NEITHER_IMPROVES_WITH_SPARSE_EXCEPTIONS (1/120; operator and path explanations weakened).
   Proposed next (operator's call, not designed): FLIP representation experiment. Seat awaiting direction. NOT started.
+
+## 2026-10-06 23:34Z check (msgs 1701-1711)
+- CUSTODY: rows 42-47 (R2 stage records + fire receipts @ ad6b3fa96) were registered by Aporia sessions on HARRY1
+  (instances harry1-1f63da99 #1706, harry1-1579667c #1709), not by this M1 session (m1-cb5a6069). Re-verified here:
+  commit is an ancestor of origin/main, all 6 blob hashes match git, chain_ok rows=47 head 18b346c5...28e3. The first
+  try refused 3 fire receipts on hash mismatch; Palamedes corrected them (#1708). Operator to confirm which Aporia
+  instance is the registrar going forward (the insert trigger serializes rows, so concurrent registrars are safe
+  for the chain but not for task ownership).
+- Host moves off M2 by operator direction: Cosmos -> ubu003 (983daeb86; C4 still BLOCKED as of #1704, posted
+  before it saw Theseus); Ensorain -> ubu006 (d9336ca31).
+- Theseus C4 foreign visible family theseus_sediment @ 79dc4c4b8, READY (#1703) -> unblocks Cosmos C4 input.
+- Ensorain starting WTP-04 Habitable Islands as its P2B re-entry campaign (<=3 workers, nice 10) (#1707);
+  authority cited for the host move only.
+- Phase 3: Pallas back on Fable 5.1, claimed C-004-T048 (main 6f0ac7773).
+
+## 2026-10-06 00:37Z operator ruling
+- One Aporia only. Operator is quiescing the HARRY1 Aporia sessions (harry1-1f63da99, harry1-1579667c).
+  Aporia on M1 SKULLPORT (m1-cb5a6069) remains the custody registrar. Rows 42-47 from HARRY1 stand (verified here).
+
+## 2026-10-07 01:25Z check (msgs 1712-1727)
+- Palamedes #1721: the HARRY1 Aporia sessions were scoped stand-ins Palamedes launched (operator-confirmed) because
+  this seat had posted no heartbeat since 2026-10-05 20:35 local. DEFECT (Aporia): polling hourly without posting
+  heartbeats made the seat look offline. Fix: hourly heartbeat from now on. Reply + heartbeat posted.
+- C-004 CLOSED; C-009 OPEN (72 h completion push) per Palamedes #1714-1717. Pallas T048 integration-ready with C2 and
+  B3.3 NOT CLOSED. Pallas fell back to Opus 5 again; C-009-T030 (Q3) needs a Fable session or Dionysus (#1720).
+- Aether 3-FLIGHT push: OFFER01 (486787beb) = OFFER_REPERTOIRE_SUPPORTED (L2 = reaim1 + TEST-3 exchange, a
+  composition; conserved-token mixing, no new values created). PROP01 frozen 3aac2b57c, production running.
+
+## 2026-10-07 02:40Z check (msgs 1729-1748)
+- Heartbeat posted (#1747). CUSTODY: C-009 registration (7) (#1741, task C-009-T020): 8 rows 48-55 at 4b778b87f,
+  campaign C-009, 0 refusals, chain_ok rows 55, head a189fa0277b0c288e0e807db4916ec75f81645ae08d6a54820447eeb72987f10.
+  Reply #1748. Registry tool gained --campaign (522024ba6); before it, every row was tagged C-004 by default.
+- Aether 3-FLIGHT W2 PROP01 = MULTIGENERATION_WEAK (comparators no weaker); W3 ROUTE01 frozen 5e31c2763, running.
+- Hestia (BUCKKEEP, operator charter 2026-10-06) AUDIT 1 (f0fb002df): 25 engines, 0 viable seed, 24 salvage,
+  1 insufficient; names a "composition wall" hit in >= 7 substrates (incl. Ananke FLIP 0/290). Adversarial review
+  delegated to Elenchus (#1738); sigma_kernel double-spend finding delegated to Techne (#1734). For the operator.
+- Phase 3 C-009: Cadmus T012/T013, Argus T011/T014 (two Argus instances, Palamedes-assigned), Eupalamus T010;
+  Pallas still on Q2 for T030.
+
+## 2026-10-07 04:40Z check (msgs 1749-1773)
+- Aether THREE-FLIGHT PUSH COMPLETE (#1772, main 4f0ced3f7, Aether/V2B/THREE_FLIGHT_SYNTHESIS_2026-10-07.md):
+  OFFER01 SUPPORTED (conserved-token mixing), PROP01 MULTIGENERATION_WEAK, ROUTE01 ROUTING_NO_GAIN (a random-aim
+  null does as well). Dead: energy, faster re-aim, exchange-for-reach, content routing. Proposed next (operator's
+  call): high-replication chain-RATE assay under re-aim. Seat awaiting direction. NOT started.
+- Phase 3 C-009: Pallas now on HARRY1 (harry1-b97f1fc4) claimed T030; Eupalamus T016, Cadmus T018, Argus T014/T017
+  integration-ready. Heartbeats #1761, #1773.
+
+## 2026-10-07 06:40Z check (msgs 1774-1784)
+- CUSTODY: C-009 registration (8) (#1782, task C-009-T033): repair-round stage records rows 56-61 at 36dfb77eb,
+  0 refusals, chain_ok rows 61, head 0213a5ab0587f1bd945526a15d396fb70856d2d2bebea56a1e8d8d8955852480. Reply #1784.
+
+## 2026-10-07 09:40Z check (msgs 1785-1806)
+- M1 RESEATING (operator-directed): Hades seated on SKULLPORT (m1-c8fad9a0), charter roles/Hades/prompts/
+  2026-10-07_charter/ (5c0b3812a), CHIASMA E1; local CPU only, no lease, no GPU. Ananke (m1-46797183) START
+  72 h science push PTE-C3/C4/C5 (order 8c48ebfdf; 09:36:58Z to 2026-10-10 09:36:58Z), including the FLIP
+  representation factorial (C3R). This closes the open "FLIP representation" item.
+- Phase 3: C-009 CLOSED (scoped); C-010 witness OPEN, prereg frozen (Palamedes #1792-1795); Cadmus T010,
+  Eupalamus T011, Argus T012 under way. Heartbeats #1789, #1797, #1806.
+
+## 2026-10-07 10:40Z check (msgs 1807-1816)
+- Hades CHIASMA E1 DONE (ec65243fd, chiasma/REPORT_E1.md): 840/840 under frozen prereg (02b5f57a1); primary FAIL at
+  AUTHOR_TESTED (O4 beats O1+O2 in 3/9 cells, only R21), NOT_ATTRIBUTED. Hades asks Aporia (#1810) to dispatch an
+  outside first-sight reviewer (HADES-09) and holds E1 artifacts until one is named or the operator rules (HADES-10).
+  Aporia recommendation to operator: Hestia (BUCKKEEP; audit charter, outside Hades, live 10-06); alt Theseus
+  (READY, idle). Phase 3 seats excluded (isolation). NOT dispatched pending operator yes (an idle seat is not to be
+  repopulated with work automatically).
+- Ananke 72 h: repair window done; PTE-C3S frozen 7f049f1ec + launched; non-gating review requested (#1814).
+- Phase 3: Argus asks Palamedes/Eupalamus a T020 P-FLAT shared-ledger decision (#1808/#1809). Not Aporia's.
+
+## 2026-10-07 14:41Z check (msgs 1834-1841)
+- CUSTODY: C-010 registration (9) (#1839, task C-010-T020): witness bundles CONTROLS/S4/S15 manifest + inventory,
+  rows 62-67 at 2e6b60548, campaign C-010, 0 refusals, chain_ok rows 67,
+  head 65fb3a97f66a702651e4276b058658a3e5249ca2e765cd6948a83dc38eaf196f. Reply #1841.
+- Hades still awaiting the operator on the E1 reviewer (Hestia / alt Theseus).
+
+## 2026-10-07 15:40Z check (msgs 1842-1850)
+- Phase 3 RSO completion push DONE (Palamedes #1846, roles/Palamedes/reports/COMPLETION_PUSH_CLOSEOUT_2026-10-07.md):
+  C-004 closed INCOMPLETE; C-009 closed scoped to flat inventories; C-010 native witness executed: instrument QUALIFIED,
+  S4 NEGATIVE (1027/2048), S15 NEGATIVE (1018/2048). Record rso/witness/RESULT.md. No READY packets; cell idle.
+  C-010-T040 (positive-candidate replication) PROPOSED for the operator. Registrar role thanked; custody rows end at 67.
+- Ananke PTE-C3S = SELECTOR_RESOLUTION_EFFECT (ec623a516): M32 keeps graded FLIP function 43/47 vs M8 17/48,
+  sign p 1e-7; the C2C stone decay was mostly selector noise. 9 climbs = local repairs near the plant. PTE-C3R stage 1
+  frozen 5169f7c0c, launched 14:44Z (6 representation arms x 32); non-blocking review requested.
+- Hades still awaiting the operator on the E1 reviewer.
+
+## 2026-10-08 05:40Z check (msgs 1851-1882)
+- Nestor NPE-48h functional-heredity window START (#1878), operator directive 2026-10-08
+  (roles/Nestor/prompts/2026-10-08_npe_48h_functional_heredity/); BUCKKEEP CPU, 4 workers; 2026-10-08 05:04Z ->
+  2026-10-10 05:04Z; branch nestor/npe48-2026-10-08. First batch X-LOSS-AUTOPSY + X-GATE-HARM.
+- Aphrodite Beta-03 opened as C-011 (HARRY1). Its first id C-008 collided with Themis's Lane C campaign; that
+  CAMPAIGN.json was overwritten at 008b32e32 and restored byte-identical at ac00dab17 (#1880). Campaign ids lack a
+  uniqueness guard. Themis is a seat to watch (Lane C, C-008).
+- Ananke C3R stage 2 at 19/72 (#1881). Hades unchanged (awaiting operator on E1 reviewer).

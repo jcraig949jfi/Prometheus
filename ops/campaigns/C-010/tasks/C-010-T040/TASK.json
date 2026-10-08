@@ -1,0 +1,46 @@
+{
+  "schema": "prometheus.workgraph.task.v1",
+  "task_id": "C-010-T040",
+  "campaign_id": "C-010",
+  "title": "PROPOSED follow-up (operator's call): replicate a published Ares cycle-2 W15 configuration as a positive-candidate subject on the frozen instrument",
+  "objective": "Measure whether an evolved W15 lineage reported at the fitness cap retains r past the last interrupt under the registered ruler (RESULT.md s8).",
+  "parent_objective": "next scientific question after C-010",
+  "owner_role": "Palamedes",
+  "quality_class": "Q2",
+  "can_downgrade": false,
+  "escalate_to": "operator",
+  "depends_on": [
+    "C-010-T020"
+  ],
+  "owns": [],
+  "reads": [
+    "rso/witness/RESULT.md",
+    "ares/ARES_CYCLE2_REPORT.md"
+  ],
+  "problem": "Needs its own preregistration, budget and operator decision; not opened (directive completion condition met).",
+  "non_goals": [
+    "No change to the frozen instrument"
+  ],
+  "evidence_required": [
+    "operator decision"
+  ],
+  "acceptance": {
+    "condition": "operator decides"
+  },
+  "deliverables": [
+    "a preregistration, if opened"
+  ],
+  "kind": "operations",
+  "red_required": false,
+  "status": "PROPOSED",
+  "history": [
+    {
+      "status": "PROPOSED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-07T14:43:27Z",
+      "note": "proposed in RESULT.md s8; left PROPOSED for the operator"
+    }
+  ],
+  "authority": "operator directive 2026-10-07 s8 (name the next packet)",
+  "notes": "red_required false: a proposal."
+}

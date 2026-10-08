@@ -1,0 +1,99 @@
+{
+  "schema": "prometheus.workgraph.task.v1",
+  "task_id": "C-009-T018",
+  "campaign_id": "C-009",
+  "title": "P-ERASE probe set and P-PRES seed set for the preregistration (PREREG_DRAFT OPEN 2)",
+  "objective": "Specify the P-ERASE paired carry-over probe set (probe episodes, the two preceding-episode conditions, the exact differing-action count and how many probes), and the P-PRES fixed seed set, as text for PREREG_DRAFT s5 plus adapter functions with plumbing tests on random or hand-wired organisms.",
+  "parent_objective": "native witness preparation (opens as its own campaign only if C-009 closes)",
+  "owner_role": "Cadmus",
+  "quality_class": "Q2",
+  "can_downgrade": false,
+  "escalate_to": "Q3",
+  "depends_on": [
+    "C-009-T013"
+  ],
+  "owns": [
+    "rso/witness/ares_client.py",
+    "rso/witness/tests/test_ares_client.py",
+    "rso/witness/ERASE_PROBES.md"
+  ],
+  "reads": [
+    "rso/witness/PREREG_DRAFT.md",
+    "rso/witness/DESIGN_DRAFT.md"
+  ],
+  "problem": "Plumbing: show on a hand-wired leaky construction that the probe can register a difference and on a non-leaky one that it registers 0 -- using constructions, not the subject or the registered arms' outputs. No accuracy statistic.",
+  "non_goals": [
+    "No subject evolution; no witness predicate on Ares output; no accuracy/retention/reward number for any arm or control",
+    "No edit of ares/ sources",
+    "No change to rso/binding or the slice evidence plane (BX6)"
+  ],
+  "evidence_required": [
+    "ERASE_PROBES.md",
+    "tests green",
+    "RED first for the new functions"
+  ],
+  "acceptance": {
+    "condition": "all evidence_required items; no outcome observed"
+  },
+  "deliverables": [
+    "rso/witness/ares_client.py",
+    "rso/witness/tests/test_ares_client.py",
+    "rso/witness/ERASE_PROBES.md"
+  ],
+  "kind": "software",
+  "status": "INTEGRATED",
+  "history": [
+    {
+      "status": "PROPOSED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-07T03:23:35Z",
+      "note": "witness preparation"
+    },
+    {
+      "status": "READY",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-07T03:23:35Z",
+      "note": "READY (preparation)"
+    },
+    {
+      "status": "CLAIMED",
+      "by": "Cadmus[m1-a86ec5e4]",
+      "at_utc": "2026-10-07T04:24:33Z",
+      "note": "claimed after T013 INTEGRATED; branch cadmus/c009-t018; preparation only"
+    },
+    {
+      "status": "RED",
+      "by": "Cadmus[m1-a86ec5e4]",
+      "at_utc": "2026-10-07T04:28:32Z",
+      "note": "branch cadmus/c009-t018 af1ce2e1c0f70099e3b1bc09817ffdcb2ad42a8a: ERASE_PROBES.md + probe/seed functions; 26 tests; no outcome observed"
+    },
+    {
+      "status": "IMPLEMENTING",
+      "by": "Cadmus[m1-a86ec5e4]",
+      "at_utc": "2026-10-07T04:28:32Z",
+      "note": "branch cadmus/c009-t018 af1ce2e1c0f70099e3b1bc09817ffdcb2ad42a8a: ERASE_PROBES.md + probe/seed functions; 26 tests; no outcome observed"
+    },
+    {
+      "status": "GREEN",
+      "by": "Cadmus[m1-a86ec5e4]",
+      "at_utc": "2026-10-07T04:28:32Z",
+      "note": "branch cadmus/c009-t018 af1ce2e1c0f70099e3b1bc09817ffdcb2ad42a8a: ERASE_PROBES.md + probe/seed functions; 26 tests; no outcome observed"
+    },
+    {
+      "status": "INTEGRATION_READY",
+      "by": "Cadmus[m1-a86ec5e4]",
+      "at_utc": "2026-10-07T04:28:32Z",
+      "note": "branch cadmus/c009-t018 af1ce2e1c0f70099e3b1bc09817ffdcb2ad42a8a: ERASE_PROBES.md + probe/seed functions; 26 tests; no outcome observed"
+    },
+    {
+      "status": "INTEGRATED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-07T05:18:04Z",
+      "note": "merged af1ce2e1c; witness 81 OK; integrator mutation (paired diff != -> ==) killed by 3 erase/pres tests"
+    }
+  ],
+  "authority": "operator directive 2026-10-07 (C-004-OP8) s6, s11 (preparation allowed; no outcomes before preregistration)",
+  "resource_ceiling": {
+    "launches": "0 (development only)"
+  }
+}

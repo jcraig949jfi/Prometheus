@@ -1,0 +1,110 @@
+{
+  "schema": "pallas.c010.t014.expected.v1",
+  "note": "Answer key, written before any outcome. 'expected' is the behaviour the FROZEN CONTRACT (PREREGISTRATION s5-s7, RULER.md, ERASE_PROBES.md, CLOSURE.md P-FLAT, evaluate.py's own docstring) calls for; 'prediction' is what I think the frozen code will do. A case scores AS_EXPECTED when the observation matches 'expected', SURVIVOR when a broken case is admitted or a sound case refused, PREMISE_FAILED when the fixture itself does not hold (then the case is void and reported as such). Numeric outcomes of registered-arm constructions are redacted from the rows; scoring never needs them.",
+  "cases": {
+    "W1.S1.DRIVER_END_TO_END": {
+      "kind": "sound",
+      "surface": "run_witness.launch storage / per-launch inventory / seed refusals; ares_client node executions; evaluate.check_bundle; custody; binding",
+      "setup": "The real driver on a TEMP ledger: 3 launches (CONTROLS on SA; SA; SB) with the full registered node map (make_configs' node table) on this set's seeds (>= 5,000,000; P-OBS on 256 episodes). SA = the hand-wired leak construction, SB = a random P = 1 population. Fixture keeper store; evaluate with registered_seeds = this set's witness list.",
+      "expected": {"every_bundle_refused": [], "p_flat": "PASS", "custody": "QUALIFIED", "binding_reasons_per_receipt": [], "p_cal_evaluated": true, "subject_gates_evaluated_include": ["P-ERASE", "P-OBS", "P-PRES", "P-RET"], "has_class": true, "class_is_unqualified": false},
+      "prediction": "AS_EXPECTED (the dry run reached the same structure with tiny n; this is the first run of the frozen path at n = 2048, so the ruler is actually reached).",
+      "scoring": "AS_EXPECTED iff every expected field matches on all three bundles and both subjects; otherwise SURVIVOR (a false refusal on the honest path)."
+    },
+    "W1.S2.PRE_INTERRUPT_ONLY": {
+      "kind": "sound",
+      "surface": "evaluate.episodes / ruler.episode_decision (window boundary)",
+      "setup": "Synthetic bundle; DA's S/P-RET trace answers correctly at every step t <= the last interrupt (the interrupt step's action is computed before the reset) and abstains after it.",
+      "expected": {"DA.P-RET.value": "NEGATIVE", "DA.P-RET.successes": 0, "DA.P-RET.wrong": 0, "DA.class": "NEGATIVE"},
+      "prediction": "AS_EXPECTED.",
+      "scoring": "AS_EXPECTED iff P-RET is NEGATIVE with 0 correct and 0 wrong; SURVIVOR if POSITIVE or INDETERMINATE (pre-reset answers counted)."
+    },
+    "W1.S3.MID_WINDOW": {
+      "kind": "sound",
+      "surface": "evaluate.episodes (LAST interrupt)",
+      "setup": "Synthetic bundle; DA's S/P-RET trace answers correctly at every step in (first interrupt, last interrupt] and abstains after the last.",
+      "expected": {"DA.P-RET.value": "NEGATIVE", "DA.P-RET.successes": 0, "DA.P-RET.wrong": 0, "DA.class": "NEGATIVE"},
+      "prediction": "AS_EXPECTED. (Witness of edit W1.E1, under which this case would read POSITIVE.)",
+      "scoring": "as S2."
+    },
+    "W1.B1.DUPLICATE_NODE_ACROSS_BUNDLES": {
+      "kind": "broken",
+      "surface": "evaluate.evaluate (node pool across bundles); PREREGISTRATION s10 'no step may be repeated to change an outcome class ... both are reported'",
+      "setup": "Two COMPLETED, registered bundles of two launches presenting the SAME node ids; DA's P-RET trace is POSITIVE in X and NEGATIVE in Y. Evaluate [X, Y] and [Y, X].",
+      "expected": {"DA.class": "UNQUALIFIED", "reason_names_duplicate": true, "same_result_in_both_orders": true},
+      "prediction": "SURVIVOR: no refusal; DA's class follows the LAST bundle in argument order (pool.update): [X, Y] -> NEGATIVE, [Y, X] -> POSITIVE.",
+      "scoring": "AS_EXPECTED iff DA is UNQUALIFIED (or a typed refusal names the duplicate) in both orders; SURVIVOR iff DA receives a class in either order; order-dependence recorded."
+    },
+    "W1.B2.P_CAL_SEEDS_UNREGISTERED": {
+      "kind": "broken",
+      "surface": "evaluate._p_cal / episodes(registered_seeds); PREREGISTRATION s3 '2048 episodes per arm ... drawn by the registered generator ... the final list committed before the witness runs'",
+      "setup": "Synthetic bundle; NULL / SHUF / POS P-CAL nodes run on a DIFFERENT balanced 2048 list (5,100,000 upward) than the registered list the S nodes use; evaluate with registered_seeds = the S nodes' list.",
+      "expected": {"P-CAL.value": "BLOCKED", "P-CAL.reason_contains": "SEEDS_NOT_REGISTERED", "classes": {"S4": "UNQUALIFIED", "S15": "UNQUALIFIED"}},
+      "prediction": "SURVIVOR: P-CAL evaluated on the unregistered list (PASS), DA POSITIVE, DB NEGATIVE.",
+      "scoring": "AS_EXPECTED iff P-CAL is BLOCKED / refused for the seed list; SURVIVOR iff P-CAL is PASS or FAIL."
+    },
+    "W1.B3.LEAKY_SUBJECT_PASSES_ERASE_ON_SAME_REGIME_TRIPLES": {
+      "kind": "broken",
+      "surface": "evaluate.evaluate_subject P-ERASE / _check_oracle; ERASE_PROBES.md s1 (pre_a r = 0, pre_b r = 1; X and X-LEAK on the same probe set)",
+      "setup": "Real traces from a hand-wired LEAKY runtime (SignLeakRuntime over the POS carrier: the reset carries a regime-quantised trace of the last episode). X's P-ERASE node runs it on triples whose two pre-episodes draw the SAME regime (6,100,000 upward); X-LEAK's node runs the same leaky runtime on registered-shape triples (6,000,000 upward). Reported regimes are the world's.",
+      "premise": {"D_same_regime": 0, "D_registered_shape": "> 0"},
+      "expected": {"DA.P-ERASE.value_or_refusal": "FAIL or refused (probe set not the registered shape; X and X-LEAK not on one probe set)", "DA.class": "not NEGATIVE/POSITIVE on a qualified P-ERASE"},
+      "prediction": "SURVIVOR: P-ERASE PASS (D = 0), qualified (leak D > 0); DA POSITIVE. A leak that passes P-ERASE.",
+      "scoring": "PREMISE_FAILED if D_same_regime != 0 or D_registered_shape == 0; else AS_EXPECTED iff P-ERASE is FAIL or the node is refused; SURVIVOR iff P-ERASE PASS and qualified."
+    },
+    "W1.B4.TWO_BACK_LEAK_ESCAPES_ERASE_AND_PRES": {
+      "kind": "broken (declared escape; construction, no evaluator)",
+      "surface": "ares_client P-ERASE / P-PRES node patterns (one-step probes); ERASE_PROBES.md s1 'leaks across more than one episode ... not enumerated'",
+      "setup": "TwoBackLeakRuntime over the leak construction: the reset starts episode k from the live W1 of episode k-2. p_erase_count on 64 registered-shape triples, p_pres_diffs on 32 pairs; controls on LeakyResetRuntime (one-back) and S.Runtime; a direct three-episode carry test [pre, mid, probe] with pre of r = 0 vs r = 1.",
+      "expected": {"TwoBack.p_erase_count": 0, "TwoBack.p_pres_diffs": 0, "TwoBack.three_episode_carry": "> 0", "LeakyReset.p_erase_count": "> 0", "Runtime.three_episode_carry": 0},
+      "prediction": "AS_EXPECTED (the declared escape is real): both one-step gates read 0 on a runtime that provably carries state across the boundary. Applicability to the registered run: S.Runtime.reset restores W1 from the genome and zeroes v and holds no other per-runtime state (code read), so NOT reachable for the registered subjects under the frozen substrate; it bears on any future runtime, and on the registered seed list's parity (alternating r = 0 / r = 1, so an even-delay carry delivers the CORRECT regime).",
+      "scoring": "AS_EXPECTED iff the five expected values hold; otherwise the escape is narrower than declared (reported)."
+    },
+    "W1.B5.NODE_ID_FIELDS_DISAGREE": {
+      "kind": "broken",
+      "surface": "evaluate.check_bundle / _node (node id vs receipt fields: arm, subject digest)",
+      "setup": "Synthetic bundle; DA's S/P-RET receipt carries arm = SHUF (traces and oracle produced in shuffled mode, so the oracle check passes under the arm's mode) and subject.genome_sha256 = DB, under node_id ares:<DA>:S:P-RET:W15.",
+      "expected": {"refused_contains": "a typed refusal naming the node id / field disagreement", "DA.class": "UNQUALIFIED"},
+      "prediction": "SURVIVOR: accepted as DA's S/P-RET node; decisions computed on shuffled-mode interrupt steps; DA POSITIVE.",
+      "scoring": "AS_EXPECTED iff refused / UNQUALIFIED; SURVIVOR iff DA receives a class."
+    },
+    "W1.B6.COUNTERFEIT_TRACE_FOR_BUNDLED_GENOME": {
+      "kind": "broken (contract limit, documented)",
+      "surface": "evaluate (no replay); PREREGISTRATION s7 'nothing it uses comes from a field the producer computed'",
+      "setup": "Synthetic bundle in the driver's layout whose subjects/<sha16>.json is the REAL canonical genome of the hand-wired leak construction; the S/P-RET node under that genome's true digest carries an always-correct trace the organism never produced; every hash, row, manifest and keeper record is consistent.",
+      "expected": {"under_the_frozen_contract": "ADMITTED (the evaluator verifies integrity, not provenance; no replay is registered)", "DA.class": "POSITIVE"},
+      "prediction": "ADMITTED, POSITIVE. Recorded as a LIMIT of the frozen contract, not a defect: trace provenance rests on the honest driver plus custody timestamps. A replay spot-check (K episodes re-run from subjects/<sha>.json with the bundled seeds; actions must equal the trace) would close it cheaply and is possible because the runtime is deterministic.",
+      "scoring": "AS_EXPECTED iff admitted POSITIVE (limit confirmed); a refusal would mean the evaluator replays, which the frozen code does not."
+    },
+    "W1.B7.STORAGE_TAMPER": {
+      "kind": "broken (4 sub-cases on COPIES of S1's SA bundle)",
+      "surface": "evaluate.decode / check_bundle / witness_custody / binding on real driver output",
+      "setup": {"artifact_swap": "two artifact files' contents swapped", "receipt_file_swap": "MANIFEST nodes[0].receipt_file := nodes[1].receipt_file, tampered manifest re-registered", "inventory_digest_edit": "a RECEIPT row's receipt_sha256 edited, original inventory registered", "inventory_digest_edit_reregistered": "same edit, tampered inventory re-registered"},
+      "expected": {"artifact_swap": "ARTIFACT_MISMATCH", "receipt_file_swap": "NODE_ID_MISMATCH", "inventory_digest_edit": "CUSTODY_UNQUALIFIED (ROW_BLOB_MISMATCH)", "inventory_digest_edit_reregistered": "BIND_DIGEST_MISMATCH"},
+      "prediction": "AS_EXPECTED on all four (confirming cases: a stored artifact that does not match its receipt, a receipt that does not match its manifest entry, a row that does not match its receipt are each refused).",
+      "scoring": "per sub-case: AS_EXPECTED iff the bundle is refused with the named reason present; SURVIVOR iff admitted."
+    },
+    "W1.B8.NULL_ARM_IS_NOT_NO_CARRY": {
+      "kind": "broken (semantic; construction, no evaluator)",
+      "surface": "ares_client.arm('NULL') as the P-CAL no-carry arm; RULER.md s5.1 'NULL (no-carry organism, W15)'; PREREGISTRATION s4 'NULL reset_each_step / random population'",
+      "setup": "The POS carrier (plastic) under arm NULL vs arm S on 8 synthetic seeds: is W1 written during an episode under reset_each_step; do the NULL arm's actions differ from S's at all, and after the last interrupt. S-NOPL as the comparison ablation.",
+      "expected": {"w1_written_under_null": false, "null_vs_s_differing_actions_after_last_interrupt": "> 0"},
+      "prediction": "SURVIVOR: reset_each_step zeroes activations only (substrate.Runtime.step), plasticity still writes W1 and the carrier re-derives h from inputs every step, so NULL(POS) == S(POS) action for action (0 differing) while S-NOPL(POS) differs. The NULL arm removes the activation channel, not the plastic one: for a subject that retains through plastic W1 the NULL arm retains too, P-CAL FAILS, and the campaign is DETECTION_UNQUALIFIED exactly when the subject carries by the allowed channel.",
+      "scoring": "AS_EXPECTED iff NULL(POS) differs from S(POS) after the last interrupt; SURVIVOR iff 0 differing actions (and W1 written)."
+    }
+  },
+  "edits": {
+    "W1.E1-window-on-first-interrupt": {"prediction": "SURVIVES the acceptance suites; witness differs ([0,0,0,0] -> regime+1 answers); killed by this set's S3 (and S2)."},
+    "W1.E2-nopl-mutates-shared-subject": {"prediction": "SURVIVES; witness differs (subject_plastic_after True -> False); consequence on the driver path: S-LEAK D = 0 after S-NOPL in config order."},
+    "W1.E3-run-unreported-dropped": {"prediction": "SURVIVES; witness differs (['RUN_UNREPORTED:...'] -> [])."},
+    "W1.E4-interrupt-before-step": {"prediction": "KILLED (control) by test_runner_reproduces_ares_rollout_actions / test_interrupts_reach_the_runtime; witness differs (True -> False)."},
+    "W1.E5-erase-pres-oracle-unchecked": {"prediction": "SURVIVES; witness differs (['ORACLE_MISMATCH:...'] -> [])."},
+    "W1.E6-pcal-margin-two-sided": {"prediction": "SURVIVES unless test_ruler pins the 1074-1077 zone (its names suggest leaking arms far above the margin); witness differs (FAIL/NULL -> PASS/None)."}
+  },
+  "verdict_rule": {
+    "evaluate.py": "CLOSED iff B1, B2, B5 are refused and E1, E3, E5 are killed; NOT CLOSED otherwise, each survivor classed behavioural / test-coverage / contract-vocabulary with applicability to the registered run.",
+    "ruler.py": "CLOSED iff S2, S3 read NEGATIVE and E6 is killed.",
+    "ares_client.py node executions": "CLOSED iff E2 and E4 are killed and B4's escape is confirmed NOT reachable under S.Runtime; B8 is a semantic finding on the registered P-CAL design, reported to the operator through Palamedes regardless of the code verdict.",
+    "run_witness.py storage / inventory / seed refusals": "CLOSED iff S1 is accepted on the honest path and all four B7 tampers are refused; the seed-refusal surface is covered by the frozen suite (T016 tests) and S1's exclusion-free path, not re-challenged here.",
+    "make_configs.py": "read only; no case. Its seed procedure is deterministic and its outputs are what B2 shows the evaluator cannot verify for the P-CAL arms."
+  }
+}

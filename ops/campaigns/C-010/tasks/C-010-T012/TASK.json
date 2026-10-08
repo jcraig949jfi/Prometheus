@@ -1,0 +1,103 @@
+{
+  "schema": "prometheus.workgraph.task.v1",
+  "task_id": "C-010-T012",
+  "campaign_id": "C-010",
+  "title": "Witness evaluator: bundle -> P-FLAT, binding, custody, artifact re-hash, predicates, outcome class per subject",
+  "objective": "rso/witness/evaluate.py: read a committed witness bundle; apply P-FLAT and the rso.binding checks (BX1, BX2, BX5b) against the anchored manifest; require custody QUALIFIED for qualification; re-hash every artifact against its receipt; recompute episode decisions and counts from the bytes; evaluate P-CAL, P-OBS, P-ERASE, P-PRES, P-RET, P-CHAN with rso/witness/ruler.py; map to the s6 outcome class per subject; emit a canonical RESULT record. No field the producer computed is trusted.",
+  "parent_objective": "C-010 NATIVE-RET-WITNESS-001",
+  "owner_role": "Argus",
+  "quality_class": "Q2",
+  "can_downgrade": false,
+  "escalate_to": "Q3",
+  "depends_on": [],
+  "owns": [
+    "rso/witness/evaluate.py",
+    "rso/witness/tests/test_evaluate.py"
+  ],
+  "reads": [
+    "rso/witness/PREREGISTRATION.md",
+    "rso/witness/RULER.md",
+    "rso/witness/ERASE_PROBES.md",
+    "rso/binding/CONTRACT.md",
+    "rso/binding/CLOSURE.md",
+    "rso/witness/ruler.py",
+    "rso/witness/ares_client.py",
+    "rso/slice001/evidence.py (custody)"
+  ],
+  "problem": "Tests on synthetic bundles you construct (fake action arrays with known counts; hand-wired organisms if useful) -- never a registered subject or arm. Cover every s6 class and every gate's FAIL path, P-FLAT refusals (nested parent, digestless COMPLETED row, duplicate node), artifact mismatch, custody UNQUALIFIED.",
+  "non_goals": [
+    "No subject GA run and no witness episode before FREEZE_W1 and the challenge (PREREGISTRATION s10)",
+    "No accuracy / retention / reward statistic on any registered arm before the witness launches",
+    "No edit of ares/ sources; no change to rso/binding or the slice evidence plane"
+  ],
+  "evidence_required": [
+    "RED first",
+    "every outcome class and every gate FAIL path tested on synthetic bundles",
+    "tests green",
+    "no registered output read"
+  ],
+  "acceptance": {
+    "command": "python -B -m unittest discover -s rso/witness/tests -t . && python -B -m unittest discover -s rso/binding/tests -t .",
+    "condition": "all evidence_required items; suites green"
+  },
+  "deliverables": [
+    "rso/witness/evaluate.py",
+    "rso/witness/tests/test_evaluate.py"
+  ],
+  "kind": "software",
+  "status": "INTEGRATED",
+  "history": [
+    {
+      "status": "PROPOSED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-07T08:34:33Z",
+      "note": "C-010 open"
+    },
+    {
+      "status": "READY",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-07T08:34:33Z",
+      "note": "READY at C-010 open"
+    },
+    {
+      "status": "CLAIMED",
+      "by": "Argus[desktop-ruapvai-b08b36ac]",
+      "at_utc": "2026-10-07T09:29:11Z",
+      "note": "claimed by Argus[desktop-ruapvai-b08b36ac] (DESKTOP-RUAPVAI, claude-opus-5-5, Q2) per #1792; work branch argus/c010-t012"
+    },
+    {
+      "status": "RED",
+      "by": "Argus[desktop-ruapvai-b08b36ac]",
+      "at_utc": "2026-10-07T09:33:07Z",
+      "note": "test_evaluate (25 tests, synthetic bundles) fails to import before evaluate.py exists (red commit 86e229027)"
+    },
+    {
+      "status": "IMPLEMENTING",
+      "by": "Argus[desktop-ruapvai-b08b36ac]",
+      "at_utc": "2026-10-07T09:33:13Z",
+      "note": ""
+    },
+    {
+      "status": "GREEN",
+      "by": "Argus[desktop-ruapvai-b08b36ac]",
+      "at_utc": "2026-10-07T09:50:02Z",
+      "note": "22 synthetic tests OK; 10 mutants killed; witness 131 + binding OK on merged tree"
+    },
+    {
+      "status": "INTEGRATION_READY",
+      "by": "Argus[desktop-ruapvai-b08b36ac]",
+      "at_utc": "2026-10-07T09:50:08Z",
+      "note": "branch argus/c010-t012 at 7680fa2af (that commit's message mislabels it 'C-009-T031 receipt'; content is the C-010-T012 receipt); evaluate.py + 22 synthetic tests; 10 mutants killed; escalation C-010-T012_1 open for T020"
+    },
+    {
+      "status": "INTEGRATED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-07T10:20:18Z",
+      "note": "merged 7680fa2af (commit message mislabelled 'C-009-T031 receipt' by the author; content is C-010-T012); witness 131 OK on the merge; integrator mutation (P-FLAT digestless check disabled) killed by test_p_flat_digestless_completed_row; escalation C-010-T012_1 answered: option 2 (per-launch inventory), implemented under T013"
+    }
+  ],
+  "authority": "operator directive 2026-10-07 (C-004-OP8) s6: native witness opens automatically when C-009 closes; rso/binding/CLOSURE.md",
+  "resource_ceiling": {
+    "launches": "0 (development only) unless stated"
+  }
+}

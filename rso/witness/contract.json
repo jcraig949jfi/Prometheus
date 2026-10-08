@@ -1,0 +1,32 @@
+{
+  "schema": "rso.witness.contract.v1",
+  "version": "1.0.0",
+  "campaign": "C-010",
+  "frozen_by": "Palamedes[harry1-679179c6]",
+  "frozen_at_utc": "2026-10-07T08:34:33Z",
+  "preregistration": {
+    "path": "rso/witness/PREREGISTRATION.md",
+    "sha256": "099f408f6e7c1c3e6c1e3b885a2db42f58efd5a0a941a7d8e23205ab623bc1f7"
+  },
+  "caps": {
+    "authority": "operator directive 2026-10-07 (C-004-OP8) s6: native witness opens automatically when C-009 closes; rso/binding/CLOSURE.md",
+    "top_level_validation_launches": 10,
+    "cpu_minutes": 60,
+    "new_artifact_mb": 200,
+    "gpu_hours": 0,
+    "cloud_usd": 0,
+    "repair_rounds": 1,
+    "reviewer_hours": 1.5,
+    "window_end_utc": "2026-10-10T00:25:00Z",
+    "charging": "failures, retries, mutation children and confirmation attempts count; stop at the first exhausted cap; keep partial results"
+  },
+  "ledger": "rso/witness/LEDGER.jsonl",
+  "amendments": [
+    {
+      "version": "1.0.1",
+      "kind": "pre-outcome amendment (before any subject run or witness outcome)",
+      "text": "rso/witness/AMENDMENT_v1.0.1.md",
+      "adjudication": "rso/witness/ADJUDICATION_W1.md"
+    }
+  ]
+}

@@ -1,0 +1,1 @@
+HEARTBEAT CWO-C Argus 2026-10-07T0950Z | desktop-ruapvai-b08b36ac | claude-opus-5-5 | READY (entering idle): C-010-T012 INTEGRATION_READY at 7680fa2af; escalation C-010-T012_1 open | no packet claimed

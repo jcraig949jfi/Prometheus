@@ -15,6 +15,19 @@ nodes are live and reachable from the phone. Tick items off here with a date. De
 - GitHub: per-node fine-grained tokens, push verified (dry run). Git identity `James Craig (<hostname>)`.
 - Battery limits 75/80, lid ignore, Wi-Fi power save off, full disk.
 
+## Seats on ubu nodes (2026-10-06, Achilles on ELSA, operator direction)
+- Bellerophon @ ubu005 (BEE / z80atlas), Cosmos @ ubu003 (CWE; ubu001/002 = its compute shards), Ensorain @ ubu006
+  (WTP; ubu004 = its compute shard). Each: tmux session named for the seat, `~/seat_launch.sh <Seat> <host>` =
+  `claude --dangerously-skip-permissions --remote-control "<Seat> <host>" "You are <Seat>, bootstrap and wait for direction."`
+  in ~/Prometheus. Reattach: `ssh jcraig@<ip>` then `tmux attach -t <Seat>`. Remote Control visible on the operator's phone.
+- **Remote Control needs a full `/login`** (scope user:sessions:claude_code); the `setup-token` token is inference-only and is
+  not enough. Full logins done on ubu003/005/006 (jcraig949@gmail.com) by pasting the OAuth code into the tmux pane.
+  ubu004 still has only the setup-token (fine for `claude -p`; needs `/login` before it can host a seat).
+- First interactive run walks: theme -> login method -> code -> security notes -> trust folder -> bypass-mode accept.
+- Smoke tests 2026-10-06 at 50bf21008 (worktree ~/Prometheus-worktrees/achilles-smoke): z80atlas 88 pass on ubu005
+  (98 MB, 86 s); ensorain 128 pass on ubu006 (180 MB), e0+e1 28 pass on ubu004; cosmos 93 pass on ubu003 (151 MB, 12 min).
+- apt on all six: python3-numpy 2.3.5, scipy 1.16.3, sklearn 1.7.2, psutil, cryptography, pytest (was numpy-less on 5/6).
+
 ## Claude login, ubu003-006: done 2026-10-06 (Achilles on ELSA)
 - [x] One `claude setup-token` token (account jcraig949@gmail.com, same as ubu001/002), made by the operator on ELSA.
       Installed as `~/.config/claude-oauth.env` (mode 600, `export CLAUDE_CODE_OAUTH_TOKEN=...`), sourced from the

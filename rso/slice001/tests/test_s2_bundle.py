@@ -5,6 +5,8 @@ temporary ledger. Expected results are the contract's (draft A A6 outcomes; draf
 read back from the consumer. Every custody QUALIFIED here is fixture-store logic, never custody evidence (V8).
 Stdlib only; uses git.
 """
+import hashlib
+import json
 import os
 import shutil
 import subprocess
@@ -327,6 +329,44 @@ class TestBuildBundle(unittest.TestCase):
             self.assertEqual(a.traces[nid], b.traces[nid], nid)
         self.assertEqual(b.dicts["rcpt:WIPE:ERASE:STANDARD"]["execution"]["run_id"], "b-test")
         self.assertEqual([r["launch_kind"] for r in b.inventory[:-1]], ["TOP_LEVEL"])
+
+    def test_receipt_rows_are_bound_to_launch_and_receipt_bytes(self):
+        # C-009-T010 (BX1-BX3): each RECEIPT row names the build row as parent and records the digest of the
+        # receipt's canonical bytes; the build row carries neither; the manifest names the launch.
+        from rso.binding import binding as BD
+        b = wipe_overdelay()
+        inv = b.inventory
+        for r in inv[:-1]:
+            if r["launch_kind"] == "TOP_LEVEL":
+                self.assertNotIn("parent_run_id", r)
+                self.assertNotIn("receipt_sha256", r)
+        for nid, d in b.dicts.items():
+            rb = R.Receipt.from_dict(d).canonical_bytes()
+            row = [r for r in inv[:-1] if r["run_id"] == d["execution"]["run_id"]][0]
+            self.assertEqual(row["parent_run_id"], "b-test", nid)
+            self.assertEqual(row["receipt_sha256"], hashlib.sha256(rb).hexdigest(), nid)
+            self.assertEqual(BD.binding_reasons(nid, d["execution"]["run_id"], rb, inv, "b-test"), [], nid)
+
+    def test_bound_row_rejects_an_edited_receipt_cheat_control(self):
+        # the digest channel can observe a swap: a receipt edited after its run no longer binds
+        from rso.binding import binding as BD
+        b = wipe_overdelay()
+        nid = "rcpt:WIPE:PRESERVE:STANDARD"
+        d = dict(b.dicts[nid], created_at_utc="2026-10-05T00:00:00Z")
+        rb = R.Receipt.from_dict(d).canonical_bytes()
+        self.assertEqual(BD.binding_reasons(nid, d["execution"]["run_id"], rb, b.inventory, "b-test"),
+                         [BD.DIGEST_MISMATCH])
+
+    def test_manifest_names_the_launch(self):
+        for rows in ("per_receipt", "build"):
+            doc = json.loads(wipe_overdelay(rows).manifest)
+            self.assertEqual(doc["launch_run_id"], "b-test", rows)
+            self.assertEqual(doc["schema"], EV.MANIFEST_SCHEMA)
+            EV.Anchors(wipe_overdelay(rows).manifest, "keeper")      # the consumer still parses it
+
+    def test_build_mode_rows_carry_no_binding_fields(self):
+        for r in wipe_overdelay("build").inventory[:-1]:
+            self.assertNotIn("receipt_sha256", r)
 
     def test_two_twins_for_one_subject_are_refused(self):
         with self.assertRaises(SB.BuildError):
