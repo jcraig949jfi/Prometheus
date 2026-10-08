@@ -1,6 +1,6 @@
 # E1 PRE-REGISTRATION: R8 SATURATION vs INTERFERENCE vs REPRESENTATION CEILING (fresh supply)
 
-Beta-03 (C-008), W01 DEV -> W02 EXP. Frozen before any E1 outcome exists. The block A/B foundry runs during the freeze;
+Beta-03 (C-011), W01 DEV -> W02 EXP. Frozen before any E1 outcome exists. The block A/B foundry runs during the freeze;
 it is outcome-free. Evidence tier 2, local CPU engine.
 Directive: prompts/2026-10-08_beta03/01_OPERATOR_DIRECTIVE_verbatim.md s4. Runner: engine/v2b/b03.py (sha256 in
 beta03/FREEZE_E1.json).
