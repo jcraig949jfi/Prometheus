@@ -1,0 +1,52 @@
+[
+ {
+  "system": "XorCue",
+  "k": 4,
+  "A": "FUNCTIONAL",
+  "B_lin": true,
+  "B_lin_acc": 0.378,
+  "B_rf": true,
+  "B_rf_acc": 1.0,
+  "sec": 14.3
+ },
+ {
+  "system": "HiddenCarrier",
+  "k": 4,
+  "A": "PASSIVE",
+  "B_lin": true,
+  "B_lin_acc": 1.0,
+  "B_rf": true,
+  "B_rf_acc": 1.0,
+  "sec": 8.5
+ },
+ {
+  "system": "Reservoir a0.9 s0.3",
+  "k": 4,
+  "A": "FUNCTIONAL",
+  "B_lin": true,
+  "B_lin_acc": 0.44,
+  "B_rf": true,
+  "B_rf_acc": 0.434,
+  "sec": 16.4
+ },
+ {
+  "system": "Reservoir a0.6 s0.8",
+  "k": 4,
+  "A": "INDETERMINATE",
+  "B_lin": false,
+  "B_lin_acc": 0.257,
+  "B_rf": false,
+  "B_rf_acc": 0.246,
+  "sec": 13.3
+ },
+ {
+  "system": "Reservoir a0.3 s1.5",
+  "k": 4,
+  "A": "NONE",
+  "B_lin": false,
+  "B_lin_acc": 0.266,
+  "B_rf": false,
+  "B_rf_acc": 0.248,
+  "sec": 12.9
+ }
+]
