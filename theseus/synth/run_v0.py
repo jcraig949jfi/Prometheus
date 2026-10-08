@@ -201,6 +201,7 @@ def main(argv=None):
     ap.add_argument("--cond-ops", action="store_true", help="THESEUS-30d: random rules may draw conditional ops")
     ap.add_argument("--g0-readers", action="store_true", help="THESEUS-30e: G0 compiled with split writer/reader concepts")
     ap.add_argument("--aligned-binding", action="store_true", help="THESEUS-34: collisions keep parent channel indices")
+    ap.add_argument("--master-seed", type=int, default=None, help="THESEUS-35: replication seed")
     a = ap.parse_args(argv)
     cfg = copy.deepcopy(CONFIG)
     cfg["gens"] = a.gens
@@ -217,6 +218,8 @@ def main(argv=None):
     cfg["cond_ops"] = bool(a.cond_ops)
     cfg["g0_readers"] = bool(a.g0_readers)
     cfg["aligned_binding"] = bool(a.aligned_binding)
+    if a.master_seed is not None:
+        cfg["master_seed"] = a.master_seed
     sb.COND_ENABLED = cfg["cond_ops"]
     if a.smoke:
         cfg.update(gens=min(a.gens, 7), per_cell=1, n_oneshot_per_arity=12, n_random=12, n_weird=6, n_neutral=6,
