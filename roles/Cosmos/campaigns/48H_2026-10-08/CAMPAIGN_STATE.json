@@ -7,12 +7,15 @@
   "start_utc": "2026-10-08T05:26Z",
   "hard_stop_utc": "2026-10-10T05:26Z",
   "window": "W1 (h0-4) DEVELOP/REPAIR",
-  "current_experiment": "LOCAL SYSID on real visible families (next)",
-  "hypothesis": "H-LOCAL: usability at delay k is predicted by composing one-step physics (rho, eta, gamma, vis) -- exploratory",
+  "current_experiment": "EXP-01 LOCAL SYSID discovery batch 0 (30 worlds x 4 families); checkpoint COSMOS_HOME/c4_exp01/discovery_b0.jsonl; resumable (python -m prometheus.cosmos.c4.exp01 <same args> skips done rows)",
+  "hypothesis": "H-LOCAL (prereg roles/Cosmos/c4/prereg/EXP-01_LOCAL_DISCOVERY.md on cosmos/c4-v03): FUNCTIONAL predicted by composing one-step physics; law C4-L-0001 frozen",
   "last_completed_test": "suite 112/112 (merged tree); c4-v03 new tests 40/40",
   "last_receipt": "hour-1 status (STATUS_LOG.md)",
-  "next_action": "write C4 DESIGN v0.3 on cosmos/c4-v03; run LOCAL coordinates on theseus_sediment + C3 substrates",
-  "active_pids": [],
+  "next_action": "when EXP-01 completes: python -m prometheus.cosmos.c4.exp01_analyse <jsonl> A and B; apply the preregistered kill rule; record verdict",
+  "active_pids": {
+    "exp01": 123565,
+    "power_v03": "see COSMOS_HOME/c4_power_v03.log"
+  },
   "incidents": [
     "Cert A seed-unstable on XOR planted (instrument finding)",
     "R-MECH harness not bit-reproducible (tuple hash seeds)"
@@ -22,5 +25,6 @@
   "branches": {
     "main": "records",
     "cosmos/c4-v03": "C4 repairs (merge after final reviews)"
-  }
+  },
+  "c4_branch_head": "cosmos/c4-v03 (DESIGN_C4_v03.md, stats/firewall/sysid_local/cert_b/planted/exp01)"
 }
