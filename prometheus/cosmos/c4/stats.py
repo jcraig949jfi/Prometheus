@@ -245,3 +245,54 @@ def s2_verdict(y, s, p, fam, rng, nperm=2000) -> Dict:
     rej = holm(pv)
     return {"pass": not any(rej.values()), "p": pv, "rejected": rej,
             "descriptive": {"calibration_lrt_p": calibration_lrt(y, p, fam)}}
+
+
+# ------------------------------------------------------------------------------------------------ A6 / A9
+
+MIN_EFFECT = 0.05   # minimum within-family uplift of interest (A6); frozen with F-0002
+
+
+def equivalence_bound(y, a, b, fam, rng, nboot=2000) -> Dict:
+    """A6: the largest uplift the data EXCLUDE (one-sided 95% upper bound of U). 'No law' may be declared only
+    when this bound < MIN_EFFECT; otherwise the verdict is UNDETERMINED at this n."""
+    ub = float(np.nanpercentile(cluster_boot(y, a, b, fam, rng, nboot), 95))
+    return {"U_upper95": ub, "verdict": "ABSENT_ABOVE_MIN_EFFECT" if ub < MIN_EFFECT else "UNDETERMINED"}
+
+
+def exclusion_bounds(y, a, fam, excluded_fam, excluded_y=None) -> Dict:
+    """A9: within-family BA of predictor `a` when the excluded (INDETERMINATE / INCOHERENT) rows are counted
+    all-wrong (worst) or all-right (best). Excluded rows' labels are unknown, so each is entered as both a
+    FUNCTIONAL and a NOT-FUNCTIONAL row with half weight when excluded_y is None."""
+    y, a, fam = map(np.asarray, (y, a, fam))
+    ef = np.asarray(excluded_fam)
+    out = {}
+    for case in ("worst", "best"):
+        yy, aa, ff = [y], [a], [fam]
+        if len(ef):
+            ey = np.concatenate([np.ones(len(ef), int), np.zeros(len(ef), int)]) if excluded_y is None \
+                else np.asarray(excluded_y)
+            eff = np.concatenate([ef, ef]) if excluded_y is None else ef
+            right = case == "best"
+            yy.append(ey)
+            aa.append(ey if right else 1 - ey)
+            ff.append(eff)
+        Y, A, F = np.concatenate(yy), np.concatenate(aa), np.concatenate(ff)
+        per = [ba(Y[F == f], A[F == f]) for f in np.unique(F)]
+        out[case] = float(np.nanmean(per))
+    return out
+
+
+def newcombe_diff(x1, n1, x2, n2, z=1.96):
+    """A9: Newcombe hybrid-score 95% CI for p1 - p2 (differential exclusion between predicted classes)."""
+    def wilson(x, n):
+        if n == 0:
+            return 0.0, 1.0
+        p = x / n
+        c = (p + z * z / (2 * n)) / (1 + z * z / n)
+        hw = z * np.sqrt(p * (1 - p) / n + z * z / (4 * n * n)) / (1 + z * z / n)
+        return c - hw, c + hw
+    p1, p2 = x1 / max(n1, 1), x2 / max(n2, 1)
+    l1, u1 = wilson(x1, n1)
+    l2, u2 = wilson(x2, n2)
+    d = p1 - p2
+    return (float(d - np.sqrt((p1 - l1) ** 2 + (u2 - p2) ** 2)), float(d + np.sqrt((u1 - p1) ** 2 + (p2 - l2) ** 2)))

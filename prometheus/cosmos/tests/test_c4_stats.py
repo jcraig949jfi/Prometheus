@@ -88,3 +88,31 @@ def test_a4_universal_law_passes_s2():
 @pytest.mark.parametrize("kind", ["FAM_OFFSET", "FAM_SLOPE"])
 def test_a4_family_specific_law_fails_s2(kind):
     assert _s2_rate(kind, 20, 12) <= 0.10
+
+
+def test_a6_equivalence_bound_declares_absence_only_when_tight():
+    rng = np.random.default_rng(4)
+    n = 2000
+    fam = np.arange(n) % 5
+    y = rng.integers(0, 2, n)
+    noise = rng.integers(0, 2, n)
+    assert S.equivalence_bound(y, noise, 1 - noise, fam, rng, nboot=300)["verdict"] == "ABSENT_ABOVE_MIN_EFFECT"
+    small = slice(0, 60)
+    assert S.equivalence_bound(y[small], noise[small], 1 - noise[small], fam[small], rng,
+                               nboot=300)["verdict"] == "UNDETERMINED"
+
+
+def test_a9_exclusion_bounds_bracket():
+    rng = np.random.default_rng(5)
+    n = 200
+    fam = np.arange(n) % 5
+    y = rng.integers(0, 2, n)
+    a = np.where(rng.random(n) < .8, y, 1 - y)
+    b = S.exclusion_bounds(y, a, fam, excluded_fam=np.arange(20) % 5)
+    mid = np.nanmean([S.ba(y[fam == f], a[fam == f]) for f in range(5)])
+    assert b["worst"] <= mid <= b["best"]
+
+
+def test_newcombe_contains_truth():
+    lo, hi = S.newcombe_diff(30, 100, 20, 100)
+    assert lo < 0.10 < hi and lo > -0.05
