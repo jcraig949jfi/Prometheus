@@ -127,6 +127,14 @@ def _run_one(spec):
                 for e in w.h_events:
                     f.write(json.dumps(e, separators=(",", ":")) + "\n")
             out["events_written"] = len(w.h_events)
+    elif kind == "comp":
+        from comp import CompWorld
+        cfg = _cfg(spec)
+        w = CompWorld(cfg, spec["seed"]); s = w.run()
+        out["summary"] = _keep(s); out["summary"]["competence"] = s.get("competence"); out["summary"]["coupling"] = {
+            k: v for k, v in (s.get("coupling") or {}).items() if k != "bonus_schedule"}
+        out["dual"] = w.dual_summary(); out["heredity"] = w.heredity_summary(); out["comp"] = w.comp_summary()
+        out["end_hash"] = end_state_hash(w)
     elif kind == "plain":
         cfg = _cfg(spec)
         w = World(cfg, spec["seed"]); s = w.run()

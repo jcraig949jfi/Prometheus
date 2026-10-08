@@ -146,3 +146,33 @@ FUNC tape at the end; relocated founder bytes; novel kinds (n/c/x) among critica
 
 ERRATUM (2026-10-08T05:55Z): amendment 1 and s4 say "~06:00Z"; the freeze commit 7133438e5 is the authority, and the
 chain was launched at 05:52:58Z (execution ledger). No content changed.
+
+## 5. WINDOW 4 -- computation x reproduction (frozen 2026-10-08T06:30Z, before any W4 run)
+
+Recovered disposition of the coupling campaign (COUPLING_CAMPAIGN_REPORT.md, frozen c9bed96de): READY_FOR_MULTIDAY;
+P1 contingent computation raises reproduction HOLDS (40/40), P2 competence enriched HOLDS, P3 heritability HOLDS
+(copy fidelity of whole-window copiers, not an evolved property), P4 extinction HOLDS, P5 preservation FAILS at
+ceiling, P6 conflict repair FAILS underpowered (4/60 vs 0/60, p 0.125). Scope limit: maintenance of seeded task code;
+de novo gain only for ECHO copiers at K40 (29/150 ON vs 6/150). Multi-day E-BEL-MD: LADDER1 and COPIER HOLD, LADDER2
+FAILS. None of this is assumed below; each W4 test re-measures under the corrected instruments.
+
+Plan: tools/plan_w4.py -> 1,050 runs, sha256 d2d458f8c8f5402c7e968c7b1925e61d1c8d39678cc4cda219222b7d60d9edba.
+Instrument tools/comp.py (CompWorld = HeredityWorld + competence x FUNC per birth + anatomy; invariance-tested).
+  M1  REP + BAD fixtures, INC, K16, ON vs OFF, 300 seed-pairs (historical COMMON + V3 configuration).
+  M2  SEEDED_REPLICATOR, ECHO, K40, ON / OFF / SHUFFLED, 150 seeds each.
+Endpoint COMP_SR_END: >= 1 alive organism that is competent AND FUNC at tick 500 (comp_func_alive > 0). Unit = run.
+
+Predictions:
+- W4-P1 (P6 powered): M1 COMP_SR_END ON > OFF, Fisher exact one-sided p < 0.05. FALSIFIED if p >= 0.05 with the ON
+  rate <= OFF rate + 0.02; otherwise (p >= 0.05, ON higher) SIGNAL_WEAK.
+- W4-P2 (M2 acquisition replicates): COMP_SR_END ON > OFF and ON > SHUFFLED, each Fisher one-sided p < 0.05 (Holm over
+  the two).
+- W4-P3 (anatomy of repair, M1 ON runs with COMP_SR_END): classify the dominant competent FUNC tape:
+  CROSS_LINEAGE if its FUNC-critical bytes include >= 1 REP-founder byte (transplant0) AND its competence-critical bytes
+  include >= 1 BAD-founder byte (transplant1); SINGLE_LINEAGE_BAD if every founder byte in both critical sets is BAD's;
+  SINGLE_LINEAGE_REP if every founder byte is REP's (task code re-invented in a copier); OTHER. Prediction: the modal
+  class is SINGLE_LINEAGE_BAD (repair by in-place change of the BAD machine). Reported with counts either way.
+- W4-P4 (protection): among births from competent FUNC writers, the per-run task_loss fraction is lower in M1 ON than
+  M1 OFF (Mann-Whitney one-sided over runs with >= 20 such births per arm). Descriptive if fewer than 10 runs qualify.
+- W4-P5 (M2 origin of competence): in ON runs with COMP_SR_END, the competence-critical bytes of the dominant tape
+  include >= 1 novel-event byte (n or c) in >= 80% of runs (competence is newly made, not found in founder material).
