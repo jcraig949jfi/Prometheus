@@ -30,6 +30,13 @@ were recorded elsewhere before this file existed are listed under
                                                                                    lease purpose); B12 long run STOPPED (partial result kept); every
                                                                                    later Beta launch <= 12 procs under that lease, and the 48 core-h/24 h
                                                                                    envelope is now the binding budget for the rest of this window.
+    2026-10-08  M2 (P2B SFE)  reported composed-world competence and an evolved      B25/B26/B27/B28/B30/B31 scored elites with evaluate_world(seed,E=8):   archaeon/beta/JOURNAL.md
+                              "evidence integration" headline from E=8 episodes     the SAME 8 episodes they trained on. B44 scored every elite on ONE     (B45, B46 entries)
+                              of one world seed                                     shared 8-episode held-out sample. Cost: B44's "7/8 integrate
+                                                                                    evidence" RETRACTED (0/8 at E=64x4); C6-unable content sensing and
+                                                                                    the open-loop "beats constant" claim RETRACTED; magnitudes fell
+                                                                                    (.48 -> .20). Core claims survived the re-score. Rule now: held-out
+                                                                                    = new episodes, >= 64 x >= 4 world seeds, never the training sample.
 
 ## Prior rows, by pointer (before this file existed)
 
