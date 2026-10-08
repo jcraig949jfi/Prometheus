@@ -37,7 +37,7 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
 | B27 | generality over 4 more worlds | B-scatter 3/3, C6-unable 1/3; B-pressure/W-artifacts inconclusive (no positive) |
 | B28 | do foragers transfer across worlds? | NO: home +.23, off-home -.02; world-specific mappings |
 | B29 | leave-one-world-out training: invariant sensing? | NULL: train lift yes, held-out blind (0/3 worlds); invariant rule exists but unfound |
-| B32 | fresh random world each generation -> invariant sensing? | WEAK_POSITIVE after B33 (unfiltered margin over specific elite +.01-.02; partly echo); replication running |
+| B32 | fresh random world each generation -> invariant sensing? | SUPPORTED_WITHIN_FAMILY: B34 paired +.048, 33/39 worlds, p<1e-5 (vs best specific: small); partly echo |
 | B30 | do foragers carry state across ticks? | YES: 6/7 content sensors use state; blind ones in rewarding worlds 5/5 |
 | B31 | what do they remember? | 2504: 1-register direction memory; others computed state (not past observations) |
 | B17 | forced perception (echo on PUT) opens the 2-value wall? | staged; controls pass |
@@ -386,6 +386,15 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   reactive foragers that transfer WITHIN the generator family about as well as a specific forager does, partly by
   echo; not the invariant rule. Instrument lesson (mine): a held-out set selected by "where the negative control
   fails" inflates the contrast -- always report the unfiltered set beside it.
+- B32 REPLICATION (12 more seeds, under lease): filtered held-out mean lift 10/12 at .04-.13, 2 failures (3212 -.044,
+  3214 -.096). B34 DECIDER (16 DIST elites vs 7 world-SPECIFIC content sensors, same 40 UNFILTERED family worlds,
+  per-world paired): mean lift DIST .066 vs SPECIFIC .018; paired diff +.048; DIST ahead on 33/39 worlds, sign test
+  p < 1e-5. PREDICTION (written after B33: no reliable advantage) FAILED. Both readings hold and measure different
+  things: vs the single BEST specific elite (P-boom 2506, .082) the margin is small (B33); vs specific elites as a
+  POPULATION, world-distribution training transfers reliably better within the generator family (B34).
+  VERDICT B32: SUPPORTED_WITHIN_FAMILY -- caveats: part echo-explained (B33-A3), no transfer to the named worlds outside
+  the family (B33-A2), 2/16 seeds fail. Lease lse-fe37dd77fe7a RELEASED (~01:30Z). CORE-HOUR TALLY since 00:07Z:
+  ~4.5 (replication 12 cells x ~20 min on 10 procs + B32 last cell + B33/B34 eval).
 - BUDGET WINDOW 2026-10-08 ~00:07Z. B29 already done (not relaunched). Lease lse-fe37dd77fe7a (spectrex5:cpu12,
   3 h) for B32 replication: 12 seeds (3211-3222), 10 procs, + B32's last cell on 2 procs = 12. CORE-HOUR TALLY
   (rolling 24 h from 00:07Z): 0 at launch; est. +3-4 for the replication.
