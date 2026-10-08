@@ -499,6 +499,10 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   Unaffected: B32-B39 (held-out = different worlds; B34/B36 paired over 40 worlds) and B45 (different world keys).
   Claims that still stand: content sensing evolves without the clock (6 sensors, two worlds); world-distribution
   training transfers within the family and finds the invariant rule (B36/B39). B27's "3 of 5 worlds" becomes 2 of 5.
+- B47 launched ~10:20Z (punish the latch): B43 v2 evidence world whose latent SWITCHES at tick 16. Sweep (noise
+  .6/.7/.8 x switch 8/12/16): a one-step STICKY filter gains at most +.042 over REACTIVE (noise .6, switch 16), latch
+  .653 < reactive .744 there. Criterion lowered to +.025 (SE ~.012 at E=64x4). 8 seeds, G=300, lease lse-45fbcd210c07;
+  scored on 4 NEW world keys x 64 episodes. PREDICTION: 0/8 elites beat REACTIVE by >= .025 with a persist drop.
 - BUDGET WINDOW 2026-10-08 ~00:07Z. B29 already done (not relaunched). Lease lse-fe37dd77fe7a (spectrex5:cpu12,
   3 h) for B32 replication: 12 seeds (3211-3222), 10 procs, + B32's last cell on 2 procs = 12. CORE-HOUR TALLY
   (rolling 24 h from 00:07Z): 0 at launch; est. +3-4 for the replication.
