@@ -124,6 +124,21 @@ declare("X-RANDOM-DIR",
               for arm, o in (("RAND_DIR", "DIR"), ("RAND_RND", "RANDOM"))])
 
 
+# X-DIR-LONG (EXPLORE, parent X-DIR-QUAL): over a longer horizon (8000 epochs at CONST 0.15 ~ 1200 interactions per
+#   organism) under DIR, does the maintained architecture change beyond drift? X-DIR-QUAL mining (F4) found neutral
+#   rewiring of the vestigial read-order detector (bytes 16-19) and re-use of the dead ABR branch's OUT (byte 29 offset).
+#   Question: does task robustness rise ("flattest" selection), is the vestigial detector lost, does routine
+#   conservation fall, and does anything fuse task and copier? k in {1, 4} (mut_scale = copy_scale = k), 6 seeds each,
+#   44_600_000 + s. Readout from dom_series (dominant competent genome every 50 epochs): single-byte robustness over
+#   time (arch.robustness), share of genomes whose bytes 16-19 differ from CT_UA, routine length to first HALT on the
+#   regime-1 path, identity by region. Classification: SIGNAL if dominant-genome routine robustness at the end exceeds
+#   CT_UA's (0.382) by >= 0.10 in >= 4/6 maintained runs at some k; WEAK_SIGNAL if by >= 0.05; CLEAN_NULL otherwise.
+SEEDS_L = [44_600_000 + s for s in range(6)]
+declare("X-DIR-LONG",
+        jobs=[("LONG_K%02d" % k, s, dict(gate="CONST", p_const=0.15, order="DIR", mut_scale=k, copy_scale=k, epochs=8000))
+              for s in SEEDS_L for k in (1, 4)])
+
+
 if __name__ == "__main__":
     name = sys.argv[1]
     w = int(sys.argv[2]) if len(sys.argv) > 2 else 4

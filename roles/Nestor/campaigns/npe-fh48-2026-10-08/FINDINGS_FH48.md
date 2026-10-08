@@ -120,3 +120,35 @@ coupling. Architectural integration is NOT observed. Endogenous re-discovery has
 **Scope caution:** DIR is a world rule that reads the task ruler, so selection on function is designed in. What is
 discovered is that DIRECTION (copy priority), not RATE (meeting frequency), is the coordinate that makes function
 heritable-and-selected on this pair tape.
+
+## F4. Mining X-DIR-QUAL DIR015: maintained function, rewired architecture (descriptive; final competent genomes, 12 runs)
+
+**Neutral positions** (CT_UA single-byte robustness 1.0) drift freely:
+- IN/OUT port operands (bytes 8, 11, 14, 33, 37): conservation 0.34-0.81.
+- The trailing HALTs (34, 38).
+- The ANSWER_BEFORE_READ branch (35-38), which is near-dead under STATIC FORCED_READ: it is taken only when key = 1.
+
+**FRAGILE positions also vary**, through COMPENSATED multi-byte rewrites, all with u = 1.0:
+
+| CT_UA position | robustness in CT_UA | conservation among maintained genomes |
+|---|---|---|
+| 16 | 0.15 | 0.83 |
+| 19 | 0.15 | 0.80 |
+| 29 | 0.23 | 0.82 |
+
+Variants seen:
+- The vestigial read-order detector (`LD A,C; CP 2; JRC abr`) is rewritten or neutralized:
+  - `LD L,C; LD D,D; nop`: the jump is kept, but the compared value is gone;
+  - `CP 3; LD L,0E`: the jump is removed;
+  - `CP 45; SUB 0E`;
+  - `JRC` becomes `JRZ`;
+  - `OR A; INC A`.
+- The regime-0 exit is re-routed: the JRZ offset becomes +6 or +3, so the base answer is emitted through the formerly
+  dead ABR branch's `OUT` (byte 36). Dead code is reused.
+
+**Reading:** where the function is maintained, the planted routine is not frozen. The population sheds a structure the
+static world makes vestigial, and repurposes dead code, while the essential conditional is conserved at 1.00: IN and
+LD at 7-15; XOR, branch and ADD 37 at 21-31.
+
+**Open:** whether this is neutral drift or robustness selection. The dominant genomes' routine robustness is
+0.38-0.45, against 0.38 for CT_UA. X-DIR-LONG tests it.
