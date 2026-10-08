@@ -94,3 +94,52 @@ TRB mechanism signatures per cell; C1 transplant effect estimate under each arm.
 
 Review gate: the two adversarial reviews of d36012f0b run in parallel with W1. If either finds a defect in a switch
 used here, the affected lane is rerun after the repair and both versions are reported.
+
+### AMENDMENT 1 to s3 (2026-10-08 ~06:00Z) -- instrument defect found by Review A; W1 re-frozen as W1 v2
+
+Review A (independent adversarial implementation review of d36012f0b) found DEF-BEL-008 PROVENANCE one-hop
+(window-sourced copies always credited to the target; scratch-staged copies read as constructed) and a DEF-BEL-010
+zero-sweep hole. belinst's byte vector shared the one-hop logic. Repaired at dc1833bc2 (multi-hop material origin in
+the VM, measurement only; byte-identity re-verified on 478 cases + golden replay). The W1 run of 5618bd275 was stopped
+at 128 results (~/bel48h_runs/w1_SUPERSEDED_def008_onehop; excluded; only lane-A end-hash identity was looked at:
+A1 11/11 identical). W1 v2 = the same plan with fresh seeds (SEED_BASE 48.1e12): 3,240 runs, sha256
+2212e6aa5c700b368cadd3529fc1cc17a97547a9dac8a8fab48e8788c246fd1d, code dc1833bc2. Definitions changed by the repair
+(s1): vec and prov use the multi-hop origin; FUNC counts window bytes whose material origin is the tape's own byte at
+the same position, written by its own code (equality implied; zero filler cannot count). Predictions W1-P1..P9 are
+unchanged.
+
+## 4. WINDOW 2 -- heredity and genetic provenance (frozen 2026-10-08 ~06:00Z, before any W2 run)
+
+Plan: tools/plan_w2.py -> 1,050 runs, sha256 47dde14c8c030db8b9fe4edd20c93877358e6cd57abb35ae144e90fafb8d2d84, code
+dc1833bc2. Instruments: tools/heredity.py (byte founder tags, FUNC-birth classes, causal anatomy), tools/reach.py
+(first-FUNC reachability; used here on H1 and analysed in W3).
+  H1  fresh random worlds, WELL_MIXED, 500 ticks, historical physics: PARTIAL 150, PAIR 150, COPY 150, COPY/VM_COPY 100.
+  H2  fragment complementation, PAIRED init, 300 ticks, 100 seeds per arm: PARTIAL x {AB, A, B, none} + COPY x AB.
+      A = prefix writer (copies its LD T,64 into partner window 0-1; not FUNC); B = LD A,1; LDIR (not FUNC).
+
+Pilot disclosure (12 runs, seeds 77.2e6, old one-hop code; excluded): A and AB both produced a FUNC child at tick 0-1
+in 3/3 runs (first FUNC = BORN_ASSEMBLY), followed by ~40-58k COPY births; B and none produced no FUNC in 300 ticks.
+So A ALONE suffices: the LDIR is supplied by random background material. The H2 predictions below are written with
+this known; the confirmatory content is the attribution and heredity analysis, not the existence of assembly.
+
+Definitions: see heredity.py docstring. Critical byte = nonzero byte whose NOP knockout breaks FUNC (zero bytes never
+critical). CAUSAL_ASSEMBLY = FUNC child, neither writer-only nor target-only reconstruction FUNC, critical set holds W
+and non-W bytes. Unit = run.
+
+Predictions (confirmatory):
+- W2-P1 (origin mode, H1): among H1 runs with a first FUNC tape, the share whose first FUNC was BORN (any class) rather
+  than FOUNDER/IN_PLACE is >= 0.9 (the grounding G6a 'built by copying' claim under the corrected rulers).
+- W2-P2 (multi-source origins depend on physics, H1): the share of first-FUNC origins that are CAUSAL_ASSEMBLY (or whose
+  critical bytes have >= 2 distinct origin events) is higher under ENDOGENOUS_PARTIAL than under ENDOGENOUS_COPY
+  (Fisher exact, one-sided, alpha 0.05), provided each cell has >= 5 runs with a first FUNC. If a cell has < 5 the test
+  is reported NOT_TESTABLE.
+- W2-P3 (H2 attribution): in PARTIAL/AB runs with >= 1 CAUSAL_ASSEMBLY event, the critical LD T,64 bytes of the FIRST
+  assembly come from an A founder in >= 90% of runs, and the critical LDIR comes from a B founder in a MINORITY (< 50%)
+  of runs (the pilot says random background supplies it). Falsified if B supplies the LDIR in >= 50%.
+- W2-P4 (H2 heritability of assembled machinery): in PARTIAL/A and PARTIAL/AB, the first assembly event has alive TRB
+  descendants at tick 300 in >= 50% of runs where it occurred.
+- W2-P5 (H2 physics control): COPY/AB produces 0 CAUSAL_ASSEMBLY events in >= 95/100 runs (a 2-byte write is not a
+  viable birth under ENDOGENOUS_COPY).
+- W2-P6 (H2 B and none): FUNC appears in <= 5/100 runs of each.
+Descriptive: FUNC-birth class mix per cell; distinct origin events and founders among critical bytes of the dominant
+FUNC tape at the end; relocated founder bytes; novel kinds (n/c/x) among critical bytes.

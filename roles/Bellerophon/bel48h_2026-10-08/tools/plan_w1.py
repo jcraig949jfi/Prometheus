@@ -5,7 +5,7 @@ import hashlib
 import json
 import sys
 
-SEED_BASE = 48_000_000_000_000          # disjoint from grounding (9e12 + ...), campaigns (<2.2e12) and the pilot (77e6)
+SEED_BASE = 48_100_000_000_000          # W1 v2 (amendment 1): fresh seeds; v1 base 48e12 superseded after 128 runs
 BASE = dict(world="GRID", representation="Z80_64", layout="SHARED", reproduction="ENDOGENOUS_COPY", pressure="IMPLICIT",
             spatial="LOCAL", task="INC", scoring="ATOMIC", read_gate="ABR", env_dynamics="FIXED", mutation="BYTE",
             mutation_rate="MED", recombination="NONE", init="RANDOM", physics="v2", ticks=500, cells=256, budget=256)
