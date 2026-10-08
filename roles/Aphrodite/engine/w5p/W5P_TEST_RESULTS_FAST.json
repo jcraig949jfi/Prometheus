@@ -8,7 +8,8 @@
   "test_fold_recognition_sound": "PASS",
   "test_instantiate_and_derive_continuity": "PASS",
   "test_conformance_fast_paths": "PASS",
-  "test_meter_exact": "PASS"
+  "test_meter_exact": "PASS",
+  "test_o1_entry_and_walk": "PASS"
  },
  "results": {
   "PARSE_NORMALISE_CONTINUITY": {
@@ -120,12 +121,23 @@
    "evaluator_mismatches": 0,
    "walk_pairs": 48,
    "walk_mismatches": 0,
+   "walk_hits": 17,
+   "walk_hits_on_bodies_outside_G5": 4,
    "libraries": 9,
    "bodies_outside_G5_in_libraries": 941,
    "PASS": true
   },
   "METER_EXACT": {
    "walks": 12,
+   "mismatches": 0,
+   "PASS": true
+  },
+  "O1_ENTRY_WALK": {
+   "empty_registry_no_entry": true,
+   "entry_bodies": 994,
+   "entry_schemas": 9,
+   "walks": 24,
+   "hits": 8,
    "mismatches": 0,
    "PASS": true
   }
