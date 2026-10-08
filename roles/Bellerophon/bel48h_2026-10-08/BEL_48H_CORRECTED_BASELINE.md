@@ -12,7 +12,7 @@ receipts/W1V2_ANALYSIS.json. Superseded first attempt (one-hop defect): 128 runs
 |---|---|---|---|
 | DEF-BEL-008 PROVENANCE | IMPLICIT pressure, 5 reproduction modes, WELL_MIXED | 100/100 | measurement only |
 | DEF-BEL-008 PROVENANCE | MINIMAL_CRITERION (PARTIAL) | 0/20 | CHANGES PHYSICS (replication credit feeds survival) |
-| DEF-BEL-008 PROVENANCE | QD (PARTIAL) | 20/20 | measurement only here (credit feeds a QD cell index that did not change selection in these runs) |
+| DEF-BEL-008 PROVENANCE | QD (PARTIAL) | 20/20 | measurement only in these runs (the credit enters the QD cell index; why it never altered selection here was not investigated) |
 | DEF-BEL-009 PAIRED | RANDOM init, no transplant, 5 modes | 100/100 | no-op by construction |
 | DEF-BEL-009 PAIRED | replicator transplant | 0/20 | changes the realisation (which random tapes the majority gets), not its distribution |
 | DEF-BEL-010 written | geometry on specimens | -- | measurement only by construction |
@@ -62,6 +62,6 @@ frozen expectation (0/30) ignored both; the instrument reported a real event cor
 
 ## 5. Descriptive (per cell; receipt)
 
-Ruler disagreement per birth: LOCAL 8.5-40% (COPY 8.5, PARTIAL 9.9, PAIR 9.0, OVERWRITE 40, VM_COPY 30, BYTECODE32 73,
+Ruler disagreement per birth: LOCAL 8.5-78% (COPY 8.5, PARTIAL 9.9, PAIR 9.0, OVERWRITE 40, VM_COPY 30, BYTECODE32 73,
 CONSTRUCTIVE 78); WELL_MIXED 9.5-94%. Mixed-origin births (>= L/8 bytes from each): <= 5.7% (PARTIAL LOCAL). Constructed
 births: 2-94%. TRB mechanism signatures (DETECTOR level): 5-28 per cell. Geometry v1 vs written: 3/245 disagreements.
