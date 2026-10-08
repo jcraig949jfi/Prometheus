@@ -1,6 +1,8 @@
 # Cosmos BOOTSTRAP -- the entry file for a fresh session (read before anything else in roles/Cosmos/)
 
-Currency: 2026-09-30 (v0.2). Governing texts, newest first:
+Currency: 2026-10-08 (v0.3). Governing texts, newest first:
+- operator 48H autonomous campaign 2026-10-08: roles/Cosmos/prompts/2026-10-08_operator_48h_campaign/DIRECTIVE_VERBATIM.md
+  (live campaign state: roles/Cosmos/campaigns/48H_2026-10-08/CAMPAIGN_STATE.json; resume from its next_action)
 - operator C4 review 2026-09-30: roles/Cosmos/prompts/2026-09-30_operator_c4_review/DIRECTIVE_VERBATIM.md
 - operator C3 disposition 2026-09-30: roles/Cosmos/prompts/2026-09-30_operator_c3_disposition/DIRECTIVE_VERBATIM.md
 - CWO-2026-09-30B finish-in-place (ops/fleet/CWO_2026-09-30B_FINISH_IN_PLACE.md, blob sha256 e62cb5ee...)
@@ -30,6 +32,8 @@ the seat does not self-promote beyond what the operator has authorized.
   governing firewall audit PASSED (FIREWALL_AUDIT_1 @67e05df12). Cosmos never reads, runs or spends it.
   The original D (seal a56ef7787) is treated as EXPOSED (operator 2026-09-28 D4).
   E is reserved for Aether from M4 only and is not commissioned.
+- 2026-10-08: foreign family DONE (Theseus theseus_sediment 79dc4c4b8, verified); C3 Session 1 PUBLISHED on main
+  (merge d75fb45ef, V1-V5 PASS). The C4 queue below is superseded by the 48H directive.
 - C4 (new campaign, successor to C3; thread T-C4 thr-cac8c079f216): DESIGN v0.2 (c4/DESIGN_C4.md), revised
   after the operator review. It is under two independent reviews (brief c4/REVIEW_BRIEF_v0.2.md) and a
   foreign visible family is commissioned (c4/VISIBLE_FAMILY_CONTRACT.md). F-0002 and the build are NOT
@@ -44,7 +48,7 @@ M2 keeps a fallback copy). A local pre-push hook refuses both unless COSMOS_PUBL
 - `cosmos/c3-s1-2026-09-24` (head e73e5eb26; early head 0ecafed1 hash-committed in c3/INFO_LEDGER.md and
   FREEZES F-0000). Preserve EXACTLY: no new commits.
 - `cosmos/c3-autopsy-2026-09-30` (branched from e73e5eb26): the WITHHELD technical autopsy. Local only.
-Rules: NEVER push either branch or merge it into a pushed branch. Publication needs an EXPLICIT operator
+Rules (2026-10-08: c3-s1 is now PUBLISHED; the rules below still bind the AUTOPSY branch): NEVER push either branch or merge it into a pushed branch. Publication needs an EXPLICIT operator
 trigger. (The 2026-09-28 conditions, seal on main and successor commitment on main, are already met,
 so the trigger is now the only condition.) Do not paste withheld content into comms, main or any public
 file. The public autopsy (research/reviews/AUTOPSY_C3_PUBLIC_2026-09-30.md) carries only abstract
