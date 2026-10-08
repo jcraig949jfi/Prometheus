@@ -1,6 +1,6 @@
 # W01 (DEV) REPORT: R8 FAILURE AUTOPSY + CAMPAIGN SET-UP
 
-Beta-03 (C-008), 2026-10-08 05:05-09:05Z. Starting SHA: origin/main 3d85e1df4. The seat branch was at 201d1a873 and
+Beta-03 (C-011), 2026-10-08 05:05-09:05Z. Starting SHA: origin/main 3d85e1df4. The seat branch was at 201d1a873 and
 was merged.
 
 ## 1. Bootstrap
