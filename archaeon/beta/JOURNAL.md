@@ -41,7 +41,7 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
 | B35/B36 | echo-free world distribution; compare on echo-free worlds | YES: paired +.050 (23/5, p=.0009); specific .002; not pass-through |
 | B37/B38 | wider distribution (delayed allowed) -> named-world transfer? | NO: named transfer ~0; family transfer collapses (+.009, p=.18) -- delayed worlds dilute |
 | B39 | what rule do the transferable foragers implement? | 6/8 = the INVARIANT rule (harvest index = position of non-empty pool .77-.92; move when empty) |
-| B40 | keyed memory under a K-distribution + wide jitter | running (8 cells, lease) |
+| B40 | keyed memory under a K-distribution + wide jitter | NULL 0/8 general (4 one-value shelf, 4 floor) -- distribution lever does not cross an isolated peak |
 | B30 | do foragers carry state across ticks? | YES: 6/7 content sensors use state; blind ones in rewarding worlds 5/5 |
 | B31 | what do they remember? | 2504: 1-register direction memory; others computed state (not past observations) |
 | B17 | forced perception (echo on PUT) opens the 2-value wall? | staged; controls pass |
@@ -441,6 +441,14 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   Controls: hand indexed solver K1-K8 .94-1.0 (GENERAL incl. never-trained K8); slot solver K3 .69 -> K8 .29.
   Reopen condition for the parked wall (update 3) was "a world or operator that makes the read half pay alone" -- a
   K-distribution does not do that directly; it removes the payoff of slots/delay lines. PREDICTION 0/8 GENERAL.
+- B40 RESULT (keyed memory under a K-distribution + wide jitter; 8 cells; lease released ~06:45Z): 0/8 GENERAL.
+  4/8 elites = one-value memory (K1 1.0, K2 .57, falling to K8 ~.17); 4/8 never left the floor (all K <= .10). Every
+  BIG-gen-0 cell except one stayed on the floor. PREDICTION (0/8; best K6 <= .5) HELD. Unlike foraging (B39), the
+  distribution lever does NOT reach the general solution for keyed memory: it removes slots and delay lines, leaving
+  the population on the single-value shelf. The asymmetry is now measured: the general foraging rule has partial-credit
+  neighbours (a position rule that is right for some pool layouts pays a little), the indexed store does not (B20
+  isolated peak; B22 write and read are separate isolated steps). Keyed memory stays PARKED. CORE-HOUR TALLY since
+  00:07Z: ~16.
 - BUDGET WINDOW 2026-10-08 ~00:07Z. B29 already done (not relaunched). Lease lse-fe37dd77fe7a (spectrex5:cpu12,
   3 h) for B32 replication: 12 seeds (3211-3222), 10 procs, + B32's last cell on 2 procs = 12. CORE-HOUR TALLY
   (rolling 24 h from 00:07Z): 0 at launch; est. +3-4 for the replication.
