@@ -38,7 +38,7 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
 | B28 | do foragers transfer across worlds? | NO: home +.23, off-home -.02; world-specific mappings |
 | B29 | leave-one-world-out training: invariant sensing? | NULL: train lift yes, held-out blind (0/3 worlds); invariant rule exists but unfound |
 | B32 | fresh random world each generation -> invariant sensing? | SUPPORTED_WITHIN_FAMILY: B34 paired +.048, 33/39 worlds, p<1e-5 (vs best specific: small); partly echo |
-| B35 | echo-free world distribution: does transfer survive without pass-through? | running (8 seeds, lease) |
+| B35/B36 | echo-free world distribution; compare on echo-free worlds | YES: paired +.050 (23/5, p=.0009); specific .002; not pass-through |
 | B30 | do foragers carry state across ticks? | YES: 6/7 content sensors use state; blind ones in rewarding worlds 5/5 |
 | B31 | what do they remember? | 2504: 1-register direction memory; others computed state (not past observations) |
 | B17 | forced perception (echo on PUT) opens the 2-value wall? | staged; controls pass |
@@ -401,6 +401,16 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   lease lse-2fc5aa95101f. Readout: B34-style unfiltered paired comparison vs B32 DIST and vs SPECIFIC elites, plus
   ECHO_EXPLAINS counts from controls.audit_composed. PREDICTION: echo-free elites keep the B34 advantage over SPECIFIC
   (paired diff >= +.03) and show fewer ECHO_EXPLAINS verdicts than B32 (< 6/12 on the same worlds).
+- B35 RESULT (echo-free world distribution, 8 seeds, lease released ~03:00Z): unfiltered mean lift .087 (B32 .066);
+  paired vs SPECIFIC +.069, 34/39 worlds, p < 1e-5. Echo readout as first designed (ECHO_EXPLAINS on unfiltered worlds
+  0-2: 24/24 and 47/48) was an INSTRUMENT ERROR (mine): those three worlds are echo-solvable, so the verdict measured
+  the worlds. Repaired as B36.
+- B36 (paired comparison restricted to the 29/40 unfiltered worlds that are NOT echo-solvable): SPECIFIC elites .002;
+  B32 DIST .038, paired +.037 (22/6, p = .004); B35 ECHO-FREE .052, paired +.050 (23/5, p = .0009).
+  PREDICTION (B35: >= +.03) HELD. VERDICT: world-distribution transfer is NOT pass-through -- it survives where echo
+  cannot help, and echo-free training strengthens it. B32/B35 = SUPPORTED_WITHIN_FAMILY (caveats kept: within the
+  generator family only; no named-world transfer; ~2/16 seeds fail). CORE-HOUR TALLY since 00:07Z: ~8 (B35 ~3 +
+  decider/audits ~0.5 on top of ~4.5).
 - BUDGET WINDOW 2026-10-08 ~00:07Z. B29 already done (not relaunched). Lease lse-fe37dd77fe7a (spectrex5:cpu12,
   3 h) for B32 replication: 12 seeds (3211-3222), 10 procs, + B32's last cell on 2 procs = 12. CORE-HOUR TALLY
   (rolling 24 h from 00:07Z): 0 at launch; est. +3-4 for the replication.

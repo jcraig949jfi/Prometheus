@@ -26,9 +26,13 @@ def sign_test(diffs):
     return pos, neg, min(1.0, p)
 
 
-def main():
+def main(argv=None):
+    import sys
+    argv = sys.argv[1:] if argv is None else argv
+    files = argv[0].split(",") if argv else ["B32_result.json", "B32rep_result.json"]
+    tag = argv[1] if len(argv) > 1 else ""
     dist = []
-    for f in ("B32_result.json", "B32rep_result.json"):
+    for f in files:
         d = json.loads((OUT / f).read_text(encoding="utf-8"))
         dist += [r["elite_manifest"] for r in d["rows"] if "elite_manifest" in r]
     b25 = {r["seed"]: r for r in json.loads((OUT / "B25_result.json").read_text(encoding="utf-8"))["rows"] if r.get("arm") == "NOCLOCK"}
@@ -42,12 +46,15 @@ def main():
         diffs.append(md - ms)
         rows.append({"world": i, "R": w.w.R, "features": w.w.features, "dist_mean": round(md, 4), "spec_mean": round(ms, 4)})
     pos, neg, p = sign_test(diffs)
+    from archaeon.beta.controls import audit_composed
+    echo_n = sum("ECHO_EXPLAINS" in audit_composed(m, w, s)["verdicts"] for m in dist for (w, s) in worlds[:3])
     summ = {"n_dist": len(dist), "n_spec": len(spec), "n_worlds": len(worlds),
             "mean_dist_lift": round(sum(r["dist_mean"] for r in rows) / len(rows), 4),
             "mean_spec_lift": round(sum(r["spec_mean"] for r in rows) / len(rows), 4),
-            "mean_paired_diff": round(sum(diffs) / len(diffs), 4), "sign_pos": pos, "sign_neg": neg, "sign_p": round(p, 4)}
+            "mean_paired_diff": round(sum(diffs) / len(diffs), 4), "sign_pos": pos, "sign_neg": neg, "sign_p": round(p, 4),
+            "dist_files": files, "echo_explains": echo_n, "echo_tests": len(dist) * 3}
     print(json.dumps(summ))
-    (OUT / "B34_result.json").write_text(json.dumps({"probe": "B34", "summary": summ, "rows": rows}, indent=1), encoding="utf-8")
+    (OUT / ("B34%s_result.json" % tag)).write_text(json.dumps({"probe": "B34", "summary": summ, "rows": rows}, indent=1), encoding="utf-8")
 
 
 if __name__ == "__main__":
