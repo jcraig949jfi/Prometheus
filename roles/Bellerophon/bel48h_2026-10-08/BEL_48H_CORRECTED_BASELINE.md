@@ -45,10 +45,16 @@ W1-P1, W1-P2, W1-P3: HOLD.
   78-94%: computed bytes the resemblance rule called 'writer'); among living organisms the genetic root differs between
   rulers for 22-26% in WELL_MIXED PARTIAL/PAIR/COPY cells (0-2% in LOCAL). Historical seed_lineage_share,
   genetic_lineages_final and 'captures' in mixing worlds are ruler-dependent and should not be cited without a ruler.
-- G6a "no initial random tape became the first self-replicator": NOT REPRODUCED on fresh seeds -- 7 of 45 independent
-  populations had an initial organism as the first replicating writer, 17 runs at tick 0 (a random founder tape that is
-  already FUNC); the HISTORICAL SR classifier on the same runs says the same (18 runs). CONFOUNDED until the grounding's
-  own genealogy-based G6 classifier is run on these runs (queued: BEL_48H_NEXT_EXPERIMENTS.md).
+- G6a: the published "160/160 BUILT_BY_COPY / no initial random tape became the first self-replicator" was ALREADY
+  WITHDRAWN on 2026-09-29 (forensics_2026-09-23/ERRATA_2026-09-29.md E1, DEF-BEL-001: the classifier tested
+  mechanism == "init" but initial organisms carry mechanism None, so every initial writer defaulted to BUILT_BY_COPY;
+  corrected 103/160 copy-born, 57 initial writers, 26 with their unmodified random tape). W1-P7 was written from the
+  withdrawn figure -- my error (calibration ledger, 2026-10-08): the seat's own errata were not re-read before the
+  prediction. On fresh seeds W1 v2 REPRODUCES THE CORRECTED PICTURE independently: first TRB writer copy-born in 43/69
+  runs / 38 of 45 independent populations (84%); initial organisms in 7 populations, 17 runs at tick 0 (an unmodified
+  random founder tape that already self-copies). Running the grounding's own g6_class on these runs returns 62/62
+  BUILT_BY_COPY -- the defect reproduces exactly (init writers: genealogy length 1, mechanism None). Classification of
+  G6a under corrected measurement: REPRODUCED in its corrected (errata) form; FALSIFIED in its published form.
 - DEF-BEL-009: old same-seed transplant-vs-control contrasts are NOT retrospectively corrected; and PAIRED would not
   have helped them (s2 W1-P8).
 
