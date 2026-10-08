@@ -504,8 +504,8 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   .6/.7/.8 x switch 8/12/16): a one-step STICKY filter gains at most +.042 over REACTIVE (noise .6, switch 16), latch
   .653 < reactive .744 there. Criterion lowered to +.025 (SE ~.012 at E=64x4). 8 seeds, G=300, lease lse-45fbcd210c07;
   scored on 4 NEW world keys x 64 episodes. PREDICTION: 0/8 elites beat REACTIVE by >= .025 with a persist drop.
-- B47 RESULT (switching latent; 8 seeds; scored E=64 x 4 new world keys; lease released ~10:55Z): every elite is BELOW
-  REACTIVE (.717-.753 vs .761); STICKY .795, LATCH .671. 7/8 lose reward under persist=none (.55-.67) -> they DO use
+- B47 RESULT (switching latent; 8 seeds; scored E=64 x 4 new world keys; lease released ~10:55Z): 7/8 elites are BELOW
+  REACTIVE (.717-.753 vs .761); 4706 .766 (+.005, far under the +.025 criterion); STICKY .795, LATCH .671. 7/8 lose reward under persist=none (.55-.67) -> they DO use
   memory, but latch-like memory that the switch punishes. PREDICTION (0/8 beat reactive by >= .025) HELD.
   Reading: with the latch made costly, evolution still does not reach a conditional update (sticky's +.034 here) -- it
   settles between latch and reactive. Across B08J/B22b/B40/B45/B47 the campaign's memory law reads: in this VM+GA,
