@@ -152,3 +152,38 @@ LD at 7-15; XOR, branch and ADD 37 at 21-31.
 
 **Open:** whether this is neutral drift or robustness selection. The dominant genomes' routine robustness is
 0.38-0.45, against 0.38 for CT_UA. X-DIR-LONG tests it.
+
+## C1. C-DIR-MAINTAIN: CONFIRMED (CONFIRM lane; fresh seeds; protocol frozen at 27c5271b4)
+
+| arm | maintained (established runs) | final CS |
+|---|---|---|
+| DIR015 | 12/12 | 0.887-0.953 |
+| RND015 | 0/12 | 0 |
+| CT_U under DIR | 0/6 | 0 |
+| COPY_ONLY under DIR | 0/6 | 0 |
+
+- **PROMOTED mechanism:** on the ffa6 pair tape, coupling task competence to copy DIRECTION (who runs first) turns a
+  transmitted function into a maintained one. Coupling competence to interaction RATE does not (F2).
+
+## ATLAS PACKET A1 (cross-pollination)
+
+| field | value |
+|---|---|
+| barrier before | functional transmission yes (P-11 child keeps the task 0.90 per generation); functional persistence no (the task is a neutral passenger in the copy race; a one-way mutational leak of about 3.5% per interaction erases it in about 50-100 interactions per organism) |
+| intervention | competence decides copy priority (who executes first on the pair tape), with the interaction rate held competence-blind |
+| barrier after | persistence and selection on function present (CS about 0.92 at mutation-selection balance; confirmed 12/12 vs 0/12); architectural integration not yet; endogenous re-discovery being tested |
+| primitive / mechanism | first-mover-wins copy race (side 0 wins 93-98% of conversions); "selection" must act on the asymmetry of heredity, not on encounter frequency. A symmetric rate gate is HARMFUL (it accelerates neutral drift to loss). |
+| generalizes? | the encounter-symmetric vs direction-asymmetric distinction should hold for any engine whose replication is a pairwise race; untested outside ffa6 |
+| open neighbors | the q x mutation boundary (X-DIR-SURFACE); re-discovery distance (X-REDISCOVER); de novo emergence (X-RANDOM-DIR); integration over long horizons (X-DIR-LONG) |
+
+**Barrier map:**
+
+| transition | status |
+|---|---|
+| copy-capable material | PRESENT |
+| causal heredity | PRESENT |
+| functional transmission | PRESENT |
+| functional persistence | PRESENT only under directional coupling |
+| selection on function | PRESENT only under directional coupling |
+| architectural integration | not observed; neutral rewiring of vestigial code seen (F4) |
+| endogenous re-discovery | testing |
