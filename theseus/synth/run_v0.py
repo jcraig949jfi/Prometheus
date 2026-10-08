@@ -66,6 +66,8 @@ CONFIG = {
     "quality": "rep",            # QD elite quality: "rep" (-replicate distance, v0) or "r5" (response mid-band)
     "elite_grids": ["pca", "desc", "resp"],
     "dark_protect_gens": None,   # None = untried dark objects protected forever (v0)
+    "elite_protect_k": None,     # None = every elite protected (v0); int = only the top-k by quality
+    "seed_select": 0.0,          # 0 = v0; > 0 = coalition seed weight x exp(s * z(quality))
 }
 
 _CAL = None
@@ -194,6 +196,8 @@ def main(argv=None):
     ap.add_argument("--elite-grids", default="pca,desc,resp")
     ap.add_argument("--pop-cap", type=int, default=None)
     ap.add_argument("--dark-protect-gens", type=int, default=None)
+    ap.add_argument("--elite-protect-k", type=int, default=None)
+    ap.add_argument("--seed-select", type=float, default=0.0)
     a = ap.parse_args(argv)
     cfg = copy.deepcopy(CONFIG)
     cfg["gens"] = a.gens
@@ -205,6 +209,8 @@ def main(argv=None):
     if a.pop_cap is not None:
         cfg["pop_cap"] = a.pop_cap
     cfg["dark_protect_gens"] = a.dark_protect_gens
+    cfg["elite_protect_k"] = a.elite_protect_k
+    cfg["seed_select"] = a.seed_select
     if a.smoke:
         cfg.update(gens=min(a.gens, 7), per_cell=1, n_oneshot_per_arity=12, n_random=12, n_weird=6, n_neutral=6,
                    n_hidden_known=4, reproduce_top={k: 2 for k in cfg["reproduce_top"]}, lens_marginal_sample=6)
@@ -254,6 +260,7 @@ def main(argv=None):
     evals = {}
     assessments = {}
     active, vitality, born_gen = set(), {}, {}
+    qual = {}
     for c, r in zip(corpus, g0_ev):
         e = {"id": c["id"], "origin": "human", "kind": "concept", "executableRepresentation": c["genome"],
              "parentIds": [], "metadata": c["metadata"], "lane": "G0_SEED", "born_step": 0}
@@ -262,6 +269,7 @@ def main(argv=None):
         evals[e["id"]] = r
         if r["viable"]:
             assessments[e["id"]] = archive.insert(e["id"], r["fp"], quality_of(r, cfg))
+            qual[e["id"]] = quality_of(r, cfg)
             active.add(e["id"])
             field.place(e["id"], r["fp"])
             born_gen[e["id"]] = 0
@@ -294,7 +302,8 @@ def main(argv=None):
                 for k in cfg["arities"]:
                     for _ in range(cfg["per_cell"]):
                         pids, modes = ec.choose_coalition(reg, tensor, field, active, base_lane, k, rng,
-                                                          lenses=[l for l, _ in lenses], need_lens=(lane == "DEEP_LENS"))
+                                                          lenses=[l for l, _ in lenses], need_lens=(lane == "DEEP_LENS"),
+                                                          seed_quality=qual, seed_strength=cfg["seed_select"])
                         if pids is None:
                             continue
                         cidn += 1
@@ -321,6 +330,7 @@ def main(argv=None):
                 asmt = None
                 if r["viable"]:
                     asmt = archive.insert(eid, r["fp"], quality_of(r, cfg))
+                    qual[eid] = quality_of(r, cfg)
                     assessments[eid] = asmt
                     active.add(eid)
                     field.place(eid, r["fp"])
@@ -362,7 +372,9 @@ def main(argv=None):
                             born_gen[lid] = gen
                         reg[d]["metadata"]["resolved_by_lens"] = lid  # measured: held-out drop > null p95
             dpg = cfg["dark_protect_gens"]
-            protected = archive.elite_ids(cfg["elite_grids"]) | {d for d in dark_queue if not reg[d]["metadata"].get("lens_tried")
+            elites = (archive.elite_ids(cfg["elite_grids"]) if cfg["elite_protect_k"] is None
+                      else archive.top_elites(cfg["elite_grids"], cfg["elite_protect_k"]))
+            protected = elites | {d for d in dark_queue if not reg[d]["metadata"].get("lens_tried")
                                                                  and (dpg is None or gen - born_gen.get(d, 0) < dpg)} | \
                 {l for l, _ in lenses}
             fos = ec.fossilize(reg, active, vitality, protected, gen, born_gen, cap=cfg["pop_cap"])
