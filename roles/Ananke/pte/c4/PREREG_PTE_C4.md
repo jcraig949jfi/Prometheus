@@ -1,6 +1,6 @@
 # PTE-C4 preregistration: composition and reuse ladder
 
-Status: library stage FROZEN by FREEZE_C4_L.json (the commit adding it); target stage DRAFT until FREEZE_C4_T.json is committed. Each freeze
+Status: library stage FROZEN by FREEZE_C4_L.json (aba974cf1); target stage FROZEN by FREEZE_C4_T.json (the commit adding it). Each freeze
 comes before its stage's production rows. The rules below are fixed at the library-stage freeze. The target-stage
 freeze adds only the frozen library and its hashes.
 
@@ -133,6 +133,12 @@ with 8 un-seeded controls. This is reported descriptively.
   - Its code (the D-LIB builder) is frozen in FREEZE_C4_D.json before its production.
 - If C3R and C4 are both clean NULLs, the C5 slot runs the terminal composition assay (order s10). Its kill rule is
   preregistered before that run.
+
+## 7a. Library stage outcome (recorded at the T freeze)
+
+- 47 of 64 library searches ran before the 2 h deadline (the highest idx rounds were censored).
+- Every (cell, one-stage task) had >= 2 competent searches, so the frozen library has all 8 modules (LIBRARY_C4.json), with 1-9 live lines each.
+- Known answer: no module placed alone in a NOP genome is TRUE on GATE or FLIP at any admitted cell (56 checks, c4_flight/module_alone_check.txt).
 
 ## 7b. Production
 
