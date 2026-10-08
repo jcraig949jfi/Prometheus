@@ -61,7 +61,7 @@ from xtg2 import COMP_MIN, GATE_SEED, HELD_SEED, UseCache, PLANTS  # noqa: E402,
 
 L = 64
 TRAJ_EARLY, TRAJ_EVERY = 10, 50          # snapshot every 10 epochs to epoch 300, then every 50
-DEFAULT = dict(cell=xtg2.CELL, ontape_alpha=0.3, extra_plants=None, gate="TG", order="RANDOM", q_dir=1.0, p_const=0.15, gate_floor=0.15, mut_scale=1.0, copy_scale=1.0,
+DEFAULT = dict(tape_readout=False, cell=xtg2.CELL, ontape_alpha=0.3, extra_plants=None, gate="TG", order="RANDOM", q_dir=1.0, p_const=0.15, gate_floor=0.15, mut_scale=1.0, copy_scale=1.0,
                plant="CT_UA", n_plants=1, epochs=None, ledger=True)
 
 
@@ -101,6 +101,7 @@ def make_runner(seed, cfg=None):
             self.loss_examples = []
             self.ledger_series = []
             self.dom_series = []
+            self.tape_cache = {}
             self.ontape = {}                 # Org -> EWMA of on-tape answer correctness (ONTAPE orders)
             self.ontape_n = [0, 0]
             base = self.mut_rate                                   # world: copy_mut == mut_rate (0.002, LOW)
@@ -115,6 +116,49 @@ def make_runner(seed, cfg=None):
 
         def _c(self, g):
             return self.cache.u(g) >= COMP_MIN
+
+        def _tape_self(self, g):
+            """Homotypic ON-TAPE cue-flip use: g on both halves of the real pair tape (dense VM, ARENA, ops mask,
+            slice, fresh registers); share of matched pairs answered exactly under r = 0 and r = 1, both sides.
+            Cached by genome. Readout only (never consulted by the world)."""
+            g = bytes(g)
+            hit = self.tape_cache.get(g)
+            if hit is not None:
+                return hit
+            z8m = world.z8
+            ok = 0
+            pairs = xtg2.flip_pairs(GATE_SEED, 16)
+            for side in (0, 1):
+                for v, key, base, e0, e1 in pairs:
+                    outs = []
+                    for rr in (0, 1):
+                        tape = bytearray(128)
+                        tape[0:len(g)] = g
+                        tape[64:64 + len(g)] = g
+                        out = None
+                        for who, start in ((0, 0), (1, 64)):
+                            c = z8m.Ctx(tape, start, 64, policy=z8m.ARENA, rng=random.Random(who), copy_mut_rate=0.0,
+                                        sense=who, inputs=((v, key, rr) if who == side else ()))
+                            z8m.run(c, start, self.t["slice"], ops_enabled=self._ops_mask())
+                            if who == side:
+                                out = c.outputs[0] if c.outputs else None
+                        outs.append(out)
+                    ok += (outs[0] == e0 and outs[1] == e1)
+            u = ok / 32
+            if len(self.tape_cache) > 50_000:
+                self.tape_cache.clear()
+            self.tape_cache[g] = u
+            return u
+
+        def _tape_classes(self, alive):
+            n = max(1, len(alive))
+            c = {"both": 0, "offline_only": 0, "tape_only": 0, "neither": 0}
+            for o in alive:
+                g = self._genome(o)
+                off = self.cache.competent(g)
+                tp = self._tape_self(g) >= COMP_MIN
+                c["both" if off and tp else "offline_only" if off else "tape_only" if tp else "neither"] += 1
+            return {k: round(v / n, 4) for k, v in c.items()}
 
         def _validate(self, force=False):
             if force:
@@ -350,6 +394,10 @@ def make_runner(seed, cfg=None):
                                   "p11_born": round(sum(self.st[o]["prov"] == "P11" for o in alive) / n, 4),
                                   "max_tx_p11": max([self.st[o]["tx_p11"] for o in comp], default=0),
                                   "inter": self.n_inter})
+                if cfg["tape_readout"] and (e % TRAJ_EVERY == 0):
+                    tc = self._tape_classes(alive)
+                    self.traj[-1].update(TCS=round(tc["both"] + tc["tape_only"], 4), tape_only=tc["tape_only"],
+                                         offline_only=tc["offline_only"])
                 self.ledger_series.append({"e": e, **self.led})
                 if comp:                                   # dominant competent genome (detail only; no RNG use)
                     cnt = {}
@@ -387,7 +435,15 @@ def summarize(r, out):
     gen = {}
     for x in comp:
         gen[x["g"]] = gen.get(x["g"], 0) + 1
+    tclass = r._tape_classes(alive) if r.cfg["tape_readout"] else None
+    tonly = {}
+    if tclass:
+        for o in alive:
+            g = r._genome(o)
+            if not r.cache.competent(g) and r._tape_self(g) >= COMP_MIN:
+                tonly[g.hex()] = tonly.get(g.hex(), 0) + 1
     rec = {
+        "TCS": round(tclass["both"] + tclass["tape_only"], 4) if tclass else None, "tape_classes": tclass,
         "alive": len(alive), "CS": share(lambda x: x["comp"]),
         "CD": share(lambda x: x["comp"] and x["prov"] == "P11"),
         "CD_TX": share(lambda x: x["comp"] and x["prov"] == "P11" and x["origin"] == "P11_TX"),
@@ -403,6 +459,7 @@ def summarize(r, out):
         "traj": t, "cfg": _jsonable(r.cfg),
     }
     detail = {"pos_loss": r.pos_loss, "pos_mut_on_comp": r.pos_mut_on_comp, "loss_examples": r.loss_examples,
+              "tape_only_genomes_final": tonly,
               "ledger_series": r.ledger_series, "dom_series": r.dom_series, "competent_genomes_final": gen,
               "organisms": [{k: v for k, v in x.items() if k != "g" or x["comp"]} for x in rows]}
     return rec, detail

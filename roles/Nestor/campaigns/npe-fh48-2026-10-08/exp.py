@@ -222,6 +222,33 @@ declare("X-REDISCOVER-SUPPLY",
               for s in SEEDS_RS for d, v in ((1, 0x24), (2, 0x00))])
 
 
+# C-ONTAPE-MAINTAIN (CONFIRM, parent X-ONTAPE): FRESH seeds 45_200_000 + s, protocol frozen at this block's commit.
+#   ONTAPE vs ONTAPE_RND (CONST 0.15, 2000 epochs, CT_UA), 12 seeds each; negatives under ONTAPE: CT_U, COPY_ONLY,
+#   6 seeds each. tape_readout on. Primary ruler: FUNCTION = TCS (share of live organisms with homotypic on-tape
+#   cue-flip use >= 0.75), because selection in this world acts on in-context behavior (F8); the offline use CS is
+#   reported beside it and decides nothing.
+#   Rule: CONFIRMED iff (established ONTAPE runs with final TCS >= 0.10) >= 0.75 x established AND (established
+#   ONTAPE_RND runs with final TCS >= 0.10) <= 1 AND no negative run has final TCS >= 0.10 or final CS >= 0.10.
+SEEDS_CO = [45_200_000 + s for s in range(12)]
+declare("C-ONTAPE-MAINTAIN",
+        jobs=[(arm, s, dict(gate="CONST", p_const=0.15, order=o, tape_readout=True)) for s in SEEDS_CO
+              for arm, o in (("ONTAPE", "ONTAPE"), ("ONTAPE_RND", "ONTAPE_RND"))]
+        + [(arm, s, dict(gate="CONST", p_const=0.15, order="ONTAPE", plant=pl, tape_readout=True)) for s in SEEDS_CO[:6]
+           for arm, pl in (("NEG_CTU_ONTAPE", "CT_U"), ("NEG_COPY_ONTAPE", "COPY_ONLY"))])
+
+# X-ONTAPE-LONG (EXPLORE, parent X-ONTAPE): over 6000 epochs (~900 interactions per organism) under ONTAPE, does
+#   function migrate from genome-contained (offline AND on-tape competent) to pair-distributed (tape-only) forms?
+#   6 seeds 45_300_000 + s, CONST 0.15, CT_UA, tape_readout on (classes every 50 epochs).
+#   Readout: tape_only share trajectory; runs where tape_only > 0.5 of live organisms at any snapshot; final TCS;
+#   mechanisms of tape-only genomes (jump targets into the partner half).
+#   Classification: SIGNAL if tape-only forms exceed 0.5 of the population in >= 2/6 runs with TCS maintained (>= 0.10);
+#   WEAK_SIGNAL if tape-only forms appear (> 0.05 at some snapshot) in >= 3/6; CLEAN_NULL otherwise.
+SEEDS_OL = [45_300_000 + s for s in range(6)]
+declare("X-ONTAPE-LONG",
+        jobs=[("ONTAPE_LONG", s, dict(gate="CONST", p_const=0.15, order="ONTAPE", tape_readout=True, epochs=6000))
+              for s in SEEDS_OL])
+
+
 if __name__ == "__main__":
     name = sys.argv[1]
     w = int(sys.argv[2]) if len(sys.argv) > 2 else 4

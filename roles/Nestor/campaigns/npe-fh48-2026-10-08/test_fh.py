@@ -114,6 +114,17 @@ def test_ot1_ontape_known_answers():
     assert co == 0.0, co
 
 
+def test_tr1_tape_ruler_matches_independent_and_controls():
+    """fh _tape_self == arch.tape_use(g, g) (independent implementation); CT_UA 1.0, CT_U 0, COPY_ONLY 0."""
+    import arch
+    r = fh.make_runner(SEED, dict(epochs=1, plant=None))
+    for k in ("CT_UA", "CT_U", "COPY_ONLY"):
+        g = fh.PLANTS[k]
+        assert abs(r._tape_self(g) - arch.tape_use(g, g)) < 1e-12, k
+    assert r._tape_self(fh.PLANTS["CT_UA"]) == 1.0
+    assert r._tape_self(fh.PLANTS["CT_U"]) == 0.0 and r._tape_self(fh.PLANTS["COPY_ONLY"]) == 0.0
+
+
 def test_ms1_scales():
     r = fh.make_runner(SEED, dict(epochs=2, mut_scale=0.5, copy_scale=3.0))
     assert abs(r.mut_rate - 0.001) < 1e-12 and abs(r.copy_mut - 0.006) < 1e-12

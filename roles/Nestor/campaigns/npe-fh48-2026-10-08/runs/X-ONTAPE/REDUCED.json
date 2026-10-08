@@ -1,0 +1,715 @@
+{
+ "NEG_COPY_ONTAPE": {
+  "n": 6,
+  "established": 4,
+  "CS_peak_median": 0.0,
+  "last_CS_gt0_median": 0.0,
+  "last_CS_gt0_all": [
+   0,
+   0,
+   0,
+   0
+  ],
+  "auc_median": 0.0,
+  "final_CS_gt0": 0,
+  "max_tx_p11_ever_median": 0.0,
+  "interaction_rate_median": 0.14985,
+  "ledger": {
+   "NONCOMP_KEPT": 206639,
+   "NONCOMP_CONVERTED": 100127
+  },
+  "competent_half_outcome_share": {
+   "KEPT": 0.0,
+   "REPL_COMP": 0.0,
+   "REPL_CREATED": 0.0,
+   "LOST_INPLACE": 0.0,
+   "LOST_OVERWRITE": 0.0,
+   "LOST_COPY_ERR": 0.0,
+   "LOST_COPY_MUT": 0.0
+  },
+  "losses": 0,
+  "gains": 0,
+  "loss_share": {
+   "LOST_INPLACE": 0.0,
+   "LOST_OVERWRITE": 0.0,
+   "LOST_COPY_ERR": 0.0,
+   "LOST_COPY_MUT": 0.0
+  },
+  "exposure": {
+   "comp_half_interactions": 0,
+   "comp_half_epochs": 0,
+   "noncomp_half_interactions": 306766,
+   "noncomp_half_epochs": 2048000
+  },
+  "inter_per_epoch_comp": 0.0,
+  "inter_per_epoch_noncomp": 0.1498,
+  "hazard_per_comp_interaction": 0.0,
+  "hazard_per_comp_epoch": 0.0,
+  "gain_per_comp_interaction": 0.0,
+  "exchange_GAIN_COPY_vs_LOST_OVERWRITE": [
+   0,
+   0
+  ],
+  "transmission": {
+   "P11": {
+    "n": 0,
+    "P_child_comp": 0.0,
+    "P_tape_comp": 0.0
+   },
+   "LABEL": {
+    "n": 0,
+    "P_child_comp": 0.0,
+    "P_tape_comp": 0.0
+   }
+  },
+  "side": {
+   "comp_donor_side0": 0,
+   "comp_donor_side1": 0,
+   "conv_side0_victim": 3744,
+   "conv_side1_victim": 96383
+  },
+  "loss_positions_by_region": {
+   "LOST_INPLACE": {
+    "copier": 0,
+    "routine": 0,
+    "padding": 0
+   },
+   "LOST_COPY_MUT": {
+    "copier": 0,
+    "routine": 0,
+    "padding": 0
+   },
+   "LOST_COPY_ERR": {
+    "copier": 0,
+    "routine": 0,
+    "padding": 0
+   }
+  },
+  "inplace_destructiveness_by_region": {
+   "copier": 0.0,
+   "routine": 0.0,
+   "padding": 0.0
+  },
+  "top_loss_positions_inplace": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ],
+  "inplace_destructiveness_by_pos": [
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null
+  ]
+ },
+ "NEG_CTU_ONTAPE": {
+  "n": 6,
+  "established": 5,
+  "CS_peak_median": 0.0,
+  "last_CS_gt0_median": 0,
+  "last_CS_gt0_all": [
+   0,
+   0,
+   0,
+   0,
+   0
+  ],
+  "auc_median": 0.0,
+  "final_CS_gt0": 0,
+  "max_tx_p11_ever_median": 0,
+  "interaction_rate_median": 0.1502,
+  "ledger": {
+   "NONCOMP_KEPT": 227866,
+   "NONCOMP_CONVERTED": 156680
+  },
+  "competent_half_outcome_share": {
+   "KEPT": 0.0,
+   "REPL_COMP": 0.0,
+   "REPL_CREATED": 0.0,
+   "LOST_INPLACE": 0.0,
+   "LOST_OVERWRITE": 0.0,
+   "LOST_COPY_ERR": 0.0,
+   "LOST_COPY_MUT": 0.0
+  },
+  "losses": 0,
+  "gains": 0,
+  "loss_share": {
+   "LOST_INPLACE": 0.0,
+   "LOST_OVERWRITE": 0.0,
+   "LOST_COPY_ERR": 0.0,
+   "LOST_COPY_MUT": 0.0
+  },
+  "exposure": {
+   "comp_half_interactions": 0,
+   "comp_half_epochs": 0,
+   "noncomp_half_interactions": 384546,
+   "noncomp_half_epochs": 2560000
+  },
+  "inter_per_epoch_comp": 0.0,
+  "inter_per_epoch_noncomp": 0.1502,
+  "hazard_per_comp_interaction": 0.0,
+  "hazard_per_comp_epoch": 0.0,
+  "gain_per_comp_interaction": 0.0,
+  "exchange_GAIN_COPY_vs_LOST_OVERWRITE": [
+   0,
+   0
+  ],
+  "transmission": {
+   "P11": {
+    "n": 0,
+    "P_child_comp": 0.0,
+    "P_tape_comp": 0.0
+   },
+   "LABEL": {
+    "n": 0,
+    "P_child_comp": 0.0,
+    "P_tape_comp": 0.0
+   }
+  },
+  "side": {
+   "comp_donor_side0": 0,
+   "comp_donor_side1": 0,
+   "conv_side0_victim": 2270,
+   "conv_side1_victim": 154410
+  },
+  "loss_positions_by_region": {
+   "LOST_INPLACE": {
+    "copier": 0,
+    "routine": 0,
+    "padding": 0
+   },
+   "LOST_COPY_MUT": {
+    "copier": 0,
+    "routine": 0,
+    "padding": 0
+   },
+   "LOST_COPY_ERR": {
+    "copier": 0,
+    "routine": 0,
+    "padding": 0
+   }
+  },
+  "inplace_destructiveness_by_region": {
+   "copier": 0.0,
+   "routine": 0.0,
+   "padding": 0.0
+  },
+  "top_loss_positions_inplace": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ],
+  "inplace_destructiveness_by_pos": [
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null
+  ]
+ },
+ "ONTAPE": {
+  "n": 12,
+  "established": 10,
+  "CS_peak_median": 0.8672,
+  "last_CS_gt0_median": 2000.0,
+  "last_CS_gt0_all": [
+   2000,
+   2000,
+   2000,
+   2000,
+   2000,
+   2000,
+   2000,
+   2000,
+   2000,
+   2000
+  ],
+  "auc_median": 0.6444,
+  "final_CS_gt0": 10,
+  "max_tx_p11_ever_median": 49.5,
+  "interaction_rate_median": 0.15015,
+  "ledger": {
+   "NONCOMP_KEPT": 114159,
+   "KEPT": 363501,
+   "GAIN_COPY": 62759,
+   "NONCOMP_CONVERTED": 24976,
+   "LOST_INPLACE": 15312,
+   "LOST_OVERWRITE": 30313,
+   "REPL_COMP": 143265,
+   "LOST_COPY_ERR": 8563,
+   "LOST_COPY_MUT": 6728,
+   "REPL_CREATED": 25,
+   "GAIN_INPLACE": 20,
+   "GAIN_CREATED": 13
+  },
+  "competent_half_outcome_share": {
+   "KEPT": 0.6403,
+   "REPL_COMP": 0.2524,
+   "REPL_CREATED": 0.0,
+   "LOST_INPLACE": 0.027,
+   "LOST_OVERWRITE": 0.0534,
+   "LOST_COPY_ERR": 0.0151,
+   "LOST_COPY_MUT": 0.0119
+  },
+  "losses": 60916,
+  "gains": 62792,
+  "loss_share": {
+   "LOST_INPLACE": 0.2514,
+   "LOST_OVERWRITE": 0.4976,
+   "LOST_COPY_ERR": 0.1406,
+   "LOST_COPY_MUT": 0.1104
+  },
+  "exposure": {
+   "comp_half_interactions": 567707,
+   "comp_half_epochs": 3778291,
+   "noncomp_half_interactions": 201927,
+   "noncomp_half_epochs": 1341709
+  },
+  "inter_per_epoch_comp": 0.1503,
+  "inter_per_epoch_noncomp": 0.1505,
+  "hazard_per_comp_interaction": 0.1073,
+  "hazard_per_comp_epoch": 0.0161,
+  "gain_per_comp_interaction": 0.1106,
+  "exchange_GAIN_COPY_vs_LOST_OVERWRITE": [
+   62759,
+   30313
+  ],
+  "transmission": {
+   "P11": {
+    "n": 219730,
+    "P_child_comp": 0.904,
+    "P_tape_comp": 0.9463
+   },
+   "LABEL": {
+    "n": 8229,
+    "P_child_comp": 0.8967,
+    "P_tape_comp": 0.9373
+   }
+  },
+  "side": {
+   "comp_donor_side0": 225193,
+   "comp_donor_side1": 2766,
+   "conv_side0_victim": 4323,
+   "conv_side1_victim": 272319
+  },
+  "loss_positions_by_region": {
+   "LOST_INPLACE": {
+    "copier": 471,
+    "routine": 15626,
+    "padding": 781
+   },
+   "LOST_COPY_MUT": {
+    "copier": 208,
+    "routine": 6907,
+    "padding": 356
+   },
+   "LOST_COPY_ERR": {
+    "copier": 796,
+    "routine": 9220,
+    "padding": 953
+   }
+  },
+  "inplace_destructiveness_by_region": {
+   "copier": 0.095,
+   "routine": 0.6495,
+   "padding": 0.0412
+  },
+  "top_loss_positions_inplace": [
+   22,
+   23,
+   9,
+   7,
+   13,
+   15,
+   27,
+   30,
+   21,
+   31
+  ],
+  "inplace_destructiveness_by_pos": [
+   null,
+   0.043,
+   0.081,
+   0.079,
+   null,
+   0.102,
+   0.174,
+   1.0,
+   null,
+   1.0,
+   1.0,
+   0.035,
+   null,
+   1.0,
+   0.042,
+   1.0,
+   null,
+   0.284,
+   0.356,
+   0.909,
+   null,
+   0.992,
+   1.0,
+   1.0,
+   null,
+   0.9,
+   0.959,
+   1.0,
+   null,
+   0.841,
+   0.999,
+   1.0,
+   null,
+   0.03,
+   0.048,
+   0.039,
+   null,
+   0.045,
+   0.035,
+   0.053,
+   null,
+   0.036,
+   0.039,
+   0.049,
+   null,
+   0.04,
+   0.034,
+   0.04,
+   null,
+   0.039,
+   0.035,
+   0.03,
+   null,
+   0.038,
+   0.037,
+   0.048,
+   null,
+   0.048,
+   0.049,
+   0.04,
+   null,
+   0.044,
+   0.054,
+   0.033
+  ]
+ },
+ "ONTAPE_RND": {
+  "n": 12,
+  "established": 10,
+  "CS_peak_median": 0.32425000000000004,
+  "last_CS_gt0_median": 450.0,
+  "last_CS_gt0_all": [
+   200,
+   250,
+   350,
+   400,
+   450,
+   450,
+   450,
+   550,
+   550,
+   650
+  ],
+  "auc_median": 0.0763,
+  "final_CS_gt0": 0,
+  "max_tx_p11_ever_median": 22.0,
+  "interaction_rate_median": 0.15000000000000002,
+  "ledger": {
+   "NONCOMP_KEPT": 427094,
+   "KEPT": 15689,
+   "GAIN_COPY": 5994,
+   "LOST_INPLACE": 659,
+   "NONCOMP_CONVERTED": 312647,
+   "LOST_OVERWRITE": 5291,
+   "LOST_COPY_ERR": 44,
+   "LOST_COPY_MUT": 21,
+   "GAIN_INPLACE": 3,
+   "REPL_COMP": 371,
+   "REPL_CREATED": 5,
+   "GAIN_CREATED": 8
+  },
+  "competent_half_outcome_share": {
+   "KEPT": 0.7106,
+   "REPL_COMP": 0.0168,
+   "REPL_CREATED": 0.0002,
+   "LOST_INPLACE": 0.0298,
+   "LOST_OVERWRITE": 0.2396,
+   "LOST_COPY_ERR": 0.002,
+   "LOST_COPY_MUT": 0.001
+  },
+  "losses": 6015,
+  "gains": 6005,
+  "loss_share": {
+   "LOST_INPLACE": 0.1096,
+   "LOST_OVERWRITE": 0.8796,
+   "LOST_COPY_ERR": 0.0073,
+   "LOST_COPY_MUT": 0.0035
+  },
+  "exposure": {
+   "comp_half_interactions": 22080,
+   "comp_half_epochs": 146362,
+   "noncomp_half_interactions": 745746,
+   "noncomp_half_epochs": 4973638
+  },
+  "inter_per_epoch_comp": 0.1509,
+  "inter_per_epoch_noncomp": 0.1499,
+  "hazard_per_comp_interaction": 0.2724,
+  "hazard_per_comp_epoch": 0.0411,
+  "gain_per_comp_interaction": 0.272,
+  "exchange_GAIN_COPY_vs_LOST_OVERWRITE": [
+   5994,
+   5291
+  ],
+  "transmission": {
+   "P11": {
+    "n": 6689,
+    "P_child_comp": 0.8973,
+    "P_tape_comp": 0.9403
+   },
+   "LABEL": {
+    "n": 443,
+    "P_child_comp": 0.8194,
+    "P_tape_comp": 0.8555
+   }
+  },
+  "side": {
+   "comp_donor_side0": 6541,
+   "comp_donor_side1": 591,
+   "conv_side0_victim": 6090,
+   "conv_side1_victim": 318291
+  },
+  "loss_positions_by_region": {
+   "LOST_INPLACE": {
+    "copier": 17,
+    "routine": 673,
+    "padding": 39
+   },
+   "LOST_COPY_MUT": {
+    "copier": 1,
+    "routine": 21,
+    "padding": 1
+   },
+   "LOST_COPY_ERR": {
+    "copier": 8,
+    "routine": 46,
+    "padding": 12
+   }
+  },
+  "inplace_destructiveness_by_region": {
+   "copier": 0.081,
+   "routine": 0.6598,
+   "padding": 0.0452
+  },
+  "top_loss_positions_inplace": [
+   30,
+   13,
+   15,
+   10,
+   23,
+   22,
+   19,
+   21,
+   27,
+   31
+  ],
+  "inplace_destructiveness_by_pos": [
+   null,
+   0.0,
+   0.119,
+   0.083,
+   null,
+   0.106,
+   0.105,
+   1.0,
+   null,
+   1.0,
+   1.0,
+   0.034,
+   null,
+   1.0,
+   0.065,
+   1.0,
+   null,
+   0.275,
+   0.367,
+   0.977,
+   null,
+   1.0,
+   1.0,
+   1.0,
+   null,
+   0.81,
+   1.0,
+   1.0,
+   null,
+   0.804,
+   1.0,
+   1.0,
+   null,
+   0.0,
+   0.073,
+   0.054,
+   null,
+   0.02,
+   0.079,
+   0.05,
+   null,
+   0.02,
+   0.0,
+   0.086,
+   null,
+   0.029,
+   0.053,
+   0.023,
+   null,
+   0.047,
+   0.071,
+   0.068,
+   null,
+   0.044,
+   0.022,
+   0.082,
+   null,
+   0.024,
+   0.0,
+   0.0,
+   null,
+   0.025,
+   0.069,
+   0.103
+  ]
+ }
+}

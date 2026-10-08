@@ -266,3 +266,65 @@ established; CONST 0.15; 2000 epochs.
 - **Endogenous re-discovery is bounded by mutational SUPPLY across a valley, not by selection.**
 
 **Child:** X-REDISCOVER-SUPPLY (a supply x7 test, below).
+
+## F8. X-ONTAPE: SIGNAL. Endogenous on-tape priority maintains function; and function can become PAIR-DISTRIBUTED (EXPLORE, 36 runs + 1 replay)
+
+**Setup:** copy priority is earned only from the organism's own answers on the pair tape. The episode is fed to IN
+during the copying execution; the score is an EWMA of the first OUT's correctness; it resets on conversion. No
+offline scorer sits in the loop.
+
+**Maintenance:**
+
+| arm | maintained by the offline use ruler | final CS | on-tape correct share |
+|---|---|---|---|
+| ONTAPE | 10/10 established | 0.76-0.86 (one at 0.11) | 0.70 |
+| ONTAPE_RND | 0/10 | -- | 0.04 |
+| CT_U under ONTAPE | 0/5 use-competent | -- | 0.37 (partial credit maintains read-but-ignore behavior; never creates use) |
+| COPY_ONLY under ONTAPE | 0/4 | -- | 0.00 |
+
+**Ledger:**
+- The exchange advantage is only about 2:1 (62,759 against 30,313), against 60:1 under DIR.
+- Overwrite is still 0.50 of losses.
+- A noisy endogenous priority signal suffices.
+
+**Lower causal depth (37-62, against 95-138 under ONTAPE_RND):** consistent with reputation being age-structured.
+The score resets on conversion, so long-scored elders out-prioritize their own fresh copies. This is a hypothesis
+only; it was not separately tested.
+
+**Anomaly mined: run 44900007 collapsed from CS about 0.78 to 0.11 between epochs 1500 and 2000** (a deterministic
+replay, `mine_ontape7.py`).
+- The genomes that displaced competence are offline-INCOMPETENT (u = 0) with the HIGHEST on-tape scores (EWMA
+  0.71-0.87).
+- **Mechanism:** a single change of the JRZ offset (byte 29: 0x02 -> 0x42, +66) sends the regime-0 path out of the
+  genome:
+  - offline (alone in a scratch arena) it never answers r = 0, so u = 0;
+  - on the 128-byte pair tape the jump wraps into the PARTNER's half at byte 32, an OUT instruction in this population.
+    The invader emits its regime-0 answer by executing its partner's code;
+  - its own byte 32 is also OUT, so it works with copies of itself: on-tape homotypic use = 1.0.
+- **The function has become pair-distributed:** it is not contained in any one genome, yet it is stable in the
+  population.
+- At the same time some offline-competent genomes fail on the tape. For example `ED 02` at byte 17 is harmless
+  offline (ops disabled) but acts on the tape.
+- **Offline competence and in-context function DIVERGE once selection reads in-context behavior.**
+
+**New ruler (readout only):** tape_self = on-tape homotypic cue-flip use (fh `_tape_self`; the independent
+`arch.tape_use` agrees, test TR-1).
+
+| genome | tape_self |
+|---|---|
+| CT_UA | 1.0 |
+| CT_U | 0 |
+| COPY_ONLY | 0 |
+| the invader | 1.0 |
+
+- Against a copier partner every genome scores about 0.5: as side 1 it is overwritten before running.
+
+**Reading:**
+- The decisive ruler must match where selection acts. Under ONTAPE, the offline CS UNDERSTATES maintained function.
+  The 0.11 run is a transition to a distributed architecture, not a loss.
+- This is the first observed ARCHITECTURAL change that is not mere drift: function re-implemented across the
+  pair-tape ecology, using the partner's code.
+
+**Children:**
+- C-ONTAPE-MAINTAIN (CONFIRM, both rulers).
+- X-ONTAPE-LONG: does the distributed form spread?

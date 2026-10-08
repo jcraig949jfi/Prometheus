@@ -70,3 +70,48 @@ if __name__ == "__main__":
     for k in ("CT_UA", "CT_U", "COPY_ONLY"):
         g = fh.PLANTS[k]
         print(k, "u", _C.u(g), "robust", robustness(g)["all"], robustness(g)["by_region"], "copier", copier(g, 20))
+
+
+# ------------------------------------------------------------------------------------------------ on-tape ruler
+_TR = {}
+
+
+def _tape_runner():
+    if "r" not in _TR:
+        _TR["r"] = fh.make_runner(47_000_000, dict(epochs=1, plant=None))
+    return _TR["r"]
+
+
+def tape_answer(g, partner, side, inputs):
+    """g's first OUT when it executes on the real 128-byte pair tape (dense VM, ARENA policy, the cell's ops mask,
+    slice budget, fresh registers) with `partner` in the other half; side 0 runs first, side 1 second, exactly as in
+    world._pair_interact. Only g's context receives `inputs`."""
+    r = _tape_runner()
+    import world
+    z8 = world.z8
+    n = 64
+    tape = bytearray(128)
+    halves = (g, partner) if side == 0 else (partner, g)
+    tape[0:len(halves[0])] = halves[0]
+    tape[n:n + len(halves[1])] = halves[1]
+    out = None
+    for who, start in ((0, 0), (1, n)):
+        ctx = z8.Ctx(tape, start, n, policy=z8.ARENA, rng=random.Random(who), copy_mut_rate=0.0, sense=who,
+                     inputs=(inputs if who == side else ()))
+        z8.run(ctx, start, r.t["slice"], ops_enabled=r._ops_mask())
+        if who == side:
+            out = ctx.outputs[0] if ctx.outputs else None
+    return out
+
+
+def tape_use(g, partner, n=16, seed=fh.GATE_SEED):
+    """On-tape cue-flip USE score of g with this partner, averaged over both sides: share of matched (v, key) pairs
+    answered exactly under r = 0 and r = 1."""
+    pairs = fh.xtg2.flip_pairs(seed, n)
+    ok = 0
+    for side in (0, 1):
+        for v, key, base, e0, e1 in pairs:
+            a0 = tape_answer(g, partner, side, (v, key, 0))
+            a1 = tape_answer(g, partner, side, (v, key, 1))
+            ok += (a0 == e0 and a1 == e1)
+    return ok / (2 * n)
