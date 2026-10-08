@@ -152,6 +152,11 @@
         "utc": "2026-10-08T13:08Z",
         "rolling_24h_est_core_h": 38.5,
         "note": "foundry 26.3 + leads/pilots/known ~6.7 + chain 5.5; E2 score/report + E5-N deferred to >= 2026-10-09T05:15Z roll-off"
+      },
+      {
+        "utc": "2026-10-08T14:19Z",
+        "rolling_24h_est_core_h": 44.5,
+        "note": "E1 complete 14:18Z; nothing heavy until >= 05:15Z Oct 9"
       }
     ]
   },
@@ -201,7 +206,8 @@
     }
   },
   "dispositions": {
-    "E5H_structured_world_R8": "INSTRUMENT_UNVALIDATED (known-positive oracle control fails under W5P and under the O1 repair; first broken links CANDIDACY/SELECTION; not cheaply repairable)"
+    "E5H_structured_world_R8": "INSTRUMENT_UNVALIDATED (known-positive oracle control fails under W5P and under the O1 repair; first broken links CANDIDACY/SELECTION; not cheaply repairable)",
+    "E1": "MEASURED: SATURATION_SUPPORTED (own-start -104, 1/20/1, p 2e-6, share 0.93, end-state L_g11 388 >= L_P 363); INTERFERENCE no (-7, 2/4/16, p .44, attainable); CEILING_CONSISTENT no (cond 4; unattributed)"
   },
   "close_decision_rule": {
     "frozen_utc": "2026-10-08T13:19:59Z",
