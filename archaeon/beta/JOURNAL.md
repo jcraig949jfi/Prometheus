@@ -449,6 +449,13 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   neighbours (a position rule that is right for some pool layouts pays a little), the indexed store does not (B20
   isolated peak; B22 write and read are separate isolated steps). Keyed memory stays PARKED. CORE-HOUR TALLY since
   00:07Z: ~16.
+- B41a DIAGNOSIS: why the B35 foragers (which implement the position rule, B39) LOSE on P-boom (-.06) while the hand
+  generalist gains (+.19). On P-boom they still position-match (.97-1.0) and move when empty, but they MOVE WHILE
+  HARVESTING: 84 vs 34 moves per 16 episodes, and P-boom's hazards are lethal (1/4 death per hazard step): deaths 7/16
+  vs 1/16 (3502 never moves: 4/16, stuck). The rule transfers; the missing component is STAY-WHILE-FOOD, harmless in
+  most family worlds and lethal in a hazardous one. Next lever (B41): force lethal hazards in the training
+  distribution so that moving while harvesting carries a cost. PREDICTION: B41 elites move <= half as often while
+  food is present and reach P-boom lift >= .05 in >= 3/8 seeds.
 - BUDGET WINDOW 2026-10-08 ~00:07Z. B29 already done (not relaunched). Lease lse-fe37dd77fe7a (spectrex5:cpu12,
   3 h) for B32 replication: 12 seeds (3211-3222), 10 procs, + B32's last cell on 2 procs = 12. CORE-HOUR TALLY
   (rolling 24 h from 00:07Z): 0 at launch; est. +3-4 for the replication.
