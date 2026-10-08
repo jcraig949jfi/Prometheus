@@ -245,3 +245,24 @@ tested instead from copier backgrounds (X-REDISCOVER).
 **Weak signal (not chased yet):** q = 0.10, k = 1 splits 3/6 with final CS 0.10-0.12 among the maintained runs. This
 cell is AT the boundary, the place to measure the critical selection coefficient. It is not chased now; more seeds
 alone would not discriminate it.
+
+## F7. X-REDISCOVER: WEAK_SIGNAL. Re-discovery is supply-limited at distance 1 and absent at distance >= 2 (48 runs)
+
+**Setup:** copier-backgrounds whose routine is d operand-steps from use (CT_UA with byte 31 changed); all
+established; CONST 0.15; 2000 epochs.
+
+| distance | runs with a competence-creation root (DIR / RANDOM) | runs ending competent, final CS >= 0.10 (DIR / RANDOM) |
+|---|---|---|
+| d = 1 (0x24) | 2/6 / 4/6 | 1/6 (CS 0.95) / 0/6 |
+| d = 2, 3, 4 | 0 / 0 | 0 / 0 |
+
+- The swept d = 1 rediscovery restored byte 31 to 0x25: the SAME solution as CT_UA.
+
+**Reading:**
+- At d = 1 the creating mutation arises only 0-1 times per run (about 77k organism-interactions). Under DIR a new
+  competent mutant can sweep (1 of 2); under RANDOM it never persists.
+- From d >= 2 no creation occurs. The use ruler gives intermediates no credit (the ADD constant is ATOMIC), so a
+  two-step path needs neutral drift and a second rare event.
+- **Endogenous re-discovery is bounded by mutational SUPPLY across a valley, not by selection.**
+
+**Child:** X-REDISCOVER-SUPPLY (a supply x7 test, below).

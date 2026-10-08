@@ -209,6 +209,19 @@ declare("X-DIR-7AE3",
            for arm, pl in (("NEG_CTU_7AE3", "CT_U"), ("NEG_COPY_7AE3", "COPY_ONLY"))])
 
 
+# X-REDISCOVER-SUPPLY (EXPLORE, parent X-REDISCOVER, weak-signal child): is re-discovery SUPPLY-limited? Same plants
+#   (d = 1: 0x24; d = 2: 0x00), DIR, but CONST p = 1.0 for 2000 epochs (~2000 interactions per organism, ~7x the
+#   mutational supply of X-REDISCOVER at the same per-interaction physics). 6 seeds 45_100_000 + s each.
+#   Declared prediction (supply model): d = 1 creation in most runs and sweeps under DIR; d = 2 creation in roughly
+#   half the runs (estimate ~0.6 two-step events per run at 7x supply).
+#   Classification: SIGNAL (supply-limited, two-step reachable) if d = 2 ends competent in >= 2/6; WEAK_SIGNAL if d = 2
+#   shows any creation root but no maintained run; CLEAN_NULL if no d = 2 creation (two-step blocked beyond supply).
+SEEDS_RS = [45_100_000 + s for s in range(6)]
+declare("X-REDISCOVER-SUPPLY",
+        jobs=[("RS%d_DIR100" % d, s, dict(gate="CONST", p_const=1.0, order="DIR", plant=ct_ua_add(v)))
+              for s in SEEDS_RS for d, v in ((1, 0x24), (2, 0x00))])
+
+
 if __name__ == "__main__":
     name = sys.argv[1]
     w = int(sys.argv[2]) if len(sys.argv) > 2 else 4
