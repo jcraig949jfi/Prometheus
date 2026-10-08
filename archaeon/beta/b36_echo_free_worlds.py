@@ -33,7 +33,8 @@ def main():
     b25 = {r["seed"]: r for r in json.loads((OUT / "B25_result.json").read_text(encoding="utf-8"))["rows"] if r.get("arm") == "NOCLOCK"}
     b27 = json.loads((OUT / "B27_result.json").read_text(encoding="utf-8"))["rows"]
     spec = [b25[s]["elite_manifest"] for s in (2504, 2505, 2506)] + [r["elite_manifest"] for r in b27 if r.get("content_sensing")]
-    groups = {"B32_dist": elites(["B32_result.json", "B32rep_result.json"]), "B35_echofree": elites(["B32echofree_result.json"])}
+    groups = {"B32_dist": elites(["B32_result.json", "B32rep_result.json"]), "B35_echofree": elites(["B32echofree_result.json"]),
+              "B37_wide": elites(["B32echofree_wide_result.json"])}
     sl = {i: sum(lift(m, *worlds[i]) for m in spec) / len(spec) for i in free}
     summ = {"n_worlds": 40, "echo_solvable": 40 - len(free), "echo_free_worlds": len(free)}
     for g, ms in groups.items():
