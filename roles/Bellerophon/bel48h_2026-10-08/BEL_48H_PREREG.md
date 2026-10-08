@@ -331,3 +331,16 @@ reverted and counted). Analysis tools/analyze_w6b4.py (committed with this secti
 - X-P6: under ON + HIGH, E share > 0.5 in more seeds than < 0.5 (sign test p < 0.05) -- W5-P6 on an independent pair.
 - X-P7: at MED, E share ON < OFF in more seeds than ON > OFF (sign test p < 0.05) -- W5 block 3's post-hoc MED reversal
   turned into a confirmatory prediction on an independent pair.
+
+## 14. N1 -- operator-matched completion, predictive test of CL-17 (frozen 2026-10-08T21:54:16Z, before any run)
+
+CL-17 was found POST-HOC (precursor neighbourhoods vs completing cause). This turns it into a prediction on the SAME 55
+specimens re-placed in new worlds (not new origins: it tests the mechanism's operator dependence, not its prevalence).
+Plan tools/plan_n1.py: 440 runs, sha256 7486853d6b9ec202a4c007c56464bcf02b3e9a201219da1744fe2a71ded6b975; 39 NEEDLE
+precursors (completed by mutation, 0 move routes), 16 MOVE_RICH (completed by uptake/self-move, >= 100 move routes);
+each transplanted into its origin physics, WELL_MIXED, PAIRED init, 100 ticks, mutation VLOW vs HIGH, 4 paired seeds.
+Endpoint: a first FUNC event within 100 ticks. Analysis tools/analyze_n1.py (committed with this section).
+- N-P1: NEEDLE precursors complete more under HIGH: mean per-precursor rate difference HIGH - VLOW >= 0.20.
+- N-P2: the mutation sensitivity is larger for NEEDLE than MOVE_RICH: bootstrap (over precursors) 95% CI of
+  [NEEDLE diff - MOVE_RICH diff] lies above 0.
+- N-P3: at VLOW, MOVE_RICH completions are mostly non-mutational (UPTAKE + SELF_MOVE + BORN_ASSEMBLY > MUTATION).
