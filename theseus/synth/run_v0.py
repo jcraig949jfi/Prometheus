@@ -79,11 +79,18 @@ def _init_worker(cald):
 
 
 def _eval_job(args):
-    g, scales, tau, fp_scale, do_dark = args
+    g, scales, tau, fp_scale, do_dark = args[:5]
+    do_task = args[5] if len(args) > 5 else False
     t0 = time.process_time()
     r = bt.evaluate(g, np.asarray(scales), tau, fp_scale)
     if do_dark:
         r["dark"] = dk.assess(g, r["viable"])
+    if do_task:  # THESEUS-31c: cue-recall J as the selected quality (V 4, k 4, 200/200 episodes)
+        from . import task_system as ts
+        if do_task == "ch0":  # THESEUS-36: composition-necessary variant (sensor-only readout, k 8)
+            r["task_J"] = ts.task_J(g, V=4, k=8, n_train=200, n_test=200, seed=0, readout="ch0")["J"]
+        else:
+            r["task_J"] = ts.task_J(g, V=4, k=4, n_train=200, n_test=200, seed=0)["J"]
     r["cpu_s"] = time.process_time() - t0
     return r
 
@@ -192,7 +199,7 @@ def main(argv=None):
     ap.add_argument("--smoke", action="store_true")
     ap.add_argument("--no-law", action="store_true", help="THESEUS-28: collisions without the generated k-ary law")
     ap.add_argument("--ecology-only", action="store_true", help="stop after phase 2; export ecology rows only")
-    ap.add_argument("--quality", choices=["rep", "r5"], default="rep")
+    ap.add_argument("--quality", choices=["rep", "r5", "task", "task0"], default="rep")
     ap.add_argument("--elite-grids", default="pca,desc,resp")
     ap.add_argument("--pop-cap", type=int, default=None)
     ap.add_argument("--dark-protect-gens", type=int, default=None)
@@ -247,7 +254,7 @@ def main(argv=None):
     g0_genomes = [c["genome"] for c in corpus]
     scales = bt.calibrate_scales(g0_genomes)
     with Pool(a.workers, initializer=_init_worker, initargs=(None,)) as pool:
-        g0_ev = pool.map(_eval_job, [(g, scales.tolist(), None, None, True) for g in g0_genomes])
+        g0_ev = pool.map(_eval_job, [(g, scales.tolist(), None, None, True, {"task": True, "task0": "ch0"}.get(cfg.get("quality"), False)) for g in g0_genomes])
     pre_viable = [i for i, r in enumerate(g0_ev) if r["viable"]]
     cal = ru.build_cal([g0_ev[i]["fp"] for i in pre_viable],
                        [(g0_ev[i]["fp_seed0"], g0_ev[i]["fp_seed1"]) for i in pre_viable], scales)
@@ -321,7 +328,7 @@ def main(argv=None):
                         g, rec = co.collide([reg[p] for p in pids], tensor, cid, law=cfg["law"], aligned=cfg.get("aligned_binding", False))
                         rec.update({"lane": lane, "gen": gen, "modes": modes})
                         jobs.append((cid, pids, g, rec))
-            res = pool.map(_eval_job, [(g, cal.desc_scales.tolist(), cal.tau_rep, fp_sd, True) for (_, _, g, _) in jobs])
+            res = pool.map(_eval_job, [(g, cal.desc_scales.tolist(), cal.tau_rep, fp_sd, True, {"task": True, "task0": "ch0"}.get(cfg.get("quality"), False)) for (_, _, g, _) in jobs])
             born = {"total": 0}
             for (cid, pids, g, rec), r in zip(jobs, res):
                 eco_cpu += r["cpu_s"]
@@ -645,6 +652,8 @@ def quality_of(r, cfg):
     """QD elite quality (never novelty): v0 = reproducibility; THESEUS-27 = R5."""
     if cfg.get("quality") == "r5":
         return r5_midband(r["fp"])
+    if cfg.get("quality") in ("task", "task0"):
+        return r.get("task_J", 0.0)
     return -r["viability"]["rep_dist"]
 
 

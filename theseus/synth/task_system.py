@@ -119,13 +119,15 @@ def run_with_input(g, obs, N=N_CELLS, seed=0):
     return trace, blow
 
 
-def features(g, obs, N=N_CELLS, seed=0):
+def features(g, obs, N=N_CELLS, seed=0, readout="all"):
+    """readout="all": the whole state at the query (31a/31b). readout="ch0" (THESEUS-36): only
+    the sensor channel after the query step -- a stored cue must be RELEASED back into it."""
     tr, blow = run_with_input(g, obs, N, seed)
-    f = tr[-1].ravel()
+    f = tr[-1][0] if readout == "ch0" else tr[-1].ravel()
     return np.tanh(f), blow
 
 
-def task_J(g, V=4, k=4, n_train=400, n_test=400, seed=0, N=N_CELLS):
+def task_J(g, V=4, k=4, n_train=400, n_test=400, seed=0, N=N_CELLS, readout="all"):
     """Held-out cue-recall accuracy of a ridge readout on the program's state at the query."""
     from prometheus.cosmos.c3 import task as tk
     t = tk.Task(V=V, k=k)
@@ -134,11 +136,11 @@ def task_J(g, V=4, k=4, n_train=400, n_test=400, seed=0, N=N_CELLS):
     c2, o2 = tk.batch(t, n_test, rng)
     F1, F2, blow = [], [], False
     for row in o1:
-        f, b = features(g, row, N)
+        f, b = features(g, row, N, readout=readout)
         F1.append(f)
         blow |= b
     for row in o2:
-        f, b = features(g, row, N)
+        f, b = features(g, row, N, readout=readout)
         F2.append(f)
         blow |= b
     F1, F2 = np.array(F1), np.array(F2)
@@ -147,4 +149,4 @@ def task_J(g, V=4, k=4, n_train=400, n_test=400, seed=0, N=N_CELLS):
     B = np.hstack([(F2 - mu) / sd, np.ones((len(F2), 1))])
     W = np.linalg.solve(A.T @ A + 1.0 * np.eye(A.shape[1]), A.T @ np.eye(V)[c1])
     return {"J": float(((B @ W).argmax(1) == c2).mean()), "chance": 1.0 / V, "blowup": bool(blow),
-            "V": V, "k": k, "n_train": n_train, "n_test": n_test}
+            "V": V, "k": k, "n_train": n_train, "n_test": n_test, "readout": readout}
