@@ -18,6 +18,15 @@ net effect on persistence depends on the mutation regime: at MED it helps (8 vs 
 frozen test level), at HIGH it hurts (4 vs 10) and preserve worlds hold fewer functional organisms (median 96 vs 155):
 the same channel that completes broken copiers also overwrites working ones with chimeras. PROVISIONAL (one block).
 
+## W5 block 2 -- does target material raise the rate of replicator ORIGIN? (prereg s8; 400 runs, 0 voids, 3.03 h)
+
+200 seed-pairs, RANDOM PARTIAL WELL_MIXED, preserve vs zero, OriginWorld. First FUNC event: preserve 9/200 [2.4, 8.3%],
+zero 7/200 [1.7, 7.1%]; discordant 8 vs 6, McNemar p 0.79. W5-P4 FALSIFIED (no detectable effect; low base rate gives
+little power -- recorded as 'no effect detected at n = 200', not as absence). Causes: preserve UPTAKE 4, MUTATION 3,
+BORN_ASSEMBLY 1, SELF_CONSTRUCT 1; zero MUTATION 4, UPTAKE 1, BORN_ASSEMBLY 1, SELF_MOVE 1. Reading: target material is
+necessary for designed fragment complementation (E5b) and raises repair births (E5a), but it is not a measurable driver
+of de novo origin; the origin routes (mutation, uptake) do not need preserved target bytes.
+
 ## Mechanism records
 
 ### M1. Two-fragment complementation (heritable replicator from two non-replicating sources)
