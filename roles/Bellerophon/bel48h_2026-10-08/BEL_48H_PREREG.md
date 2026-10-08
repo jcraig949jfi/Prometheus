@@ -212,3 +212,20 @@ Discovery predictions (from the grounding round's G6 reading "short ramp ending 
 
 ERRATUM (2026-10-08T08:03:47Z): s6 says "W3a frozen 2026-10-08T08:15Z"; the freeze is commit 4995e8b45, W3a launched 2026-10-08T08:03:32Z.
 Timestamps in this file are from now on taken from the shell clock, never written by hand.
+
+### AMENDMENT 2 (2026-10-08T08:44:22Z) -- independence: seeds are shared across cells within a lane
+
+Found while reading W3a (four 'independent' origins carried the same founder machine): every plan in this campaign
+seeds a run as SEED_BASE + lane * 1e9 + k, so run k of EVERY cell in a lane starts from the SAME initial population and
+world-RNG stream (H1: 550 runs / 150 distinct seeds; W1 v2 B lanes: 2,300 runs / 400 seeds; W4: arms of a lane share k
+by design). The pattern is inherited from the grounding plan (G1: 7 cells x 400 runs on 400 seeds). Within a cell runs
+are independent; ACROSS cells they are not.
+Rules from now on (W1 v2 results not yet read; W2/W3a already reported are corrected in their reports):
+  (1) the independent unit for any claim pooled across cells is the DISTINCT SEED (initial population); pooled counts
+      are reported per run AND per distinct seed (a seed counts once, positive if positive in any of its cells), and
+      'independent origins' = distinct seeds;
+  (2) per-cell results are primary; the frozen pooled tests (W1-P4..P7) are still computed and reported, flagged
+      CLUSTER_DEPENDENT, with the per-seed version beside them;
+  (3) W4 arms that share a seed are PAIRED by construction: the frozen Fisher tests stay primary (conservative under
+      positive pairing) and an exact McNemar on seed-pairs is reported beside each;
+  (4) every NEW plan uses a distinct seed per (lane, cell, k) unless pairing is the stated design.

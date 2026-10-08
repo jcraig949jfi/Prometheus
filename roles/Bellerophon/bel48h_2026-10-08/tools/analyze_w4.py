@@ -6,7 +6,16 @@ import math
 import sys
 from collections import Counter, defaultdict
 
+from analyze_w1 import mcnemar_exact
 from analyze_w2 import fisher_greater, wilson
+
+
+def paired(xs, ys):
+    """amendment 2: arms sharing a seed are paired; exact McNemar on seed-pairs (x only, y only)."""
+    a = {r["seed"]: r["comp"]["comp_func_alive"] > 0 for r in xs}; b = {r["seed"]: r["comp"]["comp_func_alive"] > 0 for r in ys}
+    common = set(a) & set(b)
+    xo = sum(1 for s in common if a[s] and not b[s]); yo = sum(1 for s in common if b[s] and not a[s])
+    return {"pairs": len(common), "only_first": xo, "only_second": yo, "p_two_sided": mcnemar_exact(xo, yo)}
 
 
 def mann_whitney_less(x, y):
@@ -57,7 +66,7 @@ def main(res_path, out_path):
     a = sum(map(end, on)); c = sum(map(end, off))
     p = fisher_greater(a, len(on) - a, c, len(off) - c) if on and off else None
     rate_on = a / len(on) if on else 0; rate_off = c / len(off) if off else 0
-    out["W4-P1"] = {"ON": [a, len(on)], "OFF": [c, len(off)], "p_one_sided": p,
+    out["W4-P1"] = {"mcnemar_paired": paired(on, off), "ON": [a, len(on)], "OFF": [c, len(off)], "p_one_sided": p,
                     "verdict": "HOLDS" if p is not None and p < 0.05 else ("FALSIFIED" if rate_on <= rate_off + 0.02 else "SIGNAL_WEAK")}
     m2 = {arm: by[("M2", arm)] for arm in ("ON", "OFF", "SHUFFLED")}
     k = {arm: sum(map(end, v)) for arm, v in m2.items()}
@@ -68,7 +77,8 @@ def main(res_path, out_path):
     holm = {}
     for i, (ctl, pv) in enumerate(srt):
         holm[ctl] = None if pv is None else round(min(1.0, pv * (len(srt) - i)), 6)
-    out["W4-P2"] = {"counts": {a_: [k[a_], len(v)] for a_, v in m2.items()}, "p": ps, "p_holm": holm,
+    out["W4-P2"] = {"mcnemar_paired": {ctl: paired(m2["ON"], m2[ctl]) for ctl in ("OFF", "SHUFFLED")},
+                    "counts": {a_: [k[a_], len(v)] for a_, v in m2.items()}, "p": ps, "p_holm": holm,
                     "holds": all(v is not None and v < 0.05 for v in holm.values())}
     doms = [r["comp"]["dominant"] for r in on if end(r) and r["comp"].get("dominant")]
     out["W4-P3"] = {"classes": dict(Counter(cls_repair(d) for d in doms)), "n": len(doms)}

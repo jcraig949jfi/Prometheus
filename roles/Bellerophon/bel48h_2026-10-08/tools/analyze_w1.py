@@ -65,7 +65,7 @@ def main(res_path, out_path):
     per = {}
     b1_res = b1_trb = 0; b1_n = 0; mc_b = mc_c = 0
     sus_hist = sus_trb = 0; spont_trb_runs = 0
-    g6 = [0, 0]
+    g6 = [0, 0]; trb_seeds = set()
     for c, rs in sorted(cells.items()):
         n = len(rs)
         sres = [r["dual"]["B"].get("sr_res", 0) > 0 for r in rs]
@@ -94,18 +94,31 @@ def main(res_path, out_path):
         if c.startswith(("B1:", "B2:")):
             for r, t, hs, ts in zip(rs, strb, hist_sus, trb_sus):
                 if t:
+                    trb_seeds.add(r["seed"])
                     spont_trb_runs += 1; sus_hist += hs; sus_trb += ts
                     ft = r["dual"]["first"].get("trb") or {}
                     g6[1] += 1; g6[0] += ft.get("writer_mech", "init") != "init"
     out["cells"] = per
-    out["W1-P5"] = {"spont_res": [b1_res, b1_n], "spont_trb": [b1_trb, b1_n], "wilson_trb": wilson(b1_trb, b1_n),
+    out["W1-P5"] = {"flag": "CLUSTER_DEPENDENT (amendment 2)", "spont_res": [b1_res, b1_n], "spont_trb": [b1_trb, b1_n], "wilson_trb": wilson(b1_trb, b1_n),
                     "mcnemar_only_res": mc_b, "only_trb": mc_c, "p": mcnemar_exact(mc_b, mc_c),
                     "holds": b1_trb > 0 and (wilson(b1_trb, b1_n)[0] or 0) > 0 and mc_c == 0,
                     "per_cell_G1_survives": {c[3:]: per[c]["spont_trb"] >= 1 for c in per if c.startswith("B1:")}}
+    # amendment 2: the same tests clustered by DISTINCT SEED (runs of different cells share an initial population)
+    seed_res = defaultdict(bool); seed_trb = defaultdict(bool)
+    for c, rs in cells.items():
+        if c.startswith("B1:"):
+            for r in rs:
+                seed_res[r["seed"]] |= r["dual"]["B"].get("sr_res", 0) > 0
+                seed_trb[r["seed"]] |= r["dual"]["B"].get("trb", 0) > 0
+    sb = sum(1 for s_ in seed_res if seed_res[s_] and not seed_trb[s_]); sc = sum(1 for s_ in seed_res if seed_trb[s_] and not seed_res[s_])
+    out["W1-P5_by_seed"] = {"seeds": len(seed_res), "spont_res": sum(seed_res.values()), "spont_trb": sum(seed_trb.values()),
+                            "wilson_trb": wilson(sum(seed_trb.values()), len(seed_res)), "only_res": sb, "only_trb": sc,
+                            "p": mcnemar_exact(sb, sc), "note": "amendment 2: unit = distinct initial population"}
     out["W1-P6"] = {"spont_trb_runs": spont_trb_runs, "sustained_hist": sus_hist, "sustained_trb": sus_trb,
                     "rates": [round(sus_hist / spont_trb_runs, 4), round(sus_trb / spont_trb_runs, 4)] if spont_trb_runs else None,
                     "holds": abs(sus_hist - sus_trb) / spont_trb_runs <= 0.10 if spont_trb_runs else "NOT_TESTABLE"}
-    out["W1-P7"] = {"copy_born_first_trb_writers": g6, "holds": (g6[0] / g6[1] >= 0.9) if g6[1] else "NOT_TESTABLE"}
+    out["W1-P6"]["flag"] = "CLUSTER_DEPENDENT (amendment 2)"; out["W1-P6"]["distinct_seeds_spont_trb"] = len(trb_seeds)
+    out["W1-P7"] = {"flag": "CLUSTER_DEPENDENT (amendment 2)", "copy_born_first_trb_writers": g6, "holds": (g6[0] / g6[1] >= 0.9) if g6[1] else "NOT_TESTABLE"}
     # ---- controls ----------------------------------------------------------------------------------------------------------
     ctl = {}
     for c in ("pos_seeded_replicator", "cheat_bare_ldir", "cheat_smear", "cheat_capture_partial"):

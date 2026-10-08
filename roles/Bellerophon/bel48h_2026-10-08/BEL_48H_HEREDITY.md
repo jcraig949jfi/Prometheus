@@ -17,8 +17,12 @@ every measurement below is a hook proven not to change the trajectory (tests/tes
 | W2-P5 | COPY physics blocks the 2-byte complementation | 97/100 COPY/AB runs with 0 causal-assembly events | HOLDS |
 | W2-P6 | B-only and no-fragment worlds reach FUNC in <= 5/100 | B 6/100, none 8/100 | FALSIFIED (narrowly) |
 
-Independent origins: 27 of 550 fresh random H1 runs produced a FUNC tape (COPY/Z80 7/150, PARTIAL 11/150, PAIR 7/150,
-VM_COPY 2/100); each run is one independent origin. H2: 100 independent worlds per arm.
+Independent origins (CORRECTED by prereg amendment 2): 27 of 550 H1 runs produced a FUNC tape (COPY/Z80 7/150,
+PARTIAL 11/150, PAIR 7/150, VM_COPY 2/100), but the four H1 cells share seeds (run k of every cell starts from the same
+initial population): the 27 runs come from 21 DISTINCT initial populations. Per distinct seed, W2-P1 reads: 3/21 seeds
+with any BORN origin (2/21 with only BORN origins) -- the falsification stands. W2-P2's Fisher test treated the PARTIAL
+and COPY cells as independent; they share seed k = 31 (the same founder near-replicator, see W3a); its verdict (no
+difference, both near ceiling) is unchanged. H2: 100 worlds per arm, arms paired by seed by design (PAIRED init).
 
 ## 2. What the corrected rulers show
 
