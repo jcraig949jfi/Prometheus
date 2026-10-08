@@ -592,6 +592,17 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   the memory organ is NOT ADOPTED even when store/read-by-key are single instructions. Leaning toward "the wall is
   WIRING (route the tag/value registers into the organ on the right tick kinds), not the primitive". Full B53 (16
   cells, KV vs stock) launches at the window (one-shot trigger 00:11Z).
+- B54 STAGED + PREVIEW: sensory-binding organ (VM binds kv[word1] = word2 on every tick with >= 3 words, generic; LDK
+  reads; no STK). Controls exact: 4-instruction straight-line reader (IN; IN tag; LDK r, tag; OUT r) 1.000 at K2-K8 on
+  the binding VM (~.03 stock). Light preview (2 seeds, G=300): 0/2 keyed; both on the one-value shelf; LDK used 0 times.
+  Even with the WRITE done by the organism's body and the READ a straight line, the read is not found.
+  HYPOTHESIS (named, mine): a WIRING WALL. From the shelf the reader needs a 3-instruction data-flow chain coupled by
+  matched REGISTER NAMES (tag -> rX; LDK rY, rX; OUT rY); each link alone is silent (unused LDK) or harmful (OUT of an
+  empty register), the same shape as every unreached memory solution here (B02 slots, B20/B22 indexed store, B47
+  update, B51 pair bloat). Test next window: B54 full (8 seeds) + a variant where LDK reads by the tick's 2nd word
+  IMPLICITLY (LDK r_a: r_a = kv[inputs[0][1]]) -- a 2-link chain (LDK; OUT) -- and a 1-link variant (OUTK: output
+  kv[word1] directly). PREDICTION: reach rate rises sharply as the chain shortens (1-link >= 6/8, 2-link >= 3/8, 3-link
+  <= 1/8).
 - PLAN FOR THE NEXT WINDOW (opens ~2026-10-09 00:07Z; lease spectrex5:cpu12, <= 12 procs, <= 48 core-h):
   1. REPRESENTATION lever for the memory law (the one lever not yet tried): a KV-store organism (two opcodes replacing
      RND/YIELD: STK r_key, r_val writes a hidden dict; LDK r_dst, r_key reads it). Question: is keyed memory reached
