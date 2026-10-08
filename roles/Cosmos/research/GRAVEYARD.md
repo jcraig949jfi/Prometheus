@@ -57,6 +57,37 @@ tolerance 0.10.
 - fragments: the only admitted coordinate is a task covariate (the delay). The structural lesson recurs from C0 (R-0001/2): coordinates built from the certificate's own construction re-derive the certificate. Any successor needs representation-invariant, family-balanced quantities AND a preregistered requirement to beat the zero-parameter definition rung. The reviewers warn that invariance pushes such quantities back onto the P1/P2 rung, which is an open tension, recorded for T-A1/T-E1.
 - disposition: 2026-09-30 operator: C3 CLOSED / KILLED BEFORE HOLDOUT. Preserve as a scientific scar. Do not revive, re-tune or reinterpret the REJECT as an invitation to repair. D2 was never spent. Autopsy: research/reviews/AUTOPSY_C3_PUBLIC_2026-09-30.md (public) and the local branch cosmos/c3-autopsy-2026-09-30 (withheld).
 
+### G-0007 | C4 | C4-L-0003 (LOCAL linear-Gaussian composition; local Fisher memory curve), theta -4.3144
+- law: FUNCTIONAL (Certificate A) iff log d2 > -4.3144, d2 = mean pairwise Mahalanobis discriminability of the cue at
+  the readout, composed from the one-step LOCAL description (J, B, Q, C; sysid_local.local_lgss). Prereg:
+  roles/Cosmos/c4/prereg/EXP-01_LOCAL_DISCOVERY.md ADDENDUM 1 (cosmos/c4-v03).
+- campaign: C4 (48H_2026-10-08), DISCOVERY only; no confirmation data was ever created.
+- killed_by: EXP-03 (prereg EXP-03_NEW_FAMILY_TRANSFER.md): on cosmos_phase, a mechanism the law had never seen,
+  BA .556 (< .70 rule). Before that it had survived EXP-01 (rnn 1.00, graph .86; stig FAILED, foreign family
+  uninformative) and EXP-02 (challenge worlds incl. the FOREIGN family, frozen theta: graph .97, rnn 1.00,
+  sediment .96).
+- evidence: c4/results/EXP-03_verdict.txt, EXP-03_phase_b2.jsonl; earlier EXP-01/EXP-02 results.
+- failure shape: (1) stig (moving-sensor reachability): ordinal signal absent (Spearman .14), three explanations
+  refuted; (2) cosmos_phase (nonlinear phase coding on a circle): Spearman .32 with the frozen resample
+  perturbation, .55 with an infinitesimal Jacobian (diagnostic) -> mainly SCIENTIFIC (linear local composition does
+  not carry phase-coded memory; consistent with the memory-nonlinearity trade-off, Dambre et al. 2012) plus a
+  partial INSTRUMENT_DEFECT (finite resample perturbations on curved state).
+- fragments: within the near-linear (rnn), threshold (graph) and transport (sediment) families the local FMC ORDERS
+  worlds well (Spearman .65-.99) but is not calibrated across them. The vocabulary restriction that killed F1
+  (one controlled step) is compatible with prediction; it is the LINEAR composition that fails.
+- disposition: dead as a cross-substrate law. Not re-tuned. A nonlinear local composition is a NEW candidate with a
+  new id and fresh data.
+
+### G-0008 | C4 | C4-L-0004 ("common usability boundary in local-FMC units"), theta -1.9992 on USABLE-under-B
+- law: USABLE (B, excess >= .10) iff log d2 > -2.0, with a boundary common to all families (sharpness may differ).
+  Shaped by several looks at EXP-01/02 discovery data (EXP-02_RESULT.md point 4).
+- killed_by: EXP-03 on cosmos_phase: BA .488 (below the k-only baseline .656); the family's own boundary sits at
+  log d2 -7.75 against the predicted -2.0 +- 1.0.
+- fragments: the B-label boundary collapse for graph / rnn / sediment (-3.6 / -3.6 / -4.0) was real in discovery
+  data and did not transfer to a fourth mechanism: three agreeing families were not enough.
+- disposition: dead. The lesson is about EVIDENCE, not physics: a boundary shared by three families is a
+  candidate, never a law, until a family the law has not seen agrees.
+
 ## Cross-entry note (a pattern, not yet a claim)
 The atom C - G exp(-N) <= t appears in 3 FAILED laws (G-0002, G-0003, G-0005) and in SURVIVED law B.
 Law A carries the related C - (G + exp(-N)) instead. There is an explanation that makes this

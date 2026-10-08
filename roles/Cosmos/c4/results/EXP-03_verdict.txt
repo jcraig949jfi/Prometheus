@@ -1,0 +1,9 @@
+rows 60 A classes {'FUNCTIONAL': 45, 'PASSIVE': 2, 'INDETERMINATE': 9, 'NONE': 3, 'INCOHERENT': 1} T3 {'FUNCTIONAL': 60}
+USABLE-B 17 / 60
+L-0004 BA 0.488 | T2a 0.656 | T3 0.500 | informative(>=10/class) ['phase']
+phase own boundary (USABLE-B) log d2 = -7.75 ; predicted -2.0 +- 1.0 own-threshold BA 0.702
+L-0003 (A FUNCTIONAL, determinate n=50) BA 0.556
+Spearman(log d2, B excess) 0.32
+VERDICTS: L-0004 out-of-family: FAILED | boundary claim: FAILED | L-0003: FAILED
+DIAG resample q=.05 (as frozen) : Spearman(log d2, B excess) = 0.32
+DIAG small Gaussian kick 1e-2 (diagnostic) : Spearman(log d2, B excess) = 0.55
