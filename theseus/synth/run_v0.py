@@ -198,6 +198,7 @@ def main(argv=None):
     ap.add_argument("--dark-protect-gens", type=int, default=None)
     ap.add_argument("--elite-protect-k", type=int, default=None)
     ap.add_argument("--seed-select", type=float, default=0.0)
+    ap.add_argument("--cond-ops", action="store_true", help="THESEUS-30d: random rules may draw conditional ops")
     a = ap.parse_args(argv)
     cfg = copy.deepcopy(CONFIG)
     cfg["gens"] = a.gens
@@ -211,6 +212,8 @@ def main(argv=None):
     cfg["dark_protect_gens"] = a.dark_protect_gens
     cfg["elite_protect_k"] = a.elite_protect_k
     cfg["seed_select"] = a.seed_select
+    cfg["cond_ops"] = bool(a.cond_ops)
+    sb.COND_ENABLED = cfg["cond_ops"]
     if a.smoke:
         cfg.update(gens=min(a.gens, 7), per_cell=1, n_oneshot_per_arity=12, n_random=12, n_weird=6, n_neutral=6,
                    n_hidden_known=4, reproduce_top={k: 2 for k in cfg["reproduce_top"]}, lens_marginal_sample=6)

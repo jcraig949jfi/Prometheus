@@ -112,11 +112,14 @@ def main(argv=None):
     ap.add_argument("--workers", type=int, default=4)
     ap.add_argument("--n", type=int, default=120)
     ap.add_argument("--controls-only", action="store_true")
+    ap.add_argument("--ref", default=None, help="run tag whose arms are scanned (default v0_1)")
     a = ap.parse_args(argv)
     out = f"theseus/runs/{a.tag}"
     os.makedirs(out, exist_ok=True)
     ctl = controls(np.random.default_rng(20261008))
     jobs = [("CTL:" + r["class"], r["id"], r["genome"], r) for r in ctl]
+    if a.ref:
+        cp.REF = a.ref
     if not a.controls_only:
         arms = cp.load_arms(np.random.default_rng(20261008), a.n)  # identical sample to 23b / 30b
         jobs += [(arm, r["id"], r["genome"], None) for arm in cp.ARMS for r in arms[arm]]
@@ -131,7 +134,7 @@ def main(argv=None):
         if meta and meta["class"] == "neg_recall":
             row["writer_recall_pair_found"] = meta["wr_pair"] in x["pairs"]
         rows.append(row)
-    summ = {"wall_s": round(time.time() - t0, 1), "cpu_s": round(sum(x["cpu_s"] for x in res), 1), "groups": {}}
+    summ = {"ref": cp.REF, "wall_s": round(time.time() - t0, 1), "cpu_s": round(sum(x["cpu_s"] for x in res), 1), "groups": {}}
     for grp in sorted({r["group"] for r in rows}):
         rs = [r for r in rows if r["group"] == grp]
         s = {"n": len(rs), "with_composition": sum(r["has_composition"] for r in rs),
