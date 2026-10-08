@@ -121,18 +121,20 @@ def main(argv):
     G_ = int(argv[0]) if argv else 300
     workers = int(argv[1]) if len(argv) > 1 else 12
     seeds = int(argv[2]) if len(argv) > 2 else 4
+    first = int(argv[3]) if len(argv) > 3 else 3201
+    tag = argv[4] if len(argv) > 4 else ""
     rows = []
     with ProcessPoolExecutor(max_workers=workers) as ex:
-        futs = {ex.submit(cell, {"seed": 3201 + s, "G": G_}): s for s in range(seeds)}
+        futs = {ex.submit(cell, {"seed": first + s, "G": G_}): s for s in range(seeds)}
         for f in as_completed(futs):
             try:
                 r = f.result()
             except Exception as e:                    # noqa: BLE001
-                r = {"seed": 3201 + futs[f], "error": repr(e)[:300]}
+                r = {"seed": first + futs[f], "error": repr(e)[:300]}
             rows.append(r)
-            with open(OUT / "B32_cells.jsonl", "a", encoding="utf-8") as fh:
+            with open(OUT / ("B32%s_cells.jsonl" % tag), "a", encoding="utf-8") as fh:
                 fh.write(json.dumps({k: v for k, v in r.items() if k != "elite_manifest"}) + chr(10))
-    (OUT / "B32_result.json").write_text(json.dumps({"probe": "B32", "G": G_, "controls": controls(), "rows": rows}, indent=1), encoding="utf-8")
+    (OUT / ("B32%s_result.json" % tag)).write_text(json.dumps({"probe": "B32", "G": G_, "controls": controls(), "rows": rows}, indent=1), encoding="utf-8")
     return 0
 
 
