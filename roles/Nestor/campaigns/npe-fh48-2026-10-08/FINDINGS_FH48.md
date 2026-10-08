@@ -381,3 +381,17 @@ ties them; only their mutational leak differs. The plant slot alternates by seed
   routine, so "robustness" here means a smaller destructive mutational target, not a separately measured property.
 
 **Child:** C-ARCH-COMPETE (fresh seeds, frozen).
+
+## Defects (continued)
+
+**DEF-FH-3 (instrument; it invalidated a declared horizon):** world.Runner applies
+`t["epochs"] = min(t["epochs"], max_epochs)`, so `epochs` above the tier's 2000 was silently capped.
+- X-DIR-LONG (declared 8000 epochs) ran its first 5 jobs at 2000 epochs. They were caught from the row timings
+  (about 270-440 s, against an expected 1000-2000 s).
+- Queue 2 and its workers were stopped. The 5 rows are quarantined in runs/X-DIR-LONG_INVALID_DEF-FH-3/ and are not
+  used.
+- Repaired: fh extends `r.t["epochs"]` explicitly. Regression: LE-1. The old behavior is the failing case, as the
+  production rows show.
+- X-DIR-LONG is re-queued unchanged.
+- X-ONTAPE-LONG (6000) had not started; it will run with the fix.
+- No completed 2000-epoch experiment is affected: their declared horizon equals the cap.

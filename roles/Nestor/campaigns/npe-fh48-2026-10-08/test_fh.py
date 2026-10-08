@@ -125,6 +125,13 @@ def test_tr1_tape_ruler_matches_independent_and_controls():
     assert r._tape_self(fh.PLANTS["CT_U"]) == 0.0 and r._tape_self(fh.PLANTS["COPY_ONLY"]) == 0.0
 
 
+def test_le1_long_horizon_not_capped():
+    """DEF-FH-3 regression: epochs above the tier's 2000 must be honoured (old: silently capped at 2000)."""
+    assert fh.make_runner(SEED, dict(epochs=8000)).t["epochs"] == 8000
+    assert fh.make_runner(SEED, dict(epochs=50)).t["epochs"] == 50
+    assert fh.make_runner(SEED, dict()).t["epochs"] == 2000
+
+
 def test_ms1_scales():
     r = fh.make_runner(SEED, dict(epochs=2, mut_scale=0.5, copy_scale=3.0))
     assert abs(r.mut_rate - 0.001) < 1e-12 and abs(r.copy_mut - 0.006) < 1e-12

@@ -408,6 +408,10 @@ def make_runner(seed, cfg=None):
                     self.dom_series.append({"e": e, "g": h, "n": cnt[h], "families": len(cnt)})
 
     r = FH(cell, seed, tier=a["tier"], max_epochs=cfg["epochs"], **kw)
+    if cfg["epochs"] and cfg["epochs"] > r.t["epochs"]:
+        # DEF-FH-3: world.Runner caps max_epochs at the tier's epoch count (min(...)), so a longer horizon was
+        # silently ignored. run() loops over self.t["epochs"]; extend it explicitly.
+        r.t["epochs"] = cfg["epochs"]
     assert r.d["has_task"] and r.cell["environment"] == "STATIC" and r.spec.cue_index() == 2
     return r
 
