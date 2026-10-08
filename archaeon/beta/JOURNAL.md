@@ -40,6 +40,7 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
 | B32 | fresh random world each generation -> invariant sensing? | SUPPORTED_WITHIN_FAMILY: B34 paired +.048, 33/39 worlds, p<1e-5 (vs best specific: small); partly echo |
 | B35/B36 | echo-free world distribution; compare on echo-free worlds | YES: paired +.050 (23/5, p=.0009); specific .002; not pass-through |
 | B37/B38 | wider distribution (delayed allowed) -> named-world transfer? | NO: named transfer ~0; family transfer collapses (+.009, p=.18) -- delayed worlds dilute |
+| B39 | what rule do the transferable foragers implement? | 6/8 = the INVARIANT rule (harvest index = position of non-empty pool .77-.92; move when empty) |
 | B30 | do foragers carry state across ticks? | YES: 6/7 content sensors use state; blind ones in rewarding worlds 5/5 |
 | B31 | what do they remember? | 2504: 1-register direction memory; others computed state (not past observations) |
 | B17 | forced perception (echo on PUT) opens the 2-value wall? | staged; controls pass |
@@ -424,6 +425,16 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   KILLED: "widening the distribution to delayed worlds opens transfer to the named worlds". Delayed worlds DILUTE the
   gradient: there the content rule does not pay (B27 hand controls; harvest lands after moving), so mixing them in
   degrades both family and named-world transfer. CORE-HOUR TALLY since 00:07Z: ~11.
+- B39 MECHANISM OF THE TRANSFERABLE FORAGERS (8 B35 elites, 5 echo-free unfiltered held-out worlds; evaluation only):
+  on ticks with exactly ONE non-empty local pool word, the harvest index equals that word's POSITION in 85-92% of
+  311-503 ticks for 6/8 elites (3504 .89, 3501 .85, 3502 .77, 3506 .92, 3503 .81, 3508 .83; chance 1/R ~ .2-.5);
+  move-when-all-empty 1.00 for most (3502 .52, 3508 .58). 3505 (.52) and 3507 (.25) do not. Per-word ablation flags
+  mostly word 0 only (a position rule loses little when one rarely-non-empty word is zeroed), so the action table is
+  the better evidence.
+  VERDICT: 6/8 evolved transferable foragers approximately implement the INVARIANT RULE "harvest the non-empty pool by
+  position; move when empty" -- the same rule as the hand generalist, which fixed-world (B28) and paired-world (B29)
+  training never produced. Closes the abstraction question WITHIN the family: the general solution IS reachable when
+  the world distribution removes the payoff of world-specific mappings.
 - BUDGET WINDOW 2026-10-08 ~00:07Z. B29 already done (not relaunched). Lease lse-fe37dd77fe7a (spectrex5:cpu12,
   3 h) for B32 replication: 12 seeds (3211-3222), 10 procs, + B32's last cell on 2 procs = 12. CORE-HOUR TALLY
   (rolling 24 h from 00:07Z): 0 at launch; est. +3-4 for the replication.
