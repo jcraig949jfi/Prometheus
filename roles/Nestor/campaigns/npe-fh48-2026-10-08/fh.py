@@ -8,6 +8,9 @@ ADD37, pop 256, tier M) with these declared coordinates, each defaulting to XTG-
             SHUF   same formula, u read from two OTHER random live organisms (rate-matched, competence-blind)
             CONST  p = p_const for every pair (competence-blind)
   order     RANDOM side assignment (world default: shuffled list, alive[i] runs first = side 0)
+            ONTAPE each side's pair-tape execution receives a task episode on IN (private RNG); its first OUT is
+                   scored; an organism's EWMA of on-tape correctness (alpha 0.3; reset when its half is converted,
+                   then set from the copy's own answer) orders the pair like DIR. ONTAPE_RND: same inputs, random order.
             VETO   order stays random; a pair whose side 0 is LESS competent than side 1 is skipped (prob q_dir)
             DIR    after the gate, the pair is ordered so the higher-u organism is side 0 (runs first) with
                    probability q_dir; ties keep the random order. Interaction COUNT is unchanged by order.
@@ -57,7 +60,7 @@ from xtg2 import COMP_MIN, GATE_SEED, HELD_SEED, UseCache, PLANTS  # noqa: E402,
 
 L = 64
 TRAJ_EARLY, TRAJ_EVERY = 10, 50          # snapshot every 10 epochs to epoch 300, then every 50
-DEFAULT = dict(extra_plants=None, gate="TG", order="RANDOM", q_dir=1.0, p_const=0.15, gate_floor=0.15, mut_scale=1.0, copy_scale=1.0,
+DEFAULT = dict(ontape_alpha=0.3, extra_plants=None, gate="TG", order="RANDOM", q_dir=1.0, p_const=0.15, gate_floor=0.15, mut_scale=1.0, copy_scale=1.0,
                plant="CT_UA", n_plants=1, epochs=None, ledger=True)
 
 
@@ -74,6 +77,7 @@ def make_runner(seed, cfg=None):
     cache = UseCache()
     shuf_rng = random.Random(seed * 1_000_003 + 17)
     dir_rng = random.Random(seed * 1_000_003 + 29)
+    ep_rng = random.Random(seed * 1_000_003 + 41)      # on-tape episodes (ONTAPE orders), private
     F = cfg["gate_floor"]
 
     class FH(Base):
@@ -96,6 +100,8 @@ def make_runner(seed, cfg=None):
             self.loss_examples = []
             self.ledger_series = []
             self.dom_series = []
+            self.ontape = {}                 # Org -> EWMA of on-tape answer correctness (ONTAPE orders)
+            self.ontape_n = [0, 0]
             base = self.mut_rate                                   # world: copy_mut == mut_rate (0.002, LOW)
             self.mut_rate = base * cfg["mut_scale"]
             self.copy_mut = base * cfg["copy_scale"]
@@ -175,6 +181,11 @@ def make_runner(seed, cfg=None):
                     ua, ub = self._u(a_), self._u(b_)
                     if ub > ua and dir_rng.random() < cfg["q_dir"]:
                         a_, b_ = b_, a_
+                elif cfg["order"] in ("ONTAPE", "ONTAPE_RND"):
+                    if cfg["order"] == "ONTAPE":
+                        sa, sb = self.ontape.get(a_, 0.0), self.ontape.get(b_, 0.0)
+                        if sb > sa and dir_rng.random() < cfg["q_dir"]:
+                            a_, b_ = b_, a_
                 elif cfg["order"] == "VETO":
                     # defensive asymmetry: order stays random; a pair whose first mover is LESS competent than the
                     # second is skipped with probability q_dir (the competent half cannot be overwritten by it)
@@ -202,14 +213,43 @@ def make_runner(seed, cfg=None):
                 return out
             self._mutate = m
             nlin = len(self.lineage)
+            ontape = cfg["order"] in ("ONTAPE", "ONTAPE_RND")
+            if ontape:
+                eps = []
+                for _side in (0, 1):
+                    v, key, rr = ep_rng.randrange(256), ep_rng.randrange(1, 256), ep_rng.randrange(2)
+                    base_ = (v ^ key) & 0xFF
+                    eps.append(((v, key, rr), base_ if rr == 0 else (base_ + 37) & 0xFF))
+                z8m = world.z8
+                CtxOrig = z8m.Ctx
+                made = []
+
+                def Inj(*aa, **kk):
+                    if len(made) < 2:
+                        kk["inputs"] = eps[len(made)][0]
+                    c = CtxOrig(*aa, **kk)
+                    if len(made) < 2:
+                        made.append(c)
+                    return c
+                z8m.Ctx = Inj
             try:
                 super()._pair_interact(i, a_, b_)
             finally:
+                if ontape:
+                    z8m.Ctx = CtxOrig
                 if had:
                     self._mutate = inner
                 else:
                     del self._mutate
             assert len(calls) >= 2, calls
+            if ontape:
+                al = cfg["ontape_alpha"]
+                for side, o in enumerate((a_, b_)):
+                    c = made[side]
+                    ok = 1.0 if (c.outputs and c.outputs[0] == eps[side][1]) else 0.0
+                    prev = 0.0 if o.oid != pre[o][0] else self.ontape.get(o, 0.0)   # a converted half starts over
+                    self.ontape[o] = (1 - al) * prev + al * ok
+                    self.ontape_n[int(ok)] += 1
             tape = {a_: calls[0][0], b_: calls[1][0]}
             births = {e["child"]: e for e in self.lineage[nlin:] if e["kind"] == "birth"}
             for side, o in enumerate((a_, b_)):
@@ -358,7 +398,7 @@ def summarize(r, out):
         "depth": out["max_causal_replication_depth"], "p11_events": out["p11_events"],
         "pairs": r.n_pairs, "interactions": r.n_inter, "interaction_rate": round(r.n_inter / max(1, r.n_pairs), 4),
         "ledger": r.led, "tx": r.tx, "side": r.side, "exposure": r.exposure,
-        "n_mut_on_comp": r.n_mut_on_comp, "roots": _count(x["kind"] for x in r.roots),
+        "n_mut_on_comp": r.n_mut_on_comp, "ontape_correct_wrong": [r.ontape_n[1], r.ontape_n[0]], "roots": _count(x["kind"] for x in r.roots),
         "traj": t, "cfg": _jsonable(r.cfg),
     }
     detail = {"pos_loss": r.pos_loss, "pos_mut_on_comp": r.pos_mut_on_comp, "loss_examples": r.loss_examples,

@@ -81,6 +81,39 @@ def test_js1_bytes_plant_row_serializes():
     assert json.loads(open(d + "/JS_%d.json" % SEED).read())["cfg"]["plant"]["hex"] == exp.ct_ua_add(0x24).hex()
 
 
+def _ontape_rate(plant, n=80, side=0):
+    import random
+    rng = random.Random(46_000_000)
+    ok = tot = conv_ok = conv_tot = 0
+    for k in range(n):
+        r = fh.make_runner(46_000_000 + k, dict(epochs=1, plant=None, order="ONTAPE", gate="CONST", p_const=1.0))
+        a = r._place(fh.PLANTS[plant], 0, niche=0)
+        b = r._place(bytes(rng.randrange(256) for _ in range(64)), 1, niche=0)
+        r._init_state()
+        r._mutate = lambda x: bytes(x)
+        before = list(r.ontape_n)
+        oid = b.oid
+        r._pair_interact(0, a, b)
+        ok += r.ontape.get(a, 0) > 0
+        tot += 1
+        if b.oid != oid:
+            conv_tot += 1
+            conv_ok += r.ontape.get(b, 0) > 0
+    return ok / tot, conv_ok / max(1, conv_tot)
+
+
+def test_ot1_ontape_known_answers():
+    """ONTAPE ruler: CT_UA answers correctly on the tape (donor and its fresh copy); CT_U ~ half (r = 0 only);
+    COPY_ONLY never; the offline scorer is not used."""
+    ua, ua_copy = _ontape_rate("CT_UA")
+    u, _ = _ontape_rate("CT_U")
+    co, _ = _ontape_rate("COPY_ONLY")
+    print("ontape CT_UA", ua, "copy", ua_copy, "CT_U", u, "COPY_ONLY", co)
+    assert ua >= 0.95 and ua_copy >= 0.85, (ua, ua_copy)
+    assert 0.3 <= u <= 0.7, u
+    assert co == 0.0, co
+
+
 def test_ms1_scales():
     r = fh.make_runner(SEED, dict(epochs=2, mut_scale=0.5, copy_scale=3.0))
     assert abs(r.mut_rate - 0.001) < 1e-12 and abs(r.copy_mut - 0.006) < 1e-12

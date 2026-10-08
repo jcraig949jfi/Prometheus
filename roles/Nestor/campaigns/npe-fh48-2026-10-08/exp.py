@@ -174,6 +174,25 @@ declare("X-ARCH-COMPETE",
               for s in SEEDS_AC for k in (1, 4)])
 
 
+# X-ONTAPE (EXPLORE, parent C-DIR-MAINTAIN): ENDOGENOUS ruler. Can function be maintained when copy priority is earned
+#   from the organism's OWN on-tape answers (task episode fed to IN during the pair-tape execution in which copying
+#   happens; first OUT scored; EWMA alpha 0.3, reset on conversion) instead of an offline scorer? No world-side
+#   ruler is consulted. Known answers (OT-1): on-tape correctness CT_UA 0.99 (fresh copy 0.95), CT_U 0.54, COPY_ONLY 0.
+#   Arms: ONTAPE (q 1) vs ONTAPE_RND (same inputs, random order), CT_UA, CONST 0.15, 2000 epochs, 12 seeds
+#   44_900_000 + s; negatives under ONTAPE: CT_U and COPY_ONLY, 6 seeds. Readout: final CS by the frozen USE ruler
+#   (offline, readout only), on-tape correctness counts, last-CS>0 epoch.
+#   Classification: SIGNAL if ONTAPE maintains use-competence (final CS >= 0.10) in >= 75% of established runs and
+#   ONTAPE_RND in <= 1; WEAK_SIGNAL if ONTAPE's median last-CS>0 >= 2x ONTAPE_RND's without maintenance; CLEAN_NULL
+#   otherwise. INVALID if a negative arm ends with use-CS >= 0.10. Declared caveat: the on-tape ruler gives partial
+#   credit (CT_U-like regime-blind answers score ~0.5), so it selects for answering, of which USE is the best form.
+SEEDS_O = [44_900_000 + s for s in range(12)]
+declare("X-ONTAPE",
+        jobs=[(arm, s, dict(gate="CONST", p_const=0.15, order=o)) for s in SEEDS_O
+              for arm, o in (("ONTAPE", "ONTAPE"), ("ONTAPE_RND", "ONTAPE_RND"))]
+        + [(arm, s, dict(gate="CONST", p_const=0.15, order="ONTAPE", plant=pl)) for s in SEEDS_O[:6]
+           for arm, pl in (("NEG_CTU_ONTAPE", "CT_U"), ("NEG_COPY_ONTAPE", "COPY_ONLY"))])
+
+
 if __name__ == "__main__":
     name = sys.argv[1]
     w = int(sys.argv[2]) if len(sys.argv) > 2 else 4
