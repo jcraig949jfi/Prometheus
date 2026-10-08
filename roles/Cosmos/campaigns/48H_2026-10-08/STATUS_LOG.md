@@ -27,3 +27,32 @@ compute       ~1.5 CPU-h / <1 GB / $0
 holdouts      D2 SEALED / UNREAD / UNSPENT
 ======================================================================
 ```
+
+```
+COSMOS / CWE -- 48H AUTONOMOUS CAMPAIGN
+======================================================================
+hour          2/48  (2026-10-08T07:05Z)
+host          ubu003
+model         claude-opus-5-5
+branch        main (records) | cosmos/c4-v03 e68cc51e14
+head          e68cc51e14
+state         EXPERIMENTING
+science       does a LOCAL one-step composition law (C4-L-0003, local Fisher
+              memory curve) predict usability across families?
+experiment    EXP-02: 120 challenge-proposal DISCOVERY worlds, frozen theta
+tests         c4 suite 50/0/0 (new); full suite last 112/0/0
+runtest       NOT RUN (pytest PASS)
+worlds        EXP-01 120 (rnn/graph/stig/sediment, P) | EXP-02 120 running (Q)
+laws          proposed 2 (L-0001, L-0003) | killed 0 | provisional 2 (by rule)
+coordinates   LOCAL: lam, eta, gamma, vis; local LGSS (J, B, Q, C)
+attacks       stig: moving-sensor reachability defeats both local laws;
+              S0-A family-floor over-strict (fails 65% of true laws) -> tests
+finding       L-0003 BA 1.00 rnn, .86 graph, but only +.024 over T3-DOWN;
+              local linearization is FRAME-DEPENDENT (stig abs vs agent frame)
+failure       foreign family uninformative under P (30/30 FUNCTIONAL); my own
+              A1 floor rule was a new over-strictness (repaired v0.3a)
+next          EXP-02 verdicts; ego-frame test; realistic power v0.3a
+compute       ~4 CPU-h / <2 GB / $0
+holdouts      D2 SEALED / UNREAD / UNSPENT
+======================================================================
+```
