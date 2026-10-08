@@ -146,14 +146,15 @@
   "subagents": {
     "REPRESENTATION": "DELIVERED + merged; W5P D1-D5 decided in E5N_PREREG s2",
     "SELECTOR": "DELIVERED aphrodite/b03-g12 @6c03a218f (16/16 PASS); merged; E2 frozen",
-    "ECOLOGY": "DELIVERED aphrodite/b03-eco @dbde4556f (W9-H; 44 certified depth-2 at 1M; 30k escrow blind); D1-D5 pending W07",
+    "ECOLOGY": "pilot done @64d51f5cb: oracle control FAILS under W5P D1 observation; E5-H not frozen; O1 repair under test",
     "RED_TEAM": "pre-freeze review of E1/E2 done (2 BLOCKER + 7 MAJOR); all amended pre-data (A1); W11 review pending"
   },
   "known_defects": [
     "r7e._donor drops selection_table (B01)",
     "NULL junk gates never competitive (B02 E12 s6.3) -> E2 adds NEAR-MISS trap",
     "import-order hazard: importing a17/gtc/a18 before b02/r7e changes a18.TAG (cell labels); all Beta-01/02/03 runners import b02 first; g12 asserts TAG",
-    "W9-H: depth-two attainable only at 1M transfer cap; 30k escrow/observation sees almost no L1 families (pristine 1/60) -> candidacy may fail by construction; decide in W07"
+    "W9-H: depth-two attainable only at 1M transfer cap; 30k escrow/observation sees almost no L1 families (pristine 1/60) -> candidacy may fail by construction; decide in W07",
+    "W5P observation (D1) only searches W5 base space: level-2 bodies never observed -> true compositions never candidates even with oracle inheritance (exposed pilot)"
   ],
   "expected_final_disposition": "open",
   "frozen_specs": {
