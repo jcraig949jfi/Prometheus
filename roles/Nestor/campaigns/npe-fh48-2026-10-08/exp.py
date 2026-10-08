@@ -286,6 +286,30 @@ declare("X-DISTRIB-GAME",
                   ("NEU_COMMON", MARK, [MARK] * 191 + ["CT_UA"] * 8))])
 
 
+# X-REPUTATION (EXPLORE, falsifier of the F8 depth anomaly, parent C-ONTAPE-MAINTAIN): under ONTAPE, causal depth was
+#   ~half that of controls (37-62 vs 95-138). Hypothesis (age-structured reputation): the score RESETS on conversion,
+#   so long-scored elders out-prioritize their own fresh copies and copying concentrates in old donors (short chains).
+#   Treatment: ontape_inherit (a converted half inherits its donor's pre-interaction score) vs default reset.
+#   CONST 0.15, 2000 epochs, CT_UA, 12 seeds 45_600_000 + s each (paired). Readout: causal depth (max), final CS/TCS,
+#   exchange ratio (ledger), last-CS>0.
+#   Classification: SIGNAL (hypothesis supported) if INHERIT median depth >= 1.5x RESET median AND INHERIT depth > RESET
+#   depth in >= 9/12 paired seeds; CLEAN_NULL if neither; WEAK_SIGNAL otherwise. Secondary (declared, descriptive):
+#   does heritable reputation weaken maintenance (broken copies coast on the parent's score)? compare final CS.
+SEEDS_RP = [45_600_000 + s for s in range(12)]
+declare("X-REPUTATION",
+        jobs=[(arm, s, dict(gate="CONST", p_const=0.15, order="ONTAPE", ontape_inherit=inh, tape_readout=True))
+              for s in SEEDS_RP for arm, inh in (("RESET", False), ("INHERIT", True))])
+
+# X-ONTAPE-7AE3 (EXPLORE, scope of the endogenous mechanism, parent C-ONTAPE-MAINTAIN): ONTAPE vs ONTAPE_RND in the
+#   7ae3 world (Z8_64, WELL_MIXED), CONST 0.15, 2000 epochs, CT_UA, 8 seeds 45_700_000 + s each; tape_readout on.
+#   Classification: SIGNAL if ONTAPE maintains (final TCS >= 0.10) in >= 75% of established runs and ONTAPE_RND in
+#   <= 1; CLEAN_NULL if ONTAPE does not; INVALID if CT_UA establishes in < 4/8 under either arm.
+SEEDS_O7 = [45_700_000 + s for s in range(8)]
+declare("X-ONTAPE-7AE3",
+        jobs=[(arm, s, dict(cell="7ae3", gate="CONST", p_const=0.15, order=o, tape_readout=True)) for s in SEEDS_O7
+              for arm, o in (("ONTAPE_7AE3", "ONTAPE"), ("ONTAPE_RND_7AE3", "ONTAPE_RND"))])
+
+
 if __name__ == "__main__":
     name = sys.argv[1]
     w = int(sys.argv[2]) if len(sys.argv) > 2 else 4

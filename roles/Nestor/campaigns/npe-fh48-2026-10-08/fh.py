@@ -11,6 +11,7 @@ ADD37, pop 256, tier M) with these declared coordinates, each defaulting to XTG-
             ONTAPE each side's pair-tape execution receives a task episode on IN (private RNG); its first OUT is
                    scored; an organism's EWMA of on-tape correctness (alpha 0.3; reset when its half is converted,
                    then set from the copy's own answer) orders the pair like DIR. ONTAPE_RND: same inputs, random order.
+                   ontape_inherit=True: a converted half inherits its donor's pre-interaction score instead.
             VETO   order stays random; a pair whose side 0 is LESS competent than side 1 is skipped (prob q_dir)
             DIR    after the gate, the pair is ordered so the higher-u organism is side 0 (runs first) with
                    probability q_dir; ties keep the random order. Interaction COUNT is unchanged by order.
@@ -61,7 +62,7 @@ from xtg2 import COMP_MIN, GATE_SEED, HELD_SEED, UseCache, PLANTS  # noqa: E402,
 
 L = 64
 TRAJ_EARLY, TRAJ_EVERY = 10, 50          # snapshot every 10 epochs to epoch 300, then every 50
-DEFAULT = dict(tape_readout=False, cell=xtg2.CELL, ontape_alpha=0.3, extra_plants=None, gate="TG", order="RANDOM", q_dir=1.0, p_const=0.15, gate_floor=0.15, mut_scale=1.0, copy_scale=1.0,
+DEFAULT = dict(ontape_inherit=False, tape_readout=False, cell=xtg2.CELL, ontape_alpha=0.3, extra_plants=None, gate="TG", order="RANDOM", q_dir=1.0, p_const=0.15, gate_floor=0.15, mut_scale=1.0, copy_scale=1.0,
                plant="CT_UA", n_plants=1, epochs=None, ledger=True)
 
 
@@ -291,10 +292,15 @@ def make_runner(seed, cfg=None):
             assert len(calls) >= 2, calls
             if ontape:
                 al = cfg["ontape_alpha"]
+                pre_sc = {o: self.ontape.get(o, 0.0) for o in (a_, b_)}
                 for side, o in enumerate((a_, b_)):
                     c = made[side]
                     ok = 1.0 if (c.outputs and c.outputs[0] == eps[side][1]) else 0.0
-                    prev = 0.0 if o.oid != pre[o][0] else self.ontape.get(o, 0.0)   # a converted half starts over
+                    donor = b_ if o is a_ else a_
+                    if o.oid != pre[o][0]:      # converted: reset (default) or INHERIT the donor's pre-interaction score
+                        prev = pre_sc[donor] if cfg["ontape_inherit"] else 0.0
+                    else:
+                        prev = pre_sc[o]
                     self.ontape[o] = (1 - al) * prev + al * ok
                     self.ontape_n[int(ok)] += 1
             tape = {a_: calls[0][0], b_: calls[1][0]}

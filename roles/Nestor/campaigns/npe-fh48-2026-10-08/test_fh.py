@@ -149,6 +149,29 @@ def test_tr2_partner_gets_inputs():
         assert arch.tape_use(fh.PLANTS[k], fh.PLANTS[k]) == want, k
 
 
+def test_rp1_reputation_inherit():
+    """ontape_inherit: a converted half starts from its donor's pre-interaction EWMA; default resets to 0."""
+    import random
+    for inherit in (False, True):
+        rng = random.Random(46_100_000)
+        for k in range(40):
+            r = fh.make_runner(46_100_000 + k, dict(epochs=1, plant=None, order="ONTAPE", gate="CONST", p_const=1.0,
+                                                   ontape_inherit=inherit))
+            a = r._place(fh.PLANTS["CT_UA"], 0, niche=0)
+            b = r._place(bytes(rng.randrange(256) for _ in range(64)), 1, niche=0)
+            r._init_state()
+            r._mutate = lambda x: bytes(x)
+            r.ontape[a] = 0.8
+            oid = b.oid
+            r._pair_interact(0, a, b)
+            if b.oid != oid:
+                ok = r.ontape[b] / 0.3 if not inherit else (r.ontape[b] - 0.7 * 0.8) / 0.3
+                assert abs(ok - round(ok)) < 1e-9 and round(ok) in (0, 1), (inherit, r.ontape[b])
+                break
+        else:
+            raise AssertionError("no conversion")
+
+
 def test_ms1_scales():
     r = fh.make_runner(SEED, dict(epochs=2, mut_scale=0.5, copy_scale=3.0))
     assert abs(r.mut_rate - 0.001) < 1e-12 and abs(r.copy_mut - 0.006) < 1e-12
