@@ -41,6 +41,7 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
 | B35/B36 | echo-free world distribution; compare on echo-free worlds | YES: paired +.050 (23/5, p=.0009); specific .002; not pass-through |
 | B37/B38 | wider distribution (delayed allowed) -> named-world transfer? | NO: named transfer ~0; family transfer collapses (+.009, p=.18) -- delayed worlds dilute |
 | B39 | what rule do the transferable foragers implement? | 6/8 = the INVARIANT rule (harvest index = position of non-empty pool .77-.92; move when empty) |
+| B40 | keyed memory under a K-distribution + wide jitter | running (8 cells, lease) |
 | B30 | do foragers carry state across ticks? | YES: 6/7 content sensors use state; blind ones in rewarding worlds 5/5 |
 | B31 | what do they remember? | 2504: 1-register direction memory; others computed state (not past observations) |
 | B17 | forced perception (echo on PUT) opens the 2-value wall? | staged; controls pass |
@@ -435,6 +436,11 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   position; move when empty" -- the same rule as the hand generalist, which fixed-world (B28) and paired-world (B29)
   training never produced. Closes the abstraction question WITHIN the family: the general solution IS reachable when
   the world distribution removes the payoff of world-specific mappings.
+- B40 launched ~05:40Z (keyed memory REOPENED under the distribution lever that worked in B39): K drawn from
+  {1,2,3,4,6} per episode, wide jitter, arms C2 / BIG gen-0, 4 seeds each, G=400, 8 procs, lease lse-90f61a3da686.
+  Controls: hand indexed solver K1-K8 .94-1.0 (GENERAL incl. never-trained K8); slot solver K3 .69 -> K8 .29.
+  Reopen condition for the parked wall (update 3) was "a world or operator that makes the read half pay alone" -- a
+  K-distribution does not do that directly; it removes the payoff of slots/delay lines. PREDICTION 0/8 GENERAL.
 - BUDGET WINDOW 2026-10-08 ~00:07Z. B29 already done (not relaunched). Lease lse-fe37dd77fe7a (spectrex5:cpu12,
   3 h) for B32 replication: 12 seeds (3211-3222), 10 procs, + B32's last cell on 2 procs = 12. CORE-HOUR TALLY
   (rolling 24 h from 00:07Z): 0 at launch; est. +3-4 for the replication.
