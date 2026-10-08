@@ -33,8 +33,8 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
 | B23 | re-audit Deep Frontier/C6 elites with jitter/constant-twin/disasm | WSE runs: 54% of competent = timing exploits (C6-novel5 80%) |
 | B23b | composed-world runs: constant + blind twins | 62/102 fail; 40 beat constant |
 | B23c/B24 | attack survivors (echo twins, knockout) | W-artifacts = echo (killed); P-boom = clock-vs-position lap counter |
-| B25/B26 | no-clock composed world: does content sensing evolve? | YES 3/6 sense pools (blind twin collapses); 3/6 open-loop |
-| B27 | generality over 4 more worlds | B-scatter 3/3, C6-unable 1/3; B-pressure/W-artifacts inconclusive (no positive) |
+| B25/B26 | no-clock composed world: does content sensing evolve? | YES 3/6 sense pools (re-confirmed B46 at E=64x4); open-loop 'beats constant' RETRACTED |
+| B27 | generality over 4 more worlds | B-scatter 3/3 (confirmed B46), C6-unable 0/3 after B46 re-score; B-pressure/W-artifacts inconclusive |
 | B28 | do foragers transfer across worlds? | NO: home +.23, off-home -.02; world-specific mappings |
 | B29 | leave-one-world-out training: invariant sensing? | NULL: train lift yes, held-out blind (0/3 worlds); invariant rule exists but unfound |
 | B32 | fresh random world each generation -> invariant sensing? | SUPPORTED_WITHIN_FAMILY: B34 paired +.048, 33/39 worlds, p<1e-5 (vs best specific: small); partly echo |
@@ -489,6 +489,16 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   INSTRUMENT RULE (new standard): held-out scores use >= 64 episodes across >= 4 world seeds, never one shared small
   sample. Earlier composed-world claims were made on large effects (blind collapse .40 -> .07) or many worlds with
   paired tests (B34/B36, 40 worlds) and stand; any E=8 single-seed number in this journal is provisional.
+- B46 RE-SCORE OF THE CONTENT-SENSING CLAIMS (E=64 x 4 world seeds): content sensing (blind drop >= .05) CONFIRMED in
+  P-boom 2504/2505/2506 (2504 .219 vs blind .054; 2506 .201 vs .059; 2505 .099 vs .034 but below constant .060) and
+  B-scatter 2701/2702/2703 (.20-.23 vs blind ~.11, constant .113): 6 content sensors survive. RETRACTED: C6-unable 2703
+  (.075 vs blind .063); the P-boom BLIND open-loop elites' "beat the constant twin" (.04-.06 now = constant) -- B26's
+  "constant twin too weak" lesson rested on that artifact (the BLIND-twin-primary rule stands on its own merits).
+  INSTRUMENT DEFECT (mine): B25/B26/B27/B28/B30/B31 scored elites with evaluate_world(seed, E=8) -- the SAME 8 episodes
+  they were trained on -- so those "held-out" numbers were training-set scores (2506: .48 -> .20 on new episodes).
+  Unaffected: B32-B39 (held-out = different worlds; B34/B36 paired over 40 worlds) and B45 (different world keys).
+  Claims that still stand: content sensing evolves without the clock (6 sensors, two worlds); world-distribution
+  training transfers within the family and finds the invariant rule (B36/B39). B27's "3 of 5 worlds" becomes 2 of 5.
 - BUDGET WINDOW 2026-10-08 ~00:07Z. B29 already done (not relaunched). Lease lse-fe37dd77fe7a (spectrex5:cpu12,
   3 h) for B32 replication: 12 seeds (3211-3222), 10 procs, + B32's last cell on 2 procs = 12. CORE-HOUR TALLY
   (rolling 24 h from 00:07Z): 0 at launch; est. +3-4 for the replication.
