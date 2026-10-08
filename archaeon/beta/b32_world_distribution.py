@@ -42,7 +42,7 @@ def _base():
     return _BASE["w"]
 
 
-def family_world(key):
+def family_world(key, keep_delayed=False):
     """v2 (2026-10-07 ~21:55Z): v1 varied only R / ring size / rates of the P-boom params and the P-boom-SPECIFIC elite
     transferred within it (negative control failed: lift .03-.37). v2 draws a WHOLE world from the C6 procedural
     generator (archaeon.campaign6.worlds.generator.sample_world) and forces only what foraging needs: resources ON,
@@ -56,18 +56,19 @@ def family_world(key):
         p["resources"] = copy.deepcopy(base.params["resources"])
     if not p["locality"].get("on"):
         p["locality"] = copy.deepcopy(base.params["locality"])
-    p["delayed"] = {"on": False}
+    if not keep_delayed:
+        p["delayed"] = {"on": False}
     if p["channels"].get("k", 1) < 2:
         p["channels"] = {"on": True, "k": 2}
     return NoClock(ComposedWorld(p)), 1000 + rng.randbelow(10 ** 6)
 
 
-def echo_free_world(key, tries=12):
+def echo_free_world(key, tries=12, keep_delayed=False):
     """B35: redraw until no echo twin (input word j of channel 0, j < 8) lifts >= .05 over the best constant."""
     from archaeon.beta.b23c_attack_artifacts import echo_manifest
     w = s = None
     for t in range(tries):
-        w, s = family_world(key + (t,))
+        w, s = family_world(key + (t,), keep_delayed=keep_delayed)
         n = len(w.observe(w.reset(s, 0, None))[0])
         base = max(score(constant_manifest(c, w.K), w, s) for c in CONSTS)
         if max(score(echo_manifest(0, j, w.K), w, s) for j in range(min(8, n))) - base < .05:
@@ -111,7 +112,7 @@ def cell(job):
         if k not in _WCACHE:
             _WCACHE.clear()
             if job.get("echo_free"):
-                _WCACHE[k] = echo_free_world(k)
+                _WCACHE[k] = echo_free_world(k, keep_delayed=job.get("wide", False))
             else:
                 _WCACHE[k] = family_world(k)
         w, s = _WCACHE[k]
@@ -142,7 +143,7 @@ def main(argv):
     tag = argv[4] if len(argv) > 4 else ""
     rows = []
     with ProcessPoolExecutor(max_workers=workers) as ex:
-        futs = {ex.submit(cell, {"seed": first + s, "G": G_, "echo_free": "echofree" in tag}): s for s in range(seeds)}
+        futs = {ex.submit(cell, {"seed": first + s, "G": G_, "echo_free": "echofree" in tag, "wide": "wide" in tag}): s for s in range(seeds)}
         for f in as_completed(futs):
             try:
                 r = f.result()
