@@ -62,6 +62,19 @@ def family_world(key):
     return NoClock(ComposedWorld(p)), 1000 + rng.randbelow(10 ** 6)
 
 
+def echo_free_world(key, tries=12):
+    """B35: redraw until no echo twin (input word j of channel 0, j < 8) lifts >= .05 over the best constant."""
+    from archaeon.beta.b23c_attack_artifacts import echo_manifest
+    w = s = None
+    for t in range(tries):
+        w, s = family_world(key + (t,))
+        n = len(w.observe(w.reset(s, 0, None))[0])
+        base = max(score(constant_manifest(c, w.K), w, s) for c in CONSTS)
+        if max(score(echo_manifest(0, j, w.K), w, s) for j in range(min(8, n))) - base < .05:
+            return w, s
+    return w, s
+
+
 def heldout_worlds(n=6, scan=200):
     """Held-out worlds where the controls discriminate: hand generalist lift >= .05 AND P-boom-specific elite lift <= .02."""
     b25 = {r["seed"]: r for r in json.loads((OUT / "B25_result.json").read_text(encoding="utf-8"))["rows"] if r.get("arm") == "NOCLOCK"}
@@ -96,7 +109,11 @@ def cell(job):
     def ev_fn(m, eps, intervention=None, rng_seed=0, reward_mode="per_ask"):
         k = ("train", job["seed"], state["g"])
         if k not in _WCACHE:
-            _WCACHE.clear(); _WCACHE[k] = family_world(k)
+            _WCACHE.clear()
+            if job.get("echo_free"):
+                _WCACHE[k] = echo_free_world(k)
+            else:
+                _WCACHE[k] = family_world(k)
         w, s = _WCACHE[k]
         return evaluate_world(m, w, s, 8, rng_seed=7)
 
@@ -125,7 +142,7 @@ def main(argv):
     tag = argv[4] if len(argv) > 4 else ""
     rows = []
     with ProcessPoolExecutor(max_workers=workers) as ex:
-        futs = {ex.submit(cell, {"seed": first + s, "G": G_}): s for s in range(seeds)}
+        futs = {ex.submit(cell, {"seed": first + s, "G": G_, "echo_free": "echofree" in tag}): s for s in range(seeds)}
         for f in as_completed(futs):
             try:
                 r = f.result()
