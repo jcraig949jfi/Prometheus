@@ -1,0 +1,161 @@
++==============================================================================+
+|  REVIEW PACKET -- COSMOS C3 SESSION 1: CAUSAL ACCESSIBILITY OF PAST INFO     |
+|  Author: Cosmos[m2-6ed01908] (M2 SPECTREX5)            Date: 2026-09-24      |
+|  For: operator (HITL) + reviewers. WITHHELD from origin until D seals        |
+|  Status: Session 1 complete; PRELIMINARY candidate law (not frozen)          |
+|  Self-contained: no repository access needed                                 |
++==============================================================================+
+
+0. SUMMARY / VERDICT
+------------------------------------------------------------------------------
+Mandate (operator directives 2026-09-23/24): functional memory WITHOUT a
+planted economy; three visible substrates with different retention loci;
+coordinate firewall; P1 persistence and P2 causal utility measured before
+any pressure law; Session 1 is Cosmos-only and ends before any holdout.
+Verdict, in three parts:
+  CERTIFICATE: QUALIFIED (gate v3 PASS on fresh seeds) after two recorded
+    failures of my own design (a floor mismatch; a pass-on-a-tie). PASSIVE
+    vs FUNCTIONAL -- the directive's fatal condition -- separated in every
+    run of every version.
+  LAW: PRELIMINARY CANDIDATE. FUNCTIONAL iff sR > 0.030 [95% CI 0.006,
+    0.043], where sR is a decoder-free, unit-free history-signal share in
+    the ACTOR'S view (readout input). PASSIVE iff history is in the state
+    (sF > 0) but sR ~ 0. Gates L1-L5 passed; one failure region found.
+  ABSTRACTION: consistent with the operator's candidate ("future-relevant
+    information must remain causally accessible"): the persistence
+    coordinate sF fails (BA .53-.60 on two families); the accessibility
+    coordinate sR succeeds; the law transfers without refit when the
+    substitution attack moves history from internal state to the world.
+Nothing here is evidence about intelligence or reality; nothing has been
+tested on a substrate Cosmos did not write.
+
+1. WHAT WAS BUILT (committed before measurement)
+------------------------------------------------------------------------------
+prometheus/cosmos/c3/: task (cue / k distractors / query; no rewards but J),
+system interface (batched; all randomness through the harness so paired
+episodes share it; full causal state exchangeable), probe (L2 multinomial
+logistic; held-out cross-entropy in bits), certify (P1: conditional CE
+difference, max over a generic probe on [S,O] and a probe on the system's
+own readout output, within-O permutation null, p-value with ties against;
+P2: interchange of the full causal state at t = k between CRN-paired
+episodes, effect > 3 bootstrap SE), calib (planted N0 PV FX FD MC NZ),
+substrates (A rnn leaky echo-state reservoir; B graph noisy threshold
+network read through output nodes the input never touches; C stig
+memoryless agent + decaying/diffusing ring field; H hybrid with internal
+and external channels switchable), geometry (generic decoder-free
+coordinates), maps, law (C0 miner reused, LOLO by family), attack.
+Preregistrations: P1/P2 gate (with A1, A2 amendments), law search (gates
+L1-L5, precommitments Q1-Q5) -- each committed before its data.
+
+2. CERTIFICATE HISTORY (exact)
+------------------------------------------------------------------------------
+v1 smoke: NZ INCOHERENT -- fixed 0.05-bit P1 floor vs a 3-SE P2 test
+  (analytic NZ information ~0.013 bits; P2 effect 0.089 at >10 SE).
+v2 gate FAIL: NZ seed 3 INCOHERENT (P1 0.0005 vs null 0.0016; P2 0.119,
+  z 17); MC "passed" only because its statistic TIED its null (0.0098) in
+  5/5 seeds; the preregistered INDETERMINATE rule was not implemented.
+v3 gate PASS, fresh seeds 6-10: all 6 planted systems 5/5. PV: generic
+  probe 1.96 bits, own-readout probe 0.0000, effect 0.000. NZ effect
+  0.070-0.088 (z 15-17). MC p 0.46-0.96. Seeds 1-5 under v3 (not gated):
+  one MC INDETERMINATE -- the band's ~8% false-flag rate for a truly
+  history-free system.
+
+3. MAPS (120 worlds + 12 hybrid; k in {2,4,8})
+------------------------------------------------------------------------------
+  rnn   FUNCTIONAL 34  NONE 4               INDETERMINATE 2
+  graph FUNCTIONAL 11  NONE 16  PASSIVE 8   INDETERMINATE 4  INCOHERENT 1
+  stig  FUNCTIONAL 31           PASSIVE 9
+  hybrid: FUNCTIONAL whenever either channel exists (9/9), NONE when both
+  are removed (3/3) -- history moves channel, the function does not care.
+INCOHERENT graph world (K3 b-.5 p.01 k8): P2 .028 (z 7.7) but both P1
+probes negative -- the generic probe overfits a 96-dim noisy binary state
+(D -0.05). A certificate POWER limit; several noisy graph worlds show it.
+
+4. LAW (analysis committed before the data were read)
+------------------------------------------------------------------------------
+Mined: exp(-sR) <= 0.97, i.e. FUNCTIONAL iff sR > ~0.030; null p 0.05.
+  LOLO BA: graph 0.960  rnn 1.000  stig 0.968
+  baselines (LOLO BA graph/rnn/stig): sF-only .602/.882/.530;
+            kNN5 .820/.912/.785
+  gates: L1 PASS  L2 PASS  L3 PASS (per family)  L4 PASS (hybrid 12/12)
+  PASSIVE: sR = 0.000 in 17/17, sF 0.078-1.000.
+  misfits 2/113 (both weak/noisy).
+Uncertainty: threshold 0.0304, bootstrap 95% CI [0.0064, 0.0425];
+  family-specific thresholds graph .040 rnn .032 stig .004 gain at most
+  0.016 BA over the pooled one (no correction term needed; stig offset
+  noted for the audit).
+L5 adversary (720 fresh candidates, 30% off-lattice SIZES): SURVIVED,
+  confirmed confident misses 2/44 (4.5%; graph 2/14 = 14%, kill 20%).
+  Band calibration: predicted 0.46 vs observed 0.55 (n 40).
+
+5. FAILURE REGION (shape, withheld from D/E authors)
+------------------------------------------------------------------------------
+Noisy excitable graph worlds (b = +0.5, flip p .03-.1): predicted
+FUNCTIONAL, certified NONE; sR .06-.31 with a readout-view signal that
+GROWS from t = 1 to the query (rR 1.5, rF 1.35). INFERRED: sR measures
+SENSITIVITY to history; chaotic noisy dynamics amplify any perturbation
+without carrying cue-consistent information. The law confuses sensitivity
+with reliable accessibility there. Not patched in Session 1.
+
+6. WHAT THIS DOES AND DOES NOT ESTABLISH
+------------------------------------------------------------------------------
+DOES: a certificate that separates NONE / PASSIVE / FUNCTIONAL on planted
+systems, including weak memory and a misleading current-observation
+correlate; natural PASSIVE cases in real substrates (graph with isolated
+outputs; a stigmergic agent that walks away from its marks); one decoder-
+free accessibility coordinate with one threshold across three unrelated
+mechanisms, surviving a size-changing adversary.
+DOES NOT: test anything Cosmos did not write (D not yet built); resolve
+the near-definitional reading (a trained readout can use history only if
+it reaches its inputs -- the universal content is the single unit-free
+threshold, which D must test); cover chaotic noisy dynamics; cover the
+directive's other substitution channels (communication, population state,
+recomputation) -- only internal <-> environment was tested.
+
+7. INFORMATION BARRIER (engineered and its limits)
+------------------------------------------------------------------------------
+Published to main: contract, P1/P2 definitions and reference certificate,
+gate receipts, directive, D request (to Bellerophon, comms #550).
+Withheld (local branch, hash-committed on main): substrates, coordinates,
+maps, law, attack, results, this packet. Limit: M2 worktrees share one
+.git object store, so an M2 seat CAN see the local branch; for Bellerophon
+(on M2) the barrier is honor + attestation. Harmonia's audit is sequenced
+AFTER D's seal (its report would publish the coordinates) and BEFORE D is
+adjudicated.
+
+8. RECOMMENDATION (operator's call; Cosmos's lean)
+------------------------------------------------------------------------------
+Proceed: D request is out. Session 2 = (a) Harmonia coordinate audit once
+D seals; (b) decide, on visible data only, whether to address the
+sensitivity-vs-information failure region BEFORE freezing (e.g. a noise-
+consistency term) -- any change is a new law version; (c) the remaining
+substitution channels; (d) freeze law + one intervention for D.
+Stop condition worth stating: if D certifies FUNCTIONAL/PASSIVE in a way
+sR cannot see, the accessibility coordinate is substrate-bound and the
+claim ends at "a good measurement protocol for three toy families".
+
+9. QUESTIONS FOR THE REVIEWER
+------------------------------------------------------------------------------
+Q1 Is sR anything more than a geometric proxy for "readout input carries
+   history"? What result on D would show it is MORE?
+Q2 Should the chaotic failure region be fixed before D (risking tuning to
+   visible quirks) or left as a declared scar that D may expose?
+Q3 Is the Euclidean, per-component-standardised distance defensible across
+   binary, continuous and field states, or is it an unexamined choice?
+Q4 Is honor + attestation an acceptable barrier for an M2 D author, or
+   should D be authored off M2?
+Q5 What should Cosmos stop doing?
+
+10. ARTIFACTS (withheld branch cosmos/c3-s1-2026-09-24 unless noted)
+------------------------------------------------------------------------------
+  public (main 940b486f2): prometheus/cosmos/c3/{task,system,probe,
+    certify,calib,gate}.py; roles/Cosmos/c3/{D_CONTRACT,INFO_LEDGER,
+    S1_PREREG_P1P2_GATE}.md + gate receipts; prompts/2026-09-24_*
+  withheld: prometheus/cosmos/c3/{substrates,geometry,maps,law,attack}.py,
+    tests/test_c3.py, roles/Cosmos/c3/{S1_PREREG_LAW,S1_RESULT}.md,
+    runs/maps_s1/{MAPS,LAW,ATTACK}.json, this packet
+  commitment: withheld head recorded in INFO_LEDGER.md on main
+
++==============================================================================+
+|  "Not worth continuing" remains a first-class answer.                        |
++==============================================================================+

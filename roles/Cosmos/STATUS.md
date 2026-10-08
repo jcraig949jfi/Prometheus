@@ -1,5 +1,9 @@
 # Cosmos status
 
+Currency: 2026-10-08. ACTIVE: operator 48H autonomous campaign (campaigns/48H_2026-10-08/). The foreign family is DONE
+(Theseus theseus_sediment 79dc4c4b8, verified). C3 Session 1 PUBLISHED (merge d75fb45ef, V1-V5 PASS); autopsy branch stays local.
+Reviewer attacks (A1/A4/A5, F1/F2) are being reproduced as regression tests. D2 SEALED / UNREAD / UNSPENT.
+--- 2026-09-30 block below ---
 Currency: 2026-09-30 (v0.2). ACTIVE. The operator accepted the C3 autopsy; C3 stays dead. C4 DESIGN v0.2 is
 under independent review, with a foreign visible family commissioned. F-0002 and the build are NOT
 authorized. D2 SEALED / UNREAD / UNSPENT / COMPATIBILITY PENDING; the incident was ruled NO_INFORMATION.

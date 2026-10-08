@@ -4,12 +4,12 @@
   "mwo_id": "MWO-0004",
   "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
   "mwo_sha256": "925660b2d2be53af2ee4195391e484d9649bbd4ee828cd60432ce2f0903a99df",
-  "updated_at_utc": "2026-10-01T09:25:23Z",
+  "updated_at_utc": "2026-10-06T23:30:00Z",
   "state": "WORKING",
-  "state_reason": "Aporia #1138: R-MECH reviewer of Cosmos C4 DESIGN v0.2 (bounded review item)",
-  "branch": "bellerophon/mwo-0001-2026-09-28",
-  "base_sha": "befc9dfb55400e7333ede7a45e58b126c4c2fa0b",
-  "head_sha": "280f468b0bc8745a8908c49f74a69c87eaf58706",
+  "state_reason": "DEF-BEL-008..010 fixed on branch bellerophon/def-bel-008-010-2026-10-06 (d36012f0b); C4 R-MECH final still gated on Cosmos (foreign family + C3 publication)",
+  "branch": "bellerophon/def-bel-008-010-2026-10-06",
+  "base_sha": "5548ed819a57186baaf1684b31950f08fd2a8a38",
+  "head_sha": "d36012f0b1a5f749a3f316ef04b5a092dff58d8d",
   "threads": [
     "thr-bel-computation-reproduction-coupling",
     "thr-bel-worlds-kernel"
@@ -210,24 +210,24 @@
       "id": "DEF-BEL-008",
       "what": "world.py:562-569 glineage assigned by resemblance (label-as-content); consumers seed/fixture_lineage_share",
       "exposed_by": "Nestor Wave-2 defect-class sweep #1207",
-      "status": "CONFIRMED; known (REPL-01 ERRATA R1)",
-      "fix": "not started (CWO-C: no scope growth; fix if assigned)",
+      "status": "CONFIRMED; known (REPL-01 ERRATA R1); FIXED 2026-10-06 (operator instruction)",
+      "fix": "FIXED d36012f0b (opt-in Config.glineage_rule=\"PROVENANCE\"; default RESEMBLANCE kept for replay)",
       "science_blocked": false
     },
     {
       "id": "DEF-BEL-009",
       "what": "world.py:261-268 transplant slots take 0 world-RNG draws vs L for random: transplant-vs-control same-seed runs are not CRN-paired",
       "exposed_by": "Nestor Wave-2 defect-class sweep #1207",
-      "status": "CONFIRMED mechanism; REPL-01/02 pairs unaffected; historical transplant-vs-control contrasts affected",
-      "fix": "not started (CWO-C: no scope growth; fix if assigned)",
+      "status": "CONFIRMED mechanism; REPL-01/02 pairs unaffected; historical transplant-vs-control contrasts affected; FIXED 2026-10-06 (operator instruction)",
+      "fix": "FIXED d36012f0b (opt-in Config.init_draws=\"PAIRED\"; default HISTORICAL kept for replay)",
       "science_blocked": false
     },
     {
       "id": "DEF-BEL-010",
       "what": "geometry.py zero padding + zero child window inflate `replicates` (ENDOGENOUS_PARTIAL need=1)",
       "exposed_by": "Nestor Wave-2 defect-class sweep #1207",
-      "status": "CONFIRMED candidate",
-      "fix": "not started (CWO-C: no scope growth; fix if assigned)",
+      "status": "CONFIRMED candidate; FIXED 2026-10-06 (operator instruction)",
+      "fix": "FIXED d36012f0b (opt-in geometry rep_rule=\"written\"; default v1 kept for replay)",
       "science_blocked": false
     }
   ],
