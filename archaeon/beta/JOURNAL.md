@@ -37,7 +37,7 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
 | B27 | generality over 4 more worlds | B-scatter 3/3, C6-unable 1/3; B-pressure/W-artifacts inconclusive (no positive) |
 | B28 | do foragers transfer across worlds? | NO: home +.23, off-home -.02; world-specific mappings |
 | B29 | leave-one-world-out training: invariant sensing? | NULL: train lift yes, held-out blind (0/3 worlds); invariant rule exists but unfound |
-| B32 | fresh random world each generation -> invariant sensing? | v2 staged; discriminating held-out set built; launch at budget window |
+| B32 | fresh random world each generation -> invariant sensing? | POSITIVE 3/3 so far (held-out lift .07-.13, blind collapse); replication (12 seeds) running; B33 attack staged |
 | B30 | do foragers carry state across ticks? | YES: 6/7 content sensors use state; blind ones in rewarding worlds 5/5 |
 | B31 | what do they remember? | 2504: 1-register direction memory; others computed state (not past observations) |
 | B17 | forced perception (echo on PUT) opens the 2-value wall? | staged; controls pass |
@@ -369,6 +369,16 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   +.08/+.22/+.06, P-boom elite +.004/+.002/-.012); scan raised to 200. Launch under lease at the budget window.
   Program-level pattern now visible across both lines (keyed memory; foraging abstraction): search reaches SPECIFIC
   solutions while a SHORT GENERAL solution exists and is not reached.
+- B32 RESULT (partial, 3/4 seeds; fresh procedurally generated world EVERY generation): mean held-out lift .071 /
+  .130 / .121 with large input use (elite - blind .12 / .18 / .17) on held-out worlds where the P-boom-specific elite
+  gets <= .02 and the hand generalist .06-.22. PREDICTION (>= 2/4 seeds >= .05 with blind collapse) MET. FIRST
+  TRANSFER of evolved sensing to unseen worlds -- produced by changing the WORLD DISTRIBUTION, after fixed worlds
+  (B25-B28) and paired worlds (B29) gave only specific mappings. Not yet believed: B33 attacks staged (unfiltered
+  worlds, named worlds, controls audit, program identity). Run 1 of B32 hung ~40 min (my bug: the base checkpoint was
+  re-read on every evaluation) -- fixed (load once, cache per generation).
+- BUDGET WINDOW 2026-10-08 ~00:07Z. B29 already done (not relaunched). Lease lse-fe37dd77fe7a (spectrex5:cpu12,
+  3 h) for B32 replication: 12 seeds (3211-3222), 10 procs, + B32's last cell on 2 procs = 12. CORE-HOUR TALLY
+  (rolling 24 h from 00:07Z): 0 at launch; est. +3-4 for the replication.
 - PIVOT LANE staged (B23, for the budget window): re-audit the Deep Frontier / C6 record with today's instruments.
   Off-repo evidence exists: D:\Prometheus-worktreesrchaeon-wse-2026-09-16rchaeonrontier
 uns (2.3 GB;
