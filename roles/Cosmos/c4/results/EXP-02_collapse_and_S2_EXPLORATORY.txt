@@ -1,0 +1,20 @@
+graph n 60 spearman(logd2, B excess acc)=0.65 p=1.7e-08
+rnn n 60 spearman(logd2, B excess acc)=0.99 p=1.8e-54
+sediment n 60 spearman(logd2, B excess acc)=0.86 p=1.7e-18
+stig n 60 spearman(logd2, B excess acc)=0.14 p=3.0e-01
+pooled spearman 0.80
+pooled curve a=0.48 b=0.01  RMSE=0.264
+  graph own-curve a=0.80 b=0.72 RMSE own 0.030 vs pooled 0.096; mean pooled residual -0.066
+  rnn own-curve a=0.96 b=0.90 RMSE own 0.042 vs pooled 0.139; mean pooled residual -0.085
+  sediment own-curve a=1.20 b=-0.43 RMSE own 0.183 vs pooled 0.238; mean pooled residual 0.074
+  stig own-curve a=0.01 b=-85.44 RMSE own 0.341 vs pooled 0.441; mean pooled residual -0.028
+S2 (EXPLORATORY, discovery b0+b1, informative families [np.str_('graph'), np.str_('rnn'), np.str_('sediment'), np.str_('stig')] n 218 ): {"pass": false, "p": {"b_offset": 0.009445046678201993, "c_slope": 7.173113419934327e-10, "e_conditional": 0.0009995002498750624}, "rejected": {"c_slope": true, "e_conditional": true, "b_offset": true}, "descriptive": {"calibration_lrt_p": 1.7109757969962957e-20}}
+S2 WITHOUT stig (diagnostic, n 158 ): {"pass": false, "p": {"b_offset": 0.0015670880848797652, "c_slope": 0.4401653063922155, "e_conditional": 0.0004997501249375312}, "rejected": {"e_conditional": true, "b_offset": true, "c_slope": false}, "descriptive": {"calibration_lrt_p": 3.880324746894987e-08}}
+graph logit intercept 8.48 slope 2.23  -> boundary logd2 = -3.80
+rnn logit intercept 8.75 slope 2.08  -> boundary logd2 = -4.20
+sediment logit intercept 6.90 slope 1.01  -> boundary logd2 = -6.84
+UNDER B LABELS (all rows, B defined everywhere):
+  graph n 60 B-functional 17 boundary logd2 -3.64 (slope 2.39)
+  rnn n 60 B-functional 41 boundary logd2 -3.56 (slope 3.08)
+  sediment n 60 B-functional 51 boundary logd2 -4.02 (slope 0.93)
+ S2: {"b_offset": 0.944646715109888, "c_slope": 0.00990096082127815, "e_conditional": 0.05897051474262868}

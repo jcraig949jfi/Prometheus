@@ -1,0 +1,12 @@
+classes {'rnn': {'FUNCTIONAL': 20, 'NONE': 4, 'INDETERMINATE': 6}, 'graph': {'INDETERMINATE': 8, 'FUNCTIONAL': 4, 'NONE': 16, 'PASSIVE': 2}, 'stig': {'FUNCTIONAL': 30}, 'sediment': {'FUNCTIONAL': 26, 'INCOHERENT': 1, 'NONE': 3}}
+T3 registered {'rnn': 30, 'graph': 28, 'stig': 30, 'sediment': 30}
+per-family BA (frozen L0003 | LOFO L0003 | L0001 | T3 | T2a | n, nF):
+  graph [0.972, 0.944, 0.819, 0.528, 0.5] 22 4
+  rnn [1.0, 1.0, 1.0, 0.5, 0.5] 24 20
+  sediment [0.962, 0.962, 0.981, 0.5, 0.756] 29 26
+  stig [nan, nan, nan, nan, nan] 30 30
+(i) S0-A analogue: frozen L0003 uplift over T3 on REGISTERED rows U= 0.487 {'graph': 0.5, 'rnn': 0.5, 'sediment': 0.462} dropped ['stig']
+(ii) informative families [np.str_('graph'), np.str_('rnn'), np.str_('sediment')] below T2a []
+FOREIGN: informative True frozen BA 0.9615384615384616
+L-0003 VERDICT: SURVIVED_PROVISIONAL | foreign: PASSED
+AB agreement {np.str_('graph'): np.float64(1.0), np.str_('rnn'): np.float64(1.0), np.str_('sediment'): np.float64(0.828), np.str_('stig'): np.float64(0.967)}
