@@ -22,3 +22,11 @@ before it is a property of the search (successor THESEUS-30).
 
 Predictions: K1 (all rates < 5%) RIGHT; K2 (not supported / indeterminate) RIGHT;
 K3 (R highest) WRONG (all tied at 0).
+
+CORRECTION 2026-10-08 (THESEUS-30a, theseus/runs/comp_control_2026-10-08/VERDICT.md):
+the detector used here is BLIND by construction -- planted compositions whose parts are
+inert alone by construction are flagged 0/40, because fingerprint distance includes
+structural interventions and cannot express "inert". The INDETERMINATE verdict above
+stands; the "Reading" paragraph above (wall = property of the primitive set; "parts
+never inert alone") is NOT SUPPORTED by this instrument and is withdrawn. A trace-based
+detector v2 is preregistered under THESEUS-30b.
