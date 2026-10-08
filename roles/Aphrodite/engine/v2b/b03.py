@@ -1,4 +1,4 @@
-"""BETA-03 (C-008): THE COMPOSITION FRONTIER -- coordinator runner (supply + E1). Directive:
+"""BETA-03 (C-011): THE COMPOSITION FRONTIER -- coordinator runner (supply + E1). Directive:
 prompts/2026-10-08_beta03/01_OPERATOR_DIRECTIVE_verbatim.md. Pre-registrations: beta03/windows/*_PREREG.md.
 
 Reuses the Beta-02 machinery (b02.py, unchanged) by pointing its supply paths at Beta-03 blocks:
