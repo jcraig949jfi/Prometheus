@@ -202,3 +202,19 @@ failed. No row was written and no result was lost; the orphan detail files were 
   at once, with no runs.
 - Its `--after` wait line had a broken string literal; the process died before waiting.
 - Both were caught before any run and fixed.
+
+## F5. X-RANDOM-DIR: CLEAN_NULL (structural)
+
+**Result:** from random populations at CONST 0.15, 2000 epochs:
+- no copier regime: 0/12 runs reached depth >= 20, max depth 3;
+- no competence root in either arm.
+
+**DIR and RND rows are identical by construction**, which is not a defect:
+- with u = 0 everywhere, DIR never reorders and never draws its private RNG;
+- so the identical-arms signature, normally a defect flag, is the expected reading here.
+
+**What it bounds:** de novo functional heredity in this world is blocked at the FIRST rung (copy-capable material).
+The task rung is never reached.
+
+**Retired:** the earlier C-A3 runaways (25/72) came under QD pressure and are a different regime. Re-discovery is
+tested instead from copier backgrounds (X-REDISCOVER).
