@@ -76,7 +76,9 @@ class Vault:
 
     # -- scoring ------------------------------------------------------------------------------------
     def score(self, candidate_id: str, spec: dict, batch: int,
-              predict: Callable[[list], np.ndarray], verdict: Callable[[np.ndarray, np.ndarray], Dict]) -> Dict:
+              predict: Callable[[list], np.ndarray], verdict: Callable[..., Dict]) -> Dict:
+        """verdict(labels, predictions, meta) -> summary statistics. meta carries per-world family / stratum /
+        secondary labels; it never leaves the vault either."""
         fr = [r for r in self._read(self.freeze_log) if r["candidate_id"] == candidate_id]
         if not fr:
             raise FirewallError(f"{candidate_id} is not frozen")
@@ -86,8 +88,8 @@ class Vault:
             raise FirewallError(f"confirmation batch {batch} is spent")
         b = self._batch(batch)
         pred = np.asarray(predict(b["world_ids"]))
-        out = verdict(np.asarray(b["labels"]), pred)
-        safe = {k: v for k, v in out.items() if k not in ("labels", "y")}
+        out = verdict(np.asarray(b["labels"]), pred, b.get("meta", {}))
+        safe = {k: v for k, v in out.items() if k not in ("labels", "y", "meta")}
         self._append(self.ledger, {"candidate_id": candidate_id, "spec_sha256": fr[0]["spec_sha256"],
                                    "batch": batch, "result": safe,
                                    "utc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())})

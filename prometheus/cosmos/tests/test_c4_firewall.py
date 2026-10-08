@@ -7,7 +7,7 @@ from prometheus.cosmos.c4 import firewall as F
 from prometheus.cosmos.c4 import stats as S
 
 
-def _ba_verdict(y, p):
+def _ba_verdict(y, p, meta=None):
     return {"ba": S.ba(y, p)}
 
 
