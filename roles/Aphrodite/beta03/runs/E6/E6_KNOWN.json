@@ -1,0 +1,146 @@
+{
+ "K6a_plain_identity_on_R8_libraries": true,
+ "K6a_plain_removes_nonG5": true,
+ "K6a_detail": {
+  "synthetic_entry_bodies": 6,
+  "outside_G5": 5
+ },
+ "K6b_sham_swap": true,
+ "K6b_detail": {
+  "inherited": "P_d58d7c2969b5",
+  "sham": "P_acbd91eb902a",
+  "from": "(P_d58d7c2969b5((v * {H})) - first)",
+  "to": "(P_acbd91eb902a((v * {H})) - first)",
+  "bodies_before": 6,
+  "bodies_after": 6
+ },
+ "K6c_reducer_reproduces_W01": true,
+ "K6d_plan_reproduces_PLAN_R8": true,
+ "K6d_seeds": 24,
+ "K6e_generator_reproduces_LIN72": true,
+ "K6e_cpu_note": "subprocess (2-proc pool) wall-timed by caller; parent cpu 0.0s",
+ "K6f_rules": true,
+ "K6g_negative_branch": true,
+ "K6g_detail": {
+  "links": {
+   "101": "CANDIDACY",
+   "102": "CANDIDACY",
+   "103": "SELECTION",
+   "104": "SELECTION",
+   "105": "SEARCH_BUDGET",
+   "106": "NONE"
+  },
+  "selection_kinds": {
+   "101": null,
+   "102": null,
+   "103": "ELIGIBLE_REJECTED",
+   "104": "NONE_ELIGIBLE",
+   "105": null,
+   "106": null
+  },
+  "first": {
+   "STAT": "STATISTICAL:P1_ENABLING+SECOND_LEVEL_COUNT+SHAM",
+   "MEAS": "MEASUREMENT",
+   "SUP": "SUPPLY",
+   "SB": "SEARCH_BUDGET",
+   "SEL": "SELECTION",
+   "CAND": "CANDIDACY",
+   "TR": "TRANSFER"
+  }
+ },
+ "K6j_unseen_report": true,
+ "K6h_scramble_invariance_exposed_R8_49": true,
+ "K6h_detail": {
+  "family_cells": [
+   [
+    "wjouca",
+    0,
+    193,
+    false
+   ],
+   [
+    "wfruca",
+    0,
+    299,
+    false
+   ],
+   [
+    "wcnuca",
+    1,
+    624,
+    false
+   ],
+   [
+    "wdnuca",
+    0,
+    1000000,
+    true
+   ]
+  ]
+ },
+ "K6i_positive_end_to_end": true,
+ "K6i_detail": {
+  "per_pair": [
+   {
+    "pair": 49,
+    "acq_D": 0,
+    "acq_PLAIN": 0,
+    "acq_SHAM": 0,
+    "drop_PLAIN": false,
+    "drop_SHAM": false,
+    "scramble_mismatches": []
+   }
+  ],
+  "failed_components": [
+   "DEPENDENCY_CONFIRMED",
+   "UNSEEN_LINEAGES"
+  ],
+  "cap": 30000,
+  "sham": "({H} + v)"
+ },
+ "pass": true,
+ "timing": {
+  "K6a": {
+   "wall_s": 31.2,
+   "parent_cpu_s": 31.2
+  },
+  "K6b": {
+   "wall_s": 0.2,
+   "parent_cpu_s": 0.2
+  },
+  "K6c": {
+   "wall_s": 1.3,
+   "parent_cpu_s": 1.3
+  },
+  "K6d": {
+   "wall_s": 0.4,
+   "parent_cpu_s": 0.4
+  },
+  "K6e": {
+   "wall_s": 70.5,
+   "parent_cpu_s": 0.0
+  },
+  "K6f": {
+   "wall_s": 0.0,
+   "parent_cpu_s": 0.0
+  },
+  "K6g": {
+   "wall_s": 1.2,
+   "parent_cpu_s": 1.0
+  },
+  "K6j": {
+   "wall_s": 0.1,
+   "parent_cpu_s": 0.0
+  },
+  "K6h": {
+   "wall_s": 5.9,
+   "parent_cpu_s": 0.2
+  },
+  "K6i": {
+   "wall_s": 4.0,
+   "parent_cpu_s": 0.2
+  }
+ },
+ "wall_s": 115.2,
+ "parent_cpu_s": 35.0
+}
