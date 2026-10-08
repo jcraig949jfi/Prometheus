@@ -146,7 +146,15 @@ def _has(props, prop, value=None):
     return any(v["value"] == value for v in vs) if value else bool(vs)
 
 
-def properties_to_genome(props, name, readers=False):
+MECH_RULES = {  # THESEUS-32 v2 compile: fixed table keyed on the concept's own 'mechanism' field
+    "dynamics": ["advect", "react"],
+    "structure": ["coarse", "mirror"],
+    "constraint": ["conserve", "threshold"],
+    "measure": ["rank", "select"],
+}
+
+
+def properties_to_genome(props, name, readers=False, mechanism=None, v2=False):
     """readers=True (THESEUS-30e variant): memory concepts carry a WRITER only (remember, no
     recall); delayed/routed concepts carry inert-alone READERS (inject/modulate) instead of
     delay/gate -- writers and readers start in different concept lineages."""
@@ -235,6 +243,14 @@ def properties_to_genome(props, name, readers=False):
             keep_writer = int(hashlib.sha256(("split:" + name).encode()).hexdigest(), 16) % 2 == 0
             drop = ("inject", "modulate") if keep_writer else ("remember",)
             rules = [r for r in rules if r["op"] not in drop]
+    if v2 and mechanism in MECH_RULES:
+        # THESEUS-32: description-only concepts fire few keywords and collapse onto the same
+        # diffuse+saturate program; when fewer than 3 non-bounding rules fired, add the fixed
+        # rules of the concept's declared mechanism type (deterministic, no interpretation).
+        active = [r for r in rules if r["op"] not in ("saturate",)]
+        if len(active) < 3:
+            for op in MECH_RULES[mechanism]:
+                rules.insert(len(rules) - 1, R(op, arity=2 if (op == "react" and C > 1) else 1))
     rules = rules[: sb.MAXRULES]
     g = {"C": C, "topo": {"kind": topo, "seed": int(rng.integers(1 << 16))}, "bc": bc,
          "init": {"kind": init, "amp": 1.0}, "rules": rules}
@@ -242,7 +258,7 @@ def properties_to_genome(props, name, readers=False):
     return g, defaulted
 
 
-def compile_corpus(ref="HEAD", readers=False):
+def compile_corpus(ref="HEAD", readers=False, v2=False):
     concepts = load_concepts(ref)
     art_sha = subprocess.run(["git", "log", "-1", "--format=%H", ref, "--", SOURCE_ARTIFACT],
                              capture_output=True, text=True, check=True).stdout.strip()
@@ -257,7 +273,7 @@ def compile_corpus(ref="HEAD", readers=False):
             text += " " + " ".join(" ".join(v) if isinstance(v, list) else str(v)
                                    for k, v in ce.items() if k != "concept")
         props = extract_properties(text)
-        g, defaulted = properties_to_genome(props, name, readers=readers)
+        g, defaulted = properties_to_genome(props, name, readers=readers, mechanism=c.get("mechanism"), v2=v2)
         out.append({
             "id": f"G0-{slug(name)}",
             "generation": 0,
