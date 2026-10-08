@@ -63,6 +63,9 @@ CONFIG = {
     "known_library_per_family": kn.LIB_PER_FAMILY,
     "compute_guard_wall_s_ecology": 4 * 3600,
     "law": True,
+    "quality": "rep",            # QD elite quality: "rep" (-replicate distance, v0) or "r5" (response mid-band)
+    "elite_grids": ["pca", "desc", "resp"],
+    "dark_protect_gens": None,   # None = untried dark objects protected forever (v0)
 }
 
 _CAL = None
@@ -187,12 +190,21 @@ def main(argv=None):
     ap.add_argument("--smoke", action="store_true")
     ap.add_argument("--no-law", action="store_true", help="THESEUS-28: collisions without the generated k-ary law")
     ap.add_argument("--ecology-only", action="store_true", help="stop after phase 2; export ecology rows only")
+    ap.add_argument("--quality", choices=["rep", "r5"], default="rep")
+    ap.add_argument("--elite-grids", default="pca,desc,resp")
+    ap.add_argument("--pop-cap", type=int, default=None)
+    ap.add_argument("--dark-protect-gens", type=int, default=None)
     a = ap.parse_args(argv)
     cfg = copy.deepcopy(CONFIG)
     cfg["gens"] = a.gens
     if a.no_law:
         cfg["law"] = False
     cfg["ecology_only"] = bool(a.ecology_only)
+    cfg["quality"] = a.quality
+    cfg["elite_grids"] = a.elite_grids.split(",")
+    if a.pop_cap is not None:
+        cfg["pop_cap"] = a.pop_cap
+    cfg["dark_protect_gens"] = a.dark_protect_gens
     if a.smoke:
         cfg.update(gens=min(a.gens, 7), per_cell=1, n_oneshot_per_arity=12, n_random=12, n_weird=6, n_neutral=6,
                    n_hidden_known=4, reproduce_top={k: 2 for k in cfg["reproduce_top"]}, lens_marginal_sample=6)
@@ -249,7 +261,7 @@ def main(argv=None):
         e["behavioralFingerprint"] = r["fp"]
         evals[e["id"]] = r
         if r["viable"]:
-            assessments[e["id"]] = archive.insert(e["id"], r["fp"], -r["viability"]["rep_dist"])
+            assessments[e["id"]] = archive.insert(e["id"], r["fp"], quality_of(r, cfg))
             active.add(e["id"])
             field.place(e["id"], r["fp"])
             born_gen[e["id"]] = 0
@@ -308,7 +320,7 @@ def main(argv=None):
                 evals[eid] = r
                 asmt = None
                 if r["viable"]:
-                    asmt = archive.insert(eid, r["fp"], -r["viability"]["rep_dist"])
+                    asmt = archive.insert(eid, r["fp"], quality_of(r, cfg))
                     assessments[eid] = asmt
                     active.add(eid)
                     field.place(eid, r["fp"])
@@ -349,9 +361,11 @@ def main(argv=None):
                             field.place(lid)
                             born_gen[lid] = gen
                         reg[d]["metadata"]["resolved_by_lens"] = lid  # measured: held-out drop > null p95
-            protected = archive.elite_ids() | {d for d in dark_queue if not reg[d]["metadata"].get("lens_tried")} | \
+            dpg = cfg["dark_protect_gens"]
+            protected = archive.elite_ids(cfg["elite_grids"]) | {d for d in dark_queue if not reg[d]["metadata"].get("lens_tried")
+                                                                 and (dpg is None or gen - born_gen.get(d, 0) < dpg)} | \
                 {l for l, _ in lenses}
-            fos = ec.fossilize(reg, active, vitality, protected, gen, born_gen)
+            fos = ec.fossilize(reg, active, vitality, protected, gen, born_gen, cap=cfg["pop_cap"])
             for i in list(vitality):
                 vitality[i] *= 0.9
             field.tick(active)
@@ -603,6 +617,13 @@ def main(argv=None):
         f.write(an.render(out, tag))
     clock.mark("5_analysis_and_export", 0.0)
     print(json.dumps(out.get("verdicts", {}), indent=1))
+
+
+def quality_of(r, cfg):
+    """QD elite quality (never novelty): v0 = reproducibility; THESEUS-27 = R5."""
+    if cfg.get("quality") == "r5":
+        return r5_midband(r["fp"])
+    return -r["viability"]["rep_dist"]
 
 
 def r5_midband(fp):

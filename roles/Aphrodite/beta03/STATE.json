@@ -136,28 +136,39 @@
       "outcome_free": true
     }
   ],
-  "next_permissible_action": "W02: after supply A -> b03.py e1 donors; after supply B -> e1 freeze, starts, recip, score, report",
+  "next_permissible_action": "after supply A: b03.py e1 donors THEN b03_e2.py run (E2 reuses E1 g11 rows); after supply B: e1 freeze/starts/recip/score/report; E2 score/report after its run",
   "compute": {
     "cap": "48 core-h / rolling 24h (M4)",
     "ledger": []
   },
   "cloud_spend_usd": 0.0,
   "subagents": {
-    "REPRESENTATION": "branch aphrodite/b03-w5p (running)",
-    "SELECTOR": "branch aphrodite/b03-g12 (running)",
+    "REPRESENTATION": "DELIVERED aphrodite/b03-w5p @1e169a577 (11/11 PASS); decisions D1-D5 pending W05 freeze",
+    "SELECTOR": "DELIVERED aphrodite/b03-g12 @6c03a218f (16/16 PASS); merged; E2 frozen",
     "ECOLOGY": "branch aphrodite/b03-eco (running)",
-    "RED_TEAM": "scheduled W11 + freeze reviews"
+    "RED_TEAM": "pre-freeze review of E1/E2 done (2 BLOCKER + 7 MAJOR); all amended pre-data (A1); W11 review pending"
   },
   "known_defects": [
     "r7e._donor drops selection_table (B01)",
-    "NULL junk gates never competitive (B02 E12 s6.3) -> E2 adds NEAR-MISS trap"
+    "NULL junk gates never competitive (B02 E12 s6.3) -> E2 adds NEAR-MISS trap",
+    "import-order hazard: importing a17/gtc/a18 before b02/r7e changes a18.TAG (cell labels); all Beta-01/02/03 runners import b02 first; g12 asserts TAG"
   ],
   "expected_final_disposition": "open",
   "frozen_specs": {
     "E1": {
       "spec": "beta03/windows/E1_PREREG.md",
       "freeze": "beta03/FREEZE_E1.json",
-      "b03_sha": "4408324c2211c23a46ee308761ad28d5dafe6c36c40961362126f0a1a4884225"
+      "b03_sha": "1febd5d54a6d0b26c597202bf483e15e18b071b508c4ec6dbfa14abbc1b53d82",
+      "amendments": [
+        "A1"
+      ]
+    },
+    "E2": {
+      "spec": "beta03/windows/E2_PREREG.md",
+      "freeze": "beta03/FREEZE_E2.json",
+      "amendments": [
+        "A1"
+      ]
     }
   }
 }

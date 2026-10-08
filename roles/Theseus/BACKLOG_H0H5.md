@@ -3,10 +3,11 @@
 Currency: 2026-10-08 (48h loop: THESEUS-25 DONE 27e8be548; THESEUS-23a DONE 8814bb4b0 (only R5
 discriminates); THESEUS-23b running; 27-28 added from the 23a failure shape). Priority order.
 
-THESEUS-23b | Measure the composition wall on v0_1 genomes (prereg 279db6bdc) | C1 | alpha | S | none | theseus/runs/composition_2026-10-08/ + verdict
+THESEUS-30 | Add CONDITIONAL primitives that are inert alone (act only through state other parts create: memory-keyed, channel-gated, threshold-armed), build a constructive planted composition, and re-run the 23b detector on G0/one-shot/deep arms | C1 | alpha | M | none | substrate v2 ops + planted-composition positive control + composition rates
 THESEUS-27 | Run a v1 ecology whose QD elite quality is R5 (graded causal structure) vs the v0 quality (reproducibility), same seeds and budget; does depth then build structure instead of eroding it? | C1 | alpha | M | THESEUS-23b | prereg + two runs + R5-by-generation table
 THESEUS-28 | Ablate the generated k-ary law (law-free collisions) and test whether R5 erosion with depth disappears | C1 | alpha | S | none | prereg + run + R5-by-generation table
 THESEUS-29 | Find or build a stronger structure ruler than R5 (W controls score high on R5) | C1 | beta | M | none | ruler_check rerun with the new ruler, AUC + W control
+THESEUS-23b-DONE | (closed 2026-10-08) composition wall on v0_1: 0 in every arm, INDETERMINATE; parts never inert alone (runs/composition_2026-10-08/VERDICT.md)
 THESEUS-23-DONE | (closed 2026-10-08, 8814bb4b0) Make the rulers discriminate: plant deep-ancestry structure as positive controls and require the mechanistic and lens rulers to separate planted structure from matched random programs before they judge D | C1 | alpha | M | none | control table: planted vs R separation per ruler, committed with a prereg
 THESEUS-24 | Raise H1's equal n above 51: generate ~300 LLM-arm genomes by the same spec, and report H1-without-A as a secondary | C1 | alpha | S | none | theseus/controls/llm_arm_v1/ + H1 at n >= 150
 THESEUS-20 | Replicate H1 across >= 3 master seeds and report the between-seed spread of every H1 statistic | C1 | alpha | S | THESEUS-23 | multi-seed table in a v1 report

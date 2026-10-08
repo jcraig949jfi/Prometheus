@@ -24,6 +24,30 @@
       "window": "W01",
       "kind": "FREEZE",
       "note": "E1 prereg + b03.py frozen; K1-K3 pass"
+    },
+    {
+      "utc": "2026-10-08T05:55Z",
+      "window": "W01",
+      "kind": "LEAD",
+      "note": "REPRESENTATION lead delivered W5P on branch aphrodite/b03-w5p @1e169a577: 11/11 tests PASS (semantics 15,360 cases 0 mismatch; conformance 18,600 + 48 walks; no-op continuity T12 seed17; transplant fresh-process). Donor ~2-5 CPU-min, ~1.3-1.5x search charges with inherited abstraction; expanded-billing overhead 1.076x. 5 open decisions deferred to W05/W09 freeze."
+    },
+    {
+      "utc": "2026-10-08T06:16Z",
+      "window": "W01",
+      "kind": "LEAD",
+      "note": "SELECTOR lead delivered g12 @6c03a218f (16/16); import-order defect class recorded"
+    },
+    {
+      "utc": "2026-10-08T06:16:40Z",
+      "window": "W01(early W03 work)",
+      "kind": "FREEZE",
+      "note": "E2 g12 prereg frozen; K4 pass; decisions D1 fallback off, D2 near-miss attractiveness descriptive, D4 tie-break confirmed"
+    },
+    {
+      "utc": "2026-10-08T06:51:38Z",
+      "window": "W01",
+      "kind": "AMEND",
+      "note": "A1 red-team amendment to E1/E2 (pre-data); K1,K1b,K2,K3(+R8 pairs 66/57),K4 PASS; freezes re-recorded"
     }
   ]
 }
