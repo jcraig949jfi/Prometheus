@@ -108,11 +108,15 @@ def _mark(rule, cid, how):
     return rule
 
 
-def collide(parents, tensor, cid, extra_seed=0, operators=None, law=True):
+def collide(parents, tensor, cid, extra_seed=0, operators=None, law=True, aligned=False):
     """parents: ordered list of entity dicts. Returns (genome, record).
 
     law=False (THESEUS-28 ablation): the k-ary interaction law is generated (so every RNG
-    draw is identical to law=True) but NOT inserted into the child."""
+    draw is identical to law=True) but NOT inserted into the child.
+
+    aligned=True (THESEUS-34): parent channels keep their indices (no positional remap
+    (c + j) mod C), so parts inherited from different lineages address the same memory
+    slots; every RNG draw is unchanged."""
     k = len(parents)
     rng = np.random.default_rng(_seed("collide", cid, [p["id"] for p in parents], extra_seed))
     genomes = []
@@ -150,7 +154,7 @@ def collide(parents, tensor, cid, extra_seed=0, operators=None, law=True):
             idx = [(start + i) % len(rules) for i in range(n)]  # contiguous (cyclic) run: keeps local order
         else:
             idx = list(range(len(rules)))
-        blk = [_remap(rules[i], C, j) for i in idx]
+        blk = [_remap(rules[i], C, 0 if aligned else j) for i in idx]
         blocks.append(blk)
         primaries.append((blk[0]["dst"] if blk else j) % C)
 
