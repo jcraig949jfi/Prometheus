@@ -288,3 +288,19 @@ slot orders of E/(E+S). Analysis tools/analyze_w5b3.py (committed with this sect
 - W5-P7: pooled over both levels, E_share(ON) > E_share(OFF) within seed in more seeds than the reverse: one-sided sign
   test p < 0.05 (the advantage depends on payment).
 Exploratory; specimens are single representatives of each architecture (generality limit).
+
+## 11. WINDOW 6 block 2 -- generality of two-fragment complementation (frozen 2026-10-08T18:16:03Z, before any run)
+
+Plan tools/plan_w6b2.py: 720 runs, sha256 d093d10956b27bbfd2515075bb171c75ace7cbd305af1e2e4258d2b0810a02c1. Three
+confound-free variants from evolved machine shapes, asserted at build time (A, B non-FUNC; composite FUNC; 0 single-
+substitution FUNC mutants of A and B in both physics; A holds NO LDIR and writes its 2 bytes by CONSTRUCTED writes):
+V0 = LD T,0x40 @13 + LDIR @34; V1 = LD T,0xA0 @4 + LDIR @10; V2 = LD T,0x40 @30 + LDIR @45. Arms per variant (40 paired
+seeds): PARTIAL {AB, A, B, none}, PARTIAL target_fill zero AB, ENDOGENOUS_COPY AB. Endpoint FUNC_ANY = a first FUNC tape
+occurs. Analysis tools/analyze_w6b2.py (committed with this section; smoke-tested on 18 short runs; before freezing,
+the smoke run showed A-only reaching FUNC, as W2 had, so the draft rule 'A <= 10%' was removed: A is reported only).
+Each prediction must hold in EVERY variant:
+- G-P1: FUNC_ANY in AB >= 80% of seeds; in B and in none <= 10%.
+- G-P2: AB > AB_zero (target material ablated): McNemar on seed-pairs p < 0.05, AB-only > zero-only.
+- G-P3: AB > AB_copy (complete-overwrite physics): McNemar p < 0.05, AB-only > copy-only.
+- G-P4: in AB runs, the first assembly/construct event is two-source in >= 80%: the child is FUNC, the child with its
+  target bytes zeroed is not, and the pre-birth target tape is not.
