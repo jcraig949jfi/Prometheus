@@ -285,3 +285,10 @@ What this ecology assumes, and what the coordinator should check when W5P lands:
   (>= 2 per mechanism, so LGG can recover S_a) without the p > 0 floor, or the floor should be computed with FLAT_A.
 * **D5: W5P conformance.** When aphrodite/b03-w5p lands, rerun `certify_family` with W5P's own promoted library
   builder (s7) on the pilot families. Accept W5P only if its PROMOTED_A verdicts match these at 1M.
+
+## 10. Addendum (D5, after the W5P merge)
+The certification was re-run with W5P's actual machinery (`w9h_w5p_cert.py`). Verdicts match on 31/47 admitted L2
+families. **W5P certifies 28; expansion certifies 44.** All 16 mismatches are expansion-only and caused by W5P's
+`g5p_admissible` instantiation rule (non-atom fillers under W2/W2S outer mechanisms). The 28 W5P-certified families
+still cover all 8 certified compositions. For W5P experiments, use the W5P-certified set. Details are in
+E5H_DESIGN_NOTES.md s1.
