@@ -182,3 +182,30 @@ ERRATUM (2026-10-08T05:58Z): s5's header says "frozen 2026-10-08T06:30Z"; the fr
 
 ERRATUM (2026-10-08T06:02Z): the W4 freeze commit is ebc3daaae (ebc3daaaea3b2770bf9fa9ffbbedf698877cced6); the previous
 erratum and the ledger row wrote "ebc3daaaa" by typing error. The queued script uses the correct pin directory.
+
+## 6. WINDOW 3 -- replication reachability (W3a frozen 2026-10-08T08:15Z, before any W3 run)
+
+Seen before this freeze: the W2 frozen analysis (BEL_48H_CORRECTED results to come; ~/bel48h_runs/analysis/w2.json),
+incl. that 24/27 H1 first-FUNC tapes arose IN_PLACE (lazy detection), and the reach summaries (origin-event counts,
+LDIR critical 27/27, portability, ramp flags). W3a therefore re-measures the SAME 27 origins with an eager instrument;
+its rules below are partly informed by W2 and are labelled DISCOVERY. Confirmation on fresh, unseen origins is W6.
+
+W3a plan: tools/plan_w3.py -> 27 replays of the W2 H1 runs with a first FUNC tape, sha256
+e52ba28da5c0ec69007286bd186cba389dc712b964224c83be8879ecf91b8444, instrument tools/origin.py (eager change tags m/s/u/v/i;
+first-FUNC event dissection; per-byte reversion; carrier history). Each replay must reproduce its W2 end-state hash.
+
+Frozen classification of each origin event (unit = run = independent origin):
+  CAUSE      origin_event.kind: MUTATION | SELF_CONSTRUCT | UPTAKE | SELF_MOVE | BORN_<class>
+  STEPS      number of changed critical bytes whose individual reversion kills FUNC (necessary_changed)
+  PRECURSOR  old_copy_extent (own-position bytes the tape laid down just before the event): 0 = none; 1..57 = partial
+             copier; >= 58 = near-copier that failed the 0.9 L bar for another reason
+  ASSISTED   the carrier was born by another organism's writes (carrier_mech != init) AND >= half of its critical bytes
+             were acquired by inheritance at birth (critical_via 'i')
+  PATHWAY    ATOMIC if PRECURSOR == 0 and STEPS >= 2; SINGLE_STEP_FROM_NOTHING if PRECURSOR == 0 and STEPS == 1;
+             INCREMENTAL if PRECURSOR > 0; ASSEMBLY if CAUSE in (UPTAKE, BORN_ASSEMBLY, BORN_CONSTRUCT)
+Discovery predictions (from the grounding round's G6 reading "short ramp ending in a small step"):
+- W3-P1: STEPS == 1 in >= 60% of origins.
+- W3-P2: PRECURSOR > 0 (INCREMENTAL) in >= 40% of origins.
+- W3-P3: replay identity 27/27 (a failure is INSTRUMENT_FAILURE and voids W3a).
+- W3-P4: LDIR is among the critical bytes in 27/27 (dependence on LDIR); NOP-slide dependence (FUNC lost when zero
+  bytes become HALT) in >= 50%.

@@ -135,6 +135,14 @@ def _run_one(spec):
             k: v for k, v in (s.get("coupling") or {}).items() if k != "bonus_schedule"}
         out["dual"] = w.dual_summary(); out["heredity"] = w.heredity_summary(); out["comp"] = w.comp_summary()
         out["end_hash"] = end_state_hash(w)
+    elif kind == "origin":
+        from origin import OriginWorld
+        cfg = _cfg(spec)
+        w = OriginWorld(cfg, spec["seed"]); s = w.run()
+        out["summary"] = _keep(s); out["heredity"] = w.heredity_summary(); out["reach"] = w.reach_summary()
+        out["origin"] = w.origin_summary(); out["end_hash"] = end_state_hash(w)
+        if spec.get("expect_end_hash") is not None:
+            out["replay_identical"] = out["end_hash"] == spec["expect_end_hash"]
     elif kind == "plain":
         cfg = _cfg(spec)
         w = World(cfg, spec["seed"]); s = w.run()
