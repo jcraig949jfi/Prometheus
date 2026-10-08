@@ -468,3 +468,21 @@ answer-before-read branch. In the ONTAPE world BOTH sides get episodes.
 scorer, where key >= 1 makes it rare. On the pair TAPE, in every world without task inputs (DIR / VETO / RND: IN
 returns 0), it is the path executed on EVERY interaction. Its mutations therefore change tape behavior. "Vestigial"
 applies to the offline task only.
+
+## C3. C-ARCH-COMPETE: NOT_CONFIRMED (CONFIRM lane; fresh seeds 45_400_000+; frozen at fb072bba5)
+
+**Result:**
+- 9 of 10 runs ended with competence. The CT_W family held the majority in 7; the rule needed 8.
+- **Verdict: NOT_CONFIRMED. The rule is not re-cut.**
+
+**Post-verdict mining** (descriptive only; dominant-family series):
+- In both CT_UA-won runs, CT_UA was dominant from epoch 10 on, and CT_W ended at 0%. CT_W's single founder lineage
+  was lost before it could compete.
+- In the CT_W-won runs, CT_UA leads early and CT_W takes over between epochs 100 and 500.
+
+**Reading:**
+- Robust-architecture substitution occurs when both founders establish. Single-founder establishment is a lottery
+  that the frozen rule did not condition on.
+- F10 therefore stays EXPLORE-level, and the mechanism is NOT promoted.
+- A better confirm design would plant several copies of each architecture, so that establishment is not a lottery.
+  It is not run here, to avoid adaptive re-testing in the same window.
