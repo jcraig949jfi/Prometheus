@@ -1,29 +1,29 @@
 {
   "schema": "prometheus.workgraph.campaign.v1",
   "campaign_id": "C-008",
-  "thread_id": "TH-MOON-M4",
-  "epic_id": "EP-MOONSHOT",
+  "thread_id": "TH-P2B-APHRODITE-V2B",
+  "epic_id": "EP-PHASE2B",
   "status": "OPEN",
-  "label": "C-MOON-M4-LANEC-01",
-  "title": "Lane C -- synthetic-epoch commodity fabric (R-EP D1-D5)",
-  "objective": "Establish the R-EP epoch semantics on SYNTHETIC epochs only: a pure epoch unit with a transport-independent SHA-256 semantic identity (D1), CAS publication with explicit PUBLISHED / DUPLICATE / DISAGREEMENT-QUARANTINE / AMBIGUOUS outcomes and validation as a separate state (D2), the twelve-case fault-injection matrix under both single-ref and per-chain-ref layouts (D3, tests first), a preregistered transport study on a disposable local-network bare remote plus one bounded GitHub WAN-semantics arm (D4), and node auto-join without auto-authorization (D5). No organisms, world physics, S-meter or RSO evidence.",
-  "coordinator_role": "Themis",
+  "label": "C-P2B-APH-BETA-03",
+  "title": "Aphrodite Beta-03 -- the composition frontier (48 h, 12 windows)",
+  "objective": "Why does first-order improvement stop compounding? E1 saturation/interference/ceiling; E2 g12 endpoint-aligned selector; E3 W5P promotion; E4 second-level ecology; E5 R8 under promotion; E6 attack. Kill criterion -> migrate substrate. Tier 2; no live models; no Campaign 1; no third generation.",
+  "coordinator_role": "Aphrodite",
   "members": [
-    "Themis"
+    "Aphrodite"
   ],
-  "authority": "operator OP-LC1 2026-10-06 (roles/Themis/prompts/2026-10-06_op_lc1/02_OPERATOR_OP-LC1_verbatim.md)",
-  "sources": "moonshot/epoch/CONTRACT.md; roles/Themis/design/MOONSHOT_DESIGN_v0.3.md (R-EP, N1, N3, N4, N5, N7); roles/Themis/design/LANE_C_M4_KICKOFF.md; roles/Themis/design/MOONSHOT_DESIGN_v0.2_ASTRA_REVIEW.md F08",
+  "authority": "operator directive 2026-10-08 (roles/Aphrodite/prompts/2026-10-08_beta03/01_OPERATOR_DIRECTIVE_verbatim.md)",
+  "sources": "roles/Aphrodite/beta03/STATE.json; roles/Aphrodite/beta03/LEDGER.json",
   "quality_classes": {
     "Q1": {
-      "description": "mechanical: fixtures, manifests, reruns of a frozen bench configuration",
+      "description": "mechanical: reruns of frozen procedures, manifests, fixtures from a settled design",
       "rank": 1
     },
     "Q2": {
-      "description": "substantial: protocol state machines, fault-injection TDD, transport instrumentation",
+      "description": "substantial: triage judgements, repairs, replay design, residual-science selection",
       "rank": 2
     },
     "Q3": {
-      "description": "adversarial: attacks on the publication contract, ambiguous-commit and taint semantics",
+      "description": "scarce deep reasoning / adversarial review of a repair or a surprising replay",
       "rank": 3
     }
   },
@@ -31,10 +31,10 @@
     "INTEGRATED",
     "CLOSED"
   ],
+  "created_by": "Aphrodite[harry1-0f14ab93]",
+  "created_at_utc": "2026-10-08T05:05:00Z",
   "cadence": {
-    "mode": "test-first build, then preregistered transport baseline",
-    "note": "D4 bounds are frozen and committed before any baseline is observed"
-  },
-  "created_by": "Themis[m2-0e9b1ed2]",
-  "created_at_utc": "2026-10-06T08:52:00Z"
+    "mode": "12 x 4h DEV/EXP windows",
+    "note": "see beta03/STATE.json"
+  }
 }
