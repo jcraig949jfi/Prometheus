@@ -66,3 +66,57 @@ about 9% of "mutation-free" CT_UA copies differed by one byte.
 - Regression: HK-1. The old behavior is the failing case (the 9% diffs reproduced before the fix).
 - Production runs never override `_mutate`, so they are unaffected; EQ-1 still matches frozen XTG-v2 bit for bit.
   The X-LOSS-GATE batch straddled the fix, and its runs are behaviorally identical under both versions.
+
+## F3. X-DIR-QUAL: SIGNAL. Selection on copy DIRECTION maintains transmitted function (EXPLORE, 60 runs)
+
+**Setup:** order = DIR (q = 1: the higher-u organism runs first, i.e. is the would-be donor), with interaction rate
+fixed and competence-blind (CONST p).
+
+**Maintenance** (final CS >= 0.10, established runs):
+
+| arm | maintained | final CS |
+|---|---|---|
+| DIR015 (2000 epochs) | 12/12 | 0.91-0.95 |
+| DIR100 (300 epochs, matched about 300 interactions per organism) | 12/12 | 0.88-0.94 |
+| RND015 | 0/9 | -- |
+| RND100 | 0/12 | -- |
+| CT_U under DIR | 0/5 | CS = 0 at every snapshot |
+| COPY_ONLY under DIR | 0/5 | CS = 0 at every snapshot |
+
+- Both negatives established their copiers and runaway, yet never showed competence.
+- DIR also raised CT_UA establishment: 12/12, against 9/12 under RND015.
+
+**Mechanism (ledger):**
+- Side 0 wins the copy race in 93-98% of conversions in every arm. DIR therefore converts "first mover wins" into
+  "function wins".
+- The exchange becomes 50,420 competent-over-non-competent conversions against 815 the reverse (RND: 5,524 against
+  4,925).
+- Losses shift from OVERWRITE (0.89 under RND) to the mutational leak:
+
+  | loss class (DIR) | share |
+  |---|---|
+  | in-place | 0.43 |
+  | copy error | 0.29 |
+  | post-copy mutation | 0.26 |
+  | overwrite | 0.02 |
+
+- Hazard per competent-half interaction: 0.058 (RND: 0.26-0.28).
+- Transmission per generation is unchanged at 0.92. The function is held at a mutation-selection balance of
+  CS about 0.92.
+
+**Architecture after about 300 interactions per organism (arch_mine DIR015, 12 runs):**
+- A quasispecies: 100-122 competent genome families per run; the dominant family has a share of 0.03-0.09 and a
+  Hamming distance of 14-24 from CT_UA.
+- Conservation against CT_UA: copier 0.97, routine 0.80, padding 0.43. The planted routine SURVIVES; drift is in the
+  padding and in some neutral routine positions.
+- Single-byte robustness of the dominant genome: all 0.69-0.72 (CT_UA 0.69); routine 0.38-0.45 (CT_UA 0.38). There
+  is no clear robustness gain; 3 of 12 are at 0.43 or above (weak; not yet tested).
+- Copier function is intact: P-11 conversion 0.95-1.0, task kept in 0.90-0.95 of copies.
+- **No architectural integration** at this horizon. The task is cargo held by selection, not fused with the copier.
+
+**Barrier moved:** functional persistence and selection on function are now PRESENT, under an external directional
+coupling. Architectural integration is NOT observed. Endogenous re-discovery has not yet been tested.
+
+**Scope caution:** DIR is a world rule that reads the task ruler, so selection on function is designed in. What is
+discovered is that DIRECTION (copy priority), not RATE (meeting frequency), is the coordinate that makes function
+heritable-and-selected on this pair tape.

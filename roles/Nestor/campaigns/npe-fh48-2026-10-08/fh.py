@@ -93,6 +93,7 @@ def make_runner(seed, cfg=None):
             self.side = {"comp_donor_side0": 0, "comp_donor_side1": 0, "conv_side0_victim": 0, "conv_side1_victim": 0}
             self.loss_examples = []
             self.ledger_series = []
+            self.dom_series = []
             base = self.mut_rate                                   # world: copy_mut == mut_rate (0.002, LOW)
             self.mut_rate = base * cfg["mut_scale"]
             self.copy_mut = base * cfg["copy_scale"]
@@ -293,6 +294,13 @@ def make_runner(seed, cfg=None):
                                   "max_tx_p11": max([self.st[o]["tx_p11"] for o in comp], default=0),
                                   "inter": self.n_inter})
                 self.ledger_series.append({"e": e, **self.led})
+                if comp:                                   # dominant competent genome (detail only; no RNG use)
+                    cnt = {}
+                    for o in comp:
+                        h = self._genome(o).hex()
+                        cnt[h] = cnt.get(h, 0) + 1
+                    h = max(cnt, key=cnt.get)
+                    self.dom_series.append({"e": e, "g": h, "n": cnt[h], "families": len(cnt)})
 
     r = FH(cell, seed, tier=a["tier"], max_epochs=cfg["epochs"], **kw)
     assert r.d["has_task"] and r.cell["environment"] == "STATIC" and r.spec.cue_index() == 2
@@ -338,7 +346,7 @@ def summarize(r, out):
         "traj": t, "cfg": {k: v for k, v in r.cfg.items()},
     }
     detail = {"pos_loss": r.pos_loss, "pos_mut_on_comp": r.pos_mut_on_comp, "loss_examples": r.loss_examples,
-              "ledger_series": r.ledger_series, "competent_genomes_final": gen,
+              "ledger_series": r.ledger_series, "dom_series": r.dom_series, "competent_genomes_final": gen,
               "organisms": [{k: v for k, v in x.items() if k != "g" or x["comp"]} for x in rows]}
     return rec, detail
 

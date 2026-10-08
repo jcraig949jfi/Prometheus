@@ -67,6 +67,63 @@ declare("X-DIR-QUAL",
            for arm, pl in (("NEG_CTU_DIR015", "CT_U"), ("NEG_COPY_DIR015", "COPY_ONLY"))])
 
 
+# --------------------------------------------------------------------------- 3. after X-DIR-QUAL
+def ct_ua_add(v):
+    """CT_UA with its ADD-37 operand (byte 31) replaced: a copier whose task routine is one constant away from use."""
+    g = bytearray(fh.PLANTS["CT_UA"])
+    assert g[31] == 0x25
+    g[31] = v
+    return bytes(g)
+
+
+# C-DIR-MAINTAIN (CONFIRM, parent X-DIR-QUAL): FRESH seeds 44_200_000 + s, frozen protocol (this block at its commit).
+#   Arms: DIR015 (CONST 0.15, order DIR, q 1) and RND015 (CONST 0.15, RANDOM), CT_UA plant, 12 seeds each, 2000 epochs;
+#   negatives under DIR015: CT_U and COPY_ONLY, 6 seeds each.
+#   Rule: CONFIRMED iff (established DIR015 runs with final CS >= 0.10) >= 0.75 x established DIR015 runs AND
+#   (established RND015 runs with final CS >= 0.10) <= 1 AND no negative run has final CS >= 0.10. Otherwise NOT_CONFIRMED.
+SEEDS_C = [44_200_000 + s for s in range(12)]
+declare("C-DIR-MAINTAIN",
+        jobs=[(arm, s, dict(gate="CONST", p_const=0.15, order=o)) for s in SEEDS_C
+              for arm, o in (("DIR015", "DIR"), ("RND015", "RANDOM"))]
+        + [(arm, s, dict(gate="CONST", p_const=0.15, order="DIR", plant=pl)) for s in SEEDS_C[:6]
+           for arm, pl in (("NEG_CTU_DIR015", "CT_U"), ("NEG_COPY_DIR015", "COPY_ONLY"))])
+
+# X-DIR-SURFACE (EXPLORE, parent X-DIR-QUAL): where is the maintenance boundary? Directional strength q (probability the
+#   higher-u organism is put first) x total mutation k (mut_scale = copy_scale = k), CONST 0.15, 2000 epochs, CT_UA.
+#   q in {0.1, 0.25, 0.5, 1.0} x k in {1, 4, 16} (the q = 1, k = 1 cell is X-DIR-QUAL's DIR015). 6 seeds 44_300_000 + s.
+#   Readout per cell: established runs maintained (final CS >= 0.10), median final CS, median last-CS>0 epoch.
+#   Prediction from F1 (declared): maintenance iff the directional win advantage per mixed interaction exceeds the
+#   competence leak per interaction (~0.035 x k); expected boundary between q 0.1 and 0.25 at k 1, moving up with k.
+#   Classification: SIGNAL if a monotone boundary exists (maintenance falls with k and rises with q in every row/column
+#   with at least one maintained and one lost cell); CLEAN_NULL if every cell maintains or every cell loses.
+SEEDS_S = [44_300_000 + s for s in range(6)]
+declare("X-DIR-SURFACE",
+        jobs=[("Q%03d_K%02d" % (int(q * 100), k), s,
+               dict(gate="CONST", p_const=0.15, order="DIR", q_dir=q, mut_scale=k, copy_scale=k))
+              for s in SEEDS_S for q in (0.1, 0.25, 0.5, 1.0) for k in (1, 4, 16) if not (q == 1.0 and k == 1)])
+
+# X-REDISCOVER (EXPLORE, parent X-DIR-QUAL): can directional selection RE-DISCOVER lost function? Plant a copier whose
+#   routine is d operand-steps from use (CT_UA with byte 31 = 0x24 d1, 0x00 d2, 0x40 d3, 0xD9 d4; all u = 0), under DIR
+#   (q 1) vs RANDOM order, CONST 0.15, 2000 epochs, 6 seeds 44_400_000 + s. Readout: runs with any competence root
+#   (MUT / *_CREATED), epoch of the first, runs with final CS >= 0.10, and whether the final competent genome equals
+#   CT_UA (re-discovery of the same byte) or another solution.
+#   Classification: SIGNAL if DIR reaches final CS >= 0.10 in >= 3/6 at some d >= 2 while RANDOM does in <= 1;
+#   WEAK_SIGNAL if only d = 1 is rediscovered under DIR; CLEAN_NULL if no DIR run at d >= 1 ends competent.
+SEEDS_R = [44_400_000 + s for s in range(6)]
+declare("X-REDISCOVER",
+        jobs=[("RD%d_%s" % (d, o), s, dict(gate="CONST", p_const=0.15, order=o, plant=ct_ua_add(v)))
+              for s in SEEDS_R for d, v in ((1, 0x24), (2, 0x00), (3, 0x40), (4, 0xD9)) for o in ("DIR", "RANDOM")])
+
+# X-RANDOM-DIR (EXPLORE, parent X-DIR-QUAL): from RANDOM populations (no plant), does DIR yield a copier regime and any
+#   competence? DIR vs RANDOM at CONST 0.15, 12 seeds 44_500_000 + s, 2000 epochs. Readout: depth >= 20 runs, any
+#   competence root, final CS. Expected (declared): copier regime rare, competence absent in both (the task needs a
+#   ~30-byte conditional; no gradient under the use ruler). A null here bounds endogenous re-discovery from scratch.
+SEEDS_X = [44_500_000 + s for s in range(12)]
+declare("X-RANDOM-DIR",
+        jobs=[(arm, s, dict(gate="CONST", p_const=0.15, order=o, plant=None)) for s in SEEDS_X
+              for arm, o in (("RAND_DIR", "DIR"), ("RAND_RND", "RANDOM"))])
+
+
 if __name__ == "__main__":
     name = sys.argv[1]
     w = int(sys.argv[2]) if len(sys.argv) > 2 else 4
