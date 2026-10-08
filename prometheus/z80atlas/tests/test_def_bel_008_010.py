@@ -229,3 +229,13 @@ def test_reviewA_zero_sweep_is_not_a_replicator_under_written():
         cfg = Config(reproduction="ENDOGENOUS_COPY", layout=layout)
         assert geometry._eval(sweep, cfg, Task("INC"), random.Random(1))["replicates"] is True              # v1 hole
         assert geometry._eval(sweep, cfg, Task("INC"), random.Random(1), rep_rule="written")["replicates"] is False
+
+
+def test_reviewB_S1b_laundered_partner_material_is_target():
+    # review B S1b: the writer copies the partner's window into its OWN region, then from there into the window
+    # (one-hop 'laundering'); multi-hop origin resolves every moved byte to the partner
+    import random
+    code = bytes.fromhex("0740082003201507200840032015015a087f11ff")
+    partner = bytes(random.Random(0).randrange(256) for _ in range(64))
+    (nw, nt), _ = _counts(code + bytes([0xAA]) * (64 - len(code)), partner=partner, repro="OVERWRITE")
+    assert nt > nw and nw == 0

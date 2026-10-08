@@ -176,3 +176,9 @@ Predictions:
   M1 OFF (Mann-Whitney one-sided over runs with >= 20 such births per arm). Descriptive if fewer than 10 runs qualify.
 - W4-P5 (M2 origin of competence): in ON runs with COMP_SR_END, the competence-critical bytes of the dominant tape
   include >= 1 novel-event byte (n or c) in >= 80% of runs (competence is newly made, not found in founder material).
+
+ERRATUM (2026-10-08T05:58Z): s5's header says "frozen 2026-10-08T06:30Z"; the freeze is commit ebc3daaaa, pushed at
+05:57Z. W4 is queued behind the W2 -> W1 v2 chain (~/bel48h_runs/chain_w4.sh waits for CHAIN_DONE).
+
+ERRATUM (2026-10-08T06:02Z): the W4 freeze commit is ebc3daaae (ebc3daaaea3b2770bf9fa9ffbbedf698877cced6); the previous
+erratum and the ledger row wrote "ebc3daaaa" by typing error. The queued script uses the correct pin directory.
