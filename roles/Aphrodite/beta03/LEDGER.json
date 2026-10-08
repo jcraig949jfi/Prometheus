@@ -90,6 +90,36 @@
       "window": "W02",
       "kind": "DESIGN",
       "note": "MIGRATION_DESIGN_DRAFT (TFS-1 typed functional substrate; transplant known-answers; M0-M3 first campaign; CONTINUE/MIGRATE/REPAIR decision table) written before any E1/E2/E5-N outcome; decision table frozen as close rule, sha fbeea7be46e18244"
+    },
+    {
+      "utc": "2026-10-08T13:04:41Z",
+      "window": "E1",
+      "kind": "HASH",
+      "note": "E1 pre-recipient hashes: libraries file 3b67048e21342474; common residual b90b960497069ed9 (red-team E1-8)"
+    },
+    {
+      "utc": "2026-10-08T13:08:14Z",
+      "window": "E1",
+      "kind": "HASH",
+      "note": "E1 pre-recipient hashes: libraries file 3b67048e21342474; common residual b90b960497069ed9 (red-team E1-8)"
+    },
+    {
+      "utc": "2026-10-08T13:08Z",
+      "window": "W02",
+      "kind": "HOLD",
+      "note": "E12 chain stopped (TaskStop) at E1 recip to respect 48 core-h/24h cap (est 38.5 used); relaunched E1-only (resume); E2 score/report deferred to >= 05:15Z Oct 9"
+    },
+    {
+      "utc": "2026-10-08T13:08Z",
+      "window": "W02",
+      "kind": "CLOSE",
+      "note": "W02 closed; W03 DEV opened"
+    },
+    {
+      "utc": "2026-10-08T13:19:59Z",
+      "window": "W03",
+      "kind": "AMEND",
+      "note": "Close rule A1 (red-team 3 BLOCKER/9 MAJOR): first-match exhaustive rule in beta03/CLOSE_RULE.md (sha 344d08d58af92c38); MIGRATE carries BASIS=OUTCOME_C_APPARATUS_LIMIT, S10_KILL_CRITERION=NOT_MET; E1/E2 qualifiers only. Frozen with E1_RECIP.jsonl at 9 lines (sha f518dd41c32352ed), not read."
     }
   ]
 }
