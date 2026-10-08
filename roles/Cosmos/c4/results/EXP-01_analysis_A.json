@@ -1,0 +1,144 @@
+{
+ "n_rows": 120,
+ "labels": "A",
+ "classes": {
+  "graph": {
+   "PASSIVE": 3,
+   "FUNCTIONAL": 13,
+   "NONE": 11,
+   "INDETERMINATE": 3
+  },
+  "rnn": {
+   "INDETERMINATE": 2,
+   "FUNCTIONAL": 20,
+   "NONE": 6,
+   "INCOHERENT": 2
+  },
+  "sediment": {
+   "FUNCTIONAL": 30
+  },
+  "stig": {
+   "FUNCTIONAL": 27,
+   "PASSIVE": 3
+  }
+ },
+ "excluded": {
+  "rnn": 4,
+  "graph": 3
+ },
+ "per_family_BA": {
+  "graph": {
+   "L0001": 0.6785714285714286,
+   "L0002": 0.6428571428571428,
+   "L0003": 0.8571428571428572,
+   "T2a": 0.5,
+   "T0": 0.5,
+   "T3": 0.7857142857142857,
+   "n": 27,
+   "functional": 13
+  },
+  "rnn": {
+   "L0001": 0.9,
+   "L0002": 0.95,
+   "L0003": 1.0,
+   "T2a": 0.5,
+   "T0": 0.5,
+   "T3": 0.5,
+   "n": 26,
+   "functional": 20
+  },
+  "sediment": {
+   "L0001": NaN,
+   "L0002": NaN,
+   "L0003": NaN,
+   "T2a": NaN,
+   "T0": NaN,
+   "T3": NaN,
+   "n": 30,
+   "functional": 30
+  },
+  "stig": {
+   "L0001": 0.5,
+   "L0002": 0.37037037037037035,
+   "L0003": 0.5,
+   "T2a": 0.5,
+   "T0": 0.5,
+   "T3": 1.0,
+   "n": 30,
+   "functional": 27
+  }
+ },
+ "within_uplift": {
+  "L0001": {
+   "U": 0.19285714285714284,
+   "per_family": {
+    "graph": 0.17857142857142855,
+    "rnn": 0.3999999999999999,
+    "stig": 0.0
+   },
+   "families_used": 3,
+   "families_dropped": [
+    "sediment"
+   ]
+  },
+  "L0002": {
+   "U": 0.15440917107583774,
+   "per_family": {
+    "graph": 0.14285714285714285,
+    "rnn": 0.45,
+    "stig": -0.12962962962962962
+   },
+   "families_used": 3,
+   "families_dropped": [
+    "sediment"
+   ]
+  },
+  "L0003": {
+   "U": 0.2857142857142857,
+   "per_family": {
+    "graph": 0.3571428571428571,
+    "rnn": 0.5,
+    "stig": 0.0
+   },
+   "families_used": 3,
+   "families_dropped": [
+    "sediment"
+   ]
+  },
+  "T3": {
+   "U": 0.2619047619047619,
+   "per_family": {
+    "graph": 0.2857142857142857,
+    "rnn": 0.0,
+    "stig": 0.5
+   },
+   "families_used": 3,
+   "families_dropped": [
+    "sediment"
+   ]
+  }
+ },
+ "within_uplift_vs_T3": {
+  "L0001": -0.06904761904761908,
+  "L0002": -0.10749559082892408,
+  "L0003": 0.023809523809523798
+ },
+ "AB_agreement": {
+  "graph": 1.0,
+  "rnn": 1.0,
+  "sediment": 1.0,
+  "stig": 0.9666666666666667
+ },
+ "prereg_decision_L0003": {
+  "verdict": "SURVIVED_PROVISIONAL",
+  "U_vs_T2a": 0.2857142857142857,
+  "families_below_T2a": 0
+ },
+ "prereg_decision": {
+  "H-LOCAL": "SURVIVED_PROVISIONAL",
+  "L0001_U_vs_T2a": 0.19285714285714284,
+  "families_below_T2a": 0,
+  "L0002_minus_L0001": -0.0384479717813051,
+  "sediment_alone_fails": false
+ }
+}
