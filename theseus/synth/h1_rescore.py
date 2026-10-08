@@ -48,6 +48,8 @@ def main(argv=None):
     ap = argparse.ArgumentParser()
     ap.add_argument("--tag", required=True)
     ap.add_argument("--workers", type=int, default=4)
+    ap.add_argument("--d-ref", default=REF, help="run tag whose DEEP/VERY_DEEP children form arm D")
+    ap.add_argument("--a-v1-rows", default=None, help="reuse evaluated A v1 rows (A_V1_ROWS.jsonl) instead of re-evaluating")
     a = ap.parse_args(argv)
     out = f"theseus/runs/{a.tag}"
     os.makedirs(out, exist_ok=True)
@@ -55,10 +57,10 @@ def main(argv=None):
     cal = ru.Cal(cald)
     table = {k: [] for k in ("D", "A", "B", "C", "R", "P")}
     fps = {}
-    for l in open(f"theseus/fingerprints/{REF}.jsonl", encoding="utf-8"):
+    for l in open(f"theseus/fingerprints/{a.d_ref}.jsonl", encoding="utf-8"):
         x = json.loads(l)
         fps[x["id"]] = x["fp"]
-    for l in open(f"theseus/entities/{REF}.jsonl", encoding="utf-8"):
+    for l in open(f"theseus/entities/{a.d_ref}.jsonl", encoding="utf-8"):
         e = json.loads(l)
         if e.get("kind") == "mechanism" and e.get("lane") in ("DEEP", "VERY_DEEP"):
             table["D"].append({"id": e["id"], "fp": fps[e["id"]], "viable": bool(e["viable"])})
@@ -76,13 +78,19 @@ def main(argv=None):
             errs = sb.validate(g)
             (rejected if errs else new).append({"tid": d["tid"], "genome": g, "errors": errs})
     t0 = time.time()
-    with Pool(a.workers, initializer=_init, initargs=(cald,)) as pool:
-        res = pool.map(_job, [x["genome"] for x in new])
     rows = []
-    for x, r in zip(new, res):
-        row = {"id": f"A1-{x['tid']}", "fp": r["fp"], "viable": r["viable"], "viability": r["viability"], "src": "v1"}
-        table["A"].append(row)
-        rows.append({**row, "genome": x["genome"], "cpu_s": r["cpu_s"]})
+    if a.a_v1_rows:
+        for l in open(a.a_v1_rows, encoding="utf-8"):
+            r = json.loads(l)
+            table["A"].append({k: r[k] for k in ("id", "fp", "viable", "viability", "src")})
+            rows.append(r)
+    else:
+        with Pool(a.workers, initializer=_init, initargs=(cald,)) as pool:
+            res = pool.map(_job, [x["genome"] for x in new])
+        for x, r in zip(new, res):
+            row = {"id": f"A1-{x['tid']}", "fp": r["fp"], "viable": r["viable"], "viability": r["viability"], "src": "v1"}
+            table["A"].append(row)
+            rows.append({**row, "genome": x["genome"], "cpu_s": r["cpu_s"]})
     with open(f"{out}/A_V1_ROWS.jsonl", "w", encoding="utf-8") as f:
         for r in rows:
             f.write(json.dumps(r, separators=(",", ":")) + "\n")
@@ -97,8 +105,8 @@ def main(argv=None):
         ht_noA = an.hard_test({k: v for k, v in table.items() if k != "A"}, cal, np.random.default_rng(20261008))
     finally:
         an.CMP = saved
-    summary = {"ref": REF, "A_v1_valid": len(new), "A_v1_rejected": rejected, "A_v1_viable": sum(r["viable"] for r in rows),
-               "wall_s": round(time.time() - t0, 1), "cpu_s": round(sum(r["cpu_s"] for r in rows), 1),
+    summary = {"ref": REF, "d_ref": a.d_ref, "a_v1_rows": a.a_v1_rows, "A_v1_valid": len(new), "A_v1_rejected": rejected, "A_v1_viable": sum(r["viable"] for r in rows),
+               "wall_s": round(time.time() - t0, 1), "cpu_s": round(sum(r.get("cpu_s", 0) for r in rows), 1),
                "H1_large_A": ht, "H1_v0_A_reproduced": {"verdict": ht_v0A["verdict"], "n_equal": ht_v0A["n_equal"]},
                "H1_without_A": ht_noA}
     with open(f"{out}/SUMMARY.json", "w", encoding="utf-8") as f:
