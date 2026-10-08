@@ -11,3 +11,7 @@
 {"t":"2026-10-08T06:08:26Z","event":"integration","main":"2c6072c9d","how":"origin/main merged into branch, z80atlas 109/109, fast-forward push","reviews":"A PASS_WITH_FIXES (fixed), B SOUND_WITH_LIMITS (disclosed)","nestor_notice":"comms #1884 re #1207"}
 {"t":"2026-10-08T07:59:15Z","event":"complete","window":"W2","runs":1050,"voids":0,"active_s":7560.6,"workdir":"~/bel48h_runs/w2"}
 {"t":"2026-10-08T08:03:32Z","event":"launch","window":"W3a","freeze_commit":"4995e8b45","pin":"~/bel48h_runs/pins/4995e8b45","plan_sha256":"e52ba28da5c0ec69007286bd186cba389dc712b964224c83be8879ecf91b8444","runs":27,"workers":2,"note":"2 extra workers alongside the 6 of the W1v2 chain; host prometheus-worker idle"}
+{"t":"2026-10-08T08:43:03Z","event":"complete","window":"W3a","runs":27,"voids":0,"active_s":2348.3,"replay_identical":"27/27"}
+{"t":"2026-10-08T08:43Z","event":"launch","window":"W3b","label":"EXPLORATORY","plan_sha256":"862114b33e703d53defe288f0ce904e4877bd73b60acb818df2b4c97cbc8a802","runs":75,"workers":2,"pin":"~/bel48h_runs/pins/3f5125ec7"}
+{"t":"2026-10-08T08:45Z","event":"amendment","what":"prereg amendment 2: seeds shared across cells within a lane; distinct-seed unit; W2 report corrected (27 runs = 21 initial populations)","commit":"3f3370188"}
+{"t":"2026-10-08T08:47:47Z","event":"queue","window":"W5-block1","freeze_commit":"9a9b34d6c","plan_sha256":"a35cc27ba461bec4c9b454e15e0444518546a8d12cbbca693ee42fe7ebe9457e","runs":240,"workers":2,"starts_after":"W3b complete"}
