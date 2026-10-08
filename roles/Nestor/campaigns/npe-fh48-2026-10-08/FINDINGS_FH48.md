@@ -218,3 +218,30 @@ The task rung is never reached.
 
 **Retired:** the earlier C-A3 runaways (25/72) came under QD pressure and are a different regime. Re-discovery is
 tested instead from copier backgrounds (X-REDISCOVER).
+
+## F6. X-DIR-SURFACE: SIGNAL. A monotone maintenance boundary in directional strength q x mutation k (66 runs + X-DIR-QUAL q = 1, k = 1)
+
+**Maintained runs / established runs** (median final CS in brackets; CONST 0.15, 2000 epochs, CT_UA):
+
+| q | k = 1 | k = 4 | k = 16 |
+|---|---|---|---|
+| 0.10 | 3/6 (0.10, at the boundary) | 0/5 | -- (1/6 established) |
+| 0.25 | 6/6 (0.65) | 0/5 | -- (1/6 established) |
+| 0.50 | 6/6 (0.86) | 4/6 (0.24) | -- (0/6 established) |
+| 1.00 | 6/6 (0.93) | 4/6 (0.63) | -- (1/6 established) |
+
+**The boundary:**
+- About q = 0.10 at k = 1, and between 0.25 and 0.5 at k = 4.
+- So the directional advantage needed scales with the mutational leak, consistent with F1 (leak about 0.035 x k per
+  interaction).
+- At k = 4 even q = 1 maintains in only 4/6 runs: k = 4 is near the edge for this routine.
+
+**Two error thresholds, ordered:**
+- At k = 16 (about 2 copy errors per copy) the COPIER regime itself fails to establish, in 1/6 or fewer per cell.
+  Heredity collapses before function can be tested.
+- The function threshold (k about 4-8 at q = 1) sits below the copier threshold (k < 16). This matches the routine
+  being about 6x more mutationally fragile per byte than the copier (F1).
+
+**Weak signal (not chased yet):** q = 0.10, k = 1 splits 3/6 with final CS 0.10-0.12 among the maintained runs. This
+cell is AT the boundary, the place to measure the critical selection coefficient. It is not chased now; more seeds
+alone would not discriminate it.
