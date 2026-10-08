@@ -315,3 +315,19 @@ found false in 0/20 (see the W4 CORRECTION); it is replaced by the budget-coupli
 - E-P2: BUDGET_COUPLED (a shared byte whose knockout kills competence at budget 256 but not at 512) >= 35% of competent
   dominant machines (W4 post-hoc: 10/20).
 - E-P3: repaired machines (K2): modal class SINGLE_LINEAGE_BAD.
+
+## 13. WINDOW 6 block 4 -- uptake necessity, replay receipts, independent architecture pair (frozen 2026-10-08T21:49:07Z, before any run)
+
+Plans tools/plan_w6b4.py: U 1,600 runs sha256 9ee2bd822f5de3ae462893bb06019c484a6d659e1486d1132948ee9ad1266117; R 202
+replays sha256 e9e4df127d932d316c2f30780db2ca67211fc518c23fc0449c8855f9351df4ae; X 192 runs sha256
+00152553d16726677b5c7a3924f5b93e5ef2abd857464d6ee5243e28e8d25a34 (E = w6b3_00001 BUDGET_COUPLED, S = w6b3_00020 SEPARATED,
+first of each class by run id). New ablation tools/uptake_block.py (tested: partner bytes imported into the own tape are
+reverted and counted). Analysis tools/analyze_w6b4.py (committed with this section; smoke-tested on all three lanes).
+- U-P1 (instrument check): 0 UPTAKE origins in blocked worlds; >= 5 in normal worlds.
+- U-P2 (route substitutability): pooled origin count blocked >= 0.7 x normal (falsified if blocking uptake removes more
+  than 30% of origins). McNemar on seed-pairs and per-cell counts reported.
+- U-P3 (descriptive): MUTATION share of origins per arm.
+- R-P1: every replayed run reproduces its recorded end-state hash with the current code (0 voids).
+- X-P6: under ON + HIGH, E share > 0.5 in more seeds than < 0.5 (sign test p < 0.05) -- W5-P6 on an independent pair.
+- X-P7: at MED, E share ON < OFF in more seeds than ON > OFF (sign test p < 0.05) -- W5 block 3's post-hoc MED reversal
+  turned into a confirmatory prediction on an independent pair.

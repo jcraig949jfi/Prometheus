@@ -141,10 +141,11 @@ def _run_one(spec):
             k: v for k, v in (s.get("coupling") or {}).items() if k != "bonus_schedule"}
         out["dual"] = w.dual_summary(); out["heredity"] = w.heredity_summary(); out["comp"] = w.comp_summary()
         out["end_hash"] = end_state_hash(w)
-    elif kind == "origin":
+    elif kind in ("origin", "origin_block"):
         from origin import OriginWorld
+        from uptake_block import UptakeBlockWorld
         cfg = _cfg(spec)
-        w = OriginWorld(cfg, spec["seed"]); s = w.run()
+        w = (UptakeBlockWorld if kind == "origin_block" else OriginWorld)(cfg, spec["seed"]); s = w.run()
         out["summary"] = _keep(s); out["heredity"] = w.heredity_summary(); out["reach"] = w.reach_summary()
         out["origin"] = w.origin_summary(); out["end_hash"] = end_state_hash(w)
         if spec.get("expect_end_hash") is not None:
@@ -169,6 +170,8 @@ def _run_one(spec):
         out["rng_div_tick"] = rng_div; out["pop_div_tick"] = pop_div
         sa = _finish(a); sb = _finish(b)
         out["a"] = {"summary": _keep(sa), "dual": a.dual_summary()}; out["b"] = {"summary": _keep(sb), "dual": b.dual_summary()}
+    if spec.get("expect_end_hash") is not None and "end_hash" in out:
+        out["replay_identical"] = out["end_hash"] == spec["expect_end_hash"]
     out["wall_s"] = round(time.time() - t0, 2)
     return out
 
