@@ -562,7 +562,16 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   (self-written data executed as code). B08J (FOUNDRY_C2, tapes 16-256) had L4 0/8.
   CORRECTION to the memory law (mine): "a second genuinely stored value is never reached" is FALSE as stated -- with a
   large tape it was reached in 1/4 BASE runs. Keyed (W2_K2/K>=3) and update-on-condition memory remain unreached.
-  Next window: replicate L4 with FOUNDRY_BIG vs FOUNDRY_C2 (8 seeds each) and dissect the self-written-code mechanism.
+  DISSECTION (single process): the organism is code_writable=True and rewrites its OWN GENOME every tick (tape words
+  0, 1, 2, 8 lie inside its 28-instruction genome; e.g. word 1 toggles 1 / 0 / 21419225). The two values sit in
+  registers (first in r4/r8, second in r3); on an ASK tick it outputs and SHIFTS the second value forward (into r6) --
+  a shift that happens only on ASK ticks, i.e. an UPDATE-ON-CONDITION keyed on tick kind. Ablation: forcing
+  code_writable=False drops held-out .971 -> .062. NAMED (provisional): SELF-MODIFYING-CODE STATE MACHINE -- the
+  control state lives in the program text itself. This is the first update-on-condition memory in the campaign that
+  pays reliably, and it was reached through a channel none of the memory-law tests probed (code_writable: B08J/B19
+  gen 0 drew it 50/50, but no test asked for it).
+  Next window: replicate (L4, FOUNDRY_BIG, 8 seeds; code_writable forced True vs False) and check whether
+  self-modifying solvers are the route to update-on-condition generally (evidence world, W2_K2).
 - BUDGET WINDOW 2026-10-08 ~00:07Z. B29 already done (not relaunched). Lease lse-fe37dd77fe7a (spectrex5:cpu12,
   3 h) for B32 replication: 12 seeds (3211-3222), 10 procs, + B32's last cell on 2 procs = 12. CORE-HOUR TALLY
   (rolling 24 h from 00:07Z): 0 at launch; est. +3-4 for the replication.
