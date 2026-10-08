@@ -82,7 +82,7 @@ def _tape_runner():
     return _TR["r"]
 
 
-def tape_answer(g, partner, side, inputs):
+def tape_answer(g, partner, side, inputs, partner_inputs=True):
     """g's first OUT when it executes on the real 128-byte pair tape (dense VM, ARENA policy, the cell's ops mask,
     slice budget, fresh registers) with `partner` in the other half; side 0 runs first, side 1 second, exactly as in
     world._pair_interact. Only g's context receives `inputs`."""
@@ -96,22 +96,24 @@ def tape_answer(g, partner, side, inputs):
     tape[n:n + len(halves[1])] = halves[1]
     out = None
     for who, start in ((0, 0), (1, n)):
+        # DEF-FH-4: both contexts receive the episode (as in the ONTAPE world); `partner_inputs=False` reproduces the
+        # old, defective context for the regression test.
         ctx = z8.Ctx(tape, start, n, policy=z8.ARENA, rng=random.Random(who), copy_mut_rate=0.0, sense=who,
-                     inputs=(inputs if who == side else ()))
+                     inputs=(inputs if (who == side or partner_inputs) else ()))
         z8.run(ctx, start, r.t["slice"], ops_enabled=r._ops_mask())
         if who == side:
             out = ctx.outputs[0] if ctx.outputs else None
     return out
 
 
-def tape_use(g, partner, n=16, seed=fh.GATE_SEED):
+def tape_use(g, partner, n=16, seed=fh.GATE_SEED, partner_inputs=True):
     """On-tape cue-flip USE score of g with this partner, averaged over both sides: share of matched (v, key) pairs
     answered exactly under r = 0 and r = 1."""
     pairs = fh.xtg2.flip_pairs(seed, n)
     ok = 0
     for side in (0, 1):
         for v, key, base, e0, e1 in pairs:
-            a0 = tape_answer(g, partner, side, (v, key, 0))
-            a1 = tape_answer(g, partner, side, (v, key, 1))
+            a0 = tape_answer(g, partner, side, (v, key, 0), partner_inputs)
+            a1 = tape_answer(g, partner, side, (v, key, 1), partner_inputs)
             ok += (a0 == e0 and a1 == e1)
     return ok / (2 * n)

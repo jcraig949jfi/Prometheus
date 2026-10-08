@@ -433,3 +433,38 @@ ties them; only their mutational leak differs. The plant slot alternates by seed
 | selection on function | PRESENT; also selects robust architectures (F10) |
 | architectural integration | FIRST SIGNS: pair-distributed function (F8, C2); neutral rewiring of vestigial code (F4) |
 | endogenous re-discovery | 1-step only, supply-limited (F7) |
+
+## F11. X-ONTAPE-LONG: WEAK_SIGNAL, provisional. Function holds for 6000 epochs; pair-distributed forms are a recurring minority (6 runs)
+
+**Function:** maintained in 6/6 runs to epoch 6000.
+- Final offline CS: 0.77-0.81.
+- Corrected final TCS (lower bound): 0.75-0.79.
+
+**Tape-only (pair-distributed) forms** (trajectory measured with the defective ruler, below):
+- They exceed 5% of the population at some snapshot in 5/6 runs, peaking at 26%. They never exceed 50%.
+- Corrected final shares are 0-3% in every run.
+
+**Reading:** the distributed form is a recurring, transient MINORITY, not a takeover. X-DISTRIB-GAME tests whether
+it has any selective edge.
+
+**Provisional:** the trajectory waves cannot be re-scored, because intermediate non-dominant genomes were not saved.
+
+## Defects (continued)
+
+**DEF-FH-4 (ruler; it biased a readout, not a verdict):** the on-tape ruler (`fh._tape_self`, `arch.tape_answer`)
+fed the episode to the scored side only. The partner ran without inputs, so IN returned 0 and it took the
+answer-before-read branch. In the ONTAPE world BOTH sides get episodes.
+- **Found in X-ONTAPE-LONG seed 45300004.** "TCS 0.25 vs offline CS 0.79". The dominant genomes carry a mutated
+  answer-before-read branch (byte 35 = DF). Executed by an input-less first mover, it wrecks the second half before
+  that half can answer.
+- **Repaired:** both contexts get the episode. Regression TR-2: this genome scores 0.5 under the old ruler and >= 0.75
+  under the corrected one; the controls are unchanged; the invader INV scores 1.0 under both.
+- **Post-hoc rescoring** (`rescore_tape.py`; saved genomes only, so corrected TCS is a lower bound):
+  - C-ONTAPE-MAINTAIN ONTAPE runs: corrected TCS >= 0.69-0.85 (was 0.70-0.81). ONTAPE_RND and the negatives stay at 0.
+    The frozen verdict CONFIRMED stands and is unaffected.
+  - X-ONTAPE-LONG seed 45300004: corrected TCS >= 0.77. Its "collapse" was the artifact.
+
+**Correction to F4 ("vestigial" read-order detector):** the answer-before-read branch is dead only under the offline
+scorer, where key >= 1 makes it rare. On the pair TAPE, in every world without task inputs (DIR / VETO / RND: IN
+returns 0), it is the path executed on EVERY interaction. Its mutations therefore change tape behavior. "Vestigial"
+applies to the offline task only.

@@ -137,8 +137,10 @@ def make_runner(seed, cfg=None):
                         tape[64:64 + len(g)] = g
                         out = None
                         for who, start in ((0, 0), (1, 64)):
+                            # DEF-FH-4: BOTH contexts receive the episode, as in the ONTAPE world (the partner used to
+                            # get no inputs, so it ran its answer-before-read branch and could wreck the scored half)
                             c = z8m.Ctx(tape, start, 64, policy=z8m.ARENA, rng=random.Random(who), copy_mut_rate=0.0,
-                                        sense=who, inputs=((v, key, rr) if who == side else ()))
+                                        sense=who, inputs=(v, key, rr))
                             z8m.run(c, start, self.t["slice"], ops_enabled=self._ops_mask())
                             if who == side:
                                 out = c.outputs[0] if c.outputs else None

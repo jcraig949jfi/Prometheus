@@ -132,6 +132,23 @@ def test_le1_long_horizon_not_capped():
     assert fh.make_runner(SEED, dict()).t["epochs"] == 2000
 
 
+G1_ABR_MUTANT = "ed327dee405fe5db0047db0d4fdb305779fe02380e78a9477afe00782802c625d31076dfd300f99ea4640e3f4c1e25bf1342749d6de3628982c8ffa00dc27ef5"
+
+
+def test_tr2_partner_gets_inputs():
+    """DEF-FH-4 regression: a lineage from X-ONTAPE-LONG seed 45300004 whose answer-before-read branch is mutated
+    (byte 35) wrecks the scored half only when the PARTNER runs without inputs. Old ruler: 0.5; corrected: >= 0.75.
+    Controls unchanged."""
+    import arch
+    g = bytes.fromhex(G1_ABR_MUTANT)
+    assert arch.tape_use(g, g, partner_inputs=False) == 0.5
+    assert arch.tape_use(g, g) >= 0.75
+    r = fh.make_runner(SEED, dict(epochs=1, plant=None))
+    assert r._tape_self(g) == arch.tape_use(g, g)
+    for k, want in (("CT_UA", 1.0), ("CT_U", 0.0), ("COPY_ONLY", 0.0)):
+        assert arch.tape_use(fh.PLANTS[k], fh.PLANTS[k]) == want, k
+
+
 def test_ms1_scales():
     r = fh.make_runner(SEED, dict(epochs=2, mut_scale=0.5, copy_scale=3.0))
     assert abs(r.mut_rate - 0.001) < 1e-12 and abs(r.copy_mut - 0.006) < 1e-12
