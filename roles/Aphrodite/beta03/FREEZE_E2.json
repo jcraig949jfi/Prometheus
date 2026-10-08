@@ -2,13 +2,36 @@
  "frozen_utc": "2026-10-08T06:16:40Z",
  "spec": "beta03/windows/E2_PREREG.md",
  "files": {
-  "engine/v2b/b03_e2.py": "4e308e6e26e8cae7841fca145dc2066e617d7d8b68ef4a22e67e0e28df5f384a",
+  "engine/v2b/b03_e2.py": "f9448560be6dd7ae0924ab0fa47beaff213b0463b3eecb3521109095708c36ff",
   "engine/v2b/g12.py": "2fe0e52164e42ab4082f5544f4a51097146888503ced75aae178297757bf4254",
-  "engine/v2b/b03.py": "4408324c2211c23a46ee308761ad28d5dafe6c36c40961362126f0a1a4884225",
+  "engine/v2b/b03.py": "1febd5d54a6d0b26c597202bf483e15e18b071b508c4ec6dbfa14abbc1b53d82",
   "engine/v2b/b02.py": "e1463f4d5146b8524f342f376604e386fb1e21f88d5a9ac618baa1dacde7ecc8",
   "engine/v2b/gtc.py": "e097e1d4d11f1a869a88dcd5bba9ff80a487b721d71f8a3d13d9758afdad189f",
-  "beta03/windows/E2_PREREG.md": "33a89b5fb750e2e6fb509022b04bbb80ef320409e6295c49a019f48fcb7ac5fc"
+  "beta03/windows/E2_PREREG.md": "262b310711b742e499811834da5294e2ce3794d470f23836f8bbbec1bed5f847"
  },
  "lead_branch": "aphrodite/b03-g12 @ 6c03a218f",
- "known": "beta03/runs/E2/E2_KNOWN.json"
+ "known": "beta03/runs/E2/E2_KNOWN.json",
+ "amendments": [
+  {
+   "utc": "2026-10-08T06:51:38Z",
+   "before_any_outcome": true,
+   "id": "A1",
+   "source": "beta03/reviews/REDTEAM_E1_E2_PREFREEZE.md",
+   "note": "red-team pre-data amendment (see prereg AMENDMENT A1); known answers re-run PASS",
+   "changed": {
+    "engine/v2b/b03_e2.py": {
+     "old": "4e308e6e26e8cae7",
+     "new": "f9448560be6dd7ae"
+    },
+    "engine/v2b/b03.py": {
+     "old": "4408324c2211c23a",
+     "new": "1febd5d54a6d0b26"
+    },
+    "beta03/windows/E2_PREREG.md": {
+     "old": "33a89b5fb750e2e6",
+     "new": "262b310711b742e4"
+    }
+   }
+  }
+ ]
 }

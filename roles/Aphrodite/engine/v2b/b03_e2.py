@@ -49,6 +49,9 @@ def run(w=4):
     with open(out, "a", encoding="utf-8") as fh, ProcessPoolExecutor(max_workers=w, initializer=R.T.init_worker) as ex:
         for r in ex.map(g12.run_job, jobs):
             if r.get("g12"):
+                tab0, arms0 = g12.rescore(r, lam=0.0)     # pre-registered lambda=0 rescore (red-team E2-1), no new walks
+                r["g12"]["rescore_lam0"] = {"arms": arms0,
+                                            "eligible": {k: v["eligible"] for k, v in tab0.items()}}
                 r["g12"].pop("walks", None)          # keep receipts compact; tables + arm entries retained
             fh.write(json.dumps(r, sort_keys=True, default=str) + "\n")
             fh.flush()
@@ -90,10 +93,19 @@ def score(w=4):
     b02._pool_walks(list(todo.values()), E2D / "E2_WALKS.jsonl", w, "E2")
 
 
+def _i0_eligible(gs, cand):
+    return bool((gs.get("i0_diag") or {}).get("table", {}).get(cand, {}).get("eligible"))
+
+
 def report():
-    """Frozen rules: beta03/windows/E2_PREREG.md s5."""
+    """Frozen rules: beta03/windows/E2_PREREG.md s5 (as amended A1, pre-data)."""
+    import hashlib
     libs = _arm_libs()
     seeds = sorted(libs)
+    _P, all_seeds = _seeds()
+    dropped = [s for s in all_seeds if s not in libs]
+    known = rj(E2D / "E2_KNOWN.json")
+    e1_hash = hashlib.sha256(open(E1D / "E1_DONORS.jsonl", "rb").read()).hexdigest()
     W = {(x["lib"], x["family"], x["cell"]): x["result"] for x in R.rdl(E2D / "E2_WALKS.jsonl")}
     idx = rj(E2D / "E2_INDEX.json")["index"]
     arms = ["I0_O10", "g11_O10"] + G12_ARMS
@@ -114,26 +126,52 @@ def report():
     vs_i0 = b02.flip_test(c("g12", "I0_O10"))
     vs_g11 = b02.flip_test(c("g12", "g11_O10"))
     g11_gt = b02.flip_test(c("g11_O10", "g12"))["p_one_sided"]
-    holm = b02.holm([vs_i0["p_one_sided"], min(vs_g11["p_one_sided"], g11_gt)])
+    holm = b02.holm([vs_i0["p_two_sided"], vs_g11["p_two_sided"]])          # red-team E2-4: two-sided
+    # claim 2 (reject memorisation without a ban), tested only where MEMORISE is attractive under I_0 (red-team E2-1)
+    memo_attr = [s for s in seeds if _i0_eligible(g[s], "MEMORISE")]
+    memo_rej = [s for s in memo_attr if chosen[s]["g12"] != "MEMORISE"]
+    claim2 = ("UNTESTED" if len(memo_attr) < 3 else
+              ("PASS" if len(memo_rej) >= 0.8 * len(memo_attr) else "FAIL"))
+    lam0_memo = sum(1 for s in seeds if (g[s].get("rescore_lam0") or {}).get("arms", {}).get("g12") == "MEMORISE")
+    # claim 3 (reject attractive junk), tested only where a junk plant is attractive under I_0 (red-team E2-2)
+    junk_attr = [s for s in seeds if _i0_eligible(g[s], "PLANT_NEAR") or _i0_eligible(g[s], "PLANT_OFF")]
+    junk_rej = [s for s in junk_attr if not (g[s]["arms"]["NEAR12"]["plant_selected"]
+                                             or g[s]["arms"]["NULL12"]["plant_selected"])]
+    claim3 = ("UNTESTED" if len(junk_attr) < 3 else
+              ("PASS" if len(junk_rej) >= 0.8 * len(junk_attr) else "FAIL"))
+    # non-inferiority with an explicit margin (red-team E2-3): delta = 10% of g11's mean per-seed gain;
+    # exact one-sided sign-flip on 10*d + round(10*delta) > 0  (integer scaling keeps the test exact)
+    n_ = len(seeds) or 1
+    d10 = round(tot["g11_O10"] / n_)                     # = 10 * (0.1 * mean g11 gain), rounded
+    ni = b02.flip_test([10 * x + d10 for x in c("g12", "g11_O10")])
     traps_ok = all(v <= TRAP_MAX for v in plant.values()) and natural_memo <= TRAP_MAX
     non_elim = g12_nonref >= 0.5 * g11_nonref
     transfer_pos = vs_i0["p_one_sided"] < 0.05 and vs_i0["sum"] > 0
-    if transfer_pos and traps_ok and non_elim:
-        general = "YES"
-    elif (vs_i0["sum"] <= 0) or not traps_ok or not non_elim:
+    if (vs_i0["sum"] <= 0) or not traps_ok or not non_elim or "FAIL" in (claim2, claim3):
         general = "NO"
+    elif transfer_pos and claim2 == "PASS" and claim3 == "PASS":
+        general = "YES"
     else:
-        general = "INCONCLUSIVE"
+        general = "INCONCLUSIVE"                          # incl. a positive transfer test with an UNTESTED claim
     if vs_g11["p_one_sided"] < 0.05 and vs_g11["sum"] > 0:
         rel = "SUPERIOR"
     elif g11_gt < 0.05 and vs_g11["sum"] < 0:
         rel = "INFERIOR"
-    elif tot["g12"] >= NONINF_RATIO * tot["g11_O10"]:
+    elif tot["g11_O10"] > 0 and ni["p_one_sided"] < 0.05 and ni["sum"] > 0:
         rel = "NONINFERIOR"
     else:
         rel = "INCONCLUSIVE"
     supply_ok = len(seeds) >= b03.MIN_PAIRS
-    res = {"seeds": seeds, "n": len(seeds), "gains": G, "totals": tot, "g12_choices": chosen,
+    gate = bool(known.get("pass"))
+    if not gate:
+        general = rel = "MEASUREMENT_FAILED"
+    res = {"seeds": seeds, "n": len(seeds), "dropped_seeds": dropped, "amendment": "A1 (pre-data, red-team)",
+           "E1_DONORS_sha256": e1_hash, "known_gate": gate,
+           "claim2_memorisation": {"attractive_under_I0": memo_attr, "rejected_by_g12": memo_rej, "status": claim2,
+                                   "lambda0_rescore_g12_selects_MEMORISE": lam0_memo},
+           "claim3_attractive_junk": {"attractive_under_I0": junk_attr, "rejected_by_g12": junk_rej, "status": claim3},
+           "noninferiority_margin_test": ni, "noninferiority_delta_x10": d10,
+           "gains": G, "totals": tot, "g12_choices": chosen,
            "traps": {"plant_selected_seeds": plant, "natural_MEMORISE_selected_by_g12": natural_memo,
                      "near_miss_attractive_under_I0_diag": near_attr, "pass": traps_ok},
            "non_eliminating": {"g12_nonINHERITED": g12_nonref, "g11_nonINHERITED": g11_nonref, "pass": non_elim},

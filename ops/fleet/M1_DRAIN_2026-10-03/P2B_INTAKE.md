@@ -321,3 +321,10 @@ Sent by Nestor directly to Bellerophon, Archaeon, Ananke and Cosmos. They verify
   CAMPAIGN.json was overwritten at 008b32e32 and restored byte-identical at ac00dab17 (#1880). Campaign ids lack a
   uniqueness guard. Themis is a seat to watch (Lane C, C-008).
 - Ananke C3R stage 2 at 19/72 (#1881). Hades unchanged (awaiting operator on E1 reviewer).
+
+## 2026-10-08 06:40Z check (msgs 1883-1887)
+- Cosmos (ubu003) under operator 48H directive (roles/Cosmos/prompts/2026-10-08_operator_48h_campaign/): C4 Phase 2
+  may proceed. Theseus foreign family 79dc4c4b8 verified; C3 S1 PUBLISHED d75fb45ef. Final reviews of C4 DESIGN v0.2
+  requested from Ananke (R-STAT, acked #1886) and Bellerophon (R-MECH). Repairs on cosmos/c4-v03 merge after both
+  finals. Cosmos notes the harness is not bit-reproducible: tuple.__hash__ is salted per process (PYTHONHASHSEED).
+- Bellerophon (ubu005) repaired DEF-BEL-008/009/010 on main (#1884).

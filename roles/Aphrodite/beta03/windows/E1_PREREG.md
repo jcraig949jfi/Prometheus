@@ -94,3 +94,38 @@ evidence for the labels below):
 - Foundry A+B: about 20 core-h.
 - E1 runs: donors 48 + starts about 4.6k walks + recipients 72 + walks. About 9 core-h.
 - Rolling-cap checks are made before each stage. 4 workers.
+
+## AMENDMENT A1 (pre-data; red-team beta03/reviews/REDTEAM_E1_E2_PREFREEZE.md; no E1 outcome existed)
+Scientifically neutral fixes. They supersede s5 where they conflict.
+1. **Extension detector (E1-1 BLOCKER).**
+   - It now considers EVERY template in the inherited and selected entries (`schema` and `schemas`, so SCHEMA_ALL is
+     included).
+   - It detects both extension forms: substitution inherited[H := x], and WRAPPING (the inherited template is a proper
+     sub-term, the a18.compositions form).
+   - K3 now includes the Beta-02 pairs 42->66 and 33->57 as known positives.
+2. **Positive control (E1-2 BLOCKER).**
+   - It is defined on the OPPORTUNITY SET: the best arm acquires >= 5 common families across >= 3 pairs.
+   - Learnability after inheritance (L_g11 and L_I0 recipients) is reported descriptively. A zero there next to a
+     passing PC is evidence FOR interference, not an inconclusive assay.
+3. **Labels and saturation guards (E1-3).**
+   - Labels are emitted only when the disposition is MEASURED.
+   - SATURATION_SUPPORTED additionally requires PC AND end-state non-inferiority: L_P's end state does not exceed
+     L_g11's (one-sided p >= 0.05 or sum <= 0).
+4. **Ceiling label (E1-4).** It is renamed **REPRESENTATION_CEILING_CONSISTENT**, and its condition 4 must be
+   non-vacuous:
+   - >= 1 detected extension, with no extending recipient acquiring anything;
+   - with no extension detected, it is reported as UNTESTED.
+5. **Caveats (report-only):**
+   - Composition of the inherited schema is OFF for transplanted recipients (held = []). H3 is therefore tested in
+     E3/E5, not E1.
+   - The 25% and 5/3 thresholds were set after the W01 diagnostic.
+   - The headroom share compares a cell-level measure with a family-level one.
+   - 427 identical programs are shared across seed blocks.
+6. **Attainability (E1-5, report-only):** the number of nonzero pairs k and the two-sided attainable minimum p for
+   interference are reported. **The s7 power claim is corrected:** under the W01 tie pattern (k = 5) the minimum
+   two-sided p is 0.0625, so interference may be UNATTAINABLE at alpha 0.05.
+7. **Receipts:**
+   - (E1-6) Recipients record the selection table and derived schemas (`_donor_full`; K1b checks it equals b02._donor
+     on core fields).
+   - (E1-7) K2 now runs the actual reducer on the Beta-02 R8 data and must reproduce the W01 totals.
+   - (E1-8) The library and common-residual hashes are written to LEDGER.json before `e1 recip`.

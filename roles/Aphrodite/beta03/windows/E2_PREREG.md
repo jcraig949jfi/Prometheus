@@ -96,3 +96,32 @@ censored.
 - About 13-19 core-h for 24 seeds: g12 jobs about 5 CPU-min each, I_0 rows, plus about 7 new libraries per seed walked
   on 64 transfer cells.
 - Rolling-cap check before launch.
+
+## AMENDMENT A1 (pre-data; red-team; no E2 outcome existed)
+Supersedes s5 where it conflicts.
+1. **Claim 2, rejects memorisation without a ban (E2-1).**
+   - It is tested only on seeds where MEMORISE is ATTRACTIVE, meaning eligible under the recorded I_0 diagnostic
+     table.
+   - **PASS** iff >= 3 attractive seeds AND g12 rejects MEMORISE in >= 80% of them. **UNTESTED** if < 3 attractive.
+     **FAIL** otherwise.
+   - A pre-registered **lambda = 0 rescore** (g12.rescore, no new walks) is reported. It shows whether rejection comes
+     from the fold-minimum or from the DL penalty.
+   - The MEMO12 plant remains a DL check only.
+2. **Claim 3, rejects attractive junk (E2-2).** It is tested only on seeds where PLANT_NEAR or PLANT_OFF is eligible
+   under I_0. The same PASS / UNTESTED / FAIL rule applies.
+3. **G12_GENERAL_RULE:**
+   - **NO** iff (sum vs I_0 <= 0) OR traps fail OR eliminating OR claim 2 FAIL OR claim 3 FAIL;
+   - **YES** iff the transfer test vs I_0 is positive AND claims 2 and 3 PASS (plus the trap and non-eliminating
+     rules);
+   - otherwise **INCONCLUSIVE**. That includes a positive transfer test with an UNTESTED claim.
+4. **NONINFERIOR (E2-3)** is now a real margin test:
+   - delta = 10% of g11's mean per-seed gain;
+   - exact one-sided sign-flip on 10*d + round(10*delta) > 0;
+   - it also requires g11's total > 0.
+   - SUPERIOR and INFERIOR are unchanged.
+5. **Holm (E2-4)** uses two-sided p values.
+6. **Gate and receipts (E2-5, E2-6):**
+   - MEASUREMENT_FAILED if E2_KNOWN does not pass;
+   - dropped seeds are listed;
+   - the sha256 of E1_DONORS.jsonl (the reused g11 rows) is recorded.
+   - Note that DL also taxes SCHEMA_ALL (report-only).
