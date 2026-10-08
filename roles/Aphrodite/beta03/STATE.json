@@ -36,7 +36,8 @@
       "title": "SATURATION / INTERFERENCE DISCRIMINATOR (E1)",
       "start_utc": "2026-10-08T09:05Z",
       "end_utc": "2026-10-08T13:05Z",
-      "status": "ACTIVE"
+      "status": "CLOSED",
+      "report": "beta03/windows/W02_EXP_REPORT.md"
     },
     {
       "id": "W03",
@@ -44,7 +45,7 @@
       "title": "G12 ENDPOINT-ALIGNED SELECTOR",
       "start_utc": "2026-10-08T13:05Z",
       "end_utc": "2026-10-08T17:05Z",
-      "status": "PENDING"
+      "status": "ACTIVE"
     },
     {
       "id": "W04",
@@ -119,7 +120,7 @@
       "status": "PENDING"
     }
   ],
-  "active_window": "W02",
+  "active_window": "W03",
   "supply": {
     "file": "science/arc3/w8_lin_generator/W8_SUPPLIES_B03.json",
     "blocks": {
@@ -130,17 +131,29 @@
   "jobs": [
     {
       "id": "SUPPLY_A_B",
-      "cmd": "b03.py supply A; supply B",
-      "log": "beta03/runs/SUPPLY_run.log",
-      "started_utc": "2026-10-08T05:10:34Z",
-      "status": "A_DONE 08:32Z; B RUNNING",
-      "outcome_free": true
+      "status": "DONE 11:43Z (A 24, B 22 usable)"
+    },
+    {
+      "id": "E12_CHAIN",
+      "status": "STOPPED 13:10Z for compute cap after E1 recip started"
+    },
+    {
+      "id": "E1_ONLY_CHAIN",
+      "cmd": "b03.py e1 recip -> score -> report",
+      "log": "beta03/runs/E12_chain.log",
+      "status": "RUNNING"
     }
   ],
-  "next_permissible_action": "W02/W03: E1/E2 chain -> reports; E5-N after cap check; draft MIGRATION design (directive s10) in parallel; E5-H NOT launched",
+  "next_permissible_action": "E1 report when E1-only chain completes; at >= 2026-10-09T05:15Z (cap check): b03_e2.py score -> report, then b03_e5.py sham -> recip -> score -> report",
   "compute": {
     "cap": "48 core-h / rolling 24h (M4)",
-    "ledger": []
+    "ledger": [
+      {
+        "utc": "2026-10-08T13:08Z",
+        "rolling_24h_est_core_h": 38.5,
+        "note": "foundry 26.3 + leads/pilots/known ~6.7 + chain 5.5; E2 score/report + E5-N deferred to >= 2026-10-09T05:15Z roll-off"
+      }
+    ]
   },
   "cloud_spend_usd": 0.0,
   "subagents": {
