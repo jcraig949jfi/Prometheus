@@ -4,7 +4,8 @@ Currency: 2026-10-08 (48h loop: THESEUS-25 DONE 27e8be548; THESEUS-23a DONE 8814
 discriminates); THESEUS-23b running; 27-28 added from the 23a failure shape). Priority order.
 
 THESEUS-30 | Add CONDITIONAL primitives that are inert alone (act only through state other parts create: memory-keyed, channel-gated, threshold-armed), build a constructive planted composition, and re-run the 23b detector on G0/one-shot/deep arms | C1 | alpha | M | none | substrate v2 ops + planted-composition positive control + composition rates
-THESEUS-27 | Run a v1 ecology whose QD elite quality is R5 (graded causal structure) vs the v0 quality (reproducibility), same seeds and budget; does depth then build structure instead of eroding it? | C1 | alpha | M | THESEUS-23b | prereg + two runs + R5-by-generation table
+THESEUS-27b | Rerun structure selection with a cap that counts elites (top-k elites by quality, k <= cap/2) and selection at parent choice (coalition seed weight by quality rank); same primary outcome (H1) | C1 | alpha | M | none | prereg + two runs + H1 + manipulation check
+THESEUS-27-VOID | (2026-10-08) Run a v1 ecology whose QD elite quality is R5 (graded causal structure) vs the v0 quality (reproducibility), same seeds and budget; does depth then build structure instead of eroding it? | C1 | alpha | M | THESEUS-23b | prereg + two runs + R5-by-generation table
 THESEUS-28 | Ablate the generated k-ary law (law-free collisions) and test whether R5 erosion with depth disappears | C1 | alpha | S | none | prereg + run + R5-by-generation table
 THESEUS-29 | Find or build a stronger structure ruler than R5 (W controls score high on R5) | C1 | beta | M | none | ruler_check rerun with the new ruler, AUC + W control
 THESEUS-23b-DONE | (closed 2026-10-08) composition wall on v0_1: 0 in every arm, INDETERMINATE; parts never inert alone (runs/composition_2026-10-08/VERDICT.md)
