@@ -486,3 +486,21 @@ applies to the offline task only.
 - F10 therefore stays EXPLORE-level, and the mechanism is NOT promoted.
 - A better confirm design would plant several copies of each architecture, so that establishment is not a lottery.
   It is not run here, to avoid adaptive re-testing in the same window.
+
+## F12. X-DIR-7AE3: SIGNAL. The direction-vs-rate result generalizes to a second world (scope test, 36 runs)
+
+**The 7ae3 cell:** Z8_64 representation, where OPERAND mutation hits real operand bytes only, so the world never
+mutates opcodes; WELL_MIXED. Otherwise STATIC ADD37, CONST 0.15, 2000 epochs, as in ffa6.
+
+| arm | maintained (established runs) | final CS | median last epoch with CS > 0 |
+|---|---|---|---|
+| DIR015 | 12/12 | 0.95-0.99 | 2000 |
+| RND015 | 0/9 | -- | 900 (ffa6: about 400) |
+| CT_U under DIR | 0/4 | 0 | -- |
+| COPY_ONLY under DIR | 0/4 | 0 | -- |
+
+- **The leak model predicts both shifts.** Opcode-sparing mutation shrinks the routine's destructive target, which
+  gives a higher maintained equilibrium (0.95-0.99, against 0.91-0.95 in ffa6) and slower neutral loss without
+  selection (900 against 400).
+- **Scope:** the principle (function persists iff competence biases copy-exchange DIRECTION) holds across two pair-tape
+  worlds with different mutation geometry and structure. It is untested outside pair-tape replication.
