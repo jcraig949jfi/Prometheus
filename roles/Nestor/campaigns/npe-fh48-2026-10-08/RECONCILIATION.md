@@ -19,3 +19,4 @@
   - A determinism replay of the production row PAIR_POS 43000001 is recorded below.
 - **x_task_gate_v2/ is read-only historical evidence from here on.** This campaign imports its ruler (`xtg2.py`) and
   never edits it.
+- Determinism replay: PAIR_POS 43000001 rerun at the window base reproduces the frozen row exactly (0 differing fields).

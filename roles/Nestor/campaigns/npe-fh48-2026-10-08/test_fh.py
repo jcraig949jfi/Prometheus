@@ -59,6 +59,29 @@ def test_ms1_scales():
     assert all(r0._mutate(g) == g for _ in range(200))
 
 
+def test_hk1_instance_mutate_override_respected():
+    """DEF-FH-1 regression: an instance-level _mutate override (used by assays to disable mutation) must be used by
+    the ledger wrapper and must survive the interaction. Old wrapper: called the class method and deleted the override."""
+    import random
+    g = fh.PLANTS["CT_UA"]
+    rng = random.Random(45_500_000)
+    diffs = 0
+    for t in range(40):
+        r = fh.make_runner(45_500_000 + t, dict(epochs=1, plant=None, copy_scale=0.0))
+        a = r._place(g, 0, niche=0)
+        b = r._place(bytes(rng.randrange(256) for _ in range(64)), 1, niche=0)
+        r._init_state()
+        r._mutate = lambda x: bytes(x)
+        f0 = r._mutate
+        oid = b.oid
+        r._pair_interact(0, a, b)
+        assert r._mutate is f0, "override removed"
+        if b.oid != oid:
+            diffs += r._genome(b) != g
+        diffs += r._genome(a) != g
+    assert diffs == 0, diffs
+
+
 if __name__ == "__main__":
     fails = 0
     for name, f in sorted(globals().items()):

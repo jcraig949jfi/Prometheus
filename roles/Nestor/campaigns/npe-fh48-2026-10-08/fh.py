@@ -176,8 +176,11 @@ def make_runner(seed, cfg=None):
                 self.exposure["comp_half_interactions" if pc[o] else "noncomp_half_interactions"] += 1
             calls = []
 
-            def m(g, _self=self):
-                out = type(_self)._mutate(_self, g)
+            had = "_mutate" in self.__dict__
+            inner = self._mutate                     # instance override if present, else the bound class method
+
+            def m(g, _inner=inner):
+                out = _inner(g)
                 calls.append((bytes(g), bytes(out)))
                 return out
             self._mutate = m
@@ -185,7 +188,10 @@ def make_runner(seed, cfg=None):
             try:
                 super()._pair_interact(i, a_, b_)
             finally:
-                del self._mutate
+                if had:
+                    self._mutate = inner
+                else:
+                    del self._mutate
             assert len(calls) >= 2, calls
             tape = {a_: calls[0][0], b_: calls[1][0]}
             births = {e["child"]: e for e in self.lineage[nlin:] if e["kind"] == "birth"}

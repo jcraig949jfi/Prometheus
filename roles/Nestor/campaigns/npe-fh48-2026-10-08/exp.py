@@ -46,6 +46,27 @@ declare("X-LOSS-GATE",
             ("C100", dict(gate="CONST", p_const=1.0)))])
 
 
+# --------------------------------------------------------------------------- 2. X-DIR-QUAL
+# X-DIR-QUAL (EXPLORE, parents X-GATE-HARM, X-LOSS-AUTOPSY): does selection on COPY DIRECTION (competence decides who runs
+#   first = who copies onto whom) maintain a transmitted task function, at a FIXED, competence-blind interaction rate?
+#   Single coordinate: order = DIR (higher-u organism on side 0, q = 1) vs RANDOM, at CONST p in {0.15, 1.0}; CT_UA plant.
+#   Negatives under DIR at p = 0.15: CT_U (reads, does not use; u = 0 -> no ordering advantage) and COPY_ONLY.
+#   p = 0.15 arms run 2000 epochs, p = 1.0 arms 300 epochs: both ~300 interactions per organism (X-LOSS-GATE showed
+#   p = 1.0 costs ~10x per epoch). Seeds 44_100_000 + s (paired across arms within a plant).
+#   Endpoint (persistence, not peak): among established runs, final CS >= 0.10 (MAINTAINED), and last epoch with CS > 0.
+#   Classification (declared): SIGNAL if DIR maintains (final CS >= 0.10) in >= 50% of established CT_UA runs at some p
+#   while its RANDOM partner at that p maintains in <= 1 run AND both negatives have final CS = 0 in all runs;
+#   WEAK_SIGNAL if DIR's median last-CS>0 epoch exceeds RANDOM's by >= 2x at some p without maintenance;
+#   CLEAN_NULL otherwise. INVALID if a negative arm ends with CS >= 0.10 in any run.
+SEEDS_D = [44_100_000 + s for s in range(12)]
+declare("X-DIR-QUAL",
+        jobs=[(arm, s, dict(gate="CONST", p_const=p, order=o, epochs=ep)) for s in SEEDS_D
+              for arm, p, o, ep in (("DIR015", 0.15, "DIR", 2000), ("RND015", 0.15, "RANDOM", 2000),
+                                    ("DIR100", 1.0, "DIR", 300), ("RND100", 1.0, "RANDOM", 300))]
+        + [(arm, s, dict(gate="CONST", p_const=0.15, order="DIR", plant=pl)) for s in SEEDS_D[:6]
+           for arm, pl in (("NEG_CTU_DIR015", "CT_U"), ("NEG_COPY_DIR015", "COPY_ONLY"))])
+
+
 if __name__ == "__main__":
     name = sys.argv[1]
     w = int(sys.argv[2]) if len(sys.argv) > 2 else 4
