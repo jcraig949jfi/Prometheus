@@ -304,3 +304,14 @@ Each prediction must hold in EVERY variant:
 - G-P3: AB > AB_copy (complete-overwrite physics): McNemar p < 0.05, AB-only > copy-only.
 - G-P4: in AB runs, the first assembly/construct event is two-source in >= 80%: the child is FUNC, the child with its
   target bytes zeroed is not, and the pre-birth target tape is not.
+
+## 12. WINDOW 6 block 3 -- fresh-seed confirmation of W4's provisional mechanisms (frozen 2026-10-08T18:26:36Z, before any run)
+
+Plan tools/plan_w6b3.py: 600 runs, sha256 56c76cfb766f947a034b50060207b6d5096eaeb17335160493a91db6e9286b9e; K1 ECHO K40 ON,
+300 fresh distinct seeds; K2 REP+BAD INC K16 ON, 300 fresh distinct seeds. Analysis tools/analyze_w6b3.py (committed with
+this section). Before freezing, the draft E-P2 ('OUT executed from the child copy') was tested on the 20 W4 machines and
+found false in 0/20 (see the W4 CORRECTION); it is replaced by the budget-coupling test.
+- E-P1: competent dominant machines with >= 1 shared competence/copy-critical byte >= 50%.
+- E-P2: BUDGET_COUPLED (a shared byte whose knockout kills competence at budget 256 but not at 512) >= 35% of competent
+  dominant machines (W4 post-hoc: 10/20).
+- E-P3: repaired machines (K2): modal class SINGLE_LINEAGE_BAD.

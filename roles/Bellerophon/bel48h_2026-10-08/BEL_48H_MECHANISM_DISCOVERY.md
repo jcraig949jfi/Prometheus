@@ -86,10 +86,13 @@ Fragment A: 0/16,320 single substitutions but 8/50,512 single segment moves reac
 Under copy physics, COPY_AB origins are built from A's bytes in 60/60. Class: CAUSALLY_CONFIRMED for the specimen.
 Other engines: any reachability/mutational-robustness ruler must use the physics' own variation operators.
 
-### M6. Entangled computation and reproduction
-16/20 evolved ECHO replicators share competence- and copy-critical bytes; traced specimens produce the answer after
-the copy, through the child in the window. Selection test (entangled vs separated, ON/OFF x MED/HIGH): W5 block 3.
-Class: PROVISIONAL.
+### M6. Budget coupling of computation and reproduction (CORRECTED; the 'through the child' reading is retracted)
+Evolved ECHO replicators that run their task code AFTER the copy depend on the copy routine's length operand: an
+unbounded copy (C = 0, 256 bytes) exhausts the 256-step budget before the task code runs; doubling the budget restores
+competence (w4_00735, causal). Prevalence 10/20 (post-hoc), OUT never executed from the child copy (0/20). Confirmation
+of prevalence on fresh seeds: W6 block 3 (E-P2). Selection test (budget-coupled 'copy-then-compute' E vs 'compute-then-
+copy' S, ON/OFF x MED/HIGH): W5 block 3 -- its frozen labels 'entangled/separated' refer to these two specimens.
+Class: CAUSALLY_CONFIRMED (specimen), PROVISIONAL (prevalence).
 
 ### M7. Payment-driven conflict repair
 Contingent payment yields competent self-replicators from a damaging hybrid (10/300 vs 0/300) by in-place repair of the

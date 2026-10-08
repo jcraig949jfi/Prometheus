@@ -38,3 +38,7 @@ date | call made | what was true | corrected by | changed practice
 - W5-P1 predicted that target material (complementation repair) makes function MORE persistent at HIGH mutation; the
   sign reversed (zero fill 10 vs preserve 4 discordant pairs). The repair channel was real (W5-P2) but its net effect
   depends on the mutation regime.
+- W4 s2 claimed the ECHO answer is produced 'through the child copy' from four hand traces read too quickly (a late
+  first-OUT step was taken as execution inside the window). An automated test written for W6 block 3 refuted it (0/20);
+  the real mechanism (budget coupling) was then tested causally. Rule: a mechanism read off a trace gets an automated,
+  falsifiable test BEFORE it is written into a report.

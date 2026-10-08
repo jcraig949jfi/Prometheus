@@ -58,3 +58,18 @@ separated form is NOT tested here (next experiments).
 
 Single coupling physics (v3) and parameter sets (K16 / K40); ECHO and INC only; W4-P4 untestable at this n; entanglement
 mechanism traced on 4 specimens; competence is the configured verifier's exact-answer test (tasks.verify_exact).
+
+## CORRECTION (2026-10-08T18:26:36Z) -- the entanglement mechanism in s2 was wrong; it is BUDGET COUPLING
+
+s2 said the answer is produced "after the copy, when execution falls through into the freshly written child". An
+automated test (analyze_w6b3.out_from_child: is the OUT_A executed from [L,2L) or from the organism's own tape?) gives
+OUT executed in the child copy in 0/20 W4 machines -- the claim is RETRACTED. What the four traced specimens actually
+show, now tested causally on w4_00735: competence survives every copy length C except C = 0 (an unbounded 256-byte
+LDIR), and with the execution budget raised from 256 to 512 steps the C = 0 variant is competent again. The copy routine's
+length operand is competence-critical because an unbounded copy consumes the whole step budget before the task code
+(which runs AFTER the copy, own tape, step 74 in w4_00735) is reached: computation and reproduction compete for ONE
+execution budget. Classifier (frozen for W6 block 3): BUDGET_COUPLED = a shared critical byte whose knockout kills
+competence at budget 256 but not at 512. Retrospective (post-hoc, labelled) on the 20 W4 ECHO machines: BUDGET_COUPLED
+10, OTHER_SHARED 7 (shared byte kills competence at both budgets, e.g. w4_00606: knocking out the LD T opcode exposes its
+operand 0x40 = IN_A as an instruction -- a knockout frame-shift effect, not dual use), SEPARATED 3. The 'shared bytes'
+detector of s2 therefore mixes a genuine coupling (budget) with a ruler artifact (operand exposure). CL-11 corrected.
