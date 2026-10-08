@@ -229,3 +229,21 @@ Rules from now on (W1 v2 results not yet read; W2/W3a already reported are corre
   (3) W4 arms that share a seed are PAIRED by construction: the frozen Fisher tests stay primary (conservative under
       positive pairing) and an exact McNemar on seed-pairs is reported beside each;
   (4) every NEW plan uses a distinct seed per (lane, cell, k) unless pairing is the stated design.
+
+## 7. WINDOW 5 block 1 -- complementation repair and its ablation (frozen 2026-10-08T08:47:44Z, before any W5 run)
+
+Motivation (seen before this freeze, all W2/W3a): causal assemblies continue after the fragment founders die (A: 223 of
+407 by later-born non-FUNC writers); function persists while first-assembly lineages die (W2 s2.D); W3a origins are
+completed by single changes in copy-born carriers. Hypothesis COMPLEMENTATION REPAIR: under ENDOGENOUS_PARTIAL the
+target's surviving bytes complete the defects of degraded copiers, so functional machinery is re-made continually.
+Intervention: the kernel's target_fill = "zero" (unwritten child bytes are fresh zeros, not the target's): births still
+happen, target material does not survive. Plan tools/plan_w5.py: 240 runs, sha256
+a35cc27ba461bec4c9b454e15e0444518546a8d12cbbca693ee42fe7ebe9457e; arms paired by seed; distinct seeds per block/level.
+Endpoints (unit = seed-pair): FUNC_END = func_alive > 0 at the last tick; REPAIR_BIRTHS = FUNC-child births whose writer
+pre-tape is NOT FUNC (heredity classes ASSEMBLY + CAPTURE + CONSTRUCT) per run.
+- W5-P1: E5a HIGH, FUNC_END preserve > zero: exact McNemar on discordant pairs, two-sided p < 0.05 with preserve-only >
+  zero-only. (MED reported; prediction only for HIGH, where repair should matter most.)
+- W5-P2: E5a, REPAIR_BIRTHS higher under preserve in each mutation level: sign test over pairs (ties dropped),
+  one-sided p < 0.05 per level.
+- W5-P3: E5b, causal assembly in >= 90% of preserve runs and <= 5% of zero runs.
+Exploratory block: findings are PROVISIONAL until confirmed on fresh seeds in W6.
