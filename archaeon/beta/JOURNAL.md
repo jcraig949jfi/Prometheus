@@ -43,6 +43,7 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
 | B39 | what rule do the transferable foragers implement? | 6/8 = the INVARIANT rule (harvest index = position of non-empty pool .77-.92; move when empty) |
 | B40 | keyed memory under a K-distribution + wide jitter | NULL 0/8 general (4 one-value shelf, 4 floor) -- distribution lever does not cross an isolated peak |
 | B41/B42 | lethal hazards in training -> named-world transfer? | NULL; P-boom obstacle = rare food departures (8%) -> wander -> deaths 7/16 vs 1/16 |
+| B43/B44 | evidence-integration world: does memory of cues evolve? | world validated (reactive .75 < sticky .90); B44 running |
 | B30 | do foragers carry state across ticks? | YES: 6/7 content sensors use state; blind ones in rewarding worlds 5/5 |
 | B31 | what do they remember? | 2504: 1-register direction memory; others computed state (not past observations) |
 | B17 | forced perception (echo on PUT) opens the 2-value wall? | staged; controls pass |
@@ -468,6 +469,13 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   in KIND, wrong in MAGNITUDE (a rare departure with a large downstream cost). Training under lethal hazards did not
   remove it. NAMED-WORLD TRANSFER PARKED with this as the mapped obstacle: within-family transfer is established
   (B36/B39); crossing to P-boom needs a forager that never leaves a regenerating food node. CORE-HOUR TALLY: ~19.
+- B43 EVIDENCE-INTEGRATION WORLD (design): the C6 "hidden" feature does not test integration (the latent = index of
+  the rich pool, revealed by visible pool words). Purpose-built: hint-only observation (noisy index of the rich pool),
+  no locality. v1 FLAW (caught by the oracle control scoring LOWEST, .24): C6 depletion/regeneration rewards rotating
+  harvests, so knowing the latent did not pay. v2: static pools (deplete = regen = 0). Ladder at R=4, noise .6:
+  constant .656 < REACTIVE .754 < STICKY (one remembered hint) .900 < oracle 1.0.
+- B44 launched ~09:05Z: evolution on the v2 evidence world (R=4, noise .6), 8 seeds, G=300, lease lse-94774b07ab82.
+  PREDICTION: >= 3/8 elites beat REACTIVE by >= .05 AND lose >= .05 under persist=none (evolved evidence integration).
 - BUDGET WINDOW 2026-10-08 ~00:07Z. B29 already done (not relaunched). Lease lse-fe37dd77fe7a (spectrex5:cpu12,
   3 h) for B32 replication: 12 seeds (3211-3222), 10 procs, + B32's last cell on 2 procs = 12. CORE-HOUR TALLY
   (rolling 24 h from 00:07Z): 0 at launch; est. +3-4 for the replication.
