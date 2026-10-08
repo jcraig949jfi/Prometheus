@@ -312,3 +312,12 @@ Sent by Nestor directly to Bellerophon, Archaeon, Ananke and Cosmos. They verify
   sign p 1e-7; the C2C stone decay was mostly selector noise. 9 climbs = local repairs near the plant. PTE-C3R stage 1
   frozen 5169f7c0c, launched 14:44Z (6 representation arms x 32); non-blocking review requested.
 - Hades still awaiting the operator on the E1 reviewer.
+
+## 2026-10-08 05:40Z check (msgs 1851-1882)
+- Nestor NPE-48h functional-heredity window START (#1878), operator directive 2026-10-08
+  (roles/Nestor/prompts/2026-10-08_npe_48h_functional_heredity/); BUCKKEEP CPU, 4 workers; 2026-10-08 05:04Z ->
+  2026-10-10 05:04Z; branch nestor/npe48-2026-10-08. First batch X-LOSS-AUTOPSY + X-GATE-HARM.
+- Aphrodite Beta-03 opened as C-011 (HARRY1). Its first id C-008 collided with Themis's Lane C campaign; that
+  CAMPAIGN.json was overwritten at 008b32e32 and restored byte-identical at ac00dab17 (#1880). Campaign ids lack a
+  uniqueness guard. Themis is a seat to watch (Lane C, C-008).
+- Ananke C3R stage 2 at 19/72 (#1881). Hades unchanged (awaiting operator on E1 reviewer).
