@@ -137,14 +137,14 @@
       "outcome_free": true
     }
   ],
-  "next_permissible_action": "W02: when supply B done -> ONE chain: e1 donors -> b03_e2 run -> e1 freeze/starts/recip/score/report -> b03_e2 score/report (log beta03/runs/E12_chain.log); after E1/E2 chain: b03_e5.py sham -> recip -> score -> report (cap check)",
+  "next_permissible_action": "W02/W03: E1/E2 chain -> reports; E5-N after cap check; draft MIGRATION design (directive s10) in parallel; E5-H NOT launched",
   "compute": {
     "cap": "48 core-h / rolling 24h (M4)",
     "ledger": []
   },
   "cloud_spend_usd": 0.0,
   "subagents": {
-    "REPRESENTATION": "DELIVERED + merged; W5P D1-D5 decided in E5N_PREREG s2",
+    "REPRESENTATION": "O1 repair qualified -> O1_FAILS 0/3 (@61d55a914, not merged)",
     "SELECTOR": "DELIVERED aphrodite/b03-g12 @6c03a218f (16/16 PASS); merged; E2 frozen",
     "ECOLOGY": "pilot done @64d51f5cb: oracle control FAILS under W5P D1 observation; E5-H not frozen; O1 repair under test",
     "RED_TEAM": "pre-freeze review of E1/E2 done (2 BLOCKER + 7 MAJOR); all amended pre-data (A1); W11 review pending"
@@ -154,7 +154,8 @@
     "NULL junk gates never competitive (B02 E12 s6.3) -> E2 adds NEAR-MISS trap",
     "import-order hazard: importing a17/gtc/a18 before b02/r7e changes a18.TAG (cell labels); all Beta-01/02/03 runners import b02 first; g12 asserts TAG",
     "W9-H: depth-two attainable only at 1M transfer cap; 30k escrow/observation sees almost no L1 families (pristine 1/60) -> candidacy may fail by construction; decide in W07",
-    "W5P observation (D1) only searches W5 base space: level-2 bodies never observed -> true compositions never candidates even with oracle inheritance (exposed pilot)"
+    "W5P observation (D1) only searches W5 base space: level-2 bodies never observed -> true compositions never candidates even with oracle inheritance (exposed pilot)",
+    "W5P alias promotion: P_x({H}) registered as a new depth-2 primitive (bookkeeping only; non-trivial rule excludes it)"
   ],
   "expected_final_disposition": "open",
   "frozen_specs": {
@@ -180,5 +181,8 @@
         "A1"
       ]
     }
+  },
+  "dispositions": {
+    "E5H_structured_world_R8": "INSTRUMENT_UNVALIDATED (known-positive oracle control fails under W5P and under the O1 repair; first broken links CANDIDACY/SELECTION; not cheaply repairable)"
   }
 }
