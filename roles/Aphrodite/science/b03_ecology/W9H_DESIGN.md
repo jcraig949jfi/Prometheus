@@ -67,7 +67,7 @@ admission and certification stages may read it. A treatment must never read it.
 ## 2. Generator config to be frozen
 
 `python w9h_grammar.py config` prints CONFIG and its sha256. Every supply/truth record carries `config_sha`. The
-pilot used sha **`<PILOT_SHA>`**. For a confirmatory run the coordinator freezes CONFIG (by sha) in the amendment
+pilot used sha **`2334bb7480bd5d12d085f38ce4d9e143b4f5fa2f5c1cf631e2a77ef4e6768b4a`. Reproducibility was checked: regenerating W9H:0 reproduces the families and truth byte-for-byte**. For a confirmatory run the coordinator freezes CONFIG (by sha) in the amendment
 **before any treatment run**. Recommended production changes, all of which change the sha and so must be decided
 before the freeze:
 
@@ -117,11 +117,111 @@ tribunal rejects but that equals the witness on B1 is a FALSE NEGATIVE.
 
 ## 5. Pilot results
 
-<PILOT_RESULTS>
+Pilot: seeds 0–2, 48 families per seed (L0 10 / L1 20 / L2 18), CONFIG sha `2334bb74…`. The full numbers are in
+`pilot/W9H_PILOT_METRICS.json`. Inputs and outputs are `pilot/W9H_SUPPLIES.json`, `W9H_TRUTH.json`,
+`W9H_FOUNDRY.jsonl` and `W9H_CERTIFY.jsonl`. Logs are `gen.log`, `foundry.log` and `certify.log`. No treatment was
+run.
+
+**GENERATOR_ADMISSION_YIELD**
+
+| level | generator proposals | generated | Q2 | T4-qualified | admitted | admitted/generated | admitted/proposal |
+|---|---|---|---|---|---|---|---|
+| L0 | 1402 | 30 | 29 | 29 | 28 | 0.93 | 0.020 |
+| L1 | 1954 | 60 | 60 | 60 | 60 | 1.00 | 0.031 |
+| L2 | 1236 | 54 | 54 | 50 | 47 | 0.87 | 0.038 |
+| all | 4592 | 144 | 143 | 139 | 135 | 0.94 | 0.029 |
+
+Losses after generation: L0 lost 1 to Q2 and 1 to the window; L2 lost 4 to T4 and 3 to the window (all 3 window
+losses are in W9H:1 C0). No family failed recurrence or entropy. All 139 T4-qualified families had disjoint
+dev/transfer/pilot prompt sets and distinct search seeds. The ~3% per-proposal yield is dominated by generator
+rejections. In L1, the largest are non-accumulating bodies and constant fillers. In L2, they are constant fillers,
+then T4 task-side profile and organ-equivalence. Per-level reasons are in each supply's `stats.by_level`.
+
+**Stratum sizes** (generated → admitted). L1: ADD 14→14, MUL 13→13, DIV 10→10, GCD 10→10, MIX 13→13. L2 (outer>inner):
+ADD>MIX 14→13, ADD>MUL 6→6, GCD>DIV 7→7, GCD>MIX 6→3, GCD>MUL 6→6, MIX>DIV 3→3, MIX>GCD 6→3, MIX>MUL 6→6.
+L0 30→28. These are **quota** sizes. Natural frequency under the uniform grammar is far lower (R1).
+
+**PRISTINE_REACHABILITY** (admitted families, first T4-v1a-qualified program)
+
+| level | n | escrow 30k: families p>0 (cells) | cap 1M: families reached (cells) |
+|---|---|---|---|
+| L0 | 28 | 7 (9/112) | 14 (24/56) |
+| L1 | 60 | 1 (1/240) | 9 (11/120) |
+| L2 | 47 | 2 (3/188) | 3 (6/94) |
+
+**PROMOTED_REACHABILITY: the sensitivity control** (47 admitted L2 families, same cells for every library)
+
+| library | 30k: cells (family share) | 1M: cells (family share) |
+|---|---|---|
+| PRISTINE | 8/188 (0.06) | 6/94 (0.06) |
+| FLAT (all seed mechanisms, unpromoted) | 0/188 (0.00) | 34/94 (0.36) |
+| **PROMOTED_A** (correct inner primitive promoted, outer unknown) | 4/188 (0.04) | **94/94 (1.00)** |
+| PROMOTED_ORACLE (S_b o P_a) | 110/188 (0.89) | 94/94 (1.00) |
+| SHAM_C (wrong inner primitive) | 0/188 (0.00) | 34/94 (0.36) |
+
+For level 1 (60 admitted L1), FLAT_A, the correct mechanism as a flat W5 schema, reaches 133/240 cells at 30k
+(0.93 of families) and 120/120 at 1M. PRISTINE reaches 2/240 and 11/120. Level-1 mechanisms are learnable
+targets: once learned, they pay off at the standard escrow.
+
+**The control passes at the 1M transfer cap.** Promoting the correct primitive takes depth-2 reachability from
+6% (PRISTINE) to 100% of families. The wrong primitive (SHAM_C) does no better than unpromoted FLAT. FLAT's 36%
+comes from L2 families that a flat W5 instantiation of some seed mechanism happens to express. **At escrow 30k the
+control does not pass for PROMOTED_A (4/188 cells).** Only the oracle depth-2 schema pays off at 30k (R3).
+
+**DEPTH_TWO_WITNESS_COUNT**
+
+* generated 54, T4-qualified 50, admitted 47, of which 46 have expansions outside W5;
+* **CERTIFIED_DEPTH2 = 44 / 47** (Wilson 95% [0.83, 0.98]); 43 of these are outside W5. Per seed: 15 / 11 / 18.
+  The certified families cover 8 of the 9 compositions. W9H:1 C0 has 3 admitted and 0 certified, because PRISTINE
+  reaches them;
+* **CERTIFIED_STRICT = 30 / 47.** This adds two conditions: FLAT 0/2 and SHAM_C 0/2 at 1M, so promotion of the
+  correct primitive is *necessary* as well as sufficient. 29 of the 30 are outside W5. Per seed: 5 / 11 / 14.
+  They cover 8 compositions;
+* the oracle verdict (PROMOTED_ORACLE instead of PROMOTED_A) also gives 44.
+
+So the world **does contain independently certified, attainable depth-two mechanisms**: 44 families (30 strict) on
+8 distinct compositions across 3 seeds.
+
+**FALSE_POSITIVE_RATE (tribunal T4 v1a)**. There were 727 qualified endpoints across foundry and certification
+walks. 1 was not behaviourally equal to the witness on B1 or B2, a rate of 0.0014 (Wilson 95% [0, 0.008]). That case
+is family `ydnbaa` (W9H:1 C0, not admitted, because PRISTINE reaches it). Its filler `(1 % last)` is 1 except when
+last = 1, and the PROMOTED_ORACLE endpoint dropped that edge case. The tribunal also rejected 1344 dev-consistent
+spurious programs, and none of them was B1-equal to the witness (0 false negatives).
+
+**SEMANTIC_CLASS_DIVERSITY** (admitted). Seed 0: 45 families, 45 behaviour classes, 35 body-vector classes,
+fclass ADD/AFF/OTHER 4/19/22. Seed 1: 44, 44, 40, 4/22/18. Seed 2: 46, 46, 36, 8/5/33. Behaviour classes equal
+family counts by construction (behaviour de-duplication). Body-vector classes show that 10–25% of families share a
+body semantics and differ only in init/final.
+
+**Distribution shift vs W8 LIN 0–7** (1152 families) → W9H admitted (135)
+
+| | W8 LIN | W9H admitted | TVD |
+|---|---|---|---|
+| fclass ADDITIVE / AFFINE / OTHER | .58 / .28 / .14 | .12 / .34 / .54 | 0.46 |
+| W8-audit additive one-hole share (`acc ± X`, `X + v` at root) | .63 | .38 | |
+| top op add / sub / mul / mod / gcd | .41 / .49 / .08 / .01 / .01 | .37 / .17 / .21 / .08 / .17 | 0.36 |
+| all ops | | | 0.22 |
+| body depth 1 / 2 / 3 / 4 / 5 | .12 / .56 / .32 / 0 / 0 | .03 / .30 / .33 / .15 / .19 | 0.36 |
+
+W9H moves mass from additive one-hole structure to non-additive (fclass OTHER ×3.9) and puts 34% of bodies beyond
+W5 depth. That is the intended shift. It is a stratified design, not a natural-frequency claim.
 
 ## 6. Per-seed foundry cost
 
-<COST>
+Measured in the pilot (single core, OMP=1): generator 189–321 s per seed (48 families); foundry 27.5 CPU-s per
+family; certification 10.8 CPU-s per L1 family and 22.8 CPU-s per L2 family. The pilot total was ≈1.8 CPU-h
+(gen 0.23 + foundry 1.10 + certify 0.50) and ran ~70 min wall at 2 workers.
+
+Per-seed estimate at the recommended production size (144 families: L0 24 / L1 60 / L2 60):
+
+| stage | CPU | note |
+|---|---|---|
+| generator | ~10–20 min | one-time, rejection-dominated |
+| foundry (A2–A5) | 144 × 27.5 s ≈ **66 min** | same per-family cost as a W8 foundry row plus 2 PRISTINE 1M walks |
+| certification | 60 × 10.8 + 60 × 22.8 s ≈ **34 min** | optional for L1 |
+| **total** | **≈ 1.8–2.0 CPU-h per seed** | 8 seeds ≈ 15–16 core-h, ~8 h wall at 2 workers, within the 48 core-h/24 h cap |
+
+Every single job is < 1.5 CPU-min, well under the 15-minute limit.
 
 ## 7. Interface expected from W5P (representation lead)
 
@@ -169,3 +269,19 @@ What this ecology assumes, and what the coordinator should check when W5P lands:
 * **R6: pilot size.** 3 seeds × 48 families. All rates carry wide intervals (Wilson 95% is reported where used).
 * **R7: cost of generation.** 3–6 min per seed, dominated by T4 task-side profiles and behaviour ids during
   rejection. Production (144 families) is estimated at ~10–20 min per seed. Generation is a one-time cost.
+
+## 9. Open decisions (coordinator)
+
+* **D1: freeze.** Adopt CONFIG as is (sha `2334bb74...`), or with the production level quotas (s2). Either way,
+  freeze before any treatment run, on a fresh seed block (not 0-2).
+* **D2: budget regime.** The depth-2 control passes at 1M and fails at 30k for PROMOTED_A. If W5P donors select at
+  escrow 30k, a correctly promoted primitive will rarely show depth-2 savings during selection. The options are:
+  raise the selection escrow for E4; make depth-2 savings visible through the composition move (the oracle-like
+  S_b o P_a entry is what pays at 30k); or accept that E4 tests selection on level-1 savings plus 1M transfer.
+* **D3: transfer pool.** Draw TRANSFER from CERTIFIED (44) or CERTIFIED_STRICT (30) L2 families rather than from all
+  admitted families. Strict isolates "promotion necessary"; plain certified keeps more power.
+* **D4: role rule.** The A19/T51 role rule (OBSERVE needs 0 < p_PRISTINE <= .75) leaves almost no OBSERVE floor in
+  W9H, because L1 p_PRISTINE > 0 holds for only 1 of 60. OBSERVE should be drawn from L1 families by mechanism
+  (>= 2 per mechanism, so LGG can recover S_a) without the p > 0 floor, or the floor should be computed with FLAT_A.
+* **D5: W5P conformance.** When aphrodite/b03-w5p lands, rerun `certify_family` with W5P's own promoted library
+  builder (s7) on the pilot families. Accept W5P only if its PROMOTED_A verdicts match these at 1M.

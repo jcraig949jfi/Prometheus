@@ -80,6 +80,15 @@ def wilson(k, n, z=1.96):
     return [round(max(0, c - h), 3), round(min(1, c + h), 3)]
 
 
+def strict(c):
+    """CERTIFIED and promotion is NECESSARY: FLAT (all seed mechanisms, unpromoted) also reaches 0 of 2 at 1M; for
+    L2 additionally the wrong-primitive SHAM_C reaches 0 of 2 (specificity)."""
+    s = c["summary"]
+    if c["level"] == "L2":
+        return bool(c["CERTIFIED"] and s["FLAT"]["tx_reached"] == 0 and s["SHAM_C"]["tx_reached"] == 0)
+    return None
+
+
 def report(pdir):
     W.init()
     pdir = Path(pdir)
@@ -172,6 +181,7 @@ def report(pdir):
             cert_list.append({"name": n, "seed": a["seed"], "level": c["level"], "src": c["src"],
                               "in_W5": a["in_W5"], "CERTIFIED": c["CERTIFIED"],
                               "CERTIFIED_ORACLE": c["CERTIFIED_ORACLE"],
+                              "CERTIFIED_STRICT": strict(c),
                               "tx_reached": {k: v["tx_reached"] for k, v in c["summary"].items()},
                               "dev_reached": {k: v["dev_reached"] for k, v in c["summary"].items()}})
     M["REACHABILITY_BY_LIBRARY"] = {g: {lib: dict(x, fam_share_1M=round(x["fam_reached_1M"] / max(1, x["families"]), 3),
@@ -187,6 +197,11 @@ def report(pdir):
         "certified_L2": sum(c["CERTIFIED"] for c in l2),
         "certified_L2_outside_W5": sum(c["CERTIFIED"] and not c["in_W5"] for c in l2),
         "certified_oracle_L2": sum(bool(c["CERTIFIED_ORACLE"]) for c in l2),
+        "certified_strict_L2": sum(bool(c["CERTIFIED_STRICT"]) for c in l2),
+        "certified_strict_L2_outside_W5": sum(bool(c["CERTIFIED_STRICT"]) and not c["in_W5"] for c in l2),
+        "per_seed_certified_strict_L2": dict(Counter(c["seed"] for c in l2 if c["CERTIFIED_STRICT"])),
+        "distinct_compositions_with_strict_family": len({(c["seed"], c["src"]) for c in l2 if c["CERTIFIED_STRICT"]}),
+        "admitted_L2_certified_of": len(l2),
         "certified_L2_ci95": wilson(sum(c["CERTIFIED"] for c in l2), len(l2)),
         "per_seed_certified_L2": dict(Counter(c["seed"] for c in l2 if c["CERTIFIED"])),
         "distinct_compositions_with_certified_family": len({(c["seed"], c["src"]) for c in l2 if c["CERTIFIED"]}),
