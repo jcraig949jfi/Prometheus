@@ -137,14 +137,14 @@
       "outcome_free": true
     }
   ],
-  "next_permissible_action": "W02: when supply B done -> ONE chain: e1 donors -> b03_e2 run -> e1 freeze/starts/recip/score/report -> b03_e2 score/report (log beta03/runs/E12_chain.log)",
+  "next_permissible_action": "W02: when supply B done -> ONE chain: e1 donors -> b03_e2 run -> e1 freeze/starts/recip/score/report -> b03_e2 score/report (log beta03/runs/E12_chain.log); after E1/E2 chain: b03_e5.py sham -> recip -> score -> report (cap check)",
   "compute": {
     "cap": "48 core-h / rolling 24h (M4)",
     "ledger": []
   },
   "cloud_spend_usd": 0.0,
   "subagents": {
-    "REPRESENTATION": "DELIVERED aphrodite/b03-w5p @1e169a577 (11/11 PASS); decisions D1-D5 pending W05 freeze",
+    "REPRESENTATION": "DELIVERED + merged; W5P D1-D5 decided in E5N_PREREG s2",
     "SELECTOR": "DELIVERED aphrodite/b03-g12 @6c03a218f (16/16 PASS); merged; E2 frozen",
     "ECOLOGY": "DELIVERED aphrodite/b03-eco @dbde4556f (W9-H; 44 certified depth-2 at 1M; 30k escrow blind); D1-D5 pending W07",
     "RED_TEAM": "pre-freeze review of E1/E2 done (2 BLOCKER + 7 MAJOR); all amended pre-data (A1); W11 review pending"
@@ -171,6 +171,10 @@
       "amendments": [
         "A1"
       ]
+    },
+    "E5N": {
+      "spec": "beta03/windows/E5N_PREREG.md",
+      "freeze": "beta03/FREEZE_E5N.json"
     }
   }
 }
