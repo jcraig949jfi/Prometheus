@@ -110,10 +110,10 @@ def check(probe, response):
     return check_json(response, probe["want"])
 
 
-def generate(model, prompt, timeout=600):
+def generate(model, prompt, timeout=900, think=False, budget=1024):
     import requests
-    body = dict(model=model, prompt=prompt, stream=False, think=False,
-                options=dict(temperature=0, seed=1, num_ctx=4096, num_predict=1024))
+    body = dict(model=model, prompt=prompt, stream=False, think=think,
+                options=dict(temperature=0, seed=1, num_ctx=max(4096, budget + 1024), num_predict=budget))
     r = requests.post(OLLAMA + "/api/generate", json=body, timeout=timeout)
     if r.status_code == 400 and "think" in r.text:      # model without a thinking switch
         body.pop("think")
@@ -134,13 +134,17 @@ def gpu_share(model):
     return None
 
 
-def run(models, pull=False, out=print):
+def run(models, pull=False, out=print, think=False, budget=1024):
+    """think/budget select the configuration; the label stored with each row is
+    ollama:<model>@<think|nothink><budget>, so configurations never mix."""
     from psycopg2.extras import execute_values
     from . import db
     run_id = "modelbench-{}-{}".format(dt.datetime.now(dt.timezone.utc).strftime("%Y%m%dT%H%M%SZ"), host().lower())
     with db.cursor() as cur:
         cur.execute("insert into pan.run (run_id, kind, host, params) values (%s,'modelbench',%s,%s)",
-                    (run_id, host(), json.dumps({"models": models, "probes": len(PROBES)})))
+                    (run_id, host(), json.dumps({"models": models, "probes": len(PROBES), "think": think,
+                                                 "budget": budget})))
+    cfg = "@{}{}".format("think" if think else "nothink", budget)
     summary = {}
     for model in models:
         if pull:
@@ -154,17 +158,19 @@ def run(models, pull=False, out=print):
         for i, pr in enumerate(PROBES):
             t = time.time()
             try:
-                g = generate(model, pr["prompt"])
+                g = generate(model, pr["prompt"], think=think, budget=budget)
                 text = strip_thinking(g.get("response", ""))
                 ok, detail = check(pr, text)
                 ev, evd = g.get("eval_count") or 0, (g.get("eval_duration") or 0) / 1e9
+                if ev >= budget:      # the answer may never have been reached: say so, do not hide it
+                    detail = "TRUNCATED at {} tokens; {}".format(ev, detail)
                 if i == 0:
                     load_s = (g.get("load_duration") or 0) / 1e9
                     share = gpu_share(model)
-                rows.append((run_id, "ollama:" + model, HF_MAP.get(model), pr["id"], pr["kind"], ok, detail,
+                rows.append((run_id, "ollama:" + model + cfg, HF_MAP.get(model), pr["id"], pr["kind"], ok, detail,
                              time.time() - t, ev, ev / evd if evd else None, load_s, share, text[:8000]))
             except Exception as e:
-                rows.append((run_id, "ollama:" + model, HF_MAP.get(model), pr["id"], pr["kind"], False,
+                rows.append((run_id, "ollama:" + model + cfg, HF_MAP.get(model), pr["id"], pr["kind"], False,
                              "{}: {}".format(type(e).__name__, e)[:200], time.time() - t, None, None, None, None, None))
         with db.cursor() as cur:
             execute_values(cur, """insert into pan.model_bench (run_id, model, hf_repo, probe_id, kind, ok, detail,
@@ -173,7 +179,8 @@ def run(models, pull=False, out=print):
         for r in rows:
             by.setdefault(r[4], []).append(r[5])
         tps = [r[9] for r in rows if r[9]]
-        summary[model] = dict(passed=sum(r[5] for r in rows), of=len(rows),
+        summary[model] = dict(config=cfg, passed=sum(r[5] for r in rows), of=len(rows),
+                              truncated=sum(1 for r in rows if (r[6] or "").startswith("TRUNCATED")),
                               by_kind={k: "{}/{}".format(sum(v), len(v)) for k, v in by.items()},
                               median_tok_s=round(sorted(tps)[len(tps) // 2], 1) if tps else None,
                               load_s=round(load_s, 1) if load_s else None, gpu=share)

@@ -158,3 +158,74 @@ def run(ext=".jsonl", limit=0, typed=True, out=print, batch_files=200):
         raise SystemExit("ORACLE FAILED: {} mismatched files; iceberg {} vs rows {}".format(
             len(counts["oracle_mismatch"]), counts["iceberg_records"], counts["rows"]))
     return counts
+
+
+def run_docs(ext=".json", out=print, batch_files=1000):
+    """Whole-file JSON documents -> Iceberg pan.result_docs, one row per file (record
+    verbatim). ORACLES: rows == files at the catalog SHA with this extension, and the
+    sum of record bytes == the catalog's summed size_bytes (UTF-8 byte-exact text)."""
+    import pyarrow as pa
+    from . import db, iceberg
+    from .chunker import BlobReader
+    t0 = time.time()
+    run_id = "consolidate-docs-{}-{}".format(dt.datetime.now(dt.timezone.utc).strftime("%Y%m%dT%H%M%SZ"),
+                                             host().lower())
+    with db.cursor() as cur:
+        cur.execute("""select path, blob_sha, size_bytes, coalesce(seat,''), top_dir, kind, repo_sha from pan.artifact
+                       where source='git' and ext=%s order by path""", (ext,))
+        files = cur.fetchall()
+        sha = files[0][6] if files else None
+        cur.execute("insert into pan.run (run_id, kind, host, git_sha, params) values (%s,'consolidate-docs',%s,%s,%s)",
+                    (run_id, host(), sha, json.dumps({"ext": ext})))
+    schema = pa.schema([("path", pa.string()), ("top_dir", pa.string()), ("seat", pa.string()), ("kind", pa.string()),
+                        ("blob_sha", pa.string()), ("n_bytes", pa.int64()), ("record", pa.large_string()),
+                        ("parse_ok", pa.bool_()), ("json_type", pa.string()), ("n_keys", pa.int32()),
+                        ("keys", pa.list_(pa.string()))])
+    reader = BlobReader()
+    counts = dict(files=len(files), rows=0, bytes=0, catalog_bytes=sum(f[2] or 0 for f in files), parse_fail=0,
+                  missing=0, types={})
+    first = True
+    try:
+        for i in range(0, len(files), batch_files):
+            cols = {f.name: [] for f in schema}
+            for path, bsha, size, seat, top, kind, _ in files[i:i + batch_files]:
+                data = reader.read(bsha)
+                if data is None:
+                    counts["missing"] += 1
+                    continue
+                txt = data.decode("utf-8", "replace").replace("\x00", "")
+                try:
+                    obj = json.loads(txt)
+                    ok = True
+                    jt = type(obj).__name__
+                except ValueError:
+                    obj, ok, jt = None, False, "invalid"
+                    counts["parse_fail"] += 1
+                keys = list(obj.keys())[:200] if isinstance(obj, dict) else []
+                counts["types"][jt] = counts["types"].get(jt, 0) + 1
+                for k, v in (("path", path), ("top_dir", top), ("seat", seat or None), ("kind", kind), ("blob_sha", bsha),
+                             ("n_bytes", len(data)), ("record", txt), ("parse_ok", ok), ("json_type", jt),
+                             ("n_keys", len(obj) if isinstance(obj, (dict, list)) else 0), ("keys", keys)):
+                    cols[k].append(v)
+                counts["rows"] += 1
+                counts["bytes"] += len(data)
+            if cols["path"]:
+                iceberg.write("result_docs", pa.table(cols, schema=schema), mode="overwrite" if first else "append")
+                first = False
+            out("  {}/{} files, {:.0f}s".format(min(i + batch_files, len(files)), len(files), time.time() - t0))
+    finally:
+        reader.close()
+    snap = iceberg.catalog().load_table("pan.result_docs").current_snapshot()
+    counts["iceberg_records"] = int(snap.summary.additional_properties.get("total-records", -1))
+    counts["iceberg_bytes"] = int(snap.summary.additional_properties.get("total-files-size", -1))
+    counts["seconds"] = round(time.time() - t0, 1)
+    ok = (counts["rows"] == counts["files"] - counts["missing"] == counts["iceberg_records"]
+          and counts["bytes"] == counts["catalog_bytes"])
+    with db.cursor() as cur:
+        cur.execute("update pan.run set finished_at=now(), status=%s, counts=%s where run_id=%s",
+                    ("OK" if ok else "FAILED", json.dumps(counts), run_id))
+    out(json.dumps(counts))
+    if not ok:
+        raise SystemExit("ORACLE FAILED: rows {} files {} iceberg {} bytes {} catalog {}".format(
+            counts["rows"], counts["files"], counts["iceberg_records"], counts["bytes"], counts["catalog_bytes"]))
+    return counts

@@ -3,7 +3,7 @@
   "seat": "Pan",
   "mwo_id": "MWO-0004",
   "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
-  "updated_at_utc": "2026-10-09T11:50:00Z",
+  "updated_at_utc": "2026-10-09T13:44:25Z",
   "state": "ACTIVE",
   "instance": "spectrex5-f20b5eac (SPECTREX5)",
   "branch": "pan/base-role-adopt-2026-10-09",
@@ -13,9 +13,9 @@
   "host": "SPECTREX5",
   "work_order": "MWO-0004 (ops/work_orders/CURRENT.md) + CWO-2026-09-30C. Operator charter (chat, 2026-10-09), verbatim at roles/Pan/prompts/2026-10-09_charter/.",
   "current_objective": "Charter C1-C5: inventory every store; design the Postgres/pgvector/Parquet/Iceberg layer; build catalog, full-text and vector indices; frontier intake of adjacent research and locally runnable models.",
-  "current_step": "v1 retrieval verdict FAIL on held-out (hybrid R@10 0.75 < 0.80); v2 design next",
+  "current_step": "retrieval tuning stopped (v1 shipped, CB-200 0.765); model smoke tests and JSON consolidation running",
   "in_flight": [],
-  "progress": "inventory, catalog, commits, chunks, embeddings, Iceberg, frontier intake (arXiv/HF) built; design v0.1 and inventory report written; status report 1",
+  "progress": "inventory, catalog, commits, chunks, chunk+doc embeddings, Iceberg (8 tables), JSONL consolidation 2.25M rows, comms index, frontier intake + vectors, reference graph, data dictionary, pan-search skill, MONITORS row, pgvector packet; retrieval verdicts v0/v1/v2 FAIL on n=20 held-out, CB-200 0.765",
   "finish_condition": "loop window ends no later than 2026-10-12 (charter C7) with a closing report; return to HOLD",
   "next_expected_milestone": "inventory v0 + schema pan + full-text search with controls",
   "expected_next_artifact": "roles/Pan/reports/INVENTORY_2026-10-09.md",
@@ -26,15 +26,18 @@
   "campaigns": [],
   "experiments": [],
   "fabric_tasks": [],
-  "running": [],
+  "running": [
+    "PAN-19 model smoke tests (lease lse-d045e7a2eb61)",
+    "PAN-16b JSON document consolidation"
+  ],
   "blocked": [],
   "blocked_on": [],
-  "resource_status": "no lease held (GPU lease lse-42490c10cb2b released); venv on M2 NVMe; lake 0.6 GB; schema pan 2.2 GB on M1",
+  "resource_status": "GPU lease lse-d045e7a2eb61 held (model bench); GPU today ~0.6 h before the bench; schema pan ~2.3 GB on M1; lake ~1 GB on M2 NVMe; Ollama models ~60 GB on M2 C:",
   "last_receipt": "roles/Pan/journal/2026-10-09.md",
   "last_push_sha": "UNKNOWN (set on the seat's first state commit after the push)",
   "last_push_utc": "UNKNOWN",
   "session_started_utc": "UNKNOWN (not inferred)",
-  "next": "v2 retrieval (doc-level vectors + duplicate-aware prior) on a fresh held-out set -> PAN-16 consolidation -> PAN-17 refresh -> PAN-18 skill -> PAN-19 model smoke tests",
+  "next": "finish PAN-19 (think/4096 pass) -> status report 2 (~17:50Z) -> review packet unit 2 -> daily intake refresh -> pan refresh to origin/main",
   "next_actions": [
     "PAN-31 v2 retrieval: document-level vectors with a stronger model + duplicate-aware prior; new held-out set frozen first",
     "PAN-16 consolidation recipe on committed result rows (Parquet + Iceberg, line-count oracle)",
@@ -43,7 +46,7 @@
     "PAN-14 frontier embeddings + similar-to-file across corpora"
   ],
   "operator_decisions_required": [
-    "Q-001 HARD: install pgvector on M1 (privileged host change); default real[] + in-process search"
+    "Q-001 HARD: install pgvector on M1 (packet: roles/Pan/docs/PGVECTOR_INSTALL_PACKET.md)"
   ],
   "latest_reports": [
     "roles/Pan/reports/STATUS_20261009T1150Z.md",

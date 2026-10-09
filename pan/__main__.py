@@ -78,10 +78,13 @@ def main(argv=None):
     p = sub.add_parser("modelbench")
     p.add_argument("models", nargs="+")
     p.add_argument("--pull", action="store_true")
+    p.add_argument("--think", action="store_true", help="let reasoning models think (stripped before checking)")
+    p.add_argument("--budget", type=int, default=1024, help="max generated tokens per probe")
     p = sub.add_parser("consolidate")
     p.add_argument("--ext", default=".jsonl")
     p.add_argument("--limit", type=int, default=0)
     p.add_argument("--no-typed", action="store_true")
+    p.add_argument("--docs", action="store_true", help="whole-file JSON documents -> pan.result_docs")
     p = sub.add_parser("frontier")
     p.add_argument("what", choices=["arxiv", "hf-models", "hf-daily", "search", "models", "embed", "like"])
     p.add_argument("query", nargs="*")
@@ -165,10 +168,13 @@ def main(argv=None):
             print("  {:<20} {:<40} {} {} {}s".format(k, rid, str(fin)[:16], st, secs))
     elif a.cmd == "modelbench":
         from . import modelbench
-        modelbench.run(a.models, pull=a.pull)
+        modelbench.run(a.models, pull=a.pull, think=a.think, budget=a.budget)
     elif a.cmd == "consolidate":
         from . import consolidate
-        consolidate.run(ext=a.ext, limit=a.limit, typed=not a.no_typed)
+        if a.docs:
+            consolidate.run_docs(ext=a.ext if a.ext != ".jsonl" else ".json")
+        else:
+            consolidate.run(ext=a.ext, limit=a.limit, typed=not a.no_typed)
     elif a.cmd == "frontier":
         from .frontier import arxiv, hf, query
         if a.what == "arxiv":
