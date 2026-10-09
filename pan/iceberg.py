@@ -145,3 +145,40 @@ def register_commits(lake_git_dir):
         write(name, t, mode="overwrite")
         out[name] = t.num_rows
     return out
+
+
+def snapshot_frontier():
+    """Append today's pan.frontier_item and pan.hf_model (selected columns, snapshot_date
+    stamped) to Iceberg pan.frontier_daily / pan.hf_model_daily: each day becomes a
+    snapshot, so what the corpus held or what was trending on a date is a filter or a
+    time travel. Returns {table: rows}."""
+    import datetime as dt
+    import pyarrow as pa
+    from . import db
+    today = dt.datetime.now(dt.timezone.utc).date().isoformat()
+    out = {}
+    with db.cursor() as cur:
+        cur.execute("""select source, source_id, title, primary_cat, published_at, query_tags,
+                              (signals->>'upvotes')::int, eos_type from pan.frontier_item""")
+        rows = cur.fetchall()
+        t = pa.table({"snapshot_date": [today] * len(rows), "source": [r[0] for r in rows],
+                      "source_id": [r[1] for r in rows], "title": [r[2] for r in rows],
+                      "primary_cat": [r[3] for r in rows],
+                      "published_at": pa.array([r[4] for r in rows], pa.timestamp("us", tz="UTC")),
+                      "query_tags": pa.array([r[5] or [] for r in rows], pa.list_(pa.string())),
+                      "hf_upvotes": pa.array([r[6] for r in rows], pa.int32()), "eos_type": [r[7] for r in rows]})
+        write("frontier_daily", t)
+        out["frontier_daily"] = t.num_rows
+        cur.execute("""select repo_id, pipeline_tag, params_total, downloads, likes, trending_score,
+                              (fit->>'fits_16gb_q4')::boolean, (fit->>'reliable')::boolean, license from pan.hf_model""")
+        rows = cur.fetchall()
+        t = pa.table({"snapshot_date": [today] * len(rows), "repo_id": [r[0] for r in rows],
+                      "pipeline_tag": [r[1] for r in rows], "params_total": pa.array([r[2] for r in rows], pa.int64()),
+                      "downloads": pa.array([r[3] for r in rows], pa.int64()),
+                      "likes": pa.array([r[4] for r in rows], pa.int64()),
+                      "trending_score": pa.array([r[5] for r in rows], pa.float64()),
+                      "fits_16gb_q4": pa.array([r[6] for r in rows], pa.bool_()),
+                      "fit_reliable": pa.array([r[7] for r in rows], pa.bool_()), "license": [r[8] for r in rows]})
+        write("hf_model_daily", t)
+        out["hf_model_daily"] = t.num_rows
+    return out

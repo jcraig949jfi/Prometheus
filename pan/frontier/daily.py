@@ -37,7 +37,9 @@ def run(min_age_h=20.0, force=False, out=print):
         items1 = cur.fetchone()[0]
         cur.execute("select count(*) from pan.hf_model")
         models1 = cur.fetchone()[0]
-    res = dict(new_items=items1 - items0, new_models=models1 - models0, vectors_new=e,
+    from .. import iceberg
+    snap = iceberg.snapshot_frontier()
+    res = dict(new_items=items1 - items0, new_models=models1 - models0, vectors_new=e, iceberg_snapshot=snap,
                arxiv_failed=a.get("failed"), hf_daily_failed=d.get("failed"), hf_models_failed=m.get("failed"),
                seconds=round(time.time() - t0, 1))
     finish_run(run_id, res, "OK")
