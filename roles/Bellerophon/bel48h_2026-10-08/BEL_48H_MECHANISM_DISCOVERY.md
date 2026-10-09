@@ -94,6 +94,14 @@ E = w6b3_00001 (BUDGET_COUPLED), S = w6b3_00020 (SEPARATED), fresh seeds. MED: E
 FALSIFIED (W5-P6's 'E dominates at HIGH' was pair-specific). Generalisable part: paying for the computation favours the
 compute-first architecture (at least at MED mutation) across two independently evolved pairs.
 
+## P1 -- the architecture-payment effect across a 4 x 4 specimen panel (prereg s18; 512 runs, 0 voids, 2.37 h)
+
+16 pairings of independently evolved machines (4 BUDGET_COUPLED x 4 SEPARATED from W6 block 3, excluding the X pair),
+MED mutation, ON vs OFF, 8 seeds x 2 slot orders: mean budget-coupled share ON < OFF in 14 pairings, > in 1, tie 1 (both
+0.0); sign test p 0.0005 -- P1-P1 HOLDS. CL-16 (paying for the computation favours the compute-first architecture at MED)
+is general across the panel, not a property of one pair. Class: CAUSALLY_CONFIRMED (seed-paired ON/OFF intervention) +
+REPRODUCED (18 pairings in three independent tests).
+
 ## W6 block 2 -- GENERALITY of two-fragment complementation (prereg s11; 720 runs, 0 voids, 2.0 h)
 
 Three confound-free variants (writer holds NO LDIR and writes LD T,n by constructed writes; carrier holds only LDIR; each
