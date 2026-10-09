@@ -613,6 +613,11 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
 - WINDOW 3 OPENED 2026-10-09T00:11:13Z (receipt: date -u). Lease lse-7cf54212d1c8 (spectrex5:cpu12, 4 h TTL).
   CORE-HOUR TALLY reset to 0 for this window. Launched B53 full (KV organ vs stock, 16 cells, 6 procs) and B55 full
   (chain-length wiring test L1/L2/L3, 24 cells, 6 procs) in parallel = 12 procs; est ~7 core-h.
+- B55 DESIGN FLAW (mine, caught at 00:29Z on partial results): L1/L2 solvers appear at GENERATION 0 -- random
+  founders already contain the 1-2 instruction read -- so B55 compares founder probability with search failure, not
+  search with search. Repair B56: identical, but every op-2 instruction is scrubbed (NOP) from generation 0 so the read
+  must be BUILT by mutation (verified: 0 op-2 left; smoke test L1 reaches train >= .9 at gen 1). B56 runs after
+  B53/B55 free their processes. B55's numbers are kept as the founder-probability readout.
 - PLAN FOR THE NEXT WINDOW (opens ~2026-10-09 00:07Z; lease spectrex5:cpu12, <= 12 procs, <= 48 core-h):
   1. REPRESENTATION lever for the memory law (the one lever not yet tried): a KV-store organism (two opcodes replacing
      RND/YIELD: STK r_key, r_val writes a hidden dict; LDK r_dst, r_key reads it). Question: is keyed memory reached
