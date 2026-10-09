@@ -87,6 +87,7 @@ clock.
    | entropy CONC > noise-matched SHAM by >= .2 | 4/6 | 5/6 |
    | mixed-niche groups out-earn same-niche groups (CONC) | 6/6 | 5/5 testable |
    | rare-type advantage both ways, CONC / SOLO / SHAM | 4 / 1 / 0 | 4 / 1 / 1 |
+   | hardened (B70: niches >= 10, 48 groups, bootstrap lo > 0), CONC / SOLO / SHAM | 4/6 / 0/5 / 0/5 | 4/6 / 0/4 / 0/1 |
 
    - SHAM = residual-shuffle null: same fitness signal/noise as CONC, but the competition component is detached
      from the organism.

@@ -756,6 +756,13 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
 - B69 STAGED (b69_pulse_evolution.py; smoke test passed; prediction in docstring): SOLO vs CONC on pulse P=4,
   seeds 6901-6906, 12 cells ~6 core-h. QUEUE after the window rolls (~2026-10-10 00:30Z), new lease each: B66 (k=2/8)
   then B69. Window 3 tally ~43 of 48 (B65/B67/B68 evaluation-only ~0.3 core-h).
+- Review packet for Finding 4 written + pushed (REVIEW_PACKET_FINAL_BETA_F4_NICHES.txt, 33f86e39d).
+- B70 RESULT (hardened rare-type test, packet A5/S4; prediction committed BEFORE the run, d6db86cae; ~7 min 1 proc):
+  niches >= 10 members only; 48 groups per composition; win = bootstrap 2.5th pct of mean(rare - common) > 0 in BOTH
+  compositions. CONC 4/6 on P-boom AND 4/6 on B-scatter; SOLO 0/5 + 0/4 testable, SHAM 0/5 + 0/1 testable (0/15
+  controls). PREDICTION MET. The B63/B64 control 'wins' were small-niche sampling luck; every testable control
+  shows DOMINANCE (rare>common one way, significantly rare<common the other). CONC failures: P-boom 6002 (minor
+  niche 14) and 6006 (-.009), B-scatter 6401 (minor niche 15) and 6404 (-.015).
 - PLAN FOR THE NEXT WINDOW (opens ~2026-10-09 00:07Z; lease spectrex5:cpu12, <= 12 procs, <= 48 core-h):
   1. REPRESENTATION lever for the memory law (the one lever not yet tried): a KV-store organism (two opcodes replacing
      RND/YIELD: STK r_key, r_val writes a hidden dict; LDK r_dst, r_key reads it). Question: is keyed memory reached

@@ -184,6 +184,9 @@ A4 SHAM noise matching is approximate: slope a varies (.49-.96) and residual var
    not its covariance structure. OPEN.
 A5 Rare-type 'wins' with tiny minor niches (3-8 members) are sampling-fragile. Both SOLO/SHAM
    passes are such cases. CONCEDED: n per niche is small for the controls.
+   ADDENDUM 2026-10-09 10:07Z -- RESOLVED by B70 (prediction committed before the run, d6db86cae):
+   niches >= 10 members, 48 groups, bootstrap lower bound > 0 in both compositions. CONC 4/6 on
+   both worlds; controls 0/15 testable. The control 'wins' were sampling luck.
 A6 One group size (k=4) and two C6 named worlds, both with coupling-capable K=4 and hazards.
    OPEN: not ensemble-invariant yet (B66 k=2/8 staged; a non-C6 world not yet built).
 A7 "Pool-identity specialist" might be a location specialist in disguise: pool_node is random per
