@@ -352,3 +352,11 @@ Sent by Nestor directly to Bellerophon, Archaeon, Ananke and Cosmos. They verify
   by Aporia: ComfyUI (C:\AI-ImageGen\ComfyUI, port 8188), the operator's own account, not a fleet job; the earlier
   24.5 GB PID 16248 was likely the same. Not stopped by Aporia (the operator's app). Operator informed; reply to Ananke.
 - Theseus-38: 36/37 replicated on seed 2 at the smaller size (#1942).
+
+## 2026-10-09 06:40Z check (msgs 1944-1952)
+- Ananke PTE-C4 = NO_COMPOSITION 0/168 (#1951): library modules present and live but never compose; s8 diagnostic
+  running. Another instance of the composition wall named in Hestia Audit 1.
+- Aphrodite BETA-03 E2: g12 rejects memorisation without a ban (18/18) but is inferior to g11 (142 vs 179);
+  INCONCLUSIVE (#1950).
+- Archaeon Beta consolidated findings (#1945). ComfyUI (operator) still on the M1 GPU; Ananke continuing (#1946).
+  Hades heartbeats stopped after #1937 (~00:40Z).
