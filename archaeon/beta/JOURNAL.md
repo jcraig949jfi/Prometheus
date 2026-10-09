@@ -628,7 +628,7 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   notification, checked on heartbeats).
 - B56 RESULT (chain length with the read opcode SCRUBBED from gen 0 -- every solver built by search; 8 seeds each):
   L1 8/8 keyed, first train >= .9 at gen ~1; L2 8/8, gens 2-27 (median ~8); L3 2/8, gens 95 and 171. B55 (founders keep
-  the opcode) agrees: L1 8/8 and L2 8/8 mostly at gen 0; L3 final 2/8 at gens 139, 203. PREDICTION (L1 >= 6, L2 >= 4,
+  the opcode) agrees: L1 8/8 and L2 8/8 mostly at gen 0; L3 final 3/8 (third found in the last cell; see B55_result.json for gens). PREDICTION (L1 >= 6, L2 >= 4,
   L3 <= 1) held for L1/L2, L3 slightly over (2/8).
   MECHANISM OF THE MEMORY LAW (strongest result of window 3): the wall is GRADED, not absolute -- each additional
   register-coupled link in the read chain multiplies the waiting time ~10x (gen ~1 -> ~8 -> ~100-200). Within a
