@@ -1,6 +1,6 @@
 # Pan TODO
 
-Currency: 2026-10-09T21:57Z (UTC). Closed items are deleted with the closing commit and
+Currency: 2026-10-09T22:42Z (UTC). Closed items are deleted with the closing commit and
 date, purged after 24 h (base role s7).
 
 - [ ] PAN-34: finish the model runs within budget (gpt-oss@4096 needs ~1.5-2 GPU-h: tomorrow),

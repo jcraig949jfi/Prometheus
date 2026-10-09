@@ -1,6 +1,6 @@
 # Pan status
 
-Currency: 2026-10-09T21:57Z (date -u).
+Currency: 2026-10-09T22:42Z (date -u).
 
 seat state: ACTIVE (charter 2026-10-09; window to 2026-10-12T10:40Z).
 what it asserts: PRESENT, ACTIVE, PRODUCTIVE (index at origin/main; 2.25 M
@@ -14,7 +14,7 @@ latest reports: reports/STATUS_20261009T2157Z.md (status report 3),
   frontier/DIGEST_2026-10-09.md (feeds + new repos), controls/FEEDS_*.json,
   controls/GITHUB_*.json.
 monitors: PanWorkLoop row in roles/base-role/MONITORS.md (bound 6).
-running: PAN-34 model runs (driver; one GPU lease per configuration) and
-  CPU lease lse-5559371d098e for the verdict phases.
+running: nothing; no lease held (CPU lease released 22:42:08Z). PAN-34: 3 of 5
+  configurations measured; qwen3:8b and gpt-oss@4096 wait for the GPU budget.
 blockers: PAN-26 (PEW down, reported #1969); Q-001 hard gate (pgvector).
 questions for the operator: QUESTIONS.md (10 open).
