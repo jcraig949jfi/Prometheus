@@ -488,6 +488,45 @@ def controls(workers=4, out=print):
     return res
 
 
+def excluded():
+    """Task ids the prereg's amendments remove from the PRIMARY set (A2: pass-body passers)."""
+    pr = json.loads(PREREG.read_text(encoding="utf-8"))
+    return {x for a in pr.get("amendments", []) for x in a.get("excluded_tasks", [])}
+
+
+def first_param(fn_src):
+    a = ast.parse(textwrap.dedent(fn_src)).body[0].args
+    names = [x.arg for x in a.posonlyargs + a.args] + ([a.vararg.arg] if a.vararg else []) + \
+        [x.arg for x in a.kwonlyargs] + ([a.kwarg.arg] if a.kwarg else [])
+    return names[0] if names else None
+
+
+def controls_cheat2(workers=4, out=print):
+    """A2's CHEAT2 on the primary set: the body returns the first parameter unchanged (None if none)."""
+    man, base, dirs = load(workers=workers, out=out)
+    ex = excluded()
+    tasks = [t for t in man["tasks"] if t["task_id"] not in ex]
+    jobs = []
+    for t in tasks:
+        text = (base / t["module"]).read_text(encoding="utf-8")
+        p = first_param(function_source(text, t))
+        fn = function_source(replace_body(text, t, "return {}".format(p or "None")), dict(t, end=t["body_start"]))
+        jobs.append((t,) + extract("```python\n{}```".format(textwrap.dedent(fn)), t["name"]))
+    t0 = time.time()
+    vs = verdicts(dirs, jobs)
+    k = sum(ok for ok, _ in vs)
+    res = dict(CHEAT2_return_first_param=dict(passed=k, of=len(tasks),
+                                              passing=[t["task_id"] for t, (ok, _) in zip(tasks, vs) if ok]),
+               verdict=dict(cheat2_le_10pct=k <= 0.10 * len(tasks)), seconds=round(time.time() - t0, 1),
+               primary_n=len(tasks), excluded=sorted(ex))
+    p = REPO / "roles" / "Pan" / "reports" / "repobench" / "CONTROLS_CHEAT2_{}.json".format(
+        dt.datetime.now(dt.timezone.utc).strftime("%Y%m%dT%H%M%SZ"))
+    p.write_text(json.dumps(res, indent=1), encoding="utf-8", newline="\n")
+    out("CHEAT2_return_first_param  {}/{}".format(k, len(tasks)))
+    out(json.dumps(res["verdict"]))
+    return res
+
+
 def run(model, think=False, budget=1024, workers=4, out=print):
     from psycopg2.extras import execute_values
     from . import db
@@ -527,11 +566,15 @@ def run(model, think=False, budget=1024, workers=4, out=print):
     with db.cursor() as cur:
         execute_values(cur, """insert into pan.code_bench (run_id, model, hf_repo, task_id, ok, detail, latency_s,
                                eval_tokens, tok_per_s, response) values %s""", rows)
-        k = sum(1 for r in rows if r[4])
+        ex = excluded()
+        prim = [r for r in rows if r[3] not in ex]          # A2: primary = discriminating tasks
+        k = sum(1 for r in prim if r[4])
+        k_all = sum(1 for r in rows if r[4])
         tps = sorted(r[8] for r in rows if r[8])
-        summ = dict(model=model, config=cfg, passed=k, of=len(rows), pass_at_1=round(k / len(rows), 3),
-                    wilson95=wilson(k, len(rows)),
-                    truncated=sum(1 for r in rows if (r[5] or "").startswith("TRUNCATED")),
+        summ = dict(model=model, config=cfg, passed=k, of=len(prim), pass_at_1=round(k / len(prim), 3),
+                    wilson95=wilson(k, len(prim)),
+                    secondary_all=dict(passed=k_all, of=len(rows), pass_at_1=round(k_all / len(rows), 3)),
+                    truncated=sum(1 for r in prim if (r[5] or "").startswith("TRUNCATED")),
                     median_tok_s=round(tps[len(tps) // 2], 1) if tps else None, seconds=round(time.time() - t0, 1))
         cur.execute("update pan.run set finished_at=now(), status='OK', counts=%s where run_id=%s",
                     (json.dumps(summ), run_id))

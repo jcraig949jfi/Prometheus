@@ -99,3 +99,15 @@ def test_credential_paths_never_materialized():
         assert rb.CRED_RE.search(p), p
     for p in ("pan/search.py", "archaeon/engine/kernel.py"):
         assert not rb.CRED_RE.search(p), p
+
+
+def test_first_param_for_cheat2():
+    assert rb.first_param("def f(a, b=1):\n    return a\n") == "a"
+    assert rb.first_param("def f(*args, k=1):\n    return 1\n") == "args"
+    assert rb.first_param("def f(*, k):\n    return k\n") == "k"
+    assert rb.first_param("def f():\n    return 1\n") is None
+
+
+def test_a2_exclusions_are_the_pass_body_passers():
+    ex = rb.excluded()
+    assert len(ex) == 18 and "RB-119" in ex
